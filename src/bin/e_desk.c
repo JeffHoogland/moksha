@@ -208,6 +208,7 @@ e_desk_show(E_Desk *desk)
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (desk->visible) return;
 
+   ecore_x_window_shadow_tree_flush();
    for (x = 0; x < desk->zone->desk_x_count; x++)
      {
 	for (y = 0; y < desk->zone->desk_y_count; y++)
@@ -326,6 +327,7 @@ e_desk_deskshow(E_Zone *zone)
 
    desk = e_desk_current_get(zone);
    bl = e_container_border_list_first(zone->container);
+   ecore_x_window_shadow_tree_flush();
    while ((bd = e_container_border_list_next(bl))) 
      {
 	if (bd->desk == desk)
@@ -628,6 +630,7 @@ _e_desk_show_end(E_Desk *desk)
 	  }
      }
    e_container_border_list_free(bl);
+   ecore_x_window_shadow_tree_flush();
 }
 
 static int
@@ -769,6 +772,7 @@ _e_desk_hide_end(E_Desk *desk)
 	  }
      }
    e_container_border_list_free(bl);
+   ecore_x_window_shadow_tree_flush();
 }
 
 static int

@@ -227,6 +227,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 
    bd = E_OBJECT_ALLOC(E_Border, E_BORDER_TYPE, _e_border_free);
    if (!bd) return NULL;
+   ecore_x_window_shadow_tree_flush();
    e_object_del_func_set(E_OBJECT(bd), E_OBJECT_CLEANUP_FUNC(_e_border_del));
 
    bd->w = 1;
@@ -522,6 +523,7 @@ e_border_res_change_geometry_restore(E_Border *bd)
    if (!bd->pre_res_change.valid) return;
    if (bd->new_client) return;
    
+   ecore_x_window_shadow_tree_flush();
    memcpy(&pre_res_change, &bd->pre_res_change, sizeof(pre_res_change));
 
    if (bd->fullscreen)
@@ -641,6 +643,7 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (bd->desk == desk) return;
+   ecore_x_window_shadow_tree_flush();
    bd->desk = desk;
    e_border_zone_set(bd, desk->zone);
 
@@ -683,6 +686,7 @@ e_border_show(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->visible) return;
+   ecore_x_window_shadow_tree_flush();
    e_container_shape_show(bd->shape);
    if (!bd->need_reparent)
      ecore_x_window_show(bd->client.win);
@@ -709,6 +713,7 @@ e_border_hide(E_Border *bd, int manage)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->visible) return;
+   ecore_x_window_shadow_tree_flush();
    if (bd->moving)
      _e_border_move_end(bd);
    if (bd->fullscreen)
@@ -775,6 +780,7 @@ e_border_move(E_Border *bd, int x, int y)
    if ((bd->fullscreen) || 
        (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip))) 
      return;
+   ecore_x_window_shadow_tree_flush();
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -852,6 +858,7 @@ e_border_resize(E_Border *bd, int w, int h)
    if ((bd->shaded) || (bd->shading) || (bd->fullscreen) ||
        (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)))
      return;
+   ecore_x_window_shadow_tree_flush();
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -911,6 +918,7 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    if ((bd->fullscreen) || 
        (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip))) 
 	   return;
+   ecore_x_window_shadow_tree_flush();
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -979,6 +987,8 @@ e_border_layer_set(E_Border *bd, int layer)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
+   ecore_x_window_shadow_tree_flush();
+   
    raise = e_config->transient.raise;
    
    bd->saved.layer = bd->layer;
@@ -1015,6 +1025,8 @@ e_border_raise(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
+   ecore_x_window_shadow_tree_flush();
+   
    if (e_config->transient.raise)
      {
 	for (l = evas_list_last(bd->transients); l; l = l->prev)
@@ -1102,6 +1114,8 @@ e_border_lower(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
+   ecore_x_window_shadow_tree_flush();
+   
    if (e_config->transient.lower)
      {
 	for (l = evas_list_last(bd->transients); l; l = l->prev)
@@ -1190,6 +1204,8 @@ e_border_stack_above(E_Border *bd, E_Border *above)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
+   ecore_x_window_shadow_tree_flush();
+   
    if (e_config->transient.raise)
      {
 	for (l = evas_list_last(bd->transients); l; l = l->prev)
@@ -1246,6 +1262,8 @@ e_border_stack_below(E_Border *bd, E_Border *below)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
+   ecore_x_window_shadow_tree_flush();
+   
    if (e_config->transient.lower)
      {
 	for (l = evas_list_last(bd->transients); l; l = l->prev)
@@ -1496,6 +1514,7 @@ e_border_shade(E_Border *bd, E_Direction dir)
        (bd->shading)) return;
    if ((bd->client.border.name) && 
        (!strcmp("borderless", bd->client.border.name))) return;
+   ecore_x_window_shadow_tree_flush();
    if (!bd->shaded)
      {
 //	printf("SHADE!\n");
@@ -1584,6 +1603,7 @@ e_border_unshade(E_Border *bd, E_Direction dir)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((bd->fullscreen) || ((bd->maximized) && (!e_config->allow_manip)) ||
        (bd->shading)) return;
+   ecore_x_window_shadow_tree_flush();
    if (bd->shaded)
      {
 //	printf("UNSHADE!\n");
@@ -1693,6 +1713,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
    if (!(max & E_MAXIMIZE_DIRECTION)) max |= E_MAXIMIZE_BOTH;
 
    if ((bd->shaded) || (bd->shading)) return;
+   ecore_x_window_shadow_tree_flush();
    if (bd->fullscreen)
      e_border_unfullscreen(bd);
    /* Only allow changes in vertical/ horizontal maximization */
@@ -1855,6 +1876,7 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
      }
 
    if ((bd->shaded) || (bd->shading)) return;
+   ecore_x_window_shadow_tree_flush();
    /* Remove directions not used */
    max &= (bd->maximized & E_MAXIMIZE_DIRECTION);
    /* Can only remove existing maximization directions */
@@ -1984,6 +2006,7 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
    if ((bd->shaded) || (bd->shading)) return;
+   ecore_x_window_shadow_tree_flush();
    if (bd->maximized)
      e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
    if (bd->new_client)
@@ -2075,6 +2098,7 @@ e_border_unfullscreen(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((bd->shaded) || (bd->shading)) return;
+   ecore_x_window_shadow_tree_flush();
    if (bd->fullscreen)
      {
 	bd->pre_res_change.valid = 0;
@@ -2112,6 +2136,7 @@ e_border_iconify(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((bd->fullscreen) || (bd->shading)) return;
+   ecore_x_window_shadow_tree_flush();
    if (!bd->iconic)
      {
 	bd->iconic = 1;
@@ -2154,6 +2179,7 @@ e_border_uniconify(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((bd->fullscreen) || (bd->shading)) return;
+   ecore_x_window_shadow_tree_flush();
    if (bd->iconic)
      {
 	bd->iconic = 0;

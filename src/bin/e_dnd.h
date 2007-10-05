@@ -56,6 +56,7 @@ struct _E_Drag
    unsigned int   layer;
    unsigned char  visible : 1;
    unsigned char  need_shape_export : 1;
+   unsigned char  xy_update : 1;
 };
 
 struct _E_Drop_Handler
