@@ -54,6 +54,7 @@ EAPI void
 e_shelf_config_init(void)
 {
    Evas_List *l;
+   int id = 0;
 
    while (shelves)
      {
@@ -69,13 +70,15 @@ e_shelf_config_init(void)
 	E_Zone *zone;
 	
 	cf_es = l->data;
+	if (cf_es->id <= 0) cf_es->id = id + 1;
 	zone = e_util_container_zone_number_get(cf_es->container, cf_es->zone);
+	id = cf_es->id;
 	if (zone)
 	  {
 	     E_Shelf *es;
-	     
+
 	     es = e_shelf_zone_new(zone, cf_es->name, cf_es->style,
-				   cf_es->popup, cf_es->layer, -1);
+				   cf_es->popup, cf_es->layer, cf_es->id);
 	     if (es)
 	       {
 		  if (!cf_es->hide_timeout) cf_es->hide_timeout = 1.0; 
@@ -132,6 +135,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    
    es = E_OBJECT_ALLOC(E_Shelf, E_SHELF_TYPE, _e_shelf_free);
    if (!es) return NULL;
+   es->id = id;
 
    es->x = 0;
    es->y = 0;
@@ -192,13 +196,8 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	evas_object_layer_set(es->o_event, layer);
 	evas_object_layer_set(es->o_base, layer);
      }
-   if (id < 0)
-     es->id = evas_list_count(shelves);
-   else
-     es->id = id;
 
-   snprintf(buf, sizeof(buf), "%i", es->id);
-   es->gadcon = e_gadcon_swallowed_new(es->name, buf, es->o_base, "e.swallow.content");
+   es->gadcon = e_gadcon_swallowed_new(es->name, es->id, es->o_base, "e.swallow.content");
    e_gadcon_min_size_request_callback_set(es->gadcon,
 					  _e_shelf_gadcon_min_size_request, es);
 

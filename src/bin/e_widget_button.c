@@ -3,6 +3,13 @@
  */
 #include "e.h"
 
+typedef enum _E_Widget_Button_Type E_Widget_Button_Type;
+enum _E_Widget_Button_Type
+{
+   E_WIDGET_BUTTON_TEXT = 1 << 0,
+   E_WIDGET_BUTTON_ICON = 1 << 1
+};
+
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
@@ -11,6 +18,7 @@ struct _E_Widget_Data
    void (*func) (void *data, void *data2);
    void *data;
    void *data2;   
+   E_Widget_Button_Type type;
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
@@ -19,6 +27,7 @@ static void _e_wid_activate_hook(Evas_Object *obj);
 static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_wid_button_state_send(E_Widget_Data *wd);
 /* local subsystem functions */
 
 /* externally accessible functions */
@@ -46,7 +55,11 @@ e_widget_button_add(Evas *evas, const char *label, const char *icon, void (*func
    e_theme_edje_object_set(o, "base/theme/widgets",
 			   "e/widgets/button");
    edje_object_signal_callback_add(o, "e,action,click", "", _e_wid_signal_cb1, obj);
-   edje_object_part_text_set(o, "e.text.label", label);
+   if (label && label[0] != 0)
+     {
+	edje_object_part_text_set(o, "e.text.label", label);
+	wd->type |= E_WIDGET_BUTTON_TEXT;
+     }
    evas_object_show(o);
    
    e_widget_sub_object_add(obj, o);
@@ -59,12 +72,12 @@ e_widget_button_add(Evas *evas, const char *label, const char *icon, void (*func
 	wd->o_icon = o;
 	e_util_edje_icon_set(o, icon);
 	edje_object_part_swallow(wd->o_button, "e.swallow.icon", o);
-	edje_object_signal_emit(wd->o_button, "e,action,show,icon", "e");
-	edje_object_message_signal_process(wd->o_button);
 	evas_object_show(o);
 	e_widget_sub_object_add(obj, o);
+	wd->type |= E_WIDGET_BUTTON_ICON;
      }
-   
+
+   _e_wid_button_state_send(wd);
    edje_object_size_min_calc(wd->o_button, &mw, &mh);
    e_widget_min_size_set(obj, mw, mh);
    
@@ -78,6 +91,11 @@ e_widget_button_label_set(Evas_Object *obj, const char *label)
 
    wd = e_widget_data_get(obj);
    edje_object_part_text_set(wd->o_button, "e.text.label", label);
+   if (label && label[0] != 0)
+     wd->type |= E_WIDGET_BUTTON_TEXT;
+   else
+     wd->type = ~(wd->type & E_WIDGET_BUTTON_TEXT);
+   _e_wid_button_state_send(wd);
 }
 
 EAPI void
@@ -90,8 +108,6 @@ e_widget_button_icon_set(Evas_Object *obj, Evas_Object *icon)
      {
 	e_widget_sub_object_del(obj, wd->o_icon);
 	evas_object_hide(wd->o_icon);
-	edje_object_signal_emit(wd->o_button, "e,action,hide,icon", "e");
-	edje_object_message_signal_process(wd->o_button);
 	edje_object_part_unswallow(wd->o_button, wd->o_icon);
 	evas_object_del(wd->o_icon);
 	wd->o_icon = NULL;
@@ -100,12 +116,14 @@ e_widget_button_icon_set(Evas_Object *obj, Evas_Object *icon)
      {
 	wd->o_icon = icon;
 	edje_object_part_swallow(wd->o_button, "e.swallow.icon", icon);
-	edje_object_signal_emit(wd->o_button, "e,action,show,icon", "e");
-	edje_object_message_signal_process(wd->o_button);
 	evas_object_pass_events_set(icon, 1);
 	evas_object_show(icon);
 	e_widget_sub_object_add(obj, icon);
+	wd->type |= E_WIDGET_BUTTON_ICON;
      }
+   else
+     wd->type = ~(wd->type & E_WIDGET_BUTTON_ICON);
+   _e_wid_button_state_send(wd);
 }
 
 static void
@@ -172,4 +190,26 @@ static void
 _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    e_widget_focus_steal(data);
+}
+
+static void
+_e_wid_button_state_send(E_Widget_Data *wd)
+{
+   if (!wd || !wd->o_button) return;
+   if (wd->type & E_WIDGET_BUTTON_TEXT)
+     {
+	if (wd->type & E_WIDGET_BUTTON_ICON)
+	  {
+	  edje_object_signal_emit(wd->o_button, "e,state,combo", "e");
+	  }
+	else
+	  {
+	  edje_object_signal_emit(wd->o_button, "e,state,text", "e");
+	  }
+     }
+   else if (wd->type & E_WIDGET_BUTTON_ICON)
+     {
+	edje_object_signal_emit(wd->o_button, "e,state,icon", "e");
+     }
+   edje_object_message_signal_process(wd->o_button);
 }

@@ -78,7 +78,7 @@ group {
 	    }
 	 }
 	 description {
-	    state: "visible" 0.0;
+	    state: "combo" 0.0;
 	    inherit: "default" 0.0;
 	    aspect: 1.0 1.0;
 	    aspect_preference: VERTICAL;
@@ -91,6 +91,23 @@ group {
 	    rel2 {
 	       relative: 0.0 1.0;
 	       offset:   7   -9;
+	       to: "button_image";
+	    }
+	 }
+	 description {
+	    state: "icon" 0.0;
+	    inherit: "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    align: 0.5 0.5;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   8  8;
+	       to: "button_image";
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -9   -9;
 	       to: "button_image";
 	    }
 	 }
@@ -117,7 +134,7 @@ group {
 	    color3: 255 255 255 128;
 	    color_class: "button_text";
 	    text {
-	       text:     "OK";
+	       text:     "";
 	       font:     "Edje-Vera";
 	       size:     10;
 	       min:      1 1;
@@ -131,6 +148,11 @@ group {
 	    color:    0   0   0 128;
 	    color3: 255 255 255 64;
 	    color_class: "button_text_disabled";
+	 }
+	 description {
+	    state:    "icon" 0.0;
+	    inherit:  "default" 0.0;
+	    visible: 0;
 	 }
       }
       part {
@@ -330,18 +352,28 @@ group {
 	 action: SIGNAL_EMIT "e,action,click" "";
       }
       program {
-	 name:   "icon_visible";
-	 signal: "e,action,show,icon";
-	 source: "e";
-	 action: STATE_SET "visible" 0.0;
-	 target: "e.swallow.icon";
-      }
-      program {
-	 name:   "icon_invisible";
-	 signal: "e,action,hide,icon";
+	 name: "text_state";
+	 signal: "e,state,text";
 	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 target: "e.swallow.icon";
+	 target: "e.text.label";
+      }
+      program {
+	 name: "icon_state";
+	 signal: "e,state,icon";
+	 source: "e";
+	 action: STATE_SET "icon" 0.0;
+	 target: "e.swallow.icon";
+	 target: "e.text.label";
+      }
+      program {
+	 name: "combo_state";
+	 signal: "e,state,combo";
+	 source: "e";
+	 action: STATE_SET "combo" 0.0;
+	 target: "e.swallow.icon";
+	 target: "e.text.label";
       }
       program {
 	 name: "button_in";

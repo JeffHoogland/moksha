@@ -224,7 +224,6 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Zone *zone;
-   int id;
 
    switch (cfdata->mode)
      {
@@ -276,13 +275,13 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->size = cfdata->basic_size;
    
    zone = cfdata->es->zone;
-   id = cfdata->es->id;
    cfdata->es->config_dialog = NULL;
    e_object_del(E_OBJECT(cfdata->es));
    cfdata->es = e_shelf_zone_new(zone, cfdata->escfg->name, 
 				 cfdata->escfg->style,
 				 cfdata->escfg->popup,
-				 cfdata->escfg->layer, id);
+				 cfdata->escfg->layer,
+				 cfdata->escfg->id);
    cfdata->es->cfg = cfdata->escfg;
    cfdata->es->fit_along = cfdata->escfg->fit_along;
    cfdata->es->fit_size = cfdata->escfg->fit_size;
@@ -300,7 +299,7 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    E_Zone *zone;
-   int id, idx;
+   int idx;
    int restart = 0;
 
    /* Only change style is we need to */
@@ -430,14 +429,14 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (restart) 
      {
 	zone = cfdata->es->zone;
-	id = cfdata->es->id;
 	cfdata->es->config_dialog = NULL;
 	e_object_del(E_OBJECT(cfdata->es));
 	
 	cfdata->es = e_shelf_zone_new(zone, cfdata->escfg->name, 
 				      cfdata->escfg->style,
 				      cfdata->escfg->popup,
-				      cfdata->escfg->layer, id);
+				      cfdata->escfg->layer,
+				      cfdata->escfg->id);
 	cfdata->es->cfg = cfdata->escfg;
 	cfdata->es->fit_along = cfdata->escfg->fit_along;
 	cfdata->es->fit_size = cfdata->escfg->fit_size;

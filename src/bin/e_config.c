@@ -107,7 +107,7 @@ e_config_init(void)
 #define T E_Config_Gadcon
 #define D _e_config_gadcon_edd
    E_CONFIG_VAL(D, T, name, STR);
-   E_CONFIG_VAL(D, T, id, STR);
+   E_CONFIG_VAL(D, T, id, INT);
    E_CONFIG_LIST(D, T, clients, _e_config_gadcon_client_edd);
 
    _e_config_shelf_desk_edd = E_CONFIG_DD_NEW("E_Config_Shelf_Desk", E_Config_Shelf_Desk);
@@ -124,6 +124,7 @@ e_config_init(void)
 #define T E_Config_Shelf
 #define D _e_config_shelf_edd
    E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, id, INT);
    E_CONFIG_VAL(D, T, container, INT);
    E_CONFIG_VAL(D, T, zone, INT);
    E_CONFIG_VAL(D, T, layer, INT);
@@ -1231,10 +1232,12 @@ e_config_init(void)
    e_config->gadcons = NULL;
      {
 	E_Config_Shelf *cf_es;
+	int             id = 0;
 	
 #define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size, _overlap, _autohide, _autohide_show_action, _hide_timeout, _hide_duration, _desk_show_mode, _desk_list) \
    cf_es = E_NEW(E_Config_Shelf, 1); \
    cf_es->name = evas_stringshare_add(_name); \
+   cf_es->id = ++id; \
    cf_es->container = _con; \
    cf_es->zone = _zone; \
    cf_es->popup = _pop; \
@@ -1252,20 +1255,9 @@ e_config_init(void)
    cf_es->desk_show_mode = _desk_show_mode; \
    cf_es->desk_list = evas_list_append(cf_es->desk_list, cf_es); \
    e_config->shelves = evas_list_append(e_config->shelves, cf_es)
-	/* shelves for 4 zones on head 0 by default */
 	CFG_SHELF("shelf", 0, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
 		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
-	CFG_SHELF("shelf", 0, 1,
-		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
-	CFG_SHELF("shelf", 0, 2,
-		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
-	CFG_SHELF("shelf", 0, 3,
-		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
-	/* shelves for heada 1, 2, and 3 by default */
 	CFG_SHELF("shelf", 1, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
 		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
@@ -1346,16 +1338,17 @@ e_config_init(void)
    e_config->desklock_custom_desklock_cmd = NULL;     
    IFCFGEND;
 
-   IFCFG(0x0107); /* the version # where this value(s) was introduced */
+   IFCFG(0x0121);
      {
-	E_Config_Gadcon *cf_gc;
+	E_Config_Gadcon        *cf_gc;
 	E_Config_Gadcon_Client *cf_gcc;
+	int                     id = 0;
 
 	e_config->gadcons = NULL;
-#define CFG_GADCON(_name, _id) \
+#define CFG_GADCON(_name) \
    cf_gc = E_NEW(E_Config_Gadcon, 1);\
    cf_gc->name = evas_stringshare_add(_name); \
-   cf_gc->id = evas_stringshare_add(_id); \
+   cf_gc->id = ++id; \
    e_config->gadcons = evas_list_append(e_config->gadcons, cf_gc)
 #define CFG_GADCON_CLIENT(_name, _res, _size, _pos, _style, _autoscr, _resizable) \
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1); \
@@ -1373,7 +1366,7 @@ e_config_init(void)
    cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc)
 
 	/* the default shelf on the default head/zone */
-	CFG_GADCON("shelf", "0");
+	CFG_GADCON("shelf");
 	CFG_GADCON_CLIENT("start", 800, 32,
 			  0, NULL, 0, 0);
 	CFG_GADCON_CLIENT("pager", 800, 120,
@@ -1391,19 +1384,19 @@ e_config_init(void)
 	CFG_GADCON_CLIENT("clock", 800, 32,
 			  800 - 32, NULL, 0, 0);
 	/* additional shelves for up to 3 more heads by default */
-	CFG_GADCON("shelf", "1");
+	CFG_GADCON("shelf");
 	CFG_GADCON_CLIENT("pager", 800, 120,
 			  0, NULL, 0, 0);
 	CFG_GADCON_CLIENT("ibox", 800, 32,
 			  800 - 32, NULL, 0, 0);
 	
-	CFG_GADCON("shelf", "2");
+	CFG_GADCON("shelf");
 	CFG_GADCON_CLIENT("pager", 800, 120,
 			  0, NULL, 0, 0);
 	CFG_GADCON_CLIENT("ibox", 800, 32,
 			  800 - 32, NULL, 0, 0);
 	
-	CFG_GADCON("shelf", "3");
+	CFG_GADCON("shelf");
 	CFG_GADCON_CLIENT("pager", 800, 120,
 			  0, NULL, 0, 0);
 	CFG_GADCON_CLIENT("ibox", 800, 32,

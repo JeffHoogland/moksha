@@ -237,7 +237,7 @@ e_gadcon_provider_list(void)
 }
 
 EAPI E_Gadcon *
-e_gadcon_swallowed_new(const char *name, const char *id, Evas_Object *obj, char *swallow_name)
+e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, char *swallow_name)
 {
    E_Gadcon    *gc;
    Evas_List   *l;
@@ -248,7 +248,7 @@ e_gadcon_swallowed_new(const char *name, const char *id, Evas_Object *obj, char 
    if (!gc) return NULL;
  
    gc->name = evas_stringshare_add(name);
-   gc->id = evas_stringshare_add(id);
+   gc->id = id;
    gc->layout_policy = E_GADCON_LAYOUT_POLICY_PANEL;
    
    gc->edje.o_parent = obj;
@@ -282,7 +282,7 @@ e_gadcon_swallowed_new(const char *name, const char *id, Evas_Object *obj, char 
 
 	cf_gc = l->data;
 	if ((!strcmp(cf_gc->name, gc->name)) &&
-	    (!strcmp(cf_gc->id, gc->id)))
+	    (cf_gc->id == gc->id))
 	  {
 	     gc->cf = cf_gc;
 	     break;
@@ -292,7 +292,7 @@ e_gadcon_swallowed_new(const char *name, const char *id, Evas_Object *obj, char 
      {
 	gc->cf = E_NEW(E_Config_Gadcon, 1);
 	gc->cf->name = evas_stringshare_add(gc->name);
-	gc->cf->id = evas_stringshare_add(gc->id);
+	gc->cf->id = gc->id;
 	e_config->gadcons = evas_list_append(e_config->gadcons, gc->cf);
 	e_config_save_queue();
      }
@@ -1332,7 +1332,6 @@ _e_gadcon_free(E_Gadcon *gc)
    gadcons = evas_list_remove(gadcons, gc);
    if (gc->o_container) evas_object_del(gc->o_container);
    evas_stringshare_del(gc->name);
-   evas_stringshare_del(gc->id);
    evas_stringshare_del(gc->edje.swallow_name);
    if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
    if (gc->drop_handler) e_drop_handler_del(gc->drop_handler);

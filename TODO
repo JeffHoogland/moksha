@@ -8,6 +8,11 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* when VLC goes full screen nothing happens, the main window stays
+  in place and the fullscreen window is invisible... Restart E and the
+  fullscreen window with the movie appears in the background
+  this does happens randomly with kmplayer / gmplayer but everytime with
+  VLC
 * screen res change with shaded windows that are bigger than the screen (eg
   you go from 1600x1200 ro 800x600 and some windows are "temporarily resized"
   down doesn't work right. shaded windows get resizes to widthx1 and unshaded
@@ -23,9 +28,6 @@ Some of the things (in very short form) that need to be done to E17...
   trap on the region the shelf would normally be in. also need a way to lock
   the gadcon and thus gadcon asks shelf to lock in (stay visible) for things
   like popping up menus, popups etc.
-* shelves seem to get confused with their contents if you have 3 shelves over
-  2 screens/zones - when you go back to 1 screen form 2, one of the shelves
-  gts the contents from the now non-existant shelf.
 * gkrellm options to "dont show in pager or taskber" only work if gkrellem is
   moved to one monitor and back again - doesn't seem to work on e boot/start
   if it is started at e start time
@@ -33,8 +35,6 @@ Some of the things (in very short form) that need to be done to E17...
   instead of in a straight line
 * exebuf on other zones doesn't allow mouse to work properly (only
   zone/screen 0 works properly)
-* Need global unique identifier for gadcons, so that their config will move
-  with them from one shelf to another.
 ]]]
 
 [[[
