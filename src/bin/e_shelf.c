@@ -1183,7 +1183,7 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
    switch (ev->button)
      {
       case 1:
-	if (es->cfg->autohide_show_action) e_shelf_toggle (es, 1);
+	if (es->cfg->autohide_show_action) e_shelf_toggle(es, 1);
 	break;
       case 3:
 	mn = e_menu_new();
@@ -1209,7 +1209,7 @@ _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 
    es = data;
    edje_object_signal_emit(es->o_base, "e,state,focused", "e");
-   if (!es->cfg->autohide_show_action) e_shelf_toggle (es, 1);
+   if (!es->cfg->autohide_show_action) e_shelf_toggle(es, 1);
 }
 
 static void 
