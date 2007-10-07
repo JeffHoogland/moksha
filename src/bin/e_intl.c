@@ -172,8 +172,8 @@ e_intl_language_set(const char *lang)
    else
      _e_intl_language = NULL;
 
-   if ((!_e_intl_locale_validate(_e_intl_language_alias)) || 
-       (strcmp(_e_intl_language_alias, "C")))
+   if ((!_e_intl_locale_validate(_e_intl_language_alias)) &&
+	 (strcmp(_e_intl_language_alias, "C")))
      {
 	fprintf(stderr, "The locale '%s' cannot be found on your "
 	       "system. Please install this locale or try "
@@ -727,23 +727,20 @@ e_intl_locale_parts_get(const char *locale)
      }
 
    /* set end-of-string \0 */
+   /* There are no breaks here on purpose */
    switch (state)
      {
       case 0:
 	language[tmp_idx] = 0;
 	tmp_idx = 0;
-	break;
       case 1:
 	territory[tmp_idx] = 0;
 	tmp_idx = 0;
-	break;
       case 2:
 	codeset[tmp_idx] = 0;
 	tmp_idx = 0;
-	break;
       case 3:
 	modifier[tmp_idx] = 0;
-	break;
       default:
 	break;
      }
