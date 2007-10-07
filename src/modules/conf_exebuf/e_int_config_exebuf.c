@@ -186,7 +186,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("Terminal Settings"), 0);      
    ob = e_widget_label_add(evas, _("Terminal Command (CTRL+RETURN to utilize)"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_entry_add(evas, &(cfdata->term_cmd));
+   ob = e_widget_entry_add(evas, &(cfdata->term_cmd), NULL, NULL, NULL);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
 

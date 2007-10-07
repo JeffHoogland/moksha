@@ -326,7 +326,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ot, of, 0, 0, 3, 1, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Action Params"), 0);
-   ob = e_widget_entry_add(evas, &(cfdata->locals.params));
+   ob = e_widget_entry_add(evas, &(cfdata->locals.params), NULL, NULL, NULL);
    e_widget_disabled_set(ob, 1);
    cfdata->gui.o_params = ob;
    e_widget_framelist_object_append(of, ob);

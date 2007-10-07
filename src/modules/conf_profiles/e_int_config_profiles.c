@@ -266,7 +266,7 @@ _dia_new_profile(E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(ot, ob,
 				     0, 0, 1, 1,
 				     0, 1, 0, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->new_profile));
+   ob = e_widget_entry_add(evas, &(cfdata->new_profile), NULL, NULL, NULL);
    e_widget_min_size_set(ob, 100, 1);
    e_widget_table_object_append(ot, ob,
 				     1, 0, 1, 1,

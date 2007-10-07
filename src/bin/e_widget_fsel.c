@@ -327,7 +327,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 				     wd->o_preview_size,
                                      0, 0, 1, 1, 1, 1, 1, 1);
 
-        o = e_widget_entry_add(evas, &(wd->preview_size_text));
+        o = e_widget_entry_add(evas, &(wd->preview_size_text), NULL, NULL, NULL);
 	e_widget_entry_readonly_set(o, 1);
         wd->o_preview_size_entry = o;
         e_widget_sub_object_add(obj, o);
@@ -343,7 +343,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 				     wd->o_preview_owner,
                                      0, 1, 1, 1, 1, 1, 1, 1);
 
-        o = e_widget_entry_add(evas, &(wd->preview_owner_text));
+        o = e_widget_entry_add(evas, &(wd->preview_owner_text), NULL, NULL, NULL);
 	e_widget_entry_readonly_set(o, 1);
         wd->o_preview_owner_entry = o;
         e_widget_sub_object_add(obj, o);
@@ -359,7 +359,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 				     wd->o_preview_perms,
                                      0, 2, 1, 1, 1, 1, 1, 1);
 	
-        o = e_widget_entry_add(evas, &(wd->preview_perms_text));
+        o = e_widget_entry_add(evas, &(wd->preview_perms_text), NULL, NULL, NULL);
 	e_widget_entry_readonly_set(o, 1);
         wd->o_preview_perms_entry = o;
         e_widget_sub_object_add(obj, o);
@@ -375,7 +375,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 				     wd->o_preview_time,
                                      0, 3, 1, 1, 1, 1, 1, 1);
 
-        o = e_widget_entry_add(evas, &(wd->preview_time_text));
+        o = e_widget_entry_add(evas, &(wd->preview_time_text), NULL, NULL, NULL);
 	e_widget_entry_readonly_set(o, 1);
         wd->o_preview_time_entry = o;
         e_widget_sub_object_add(obj, o); 
@@ -469,7 +469,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    e_widget_min_size_set(o, 128, 128);
    e_widget_table_object_append(wd->o_table2, o, 1, 1, 1, 1, 1, 1, 1, 1);
 
-   o = e_widget_entry_add(evas, &(wd->entry_text));
+   o = e_widget_entry_add(evas, &(wd->entry_text), NULL, NULL, NULL);
    wd->o_entry = o;
    e_widget_sub_object_add(obj, o);
    

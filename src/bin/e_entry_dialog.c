@@ -48,7 +48,7 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
 	e_widget_list_object_append(o, ob, 1, 0, 0.5);
      }
    
-   ed->entry = e_widget_entry_add(dia->win->evas, &(ed->text));
+   ed->entry = e_widget_entry_add(dia->win->evas, &(ed->text), NULL, NULL, NULL);
    e_widget_list_object_append(o, ed->entry, 1, 1, 0.5);
    e_widget_min_size_get(o, &w, &h);
    e_dialog_content_set(dia, o, w, h);

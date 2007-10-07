@@ -329,7 +329,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_check_add(evas, _("Use custom screenlock"), 
 			   &(cfdata->custom_lock));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_entry_add(evas, &(cfdata->custom_lock_cmd));
+   ow = e_widget_entry_add(evas, &(cfdata->custom_lock_cmd), NULL, NULL, NULL);
    e_widget_framelist_object_append(of, ow);
    e_widget_table_object_append(mt, of, 1, 2, 2, 1, 1, 1, 1, 1);
    

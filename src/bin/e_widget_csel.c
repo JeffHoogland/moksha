@@ -242,7 +242,7 @@ e_widget_csel_add(Evas *evas, E_Color *color)
 	e_widget_on_change_hook_set(o, _e_wid_cb_color_changed, wd);
 	e_widget_table_object_append(frame, o, 1, i, 1, 1, 1, 1, 1, 0);
 
-	o = e_widget_entry_add(evas, &(wd->values[i]));
+	o = e_widget_entry_add(evas, &(wd->values[i]), NULL, NULL, NULL);
 	e_widget_sub_object_add(obj, o);
 	evas_object_show(o);
 	wd->entries = evas_list_append(wd->entries, o);

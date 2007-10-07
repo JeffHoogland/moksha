@@ -136,7 +136,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    of = e_widget_frametable_add(evas, _("Basic Info"), 0);
    ob = e_widget_label_add(evas, _("Mime:"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_entry_add(evas, &(cfdata->mime));
+   ob = e_widget_entry_add(evas, &(cfdata->mime), NULL, NULL, NULL);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_min_size_set(ob, 100, 1);
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);

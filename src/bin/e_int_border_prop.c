@@ -384,7 +384,7 @@ _bd_go(void *data, void *data2)
       ob = e_widget_label_add(evas, label); \
       if (!cfdata->val) e_widget_disabled_set(ob, 1); \
       e_widget_frametable_object_append(of, ob, x, y, 1, 1,    1, 1, 1, 1); \
-      ob = e_widget_entry_add(evas, &(cfdata->val)); \
+      ob = e_widget_entry_add(evas, &(cfdata->val), NULL, NULL, NULL); \
       if (!cfdata->val) e_widget_disabled_set(ob, 1); \
       e_widget_entry_readonly_set(ob, 1); \
       e_widget_min_size_get(ob, &mw, &mh); \

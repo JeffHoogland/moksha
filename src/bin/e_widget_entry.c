@@ -8,6 +8,9 @@ struct _E_Widget_Data
 {
    Evas_Object *o_entry;
    char **text_location;
+   void (*func) (void *data, void *data2);
+   void *data;
+   void *data2;
 };
 
 /* local subsystem functions */
@@ -30,9 +33,9 @@ static void _e_wid_keydown(void *data, Evas *e, Evas_Object *obj, void *event_in
  * The current value will be used to initialize the entry
  * @return Returns the new entry widget
  */
-EAPI Evas_Object *
-e_widget_entry_add(Evas *evas, char **text_location)
-{   
+EAPI Evas_Object
+*e_widget_entry_add(Evas *evas, char **text_location, void (*func) (void *data, void *data2), void *data, void *data2)
+{
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
    Evas_Coord minw, minh;
@@ -63,6 +66,9 @@ e_widget_entry_add(Evas *evas, char **text_location)
    e_entry_min_size_get(o, &minw, &minh);
    e_widget_min_size_set(obj, minw, minh);
 
+   wd->func = func;
+   wd->data = data;
+   wd->data2 = data2;
    evas_object_smart_callback_add(o, "changed", _e_wid_changed_cb, obj);
 
    return obj;
@@ -252,8 +258,9 @@ _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info)
         free(*wd->text_location);
         *wd->text_location = text ? strdup(text) : NULL;
      }
-   
    e_widget_change(data);
+
+   if (wd->func) wd->func(wd->data, wd->data2);
 }
 
 static void 

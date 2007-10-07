@@ -906,21 +906,21 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    o = e_widget_label_add(evas, _("Name"));
    e_widget_frametable_object_append(ol, o, 0, 0, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.e_im_name));
+   o = e_widget_entry_add(evas, &(cfdata->imc.e_im_name), NULL, NULL, NULL);
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.e_im_name = o;
    e_widget_frametable_object_append(ol, o, 1, 0, 1, 1, 1, 1, 1, 0);
 
    o = e_widget_label_add(evas, _("Execute Command"));
    e_widget_frametable_object_append(ol, o, 0, 1, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.e_im_exec));
+   o = e_widget_entry_add(evas, &(cfdata->imc.e_im_exec), NULL, NULL, NULL);
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.e_im_exec = o;
    e_widget_frametable_object_append(ol, o, 1, 1, 1, 1, 1, 1, 1, 0);
  
    o = e_widget_label_add(evas, _("Setup Command"));
    e_widget_frametable_object_append(ol, o, 0, 2, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.e_im_setup_exec));
+   o = e_widget_entry_add(evas, &(cfdata->imc.e_im_setup_exec), NULL, NULL, NULL);
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.e_im_setup_exec = o;
    e_widget_frametable_object_append(ol, o, 1, 2, 1, 1, 1, 1, 1, 0);
@@ -932,21 +932,21 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    o = e_widget_label_add(evas, "GTK_IM_MODULE");
    e_widget_frametable_object_append(ol, o, 0, 0, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.gtk_im_module));
+   o = e_widget_entry_add(evas, &(cfdata->imc.gtk_im_module), NULL, NULL, NULL);
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.gtk_im_module = o;
    e_widget_frametable_object_append(ol, o, 1, 0, 1, 1, 1, 1, 1, 0);
    
    o = e_widget_label_add(evas, "QT_IM_MODULE");
    e_widget_frametable_object_append(ol, o, 0, 1, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.qt_im_module));
+   o = e_widget_entry_add(evas, &(cfdata->imc.qt_im_module), NULL, NULL, NULL);
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.qt_im_module = o;
    e_widget_frametable_object_append(ol, o, 1, 1, 1, 1, 1, 1, 1, 0);
    
    o = e_widget_label_add(evas, "XMODIFIERS");
    e_widget_frametable_object_append(ol, o, 0, 2, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.xmodifiers));
+   o = e_widget_entry_add(evas, &(cfdata->imc.xmodifiers), NULL, NULL, NULL);
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.xmodifiers = o;
    e_widget_frametable_object_append(ol, o, 1, 2, 1, 1, 1, 1, 1, 0);

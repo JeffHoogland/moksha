@@ -337,28 +337,28 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    ob = e_widget_label_add(evas, _("File:"));
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->file));
+   ob = e_widget_entry_add(evas, &(cfdata->file), NULL, NULL, NULL);
    e_widget_min_size_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 1, 0, 1, 0);
    
    ob = e_widget_label_add(evas, _("Size:"));
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->size));
+   ob = e_widget_entry_add(evas, &(cfdata->size), NULL, NULL, NULL);
    e_widget_min_size_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_label_add(evas, _("Last Modified:"));
    e_widget_table_object_append(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->mod_date));
+   ob = e_widget_entry_add(evas, &(cfdata->mod_date), NULL, NULL, NULL);
    e_widget_min_size_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_label_add(evas, _("File Type:"));
    e_widget_table_object_append(ot, ob, 0, 3, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->mime));
+   ob = e_widget_entry_add(evas, &(cfdata->mime), NULL, NULL, NULL);
    e_widget_min_size_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 3, 1, 1, 1, 0, 1, 0);
@@ -366,7 +366,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_frametable_add(evas, _("Permissions"), 0);
    ob = e_widget_label_add(evas, _("Owner:"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_entry_add(evas, &(cfdata->owner));
+   ob = e_widget_entry_add(evas, &(cfdata->owner), NULL, NULL, NULL);
    e_widget_min_size_set(ob, 60, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
@@ -455,7 +455,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      {
 	ot = e_widget_frametable_add(evas, _("Link Information"), 0);
 	
-	ob = e_widget_entry_add(evas, &(cfdata->link));
+	ob = e_widget_entry_add(evas, &(cfdata->link), NULL, NULL, NULL);
 	e_widget_frametable_object_append(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0);
 	
 	e_widget_table_object_append(o, ot, 1, 1, 1, 1, 1, 1, 1, 1);

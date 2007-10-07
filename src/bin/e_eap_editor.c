@@ -463,7 +463,7 @@ _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
 
-   entry = e_widget_entry_add(evas, &(cfdata->name));
+   entry = e_widget_entry_add(evas, &(cfdata->name), NULL, NULL, NULL);
    e_widget_min_size_set(entry, 100, 1);
    e_widget_frametable_object_append(o, entry,
 				     1, 0, 1, 1,
@@ -471,7 +471,7 @@ _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Executable")),
 				     0, 1, 1, 1,
 				     1, 1, 1, 1);
-   editor->entry_widget = e_widget_entry_add(evas, &(cfdata->exec));
+   editor->entry_widget = e_widget_entry_add(evas, &(cfdata->exec), NULL, NULL, NULL);
    e_widget_frametable_object_append(o, editor->entry_widget,
 				     1, 1, 1, 1,
 				     1, 1, 1, 1);
@@ -482,7 +482,7 @@ _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Comment")),
 				     0, 2, 1, 1,
 				     1, 1, 1, 1);
-   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->comment)),
+   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->comment), NULL, NULL, NULL),
 				     1, 2, 1, 1,
 				     1, 1, 1, 1);
    e_widget_table_object_append(ol, o, 1, 0, 1, 1, 1 ,1, 1, 1);
@@ -514,7 +514,7 @@ _e_desktop_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Conf
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
 
-   entry = e_widget_entry_add(evas, &(cfdata->generic_name));
+   entry = e_widget_entry_add(evas, &(cfdata->generic_name), NULL, NULL, NULL);
    e_widget_min_size_set(entry, 100, 1);
    e_widget_frametable_object_append(o, entry,
 				     1, 0, 1, 1,
@@ -523,14 +523,14 @@ _e_desktop_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Conf
 				     0, 1, 1, 1,
 				     1, 1, 1, 1);
 
-   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->startup_wm_class)),
+   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->startup_wm_class), NULL, NULL, NULL),
 				     1, 1, 1, 1,
 				     1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Categories")),
 				     0, 2, 1, 1,
 				     1, 1, 1, 1);
 
-   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->categories)),
+   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->categories), NULL, NULL, NULL),
 				     1, 2, 1, 1,
 				     1, 1, 1, 1);
 
@@ -552,7 +552,7 @@ _e_desktop_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Conf
    o = e_widget_frametable_add(evas, _("Desktop file"), 0);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Filename")), 
 				     0, 0, 1, 1, 0, 0, 0, 0);
-   fn = e_widget_entry_add(evas, &(cfdata->editor->desktop->orig_path)); 
+   fn = e_widget_entry_add(evas, &(cfdata->editor->desktop->orig_path), NULL, NULL, NULL); 
    e_widget_frametable_object_append(o, fn, 1, 0, 2, 1, 1, 1, 1, 1);
    e_widget_disabled_set(fn, 1);
    e_widget_table_object_append(ol, o, 0, 2, 2, 1, 1 ,1, 1, 1);

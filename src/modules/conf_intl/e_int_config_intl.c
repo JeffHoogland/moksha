@@ -942,7 +942,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_frametable_add(evas, _("Locale Selected"), 0);
    ob = e_widget_label_add(evas, _("Locale"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->cur_language));
+   ob = e_widget_entry_add(evas, &(cfdata->cur_language), NULL, NULL, NULL);
    cfdata->gui.locale_entry = ob;
    e_widget_disabled_set(cfdata->gui.locale_entry, 1);
    e_widget_min_size_set(cfdata->gui.locale_entry, 100, 25);
@@ -1020,7 +1020,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_frametable_add(evas, _("Locale Selected"), 0);
    ob = e_widget_label_add(evas, _("Locale"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->cur_language));
+   ob = e_widget_entry_add(evas, &(cfdata->cur_language), NULL, NULL, NULL);
    cfdata->gui.locale_entry = ob;
    e_widget_disabled_set(cfdata->gui.locale_entry, 1);
    e_widget_min_size_set(cfdata->gui.locale_entry, 100, 25);
