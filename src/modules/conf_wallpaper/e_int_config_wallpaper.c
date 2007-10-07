@@ -306,6 +306,7 @@ _cb_theme_wallpaper(void *data, Evas_Object *obj, void *event_info)
      }
    else
      {
+	evas_object_smart_callback_call(cfdata->o_fm, "selection_change", cfdata);
 	if (cfdata->bg)
 	  {
 	     if (cfdata->o_preview)
