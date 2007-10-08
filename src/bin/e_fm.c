@@ -2868,7 +2868,6 @@ _e_fm2_file_cut(void *data, E_Menu *m, E_Menu_Item *mi)
 	ici = l->data;
 	if (!ici) continue;
 	snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-	printf("Cutting: %s\n", buf);
 	sd->file_queue = evas_list_append(sd->file_queue, strdup(buf));
      }
 }
