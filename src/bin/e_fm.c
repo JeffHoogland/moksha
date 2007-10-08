@@ -6580,16 +6580,19 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) && 
 	    (evas_list_count(sd->file_queue) > 0))
 	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_separator_set(mi, 1);
+	     if (ecore_file_can_write(sd->realpath))
+	       {
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_separator_set(mi, 1);
 		  
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, _("Paste"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/paste"),
-				       "e/fileman/default/button/paste");
-	     e_menu_item_callback_set(mi, _e_fm2_file_paste, sd);
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_label_set(mi, _("Paste"));
+		  e_menu_item_icon_edje_set(mi,
+					    e_theme_edje_file_get("base/theme/fileman",
+								  "e/fileman/default/button/paste"),
+					    "e/fileman/default/button/paste");
+		  e_menu_item_callback_set(mi, _e_fm2_file_paste, sd);
+	       }
 	  }
 	
 	if (sd->icon_menu.end.func)
@@ -6754,13 +6757,16 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) && 
 	    (evas_list_count(sd->file_queue) > 0))
 	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, _("Paste"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/paste"),
-				       "e/fileman/default/button/paste");
-	     e_menu_item_callback_set(mi, _e_fm2_file_paste, sd);
+	     if (ecore_file_can_write(sd->realpath))
+	       {
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_label_set(mi, _("Paste"));
+		  e_menu_item_icon_edje_set(mi,
+					    e_theme_edje_file_get("base/theme/fileman",
+								  "e/fileman/default/button/paste"),
+					    "e/fileman/default/button/paste");
+		  e_menu_item_callback_set(mi, _e_fm2_file_paste, sd);
+	       }
 	  }
 	
 	can_w = 0;
