@@ -157,6 +157,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_desc = ow;
    e_widget_textblock_markup_set(ow, "Description: Unavailable.");
    e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 1, 1, 0);
+
    ow = e_widget_button_add(evas, _("Load Module"), NULL, _btn_cb_load, 
 			    cfdata, NULL);
    cfdata->b_load = ow;
@@ -171,21 +172,24 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_on_change_hook_set(ow, _loaded_list_cb_change, cfdata);
    _fill_loaded_list(cfdata);
    e_widget_frametable_object_append(of, ow, 0, 0, 2, 1, 1, 1, 1, 1);
-   ow = e_widget_button_add(evas, _("Unload Module"), NULL, _btn_cb_unload, 
-			    cfdata, NULL);
-   cfdata->b_unload = ow;
-   e_widget_disabled_set(ow, 1);
-   e_widget_frametable_object_append(of, ow, 0, 2, 2, 1, 1, 1, 1, 0);
+
    ow = e_widget_button_add(evas, _("About"), NULL, _btn_cb_about, 
 			    NULL, NULL);
    cfdata->b_about = ow;
    e_widget_disabled_set(ow, 1);
    e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 0, 0);
+
    ow = e_widget_button_add(evas, _("Configure"), NULL, _btn_cb_config, 
 			    NULL, NULL);
    cfdata->b_config = ow;
    e_widget_disabled_set(ow, 1);
    e_widget_frametable_object_append(of, ow, 1, 1, 1, 1, 1, 0, 0, 0);
+   
+   ow = e_widget_button_add(evas, _("Unload Module"), NULL, _btn_cb_unload, 
+			    cfdata, NULL);
+   cfdata->b_unload = ow;
+   e_widget_disabled_set(ow, 1);
+   e_widget_frametable_object_append(of, ow, 0, 2, 2, 1, 1, 1, 1, 0);
    
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    
