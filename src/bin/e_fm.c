@@ -2653,62 +2653,68 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 #define CMP(x) ((dev) && (e_util_glob_case_match(dev, x)))
 #define PRT(args...) snprintf(buf, sizeof(buf), ##args)
    
-   if (CMP("/")) {
-      PRT("%s", path);
-   }
-   else if (CMP("~/")) {
-      s = (char *)e_user_homedir_get();
-      PRT("%s%s", s, path);
-   }
-   else if (dev[0] == '/') {
-      /* dev is a full path - consider it a mountpoint device on its own */
-      PRT("%s%s", dev, path);
-   }
-   else if (CMP("favorites")) {
-      /* this is a virtual device - it's where your favorites list is 
-       * stored - a dir with 
-       .desktop files or symlinks (in fact anything
-       * you like
-       */
-      s = (char *)e_user_homedir_get();
-      PRT("%s/.e/e/fileman/favorites", s);
-   }
-   else if (CMP("desktop")) {
-      /* this is a virtual device - it's where your favorites list is 
-       * stored - a dir with 
-       .desktop files or symlinks (in fact anything
-       * you like
-       */
-      s = (char *)e_user_homedir_get();
-      if (!strcmp(path, "/"))
-	{
-	   PRT("%s/Desktop", s);
-	   ecore_file_mkpath(buf);
-	}
-      else
-	{
-	   PRT("%s/Desktop-%s", s, path);
-	   ecore_file_mkpath(buf);
-	}
-   }
-   else if (CMP("removable:*")) {
-      E_Volume *v;
-      
-      v = e_volume_find(dev + strlen("removable:"));
-      if (v)
-	{
-	   snprintf(buf, sizeof(buf), "/media/%s", v->mount_point);
-	}
-   }
-   else if (CMP("dvd") || CMP("dvd-*"))  {
-      /* FIXME: find dvd mountpoint optionally for dvd no. X */
-      /* maybe make part of the device mappings config? */
-   }
+   if (CMP("/")) 
+     {
+	PRT("%s", path);
+     }
+   else if (CMP("~/")) 
+     {
+	s = (char *)e_user_homedir_get();
+	PRT("%s%s", s, path);
+     }
+   else if (dev[0] == '/') 
+     {
+	/* dev is a full path - consider it a mountpoint device on its own */
+	PRT("%s%s", dev, path);
+     }
+   else if (CMP("favorites")) 
+     {
+	/* this is a virtual device - it's where your favorites list is 
+	 * stored - a dir with 
+	 .desktop files or symlinks (in fact anything
+	 * you like
+	 */
+	s = (char *)e_user_homedir_get();
+	PRT("%s/.e/e/fileman/favorites", s);
+     }
+   else if (CMP("desktop")) 
+     {
+	/* this is a virtual device - it's where your favorites list is 
+	 * stored - a dir with 
+	 .desktop files or symlinks (in fact anything
+	 * you like
+	 */
+	s = (char *)e_user_homedir_get();
+	if (!strcmp(path, "/"))
+	  {
+	     PRT("%s/Desktop", s);
+	     ecore_file_mkpath(buf);
+	  }
+	else
+	  {
+	     PRT("%s/Desktop-%s", s, path);
+	     ecore_file_mkpath(buf);
+	  }
+     }
+   else if (CMP("removable:*")) 
+     {
+	E_Volume *v;
+	
+	v = e_volume_find(dev + strlen("removable:"));
+	if (v)
+	  snprintf(buf, sizeof(buf), "/media/%s", v->mount_point);
+     }
+   else if (CMP("dvd") || CMP("dvd-*"))  
+     {
+	/* FIXME: find dvd mountpoint optionally for dvd no. X */
+	/* maybe make part of the device mappings config? */
+     }
    else if (CMP("cd") || CMP("cd-*") || CMP("cdrom") || CMP("cdrom-*") ||
-	    CMP("dvd") || CMP("dvd-*")) {
-      /* FIXME: find cdrom or dvd mountpoint optionally for cd/dvd no. X */
-      /* maybe make part of the device mappings config? */
-   }
+	    CMP("dvd") || CMP("dvd-*")) 
+     {
+	/* FIXME: find cdrom or dvd mountpoint optionally for cd/dvd no. X */
+	/* maybe make part of the device mappings config? */
+     }
    /* FIXME: add code to find USB devices (multi-card readers or single,
     * usb thumb drives, other usb storage devices (usb hd's etc.)
     */
