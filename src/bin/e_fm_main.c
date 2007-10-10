@@ -1617,8 +1617,87 @@ _e_cb_fop_rm_idler(void *data)
 static int
 _e_cb_fop_trash_idler(void *data)
 {
-   /* FIXME: for now trash == rm - later move to trash */
-   return _e_cb_fop_rm_idler(data);
+   E_Fop *fop = NULL;
+   FILE *info = NULL;
+   const char *trash_dir = NULL;
+   const char *filename = NULL;
+   const char *escname = NULL;
+   const char *dest = NULL;
+   char buf[4096];
+   unsigned int i = 0;
+   struct tm *lt;
+   time_t t;
+
+   /* FIXME: For now, this will only implement 'home trash' 
+    * Later, implement mount/remote/removable device trash, if wanted. */
+
+   fop = (E_Fop *)data;
+   if (!fop) return 0;
+
+   /* Check that 'home trash' exists, create if not */
+   snprintf(buf, sizeof(buf), "%s/Trash", efreet_data_home_get());
+   trash_dir = evas_stringshare_add(buf);
+   if (!ecore_file_exists(trash_dir)) ecore_file_mkdir(trash_dir);
+
+   /* Create required 'info' and 'files' subdirs if needed */
+   snprintf(buf, sizeof(buf), "%s/files", trash_dir);
+   if (!ecore_file_exists(buf)) ecore_file_mkdir(buf);
+   snprintf(buf, sizeof(buf), "%s/info", trash_dir);
+   if (!ecore_file_exists(buf)) ecore_file_mkdir(buf);
+
+   filename = evas_stringshare_add(strrchr(fop->src, '/'));
+   escname = ecore_file_escape_name(filename);
+   evas_stringshare_del(filename);
+
+   /* Find path for info file. Pointer address is part of the filename to
+    * alleviate some of the looping in case of multiple filenames with the
+    * same name. Also use the name of the file to help */
+   do 
+     {
+	snprintf(buf, sizeof(buf), "%s/file%s.%u.%u", trash_dir, escname, 
+		 fop, i++);
+     }
+   while (ecore_file_exists(buf));
+   dest = evas_stringshare_add(buf);
+   
+   /* Try to move the file */
+   if (rename(fop->src, dest)) 
+     {
+	if (errno == EXDEV) 
+	  {
+	     /* Move failed. Spec says delete files that can't be trashed */
+	     ecore_file_unlink(fop->src);
+	     return 0;
+	  }
+     }
+
+   /* Move worked. Create info file */
+   snprintf(buf, sizeof(buf), "%s/info%s.%u.%u.trashinfo", trash_dir, 
+	    escname, fop, --i);
+   info = fopen(buf, "w");
+   if (info) 
+     {
+	t = time(NULL);
+	lt = localtime(&t);
+
+	/* Insert info for trashed file */
+	fprintf(info, 
+		"[Trash Info]\nPath=%s\nDeletionDate=%04u%02u%02uT%02u:%02u:%02u",
+		fop->src, lt->tm_year+1900, lt->tm_mon+1, lt->tm_mday,
+		lt->tm_hour, lt->tm_min, lt->tm_sec);
+	fclose(info);
+     }
+   else
+     /* Could not create info file. Spec says to put orig file back */
+     rename(dest, fop->src);
+
+   if (dest) evas_stringshare_del(dest);
+   if (trash_dir) evas_stringshare_del(trash_dir);
+   evas_stringshare_del(fop->src);
+   evas_stringshare_del(fop->dst);
+   free(fop);
+   _e_fops = evas_list_remove(_e_fops, fop);
+   return 0;
 }
 
 static int
