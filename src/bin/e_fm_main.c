@@ -1638,9 +1638,9 @@ _e_cb_fop_trash_idler(void *data)
    snprintf(buf, sizeof(buf), "%s/Trash", efreet_data_home_get());
    trash_dir = evas_stringshare_add(buf);
    snprintf(buf, sizeof(buf), "%s/files", trash_dir);
-   ecore_file_mkpath(buf);
+   if (!ecore_file_mkpath(buf)) return 0;
    snprintf(buf, sizeof(buf), "%s/info", trash_dir);
-   ecore_file_mkpath(buf);
+   if (!ecore_file_mkpath(buf)) return 0;
 
    filename = evas_stringshare_add(strrchr(fop->src, '/'));
    escname = ecore_file_escape_name(filename);
