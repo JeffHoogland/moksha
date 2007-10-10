@@ -660,7 +660,14 @@ e_util_shell_env_path_eval(char *path)
 		       s = alloca(v2 - v1);
 		       strncpy(s, v1 + 1, v2 - v1 - 1);
 		       s[v2 - v1 - 1] = 0;
-		       v = getenv(s);
+		       if (!strcmp(s, "XDG_CONFIG_HOME")) 
+			 v = (char *)efreet_config_home_get();
+		       else if (!strcmp(s, "XDG_CACHE_HOME")) 
+			 v = (char *)efreet_cache_home_get();
+		       else if (!strcmp(s, "XDG_DATA_HOME")) 
+			 v = (char *)efreet_data_home_get();
+		       else
+			 v = getenv(s);
 		       if (v)
 			 {
 			    vp = v;
