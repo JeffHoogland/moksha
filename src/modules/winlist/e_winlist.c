@@ -227,10 +227,10 @@ e_winlist_hide(void)
 	ww = wins->data;
 	evas_object_del(ww->bg_object);
 	if (ww->icon_object) evas_object_del(ww->icon_object);
-	free(ww);
 	wins = evas_list_remove_list(wins, wins);
 	if ((!bd) || (ww->border != bd))
 	  e_object_unref(E_OBJECT(ww->border));	
+	free(ww);
      }
    e_box_thaw(list_object);
    win_selected = NULL;
