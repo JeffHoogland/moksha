@@ -1295,7 +1295,6 @@ static void
 _ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    IBox *b;
-   Config_Item *ci;
    int ok = 1;
    Evas_List *l;
 
@@ -1311,7 +1310,7 @@ _ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
 	     break;
 	  }
      }
-   if (ok) _config_ibox_module(ci);
+   if (ok) _config_ibox_module(b->inst->ci);
 }
 
 /***************************************************************************/
