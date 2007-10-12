@@ -27,7 +27,7 @@ e_fm_mime_icon_get(const char *mime)
 {
    char buf[4096], buf2[4096], *val;
    const char *homedir = NULL;
-   Evas_List *l;
+   Evas_List *l = NULL;
    E_Config_Mime_Icon *mi;
    
    /* 0.0 clean out hash cache once it has mroe than 512 entries in it */
@@ -98,7 +98,6 @@ e_fm_mime_icon_get(const char *mime)
    val = (char *)evas_stringshare_add(buf);
    icon_map = evas_hash_add(icon_map, mime, val);
    return val;
-   
 }
 
 EAPI void
