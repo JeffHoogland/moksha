@@ -69,7 +69,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->border_shade_animate = e_config->border_shade_animate;
    cfdata->border_shade_transition = e_config->border_shade_transition;
    cfdata->border_shade_speed = e_config->border_shade_speed;
-   if (cfdata->move_info_visible ||
+   if (cfdata->move_info_visible &&
        cfdata->resize_info_visible) cfdata->move_resize_info = 1;
    if (cfdata->border_shade_animate) cfdata->animate_shading = 1;
    cfdata->use_app_icon = e_config->use_app_icon;
@@ -151,6 +151,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
    
+   if (cfdata->move_info_visible && cfdata->resize_info_visible)
+     cfdata->move_resize_info = 1;
+   else
+     cfdata->move_resize_info = 0;
+   
    o = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Display"), 0);
@@ -183,17 +188,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of, *ot;
    E_Radio_Group *rg;
-   
-   if (cfdata->move_resize_info)
-     {
-	cfdata->move_info_visible = 1;
-	cfdata->resize_info_visible = 1;
-     }
-   else
-     {
-	cfdata->move_info_visible = 0;
-	cfdata->resize_info_visible = 0;
-     }
 
    o = e_widget_list_add(evas, 0, 0);
    ot = e_widget_table_add(evas, 0);
