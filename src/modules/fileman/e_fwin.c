@@ -1277,8 +1277,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 				  _e_fwin_cb_fm_selection_change, fad);
    evas_object_smart_callback_add(mt, "selected",
 				  _e_fwin_cb_fm_selected, fad);
-   snprintf(buf, sizeof(buf), "%s/.local/share/applications", 
-	    e_user_homedir_get());
+   snprintf(buf, sizeof(buf), "%s/applications", 
+	    efreet_data_home_get());
    e_fm2_path_set(mt, buf, "/");
    o = e_widget_scrollframe_pan_add(evas, mt,
 				    e_fm2_pan_set,
