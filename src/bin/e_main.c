@@ -1026,7 +1026,6 @@ _e_main_dirs_init(void)
 	"%s/.e/e/icons",
 	"%s/.e/e/backgrounds",
 	"%s/.e/e/applications",
-	"%s/.e/e/applications/all",
 	"%s/.e/e/applications/menu",
 	"%s/.e/e/applications/menu/favorite",
 	"%s/.e/e/applications/menu/all",
@@ -1057,6 +1056,17 @@ _e_main_dirs_init(void)
 	       }
 	  }
      }
+   snprintf(buf, sizeof(buf), "%s/applications", efreet_data_home_get());
+   if (!ecore_file_mkpath(buf))
+     {
+	if (!ecore_file_is_dir(buf))
+	  {
+	     e_error_message_show("Error creating directory:\n"
+				  "%s",
+				  buf);
+	     return 0;
+	  }
+     }
    
    /* FIXME: THIS is a hack to get people started!!! */
    /* err dont just disable it - replace it with a proper wizard tool */
@@ -1066,8 +1076,14 @@ _e_main_dirs_init(void)
    if (!ecore_file_exists(buf))
      {
 	snprintf(buf, sizeof(buf), 
-		 "gzip -d -c < %s/data/other/applications.tar.gz | "
-		 "(cd %s/.e/e/ ; tar -xf -)", 
+		 "gzip -d -c < %s/data/other/desktop_files.tar.gz | "
+		 "(cd %s/applications/ ; tar -xkf -)", 
+		 e_prefix_data_get(),
+		 efreet_data_home_get());
+	system(buf);
+	snprintf(buf, sizeof(buf), 
+		 "gzip -d -c < %s/data/other/desktop_order.tar.gz | "
+		 "(cd %s/.e/e/ ; tar -xkf -)", 
 		 e_prefix_data_get(),
 		 homedir);
 	system(buf);
@@ -1078,7 +1094,7 @@ _e_main_dirs_init(void)
      {
 	snprintf(buf, sizeof(buf), 
 		 "gzip -d -c < %s/data/other/efm_favorites.tar.gz | "
-		 "(cd %s/.e/e/ ; tar -xf -)", 
+		 "(cd %s/.e/e/ ; tar -xkf -)", 
 		 e_prefix_data_get(),
 		 homedir);
 	system(buf);
