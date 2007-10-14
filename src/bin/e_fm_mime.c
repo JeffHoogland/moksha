@@ -199,6 +199,64 @@ e_fm_mime_handler_glob_add(E_Fm_Mime_Handler *handler, const char *glob)
    return 1;
 }
 
+/* delete a certain handler for a certian mime */
+EAPI void
+e_fm_mime_handler_mime_del(E_Fm_Mime_Handler *handler, const char *mime) 
+{
+   Evas_List *handlers = NULL;
+
+   if ((!handler) || (!mime)) return;
+
+   /* if there's an entry for this mime already, then append to its list */
+   if ((handlers = evas_hash_find(_mime_handlers, mime)))
+     {
+	handlers = evas_list_remove(handlers, handler);
+	if (handlers)
+	  _mime_handlers = evas_hash_modify(_mime_handlers, mime, handlers);
+	else
+	  _mime_handlers = evas_hash_del(_mime_handlers, mime, handlers);
+     }
+}
+
+/* delete a certain handler for a certain glob */
+EAPI void
+e_fm_mime_handler_glob_del(E_Fm_Mime_Handler *handler, const char *glob) 
+{
+   Evas_List *handlers = NULL;
+
+   if ((!handler) || (!glob)) return;
+
+   /* if there's an entry for this glob already, then append to its list */
+   if ((handlers = evas_hash_find(_glob_handlers, glob)))
+     {
+	handlers = evas_list_remove(handlers, handler);
+	if (handlers)
+	  _glob_handlers = evas_hash_modify(_glob_handlers, glob, handlers);
+	else
+	  _glob_handlers = evas_hash_del(_glob_handlers, glob, handlers);
+     }
+}
+
+/* get the list of mime handlers for a mime */
+EAPI Evas_List *
+e_fm_mime_handler_mime_handlers_get(const char *mime)
+{
+   if ((!mime) || (!_mime_handlers))
+     return NULL;
+   
+   return evas_hash_find(_mime_handlers, mime);
+}
+
+/* get the list of glob handlers for a glob */
+EAPI Evas_List *
+e_fm_mime_handler_glob_handlers_get(const char *glob)
+{
+   if ((!glob) || (!_glob_handlers))
+     return NULL;
+   
+   return evas_hash_find(_glob_handlers, glob);
+}
+
 /* call a certain handler */
 EAPI Evas_Bool
 e_fm_mime_handler_call(E_Fm_Mime_Handler *handler, Evas_Object *obj, const char *path)
@@ -221,39 +279,53 @@ e_fm_mime_handler_call(E_Fm_Mime_Handler *handler, Evas_Object *obj, const char 
    return 1;
 }
 
+/* call all handlers related to a certain mime */
 EAPI void
-e_fm_mime_handler_mime_del(E_Fm_Mime_Handler *handler, const char *mime) 
+e_fm_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, const char *mime)
 {
-   Evas_List *handlers = NULL;
+   Evas_List *handlers;
+   Evas_List *l;
 
-   if ((!handler) || (!mime)) return;
+   if ((!obj) || (!path) || (!mime))
+     return;
 
-   /* if there's an entry for this mime already, then append to its list */
-   if ((handlers = evas_hash_find(_mime_handlers, mime)))
+   handlers = e_fm_mime_handler_mime_handlers_get(mime);
+   if (!handlers)
+     return;
+
+   for (l = handlers; l; l = l->next)
      {
-	handlers = evas_list_remove(handlers, handler);
-	if (handlers)
-	  _mime_handlers = evas_hash_modify(_mime_handlers, mime, handlers);
-	else
-	  _mime_handlers = evas_hash_del(_mime_handlers, mime, handlers);
+	E_Fm_Mime_Handler *handler;
+
+	handler = l->data;
+	if (!handler) continue;
+	
+	e_fm_mime_handler_call(handler, obj, path);
      }
 }
 
+/* call all handlers related to a certain glob */
 EAPI void
-e_fm_mime_handler_glob_del(E_Fm_Mime_Handler *handler, const char *glob) 
+e_fm_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, const char *glob)
 {
-   Evas_List *handlers = NULL;
+   Evas_List *handlers;
+   Evas_List *l;
 
-   if ((!handler) || (!glob)) return;
+   if ((!obj) || (!path) || (!glob))
+     return;
 
-   /* if there's an entry for this glob already, then append to its list */
-   if ((handlers = evas_hash_find(_glob_handlers, glob)))
+   handlers = e_fm_mime_handler_glob_handlers_get(glob);
+   if (!handlers)
+     return;
+
+   for (l = handlers; l; l = l->next)
      {
-	handlers = evas_list_remove(handlers, handler);
-	if (handlers)
-	  _glob_handlers = evas_hash_modify(_glob_handlers, glob, handlers);
-	else
-	  _glob_handlers = evas_hash_del(_glob_handlers, glob, handlers);
+	E_Fm_Mime_Handler *handler;
+
+	handler = l->data;
+	if (!handler) continue;
+	
+	e_fm_mime_handler_call(handler, obj, path);
      }
 }
 

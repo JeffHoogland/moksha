@@ -27,8 +27,11 @@ EAPI void e_fm_mime_handler_free(E_Fm_Mime_Handler *handler);
 EAPI Evas_Bool e_fm_mime_handler_mime_add(E_Fm_Mime_Handler *handler, const char *mime);
 EAPI Evas_Bool e_fm_mime_handler_glob_add(E_Fm_Mime_Handler *handler, const char *glob);
 EAPI Evas_Bool e_fm_mime_handler_call(E_Fm_Mime_Handler *handler, Evas_Object *obj, const char *path);
+EAPI void e_fm_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, const char *mime);
 EAPI void e_fm_mime_handler_mime_del(E_Fm_Mime_Handler *handler, const char *mime);
 EAPI void e_fm_mime_handler_glob_del(E_Fm_Mime_Handler *handler, const char *glob);
+EAPI Evas_List *e_fm_mime_handler_mime_handlers_get(const char *mime);
+EAPI Evas_List *e_fm_mime_handler_glob_handlers_get(const char *glob);
 
 #endif
 #endif
