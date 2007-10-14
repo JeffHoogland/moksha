@@ -246,25 +246,24 @@ e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob)
      }
 }
 
-/* get the list of mime handlers for a mime */
+/* get the list of mime handlers for a mime. 
+ NOTE: the list should be free()'ed */
 EAPI Evas_List *
 e_fm2_mime_handler_mime_handlers_get(const char *mime)
 {
-   if ((!mime) || (!_mime_handlers))
-     return NULL;
-   
+   if ((!mime) || (!_mime_handlers)) return NULL;
    return evas_hash_find(_mime_handlers, mime);
 }
 
-/* get the list of glob handlers for a glob. NOTE: the list should be free()'ed */
+/* get the list of glob handlers for a glob. 
+ NOTE: the list should be free()'ed */
 EAPI Evas_List *
 e_fm2_mime_handler_glob_handlers_get(const char *glob)
 {
-   E_Fm2_Mime_Handler_Tuple *tuple;
-   Evas_List *handlers;
+   E_Fm2_Mime_Handler_Tuple *tuple = NULL;
+   Evas_List *handlers = NULL;
 
-   if ((!glob) || (!_glob_handlers))
-     return NULL;
+   if ((!glob) || (!_glob_handlers)) return NULL;
 
    tuple = E_NEW(E_Fm2_Mime_Handler_Tuple, 1);
    tuple->list = NULL;
@@ -279,7 +278,7 @@ e_fm2_mime_handler_glob_handlers_get(const char *glob)
 EAPI Evas_Bool
 e_fm2_mime_handler_call(E_Fm2_Mime_Handler *handler, Evas_Object *obj, const char *path)
 {
-   if (!handler || !obj || !path || !handler->action_func)
+   if ((!handler) || (!obj) || (!path) || (!handler->action_func))
      return 0;
 
    if (handler->test_func)
@@ -301,19 +300,17 @@ e_fm2_mime_handler_call(E_Fm2_Mime_Handler *handler, Evas_Object *obj, const cha
 EAPI void
 e_fm2_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, const char *mime)
 {
-   Evas_List *handlers;
-   Evas_List *l;
+   Evas_List *handlers = NULL;
+   Evas_List *l = NULL;
 
-   if ((!obj) || (!path) || (!mime))
-     return;
+   if ((!obj) || (!path) || (!mime)) return;
 
    handlers = e_fm2_mime_handler_mime_handlers_get(mime);
-   if (!handlers)
-     return;
+   if (!handlers) return;
 
    for (l = handlers; l; l = l->next)
      {
-	E_Fm2_Mime_Handler *handler;
+	E_Fm2_Mime_Handler *handler = NULL;
 
 	handler = l->data;
 	if (!handler) continue;
@@ -326,19 +323,17 @@ e_fm2_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, co
 EAPI void
 e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, const char *glob)
 {
-   Evas_List *handlers;
-   Evas_List *l;
+   Evas_List *handlers = NULL;
+   Evas_List *l = NULL;
 
-   if ((!obj) || (!path) || (!glob))
-     return;
+   if ((!obj) || (!path) || (!glob)) return;
 
    handlers = e_fm2_mime_handler_glob_handlers_get(glob);
-   if (!handlers)
-     return;
+   if (!handlers) return;
 
    for (l = handlers; l; l = l->next)
      {
-	E_Fm2_Mime_Handler *handler;
+	E_Fm2_Mime_Handler *handler = NULL;
 
 	handler = l->data;
 	if (!handler) continue;
@@ -349,16 +344,16 @@ e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, co
 
 /* local subsystem functions */
 /* used to loop a glob hash and determine if the glob handler matches the filename */
-static Evas_Bool _e_fm2_mime_handler_glob_match_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata)
+static Evas_Bool 
+_e_fm2_mime_handler_glob_match_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
    E_Fm2_Mime_Handler_Tuple *tuple;
+   Evas_List *handlers = NULL;
+   Evas_List *l = NULL;
 
    tuple = fdata;
    if (e_util_glob_match(tuple->str, key))
      {
-	Evas_List *handlers;
-	Evas_List *l;
-
 	handlers = data;
 	for (l = handlers; l; l = l->next)
 	  {
