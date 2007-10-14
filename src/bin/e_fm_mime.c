@@ -172,7 +172,7 @@ e_fm2_mime_handler_mime_add(E_Fm2_Mime_Handler *handler, const char *mime)
    if ((handlers = evas_hash_find(_mime_handlers, mime)))
      {
 	handlers = evas_list_append(handlers, handler);
-	_mime_handlers = evas_hash_modify(_mime_handlers, mime, handlers);
+	evas_hash_modify(_mime_handlers, mime, handlers);
      }
    else
      {
@@ -196,7 +196,7 @@ e_fm2_mime_handler_glob_add(E_Fm2_Mime_Handler *handler, const char *glob)
    if ((handlers = evas_hash_find(_glob_handlers, glob)))
      {
 	handlers = evas_list_append(handlers, handler);
-	_glob_handlers = evas_hash_modify(_glob_handlers, glob, handlers);
+	evas_hash_modify(_glob_handlers, glob, handlers);
      }
    else
      {
@@ -362,8 +362,8 @@ static Evas_Bool _e_fm2_mime_handler_glob_match_foreach(Evas_Hash *hash, const c
 	handlers = data;
 	for (l = handlers; l; l = l->next)
 	  {
-	     if (handlers->data)
-	       tuple->list = evas_list_append(tuple->list, handlers->data);
+	     if (l->data)
+	       tuple->list = evas_list_append(tuple->list, l->data);
 	  }
      }
    

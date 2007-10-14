@@ -28,14 +28,21 @@ static Evas_List *categories = NULL;
 static Evas_List *transitions = NULL;
 static Evas_List *borders = NULL;
 static Evas_List *shelfs = NULL;
+static E_Fm2_Mime_Handler *theme_hdl = NULL;
 
 /* externally accessible functions */
 
 EAPI int
 e_theme_init(void)
 {
-   Evas_List *l;
-   
+   Evas_List *l = NULL;
+
+   /* Register mime handler */
+   theme_hdl = e_fm2_mime_handler_new(_("Set As Theme"), "enlightenment/themes", 
+				      e_theme_handler_set, NULL, 
+				      e_theme_handler_test, NULL);
+   e_fm2_mime_handler_glob_add(theme_hdl, "*.edj");
+
    /* this is a fallback that is ALWAYS there - if all fails things will */
    /* always fall back to the default theme. the rest after this are config */
    /* values users can set */
@@ -96,6 +103,8 @@ e_theme_init(void)
 EAPI int
 e_theme_shutdown(void)
 {
+   if (theme_hdl) e_fm2_mime_handler_free(theme_hdl);
+
    if (mappings)
      {
 	evas_hash_foreach(mappings, _e_theme_mappings_free_cb, NULL);
@@ -460,6 +469,33 @@ EAPI Evas_List *
 e_theme_shelf_list(void)
 {
    return shelfs;
+}
+
+EAPI void 
+e_theme_handler_set(Evas_Object *obj, const char *path, void *data) 
+{
+   E_Action *a;
+   
+   if (!path) return;
+   e_theme_config_set("theme", path);
+   e_config_save_queue();
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+}
+
+EAPI int 
+e_theme_handler_test(Evas_Object *obj, const char *path, void *data) 
+{
+   E_Config_Theme *ct;
+   
+   if (!path) return 0;
+
+   /* test is this theme is already set */
+   ct = e_theme_config_get("theme");
+   if ((ct) && (!strcmp(ct->file, path))) return 0;
+   if (!edje_file_group_exists(path, "e/widgets/border/default/border")) 
+     return 0;
+   return 1;
 }
 
 /* local subsystem functions */

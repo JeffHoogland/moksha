@@ -360,6 +360,7 @@ static void _e_fm2_client_mount(const char *udi, const char *mountpoint);
 static void _e_fm2_client_unmount(const char *udi);
 static void _e_fm2_sel_rect_update(void *data);
 static inline void _e_fm2_context_menu_append(Evas_List *l, E_Menu *mn, E_Fm2_Icon *ic);
+static int _e_fm2_context_list_sort(void *data1, void *data2);
 
 static char *_e_fm2_meta_path = NULL;
 static Evas_Smart *_e_fm2_smart = NULL;
@@ -6881,7 +6882,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  }
 
 	/* see if we have any glob handlers registered for this file */
-	snprintf(buf, sizeof(buf), "*.%s", strrchr(ic->info.file, '.'));
+	snprintf(buf, sizeof(buf), "*%s", strrchr(ic->info.file, '.'));
 	l = e_fm2_mime_handler_glob_handlers_get(buf);
 	_e_fm2_context_menu_append(l, mn, ic);
 	if (l) evas_list_free(l);
@@ -6922,31 +6923,44 @@ _e_fm2_context_menu_append(Evas_List *l, E_Menu *mn, E_Fm2_Icon *ic)
    Evas_List *ll = NULL;
    E_Menu_Item *mi;
 
-   if (l) 
-     {
-	mi = e_menu_item_new(mn);
-	e_menu_item_separator_set(mi, 1);
+   if (!l) return;
+   
+   l = evas_list_sort(l, -1, _e_fm2_context_list_sort);
+   mi = e_menu_item_new(mn);
+   e_menu_item_separator_set(mi, 1);
 
-	for (ll = l; ll; ll = ll->next) 
-	  {
-	     E_Fm2_Mime_Handler *handler = NULL;
-	     E_Fm2_Context_Menu_Data *md = NULL;
-	     
-	     handler = ll->data;
-	     if (!handler) continue;
-	     md = E_NEW(E_Fm2_Context_Menu_Data, 1);
-	     if (!md) continue;
-	     _e_fm2_menu_contexts = evas_list_append(_e_fm2_menu_contexts, md);
-	     
-	     md->icon = ic;
-	     md->handler = handler;
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, handler->label);
-	     if (handler->icon_group)
-	       e_util_menu_item_edje_icon_set(mi, handler->icon_group);
-	     e_menu_item_callback_set(mi, _e_fm2_icon_menu_item_cb, md);
-	  }
+   for (ll = l; ll; ll = ll->next) 
+     {
+	E_Fm2_Mime_Handler *handler = NULL;
+	E_Fm2_Context_Menu_Data *md = NULL;
+	
+	handler = ll->data;
+	if (!handler) continue;
+	md = E_NEW(E_Fm2_Context_Menu_Data, 1);
+	if (!md) continue;
+	_e_fm2_menu_contexts = evas_list_append(_e_fm2_menu_contexts, md);
+	
+	md->icon = ic;
+	md->handler = handler;
+
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, handler->label);
+	if (handler->icon_group)
+	  e_util_menu_item_edje_icon_set(mi, handler->icon_group);
+	e_menu_item_callback_set(mi, _e_fm2_icon_menu_item_cb, md);
      }
+}
+
+static int 
+_e_fm2_context_list_sort(void *data1, void *data2) 
+{
+   E_Fm2_Mime_Handler *d1, *d2;
+   
+   if (!data1) return 1;
+   if (!data2) return -1;
+   d1 = data1;
+   d2 = data2;
+   return (strcmp(d1->label, d2->label));
 }
 
 static void
