@@ -21,6 +21,7 @@ EAPI const char *e_fm_mime_icon_get(const char *mime);
 EAPI void e_fm_mime_icon_cache_flush(void);
 
 EAPI E_Fm_Mime_Handler *e_fm_mime_handler_new(const char *label, const char *icon_group, void (*action_func) (Evas_Object *obj, const char *path, void *data), int (test_func) (Evas_Object *obj, const char *path, void *data));
+EAPI void e_fm_mime_handler_free(E_Fm_Mime_Handler *handler);
 EAPI int e_fm_mime_handler_mime_add(E_Fm_Mime_Handler *handler, const char *mime);
 EAPI int e_fm_mime_handler_glob_add(E_Fm_Mime_Handler *handler, const char *glob);
 

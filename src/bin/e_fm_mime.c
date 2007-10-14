@@ -134,11 +134,20 @@ e_fm_mime_handler_new(const char *label, const char *icon_group,
    handler->label = evas_stringshare_add(label);
    handler->icon_group = icon_group ? evas_stringshare_add(icon_group) : NULL;
    handler->action_func = action_func;
-   if (test_func) handler->test_func = test_func;
+   handler->test_func = test_func;
 
    /* TODO: add data for both action_cb and test_cb */
 
    return handler;
+}
+
+EAPI void
+e_fm_mime_handler_free(E_Fm_Mime_Handler *handler) 
+{
+   if (!handler) return;
+   evas_stringshare_del(handler->label);
+   if (handler->icon_group) evas_stringshare_del(handler->icon_group);
+   E_FREE(handler);
 }
 
 /* associate a certain mime type with a handler */
