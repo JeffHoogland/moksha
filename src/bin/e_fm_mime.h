@@ -14,16 +14,20 @@ struct _E_Fm_Mime_Handler
    const char *label, *icon_group;
    void (*action_func) (Evas_Object *obj, const char *path, void *data);
    int (*test_func) (Evas_Object *obj, const char *path, void *data);
+   void *action_data;
+   void *test_data;
 };
 
 EAPI const char *e_fm_mime_filename_get(const char *fname);
 EAPI const char *e_fm_mime_icon_get(const char *mime);
 EAPI void e_fm_mime_icon_cache_flush(void);
 
-EAPI E_Fm_Mime_Handler *e_fm_mime_handler_new(const char *label, const char *icon_group, void (*action_func) (Evas_Object *obj, const char *path, void *data), int (test_func) (Evas_Object *obj, const char *path, void *data));
+EAPI E_Fm_Mime_Handler *e_fm_mime_handler_new(const char *label, const char *icon_group, void (*action_func) (Evas_Object *obj, const char *path, void *data), void *action_data, int (test_func) (Evas_Object *obj, const char *path, void *data), void *test_data);
 EAPI void e_fm_mime_handler_free(E_Fm_Mime_Handler *handler);
-EAPI int e_fm_mime_handler_mime_add(E_Fm_Mime_Handler *handler, const char *mime);
-EAPI int e_fm_mime_handler_glob_add(E_Fm_Mime_Handler *handler, const char *glob);
+EAPI Evas_Bool e_fm_mime_handler_mime_add(E_Fm_Mime_Handler *handler, const char *mime);
+EAPI Evas_Bool e_fm_mime_handler_glob_add(E_Fm_Mime_Handler *handler, const char *glob);
+EAPI Evas_Bool e_fm_mime_handler_call(E_Fm_Mime_Handler *handler, Evas_Object *obj, const char *path);
+
 
 #endif
 #endif
