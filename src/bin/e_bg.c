@@ -9,12 +9,19 @@ static void _e_bg_event_bg_update_free(void *data, void *event);
 
 /* local subsystem globals */
 EAPI int E_EVENT_BG_UPDATE = 0;
+static E_Fm2_Mime_Handler *bg_hdl = NULL;
 
 /* externally accessible functions */
 EAPI int 
 e_bg_init(void)
 {
    Evas_List *l = NULL;
+
+   /* Register mime handler */
+   bg_hdl = e_fm2_mime_handler_new(_("Set As Background"), NULL, 
+				   e_bg_handler_set, NULL, 
+				   e_bg_handler_test, NULL);
+   e_fm2_mime_handler_glob_add(bg_hdl, "*.edj");
 
    /* Register files in use */
    if (e_config->desktop_default_background)
@@ -38,7 +45,10 @@ e_bg_shutdown(void)
 {
    Evas_List *l = NULL;
 
-   /* Register files in use */
+   /* Deregister mime handler */
+   if (bg_hdl) e_fm2_mime_handler_free(bg_hdl);
+   
+   /* Deregister files in use */
    if (e_config->desktop_default_background)
       e_filereg_deregister(e_config->desktop_default_background);
 
@@ -330,8 +340,32 @@ e_bg_update(void)
      }
 }
 
-/* local subsystem functions */
+EAPI void 
+e_bg_handler_set(Evas_Object *obj, const char *path, void *data) 
+{
+   E_Container *con;
+   E_Zone *zone;
+   E_Desk *desk;
+   
+   if (!path) return;
+   con = e_container_current_get(e_manager_current_get());
+   zone = e_zone_current_get(con);
+   desk = e_desk_current_get(zone);
+   e_bg_del(con->num, zone->num, desk->x, desk->y);
+   e_bg_add(con->num, zone->num, desk->x, desk->y, (char *)path);
+   e_bg_update();
+   e_config_save_queue();
+}
 
+EAPI int 
+e_bg_handler_test(Evas_Object *obj, const char *path, void *data) 
+{
+   if (!path) return 0;
+   if (edje_file_group_exists(path, "e/desktop/background")) return 1;
+   return 0;
+}
+
+/* local subsystem functions */
 static void
 _e_bg_signal(void *data, Evas_Object *obj, const char *emission, const char *source)
 {

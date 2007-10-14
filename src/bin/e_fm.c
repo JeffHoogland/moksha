@@ -18,17 +18,18 @@
 typedef enum _E_Fm2_Action_Type
 {
    FILE_ADD,
-     FILE_DEL,
-     FILE_CHANGE
+   FILE_DEL,
+   FILE_CHANGE
 } E_Fm2_Action_Type;
 
-typedef struct _E_Fm2_Smart_Data E_Fm2_Smart_Data;
-typedef struct _E_Fm2_Region     E_Fm2_Region;
-typedef struct _E_Fm2_Finfo      E_Fm2_Finfo;
-typedef struct _E_Fm2_Action     E_Fm2_Action;
-typedef struct _E_Fm2_Client     E_Fm2_Client;
-typedef struct _E_Fm2_Mount      E_Fm2_Mount;
-typedef struct _E_Fm2_Uri        E_Fm2_Uri;
+typedef struct _E_Fm2_Smart_Data         E_Fm2_Smart_Data;
+typedef struct _E_Fm2_Region             E_Fm2_Region;
+typedef struct _E_Fm2_Finfo              E_Fm2_Finfo;
+typedef struct _E_Fm2_Action             E_Fm2_Action;
+typedef struct _E_Fm2_Client             E_Fm2_Client;
+typedef struct _E_Fm2_Mount              E_Fm2_Mount;
+typedef struct _E_Fm2_Uri                E_Fm2_Uri;
+typedef struct _E_Fm2_Context_Menu_Data  E_Fm2_Context_Menu_Data;
 
 struct _E_Fm2_Smart_Data
 {
@@ -207,6 +208,12 @@ struct _E_Fm2_Uri
    const char *path;
 };
 
+struct _E_Fm2_Context_Menu_Data 
+{
+   E_Fm2_Icon *icon;
+   E_Fm2_Mime_Handler *handler;
+};
+
 static E_Fm2_Mount *_e_fm2_mount(E_Volume *v, void (*mount_ok) (void *data), void (*mount_fail) (void *data), void (*unmount_ok) (void *data), void (*unmount_fail) (void *data), void *data);
 static void _e_fm2_unmount(E_Fm2_Mount *m);
 static E_Volume *e_volume_find(const char *udi);
@@ -301,6 +308,7 @@ static void _e_fm2_menu(Evas_Object *obj, unsigned int timestamp);
 static void _e_fm2_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp);
 static void _e_fm2_icon_menu_post_cb(void *data, E_Menu *m);
+static void _e_fm2_icon_menu_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -351,6 +359,7 @@ static void _e_fm2_client_file_copy(int id, const char *path, const char *dest, 
 static void _e_fm2_client_mount(const char *udi, const char *mountpoint);
 static void _e_fm2_client_unmount(const char *udi);
 static void _e_fm2_sel_rect_update(void *data);
+static inline void _e_fm2_context_menu_append(Evas_List *l, E_Menu *mn, E_Fm2_Icon *ic);
 
 static char *_e_fm2_meta_path = NULL;
 static Evas_Smart *_e_fm2_smart = NULL;
@@ -362,7 +371,7 @@ static int _e_fm2_id = 0;
 static Evas_List *_e_stores = NULL;
 static Evas_List *_e_vols = NULL;
 static Evas_List *_e_fm2_mounts = NULL;
-
+static Evas_List *_e_fm2_menu_contexts = NULL;
 
 /* contains:
  * _e_volume_edd
@@ -6649,7 +6658,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
-   Evas_List *sel;
+   Evas_List *sel, *l = NULL;
+   Evas_List *handlers = NULL;
    int x, y, can_w, can_w2, protect;
    char buf[4096];
    
@@ -6861,7 +6871,21 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 							"e/fileman/default/button/properties"),
 				  "e/fileman/default/button/properties");
 	e_menu_item_callback_set(mi, _e_fm2_file_properties, ic);
-	
+
+	if (ic->info.mime) 
+	  {
+	     /* see if we have any mime handlers registered for this file */
+	     l = e_fm2_mime_handler_mime_handlers_get(ic->info.mime);
+	     _e_fm2_context_menu_append(l, mn, ic);
+	     if (l) evas_list_free(l);
+	  }
+
+	/* see if we have any glob handlers registered for this file */
+	snprintf(buf, sizeof(buf), "*.%s", strrchr(ic->info.file, '.'));
+	l = e_fm2_mime_handler_glob_handlers_get(buf);
+	_e_fm2_context_menu_append(l, mn, ic);
+	if (l) evas_list_free(l);
+
 	if (sd->icon_menu.end.func)
 	  sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, &(ic->info));
      }
@@ -6892,6 +6916,38 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 			 E_MENU_POP_DIRECTION_DOWN, timestamp);
 }
 
+static inline void 
+_e_fm2_context_menu_append(Evas_List *l, E_Menu *mn, E_Fm2_Icon *ic) 
+{
+   Evas_List *ll = NULL;
+   E_Menu_Item *mi;
+
+   if (l) 
+     {
+	mi = e_menu_item_new(mn);
+	e_menu_item_separator_set(mi, 1);
+
+	for (ll = l; ll; ll = ll->next) 
+	  {
+	     E_Fm2_Mime_Handler *handler = NULL;
+	     E_Fm2_Context_Menu_Data *md = NULL;
+	     
+	     handler = ll->data;
+	     if (!handler) continue;
+	     md = E_NEW(E_Fm2_Context_Menu_Data, 1);
+	     if (!md) continue;
+	     _e_fm2_menu_contexts = evas_list_append(_e_fm2_menu_contexts, md);
+	     
+	     md->icon = ic;
+	     md->handler = handler;
+	     mi = e_menu_item_new(mn);
+	     e_menu_item_label_set(mi, handler->label);
+	     /* TODO: Add Icon */
+	     e_menu_item_callback_set(mi, _e_fm2_icon_menu_item_cb, md);
+	  }
+     }
+}
+
 static void
 _e_fm2_icon_menu_post_cb(void *data, E_Menu *m)
 {
@@ -6899,6 +6955,30 @@ _e_fm2_icon_menu_post_cb(void *data, E_Menu *m)
    
    ic = data;
    ic->menu = NULL;
+   while (_e_fm2_menu_contexts) 
+     {
+	E_Fm2_Context_Menu_Data *md;
+	
+	md = _e_fm2_menu_contexts->data;
+	_e_fm2_menu_contexts = evas_list_remove_list(_e_fm2_menu_contexts, 
+						     _e_fm2_menu_contexts);
+	E_FREE(md);
+     }
+}
+
+static void 
+_e_fm2_icon_menu_item_cb(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Fm2_Context_Menu_Data *md = NULL;
+   Evas_Object *obj = NULL;
+   char buf[4096];
+   
+   md = data;
+   if (!md) return;
+   obj = md->icon->info.fm;
+   if (!obj) return;
+   snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(obj), md->icon->info.file);
+   e_fm2_mime_handler_call(md->handler, obj, buf);
 }
 
 static void

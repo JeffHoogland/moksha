@@ -11,6 +11,7 @@ typedef enum {
 } E_Bg_Transition;
 
 typedef struct _E_Event_Bg_Update E_Event_Bg_Update;
+
 #else
 #ifndef E_BG_H
 #define E_BG_H
@@ -35,5 +36,8 @@ EAPI void e_bg_add(int container, int zone, int desk_x, int desk_y, char *file);
 EAPI void e_bg_del(int container, int zone, int desk_x, int desk_y);
 EAPI void e_bg_default_set(char *file);
 EAPI void e_bg_update(void);
+EAPI void e_bg_handler_set(Evas_Object *obj, const char *path, void *data);
+EAPI int  e_bg_handler_test(Evas_Object *obj, const char *path, void *data);
+
 #endif
 #endif
