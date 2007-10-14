@@ -68,8 +68,6 @@ Some of the things (in very short form) that need to be done to E17...
 * fm2 needs to display more than 1 file being dragged (if more than 1 is being
   dragged)
 & fm2 needs to drag other files in mult-drag to the right location
-* fm2 needs a way of mapping a internal e actions to do based on mime or
-  extension (like add as wallpaper etc.)
 * fm2 needs a way to bypass thumb gen anim on just a unrealize/realize as well
   as change state instantly if it already was selected
 * fm2 needs to not unrealize then re-realize on re-sort/arrange - keep objects
