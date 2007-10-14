@@ -3,7 +3,16 @@
  */
 #include "e.h"
 
+/* local types */
+typedef struct _E_Fm2_Mime_Handler_Tuple E_Fm2_Mime_Handler_Tuple;
+struct _E_Fm2_Mime_Handler_Tuple
+{
+   Evas_List *list;
+   const char *str;
+};
+
 /* local subsystem functions */
+static Evas_Bool _e_fm2_mime_handler_glob_match(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_Bool _e_fm_mime_icon_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
 static Evas_Hash *icon_map = NULL;
@@ -118,18 +127,18 @@ e_fm_mime_icon_cache_flush(void)
 }
 
 /* create (allocate), set properties, and return a new mime handler */
-EAPI E_Fm_Mime_Handler *
-e_fm_mime_handler_new(const char *label, const char *icon_group, 
+EAPI E_Fm2_Mime_Handler *
+e_fm2_mime_handler_new(const char *label, const char *icon_group, 
                       void (*action_func) (Evas_Object *obj, const char *path, void *data),
 		      void *action_data,
 		      int (test_func) (Evas_Object *obj, const char *path, void *data),
 		      void *test_data)
 {
-   E_Fm_Mime_Handler *handler;
+   E_Fm2_Mime_Handler *handler;
 
    if ((!label) || (!action_func)) return NULL;
 
-   handler = E_NEW(E_Fm_Mime_Handler, 1);
+   handler = E_NEW(E_Fm2_Mime_Handler, 1);
    if (!handler) return NULL;
 
    handler->label = evas_stringshare_add(label);
@@ -143,7 +152,7 @@ e_fm_mime_handler_new(const char *label, const char *icon_group,
 }
 
 EAPI void
-e_fm_mime_handler_free(E_Fm_Mime_Handler *handler) 
+e_fm2_mime_handler_free(E_Fm2_Mime_Handler *handler) 
 {
    if (!handler) return;
    evas_stringshare_del(handler->label);
@@ -153,7 +162,7 @@ e_fm_mime_handler_free(E_Fm_Mime_Handler *handler)
 
 /* associate a certain mime type with a handler */
 EAPI Evas_Bool
-e_fm_mime_handler_mime_add(E_Fm_Mime_Handler *handler, const char *mime)
+e_fm2_mime_handler_mime_add(E_Fm2_Mime_Handler *handler, const char *mime)
 {
    Evas_List *handlers = NULL;
 
@@ -177,7 +186,7 @@ e_fm_mime_handler_mime_add(E_Fm_Mime_Handler *handler, const char *mime)
 
 /* associate a certain glob with a handler */
 EAPI Evas_Bool
-e_fm_mime_handler_glob_add(E_Fm_Mime_Handler *handler, const char *glob)
+e_fm2_mime_handler_glob_add(E_Fm2_Mime_Handler *handler, const char *glob)
 {
    Evas_List *handlers = NULL;
 
@@ -201,7 +210,7 @@ e_fm_mime_handler_glob_add(E_Fm_Mime_Handler *handler, const char *glob)
 
 /* delete a certain handler for a certian mime */
 EAPI void
-e_fm_mime_handler_mime_del(E_Fm_Mime_Handler *handler, const char *mime) 
+e_fm2_mime_handler_mime_del(E_Fm2_Mime_Handler *handler, const char *mime) 
 {
    Evas_List *handlers = NULL;
 
@@ -220,7 +229,7 @@ e_fm_mime_handler_mime_del(E_Fm_Mime_Handler *handler, const char *mime)
 
 /* delete a certain handler for a certain glob */
 EAPI void
-e_fm_mime_handler_glob_del(E_Fm_Mime_Handler *handler, const char *glob) 
+e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob) 
 {
    Evas_List *handlers = NULL;
 
@@ -239,7 +248,7 @@ e_fm_mime_handler_glob_del(E_Fm_Mime_Handler *handler, const char *glob)
 
 /* get the list of mime handlers for a mime */
 EAPI Evas_List *
-e_fm_mime_handler_mime_handlers_get(const char *mime)
+e_fm2_mime_handler_mime_handlers_get(const char *mime)
 {
    if ((!mime) || (!_mime_handlers))
      return NULL;
@@ -247,19 +256,28 @@ e_fm_mime_handler_mime_handlers_get(const char *mime)
    return evas_hash_find(_mime_handlers, mime);
 }
 
-/* get the list of glob handlers for a glob */
+/* get the list of glob handlers for a glob. NOTE: the list should be free()'ed */
 EAPI Evas_List *
-e_fm_mime_handler_glob_handlers_get(const char *glob)
+e_fm2_mime_handler_glob_handlers_get(const char *glob)
 {
+   E_Fm2_Mime_Handler_Tuple *tuple;
+   Evas_List *handlers;
+
    if ((!glob) || (!_glob_handlers))
      return NULL;
-   
-   return evas_hash_find(_glob_handlers, glob);
+
+   tuple = E_NEW(E_Fm2_Mime_Handler_Tuple, 1);
+   tuple->list = NULL;
+   tuple->str = glob;
+   evas_hash_foreach(_glob_handlers, _e_fm2_mime_handler_glob_match, tuple);
+   handlers = tuple->list;
+   E_FREE(tuple);
+   return handlers;
 }
 
 /* call a certain handler */
 EAPI Evas_Bool
-e_fm_mime_handler_call(E_Fm_Mime_Handler *handler, Evas_Object *obj, const char *path)
+e_fm2_mime_handler_call(E_Fm2_Mime_Handler *handler, Evas_Object *obj, const char *path)
 {
    if (!handler || !obj || !path || !handler->action_func)
      return 0;
@@ -281,7 +299,7 @@ e_fm_mime_handler_call(E_Fm_Mime_Handler *handler, Evas_Object *obj, const char 
 
 /* call all handlers related to a certain mime */
 EAPI void
-e_fm_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, const char *mime)
+e_fm2_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, const char *mime)
 {
    Evas_List *handlers;
    Evas_List *l;
@@ -289,24 +307,24 @@ e_fm_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, con
    if ((!obj) || (!path) || (!mime))
      return;
 
-   handlers = e_fm_mime_handler_mime_handlers_get(mime);
+   handlers = e_fm2_mime_handler_mime_handlers_get(mime);
    if (!handlers)
      return;
 
    for (l = handlers; l; l = l->next)
      {
-	E_Fm_Mime_Handler *handler;
+	E_Fm2_Mime_Handler *handler;
 
 	handler = l->data;
 	if (!handler) continue;
 	
-	e_fm_mime_handler_call(handler, obj, path);
+	e_fm2_mime_handler_call(handler, obj, path);
      }
 }
 
 /* call all handlers related to a certain glob */
 EAPI void
-e_fm_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, const char *glob)
+e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, const char *glob)
 {
    Evas_List *handlers;
    Evas_List *l;
@@ -314,22 +332,34 @@ e_fm_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, con
    if ((!obj) || (!path) || (!glob))
      return;
 
-   handlers = e_fm_mime_handler_glob_handlers_get(glob);
+   handlers = e_fm2_mime_handler_glob_handlers_get(glob);
    if (!handlers)
      return;
 
    for (l = handlers; l; l = l->next)
      {
-	E_Fm_Mime_Handler *handler;
+	E_Fm2_Mime_Handler *handler;
 
 	handler = l->data;
 	if (!handler) continue;
 	
-	e_fm_mime_handler_call(handler, obj, path);
+	e_fm2_mime_handler_call(handler, obj, path);
      }
 }
 
 /* local subsystem functions */
+/* used to loop a glob hash and determine if the glob handler matches the filename */
+static Evas_Bool _e_fm2_mime_handler_glob_match(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   E_Fm2_Mime_Handler_Tuple *tuple;
+
+   tuple = fdata;
+   if (e_util_glob_match(tuple->str, key))
+     tuple->list = evas_list_append(tuple->list, data);
+   
+   return 1;
+}
+
 static Evas_Bool
 _e_fm_mime_icon_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
