@@ -22,7 +22,7 @@ e_bg_init(void)
 				   "enlightenment/background", 
 				   e_bg_handler_set, NULL, 
 				   e_bg_handler_test, NULL);
-   e_fm2_mime_handler_glob_add(bg_hdl, "*.edj");
+   if (bg_hdl) e_fm2_mime_handler_glob_add(bg_hdl, "*.edj");
 
    /* Register files in use */
    if (e_config->desktop_default_background)

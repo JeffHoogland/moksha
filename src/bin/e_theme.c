@@ -41,7 +41,7 @@ e_theme_init(void)
    theme_hdl = e_fm2_mime_handler_new(_("Set As Theme"), "enlightenment/themes", 
 				      e_theme_handler_set, NULL, 
 				      e_theme_handler_test, NULL);
-   e_fm2_mime_handler_glob_add(theme_hdl, "*.edj");
+   if (theme_hdl) e_fm2_mime_handler_glob_add(theme_hdl, "*.edj");
 
    /* this is a fallback that is ALWAYS there - if all fails things will */
    /* always fall back to the default theme. the rest after this are config */
