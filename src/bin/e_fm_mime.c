@@ -12,7 +12,7 @@ struct _E_Fm2_Mime_Handler_Tuple
 };
 
 /* local subsystem functions */
-static Evas_Bool _e_fm2_mime_handler_glob_match(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _e_fm2_mime_handler_glob_match_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_Bool _e_fm_mime_icon_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
 static Evas_Hash *icon_map = NULL;
@@ -269,7 +269,7 @@ e_fm2_mime_handler_glob_handlers_get(const char *glob)
    tuple = E_NEW(E_Fm2_Mime_Handler_Tuple, 1);
    tuple->list = NULL;
    tuple->str = glob;
-   evas_hash_foreach(_glob_handlers, _e_fm2_mime_handler_glob_match, tuple);
+   evas_hash_foreach(_glob_handlers, _e_fm2_mime_handler_glob_match_foreach, tuple);
    handlers = tuple->list;
    E_FREE(tuple);
    return handlers;
@@ -349,13 +349,23 @@ e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, co
 
 /* local subsystem functions */
 /* used to loop a glob hash and determine if the glob handler matches the filename */
-static Evas_Bool _e_fm2_mime_handler_glob_match(Evas_Hash *hash, const char *key, void *data, void *fdata)
+static Evas_Bool _e_fm2_mime_handler_glob_match_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
    E_Fm2_Mime_Handler_Tuple *tuple;
 
    tuple = fdata;
    if (e_util_glob_match(tuple->str, key))
-     tuple->list = evas_list_append(tuple->list, data);
+     {
+	Evas_List *handlers;
+	Evas_List *l;
+
+	handlers = data;
+	for (l = handlers; l; l = l->next)
+	  {
+	     if (handlers->data)
+	       tuple->list = evas_list_append(tuple->list, handlers->data);
+	  }
+     }
    
    return 1;
 }
