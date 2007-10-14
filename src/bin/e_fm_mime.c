@@ -7,6 +7,8 @@
 static Evas_Bool _e_fm_mime_icon_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
 static Evas_Hash *icon_map = NULL;
+static Evas_Hash *_mime_handlers = NULL;
+static Evas_Hash *_glob_handlers = NULL;
 
 /* externally accessible functions */
 EAPI const char *
@@ -115,9 +117,6 @@ e_fm_mime_icon_cache_flush(void)
    icon_map = NULL;
 }
 
-static Evas_Hash *_mime_handlers = NULL;
-static Evas_Hash *_glob_handlers = NULL;
-
 /* create (allocate), set properties, and return a new mime handler */
 EAPI E_Fm_Mime_Handler *
 e_fm_mime_handler_new(const char *label, const char *icon_group, 
@@ -220,6 +219,42 @@ e_fm_mime_handler_call(E_Fm_Mime_Handler *handler, Evas_Object *obj, const char 
 
    handler->action_func(obj, path, handler->action_data);
    return 1;
+}
+
+EAPI void
+e_fm_mime_handler_mime_del(E_Fm_Mime_Handler *handler, const char *mime) 
+{
+   Evas_List *handlers = NULL;
+
+   if ((!handler) || (!mime)) return;
+
+   /* if there's an entry for this mime already, then append to its list */
+   if ((handlers = evas_hash_find(_mime_handlers, mime)))
+     {
+	handlers = evas_list_remove(handlers, handler);
+	if (handlers)
+	  _mime_handlers = evas_hash_modify(_mime_handlers, mime, handlers);
+	else
+	  _mime_handlers = evas_hash_del(_mime_handlers, mime, handlers);
+     }
+}
+
+EAPI void
+e_fm_mime_handler_glob_del(E_Fm_Mime_Handler *handler, const char *glob) 
+{
+   Evas_List *handlers = NULL;
+
+   if ((!handler) || (!glob)) return;
+
+   /* if there's an entry for this glob already, then append to its list */
+   if ((handlers = evas_hash_find(_glob_handlers, glob)))
+     {
+	handlers = evas_list_remove(handlers, handler);
+	if (handlers)
+	  _glob_handlers = evas_hash_modify(_glob_handlers, glob, handlers);
+	else
+	  _glob_handlers = evas_hash_del(_glob_handlers, glob, handlers);
+     }
 }
 
 /* local subsystem functions */
