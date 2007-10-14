@@ -6942,7 +6942,8 @@ _e_fm2_context_menu_append(Evas_List *l, E_Menu *mn, E_Fm2_Icon *ic)
 	     md->handler = handler;
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, handler->label);
-	     /* TODO: Add Icon */
+	     if (handler->icon_group)
+	       e_util_menu_item_edje_icon_set(mi, handler->icon_group);
 	     e_menu_item_callback_set(mi, _e_fm2_icon_menu_item_cb, md);
 	  }
      }
