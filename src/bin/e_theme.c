@@ -486,13 +486,7 @@ e_theme_handler_set(Evas_Object *obj, const char *path, void *data)
 EAPI int 
 e_theme_handler_test(Evas_Object *obj, const char *path, void *data) 
 {
-   E_Config_Theme *ct;
-   
    if (!path) return 0;
-
-   /* test is this theme is already set */
-   ct = e_theme_config_get("theme");
-   if ((ct) && (!strcmp(ct->file, path))) return 0;
    if (!edje_file_group_exists(path, "e/widgets/border/default/border")) 
      return 0;
    return 1;
