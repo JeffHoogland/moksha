@@ -359,7 +359,7 @@ static void _e_fm2_client_file_copy(int id, const char *path, const char *dest, 
 static void _e_fm2_client_mount(const char *udi, const char *mountpoint);
 static void _e_fm2_client_unmount(const char *udi);
 static void _e_fm2_sel_rect_update(void *data);
-static inline void _e_fm2_context_menu_append(Evas_List *l, E_Menu *mn, E_Fm2_Icon *ic);
+static inline void _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Evas_List *l, E_Menu *mn, E_Fm2_Icon *ic);
 static int _e_fm2_context_list_sort(void *data1, void *data2);
 
 static char *_e_fm2_meta_path = NULL;
@@ -6877,14 +6877,16 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  {
 	     /* see if we have any mime handlers registered for this file */
 	     l = e_fm2_mime_handler_mime_handlers_get(ic->info.mime);
-	     _e_fm2_context_menu_append(l, mn, ic);
+	     snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
+	     _e_fm2_context_menu_append(obj, buf, l, mn, ic);
 	     if (l) evas_list_free(l);
 	  }
 
 	/* see if we have any glob handlers registered for this file */
 	snprintf(buf, sizeof(buf), "*%s", strrchr(ic->info.file, '.'));
 	l = e_fm2_mime_handler_glob_handlers_get(buf);
-	_e_fm2_context_menu_append(l, mn, ic);
+	snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
+	_e_fm2_context_menu_append(obj, buf, l, mn, ic);
 	if (l) evas_list_free(l);
 
 	if (sd->icon_menu.end.func)
@@ -6918,7 +6920,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 }
 
 static inline void 
-_e_fm2_context_menu_append(Evas_List *l, E_Menu *mn, E_Fm2_Icon *ic) 
+_e_fm2_context_menu_append(Evas_Object *obj, const char *path, Evas_List *l, E_Menu *mn, E_Fm2_Icon *ic) 
 {
    Evas_List *ll = NULL;
    E_Menu_Item *mi;
@@ -6926,16 +6928,24 @@ _e_fm2_context_menu_append(Evas_List *l, E_Menu *mn, E_Fm2_Icon *ic)
    if (!l) return;
    
    l = evas_list_sort(l, -1, _e_fm2_context_list_sort);
-   mi = e_menu_item_new(mn);
-   e_menu_item_separator_set(mi, 1);
-
+   
    for (ll = l; ll; ll = ll->next) 
      {
 	E_Fm2_Mime_Handler *handler = NULL;
 	E_Fm2_Context_Menu_Data *md = NULL;
 	
 	handler = ll->data;
-	if (!handler) continue;
+	if ((!handler) || (!e_fm2_mime_handler_test(handler, obj, path))) continue;
+
+	if (ll == l)
+	  {
+	     /* only append the separator if this is the first item */
+	     /* we do this in here because we dont want to add a separator
+	      * when we have no context entries */
+	     mi = e_menu_item_new(mn);
+	     e_menu_item_separator_set(mi, 1);
+	  }
+
 	md = E_NEW(E_Fm2_Context_Menu_Data, 1);
 	if (!md) continue;
 	_e_fm2_menu_contexts = evas_list_append(_e_fm2_menu_contexts, md);

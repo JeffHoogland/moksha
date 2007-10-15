@@ -342,6 +342,16 @@ e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, co
      }
 }
 
+/* run a handlers test function */
+EAPI Evas_Bool
+e_fm2_mime_handler_test(E_Fm2_Mime_Handler *handler, Evas_Object *obj, const char *path)
+{
+   if ((!handler) || (!obj) || (!path)) return 0;
+   if (!handler->test_func) return 1;
+
+   return handler->test_func(obj, path, handler->test_data);
+}
+
 /* local subsystem functions */
 /* used to loop a glob hash and determine if the glob handler matches the filename */
 static Evas_Bool 
