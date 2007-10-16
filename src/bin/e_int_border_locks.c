@@ -293,7 +293,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Remember these Locks for this window next time it appears"), &(cfdata->remember_locks));
-   e_widget_list_object_append(o, ob, 0, 0, 1.0);
+   e_widget_list_object_append(o, ob, 0, 0, 0.0);
    return o;
 }
 
