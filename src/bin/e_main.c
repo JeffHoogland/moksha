@@ -303,7 +303,6 @@ main(int argc, char **argv)
 	  ecore_file_unlink(buf);
      }
    
-   
    TS("ecore init");
    /* basic ecore init */
    if (!ecore_init())
@@ -455,7 +454,24 @@ main(int argc, char **argv)
    TS("test done");
    
    /*** Finished loading subsystems, Loading WM Specifics ***/
-	 
+   TS("efreet");
+   /* init FDO desktop */
+   if (!efreet_init())
+     {
+        e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
+                               "Perhaps you are out of memory?"));
+        _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(efreet_shutdown);
+   if (!efreet_util_init())
+     {
+        e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
+                               "Perhaps you are out of memory?"));
+        _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(efreet_util_shutdown);
+   TS("efreet done");
+   
    TS("dirs");
    /* setup directories we will be using for configurations storage etc. */
    if (!_e_main_dirs_init())
@@ -465,6 +481,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_dirs_shutdown);
+   
    TS("filereg");
    /* setup file registry */
    if (!e_filereg_init())
@@ -473,6 +490,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_filereg_shutdown);
+   
    TS("config");
    /* init config system */
    if (!e_config_init())
@@ -481,6 +499,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_config_shutdown);
+   
    TS("path");
    /* setup paths for finding things */
    if (!_e_main_path_init())
@@ -490,6 +509,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_path_shutdown);
+   
    TS("ipc");
    /* setup e ipc service */
    if (e_ipc_init())
@@ -595,24 +615,6 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_intl_post_shutdown);
-   TS("efreet");
-   e_init_status_set(_("Starting Efreet"));
-   /* init FDO desktop */
-   if (!efreet_init())
-     {
-        e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
-                               "Perhaps you are out of memory?"));
-        _e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(efreet_shutdown);
-   if (!efreet_util_init())
-     {
-        e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
-                               "Perhaps you are out of memory?"));
-        _e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(efreet_util_shutdown);
-   TS("efreet done");
 
    e_init_status_set(_("Setting up Paths"));
    TS("efreet paths");
@@ -1056,6 +1058,7 @@ _e_main_dirs_init(void)
 	       }
 	  }
      }
+   
    snprintf(buf, sizeof(buf), "%s/applications", efreet_data_home_get());
    if (!ecore_file_mkpath(buf))
      {
@@ -1153,9 +1156,7 @@ _e_main_screens_init(void)
 	
 	man = e_manager_new(roots[i], i);
 	if (man)
-	  {
-	     e_manager_show(man);
-	  }
+	  e_manager_show(man);
 	else
 	  {
 	     e_error_message_show("Cannot create manager object for screen %i\n", 
