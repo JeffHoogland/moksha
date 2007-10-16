@@ -47,8 +47,12 @@ e_bg_shutdown(void)
    Evas_List *l = NULL;
 
    /* Deregister mime handler */
-   if (bg_hdl) e_fm2_mime_handler_free(bg_hdl);
-   
+   if (bg_hdl) 
+     {
+	e_fm2_mime_handler_glob_del(bg_hdl, "*.edj");
+	e_fm2_mime_handler_free(bg_hdl);
+     }
+
    /* Deregister files in use */
    if (e_config->desktop_default_background)
       e_filereg_deregister(e_config->desktop_default_background);

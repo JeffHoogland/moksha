@@ -13,7 +13,7 @@ struct _E_Fm2_Mime_Handler_Tuple
 
 /* local subsystem functions */
 static Evas_Bool _e_fm2_mime_handler_glob_match_foreach(Evas_Hash *hash __UNUSED__, const char *key, void *data, void *fdata);
-static Evas_Bool _e_fm_mime_icon_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _e_fm_mime_icon_foreach(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata);
 
 static Evas_Hash *icon_map = NULL;
 static Evas_Hash *_mime_handlers = NULL;
@@ -155,6 +155,7 @@ EAPI void
 e_fm2_mime_handler_free(E_Fm2_Mime_Handler *handler) 
 {
    if (!handler) return;
+   
    evas_stringshare_del(handler->label);
    if (handler->icon_group) evas_stringshare_del(handler->icon_group);
    E_FREE(handler);
@@ -362,7 +363,7 @@ _e_fm2_mime_handler_glob_match_foreach(Evas_Hash *hash __UNUSED__, const char *k
    Evas_List *l = NULL;
 
    tuple = fdata;
-   if (e_util_glob_match(tuple->str, key))
+   if (e_util_glob_match(tuple->str, key)) 
      {
 	handlers = data;
 	for (l = handlers; l; l = l->next)
@@ -376,7 +377,7 @@ _e_fm2_mime_handler_glob_match_foreach(Evas_Hash *hash __UNUSED__, const char *k
 }
 
 static Evas_Bool
-_e_fm_mime_icon_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata)
+_e_fm_mime_icon_foreach(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata)
 {
    Evas_List **freelist;
    

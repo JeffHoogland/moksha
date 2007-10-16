@@ -103,7 +103,11 @@ e_theme_init(void)
 EAPI int
 e_theme_shutdown(void)
 {
-   if (theme_hdl) e_fm2_mime_handler_free(theme_hdl);
+   if (theme_hdl) 
+     {
+	e_fm2_mime_handler_glob_del(theme_hdl, "*.edj");
+	e_fm2_mime_handler_free(theme_hdl);
+     }
 
    if (mappings)
      {
