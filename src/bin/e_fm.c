@@ -6660,7 +6660,6 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    E_Container *con;
    E_Zone *zone;
    Evas_List *sel, *l = NULL;
-   Evas_List *handlers = NULL;
    int x, y, can_w, can_w2, protect;
    char buf[4096];
    
