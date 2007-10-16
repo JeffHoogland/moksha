@@ -200,9 +200,9 @@ e_fm2_mime_handler_glob_add(E_Fm2_Mime_Handler *handler, const char *glob)
      }
    else
      {
-	/* no previous entry for this mime, lets add one */
+	/* no previous entry for this glob, lets add one */
 	handlers = evas_list_append(handlers, handler);
-	_glob_handlers = evas_hash_add(_mime_handlers, glob, handlers);
+	_glob_handlers = evas_hash_add(_glob_handlers, glob, handlers);
      }
 
    return 1;
@@ -216,7 +216,7 @@ e_fm2_mime_handler_mime_del(E_Fm2_Mime_Handler *handler, const char *mime)
 
    if ((!handler) || (!mime)) return;
 
-   /* if there's an entry for this mime already, then append to its list */
+   /* if there's an entry for this mime already, then remove from list */
    if ((handlers = evas_hash_find(_mime_handlers, mime)))
      {
 	handlers = evas_list_remove(handlers, handler);
@@ -235,7 +235,7 @@ e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob)
 
    if ((!handler) || (!glob)) return;
 
-   /* if there's an entry for this glob already, then append to its list */
+   /* if there's an entry for this glob already, then remove from list */
    if ((handlers = evas_hash_find(_glob_handlers, glob)))
      {
 	handlers = evas_list_remove(handlers, handler);
