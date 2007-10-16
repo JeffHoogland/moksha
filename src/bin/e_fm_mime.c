@@ -221,7 +221,7 @@ e_fm2_mime_handler_mime_del(E_Fm2_Mime_Handler *handler, const char *mime)
      {
 	handlers = evas_list_remove(handlers, handler);
 	if (handlers)
-	  _mime_handlers = evas_hash_modify(_mime_handlers, mime, handlers);
+	  evas_hash_modify(_mime_handlers, mime, handlers);
 	else
 	  _mime_handlers = evas_hash_del(_mime_handlers, mime, handlers);
      }
@@ -240,7 +240,7 @@ e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob)
      {
 	handlers = evas_list_remove(handlers, handler);
 	if (handlers)
-	  _glob_handlers = evas_hash_modify(_glob_handlers, glob, handlers);
+	  evas_hash_modify(_glob_handlers, glob, handlers);
 	else
 	  _glob_handlers = evas_hash_del(_glob_handlers, glob, handlers);
      }
