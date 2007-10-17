@@ -261,7 +261,6 @@ _e_smart_value_fetch(E_Smart_Data *sd)
 static void
 _e_smart_value_limit(E_Smart_Data *sd)
 {
-   printf("direction: %d\n", sd->direction);
    if (sd->val < sd->val_min) sd->val = sd->val_min;
    if (sd->val > sd->val_max) sd->val = sd->val_max;
    if (sd->val_max > sd->val_min)
