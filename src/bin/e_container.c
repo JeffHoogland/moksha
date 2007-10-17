@@ -166,12 +166,12 @@ e_container_new(E_Manager *man)
 	     E_Screen *scr;
 	     
 	     scr = l->data;
-	     zone = e_zone_new(con, scr->screen, scr->x, scr->y, scr->w, scr->h);
+	     zone = e_zone_new(con, scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
 	  }
      }
    else
      {
-	zone = e_zone_new(con, 0, 0, 0, con->w, con->h);
+	zone = e_zone_new(con, 0, 0, 0, 0, con->w, con->h);
      }
    return con;
 }
@@ -335,6 +335,24 @@ e_container_zone_number_get(E_Container *con, int num)
 	
 	zone = l->data;
 	if (zone->num == num)
+	  return zone;
+     }
+   return NULL;
+}
+
+EAPI E_Zone *
+e_container_zone_id_get(E_Container *con, int id)
+{
+   Evas_List *l;
+   
+   E_OBJECT_CHECK_RETURN(con, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
+   for (l = con->zones; l; l = l->next)
+     {
+	E_Zone *zone;
+	
+	zone = l->data;
+	if (zone->id == id)
 	  return zone;
      }
    return NULL;
@@ -1165,7 +1183,7 @@ static void
 _e_container_resize_handle(E_Container *con)
 {
    E_Event_Container_Resize *ev;
-   Evas_List *l, *screens;
+   Evas_List *l, *screens, *zones = NULL;
    int i;
    
    ev = calloc(1, sizeof(E_Event_Container_Resize));
@@ -1174,28 +1192,52 @@ _e_container_resize_handle(E_Container *con)
    
    e_xinerama_update();
    screens = (Evas_List *)e_xinerama_screens_get();
+   
    if (screens)
      {
+	for (l = con->zones; l; l = l->next)
+	  zones = evas_list_append(zones, l->data);
 	for (l = screens; l; l = l->next)
 	  {
 	     E_Screen *scr;
 	     E_Zone *zone;
 	     
 	     scr = l->data;
-	     zone = e_container_zone_number_get(con, scr->screen);
+	     zone = e_container_zone_id_get(con, scr->escreen);
 	     if (zone)
 	       {
 		  e_zone_move_resize(zone, scr->x, scr->y, scr->w, scr->h);
 		  e_shelf_zone_move_resize_handle(zone);	
+		  zones = evas_list_remove(zones, zone);
 	       }
 	     else
-	       zone = e_zone_new(con, scr->screen, scr->x, scr->y, scr->w, scr->h);
+	       {
+		  zone = e_zone_new(con, scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
+		  // ...
+		  // ...
+		  /* FIXME: if there were shelves for this zone - create them */
+		  // ....
+		  // ...
+		  // ...
+	       }
 	  }
-	if (evas_list_count(con->zones) != evas_list_count(screens))
+	if (zones)
 	  {
-	     /* xinerama screens where deleted! eek! */
-	     /* FIXME: handle deletion of a zone! */
-	     printf("FIXME: handle deletion of xinerama screens\n");
+	     while (zones)
+	       {
+		  E_Zone *zone;
+		  
+		  zone = zones->data;
+		  /* FIXME: any shelves for this zone - kill them */
+		  /* FIXME: take all borders in the zone and move elsewhere */
+		  // ...
+		  // ...
+		  //e_border_zone_set(bd, new_zone);
+		  // ...
+		  // ...
+		  e_object_del(E_OBJECT(zone));
+		  zones = evas_list_remove_list(zones, zones);
+	       }
 	  }
      }
    else

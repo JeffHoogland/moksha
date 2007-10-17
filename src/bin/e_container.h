@@ -109,6 +109,7 @@ EAPI void           e_container_border_list_free(E_Border_List *list);
 
 EAPI E_Zone      *e_container_zone_at_point_get(E_Container *con, int x, int y);
 EAPI E_Zone      *e_container_zone_number_get(E_Container *con, int num);
+EAPI E_Zone      *e_container_zone_id_get(E_Container *con, int id);
 
 EAPI E_Container_Shape *e_container_shape_add(E_Container *con);
 EAPI void               e_container_shape_show(E_Container_Shape *es);

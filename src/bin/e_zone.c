@@ -44,7 +44,7 @@ e_zone_shutdown(void)
 }
 
 EAPI E_Zone *
-e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
+e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
 {
    E_Zone *zone;
    char    name[40];
@@ -60,6 +60,7 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
    zone->w = w;
    zone->h = h;
    zone->num = num;
+   zone->id = id;
 
    zone->flip.left = ecore_x_window_input_new(con->win, zone->x, zone->y, 1, zone->h);
    zone->flip.right = ecore_x_window_input_new(con->win, zone->x + zone->w - 1, zone->y, 1, zone->h);

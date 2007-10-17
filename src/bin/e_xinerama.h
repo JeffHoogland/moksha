@@ -11,7 +11,7 @@ typedef struct _E_Screen E_Screen;
 
 struct _E_Screen
 {
-   int screen;
+   int screen, escreen;
    int x, y, w, h;
 };
 

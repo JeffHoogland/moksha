@@ -199,7 +199,7 @@ _e_xinerama_update(void)
 	scr = l->data;
 	printf("E17 INIT: XINERAMA CHOSEN: [%i], %ix%i+%i+%i\n",
 	       scr->screen, scr->w, scr->h, scr->x, scr->y);
-	scr->screen = n;
+	scr->escreen = n;
      }
 }
 
