@@ -71,50 +71,9 @@ e_shelf_config_init(void)
 	
 	cf_es = l->data;
 	if (cf_es->id <= 0) cf_es->id = id + 1;
-	zone = e_util_container_zone_number_get(cf_es->container, cf_es->zone);
+	zone = e_util_container_zone_id_get(cf_es->container, cf_es->zone);
 	id = cf_es->id;
-	if (zone)
-	  {
-	     E_Shelf *es;
-
-	     es = e_shelf_zone_new(zone, cf_es->name, cf_es->style,
-				   cf_es->popup, cf_es->layer, cf_es->id);
-	     if (es)
-	       {
-		  if (!cf_es->hide_timeout) cf_es->hide_timeout = 1.0; 
-		  if (!cf_es->hide_duration) cf_es->hide_duration = 1.0; 
-		  es->cfg = cf_es;
-		  es->fit_along = cf_es->fit_along;
-		  es->fit_size = cf_es->fit_size;
-
-		  e_shelf_orient(es, cf_es->orient);
-		  e_shelf_position_calc(es);
-		  e_shelf_populate(es);
-
-		  if (cf_es->desk_show_mode)
-		    {
-		       E_Desk *desk;
-		       Evas_List *ll;
-
-		       desk = e_desk_current_get(zone);
-		       for (ll = cf_es->desk_list; ll; ll = ll->next)
-			 {
-			    E_Config_Shelf_Desk *sd;
-
-			    sd = ll->data;
-			    if ((desk->x == sd->x) && (desk->y == sd->y))
-			      {
-				 e_shelf_show(es);
-				 break;
-			      }
-			 }
-		    }
-		  else
-		    e_shelf_show(es);
-
-		  e_shelf_toggle(es, 0);
-	       }
-	  }
+	if (zone) e_shelf_config_new(zone, cf_es);
      }
 }
 
@@ -655,6 +614,50 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 	evas_object_layer_set(es->o_event, es->cfg->layer);
 	evas_object_layer_set(es->o_base, es->cfg->layer);
      }
+}
+
+EAPI E_Shelf *
+e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
+{
+   E_Shelf *es;
+   
+   es = e_shelf_zone_new(zone, cf_es->name, cf_es->style,
+			 cf_es->popup, cf_es->layer, cf_es->id);
+   if (!es) return NULL;
+   
+   if (!cf_es->hide_timeout) cf_es->hide_timeout = 1.0; 
+   if (!cf_es->hide_duration) cf_es->hide_duration = 1.0; 
+   es->cfg = cf_es;
+   es->fit_along = cf_es->fit_along;
+   es->fit_size = cf_es->fit_size;
+   
+   e_shelf_orient(es, cf_es->orient);
+   e_shelf_position_calc(es);
+   e_shelf_populate(es);
+   
+   if (cf_es->desk_show_mode)
+     {
+	E_Desk *desk;
+	Evas_List *ll;
+	
+	desk = e_desk_current_get(zone);
+	for (ll = cf_es->desk_list; ll; ll = ll->next)
+	  {
+	     E_Config_Shelf_Desk *sd;
+	     
+	     sd = ll->data;
+	     if ((desk->x == sd->x) && (desk->y == sd->y))
+	       {
+		  e_shelf_show(es);
+		  break;
+	       }
+	  }
+     }
+   else
+     e_shelf_show(es);
+   
+   e_shelf_toggle(es, 0);
+   return es;
 }
 
 /* local subsystem functions */

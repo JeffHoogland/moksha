@@ -185,6 +185,16 @@ e_util_container_zone_number_get(int con_num, int zone_num)
    return e_container_zone_number_get(con, zone_num);
 }
 
+EAPI E_Zone *
+e_util_container_zone_id_get(int con_num, int id)
+{
+   E_Container *con;
+
+   con = e_util_container_number_get(con_num);
+   if (!con) return NULL;
+   return e_container_zone_id_get(con, id);
+}
+
 EAPI int
 e_util_head_exec(int head, const char *cmd)
 {

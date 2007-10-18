@@ -1212,29 +1212,69 @@ _e_container_resize_handle(E_Container *con)
 	       }
 	     else
 	       {
+		  Evas_List *ll;
+		  
 		  zone = e_zone_new(con, scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
-		  // ...
-		  // ...
-		  /* FIXME: if there were shelves for this zone - create them */
-		  // ....
-		  // ...
-		  // ...
+		  /* find any shelves configured for this zone and add them in */
+		  for (ll = e_config->shelves; ll; ll = ll->next)
+		    {
+		       E_Config_Shelf *cf_es;
+		       
+		       cf_es = ll->data;
+		       if (e_util_container_zone_id_get(cf_es->container, cf_es->zone) == zone)
+			 e_shelf_config_new(zone, cf_es);
+		    }
 	       }
 	  }
 	if (zones)
 	  {
+	     E_Zone *spare_zone = NULL;
+	     Evas_List *ll;
+	     
+	     for (ll = con->zones; ll; ll = ll->next)
+	       {
+		  spare_zone = ll->data;
+		  if (evas_list_find(zones, spare_zone))
+		    spare_zone = NULL;
+		  else break;
+	       }
 	     while (zones)
 	       {
 		  E_Zone *zone;
+		  Evas_List *shelves, *ll, *del_shelves;
+		  E_Border_List *bl;
+		  E_Border *bd;
 		  
 		  zone = zones->data;
-		  /* FIXME: any shelves for this zone - kill them */
-		  /* FIXME: take all borders in the zone and move elsewhere */
-		  // ...
-		  // ...
-		  //e_border_zone_set(bd, new_zone);
-		  // ...
-		  // ...
+		  /* delete any shelves on this zone */
+		  shelves = e_shelf_list();
+		  del_shelves = NULL;
+		  for (ll = shelves; ll; ll = ll->next)
+		    {
+		       E_Shelf *es;
+		       
+		       es = ll->data;
+		       if (es->zone == zone)
+			 del_shelves = evas_list_append(del_shelves, es);
+		    }
+		  while (del_shelves)
+		    {
+		       e_object_del(E_OBJECT(del_shelves->data));
+		       del_shelves = evas_list_remove_list(del_shelves, del_shelves);
+		    }
+		  bl = e_container_border_list_first(zone->container);
+		  while ((bd = e_container_border_list_next(bl)))
+		    {
+		       if (bd->zone == zone)
+			 {
+			    if (spare_zone) e_border_zone_set(bd, spare_zone);
+			    else
+			      printf("EEEK! should not be here - but no\n"
+				     "spare zones exist to move this\n"
+				     "window to!!! help!\n");
+			 }
+		    }
+		  e_container_border_list_free(bl);
 		  e_object_del(E_OBJECT(zone));
 		  zones = evas_list_remove_list(zones, zones);
 	       }
