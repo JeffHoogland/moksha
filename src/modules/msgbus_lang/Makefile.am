@@ -3,10 +3,6 @@ MODULE = msgbus_lang
 
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
-files_DATA = \
-e-module-$(MODULE).edj module.desktop
-
-EXTRA_DIST = $(files_DATA)
 
 # the module .so file
 INCLUDES               = -I. \
@@ -20,6 +16,12 @@ INCLUDES               = -I. \
 pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
 
 if HAVE_EDBUS
+files_DATA = \
+e-module-$(MODULE).edj \
+module.desktop
+
+EXTRA_DIST = $(files_DATA)
+
 pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h
