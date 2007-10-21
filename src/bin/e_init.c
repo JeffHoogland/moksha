@@ -124,7 +124,8 @@ e_init_status_set(const char *str)
 	return;
      }
    printf("---SEND\n");
-   ecore_ipc_client_send(client, E_IPC_DOMAIN_INIT, 1, 0, 0, 0, str, strlen(str) + 1);
+   ecore_ipc_client_send(client, E_IPC_DOMAIN_INIT, 1, 0, 0, 0, (void *)str, 
+			 strlen(str) + 1);
    ecore_ipc_client_flush(client);
 }
 
