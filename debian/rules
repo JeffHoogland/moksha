@@ -3,6 +3,8 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
+DEB_FIXPERMS_EXCLUDE := enlightenment_sys freqset
+
 install/enlightenment::
 	mkdir debian/enlightenment/etc
 	mv debian/tmp/usr/etc/enlightenment debian/enlightenment/etc/
