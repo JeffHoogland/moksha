@@ -36,6 +36,10 @@ typedef struct _E_Fm2_Config      E_Fm2_Config;
 typedef struct _E_Fm2_Icon        E_Fm2_Icon;
 typedef struct _E_Fm2_Icon_Info   E_Fm2_Icon_Info;
 
+#define E_FM_SHARED_DATATYPES
+#include "e_fm_shared.h"
+#undef E_FM_SHARED_DATATYPES
+
 #else
 #ifndef E_FM_H
 #define E_FM_H
@@ -153,6 +157,10 @@ EAPI E_Fm2_Icon_Info *e_fm2_icon_file_info_get(E_Fm2_Icon *ic);
     
 EAPI void        e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e);
 EAPI void        e_fm2_client_del(Ecore_Ipc_Event_Client_Del *e);
+
+EAPI void        _e_fm2_client_mount(const char *udi, const char *mountpoint);
+EAPI void        _e_fm2_client_unmount(const char *udi);
+EAPI void        _e_fm2_file_force_update(const char *path);
     
 #endif
 #endif

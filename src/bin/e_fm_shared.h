@@ -4,6 +4,7 @@
 # define E_DEVICE_TYPE_VOLUME  2
 typedef struct _E_Storage E_Storage;
 typedef struct _E_Volume  E_Volume;
+typedef struct _E_Fm2_Mount  E_Fm2_Mount;
 
 struct _E_Storage
 {
@@ -42,16 +43,37 @@ struct _E_Volume
    char *uuid;
    char *label;
    char *fstype;
+   unsigned long long size;
    
-   char partition;
+   char  partition;
+   int   partition_number;
    char *partition_label;
-   char mounted;
+   char  mounted;
    char *mount_point;
    
    char *parent;
    E_Storage *storage;
+   void *prop_handler;
+   Evas_List *mounts;
    
    unsigned char validated;
+};
+
+struct _E_Fm2_Mount
+{
+   const char   *udi;
+   const char   *mount_point;
+   
+   Ecore_Timer  *timeout;
+   void        (*mount_ok) (void *data);
+   void        (*mount_fail) (void *data);
+   void        (*unmount_ok) (void *data);
+   void        (*unmount_fail) (void *data);
+   void         *data;
+
+   E_Volume *volume;
+
+   unsigned char mounted : 1;
 };
 
 #endif
@@ -130,7 +152,9 @@ _e_volume_edd_new(void)
    DAT("uuid", uuid, EET_T_STRING);
    DAT("label", label, EET_T_STRING);
    DAT("fstype", fstype, EET_T_STRING);
+   DAT("size", size, EET_T_ULONG_LONG);
    DAT("partition", partition, EET_T_CHAR);
+   DAT("partition_number", partition_number, EET_T_INT);
    DAT("partition_label", partition_label, EET_T_STRING);
    DAT("mounted", mounted, EET_T_CHAR);
    DAT("mount_point", mount_point, EET_T_STRING);
