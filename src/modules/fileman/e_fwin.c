@@ -46,12 +46,12 @@ struct _E_Fwin
 
 struct _E_Fwin_Apps_Dialog
 {
-   E_Dialog           *dia;
-   E_Fwin             *fwin;
-   char               *app1, *app2;
-   Evas_Object        *o_ilist, *o_fm;
-   Evas_Object        *o_entry;
-   char               *exec_cmd;
+   E_Dialog    *dia;
+   E_Fwin      *fwin;
+   char        *app1, *app2;
+   Evas_Object *o_ilist, *o_fm;
+   Evas_Object *o_entry;
+   char        *exec_cmd;
 };
 
 typedef enum
@@ -526,8 +526,8 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 	fwin->overlay_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->overlay_file, "X-Enlightenment-Directory-Overlay");
 	fwin->scrollframe_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->scrollframe_file, "X-Enlightenment-Directory-Scrollframe");
 	fwin->theme_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->theme_file, "X-Enlightenment-Directory-Theme");
-// FIXME: there is no way to just unref an efreet desktop - free completely
-// frees - doesnt just unref.
+	// FIXME: there is no way to just unref an efreet desktop - free completely
+	// frees - doesnt just unref.
  	efreet_desktop_free(ef);
      }
    if (fwin->under_obj)
@@ -742,7 +742,7 @@ _e_fwin_cb_exec_cmd_changed(void *data, void *data2)
    
    fad = data;
    if (!fad) return;
-   if (!fad->app1 && !fad->app2) return;
+   if ((!fad->app1) && (!fad->app2)) return;
 
    if (fad->app1) 
      desktop = efreet_util_desktop_file_id_find(fad->app1);
@@ -750,10 +750,10 @@ _e_fwin_cb_exec_cmd_changed(void *data, void *data2)
      desktop = efreet_util_desktop_file_id_find(fad->app2);
 
    if (!desktop) return;
-   if (!strcmp (desktop->exec, fad->exec_cmd)) return;
+   if (!strcmp(desktop->exec, fad->exec_cmd)) return;
 
-   fad->app1 = NULL;
-   fad->app2 = NULL;
+   E_FREE(fad->app1);
+   E_FREE(fad->app2);
    if (fad->o_ilist) e_widget_ilist_unselect(fad->o_ilist);
    if (fad->o_fm) e_fm2_select_set(fad->o_fm, NULL, 0);
 }
@@ -773,7 +773,7 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
      desktop = efreet_util_desktop_file_id_find(fad->app1);
    else if (fad->app2) 
      desktop = efreet_util_desktop_file_id_find(fad->app2);
-   if (desktop || strcmp (fad->exec_cmd, ""))
+   if ((desktop) || (strcmp(fad->exec_cmd, "")))
      {
 	getcwd(pcwd, sizeof(pcwd));
 	chdir(e_fm2_real_path_get(fad->fwin->fm_obj));
@@ -860,6 +860,7 @@ _e_fwin_cb_dialog_free(void *obj)
    fad = dia->data;
    E_FREE(fad->app1);
    E_FREE(fad->app2);
+   E_FREE(fad->exec_cmd);
    fad->fwin->fad = NULL;
    free(fad);
 }
