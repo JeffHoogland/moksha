@@ -80,8 +80,12 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    
    import = E_NEW(Import, 1);
    if (!import) return NULL;
-   
-   win = e_win_new(parent->con);
+
+   if (parent)
+     win = e_win_new(parent->con);
+   else
+     win = e_win_new(e_container_current_get(e_manager_current_get()));
+
    if (!win) 
      { 
 	free(import);
@@ -96,8 +100,9 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    import->win = win;
    
    evas = e_win_evas_get(win);
-   
-   import->parent = parent;
+
+   if (parent)
+     import->parent = parent;
 
    e_win_title_set(win, _("Select a Picture..."));
    e_win_delete_callback_set(win, _import_cb_delete);
@@ -141,8 +146,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
      }
    ofm = e_widget_fsel_add(evas, fdev, fpath, NULL, NULL,
 			   _import_cb_sel_selected, import,
-			   _import_cb_sel_change, import, 1 
-			   );
+			   _import_cb_sel_change, import, 1);
    e_widget_fsel_window_object_set(ofm, E_OBJECT(win));
    import->fsel_obj = ofm;
    e_widget_list_object_append(o, ofm, 1, 1, 0.5);
@@ -230,7 +234,8 @@ e_int_config_wallpaper_del(E_Win *win)
    E_FREE(import->fdest);
    import->exe = NULL;
    e_object_del(E_OBJECT(import->win));
-   e_int_config_wallpaper_import_done(import->parent);
+   if (import->parent)
+     e_int_config_wallpaper_import_done(import->parent);
    E_FREE(import->cfdata->file);
    E_FREE(import->cfdata);
    if (import) free(import);
@@ -475,8 +480,9 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
 			   _("Enlightenment was unable to import the picture<br>"
 			     "due to conversion errors."));
      }
-   
-   e_int_config_wallpaper_update(import->parent, import->fdest);
+
+   if (import->parent)
+     e_int_config_wallpaper_update(import->parent, import->fdest);
 
    e_int_config_wallpaper_del(import->win);
    return 0;
@@ -554,7 +560,8 @@ _import_cb_ok(void *data, void *data2)
 		    }
 		  else 
 		    {
-		       e_int_config_wallpaper_update(import->parent, buf);
+		       if (import->parent)
+			 e_int_config_wallpaper_update(import->parent, buf);
 		       e_int_config_wallpaper_del(win);
 		       return;
 		    }
