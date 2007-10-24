@@ -5658,7 +5658,7 @@ _e_fm2_cb_resize_job(void *data)
 	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_LIST:
-	printf("LIST RESIZE HANDLE\n");
+//	printf("LIST RESIZE HANDLE\n");
 	if (sd->iconlist_changed)
 	  {
 	     for (l = sd->icons; l; l = l->next)
