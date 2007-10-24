@@ -6532,7 +6532,9 @@ _e_fm2_context_list_sort(void *data1, void *data2)
    if (!data1) return 1;
    if (!data2) return -1;
    d1 = data1;
+   if (!d1->label) return 1;
    d2 = data2;
+   if (!d2->label) return -1;
    return (strcmp(d1->label, d2->label));
 }
 
