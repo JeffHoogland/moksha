@@ -451,7 +451,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 {
    E_Fm2_Smart_Data *sd;
    Evas_List *l;
-   const char *realpath;
+   const char *realpath, *extended_path;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd || !path) return; // safety
@@ -489,7 +489,12 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 	sd->config->theme.fixed = 0;
      }
    
-   realpath = _e_fm2_dev_path_map(dev, path);
+   if (!strcmp(path, "~/")) 
+     extended_path = e_user_homedir_get();
+   else 
+     extended_path = path;
+
+   realpath = _e_fm2_dev_path_map(dev, extended_path);
    /* If the path doesn't exist, popup a dialog */
    if (dev && strncmp(dev, "removable:", 10)
        && !ecore_file_exists(realpath))
@@ -530,7 +535,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    sd->order_file = 0;
    
    if (dev) sd->dev = evas_stringshare_add(dev);
-   if (path) sd->path = evas_stringshare_add(path);
+   if (path) sd->path = evas_stringshare_add(extended_path);
    sd->realpath = realpath;
    _e_fm2_queue_free(obj);
    _e_fm2_regions_free(obj);
@@ -739,9 +744,11 @@ e_fm2_parent_go(Evas_Object *obj)
    if (!sd->path) return;
    path = strdup(sd->path);
    if (sd->dev) dev = strdup(sd->dev);
-   p = strrchr(path, '/');
-   if (p) *p = 0;
-   e_fm2_path_set(obj, dev, path);
+   if ((p = strrchr(path, '/'))) *p = 0;
+   if (*path == 0)
+     e_fm2_path_set(obj, dev, "/");
+   else
+     e_fm2_path_set(obj, dev, path);
    E_FREE(dev);
    E_FREE(path);
 }
@@ -3888,7 +3895,7 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    ic->info.icon = NULL;
    ic->info.link = NULL;
    //Hack
-   if (!strncmp(ic->info.file, "|storage_serial_", 16)) ecore_file_unlink(buf);
+   if (!strncmp(ic->info.file, "|storage_", 9)) ecore_file_unlink(buf);
    return 0;
 }
 

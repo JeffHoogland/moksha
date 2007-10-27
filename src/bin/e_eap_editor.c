@@ -568,7 +568,7 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
    Evas_Object *o;
    Evas_Coord mw, mh;
    E_Desktop_Edit *editor;
-   char *dir = NULL;
+   char *path = NULL, *icon_path = NULL;
 
    editor = data2;
    cfdata = data1;
@@ -586,22 +586,27 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
    /* XXX change this to a generic icon selector (that can do either
     * files from a dir, or icons in the current theme */
    if (cfdata->icon) 
-     dir = ecore_file_dir_get(cfdata->icon);
-
-   if (dir)
      {
-	o = e_widget_fsel_add(dia->win->evas, dir, "/", NULL, NULL,
+	icon_path = efreet_icon_path_find(e_config->icon_theme, 
+					  cfdata->icon, "scalable");
+	path = ecore_file_dir_get(icon_path);
+     }
+
+   if (path)
+     {
+	o = e_widget_fsel_add(dia->win->evas, "/", path, NULL, NULL,
 			      _e_desktop_edit_select_cb, cfdata,
 			      NULL, cfdata, 1);
-	free(dir);
+	free(path);
      }
    else
      {
-	o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
+	o = e_widget_fsel_add(dia->win->evas, "/", "~/", NULL, NULL,
 			      _e_desktop_edit_select_cb, cfdata,
 			      NULL, cfdata, 1);
      }
    
+   if (icon_path) free(icon_path);
    evas_object_show(o);
    editor->icon_fsel = o;
    e_widget_min_size_get(o, &mw, &mh);
@@ -626,7 +631,7 @@ _e_desktop_editor_cb_exec_select(void *data1, void *data2)
    Evas_Object *o;
    Evas_Coord mw, mh;
    E_Desktop_Edit *editor;
-   char *dir = NULL;
+   char *path = NULL;
 
    editor = data2;
    cfdata = data1;
@@ -642,18 +647,25 @@ _e_desktop_editor_cb_exec_select(void *data1, void *data2)
 
    /* absolute path to exe */
    if (cfdata->exec) 
-     dir = ecore_file_dir_get(cfdata->exec);
-
-   if (dir)
      {
-	o = e_widget_fsel_add(dia->win->evas, dir, "/", NULL, NULL,
+	path = ecore_file_dir_get(cfdata->exec);
+	if (path && !ecore_file_exists(path))
+	  {
+	     free(path);
+	     path = NULL;
+	  }
+     }
+
+   if (path)
+     {
+	o = e_widget_fsel_add(dia->win->evas, "/", path, NULL, NULL,
 			      _e_desktop_edit_select_cb, cfdata,
 			      NULL, cfdata, 1);
-	free(dir);
+	free(path);
      }
    else
      {
-	o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
+	o = e_widget_fsel_add(dia->win->evas, "/", "~/", NULL, NULL,
 			      _e_desktop_edit_select_cb, cfdata,
 			      NULL, cfdata, 1);
      }
