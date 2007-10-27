@@ -5823,6 +5823,7 @@ _e_border_eval(E_Border *bd)
 		    }
 	       }
 
+	     bd->shaped = 0;
 	     if (ok)
 	       {
 		  const char *shape_option;
@@ -5831,19 +5832,7 @@ _e_border_eval(E_Border *bd)
 		  shape_option = edje_object_data_get(o, "shaped");
 		  if (shape_option && !strcmp(shape_option, "1"))
 		    {
-		       if (!bd->shaped)
-			 {
-			    bd->shaped = 1;
-			    ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
-			 }
-		    }
-		  else
-		    {
-		       if (bd->shaped)
-			 {
-			    bd->shaped = 0;
-			    ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
-			 }
+		       bd->shaped = 1;
 		    }
 
 		  if (bd->client.netwm.name)
@@ -5877,6 +5866,7 @@ _e_border_eval(E_Border *bd)
 	     ecore_x_e_frame_size_set(bd->client.win, l, r, t, b);
 	     bd->w += (bd->client_inset.l + bd->client_inset.r);
 	     bd->h += (bd->client_inset.t + bd->client_inset.b);
+	     ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
 	     bd->changes.size = 1;
 	     ecore_x_window_move(bd->client.shell_win, l, t);
 	     if (bd->bg_object)
