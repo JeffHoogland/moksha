@@ -326,6 +326,7 @@ e_fm2_hal_volume_mountpoint_get(E_Volume *v)
    if (!v) return NULL;
    if (v->mount_point)
      {
+	printf("GET MOUNTPOINT = %s\n", v->mount_point);
 	return strdup(v->mount_point);
      }
    
@@ -340,6 +341,7 @@ e_fm2_hal_volume_mountpoint_get(E_Volume *v)
 	static int mount_count = 1;
 	snprintf(buf, sizeof(buf) - 1, "/media/unknown-%i", mount_count++);
      }
+   printf("GET MOUNTPOINT = %s\n", buf);
    return strdup(buf);
 }
 

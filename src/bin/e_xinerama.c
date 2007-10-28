@@ -53,6 +53,7 @@ e_xinerama_fake_screen_add(int x, int y, int w, int h)
 
    scr = calloc(1, sizeof(E_Screen));
    scr->screen = evas_list_count(fake_screens);
+   scr->escren = scr->screen;
    scr->x = x;
    scr->y = y;
    scr->w = w;
