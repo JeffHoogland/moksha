@@ -602,6 +602,7 @@ _e_winlist_activate(void)
 	if (e_config->winlist_warp_while_selecting)
 	  {
 	     ecore_x_pointer_xy_get(winlist->zone->container->win, &warp_x, &warp_y);
+	     e_border_focus_latest_set(ww->border);
 	     warp_to = 1;
 	     if (!warp_timer)
 	       warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
