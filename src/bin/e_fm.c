@@ -6447,18 +6447,23 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  {
 	     /* see if we have any mime handlers registered for this file */
 	     l = e_fm2_mime_handler_mime_handlers_get(ic->info.mime);
-	     snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
-	     _e_fm2_context_menu_append(obj, buf, l, mn, ic);
-	     if (l) evas_list_free(l);
+	     if (l) 
+	       {
+		  snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
+		  _e_fm2_context_menu_append(obj, buf, l, mn, ic);
+	       }
 	  }
 
 	/* see if we have any glob handlers registered for this file */
 	snprintf(buf, sizeof(buf), "*%s", strrchr(ic->info.file, '.'));
 	l = e_fm2_mime_handler_glob_handlers_get(buf);
-	snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
-	_e_fm2_context_menu_append(obj, buf, l, mn, ic);
-	if (l) evas_list_free(l);
-
+	if (l) 
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
+	     _e_fm2_context_menu_append(obj, buf, l, mn, ic);
+	     evas_list_free(l);
+	  }
+	
 	if (sd->icon_menu.end.func)
 	  sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, &(ic->info));
      }
@@ -6493,20 +6498,20 @@ static inline void
 _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Evas_List *l, E_Menu *mn, E_Fm2_Icon *ic) 
 {
    Evas_List *ll = NULL;
-   E_Menu_Item *mi;
 
    if (!l) return;
-   
+
    l = evas_list_sort(l, -1, _e_fm2_context_list_sort);
-   
+
    for (ll = l; ll; ll = ll->next) 
      {
 	E_Fm2_Mime_Handler *handler = NULL;
 	E_Fm2_Context_Menu_Data *md = NULL;
-	
-	handler = ll->data;
-	if ((!handler) || (!e_fm2_mime_handler_test(handler, obj, path))) continue;
+	E_Menu_Item *mi;
 
+	handler = ll->data;
+	if ((!handler) || (!e_fm2_mime_handler_test(handler, obj, path)) || 
+	    (!handler->label)) continue;
 	if (ll == l)
 	  {
 	     /* only append the separator if this is the first item */
@@ -6518,10 +6523,9 @@ _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Evas_List *l, E_M
 
 	md = E_NEW(E_Fm2_Context_Menu_Data, 1);
 	if (!md) continue;
-	_e_fm2_menu_contexts = evas_list_append(_e_fm2_menu_contexts, md);
-	
 	md->icon = ic;
 	md->handler = handler;
+	_e_fm2_menu_contexts = evas_list_append(_e_fm2_menu_contexts, md);
 
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, handler->label);
