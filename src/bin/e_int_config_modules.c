@@ -564,8 +564,8 @@ static Evas_Bool
 _modules_hash_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		      void *data, void *fdata __UNUSED__) 
 {
-   CFModule *module;
-   
+   CFModule *module = NULL;
+
    module = data;
    if (!module) return 1;
    if (module->short_name) evas_stringshare_del(module->short_name);
@@ -581,8 +581,8 @@ static Evas_Bool
 _modules_hash_cb_unsel(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		       void *data, void *fdata __UNUSED__) 
 {
-   CFModule *module;
-   
+   CFModule *module = NULL;
+
    module = data;
    if (!module) return 1;
    module->selected = 0;
@@ -593,9 +593,9 @@ static Evas_Bool
 _modules_hash_cb_load(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		      void *data, void *fdata __UNUSED__) 
 {
-   CFModule *module;
-   E_Module *mod;
-   
+   CFModule *module = NULL;
+   E_Module *mod = NULL;
+
    module = data;
    if ((!module) || (!module->selected)) return 1;
    mod = e_module_find(module->short_name);
@@ -609,9 +609,9 @@ static Evas_Bool
 _modules_hash_cb_unload(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 			void *data, void *fdata __UNUSED__) 
 {
-   CFModule *module;
-   E_Module *mod;
-   
+   CFModule *module = NULL;
+   E_Module *mod = NULL;
+
    module = data;
    if ((!module) || (!module->selected)) return 1;
    mod = e_module_find(module->short_name);
