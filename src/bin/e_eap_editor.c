@@ -587,9 +587,16 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
     * files from a dir, or icons in the current theme */
    if (cfdata->icon) 
      {
-	icon_path = efreet_icon_path_find(e_config->icon_theme, 
-					  cfdata->icon, "scalable");
-	path = ecore_file_dir_get(icon_path);
+	if (ecore_file_exists(cfdata->icon))
+	  icon_path = strdup(cfdata->icon);
+	else
+	  icon_path = efreet_icon_path_find(e_config->icon_theme, cfdata->icon, "scalable");
+
+	if (icon_path)
+	  {
+	     path = ecore_file_dir_get(icon_path);
+	     free(icon_path);
+	  }
      }
 
    if (path)
@@ -606,7 +613,6 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
 			      NULL, cfdata, 1);
      }
    
-   if (icon_path) free(icon_path);
    evas_object_show(o);
    editor->icon_fsel = o;
    e_widget_min_size_get(o, &mw, &mh);
