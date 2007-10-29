@@ -88,7 +88,7 @@ e_int_config_keybindings(E_Container *con, const char *params)
    cfd = e_config_dialog_new(con, _("Key Binding Settings"), "E", 
 			     "_config_keybindings_dialog",
 			     "enlightenment/keys", 0, v, NULL);
-   if (strlen(params) > 0)
+   if ((params) && (strlen(params) > 0))
      {
 	cfd->cfdata->params = params;
 	_add_key_binding_cb(cfd->cfdata, NULL);
