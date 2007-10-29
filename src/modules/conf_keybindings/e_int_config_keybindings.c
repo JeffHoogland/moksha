@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 #define TEXT_NONE_ACTION_KEY _("<None>")
@@ -9,8 +12,8 @@
 static void	    *_create_data(E_Config_Dialog *cfd);
 static void	    _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int	    _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object  *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas,
-					   E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas,
+					  E_Config_Dialog_Data *cfdata);
 
 /********* private functions ***************/
 static void _fill_actions_list(E_Config_Dialog_Data *cfdata);
@@ -979,7 +982,7 @@ _grab_key_down_cb(void *data, int type, void *event)
    cfdata = data;
 
    if (ev->win != cfdata->locals.bind_win) return 1;
-   
+
    if (!strcmp(ev->keyname, "Escape") &&
        !(ev->modifiers & ECORE_X_MODIFIER_SHIFT) &&
        !(ev->modifiers & ECORE_X_MODIFIER_CTRL) &&
@@ -1000,14 +1003,16 @@ _grab_key_down_cb(void *data, int type, void *event)
 	    !strcmp(ev->keyname, "Shift_L") || !strcmp(ev->keyname, "Shift_R") ||
 	    !strcmp(ev->keyname, "Alt_L") || !strcmp(ev->keyname, "Alt_R") ||
 	    !strcmp(ev->keyname, "Super_L") || !strcmp(ev->keyname, "Super_R"))
-	  ;
+	  {
+	     /* Do nothing */
+	  }
 	else
 	  {
 	     E_Config_Binding_Key *bi = NULL, *bi2 = NULL;
 	     Evas_List *l = NULL;
 	     int mod = E_BINDING_MODIFIER_NONE; 
 	     int found = 0, n;
-	     
+
 	     if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) 
 	       mod |= E_BINDING_MODIFIER_SHIFT;
 	     if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
@@ -1088,22 +1093,22 @@ _grab_key_down_cb(void *data, int type, void *event)
 		       e_widget_ilist_unselect(cfdata->gui.o_action_list);
 		       if (cfdata->locals.action) free(cfdata->locals.action);
 		       cfdata->locals.action = strdup("");
-	               if (cfdata->params[0])
-                         {
-			     int j, g = -1;
-			     _find_key_binding_action("exec", NULL, &g, NULL, &j);
-			     if (j >= 0)
-                               {
-			          e_widget_ilist_unselect(cfdata->gui.o_action_list);
-			          e_widget_ilist_selected_set(cfdata->gui.o_action_list, (j + g + 1));
-				  e_widget_entry_clear(cfdata->gui.o_params);
-				  e_widget_entry_text_set(cfdata->gui.o_params, cfdata->params);
-	                       } 
-                         }
-			else
-  			 {
-			       e_widget_entry_clear(cfdata->gui.o_params);
-	  		       e_widget_disabled_set(cfdata->gui.o_params, 1);
+		       if (cfdata->params[0])
+			 {
+			    int j, g = -1;
+			    _find_key_binding_action("exec", NULL, &g, NULL, &j);
+			    if (j >= 0)
+			      {
+				 e_widget_ilist_unselect(cfdata->gui.o_action_list);
+				 e_widget_ilist_selected_set(cfdata->gui.o_action_list, (j + g + 1));
+				 e_widget_entry_clear(cfdata->gui.o_params);
+				 e_widget_entry_text_set(cfdata->gui.o_params, cfdata->params);
+			      } 
+			 }
+		       else
+			 {
+			    e_widget_entry_clear(cfdata->gui.o_params);
+			    e_widget_disabled_set(cfdata->gui.o_params, 1);
 			 }
 		    }
 		  else
@@ -1138,7 +1143,7 @@ _grab_key_down_cb(void *data, int type, void *event)
 			     " is already used by <br>" 
 			     "<hilight>%s</hilight> action.<br>" 
 			     "Please choose another binding key sequence."), 
-			     label ? label : _("Unknown")); 
+			   label ? label : _("Unknown")); 
 		  e_util_dialog_show(_("Binding Key Error"), buf);
 	       }
 	     _grab_wnd_hide(cfdata);
