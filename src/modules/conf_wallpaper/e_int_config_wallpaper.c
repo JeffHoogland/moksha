@@ -417,7 +417,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	z = e_zone_current_get(c);
 	d = e_desk_current_get(z);
 
-	cfbg = e_bg_config_get(c->num, z->num, d->x, d->y);
+	cfbg = e_bg_config_get(c->num, z->id, d->x, d->y);
 	/* if we have a config for this bg, use it. */
 	if (cfbg)
 	  {
@@ -796,11 +796,11 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  }
 	else if (cfdata->all_this_desk_screen == E_CONFIG_WALLPAPER_DESK)
 	  {
-	     e_bg_del(z->container->num, z->num, d->x, d->y);
+	     e_bg_del(z->container->num, z->id, d->x, d->y);
 	     e_bg_del(z->container->num, -1, d->x, d->y);
-	     e_bg_del(-1, z->num, d->x, d->y);
+	     e_bg_del(-1, z->id, d->x, d->y);
 	     e_bg_del(-1, -1, d->x, d->y);
-	     e_bg_add(z->container->num, z->num, d->x, d->y, cfdata->bg);
+	     e_bg_add(z->container->num, z->id, d->x, d->y, cfdata->bg);
 	     
 	  }
 	else if (cfdata->all_this_desk_screen == E_CONFIG_WALLPAPER_SCREEN)
@@ -812,7 +812,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  cfbg = l->data;
 		  if (
 		      (cfbg->container == z->container->num) &&
-		      (cfbg->zone == z->num) 
+		      (cfbg->zone == z->id) 
 		     )
 		    fl = evas_list_append(fl, cfbg);
 	       }
@@ -823,7 +823,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
 		  fl = evas_list_remove_list(fl, fl);
 	       }
-	     e_bg_add(z->container->num, z->num, -1, -1, cfdata->bg);
+	     e_bg_add(z->container->num, z->id, -1, -1, cfdata->bg);
 	  }
      }
    e_bg_update();
