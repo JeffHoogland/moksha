@@ -22,8 +22,8 @@ typedef struct _E_Util_Fake_Mouse_Up_Info E_Util_Fake_Mouse_Up_Info;
 
 struct _E_Util_Fake_Mouse_Up_Info
 {
-   Evas        *evas;
-   int          button;
+   Evas *evas;
+   int   button;
 };
 
 /* local subsystem functions */
