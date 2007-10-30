@@ -605,12 +605,15 @@ _get_theme_categories_list(void)
 	E_Config_Theme *theme, *newtheme = NULL;
 
 	category = cats->data;
-	/* Not interested in adding "base" and "base/theme" */
-	if (strcmp(category, "base") && strcmp(category, "base/theme"))
+	/* Not interested in adding "base" */
+	if (strcmp(category, "base"))
 	  { 
 	     newtheme = (E_Config_Theme *)malloc(sizeof(E_Config_Theme));
 	     if (!newtheme) break;
-	     newtheme->category = strdup(category);
+	     if (!strcmp(category, "base/theme"))
+	       newtheme->category = strdup("base/theme/Base Theme");
+	     else
+	       newtheme->category = strdup(category);
 	     newtheme->file = NULL;
 
 	     for (themes = e_config->themes; themes; themes = themes->next)
@@ -1118,6 +1121,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	E_Config_Theme *theme, *ec_theme;
 
 	theme = themes->data;
+	if (!strcmp(theme->category, "base/theme/Base Theme"))
+	      theme->category = strdup("base/theme");
 	for (ec_themes = e_config->themes; ec_themes; ec_themes = ec_themes->next)
 	  {
 	     ec_theme = ec_themes->data;
