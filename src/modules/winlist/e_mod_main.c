@@ -62,7 +62,7 @@ e_modapi_shutdown(E_Module *m)
      {
 	e_action_predef_name_del(_("Window : List"), _("Previous Window"));
 	e_action_predef_name_del(_("Window : List"), _("Next Window"));
-	e_action_del("exebuf");
+	e_action_del("winlist");
 	act = NULL;
      }
    e_winlist_shutdown();
