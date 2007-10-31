@@ -84,5 +84,5 @@ collections {
 #include "default_deskpreview.edc"
 #include "default_fontpreview.edc"
 #include "default_wizard.edc"
+#include "default_toolbar.edc"
 }
-
