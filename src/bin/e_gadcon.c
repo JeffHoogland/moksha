@@ -672,6 +672,22 @@ e_gadcon_shelf_get(E_Gadcon *gc)
    return gc->shelf;
 }
 
+EAPI void 
+e_gadcon_toolbar_set(E_Gadcon *gc, E_Toolbar *toolbar) 
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   gc->toolbar = toolbar;
+}
+
+EAPI E_Toolbar *
+e_gadcon_toolbar_get(E_Gadcon *gc) 
+{
+   E_OBJECT_CHECK_RETURN(gc, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
+   return gc->toolbar;
+}
+
 EAPI E_Config_Gadcon_Client *
 e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
 {

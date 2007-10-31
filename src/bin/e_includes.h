@@ -119,7 +119,6 @@
 #include "e_color_dialog.h"
 #include "e_sys.h"
 #include "e_obj_dialog.h"
-//#include "e_fwin.h"
 #include "e_filereg.h"
 #include "e_widget_aspect.h"
 #include "e_widget_desk_preview.h"
@@ -130,3 +129,5 @@
 #include "e_widget_font_preview.h"
 #include "e_fm_custom.h"
 #include "e_msgbus.h"
+#include "e_toolbar.h"
+#include "e_int_toolbar_config.h"

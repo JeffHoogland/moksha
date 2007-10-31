@@ -156,7 +156,9 @@ e_widget_font_preview.h \
 e_fm_custom.h \
 e_fm_shared.h \
 e_config_data.h \
-e_intl_data.h
+e_intl_data.h \
+e_toolbar.h \
+e_int_toolbar_config.h
 
 enlightenment_src = \
 e_user.c \
@@ -286,6 +288,8 @@ e_order.c \
 e_exec.c \
 e_widget_font_preview.c \
 e_fm_custom.c \
+e_toolbar.c \
+e_int_toolbar_config.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
