@@ -82,11 +82,12 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    Dropshadow *ds;
+   char buf[4096];
    
    ds = _ds_init(m);
-   
+   snprintf(buf, sizeof(buf), "%s/e-module-dropshadow.edj", e_module_dir_get(m));
    e_configure_registry_category_add("appearance", 10, _("Appearance"), NULL, "enlightenment/appearance");
-   e_configure_registry_item_add("appearance/dropshadow", 150, _("Dropshadow"), NULL, "enlightenment/dropshadow", e_int_config_dropshadow_module);
+   e_configure_registry_item_add("appearance/dropshadow", 150, _("Dropshadow"), NULL, buf, e_int_config_dropshadow_module);
    
    dropshadow_mod = m;
    
