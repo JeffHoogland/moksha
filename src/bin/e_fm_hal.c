@@ -81,7 +81,7 @@ e_fm2_hal_storage_find(const char *udi)
 {
    Evas_List *l;
 
-   if (!udi) return;
+   if (!udi) return NULL;
    
    for (l = _e_stores; l; l = l->next)
      {
@@ -98,7 +98,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 {
    E_Storage *s;
 
-   if (e_fm2_hal_volume_find(v)) return;
+   if (e_fm2_hal_volume_find(v->udi)) return;
 
    v->validated = 1;
    _e_vols = evas_list_append(_e_vols, v);
@@ -401,7 +401,7 @@ e_fm2_hal_mount(E_Volume *v,
 {
    E_Fm2_Mount *m;
 
-   if (!v) return;
+   if (!v) return NULL;
 
    m = calloc(1, sizeof(E_Fm2_Mount));
    if (!m) return NULL;

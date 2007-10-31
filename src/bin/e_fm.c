@@ -2272,8 +2272,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
    else if (CMP("removable:*")) 
      {
 	E_Volume *v;
-	char *mountpoint;
- 	
+
 	v = e_fm2_hal_volume_find(dev + strlen("removable:"));
 	if (v) 
 	  {

@@ -31,6 +31,7 @@
 #include <Ecore_Ipc.h>
 #include <Ecore_File.h>
 #include <Evas.h>
+#include <Efreet.h>
 #include <Eet.h>
 #include "config.h"
 
@@ -689,10 +690,8 @@ static void
 _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *error)
 {
    E_Volume *v = data;
-   E_Storage *s = NULL;
    E_Hal_Device_Get_All_Properties_Return *ret = reply_data;
    int err = 0;
-   char *str = NULL;
 
    if (!ret) return;
    if (dbus_error_is_set(error))

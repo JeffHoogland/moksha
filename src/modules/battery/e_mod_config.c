@@ -39,6 +39,7 @@ e_int_config_battery_module(E_Container *con, const char *params __UNUSED__)
 			     "E", "_e_mod_battery_config_dialog",
 			     buf, 0, v, NULL);
    battery_config->config_dialog = cfd;
+   return cfd;
 }
 
 static void

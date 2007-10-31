@@ -27,7 +27,7 @@ e_int_config_dropshadow_module(E_Container *con, const char *params __UNUSED__)
    Dropshadow *ds;
 
    ds = dropshadow_mod->data;
-   if (e_config_dialog_find("E", "_e_mod_dropshadow_config_dialog")) return;   
+   if (e_config_dialog_find("E", "_e_mod_dropshadow_config_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    
    v->create_cfdata = _create_data;
@@ -41,6 +41,7 @@ e_int_config_dropshadow_module(E_Container *con, const char *params __UNUSED__)
 			     "E", "_e_mod_dropshadow_config_dialog",
 			     buf, 0, v, ds);
    ds->config_dialog = cfd;
+   return cfd;
 }
 
 static void 
