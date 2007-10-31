@@ -93,7 +93,7 @@ e_int_config_keybindings(E_Container *con, const char *params)
 			     "enlightenment/keys", 0, v, NULL);
    if ((params) && (params[0]))
      {
-	cfd->cfdata->params = params;
+	cfd->cfdata->params = strdup(params);
 	_add_key_binding_cb(cfd->cfdata, NULL);
      }
 
