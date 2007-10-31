@@ -1440,12 +1440,19 @@ e_modapi_init(E_Module *m)
    battery_config->module = m;
    
    e_gadcon_provider_register(&_gadcon_class);
+   
+   e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "enlightenment/advanced");
+   e_configure_registry_item_add("advanced/battery", 100, _("Battery Meter"), NULL, "enlightenment/battery", e_int_config_battery_module);
+   
    return m;
 }
 
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
+   e_configure_registry_item_del("advanced/battery");
+   e_configure_registry_category_del("advanced");
+   
    e_gadcon_provider_unregister(&_gadcon_class);
    
    if (battery_config->config_dialog)
@@ -1468,18 +1475,6 @@ EAPI int
 e_modapi_save(E_Module *m)
 {
    e_config_domain_save("module.battery", conf_edd, battery_config);
-   return 1;
-}
-
-EAPI int
-e_modapi_about(E_Module *m)
-{
-   e_module_dialog_show(m, _("Enlightenment Battery Module"),
-		       _("A basic battery meter that uses either"
-		 	 "<hilight>ACPI</hilight> or <hilight>APM</hilight><br>"
-			 "on Linux to monitor your battery and AC power adaptor<br>"
-			 "status. This will work under Linux and FreeBSD and is only<br>"
-			 "as accurate as your BIOS or kernel drivers."));
    return 1;
 }
 

@@ -3,7 +3,7 @@
  */
 #ifdef E_TYPEDEFS
 
-#define E_MODULE_API_VERSION 6
+#define E_MODULE_API_VERSION 7
 
 typedef struct _E_Module     E_Module;
 typedef struct _E_Module_Api E_Module_Api;
@@ -38,8 +38,6 @@ struct _E_Module
       void * (*init)        (E_Module *m);
       int    (*shutdown)    (E_Module *m);
       int    (*save)        (E_Module *m);
-      int    (*about)       (E_Module *m);
-      int    (*config)      (E_Module *m);
    } func;
    
    unsigned char        enabled : 1;
@@ -68,7 +66,6 @@ EAPI int          e_module_enabled_get(E_Module *m);
 EAPI int          e_module_save_all(void);
 EAPI E_Module    *e_module_find(const char *name);
 EAPI Evas_List   *e_module_list(void);
-EAPI void         e_module_dialog_show(E_Module *m, const char *title, const char *body);
 EAPI void         e_module_delayed_set(E_Module *m, int delayed);
     
 #endif

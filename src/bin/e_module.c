@@ -129,20 +129,11 @@ e_module_new(const char *name)
    m->func.init = dlsym(m->handle, "e_modapi_init");
    m->func.shutdown = dlsym(m->handle, "e_modapi_shutdown");
    m->func.save = dlsym(m->handle, "e_modapi_save");
-   m->func.about = dlsym(m->handle, "e_modapi_about");
-   m->func.config = dlsym(m->handle, "e_modapi_config");
 
    if ((!m->func.init) ||
        (!m->func.shutdown) ||
        (!m->func.save) ||
-       (!m->func.about) ||
-       (!m->api) ||
-       
-       /*
-	* this is to more forcibly catch old/bad modules. will go - eventually,
-	* but for now is a good check to have
-	*/
-       (dlsym(m->handle, "e_modapi_info"))
+       (!m->api)
        )
      {
 	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"
@@ -156,8 +147,6 @@ e_module_new(const char *name)
 	m->func.init = NULL;
 	m->func.shutdown = NULL;
 	m->func.save = NULL;
-	m->func.about = NULL;
-	m->func.config = NULL;
 
 	dlclose(m->handle);
 	m->handle = NULL;
@@ -178,8 +167,6 @@ e_module_new(const char *name)
 	m->func.init = NULL;
 	m->func.shutdown = NULL;
 	m->func.save = NULL;
-	m->func.about = NULL;
-	m->func.config = NULL;
 	dlclose(m->handle);
 	m->handle = NULL;
 	m->error = 1;

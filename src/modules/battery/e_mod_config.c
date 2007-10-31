@@ -17,8 +17,8 @@ static int           _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Dat
 static Evas_Object   *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int           _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
-void
-_config_battery_module(void) 
+EAPI E_Config_Dialog *
+e_int_config_battery_module(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -34,7 +34,7 @@ _config_battery_module(void)
    v->advanced.create_widgets = _advanced_create_widgets;
 
    snprintf(buf, sizeof(buf), "%s/e-module-battery.edj", e_module_dir_get(battery_config->module));
-   cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
+   cfd = e_config_dialog_new(con,
 			     _("Battery Monitor Configuration"), 
 			     "E", "_e_mod_battery_config_dialog",
 			     buf, 0, v, NULL);

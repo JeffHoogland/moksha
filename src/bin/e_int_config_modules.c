@@ -14,7 +14,6 @@ struct _E_Config_Dialog_Data
 {
    Evas_Object *o_avail, *o_loaded;
    Evas_Object *b_load, *b_unload;
-   Evas_Object *b_about, *b_config;
    Evas_Object *o_desc;
 };
 
@@ -34,8 +33,6 @@ static void _avail_list_cb_change  (void *data, Evas_Object *obj);
 static void _loaded_list_cb_change (void *data, Evas_Object *obj);
 static void _btn_cb_unload         (void *data, void *data2);
 static void _btn_cb_load           (void *data, void *data2);
-static void _btn_cb_about          (void *data, void *data2);
-static void _btn_cb_config         (void *data, void *data2);
 static int  _upd_hdl_cb            (void *data, int type, void *event);
 
 /* Hash callback Protos */
@@ -49,12 +46,6 @@ static Evas_Bool _modules_hash_cb_load   (Evas_Hash *hash __UNUSED__,
 					  const char *key __UNUSED__, 
 					  void *data, void *fdata __UNUSED__);
 static Evas_Bool _modules_hash_cb_unload (Evas_Hash *hash __UNUSED__, 
-					  const char *key __UNUSED__, 
-					  void *data, void *fdata __UNUSED__);
-static Evas_Bool _modules_hash_cb_about  (Evas_Hash *hash __UNUSED__, 
-					  const char *key __UNUSED__, 
-					  void *data, void *fdata __UNUSED__);
-static Evas_Bool _modules_hash_cb_config (Evas_Hash *hash __UNUSED__, 
 					  const char *key __UNUSED__, 
 					  void *data, void *fdata __UNUSED__);
 
@@ -172,18 +163,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    _fill_loaded_list(cfdata);
    e_widget_frametable_object_append(of, ow, 0, 0, 2, 1, 1, 1, 1, 1);
 
-   ow = e_widget_button_add(evas, _("About"), NULL, _btn_cb_about, 
-			    NULL, NULL);
-   cfdata->b_about = ow;
-   e_widget_disabled_set(ow, 1);
-   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 0, 0);
-
-   ow = e_widget_button_add(evas, _("Configure"), NULL, _btn_cb_config, 
-			    NULL, NULL);
-   cfdata->b_config = ow;
-   e_widget_disabled_set(ow, 1);
-   e_widget_frametable_object_append(of, ow, 1, 1, 1, 1, 1, 0, 0, 0);
-   
    ow = e_widget_button_add(evas, _("Unload Module"), NULL, _btn_cb_unload, 
 			    cfdata, NULL);
    cfdata->b_unload = ow;
@@ -401,8 +380,6 @@ _avail_list_cb_change(void *data, Evas_Object *obj)
    /* Unselect all in loaded list & disable buttons */
    e_widget_ilist_unselect(cfdata->o_loaded);
    e_widget_disabled_set(cfdata->b_unload, 1);
-   e_widget_disabled_set(cfdata->b_about, 1);
-   e_widget_disabled_set(cfdata->b_config, 1);
 
    /* Make sure something is selected, else disable the load button */
    if (e_widget_ilist_selected_count_get(cfdata->o_avail) <= 0) 
@@ -448,8 +425,6 @@ _loaded_list_cb_change(void *data, Evas_Object *obj)
    /* Unselect all in avail list & disable buttons */
    e_widget_ilist_unselect(cfdata->o_avail);
    e_widget_disabled_set(cfdata->b_load, 1);
-   e_widget_disabled_set(cfdata->b_about, 1);
-   e_widget_disabled_set(cfdata->b_config, 1);
    
    /* Make sure something is selected, else disable the buttons */
    c = e_widget_ilist_selected_count_get(cfdata->o_loaded);
@@ -476,17 +451,6 @@ _loaded_list_cb_change(void *data, Evas_Object *obj)
 	else
 	  e_widget_textblock_markup_set(cfdata->o_desc, "Description: Unavailable.");
 	module->selected = 1;
-	if (c == 1) 
-	  {
-	     mod = e_module_find(module->short_name);
-	     if (mod) 
-	       {
-		  if (mod->func.about)
-		    e_widget_disabled_set(cfdata->b_about, 0);
-		  if (mod->func.config)
-		    e_widget_disabled_set(cfdata->b_config, 0);
-	       }
-	  }
      }
    if (l) evas_list_free(l);
    e_widget_disabled_set(cfdata->b_unload, 0);
@@ -506,8 +470,6 @@ _btn_cb_unload(void *data, void *data2)
    evas_hash_foreach(modules, _modules_hash_cb_unsel, NULL);
    e_widget_ilist_unselect(cfdata->o_loaded);
    e_widget_disabled_set(cfdata->b_unload, 1);
-   e_widget_disabled_set(cfdata->b_about, 1);
-   e_widget_disabled_set(cfdata->b_config, 1);
 
    _fill_avail_list(cfdata);
    _fill_loaded_list(cfdata);
@@ -530,18 +492,6 @@ _btn_cb_load(void *data, void *data2)
    
    _fill_avail_list(cfdata);
    _fill_loaded_list(cfdata);
-}
-
-static void 
-_btn_cb_about(void *data, void *data2) 
-{
-   evas_hash_foreach(modules, _modules_hash_cb_about, NULL);
-}
-
-static void 
-_btn_cb_config(void *data, void *data2) 
-{
-   evas_hash_foreach(modules, _modules_hash_cb_config, NULL);
 }
 
 static int 
@@ -621,35 +571,5 @@ _modules_hash_cb_unload(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 	e_object_del(E_OBJECT(mod));
      }
    module->enabled = 0;
-   return 1;
-}
-
-static Evas_Bool 
-_modules_hash_cb_about(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
-		       void *data, void *fdata __UNUSED__) 
-{
-   CFModule *module = NULL;
-   E_Module *mod = NULL;
-   
-   module = data;
-   if ((!module) || (!module->selected)) return 1;
-   mod = e_module_find(module->short_name);
-   if ((!mod) || (!mod->func.about)) return 1;
-   mod->func.about(mod);
-   return 1;
-}
-
-static Evas_Bool 
-_modules_hash_cb_config(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
-			void *data, void *fdata __UNUSED__) 
-{
-   CFModule *module = NULL;
-   E_Module *mod = NULL;
-   
-   module = data;
-   if ((!module) || (!module->selected)) return 1;
-   mod = e_module_find(module->short_name);
-   if ((!mod) || (!mod->func.config)) return 1;
-   mod->func.config(mod);
    return 1;
 }

@@ -26,8 +26,8 @@
 typedef Eet_Data_Descriptor                 E_Config_DD;
 
 #else
-#ifndef E_CONFIG_H
-#define E_CONFIG_H
+#ifndef E_CONFIG_DATA_H
+#define E_CONFIG_DATA_H
 
 EAPI E_Config_DD *e_config_descriptor_new(const char *name, int size);
 
