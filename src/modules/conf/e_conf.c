@@ -279,8 +279,13 @@ _e_configure_category_add(E_Configure *eco, const char *label, const char *icon)
    cat->label = evas_stringshare_add(label);
    if (icon) 
      {
-	o = edje_object_add(eco->evas);
-	e_util_edje_icon_set(o, icon);
+	if (e_util_edje_icon_check(icon)) 
+	  {
+	     o = edje_object_add(eco->evas);
+	     e_util_edje_icon_set(o, icon);
+	  }
+	else
+	  o = e_util_icon_add(icon, eco->evas);
      }
    eco->cats = evas_list_append(eco->cats, cat);
 
@@ -314,8 +319,13 @@ _e_configure_category_cb(void *data)
 	if (!ci) continue;
 	if (ci->icon) 
 	  {
-	     o = edje_object_add(eco->evas);
-	     e_util_edje_icon_set(o, ci->icon);
+	     if (e_util_edje_icon_check(ci->icon)) 
+	       {
+		  o = edje_object_add(eco->evas);
+		  e_util_edje_icon_set(o, ci->icon);
+	       }
+	     else
+	       o = e_util_icon_add(ci->icon, eco->evas);
 	  }
 	e_widget_ilist_append(eco->item_list, o, ci->label, _e_configure_item_cb, ci, NULL);
      }
