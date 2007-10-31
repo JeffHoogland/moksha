@@ -280,7 +280,7 @@ e_intl_language_list(void)
 	     dir_languages = evas_list_remove_list(dir_languages, dir_languages);
 
 	     if ((_e_intl_language_list_find(all_languages, language)) || 
-		 (strlen(language) > 2) && (!_e_intl_locale_validate(language)))
+		 ((strlen(language) > 2) && (!_e_intl_locale_validate(language))))
 	       {
 		  free(language);
 	       }
