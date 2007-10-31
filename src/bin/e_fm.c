@@ -450,7 +450,6 @@ EAPI void
 e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 {
    E_Fm2_Smart_Data *sd;
-   Evas_List *l;
    const char *realpath, *extended_path;
 
    sd = evas_object_smart_data_get(obj);

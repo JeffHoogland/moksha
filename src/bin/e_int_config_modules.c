@@ -437,7 +437,6 @@ _loaded_list_cb_change(void *data, Evas_Object *obj)
    for (i = 0, l = e_widget_ilist_items_get(cfdata->o_loaded); l; l = l->next, i++)
      {
 	E_Ilist_Item *item = NULL;
-	E_Module *mod = NULL;
 	CFModule *module = NULL;
 	const char *lbl;
 
