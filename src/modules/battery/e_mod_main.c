@@ -1385,7 +1385,7 @@ _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    if (!battery_config) return;
    if (battery_config->config_dialog) return;
-   _config_battery_module();
+   e_int_config_battery_module(m->zone->container, NULL);
 }
 
 void
@@ -1475,15 +1475,6 @@ EAPI int
 e_modapi_save(E_Module *m)
 {
    e_config_domain_save("module.battery", conf_edd, battery_config);
-   return 1;
-}
-
-EAPI int
-e_modapi_config(E_Module *m)
-{
-   if (!battery_config) return 0;
-   if (battery_config->config_dialog) return 0;
-   _config_battery_module();
    return 1;
 }
 /**/
