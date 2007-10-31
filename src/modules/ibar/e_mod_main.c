@@ -1269,17 +1269,6 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-EAPI int
-e_modapi_about(E_Module *m)
-{
-   e_module_dialog_show(m, _("Enlightenment IBar Module"),
-			_("This is the IBar Application Launcher bar module for Enlightenment.<br>"
-			  "It is a first example module and is being used to flesh out several<br>"
-			  "interfaces in Enlightenment 0.17.0. It is under heavy development,<br>"
-			  "so expect it to <hilight>break often</hilight> and change as it improves."));
-   return 1;
-}
-
 static int
 _ibar_cb_config_icon_theme(void *data, int ev_type, void *ev)
 {

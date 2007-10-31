@@ -76,15 +76,6 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-EAPI int
-e_modapi_about(E_Module *m)
-{
-   e_module_dialog_show(m,
-			_("Enlightenment Winlist Module"),
-			_("A module for displaying a list of windows to switch between."));
-   return 1;
-}
-
 /* action callback */
 static void
 _e_mod_action_winlist_cb(E_Object *obj, const char *params)

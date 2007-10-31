@@ -76,48 +76,20 @@ EAPI E_Module_Api e_modapi =
    "Dropshadow"
 };
 
+EAPI E_Module *dropshadow_mod = NULL;
+
 EAPI void *
 e_modapi_init(E_Module *m)
 {
    Dropshadow *ds;
    
    ds = _ds_init(m);
-#if 0
-     {
-	Shpix *sh;
-	double t1, t2;
-	int i;
-	
-	sh = _ds_shpix_new(1000, 1000);
-	t1 = ecore_time_get();
-	for (i = 0; i < 100; i++)
-	  {
-	     _ds_shpix_blur(sh, 0, 0, 1000, 100, ds->table.gauss, ds->conf->blur_size, 1);
-	  }
-	t2 = ecore_time_get();
-	printf("blur time: %3.3f\n", t2 -t1);
-	_ds_shpix_free(sh);
-	
-	sh = _ds_shpix_new(1000, 1000);
-	t1 = ecore_time_get();
-	for (i = 0; i < 100; i++)
-	  {
-	     _ds_shpix_blur(sh, 0, 0, 1000, 100, ds->table.gauss, ds->conf->blur_size, 2);
-	  }
-	t2 = ecore_time_get();
-	printf("blur time: %3.3f\n", t2 -t1);
-	
-	sh = _ds_shpix_new(1000, 1000);
-	t1 = ecore_time_get();
-	for (i = 0; i < 100; i++)
-	  {
-	     _ds_shpix_blur(sh, 0, 0, 1000, 100, ds->table.gauss, ds->conf->blur_size, 4);
-	  }
-	t2 = ecore_time_get();
-	printf("blur time: %3.3f\n", t2 -t1);
-	_ds_shpix_free(sh);
-     }
-#endif   
+   
+   e_configure_registry_category_add("appearance", 10, _("Appearance"), NULL, "enlightenment/appearance");
+   e_configure_registry_item_add("appearance/dropshadow", 150, _("Dropshadow"), NULL, "enlightenment/dropshadow", e_int_config_dropshadow_module);
+   
+   dropshadow_mod = m;
+   
    return ds;
 }
 
@@ -125,6 +97,9 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    Dropshadow *ds;
+   
+   e_configure_registry_item_del("appearance/dropshadow");
+   e_configure_registry_category_del("appearance");
    
    ds = m->data;
    if (ds) 
@@ -135,7 +110,7 @@ e_modapi_shutdown(E_Module *m)
 	     ds->config_dialog = NULL;
 	  }
 	_ds_shutdown(ds);
-     }
+     }   
    return 1;
 }
 
@@ -146,29 +121,6 @@ e_modapi_save(E_Module *m)
    
    ds = m->data;
    e_config_domain_save("module.dropshadow", ds->conf_edd, ds->conf);
-   return 1;
-}
-
-EAPI int
-e_modapi_about(E_Module *m)
-{
-   e_module_dialog_show(m, _("Enlightenment Dropshadow Module"),
-			_("This is the dropshadow module that allows dropshadows to be cast<br>"
-			  "on the desktop background - without special X-Server extensions<br>"
-			  "or hardware acceleration."));
-   return 1;
-}
-
-EAPI int
-e_modapi_config(E_Module *m) 
-{
-   Dropshadow *ds;
-   E_Container *con;
-   
-   ds = m->data;
-   if (!ds) return 0;
-   con = e_container_current_get(e_manager_current_get());
-   _config_dropshadow_module(con, ds);
    return 1;
 }
 

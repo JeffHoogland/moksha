@@ -145,25 +145,6 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-EAPI int
-e_modapi_about(E_Module *m)
-{
-   e_module_dialog_show(m,
-			_("Enlightenment File Manager"),
-			_("A module for providing a file manager."));
-   return 1;
-}
-
-EAPI int
-e_modapi_config(E_Module *m) 
-{
-   E_Container *con;
-   
-   con = e_container_current_get(e_manager_current_get());
-   e_int_config_fileman(con, NULL);
-   return 1;
-}
-
 /* action callback */
 static void
 _e_mod_action_fileman_cb(E_Object *obj, const char *params)

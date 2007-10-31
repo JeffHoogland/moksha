@@ -79,15 +79,6 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-EAPI int
-e_modapi_about(E_Module *m)
-{
-   e_module_dialog_show(m,
-			_("Enlightenment Configuration Module - Wallpaper"),
-			_("Configuration dialog for wallpaper configuration."));
-   return 1;
-}
-
 /* menu item callback(s) */
 static void 
 _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi)

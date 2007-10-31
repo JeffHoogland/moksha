@@ -63,7 +63,6 @@ EAPI extern E_Module_Api e_modapi;
 EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
-EAPI int   e_modapi_about    (E_Module *m);
 
 void config_temperature_module(Config_Face *inst);
 void temperature_face_update_config(Config_Face *inst);

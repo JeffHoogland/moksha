@@ -54,12 +54,3 @@ e_modapi_save(E_Module *m)
 {
    return 1;
 }
-
-EAPI int
-e_modapi_about(E_Module *m)
-{
-   e_module_dialog_show(m,
-			_("Enlightenment Configuration Module - Startup"),
-			_("Configuration dialog for startup."));
-   return 1;
-}

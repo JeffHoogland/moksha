@@ -47,7 +47,6 @@ EAPI extern E_Module_Api e_modapi;
 EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
-EAPI int   e_modapi_about    (E_Module *m);
 
 void  _pager_cb_config_updated(void);
 void _config_pager_module(Config_Item *ci);

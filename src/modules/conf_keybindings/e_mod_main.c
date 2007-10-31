@@ -54,12 +54,3 @@ e_modapi_save(E_Module *m)
 {
    return 1;
 }
-
-EAPI int
-e_modapi_about(E_Module *m)
-{
-   e_module_dialog_show(m,
-			_("Enlightenment Configuration Module - Key Bindings"),
-			_("Configuration dialog for key bindings."));
-   return 1;
-}
