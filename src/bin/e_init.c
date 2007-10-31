@@ -18,8 +18,7 @@ static int
 _e_init_cb_exe_event_del(void *data, int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
-   Evas_List *l;
-   
+
    ev = event;
    if (ev->exe == init_exe)
      {
@@ -32,7 +31,7 @@ _e_init_cb_exe_event_del(void *data, int type, void *event)
 
 EAPI int
 e_init_init(void)
-{   
+{
    exe_del_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
 					      _e_init_cb_exe_event_del,
 					      NULL);
@@ -69,20 +68,20 @@ e_init_show(void)
      s = evas_stringshare_add(e_config->init_default_theme);
    else
      s = e_path_find(path_init, e_config->init_default_theme);
-   
+
    if (s) theme = strdup(e_util_filename_escape(s));
    else theme = strdup("XdX");
    if (s) evas_stringshare_del(s);
-   
+
    if (title) tit = strdup(e_util_filename_escape(title));
    else tit = strdup("XtX");
-   
+
    if (version) ver = strdup(e_util_filename_escape(version));
    else ver = strdup("XvX");
-   
+
    snprintf(buf, sizeof(buf), "%s/enlightenment_init %s %i %i %s %s",
 	    e_prefix_bin_get(),
-	    theme, 
+	    theme,
 	    e_canvas_engine_decide(e_config->evas_engine_init),
 	    e_config->font_hinting,
 	    tit, ver);
@@ -124,7 +123,7 @@ e_init_status_set(const char *str)
 	return;
      }
    printf("---SEND\n");
-   ecore_ipc_client_send(client, E_IPC_DOMAIN_INIT, 1, 0, 0, 0, (void *)str, 
+   ecore_ipc_client_send(client, E_IPC_DOMAIN_INIT, 1, 0, 0, 0, (void *)str,
 			 strlen(str) + 1);
    ecore_ipc_client_flush(client);
 }
@@ -159,17 +158,17 @@ e_init_client_data(Ecore_Ipc_Event_Client_Data *e)
 	  {
 	     int i, num;
 	     Ecore_X_Window *initwins;
-	     
+
 	     num = e->size / sizeof(Ecore_X_Window);
 	     initwins = e->data;
 	     for (i = 0; i < num; i+= 2)
 	       {
 		  Evas_List *l;
-		  
+
 		  for (l = e_manager_list(); l; l = l->next)
 		    {
 		       E_Manager *man;
-		       
+
 		       man = l->data;
 		       if (man->root == initwins[i + 0])
 			 {
@@ -182,7 +181,7 @@ e_init_client_data(Ecore_Ipc_Event_Client_Data *e)
 	while (stats)
 	  {
 	     const char *s;
-	     
+
 	     s = stats->data;
 	     stats = evas_list_remove_list(stats, stats);
 	     printf("---SPOOL %s\n", s);
@@ -205,12 +204,12 @@ e_init_client_del(Ecore_Ipc_Event_Client_Del *e)
    if (e->client == client)
      {
 	Evas_List *l;
-	
+
 	client = NULL;
 	for (l = e_manager_list(); l; l = l->next)
 	  {
 	     E_Manager *man;
-	     
+
 	     man = l->data;
 	     man->initwin = 0;
 	  }
@@ -270,7 +269,7 @@ static Evas_Object    *_e_init_icon_box = NULL;
 static E_Pointer      *_e_init_pointer = NULL;
 static Ecore_Event_Handler *_e_init_configure_handler = NULL;
 static Ecore_Timer         *_e_init_timeout_timer = NULL;
-  
+
 /* startup icons */
 static Evas_Coord _e_init_icon_size = 0;
 static Evas_List *_e_init_icon_list = NULL;
@@ -287,10 +286,10 @@ e_init_init(void)
    Evas_List *l, *screens;
    const char *s;
 
-   _e_init_configure_handler = 
-     ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, 
+   _e_init_configure_handler =
+     ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE,
 			     _e_init_cb_window_configure, NULL);
-   
+
    num = 0;
    roots = ecore_x_window_root_list(&num);
    if ((!roots) || (num <= 0))
@@ -301,7 +300,7 @@ e_init_init(void)
      }
    root = roots[0];
    _e_init_root_win = root;
-   
+
    ecore_x_window_size_get(root, &w, &h);
    _e_init_ecore_evas = e_canvas_new(e_config->evas_engine_init, root,
 				     0, 0, w, h, 1, 1,
@@ -322,14 +321,14 @@ e_init_init(void)
      s = evas_stringshare_add(e_config->init_default_theme);
    else
      s = e_path_find(path_init, e_config->init_default_theme);
-   
+
    screens = (Evas_List *)e_xinerama_screens_get();
    if (screens)
      {
 	for (l = screens; l; l = l->next)
 	  {
 	     E_Screen *scr;
-	     
+
 	     scr = l->data;
 	     o = edje_object_add(_e_init_evas);
 	     /* first screen */
@@ -357,8 +356,8 @@ e_init_init(void)
 	evas_object_show(o);
      }
    if (s) evas_stringshare_del(s);
-   
-   edje_object_part_text_set(_e_init_object, "e.text.disable_text", 
+
+   edje_object_part_text_set(_e_init_object, "e.text.disable_text",
 			     _("Disable this splash screen in the future?"));
    edje_object_signal_callback_add(_e_init_object, "e,action,init,disable", "e",
 				   _e_init_cb_signal_disable, NULL);
@@ -455,11 +454,11 @@ e_init_icons_desktop_add(Efreet_Desktop *desktop)
    char buf[128];
 
    if (!_e_init_evas) return;
-   
+
    if (!_e_init_icon_box)
      {
 	Evas_Coord w, h;
-	
+
 	o = e_box_add(_e_init_evas);
 	_e_init_icon_box = o;
 	e_box_homogenous_set(o, 1);
@@ -478,16 +477,16 @@ e_init_icons_desktop_add(Efreet_Desktop *desktop)
 	  }
 	evas_object_show(o);
      }
-   
+
    snprintf(buf, sizeof(buf), "%dx%d", _e_init_icon_size, _e_init_icon_size);
    o = e_util_desktop_icon_add(desktop, buf, _e_init_evas);
    if (o)
      {
 	evas_object_resize(o, _e_init_icon_size, _e_init_icon_size);
 	e_box_pack_end(_e_init_icon_box, o);
-	e_box_pack_options_set(o, 
-			       0, 0, 
-			       0, 0, 
+	e_box_pack_options_set(o,
+			       0, 0,
+			       0, 0,
 			       0.5, 0.5,
 			       _e_init_icon_size, _e_init_icon_size,
 			       _e_init_icon_size, _e_init_icon_size);
@@ -541,7 +540,7 @@ static int
 _e_init_cb_window_configure(void *data, int ev_type, void *ev)
 {
    Ecore_X_Event_Window_Configure *e;
-   
+
    e = ev;
    /* really simple - don't handle xinerama - because this event will only
     * happen in single head */

@@ -87,15 +87,14 @@ _e_xinerama_update(void)
    int n;
    Ecore_X_Window *roots;
    Evas_List *l;
-   int sorted;
-   
+
    roots = ecore_x_window_root_list(&n);
    if (roots)
      {
 	int i;
 	int rw, rh;
 	Ecore_X_Window root;
-	
+
 	/* more than 1 root window - xinerama wont be active */
 	if (n > 1)
 	  {
@@ -112,7 +111,7 @@ _e_xinerama_update(void)
 	if (n < 1)
 	  {
 	     E_Screen *scr;
-	     
+
 	     scr = calloc(1, sizeof(E_Screen));
 	     scr->screen = 0;
 	     scr->x = 0;
@@ -126,12 +125,12 @@ _e_xinerama_update(void)
 	     for (i = 0; i < n; i++)
 	       {
 		  int x, y, w, h;
-		  
+
 		  /* get each xinerama screen geometry */
 		  if (ecore_x_xinerama_screen_geometry_get(i, &x, &y, &w, &h))
 		    {
 		       E_Screen *scr;
-		       
+
 		       printf("E17 INIT: XINERAMA SCREEN: [%i], %ix%i+%i+%i\n",
 			      i, w, h, x, y);
 		       /* add it to our list */
@@ -153,7 +152,7 @@ _e_xinerama_update(void)
 	E_Screen *scr;
 	int add = 0;
 	Evas_List *removes;
-	
+
 	scr = l->data;
 	add = 1;
 	removes = NULL;
@@ -161,14 +160,14 @@ _e_xinerama_update(void)
 	for (ll = chosen_screens; ll; ll = ll->next)
 	  {
 	     E_Screen *scr2;
-	     
+
 	     scr2 = ll->data;
 	     /* if they intersect */
 	     if (E_INTERSECTS(scr->x, scr->y, scr->w, scr->h,
 			      scr2->x, scr2->y, scr2->w, scr2->h))
 	       {
 		  int sz, sz2;
-		  
+
 		  /* calculate pixel area */
 		  sz = scr->w * scr->h;
 		  sz2 = scr2->w * scr2->h;
@@ -196,7 +195,7 @@ _e_xinerama_update(void)
    for (n = 0, l = chosen_screens; l; l = l->next, n++)
      {
         E_Screen *scr;
-	
+
 	scr = l->data;
 	printf("E17 INIT: XINERAMA CHOSEN: [%i], %ix%i+%i+%i\n",
 	       scr->screen, scr->w, scr->h, scr->x, scr->y);
@@ -209,7 +208,7 @@ _e_xinerama_cb_screen_sort(void *data1, void *data2)
 {
    E_Screen *scr, *scr2;
    int dif;
-   
+
    scr = data1;
    scr2 = data2;
    dif = (scr2->w * scr2->h) - (scr->w * scr->h);
