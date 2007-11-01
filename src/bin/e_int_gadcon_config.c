@@ -33,20 +33,19 @@ e_int_gadcon_config(E_Gadcon *gc)
    E_Config_Dialog_View *v;
    
    v = E_NEW(E_Config_Dialog_View, 1);
-   if (v)
-     {
-	v->create_cfdata           = _create_data;
-	v->free_cfdata             = _free_data;
-	v->basic.create_widgets    = _basic_create_widgets;
-	v->override_auto_apply = 1;
-	
-	cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
-				  _("Shelf Contents"),
-				  "E", "_gadcon_config_dialog",
-				  "enlightenment/shelf", 0, v, gc);
-	gc->config_dialog = cfd;
-	e_dialog_resizable_set(cfd->dia, 1);
-     }
+   if (!v) return;
+
+   v->create_cfdata           = _create_data;
+   v->free_cfdata             = _free_data;
+   v->basic.create_widgets    = _basic_create_widgets;
+   v->override_auto_apply = 1;
+
+   cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
+			     _("Shelf Contents"),
+			     "E", "_gadcon_config_dialog",
+			     "enlightenment/shelf", 0, v, gc);
+   gc->config_dialog = cfd;
+   e_dialog_resizable_set(cfd->dia, 1);
 }
 
 static void
@@ -135,7 +134,8 @@ _cb_remove_instance(void *data, void *data2)
    cfdata = data;
    i = e_widget_ilist_selected_get(cfdata->o_instances);
 
-   e_gadcon_client_config_del(cfdata->cf_gc, evas_hash_find(cfdata->ids, cfdata->id_remove));
+   e_gadcon_client_config_del(cfdata->cf_gc, 
+			      evas_hash_find(cfdata->ids, cfdata->id_remove));
 
    _load_selected_gadgets(cfdata);
 
@@ -277,8 +277,8 @@ _load_selected_gadgets(void *data)
 		  if (cc->func.label) label = cc->func.label();
 		  if (!label) label = cc->name;
 		  if (cc->func.icon) icon = cc->func.icon(evas);
-		  e_widget_ilist_append(oi, icon, label, _cb_select_client_instance,
-					cfdata, buf);
+		  e_widget_ilist_append(oi, icon, label, 
+					_cb_select_client_instance, cfdata, buf);
 	       }
 	  }
      }
