@@ -90,6 +90,7 @@ e_configure_registry_item_del(const char *path)
 		       evas_stringshare_del(eci->item);
 		       evas_stringshare_del(eci->label);
 		       evas_stringshare_del(eci->icon);
+		       if (eci->icon_file) evas_stringshare_del(eci->icon_file);
 		       free(eci);
 		       goto done;
 		    }
@@ -149,6 +150,7 @@ e_configure_registry_category_del(const char *path)
 	     evas_stringshare_del(ecat->cat);
 	     evas_stringshare_del(ecat->label);
 	     if (ecat->icon) evas_stringshare_del(ecat->icon);
+	     if (ecat->icon_file) evas_stringshare_del(ecat->icon_file);
 	     free(ecat);
 	     goto done;
 	  }
