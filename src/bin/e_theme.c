@@ -108,7 +108,6 @@ e_theme_shutdown(void)
 	e_fm2_mime_handler_glob_del(theme_hdl, "*.edj");
 	e_fm2_mime_handler_free(theme_hdl);
      }
-
    if (mappings)
      {
 	evas_hash_foreach(mappings, _e_theme_mappings_free_cb, NULL);
@@ -304,10 +303,11 @@ e_theme_file_set(const char *category, const char *file)
    if (res)
      {
 	mappings = evas_hash_del(mappings, category, res);
-	if (res->file) {
+	if (res->file) 
+	  {
 	     e_filereg_deregister(res->file);
 	     evas_stringshare_del(res->file);
-	}
+	  }
 	if (res->cache) evas_stringshare_del(res->cache);
 	free(res);
      }
@@ -363,9 +363,7 @@ e_theme_config_get(const char *category)
      {
 	ect = evas_list_data(next);
 	if (!strcmp(ect->category, category))
-	  {
-	     return ect;
-	  }
+	  return ect;
      }
    return NULL;
 }
@@ -382,8 +380,7 @@ e_theme_config_remove(const char *category)
 	ect = evas_list_data(next);
 	if (!strcmp(ect->category, category))
 	  {
-	     e_config->themes = evas_list_remove_list(
-					e_config->themes, next);
+	     e_config->themes = evas_list_remove_list(e_config->themes, next);
 	     if (ect->category) evas_stringshare_del(ect->category);
 	     if (ect->file) evas_stringshare_del(ect->file);
 	     free(ect);
