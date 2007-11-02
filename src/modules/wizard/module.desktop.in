@@ -5,3 +5,4 @@ Name[it]=Wizard prima esecuzione
 Icon=e-module-wizard
 Comment=<hilight>First Run Wizard</hilight><br>The first run wizard will help<br>configure E, when E is started<br>for the first time.<br><hilight>WARNING!!! DO NOT USE!!!</hilight>
 Comment[it]=<hilight>Wizard prima esecuzione</hilight><br>Wizard che aiuta a configurare<br>E17 la prima volta che questo<br>viene avviato.<br><hilight>ATTENZIONE!!! NON USARE!!!</hilight>
+X-Enlightenment-ModuleType=config
