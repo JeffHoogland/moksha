@@ -5,3 +5,4 @@ Name[it]=Pannello di configurazione
 Icon=e-module-conf
 Comment=<hilight>The E17 Configuration Panel</hilight>
 Comment[it]=<hilight>Il pannello di configurazione di E17</hilight>
+X-Enlightenment-ModuleType=config
