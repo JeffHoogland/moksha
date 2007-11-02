@@ -5,3 +5,4 @@ Name[it]=Configurazione - Impostazioni menù
 Icon=e-module-conf_menus
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configures menu behavior.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura il comportamento<br>dei menù.
+X-Enlightenment-ModuleType=config

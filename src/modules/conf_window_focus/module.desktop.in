@@ -5,3 +5,4 @@ Name[it]=Configurazione - Fuoco delle finestre
 Icon=e-module-conf_window_focus
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configure window focus behavior.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura il comportamento del<br>fuoco delle finestre.
+X-Enlightenment-ModuleType=config

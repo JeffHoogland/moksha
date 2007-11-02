@@ -5,3 +5,4 @@ Name[it]=Configurazione - Transizioni
 Icon=e-module-conf_transitions
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to choose a default transition.<br>Transitions are used  upon wallpaper<br>changes, among other things.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per scegliere una transizione<br>predefinita. Le transizioni sono<br>usate al cambio di sfondo, e per<br>altre cose.
+X-Enlightenment-ModuleType=config

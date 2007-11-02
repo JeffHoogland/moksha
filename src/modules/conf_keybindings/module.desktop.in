@@ -5,3 +5,4 @@ Name[it]=Configurazione - Associazioni di tasti
 Icon=e-module-conf_keybindings
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configure your keybindings here.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura le vostre<br>associazioni di tasti.
+X-Enlightenment-ModuleType=config

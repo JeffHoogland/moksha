@@ -5,3 +5,4 @@ Name[it]=Configurazione - Metodo di input
 Icon=e-module-conf_imc
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to select an input method.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per selezionare un<br>metodo di input.
+X-Enlightenment-ModuleType=config

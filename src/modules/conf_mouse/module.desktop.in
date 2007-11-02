@@ -5,3 +5,4 @@ Name[it]=Configurazione - Accelerazione mouse
 Icon=e-module-conf_mouse
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configure mouse cursor<br>acceleration.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura l'accelerazione del<br>puntatore del mouse.
+X-Enlightenment-ModuleType=config

@@ -5,3 +5,4 @@ Name[it]=Configurazione - Gestione energetica
 Icon=e-module-conf_dpms
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configure the DPMS settings of<br>your system.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura le impostazioni DPMS<br>del vostro sistema.
+X-Enlightenment-ModuleType=config

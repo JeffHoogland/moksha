@@ -5,3 +5,4 @@ Name[it]=Configurazione - Associazioni del mouse
 Icon=e-module-conf_mousebindings
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to configure your mouse<br>bindings.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per configurare le<br>associazioni per i tasti del mouse.
+X-Enlightenment-ModuleType=config

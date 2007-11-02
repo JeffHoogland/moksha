@@ -5,3 +5,4 @@ Name[it]=Configurazione - Bloccaschermo
 Icon=e-module-conf_desklock
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configures the integrated desk lock.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura il bloccaschermo integrato.
+X-Enlightenment-ModuleType=config

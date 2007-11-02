@@ -5,3 +5,4 @@ Name[it]=Configurazione - Desktop
 Icon=e-module-conf_desk
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to configure the desktop name<br>and wallpaper for individual<br>virtual desktops.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per configurare il nome e<br>lo sfondo per ogni singolo<br>desktop virtuale.
+X-Enlightenment-ModuleType=config

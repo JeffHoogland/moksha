@@ -5,3 +5,4 @@ Name[it]=Configurazione - Visualizzazione finestre
 Icon=e-module-conf_window_display
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configures default window<br>properties such as default<br>geometries, border icons,<br>placement styles, etc.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura le proprietà predefinite<br>delle finestre come geometrie, icona<br>del bordo, stile di posizionamento, ecc.
+X-Enlightenment-ModuleType=config

@@ -5,3 +5,4 @@ Name[it]=Configurazione - Screensaver
 Icon=e-module-conf_screensaver
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configures the X screensaver.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura lo screensaver di X.
+X-Enlightenment-ModuleType=config

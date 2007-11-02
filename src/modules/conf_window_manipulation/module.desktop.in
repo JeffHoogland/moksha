@@ -5,3 +5,4 @@ Name[it]=Configurazione - Manipolazione finestre
 Icon=e-module-conf_winmanip
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configures window raise, resistance,<br>and maximize policies.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura le regole per l'elevazione,<br>la resistenza e la massimizzazione<br>delle finestre.
+X-Enlightenment-ModuleType=config

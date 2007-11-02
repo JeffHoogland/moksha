@@ -40,7 +40,8 @@ struct _E_Fwin
    const char         *overlay_file;
    const char         *scrollframe_file;
    const char         *theme_file;
-   
+
+   E_Toolbar          *tbar;
    Ecore_Event_Handler *zone_handler;
 };
 
@@ -372,7 +373,10 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    fwin->scrollframe_obj = o;
    evas_object_move(o, 0, 0);
    evas_object_show(o);
-   
+
+   fwin->tbar = e_toolbar_new(e_win_evas_get(fwin->win), "toolbar");
+   e_toolbar_show(fwin->tbar);
+
    o = edje_object_add(e_win_evas_get(fwin->win));
    edje_object_part_swallow(fwin->bg_obj, "e.swallow.bg", o);
    evas_object_pass_events_set(o, 1);
@@ -421,6 +425,9 @@ _e_fwin_free(E_Fwin *fwin)
      }
    if (fwin->win) e_object_del(E_OBJECT(fwin->win));
    if (fwin->fm_obj) evas_object_del(fwin->fm_obj);
+
+   if (fwin->tbar) e_object_del(E_OBJECT(fwin->tbar));
+   
    if (fwin->scrollframe_obj) evas_object_del(fwin->scrollframe_obj);
 
    if (fwin->zone)  
@@ -465,8 +472,13 @@ _e_fwin_cb_resize(E_Win *win)
 	else if (fwin->zone)
 	  evas_object_resize(fwin->bg_obj, fwin->zone->w, fwin->zone->h);
      }
-   if (fwin->win)
-     evas_object_resize(fwin->scrollframe_obj, fwin->win->w, fwin->win->h);
+   if (fwin->win) 
+     {
+	e_toolbar_move_resize(fwin->tbar, 0, 0, fwin->win->w, fwin->tbar->h);
+	evas_object_move(fwin->scrollframe_obj, 0, fwin->tbar->h);
+	evas_object_resize(fwin->scrollframe_obj, fwin->win->w, 
+			   (fwin->win->h - fwin->tbar->h));
+     }
    else if (fwin->zone)
      evas_object_resize(fwin->scrollframe_obj, fwin->zone->w, fwin->zone->h);
 }

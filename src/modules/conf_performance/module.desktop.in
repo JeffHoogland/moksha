@@ -5,3 +5,4 @@ Name[it]=Configurazione - Prestazioni
 Icon=e-module-conf_performance
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to configure certain<br>performance related items as<br>frame rates and cache settings.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per configurare alcune<br>proprieta' correlate alle prestazioni<br>come velocità frame e cache.
+X-Enlightenment-ModuleType=config

@@ -5,3 +5,4 @@ Name[it]=Configurazione - Lanciacomandi
 Icon=e-module-conf_exebuf
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to configure the settings of<br>the run command GUI.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per configurare le<br>impostazioni della GUI per<br>l'esecuzione di comandi.
+X-Enlightenment-ModuleType=config
