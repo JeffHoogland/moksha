@@ -25,6 +25,8 @@ struct _E_Msgbus_Data
 
 EAPI int e_msgbus_init(void);
 EAPI int e_msgbus_shutdown(void);
+EAPI void e_msgbus_interface_attach(E_DBus_Interface *iface);
+EAPI void e_msgbus_interface_detach(E_DBus_Interface *iface);
 
 #endif
 #endif
