@@ -3,3 +3,4 @@ Type=Link
 Name=DBus Extension - Language
 Name[it]=Estensione DBus - Lingua
 Icon=e-module-msgbus_lang
+X-Enlightenment-ModuleType=system
