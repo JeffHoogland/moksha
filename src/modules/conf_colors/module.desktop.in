@@ -5,3 +5,4 @@ Name[it]=Configurazione - Colori
 Icon=e-module-conf_colors
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to customize the color classes.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per la personalizzazione<br>delle classi di colore.
+X-Enlightenment-ModuleType=config

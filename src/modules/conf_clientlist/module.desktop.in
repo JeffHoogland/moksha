@@ -5,3 +5,4 @@ Name[it]=Configurazione - Menù lista client
 Icon=e-module-conf_clientlist
 Comment=<hilight>E17 Configuration Applet</hilight><br>Allows customization of the client<br>list menu.
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Consente la personalizzazione del<br>menù con la lista dei client.
+X-Enlightenment-ModuleType=config
