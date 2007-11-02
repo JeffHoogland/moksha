@@ -1093,7 +1093,7 @@ _grab_key_down_cb(void *data, int type, void *event)
 		       e_widget_ilist_unselect(cfdata->gui.o_action_list);
 		       if (cfdata->locals.action) free(cfdata->locals.action);
 		       cfdata->locals.action = strdup("");
-		       if (cfdata->params[0])
+		       if ((cfdata->params) && (cfdata->params[0]))
 			 {
 			    int j, g = -1;
 			    _find_key_binding_action("exec", NULL, &g, NULL, &j);
