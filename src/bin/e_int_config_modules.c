@@ -6,7 +6,7 @@
 typedef struct _CFModule
 {
    const char *short_name, *name, *comment;
-   const char *icon, *orig_path;
+   const char *icon, *orig_path, *type;
    int enabled, selected;
 } CFModule;
 
@@ -34,6 +34,8 @@ static void _loaded_list_cb_change (void *data, Evas_Object *obj);
 static void _btn_cb_unload         (void *data, void *data2);
 static void _btn_cb_load           (void *data, void *data2);
 static int  _upd_hdl_cb            (void *data, int type, void *event);
+static void _fill_list             (Evas_Object *obj, const char *type, int enabled);
+static int _find_module_category   (const char *type, int enabled);
 
 /* Hash callback Protos */
 static Evas_Bool _modules_hash_cb_free   (Evas_Hash *hash __UNUSED__,
@@ -192,6 +194,7 @@ _load_modules(const char *dir)
    ecore_list_first_goto(files);
    while ((mod = ecore_list_next(files)))
      {
+	const char *type;
 	char buf[4096];
 	Efreet_Desktop *desktop;
 	CFModule *module;
@@ -210,9 +213,18 @@ _load_modules(const char *dir)
 	module->short_name = evas_stringshare_add(mod);
 	if (desktop->name) module->name = evas_stringshare_add(desktop->name);
 	if (desktop->icon) module->icon = evas_stringshare_add(desktop->icon);
-	if (desktop->comment) module->comment = evas_stringshare_add(desktop->comment);
+	if (desktop->comment) 
+	  module->comment = evas_stringshare_add(desktop->comment);
 	if (desktop->orig_path)
 	  module->orig_path = evas_stringshare_add(desktop->orig_path);
+	if (desktop->x) 
+	  {
+	     type = ecore_hash_get(desktop->x, "X-Enlightenment-ModuleType");
+	     if (type) 
+	       module->type = evas_stringshare_add(type);
+	  }
+	else
+	  module->type = evas_stringshare_add("shelf");
 	if (e_module_find(mod)) module->enabled = 1;
 
 	modules = evas_hash_direct_add(modules,
@@ -240,7 +252,6 @@ static void
 _fill_avail_list(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
-   Evas_List *l = NULL;
    Evas_Coord w;
 
    if (!cfdata) return;
@@ -251,60 +262,44 @@ _fill_avail_list(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(cfdata->o_avail);
    e_widget_ilist_clear(cfdata->o_avail);
 
-   for (l = modules_list; l; l = l->next)
+   if (_find_module_category("appearance", 0)) 
      {
-	CFModule *module = NULL;
-	Evas_Object *ic = NULL;
-	char *name, *icon, *path;
-	char buf[4096];
-
-	name = l->data;
-	if (!name) continue;
-	module = evas_hash_find(modules, name);
-	if ((!module) || (module->enabled) || (!module->icon)) continue;
-	/*
-	icon = efreet_icon_path_find(e_config->icon_theme,
-				     module->icon, "24x24");
-	if ((!icon) && (module->orig_path))
-	  {
-	     path = ecore_file_dir_get(module->orig_path);
-	     snprintf(buf, sizeof(buf), "%s/%s.edj", path, module->icon);
-	     icon = strdup(buf);
-	     free(path);
-	  }
-	 */
-	if (module->orig_path)
-	  {
-	     path = ecore_file_dir_get(module->orig_path);
-	     snprintf(buf, sizeof(buf), "%s/%s.edj", path, module->icon);
-	     icon = strdup(buf);
-	     free(path);
-	  }
-	if (icon)
-	  {
-	     ic = e_util_icon_add(icon, evas);
-	     free(icon);
-	  }
-	if (module->name)
-	  e_widget_ilist_append(cfdata->o_avail, ic, module->name, NULL, NULL, NULL);
-	else if (module->short_name)
-	  e_widget_ilist_append(cfdata->o_avail, ic, module->short_name, NULL, NULL, NULL);
+	e_widget_ilist_header_append(cfdata->o_avail, NULL, _("Appearance"));
+	_fill_list(cfdata->o_avail, "appearance", 0);
      }
-
+   if (_find_module_category("config", 0)) 
+     {
+	e_widget_ilist_header_append(cfdata->o_avail, NULL, _("Configuration"));
+	_fill_list(cfdata->o_avail, "config", 0);
+     }
+   if (_find_module_category("shelf", 0)) 
+     {
+	e_widget_ilist_header_append(cfdata->o_avail, NULL, _("Shelf"));
+	_fill_list(cfdata->o_avail, "shelf", 0);
+     }
+   if (_find_module_category("system", 0)) 
+     {
+	e_widget_ilist_header_append(cfdata->o_avail, NULL, _("System"));
+	_fill_list(cfdata->o_avail, "system", 0);
+     }
+   if (_find_module_category("fileman", 0)) 
+     {
+	e_widget_ilist_header_append(cfdata->o_avail, NULL, _("Fileman"));
+	_fill_list(cfdata->o_avail, "fileman", 0);
+     }
+   
    e_widget_ilist_go(cfdata->o_avail);
    e_widget_min_size_get(cfdata->o_avail, &w, NULL);
    e_widget_min_size_set(cfdata->o_avail, w, 200);
    e_widget_ilist_thaw(cfdata->o_avail);
    edje_thaw();
    evas_event_thaw(evas);
-   if (l) evas_list_free(l);
 }
 
 static void
 _fill_loaded_list(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
-   Evas_List *l = NULL;
    Evas_Coord w;
 
    if (!cfdata) return;
@@ -315,44 +310,30 @@ _fill_loaded_list(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(cfdata->o_loaded);
    e_widget_ilist_clear(cfdata->o_loaded);
 
-   for (l = modules_list; l; l = l->next)
+   if (_find_module_category("appearance", 1)) 
      {
-	CFModule *module = NULL;
-	Evas_Object *ic = NULL;
-	char *name, *icon, *path;
-	char buf[4096];
-
-	name = l->data;
-	if (!name) continue;
-	module = evas_hash_find(modules, name);
-	if ((!module) || (!module->enabled) || (!module->icon)) continue;
-	/*
-	icon = efreet_icon_path_find(e_config->icon_theme,
-				     module->icon, "24x24");
-	if ((!icon) && (module->orig_path))
-	  {
-	     path = ecore_file_dir_get(module->orig_path);
-	     snprintf(buf, sizeof(buf), "%s/%s.edj", path, module->icon);
-	     icon = strdup(buf);
-	     free(path);
-	  }
-	 */
-	if (module->orig_path)
-	  {
-	     path = ecore_file_dir_get(module->orig_path);
-	     snprintf(buf, sizeof(buf), "%s/%s.edj", path, module->icon);
-	     icon = strdup(buf);
-	     free(path);
-	  }
-	if (icon)
-	  {
-	     ic = e_util_icon_add(icon, evas);
-	     free(icon);
-	  }
-	if (module->name)
-	  e_widget_ilist_append(cfdata->o_loaded, ic, module->name, NULL, NULL, NULL);
-	else if (module->short_name)
-	  e_widget_ilist_append(cfdata->o_loaded, ic, module->short_name, NULL, NULL, NULL);
+	e_widget_ilist_header_append(cfdata->o_loaded, NULL, _("Appearance"));
+	_fill_list(cfdata->o_loaded, "appearance", 1);
+     }
+   if (_find_module_category("config", 1)) 
+     {
+	e_widget_ilist_header_append(cfdata->o_loaded, NULL, _("Configuration"));
+	_fill_list(cfdata->o_loaded, "config", 1);
+     }
+   if (_find_module_category("shelf", 1)) 
+     {
+	e_widget_ilist_header_append(cfdata->o_loaded, NULL, _("Shelf"));
+	_fill_list(cfdata->o_loaded, "shelf", 1);
+     }
+   if (_find_module_category("system", 1)) 
+     {
+	e_widget_ilist_header_append(cfdata->o_loaded, NULL, _("System"));
+	_fill_list(cfdata->o_loaded, "system", 1);
+     }
+   if (_find_module_category("fileman", 1)) 
+     {
+	e_widget_ilist_header_append(cfdata->o_loaded, NULL, _("Fileman"));
+	_fill_list(cfdata->o_loaded, "fileman", 1);
      }
 
    e_widget_ilist_go(cfdata->o_loaded);
@@ -361,7 +342,6 @@ _fill_loaded_list(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_thaw(cfdata->o_loaded);
    edje_thaw();
    evas_event_thaw(evas);
-   if (l) evas_list_free(l);
 }
 
 static void
@@ -510,6 +490,78 @@ _upd_hdl_cb(void *data, int type, void *event)
    return 1;
 }
 
+static void 
+_fill_list(Evas_Object *obj, const char *type, int enabled) 
+{
+   Evas *evas;
+   Evas_List *l = NULL;
+
+   evas = evas_object_evas_get(obj);
+   for (l = modules_list; l; l = l->next)
+     {
+	CFModule *module = NULL;
+	Evas_Object *ic = NULL;
+	char *name, *icon, *path;
+	char buf[4096];
+
+	name = l->data;
+	if (!name) continue;
+	module = evas_hash_find(modules, name);
+	if ((!module) || (module->enabled != enabled) || (!module->icon)) 
+	  continue;
+	if (module->type)
+	  {
+	     if (strcmp(module->type, type)) continue;
+	  }
+	else
+	  if (strcmp(type, "shelf")) continue;
+
+	if (module->orig_path)
+	  {
+	     path = ecore_file_dir_get(module->orig_path);
+	     snprintf(buf, sizeof(buf), "%s/%s.edj", path, module->icon);
+	     icon = strdup(buf);
+	     free(path);
+	  }
+	if (icon)
+	  {
+	     ic = e_util_icon_add(icon, evas);
+	     free(icon);
+	  }
+	if (module->name)
+	  e_widget_ilist_append(obj, ic, module->name, NULL, NULL, NULL);
+	else if (module->short_name)
+	  e_widget_ilist_append(obj, ic, module->short_name, NULL, NULL, NULL);
+     }
+   if (l) evas_list_free(l);
+}
+
+static int 
+_find_module_category(const char *type, int enabled) 
+{
+   Evas_List *l = NULL;
+   
+   for (l = modules_list; l; l = l->next) 
+     {
+	CFModule *module = NULL;
+	char *name;
+
+	name = l->data;
+	if (!name) continue;
+	module = evas_hash_find(modules, name);
+	if ((!module) || (module->enabled != enabled) || (!module->icon)) 
+	  continue;
+	if (module->type)
+	  {
+	     if (strcmp(module->type, type)) continue;
+	     return 1;
+	  }
+	else
+	  if (!strcmp(type, "shelf")) return 1;
+     }
+   return 0;
+}
+
 /* Hash callback Functions */
 static Evas_Bool
 _modules_hash_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
@@ -524,6 +576,7 @@ _modules_hash_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
    if (module->icon) evas_stringshare_del(module->icon);
    if (module->comment) evas_stringshare_del(module->comment);
    if (module->orig_path) evas_stringshare_del(module->orig_path);
+   if (module->type) evas_stringshare_del(module->type);
    E_FREE(module);
    return 1;
 }
