@@ -18,6 +18,7 @@ struct _E_Pointer_Stack
 };
 
 static Evas_List *_e_pointers = NULL;
+static Evas_List *handlers = NULL;
 
 static void _e_pointer_canvas_add(E_Pointer *p);
 static void _e_pointer_canvas_del(E_Pointer *p);
@@ -25,8 +26,41 @@ static void _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj 
 static void _e_pointer_free(E_Pointer *p);
 static void _e_pointer_stack_free(E_Pointer_Stack *elem);
 static int  _e_pointer_type_set(E_Pointer *p, const char *type);
+static void _e_pointer_active_handle(E_Pointer *p);
+
+static int _e_pointer_cb_mouse_down(void *data, int type, void *event);
+static int _e_pointer_cb_mouse_up(void *data, int type, void *event);
+static int _e_pointer_cb_mouse_move(void *data, int type, void *event);
+static int _e_pointer_cb_mouse_wheel(void *data, int type, void *event);
+static int _e_pointer_cb_idle_timer_pre(void *data);
+static int _e_pointer_cb_idle_timer(void *data);
 
 /* externally accessible functions */
+EAPI int
+e_pointer_init(void)
+{
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_pointer_cb_mouse_down, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP, _e_pointer_cb_mouse_up, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE, _e_pointer_cb_mouse_move, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL, _e_pointer_cb_mouse_wheel, NULL));
+   return 1;
+}
+
+EAPI int
+e_pointer_shutdown(void)
+{
+   while (handlers)
+     {
+	Ecore_Event_Handler *h;
+	
+	h = handlers->data;
+	handlers = evas_list_remove_list(handlers, handlers);
+	ecore_event_handler_del(h);
+     }
+   
+   return 1;
+}
+
 EAPI E_Pointer *
 e_pointer_window_new(Ecore_X_Window win, int filled)
 {
@@ -210,7 +244,7 @@ _e_pointer_canvas_add(E_Pointer *p)
    evas_output_method_set(p->evas, rmethod);
    evas_output_size_set(p->evas, p->w, p->h);
    evas_output_viewport_set(p->evas, 0, 0, p->w, p->h);
-   
+
    p->pixels = malloc(p->w * p->h * sizeof(int));
    if (!p->pixels)
      {
@@ -295,6 +329,9 @@ _e_pointer_free(E_Pointer *p)
      }
 
    if (p->type) evas_stringshare_del(p->type);
+   
+   if (p->idle_timer) ecore_timer_del(p->idle_timer);
+   
    free(p);
 }
 
@@ -425,5 +462,142 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	  }
 	if (cursor) ecore_x_cursor_free(cursor);
      }
+   return 1;
+}
+
+static void
+_e_pointer_active_handle(E_Pointer *p)
+{
+   /* we got some mouse event - if there was an idle timer emit an active
+    * signal as we WERE idle, NOW we are active */
+   if (p->idle_timer) ecore_timer_del(p->idle_timer);
+   if (p->idle)
+     {
+	if (p->pointer_object)
+	  edje_object_signal_emit(p->pointer_object, "e,state,mouse,active", "e");
+	p->idle = 0;
+     }
+   /* and scedule a pre-idle check in 1 second if no more events happen */
+   p->idle_timer = ecore_timer_add(1.0, _e_pointer_cb_idle_timer_pre, p);
+}
+
+static int
+_e_pointer_cb_mouse_down(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Button_Down *ev;
+   Evas_List *l;
+   E_Pointer *p;
+                                     
+   ev = event;
+   for (l = _e_pointers; l; l = l->next)
+     {
+	p = l->data;
+	_e_pointer_active_handle(p);
+	if (p->pointer_object)
+	  edje_object_signal_emit(p->pointer_object, "e,action,mouse,down", "e");
+     }
+   return 1;
+}
+
+static int
+_e_pointer_cb_mouse_up(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Button_Up *ev;
+   Evas_List *l;
+   E_Pointer *p;
+                                     
+   ev = event;
+   for (l = _e_pointers; l; l = l->next)
+     {
+	p = l->data;
+	_e_pointer_active_handle(p);
+	if (p->pointer_object)
+	  edje_object_signal_emit(p->pointer_object, "e,action,mouse,up", "e");
+     }
+   return 1;
+}
+
+static int
+_e_pointer_cb_mouse_move(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Move *ev;
+   Evas_List *l;
+   E_Pointer *p;
+                                     
+   ev = event;
+   for (l = _e_pointers; l; l = l->next)
+     {
+	p = l->data;
+	_e_pointer_active_handle(p);
+	if (p->pointer_object)
+	  edje_object_signal_emit(p->pointer_object, "e,action,mouse,move", "e");
+     }
+   return 1;
+}
+
+static int
+_e_pointer_cb_mouse_wheel(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Wheel *ev;
+   Evas_List *l;
+   E_Pointer *p;
+                                     
+   ev = event;
+   for (l = _e_pointers; l; l = l->next)
+     {
+	p = l->data;
+	_e_pointer_active_handle(p);
+	if (p->pointer_object)
+	  edje_object_signal_emit(p->pointer_object, "e,action,mouse,wheel", "e");
+     }
+   return 1;
+}
+
+static int
+_e_pointer_cb_idle_timer_pre(void *data)
+{
+   E_Pointer *p;
+   int x, y;
+   
+   p = data;
+   ecore_x_pointer_xy_get(p->win, &x, &y);
+   p->x = x;
+   p->y = y;
+   p->idle_timer = ecore_timer_add(4.0, _e_pointer_cb_idle_timer, p);
+   return 0;
+}
+
+static int
+_e_pointer_cb_idle_timer(void *data)
+{
+   E_Pointer *p;
+   int x, y;
+   
+   p = data;
+   /* check if pointer actually moved since the 1 second post-mouse move idle
+    * pre-timer that fetches the position */
+   ecore_x_pointer_xy_get(p->win, &x, &y);
+   if ((x != p->x) || (y != p->y))
+     {
+	/* it moved - so we are not idle yet - record position and wait 
+	 * 4 secons more */
+	p->x = x;
+	p->y = y;
+	if (p->idle)
+	  {
+	     if (p->pointer_object)
+	       edje_object_signal_emit(p->pointer_object, "e,state,mouse,active", "e");
+	     p->idle = 0;
+	  }
+	return 1;
+     }
+   /* we are idle - report it if not idle before */
+   if (!p->idle)
+     {
+	if (p->pointer_object)
+	  edje_object_signal_emit(p->pointer_object, "e,state,mouse,idle", "e");
+	p->idle = 1;
+     }
+   /* and check again in 4 seconds */
    return 1;
 }

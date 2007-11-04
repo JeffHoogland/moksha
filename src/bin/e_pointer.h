@@ -17,6 +17,7 @@ struct _E_Pointer
 
    unsigned char     e_cursor : 1;
    unsigned char     color : 1;
+   unsigned char     idle : 1;
 
    Evas             *evas;
    Evas_Object      *pointer_object;
@@ -24,6 +25,8 @@ struct _E_Pointer
    int              *pixels;
    Ecore_X_Window    win;
    int               w, h;
+   Ecore_Timer      *idle_timer;
+   int               x, y;
 
    const char       *type;
    void             *obj;
@@ -35,6 +38,8 @@ struct _E_Pointer
    } hot;
 };
 
+EAPI int        e_pointer_init(void);
+EAPI int        e_pointer_shutdown(void);    
 EAPI E_Pointer *e_pointer_window_new(Ecore_X_Window win, int filled);
 EAPI void       e_pointer_type_push(E_Pointer *p, void *obj, const char *type);
 EAPI void       e_pointer_type_pop(E_Pointer *p, void *obj, const char *type);

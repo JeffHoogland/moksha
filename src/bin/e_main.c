@@ -500,6 +500,14 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_config_shutdown);
    
+   TS("pointer");
+   if (!e_pointer_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up the pointer system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_pointer_shutdown);
+   
    TS("path");
    /* setup paths for finding things */
    if (!_e_main_path_init())
