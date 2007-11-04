@@ -35,6 +35,7 @@ src/bin/e_fm_custom.c
 src/bin/e_fm_main.c
 src/bin/e_fm_mime.c
 src/bin/e_fm_prop.c
+src/bin/e_fm_hal.c
 src/bin/e_focus.c
 src/bin/e_font.c
 src/bin/e_gadcon.c
@@ -50,6 +51,7 @@ src/bin/e_int_border_prop.c
 src/bin/e_int_border_remember.c
 src/bin/e_int_config_modules.c
 src/bin/e_int_gadcon_config.c
+src/bin/e_int_toolbar_config.c
 src/bin/e_intl.c
 src/bin/e_int_menus.c
 src/bin/e_int_shelf_config.c
@@ -96,6 +98,7 @@ src/bin/e_theme.c
 src/bin/e_thumb.c
 src/bin/e_thumb_main.c
 src/bin/e_tlist.c
+src/bin/e_toolbar.c
 src/bin/e_user.c
 src/bin/e_utils.c
 src/bin/e_widget_aspect.c
@@ -230,3 +233,4 @@ src/modules/temperature/e_mod_config.c
 src/modules/temperature/e_mod_main.c
 src/modules/wizard/e_mod_main.c
 src/modules/wizard/e_wizard.c
+src/modules/wizard/page_010.c
