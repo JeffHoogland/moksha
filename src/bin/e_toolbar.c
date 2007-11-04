@@ -9,6 +9,7 @@ static void _e_toolbar_menu_append(E_Toolbar *tbar, E_Menu *mn);
 static void _e_toolbar_menu_del_hook(void *data);
 static void _e_toolbar_menu_cb_edit(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _e_toolbar_menu_cb_config(void *data, E_Menu *mn, E_Menu_Item *mi);
+static void _e_toolbar_menu_cb_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _e_toolbar_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 
 /* local vars */
@@ -26,7 +27,7 @@ e_toolbar_shutdown(void)
    while (toolbars) 
      {
 	E_Toolbar *tbar;
-	
+
 	tbar = toolbars->data;
 	e_object_del(E_OBJECT(tbar));
      }
@@ -125,7 +126,7 @@ static void
 _e_toolbar_free(E_Toolbar *tbar) 
 {
    toolbars = evas_list_remove(toolbars, tbar);
-   
+
    if (tbar->menu) 
      {
 	e_menu_post_deactivate_callback_set(tbar->menu, NULL, NULL);
@@ -173,7 +174,7 @@ static void
 _e_toolbar_menu_cb_post(void *data, E_Menu *mn) 
 {
    E_Toolbar *tbar;
-   
+
    tbar = data;
    if (!tbar->menu) return;
    e_object_del(E_OBJECT(tbar->menu));
@@ -185,10 +186,10 @@ _e_toolbar_menu_cb_pre(void *data, E_Menu *mn)
 {
    E_Toolbar *tbar;
    E_Menu_Item *mi;
-   
+
    tbar = data;
    e_menu_pre_activate_callback_set(mn, NULL, NULL);
-   
+
    mi = e_menu_item_new(mn);
    if (tbar->gadcon->editing)
      e_menu_item_label_set(mi, _("Stop Moving/Resizing Items"));
@@ -196,10 +197,10 @@ _e_toolbar_menu_cb_pre(void *data, E_Menu *mn)
      e_menu_item_label_set(mi, _("Begin Moving/Resizing Items"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
    e_menu_item_callback_set(mi, _e_toolbar_menu_cb_edit, tbar);
-   
+
    mi = e_menu_item_new(mn);
    e_menu_item_separator_set(mi, 1);
-   
+
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Toolbar Configuration"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
@@ -208,6 +209,7 @@ _e_toolbar_menu_cb_pre(void *data, E_Menu *mn)
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Configure Toolbar Contents"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
+   e_menu_item_callback_set(mi, _e_toolbar_menu_cb_contents, tbar);
 }
 
 static void 
@@ -215,7 +217,7 @@ _e_toolbar_menu_append(E_Toolbar *tbar, E_Menu *mn)
 {
    E_Menu_Item *mi;
    E_Menu *subm;
-   
+
    subm = e_menu_new();
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, tbar->name);
@@ -230,12 +232,12 @@ _e_toolbar_menu_del_hook(void *data)
 {
    E_Menu *mn;
    Evas_List *l = NULL;
-   
+
    mn = data;
    for (l = mn->items; l; l = l->next) 
      {
 	E_Menu_Item *mi;
-	
+
 	mi = l->data;
 	if (mi->submenu) e_object_del(E_OBJECT(mi->submenu));
      }
@@ -245,25 +247,32 @@ static void
 _e_toolbar_menu_cb_edit(void *data, E_Menu *mn, E_Menu_Item *mi) 
 {
    E_Toolbar *tbar;
-   
+
    tbar = data;
    if (tbar->gadcon->editing) 
-     {
-	e_gadcon_edit_end(tbar->gadcon);
-     }
+     e_gadcon_edit_end(tbar->gadcon);
    else 
-     {
-	e_gadcon_edit_begin(tbar->gadcon);
-     }
+     e_gadcon_edit_begin(tbar->gadcon);
 }
 
 static void 
 _e_toolbar_menu_cb_config(void *data, E_Menu *mn, E_Menu_Item *mi) 
 {
    E_Toolbar *tbar;
-   
+
    tbar = data;
    if (!tbar->cfg_dlg) e_int_toolbar_config(tbar);
+}
+
+static void 
+_e_toolbar_menu_cb_contents(void *data, E_Menu *mn, E_Menu_Item *mi) 
+{
+   E_Toolbar *tbar;
+
+   tbar = data;
+#if 0
+   if (!tbar->gadcon->config_dialog) e_int_gadcon_config(tbar->gadcon);
+#endif
 }
 
 static void 
