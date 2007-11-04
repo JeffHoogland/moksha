@@ -64,7 +64,7 @@ _e_wid_desk_del_hook(Evas_Object *obj)
    free(dd);
 }
 
-void
+EAPI void
 e_widget_desk_preview_num_desks_set(Evas_Object *obj, int nx, int ny)
 {
    E_Widget_Data *wd;
@@ -77,7 +77,7 @@ e_widget_desk_preview_num_desks_set(Evas_Object *obj, int nx, int ny)
    _e_wid_reconfigure(wd);
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_widget_deskpreview_desk_add(Evas *evas, E_Zone *zone, int x, int y, int tw, int th)
 {
    Evas_Object *overlay;

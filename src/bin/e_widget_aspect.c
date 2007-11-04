@@ -65,7 +65,7 @@ _cb_reconfigure(void *data, Evas *a, Evas_Object *obj, void *event_info)
    _e_wid_reconfigure(wd);
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_widget_aspect_add(Evas *evas, int w, int h)
 {
    Evas_Object *obj;
@@ -89,7 +89,7 @@ e_widget_aspect_add(Evas *evas, int w, int h)
    return obj;
 }
 
-void
+EAPI void
 e_widget_aspect_aspect_set(Evas_Object *obj, int w, int h)
 {
    E_Widget_Data *wd;
@@ -102,7 +102,7 @@ e_widget_aspect_aspect_set(Evas_Object *obj, int w, int h)
    _e_wid_reconfigure(wd);
 }
 
-void
+EAPI void
 e_widget_aspect_align_set(Evas_Object *obj, double align_x, double align_y)
 {
    E_Widget_Data *wd;
@@ -115,7 +115,7 @@ e_widget_aspect_align_set(Evas_Object *obj, double align_x, double align_y)
    _e_wid_reconfigure(wd);
 }
 
-void
+EAPI void
 e_widget_aspect_child_set(Evas_Object *obj, Evas_Object *child)
 {
    E_Widget_Data *wd;
