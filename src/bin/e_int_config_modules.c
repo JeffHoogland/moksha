@@ -10,7 +10,7 @@ typedef struct _CFTypes CFTypes;
 struct _CFModule 
 {
    const char *short_name, *name, *comment;
-   const char *icon, *orig_path, *type;
+   const char *icon, *orig_path;
    int enabled, selected;
 };
 
@@ -273,7 +273,6 @@ _load_modules(const char *dir)
 	if (desk->comment) cfm->comment = evas_stringshare_add(desk->comment);
 	if (desk->orig_path) 
 	  cfm->orig_path = evas_stringshare_add(desk->orig_path);
-	cfm->type = evas_stringshare_add(type);
 	if ((!desk->x) && (type)) evas_stringshare_del(type);
 	efreet_desktop_free(desk);
 
@@ -378,7 +377,6 @@ _mod_hash_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
    if (mod->icon) evas_stringshare_del(mod->icon);
    if (mod->comment) evas_stringshare_del(mod->comment);
    if (mod->orig_path) evas_stringshare_del(mod->orig_path);
-   if (mod->type) evas_stringshare_del(mod->type);
    E_FREE(mod);
    return 1;
 }
