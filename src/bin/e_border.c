@@ -1580,6 +1580,8 @@ e_border_shade(E_Border *bd, E_Direction dir)
 		  bd->need_shape_export = 1;
 	       }
 	     edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
+	     edje_object_message_signal_process(bd->bg_object);
+	     e_border_frame_recalc(bd);
 	     ev = calloc(1, sizeof(E_Event_Border_Resize));
 	     ev->border = bd;
 	     /* The resize is added in the animator when animation complete */
@@ -1690,6 +1692,8 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 		  bd->need_shape_export = 1;
 	       }
 	     edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
+	     edje_object_message_signal_process(bd->bg_object);
+	     e_border_frame_recalc(bd);
 	     ev = calloc(1, sizeof(E_Event_Border_Resize));
 	     ev->border = bd;
 	     /* The resize is added in the animator when animation complete */
@@ -5889,6 +5893,9 @@ _e_border_eval(E_Border *bd)
 		    edje_object_signal_emit(bd->bg_object, "e,state,hung", "e");
 		  if (bd->client.icccm.urgent)
 		    edje_object_signal_emit(bd->bg_object, "e,state,urgent", "e");
+// FIXME: in eval -do differently
+//	     edje_object_message_signal_process(bd->bg_object);
+//	     e_border_frame_recalc(bd);
 
 		  evas_object_move(bd->bg_object, 0, 0);
 		  evas_object_resize(bd->bg_object, bd->w, bd->h);
@@ -6963,6 +6970,8 @@ _e_border_shade_animator(void *data)
 	  edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
 	else
 	  edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
+	edje_object_message_signal_process(bd->bg_object);
+	e_border_frame_recalc(bd);
 
 	ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_NW);
 	ev = calloc(1, sizeof(E_Event_Border_Resize));
