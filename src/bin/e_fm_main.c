@@ -1754,7 +1754,7 @@ _e_cb_fop_trash_idler(void *data)
     * same name. Also use the name of the file to help */
    do 
      {
-	snprintf(buf, sizeof(buf), "%s/file%s.%u.%u", trash_dir, escname, 
+	snprintf(buf, sizeof(buf), "%s/file%s.%p.%u", trash_dir, escname, 
 		 fop, i++);
      }
    while (ecore_file_exists(buf));
@@ -1772,7 +1772,7 @@ _e_cb_fop_trash_idler(void *data)
      }
 
    /* Move worked. Create info file */
-   snprintf(buf, sizeof(buf), "%s/info%s.%u.%u.trashinfo", trash_dir, 
+   snprintf(buf, sizeof(buf), "%s/info%s.%p.%u.trashinfo", trash_dir, 
 	    escname, fop, --i);
    info = fopen(buf, "w");
    if (info) 
