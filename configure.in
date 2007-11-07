@@ -357,7 +357,6 @@ data/icons/Makefile
 doc/Makefile
 po/Makefile.in
 enlightenment-config
-debian/changelog
 ],[
 chmod +x enlightenment-config
 ])

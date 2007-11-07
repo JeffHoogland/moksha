@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-04 17:06+0100\n"
+"POT-Creation-Date: 2007-11-08 09:45+1100\n"
 "PO-Revision-Date: 2007-11-03 14:01+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -20,7 +20,7 @@ msgstr "Informazioni su Enlightenment"
 
 #: src/bin/e_about.c:74 src/bin/e_actions.c:2165 src/bin/e_actions.c:2169
 #: src/bin/e_actions.c:2173 src/bin/e_actions.c:2177 src/bin/e_int_menus.c:166
-#: src/bin/e_main.c:551
+#: src/bin/e_main.c:559
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -508,11 +508,11 @@ msgstr "Ordina Finestre"
 msgid "Set As Background"
 msgstr "Imposta come sfondo"
 
-#: src/bin/e_border.c:4386
+#: src/bin/e_border.c:4390
 msgid "Desktop files scan done"
 msgstr "Scansione file desktop eseguita"
 
-#: src/bin/e_border.c:4398
+#: src/bin/e_border.c:4402
 msgid "Desktop file scan"
 msgstr "Scansione file desktop"
 
@@ -1767,8 +1767,8 @@ msgstr "Gestione moduli"
 msgid "Available Modules"
 msgstr "Moduli disponibili"
 
-#: src/bin/e_int_config_modules.c:177 src/bin/e_int_config_modules.c:563
-#: src/bin/e_int_config_modules.c:578 src/bin/e_int_config_modules.c:593
+#: src/bin/e_int_config_modules.c:177 src/bin/e_int_config_modules.c:561
+#: src/bin/e_int_config_modules.c:576 src/bin/e_int_config_modules.c:591
 msgid "Description: Unavailable"
 msgstr "Descrizione: non disponibile"
 
@@ -1804,7 +1804,7 @@ msgstr "Gadget selezionati"
 msgid "Remove Gadget"
 msgstr "Elimina gadget"
 
-#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:204
+#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:205
 msgid "Toolbar Configuration"
 msgstr "Configurazione barra strumenti"
 
@@ -2224,7 +2224,14 @@ msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di configurazione."
 
-#: src/bin/e_main.c:507
+#: src/bin/e_main.c:506
+#, fuzzy
+msgid "Enlightenment cannot set up the pointer system."
+msgstr ""
+"Enlightenment non riesce a configurare il suo\n"
+"sistema di font."
+
+#: src/bin/e_main.c:515
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2232,19 +2239,19 @@ msgstr ""
 "Enlightenment non riesce a configurare i percorsi per la\n"
 "ricerca dei file. Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:525
+#: src/bin/e_main.c:533
 msgid "Enlightenment cannot set up its font system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di font."
 
-#: src/bin/e_main.c:536
+#: src/bin/e_main.c:544
 msgid "Enlightenment cannot set up its theme system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di temi."
 
-#: src/bin/e_main.c:547
+#: src/bin/e_main.c:555
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2252,11 +2259,11 @@ msgstr ""
 "Enlightenment non riesce a configurare la schermata d'avvio.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:558
+#: src/bin/e_main.c:566
 msgid "Testing Format Support"
 msgstr "Test supporto formato"
 
-#: src/bin/e_main.c:568
+#: src/bin/e_main.c:576
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2265,7 +2272,7 @@ msgstr ""
 "buffer. Controllare che Evas abbia il supporto per il motore di\n"
 "rendering software Buffer.\n"
 
-#: src/bin/e_main.c:578
+#: src/bin/e_main.c:586
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2273,7 +2280,7 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file PNG.\n"
 "Controllare che Evas abbia il supporto per il loader PNG.\n"
 
-#: src/bin/e_main.c:587
+#: src/bin/e_main.c:595
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2281,7 +2288,7 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file JPEG.\n"
 "Controllare che Evas abbia il supporto per il loader JPEG.\n"
 
-#: src/bin/e_main.c:596
+#: src/bin/e_main.c:604
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -2289,85 +2296,85 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file EET.\n"
 "Controllare che Evas abbia il supporto per il loader EET.\n"
 
-#: src/bin/e_main.c:609
+#: src/bin/e_main.c:617
 msgid "Starting International Support"
 msgstr "Avvio supporto internazionalizzazione"
 
-#: src/bin/e_main.c:614
+#: src/bin/e_main.c:622
 msgid "Enlightenment cannot set up its intl system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di intl (internazionalizzazione)."
 
-#: src/bin/e_main.c:619
+#: src/bin/e_main.c:627
 msgid "Setting up Paths"
 msgstr "Impostazione percorsi"
 
-#: src/bin/e_main.c:636
+#: src/bin/e_main.c:644
 msgid "Setup Thumbnailer"
 msgstr "Generatore miniature"
 
-#: src/bin/e_main.c:641
+#: src/bin/e_main.c:649
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di thumbnailing (anteprime).\n"
 
-#: src/bin/e_main.c:646
+#: src/bin/e_main.c:654
 msgid "Setup System Controls"
 msgstr "Controlli di sistema"
 
-#: src/bin/e_main.c:651
+#: src/bin/e_main.c:659
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr ""
 "Enlightenment non riesce a il sistema di comandi di sistema.\n"
 "\n"
 
-#: src/bin/e_main.c:656
+#: src/bin/e_main.c:664
 msgid "Setup Actions"
 msgstr "Impostazione azioni"
 
-#: src/bin/e_main.c:661
+#: src/bin/e_main.c:669
 msgid "Enlightenment cannot set up its actions system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di azioni."
 
-#: src/bin/e_main.c:665
+#: src/bin/e_main.c:673
 msgid "Setup Bindings"
 msgstr "Combinazioni tastiera e mouse"
 
-#: src/bin/e_main.c:670
+#: src/bin/e_main.c:678
 msgid "Enlightenment cannot set up its bindings system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di binding (associazioni)."
 
-#: src/bin/e_main.c:674
+#: src/bin/e_main.c:682
 msgid "Setup Popups"
 msgstr "Finestre popup"
 
-#: src/bin/e_main.c:679
+#: src/bin/e_main.c:687
 msgid "Enlightenment cannot set up its popup system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di popup."
 
-#: src/bin/e_main.c:684
+#: src/bin/e_main.c:692
 msgid "Setup Wallpaper"
 msgstr "Impostazione sfondo"
 
-#: src/bin/e_main.c:689
+#: src/bin/e_main.c:697
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di sfondi del desktop."
 
-#: src/bin/e_main.c:693
+#: src/bin/e_main.c:701
 msgid "Setup Screens"
 msgstr "Impostazione schermi"
 
-#: src/bin/e_main.c:698
+#: src/bin/e_main.c:706
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -2376,159 +2383,159 @@ msgstr ""
 "da parte di Enlightenment è fallita. Forse c'è un altro window\n"
 "manager in esecuzione?\n"
 
-#: src/bin/e_main.c:703
+#: src/bin/e_main.c:711
 msgid "Setup Execution System"
 msgstr "Sistema di esecuzione"
 
-#: src/bin/e_main.c:708
+#: src/bin/e_main.c:716
 msgid "Enlightenment cannot set up its exec system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema \"exec\"."
 
-#: src/bin/e_main.c:712
+#: src/bin/e_main.c:720
 msgid "Setup Remembers"
 msgstr "Ripristino impostazioni da ricordare"
 
-#: src/bin/e_main.c:717
+#: src/bin/e_main.c:725
 msgid "Enlightenment cannot setup remember settings."
 msgstr ""
 "Enlightenment non riesce a configurare le\n"
 "impostazioni da ricordare."
 
-#: src/bin/e_main.c:725
+#: src/bin/e_main.c:733
 msgid "Setup FM"
 msgstr "Impostazione file manager"
 
-#: src/bin/e_main.c:730
+#: src/bin/e_main.c:738
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment non riesce ad inizializzare il File manager.\n"
 
-#: src/bin/e_main.c:743
+#: src/bin/e_main.c:751
 msgid "Setup Message System"
 msgstr "Sistema di messaggi"
 
-#: src/bin/e_main.c:748
+#: src/bin/e_main.c:756
 msgid "Enlightenment cannot set up its msg system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di messaggi."
 
-#: src/bin/e_main.c:752
+#: src/bin/e_main.c:760
 msgid "Setup DND"
 msgstr "Impostazione drag and drop"
 
-#: src/bin/e_main.c:757
+#: src/bin/e_main.c:765
 msgid "Enlightenment cannot set up its dnd system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di 'drag & drop'."
 
-#: src/bin/e_main.c:761
+#: src/bin/e_main.c:769
 msgid "Setup Grab Input HAnding"
 msgstr "Gestione cattura input"
 
-#: src/bin/e_main.c:766
+#: src/bin/e_main.c:774
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di gestione dell'input catturato."
 
-#: src/bin/e_main.c:770
+#: src/bin/e_main.c:778
 msgid "Setup Modules"
 msgstr "Impostazione moduli"
 
-#: src/bin/e_main.c:775
+#: src/bin/e_main.c:783
 msgid "Enlightenment cannot set up its module system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di moduli."
 
-#: src/bin/e_main.c:779
+#: src/bin/e_main.c:787
 msgid "Setup Color Classes"
 msgstr "Impostazione classi colore"
 
-#: src/bin/e_main.c:784
+#: src/bin/e_main.c:792
 msgid "Enlightenment cannot set up its color class system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di classi colore."
 
-#: src/bin/e_main.c:788
+#: src/bin/e_main.c:796
 msgid "Setup Gadcon"
 msgstr "Controllo dei gadget"
 
-#: src/bin/e_main.c:793
+#: src/bin/e_main.c:801
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di controllo dei gadget."
 
-#: src/bin/e_main.c:797
+#: src/bin/e_main.c:805
 msgid "Setup Shelves"
 msgstr "Impostazione mensole portamoduli"
 
-#: src/bin/e_main.c:802
+#: src/bin/e_main.c:810
 msgid "Enlightenment cannot set up its shelf system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di mensole portamoduli."
 
-#: src/bin/e_main.c:807
+#: src/bin/e_main.c:815
 msgid "Setup DPMS"
 msgstr "Impostazione DPMS"
 
-#: src/bin/e_main.c:812
+#: src/bin/e_main.c:820
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr ""
 "Enlightenment non riesce a configurare le\n"
 "impostazioni DPMS."
 
-#: src/bin/e_main.c:816
+#: src/bin/e_main.c:824
 msgid "Setup Screensaver"
 msgstr "Impostazione screensaver"
 
-#: src/bin/e_main.c:821
+#: src/bin/e_main.c:829
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr ""
 "Enlightenment non riesce a configurare lo\n"
 "screensaver di X."
 
-#: src/bin/e_main.c:825
+#: src/bin/e_main.c:833
 msgid "Setup Mouse"
 msgstr "Impostazione mouse"
 
-#: src/bin/e_main.c:830
+#: src/bin/e_main.c:838
 msgid "Enlightenment cannot configure the mouse acceleration settings."
 msgstr ""
 "Enlightenment non riesce a configurare le\n"
 "impostazioni di accelerazione del mouse."
 
-#: src/bin/e_main.c:834
+#: src/bin/e_main.c:842
 msgid "Setup Desklock"
 msgstr "Impostazione bloccashermo"
 
-#: src/bin/e_main.c:839
+#: src/bin/e_main.c:847
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di blocco dello schermo."
 
-#: src/bin/e_main.c:844
+#: src/bin/e_main.c:852
 msgid "Set Up File Ordering"
 msgstr "Ordinamento dei file"
 
-#: src/bin/e_main.c:848
+#: src/bin/e_main.c:856
 msgid "Enlightenment cannot set up its order file system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di ordinamento file."
 
-#: src/bin/e_main.c:880
+#: src/bin/e_main.c:888
 msgid "Load Modules"
 msgstr "Carica moduli"
 
-#: src/bin/e_main.c:888
+#: src/bin/e_main.c:896
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2541,11 +2548,11 @@ msgstr ""
 "finestra di configurazione<br>dei moduli dovrebbe permettervi di "
 "selezionare<br>nuovamente i vostri moduli."
 
-#: src/bin/e_main.c:895
+#: src/bin/e_main.c:903
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Enlightenment è andato subito in crash ed è stato riavviato"
 
-#: src/bin/e_main.c:896
+#: src/bin/e_main.c:904
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2558,11 +2565,11 @@ msgstr ""
 "finestra di configurazione<br>dei moduli dovrebbe permettervi di "
 "selezionare<br>nuovamente i vostri moduli."
 
-#: src/bin/e_main.c:904
+#: src/bin/e_main.c:912
 msgid "Configure Shelves"
 msgstr "Configura mensole portamoduli"
 
-#: src/bin/e_main.c:911
+#: src/bin/e_main.c:919
 msgid "Almost Done"
 msgstr "Quasi fatto"
 
@@ -2624,11 +2631,11 @@ msgstr ""
 "Avete chiesto di eliminare questa mensola.<br><br>Siete sicuri di volerla "
 "eliminare?"
 
-#: src/bin/e_shelf.c:1525 src/bin/e_toolbar.c:194
+#: src/bin/e_shelf.c:1525 src/bin/e_toolbar.c:195
 msgid "Stop Moving/Resizing Items"
 msgstr "Fine spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_shelf.c:1527 src/bin/e_toolbar.c:196
+#: src/bin/e_shelf.c:1527 src/bin/e_toolbar.c:197
 msgid "Begin Moving/Resizing Items"
 msgstr "Inizio spostamento/ridimensionamento oggetti"
 
@@ -2798,7 +2805,7 @@ msgstr "Informazioni su questo tema"
 msgid "Set As Theme"
 msgstr "Imposta come tema"
 
-#: src/bin/e_toolbar.c:209
+#: src/bin/e_toolbar.c:210
 msgid "Configure Toolbar Contents"
 msgstr "Configura contenuti della barra"
 
