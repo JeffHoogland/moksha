@@ -11,6 +11,7 @@ static void _e_toolbar_menu_cb_edit(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _e_toolbar_menu_cb_config(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _e_toolbar_menu_cb_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _e_toolbar_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
+static const char *_e_toolbar_orient_string_get(E_Toolbar *tbar);
 
 /* local vars */
 static Evas_List *toolbars = NULL;
@@ -38,6 +39,7 @@ EAPI E_Toolbar *
 e_toolbar_new(Evas *evas, const char *name) 
 {
    E_Toolbar *tbar = NULL;
+   char buf[4096];
 
    if (!name) return NULL;
 
@@ -65,11 +67,15 @@ e_toolbar_new(Evas *evas, const char *name)
    tbar->gadcon = e_gadcon_swallowed_new(tbar->name, tbar->id, tbar->o_base, "e.swallow.content");
    e_gadcon_size_request_callback_set(tbar->gadcon, _e_toolbar_gadcon_size_request, tbar);
    /* FIXME: We want to implement "styles" here ? */
-   
+
+   snprintf(buf, sizeof(buf), "e,state,orientation,%s", 
+	    _e_toolbar_orient_string_get(tbar));
    e_gadcon_orient(tbar->gadcon, E_GADCON_ORIENT_TOP);
-   /* TODO: Send signals to theme obj */
+   edje_object_signal_emit(tbar->o_base, buf, "e");
+   edje_object_message_signal_process(tbar->o_base);
 
    e_gadcon_toolbar_set(tbar->gadcon, tbar);
+   e_gadcon_populate(tbar->gadcon);
 
    toolbars = evas_list_append(toolbars, tbar);
    return tbar;
@@ -270,9 +276,7 @@ _e_toolbar_menu_cb_contents(void *data, E_Menu *mn, E_Menu_Item *mi)
    E_Toolbar *tbar;
 
    tbar = data;
-#if 0
    if (!tbar->gadcon->config_dialog) e_int_gadcon_config(tbar->gadcon);
-#endif
 }
 
 static void 
@@ -309,4 +313,35 @@ _e_toolbar_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coor
 	break;
      }
    e_toolbar_move_resize(tbar, nx, ny, nw, nh);
+}
+
+static const char *
+_e_toolbar_orient_string_get(E_Toolbar *tbar) 
+{
+   const char *sig = "";
+
+   switch (tbar->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_HORIZ:
+	sig = "horizontal";
+	break;
+      case E_GADCON_ORIENT_VERT:
+	sig = "vertical";
+	break;
+      case E_GADCON_ORIENT_LEFT:
+	sig = "left";
+	break;
+      case E_GADCON_ORIENT_RIGHT:
+	sig = "right";
+	break;
+      case E_GADCON_ORIENT_TOP:
+	sig = "top";
+	break;
+      case E_GADCON_ORIENT_BOTTOM:
+	sig = "bottom";
+	break;
+      default:
+	break;
+     }
+   return sig;
 }
