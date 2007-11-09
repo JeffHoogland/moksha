@@ -127,6 +127,20 @@ e_toolbar_move_resize(E_Toolbar *tbar, int x, int y, int w, int h)
    evas_object_resize(tbar->o_base, w, h);
 }
 
+EAPI void 
+e_toolbar_orient(E_Toolbar *tbar, E_Gadcon_Orient orient) 
+{
+   char buf[4096];
+   
+   E_OBJECT_CHECK(tbar);
+   E_OBJECT_TYPE_CHECK(tbar, E_TOOLBAR_TYPE);
+   e_gadcon_orient(tbar->gadcon, orient);
+   snprintf(buf, sizeof(buf), "e,state,orientation,%s", 
+	    _e_toolbar_orient_string_get(tbar));
+   edje_object_signal_emit(tbar->o_base, buf, "e");
+   edje_object_message_signal_process(tbar->o_base);
+}
+
 /* local functions */
 static void 
 _e_toolbar_free(E_Toolbar *tbar) 

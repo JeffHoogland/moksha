@@ -30,6 +30,7 @@ EAPI void       e_toolbar_show        (E_Toolbar *tbar);
 EAPI void       e_toolbar_move        (E_Toolbar *tbar, int x, int y);
 EAPI void       e_toolbar_resize      (E_Toolbar *tbar, int w, int h);
 EAPI void       e_toolbar_move_resize (E_Toolbar *tbar, int x, int y, int w, int h);
+EAPI void       e_toolbar_orient      (E_Toolbar *tbar, E_Gadcon_Orient orient);
 
 #endif
 #endif
