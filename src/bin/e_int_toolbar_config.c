@@ -61,6 +61,14 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   E_Toolbar *tbar;
+
+   tbar = cfdata->tbar;
+   if (!tbar) return 0;
+   e_toolbar_orient(tbar, cfdata->orient);
+   e_toolbar_position_calc(tbar);
+   if ((tbar->fwin) && (tbar->fwin->cb_resize))
+     tbar->fwin->cb_resize(tbar->fwin);
    return 1;
 }
 

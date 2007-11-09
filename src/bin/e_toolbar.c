@@ -36,20 +36,24 @@ e_toolbar_shutdown(void)
 }
 
 EAPI E_Toolbar *
-e_toolbar_new(Evas *evas, const char *name) 
+e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2) 
 {
    E_Toolbar *tbar = NULL;
    char buf[4096];
 
    if (!name) return NULL;
+   if ((!fwin) || (!fm2)) return NULL;
 
    tbar = E_OBJECT_ALLOC(E_Toolbar, E_TOOLBAR_TYPE, _e_toolbar_free);
    if (!tbar) return NULL;
    tbar->id = evas_list_count(toolbars) + 1;
    tbar->x = tbar->y = 0;
-   tbar->h = tbar->w = 32;
+   tbar->h = 32;
+   tbar->w = fwin->w;
    tbar->evas = evas;
    tbar->name = evas_stringshare_add(name);
+   tbar->fwin = fwin;
+   tbar->fm2 = fm2;
 
    tbar->o_event = evas_object_rectangle_add(evas);
    evas_object_color_set(tbar->o_event, 0, 0, 0, 0);
@@ -61,11 +65,12 @@ e_toolbar_new(Evas *evas, const char *name)
    evas_object_resize(tbar->o_base, tbar->w, tbar->h);
    e_theme_edje_object_set(tbar->o_base, "base/theme/toolbar", 
 			   "e/toolbar/default/base");
-   evas_object_move(tbar->o_event, 0, 0);
-   evas_object_move(tbar->o_base, 0, 0);
-
-   tbar->gadcon = e_gadcon_swallowed_new(tbar->name, tbar->id, tbar->o_base, "e.swallow.content");
-   e_gadcon_size_request_callback_set(tbar->gadcon, _e_toolbar_gadcon_size_request, tbar);
+   e_toolbar_move_resize(tbar, tbar->x, tbar->y, tbar->w, tbar->h);
+   
+   tbar->gadcon = e_gadcon_swallowed_new(tbar->name, tbar->id, tbar->o_base, 
+					 "e.swallow.content");
+   e_gadcon_size_request_callback_set(tbar->gadcon, 
+				      _e_toolbar_gadcon_size_request, tbar);
    /* FIXME: We want to implement "styles" here ? */
 
    snprintf(buf, sizeof(buf), "e,state,orientation,%s", 
@@ -79,6 +84,22 @@ e_toolbar_new(Evas *evas, const char *name)
 
    toolbars = evas_list_append(toolbars, tbar);
    return tbar;
+}
+
+EAPI void 
+e_toolbar_fwin_set(E_Toolbar *tbar, E_Win *fwin) 
+{
+   E_OBJECT_CHECK(tbar);
+   E_OBJECT_TYPE_CHECK(tbar, E_TOOLBAR_TYPE);
+   tbar->fwin = fwin;
+}
+
+EAPI void 
+e_toolbar_fm2_set(E_Toolbar *tbar, Evas_Object *fm2) 
+{
+   E_OBJECT_CHECK(tbar);
+   E_OBJECT_TYPE_CHECK(tbar, E_TOOLBAR_TYPE);
+   tbar->fm2 = fm2;
 }
 
 EAPI void 
@@ -139,6 +160,57 @@ e_toolbar_orient(E_Toolbar *tbar, E_Gadcon_Orient orient)
 	    _e_toolbar_orient_string_get(tbar));
    edje_object_signal_emit(tbar->o_base, buf, "e");
    edje_object_message_signal_process(tbar->o_base);
+}
+
+EAPI void 
+e_toolbar_position_calc(E_Toolbar *tbar) 
+{
+   E_Gadcon_Orient orient = E_GADCON_ORIENT_TOP;
+
+   E_OBJECT_CHECK(tbar);
+   E_OBJECT_TYPE_CHECK(tbar, E_TOOLBAR_TYPE);
+   if (!tbar->fwin) return;
+   orient = tbar->gadcon->orient;
+   switch (orient) 
+     {
+      case E_GADCON_ORIENT_HORIZ:
+      case E_GADCON_ORIENT_TOP:
+	tbar->x = 0;
+	tbar->y = 0;
+	tbar->h = 32;
+	tbar->w = tbar->fwin->w;
+	break;
+      case E_GADCON_ORIENT_BOTTOM:
+	tbar->x = 0;
+	tbar->h = 32;
+	tbar->w = tbar->fwin->w;
+	tbar->y = (tbar->fwin->h - tbar->h);
+	break;
+      case E_GADCON_ORIENT_VERT:
+      case E_GADCON_ORIENT_LEFT:
+	tbar->x = 0;
+	tbar->w = 32;
+	tbar->h = tbar->fwin->h;
+	tbar->y = (tbar->fwin->h - tbar->h);
+	break;
+      case E_GADCON_ORIENT_RIGHT:
+	tbar->y = 0;
+	tbar->w = 32;
+	tbar->x = (tbar->fwin->w - tbar->w);
+	tbar->h = tbar->fwin->h;
+	break;
+      default:
+	break;
+     }
+   e_toolbar_move_resize(tbar, tbar->x, tbar->y, tbar->w, tbar->h);
+}
+
+EAPI void 
+e_toolbar_populate(E_Toolbar *tbar) 
+{
+   E_OBJECT_CHECK(tbar);
+   E_OBJECT_TYPE_CHECK(tbar, E_TOOLBAR_TYPE);
+   e_gadcon_populate(tbar->gadcon);
 }
 
 /* local functions */
@@ -309,8 +381,16 @@ _e_toolbar_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coor
    switch (gc->orient) 
      {
       case E_GADCON_ORIENT_TOP:
+      case E_GADCON_ORIENT_BOTTOM:
+      case E_GADCON_ORIENT_HORIZ:
 	w = ww;
+	h = 32;
+	break;
+      case E_GADCON_ORIENT_LEFT:
+      case E_GADCON_ORIENT_RIGHT:
+      case E_GADCON_ORIENT_VERT:
 	h = hh;
+	w = 32;
 	break;
       default:
 	break;
@@ -320,8 +400,34 @@ _e_toolbar_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coor
    switch (gc->orient) 
      {
       case E_GADCON_ORIENT_TOP:
+	nx = ny = 0;
 	nw = tbar->w;
 	nh = tbar->h;
+	if (nw > tbar->fwin->w) nw = tbar->fwin->w;
+	if (nh > tbar->fwin->h) nh = 32;
+	break;
+      case E_GADCON_ORIENT_BOTTOM:
+	nx = 0;
+	nw = tbar->w;
+	nh = tbar->h;
+	if (nw > tbar->fwin->w) nw = tbar->fwin->w;
+	if (nh > tbar->fwin->h) nh = 32;
+	ny = (tbar->fwin->h - nh);
+	break;
+      case E_GADCON_ORIENT_LEFT:
+	nx = ny = 0;
+	nw = tbar->w;
+	nh = tbar->h;
+	if (nh > tbar->fwin->h) nh = tbar->fwin->h;
+	if (nw > tbar->fwin->w) nw = 32;
+	break;
+      case E_GADCON_ORIENT_RIGHT:
+	ny = 0;
+	nh = tbar->h;
+	nw = tbar->w;
+	if (nw > tbar->fwin->w) nw = 32;
+	if (nh > tbar->fwin->h) nh = tbar->fwin->h;
+	nx = (tbar->fwin->w - tbar->w);
 	break;
       default:
 	break;
