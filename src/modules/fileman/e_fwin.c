@@ -104,6 +104,7 @@ static void _e_fwin_zone_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj,
 static int  _e_fwin_zone_move_resize(void *data, int type, void *event);
 static void _e_fwin_config_set(E_Fwin *fwin);
 static void _e_fwin_window_title_set(E_Fwin *fwin);
+static void _e_fwin_toolbar_resize(E_Fwin *fwin);
 
 /* local subsystem globals */
 static Evas_List *fwins = NULL;
@@ -374,8 +375,14 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    evas_object_move(o, 0, 0);
    evas_object_show(o);
 
-   fwin->tbar = e_toolbar_new(e_win_evas_get(fwin->win), "toolbar");
-   e_toolbar_show(fwin->tbar);
+#if 0
+   if (fileman_config->view.show_toolbar) 
+     {
+	fwin->tbar = e_toolbar_new(e_win_evas_get(fwin->win), "toolbar", 
+			      fwin->win, fwin->fm_obj);
+	e_toolbar_show(fwin->tbar);
+     }
+#endif
 
    o = edje_object_add(e_win_evas_get(fwin->win));
    edje_object_part_swallow(fwin->bg_obj, "e.swallow.bg", o);
@@ -462,7 +469,7 @@ static void
 _e_fwin_cb_resize(E_Win *win)
 {
    E_Fwin *fwin;
-   
+
    if (!win) return; //safety
    fwin = win->data;
    if (fwin->bg_obj)
@@ -474,10 +481,10 @@ _e_fwin_cb_resize(E_Win *win)
      }
    if (fwin->win) 
      {
-	e_toolbar_move_resize(fwin->tbar, 0, 0, fwin->win->w, fwin->tbar->h);
-	evas_object_move(fwin->scrollframe_obj, 0, fwin->tbar->h);
-	evas_object_resize(fwin->scrollframe_obj, fwin->win->w, 
-			   (fwin->win->h - fwin->tbar->h));
+	if (fwin->tbar)
+	  _e_fwin_toolbar_resize(fwin);
+	else 
+	  evas_object_resize(fwin->scrollframe_obj, fwin->win->w, fwin->win->h);
      }
    else if (fwin->zone)
      evas_object_resize(fwin->scrollframe_obj, fwin->zone->w, fwin->zone->h);
@@ -1579,4 +1586,41 @@ _e_fwin_window_title_set(E_Fwin *fwin)
 	snprintf(buf, sizeof(buf), "%s", file);
 	e_win_title_set(fwin->win, buf);
      }
+}
+
+static void 
+_e_fwin_toolbar_resize(E_Fwin *fwin) 
+{
+   int x, y, w, h;
+
+   e_toolbar_position_calc(fwin->tbar);
+   w = fwin->win->w;
+   h = fwin->win->h;
+   switch (fwin->tbar->gadcon->orient) 
+     {
+      case E_GADCON_ORIENT_TOP:
+	x = 0;
+	y = fwin->tbar->h;
+	h = (h - fwin->tbar->h);
+	break;
+      case E_GADCON_ORIENT_BOTTOM:
+	x = 0;
+	y = 0;
+	h = (h - fwin->tbar->h);
+	break;
+      case E_GADCON_ORIENT_LEFT:
+	x = (fwin->tbar->x + fwin->tbar->w);
+	y = 0;
+	w = (w - fwin->tbar->w);
+	break;
+      case E_GADCON_ORIENT_RIGHT:
+	x = 0;
+	y = 0;
+	w = (fwin->win->w - fwin->tbar->w);
+	break;
+      default:
+	break;
+     }
+   evas_object_move(fwin->scrollframe_obj, x, y);
+   evas_object_resize(fwin->scrollframe_obj, w, h);
 }

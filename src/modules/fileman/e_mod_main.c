@@ -82,7 +82,6 @@ e_modapi_init(E_Module *m)
 				(zone->container->num + zone->num));
 			    e_fwin_zone_new(zone, "desktop", buf);
 			 }
-		       
 		    }
 	       }
 	  }
@@ -224,6 +223,7 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, view.fit_custom_pos, UCHAR);
    E_CONFIG_VAL(D, T, view.show_full_path, UCHAR);
    E_CONFIG_VAL(D, T, view.show_desktop_icons, UCHAR);
+   E_CONFIG_VAL(D, T, view.show_toolbar, UCHAR);
    E_CONFIG_VAL(D, T, icon.icon.w, INT);
    E_CONFIG_VAL(D, T, icon.icon.h, INT);
    E_CONFIG_VAL(D, T, icon.list.w, INT);
@@ -298,7 +298,11 @@ _e_mod_fileman_config_load(void)
    fileman_config->selection.single = 0;
    fileman_config->selection.windows_modifiers = 0;
    IFMODCFGEND;
-   
+
+   IFMODCFG(0x0101);
+   fileman_config->view.show_toolbar = 0;
+   IFMODCFGEND;
+
    fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
    
    /* UCHAR's give nasty compile warnings about comparisons so not gonna limit those */
