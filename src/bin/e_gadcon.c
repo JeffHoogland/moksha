@@ -1543,21 +1543,27 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
    if (!e_drop_inside(gcc->gadcon->drop_handler, x, y))
      e_gadcon_client_hide(gcc);
 
-   drag = e_drag_new(gcc->gadcon->zone->container, gcc->drag.x, gcc->drag.y,
-	 drag_types, 1, gcc, -1, NULL, _e_gadcon_cb_drag_finished);
-   o = gcc->client_class->func.icon(drag->evas);
-   evas_object_geometry_get(o, NULL, NULL, &w, &h);
-   if (!o)
+   if ((gcc->gadcon->zone) && (gcc->gadcon->zone->container))
      {
-	/* FIXME: fallback icon for drag */
-	o = evas_object_rectangle_add(drag->evas);
-	evas_object_color_set(o, 255, 255, 255, 255);
+	drag = e_drag_new(gcc->gadcon->zone->container, gcc->drag.x, gcc->drag.y,
+			  drag_types, 1, gcc, -1, NULL, 
+			  _e_gadcon_cb_drag_finished);
+	if (drag) 
+	  {
+	     o = gcc->client_class->func.icon(drag->evas);
+	     evas_object_geometry_get(o, NULL, NULL, &w, &h);
+	     if (!o)
+	       {
+		  /* FIXME: fallback icon for drag */
+		  o = evas_object_rectangle_add(drag->evas);
+		  evas_object_color_set(o, 255, 255, 255, 255);
+	       }
+	     e_drag_object_set(drag, o);
+	     e_drag_move(drag, gcc->drag.x - w/2, gcc->drag.y - h/2);
+	     e_drag_resize(drag, w, h);
+	     e_drag_start(drag, gcc->drag.x, gcc->drag.y);
+	  }
      }
-   e_drag_object_set(drag, o);
-
-   e_drag_move(drag, gcc->drag.x - w/2, gcc->drag.y - h/2);
-   e_drag_resize(drag, w, h);
-   e_drag_start(drag, gcc->drag.x, gcc->drag.y);
    e_util_evas_fake_mouse_up_later(gcc->gadcon->evas, 1);
 }
 
