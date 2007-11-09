@@ -1100,7 +1100,7 @@ _e_shelf_cb_menu_contents(void *data, E_Menu *m, E_Menu_Item *mi)
    
    es = data;
    if (!es->gadcon->config_dialog)
-     e_int_gadcon_config(es->gadcon);
+     e_int_gadcon_config_shelf(es->gadcon);
 }
 
 static void

@@ -481,7 +481,7 @@ _cb_configure(void *data, void *data2)
 
    cfdata = data;
    if (!cfdata->es->gadcon->config_dialog)
-     e_int_gadcon_config(cfdata->es->gadcon);
+     e_int_gadcon_config_shelf(cfdata->es->gadcon);
 }
     
 /**--GUI--**/

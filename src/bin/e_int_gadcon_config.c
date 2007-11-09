@@ -10,6 +10,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 static void _load_available_gadgets(void *data);
 static void _load_selected_gadgets(void *data);
 static int _cb_mod_update(void *data, int type, void *event);
+static void _e_int_gadcon_config(E_Gadcon *gc, const char *title);
 
 /* Actual config data we will be playing with while the dialog is active */
 struct _E_Config_Dialog_Data
@@ -25,9 +26,21 @@ struct _E_Config_Dialog_Data
    Ecore_Event_Handler *hdl;
 };
 
-/* a nice easy setup function that does the dirty work */
 EAPI void
-e_int_gadcon_config(E_Gadcon *gc)
+e_int_gadcon_config_shelf(E_Gadcon *gc)
+{
+   _e_int_gadcon_config(gc, _("Shelf Contents"));
+}
+
+EAPI void 
+e_int_gadcon_config_toolbar(E_Gadcon *gc) 
+{
+   _e_int_gadcon_config(gc, _("Toolbar Contents"));
+}
+
+/* a nice easy setup function that does the dirty work */
+static void 
+_e_int_gadcon_config(E_Gadcon *gc, const char *title) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -41,8 +54,7 @@ e_int_gadcon_config(E_Gadcon *gc)
    v->override_auto_apply = 1;
 
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
-			     _("Shelf Contents"),
-			     "E", "_gadcon_config_dialog",
+			     title, "E", "_gadcon_config_dialog",
 			     "enlightenment/shelf", 0, v, gc);
    gc->config_dialog = cfd;
    e_dialog_resizable_set(cfd->dia, 1);

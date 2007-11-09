@@ -362,7 +362,8 @@ _e_toolbar_menu_cb_contents(void *data, E_Menu *mn, E_Menu_Item *mi)
    E_Toolbar *tbar;
 
    tbar = data;
-   if (!tbar->gadcon->config_dialog) e_int_gadcon_config(tbar->gadcon);
+   if (!tbar->gadcon->config_dialog) 
+     e_int_gadcon_config_toolbar(tbar->gadcon);
 }
 
 static void 
