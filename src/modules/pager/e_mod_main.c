@@ -941,8 +941,8 @@ _pager_cb_event_border_remove(void *data, int type, void *event)
 static int
 _pager_cb_event_border_iconify(void *data, int type, void *event)
 {
-   E_Event_Border_Hide   *ev;
-   Evas_List             *l, *l2;
+   E_Event_Border_Iconify  *ev;
+   Evas_List               *l, *l2;
 
    ev = event;
    for (l = pager_config->instances; l; l = l->next)
@@ -972,8 +972,8 @@ _pager_cb_event_border_iconify(void *data, int type, void *event)
 static int
 _pager_cb_event_border_uniconify(void *data, int type, void *event)
 {
-   E_Event_Border_Show   *ev;
-   Evas_List             *l, *l2;
+   E_Event_Border_Uniconify *ev;
+   Evas_List                *l, *l2;
 
    ev = event;
    for (l = pager_config->instances; l; l = l->next)
@@ -1355,9 +1355,9 @@ _pager_cb_event_border_urgent_change(void *data, int type, void *event)
 static int 
 _pager_cb_event_border_property(void *data, int type, void *event) 
 {
-   E_Event_Border_Remove *ev;
-   Evas_List             *l, *l2;
-   int                    found = 0;
+   E_Event_Border_Property *ev;
+   Evas_List               *l, *l2;
+   int                      found = 0;
    
    ev = event;
    for (l = pager_config->instances; l; l = l->next)
