@@ -303,7 +303,32 @@ _e_exehist_limit(void)
 {
    /* go from first item in hist on and either delete all items before a
     * specific timestamp, or if the list count > limit then delete items
+    * 
+    * for now - limit to 500
     */
+   if (_e_exehist)
+     {
+	while (evas_list_count(_e_exehist->history) > 500)
+	  {
+	     E_Exehist_Item *ei;
+	     
+	     ei = _e_exehist->history->data;
+	     if (ei->exe) evas_stringshare_del(ei->exe);
+	     if (ei->launch_method) evas_stringshare_del(ei->launch_method);
+	     free(ei);
+	     _e_exehist->history = evas_list_remove_list(_e_exehist->history, _e_exehist->history);
+	  }
+	while (evas_list_count(_e_exehist->mimes) > 500)
+	  {
+	     E_Exehist_Item *ei;
+	     
+	     ei = _e_exehist->mimes->data;
+	     if (ei->exe) evas_stringshare_del(ei->exe);
+	     if (ei->launch_method) evas_stringshare_del(ei->launch_method);
+	     free(ei);
+	     _e_exehist->mimes = evas_list_remove_list(_e_exehist->mimes, _e_exehist->mimes);
+	  }
+     }
 }
 
 static int
