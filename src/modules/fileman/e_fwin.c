@@ -375,14 +375,12 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    evas_object_move(o, 0, 0);
    evas_object_show(o);
 
-#if 0
    if (fileman_config->view.show_toolbar) 
      {
 	fwin->tbar = e_toolbar_new(e_win_evas_get(fwin->win), "toolbar", 
 			      fwin->win, fwin->fm_obj);
 	e_toolbar_show(fwin->tbar);
      }
-#endif
 
    o = edje_object_add(e_win_evas_get(fwin->win));
    edje_object_part_swallow(fwin->bg_obj, "e.swallow.bg", o);
