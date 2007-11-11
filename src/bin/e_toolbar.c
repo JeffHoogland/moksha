@@ -12,6 +12,12 @@ static void _e_toolbar_menu_cb_config(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _e_toolbar_menu_cb_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _e_toolbar_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static const char *_e_toolbar_orient_string_get(E_Toolbar *tbar);
+static void _e_toolbar_fm2_changed(void *data, Evas_Object *obj, void *event_info);
+static void _e_toolbar_fm2_dir_changed(void *data, Evas_Object *obj, void *event_info);
+static void _e_toolbar_fm2_dir_deleted(void *data, Evas_Object *obj, void *event_info);
+static void _e_toolbar_fm2_files_deleted(void *data, Evas_Object *obj, void *event_info);
+static void _e_toolbar_fm2_selected(void *data, Evas_Object *obj, void *event_info);
+static void _e_toolbar_fm2_selection_changed(void *data, Evas_Object *obj, void *event_info);
 
 /* local vars */
 static Evas_List *toolbars = NULL;
@@ -55,6 +61,19 @@ e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2)
    tbar->fwin = fwin;
    tbar->fm2 = fm2;
 
+   evas_object_smart_callback_add(tbar->fm2, "changed", 
+				  _e_toolbar_fm2_changed, tbar);
+   evas_object_smart_callback_add(tbar->fm2, "dir_changed", 
+				  _e_toolbar_fm2_dir_changed, tbar);
+   evas_object_smart_callback_add(tbar->fm2, "dir_deleted", 
+				  _e_toolbar_fm2_dir_deleted, tbar);
+   evas_object_smart_callback_add(tbar->fm2, "files_deleted", 
+				  _e_toolbar_fm2_files_deleted, tbar);
+   evas_object_smart_callback_add(tbar->fm2, "selected", 
+				  _e_toolbar_fm2_selected, tbar);
+   evas_object_smart_callback_add(tbar->fm2, "selection_change", 
+				  _e_toolbar_fm2_selection_changed, tbar);
+
    tbar->o_event = evas_object_rectangle_add(evas);
    evas_object_color_set(tbar->o_event, 0, 0, 0, 0);
    evas_object_resize(tbar->o_event, tbar->w, tbar->h);
@@ -94,12 +113,28 @@ e_toolbar_fwin_set(E_Toolbar *tbar, E_Win *fwin)
    tbar->fwin = fwin;
 }
 
+EAPI E_Win *
+e_toolbar_fwin_get(E_Toolbar *tbar) 
+{
+   E_OBJECT_CHECK_RETURN(tbar, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(tbar, E_TOOLBAR_TYPE, NULL);
+   return tbar->fwin;
+}
+
 EAPI void 
 e_toolbar_fm2_set(E_Toolbar *tbar, Evas_Object *fm2) 
 {
    E_OBJECT_CHECK(tbar);
    E_OBJECT_TYPE_CHECK(tbar, E_TOOLBAR_TYPE);
    tbar->fm2 = fm2;
+}
+
+EAPI Evas_Object *
+e_toolbar_fm2_get(E_Toolbar *tbar) 
+{
+   E_OBJECT_CHECK_RETURN(tbar, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(tbar, E_TOOLBAR_TYPE, NULL);
+   return tbar->fm2;
 }
 
 EAPI void 
@@ -152,7 +187,7 @@ EAPI void
 e_toolbar_orient(E_Toolbar *tbar, E_Gadcon_Orient orient) 
 {
    char buf[4096];
-   
+
    E_OBJECT_CHECK(tbar);
    E_OBJECT_TYPE_CHECK(tbar, E_TOOLBAR_TYPE);
    e_gadcon_orient(tbar->gadcon, orient);
@@ -465,4 +500,112 @@ _e_toolbar_orient_string_get(E_Toolbar *tbar)
 	break;
      }
    return sig;
+}
+
+static void 
+_e_toolbar_fm2_changed(void *data, Evas_Object *obj, void *event_info) 
+{
+   E_Toolbar *tbar;
+   Evas_List *l = NULL;
+
+   tbar = data;
+   if (!tbar) return;
+   for (l = tbar->gadcon->clients; l; l = l->next) 
+     {
+	E_Gadcon_Client *gcc = NULL;
+
+	gcc = l->data;
+	if (!gcc) continue;
+	evas_object_smart_callback_call(gcc->o_base, "changed", tbar);
+     }
+}
+
+static void 
+_e_toolbar_fm2_dir_changed(void *data, Evas_Object *obj, void *event_info) 
+{
+   E_Toolbar *tbar;
+   Evas_List *l = NULL;
+
+   tbar = data;
+   if (!tbar) return;
+   for (l = tbar->gadcon->clients; l; l = l->next) 
+     {
+	E_Gadcon_Client *gcc = NULL;
+
+	gcc = l->data;
+	if (!gcc) continue;
+	evas_object_smart_callback_call(gcc->o_base, "dir_changed", tbar);
+     }
+}
+
+static void 
+_e_toolbar_fm2_dir_deleted(void *data, Evas_Object *obj, void *event_info) 
+{
+   E_Toolbar *tbar;
+   Evas_List *l = NULL;
+
+   tbar = data;
+   if (!tbar) return;
+   for (l = tbar->gadcon->clients; l; l = l->next) 
+     {
+	E_Gadcon_Client *gcc = NULL;
+
+	gcc = l->data;
+	if (!gcc) continue;
+	evas_object_smart_callback_call(gcc->o_base, "dir_deleted", tbar);
+     }
+}
+
+static void 
+_e_toolbar_fm2_files_deleted(void *data, Evas_Object *obj, void *event_info) 
+{
+   E_Toolbar *tbar;
+   Evas_List *l = NULL;
+
+   tbar = data;
+   if (!tbar) return;
+   for (l = tbar->gadcon->clients; l; l = l->next) 
+     {
+	E_Gadcon_Client *gcc = NULL;
+
+	gcc = l->data;
+	if (!gcc) continue;
+	evas_object_smart_callback_call(gcc->o_base, "files_deleted", tbar);
+     }
+}
+
+static void 
+_e_toolbar_fm2_selected(void *data, Evas_Object *obj, void *event_info) 
+{
+   E_Toolbar *tbar;
+   Evas_List *l = NULL;
+
+   tbar = data;
+   if (!tbar) return;
+   for (l = tbar->gadcon->clients; l; l = l->next) 
+     {
+	E_Gadcon_Client *gcc = NULL;
+
+	gcc = l->data;
+	if (!gcc) continue;
+	evas_object_smart_callback_call(gcc->o_base, "selected", tbar);
+     }
+}
+
+static void 
+_e_toolbar_fm2_selection_changed(void *data, Evas_Object *obj, void *event_info) 
+{
+   E_Toolbar *tbar;
+   Evas_List *l = NULL;
+
+   tbar = data;
+   if (!tbar) return;
+   for (l = tbar->gadcon->clients; l; l = l->next) 
+     {
+	E_Gadcon_Client *gcc = NULL;
+
+	gcc = l->data;
+	if (!gcc) continue;
+	evas_object_smart_callback_call(gcc->o_base, "selection_changed", tbar);
+     }
 }
