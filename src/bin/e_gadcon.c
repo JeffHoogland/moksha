@@ -812,7 +812,8 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
 
    if (gcc->o_control) return;
-   
+
+   gcc->gadcon->editing = 1;
    gcc->o_control = edje_object_add(gcc->gadcon->evas);
    evas_object_layer_set(gcc->o_control, 100);
    if (gcc->o_frame)
@@ -898,6 +899,8 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
 EAPI void
 e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
 {
+   Evas_List *l = NULL;
+
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    
@@ -921,6 +924,16 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
    gcc->o_event = NULL;
    if (gcc->o_control) evas_object_del(gcc->o_control);
    gcc->o_control = NULL;
+   
+   for (l = gcc->gadcon->clients; l; l = l->next) 
+     {
+	E_Gadcon_Client *client = NULL;
+	
+	client = l->data;
+	if (!client) continue;
+	if (client->o_control) return;
+     }
+   gcc->gadcon->editing = 0;
 }
 
 EAPI void
