@@ -47,7 +47,7 @@ while test $# -gt 0; do
       echo $libdirs
       ;;
     --module-dir)
-      dir="@libdir@/@PACKAGE@/modules_extra"
+      dir="@libdir@/@PACKAGE@/modules"
       echo $dir
       ;;
     --config-apps-dir)
