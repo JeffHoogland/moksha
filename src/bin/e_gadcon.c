@@ -1231,35 +1231,34 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
    
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+
+   if (!gcc->gadcon->toolbar) 
+     {
+	mn = e_menu_new();
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Plain"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/plain");
+	e_menu_item_radio_group_set(mi, 1);
+	e_menu_item_radio_set(mi, 1);
+	if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_PLAIN)))
+	  e_menu_item_toggle_set(mi, 1);
+	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_plain, gcc);
    
-   mn = e_menu_new();
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Plain"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/plain");
-   e_menu_item_radio_group_set(mi, 1);
-   e_menu_item_radio_set(mi, 1);
-   if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_PLAIN)))
-     e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_plain, gcc);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Inset"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/plain");
-   e_menu_item_radio_group_set(mi, 1);
-   e_menu_item_radio_set(mi, 1);
-   if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_INSET)))
-     e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_inset, gcc);
-   
-   /***/
-   
-   mi = e_menu_item_new(menu);
-   e_menu_item_label_set(mi, _("Appearance"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/appearance");
-   e_menu_item_submenu_set(mi, mn);
-   e_object_del(E_OBJECT(mn));
-   
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Inset"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/plain");
+	e_menu_item_radio_group_set(mi, 1);
+	e_menu_item_radio_set(mi, 1);
+	if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_INSET)))
+	  e_menu_item_toggle_set(mi, 1);
+	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_inset, gcc);
+
+	mi = e_menu_item_new(menu);
+	e_menu_item_label_set(mi, _("Appearance"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/appearance");
+	e_menu_item_submenu_set(mi, mn);
+	e_object_del(E_OBJECT(mn));
+     }
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Automatically scroll contents"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/autoscroll");
