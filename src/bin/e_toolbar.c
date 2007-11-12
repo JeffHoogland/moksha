@@ -18,6 +18,7 @@ static void _e_toolbar_fm2_dir_deleted(void *data, Evas_Object *obj, void *event
 static void _e_toolbar_fm2_files_deleted(void *data, Evas_Object *obj, void *event_info);
 static void _e_toolbar_fm2_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_toolbar_fm2_selection_changed(void *data, Evas_Object *obj, void *event_info);
+static void _e_toolbar_menu_items_append(void *data, E_Menu *mn);
 
 /* local vars */
 static Evas_List *toolbars = NULL;
@@ -84,21 +85,21 @@ e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2)
    evas_object_resize(tbar->o_base, tbar->w, tbar->h);
    e_theme_edje_object_set(tbar->o_base, "base/theme/toolbar", 
 			   "e/toolbar/default/base");
+   evas_object_show(tbar->o_base);
+
    e_toolbar_move_resize(tbar, tbar->x, tbar->y, tbar->w, tbar->h);
-   
+
    tbar->gadcon = e_gadcon_swallowed_new(tbar->name, tbar->id, tbar->o_base, 
 					 "e.swallow.content");
    e_gadcon_size_request_callback_set(tbar->gadcon, 
 				      _e_toolbar_gadcon_size_request, tbar);
    /* FIXME: We want to implement "styles" here ? */
 
-   snprintf(buf, sizeof(buf), "e,state,orientation,%s", 
-	    _e_toolbar_orient_string_get(tbar));
-   e_gadcon_orient(tbar->gadcon, E_GADCON_ORIENT_TOP);
-   edje_object_signal_emit(tbar->o_base, buf, "e");
-   edje_object_message_signal_process(tbar->o_base);
+   e_toolbar_orient(tbar, E_GADCON_ORIENT_TOP);
 
    e_gadcon_toolbar_set(tbar->gadcon, tbar);
+   e_gadcon_util_menu_attach_func_set(tbar->gadcon, 
+				      _e_toolbar_menu_items_append, tbar);
    e_gadcon_populate(tbar->gadcon);
 
    toolbars = evas_list_append(toolbars, tbar);
@@ -340,6 +341,15 @@ _e_toolbar_menu_cb_pre(void *data, E_Menu *mn)
 }
 
 static void 
+_e_toolbar_menu_items_append(void *data, E_Menu *mn) 
+{
+   E_Toolbar *tbar;
+   
+   tbar = data;
+   _e_toolbar_menu_append(tbar, mn);
+}
+
+static void 
 _e_toolbar_menu_append(E_Toolbar *tbar, E_Menu *mn) 
 {
    E_Menu_Item *mi;
@@ -418,15 +428,13 @@ _e_toolbar_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coor
      {
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_BOTTOM:
-      case E_GADCON_ORIENT_HORIZ:
 	w = ww;
 	h = 32;
 	break;
       case E_GADCON_ORIENT_LEFT:
       case E_GADCON_ORIENT_RIGHT:
-      case E_GADCON_ORIENT_VERT:
-	h = hh;
 	w = 32;
+	h = hh;
 	break;
       default:
 	break;
