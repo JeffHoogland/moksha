@@ -692,7 +692,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y)
 	     move_ev.y = y - dy;
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
-	     if (E_INSIDE(x, y, dx, dy, dw, dh))
+	     if (E_INSIDE(x, y, dx, dy, dw, dh) && _e_drag_win_matches(h, win))
 	       {
 		  if (!h->entered)
 		    {
@@ -740,7 +740,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y)
 	     move_ev.y = y - dy;
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
-	     if (E_INSIDE(x, y, dx, dy, dw, dh))
+	     if (E_INSIDE(x, y, dx, dy, dw, dh) && _e_drag_win_matches(h, win))
 	       {
 		  if (!h->entered)
 		    {
