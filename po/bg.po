@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-08 09:45+1100\n"
-"PO-Revision-Date: 2007-08-16 20:38+0300\n"
+"POT-Creation-Date: 2007-11-15 00:21+0200\n"
+"PO-Revision-Date: 2007-11-15 00:40+0200\n"
 "Last-Translator: Viktor Kojouharov <vkojouharov@abv.bg>\n"
 "Language-Team: English <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -167,7 +167,7 @@ msgstr "По-ниско"
 
 #: src/bin/e_actions.c:1940 src/bin/e_config_dialog.c:226 src/bin/e_fm.c:512
 #: src/bin/e_int_border_menu.c:328 src/bin/e_int_border_prop.c:81
-#: src/modules/conf/e_conf.c:160 src/modules/fileman/e_fwin.c:1299
+#: src/modules/conf/e_conf.c:160 src/modules/fileman/e_fwin.c:1304
 msgid "Close"
 msgstr "Затваряне"
 
@@ -430,7 +430,7 @@ msgstr "Показване на меню..."
 #: src/bin/e_actions.c:2156 src/bin/e_actions.c:2161
 #: src/modules/conf/e_mod_main.c:46 src/modules/conf/e_mod_main.c:67
 #: src/modules/exebuf/e_mod_main.c:48 src/modules/exebuf/e_mod_main.c:68
-#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:127
+#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:126
 msgid "Launch"
 msgstr "Стартиране"
 
@@ -496,19 +496,16 @@ msgid "Cleanup Windows"
 msgstr "Изчистване на прозорци"
 
 #: src/bin/e_bg.c:21 src/modules/conf_wallpaper/e_mod_main.c:34
-#, fuzzy
 msgid "Set As Background"
-msgstr "Поставяне на фон за"
+msgstr "Поставяне като фон"
 
 #: src/bin/e_border.c:4390
-#, fuzzy
 msgid "Desktop files scan done"
-msgstr "Desktop файл"
+msgstr "Сканиране на Desktop файлове завършено"
 
 #: src/bin/e_border.c:4402
-#, fuzzy
 msgid "Desktop file scan"
-msgstr "Desktop файл"
+msgstr "Сканиране на Desktop файлове"
 
 #: src/bin/e_config.c:585
 msgid ""
@@ -595,9 +592,8 @@ msgid ""
 msgstr ""
 
 #: src/bin/e_config.c:2283
-#, fuzzy
 msgid "Enlightenment Configuration Write Problems"
-msgstr "Проблем при запазване на конфигурацията на E17"
+msgstr "Проблем при запис на конфигурацията на E17"
 
 #: src/bin/e_config.c:2287 src/bin/e_config_dialog.c:218
 #: src/bin/e_eap_editor.c:622 src/bin/e_eap_editor.c:685
@@ -948,12 +944,12 @@ msgstr "Няма резултат"
 
 #: src/bin/e_fm.c:514
 msgid "Unexisting path"
-msgstr ""
+msgstr "Несъществуващ път"
 
 #: src/bin/e_fm.c:517
 #, c-format
 msgid "%s doesn't exists"
-msgstr ""
+msgstr "%s не съществува"
 
 #: src/bin/e_fm.c:2650
 #, c-format
@@ -1105,46 +1101,46 @@ msgstr "Избиране на изображение"
 #: src/bin/e_fm_hal.c:189
 #, c-format
 msgid "%llu TiB"
-msgstr ""
+msgstr "%llu TiB"
 
 #: src/bin/e_fm_hal.c:191
 #, c-format
 msgid "%llu GiB"
-msgstr ""
+msgstr "%llu GiB"
 
 #: src/bin/e_fm_hal.c:193
 #, c-format
 msgid "%llu MiB"
-msgstr ""
+msgstr "%llu MiB"
 
 #: src/bin/e_fm_hal.c:195
 #, c-format
 msgid "%llu KiB"
-msgstr ""
+msgstr "%llu KiB"
 
 #: src/bin/e_fm_hal.c:197
 #, c-format
 msgid "%llu B"
-msgstr ""
+msgstr "%llu B"
 
 #: src/bin/e_fm_hal.c:227
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown Volume"
-msgstr "Незнаен"
+msgstr "Непознат дял"
 
 #: src/bin/e_fm_hal.c:267
 msgid "Removable Device"
 msgstr "Сменяемо устройство"
 
-#: src/bin/e_gadcon.c:1225
+#: src/bin/e_gadcon.c:1239
 msgid "Plain"
 msgstr "Прост"
 
-#: src/bin/e_gadcon.c:1234
+#: src/bin/e_gadcon.c:1248
 msgid "Inset"
 msgstr "Вдълбано"
 
-#: src/bin/e_gadcon.c:1245 src/bin/e_int_config_modules.c:40
+#: src/bin/e_gadcon.c:1257 src/bin/e_int_config_modules.c:40
 #: src/modules/conf_borders/e_mod_main.c:34
 #: src/modules/conf_colors/e_mod_main.c:34
 #: src/modules/conf_fonts/e_mod_main.c:34
@@ -1158,23 +1154,23 @@ msgstr "Вдълбано"
 msgid "Appearance"
 msgstr "Изглед"
 
-#: src/bin/e_gadcon.c:1251
+#: src/bin/e_gadcon.c:1263
 msgid "Automatically scroll contents"
 msgstr "Автоматично плъзгане на съдържание"
 
-#: src/bin/e_gadcon.c:1258
+#: src/bin/e_gadcon.c:1270
 msgid "Able to be resized"
 msgstr "Възможност за оразмеряване"
 
-#: src/bin/e_gadcon.c:1270
+#: src/bin/e_gadcon.c:1282
 msgid "Begin move/resize this gadget"
 msgstr "Започване редактирането на този инструмент"
 
-#: src/bin/e_gadcon.c:1276
+#: src/bin/e_gadcon.c:1288
 msgid "Remove this gadget"
 msgstr "Премахване"
 
-#: src/bin/e_gadcon.c:1694
+#: src/bin/e_gadcon.c:1712
 msgid "Stop move/resize this gadget"
 msgstr "Спиране редактирането на този инструмент"
 
@@ -1375,7 +1371,7 @@ msgstr "Добавяне до менюто за предпочитания"
 
 #: src/bin/e_int_border_menu.c:282
 msgid "Add Keyboard Shortcut"
-msgstr ""
+msgstr "Добавяне на бърз клавиш"
 
 #: src/bin/e_int_border_menu.c:287
 msgid "Add To Launcher"
@@ -1433,11 +1429,11 @@ msgstr "Превключвател на полета"
 
 #: src/bin/e_int_border_prop.c:363
 msgid "NetWM"
-msgstr ""
+msgstr "NetWM"
 
 #: src/bin/e_int_border_prop.c:370
 msgid "ICCCM"
-msgstr ""
+msgstr "ICCCM"
 
 #: src/bin/e_int_border_prop.c:418
 msgid "ICCCM Properties"
@@ -1680,15 +1676,13 @@ msgstr "Конфигурация"
 
 #: src/bin/e_int_config_modules.c:42 src/modules/conf_mime/e_mod_main.c:34
 #: src/modules/fileman/e_mod_main.c:41 src/modules/fileman/e_mod_main.c:43
-#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:127
-#, fuzzy
+#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:126
 msgid "File Manager"
-msgstr "Файлов мениджър"
+msgstr "Файлов манипулатор"
 
 #: src/bin/e_int_config_modules.c:43
-#, fuzzy
 msgid "Shelf"
-msgstr "Рафт №"
+msgstr "Рафт"
 
 #: src/bin/e_int_config_modules.c:105
 msgid "Module Settings"
@@ -1701,7 +1695,7 @@ msgstr "Налични модули"
 #: src/bin/e_int_config_modules.c:177 src/bin/e_int_config_modules.c:561
 #: src/bin/e_int_config_modules.c:576 src/bin/e_int_config_modules.c:591
 msgid "Description: Unavailable"
-msgstr ""
+msgstr "Описание: не е зададено"
 
 #: src/bin/e_int_config_modules.c:179
 msgid "Load Module"
@@ -1715,32 +1709,35 @@ msgstr "Заредени модули"
 msgid "Unload Module"
 msgstr "Изключване на модул"
 
-#: src/bin/e_int_gadcon_config.c:44
+#: src/bin/e_int_gadcon_config.c:32
 msgid "Shelf Contents"
 msgstr "Съдържание на рафта"
 
-#: src/bin/e_int_gadcon_config.c:165
+#: src/bin/e_int_gadcon_config.c:38
+msgid "Toolbar Contents"
+msgstr "Съдържание на лентата с инструменти"
+
+#: src/bin/e_int_gadcon_config.c:177
 msgid "Available Gadgets"
 msgstr "Налични джунджурии"
 
-#: src/bin/e_int_gadcon_config.c:173
+#: src/bin/e_int_gadcon_config.c:185
 msgid "Add Gadget"
 msgstr "Добавяне"
 
-#: src/bin/e_int_gadcon_config.c:179
+#: src/bin/e_int_gadcon_config.c:191
 msgid "Selected Gadgets"
 msgstr "Избрани джунджурийки"
 
-#: src/bin/e_int_gadcon_config.c:187
+#: src/bin/e_int_gadcon_config.c:199
 msgid "Remove Gadget"
 msgstr "Премахване"
 
-#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:205
-#, fuzzy
+#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:333
 msgid "Toolbar Configuration"
-msgstr "Конфигурация на ibar"
+msgstr "Конфигурация на лентата с инструменти"
 
-#: src/bin/e_int_toolbar_config.c:74 src/bin/e_int_shelf_config.c:499
+#: src/bin/e_int_toolbar_config.c:82 src/bin/e_int_shelf_config.c:499
 #: src/bin/e_int_shelf_config.c:564
 msgid "Layout"
 msgstr "Подредба"
@@ -1943,14 +1940,12 @@ msgid "Hide duration"
 msgstr "Продължителност"
 
 #: src/bin/e_int_shelf_config.c:663
-#, fuzzy
 msgid "Show on all Desktops"
-msgstr "Показване на полето"
+msgstr "Показване върху всички полета"
 
 #: src/bin/e_int_shelf_config.c:665
-#, fuzzy
 msgid "Show on specified Desktops"
-msgstr "Показване на полето"
+msgstr "Показване върху определено поле"
 
 #: src/bin/e_ipc.c:48
 #, c-format
@@ -2142,9 +2137,8 @@ msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment не може да настрои конфигурационната си система"
 
 #: src/bin/e_main.c:506
-#, fuzzy
 msgid "Enlightenment cannot set up the pointer system."
-msgstr "Enlightenment не може да настрои стартовата си система"
+msgstr ""
 
 #: src/bin/e_main.c:515
 msgid ""
@@ -2215,68 +2209,60 @@ msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment не може да настрои стартовата си система"
 
 #: src/bin/e_main.c:627
-#, fuzzy
 msgid "Setting up Paths"
-msgstr "Настройки"
+msgstr "Настройване на пътища"
 
 #: src/bin/e_main.c:644
-#, fuzzy
 msgid "Setup Thumbnailer"
-msgstr "Миниизображение"
+msgstr "Настройване на миниизображения"
 
 #: src/bin/e_main.c:649
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment не може да стартира системата за миниизображения:в.\n"
 
 #: src/bin/e_main.c:654
-#, fuzzy
 msgid "Setup System Controls"
-msgstr "Настройка на контрольор"
+msgstr ""
 
 #: src/bin/e_main.c:659
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Enlightenment не може да стартира системата за Системни команди.\n"
 
 #: src/bin/e_main.c:664
-#, fuzzy
 msgid "Setup Actions"
-msgstr "Начални програми"
+msgstr "Настройване на действията"
 
 #: src/bin/e_main.c:669
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment не може да настрои системата си за действия"
 
 #: src/bin/e_main.c:673
-#, fuzzy
 msgid "Setup Bindings"
-msgstr "Бързи клавиши"
+msgstr ""
 
 #: src/bin/e_main.c:678
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment не може да настрои системата си за обвързване"
 
 #: src/bin/e_main.c:682
-#, fuzzy
 msgid "Setup Popups"
-msgstr "Показва изкачащо поле"
+msgstr "Настройване на изскачащи прозорци"
 
 #: src/bin/e_main.c:687
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment не може да настрои системата си за изкачащи прозорци."
 
 #: src/bin/e_main.c:692
-#, fuzzy
 msgid "Setup Wallpaper"
-msgstr "Тапет на полето"
+msgstr "Настройване на тапети"
 
 #: src/bin/e_main.c:697
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Enlightenment не може да настрои система за тапети."
 
 #: src/bin/e_main.c:701
-#, fuzzy
 msgid "Setup Screens"
-msgstr "Текущ екран"
+msgstr "Настройване на екрани"
 
 #: src/bin/e_main.c:706
 msgid ""
@@ -2295,9 +2281,8 @@ msgid "Enlightenment cannot set up its exec system."
 msgstr "Enlightenment не може да настрои своята 'exec' система."
 
 #: src/bin/e_main.c:720
-#, fuzzy
 msgid "Setup Remembers"
-msgstr "Запомняне"
+msgstr "Настройване на запомняне"
 
 #: src/bin/e_main.c:725
 msgid "Enlightenment cannot setup remember settings."
@@ -2337,27 +2322,24 @@ msgstr ""
 "Enlightenment не може да настрои системата си за прихващане на въвеждане."
 
 #: src/bin/e_main.c:778
-#, fuzzy
 msgid "Setup Modules"
-msgstr "Модули"
+msgstr "Настройване на модули"
 
 #: src/bin/e_main.c:783
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment не може да настрои модулната си система"
 
 #: src/bin/e_main.c:787
-#, fuzzy
 msgid "Setup Color Classes"
-msgstr "Цветови класове"
+msgstr "Настройване на цветови класове"
 
 #: src/bin/e_main.c:792
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment не може да настрои системата си за класове на цветовете."
 
 #: src/bin/e_main.c:796
-#, fuzzy
 msgid "Setup Gadcon"
-msgstr "Команда за настройки"
+msgstr ""
 
 #: src/bin/e_main.c:801
 msgid "Enlightenment cannot set up its gadget control system."
@@ -2366,9 +2348,8 @@ msgstr ""
 "джунджурийки."
 
 #: src/bin/e_main.c:805
-#, fuzzy
 msgid "Setup Shelves"
-msgstr "Рафтове"
+msgstr "Настройване на рафтове"
 
 #: src/bin/e_main.c:810
 msgid "Enlightenment cannot set up its shelf system."
@@ -2383,27 +2364,24 @@ msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment не може да настрои DPMS."
 
 #: src/bin/e_main.c:824
-#, fuzzy
 msgid "Setup Screensaver"
-msgstr "Предпазител на екрана"
+msgstr "Настройване на предпазител на екрана"
 
 #: src/bin/e_main.c:829
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "Enlightenment не може да настрои X screensaver."
 
 #: src/bin/e_main.c:833
-#, fuzzy
 msgid "Setup Mouse"
-msgstr "Изтриване"
+msgstr "Настройване на показалеца"
 
 #: src/bin/e_main.c:838
 msgid "Enlightenment cannot configure the mouse acceleration settings."
 msgstr "Enlightenment не може да настрои ускорението на показалеца."
 
 #: src/bin/e_main.c:842
-#, fuzzy
 msgid "Setup Desklock"
-msgstr "Изпращане до поле"
+msgstr "Настройване на заключване"
 
 #: src/bin/e_main.c:847
 msgid "Enlightenment cannot set up its desk locking system."
@@ -2418,9 +2396,8 @@ msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment не може да настрои системата за \"order\" файлове."
 
 #: src/bin/e_main.c:888
-#, fuzzy
 msgid "Load Modules"
-msgstr "Зареждане на модул"
+msgstr "Зареждане на модули"
 
 #: src/bin/e_main.c:896
 msgid ""
@@ -2451,13 +2428,12 @@ msgstr ""
 "конфигурационния панел."
 
 #: src/bin/e_main.c:912
-#, fuzzy
 msgid "Configure Shelves"
-msgstr "Настроени рафтове"
+msgstr "Настройване на рафтове"
 
 #: src/bin/e_main.c:919
 msgid "Almost Done"
-msgstr ""
+msgstr "Почти е готово"
 
 #: src/bin/e_module.c:107
 #, c-format
@@ -2515,11 +2491,11 @@ msgid ""
 "it?"
 msgstr "Искате да изтриете този рафт.<br><br>Сигурни ли сте?"
 
-#: src/bin/e_shelf.c:1525 src/bin/e_toolbar.c:195
+#: src/bin/e_shelf.c:1525 src/bin/e_toolbar.c:323
 msgid "Stop Moving/Resizing Items"
 msgstr "Спиране на всякакво редактиране "
 
-#: src/bin/e_shelf.c:1527 src/bin/e_toolbar.c:197
+#: src/bin/e_shelf.c:1527 src/bin/e_toolbar.c:325
 msgid "Begin Moving/Resizing Items"
 msgstr "Започване на редактиране на всичко"
 
@@ -2532,18 +2508,17 @@ msgid "Delete this Shelf"
 msgstr "Изтриване на този рафт"
 
 #: src/bin/e_startup.c:62
-#, fuzzy
 msgid "Starting"
-msgstr "Стартиране на %s"
+msgstr "Стартиране"
 
 #: src/bin/e_sys.c:128
 msgid "Checking System Permissions"
-msgstr ""
+msgstr "Преглед на системните права"
 
 #: src/bin/e_sys.c:165 src/bin/e_sys.c:176 src/bin/e_sys.c:185
 #: src/bin/e_sys.c:194
 msgid "System Check Done"
-msgstr ""
+msgstr "Прегледът над системата е завържен"
 
 #: src/bin/e_sys.c:271
 msgid "Logout problems"
@@ -2576,7 +2551,7 @@ msgstr "В процес на изход"
 
 #: src/bin/e_sys.c:323
 msgid "Logout is currently in progress.<br><hilight>Please wait.</hilight>"
-msgstr "Изхода е задействан.:·<br><hilight>Моля изчакайте.</hilight>"
+msgstr "Изходът е задействан.:·<br><hilight>Моля изчакайте.</hilight>"
 
 #: src/bin/e_sys.c:352 src/bin/e_sys.c:412
 msgid "Enlightenment is busy with another request"
@@ -2677,14 +2652,12 @@ msgid "About This Theme"
 msgstr "За тази тема"
 
 #: src/bin/e_theme.c:41
-#, fuzzy
 msgid "Set As Theme"
-msgstr "Изберете тема..."
+msgstr "Избиране като тема"
 
-#: src/bin/e_toolbar.c:210
-#, fuzzy
+#: src/bin/e_toolbar.c:338
 msgid "Configure Toolbar Contents"
-msgstr "Конфигурация на съдържанието"
+msgstr "Конфигурация на съдържанието на лентата с инструменти"
 
 #: src/bin/e_utils.c:282
 msgid "Cannot exit - immortal windows."
@@ -2930,9 +2903,8 @@ msgid "Charging"
 msgstr "Зареждане"
 
 #: src/modules/battery/e_mod_main.c:1448
-#, fuzzy
 msgid "Battery Meter"
-msgstr "Батерия"
+msgstr ""
 
 #: src/modules/clock/e_mod_main.c:91
 msgid "Clock"
@@ -3368,7 +3340,7 @@ msgstr "Показване в зона #:"
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:173
 #: src/modules/conf_mouse/e_int_config_mouse.c:95
 #: src/modules/conf_mouse/e_int_config_mouse.c:101
-#: src/modules/fileman/e_mod_config.c:180
+#: src/modules/fileman/e_mod_config.c:175
 #, c-format
 msgid "%1.0f"
 msgstr "%1.0f"
@@ -4059,1535 +4031,6 @@ msgstr "Език"
 msgid "Input Method Settings"
 msgstr "Настройка на входящите методи"
 
-#: src/modules/conf_intl/e_int_config_intl.c:104
-#: src/modules/conf_intl/e_int_config_intl.c:140
-msgid "Bulgarian"
-msgstr "Български"
-
-#: src/modules/conf_intl/e_int_config_intl.c:105
-#: src/modules/conf_intl/e_int_config_intl.c:145
-msgid "Catalan"
-msgstr "Каталунски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:106
-msgid "Chinese (Simplified)"
-msgstr "Китайски (опростен)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:107
-msgid "Chinese (Traditional)"
-msgstr "Китайски (традиционен)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:108
-#: src/modules/conf_intl/e_int_config_intl.c:147
-msgid "Czech"
-msgstr "Чешки"
-
-#: src/modules/conf_intl/e_int_config_intl.c:109
-#: src/modules/conf_intl/e_int_config_intl.c:149
-msgid "Danish"
-msgstr "Датски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:110
-#: src/modules/conf_intl/e_int_config_intl.c:213
-msgid "Dutch"
-msgstr "Холандски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:111
-#: src/modules/conf_intl/e_int_config_intl.c:155
-msgid "English"
-msgstr "Английски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:112
-#: src/modules/conf_intl/e_int_config_intl.c:161
-msgid "Finnish"
-msgstr "Финландски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:113
-#: src/modules/conf_intl/e_int_config_intl.c:163
-msgid "French"
-msgstr "Френски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:114
-#: src/modules/conf_intl/e_int_config_intl.c:150
-msgid "German"
-msgstr "Германски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:115
-#: src/modules/conf_intl/e_int_config_intl.c:176
-msgid "Hungarian"
-msgstr "Унгарски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:116
-#: src/modules/conf_intl/e_int_config_intl.c:182
-msgid "Italian"
-msgstr "Италиански"
-
-#: src/modules/conf_intl/e_int_config_intl.c:117
-#: src/modules/conf_intl/e_int_config_intl.c:185
-msgid "Japanese"
-msgstr "Японски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:118
-#: src/modules/conf_intl/e_int_config_intl.c:195
-msgid "Korean"
-msgstr "Корейски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:119
-#: src/modules/conf_intl/e_int_config_intl.c:211
-msgid "Norwegian Bokmål"
-msgstr "Норвежки"
-
-#: src/modules/conf_intl/e_int_config_intl.c:120
-#: src/modules/conf_intl/e_int_config_intl.c:223
-msgid "Polish"
-msgstr "Полски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:121
-#: src/modules/conf_intl/e_int_config_intl.c:225
-msgid "Portuguese"
-msgstr "Португалски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:122
-#: src/modules/conf_intl/e_int_config_intl.c:227
-msgid "Russian"
-msgstr "Руски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:123
-#: src/modules/conf_intl/e_int_config_intl.c:233
-msgid "Slovak"
-msgstr "Словашки"
-
-#: src/modules/conf_intl/e_int_config_intl.c:124
-#: src/modules/conf_intl/e_int_config_intl.c:234
-msgid "Slovenian"
-msgstr "Словенски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:125
-#: src/modules/conf_intl/e_int_config_intl.c:157
-msgid "Spanish"
-msgstr "Испански"
-
-#: src/modules/conf_intl/e_int_config_intl.c:126
-#: src/modules/conf_intl/e_int_config_intl.c:240
-msgid "Swedish"
-msgstr "Шведски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:131
-msgid "Afar"
-msgstr "Афар"
-
-#: src/modules/conf_intl/e_int_config_intl.c:132
-msgid "Afrikaans"
-msgstr "Африканс"
-
-#: src/modules/conf_intl/e_int_config_intl.c:133
-msgid "Akan"
-msgstr "Акан"
-
-#: src/modules/conf_intl/e_int_config_intl.c:134
-msgid "Amharic"
-msgstr "Амхарски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:135
-msgid "Aragonese"
-msgstr "Арагонски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:136
-msgid "Arabic"
-msgstr "Арабски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:137
-msgid "Assamese"
-msgstr "Асамски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:138
-msgid "Azerbaijani"
-msgstr "Азербейджански"
-
-#: src/modules/conf_intl/e_int_config_intl.c:139
-msgid "Belarusian"
-msgstr "Беларуски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:141
-msgid "Bengali"
-msgstr "Бенгалски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:142
-msgid "Breton"
-msgstr "Келтски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:143
-msgid "Bosnian"
-msgstr "Босненски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:144
-msgid "Blin"
-msgstr "Блин"
-
-#: src/modules/conf_intl/e_int_config_intl.c:146
-msgid "Atsam"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:148
-msgid "Welsh"
-msgstr "Уелски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:151
-msgid "Divehi"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:152
-msgid "Dzongkha"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:153
-msgid "Ewe"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:154
-msgid "Greek"
-msgstr "Гръцки"
-
-#: src/modules/conf_intl/e_int_config_intl.c:156
-msgid "Esperanto"
-msgstr "Есперанто"
-
-#: src/modules/conf_intl/e_int_config_intl.c:158
-msgid "Estonian"
-msgstr "Естонски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:159
-msgid "Basque"
-msgstr "Баскски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:160
-msgid "Persian"
-msgstr "Персииски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:162
-msgid "Faroese"
-msgstr "Фарерски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:164
-msgid "Friulian"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:165
-msgid "Irish"
-msgstr "Ирландски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:166
-msgid "Ga"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:167
-msgid "Geez"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:168
-msgid "Galician"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:169
-msgid "Gujarati"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:170
-msgid "Manx"
-msgstr "Менски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:171
-msgid "Hausa"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:172
-msgid "Hawaiian"
-msgstr "Хавайски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:173
-#: src/modules/conf_intl/e_int_config_intl.c:184
-msgid "Hebrew"
-msgstr "Еврейски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:174
-msgid "Hindi"
-msgstr "Индус"
-
-#: src/modules/conf_intl/e_int_config_intl.c:175
-msgid "Croatian"
-msgstr "Хърватски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:177
-msgid "Armenian"
-msgstr "Арменски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:178
-msgid "Interlingua"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:179
-msgid "Indonesian"
-msgstr "Индонезийски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:180
-msgid "Igbo"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:181
-msgid "Icelandic"
-msgstr "Исландски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:183
-msgid "Inuktitut"
-msgstr "Инуктитут"
-
-#: src/modules/conf_intl/e_int_config_intl.c:186
-msgid "Georgian"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:187
-msgid "Jju"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:188
-msgid "Kamba"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:189
-msgid "Tyap"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:190
-msgid "Koro"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:191
-msgid "Kazakh"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:192
-msgid "Kalaallisut"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:193
-msgid "Khmer"
-msgstr "Кхмерски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:194
-msgid "Kannada"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:196
-msgid "Konkani"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:197
-msgid "Kurdish"
-msgstr "Кюрдски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:198
-msgid "Cornish"
-msgstr "Корнуолски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:199
-msgid "Kirghiz"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:200
-msgid "Lingala"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:201
-msgid "Lao"
-msgstr "Лао"
-
-#: src/modules/conf_intl/e_int_config_intl.c:202
-msgid "Lithuanian"
-msgstr "Литовски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:203
-msgid "Latvian"
-msgstr "Латвийски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:204
-msgid "Maori"
-msgstr "Маори"
-
-#: src/modules/conf_intl/e_int_config_intl.c:205
-msgid "Macedonian"
-msgstr "Македонски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:206
-msgid "Malayalam"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:207
-msgid "Mongolian"
-msgstr "Монголски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:208
-msgid "Marathi"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:209
-msgid "Malay"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:210
-msgid "Maltese"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:212
-msgid "Nepali"
-msgstr "Непалски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:214
-msgid "Norwegian Nynorsk"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:215
-msgid "Norwegian"
-msgstr "Норвежки"
-
-#: src/modules/conf_intl/e_int_config_intl.c:216
-msgid "South Ndebele"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:217
-msgid "Northern Sotho"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:218
-msgid "Nyanja; Chichewa; Chewa"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:219
-msgid "Occitan"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:220
-msgid "Oromo"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:221
-msgid "Oriya"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:222
-msgid "Punjabi"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:224
-msgid "Pashto"
-msgstr "Пущунски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:226
-msgid "Romanian"
-msgstr "Румънски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:228
-msgid "Kinyarwanda"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:229
-msgid "Sanskrit"
-msgstr "Санскрит"
-
-#: src/modules/conf_intl/e_int_config_intl.c:230
-msgid "Northern Sami"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:231
-msgid "Serbo-Croatian"
-msgstr "Сръбски-Хърватски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:232
-msgid "Sidamo"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:235
-msgid "Somali"
-msgstr "Сомалски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:236
-msgid "Albanian"
-msgstr "Албански"
-
-#: src/modules/conf_intl/e_int_config_intl.c:237
-msgid "Serbian"
-msgstr "Сръбски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:238
-msgid "Swati"
-msgstr "Свази"
-
-#: src/modules/conf_intl/e_int_config_intl.c:239
-msgid "Southern Sotho"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:241
-msgid "Swahili"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:242
-msgid "Syriac"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:243
-msgid "Tamil"
-msgstr "Тамилски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:244
-msgid "Telugu"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:245
-msgid "Tajik"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:246
-msgid "Thai"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:247
-msgid "Tigrinya"
-msgstr "Тигриня"
-
-#: src/modules/conf_intl/e_int_config_intl.c:248
-msgid "Tigre"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:249
-msgid "Tagalog"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:250
-msgid "Tswana"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:251
-msgid "Turkish"
-msgstr "Турски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:252
-msgid "Tsonga"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:253
-msgid "Tatar"
-msgstr "Татарски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:254
-msgid "Ukrainian"
-msgstr "Украински"
-
-#: src/modules/conf_intl/e_int_config_intl.c:255
-msgid "Urdu"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:256
-msgid "Uzbek"
-msgstr "Узбекистански"
-
-#: src/modules/conf_intl/e_int_config_intl.c:257
-msgid "Venda"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:258
-msgid "Vietnamese"
-msgstr "Виетнамски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:259
-msgid "Walloon"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:260
-msgid "Walamo"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:261
-msgid "Xhosa"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:262
-msgid "Yiddish"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:263
-msgid "Yoruba"
-msgstr "Йоруба"
-
-#: src/modules/conf_intl/e_int_config_intl.c:264
-msgid "Chinese"
-msgstr "Китайски"
-
-#: src/modules/conf_intl/e_int_config_intl.c:265
-msgid "Zulu"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:270
-msgid "Afghanistan"
-msgstr "Афганистански"
-
-#: src/modules/conf_intl/e_int_config_intl.c:271
-msgid "Åland Islands"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:272
-msgid "Albania"
-msgstr "Албания"
-
-#: src/modules/conf_intl/e_int_config_intl.c:273
-msgid "Algeria"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:274
-msgid "American Samoa"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:275
-msgid "Andorra"
-msgstr "Андора"
-
-#: src/modules/conf_intl/e_int_config_intl.c:276
-msgid "Angola"
-msgstr "Ангола"
-
-#: src/modules/conf_intl/e_int_config_intl.c:277
-msgid "Anguilla"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:278
-msgid "Antarctica"
-msgstr "Антарктика"
-
-#: src/modules/conf_intl/e_int_config_intl.c:279
-msgid "Antigua and Barbuda"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:280
-msgid "Argentina"
-msgstr "Аржентина"
-
-#: src/modules/conf_intl/e_int_config_intl.c:281
-msgid "Armenia"
-msgstr "Армения"
-
-#: src/modules/conf_intl/e_int_config_intl.c:282
-msgid "Aruba"
-msgstr "Аруба"
-
-#: src/modules/conf_intl/e_int_config_intl.c:283
-msgid "Australia"
-msgstr "Австралия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:284
-msgid "Austria"
-msgstr "Австрия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:285
-msgid "Azerbaijan"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:286
-msgid "Bahamas"
-msgstr "Бахами"
-
-#: src/modules/conf_intl/e_int_config_intl.c:287
-msgid "Bahrain"
-msgstr "Бахрейн"
-
-#: src/modules/conf_intl/e_int_config_intl.c:288
-msgid "Bangladesh"
-msgstr "Бангладеш"
-
-#: src/modules/conf_intl/e_int_config_intl.c:289
-msgid "Barbados"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:290
-msgid "Belarus"
-msgstr "Беларус"
-
-#: src/modules/conf_intl/e_int_config_intl.c:291
-msgid "Belgium"
-msgstr "Белгия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:292
-msgid "Belize"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:293
-msgid "Benin"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:294
-msgid "Bermuda"
-msgstr "Бермуда"
-
-#: src/modules/conf_intl/e_int_config_intl.c:295
-msgid "Bhutan"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:296
-msgid "Bolivia"
-msgstr "Боливия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:297
-msgid "Bosnia and Herzegovina"
-msgstr "Босна и Херцеговина"
-
-#: src/modules/conf_intl/e_int_config_intl.c:298
-msgid "Botswana"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:299
-msgid "Bouvet Island"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:300
-msgid "Brazil"
-msgstr "Бразилия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:301
-msgid "British Indian Ocean Territory"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:302
-msgid "Brunei Darussalam"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:303
-msgid "Bulgaria"
-msgstr "България"
-
-#: src/modules/conf_intl/e_int_config_intl.c:304
-msgid "Burkina Faso"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:305
-msgid "Burundi"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:306
-msgid "Cambodia"
-msgstr "Камбоджа"
-
-#: src/modules/conf_intl/e_int_config_intl.c:307
-msgid "Cameroon"
-msgstr "Камерун"
-
-#: src/modules/conf_intl/e_int_config_intl.c:308
-msgid "Canada"
-msgstr "Канада"
-
-#: src/modules/conf_intl/e_int_config_intl.c:309
-msgid "Cape Verde"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:310
-msgid "Cayman Islands"
-msgstr "Кайманските Острови"
-
-#: src/modules/conf_intl/e_int_config_intl.c:311
-msgid "Central African Republic"
-msgstr "Централно Африканска Република"
-
-#: src/modules/conf_intl/e_int_config_intl.c:312
-msgid "Chad"
-msgstr "Чад"
-
-#: src/modules/conf_intl/e_int_config_intl.c:313
-msgid "Chile"
-msgstr "Чили"
-
-#: src/modules/conf_intl/e_int_config_intl.c:314
-msgid "China"
-msgstr "Китай"
-
-#: src/modules/conf_intl/e_int_config_intl.c:315
-msgid "Christmas Island"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:316
-msgid "Cocos (keeling) Islands"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:317
-msgid "Colombia"
-msgstr "Колумбия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:318
-msgid "Comoros"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:319
-#: src/modules/conf_intl/e_int_config_intl.c:320
-msgid "Congo"
-msgstr "Конго"
-
-#: src/modules/conf_intl/e_int_config_intl.c:321
-msgid "Cook Islands"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:322
-msgid "Costa Rica"
-msgstr "Коста Рика"
-
-#: src/modules/conf_intl/e_int_config_intl.c:323
-msgid "Cote d'Ivoire"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:324
-msgid "Croatia"
-msgstr "Хърватска"
-
-#: src/modules/conf_intl/e_int_config_intl.c:325
-msgid "Cuba"
-msgstr "Куба"
-
-#: src/modules/conf_intl/e_int_config_intl.c:326
-msgid "Cyprus"
-msgstr "Кипър"
-
-#: src/modules/conf_intl/e_int_config_intl.c:327
-msgid "Czech Republic"
-msgstr "Чехия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:328
-msgid "Denmark"
-msgstr "Дания"
-
-#: src/modules/conf_intl/e_int_config_intl.c:329
-msgid "Djibouti"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:330
-msgid "Dominica"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:331
-msgid "Dominican Republic"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:332
-msgid "Ecuador"
-msgstr "Еквадор"
-
-#: src/modules/conf_intl/e_int_config_intl.c:333
-msgid "Egypt"
-msgstr "Египет"
-
-#: src/modules/conf_intl/e_int_config_intl.c:334
-msgid "El Salvador"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:335
-msgid "Equatorial Guinea"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:336
-msgid "Eritrea"
-msgstr "Еритрея"
-
-#: src/modules/conf_intl/e_int_config_intl.c:337
-msgid "Estonia"
-msgstr "Естония"
-
-#: src/modules/conf_intl/e_int_config_intl.c:338
-msgid "Ethiopia"
-msgstr "Етиопия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:339
-msgid "Falkland Islands (malvinas)"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:340
-msgid "Faroe Islands"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:341
-msgid "Fiji"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:342
-msgid "Finland"
-msgstr "Финландия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:343
-msgid "France"
-msgstr "Франция"
-
-#: src/modules/conf_intl/e_int_config_intl.c:344
-msgid "French Guiana"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:345
-msgid "French Polynesia"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:346
-msgid "French Southern Territories"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:347
-msgid "Gabon"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:348
-msgid "Gambia"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:349
-msgid "Georgia"
-msgstr "Грузия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:350
-msgid "Germany"
-msgstr "Германия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:351
-msgid "Ghana"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:352
-msgid "Gibraltar"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:353
-msgid "Greece"
-msgstr "Гърция"
-
-#: src/modules/conf_intl/e_int_config_intl.c:354
-msgid "Greenland"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:355
-msgid "Grenada"
-msgstr "Гренландия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:356
-msgid "Guadeloupe"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:357
-msgid "Guam"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:358
-msgid "Guatemala"
-msgstr "Гватемала"
-
-#: src/modules/conf_intl/e_int_config_intl.c:359
-msgid "Guernsey"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:360
-msgid "Guinea"
-msgstr "Гвинея"
-
-#: src/modules/conf_intl/e_int_config_intl.c:361
-msgid "Guinea-Bissau"
-msgstr "Гвинея"
-
-#: src/modules/conf_intl/e_int_config_intl.c:362
-msgid "Guyana"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:363
-msgid "Haiti"
-msgstr "Хаити"
-
-#: src/modules/conf_intl/e_int_config_intl.c:364
-msgid "Heard Island and Mcdonald Islands"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:365
-msgid "Holy See (Vatican City State)"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:366
-msgid "Honduras"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:367
-msgid "Hong Kong"
-msgstr "Хонг Конг"
-
-#: src/modules/conf_intl/e_int_config_intl.c:368
-msgid "Hungary"
-msgstr "Унгария"
-
-#: src/modules/conf_intl/e_int_config_intl.c:369
-msgid "Iceland"
-msgstr "Исландия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:370
-msgid "India"
-msgstr "Индия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:371
-msgid "Indonesia"
-msgstr "Индонезия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:372
-msgid "Iran"
-msgstr "Иран"
-
-#: src/modules/conf_intl/e_int_config_intl.c:373
-msgid "Iraq"
-msgstr "Ирак"
-
-#: src/modules/conf_intl/e_int_config_intl.c:374
-msgid "Ireland"
-msgstr "Ирландия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:375
-msgid "Isle Of Man"
-msgstr "Остров Мен"
-
-#: src/modules/conf_intl/e_int_config_intl.c:376
-msgid "Israel"
-msgstr "Израел"
-
-#: src/modules/conf_intl/e_int_config_intl.c:377
-msgid "Italy"
-msgstr "Италия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:378
-msgid "Jamaica"
-msgstr "Ямайка"
-
-#: src/modules/conf_intl/e_int_config_intl.c:379
-msgid "Japan"
-msgstr "Япония"
-
-#: src/modules/conf_intl/e_int_config_intl.c:380
-msgid "Jersey"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:381
-msgid "Jordan"
-msgstr "Йордания"
-
-#: src/modules/conf_intl/e_int_config_intl.c:382
-msgid "Kazakhstan"
-msgstr "Казахстан"
-
-#: src/modules/conf_intl/e_int_config_intl.c:383
-msgid "Kenya"
-msgstr "Кения"
-
-#: src/modules/conf_intl/e_int_config_intl.c:384
-msgid "Kiribati"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:385
-#: src/modules/conf_intl/e_int_config_intl.c:386
-msgid "Korea"
-msgstr "Корея"
-
-#: src/modules/conf_intl/e_int_config_intl.c:387
-msgid "Kuwait"
-msgstr "Кувейт"
-
-#: src/modules/conf_intl/e_int_config_intl.c:388
-msgid "Kyrgyzstan"
-msgstr "Киргизстан"
-
-#: src/modules/conf_intl/e_int_config_intl.c:389
-msgid "Lao People's Democratic Republic"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:390
-msgid "Latvia"
-msgstr "Латвия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:391
-msgid "Lebanon"
-msgstr "Ливан"
-
-#: src/modules/conf_intl/e_int_config_intl.c:392
-msgid "Lesotho"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:393
-msgid "Liberia"
-msgstr "Либерия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:394
-msgid "Libyan Arab Jamahiriya"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:395
-msgid "Liechtenstein"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:396
-msgid "Lithuania"
-msgstr "Литва"
-
-#: src/modules/conf_intl/e_int_config_intl.c:397
-msgid "Luxembourg"
-msgstr "Люксембург"
-
-#: src/modules/conf_intl/e_int_config_intl.c:398
-msgid "Macao"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:399
-msgid "Macedonia"
-msgstr "Македония"
-
-#: src/modules/conf_intl/e_int_config_intl.c:400
-msgid "Madagascar"
-msgstr "Мадагаскар"
-
-#: src/modules/conf_intl/e_int_config_intl.c:401
-msgid "Malawi"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:402
-msgid "Malaysia"
-msgstr "Малайзия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:403
-msgid "Maldives"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:404
-msgid "Mali"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:405
-msgid "Malta"
-msgstr "Малта"
-
-#: src/modules/conf_intl/e_int_config_intl.c:406
-msgid "Marshall Islands"
-msgstr "Маршалови Острови"
-
-#: src/modules/conf_intl/e_int_config_intl.c:407
-msgid "Martinique"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:408
-msgid "Mauritania"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:409
-msgid "Mauritius"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:410
-msgid "Mayotte"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:411
-msgid "Mexico"
-msgstr "Мексико"
-
-#: src/modules/conf_intl/e_int_config_intl.c:412
-msgid "Micronesia"
-msgstr "Микронезия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:413
-msgid "Moldova"
-msgstr "Молдова"
-
-#: src/modules/conf_intl/e_int_config_intl.c:414
-msgid "Monaco"
-msgstr "Монако"
-
-#: src/modules/conf_intl/e_int_config_intl.c:415
-msgid "Mongolia"
-msgstr "Монголия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:416
-msgid "Montserrat"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:417
-msgid "Morocco"
-msgstr "Мароко"
-
-#: src/modules/conf_intl/e_int_config_intl.c:418
-msgid "Mozambique"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:419
-msgid "Myanmar"
-msgstr "Мианмар"
-
-#: src/modules/conf_intl/e_int_config_intl.c:420
-msgid "Namibia"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:421
-msgid "Nauru"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:422
-msgid "Nepal"
-msgstr "Непал"
-
-#: src/modules/conf_intl/e_int_config_intl.c:423
-msgid "Netherlands"
-msgstr "Холандия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:424
-msgid "Netherlands Antilles"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:425
-msgid "New Caledonia"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:426
-msgid "New Zealand"
-msgstr "Нова Зеландия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:427
-msgid "Nicaragua"
-msgstr "Никарагуа"
-
-#: src/modules/conf_intl/e_int_config_intl.c:428
-msgid "Niger"
-msgstr "Нигер"
-
-#: src/modules/conf_intl/e_int_config_intl.c:429
-msgid "Nigeria"
-msgstr "Нигерия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:430
-msgid "Niue"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:431
-msgid "Norfolk Island"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:432
-msgid "Northern Mariana Islands"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:433
-msgid "Norway"
-msgstr "Норвегия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:434
-msgid "Oman"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:435
-msgid "Pakistan"
-msgstr "Пакистан"
-
-#: src/modules/conf_intl/e_int_config_intl.c:436
-msgid "Palau"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:437
-msgid "Palestinian Territory"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:438
-msgid "Panama"
-msgstr "Панама"
-
-#: src/modules/conf_intl/e_int_config_intl.c:439
-msgid "Papua New Guinea"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:440
-msgid "Paraguay"
-msgstr "Парагвай"
-
-#: src/modules/conf_intl/e_int_config_intl.c:441
-msgid "Peru"
-msgstr "Перу"
-
-#: src/modules/conf_intl/e_int_config_intl.c:442
-msgid "Philippines"
-msgstr "Филипини"
-
-#: src/modules/conf_intl/e_int_config_intl.c:443
-msgid "Pitcairn"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:444
-msgid "Poland"
-msgstr "Полша"
-
-#: src/modules/conf_intl/e_int_config_intl.c:445
-msgid "Portugal"
-msgstr "Португалия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:446
-msgid "Puerto Rico"
-msgstr "Пуерто Рико"
-
-#: src/modules/conf_intl/e_int_config_intl.c:447
-msgid "Qatar"
-msgstr "Катар"
-
-#: src/modules/conf_intl/e_int_config_intl.c:448
-msgid "Reunion"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:449
-msgid "Romania"
-msgstr "Румъния"
-
-#: src/modules/conf_intl/e_int_config_intl.c:450
-msgid "Russian Federation"
-msgstr "Русия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:451
-msgid "Rwanda"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:452
-msgid "Saint Helena"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:453
-msgid "Saint Kitts and Nevis"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:454
-msgid "Saint Lucia"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:455
-msgid "Saint Pierre and Miquelon"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:456
-msgid "Saint Vincent and the Grenadines"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:457
-msgid "Samoa"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:458
-msgid "San Marino"
-msgstr "Сан Марино"
-
-#: src/modules/conf_intl/e_int_config_intl.c:459
-msgid "Sao Tome and Principe"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:460
-msgid "Saudi Arabia"
-msgstr "Саудитска Арабия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:461
-msgid "Senegal"
-msgstr "Сенегал"
-
-#: src/modules/conf_intl/e_int_config_intl.c:462
-msgid "Serbia and Montenegro"
-msgstr "Сърбия и Черна Гора"
-
-#: src/modules/conf_intl/e_int_config_intl.c:463
-msgid "Seychelles"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:464
-msgid "Sierra Leone"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:465
-msgid "Singapore"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:466
-msgid "Slovakia"
-msgstr "Словакия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:467
-msgid "Slovenia"
-msgstr "Словения"
-
-#: src/modules/conf_intl/e_int_config_intl.c:468
-msgid "Solomon Islands"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:469
-msgid "Somalia"
-msgstr "Сомалия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:470
-msgid "South Africa"
-msgstr "Южноафриканска Република"
-
-#: src/modules/conf_intl/e_int_config_intl.c:471
-msgid "South Georgia and the South Sandwich Islands"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:472
-msgid "Spain"
-msgstr "Испания"
-
-#: src/modules/conf_intl/e_int_config_intl.c:473
-msgid "Sri Lanka"
-msgstr "Шри Ланка"
-
-#: src/modules/conf_intl/e_int_config_intl.c:474
-msgid "Sudan"
-msgstr "Судан"
-
-#: src/modules/conf_intl/e_int_config_intl.c:475
-msgid "Suriname"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:476
-msgid "Svalbard and Jan Mayen"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:477
-msgid "Swaziland"
-msgstr "Свазиленд"
-
-#: src/modules/conf_intl/e_int_config_intl.c:478
-msgid "Sweden"
-msgstr "Швеция"
-
-#: src/modules/conf_intl/e_int_config_intl.c:479
-msgid "Switzerland"
-msgstr "Швейцария"
-
-#: src/modules/conf_intl/e_int_config_intl.c:480
-msgid "Syrian Arab Republic"
-msgstr "Сирия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:481
-msgid "Taiwan"
-msgstr "Тайван"
-
-#: src/modules/conf_intl/e_int_config_intl.c:482
-msgid "Tajikistan"
-msgstr "Таджикистан"
-
-#: src/modules/conf_intl/e_int_config_intl.c:483
-msgid "Tanzania"
-msgstr "Танзания"
-
-#: src/modules/conf_intl/e_int_config_intl.c:484
-msgid "Thailand"
-msgstr "Тайланд"
-
-#: src/modules/conf_intl/e_int_config_intl.c:485
-msgid "Timor-Leste"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:486
-msgid "Togo"
-msgstr "Того"
-
-#: src/modules/conf_intl/e_int_config_intl.c:487
-msgid "Tokelau"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:488
-msgid "Tonga"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:489
-msgid "Trinidad and Tobago"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:490
-msgid "Tunisia"
-msgstr "Тунис"
-
-#: src/modules/conf_intl/e_int_config_intl.c:491
-msgid "Turkey"
-msgstr "Турция"
-
-#: src/modules/conf_intl/e_int_config_intl.c:492
-msgid "Turkmenistan"
-msgstr "Тюркменистан"
-
-#: src/modules/conf_intl/e_int_config_intl.c:493
-msgid "Turks and Caicos Islands"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:494
-msgid "Tuvalu"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:495
-msgid "Uganda"
-msgstr "Уганда"
-
-#: src/modules/conf_intl/e_int_config_intl.c:496
-msgid "Ukraine"
-msgstr "Украйна"
-
-#: src/modules/conf_intl/e_int_config_intl.c:497
-msgid "United Arab Emirates"
-msgstr "Обединени Арабски Емирства"
-
-#: src/modules/conf_intl/e_int_config_intl.c:498
-msgid "United Kingdom"
-msgstr "Обединено Кралство"
-
-#: src/modules/conf_intl/e_int_config_intl.c:499
-msgid "United States"
-msgstr "Съединените Щати"
-
-#: src/modules/conf_intl/e_int_config_intl.c:500
-msgid "United States Minor Outlying Islands"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:501
-msgid "Uruguay"
-msgstr "Уругвай"
-
-#: src/modules/conf_intl/e_int_config_intl.c:502
-msgid "Uzbekistan"
-msgstr "Узбекистан"
-
-#: src/modules/conf_intl/e_int_config_intl.c:503
-msgid "Vanuatu"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:504
-msgid "Venezuela"
-msgstr "Венецуела"
-
-#: src/modules/conf_intl/e_int_config_intl.c:505
-msgid "Viet Nam"
-msgstr "Виетнам"
-
-#: src/modules/conf_intl/e_int_config_intl.c:506
-#: src/modules/conf_intl/e_int_config_intl.c:507
-msgid "Virgin Islands"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:508
-msgid "Wallis and Futuna"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:509
-msgid "Western Sahara"
-msgstr "Западна Сахара"
-
-#: src/modules/conf_intl/e_int_config_intl.c:510
-msgid "Yemen"
-msgstr "Йемен"
-
-#: src/modules/conf_intl/e_int_config_intl.c:511
-msgid "Zambia"
-msgstr "Замбия"
-
-#: src/modules/conf_intl/e_int_config_intl.c:512
-msgid "Zimbabwe"
-msgstr "Зимбабве"
-
 #: src/modules/conf_intl/e_int_config_intl.c:582
 msgid "Language Configuration"
 msgstr "Настройки на езика"
@@ -5808,7 +4251,7 @@ msgstr "Файлова икона"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:137
 msgid "Mime:"
-msgstr ""
+msgstr "Mime:"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Use Generated Thumbnail"
@@ -5966,7 +4409,7 @@ msgid "Init"
 msgstr "Начало"
 
 #: src/modules/conf_paths/e_int_config_paths.c:86
-#: src/modules/fileman/e_mod_config.c:161
+#: src/modules/fileman/e_mod_config.c:156
 msgid "Icons"
 msgstr "Икони"
 
@@ -6938,7 +5381,7 @@ msgstr "Сенки"
 msgid "Run Command Dialog"
 msgstr "Диалог за стартиране на програми"
 
-#: src/modules/fileman/e_mod_main.c:200
+#: src/modules/fileman/e_mod_main.c:199
 msgid "Files"
 msgstr "Файлове"
 
@@ -6976,92 +5419,87 @@ msgstr ""
 "лошо, и затова конфигурацията е възстановена по<br>подразбиране. Извиняваме "
 "се за това неудобство.<br>"
 
-#: src/modules/fileman/e_mod_main.c:329
-#, fuzzy
+#: src/modules/fileman/e_mod_main.c:333
 msgid "Fileman Configuration Updated"
-msgstr "Конфигурацията е подновена"
+msgstr "Конфигурацията на файловия манипулатор е подновена"
 
-#: src/modules/fileman/e_mod_config.c:89
-#, fuzzy
+#: src/modules/fileman/e_mod_config.c:82
 msgid "Fileman Settings"
-msgstr "Размер"
+msgstr "Конфигурация на файловия манипулатор"
+
+#: src/modules/fileman/e_mod_config.c:154
+msgid "View Mode"
+msgstr "Режим за разглеждане"
 
 #: src/modules/fileman/e_mod_config.c:159
-#, fuzzy
-msgid "View Mode"
-msgstr "Режим за редактиране"
-
-#: src/modules/fileman/e_mod_config.c:164
-#, fuzzy
 msgid "Grid Icons"
-msgstr "Файлови икони"
+msgstr ""
+
+#: src/modules/fileman/e_mod_config.c:161
+msgid "Custom Icons"
+msgstr ""
+
+#: src/modules/fileman/e_mod_config.c:163
+msgid "Custom Grid Icons"
+msgstr ""
 
 #: src/modules/fileman/e_mod_config.c:166
-#, fuzzy
-msgid "Custom Icons"
-msgstr "Автоматично нагласяне на икони"
-
-#: src/modules/fileman/e_mod_config.c:168
-#, fuzzy
-msgid "Custom Grid Icons"
-msgstr "Автоматично нагласяне на икони"
-
-#: src/modules/fileman/e_mod_config.c:171
 msgid "Custom Smart Grid Icons"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:174
-#, fuzzy
+#: src/modules/fileman/e_mod_config.c:169
 msgid "List"
-msgstr "Списък с прозорци"
+msgstr "Списък"
 
-#: src/modules/fileman/e_mod_config.c:178
+#: src/modules/fileman/e_mod_config.c:173
 msgid "Icon Size"
 msgstr "Размер на иконите"
 
-#: src/modules/fileman/e_mod_config.c:184
+#: src/modules/fileman/e_mod_config.c:179
 msgid "Open Dirs In Place"
-msgstr ""
+msgstr "Отваряне на директории на място"
 
-#: src/modules/fileman/e_mod_config.c:187
+#: src/modules/fileman/e_mod_config.c:182
 msgid "Sort Dirs First"
-msgstr ""
+msgstr "Сортиране на директории най-отпред"
 
-#: src/modules/fileman/e_mod_config.c:190
+#: src/modules/fileman/e_mod_config.c:185
 msgid "Use Single Click"
-msgstr ""
+msgstr "Използване на единично натискане на бутона"
 
-#: src/modules/fileman/e_mod_config.c:193
-#, fuzzy
+#: src/modules/fileman/e_mod_config.c:188
 msgid "Show Icon Extension"
-msgstr "Имена на икони"
+msgstr "Показване на разширения на иконите"
 
-#: src/modules/fileman/e_mod_config.c:196
+#: src/modules/fileman/e_mod_config.c:191
 msgid "Show Full Path"
-msgstr ""
+msgstr "Показване на пълен път"
 
-#: src/modules/fileman/e_mod_config.c:199
-#, fuzzy
+#: src/modules/fileman/e_mod_config.c:194
 msgid "Show Desktop Icons"
-msgstr "Показване на икони върху полето"
+msgstr "Показване на икони вържу полето"
 
-#: src/modules/fileman/e_fwin.c:630
+#: src/modules/fileman/e_mod_config.c:197
+msgid "Show Toolbar"
+msgstr "Показване на лентата с инструменти"
+
+#: src/modules/fileman/e_fwin.c:635
 msgid "Go to Parent Directory"
 msgstr "Една директория нагоре"
 
-#: src/modules/fileman/e_fwin.c:656 src/modules/fileman/e_fwin.c:1297
+#: src/modules/fileman/e_fwin.c:661 src/modules/fileman/e_fwin.c:1302
 msgid "Open"
 msgstr "Отваряне"
 
-#: src/modules/fileman/e_fwin.c:663 src/modules/fileman/e_fwin.c:1295
+#: src/modules/fileman/e_fwin.c:668 src/modules/fileman/e_fwin.c:1300
 msgid "Open with..."
 msgstr "Отваряне с ..."
 
-#: src/modules/fileman/e_fwin.c:1315
+#: src/modules/fileman/e_fwin.c:1320
 msgid "Specific Applications"
 msgstr "Специфични програми"
 
-#: src/modules/fileman/e_fwin.c:1337
+#: src/modules/fileman/e_fwin.c:1342
 msgid "All Applications"
 msgstr "Всички Пограми"
 
@@ -7400,1524 +5838,17 @@ msgid "Temperature"
 msgstr "Температура"
 
 #: src/modules/wizard/e_wizard.c:341
-#, fuzzy
 msgid "Welcome to Enlightenment 東京"
 msgstr "Добре дошли в Enlightenment 0.17"
 
 #: src/modules/wizard/e_wizard.c:343
 msgid "Next"
-msgstr ""
+msgstr "Напред"
 
 #: src/modules/wizard/e_wizard.c:344
-#, fuzzy
 msgid "Back"
-msgstr "Прости"
+msgstr "Назад"
 
 #: src/modules/wizard/page_010.c:25
-#, fuzzy
 msgid "Choose Language"
-msgstr "Език"
-
-#~ msgid "Unknown Data"
-#~ msgstr "Неизвестна дата"
-
-#~ msgid "Enlightenment Starting. Please wait."
-#~ msgstr "Enlightenment стартира. Моля изчакайте."
-
-#~ msgid "Enlightenment Battery Module"
-#~ msgstr "Модул за батерия на Enlightenment"
-
-#~ msgid ""
-#~ "A basic battery meter that uses either<hilight>ACPI</hilight> or "
-#~ "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
-#~ "adaptor<br>status. This will work under Linux and FreeBSD and is "
-#~ "only<br>as accurate as your BIOS or kernel drivers."
-#~ msgstr ""
-#~ "Прост модул за наблюдение на батероята който използва ACPI или APM,\n"
-#~ "в Linux за да наблюдава положението на батерията и\n"
-#~ "АС захравнащ адаптор. Модула работи само под Linux и FreeBSD и е\n"
-#~ "точен колкото вашият BIOS или драйверите на ядрото Ви."
-
-#~ msgid "Enlightenment Clock Module"
-#~ msgstr "Модул за часовник на Enlightenment"
-
-#~ msgid "A simple module to give E17 a clock."
-#~ msgstr "Прост модул за часовник в E17"
-
-#~ msgid "Enlightenment Conf Module"
-#~ msgstr "Модул за конфигурация на Enlightenment"
-
-#~ msgid "A module for displaying a configuration panel."
-#~ msgstr "Модул за показване на конфигурационния панел."
-
-#~ msgid "Enlightenment Configuration Module - Applications"
-#~ msgstr "Enlightenment конфигурацонен модул - Програми"
-
-#~ msgid "Configuration dialog for applications."
-#~ msgstr "Конфигурационен диалог за програми."
-
-#~ msgid "Enlightenment Configuration Module - Borders"
-#~ msgstr "Enlightenment конфигурационен модул - Рамки"
-
-#~ msgid "Configuration dialog for borders."
-#~ msgstr "Конфигурационен диалог за рамки."
-
-#~ msgid "Enlightenment Configuration Module - Client List Menu"
-#~ msgstr "Enlightenment конфигурацонен модул - Списък с прозорци"
-
-#~ msgid "Configuration dialog for client list menu."
-#~ msgstr "Конфигурационен диалог за списък с прозорци."
-
-#~ msgid "Enlightenment Configuration Module - Colors"
-#~ msgstr "Enlightenment конфигурацонен модул - Цветове"
-
-#~ msgid "Configuration dialog for colors."
-#~ msgstr "Конфигурационен диалог за цветове."
-
-#~ msgid "Enlightenment Configuration Module - Desk"
-#~ msgstr "Enlightenment конфигурацонен модул - Поле"
-
-#~ msgid "Configuration dialog for desk."
-#~ msgstr "Конфигурационен диалог за полето."
-
-#~ msgid "Enlightenment Configuration Module - Screen Lock"
-#~ msgstr "Enlightenment конфигурацонен модул - Заключване на екрана"
-
-#~ msgid "Configuration dialog for screen lock."
-#~ msgstr "Конфигурационен диалог за заключване на екрана."
-
-#~ msgid "Enlightenment Configuration Module - Virtual Desktops"
-#~ msgstr "Enlightenment конфигурацонен модул - Виртуални полета"
-
-#~ msgid "Configuration dialog for virtual desktops."
-#~ msgstr "Конфигурационен диалог за виртуални полета."
-
-#~ msgid "Enlightenment Configuration Module - Dialogs"
-#~ msgstr "Enlightenment конфигурацонен модул - Диалози"
-
-#~ msgid "Configuration dialog for dialogs."
-#~ msgstr "Конфигурационен диалог за диалози."
-
-#~ msgid "Enlightenment Configuration Module - Screen Resolution"
-#~ msgstr "Enlightenment конфигурацонен модул - Разделителна способност"
-
-#~ msgid "Configuration dialog for screen resolution."
-#~ msgstr "Конфигурационен диалог за разделителна способност."
-
-#~ msgid "Enlightenment Configuration Module - Power Management"
-#~ msgstr "Enlightenment конфигурацонен модул - Енергийни настройки"
-
-#~ msgid "Configuration dialog for power management."
-#~ msgstr "Конфигурационен диалог за енергийни настройки."
-
-#~ msgid "Enlightenment Configuration Module - Engine"
-#~ msgstr "Enlightenment конфигурацонен модул - Възпроизвеждане"
-
-#~ msgid "Configuration dialog for engine."
-#~ msgstr "Конфигурационен диалог за възпроизвеждане."
-
-#~ msgid "Enlightenment Configuration Module - Run Command"
-#~ msgstr "Enlightenment конфигурацонен модул - Стартиране на програми"
-
-#~ msgid "Configuration dialog for run command."
-#~ msgstr "Конфигурационен диалог за стартиране на програми."
-
-#~ msgid "Enlightenment Configuration Module - Fonts"
-#~ msgstr "Enlightenment конфигурацонен модул - Шрифтове"
-
-#~ msgid "Configuration dialog for fonts."
-#~ msgstr "Конфигурационен диалог за шрифтове."
-
-#~ msgid "Enlightenment Configuration Module - Icon Theme"
-#~ msgstr "Enlightenment конфигурацонен модул - Теми за икони"
-
-#~ msgid "Configuration dialog for icon theme."
-#~ msgstr "Конфигурационен диалог за теми за икони."
-
-#~ msgid "Enlightenment Configuration Module - Input Methods"
-#~ msgstr "Enlightenment конфигурацонен модул - Входящи методи"
-
-#~ msgid "Configuration dialog for input methods."
-#~ msgstr "Конфигурационен диалог за входящи методи."
-
-#~ msgid "Enlightenment Configuration Module - Language"
-#~ msgstr "Enlightenment конфигурацонен модул - Език"
-
-#~ msgid "Configuration dialog for language and locale."
-#~ msgstr "Конфигурационен диалог за език."
-
-#~ msgid "Enlightenment Configuration Module - Key Bindings"
-#~ msgstr "Enlightenment конфигурацонен модул - Бързи клавиши"
-
-#~ msgid "Configuration dialog for key bindings."
-#~ msgstr "Конфигурационен диалог за бързи клавиши."
-
-#~ msgid "Enlightenment Configuration Module - Menu Settings"
-#~ msgstr "Enlightenment конфигурацонен модул - Настойки на менюта"
-
-#~ msgid "Configuration dialog for menus settings."
-#~ msgstr "Конфигурационен диалог за настройки на менюта."
-
-#~ msgid "Enlightenment Configuration Module - File Icons"
-#~ msgstr "Enlightenment конфигурацонен модул - Файлови икони"
-
-#~ msgid "Configuration dialog for file icons."
-#~ msgstr "Конфигурационен диалог за файлови икони."
-
-#~ msgid "Enlightenment Configuration Module - Mouse Bindings"
-#~ msgstr "Enlightenment конфигурацонен модул - Бутони на мишката"
-
-#~ msgid "Configuration dialog for mouse bindings."
-#~ msgstr "Конфигурационен диалог за бутони на мишката."
-
-#~ msgid "Enlightenment Configuration Module - Mouse Cursor"
-#~ msgstr "Enlightenment конфигурацонен модул - Показалец"
-
-#~ msgid "Configuration dialog for mouse cursor."
-#~ msgstr "Конфигурационен диалог за показалец."
-
-#~ msgid "Enlightenment Configuration Module - Mouse Acceleration"
-#~ msgstr "Enlightenment конфигурацонен модул - Ускорение на мишката"
-
-#~ msgid "Configuration dialog for mouse acceleration."
-#~ msgstr "Конфигурационен диалог за ускорение на мишката."
-
-#~ msgid "Enlightenment Configuration Module - Search Directories"
-#~ msgstr "Enlightenment конфигурацонен модул - Директории за търсене"
-
-#~ msgid "Configuration dialog for search directories."
-#~ msgstr "Конфигурационен диалог за директории за търсене."
-
-#~ msgid "Enlightenment Configuration Module - Performance"
-#~ msgstr "Enlightenment конфигурацонен модул - Бързодействие"
-
-#~ msgid "Configuration dialog for performance."
-#~ msgstr "Конфигурационен диалог за бързодействие."
-
-#~ msgid "Enlightenment Configuration Module - Profiles"
-#~ msgstr "Enlightenment конфигурацонен модул - Профили"
-
-#~ msgid "Configuration dialog for config profiles."
-#~ msgstr "Конфигурационен диалог за профили."
-
-#~ msgid "Enlightenment Configuration Module - Screen Saver"
-#~ msgstr "Enlightenment конфигурацонен модул - Предпазител на екрана"
-
-#~ msgid "Configuration dialog for screen saver."
-#~ msgstr "Конфигурационен диалог за предпазител на екрана."
-
-#~ msgid "Enlightenment Configuration Module - Shelves"
-#~ msgstr "Enlightenment конфигурацонен модул - Рафтове"
-
-#~ msgid "Configuration dialog for shelves."
-#~ msgstr "Конфигурационен диалог за рафтове."
-
-#~ msgid "Enlightenment Configuration Module - Startup"
-#~ msgstr "Enlightenment конфигурацонен модул - Начало"
-
-#~ msgid "Configuration dialog for startup."
-#~ msgstr "Конфигурационен диалог за начало."
-
-#~ msgid "Enlightenment Configuration Module - Theme"
-#~ msgstr "Enlightenment конфигурацонен модул - Теми"
-
-#~ msgid "Configuration dialog for theme."
-#~ msgstr "Конфигурационен диалог за теми."
-
-#~ msgid "Enlightenment Configuration Module - Transitions"
-#~ msgstr "Enlightenment конфигурацонен модул - Преходни ефекти"
-
-#~ msgid "Configuration dialog for transitions."
-#~ msgstr "Конфигурационен диалог за преходни ефекти."
-
-#~ msgid "Enlightenment Configuration Module - Wallpaper"
-#~ msgstr "Enlightenment конфигурацонен модул - Тапети"
-
-#~ msgid "Configuration dialog for wallpaper configuration."
-#~ msgstr "Конфигурационен диалог за тапети."
-
-#~ msgid "Enlightenment Configuration Module - Window Display"
-#~ msgstr "Enlightenment конфигурацонен модул - Изглед на прозорци"
-
-#~ msgid "Configuration dialog for window display."
-#~ msgstr "Конфигурационен диалог за изглед на прозорци."
-
-#~ msgid "Enlightenment Configuration Module - Window Focus"
-#~ msgstr "Enlightenment конфигурацонен модул - Фокус на прозорци"
-
-#~ msgid "Configuration dialog for window focus."
-#~ msgstr "Конфигурационен диалог за фокус на прозорци."
-
-#~ msgid "Enlightenment Configuration Module - Window Manipulation"
-#~ msgstr "Enlightenment конфигурацонен модул - Манипулиране на прозорци"
-
-#~ msgid "Configuration dialog for window manipulation."
-#~ msgstr "Конфигурационен диалог за манипулиране на прозорци."
-
-#~ msgid "Enlightenment Configuration Module - Window List"
-#~ msgstr "Enlightenment конфигурацонен модул - Списък с прозорци"
-
-#~ msgid "Configuration dialog for window list."
-#~ msgstr "Конфигурационен диалог за списък с прозорци."
-
-#~ msgid "CPU Frequency Controller Module"
-#~ msgstr "Модул за контролиране на процесорна честота"
-
-#~ msgid ""
-#~ "A simple module to control the frequency of the system CPU.<br>This is "
-#~ "especially useful to save power on laptops."
-#~ msgstr ""
-#~ "Прост модул за наблюдение на процесорната честота.Функцията е полезна за "
-#~ "пестене на енергията при лаптопи."
-
-#~ msgid "Enlightenment Dropshadow Module"
-#~ msgstr "Модул за сенки на Enlightenment"
-
-#~ msgid ""
-#~ "This is the dropshadow module that allows dropshadows to be cast<br>on "
-#~ "the desktop background - without special X-Server extensions<br>or "
-#~ "hardware acceleration."
-#~ msgstr ""
-#~ "Това е модул за хвърлена сянка, който позволява прозорците да хвърлят "
-#~ "сенки\n"
-#~ "върху фона - без това да използва специялни разширения на Х сървъра\n"
-#~ "или хардуерно ускорение."
-
-#~ msgid "Enlightenment Exebuf Module"
-#~ msgstr "Модул за стартиране на програми"
-
-#~ msgid "A module for executing apps just by typing names."
-#~ msgstr "Модул за стартиране на програми чрез писане на имена."
-
-#, fuzzy
-#~ msgid "Enlightenment File Manager"
-#~ msgstr "Модул за списък с прозорци"
-
-#, fuzzy
-#~ msgid "A module for providing a file manager."
-#~ msgstr "Модул за показване на конфигурационния панел."
-
-#~ msgid "Enlightenment Winlist Module"
-#~ msgstr "Модул за списък с прозорци"
-
-#~ msgid "A module for displaying a list of windows to switch between."
-#~ msgstr "Модул за показване на списък с прозорци."
-
-#~ msgid "Enlightenment IBar Module"
-#~ msgstr "Модул IBar на Enlightenment"
-
-#~ msgid ""
-#~ "This is the IBar Application Launcher bar module for Enlightenment.<br>It "
-#~ "is a first example module and is being used to flesh out "
-#~ "several<br>interfaces in Enlightenment 0.17.0. It is under heavy "
-#~ "development,<br>so expect it to <hilight>break often</hilight> and change "
-#~ "as it improves."
-#~ msgstr ""
-#~ "Това е IBar, стартера на програми за Enlightenment.<br>Това е първи "
-#~ "екземплярен модул и се използва за тестване на<br>множество интерфейси в "
-#~ "Enlightenment 0.17.0. Все още се разработва,<br>затова очаквайте да се "
-#~ "<hilight>чупи</hilight> и да се променя за да стане по-добра."
-
-#~ msgid "Enlightenment IBox Module"
-#~ msgstr "Модул IBox на Enlightenment"
-
-#~ msgid ""
-#~ "This is the IBox Iconified Application module for Enlightenment.<br>It "
-#~ "will hold minimized applications"
-#~ msgstr "Това е модула Ibox. Той ще съдържа скрити прозорци"
-
-#~ msgid "Enlightenment Layout Module"
-#~ msgstr "Модул за подредби"
-
-#~ msgid ""
-#~ "Can restrict or implement specific window layout policies for specialised "
-#~ "situations."
-#~ msgstr ""
-#~ "Може да ограничи или да въведе специфични поведение за подредба "
-#~ "заспециализирани ситуации."
-
-#~ msgid "Enlightenment Pager Module"
-#~ msgstr "Модул превключвател на полета на Enlightenment"
-
-#~ msgid "A pager module to navigate virtual desktops."
-#~ msgstr "Модул превключвател с който се сменят виртуалните полета."
-
-#~ msgid "Enlightenment Start Module"
-#~ msgstr "Модул Старт на Enlightenment"
-
-#~ msgid "Experimental Button module for E17"
-#~ msgstr "Експериментален бутонен модул за E17"
-
-#~ msgid "Enlightenment Temperature Module"
-#~ msgstr "Модул за температура на Enlightenment"
-
-#~ msgid ""
-#~ "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
-#~ "<br>It is especially useful for modern Laptops with high speed<br>CPUs "
-#~ "that generate a lot of heat."
-#~ msgstr ""
-#~ "Модул, отчитащ <hilight>ACPI термичен сензор</hilight> в Линукс. Най-"
-#~ "полезен е\n"
-#~ "за модерни лаптопи с бързи процесори които генерират\n"
-#~ "много топлина."
-
-#, fuzzy
-#~ msgid "Enlightenment First Run Wizard Module"
-#~ msgstr "Модул Старт на Enlightenment"
-
-#~ msgid "Enlightenment was unable to process a command line:<br><br>%s %s<br>"
-#~ msgstr "Enlightenment не е могъл да обработи командата:<br><br>%s %s<br>"
-
-#~ msgid "Enlightenment was unable to fork a child process:<br><br>%s %s<br>"
-#~ msgstr ""
-#~ "Enlightenment не е могъл да създаде отделен дъщерен процес:<br><br>%s %"
-#~ "s<br>"
-
-#~ msgid "Application Menus"
-#~ msgstr "Програмно меню"
-
-#~ msgid "Applications Menu"
-#~ msgstr "Меню на програмите"
-
-#~ msgid "Enlightenment cannot set up its app system."
-#~ msgstr "Enlightenment не може да настрои системата си за програми."
-
-#~ msgid "Enlightenment cannot set up its window list system."
-#~ msgstr "Enlightenment не може да настрои списъкът с прозорци."
-
-#~ msgid "Enlightenment cannot set up its exebuf system."
-#~ msgstr "Enlightenment не може да настрои системата си за exebuf"
-
-#~ msgid "About..."
-#~ msgstr "За..."
-
-#, fuzzy
-#~ msgid "Configuration Items"
-#~ msgstr "Конфигурация"
-
-#, fuzzy
-#~ msgid "DPMS Settings"
-#~ msgstr "Настройки на менюта"
-
-#, fuzzy
-#~ msgid "Configuration Dialogs"
-#~ msgstr "Конфигурационен панел"
-
-#~ msgid "Screen zone"
-#~ msgstr "Екранна зона"
-
-#, fuzzy
-#~ msgid "Application Editor"
-#~ msgstr "Програма"
-
-#, fuzzy
-#~ msgid "Generic Info"
-#~ msgstr "Общи забрани"
-
-#~ msgid "Window"
-#~ msgstr "Прозорец"
-
-#~ msgid "Window Name"
-#~ msgstr "Име на прозорец"
-
-#~ msgid "Window Title"
-#~ msgstr "Заглавна лента на прозорец"
-
-#~ msgid "Use Icon Theme"
-#~ msgstr "Използване на тема за икони"
-
-#~ msgid "Icon Class"
-#~ msgstr "Иконен клас"
-
-#~ msgid "Misc"
-#~ msgstr "Разни"
-
-#~ msgid "Wait Exit"
-#~ msgstr "Изчакване изход"
-
-#~ msgid "Window Frame"
-#~ msgstr "Рамка"
-
-#~ msgid "Module State"
-#~ msgstr "Състояние"
-
-#~ msgid "Module Actions"
-#~ msgstr "Действия"
-
-#~ msgid "Terminal Command"
-#~ msgstr "Команда на терминала"
-
-#~ msgid "Widget"
-#~ msgstr "Интерфейс"
-
-#~ msgid "Module"
-#~ msgstr "Модул"
-
-#~ msgid "Font Size:"
-#~ msgstr "Размер на шрифта:"
-
-#~ msgid "%2.1f pixels"
-#~ msgstr "%2.1f·пиксели"
-
-#~ msgid "Font Class Configuration"
-#~ msgstr "Конфигурация на шрифтовите класове"
-
-#~ msgid "Font"
-#~ msgstr "Шрифт"
-
-#~ msgid "Font Size"
-#~ msgstr "Размер на шрифта"
-
-#~ msgid "Move Up"
-#~ msgstr "Преместване нагоре"
-
-#~ msgid "Move Down"
-#~ msgstr "Преместване надолу"
-
-#~ msgid "Error"
-#~ msgstr "Грешка"
-
-#~ msgid "Could not create directory:<br><hilight>%s</hilight>"
-#~ msgstr "Не може да се изтрие директорията:·<br><hilight>%s</hilight>"
-
-#~ msgid "Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"
-#~ msgstr ""
-#~ "Не е било възможно преименуването от <hilight>%s</hilight> до <hilight>%"
-#~ "s</hilight>"
-
-#~ msgid "Could not delete <br><hilight>%s</hilight>"
-#~ msgstr "Не може да се изтрие <br><hilight>%s</hilight>"
-
-#~ msgid "%i Queued"
-#~ msgstr "%i на опашката"
-
-#~ msgid "Programming"
-#~ msgstr "Програмиране"
-
-#~ msgid "Games"
-#~ msgstr "Игри"
-
-#~ msgid "Multimedia"
-#~ msgstr "Мултимедия"
-
-#~ msgid "Toys"
-#~ msgstr "Играчки"
-
-#~ msgid "Utilities"
-#~ msgstr "Полезни"
-
-#~ msgid "Editors"
-#~ msgstr "Редактори"
-
-#~ msgid "Graphics"
-#~ msgstr "Графика"
-
-#~ msgid "Edit Application"
-#~ msgstr "Редактиране на стартер"
-
-#~ msgid "Regenerate or update your Applications menu?"
-#~ msgstr "Пресъздаване/подновяване на вашето меню \"Всички програми\"?"
-
-#~ msgid "Regenerate"
-#~ msgstr "Пресъздаване"
-
-#~ msgid "Update"
-#~ msgstr "Подновяване"
-
-#~ msgid "Available Applications"
-#~ msgstr "Налични стартери"
-
-#~ msgid "Create a new Application"
-#~ msgstr "Създаване на нова Eap икона"
-
-#~ msgid "Regenerate / Update \"Applications\" Menu"
-#~ msgstr "Пресъздаване/подновяване на меню \"Всички програми\""
-
-#~ msgid "Add to IBar"
-#~ msgstr "Добавяне до IBar"
-
-#~ msgid "Show windows from all zones"
-#~ msgstr "Показване на прозорци от всички зони"
-
-#~ msgid "Buttons Settings"
-#~ msgstr "Настройки на бутоните"
-
-#, fuzzy
-#~ msgid "Drag and select button"
-#~ msgstr "Избиране на икона"
-
-#~ msgid "Wheel callback"
-#~ msgstr "Колело на мишката"
-
-#, fuzzy
-#~ msgid "Favorites"
-#~ msgstr "Добавяне до предпочитаните"
-
-#~ msgid "Miscellaneous"
-#~ msgstr "Разни"
-
-#~ msgid "Window list skip"
-#~ msgstr "Списък за пропускане на прозорци"
-
-#~ msgid "Desktop Settings"
-#~ msgstr "Настройки на полетата"
-
-#~ msgid "Desktop Flip"
-#~ msgstr "Прелистване на полетата"
-
-#~ msgid "Stop editing"
-#~ msgstr "Спиране на редактиране"
-
-#~ msgid "Add Mouse"
-#~ msgstr "Добавяне"
-
-#~ msgid "Modify"
-#~ msgstr "Промяна"
-
-#~ msgid "Cannot add icon"
-#~ msgstr "Невъзможно е да се прибави икона"
-
-#~ msgid ""
-#~ "You tried to drop an icon of an application that<br>does not have a "
-#~ "matching application file.<br><br>The icon cannot be added to IBar."
-#~ msgstr ""
-#~ "Опитали сте се да поставите икона на програма,<br>която няма "
-#~ "съответниятeap файл.<br><br>Иконата не може да бъде добавена в IBar."
-
-#~ msgid "Temp 1"
-#~ msgstr "Темп 1"
-
-#~ msgid "Temp 2"
-#~ msgstr "Темп 2"
-
-#~ msgid "Temp 3"
-#~ msgstr "Темп 3"
-
-#~ msgid "ACPI Temperature"
-#~ msgstr "ACPI Температура"
-
-#~ msgid "Behavior"
-#~ msgstr "Поведение"
-
-#~ msgid "Desktop Lock Settings"
-#~ msgstr "Настройки за заключване на екрана"
-
-#~ msgid "Restart Enlightenment"
-#~ msgstr "Рестартиране на Enlightenment"
-
-#~ msgid "Exit Enlightenment"
-#~ msgstr "Излизане от Enlightenment"
-
-#~ msgid "Sort applications"
-#~ msgstr "Подреждане на стартери"
-
-#~ msgid "Add application..."
-#~ msgstr "Добавяне на стартер"
-
-#~ msgid "Create a new application"
-#~ msgstr "Създаване на нов стартер"
-
-#~ msgid "Bars, Menus, etc."
-#~ msgstr "Менюта, ленти, ..."
-
-#~ msgid "Move application up"
-#~ msgstr "Преместване на стартера нагоре"
-
-#~ msgid "Move application down"
-#~ msgstr "Преместване на стартера надолу"
-
-#~ msgid "ITray Configuration"
-#~ msgstr "Конфигурация на itray"
-
-#~ msgid "Number of Rows"
-#~ msgstr "Брой редове"
-
-#~ msgid "%3.0f"
-#~ msgstr "%3.0f"
-
-#~ msgid "Enlightenment ITray Module"
-#~ msgstr "Модул ITray на Enlightenment"
-
-#~ msgid "To Desktop 0"
-#~ msgstr "До поле 0"
-
-#~ msgid "To Desktop 1"
-#~ msgstr "До поле 1"
-
-#~ msgid "To Desktop 2"
-#~ msgstr "До поле 2"
-
-#~ msgid "To Desktop 3"
-#~ msgstr "До поле 3"
-
-#~ msgid "To Desktop 4"
-#~ msgstr "До поле 4"
-
-#~ msgid "To Desktop 5"
-#~ msgstr "До поле 5"
-
-#~ msgid "To Desktop 6"
-#~ msgstr "До поле 6"
-
-#~ msgid "To Desktop 7"
-#~ msgstr "До поле 7"
-
-#~ msgid "To Desktop 8"
-#~ msgstr "До поле 8"
-
-#~ msgid "To Desktop 9"
-#~ msgstr "До поле 9"
-
-#~ msgid "To Desktop 10"
-#~ msgstr "До поле 10"
-
-#~ msgid "To Desktop 11"
-#~ msgstr "До поле 11"
-
-#~ msgid "Internationalization"
-#~ msgstr "Интернационализация"
-
-#~ msgid "Ok"
-#~ msgstr "Добре"
-
-#~ msgid "Borderless"
-#~ msgstr "Без рамка"
-
-#~ msgid "Maximum Number Of Matched Eaps To List"
-#~ msgstr "Максимален брой на Eaps за показ"
-
-#~ msgid "Maximum Number Of Matched Exes To List"
-#~ msgstr "Максимален брой на програми за показ"
-
-#~ msgid "Choose a Key"
-#~ msgstr "Изберете клавиш"
-
-#~ msgid "Unsorted"
-#~ msgstr "Без подредба"
-
-#~ msgid "Binding Context"
-#~ msgstr "Контекст"
-
-#~ msgid "Key & Action"
-#~ msgstr "Клавиши & Действие"
-
-#~ msgid ":"
-#~ msgstr ":"
-
-#~ msgid "Parameters"
-#~ msgstr "Параметри"
-
-#~ msgid ""
-#~ "You requested to delete \"%s\" keybinding.<br><br>Are you sure you want "
-#~ "to delete it?"
-#~ msgstr "Искате да изтриете бърз клавиш \"%s\".<br><br>Сигурни ли сте?"
-
-#~ msgid "Delete?"
-#~ msgstr "Изтриване?"
-
-#~ msgid "Binding Key Sequence"
-#~ msgstr "Серия бързи клавиши"
-
-#~ msgid "App name"
-#~ msgstr "Име на програмата"
-
-#~ msgid "Enlightenment: Error!"
-#~ msgstr "Enlightenment : Грешка !"
-
-#~ msgid "Places"
-#~ msgstr "Места"
-
-#~ msgid "Home"
-#~ msgstr "Домашна папка"
-
-#~ msgid ""
-#~ "Enlightenment was unable to fork a child process:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Enlightenment не е могъл да създаде дъщерен процес:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-
-#~ msgid "Could not delete  <br><b>%s</b>"
-#~ msgstr "Не може да изтрие  ··<br><b>%s</b>"
-
-#~ msgid "Confirm"
-#~ msgstr "Потвърждаване"
-
-#~ msgid " Are you sure you want to delete <br><b>%s</b> ?"
-#~ msgstr "Сигурни ли сте, че искате да изтриете <br><b>%s</b>·?"
-
-#~ msgid "Protect this file"
-#~ msgstr "Предпазване на този файл"
-
-#~ msgid "Let others see this file"
-#~ msgstr "Разрешение на други да виждат този файл"
-
-#~ msgid "Let others modify this file"
-#~ msgstr "Разрешение на други да модифицират този файл"
-
-#~ msgid "Dont let others see or modify this file"
-#~ msgstr "Забрана на други да виждат/модифицират този файл"
-
-#~ msgid "Last Access:"
-#~ msgstr "Последен достъп:"
-
-#~ msgid "Me"
-#~ msgstr "Аз"
-
-#~ msgid "My Group"
-#~ msgstr "Моята група"
-
-#~ msgid "Everyone"
-#~ msgstr "Всички"
-
-#~ msgid "By Name"
-#~ msgstr "По име"
-
-#~ msgid "By Mod Time"
-#~ msgstr "По време на мод."
-
-#~ msgid "Directory"
-#~ msgstr "Директория"
-
-#~ msgid "View"
-#~ msgstr "Преглед"
-
-#~ msgid "Name Only"
-#~ msgstr "По име"
-
-#~ msgid "Add application ->"
-#~ msgstr "Добавете стартер ->"
-
-#~ msgid "Gadgets"
-#~ msgstr "Джунджурийки"
-
-#~ msgid "Toggle Edit Mode"
-#~ msgstr "Режим на редактиране"
-
-#~ msgid "Automatic Width"
-#~ msgstr "Автоматична ширина"
-
-#~ msgid "Half Screen Width"
-#~ msgstr "Полу-екранна ширина"
-
-#~ msgid "Full Screen Width"
-#~ msgstr "Пълна екранна ширина"
-
-#~ msgid "Center Horizontally"
-#~ msgstr "Хоризонтално центриране"
-
-#~ msgid "Automatic Height"
-#~ msgstr "Автоматична височина"
-
-#~ msgid "Half Screen Height"
-#~ msgstr "Полу-екранна височина"
-
-#~ msgid "Full Screen Height"
-#~ msgstr "Пълна екранна височина"
-
-#~ msgid "Center Vertically"
-#~ msgstr "Вертикално центриране"
-
-#~ msgid "Allow Overlap"
-#~ msgstr "Позволяване за покриване"
-
-#~ msgid "End Edit Mode"
-#~ msgstr "Спиране на режима за редактиране"
-
-#~ msgid "Import An Image"
-#~ msgstr "Вмъкване на изображение"
-
-#~ msgid "Scale Image"
-#~ msgstr "Разтеглено"
-
-#~ msgid "Password Type"
-#~ msgstr "Тип на паролата"
-
-#~ msgid "Use my login password"
-#~ msgstr "Използване на системната парола"
-
-#~ msgid "Personalized password"
-#~ msgstr "Лична парола"
-
-#~ msgid "Personalized Password:"
-#~ msgstr "Лична Парола"
-
-#~ msgid "Show password"
-#~ msgstr "Показване на паролата"
-
-#~ msgid "Theme Backgrounds"
-#~ msgstr "Фон от темата"
-
-#~ msgid "Theme Desklock Background"
-#~ msgstr "Фон за заключване от темата"
-
-#~ msgid "Theme Background"
-#~ msgstr "Фон от темата"
-
-#~ msgid "Exebuf Settings"
-#~ msgstr "Настройки на Стартиране на програма"
-
-#~ msgid "Font Hinting Settings"
-#~ msgstr "Заглаждане на шрифтове"
-
-#~ msgid "Bytecode Hinting"
-#~ msgstr "Bytecode·Заглаждане"
-
-#~ msgid "Automatic Hinting"
-#~ msgstr "Автоматично заглаждане"
-
-#~ msgid "No Hinting"
-#~ msgstr "Без заглаждане"
-
-#~ msgid "(Unused)"
-#~ msgstr "(Неизползвано)"
-
-#~ msgid "Background Settings"
-#~ msgstr "Настройки на фона"
-
-#~ msgid "To the left"
-#~ msgstr "Наляво"
-
-#~ msgid "Turned around"
-#~ msgstr "Обърнат наопъки"
-
-#~ msgid "To the right"
-#~ msgstr "Надясно"
-
-#~ msgid "Horizontally"
-#~ msgstr "Хоризонтално"
-
-#~ msgid "Vertically"
-#~ msgstr "Вертикално"
-
-#~ msgid "Assign Key Binding..."
-#~ msgstr "Добавяне на бърз клавиш..."
-
-#~ msgid "Contents Settings"
-#~ msgstr "Настройки на съдържанията"
-
-#~ msgid ""
-#~ "Enlightenment cannot set up the IPC socket.\n"
-#~ "It likely is already in use by an existing copy of Enlightenment.\n"
-#~ "Double check to see if Enlightenment is not already on this display,\n"
-#~ "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-#~ "and try running again.\n"
-#~ "\n"
-#~ "If you use AFS then maybe you might want to make a symlink from\n"
-#~ "~/.ecore to /tmp/my_directory/ecore where sockets can be made."
-#~ msgstr ""
-#~ "Enlightenment не може да настрои IPC сокет.\n"
-#~ "Сигурно вече се използва от друго копие на Enlightenment.\n"
-#~ "Проверете дали Enlightenment не е вече на този екран,\n"
-#~ "но ако не откриете грешката, изтрийте всички файлове в\n"
-#~ "~/.ecore/enlightenment-* и пробвайте пак да го пуснете.\n"
-#~ "Ако използвате AFS, пробвайте да направите мека връзка от\n"
-#~ "~/.ecore до /tmp/my_directory/ecore където сокети могат да се създадат."
-
-#~ msgid "Enlightenment IPC setup error!"
-#~ msgstr "IPC грешка в настройките на Enlightenment"
-
-#~ msgid ""
-#~ "Enlightenment cannot set up the IPC socket.\n"
-#~ "It likely is already in use by an existing copy of Enlightenment.\n"
-#~ "Double check to see if Enlightenment is not already on this display,\n"
-#~ "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-#~ "and try running again."
-#~ msgstr ""
-#~ "Enlightenment не може да настрои IPC сокет.\n"
-#~ "Сигурно вече се използва от друго копие на Enlightenment.\n"
-#~ "Проверете дали Enlightenment не е вече на този екран,\n"
-#~ "но ако не откриете грешката, изтрийте всички файлове в\n"
-#~ "~/.ecore/enlightenment-* и пробвайте пак да го пуснете."
-
-#~ msgid "About…"
-#~ msgstr "За..."
-
-#~ msgid "Begin editing"
-#~ msgstr "Започване на редактиране"
-
-#~ msgid "Shelf Location and Appearance Settings"
-#~ msgstr "Настройки за изглед и мястно на рафта"
-
-#~ msgid "Maximized"
-#~ msgstr "Уголемен"
-
-#~ msgid "Status"
-#~ msgstr "Състояние"
-
-#~ msgid "Auto-Apply Configuration Changes"
-#~ msgstr "Автоматично прилагане на промени"
-
-#~ msgid "Left"
-#~ msgstr "Отляво"
-
-#~ msgid "Right"
-#~ msgstr "В дясно"
-
-#~ msgid "Top"
-#~ msgstr "Отгоре"
-
-#~ msgid "Top Left"
-#~ msgstr "Горе вляво"
-
-#~ msgid "Top Right"
-#~ msgstr "Горе вдясно"
-
-#~ msgid "Bottom Left"
-#~ msgstr "Долу в лявo"
-
-#~ msgid "Bottom Right"
-#~ msgstr "Долу в дясно"
-
-#~ msgid "Left Top"
-#~ msgstr "В ляво отгоре"
-
-#~ msgid "Right Top"
-#~ msgstr "В дясно отгоре"
-
-#~ msgid "Left Bottom"
-#~ msgstr "В ляво отдолу"
-
-#~ msgid "Right Bottom"
-#~ msgstr "В дясно отдолу"
-
-#~ msgid "Follower"
-#~ msgstr "Придружител"
-
-#~ msgid "Visible"
-#~ msgstr "Видим"
-
-#~ msgid "Follow Speed"
-#~ msgstr "Скорост на придружителя"
-
-#~ msgid "%1.2f px/s"
-#~ msgstr "%1.2f·пиксела/сек"
-
-#~ msgid "Auto Fit"
-#~ msgstr "Автоматично нагласяне"
-
-#~ msgid "Autoscroll Speed:"
-#~ msgstr "Скорост на автоплъзгане"
-
-#~ msgid "Path"
-#~ msgstr "Път"
-
-#~ msgid "Allow shading/resizing"
-#~ msgstr "Разрешаване на навиване/оразмеряване"
-
-#~ msgid "Loaded"
-#~ msgstr "Зареждане"
-
-#~ msgid "BLAH"
-#~ msgstr "боо"
-
-#~ msgid "Window Display Settings"
-#~ msgstr "Настройки за изглед на прозорци"
-
-#~ msgid "Window Manipulation Settings"
-#~ msgstr "Настойки за манипулации на прозорци"
-
-#~ msgid "Search Paths"
-#~ msgstr "Пътища за търсене"
-
-#~ msgid "Clock Configuration"
-#~ msgstr "Конфигурация на Часовник"
-
-#~ msgid "No Digital Display"
-#~ msgstr "Няма цифрово лице"
-
-#~ msgid "12 Hour Display"
-#~ msgstr "12 часа"
-
-#~ msgid "24 Hour Display"
-#~ msgstr "24 часа"
-
-#~ msgid "Set Poll Time"
-#~ msgstr "Настройка на време за броене"
-
-#~ msgid "Restore Controller on Startup"
-#~ msgstr "Възвръщане на контрольор при стартиране"
-
-#~ msgid "Check Fast (0.5 sec)"
-#~ msgstr "Бързо проверяване (0,5 с)"
-
-#~ msgid "Check Medium (1 sec)"
-#~ msgstr "Умерено проверяване (1 с)"
-
-#~ msgid "Check Normal (2 sec)"
-#~ msgstr "Нормално проверяване (2 с)"
-
-#~ msgid "Check Slow (5 sec)"
-#~ msgstr "Бавно проверяване (5 с)"
-
-#~ msgid "Check Very Slow (30 sec)"
-#~ msgstr "Много бавно проверяване (30 с)"
-
-#~ msgid "Restore Governor on Startup"
-#~ msgstr "Възвръщане на регулатора при стартиране"
-
-#~ msgid "Desktop Name Position"
-#~ msgstr "Позиция на името на полето"
-
-#~ msgid "Fix Aspect (Keep Height)"
-#~ msgstr "Фиксирани пропорции (запазване на височина)"
-
-#~ msgid "Fix Aspect (Keep Width)"
-#~ msgstr "Фиксирани пропорции (запазване на ширина)"
-
-#~ msgid "Font Display Hinting"
-#~ msgstr "Заглаждане на шрифтове"
-
-#~ msgid "Background Preview"
-#~ msgstr "Преглед на фоновете"
-
-#~ msgid "Mouse Pointer Size"
-#~ msgstr "Размер на показалеца"
-
-#~ msgid "Prev Key Binding"
-#~ msgstr "Предишен бърз клавиш"
-
-#~ msgid "Enlightenment Randr Module"
-#~ msgstr "Модул Randr на Enlightenment"
-
-#~ msgid "Module to change screen resolution for E17"
-#~ msgstr "Модул за смяна на разделителна способността в E17"
-
-#~ msgid "Restore Resolution on Startup"
-#~ msgstr "Възвръщане на разделителна способността при стартиране"
-
-#~ msgid ""
-#~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
-#~ "resolution %dx%d in %d seconds."
-#~ msgstr ""
-#~ "Запазване на новата разделителна способност·<hilight>%dx%d</hilight>?"
-#~ "<br><br>Възвръщане на старата %dx%d·след·%d·секунди."
-
-#~ msgid ""
-#~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
-#~ "resolution %dx%d NOW!"
-#~ msgstr ""
-#~ "Запазване на новата разделителна способност·<hilight>%dx%d</hilight>?"
-#~ "<br><br>Връщане на старата·%dx%d·СЕГА!"
-
-#~ msgid "Something Else"
-#~ msgstr "Autre Chose"
-
-#, fuzzy
-#~ msgid "Gadget test"
-#~ msgstr "Джунджурийки"
-
-#~ msgid "The border style"
-#~ msgstr "Стил на рамката"
-
-#, fuzzy
-#~ msgid ""
-#~ "There was an error loading module named: %s<br>The full path to this "
-#~ "module is:<br>%s<br>The error reported was:<br>Module does not contain "
-#~ "all needed functions<br>"
-#~ msgstr ""
-#~ "Имало е грешка при зареждане на модула %s\n"
-#~ "Пълният път до този модул е:\n"
-#~ "%s\n"
-#~ "Съобщената грешка е:\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Enlightenment was unable run the program:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ "The command was not found\n"
-#~ msgstr ""
-#~ "Enlightenment не е могъл да стартира програмата:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Командата не е намерена\n"
-
-#~ msgid "User"
-#~ msgstr "Потребител"
-
-#~ msgid "Lifespan"
-#~ msgstr "Живот"
-
-#~ msgid "Remember This Window"
-#~ msgstr "Запомняне на този прозорец"
-
-#~ msgid "Remember This Instance Only"
-#~ msgstr "Запомняне само на този екземпляр"
-
-#~ msgid "Match by Class"
-#~ msgstr "Съответствие по клас"
-
-#~ msgid "Match by Role"
-#~ msgstr "Съответствие по роля"
-
-#~ msgid "Match by Transient Status"
-#~ msgstr "Съответствие по преходен статут"
-
-#~ msgid "Remember Size"
-#~ msgstr "Запомняне на размер"
-
-#~ msgid "Remember Desktop"
-#~ msgstr "Запомняне на поле"
-
-#~ msgid "Remember Shaded State"
-#~ msgstr "Запомняне на навиване"
-
-#~ msgid "Remember Zone"
-#~ msgstr "Запомняне на зона"
-
-#~ msgid "Remember Skip Window List"
-#~ msgstr "Запомняне на списък за пропускане на прозорци"
-
-#~ msgid "Send To"
-#~ msgstr "Преместване до"
-
-#~ msgid ""
-#~ "Error starting icon editor\n"
-#~ "\n"
-#~ "please install e_util_eapp_edit\n"
-#~ "or make sure it is in your PATH\n"
-#~ msgstr ""
-#~ "Грешка при стартиране на редактора на икони\n"
-#~ "\n"
-#~ "Моля инсталирайте e_util_eapp_edit\n"
-#~ "или проверете че е в ПЪТЯ ви\n"
-
-#~ msgid ""
-#~ "This is Enlightenment %s.\n"
-#~ "Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
-#~ "\n"
-#~ "We hope you enjoy using this software as much as we enjoyed writing it.\n"
-#~ "\n"
-#~ "Please think of the aardvarks. They need some love too."
-#~ msgstr ""
-#~ "Това е Enlightenment %s.\n"
-#~ "Авторско право © 1999-2004, от Enlightenment Dev Team.\n"
-#~ "\n"
-#~ "Надяваме се, че ви радва използването на този продукт, колкото нас ни "
-#~ "радва да го пишем\n"
-#~ "\n"
-#~ "И мислете за мравоядите. И те искат малко любов"
-
-#~ msgid "Remove Row of Desktops"
-#~ msgstr "Премахване ред от полета"
-
-#~ msgid "Remove Column of Desktops"
-#~ msgstr "Премахване на колона от полета"
-
-#~ msgid "(Empty)"
-#~ msgstr "(Празно)"
-
-#~ msgid "Module API Error"
-#~ msgstr "Грешка на модулното API"
-
-#~ msgid ""
-#~ "Error initializing Module: Battery\n"
-#~ "It requires a minimum module API version of: %i.\n"
-#~ "The module API advertized by Enlightenment is: %i.\n"
-#~ "Aborting module."
-#~ msgstr ""
-#~ "Грешка при стартиране на модул : Батерия\n"
-#~ "Минималната нужна версия на модулно API е : %i.\n"
-#~ "Версията, използвана от Enlightenment е: %i.\n"
-#~ "Прекратяване на модула."
-
-#~ msgid "Set Alarm"
-#~ msgstr "Настройка на аларма"
-
-#~ msgid "20 mins"
-#~ msgstr "20 мин"
-
-#~ msgid "30 mins"
-#~ msgstr "30 мин"
-
-#~ msgid "40 mins"
-#~ msgstr "40 мин"
-
-#~ msgid "50 mins"
-#~ msgstr "50 мин"
-
-#~ msgid "1 hour"
-#~ msgstr "1 час"
-
-#~ msgid "Check Fast (1 sec)"
-#~ msgstr "Бързо проверяване (1 с)"
-
-#~ msgid "Check Medium (5 sec)"
-#~ msgstr "Умерено проверяване (5 с)"
-
-#~ msgid "Check Normal (10 sec)"
-#~ msgstr "Нормално проверяване (10 с)"
-
-#~ msgid "Check Slow (30 sec)"
-#~ msgstr "Бавно проверяване (30 с)"
-
-#~ msgid "Check Very Slow (60 sec)"
-#~ msgstr "Много бавно проверяване (60 с)"
-
-#~ msgid "Battery Running Low"
-#~ msgstr "Батерията свършва"
-
-#~ msgid ""
-#~ "Error initializing Module: Clock\n"
-#~ "It requires a minimum module API version of: %i.\n"
-#~ "The module API advertized by Enlightenment is: %i.\n"
-#~ "Aborting module."
-#~ msgstr ""
-#~ "Грешка при стартиране на модул : Часовник\n"
-#~ "Минималната нужна версия на модулно API е : %i.\n"
-#~ "Версията, използвана от Enlightenment е: %i.\n"
-#~ "Прекратяване на модула."
-
-#~ msgid ""
-#~ "Error initializing Module: cpufreq\n"
-#~ "It requires a minimum module API version of: %i.\n"
-#~ "The module API advertized by Enlightenment is %i.\n"
-#~ "Aborting module."
-#~ msgstr ""
-#~ "Грешка при стартиране на модул : Процесорна честота\n"
-#~ "Минималната нужна версия на модулно API е : %i.\n"
-#~ "Версията, използвана от Enlightenment е: %i.\n"
-#~ "Прекратяване на модула."
-
-#~ msgid "CPU Frequency ERROR"
-#~ msgstr "Грешка на процесорна честота"
-
-#~ msgid ""
-#~ "Error initializing Module: desktop\n"
-#~ "It requires a minimum module API version of: %i.\n"
-#~ "The module API advertized by Enlightenment is: %i.\n"
-#~ "Aborting module."
-#~ msgstr ""
-#~ "Грешка при стартиране на модул : desktop\n"
-#~ "Минималната нужна версия на модулно API е : %i.\n"
-#~ "Версията, използвана от Enlightenment е: %i.\n"
-#~ "Прекратяване на модула."
-
-#~ msgid "Enlightenment DesktopName Module"
-#~ msgstr "Модул ИмеНаПолето на Enlightenment"
-
-#~ msgid "Experimental module for E17: display desktop name on screen."
-#~ msgstr "Експериментален модул за Е17: показване на имената на полетата."
-
-#~ msgid "Very Fast"
-#~ msgstr "Много бурзо"
-
-#~ msgid ""
-#~ "Error initializing Module: Dropshadow\n"
-#~ "It requires a minimum module API version of: %i.\n"
-#~ "The module API advertized by Enlightenment is: %i.\n"
-#~ "Aborting module."
-#~ msgstr ""
-#~ "Грешка при стартиране на модул : Сенки\n"
-#~ "Минималната нужна версия на модулно API е : %i.\n"
-#~ "Версията, използвана от Enlightenment е: %i.\n"
-#~ "Прекратяване на модула."
-
-#~ msgid ""
-#~ "Error initializing Module: IBar\n"
-#~ "It requires a minimum module API version of: %i.\n"
-#~ "The module API advertized by Enlightenment is: %i.\n"
-#~ "Aborting module."
-#~ msgstr ""
-#~ "Грешка при стартиране на модул : IBar\n"
-#~ "Минималната нужна версия на модулно API е : %i.\n"
-#~ "Версията, използвана от Enlightenment е: %i.\n"
-#~ "Прекратяване на модула."
-
-#~ msgid "Very Small"
-#~ msgstr "Много малък"
-
-#~ msgid "Very Large"
-#~ msgstr "Много голям"
-
-#~ msgid "Extremely Large"
-#~ msgstr "Крайно голям"
-
-#~ msgid "Enormous"
-#~ msgstr "Огромен"
-
-#~ msgid "Gigantic"
-#~ msgstr "Циклопен"
-
-#~ msgid ""
-#~ "Error initializing Module: IBox\n"
-#~ "It requires a minimum module API version of: %i.\n"
-#~ "The module API advertized by Enlightenment is: %i.\n"
-#~ "Aborting module."
-#~ msgstr ""
-#~ "Грешка при стартиране на модул : IBxr\n"
-#~ "Минималната нужна версия на модулно API е : %i.\n"
-#~ "Версията, използвана от Enlightenment е: %i.\n"
-#~ "Прекратяване на модула."
-
-#~ msgid ""
-#~ "This is the IBox Application Launcher box module for Enlightenment.\n"
-#~ "It is a first example module and is being used to flesh out several\n"
-#~ "Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
-#~ "so expect it to break often and change as it improves."
-#~ msgstr ""
-#~ "Това е IBox, кутия със програми за Enlightenment.\n"
-#~ "Това е първи екземплярен модул и се използва за тестване на\n"
-#~ "множество интерфейси в Enlightenment 0.17.0. Все още се разработва,\n"
-#~ "затова очаквайте да се чупи и да се променя за да стане по-добър."
-
-#~ msgid ""
-#~ "Error initializing Module: Pager\n"
-#~ "It requires a minimum module API version of: %i.\n"
-#~ "The module API advertized by Enlightenment is: %i.\n"
-#~ "Aborting module."
-#~ msgstr ""
-#~ "Грешка при стартиране на модул : Pager\n"
-#~ "Минималната нужна версия на модулно API е : %i.\n"
-#~ "Версията, използвана от Enlightenment е: %i.\n"
-#~ "Прекратяване на модула."
-
-#~ msgid ""
-#~ "Error initializing Module: randr\n"
-#~ "It requires a minimum module API version of: %i.\n"
-#~ "The module API advertized by Enlightenment is: %i.\n"
-#~ "Aborting module."
-#~ msgstr ""
-#~ "Грешка при стартиране на модул : randr\n"
-#~ "Минималната нужна версия на модулно API е : %i.\n"
-#~ "Версията, използвана от Enlightenment е: %i.\n"
-#~ "Прекратяване на модула."
-
-#~ msgid ""
-#~ "Error initializing Module: Temperature\n"
-#~ "It requires a minimum module API version of: %i.\n"
-#~ "The module API advertized by Enlightenment is: %i.\n"
-#~ "Aborting module."
-#~ msgstr ""
-#~ "Грешка при стартиране на модул : Температура\n"
-#~ "Минималната нужна версия на модулно API е : %i.\n"
-#~ "Версията, използвана от Enlightenment е: %i.\n"
-#~ "Прекратяване на модула."
-
-#~ msgid "20C"
-#~ msgstr "20°C"
-
-#~ msgid "30C"
-#~ msgstr "30°C"
-
-#~ msgid "40C"
-#~ msgstr "40°C"
-
-#~ msgid "50C"
-#~ msgstr "50°C"
-
-#~ msgid "60C"
-#~ msgstr "60°C"
-
-#~ msgid "70C"
-#~ msgstr "70°C"
-
-#~ msgid "80C"
-#~ msgstr "80°C"
-
-#~ msgid "90C"
-#~ msgstr "90°C"
-
-#~ msgid "100C"
-#~ msgstr "100°C"
-
-#~ msgid ""
-#~ "Error initializing Module: test\n"
-#~ "It requires a minimum module API version of: %i.\n"
-#~ "The module API advertized by Enlightenment is: %i.\n"
-#~ "Aborting module."
-#~ msgstr ""
-#~ "Грешка при стартиране на модул : тест\n"
-#~ "Минималната нужна версия на модулно API е : %i.\n"
-#~ "Версията, използвана от Enlightenment е: %i.\n"
-#~ "Прекратяване на модула."
-
-#~ msgid "Test!!!"
-#~ msgstr "Test !"
-
-#~ msgid "Size (User)"
-#~ msgstr "Размер (Потребител)"
-
-#~ msgid "Stacking (User)"
-#~ msgstr "Ниво (Потребител)"
-
-#~ msgid "Sticky (User)"
-#~ msgstr "Залепване (Потребител)"
-
-#~ msgid "Position (Application)"
-#~ msgstr "Позиция (Програма)"
-
-#~ msgid "Size (Application)"
-#~ msgstr "Размер (Програма)"
-
-#~ msgid "Stacking (Application)"
-#~ msgstr "Ниво (Програма)"
-
-#~ msgid "Iconify (Application)"
-#~ msgstr "Скриване (Програма)"
-
-#~ msgid "Shade (Application)"
-#~ msgstr "Навиване (Програма)"
-
-#~ msgid "Maximize (Application)"
-#~ msgstr "Уголемяване (Програма)"
-
-#~ msgid ""
-#~ "Enlightenment was unable fork a child process\n"
-#~ "to run the execute line:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Enlightenment не е могъл да създаде\n"
-#~ "отделен дъщерен процес за пускане на стартовият ред:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "This is the IBar Application Launcher bar module for Enlightenment.\n"
-#~ "It is a first example module and is being used to flesh out several\n"
-#~ "Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
-#~ "so expect it to break often and change as it improves."
-#~ msgstr ""
-#~ "Това е IBar, стартера на програми за Enlightenment.\n"
-#~ "Това е първи екземплярен модул и се използва за тестване на\n"
-#~ "множество интерфейси в Enlightenment 0.17.0. Все още се разработва,\n"
-#~ "затова очаквайте да се чупи и да се променя за да стане по-добър."
-
-#~ msgid "Artificially slowing startup so you can see it all."
-#~ msgstr "Изкуствено е забавено пускането за да видите всичко ."
-
-#~ msgid "Most features do not work yet, and those that do are buggy."
-#~ msgstr ""
-#~ "Повечето екстри не работят, а тези които работят, не го правят добре"
-
-#~ msgid "This is development code, so be warned."
-#~ msgstr "Предупреждаваме ви, че този код е в процес на разработка."
-
-#~ msgid ""
-#~ "This is program has barely been started on, so it is not complete by a "
-#~ "long\n"
-#~ "shot. Please do NOT expect anything to work properly at this stage. It's\n"
-#~ "being worked on.\n"
-#~ "\n"
-#~ "Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17."
-#~ msgstr ""
-#~ "По тази програма тепърва е почнало да се работи, тъй че\n"
-#~ "не очаквайте чудеса\n"
-#~ ".Сега натиснете красивият бутон за да продължите."
-
-#, fuzzy
-#~ msgid "Enlightenment cannot initialize thePerhaps you are out of memory?"
-#~ msgstr "Enlightenment не може да стартираМоже би няма свободна памет?"
-
-#~ msgid "Extremely Close"
-#~ msgstr "Извънредно близки"
+msgstr "Избор на език"
