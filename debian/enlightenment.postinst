@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+add_wm_entry ()
+{
+       update-alternatives --install /usr/bin/x-window-manager \
+     x-window-manager /usr/bin/enlightenment_start 50
+}
+
+case "$1" in
+     configure)
+         add_wm_entry
+     ;;
+
+     abort-*)
+         exit 1
+     ;;
+
+     *)
+     ;;
+esac
+
+#DEBHELPER#
