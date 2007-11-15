@@ -55,6 +55,7 @@ static Evas_List *_drop_handlers = NULL;
 static Evas_Hash *_drop_win_hash = NULL;
 
 static Ecore_X_Window _drag_win = 0;
+static Ecore_X_Window _drag_win_root = 0;
 
 static Evas_List *_drag_list = NULL;
 static E_Drag    *_drag_current = NULL;
@@ -219,6 +220,7 @@ e_drag_move(E_Drag *drag, int x, int y)
    drag->x = x;
    drag->y = y;
    drag->xy_update = 1;
+//   printf("DND MOVE %i %i\n", x, y);
 }
 
 EAPI void
@@ -247,6 +249,7 @@ e_drag_start(E_Drag *drag, int x, int y)
    _drag_win = ecore_x_window_input_new(drag->container->win, 
 					drag->container->x, drag->container->y,
 					drag->container->w, drag->container->h);
+   _drag_win_root = ecore_x_window_root_get(_drag_win);
    ecore_x_window_show(_drag_win);
    if (!e_grabinput_get(_drag_win, 1, _drag_win))
      {
@@ -478,6 +481,7 @@ e_drag_idler_before(void)
 	  }
         if (drag->xy_update)
 	  {
+//	     printf("DND REAL MOVE\n");
 	     ecore_evas_move(drag->ecore_evas, drag->x, drag->y);
 	     e_container_shape_move(drag->shape, drag->x, drag->y);
 	     drag->xy_update = 0;
@@ -520,6 +524,7 @@ _e_drag_move(E_Drag *drag, int x, int y)
    drag->x = x - drag->dx;
    drag->y = y - drag->dy;
    drag->xy_update = 1;
+//   printf("DND MOVE 2 %i %i\n", x, y);
 }
 
 static void
@@ -653,6 +658,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y)
    int dx, dy, dw, dh;
    Ecore_X_Window win, ignore_win[2];
 
+//   double t1 = ecore_time_get(); ////
    if (_drag_current)
      {
 	ignore_win[0] = _drag_current->evas_win;
@@ -762,6 +768,8 @@ _e_drag_update(Ecore_X_Window root, int x, int y)
 	       }
 	  }
      }
+//   double t2 = ecore_time_get() - t1; ////
+//   printf("DND UPDATE %3.7f\n", t2); ////
 }
 
 static void
@@ -992,7 +1000,7 @@ _e_dnd_cb_mouse_up(void *data, int type, void *event)
    ev = event;
    if (ev->win != _drag_win) return 1;
 
-   _e_drag_end(ecore_x_window_root_get(ev->win), ev->x, ev->y);
+   _e_drag_end(_drag_win_root, ev->x, ev->y);
 
    return 1;
 }
@@ -1005,7 +1013,7 @@ _e_dnd_cb_mouse_move(void *data, int type, void *event)
    ev = event;
    if (ev->win != _drag_win) return 1;
 
-   _e_drag_update(ecore_x_window_root_get(ev->win), ev->x, ev->y);
+   _e_drag_update(_drag_win_root, ev->x, ev->y);
    return 1;
 }
 
@@ -1137,8 +1145,14 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
    int active;
 
    ev = event;
+//   double t1 = ecore_time_get(); ////
    id = e_util_winid_str_get(ev->win);
-   if (!evas_hash_find(_drop_win_hash, id)) return 1;
+   if (!evas_hash_find(_drop_win_hash, id))
+     {
+//	double t2 = ecore_time_get() - t1; ////
+//	printf("DND POS EV 1 %3.7f\n", t2); ////
+	return 1;
+     }
 
    rect.x = 0;
    rect.y = 0;
@@ -1160,9 +1174,11 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
      }
    else
      {
-	_e_drag_update(ecore_x_window_root_get(ev->win), ev->position.x, ev->position.y);
+	_e_drag_update(_drag_win_root, ev->position.x, ev->position.y);
 	ecore_x_dnd_send_status(1, 0, rect, ECORE_X_DND_ACTION_PRIVATE);
      }
+//   double t2 = ecore_time_get() - t1; ////
+//   printf("DND POS EV 2 %3.7f\n", t2); ////
    return 1;
 }
 
@@ -1242,7 +1258,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	for (i = 0; i < files->num_files; i++)
 	  l = evas_list_append(l, files->files[i]), printf("file: %s\n", files->files[i]);
 	_xdnd->data = l;
-	_e_drag_xdnd_end(ecore_x_window_root_get(ev->win), _xdnd->x, _xdnd->y);
+	_e_drag_xdnd_end(_drag_win_root, _xdnd->x, _xdnd->y);
 	evas_list_free(l);
      }
    else if (!strcmp("text/x-moz-url", _xdnd->type))
@@ -1281,12 +1297,12 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	l = evas_list_append(l, file);
 
 	_xdnd->data = l;
-	_e_drag_xdnd_end(ecore_x_window_root_get(ev->win), _xdnd->x, _xdnd->y);
+	_e_drag_xdnd_end(_drag_win_root, _xdnd->x, _xdnd->y);
 	evas_list_free(l);
      }
    else
      {
-	_e_drag_xdnd_end(ecore_x_window_root_get(ev->win), _xdnd->x, _xdnd->y);
+	_e_drag_xdnd_end(_drag_win_root, _xdnd->x, _xdnd->y);
      }
    /* FIXME: When to execute this? It could be executed in ecore_x after getting
     * the drop property... */
