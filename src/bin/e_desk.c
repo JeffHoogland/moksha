@@ -308,9 +308,9 @@ e_desk_show(E_Desk *desk)
 	       }
 	  }
 	if (show_shelf)
-	  e_shelf_show (es);
+	  e_shelf_show(es);
 	else
-	  e_shelf_hide (es);
+	  e_shelf_hide(es);
      }
 }
 
