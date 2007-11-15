@@ -563,7 +563,6 @@ _e_entry_x_selection_update(Evas_Object *entry)
    if ((!selecting) ||
        (!(text = e_editable_text_range_get(editable, start_pos, end_pos))))
      return;
-  
 
    ecore_x_selection_primary_set(win->evas_win, text, strlen(text) + 1);
    free(text);
