@@ -1699,9 +1699,12 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *e
    ev = event_info;
    if (ev->button == 3)
      {
+	E_Zone *zone;
 	E_Menu *mn;
 	E_Menu_Item *mi;
-	int cx, cy, cw, ch;
+	int cx, cy;
+
+	zone = e_util_zone_current_get(e_manager_current_get()),
 
 	mn = e_menu_new();
 	e_menu_post_deactivate_callback_set(mn, _e_gadcon_client_cb_menu_post,
@@ -1720,14 +1723,18 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *e
 
 	     gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, mn);
 	  }
-
-	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
-	e_menu_activate_mouse(mn,
-			      e_util_zone_current_get(e_manager_current_get()),
-			      cx + ev->output.x, cy + ev->output.y, 1, 1,
+	
+	if (gcc->gadcon->toolbar)
+	  ecore_x_pointer_xy_get(zone->container->win, &cx, &cy);
+	else 
+	  {
+	     e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, NULL, NULL);
+	     cx = cx + ev->output.x;
+	     cy = cy + ev->output.y;
+	  }
+	e_menu_activate_mouse(mn, zone, cx, cy, 1, 1, 
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(gcc->gadcon->evas,
-					ev->button);
+	e_util_evas_fake_mouse_up_later(gcc->gadcon->evas, ev->button);
      }
 }
 

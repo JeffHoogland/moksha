@@ -80,12 +80,13 @@ e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2)
    evas_object_resize(tbar->o_event, tbar->w, tbar->h);
    evas_object_event_callback_add(tbar->o_event, EVAS_CALLBACK_MOUSE_DOWN, 
 				  _e_toolbar_cb_mouse_down, tbar);
+   evas_object_layer_set(tbar->o_event, 0);
+   evas_object_show(tbar->o_event);
 
    tbar->o_base = edje_object_add(evas);
    evas_object_resize(tbar->o_base, tbar->w, tbar->h);
    e_theme_edje_object_set(tbar->o_base, "base/theme/toolbar", 
 			   "e/toolbar/default/base");
-   evas_object_show(tbar->o_base);
 
    e_toolbar_move_resize(tbar, tbar->x, tbar->y, tbar->w, tbar->h);
 
