@@ -403,90 +403,82 @@ _e_winlist_size_adjust(void)
 static void
 _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 {
-   int ok;
-
-   ok = 1;
+   E_Winlist_Win *ww;
+   Evas_Coord mw, mh;
+   Evas_Object *o;
+	
    if ((!bd->client.icccm.accepts_focus) &&
-       (!bd->client.icccm.take_focus)) ok = 0;
-   if (bd->client.netwm.state.skip_taskbar) ok = 0;
-   if (bd->user_skip_winlist) ok = 0;
+       (!bd->client.icccm.take_focus)) return;
+   if (bd->client.netwm.state.skip_taskbar) return;
+   if (bd->user_skip_winlist) return;
    if (bd->iconic)
      {
-	if (!e_config->winlist_list_show_iconified) ok = 0;
+	if (!e_config->winlist_list_show_iconified) return;
 	if ((bd->zone != zone) &&
-	    (!e_config->winlist_list_show_other_screen_iconified)) ok = 0;	
+	    (!e_config->winlist_list_show_other_screen_iconified)) return;	
 	if ((bd->desk != desk) &&
-	    (!e_config->winlist_list_show_other_desk_iconified)) ok = 0;
+	    (!e_config->winlist_list_show_other_desk_iconified)) return;
      }
    else
      {
 	if (bd->sticky)
 	  {
 	     if ((bd->zone != zone) &&
-		 (!e_config->winlist_list_show_other_screen_windows)) ok = 0;
+		 (!e_config->winlist_list_show_other_screen_windows)) return;
 	  }
 	else
 	  {
 	     if (bd->desk != desk)
 	       {
 		  if ((bd->zone) && (bd->zone != zone))
-		    {
-		       if (!e_config->winlist_list_show_other_screen_windows) ok = 0;
-		    }
-		  else if (!e_config->winlist_list_show_other_desk_windows) ok = 0;
+		    if (!e_config->winlist_list_show_other_screen_windows) return;
+		  else
+		    if (!e_config->winlist_list_show_other_desk_windows) return;
 	       }
 	  }
      }
-   if (ok)
+
+   ww = calloc(1, sizeof(E_Winlist_Win));
+   if (!ww) return;
+   ww->border = bd;
+   wins = evas_list_append(wins, ww);
+   o = edje_object_add(winlist->evas);
+   ww->bg_object = o;
+   e_theme_edje_object_set(o, "base/theme/winlist",
+			   "e/widgets/winlist/item");
+   edje_object_part_text_set(o, "e.text.label", e_border_name_get(ww->border));
+   evas_object_show(o);
+   if (edje_object_part_exists(ww->bg_object, "e.swallow.icon"))
      {
-	E_Winlist_Win *ww;
-	Evas_Coord mw, mh;
-	Evas_Object *o;
-	
-	ww = calloc(1, sizeof(E_Winlist_Win));
-	if (!ww) return;
-	ww->border = bd;
-	wins = evas_list_append(wins, ww);
-	o = edje_object_add(winlist->evas);
-	ww->bg_object = o;
-	e_theme_edje_object_set(o, "base/theme/winlist",
-				"e/widgets/winlist/item");
-	edje_object_part_text_set(o, "e.text.label", e_border_name_get(ww->border));
+	o = e_border_icon_add(bd, winlist->evas);
+	ww->icon_object = o;
+	edje_object_part_swallow(ww->bg_object, "e.swallow.icon", o);
 	evas_object_show(o);
-	if (edje_object_part_exists(ww->bg_object, "e.swallow.icon"))
-	  {
-	     o = e_border_icon_add(bd, winlist->evas);
-	     ww->icon_object = o;
-	     edje_object_part_swallow(ww->bg_object, "e.swallow.icon", o);
-	     evas_object_show(o);
-	  }
-	if (bd->shaded)
-	  {
-	     edje_object_signal_emit(ww->bg_object, "e,state,shaded", "e");
-	  }
-	else if (bd->iconic)
-	  {
-	     edje_object_signal_emit(ww->bg_object, "e,state,iconified", "e");
-	  }
-	else if (bd->desk != desk)
-	  {
-	     if (!((bd->sticky) && (bd->zone == zone)))
-	       {
-		  edje_object_signal_emit(ww->bg_object, "e,state,invisible", "e");
-	       }
-	  }
-	  
-	edje_object_size_min_calc(ww->bg_object, &mw, &mh);
-	e_box_pack_end(list_object, ww->bg_object);
-	e_box_pack_options_set(ww->bg_object, 
-			       1, 1, /* fill */
-			       1, 0, /* expand */
-			       0.5, 0.5, /* align */
-			       mw, mh, /* min */
-			       9999, mh /* max */
-			       );
-        e_object_ref(E_OBJECT(ww->border));
      }
+   if (bd->shaded)
+     {
+	edje_object_signal_emit(ww->bg_object, "e,state,shaded", "e");
+     }
+   else if (bd->iconic)
+     {
+	edje_object_signal_emit(ww->bg_object, "e,state,iconified", "e");
+     }
+   else if (bd->desk != desk)
+     {
+	if (!((bd->sticky) && (bd->zone == zone)))
+	  edje_object_signal_emit(ww->bg_object, "e,state,invisible", "e");
+     }
+
+   edje_object_size_min_calc(ww->bg_object, &mw, &mh);
+   e_box_pack_end(list_object, ww->bg_object);
+   e_box_pack_options_set(ww->bg_object, 
+			  1, 1, /* fill */
+			  1, 0, /* expand */
+			  0.5, 0.5, /* align */
+			  mw, mh, /* min */
+			  9999, mh /* max */
+			 );
+   e_object_ref(E_OBJECT(ww->border));
 }
 
 static void
