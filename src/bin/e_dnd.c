@@ -196,6 +196,8 @@ e_drag_new(E_Container *container, int x, int y,
 
    ecore_x_window_shadow_tree_flush();
    
+   _drag_win_root = drag->container->manager->root;
+   
    return drag;
 }
 
@@ -249,7 +251,7 @@ e_drag_start(E_Drag *drag, int x, int y)
    _drag_win = ecore_x_window_input_new(drag->container->win, 
 					drag->container->x, drag->container->y,
 					drag->container->w, drag->container->h);
-   _drag_win_root = ecore_x_window_root_get(_drag_win);
+   _drag_win_root= drag->container->manager->root;
    ecore_x_window_show(_drag_win);
    if (!e_grabinput_get(_drag_win, 1, _drag_win))
      {
@@ -803,7 +805,6 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 	     ecore_x_window_del(_drag_win);
 	     _drag_win = 0;
 	  }
-
 	if (_drag_current->cb.finished)
 	  _drag_current->cb.finished(_drag_current, dropped);
 
@@ -1014,6 +1015,7 @@ _e_dnd_cb_mouse_move(void *data, int type, void *event)
    if (ev->win != _drag_win) return 1;
 
    _e_drag_update(_drag_win_root, ev->x, ev->y);
+   
    return 1;
 }
 
@@ -1226,7 +1228,7 @@ _e_dnd_cb_event_dnd_drop(void *data, int type, void *event)
    ev = event;
    id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
-   printf("Xdnd drop\n");
+   printf("Xdnd drop %x %s\n", ev->win, _xdnd->type);
 
    ecore_x_selection_xdnd_request(ev->win, _xdnd->type);
 
@@ -1258,6 +1260,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	for (i = 0; i < files->num_files; i++)
 	  l = evas_list_append(l, files->files[i]), printf("file: %s\n", files->files[i]);
 	_xdnd->data = l;
+	printf("_drag_win_root = %x\n", _drag_win_root);
 	_e_drag_xdnd_end(_drag_win_root, _xdnd->x, _xdnd->y);
 	evas_list_free(l);
      }
