@@ -3,7 +3,7 @@
  */
 #include "e.h"
 
-#include <Ecore_IMFF.h>
+#include <Ecore_IMF.h>
 
 typedef struct _E_Entry_Smart_Data E_Entry_Smart_Data;
 
