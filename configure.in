@@ -174,7 +174,7 @@ PKG_CHECK_MODULES(E, [
   ecore-con
   ecore-job
   ecore-txt
-  ecore-im
+  ecore-imf
   edje
   eet
   embryo
