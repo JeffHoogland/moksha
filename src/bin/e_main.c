@@ -3,6 +3,8 @@
  */
 #include "e.h"
 
+#include <Ecore_IM.h>
+
 EAPI int e_precache_end = 0;
 
 /* local subsystem functions */
@@ -311,6 +313,8 @@ main(int argc, char **argv)
 			       "Perhaps you are out of memory?"));
 	exit(-1);
      }
+   ecore_im_init();
+   _e_main_shutdown_push(ecore_im_shutdown);
 // FIXME: SEGV's on shutdown if fm2 windows up - disable for now.   
 //   _e_main_shutdown_push(ecore_shutdown);
    ecore_job_init();
