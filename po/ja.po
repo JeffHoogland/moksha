@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-08 09:45+1100\n"
-"PO-Revision-Date: 2007-10-08 16:23+0900\n"
+"POT-Creation-Date: 2007-11-20 11:06+0900\n"
+"PO-Revision-Date: 2007-11-20 11:46+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr "Enlightenment について"
 
 #: src/bin/e_about.c:74 src/bin/e_actions.c:2165 src/bin/e_actions.c:2169
 #: src/bin/e_actions.c:2173 src/bin/e_actions.c:2177 src/bin/e_int_menus.c:166
-#: src/bin/e_main.c:559
+#: src/bin/e_main.c:563
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -159,7 +159,7 @@ msgstr "下げる"
 
 #: src/bin/e_actions.c:1940 src/bin/e_config_dialog.c:226 src/bin/e_fm.c:512
 #: src/bin/e_int_border_menu.c:328 src/bin/e_int_border_prop.c:81
-#: src/modules/conf/e_conf.c:160 src/modules/fileman/e_fwin.c:1299
+#: src/modules/conf/e_conf.c:160 src/modules/fileman/e_fwin.c:1304
 msgid "Close"
 msgstr "閉じる"
 
@@ -428,7 +428,7 @@ msgstr "指定のメニューを表示する..."
 #: src/bin/e_actions.c:2156 src/bin/e_actions.c:2161
 #: src/modules/conf/e_mod_main.c:46 src/modules/conf/e_mod_main.c:67
 #: src/modules/exebuf/e_mod_main.c:48 src/modules/exebuf/e_mod_main.c:68
-#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:127
+#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:126
 msgid "Launch"
 msgstr "コマンドの実行"
 
@@ -494,9 +494,8 @@ msgid "Cleanup Windows"
 msgstr "ウィンドウ整頓"
 
 #: src/bin/e_bg.c:21 src/modules/conf_wallpaper/e_mod_main.c:34
-#, fuzzy
 msgid "Set As Background"
-msgstr "背景の設定先"
+msgstr "背景に設定する"
 
 #
 #: src/bin/e_border.c:4390
@@ -614,7 +613,6 @@ msgstr ""
 "れたデータが使われないように, このファイルは削除されました.<br>"
 
 #: src/bin/e_config.c:2283
-#, fuzzy
 msgid "Enlightenment Configuration Write Problems"
 msgstr "Enlightenment の設定を書き込む時に問題が起きました."
 
@@ -821,7 +819,7 @@ msgstr "取消"
 msgid "Select an Executable"
 msgstr "プログラムの選択"
 
-#: src/bin/e_entry.c:390 src/bin/e_fm.c:6416
+#: src/bin/e_entry.c:443 src/bin/e_fm.c:6416
 #: src/modules/conf_applications/e_int_config_apps.c:305
 #: src/modules/conf_profiles/e_int_config_profiles.c:93
 #: src/modules/conf_shelves/e_int_config_shelf.c:83
@@ -829,19 +827,19 @@ msgstr "プログラムの選択"
 msgid "Delete"
 msgstr "削除"
 
-#: src/bin/e_entry.c:403 src/bin/e_fm.c:6326
+#: src/bin/e_entry.c:456 src/bin/e_fm.c:6326
 msgid "Cut"
 msgstr "カット"
 
-#: src/bin/e_entry.c:414 src/bin/e_fm.c:6343
+#: src/bin/e_entry.c:467 src/bin/e_fm.c:6343
 msgid "Copy"
 msgstr "コピー"
 
-#: src/bin/e_entry.c:425 src/bin/e_fm.c:6174 src/bin/e_fm.c:6357
+#: src/bin/e_entry.c:478 src/bin/e_fm.c:6174 src/bin/e_fm.c:6357
 msgid "Paste"
 msgstr "貼り付け"
 
-#: src/bin/e_entry.c:437
+#: src/bin/e_entry.c:490
 msgid "Select All"
 msgstr "すべて選択"
 
@@ -976,14 +974,13 @@ msgid "There was no output."
 msgstr "出力はありませんでした"
 
 #: src/bin/e_fm.c:514
-#, fuzzy
 msgid "Unexisting path"
-msgstr "パスを設定中"
+msgstr "存在しないパス"
 
 #: src/bin/e_fm.c:517
 #, c-format
 msgid "%s doesn't exists"
-msgstr ""
+msgstr "%s が存在しません"
 
 #: src/bin/e_fm.c:2650
 #, c-format
@@ -1159,23 +1156,23 @@ msgid "%llu B"
 msgstr ""
 
 #: src/bin/e_fm_hal.c:227
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown Volume"
-msgstr "不明"
+msgstr "未知のボリュームです"
 
 #: src/bin/e_fm_hal.c:267
 msgid "Removable Device"
 msgstr "着脱可能媒体"
 
-#: src/bin/e_gadcon.c:1225
+#: src/bin/e_gadcon.c:1239
 msgid "Plain"
 msgstr "普通"
 
-#: src/bin/e_gadcon.c:1234
+#: src/bin/e_gadcon.c:1248
 msgid "Inset"
 msgstr "埋め込む"
 
-#: src/bin/e_gadcon.c:1245 src/bin/e_int_config_modules.c:40
+#: src/bin/e_gadcon.c:1257 src/bin/e_int_config_modules.c:40
 #: src/modules/conf_borders/e_mod_main.c:34
 #: src/modules/conf_colors/e_mod_main.c:34
 #: src/modules/conf_fonts/e_mod_main.c:34
@@ -1189,23 +1186,23 @@ msgstr "埋め込む"
 msgid "Appearance"
 msgstr "外観"
 
-#: src/bin/e_gadcon.c:1251
+#: src/bin/e_gadcon.c:1263
 msgid "Automatically scroll contents"
 msgstr "自動的にスクロールする"
 
-#: src/bin/e_gadcon.c:1258
+#: src/bin/e_gadcon.c:1270
 msgid "Able to be resized"
 msgstr "大きさを変える"
 
-#: src/bin/e_gadcon.c:1270
+#: src/bin/e_gadcon.c:1282
 msgid "Begin move/resize this gadget"
 msgstr "このガジェットの移動/大きさ変更を始める"
 
-#: src/bin/e_gadcon.c:1276
+#: src/bin/e_gadcon.c:1288
 msgid "Remove this gadget"
 msgstr "このガジェットを削除する"
 
-#: src/bin/e_gadcon.c:1694
+#: src/bin/e_gadcon.c:1715
 msgid "Stop move/resize this gadget"
 msgstr "このガジェットの移動/大きさ変更を終了する"
 
@@ -1414,7 +1411,7 @@ msgstr "お気に入りに追加する"
 
 #: src/bin/e_int_border_menu.c:282
 msgid "Add Keyboard Shortcut"
-msgstr ""
+msgstr "キーボードショートカットを追加する"
 
 #: src/bin/e_int_border_menu.c:287
 msgid "Add To Launcher"
@@ -1745,14 +1742,13 @@ msgstr "設定"
 
 #: src/bin/e_int_config_modules.c:42 src/modules/conf_mime/e_mod_main.c:34
 #: src/modules/fileman/e_mod_main.c:41 src/modules/fileman/e_mod_main.c:43
-#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:127
+#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:126
 msgid "File Manager"
 msgstr "ファイルマネージャ"
 
 #: src/bin/e_int_config_modules.c:43
-#, fuzzy
 msgid "Shelf"
-msgstr "シェルフ #"
+msgstr "シェルフ"
 
 #: src/bin/e_int_config_modules.c:105
 msgid "Module Settings"
@@ -1765,7 +1761,7 @@ msgstr "利用できるモジュール"
 #: src/bin/e_int_config_modules.c:177 src/bin/e_int_config_modules.c:561
 #: src/bin/e_int_config_modules.c:576 src/bin/e_int_config_modules.c:591
 msgid "Description: Unavailable"
-msgstr ""
+msgstr "説明: 利用不可"
 
 #: src/bin/e_int_config_modules.c:179
 msgid "Load Module"
@@ -1780,32 +1776,35 @@ msgstr "ロード済みモジュール"
 msgid "Unload Module"
 msgstr "モジュールをアンロードする"
 
-#: src/bin/e_int_gadcon_config.c:44
+#: src/bin/e_int_gadcon_config.c:32
 msgid "Shelf Contents"
 msgstr "シェルフの中身の設定"
 
-#: src/bin/e_int_gadcon_config.c:165
+#: src/bin/e_int_gadcon_config.c:38
+msgid "Toolbar Contents"
+msgstr "ツールバーの内容"
+
+#: src/bin/e_int_gadcon_config.c:177
 msgid "Available Gadgets"
 msgstr "使えるガジェット"
 
-#: src/bin/e_int_gadcon_config.c:173
+#: src/bin/e_int_gadcon_config.c:185
 msgid "Add Gadget"
 msgstr "ガジェットを追加する"
 
-#: src/bin/e_int_gadcon_config.c:179
+#: src/bin/e_int_gadcon_config.c:191
 msgid "Selected Gadgets"
 msgstr "使用中のガジェット"
 
-#: src/bin/e_int_gadcon_config.c:187
+#: src/bin/e_int_gadcon_config.c:199
 msgid "Remove Gadget"
 msgstr "ガジェットを削除する"
 
-#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:205
-#, fuzzy
+#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:334
 msgid "Toolbar Configuration"
-msgstr "IBar の設定"
+msgstr "ツールバーの設定"
 
-#: src/bin/e_int_toolbar_config.c:74 src/bin/e_int_shelf_config.c:499
+#: src/bin/e_int_toolbar_config.c:82 src/bin/e_int_shelf_config.c:499
 #: src/bin/e_int_shelf_config.c:564
 msgid "Layout"
 msgstr "配置"
@@ -2047,7 +2046,7 @@ msgstr ""
 "以下の結果を確認して下さい:\n"
 "%s/enlightenment-%s\n"
 
-#: src/bin/e_main.c:248
+#: src/bin/e_main.c:250
 #, c-format
 msgid ""
 "Options:\n"
@@ -2091,7 +2090,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\t精神病様にしてて\n"
 
-#: src/bin/e_main.c:310
+#: src/bin/e_main.c:312
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2099,7 +2098,7 @@ msgstr ""
 "Enlightenment で Ecore が初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:332
+#: src/bin/e_main.c:336
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2107,7 +2106,7 @@ msgstr ""
 "Enlightenment でファイルシステムが初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:344
+#: src/bin/e_main.c:348
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2115,7 +2114,7 @@ msgstr ""
 "Enlightenment で終了シグナルハンドラーが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:350
+#: src/bin/e_main.c:354
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2123,7 +2122,7 @@ msgstr ""
 "Enlightenment で HUP シグナルハンドラーが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:362
+#: src/bin/e_main.c:366
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2131,7 +2130,7 @@ msgstr ""
 "Enlightenmentで X との接続が初期化できません.\n"
 "環境変数 DISPLAY の定義を確認してください."
 
-#: src/bin/e_main.c:370
+#: src/bin/e_main.c:374
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2139,7 +2138,7 @@ msgstr ""
 "Enlightenmentで緊急アラートシステムが初期化できません.\n"
 "環境変数 DISPLAY の定義を確認してください."
 
-#: src/bin/e_main.c:393
+#: src/bin/e_main.c:397
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -2147,7 +2146,7 @@ msgstr ""
 "Enlightenment で接続システムが初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:401
+#: src/bin/e_main.c:405
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2155,7 +2154,7 @@ msgstr ""
 "Enlightenment で IPC システムが初期化できません.\n"
 "メモリー不足かも知れません."
 
-#: src/bin/e_main.c:410
+#: src/bin/e_main.c:414
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -2163,7 +2162,7 @@ msgstr ""
 "Enlightenment で xinerama のラッピングが準備できません.\n"
 "そんなばかな..."
 
-#: src/bin/e_main.c:432
+#: src/bin/e_main.c:436
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -2171,7 +2170,7 @@ msgstr ""
 "Enlightenment で Evas システムが初期化できません.\n"
 "メモリー不足かも知れません."
 
-#: src/bin/e_main.c:438
+#: src/bin/e_main.c:442
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2182,7 +2181,7 @@ msgstr ""
 "ソフトウェア x11 レンダリングエンジンがサポートされていることも確認してくださ"
 "い."
 
-#: src/bin/e_main.c:445
+#: src/bin/e_main.c:449
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2194,7 +2193,7 @@ msgstr ""
 "ソフトウェアバッファレンダリングエンジンがサポートされていることを確認してく"
 "ださい."
 
-#: src/bin/e_main.c:461 src/bin/e_main.c:468
+#: src/bin/e_main.c:465 src/bin/e_main.c:472
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
@@ -2202,7 +2201,7 @@ msgstr ""
 "Enlightenment で FDO デスクトップシステムが初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:479
+#: src/bin/e_main.c:483
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2210,20 +2209,19 @@ msgstr ""
 "あなたのホームディレクトリにディレクトリが作成できません.\n"
 "ホームディレクトリはちゃんとありますか, ディスクが一杯になっていませんか."
 
-#: src/bin/e_main.c:489
+#: src/bin/e_main.c:493
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Enlightenment でファイルレジストリシステムが初期化できません."
 
-#: src/bin/e_main.c:498
+#: src/bin/e_main.c:502
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment で設定処理システムが初期化できません."
 
-#: src/bin/e_main.c:506
-#, fuzzy
+#: src/bin/e_main.c:510
 msgid "Enlightenment cannot set up the pointer system."
-msgstr "Enlightenment でフォントシステムが準備できません."
+msgstr "Enlightenment でポインタシステムが準備できません."
 
-#: src/bin/e_main.c:515
+#: src/bin/e_main.c:519
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2231,15 +2229,15 @@ msgstr ""
 "Enlightenment でファイル検索用のパスが設定できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:533
+#: src/bin/e_main.c:537
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment でフォントシステムが準備できません."
 
-#: src/bin/e_main.c:544
+#: src/bin/e_main.c:548
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment でテーマシステムが準備できません."
 
-#: src/bin/e_main.c:555
+#: src/bin/e_main.c:559
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2247,11 +2245,11 @@ msgstr ""
 "Enlightenment で初期スクリーンが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:566
+#: src/bin/e_main.c:570
 msgid "Testing Format Support"
 msgstr "フォーマットのサポート状態を確認中"
 
-#: src/bin/e_main.c:576
+#: src/bin/e_main.c:580
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2260,7 +2258,7 @@ msgstr ""
 "Evas にソフトウェアバッファエンジンがサポートされていることを確認して下さ"
 "い.\n"
 
-#: src/bin/e_main.c:586
+#: src/bin/e_main.c:590
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2268,7 +2266,7 @@ msgstr ""
 "Evas で PNG ファイルがロードできません.\n"
 "Evas で PNG ローダーがサポートされていることを確認して下さい.\n"
 
-#: src/bin/e_main.c:595
+#: src/bin/e_main.c:599
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2276,7 +2274,7 @@ msgstr ""
 "Evas で JPEG ファイルがロードできません.\n"
 "Evas で JPEG ローダーがサポートされていることを確認して下さい.\n"
 
-#: src/bin/e_main.c:604
+#: src/bin/e_main.c:608
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -2284,73 +2282,73 @@ msgstr ""
 "Evas で EET ファイルがロードできません.\n"
 "Evas で EET ローダーがサポートされていることを確認して下さい.\n"
 
-#: src/bin/e_main.c:617
+#: src/bin/e_main.c:621
 msgid "Starting International Support"
 msgstr "国際化機能を起動中"
 
-#: src/bin/e_main.c:622
+#: src/bin/e_main.c:626
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment で国際化システムが準備できません."
 
-#: src/bin/e_main.c:627
+#: src/bin/e_main.c:631
 msgid "Setting up Paths"
 msgstr "パスを設定中"
 
-#: src/bin/e_main.c:644
+#: src/bin/e_main.c:648
 msgid "Setup Thumbnailer"
 msgstr "サムネイル機能を準備中"
 
 #
-#: src/bin/e_main.c:649
+#: src/bin/e_main.c:653
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment でサムネイル処理システムが初期化できません.\n"
 
-#: src/bin/e_main.c:654
+#: src/bin/e_main.c:658
 msgid "Setup System Controls"
 msgstr "システムコントロールを準備中"
 
 #
-#: src/bin/e_main.c:659
+#: src/bin/e_main.c:663
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Enlightenment でシステムコマンドの処理システムが初期化できません.\n"
 
-#: src/bin/e_main.c:664
+#: src/bin/e_main.c:668
 msgid "Setup Actions"
 msgstr "アクションを準備中"
 
-#: src/bin/e_main.c:669
+#: src/bin/e_main.c:673
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment でアクションシステムが準備できません."
 
-#: src/bin/e_main.c:673
+#: src/bin/e_main.c:677
 msgid "Setup Bindings"
 msgstr "バインドを準備中"
 
-#: src/bin/e_main.c:678
+#: src/bin/e_main.c:682
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment でバインディングシステムが準備できません."
 
-#: src/bin/e_main.c:682
+#: src/bin/e_main.c:686
 msgid "Setup Popups"
 msgstr "ポップアップを準備中"
 
-#: src/bin/e_main.c:687
+#: src/bin/e_main.c:691
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment でポップアップシステムが準備できません."
 
-#: src/bin/e_main.c:692
+#: src/bin/e_main.c:696
 msgid "Setup Wallpaper"
 msgstr "壁紙を準備中"
 
-#: src/bin/e_main.c:697
+#: src/bin/e_main.c:701
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Enlightenment でデスクトップ背景システムが準備できません."
 
-#: src/bin/e_main.c:701
+#: src/bin/e_main.c:705
 msgid "Setup Screens"
 msgstr "スクリーンを準備中"
 
-#: src/bin/e_main.c:706
+#: src/bin/e_main.c:710
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -2358,133 +2356,133 @@ msgstr ""
 "Enlightenment でこのシステムのすべての画面に対するウィンドウ管理が\n"
 "準備できませんでした. 別のウィンドウマネージャが動いているかもしれません.\n"
 
-#: src/bin/e_main.c:711
+#: src/bin/e_main.c:715
 msgid "Setup Execution System"
 msgstr "実行システムを準備中"
 
-#: src/bin/e_main.c:716
+#: src/bin/e_main.c:720
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Enlightenment で exec システムが準備できません."
 
-#: src/bin/e_main.c:720
+#: src/bin/e_main.c:724
 msgid "Setup Remembers"
 msgstr "記憶機能を準備中"
 
-#: src/bin/e_main.c:725
+#: src/bin/e_main.c:729
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment で記憶機能の設定が準備できません."
 
-#: src/bin/e_main.c:733
+#: src/bin/e_main.c:737
 msgid "Setup FM"
 msgstr "ファイルマネージャを準備中"
 
 #
-#: src/bin/e_main.c:738
+#: src/bin/e_main.c:742
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment でファイルマネージャが初期化できません.\n"
 
-#: src/bin/e_main.c:751
+#: src/bin/e_main.c:755
 msgid "Setup Message System"
 msgstr "メッセージシステムを準備中"
 
-#: src/bin/e_main.c:756
+#: src/bin/e_main.c:760
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment で メッセージシステムが準備できません."
 
-#: src/bin/e_main.c:760
+#: src/bin/e_main.c:764
 msgid "Setup DND"
 msgstr "DNDシステムを準備中"
 
-#: src/bin/e_main.c:765
+#: src/bin/e_main.c:769
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment で dnd システムが準備できません."
 
-#: src/bin/e_main.c:769
+#: src/bin/e_main.c:773
 msgid "Setup Grab Input HAnding"
 msgstr "入力グラブ処理システムを準備中"
 
-#: src/bin/e_main.c:774
+#: src/bin/e_main.c:778
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment で入力グラブ処理システムが準備できません."
 
-#: src/bin/e_main.c:778
+#: src/bin/e_main.c:782
 msgid "Setup Modules"
 msgstr "モジュールを準備中"
 
-#: src/bin/e_main.c:783
+#: src/bin/e_main.c:787
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment でモジュールシステムが準備できません."
 
-#: src/bin/e_main.c:787
+#: src/bin/e_main.c:791
 msgid "Setup Color Classes"
 msgstr "色クラスを準備中"
 
-#: src/bin/e_main.c:792
+#: src/bin/e_main.c:796
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment でカラークラスシステムが準備できません."
 
-#: src/bin/e_main.c:796
+#: src/bin/e_main.c:800
 msgid "Setup Gadcon"
 msgstr "Gadconを準備中"
 
-#: src/bin/e_main.c:801
+#: src/bin/e_main.c:805
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment でガジェット管理システムが準備できません."
 
-#: src/bin/e_main.c:805
+#: src/bin/e_main.c:809
 msgid "Setup Shelves"
 msgstr "シェルフを準備中"
 
-#: src/bin/e_main.c:810
+#: src/bin/e_main.c:814
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Enlightenment でシェルフシステムが準備できません."
 
-#: src/bin/e_main.c:815
+#: src/bin/e_main.c:819
 msgid "Setup DPMS"
 msgstr "DPMSを準備中"
 
-#: src/bin/e_main.c:820
+#: src/bin/e_main.c:824
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment で DPMS が設定できません."
 
-#: src/bin/e_main.c:824
+#: src/bin/e_main.c:828
 msgid "Setup Screensaver"
 msgstr "スクリーンセーバーを準備中"
 
 #
-#: src/bin/e_main.c:829
+#: src/bin/e_main.c:833
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "Enlightenment で X スクリーンセーバーが設定できません."
 
-#: src/bin/e_main.c:833
+#: src/bin/e_main.c:837
 msgid "Setup Mouse"
 msgstr "マウスを準備中"
 
-#: src/bin/e_main.c:838
+#: src/bin/e_main.c:842
 msgid "Enlightenment cannot configure the mouse acceleration settings."
 msgstr "Enlightenment でマウスアクセラレータが設定できません."
 
-#: src/bin/e_main.c:842
+#: src/bin/e_main.c:846
 msgid "Setup Desklock"
 msgstr "デスクロックを準備中"
 
-#: src/bin/e_main.c:847
+#: src/bin/e_main.c:851
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "Enlightenment で デスクロックシステムが準備できません."
 
-#: src/bin/e_main.c:852
+#: src/bin/e_main.c:856
 msgid "Set Up File Ordering"
 msgstr "orderファイルシステムを準備中"
 
-#: src/bin/e_main.c:856
+#: src/bin/e_main.c:860
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment で order ファイルシステムが準備できません."
 
-#: src/bin/e_main.c:888
+#: src/bin/e_main.c:892
 msgid "Load Modules"
 msgstr "モジュールをロード中"
 
-#: src/bin/e_main.c:896
+#: src/bin/e_main.c:900
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2492,11 +2490,11 @@ msgid ""
 "dialog should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:903
+#: src/bin/e_main.c:907
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr ""
 
-#: src/bin/e_main.c:904
+#: src/bin/e_main.c:908
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2504,11 +2502,11 @@ msgid ""
 "should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:912
+#: src/bin/e_main.c:916
 msgid "Configure Shelves"
 msgstr "シェルフを設定中"
 
-#: src/bin/e_main.c:919
+#: src/bin/e_main.c:923
 msgid "Almost Done"
 msgstr "ほぼ終了"
 
@@ -2568,11 +2566,11 @@ msgid ""
 "it?"
 msgstr "このシェルフを削除しようとしています.<br><br>本当に削除しますか."
 
-#: src/bin/e_shelf.c:1525 src/bin/e_toolbar.c:195
+#: src/bin/e_shelf.c:1525 src/bin/e_toolbar.c:324
 msgid "Stop Moving/Resizing Items"
 msgstr "搭載ガジェットの位置と大きさの変更を終了する"
 
-#: src/bin/e_shelf.c:1527 src/bin/e_toolbar.c:197
+#: src/bin/e_shelf.c:1527 src/bin/e_toolbar.c:326
 msgid "Begin Moving/Resizing Items"
 msgstr "搭載ガジェットの位置と大きさの変更を始める"
 
@@ -2732,14 +2730,12 @@ msgid "About This Theme"
 msgstr "このテーマについて"
 
 #: src/bin/e_theme.c:41
-#, fuzzy
 msgid "Set As Theme"
-msgstr "テーマの選択..."
+msgstr "テーマに設定する"
 
-#: src/bin/e_toolbar.c:210
-#, fuzzy
+#: src/bin/e_toolbar.c:339
 msgid "Configure Toolbar Contents"
-msgstr "シェルフの中身を設定する..."
+msgstr "ツールバーの内容を設定する"
 
 #: src/bin/e_utils.c:282
 msgid "Cannot exit - immortal windows."
@@ -2987,9 +2983,8 @@ msgstr "充電中"
 
 #
 #: src/modules/battery/e_mod_main.c:1448
-#, fuzzy
 msgid "Battery Meter"
-msgstr "バッテリ"
+msgstr "バッテリメーター"
 
 #: src/modules/clock/e_mod_main.c:91
 msgid "Clock"
@@ -3042,11 +3037,11 @@ msgstr "新しいアプリケーション"
 #: src/modules/conf_desk/e_mod_main.c:34
 #: src/modules/conf_wallpaper/e_mod_main.c:30
 msgid "Internal"
-msgstr ""
+msgstr "内部"
 
 #: src/modules/conf_applications/e_mod_main.c:40
 msgid "IBar Other"
-msgstr ""
+msgstr "IBar 他"
 
 #: src/modules/conf_applications/e_mod_main.c:41
 #: src/modules/conf_clientlist/e_mod_main.c:34
@@ -3431,7 +3426,7 @@ msgstr "以下のスクリーンゾーンに表示する :"
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:173
 #: src/modules/conf_mouse/e_int_config_mouse.c:95
 #: src/modules/conf_mouse/e_int_config_mouse.c:101
-#: src/modules/fileman/e_mod_config.c:180
+#: src/modules/fileman/e_mod_config.c:175
 #, c-format
 msgid "%1.0f"
 msgstr ""
@@ -4125,1535 +4120,6 @@ msgstr "言語"
 msgid "Input Method Settings"
 msgstr "入力方式の設定"
 
-#: src/modules/conf_intl/e_int_config_intl.c:104
-#: src/modules/conf_intl/e_int_config_intl.c:140
-msgid "Bulgarian"
-msgstr "ブルガリア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:105
-#: src/modules/conf_intl/e_int_config_intl.c:145
-msgid "Catalan"
-msgstr "カタロニア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:106
-msgid "Chinese (Simplified)"
-msgstr "簡体中文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:107
-msgid "Chinese (Traditional)"
-msgstr "繁体中文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:108
-#: src/modules/conf_intl/e_int_config_intl.c:147
-msgid "Czech"
-msgstr "チェコ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:109
-#: src/modules/conf_intl/e_int_config_intl.c:149
-msgid "Danish"
-msgstr "デンマーク語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:110
-#: src/modules/conf_intl/e_int_config_intl.c:213
-msgid "Dutch"
-msgstr "オランダ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:111
-#: src/modules/conf_intl/e_int_config_intl.c:155
-msgid "English"
-msgstr "英語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:112
-#: src/modules/conf_intl/e_int_config_intl.c:161
-msgid "Finnish"
-msgstr "フィンランド語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:113
-#: src/modules/conf_intl/e_int_config_intl.c:163
-msgid "French"
-msgstr "フランス語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:114
-#: src/modules/conf_intl/e_int_config_intl.c:150
-msgid "German"
-msgstr "ドイツ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:115
-#: src/modules/conf_intl/e_int_config_intl.c:176
-msgid "Hungarian"
-msgstr "ハンガリー語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:116
-#: src/modules/conf_intl/e_int_config_intl.c:182
-msgid "Italian"
-msgstr "イタリア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:117
-#: src/modules/conf_intl/e_int_config_intl.c:185
-msgid "Japanese"
-msgstr "日本語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:118
-#: src/modules/conf_intl/e_int_config_intl.c:195
-msgid "Korean"
-msgstr "韓国語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:119
-#: src/modules/conf_intl/e_int_config_intl.c:211
-msgid "Norwegian Bokmål"
-msgstr "ノルウェー語(ブークモール)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:120
-#: src/modules/conf_intl/e_int_config_intl.c:223
-msgid "Polish"
-msgstr "ポーランド語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:121
-#: src/modules/conf_intl/e_int_config_intl.c:225
-msgid "Portuguese"
-msgstr "ポルトガル語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:122
-#: src/modules/conf_intl/e_int_config_intl.c:227
-msgid "Russian"
-msgstr "ロシア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:123
-#: src/modules/conf_intl/e_int_config_intl.c:233
-msgid "Slovak"
-msgstr "スロバキア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:124
-#: src/modules/conf_intl/e_int_config_intl.c:234
-msgid "Slovenian"
-msgstr "スロベニア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:125
-#: src/modules/conf_intl/e_int_config_intl.c:157
-msgid "Spanish"
-msgstr "スペイン語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:126
-#: src/modules/conf_intl/e_int_config_intl.c:240
-msgid "Swedish"
-msgstr "スウェーデン語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:131
-msgid "Afar"
-msgstr "アファル語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:132
-msgid "Afrikaans"
-msgstr "アフリカーンス語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:133
-msgid "Akan"
-msgstr "アカン語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:134
-msgid "Amharic"
-msgstr "アムハラ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:135
-msgid "Aragonese"
-msgstr "アラゴン語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:136
-msgid "Arabic"
-msgstr "アラビア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:137
-msgid "Assamese"
-msgstr "アッサム語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:138
-msgid "Azerbaijani"
-msgstr "アゼルバイジャン語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:139
-msgid "Belarusian"
-msgstr "ベラルーシ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:141
-msgid "Bengali"
-msgstr "ベンガル語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:142
-msgid "Breton"
-msgstr "ブルトン語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:143
-msgid "Bosnian"
-msgstr "ボスニア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:144
-msgid "Blin"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:146
-msgid "Atsam"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:148
-msgid "Welsh"
-msgstr "ウェールズ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:151
-msgid "Divehi"
-msgstr "ディヴェヒ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:152
-msgid "Dzongkha"
-msgstr "ブータン語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:153
-msgid "Ewe"
-msgstr "エウェ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:154
-msgid "Greek"
-msgstr "ギリシャ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:156
-msgid "Esperanto"
-msgstr "エスペラント語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:158
-msgid "Estonian"
-msgstr "エストニア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:159
-msgid "Basque"
-msgstr "バスク語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:160
-msgid "Persian"
-msgstr "ペルシャ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:162
-msgid "Faroese"
-msgstr "フェロー語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:164
-msgid "Friulian"
-msgstr "フリウリ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:165
-msgid "Irish"
-msgstr "アイルランド語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:166
-msgid "Ga"
-msgstr "ガ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:167
-msgid "Geez"
-msgstr "ゲーズ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:168
-msgid "Galician"
-msgstr "ガリシア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:169
-msgid "Gujarati"
-msgstr "グジャラート語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:170
-msgid "Manx"
-msgstr "マン島語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:171
-msgid "Hausa"
-msgstr "ハウサ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:172
-msgid "Hawaiian"
-msgstr "ハワイ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:173
-#: src/modules/conf_intl/e_int_config_intl.c:184
-msgid "Hebrew"
-msgstr "ヘブライ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:174
-msgid "Hindi"
-msgstr "ヒンディー語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:175
-msgid "Croatian"
-msgstr "クロアチア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:177
-msgid "Armenian"
-msgstr "アルメニア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:178
-msgid "Interlingua"
-msgstr "インターリングア(国際語)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:179
-msgid "Indonesian"
-msgstr "インドネシア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:180
-msgid "Igbo"
-msgstr "イボ語(ナイジェリア)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:181
-msgid "Icelandic"
-msgstr "アイスランド語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:183
-msgid "Inuktitut"
-msgstr "イヌイット語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:186
-msgid "Georgian"
-msgstr "グルジア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:187
-msgid "Jju"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:188
-msgid "Kamba"
-msgstr "カンバ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:189
-msgid "Tyap"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:190
-msgid "Koro"
-msgstr "コロ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:191
-msgid "Kazakh"
-msgstr "カザフ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:192
-msgid "Kalaallisut"
-msgstr "グリーンランド語西方言"
-
-#: src/modules/conf_intl/e_int_config_intl.c:193
-msgid "Khmer"
-msgstr "クメール語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:194
-msgid "Kannada"
-msgstr "カンナダ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:196
-msgid "Konkani"
-msgstr "コンカニ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:197
-msgid "Kurdish"
-msgstr "クルド語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:198
-msgid "Cornish"
-msgstr "コーンウォール語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:199
-msgid "Kirghiz"
-msgstr "キルギス語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:200
-msgid "Lingala"
-msgstr "リンガラ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:201
-msgid "Lao"
-msgstr "ラオス語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:202
-msgid "Lithuanian"
-msgstr "リトアニア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:203
-msgid "Latvian"
-msgstr "ラトビア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:204
-msgid "Maori"
-msgstr "マオリ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:205
-msgid "Macedonian"
-msgstr "マケドニア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:206
-msgid "Malayalam"
-msgstr "マラヤーラム語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:207
-msgid "Mongolian"
-msgstr "モンゴル語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:208
-msgid "Marathi"
-msgstr "マラティー語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:209
-msgid "Malay"
-msgstr "マレー語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:210
-msgid "Maltese"
-msgstr "マルタ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:212
-msgid "Nepali"
-msgstr "ネパール語(インド)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:214
-msgid "Norwegian Nynorsk"
-msgstr "ノルウェー語(ニーノシク)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:215
-msgid "Norwegian"
-msgstr "ノルウェー語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:216
-msgid "South Ndebele"
-msgstr "マタベレ語(南部)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:217
-msgid "Northern Sotho"
-msgstr "ソト語(北部)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:218
-msgid "Nyanja; Chichewa; Chewa"
-msgstr "ニャンジャ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:219
-msgid "Occitan"
-msgstr "オック語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:220
-msgid "Oromo"
-msgstr "オロモ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:221
-msgid "Oriya"
-msgstr "オリヤー語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:222
-msgid "Punjabi"
-msgstr "パンジャブ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:224
-msgid "Pashto"
-msgstr "パシュト語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:226
-msgid "Romanian"
-msgstr "ルーマニア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:228
-msgid "Kinyarwanda"
-msgstr "キンヤルワンダ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:229
-msgid "Sanskrit"
-msgstr "サンスクリット語(梵語)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:230
-msgid "Northern Sami"
-msgstr "サモス語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:231
-msgid "Serbo-Croatian"
-msgstr "セルボ・クロアチア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:232
-msgid "Sidamo"
-msgstr "シダモ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:235
-msgid "Somali"
-msgstr "ソマリ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:236
-msgid "Albanian"
-msgstr "アルバニア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:237
-msgid "Serbian"
-msgstr "セルビア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:238
-msgid "Swati"
-msgstr "シスワティ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:239
-msgid "Southern Sotho"
-msgstr "ソト語(南部)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:241
-msgid "Swahili"
-msgstr "スワヒリ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:242
-msgid "Syriac"
-msgstr "シリア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:243
-msgid "Tamil"
-msgstr "タミール語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:244
-msgid "Telugu"
-msgstr "テルグ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:245
-msgid "Tajik"
-msgstr "タジク語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:246
-msgid "Thai"
-msgstr "タイ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:247
-msgid "Tigrinya"
-msgstr "ティグリニャ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:248
-msgid "Tigre"
-msgstr "ティグレ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:249
-msgid "Tagalog"
-msgstr "タガログ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:250
-msgid "Tswana"
-msgstr "ツワナ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:251
-msgid "Turkish"
-msgstr "トルコ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:252
-msgid "Tsonga"
-msgstr "ツォンガ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:253
-msgid "Tatar"
-msgstr "タタール語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:254
-msgid "Ukrainian"
-msgstr "ウクライナ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:255
-msgid "Urdu"
-msgstr "ウルドゥー語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:256
-msgid "Uzbek"
-msgstr "ウズベク語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:257
-msgid "Venda"
-msgstr "ベンダ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:258
-msgid "Vietnamese"
-msgstr "ベトナム語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:259
-msgid "Walloon"
-msgstr "ワロン語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:260
-msgid "Walamo"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:261
-msgid "Xhosa"
-msgstr "コーサ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:262
-msgid "Yiddish"
-msgstr "イディッシュ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:263
-msgid "Yoruba"
-msgstr "ヨルバ語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:264
-msgid "Chinese"
-msgstr "中国語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:265
-msgid "Zulu"
-msgstr "ズールー語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:270
-msgid "Afghanistan"
-msgstr "アフガニスタン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:271
-msgid "Åland Islands"
-msgstr "オーランド諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:272
-msgid "Albania"
-msgstr "アルバニア語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:273
-msgid "Algeria"
-msgstr "アルジェリア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:274
-msgid "American Samoa"
-msgstr "アメリカ領サモア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:275
-msgid "Andorra"
-msgstr "アンドラ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:276
-msgid "Angola"
-msgstr "アンゴラ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:277
-msgid "Anguilla"
-msgstr "アンギラ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:278
-msgid "Antarctica"
-msgstr "南極"
-
-#: src/modules/conf_intl/e_int_config_intl.c:279
-msgid "Antigua and Barbuda"
-msgstr "アンティグア・バーブーダ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:280
-msgid "Argentina"
-msgstr "アルゼンチン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:281
-msgid "Armenia"
-msgstr "アルメニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:282
-msgid "Aruba"
-msgstr "アルバ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:283
-msgid "Australia"
-msgstr "オーストラリア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:284
-msgid "Austria"
-msgstr "オーストリア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:285
-msgid "Azerbaijan"
-msgstr "アゼルバイジャン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:286
-msgid "Bahamas"
-msgstr "バハマ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:287
-msgid "Bahrain"
-msgstr "バーレーン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:288
-msgid "Bangladesh"
-msgstr "バングラデシュ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:289
-msgid "Barbados"
-msgstr "バルバドス"
-
-#: src/modules/conf_intl/e_int_config_intl.c:290
-msgid "Belarus"
-msgstr "ベラルーシ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:291
-msgid "Belgium"
-msgstr "ベルギー"
-
-#: src/modules/conf_intl/e_int_config_intl.c:292
-msgid "Belize"
-msgstr "ベリーズ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:293
-msgid "Benin"
-msgstr "ベナン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:294
-msgid "Bermuda"
-msgstr "バミューダ諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:295
-msgid "Bhutan"
-msgstr "ブータン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:296
-msgid "Bolivia"
-msgstr "ボリビア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:297
-msgid "Bosnia and Herzegovina"
-msgstr "ボスニア・ヘルツェゴビナ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:298
-msgid "Botswana"
-msgstr "ボツワナ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:299
-msgid "Bouvet Island"
-msgstr "ブーベ島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:300
-msgid "Brazil"
-msgstr "ブラジル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:301
-msgid "British Indian Ocean Territory"
-msgstr "イギリス領インド洋地域"
-
-#: src/modules/conf_intl/e_int_config_intl.c:302
-msgid "Brunei Darussalam"
-msgstr "ブルネイ・ダルサラーム"
-
-#: src/modules/conf_intl/e_int_config_intl.c:303
-msgid "Bulgaria"
-msgstr "ブルガリア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:304
-msgid "Burkina Faso"
-msgstr "ブルキナファソ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:305
-msgid "Burundi"
-msgstr "ブルンジ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:306
-msgid "Cambodia"
-msgstr "カンボジア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:307
-msgid "Cameroon"
-msgstr "カメルーン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:308
-msgid "Canada"
-msgstr "カナダ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:309
-msgid "Cape Verde"
-msgstr "カボベルデ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:310
-msgid "Cayman Islands"
-msgstr "ケイマン諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:311
-msgid "Central African Republic"
-msgstr "中央アフリカ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:312
-msgid "Chad"
-msgstr "チャド"
-
-#: src/modules/conf_intl/e_int_config_intl.c:313
-msgid "Chile"
-msgstr "チリ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:314
-msgid "China"
-msgstr "中華人民共和国"
-
-#: src/modules/conf_intl/e_int_config_intl.c:315
-msgid "Christmas Island"
-msgstr "クリスマス島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:316
-msgid "Cocos (keeling) Islands"
-msgstr "ココス諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:317
-msgid "Colombia"
-msgstr "コロンビア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:318
-msgid "Comoros"
-msgstr "コモロ連合"
-
-#: src/modules/conf_intl/e_int_config_intl.c:319
-#: src/modules/conf_intl/e_int_config_intl.c:320
-msgid "Congo"
-msgstr "コンゴ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:321
-msgid "Cook Islands"
-msgstr "クック諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:322
-msgid "Costa Rica"
-msgstr "コスタリカ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:323
-msgid "Cote d'Ivoire"
-msgstr "コートジボワール"
-
-#: src/modules/conf_intl/e_int_config_intl.c:324
-msgid "Croatia"
-msgstr "クロアチア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:325
-msgid "Cuba"
-msgstr "キューバ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:326
-msgid "Cyprus"
-msgstr "キプロス"
-
-#: src/modules/conf_intl/e_int_config_intl.c:327
-msgid "Czech Republic"
-msgstr "チェコ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:328
-msgid "Denmark"
-msgstr "デンマーク"
-
-#: src/modules/conf_intl/e_int_config_intl.c:329
-msgid "Djibouti"
-msgstr "ジブチ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:330
-msgid "Dominica"
-msgstr "ドミニカ連邦"
-
-#: src/modules/conf_intl/e_int_config_intl.c:331
-msgid "Dominican Republic"
-msgstr "ドミニカ共和国"
-
-#: src/modules/conf_intl/e_int_config_intl.c:332
-msgid "Ecuador"
-msgstr "エクアドル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:333
-msgid "Egypt"
-msgstr "エジプト"
-
-#: src/modules/conf_intl/e_int_config_intl.c:334
-msgid "El Salvador"
-msgstr "エルサルバドル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:335
-msgid "Equatorial Guinea"
-msgstr "赤道ギニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:336
-msgid "Eritrea"
-msgstr "エリトリア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:337
-msgid "Estonia"
-msgstr "エストニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:338
-msgid "Ethiopia"
-msgstr "エチオピア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:339
-msgid "Falkland Islands (malvinas)"
-msgstr "フォークランド諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:340
-msgid "Faroe Islands"
-msgstr "フェロー諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:341
-msgid "Fiji"
-msgstr "フィジー"
-
-#: src/modules/conf_intl/e_int_config_intl.c:342
-msgid "Finland"
-msgstr "フィンランド"
-
-#: src/modules/conf_intl/e_int_config_intl.c:343
-msgid "France"
-msgstr "フランス"
-
-#: src/modules/conf_intl/e_int_config_intl.c:344
-msgid "French Guiana"
-msgstr "フランス領ギアナ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:345
-msgid "French Polynesia"
-msgstr "フランス領ポリネシア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:346
-msgid "French Southern Territories"
-msgstr "フランス領南方地域"
-
-#: src/modules/conf_intl/e_int_config_intl.c:347
-msgid "Gabon"
-msgstr "ガボン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:348
-msgid "Gambia"
-msgstr "ガンビア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:349
-msgid "Georgia"
-msgstr "グルジア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:350
-msgid "Germany"
-msgstr "ドイツ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:351
-msgid "Ghana"
-msgstr "ガーナ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:352
-msgid "Gibraltar"
-msgstr "ジブラルタル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:353
-msgid "Greece"
-msgstr "ギリシャ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:354
-msgid "Greenland"
-msgstr "グリーンランド"
-
-#: src/modules/conf_intl/e_int_config_intl.c:355
-msgid "Grenada"
-msgstr "グレナダ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:356
-msgid "Guadeloupe"
-msgstr "グアドループ島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:357
-msgid "Guam"
-msgstr "グアム"
-
-#: src/modules/conf_intl/e_int_config_intl.c:358
-msgid "Guatemala"
-msgstr "グアテマラ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:359
-msgid "Guernsey"
-msgstr "ガーンジー島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:360
-msgid "Guinea"
-msgstr "ギニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:361
-msgid "Guinea-Bissau"
-msgstr "ギニアビサウ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:362
-msgid "Guyana"
-msgstr "ガイアナ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:363
-msgid "Haiti"
-msgstr "ハイチ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:364
-msgid "Heard Island and Mcdonald Islands"
-msgstr "ヘアド島・マクドナルド諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:365
-msgid "Holy See (Vatican City State)"
-msgstr "バチカン市国"
-
-#: src/modules/conf_intl/e_int_config_intl.c:366
-msgid "Honduras"
-msgstr "ホンジュラス"
-
-#: src/modules/conf_intl/e_int_config_intl.c:367
-msgid "Hong Kong"
-msgstr "香港特別行政区"
-
-#: src/modules/conf_intl/e_int_config_intl.c:368
-msgid "Hungary"
-msgstr "ハンガリー"
-
-#: src/modules/conf_intl/e_int_config_intl.c:369
-msgid "Iceland"
-msgstr "アイスランド"
-
-#: src/modules/conf_intl/e_int_config_intl.c:370
-msgid "India"
-msgstr "インド"
-
-#: src/modules/conf_intl/e_int_config_intl.c:371
-msgid "Indonesia"
-msgstr "インドネシア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:372
-msgid "Iran"
-msgstr "イラン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:373
-msgid "Iraq"
-msgstr "イラク"
-
-#: src/modules/conf_intl/e_int_config_intl.c:374
-msgid "Ireland"
-msgstr "アイルランド"
-
-#: src/modules/conf_intl/e_int_config_intl.c:375
-msgid "Isle Of Man"
-msgstr "マン島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:376
-msgid "Israel"
-msgstr "イスラエル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:377
-msgid "Italy"
-msgstr "イタリア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:378
-msgid "Jamaica"
-msgstr "ジャマイカ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:379
-msgid "Japan"
-msgstr "日本"
-
-#: src/modules/conf_intl/e_int_config_intl.c:380
-msgid "Jersey"
-msgstr "ジャージー島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:381
-msgid "Jordan"
-msgstr "ヨルダン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:382
-msgid "Kazakhstan"
-msgstr "カザフスタン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:383
-msgid "Kenya"
-msgstr "ケニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:384
-msgid "Kiribati"
-msgstr "キリバス"
-
-#: src/modules/conf_intl/e_int_config_intl.c:385
-#: src/modules/conf_intl/e_int_config_intl.c:386
-msgid "Korea"
-msgstr "大韓民国"
-
-#: src/modules/conf_intl/e_int_config_intl.c:387
-msgid "Kuwait"
-msgstr "クウェート"
-
-#: src/modules/conf_intl/e_int_config_intl.c:388
-msgid "Kyrgyzstan"
-msgstr "キルギスタン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:389
-msgid "Lao People's Democratic Republic"
-msgstr "ラオス"
-
-#: src/modules/conf_intl/e_int_config_intl.c:390
-msgid "Latvia"
-msgstr "ラトビア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:391
-msgid "Lebanon"
-msgstr "レバノン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:392
-msgid "Lesotho"
-msgstr "レソト"
-
-#: src/modules/conf_intl/e_int_config_intl.c:393
-msgid "Liberia"
-msgstr "リベリア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:394
-msgid "Libyan Arab Jamahiriya"
-msgstr "リビア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:395
-msgid "Liechtenstein"
-msgstr "リヒテンシュタイン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:396
-msgid "Lithuania"
-msgstr "リトアニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:397
-msgid "Luxembourg"
-msgstr "ルクセンブルク"
-
-#: src/modules/conf_intl/e_int_config_intl.c:398
-msgid "Macao"
-msgstr "マカオ特別行政区"
-
-#: src/modules/conf_intl/e_int_config_intl.c:399
-msgid "Macedonia"
-msgstr "マケドニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:400
-msgid "Madagascar"
-msgstr "マダガスカル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:401
-msgid "Malawi"
-msgstr "マラウィ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:402
-msgid "Malaysia"
-msgstr "マレーシア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:403
-msgid "Maldives"
-msgstr "モルジブ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:404
-msgid "Mali"
-msgstr "マリ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:405
-msgid "Malta"
-msgstr "マルタ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:406
-msgid "Marshall Islands"
-msgstr "マーシャル諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:407
-msgid "Martinique"
-msgstr "マルチニーク島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:408
-msgid "Mauritania"
-msgstr "モーリタニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:409
-msgid "Mauritius"
-msgstr "モーリシャス"
-
-#: src/modules/conf_intl/e_int_config_intl.c:410
-msgid "Mayotte"
-msgstr "マヨット島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:411
-msgid "Mexico"
-msgstr "メキシコ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:412
-msgid "Micronesia"
-msgstr "ミクロネシア連邦"
-
-#: src/modules/conf_intl/e_int_config_intl.c:413
-msgid "Moldova"
-msgstr "モルドバ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:414
-msgid "Monaco"
-msgstr "モナコ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:415
-msgid "Mongolia"
-msgstr "モンゴル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:416
-msgid "Montserrat"
-msgstr "モントセラト"
-
-#: src/modules/conf_intl/e_int_config_intl.c:417
-msgid "Morocco"
-msgstr "モロッコ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:418
-msgid "Mozambique"
-msgstr "モザンビーク"
-
-#: src/modules/conf_intl/e_int_config_intl.c:419
-msgid "Myanmar"
-msgstr "ミャンマー"
-
-#: src/modules/conf_intl/e_int_config_intl.c:420
-msgid "Namibia"
-msgstr "ナミビア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:421
-msgid "Nauru"
-msgstr "ナウル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:422
-msgid "Nepal"
-msgstr "ネパール"
-
-#: src/modules/conf_intl/e_int_config_intl.c:423
-msgid "Netherlands"
-msgstr "オランダ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:424
-msgid "Netherlands Antilles"
-msgstr "オランダ領アンティル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:425
-msgid "New Caledonia"
-msgstr "ニューカレドニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:426
-msgid "New Zealand"
-msgstr "ニュージーランド"
-
-#: src/modules/conf_intl/e_int_config_intl.c:427
-msgid "Nicaragua"
-msgstr "ニカラグア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:428
-msgid "Niger"
-msgstr "ニジェール"
-
-#: src/modules/conf_intl/e_int_config_intl.c:429
-msgid "Nigeria"
-msgstr "ナイジェリア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:430
-msgid "Niue"
-msgstr "ニウエ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:431
-msgid "Norfolk Island"
-msgstr "ノーフォーク島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:432
-msgid "Northern Mariana Islands"
-msgstr "北マリアナ諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:433
-msgid "Norway"
-msgstr "ノルウェー"
-
-#: src/modules/conf_intl/e_int_config_intl.c:434
-msgid "Oman"
-msgstr "オマーン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:435
-msgid "Pakistan"
-msgstr "パキスタン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:436
-msgid "Palau"
-msgstr "パラオ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:437
-msgid "Palestinian Territory"
-msgstr "パレスチナ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:438
-msgid "Panama"
-msgstr "パナマ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:439
-msgid "Papua New Guinea"
-msgstr "パプアニューギニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:440
-msgid "Paraguay"
-msgstr "パラグアイ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:441
-msgid "Peru"
-msgstr "ペルー"
-
-#: src/modules/conf_intl/e_int_config_intl.c:442
-msgid "Philippines"
-msgstr "フィリピン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:443
-msgid "Pitcairn"
-msgstr "ピトケアン諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:444
-msgid "Poland"
-msgstr "ポーランド"
-
-#: src/modules/conf_intl/e_int_config_intl.c:445
-msgid "Portugal"
-msgstr "ポルトガル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:446
-msgid "Puerto Rico"
-msgstr "プエルトリコ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:447
-msgid "Qatar"
-msgstr "カタール"
-
-#: src/modules/conf_intl/e_int_config_intl.c:448
-msgid "Reunion"
-msgstr "レユニオン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:449
-msgid "Romania"
-msgstr "ルーマニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:450
-msgid "Russian Federation"
-msgstr "ロシア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:451
-msgid "Rwanda"
-msgstr "ルワンダ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:452
-msgid "Saint Helena"
-msgstr "セントヘレナ島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:453
-msgid "Saint Kitts and Nevis"
-msgstr "セントクリストファー・ネイビス"
-
-#: src/modules/conf_intl/e_int_config_intl.c:454
-msgid "Saint Lucia"
-msgstr "セントルシア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:455
-msgid "Saint Pierre and Miquelon"
-msgstr "サンピエール島・ミクロン島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:456
-msgid "Saint Vincent and the Grenadines"
-msgstr "セントビンセントおよびグレナディーン諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:457
-msgid "Samoa"
-msgstr "サモア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:458
-msgid "San Marino"
-msgstr "サンマリノ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:459
-msgid "Sao Tome and Principe"
-msgstr "サントメ・プリンシペ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:460
-msgid "Saudi Arabia"
-msgstr "サウジアラビア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:461
-msgid "Senegal"
-msgstr "セネガル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:462
-msgid "Serbia and Montenegro"
-msgstr "セルビア・モンテネグロ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:463
-msgid "Seychelles"
-msgstr "セーシェル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:464
-msgid "Sierra Leone"
-msgstr "シエラレオネ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:465
-msgid "Singapore"
-msgstr "シンガポール"
-
-#: src/modules/conf_intl/e_int_config_intl.c:466
-msgid "Slovakia"
-msgstr "スロバキア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:467
-msgid "Slovenia"
-msgstr "スロベニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:468
-msgid "Solomon Islands"
-msgstr "ソロモン諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:469
-msgid "Somalia"
-msgstr "ソマリア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:470
-msgid "South Africa"
-msgstr "南アフリカ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:471
-msgid "South Georgia and the South Sandwich Islands"
-msgstr "南ジョージア島・南サンドイッチ諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:472
-msgid "Spain"
-msgstr "スペイン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:473
-msgid "Sri Lanka"
-msgstr "スリランカ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:474
-msgid "Sudan"
-msgstr "スーダン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:475
-msgid "Suriname"
-msgstr "スリナム"
-
-#: src/modules/conf_intl/e_int_config_intl.c:476
-msgid "Svalbard and Jan Mayen"
-msgstr "スバールバル諸島・ヤンマイエン島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:477
-msgid "Swaziland"
-msgstr "スワジランド"
-
-#: src/modules/conf_intl/e_int_config_intl.c:478
-msgid "Sweden"
-msgstr "スウェーデン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:479
-msgid "Switzerland"
-msgstr "スイス"
-
-#: src/modules/conf_intl/e_int_config_intl.c:480
-msgid "Syrian Arab Republic"
-msgstr "シリア・アラブ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:481
-msgid "Taiwan"
-msgstr "中華民国"
-
-#: src/modules/conf_intl/e_int_config_intl.c:482
-msgid "Tajikistan"
-msgstr "タジキスタン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:483
-msgid "Tanzania"
-msgstr "タンザニア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:484
-msgid "Thailand"
-msgstr "タイ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:485
-msgid "Timor-Leste"
-msgstr "東ティモール"
-
-#: src/modules/conf_intl/e_int_config_intl.c:486
-msgid "Togo"
-msgstr "トーゴ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:487
-msgid "Tokelau"
-msgstr "トケラウ諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:488
-msgid "Tonga"
-msgstr "トンガ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:489
-msgid "Trinidad and Tobago"
-msgstr "トリニダード・トバゴ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:490
-msgid "Tunisia"
-msgstr "チュニジア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:491
-msgid "Turkey"
-msgstr "トルコ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:492
-msgid "Turkmenistan"
-msgstr "トルクメニスタン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:493
-msgid "Turks and Caicos Islands"
-msgstr "タークス・カイコス諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:494
-msgid "Tuvalu"
-msgstr "ツバル"
-
-#: src/modules/conf_intl/e_int_config_intl.c:495
-msgid "Uganda"
-msgstr "ウガンダ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:496
-msgid "Ukraine"
-msgstr "ウクライナ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:497
-msgid "United Arab Emirates"
-msgstr "アラブ首長国連邦"
-
-#: src/modules/conf_intl/e_int_config_intl.c:498
-msgid "United Kingdom"
-msgstr "イギリス"
-
-#: src/modules/conf_intl/e_int_config_intl.c:499
-msgid "United States"
-msgstr "アメリカ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:500
-msgid "United States Minor Outlying Islands"
-msgstr "アメリカ領太平洋諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:501
-msgid "Uruguay"
-msgstr "ウルグアイ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:502
-msgid "Uzbekistan"
-msgstr "ウズベキスタン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:503
-msgid "Vanuatu"
-msgstr "バヌアツ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:504
-msgid "Venezuela"
-msgstr "ベネズエラ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:505
-msgid "Viet Nam"
-msgstr "ベトナム"
-
-#: src/modules/conf_intl/e_int_config_intl.c:506
-#: src/modules/conf_intl/e_int_config_intl.c:507
-msgid "Virgin Islands"
-msgstr "ヴァージン諸島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:508
-msgid "Wallis and Futuna"
-msgstr "ウォリス・フツナ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:509
-msgid "Western Sahara"
-msgstr "西サハラ"
-
-#: src/modules/conf_intl/e_int_config_intl.c:510
-msgid "Yemen"
-msgstr "イエメン"
-
-#: src/modules/conf_intl/e_int_config_intl.c:511
-msgid "Zambia"
-msgstr "ザンビア"
-
-#: src/modules/conf_intl/e_int_config_intl.c:512
-msgid "Zimbabwe"
-msgstr "ジンバブエ"
-
 #: src/modules/conf_intl/e_int_config_intl.c:582
 msgid "Language Configuration"
 msgstr "言語の設定"
@@ -6036,7 +4502,7 @@ msgid "Init"
 msgstr "初期化"
 
 #: src/modules/conf_paths/e_int_config_paths.c:86
-#: src/modules/fileman/e_mod_config.c:161
+#: src/modules/fileman/e_mod_config.c:156
 msgid "Icons"
 msgstr "アイコン"
 
@@ -7010,7 +5476,7 @@ msgstr "ドロップシャドウ"
 msgid "Run Command Dialog"
 msgstr "コマンド実行ダイアログ"
 
-#: src/modules/fileman/e_mod_main.c:200
+#: src/modules/fileman/e_mod_main.c:199
 msgid "Files"
 msgstr "ファイル"
 
@@ -7054,83 +5520,87 @@ msgstr ""
 "これではまずいので, 念のためデフォルトの設定に置き換えました.<br>\n"
 "ご不便をおかけしますが, よろしくお願いします.<br>"
 
-#: src/modules/fileman/e_mod_main.c:329
+#: src/modules/fileman/e_mod_main.c:333
 msgid "Fileman Configuration Updated"
 msgstr "ファイルマネージャの設定を更新しました"
 
-#: src/modules/fileman/e_mod_config.c:89
+#: src/modules/fileman/e_mod_config.c:82
 msgid "Fileman Settings"
 msgstr "ファイルマネージャの設定"
 
-#: src/modules/fileman/e_mod_config.c:159
+#: src/modules/fileman/e_mod_config.c:154
 msgid "View Mode"
 msgstr "表示モード"
 
-#: src/modules/fileman/e_mod_config.c:164
+#: src/modules/fileman/e_mod_config.c:159
 msgid "Grid Icons"
 msgstr "グリッドアイコン"
 
-#: src/modules/fileman/e_mod_config.c:166
+#: src/modules/fileman/e_mod_config.c:161
 msgid "Custom Icons"
 msgstr "カスタムアイコン"
 
-#: src/modules/fileman/e_mod_config.c:168
+#: src/modules/fileman/e_mod_config.c:163
 msgid "Custom Grid Icons"
 msgstr "カスタムグリッドアイコン"
 
-#: src/modules/fileman/e_mod_config.c:171
+#: src/modules/fileman/e_mod_config.c:166
 msgid "Custom Smart Grid Icons"
 msgstr "カスタムスマートグリッドアイコン"
 
-#: src/modules/fileman/e_mod_config.c:174
+#: src/modules/fileman/e_mod_config.c:169
 msgid "List"
 msgstr "リスト"
 
-#: src/modules/fileman/e_mod_config.c:178
+#: src/modules/fileman/e_mod_config.c:173
 msgid "Icon Size"
 msgstr "アイコンサイズ"
 
-#: src/modules/fileman/e_mod_config.c:184
+#: src/modules/fileman/e_mod_config.c:179
 msgid "Open Dirs In Place"
 msgstr "開くウィンドウは変えない"
 
-#: src/modules/fileman/e_mod_config.c:187
+#: src/modules/fileman/e_mod_config.c:182
 msgid "Sort Dirs First"
 msgstr "初めにディレクトリをソートする"
 
-#: src/modules/fileman/e_mod_config.c:190
+#: src/modules/fileman/e_mod_config.c:185
 msgid "Use Single Click"
 msgstr "シングルクリックで開く"
 
-#: src/modules/fileman/e_mod_config.c:193
+#: src/modules/fileman/e_mod_config.c:188
 msgid "Show Icon Extension"
 msgstr "拡張子を表示する"
 
-#: src/modules/fileman/e_mod_config.c:196
+#: src/modules/fileman/e_mod_config.c:191
 msgid "Show Full Path"
 msgstr "完全パス名を表示する"
 
-#: src/modules/fileman/e_mod_config.c:199
+#: src/modules/fileman/e_mod_config.c:194
 msgid "Show Desktop Icons"
 msgstr "デスクトップにアイコンを表示する"
 
-#: src/modules/fileman/e_fwin.c:630
+#: src/modules/fileman/e_mod_config.c:197
+msgid "Show Toolbar"
+msgstr "ツールバーを表示する"
+
+#: src/modules/fileman/e_fwin.c:635
 msgid "Go to Parent Directory"
 msgstr "上のディレクトリへ移動"
 
-#: src/modules/fileman/e_fwin.c:656 src/modules/fileman/e_fwin.c:1297
+#: src/modules/fileman/e_fwin.c:661 src/modules/fileman/e_fwin.c:1302
 msgid "Open"
 msgstr "開く"
 
-#: src/modules/fileman/e_fwin.c:663 src/modules/fileman/e_fwin.c:1295
+#: src/modules/fileman/e_fwin.c:668 src/modules/fileman/e_fwin.c:1300
 msgid "Open with..."
 msgstr "開くツール..."
 
-#: src/modules/fileman/e_fwin.c:1315
+#: src/modules/fileman/e_fwin.c:1320
 msgid "Specific Applications"
 msgstr "アプリケーション"
 
-#: src/modules/fileman/e_fwin.c:1337
+#: src/modules/fileman/e_fwin.c:1342
 msgid "All Applications"
 msgstr "全アプリケーション"
 
@@ -7485,9 +5955,1121 @@ msgid "Back"
 msgstr "戻る"
 
 #: src/modules/wizard/page_010.c:25
-#, fuzzy
 msgid "Choose Language"
-msgstr "言語"
+msgstr "言語選択"
+
+#~ msgid "Bulgarian"
+#~ msgstr "ブルガリア語"
+
+#~ msgid "Catalan"
+#~ msgstr "カタロニア語"
+
+#~ msgid "Chinese (Simplified)"
+#~ msgstr "簡体中文"
+
+#~ msgid "Chinese (Traditional)"
+#~ msgstr "繁体中文"
+
+#~ msgid "Czech"
+#~ msgstr "チェコ語"
+
+#~ msgid "Danish"
+#~ msgstr "デンマーク語"
+
+#~ msgid "Dutch"
+#~ msgstr "オランダ語"
+
+#~ msgid "English"
+#~ msgstr "英語"
+
+#~ msgid "Finnish"
+#~ msgstr "フィンランド語"
+
+#~ msgid "French"
+#~ msgstr "フランス語"
+
+#~ msgid "German"
+#~ msgstr "ドイツ語"
+
+#~ msgid "Hungarian"
+#~ msgstr "ハンガリー語"
+
+#~ msgid "Italian"
+#~ msgstr "イタリア語"
+
+#~ msgid "Japanese"
+#~ msgstr "日本語"
+
+#~ msgid "Korean"
+#~ msgstr "韓国語"
+
+#~ msgid "Norwegian Bokmål"
+#~ msgstr "ノルウェー語(ブークモール)"
+
+#~ msgid "Polish"
+#~ msgstr "ポーランド語"
+
+#~ msgid "Portuguese"
+#~ msgstr "ポルトガル語"
+
+#~ msgid "Russian"
+#~ msgstr "ロシア語"
+
+#~ msgid "Slovak"
+#~ msgstr "スロバキア語"
+
+#~ msgid "Slovenian"
+#~ msgstr "スロベニア語"
+
+#~ msgid "Spanish"
+#~ msgstr "スペイン語"
+
+#~ msgid "Swedish"
+#~ msgstr "スウェーデン語"
+
+#~ msgid "Afar"
+#~ msgstr "アファル語"
+
+#~ msgid "Afrikaans"
+#~ msgstr "アフリカーンス語"
+
+#~ msgid "Akan"
+#~ msgstr "アカン語"
+
+#~ msgid "Amharic"
+#~ msgstr "アムハラ語"
+
+#~ msgid "Aragonese"
+#~ msgstr "アラゴン語"
+
+#~ msgid "Arabic"
+#~ msgstr "アラビア語"
+
+#~ msgid "Assamese"
+#~ msgstr "アッサム語"
+
+#~ msgid "Azerbaijani"
+#~ msgstr "アゼルバイジャン語"
+
+#~ msgid "Belarusian"
+#~ msgstr "ベラルーシ語"
+
+#~ msgid "Bengali"
+#~ msgstr "ベンガル語"
+
+#~ msgid "Breton"
+#~ msgstr "ブルトン語"
+
+#~ msgid "Bosnian"
+#~ msgstr "ボスニア語"
+
+#~ msgid "Welsh"
+#~ msgstr "ウェールズ語"
+
+#~ msgid "Divehi"
+#~ msgstr "ディヴェヒ語"
+
+#~ msgid "Dzongkha"
+#~ msgstr "ブータン語"
+
+#~ msgid "Ewe"
+#~ msgstr "エウェ語"
+
+#~ msgid "Greek"
+#~ msgstr "ギリシャ語"
+
+#~ msgid "Esperanto"
+#~ msgstr "エスペラント語"
+
+#~ msgid "Estonian"
+#~ msgstr "エストニア語"
+
+#~ msgid "Basque"
+#~ msgstr "バスク語"
+
+#~ msgid "Persian"
+#~ msgstr "ペルシャ語"
+
+#~ msgid "Faroese"
+#~ msgstr "フェロー語"
+
+#~ msgid "Friulian"
+#~ msgstr "フリウリ語"
+
+#~ msgid "Irish"
+#~ msgstr "アイルランド語"
+
+#~ msgid "Ga"
+#~ msgstr "ガ語"
+
+#~ msgid "Geez"
+#~ msgstr "ゲーズ語"
+
+#~ msgid "Galician"
+#~ msgstr "ガリシア語"
+
+#~ msgid "Gujarati"
+#~ msgstr "グジャラート語"
+
+#~ msgid "Manx"
+#~ msgstr "マン島語"
+
+#~ msgid "Hausa"
+#~ msgstr "ハウサ語"
+
+#~ msgid "Hawaiian"
+#~ msgstr "ハワイ語"
+
+#~ msgid "Hebrew"
+#~ msgstr "ヘブライ語"
+
+#~ msgid "Hindi"
+#~ msgstr "ヒンディー語"
+
+#~ msgid "Croatian"
+#~ msgstr "クロアチア語"
+
+#~ msgid "Armenian"
+#~ msgstr "アルメニア語"
+
+#~ msgid "Interlingua"
+#~ msgstr "インターリングア(国際語)"
+
+#~ msgid "Indonesian"
+#~ msgstr "インドネシア語"
+
+#~ msgid "Igbo"
+#~ msgstr "イボ語(ナイジェリア)"
+
+#~ msgid "Icelandic"
+#~ msgstr "アイスランド語"
+
+#~ msgid "Inuktitut"
+#~ msgstr "イヌイット語"
+
+#~ msgid "Georgian"
+#~ msgstr "グルジア語"
+
+#~ msgid "Kamba"
+#~ msgstr "カンバ語"
+
+#~ msgid "Koro"
+#~ msgstr "コロ語"
+
+#~ msgid "Kazakh"
+#~ msgstr "カザフ語"
+
+#~ msgid "Kalaallisut"
+#~ msgstr "グリーンランド語西方言"
+
+#~ msgid "Khmer"
+#~ msgstr "クメール語"
+
+#~ msgid "Kannada"
+#~ msgstr "カンナダ語"
+
+#~ msgid "Konkani"
+#~ msgstr "コンカニ語"
+
+#~ msgid "Kurdish"
+#~ msgstr "クルド語"
+
+#~ msgid "Cornish"
+#~ msgstr "コーンウォール語"
+
+#~ msgid "Kirghiz"
+#~ msgstr "キルギス語"
+
+#~ msgid "Lingala"
+#~ msgstr "リンガラ語"
+
+#~ msgid "Lao"
+#~ msgstr "ラオス語"
+
+#~ msgid "Lithuanian"
+#~ msgstr "リトアニア語"
+
+#~ msgid "Latvian"
+#~ msgstr "ラトビア語"
+
+#~ msgid "Maori"
+#~ msgstr "マオリ語"
+
+#~ msgid "Macedonian"
+#~ msgstr "マケドニア語"
+
+#~ msgid "Malayalam"
+#~ msgstr "マラヤーラム語"
+
+#~ msgid "Mongolian"
+#~ msgstr "モンゴル語"
+
+#~ msgid "Marathi"
+#~ msgstr "マラティー語"
+
+#~ msgid "Malay"
+#~ msgstr "マレー語"
+
+#~ msgid "Maltese"
+#~ msgstr "マルタ語"
+
+#~ msgid "Nepali"
+#~ msgstr "ネパール語(インド)"
+
+#~ msgid "Norwegian Nynorsk"
+#~ msgstr "ノルウェー語(ニーノシク)"
+
+#~ msgid "Norwegian"
+#~ msgstr "ノルウェー語"
+
+#~ msgid "South Ndebele"
+#~ msgstr "マタベレ語(南部)"
+
+#~ msgid "Northern Sotho"
+#~ msgstr "ソト語(北部)"
+
+#~ msgid "Nyanja; Chichewa; Chewa"
+#~ msgstr "ニャンジャ語"
+
+#~ msgid "Occitan"
+#~ msgstr "オック語"
+
+#~ msgid "Oromo"
+#~ msgstr "オロモ語"
+
+#~ msgid "Oriya"
+#~ msgstr "オリヤー語"
+
+#~ msgid "Punjabi"
+#~ msgstr "パンジャブ語"
+
+#~ msgid "Pashto"
+#~ msgstr "パシュト語"
+
+#~ msgid "Romanian"
+#~ msgstr "ルーマニア語"
+
+#~ msgid "Kinyarwanda"
+#~ msgstr "キンヤルワンダ語"
+
+#~ msgid "Sanskrit"
+#~ msgstr "サンスクリット語(梵語)"
+
+#~ msgid "Northern Sami"
+#~ msgstr "サモス語"
+
+#~ msgid "Serbo-Croatian"
+#~ msgstr "セルボ・クロアチア語"
+
+#~ msgid "Sidamo"
+#~ msgstr "シダモ語"
+
+#~ msgid "Somali"
+#~ msgstr "ソマリ語"
+
+#~ msgid "Albanian"
+#~ msgstr "アルバニア語"
+
+#~ msgid "Serbian"
+#~ msgstr "セルビア語"
+
+#~ msgid "Swati"
+#~ msgstr "シスワティ語"
+
+#~ msgid "Southern Sotho"
+#~ msgstr "ソト語(南部)"
+
+#~ msgid "Swahili"
+#~ msgstr "スワヒリ語"
+
+#~ msgid "Syriac"
+#~ msgstr "シリア語"
+
+#~ msgid "Tamil"
+#~ msgstr "タミール語"
+
+#~ msgid "Telugu"
+#~ msgstr "テルグ語"
+
+#~ msgid "Tajik"
+#~ msgstr "タジク語"
+
+#~ msgid "Thai"
+#~ msgstr "タイ語"
+
+#~ msgid "Tigrinya"
+#~ msgstr "ティグリニャ語"
+
+#~ msgid "Tigre"
+#~ msgstr "ティグレ語"
+
+#~ msgid "Tagalog"
+#~ msgstr "タガログ語"
+
+#~ msgid "Tswana"
+#~ msgstr "ツワナ語"
+
+#~ msgid "Turkish"
+#~ msgstr "トルコ語"
+
+#~ msgid "Tsonga"
+#~ msgstr "ツォンガ語"
+
+#~ msgid "Tatar"
+#~ msgstr "タタール語"
+
+#~ msgid "Ukrainian"
+#~ msgstr "ウクライナ語"
+
+#~ msgid "Urdu"
+#~ msgstr "ウルドゥー語"
+
+#~ msgid "Uzbek"
+#~ msgstr "ウズベク語"
+
+#~ msgid "Venda"
+#~ msgstr "ベンダ語"
+
+#~ msgid "Vietnamese"
+#~ msgstr "ベトナム語"
+
+#~ msgid "Walloon"
+#~ msgstr "ワロン語"
+
+#~ msgid "Xhosa"
+#~ msgstr "コーサ語"
+
+#~ msgid "Yiddish"
+#~ msgstr "イディッシュ語"
+
+#~ msgid "Yoruba"
+#~ msgstr "ヨルバ語"
+
+#~ msgid "Chinese"
+#~ msgstr "中国語"
+
+#~ msgid "Zulu"
+#~ msgstr "ズールー語"
+
+#~ msgid "Afghanistan"
+#~ msgstr "アフガニスタン"
+
+#~ msgid "Åland Islands"
+#~ msgstr "オーランド諸島"
+
+#~ msgid "Albania"
+#~ msgstr "アルバニア語"
+
+#~ msgid "Algeria"
+#~ msgstr "アルジェリア"
+
+#~ msgid "American Samoa"
+#~ msgstr "アメリカ領サモア"
+
+#~ msgid "Andorra"
+#~ msgstr "アンドラ"
+
+#~ msgid "Angola"
+#~ msgstr "アンゴラ"
+
+#~ msgid "Anguilla"
+#~ msgstr "アンギラ"
+
+#~ msgid "Antarctica"
+#~ msgstr "南極"
+
+#~ msgid "Antigua and Barbuda"
+#~ msgstr "アンティグア・バーブーダ"
+
+#~ msgid "Argentina"
+#~ msgstr "アルゼンチン"
+
+#~ msgid "Armenia"
+#~ msgstr "アルメニア"
+
+#~ msgid "Aruba"
+#~ msgstr "アルバ"
+
+#~ msgid "Australia"
+#~ msgstr "オーストラリア"
+
+#~ msgid "Austria"
+#~ msgstr "オーストリア"
+
+#~ msgid "Azerbaijan"
+#~ msgstr "アゼルバイジャン"
+
+#~ msgid "Bahamas"
+#~ msgstr "バハマ"
+
+#~ msgid "Bahrain"
+#~ msgstr "バーレーン"
+
+#~ msgid "Bangladesh"
+#~ msgstr "バングラデシュ"
+
+#~ msgid "Barbados"
+#~ msgstr "バルバドス"
+
+#~ msgid "Belarus"
+#~ msgstr "ベラルーシ"
+
+#~ msgid "Belgium"
+#~ msgstr "ベルギー"
+
+#~ msgid "Belize"
+#~ msgstr "ベリーズ"
+
+#~ msgid "Benin"
+#~ msgstr "ベナン"
+
+#~ msgid "Bermuda"
+#~ msgstr "バミューダ諸島"
+
+#~ msgid "Bhutan"
+#~ msgstr "ブータン"
+
+#~ msgid "Bolivia"
+#~ msgstr "ボリビア"
+
+#~ msgid "Bosnia and Herzegovina"
+#~ msgstr "ボスニア・ヘルツェゴビナ"
+
+#~ msgid "Botswana"
+#~ msgstr "ボツワナ"
+
+#~ msgid "Bouvet Island"
+#~ msgstr "ブーベ島"
+
+#~ msgid "Brazil"
+#~ msgstr "ブラジル"
+
+#~ msgid "British Indian Ocean Territory"
+#~ msgstr "イギリス領インド洋地域"
+
+#~ msgid "Brunei Darussalam"
+#~ msgstr "ブルネイ・ダルサラーム"
+
+#~ msgid "Bulgaria"
+#~ msgstr "ブルガリア"
+
+#~ msgid "Burkina Faso"
+#~ msgstr "ブルキナファソ"
+
+#~ msgid "Burundi"
+#~ msgstr "ブルンジ"
+
+#~ msgid "Cambodia"
+#~ msgstr "カンボジア"
+
+#~ msgid "Cameroon"
+#~ msgstr "カメルーン"
+
+#~ msgid "Canada"
+#~ msgstr "カナダ"
+
+#~ msgid "Cape Verde"
+#~ msgstr "カボベルデ"
+
+#~ msgid "Cayman Islands"
+#~ msgstr "ケイマン諸島"
+
+#~ msgid "Central African Republic"
+#~ msgstr "中央アフリカ"
+
+#~ msgid "Chad"
+#~ msgstr "チャド"
+
+#~ msgid "Chile"
+#~ msgstr "チリ"
+
+#~ msgid "China"
+#~ msgstr "中華人民共和国"
+
+#~ msgid "Christmas Island"
+#~ msgstr "クリスマス島"
+
+#~ msgid "Cocos (keeling) Islands"
+#~ msgstr "ココス諸島"
+
+#~ msgid "Colombia"
+#~ msgstr "コロンビア"
+
+#~ msgid "Comoros"
+#~ msgstr "コモロ連合"
+
+#~ msgid "Congo"
+#~ msgstr "コンゴ"
+
+#~ msgid "Cook Islands"
+#~ msgstr "クック諸島"
+
+#~ msgid "Costa Rica"
+#~ msgstr "コスタリカ"
+
+#~ msgid "Cote d'Ivoire"
+#~ msgstr "コートジボワール"
+
+#~ msgid "Croatia"
+#~ msgstr "クロアチア"
+
+#~ msgid "Cuba"
+#~ msgstr "キューバ"
+
+#~ msgid "Cyprus"
+#~ msgstr "キプロス"
+
+#~ msgid "Czech Republic"
+#~ msgstr "チェコ"
+
+#~ msgid "Denmark"
+#~ msgstr "デンマーク"
+
+#~ msgid "Djibouti"
+#~ msgstr "ジブチ"
+
+#~ msgid "Dominica"
+#~ msgstr "ドミニカ連邦"
+
+#~ msgid "Dominican Republic"
+#~ msgstr "ドミニカ共和国"
+
+#~ msgid "Ecuador"
+#~ msgstr "エクアドル"
+
+#~ msgid "Egypt"
+#~ msgstr "エジプト"
+
+#~ msgid "El Salvador"
+#~ msgstr "エルサルバドル"
+
+#~ msgid "Equatorial Guinea"
+#~ msgstr "赤道ギニア"
+
+#~ msgid "Eritrea"
+#~ msgstr "エリトリア"
+
+#~ msgid "Estonia"
+#~ msgstr "エストニア"
+
+#~ msgid "Ethiopia"
+#~ msgstr "エチオピア"
+
+#~ msgid "Falkland Islands (malvinas)"
+#~ msgstr "フォークランド諸島"
+
+#~ msgid "Faroe Islands"
+#~ msgstr "フェロー諸島"
+
+#~ msgid "Fiji"
+#~ msgstr "フィジー"
+
+#~ msgid "Finland"
+#~ msgstr "フィンランド"
+
+#~ msgid "France"
+#~ msgstr "フランス"
+
+#~ msgid "French Guiana"
+#~ msgstr "フランス領ギアナ"
+
+#~ msgid "French Polynesia"
+#~ msgstr "フランス領ポリネシア"
+
+#~ msgid "French Southern Territories"
+#~ msgstr "フランス領南方地域"
+
+#~ msgid "Gabon"
+#~ msgstr "ガボン"
+
+#~ msgid "Gambia"
+#~ msgstr "ガンビア"
+
+#~ msgid "Georgia"
+#~ msgstr "グルジア"
+
+#~ msgid "Germany"
+#~ msgstr "ドイツ"
+
+#~ msgid "Ghana"
+#~ msgstr "ガーナ"
+
+#~ msgid "Gibraltar"
+#~ msgstr "ジブラルタル"
+
+#~ msgid "Greece"
+#~ msgstr "ギリシャ"
+
+#~ msgid "Greenland"
+#~ msgstr "グリーンランド"
+
+#~ msgid "Grenada"
+#~ msgstr "グレナダ"
+
+#~ msgid "Guadeloupe"
+#~ msgstr "グアドループ島"
+
+#~ msgid "Guam"
+#~ msgstr "グアム"
+
+#~ msgid "Guatemala"
+#~ msgstr "グアテマラ"
+
+#~ msgid "Guernsey"
+#~ msgstr "ガーンジー島"
+
+#~ msgid "Guinea"
+#~ msgstr "ギニア"
+
+#~ msgid "Guinea-Bissau"
+#~ msgstr "ギニアビサウ"
+
+#~ msgid "Guyana"
+#~ msgstr "ガイアナ"
+
+#~ msgid "Haiti"
+#~ msgstr "ハイチ"
+
+#~ msgid "Heard Island and Mcdonald Islands"
+#~ msgstr "ヘアド島・マクドナルド諸島"
+
+#~ msgid "Holy See (Vatican City State)"
+#~ msgstr "バチカン市国"
+
+#~ msgid "Honduras"
+#~ msgstr "ホンジュラス"
+
+#~ msgid "Hong Kong"
+#~ msgstr "香港特別行政区"
+
+#~ msgid "Hungary"
+#~ msgstr "ハンガリー"
+
+#~ msgid "Iceland"
+#~ msgstr "アイスランド"
+
+#~ msgid "India"
+#~ msgstr "インド"
+
+#~ msgid "Indonesia"
+#~ msgstr "インドネシア"
+
+#~ msgid "Iran"
+#~ msgstr "イラン"
+
+#~ msgid "Iraq"
+#~ msgstr "イラク"
+
+#~ msgid "Ireland"
+#~ msgstr "アイルランド"
+
+#~ msgid "Isle Of Man"
+#~ msgstr "マン島"
+
+#~ msgid "Israel"
+#~ msgstr "イスラエル"
+
+#~ msgid "Italy"
+#~ msgstr "イタリア"
+
+#~ msgid "Jamaica"
+#~ msgstr "ジャマイカ"
+
+#~ msgid "Japan"
+#~ msgstr "日本"
+
+#~ msgid "Jersey"
+#~ msgstr "ジャージー島"
+
+#~ msgid "Jordan"
+#~ msgstr "ヨルダン"
+
+#~ msgid "Kazakhstan"
+#~ msgstr "カザフスタン"
+
+#~ msgid "Kenya"
+#~ msgstr "ケニア"
+
+#~ msgid "Kiribati"
+#~ msgstr "キリバス"
+
+#~ msgid "Korea"
+#~ msgstr "大韓民国"
+
+#~ msgid "Kuwait"
+#~ msgstr "クウェート"
+
+#~ msgid "Kyrgyzstan"
+#~ msgstr "キルギスタン"
+
+#~ msgid "Lao People's Democratic Republic"
+#~ msgstr "ラオス"
+
+#~ msgid "Latvia"
+#~ msgstr "ラトビア"
+
+#~ msgid "Lebanon"
+#~ msgstr "レバノン"
+
+#~ msgid "Lesotho"
+#~ msgstr "レソト"
+
+#~ msgid "Liberia"
+#~ msgstr "リベリア"
+
+#~ msgid "Libyan Arab Jamahiriya"
+#~ msgstr "リビア"
+
+#~ msgid "Liechtenstein"
+#~ msgstr "リヒテンシュタイン"
+
+#~ msgid "Lithuania"
+#~ msgstr "リトアニア"
+
+#~ msgid "Luxembourg"
+#~ msgstr "ルクセンブルク"
+
+#~ msgid "Macao"
+#~ msgstr "マカオ特別行政区"
+
+#~ msgid "Macedonia"
+#~ msgstr "マケドニア"
+
+#~ msgid "Madagascar"
+#~ msgstr "マダガスカル"
+
+#~ msgid "Malawi"
+#~ msgstr "マラウィ"
+
+#~ msgid "Malaysia"
+#~ msgstr "マレーシア"
+
+#~ msgid "Maldives"
+#~ msgstr "モルジブ"
+
+#~ msgid "Mali"
+#~ msgstr "マリ"
+
+#~ msgid "Malta"
+#~ msgstr "マルタ"
+
+#~ msgid "Marshall Islands"
+#~ msgstr "マーシャル諸島"
+
+#~ msgid "Martinique"
+#~ msgstr "マルチニーク島"
+
+#~ msgid "Mauritania"
+#~ msgstr "モーリタニア"
+
+#~ msgid "Mauritius"
+#~ msgstr "モーリシャス"
+
+#~ msgid "Mayotte"
+#~ msgstr "マヨット島"
+
+#~ msgid "Mexico"
+#~ msgstr "メキシコ"
+
+#~ msgid "Micronesia"
+#~ msgstr "ミクロネシア連邦"
+
+#~ msgid "Moldova"
+#~ msgstr "モルドバ"
+
+#~ msgid "Monaco"
+#~ msgstr "モナコ"
+
+#~ msgid "Mongolia"
+#~ msgstr "モンゴル"
+
+#~ msgid "Montserrat"
+#~ msgstr "モントセラト"
+
+#~ msgid "Morocco"
+#~ msgstr "モロッコ"
+
+#~ msgid "Mozambique"
+#~ msgstr "モザンビーク"
+
+#~ msgid "Myanmar"
+#~ msgstr "ミャンマー"
+
+#~ msgid "Namibia"
+#~ msgstr "ナミビア"
+
+#~ msgid "Nauru"
+#~ msgstr "ナウル"
+
+#~ msgid "Nepal"
+#~ msgstr "ネパール"
+
+#~ msgid "Netherlands"
+#~ msgstr "オランダ"
+
+#~ msgid "Netherlands Antilles"
+#~ msgstr "オランダ領アンティル"
+
+#~ msgid "New Caledonia"
+#~ msgstr "ニューカレドニア"
+
+#~ msgid "New Zealand"
+#~ msgstr "ニュージーランド"
+
+#~ msgid "Nicaragua"
+#~ msgstr "ニカラグア"
+
+#~ msgid "Niger"
+#~ msgstr "ニジェール"
+
+#~ msgid "Nigeria"
+#~ msgstr "ナイジェリア"
+
+#~ msgid "Niue"
+#~ msgstr "ニウエ"
+
+#~ msgid "Norfolk Island"
+#~ msgstr "ノーフォーク島"
+
+#~ msgid "Northern Mariana Islands"
+#~ msgstr "北マリアナ諸島"
+
+#~ msgid "Norway"
+#~ msgstr "ノルウェー"
+
+#~ msgid "Oman"
+#~ msgstr "オマーン"
+
+#~ msgid "Pakistan"
+#~ msgstr "パキスタン"
+
+#~ msgid "Palau"
+#~ msgstr "パラオ"
+
+#~ msgid "Palestinian Territory"
+#~ msgstr "パレスチナ"
+
+#~ msgid "Panama"
+#~ msgstr "パナマ"
+
+#~ msgid "Papua New Guinea"
+#~ msgstr "パプアニューギニア"
+
+#~ msgid "Paraguay"
+#~ msgstr "パラグアイ"
+
+#~ msgid "Peru"
+#~ msgstr "ペルー"
+
+#~ msgid "Philippines"
+#~ msgstr "フィリピン"
+
+#~ msgid "Pitcairn"
+#~ msgstr "ピトケアン諸島"
+
+#~ msgid "Poland"
+#~ msgstr "ポーランド"
+
+#~ msgid "Portugal"
+#~ msgstr "ポルトガル"
+
+#~ msgid "Puerto Rico"
+#~ msgstr "プエルトリコ"
+
+#~ msgid "Qatar"
+#~ msgstr "カタール"
+
+#~ msgid "Reunion"
+#~ msgstr "レユニオン"
+
+#~ msgid "Romania"
+#~ msgstr "ルーマニア"
+
+#~ msgid "Russian Federation"
+#~ msgstr "ロシア"
+
+#~ msgid "Rwanda"
+#~ msgstr "ルワンダ"
+
+#~ msgid "Saint Helena"
+#~ msgstr "セントヘレナ島"
+
+#~ msgid "Saint Kitts and Nevis"
+#~ msgstr "セントクリストファー・ネイビス"
+
+#~ msgid "Saint Lucia"
+#~ msgstr "セントルシア"
+
+#~ msgid "Saint Pierre and Miquelon"
+#~ msgstr "サンピエール島・ミクロン島"
+
+#~ msgid "Saint Vincent and the Grenadines"
+#~ msgstr "セントビンセントおよびグレナディーン諸島"
+
+#~ msgid "Samoa"
+#~ msgstr "サモア"
+
+#~ msgid "San Marino"
+#~ msgstr "サンマリノ"
+
+#~ msgid "Sao Tome and Principe"
+#~ msgstr "サントメ・プリンシペ"
+
+#~ msgid "Saudi Arabia"
+#~ msgstr "サウジアラビア"
+
+#~ msgid "Senegal"
+#~ msgstr "セネガル"
+
+#~ msgid "Serbia and Montenegro"
+#~ msgstr "セルビア・モンテネグロ"
+
+#~ msgid "Seychelles"
+#~ msgstr "セーシェル"
+
+#~ msgid "Sierra Leone"
+#~ msgstr "シエラレオネ"
+
+#~ msgid "Singapore"
+#~ msgstr "シンガポール"
+
+#~ msgid "Slovakia"
+#~ msgstr "スロバキア"
+
+#~ msgid "Slovenia"
+#~ msgstr "スロベニア"
+
+#~ msgid "Solomon Islands"
+#~ msgstr "ソロモン諸島"
+
+#~ msgid "Somalia"
+#~ msgstr "ソマリア"
+
+#~ msgid "South Africa"
+#~ msgstr "南アフリカ"
+
+#~ msgid "South Georgia and the South Sandwich Islands"
+#~ msgstr "南ジョージア島・南サンドイッチ諸島"
+
+#~ msgid "Spain"
+#~ msgstr "スペイン"
+
+#~ msgid "Sri Lanka"
+#~ msgstr "スリランカ"
+
+#~ msgid "Sudan"
+#~ msgstr "スーダン"
+
+#~ msgid "Suriname"
+#~ msgstr "スリナム"
+
+#~ msgid "Svalbard and Jan Mayen"
+#~ msgstr "スバールバル諸島・ヤンマイエン島"
+
+#~ msgid "Swaziland"
+#~ msgstr "スワジランド"
+
+#~ msgid "Sweden"
+#~ msgstr "スウェーデン"
+
+#~ msgid "Switzerland"
+#~ msgstr "スイス"
+
+#~ msgid "Syrian Arab Republic"
+#~ msgstr "シリア・アラブ"
+
+#~ msgid "Taiwan"
+#~ msgstr "中華民国"
+
+#~ msgid "Tajikistan"
+#~ msgstr "タジキスタン"
+
+#~ msgid "Tanzania"
+#~ msgstr "タンザニア"
+
+#~ msgid "Thailand"
+#~ msgstr "タイ"
+
+#~ msgid "Timor-Leste"
+#~ msgstr "東ティモール"
+
+#~ msgid "Togo"
+#~ msgstr "トーゴ"
+
+#~ msgid "Tokelau"
+#~ msgstr "トケラウ諸島"
+
+#~ msgid "Tonga"
+#~ msgstr "トンガ"
+
+#~ msgid "Trinidad and Tobago"
+#~ msgstr "トリニダード・トバゴ"
+
+#~ msgid "Tunisia"
+#~ msgstr "チュニジア"
+
+#~ msgid "Turkey"
+#~ msgstr "トルコ"
+
+#~ msgid "Turkmenistan"
+#~ msgstr "トルクメニスタン"
+
+#~ msgid "Turks and Caicos Islands"
+#~ msgstr "タークス・カイコス諸島"
+
+#~ msgid "Tuvalu"
+#~ msgstr "ツバル"
+
+#~ msgid "Uganda"
+#~ msgstr "ウガンダ"
+
+#~ msgid "Ukraine"
+#~ msgstr "ウクライナ"
+
+#~ msgid "United Arab Emirates"
+#~ msgstr "アラブ首長国連邦"
+
+#~ msgid "United Kingdom"
+#~ msgstr "イギリス"
+
+#~ msgid "United States"
+#~ msgstr "アメリカ"
+
+#~ msgid "United States Minor Outlying Islands"
+#~ msgstr "アメリカ領太平洋諸島"
+
+#~ msgid "Uruguay"
+#~ msgstr "ウルグアイ"
+
+#~ msgid "Uzbekistan"
+#~ msgstr "ウズベキスタン"
+
+#~ msgid "Vanuatu"
+#~ msgstr "バヌアツ"
+
+#~ msgid "Venezuela"
+#~ msgstr "ベネズエラ"
+
+#~ msgid "Viet Nam"
+#~ msgstr "ベトナム"
+
+#~ msgid "Virgin Islands"
+#~ msgstr "ヴァージン諸島"
+
+#~ msgid "Wallis and Futuna"
+#~ msgstr "ウォリス・フツナ"
+
+#~ msgid "Western Sahara"
+#~ msgstr "西サハラ"
+
+#~ msgid "Yemen"
+#~ msgstr "イエメン"
+
+#~ msgid "Zambia"
+#~ msgstr "ザンビア"
+
+#~ msgid "Zimbabwe"
+#~ msgstr "ジンバブエ"
 
 #~ msgid "Unknown Data"
 #~ msgstr "不明データ"
