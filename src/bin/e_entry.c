@@ -4,6 +4,7 @@
 #include "e.h"
 
 #include <Ecore_IMF.h>
+#include <Ecore_IMF_Evas.h>
 
 typedef struct _E_Entry_Smart_Data E_Entry_Smart_Data;
 
@@ -327,9 +328,16 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
      return;
 
-   if (sd->imf_context &&
-       ecore_imf_context_filter_event(sd->imf_context, EVAS_CALLBACK_KEY_DOWN, event_info))
-     return;
+   if (sd->imf_context)
+     {
+	Ecore_IMF_Event_Key_Down ev;
+
+	ecore_imf_evas_event_key_down_wrap(event_info, &ev);
+	if (ecore_imf_context_filter_event(sd->imf_context,
+					   ECORE_IMF_EVENT_KEY_DOWN,
+					   (Ecore_IMF_Event *) &ev))
+	  return;
+     }
 
    if (_e_entry_emacs_keybindings)
      _e_entry_key_down_emacs(obj, event_info);
@@ -347,7 +355,15 @@ _e_entry_key_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
      return;
 
    if (sd->imf_context)
-     ecore_imf_context_filter_event(sd->imf_context, EVAS_CALLBACK_KEY_UP, event_info);
+     {
+	Ecore_IMF_Event_Key_Up ev;
+
+	ecore_imf_evas_event_key_up_wrap(event_info, &ev);
+	if (ecore_imf_context_filter_event(sd->imf_context,
+					   ECORE_IMF_EVENT_KEY_UP,
+					   (Ecore_IMF_Event *) &ev))
+	  return;
+     }
 }
 
 /* Called when the entry object is pressed by the mouse */
@@ -364,9 +380,16 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (!(event = event_info))
      return;
 
-   if (sd->imf_context &&
-       ecore_imf_context_filter_event(sd->imf_context, EVAS_CALLBACK_MOUSE_DOWN, event_info))
-     return;
+   if (sd->imf_context)
+     {
+	Ecore_IMF_Event_Mouse_Down ev;
+
+	ecore_imf_evas_event_mouse_down_wrap(event_info, &ev);
+	if (ecore_imf_context_filter_event(sd->imf_context,
+					   ECORE_IMF_EVENT_MOUSE_DOWN,
+					   (Ecore_IMF_Event *) &ev))
+	  return;
+     }
 
    evas_object_geometry_get(sd->editable_object, &ox, &oy, NULL, NULL);
    pos = e_editable_pos_get_from_coords(sd->editable_object,
@@ -517,9 +540,16 @@ _e_entry_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
      return;
    
-   if (sd->imf_context &&
-       ecore_imf_context_filter_event(sd->imf_context, EVAS_CALLBACK_MOUSE_UP, event_info))
-     return;
+   if (sd->imf_context)
+     {
+	Ecore_IMF_Event_Mouse_Up ev;
+
+	ecore_imf_evas_event_mouse_up_wrap(event_info, &ev);
+	if (ecore_imf_context_filter_event(sd->imf_context,
+					   ECORE_IMF_EVENT_MOUSE_UP,
+					   (Ecore_IMF_Event *) &ev))
+	  return;
+     }
 
    if (sd->selection_dragging)
      {
@@ -542,9 +572,16 @@ _e_entry_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (!(event = event_info))
      return;
 
-   if (sd->imf_context &&
-       ecore_imf_context_filter_event(sd->imf_context, EVAS_CALLBACK_MOUSE_MOVE, event_info))
-     return;
+   if (sd->imf_context)
+     {
+	Ecore_IMF_Event_Mouse_Move ev;
+
+	ecore_imf_evas_event_mouse_move_wrap(event_info, &ev);
+	if (ecore_imf_context_filter_event(sd->imf_context,
+					   ECORE_IMF_EVENT_MOUSE_MOVE,
+					   (Ecore_IMF_Event *) &ev))
+	  return;
+     }
 
    if (sd->selection_dragging)
      {
@@ -963,6 +1000,8 @@ _e_entry_smart_add(Evas_Object *object)
    E_Entry_Smart_Data *sd;
    Evas_Object *o;
    int cw, ch;
+   const char *ctx_id;
+   const Ecore_IMF_Context_Info *ctx_info;
    
    if ((!object) || !(evas = evas_object_evas_get(object)))
      return;
@@ -972,10 +1011,25 @@ _e_entry_smart_add(Evas_Object *object)
    
    evas_object_smart_data_set(object, sd);
 
-   sd->imf_context = ecore_imf_context_add(ecore_imf_context_default_id_get());
+   ctx_id = ecore_imf_context_default_id_get();
+   ctx_info = ecore_imf_context_info_by_id_get(ctx_id);
+   if (!ctx_info->canvas_type ||
+       strcmp(ctx_info->canvas_type, "evas") == 0)
+     sd->imf_context = ecore_imf_context_add(ctx_id);
+   else
+     {
+	ctx_id = ecore_imf_context_default_id_by_canvas_type_get("evas");
+	if (ctx_id)
+	  sd->imf_context = ecore_imf_context_add(ctx_id);
+	else
+	  sd->imf_context = NULL;
+     }
+
    if (sd->imf_context)
      {
-        ecore_imf_context_client_window_set(sd->imf_context, evas);
+        ecore_imf_context_client_window_set(sd->imf_context,
+					    ecore_evas_window_get(ecore_evas_ecore_evas_get(evas)));
+        ecore_imf_context_client_canvas_set(sd->imf_context, evas);
         ecore_imf_context_retrieve_surrounding_callback_set(sd->imf_context,
                                                             _e_entry_cb_imf_retrieve_surrounding,
                                                             sd);
