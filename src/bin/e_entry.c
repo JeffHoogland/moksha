@@ -975,8 +975,7 @@ _e_entry_smart_add(Evas_Object *object)
    sd->imf_context = ecore_imf_context_add(ecore_imf_context_default_id_get());
    if (sd->imf_context)
      {
-        ecore_imf_context_client_window_set(sd->imf_context,
-                                            ecore_evas_window_get(ecore_evas_ecore_evas_get(evas)));
+        ecore_imf_context_client_window_set(sd->imf_context, evas);
         ecore_imf_context_retrieve_surrounding_callback_set(sd->imf_context,
                                                             _e_entry_cb_imf_retrieve_surrounding,
                                                             sd);
