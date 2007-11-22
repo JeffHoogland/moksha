@@ -5,10 +5,10 @@
 
 typedef enum _E_Zone_Edge
 {
-   E_ZONE_LEFT,
-   E_ZONE_RIGHT,
-   E_ZONE_TOP,
-   E_ZONE_BOTTOM
+   E_ZONE_EDGE_LEFT,
+   E_ZONE_EDGE_RIGHT,
+   E_ZONE_EDGE_TOP,
+   E_ZONE_EDGE_BOTTOM
 } E_Zone_Edge;
 
 typedef struct _E_Zone     E_Zone;
@@ -17,6 +17,8 @@ typedef struct _E_Event_Zone_Desk_Count_Set     E_Event_Zone_Desk_Count_Set;
 typedef struct _E_Event_Zone_Move_Resize        E_Event_Zone_Move_Resize;
 /* TODO: Move this to a general place? */
 typedef struct _E_Event_Pointer_Warp            E_Event_Pointer_Warp;
+typedef struct _E_Event_Zone_Edge               E_Event_Zone_Edge_In;
+typedef struct _E_Event_Zone_Edge               E_Event_Zone_Edge_Out;
 
 #else
 #ifndef E_ZONE_H
@@ -90,6 +92,12 @@ struct _E_Event_Pointer_Warp
    } curr;
 };
 
+struct _E_Event_Zone_Edge
+{
+   E_Zone      *zone;
+   E_Zone_Edge  edge;
+};
+
 EAPI int        e_zone_init(void);
 EAPI int        e_zone_shutdown(void);
 EAPI E_Zone    *e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h);
@@ -115,6 +123,8 @@ EAPI void       e_zone_flip_win_restore(void);
 extern EAPI int E_EVENT_ZONE_DESK_COUNT_SET;
 extern EAPI int E_EVENT_ZONE_MOVE_RESIZE;
 extern EAPI int E_EVENT_POINTER_WARP;
+extern EAPI int E_EVENT_ZONE_EDGE_IN;
+extern EAPI int E_EVENT_ZONE_EDGE_OUT;
 
 #endif
 #endif
