@@ -3,6 +3,14 @@
  */
 #ifdef E_TYPEDEFS
 
+typedef enum _E_Zone_Edge
+{
+   E_ZONE_LEFT,
+   E_ZONE_RIGHT,
+   E_ZONE_TOP,
+   E_ZONE_BOTTOM
+} E_Zone_Edge;
+
 typedef struct _E_Zone     E_Zone;
 
 typedef struct _E_Event_Zone_Desk_Count_Set     E_Event_Zone_Desk_Count_Set;
@@ -41,10 +49,17 @@ struct _E_Zone
    Evas_List           *handlers;
 
    struct {
-	Ecore_X_Window top, right, bottom, left;
+	unsigned char top : 1;
+	unsigned char right : 1;
+	unsigned char bottom : 1;
+	unsigned char left : 1;
 	Ecore_Timer *timer;
 	E_Direction direction;
    } flip;
+
+   struct {
+	Ecore_X_Window top, right, bottom, left;
+   } edge;
    
    E_Action *cur_mouse_action;
    Evas_List *popups;
