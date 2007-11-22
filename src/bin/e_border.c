@@ -205,15 +205,8 @@ e_border_init(void)
 EAPI int
 e_border_shutdown(void)
 {
-   while (handlers)
-     {
-	Ecore_Event_Handler *h;
+   E_FREE_LIST(handlers, ecore_event_handler_del);
 
-	h = handlers->data;
-	handlers = evas_list_remove_list(handlers, handlers);
-	ecore_event_handler_del(h);
-     }
-   
    return 1;
 }
 
@@ -3197,14 +3190,7 @@ _e_border_free(E_Border *bd)
 	e_hints_active_window_set(bd->zone->container->manager, NULL);
 	focused = NULL;
      }
-   while (bd->handlers)
-     {
-	Ecore_Event_Handler *h;
-
-	h = bd->handlers->data;
-	bd->handlers = evas_list_remove_list(bd->handlers, bd->handlers);
-	ecore_event_handler_del(h);
-     }
+   E_FREE_LIST(bd->handlers, ecore_event_handler_del);
    if (bd->remember)
      {
 	E_Remember *rem;
