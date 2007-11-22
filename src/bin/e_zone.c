@@ -791,6 +791,8 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
 
 	zev = E_NEW(E_Event_Zone_Edge_In, 1);
 	zev->zone = zone;
+	zev->x = ev->x;
+	zev->y = ev->y;
 	zev->edge = E_ZONE_EDGE_TOP;
 	ecore_event_add(E_EVENT_ZONE_EDGE_IN, zev, NULL, NULL);
      }
@@ -805,6 +807,8 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
 
 	zev = E_NEW(E_Event_Zone_Edge_In, 1);
 	zev->zone = zone;
+	zev->x = ev->x;
+	zev->y = ev->y;
 	zev->edge = E_ZONE_EDGE_RIGHT;
 	ecore_event_add(E_EVENT_ZONE_EDGE_IN, zev, NULL, NULL);
      }
@@ -819,6 +823,8 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
 
 	zev = E_NEW(E_Event_Zone_Edge_In, 1);
 	zev->zone = zone;
+	zev->x = ev->x;
+	zev->y = ev->y;
 	zev->edge = E_ZONE_EDGE_BOTTOM;
 	ecore_event_add(E_EVENT_ZONE_EDGE_IN, zev, NULL, NULL);
      }
@@ -833,6 +839,8 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
 
 	zev = E_NEW(E_Event_Zone_Edge_In, 1);
 	zev->zone = zone;
+	zev->x = ev->x;
+	zev->y = ev->y;
 	zev->edge = E_ZONE_EDGE_LEFT;
 	ecore_event_add(E_EVENT_ZONE_EDGE_IN, zev, NULL, NULL);
      }
@@ -859,6 +867,8 @@ _e_zone_cb_mouse_out(void *data, int type, void *event)
 	zone->flip.timer = NULL;
 	zev = E_NEW(E_Event_Zone_Edge_Out, 1);
 	zev->zone = zone;
+	zev->x = ev->x;
+	zev->y = ev->y;
 	if (ev->win == zone->edge.top) zev->edge = E_ZONE_EDGE_TOP;
 	else if (ev->win == zone->edge.bottom) zev->edge = E_ZONE_EDGE_BOTTOM;
 	else if (ev->win == zone->edge.left) zev->edge = E_ZONE_EDGE_LEFT;
