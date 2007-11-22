@@ -46,7 +46,6 @@ EAPI E_Toolbar *
 e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2) 
 {
    E_Toolbar *tbar = NULL;
-   char buf[4096];
 
    if (!name) return NULL;
    if ((!fwin) || (!fm2)) return NULL;
