@@ -17,8 +17,8 @@ static void _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_menu_append(E_Shelf *es, E_Menu *mn);
 static void _e_shelf_cb_menu_items_append(void *data, E_Menu *mn);
 static void _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static int  _e_shelf_cb_mouse_in(void *data, int type, void *event);
+static int  _e_shelf_cb_mouse_out(void *data, int type, void *event);
 static int  _e_shelf_cb_id_sort(void *data1, void *data2);
 static int  _e_shelf_cb_hide_animator(void *data);
 static int  _e_shelf_cb_hide_animator_timer(void *data);
@@ -107,12 +107,15 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	e_popup_layer_set(es->popup, layer);
 	es->ee = es->popup->ecore_evas;
 	es->evas = es->popup->evas;
+	es->win = es->popup->evas_win;
      }
    else
      {
 	e_drop_xdnd_register_set(zone->container->event_win, 1);
 	es->ee = zone->container->bg_ecore_evas;
 	es->evas = zone->container->bg_evas;
+	/* TODO: We should have a mouse out on the evas object if we are on the desktop */
+	es->win = zone->container->event_win;
      }
    es->fit_along = 1;
    es->layer = layer;
@@ -124,12 +127,10 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    evas_object_resize(es->o_event, es->w, es->h);
    evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_DOWN, _e_shelf_cb_mouse_down, es);
 
-   es->o_hide = evas_object_rectangle_add(es->evas);
-   evas_object_color_set(es->o_hide, 0, 0, 0, 0);
-   evas_object_resize(es->o_hide, es->w, es->h);
-   evas_object_event_callback_add(es->o_hide, EVAS_CALLBACK_MOUSE_IN, _e_shelf_cb_mouse_in, es);
-   evas_object_event_callback_add(es->o_hide, EVAS_CALLBACK_MOUSE_OUT, _e_shelf_cb_mouse_out, es);
-   evas_object_repeat_events_set(es->o_hide, 1);
+   es->handlers = evas_list_append(es->handlers,
+	 ecore_event_handler_add(E_EVENT_ZONE_EDGE_IN, _e_shelf_cb_mouse_in, es));
+   es->handlers = evas_list_append(es->handlers,
+	 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_shelf_cb_mouse_out, es));
  
    es->o_base = edje_object_add(es->evas);
    es->name = evas_stringshare_add(name);
@@ -140,18 +141,14 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 			     "e/shelf/default/base");
    if (es->popup)
      {
-	evas_object_layer_set(es->o_hide, 1);
-	evas_object_show(es->o_hide);
 	evas_object_show(es->o_event);
 	evas_object_show(es->o_base);
 	e_popup_edje_bg_object_set(es->popup, es->o_base);
      }
    else
      {
-	evas_object_move(es->o_hide, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
-	evas_object_layer_set(es->o_hide, layer + 1);
 	evas_object_layer_set(es->o_event, layer);
 	evas_object_layer_set(es->o_base, layer);
      }
@@ -234,7 +231,6 @@ e_shelf_show(E_Shelf *es)
      e_popup_show(es->popup);
    else
      {
-	evas_object_show(es->o_hide);
 	evas_object_show(es->o_event);
 	evas_object_show(es->o_base);
      }
@@ -249,7 +245,6 @@ e_shelf_hide(E_Shelf *es)
      e_popup_hide(es->popup);
    else
      {
-	evas_object_hide(es->o_hide);
 	evas_object_hide(es->o_event);
 	evas_object_hide(es->o_base);
      }
@@ -315,7 +310,6 @@ e_shelf_move(E_Shelf *es, int x, int y)
      e_popup_move(es->popup, es->x, es->y);
    else
      {
-	evas_object_move(es->o_hide, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
      }
@@ -330,7 +324,6 @@ e_shelf_resize(E_Shelf *es, int w, int h)
    es->h = h;
    if (es->popup)
      e_popup_resize(es->popup, es->w, es->h);
-   evas_object_resize(es->o_hide, es->w, es->h);
    evas_object_resize(es->o_event, es->w, es->h);
    evas_object_resize(es->o_base, es->w, es->h);
 }
@@ -348,11 +341,9 @@ e_shelf_move_resize(E_Shelf *es, int x, int y, int w, int h)
      e_popup_move_resize(es->popup, es->x, es->y, es->w, es->h); 
    else
      {
-	evas_object_move(es->o_hide, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
      }
-   evas_object_resize(es->o_hide, es->w, es->h);
    evas_object_resize(es->o_event, es->w, es->h);
    evas_object_resize(es->o_base, es->w, es->h);
 }
@@ -368,7 +359,6 @@ e_shelf_layer_set(E_Shelf *es, int layer)
      e_popup_layer_set(es->popup, es->layer);
    else
      {
-	evas_object_layer_set(es->o_hide, es->layer + 1);
 	evas_object_layer_set(es->o_event, es->layer);
 	evas_object_layer_set(es->o_base, es->layer);
      }
@@ -600,17 +590,15 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 	e_popup_layer_set(es->popup, es->cfg->layer);
 	es->ee = es->popup->ecore_evas;
 	es->evas = es->popup->evas;
-	evas_object_show(es->o_hide);
+	es->win = es->popup->evas_win;
 	evas_object_show(es->o_event);
 	evas_object_show(es->o_base);
 	e_popup_edje_bg_object_set(es->popup, es->o_base);
      }
    else 
      {
-	evas_object_move(es->o_hide, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
-	evas_object_layer_set(es->o_hide, es->cfg->layer);
 	evas_object_layer_set(es->o_event, es->cfg->layer);
 	evas_object_layer_set(es->o_base, es->cfg->layer);
      }
@@ -664,6 +652,7 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
 static void
 _e_shelf_free(E_Shelf *es)
 {
+   E_FREE_LIST(es->handlers, ecore_event_handler_del);
    if (es->hide_animator)
      {
 	ecore_animator_del(es->hide_animator);
@@ -686,7 +675,6 @@ _e_shelf_free(E_Shelf *es)
    e_object_del(E_OBJECT(es->gadcon));
    evas_stringshare_del(es->name);
    evas_stringshare_del(es->style);
-   evas_object_del(es->o_hide);
    evas_object_del(es->o_event);
    evas_object_del(es->o_base);
    if (es->popup)
@@ -1205,23 +1193,84 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
      }
 }
 
-static void
-_e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+static int
+_e_shelf_cb_mouse_in(void *data, int type, void *event)
 {
-   E_Shelf *es;
+   E_Event_Zone_Edge_In *ev;
+   E_Shelf              *es;
+   int                   show = 0;
 
+   ev = event;
    es = data;
-   edje_object_signal_emit(es->o_base, "e,state,focused", "e");
-   if (!es->cfg->autohide_show_action) e_shelf_toggle(es, 1);
+   switch (es->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_LEFT:
+	 if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+	   show = 1;
+	 break;
+      case E_GADCON_ORIENT_RIGHT:
+	 if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+	   show = 1;
+	 break;
+      case E_GADCON_ORIENT_TOP:
+	 if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+	   show = 1;
+	 break;
+      case E_GADCON_ORIENT_BOTTOM:
+	 if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+	   show = 1;
+	 break;
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_LT:
+	 if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+	   show = 1;
+	 else if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+	   show = 1;
+	 break;
+      case E_GADCON_ORIENT_CORNER_TR:
+      case E_GADCON_ORIENT_CORNER_RT:
+	 if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+	   show = 1;
+	 else if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+	   show = 1;
+	 break;
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_LB:
+	 if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+	   show = 1;
+	 else if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+	   show = 1;
+	 break;
+      case E_GADCON_ORIENT_CORNER_BR:
+      case E_GADCON_ORIENT_CORNER_RB:
+	 if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+	   show = 1;
+	 else if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+	   show = 1;
+	 break;
+      default:
+	 break;
+     }
+
+   if (show)
+     {
+	edje_object_signal_emit(es->o_base, "e,state,focused", "e");
+	if (!es->cfg->autohide_show_action) e_shelf_toggle(es, 1);
+     }
+   return 1;
 }
 
-static void 
-_e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+static int
+_e_shelf_cb_mouse_out(void *data, int type, void *event)
 {
-   E_Shelf *es;
+   Ecore_X_Event_Mouse_Out *ev;
+   E_Shelf                 *es;
 
+   ev = event;
    es = data;
+   if (ev->win != es->win) return 1;
    e_shelf_toggle(es, 0);
+   return 1;
 }
 
 static int

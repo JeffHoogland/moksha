@@ -21,9 +21,9 @@ struct _E_Shelf
    E_Zone              *zone; 
    Evas_Object         *o_base;
    Evas_Object         *o_event;
-   Evas_Object         *o_hide;
    Ecore_Evas          *ee;
    Evas                *evas;
+   Ecore_X_Window       win;
    E_Gadcon            *gadcon;
    const char          *name;
    const char          *style;
@@ -42,6 +42,7 @@ struct _E_Shelf
    int                  interrupted;
    float                instant_delay;
    Ecore_Timer         *instant_timer;
+   Evas_List           *handlers;
 };
 
 EAPI int              e_shelf_init(void);
