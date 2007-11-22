@@ -1012,18 +1012,23 @@ _e_entry_smart_add(Evas_Object *object)
    evas_object_smart_data_set(object, sd);
 
    ctx_id = ecore_imf_context_default_id_get();
-   ctx_info = ecore_imf_context_info_by_id_get(ctx_id);
-   if (!ctx_info->canvas_type ||
-       strcmp(ctx_info->canvas_type, "evas") == 0)
-     sd->imf_context = ecore_imf_context_add(ctx_id);
-   else
+   if (ctx_id)
      {
-	ctx_id = ecore_imf_context_default_id_by_canvas_type_get("evas");
-	if (ctx_id)
+	ctx_info = ecore_imf_context_info_by_id_get(ctx_id);
+	if (!ctx_info->canvas_type ||
+	    strcmp(ctx_info->canvas_type, "evas") == 0)
 	  sd->imf_context = ecore_imf_context_add(ctx_id);
 	else
-	  sd->imf_context = NULL;
+	  {
+	     ctx_id = ecore_imf_context_default_id_by_canvas_type_get("evas");
+	     if (ctx_id)
+	       sd->imf_context = ecore_imf_context_add(ctx_id);
+	     else
+	       sd->imf_context = NULL;
+	  }
      }
+   else
+     sd->imf_context = NULL;
 
    if (sd->imf_context)
      {
