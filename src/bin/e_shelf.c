@@ -253,7 +253,6 @@ e_shelf_hide(E_Shelf *es)
 EAPI void
 e_shelf_locked_set(E_Shelf *es, int lock)
 {
-   printf("Lock shelf: %d\n", lock);
    if (lock)
      {
 	e_shelf_toggle(es, 1);
