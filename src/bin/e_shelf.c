@@ -1285,7 +1285,7 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
    ev = event;
    es = data;
    if (ev->win != es->win) return 1;
-   e_shelf_toggle(es, 0);
+   if (!es->cfg->autohide_show_action) e_shelf_toggle(es, 0);
    return 1;
 }
 
