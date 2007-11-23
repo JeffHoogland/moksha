@@ -28,9 +28,6 @@ struct _E_Shelf
    const char          *name;
    const char          *style;
    E_Config_Shelf      *cfg;
-   unsigned char        fit_along : 1;
-   unsigned char        fit_size  : 1;
-   unsigned char        hidden    : 1;
    int                  size;
    E_Config_Dialog     *config_dialog;
    E_Menu              *menu;
@@ -43,6 +40,11 @@ struct _E_Shelf
    float                instant_delay;
    Ecore_Timer         *instant_timer;
    Evas_List           *handlers;
+   unsigned char        fit_along : 1;
+   unsigned char        fit_size  : 1;
+   unsigned char        hidden    : 1;
+   unsigned char        locked    : 1;
+   unsigned char        toggle    : 1;
 };
 
 EAPI int              e_shelf_init(void);
@@ -54,6 +56,7 @@ EAPI void             e_shelf_zone_move_resize_handle(E_Zone *zone);
 EAPI void             e_shelf_populate(E_Shelf *es);
 EAPI void             e_shelf_show(E_Shelf *es);
 EAPI void             e_shelf_hide(E_Shelf *es);
+EAPI void             e_shelf_locked_set(E_Shelf *es, int lock);
 EAPI void             e_shelf_toggle(E_Shelf *es, int show);
 EAPI void             e_shelf_move(E_Shelf *es, int x, int y);
 EAPI void             e_shelf_resize(E_Shelf *es, int w, int h);
