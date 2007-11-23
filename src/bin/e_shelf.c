@@ -583,6 +583,7 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 
    if (!es->cfg) return;
    if (es->popup) e_object_del(E_OBJECT(es->popup));
+   es->popup = NULL;
    if (popup) 
      {
 	es->popup = e_popup_new(es->zone, es->x, es->y, es->w, es->h);
