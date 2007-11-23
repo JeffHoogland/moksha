@@ -540,7 +540,7 @@ e_gadcon_edit_begin(E_Gadcon *gc)
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    e_gadcon_layout_freeze(gc->o_container);
-   e_shelf_locked_set(gc->shelf, 1);
+   if (gc->shelf) e_shelf_locked_set(gc->shelf, 1);
    gc->editing = 1;
    for (l = gc->clients; l; l = l->next)
      {
@@ -569,7 +569,7 @@ e_gadcon_edit_end(E_Gadcon *gc)
 	e_gadcon_client_edit_end(gcc);
      }
    e_gadcon_layout_thaw(gc->o_container);
-   e_shelf_locked_set(gc->shelf, 0);
+   if (gc->shelf) e_shelf_locked_set(gc->shelf, 0);
 }
 
 EAPI void
@@ -823,7 +823,7 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
 
    if (gcc->o_control) return;
 
-   e_shelf_locked_set(gcc->gadcon->shelf, 1);
+   if (gcc->gadcon->shelf) e_shelf_locked_set(gcc->gadcon->shelf, 1);
    gcc->gadcon->editing = 1;
    gcc->o_control = edje_object_add(gcc->gadcon->evas);
    evas_object_layer_set(gcc->o_control, 100);
@@ -945,7 +945,7 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
 	if (client->o_control) return;
      }
    gcc->gadcon->editing = 0;
-   e_shelf_locked_set(gcc->gadcon->shelf, 0);
+   if (gcc->gadcon->shelf) e_shelf_locked_set(gcc->gadcon->shelf, 0);
 }
 
 EAPI void
