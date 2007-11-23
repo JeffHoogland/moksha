@@ -272,8 +272,8 @@ e_shelf_toggle(E_Shelf *es, int show)
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
    es->toggle = show;
-   if (es->locked)
-     es->interrupted = -1;
+   if (es->locked) return;
+   es->interrupted = -1;
    if ((show) && (es->hidden))
      {  
 	es->hidden = 0;
