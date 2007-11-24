@@ -507,15 +507,14 @@ _e_configure_fill_cat_list(void *data)
 static int 
 _e_configure_module_update_cb(void *data, int type, void *event) 
 {
-   E_Event_Module_Update *ev;
    E_Configure *eco;
    int sel = 0;
 
    if (type != E_EVENT_MODULE_UPDATE) return 1;
    eco = data;
-   if (!eco) return;
-   ev = event;
+   if (!eco) return 1;
    sel = e_widget_ilist_selected_get(eco->cat_list);
    _e_configure_fill_cat_list(eco);
    e_widget_ilist_selected_set(eco->cat_list, sel);
+   return 1;
 }
