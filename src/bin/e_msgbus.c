@@ -142,7 +142,7 @@ _e_msgbus_core_restart_cb(E_DBus_Object *obj, DBusMessage *msg)
    restart = 1;
    ecore_main_loop_quit();
 
-    return dbus_message_new_method_return(msg);
+   return dbus_message_new_method_return(msg);
 }
 
 static DBusMessage* 
