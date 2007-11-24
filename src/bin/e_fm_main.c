@@ -249,7 +249,7 @@ main(int argc, char **argv)
      }
 
 #ifdef HAVE_EDBUS
-   e_dbus_connection_unref(_e_dbus_conn);
+   e_dbus_connection_close(_e_dbus_conn);
    e_dbus_shutdown();
    _e_storage_volume_edd_shutdown();
 #endif
