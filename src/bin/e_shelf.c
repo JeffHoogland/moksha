@@ -1217,7 +1217,6 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
    E_Shelf              *es;
 
    es = data;
-   edje_object_signal_emit(es->o_base, "e,state,focused", "e");
    if (es->cfg->autohide_show_action) return 1;
 
    if (type == E_EVENT_ZONE_EDGE_IN)
@@ -1276,7 +1275,11 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	      break;
 	  }
 
-	if (show) e_shelf_toggle(es, 1);
+	if (show)
+	  {
+	     edje_object_signal_emit(es->o_base, "e,state,focused", "e");
+	     e_shelf_toggle(es, 1);
+	  }
      }
    else if (type == ECORE_X_EVENT_MOUSE_IN)
      {
@@ -1284,9 +1287,12 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 
 	ev = event;
 	/* If we are about to hide the shelf, interrupt on mouse in */
-	if ((ev->win == es->win) &&
-	    ((es->hide_animator) || (es->instant_timer)))
-	  e_shelf_toggle(es, 1);
+	if (ev->win == es->win)
+	  {
+	     edje_object_signal_emit(es->o_base, "e,state,focused", "e");
+	     if ((es->hide_animator) || (es->instant_timer))
+	       e_shelf_toggle(es, 1);
+	  }
      }
    return 1;
 }
