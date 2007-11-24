@@ -510,7 +510,6 @@ _e_configure_module_update_cb(void *data, int type, void *event)
    E_Configure *eco;
    int sel = 0;
 
-   if (type != E_EVENT_MODULE_UPDATE) return 1;
    eco = data;
    if (!eco) return 1;
    sel = e_widget_ilist_selected_get(eco->cat_list);
