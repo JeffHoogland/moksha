@@ -130,6 +130,8 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    es->handlers = evas_list_append(es->handlers,
 	 ecore_event_handler_add(E_EVENT_ZONE_EDGE_IN, _e_shelf_cb_mouse_in, es));
    es->handlers = evas_list_append(es->handlers,
+	 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_shelf_cb_mouse_in, es));
+   es->handlers = evas_list_append(es->handlers,
 	 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_shelf_cb_mouse_out, es));
  
    es->o_base = edje_object_add(es->evas);
@@ -1212,66 +1214,79 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 static int
 _e_shelf_cb_mouse_in(void *data, int type, void *event)
 {
-   E_Event_Zone_Edge_In *ev;
    E_Shelf              *es;
-   int                   show = 0;
 
-   ev = event;
    es = data;
-   switch (es->gadcon->orient)
-     {
-      case E_GADCON_ORIENT_LEFT:
-	 if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
-	   show = 1;
-	 break;
-      case E_GADCON_ORIENT_RIGHT:
-	 if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
-	   show = 1;
-	 break;
-      case E_GADCON_ORIENT_TOP:
-	 if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
-	   show = 1;
-	 break;
-      case E_GADCON_ORIENT_BOTTOM:
-	 if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
-	   show = 1;
-	 break;
-      case E_GADCON_ORIENT_CORNER_TL:
-      case E_GADCON_ORIENT_CORNER_LT:
-	 if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
-	   show = 1;
-	 else if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
-	   show = 1;
-	 break;
-      case E_GADCON_ORIENT_CORNER_TR:
-      case E_GADCON_ORIENT_CORNER_RT:
-	 if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
-	   show = 1;
-	 else if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
-	   show = 1;
-	 break;
-      case E_GADCON_ORIENT_CORNER_BL:
-      case E_GADCON_ORIENT_CORNER_LB:
-	 if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
-	   show = 1;
-	 else if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
-	   show = 1;
-	 break;
-      case E_GADCON_ORIENT_CORNER_BR:
-      case E_GADCON_ORIENT_CORNER_RB:
-	 if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
-	   show = 1;
-	 else if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
-	   show = 1;
-	 break;
-      default:
-	 break;
-     }
+   edje_object_signal_emit(es->o_base, "e,state,focused", "e");
+   if (es->cfg->autohide_show_action) return 1;
 
-   if (show)
+   if (type == E_EVENT_ZONE_EDGE_IN)
      {
-	edje_object_signal_emit(es->o_base, "e,state,focused", "e");
-	if (!es->cfg->autohide_show_action) e_shelf_toggle(es, 1);
+	E_Event_Zone_Edge_In *ev;
+	int                   show = 0;
+
+	ev = event;
+	switch (es->gadcon->orient)
+	  {
+	   case E_GADCON_ORIENT_LEFT:
+	      if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		show = 1;
+	      break;
+	   case E_GADCON_ORIENT_RIGHT:
+	      if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		show = 1;
+	      break;
+	   case E_GADCON_ORIENT_TOP:
+	      if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		show = 1;
+	      break;
+	   case E_GADCON_ORIENT_BOTTOM:
+	      if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		show = 1;
+	      break;
+	   case E_GADCON_ORIENT_CORNER_TL:
+	   case E_GADCON_ORIENT_CORNER_LT:
+	      if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		show = 1;
+	      else if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		show = 1;
+	      break;
+	   case E_GADCON_ORIENT_CORNER_TR:
+	   case E_GADCON_ORIENT_CORNER_RT:
+	      if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		show = 1;
+	      else if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		show = 1;
+	      break;
+	   case E_GADCON_ORIENT_CORNER_BL:
+	   case E_GADCON_ORIENT_CORNER_LB:
+	      if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		show = 1;
+	      else if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		show = 1;
+	      break;
+	   case E_GADCON_ORIENT_CORNER_BR:
+	   case E_GADCON_ORIENT_CORNER_RB:
+	      if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		show = 1;
+	      else if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		show = 1;
+	      break;
+	   default:
+	      break;
+	  }
+
+	if (show) e_shelf_toggle(es, 1);
+     }
+   else if (type == ECORE_X_EVENT_MOUSE_IN)
+     {
+	Ecore_X_Event_Mouse_In *ev;
+
+	ev = event;
+	/* If we are about to hide the shelf, interrupt on mouse in */
+	if ((ev->win == es->win) &&
+	    ((es->hide_animator) || (es->instant_timer)))
+	  e_shelf_toggle(es, 1);
      }
    return 1;
 }
