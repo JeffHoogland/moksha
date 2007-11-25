@@ -1159,7 +1159,8 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
 
-   e_shelf_locked_set(gcc->gadcon->shelf, 1);
+   if (gcc->gadcon->shelf)
+     e_shelf_locked_set(gcc->gadcon->shelf, 1);
    e_menu_post_deactivate_callback_set(menu, _e_gadcon_client_cb_menu_post, gcc);
 
    if (!gcc->gadcon->toolbar) 
@@ -2165,7 +2166,8 @@ _e_gadcon_client_cb_menu_post(void *data, E_Menu *m)
    E_Gadcon_Client *gcc;
 
    gcc = data;
-   e_shelf_locked_set(gcc->gadcon->shelf, 0);
+   if (gcc->gadcon->shelf)
+     e_shelf_locked_set(gcc->gadcon->shelf, 0);
    if (!gcc->menu) return;
    e_object_del(E_OBJECT(gcc->menu));
    gcc->menu = NULL;
