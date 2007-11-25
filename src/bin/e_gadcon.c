@@ -1594,7 +1594,8 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *e
 
 	zone = e_util_zone_current_get(e_manager_current_get());
 
-	e_shelf_locked_set(gcc->gadcon->shelf, 1);
+	if (gcc->gadcon->shelf)
+	  e_shelf_locked_set(gcc->gadcon->shelf, 1);
 	mn = e_menu_new();
 	e_menu_post_deactivate_callback_set(mn, _e_gadcon_client_cb_menu_post,
 					    gcc);
