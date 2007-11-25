@@ -2167,7 +2167,7 @@ _e_gadcon_client_cb_menu_post(void *data, E_Menu *m)
    E_Gadcon_Client *gcc;
 
    gcc = data;
-   if (gcc->gadcon->shelf)
+   if ((gcc->gadcon) && (gcc->gadcon->shelf))
      e_shelf_locked_set(gcc->gadcon->shelf, 0);
    if (!gcc->menu) return;
    e_object_del(E_OBJECT(gcc->menu));
