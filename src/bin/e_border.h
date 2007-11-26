@@ -546,6 +546,8 @@ EAPI void      e_border_lower(E_Border *bd);
 EAPI void      e_border_stack_above(E_Border *bd, E_Border *above);
 EAPI void      e_border_stack_below(E_Border *bd, E_Border *below);
 EAPI void      e_border_focus_latest_set(E_Border *bd);
+EAPI void      e_border_raise_latest_set(E_Border *bd);
+EAPI void      e_border_focus_set_with_pointer(E_Border *bd);
 EAPI void      e_border_focus_set(E_Border *bd, int focus, int set);
 EAPI void      e_border_shade(E_Border *bd, E_Direction dir);
 EAPI void      e_border_unshade(E_Border *bd, E_Direction dir);
@@ -604,6 +606,9 @@ EAPI E_Border_Hook *e_border_hook_add(E_Border_Hook_Point hookpoint, void (*func
 EAPI void e_border_hook_del(E_Border_Hook *bh);
 EAPI void e_border_focus_track_freeze(void);
 EAPI void e_border_focus_track_thaw(void);
+
+EAPI E_Border *e_border_under_pointer_get(E_Desk *desk, E_Border *exclude);
+EAPI int e_border_pointer_warp_to_center(E_Border *bd);
 
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;

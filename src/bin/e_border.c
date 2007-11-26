@@ -115,10 +115,19 @@ static E_Border    *move = NULL;
 static int grabbed = 0;
 
 static Evas_List *focus_stack = NULL;
+static Evas_List *raise_stack = NULL;
 
 static Ecore_X_Screen_Size screen_size = { -1, -1 };
 
 static int focus_track_frozen = 0;
+
+static int warp_to = 0;
+static int warp_to_x = 0;
+static int warp_to_y = 0;
+static int warp_x = 0;
+static int warp_y = 0;
+static Ecore_X_Window warp_to_win;
+static Ecore_Timer *warp_timer = NULL;
 
 EAPI int E_EVENT_BORDER_ADD = 0;
 EAPI int E_EVENT_BORDER_REMOVE = 0;
@@ -731,7 +740,7 @@ e_border_hide(E_Border *bd, int manage)
 	     e_border_focus_set(bd, 0, 1);
 	     if (manage != 2)
 	       {
-		  if (e_config->focus_revert_on_hide_or_close)
+		  if (e_config->focus_policy == E_FOCUS_CLICK && e_config->focus_revert_on_hide_or_close)
 		    e_desk_last_focused_focus(bd->desk);
 	       }
 	  }
@@ -1077,6 +1086,7 @@ e_border_raise(E_Border *bd)
 
 	/* If we don't have any children, raise this border */
 	above = e_container_border_raise(bd);
+	e_border_raise_latest_set(bd);
 	if (above)
 	  {
 	     /* We ended up above a border */
@@ -1307,6 +1317,58 @@ e_border_focus_latest_set(E_Border *bd)
 {
    focus_stack = evas_list_remove(focus_stack, bd);
    focus_stack = evas_list_prepend(focus_stack, bd);
+}
+
+EAPI void
+e_border_raise_latest_set(E_Border *bd)
+{
+   raise_stack = evas_list_remove(raise_stack, bd);
+   raise_stack = evas_list_prepend(raise_stack, bd);
+}
+
+/*
+ * Sets the focus to the given border if necessary
+ * There are 3 cases of different focus_policy-configurations:
+ *
+ * - E_FOCUS_CLICK: just set the focus, the most simple one
+ *
+ * - E_FOCUS_MOUSE: focus is where the mouse is, so try to
+ *   warp the pointer to the window. If this fails (because
+ *   the pointer is already in the window), just set the focus.
+ *
+ * - E_FOCUS_SLOPPY: focus is where the mouse is or on the
+ *   last window which was focused, if the mouse is on the
+ *   desktop. So, we need to look if there is another window
+ *   under the pointer and warp to pointer to the right
+ *   one if so (also, we set the focus afterwards). In case
+ *   there is no window under pointer, the pointer is on the
+ *   desktop and so we just set the focus.
+ *
+ *
+ * This function is to be called when setting the focus was not
+ * explicitly triggered by the user (by moving the mouse or
+ * clicking for example), but implicitly (by closing a window,
+ * the last focused window should get focus).
+ *
+ */
+EAPI void
+e_border_focus_set_with_pointer(E_Border *bd)
+{
+   if (e_config->focus_policy == E_FOCUS_SLOPPY)
+     {
+	if (e_border_under_pointer_get(NULL, bd))
+	  {
+	     if (!e_border_pointer_warp_to_center(bd))
+	       e_border_focus_set(bd, 1, 1);
+	  }
+	else
+	  e_border_focus_set(bd, 1, 1);
+     }
+   else if (e_config->focus_policy == E_FOCUS_CLICK)
+     e_border_focus_set(bd, 1, 1);
+   else
+     if (!e_border_pointer_warp_to_center(bd))
+       e_border_focus_set(bd, 1, 1);
 }
 
 EAPI void
@@ -2748,6 +2810,12 @@ e_border_focus_stack_get(void)
 }
 
 EAPI Evas_List *
+e_border_raise_stack_get(void)
+{
+   return raise_stack;
+}
+
+EAPI Evas_List *
 e_border_lost_windows_get(E_Zone *zone)
 {
    Evas_List *list = NULL, *l;
@@ -3252,6 +3320,7 @@ _e_border_free(E_Border *bd)
    borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd->win), bd);
    borders = evas_list_remove(borders, bd);
    focus_stack = evas_list_remove(focus_stack, bd);
+   raise_stack = evas_list_remove(raise_stack, bd);
    
    e_container_border_remove(bd);
    free(bd);
@@ -3441,7 +3510,19 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
      }
    else
      {
+	E_Border *pbd;
+
 	e_border_hide(bd, 0);
+	pbd = e_border_under_pointer_get(bd->desk, bd);
+	if (pbd)
+	  e_border_focus_set(pbd, 1, 1);
+	else if (e_config->focus_policy == E_FOCUS_SLOPPY)
+	  {
+	     /* If we could not determine a window under cursor but
+	      * sloppy focus is enabled, we focus the most recently 
+	      * focused window */
+	     e_desk_last_focused_focus(bd->desk);
+	  }
 	e_object_del(E_OBJECT(bd));
      }
    return 1;
@@ -5292,8 +5373,10 @@ _e_border_eval(E_Border *bd)
 	     e_border_layer_set(bd, bd->parent->layer);
 	     if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
 	       bd->parent->modal = bd;
-	     if (bd->parent->focused)
-	       e_border_focus_set(bd, 1, 1);
+
+	     if (e_config->focus_setting == E_FOCUS_NEW_DIALOG ||
+		 (bd->parent->focused && (e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED)))
+	       bd->take_focus = 1;
 	  }
 	bd->client.icccm.fetch.transient_for = 0;
 	rem_change = 1;
@@ -6710,7 +6793,7 @@ _e_border_eval(E_Border *bd)
 	  {
 	     bd->want_focus = 0;
 	     if (!bd->lock_focus_out)
-	       e_border_focus_set(bd, 1, 1);
+	       e_border_focus_set_with_pointer(bd);
 	  }
 	else
 	  {
@@ -6722,7 +6805,7 @@ _e_border_eval(E_Border *bd)
 			e_border_focused_get())))
 		    {
 		       if (!bd->lock_focus_out)
-			 e_border_focus_set(bd, 1, 1);
+			 e_border_focus_set_with_pointer(bd);
 		    }
 	       }
 	  }
@@ -7579,4 +7662,114 @@ EAPI void
 e_border_focus_track_thaw(void)
 {
    focus_track_frozen--;
+}
+
+EAPI E_Border *
+e_border_under_pointer_get(E_Desk *desk, E_Border *exclude)
+{
+   E_Border *bd = NULL;
+   Evas_List *l;
+   int x, y;
+
+   /* We need to ensure that we can get the container window for the
+    * zone of either the given desk or the desk of the excluded
+    * window, so return if neither is given */
+   if (desk)
+     ecore_x_pointer_xy_get(desk->zone->container->win, &x, &y);
+   else if (exclude)
+     ecore_x_pointer_xy_get(exclude->desk->zone->container->win, &x, &y);
+   else return;
+
+   for (l = e_border_raise_stack_get(); l; l = l->next)
+     {
+	E_Border *cbd;
+
+	cbd = l->data;
+	if (!cbd) continue;
+	/* If a border was specified which should be excluded from the list
+	 * (because it will be closed shortly for example), skip */
+	if ((exclude) && (cbd == exclude)) continue;
+	if ((desk) && (cbd->desk != desk)) continue;
+	if ((x < cbd->x) || (x > (cbd->x + cbd->w)) ||
+	    (y < cbd->y) || (y > (cbd->y + cbd->h))) continue;
+	/* If the layer is higher, the position of the window is higher
+	 * (always on top vs always below) */
+	if (!bd || (cbd->layer > bd->layer))
+	 {
+	    bd = cbd;
+	    break;
+	 }
+     }
+   return bd;
+}
+
+static int
+_e_border_pointer_warp_to_center_timer(void *data)
+{
+   if (warp_to)
+     {
+	int dx, dy, x, y;
+	double spd;
+
+	ecore_x_pointer_xy_get(warp_to_win, &x, &y);
+	if ((x - warp_x) > 5 || (x - warp_x) < -5 ||
+	    (y - warp_y) > 5 || (y - warp_y) < -5)
+	  {
+	     /* User moved the mouse, so stop warping */
+	     warp_to = 0;
+	     goto cleanup;
+	  }
+
+	/* We just use the same warp speed as configured
+	 * for the windowlist */
+	spd = e_config->winlist_warp_speed;
+	x = warp_x;
+	y = warp_y;
+	warp_x = (x * (1.0 - spd)) + (warp_to_x * spd);
+	warp_y = (y * (1.0 - spd)) + (warp_to_y * spd);
+	if (warp_x == x && warp_y == y)
+	  {
+	     warp_x = warp_to_x;
+	     warp_y = warp_to_y;
+	     warp_to = 0;
+	     goto cleanup;
+	  }
+	ecore_x_pointer_warp(warp_to_win, warp_x, warp_y);
+	return 1;
+     }
+   cleanup:
+   ecore_timer_del(warp_timer);
+   warp_timer = NULL;
+   return 0;
+}
+
+EAPI int
+e_border_pointer_warp_to_center(E_Border *bd)
+{
+   int x, y;
+
+   /* Only warp the pointer if it is not already in the area of
+    * the given border */
+   ecore_x_pointer_xy_get(bd->zone->container->win, &x, &y);
+   if ((x >= bd->x) && (x <= (bd->x + bd->w)) &&
+       (y >= bd->y) && (y <= (bd->y + bd->h)))
+     return 0;
+
+   warp_to_x = bd->x + (bd->w / 2); 
+   if (warp_to_x < (bd->zone->x + 1))
+     warp_to_x = bd->zone->x + ((bd->x + bd->w - bd->zone->x) / 2);
+   else if (warp_to_x > (bd->zone->x + bd->zone->w))
+     warp_to_x = (bd->zone->x + bd->zone->w + bd->x) / 2; 
+
+   warp_to_y = bd->y + (bd->h / 2);
+   if (warp_to_y < (bd->zone->y + 1))
+     warp_to_y = bd->zone->y + ((bd->y + bd->h - bd->zone->y) / 2);
+   else if (warp_to_y > (bd->zone->y + bd->zone->h))
+     warp_to_y = (bd->zone->y + bd->zone->h + bd->y) / 2; 
+
+   warp_to = 1;
+   warp_to_win = bd->zone->container->win;
+   ecore_x_pointer_xy_get(bd->zone->container->win, &warp_x, &warp_y);
+   warp_timer = ecore_timer_add(0.01, _e_border_pointer_warp_to_center_timer, (const void*)bd);
+   return 1;
 }
