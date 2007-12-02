@@ -9277,6 +9277,7 @@ images
    image: "e17_icon_fileman_zip.png" COMP;
    image: "e17_icon_fileman_gz.png" COMP;
    image: "e17_icon_fileman_tar.png" COMP;
+   image: "e17_icon_fileman_rar.png" COMP;
    image: "e17_icon_fileman_mpg.png" COMP;
    
    image: "e17_button_detail_open.png" COMP;   
@@ -9378,6 +9379,7 @@ FILEMAN_MIME("application/x-bzip-compressed-tar","tar");
 FILEMAN_MIME("application/x-bzip2-compressed-tar","tar");
 FILEMAN_MIME("application/x-compressed-tar","tar");
 FILEMAN_MIME("application/x-tar","tar");
+FILEMAN_MIME("application/x-rar","rar");
 FILEMAN_MIME("video/mpeg","mpg");
 
 FILEMAN_MIME("video","mpg");
@@ -9402,4 +9404,3 @@ FULL_SIZE_FILEMAN_BUTTON("view_details");
 FULL_SIZE_FILEMAN_BUTTON("view_name");
 FULL_SIZE_FILEMAN_BUTTON("view");
 FULL_SIZE_FILEMAN_BUTTON("select");
-
