@@ -1280,6 +1280,8 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	     edje_object_signal_emit(es->o_base, "e,state,focused", "e");
 	     e_shelf_toggle(es, 1);
 	  }
+	else
+	  e_shelf_toggle(es, 0);
      }
    else if (type == ECORE_X_EVENT_MOUSE_IN)
      {
