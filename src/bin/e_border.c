@@ -7678,7 +7678,8 @@ e_border_under_pointer_get(E_Desk *desk, E_Border *exclude)
      ecore_x_pointer_xy_get(desk->zone->container->win, &x, &y);
    else if (exclude)
      ecore_x_pointer_xy_get(exclude->desk->zone->container->win, &x, &y);
-   else return NULL;
+   else
+     return NULL;
 
    for (l = e_border_raise_stack_get(); l; l = l->next)
      {
