@@ -372,6 +372,7 @@ e17_icon_fileman_ttf.png \
 e17_icon_fileman_txt.png \
 e17_icon_fileman_xcf.png \
 e17_icon_fileman_zip.png \
+e17_icon_fileman_rar.png \
 e17_icon_font.png \
 e17_icon_gadget.png \
 e17_icon_halt.png \
