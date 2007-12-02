@@ -7678,7 +7678,7 @@ e_border_under_pointer_get(E_Desk *desk, E_Border *exclude)
      ecore_x_pointer_xy_get(desk->zone->container->win, &x, &y);
    else if (exclude)
      ecore_x_pointer_xy_get(exclude->desk->zone->container->win, &x, &y);
-   else return;
+   else return NULL;
 
    for (l = e_border_raise_stack_get(); l; l = l->next)
      {
@@ -7708,7 +7708,7 @@ _e_border_pointer_warp_to_center_timer(void *data)
 {
    if (warp_to)
      {
-	int dx, dy, x, y;
+	int x, y;
 	double spd;
 
 	ecore_x_pointer_xy_get(warp_to_win, &x, &y);
