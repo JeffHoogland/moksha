@@ -21,6 +21,7 @@ static void _e_zone_update_flip(E_Zone *zone);
 EAPI int E_EVENT_ZONE_DESK_COUNT_SET = 0;
 EAPI int E_EVENT_POINTER_WARP = 0;
 EAPI int E_EVENT_ZONE_MOVE_RESIZE = 0;
+/* FIXME: We need a EDGE_MOVE event */
 EAPI int E_EVENT_ZONE_EDGE_IN = 0;
 EAPI int E_EVENT_ZONE_EDGE_OUT = 0;
 
