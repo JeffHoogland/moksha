@@ -50,7 +50,7 @@ struct _E_Fwin_Apps_Dialog
    E_Dialog    *dia;
    E_Fwin      *fwin;
    char        *app1, *app2;
-   Evas_Object *o_ilist, *o_fm;
+   Evas_Object *o_specific, *o_all;
    Evas_Object *o_entry;
    char        *exec_cmd;
 };
@@ -80,11 +80,8 @@ static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
 static void _e_fwin_cb_menu_open(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fwin_cb_menu_open_with(void *data, E_Menu *m, E_Menu_Item *mi);
-
-static void _e_fwin_cb_ilist_change(void *data);
-static void _e_fwin_cb_ilist_selected(void *data, Evas_Object *obj, void *event_info);
-static void _e_fwin_cb_fm_selection_change(void *data, Evas_Object *obj, void *event_info);
-static void _e_fwin_cb_fm_selected(void *data, Evas_Object *obj, void *event_info);
+static void _e_fwin_cb_all_change(void *data, Evas_Object *obj);
+static void _e_fwin_cb_specific_change(void *data, Evas_Object *obj);
 static void _e_fwin_cb_exec_cmd_changed(void *data, void *data2);
 static void _e_fwin_cb_open(void *data, E_Dialog *dia);
 static void _e_fwin_cb_close(void *data, E_Dialog *dia);
@@ -105,6 +102,8 @@ static int  _e_fwin_zone_move_resize(void *data, int type, void *event);
 static void _e_fwin_config_set(E_Fwin *fwin);
 static void _e_fwin_window_title_set(E_Fwin *fwin);
 static void _e_fwin_toolbar_resize(E_Fwin *fwin);
+static int _e_fwin_dlg_cb_desk_sort(Efreet_Desktop *d1, Efreet_Desktop *d2);
+static int _e_fwin_dlg_cb_desk_list_sort(void *data1, void *data2);
 
 /* local subsystem globals */
 static Evas_List *fwins = NULL;
@@ -167,7 +166,7 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    o = e_fm2_add(zone->container->bg_evas);
    fwin->fm_obj = o;
    _e_fwin_config_set(fwin);
-   
+
    e_fm2_custom_theme_content_set(o, "desktop");
    evas_object_smart_callback_add(o, "dir_changed",
 				  _e_fwin_changed, fwin);
@@ -430,11 +429,8 @@ _e_fwin_free(E_Fwin *fwin)
      }
    if (fwin->win) e_object_del(E_OBJECT(fwin->win));
    if (fwin->fm_obj) evas_object_del(fwin->fm_obj);
-
    if (fwin->tbar) e_object_del(E_OBJECT(fwin->tbar));
-   
    if (fwin->scrollframe_obj) evas_object_del(fwin->scrollframe_obj);
-
    if (fwin->zone)  
      {
 	evas_object_event_callback_del(fwin->zone->bg_event_object, 
@@ -699,66 +695,41 @@ _e_fwin_cb_menu_open_with(void *data, E_Menu *m, E_Menu_Item *mi)
    evas_list_free(selected);
 }
 
-static void
-_e_fwin_cb_ilist_change(void *data)
-{
-   E_Fwin_Apps_Dialog *fad;
-   
-   fad = data;
-   E_FREE(fad->app2);
-   if (fad->o_fm) e_fm2_select_set(fad->o_fm, NULL, 0);
-}
-
-static void
-_e_fwin_cb_ilist_selected(void *data, Evas_Object *obj, void *event_info)
-{
-   E_Fwin_Apps_Dialog *fad;
-   
-   fad = data;
-   _e_fwin_cb_open(fad, fad->dia);
-}
-
-static void
-_e_fwin_cb_fm_selection_change(void *data, Evas_Object *obj, void *event_info)
+static void 
+_e_fwin_cb_all_change(void *data, Evas_Object *obj) 
 {
    E_Fwin_Apps_Dialog *fad;
    Efreet_Desktop *desktop = NULL;
-   Evas_List *sel;
-   E_Fm2_Icon_Info *ici;
-   
+
    fad = data;
    E_FREE(fad->app1);
-   if (fad->o_ilist) e_widget_ilist_unselect(fad->o_ilist);
-   E_FREE(fad->app2);
-   e_widget_entry_text_set(fad->o_entry, NULL);
-   sel = e_fm2_selected_list_get(obj);
-   if (sel)
-     {
-	ici = sel->data;
-	fad->app2 = strdup(ici->file);
-	desktop = efreet_util_desktop_file_id_find(ici->file);
-	if (desktop->exec) e_widget_entry_text_set(fad->o_entry, desktop->exec);
-	evas_list_free(sel);
-     }
+   if (fad->o_specific) e_widget_ilist_unselect(fad->o_specific);
+   desktop = efreet_util_desktop_file_id_find(fad->app2);
+   if ((desktop) && (desktop->exec)) 
+     e_widget_entry_text_set(fad->o_entry, desktop->exec);
 }
 
 static void
-_e_fwin_cb_fm_selected(void *data, Evas_Object *obj, void *event_info)
+_e_fwin_cb_specific_change(void *data, Evas_Object *obj)
 {
    E_Fwin_Apps_Dialog *fad;
-   
+   Efreet_Desktop *desktop = NULL;
+
    fad = data;
-   _e_fwin_cb_open(fad, fad->dia);
+   E_FREE(fad->app2);
+   if (fad->o_all) e_widget_ilist_unselect(fad->o_all);
+   desktop = efreet_util_desktop_file_id_find(fad->app1);
+   if ((desktop) && (desktop->exec)) 
+     e_widget_entry_text_set(fad->o_entry, desktop->exec);
 }
 
 static void
 _e_fwin_cb_exec_cmd_changed(void *data, void *data2)
 {
-   E_Fwin_Apps_Dialog *fad;
-   Efreet_Desktop *desktop;
+   E_Fwin_Apps_Dialog *fad = NULL;
+   Efreet_Desktop *desktop = NULL;
    
-   fad = data;
-   if (!fad) return;
+   if (!(fad = data)) return;
    if ((!fad->app1) && (!fad->app2)) return;
 
    if (fad->app1) 
@@ -771,8 +742,8 @@ _e_fwin_cb_exec_cmd_changed(void *data, void *data2)
 
    E_FREE(fad->app1);
    E_FREE(fad->app2);
-   if (fad->o_ilist) e_widget_ilist_unselect(fad->o_ilist);
-   if (fad->o_fm) e_fm2_select_set(fad->o_fm, NULL, 0);
+   if (fad->o_specific) e_widget_ilist_unselect(fad->o_specific);
+   if (fad->o_all) e_widget_ilist_unselect(fad->o_all);
 }
 
 static void
@@ -879,7 +850,7 @@ _e_fwin_cb_dialog_free(void *obj)
    E_FREE(fad->app2);
    E_FREE(fad->exec_cmd);
    fad->fwin->fad = NULL;
-   free(fad);
+   E_FREE(fad);
 }
 
 static Evas_Bool
@@ -1021,14 +992,15 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    E_Fwin *fwin2 = NULL;
    E_Dialog *dia;
    Evas_Coord mw, mh;
-   Evas_Object *o, *ocon, *ocon2, *of, *oi, *mt;
+   Evas_Object *o, *of, *oi, *ot;
    Evas *evas;
    Evas_List *l = NULL, *apps = NULL, *mlist = NULL;
+   Ecore_List *cats = NULL;
    Evas_Hash *mimes = NULL;
    E_Fwin_Apps_Dialog *fad;
-   E_Fm2_Config fmc;
    E_Fm2_Icon_Info *ici;
    char buf[PATH_MAX];
+   char *cat;
    const char *f;
    int need_dia = 0;
 
@@ -1288,7 +1260,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	       }
 	  }
      }
-   evas_list_free(mlist);
+   if (mlist) evas_list_free(mlist);
    
    fad = E_NEW(E_Fwin_Apps_Dialog, 1);
    if (fwin->win)
@@ -1298,7 +1270,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
      dia = e_dialog_new(fwin->zone->container, 
 			"E", "_fwin_open_apps");
    e_dialog_title_set(dia, _("Open with..."));
-   e_dialog_border_icon_set(dia, "enlightenment/applications");
+   e_dialog_resizable_set(dia, 1);
    e_dialog_button_add(dia, _("Open"), "enlightenment/open",
 		       _e_fwin_cb_open, fad);
    e_dialog_button_add(dia, _("Close"), "enlightenment/close",
@@ -1312,80 +1284,104 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    
    evas = e_win_evas_get(dia->win);
    
-   ocon = e_widget_list_add(evas, 0, 0);
-   ocon2 = e_widget_list_add(evas, 1, 1);
-
+   ot = e_widget_table_add(evas, 0);
    if (apps)
      {
 	of = e_widget_framelist_add(evas, _("Specific Applications"), 0);
 	o = e_widget_ilist_add(evas, 24, 24, &(fad->app1));
-	fad->o_ilist = o;
+	e_widget_on_change_hook_set(o, _e_fwin_cb_specific_change, fad);
+	evas_event_freeze(evas);
+	edje_freeze();
+	e_widget_ilist_freeze(o);
+	fad->o_specific = o;
 	for (l = apps; l; l = l->next)
 	  {
 	     Efreet_Desktop *desktop;
 
 	     desktop = l->data;
 	     oi = e_util_desktop_icon_add(desktop, "24x24", evas);
-	     e_widget_ilist_append(o, oi, desktop->name,
-				   _e_fwin_cb_ilist_change, fad, 
+	     e_widget_ilist_append(o, oi, desktop->name, NULL, NULL, 
 				   efreet_util_path_to_file_id(desktop->orig_path));
 	  }
-	evas_list_free(apps);
 	e_widget_ilist_go(o);
+	e_widget_ilist_thaw(o);
+	edje_thaw();
+	evas_event_thaw(evas);
 	e_widget_min_size_set(o, 160, 240);
 	e_widget_framelist_object_append(of, o);
-	e_widget_list_object_append(ocon2, of, 1, 1, 0.5);
-	evas_object_smart_callback_add(o, "selected",
-				       _e_fwin_cb_ilist_selected, fad);
+	e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
      }
-   
+
+   if (l) evas_list_free(l);
+
    of = e_widget_framelist_add(evas, _("All Applications"), 0);
-   mt = e_fm2_add(evas);
-   fad->o_fm = mt;
-   memset(&fmc, 0, sizeof(E_Fm2_Config));
-   fmc.view.mode = E_FM2_VIEW_MODE_LIST;
-   fmc.view.open_dirs_in_place = 0;
-   fmc.view.selector = 1;
-   fmc.view.single_click = 0;
-   fmc.view.no_subdir_jump = 1;
-   fmc.icon.list.w = 24;
-   fmc.icon.list.h = 24;
-   fmc.icon.fixed.w = 1;
-   fmc.icon.fixed.h = 1;
-   fmc.icon.extension.show = 1;
-   fmc.icon.key_hint = NULL;
-   fmc.list.sort.no_case = 1;
-   fmc.list.sort.dirs.first = 1;
-   fmc.list.sort.dirs.last = 0;
-   fmc.selection.single = 1;
-   fmc.selection.windows_modifiers = 0;
-   e_fm2_config_set(mt, &fmc);
-   e_fm2_icon_menu_flags_set(mt, E_FM2_MENU_NO_SHOW_HIDDEN | E_FM2_MENU_NO_REMEMBER_ORDERING | E_FM2_MENU_NO_NEW_DIRECTORY | E_FM2_MENU_NO_RENAME | E_FM2_MENU_NO_DELETE);
-   evas_object_smart_callback_add(mt, "selection_change",
-				  _e_fwin_cb_fm_selection_change, fad);
-   evas_object_smart_callback_add(mt, "selected",
-				  _e_fwin_cb_fm_selected, fad);
-   snprintf(buf, sizeof(buf), "%s/applications", 
-	    efreet_data_home_get());
-   e_fm2_path_set(mt, buf, "/");
-   o = e_widget_scrollframe_pan_add(evas, mt,
-				    e_fm2_pan_set,
-				    e_fm2_pan_get,
-				    e_fm2_pan_max_get,
-				    e_fm2_pan_child_size_get);
+   o = e_widget_ilist_add(evas, 24, 24, &(fad->app2));
+   e_widget_on_change_hook_set(o, _e_fwin_cb_all_change, fad);
+   fad->o_all = o;
+   evas_event_freeze(evas);
+   edje_freeze();
+   e_widget_ilist_freeze(o);
+   cats = efreet_util_desktop_categories_list();
+   ecore_list_sort(cats, ECORE_COMPARE_CB(strcmp), ECORE_SORT_MIN);
+   ecore_list_first_goto(cats);
+   while ((cat = ecore_list_next(cats))) 
+     {
+	Ecore_List *desks = NULL;
+	Efreet_Desktop *desk = NULL;
+	
+	desks = efreet_util_desktop_category_list(cat);
+	if (!desks) continue;
+	ecore_list_sort(desks, ECORE_COMPARE_CB(_e_fwin_dlg_cb_desk_sort), ECORE_SORT_MIN);
+	ecore_list_first_goto(desks);
+	while ((desk = ecore_list_next(desks))) 
+	  {
+	     if (!evas_list_find(l, desk))
+	       l = evas_list_append(l, desk);
+	  }
+     }
+   if (cat) free(cat);
+   if (cats) ecore_list_destroy(cats);
+   if (l) l = evas_list_sort(l, -1, _e_fwin_dlg_cb_desk_list_sort);
+
+   /* reuse mlist var here */
+   for (mlist = l; mlist; mlist = mlist->next) 
+     {
+	Evas_Object *icon = NULL;
+	Efreet_Desktop *desk = NULL;
+	
+	desk = mlist->data;
+	if (!desk) continue;
+	icon = e_util_desktop_icon_add(desk, "24x24", evas);
+	e_widget_ilist_append(o, icon, desk->name, NULL, NULL, 
+			      efreet_util_path_to_file_id(desk->orig_path));
+     }
+   if (mlist) evas_list_free(mlist);
+   if (l) evas_list_free(l);
+
+   e_widget_ilist_go(o);
+   e_widget_ilist_thaw(o);
+   edje_thaw();
+   evas_event_thaw(evas);
    e_widget_min_size_set(o, 160, 240);
    e_widget_framelist_object_append(of, o);
-   e_widget_list_object_append(ocon2, of, 1, 1, 0.5);
-   
-   e_widget_list_object_append(ocon, ocon2, 1, 1, 0.5);
+   if (apps) 
+     {
+	e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
+	evas_list_free(apps);
+     }
+   else
+     e_widget_table_object_append(ot, of, 0, 0, 2, 1, 1, 1, 1, 1);
 
-   fad->o_entry = e_widget_entry_add(evas, &(fad->exec_cmd), _e_fwin_cb_exec_cmd_changed, fad, NULL);
-   e_widget_list_object_append(ocon, fad->o_entry, 1, 1, 0.5);
+   o = e_widget_label_add(evas, _("Custom Command"));
+   e_widget_table_object_append(ot, o, 0, 1, 1, 1, 1, 1, 1, 0);
+   fad->o_entry = e_widget_entry_add(evas, &(fad->exec_cmd), 
+				     _e_fwin_cb_exec_cmd_changed, fad, NULL);
+   e_widget_table_object_append(ot, fad->o_entry, 0, 2, 2, 1, 1, 1, 1, 0);
 
-   e_widget_min_size_get(ocon, &mw, &mh);
-   e_dialog_content_set(dia, ocon, mw, mh);
-   
+   e_widget_min_size_get(ot, &mw, &mh);
+   e_dialog_content_set(dia, ot, mw, mh);
    e_dialog_show(dia);
+   e_dialog_border_icon_set(dia, "enlightenment/applications");
 }
 
 static void
@@ -1621,4 +1617,22 @@ _e_fwin_toolbar_resize(E_Fwin *fwin)
      }
    evas_object_move(fwin->scrollframe_obj, x, y);
    evas_object_resize(fwin->scrollframe_obj, w, h);
+}
+
+static int 
+_e_fwin_dlg_cb_desk_sort(Efreet_Desktop *d1, Efreet_Desktop *d2) 
+{
+   if (!d1->name) return 1;
+   if (!d2->name) return -1;
+   return strcmp(d1->name, d2->name);
+}
+
+static int 
+_e_fwin_dlg_cb_desk_list_sort(void *data1, void *data2) 
+{
+   Efreet_Desktop *d1, *d2;
+
+   if (!(d1 = data1)) return 1;
+   if (!(d2 = data2)) return -1;
+   return strcmp(d1->name, d2->name);
 }
