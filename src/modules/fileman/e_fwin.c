@@ -997,10 +997,10 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    Evas_List *l = NULL, *apps = NULL, *mlist = NULL;
    Ecore_List *cats = NULL;
    Evas_Hash *mimes = NULL;
+   Efreet_Desktop *desk = NULL;
    E_Fwin_Apps_Dialog *fad;
    E_Fm2_Icon_Info *ici;
    char buf[PATH_MAX];
-   char *cat;
    const char *f;
    int need_dia = 0;
 
@@ -1174,7 +1174,6 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    if (mlist)
      {
 	Ecore_List *ml;
-	Efreet_Desktop *desktop;
 
 	for (l = mlist; l; l = l->next)
 	  {
@@ -1182,8 +1181,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	     if (ml)
 	       {
 		  ecore_list_first_goto(ml);
-		  while ((desktop = ecore_list_next(ml)))
-		    apps = evas_list_append(apps, desktop);
+		  while ((desk = ecore_list_next(ml)))
+		    apps = evas_list_append(apps, desk);
 		  ecore_list_destroy(ml);
 	       }
 	  }
@@ -1207,12 +1206,11 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	 */
 	if (evas_list_count(mlist) <= 1)
 	  {
-	     Efreet_Desktop *desktop = NULL;
 	     char pcwd[4096];
 	     Ecore_List *files_list = NULL;
 	   
 	     need_dia = 1;
-	     if (mlist) desktop = e_exehist_mime_desktop_get(mlist->data);
+	     if (mlist) desk = e_exehist_mime_desktop_get(mlist->data);
 	     getcwd(pcwd, sizeof(pcwd));
 	     chdir(e_fm2_real_path_get(fwin->fm_obj));
 	     
@@ -1236,16 +1234,16 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 		       need_dia = 0;
 		    }
 	       }
-	     if (desktop)
+	     if (desk)
 	       {
 		  if (fwin->win)
 		    {
-		       if (e_exec(fwin->win->border->zone, desktop, NULL, files_list, "fwin"))
+		       if (e_exec(fwin->win->border->zone, desk, NULL, files_list, "fwin"))
 			 need_dia = 0;
 		    }
 		  else if (fwin->zone)
 		    {
-		       if (e_exec(fwin->zone, desktop, NULL, files_list, "fwin"))
+		       if (e_exec(fwin->zone, desk, NULL, files_list, "fwin"))
 			 need_dia = 0;
 		    }
 	       }
@@ -1296,12 +1294,10 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	fad->o_specific = o;
 	for (l = apps; l; l = l->next)
 	  {
-	     Efreet_Desktop *desktop;
-
-	     desktop = l->data;
-	     oi = e_util_desktop_icon_add(desktop, "24x24", evas);
-	     e_widget_ilist_append(o, oi, desktop->name, NULL, NULL, 
-				   efreet_util_path_to_file_id(desktop->orig_path));
+	     desk = l->data;
+	     oi = e_util_desktop_icon_add(desk, "24x24", evas);
+	     e_widget_ilist_append(o, oi, desk->name, NULL, NULL, 
+				   efreet_util_path_to_file_id(desk->orig_path));
 	  }
 	e_widget_ilist_go(o);
 	e_widget_ilist_thaw(o);
@@ -1321,25 +1317,14 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    evas_event_freeze(evas);
    edje_freeze();
    e_widget_ilist_freeze(o);
-   cats = efreet_util_desktop_categories_list();
-   ecore_list_sort(cats, ECORE_COMPARE_CB(strcmp), ECORE_SORT_MIN);
+   cats = efreet_util_desktop_name_glob_list("*");
+   ecore_list_sort(cats, ECORE_COMPARE_CB(_e_fwin_dlg_cb_desk_sort), ECORE_SORT_MIN);
    ecore_list_first_goto(cats);
-   while ((cat = ecore_list_next(cats))) 
+   while ((desk = ecore_list_next(cats))) 
      {
-	Ecore_List *desks = NULL;
-	Efreet_Desktop *desk = NULL;
-	
-	desks = efreet_util_desktop_category_list(cat);
-	if (!desks) continue;
-	ecore_list_sort(desks, ECORE_COMPARE_CB(_e_fwin_dlg_cb_desk_sort), ECORE_SORT_MIN);
-	ecore_list_first_goto(desks);
-	while ((desk = ecore_list_next(desks))) 
-	  {
-	     if (!evas_list_find(l, desk))
-	       l = evas_list_append(l, desk);
-	  }
+	if (!evas_list_find(l, desk))
+	  l = evas_list_append(l, desk);
      }
-   if (cat) free(cat);
    if (cats) ecore_list_destroy(cats);
    if (l) l = evas_list_sort(l, -1, _e_fwin_dlg_cb_desk_list_sort);
 
@@ -1347,8 +1332,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    for (mlist = l; mlist; mlist = mlist->next) 
      {
 	Evas_Object *icon = NULL;
-	Efreet_Desktop *desk = NULL;
-	
+
 	desk = mlist->data;
 	if (!desk) continue;
 	icon = e_util_desktop_icon_add(desk, "24x24", evas);
