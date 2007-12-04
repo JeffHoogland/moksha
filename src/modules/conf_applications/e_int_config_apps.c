@@ -313,7 +313,6 @@ _load_menu(const char *path)
 	ecore_list_append(apps, entry->desktop);
      }
    efreet_menu_free(menu);
-   if (apps) ecore_list_sort(apps, ECORE_COMPARE_CB(_cb_sort_desks), ECORE_SORT_MIN);
    return apps;
 }
 
@@ -336,7 +335,6 @@ _load_order(const char *path)
      }
    if (l) evas_list_free(l);
    e_object_del(E_OBJECT(order));
-   if (apps) ecore_list_sort(apps, ECORE_COMPARE_CB(_cb_sort_desks), ECORE_SORT_MIN);
    return apps;
 }
 
