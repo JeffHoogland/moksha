@@ -7,10 +7,6 @@ images
 group 
 {
    name: "e/toolbar/default/base";
-   data 
-     {
-	item: "shaped" "1";
-     }
    parts 
      {
 	part 
@@ -105,29 +101,29 @@ group
 	     description 
 	       {
 		  state: "default" 0.0;
-		  rel1.offset: 18 2;
-		  rel2.offset: -19 -3;
+		  rel1.offset: 2 2;
+		  rel2.offset: -3 -3;
 	       }
 	     description 
 	       {
 		  state: "bottom" 0.0;
 		  inherit: "default" 0.0;
-		  rel1.offset: 18 2;
-		  rel2.offset: -19 -3;
+		  rel1.offset: 2 2;
+		  rel2.offset: -3 -3;
 	       }
 	     description 
 	       {
 		  state: "left" 0.0;
 		  inherit: "default" 0.0;
-		  rel1.offset: 2 18;
-		  rel2.offset: -3 -19;
+		  rel1.offset: 2 2;
+		  rel2.offset: -3 -3;
 	       }
 	     description 
 	       {
 		  state: "right" 0.0;
 		  inherit: "default" 0.0;
-		  rel1.offset: 2 18;
-		  rel2.offset: -3 -19;
+		  rel1.offset: 2 2;
+		  rel2.offset: -3 -3;
 	       }
 	  }
      }
