@@ -9,7 +9,7 @@ e_user_homedir_get(void)
 {
    char *homedir;
    int len;
-   
+
    homedir = getenv("HOME");
    if (!homedir) return "/tmp";
    len = strlen(homedir);
@@ -30,9 +30,10 @@ EAPI const char *
 e_user_desktop_dir_get(void)
 {
    static char dir[PATH_MAX] = "";
+
    if (!dir[0])
-     snprintf(dir, sizeof(dir), "%s/applications", efreet_data_home_get());	
-  
+     snprintf(dir, sizeof(dir), "%s/applications", efreet_data_home_get());
+
    return dir;
 }
 
@@ -45,10 +46,9 @@ EAPI const char *
 e_user_icon_dir_get(void)
 {
    static char dir[PATH_MAX] = "";
+
    if (!dir[0])
      snprintf(dir, sizeof(dir), "%s/icons", efreet_data_home_get());
-  
+
    return dir;
 }
-
-
