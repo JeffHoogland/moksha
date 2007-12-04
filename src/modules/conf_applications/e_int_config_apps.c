@@ -15,7 +15,6 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_add, *o_del;
    Evas_Object *o_up, *o_down;
    Ecore_List *apps;
-   char *app, *sel;
 };
 
 /* local protos */
@@ -226,8 +225,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (data->filename) evas_stringshare_del(data->filename);
 	E_FREE(data);
      }
-   if (cfdata->app) free(cfdata->app);
-   if (cfdata->sel) free(cfdata->sel);
    if (cfdata->apps) ecore_list_destroy(cfdata->apps);
    E_FREE(cfdata);
 }
@@ -239,7 +236,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    o = e_widget_list_add(evas, 0, 1);
    ot = e_widget_frametable_add(evas, _("All Applications"), 0);
-   ow = e_widget_ilist_add(evas, 24, 24, &(cfdata->app));
+   ow = e_widget_ilist_add(evas, 24, 24, NULL);
    e_widget_ilist_multi_select_set(ow, 1);
    e_widget_on_change_hook_set(ow, _all_list_cb_change, cfdata);
    cfdata->o_all = ow;
@@ -253,7 +250,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
    ot = e_widget_frametable_add(evas, _("Selected Applications"), 0);
-   ow = e_widget_ilist_add(evas, 24, 24, &(cfdata->sel));
+   ow = e_widget_ilist_add(evas, 24, 24, NULL);
    e_widget_ilist_multi_select_set(ow, 1);
    e_widget_on_change_hook_set(ow, _sel_list_cb_change, cfdata);
    cfdata->o_sel = ow;
