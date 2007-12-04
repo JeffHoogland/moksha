@@ -698,17 +698,17 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	e_widget_config_list_append(ob, eff->name);
 	option_enable = 1;
      }
-   
+
    ob = e_widget_check_add(evas, _("Enable Fallbacks"), &(cfdata->cur_fallbacks_enabled));
    e_widget_config_list_object_append(cfdata->gui.fallback_list, ob, 
-				      0, 0, 2, 1, 1, 1, 1, 1);
+				      0, 0, 2, 1, 1, 0, 1, 0);
    e_widget_on_change_hook_set(ob, _adv_enabled_fallback_cb_change, cfdata);
    e_widget_check_checked_set(ob, option_enable);
    e_widget_change(ob);
    e_widget_list_object_append(ol2, of, 1, 1, 0.5);
 
    e_widget_list_object_append(ol, ol2, 1, 1, 0.5);
-   
+
    e_dialog_resizable_set(cfd->dia, 1);
    return ol;
 }
