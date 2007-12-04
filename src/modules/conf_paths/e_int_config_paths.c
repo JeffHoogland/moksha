@@ -16,8 +16,8 @@ static void _ilist_path_cb_change(void *data);
 
 struct _E_Path_Pair
 {
-   E_Path	*path;
-   const char	*path_description;
+   E_Path     *path;
+   const char *path_description;
 };
 
 struct _CFPath_Change_Data
@@ -33,18 +33,16 @@ struct _E_Config_Dialog_Data
    E_Config_Dialog *cfd;
 
    /* Current data */
-   CFPath_Change_Data	*cur_pcd;
+   CFPath_Change_Data *cur_pcd;
 
-   Evas_List		*pcd_list;
-   E_Path_Pair		*paths_available;
+   Evas_List        *pcd_list;
+   E_Path_Pair      *paths_available;
    struct
      {
-	Evas_Object	*path_list;
-	   
-	Evas_Object	*default_list; /* Read Only */
-	Evas_Object	*user_list; /* Editable */
-     }
-   gui;
+	Evas_Object *path_list;
+	Evas_Object *default_list; /* Read Only */
+	Evas_Object *user_list; /* Editable */
+     } gui;
 };
 
 EAPI E_Config_Dialog *
@@ -61,8 +59,7 @@ e_int_config_paths(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets    = _basic_create_widgets;
    v->basic.apply_cfdata      = _basic_apply_data;
    
-   cfd = e_config_dialog_new(con,
-			     _("Search Path Configuration"),
+   cfd = e_config_dialog_new(con, _("Search Path Configuration"),
 			    "E", "_config_paths_dialog",
 			     "enlightenment/directories", 0, v, NULL);
    return cfd;
@@ -72,26 +69,26 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    cfdata->paths_available = E_NEW(E_Path_Pair, 11);
-   cfdata->paths_available[0].path =			path_data;
-   cfdata->paths_available[0].path_description =	_("Data");
-   cfdata->paths_available[1].path =			path_images;
-   cfdata->paths_available[1].path_description =	_("Images");
-   cfdata->paths_available[2].path =			path_fonts;
-   cfdata->paths_available[2].path_description =	_("Fonts");
-   cfdata->paths_available[3].path =			path_themes;
-   cfdata->paths_available[3].path_description =	_("Themes");
-   cfdata->paths_available[4].path =			path_init;
-   cfdata->paths_available[4].path_description =	_("Init");
-   cfdata->paths_available[5].path =			path_icons;
-   cfdata->paths_available[5].path_description =	_("Icons");
-   cfdata->paths_available[6].path =			path_modules;
-   cfdata->paths_available[6].path_description =	_("Modules");
-   cfdata->paths_available[7].path =			path_backgrounds;
-   cfdata->paths_available[7].path_description =	_("Backgrounds");
-   cfdata->paths_available[8].path =			path_messages;
-   cfdata->paths_available[8].path_description =	_("Messages");
-   cfdata->paths_available[9].path =			 NULL;
-   cfdata->paths_available[9].path_description =	 NULL;
+   cfdata->paths_available[0].path =		 path_data;
+   cfdata->paths_available[0].path_description = _("Data");
+   cfdata->paths_available[1].path =		 path_images;
+   cfdata->paths_available[1].path_description = _("Images");
+   cfdata->paths_available[2].path =		 path_fonts;
+   cfdata->paths_available[2].path_description = _("Fonts");
+   cfdata->paths_available[3].path =		 path_themes;
+   cfdata->paths_available[3].path_description = _("Themes");
+   cfdata->paths_available[4].path =		 path_init;
+   cfdata->paths_available[4].path_description = _("Init");
+   cfdata->paths_available[5].path =		 path_icons;
+   cfdata->paths_available[5].path_description = _("Icons");
+   cfdata->paths_available[6].path =		 path_modules;
+   cfdata->paths_available[6].path_description = _("Modules");
+   cfdata->paths_available[7].path =		 path_backgrounds;
+   cfdata->paths_available[7].path_description = _("Backgrounds");
+   cfdata->paths_available[8].path =		 path_messages;
+   cfdata->paths_available[8].path_description = _("Messages");
+   cfdata->paths_available[9].path =		 NULL;
+   cfdata->paths_available[9].path_description = NULL;
    
    return;
 }
@@ -121,10 +118,12 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     
 	     dir = pcd->new_user_path->data;
 	     evas_stringshare_del(dir);
-	     pcd->new_user_path = evas_list_remove_list(pcd->new_user_path, pcd->new_user_path);
+	     pcd->new_user_path = 
+	       evas_list_remove_list(pcd->new_user_path, pcd->new_user_path);
 	  }
 	free(pcd);
-	cfdata->pcd_list = evas_list_remove_list(cfdata->pcd_list, cfdata->pcd_list);
+	cfdata->pcd_list = 
+	  evas_list_remove_list(cfdata->pcd_list, cfdata->pcd_list);
      }
    free(cfdata->paths_available);
    E_FREE(cfdata);
@@ -168,7 +167,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    int i;
 
    o = e_widget_table_add(evas, 0);
-  
+
    of = e_widget_framelist_add(evas, _("E Paths"), 0);
    ob = e_widget_ilist_add(evas, 0, 0, NULL);
    cfdata->gui.path_list = ob;
@@ -182,12 +181,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    for (i = 0; cfdata->paths_available[i].path; i++)
      {
 	CFPath_Change_Data *pcd;
+
 	pcd = E_NEW(CFPath_Change_Data, 1);
-	
 	pcd->path = cfdata->paths_available[i].path;
 	pcd->cfdata = cfdata;
 	cfdata->pcd_list = evas_list_append(cfdata->pcd_list, pcd);
-	e_widget_ilist_append(ob, NULL, cfdata->paths_available[i].path_description, _ilist_path_cb_change, pcd, NULL);
+	e_widget_ilist_append(ob, NULL, 
+			      cfdata->paths_available[i].path_description, 
+			      _ilist_path_cb_change, pcd, NULL);
      }
 
    e_widget_ilist_go(ob);
@@ -206,8 +207,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(o, of, 0, 1, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("User Defined Directories"), 0);
-//   e_widget_framelist_content_align_set(of, 0.5, 0.5);
-   ob = e_widget_config_list_add(evas, e_widget_entry_add, _("New Directory"), 2);
+   ob = e_widget_config_list_add(evas, e_widget_entry_add, 
+				 _("New Directory"), 2);
    e_widget_disabled_set(ob, 1);
    cfdata->gui.user_list = ob;
    e_widget_framelist_object_append(of, ob);
@@ -238,7 +239,8 @@ _ilist_path_cb_change(void *data)
 	const char *dir;
 
 	dir = ((E_Path_Dir *)l->data)->dir;
-	e_widget_ilist_append(pcd->cfdata->gui.default_list, NULL, dir, NULL, NULL, NULL);
+	e_widget_ilist_append(pcd->cfdata->gui.default_list, 
+			      NULL, dir, NULL, NULL, NULL);
      }
    e_widget_ilist_go(pcd->cfdata->gui.default_list);
 
@@ -268,14 +270,17 @@ _ilist_update(Evas_Object *obj, CFPath_Change_Data *old, CFPath_Change_Data *new
 	     
 	     dir = old->new_user_path->data;
 	     evas_stringshare_del(dir);
-	     old->new_user_path = evas_list_remove_list(old->new_user_path, old->new_user_path);
+	     old->new_user_path = 
+	       evas_list_remove_list(old->new_user_path, old->new_user_path);
 	  }
 	
 	for (i = 0; i < e_widget_config_list_count(obj); i++)
 	  {
 	     const char *dir;
+
 	     dir = e_widget_config_list_nth_get(obj, i);
-	     old->new_user_path = evas_list_append(old->new_user_path, evas_stringshare_add(dir)); 
+	     old->new_user_path = 
+	       evas_list_append(old->new_user_path, evas_stringshare_add(dir));
 	  }
      }
 
