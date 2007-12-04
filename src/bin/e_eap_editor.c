@@ -7,45 +7,45 @@ struct _E_Config_Dialog_Data
 {
    Efreet_Desktop *desktop;
 
-   char         *name; /* app name (e.g. Firefox) */
-   char         *generic_name; /* generic app name (e.g. Web Browser) */
-   char         *comment; /* a longer description */
-   char		*exec; /* command to execute */
-   char		*try_exec; /* executable to test for an apps existance */
+   char *name; /* app name (e.g. Firefox) */
+   char *generic_name; /* generic app name (e.g. Web Browser) */
+   char *comment; /* a longer description */
+   char *exec; /* command to execute */
+   char *try_exec; /* executable to test for an apps existance */
 
-   char         *startup_wm_class; /* window class */
-   char         *categories; /* list of category names that app is in */
+   char *startup_wm_class; /* window class */
+   char *categories; /* list of category names that app is in */
 
-   char         *icon;  /* absolute path to file or icon name */
+   char *icon;  /* absolute path to file or icon name */
 
-   int		 startup_notify;
-   int		 terminal;
-   int		 show_in_menus;
+   int startup_notify;
+   int terminal;
+   int show_in_menus;
 
    E_Desktop_Edit *editor;
 };
 
 /* local subsystem functions */
 
-static int            _e_desktop_edit_view_create(E_Desktop_Edit *editor, E_Container *con);
-static void           _e_desktop_edit_free(E_Desktop_Edit *editor);
-static void          *_e_desktop_edit_create_data(E_Config_Dialog *cfd);
-static void           _e_desktop_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
-static int            _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
-static int            _e_desktop_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
-static Evas_Object   *_e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *data);
-static Evas_Object   *_e_desktop_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *data);
-static void           _e_desktop_editor_cb_icon_select(void *data1, void *data2);
-static void           _e_desktop_edit_cb_icon_select_destroy(void *obj);
-static void           _e_desktop_edit_cb_icon_select_ok(void *data, E_Dialog *dia);
-static void           _e_desktop_edit_cb_icon_select_cancel(void *data, E_Dialog *dia);
-static void           _e_desktop_editor_icon_update(E_Config_Dialog_Data *cfdata);
-static void           _e_desktop_editor_cb_exec_select(void *data1, void *data2);
-static void           _e_desktop_edit_cb_exec_select_destroy(void *obj);
-static void           _e_desktop_edit_cb_exec_select_ok(void *data, E_Dialog *dia);
-static void           _e_desktop_edit_cb_exec_select_cancel(void *data, E_Dialog *dia);
-static void           _e_desktop_editor_exec_update(E_Config_Dialog_Data *cfdata);
-static void           _e_desktop_edit_select_cb(void *data, Evas_Object *obj);
+static int          _e_desktop_edit_view_create(E_Desktop_Edit *editor, E_Container *con);
+static void         _e_desktop_edit_free(E_Desktop_Edit *editor);
+static void        *_e_desktop_edit_create_data(E_Config_Dialog *cfd);
+static void         _e_desktop_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
+static int          _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
+static int          _e_desktop_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
+static Evas_Object *_e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *data);
+static Evas_Object *_e_desktop_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *data);
+static void         _e_desktop_editor_cb_icon_select(void *data1, void *data2);
+static void         _e_desktop_edit_cb_icon_select_destroy(void *obj);
+static void         _e_desktop_edit_cb_icon_select_ok(void *data, E_Dialog *dia);
+static void         _e_desktop_edit_cb_icon_select_cancel(void *data, E_Dialog *dia);
+static void         _e_desktop_editor_icon_update(E_Config_Dialog_Data *cfdata);
+static void         _e_desktop_editor_cb_exec_select(void *data1, void *data2);
+static void         _e_desktop_edit_cb_exec_select_destroy(void *obj);
+static void         _e_desktop_edit_cb_exec_select_ok(void *data, E_Dialog *dia);
+static void         _e_desktop_edit_cb_exec_select_cancel(void *data, E_Dialog *dia);
+static void         _e_desktop_editor_exec_update(E_Config_Dialog_Data *cfdata);
+static void         _e_desktop_edit_select_cb(void *data, Evas_Object *obj);
 
 #define IFADD(src, dst) if (src) dst = evas_stringshare_add(src); else dst = NULL
 #define IFDEL(src) if (src) evas_stringshare_del(src);  src = NULL;
@@ -209,11 +209,10 @@ _e_desktop_edit_view_create(E_Desktop_Edit *editor, E_Container *con)
    v->advanced.apply_cfdata   = _e_desktop_edit_advanced_apply_data;
    v->advanced.create_widgets = _e_desktop_edit_advanced_create_widgets;
 
-   editor->cfd = e_config_dialog_new(con,
-				     _("Desktop Entry Editor"), 
-				     "E", "_desktop_editor_dialog",
-				     "enlightenment/desktop_editor", 0, 
-				     v, editor);
+   editor->cfd = 
+     e_config_dialog_new(con, _("Desktop Entry Editor"), "E", 
+			 "_desktop_editor_dialog",
+			 "enlightenment/applications", 0, v, editor);
    return 1;
 }
 
@@ -226,7 +225,6 @@ _e_desktop_edit_free(E_Desktop_Edit *editor)
    E_OBJECT_TYPE_CHECK(editor, E_EAP_EDIT_TYPE);
 
    IFFREE(editor->tmp_image_path);
-
    E_FREE(editor);
 }
 
@@ -276,7 +274,6 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
 	      */
 	     cfdata->desktop = efreet_desktop_get(path);
 	  }
-	     
 	desktop = cfdata->editor->desktop;
      }
 
@@ -293,7 +290,6 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
    IFDUP(desktop->comment, cfdata->comment);
    IFDUP(desktop->exec, cfdata->exec);
    IFDUP(desktop->try_exec, cfdata->try_exec);
-
    IFDUP(desktop->startup_wm_class, cfdata->startup_wm_class);
 
    if (desktop->categories)
@@ -315,18 +311,17 @@ static void
 _e_desktop_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->desktop)
-	efreet_desktop_free(cfdata->desktop);
+     efreet_desktop_free(cfdata->desktop);
 
    if (cfdata->editor->tmp_image_path) 
      {
-	if (!cfdata->desktop || !cfdata->editor->saved ||
+	if (!cfdata->desktop || !cfdata->editor->saved || 
 	    !cfdata->desktop->icon ||
 	    strcmp(cfdata->editor->tmp_image_path, cfdata->desktop->icon))
 	  {
 	     ecore_file_unlink(cfdata->editor->tmp_image_path);
 	  }
      }
-     
 
    IFFREE(cfdata->name);
    IFFREE(cfdata->generic_name);
@@ -362,7 +357,6 @@ _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfd
    IFDUP(cfdata->generic_name, cfdata->desktop->generic_name);
    IFFREE(cfdata->desktop->try_exec);
    IFDUP(cfdata->try_exec, cfdata->desktop->try_exec);
-
    IFFREE(cfdata->desktop->startup_wm_class);
    IFDUP(cfdata->startup_wm_class, cfdata->desktop->startup_wm_class);
 
@@ -401,9 +395,7 @@ _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfd
 	     basename[i] = '\0';
 	  }
 	else
-	  {
-	     strncpy(basename, "unnamed_desktop", sizeof(basename));
-	  }
+	  strncpy(basename, "unnamed_desktop", sizeof(basename));
 
 	i = 0;
 	snprintf(path, sizeof(path), "%s/applications/%s.desktop", efreet_data_home_get(), basename);
@@ -412,7 +404,6 @@ _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfd
 	     snprintf(path, sizeof(path), "%s/applications/%s-%d.desktop", efreet_data_home_get(), basename, i);
 	     i++;
 	  }
-
 	cfdata->editor->saved = efreet_desktop_save_as(cfdata->desktop, path);
      }
    return 1;
@@ -426,7 +417,6 @@ _e_desktop_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *
 {
    return _e_desktop_edit_basic_apply_data(cfd, cfdata);
 }
-
 
 /**
  * Generate the gui for the basic dialog
@@ -447,46 +437,37 @@ _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_
 
    o = e_widget_frametable_add(evas, _("Icon"), 0);
 
-   editor->img_widget = e_widget_button_add(evas, "", NULL,
-					    _e_desktop_editor_cb_icon_select, cfdata, editor);
+   editor->img_widget = 
+     e_widget_button_add(evas, "", NULL, _e_desktop_editor_cb_icon_select, 
+			 cfdata, editor);
    _e_desktop_editor_icon_update(cfdata);
    e_widget_min_size_set(editor->img_widget, 48, 48);
 
-   e_widget_frametable_object_append(o, editor->img_widget,
-				     0, 0, 1, 1,
-				     0, 0, 1, 1);
+   e_widget_frametable_object_append(o, editor->img_widget, 
+				     0, 0, 1, 1, 0, 0, 1, 1);
 
    e_widget_table_object_append(ol, o, 0, 0, 1, 1, 1 ,1, 1, 1);
 
    o = e_widget_frametable_add(evas, _("Basic Info"), 0);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Name")),
-				     0, 0, 1, 1,
-				     1, 1, 1, 1);
+				     0, 0, 1, 1, 1, 1, 1, 1);
 
    entry = e_widget_entry_add(evas, &(cfdata->name), NULL, NULL, NULL);
    e_widget_min_size_set(entry, 100, 1);
-   e_widget_frametable_object_append(o, entry,
-				     1, 0, 1, 1,
-				     1, 1, 1, 1);
+   e_widget_frametable_object_append(o, entry, 1, 0, 1, 1, 1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Executable")),
-				     0, 1, 1, 1,
-				     1, 1, 1, 1);
+				     0, 1, 1, 1, 1, 1, 1, 1);
    editor->entry_widget = e_widget_entry_add(evas, &(cfdata->exec), NULL, NULL, NULL);
    e_widget_frametable_object_append(o, editor->entry_widget,
-				     1, 1, 1, 1,
-				     1, 1, 1, 1);
+				     1, 1, 1, 1, 1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_button_add(evas, "...", NULL,
 				     _e_desktop_editor_cb_exec_select, cfdata, editor),
-				     2, 1, 1, 1,
-				     1, 1, 1, 1);
+				     2, 1, 1, 1, 1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Comment")),
-				     0, 2, 1, 1,
-				     1, 1, 1, 1);
+				     0, 2, 1, 1, 1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->comment), NULL, NULL, NULL),
-				     1, 2, 1, 1,
-				     1, 1, 1, 1);
+				     1, 2, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(ol, o, 1, 0, 1, 1, 1 ,1, 1, 1);
-
    return ol;
 }
 
@@ -511,42 +492,30 @@ _e_desktop_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Conf
 
    /*- general info -*/
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Generic Name")),
-				     0, 0, 1, 1,
-				     1, 1, 1, 1);
+				     0, 0, 1, 1, 1, 1, 1, 1);
 
    entry = e_widget_entry_add(evas, &(cfdata->generic_name), NULL, NULL, NULL);
    e_widget_min_size_set(entry, 100, 1);
-   e_widget_frametable_object_append(o, entry,
-				     1, 0, 1, 1,
-				     1, 1, 1, 1);
+   e_widget_frametable_object_append(o, entry, 1, 0, 1, 1, 1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Window Class")),
-				     0, 1, 1, 1,
-				     1, 1, 1, 1);
+				     0, 1, 1, 1, 1, 1, 1, 1);
 
    e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->startup_wm_class), NULL, NULL, NULL),
-				     1, 1, 1, 1,
-				     1, 1, 1, 1);
+				     1, 1, 1, 1, 1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Categories")),
-				     0, 2, 1, 1,
-				     1, 1, 1, 1);
-
+				     0, 2, 1, 1, 1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->categories), NULL, NULL, NULL),
-				     1, 2, 1, 1,
-				     1, 1, 1, 1);
+				     1, 2, 1, 1, 1, 1, 1, 1);
 
    e_widget_table_object_append(ol, o, 0, 1, 1, 1, 1 ,1, 1, 1);
 
-
    o = e_widget_frametable_add(evas, _("Categories"), 0);
    e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Startup Notify"), &(cfdata->startup_notify)),
-				     0, 0, 2, 1,
-				     1, 1, 1, 1);
+				     0, 0, 2, 1, 1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Run in Terminal"), &(cfdata->terminal)),
-				     0, 1, 2, 1,
-				     1, 1, 1, 1);
+				     0, 1, 2, 1, 1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Show in Menus"), &(cfdata->show_in_menus)),
-				     0, 2, 2, 1,
-				     1, 1, 1, 1);
+				     0, 2, 2, 1, 1, 1, 1, 1);
    e_widget_table_object_append(ol, o, 1, 1, 1, 1, 1 ,1, 1, 1);
 
    o = e_widget_frametable_add(evas, _("Desktop file"), 0);
@@ -602,7 +571,7 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
    if (path)
      {
 	o = e_widget_fsel_add(dia->win->evas, "/", path, NULL, NULL,
-			      _e_desktop_edit_select_cb, cfdata,
+			      _e_desktop_edit_select_cb, cfdata, 
 			      NULL, cfdata, 1);
 	free(path);
      }
@@ -668,6 +637,7 @@ _e_desktop_editor_cb_exec_select(void *data1, void *data2)
 			      _e_desktop_edit_select_cb, cfdata,
 			      NULL, cfdata, 1);
 	free(path);
+	path = NULL;
      }
    else
      {
@@ -682,8 +652,10 @@ _e_desktop_editor_cb_exec_select(void *data1, void *data2)
    e_dialog_content_set(dia, o, mw, mh);
 
    /* buttons at the bottom */
-   e_dialog_button_add(dia, _("OK"), NULL, _e_desktop_edit_cb_exec_select_ok, cfdata);
-   e_dialog_button_add(dia, _("Cancel"), NULL, _e_desktop_edit_cb_exec_select_cancel, cfdata);
+   e_dialog_button_add(dia, _("OK"), NULL, 
+		       _e_desktop_edit_cb_exec_select_ok, cfdata);
+   e_dialog_button_add(dia, _("Cancel"), NULL, 
+		       _e_desktop_edit_cb_exec_select_cancel, cfdata);
    e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
@@ -739,8 +711,8 @@ static void
 _e_desktop_editor_icon_update(E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o;
+
    if (!cfdata->editor->img_widget) return;
-   
    o = e_util_icon_theme_icon_add(cfdata->icon, "32x32", cfdata->editor->evas);
 
    /* NB this takes care of freeing any previous icon object */
@@ -787,6 +759,5 @@ static void
 _e_desktop_editor_exec_update(E_Config_Dialog_Data *cfdata)
 {
    if (!cfdata->editor->entry_widget) return;
-
    e_widget_entry_text_set(cfdata->editor->entry_widget, cfdata->exec);
 }
