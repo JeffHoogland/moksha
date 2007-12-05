@@ -193,6 +193,7 @@ e_configure_del(void)
      {
 	if (_e_configure->mod_hdl) 
 	  ecore_event_handler_del(_e_configure->mod_hdl);
+	_e_configure->mod_hdl = NULL;
 	e_object_del(E_OBJECT(_e_configure));
 	_e_configure = NULL;
      }
@@ -201,6 +202,9 @@ e_configure_del(void)
 static void 
 _e_configure_free(E_Configure *eco) 
 {
+   if (_e_configure->mod_hdl)
+     ecore_event_handler_del(_e_configure->mod_hdl);
+   eco->mod_hdl = NULL;
    _e_configure = NULL;
    while (eco->cats) 
      {
@@ -239,7 +243,7 @@ _e_configure_free(E_Configure *eco)
    evas_object_del(eco->o_list);
    evas_object_del(eco->edje);
    e_object_del(E_OBJECT(eco->win));
-   free(eco);
+   E_FREE(eco);
 }
 
 static void 
