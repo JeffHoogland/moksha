@@ -85,7 +85,7 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    o = e_widget_ilist_add(evas, 0, 0, NULL);
    wd->gui.list = o;
    e_widget_disabled_set(o, 1);
-   e_widget_min_size_set(o, 80, 80);
+   e_widget_min_size_set(o, 80, 40);
    e_widget_on_change_hook_set(o, _list_cb_change, wd);
    e_widget_ilist_go(o);
    e_widget_table_object_append(wd->gui.table, o, 0, 5, 2, 1, 1, 1, 1, 1);
