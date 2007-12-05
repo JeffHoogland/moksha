@@ -204,7 +204,7 @@ _e_configure_free(E_Configure *eco)
 {
    if (_e_configure->mod_hdl)
      ecore_event_handler_del(_e_configure->mod_hdl);
-   eco->mod_hdl = NULL;
+   _e_configure->mod_hdl = NULL;
    _e_configure = NULL;
    while (eco->cats) 
      {
