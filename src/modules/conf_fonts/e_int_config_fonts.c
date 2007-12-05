@@ -604,21 +604,17 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *ot, *ob, *of, *ol, *ol2;
+   Evas_Object *ot, *ob, *of;
    Evas_Coord w;
    E_Radio_Group *rg;
-   Evas_List *next;
+   Evas_List *next = NULL;
    int option_enable;
 
    cfdata->cur_index = -1;
    cfdata->evas = evas;
  
-   /* Serup Section List */
-   ol = e_widget_list_add(evas, 0, 1);
-
-   /* Table for Font Class Setup */ 
    ot = e_widget_table_add(evas, 0);
-   of = e_widget_framelist_add(evas, _("Font Classes"), 0);
+   of = e_widget_frametable_add(evas, _("Font Classes"), 0);
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
    cfdata->gui.class_list = ob;
    _class_list_load(cfdata);
@@ -626,8 +622,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_min_size_get(ob, &w, NULL);
    e_widget_min_size_set(ob, w, 180);
    e_widget_on_change_hook_set(ob, _adv_class_cb_change, cfdata);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 2, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("Enable Font Class"), &(cfdata->cur_enabled));
+   cfdata->gui.enabled = ob;
+   e_widget_on_change_hook_set(ob, _adv_enabled_font_cb_change, cfdata);
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 3, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Fonts"), 1);
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_font));
@@ -635,7 +636,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_on_change_hook_set(ob, _adv_font_cb_change, cfdata);
    _font_list_load(cfdata, NULL);
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 1, 0, 1, 2, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 1, 0, 1, 3, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Styles"), 1);
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_style));
@@ -652,39 +653,24 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 90, 90);
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 2, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 2, 1, 1, 2, 1, 1, 1, 1);
 
-   ob = e_widget_check_add(evas, _("Enable Font Class"), &(cfdata->cur_enabled));
-   cfdata->gui.enabled = ob;
-   e_widget_on_change_hook_set(ob, _adv_enabled_font_cb_change, cfdata);
-   e_widget_disabled_set(ob, 1);
-   e_widget_table_object_append(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0); 
-
-   ob = e_widget_font_preview_add(evas, _("Advanced Preview Text.. 我真的会写中文"));
-   cfdata->gui.preview = ob;
-   e_widget_table_object_append(ot, ob, 1, 2, 2, 1, 1, 0, 1, 0);
-   e_widget_list_object_append(ol, ot, 1, 1, 0.5);
-
-   ol2 = e_widget_list_add(evas, 0, 0);
-   
-   /* Frame for Hinting Setup */
-   of = e_widget_framelist_add(evas, _("Hinting"), 0);
+   of = e_widget_frametable_add(evas, _("Hinting"), 0);
    rg = e_widget_radio_group_new(&(cfdata->hinting));
    option_enable = evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_BYTECODE);
    ob = e_widget_radio_add(evas, _("Bytecode"), 0, rg);
    e_widget_disabled_set(ob, !option_enable);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
    option_enable = evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_AUTO);
    ob = e_widget_radio_add(evas, _("Automatic"), 1, rg);
    e_widget_disabled_set(ob, !option_enable);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    option_enable = evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_NONE);
    ob = e_widget_radio_add(evas, _("None"), 2, rg);
    e_widget_disabled_set(ob, !option_enable);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(ol2, of, 1, 1, 0.5);
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 3, 0, 1, 1, 1, 1, 1, 0);
 
-   /* Frame for Fallbacks Setup */
    of = e_widget_framelist_add(evas, _("Font Fallbacks"), 0);
    ob = e_widget_config_list_add(evas, e_widget_entry_add, _("Fallback Name"), 2);
    cfdata->gui.fallback_list = ob;
@@ -698,19 +684,21 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	e_widget_config_list_append(ob, eff->name);
 	option_enable = 1;
      }
-
+   if (next) evas_list_free(next);
    ob = e_widget_check_add(evas, _("Enable Fallbacks"), &(cfdata->cur_fallbacks_enabled));
    e_widget_config_list_object_append(cfdata->gui.fallback_list, ob, 
 				      0, 0, 2, 1, 1, 0, 1, 0);
    e_widget_on_change_hook_set(ob, _adv_enabled_fallback_cb_change, cfdata);
    e_widget_check_checked_set(ob, option_enable);
    e_widget_change(ob);
-   e_widget_list_object_append(ol2, of, 1, 1, 0.5);
-
-   e_widget_list_object_append(ol, ol2, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 3, 1, 1, 2, 1, 1, 1, 1);
+   
+   ob = e_widget_font_preview_add(evas, _("Advanced Preview Text.. 我真的会写中文"));
+   cfdata->gui.preview = ob;
+   e_widget_table_object_append(ot, ob, 0, 3, 4, 1, 1, 0, 1, 0);
 
    e_dialog_resizable_set(cfd->dia, 1);
-   return ol;
+   return ot;
 }
 
 /* Private Font Class Functions */
