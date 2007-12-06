@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Power Management
+Name[de]=
+Name[es]=Configuración - Administración de energía
+Name[fr]=
 Name[it]=Configurazione - Gestione energetica
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-conf_dpms
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configure the DPMS settings of<br>your system.
+Comment[de]=
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br>Configura las opciones de DPMS de<br>su sistema.
+Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura le impostazioni DPMS<br>del vostro sistema.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=config

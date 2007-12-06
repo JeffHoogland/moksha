@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Performance
+Name[de]=
+Name[es]=Configuración - Rendimiento
+Name[fr]=
 Name[it]=Configurazione - Prestazioni
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-conf_performance
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to configure certain<br>performance related items as<br>frame rates and cache settings.
+Comment[de]=
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br>Usado para configurar ciertos<br>elementos de rendimiento<br>como opciones de caché y cuadros por segundo.
+Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per configurare alcune<br>proprieta' correlate alle prestazioni<br>come velocità frame e cache.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]
 X-Enlightenment-ModuleType=config

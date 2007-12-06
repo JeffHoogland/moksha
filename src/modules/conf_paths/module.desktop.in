@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Search Directories
+Name[de]=
+Name[es]=Configuración - Directorios de búsqueda
+Name[fr]=
 Name[it]=Configurazione - Percorsi di ricerca
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-conf_paths
 Comment=<hilight>E17 Configuration Applet</hilight><br>Specifies the E17 search paths<br>and default directories.
+Comment[de]=
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br>Especifica las rutas de búsqueda de E17<br>y los directorios predefinidos. 
+Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Specifica i percorsi di ricerca e<br>le directory predefinite in E17.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=config

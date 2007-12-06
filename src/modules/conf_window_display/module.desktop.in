@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Window Display
+Name[de]=
+Name[es]=Configuración - Visualización de ventanas
+Name[fr]=
 Name[it]=Configurazione - Visualizzazione finestre
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-conf_window_display
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configures default window<br>properties such as default<br>geometries, border icons,<br>placement styles, etc.
+Comment[de]=
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br>Configura las propiedades predefinidas<br>de las ventanas, como su geometría, los íconos del borde, <br>el diseño, ubicación, etc.
+Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura le proprietà predefinite<br>delle finestre come geometrie, icona<br>del bordo, stile di posizionamento, ecc.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=config

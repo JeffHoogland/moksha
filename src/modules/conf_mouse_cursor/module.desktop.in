@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Mouse Cursor
+Name[de]=
+Name[es]=Configuración - Cursor del mouse
+Name[fr]=
 Name[it]=Configurazione - Cursore del mouse
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-conf_mouse_cursor
 Comment=<hilight>E17 Configuration Applet</hilight><br>Select the mouse cursor style.
+Comment[de]=
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br>Seleccione el diseño del cursor del mouse.
+Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Seleziona lo stile di puntatore<br>per il mouse.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=config

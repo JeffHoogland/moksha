@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Run Command
+Name[de]=
+Name[es]=Ejecutar comando
+Name[fr]=
 Name[it]=Lanciacomandi
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-exebuf
 Comment=<hilight>Run Command Module</hilight><br>The run command module provides<br>an application launcher dialog.
+Comment[de]=
+Comment[es]=<hilight>Módulo para ejecutar comandos</hilight><br>El módulo de ejecutar comandos provee<br>un diálogo para ejecutar aplicaciones.
+Comment[fr]=
 Comment[it]=<hilight>Modulo lanciacomandi</hilight><br>Questo modulo fornisce una voce<br>di menù per l'esecuzione di comandi.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=system

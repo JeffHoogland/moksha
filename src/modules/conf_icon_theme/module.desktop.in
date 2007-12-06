@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Icon Theme
+Name[de]=
+Name[es]=Configuración - Tema de íconos
+Name[fr]=
 Name[it]=Configurazione - Temi di icone
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-conf_icon_theme
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configuration applet used to select<br>an icon theme for E17.
+Comment[de]=
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br>Applet de configuración usado para seleccionar<br>el tema de íconos para E17.
+Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Applet di configurazione per<br>la selezione di un tema di<br>icone per E17.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=config

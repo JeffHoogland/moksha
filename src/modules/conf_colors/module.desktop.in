@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Colors
+Name[de]=
+Name[es]=Configuración - Colores
+Name[fr]=
 Name[it]=Configurazione - Colori
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-conf_colors
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to customize the color classes.
+Comment[de]=
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br>Usado para personalizar las clases de colores.
+Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per la personalizzazione<br>delle classi di colore.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=config

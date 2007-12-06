@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Fonts
+Name[de]=
+Name[es]=Configuración - Fuentes
+Name[fr]=
 Name[it]=Configurazione - Font
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-conf_fonts
 Comment=<hilight>E17 Configuration Applet</hilight><br>Font configuration dialog.
+Comment[de]=
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br>Diálogo de configuración de fuentes.
+Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Interfaccia per la configurazione<br>dei font.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=config

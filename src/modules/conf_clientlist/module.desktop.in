@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Client List Menu
+Name[de]=
+Name[es]=Configuración - Menú de lista de clientes
+Name[fr]=
 Name[it]=Configurazione - Menù lista client
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-conf_clientlist
 Comment=<hilight>E17 Configuration Applet</hilight><br>Allows customization of the client<br>list menu.
+Comment[de]=
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br>Permite la personalización del menú<br>de lista de clientes.
+Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Consente la personalizzazione del<br>menù con la lista dei client.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=config

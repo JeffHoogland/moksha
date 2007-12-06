@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Virtual Desktops
+Name[de]=
+Name[es]=Configuración - Escritorios virtuales
+Name[fr]=
 Name[it]=Configurazione - Desktop virtuali
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]
 Icon=e-module-conf_desks
-Comment=<hilight>E17 Configuration Applet</hilight><br>Configure the the virtual desktop<br>properties.
+Comment=<hilight>E17 Configuration Applet</hilight><br>Configure the virtual desktop<br>properties.
+Comment[de]=
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br>Configura las propiedades de los<br>escritorios virtuales.
+Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura le proprietà dei<br>desktop virtuali.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=config

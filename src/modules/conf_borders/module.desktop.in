@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Borders
+Name[de]=
+Name[es]=Configuración - Bordes
+Name[fr]=
 Name[it]=Configurazione - Bordi
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-conf_borders
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to select a default border<br>style.
+Comment[de]=
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br>USado para elegir un diseño<br>de borde predeterminado.
+Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per selezionare uno<br>stile di bordo predefinito.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=config

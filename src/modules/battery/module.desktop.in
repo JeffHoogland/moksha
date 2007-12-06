@@ -1,7 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=Battery
+Name[de]=
+Name[es]=Batería
+Name[fr]=
+Name[it]=
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-battery
 Comment=<hilight>Battery Gadget</hilight><br>A gadget to visualize your battery<br>status.
+Comment[de]=
+Comment[es]=<hilight>Dispositivo batería</hilight><br>Un dispositivo para ver el estado de su<br>batería.
+Comment[fr]=
 Comment[it]=<hilight>Modulo Battery</hilight><br>Un modulo per visualizzare lo<br>stato della batteria.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=system

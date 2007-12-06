@@ -1,8 +1,24 @@
 [Desktop Entry]
 Type=Link
 Name=File Manager
+Name[de]=
+Name[es]=Administrador de archivos
+Name[fr]=
 Name[it]=File manager
+Name[ja]=
+Name[pt]=
+Name[pt_BR]=
+Name[zh_CN]=
+Name[zh_TW]=
 Icon=e-module-fileman
 Comment=<hilight>The E17 File Manager</hilight><br>E17's integrated file manager.<br><hilight>Under Construction!</hilight>
+Comment[de]=
+Comment[es]=<hilight>El Administrador de archivos de E17</hilight><br>El administrador de archivos integrado a E17.<br><hilight>¡Todavía en construcción!</hilight>
+Comment[fr]=
 Comment[it]=<hilight>Il file manager di E17</hilight><br>Questo è il file manager<br>integrato in E17.
+Comment[ja]=
+Comment[pt]=
+Comment[pt_BR]=
+Comment[zh_CN]=
+Comment[zh_TW]=
 X-Enlightenment-ModuleType=system
