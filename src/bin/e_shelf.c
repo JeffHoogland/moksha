@@ -72,16 +72,18 @@ e_shelf_config_init(void)
 	cf_es = l->data;
 	if (cf_es->id <= 0) cf_es->id = id + 1;
 	zone = e_util_container_zone_id_get(cf_es->container, cf_es->zone);
-	id = cf_es->id;
-	if (zone) e_shelf_config_new(zone, cf_es);
+	if (zone) 
+	  {
+	     id = cf_es->id;
+	     e_shelf_config_new(zone, cf_es);
+	  }
      }
 }
 
 EAPI Evas_List *
 e_shelf_list(void)
 {
-   shelves = evas_list_sort(shelves, evas_list_count(shelves), 
-			    _e_shelf_cb_id_sort);
+   shelves = evas_list_sort(shelves, -1, _e_shelf_cb_id_sort);
    return shelves;
 }
 
@@ -183,7 +185,6 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 				      _e_shelf_cb_menu_items_append, es);
    
    shelves = evas_list_append(shelves, es);
-   shelves = evas_list_sort(shelves, -1, _e_shelf_cb_id_sort);
    
    es->hidden = 0;
    es->hide_step = 0;
