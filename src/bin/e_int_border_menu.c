@@ -655,7 +655,7 @@ _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (!bd) return;
 
-   if ((bd->client.icccm.accepts_focus || bd->client.icccm.take_focus) &&
+   if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus) &&
        (!bd->client.netwm.state.skip_taskbar))
      bd->user_skip_winlist = e_menu_item_toggle_get(mi);
    else
@@ -671,13 +671,11 @@ _e_border_menu_cb_skip_pager(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (!bd) return;
 
-   if ((bd->client.icccm.accepts_focus || bd->client.icccm.take_focus))
-     {
-	bd->client.netwm.state.skip_pager = e_menu_item_toggle_get(mi);
-	bd->changed = 1;
-     }
+   if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus))
+     bd->client.netwm.state.skip_pager = e_menu_item_toggle_get(mi);
    else
      bd->client.netwm.state.skip_pager = 0;
+   bd->changed = 1;
    if (bd->remember) e_remember_update(bd->remember, bd);
 }
 
