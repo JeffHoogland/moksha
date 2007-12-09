@@ -63,7 +63,7 @@ _surebox_dialog_cb_delete(E_Win *win)
    E_Dialog *dia;
    SureBox *sb;
    E_Config_Dialog *cfd;
-   
+
    dia = win->data;
    sb = dia->data;
    sb->cfdata->surebox = NULL;
@@ -108,8 +108,9 @@ _surebox_dialog_cb_no(void *data, E_Dialog *dia)
    for (l = sb->cfdata->resolutions; l; l = l->next)
      {
 	Resolution *res = l->data;
-	if (res->size.width == sb->cfdata->orig_size.width 
-	  && res->size.height == sb->cfdata->orig_size.height)
+
+	if ((res->size.width == sb->cfdata->orig_size.width) 
+	  && (res->size.height == sb->cfdata->orig_size.height))
 	  {
 	     e_widget_ilist_selected_set(sb->cfdata->res_list, res->id);
 	     break;
@@ -129,35 +130,34 @@ _surebox_text_fill(SureBox *sb)
      {
 	if (sb->cfdata->has_rates)
 	  snprintf(buf, sizeof(buf),
-		_("Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>"
-		   "If you do not press a button, the old resolution of<br>"
-		   "%dx%d at %d Hz will be restored in %d seconds."),
-		sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
-		sb->cfdata->orig_rate.rate, sb->iterations);
+		   _("Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>"
+		     "If you do not press a button, the old resolution of<br>"
+		     "%dx%d at %d Hz will be restored in %d seconds."),
+		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
+		   sb->cfdata->orig_rate.rate, sb->iterations);
 	else
 	  snprintf(buf, sizeof(buf),
-		_("Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>"
-		   "If you do not press a button, the old resolution of<br>"
-		   "%dx%d at will be restored in %d seconds."),
-		sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
-		sb->iterations);
-
+		   _("Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>"
+		     "If you do not press a button, the old resolution of<br>"
+		     "%dx%d at will be restored in %d seconds."),
+		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
+		   sb->iterations);
      }
    else
      {
 	if (sb->cfdata->has_rates)
 	  snprintf(buf, sizeof(buf),
-		_("Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>"
-		   "If you do not press a button, the old resolution of<br>"
-		   "%dx%d at %d Hz will be restored <hilight>IMMEDIATELY</hilight>."),
-		sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
-		sb->cfdata->orig_rate.rate);
+		   _("Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>"
+		     "If you do not press a button, the old resolution of<br>"
+		     "%dx%d at %d Hz will be restored <hilight>IMMEDIATELY</hilight>."),
+		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
+		   sb->cfdata->orig_rate.rate);
 	else
 	  snprintf(buf, sizeof(buf),
-		_("Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>"
-		   "If you do not press a button, the old resolution of<br>"
-		   "%dx%d at will be restored <hilight>IMMEDIATELY</hilight>."),
-		sb->cfdata->orig_size.width, sb->cfdata->orig_size.height);
+		   _("Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>"
+		     "If you do not press a button, the old resolution of<br>"
+		     "%dx%d at will be restored <hilight>IMMEDIATELY</hilight>."),
+		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height);
      }
    e_dialog_text_set(sb->dia, buf);
 }
@@ -179,8 +179,9 @@ _surebox_timer_cb(void *data)
 	for (l = sb->cfdata->resolutions; l; l = l->next)
 	  {
 	     Resolution *res = l->data;
-	     if (res->size.width == sb->cfdata->orig_size.width 
-		   && res->size.height == sb->cfdata->orig_size.height)
+
+	     if ((res->size.width == sb->cfdata->orig_size.width) 
+		   && (res->size.height == sb->cfdata->orig_size.height))
 	       {
 		  e_widget_ilist_selected_set(sb->cfdata->res_list, res->id);
 		  break;
@@ -199,7 +200,7 @@ static SureBox *
 _surebox_new(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    SureBox *sb;
-   
+
    sb = E_NEW(SureBox, 1);
    sb->dia = e_dialog_new(cfd->con, "E", "_display_res_sure_dialog");
    sb->timer = ecore_timer_add(1.0, _surebox_timer_cb, sb);
@@ -229,7 +230,7 @@ e_int_config_display(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
    if (e_config_dialog_find("E", "_config_display_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    v->create_cfdata = _create_data;
@@ -237,7 +238,7 @@ e_int_config_display(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
    v->override_auto_apply = 1;
-   
+
    cfd = e_config_dialog_new(con,
 			     _("Screen Resolution Settings"),
 			    "E", "_config_display_dialog",
@@ -250,7 +251,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 {
    E_Manager *man;
    int rots;
-   
+
    man = e_manager_current_get();
    cfdata->orig_size = ecore_x_randr_current_screen_size_get(man->root);   
    cfdata->orig_rate = ecore_x_randr_current_screen_refresh_rate_get(man->root);
@@ -268,7 +269,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	  cfdata->flip_x = 1;
 	if (cfdata->rotation & (ECORE_X_RANDR_FLIP_Y))
 	  cfdata->flip_y = 1;
-	
+
 	cfdata->can_rotate = 
 	  rots & (ECORE_X_RANDR_ROT_0 | ECORE_X_RANDR_ROT_90 |
 		  ECORE_X_RANDR_ROT_180 | ECORE_X_RANDR_ROT_270);
@@ -283,6 +284,7 @@ static void *
 _create_data(E_Config_Dialog *cfd) 
 {
    E_Config_Dialog_Data *cfdata;
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _fill_data(cfdata);
    cfdata->cfd = cfd;
@@ -300,8 +302,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    for (l = cfdata->resolutions; l; l = l->next)
      {
 	Resolution *r = l->data;
+
 	for (ll = r->rates; ll; ll = ll->next)
-	     E_FREE(ll->data);
+	  E_FREE(ll->data);
 
 	r->rates = evas_list_free(r->rates);
 	E_FREE(r);
@@ -317,37 +320,36 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    Ecore_X_Screen_Size size;
    Ecore_X_Screen_Refresh_Rate rate;
    E_Manager *man;
-   
+
    sel_res = e_widget_ilist_selected_label_get(cfdata->res_list);
    sel_rate = e_widget_ilist_selected_label_get(cfdata->rate_list);
    if (!sel_res) return 0;
    if (!sel_rate && cfdata->has_rates) return 0;
 
    sscanf(sel_res, "%ix%i", &size.width, &size.height);
-   if (cfdata->has_rates)
-      sscanf(sel_rate, "%i Hz", &rate.rate);
-      
+   if (cfdata->has_rates) sscanf(sel_rate, "%i Hz", &rate.rate);
+
    man = e_manager_current_get();
-   
+
    if (!((cfdata->orig_size.width == size.width) && (cfdata->orig_size.height == size.height) &&
 	 (cfdata->orig_rate.rate == rate.rate || !cfdata->has_rates)))
      {
 	if (cfdata->has_rates)
-	   ecore_x_randr_screen_refresh_rate_set(man->root, size, rate);
+	  ecore_x_randr_screen_refresh_rate_set(man->root, size, rate);
 	else
-	   ecore_x_randr_screen_size_set(man->root, size);
+	  ecore_x_randr_screen_size_set(man->root, size);
 
 	if (e_config->cnfmdlg_disabled)
 	  {
 	     SureBox *sb;
-	     
+
 	     sb = E_NEW(SureBox, 1);
 	     sb->cfd = cfd;
 	     sb->cfdata = cfdata;
 	     _surebox_dialog_cb_yes (sb, NULL);
 	  }
 	else
-	   _surebox_new(cfd, cfdata);
+	  _surebox_new(cfd, cfdata);
      }
 
    if ((cfdata->can_rotate) || (cfdata->can_flip))
@@ -359,7 +361,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  cfdata->flip = cfdata->flip | ECORE_X_RANDR_FLIP_X;
 	if (cfdata->flip_y)
 	  cfdata->flip = cfdata->flip | ECORE_X_RANDR_FLIP_Y;
-	
+
 	rot = ecore_x_randr_screen_rotation_get(man->root);
 	ecore_x_randr_screen_rotation_set(man->root,
 					  cfdata->rotation | cfdata->flip);
@@ -367,10 +369,10 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    else
      e_config->display_res_rotation = 0;
-   
+
    e_config->display_res_restore = cfdata->restore;
    e_config_save_queue();
-   
+
    return 1;
 }
 
@@ -396,7 +398,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Restore on login"), &cfdata->restore);
    e_widget_list_object_append(o2, ob, 1, 0, 0.0);
    e_widget_list_object_append(o, o2, 1, 1, 0.5);
-   
+
    ot = e_widget_table_add(evas, 0);
    of = e_widget_framelist_add(evas, _("Refresh"), 0);   
    ob = e_widget_ilist_add(evas, 24, 24, NULL);
@@ -408,7 +410,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    man = e_manager_current_get();
    sizes = ecore_x_randr_screen_sizes_get(man->root, &s);
    cfdata->has_rates = 0;
-   
+
    if ((!sizes) || (s == 0))
      ecore_timer_add(0.5, _deferred_noxrandr_error, NULL);
    else
@@ -461,8 +463,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	     snprintf(buf, sizeof(buf), "%ix%i", res->size.width, res->size.height);
 	     e_widget_ilist_append(cfdata->res_list, NULL, buf, _ilist_item_change, cfdata, NULL);
 
-	     if (res->size.width == cfdata->orig_size.width &&
-		 res->size.height == cfdata->orig_size.height)
+	     if ((res->size.width == cfdata->orig_size.width) &&
+		 (res->size.height == cfdata->orig_size.height))
 	       sel = res->id;
 	  }
 
@@ -478,7 +480,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_thaw(cfdata->res_list);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(cfdata->res_list));
-   
+
    if (cfdata->can_rotate)
      {
 	of = e_widget_framelist_add(evas, _("Rotation"), 0);
@@ -506,10 +508,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	if (!(cfdata->can_rotate & ECORE_X_RANDR_FLIP_X)) e_widget_disabled_set(ob, 1);
 	ob = e_widget_check_icon_add(evas, NULL, "enlightenment/screen_vflip", 24, 24, &(cfdata->flip_y));
         e_widget_framelist_object_append(of, ob);
-	if (!(cfdata->can_rotate & ECORE_X_RANDR_FLIP_Y)) e_widget_disabled_set(ob, 1);
+	if (!(cfdata->can_rotate & ECORE_X_RANDR_FLIP_Y)) 
+	  e_widget_disabled_set(ob, 1);
 	e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 0, 1, 0);
      }
-   
+
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
    e_dialog_resizable_set(cfd->dia, 1);
    return o;
@@ -538,7 +541,6 @@ _load_rates(E_Config_Dialog_Data *cfdata)
    evas_event_freeze(evas_object_evas_get(cfdata->rate_list));
    edje_freeze();
    e_widget_ilist_freeze(cfdata->rate_list);
-   
    e_widget_ilist_clear(cfdata->rate_list);
 
    r = e_widget_ilist_selected_get(cfdata->res_list);
@@ -546,18 +548,19 @@ _load_rates(E_Config_Dialog_Data *cfdata)
    for (l = cfdata->resolutions; l; l = l->next) 
      {
 	Resolution *res = l->data;
+
 	if (res->id == r)
 	  {
 	     Evas_List *ll;
 	     for (ll = res->rates; ll; ll = ll->next)
 	       {
 		  Ecore_X_Screen_Refresh_Rate *rt;
+
 		  rt = ll->data;
 		  snprintf(buf, sizeof(buf), "%i Hz", rt->rate);
 		  e_widget_ilist_append(cfdata->rate_list, NULL, buf, NULL, NULL, NULL);
 
-		  if (rt->rate == cfdata->orig_rate.rate)
-		     sel = k;
+		  if (rt->rate == cfdata->orig_rate.rate) sel = k;
 		  k++;
 	       }
 	     break;
@@ -594,11 +597,10 @@ static int
 _deferred_norates_error(void *data)
 {
    e_util_dialog_show(_("No Refresh Rates Found"),
-	    _("No refresh rates were reported by your X Display Server.<br>"
-	       "If you are running a nested X Display Server, then<br>"
-	       "this is to be expected. However, if you are not, then<br>"
-	       "the current refresh rate will be used when setting<br>"
-	       "the resolution, which may cause <hilight>damage</hilight> to your screen."));
-
+		      _("No refresh rates were reported by your X Display Server.<br>"
+			"If you are running a nested X Display Server, then<br>"
+			"this is to be expected. However, if you are not, then<br>"
+			"the current refresh rate will be used when setting<br>"
+			"the resolution, which may cause <hilight>damage</hilight> to your screen."));
    return 0;
 }
