@@ -109,15 +109,12 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	e_popup_layer_set(es->popup, layer);
 	es->ee = es->popup->ecore_evas;
 	es->evas = es->popup->evas;
-	es->win = es->popup->evas_win;
      }
    else
      {
 	e_drop_xdnd_register_set(zone->container->event_win, 1);
 	es->ee = zone->container->bg_ecore_evas;
 	es->evas = zone->container->bg_evas;
-	/* TODO: We should have a mouse out on the evas object if we are on the desktop */
-	es->win = zone->container->event_win;
      }
    es->fit_along = 1;
    es->layer = layer;
@@ -149,6 +146,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	evas_object_show(es->o_event);
 	evas_object_show(es->o_base);
 	e_popup_edje_bg_object_set(es->popup, es->o_base);
+	es->win = es->popup->evas_win;
      }
    else
      {
@@ -156,6 +154,8 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_layer_set(es->o_event, layer);
 	evas_object_layer_set(es->o_base, layer);
+	/* TODO: We should have a mouse out on the evas object if we are on the desktop */
+	es->win = zone->container->event_win;
      }
 
    es->gadcon = e_gadcon_swallowed_new(es->name, es->id, es->o_base, "e.swallow.content");
