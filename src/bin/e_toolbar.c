@@ -280,22 +280,16 @@ _e_toolbar_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
 
    ev = event_info;
    tbar = data;
-   switch (ev->button) 
-     {
-      case 3:
-	mn = e_menu_new();
-	e_menu_post_deactivate_callback_set(mn, _e_toolbar_menu_cb_post, tbar);
-	tbar->menu = mn;
-	_e_toolbar_menu_append(tbar, mn);
-	zone = e_util_zone_current_get(e_manager_current_get());
-	ecore_x_pointer_xy_get(zone->container->win, &x, &y);
-	e_menu_activate_mouse(mn, zone, x, y, 1, 1, 
-			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(tbar->gadcon->evas, ev->button);
-	break;
-      default:
-	break;
-     }
+   if (ev->button != 3) return;
+   mn = e_menu_new();
+   e_menu_post_deactivate_callback_set(mn, _e_toolbar_menu_cb_post, tbar);
+   tbar->menu = mn;
+   _e_toolbar_menu_append(tbar, mn);
+   zone = e_util_zone_current_get(e_manager_current_get());
+   ecore_x_pointer_xy_get(zone->container->win, &x, &y);
+   e_menu_activate_mouse(mn, zone, x, y, 1, 1, 
+			 E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+   e_util_evas_fake_mouse_up_later(tbar->gadcon->evas, ev->button);
 }
 
 static void 
@@ -376,6 +370,7 @@ _e_toolbar_menu_del_hook(void *data)
 	E_Menu_Item *mi;
 
 	mi = l->data;
+	if (!mi) continue;
 	if (mi->submenu) e_object_del(E_OBJECT(mi->submenu));
      }
 }
@@ -407,8 +402,7 @@ _e_toolbar_menu_cb_contents(void *data, E_Menu *mn, E_Menu_Item *mi)
    E_Toolbar *tbar;
 
    tbar = data;
-   if (!tbar->gadcon->config_dialog) 
-     e_int_gadcon_config_toolbar(tbar->gadcon);
+   if (!tbar->gadcon->config_dialog) e_int_gadcon_config_toolbar(tbar->gadcon);
 }
 
 static void 
