@@ -718,8 +718,6 @@ e_border_hide(E_Border *bd, int manage)
    ecore_x_window_shadow_tree_flush();
    if (bd->moving)
      _e_border_move_end(bd);
-   if (bd->fullscreen)
-     e_border_unfullscreen(bd);
    if (bd->resize_mode != RESIZE_NONE)
      {
 	_e_border_pointer_resize_end(bd);

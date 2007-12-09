@@ -244,17 +244,11 @@ e_desk_show(E_Desk *desk)
 		  if ((bd->desk == desk) || (bd->sticky))
 		    {
 		       e_border_show(bd);
-		       if (bd->want_fullscreen)
-			 {
-			    e_border_fullscreen(bd, e_config->fullscreen_policy);
-			    bd->want_fullscreen = 0;
-			 }
 		    }
 		  else if (bd->moving)
 		    e_border_desk_set(bd, desk);
 		  else
 		    {
-		       if (bd->fullscreen) bd->want_fullscreen = 1;
 		       e_border_hide(bd, 2);
 		    }
 	       }
@@ -599,11 +593,6 @@ _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy)
 		    bd->fx.start.y += bd->zone->container->h - (bd->zone->y + bd->zone->h);
 		  e_border_fx_offset(bd, bd->fx.start.x, bd->fx.start.y);
 		  e_border_show(bd);
-		  if (bd->want_fullscreen)
-		    {
-		       e_border_fullscreen(bd, e_config->fullscreen_policy);
-		       bd->want_fullscreen = 0;
-		    }
 	       }
 	  }
      }
@@ -737,11 +726,6 @@ _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy)
 		  else
 		    bd->fx.start.y += bd->zone->container->h - (bd->zone->y + bd->zone->h);
 		  e_border_fx_offset(bd, 0, 0);
-		  if (bd->want_fullscreen)
-		    {
-		       e_border_fullscreen(bd, e_config->fullscreen_policy);
-		       bd->want_fullscreen = 0;
-		    }
 	       }
 	  }
      }
@@ -766,7 +750,6 @@ _e_desk_hide_end(E_Desk *desk)
 	     else if ((bd->desk == desk) && (!bd->sticky))
 	       {
 		  e_border_fx_offset(bd, 0, 0);
-		  if (bd->fullscreen) bd->want_fullscreen = 1;
 		  e_border_hide(bd, 2);
 	       }
 	  }
