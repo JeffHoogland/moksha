@@ -835,7 +835,6 @@ e_config_init(void)
    e_config->font_defaults = evas_list_append(e_config->font_defaults, efd)
 	
 	CFG_FONTDEFAULT("default", "Vera", 10);
-	CFG_FONTDEFAULT("title_bar", "Vera", 10);
      }
      {
 	E_Config_Theme *et;
