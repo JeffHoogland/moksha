@@ -201,12 +201,6 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 				       cfdata, NULL);
    e_widget_table_object_append(ft, cfdata->o_btn, 0, 1, 1, 1, 0, 0, 0, 0);
 
-   cfdata->fmdir = 0;
-   if (cfdata->bg) 
-     {
-	if (!strstr(cfdata->bg, e_user_homedir_get()))
-	  cfdata->fmdir = 1;
-     }
    if (cfdata->fmdir == 1)
      snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
    else
@@ -284,42 +278,42 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
      }
    e_widget_table_object_append(mt, ow, 1, 0, 1, 1, 1, 1, 1, 1);
 
-   of = e_widget_framelist_add(evas, _("Login Box Settings"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   of = e_widget_frametable_add(evas, _("Login Box Settings"), 0);
    e_widget_disabled_set(of, (screen_count <= 0));
    rg = e_widget_radio_group_new(&(cfdata->login_zone));
    ow = e_widget_radio_add(evas, _("Show on all screen zones"), -1, rg);
    e_widget_on_change_hook_set(ow, _cb_login_change, cfdata);
    e_widget_disabled_set(ow, (screen_count <= 0));
-   e_widget_framelist_object_append(of, ow);
+   e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 0, 1, 0);
    ow = e_widget_radio_add(evas, _("Show on current screen zone"), -2, rg);
    e_widget_on_change_hook_set(ow, _cb_login_change, cfdata);
    e_widget_disabled_set(ow, (screen_count <= 0));
-   e_widget_framelist_object_append(of, ow);
+   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
    ow = e_widget_radio_add(evas, _("Show on screen zone #:"), 0, rg);
    e_widget_on_change_hook_set(ow, _cb_login_change, cfdata);
    e_widget_disabled_set(ow, (screen_count <= 0));
-   e_widget_framelist_object_append(of, ow);
+   e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 0, 1, 0);
    cfdata->o_login_slider = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0.0, 
 						(cfdata->zone_count -1), 1.0, 
 						0, NULL, &(cfdata->zone), 100);
    e_widget_disabled_set(cfdata->o_login_slider, (screen_count <= 0));
-   e_widget_framelist_object_append(of, cfdata->o_login_slider);
+   e_widget_frametable_object_append(of, cfdata->o_login_slider, 0, 3, 1, 1, 
+				     1, 0, 1, 0);
    e_widget_table_object_append(mt, of, 2, 0, 1, 1, 1, 1, 1, 1);
    
-   of = e_widget_framelist_add(evas, _("Wallpaper Mode"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   of = e_widget_frametable_add(evas, _("Wallpaper Mode"), 0);
    rg = e_widget_radio_group_new(&(cfdata->bg_method));
    ow = e_widget_radio_add(evas, _("Theme Defined"), 0, rg);
    evas_object_smart_callback_add(ow, "changed", _cb_method_change, cfdata);
-   e_widget_framelist_object_append(of, ow);
+   e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 0, 1, 0);
    ow = e_widget_radio_add(evas, _("Theme Wallpaper"), 1, rg);
    evas_object_smart_callback_add(ow, "changed", _cb_method_change, cfdata);
-   e_widget_framelist_object_append(of, ow);
+   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
    cfdata->o_custom = e_widget_radio_add(evas, _("Custom"), 2, rg);
    evas_object_smart_callback_add(cfdata->o_custom, "changed", 
 				  _cb_method_change, cfdata);
-   e_widget_framelist_object_append(of, cfdata->o_custom);
+   e_widget_frametable_object_append(of, cfdata->o_custom, 0, 2, 1, 1, 
+				     1, 0, 1, 0);
    e_widget_table_object_append(mt, of, 1, 1, 1, 1, 1, 1, 1, 1);
 
    ow = _basic_create(cfd, evas, cfdata);
