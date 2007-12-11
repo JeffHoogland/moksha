@@ -377,7 +377,7 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    if (fileman_config->view.show_toolbar) 
      {
 	fwin->tbar = e_toolbar_new(e_win_evas_get(fwin->win), "toolbar", 
-			      fwin->win, fwin->fm_obj);
+				   fwin->win, fwin->fm_obj);
 	e_toolbar_show(fwin->tbar);
      }
 
@@ -1071,7 +1071,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 			   e_fm2_real_path_get(fwin->fm_obj), ici->file);
 		  if (S_ISDIR(ici->statinfo.st_mode))
 		    {
-		       if (!fileman_config->view.open_dirs_in_place || fwin->zone) 
+		       if ((!fileman_config->view.open_dirs_in_place) || (fwin->zone)) 
 			 {
 			    if (fwin->win)
 			      fwin2 = _e_fwin_new(fwin->win->container, NULL, buf);
@@ -1093,7 +1093,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 		    {
 		       Evas_Object *oic;
 		       const char *itype = NULL;
-		       
+		       int ix, iy, iw, ih, nx, ny;
+
 		       oic = e_fm2_icon_get(evas_object_evas_get(fwin->fm_obj),
 					    ici->ic, NULL, NULL, 0, &itype);
 		       if (oic)
@@ -1126,6 +1127,17 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 				   evas_stringshare_add(file);
 			      }
 			    evas_object_del(oic);
+
+			    /* Move spawned window */
+			    e_fm2_icon_geometry_get(ici->ic, &ix, &iy, &iw, &ih);
+			    nx = ((ix + iw) / 2);
+			    ny = ((iy + ih) / 2);
+			    if (fwin->win) 
+			      {
+				 nx += fwin->win->x;
+				 ny += fwin->win->y;
+			      }
+			    e_win_move(fwin2->win, nx, ny);
 			 }
 		       if (ici->label)
 			 e_win_title_set(fwin2->win, ici->label);
