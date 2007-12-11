@@ -154,7 +154,8 @@ EAPI Evas_Object *
 		 void (*gen_func) (void *data, Evas_Object *obj, void *event_info),
 		 void *data, int force_gen, const char **type_ret);
 EAPI E_Fm2_Icon_Info *e_fm2_icon_file_info_get(E_Fm2_Icon *ic);
-    
+EAPI void        e_fm2_icon_geometry_get(E_Fm2_Icon *ic, int *x, int *y, int *w, int *h);
+
 EAPI void        e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e);
 EAPI void        e_fm2_client_del(Ecore_Ipc_Event_Client_Del *e);
 
