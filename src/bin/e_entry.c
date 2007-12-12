@@ -15,6 +15,8 @@ struct _E_Entry_Smart_Data
    E_Menu *popup;
    Ecore_Event_Handler *selection_handler;
    Ecore_IMF_Context *imf_context;
+   Ecore_Event_Handler *imf_ee_commit_handler;
+   Ecore_Event_Handler *imf_ee_delete_handler;
    
    int enabled;
    int focused;
@@ -1038,12 +1040,12 @@ _e_entry_smart_add(Evas_Object *object)
         ecore_imf_context_retrieve_surrounding_callback_set(sd->imf_context,
                                                             _e_entry_cb_imf_retrieve_surrounding,
                                                             sd);
-        ecore_event_handler_add(ECORE_IMF_EVENT_COMMIT,
-                                _e_entry_cb_imf_event_commit,
-                                object);
-        ecore_event_handler_add(ECORE_IMF_EVENT_DELETE_SURROUNDIND,
-                                _e_entry_cb_imf_event_delete_surrounding,
-                                sd);
+        sd->imf_ee_commit_handler = ecore_event_handler_add(ECORE_IMF_EVENT_COMMIT,
+                                                            _e_entry_cb_imf_event_commit,
+                                                            object);
+        sd->imf_ee_delete_handler = ecore_event_handler_add(ECORE_IMF_EVENT_DELETE_SURROUNDING,
+                                                            _e_entry_cb_imf_event_delete_surrounding,
+                                                            sd);
      }
 
    sd->enabled = 1;
@@ -1092,7 +1094,11 @@ _e_entry_smart_del(Evas_Object *object)
      return;
 
    if (sd->imf_context)
-     ecore_imf_context_del(sd->imf_context);
+     {
+	ecore_event_handler_del(sd->imf_ee_commit_handler);
+	ecore_event_handler_del(sd->imf_ee_delete_handler);
+	ecore_imf_context_del(sd->imf_context);
+     }
 
    evas_object_event_callback_del(object, EVAS_CALLBACK_KEY_DOWN,
                                   _e_entry_key_down_cb);
