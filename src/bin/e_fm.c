@@ -3851,11 +3851,11 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 
    desktop = efreet_desktop_new(buf);
-   printf("efreet_desktop_new(%s) = %p\n", buf, desktop);
+//   printf("efreet_desktop_new(%s) = %p\n", buf, desktop);
    if (!desktop) goto error;
 //   if (desktop->type != EFREET_DESKTOP_TYPE_LINK) goto error;
 
-   printf("  mod time %lli\n", desktop->load_time);
+//   printf("  mod time %lli\n", desktop->load_time);
    ic->info.removable = 0;
    ic->info.removable_full = 0;
    if (desktop->name)         ic->info.label   = evas_stringshare_add(desktop->name);
@@ -3875,18 +3875,18 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	     else if (!strcmp(type, "Removable"))
 	       {
 		  ic->info.removable = 1;
-		  printf("REMOVABLE %s\n", ic->info.link);
+//		  printf("REMOVABLE %s\n", ic->info.link);
 		  if ((!e_fm2_hal_storage_find(ic->info.link)) &&
 		       (!e_fm2_hal_volume_find(ic->info.link)))
 		    {
-		       printf("REMOVE IT %s\n", ic->info.file);
+//		       printf("REMOVE IT %s\n", ic->info.file);
 		       _e_fm2_live_file_del(ic->sd->obj, ic->info.file);
 		       efreet_desktop_free(desktop);
 		       goto error;
 		    }
 	       }
 	     type = ecore_hash_get(desktop->x, "X-Enlightenment-Removable-State");
-	     printf(" rem state type = %s\n", type);
+//	     printf(" rem state type = %s\n", type);
 	     if (type)
 	       {
 		  if (!strcmp(type, "Full"))
@@ -4883,7 +4883,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
 	else if (evas_key_modifier_is_set(modifiers, "Shift"))
 	  multi_sel = 1;
      }
-   printf("MOUSE 1 range=%i multi=%i\n", range_sel, multi_sel);
+//   printf("MOUSE 1 range=%i multi=%i\n", range_sel, multi_sel);
    if (ic->sd->config->selection.single)
      {
 	multi_sel = 0;
@@ -5567,6 +5567,26 @@ _e_fm2_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    _e_fm2_sel_rect_update(sd);
 
    evas_object_geometry_get(sd->sel_rect, &x, &y, &w, &h);
+
+/*
+ * Leave commented for now. Start of scrolling the sel_rect
+ * 
+   int nx, ny, nw, nh;
+
+   nx = sd->pos.x;
+   if ((x - sd->pos.x) < 0)
+     nx = x;
+   else if ((x + w - sd->pos.x) > (sd->w))
+     nx = x + w - sd->w;
+   ny = sd->pos.y;
+   if ((y - sd->pos.y) < 0)
+     ny = y;
+   else if ((y + h - sd->pos.y) > (sd->h))
+     ny = y + h - sd->h;
+   e_fm2_pan_set(sd->obj, nx, ny);
+   evas_object_smart_callback_call(sd->obj, "pan_changed", NULL);
+*/
+
    for (l = sd->icons; l; l = l->next)
      {
 	E_Fm2_Icon *ic;
