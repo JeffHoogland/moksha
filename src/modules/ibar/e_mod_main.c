@@ -8,8 +8,6 @@
  * - Track execution status
  */
 
-/***************************************************************************/
-/**/
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
@@ -18,6 +16,7 @@ static char *_gc_label(void);
 static Evas_Object *_gc_icon(Evas *evas);
 static const char *_gc_id_new(void);
 static void _gc_id_del(const char *id);
+
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
@@ -28,13 +27,8 @@ static const E_Gadcon_Client_Class _gadcon_class =
      },
    E_GADCON_CLIENT_STYLE_INSET
 };
-/**/
-/***************************************************************************/
 
-/***************************************************************************/
-/**/
 /* actual module specifics */
-
 typedef struct _Instance  Instance;
 
 typedef struct _IBar      IBar;
@@ -97,6 +91,8 @@ static void _ibar_icon_empty(IBar_Icon *ic);
 static void _ibar_icon_signal_emit(IBar_Icon *ic, char *sig, char *src);
 static void _ibar_cb_app_change(void *data, E_Order *eo);
 static void _ibar_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _ibar_cb_menu_icon_new(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _ibar_cb_menu_icon_add(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _ibar_cb_menu_icon_remove(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _ibar_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -319,7 +315,7 @@ _ibar_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	e_menu_item_label_set(mi, _("Configuration"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_configuration, b);
-	
+
 	mi = e_menu_item_new(mn);
 	e_menu_item_separator_set(mi, 1);
 	
@@ -675,6 +671,26 @@ _ibar_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info)
    _ibar_instance_drop_zone_recalc(inst);
 }
 
+static void 
+_ibar_cb_menu_icon_new(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Container *con;
+
+   if (!e_configure_registry_exists("applications/new_application")) return;
+   con = e_container_current_get(e_manager_current_get());
+   e_configure_registry_call("applications/new_application", con, NULL);
+}
+
+static void 
+_ibar_cb_menu_icon_add(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Container *con;
+
+   if (!e_configure_registry_exists("applications/ibar_applications")) return;
+   con = e_container_current_get(e_manager_current_get());
+   e_configure_registry_call("applications/ibar_applications", con, NULL);
+}
+
 static void
 _ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 {
@@ -788,6 +804,19 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	e_menu_item_label_set(mi, _("Remove Icon"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/delete");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_icon_remove, ic);
+
+	mi = e_menu_item_new(mn);
+	e_menu_item_separator_set(mi, 1);
+	
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Add An Icon"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/ibar_applications");
+	e_menu_item_callback_set(mi, _ibar_cb_menu_icon_add, NULL);
+
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Create New Icon"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/new_application");
+	e_menu_item_callback_set(mi, _ibar_cb_menu_icon_new, NULL);
 
 	mi = e_menu_item_new(mn);
 	e_menu_item_separator_set(mi, 1);
