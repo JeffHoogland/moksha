@@ -19,7 +19,7 @@ e_gadcon_popup_new(E_Gadcon_Client *gcc, void (*resize_func) (Evas_Object *obj, 
    if (!pop) return NULL;
    zone = e_util_zone_current_get(e_manager_current_get());
    pop->win = e_popup_new(zone, 0, 0, 0, 0);
-   e_popup_layer_set(pop->win, 990);
+   e_popup_layer_set(pop->win, 255);
 
    o = edje_object_add(pop->win->evas);
    e_theme_edje_object_set(o, "base/theme/gadman", "e/gadman/popup");
@@ -51,7 +51,7 @@ e_gadcon_popup_content_set(E_Gadcon_Popup *pop, Evas_Object *o)
 	evas_object_del(old_o);
      }
    e_widget_min_size_get(o, &w, &h);
-   if (!w || !h) edje_object_size_min_calc(o, &w, &h);
+   if ((!w) || (!h)) edje_object_size_min_calc(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
    edje_object_part_swallow(pop->o_bg, "e.swallow.content", o);
    edje_object_size_min_calc(pop->o_bg, &pop->w, &pop->h);
@@ -75,7 +75,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
 	Evas_Coord w = 0, h = 0;
 
 	e_widget_min_size_get(o, &w, &h);
-	if (!w || !h) edje_object_size_min_calc(o, &w, &h);
+	if ((!w) || (!h)) edje_object_size_min_calc(o, &w, &h);
 	edje_extern_object_min_size_set(o, w, h);
      }
 
