@@ -284,6 +284,9 @@ static void _e_fm2_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp);
 static void _e_fm2_icon_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_icon_menu_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_view_menu_grid_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_view_menu_list_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -6129,7 +6132,13 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_separator_set(mi, 1);
 	  }
-
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_VIEW_MENU)) 
+	  {
+	     mi = e_menu_item_new(mn);
+	     e_menu_item_label_set(mi, _("View Mode"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/appearance");
+	     e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_pre, sd);
+	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
 	  {
 	     mi = e_menu_item_new(mn);
@@ -6284,6 +6293,13 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_separator_set(mi, 1);
 	  }
 
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_VIEW_MENU)) 
+	  {
+	     mi = e_menu_item_new(mn);
+	     e_menu_item_label_set(mi, _("View Mode"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/appearance");
+	     e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_pre, sd);
+	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
 	  {
 	     mi = e_menu_item_new(mn);
@@ -6616,11 +6632,98 @@ _e_fm2_icon_menu_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    e_fm2_mime_handler_call(md->handler, obj, buf);
 }
 
+static void 
+_e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Menu *subm;
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Config *cfg;
+
+   sd = data;
+   cfg = e_fm2_config_get(sd->obj);
+
+   subm = e_menu_new();
+   e_object_data_set(E_OBJECT(subm), sd);
+   e_menu_item_submenu_set(mi, subm);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Icons"));
+   e_menu_item_radio_group_set(mi, 1);
+   e_menu_item_radio_set(mi, 1);
+   if (cfg->view.mode == E_FM2_VIEW_MODE_GRID_ICONS)
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_grid_cb, sd);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("List"));
+   e_menu_item_radio_group_set(mi, 1);
+   e_menu_item_radio_set(mi, 1);
+   if (cfg->view.mode == E_FM2_VIEW_MODE_LIST)
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_list_cb, sd);
+}
+
+static void 
+_e_fm2_view_menu_grid_cb(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Config cfg;
+
+   sd = data;
+   memset(&cfg, 0, sizeof(E_Fm2_Config));
+   cfg.view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
+   cfg.view.open_dirs_in_place = 1;
+   cfg.view.selector = 1;
+   cfg.view.single_click = 0;
+   cfg.view.no_subdir_jump = 0;
+   cfg.icon.icon.w = 48;
+   cfg.icon.icon.h = 48;
+   cfg.icon.fixed.w = 0;
+   cfg.icon.fixed.h = 0;
+   cfg.icon.extension.show = 0;
+   cfg.icon.key_hint = NULL;
+   cfg.list.sort.no_case = 1;
+   cfg.list.sort.dirs.first = 0;
+   cfg.list.sort.dirs.last = 1;
+   cfg.selection.single = 1;
+   cfg.selection.windows_modifiers = 0;
+   e_fm2_config_set(sd->obj, &cfg);
+   e_fm2_refresh(sd->obj);
+}
+
+static void 
+_e_fm2_view_menu_list_cb(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Config cfg;
+
+   sd = data;
+   memset(&cfg, 0, sizeof(E_Fm2_Config));
+   cfg.view.mode = E_FM2_VIEW_MODE_LIST;
+   cfg.view.open_dirs_in_place = 1;
+   cfg.view.selector = 1;
+   cfg.view.single_click = 0;
+   cfg.view.no_subdir_jump = 0;
+   cfg.icon.list.w = 48;
+   cfg.icon.list.h = 48;
+   cfg.icon.fixed.w = 1;
+   cfg.icon.fixed.h = 1;
+   cfg.icon.extension.show = 0;
+   cfg.icon.key_hint = NULL;
+   cfg.list.sort.no_case = 1;
+   cfg.list.sort.dirs.first = 0;
+   cfg.list.sort.dirs.last = 1;
+   cfg.selection.single = 1;
+   cfg.selection.windows_modifiers = 0;
+   e_fm2_config_set(sd->obj, &cfg);
+   e_fm2_refresh(sd->obj);
+}
+
 static void
 _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fm2_Smart_Data *sd;
-   
+
    sd = data;
    if (sd->refresh_job) ecore_job_del(sd->refresh_job);
    sd->refresh_job = ecore_job_add(_e_fm2_refresh_job_cb, sd->obj);
