@@ -12,10 +12,12 @@ static void  _e_mod_menu_add(void *data, E_Menu *m);
 static void  _e_mod_fileman_config_load(void);
 static void  _e_mod_fileman_config_free(void);
 static int   _e_mod_cb_config_timer(void *data);
+static int   _e_mod_zone_add(void *data, int type, void *event);
 
 static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
+static Ecore_Event_Handler *zone_add_handler = NULL;
 
 static E_Config_DD *conf_edd = NULL;
 Config *fileman_config = NULL;
@@ -69,6 +71,7 @@ e_modapi_init(E_Module *m)
 	     for (lll = con->zones; lll; lll = lll->next)
 	       {
 		  zone = lll->data;
+                  if (e_fwin_zone_find(zone)) continue;
 		  if ((zone->container->num == 0) && (zone->num == 0) && 
 		      (fileman_config->view.show_desktop_icons))
 		    e_fwin_zone_new(zone, "desktop", "/");
@@ -86,6 +89,10 @@ e_modapi_init(E_Module *m)
 	       }
 	  }
      }
+   zone_add_handler = ecore_event_handler_add(E_EVENT_ZONE_ADD,
+					      _e_mod_zone_add, NULL);
+   
+   /* FIXME: add system event for new zone creation, and on creation, add an fwin to the zone */
    
    return m;
 }
@@ -98,6 +105,9 @@ e_modapi_shutdown(E_Module *m)
    E_Container *con;
    E_Zone *zone;
 
+   ecore_event_handler_del(zone_add_handler);
+   zone_add_handler = NULL;
+   
    /* Unhook zone fm */
    for (l = e_manager_list(); l; l = l->next)
      {
@@ -332,4 +342,31 @@ _e_mod_cb_config_timer(void *data)
 {
    e_util_dialog_show(_("Fileman Configuration Updated"), data);
    return 0;
+}
+
+static int
+_e_mod_zone_add(void *data, int type, void *event)
+{
+   E_Event_Zone_Add *ev;
+   E_Zone *zone;
+   
+   if (type != E_EVENT_ZONE_ADD) return 1;
+   ev = event;
+   zone = ev->zone;
+   if (e_fwin_zone_find(zone)) return 1;
+   if ((zone->container->num == 0) && (zone->num == 0) && 
+       (fileman_config->view.show_desktop_icons))
+     e_fwin_zone_new(zone, "desktop", "/");
+   else 
+     {
+	char buf[256];
+	
+	if (fileman_config->view.show_desktop_icons) 
+	  {
+	     snprintf(buf, sizeof(buf), "%i", 
+		      (zone->container->num + zone->num));
+	     e_fwin_zone_new(zone, "desktop", buf);
+	  }
+     }
+   return 1;
 }

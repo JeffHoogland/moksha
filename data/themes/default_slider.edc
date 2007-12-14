@@ -194,7 +194,7 @@ group {
 	 mouse_events: 1;
 	 dragable {
 	    x: 0 0 0;
-	    y: 1 1 0;
+	    y: -1 1 0;
 	    confine: "sld_base";
 	 }
 	 description {

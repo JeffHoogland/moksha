@@ -17,10 +17,16 @@ static int  _e_zone_cb_mouse_out(void *data, int type, void *event);
 static int  _e_zone_cb_timer(void *data);
 static int  _e_zone_cb_desk_show(void *data, int type, void *event);
 static void _e_zone_update_flip(E_Zone *zone);
+static void _e_zone_event_move_resize_free(void *data, void *ev);
+static void _e_zone_event_add_free(void *data, void *ev);
+static void _e_zone_event_del_free(void *data, void *ev);
+static void _e_zone_object_del_attach(void *o);
 
 EAPI int E_EVENT_ZONE_DESK_COUNT_SET = 0;
 EAPI int E_EVENT_POINTER_WARP = 0;
 EAPI int E_EVENT_ZONE_MOVE_RESIZE = 0;
+EAPI int E_EVENT_ZONE_ADD = 0;
+EAPI int E_EVENT_ZONE_DEL = 0;
 /* FIXME: We need a EDGE_MOVE event */
 EAPI int E_EVENT_ZONE_EDGE_IN = 0;
 EAPI int E_EVENT_ZONE_EDGE_OUT = 0;
@@ -36,6 +42,8 @@ e_zone_init(void)
    E_EVENT_ZONE_DESK_COUNT_SET = ecore_event_type_new();
    E_EVENT_POINTER_WARP = ecore_event_type_new();
    E_EVENT_ZONE_MOVE_RESIZE = ecore_event_type_new();
+   E_EVENT_ZONE_ADD = ecore_event_type_new();
+   E_EVENT_ZONE_DEL = ecore_event_type_new();
    E_EVENT_ZONE_EDGE_IN = ecore_event_type_new();
    E_EVENT_ZONE_EDGE_OUT = ecore_event_type_new();
    return 1;
@@ -53,6 +61,7 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
    E_Zone *zone;
    char    name[40];
    Evas_Object *o;
+   E_Event_Zone_Add *ev;
 
    zone = E_OBJECT_ALLOC(E_Zone, E_ZONE_TYPE, _e_zone_free);
    if (!zone) return NULL;
@@ -141,6 +150,14 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
 			 e_config->zone_desks_y_count);
 
    _e_zone_update_flip(zone);
+
+   e_object_del_attach_func_set(E_OBJECT(zone), _e_zone_object_del_attach);
+   
+   ev = E_NEW(E_Event_Zone_Add, 1);
+   ev->zone = zone;
+   e_object_ref(E_OBJECT(ev->zone));
+   ecore_event_add(E_EVENT_ZONE_ADD, ev, _e_zone_event_add_free, NULL);
+   
    return zone;
 }
 
@@ -170,7 +187,8 @@ e_zone_move(E_Zone *zone, int x, int y)
 
    ev = E_NEW(E_Event_Zone_Move_Resize, 1);
    ev->zone = zone;
-   ecore_event_add(E_EVENT_ZONE_MOVE_RESIZE, ev, NULL, NULL);
+   e_object_ref(E_OBJECT(ev->zone));
+   ecore_event_add(E_EVENT_ZONE_MOVE_RESIZE, ev, _e_zone_event_move_resize_free, NULL);
 
    ecore_x_window_move_resize(zone->edge.left, zone->x, zone->y, 1, zone->h);
    ecore_x_window_move_resize(zone->edge.right, zone->x + zone->w - 1, zone->y, 1, zone->h);
@@ -195,7 +213,8 @@ e_zone_resize(E_Zone *zone, int w, int h)
 
    ev = E_NEW(E_Event_Zone_Move_Resize, 1);
    ev->zone = zone;
-   ecore_event_add(E_EVENT_ZONE_MOVE_RESIZE, ev, NULL, NULL);
+   e_object_ref(E_OBJECT(ev->zone));
+   ecore_event_add(E_EVENT_ZONE_MOVE_RESIZE, ev, _e_zone_event_move_resize_free, NULL);
 
    ecore_x_window_move_resize(zone->edge.left, zone->x, zone->y, 1, zone->h);
    ecore_x_window_move_resize(zone->edge.right, zone->x + zone->w - 1, zone->y, 1, zone->h);
@@ -228,7 +247,8 @@ e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h)
    
    ev = E_NEW(E_Event_Zone_Move_Resize, 1);
    ev->zone = zone;
-   ecore_event_add(E_EVENT_ZONE_MOVE_RESIZE, ev, NULL, NULL);
+   e_object_ref(E_OBJECT(ev->zone));
+   ecore_event_add(E_EVENT_ZONE_MOVE_RESIZE, ev, _e_zone_event_move_resize_free, NULL);
 
    ecore_x_window_move_resize(zone->edge.left, zone->x, zone->y, 1, zone->h);
    ecore_x_window_move_resize(zone->edge.right, zone->x + zone->w - 1, zone->y, 1, zone->h);
@@ -468,7 +488,7 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    ev = E_NEW(E_Event_Zone_Desk_Count_Set, 1);
    if (!ev) return;
    ev->zone = zone;
-   e_object_ref(E_OBJECT(zone));
+   e_object_ref(E_OBJECT(ev->zone));
    ecore_event_add(E_EVENT_ZONE_DESK_COUNT_SET, ev, _e_zone_event_zone_desk_count_set_free, NULL);
 }
 
@@ -1018,3 +1038,48 @@ _e_zone_update_flip(E_Zone *zone)
 	  zone->flip.bottom = 1;
      }
 }
+
+static void
+_e_zone_event_move_resize_free(void *data, void *ev)
+{
+   E_Event_Zone_Move_Resize *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->zone));
+   free(e);
+}
+
+static void
+_e_zone_event_add_free(void *data, void *ev)
+{
+   E_Event_Zone_Add *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->zone));
+   free(e);
+}
+
+static void
+_e_zone_event_del_free(void *data, void *ev)
+{
+   E_Event_Zone_Del *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->zone));
+   free(e);
+}
+
+static void
+_e_zone_object_del_attach(void *o)
+{
+   E_Zone *zone;
+   E_Event_Zone_Del *ev;
+
+   if (e_object_is_del(E_OBJECT(o))) return;
+   zone = o;
+   ev = E_NEW(E_Event_Zone_Del, 1);
+   ev->zone = zone;
+   e_object_ref(E_OBJECT(ev->zone));
+   ecore_event_add(E_EVENT_ZONE_DEL, ev, _e_zone_event_del_free, NULL);
+}
+

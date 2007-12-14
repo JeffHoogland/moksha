@@ -15,6 +15,8 @@ typedef struct _E_Zone     E_Zone;
 
 typedef struct _E_Event_Zone_Desk_Count_Set     E_Event_Zone_Desk_Count_Set;
 typedef struct _E_Event_Zone_Move_Resize        E_Event_Zone_Move_Resize;
+typedef struct _E_Event_Zone_Add                E_Event_Zone_Add;
+typedef struct _E_Event_Zone_Del                E_Event_Zone_Del;
 /* TODO: Move this to a general place? */
 typedef struct _E_Event_Pointer_Warp            E_Event_Pointer_Warp;
 typedef struct _E_Event_Zone_Edge               E_Event_Zone_Edge_In;
@@ -82,6 +84,16 @@ struct _E_Event_Zone_Move_Resize
    E_Zone *zone;
 };
 
+struct _E_Event_Zone_Add
+{
+   E_Zone *zone;
+};
+
+struct _E_Event_Zone_Del
+{
+   E_Zone *zone;
+};
+
 struct _E_Event_Pointer_Warp
 {
    struct {
@@ -123,6 +135,8 @@ EAPI void       e_zone_flip_win_restore(void);
 
 extern EAPI int E_EVENT_ZONE_DESK_COUNT_SET;
 extern EAPI int E_EVENT_ZONE_MOVE_RESIZE;
+extern EAPI int E_EVENT_ZONE_ADD;
+extern EAPI int E_EVENT_ZONE_DEL;
 extern EAPI int E_EVENT_POINTER_WARP;
 extern EAPI int E_EVENT_ZONE_EDGE_IN;
 extern EAPI int E_EVENT_ZONE_EDGE_OUT;

@@ -43,6 +43,7 @@ struct _E_Fwin
 
    E_Toolbar          *tbar;
    Ecore_Event_Handler *zone_handler;
+   Ecore_Event_Handler *zone_del_handler;
 };
 
 struct _E_Fwin_Apps_Dialog
@@ -99,6 +100,7 @@ static void _e_fwin_pan_scroll_update(E_Fwin *fwin);
 
 static void _e_fwin_zone_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static int  _e_fwin_zone_move_resize(void *data, int type, void *event);
+static int  _e_fwin_zone_del(void *data, int type, void *event);
 static void _e_fwin_config_set(E_Fwin *fwin);
 static void _e_fwin_window_title_set(E_Fwin *fwin);
 static void _e_fwin_toolbar_resize(E_Fwin *fwin);
@@ -155,6 +157,10 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    fwin->zone_handler = ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE, 
 						_e_fwin_zone_move_resize, 
 						fwin);
+   fwin->zone_del_handler = ecore_event_handler_add(E_EVENT_ZONE_DEL, 
+						    _e_fwin_zone_del,
+						    fwin);
+   /* FIXME: catch del of zone and del fwin when zone goes */
    
    /* Trap the mouse_down on zone so we can unselect */
    evas_object_event_callback_add(zone->bg_event_object, 
@@ -283,6 +289,7 @@ e_fwin_reload_all(void)
 		  E_Zone *zone;
 
 		  zone = lll->data;
+		  if (e_fwin_zone_find(zone)) continue;
 		  if ((zone->container->num == 0) && (zone->num == 0) && 
 		      (fileman_config->view.show_desktop_icons))
 		    e_fwin_zone_new(zone, "desktop", "/");
@@ -300,6 +307,21 @@ e_fwin_reload_all(void)
 	       }
 	  }
      }
+}
+
+EAPI int
+e_fwin_zone_find(E_Zone *zone)
+{
+   Evas_List *f;
+   
+   for (f = fwins; f; f = f->next)
+     {
+	E_Fwin *win;
+	
+	win = f->data;
+	if (win->zone == zone) return 1;
+     }
+   return 0;
 }
 
 /* local subsystem functions */
@@ -440,6 +462,8 @@ _e_fwin_free(E_Fwin *fwin)
    
    if (fwin->zone_handler) 
      ecore_event_handler_del(fwin->zone_handler);
+   if (fwin->zone_del_handler) 
+     ecore_event_handler_del(fwin->zone_del_handler);
    
    fwins = evas_list_remove(fwins, fwin);
    if (fwin->wallpaper_file) evas_stringshare_del(fwin->wallpaper_file);
@@ -1489,6 +1513,7 @@ _e_fwin_zone_move_resize(void *data, int type, void *event)
    fwin = data;
    ev = event;
    if (!fwin) return 1;
+   if (fwin->zone != ev->zone) return 1;
    if (fwin->bg_obj) 
      {
 	evas_object_move(fwin->bg_obj, ev->zone->x, ev->zone->y);
@@ -1499,6 +1524,21 @@ _e_fwin_zone_move_resize(void *data, int type, void *event)
 	evas_object_move(fwin->scrollframe_obj, ev->zone->x, ev->zone->y);
 	evas_object_resize(fwin->scrollframe_obj, ev->zone->w, ev->zone->h);
      }
+   return 1;
+}
+
+static int 
+_e_fwin_zone_del(void *data, int type, void *event) 
+{
+   E_Event_Zone_Del *ev;
+   E_Fwin *fwin;
+   
+   if (type != E_EVENT_ZONE_DEL) return 1;
+   fwin = data;
+   ev = event;
+   if (!fwin) return 1;
+   if (fwin->zone != ev->zone) return 1;
+   e_object_del(E_OBJECT(fwin));
    return 1;
 }
 

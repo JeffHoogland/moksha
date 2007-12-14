@@ -738,7 +738,8 @@ e_border_hide(E_Border *bd, int manage)
 	     e_border_focus_set(bd, 0, 1);
 	     if (manage != 2)
 	       {
-		  if (e_config->focus_policy == E_FOCUS_CLICK && e_config->focus_revert_on_hide_or_close)
+		  if ((e_config->focus_policy == E_FOCUS_CLICK) && 
+		      (e_config->focus_revert_on_hide_or_close))
 		    e_desk_last_focused_focus(bd->desk);
 	       }
 	  }
@@ -1353,6 +1354,10 @@ EAPI void
 e_border_focus_set_with_pointer(E_Border *bd)
 {
    if (e_config->focus_policy == E_FOCUS_SLOPPY)
+     {
+	e_border_focus_set(bd, 1, 1);
+     }
+   else if (e_config->focus_policy == E_FOCUS_MOUSE)
      {
 	if (e_border_under_pointer_get(NULL, bd))
 	  {
