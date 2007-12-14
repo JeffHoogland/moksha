@@ -1097,7 +1097,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
      e_widget_preview_edje_set(ob, cfdata->theme, "e/desktop/background");
    e_widget_aspect_child_set(oa, ob);
    e_widget_framelist_object_append(of, oa);
-   e_widget_table_object_append(ot, of, 2, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 2, 0, 1, 1, 1, 1, 0, 1);
 
    _fill_files_ilist(cfdata);
    _fill_categories_ilist(cfdata);
