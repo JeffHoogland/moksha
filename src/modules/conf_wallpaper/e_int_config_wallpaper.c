@@ -14,6 +14,16 @@ static Evas_Object *_adv_create   (E_Config_Dialog *cfd, Evas *evas, E_Config_Di
 
 static E_Config_Dialog *_e_int_config_wallpaper_desk(E_Container *con, int con_num, int zone_num, int desk_x, int desk_y);
 
+static void _cb_button_up(void *data1, void *data2);
+static void _cb_files_changed(void *data, Evas_Object *obj, void *event_info);
+static void _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info);
+static void _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info);
+static void _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info);
+static void _cb_theme_wallpaper(void *data, Evas_Object *obj, void *event_info);
+static void _cb_dir(void *data, Evas_Object *obj, void *event_info);
+static void _cb_import(void *data1, void *data2);
+static void _cb_gradient(void *data1, void *data2);
+
 #define E_CONFIG_WALLPAPER_ALL 0
 #define E_CONFIG_WALLPAPER_DESK 1
 #define E_CONFIG_WALLPAPER_SCREEN 2
@@ -234,14 +244,6 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
      e_widget_check_checked_set(cfdata->o_theme_bg, 0);
    cfdata->use_theme_bg = 0;
    if (cfdata->o_frame) e_widget_change(cfdata->o_frame);
-}
-
-static void
-_cb_files_selected(void *data, Evas_Object *obj, void *event_info)
-{
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = data;
 }
 
 static void
@@ -466,44 +468,46 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *ot, *of, *il, *ol, *oa;
-   char path[4096];
-   const char *f;
-   E_Fm2_Config fmc;
-   E_Zone *z;
+   Evas_Object *o, *rt, *ot;
+   Evas_Object *ow, *of, *oa;
+   E_Zone *zone = NULL;
    E_Radio_Group *rg;
+   char path[4096];
+   E_Fm2_Config fmc;
    int mw, mh;
+   const char *f;
 
-   z = e_zone_current_get(cfd->con);
-   
-   ot = e_widget_table_add(evas, 0);
-   ol = e_widget_table_add(evas, 0);
-   il = e_widget_table_add(evas, 1);
-   
+   zone = e_zone_current_get(cfd->con);
+   o = e_widget_list_add(evas, 0, 1);
+
    rg = e_widget_radio_group_new(&(cfdata->fmdir));
-   o = e_widget_radio_add(evas, _("Personal"), 0, rg);
-   cfdata->o_personal = o;
-   evas_object_smart_callback_add(o, "changed", _cb_dir, cfdata);
-   e_widget_table_object_append(il, o, 0, 0, 1, 1, 1, 1, 0, 0);
-   o = e_widget_radio_add(evas, _("System"), 1, rg);
-   cfdata->o_system = o;
-   evas_object_smart_callback_add(o, "changed", _cb_dir, cfdata);
-   e_widget_table_object_append(il, o, 1, 0, 1, 1, 1, 1, 0, 0);
-   
-   e_widget_table_object_append(ol, il, 0, 0, 1, 1, 0, 0, 0, 0);
-   
-   o = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
-			   _cb_button_up, cfdata, NULL);
-   cfdata->o_up_button = o;
-   e_widget_table_object_append(ol, o, 0, 1, 1, 1, 0, 0, 0, 0);
-   
+   ot = e_widget_table_add(evas, 0);
+   rt = e_widget_table_add(evas, 1);
+
+   /* create dir radios */
+   ow = e_widget_radio_add(evas, _("Personal"), 0, rg);
+   cfdata->o_personal = ow;
+   evas_object_smart_callback_add(ow, "changed", _cb_dir, cfdata);
+   e_widget_table_object_append(rt, ow, 0, 0, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_radio_add(evas, _("System"), 1, rg);
+   cfdata->o_system = ow;
+   evas_object_smart_callback_add(ow, "changed", _cb_dir, cfdata);
+   e_widget_table_object_append(rt, ow, 1, 0, 1, 1, 1, 1, 0, 0);
+   e_widget_table_object_append(ot, rt, 0, 0, 1, 1, 0, 0, 0, 0);
+
+   ow = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
+			    _cb_button_up, cfdata, NULL);
+   cfdata->o_up_button = ow;
+   e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 0, 0, 0, 0);
+
    if (cfdata->fmdir == 1)
      snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
    else
      snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
-   
-   o = e_fm2_add(evas);
-   cfdata->o_fm = o;
+
+   /* add file selector */
+   ow = e_fm2_add(evas);
+   cfdata->o_fm = ow;
    memset(&fmc, 0, sizeof(E_Fm2_Config));
    fmc.view.mode = E_FM2_VIEW_MODE_LIST;
    fmc.view.open_dirs_in_place = 1;
@@ -521,66 +525,56 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    fmc.list.sort.dirs.last = 1;
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
-   e_fm2_config_set(o, &fmc);
-   e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_SHOW_HIDDEN);
-   evas_object_smart_callback_add(o, "dir_changed",
+   e_fm2_config_set(ow, &fmc);
+   e_fm2_icon_menu_flags_set(ow, E_FM2_MENU_NO_SHOW_HIDDEN);
+   evas_object_smart_callback_add(ow, "dir_changed",
 				  _cb_files_changed, cfdata);
-   evas_object_smart_callback_add(o, "selection_change",
+   evas_object_smart_callback_add(ow, "selection_change",
 				  _cb_files_selection_change, cfdata);
-   evas_object_smart_callback_add(o, "selected",
-				  _cb_files_selected, cfdata);
-   evas_object_smart_callback_add(o, "changed",
+   evas_object_smart_callback_add(ow, "changed",
 				  _cb_files_files_changed, cfdata);
-   evas_object_smart_callback_add(o, "files_deleted",
+   evas_object_smart_callback_add(ow, "files_deleted",
 				  _cb_files_files_deleted, cfdata);
-   
-   e_fm2_path_set(o, path, "/");
+   e_fm2_path_set(ow, path, "/");
 
-   of = e_widget_scrollframe_pan_add(evas, o,
+   of = e_widget_scrollframe_pan_add(evas, ow,
 				     e_fm2_pan_set,
 				     e_fm2_pan_get,
 				     e_fm2_pan_max_get,
 				     e_fm2_pan_child_size_get);
    cfdata->o_frame = of;
    e_widget_min_size_set(of, 160, 160);
-   e_widget_table_object_append(ol, of, 0, 2, 1, 1, 1, 1, 1, 1);
-   e_widget_table_object_append(ot, ol, 0, 0, 1, 1, 1, 1, 1, 1);
-   
-   of = e_widget_list_add(evas, 0, 0);
-   
-   il = e_widget_list_add(evas, 0, 1);
-   o = e_widget_check_add(evas, _("Use Theme Wallpaper"), &cfdata->use_theme_bg);
-   cfdata->o_theme_bg = o;
-   evas_object_smart_callback_add(o, "changed", _cb_theme_wallpaper, cfdata);
-   e_widget_list_object_append(il, o, 1, 0, 0.5);
+   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(o, ot, 1, 1, 0.0);
 
-   ol = e_widget_list_add(evas, 1, 1);
-   o = e_widget_button_add(evas, _("Picture..."), "enlightenment/picture",
-			   _cb_import, cfdata, NULL);
-   e_widget_list_object_append(ol, o, 1, 0, 0.5);
-   o = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
-			   _cb_gradient, cfdata, NULL);
-   e_widget_list_object_append(ol, o, 1, 0, 0.5);
-   e_widget_list_object_append(il, ol, 1, 0, 0.5);
-   e_widget_list_object_append(of, il, 1, 0, 0.0);
+   ot = e_widget_table_add(evas, 0);
+   ow = e_widget_check_add(evas, _("Use Theme Wallpaper"), &cfdata->use_theme_bg);
+   cfdata->o_theme_bg = ow;
+   evas_object_smart_callback_add(ow, "changed", _cb_theme_wallpaper, cfdata);
+   e_widget_table_object_append(ot, ow, 0, 0, 2, 1, 1, 0, 0, 0);
+   ow = e_widget_button_add(evas, _("Picture..."), "enlightenment/picture",
+			    _cb_import, cfdata, NULL);
+   e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
+   ow = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
+			    _cb_gradient, cfdata, NULL);
+   e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
 
    mw = 320;
-   mh = (320 * z->h) / z->w;
+   mh = (320 * zone->h) / zone->w;
    oa = e_widget_aspect_add(evas, mw, mh);
-   o = e_widget_preview_add(evas, mw, mh);
-   cfdata->o_preview = o;
+   ow = e_widget_preview_add(evas, mw, mh);
+   cfdata->o_preview = ow;
    if (cfdata->bg)
      f = cfdata->bg;
    else
      f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
-   e_widget_preview_edje_set(o, f, "e/desktop/background");
-   e_widget_aspect_child_set(oa, o);
-   e_widget_list_object_append(of, oa, 1, 1, 0.5);
-   
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
-   
+   e_widget_preview_edje_set(ow, f, "e/desktop/background");
+   e_widget_aspect_child_set(oa, ow);
+   e_widget_table_object_append(ot, oa, 0, 2, 4, 1, 1, 1, 1, 1);
+
+   e_widget_list_object_append(o, ot, 1, 0, 0.5);
    e_dialog_resizable_set(cfd->dia, 1);
-   return ot;
+   return o;
 }
 
 static int
@@ -620,43 +614,46 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *ot, *of, *il, *ol;
-   char path[4096];
-   const char *f;
-   E_Fm2_Config fmc;
-   E_Zone *z;
+   Evas_Object *o, *rt, *ot;
+   Evas_Object *ow, *of, *oa;
+   E_Zone *zone = NULL;
    E_Radio_Group *rg;
+   char path[4096];
+   E_Fm2_Config fmc;
+   int mw, mh;
+   const char *f;
 
-   z = e_zone_current_get(cfd->con);
-   
-   ot = e_widget_table_add(evas, 0);
-   ol = e_widget_table_add(evas, 0);
-   il = e_widget_table_add(evas, 1);
-   
+   zone = e_zone_current_get(cfd->con);
+   o = e_widget_list_add(evas, 0, 1);
+
    rg = e_widget_radio_group_new(&(cfdata->fmdir));
-   o = e_widget_radio_add(evas, _("Personal"), 0, rg);
-   cfdata->o_personal = o;
-   evas_object_smart_callback_add(o, "changed", _cb_dir, cfdata);
-   e_widget_table_object_append(il, o, 0, 0, 1, 1, 1, 1, 0, 0);
-   o = e_widget_radio_add(evas, _("System"), 1, rg);
-   cfdata->o_system = o;
-   evas_object_smart_callback_add(o, "changed", _cb_dir, cfdata);
-   e_widget_table_object_append(il, o, 1, 0, 1, 1, 1, 1, 0, 0);
-   
-   e_widget_table_object_append(ol, il, 0, 0, 1, 1, 0, 0, 0, 0);
-   
-   o = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
-			   _cb_button_up, cfdata, NULL);
-   cfdata->o_up_button = o;
-   e_widget_table_object_append(ol, o, 0, 1, 1, 1, 0, 0, 0, 0);
-   
+   ot = e_widget_table_add(evas, 0);
+   rt = e_widget_table_add(evas, 1);
+
+   /* create dir radios */
+   ow = e_widget_radio_add(evas, _("Personal"), 0, rg);
+   cfdata->o_personal = ow;
+   evas_object_smart_callback_add(ow, "changed", _cb_dir, cfdata);
+   e_widget_table_object_append(rt, ow, 0, 0, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_radio_add(evas, _("System"), 1, rg);
+   cfdata->o_system = ow;
+   evas_object_smart_callback_add(ow, "changed", _cb_dir, cfdata);
+   e_widget_table_object_append(rt, ow, 1, 0, 1, 1, 1, 1, 0, 0);
+   e_widget_table_object_append(ot, rt, 0, 0, 1, 1, 0, 0, 0, 0);
+
+   ow = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
+			    _cb_button_up, cfdata, NULL);
+   cfdata->o_up_button = ow;
+   e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 0, 0, 0, 0);
+
    if (cfdata->fmdir == 1)
      snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
    else
      snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
-   
-   o = e_fm2_add(evas);
-   cfdata->o_fm = o;
+
+   /* add file selector */
+   ow = e_fm2_add(evas);
+   cfdata->o_fm = ow;
    memset(&fmc, 0, sizeof(E_Fm2_Config));
    fmc.view.mode = E_FM2_VIEW_MODE_LIST;
    fmc.view.open_dirs_in_place = 1;
@@ -674,75 +671,69 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    fmc.list.sort.dirs.last = 1;
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
-   e_fm2_config_set(o, &fmc);
-   e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_SHOW_HIDDEN);
-   evas_object_smart_callback_add(o, "dir_changed",
+   e_fm2_config_set(ow, &fmc);
+   e_fm2_icon_menu_flags_set(ow, E_FM2_MENU_NO_SHOW_HIDDEN);
+   evas_object_smart_callback_add(ow, "dir_changed",
 				  _cb_files_changed, cfdata);
-   evas_object_smart_callback_add(o, "selection_change",
+   evas_object_smart_callback_add(ow, "selection_change",
 				  _cb_files_selection_change, cfdata);
-   evas_object_smart_callback_add(o, "selected",
-				  _cb_files_selected, cfdata);
-   evas_object_smart_callback_add(o, "changed",
+   evas_object_smart_callback_add(ow, "changed",
 				  _cb_files_files_changed, cfdata);
-   e_fm2_path_set(o, path, "/");
+   evas_object_smart_callback_add(ow, "files_deleted",
+				  _cb_files_files_deleted, cfdata);
+   e_fm2_path_set(ow, path, "/");
 
-   of = e_widget_scrollframe_pan_add(evas, o,
+   of = e_widget_scrollframe_pan_add(evas, ow,
 				     e_fm2_pan_set,
 				     e_fm2_pan_get,
 				     e_fm2_pan_max_get,
 				     e_fm2_pan_child_size_get);
    cfdata->o_frame = of;
    e_widget_min_size_set(of, 160, 160);
-   e_widget_table_object_append(ol, of, 0, 2, 1, 1, 1, 1, 1, 1);
-   e_widget_table_object_append(ot, ol, 0, 0, 1, 1, 1, 1, 1, 1);
-   
-   of = e_widget_list_add(evas, 0, 0);
-   
-   il = e_widget_list_add(evas, 0, 1);
-   o = e_widget_check_add(evas, _("Use Theme Wallpaper"), &cfdata->use_theme_bg);
-   cfdata->o_theme_bg = o;
-   evas_object_smart_callback_add(o, "changed", _cb_theme_wallpaper, cfdata);
-   e_widget_list_object_append(il, o, 1, 0, 0.5);
+   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(o, ot, 1, 1, 0.0);
 
-   ol = e_widget_list_add(evas, 1, 1);
-   o = e_widget_button_add(evas, _("Picture..."), "enlightenment/picture",
-			   _cb_import, cfdata, NULL);
-   e_widget_list_object_append(ol, o, 1, 0, 0.5);
-   o = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
-			   _cb_gradient, cfdata, NULL);
-   e_widget_list_object_append(ol, o, 1, 0, 0.5);
-   e_widget_list_object_append(il, ol, 1, 0, 0.5);
-   e_widget_list_object_append(of, il, 1, 0, 0.0);
-   
-   o = e_widget_preview_add(evas, 320, (320 * z->h) / z->w);
-   cfdata->o_preview = o;
+   ot = e_widget_table_add(evas, 0);
+   ow = e_widget_check_add(evas, _("Use Theme Wallpaper"), &cfdata->use_theme_bg);
+   cfdata->o_theme_bg = ow;
+   evas_object_smart_callback_add(ow, "changed", _cb_theme_wallpaper, cfdata);
+   e_widget_table_object_append(ot, ow, 0, 0, 2, 1, 1, 0, 0, 0);
+   ow = e_widget_button_add(evas, _("Picture..."), "enlightenment/picture",
+			    _cb_import, cfdata, NULL);
+   e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
+   ow = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
+			    _cb_gradient, cfdata, NULL);
+   e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
+
+   mw = 320;
+   mh = (320 * zone->h) / zone->w;
+   oa = e_widget_aspect_add(evas, mw, mh);
+   ow = e_widget_preview_add(evas, mw, mh);
+   cfdata->o_preview = ow;
    if (cfdata->bg)
      f = cfdata->bg;
    else
      f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
-   e_widget_preview_edje_set(o, f, "e/desktop/background");
-   e_widget_list_object_append(of, o, 0, 0, 0.5);
-   
-   ol = e_widget_framelist_add(evas, _("Where to place the Wallpaper"), 0);
-   e_widget_framelist_content_align_set(ol, 0.0, 0.0);
-   rg = e_widget_radio_group_new(&(cfdata->all_this_desk_screen));
+   e_widget_preview_edje_set(ow, f, "e/desktop/background");
+   e_widget_aspect_child_set(oa, ow);
+   e_widget_table_object_append(ot, oa, 0, 2, 4, 1, 1, 1, 0, 0);
 
-   o = e_widget_radio_add(evas, _("All Desktops"), E_CONFIG_WALLPAPER_ALL, rg);
-   e_widget_framelist_object_append(ol, o);
-   o = e_widget_radio_add(evas, _("This Desktop"), E_CONFIG_WALLPAPER_DESK, rg);
-   e_widget_framelist_object_append(ol, o);
-   o = e_widget_radio_add(evas, _("This Screen"), E_CONFIG_WALLPAPER_SCREEN, rg);
-   if (!((e_util_container_zone_number_get(0, 1)) ||
+   rg = e_widget_radio_group_new(&(cfdata->all_this_desk_screen));
+   of = e_widget_frametable_add(evas, _("Where to place the Wallpaper"), 0);
+   ow = e_widget_radio_add(evas, _("All Desktops"), E_CONFIG_WALLPAPER_ALL, rg);
+   e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 0, 1, 0);
+   ow = e_widget_radio_add(evas, _("This Desktop"), E_CONFIG_WALLPAPER_DESK, rg);
+   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
+   ow = e_widget_radio_add(evas, _("This Screen"), E_CONFIG_WALLPAPER_SCREEN, rg);
+   if (!(e_util_container_zone_number_get(0, 1) ||
 	 (e_util_container_zone_number_get(1, 0))))
-     e_widget_disabled_set(o, 1);
-   e_widget_framelist_object_append(ol, o);
-   
-   e_widget_list_object_append(of, ol, 1, 0, 0.5);
-   
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 0, 0, 0, 0);
-   
+     e_widget_disabled_set(ow, 1);
+   e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 3, 4, 1, 1, 1, 1, 1);
+
+   e_widget_list_object_append(o, ot, 1, 0, 0.5);
    e_dialog_resizable_set(cfd->dia, 1);
-   return ot;
+   return o;
 }
 
 static int
