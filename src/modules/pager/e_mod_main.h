@@ -26,6 +26,7 @@ struct _Config
    unsigned int    popup_urgent;
    unsigned int    popup_urgent_stick;
    double          popup_urgent_speed;
+   int             popup_pager_height;
    unsigned int    drag_resist;
    unsigned int    scale;
    unsigned char   resize;

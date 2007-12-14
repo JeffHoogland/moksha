@@ -16,6 +16,7 @@ struct _E_Config_Dialog_Data
    int show_popup_urgent;
    int popup_urgent_stick;
    double popup_urgent_speed;
+   int popup_pager_height;
    int drag_resist;
    unsigned int btn_drag;
    unsigned int btn_noplace;
@@ -85,6 +86,7 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    cfdata->show_popup_urgent = pager_config->popup_urgent;
    cfdata->popup_urgent_stick = pager_config->popup_urgent_stick;
    cfdata->popup_urgent_speed = pager_config->popup_urgent_speed;
+   cfdata->popup_pager_height = pager_config->popup_pager_height;
    cfdata->drag_resist = pager_config->drag_resist;
    cfdata->btn_drag = pager_config->btn_drag;
    cfdata->btn_noplace = pager_config->btn_noplace;
@@ -169,6 +171,10 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("Pager Popup Settings"), 0);   
    ob = e_widget_check_add(evas, _("Show Popup on desktop change"), &(cfdata->show_popup));
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_label_add(evas, _("Popup Pager Height"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 20.0, 200.0, 0.1, 0, NULL, &(cfdata->popup_pager_height), 200);
+   e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Popup Speed"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f seconds"), 0.1, 10.0, 0.1, 0, &(cfdata->popup_speed), NULL, 200);
@@ -202,6 +208,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    pager_config->popup_urgent = cfdata->show_popup_urgent;
    pager_config->popup_urgent_stick = cfdata->popup_urgent_stick;
    pager_config->popup_urgent_speed = cfdata->popup_urgent_speed;
+   pager_config->popup_pager_height = cfdata->popup_pager_height;
    pager_config->drag_resist = cfdata->drag_resist;
    pager_config->btn_drag = cfdata->btn_drag;
    pager_config->btn_noplace = cfdata->btn_noplace;
