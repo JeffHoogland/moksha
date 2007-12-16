@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-12-09 18:37+0100\n"
-"PO-Revision-Date: 2007-12-09 18:41+0100\n"
+"POT-Creation-Date: 2007-12-16 12:42+0100\n"
+"PO-Revision-Date: 2007-12-16 12:44+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -221,9 +221,9 @@ msgid "Exit"
 msgstr "Esci"
 
 #: src/bin/e_int_menus.c:212 src/bin/e_int_config_modules.c:41
-#: src/modules/ibar/e_mod_main.c:319 src/modules/ibar/e_mod_main.c:796
+#: src/modules/ibar/e_mod_main.c:315 src/modules/ibar/e_mod_main.c:830
 #: src/modules/ibox/e_mod_main.c:309 src/modules/ibox/e_mod_main.c:701
-#: src/modules/pager/e_mod_main.c:767 src/modules/temperature/e_mod_main.c:210
+#: src/modules/pager/e_mod_main.c:778 src/modules/temperature/e_mod_main.c:210
 #: src/modules/battery/e_mod_main.c:183
 msgid "Configuration"
 msgstr "Configurazione"
@@ -234,8 +234,8 @@ msgstr "Configurazione"
 #: src/modules/conf_startup/e_int_config_startup.c:273
 #: src/modules/conf_theme/e_int_config_theme.c:379
 #: src/modules/conf_theme/e_int_config_theme.c:849
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:488
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:641
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:492
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:638
 #: src/modules/conf_desklock/e_int_config_desklock.c:195
 #: src/modules/conf_imc/e_int_config_imc.c:823
 msgid "System"
@@ -356,7 +356,7 @@ msgstr ""
 #: src/bin/e_exec.c:324 src/bin/e_sys.c:397 src/bin/e_sys.c:442
 #: src/bin/e_int_border_remember.c:250 src/bin/e_int_border_remember.c:325
 #: src/bin/e_int_border_remember.c:367 src/bin/e_config_dialog.c:218
-#: src/bin/e_module.c:398 src/bin/e_entry_dialog.c:56 src/bin/e_config.c:2287
+#: src/bin/e_module.c:398 src/bin/e_entry_dialog.c:56 src/bin/e_config.c:2286
 #: src/bin/e_eap_editor.c:596 src/bin/e_eap_editor.c:660 src/bin/e_utils.c:577
 #: src/bin/e_fm_prop.c:513 src/modules/cpufreq/e_mod_main.c:340
 #: src/modules/cpufreq/e_mod_main.c:367 src/modules/cpufreq/e_mod_main.c:386
@@ -494,8 +494,8 @@ msgid "Appearance"
 msgstr "Aspetto"
 
 #: src/bin/e_int_config_modules.c:42 src/modules/conf_mime/e_mod_main.c:34
-#: src/modules/fileman/e_mod_main.c:41 src/modules/fileman/e_mod_main.c:43
-#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:126
+#: src/modules/fileman/e_mod_main.c:43 src/modules/fileman/e_mod_main.c:45
+#: src/modules/fileman/e_mod_main.c:57 src/modules/fileman/e_mod_main.c:136
 msgid "File Manager"
 msgstr "File manager"
 
@@ -899,10 +899,10 @@ msgstr "Basilari"
 msgid "Apply"
 msgstr "Applica"
 
-#: src/bin/e_config_dialog.c:226 src/bin/e_fm.c:512
+#: src/bin/e_config_dialog.c:226 src/bin/e_fm.c:515
 #: src/bin/e_int_border_menu.c:328 src/bin/e_int_border_prop.c:81
 #: src/bin/e_actions.c:1940 src/modules/conf/e_conf.c:167
-#: src/modules/fileman/e_fwin.c:1274
+#: src/modules/fileman/e_fwin.c:1310
 msgid "Close"
 msgstr "Chiudi"
 
@@ -1554,7 +1554,7 @@ msgstr "Modulo %s di Enlightenment"
 msgid "Would you like to unload this module?<br>"
 msgstr "Volete disattivare questo modulo?<br>"
 
-#: src/bin/e_module.c:479 src/bin/e_fm.c:6814 src/bin/e_confirm_dialog.c:47
+#: src/bin/e_module.c:479 src/bin/e_fm.c:6953 src/bin/e_confirm_dialog.c:47
 #: src/bin/e_actions.c:327 src/bin/e_actions.c:1522 src/bin/e_actions.c:1593
 #: src/bin/e_actions.c:1652 src/bin/e_actions.c:1711 src/bin/e_actions.c:1770
 #: src/bin/e_actions.c:1829
@@ -1562,7 +1562,7 @@ msgstr "Volete disattivare questo modulo?<br>"
 msgid "Yes"
 msgstr "Sì"
 
-#: src/bin/e_module.c:480 src/bin/e_fm.c:6815 src/bin/e_confirm_dialog.c:48
+#: src/bin/e_module.c:480 src/bin/e_fm.c:6954 src/bin/e_confirm_dialog.c:48
 #: src/bin/e_actions.c:329 src/bin/e_actions.c:1524 src/bin/e_actions.c:1595
 #: src/bin/e_actions.c:1654 src/bin/e_actions.c:1713 src/bin/e_actions.c:1772
 #: src/bin/e_actions.c:1831
@@ -1613,54 +1613,59 @@ msgstr "Avvio"
 msgid "Set As Background"
 msgstr "Imposta come sfondo"
 
-#: src/bin/e_fm.c:514
+#: src/bin/e_fm.c:517
 msgid "Unexisting path"
 msgstr "Percorso inesistente"
 
-#: src/bin/e_fm.c:517
+#: src/bin/e_fm.c:520
 #, c-format
 msgid "%s doesn't exists"
 msgstr "%s non esiste"
 
-#: src/bin/e_fm.c:2650
+#: src/bin/e_fm.c:2669
 #, c-format
 msgid "%i Files"
 msgstr "%i File"
 
-#: src/bin/e_fm.c:6100 src/bin/e_fm.c:6254
+#: src/bin/e_fm.c:6138 src/bin/e_fm.c:6299
+#: src/modules/fileman/e_mod_config.c:154
+msgid "View Mode"
+msgstr "Modalità visualizzazione"
+
+#: src/bin/e_fm.c:6145 src/bin/e_fm.c:6306
 msgid "Refresh View"
 msgstr "Aggiorna vista"
 
-#: src/bin/e_fm.c:6111 src/bin/e_fm.c:6265
+#: src/bin/e_fm.c:6156 src/bin/e_fm.c:6317
 msgid "Show Hidden Files"
 msgstr "Mostra file nascosti"
 
-#: src/bin/e_fm.c:6126 src/bin/e_fm.c:6280
+#: src/bin/e_fm.c:6171 src/bin/e_fm.c:6332
 msgid "Remember Ordering"
 msgstr "Ricorda ordinamento"
 
-#: src/bin/e_fm.c:6138 src/bin/e_fm.c:6292
+#: src/bin/e_fm.c:6183 src/bin/e_fm.c:6344
 msgid "Sort Now"
 msgstr "Ordina adesso"
 
-#: src/bin/e_fm.c:6156 src/bin/e_fm.c:6310
+#: src/bin/e_fm.c:6201 src/bin/e_fm.c:6362
 #: src/modules/conf_paths/e_int_config_paths.c:211
 msgid "New Directory"
 msgstr "Nuova directory"
 
-#: src/bin/e_fm.c:6174 src/bin/e_fm.c:6357 src/bin/e_entry.c:501
+#: src/bin/e_fm.c:6219 src/bin/e_fm.c:6409 src/bin/e_entry.c:503
 msgid "Paste"
 msgstr "Incolla"
 
-#: src/bin/e_fm.c:6326 src/bin/e_entry.c:479
+#: src/bin/e_fm.c:6378 src/bin/e_entry.c:481
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_fm.c:6343 src/bin/e_entry.c:490
+#: src/bin/e_fm.c:6395 src/bin/e_entry.c:492
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_fm.c:6416 src/bin/e_entry.c:466
+#: src/bin/e_fm.c:6468 src/bin/e_entry.c:468
 #: src/modules/ibar/e_mod_config.c:111
 #: src/modules/conf_applications/e_int_config_apps.c:271
 #: src/modules/conf_profiles/e_int_config_profiles.c:93
@@ -1668,41 +1673,50 @@ msgstr "Copia"
 msgid "Delete"
 msgstr "Elimina"
 
-#: src/bin/e_fm.c:6427
+#: src/bin/e_fm.c:6479
 msgid "Rename"
 msgstr "Rinomina"
 
-#: src/bin/e_fm.c:6437
+#: src/bin/e_fm.c:6489
 msgid "Properties"
 msgstr "Proprietà"
 
-#: src/bin/e_fm.c:6657
+#: src/bin/e_fm.c:6650 src/modules/conf_paths/e_int_config_paths.c:83
+#: src/modules/fileman/e_mod_config.c:156
+msgid "Icons"
+msgstr "Icone"
+
+#: src/bin/e_fm.c:6658 src/modules/fileman/e_mod_config.c:169
+msgid "List"
+msgstr "Elenco"
+
+#: src/bin/e_fm.c:6796
 msgid "Create a new Directory"
 msgstr "Crea nuova directory"
 
-#: src/bin/e_fm.c:6658
+#: src/bin/e_fm.c:6797
 msgid "New Directory Name:"
 msgstr "Nome directory:"
 
-#: src/bin/e_fm.c:6717
+#: src/bin/e_fm.c:6856
 #, c-format
 msgid "Rename %s to:"
 msgstr "Rinomina %s in:"
 
-#: src/bin/e_fm.c:6719
+#: src/bin/e_fm.c:6858
 msgid "Rename File"
 msgstr "Rinomina file"
 
-#: src/bin/e_fm.c:6817
+#: src/bin/e_fm.c:6956
 msgid "Confirm Delete"
 msgstr "Conferma eliminazione"
 
-#: src/bin/e_fm.c:6821
+#: src/bin/e_fm.c:6960
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Siete sicuri di voler eliminare<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:6827
+#: src/bin/e_fm.c:6966
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1846,7 +1860,8 @@ msgstr "A tutto schermo"
 msgid "Window List"
 msgstr "Lista finestre"
 
-#: src/bin/e_int_border_menu.c:980 src/modules/pager/e_mod_main.c:239
+#: src/bin/e_int_border_menu.c:980 src/modules/pager/e_mod_main.c:235
+#: src/modules/pager/e_mod_main.c:2335
 msgid "Pager"
 msgstr "Pager"
 
@@ -1855,7 +1870,7 @@ msgstr "Pager"
 msgid "Container %d"
 msgstr "Contenitore %d"
 
-#: src/bin/e_entry.c:513
+#: src/bin/e_entry.c:515
 msgid "Select All"
 msgstr "Seleziona tutto"
 
@@ -2319,7 +2334,7 @@ msgstr "Mostra menù..."
 #: src/bin/e_actions.c:2156 src/bin/e_actions.c:2161
 #: src/modules/conf/e_mod_main.c:46 src/modules/conf/e_mod_main.c:67
 #: src/modules/exebuf/e_mod_main.c:48 src/modules/exebuf/e_mod_main.c:68
-#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:126
+#: src/modules/fileman/e_mod_main.c:57 src/modules/fileman/e_mod_main.c:136
 msgid "Launch"
 msgstr "Esecuzione"
 
@@ -2387,11 +2402,11 @@ msgstr ""
 msgid "Desktop %i, %i"
 msgstr "Desktop %i, %i"
 
-#: src/bin/e_config.c:2186
+#: src/bin/e_config.c:2185
 msgid "Configuration Upgraded"
 msgstr "Aggiornamento configurazione"
 
-#: src/bin/e_config.c:2211
+#: src/bin/e_config.c:2210
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>configuration to disk. The "
@@ -2403,7 +2418,7 @@ msgstr ""
 "dove è avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2222
+#: src/bin/e_config.c:2221
 #, c-format
 msgid ""
 "Enlightenment's configuration files are too big<br>for the file system they "
@@ -2419,7 +2434,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2235
+#: src/bin/e_config.c:2234
 #, c-format
 msgid ""
 "An output error occured when writing the configuration<br>files for "
@@ -2433,7 +2448,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2246
+#: src/bin/e_config.c:2245
 #, c-format
 msgid ""
 "Enlightenment cannot write its configuration file<br>because it ran out of "
@@ -2447,7 +2462,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2258
+#: src/bin/e_config.c:2257
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the configuration file<br>it was writing "
@@ -2459,7 +2474,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2283
+#: src/bin/e_config.c:2282
 msgid "Enlightenment Configuration Write Problems"
 msgstr "Problemi scrittura configurazione di Enlightenment"
 
@@ -2639,8 +2654,8 @@ msgstr "Aggiungi ai preferiti"
 #: src/bin/e_widget_fsel.c:294
 #: src/modules/conf_startup/e_int_config_startup.c:281
 #: src/modules/conf_theme/e_int_config_theme.c:386
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:495
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:648
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:498
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:644
 #: src/modules/conf_desklock/e_int_config_desklock.c:199
 #: src/modules/conf_imc/e_int_config_imc.c:830
 msgid "Go up a Directory"
@@ -2894,11 +2909,11 @@ msgstr "Mostra su tutti i desktop"
 msgid "Show on specified Desktops"
 msgstr "Mostra sui desktop specificati"
 
-#: src/bin/e_border.c:4455
+#: src/bin/e_border.c:4460
 msgid "Desktop files scan done"
 msgstr "Scansione file desktop eseguita"
 
-#: src/bin/e_border.c:4467
+#: src/bin/e_border.c:4472
 msgid "Desktop file scan"
 msgstr "Scansione file desktop"
 
@@ -2949,7 +2964,7 @@ msgid "Thumbnail"
 msgstr "Miniatura"
 
 #: src/bin/e_fm_prop.c:438
-#: src/modules/conf_desklock/e_int_config_desklock.c:319
+#: src/modules/conf_desklock/e_int_config_desklock.c:312
 msgid "Custom"
 msgstr "Personalizzata"
 
@@ -3021,19 +3036,27 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Siete sicuri di voler rimuovere questa sorgente per Ibar?"
 
-#: src/modules/ibar/e_mod_main.c:215
+#: src/modules/ibar/e_mod_main.c:211
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:783
+#: src/modules/ibar/e_mod_main.c:799
 msgid "Change Icon Properties"
 msgstr "Cambia proprietà dell'icona"
 
-#: src/modules/ibar/e_mod_main.c:788
+#: src/modules/ibar/e_mod_main.c:804
 msgid "Remove Icon"
 msgstr "Elimina icona"
 
-#: src/modules/ibar/e_mod_main.c:803
+#: src/modules/ibar/e_mod_main.c:814
+msgid "Add An Icon"
+msgstr "Aggiungi icona"
+
+#: src/modules/ibar/e_mod_main.c:821
+msgid "Create New Icon"
+msgstr "Crea nuova icona"
+
+#: src/modules/ibar/e_mod_main.c:837
 msgid "Add Application"
 msgstr "Aggiungi applicazione"
 
@@ -3041,7 +3064,7 @@ msgstr "Aggiungi applicazione"
 msgid "IBox Configuration"
 msgstr "Configurazione modulo IBox"
 
-#: src/modules/ibox/e_mod_config.c:93 src/modules/pager/e_mod_config.c:120
+#: src/modules/ibox/e_mod_config.c:93 src/modules/pager/e_mod_config.c:122
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:84
 #: src/modules/conf_engine/e_int_config_engine.c:82
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:110
@@ -3189,88 +3212,92 @@ msgstr ""
 msgid "Clock"
 msgstr "Clock"
 
-#: src/modules/pager/e_mod_config.c:73
+#: src/modules/pager/e_mod_config.c:74
 msgid "Pager Configuration"
 msgstr "Configurazione modulo Pager"
 
-#: src/modules/pager/e_mod_config.c:121 src/modules/pager/e_mod_config.c:170
+#: src/modules/pager/e_mod_config.c:123 src/modules/pager/e_mod_config.c:172
 msgid "Show Popup on desktop change"
 msgstr "Mostra popup al cambio di desktop"
 
-#: src/modules/pager/e_mod_config.c:144
+#: src/modules/pager/e_mod_config.c:146
 msgid "Pager Settings"
 msgstr "Impostazioni di Pager"
 
-#: src/modules/pager/e_mod_config.c:145
+#: src/modules/pager/e_mod_config.c:147
 msgid "Flip desktop on mouse wheel"
 msgstr "Cambia desktop con la rotella del mouse"
 
-#: src/modules/pager/e_mod_config.c:147
+#: src/modules/pager/e_mod_config.c:149
 msgid "Select and Slide button"
 msgstr "Selezione e trasferimento"
 
-#: src/modules/pager/e_mod_config.c:149
+#: src/modules/pager/e_mod_config.c:151
 msgid "Drag and Drop button (Keeps rel. loc.)"
 msgstr "Trascinamento e rilascio (mantiene pos. rel.)"
 
-#: src/modules/pager/e_mod_config.c:151
+#: src/modules/pager/e_mod_config.c:153
 msgid "Drag whole desktop (Move all windows of a desktop)"
 msgstr "Trascina l'intero desktop (sposta tutte le finestre)"
 
-#: src/modules/pager/e_mod_config.c:153 src/modules/pager/e_mod_config.c:156
-#: src/modules/pager/e_mod_config.c:159 src/modules/pager/e_mod_config.c:223
-#: src/modules/pager/e_mod_config.c:229 src/modules/pager/e_mod_config.c:235
+#: src/modules/pager/e_mod_config.c:155 src/modules/pager/e_mod_config.c:158
+#: src/modules/pager/e_mod_config.c:161 src/modules/pager/e_mod_config.c:230
+#: src/modules/pager/e_mod_config.c:236 src/modules/pager/e_mod_config.c:242
 #, c-format
 msgid "Click to set"
 msgstr "Clicca per impostare"
 
-#: src/modules/pager/e_mod_config.c:163
+#: src/modules/pager/e_mod_config.c:165
 msgid "Resistance to dragging"
 msgstr "Resistenza al trascinamento"
 
-#: src/modules/pager/e_mod_config.c:165
+#: src/modules/pager/e_mod_config.c:167 src/modules/pager/e_mod_config.c:176
 #, c-format
 msgid "%.0f px"
 msgstr "%.0f px"
 
-#: src/modules/pager/e_mod_config.c:169
+#: src/modules/pager/e_mod_config.c:171
 msgid "Pager Popup Settings"
 msgstr "Impostazioni del popup"
 
-#: src/modules/pager/e_mod_config.c:172 src/modules/pager/e_mod_config.c:184
+#: src/modules/pager/e_mod_config.c:174
+msgid "Popup Pager Height"
+msgstr "Altezza del pager"
+
+#: src/modules/pager/e_mod_config.c:178 src/modules/pager/e_mod_config.c:190
 msgid "Popup Speed"
 msgstr "Velocità del popup"
 
-#: src/modules/pager/e_mod_config.c:174 src/modules/pager/e_mod_config.c:186
+#: src/modules/pager/e_mod_config.c:180 src/modules/pager/e_mod_config.c:192
 #: src/modules/temperature/e_mod_config.c:343
 #: src/modules/battery/e_mod_config.c:120
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f secondi"
 
-#: src/modules/pager/e_mod_config.c:177
+#: src/modules/pager/e_mod_config.c:183
 msgid "Urgent window"
 msgstr "Finestre urgenti"
 
-#: src/modules/pager/e_mod_config.c:178
+#: src/modules/pager/e_mod_config.c:184
 msgid "Show Popup on urgent window"
 msgstr "Mostra popup con finestre urgenti"
 
-#: src/modules/pager/e_mod_config.c:180
+#: src/modules/pager/e_mod_config.c:186
 msgid "Popup on urgent window sticks on the screen"
 msgstr "Appicica popup sullo schermo con finestre urgenti"
 
-#: src/modules/pager/e_mod_config.c:221 src/modules/pager/e_mod_config.c:227
-#: src/modules/pager/e_mod_config.c:233
+#: src/modules/pager/e_mod_config.c:228 src/modules/pager/e_mod_config.c:234
+#: src/modules/pager/e_mod_config.c:240
 #, c-format
 msgid "Button %i"
 msgstr "Bottone %i"
 
-#: src/modules/pager/e_mod_config.c:257
+#: src/modules/pager/e_mod_config.c:264
 msgid "Pager Button Grab"
 msgstr "Cattura bottone"
 
-#: src/modules/pager/e_mod_config.c:259
+#: src/modules/pager/e_mod_config.c:266
 msgid ""
 "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
 "<br>Or <hilight>Del</hilight> to reset the button."
@@ -3278,11 +3305,11 @@ msgstr ""
 "Premere un pulsante del mouse,<br><br>o <hilight>Escape</hilight> per "
 "abortire"
 
-#: src/modules/pager/e_mod_config.c:318
+#: src/modules/pager/e_mod_config.c:325
 msgid "Error - Invalid Button"
 msgstr "Errore - Pulsante non valido"
 
-#: src/modules/pager/e_mod_config.c:319
+#: src/modules/pager/e_mod_config.c:326
 msgid ""
 "You cannot use the right mouse button<br>for this as it is already taken by "
 "internal<br>code for context menus."
@@ -3290,7 +3317,7 @@ msgstr ""
 "Non potete usare il tasto destro del mouse<br>per questo poichè è già usato "
 "dal codice<br>interno per il menù contestuale."
 
-#: src/modules/pager/e_mod_main.c:774
+#: src/modules/pager/e_mod_main.c:785
 msgid "Virtual Desktops Configuration"
 msgstr "Configurazione desktop virtuali"
 
@@ -4039,8 +4066,8 @@ msgstr "Avvio di Enlightenment"
 #: src/modules/conf_startup/e_int_config_startup.c:268
 #: src/modules/conf_theme/e_int_config_theme.c:375
 #: src/modules/conf_theme/e_int_config_theme.c:843
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:484
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:637
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:488
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:634
 #: src/modules/conf_desklock/e_int_config_desklock.c:192
 #: src/modules/conf_imc/e_int_config_imc.c:818
 msgid "Personal"
@@ -4129,38 +4156,38 @@ msgstr "Cambio sfondo"
 msgid "Transitions"
 msgstr "Transizioni"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:99
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:109
 msgid "Wallpaper Settings"
 msgstr "Impostazioni sfondo"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:552
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:702
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:551
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:697
 msgid "Use Theme Wallpaper"
 msgstr "Usa sfondo del tema"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:558
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:708
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:555
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:701
 msgid "Picture..."
 msgstr "Immagine..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:561
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:711
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:558
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:704
 msgid "Gradient..."
 msgstr "Gradiente..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:726
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:722
 msgid "Where to place the Wallpaper"
 msgstr "Posizionamento dello sfondo"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:730
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:723
 msgid "All Desktops"
 msgstr "Tutti i desktop"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:732
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:725
 msgid "This Desktop"
 msgstr "Questo desktop"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:734
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:727
 msgid "This Screen"
 msgstr "Questo schermo"
 
@@ -4316,7 +4343,7 @@ msgid "Restart Applications"
 msgstr "Applicazioni per il riavvio"
 
 #: src/modules/conf_applications/e_int_config_apps.c:238
-#: src/modules/fileman/e_fwin.c:1313
+#: src/modules/fileman/e_fwin.c:1349
 msgid "All Applications"
 msgstr "Tutte le applicazioni"
 
@@ -4451,23 +4478,23 @@ msgstr "Blocca al superamento del tempo massimo"
 msgid "Idle time to exceed"
 msgstr "Tempo massimo per bloccaschermo"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:287
+#: src/modules/conf_desklock/e_int_config_desklock.c:281
 msgid "Login Box Settings"
 msgstr "Finestra di login"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:291
+#: src/modules/conf_desklock/e_int_config_desklock.c:284
 msgid "Show on all screen zones"
 msgstr "Mostra su tutte le zone"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:295
+#: src/modules/conf_desklock/e_int_config_desklock.c:288
 msgid "Show on current screen zone"
 msgstr "Mostra sulla zona corrente"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:299
+#: src/modules/conf_desklock/e_int_config_desklock.c:292
 msgid "Show on screen zone #:"
 msgstr "Mostra sulla zona #:"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:303
+#: src/modules/conf_desklock/e_int_config_desklock.c:296
 #: src/modules/conf_desks/e_int_config_desks.c:197
 #: src/modules/conf_desks/e_int_config_desks.c:201
 #: src/modules/conf_desks/e_int_config_desks.c:236
@@ -4485,23 +4512,23 @@ msgstr "Mostra sulla zona #:"
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:310
+#: src/modules/conf_desklock/e_int_config_desklock.c:304
 msgid "Wallpaper Mode"
 msgstr "Modalità sfondo"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:313
+#: src/modules/conf_desklock/e_int_config_desklock.c:306
 msgid "Theme Defined"
 msgstr "Definita dal tema"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:316
+#: src/modules/conf_desklock/e_int_config_desklock.c:309
 msgid "Theme Wallpaper"
 msgstr "Sfondo del tema"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:328
+#: src/modules/conf_desklock/e_int_config_desklock.c:322
 msgid "Custom Screenlock"
 msgstr "Bloccaschermo personalizzato"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:329
+#: src/modules/conf_desklock/e_int_config_desklock.c:323
 msgid "Use custom screenlock"
 msgstr "Usa bloccaschermo personalizzato"
 
@@ -5306,11 +5333,6 @@ msgstr "Immagini"
 msgid "Init"
 msgstr "Inizializzazione"
 
-#: src/modules/conf_paths/e_int_config_paths.c:83
-#: src/modules/fileman/e_mod_config.c:156
-msgid "Icons"
-msgstr "Icone"
-
 #: src/modules/conf_paths/e_int_config_paths.c:87
 msgid "Backgrounds"
 msgstr "Sfondi"
@@ -5877,33 +5899,29 @@ msgstr "Pannello di configurazione"
 msgid "Run Command Dialog"
 msgstr "Lanciacomandi"
 
-#: src/modules/fileman/e_fwin.c:631
+#: src/modules/fileman/e_fwin.c:655
 msgid "Go to Parent Directory"
 msgstr "Directory superiore"
 
-#: src/modules/fileman/e_fwin.c:657 src/modules/fileman/e_fwin.c:1272
+#: src/modules/fileman/e_fwin.c:681 src/modules/fileman/e_fwin.c:1308
 msgid "Open"
 msgstr "Apri"
 
-#: src/modules/fileman/e_fwin.c:664 src/modules/fileman/e_fwin.c:1270
+#: src/modules/fileman/e_fwin.c:688 src/modules/fileman/e_fwin.c:1306
 msgid "Open with..."
 msgstr "Apri con..."
 
-#: src/modules/fileman/e_fwin.c:1288
+#: src/modules/fileman/e_fwin.c:1324
 msgid "Specific Applications"
 msgstr "Applicazioni specifiche"
 
-#: src/modules/fileman/e_fwin.c:1359
+#: src/modules/fileman/e_fwin.c:1395
 msgid "Custom Command"
 msgstr "Comando personalizzato"
 
 #: src/modules/fileman/e_mod_config.c:82
 msgid "Fileman Settings"
 msgstr "Impostazioni di Fileman"
-
-#: src/modules/fileman/e_mod_config.c:154
-msgid "View Mode"
-msgstr "Modalità visualizzazione"
 
 #: src/modules/fileman/e_mod_config.c:159
 msgid "Grid Icons"
@@ -5920,10 +5938,6 @@ msgstr "Icone in griglia personalizzata"
 #: src/modules/fileman/e_mod_config.c:166
 msgid "Custom Smart Grid Icons"
 msgstr "Icone in griglia personalizzata intelligente"
-
-#: src/modules/fileman/e_mod_config.c:169
-msgid "List"
-msgstr "Elenco"
 
 #: src/modules/fileman/e_mod_config.c:173
 msgid "Icon Size"
@@ -5957,11 +5971,11 @@ msgstr "Mostra icone sul desktop"
 msgid "Show Toolbar"
 msgstr "Mostra barra strumenti"
 
-#: src/modules/fileman/e_mod_main.c:199
+#: src/modules/fileman/e_mod_main.c:209
 msgid "Files"
 msgstr "File e directory"
 
-#: src/modules/fileman/e_mod_main.c:251
+#: src/modules/fileman/e_mod_main.c:261
 msgid ""
 "Fileman Module Configuration data needed upgrading. Your old "
 "configuration<br>has been wiped and a new set of defaults initialized. "
@@ -5981,7 +5995,7 @@ msgstr ""
 "nuove funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/modules/fileman/e_mod_main.c:264
+#: src/modules/fileman/e_mod_main.c:274
 msgid ""
 "Your Fileman Module configuration is NEWER than Fileman Module version. This "
 "is very<br>strange. This should not happen unless you downgraded<br>the "
@@ -5998,7 +6012,7 @@ msgstr ""
 "configurazione è<br>stata ripristinata a scopo precauzionale ai valori "
 "predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/modules/fileman/e_mod_main.c:333
+#: src/modules/fileman/e_mod_main.c:343
 msgid "Fileman Configuration Updated"
 msgstr "Aggiornamento configurazione Fileman"
 
