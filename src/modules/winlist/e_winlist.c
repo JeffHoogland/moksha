@@ -784,8 +784,39 @@ _e_winlist_cb_key_down(void *data, int type, void *event)
    else if (!strcmp(ev->keysymbol, "0"))
      _e_winlist_activate_nth(9);
    else
-     e_bindings_key_down_event_handle(E_BINDING_CONTEXT_WINLIST, 
-				      E_OBJECT(winlist->zone), ev);
+     {
+	E_Action *act;
+	Evas_List *l;
+	E_Config_Binding_Key *bind;
+	E_Binding_Modifier mod;
+
+	for (l = e_config->key_bindings; l; l = l->next)
+	  {
+	     bind = l->data;
+
+	     if (bind->action && strcmp(bind->action,"winlist")) continue;
+
+	     mod = 0;
+
+	     if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
+	     if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
+	     if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
+	     if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+
+	     if (bind->key && (!strcmp(bind->key, ev->keyname)) && ((bind->modifiers == mod))) 
+	       {	
+		  act = e_action_find(bind->action);
+		  
+		  if(!act) continue;
+
+		  if (act->func.go_key)
+		    act->func.go_key(E_OBJECT(winlist->zone), bind->params, ev); 
+		  else if (act->func.go)
+		    act->func.go(E_OBJECT(winlist->zone), bind->params); 
+
+	       }
+	  }
+     }
    return 1;
 }
 
@@ -793,6 +824,10 @@ static int
 _e_winlist_cb_key_up(void *data, int type, void *event)
 {
    Ecore_X_Event_Key_Up *ev;
+   E_Action *act;
+   Evas_List *l;
+   E_Config_Binding_Key *bind;
+   E_Binding_Modifier mod;
    
    ev = event;
    if (!winlist) return 1;
@@ -819,8 +854,33 @@ _e_winlist_cb_key_up(void *data, int type, void *event)
 	     return 1;
 	  }
      }
-   e_bindings_key_up_event_handle(E_BINDING_CONTEXT_WINLIST,
-				  E_OBJECT(winlist->zone), ev);
+
+   for (l = e_config->key_bindings; l; l = l->next)
+     {
+	bind = l->data;
+
+	if (bind->action && strcmp(bind->action,"winlist")) continue;
+
+	mod = 0;
+
+	if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
+	if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
+	if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
+	if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+
+	if (bind->key && (!strcmp(bind->key, ev->keyname)) && ((bind->modifiers == mod))) 
+	  {	
+	     act = e_action_find(bind->action);
+
+	     if(!act) continue;
+
+	     if (act->func.end_key)
+	       act->func.end_key(E_OBJECT(winlist->zone), bind->params, ev);
+	     else if (act->func.end)
+	       act->func.end(E_OBJECT(winlist->zone), bind->params);
+	  }
+     }
+
    return 1;
 }
 
