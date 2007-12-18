@@ -1108,11 +1108,43 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
    if (ic->info.icon)
      {
 	/* custom icon */
-	if (ic->info.icon[0] == '/')
+	if ((ic->info.icon[0] == '/') || 
+	    (!strncmp(ic->info.icon, "./", 2)) ||
+	    (!strncmp(ic->info.icon, "../", 3)))
 	  {
+	     char *icfile = NULL;
+	     
 	     /* path to icon file */
+	     icfile = ic->info.icon;
+	     if (!strncmp(ic->info.icon, "./", 2))
+	       {
+		  /* relative path */
+		  snprintf(buf, sizeof(buf), "%s/%s",
+			   e_fm2_real_path_get(ic->info.fm),
+			   ic->info.icon + 2);
+		  icfile = buf;
+	       }
+	     else if (!strncmp(ic->info.icon, "../", 3))
+	       {
+		  char *dirpath;
+		  
+		  /* relative path - parent */
+		  dirpath = strdup(e_fm2_real_path_get(ic->info.fm));
+		  if (dirpath)
+		    {
+		       p = strrchr(dirpath, '/');
+		       if (p)
+			 {
+			    *p = 0;
+			    snprintf(buf, sizeof(buf), "%s/%s", dirpath, 
+				     ic->info.icon + 3);
+			    icfile = buf;
+			 }
+		       free(dirpath);
+		    }
+	       }
 	     p = strrchr(ic->info.icon, '.');
-	     if ((p) && (!strcmp(p, ".edj")))
+	     if ((p) && (!strcasecmp(p, ".edj")))
 	       {
 		  oic = edje_object_add(evas);
 		  if (!edje_object_file_set(oic, ic->info.icon, "icon"))
