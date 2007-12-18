@@ -304,7 +304,7 @@ _load_menu(const char *path)
    apps = ecore_list_new();
    ecore_list_free_cb_set(apps, ECORE_FREE_CB(efreet_desktop_free));
    menu = efreet_menu_parse(path);
-   if (!menu) return apps;
+   if ((!menu) || (!menu->entries)) return apps;
    ecore_list_first_goto(menu->entries);
    while ((entry = ecore_list_next(menu->entries))) 
      {
@@ -351,34 +351,39 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
 
    evas = evas_object_evas_get(cfdata->o_all);
    desks = efreet_util_desktop_name_glob_list("*");
-   ecore_list_sort(desks, ECORE_COMPARE_CB(_cb_sort_desks), ECORE_SORT_MIN);
-   ecore_list_first_goto(desks);
-   while ((desk = ecore_list_next(desks))) 
+   if (desks) 
      {
-	if (!ecore_list_find(l, ECORE_COMPARE_CB(_cb_sort_desks), desk)) 
+	ecore_list_sort(desks, ECORE_COMPARE_CB(_cb_sort_desks), ECORE_SORT_MIN);
+	ecore_list_first_goto(desks);
+	while ((desk = ecore_list_next(desks))) 
 	  {
-	     efreet_desktop_ref(desk);
-	     ecore_list_append(l, desk);
+	     if (!ecore_list_find(l, ECORE_COMPARE_CB(_cb_sort_desks), desk)) 
+	       {
+		  efreet_desktop_ref(desk);
+		  ecore_list_append(l, desk);
+	       }
 	  }
+	ecore_list_destroy(desks);
      }
-
-   if (desks) ecore_list_destroy(desks);
    if (l) ecore_list_sort(l, ECORE_COMPARE_CB(_cb_sort_desks), ECORE_SORT_MIN);
 
    evas_event_freeze(evas);
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_all);
    e_widget_ilist_clear(cfdata->o_all);
-   ecore_list_first_goto(l);
-   while ((desk = ecore_list_next(l))) 
+   if (l) 
      {
-	Evas_Object *icon = NULL;
+	ecore_list_first_goto(l);
+	while ((desk = ecore_list_next(l))) 
+	  {
+	     Evas_Object *icon = NULL;
 
-	icon = e_util_desktop_icon_add(desk, "24x24", evas);
-	e_widget_ilist_append(cfdata->o_all, icon, desk->name, 
-			      _all_list_cb_selected, cfdata, desk->orig_path);
+	     icon = e_util_desktop_icon_add(desk, "24x24", evas);
+	     e_widget_ilist_append(cfdata->o_all, icon, desk->name, 
+				   _all_list_cb_selected, cfdata, desk->orig_path);
+	  }
+	ecore_list_destroy(l);
      }
-   if (l) ecore_list_destroy(l);
 
    e_widget_ilist_go(cfdata->o_all);
    e_widget_ilist_thaw(cfdata->o_all);
@@ -401,16 +406,20 @@ _fill_list(E_Config_Dialog_Data *cfdata)
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_sel);
    e_widget_ilist_clear(cfdata->o_sel);
-   ecore_list_first_goto(cfdata->apps);
-   while ((desk = ecore_list_next(cfdata->apps))) 
+   if (cfdata->apps) 
      {
-	Evas_Object *icon = NULL;
+	ecore_list_first_goto(cfdata->apps);
+	while ((desk = ecore_list_next(cfdata->apps))) 
+	  {
+	     Evas_Object *icon = NULL;
 
-	icon = e_util_desktop_icon_add(desk, "24x24", evas);
-	e_widget_ilist_append(cfdata->o_sel, icon, desk->name, 
-			      _sel_list_cb_selected, cfdata, desk->orig_path);
+	     icon = e_util_desktop_icon_add(desk, "24x24", evas);
+	     e_widget_ilist_append(cfdata->o_sel, icon, desk->name, 
+				   _sel_list_cb_selected, cfdata, desk->orig_path);
+	  }
+	ecore_list_destroy(cfdata->apps);
      }
-   if (cfdata->apps) ecore_list_destroy(cfdata->apps);
+   
    cfdata->apps = NULL;
    e_widget_ilist_go(cfdata->o_sel);
    e_widget_min_size_get(cfdata->o_sel, &w, NULL);
