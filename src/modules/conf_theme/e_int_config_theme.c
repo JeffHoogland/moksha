@@ -788,7 +788,7 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata, const char *header, const char *d
 	     if (strstr(dentry->d_name,".edj") != NULL)
 	       {
 		  snprintf(themename, sizeof(themename), "%s/%s",
-			dir, dentry->d_name);
+			   dir, dentry->d_name);
 		  themefiles = evas_list_append(themefiles, strdup(themename));
 	       }
 	  }
@@ -840,8 +840,8 @@ _fill_files_ilist(E_Config_Dialog_Data *cfdata)
    /* Grab the "Personal" themes. */
    snprintf(theme_dir, sizeof(theme_dir), "%s/.e/e/themes",
 	 e_user_homedir_get());
-   cfdata->personal_file_count = _ilist_files_add(cfdata, _("Personal"),
-							theme_dir);
+   cfdata->personal_file_count = 
+     _ilist_files_add(cfdata, _("Personal"), theme_dir);
 
    /* Grab the "System" themes. */
    snprintf(theme_dir, sizeof(theme_dir),
@@ -1073,17 +1073,19 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
    e_widget_on_change_hook_set(ob, _cb_adv_theme_change, cfdata);
    cfdata->o_files_ilist = ob;
-   e_widget_ilist_multi_select_set(ob, 0);
    e_widget_min_size_set(ob, 150, 250);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
 
    ol = e_widget_list_add(evas, 1, 1);
-   ob = e_widget_button_add(evas, _("Assign"), NULL, _cb_adv_btn_assign, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Assign"), NULL, 
+			    _cb_adv_btn_assign, cfdata, NULL);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
-   ob = e_widget_button_add(evas, _("Clear"), NULL, _cb_adv_btn_clear, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Clear"), NULL, 
+			    _cb_adv_btn_clear, cfdata, NULL);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
-   ob = e_widget_button_add(evas, _("Clear All"), NULL, _cb_adv_btn_clearall, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Clear All"), NULL, 
+			    _cb_adv_btn_clearall, cfdata, NULL);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
    e_widget_table_object_append(ot, ol, 0, 1, 1, 1, 1, 0, 1, 0);
 
