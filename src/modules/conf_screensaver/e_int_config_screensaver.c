@@ -117,12 +117,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_label_add(evas, _("Time until X screensaver starts"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0, 
-			    &(cfdata->timeout), NULL, 200);
+			    &(cfdata->timeout), NULL, 100);
    e_widget_framelist_object_append(of, ob);
    
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   e_dialog_resizable_set(cfd->dia, 0);
-   
    return o;
 }
 
@@ -181,6 +179,5 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
-   e_dialog_resizable_set(cfd->dia, 0);
    return o;   
 }
