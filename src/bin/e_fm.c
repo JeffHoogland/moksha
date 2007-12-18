@@ -1147,7 +1147,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 	     if ((p) && (!strcasecmp(p, ".edj")))
 	       {
 		  oic = edje_object_add(evas);
-		  if (!edje_object_file_set(oic, ic->info.icon, "icon"))
+		  if (!edje_object_file_set(oic, icfile, "icon"))
 		    _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
 						      "base/theme/fileman",
 						      "file");
@@ -1155,7 +1155,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 	     else
 	       {
 		  oic = e_icon_add(evas);
-		  e_icon_file_set(oic, ic->info.icon);
+		  e_icon_file_set(oic, icfile);
 		  e_icon_fill_inside_set(oic, 1);
 	       }
 	     if (type_ret) *type_ret = "CUSTOM";
