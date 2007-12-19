@@ -179,11 +179,11 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    of = e_widget_frametable_add(evas, _("Popup Settings"), 0);
    ow = e_widget_check_add(evas, _("Show popup on desktop change"), 
-			   &(cfdata->flip_desk));
+			   &(cfdata->popup.show));
    e_widget_frametable_object_append(of, ow, 0, 0, 2, 1, 1, 0, 1, 0);
    ow = e_widget_label_add(evas, _("Popup pager height"));
    e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
-   ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 0.0, 10.0, 1.0, 0, NULL, 
+   ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 20.0, 200.0, 1.0, 0, NULL, 
 			    &(cfdata->popup.pager_height), 100);
    e_widget_frametable_object_append(of, ow, 1, 1, 1, 1, 1, 0, 1, 0);
    ow = e_widget_label_add(evas, _("Popup speed"));
