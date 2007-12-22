@@ -1355,11 +1355,7 @@ e_border_focus_set_with_pointer(E_Border *bd)
 {
    if (e_config->focus_policy == E_FOCUS_SLOPPY)
      {
-	e_border_focus_set(bd, 1, 1);
-     }
-   else if (e_config->focus_policy == E_FOCUS_MOUSE)
-     {
-	if (e_border_under_pointer_get(NULL, bd))
+	if (e_border_under_pointer_get(bd->desk, bd))
 	  {
 	     if (!e_border_pointer_warp_to_center(bd))
 	       e_border_focus_set(bd, 1, 1);
@@ -7752,6 +7748,9 @@ e_border_pointer_warp_to_center(E_Border *bd)
 {
    int x, y;
 
+   /* Do not slide pointer when disabled (probably breaks focus
+    * on sloppy/mouse focus but requested by users). */
+   if (!e_config->pointer_slide) return 0;
    /* Only warp the pointer if it is not already in the area of
     * the given border */
    ecore_x_pointer_xy_get(bd->zone->container->win, &x, &y);

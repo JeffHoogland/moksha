@@ -25,6 +25,7 @@ struct _E_Config_Dialog_Data
    int always_click_to_focus;
    int focus_last_focused_per_desktop;
    int focus_revert_on_hide_or_close;
+   int pointer_slide;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -63,6 +64,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->always_click_to_focus = e_config->always_click_to_focus;
    cfdata->focus_last_focused_per_desktop = e_config->focus_last_focused_per_desktop;
    cfdata->focus_revert_on_hide_or_close = e_config->focus_revert_on_hide_or_close;
+   cfdata->pointer_slide = e_config->pointer_slide;
 
    cfdata->mode = cfdata->focus_policy;
 }
@@ -103,6 +105,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_config->always_click_to_focus = 0;
 	e_config->focus_last_focused_per_desktop = 1;
 	e_config->focus_revert_on_hide_or_close = 1;
+	e_config->pointer_slide = 0;
      }
    else if (cfdata->mode == E_FOCUS_MOUSE)
      {
@@ -113,6 +116,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_config->always_click_to_focus = 0;
 	e_config->focus_last_focused_per_desktop = 0;
 	e_config->focus_revert_on_hide_or_close = 0;
+	e_config->pointer_slide = 1;
      }
    else
      {
@@ -123,6 +127,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_config->always_click_to_focus = 0;
 	e_config->focus_last_focused_per_desktop = 1;
 	e_config->focus_revert_on_hide_or_close = 1;
+	e_config->pointer_slide = 1;
      }
    e_border_button_bindings_grab_all();
    e_config_save_queue();
@@ -141,6 +146,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->always_click_to_focus = cfdata->always_click_to_focus;
    e_config->focus_last_focused_per_desktop = cfdata->focus_last_focused_per_desktop;
    e_config->focus_revert_on_hide_or_close = cfdata->focus_revert_on_hide_or_close;
+   e_config->pointer_slide = cfdata->pointer_slide;
    e_border_button_bindings_grab_all();
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -206,6 +212,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_check_add(evas, _("Refocus last focused window on desktop switch"), &(cfdata->focus_last_focused_per_desktop));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Revert focus when hiding or closing a window"), &(cfdata->focus_revert_on_hide_or_close));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Slide pointer to a new focused window"), &(cfdata->pointer_slide));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
