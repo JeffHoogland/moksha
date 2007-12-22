@@ -153,14 +153,13 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    if (!fwin) return;
    fwin->zone = zone;
    
-   /* Add Event Handler for zone move/resize */
+   /* Add Event Handler for zone move/resize & del */
    fwin->zone_handler = ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE, 
 						_e_fwin_zone_move_resize, 
 						fwin);
    fwin->zone_del_handler = ecore_event_handler_add(E_EVENT_ZONE_DEL, 
 						    _e_fwin_zone_del,
 						    fwin);
-   /* FIXME: catch del of zone and del fwin when zone goes */
    
    /* Trap the mouse_down on zone so we can unselect */
    evas_object_event_callback_add(zone->bg_event_object, 
