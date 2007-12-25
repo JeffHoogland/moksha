@@ -5,6 +5,7 @@ static void _e_entry_dialog_free(E_Entry_Dialog *dia);
 static void _e_entry_dialog_ok(void *data, E_Dialog *dia);
 static void _e_entry_dialog_cancel(void *data, E_Dialog *dia);
 static void _e_entry_dialog_delete(E_Win *win);
+static void _e_entry_cb_key_down(void *data, Evas_Object *obj, void *event_info);
 
 /* Externally accesible functions */
 EAPI E_Entry_Dialog *
@@ -49,6 +50,7 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
      }
    
    ed->entry = e_widget_entry_add(dia->win->evas, &(ed->text), NULL, NULL, NULL);
+   evas_object_smart_callback_add(ed->entry, "key_down", _e_entry_cb_key_down, ed);
    e_widget_list_object_append(o, ed->entry, 1, 1, 0.5);
    e_widget_min_size_get(o, &w, &h);
    e_dialog_content_set(dia, o, w, h);
@@ -66,6 +68,7 @@ static void
 _e_entry_dialog_free(E_Entry_Dialog *ed)
 {
    e_object_del(E_OBJECT(ed->dia));
+   evas_object_smart_callback_del(ed->entry, "key_down", _e_entry_cb_key_down);
    E_FREE(ed->text);
    free(ed);
 }
@@ -103,4 +106,19 @@ _e_entry_dialog_delete(E_Win *win)
    dia = win->data;
    ed = dia->data;
    e_object_del(E_OBJECT(ed));
+}
+
+static void 
+_e_entry_cb_key_down(void *data, Evas_Object *obj, void *event_info) 
+{
+   Evas_Event_Key_Down *ev;
+   E_Entry_Dialog *ed;
+   
+   ev = event_info;
+   if (strcmp(ev->keyname, "Return")) return;
+   if (!(ed = data)) return;
+   e_object_ref(E_OBJECT(ed));
+   if (ed->ok.func) ed->ok.func(ed->text, ed->ok.data);
+   e_object_del(E_OBJECT(ed));
+   e_object_unref(E_OBJECT(ed));
 }
