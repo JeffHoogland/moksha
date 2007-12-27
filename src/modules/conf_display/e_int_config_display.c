@@ -231,6 +231,13 @@ e_int_config_display(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
+   if (!ecore_x_randr_present())
+     {
+        ecore_timer_add(0.5, _deferred_noxrandr_error, NULL);
+        fprintf(stderr, "XRandR not present on this display. \n");
+        return NULL;
+     }
+
    if (e_config_dialog_find("E", "_config_display_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    v->create_cfdata = _create_data;
