@@ -14,6 +14,7 @@ static void _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, v
 static void _e_zone_event_zone_desk_count_set_free(void *data, void *ev);
 static int  _e_zone_cb_mouse_in(void *data, int type, void *event);
 static int  _e_zone_cb_mouse_out(void *data, int type, void *event);
+static int  _e_zone_cb_mouse_down(void *data, int type, void *event);
 static int  _e_zone_cb_timer(void *data);
 static int  _e_zone_cb_desk_show(void *data, int type, void *event);
 static void _e_zone_update_flip(E_Zone *zone);
@@ -95,9 +96,11 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
 				     ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT,
 							     _e_zone_cb_mouse_out, zone));
    zone->handlers = evas_list_append(zone->handlers,
+				     ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
+							     _e_zone_cb_mouse_down, zone));
+   zone->handlers = evas_list_append(zone->handlers,
 				     ecore_event_handler_add(E_EVENT_DESK_SHOW,
 							     _e_zone_cb_desk_show, zone));
-   
 
    snprintf(name, sizeof(name), "Zone %d", zone->num);
    zone->name = evas_stringshare_add(name);
@@ -657,10 +660,22 @@ _e_zone_free(E_Zone *zone)
    Evas_List *l;
    int x, y;
 
+   /* Delete the edge windows if they exist */
+   if (zone->edge.top) ecore_x_window_del(zone->edge.top);
+   if (zone->edge.bottom) ecore_x_window_del(zone->edge.bottom);
+   if (zone->edge.left) ecore_x_window_del(zone->edge.left);
+   if (zone->edge.right) ecore_x_window_del(zone->edge.right);
+
    /* Delete the object event callbacks */
-   evas_object_event_callback_del(zone->bg_event_object, EVAS_CALLBACK_MOUSE_DOWN, _e_zone_cb_bg_mouse_down);
-   evas_object_event_callback_del(zone->bg_event_object, EVAS_CALLBACK_MOUSE_UP, _e_zone_cb_bg_mouse_up);
-   evas_object_event_callback_del(zone->bg_event_object, EVAS_CALLBACK_MOUSE_MOVE, _e_zone_cb_bg_mouse_move);
+   evas_object_event_callback_del(zone->bg_event_object, 
+				  EVAS_CALLBACK_MOUSE_DOWN, 
+				  _e_zone_cb_bg_mouse_down);
+   evas_object_event_callback_del(zone->bg_event_object, 
+				  EVAS_CALLBACK_MOUSE_UP, 
+				  _e_zone_cb_bg_mouse_up);
+   evas_object_event_callback_del(zone->bg_event_object, 
+				  EVAS_CALLBACK_MOUSE_MOVE, 
+				  _e_zone_cb_bg_mouse_move);
 
    if (zone->black_ecore_evas)
      {
@@ -895,6 +910,35 @@ _e_zone_cb_mouse_out(void *data, int type, void *event)
 	else if (ev->win == zone->edge.left) zev->edge = E_ZONE_EDGE_LEFT;
 	else if (ev->win == zone->edge.right) zev->edge = E_ZONE_EDGE_RIGHT;
 	ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
+     }
+   return 1;
+}
+
+static int 
+_e_zone_cb_mouse_down(void *data, int type, void *event) 
+{
+   Ecore_X_Event_Mouse_Button_Down *ev;
+   E_Event_Zone_Edge_Out *zev;
+   E_Zone *zone;
+
+   ev = event;
+   zone = data;
+   if ((ev->win == zone->edge.top) ||
+       (ev->win == zone->edge.bottom) ||
+       (ev->win == zone->edge.left) ||
+       (ev->win == zone->edge.right))
+     {
+	zone->cur_mouse_action =
+	  e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_ZONE,
+					     E_OBJECT(zone), ev);
+	if (zone->cur_mouse_action)
+	  {
+	     if ((!zone->cur_mouse_action->func.end_mouse) &&
+		 (!zone->cur_mouse_action->func.end))
+	       zone->cur_mouse_action = NULL;
+	     if (zone->cur_mouse_action)
+	       e_object_ref(E_OBJECT(zone->cur_mouse_action));
+	  }
      }
    return 1;
 }
