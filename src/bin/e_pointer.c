@@ -453,6 +453,12 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
+	else if (!strcmp(type, "plus"))
+	  {
+	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_PLUS);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
+	     ecore_x_window_cursor_set(p->win, cursor);
+	  }
 	else
 	  {
 	     printf("Unknown pointer type: %s\n", type);
