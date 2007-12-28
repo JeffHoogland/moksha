@@ -2092,7 +2092,7 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
         if (!e_config->allow_above_fullscreen)
 	  e_border_layer_set(bd, 200);
 
-	if ((evas_list_count(bd->zone->container->zones) > 1) || (policy == E_FULLSCREEN_RESIZE) || (!ecore_x_randr_present()))
+	if ((evas_list_count(bd->zone->container->zones) > 1) || (policy == E_FULLSCREEN_RESIZE) || (!ecore_x_randr_query()))
 	  {
 	     e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
 	  }

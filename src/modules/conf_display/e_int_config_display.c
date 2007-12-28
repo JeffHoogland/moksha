@@ -231,7 +231,7 @@ e_int_config_display(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (!ecore_x_randr_present())
+   if (!ecore_x_randr_query())
      {
         ecore_timer_add(0.5, _deferred_noxrandr_error, NULL);
         fprintf(stderr, "XRandR not present on this display. \n");
