@@ -24,6 +24,7 @@ typedef struct _E_Remember E_Remember;
 #define E_REMEMBER_APPLY_RUN (1 << 9)
 #define E_REMEMBER_APPLY_SKIP_WINLIST (1 << 10)
 #define E_REMEMBER_APPLY_ICON_PREF (1 << 11)
+#define E_REMEMBER_SET_FOCUS_ON_START (1 << 12)
 
 #else
 #ifndef E_REMEMBER_H

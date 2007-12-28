@@ -5825,6 +5825,8 @@ _e_border_eval(E_Border *bd)
 	       bd->user_skip_winlist = rem->prop.skip_winlist;
 	     if (rem->apply & E_REMEMBER_APPLY_ICON_PREF)
 	       bd->icon_preference = rem->prop.icon_preference;
+	     if (rem->apply & E_REMEMBER_SET_FOCUS_ON_START)
+	       bd->want_focus = 1;
 	  }
      }
 
