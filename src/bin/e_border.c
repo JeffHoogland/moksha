@@ -3509,18 +3509,30 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
      }
    else
      {
-	E_Border *pbd;
-
 	e_border_hide(bd, 0);
-	pbd = e_border_under_pointer_get(bd->desk, bd);
-	if (pbd)
-	  e_border_focus_set(pbd, 1, 1);
-	else if (e_config->focus_policy == E_FOCUS_SLOPPY)
+	if (e_config->focus_revert_on_hide_or_close)
 	  {
-	     /* If we could not determine a window under cursor but
-	      * sloppy focus is enabled, we focus the most recently 
-	      * focused window */
-	     e_desk_last_focused_focus(bd->desk);
+	     E_Border *pbd;
+	     E_Container *con;
+	     E_Zone *zone;
+	     E_Desk *desk;
+
+	     con = e_container_current_get(e_manager_current_get());
+	     zone = e_zone_current_get(con);
+	     desk = e_desk_current_get(zone);
+
+	     /* When using pointer focus, the border under the
+	      * pointer (if any) gets focused, in sloppy/click
+	      * focus the last focused window on the current
+	      * desk gets focus */
+	     if (e_config->focus_policy == E_FOCUS_MOUSE)
+	       {
+		  pbd = e_border_under_pointer_get(desk, bd);
+		  if (pbd)
+		    e_border_focus_set(pbd, 1, 1);
+	       }
+	     else
+	       e_desk_last_focused_focus(desk);
 	  }
 	e_object_del(E_OBJECT(bd));
      }
