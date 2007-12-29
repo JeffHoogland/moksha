@@ -169,7 +169,8 @@ e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
 	  pop->shaped = 1;
 	else
 	  pop->shaped = 0;
-	if (e_config->use_composite)
+	/* check if user wanted composite AND that X can do it */
+	if ((e_config->use_composite) && (ecore_x_composite_query()))
 	  {
 	     ecore_evas_alpha_set(pop->ecore_evas, pop->shaped);
 	     pop->evas_win = ecore_evas_software_x11_window_get(pop->ecore_evas);
