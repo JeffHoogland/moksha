@@ -60,6 +60,7 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
    
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
+   e_widget_focus_set(ed->entry, 1);
    return ed;
 }
 
