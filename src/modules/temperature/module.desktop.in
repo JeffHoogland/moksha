@@ -2,6 +2,6 @@
 Type=Link
 Name=Temperature
 Icon=e-module-temperature
-Comment=<hilight>Temperature Gadget</hilight><br>Temperature monitor.
-Comment[it]=<hilight>Modulo Temperature</hilight><br>Monitor per le temperature.
+Comment=<hilight>Temperature Gadget</hilight><br><br>Temperature monitor.
+Comment[it]=<hilight>Modulo Temperature</hilight><br><br>Monitor per le temperature.
 X-Enlightenment-ModuleType=system

@@ -2,11 +2,11 @@
 Type=Link
 Name=Cpufreq
 Icon=e-module-cpufreq
-Comment=<hilight>CPUfreq Gadget</hilight><br>Gadget to moitor and change<br>the CPU frequency.
+Comment=<hilight>CPUfreq Gadget</hilight><br><br>Gadget to moitor and change the CPU frequency.
 Comment[de]=
-Comment[es]=<hilight>Dispositivo de frecuencia de CPU</hilight><br>Dispositivo para monitorear y cambiar<br>la frecuencia del CPU.
+Comment[es]=<hilight>Dispositivo de frecuencia de CPU</hilight><br><br>Dispositivo para monitorear y cambiar la frecuencia del CPU.
 Comment[fr]=
-Comment[it]=<hilight>Modulo CPUfreq</hilight><br>Modulo per il monitoraggio e la<br>variazione della frequenza della CPU.
+Comment[it]=<hilight>Modulo CPUfreq</hilight><br><br>Modulo per il monitoraggio e la variazione della frequenza della CPU.
 Comment[ja]=
 Comment[pt]=
 Comment[pt_BR]=

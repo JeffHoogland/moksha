@@ -2,11 +2,11 @@
 Type=Link
 Name=IBar
 Icon=e-module-ibar
-Comment=<hilight>IconBar Gadget</hilight><br>Iconic application launcher.
+Comment=<hilight>IconBar Gadget</hilight><br><br>Iconic application launcher.
 Comment[de]=
-Comment[es]=<hilight>Dispositivo IconBar</hilight><br>Lanzador de aplicaciones con íconos.
+Comment[es]=<hilight>Dispositivo IconBar</hilight><br><br>Lanzador de aplicaciones con íconos.
 Comment[fr]=
-Comment[it]=<hilight>Modulo IBar</hilight><br>Una barra di icone per il<br>lancio di applicazioni.
+Comment[it]=<hilight>Modulo IBar</hilight><br><br>Una barra di icone per il lancio di applicazioni.
 Comment[ja]=
 Comment[pt]=
 Comment[pt_BR]=

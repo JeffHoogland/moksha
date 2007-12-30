@@ -2,11 +2,11 @@
 Type=Link
 Name=Dropshadow
 Icon=e-module-dropshadow
-Comment=<hilight>Dropshadow Module</hilight><br>Module to add a dropshadow to<br>windows.
+Comment=<hilight>Dropshadow Module</hilight><br><br>Module to add a dropshadow to windows.
 Comment[de]=
-Comment[es]=<hilight>Módulo de sombra</hilight><br>Módulo para añadir una sombra<br>a las ventanas.
+Comment[es]=<hilight>Módulo de sombra</hilight><br><br>Módulo para añadir una sombra a las ventanas.
 Comment[fr]=
-Comment[it]=<hilight>Modulo Dropshadow</hilight><br>Modulo per aggiungere un'ombreggiatura<br>alle finestre.
+Comment[it]=<hilight>Modulo Dropshadow</hilight><br><br>Modulo per aggiungere un'ombreggiatura alle finestre.
 Comment[ja]=
 Comment[pt]=
 Comment[pt_BR]=

@@ -2,11 +2,11 @@
 Type=Link
 Name=Pager
 Icon=e-module-pager
-Comment=<hilight>Pager Gadget</hilight><br>Gadget to allow you to visualize<br>your virtual desktops and the<br>windows they contain.
+Comment=<hilight>Pager Gadget</hilight><br><br>Gadget to allow you to visualize your virtual desktops and the windows they contain.
 Comment[de]=
-Comment[es]=<hilight>Dispositivo paginador</hilight><br>Dispositivo que permite visualizar<br>los escritorios virtuales y<br>las ventanas que contienen.
+Comment[es]=<hilight>Dispositivo paginador</hilight><br><br>Dispositivo que permite visualizar los escritorios virtuales y las ventanas que contienen.
 Comment[fr]=
-Comment[it]=<hilight>Modulo Pager</hilight><br>Modulo che permette di visualizzare<br>i desktop virtuali e le finestre<br>che contengono.
+Comment[it]=<hilight>Modulo Pager</hilight><br><br>Modulo che permette di visualizzare i desktop virtuali e le finestre che contengono.
 Comment[ja]=
 Comment[pt]=
 Comment[pt_BR]=

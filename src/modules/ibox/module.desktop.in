@@ -2,11 +2,11 @@
 Type=Link
 Name=IBox
 Icon=e-module-ibox
-Comment=<hilight>IconBox Gadget</hilight><br>An home for your iconified<br>applications.
+Comment=<hilight>IconBox Gadget</hilight><br><br>An home for your iconified applications.
 Comment[de]=
-Comment[es]=<hilight>Dispositivo IconBox</hilight>Un contenedor para sus aplicaciones<br>iconificadas.
+Comment[es]=<hilight>Dispositivo IconBox</hilight><br><br>Un contenedor para sus aplicaciones iconificadas.
 Comment[fr]=
-Comment[it]=<hilight>Modulo IBox</hilight><br>Un contenitore per le applicazioni<br>iconificate.
+Comment[it]=<hilight>Modulo IBox</hilight><br><br>Un contenitore per le applicazioni iconificate.
 Comment[ja]=
 Comment[pt]=
 Comment[pt_BR]=
