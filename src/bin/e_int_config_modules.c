@@ -162,7 +162,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ol;
 
-   o = e_widget_list_add(evas, 0, 1);
+   o = e_widget_table_add(evas, 0);
 
    of = e_widget_frametable_add(evas, _("Available Modules"), 0);
    ol = e_widget_ilist_add(evas, 24, 24, NULL);
@@ -171,17 +171,14 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_on_change_hook_set(ol, _avail_list_cb_change, cfdata);
    _fill_list(ol, 0);
    e_widget_frametable_object_append(of, ol, 0, 0, 1, 1, 1, 1, 1, 1);
-   ol = e_widget_textblock_add(evas);
-   e_widget_min_size_set(ol, 200, 70);
-   cfdata->o_desc = ol;
-   e_widget_textblock_markup_set(ol, _("Description: Unavailable"));
-   e_widget_frametable_object_append(of, ol, 0, 1, 1, 1, 1, 1, 1, 0);
    ol = e_widget_button_add(evas, _("Load Module"), NULL, 
 			    _btn_cb_load, cfdata, NULL);
    cfdata->b_load = ol;
    e_widget_disabled_set(ol, 1);
-   e_widget_frametable_object_append(of, ol, 0, 2, 1, 1, 1, 1, 1, 0);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_frametable_object_append(of, ol, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 1, 1, 1);
+
+//   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_frametable_add(evas, _("Loaded Modules"), 0);
    ol = e_widget_ilist_add(evas, 24, 24, NULL);
@@ -195,7 +192,18 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->b_unload = ol;
    e_widget_disabled_set(ol, 1);
    e_widget_frametable_object_append(of, ol, 0, 1, 1, 1, 1, 1, 1, 0);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(o, of, 1, 0, 1, 1, 1, 1, 1, 1);
+
+//   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   ol = e_widget_textblock_add(evas);
+   e_widget_min_size_set(ol, 200, 70);
+   cfdata->o_desc = ol;
+   e_widget_textblock_markup_set(ol, _("Description: Unavailable"));
+//   e_widget_frametable_object_append(of, ol, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(o, ol, 0, 1, 2, 1, 1, 0, 1, 0);
+
+//   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    return o;
 }
@@ -338,7 +346,7 @@ _fill_list(Evas_Object *obj, int enabled)
 
    e_widget_ilist_go(obj);
    e_widget_min_size_get(obj, &w, NULL);
-   e_widget_min_size_set(obj, w, 200);
+   e_widget_min_size_set(obj, w, 250);
    e_widget_ilist_thaw(obj);
    edje_thaw();
    evas_event_thaw(evas);
