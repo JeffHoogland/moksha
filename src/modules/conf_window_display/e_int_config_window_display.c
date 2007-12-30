@@ -19,7 +19,7 @@ struct _E_Config_Dialog_Data
    int animate_shading;
    int window_placement_policy;
    int desk_auto_switch;
-   
+
    /*- ADVANCED -*/
    int move_info_visible;
    int move_info_follows;
@@ -38,10 +38,10 @@ e_int_config_window_display(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
    if (e_config_dialog_find("E", "_config_window_display_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
-   
+
    /* methods */
    v->create_cfdata           = _create_data;
    v->free_cfdata             = _free_data;
@@ -85,7 +85,7 @@ _create_data(E_Config_Dialog *cfd)
     * the running systems/config in the apply methods
     */
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _fill_data(cfdata);
    return cfdata;
@@ -150,14 +150,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
-   
+
    if (cfdata->move_info_visible && cfdata->resize_info_visible)
      cfdata->move_resize_info = 1;
    else
      cfdata->move_resize_info = 0;
-   
+
    o = e_widget_list_add(evas, 0, 0);
-   
+
    of = e_widget_framelist_add(evas, _("Display"), 0);
    ob = e_widget_check_add(evas, _("Show window geometry information when moving or resizing"), &(cfdata->move_resize_info));
    e_widget_framelist_object_append(of, ob);
@@ -178,7 +178,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Automatically switch to desktop of new window"), &(cfdata->desk_auto_switch));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+
    return o;
 }
 
@@ -186,12 +186,11 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
-   Evas_Object *o, *ob, *of, *ot;
+   Evas_Object *ob, *of, *ot;
    E_Radio_Group *rg;
 
-   o = e_widget_list_add(evas, 0, 0);
    ot = e_widget_table_add(evas, 0);
-   
+
    of = e_widget_framelist_add(evas, _("Window Move Geometry"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    ob = e_widget_check_add(evas, _("Display information"), &(cfdata->move_info_visible));
@@ -199,7 +198,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_check_add(evas, _("Follow the window as it moves"), &(cfdata->move_info_follows));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
-   
+
    of = e_widget_framelist_add(evas, _("Window Resize Geometry"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    ob = e_widget_check_add(evas, _("Display information"), &(cfdata->resize_info_visible));
@@ -224,7 +223,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_radio_add(evas, _("Decelerate"), E_TRANSITION_DECELERATE, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
-   
+
    of = e_widget_framelist_add(evas, _("Automatic New Window Placement"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    rg = e_widget_radio_group_new(&(cfdata->window_placement_policy));
@@ -239,7 +238,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_check_add(evas, _("Automatically switch to desktop of new window"), &(cfdata->desk_auto_switch));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
-   
+
    of = e_widget_framelist_add(evas, _("Window Border"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    rg = e_widget_radio_group_new(&(cfdata->use_app_icon));
@@ -254,8 +253,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_check_add(evas, _("Always remember internal windows"), &(cfdata->remember_internal_windows));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
-   
-   e_widget_list_object_append(o, ot, 1, 1, 0.5);
-   
-   return o;
+
+   return ot;
 }
