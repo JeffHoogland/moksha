@@ -24,7 +24,7 @@ struct _E_Config_Dialog_Data
    int pos_min_h;
    int pos_max_w;
    int pos_max_h;
-   char * term_cmd;
+   char *term_cmd;
 };
 
 EAPI E_Config_Dialog *
@@ -69,7 +69,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->pos_max_h = e_config->exebuf_pos_max_h;
    if (e_config->exebuf_term_cmd)
      cfdata->term_cmd = strdup(e_config->exebuf_term_cmd);
-
 }
 
 static void *
@@ -183,11 +182,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);   
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
 
-   of = e_widget_framelist_add(evas, _("Terminal Settings"), 0);      
+   of = e_widget_frametable_add(evas, _("Terminal Settings"), 0);      
    ob = e_widget_label_add(evas, _("Terminal Command (CTRL+RETURN to utilize)"));
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
+//   e_widget_framelist_object_append(of, ob);
    ob = e_widget_entry_add(evas, &(cfdata->term_cmd), NULL, NULL, NULL);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+//   e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_frametable_add(evas, _("Size Settings"), 0);
