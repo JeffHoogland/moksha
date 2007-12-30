@@ -178,8 +178,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_frametable_object_append(of, ol, 0, 1, 1, 1, 1, 1, 1, 0);
    e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
-//   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
    of = e_widget_frametable_add(evas, _("Loaded Modules"), 0);
    ol = e_widget_ilist_add(evas, 24, 24, NULL);
    cfdata->l_loaded = ol;
@@ -194,16 +192,11 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_frametable_object_append(of, ol, 0, 1, 1, 1, 1, 1, 1, 0);
    e_widget_table_object_append(o, of, 1, 0, 1, 1, 1, 1, 1, 1);
 
-//   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
    ol = e_widget_textblock_add(evas);
    e_widget_min_size_set(ol, 200, 70);
    cfdata->o_desc = ol;
    e_widget_textblock_markup_set(ol, _("Description: Unavailable"));
-//   e_widget_frametable_object_append(of, ol, 0, 1, 1, 1, 1, 1, 1, 0);
    e_widget_table_object_append(o, ol, 0, 1, 2, 1, 1, 0, 1, 0);
-
-//   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    return o;
 }
