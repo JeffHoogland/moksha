@@ -14,7 +14,6 @@ static void _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, v
 static void _e_zone_event_zone_desk_count_set_free(void *data, void *ev);
 static int  _e_zone_cb_mouse_in(void *data, int type, void *event);
 static int  _e_zone_cb_mouse_out(void *data, int type, void *event);
-static int  _e_zone_cb_mouse_down(void *data, int type, void *event);
 static int  _e_zone_cb_timer(void *data);
 static int  _e_zone_cb_desk_show(void *data, int type, void *event);
 static void _e_zone_update_flip(E_Zone *zone);
