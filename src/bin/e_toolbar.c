@@ -52,7 +52,8 @@ e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2)
 
    tbar = E_OBJECT_ALLOC(E_Toolbar, E_TOOLBAR_TYPE, _e_toolbar_free);
    if (!tbar) return NULL;
-   tbar->id = evas_list_count(toolbars) + 1;
+   tbar->id = 1;
+//   tbar->id = evas_list_count(toolbars) + 1;
    tbar->x = tbar->y = 0;
    tbar->h = 32;
    tbar->w = fwin->w;
