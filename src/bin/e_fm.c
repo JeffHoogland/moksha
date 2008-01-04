@@ -1112,7 +1112,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 	    (!strncmp(ic->info.icon, "./", 2)) ||
 	    (!strncmp(ic->info.icon, "../", 3)))
 	  {
-	     char *icfile = NULL;
+	     const char *icfile;
 	     
 	     /* path to icon file */
 	     icfile = ic->info.icon;
