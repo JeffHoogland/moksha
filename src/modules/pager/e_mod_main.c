@@ -738,11 +738,11 @@ _pager_popup_find(E_Zone *zone)
    Pager_Popup *pp;
    Evas_List *l;
 
-   for(l = pager_popups; l; l = l->next)
+   for (l = pager_popups; l; l = l->next)
      {
 	pp = l->data;
-	pp->pager->zone == zone;
-	return pp;
+	if (pp->pager->zone == zone)
+	  return pp;
      }
    return NULL;
 }
@@ -818,8 +818,8 @@ _pager_inst_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 static E_Config_Dialog *
 _pager_config_dialog(E_Container *con, const char *params)
 {
-   if (!pager_config) return;
-   if (pager_config->config_dialog) return;
+   if (!pager_config) return NULL;
+   if (pager_config->config_dialog) return NULL;
    /* FIXME: pass zone config item */
    _config_pager_module(NULL);  
    return pager_config->config_dialog;
