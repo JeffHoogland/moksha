@@ -11,7 +11,8 @@ struct _E_Config_Dialog_Data
      {
 	int show, urgent_show, urgent_stick;
 	double speed, urgent_speed;
-	int pager_height;
+	int height;
+	int act_height;
      } popup;
    int drag_resist, flip_desk;
    struct 
@@ -88,7 +89,8 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    cfdata->popup.urgent_show = pager_config->popup_urgent;
    cfdata->popup.urgent_stick = pager_config->popup_urgent_stick;
    cfdata->popup.urgent_speed = pager_config->popup_urgent_speed;
-   cfdata->popup.pager_height = pager_config->popup_pager_height;
+   cfdata->popup.height = pager_config->popup_height;
+   cfdata->popup.act_height = pager_config->popup_act_height;
    cfdata->drag_resist = pager_config->drag_resist;
    cfdata->btn.drag = pager_config->btn_drag;
    cfdata->btn.noplace = pager_config->btn_noplace;
@@ -169,12 +171,19 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->gui.o_btn3 = ow;
    e_widget_frametable_object_append(of, ow, 1, 3, 1, 1, 0, 0, 1, 0);
    _adv_update_btn_lbl(cfdata);
+   
+   /* TODO find better name */                                                                         
+   ow = e_widget_label_add(evas, _("Keyaction popup height"));                                       
+   e_widget_frametable_object_append(of, ow, 0, 4, 1, 1, 1, 0, 1, 0);                                
+   ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 20.0, 200.0, 1.0, 0, NULL,                     
+                          &(cfdata->popup.act_height), 100);                                         
+   e_widget_frametable_object_append(of, ow, 1, 4, 1, 1, 1, 0, 1, 0);  
 
    ow = e_widget_label_add(evas, _("Resistance to dragging"));
-   e_widget_frametable_object_append(of, ow, 0, 4, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ow, 0, 5, 1, 1, 1, 0, 1, 0);
    ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 0.0, 10.0, 1.0, 0, NULL, 
 			    &(cfdata->drag_resist), 100);
-   e_widget_frametable_object_append(of, ow, 1, 4, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ow, 1, 5, 1, 1, 1, 0, 1, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_frametable_add(evas, _("Popup Settings"), 0);
@@ -184,7 +193,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_label_add(evas, _("Popup pager height"));
    e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
    ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 20.0, 200.0, 1.0, 0, NULL, 
-			    &(cfdata->popup.pager_height), 100);
+			    &(cfdata->popup.height), 100);
    e_widget_frametable_object_append(of, ow, 1, 1, 1, 1, 1, 0, 1, 0);
    ow = e_widget_label_add(evas, _("Popup speed"));
    e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 0, 1, 0);
@@ -219,7 +228,8 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    pager_config->popup_urgent = cfdata->popup.urgent_show;
    pager_config->popup_urgent_stick = cfdata->popup.urgent_stick;
    pager_config->popup_urgent_speed = cfdata->popup.urgent_speed;
-   pager_config->popup_pager_height = cfdata->popup.pager_height;
+   pager_config->popup_height = cfdata->popup.height;
+   pager_config->popup_act_height = cfdata->popup.act_height;
    pager_config->drag_resist = cfdata->drag_resist;
    pager_config->btn_drag = cfdata->btn.drag;
    pager_config->btn_noplace = cfdata->btn.noplace;
@@ -287,21 +297,28 @@ _grab_cb_mouse_down(void *data, int type, void *event)
    ev = event;
    if (!(cfdata = data)) return 1;
    if (ev->win != cfdata->grab.bind_win) return 1;
-   if (ev->button != 3) 
+
+   if(ev->button == cfdata->btn.drag)
+     cfdata->btn.drag = 0;
+   else if (ev->button == cfdata->btn.noplace)
+     cfdata->btn.noplace = 0;
+   else if (ev->button == cfdata->btn.desk)
+     cfdata->btn.desk = 0;
+        
+   if (cfdata->grab.btn == 1)
+     cfdata->btn.drag = ev->button;
+   else if (cfdata->grab.btn == 2)
+     cfdata->btn.noplace = ev->button;
+   else
+     cfdata->btn.desk = ev->button;
+
+   if(ev->button == 3) 
      {
-	if (cfdata->grab.btn == 1)
-	  cfdata->btn.drag = ev->button;
-	else if (cfdata->grab.btn == 2)
-	  cfdata->btn.noplace = ev->button;
-	else
-	  cfdata->btn.desk = ev->button;
-     }
-   else 
-     {
-	e_util_dialog_show(_("Error - Invalid Button"), 
-			   _("You cannot use the right mouse button<br>"
-			     "for this as it is already taken by internal<br>"
-			     "code for context menus."));
+	e_util_dialog_show(_("Attetion"), 
+			   _("You cannot use the right mouse button in the<br>"
+			     "shelf for this as it is already taken by internal<br>"
+			     "code for context menus. <br>"
+			     "This button only works in the Popup"));
      }
    _grab_wnd_hide(cfdata);
    return 1;

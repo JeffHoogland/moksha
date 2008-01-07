@@ -26,21 +26,20 @@ struct _Config
    unsigned int    popup_urgent;
    unsigned int    popup_urgent_stick;
    double          popup_urgent_speed;
-   int             popup_pager_height;
+   int             popup_act_height; /*keyaction popup */
+   int             popup_height;    /* urgent/on-deskswitch popup*/
    unsigned int    drag_resist;
-   unsigned int    scale;
-   unsigned char   resize;
+   unsigned int    btn_drag;
+   unsigned int    btn_noplace;
+   unsigned int    btn_desk;
+   unsigned int    flip_desk;
+
    /* just config state */
    E_Module        *module;
    E_Config_Dialog *config_dialog;
    Evas_List       *instances;
    E_Menu          *menu;
    Evas_List       *handlers;
-
-   unsigned int     btn_drag;
-   unsigned int     btn_noplace;
-   unsigned int     btn_desk;
-   unsigned int     flip_desk;
 };
 
 EAPI extern E_Module_Api e_modapi;
