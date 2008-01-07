@@ -701,7 +701,7 @@ _pager_popup_new(E_Zone *zone, int keyaction)
    pp->pager->popup = pp;
 
    pp->urgent = 0;
-   
+
    e_zone_desk_count_get(zone, &x, &y);
 
    if (keyaction)
@@ -735,11 +735,11 @@ _pager_popup_new(E_Zone *zone, int keyaction)
 		       ((zone->h - h) / 2), w, h);
    e_bindings_mouse_grab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);
    e_bindings_wheel_grab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);
-   
+
    e_popup_show(pp->popup);
- 
+
    pp->timer = NULL;
-   
+
    return pp;
 }
 
@@ -844,7 +844,7 @@ _pager_config_dialog(E_Container *con, const char *params)
    if (!pager_config) return;
    if (pager_config->config_dialog) return;
    /* FIXME: pass zone config item */
-   _config_pager_module(NULL);  
+   _config_pager_module(NULL);
    return pager_config->config_dialog;
 }
 
@@ -926,9 +926,9 @@ _pager_cb_event_border_move(void *data, int type, void *event)
 	     pd = l->data;
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if (pw) _pager_window_move(pw);
-	  }  
+	  }
      }
-   
+
    return 1;
 }
 
@@ -1099,7 +1099,7 @@ _pager_cb_event_border_unstick(void *data, int type, void *event)
    return 1;
 }
 
-static void 
+static void
 _pager_window_desk_change(Pager *pager, E_Border *bd)
 {
    Evas_List *l;
@@ -1224,14 +1224,14 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
    E_Event_Border_Desk_Set *ev;
    Evas_List *l;
    Pager *p;
-   
+
    ev = event;
    for (l = pagers; l; l = l->next)
      {
 	p = l->data;
 	_pager_window_desk_change(p, ev->border);
      }
-   
+
    return 1;
 }
 
@@ -1544,7 +1544,7 @@ _pager_cb_event_desk_show(void *data, int type, void *event)
    Pager *p;
    Pager_Desk *pd;
    Pager_Popup *pp;
-   
+
    ev = event;
    for (l = pagers; l; l = l->next)
      {
@@ -1562,7 +1562,7 @@ _pager_cb_event_desk_show(void *data, int type, void *event)
    if (pager_config->popup && !act_popup)
      {
 	if (pp = _pager_popup_find(ev->desk->zone))
-	  {             
+	  {
 	     ecore_timer_del(pp->timer);
 	  }
 	else
@@ -1635,7 +1635,7 @@ _pager_window_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_inf
 {
    Evas_Event_Mouse_In *ev;
    Pager_Win *pw;
-   
+
    ev = event_info;
    pw = data;
    /* FIXME: display window title in some tooltip thing */
@@ -1660,7 +1660,7 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
 
    ev = event_info;
    pw = data;
-   
+
    if (!pw) return;
    if (pw->desk->pager->popup && !act_popup) return;
    if (pw->border->lock_user_location) return;
@@ -1689,13 +1689,13 @@ _pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_inf
    Evas_Event_Mouse_Up *ev;
    Pager_Win *pw;
    Pager *p;
-   
+
    ev = event_info;
    pw = data;
    if (!pw) return;
 
    p = pw->desk->pager;
-   
+
    if (pw->desk->pager->popup && !act_popup) return;
    if (ev->button == pager_config->btn_desk) return;
    if ((ev->button == pager_config->btn_drag) ||
@@ -1725,7 +1725,7 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
    unsigned int resist = 0;
    Evas_Coord mx, my, vx, vy;
    Pager_Desk *pd;
-   
+
    ev = event_info;
    pw = data;
 
@@ -1769,7 +1769,7 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 	  {
 	     evas_object_geometry_get(pw->o_window, &x, &y, &w, &h);
 	     evas_object_hide(pw->o_window);
-	     
+
 	     drag = e_drag_new(pw->desk->pager->zone->container,
 			       x, y, drag_types, 2, pw, -1,
 			       _pager_window_cb_drag_convert,
@@ -1858,13 +1858,13 @@ _pager_window_cb_drag_finished(E_Drag *drag, int dropped)
 	  }
 	else y = 0;
 	e_border_move(pw->border, x, y);
-       
+
 	if (!(pw->border->lock_user_stacking))
 	  e_border_raise(pw->border);
      }
    if (pw && pw->drag.from_pager) pw->drag.from_pager->dragging = 0;
    pw->drag.from_pager = NULL;
- 
+
   if (act_popup)
      {
 	e_grabinput_get(input_window, 0, input_window);
@@ -1918,11 +1918,11 @@ _pager_drop_cb_enter(void *data, const char *type, void *event_info)
    p = data;
 
    /* FIXME this fixes a segv, but the case is not easy
-    * reproduceable. this makes no sense either since 
-    * the same 'pager' is passed to e_drop_handler_add 
+    * reproduceable. this makes no sense either since
+    * the same 'pager' is passed to e_drop_handler_add
     * and it works without this almost all the time.
     * so this must be an issue with e_dnd code... i guess */
-   if (act_popup) p = act_popup->pager; 
+   if (act_popup) p = act_popup->pager;
 
    _pager_update_drop_position(p, ev->x, ev->y);
 
@@ -1942,7 +1942,7 @@ _pager_drop_cb_move(void *data, const char *type, void *event_info)
    ev = event_info;
    p = data;
 
-   if (act_popup) p = act_popup->pager; 
+   if (act_popup) p = act_popup->pager;
 
    _pager_update_drop_position(p, ev->x, ev->y);
 
@@ -1962,7 +1962,7 @@ _pager_drop_cb_leave(void *data, const char *type, void *event_info)
    ev = event_info;
    p = data;
 
-   if (act_popup) p = act_popup->pager; 
+   if (act_popup) p = act_popup->pager;
 
    for (l = p->desks; l && p->active_drop_pd; l = l->next)
      {
@@ -1998,7 +1998,7 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
    ev = event_info;
    p = data;
 
-   if (act_popup) p = act_popup->pager; 
+   if (act_popup) p = act_popup->pager;
 
    evas_object_geometry_get(p->o_table, &xx, &yy, NULL, NULL);
    if (p->inst) e_box_align_pixel_offset_get(p->inst->gcc->o_box, &x, &y);
@@ -2125,9 +2125,9 @@ _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
    const char *drag_types[] = { "enlightenment/vdesktop" };
    Pager_Win *pw;
    Evas_List *l;
- 
+
    ev = event_info;
-    
+
    pd = data;
    if (!pd) return;
    /* prevent drag for a few pixels */
@@ -2296,7 +2296,7 @@ _pager_popup_show()
 	input_window = 0;
 	return 0;
      }
-   
+
    handlers = evas_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_KEY_DOWN, _pager_popup_cb_key_down, NULL));
@@ -2327,9 +2327,9 @@ _pager_popup_show()
 		      _pager_drop_cb_enter, _pager_drop_cb_move,
 		      _pager_drop_cb_leave, _pager_drop_cb_drop,
 		      drop, 3, x, y, w, h);
-   
+
    e_bindings_key_grab(E_BINDING_CONTEXT_POPUP, act_popup->popup->evas_win);
-  
+
    evas_event_freeze(act_popup->popup->evas);
    evas_event_feed_mouse_in(act_popup->popup->evas, ecore_x_current_time_get(), NULL);
    evas_event_feed_mouse_move(act_popup->popup->evas, -1000000, -1000000, ecore_x_current_time_get(), NULL);
@@ -2344,7 +2344,7 @@ static void
 _pager_popup_hide(int switch_desk)
 {
    e_bindings_key_ungrab(E_BINDING_CONTEXT_POPUP, act_popup->popup->evas_win);
-   _pager_popup_free(act_popup); 
+   _pager_popup_free(act_popup);
    act_popup = NULL;
    hold_count = 0;
    hold_mod = 0;
@@ -2380,50 +2380,50 @@ _pager_popup_desk_switch(int x, int y)
    Pager_Popup *pp = act_popup;
 
    e_zone_desk_count_get(pp->pager->zone, &max_x, &max_y);
-   
+
    max_y -= 1;
    max_x -= 1;
-   
+
    desk_x = current_desk->x + x;
    desk_y = current_desk->y + y;
-   
-   if (desk_x < 0) 
+
+   if (desk_x < 0)
      desk_x = max_x;
    else if (desk_x > max_x)
      desk_x = 0;
-   
+
    if (desk_y < 0)
      desk_y = max_y;
    else if (desk_y > max_y)
      desk_y = 0;
-   
+
    current_desk = e_desk_at_xy_get(pp->pager->zone, desk_x, desk_y);
-   
+
    pd = _pager_desk_find(pp->pager, current_desk);
    if (pd) _pager_desk_select(pd);
 
    edje_object_part_text_set(pp->o_bg, "text", current_desk->name);
 }
 
-static void 
+static void
 _pager_popup_cb_action_show(E_Object *obj, const char *params, Ecore_X_Event_Key_Down *ev)
 {
    if (_pager_popup_show())
      _pager_popup_modifiers_set(ev->modifiers);
 }
 
-static void 
+static void
 _pager_popup_cb_action_switch(E_Object *obj, const char *params, Ecore_X_Event_Key_Down *ev)
 {
    int x = 0;
    int y = 0;
- 
+
    if (!act_popup)
      {
-        if (_pager_popup_show())
-          _pager_popup_modifiers_set(ev->modifiers);
-        else 
-          return;   
+	if (_pager_popup_show())
+	  _pager_popup_modifiers_set(ev->modifiers);
+	else
+	  return;
      }
    if (!strcmp(params, "left"))
      x = -1;
@@ -2446,8 +2446,8 @@ _pager_popup_cb_mouse_down(void *data, int type, void *event)
    ev = event;
    if (ev->win != input_window) return 1;
 
-   evas_event_feed_mouse_down(pp->popup->evas, ev->button, 
-                              0, ev->time, NULL);
+   evas_event_feed_mouse_down(pp->popup->evas, ev->button,
+			      0, ev->time, NULL);
    return 1;
 }
 
@@ -2459,13 +2459,13 @@ _pager_popup_cb_mouse_up(void *data, int type, void *event)
 
    ev = event;
    if (ev->win != input_window) return 1;
- 
-   evas_event_feed_mouse_up(pp->popup->evas, ev->button, 
-                            0, ev->time, NULL);
+
+   evas_event_feed_mouse_up(pp->popup->evas, ev->button,
+			    0, ev->time, NULL);
    return 1;
 }
 
-static int 
+static int
 _pager_popup_cb_mouse_move(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Move *ev;
@@ -2474,10 +2474,10 @@ _pager_popup_cb_mouse_move(void *data, int type, void *event)
    ev = event;
    if (ev->win != input_window) return 1;
 
-   evas_event_feed_mouse_move(pp->popup->evas, 
-			      ev->x - pp->popup->x + pp->pager->zone->x, 
-			      ev->y - pp->popup->y + pp->pager->zone->y, 
-			      ev->time, NULL);   
+   evas_event_feed_mouse_move(pp->popup->evas,
+			      ev->x - pp->popup->x + pp->pager->zone->x,
+			      ev->y - pp->popup->y + pp->pager->zone->y,
+			      ev->time, NULL);
    return 1;
 }
 
@@ -2485,7 +2485,7 @@ static int
 _pager_popup_cb_key_down(void *data, int type, void *event)
 {
    Ecore_X_Event_Key_Down *ev;
-   
+
    ev = event;
    if (ev->win != input_window) return 1;
    if      (!strcmp(ev->keysymbol, "Up"))
@@ -2516,10 +2516,10 @@ _pager_popup_cb_key_down(void *data, int type, void *event)
 	     if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
 	     if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
 
-	     if (bind->key && (!strcmp(bind->key, ev->keyname)) && ((bind->modifiers == mod))) 
+	     if (bind->key && (!strcmp(bind->key, ev->keyname)) && ((bind->modifiers == mod)))
 	       {
 		  E_Action *act;
-	
+
 		  act = e_action_find(bind->action);
 
 		  if (act)
@@ -2529,7 +2529,7 @@ _pager_popup_cb_key_down(void *data, int type, void *event)
 		    }
 	       }
 	  }
-     }  
+     }
    return 1;
 }
 
@@ -2564,7 +2564,7 @@ _pager_popup_cb_key_up(void *data, int type, void *event)
 	     return 1;
 	  }
      }
- 
+
    return 1;
 }
 
@@ -2627,7 +2627,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIMIT(pager_config->btn_drag, 0, 32);
    E_CONFIG_LIMIT(pager_config->btn_noplace, 0, 32);
    E_CONFIG_LIMIT(pager_config->btn_desk, 0, 32);
- 
+
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_RESIZE, _pager_cb_event_border_resize, NULL));
@@ -2680,28 +2680,28 @@ e_modapi_init(E_Module *m)
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add
       (E_EVENT_CONTAINER_RESIZE, _pager_cb_event_container_resize, NULL));
-    
+
    pager_config->module = m;
 
    e_gadcon_provider_register(&_gadcon_class);
 
-   e_configure_registry_item_add("extensions/pager", 40, N_("Pager"), NULL, 
+   e_configure_registry_item_add("extensions/pager", 40, N_("Pager"), NULL,
 				 "enlightenment/pager", _pager_config_dialog);
-  
+
    act_popup_show = e_action_add("pager_show");
    if (act_popup_show)
      {
 	act_popup_show->func.go_key = _pager_popup_cb_action_show;
- 	e_action_predef_name_set(N_("Pager"), N_("Show Pager Popup"), "pager_show", "<none>", NULL, 0);
+	e_action_predef_name_set(N_("Pager"), N_("Show Pager Popup"), "pager_show", "<none>", NULL, 0);
      }
    act_popup_switch = e_action_add("pager_switch");
    if (act_popup_switch)
      {
 	act_popup_switch->func.go_key = _pager_popup_cb_action_switch;
-	e_action_predef_name_set(N_("Pager"), N_("Desk Right"), "pager_switch", "right", NULL, 0);
-        e_action_predef_name_set(N_("Pager"), N_("Desk Left"),  "pager_switch", "left",  NULL, 0);
-        e_action_predef_name_set(N_("Pager"), N_("Desk Up"),    "pager_switch", "up",    NULL, 0);
-        e_action_predef_name_set(N_("Pager"), N_("Desk Down"),  "pager_switch", "down",  NULL, 0);
+	e_action_predef_name_set(N_("Pager"), N_("Popup Desk Right"), "pager_switch", "right", NULL, 0);
+	e_action_predef_name_set(N_("Pager"), N_("Popup Desk Left"),  "pager_switch", "left",  NULL, 0);
+	e_action_predef_name_set(N_("Pager"), N_("Popup Desk Up"),    "pager_switch", "up",    NULL, 0);
+	e_action_predef_name_set(N_("Pager"), N_("Popup Desk Down"),  "pager_switch", "down",  NULL, 0);
      }
 
    return m;
@@ -2727,15 +2727,15 @@ e_modapi_shutdown(E_Module *m)
 	pager_config->menu = NULL;
      }
 
-   e_configure_registry_item_del("extensions/pager");   
+   e_configure_registry_item_del("extensions/pager");
 
    e_action_del("pager_show");
    e_action_del("pager_switch");
 
-   e_action_predef_name_del(_("Pager"), _("Desk Right"));
-   e_action_predef_name_del(_("Pager"), _("Desk Left"));
-   e_action_predef_name_del(_("Pager"), _("Desk Up"));
-   e_action_predef_name_del(_("Pager"), _("Desk Down"));
+   e_action_predef_name_del(_("Pager"), N_("Popup Desk Right"));
+   e_action_predef_name_del(_("Pager"), N_("Popup Desk Left"));
+   e_action_predef_name_del(_("Pager"), N_("Popup Desk Up"));
+   e_action_predef_name_del(_("Pager"), N_("Popup Desk Down"));
 
    E_FREE(pager_config);
    E_CONFIG_DD_FREE(conf_edd);
