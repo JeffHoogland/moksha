@@ -1387,7 +1387,7 @@ _pager_cb_event_border_urgent_change(void *data, int type, void *event)
      {
 	pp = _pager_popup_find(zone);
 
-	if (!pp && urgent)
+	if (!pp && urgent && !(ev->border->iconic))
 	  {
 	     pp = _pager_popup_new(zone, 0);
 
