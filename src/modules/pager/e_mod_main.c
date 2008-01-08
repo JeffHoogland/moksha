@@ -2493,17 +2493,11 @@ _pager_popup_cb_mouse_wheel(void *data, int type, void *event)
    max_x -= 1;
 
    if (current_desk->x + ev->z > max_x)
-     {
-       _pager_popup_desk_switch(1, 1);
-     } 
+     _pager_popup_desk_switch(1, 1);
    else if (current_desk->x + ev->z < 0)
-     {
-       _pager_popup_desk_switch(-1, -1);
-     }
+     _pager_popup_desk_switch(-1, -1);
    else
-     {
-       _pager_popup_desk_switch(ev->z, 0);
-     }
+     _pager_popup_desk_switch(ev->z, 0);
 
    return 1;
 }
