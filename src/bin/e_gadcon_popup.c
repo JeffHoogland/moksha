@@ -115,7 +115,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
       case E_GADCON_ORIENT_CORNER_TL:
       case E_GADCON_ORIENT_CORNER_TR:
 	py = gy + gh;
-	px = gx;
+	px = (gx + (gw / 2)) - (pop->w / 2);
 	if (px + pop->w >= zw)
 	  px = gx + gw - pop->w;
 	break;
@@ -123,7 +123,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_BR:
 	py = gy - pop->h;
-	px = gx;
+	px = (gx + (gw / 2)) - (pop->w / 2);
 	if (px + pop->w >= zw)
 	  px = gx + gw - pop->w;
 	break;
