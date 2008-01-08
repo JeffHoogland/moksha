@@ -170,6 +170,7 @@ static void _cb_action_pager_popup_switch(E_Object *obj, const char *params, Eco
 static int _pager_popup_cb_mouse_down(void *data, int type, void *event);
 static int _pager_popup_cb_mouse_up(void *data, int type, void *event);
 static int _pager_popup_cb_mouse_move(void *data, int type, void *event);
+static int _pager_popup_cb_mouse_wheel(void *data, int type, void *event);
 static void _pager_popup_desk_switch(int x, int y);
 static void _pager_popup_modifiers_set(int mod);
 static int _pager_popup_cb_key_down(void *data, int type, void *event);
@@ -2270,7 +2271,6 @@ _pager_popup_cb_timeout(void *data)
    return 0;
 }
 
-
 /************************************************************************/
 /* popup-on-keyaction functions */
 static int
@@ -2309,10 +2309,9 @@ _pager_popup_show()
    handlers = evas_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_MOUSE_BUTTON_UP, _pager_popup_cb_mouse_up, NULL));
-   /* TODO */
-   /* handlers = evas_list_append
-      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_WHEEL, _e_winlist_cb_mouse_wheel, NULL));*/
+   handlers = evas_list_append
+     (handlers, ecore_event_handler_add
+      (ECORE_X_EVENT_MOUSE_WHEEL, _pager_popup_cb_mouse_wheel, NULL));
    handlers = evas_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_MOUSE_MOVE, _pager_popup_cb_mouse_move, NULL));
@@ -2478,6 +2477,34 @@ _pager_popup_cb_mouse_move(void *data, int type, void *event)
 			      ev->x - pp->popup->x + pp->pager->zone->x,
 			      ev->y - pp->popup->y + pp->pager->zone->y,
 			      ev->time, NULL);
+   return 1;
+}
+
+static int
+_pager_popup_cb_mouse_wheel(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Wheel *ev = event;
+   Pager_Popup *pp = act_popup;
+   int max_x, max_y;
+   
+   e_zone_desk_count_get(pp->pager->zone, &max_x, &max_y);
+
+   max_y -= 1;
+   max_x -= 1;
+
+   if (current_desk->x + ev->z > max_x)
+     {
+       _pager_popup_desk_switch(1, 1);
+     } 
+   else if (current_desk->x + ev->z < 0)
+     {
+       _pager_popup_desk_switch(-1, -1);
+     }
+   else
+     {
+       _pager_popup_desk_switch(ev->z, 0);
+     }
+
    return 1;
 }
 
@@ -2663,8 +2690,7 @@ e_modapi_init(E_Module *m)
       (E_EVENT_BORDER_ICON_CHANGE, _pager_cb_event_border_icon_change, NULL));
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_URGENT_CHANGE,
-       _pager_cb_event_border_urgent_change, NULL));
+      (E_EVENT_BORDER_URGENT_CHANGE, _pager_cb_event_border_urgent_change, NULL));
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_PROPERTY, _pager_cb_event_border_property, NULL));
@@ -2732,10 +2758,10 @@ e_modapi_shutdown(E_Module *m)
    e_action_del("pager_show");
    e_action_del("pager_switch");
 
-   e_action_predef_name_del(_("Pager"), N_("Popup Desk Right"));
-   e_action_predef_name_del(_("Pager"), N_("Popup Desk Left"));
-   e_action_predef_name_del(_("Pager"), N_("Popup Desk Up"));
-   e_action_predef_name_del(_("Pager"), N_("Popup Desk Down"));
+   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Right"));
+   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Left"));
+   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Up"));
+   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Down"));
 
    E_FREE(pager_config);
    E_CONFIG_DD_FREE(conf_edd);
