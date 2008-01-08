@@ -2380,20 +2380,17 @@ _pager_popup_desk_switch(int x, int y)
 
    e_zone_desk_count_get(pp->pager->zone, &max_x, &max_y);
 
-   max_y -= 1;
-   max_x -= 1;
-
    desk_x = current_desk->x + x;
    desk_y = current_desk->y + y;
 
    if (desk_x < 0)
-     desk_x = max_x;
-   else if (desk_x > max_x)
+     desk_x = max_x - 1;
+   else if (desk_x >= max_x)
      desk_x = 0;
 
    if (desk_y < 0)
-     desk_y = max_y;
-   else if (desk_y > max_y)
+     desk_y = max_y - 1;
+   else if (desk_y >= max_y)
      desk_y = 0;
 
    current_desk = e_desk_at_xy_get(pp->pager->zone, desk_x, desk_y);
