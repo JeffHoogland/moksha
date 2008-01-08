@@ -2485,14 +2485,11 @@ _pager_popup_cb_mouse_wheel(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Wheel *ev = event;
    Pager_Popup *pp = act_popup;
-   int max_x, max_y;
+   int max_x;
    
-   e_zone_desk_count_get(pp->pager->zone, &max_x, &max_y);
+   e_zone_desk_count_get(pp->pager->zone, &max_x, NULL);
 
-   max_y -= 1;
-   max_x -= 1;
-
-   if (current_desk->x + ev->z > max_x)
+   if (current_desk->x + ev->z > max_x - 1)
      _pager_popup_desk_switch(1, 1);
    else if (current_desk->x + ev->z < 0)
      _pager_popup_desk_switch(-1, -1);
