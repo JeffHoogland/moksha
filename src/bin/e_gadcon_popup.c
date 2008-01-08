@@ -62,7 +62,8 @@ EAPI void
 e_gadcon_popup_show(E_Gadcon_Popup *pop)
 {
    Evas_Object *o;
-   Evas_Coord gx, gy, gw, gh, zw, zh, px, py, ww, wh;
+   Evas_Coord gx, gy, gw, gh, zw, zh, zx;
+   Evas_Coord px, py, ww, wh;
 
    if (!pop) return;
    E_OBJECT_CHECK(pop);
@@ -92,6 +93,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
    e_gadcon_client_geometry_get(pop->gcc, &gx, &gy, &gw, &gh);
    zw = pop->gcc->gadcon->zone->w;
    zh = pop->gcc->gadcon->zone->h;
+   zx = pop->gcc->gadcon->zone->x;
    switch (pop->gcc->gadcon->orient)
      {
       case E_GADCON_ORIENT_CORNER_RT:
@@ -118,6 +120,8 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
 	px = (gx + (gw / 2)) - (pop->w / 2);
 	if (px + pop->w >= zw)
 	  px = gx + gw - pop->w;
+        else if (px < zx)
+          px = zx;
 	break;
       case E_GADCON_ORIENT_BOTTOM:
       case E_GADCON_ORIENT_CORNER_BL:
@@ -126,6 +130,8 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
 	px = (gx + (gw / 2)) - (pop->w / 2);
 	if (px + pop->w >= zw)
 	  px = gx + gw - pop->w;
+        else if (px < zx)
+          px = zx;
 	break;
       default:
 	e_popup_move_resize(pop->win, 50, 50, pop->w, pop->h);
