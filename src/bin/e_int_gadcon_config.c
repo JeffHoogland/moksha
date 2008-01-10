@@ -355,7 +355,6 @@ _set_description(void *data, const char *name)
    E_Module *mod = NULL;
    Efreet_Desktop *desk = NULL;
    char buf[4096];
-   char *tmp;
 
    if (!(cfdata = data)) return;
    if (!name) return;
