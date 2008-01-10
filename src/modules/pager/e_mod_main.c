@@ -165,8 +165,6 @@ static E_Config_Dialog *_pager_config_dialog(E_Container *con, const char *param
 /* functions for pager popup on key actions */
 static int _pager_popup_show();
 static void _pager_popup_hide(int switch_desk);
-static void _cb_action_pager_popup_show(E_Object *obj, const char *params, Ecore_X_Event_Key_Down *ev);
-static void _cb_action_pager_popup_switch(E_Object *obj, const char *params, Ecore_X_Event_Key_Down *ev);
 static int _pager_popup_cb_mouse_down(void *data, int type, void *event);
 static int _pager_popup_cb_mouse_up(void *data, int type, void *event);
 static int _pager_popup_cb_mouse_move(void *data, int type, void *event);
@@ -842,8 +840,8 @@ _pager_inst_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 static E_Config_Dialog *
 _pager_config_dialog(E_Container *con, const char *params)
 {
-   if (!pager_config) return;
-   if (pager_config->config_dialog) return;
+   if (!pager_config) return NULL;
+   if (pager_config->config_dialog) return NULL;
    /* FIXME: pass zone config item */
    _config_pager_module(NULL);
    return pager_config->config_dialog;
@@ -1345,7 +1343,6 @@ _pager_cb_event_border_urgent_change(void *data, int type, void *event)
    Pager_Popup *pp;
    E_Zone *zone;
    int urgent;
-   int urgent_cnt = 0;
    Pager *p;
    Pager_Desk *pd;
    Pager_Win *pw;
@@ -1562,7 +1559,7 @@ _pager_cb_event_desk_show(void *data, int type, void *event)
 
    if (pager_config->popup && !act_popup)
      {
-	if (pp = _pager_popup_find(ev->desk->zone))
+	if ((pp = _pager_popup_find(ev->desk->zone)))
 	  {
 	     ecore_timer_del(pp->timer);
 	  }
@@ -1720,7 +1717,6 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
    E_Drag *drag;
    Evas_Object *o, *oo;
    Evas_Coord x, y, w, h;
-   const char *file = NULL, *part = NULL;
    const char *drag_types[] = { "enlightenment/pager_win", "enlightenment/border" };
    Evas_Coord dx, dy;
    unsigned int resist = 0;
