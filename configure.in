@@ -232,6 +232,8 @@ AC_ARG_WITH(edje-cc,
 ])
 AC_SUBST(edje_cc)
 
+AC_DEFINE(E_INTERNAL, 1, "This define can be used to wrap internal E stuff, as config.h isn't exported")
+
 
 AC_OUTPUT([
 Makefile

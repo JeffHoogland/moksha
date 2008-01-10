@@ -3,8 +3,10 @@
  */
 #ifdef E_TYPEDEFS
 
+#if E_INTERNAL
 #define _(str) gettext(str)
 #define d_(str, dom) dgettext(PACKAGE dom, str)
+#endif
 
 /* This macro is used to just mark string for translation, this is useful
  * for string lists which are not dynamically allocated 
