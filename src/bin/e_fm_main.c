@@ -280,7 +280,7 @@ _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
    ecore_list_first_goto(ret->strings);
    while ((device = ecore_list_next(ret->strings)))
      {
-//	printf("DB INIT DEV+: %s\n", device);
+	printf("DB INIT DEV+: %s\n", device);
 	char *udi;
 
 	udi = device;
@@ -308,7 +308,7 @@ _e_dbus_cb_dev_store(void *user_data, void *reply_data, DBusError *error)
    ecore_list_first_goto(ret->strings);
    while ((device = ecore_list_next(ret->strings)))
      {
-//	printf("DB STORE+: %s\n", device);
+	printf("DB STORE+: %s\n", device);
 	e_storage_add(device);
      }
 }
@@ -330,7 +330,7 @@ _e_dbus_cb_dev_vol(void *user_data, void *reply_data, DBusError *error)
    ecore_list_first_goto(ret->strings);
    while ((device = ecore_list_next(ret->strings)))
      {
-//	printf("DB VOL+: %s\n", device);
+	printf("DB VOL+: %s\n", device);
 	e_volume_add(device);
      }
 }
@@ -349,7 +349,7 @@ _e_dbus_cb_store_is(void *user_data, void *reply_data, DBusError *error)
    
    if (ret && ret->boolean)
      {
-//	printf("DB STORE IS+: %s\n", udi);
+	printf("DB STORE IS+: %s\n", udi);
 	e_storage_add(udi);
      }
    
@@ -362,7 +362,7 @@ _e_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error)
 {
    char *udi = user_data;
    E_Hal_Device_Query_Capability_Return *ret = reply_data;
-   
+
    if (dbus_error_is_set(error))
      {
 	dbus_error_free(error);
@@ -371,7 +371,7 @@ _e_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error)
    
    if (ret && ret->boolean)
      {
-//	printf("DB VOL IS+: %s\n", udi);
+	printf("DB VOL IS+: %s\n", udi);
 	e_volume_add(udi);
      }
    
@@ -389,7 +389,7 @@ _e_dbus_cb_dev_add(void *data, DBusMessage *msg)
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
    udi = strdup(udi);
-//   printf("DB DEV+: %s\n", udi);
+   printf("DB DEV+: %s\n", udi);
    ret = e_hal_device_query_capability(_e_dbus_conn, udi, "storage", 
 				       _e_dbus_cb_store_is, strdup(udi));
    e_hal_device_query_capability(_e_dbus_conn, udi, "volume",
@@ -407,7 +407,7 @@ _e_dbus_cb_dev_del(void *data, DBusMessage *msg)
    dbus_message_get_args(msg, 
 			 &err, DBUS_TYPE_STRING, 
 			 &udi, DBUS_TYPE_INVALID);
-//   printf("DB DEV-: %s\n", udi);
+   printf("DB DEV-: %s\n", udi);
    e_storage_del(udi);
    e_volume_del(udi);
 }
@@ -426,7 +426,7 @@ _e_dbus_cb_cap_add(void *data, DBusMessage *msg)
 			 &capability, DBUS_TYPE_INVALID);
    if (!strcmp(capability, "storage"))
      {
-//        printf("DB STORE CAP+: %s\n", udi);
+        printf("DB STORE CAP+: %s\n", udi);
 	e_storage_add(udi);
      }
 }
@@ -1485,6 +1485,7 @@ _e_file_add_mod(E_Dir *ed, const char *path, int op, int listing)
      }
 //   printf("MOD %s %3.3f\n", path, ecore_time_get());
    lnk = ecore_file_readlink(path);
+   memset(&st, 0, sizeof(struct stat));
    if (stat(path, &st) == -1)
      {
 	if ((path[0] == 0) || (lnk)) broken_lnk = 1;
@@ -1848,6 +1849,7 @@ _e_cb_fop_cp_idler(void *data)
    char buf[PATH_MAX], buf2[PATH_MAX], *lnk;
    
    fop = (E_Fop *)data;
+   memset(&st, 0, sizeof(struct stat));
    if (!fop->data)
      {
 	fd = calloc(1, sizeof(struct Fop_Data));

@@ -59,7 +59,7 @@ static pid_t _e_desklock_child_pid = -1;
 #endif
 static Ecore_Exe *_e_custom_desklock_exe = NULL;
 static Ecore_Event_Handler *_e_custom_desklock_exe_handler = NULL;
-static Ecore_Timer *_e_desklock_idle_timer = NULL;
+static Ecore_Poller *_e_desklock_idle_poller = NULL;
 static int _e_desklock_user_idle = 0;
 
 /***********************************************************************/
@@ -70,7 +70,7 @@ static int _e_desklock_cb_mouse_up(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_wheel(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_move(void *data, int type, void *event);
 static int _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event);
-static int _e_desklock_cb_idle_timer(void *data);
+static int _e_desklock_cb_idle_poller(void *data);
 
 static void _e_desklock_passwd_update(void);
 static void _e_desklock_backspace(void);
@@ -93,9 +93,9 @@ EAPI int E_EVENT_DESKLOCK = 0;
 EAPI int
 e_desklock_init(void)
 {
-   /* A timer to tick every second, watching for an idle user */
-   _e_desklock_idle_timer = ecore_timer_add(1.0,
-					    _e_desklock_cb_idle_timer, NULL);
+   /* A poller to tick every 256 ticks, watching for an idle user */
+   _e_desklock_idle_poller = ecore_poller_add(ECORE_POLLER_CORE, 256,
+					      _e_desklock_cb_idle_poller, NULL);
      
    if (e_config->desklock_background)
      e_filereg_register(e_config->desklock_background);
@@ -841,7 +841,7 @@ _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event)
 }
 
 static int 
-_e_desklock_cb_idle_timer(void *data)
+_e_desklock_cb_idle_poller(void *data)
 {
    if (e_config->desklock_autolock_idle)
      {
@@ -870,6 +870,6 @@ _e_desklock_cb_idle_timer(void *data)
 	  _e_desklock_user_idle = 0;
      }
 
-   /* Make sure our timer persists. */
+   /* Make sure our poller persists. */
    return 1;
 }

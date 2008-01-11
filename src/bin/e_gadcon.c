@@ -453,7 +453,8 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 
 	cf_gcc = l->data;
 	if ((cf_gcc->name) && (cc->name) && 
-	    (!strcmp(cf_gcc->name, cc->name)))
+	    (!strcmp(cf_gcc->name, cc->name)) &&
+	    (cf_gcc->id) && (cf_gcc->style))
 	  {
 	     E_Gadcon_Client *gcc;
 

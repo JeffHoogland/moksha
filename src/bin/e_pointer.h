@@ -26,6 +26,7 @@ struct _E_Pointer
    Ecore_X_Window    win;
    int               w, h;
    Ecore_Timer      *idle_timer;
+   Ecore_Poller     *idle_poller;
    int               x, y;
 
    const char       *type;

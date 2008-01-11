@@ -3,8 +3,6 @@
  */
 #include "e.h"
 
-/* currently default bind is alt+` buf alt+space has been suggested */
-
 /* local subsystem functions */
 typedef struct _E_Exehist E_Exehist;
 typedef struct _E_Exehist_Item E_Exehist_Item;
@@ -27,13 +25,14 @@ static void _e_exehist_load(void);
 static void _e_exehist_clear(void);
 static void _e_exehist_unload(void);
 static void _e_exehist_limit(void);
-static int _e_exehist_cb_unload(void *data);
+static void _e_exehist_cb_unload(void *data);
 
 /* local subsystem globals */
 static E_Config_DD *_e_exehist_config_edd = NULL;
 static E_Config_DD *_e_exehist_config_item_edd = NULL;
 static E_Exehist *_e_exehist = NULL;
-static Ecore_Timer *_e_exehist_unload_timer = NULL;
+static E_Powersave_Deferred_Action *_e_exehist_unload_defer = NULL;
+static int _e_exehist_changes = 0;
 
 /* externally accessible functions */
 EAPI int
@@ -61,7 +60,12 @@ e_exehist_init(void)
 EAPI int
 e_exehist_shutdown(void)
 {
-   _e_exehist_unload();
+   if (_e_exehist_unload_defer)
+     {
+	e_powersave_deferred_action_del(_e_exehist_unload_defer);
+	_e_exehist_unload_defer = NULL;
+     }
+   _e_exehist_cb_unload(NULL);
    E_CONFIG_DD_FREE(_e_exehist_config_item_edd);
    E_CONFIG_DD_FREE(_e_exehist_config_edd);
    return 1;
@@ -85,7 +89,7 @@ e_exehist_add(const char *launch_method, const char *exe)
    ei->exetime = ecore_time_get();
    _e_exehist->history = evas_list_append(_e_exehist->history, ei);
    _e_exehist_limit();
-   e_config_domain_save("exehist", _e_exehist_config_edd, _e_exehist);
+   _e_exehist_changes++;
    _e_exehist_unload_queue();
 }
 
@@ -95,7 +99,7 @@ e_exehist_clear(void)
    _e_exehist_load();
    if (!_e_exehist) return;
    _e_exehist_clear();
-   e_config_domain_save("exehist", _e_exehist_config_edd, _e_exehist);
+   _e_exehist_changes++;
    _e_exehist_unload_queue();
 }
 
@@ -114,6 +118,7 @@ e_exehist_popularity_get(const char *exe)
 	ei = l->data;
 	if ((ei->exe) && (!strcmp(exe, ei->exe))) count++;
      }
+   _e_exehist_unload_queue();
    return count;
 }
 
@@ -129,8 +134,13 @@ e_exehist_newest_run_get(const char *exe)
 	E_Exehist_Item *ei;
 	
 	ei = l->data;
-	if ((ei->exe) && (!strcmp(exe, ei->exe))) return ei->exetime;
+	if ((ei->exe) && (!strcmp(exe, ei->exe)))
+	  {
+	     _e_exehist_unload_queue();
+	  }
+	     return ei->exetime;
      }
+   _e_exehist_unload_queue();
    return 0.0;
 }
 
@@ -169,6 +179,7 @@ e_exehist_list_get(void)
 	  }
 	if (count > max) break;
      }
+   _e_exehist_unload_queue();
    return list;
 }
 
@@ -200,6 +211,7 @@ e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
 	     if (ei->launch_method) evas_stringshare_del(ei->launch_method);
 	     free(ei);
 	     _e_exehist->mimes = evas_list_remove_list(_e_exehist->mimes, l);
+	     _e_exehist_changes++;
 	     break;
 	  }
      }
@@ -214,7 +226,7 @@ e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
    ei->exetime = ecore_time_get();
    _e_exehist->mimes = evas_list_append(_e_exehist->mimes, ei);
    _e_exehist_limit();
-   e_config_domain_save("exehist", _e_exehist_config_edd, _e_exehist);
+   _e_exehist_changes++;
    _e_exehist_unload_queue();
 }
 
@@ -250,8 +262,10 @@ e_exehist_mime_desktop_get(const char *mime)
 static void
 _e_exehist_unload_queue(void)
 {
-   if (_e_exehist_unload_timer) ecore_timer_del(_e_exehist_unload_timer);
-   _e_exehist_unload_timer = ecore_timer_add(2.0, _e_exehist_cb_unload, NULL);
+   if (_e_exehist_unload_defer)
+     e_powersave_deferred_action_del(_e_exehist_unload_defer);
+   _e_exehist_unload_defer = 
+     e_powersave_deferred_action_add(_e_exehist_cb_unload, NULL);
 }
 
 static void
@@ -331,10 +345,14 @@ _e_exehist_limit(void)
      }
 }
 
-static int
+static void
 _e_exehist_cb_unload(void *data)
 {
+   if (_e_exehist_changes)
+     {
+	e_config_domain_save("exehist", _e_exehist_config_edd, _e_exehist);
+	_e_exehist_changes = 0;
+     }
    _e_exehist_unload();
-   _e_exehist_unload_timer = NULL;
-   return 0;
+   _e_exehist_unload_defer = NULL;
 }

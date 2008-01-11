@@ -18,7 +18,7 @@
 struct _E_Config_Dialog_Data
 {
    int poll_method;
-   double poll_time;
+   int poll_interval;
    
    int unit_method;
    Unit units;
@@ -70,6 +70,7 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    double      p;
+   int         pi;
    Ecore_List *therms;
    char       *name;
    char        path[PATH_MAX];
@@ -80,16 +81,16 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    else 
      cfdata->unit_method = 1;
    
-   p = cfdata->inst->poll_time;
-   cfdata->poll_time = p;
-   if ((p >= 0) && (p <= 5)) 
-     cfdata->poll_method = 1; /* Fast */
-   else if ((p > 5) && (p <= 10)) 
-     cfdata->poll_method = 10; /* Normal */
-   else if ((p > 10) && (p <= 30)) 
-     cfdata->poll_method = 30; /* Slow */
-   else if (p > 30) 
-     cfdata->poll_method = 60; /* Very Slow */
+   pi = cfdata->inst->poll_interval;
+   cfdata->poll_interval = pi;
+   if ((pi >= 1) && (pi <= 64)) 
+     cfdata->poll_method = 4; /* Fast */
+   else if ((pi > 64) && (pi <= 128)) 
+     cfdata->poll_method = 128; /* Normal */
+   else if ((pi > 128) && (pi <= 256)) 
+     cfdata->poll_method = 256; /* Slow */
+   else if (pi > 256) 
+     cfdata->poll_method = 512; /* Very Slow */
    
    p = cfdata->inst->low;
    if (cfdata->units == FAHRENHEIT)
@@ -219,13 +220,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    of = e_widget_framelist_add(evas, _("Check Interval"), 0);
    rg = e_widget_radio_group_new(&(cfdata->poll_method));
-   ob = e_widget_radio_add(evas, _("Fast"), 1, rg);
+   ob = e_widget_radio_add(evas, _("Fast"), 4, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Normal"), 10, rg);
+   ob = e_widget_radio_add(evas, _("Normal"), 128, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Slow"), 30, rg);
+   ob = e_widget_radio_add(evas, _("Slow"), 256, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Very Slow"), 60, rg);
+   ob = e_widget_radio_add(evas, _("Very Slow"), 512, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -289,7 +290,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      cfdata->inst->units = CELCIUS;	
    else 
      cfdata->inst->units = FAHRENHEIT;
-   cfdata->inst->poll_time = (double)cfdata->poll_method;
+   cfdata->inst->poll_interval = cfdata->poll_method;
    if (cfdata->inst->units == FAHRENHEIT)
      {
 	cfdata->inst->low = CEL_2_FAR(cfdata->low_method);
@@ -340,7 +341,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
      }
 
    of = e_widget_framelist_add(evas, _("Check Interval"), 0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f seconds"), 0.5, 1000.0, 0.5, 0, &(cfdata->poll_time), NULL, 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 1, 1024, 4, 0, NULL, &(cfdata->poll_interval), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -403,7 +404,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      cfdata->inst->units = CELCIUS;	
    else 
      cfdata->inst->units = FAHRENHEIT;
-   cfdata->inst->poll_time = cfdata->poll_time;
+   cfdata->inst->poll_interval = cfdata->poll_interval;
    cfdata->inst->low = cfdata->low_temp;
    cfdata->inst->high = cfdata->high_temp;
    if (cfdata->inst->sensor_name)

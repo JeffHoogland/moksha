@@ -93,7 +93,7 @@ static int  _e_border_move_begin(E_Border *bd);
 static int  _e_border_move_end(E_Border *bd);
 static void _e_border_move_update(E_Border *bd);
 
-static int  _e_border_cb_ping_timer(void *data);
+static int  _e_border_cb_ping_poller(void *data);
 static int  _e_border_cb_kill_timer(void *data);
 
 static void _e_border_pointer_resize_begin(E_Border *bd);
@@ -2887,9 +2887,10 @@ e_border_ping(E_Border *bd)
    bd->ping_ok = 0;
    ecore_x_netwm_ping_send(bd->client.win);
    bd->ping = ecore_time_get();
-   if (bd->ping_timer) ecore_timer_del(bd->ping_timer);
-   bd->ping_timer = ecore_timer_add(e_config->ping_clients_wait,
-				    _e_border_cb_ping_timer, bd);
+   if (bd->ping_poller) ecore_poller_del(bd->ping_poller);
+   bd->ping_poller = ecore_poller_add(ECORE_POLLER_CORE,
+				      e_config->ping_clients_interval,
+				      _e_border_cb_ping_poller, bd);
 }
 
 EAPI void
@@ -3213,10 +3214,10 @@ _e_border_free(E_Border *bd)
 	ecore_timer_del(bd->kill_timer);
 	bd->kill_timer = NULL;
      }
-   if (bd->ping_timer)
+   if (bd->ping_poller)
      {
-	ecore_timer_del(bd->ping_timer);
-	bd->ping_timer = NULL;
+	ecore_poller_del(bd->ping_poller);
+	bd->ping_poller = NULL;
      }
    while (bd->pending_move_resize)
      {
@@ -5352,8 +5353,8 @@ _e_border_eval(E_Border *bd)
 	  e_border_ping(bd);
 	else
 	  {
-	     if (bd->ping_timer) ecore_timer_del(bd->ping_timer);
-	     bd->ping_timer = NULL;
+	     if (bd->ping_poller) ecore_timer_del(bd->ping_poller);
+	     bd->ping_poller = NULL;
 	  }
 	bd->client.icccm.fetch.protocol = 0;
      }
@@ -6285,15 +6286,15 @@ _e_border_eval(E_Border *bd)
 	if ((bd->shaded) && (!bd->shading))
 	  {
 	     evas_obscured_clear(bd->bg_evas);
-	     if (0)
-	       {
-		  if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
-		  bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job,
-							bd);
-		  bd->post_move = 1;
-		  bd->post_resize = 1;
-	       }
-	     else
+//	     if (0)
+//	       {
+//		  if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
+//		  bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job,
+//							bd);
+//		  bd->post_move = 1;
+//		  bd->post_resize = 1;
+//	       }
+//	     else
 	       {
 		  ecore_x_window_move_resize(bd->win, 
 					     bd->x + bd->fx.x, 
@@ -6319,15 +6320,15 @@ _e_border_eval(E_Border *bd)
 					 bd->client_inset.l, bd->client_inset.t,
 					 bd->w - (bd->client_inset.l + bd->client_inset.r),
 					 bd->h - (bd->client_inset.t + bd->client_inset.b));
-	     if (0)
-	       {
-		  if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
-		  bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job,
-							bd);
-		  bd->post_move = 1;
-		  bd->post_resize = 1;
-	       }
-	     else
+//	     if (0)
+//	       {
+//		  if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
+//		  bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job,
+//							bd);
+//		  bd->post_move = 1;
+//		  bd->post_resize = 1;
+//	       }
+//	     else
 	       {
 		  ecore_x_window_move_resize(bd->win,
 					     bd->x + bd->fx.x,
@@ -7467,7 +7468,7 @@ _e_border_move_update(E_Border *bd)
 }
 
 static int
-_e_border_cb_ping_timer(void *data)
+_e_border_cb_ping_poller(void *data)
 {
    E_Border *bd;
    
@@ -7499,7 +7500,7 @@ _e_border_cb_ping_timer(void *data)
 	     e_border_act_kill_begin(bd);
 	  }
      }
-   bd->ping_timer = NULL;
+   bd->ping_poller = NULL;
    e_border_ping(bd);
    return 0;
 }

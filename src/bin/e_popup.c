@@ -61,7 +61,7 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
 				  pop->zone->x + pop->x, pop->zone->y + pop->y, pop->w, pop->h, 1, 1,
 				  &(pop->evas_win), NULL);
    /* avoid excess exposes when shaped - set damage avoid to 1 */
-   ecore_evas_avoid_damage_set(pop->ecore_evas, 1);
+//   ecore_evas_avoid_damage_set(pop->ecore_evas, 1);
    
    e_canvas_add(pop->ecore_evas);
    pop->shape = e_container_shape_add(pop->zone->container);

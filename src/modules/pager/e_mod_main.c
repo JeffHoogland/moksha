@@ -118,6 +118,8 @@ static int _pager_cb_event_border_desk_set(void *data, int type, void *event);
 static int _pager_cb_event_border_stack(void *data, int type, void *event);
 static int _pager_cb_event_border_icon_change(void *data, int type, void *event);
 static int _pager_cb_event_border_urgent_change(void *data, int type, void *event);
+static int _pager_cb_event_border_focus_in(void *data, int type, void *event);
+static int _pager_cb_event_border_focus_out(void *data, int type, void *event);
 static int _pager_cb_event_border_property(void *data, int type, void *event);
 static int _pager_cb_event_zone_desk_count_set(void *data, int type, void *event);
 static int _pager_cb_event_desk_show(void *data, int type, void *event);
@@ -364,7 +366,8 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
    pd->o_desk = o;
    e_theme_edje_object_set(o, "base/theme/modules/pager",
 			   "e/modules/pager/desk");
-   edje_object_part_text_set(o, "label", desk->name);
+   if (pager_config->show_desk_names)
+     edje_object_part_text_set(o, "e.text.label", desk->name);
    e_table_pack(p->o_table, o, xpos, ypos, 1, 1);
    e_table_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, 0, 0, -1, -1);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _pager_desk_cb_mouse_down, pd);
@@ -378,7 +381,7 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
    pd->o_layout = o;
 
    e_layout_virtual_size_set(o, desk->zone->w, desk->zone->h);
-   edje_object_part_swallow(pd->o_desk, "items", pd->o_layout);
+   edje_object_part_swallow(pd->o_desk, "e.swallow.content", pd->o_layout);
    evas_object_show(o);
 
    bl = e_container_border_list_first(desk->zone->container);
@@ -606,7 +609,7 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
      {
 	pw->o_icon = o;
 	evas_object_show(o);
-	edje_object_part_swallow(pw->o_window, "icon", o);
+	edje_object_part_swallow(pw->o_window, "e.swallow.icon", o);
      }
 
    if (border->client.icccm.urgent)
@@ -716,14 +719,14 @@ _pager_popup_new(E_Zone *zone, int keyaction)
    pp->o_bg = edje_object_add(pp->popup->evas);
    e_theme_edje_object_set(pp->o_bg,
 			   "base/theme/modules/pager",
-			   "e/widgets/pager/popup");
+			   "e/modules/pager/popup");
    desk = e_desk_current_get(zone);
    if (desk)
-     edje_object_part_text_set(pp->o_bg, "text", desk->name);
+     edje_object_part_text_set(pp->o_bg, "e.text.label", desk->name);
    evas_object_show(pp->o_bg);
 
    edje_extern_object_min_size_set(pp->pager->o_table, width, height);
-   edje_object_part_swallow(pp->o_bg, "pager", pp->pager->o_table);
+   edje_object_part_swallow(pp->o_bg, "e.swallow.content", pp->pager->o_table);
    edje_object_size_min_calc(pp->o_bg, &w, &h);
 
    evas_object_move(pp->o_bg, 0, 0);
@@ -1327,7 +1330,7 @@ _pager_cb_event_border_icon_change(void *data, int type, void *event)
 		    {
 		       pw->o_icon = o;
 		       evas_object_show(o);
-		       edje_object_part_swallow(pw->o_window, "icon", o);
+		       edje_object_part_swallow(pw->o_window, "e.swallow.icon", o);
 		    }
 	       }
 	  }
@@ -1421,6 +1424,110 @@ _pager_cb_event_border_urgent_change(void *data, int type, void *event)
 					       "e,state,not_urgent", "e");
 		    }
 	       }
+	  }
+     }
+   return 1;
+}
+
+static int
+_pager_cb_event_border_focus_in(void *data, int type, void *event)
+{
+   E_Event_Border_Focus_In *ev;
+   Evas_List *l, *l2;
+   Pager_Popup *pp;
+   E_Zone *zone;
+
+   ev = event;
+   zone = ev->border->zone;
+
+   for (l = pager_config->instances; l; l = l->next)
+     {
+	Instance *inst;
+
+	inst = l->data;
+	if (inst->pager->zone != zone) continue;
+	for (l2 = inst->pager->desks; l2; l2 = l2->next)
+	  {
+	     Pager_Desk *pd;
+	     Pager_Win *pw;
+
+	     pd = l2->data;
+	     pw = _pager_desk_window_find(pd, ev->border);
+	     if (pw)
+	       {
+		  edje_object_signal_emit(pw->o_window,
+					  "e,state,focused", "e");
+		  break;
+	       }
+	  }
+     }
+
+   pp = _pager_popup_find(zone);
+   if (!pp) return;
+   for (l = pp->pager->desks; l; l = l->next)
+     {
+	Pager_Desk *pd;
+	Pager_Win *pw;
+	
+	pd = l->data;
+	pw = _pager_desk_window_find(pd, ev->border);
+	if (pw)
+	  {
+	     edje_object_signal_emit(pw->o_window,
+				     "e,state,focused", "e");
+	     break;
+	  }
+     }
+   return 1;
+}
+
+static int
+_pager_cb_event_border_focus_out(void *data, int type, void *event)
+{
+   E_Event_Border_Focus_Out *ev;
+   Evas_List *l, *l2;
+   Pager_Popup *pp;
+   E_Zone *zone;
+
+   ev = event;
+   zone = ev->border->zone;
+
+   for (l = pager_config->instances; l; l = l->next)
+     {
+	Instance *inst;
+
+	inst = l->data;
+	if (inst->pager->zone != zone) continue;
+	for (l2 = inst->pager->desks; l2; l2 = l2->next)
+	  {
+	     Pager_Desk *pd;
+	     Pager_Win *pw;
+
+	     pd = l2->data;
+	     pw = _pager_desk_window_find(pd, ev->border);
+	     if (pw)
+	       {
+		  edje_object_signal_emit(pw->o_window,
+					  "e,state,unfocused", "e");
+		  break;
+	       }
+	  }
+     }
+
+   pp = _pager_popup_find(zone);
+   if (!pp) return;
+   for (l = pp->pager->desks; l; l = l->next)
+     {
+	Pager_Desk *pd;
+	Pager_Win *pw;
+	
+	pd = l->data;
+	pw = _pager_desk_window_find(pd, ev->border);
+	if (pw)
+	  {
+	     edje_object_signal_emit(pw->o_window,
+				     "e,state,unfocused", "e");
+	     break;
 	  }
      }
    return 1;
@@ -1574,10 +1681,15 @@ _pager_cb_event_desk_show(void *data, int type, void *event)
 					 _pager_popup_cb_timeout, pp);
 
 	     pd = _pager_desk_find(pp->pager, ev->desk);
-
-	     if (pd) _pager_desk_select(pd);
-
-	     edje_object_part_text_set(pp->o_bg, "text", ev->desk->name);
+	     if (pd)
+	       {
+		  _pager_desk_select(pd);
+		  edje_object_part_text_set(pp->o_bg, "e.text.label",
+					    ev->desk->name);
+	       }
+	     ecore_timer_del(pp->timer);
+	     pp->timer = ecore_timer_add(pager_config->popup_speed,
+					 _pager_popup_cb_timeout, pp);
 	  }
      }
    return 1;
@@ -1597,8 +1709,11 @@ _pager_cb_event_desk_name_change(void *data, int type, void *event)
 	p = l->data;
 	if (p->zone != ev->desk->zone) continue;
 	pd = _pager_desk_find(p, ev->desk);
-	if (pd)
-	  edje_object_part_text_set(pd->o_desk, "label", ev->desk->name);
+	if (pager_config->show_desk_names)
+	  {
+	     if (pd)
+	       edje_object_part_text_set(pd->o_desk, "e.text.label", ev->desk->name);
+	  }
      }
    return 1;
 }
@@ -1781,7 +1896,7 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 	     if (oo)
 	       {
 		  evas_object_show(oo);
-		  edje_object_part_swallow(o, "icon", oo);
+		  edje_object_part_swallow(o, "e.swallow.icon", oo);
 	       }
 
 	     e_drag_object_set(drag, o);
@@ -2164,7 +2279,7 @@ _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	/* and redraw is content */
 	oo = e_layout_add(drag->evas);
 	e_layout_virtual_size_set(oo, pd->pager->zone->w, pd->pager->zone->h);
-	edje_object_part_swallow(o, "items", oo);
+	edje_object_part_swallow(o, "e.swallow.content", oo);
 	evas_object_show(oo);
 
 	for (l = pd->wins; l; l = l->next)
@@ -2188,7 +2303,7 @@ _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     if ((o_icon = e_border_icon_add(pw->border, drag->evas)))
 	       {
 		  evas_object_show(o_icon);
-		  edje_object_part_swallow(o, "icon", o_icon);
+		  edje_object_part_swallow(o, "e.swallow.icon", o_icon);
 	       }
 	  }
 	e_drag_resize(drag, w, h);
@@ -2600,6 +2715,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, popup_urgent, UINT);
    E_CONFIG_VAL(D, T, popup_urgent_stick, UINT);
    E_CONFIG_VAL(D, T, popup_urgent_speed, DOUBLE);
+   E_CONFIG_VAL(D, T, show_desk_names, UINT);
    E_CONFIG_VAL(D, T, popup_height, INT);
    E_CONFIG_VAL(D, T, popup_act_height, INT);
    E_CONFIG_VAL(D, T, drag_resist, UINT);
@@ -2618,6 +2734,7 @@ e_modapi_init(E_Module *m)
 	pager_config->popup_urgent = 0;
 	pager_config->popup_urgent_stick = 0;
 	pager_config->popup_urgent_speed = 1.5;
+	pager_config->show_desk_names = 1;
 	pager_config->popup_height = 60;
 	pager_config->popup_act_height = 60;
 	pager_config->drag_resist = 3;
@@ -2631,6 +2748,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIMIT(pager_config->popup_urgent, 0, 1);
    E_CONFIG_LIMIT(pager_config->popup_urgent_stick, 0, 1);
    E_CONFIG_LIMIT(pager_config->popup_urgent_speed, 0.1, 10.0);
+   E_CONFIG_LIMIT(pager_config->show_desk_names, 0, 1);
    E_CONFIG_LIMIT(pager_config->popup_height, 20, 200);
    E_CONFIG_LIMIT(pager_config->popup_act_height, 20, 200);
    E_CONFIG_LIMIT(pager_config->drag_resist, 0, 50);
@@ -2675,6 +2793,14 @@ e_modapi_init(E_Module *m)
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_URGENT_CHANGE, _pager_cb_event_border_urgent_change, NULL));
+   pager_config->handlers = evas_list_append
+     (pager_config->handlers, ecore_event_handler_add
+      (E_EVENT_BORDER_FOCUS_IN,
+       _pager_cb_event_border_focus_in, NULL));
+   pager_config->handlers = evas_list_append
+     (pager_config->handlers, ecore_event_handler_add
+      (E_EVENT_BORDER_FOCUS_OUT,
+       _pager_cb_event_border_focus_out, NULL));
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_PROPERTY, _pager_cb_event_border_property, NULL));

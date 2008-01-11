@@ -12,6 +12,7 @@ struct _Main_Data
    E_Menu *all_apps;
    E_Menu *desktops;
    E_Menu *clients;
+   E_Menu *enlightenment;
    E_Menu *config;
    E_Menu *lost_clients;
    E_Menu *sys;
@@ -162,6 +163,7 @@ e_int_menus_main_new(void)
    if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_menu_new();
+   dat->enlightenment = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Enlightenment"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
@@ -415,6 +417,7 @@ _e_int_menus_main_del_hook(void *obj)
 	if (dat->all_apps) e_object_del(E_OBJECT(dat->all_apps));
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
+	e_object_del(E_OBJECT(dat->enlightenment));
 	e_object_del(E_OBJECT(dat->config));
 	if (dat->lost_clients) e_object_del(E_OBJECT(dat->lost_clients));
 	e_object_del(E_OBJECT(dat->sys));
@@ -473,6 +476,8 @@ _e_int_menus_main_lock_defer_cb(void *data)
 static void
 _e_int_menus_main_lock(void *data, E_Menu *m, E_Menu_Item *mi)
 {
+   /* this is correct - should be after other idle enteres have run - i.e.
+    * after e_menu's idler_enterer has been run */
    ecore_idle_enterer_add(_e_int_menus_main_lock_defer_cb, m->zone);
 }
 

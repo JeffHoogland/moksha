@@ -12,7 +12,7 @@ struct _E_Config_Dialog_Data
    double framerate;
 
    /* Advanced */   
-   double cache_flush_interval;
+   int cache_flush_poll_interval;
    double font_cache;
    double image_cache;
    int edje_cache;
@@ -50,7 +50,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->image_cache = ((double)e_config->image_cache / 1024);
    cfdata->edje_cache = e_config->edje_cache;
    cfdata->edje_collection_cache = e_config->edje_collection_cache;
-   cfdata->cache_flush_interval = e_config->cache_flush_interval;
+   cfdata->cache_flush_poll_interval = e_config->cache_flush_poll_interval;
 }
 
 static void *
@@ -75,6 +75,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->framerate <= 0.0) cfdata->framerate = 1.0;
    e_config->framerate = cfdata->framerate;
    edje_frametime_set(1.0 / e_config->framerate);
+   e_canvas_recache();
    e_config_save_queue();
    return 1;
 }
@@ -101,12 +102,13 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->framerate <= 0.0) cfdata->framerate = 1.0;
    e_config->framerate = cfdata->framerate;
-   e_config->cache_flush_interval = cfdata->cache_flush_interval;   
+   e_config->cache_flush_poll_interval = cfdata->cache_flush_poll_interval;   
    e_config->font_cache = (cfdata->font_cache * 1024);
    e_config->image_cache = (cfdata->image_cache * 1024);
    e_config->edje_cache = cfdata->edje_cache;
    e_config->edje_collection_cache = cfdata->edje_collection_cache;
    edje_frametime_set(1.0 / e_config->framerate);
+   e_canvas_recache();
    e_config_save_queue();
    return 1;
 }
@@ -121,14 +123,14 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
    ob = e_widget_label_add(evas, _("Framerate"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 5.0, 200.0, 5.0, 0, &(cfdata->framerate), NULL, 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 5.0, 240.0, 1.0, 0, &(cfdata->framerate), NULL, 150);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
 
    of = e_widget_framelist_add(evas, _("Cache Settings"), 0);   
    ob = e_widget_label_add(evas, _("Cache Flush Interval"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"), 0.0, 600.0, 1.0, 0, &(cfdata->cache_flush_interval), NULL, 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 8, 4096, 8, 0, NULL, &(cfdata->cache_flush_poll_interval), 150);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Size Of Font Cache"));

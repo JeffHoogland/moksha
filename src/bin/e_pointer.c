@@ -33,7 +33,8 @@ static int _e_pointer_cb_mouse_up(void *data, int type, void *event);
 static int _e_pointer_cb_mouse_move(void *data, int type, void *event);
 static int _e_pointer_cb_mouse_wheel(void *data, int type, void *event);
 static int _e_pointer_cb_idle_timer_pre(void *data);
-static int _e_pointer_cb_idle_timer(void *data);
+static int _e_pointer_cb_idle_timer_wait(void *data);
+static int _e_pointer_cb_idle_poller(void *data);
 
 /* externally accessible functions */
 EAPI int
@@ -331,6 +332,7 @@ _e_pointer_free(E_Pointer *p)
    if (p->type) evas_stringshare_del(p->type);
    
    if (p->idle_timer) ecore_timer_del(p->idle_timer);
+   if (p->idle_poller) ecore_poller_del(p->idle_poller);
    
    free(p);
 }
@@ -477,6 +479,11 @@ _e_pointer_active_handle(E_Pointer *p)
    /* we got some mouse event - if there was an idle timer emit an active
     * signal as we WERE idle, NOW we are active */
    if (p->idle_timer) ecore_timer_del(p->idle_timer);
+   if (p->idle_poller)
+     {
+	ecore_poller_del(p->idle_poller);
+	p->idle_poller = NULL;
+     }
    if (p->idle)
      {
 	if (p->pointer_object)
@@ -569,12 +576,25 @@ _e_pointer_cb_idle_timer_pre(void *data)
    ecore_x_pointer_xy_get(p->win, &x, &y);
    p->x = x;
    p->y = y;
-   p->idle_timer = ecore_timer_add(4.0, _e_pointer_cb_idle_timer, p);
+   p->idle_timer = ecore_timer_add(4.0, _e_pointer_cb_idle_timer_wait, p);
    return 0;
 }
 
 static int
-_e_pointer_cb_idle_timer(void *data)
+_e_pointer_cb_idle_timer_wait(void *data)
+{
+   E_Pointer *p;
+
+   p = data;
+   if (!p->idle_poller)
+     p->idle_poller = ecore_poller_add(ECORE_POLLER_CORE, 64,
+				       _e_pointer_cb_idle_poller, p);
+   p->idle_timer = NULL;
+   return 0;
+}
+
+static int
+_e_pointer_cb_idle_poller(void *data)
 {
    E_Pointer *p;
    int x, y;
@@ -595,6 +615,7 @@ _e_pointer_cb_idle_timer(void *data)
 	       edje_object_signal_emit(p->pointer_object, "e,state,mouse,active", "e");
 	     p->idle = 0;
 	  }
+	/* use poller to check from now on */
 	return 1;
      }
    /* we are idle - report it if not idle before */
@@ -604,6 +625,5 @@ _e_pointer_cb_idle_timer(void *data)
 	  edje_object_signal_emit(p->pointer_object, "e,state,mouse,idle", "e");
 	p->idle = 1;
      }
-   /* and check again in 4 seconds */
    return 1;
 }

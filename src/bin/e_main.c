@@ -357,7 +357,7 @@ main(int argc, char **argv)
      }
 
    /* an idle enterer to be called before all others */
-   _e_main_idle_enterer_before = ecore_idle_enterer_add(_e_main_cb_idler_before, NULL);
+   _e_main_idle_enterer_before = ecore_idle_enterer_before_add(_e_main_cb_idler_before, NULL);
    
    TS("x connect");
    /* init x */
@@ -862,8 +862,17 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_order_shutdown);
 
+   e_init_status_set(_("Set Up Powersave modes"));
+   TS("powersave");
+   if (!e_powersave_init())
+     {
+       e_error_message_show(_("Enlightenment cannot set up its powersave modes."));
+       _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_powersave_shutdown);
+
    TS("add idle enterers");
-   /* add in a handler that just before we go idle we flush x */
+   /* add in a handler that just before we go idle we flush x - will happen after ecore_evas's idle rendering as it's after ecore_evas_init() */
    _e_main_idle_enterer_flusher = ecore_idle_enterer_add(_e_main_cb_x_flusher, NULL);
       
    e_managers_keys_grab();
@@ -926,6 +935,8 @@ main(int argc, char **argv)
    starting = 0;
    /* start our main loop */
    ecore_main_loop_begin();
+
+   e_canvas_idle_flush();
    stopping = 1;
    
    /* ask all modules to save their config and then shutdown */

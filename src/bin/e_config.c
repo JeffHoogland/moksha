@@ -12,14 +12,14 @@
 EAPI E_Config *e_config = NULL;
 
 /* local subsystem functions */
-static int  _e_config_save_cb(void *data);
+static void _e_config_save_cb(void *data);
 static void _e_config_free(void);
 static int  _e_config_cb_timer(void *data);
 static int  _e_config_eet_close_handle(Eet_File *ef, char *file);
 
 /* local subsystem globals */
 static int _e_config_save_block = 0;
-static Ecore_Timer *_e_config_save_timer = NULL;
+static E_Powersave_Deferred_Action *_e_config_save_defer = NULL;
 static char *_e_config_profile = NULL;
 
 static E_Config_DD *_e_config_edd = NULL;
@@ -81,6 +81,7 @@ e_config_init(void)
 	  }
 	else
 	  _e_config_profile = strdup("default");
+	e_util_env_set("E_CONF_PROFILE", _e_config_profile);
      }
    else 
      _e_config_profile = strdup(_e_config_profile);
@@ -370,7 +371,6 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, font_cache, INT); /**/
    E_CONFIG_VAL(D, T, edje_cache, INT); /**/
    E_CONFIG_VAL(D, T, edje_collection_cache, INT); /**/
-   E_CONFIG_VAL(D, T, cache_flush_interval, DOUBLE); /**/
    E_CONFIG_VAL(D, T, zone_desks_x_count, INT); /**/
    E_CONFIG_VAL(D, T, zone_desks_y_count, INT); /**/
    E_CONFIG_VAL(D, T, use_virtual_roots, INT); /* should not make this a config option (for now) */
@@ -449,7 +449,6 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, kill_process, INT); /**/
    E_CONFIG_VAL(D, T, kill_timer_wait, DOUBLE); /**/
    E_CONFIG_VAL(D, T, ping_clients, INT); /**/
-   E_CONFIG_VAL(D, T, ping_clients_wait, DOUBLE); /**/
    E_CONFIG_VAL(D, T, transition_start, STR); /**/
    E_CONFIG_VAL(D, T, transition_desk, STR); /**/
    E_CONFIG_VAL(D, T, transition_change, STR); /**/
@@ -575,6 +574,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, menu_favorites_show, INT);
    E_CONFIG_VAL(D, T, menu_apps_show, INT);
    
+   E_CONFIG_VAL(D, T, ping_clients_interval, INT);
+   E_CONFIG_VAL(D, T, cache_flush_poll_interval, INT);
+   
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -631,7 +633,6 @@ e_config_init(void)
    e_config->font_cache = 512;
    e_config->edje_cache = 32;
    e_config->edje_collection_cache = 64;
-   e_config->cache_flush_interval = 60.0;
    e_config->zone_desks_x_count = 4;
    e_config->zone_desks_y_count = 1;
    e_config->use_virtual_roots = 0;
@@ -689,7 +690,6 @@ e_config_init(void)
    e_config->kill_process = 1;
    e_config->kill_timer_wait = 10.0;
    e_config->ping_clients = 1;
-   e_config->ping_clients_wait = 10.0;
    e_config->transition_start = NULL;
    e_config->transition_desk = evas_stringshare_add("vswipe");
    e_config->transition_change = evas_stringshare_add("crossfade");
@@ -1477,6 +1477,11 @@ e_config_init(void)
    e_config->show_desktop_icons = 1;
    IFCFGEND;
 
+   IFCFG(0x0123);
+   e_config->ping_clients_interval = 128;
+   e_config->cache_flush_poll_interval = 512;
+   IFCFGEND;
+   
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
 #if 0 /* example of new config */
@@ -1497,7 +1502,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
    E_CONFIG_LIMIT(e_config->edje_cache, 0, 256);
    E_CONFIG_LIMIT(e_config->edje_collection_cache, 0, 512);
-   E_CONFIG_LIMIT(e_config->cache_flush_interval, 0.0, 600.0);
+   E_CONFIG_LIMIT(e_config->cache_flush_poll_interval, 8, 32768);
    E_CONFIG_LIMIT(e_config->zone_desks_x_count, 1, 64);
    E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64);
    E_CONFIG_LIMIT(e_config->show_desktop_icons, 0, 1);
@@ -1545,7 +1550,6 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->kill_process, 0, 1);
    E_CONFIG_LIMIT(e_config->kill_timer_wait, 0.0, 120.0);
    E_CONFIG_LIMIT(e_config->ping_clients, 0, 1);
-   E_CONFIG_LIMIT(e_config->ping_clients_wait, 0.0, 120.0);
    E_CONFIG_LIMIT(e_config->move_info_follows, 0, 1);
    E_CONFIG_LIMIT(e_config->resize_info_follows, 0, 1);
    E_CONFIG_LIMIT(e_config->move_info_visible, 0, 1);
@@ -1609,6 +1613,8 @@ e_config_init(void)
 
    E_CONFIG_LIMIT(e_config->menu_favorites_show, 0, 1);
    E_CONFIG_LIMIT(e_config->menu_apps_show, 0, 1);
+
+   E_CONFIG_LIMIT(e_config->ping_clients_interval, 4, 1024);
    
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
@@ -1649,10 +1655,10 @@ e_config_shutdown(void)
 EAPI int
 e_config_save(void)
 {
-   if (_e_config_save_timer)
+   if (_e_config_save_defer)
      {
-	ecore_timer_del(_e_config_save_timer);
-	_e_config_save_timer = NULL;
+	e_powersave_deferred_action_del(_e_config_save_defer);
+	_e_config_save_defer = NULL;
      }
    _e_config_save_cb(NULL);
    return e_config_domain_save("e", _e_config_edd, e_config);
@@ -1661,10 +1667,10 @@ e_config_save(void)
 EAPI void
 e_config_save_flush(void)
 {
-   if (_e_config_save_timer)
+   if (_e_config_save_defer)
      {
-	ecore_timer_del(_e_config_save_timer);
-	_e_config_save_timer = NULL;
+	e_powersave_deferred_action_del(_e_config_save_defer);
+	_e_config_save_defer = NULL;
 	_e_config_save_cb(NULL);
      }
 }
@@ -1672,8 +1678,10 @@ e_config_save_flush(void)
 EAPI void
 e_config_save_queue(void)
 {
-   if (_e_config_save_timer) ecore_timer_del(_e_config_save_timer);
-   _e_config_save_timer = ecore_timer_add(0.25, _e_config_save_cb, NULL);
+   if (_e_config_save_defer)
+     e_powersave_deferred_action_del(_e_config_save_defer);
+   _e_config_save_defer = e_powersave_deferred_action_add(_e_config_save_cb,
+							  NULL);
 }
 
 EAPI char *
@@ -1687,6 +1695,7 @@ e_config_profile_set(char *prof)
 {
    E_FREE(_e_config_profile);
    _e_config_profile = strdup(prof);
+   e_util_env_set("E_CONF_PROFILE", _e_config_profile);
 }
 
 EAPI Evas_List *
@@ -1970,14 +1979,13 @@ e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in)
 }
 
 /* local subsystem functions */
-static int
+static void
 _e_config_save_cb(void *data)
 {
    e_config_profile_save();
    e_module_save_all();
    e_config_domain_save("e", _e_config_edd, e_config);
-   _e_config_save_timer = NULL;
-   return 0;
+   _e_config_save_defer = NULL;
 }
 
 static void

@@ -2080,47 +2080,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-#define HDL E_IPC_OP_CACHE_FLUSH_INTERVAL_SET
-#if (TYPE == E_REMOTE_OPTIONS)
-   OP("-cache-flush-interval-set", 1, "Set the cache flush interval (sec) (0.0 = off)", 0, HDL)
-#elif (TYPE == E_REMOTE_OUT)
-   REQ_DOUBLE(atof(params[0]), HDL);
-#elif (TYPE == E_WM_IN)
-   START_DOUBLE(dbl, HDL);
-   e_config->cache_flush_interval = dbl;
-   E_CONFIG_LIMIT(e_config->cache_flush_interval, 0.0, 600.0);
-   e_canvas_recache();
-   SAVE;
-   END_DOUBLE;
-#elif (TYPE == E_REMOTE_IN)
-#endif
-#undef HDL
-
-/****************************************************************************/
-#define HDL E_IPC_OP_CACHE_FLUSH_INTERVAL_GET
-#if (TYPE == E_REMOTE_OPTIONS)
-   OP("-cache-flush-interval-get", 0, "Get the interval between cache flushed (sec)", 1, HDL)
-#elif (TYPE == E_REMOTE_OUT)
-   REQ_NULL(HDL);
-#elif (TYPE == E_WM_IN)
-   SEND_DOUBLE(e_config->cache_flush_interval, E_IPC_OP_CACHE_FLUSH_INTERVAL_GET_REPLY, HDL);
-#elif (TYPE == E_REMOTE_IN)
-#endif
-#undef HDL
-
-/****************************************************************************/
-#define HDL E_IPC_OP_CACHE_FLUSH_INTERVAL_GET_REPLY
-#if (TYPE == E_REMOTE_OPTIONS)
-#elif (TYPE == E_REMOTE_OUT)
-#elif (TYPE == E_WM_IN)
-#elif (TYPE == E_REMOTE_IN)
-   START_DOUBLE(fint, HDL);
-   printf("REPLY: %3.3f\n", fint);
-   END_DOUBLE;
-#endif
-#undef HDL
-
-/****************************************************************************/
 #define HDL E_IPC_OP_MENUS_FAST_MOVE_THRESHOLD_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-menus-fast-move-threshold-set", 1, "Set the mouse speed (pixels/second) that is considered a 'fast move'", 0, HDL)
@@ -4556,46 +4515,6 @@ break;
    START_INT(val, HDL);
    printf("REPLY: %d\n", val);
    END_INT;
-#endif
-#undef HDL
-
-/****************************************************************************/
-#define HDL E_IPC_OP_PING_CLIENTS_WAIT_SET
-#if (TYPE == E_REMOTE_OPTIONS)
-   OP("-ping-clients-wait-set", 1, "Set client ping interval (0.0-120.0)", 0, HDL)
-#elif (TYPE == E_REMOTE_OUT)
-   REQ_DOUBLE(atof(params[0]), HDL);
-#elif (TYPE == E_WM_IN)
-   START_DOUBLE(val, HDL);
-   e_config->ping_clients_wait = val;
-   E_CONFIG_LIMIT(e_config->ping_clients_wait, 0.0, 120.0);
-   SAVE;
-   END_DOUBLE;
-#elif (TYPE == E_REMOTE_IN)
-#endif
-#undef HDL
-
-/****************************************************************************/
-#define HDL E_IPC_OP_PING_CLIENTS_WAIT_GET
-#if (TYPE == E_REMOTE_OPTIONS)
-   OP("-ping-clients-wait-get", 0, "Get client ping interval", 1, HDL)
-#elif (TYPE == E_REMOTE_OUT)
-   REQ_NULL(HDL);
-#elif (TYPE == E_WM_IN)
-   SEND_DOUBLE(e_config->ping_clients_wait, E_IPC_OP_PING_CLIENTS_WAIT_GET_REPLY, HDL);
-#elif (TYPE == E_REMOTE_IN)
-#endif
-#undef HDL
-
-/****************************************************************************/
-#define HDL E_IPC_OP_PING_CLIENTS_WAIT_GET_REPLY
-#if (TYPE == E_REMOTE_OPTIONS)
-#elif (TYPE == E_REMOTE_OUT)
-#elif (TYPE == E_WM_IN)
-#elif (TYPE == E_REMOTE_IN)
-   START_DOUBLE(val, HDL);
-   printf("REPLY: %3.3f\n", val);
-   END_DOUBLE;
 #endif
 #undef HDL
 

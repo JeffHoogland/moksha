@@ -8,7 +8,7 @@ static int _e_canvas_cb_flush(void *data);
 
 /* local subsystem globals */
 static Evas_List *_e_canvases = NULL;
-static Ecore_Timer *_e_canvas_cache_flush_timer = NULL;
+static Ecore_Poller *_e_canvas_cache_flush_poller = NULL;
 
 /* externally accessible functions */
 EAPI void
@@ -86,16 +86,17 @@ e_canvas_recache(void)
      }
    edje_file_cache_set(e_config->edje_cache);
    edje_collection_cache_set(e_config->edje_collection_cache);
-   if (_e_canvas_cache_flush_timer)
+   if (_e_canvas_cache_flush_poller)
      {
-	ecore_timer_del(_e_canvas_cache_flush_timer);
-	_e_canvas_cache_flush_timer = NULL;
+	ecore_poller_del(_e_canvas_cache_flush_poller);
+	_e_canvas_cache_flush_poller = NULL;
      }
-   if (e_config->cache_flush_interval > 0.0)
+   if (e_config->cache_flush_poll_interval > 0)
      {
-	_e_canvas_cache_flush_timer = 
-	  ecore_timer_add(e_config->cache_flush_interval, _e_canvas_cb_flush,
-			  NULL);
+	_e_canvas_cache_flush_poller = 
+	  ecore_poller_add(ECORE_POLLER_CORE,
+			   e_config->cache_flush_poll_interval,
+			   _e_canvas_cb_flush, NULL);
      }
 }
 
@@ -116,6 +117,7 @@ e_canvas_cache_flush(void)
      }
    edje_file_cache_flush();
    edje_collection_cache_flush();
+   printf("...caches flushed.\n");
 }
 
 EAPI void
@@ -131,6 +133,22 @@ e_canvas_cache_reload(void)
 	ee = l->data;
 	e = ecore_evas_get(ee);
 	evas_image_cache_reload(e);
+     }
+}
+
+EAPI void
+e_canvas_idle_flush(void)
+{
+   Evas_List *l;
+   
+   for (l = _e_canvases; l; l = l->next)
+     {
+	Ecore_Evas *ee;
+	Evas *e;
+	
+	ee = l->data;
+	e = ecore_evas_get(ee);
+	evas_render_idle_flush(e);
      }
 }
 

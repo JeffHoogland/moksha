@@ -26,6 +26,7 @@ struct _Config
    unsigned int    popup_urgent;
    unsigned int    popup_urgent_stick;
    double          popup_urgent_speed;
+   unsigned int    show_desk_names;
    int             popup_act_height; /*keyaction popup */
    int             popup_height;    /* urgent/on-deskswitch popup*/
    unsigned int    drag_resist;

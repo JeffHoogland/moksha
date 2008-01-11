@@ -109,15 +109,27 @@ AC_SUBST(PACKAGE_DATA_DIR)
 AC_SUBST(LOCALE_DIR)
 AC_SUBST(PACKAGE_SYSCONF_DIR)
 
+#######################################
+## Simple X11 build/link
+
+AC_ARG_ENABLE(simple-x11,
+  AC_HELP_STRING([--enable-simple-x11], [enable simple x11 linking]),
+  [ want_evas_simple_x11=$enableval ]
+)
+    
 x_dir=""
 x_cflags=""
 x_libs=""
 AC_PATH_XTRA
 AC_CHECK_HEADER(X11/X.h,
   [
-    x_dir=${x_dir:-/usr/X11R6}
-    x_cflags=${x_cflags:--I${x_includes:-$x_dir/include}}
-    x_libs="${x_libs:--L${x_libraries:-$x_dir/lib}} -lX11 -lXext"
+    if test "x$want_evas_simple_x11" = "xyes"; then
+      x_libs="${x_libs} -lX11 -lXext"
+    else
+      x_dir=${x_dir:-/usr/X11R6}
+      x_cflags=${x_cflags:--I${x_includes:-$x_dir/include}}
+      x_libs="${x_libs:--L${x_libraries:-$x_dir/lib}} -lX11 -lXext"
+    fi
   ],[
     AC_MSG_ERROR([Cannot find X headers and libraries.])
   ]

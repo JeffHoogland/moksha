@@ -82,7 +82,7 @@ static int  _e_menu_cb_mouse_down                 (void *data, int type, void *e
 static int  _e_menu_cb_mouse_up                   (void *data, int type, void *event);
 static int  _e_menu_cb_mouse_move                 (void *data, int type, void *event);
 static int  _e_menu_cb_mouse_wheel                (void *data, int type, void *event);
-static int  _e_menu_cb_scroll_timer               (void *data);
+static int  _e_menu_cb_scroll_animator            (void *data);
 static int  _e_menu_cb_window_shape               (void *data, int ev_type, void *ev);
 
 static void _e_menu_cb_item_submenu_post_default  (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -98,7 +98,7 @@ static Ecore_X_Time         _e_menu_activate_time       = 0;
 static int                  _e_menu_activate_floating   = 0;
 static int                  _e_menu_activate_maybe_drag = 0;
 static int                  _e_menu_activate_dragging   = 0;
-static Ecore_Timer         *_e_menu_scroll_timer        = NULL;
+static Ecore_Animator      *_e_menu_scroll_animator     = NULL;
 static double               _e_menu_scroll_start        = 0.0;
 static int                  _e_menu_x                   = 0;
 static int                  _e_menu_y                   = 0;
@@ -2394,9 +2394,9 @@ _e_menu_mouse_autoscroll_check(void)
    _e_menu_autoscroll_x = autoscroll_x;
    _e_menu_autoscroll_y = autoscroll_y;
    if ((!autoscroll_x) && (!autoscroll_y)) return;
-   if (_e_menu_scroll_timer) return;
-   _e_menu_scroll_timer = ecore_timer_add(1.0 / 60.0, 
-					  _e_menu_cb_scroll_timer, NULL);
+   if (_e_menu_scroll_animator) return;
+   _e_menu_scroll_animator = ecore_animator_add(_e_menu_cb_scroll_animator,
+						NULL);
    _e_menu_scroll_start = ecore_time_get();
 }
 
@@ -2786,7 +2786,7 @@ _e_menu_cb_mouse_wheel(void *data, int type, void *event)
 }
 
 static int
-_e_menu_cb_scroll_timer(void *data)
+_e_menu_cb_scroll_animator(void *data)
 {
    double t, dt;
    double dx, dy;
@@ -2829,7 +2829,7 @@ _e_menu_cb_scroll_timer(void *data)
    _e_menu_mouse_autoscroll_check();
    if ((_e_menu_autoscroll_x == 0) && (_e_menu_autoscroll_y == 0))
      {
-	_e_menu_scroll_timer = NULL;
+	_e_menu_scroll_animator = NULL;
 	return 0;
      }
    return 1;

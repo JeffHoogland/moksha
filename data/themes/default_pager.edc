@@ -10,7 +10,7 @@ images {
 }
 
 group {
-   name: "e/widgets/pager/popup";
+   name: "e/modules/pager/popup";
    parts {
       part {
 	 name:          "base";
@@ -96,7 +96,7 @@ group {
 	 }
       }
       part {
-	 name: "text";
+	 name: "e.text.label";
 	 type: TEXT;
 	 effect: SOFT_SHADOW;
 	 mouse_events: 0;
@@ -134,12 +134,12 @@ group {
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:  16   -7;
-	       to_y: "text";
+	       to_y: "e.text.label";
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
 	       offset:  -17  6;
-	       to_y: "text";
+	       to_y: "e.text.label";
 	    }
 	    image {
 	       normal: "e17_ibar_over_h.png";
@@ -189,7 +189,7 @@ group {
 	 }
       }
       part {
-	 name:          "pager";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 clip_to:       "items_clip";
 	 description {
@@ -316,7 +316,7 @@ group {
 	 }
       }
       part {
-	 name:          "items";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 clip_to:       "clip";
          description {
@@ -647,7 +647,7 @@ group {
 	 }
       }
       part {
-	 name:           "icon";
+	 name:           "e.swallow.icon";
 	 type:           SWALLOW;
 	 description {
 	    state:       "default" 0.0;

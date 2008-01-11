@@ -17,19 +17,19 @@ struct _Status
 struct _Config
 {
    /* saved * loaded config values */
-   double       poll_time;
-   int          restore_governor;
-   const char  *governor;
+   int           poll_interval;
+   int           restore_governor;
+   const char   *governor;
    /* just config state */
-   E_Module    *module;
-   Evas_List   *instances;
-   E_Menu      *menu;
-   E_Menu      *menu_poll;
-   E_Menu      *menu_governor;
-   E_Menu      *menu_frequency;
-   Status      *status;
-   char        *set_exe_path;
-   Ecore_Timer *frequency_check_timer;
+   E_Module     *module;
+   Evas_List    *instances;
+   E_Menu       *menu;
+   E_Menu       *menu_poll;
+   E_Menu       *menu_governor;
+   E_Menu       *menu_frequency;
+   Status       *status;
+   char         *set_exe_path;
+   Ecore_Poller *frequency_check_poller;
 };
 
 EAPI extern E_Module_Api e_modapi;

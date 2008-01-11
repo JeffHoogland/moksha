@@ -15,7 +15,7 @@ typedef struct _Status       Status;
 struct _Config
 {
    /* saved * loaded config values */
-   double           poll_time;
+   int              poll_interval;
    int              alarm;	/* Alarm on minutes remaining */
    int	            alarm_p;    /* Alarm on percentage remaining */
    /* just config state */
@@ -25,7 +25,7 @@ struct _Config
    E_Menu          *menu;
    int              alarm_triggered;
    int              battery_check_mode;
-   Ecore_Timer     *battery_check_timer;
+   Ecore_Poller    *battery_check_poller;
    int              battery_prev_drain;
    int              battery_prev_ac;
    int              battery_prev_battery;

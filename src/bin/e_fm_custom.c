@@ -12,9 +12,9 @@ static Evas_Bool _e_fm2_custom_file_hash_foreach_save(Evas_Hash *hash, const cha
 static void _e_fm2_custom_file_info_load(void);
 static void _e_fm2_custom_file_info_save(void);
 static void _e_fm2_custom_file_info_free(void);
-static int _e_fm2_custom_file_cb_timer_save(void *data);
+static void _e_fm2_custom_file_cb_defer_save(void *data);
 
-static Ecore_Timer *_e_fm2_flush_timer = NULL;
+static E_Powersave_Deferred_Action*_e_fm2_flush_defer = NULL;
 static Eet_File *_e_fm2_custom_file = NULL;
 static Eet_Data_Descriptor *_e_fm2_custom_file_edd = NULL;
 static Evas_Hash *_e_fm2_custom_hash = NULL;
@@ -75,8 +75,8 @@ e_fm2_custom_file_shutdown(void)
 {
    _e_fm2_custom_file_info_save();
    _e_fm2_custom_file_info_free();
-   if (_e_fm2_flush_timer) ecore_timer_del(_e_fm2_flush_timer);
-   _e_fm2_flush_timer = NULL;
+   if (_e_fm2_flush_defer) e_powersave_deferred_action_del(_e_fm2_flush_defer);
+   _e_fm2_flush_defer = NULL;
    eet_data_descriptor_free(_e_fm2_custom_file_edd);
    _e_fm2_custom_file_edd = NULL;
 }
@@ -88,7 +88,7 @@ e_fm2_custom_file_get(const char *path)
    
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return NULL;
-   if (_e_fm2_flush_timer) e_fm2_custom_file_flush();
+   if (_e_fm2_flush_defer) e_fm2_custom_file_flush();
    cf = evas_hash_find(_e_fm2_custom_hash, path);
    return cf;
 }
@@ -98,7 +98,7 @@ e_fm2_custom_file_set(const char *path, E_Fm2_Custom_File *cf)
 {
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
-   if (_e_fm2_flush_timer) e_fm2_custom_file_flush();
+   if (_e_fm2_flush_defer) e_fm2_custom_file_flush();
    if (evas_hash_find(_e_fm2_custom_hash, path) != cf)
      {
 	E_Fm2_Custom_File *cf2;
@@ -125,7 +125,7 @@ e_fm2_custom_file_del(const char *path)
 	
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
-   if (_e_fm2_flush_timer) e_fm2_custom_file_flush();
+   if (_e_fm2_flush_defer) e_fm2_custom_file_flush();
    
    list = _e_fm2_custom_hash_key_base_list(_e_fm2_custom_hash, path);
    if (list)
@@ -155,7 +155,7 @@ e_fm2_custom_file_rename(const char *path, const char *new_path)
 
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
-   if (_e_fm2_flush_timer) e_fm2_custom_file_flush();
+   if (_e_fm2_flush_defer) e_fm2_custom_file_flush();
    cf2 = evas_hash_find(_e_fm2_custom_hash, path);
    if (cf2)
      {
@@ -203,8 +203,11 @@ EAPI void
 e_fm2_custom_file_flush(void)
 {
    if (!_e_fm2_custom_file) return;
-   if (_e_fm2_flush_timer) ecore_timer_del(_e_fm2_flush_timer);
-   _e_fm2_flush_timer = ecore_timer_add(1.0, _e_fm2_custom_file_cb_timer_save, NULL);
+   
+   if (_e_fm2_flush_defer)
+     e_powersave_deferred_action_del(_e_fm2_flush_defer);
+   _e_fm2_flush_defer = 
+     e_powersave_deferred_action_add(_e_fm2_custom_file_cb_defer_save, NULL);
 }
 
 /**/
@@ -372,11 +375,10 @@ _e_fm2_custom_file_info_free(void)
      }
 }
 
-static int
-_e_fm2_custom_file_cb_timer_save(void *data)
+static void
+_e_fm2_custom_file_cb_defer_save(void *data)
 {
    _e_fm2_custom_file_info_save();
    _e_fm2_custom_file_info_free();
-   _e_fm2_flush_timer = NULL;
-   return 0;
+   _e_fm2_flush_defer = NULL;
 }

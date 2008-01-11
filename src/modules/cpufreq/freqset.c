@@ -81,6 +81,7 @@ main(int argc, char *argv[])
 #endif
 
    seteuid(-1);
+   return -1;
 }
 
 static int

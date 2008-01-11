@@ -33,7 +33,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0122
+#define E_CONFIG_FILE_GENERATION 0x0123
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -74,7 +74,6 @@ struct _E_Config
    int         font_cache; // GUI
    int         edje_cache; // GUI
    int         edje_collection_cache; // GUI
-   double      cache_flush_interval; // GUI
    int         zone_desks_x_count; // GUI
    int         zone_desks_y_count; // GUI
    int         use_virtual_roots; // NO GUI - maybe remove?
@@ -154,7 +153,6 @@ struct _E_Config
    int         kill_process;
    double      kill_timer_wait;
    int         ping_clients;
-   double      ping_clients_wait;
    const char *transition_start; // GUI
    const char *transition_desk; // GUI
    const char *transition_change; // GUI
@@ -279,6 +277,9 @@ struct _E_Config
    int desk_auto_switch; // GUI;
 
    int thumb_nice;
+   
+   int ping_clients_interval;
+   int cache_flush_poll_interval; // GUI
 };
 
 struct _E_Config_Module

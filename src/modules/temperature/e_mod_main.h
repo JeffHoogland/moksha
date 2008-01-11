@@ -29,11 +29,10 @@ struct _Config_Face
 {
    const char      *id;
    /* saved * loaded config values */
-   double           poll_time;
+   int              poll_interval;
    int              low, high;
-   Sensor_Type      sensor_type;
+   int              sensor_type;
    const char      *sensor_name;
-   const char      *sensor_path;
    Unit             units;
    /* config state */
    E_Gadcon_Client *gcc;
@@ -43,7 +42,11 @@ struct _Config_Face
 
    E_Config_Dialog *config_dialog;
    E_Menu          *menu;
-   Ecore_Timer     *temperature_check_timer;
+   Ecore_Exe       *tempget_exe;
+   Ecore_Event_Handler *tempget_data_handler;
+   Ecore_Event_Handler *tempget_del_handler;
+   
+//   Ecore_Poller    *temperature_check_poller;
    unsigned char    have_temp;
 #ifdef __FreeBSD__
    int              mib[5];

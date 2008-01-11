@@ -14,7 +14,7 @@ struct _E_Config_Dialog_Data
 	int height;
 	int act_height;
      } popup;
-   int drag_resist, flip_desk;
+   int drag_resist, flip_desk, show_desk_names;
    struct 
      {
 	unsigned int drag, noplace, desk;
@@ -89,6 +89,7 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    cfdata->popup.urgent_show = pager_config->popup_urgent;
    cfdata->popup.urgent_stick = pager_config->popup_urgent_stick;
    cfdata->popup.urgent_speed = pager_config->popup_urgent_speed;
+   cfdata->show_desk_names = pager_config->show_desk_names;
    cfdata->popup.height = pager_config->popup_height;
    cfdata->popup.act_height = pager_config->popup_act_height;
    cfdata->drag_resist = pager_config->drag_resist;
@@ -115,6 +116,9 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_check_add(evas, _("Flip desktop on mouse wheel"), 
 			   &(cfdata->flip_desk));
    e_widget_framelist_object_append(of, ow);
+   ow = e_widget_check_add(evas, _("Show desktop names"), 
+			   &(cfdata->show_desk_names));
+   e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Popup Settings"), 0);
@@ -134,7 +138,9 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    pager_config->popup = cfdata->popup.show;
    pager_config->flip_desk = cfdata->flip_desk;
+   pager_config->show_desk_names = cfdata->show_desk_names;
    pager_config->popup_urgent = cfdata->popup.urgent_show;
+   /* FIXME: update gui with desk names */
    e_config_save_queue();
    return 1;
 }
@@ -149,41 +155,44 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_check_add(evas, _("Flip desktop on mouse wheel"), 
 			   &(cfdata->flip_desk));
    e_widget_frametable_object_append(of, ow, 0, 0, 2, 1, 1, 0, 1, 0);
+   ow = e_widget_check_add(evas, _("Show desktop names"), 
+			   &(cfdata->show_desk_names));
+   e_widget_frametable_object_append(of, ow, 0, 1, 2, 1, 1, 0, 1, 0);
 
    ow = e_widget_label_add(evas, _("Select and Slide button"));
-   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 0, 1, 0);
    ow = e_widget_button_add(evas, _("Click to set"), NULL, 
 			    _grab_wnd_show, (void *)BUTTON_DRAG, cfdata);
    cfdata->gui.o_btn1 = ow;
-   e_widget_frametable_object_append(of, ow, 1, 1, 1, 1, 0, 0, 1, 0);
+   e_widget_frametable_object_append(of, ow, 1, 2, 1, 1, 0, 0, 1, 0);
 
    ow = e_widget_label_add(evas, _("Drag and Drop button"));
-   e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ow, 0, 3, 1, 1, 1, 0, 1, 0);
    ow = e_widget_button_add(evas, _("Click to set"), NULL, 
 			    _grab_wnd_show, (void *)BUTTON_NOPLACE, cfdata);
    cfdata->gui.o_btn2 = ow;
-   e_widget_frametable_object_append(of, ow, 1, 2, 1, 1, 0, 0, 1, 0);
+   e_widget_frametable_object_append(of, ow, 1, 3, 1, 1, 0, 0, 1, 0);
 
    ow = e_widget_label_add(evas, _("Drag whole desktop"));
-   e_widget_frametable_object_append(of, ow, 0, 3, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ow, 0, 4, 1, 1, 1, 0, 1, 0);
    ow = e_widget_button_add(evas, _("Click to set"), NULL, 
 			    _grab_wnd_show, (void *)BUTTON_DESK, cfdata);
    cfdata->gui.o_btn3 = ow;
-   e_widget_frametable_object_append(of, ow, 1, 3, 1, 1, 0, 0, 1, 0);
+   e_widget_frametable_object_append(of, ow, 1, 4, 1, 1, 0, 0, 1, 0);
    _adv_update_btn_lbl(cfdata);
    
    /* TODO find better name */                                                                         
    ow = e_widget_label_add(evas, _("Keyaction popup height"));                                       
-   e_widget_frametable_object_append(of, ow, 0, 4, 1, 1, 1, 0, 1, 0);                                
+   e_widget_frametable_object_append(of, ow, 0, 5, 1, 1, 1, 0, 1, 0);                                
    ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 20.0, 200.0, 1.0, 0, NULL,                     
                           &(cfdata->popup.act_height), 100);                                         
-   e_widget_frametable_object_append(of, ow, 1, 4, 1, 1, 1, 0, 1, 0);  
+   e_widget_frametable_object_append(of, ow, 1, 5, 1, 1, 1, 0, 1, 0);  
 
    ow = e_widget_label_add(evas, _("Resistance to dragging"));
-   e_widget_frametable_object_append(of, ow, 0, 5, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ow, 0, 6, 1, 1, 1, 0, 1, 0);
    ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 0.0, 10.0, 1.0, 0, NULL, 
 			    &(cfdata->drag_resist), 100);
-   e_widget_frametable_object_append(of, ow, 1, 5, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ow, 1, 6, 1, 1, 1, 0, 1, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_frametable_add(evas, _("Popup Settings"), 0);
@@ -228,12 +237,14 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    pager_config->popup_urgent = cfdata->popup.urgent_show;
    pager_config->popup_urgent_stick = cfdata->popup.urgent_stick;
    pager_config->popup_urgent_speed = cfdata->popup.urgent_speed;
+   pager_config->show_desk_names = cfdata->show_desk_names;
    pager_config->popup_height = cfdata->popup.height;
    pager_config->popup_act_height = cfdata->popup.act_height;
    pager_config->drag_resist = cfdata->drag_resist;
    pager_config->btn_drag = cfdata->btn.drag;
    pager_config->btn_noplace = cfdata->btn.noplace;
    pager_config->btn_desk = cfdata->btn.desk;
+   /* FIXME: update gui with desk names */
    e_config_save_queue();
    return 1;
 }

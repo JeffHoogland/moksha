@@ -352,7 +352,7 @@ _battery_cb_check(void *data)
 	     /* Error reading status */
 	     if (battery_config->battery_prev_battery != -2)
 	       edje_object_signal_emit(inst->o_battery, "e,state,unknown", "e");
-	     edje_object_part_text_set(inst->o_battery, "e.text.reading", _("NO INFO"));
+	     edje_object_part_text_set(inst->o_battery, "e.text.reading", _("ERROR"));
 	     edje_object_part_text_set(inst->o_battery, "e.text.time", "--:--");
 	     _battery_face_level_set(inst, (double)(rand() & 0xff) / 255.0);
 	     battery_config->battery_prev_battery = -2;
@@ -388,10 +388,16 @@ _battery_linux_acpi_check(void)
    int level_unknown = 0;
    int hours, minutes;
    Status *stat;
+   static double last_poll_time = 0.0;
+   double poll_time, t;
 
    stat = E_NEW(Status, 1);
    if (!stat) return NULL;
 
+   t = ecore_time_get();
+   poll_time = t - last_poll_time;
+   last_poll_time = t;
+   
    /* Read some information on first run. */
    bats = ecore_file_ls("/proc/acpi/battery");
    if (bats)
@@ -505,11 +511,11 @@ _battery_linux_acpi_check(void)
      }
    
    if ((rate_unknown) && (bat_level != battery_config->battery_prev_level) &&
-       (battery_config->battery_prev_level >= 0))
+       (battery_config->battery_prev_level >= 0) && (poll_time > 0.0))
      {
 	bat_drain = 
 	  ((bat_level - battery_config->battery_prev_level) * 60 * 60) /
-	  battery_config->poll_time;
+	  poll_time;
 	if (bat_drain < 0) bat_drain = -bat_drain;
 	if (bat_drain == 0) bat_drain = 1;
 	rate_unknown = 0;
@@ -547,7 +553,7 @@ _battery_linux_acpi_check(void)
      {
 	stat->has_battery = 0;
 	stat->state = BATTERY_STATE_NONE;
-	stat->reading = strdup(_("NO BAT"));
+	stat->reading = strdup(_("N/A"));
 	stat->time = strdup("--:--");
 	stat->level = 1.0;
      }
@@ -637,7 +643,7 @@ _battery_linux_apm_check(void)
      {
 	stat->has_battery = 0;
 	stat->state = BATTERY_STATE_NONE;
-	stat->reading = strdup("NO BAT");
+	stat->reading = strdup("N/A");
 	stat->time = strdup("--:--");
 	stat->level = 1.0;
 	return stat;
@@ -864,7 +870,7 @@ _battery_linux_powerbook_check(void)
      {
 	stat->has_battery = 0;
 	stat->state = BATTERY_STATE_NONE;
-	stat->reading = strdup(_("NO BAT"));
+	stat->reading = strdup(_("N/A"));
 	stat->time = strdup("--:--");
 	stat->level = 1.0;
      }
@@ -1020,7 +1026,7 @@ _battery_bsd_acpi_check(void)
      {
 	stat->has_battery = 0;
 	stat->state = BATTERY_STATE_NONE;
-	stat->reading = strdup(_("NO BAT"));
+	stat->reading = strdup(_("N/A"));
 	stat->time = strdup("--:--");
 	stat->level = 1.0;
      }
@@ -1113,7 +1119,7 @@ _battery_bsd_apm_check(void)
      {
 	stat->has_battery = 0;
 	stat->state = BATTERY_STATE_NONE;
-	stat->reading = strdup("NO BAT");
+	stat->reading = strdup("N/A");
 	stat->time = strdup("--:--");
 	stat->level = 1.0;
 	return stat;
@@ -1251,7 +1257,7 @@ _battery_darwin_check(void)
 	CFRelease(sources);
 	CFRelease(blob);
 	stat->state = BATTERY_STATE_NONE;
-	stat->reading = strdup("NO BAT");
+	stat->reading = strdup("N/A");
 	stat->time = strdup("--:--");
 	stat->level = 1.0;
 	return stat;
@@ -1392,9 +1398,10 @@ void
 _battery_config_updated(void)
 {
    if (!battery_config) return;
-   ecore_timer_del(battery_config->battery_check_timer);
-   battery_config->battery_check_timer = ecore_timer_add(battery_config->poll_time,
-						 _battery_cb_check, NULL);
+   ecore_poller_del(battery_config->battery_check_poller);
+   battery_config->battery_check_poller = 
+     ecore_poller_add(ECORE_POLLER_CORE, battery_config->poll_interval,
+		      _battery_cb_check, NULL);
    _battery_cb_check(NULL);
 }
 
@@ -1417,7 +1424,7 @@ e_modapi_init(E_Module *m)
 #undef D
 #define T Config
 #define D conf_edd
-   E_CONFIG_VAL(D, T, poll_time, DOUBLE);
+   E_CONFIG_VAL(D, T, poll_interval, INT);
    E_CONFIG_VAL(D, T, alarm, INT);
    E_CONFIG_VAL(D, T, alarm_p, INT);
 
@@ -1425,11 +1432,11 @@ e_modapi_init(E_Module *m)
    if (!battery_config)
      {
        battery_config = E_NEW(Config, 1);
-       battery_config->poll_time = 30.0;
+       battery_config->poll_interval = 256;
        battery_config->alarm = 30;
        battery_config->alarm_p = 10;
      }
-   E_CONFIG_LIMIT(battery_config->poll_time, 0.5, 1000.0);
+   E_CONFIG_LIMIT(battery_config->poll_interval, 1, 1024);
    E_CONFIG_LIMIT(battery_config->alarm, 0, 60);
    E_CONFIG_LIMIT(battery_config->alarm_p, 0, 100);
    
@@ -1437,8 +1444,9 @@ e_modapi_init(E_Module *m)
    battery_config->battery_prev_drain = 1;
    battery_config->battery_prev_ac = -1;
    battery_config->battery_prev_battery = -1;
-   battery_config->battery_check_timer = ecore_timer_add(battery_config->poll_time,
-						 _battery_cb_check, NULL);
+   battery_config->battery_check_poller = 
+     ecore_poller_add(ECORE_POLLER_CORE, battery_config->poll_interval,
+		      _battery_cb_check, NULL);
    battery_config->module = m;
    
    e_gadcon_provider_register(&_gadcon_class);
@@ -1460,8 +1468,8 @@ e_modapi_shutdown(E_Module *m)
    
    if (battery_config->config_dialog)
      e_object_del(E_OBJECT(battery_config->config_dialog));
-   if (battery_config->battery_check_timer)
-     ecore_timer_del(battery_config->battery_check_timer);
+   if (battery_config->battery_check_poller)
+     ecore_poller_del(battery_config->battery_check_poller);
    if (battery_config->menu)
      {
         e_menu_post_deactivate_callback_set(battery_config->menu, NULL, NULL);

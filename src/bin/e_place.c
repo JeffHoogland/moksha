@@ -442,7 +442,7 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
    if ((*ry + h) > zone->h) *ry = zone->h - h;
    if (*ry < 0) *ry = 0;
 
-   printf("0 - PLACE %i %i | %ix%i\n", *rx, *ry, w, h);
+//   printf("0 - PLACE %i %i | %ix%i\n", *rx, *ry, w, h);
 
    *rx += zone->x;
    *ry += zone->y;

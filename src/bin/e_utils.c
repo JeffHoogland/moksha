@@ -947,7 +947,7 @@ e_util_defer_object_del(E_Object *obj)
    if (stopping)
      e_object_del(obj);
    else
-     ecore_idle_enterer_add(_e_util_cb_delayed_del, obj);
+     ecore_idle_enterer_before_add(_e_util_cb_delayed_del, obj);
 }
 
 EAPI const char *

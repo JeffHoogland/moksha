@@ -131,3 +131,4 @@
 #include "e_msgbus.h"
 #include "e_toolbar.h"
 #include "e_int_toolbar_config.h"
+#include "e_powersave.h"
