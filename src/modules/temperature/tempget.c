@@ -20,7 +20,6 @@ static int mib[5];
 #endif
 static Ecore_Poller *poller = NULL;
 static int ptemp = 0;
-static int have_temp = 0;
 
 static void init(void);
 static int check(void);
