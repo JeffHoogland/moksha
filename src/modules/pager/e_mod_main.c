@@ -1463,7 +1463,7 @@ _pager_cb_event_border_focus_in(void *data, int type, void *event)
      }
 
    pp = _pager_popup_find(zone);
-   if (!pp) return;
+   if (!pp) return 1;
    for (l = pp->pager->desks; l; l = l->next)
      {
 	Pager_Desk *pd;
@@ -1515,7 +1515,7 @@ _pager_cb_event_border_focus_out(void *data, int type, void *event)
      }
 
    pp = _pager_popup_find(zone);
-   if (!pp) return;
+   if (!pp) return 1;
    for (l = pp->pager->desks; l; l = l->next)
      {
 	Pager_Desk *pd;
