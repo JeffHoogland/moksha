@@ -76,7 +76,7 @@ e_grabinput_release(Ecore_X_Window mouse_win, Ecore_X_Window key_win)
    if (mouse_win == grab_mouse_win)
      {
 	ecore_x_pointer_ungrab();
-	mouse_win = 0;
+	grab_mouse_win = 0;
      }
    if (key_win == grab_key_win)
      {
