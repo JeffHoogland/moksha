@@ -3,7 +3,6 @@
 /* local function protos */
 static void _e_int_gadcon_config(E_Gadcon *gc, const char *title);
 static void *_create_data(E_Config_Dialog *cfd);
-static void _fill_data(E_Config_Dialog_Data *cfdata);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _cb_mod_update(void *data, int type, void *event);
@@ -14,6 +13,7 @@ static void _load_sel_gadgets(void *data);
 static void _cb_add(void *data, void *data2);
 static void _cb_del(void *data, void *data2);
 static void _set_description(void *data, const char *name);
+static int _gad_list_sort(void *data1, void *data2);
 
 struct _E_Config_Dialog_Data 
 {
@@ -68,14 +68,7 @@ _create_data(E_Config_Dialog *cfd)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->gc = cfd->data;
-//   _fill_data(cfdata);
    return cfdata;
-}
-
-static void 
-_fill_data(E_Config_Dialog_Data *cfdata) 
-{
-
 }
 
 static void 
@@ -205,7 +198,9 @@ _load_avail_gadgets(void *data)
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_avail);
    e_widget_ilist_clear(cfdata->o_avail);
-   for (l = e_gadcon_provider_list(); l; l = l->next) 
+   l = e_gadcon_provider_list();
+   if (l) l = evas_list_sort(l, -1, _gad_list_sort);
+   for (; l; l = l->next) 
      {
         E_Gadcon_Client_Class *cc;
         Evas_Object *icon = NULL;
@@ -220,6 +215,7 @@ _load_avail_gadgets(void *data)
      }
    e_widget_ilist_go(cfdata->o_avail);
    e_widget_min_size_get(cfdata->o_avail, &w, NULL);
+   if (w < 200) w = 200;
    e_widget_min_size_set(cfdata->o_avail, w, 250);
    e_widget_ilist_thaw(cfdata->o_avail);
    edje_thaw();
@@ -265,6 +261,7 @@ _load_sel_gadgets(void *data)
      }
    e_widget_ilist_go(cfdata->o_sel);
    e_widget_min_size_get(cfdata->o_sel, &w, NULL);
+   if (w < 200) w = 200;
    e_widget_min_size_set(cfdata->o_sel, w, 250);
    e_widget_ilist_thaw(cfdata->o_sel);
    edje_thaw();
@@ -366,4 +363,22 @@ _set_description(void *data, const char *name)
    if (desk->comment) 
      e_widget_textblock_markup_set(cfdata->o_desc, desk->comment);
    efreet_desktop_free(desk);
+}
+
+static int 
+_gad_list_sort(void *data1, void *data2) 
+{
+   E_Gadcon_Client_Class *cc, *cc2;
+   char *lbl1 = NULL, *lbl2 = NULL;
+
+   if (!(cc = data1)) return 1;
+   if (!(cc2 = data2)) return -1;
+
+   if (cc->func.label) lbl1 = cc->func.label();
+   if (!lbl1) lbl1 = cc->name;
+
+   if (cc2->func.label) lbl2 = cc2->func.label();
+   if (!lbl2) lbl2 = cc2->name;
+
+   return (strcmp(lbl1, lbl2));
 }
