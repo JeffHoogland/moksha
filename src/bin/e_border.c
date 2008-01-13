@@ -1941,26 +1941,16 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
    if (!max) return;
    if (bd->maximized & E_MAXIMIZE_TYPE)
      {
-//	printf("UNMAXIMIZE!!\n");
-	E_Maximize dir;
-	int signal;
-
 	bd->pre_res_change.valid = 0;
-	/* Get the resulting directions */
-	dir = (max & bd->maximized & E_MAXIMIZE_DIRECTION);
-
 	bd->need_maximize = 0;
 
-	signal = 1;
-	switch (bd->maximized & E_MAXIMIZE_TYPE)
+	if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN)
 	  {
-	   case E_MAXIMIZE_FULLSCREEN:
 	     if (bd->bg_object)
 	       {
 		  Evas_Coord cx, cy, cw, ch;
 		  
 		  edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
-		  signal = 0;
 		  edje_object_message_signal_process(bd->bg_object);
 		  
 		  evas_object_resize(bd->bg_object, 1000, 1000);
@@ -1977,20 +1967,13 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 					   bd->client_inset.l, bd->client_inset.r,
 					   bd->client_inset.t, bd->client_inset.b);
 	       }
-	     dir = 0;
-	     break;
-	   case E_MAXIMIZE_SMART:
-	     /* Don't have to do anything special */
-	     break;
-	   case E_MAXIMIZE_NONE:
-	   case E_MAXIMIZE_EXPAND:
-	   case E_MAXIMIZE_FILL:
-	   case E_MAXIMIZE_VERTICAL:
-	   case E_MAXIMIZE_HORIZONTAL:
-	     /*Ignore*/
-	     break;
+
+	     bd->maximized = E_MAXIMIZE_NONE;
+	     e_border_move_resize(bd, bd->zone->x + bd->saved.x, bd->zone->y + bd->saved.y, bd->saved.w, bd->saved.h);
+	     bd->saved.x = bd->saved.y = bd->saved.w = bd->saved.h = 0;
+	     e_hints_window_size_unset(bd);
 	  }
-	if (dir)
+	else
 	  {
 	     int w, h, x, y;
 
@@ -1999,7 +1982,7 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	     x = bd->x;
 	     y = bd->y;
 
-	     if (dir & E_MAXIMIZE_VERTICAL)
+	     if (max & E_MAXIMIZE_VERTICAL)
 	       {
 		  /* Remove vertical */
 		  h = bd->saved.h;
@@ -2007,7 +1990,7 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 		  bd->saved.h = bd->saved.y = 0;
 		  bd->maximized &= ~E_MAXIMIZE_VERTICAL;
 	       }
-	     if (dir & E_MAXIMIZE_HORIZONTAL)
+	     if (max & E_MAXIMIZE_HORIZONTAL)
 	       {
 		  /* Remove horizontal */
 		  w = bd->saved.w;
@@ -2022,18 +2005,13 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	       {
 		  bd->maximized = E_MAXIMIZE_NONE;
 		  e_hints_window_size_unset(bd);
+		  edje_object_signal_emit(bd->bg_object, "e,action,unmaximize", "e");
 	       }
 	     else
-	       {
-		  signal = 0;
-		  e_hints_window_size_set(bd);
-	       }
+	       e_hints_window_size_set(bd);
 	  }
 	e_hints_window_maximized_set(bd, bd->maximized & E_MAXIMIZE_HORIZONTAL,
 	                             bd->maximized & E_MAXIMIZE_VERTICAL);
-	
-	if (signal)
-	  edje_object_signal_emit(bd->bg_object, "e,action,unmaximize", "e");
      }
    if (bd->remember)
      e_remember_update(bd->remember, bd);
