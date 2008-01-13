@@ -198,9 +198,9 @@ _load_avail_gadgets(void *data)
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_avail);
    e_widget_ilist_clear(cfdata->o_avail);
-   l = e_gadcon_provider_list();
-   if (l) l = evas_list_sort(l, -1, _gad_list_sort);
-   for (; l; l = l->next) 
+//   l = e_gadcon_provider_list();
+//   if (l) l = evas_list_sort(l, -1, _gad_list_sort);
+   for (l = e_gadcon_provider_list(); l; l = l->next) 
      {
         E_Gadcon_Client_Class *cc;
         Evas_Object *icon = NULL;
@@ -376,7 +376,7 @@ _gad_list_sort(void *data1, void *data2)
 
    if (cc->func.label) lbl1 = cc->func.label();
    if (!lbl1) lbl1 = cc->name;
-
+   
    if (cc2->func.label) lbl2 = cc2->func.label();
    if (!lbl2) lbl2 = cc2->name;
 
