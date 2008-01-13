@@ -1227,6 +1227,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	int                   show = 0;
 
 	ev = event;
+	if (es->zone != ev->zone) return 1;
 	switch (es->gadcon->orient)
 	  {
 	   case E_GADCON_ORIENT_LEFT:
