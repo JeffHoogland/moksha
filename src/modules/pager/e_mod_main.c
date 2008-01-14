@@ -1750,7 +1750,6 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
    if (!pw) return;
    if (pw->desk->pager->popup && !act_popup) return;
    if (!pw->desk->pager->popup && ev->button == 3) return;
-   if (pw->border->lock_user_location) return;
    if (ev->button == pager_config->btn_desk) return;
    if ((ev->button == pager_config->btn_drag) ||
        (ev->button == pager_config->btn_noplace))
@@ -1816,6 +1815,7 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
    pw = data;
 
    if (!pw) return;
+   if (pw->border->lock_user_location) return;
    if (pw->desk->pager->popup && !act_popup) return;
    /* prevent drag for a few pixels */
    if (pw->drag.start)
