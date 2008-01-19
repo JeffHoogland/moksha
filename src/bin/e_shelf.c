@@ -601,8 +601,7 @@ e_shelf_popup_set(E_Shelf *es, int popup)
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
    if (!es->cfg) return;
-   if (es->popup) e_object_del(E_OBJECT(es->popup));
-   es->popup = NULL;
+   if (((popup) && (es->popup)) || ((!popup) && (!es->popup))) return;
    if (popup) 
      {
 	es->popup = e_popup_new(es->zone, es->x, es->y, es->w, es->h);
@@ -617,6 +616,9 @@ e_shelf_popup_set(E_Shelf *es, int popup)
      }
    else 
      {
+	e_object_del(E_OBJECT(es->popup));
+	es->popup = NULL;
+
 	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_layer_set(es->o_event, es->cfg->layer);
