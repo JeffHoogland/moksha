@@ -847,7 +847,7 @@ e_editable_char_size_get(Evas_Object *editable, int *w, int *h)
 }
 
 EAPI void
-e_editable_enable (Evas_Object *editable)
+e_editable_enable(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
    
@@ -858,7 +858,7 @@ e_editable_enable (Evas_Object *editable)
 }
 
 EAPI void
-e_editable_disable (Evas_Object *editable)
+e_editable_disable(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
    
