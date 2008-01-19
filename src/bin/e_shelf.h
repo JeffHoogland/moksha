@@ -45,6 +45,7 @@ struct _E_Shelf
    unsigned char        hidden    : 1;
    unsigned char        locked    : 1;
    unsigned char        toggle    : 1;
+   unsigned char        edge      : 1;
 };
 
 EAPI int              e_shelf_init(void);

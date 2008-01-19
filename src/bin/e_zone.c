@@ -17,6 +17,7 @@ static int  _e_zone_cb_mouse_out(void *data, int type, void *event);
 static int  _e_zone_cb_timer(void *data);
 static int  _e_zone_cb_desk_show(void *data, int type, void *event);
 static void _e_zone_update_flip(E_Zone *zone);
+static void _e_zone_update_edge(E_Zone *zone);
 static void _e_zone_event_move_resize_free(void *data, void *ev);
 static void _e_zone_event_add_free(void *data, void *ev);
 static void _e_zone_event_del_free(void *data, void *ev);
@@ -76,16 +77,12 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
    zone->id = id;
 
    zone->edge.left = ecore_x_window_input_new(con->win, zone->x, zone->y, 1, zone->h);
-   ecore_x_window_show(zone->edge.left);
    e_container_window_raise(zone->container, zone->edge.left, 999);
    zone->edge.right = ecore_x_window_input_new(con->win, zone->x + zone->w - 1, zone->y, 1, zone->h);
-   ecore_x_window_show(zone->edge.right);
    e_container_window_raise(zone->container, zone->edge.right, 999);
    zone->edge.top = ecore_x_window_input_new(con->win, zone->x + 1, zone->y, zone->w - 2, 1);
-   ecore_x_window_show(zone->edge.top);
    e_container_window_raise(zone->container, zone->edge.top, 999);
    zone->edge.bottom = ecore_x_window_input_new(con->win, zone->x + 1, zone->y + zone->h - 1, zone->w - 2, 1);
-   ecore_x_window_show(zone->edge.bottom);
    e_container_window_raise(zone->container, zone->edge.bottom, 999);
 
    zone->handlers = evas_list_append(zone->handlers,
@@ -149,6 +146,7 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
 			 e_config->zone_desks_y_count);
 
    _e_zone_update_flip(zone);
+   _e_zone_update_edge(zone);
 
    e_object_del_attach_func_set(E_OBJECT(zone), _e_zone_object_del_attach);
    
@@ -639,13 +637,35 @@ e_zone_flip_win_restore(void)
 		  E_Zone *zone;
 		  
 		  zone = lll->data;
-		  ecore_x_window_show(zone->edge.left);
-		  ecore_x_window_show(zone->edge.right);
-		  ecore_x_window_show(zone->edge.top);
-		  ecore_x_window_show(zone->edge.bottom);
+		  _e_zone_update_edge(zone);
 	       }
 	  }
      }
+}
+
+EAPI void
+e_zone_edge_event_register(E_Zone *zone, E_Zone_Edge edge, int reg)
+{
+   switch (edge)
+     {
+      case E_ZONE_EDGE_LEFT:
+	 if (reg) zone->show.left++;
+	 else zone->show.left--;
+	 break;
+      case E_ZONE_EDGE_RIGHT:
+	 if (reg) zone->show.right++;
+	 else zone->show.right--;
+	 break;
+      case E_ZONE_EDGE_TOP:
+	 if (reg) zone->show.top++;
+	 else zone->show.top--;
+	 break;
+      case E_ZONE_EDGE_BOTTOM:
+	 if (reg) zone->show.bottom++;
+	 else zone->show.bottom--;
+	 break;
+     }
+   _e_zone_update_edge(zone);
 }
 
 /* local subsystem functions */
@@ -1000,9 +1020,13 @@ _e_zone_cb_desk_show(void *data, int type, void *event)
 static void
 _e_zone_update_flip(E_Zone *zone)
 {
+   if (zone->flip.left) zone->show.left--;
    zone->flip.left = 0;
+   if (zone->flip.right) zone->show.right--;
    zone->flip.right = 0;
+   if (zone->flip.top) zone->show.top--;
    zone->flip.top = 0;
+   if (zone->flip.bottom) zone->show.bottom--;
    zone->flip.bottom = 0;
 
    if (e_config->edge_flip_moving)
@@ -1037,17 +1061,45 @@ _e_zone_update_flip(E_Zone *zone)
 	  }
 
 	if (one_col && E_ZONE_FLIP_LEFT(zone))
-	  zone->flip.left = 1;
+	  {
+	     zone->flip.left = 1;
+	     zone->show.left++;
+	  }
 	
 	if (one_col && E_ZONE_FLIP_RIGHT(zone))
-	  zone->flip.right = 1;
+	  {
+	     zone->flip.right = 1;
+	     zone->show.right++;
+	  }
 	
 	if (one_row && E_ZONE_FLIP_UP(zone))
-	  zone->flip.top = 1;
+	  {
+	     zone->flip.top = 1;
+	     zone->show.top++;
+	  }
 	
 	if (one_row && E_ZONE_FLIP_DOWN(zone))
-	  zone->flip.bottom = 1;
+	  {
+	     zone->flip.bottom = 1;
+	     zone->show.bottom++;
+	  }
      }
+}
+
+static void
+_e_zone_update_edge(E_Zone *zone)
+{
+   if (zone->show.left) ecore_x_window_show(zone->edge.left);
+   else ecore_x_window_hide(zone->edge.left);
+
+   if (zone->show.right) ecore_x_window_show(zone->edge.right);
+   else ecore_x_window_hide(zone->edge.right);
+
+   if (zone->show.top) ecore_x_window_show(zone->edge.top);
+   else ecore_x_window_hide(zone->edge.top);
+
+   if (zone->show.bottom) ecore_x_window_show(zone->edge.bottom);
+   else ecore_x_window_hide(zone->edge.bottom);
 }
 
 static void

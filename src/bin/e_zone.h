@@ -64,6 +64,9 @@ struct _E_Zone
    struct {
 	Ecore_X_Window top, right, bottom, left;
    } edge;
+   struct {
+	int top, right, bottom, left;
+   } show;
    
    E_Action *cur_mouse_action;
    Evas_List *popups;
@@ -132,6 +135,7 @@ EAPI void       e_zone_desk_linear_flip_by(E_Zone *zone, int dx);
 EAPI void       e_zone_desk_linear_flip_to(E_Zone *zone, int x);
 EAPI void       e_zone_flip_win_disable(void);
 EAPI void       e_zone_flip_win_restore(void);
+EAPI void       e_zone_edge_event_register(E_Zone *zone, E_Zone_Edge edge, int reg);
 
 extern EAPI int E_EVENT_ZONE_DESK_COUNT_SET;
 extern EAPI int E_EVENT_ZONE_MOVE_RESIZE;

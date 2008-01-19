@@ -26,6 +26,8 @@ static int  _e_shelf_cb_instant_hide_timer(void *data);
 static void _e_shelf_menu_del_hook(void *data);
 static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 
+static void _e_shelf_edge_event_register(E_Shelf *es, int reg);
+
 static Evas_List *shelves = NULL;
 static Evas_Hash *winid_shelves = NULL;
 
@@ -102,6 +104,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    es->y = 0;
    es->w = 32;
    es->h = 32;
+   es->zone = zone;
    if (popup)
      {
 	es->popup = e_popup_new(zone, es->x, es->y, es->w, es->h);
@@ -118,7 +121,6 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      }
    es->fit_along = 1;
    es->layer = layer;
-   es->zone = zone;
    es->style = evas_stringshare_add(style);
 
    es->o_event = evas_object_rectangle_add(es->evas);
@@ -602,17 +604,21 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 
    if (!es->cfg) return;
    if (((popup) && (es->popup)) || ((!popup) && (!es->popup))) return;
+
    if (popup) 
      {
 	es->popup = e_popup_new(es->zone, es->x, es->y, es->w, es->h);
 	e_drop_xdnd_register_set(es->popup->evas_win, 1);
 	e_popup_layer_set(es->popup, es->cfg->layer);
+
 	es->ee = es->popup->ecore_evas;
 	es->evas = es->popup->evas;
 	es->win = es->popup->evas_win;
 	evas_object_show(es->o_event);
 	evas_object_show(es->o_base);
 	e_popup_edje_bg_object_set(es->popup, es->o_base);
+
+	_e_shelf_edge_event_register(es, 1);
      }
    else 
      {
@@ -623,6 +629,8 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_layer_set(es->o_event, es->cfg->layer);
 	evas_object_layer_set(es->o_base, es->cfg->layer);
+
+	_e_shelf_edge_event_register(es, 0);
      }
 }
 
@@ -666,6 +674,8 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
    else
      e_shelf_show(es);
 
+   if (es->popup)
+     _e_shelf_edge_event_register(es, 1);
    e_shelf_toggle(es, 0);
    return es;
 }
@@ -701,6 +711,7 @@ _e_shelf_free(E_Shelf *es)
    evas_object_del(es->o_base);
    if (es->popup)
      {
+	_e_shelf_edge_event_register(es, 0);
 	e_drop_xdnd_register_set(es->popup->evas_win, 0);
 	winid_shelves = evas_hash_del(winid_shelves, e_util_winid_str_get(es->popup->evas_win), es);
 	e_object_del(E_OBJECT(es->popup));
@@ -1638,4 +1649,52 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Delete this Shelf"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/delete");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);   
+}
+
+static void
+_e_shelf_edge_event_register(E_Shelf *es, int reg)
+{
+   if (!es) return;
+   if ((!reg) && (!es->edge)) return;
+   if ((reg) && (es->edge)) return;
+   if ((reg) && ((!es->cfg->autohide) || (es->cfg->autohide_show_action) || (!es->popup))) return;
+   es->edge = reg;
+
+   switch (es->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_LEFT:
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_LEFT, es->edge);
+	 break;
+      case E_GADCON_ORIENT_RIGHT:
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_RIGHT, es->edge);
+	 break;
+      case E_GADCON_ORIENT_TOP:
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_TOP, es->edge);
+	 break;
+      case E_GADCON_ORIENT_BOTTOM:
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_BOTTOM, es->edge);
+	 break;
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_LT:
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_TOP, es->edge);
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_LEFT, es->edge);
+	 break;
+      case E_GADCON_ORIENT_CORNER_TR:
+      case E_GADCON_ORIENT_CORNER_RT:
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_TOP, es->edge);
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_RIGHT, es->edge);
+	 break;
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_LB:
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_BOTTOM, es->edge);
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_LEFT, es->edge);
+	 break;
+      case E_GADCON_ORIENT_CORNER_BR:
+      case E_GADCON_ORIENT_CORNER_RB:
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_BOTTOM, es->edge);
+	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_RIGHT, es->edge);
+	 break;
+      default:
+	 break;
+     }
 }
