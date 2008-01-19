@@ -291,7 +291,8 @@ e_entry_enable(Evas_Object *entry)
    if (sd->enabled)
      return;
    
-   edje_object_signal_emit(entry, "e,state,enabled", "e");
+   edje_object_signal_emit(sd->entry_object, "e,state,enabled", "e");
+   e_editable_enable(sd->editable_object);
    if (sd->focused)
      e_editable_cursor_show(sd->editable_object);
    sd->enabled = 1;
@@ -313,7 +314,8 @@ e_entry_disable(Evas_Object *entry)
    if (!sd->enabled)
      return;
    
-   edje_object_signal_emit(entry, "e,state,disabled", "e");
+   edje_object_signal_emit(sd->entry_object, "e,state,disabled", "e");
+   e_editable_disable(sd->editable_object);
    e_editable_cursor_hide(sd->editable_object);
    sd->enabled = 0;
 }

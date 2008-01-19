@@ -96,8 +96,30 @@ group {
                text_class: "entry";
 	    }
 	 }
+   description {
+         state: "disabled" 0.0;
+         inherit:  "default" 0.0;
+         color: 128 128 128 255;
+        }
       }
    }
+
+   programs {
+      program {
+         name: "disable";
+              signal: "e,state,disabled";
+              source: "e";
+               action: STATE_SET "disabled" 0.0;
+              target: "e.text.text"; 
+            }
+      program {
+              name: "enable";
+              signal: "e,state,enabled";
+              source: "e";
+               action: STATE_SET "default" 0.0;
+              target: "e.text.text"; 
+     }
+  }
 }
 
 group {

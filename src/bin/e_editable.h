@@ -42,5 +42,8 @@ EAPI void         e_editable_selection_hide          (Evas_Object *editable);
 EAPI int          e_editable_pos_get_from_coords     (Evas_Object *editable, Evas_Coord x, Evas_Coord y);
 EAPI void         e_editable_char_size_get           (Evas_Object *editable, int *w, int *h);
 
+EAPI void         e_editable_enable                  (Evas_Object *entry);
+EAPI void         e_editable_disable                 (Evas_Object *entry);
+
 #endif
 #endif

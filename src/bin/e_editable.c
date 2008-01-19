@@ -846,6 +846,27 @@ e_editable_char_size_get(Evas_Object *editable, int *w, int *h)
    if (h)   *h = sd->average_char_h;
 }
 
+EAPI void
+e_editable_enable (Evas_Object *editable)
+{
+   E_Editable_Smart_Data *sd;
+   
+   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
+     return;
+   
+   edje_object_signal_emit(sd->text_object, "e,state,enabled", "e");
+}
+
+EAPI void
+e_editable_disable (Evas_Object *editable)
+{
+   E_Editable_Smart_Data *sd;
+   
+   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
+     return;
+   
+   edje_object_signal_emit(sd->text_object, "e,state,disabled", "e");
+}
 /* Private functions */
 
 /* A utility function to insert some text inside the editable object.
