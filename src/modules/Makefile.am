@@ -5,7 +5,6 @@ dropshadow \
 clock \
 pager \
 battery \
-temperature \
 cpufreq \
 ibox \
 start \
@@ -51,3 +50,7 @@ conf_winlist \
 conf_exebuf \
 conf_paths \
 conf_mime
+
+if HAVE_TEMPERATURE
+SUBDIRS += temperature
+endif

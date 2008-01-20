@@ -185,7 +185,6 @@ PKG_CHECK_MODULES(E, [
   ecore-ipc
   ecore-con
   ecore-job
-  ecore-txt
   ecore-imf
   ecore-imf-evas
   edje
@@ -195,11 +194,17 @@ PKG_CHECK_MODULES(E, [
   efreet-mime
 ])
 
-# ecore-txt is really only needed by the temperature module,
-# so we check for it separately.
-# in a perfect world, we'd also disable the temperate module here
-# if ecore-txt isn't available.
-PKG_CHECK_MODULES(ECORE_TXT, ecore-txt)
+PKG_CHECK_MODULES(ECORE_TXT, [
+  ecore-txt
+], [
+  have_temp="yes"
+  # This test will succeed as these modules are also checked before
+  PKG_CHECK_MODULES(TEMPERATURE, [
+    ecore
+    ecore-file
+  ])
+], [ have_temp="no"])
+AM_CONDITIONAL(HAVE_TEMPERATURE, test x$have_temp = "xyes")
 
 PKG_CHECK_MODULES(E_DBUS, edbus, have_edbus=yes, have_edbus=no)
 PKG_CHECK_MODULES(E_HAL, ehal, have_ehal=yes, have_ehal=no)

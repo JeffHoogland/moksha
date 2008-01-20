@@ -35,7 +35,7 @@ install-data-hook:
 
 noinst_PROGRAMS        = tempget
 tempget_SOURCES        = tempget.c
-tempget_LDFLAGS        = @e_libs@
+tempget_LDFLAGS        = @TEMPERATURE_LIBS@
 
 uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)
