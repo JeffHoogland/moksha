@@ -102,6 +102,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Display Icon Name"), 3, rg);
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Display Border Caption"), 4, rg);
+   e_widget_framelist_object_append(of, ob);
    
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 

@@ -576,6 +576,9 @@ _ibox_icon_fill_label(IBox_Icon *ic)
 	if (!label)
 	  label = ic->border->client.icccm.icon_name;
 	break;
+      case 4:
+	label = e_border_name_get(ic->border);
+	break;
      }
 
    if (!label) label = "?";
