@@ -1614,7 +1614,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->menu_favorites_show, 0, 1);
    E_CONFIG_LIMIT(e_config->menu_apps_show, 0, 1);
 
-   E_CONFIG_LIMIT(e_config->ping_clients_interval, 4, 1024);
+   E_CONFIG_LIMIT(e_config->ping_clients_interval, 16, 1024);
    
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;

@@ -1105,6 +1105,84 @@ ACT_FN_GO(desk_linear_flip_to)
      }
 }
 
+
+
+#define DESK_ACTION_ALL(zone, act) \
+  E_Zone *zone;			   \
+  Evas_List *lm, *lc, *lz;	   \
+  E_Container *con;		   \
+  E_Manager *man;				\
+  \
+  for (lm = e_manager_list(); lm; lm = lm->next) {		 \
+    man = lm->data;					   \
+    for (lc = man->containers; lc; lc = lc->next) {	   \
+      con = lc->data;					   \
+      for (lz = con->zones; lz; lz = lz->next) {	   \
+	zone = lz->data;				   \
+	act;						   \
+      }							   \
+    }							   \
+  }
+
+
+/***************************************************************************/
+ACT_FN_GO(desk_flip_by_all)
+{
+  if (params)
+    {
+      int dx = 0, dy = 0;
+
+      if (sscanf(params, "%i %i", &dx, &dy) == 2)
+	{
+	  DESK_ACTION_ALL(zone, e_zone_desk_flip_by(zone, dx, dy));
+	}
+    }
+}
+
+/***************************************************************************/
+ACT_FN_GO(desk_flip_to_all)
+{
+  if (params)
+    {
+      int dx = 0, dy = 0;
+
+      if (sscanf(params, "%i %i", &dx, &dy) == 2)
+	{
+	  DESK_ACTION_ALL(zone, e_zone_desk_flip_to(zone, dx, dy));
+	}
+    }
+}
+
+/***************************************************************************/
+ACT_FN_GO(desk_linear_flip_by_all)
+{
+  if (params)
+    {
+      int dx = 0;
+
+      if (sscanf(params, "%i", &dx) == 1)
+	{
+	  DESK_ACTION_ALL(zone, e_zone_desk_linear_flip_by(zone, dx));
+	}
+    }
+}
+
+/***************************************************************************/
+ACT_FN_GO(desk_linear_flip_to_all)
+{
+  if (params)
+    {
+      int dx = 0;
+
+      if (sscanf(params, "%i", &dx) == 1)
+	{
+	  DESK_ACTION_ALL(zone, e_zone_desk_linear_flip_to(zone, dx));
+	}
+    }
+}
+
+
+
 /***************************************************************************/
 ACT_FN_GO(screen_send_to)
 {
@@ -2072,6 +2150,63 @@ e_actions_init(void)
    e_action_predef_name_set(_("Desktop"), _("Switch To Desktop..."), 
 			    "desk_linear_flip_to", NULL,
 			    "syntax: N, example: 1", 1);
+
+   /* desk_flip_by_all */
+   ACT_GO(desk_flip_by_all);
+   e_action_predef_name_set(_("Desktop"), _("Flip Desktop Left (All Screens)"), 
+			    "desk_flip_by_all", "-1 0", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Flip Desktop Right (All Screens)"), 
+			    "desk_flip_by_all", "1 0", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Flip Desktop Up (All Screens)"), 
+			    "desk_flip_by_all", "0 -1", NULL,  0);
+   e_action_predef_name_set(_("Desktop"), _("Flip Desktop Down (All Screens)"), 
+			    "desk_flip_by_all", "0 1", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Flip Desktop By... (All Screens)"), 
+			    "desk_flip_by_all", NULL,
+			    "syntax: X-offset Y-offset, example: -1 0", 1);
+
+   /* desk_flip_to_all */
+   ACT_GO(desk_flip_to_all);
+   e_action_predef_name_set(_("Desktop"), _("Flip Desktop To... (All Screens)"), 
+			    "desk_flip_to_all", NULL,
+			    "syntax: X Y, example: 1 2", 1);
+
+   /* desk_linear_flip_by_all */
+   ACT_GO(desk_linear_flip_by_all);
+   e_action_predef_name_set(_("Desktop"), _("Flip Desktop Linearly... (All Screens)"), 
+			    "desk_linear_flip_by_all",
+			    NULL, "syntax: N-offset, example: -2", 1);
+
+   /* desk_linear_flip_to_all */
+   ACT_GO(desk_linear_flip_to_all);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 0 (All Screens)"), 
+			    "desk_linear_flip_to_all", "0", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 1 (All Screens)"), 
+			    "desk_linear_flip_to_all", "1", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 2 (All Screens)"), 
+			    "desk_linear_flip_to_all", "2", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 3 (All Screens)"), 
+			    "desk_linear_flip_to_all", "3", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 4 (All Screens)"), 
+			    "desk_linear_flip_to_all", "4", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 5 (All Screens)"), 
+			    "desk_linear_flip_to_all", "5", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 6 (All Screens)"), 
+			    "desk_linear_flip_to_all", "6", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 7 (All Screens)"), 
+			    "desk_linear_flip_to_all", "7", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 8 (All Screens)"), 
+			    "desk_linear_flip_to_all", "8", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 9 (All Screens)"), 
+			    "desk_linear_flip_to_all", "9", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 10 (All Screens)"), 
+			    "desk_linear_flip_to_all", "10", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop 11 (All Screens)"), 
+			    "desk_linear_flip_to_all", "11", NULL, 0);
+   e_action_predef_name_set(_("Desktop"), _("Switch To Desktop... (All Screens)"), 
+			    "desk_linear_flip_to_all", NULL,
+			    "syntax: N, example: 1", 1);
+
 
    /* screen_send_to */
    ACT_GO(screen_send_to);
