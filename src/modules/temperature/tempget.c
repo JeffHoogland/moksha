@@ -385,7 +385,7 @@ main(int argc, char *argv[])
      }
    sensor_type = atoi(argv[1]);
    sensor_name = strdup(argv[2]);
-   if (!strcmp(sensor_name, "(null)"))
+   if (!strcmp(sensor_name, "-null-"))
      {
 	free(sensor_name);
 	sensor_name = NULL;	
