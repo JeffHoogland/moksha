@@ -576,6 +576,11 @@ e_config_init(void)
    
    E_CONFIG_VAL(D, T, ping_clients_interval, INT);
    E_CONFIG_VAL(D, T, cache_flush_poll_interval, INT);
+
+   E_CONFIG_VAL(D, T, thumbscroll_enable, INT);
+   E_CONFIG_VAL(D, T, thumbscroll_threshhold, INT);
+   E_CONFIG_VAL(D, T, thumbscroll_momentum_threshhold, DOUBLE);
+   E_CONFIG_VAL(D, T, thumbscroll_friction, DOUBLE);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -811,6 +816,7 @@ e_config_init(void)
 	CFG_MODULE("conf_winlist", 1, 1);
 	CFG_MODULE("conf_engine", 1, 1);
 	CFG_MODULE("fileman", 1, 1);
+	CFG_MODULE("conf_interaction", 1, 1);
      }
 #if 0
      {
@@ -1480,6 +1486,13 @@ e_config_init(void)
    IFCFG(0x0123);
    e_config->ping_clients_interval = 128;
    e_config->cache_flush_poll_interval = 512;
+   IFCFGEND;
+   
+   IFCFG(0x0124);
+   e_config->thumbscroll_enable = 0;
+   e_config->thumbscroll_threshhold = 8;
+   e_config->thumbscroll_momentum_threshhold = 100.0;
+   e_config->thumbscroll_friction = 1.0;
    IFCFGEND;
    
    e_config->config_version = E_CONFIG_FILE_VERSION;   

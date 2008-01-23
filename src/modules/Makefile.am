@@ -49,7 +49,8 @@ conf_performance \
 conf_winlist \
 conf_exebuf \
 conf_paths \
-conf_mime
+conf_mime \
+conf_interaction
 
 if HAVE_TEMPERATURE
 SUBDIRS += temperature

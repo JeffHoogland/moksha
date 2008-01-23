@@ -148,6 +148,7 @@ e_configure_show(E_Container *con)
    /* Category List */
    of = e_widget_framelist_add(eco->evas, _("Categories"), 1);
    eco->cat_list = e_widget_ilist_add(eco->evas, 32, 32, NULL);
+   e_widget_ilist_selector_set(eco->cat_list, 1);
    /***--- fill ---***/
    _e_configure_fill_cat_list(eco);
    e_widget_on_focus_hook_set(eco->cat_list, _e_configure_focus_cb, eco->win);
@@ -182,6 +183,14 @@ e_configure_show(E_Container *con)
    /* Preselect "Appearance" */
    e_widget_focus_set(eco->cat_list, 1);
    e_widget_ilist_selected_set(eco->cat_list, 0);
+
+   if (eco->cats)
+     {
+	E_Configure_Category *cat;
+	
+	cat = eco->cats->data;
+	_e_configure_category_cb(cat);
+     }
    
    _e_configure = eco;
 }

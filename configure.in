@@ -360,6 +360,8 @@ src/modules/conf_paths/Makefile
 src/modules/conf_paths/module.desktop
 src/modules/conf_mime/Makefile
 src/modules/conf_mime/module.desktop
+src/modules/conf_interaction/Makefile
+src/modules/conf_interaction/module.desktop
 src/preload/Makefile
 data/Makefile
 data/fonts/Makefile

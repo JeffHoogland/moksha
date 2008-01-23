@@ -5082,9 +5082,11 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    ic = data;
    ev = event_info;
+   
    if ((ev->button == 1) && (!ic->drag.dnd))
      {
-	_e_fm2_mouse_1_handler(ic, 1, ev->modifiers);
+	if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD))
+	  _e_fm2_mouse_1_handler(ic, 1, ev->modifiers);
         ic->drag.start = 0;
 	ic->drag.dnd = 0;
 	ic->drag.src = 0;
@@ -5143,6 +5145,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
    E_Fm2_Icon_Info *ici;
    
    ic = data;
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    ev = event_info;
    if ((ic->drag.start) && (ic->sd->eobj))
      {     
@@ -5538,12 +5541,15 @@ _e_fm2_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
 	if (sel_change)
 	  evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
-	
-	if (!sd->config->selection.single) 
+
+	if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD))
 	  {
-	     sd->selrect.ox = ev->canvas.x;
-	     sd->selrect.oy = ev->canvas.y;
-	     sd->selecting = 1;
+	     if (!sd->config->selection.single) 
+	       {
+		  sd->selrect.ox = ev->canvas.x;
+		  sd->selrect.oy = ev->canvas.y;
+		  sd->selecting = 1;
+	       }
 	  }
      }
    else if (ev->button == 3)
@@ -5577,6 +5583,17 @@ _e_fm2_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    sd = data;
    ev = event_info;
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD)
+     {
+	if (sd->selecting)
+	  {
+	     sd->selecting = 0;
+	     sd->selrect.ox = 0;
+	     sd->selrect.oy = 0;
+	     evas_object_hide(sd->sel_rect);
+	  }
+	return;
+     }
    if (!sd->selecting) return;
 
    if (ev->cur.canvas.x < sd->selrect.ox) 

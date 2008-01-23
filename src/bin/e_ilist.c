@@ -17,6 +17,7 @@ struct _E_Smart_Data
    int selected;
    unsigned char selector : 1;
    unsigned char multi_select : 1;
+   unsigned char on_hold : 1;
 };
 
 static void _e_smart_init             (void);
@@ -44,7 +45,7 @@ e_ilist_add(Evas *evas)
 }
 
 EAPI void 
-e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2) 
+e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2)
 {
    E_Ilist_Item *si;
    Evas_Coord mw = 0, mh = 0;
@@ -390,7 +391,10 @@ e_ilist_selected_set(Evas_Object *obj, int n)
    edje_object_signal_emit(si->o_base, "e,state,selected", "e");
    if (si->func_hilight) si->func_hilight(si->data, si->data2);
    if (sd->selector) return;
-   if (si->func) si->func(si->data, si->data2);
+   if (!sd->on_hold)
+     {
+	if (si->func) si->func(si->data, si->data2);
+     }
 }
 
 EAPI int 
@@ -666,7 +670,10 @@ e_ilist_multi_select(Evas_Object *obj, int n)
 	si->selected = 0;
 	if (si->func_hilight) si->func_hilight(si->data, si->data2);
 	if (sd->selector) return;
-	if (si->func) si->func(si->data, si->data2);
+	if (!sd->on_hold)
+	  {
+	     if (si->func) si->func(si->data, si->data2);
+	  }
 	return;
      }
    si->selected = 1;
@@ -674,7 +681,10 @@ e_ilist_multi_select(Evas_Object *obj, int n)
    edje_object_signal_emit(si->o_base, "e,state,selected", "e");
    if (si->func_hilight) si->func_hilight(si->data, si->data2);
    if (sd->selector) return;
-   if (si->func) si->func(si->data, si->data2);
+   if (!sd->on_hold)
+     {
+	if (si->func) si->func(si->data, si->data2);
+     }
 }
 
 EAPI void 
@@ -841,6 +851,9 @@ _e_smart_event_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_
    si = data;
    sd = si->sd;
    
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) sd->on_hold = 1;
+   else sd->on_hold = 0;
+   
    if (si->header) return;
    if (!sd->items) return;
    for (i = 0, l = sd->items; l; l = l->next, i++) 
@@ -876,12 +889,20 @@ _e_smart_event_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_in
    ev = event_info;
    si = data;
    sd = si->sd;
+
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) sd->on_hold = 1;
+   else sd->on_hold = 0;
    
    if (si->header) return;
    if (!sd->items) return;
    if (!sd->selector) return;
    si = evas_list_nth(sd->items, sd->selected);
    if (!si) return;
+   if (sd->on_hold)
+     {
+	sd->on_hold = 0;
+	return;
+     }
    if (si->func) si->func(si->data, si->data2);
 }
 
@@ -896,6 +917,10 @@ _e_smart_event_key_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
    sd = data;
    ev = event_info;
    ns = sd->selected;
+   
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) sd->on_hold = 1;
+   else sd->on_hold = 0;
+   
    if ((!strcmp(ev->keyname, "Up")) || (!strcmp(ev->keyname, "KP_Up")))
      {
 	n = ns;
@@ -1004,10 +1029,14 @@ _e_smart_event_key_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
 	    (!strcmp(ev->keyname, "KP_Enter")) ||
 	    (!strcmp(ev->keyname, "space")))
      {
-	si = evas_list_nth(sd->items, sd->selected);
-	if (si)
+	if (!sd->on_hold)
 	  {
-	     if (si->func) si->func(si->data, si->data2);
+	     si = evas_list_nth(sd->items, sd->selected);
+	     if (si)
+	       {
+		  if (si->func) si->func(si->data, si->data2);
+	       }
 	  }
      }   
+   sd->on_hold = 0;
 }

@@ -312,8 +312,8 @@ _battery_cb_check(void *data)
 				 e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
 				 e_win_centered_set(dia->win, 1);
 				 e_dialog_show(dia);
+				 edje_object_signal_emit(inst->o_battery, "e,action,pulse,start", "e");
 			      }
-			    edje_object_signal_emit(inst->o_battery, "e,action,pulse,start", "e");
 			 }
 		       edje_object_part_text_set(inst->o_battery, "e.text.reading", ret->reading);
 		       edje_object_part_text_set(inst->o_battery, "e.text.time", ret->time);
