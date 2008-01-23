@@ -1,15 +1,14 @@
-# Enlightenment (e17) CVS Finnish translation
+# Enlightenment (e17) CVS, Finnish translation
 # This file is put in the public domain.
 # Jani Väyrynen <janivayrynen@gmail.com>, 2008.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Enlightenment DR17\n"
+"Project-Id-Version: Enlightenment (e17) CVS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-01-15 19:27+0200\n"
-"PO-Revision-Date: 2008-01-22 13:45+0200\n"
-"Last-Translator: Jani Väyrynen <janivayrynen@gmail.com>\n"
+"PO-Revision-Date: 2008-01-23 02:45+0200\n"
+"Last-Translator: Jani väyrynen <janivayrynen@gmail.com>\n"
 "Language-Team: Finnish <janivayrynen@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1526,13 +1525,13 @@ msgstr "Ei"
 
 #: src/bin/e_shelf.c:1165 src/modules/conf_shelves/e_int_config_shelf.c:268
 msgid "Are you sure you want to delete this shelf?"
-msgstr "Oletko varma, että haluat poistaa tämän hyllyn?"
+msgstr "Haluatko varmasti poistaa tämän hyllyn?"
 
 #: src/bin/e_shelf.c:1166
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
-msgstr "Vaadit tämän hyllyn poistamista.<br><br>Oletko varma, että haluat poistaa "
+msgstr "Vaadit tämän hyllyn poistamista.<br><br>Haluatko varmasti poistaa "
 "sen?"
 
 #: src/bin/e_shelf.c:1615 src/bin/e_toolbar.c:318
@@ -1664,7 +1663,7 @@ msgstr "Vahvista poisto"
 #: src/bin/e_fm.c:6992
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
-msgstr "Oletko varma, että haluat poistaa tiedoston<br><hilight>%s</hilight> ?"
+msgstr "Haluatko varmasti poistaa tiedoston<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm.c:6998
 #, c-format
@@ -1672,7 +1671,7 @@ msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
 "hilight> ?"
 msgstr ""
-"Oletko varma, että haluat poistaa<br>%d valittu(a) tiedostoa hakemistossa:<br><hilight>%s"
+"Haluatko varmasti poistaa<br>%d valittu(a) tiedostoa hakemistossa:<br><hilight>%s"
 "</hilight> ?"
 
 #: src/bin/e_int_border_menu.c:64
@@ -1891,7 +1890,7 @@ msgstr "Ikkunaryhmä"
 
 #: src/bin/e_int_border_prop.c:436
 msgid "Transient For"
-msgstr "Vaihdunta"
+msgstr "Vaihtuma"
 
 #: src/bin/e_int_border_prop.c:437
 msgid "Client Leader"
@@ -1953,53 +1952,53 @@ msgid ""
 "you want to kill this window?"
 msgstr ""
 "Olet tappamassa ikkunaa %s.<br><br>Pidä mielessä, että kaikki tämän ikkunan "
-"tieto,<br>jota ei ole vielä tallennettu, häviää!<br><br>Oletko varma, "
-"että haluat tappaa tämän ikkunan?"
+"tieto,<br>jota ei ole vielä tallennettu, häviää!<br><br>Haluatko varmasti "
+"tappaa tämän ikkunan?"
 
 #: src/bin/e_actions.c:324
 msgid "Are you sure you want to kill this window?"
-msgstr "Oletko varma, että haluat tappaa tämän ikkunan?"
+msgstr "Haluatko varmasti tappaa tämän ikkunan?"
 
 #: src/bin/e_actions.c:1515
 msgid "Are you sure you want to exit?"
-msgstr "Oletko varma, että haluat poistua?"
+msgstr "Haluatko varmasti poistua?"
 
 #: src/bin/e_actions.c:1517
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr ""
-"Vaadit Enlightenmentista poistumista.<br><br>Oletko varma, että haluat poistua?"
+"Vaadit Enlightenmentista poistumista.<br><br>Haluatko varmasti poistua?"
 
 #: src/bin/e_actions.c:1586
 msgid "Are you sure you want to log out?"
-msgstr "Oletko varma, että haluat uloskirjautua?"
+msgstr "Haluatko varmasti uloskirjautua?"
 
 #: src/bin/e_actions.c:1588
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
-msgstr "Olet uloskirjautumassa.<br><br>Oletko varma, että haluat tehdä tämän?"
+msgstr "Olet uloskirjautumassa.<br><br>Haluatko varmasti tehdä tämän?"
 
 #: src/bin/e_actions.c:1645 src/bin/e_actions.c:1763
 msgid "Are you sure you want to turn off?"
-msgstr "Oletko varma, että haluat sulkea?"
+msgstr "Haluatko varmasti sammuttaa?"
 
 #: src/bin/e_actions.c:1647
 msgid ""
 "You requested to turn off your Computer.<br><br>Are you sure you want to "
 "shut down?"
 msgstr ""
-"Vaadit tietokoneesi sammuttamista.<br><br>Oletko varma, että haluat "
+"Vaadit tietokoneesi sammuttamista.<br><br>Haluatko varmasti "
 "sammuttaa?"
 
 #: src/bin/e_actions.c:1704
 msgid "Are you sure you want to reboot?"
-msgstr "Oletko varma, että haluat uudelleenkäynnistää"
+msgstr "Haluatko varmasti uudelleenkäynnistää?"
 
 #: src/bin/e_actions.c:1706
 msgid ""
 "You requested to reboot your Computer.<br><br>Are you sure you want to "
 "restart it?"
 msgstr ""
-"Vaadit tietokoneesi uudelleenkäynnistämistä.<br><br>Oletko varma, että haluat "
+"Vaadit tietokoneesi uudelleenkäynnistämistä.<br><br>Haluatko varmasti "
 "uudelleenkäynnistää?"
 
 #: src/bin/e_actions.c:1765
@@ -2007,19 +2006,19 @@ msgid ""
 "You requested to suspend your Computer.<br><br>Are you sure you want to "
 "suspend?"
 msgstr ""
-"Vaadit tietokoneesi asettamista valmiustilaan.<br><br>Oletko varma, että haluat "
+"Vaadit tietokoneesi asettamista valmiustilaan.<br><br>Haluatko varmasti "
 "asettua valmiustilaan?"
 
 #: src/bin/e_actions.c:1822
 msgid "Are you sure you want to hibernate?"
-msgstr "Oletko varma, että haluat asettua lepotilaan?"
+msgstr "Haluatko varmasti asettua lepotilaan?"
 
 #: src/bin/e_actions.c:1824
 msgid ""
 "You requested to hibernate your Computer.<br><br>Are you sure you want to "
 "suspend to disk?"
 msgstr ""
-"Vaadit koneesi asettamista lepotilaan.<br><br>Oletko varma, että haluat "
+"Vaadit koneesi asettamista lepotilaan.<br><br>Haluatko varmasti "
 "asettua lepotilaan?"
 
 #: src/bin/e_actions.c:1902 src/bin/e_actions.c:1912 src/bin/e_actions.c:1930
@@ -3169,7 +3168,7 @@ msgstr "Kello"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:44
 msgid "Transition Settings"
-msgstr "Vaihtumien asetukset"
+msgstr "Vaihtuman asetukset"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:126
 msgid "Events"
@@ -4505,8 +4504,8 @@ msgstr ""
 "on hyvin<br>outoa. Tätä ei pitäisi tapahtua, ellet ole asentanut<br>vanhempaa "
 "Fileman -moduulia tai kopioinut asetuksia paikasta, missä<br>Fileman"
 "moduulin uudempi versio on käytössä. Tämä on huono juttu, ja<br> "
-"varotoimena asetuksesi on palautettu oletus arvoihin.<br>Anteeksi "
-"häiriö.<br>"
+"varotoimena asetuksesi on palautettu oletus arvoihin.<br>Pahoittelut "
+"aiheutetusta vaivasta.<br>"
 
 #: src/modules/fileman/e_mod_main.c:343
 msgid "Fileman Configuration Updated"
@@ -5129,18 +5128,18 @@ msgstr "Näytön tarkkuus"
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
+"<br>If you do not press a button, the old resolution of<br>%dx%d at "
 "will be restored in %d seconds."
 msgstr ""
 "Näyttääkö tämä hyvältä? Paina <hilight>Kyllä</hilight>, jos näyttää, muuten Ei."
-"<br>Jos et paina mitään näppäintä, vanha resoluutio <br>%dx%d @ %d Hz "
+"<br>Jos et paina mitään näppäintä, vanha resoluutio <br>%dx%d "
 "palautetaan %d sekunnin päästä."
 
 #: src/modules/conf_display/e_int_config_display.c:140
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at will be "
+"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz will be "
 "restored in %d seconds."
 msgstr ""
 "Näyttääkö tämä hyvältä? Paina <hilight>Kyllä</hilight>, jos näyttää, muuten Ei."
@@ -5166,7 +5165,7 @@ msgid ""
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 "Näyttääkö tämä hyvältä? Paina <hilight>Kyllä</hilight>, jos näyttää, muuten Ei."
-"<br>Jos et paina mitään näppäintä, vanha resoluutio <br>%dx%d @ %d Hz "
+"<br>Jos et paina mitään näppäintä, vanha resoluutio <br>%dx%d "
 "palautetaan <hilight>VÄLITTÖMÄSTI</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:212
@@ -5478,7 +5477,7 @@ msgid ""
 "shelf?"
 msgstr ""
 "Vaadit hyllyn \"%s\" poistamista.<br><br>Haluatko varmasti poistaa tämän "
-"hylyn?"
+"hyllyn?"
 
 #: src/modules/winlist/e_mod_main.c:48 src/modules/winlist/e_mod_main.c:50
 #: src/modules/winlist/e_mod_main.c:63 src/modules/winlist/e_mod_main.c:64
