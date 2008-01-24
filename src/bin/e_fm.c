@@ -104,7 +104,7 @@ struct _E_Fm2_Smart_Data
    E_Drop_Handler     *drop_handler;
    E_Fm2_Icon         *drop_icon;
    E_Fm2_Mount        *mount;
-   char                drop_after;
+   signed char         drop_after;
    unsigned char       drop_show : 1;
    unsigned char       drop_in_show : 1;
    unsigned char       drop_all : 1;
