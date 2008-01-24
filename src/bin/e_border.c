@@ -284,10 +284,10 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    bd->client.win = win;
 
    bd->client.icccm.title = NULL;
-   bd->client.icccm.name = strdup("");
-   bd->client.icccm.class = strdup("");
+   bd->client.icccm.name = NULL;
+   bd->client.icccm.class = NULL;
    bd->client.icccm.icon_name = NULL;
-   bd->client.icccm.machine = strdup("");
+   bd->client.icccm.machine = NULL;
    bd->client.icccm.min_w = 1;
    bd->client.icccm.min_h = 1;
    bd->client.icccm.max_w = 32767;
@@ -5114,8 +5114,6 @@ _e_border_eval(E_Border *bd)
 
 	pname = bd->client.icccm.name;
 	pclass = bd->client.icccm.class;
-	bd->client.icccm.name = NULL;
-	bd->client.icccm.class = NULL;
 	ecore_x_icccm_name_class_get(bd->client.win, &bd->client.icccm.name, &bd->client.icccm.class);
 	if ((pname) && (bd->client.icccm.name) &&
 	    (pclass) && (bd->client.icccm.class))
@@ -6704,8 +6702,9 @@ _e_border_eval(E_Border *bd)
 	  }
 	if (!bd->desktop)
 	  {
-	     bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
-							     bd->client.icccm.class);
+	     if ((bd->client.icccm.name) && (bd->client.icccm.class))
+	       bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
+							       bd->client.icccm.class);
 	     if (bd->desktop) efreet_desktop_ref(bd->desktop);
 	  }
 	if (!bd->desktop)
