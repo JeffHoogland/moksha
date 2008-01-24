@@ -261,6 +261,19 @@ _cb_delete(void *data, void *data2)
    if (!d->es) return;
    e_object_ref(E_OBJECT(d->es));
 
+   if (e_config->cnfmdlg_disabled)
+     {
+        if (e_object_is_del(E_OBJECT(d->es))) return;
+        e_shelf_unsave(d->es);
+        e_object_del(E_OBJECT(d->es));
+        e_config_save_queue();
+
+        e_object_unref(E_OBJECT(d->es));
+        _ilist_fill(d->cfdata);
+        E_FREE(d);
+		return;
+     }
+
    snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br><br>"
 				"Are you sure you want to delete this shelf?"),
 	    d->cfdata->cur_shelf);
