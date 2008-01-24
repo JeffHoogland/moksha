@@ -65,6 +65,7 @@ e_module_all_load(void)
 	E_Module *m;
 	
 	em = l->data;
+	if (!em) continue;
 	if ((em->delayed) && (em->enabled))
 	  {
 	     if (!_e_module_idler)
@@ -198,7 +199,8 @@ init_done:
 	E_Config_Module *em;
 	
 	em = l->data;
-	if (!strcmp(em->name, m->name))
+	if (!em) continue;
+	if (!e_util_strcmp(em->name, m->name))
 	  {
 	     in_list = 1;
 	     break;
@@ -253,6 +255,7 @@ e_module_enable(E_Module *m)
 	     E_Config_Module *em;
 	     
 	     em = l->data;
+	     if (!em) continue;
 	     if (!e_util_strcmp(em->name, m->name))
 	       {
 		  em->enabled = 1;
@@ -289,6 +292,7 @@ e_module_disable(E_Module *m)
 	E_Config_Module *em;
 	
 	em = l->data;
+	if (!em) continue;
 	if (!e_util_strcmp(em->name, m->name))
 	  {
 	     em->enabled = 0;
@@ -345,7 +349,7 @@ e_module_find(const char *name)
 	E_Module *m;
 	
 	m = l->data;
-	if (!strcmp(name, m->name)) return m;
+	if (!e_util_strcmp(name, m->name)) return m;
      }
    return NULL;
 }
@@ -416,7 +420,8 @@ e_module_delayed_set(E_Module *m, int delayed)
         E_Config_Module *em;
 	
 	em = l->data;
-	if ((em->name) && (!strcmp(m->name, em->name)))
+	if (!em) continue;
+	if (!e_util_strcmp(m->name, em->name))
 	  {
 	     if (em->delayed != delayed)
 	       {
@@ -440,7 +445,8 @@ _e_module_free(E_Module *m)
 	E_Config_Module *em;
 	
 	em = l->data;
-	if (!strcmp(em->name, m->name))
+	if (!em) continue;
+	if (!e_util_strcmp(em->name, m->name))
 	  {
 	     e_config->modules = evas_list_remove(e_config->modules, em);
 	     if (em->name) evas_stringshare_del(em->name);
