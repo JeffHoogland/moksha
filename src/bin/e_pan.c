@@ -230,7 +230,7 @@ _e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 }
 
 static void
-_e_smart_clip_set(Evas_Object *obj, Evas_Object * clip)
+_e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 {
    INTERNAL_ENTRY;
    evas_object_clip_set(sd->child_obj, clip);
