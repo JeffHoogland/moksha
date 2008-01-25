@@ -5145,8 +5145,8 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
    E_Fm2_Icon_Info *ici;
    
    ic = data;
-   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    ev = event_info;
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    if ((ic->drag.start) && (ic->sd->eobj))
      {     
 	int dx, dy;
