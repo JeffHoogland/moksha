@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-01-25 13:23+1100\n"
-"PO-Revision-Date: 2007-12-23 09:25+0900\n"
+"POT-Creation-Date: 2008-01-25 12:23+0900\n"
+"PO-Revision-Date: 2008-01-25 14:58+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -357,104 +357,84 @@ msgid "Switch To Desktop..."
 msgstr "指定のデスクトップに切り替える"
 
 #: src/bin/e_actions.c:2156
-#, fuzzy
 msgid "Flip Desktop Left (All Screens)"
-msgstr "左のデスクトップへ移動する"
+msgstr "左のデスクトップへ移動する(全スクリーン)"
 
 #: src/bin/e_actions.c:2158
-#, fuzzy
 msgid "Flip Desktop Right (All Screens)"
-msgstr "右のデスクトップへ移動する"
+msgstr "右のデスクトップへ移動する(全スクリーン)"
 
 #: src/bin/e_actions.c:2160
-#, fuzzy
 msgid "Flip Desktop Up (All Screens)"
-msgstr "上のデスクトップへ移動する"
+msgstr "上のデスクトップへ移動する(全スクリーン)"
 
 #: src/bin/e_actions.c:2162
-#, fuzzy
 msgid "Flip Desktop Down (All Screens)"
-msgstr "下のデスクトップへ移動する"
+msgstr "下のデスクトップへ移動する(全スクリーン)"
 
 #: src/bin/e_actions.c:2164
-#, fuzzy
 msgid "Flip Desktop By... (All Screens)"
-msgstr "デスクトップを指定分移動する"
+msgstr "デスクトップを指定分移動する(全スクリーン)"
 
 #: src/bin/e_actions.c:2170
-#, fuzzy
 msgid "Flip Desktop To... (All Screens)"
-msgstr "指定のデスクトップへ移動する..."
+msgstr "指定のデスクトップへ移動する...(全スクリーン)"
 
 #: src/bin/e_actions.c:2176
-#, fuzzy
 msgid "Flip Desktop Linearly... (All Screens)"
-msgstr "デスクトップを順に移動する..."
+msgstr "デスクトップを順に移動する...(全スクリーン)"
 
 #: src/bin/e_actions.c:2182
-#, fuzzy
 msgid "Switch To Desktop 0 (All Screens)"
-msgstr "デスクトップ 0 に切り替える"
+msgstr "デスクトップ 0 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2184
-#, fuzzy
 msgid "Switch To Desktop 1 (All Screens)"
-msgstr "デスクトップ 1 に切り替える"
+msgstr "デスクトップ 1 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2186
-#, fuzzy
 msgid "Switch To Desktop 2 (All Screens)"
-msgstr "デスクトップ 2 に切り替える"
+msgstr "デスクトップ 2 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2188
-#, fuzzy
 msgid "Switch To Desktop 3 (All Screens)"
-msgstr "デスクトップ 3 に切り替える"
+msgstr "デスクトップ 3 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2190
-#, fuzzy
 msgid "Switch To Desktop 4 (All Screens)"
-msgstr "デスクトップ 4 に切り替える"
+msgstr "デスクトップ 4 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2192
-#, fuzzy
 msgid "Switch To Desktop 5 (All Screens)"
-msgstr "デスクトップ 5 に切り替える"
+msgstr "デスクトップ 5 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2194
-#, fuzzy
 msgid "Switch To Desktop 6 (All Screens)"
-msgstr "デスクトップ 6 に切り替える"
+msgstr "デスクトップ 6 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2196
-#, fuzzy
 msgid "Switch To Desktop 7 (All Screens)"
-msgstr "デスクトップ 7 に切り替える"
+msgstr "デスクトップ 7 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2198
-#, fuzzy
 msgid "Switch To Desktop 8 (All Screens)"
-msgstr "デスクトップ 8 に切り替える"
+msgstr "デスクトップ 8 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2200
-#, fuzzy
 msgid "Switch To Desktop 9 (All Screens)"
-msgstr "デスクトップ 9 に切り替える"
+msgstr "デスクトップ 9 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2202
-#, fuzzy
 msgid "Switch To Desktop 10 (All Screens)"
-msgstr "デスクトップ 10 に切り替える"
+msgstr "デスクトップ 10 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2204
-#, fuzzy
 msgid "Switch To Desktop 11 (All Screens)"
-msgstr "デスクトップ 11 に切り替える"
+msgstr "デスクトップ 11 に切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2206
-#, fuzzy
 msgid "Switch To Desktop... (All Screens)"
-msgstr "指定のデスクトップに切り替える"
+msgstr "指定のデスクトップに切り替える(全スクリーン)"
 
 #: src/bin/e_actions.c:2213 src/bin/e_actions.c:2215 src/bin/e_actions.c:2217
 #: src/bin/e_actions.c:2222 src/bin/e_actions.c:2224 src/bin/e_actions.c:2226
@@ -1866,7 +1846,7 @@ msgstr "ログイン時にこのプログラムを実行する"
 
 #: src/bin/e_int_border_remember.c:529
 msgid "Always focus on start"
-msgstr ""
+msgstr "起動時に必ずフォーカスを当てる"
 
 #: src/bin/e_int_config_modules.c:41 src/bin/e_int_menus.c:214
 #: src/modules/battery/e_mod_main.c:183 src/modules/ibar/e_mod_main.c:315
@@ -2617,14 +2597,12 @@ msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment で order ファイルシステムが準備できません."
 
 #: src/bin/e_main.c:865
-#, fuzzy
 msgid "Set Up Powersave modes"
-msgstr "CPU パワーポリシーを設定する"
+msgstr "省電力モードを設定中"
 
 #: src/bin/e_main.c:869
-#, fuzzy
 msgid "Enlightenment cannot set up its powersave modes."
-msgstr "Enlightenment でポップアップシステムが準備できません."
+msgstr "Enlightenment で省電力モードが準備できません."
 
 #: src/bin/e_main.c:901
 msgid "Load Modules"
@@ -3057,9 +3035,9 @@ msgstr "バッテリの監視間隔"
 #: src/modules/battery/e_mod_config.c:120
 #: src/modules/conf_performance/e_int_config_performance.c:133
 #: src/modules/temperature/e_mod_config.c:344
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f ticks"
-msgstr "%1.0f 個"
+msgstr ""
 
 #: src/modules/battery/e_mod_config.c:126
 msgid "Alert when battery is down to:"
@@ -3096,12 +3074,12 @@ msgstr ""
 
 #: src/modules/battery/e_mod_main.c:355
 msgid "ERROR"
-msgstr ""
+msgstr "エラー"
 
 #: src/modules/battery/e_mod_main.c:556 src/modules/battery/e_mod_main.c:873
 #: src/modules/battery/e_mod_main.c:1029
 msgid "N/A"
-msgstr ""
+msgstr "不可"
 
 #: src/modules/battery/e_mod_main.c:582 src/modules/battery/e_mod_main.c:1056
 msgid "BAD DRIVER"
@@ -3882,16 +3860,15 @@ msgid "Default Engine"
 msgstr "デフォルトのエンジン"
 
 #: src/modules/conf_engine/e_int_config_engine.c:121
-#, fuzzy
 msgid "Enable Composite Support ?"
-msgstr "コンポジットを有効にする"
+msgstr "コンポジット機能を有効にしますか？"
 
 #: src/modules/conf_engine/e_int_config_engine.c:123
 msgid ""
 "You have chosen to enable composite support,<br>but your current screen does "
 "not support composite.<br><br>Are you sure you wish to enable composite "
 "support ?"
-msgstr ""
+msgstr "コンポジット機能を有効にするよう選択されました.<br>しかし現在のスクリーンはコンポジット機能に対応していません.<br>それでもコンポジット機能を有効にしますか？"
 
 #: src/modules/conf_engine/e_mod_main.c:35
 msgid "Engine"
@@ -5456,29 +5433,24 @@ msgid "Cpufreq"
 msgstr "Cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:177
-#, fuzzy
 msgid "Fast (4 ticks)"
-msgstr "0.5 秒ごと"
+msgstr "高速(4 ticks ごと)"
 
 #: src/modules/cpufreq/e_mod_main.c:184
-#, fuzzy
 msgid "Medium (8 ticks)"
-msgstr "1 秒ごと"
+msgstr "中速(8 ticks ごと)"
 
 #: src/modules/cpufreq/e_mod_main.c:191
-#, fuzzy
 msgid "Normal (32 ticks)"
-msgstr "2 秒ごと"
+msgstr "普通(32 ticks ごと)"
 
 #: src/modules/cpufreq/e_mod_main.c:198
-#, fuzzy
 msgid "Slow (64 ticks)"
-msgstr "5 秒ごと"
+msgstr "低速(64 ticks ごと)"
 
 #: src/modules/cpufreq/e_mod_main.c:205
-#, fuzzy
 msgid "Very Slow (256 ticks)"
-msgstr "30 秒ごと"
+msgstr "超低速(256 ticks ごと)"
 
 #: src/modules/cpufreq/e_mod_main.c:220
 msgid "Manual"
@@ -5875,9 +5847,8 @@ msgid "Display Icon Name"
 msgstr "アイコン名を表示する"
 
 #: src/modules/ibox/e_mod_config.c:105
-#, fuzzy
 msgid "Display Border Caption"
-msgstr "情報を表示する"
+msgstr "ボーダーキャプションを表示する"
 
 #: src/modules/ibox/e_mod_config.c:130
 msgid "Show windows from all screens"
@@ -5908,9 +5879,8 @@ msgid "Flip desktop on mouse wheel"
 msgstr "マウスホイールでデスクトップを切替える"
 
 #: src/modules/pager/e_mod_config.c:119 src/modules/pager/e_mod_config.c:158
-#, fuzzy
 msgid "Show desktop names"
-msgstr "デスクトップにアイコンを表示する"
+msgstr "デスクトップ名を表示する"
 
 #: src/modules/pager/e_mod_config.c:124 src/modules/pager/e_mod_config.c:198
 msgid "Popup Settings"
@@ -5945,7 +5915,7 @@ msgstr "デスクトップ全体をドラッグ"
 
 #: src/modules/pager/e_mod_config.c:185
 msgid "Keyaction popup height"
-msgstr ""
+msgstr "キーアクション・ポップアップの高さ"
 
 #: src/modules/pager/e_mod_config.c:187 src/modules/pager/e_mod_config.c:193
 #: src/modules/pager/e_mod_config.c:204
@@ -5996,19 +5966,15 @@ msgstr ""
 "キーを押してください."
 
 #: src/modules/pager/e_mod_config.c:328
-#, fuzzy
 msgid "Attetion"
-msgstr "アクション"
+msgstr "注意"
 
 #: src/modules/pager/e_mod_config.c:329
-#, fuzzy
 msgid ""
 "You cannot use the right mouse button in the<br>shelf for this as it is "
 "already taken by internal<br>code for context menus. <br>This button only "
 "works in the Popup"
-msgstr ""
-"マウスの右ボタンは使用できません.<br>すでに内部コードでコンテキストメニュー用"
-"に確保されています."
+msgstr "マウスの右ボタンは使用できません.<br>すでに内部コードでコンテキストメニュー用に確保されています.<br>このボタンはポップアップでしか使えません."
 
 #: src/modules/pager/e_mod_config.c:388 src/modules/pager/e_mod_config.c:393
 #: src/modules/pager/e_mod_config.c:398
@@ -6022,25 +5988,21 @@ msgstr "仮想デスクトップの設定"
 
 #: src/modules/pager/e_mod_main.c:2806
 msgid "Show Pager Popup"
-msgstr ""
+msgstr "ページャーのポップアップを表示する"
 
 #: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2846
-#, fuzzy
 msgid "Popup Desk Right"
 msgstr "右のデスクトップへ移動する"
 
 #: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2847
-#, fuzzy
 msgid "Popup Desk Left"
 msgstr "左のデスクトップへ移動する"
 
 #: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2848
-#, fuzzy
 msgid "Popup Desk Up"
-msgstr "ポップアップの速度"
+msgstr "上のデスクトップへ移動する"
 
 #: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2849
-#, fuzzy
 msgid "Popup Desk Down"
 msgstr "下のデスクトップへ移動する"
 
