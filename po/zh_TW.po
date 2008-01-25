@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-08 09:45+1100\n"
+"POT-Creation-Date: 2008-01-25 13:23+1100\n"
 "PO-Revision-Date: 2007-11-06 20:25+0800\n"
 "Last-Translator: Chia-I Wu <olv@openmoko.com>\n"
 "Language-Team: none\n"
@@ -20,9 +20,9 @@ msgstr ""
 msgid "About Enlightenment"
 msgstr "關於 Enlightenment"
 
-#: src/bin/e_about.c:74 src/bin/e_actions.c:2165 src/bin/e_actions.c:2169
-#: src/bin/e_actions.c:2173 src/bin/e_actions.c:2177 src/bin/e_int_menus.c:166
-#: src/bin/e_main.c:559
+#: src/bin/e_about.c:74 src/bin/e_actions.c:2300 src/bin/e_actions.c:2304
+#: src/bin/e_actions.c:2308 src/bin/e_actions.c:2312 src/bin/e_int_menus.c:168
+#: src/bin/e_main.c:563
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -56,433 +56,540 @@ msgstr ""
 msgid "Are you sure you want to kill this window?"
 msgstr "您是否確定強制結束此視窗？"
 
-#: src/bin/e_actions.c:327 src/bin/e_actions.c:1522 src/bin/e_actions.c:1593
-#: src/bin/e_actions.c:1652 src/bin/e_actions.c:1711 src/bin/e_actions.c:1770
-#: src/bin/e_actions.c:1829 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:6814
-#: src/bin/e_module.c:479 src/modules/conf_display/e_int_config_display.c:214
+#: src/bin/e_actions.c:327 src/bin/e_actions.c:1600 src/bin/e_actions.c:1671
+#: src/bin/e_actions.c:1730 src/bin/e_actions.c:1789 src/bin/e_actions.c:1848
+#: src/bin/e_actions.c:1907 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:7002
+#: src/bin/e_module.c:485 src/modules/conf_display/e_int_config_display.c:215
 msgid "Yes"
 msgstr "是"
 
-#: src/bin/e_actions.c:329 src/bin/e_actions.c:1524 src/bin/e_actions.c:1595
-#: src/bin/e_actions.c:1654 src/bin/e_actions.c:1713 src/bin/e_actions.c:1772
-#: src/bin/e_actions.c:1831 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:6815
-#: src/bin/e_module.c:480 src/modules/conf_display/e_int_config_display.c:215
+#: src/bin/e_actions.c:329 src/bin/e_actions.c:1602 src/bin/e_actions.c:1673
+#: src/bin/e_actions.c:1732 src/bin/e_actions.c:1791 src/bin/e_actions.c:1850
+#: src/bin/e_actions.c:1909 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:7003
+#: src/bin/e_module.c:486 src/modules/conf_display/e_int_config_display.c:216
 msgid "No"
 msgstr "否"
 
-#: src/bin/e_actions.c:1515
+#: src/bin/e_actions.c:1593
 msgid "Are you sure you want to exit?"
 msgstr "您是否確定退出？"
 
-#: src/bin/e_actions.c:1517
+#: src/bin/e_actions.c:1595
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr "您要求退出 Enlightenment。<br><br>您是否確定退出？"
 
-#: src/bin/e_actions.c:1586
+#: src/bin/e_actions.c:1664
 msgid "Are you sure you want to log out?"
 msgstr "您是否確定登出？"
 
-#: src/bin/e_actions.c:1588
+#: src/bin/e_actions.c:1666
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 msgstr "您即將登出系統。<br><br>您是否確定登出系統？"
 
-#: src/bin/e_actions.c:1645 src/bin/e_actions.c:1763
+#: src/bin/e_actions.c:1723 src/bin/e_actions.c:1841
 msgid "Are you sure you want to turn off?"
 msgstr "您是否確定關機？"
 
-#: src/bin/e_actions.c:1647
+#: src/bin/e_actions.c:1725
 msgid ""
 "You requested to turn off your Computer.<br><br>Are you sure you want to "
 "shut down?"
 msgstr "您要求關閉您的電腦。<br><br>您是否確定關機？"
 
-#: src/bin/e_actions.c:1704
+#: src/bin/e_actions.c:1782
 msgid "Are you sure you want to reboot?"
 msgstr "您是否確定重新開機？"
 
-#: src/bin/e_actions.c:1706
+#: src/bin/e_actions.c:1784
 msgid ""
 "You requested to reboot your Computer.<br><br>Are you sure you want to "
 "restart it?"
 msgstr "您要求重新啟動您的電腦。<br><br>您是否確定重新開機？"
 
-#: src/bin/e_actions.c:1765
+#: src/bin/e_actions.c:1843
 msgid ""
 "You requested to suspend your Computer.<br><br>Are you sure you want to "
 "suspend?"
 msgstr "您要求進入待機狀態。<br><br>您是否確定待機？"
 
-#: src/bin/e_actions.c:1822
+#: src/bin/e_actions.c:1900
 msgid "Are you sure you want to hibernate?"
 msgstr "您是否確定休眠？"
 
-#: src/bin/e_actions.c:1824
+#: src/bin/e_actions.c:1902
 msgid ""
 "You requested to hibernate your Computer.<br><br>Are you sure you want to "
 "suspend to disk?"
 msgstr "您要求進入休眠狀態。<br><br>您是否確定休眠？"
 
-#: src/bin/e_actions.c:1902 src/bin/e_actions.c:1912 src/bin/e_actions.c:1930
-#: src/bin/e_actions.c:1935 src/bin/e_actions.c:1940 src/bin/e_actions.c:1945
-#: src/bin/e_actions.c:2097 src/bin/e_actions.c:2102 src/bin/e_actions.c:2108
-#: src/bin/e_actions.c:2114 src/bin/e_actions.c:2120
+#: src/bin/e_actions.c:1980 src/bin/e_actions.c:1990 src/bin/e_actions.c:2008
+#: src/bin/e_actions.c:2013 src/bin/e_actions.c:2018 src/bin/e_actions.c:2023
+#: src/bin/e_actions.c:2232 src/bin/e_actions.c:2237 src/bin/e_actions.c:2243
+#: src/bin/e_actions.c:2249 src/bin/e_actions.c:2255
 msgid "Window : Actions"
 msgstr "視窗: 動作"
 
-#: src/bin/e_actions.c:1902
+#: src/bin/e_actions.c:1980
 msgid "Move"
 msgstr "移動"
 
-#: src/bin/e_actions.c:1912
+#: src/bin/e_actions.c:1990
 msgid "Resize"
 msgstr "改變大小"
 
-#: src/bin/e_actions.c:1922 src/bin/e_actions.c:2141 src/bin/e_actions.c:2143
-#: src/bin/e_actions.c:2145 src/bin/e_actions.c:2147 src/bin/e_actions.c:2149
+#: src/bin/e_actions.c:2000 src/bin/e_actions.c:2276 src/bin/e_actions.c:2278
+#: src/bin/e_actions.c:2280 src/bin/e_actions.c:2282 src/bin/e_actions.c:2284
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:345
 msgid "Menu"
 msgstr "選單"
 
-#: src/bin/e_actions.c:1922
+#: src/bin/e_actions.c:2000
 msgid "Window Menu"
 msgstr "視窗選單"
 
-#: src/bin/e_actions.c:1930 src/bin/e_int_border_menu.c:346
+#: src/bin/e_actions.c:2008 src/bin/e_int_border_menu.c:346
 msgid "Raise"
 msgstr "上移"
 
-#: src/bin/e_actions.c:1935 src/bin/e_int_border_menu.c:354
+#: src/bin/e_actions.c:2013 src/bin/e_int_border_menu.c:354
 msgid "Lower"
 msgstr "下移"
 
-#: src/bin/e_actions.c:1940 src/bin/e_config_dialog.c:226 src/bin/e_fm.c:512
+#: src/bin/e_actions.c:2018 src/bin/e_config_dialog.c:226 src/bin/e_fm.c:515
 #: src/bin/e_int_border_menu.c:328 src/bin/e_int_border_prop.c:81
-#: src/modules/conf/e_conf.c:160 src/modules/fileman/e_fwin.c:1299
+#: src/modules/conf/e_conf.c:168 src/modules/fileman/e_fwin.c:1309
 msgid "Close"
 msgstr "關閉"
 
-#: src/bin/e_actions.c:1945 src/bin/e_int_border_menu.c:317
+#: src/bin/e_actions.c:2023 src/bin/e_int_border_menu.c:317
 msgid "Kill"
 msgstr "強制結束"
 
-#: src/bin/e_actions.c:1950 src/bin/e_actions.c:1957 src/bin/e_actions.c:1964
-#: src/bin/e_actions.c:1971 src/bin/e_actions.c:1973 src/bin/e_actions.c:1976
-#: src/bin/e_actions.c:1979 src/bin/e_actions.c:1981 src/bin/e_actions.c:1983
-#: src/bin/e_actions.c:1985 src/bin/e_actions.c:1992 src/bin/e_actions.c:1994
-#: src/bin/e_actions.c:1996 src/bin/e_actions.c:1998 src/bin/e_actions.c:2000
-#: src/bin/e_actions.c:2007 src/bin/e_actions.c:2012
+#: src/bin/e_actions.c:2028 src/bin/e_actions.c:2035 src/bin/e_actions.c:2042
+#: src/bin/e_actions.c:2049 src/bin/e_actions.c:2051 src/bin/e_actions.c:2054
+#: src/bin/e_actions.c:2057 src/bin/e_actions.c:2059 src/bin/e_actions.c:2061
+#: src/bin/e_actions.c:2063 src/bin/e_actions.c:2070 src/bin/e_actions.c:2072
+#: src/bin/e_actions.c:2074 src/bin/e_actions.c:2076 src/bin/e_actions.c:2078
+#: src/bin/e_actions.c:2085 src/bin/e_actions.c:2090
 msgid "Window : State"
 msgstr "視窗: 狀態"
 
-#: src/bin/e_actions.c:1950
+#: src/bin/e_actions.c:2028
 msgid "Sticky Mode Toggle"
 msgstr "切換相黏模式"
 
-#: src/bin/e_actions.c:1957
+#: src/bin/e_actions.c:2035
 msgid "Iconic Mode Toggle"
 msgstr "切換圖示化"
 
-#: src/bin/e_actions.c:1964
+#: src/bin/e_actions.c:2042
 msgid "Fullscreen Mode Toggle"
 msgstr "切換全螢幕模式"
 
-#: src/bin/e_actions.c:1971 src/bin/e_int_border_menu.c:107
+#: src/bin/e_actions.c:2049 src/bin/e_int_border_menu.c:107
 #: src/bin/e_int_border_menu.c:237
 msgid "Maximize"
 msgstr "最大化"
 
-#: src/bin/e_actions.c:1973
+#: src/bin/e_actions.c:2051
 msgid "Maximize Vertically"
 msgstr "垂直最大化"
 
-#: src/bin/e_actions.c:1976
+#: src/bin/e_actions.c:2054
 msgid "Maximize Horizontally"
 msgstr "水平最大化"
 
-#: src/bin/e_actions.c:1979
+#: src/bin/e_actions.c:2057
 msgid "Maximize Fullscreen"
 msgstr "全螢幕最大化"
 
-#: src/bin/e_actions.c:1981
+#: src/bin/e_actions.c:2059
 msgid "Maximize Mode \"Smart\""
 msgstr "「智慧型」最大化模式"
 
-#: src/bin/e_actions.c:1983
+#: src/bin/e_actions.c:2061
 msgid "Maximize Mode \"Expand\""
 msgstr "「展開」最大化模式"
 
-#: src/bin/e_actions.c:1985
+#: src/bin/e_actions.c:2063
 msgid "Maximize Mode \"Fill\""
 msgstr "「填滿」最大化模式"
 
-#: src/bin/e_actions.c:1992
+#: src/bin/e_actions.c:2070
 msgid "Shade Up Mode Toggle"
 msgstr "切換上捲模式"
 
-#: src/bin/e_actions.c:1994
+#: src/bin/e_actions.c:2072
 msgid "Shade Down Mode Toggle"
 msgstr "切換下捲模式"
 
-#: src/bin/e_actions.c:1996
+#: src/bin/e_actions.c:2074
 msgid "Shade Left Mode Toggle"
 msgstr "切換左捲模式"
 
-#: src/bin/e_actions.c:1998
+#: src/bin/e_actions.c:2076
 msgid "Shade Right Mode Toggle"
 msgstr "切換右捲模式"
 
-#: src/bin/e_actions.c:2000
+#: src/bin/e_actions.c:2078
 msgid "Shade Mode Toggle"
 msgstr "切換捲起模式"
 
-#: src/bin/e_actions.c:2007
+#: src/bin/e_actions.c:2085
 msgid "Toggle Borderless State"
 msgstr "切換無邊框狀態"
 
-#: src/bin/e_actions.c:2012
+#: src/bin/e_actions.c:2090
 msgid "Toggle Pinned State"
 msgstr "切換固定於桌面狀態"
 
-#: src/bin/e_actions.c:2017 src/bin/e_actions.c:2019 src/bin/e_actions.c:2021
-#: src/bin/e_actions.c:2023 src/bin/e_actions.c:2025 src/bin/e_actions.c:2031
-#: src/bin/e_actions.c:2036 src/bin/e_actions.c:2042 src/bin/e_actions.c:2048
-#: src/bin/e_actions.c:2050 src/bin/e_actions.c:2052 src/bin/e_actions.c:2054
-#: src/bin/e_actions.c:2056 src/bin/e_actions.c:2058 src/bin/e_actions.c:2060
-#: src/bin/e_actions.c:2062 src/bin/e_actions.c:2064 src/bin/e_actions.c:2066
-#: src/bin/e_actions.c:2068 src/bin/e_actions.c:2070 src/bin/e_actions.c:2072
-#: src/bin/e_actions.c:2201 src/bin/e_actions.c:2206 src/bin/e_int_menus.c:134
+#: src/bin/e_actions.c:2095 src/bin/e_actions.c:2097 src/bin/e_actions.c:2099
+#: src/bin/e_actions.c:2101 src/bin/e_actions.c:2103 src/bin/e_actions.c:2109
+#: src/bin/e_actions.c:2114 src/bin/e_actions.c:2120 src/bin/e_actions.c:2126
+#: src/bin/e_actions.c:2128 src/bin/e_actions.c:2130 src/bin/e_actions.c:2132
+#: src/bin/e_actions.c:2134 src/bin/e_actions.c:2136 src/bin/e_actions.c:2138
+#: src/bin/e_actions.c:2140 src/bin/e_actions.c:2142 src/bin/e_actions.c:2144
+#: src/bin/e_actions.c:2146 src/bin/e_actions.c:2148 src/bin/e_actions.c:2150
+#: src/bin/e_actions.c:2156 src/bin/e_actions.c:2158 src/bin/e_actions.c:2160
+#: src/bin/e_actions.c:2162 src/bin/e_actions.c:2164 src/bin/e_actions.c:2170
+#: src/bin/e_actions.c:2176 src/bin/e_actions.c:2182 src/bin/e_actions.c:2184
+#: src/bin/e_actions.c:2186 src/bin/e_actions.c:2188 src/bin/e_actions.c:2190
+#: src/bin/e_actions.c:2192 src/bin/e_actions.c:2194 src/bin/e_actions.c:2196
+#: src/bin/e_actions.c:2198 src/bin/e_actions.c:2200 src/bin/e_actions.c:2202
+#: src/bin/e_actions.c:2204 src/bin/e_actions.c:2206 src/bin/e_actions.c:2336
+#: src/bin/e_actions.c:2341 src/bin/e_int_menus.c:135
 #: src/bin/e_int_shelf_config.c:661
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:103
-#: src/modules/ibox/e_mod_config.c:139
+#: src/modules/ibox/e_mod_config.c:141
 msgid "Desktop"
 msgstr "桌面"
 
-#: src/bin/e_actions.c:2017
+#: src/bin/e_actions.c:2095
 msgid "Flip Desktop Left"
 msgstr "切換到左方桌面"
 
-#: src/bin/e_actions.c:2019
+#: src/bin/e_actions.c:2097
 msgid "Flip Desktop Right"
 msgstr "切換到右方桌面"
 
-#: src/bin/e_actions.c:2021
+#: src/bin/e_actions.c:2099
 msgid "Flip Desktop Up"
 msgstr "切換到上方桌面"
 
-#: src/bin/e_actions.c:2023
+#: src/bin/e_actions.c:2101
 msgid "Flip Desktop Down"
 msgstr "切換到下方桌面"
 
-#: src/bin/e_actions.c:2025
+#: src/bin/e_actions.c:2103
 msgid "Flip Desktop By..."
 msgstr "切換到目前桌面之..."
 
-#: src/bin/e_actions.c:2031
+#: src/bin/e_actions.c:2109
 msgid "Show The Desktop"
 msgstr "顯示桌面"
 
-#: src/bin/e_actions.c:2036
+#: src/bin/e_actions.c:2114
 msgid "Flip Desktop To..."
 msgstr "二維切換桌面到..."
 
-#: src/bin/e_actions.c:2042
+#: src/bin/e_actions.c:2120
 msgid "Flip Desktop Linearly..."
 msgstr "切換到目前桌面之..."
 
-#: src/bin/e_actions.c:2048
+#: src/bin/e_actions.c:2126
 msgid "Switch To Desktop 0"
 msgstr "切換到桌面 0"
 
-#: src/bin/e_actions.c:2050
+#: src/bin/e_actions.c:2128
 msgid "Switch To Desktop 1"
 msgstr "切換到桌面 1"
 
-#: src/bin/e_actions.c:2052
+#: src/bin/e_actions.c:2130
 msgid "Switch To Desktop 2"
 msgstr "切換到桌面 2"
 
-#: src/bin/e_actions.c:2054
+#: src/bin/e_actions.c:2132
 msgid "Switch To Desktop 3"
 msgstr "切換到桌面 3"
 
-#: src/bin/e_actions.c:2056
+#: src/bin/e_actions.c:2134
 msgid "Switch To Desktop 4"
 msgstr "切換到桌面 4"
 
-#: src/bin/e_actions.c:2058
+#: src/bin/e_actions.c:2136
 msgid "Switch To Desktop 5"
 msgstr "切換到桌面 5"
 
-#: src/bin/e_actions.c:2060
+#: src/bin/e_actions.c:2138
 msgid "Switch To Desktop 6"
 msgstr "切換到桌面 6"
 
-#: src/bin/e_actions.c:2062
+#: src/bin/e_actions.c:2140
 msgid "Switch To Desktop 7"
 msgstr "切換到桌面 7"
 
-#: src/bin/e_actions.c:2064
+#: src/bin/e_actions.c:2142
 msgid "Switch To Desktop 8"
 msgstr "切換到桌面 8"
 
-#: src/bin/e_actions.c:2066
+#: src/bin/e_actions.c:2144
 msgid "Switch To Desktop 9"
 msgstr "切換到桌面 9"
 
-#: src/bin/e_actions.c:2068
+#: src/bin/e_actions.c:2146
 msgid "Switch To Desktop 10"
 msgstr "切換到桌面 10"
 
-#: src/bin/e_actions.c:2070
+#: src/bin/e_actions.c:2148
 msgid "Switch To Desktop 11"
 msgstr "切換到桌面 11"
 
-#: src/bin/e_actions.c:2072
+#: src/bin/e_actions.c:2150
 msgid "Switch To Desktop..."
 msgstr "切換桌面到..."
 
-#: src/bin/e_actions.c:2078 src/bin/e_actions.c:2080 src/bin/e_actions.c:2082
-#: src/bin/e_actions.c:2087 src/bin/e_actions.c:2089 src/bin/e_actions.c:2091
+#: src/bin/e_actions.c:2156
+#, fuzzy
+msgid "Flip Desktop Left (All Screens)"
+msgstr "切換到左方桌面"
+
+#: src/bin/e_actions.c:2158
+#, fuzzy
+msgid "Flip Desktop Right (All Screens)"
+msgstr "切換到右方桌面"
+
+#: src/bin/e_actions.c:2160
+#, fuzzy
+msgid "Flip Desktop Up (All Screens)"
+msgstr "切換到上方桌面"
+
+#: src/bin/e_actions.c:2162
+#, fuzzy
+msgid "Flip Desktop Down (All Screens)"
+msgstr "切換到下方桌面"
+
+#: src/bin/e_actions.c:2164
+#, fuzzy
+msgid "Flip Desktop By... (All Screens)"
+msgstr "切換到目前桌面之..."
+
+#: src/bin/e_actions.c:2170
+#, fuzzy
+msgid "Flip Desktop To... (All Screens)"
+msgstr "二維切換桌面到..."
+
+#: src/bin/e_actions.c:2176
+#, fuzzy
+msgid "Flip Desktop Linearly... (All Screens)"
+msgstr "切換到目前桌面之..."
+
+#: src/bin/e_actions.c:2182
+#, fuzzy
+msgid "Switch To Desktop 0 (All Screens)"
+msgstr "切換到桌面 0"
+
+#: src/bin/e_actions.c:2184
+#, fuzzy
+msgid "Switch To Desktop 1 (All Screens)"
+msgstr "切換到桌面 1"
+
+#: src/bin/e_actions.c:2186
+#, fuzzy
+msgid "Switch To Desktop 2 (All Screens)"
+msgstr "切換到桌面 2"
+
+#: src/bin/e_actions.c:2188
+#, fuzzy
+msgid "Switch To Desktop 3 (All Screens)"
+msgstr "切換到桌面 3"
+
+#: src/bin/e_actions.c:2190
+#, fuzzy
+msgid "Switch To Desktop 4 (All Screens)"
+msgstr "切換到桌面 4"
+
+#: src/bin/e_actions.c:2192
+#, fuzzy
+msgid "Switch To Desktop 5 (All Screens)"
+msgstr "切換到桌面 5"
+
+#: src/bin/e_actions.c:2194
+#, fuzzy
+msgid "Switch To Desktop 6 (All Screens)"
+msgstr "切換到桌面 6"
+
+#: src/bin/e_actions.c:2196
+#, fuzzy
+msgid "Switch To Desktop 7 (All Screens)"
+msgstr "切換到桌面 7"
+
+#: src/bin/e_actions.c:2198
+#, fuzzy
+msgid "Switch To Desktop 8 (All Screens)"
+msgstr "切換到桌面 8"
+
+#: src/bin/e_actions.c:2200
+#, fuzzy
+msgid "Switch To Desktop 9 (All Screens)"
+msgstr "切換到桌面 9"
+
+#: src/bin/e_actions.c:2202
+#, fuzzy
+msgid "Switch To Desktop 10 (All Screens)"
+msgstr "切換到桌面 10"
+
+#: src/bin/e_actions.c:2204
+#, fuzzy
+msgid "Switch To Desktop 11 (All Screens)"
+msgstr "切換到桌面 11"
+
+#: src/bin/e_actions.c:2206
+#, fuzzy
+msgid "Switch To Desktop... (All Screens)"
+msgstr "切換桌面到..."
+
+#: src/bin/e_actions.c:2213 src/bin/e_actions.c:2215 src/bin/e_actions.c:2217
+#: src/bin/e_actions.c:2222 src/bin/e_actions.c:2224 src/bin/e_actions.c:2226
 #: src/modules/conf_desklock/e_mod_main.c:34
 #: src/modules/conf_desks/e_mod_main.c:34
 #: src/modules/conf_display/e_mod_main.c:34
 #: src/modules/conf_dpms/e_mod_main.c:34
 #: src/modules/conf_screensaver/e_mod_main.c:34
-#: src/modules/ibox/e_mod_config.c:108
+#: src/modules/ibox/e_mod_config.c:110
 msgid "Screen"
 msgstr "螢幕"
 
-#: src/bin/e_actions.c:2078
+#: src/bin/e_actions.c:2213
 msgid "Send Mouse To Screen 0"
 msgstr "將滑鼠送到螢幕 0"
 
-#: src/bin/e_actions.c:2080
+#: src/bin/e_actions.c:2215
 msgid "Send Mouse To Screen 1"
 msgstr "將滑鼠送到螢幕 1"
 
-#: src/bin/e_actions.c:2082
+#: src/bin/e_actions.c:2217
 msgid "Send Mouse To Screen..."
 msgstr "將滑鼠送到其它螢幕..."
 
-#: src/bin/e_actions.c:2087
+#: src/bin/e_actions.c:2222
 msgid "Send Mouse Forward 1 Screen"
 msgstr "將滑鼠送到下一螢幕"
 
-#: src/bin/e_actions.c:2089
+#: src/bin/e_actions.c:2224
 msgid "Send Mouse Back 1 Screen"
 msgstr "將滑鼠送到上一螢幕"
 
-#: src/bin/e_actions.c:2091
+#: src/bin/e_actions.c:2226
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "將滑鼠送到目前螢幕之..."
 
-#: src/bin/e_actions.c:2125 src/bin/e_actions.c:2127 src/bin/e_actions.c:2129
-#: src/bin/e_actions.c:2135
+#: src/bin/e_actions.c:2260 src/bin/e_actions.c:2262 src/bin/e_actions.c:2264
+#: src/bin/e_actions.c:2270
 msgid "Window : Moving"
 msgstr "視窗: 移動"
 
-#: src/bin/e_actions.c:2125
+#: src/bin/e_actions.c:2260
 msgid "To Next Desktop"
 msgstr "送到下一桌面"
 
-#: src/bin/e_actions.c:2127
+#: src/bin/e_actions.c:2262
 msgid "To Previous Desktop"
 msgstr "送到上一桌面"
 
-#: src/bin/e_actions.c:2129
+#: src/bin/e_actions.c:2264
 msgid "By Desktop #..."
 msgstr "目前桌面之..."
 
-#: src/bin/e_actions.c:2135
+#: src/bin/e_actions.c:2270
 msgid "To Desktop..."
 msgstr "送到桌面..."
 
-#: src/bin/e_actions.c:2141
+#: src/bin/e_actions.c:2276
 msgid "Show Main Menu"
 msgstr "顯示主選單"
 
-#: src/bin/e_actions.c:2143
+#: src/bin/e_actions.c:2278
 msgid "Show Favorites Menu"
 msgstr "顯示「我的最愛」選單"
 
-#: src/bin/e_actions.c:2145
+#: src/bin/e_actions.c:2280
 msgid "Show All Applications Menu"
 msgstr "顯示「應用程式」選單"
 
-#: src/bin/e_actions.c:2147
+#: src/bin/e_actions.c:2282
 msgid "Show Clients Menu"
 msgstr "顯示「視窗列表」選單"
 
-#: src/bin/e_actions.c:2149
+#: src/bin/e_actions.c:2284
 msgid "Show Menu..."
 msgstr "顯示選單..."
 
-#: src/bin/e_actions.c:2156 src/bin/e_actions.c:2161
+#: src/bin/e_actions.c:2291 src/bin/e_actions.c:2296
 #: src/modules/conf/e_mod_main.c:46 src/modules/conf/e_mod_main.c:67
 #: src/modules/exebuf/e_mod_main.c:48 src/modules/exebuf/e_mod_main.c:68
-#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:127
+#: src/modules/fileman/e_mod_main.c:57 src/modules/fileman/e_mod_main.c:136
 msgid "Launch"
 msgstr "啟動"
 
-#: src/bin/e_actions.c:2156
+#: src/bin/e_actions.c:2291
 msgid "Defined Command"
 msgstr "指定命令"
 
-#: src/bin/e_actions.c:2161
+#: src/bin/e_actions.c:2296
 msgid "Application"
 msgstr "應用程式"
 
-#: src/bin/e_actions.c:2165 src/bin/e_int_menus.c:191
+#: src/bin/e_actions.c:2300 src/bin/e_int_menus.c:193
 msgid "Restart"
 msgstr "重新啟動"
 
-#: src/bin/e_actions.c:2169 src/bin/e_int_menus.c:196
+#: src/bin/e_actions.c:2304 src/bin/e_int_menus.c:198
 msgid "Exit"
 msgstr "退出"
 
-#: src/bin/e_actions.c:2173
+#: src/bin/e_actions.c:2308
 msgid "Log Out"
 msgstr "登入"
 
-#: src/bin/e_actions.c:2177
+#: src/bin/e_actions.c:2312
 msgid "Exit Immediately"
 msgstr "立即退出"
 
-#: src/bin/e_actions.c:2181 src/bin/e_actions.c:2185 src/bin/e_actions.c:2189
-#: src/bin/e_actions.c:2193 src/bin/e_int_config_modules.c:44
-#: src/bin/e_int_menus.c:228
+#: src/bin/e_actions.c:2316 src/bin/e_actions.c:2320 src/bin/e_actions.c:2324
+#: src/bin/e_actions.c:2328 src/bin/e_int_config_modules.c:44
+#: src/bin/e_int_menus.c:230
 #: src/modules/conf_desklock/e_int_config_desklock.c:195
 #: src/modules/conf_imc/e_int_config_imc.c:823
 #: src/modules/conf_startup/e_int_config_startup.c:273
 #: src/modules/conf_theme/e_int_config_theme.c:379
 #: src/modules/conf_theme/e_int_config_theme.c:849
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:502
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:657
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:492
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:638
 msgid "System"
 msgstr "系統"
 
-#: src/bin/e_actions.c:2181 src/bin/e_int_menus.c:874
+#: src/bin/e_actions.c:2316 src/bin/e_int_menus.c:879
 msgid "Shut Down"
 msgstr "關機"
 
-#: src/bin/e_actions.c:2185 src/bin/e_int_menus.c:867
+#: src/bin/e_actions.c:2320 src/bin/e_int_menus.c:872
 msgid "Reboot"
 msgstr "重新開機"
 
-#: src/bin/e_actions.c:2189 src/bin/e_int_menus.c:853
+#: src/bin/e_actions.c:2324 src/bin/e_int_menus.c:858
 msgid "Suspend"
 msgstr "待機"
 
-#: src/bin/e_actions.c:2193
+#: src/bin/e_actions.c:2328
 msgid "Suspend to Disk"
 msgstr "休眠"
 
-#: src/bin/e_actions.c:2201
+#: src/bin/e_actions.c:2336
 msgid "Desktop Lock"
 msgstr "鎖定桌面"
 
-#: src/bin/e_actions.c:2206 src/bin/e_int_menus.c:1243
+#: src/bin/e_actions.c:2341 src/bin/e_int_menus.c:1248
 msgid "Cleanup Windows"
 msgstr "排列視窗"
 
@@ -490,15 +597,15 @@ msgstr "排列視窗"
 msgid "Set As Background"
 msgstr "設定為桌布"
 
-#: src/bin/e_border.c:4390
+#: src/bin/e_border.c:4429
 msgid "Desktop files scan done"
 msgstr "完成 desktop 檔案掃描"
 
-#: src/bin/e_border.c:4402
+#: src/bin/e_border.c:4441
 msgid "Desktop file scan"
 msgstr "掃描 desktop 檔案"
 
-#: src/bin/e_config.c:585
+#: src/bin/e_config.c:593
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -513,7 +620,7 @@ msgstr ""
 "資料未能提供的功能。<br>新的組態會加入這些功能。您現在可以重新配置您的桌面設"
 "定。<br>抱歉打斷您的配置。<br>"
 
-#: src/bin/e_config.c:599
+#: src/bin/e_config.c:607
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -525,16 +632,16 @@ msgstr ""
 "Enlightenment 或是從其它地方複製了新版的組態檔<br>否則這不應該發生。這是不好"
 "的，所以為防萬一，您的組態檔已被<br>恢復成預設值。很抱歉為您帶來不便。<br>"
 
-#: src/bin/e_config.c:621
+#: src/bin/e_config.c:629
 #, c-format
 msgid "Desktop %i, %i"
 msgstr "桌面 %i, %i"
 
-#: src/bin/e_config.c:2186
+#: src/bin/e_config.c:2209
 msgid "Configuration Upgraded"
 msgstr "組態已經更新"
 
-#: src/bin/e_config.c:2211
+#: src/bin/e_config.c:2234
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>configuration to disk. The "
@@ -544,7 +651,7 @@ msgstr ""
 "當儲存 Enlightment 設定檔時有錯誤發生。<br>錯誤原因無法確定。<br><br>發生錯誤"
 "的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:2222
+#: src/bin/e_config.c:2245
 #, c-format
 msgid ""
 "Enlightenment's configuration files are too big<br>for the file system they "
@@ -557,7 +664,7 @@ msgstr ""
 "設定檔應該非常小。<br>請檢查您家目錄的設定。<br><br>發生錯誤的檔案為:<br>%"
 "s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:2235
+#: src/bin/e_config.c:2258
 #, c-format
 msgid ""
 "An output error occured when writing the configuration<br>files for "
@@ -568,7 +675,7 @@ msgstr ""
 "當寫入 Enlightment 設定檔時有錯誤發生。<br>您的磁碟有問題而且可能需要替換。"
 "<br><br>發生錯誤的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:2246
+#: src/bin/e_config.c:2269
 #, c-format
 msgid ""
 "Enlightenment cannot write its configuration file<br>because it ran out of "
@@ -580,7 +687,7 @@ msgstr ""
 "了磁碟配額。<br><br>發生錯誤的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設"
 "定。<br>"
 
-#: src/bin/e_config.c:2258
+#: src/bin/e_config.c:2281
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the configuration file<br>it was writing "
@@ -590,15 +697,15 @@ msgstr ""
 "Enlightment 要寫入的設定檔未預期的被關閉了。<br>這很不尋常。<br><br>發生錯誤"
 "的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:2283
+#: src/bin/e_config.c:2306
 msgid "Enlightenment Configuration Write Problems"
 msgstr "Enlightenment 組態寫入發生問題"
 
-#: src/bin/e_config.c:2287 src/bin/e_config_dialog.c:218
-#: src/bin/e_eap_editor.c:622 src/bin/e_eap_editor.c:685
-#: src/bin/e_entry_dialog.c:56 src/bin/e_exec.c:324 src/bin/e_fm_prop.c:513
-#: src/bin/e_int_border_remember.c:250 src/bin/e_int_border_remember.c:325
-#: src/bin/e_int_border_remember.c:367 src/bin/e_module.c:398
+#: src/bin/e_config.c:2310 src/bin/e_config_dialog.c:218
+#: src/bin/e_eap_editor.c:596 src/bin/e_eap_editor.c:660
+#: src/bin/e_entry_dialog.c:58 src/bin/e_exec.c:324 src/bin/e_fm_prop.c:513
+#: src/bin/e_int_border_remember.c:254 src/bin/e_int_border_remember.c:330
+#: src/bin/e_int_border_remember.c:372 src/bin/e_module.c:402
 #: src/bin/e_sys.c:397 src/bin/e_sys.c:442 src/bin/e_utils.c:577
 #: src/modules/battery/e_mod_main.c:312
 #: src/modules/conf_dpms/e_int_config_dpms.c:60
@@ -614,7 +721,7 @@ msgstr "Enlightenment 組態寫入發生問題"
 msgid "OK"
 msgstr "確定"
 
-#: src/bin/e_config_dialog.c:189 src/modules/battery/e_mod_main.c:1447
+#: src/bin/e_config_dialog.c:189 src/modules/battery/e_mod_main.c:1455
 #: src/modules/conf_dialogs/e_mod_main.c:34
 #: src/modules/conf_engine/e_mod_main.c:34
 #: src/modules/conf_exebuf/e_mod_main.c:34
@@ -637,10 +744,10 @@ msgstr "套用"
 msgid "Extensions"
 msgstr "擴充套件"
 
-#: src/bin/e_configure.c:9 src/bin/e_int_menus.c:786
+#: src/bin/e_configure.c:9 src/bin/e_int_menus.c:791
 #: src/modules/conf_colors/e_int_config_color_classes.c:83
 #: src/modules/conf_fonts/e_int_config_fonts.c:96
-#: src/modules/conf_paths/e_int_config_paths.c:88
+#: src/modules/conf_paths/e_int_config_paths.c:85
 msgid "Modules"
 msgstr "模組"
 
@@ -687,11 +794,11 @@ msgstr ""
 "PAM 認證階段設定失敗。<br>錯誤代碼為 <hilight>%i</hilight>。<br>這很糟糕而且"
 "不應該發生，請回報這個錯誤。"
 
-#: src/bin/e_eap_editor.c:157
+#: src/bin/e_eap_editor.c:156
 msgid "Incomplete Window Properties"
 msgstr "不完整的視窗屬性"
 
-#: src/bin/e_eap_editor.c:158
+#: src/bin/e_eap_editor.c:157
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties, so the needed properties for<br>the icon so that it "
@@ -703,80 +810,88 @@ msgstr ""
 "上所需的屬性<br>無法決定。你需要改用視窗標題。這只在標題與視窗<br>開啟時相"
 "同，而且不改變時才有作用。"
 
-#: src/bin/e_eap_editor.c:213
+#: src/bin/e_eap_editor.c:210
 msgid "Desktop Entry Editor"
 msgstr "Desktop Entry 編輯器"
 
-#: src/bin/e_eap_editor.c:448 src/bin/e_fm_prop.c:400
+#: src/bin/e_eap_editor.c:444 src/bin/e_fm_prop.c:400
 #: src/modules/conf_fonts/e_int_config_fonts.c:94
 #: src/modules/conf_mime/e_int_config_mime_edit.c:145
 msgid "Icon"
 msgstr "圖示"
 
-#: src/bin/e_eap_editor.c:461
+#: src/bin/e_eap_editor.c:455
 #: src/modules/conf_mime/e_int_config_mime_edit.c:136
 msgid "Basic Info"
 msgstr "基本資訊"
 
-#: src/bin/e_eap_editor.c:462 src/bin/e_int_border_prop.c:420
+#: src/bin/e_eap_editor.c:456 src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467 src/modules/conf_imc/e_int_config_imc.c:907
 msgid "Name"
 msgstr "名稱"
 
-#: src/bin/e_eap_editor.c:471
+#: src/bin/e_eap_editor.c:462
 msgid "Executable"
 msgstr "執行檔"
 
-#: src/bin/e_eap_editor.c:482
+#: src/bin/e_eap_editor.c:470
 msgid "Comment"
 msgstr "註解"
 
-#: src/bin/e_eap_editor.c:510
+#: src/bin/e_eap_editor.c:495
 msgid "General"
 msgstr "一般資訊"
 
-#: src/bin/e_eap_editor.c:513
+#: src/bin/e_eap_editor.c:498
 msgid "Generic Name"
 msgstr "通用名稱"
 
-#: src/bin/e_eap_editor.c:522
+#: src/bin/e_eap_editor.c:503
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:105
 msgid "Window Class"
 msgstr "視窗類別"
 
-#: src/bin/e_eap_editor.c:529 src/bin/e_eap_editor.c:540
-#: src/modules/conf/e_conf.c:142
-#: src/modules/conf_applications/e_int_config_apps.c:287
+#: src/bin/e_eap_editor.c:507 src/modules/conf/e_conf.c:149
 #: src/modules/conf_mime/e_int_config_mime.c:189
 msgid "Categories"
 msgstr "類別"
 
-#: src/bin/e_eap_editor.c:541
+#: src/bin/e_eap_editor.c:511
+#, fuzzy
+msgid "Mime Types"
+msgstr "檔案類型"
+
+#: src/bin/e_eap_editor.c:517
+#, fuzzy
+msgid "Options"
+msgstr "填滿選項"
+
+#: src/bin/e_eap_editor.c:518
 msgid "Startup Notify"
 msgstr "啟動通知"
 
-#: src/bin/e_eap_editor.c:544
+#: src/bin/e_eap_editor.c:520
 msgid "Run in Terminal"
 msgstr "執行於終端機"
 
-#: src/bin/e_eap_editor.c:547
+#: src/bin/e_eap_editor.c:522
 msgid "Show in Menus"
 msgstr "在選單中顯示"
 
-#: src/bin/e_eap_editor.c:552
+#: src/bin/e_eap_editor.c:526
 msgid "Desktop file"
 msgstr "desktop 檔"
 
-#: src/bin/e_eap_editor.c:553
+#: src/bin/e_eap_editor.c:527
 msgid "Filename"
 msgstr "檔案名稱"
 
-#: src/bin/e_eap_editor.c:582
+#: src/bin/e_eap_editor.c:556
 msgid "Select an Icon"
 msgstr "選擇圖示"
 
-#: src/bin/e_eap_editor.c:624 src/bin/e_eap_editor.c:686
-#: src/bin/e_entry_dialog.c:57 src/bin/e_fm_prop.c:514
+#: src/bin/e_eap_editor.c:598 src/bin/e_eap_editor.c:662
+#: src/bin/e_entry_dialog.c:59 src/bin/e_fm_prop.c:514
 #: src/modules/conf_imc/e_int_config_imc_import.c:116
 #: src/modules/conf_mime/e_int_config_mime_edit.c:284
 #: src/modules/conf_profiles/e_int_config_profiles.c:289
@@ -786,31 +901,31 @@ msgstr "選擇圖示"
 msgid "Cancel"
 msgstr "取消"
 
-#: src/bin/e_eap_editor.c:651
+#: src/bin/e_eap_editor.c:625
 msgid "Select an Executable"
 msgstr "選擇一個執行檔"
 
-#: src/bin/e_entry.c:390 src/bin/e_fm.c:6416
-#: src/modules/conf_applications/e_int_config_apps.c:305
+#: src/bin/e_entry.c:470 src/bin/e_fm.c:6517
+#: src/modules/conf_applications/e_int_config_apps.c:271
 #: src/modules/conf_profiles/e_int_config_profiles.c:93
-#: src/modules/conf_shelves/e_int_config_shelf.c:83
+#: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:111
 msgid "Delete"
 msgstr "刪除"
 
-#: src/bin/e_entry.c:403 src/bin/e_fm.c:6326
+#: src/bin/e_entry.c:483 src/bin/e_fm.c:6427
 msgid "Cut"
 msgstr "剪下"
 
-#: src/bin/e_entry.c:414 src/bin/e_fm.c:6343
+#: src/bin/e_entry.c:494 src/bin/e_fm.c:6444
 msgid "Copy"
 msgstr "複製"
 
-#: src/bin/e_entry.c:425 src/bin/e_fm.c:6174 src/bin/e_fm.c:6357
+#: src/bin/e_entry.c:505 src/bin/e_fm.c:6268 src/bin/e_fm.c:6458
 msgid "Paste"
 msgstr "貼上"
 
-#: src/bin/e_entry.c:437
+#: src/bin/e_entry.c:517
 msgid "Select All"
 msgstr "全選"
 
@@ -940,76 +1055,90 @@ msgstr "輸出資料"
 msgid "There was no output."
 msgstr "沒有輸入。"
 
-#: src/bin/e_fm.c:514
+#: src/bin/e_fm.c:517
 msgid "Unexisting path"
 msgstr "不存在的路徑"
 
-#: src/bin/e_fm.c:517
+#: src/bin/e_fm.c:520
 #, c-format
 msgid "%s doesn't exists"
 msgstr "不存在 %s"
 
-#: src/bin/e_fm.c:2650
+#: src/bin/e_fm.c:2701
 #, c-format
 msgid "%i Files"
 msgstr "%i 筆檔案"
 
-#: src/bin/e_fm.c:6100 src/bin/e_fm.c:6254
+#: src/bin/e_fm.c:6187 src/bin/e_fm.c:6348
+#: src/modules/fileman/e_mod_config.c:154
+msgid "View Mode"
+msgstr "顯式模式"
+
+#: src/bin/e_fm.c:6194 src/bin/e_fm.c:6355
 msgid "Refresh View"
 msgstr "重新整理"
 
-#: src/bin/e_fm.c:6111 src/bin/e_fm.c:6265
+#: src/bin/e_fm.c:6205 src/bin/e_fm.c:6366
 msgid "Show Hidden Files"
 msgstr "顯示隱藏的檔案"
 
-#: src/bin/e_fm.c:6126 src/bin/e_fm.c:6280
+#: src/bin/e_fm.c:6220 src/bin/e_fm.c:6381
 msgid "Remember Ordering"
 msgstr "記住順序"
 
-#: src/bin/e_fm.c:6138 src/bin/e_fm.c:6292
+#: src/bin/e_fm.c:6232 src/bin/e_fm.c:6393
 msgid "Sort Now"
 msgstr "排列檔案"
 
-#: src/bin/e_fm.c:6156 src/bin/e_fm.c:6310
-#: src/modules/conf_paths/e_int_config_paths.c:210
+#: src/bin/e_fm.c:6250 src/bin/e_fm.c:6411
+#: src/modules/conf_paths/e_int_config_paths.c:211
 msgid "New Directory"
 msgstr "新目錄"
 
-#: src/bin/e_fm.c:6427
+#: src/bin/e_fm.c:6528
 msgid "Rename"
 msgstr "重新命名"
 
-#: src/bin/e_fm.c:6437
+#: src/bin/e_fm.c:6538
 msgid "Properties"
 msgstr "屬性"
 
-#: src/bin/e_fm.c:6657
+#: src/bin/e_fm.c:6699 src/modules/conf_paths/e_int_config_paths.c:83
+#: src/modules/fileman/e_mod_config.c:156
+msgid "Icons"
+msgstr "圖示"
+
+#: src/bin/e_fm.c:6707 src/modules/fileman/e_mod_config.c:169
+msgid "List"
+msgstr "列表"
+
+#: src/bin/e_fm.c:6845
 msgid "Create a new Directory"
 msgstr "建立新目錄"
 
-#: src/bin/e_fm.c:6658
+#: src/bin/e_fm.c:6846
 msgid "New Directory Name:"
 msgstr "新目錄名稱"
 
-#: src/bin/e_fm.c:6717
+#: src/bin/e_fm.c:6905
 #, c-format
 msgid "Rename %s to:"
 msgstr "重新命名 %s 成:"
 
-#: src/bin/e_fm.c:6719
+#: src/bin/e_fm.c:6907
 msgid "Rename File"
 msgstr "重新命名檔案"
 
-#: src/bin/e_fm.c:6817
+#: src/bin/e_fm.c:7005
 msgid "Confirm Delete"
 msgstr "確定刪除"
 
-#: src/bin/e_fm.c:6821
+#: src/bin/e_fm.c:7009
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "您是否確定刪除<br><hilight>%s</hilight>？"
 
-#: src/bin/e_fm.c:6827
+#: src/bin/e_fm.c:7015
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1062,15 +1191,15 @@ msgid "Owner can write"
 msgstr "擁有者可以寫入"
 
 #: src/bin/e_fm_prop.c:385 src/bin/e_widget_fsel.c:302
-#: src/modules/conf_theme/e_int_config_theme.c:1090
+#: src/modules/conf_theme/e_int_config_theme.c:1092
 #: src/modules/conf_transitions/e_int_config_transitions.c:167
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:154
 msgid "Preview"
 msgstr "預覽"
 
 #: src/bin/e_fm_prop.c:432
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:166
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:176
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:164
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:174
 msgid "Default"
 msgstr "預設值"
 
@@ -1079,7 +1208,7 @@ msgid "Thumbnail"
 msgstr "縮圖"
 
 #: src/bin/e_fm_prop.c:438
-#: src/modules/conf_desklock/e_int_config_desklock.c:319
+#: src/modules/conf_desklock/e_int_config_desklock.c:312
 msgid "Custom"
 msgstr "自訂"
 
@@ -1129,15 +1258,15 @@ msgstr "末知"
 msgid "Removable Device"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1225
+#: src/bin/e_gadcon.c:1174
 msgid "Plain"
 msgstr "一般"
 
-#: src/bin/e_gadcon.c:1234
+#: src/bin/e_gadcon.c:1183
 msgid "Inset"
 msgstr "嵌入"
 
-#: src/bin/e_gadcon.c:1245 src/bin/e_int_config_modules.c:40
+#: src/bin/e_gadcon.c:1192 src/bin/e_int_config_modules.c:40
 #: src/modules/conf_borders/e_mod_main.c:34
 #: src/modules/conf_colors/e_mod_main.c:34
 #: src/modules/conf_fonts/e_mod_main.c:34
@@ -1151,23 +1280,23 @@ msgstr "嵌入"
 msgid "Appearance"
 msgstr "外觀"
 
-#: src/bin/e_gadcon.c:1251
+#: src/bin/e_gadcon.c:1198
 msgid "Automatically scroll contents"
 msgstr "自動捲動內容"
 
-#: src/bin/e_gadcon.c:1258
+#: src/bin/e_gadcon.c:1205
 msgid "Able to be resized"
 msgstr "可改變大小"
 
-#: src/bin/e_gadcon.c:1270
+#: src/bin/e_gadcon.c:1217
 msgid "Begin move/resize this gadget"
 msgstr "開始移動或改變這個小工具大小"
 
-#: src/bin/e_gadcon.c:1276
+#: src/bin/e_gadcon.c:1223
 msgid "Remove this gadget"
 msgstr "移除這個小工具"
 
-#: src/bin/e_gadcon.c:1694
+#: src/bin/e_gadcon.c:1609
 msgid "Stop move/resize this gadget"
 msgstr "停止移動或改變這個小工具大小"
 
@@ -1233,21 +1362,21 @@ msgid "Lock program changing:"
 msgstr "鎖定其它程式改變:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:489
+#: src/bin/e_int_border_remember.c:496
 msgid "Position"
 msgstr "位置"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:491 src/bin/e_int_shelf_config.c:515
+#: src/bin/e_int_border_remember.c:498 src/bin/e_int_shelf_config.c:515
 #: src/bin/e_int_shelf_config.c:596
 #: src/modules/conf_fonts/e_int_config_fonts.c:456
-#: src/modules/conf_fonts/e_int_config_fonts.c:649
+#: src/modules/conf_fonts/e_int_config_fonts.c:650
 msgid "Size"
 msgstr "大小"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:225 src/bin/e_int_border_prop.c:469
-#: src/bin/e_int_border_remember.c:493 src/bin/e_int_shelf_config.c:552
+#: src/bin/e_int_border_remember.c:500 src/bin/e_int_shelf_config.c:552
 msgid "Stacking"
 msgstr "堆疊"
 
@@ -1256,12 +1385,12 @@ msgid "Iconified state"
 msgstr "圖示化狀態"
 
 #: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
-#: src/bin/e_int_border_remember.c:501
+#: src/bin/e_int_border_remember.c:508
 msgid "Stickiness"
 msgstr "相黏性"
 
 #: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
-#: src/bin/e_int_border_remember.c:505
+#: src/bin/e_int_border_remember.c:512
 msgid "Shaded state"
 msgstr "捲起狀態"
 
@@ -1277,7 +1406,7 @@ msgstr "全螢幕狀態"
 msgid "Lock me from changing:"
 msgstr "鎖住我改變:"
 
-#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:497
+#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:504
 msgid "Border style"
 msgstr "邊框樣式"
 
@@ -1304,7 +1433,7 @@ msgstr "最上層顯示"
 #: src/bin/e_int_border_menu.c:75
 #: src/modules/conf_fonts/e_int_config_fonts.c:98
 #: src/modules/conf_fonts/e_int_config_fonts.c:261
-#: src/modules/temperature/e_mod_config.c:224
+#: src/modules/temperature/e_mod_config.c:225
 msgid "Normal"
 msgstr "正常"
 
@@ -1382,41 +1511,46 @@ msgstr "視窗屬性"
 msgid "Iconify"
 msgstr "圖示化"
 
-#: src/bin/e_int_border_menu.c:825
+#: src/bin/e_int_border_menu.c:826
 msgid "Select Border Style"
 msgstr "選擇邊框樣式"
 
-#: src/bin/e_int_border_menu.c:837
+#: src/bin/e_int_border_menu.c:838
 msgid "Use E17 Default Icon Preference"
 msgstr "使用 E17 預設圖示偏好"
 
-#: src/bin/e_int_border_menu.c:846
+#: src/bin/e_int_border_menu.c:847
 msgid "Use Application Provided Icon "
 msgstr "使用應用程式圖示"
 
-#: src/bin/e_int_border_menu.c:854
+#: src/bin/e_int_border_menu.c:855
 msgid "Use User Defined Icon"
 msgstr "使用使用者自訂圖示"
 
-#: src/bin/e_int_border_menu.c:918 src/bin/e_int_border_prop.c:473
+#: src/bin/e_int_border_menu.c:919 src/bin/e_int_border_prop.c:473
 msgid "Shaded"
 msgstr "捲起"
 
-#: src/bin/e_int_border_menu.c:931 src/bin/e_int_border_prop.c:472
+#: src/bin/e_int_border_menu.c:932 src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr "相黏"
 
-#: src/bin/e_int_border_menu.c:944 src/bin/e_int_border_prop.c:477
+#: src/bin/e_int_border_menu.c:945 src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:154
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:215
 msgid "Fullscreen"
 msgstr "全螢幕"
 
-#: src/bin/e_int_border_menu.c:969 src/modules/conf_winlist/e_mod_main.c:35
+#: src/bin/e_int_border_menu.c:970 src/modules/conf_winlist/e_mod_main.c:35
 msgid "Window List"
 msgstr "視窗列表"
 
-#: src/bin/e_int_border_menu.c:979 src/modules/pager/e_mod_main.c:239
+#: src/bin/e_int_border_menu.c:980 src/modules/pager/e_mod_main.c:263
+#: src/modules/pager/e_mod_main.c:2799 src/modules/pager/e_mod_main.c:2806
+#: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2813
+#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2815
+#: src/modules/pager/e_mod_main.c:2846 src/modules/pager/e_mod_main.c:2847
+#: src/modules/pager/e_mod_main.c:2848 src/modules/pager/e_mod_main.c:2849
 msgid "Pager"
 msgstr "桌面切換器"
 
@@ -1432,7 +1566,7 @@ msgstr "ICCCM"
 msgid "ICCCM Properties"
 msgstr "ICCCM 屬性"
 
-#: src/bin/e_int_border_prop.c:419 src/bin/e_int_border_remember.c:458
+#: src/bin/e_int_border_prop.c:419 src/bin/e_int_border_remember.c:465
 msgid "Title"
 msgstr "標題"
 
@@ -1540,15 +1674,15 @@ msgstr "略過桌面切換器"
 msgid "Hidden"
 msgstr "隱藏"
 
-#: src/bin/e_int_border_remember.c:71
+#: src/bin/e_int_border_remember.c:72
 msgid "Window Remember"
 msgstr "記住視窗"
 
-#: src/bin/e_int_border_remember.c:233
+#: src/bin/e_int_border_remember.c:237
 msgid "Window properties are not a unique match"
 msgstr "視窗比對屬性並不唯一"
 
-#: src/bin/e_int_border_remember.c:236
+#: src/bin/e_int_border_remember.c:240
 msgid ""
 "You are trying to ask Enlightenment to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
@@ -1568,11 +1702,11 @@ msgstr ""
 "是，<br>你只需按下<hilight>套用</hilight>或者<hilight>確定</hilight>則你的設"
 "定就會被接受。<br>如果你不確定，按下<hilight>取消</hilight>就全無影響。"
 
-#: src/bin/e_int_border_remember.c:316 src/bin/e_int_border_remember.c:346
+#: src/bin/e_int_border_remember.c:321 src/bin/e_int_border_remember.c:351
 msgid "No match properties set"
 msgstr "未設定比對屬性"
 
-#: src/bin/e_int_border_remember.c:319
+#: src/bin/e_int_border_remember.c:324
 msgid ""
 "You are trying to ask Enlightenment to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window <hilight>without "
@@ -1583,7 +1717,7 @@ msgstr ""
 "視窗，卻<hilight>沒有指定如何記住</hilight>他們。<br><br>你必須至少指定一種的"
 "方法來記下此視窗。"
 
-#: src/bin/e_int_border_remember.c:349
+#: src/bin/e_int_border_remember.c:354
 msgid ""
 "You are trying to ask Enlightenment to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
@@ -1608,85 +1742,89 @@ msgstr ""
 "定</hilight>則你的設定就會被接受。<br>如果你不確定，按下<hilight>取消</"
 "hilight>就全無影響。"
 
-#: src/bin/e_int_border_remember.c:421
+#: src/bin/e_int_border_remember.c:428
 msgid "Nothing"
 msgstr "無"
 
-#: src/bin/e_int_border_remember.c:423
+#: src/bin/e_int_border_remember.c:430
 msgid "Size and Position"
 msgstr "大小與位置"
 
-#: src/bin/e_int_border_remember.c:425 src/bin/e_int_border_remember.c:495
+#: src/bin/e_int_border_remember.c:432 src/bin/e_int_border_remember.c:502
 msgid "Locks"
 msgstr "鎖定值"
 
-#: src/bin/e_int_border_remember.c:427
+#: src/bin/e_int_border_remember.c:434
 msgid "Size, Position and Locks"
 msgstr "大小、位置與鎖定值"
 
-#: src/bin/e_int_border_remember.c:429
+#: src/bin/e_int_border_remember.c:436
 msgid "Everything"
 msgstr "全部"
 
-#: src/bin/e_int_border_remember.c:442
+#: src/bin/e_int_border_remember.c:449
 msgid "Remember using"
 msgstr "使用下列特徵來記住視窗:"
 
-#: src/bin/e_int_border_remember.c:448
+#: src/bin/e_int_border_remember.c:455
 msgid "Window name and class"
 msgstr "視窗名稱與類別"
 
-#: src/bin/e_int_border_remember.c:468
+#: src/bin/e_int_border_remember.c:475
 msgid "Window Role"
 msgstr "視窗腳色"
 
-#: src/bin/e_int_border_remember.c:477
+#: src/bin/e_int_border_remember.c:484
 msgid "Window type"
 msgstr "視窗類型"
 
-#: src/bin/e_int_border_remember.c:484
+#: src/bin/e_int_border_remember.c:491
 msgid "Transience"
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:488
+#: src/bin/e_int_border_remember.c:495
 msgid "Properties to remember"
 msgstr "記住下列屬性:"
 
-#: src/bin/e_int_border_remember.c:499
+#: src/bin/e_int_border_remember.c:506
 msgid "Icon Preference"
 msgstr "圖示偏好"
 
-#: src/bin/e_int_border_remember.c:503
+#: src/bin/e_int_border_remember.c:510
 msgid "Virtual Desktop"
 msgstr "虛擬桌面"
 
-#: src/bin/e_int_border_remember.c:507
+#: src/bin/e_int_border_remember.c:514
 msgid "Current Screen"
 msgstr "目前螢幕"
 
-#: src/bin/e_int_border_remember.c:509
+#: src/bin/e_int_border_remember.c:516
 msgid "Skip Window List"
 msgstr "略過視窗列表"
 
-#: src/bin/e_int_border_remember.c:513
+#: src/bin/e_int_border_remember.c:520
 msgid "Match only one window"
 msgstr "只匹配單一視窗"
 
-#: src/bin/e_int_border_remember.c:518
+#: src/bin/e_int_border_remember.c:525
 msgid "Start this program on login"
 msgstr "登入時啟動此程式"
 
-#: src/bin/e_int_config_modules.c:41 src/bin/e_int_menus.c:212
-#: src/modules/battery/e_mod_main.c:183 src/modules/ibar/e_mod_main.c:319
-#: src/modules/ibar/e_mod_main.c:796 src/modules/ibox/e_mod_main.c:309
-#: src/modules/ibox/e_mod_main.c:701 src/modules/pager/e_mod_main.c:767
-#: src/modules/temperature/e_mod_main.c:210
+#: src/bin/e_int_border_remember.c:529
+msgid "Always focus on start"
+msgstr ""
+
+#: src/bin/e_int_config_modules.c:41 src/bin/e_int_menus.c:214
+#: src/modules/battery/e_mod_main.c:183 src/modules/ibar/e_mod_main.c:315
+#: src/modules/ibar/e_mod_main.c:830 src/modules/ibox/e_mod_main.c:309
+#: src/modules/ibox/e_mod_main.c:704 src/modules/pager/e_mod_main.c:803
+#: src/modules/temperature/e_mod_main.c:312
 msgid "Configuration"
 msgstr "組態"
 
 #: src/bin/e_int_config_modules.c:42 src/modules/conf_mime/e_mod_main.c:34
-#: src/modules/fileman/e_mod_main.c:41 src/modules/fileman/e_mod_main.c:43
-#: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:127
+#: src/modules/fileman/e_mod_main.c:43 src/modules/fileman/e_mod_main.c:45
+#: src/modules/fileman/e_mod_main.c:57 src/modules/fileman/e_mod_main.c:136
 msgid "File Manager"
 msgstr "檔案管理員"
 
@@ -1703,49 +1841,56 @@ msgstr "設定模組"
 msgid "Available Modules"
 msgstr "可用模組"
 
-#: src/bin/e_int_config_modules.c:177 src/bin/e_int_config_modules.c:561
-#: src/bin/e_int_config_modules.c:576 src/bin/e_int_config_modules.c:591
-msgid "Description: Unavailable"
-msgstr ""
-
-#: src/bin/e_int_config_modules.c:179
+#: src/bin/e_int_config_modules.c:174
 msgid "Load Module"
 msgstr "載入模組"
 
-#: src/bin/e_int_config_modules.c:186
+#: src/bin/e_int_config_modules.c:181
 msgid "Loaded Modules"
 msgstr "已載入模組"
 
-#: src/bin/e_int_config_modules.c:193
+#: src/bin/e_int_config_modules.c:188
 msgid "Unload Module"
 msgstr "卸除模組"
 
-#: src/bin/e_int_gadcon_config.c:44
+#: src/bin/e_int_config_modules.c:198 src/bin/e_int_config_modules.c:562
+#: src/bin/e_int_config_modules.c:577 src/bin/e_int_config_modules.c:592
+#: src/bin/e_int_gadcon_config.c:121 src/bin/e_int_gadcon_config.c:156
+#: src/bin/e_int_gadcon_config.c:178
+msgid "Description: Unavailable"
+msgstr ""
+
+#: src/bin/e_int_gadcon_config.c:32
 msgid "Shelf Contents"
 msgstr "置物架內容物"
 
-#: src/bin/e_int_gadcon_config.c:165
+#: src/bin/e_int_gadcon_config.c:38
+#, fuzzy
+msgid "Toolbar Contents"
+msgstr "設定置物架內容物"
+
+#: src/bin/e_int_gadcon_config.c:93
 msgid "Available Gadgets"
 msgstr "可用小工具"
 
-#: src/bin/e_int_gadcon_config.c:173
+#: src/bin/e_int_gadcon_config.c:100
 msgid "Add Gadget"
 msgstr "新增小工具"
 
-#: src/bin/e_int_gadcon_config.c:179
+#: src/bin/e_int_gadcon_config.c:106
 msgid "Selected Gadgets"
 msgstr "選取的小工具"
 
-#: src/bin/e_int_gadcon_config.c:187
+#: src/bin/e_int_gadcon_config.c:113
 msgid "Remove Gadget"
 msgstr "移除小工具"
 
-#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:205
+#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:328
 #, fuzzy
 msgid "Toolbar Configuration"
 msgstr "IBar 組"
 
-#: src/bin/e_int_toolbar_config.c:74 src/bin/e_int_shelf_config.c:499
+#: src/bin/e_int_toolbar_config.c:82 src/bin/e_int_shelf_config.c:499
 #: src/bin/e_int_shelf_config.c:564
 msgid "Layout"
 msgstr "版面配置"
@@ -1763,97 +1908,97 @@ msgstr ""
 "啟動輸入法時發生錯誤。<br><br>請確定你的輸入法設定正確，<br>且執行檔在您的 "
 "PATH 變數中。<br>"
 
-#: src/bin/e_int_menus.c:89
+#: src/bin/e_int_menus.c:90
 msgid "Main"
 msgstr "主選單"
 
-#: src/bin/e_int_menus.c:106
+#: src/bin/e_int_menus.c:107
 msgid "Favorite Applications"
 msgstr "我的最愛"
 
-#: src/bin/e_int_menus.c:117 src/modules/conf_applications/e_mod_main.c:34
+#: src/bin/e_int_menus.c:118 src/modules/conf_applications/e_mod_main.c:34
 msgid "Applications"
 msgstr "應用程式"
 
-#: src/bin/e_int_menus.c:142 src/bin/e_int_menus.c:1200
+#: src/bin/e_int_menus.c:143 src/bin/e_int_menus.c:1205
 #: src/modules/conf_window_display/e_mod_main.c:34
 #: src/modules/conf_window_focus/e_mod_main.c:34
 #: src/modules/conf_window_manipulation/e_mod_main.c:34
 msgid "Windows"
 msgstr "視窗"
 
-#: src/bin/e_int_menus.c:172
+#: src/bin/e_int_menus.c:174
 msgid "About"
 msgstr "關於"
 
-#: src/bin/e_int_menus.c:177 src/modules/conf_theme/e_mod_main.c:39
+#: src/bin/e_int_menus.c:179 src/modules/conf_theme/e_mod_main.c:39
 #: src/modules/conf_theme/e_mod_main.c:84
 msgid "Theme"
 msgstr "佈景主題"
 
-#: src/bin/e_int_menus.c:261
+#: src/bin/e_int_menus.c:263
 msgid "Virtual"
 msgstr "虛擬桌面"
 
-#: src/bin/e_int_menus.c:269 src/modules/conf_shelves/e_mod_main.c:39
+#: src/bin/e_int_menus.c:271 src/modules/conf_shelves/e_mod_main.c:39
 #: src/modules/conf_shelves/e_mod_main.c:84
 msgid "Shelves"
 msgstr "置物架"
 
-#: src/bin/e_int_menus.c:279
+#: src/bin/e_int_menus.c:281
 msgid "Show/Hide All Windows"
 msgstr "顯示/隱藏所有視窗"
 
-#: src/bin/e_int_menus.c:604
+#: src/bin/e_int_menus.c:609
 msgid "(No Applications)"
 msgstr "（無任何應用程式）"
 
-#: src/bin/e_int_menus.c:742
+#: src/bin/e_int_menus.c:747
 msgid "Configure Virtual Desktops"
 msgstr "設定虛擬桌面"
 
-#: src/bin/e_int_menus.c:838
+#: src/bin/e_int_menus.c:843
 msgid "Lock Screen"
 msgstr "鎖定螢幕"
 
-#: src/bin/e_int_menus.c:860
+#: src/bin/e_int_menus.c:865
 msgid "Hibernate"
 msgstr "休眠"
 
-#: src/bin/e_int_menus.c:883
+#: src/bin/e_int_menus.c:888
 msgid "Logout"
 msgstr "登出"
 
-#: src/bin/e_int_menus.c:1206 src/bin/e_int_menus.c:1401
+#: src/bin/e_int_menus.c:1211 src/bin/e_int_menus.c:1406
 msgid "(No Windows)"
 msgstr "（無任何視窗）"
 
-#: src/bin/e_int_menus.c:1256
+#: src/bin/e_int_menus.c:1261
 msgid "Lost Windows"
 msgstr "迷路的視窗"
 
-#: src/bin/e_int_menus.c:1302 src/bin/e_int_menus.c:1414
+#: src/bin/e_int_menus.c:1307 src/bin/e_int_menus.c:1419
 msgid "No name!!"
 msgstr "無名稱！！"
 
-#: src/bin/e_int_menus.c:1507
+#: src/bin/e_int_menus.c:1512
 msgid "(No Shelves)"
 msgstr "(無任何置物架)"
 
-#: src/bin/e_int_menus.c:1521 src/bin/e_shelf.c:1048
-#: src/modules/conf_shelves/e_int_config_shelf.c:133
+#: src/bin/e_int_menus.c:1526 src/bin/e_shelf.c:1069
+#: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "置物架 #"
 
-#: src/bin/e_int_menus.c:1574
+#: src/bin/e_int_menus.c:1579
 msgid "Add A Shelf"
 msgstr "新增置物架"
 
-#: src/bin/e_int_menus.c:1580
+#: src/bin/e_int_menus.c:1585
 msgid "Delete A Shelf"
 msgstr "移除置物架"
 
-#: src/bin/e_int_shelf_config.c:71 src/bin/e_shelf.c:1535
+#: src/bin/e_int_shelf_config.c:71 src/bin/e_shelf.c:1639
 msgid "Shelf Configuration"
 msgstr "置物架組態"
 
@@ -1916,7 +2061,7 @@ msgid "%3.0f pixels"
 msgstr "%3.0f 像素"
 
 #: src/bin/e_int_shelf_config.c:605
-#: src/modules/conf_fonts/e_int_config_fonts.c:640
+#: src/modules/conf_fonts/e_int_config_fonts.c:641
 msgid "Styles"
 msgstr "樣式"
 
@@ -1984,7 +2129,7 @@ msgstr ""
 "請檢查:\n"
 "%s/enlightenment-%s\n"
 
-#: src/bin/e_main.c:248
+#: src/bin/e_main.c:250
 #, c-format
 msgid ""
 "Options:\n"
@@ -2009,7 +2154,7 @@ msgid ""
 "\t\tBe psychotic.\n"
 msgstr ""
 
-#: src/bin/e_main.c:310
+#: src/bin/e_main.c:312
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2017,7 +2162,7 @@ msgstr ""
 "Enlightenment 無法初始化 Ecore!\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:332
+#: src/bin/e_main.c:336
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2025,7 +2170,7 @@ msgstr ""
 "Enlightenment 無法初始化檔案系統。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:344
+#: src/bin/e_main.c:348
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2033,7 +2178,7 @@ msgstr ""
 "Enlightenment 無法建立 exit signal handler。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:350
+#: src/bin/e_main.c:354
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2041,7 +2186,7 @@ msgstr ""
 "Enlightenment 無法建立 HUP signal handler。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:362
+#: src/bin/e_main.c:366
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2049,7 +2194,7 @@ msgstr ""
 "Enlightenment 無法初始化 X 連結。\n"
 "您是否已設定 DISPLAY 環境變數？"
 
-#: src/bin/e_main.c:370
+#: src/bin/e_main.c:374
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2057,7 +2202,7 @@ msgstr ""
 "Enlightenment 無法初始化緊急警報系統。\n"
 "您是否已設定 DISPLAY 環境變數？"
 
-#: src/bin/e_main.c:393
+#: src/bin/e_main.c:397
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -2065,7 +2210,7 @@ msgstr ""
 "Enlightenment 無法初始化連結系統。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:401
+#: src/bin/e_main.c:405
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2073,7 +2218,7 @@ msgstr ""
 "Enlightenment 無法初始化 IPC 系統。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:410
+#: src/bin/e_main.c:414
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -2081,7 +2226,7 @@ msgstr ""
 "Enlightenment 無法設定 xinerama wrapping。\n"
 "這種情況不應該發生。"
 
-#: src/bin/e_main.c:432
+#: src/bin/e_main.c:436
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -2089,7 +2234,7 @@ msgstr ""
 "Enlightenment 無法初始化 Evas 系統。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:438
+#: src/bin/e_main.c:442
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2098,7 +2243,7 @@ msgstr ""
 "Enlightenment 發現 ecore_evas 不支援 Evas Software X11 繪圖。\n"
 "請檢查您的 Evas 和 Ecore 是否正確安裝且支援 Software X11 繪圖引擎。"
 
-#: src/bin/e_main.c:445
+#: src/bin/e_main.c:449
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2107,7 +2252,7 @@ msgstr ""
 "Enlightenment 發現 ecore_evas 不支援 Evas Software Buffer 繪圖。\n"
 "請檢查您的 Evas 和 Ecore 是否正確安裝且支援 Software Buffer 繪圖引擎。"
 
-#: src/bin/e_main.c:461 src/bin/e_main.c:468
+#: src/bin/e_main.c:465 src/bin/e_main.c:472
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
@@ -2115,7 +2260,7 @@ msgstr ""
 "Enlightenment 無法初始化 FDO desktop 系統。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:479
+#: src/bin/e_main.c:483
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2123,20 +2268,20 @@ msgstr ""
 "Enlightenment 無法在你的家目錄建立目錄。\n"
 "可能你沒有家目錄或是磁碟已滿？"
 
-#: src/bin/e_main.c:489
+#: src/bin/e_main.c:493
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Enlightenment 無法設定他的登錄系統。"
 
-#: src/bin/e_main.c:498
+#: src/bin/e_main.c:502
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment 無法設定他的配置系統。"
 
-#: src/bin/e_main.c:506
+#: src/bin/e_main.c:510
 #, fuzzy
 msgid "Enlightenment cannot set up the pointer system."
 msgstr "Enlightenment 無法建立他的字形系統。"
 
-#: src/bin/e_main.c:515
+#: src/bin/e_main.c:519
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2144,15 +2289,15 @@ msgstr ""
 "Enlightenment 無法為找到的文件建立路徑。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:533
+#: src/bin/e_main.c:537
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment 無法建立他的字形系統。"
 
-#: src/bin/e_main.c:544
+#: src/bin/e_main.c:548
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment 無法建立他的主題系統。"
 
-#: src/bin/e_main.c:555
+#: src/bin/e_main.c:559
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2160,11 +2305,11 @@ msgstr ""
 "Enlightenment 無法建立初始螢幕。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:566
+#: src/bin/e_main.c:570
 msgid "Testing Format Support"
 msgstr "測試格式支援"
 
-#: src/bin/e_main.c:576
+#: src/bin/e_main.c:580
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2172,7 +2317,7 @@ msgstr ""
 "Enlightment 發現 Evas 無法創造緩衝畫面。請確認\n"
 "Evas 支援軟體緩衝引擎。\n"
 
-#: src/bin/e_main.c:586
+#: src/bin/e_main.c:590
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2180,7 +2325,7 @@ msgstr ""
 "Enlightment 發現 Evas 無法讀入 PNG 檔案。請確認\n"
 "Evas 支援 PNG 檔讀取。\n"
 
-#: src/bin/e_main.c:595
+#: src/bin/e_main.c:599
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2188,7 +2333,7 @@ msgstr ""
 "Enlightment 發現 Evas 無法讀入 JPEG 檔案。請確認\n"
 "Evas 支援 JPEG 檔案讀取。\n"
 
-#: src/bin/e_main.c:604
+#: src/bin/e_main.c:608
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -2196,71 +2341,71 @@ msgstr ""
 "Enlightment 發現 Evas 無法讀入 EET 檔案。請確認\n"
 "Evas 支援 EET 檔案讀取。\n"
 
-#: src/bin/e_main.c:617
+#: src/bin/e_main.c:621
 msgid "Starting International Support"
 msgstr "開始國際化支援"
 
-#: src/bin/e_main.c:622
+#: src/bin/e_main.c:626
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment 無法建立國際化系統。"
 
-#: src/bin/e_main.c:627
+#: src/bin/e_main.c:631
 msgid "Setting up Paths"
 msgstr "設定路徑"
 
-#: src/bin/e_main.c:644
+#: src/bin/e_main.c:648
 msgid "Setup Thumbnailer"
 msgstr "設定縮圖"
 
-#: src/bin/e_main.c:649
+#: src/bin/e_main.c:653
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment 無法初始化縮圖系統。\n"
 
-#: src/bin/e_main.c:654
+#: src/bin/e_main.c:658
 msgid "Setup System Controls"
 msgstr "設定系統控制"
 
-#: src/bin/e_main.c:659
+#: src/bin/e_main.c:663
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Enlightenment 無法初始化系統命令系統。\n"
 
-#: src/bin/e_main.c:664
+#: src/bin/e_main.c:668
 msgid "Setup Actions"
 msgstr "設定行動"
 
-#: src/bin/e_main.c:669
+#: src/bin/e_main.c:673
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment 無法建立他的動作系統。"
 
-#: src/bin/e_main.c:673
+#: src/bin/e_main.c:677
 msgid "Setup Bindings"
 msgstr "設定快速鍵"
 
-#: src/bin/e_main.c:678
+#: src/bin/e_main.c:682
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment 無法建立他的連接系統。"
 
-#: src/bin/e_main.c:682
+#: src/bin/e_main.c:686
 msgid "Setup Popups"
 msgstr "設定彈出視窗"
 
-#: src/bin/e_main.c:687
+#: src/bin/e_main.c:691
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment 無法建立他的彈出系統。"
 
-#: src/bin/e_main.c:692
+#: src/bin/e_main.c:696
 msgid "Setup Wallpaper"
 msgstr "設定桌布"
 
-#: src/bin/e_main.c:697
+#: src/bin/e_main.c:701
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Enlightenment 無法建立桌面背景系統。"
 
-#: src/bin/e_main.c:701
+#: src/bin/e_main.c:705
 msgid "Setup Screens"
 msgstr "設定螢幕"
 
-#: src/bin/e_main.c:706
+#: src/bin/e_main.c:710
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -2268,131 +2413,141 @@ msgstr ""
 "Enlightenment 在你所有的screen上建立視窗管理都失敗。\n"
 "可能有另一個視窗管理程式正在執行？\n"
 
-#: src/bin/e_main.c:711
+#: src/bin/e_main.c:715
 msgid "Setup Execution System"
 msgstr "設定執行系統"
 
-#: src/bin/e_main.c:716
+#: src/bin/e_main.c:720
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Enlightenment 無法建立他的執行系統。"
 
-#: src/bin/e_main.c:720
+#: src/bin/e_main.c:724
 msgid "Setup Remembers"
 msgstr "設定記憶值"
 
-#: src/bin/e_main.c:725
+#: src/bin/e_main.c:729
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment 無法設定他的設定記憶系統。"
 
-#: src/bin/e_main.c:733
+#: src/bin/e_main.c:737
 msgid "Setup FM"
 msgstr "設定 FM"
 
-#: src/bin/e_main.c:738
+#: src/bin/e_main.c:742
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment 無法初始文件管理器。\n"
 
-#: src/bin/e_main.c:751
+#: src/bin/e_main.c:755
 msgid "Setup Message System"
 msgstr "設定訊息系統"
 
-#: src/bin/e_main.c:756
+#: src/bin/e_main.c:760
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment 無法建立他的訊息系統。"
 
-#: src/bin/e_main.c:760
+#: src/bin/e_main.c:764
 msgid "Setup DND"
 msgstr "設定拖放"
 
-#: src/bin/e_main.c:765
+#: src/bin/e_main.c:769
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment 無法建立他的拖放系統。"
 
-#: src/bin/e_main.c:769
+#: src/bin/e_main.c:773
 msgid "Setup Grab Input HAnding"
 msgstr "設定輸入攫取處理系統"
 
-#: src/bin/e_main.c:774
+#: src/bin/e_main.c:778
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment 無法建立他的輸入擷取處理系統。"
 
-#: src/bin/e_main.c:778
+#: src/bin/e_main.c:782
 msgid "Setup Modules"
 msgstr "設定模組"
 
-#: src/bin/e_main.c:783
+#: src/bin/e_main.c:787
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment 無法建立他的模組系統。"
 
-#: src/bin/e_main.c:787
+#: src/bin/e_main.c:791
 msgid "Setup Color Classes"
 msgstr "設定顏色類別"
 
-#: src/bin/e_main.c:792
+#: src/bin/e_main.c:796
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment 無法建立他的顏色類別系統。"
 
-#: src/bin/e_main.c:796
+#: src/bin/e_main.c:800
 msgid "Setup Gadcon"
 msgstr "設定小工具控制"
 
-#: src/bin/e_main.c:801
+#: src/bin/e_main.c:805
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment 無法建立他的小工具控制系統。"
 
-#: src/bin/e_main.c:805
+#: src/bin/e_main.c:809
 msgid "Setup Shelves"
 msgstr "設定置物架"
 
-#: src/bin/e_main.c:810
+#: src/bin/e_main.c:814
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Enlightenment 無法建立他的置物架系統。"
 
-#: src/bin/e_main.c:815
+#: src/bin/e_main.c:819
 msgid "Setup DPMS"
 msgstr "設定 DPMS"
 
-#: src/bin/e_main.c:820
+#: src/bin/e_main.c:824
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment 無法設定 DPMS 設定。"
 
-#: src/bin/e_main.c:824
+#: src/bin/e_main.c:828
 msgid "Setup Screensaver"
 msgstr "設定螢幕保護程式"
 
-#: src/bin/e_main.c:829
+#: src/bin/e_main.c:833
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "Enlightenment 無法設定 X 螢幕保護程式。"
 
-#: src/bin/e_main.c:833
+#: src/bin/e_main.c:837
 msgid "Setup Mouse"
 msgstr "設定滑鼠"
 
-#: src/bin/e_main.c:838
+#: src/bin/e_main.c:842
 msgid "Enlightenment cannot configure the mouse acceleration settings."
 msgstr "Enlightenment 無法設定他的滑鼠加速設定。"
 
-#: src/bin/e_main.c:842
+#: src/bin/e_main.c:846
 msgid "Setup Desklock"
 msgstr "設定桌面鎖定"
 
-#: src/bin/e_main.c:847
+#: src/bin/e_main.c:851
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "Enlightenment 無法建立他的桌面鎖定系統。"
 
-#: src/bin/e_main.c:852
+#: src/bin/e_main.c:856
 msgid "Set Up File Ordering"
 msgstr "設定檔案排序"
 
-#: src/bin/e_main.c:856
+#: src/bin/e_main.c:860
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment 無法建立他的有序檔案系統。"
 
-#: src/bin/e_main.c:888
+#: src/bin/e_main.c:865
+#, fuzzy
+msgid "Set Up Powersave modes"
+msgstr "設定 CPU 電源管理原則"
+
+#: src/bin/e_main.c:869
+#, fuzzy
+msgid "Enlightenment cannot set up its powersave modes."
+msgstr "Enlightenment 無法建立他的彈出系統。"
+
+#: src/bin/e_main.c:901
 msgid "Load Modules"
 msgstr "載入模組"
 
-#: src/bin/e_main.c:896
+#: src/bin/e_main.c:909
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2403,11 +2558,11 @@ msgstr ""
 "您<br>\n"
 "從設定檔中移除任何問題模組。<br>模組設定對話框應可讓您重新選擇模組。"
 
-#: src/bin/e_main.c:903
+#: src/bin/e_main.c:916
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Enlightment 在啟動途中當機，已經重新啟動。"
 
-#: src/bin/e_main.c:904
+#: src/bin/e_main.c:917
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2418,15 +2573,15 @@ msgstr ""
 "您<br>\n"
 "從設定檔中移除任何問題模組。<br><br>模組設定對話框應可讓您重新選擇模組。"
 
-#: src/bin/e_main.c:912
+#: src/bin/e_main.c:925
 msgid "Configure Shelves"
 msgstr "設定置物架"
 
-#: src/bin/e_main.c:919
+#: src/bin/e_main.c:932
 msgid "Almost Done"
 msgstr "快好了"
 
-#: src/bin/e_module.c:107
+#: src/bin/e_module.c:108
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
@@ -2434,11 +2589,11 @@ msgid ""
 msgstr ""
 "載入模組 %s 時發生錯誤。<br>在模組的搜尋路徑<br>沒有找到名為 %s 的模組。<br>"
 
-#: src/bin/e_module.c:111 src/bin/e_module.c:124 src/bin/e_module.c:145
+#: src/bin/e_module.c:112 src/bin/e_module.c:125 src/bin/e_module.c:146
 msgid "Error loading Module"
 msgstr "載入模組時發生錯誤"
 
-#: src/bin/e_module.c:118 src/bin/e_module.c:139
+#: src/bin/e_module.c:119 src/bin/e_module.c:140
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
@@ -2447,11 +2602,11 @@ msgstr ""
 "載入模組 %s 時發生錯誤。<br>該模組的完整路徑是:<br>%s<br>錯誤報告如下:<br>%"
 "s<br>"
 
-#: src/bin/e_module.c:144
+#: src/bin/e_module.c:145
 msgid "Module does not contain all needed functions"
 msgstr "模組並末包含所有必需之功能"
 
-#: src/bin/e_module.c:158
+#: src/bin/e_module.c:159
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -2461,38 +2616,38 @@ msgstr ""
 "模組 API 錯誤<br>模組初始化錯誤: %s<br>要求最小的模組 API 版本號: %i。"
 "<br>Enlightenment給的模組版本化: %i。<br>"
 
-#: src/bin/e_module.c:163
+#: src/bin/e_module.c:164
 #, c-format
 msgid "Enlightenment %s Module"
 msgstr "Enlightenment %s 模組"
 
-#: src/bin/e_module.c:474
+#: src/bin/e_module.c:480
 msgid "Would you like to unload this module?<br>"
 msgstr "您是否要卸除這個模組？<br>"
 
-#: src/bin/e_shelf.c:1157 src/modules/conf_shelves/e_int_config_shelf.c:268
+#: src/bin/e_shelf.c:1178 src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
 msgstr "您是否確定移除這個置物架？"
 
-#: src/bin/e_shelf.c:1158
+#: src/bin/e_shelf.c:1179
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "您要求移除此置物架。<br><br>您是否確定移除？"
 
-#: src/bin/e_shelf.c:1525 src/bin/e_toolbar.c:195
+#: src/bin/e_shelf.c:1629 src/bin/e_toolbar.c:318
 msgid "Stop Moving/Resizing Items"
 msgstr "停止移動或改變項目大小"
 
-#: src/bin/e_shelf.c:1527 src/bin/e_toolbar.c:197
+#: src/bin/e_shelf.c:1631 src/bin/e_toolbar.c:320
 msgid "Begin Moving/Resizing Items"
 msgstr "開始移動或改變項目大小"
 
-#: src/bin/e_shelf.c:1540
+#: src/bin/e_shelf.c:1644
 msgid "Configure Shelf Contents"
 msgstr "設定置物架內容物"
 
-#: src/bin/e_shelf.c:1545
+#: src/bin/e_shelf.c:1649
 msgid "Delete this Shelf"
 msgstr "移除這個置物架"
 
@@ -2642,7 +2797,7 @@ msgstr "關於此佈景主題"
 msgid "Set As Theme"
 msgstr "設定為佈景主題"
 
-#: src/bin/e_toolbar.c:210
+#: src/bin/e_toolbar.c:333
 #, fuzzy
 msgid "Configure Toolbar Contents"
 msgstr "設定置物架內容物"
@@ -2725,25 +2880,25 @@ msgstr "%li 分鐘前"
 msgid "Unknown"
 msgstr "末知"
 
-#: src/bin/e_widget_config_list.c:57
-#: src/modules/conf_applications/e_int_config_apps.c:300
+#: src/bin/e_widget_config_list.c:54
+#: src/modules/conf_applications/e_int_config_apps.c:245
 #: src/modules/conf_profiles/e_int_config_profiles.c:89
-#: src/modules/conf_shelves/e_int_config_shelf.c:81
+#: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:109
 msgid "Add"
 msgstr "新增"
 
-#: src/bin/e_widget_config_list.c:62
+#: src/bin/e_widget_config_list.c:59
 msgid "Remove"
 msgstr "移除"
 
-#: src/bin/e_widget_config_list.c:76
-#: src/modules/conf_applications/e_int_config_apps.c:317
+#: src/bin/e_widget_config_list.c:73
+#: src/modules/conf_applications/e_int_config_apps.c:260
 msgid "Up"
 msgstr "往上"
 
-#: src/bin/e_widget_config_list.c:83
-#: src/modules/conf_applications/e_int_config_apps.c:323
+#: src/bin/e_widget_config_list.c:79
+#: src/modules/conf_applications/e_int_config_apps.c:265
 msgid "Down"
 msgstr "往下"
 
@@ -2756,8 +2911,8 @@ msgstr "加入「我的最愛」選單"
 #: src/modules/conf_imc/e_int_config_imc.c:830
 #: src/modules/conf_startup/e_int_config_startup.c:281
 #: src/modules/conf_theme/e_int_config_theme.c:386
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:509
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:664
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:498
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:644
 msgid "Go up a Directory"
 msgstr "到上一層目錄"
 
@@ -2815,12 +2970,12 @@ msgstr "進階設定"
 msgid "Check battery every:"
 msgstr "電量檢查間隔:"
 
-#: src/modules/battery/e_mod_config.c:120 src/modules/pager/e_mod_config.c:174
-#: src/modules/pager/e_mod_config.c:186
-#: src/modules/temperature/e_mod_config.c:343
-#, c-format
-msgid "%1.1f seconds"
-msgstr "%1.1f 秒"
+#: src/modules/battery/e_mod_config.c:120
+#: src/modules/conf_performance/e_int_config_performance.c:133
+#: src/modules/temperature/e_mod_config.c:344
+#, fuzzy, c-format
+msgid "%1.0f ticks"
+msgstr "%1.0f 筆"
 
 #: src/modules/battery/e_mod_config.c:126
 msgid "Alert when battery is down to:"
@@ -2832,7 +2987,7 @@ msgstr "可用電量低於此時間時發出警告:"
 #: src/modules/conf_dpms/e_int_config_dpms.c:201
 #: src/modules/conf_dpms/e_int_config_dpms.c:209
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:119
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:153
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:151
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f 分鐘"
@@ -2853,41 +3008,41 @@ msgid ""
 msgstr "電池電量不足<br>您的電池電量不足。<br>您可能需要切換到交流電源"
 
 #: src/modules/battery/e_mod_main.c:355
-msgid "NO INFO"
-msgstr "沒有資訊"
+msgid "ERROR"
+msgstr ""
 
-#: src/modules/battery/e_mod_main.c:550 src/modules/battery/e_mod_main.c:867
-#: src/modules/battery/e_mod_main.c:1023
-msgid "NO BAT"
-msgstr "沒有電池"
+#: src/modules/battery/e_mod_main.c:556 src/modules/battery/e_mod_main.c:873
+#: src/modules/battery/e_mod_main.c:1029
+msgid "N/A"
+msgstr ""
 
-#: src/modules/battery/e_mod_main.c:576 src/modules/battery/e_mod_main.c:1050
+#: src/modules/battery/e_mod_main.c:582 src/modules/battery/e_mod_main.c:1056
 msgid "BAD DRIVER"
 msgstr "錯誤的驅動程式"
 
-#: src/modules/battery/e_mod_main.c:600 src/modules/battery/e_mod_main.c:905
-#: src/modules/battery/e_mod_main.c:1074
+#: src/modules/battery/e_mod_main.c:606 src/modules/battery/e_mod_main.c:911
+#: src/modules/battery/e_mod_main.c:1080
 msgid "FULL"
 msgstr "滿"
 
-#: src/modules/battery/e_mod_main.c:661 src/modules/battery/e_mod_main.c:1135
+#: src/modules/battery/e_mod_main.c:667 src/modules/battery/e_mod_main.c:1141
 msgid "High"
 msgstr "高"
 
-#: src/modules/battery/e_mod_main.c:665 src/modules/battery/e_mod_main.c:1139
+#: src/modules/battery/e_mod_main.c:671 src/modules/battery/e_mod_main.c:1145
 msgid "Low"
 msgstr "低"
 
-#: src/modules/battery/e_mod_main.c:669 src/modules/battery/e_mod_main.c:1143
+#: src/modules/battery/e_mod_main.c:675 src/modules/battery/e_mod_main.c:1149
 msgid "Danger"
 msgstr "危險"
 
-#: src/modules/battery/e_mod_main.c:673 src/modules/battery/e_mod_main.c:1147
-#: src/modules/battery/e_mod_main.c:1318
+#: src/modules/battery/e_mod_main.c:679 src/modules/battery/e_mod_main.c:1153
+#: src/modules/battery/e_mod_main.c:1324
 msgid "Charging"
 msgstr "充電中"
 
-#: src/modules/battery/e_mod_main.c:1448
+#: src/modules/battery/e_mod_main.c:1456
 #, fuzzy
 msgid "Battery Meter"
 msgstr "電池"
@@ -2896,11 +3051,11 @@ msgstr "電池"
 msgid "Clock"
 msgstr "時鐘"
 
-#: src/modules/conf/e_conf.c:116
+#: src/modules/conf/e_conf.c:122
 msgid "Enlightenment Configuration"
 msgstr "Enlightenment 組態"
 
-#: src/modules/conf/e_conf.c:151
+#: src/modules/conf/e_conf.c:159
 msgid "Items"
 msgstr "項目"
 
@@ -2909,30 +3064,36 @@ msgstr "項目"
 msgid "Configuration Panel"
 msgstr "組態面板"
 
-#: src/modules/conf_applications/e_int_config_apps.c:101
+#: src/modules/conf_applications/e_int_config_apps.c:51
 #: src/modules/conf_applications/e_mod_main.c:42
 msgid "Favorites Menu"
 msgstr "「我的最愛」選單"
 
-#: src/modules/conf_applications/e_int_config_apps.c:118
-#: src/modules/conf_applications/e_int_config_apps.c:133
+#: src/modules/conf_applications/e_int_config_apps.c:106
+#: src/modules/conf_applications/e_int_config_apps.c:121
 #: src/modules/conf_applications/e_mod_main.c:36
 msgid "IBar Applications"
 msgstr "IBar 應用程式"
 
-#: src/modules/conf_applications/e_int_config_apps.c:151
+#: src/modules/conf_applications/e_int_config_apps.c:138
 #: src/modules/conf_applications/e_mod_main.c:38
 msgid "Startup Applications"
 msgstr "自動啟動之應用程式"
 
-#: src/modules/conf_applications/e_int_config_apps.c:169
+#: src/modules/conf_applications/e_int_config_apps.c:155
 #: src/modules/conf_applications/e_mod_main.c:37
 msgid "Restart Applications"
 msgstr "自動重新啟動之應用程式"
 
-#: src/modules/conf_applications/e_int_config_apps.c:286
-msgid "Application Categories"
-msgstr "應用程式類別"
+#: src/modules/conf_applications/e_int_config_apps.c:238
+#: src/modules/fileman/e_fwin.c:1348
+msgid "All Applications"
+msgstr "全部應用程式"
+
+#: src/modules/conf_applications/e_int_config_apps.c:252
+#, fuzzy
+msgid "Selected Applications"
+msgstr "特定應用程式"
 
 #: src/modules/conf_applications/e_mod_main.c:35
 msgid "New Application"
@@ -2983,7 +3144,7 @@ msgstr "以下列方式分為群組:"
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:101
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:114
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:124
-#: src/modules/conf_fonts/e_int_config_fonts.c:682
+#: src/modules/conf_fonts/e_int_config_fonts.c:669
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:369
 #: src/modules/conf_transitions/e_int_config_transitions.c:152
 #: src/modules/conf_transitions/e_int_config_transitions.c:204
@@ -3258,7 +3419,7 @@ msgstr "桌布"
 
 #: src/modules/conf_desk/e_int_config_desk.c:162
 #: src/modules/conf_mime/e_int_config_mime.c:203
-#: src/modules/conf_shelves/e_int_config_shelf.c:85
+#: src/modules/conf_shelves/e_int_config_shelf.c:84
 #: src/modules/ibar/e_mod_config.c:113
 msgid "Configure"
 msgstr "設定"
@@ -3291,63 +3452,63 @@ msgstr "超過此時間時視為閒置:"
 #: src/modules/conf_imc/e_int_config_imc.c:818
 #: src/modules/conf_startup/e_int_config_startup.c:268
 #: src/modules/conf_theme/e_int_config_theme.c:375
-#: src/modules/conf_theme/e_int_config_theme.c:843
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:498
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:653
+#: src/modules/conf_theme/e_int_config_theme.c:844
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:488
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:634
 msgid "Personal"
 msgstr "個人"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:287
+#: src/modules/conf_desklock/e_int_config_desklock.c:281
 msgid "Login Box Settings"
 msgstr "登入方塊設定"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:291
+#: src/modules/conf_desklock/e_int_config_desklock.c:284
 msgid "Show on all screen zones"
 msgstr "顯示於全部螢幕區域"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:295
+#: src/modules/conf_desklock/e_int_config_desklock.c:288
 msgid "Show on current screen zone"
 msgstr "顯示於目前螢幕區域"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:299
+#: src/modules/conf_desklock/e_int_config_desklock.c:292
 msgid "Show on screen zone #:"
 msgstr "顯示於螢幕區域 #:"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:303
+#: src/modules/conf_desklock/e_int_config_desklock.c:296
 #: src/modules/conf_desks/e_int_config_desks.c:197
 #: src/modules/conf_desks/e_int_config_desks.c:201
 #: src/modules/conf_desks/e_int_config_desks.c:236
 #: src/modules/conf_desks/e_int_config_desks.c:240
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:113
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:117
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:121
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:165
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:169
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:173
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:112
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:116
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:120
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:164
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:168
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:172
 #: src/modules/conf_mouse/e_int_config_mouse.c:95
 #: src/modules/conf_mouse/e_int_config_mouse.c:101
-#: src/modules/fileman/e_mod_config.c:180
+#: src/modules/fileman/e_mod_config.c:175
 #, c-format
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:310
+#: src/modules/conf_desklock/e_int_config_desklock.c:304
 msgid "Wallpaper Mode"
 msgstr "桌布模式"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:313
+#: src/modules/conf_desklock/e_int_config_desklock.c:306
 msgid "Theme Defined"
 msgstr "依佈景主題"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:316
+#: src/modules/conf_desklock/e_int_config_desklock.c:309
 msgid "Theme Wallpaper"
 msgstr "佈景主題桌布"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:328
+#: src/modules/conf_desklock/e_int_config_desklock.c:322
 msgid "Custom Screenlock"
 msgstr "自訂螢幕鎖定"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:329
+#: src/modules/conf_desklock/e_int_config_desklock.c:323
 msgid "Use custom screenlock"
 msgstr "使用自訂螢幕鎖定"
 
@@ -3428,13 +3589,14 @@ msgid "Dialog Settings"
 msgstr "對話框設定"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:84
-#: src/modules/conf_engine/e_int_config_engine.c:82
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:110
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:162
-#: src/modules/conf_performance/e_int_config_performance.c:89
-#: src/modules/conf_performance/e_int_config_performance.c:121
+#: src/modules/conf_engine/e_int_config_engine.c:85
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:109
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:161
+#: src/modules/conf_performance/e_int_config_performance.c:90
+#: src/modules/conf_performance/e_int_config_performance.c:123
 #: src/modules/conf_winlist/e_int_config_winlist.c:131
-#: src/modules/ibox/e_mod_config.c:93 src/modules/pager/e_mod_config.c:120
+#: src/modules/ibox/e_mod_config.c:93 src/modules/pager/e_mod_config.c:115
+#: src/modules/pager/e_mod_config.c:154
 msgid "General Settings"
 msgstr "一般設定"
 
@@ -3464,7 +3626,7 @@ msgstr "預設對話框模式"
 msgid "Dialogs"
 msgstr "對話框"
 
-#: src/modules/conf_display/e_int_config_display.c:132
+#: src/modules/conf_display/e_int_config_display.c:133
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -3475,7 +3637,7 @@ msgstr ""
 "先的解晰度為<br>%dx%d @ %dHz。如果您在 %d 秒內末按下任何按鈕，系統<br>將自動"
 "還原成原先的解晰度。"
 
-#: src/modules/conf_display/e_int_config_display.c:139
+#: src/modules/conf_display/e_int_config_display.c:140
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -3508,39 +3670,39 @@ msgstr ""
 "先的解晰度為<br>%dx%d。如果您沒有按下任何按鈕，系統<br>將馬上還原成原先的解晰"
 "度。"
 
-#: src/modules/conf_display/e_int_config_display.c:211
+#: src/modules/conf_display/e_int_config_display.c:212
 msgid "Resolution change"
 msgstr "改變解析度"
 
-#: src/modules/conf_display/e_int_config_display.c:242
+#: src/modules/conf_display/e_int_config_display.c:250
 msgid "Screen Resolution Settings"
 msgstr "螢幕解析度設定"
 
-#: src/modules/conf_display/e_int_config_display.c:389
+#: src/modules/conf_display/e_int_config_display.c:398
 msgid "Resolution"
 msgstr "解析度"
 
-#: src/modules/conf_display/e_int_config_display.c:396
+#: src/modules/conf_display/e_int_config_display.c:405
 msgid "Restore on login"
 msgstr "登入時復原"
 
-#: src/modules/conf_display/e_int_config_display.c:401
+#: src/modules/conf_display/e_int_config_display.c:410
 msgid "Refresh"
 msgstr "更新頻率"
 
-#: src/modules/conf_display/e_int_config_display.c:484
+#: src/modules/conf_display/e_int_config_display.c:493
 msgid "Rotation"
 msgstr "旋轉"
 
-#: src/modules/conf_display/e_int_config_display.c:503
+#: src/modules/conf_display/e_int_config_display.c:512
 msgid "Mirroring"
 msgstr "鏡射"
 
-#: src/modules/conf_display/e_int_config_display.c:583
+#: src/modules/conf_display/e_int_config_display.c:593
 msgid "Missing Features"
 msgstr "缺少的功能"
 
-#: src/modules/conf_display/e_int_config_display.c:584
+#: src/modules/conf_display/e_int_config_display.c:594
 msgid ""
 "Your X Display Server is missing support for<br>the <hilight>XRandr</"
 "hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
@@ -3552,11 +3714,11 @@ msgstr ""
 "援。<br>在這個情況下您無法改變您的螢幕解晰度。這也有可能是因為 "
 "<hilight>ecore</hilight><br>在編譯時沒有偵測到 XRandR。"
 
-#: src/modules/conf_display/e_int_config_display.c:596
+#: src/modules/conf_display/e_int_config_display.c:606
 msgid "No Refresh Rates Found"
 msgstr "找不到可用之更新頻率"
 
-#: src/modules/conf_display/e_int_config_display.c:597
+#: src/modules/conf_display/e_int_config_display.c:607
 msgid ""
 "No refresh rates were reported by your X Display Server.<br>If you are "
 "running a nested X Display Server, then<br>this is to be expected. However, "
@@ -3613,17 +3775,29 @@ msgstr "關機時間"
 msgid "Power Management"
 msgstr "電源管理"
 
-#: src/modules/conf_engine/e_int_config_engine.c:33
+#: src/modules/conf_engine/e_int_config_engine.c:36
 msgid "Engine Settings"
 msgstr "引擎設定"
 
-#: src/modules/conf_engine/e_int_config_engine.c:83
+#: src/modules/conf_engine/e_int_config_engine.c:86
 msgid "Enable Composite"
 msgstr "啟用 Composite"
 
-#: src/modules/conf_engine/e_int_config_engine.c:87
+#: src/modules/conf_engine/e_int_config_engine.c:93
 msgid "Default Engine"
 msgstr "預設引擎"
+
+#: src/modules/conf_engine/e_int_config_engine.c:121
+#, fuzzy
+msgid "Enable Composite Support ?"
+msgstr "啟用 Composite"
+
+#: src/modules/conf_engine/e_int_config_engine.c:123
+msgid ""
+"You have chosen to enable composite support,<br>but your current screen does "
+"not support composite.<br><br>Are you sure you wish to enable composite "
+"support ?"
+msgstr ""
 
 #: src/modules/conf_engine/e_mod_main.c:35
 msgid "Engine"
@@ -3633,43 +3807,43 @@ msgstr "引擎"
 msgid "Run Command Settings"
 msgstr "執行命令設定"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:111
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:163
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:110
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:162
 msgid "Maximum Number of Matched Apps to List"
 msgstr "最多列出此筆數符合的應用程式"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:115
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:167
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:114
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:166
 msgid "Maximum Number of Matched Exes to List"
 msgstr "最多列出此筆數符合的執行檔"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:119
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:171
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:118
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:170
 msgid "Maximum History to List"
 msgstr "最多列出此筆數歷史資料"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:125
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:177
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:124
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:176
 #: src/modules/conf_winlist/e_int_config_winlist.c:162
 #: src/modules/conf_winlist/e_int_config_winlist.c:240
 msgid "Scroll Settings"
 msgstr "捲動設定"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:126
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:178
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:125
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:177
 #: src/modules/conf_winlist/e_int_config_winlist.c:163
 #: src/modules/conf_winlist/e_int_config_winlist.c:241
 msgid "Scroll Animate"
 msgstr "捲動動畫"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:180
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:179
 #: src/modules/conf_winlist/e_int_config_winlist.c:243
 msgid "Scroll Speed"
 msgstr "捲動速度"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:182
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:215
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:219
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:181
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:216
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:220
 #: src/modules/conf_winlist/e_int_config_winlist.c:236
 #: src/modules/conf_winlist/e_int_config_winlist.c:245
 #: src/modules/conf_winlist/e_int_config_winlist.c:252
@@ -3678,28 +3852,28 @@ msgstr "捲動速度"
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:186
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:185
 msgid "Terminal Settings"
 msgstr "終端機設定"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:187
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:186
 msgid "Terminal Command (CTRL+RETURN to utilize)"
 msgstr "終端機命令 (利用 CTRL+RETURN)"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:193
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:194
 #: src/modules/conf_winlist/e_int_config_winlist.c:260
 msgid "Size Settings"
 msgstr "大小設定"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:194
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:195
 #: src/modules/conf_winlist/e_int_config_winlist.c:261
 msgid "Minimum Width"
 msgstr "最小寬度"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:196
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:200
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:204
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:208
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:197
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:201
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:205
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:209
 #: src/modules/conf_winlist/e_int_config_winlist.c:263
 #: src/modules/conf_winlist/e_int_config_winlist.c:267
 #: src/modules/conf_winlist/e_int_config_winlist.c:271
@@ -3708,32 +3882,32 @@ msgstr "最小寬度"
 msgid "%4.0f"
 msgstr "%4.0f"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:198
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:199
 #: src/modules/conf_winlist/e_int_config_winlist.c:265
 msgid "Minimum Height"
 msgstr "最小高度"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:202
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:203
 #: src/modules/conf_winlist/e_int_config_winlist.c:269
 msgid "Maximum Width"
 msgstr "最大寬度"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:206
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:207
 #: src/modules/conf_winlist/e_int_config_winlist.c:273
 msgid "Maximum Height"
 msgstr "最大高度"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:212
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:213
 #: src/modules/conf_winlist/e_int_config_winlist.c:249
 msgid "Position Settings"
 msgstr "位置設定"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:213
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:214
 #: src/modules/conf_winlist/e_int_config_winlist.c:250
 msgid "X-Axis Alignment"
 msgstr "X-軸排列"
 
-#: src/modules/conf_exebuf/e_int_config_exebuf.c:217
+#: src/modules/conf_exebuf/e_int_config_exebuf.c:218
 #: src/modules/conf_winlist/e_int_config_winlist.c:254
 msgid "Y-Axis Alignment"
 msgstr "Y-軸排列"
@@ -3884,9 +4058,9 @@ msgid "Enable Custom Font Classes"
 msgstr "啟用自訂字型類別"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:448
-#: src/modules/conf_fonts/e_int_config_fonts.c:632
+#: src/modules/conf_fonts/e_int_config_fonts.c:633
 #: src/modules/conf_fonts/e_mod_main.c:35
-#: src/modules/conf_paths/e_int_config_paths.c:80
+#: src/modules/conf_paths/e_int_config_paths.c:77
 msgid "Fonts"
 msgstr "字型"
 
@@ -3894,42 +4068,42 @@ msgstr "字型"
 msgid "Basic preview text: 123: 我的天空！"
 msgstr "Basic preview text: 123: 我的天空！"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:621
+#: src/modules/conf_fonts/e_int_config_fonts.c:617
 msgid "Font Classes"
 msgstr "字型類別"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:657
+#: src/modules/conf_fonts/e_int_config_fonts.c:626
 msgid "Enable Font Class"
 msgstr "啟用字型類別"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:663
-msgid "Advanced Preview Text.. 我真的会写中文"
-msgstr "Advanced Preview Text.. 我真的会写中文"
-
-#: src/modules/conf_fonts/e_int_config_fonts.c:671
+#: src/modules/conf_fonts/e_int_config_fonts.c:658
 msgid "Hinting"
 msgstr "Hinting"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:674
+#: src/modules/conf_fonts/e_int_config_fonts.c:661
 msgid "Bytecode"
 msgstr "Bytecode"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:678
+#: src/modules/conf_fonts/e_int_config_fonts.c:665
 #: src/modules/cpufreq/e_mod_main.c:222
 msgid "Automatic"
 msgstr "自動"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:688
+#: src/modules/conf_fonts/e_int_config_fonts.c:674
 msgid "Font Fallbacks"
 msgstr "備用字型"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:689
+#: src/modules/conf_fonts/e_int_config_fonts.c:675
 msgid "Fallback Name"
 msgstr "備用字型名稱"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:702
+#: src/modules/conf_fonts/e_int_config_fonts.c:688
 msgid "Enable Fallbacks"
 msgstr "啟用備用字型"
+
+#: src/modules/conf_fonts/e_int_config_fonts.c:696
+msgid "Advanced Preview Text.. 我真的会写中文"
+msgstr "Advanced Preview Text.. 我真的会写中文"
 
 #: src/modules/conf_icon_theme/e_int_config_icon_themes.c:54
 msgid "Icon Theme Settings"
@@ -4013,1543 +4187,6 @@ msgstr "語言"
 #: src/modules/conf_imc/e_mod_main.c:35
 msgid "Input Method Settings"
 msgstr "輸入法設定"
-
-#: src/modules/conf_intl/e_int_config_intl.c:104
-#: src/modules/conf_intl/e_int_config_intl.c:140
-msgid "Bulgarian"
-msgstr "保加利亞文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:105
-#: src/modules/conf_intl/e_int_config_intl.c:145
-msgid "Catalan"
-msgstr "加泰隆文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:106
-msgid "Chinese (Simplified)"
-msgstr "簡體中文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:107
-msgid "Chinese (Traditional)"
-msgstr "繁體中文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:108
-#: src/modules/conf_intl/e_int_config_intl.c:147
-msgid "Czech"
-msgstr "捷克文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:109
-#: src/modules/conf_intl/e_int_config_intl.c:149
-msgid "Danish"
-msgstr "丹麥文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:110
-#: src/modules/conf_intl/e_int_config_intl.c:213
-msgid "Dutch"
-msgstr "荷蘭文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:111
-#: src/modules/conf_intl/e_int_config_intl.c:155
-msgid "English"
-msgstr "英文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:112
-#: src/modules/conf_intl/e_int_config_intl.c:161
-msgid "Finnish"
-msgstr "芬蘭文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:113
-#: src/modules/conf_intl/e_int_config_intl.c:163
-msgid "French"
-msgstr "法文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:114
-#: src/modules/conf_intl/e_int_config_intl.c:150
-msgid "German"
-msgstr "德文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:115
-#: src/modules/conf_intl/e_int_config_intl.c:176
-msgid "Hungarian"
-msgstr "匈牙利文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:116
-#: src/modules/conf_intl/e_int_config_intl.c:182
-msgid "Italian"
-msgstr "意大利文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:117
-#: src/modules/conf_intl/e_int_config_intl.c:185
-msgid "Japanese"
-msgstr "日本"
-
-#: src/modules/conf_intl/e_int_config_intl.c:118
-#: src/modules/conf_intl/e_int_config_intl.c:195
-msgid "Korean"
-msgstr "韓國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:119
-#: src/modules/conf_intl/e_int_config_intl.c:211
-msgid "Norwegian Bokmål"
-msgstr "挪威 Bokmål 語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:120
-#: src/modules/conf_intl/e_int_config_intl.c:223
-msgid "Polish"
-msgstr "波蘭文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:121
-#: src/modules/conf_intl/e_int_config_intl.c:225
-msgid "Portuguese"
-msgstr "葡萄牙文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:122
-#: src/modules/conf_intl/e_int_config_intl.c:227
-msgid "Russian"
-msgstr "俄羅斯文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:123
-#: src/modules/conf_intl/e_int_config_intl.c:233
-msgid "Slovak"
-msgstr "斯洛伐克文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:124
-#: src/modules/conf_intl/e_int_config_intl.c:234
-msgid "Slovenian"
-msgstr "斯洛文尼亞文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:125
-#: src/modules/conf_intl/e_int_config_intl.c:157
-msgid "Spanish"
-msgstr "西班牙文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:126
-#: src/modules/conf_intl/e_int_config_intl.c:240
-msgid "Swedish"
-msgstr "瑞典文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:131
-msgid "Afar"
-msgstr "Afar"
-
-#: src/modules/conf_intl/e_int_config_intl.c:132
-msgid "Afrikaans"
-msgstr "南非荷蘭文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:133
-msgid "Akan"
-msgstr "Akan"
-
-#: src/modules/conf_intl/e_int_config_intl.c:134
-msgid "Amharic"
-msgstr "Amharic"
-
-#: src/modules/conf_intl/e_int_config_intl.c:135
-msgid "Aragonese"
-msgstr "Aragonese"
-
-#: src/modules/conf_intl/e_int_config_intl.c:136
-msgid "Arabic"
-msgstr "阿拉伯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:137
-msgid "Assamese"
-msgstr "Assamese"
-
-#: src/modules/conf_intl/e_int_config_intl.c:138
-msgid "Azerbaijani"
-msgstr "亞塞拜疆文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:139
-msgid "Belarusian"
-msgstr "白俄羅斯文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:141
-msgid "Bengali"
-msgstr "Bengali"
-
-#: src/modules/conf_intl/e_int_config_intl.c:142
-msgid "Breton"
-msgstr "布列塔尼文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:143
-msgid "Bosnian"
-msgstr "Bosnian"
-
-#: src/modules/conf_intl/e_int_config_intl.c:144
-msgid "Blin"
-msgstr "Blin"
-
-#: src/modules/conf_intl/e_int_config_intl.c:146
-msgid "Atsam"
-msgstr "Atsam"
-
-#: src/modules/conf_intl/e_int_config_intl.c:148
-msgid "Welsh"
-msgstr "Welsh"
-
-#: src/modules/conf_intl/e_int_config_intl.c:151
-msgid "Divehi"
-msgstr "Divehi"
-
-#: src/modules/conf_intl/e_int_config_intl.c:152
-msgid "Dzongkha"
-msgstr "Dzongkha"
-
-#: src/modules/conf_intl/e_int_config_intl.c:153
-msgid "Ewe"
-msgstr "Ewe"
-
-#: src/modules/conf_intl/e_int_config_intl.c:154
-msgid "Greek"
-msgstr "Greek"
-
-#: src/modules/conf_intl/e_int_config_intl.c:156
-msgid "Esperanto"
-msgstr "世界語"
-
-#: src/modules/conf_intl/e_int_config_intl.c:158
-msgid "Estonian"
-msgstr "愛沙尼亞文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:159
-msgid "Basque"
-msgstr "巴斯克文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:160
-msgid "Persian"
-msgstr "Persian"
-
-#: src/modules/conf_intl/e_int_config_intl.c:162
-msgid "Faroese"
-msgstr "法羅文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:164
-msgid "Friulian"
-msgstr "Friulian"
-
-#: src/modules/conf_intl/e_int_config_intl.c:165
-msgid "Irish"
-msgstr "愛爾蘭文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:166
-msgid "Ga"
-msgstr "Ga"
-
-#: src/modules/conf_intl/e_int_config_intl.c:167
-msgid "Geez"
-msgstr "Geez"
-
-#: src/modules/conf_intl/e_int_config_intl.c:168
-msgid "Galician"
-msgstr "Galician"
-
-#: src/modules/conf_intl/e_int_config_intl.c:169
-msgid "Gujarati"
-msgstr "Gujarati"
-
-#: src/modules/conf_intl/e_int_config_intl.c:170
-msgid "Manx"
-msgstr "Manx"
-
-#: src/modules/conf_intl/e_int_config_intl.c:171
-msgid "Hausa"
-msgstr "Hausa"
-
-#: src/modules/conf_intl/e_int_config_intl.c:172
-msgid "Hawaiian"
-msgstr "Hawaiian"
-
-#: src/modules/conf_intl/e_int_config_intl.c:173
-#: src/modules/conf_intl/e_int_config_intl.c:184
-msgid "Hebrew"
-msgstr "希伯來"
-
-#: src/modules/conf_intl/e_int_config_intl.c:174
-msgid "Hindi"
-msgstr "Hindi"
-
-#: src/modules/conf_intl/e_int_config_intl.c:175
-msgid "Croatian"
-msgstr "克羅地亞文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:177
-msgid "Armenian"
-msgstr "Armenian"
-
-#: src/modules/conf_intl/e_int_config_intl.c:178
-msgid "Interlingua"
-msgstr "Interlingua"
-
-#: src/modules/conf_intl/e_int_config_intl.c:179
-msgid "Indonesian"
-msgstr "印尼文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:180
-msgid "Igbo"
-msgstr "Igbo"
-
-#: src/modules/conf_intl/e_int_config_intl.c:181
-msgid "Icelandic"
-msgstr "冰島文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:183
-msgid "Inuktitut"
-msgstr "Inuktitut"
-
-#: src/modules/conf_intl/e_int_config_intl.c:186
-msgid "Georgian"
-msgstr "Georgian"
-
-#: src/modules/conf_intl/e_int_config_intl.c:187
-msgid "Jju"
-msgstr "Jju"
-
-#: src/modules/conf_intl/e_int_config_intl.c:188
-msgid "Kamba"
-msgstr "Kamba"
-
-#: src/modules/conf_intl/e_int_config_intl.c:189
-msgid "Tyap"
-msgstr "Tyap"
-
-#: src/modules/conf_intl/e_int_config_intl.c:190
-msgid "Koro"
-msgstr "Koro"
-
-#: src/modules/conf_intl/e_int_config_intl.c:191
-msgid "Kazakh"
-msgstr "Kazakh"
-
-#: src/modules/conf_intl/e_int_config_intl.c:192
-msgid "Kalaallisut"
-msgstr "Kalaallisut"
-
-#: src/modules/conf_intl/e_int_config_intl.c:193
-msgid "Khmer"
-msgstr "Khmer"
-
-#: src/modules/conf_intl/e_int_config_intl.c:194
-msgid "Kannada"
-msgstr "Kannada"
-
-#: src/modules/conf_intl/e_int_config_intl.c:196
-msgid "Konkani"
-msgstr "Konkani"
-
-#: src/modules/conf_intl/e_int_config_intl.c:197
-msgid "Kurdish"
-msgstr "Kurdish"
-
-#: src/modules/conf_intl/e_int_config_intl.c:198
-msgid "Cornish"
-msgstr "Cornish"
-
-#: src/modules/conf_intl/e_int_config_intl.c:199
-msgid "Kirghiz"
-msgstr "Kirghiz"
-
-#: src/modules/conf_intl/e_int_config_intl.c:200
-msgid "Lingala"
-msgstr "Lingala"
-
-#: src/modules/conf_intl/e_int_config_intl.c:201
-msgid "Lao"
-msgstr "Lao"
-
-#: src/modules/conf_intl/e_int_config_intl.c:202
-msgid "Lithuanian"
-msgstr "立陶宛文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:203
-msgid "Latvian"
-msgstr "拉脫維亞文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:204
-msgid "Maori"
-msgstr "Maori"
-
-#: src/modules/conf_intl/e_int_config_intl.c:205
-msgid "Macedonian"
-msgstr "馬其頓文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:206
-msgid "Malayalam"
-msgstr "Malayalam"
-
-#: src/modules/conf_intl/e_int_config_intl.c:207
-msgid "Mongolian"
-msgstr "Mongolian"
-
-#: src/modules/conf_intl/e_int_config_intl.c:208
-msgid "Marathi"
-msgstr "Marathi"
-
-#: src/modules/conf_intl/e_int_config_intl.c:209
-msgid "Malay"
-msgstr "Malay"
-
-#: src/modules/conf_intl/e_int_config_intl.c:210
-msgid "Maltese"
-msgstr "Maltese"
-
-#: src/modules/conf_intl/e_int_config_intl.c:212
-msgid "Nepali"
-msgstr "Nepali"
-
-#: src/modules/conf_intl/e_int_config_intl.c:214
-msgid "Norwegian Nynorsk"
-msgstr "Norwegian Nynorsk"
-
-#: src/modules/conf_intl/e_int_config_intl.c:215
-msgid "Norwegian"
-msgstr "挪威文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:216
-msgid "South Ndebele"
-msgstr "South Ndebele"
-
-#: src/modules/conf_intl/e_int_config_intl.c:217
-msgid "Northern Sotho"
-msgstr "Northern Sotho"
-
-#: src/modules/conf_intl/e_int_config_intl.c:218
-msgid "Nyanja; Chichewa; Chewa"
-msgstr "Nyanja; Chichewa; Chewa"
-
-#: src/modules/conf_intl/e_int_config_intl.c:219
-msgid "Occitan"
-msgstr "Occitan"
-
-#: src/modules/conf_intl/e_int_config_intl.c:220
-msgid "Oromo"
-msgstr "Oromo"
-
-#: src/modules/conf_intl/e_int_config_intl.c:221
-msgid "Oriya"
-msgstr "Oriya"
-
-#: src/modules/conf_intl/e_int_config_intl.c:222
-msgid "Punjabi"
-msgstr "Punjabi"
-
-#: src/modules/conf_intl/e_int_config_intl.c:224
-msgid "Pashto"
-msgstr "Pashto"
-
-#: src/modules/conf_intl/e_int_config_intl.c:226
-msgid "Romanian"
-msgstr "羅馬尼亞文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:228
-msgid "Kinyarwanda"
-msgstr "Kinyarwanda"
-
-#: src/modules/conf_intl/e_int_config_intl.c:229
-msgid "Sanskrit"
-msgstr "Sanskrit"
-
-#: src/modules/conf_intl/e_int_config_intl.c:230
-msgid "Northern Sami"
-msgstr "Northern Sami"
-
-#: src/modules/conf_intl/e_int_config_intl.c:231
-msgid "Serbo-Croatian"
-msgstr "Serbo-Croatian"
-
-#: src/modules/conf_intl/e_int_config_intl.c:232
-msgid "Sidamo"
-msgstr "Sidamo"
-
-#: src/modules/conf_intl/e_int_config_intl.c:235
-msgid "Somali"
-msgstr "Somali"
-
-#: src/modules/conf_intl/e_int_config_intl.c:236
-msgid "Albanian"
-msgstr "阿爾巴尼亞文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:237
-msgid "Serbian"
-msgstr "塞爾維亞文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:238
-msgid "Swati"
-msgstr "Swati"
-
-#: src/modules/conf_intl/e_int_config_intl.c:239
-msgid "Southern Sotho"
-msgstr "Southern Sotho"
-
-#: src/modules/conf_intl/e_int_config_intl.c:241
-msgid "Swahili"
-msgstr "Swahili"
-
-#: src/modules/conf_intl/e_int_config_intl.c:242
-msgid "Syriac"
-msgstr "Syriac"
-
-#: src/modules/conf_intl/e_int_config_intl.c:243
-msgid "Tamil"
-msgstr "Tamil"
-
-#: src/modules/conf_intl/e_int_config_intl.c:244
-msgid "Telugu"
-msgstr "Telugu"
-
-#: src/modules/conf_intl/e_int_config_intl.c:245
-msgid "Tajik"
-msgstr "Tajik"
-
-#: src/modules/conf_intl/e_int_config_intl.c:246
-msgid "Thai"
-msgstr "泰國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:247
-msgid "Tigrinya"
-msgstr "Tigrinya"
-
-#: src/modules/conf_intl/e_int_config_intl.c:248
-msgid "Tigre"
-msgstr "Tigre"
-
-#: src/modules/conf_intl/e_int_config_intl.c:249
-msgid "Tagalog"
-msgstr "Tagalog"
-
-#: src/modules/conf_intl/e_int_config_intl.c:250
-msgid "Tswana"
-msgstr "Tswana"
-
-#: src/modules/conf_intl/e_int_config_intl.c:251
-msgid "Turkish"
-msgstr "土耳其"
-
-#: src/modules/conf_intl/e_int_config_intl.c:252
-msgid "Tsonga"
-msgstr "Tsonga"
-
-#: src/modules/conf_intl/e_int_config_intl.c:253
-msgid "Tatar"
-msgstr "Tatar"
-
-#: src/modules/conf_intl/e_int_config_intl.c:254
-msgid "Ukrainian"
-msgstr "Ukrainian"
-
-#: src/modules/conf_intl/e_int_config_intl.c:255
-msgid "Urdu"
-msgstr "Urdu"
-
-#: src/modules/conf_intl/e_int_config_intl.c:256
-msgid "Uzbek"
-msgstr "Uzbek"
-
-#: src/modules/conf_intl/e_int_config_intl.c:257
-msgid "Venda"
-msgstr "Venda"
-
-#: src/modules/conf_intl/e_int_config_intl.c:258
-msgid "Vietnamese"
-msgstr "越南"
-
-#: src/modules/conf_intl/e_int_config_intl.c:259
-msgid "Walloon"
-msgstr "Walloon"
-
-#: src/modules/conf_intl/e_int_config_intl.c:260
-msgid "Walamo"
-msgstr "Walamo"
-
-#: src/modules/conf_intl/e_int_config_intl.c:261
-msgid "Xhosa"
-msgstr "Xhosa"
-
-#: src/modules/conf_intl/e_int_config_intl.c:262
-msgid "Yiddish"
-msgstr "Yiddish"
-
-#: src/modules/conf_intl/e_int_config_intl.c:263
-msgid "Yoruba"
-msgstr "Yoruba"
-
-#: src/modules/conf_intl/e_int_config_intl.c:264
-msgid "Chinese"
-msgstr "中文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:265
-msgid "Zulu"
-msgstr "Zulu"
-
-#: src/modules/conf_intl/e_int_config_intl.c:270
-msgid "Afghanistan"
-msgstr "阿富汗"
-
-#: src/modules/conf_intl/e_int_config_intl.c:271
-msgid "Åland Islands"
-msgstr "奧蘭群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:272
-msgid "Albania"
-msgstr "阿爾巴尼亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:273
-msgid "Algeria"
-msgstr "阿爾及利亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:274
-msgid "American Samoa"
-msgstr "美屬薩摩亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:275
-msgid "Andorra"
-msgstr "安道爾"
-
-#: src/modules/conf_intl/e_int_config_intl.c:276
-msgid "Angola"
-msgstr "安哥拉"
-
-#: src/modules/conf_intl/e_int_config_intl.c:277
-msgid "Anguilla"
-msgstr "安圭拉"
-
-#: src/modules/conf_intl/e_int_config_intl.c:278
-msgid "Antarctica"
-msgstr "南極洲"
-
-#: src/modules/conf_intl/e_int_config_intl.c:279
-msgid "Antigua and Barbuda"
-msgstr "安地卡及巴布達"
-
-#: src/modules/conf_intl/e_int_config_intl.c:280
-msgid "Argentina"
-msgstr "阿根廷"
-
-#: src/modules/conf_intl/e_int_config_intl.c:281
-msgid "Armenia"
-msgstr "亞美尼亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:282
-msgid "Aruba"
-msgstr "阿魯巴"
-
-#: src/modules/conf_intl/e_int_config_intl.c:283
-msgid "Australia"
-msgstr "澳大利亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:284
-msgid "Austria"
-msgstr "奧地利"
-
-#: src/modules/conf_intl/e_int_config_intl.c:285
-msgid "Azerbaijan"
-msgstr "亞塞拜然"
-
-#: src/modules/conf_intl/e_int_config_intl.c:286
-msgid "Bahamas"
-msgstr "巴哈馬"
-
-#: src/modules/conf_intl/e_int_config_intl.c:287
-msgid "Bahrain"
-msgstr "巴林"
-
-#: src/modules/conf_intl/e_int_config_intl.c:288
-msgid "Bangladesh"
-msgstr "孟加拉"
-
-#: src/modules/conf_intl/e_int_config_intl.c:289
-msgid "Barbados"
-msgstr "巴貝多"
-
-#: src/modules/conf_intl/e_int_config_intl.c:290
-msgid "Belarus"
-msgstr "白俄羅斯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:291
-msgid "Belgium"
-msgstr "比利時"
-
-#: src/modules/conf_intl/e_int_config_intl.c:292
-msgid "Belize"
-msgstr "貝里斯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:293
-msgid "Benin"
-msgstr "貝南"
-
-#: src/modules/conf_intl/e_int_config_intl.c:294
-msgid "Bermuda"
-msgstr "百慕達"
-
-#: src/modules/conf_intl/e_int_config_intl.c:295
-msgid "Bhutan"
-msgstr "不丹"
-
-#: src/modules/conf_intl/e_int_config_intl.c:296
-msgid "Bolivia"
-msgstr "玻利維亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:297
-msgid "Bosnia and Herzegovina"
-msgstr "波士尼亞及赫塞哥維納"
-
-#: src/modules/conf_intl/e_int_config_intl.c:298
-msgid "Botswana"
-msgstr "波札那"
-
-#: src/modules/conf_intl/e_int_config_intl.c:299
-msgid "Bouvet Island"
-msgstr "波維特島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:300
-msgid "Brazil"
-msgstr "巴西"
-
-#: src/modules/conf_intl/e_int_config_intl.c:301
-msgid "British Indian Ocean Territory"
-msgstr "英屬印度洋地區"
-
-#: src/modules/conf_intl/e_int_config_intl.c:302
-msgid "Brunei Darussalam"
-msgstr "汶萊"
-
-#: src/modules/conf_intl/e_int_config_intl.c:303
-msgid "Bulgaria"
-msgstr "保加利亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:304
-msgid "Burkina Faso"
-msgstr "布吉納法索"
-
-#: src/modules/conf_intl/e_int_config_intl.c:305
-msgid "Burundi"
-msgstr "浦隆地"
-
-#: src/modules/conf_intl/e_int_config_intl.c:306
-msgid "Cambodia"
-msgstr "柬普寨"
-
-#: src/modules/conf_intl/e_int_config_intl.c:307
-msgid "Cameroon"
-msgstr "喀麥隆"
-
-#: src/modules/conf_intl/e_int_config_intl.c:308
-msgid "Canada"
-msgstr "加拿大"
-
-#: src/modules/conf_intl/e_int_config_intl.c:309
-msgid "Cape Verde"
-msgstr "維德角"
-
-#: src/modules/conf_intl/e_int_config_intl.c:310
-msgid "Cayman Islands"
-msgstr "開曼群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:311
-msgid "Central African Republic"
-msgstr "中非共和國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:312
-msgid "Chad"
-msgstr "查德"
-
-#: src/modules/conf_intl/e_int_config_intl.c:313
-msgid "Chile"
-msgstr "智利"
-
-#: src/modules/conf_intl/e_int_config_intl.c:314
-msgid "China"
-msgstr "中國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:315
-msgid "Christmas Island"
-msgstr "聖誕島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:316
-#, fuzzy
-msgid "Cocos (keeling) Islands"
-msgstr "可可斯群島 (椰島)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:317
-msgid "Colombia"
-msgstr "哥倫比亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:318
-msgid "Comoros"
-msgstr "葛摩"
-
-#: src/modules/conf_intl/e_int_config_intl.c:319
-#: src/modules/conf_intl/e_int_config_intl.c:320
-msgid "Congo"
-msgstr "剛果"
-
-#: src/modules/conf_intl/e_int_config_intl.c:321
-msgid "Cook Islands"
-msgstr "科克群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:322
-msgid "Costa Rica"
-msgstr "哥斯大黎加"
-
-#: src/modules/conf_intl/e_int_config_intl.c:323
-#, fuzzy
-msgid "Cote d'Ivoire"
-msgstr "象牙海岸"
-
-#: src/modules/conf_intl/e_int_config_intl.c:324
-msgid "Croatia"
-msgstr "克羅埃西亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:325
-msgid "Cuba"
-msgstr "古巴"
-
-#: src/modules/conf_intl/e_int_config_intl.c:326
-msgid "Cyprus"
-msgstr "賽普勒斯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:327
-msgid "Czech Republic"
-msgstr "捷克共和國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:328
-msgid "Denmark"
-msgstr "丹麥"
-
-#: src/modules/conf_intl/e_int_config_intl.c:329
-msgid "Djibouti"
-msgstr "吉布地"
-
-#: src/modules/conf_intl/e_int_config_intl.c:330
-msgid "Dominica"
-msgstr "多米尼克"
-
-#: src/modules/conf_intl/e_int_config_intl.c:331
-msgid "Dominican Republic"
-msgstr "多明尼加共和國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:332
-msgid "Ecuador"
-msgstr "厄瓜多"
-
-#: src/modules/conf_intl/e_int_config_intl.c:333
-msgid "Egypt"
-msgstr "埃及"
-
-#: src/modules/conf_intl/e_int_config_intl.c:334
-msgid "El Salvador"
-msgstr "薩爾瓦多"
-
-#: src/modules/conf_intl/e_int_config_intl.c:335
-msgid "Equatorial Guinea"
-msgstr "赤道幾內亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:336
-msgid "Eritrea"
-msgstr "厄利垂亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:337
-msgid "Estonia"
-msgstr "愛沙尼亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:338
-msgid "Ethiopia"
-msgstr "依索比亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:339
-#, fuzzy
-msgid "Falkland Islands (malvinas)"
-msgstr "法克蘭群島 (馬爾維納斯)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:340
-msgid "Faroe Islands"
-msgstr "法羅群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:341
-msgid "Fiji"
-msgstr "斐濟"
-
-#: src/modules/conf_intl/e_int_config_intl.c:342
-msgid "Finland"
-msgstr "芬蘭"
-
-#: src/modules/conf_intl/e_int_config_intl.c:343
-msgid "France"
-msgstr "法國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:344
-msgid "French Guiana"
-msgstr "法屬圭亞那"
-
-#: src/modules/conf_intl/e_int_config_intl.c:345
-msgid "French Polynesia"
-msgstr "法屬圭亞那"
-
-#: src/modules/conf_intl/e_int_config_intl.c:346
-msgid "French Southern Territories"
-msgstr "法屬南部屬地"
-
-#: src/modules/conf_intl/e_int_config_intl.c:347
-msgid "Gabon"
-msgstr "加彭"
-
-#: src/modules/conf_intl/e_int_config_intl.c:348
-msgid "Gambia"
-msgstr "甘比亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:349
-msgid "Georgia"
-msgstr "喬治亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:350
-msgid "Germany"
-msgstr "德國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:351
-msgid "Ghana"
-msgstr "迦納"
-
-#: src/modules/conf_intl/e_int_config_intl.c:352
-msgid "Gibraltar"
-msgstr "直布羅陀"
-
-#: src/modules/conf_intl/e_int_config_intl.c:353
-msgid "Greece"
-msgstr "希臘"
-
-#: src/modules/conf_intl/e_int_config_intl.c:354
-msgid "Greenland"
-msgstr "格陵蘭"
-
-#: src/modules/conf_intl/e_int_config_intl.c:355
-msgid "Grenada"
-msgstr "格瑞那達"
-
-#: src/modules/conf_intl/e_int_config_intl.c:356
-msgid "Guadeloupe"
-msgstr "瓜德魯普"
-
-#: src/modules/conf_intl/e_int_config_intl.c:357
-msgid "Guam"
-msgstr "關島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:358
-msgid "Guatemala"
-msgstr "瓜地馬拉"
-
-#: src/modules/conf_intl/e_int_config_intl.c:359
-msgid "Guernsey"
-msgstr "根西島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:360
-msgid "Guinea"
-msgstr "幾內亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:361
-msgid "Guinea-Bissau"
-msgstr "幾內亞比索"
-
-#: src/modules/conf_intl/e_int_config_intl.c:362
-msgid "Guyana"
-msgstr "蓋亞那"
-
-#: src/modules/conf_intl/e_int_config_intl.c:363
-msgid "Haiti"
-msgstr "海地"
-
-#: src/modules/conf_intl/e_int_config_intl.c:364
-#, fuzzy
-msgid "Heard Island and Mcdonald Islands"
-msgstr "赫德及麥當勞群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:365
-msgid "Holy See (Vatican City State)"
-msgstr "教廷 (梵蒂岡)"
-
-#: src/modules/conf_intl/e_int_config_intl.c:366
-msgid "Honduras"
-msgstr "宏都拉斯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:367
-msgid "Hong Kong"
-msgstr "香港"
-
-#: src/modules/conf_intl/e_int_config_intl.c:368
-msgid "Hungary"
-msgstr "匈牙利"
-
-#: src/modules/conf_intl/e_int_config_intl.c:369
-msgid "Iceland"
-msgstr "冰島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:370
-msgid "India"
-msgstr "印度"
-
-#: src/modules/conf_intl/e_int_config_intl.c:371
-msgid "Indonesia"
-msgstr "印尼"
-
-#: src/modules/conf_intl/e_int_config_intl.c:372
-msgid "Iran"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:373
-msgid "Iraq"
-msgstr "伊拉克"
-
-#: src/modules/conf_intl/e_int_config_intl.c:374
-msgid "Ireland"
-msgstr "愛爾蘭"
-
-#: src/modules/conf_intl/e_int_config_intl.c:375
-msgid "Isle Of Man"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:376
-msgid "Israel"
-msgstr "以色列"
-
-#: src/modules/conf_intl/e_int_config_intl.c:377
-msgid "Italy"
-msgstr "義大利"
-
-#: src/modules/conf_intl/e_int_config_intl.c:378
-msgid "Jamaica"
-msgstr "牙買加"
-
-#: src/modules/conf_intl/e_int_config_intl.c:379
-msgid "Japan"
-msgstr "日本"
-
-#: src/modules/conf_intl/e_int_config_intl.c:380
-msgid "Jersey"
-msgstr "澤西島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:381
-msgid "Jordan"
-msgstr "約旦"
-
-#: src/modules/conf_intl/e_int_config_intl.c:382
-msgid "Kazakhstan"
-msgstr "哈薩克"
-
-#: src/modules/conf_intl/e_int_config_intl.c:383
-msgid "Kenya"
-msgstr "肯亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:384
-msgid "Kiribati"
-msgstr "吉里巴斯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:385
-#: src/modules/conf_intl/e_int_config_intl.c:386
-msgid "Korea"
-msgstr "韓國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:387
-msgid "Kuwait"
-msgstr "科威特"
-
-#: src/modules/conf_intl/e_int_config_intl.c:388
-msgid "Kyrgyzstan"
-msgstr "吉爾吉斯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:389
-msgid "Lao People's Democratic Republic"
-msgstr "寮國人民民主共和國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:390
-msgid "Latvia"
-msgstr "拉脫維亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:391
-msgid "Lebanon"
-msgstr "黎巴嫩"
-
-#: src/modules/conf_intl/e_int_config_intl.c:392
-msgid "Lesotho"
-msgstr "賴索托"
-
-#: src/modules/conf_intl/e_int_config_intl.c:393
-msgid "Liberia"
-msgstr "賴比瑞亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:394
-msgid "Libyan Arab Jamahiriya"
-msgstr "利比亞阿拉伯群眾國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:395
-msgid "Liechtenstein"
-msgstr "列支敦斯登"
-
-#: src/modules/conf_intl/e_int_config_intl.c:396
-msgid "Lithuania"
-msgstr "立陶宛"
-
-#: src/modules/conf_intl/e_int_config_intl.c:397
-msgid "Luxembourg"
-msgstr "盧森堡"
-
-#: src/modules/conf_intl/e_int_config_intl.c:398
-msgid "Macao"
-msgstr "澳門"
-
-#: src/modules/conf_intl/e_int_config_intl.c:399
-#, fuzzy
-msgid "Macedonia"
-msgstr "馬其頓文"
-
-#: src/modules/conf_intl/e_int_config_intl.c:400
-msgid "Madagascar"
-msgstr "馬達加斯加"
-
-#: src/modules/conf_intl/e_int_config_intl.c:401
-msgid "Malawi"
-msgstr "馬拉威"
-
-#: src/modules/conf_intl/e_int_config_intl.c:402
-msgid "Malaysia"
-msgstr "馬來西亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:403
-msgid "Maldives"
-msgstr "馬爾地夫"
-
-#: src/modules/conf_intl/e_int_config_intl.c:404
-msgid "Mali"
-msgstr "馬利"
-
-#: src/modules/conf_intl/e_int_config_intl.c:405
-msgid "Malta"
-msgstr "馬爾他"
-
-#: src/modules/conf_intl/e_int_config_intl.c:406
-msgid "Marshall Islands"
-msgstr "馬紹爾群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:407
-msgid "Martinique"
-msgstr "馬丁尼克"
-
-#: src/modules/conf_intl/e_int_config_intl.c:408
-msgid "Mauritania"
-msgstr "茅利塔尼亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:409
-msgid "Mauritius"
-msgstr "模里西斯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:410
-msgid "Mayotte"
-msgstr "美亞特"
-
-#: src/modules/conf_intl/e_int_config_intl.c:411
-msgid "Mexico"
-msgstr "墨西哥"
-
-#: src/modules/conf_intl/e_int_config_intl.c:412
-msgid "Micronesia"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:413
-msgid "Moldova"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:414
-msgid "Monaco"
-msgstr "摩納哥"
-
-#: src/modules/conf_intl/e_int_config_intl.c:415
-msgid "Mongolia"
-msgstr "蒙古"
-
-#: src/modules/conf_intl/e_int_config_intl.c:416
-msgid "Montserrat"
-msgstr "蒙瑟拉特島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:417
-msgid "Morocco"
-msgstr "摩洛哥"
-
-#: src/modules/conf_intl/e_int_config_intl.c:418
-msgid "Mozambique"
-msgstr "莫三比克"
-
-#: src/modules/conf_intl/e_int_config_intl.c:419
-msgid "Myanmar"
-msgstr "緬甸"
-
-#: src/modules/conf_intl/e_int_config_intl.c:420
-msgid "Namibia"
-msgstr "納米比亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:421
-msgid "Nauru"
-msgstr "諾魯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:422
-msgid "Nepal"
-msgstr "尼泊爾"
-
-#: src/modules/conf_intl/e_int_config_intl.c:423
-msgid "Netherlands"
-msgstr "荷蘭"
-
-#: src/modules/conf_intl/e_int_config_intl.c:424
-msgid "Netherlands Antilles"
-msgstr "荷屬安地列斯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:425
-msgid "New Caledonia"
-msgstr "新喀里多尼亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:426
-msgid "New Zealand"
-msgstr "紐西蘭"
-
-#: src/modules/conf_intl/e_int_config_intl.c:427
-msgid "Nicaragua"
-msgstr "尼加拉瓜"
-
-#: src/modules/conf_intl/e_int_config_intl.c:428
-msgid "Niger"
-msgstr "尼日"
-
-#: src/modules/conf_intl/e_int_config_intl.c:429
-msgid "Nigeria"
-msgstr "奈及利亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:430
-msgid "Niue"
-msgstr "紐威"
-
-#: src/modules/conf_intl/e_int_config_intl.c:431
-msgid "Norfolk Island"
-msgstr "諾福克群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:432
-msgid "Northern Mariana Islands"
-msgstr "北馬里亞納群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:433
-msgid "Norway"
-msgstr "挪威"
-
-#: src/modules/conf_intl/e_int_config_intl.c:434
-msgid "Oman"
-msgstr "阿曼"
-
-#: src/modules/conf_intl/e_int_config_intl.c:435
-msgid "Pakistan"
-msgstr "巴基斯坦"
-
-#: src/modules/conf_intl/e_int_config_intl.c:436
-msgid "Palau"
-msgstr "帛琉"
-
-#: src/modules/conf_intl/e_int_config_intl.c:437
-#, fuzzy
-msgid "Palestinian Territory"
-msgstr "巴勒斯坦佔領區"
-
-#: src/modules/conf_intl/e_int_config_intl.c:438
-msgid "Panama"
-msgstr "巴拿馬"
-
-#: src/modules/conf_intl/e_int_config_intl.c:439
-msgid "Papua New Guinea"
-msgstr "巴布亞紐幾內亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:440
-msgid "Paraguay"
-msgstr "巴拉圭"
-
-#: src/modules/conf_intl/e_int_config_intl.c:441
-msgid "Peru"
-msgstr "祕魯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:442
-msgid "Philippines"
-msgstr "菲律賓"
-
-#: src/modules/conf_intl/e_int_config_intl.c:443
-msgid "Pitcairn"
-msgstr "皮特康"
-
-#: src/modules/conf_intl/e_int_config_intl.c:444
-msgid "Poland"
-msgstr "波蘭"
-
-#: src/modules/conf_intl/e_int_config_intl.c:445
-msgid "Portugal"
-msgstr "葡萄牙"
-
-#: src/modules/conf_intl/e_int_config_intl.c:446
-msgid "Puerto Rico"
-msgstr "波多黎各"
-
-#: src/modules/conf_intl/e_int_config_intl.c:447
-msgid "Qatar"
-msgstr "卡達"
-
-#: src/modules/conf_intl/e_int_config_intl.c:448
-msgid "Reunion"
-msgstr "留尼旺"
-
-#: src/modules/conf_intl/e_int_config_intl.c:449
-msgid "Romania"
-msgstr "羅馬尼亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:450
-msgid "Russian Federation"
-msgstr "俄羅斯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:451
-msgid "Rwanda"
-msgstr "盧安達"
-
-#: src/modules/conf_intl/e_int_config_intl.c:452
-msgid "Saint Helena"
-msgstr "聖赫勒拿"
-
-#: src/modules/conf_intl/e_int_config_intl.c:453
-msgid "Saint Kitts and Nevis"
-msgstr "聖克里斯多福及尼維斯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:454
-msgid "Saint Lucia"
-msgstr "聖路西亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:455
-msgid "Saint Pierre and Miquelon"
-msgstr "聖匹及密啟倫"
-
-#: src/modules/conf_intl/e_int_config_intl.c:456
-msgid "Saint Vincent and the Grenadines"
-msgstr "聖文森及格瑞那丁"
-
-#: src/modules/conf_intl/e_int_config_intl.c:457
-msgid "Samoa"
-msgstr "薩摩亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:458
-msgid "San Marino"
-msgstr "聖馬利諾"
-
-#: src/modules/conf_intl/e_int_config_intl.c:459
-msgid "Sao Tome and Principe"
-msgstr "聖多美及普林西比"
-
-#: src/modules/conf_intl/e_int_config_intl.c:460
-msgid "Saudi Arabia"
-msgstr "沙烏地阿拉伯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:461
-msgid "Senegal"
-msgstr "塞內加爾"
-
-#: src/modules/conf_intl/e_int_config_intl.c:462
-#, fuzzy
-msgid "Serbia and Montenegro"
-msgstr "蒙特內哥羅共和國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:463
-msgid "Seychelles"
-msgstr "塞席爾"
-
-#: src/modules/conf_intl/e_int_config_intl.c:464
-msgid "Sierra Leone"
-msgstr "獅子山"
-
-#: src/modules/conf_intl/e_int_config_intl.c:465
-msgid "Singapore"
-msgstr "新加坡"
-
-#: src/modules/conf_intl/e_int_config_intl.c:466
-msgid "Slovakia"
-msgstr "斯洛伐克"
-
-#: src/modules/conf_intl/e_int_config_intl.c:467
-msgid "Slovenia"
-msgstr "斯洛凡尼亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:468
-msgid "Solomon Islands"
-msgstr "索羅門群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:469
-msgid "Somalia"
-msgstr "索馬利亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:470
-msgid "South Africa"
-msgstr "南非"
-
-#: src/modules/conf_intl/e_int_config_intl.c:471
-msgid "South Georgia and the South Sandwich Islands"
-msgstr "南喬治亞及南桑威奇群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:472
-msgid "Spain"
-msgstr "西班牙"
-
-#: src/modules/conf_intl/e_int_config_intl.c:473
-msgid "Sri Lanka"
-msgstr "斯里蘭卡"
-
-#: src/modules/conf_intl/e_int_config_intl.c:474
-msgid "Sudan"
-msgstr "蘇丹"
-
-#: src/modules/conf_intl/e_int_config_intl.c:475
-msgid "Suriname"
-msgstr "蘇利南"
-
-#: src/modules/conf_intl/e_int_config_intl.c:476
-msgid "Svalbard and Jan Mayen"
-msgstr "斯瓦巴及尖棉"
-
-#: src/modules/conf_intl/e_int_config_intl.c:477
-msgid "Swaziland"
-msgstr "史瓦濟蘭"
-
-#: src/modules/conf_intl/e_int_config_intl.c:478
-msgid "Sweden"
-msgstr "瑞典"
-
-#: src/modules/conf_intl/e_int_config_intl.c:479
-msgid "Switzerland"
-msgstr "瑞士"
-
-#: src/modules/conf_intl/e_int_config_intl.c:480
-msgid "Syrian Arab Republic"
-msgstr "敘利亞阿拉伯共和國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:481
-msgid "Taiwan"
-msgstr "台灣"
-
-#: src/modules/conf_intl/e_int_config_intl.c:482
-msgid "Tajikistan"
-msgstr "塔吉克"
-
-#: src/modules/conf_intl/e_int_config_intl.c:483
-msgid "Tanzania"
-msgstr ""
-
-#: src/modules/conf_intl/e_int_config_intl.c:484
-msgid "Thailand"
-msgstr "泰國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:485
-msgid "Timor-Leste"
-msgstr "東帝汶"
-
-#: src/modules/conf_intl/e_int_config_intl.c:486
-msgid "Togo"
-msgstr "多哥"
-
-#: src/modules/conf_intl/e_int_config_intl.c:487
-msgid "Tokelau"
-msgstr "托克勞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:488
-msgid "Tonga"
-msgstr "東加"
-
-#: src/modules/conf_intl/e_int_config_intl.c:489
-msgid "Trinidad and Tobago"
-msgstr "千里達及托貝哥"
-
-#: src/modules/conf_intl/e_int_config_intl.c:490
-msgid "Tunisia"
-msgstr "突尼西亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:491
-msgid "Turkey"
-msgstr "土耳其"
-
-#: src/modules/conf_intl/e_int_config_intl.c:492
-msgid "Turkmenistan"
-msgstr "土庫曼"
-
-#: src/modules/conf_intl/e_int_config_intl.c:493
-msgid "Turks and Caicos Islands"
-msgstr "土克斯及開科斯群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:494
-msgid "Tuvalu"
-msgstr "吐瓦魯"
-
-#: src/modules/conf_intl/e_int_config_intl.c:495
-msgid "Uganda"
-msgstr "烏干達"
-
-#: src/modules/conf_intl/e_int_config_intl.c:496
-msgid "Ukraine"
-msgstr "烏克蘭"
-
-#: src/modules/conf_intl/e_int_config_intl.c:497
-msgid "United Arab Emirates"
-msgstr "阿拉伯聯合大公國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:498
-msgid "United Kingdom"
-msgstr "英國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:499
-msgid "United States"
-msgstr "美國"
-
-#: src/modules/conf_intl/e_int_config_intl.c:500
-msgid "United States Minor Outlying Islands"
-msgstr "美屬邊疆群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:501
-msgid "Uruguay"
-msgstr "烏拉圭"
-
-#: src/modules/conf_intl/e_int_config_intl.c:502
-msgid "Uzbekistan"
-msgstr "烏茲別克"
-
-#: src/modules/conf_intl/e_int_config_intl.c:503
-msgid "Vanuatu"
-msgstr "萬那杜"
-
-#: src/modules/conf_intl/e_int_config_intl.c:504
-msgid "Venezuela"
-msgstr "委內瑞拉"
-
-#: src/modules/conf_intl/e_int_config_intl.c:505
-msgid "Viet Nam"
-msgstr "越南"
-
-#: src/modules/conf_intl/e_int_config_intl.c:506
-#: src/modules/conf_intl/e_int_config_intl.c:507
-#, fuzzy
-msgid "Virgin Islands"
-msgstr "美屬維爾京群島"
-
-#: src/modules/conf_intl/e_int_config_intl.c:508
-msgid "Wallis and Futuna"
-msgstr "沃里斯及伏塔那"
-
-#: src/modules/conf_intl/e_int_config_intl.c:509
-msgid "Western Sahara"
-msgstr "西撒哈拉"
-
-#: src/modules/conf_intl/e_int_config_intl.c:510
-msgid "Yemen"
-msgstr "葉門"
-
-#: src/modules/conf_intl/e_int_config_intl.c:511
-msgid "Zambia"
-msgstr "尚比亞"
-
-#: src/modules/conf_intl/e_int_config_intl.c:512
-msgid "Zimbabwe"
-msgstr "辛巴威"
 
 #: src/modules/conf_intl/e_int_config_intl.c:582
 msgid "Language Configuration"
@@ -5665,52 +4302,52 @@ msgid "Keyboard & Mouse"
 msgstr "鍵盤 & 滑鼠"
 
 #: src/modules/conf_menus/e_int_config_menus.c:44
-#: src/modules/conf_menus/e_int_config_menus.c:106
-#: src/modules/conf_menus/e_int_config_menus.c:156
+#: src/modules/conf_menus/e_int_config_menus.c:110
+#: src/modules/conf_menus/e_int_config_menus.c:169
 #: src/modules/conf_menus/e_mod_main.c:35
 msgid "Menu Settings"
 msgstr "選單設定"
 
-#: src/modules/conf_menus/e_int_config_menus.c:99
-#: src/modules/conf_menus/e_int_config_menus.c:149
+#: src/modules/conf_menus/e_int_config_menus.c:101
+#: src/modules/conf_menus/e_int_config_menus.c:160
 msgid "Main Menu Settings"
 msgstr "主選單設定"
 
-#: src/modules/conf_menus/e_int_config_menus.c:100
-#: src/modules/conf_menus/e_int_config_menus.c:150
+#: src/modules/conf_menus/e_int_config_menus.c:102
+#: src/modules/conf_menus/e_int_config_menus.c:161
 msgid "Show Favorites In Main Menu"
 msgstr "在主選單中顯示「我的最愛」選單"
 
-#: src/modules/conf_menus/e_int_config_menus.c:102
-#: src/modules/conf_menus/e_int_config_menus.c:152
+#: src/modules/conf_menus/e_int_config_menus.c:105
+#: src/modules/conf_menus/e_int_config_menus.c:164
 msgid "Show Applications In Main Menu"
 msgstr "在主選單中顯示「所有應用程式」選單"
 
-#: src/modules/conf_menus/e_int_config_menus.c:107
-#: src/modules/conf_menus/e_int_config_menus.c:157
+#: src/modules/conf_menus/e_int_config_menus.c:111
+#: src/modules/conf_menus/e_int_config_menus.c:170
 msgid "Show Name In Menu"
 msgstr "在選單中顯示名稱"
 
-#: src/modules/conf_menus/e_int_config_menus.c:109
-#: src/modules/conf_menus/e_int_config_menus.c:159
+#: src/modules/conf_menus/e_int_config_menus.c:114
+#: src/modules/conf_menus/e_int_config_menus.c:173
 msgid "Show Comment In Menu"
 msgstr "在選單中顯示註解"
 
-#: src/modules/conf_menus/e_int_config_menus.c:111
-#: src/modules/conf_menus/e_int_config_menus.c:161
+#: src/modules/conf_menus/e_int_config_menus.c:117
+#: src/modules/conf_menus/e_int_config_menus.c:176
 msgid "Show Generic In Menu"
 msgstr "在選單中顯示通用名稱"
 
-#: src/modules/conf_menus/e_int_config_menus.c:165
+#: src/modules/conf_menus/e_int_config_menus.c:181
 msgid "Autoscroll Settings"
 msgstr "自動捲動設定"
 
-#: src/modules/conf_menus/e_int_config_menus.c:166
+#: src/modules/conf_menus/e_int_config_menus.c:182
 msgid "Autoscroll Margin"
 msgstr "自動捲動邊界"
 
-#: src/modules/conf_menus/e_int_config_menus.c:168
-#: src/modules/conf_menus/e_int_config_menus.c:172
+#: src/modules/conf_menus/e_int_config_menus.c:184
+#: src/modules/conf_menus/e_int_config_menus.c:189
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:201
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:205
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:209
@@ -5718,39 +4355,39 @@ msgstr "自動捲動邊界"
 msgid "%2.0f pixels"
 msgstr "%2.0f 像素"
 
-#: src/modules/conf_menus/e_int_config_menus.c:170
+#: src/modules/conf_menus/e_int_config_menus.c:187
 msgid "Autoscroll Cursor Margin"
 msgstr "自動捲動游標邊界"
 
-#: src/modules/conf_menus/e_int_config_menus.c:176
+#: src/modules/conf_menus/e_int_config_menus.c:194
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:145
 msgid "Miscellaneous Options"
 msgstr "雜項選項"
 
-#: src/modules/conf_menus/e_int_config_menus.c:177
+#: src/modules/conf_menus/e_int_config_menus.c:195
 msgid "Menu Scroll Speed"
 msgstr "選單捲動速度"
 
-#: src/modules/conf_menus/e_int_config_menus.c:179
+#: src/modules/conf_menus/e_int_config_menus.c:197
 #, c-format
 msgid "%5.0f pixels/sec"
 msgstr "%5.0f 像素/秒"
 
-#: src/modules/conf_menus/e_int_config_menus.c:181
+#: src/modules/conf_menus/e_int_config_menus.c:200
 msgid "Fast Mouse Move Threshhold"
 msgstr "快速滑鼠移動閥值"
 
-#: src/modules/conf_menus/e_int_config_menus.c:183
-#: src/modules/conf_window_display/e_int_config_window_display.c:215
+#: src/modules/conf_menus/e_int_config_menus.c:202
+#: src/modules/conf_window_display/e_int_config_window_display.c:214
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f 像素/秒"
 
-#: src/modules/conf_menus/e_int_config_menus.c:185
+#: src/modules/conf_menus/e_int_config_menus.c:206
 msgid "Click Drag Timeout"
 msgstr "點擊拖拉逾時"
 
-#: src/modules/conf_menus/e_int_config_menus.c:187
+#: src/modules/conf_menus/e_int_config_menus.c:208
 #, c-format
 msgid "%2.2f seconds"
 msgstr "%2.2f 秒"
@@ -5908,49 +4545,44 @@ msgstr "加速"
 msgid "Threshold"
 msgstr "閥值"
 
-#: src/modules/conf_paths/e_int_config_paths.c:65
+#: src/modules/conf_paths/e_int_config_paths.c:62
 msgid "Search Path Configuration"
 msgstr "搜尋路徑組態"
 
-#: src/modules/conf_paths/e_int_config_paths.c:76
+#: src/modules/conf_paths/e_int_config_paths.c:73
 msgid "Data"
 msgstr "資料"
 
-#: src/modules/conf_paths/e_int_config_paths.c:78
+#: src/modules/conf_paths/e_int_config_paths.c:75
 msgid "Images"
 msgstr "圖片"
 
-#: src/modules/conf_paths/e_int_config_paths.c:82
+#: src/modules/conf_paths/e_int_config_paths.c:79
 #: src/modules/conf_theme/e_int_config_theme.c:1072
 msgid "Themes"
 msgstr "佈景主題"
 
-#: src/modules/conf_paths/e_int_config_paths.c:84
+#: src/modules/conf_paths/e_int_config_paths.c:81
 msgid "Init"
 msgstr "單位"
 
-#: src/modules/conf_paths/e_int_config_paths.c:86
-#: src/modules/fileman/e_mod_config.c:161
-msgid "Icons"
-msgstr "圖示"
-
-#: src/modules/conf_paths/e_int_config_paths.c:90
+#: src/modules/conf_paths/e_int_config_paths.c:87
 msgid "Backgrounds"
 msgstr "背景"
 
-#: src/modules/conf_paths/e_int_config_paths.c:92
+#: src/modules/conf_paths/e_int_config_paths.c:89
 msgid "Messages"
 msgstr "訊息"
 
-#: src/modules/conf_paths/e_int_config_paths.c:172
+#: src/modules/conf_paths/e_int_config_paths.c:171
 msgid "E Paths"
 msgstr "E 路徑"
 
-#: src/modules/conf_paths/e_int_config_paths.c:201
+#: src/modules/conf_paths/e_int_config_paths.c:202
 msgid "Default Directories"
 msgstr "預設目錄"
 
-#: src/modules/conf_paths/e_int_config_paths.c:208
+#: src/modules/conf_paths/e_int_config_paths.c:209
 msgid "User Defined Directories"
 msgstr "使用者自訂目錄"
 
@@ -5962,63 +4594,57 @@ msgstr "搜尋目錄"
 msgid "Performance Settings"
 msgstr "效能設定"
 
-#: src/modules/conf_performance/e_int_config_performance.c:90
-#: src/modules/conf_performance/e_int_config_performance.c:122
+#: src/modules/conf_performance/e_int_config_performance.c:91
+#: src/modules/conf_performance/e_int_config_performance.c:124
 msgid "Framerate"
 msgstr "畫面更新頻率"
 
-#: src/modules/conf_performance/e_int_config_performance.c:92
-#: src/modules/conf_performance/e_int_config_performance.c:124
+#: src/modules/conf_performance/e_int_config_performance.c:93
+#: src/modules/conf_performance/e_int_config_performance.c:126
 #, c-format
 msgid "%1.0f fps"
 msgstr "%1.0f fps"
 
-#: src/modules/conf_performance/e_int_config_performance.c:128
+#: src/modules/conf_performance/e_int_config_performance.c:130
 msgid "Cache Settings"
 msgstr "快取設定"
 
-#: src/modules/conf_performance/e_int_config_performance.c:129
+#: src/modules/conf_performance/e_int_config_performance.c:131
 msgid "Cache Flush Interval"
 msgstr "快取丟棄間隔"
 
-#: src/modules/conf_performance/e_int_config_performance.c:131
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:159
-#, c-format
-msgid "%1.0f seconds"
-msgstr "%1.0f 秒"
-
-#: src/modules/conf_performance/e_int_config_performance.c:134
+#: src/modules/conf_performance/e_int_config_performance.c:136
 msgid "Size Of Font Cache"
 msgstr "字型快取大小"
 
-#: src/modules/conf_performance/e_int_config_performance.c:136
+#: src/modules/conf_performance/e_int_config_performance.c:138
 #, c-format
 msgid "%1.1f MB"
 msgstr "%1.1f MB"
 
-#: src/modules/conf_performance/e_int_config_performance.c:139
+#: src/modules/conf_performance/e_int_config_performance.c:141
 msgid "Size Of Image Cache"
 msgstr "圖形快取大小"
 
-#: src/modules/conf_performance/e_int_config_performance.c:141
+#: src/modules/conf_performance/e_int_config_performance.c:143
 #, c-format
 msgid "%1.0f MB"
 msgstr "%1.0f MB"
 
-#: src/modules/conf_performance/e_int_config_performance.c:144
+#: src/modules/conf_performance/e_int_config_performance.c:146
 msgid "Number Of Edje Files To Cache"
 msgstr "Edje 檔快取筆數"
 
-#: src/modules/conf_performance/e_int_config_performance.c:146
+#: src/modules/conf_performance/e_int_config_performance.c:148
 #, c-format
 msgid "%1.0f files"
 msgstr "%1.0f 筆"
 
-#: src/modules/conf_performance/e_int_config_performance.c:149
+#: src/modules/conf_performance/e_int_config_performance.c:151
 msgid "Number Of Edje Collections To Cache"
 msgstr "Edje 集合快取筆數"
 
-#: src/modules/conf_performance/e_int_config_performance.c:151
+#: src/modules/conf_performance/e_int_config_performance.c:153
 #, c-format
 msgid "%1.0f collections"
 msgstr "%1.0f 筆"
@@ -6071,45 +4697,50 @@ msgid "Screen Saver Settings"
 msgstr "螢幕保護程式設定"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:112
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:146
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:144
 msgid "Enable X screensaver"
 msgstr "啟用 X 螢幕保護程式"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:115
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:149
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:147
 msgid "Screensaver Timer(s)"
 msgstr "螢幕保護程式計時器"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:117
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:151
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:149
 msgid "Time until X screensaver starts"
 msgstr "在此時間後啟動 X 螢幕保護程式"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:155
 msgid "Time until X screensaver alternates"
 msgstr "在此時間後變換 X 螢幕保護程式"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:164
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
+#, c-format
+msgid "%1.0f seconds"
+msgstr "%1.0f 秒"
+
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:162
 msgid "Blanking"
 msgstr "空白"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:168
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:166
 msgid "Preferred"
 msgstr "偏好的"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:170
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:168
 msgid "Not Preferred"
 msgstr "非偏好的"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:174
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:172
 msgid "Exposure Events"
 msgstr "Exposure 事件"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:178
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:176
 msgid "Allow"
 msgstr "允許"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:180
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:178
 msgid "Don't Allow"
 msgstr "不允許"
 
@@ -6117,15 +4748,15 @@ msgstr "不允許"
 msgid "Screen Saver"
 msgstr "螢幕保護程式"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:45
+#: src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "置物架設定"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:73
+#: src/modules/conf_shelves/e_int_config_shelf.c:71
 msgid "Configured Shelves"
 msgstr "已配置的置物器"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:264
+#: src/modules/conf_shelves/e_int_config_shelf.c:277
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -6153,7 +4784,7 @@ msgstr "佈景主題選擇器"
 msgid "Theme Categories"
 msgstr "佈景主題分類"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1082
+#: src/modules/conf_theme/e_int_config_theme.c:1081
 msgid "Assign"
 msgstr "指定"
 
@@ -6161,7 +4792,7 @@ msgstr "指定"
 msgid "Clear"
 msgstr "清除"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1086
+#: src/modules/conf_theme/e_int_config_theme.c:1087
 msgid "Clear All"
 msgstr "全部清除"
 
@@ -6206,38 +4837,38 @@ msgstr "背景改變"
 msgid "Transitions"
 msgstr "轉換"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:100
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:109
 msgid "Wallpaper Settings"
 msgstr "桌布設定"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:566
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:718
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:551
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:697
 msgid "Use Theme Wallpaper"
 msgstr "使用佈景主題桌布"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:572
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:724
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:555
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:701
 msgid "Picture..."
 msgstr "圖片..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:575
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:727
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:558
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:704
 msgid "Gradient..."
 msgstr "漸層..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:742
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:722
 msgid "Where to place the Wallpaper"
 msgstr "將桌布置於"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:746
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:723
 msgid "All Desktops"
 msgstr "所有桌面"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:748
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:725
 msgid "This Desktop"
 msgstr "此桌面"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:750
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:727
 msgid "This Screen"
 msgstr "此螢幕"
 
@@ -6373,176 +5004,180 @@ msgid "Show window geometry information when moving or resizing"
 msgstr "當移動或改變視窗大小時顯示幾何資訊"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:164
-#: src/modules/conf_window_display/e_int_config_window_display.c:213
+#: src/modules/conf_window_display/e_int_config_window_display.c:212
 msgid "Animate the shading and unshading of windows"
 msgstr "以動畫方式表現視窗捲起或捲落效果"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:168
-#: src/modules/conf_window_display/e_int_config_window_display.c:228
+#: src/modules/conf_window_display/e_int_config_window_display.c:227
 msgid "Automatic New Window Placement"
 msgstr "自動擺設新視窗"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:170
-#: src/modules/conf_window_display/e_int_config_window_display.c:231
+#: src/modules/conf_window_display/e_int_config_window_display.c:230
 msgid "Smart Placement"
 msgstr "智慧型擺設"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:172
-#: src/modules/conf_window_display/e_int_config_window_display.c:233
+#: src/modules/conf_window_display/e_int_config_window_display.c:232
 msgid "Don't hide Gadgets"
 msgstr "不要覆蓋小工具"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:174
-#: src/modules/conf_window_display/e_int_config_window_display.c:235
+#: src/modules/conf_window_display/e_int_config_window_display.c:234
 msgid "Place at mouse pointer"
 msgstr "擺在滑鼠游標所在處"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:176
-#: src/modules/conf_window_display/e_int_config_window_display.c:237
+#: src/modules/conf_window_display/e_int_config_window_display.c:236
 msgid "Place manually with the mouse"
 msgstr "手動擺設"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:178
-#: src/modules/conf_window_display/e_int_config_window_display.c:239
+#: src/modules/conf_window_display/e_int_config_window_display.c:238
 msgid "Automatically switch to desktop of new window"
 msgstr "自動切換到新視窗所在桌面"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:195
+#: src/modules/conf_window_display/e_int_config_window_display.c:194
 msgid "Window Move Geometry"
 msgstr "視窗移動幾何"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:197
-#: src/modules/conf_window_display/e_int_config_window_display.c:205
+#: src/modules/conf_window_display/e_int_config_window_display.c:196
+#: src/modules/conf_window_display/e_int_config_window_display.c:204
 msgid "Display information"
 msgstr "顯示資訊"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:199
+#: src/modules/conf_window_display/e_int_config_window_display.c:198
 msgid "Follow the window as it moves"
 msgstr "隨視窗移動"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:203
+#: src/modules/conf_window_display/e_int_config_window_display.c:202
 msgid "Window Resize Geometry"
 msgstr "視窗改變大小幾何"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:207
+#: src/modules/conf_window_display/e_int_config_window_display.c:206
 msgid "Follow the window as it resizes"
 msgstr "隨視窗移動"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:211
+#: src/modules/conf_window_display/e_int_config_window_display.c:210
 msgid "Window Shading"
 msgstr "視窗捲起"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:218
+#: src/modules/conf_window_display/e_int_config_window_display.c:217
 msgid "Linear"
 msgstr "線性"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:220
+#: src/modules/conf_window_display/e_int_config_window_display.c:219
 msgid "Smooth accelerate and decelerate"
 msgstr "平滑加速與減速"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:222
+#: src/modules/conf_window_display/e_int_config_window_display.c:221
 msgid "Accelerate"
 msgstr "加速"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:224
+#: src/modules/conf_window_display/e_int_config_window_display.c:223
 msgid "Decelerate"
 msgstr "減速"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:243
+#: src/modules/conf_window_display/e_int_config_window_display.c:242
 msgid "Window Border"
 msgstr "視窗邊框"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:246
+#: src/modules/conf_window_display/e_int_config_window_display.c:245
 msgid "Prefer user defined icon"
 msgstr "偏好使用者自訂圖示"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:248
+#: src/modules/conf_window_display/e_int_config_window_display.c:247
 msgid "Prefer application provided icon"
 msgstr "偏好程式內建圖示"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:252
+#: src/modules/conf_window_display/e_int_config_window_display.c:251
 msgid "Internal Windows"
 msgstr "內部視窗"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:254
+#: src/modules/conf_window_display/e_int_config_window_display.c:253
 msgid "Always remember internal windows"
 msgstr "總是記住內部視窗"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:49
+#: src/modules/conf_window_focus/e_int_config_focus.c:50
 msgid "Focus Settings"
 msgstr "焦點設定"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:159
+#: src/modules/conf_window_focus/e_int_config_focus.c:165
 msgid "Click Window to Focus"
 msgstr "點擊視窗以取得焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:161
+#: src/modules/conf_window_focus/e_int_config_focus.c:167
 msgid "Window under the Mouse"
 msgstr "滑鼠所在視窗自動取得焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:163
+#: src/modules/conf_window_focus/e_int_config_focus.c:169
 msgid "Most recent Window under the Mouse"
 msgstr "滑鼠所在的最新視窗自動取得焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:177
+#: src/modules/conf_window_focus/e_int_config_focus.c:183
 msgid "Focus"
 msgstr "焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:179
+#: src/modules/conf_window_focus/e_int_config_focus.c:185
 msgid "Click to focus"
 msgstr "點擊以取得焦點 "
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:181
+#: src/modules/conf_window_focus/e_int_config_focus.c:187
 msgid "Pointer focus"
 msgstr "游標自動取得焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:183
+#: src/modules/conf_window_focus/e_int_config_focus.c:189
 msgid "Sloppy focus"
 msgstr "拖泥帶水取得焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:187
+#: src/modules/conf_window_focus/e_int_config_focus.c:193
 msgid "New Window Focus"
 msgstr "新視窗焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:189
+#: src/modules/conf_window_focus/e_int_config_focus.c:195
 msgid "No new windows get focus"
 msgstr "新視窗不會自動取得焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:191
+#: src/modules/conf_window_focus/e_int_config_focus.c:197
 msgid "All new windows get focus"
 msgstr "新視窗自動取得焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:193
+#: src/modules/conf_window_focus/e_int_config_focus.c:199
 msgid "Only new dialogs get focus"
 msgstr "只有新對話框自動取得焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:195
+#: src/modules/conf_window_focus/e_int_config_focus.c:201
 msgid "Only new dialogs get focus if the parent has focus"
 msgstr "當父視窗擁有焦點時，新對話框自動取得焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:199
+#: src/modules/conf_window_focus/e_int_config_focus.c:205
 msgid "Other Settings"
 msgstr "其它設定"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:200
+#: src/modules/conf_window_focus/e_int_config_focus.c:206
 msgid "Always pass on caught click events to programs"
 msgstr "總是當點擊事件傳送給程式"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:202
+#: src/modules/conf_window_focus/e_int_config_focus.c:208
 msgid "A click on a window always raises it"
 msgstr "總是上移被點擊的視窗"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:204
+#: src/modules/conf_window_focus/e_int_config_focus.c:210
 msgid "A click in a window always focuses it"
 msgstr "被點擊的視窗總是取得焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:206
+#: src/modules/conf_window_focus/e_int_config_focus.c:212
 msgid "Refocus last focused window on desktop switch"
 msgstr "切換桌面時上次取得焦點的視窗自動取得焦點"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:208
+#: src/modules/conf_window_focus/e_int_config_focus.c:214
 msgid "Revert focus when hiding or closing a window"
 msgstr "當視窗被隱藏或關閉時恢復焦點"
+
+#: src/modules/conf_window_focus/e_int_config_focus.c:216
+msgid "Slide pointer to a new focused window"
+msgstr ""
 
 #: src/modules/conf_window_focus/e_mod_main.c:35
 msgid "Window Focus"
@@ -6711,23 +5346,28 @@ msgid "Cpufreq"
 msgstr "CPU 頻率"
 
 #: src/modules/cpufreq/e_mod_main.c:177
-msgid "Fast (0.5 sec)"
+#, fuzzy
+msgid "Fast (4 ticks)"
 msgstr "快 （0.5 秒）"
 
 #: src/modules/cpufreq/e_mod_main.c:184
-msgid "Medium (1 sec)"
+#, fuzzy
+msgid "Medium (8 ticks)"
 msgstr "中等 （1 秒）"
 
 #: src/modules/cpufreq/e_mod_main.c:191
-msgid "Normal (2 sec)"
+#, fuzzy
+msgid "Normal (32 ticks)"
 msgstr "正常 （2 秒）"
 
 #: src/modules/cpufreq/e_mod_main.c:198
-msgid "Slow (5 sec)"
+#, fuzzy
+msgid "Slow (64 ticks)"
 msgstr "慢 （5 秒）"
 
 #: src/modules/cpufreq/e_mod_main.c:205
-msgid "Very Slow (30 sec)"
+#, fuzzy
+msgid "Very Slow (256 ticks)"
 msgstr "很慢 （30 秒）"
 
 #: src/modules/cpufreq/e_mod_main.c:220
@@ -6889,11 +5529,11 @@ msgstr "視窗陰影"
 msgid "Run Command Dialog"
 msgstr "執行命令對話框"
 
-#: src/modules/fileman/e_mod_main.c:200
+#: src/modules/fileman/e_mod_main.c:209
 msgid "Files"
 msgstr "檔案"
 
-#: src/modules/fileman/e_mod_main.c:251
+#: src/modules/fileman/e_mod_main.c:261
 msgid ""
 "Fileman Module Configuration data needed upgrading. Your old "
 "configuration<br>has been wiped and a new set of defaults initialized. "
@@ -6908,7 +5548,7 @@ msgstr ""
 "需要部份舊組態資料未能提供的功能。<br>新的組態會加入這些功能。您現在可以重新"
 "配置您設定。<br>抱歉打斷您的配置。<br>"
 
-#: src/modules/fileman/e_mod_main.c:264
+#: src/modules/fileman/e_mod_main.c:274
 msgid ""
 "Your Fileman Module configuration is NEWER than Fileman Module version. This "
 "is very<br>strange. This should not happen unless you downgraded<br>the "
@@ -6922,85 +5562,83 @@ msgstr ""
 "這是不好的，所以為防萬一，您的組態檔已被<br>恢復成預設值。很抱歉為您帶來不"
 "便。<br>"
 
-#: src/modules/fileman/e_mod_main.c:329
+#: src/modules/fileman/e_mod_main.c:343
 msgid "Fileman Configuration Updated"
 msgstr "檔案管理員組態已經更新"
 
-#: src/modules/fileman/e_mod_config.c:89
+#: src/modules/fileman/e_mod_config.c:82
 msgid "Fileman Settings"
 msgstr "檔案管理員設定"
 
 #: src/modules/fileman/e_mod_config.c:159
-msgid "View Mode"
-msgstr "顯式模式"
-
-#: src/modules/fileman/e_mod_config.c:164
 msgid "Grid Icons"
 msgstr "對齊圖示"
 
-#: src/modules/fileman/e_mod_config.c:166
+#: src/modules/fileman/e_mod_config.c:161
 msgid "Custom Icons"
 msgstr "自訂圖示"
 
-#: src/modules/fileman/e_mod_config.c:168
+#: src/modules/fileman/e_mod_config.c:163
 msgid "Custom Grid Icons"
 msgstr "自訂對齊圖示"
 
-#: src/modules/fileman/e_mod_config.c:171
+#: src/modules/fileman/e_mod_config.c:166
 msgid "Custom Smart Grid Icons"
 msgstr "自訂智慧型對齊圖示"
 
-#: src/modules/fileman/e_mod_config.c:174
-msgid "List"
-msgstr "列表"
-
-#: src/modules/fileman/e_mod_config.c:178
+#: src/modules/fileman/e_mod_config.c:173
 msgid "Icon Size"
 msgstr "圖示大小"
 
-#: src/modules/fileman/e_mod_config.c:184
+#: src/modules/fileman/e_mod_config.c:179
 msgid "Open Dirs In Place"
 msgstr "使用同一視窗開啟目錄"
 
-#: src/modules/fileman/e_mod_config.c:187
+#: src/modules/fileman/e_mod_config.c:182
 msgid "Sort Dirs First"
 msgstr "優先排序目錄"
 
-#: src/modules/fileman/e_mod_config.c:190
+#: src/modules/fileman/e_mod_config.c:185
 msgid "Use Single Click"
 msgstr "使用單擊"
 
-#: src/modules/fileman/e_mod_config.c:193
+#: src/modules/fileman/e_mod_config.c:188
 msgid "Show Icon Extension"
 msgstr "顯示圖示副檔名"
 
-#: src/modules/fileman/e_mod_config.c:196
+#: src/modules/fileman/e_mod_config.c:191
 msgid "Show Full Path"
 msgstr "顯示完整路徑"
 
-#: src/modules/fileman/e_mod_config.c:199
+#: src/modules/fileman/e_mod_config.c:194
 msgid "Show Desktop Icons"
 msgstr "顯示桌面圖示"
 
-#: src/modules/fileman/e_fwin.c:630
+#: src/modules/fileman/e_mod_config.c:197
+#, fuzzy
+msgid "Show Toolbar"
+msgstr "陰影顏色"
+
+#: src/modules/fileman/e_fwin.c:654
 msgid "Go to Parent Directory"
 msgstr "到上一層目錄"
 
-#: src/modules/fileman/e_fwin.c:656 src/modules/fileman/e_fwin.c:1297
+#: src/modules/fileman/e_fwin.c:680 src/modules/fileman/e_fwin.c:1307
 msgid "Open"
 msgstr "開啟"
 
-#: src/modules/fileman/e_fwin.c:663 src/modules/fileman/e_fwin.c:1295
+#: src/modules/fileman/e_fwin.c:687 src/modules/fileman/e_fwin.c:1305
 msgid "Open with..."
 msgstr "以特定程式開啟..."
 
-#: src/modules/fileman/e_fwin.c:1315
+#: src/modules/fileman/e_fwin.c:1323
 msgid "Specific Applications"
 msgstr "特定應用程式"
 
-#: src/modules/fileman/e_fwin.c:1337
-msgid "All Applications"
-msgstr "全部應用程式"
+#: src/modules/fileman/e_fwin.c:1394
+#, fuzzy
+msgid "Custom Command"
+msgstr "執行指令"
 
 #: src/modules/winlist/e_mod_main.c:48 src/modules/winlist/e_mod_main.c:50
 #: src/modules/winlist/e_mod_main.c:63 src/modules/winlist/e_mod_main.c:64
@@ -7066,19 +5704,29 @@ msgstr "您要求刪除「%s」。<br><br>您是否確定刪除此 bar source？
 msgid "Are you sure you want to delete this bar source?"
 msgstr "您是否確定刪除此 bar source？"
 
-#: src/modules/ibar/e_mod_main.c:215
+#: src/modules/ibar/e_mod_main.c:211
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:783
+#: src/modules/ibar/e_mod_main.c:799
 msgid "Change Icon Properties"
 msgstr "改變圖示屬性"
 
-#: src/modules/ibar/e_mod_main.c:788
+#: src/modules/ibar/e_mod_main.c:804
 msgid "Remove Icon"
 msgstr "移除圖示"
 
-#: src/modules/ibar/e_mod_main.c:803
+#: src/modules/ibar/e_mod_main.c:814
+#, fuzzy
+msgid "Add An Icon"
+msgstr "新增應用程式"
+
+#: src/modules/ibar/e_mod_main.c:821
+#, fuzzy
+msgid "Create New Icon"
+msgstr "建立圖示"
+
+#: src/modules/ibar/e_mod_main.c:837
 msgid "Add Application"
 msgstr "新增應用程式"
 
@@ -7102,19 +5750,24 @@ msgstr "顯示類別"
 msgid "Display Icon Name"
 msgstr "顯示圖示名稱"
 
-#: src/modules/ibox/e_mod_config.c:128
+#: src/modules/ibox/e_mod_config.c:105
+#, fuzzy
+msgid "Display Border Caption"
+msgstr "顯示資訊"
+
+#: src/modules/ibox/e_mod_config.c:130
 msgid "Show windows from all screens"
 msgstr "顯示所有螢幕上的視窗"
 
-#: src/modules/ibox/e_mod_config.c:133
+#: src/modules/ibox/e_mod_config.c:135
 msgid "Show windows from current screen"
 msgstr "顯示目前螢幕上的視窗"
 
-#: src/modules/ibox/e_mod_config.c:142
+#: src/modules/ibox/e_mod_config.c:144
 msgid "Show windows from all desktops"
 msgstr "顯示所有桌面上的視窗"
 
-#: src/modules/ibox/e_mod_config.c:147
+#: src/modules/ibox/e_mod_config.c:149
 msgid "Show windows from active desktop"
 msgstr "顯示目前桌面上的視窗"
 
@@ -7122,81 +5775,103 @@ msgstr "顯示目前桌面上的視窗"
 msgid "IBox"
 msgstr "IBox"
 
-#: src/modules/pager/e_mod_config.c:73
+#: src/modules/pager/e_mod_config.c:69
 msgid "Pager Configuration"
 msgstr "桌面切換器組態"
 
-#: src/modules/pager/e_mod_config.c:121 src/modules/pager/e_mod_config.c:170
-msgid "Show Popup on desktop change"
-msgstr "切換桌面時顯示彈出訊息"
-
-#: src/modules/pager/e_mod_config.c:144
-msgid "Pager Settings"
-msgstr "桌面切換器設定"
-
-#: src/modules/pager/e_mod_config.c:145
+#: src/modules/pager/e_mod_config.c:116 src/modules/pager/e_mod_config.c:155
 msgid "Flip desktop on mouse wheel"
 msgstr "滑鼠捲動時切換桌面"
 
-#: src/modules/pager/e_mod_config.c:147
+#: src/modules/pager/e_mod_config.c:119 src/modules/pager/e_mod_config.c:158
+#, fuzzy
+msgid "Show desktop names"
+msgstr "顯示桌面圖示"
+
+#: src/modules/pager/e_mod_config.c:124 src/modules/pager/e_mod_config.c:198
+#, fuzzy
+msgid "Popup Settings"
+msgstr "桌面切換器彈出訊息設定"
+
+#: src/modules/pager/e_mod_config.c:125 src/modules/pager/e_mod_config.c:199
+#, fuzzy
+msgid "Show popup on desktop change"
+msgstr "切換桌面時顯示彈出訊息"
+
+#: src/modules/pager/e_mod_config.c:128
+#, fuzzy
+msgid "Show popup for urgent windows"
+msgstr "在緊急視窗上顯示彈出訊息"
+
+#: src/modules/pager/e_mod_config.c:162
 msgid "Select and Slide button"
 msgstr "選取與滑動按鍵"
 
-#: src/modules/pager/e_mod_config.c:149
-msgid "Drag and Drop button (Keeps rel. loc.)"
-msgstr "拖放按鍵 (保持相對位置)"
-
-#: src/modules/pager/e_mod_config.c:151
-msgid "Drag whole desktop (Move all windows of a desktop)"
-msgstr "拖拉整個桌面 (移動桌面上全部視窗)"
-
-#: src/modules/pager/e_mod_config.c:153 src/modules/pager/e_mod_config.c:156
-#: src/modules/pager/e_mod_config.c:159 src/modules/pager/e_mod_config.c:223
-#: src/modules/pager/e_mod_config.c:229 src/modules/pager/e_mod_config.c:235
+#: src/modules/pager/e_mod_config.c:164 src/modules/pager/e_mod_config.c:171
+#: src/modules/pager/e_mod_config.c:178 src/modules/pager/e_mod_config.c:386
+#: src/modules/pager/e_mod_config.c:391 src/modules/pager/e_mod_config.c:396
 #, c-format
 msgid "Click to set"
 msgstr "點擊以設定"
 
-#: src/modules/pager/e_mod_config.c:163
-msgid "Resistance to dragging"
-msgstr "拖曳阻力"
+#: src/modules/pager/e_mod_config.c:169
+#, fuzzy
+msgid "Drag and Drop button"
+msgstr "拖放按鍵 (保持相對位置)"
 
-#: src/modules/pager/e_mod_config.c:165
+#: src/modules/pager/e_mod_config.c:176
+#, fuzzy
+msgid "Drag whole desktop"
+msgstr "虛擬桌面"
+
+#: src/modules/pager/e_mod_config.c:185
+msgid "Keyaction popup height"
+msgstr ""
+
+#: src/modules/pager/e_mod_config.c:187 src/modules/pager/e_mod_config.c:193
+#: src/modules/pager/e_mod_config.c:204
 #, c-format
 msgid "%.0f px"
 msgstr "%.0f 像素"
 
-#: src/modules/pager/e_mod_config.c:169
-msgid "Pager Popup Settings"
-msgstr "桌面切換器彈出訊息設定"
+#: src/modules/pager/e_mod_config.c:191
+msgid "Resistance to dragging"
+msgstr "拖曳阻力"
 
-#: src/modules/pager/e_mod_config.c:172 src/modules/pager/e_mod_config.c:184
-msgid "Popup Speed"
+#: src/modules/pager/e_mod_config.c:202
+#, fuzzy
+msgid "Popup pager height"
 msgstr "彈出訊息速度"
 
-#: src/modules/pager/e_mod_config.c:177
-msgid "Urgent window"
-msgstr "緊急視窗"
+#: src/modules/pager/e_mod_config.c:207 src/modules/pager/e_mod_config.c:221
+#, fuzzy
+msgid "Popup speed"
+msgstr "彈出訊息速度"
 
-#: src/modules/pager/e_mod_config.c:178
-msgid "Show Popup on urgent window"
+#: src/modules/pager/e_mod_config.c:209 src/modules/pager/e_mod_config.c:223
+#, c-format
+msgid "%1.1f seconds"
+msgstr "%1.1f 秒"
+
+#: src/modules/pager/e_mod_config.c:214
+#, fuzzy
+msgid "Urgent Window Settings"
+msgstr "視窗列表設定"
+
+#: src/modules/pager/e_mod_config.c:215
+#, fuzzy
+msgid "Show popup on urgent window"
 msgstr "在緊急視窗上顯示彈出訊息"
 
-#: src/modules/pager/e_mod_config.c:180
+#: src/modules/pager/e_mod_config.c:218
 msgid "Popup on urgent window sticks on the screen"
 msgstr "將緊急視窗上的彈出訊息相黏於螢幕上"
 
-#: src/modules/pager/e_mod_config.c:221 src/modules/pager/e_mod_config.c:227
-#: src/modules/pager/e_mod_config.c:233
-#, c-format
-msgid "Button %i"
-msgstr "按鈕 %i"
-
-#: src/modules/pager/e_mod_config.c:257
+#: src/modules/pager/e_mod_config.c:271
 msgid "Pager Button Grab"
 msgstr "桌面切換器按鍵擷取"
 
-#: src/modules/pager/e_mod_config.c:259
+#: src/modules/pager/e_mod_config.c:273
 msgid ""
 "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
 "<br>Or <hilight>Del</hilight> to reset the button."
@@ -7204,19 +5879,53 @@ msgstr ""
 "請按下任一滑鼠鍵。<br>按下 <hilight>Escape</hilight> 以放棄。<br>或按下 "
 "<hilight>Del</hilight> 以重設此按鍵。"
 
-#: src/modules/pager/e_mod_config.c:318
-msgid "Error - Invalid Button"
-msgstr "錯誤 - 不合法的按鈕"
+#: src/modules/pager/e_mod_config.c:328
+#, fuzzy
+msgid "Attetion"
+msgstr "動作"
 
-#: src/modules/pager/e_mod_config.c:319
+#: src/modules/pager/e_mod_config.c:329
+#, fuzzy
 msgid ""
-"You cannot use the right mouse button<br>for this as it is already taken by "
-"internal<br>code for context menus."
+"You cannot use the right mouse button in the<br>shelf for this as it is "
+"already taken by internal<br>code for context menus. <br>This button only "
+"works in the Popup"
 msgstr "您不能使用滑鼠右鍵。<br>本程式內部已將滑鼠右鍵用於彈出式選單。"
 
-#: src/modules/pager/e_mod_main.c:774
+#: src/modules/pager/e_mod_config.c:388 src/modules/pager/e_mod_config.c:393
+#: src/modules/pager/e_mod_config.c:398
+#, c-format
+msgid "Button %i"
+msgstr "按鈕 %i"
+
+#: src/modules/pager/e_mod_main.c:810
 msgid "Virtual Desktops Configuration"
 msgstr "虛擬桌面組態"
+
+#: src/modules/pager/e_mod_main.c:2806
+#, fuzzy
+msgid "Show Pager Popup"
+msgstr "桌面切換器彈出訊息設定"
+
+#: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2846
+#, fuzzy
+msgid "Popup Desk Right"
+msgstr "切換到右方桌面"
+
+#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2847
+#, fuzzy
+msgid "Popup Desk Left"
+msgstr "切換到左方桌面"
+
+#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2848
+#, fuzzy
+msgid "Popup Desk Up"
+msgstr "切換到上方桌面"
+
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2849
+#, fuzzy
+msgid "Popup Desk Down"
+msgstr "切換到下方桌面"
 
 #: src/modules/start/e_mod_main.c:103
 msgid "Start"
@@ -7226,111 +5935,111 @@ msgstr "開始"
 msgid "Temperature Configuration"
 msgstr "溫度組態"
 
-#: src/modules/temperature/e_mod_config.c:212
-#: src/modules/temperature/e_mod_config.c:315
+#: src/modules/temperature/e_mod_config.c:213
+#: src/modules/temperature/e_mod_config.c:316
 msgid "Display Units"
 msgstr "顯示單位"
 
-#: src/modules/temperature/e_mod_config.c:214
-#: src/modules/temperature/e_mod_config.c:317
+#: src/modules/temperature/e_mod_config.c:215
+#: src/modules/temperature/e_mod_config.c:318
 msgid "Celsius"
 msgstr "攝氏"
 
-#: src/modules/temperature/e_mod_config.c:216
-#: src/modules/temperature/e_mod_config.c:319
+#: src/modules/temperature/e_mod_config.c:217
+#: src/modules/temperature/e_mod_config.c:320
 msgid "Fahrenheit"
 msgstr "華氏"
 
-#: src/modules/temperature/e_mod_config.c:220
-#: src/modules/temperature/e_mod_config.c:342
+#: src/modules/temperature/e_mod_config.c:221
+#: src/modules/temperature/e_mod_config.c:343
 msgid "Check Interval"
 msgstr "檢查間隔"
 
-#: src/modules/temperature/e_mod_config.c:222
+#: src/modules/temperature/e_mod_config.c:223
 msgid "Fast"
 msgstr "快"
 
-#: src/modules/temperature/e_mod_config.c:226
+#: src/modules/temperature/e_mod_config.c:227
 msgid "Slow"
 msgstr "慢"
 
-#: src/modules/temperature/e_mod_config.c:228
+#: src/modules/temperature/e_mod_config.c:229
 msgid "Very Slow"
 msgstr "很慢"
 
-#: src/modules/temperature/e_mod_config.c:235
-#: src/modules/temperature/e_mod_config.c:259
-#: src/modules/temperature/e_mod_config.c:360
-#: src/modules/temperature/e_mod_config.c:372
+#: src/modules/temperature/e_mod_config.c:236
+#: src/modules/temperature/e_mod_config.c:260
+#: src/modules/temperature/e_mod_config.c:361
+#: src/modules/temperature/e_mod_config.c:373
 msgid "High Temperature"
 msgstr "高温"
 
-#: src/modules/temperature/e_mod_config.c:238
+#: src/modules/temperature/e_mod_config.c:239
 msgid "200 F"
 msgstr "200 F"
 
-#: src/modules/temperature/e_mod_config.c:240
+#: src/modules/temperature/e_mod_config.c:241
 msgid "150 F"
 msgstr "150 F"
 
-#: src/modules/temperature/e_mod_config.c:242
-#: src/modules/temperature/e_mod_config.c:251
+#: src/modules/temperature/e_mod_config.c:243
+#: src/modules/temperature/e_mod_config.c:252
 msgid "110 F"
 msgstr "110 F"
 
-#: src/modules/temperature/e_mod_config.c:246
-#: src/modules/temperature/e_mod_config.c:270
-#: src/modules/temperature/e_mod_config.c:365
-#: src/modules/temperature/e_mod_config.c:377
+#: src/modules/temperature/e_mod_config.c:247
+#: src/modules/temperature/e_mod_config.c:271
+#: src/modules/temperature/e_mod_config.c:366
+#: src/modules/temperature/e_mod_config.c:378
 msgid "Low Temperature"
 msgstr "低溫"
 
-#: src/modules/temperature/e_mod_config.c:249
+#: src/modules/temperature/e_mod_config.c:250
 msgid "130 F"
 msgstr "130 F"
 
-#: src/modules/temperature/e_mod_config.c:253
+#: src/modules/temperature/e_mod_config.c:254
 msgid "90 F"
 msgstr "90 F"
 
-#: src/modules/temperature/e_mod_config.c:262
+#: src/modules/temperature/e_mod_config.c:263
 msgid "93 C"
 msgstr "93 C"
 
-#: src/modules/temperature/e_mod_config.c:264
+#: src/modules/temperature/e_mod_config.c:265
 msgid "65 C"
 msgstr "65 C"
 
-#: src/modules/temperature/e_mod_config.c:266
-#: src/modules/temperature/e_mod_config.c:275
+#: src/modules/temperature/e_mod_config.c:267
+#: src/modules/temperature/e_mod_config.c:276
 msgid "43 C"
 msgstr "43 C"
 
-#: src/modules/temperature/e_mod_config.c:273
+#: src/modules/temperature/e_mod_config.c:274
 msgid "55 C"
 msgstr "55 C"
 
-#: src/modules/temperature/e_mod_config.c:277
+#: src/modules/temperature/e_mod_config.c:278
 msgid "32 C"
 msgstr "32 C"
 
-#: src/modules/temperature/e_mod_config.c:330
+#: src/modules/temperature/e_mod_config.c:331
 msgid "Sensors"
 msgstr "感應器"
 
-#: src/modules/temperature/e_mod_config.c:361
-#: src/modules/temperature/e_mod_config.c:366
+#: src/modules/temperature/e_mod_config.c:362
+#: src/modules/temperature/e_mod_config.c:367
 #, c-format
 msgid "%1.0f F"
 msgstr "%1.0f F"
 
-#: src/modules/temperature/e_mod_config.c:373
-#: src/modules/temperature/e_mod_config.c:378
+#: src/modules/temperature/e_mod_config.c:374
+#: src/modules/temperature/e_mod_config.c:379
 #, c-format
 msgid "%1.0f C"
 msgstr "%1.0f C"
 
-#: src/modules/temperature/e_mod_main.c:134
+#: src/modules/temperature/e_mod_main.c:161
 msgid "Temperature"
 msgstr "温度"
 
@@ -7350,6 +6059,1148 @@ msgstr "上一步"
 #, fuzzy
 msgid "Choose Language"
 msgstr "語言"
+
+#~ msgid "NO INFO"
+#~ msgstr "沒有資訊"
+
+#~ msgid "NO BAT"
+#~ msgstr "沒有電池"
+
+#~ msgid "Application Categories"
+#~ msgstr "應用程式類別"
+
+#~ msgid "Bulgarian"
+#~ msgstr "保加利亞文"
+
+#~ msgid "Catalan"
+#~ msgstr "加泰隆文"
+
+#~ msgid "Chinese (Simplified)"
+#~ msgstr "簡體中文"
+
+#~ msgid "Chinese (Traditional)"
+#~ msgstr "繁體中文"
+
+#~ msgid "Czech"
+#~ msgstr "捷克文"
+
+#~ msgid "Danish"
+#~ msgstr "丹麥文"
+
+#~ msgid "Dutch"
+#~ msgstr "荷蘭文"
+
+#~ msgid "English"
+#~ msgstr "英文"
+
+#~ msgid "Finnish"
+#~ msgstr "芬蘭文"
+
+#~ msgid "French"
+#~ msgstr "法文"
+
+#~ msgid "German"
+#~ msgstr "德文"
+
+#~ msgid "Hungarian"
+#~ msgstr "匈牙利文"
+
+#~ msgid "Italian"
+#~ msgstr "意大利文"
+
+#~ msgid "Japanese"
+#~ msgstr "日本"
+
+#~ msgid "Korean"
+#~ msgstr "韓國"
+
+#~ msgid "Norwegian Bokmål"
+#~ msgstr "挪威 Bokmål 語"
+
+#~ msgid "Polish"
+#~ msgstr "波蘭文"
+
+#~ msgid "Portuguese"
+#~ msgstr "葡萄牙文"
+
+#~ msgid "Russian"
+#~ msgstr "俄羅斯文"
+
+#~ msgid "Slovak"
+#~ msgstr "斯洛伐克文"
+
+#~ msgid "Slovenian"
+#~ msgstr "斯洛文尼亞文"
+
+#~ msgid "Spanish"
+#~ msgstr "西班牙文"
+
+#~ msgid "Swedish"
+#~ msgstr "瑞典文"
+
+#~ msgid "Afar"
+#~ msgstr "Afar"
+
+#~ msgid "Afrikaans"
+#~ msgstr "南非荷蘭文"
+
+#~ msgid "Akan"
+#~ msgstr "Akan"
+
+#~ msgid "Amharic"
+#~ msgstr "Amharic"
+
+#~ msgid "Aragonese"
+#~ msgstr "Aragonese"
+
+#~ msgid "Arabic"
+#~ msgstr "阿拉伯"
+
+#~ msgid "Assamese"
+#~ msgstr "Assamese"
+
+#~ msgid "Azerbaijani"
+#~ msgstr "亞塞拜疆文"
+
+#~ msgid "Belarusian"
+#~ msgstr "白俄羅斯文"
+
+#~ msgid "Bengali"
+#~ msgstr "Bengali"
+
+#~ msgid "Breton"
+#~ msgstr "布列塔尼文"
+
+#~ msgid "Bosnian"
+#~ msgstr "Bosnian"
+
+#~ msgid "Blin"
+#~ msgstr "Blin"
+
+#~ msgid "Atsam"
+#~ msgstr "Atsam"
+
+#~ msgid "Welsh"
+#~ msgstr "Welsh"
+
+#~ msgid "Divehi"
+#~ msgstr "Divehi"
+
+#~ msgid "Dzongkha"
+#~ msgstr "Dzongkha"
+
+#~ msgid "Ewe"
+#~ msgstr "Ewe"
+
+#~ msgid "Greek"
+#~ msgstr "Greek"
+
+#~ msgid "Esperanto"
+#~ msgstr "世界語"
+
+#~ msgid "Estonian"
+#~ msgstr "愛沙尼亞文"
+
+#~ msgid "Basque"
+#~ msgstr "巴斯克文"
+
+#~ msgid "Persian"
+#~ msgstr "Persian"
+
+#~ msgid "Faroese"
+#~ msgstr "法羅文"
+
+#~ msgid "Friulian"
+#~ msgstr "Friulian"
+
+#~ msgid "Irish"
+#~ msgstr "愛爾蘭文"
+
+#~ msgid "Ga"
+#~ msgstr "Ga"
+
+#~ msgid "Geez"
+#~ msgstr "Geez"
+
+#~ msgid "Galician"
+#~ msgstr "Galician"
+
+#~ msgid "Gujarati"
+#~ msgstr "Gujarati"
+
+#~ msgid "Manx"
+#~ msgstr "Manx"
+
+#~ msgid "Hausa"
+#~ msgstr "Hausa"
+
+#~ msgid "Hawaiian"
+#~ msgstr "Hawaiian"
+
+#~ msgid "Hebrew"
+#~ msgstr "希伯來"
+
+#~ msgid "Hindi"
+#~ msgstr "Hindi"
+
+#~ msgid "Croatian"
+#~ msgstr "克羅地亞文"
+
+#~ msgid "Armenian"
+#~ msgstr "Armenian"
+
+#~ msgid "Interlingua"
+#~ msgstr "Interlingua"
+
+#~ msgid "Indonesian"
+#~ msgstr "印尼文"
+
+#~ msgid "Igbo"
+#~ msgstr "Igbo"
+
+#~ msgid "Icelandic"
+#~ msgstr "冰島文"
+
+#~ msgid "Inuktitut"
+#~ msgstr "Inuktitut"
+
+#~ msgid "Georgian"
+#~ msgstr "Georgian"
+
+#~ msgid "Jju"
+#~ msgstr "Jju"
+
+#~ msgid "Kamba"
+#~ msgstr "Kamba"
+
+#~ msgid "Tyap"
+#~ msgstr "Tyap"
+
+#~ msgid "Koro"
+#~ msgstr "Koro"
+
+#~ msgid "Kazakh"
+#~ msgstr "Kazakh"
+
+#~ msgid "Kalaallisut"
+#~ msgstr "Kalaallisut"
+
+#~ msgid "Khmer"
+#~ msgstr "Khmer"
+
+#~ msgid "Kannada"
+#~ msgstr "Kannada"
+
+#~ msgid "Konkani"
+#~ msgstr "Konkani"
+
+#~ msgid "Kurdish"
+#~ msgstr "Kurdish"
+
+#~ msgid "Cornish"
+#~ msgstr "Cornish"
+
+#~ msgid "Kirghiz"
+#~ msgstr "Kirghiz"
+
+#~ msgid "Lingala"
+#~ msgstr "Lingala"
+
+#~ msgid "Lao"
+#~ msgstr "Lao"
+
+#~ msgid "Lithuanian"
+#~ msgstr "立陶宛文"
+
+#~ msgid "Latvian"
+#~ msgstr "拉脫維亞文"
+
+#~ msgid "Maori"
+#~ msgstr "Maori"
+
+#~ msgid "Macedonian"
+#~ msgstr "馬其頓文"
+
+#~ msgid "Malayalam"
+#~ msgstr "Malayalam"
+
+#~ msgid "Mongolian"
+#~ msgstr "Mongolian"
+
+#~ msgid "Marathi"
+#~ msgstr "Marathi"
+
+#~ msgid "Malay"
+#~ msgstr "Malay"
+
+#~ msgid "Maltese"
+#~ msgstr "Maltese"
+
+#~ msgid "Nepali"
+#~ msgstr "Nepali"
+
+#~ msgid "Norwegian Nynorsk"
+#~ msgstr "Norwegian Nynorsk"
+
+#~ msgid "Norwegian"
+#~ msgstr "挪威文"
+
+#~ msgid "South Ndebele"
+#~ msgstr "South Ndebele"
+
+#~ msgid "Northern Sotho"
+#~ msgstr "Northern Sotho"
+
+#~ msgid "Nyanja; Chichewa; Chewa"
+#~ msgstr "Nyanja; Chichewa; Chewa"
+
+#~ msgid "Occitan"
+#~ msgstr "Occitan"
+
+#~ msgid "Oromo"
+#~ msgstr "Oromo"
+
+#~ msgid "Oriya"
+#~ msgstr "Oriya"
+
+#~ msgid "Punjabi"
+#~ msgstr "Punjabi"
+
+#~ msgid "Pashto"
+#~ msgstr "Pashto"
+
+#~ msgid "Romanian"
+#~ msgstr "羅馬尼亞文"
+
+#~ msgid "Kinyarwanda"
+#~ msgstr "Kinyarwanda"
+
+#~ msgid "Sanskrit"
+#~ msgstr "Sanskrit"
+
+#~ msgid "Northern Sami"
+#~ msgstr "Northern Sami"
+
+#~ msgid "Serbo-Croatian"
+#~ msgstr "Serbo-Croatian"
+
+#~ msgid "Sidamo"
+#~ msgstr "Sidamo"
+
+#~ msgid "Somali"
+#~ msgstr "Somali"
+
+#~ msgid "Albanian"
+#~ msgstr "阿爾巴尼亞文"
+
+#~ msgid "Serbian"
+#~ msgstr "塞爾維亞文"
+
+#~ msgid "Swati"
+#~ msgstr "Swati"
+
+#~ msgid "Southern Sotho"
+#~ msgstr "Southern Sotho"
+
+#~ msgid "Swahili"
+#~ msgstr "Swahili"
+
+#~ msgid "Syriac"
+#~ msgstr "Syriac"
+
+#~ msgid "Tamil"
+#~ msgstr "Tamil"
+
+#~ msgid "Telugu"
+#~ msgstr "Telugu"
+
+#~ msgid "Tajik"
+#~ msgstr "Tajik"
+
+#~ msgid "Thai"
+#~ msgstr "泰國"
+
+#~ msgid "Tigrinya"
+#~ msgstr "Tigrinya"
+
+#~ msgid "Tigre"
+#~ msgstr "Tigre"
+
+#~ msgid "Tagalog"
+#~ msgstr "Tagalog"
+
+#~ msgid "Tswana"
+#~ msgstr "Tswana"
+
+#~ msgid "Turkish"
+#~ msgstr "土耳其"
+
+#~ msgid "Tsonga"
+#~ msgstr "Tsonga"
+
+#~ msgid "Tatar"
+#~ msgstr "Tatar"
+
+#~ msgid "Ukrainian"
+#~ msgstr "Ukrainian"
+
+#~ msgid "Urdu"
+#~ msgstr "Urdu"
+
+#~ msgid "Uzbek"
+#~ msgstr "Uzbek"
+
+#~ msgid "Venda"
+#~ msgstr "Venda"
+
+#~ msgid "Vietnamese"
+#~ msgstr "越南"
+
+#~ msgid "Walloon"
+#~ msgstr "Walloon"
+
+#~ msgid "Walamo"
+#~ msgstr "Walamo"
+
+#~ msgid "Xhosa"
+#~ msgstr "Xhosa"
+
+#~ msgid "Yiddish"
+#~ msgstr "Yiddish"
+
+#~ msgid "Yoruba"
+#~ msgstr "Yoruba"
+
+#~ msgid "Chinese"
+#~ msgstr "中文"
+
+#~ msgid "Zulu"
+#~ msgstr "Zulu"
+
+#~ msgid "Afghanistan"
+#~ msgstr "阿富汗"
+
+#~ msgid "Åland Islands"
+#~ msgstr "奧蘭群島"
+
+#~ msgid "Albania"
+#~ msgstr "阿爾巴尼亞"
+
+#~ msgid "Algeria"
+#~ msgstr "阿爾及利亞"
+
+#~ msgid "American Samoa"
+#~ msgstr "美屬薩摩亞"
+
+#~ msgid "Andorra"
+#~ msgstr "安道爾"
+
+#~ msgid "Angola"
+#~ msgstr "安哥拉"
+
+#~ msgid "Anguilla"
+#~ msgstr "安圭拉"
+
+#~ msgid "Antarctica"
+#~ msgstr "南極洲"
+
+#~ msgid "Antigua and Barbuda"
+#~ msgstr "安地卡及巴布達"
+
+#~ msgid "Argentina"
+#~ msgstr "阿根廷"
+
+#~ msgid "Armenia"
+#~ msgstr "亞美尼亞"
+
+#~ msgid "Aruba"
+#~ msgstr "阿魯巴"
+
+#~ msgid "Australia"
+#~ msgstr "澳大利亞"
+
+#~ msgid "Austria"
+#~ msgstr "奧地利"
+
+#~ msgid "Azerbaijan"
+#~ msgstr "亞塞拜然"
+
+#~ msgid "Bahamas"
+#~ msgstr "巴哈馬"
+
+#~ msgid "Bahrain"
+#~ msgstr "巴林"
+
+#~ msgid "Bangladesh"
+#~ msgstr "孟加拉"
+
+#~ msgid "Barbados"
+#~ msgstr "巴貝多"
+
+#~ msgid "Belarus"
+#~ msgstr "白俄羅斯"
+
+#~ msgid "Belgium"
+#~ msgstr "比利時"
+
+#~ msgid "Belize"
+#~ msgstr "貝里斯"
+
+#~ msgid "Benin"
+#~ msgstr "貝南"
+
+#~ msgid "Bermuda"
+#~ msgstr "百慕達"
+
+#~ msgid "Bhutan"
+#~ msgstr "不丹"
+
+#~ msgid "Bolivia"
+#~ msgstr "玻利維亞"
+
+#~ msgid "Bosnia and Herzegovina"
+#~ msgstr "波士尼亞及赫塞哥維納"
+
+#~ msgid "Botswana"
+#~ msgstr "波札那"
+
+#~ msgid "Bouvet Island"
+#~ msgstr "波維特島"
+
+#~ msgid "Brazil"
+#~ msgstr "巴西"
+
+#~ msgid "British Indian Ocean Territory"
+#~ msgstr "英屬印度洋地區"
+
+#~ msgid "Brunei Darussalam"
+#~ msgstr "汶萊"
+
+#~ msgid "Bulgaria"
+#~ msgstr "保加利亞"
+
+#~ msgid "Burkina Faso"
+#~ msgstr "布吉納法索"
+
+#~ msgid "Burundi"
+#~ msgstr "浦隆地"
+
+#~ msgid "Cambodia"
+#~ msgstr "柬普寨"
+
+#~ msgid "Cameroon"
+#~ msgstr "喀麥隆"
+
+#~ msgid "Canada"
+#~ msgstr "加拿大"
+
+#~ msgid "Cape Verde"
+#~ msgstr "維德角"
+
+#~ msgid "Cayman Islands"
+#~ msgstr "開曼群島"
+
+#~ msgid "Central African Republic"
+#~ msgstr "中非共和國"
+
+#~ msgid "Chad"
+#~ msgstr "查德"
+
+#~ msgid "Chile"
+#~ msgstr "智利"
+
+#~ msgid "China"
+#~ msgstr "中國"
+
+#~ msgid "Christmas Island"
+#~ msgstr "聖誕島"
+
+#, fuzzy
+#~ msgid "Cocos (keeling) Islands"
+#~ msgstr "可可斯群島 (椰島)"
+
+#~ msgid "Colombia"
+#~ msgstr "哥倫比亞"
+
+#~ msgid "Comoros"
+#~ msgstr "葛摩"
+
+#~ msgid "Congo"
+#~ msgstr "剛果"
+
+#~ msgid "Cook Islands"
+#~ msgstr "科克群島"
+
+#~ msgid "Costa Rica"
+#~ msgstr "哥斯大黎加"
+
+#, fuzzy
+#~ msgid "Cote d'Ivoire"
+#~ msgstr "象牙海岸"
+
+#~ msgid "Croatia"
+#~ msgstr "克羅埃西亞"
+
+#~ msgid "Cuba"
+#~ msgstr "古巴"
+
+#~ msgid "Cyprus"
+#~ msgstr "賽普勒斯"
+
+#~ msgid "Czech Republic"
+#~ msgstr "捷克共和國"
+
+#~ msgid "Denmark"
+#~ msgstr "丹麥"
+
+#~ msgid "Djibouti"
+#~ msgstr "吉布地"
+
+#~ msgid "Dominica"
+#~ msgstr "多米尼克"
+
+#~ msgid "Dominican Republic"
+#~ msgstr "多明尼加共和國"
+
+#~ msgid "Ecuador"
+#~ msgstr "厄瓜多"
+
+#~ msgid "Egypt"
+#~ msgstr "埃及"
+
+#~ msgid "El Salvador"
+#~ msgstr "薩爾瓦多"
+
+#~ msgid "Equatorial Guinea"
+#~ msgstr "赤道幾內亞"
+
+#~ msgid "Eritrea"
+#~ msgstr "厄利垂亞"
+
+#~ msgid "Estonia"
+#~ msgstr "愛沙尼亞"
+
+#~ msgid "Ethiopia"
+#~ msgstr "依索比亞"
+
+#, fuzzy
+#~ msgid "Falkland Islands (malvinas)"
+#~ msgstr "法克蘭群島 (馬爾維納斯)"
+
+#~ msgid "Faroe Islands"
+#~ msgstr "法羅群島"
+
+#~ msgid "Fiji"
+#~ msgstr "斐濟"
+
+#~ msgid "Finland"
+#~ msgstr "芬蘭"
+
+#~ msgid "France"
+#~ msgstr "法國"
+
+#~ msgid "French Guiana"
+#~ msgstr "法屬圭亞那"
+
+#~ msgid "French Polynesia"
+#~ msgstr "法屬圭亞那"
+
+#~ msgid "French Southern Territories"
+#~ msgstr "法屬南部屬地"
+
+#~ msgid "Gabon"
+#~ msgstr "加彭"
+
+#~ msgid "Gambia"
+#~ msgstr "甘比亞"
+
+#~ msgid "Georgia"
+#~ msgstr "喬治亞"
+
+#~ msgid "Germany"
+#~ msgstr "德國"
+
+#~ msgid "Ghana"
+#~ msgstr "迦納"
+
+#~ msgid "Gibraltar"
+#~ msgstr "直布羅陀"
+
+#~ msgid "Greece"
+#~ msgstr "希臘"
+
+#~ msgid "Greenland"
+#~ msgstr "格陵蘭"
+
+#~ msgid "Grenada"
+#~ msgstr "格瑞那達"
+
+#~ msgid "Guadeloupe"
+#~ msgstr "瓜德魯普"
+
+#~ msgid "Guam"
+#~ msgstr "關島"
+
+#~ msgid "Guatemala"
+#~ msgstr "瓜地馬拉"
+
+#~ msgid "Guernsey"
+#~ msgstr "根西島"
+
+#~ msgid "Guinea"
+#~ msgstr "幾內亞"
+
+#~ msgid "Guinea-Bissau"
+#~ msgstr "幾內亞比索"
+
+#~ msgid "Guyana"
+#~ msgstr "蓋亞那"
+
+#~ msgid "Haiti"
+#~ msgstr "海地"
+
+#, fuzzy
+#~ msgid "Heard Island and Mcdonald Islands"
+#~ msgstr "赫德及麥當勞群島"
+
+#~ msgid "Holy See (Vatican City State)"
+#~ msgstr "教廷 (梵蒂岡)"
+
+#~ msgid "Honduras"
+#~ msgstr "宏都拉斯"
+
+#~ msgid "Hong Kong"
+#~ msgstr "香港"
+
+#~ msgid "Hungary"
+#~ msgstr "匈牙利"
+
+#~ msgid "Iceland"
+#~ msgstr "冰島"
+
+#~ msgid "India"
+#~ msgstr "印度"
+
+#~ msgid "Indonesia"
+#~ msgstr "印尼"
+
+#~ msgid "Iraq"
+#~ msgstr "伊拉克"
+
+#~ msgid "Ireland"
+#~ msgstr "愛爾蘭"
+
+#~ msgid "Israel"
+#~ msgstr "以色列"
+
+#~ msgid "Italy"
+#~ msgstr "義大利"
+
+#~ msgid "Jamaica"
+#~ msgstr "牙買加"
+
+#~ msgid "Japan"
+#~ msgstr "日本"
+
+#~ msgid "Jersey"
+#~ msgstr "澤西島"
+
+#~ msgid "Jordan"
+#~ msgstr "約旦"
+
+#~ msgid "Kazakhstan"
+#~ msgstr "哈薩克"
+
+#~ msgid "Kenya"
+#~ msgstr "肯亞"
+
+#~ msgid "Kiribati"
+#~ msgstr "吉里巴斯"
+
+#~ msgid "Korea"
+#~ msgstr "韓國"
+
+#~ msgid "Kuwait"
+#~ msgstr "科威特"
+
+#~ msgid "Kyrgyzstan"
+#~ msgstr "吉爾吉斯"
+
+#~ msgid "Lao People's Democratic Republic"
+#~ msgstr "寮國人民民主共和國"
+
+#~ msgid "Latvia"
+#~ msgstr "拉脫維亞"
+
+#~ msgid "Lebanon"
+#~ msgstr "黎巴嫩"
+
+#~ msgid "Lesotho"
+#~ msgstr "賴索托"
+
+#~ msgid "Liberia"
+#~ msgstr "賴比瑞亞"
+
+#~ msgid "Libyan Arab Jamahiriya"
+#~ msgstr "利比亞阿拉伯群眾國"
+
+#~ msgid "Liechtenstein"
+#~ msgstr "列支敦斯登"
+
+#~ msgid "Lithuania"
+#~ msgstr "立陶宛"
+
+#~ msgid "Luxembourg"
+#~ msgstr "盧森堡"
+
+#~ msgid "Macao"
+#~ msgstr "澳門"
+
+#, fuzzy
+#~ msgid "Macedonia"
+#~ msgstr "馬其頓文"
+
+#~ msgid "Madagascar"
+#~ msgstr "馬達加斯加"
+
+#~ msgid "Malawi"
+#~ msgstr "馬拉威"
+
+#~ msgid "Malaysia"
+#~ msgstr "馬來西亞"
+
+#~ msgid "Maldives"
+#~ msgstr "馬爾地夫"
+
+#~ msgid "Mali"
+#~ msgstr "馬利"
+
+#~ msgid "Malta"
+#~ msgstr "馬爾他"
+
+#~ msgid "Marshall Islands"
+#~ msgstr "馬紹爾群島"
+
+#~ msgid "Martinique"
+#~ msgstr "馬丁尼克"
+
+#~ msgid "Mauritania"
+#~ msgstr "茅利塔尼亞"
+
+#~ msgid "Mauritius"
+#~ msgstr "模里西斯"
+
+#~ msgid "Mayotte"
+#~ msgstr "美亞特"
+
+#~ msgid "Mexico"
+#~ msgstr "墨西哥"
+
+#~ msgid "Monaco"
+#~ msgstr "摩納哥"
+
+#~ msgid "Mongolia"
+#~ msgstr "蒙古"
+
+#~ msgid "Montserrat"
+#~ msgstr "蒙瑟拉特島"
+
+#~ msgid "Morocco"
+#~ msgstr "摩洛哥"
+
+#~ msgid "Mozambique"
+#~ msgstr "莫三比克"
+
+#~ msgid "Myanmar"
+#~ msgstr "緬甸"
+
+#~ msgid "Namibia"
+#~ msgstr "納米比亞"
+
+#~ msgid "Nauru"
+#~ msgstr "諾魯"
+
+#~ msgid "Nepal"
+#~ msgstr "尼泊爾"
+
+#~ msgid "Netherlands"
+#~ msgstr "荷蘭"
+
+#~ msgid "Netherlands Antilles"
+#~ msgstr "荷屬安地列斯"
+
+#~ msgid "New Caledonia"
+#~ msgstr "新喀里多尼亞"
+
+#~ msgid "New Zealand"
+#~ msgstr "紐西蘭"
+
+#~ msgid "Nicaragua"
+#~ msgstr "尼加拉瓜"
+
+#~ msgid "Niger"
+#~ msgstr "尼日"
+
+#~ msgid "Nigeria"
+#~ msgstr "奈及利亞"
+
+#~ msgid "Niue"
+#~ msgstr "紐威"
+
+#~ msgid "Norfolk Island"
+#~ msgstr "諾福克群島"
+
+#~ msgid "Northern Mariana Islands"
+#~ msgstr "北馬里亞納群島"
+
+#~ msgid "Norway"
+#~ msgstr "挪威"
+
+#~ msgid "Oman"
+#~ msgstr "阿曼"
+
+#~ msgid "Pakistan"
+#~ msgstr "巴基斯坦"
+
+#~ msgid "Palau"
+#~ msgstr "帛琉"
+
+#, fuzzy
+#~ msgid "Palestinian Territory"
+#~ msgstr "巴勒斯坦佔領區"
+
+#~ msgid "Panama"
+#~ msgstr "巴拿馬"
+
+#~ msgid "Papua New Guinea"
+#~ msgstr "巴布亞紐幾內亞"
+
+#~ msgid "Paraguay"
+#~ msgstr "巴拉圭"
+
+#~ msgid "Peru"
+#~ msgstr "祕魯"
+
+#~ msgid "Philippines"
+#~ msgstr "菲律賓"
+
+#~ msgid "Pitcairn"
+#~ msgstr "皮特康"
+
+#~ msgid "Poland"
+#~ msgstr "波蘭"
+
+#~ msgid "Portugal"
+#~ msgstr "葡萄牙"
+
+#~ msgid "Puerto Rico"
+#~ msgstr "波多黎各"
+
+#~ msgid "Qatar"
+#~ msgstr "卡達"
+
+#~ msgid "Reunion"
+#~ msgstr "留尼旺"
+
+#~ msgid "Romania"
+#~ msgstr "羅馬尼亞"
+
+#~ msgid "Russian Federation"
+#~ msgstr "俄羅斯"
+
+#~ msgid "Rwanda"
+#~ msgstr "盧安達"
+
+#~ msgid "Saint Helena"
+#~ msgstr "聖赫勒拿"
+
+#~ msgid "Saint Kitts and Nevis"
+#~ msgstr "聖克里斯多福及尼維斯"
+
+#~ msgid "Saint Lucia"
+#~ msgstr "聖路西亞"
+
+#~ msgid "Saint Pierre and Miquelon"
+#~ msgstr "聖匹及密啟倫"
+
+#~ msgid "Saint Vincent and the Grenadines"
+#~ msgstr "聖文森及格瑞那丁"
+
+#~ msgid "Samoa"
+#~ msgstr "薩摩亞"
+
+#~ msgid "San Marino"
+#~ msgstr "聖馬利諾"
+
+#~ msgid "Sao Tome and Principe"
+#~ msgstr "聖多美及普林西比"
+
+#~ msgid "Saudi Arabia"
+#~ msgstr "沙烏地阿拉伯"
+
+#~ msgid "Senegal"
+#~ msgstr "塞內加爾"
+
+#, fuzzy
+#~ msgid "Serbia and Montenegro"
+#~ msgstr "蒙特內哥羅共和國"
+
+#~ msgid "Seychelles"
+#~ msgstr "塞席爾"
+
+#~ msgid "Sierra Leone"
+#~ msgstr "獅子山"
+
+#~ msgid "Singapore"
+#~ msgstr "新加坡"
+
+#~ msgid "Slovakia"
+#~ msgstr "斯洛伐克"
+
+#~ msgid "Slovenia"
+#~ msgstr "斯洛凡尼亞"
+
+#~ msgid "Solomon Islands"
+#~ msgstr "索羅門群島"
+
+#~ msgid "Somalia"
+#~ msgstr "索馬利亞"
+
+#~ msgid "South Africa"
+#~ msgstr "南非"
+
+#~ msgid "South Georgia and the South Sandwich Islands"
+#~ msgstr "南喬治亞及南桑威奇群島"
+
+#~ msgid "Spain"
+#~ msgstr "西班牙"
+
+#~ msgid "Sri Lanka"
+#~ msgstr "斯里蘭卡"
+
+#~ msgid "Sudan"
+#~ msgstr "蘇丹"
+
+#~ msgid "Suriname"
+#~ msgstr "蘇利南"
+
+#~ msgid "Svalbard and Jan Mayen"
+#~ msgstr "斯瓦巴及尖棉"
+
+#~ msgid "Swaziland"
+#~ msgstr "史瓦濟蘭"
+
+#~ msgid "Sweden"
+#~ msgstr "瑞典"
+
+#~ msgid "Switzerland"
+#~ msgstr "瑞士"
+
+#~ msgid "Syrian Arab Republic"
+#~ msgstr "敘利亞阿拉伯共和國"
+
+#~ msgid "Taiwan"
+#~ msgstr "台灣"
+
+#~ msgid "Tajikistan"
+#~ msgstr "塔吉克"
+
+#~ msgid "Thailand"
+#~ msgstr "泰國"
+
+#~ msgid "Timor-Leste"
+#~ msgstr "東帝汶"
+
+#~ msgid "Togo"
+#~ msgstr "多哥"
+
+#~ msgid "Tokelau"
+#~ msgstr "托克勞"
+
+#~ msgid "Tonga"
+#~ msgstr "東加"
+
+#~ msgid "Trinidad and Tobago"
+#~ msgstr "千里達及托貝哥"
+
+#~ msgid "Tunisia"
+#~ msgstr "突尼西亞"
+
+#~ msgid "Turkey"
+#~ msgstr "土耳其"
+
+#~ msgid "Turkmenistan"
+#~ msgstr "土庫曼"
+
+#~ msgid "Turks and Caicos Islands"
+#~ msgstr "土克斯及開科斯群島"
+
+#~ msgid "Tuvalu"
+#~ msgstr "吐瓦魯"
+
+#~ msgid "Uganda"
+#~ msgstr "烏干達"
+
+#~ msgid "Ukraine"
+#~ msgstr "烏克蘭"
+
+#~ msgid "United Arab Emirates"
+#~ msgstr "阿拉伯聯合大公國"
+
+#~ msgid "United Kingdom"
+#~ msgstr "英國"
+
+#~ msgid "United States"
+#~ msgstr "美國"
+
+#~ msgid "United States Minor Outlying Islands"
+#~ msgstr "美屬邊疆群島"
+
+#~ msgid "Uruguay"
+#~ msgstr "烏拉圭"
+
+#~ msgid "Uzbekistan"
+#~ msgstr "烏茲別克"
+
+#~ msgid "Vanuatu"
+#~ msgstr "萬那杜"
+
+#~ msgid "Venezuela"
+#~ msgstr "委內瑞拉"
+
+#~ msgid "Viet Nam"
+#~ msgstr "越南"
+
+#, fuzzy
+#~ msgid "Virgin Islands"
+#~ msgstr "美屬維爾京群島"
+
+#~ msgid "Wallis and Futuna"
+#~ msgstr "沃里斯及伏塔那"
+
+#~ msgid "Western Sahara"
+#~ msgstr "西撒哈拉"
+
+#~ msgid "Yemen"
+#~ msgstr "葉門"
+
+#~ msgid "Zambia"
+#~ msgstr "尚比亞"
+
+#~ msgid "Zimbabwe"
+#~ msgstr "辛巴威"
+
+#~ msgid "Pager Settings"
+#~ msgstr "桌面切換器設定"
+
+#~ msgid "Drag whole desktop (Move all windows of a desktop)"
+#~ msgstr "拖拉整個桌面 (移動桌面上全部視窗)"
+
+#~ msgid "Urgent window"
+#~ msgstr "緊急視窗"
+
+#~ msgid "Error - Invalid Button"
+#~ msgstr "錯誤 - 不合法的按鈕"
 
 #~ msgid "Enlightenment Battery Module"
 #~ msgstr "Enlightenment 電池模組"
