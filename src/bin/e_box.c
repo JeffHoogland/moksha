@@ -99,8 +99,7 @@ e_box_orientation_set(Evas_Object *obj, int horizontal)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   if (((sd->horizontal) && (horizontal)) ||
-       ((!sd->horizontal) && (!horizontal))) return;
+   if (sd->horizontal == horizontal) return;
    sd->horizontal = horizontal;
    sd->changed = 1;
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
