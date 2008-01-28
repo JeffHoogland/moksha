@@ -7,10 +7,11 @@
 typedef struct _Config       Config;
 typedef struct _Status       Status;
 
-#define CHECK_NONE 0
-#define CHECK_ACPI 1
-#define CHECK_APM  2
-#define CHECK_PMU  3
+#define CHECK_NONE      0
+#define CHECK_ACPI      1
+#define CHECK_APM       2
+#define CHECK_PMU       3
+#define CHECK_SYS_ACPI  4
 
 struct _Config
 {

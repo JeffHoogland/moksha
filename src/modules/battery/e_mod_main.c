@@ -62,6 +62,7 @@ static void _menu_cb_post(void *data, E_Menu *m);
 static Status *_battery_linux_acpi_check(void);
 static Status *_battery_linux_apm_check(void);
 static Status *_battery_linux_powerbook_check(void);
+static Status *_battery_linux_sys_acpi_check(void);
 #ifdef __FreeBSD__
 static Status *_battery_bsd_acpi_check(void);
 static Status *_battery_bsd_apm_check(void);
@@ -250,8 +251,10 @@ _battery_cb_check(void *data)
 #else
    if (battery_config->battery_check_mode == 0)
      {
-	if (ecore_file_is_dir("/proc/acpi"))
+	if (ecore_file_is_dir("/proc/acpi")) /* <= 2.6.24 */
 	  battery_config->battery_check_mode = CHECK_ACPI;
+	else if (ecore_file_is_dir("/sys/class/power_supply")) /* >= 2.6.24 */
+	  battery_config->battery_check_mode = CHECK_SYS_ACPI;
 	else if (ecore_file_exists("/proc/apm"))
 	  battery_config->battery_check_mode = CHECK_APM;
 	else if (ecore_file_is_dir("/proc/pmu"))
@@ -267,6 +270,9 @@ _battery_cb_check(void *data)
 	break;
       case CHECK_PMU:
 	ret = _battery_linux_powerbook_check();
+	break;
+      case CHECK_SYS_ACPI:
+	ret = _battery_linux_sys_acpi_check();
 	break;
       default:
 	break;
@@ -366,6 +372,257 @@ _battery_cb_check(void *data)
 	free(ret);
      }
    return 1;
+}
+
+static Status *
+_battery_linux_sys_acpi_check(void)
+{
+   Ecore_List *bats;
+   char buf[4096], buf2[4096];
+   char *name;
+   int bat_max = 0;
+   int bat_filled = 0;
+   int bat_level = 0;
+   int bat_drain = 1;
+   int bat_val = 0;
+   int discharging = 0;
+   int charging = 0;
+   int battery = 0;
+   int design_cap_unknown = 0;
+   int last_full_unknown = 0;
+   int rate_unknown = 0;
+   int level_unknown = 0;
+   int hours, minutes;
+   Status *stat;
+   static double last_poll_time = 0.0;
+   double poll_time, t;
+
+   stat = E_NEW(Status, 1);
+   if (!stat) return NULL;
+
+   t = ecore_time_get();
+   poll_time = t - last_poll_time;
+   last_poll_time = t;
+   
+   /* Read some information on first run. */
+   bats = ecore_file_ls("/sys/class/power_supply/");
+   if (bats)
+     {
+	while ((name = ecore_list_next(bats)))
+	  {
+	     FILE *f;
+	     int design_cap = 0;
+	     int last_full = 0;
+	     int present = 0;
+	     char *charging_state = NULL;
+	     int rate = 1;
+	     int level = 0;
+
+	     if (name && strncmp("BAT",name,3)) continue;
+             
+	     /* present */
+	     snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/present", name);
+	     f = fopen(buf, "r");    
+	     if (f)
+	       {
+		  fgets(buf2, sizeof(buf2), f);
+		  present = atoi(buf2);
+
+		  fclose(f);
+	       }  
+       
+	     /* design capacity */
+	     snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/charge_full_design", name);
+	     f = fopen(buf, "r");
+	     if (f)
+	       {
+		  fgets(buf2, sizeof(buf2), f);
+		  design_cap = atoi(buf2); 
+         
+		  if(!design_cap) design_cap_unknown++;
+         
+		  fclose(f);
+	       }
+       
+	     /* last full capacity */
+	     snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/charge_full", name);
+	     f = fopen(buf, "r");      
+	     if (f)
+	       {
+		  fgets(buf2, sizeof(buf2), f);
+		  last_full = atoi(buf2);
+         
+		  if(!last_full) last_full_unknown++;
+         
+		  fclose(f);
+	       }
+       		
+	     /* charging state */       
+	     snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/status", name);
+	     f = fopen(buf, "r");       
+	     if (f)
+	       {
+		  fgets(buf2, sizeof(buf2), f);
+		  charging_state = strdup(buf2);
+         
+		  fclose(f);
+	       }
+		  
+	     /* present rate */
+	     snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/current_now", name);
+	     f = fopen(buf, "r");       
+	     if (f)
+	       {
+		  fgets(buf2, sizeof(buf2), f);
+		  rate = atoi(buf2);              
+         
+		  fclose(f);
+	       }
+		    
+	     /* remaining capacity */
+	     snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/charge_now", name);
+	     f = fopen(buf, "r");       
+	     if (f)
+	       {
+		  fgets(buf2, sizeof(buf2), f);
+		  level = atoi(buf2);   
+         
+		  if(!level) level_unknown++;
+         
+		  fclose(f);
+	       }		
+		  
+	     if (present) battery++;
+      
+	     if (charging_state)
+	       {
+		  if (!strncmp(charging_state, "Discharging", strlen("Discharging")))
+		    {
+		       discharging++;
+		       if ((rate == 0) && (rate_unknown == 0)) rate_unknown++;
+		    }
+		  else if (!strncmp(charging_state, "Charging", strlen("Charging")))
+		    {
+		       charging++;
+		       if ((rate == 0) && (rate_unknown == 0)) rate_unknown++;
+		    }
+		  else if (!strncmp(charging_state, "Full", strlen("Full")))
+		    {
+		       rate_unknown--;
+		    }
+		  free(charging_state);
+	       }
+
+	     bat_drain += rate;
+	     bat_level += level;
+	     bat_max += design_cap;
+	     bat_filled += last_full;
+	  }
+	ecore_list_destroy(bats);
+     }      
+	
+     
+   
+   if ((rate_unknown) && (bat_level != battery_config->battery_prev_level) &&
+       (battery_config->battery_prev_level >= 0) && (poll_time > 0.0))
+     {
+	bat_drain = 
+	  ((bat_level - battery_config->battery_prev_level) * 60 * 60) /
+	  poll_time;
+	if (bat_drain < 0) bat_drain = -bat_drain;
+	if (bat_drain == 0) bat_drain = 1;
+	rate_unknown = 0;
+     }
+   else
+     {
+	if (battery_config->battery_prev_drain < 1)
+	  battery_config->battery_prev_drain = 1;
+	if (bat_drain < 1)
+	  bat_drain = battery_config->battery_prev_drain;
+	battery_config->battery_prev_drain = bat_drain;
+     }
+   
+   if (bat_filled > 0) bat_val = (100 * bat_level) / bat_filled;
+   else bat_val = 100;
+   
+   battery_config->battery_prev_level = bat_level;
+   
+   if (discharging) minutes = (60 * bat_level) / bat_drain;
+   else
+     {
+	/* FIXME: Batteries charge in paralell! */
+	if (bat_filled > 0)
+	  minutes = (60 * (bat_filled - bat_level)) / bat_drain;
+	else
+	  minutes = 0;
+     }
+   hours = minutes / 60;
+   minutes -= (hours * 60);
+
+   if (hours < 0) hours = 0;
+   if (minutes < 0) minutes = 0;
+
+   if (!battery)
+     {
+	stat->has_battery = 0;
+	stat->state = BATTERY_STATE_NONE;
+	stat->reading = strdup(_("N/A"));
+	stat->time = strdup("--:--");
+	stat->level = 1.0;
+     }
+   else if ((charging) || (discharging))
+     {
+	battery_config->battery_prev_battery = 1;
+	stat->has_battery = 1;
+	if (charging)
+          {
+	     stat->state = BATTERY_STATE_CHARGING;
+	     battery_config->alarm_triggered = 0;
+          }
+	else if (discharging)
+	  {
+	     stat->state = BATTERY_STATE_DISCHARGING;
+	     if (stat->level < 0.1)
+	       {
+		  if (((hours * 60) + minutes) <= battery_config->alarm)
+		    stat->alarm = 1;
+		  if (bat_val <= battery_config->alarm_p)
+		    stat->alarm = 1;
+	       }
+	  }
+  
+	if (level_unknown)
+          {
+	     stat->reading = strdup(_("BAD DRIVER"));
+	     stat->time = strdup("--:--");
+	     stat->level = 0.0;
+          }
+	else if (rate_unknown)
+          {
+	     snprintf(buf, sizeof(buf), "%i%%", bat_val);
+	     stat->reading = strdup(buf);
+	     stat->time = strdup("--:--");
+	     stat->level = (double)bat_val / 100.0;
+          }
+	else
+          {
+	     snprintf(buf, sizeof(buf), "%i%%", bat_val);
+	     stat->reading = strdup(buf);
+	     snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
+	     stat->time = strdup(buf);
+	     stat->level = (double)bat_val / 100.0;
+          }
+     }
+   else
+     {
+	stat->has_battery = 1;
+	stat->state = BATTERY_STATE_NONE;
+	stat->reading = strdup(_("FULL"));
+	stat->time = strdup("--:--");
+	stat->level = 1.0;
+     }
+   
+   return stat;
 }
 
 static Status *
