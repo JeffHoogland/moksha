@@ -669,6 +669,76 @@ _e_test_internal(E_Container *con)
    e_color_dialog_select_callback_set(d, _e_test_cb_ok, NULL);
 }
 
+#elif 0
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Dialog *dia;
+   Evas_Object *o, *ob, *of;
+   Evas_Coord mw, mh;
+   int i;
+   
+   dia = e_dialog_new(con, "E", "_test");
+   e_dialog_title_set(dia, "A Test Dialog");
+
+   of = e_scrollframe_add(dia->win->evas);
+   
+   ob = e_box_add(dia->win->evas);
+   e_box_orientation_set(ob, 0);
+
+   for (i = 0; i < 8; i++)
+     {
+   o = e_slidesel_add(dia->win->evas);
+   e_slidesel_item_distance_set(o, 64);
+   e_slidesel_item_add(o, "blah / item 1", 
+		       "/home/raster/pix/OLD/Download/Crystalline____a.jpg",
+		       NULL, NULL);
+   e_slidesel_item_add(o, "blah / smelly fish", 
+		       "/home/raster/pix/OLD/Download/Reluctant_Sunrise.jpg",
+		       NULL, NULL);
+   e_slidesel_item_add(o, "blah / pong", 
+		       "/home/raster/pix/OLD/Download/Soft_Wings.jpg",
+		       NULL, NULL);
+   e_slidesel_item_add(o, "blah / on a stick", 
+		       "/home/raster/pix/OLD/Download/Stock_rose_1.jpg",
+		       NULL, NULL);
+   e_slidesel_item_add(o, "blah / oath", 
+		       "/home/raster/pix/OLD/Download/The_Eyes_Of_A_Killer.jpg",
+		       NULL, NULL);
+   e_slidesel_item_add(o, "blah / yiiihaaaaa", 
+		       "/home/raster/pix/OLD/Download/lady_bug.jpg",
+		       NULL, NULL);
+   e_slidesel_item_add(o, "blah / blah blah blah",
+		       "/home/raster/pix/OLD/Download/ocean_rocks_covered_by_ash.jpg",
+		       NULL, NULL);
+   e_slidesel_item_add(o, "blah / bing bing bing", 
+		       "/home/raster/pix/OLD/Download/orange_chair_heaven_falling.jpg",
+		       NULL, NULL);
+   
+   e_box_pack_end(ob, o);
+   e_box_pack_options_set(o, 1, 1, 1, 0, 0.5, 0.5, 300, 100, 300, 100);
+   evas_object_show(o);
+     }
+   
+   /* fixme... more */
+   e_box_min_size_get(ob, &mw, &mh);
+   evas_object_resize(ob, mw, mh);
+
+   e_scrollframe_child_set(of, ob);
+   evas_object_show(ob);
+//   e_widget_min_size_get(o, &mw, &mh);
+   mw = 300; mh = 300;
+   e_dialog_content_set(dia, of, mw, mh);
+   evas_object_show(of);
+   
+   /* buttons at the bottom */
+   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_dialog_resizable_set(dia, 1);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   e_win_resize(dia->win, 400, 400);
+   
+}
 #else
 static void
 _e_test_internal(E_Container *con)

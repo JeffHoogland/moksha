@@ -85,4 +85,5 @@ collections {
 #include "default_fontpreview.edc"
 #include "default_wizard.edc"
 #include "default_toolbar.edc"
+#include "default_slidesel.edc"
 }
