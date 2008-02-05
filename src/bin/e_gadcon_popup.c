@@ -175,7 +175,6 @@ static void
 _e_gadcon_popup_free(E_Gadcon_Popup *pop)
 {
    pop->gcc = NULL;
-   if (pop->o_con) evas_object_del(pop->o_con);
    e_object_del(E_OBJECT(pop->win));
    free(pop);
 }

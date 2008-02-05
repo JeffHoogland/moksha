@@ -18,7 +18,7 @@ struct _E_Gadcon_Popup
    E_Popup	       *win;
    E_Gadcon_Client     *gcc;
    Evas_Coord		w, h;
-   Evas_Object	       *o_bg, *o_con;
+   Evas_Object	       *o_bg;
 
    int			pinned : 1;
 
