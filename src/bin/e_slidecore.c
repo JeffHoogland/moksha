@@ -145,7 +145,6 @@ _e_smart_reconfigure(E_Smart_Data *sd)
    dp = pos - (p1 * sd->dist);
    at = (dp * 255) / (sd->dist - 1);
    
-   printf("? %i %i | %i : %i # %i\n", p1, p2, dp, at, pos);
    while ((p1 < 0) || (p2 < 0))
      {
 	p1 += n;
@@ -153,7 +152,6 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 	at += 255;
 	dp += sd->dist;
      }
-   printf("??? %i %i | %i : %i # %i\n", p1, p2, dp, at, pos);
    if ((sd->p1 != p1) || (sd->p2 != p2) || (sd->pn != n))
      {
 	E_Smart_Item *it1, *it2;
@@ -170,15 +168,15 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 	     sd->o2 = NULL;
 	     pl1 = sd->p1 % n;
 	     pl2 = sd->p2 % n;
-	     printf("## %i -> %i | %i -> %i ||| %i\n", p1, pl1, p2, pl2, dp);
 	     it1 = evas_list_nth(sd->items, pl1);
 	     it2 = evas_list_nth(sd->items, pl2);
 	     if (it1 && it2)
 	       {
-		  sd->o1 =  e_util_icon_theme_icon_add(it1->icon, "480x480", 
+		  sd->o1 =  e_util_icon_theme_icon_add(it1->icon, "512x512", 
 						       evas_object_evas_get(sd->smart_obj));
 		  if (sd->o1)
 		    {
+		       e_icon_scale_size_set(sd->o1, 0);
 		       evas_object_stack_below(sd->o1, sd->event_obj);
 		       evas_object_pass_events_set(sd->o1, 1);
 		       evas_object_smart_member_add(sd->o1, sd->smart_obj);
@@ -186,10 +184,11 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 		       evas_object_clip_set(sd->o1, evas_object_clip_get(sd->smart_obj));
 		       evas_object_show(sd->o1);
 		    }
-		  sd->o2 =  e_util_icon_theme_icon_add(it2->icon, "480x480", 
+		  sd->o2 =  e_util_icon_theme_icon_add(it2->icon, "512x512", 
 						       evas_object_evas_get(sd->smart_obj));
 		  if (sd->o2)
 		    {
+		       e_icon_scale_size_set(sd->o2, 0);
 		       evas_object_stack_below(sd->o2, sd->event_obj);
 		       evas_object_pass_events_set(sd->o2, 1);
 		       evas_object_smart_member_add(sd->o2, sd->smart_obj);

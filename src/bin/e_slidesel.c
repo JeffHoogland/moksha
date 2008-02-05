@@ -19,6 +19,7 @@ struct _E_Smart_Data
    Evas_Object *slide_obj;
    Evas_List *items;
    Evas_Coord down_x, down_y;
+   E_Smart_Item *cur;
    unsigned char down : 1;
 }; 
 
@@ -59,6 +60,7 @@ _e_smart_label_change(void *data)
    
    it = data;
    edje_object_part_text_set(it->sd->edje_obj, "e.text.label", it->label);
+   it->sd->cur = it;
 }
 
 /* externally accessible functions */
@@ -146,8 +148,10 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  {
 	     if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD))
 	       {
-		  printf("RUN!!!!\n");
-		  /* FIXME: call current item callback */
+		  if (sd->cur)
+		    {
+		       if (sd->cur->func) sd->cur->func(sd->cur->data);
+		    }
 	       }
 	  }
 	sd->down = 0;

@@ -9,6 +9,7 @@ struct _E_Smart_Data
 { 
    Evas_Coord   x, y, w, h;
    Evas_Object *obj;
+   int          size;
    char         fill_inside : 1;
 }; 
 
@@ -44,7 +45,9 @@ e_icon_file_set(Evas_Object *obj, const char *file)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    /* smart code here */
-   evas_object_image_load_size_set(sd->obj, 64, 64);
+   /* FIXME: 64x64 - unhappy about this. use icon size */
+   if (sd->size != 0)
+     evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
    evas_object_image_file_set(sd->obj, file, NULL);
    _e_icon_smart_reconfigure(sd);
 }
@@ -57,7 +60,8 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    /* smart code here */
-   evas_object_image_load_size_set(sd->obj, 64, 64);
+   if (sd->size != 0)
+     evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
    evas_object_image_file_set(sd->obj, file, key);
    _e_icon_smart_reconfigure(sd);
 }
@@ -215,6 +219,29 @@ e_icon_data_get(Evas_Object *obj, int *w, int *h)
    return evas_object_image_data_get(sd->obj, 0);
 }
 
+EAPI void
+e_icon_scale_size_set(Evas_Object *obj, int size)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return NULL;
+   sd->size = size;
+   if (!strcmp(evas_object_type_get(sd->obj), "edje"))
+     return;   
+   evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
+}
+
+EAPI int
+e_icon_scale_size_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return NULL;
+   return sd->size;
+}
+
 /* local subsystem globals */
 static void
 _e_icon_smart_reconfigure(E_Smart_Data *sd)
@@ -305,6 +332,7 @@ _e_icon_smart_add(Evas_Object *obj)
    sd->w = 0;
    sd->h = 0;
    sd->fill_inside = 1;
+   sd->size = 64;
    evas_object_smart_member_add(sd->obj, obj);
    evas_object_smart_data_set(obj, sd);
 }
