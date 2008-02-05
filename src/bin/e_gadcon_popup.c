@@ -175,9 +175,7 @@ static void
 _e_gadcon_popup_free(E_Gadcon_Popup *pop)
 {
    pop->gcc = NULL;
-   e_object_del(E_OBJECT(pop->win));
-   if (pop->pinned) e_gadcon_popup_toggle_pinned(pop);
-   if (pop->o_bg) evas_object_del(pop->o_bg);
    if (pop->o_con) evas_object_del(pop->o_con);
+   e_object_del(E_OBJECT(pop->win));
    free(pop);
 }
