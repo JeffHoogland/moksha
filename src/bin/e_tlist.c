@@ -36,7 +36,7 @@ struct _E_Smart_Item
 };
 
 /* local subsystem functions */
-static void         _e_tlist_append(Evas_Object * obj, char *label,
+static void         _e_tlist_append(Evas_Object * obj, const char *label,
 				    void (*func) (void *data, void *data2),
 				    void (*func_hilight) (void *data,
 							  void *data2),
@@ -77,7 +77,7 @@ e_tlist_add(Evas * evas)
 }
 
 EAPI void
-e_tlist_append(Evas_Object * obj, char *label,
+e_tlist_append(Evas_Object * obj, const char *label,
 	       void (*func) (void *data, void *data2),
 	       void (*func_hilight) (void *data, void *data2), void *data,
 	       void *data2)
@@ -86,7 +86,7 @@ e_tlist_append(Evas_Object * obj, char *label,
 }
 
 EAPI void
-e_tlist_markup_append(Evas_Object * obj, char *label,
+e_tlist_markup_append(Evas_Object * obj, const char *label,
 		      void (*func) (void *data, void *data2),
 		      void (*func_hilight) (void *data, void *data2),
 		      void *data, void *data2)
@@ -253,7 +253,7 @@ e_tlist_remove_num(Evas_Object * obj, int n)
 }
 
 EAPI void
-e_tlist_remove_label(Evas_Object * obj, char *label)
+e_tlist_remove_label(Evas_Object * obj, const char *label)
 {
    E_Smart_Item       *si;
    Evas_List          *l;
@@ -315,7 +315,7 @@ e_tlist_clear(Evas_Object *obj)
 
 /* local subsystem functions */
 static void
-_e_tlist_append(Evas_Object * obj, char *label,
+_e_tlist_append(Evas_Object * obj, const char *label,
 		void (*func) (void *data, void *data2),
 		void (*func_hilight) (void *data, void *data2), void *data,
 		void *data2, int markup)

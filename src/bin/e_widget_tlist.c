@@ -21,9 +21,10 @@ struct _E_Widget_Callback
    char               *value;
 };
 
-static void         _e_widget_tlist_append(Evas_Object * obj, char *label,
+static void         _e_widget_tlist_append(Evas_Object * obj, const char *label,
 					   void (*func) (void *data),
-					   void *data, char *val, int markup);
+					   void *data, const char *val,
+					   int markup);
 static void         _e_wid_del_hook(Evas_Object * obj);
 static void         _e_wid_focus_hook(Evas_Object * obj);
 static void         _e_wid_cb_scrollframe_resize(void *data, Evas * e,
@@ -72,15 +73,16 @@ e_widget_tlist_add(Evas * evas, char **value)
 }
 
 EAPI void
-e_widget_tlist_append(Evas_Object * obj, char *label, void (*func) (void *data),
-		      void *data, char *val)
+e_widget_tlist_append(Evas_Object * obj, const char *label,
+		      void (*func) (void *data), void *data, const char *val)
 {
    _e_widget_tlist_append(obj, label, func, data, val, 0);
 }
 
 EAPI void
-e_widget_tlist_markup_append(Evas_Object * obj, char *label,
-			     void (*func) (void *data), void *data, char *val)
+e_widget_tlist_markup_append(Evas_Object * obj, const char *label,
+			     void (*func) (void *data), void *data,
+			     const char *val)
 {
    _e_widget_tlist_append(obj, label, func, data, val, 1);
 }
@@ -140,7 +142,7 @@ e_widget_tlist_remove_num(Evas_Object * obj, int n)
 }
 
 EAPI void
-e_widget_tlist_remove_label(Evas_Object * obj, char *label)
+e_widget_tlist_remove_label(Evas_Object * obj, const char *label)
 {
    E_Widget_Data      *wd;
 
@@ -158,8 +160,8 @@ e_widget_tlist_count(Evas_Object * obj)
 }
 
 static void
-_e_widget_tlist_append(Evas_Object * obj, char *label,
-		       void (*func) (void *data), void *data, char *val,
+_e_widget_tlist_append(Evas_Object * obj, const char *label,
+		       void (*func) (void *data), void *data, const char *val,
 		       int markup)
 {
    E_Widget_Data      *wd;
