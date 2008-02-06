@@ -39,7 +39,7 @@ e_widget_radio_group_new(int *val)
 }
 
 EAPI Evas_Object *
-e_widget_radio_add(Evas *evas, char *label, int valnum, E_Radio_Group *group)
+e_widget_radio_add(Evas *evas, const char *label, int valnum, E_Radio_Group *group)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -82,7 +82,7 @@ e_widget_radio_add(Evas *evas, char *label, int valnum, E_Radio_Group *group)
 }
 
 EAPI Evas_Object *
-e_widget_radio_icon_add(Evas *evas, char *label, char *icon, int icon_w, int icon_h, int valnum, E_Radio_Group *group)
+e_widget_radio_icon_add(Evas *evas, const char *label, const char *icon, int icon_w, int icon_h, int valnum, E_Radio_Group *group)
 {
    Evas_Object *obj, *o, *o2;
    E_Widget_Data *wd;
