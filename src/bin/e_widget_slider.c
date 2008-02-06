@@ -19,7 +19,7 @@ static void _e_wid_disable_hook(Evas_Object *obj);
 
 /* externally accessible functions */
 EAPI Evas_Object *
-e_widget_slider_add(Evas *evas, int horiz, int rev, char *fmt, double min, double max, double step, int count, double *dval, int *ival, Evas_Coord size)
+e_widget_slider_add(Evas *evas, int horiz, int rev, const char *fmt, double min, double max, double step, int count, double *dval, int *ival, Evas_Coord size)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
