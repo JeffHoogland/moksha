@@ -23,7 +23,7 @@ static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *even
 
 /* externally accessible functions */
 EAPI Evas_Object *
-e_widget_check_add(Evas *evas, char *label, int *val)
+e_widget_check_add(Evas *evas, const char *label, int *val)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -90,7 +90,7 @@ e_widget_check_checked_get(Evas_Object *check)
 }
 
 EAPI Evas_Object *
-e_widget_check_icon_add(Evas *evas, char *label, char *icon, int icon_w, int icon_h, int *val) 
+e_widget_check_icon_add(Evas *evas, const char *label, const char *icon, int icon_w, int icon_h, int *val) 
 {
    Evas_Object *obj, *o, *o2;
    E_Widget_Data *wd;
