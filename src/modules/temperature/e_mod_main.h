@@ -21,6 +21,7 @@ typedef enum _Sensor_Type
    SENSOR_TYPE_LINUX_MACMINI,
    SENSOR_TYPE_LINUX_I2C,
    SENSOR_TYPE_LINUX_ACPI,
+   SENSOR_TYPE_LINUX_PCI,
    SENSOR_TYPE_LINUX_PBOOK,
    SENSOR_TYPE_LINUX_INTELCORETEMP
 } Sensor_Type;
@@ -69,7 +70,7 @@ EAPI int   e_modapi_save     (E_Module *m);
 
 void config_temperature_module(Config_Face *inst);
 void temperature_face_update_config(Config_Face *inst);
-Ecore_List *temperature_get_i2c_files(void);
+Ecore_List *temperature_get_bus_files(const char* bus);
 
 
 #endif

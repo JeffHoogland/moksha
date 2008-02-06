@@ -407,54 +407,57 @@ temperature_face_update_config(Config_Face *inst)
 }
 
 Ecore_List *
-temperature_get_i2c_files()
+temperature_get_bus_files(const char* bus)
 {
    Ecore_List *result;
    Ecore_List *therms;
    char        path[PATH_MAX];
-
+   char		busdir[PATH_MAX];
+   
    result = ecore_list_new();
    if (result)
      {
-        ecore_list_free_cb_set(result, free);
-
-        /* Look through all the i2c devices. */
-        therms = ecore_file_ls("/sys/bus/i2c/devices");
-        if (therms)
-          {
-             char *name;
-
+	ecore_list_free_cb_set(result, free);
+	snprintf(busdir, sizeof(busdir), "/sys/bus/%s/devices", bus);
+	/* Look through all the devices for the given bus. */
+	therms = ecore_file_ls(busdir);
+	if (therms)
+	  {
+	     char *name;
+	     
 	     while ((name = ecore_list_next(therms)))
 	       {
-                  Ecore_List *files;
-
-                  /* Search each device for temp*_input, these should be i2c temperature devices. */
-	          sprintf(path, "/sys/bus/i2c/devices/%s", name);
-	          files = ecore_file_ls(path);
-	          if (files)
-	            {
-                       char *file;
-
-	               while ((file = ecore_list_next(files)))
-	                 {
-		    	    if ((strncmp("temp", file, 4) == 0) && (strcmp("_input", &file[strlen(file) - 6]) == 0))
+		  Ecore_List *files;
+		  
+		  /* Search each device for temp*_input, these should be 
+		   * temperature devices. */
+		  snprintf(path, sizeof(path),
+			   "%s/%s", busdir, name);
+		  files = ecore_file_ls(path);
+		  if (files)
+		    {
+		       char *file;
+		       
+		       while ((file = ecore_list_next(files)))
+			 {
+			    if ((!strncmp("temp", file, 4)) && 
+				(!strcmp("_input", &file[strlen(file) - 6])))
 			      {
-			         char *f;
-
-	                         sprintf(path, "/sys/bus/i2c/devices/%s/%s", name, file);
-	                         f = strdup(path);
-			         if (f)
-	                            ecore_list_append(result, f);
+				 char *f;
+				 
+				 snprintf(path, sizeof(path),
+					  "%s/%s/%s", busdir, name, file);
+				 f = strdup(path);
+				 if (f) ecore_list_append(result, f);
 			      }
-	                 }
-	               ecore_list_destroy(files);
+			 }
+		       ecore_list_destroy(files);
 		    }
 	       }
 	     ecore_list_destroy(therms);
-          }
-        ecore_list_first_goto(result);
+	  }
+	ecore_list_first_goto(result);
      }
-
    return result;
 }
 

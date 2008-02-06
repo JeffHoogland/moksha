@@ -26,18 +26,20 @@ static int check(void);
 static int poll_cb(void *data);
 
 Ecore_List *
-temperature_get_i2c_files()
+temperature_get_bus_files(const char* bus)
 {
    Ecore_List *result;
    Ecore_List *therms;
    char        path[PATH_MAX];
+   char		busdir[PATH_MAX];
    
    result = ecore_list_new();
    if (result)
      {
 	ecore_list_free_cb_set(result, free);
-	/* Look through all the i2c devices. */
-	therms = ecore_file_ls("/sys/bus/i2c/devices");
+	snprintf(busdir, sizeof(busdir), "/sys/bus/%s/devices", bus);
+	/* Look through all the devices for the given bus. */
+	therms = ecore_file_ls(busdir);
 	if (therms)
 	  {
 	     char *name;
@@ -47,9 +49,9 @@ temperature_get_i2c_files()
 		  Ecore_List *files;
 		  
 		  /* Search each device for temp*_input, these should be 
-		   * i2c temperature devices. */
+		   * temperature devices. */
 		  snprintf(path, sizeof(path),
-			   "/sys/bus/i2c/devices/%s", name);
+			   "%s/%s", busdir, name);
 		  files = ecore_file_ls(path);
 		  if (files)
 		    {
@@ -63,8 +65,7 @@ temperature_get_i2c_files()
 				 char *f;
 				 
 				 snprintf(path, sizeof(path),
-					  "/sys/bus/i2c/devices/%s/%s", 
-					  name, file);
+					  "%s/%s/%s", busdir, name, file);
 				 f = strdup(path);
 				 if (f) ecore_list_append(result, f);
 			      }
@@ -133,7 +134,8 @@ init(void)
 	       }
 	     else
 	       {
-		  therms = temperature_get_i2c_files();
+		  // try the i2c bus
+		  therms = temperature_get_bus_files("i2c");
 		  if (therms)
 		    {
 		       char *name;
@@ -151,9 +153,43 @@ init(void)
 				 sensor_type = SENSOR_TYPE_LINUX_I2C;
 				 sensor_path = strdup(name);
 				 sensor_name = strdup(path);
+				 printf("sensor type = i2c\n"
+				       "sensor path = %s\n"
+				       "sensor name = %s\n",
+				       sensor_path, sensor_name);
 			      }
 			 }
 		       ecore_list_destroy(therms);
+		    }
+		  if (!sensor_path)
+		    {
+		       // try the pci bus
+		       therms = temperature_get_bus_files("pci");
+		       if (therms)
+			 {
+			    char *name;
+
+			    if ((name = ecore_list_next(therms)))
+			      {
+				 if (ecore_file_exists(name))
+				   {
+				      int len;
+
+				      snprintf(path, sizeof(path),
+					    "%s", ecore_file_file_get(name));
+				      len = strlen(path);
+				      if (len > 6) path[len - 6] = '\0';
+				      sensor_type = SENSOR_TYPE_LINUX_PCI;
+				      sensor_path = strdup(name);
+				      sensor_name = strdup(path);
+				      printf("sensor type = pci\n"
+					    "sensor path = %s\n"
+					    "sensor name = %s\n",
+					    sensor_path, sensor_name);
+				   }
+			      }
+			    ecore_list_destroy(therms);
+			 }
 		    }
 	       }
 	  }
@@ -196,6 +232,28 @@ init(void)
 		    {
 		       snprintf(path, sizeof(path),
 				"/sys/bus/i2c/devices/%s/%s_input",
+				name, sensor_name);
+		       if (ecore_file_exists(path))
+			 {
+			    sensor_path = strdup(path);
+			    /* We really only care about the first
+			     * one for the default. */
+			    break;
+			 }
+		    }
+		  ecore_list_destroy(therms);
+	       }
+	     break;
+	   case SENSOR_TYPE_LINUX_PCI:
+	     therms = ecore_file_ls("/sys/bus/pci/devices");
+	     if (therms)
+	       {
+		  char *name;
+		  
+		  while ((name = ecore_list_next(therms)))
+		    {
+		       snprintf(path, sizeof(path),
+				"/sys/bus/pci/devices/%s/%s_input",
 				name, sensor_name);
 		       if (ecore_file_exists(path))
 			 {
@@ -283,6 +341,25 @@ check(void)
 	break;
       case SENSOR_TYPE_LINUX_INTELCORETEMP:
       case SENSOR_TYPE_LINUX_I2C:
+	f = fopen(sensor_path, "r");
+	if (f)
+	  {
+	     fgets(buf, sizeof(buf), f);
+	     buf[sizeof(buf) - 1] = 0;
+	     
+	     /* actually read the temp */
+	     if (sscanf(buf, "%i", &temp) == 1)
+	       ret = 1;
+	     else
+	       goto error;
+	     /* Hack for temp */
+	     temp = temp / 1000;
+	     fclose(f);
+	  }
+	else
+	  goto error;
+	break;
+      case SENSOR_TYPE_LINUX_PCI:
 	f = fopen(sensor_path, "r");
 	if (f)
 	  {

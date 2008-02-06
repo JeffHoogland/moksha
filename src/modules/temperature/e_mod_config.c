@@ -125,7 +125,43 @@ _fill_data(E_Config_Dialog_Data *cfdata)
       case SENSOR_TYPE_LINUX_INTELCORETEMP:
 	 break;
       case SENSOR_TYPE_LINUX_I2C:
-	 therms = temperature_get_i2c_files();
+	 therms = temperature_get_bus_files("i2c");
+	 if (therms)
+	   {
+              char *name;
+
+	      while ((name = ecore_list_next(therms)))
+	        {
+		   if (ecore_file_exists(name))
+		     {
+		        int len;
+
+			sprintf(path, "%s", ecore_file_file_get(name));
+			len = strlen(path);
+			if (len > 6)
+			   path[len - 6] = '\0';
+	                ecore_list_append(cfdata->sensors, strdup(path));
+			/* TODO: Track down the user friendly names and display them instead.
+			 * User friendly names are not available on the system, lm-sensors 
+			 * contains a database in /etc/sensors.conf, but the format may change,
+			 * so the best way to use that database is thru libsensors, but we 
+			 * don't want to add any more library dependencies. 
+			 */
+		     }
+		}
+	      ecore_list_destroy(therms);
+	   }
+
+	 ecore_list_first_goto(cfdata->sensors);
+	 while ((name = ecore_list_next(cfdata->sensors)))
+	   {
+	      if (!strcmp(cfdata->inst->sensor_name, name)) 
+		break;
+	      cfdata->sensor++;
+	   }
+	 break;
+      case SENSOR_TYPE_LINUX_PCI:
+	 therms = temperature_get_bus_files("pci");
 	 if (therms)
 	   {
               char *name;
