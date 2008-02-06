@@ -73,7 +73,7 @@ e_widget_image_add_from_file(Evas *evas, const char *file, int minw, int minh)
 }
 
 EAPI void
-e_widget_image_edje_set(Evas_Object *obj, char *file, char *part)
+e_widget_image_edje_set(Evas_Object *obj, const char *file, const char *part)
 {
    E_Widget_Data *wd;
    
@@ -83,7 +83,7 @@ e_widget_image_edje_set(Evas_Object *obj, char *file, char *part)
 }
 
 EAPI void
-e_widget_image_file_set(Evas_Object *obj, char *file)
+e_widget_image_file_set(Evas_Object *obj, const char *file)
 {
    E_Widget_Data *wd;
    
@@ -93,7 +93,7 @@ e_widget_image_file_set(Evas_Object *obj, char *file)
 }
 
 EAPI void
-e_widget_image_file_key_set(Evas_Object *obj, char *file, char *key)
+e_widget_image_file_key_set(Evas_Object *obj, const char *file, const char *key)
 {
    E_Widget_Data *wd;
    
