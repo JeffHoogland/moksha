@@ -16,7 +16,7 @@ static void _e_wid_disable_hook(Evas_Object *obj);
 
 /* externally accessible functions */
 EAPI Evas_Object *
-e_widget_frametable_add(Evas *evas, char *label, int homogenous)
+e_widget_frametable_add(Evas *evas, const char *label, int homogenous)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -87,7 +87,7 @@ e_widget_frametable_content_align_set(Evas_Object *obj, double halign, double va
 }
 
 EAPI void
-e_widget_frametable_label_set(Evas_Object *obj, char *label)
+e_widget_frametable_label_set(Evas_Object *obj, const char *label)
 {
    E_Widget_Data *wd;
    
