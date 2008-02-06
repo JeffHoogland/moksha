@@ -1353,6 +1353,10 @@ e_border_raise_latest_set(E_Border *bd)
 EAPI void
 e_border_focus_set_with_pointer(E_Border *bd)
 {
+   /* Try to grab the pointer to make sure it's not "in use" */
+   if (!ecore_x_pointer_grab(bd->zone->container->win))
+     return;
+
    if (e_config->focus_policy == E_FOCUS_SLOPPY)
      {
 	if (e_border_under_pointer_get(bd->desk, bd))
@@ -1368,6 +1372,8 @@ e_border_focus_set_with_pointer(E_Border *bd)
    else
      if (!e_border_pointer_warp_to_center(bd))
        e_border_focus_set(bd, 1, 1);
+
+   ecore_x_pointer_ungrab();
 }
 
 EAPI void
