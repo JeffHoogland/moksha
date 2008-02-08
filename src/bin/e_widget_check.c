@@ -192,6 +192,7 @@ _e_wid_do(Evas_Object *obj)
 	  }
      }
    evas_object_smart_callback_call(obj, "changed", NULL);
+   e_widget_change(obj);
 }
 
 static void
