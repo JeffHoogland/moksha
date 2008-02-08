@@ -225,7 +225,7 @@ e_icon_scale_size_set(Evas_Object *obj, int size)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
-   if (!sd) return NULL;
+   if (!sd) return;
    sd->size = size;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      return;   
@@ -238,7 +238,7 @@ e_icon_scale_size_get(Evas_Object *obj)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
-   if (!sd) return NULL;
+   if (!sd) return 0;
    return sd->size;
 }
 

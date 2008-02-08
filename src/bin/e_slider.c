@@ -1,7 +1,9 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
+#define _XOPEN_SOURCE 600
 #include "e.h"
+#include <math.h>
 
 #define SMART_NAME "e_slider"
 #define API_ENTRY E_Smart_Data *sd; sd = evas_object_smart_data_get(obj); if ((!obj) || (!sd) || (evas_object_type_get(obj) && strcmp(evas_object_type_get(obj), SMART_NAME)))
