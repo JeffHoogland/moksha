@@ -57,7 +57,7 @@ static void _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int
 static int  _e_exec_cb_expire_timer(void *data);
 static int  _e_exec_cb_exit(void *data, int type, void *event);
 
-static Evas_Bool _e_exec_startup_id_pid_find(const Evas_Hash *hash, const char *key, void *value, void *data);
+static Evas_Bool _e_exec_startup_id_pid_find(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *value, void *data);
 
 static void         _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_Del *event, Ecore_Exe_Event_Data *error, Ecore_Exe_Event_Data *read);
 static void         _fill_data(E_Config_Dialog_Data *cfdata);
@@ -352,7 +352,7 @@ _e_exec_cb_exit(void *data, int type, void *event)
 }
 
 static Evas_Bool
-_e_exec_startup_id_pid_find(const Evas_Hash *hash, const char *key, void *value, void *data)
+_e_exec_startup_id_pid_find(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *value, void *data)
 {
    E_Exec_Search *search;
    Evas_List *instances, *l;
@@ -365,7 +365,8 @@ _e_exec_startup_id_pid_find(const Evas_Hash *hash, const char *key, void *value,
 
 	inst = l->data;
 	if (((search->startup_id > 0) && (search->startup_id == inst->startup_id)) ||
-	    ((inst->exe) && (search->pid > 1) && (search->pid == ecore_exe_pid_get(inst->exe))))
+	    ((inst->exe) && (search->pid > 1) && 
+             (search->pid == ecore_exe_pid_get(inst->exe))))
 	  {
 	     search->desktop = inst->desktop;
 	     return 0;
