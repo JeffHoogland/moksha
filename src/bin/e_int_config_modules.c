@@ -55,16 +55,16 @@ static Evas_Object *_basic_create         (E_Config_Dialog *cfd, Evas *evas,
 static void         _fill_type_hash       (void);
 static void         _load_modules         (const char *dir);
 static void         _fill_list            (Evas_Object *obj, int enabled);
-static Evas_Bool    _types_hash_cb_free   (Evas_Hash *hash __UNUSED__, 
+static Evas_Bool    _types_hash_cb_free   (const Evas_Hash *hash __UNUSED__, 
 					   const char *key __UNUSED__, 
 					   void *data, void *fdata __UNUSED__);
-static Evas_Bool    _mod_hash_cb_free     (Evas_Hash *hash __UNUSED__, 
+static Evas_Bool    _mod_hash_cb_free     (const Evas_Hash *hash __UNUSED__, 
 					   const char *key __UNUSED__, 
 					   void *data, void *fdata __UNUSED__);
-static Evas_Bool    _mod_hash_avail_list  (Evas_Hash *hash __UNUSED__, 
+static Evas_Bool    _mod_hash_avail_list  (const Evas_Hash *hash __UNUSED__, 
 					   const char *key __UNUSED__, 
 					   void *data, void *fdata);
-static Evas_Bool    _mod_hash_load_list   (Evas_Hash *hash __UNUSED__, 
+static Evas_Bool    _mod_hash_load_list   (const Evas_Hash *hash __UNUSED__, 
 					   const char *key __UNUSED__, 
 					   void *data, void *fdata);
 static int          _mod_list_sort        (void *data1, void *data2);
@@ -72,16 +72,16 @@ static void         _list_widget_load     (Evas_Object *obj, Evas_List *list);
 static void         _avail_list_cb_change (void *data, Evas_Object *obj);
 static void         _load_list_cb_change  (void *data, Evas_Object *obj);
 static void         _unselect_all_modules (void);
-static Evas_Bool    _mod_hash_unselect    (Evas_Hash *hash __UNUSED__, 
+static Evas_Bool    _mod_hash_unselect    (const Evas_Hash *hash __UNUSED__, 
 					   const char *key __UNUSED__, 
 					   void *data, void *fdata __UNUSED__);
 static void         _select_all_modules   (Evas_Object *obj, void *data);
 static void         _btn_cb_unload        (void *data, void *data2);
 static void         _btn_cb_load          (void *data, void *data2);
-static Evas_Bool    _mod_hash_load        (Evas_Hash *hash __UNUSED__, 
+static Evas_Bool    _mod_hash_load        (const Evas_Hash *hash __UNUSED__, 
 					   const char *key __UNUSED__, 
 					   void *data, void *fdata __UNUSED__);
-static Evas_Bool    _mod_hash_unload      (Evas_Hash *hash __UNUSED__, 
+static Evas_Bool    _mod_hash_unload      (const Evas_Hash *hash __UNUSED__, 
 					   const char *key __UNUSED__, 
 					   void *data, void *fdata __UNUSED__);
 static void         _enable_modules       (int enable);
@@ -346,7 +346,7 @@ _fill_list(Evas_Object *obj, int enabled)
 }
 
 static Evas_Bool 
-_types_hash_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
+_types_hash_cb_free(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		    void *data, void *fdata __UNUSED__) 
 {
    CFType *type = NULL;
@@ -366,7 +366,7 @@ _types_hash_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 }
 
 static Evas_Bool 
-_mod_hash_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
+_mod_hash_cb_free(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		  void *data, void *fdata __UNUSED__) 
 {
    CFModule *mod = NULL;
@@ -383,7 +383,7 @@ _mod_hash_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 }
 
 static Evas_Bool 
-_mod_hash_avail_list(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
+_mod_hash_avail_list(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		     void *data, void *fdata) 
 {
    Evas_List **l;
@@ -397,7 +397,7 @@ _mod_hash_avail_list(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 }
 
 static Evas_Bool 
-_mod_hash_load_list(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
+_mod_hash_load_list(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		    void *data, void *fdata) 
 {
    Evas_List **l;
@@ -525,7 +525,7 @@ _unselect_all_modules(void)
 }
 
 static Evas_Bool 
-_mod_hash_unselect(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
+_mod_hash_unselect(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		   void *data, void *fdata __UNUSED__) 
 {
    CFModule *mod = NULL;
@@ -617,7 +617,7 @@ _enable_modules(int enable)
 }
 
 static Evas_Bool 
-_mod_hash_load(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
+_mod_hash_load(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 	       void *data, void *fdata __UNUSED__) 
 {
    CFModule *mod = NULL;
@@ -634,7 +634,7 @@ _mod_hash_load(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 }
 
 static Evas_Bool 
-_mod_hash_unload(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
+_mod_hash_unload(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		 void *data, void *fdata __UNUSED__) 
 {
    CFModule *mod = NULL;

@@ -13,8 +13,8 @@ struct _E_Theme_Result
    Evas_Hash  *quickfind;
 };
 
-static Evas_Bool _e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
-static Evas_Bool _e_theme_mappings_quickfind_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _e_theme_mappings_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _e_theme_mappings_quickfind_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata);
 static void      _e_theme_category_register(const char *category);
 static Evas_List *_e_theme_collection_item_register(Evas_List *list, const char *name);
 static Evas_List *_e_theme_collection_items_find(const char *base, const char *collname);
@@ -495,7 +495,7 @@ e_theme_handler_test(Evas_Object *obj, const char *path, void *data)
 
 /* local subsystem functions */
 static Evas_Bool
-_e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
+_e_theme_mappings_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
    E_Theme_Result *res;
    
@@ -512,7 +512,7 @@ _e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fd
 }
 
 static Evas_Bool
-_e_theme_mappings_quickfind_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
+_e_theme_mappings_quickfind_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
    evas_stringshare_del(key);
    return 1;

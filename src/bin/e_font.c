@@ -5,7 +5,7 @@
 
 #define E_TOK_STYLE ":style="
 
-static Evas_Bool _font_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _font_hash_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_Hash *_e_font_available_hash_add(Evas_Hash *font_hash, const char *full_name);
 static E_Font_Properties *_e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, const char *font);
 static char _fn_buf[1024];
@@ -151,12 +151,12 @@ e_font_properties_free(E_Font_Properties *efp)
 }
 
 static Evas_Bool
-_font_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
+_font_hash_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
    E_Font_Properties *efp;
+
    efp = data;
    e_font_properties_free(efp);
-
    return 1;
 }
 
@@ -177,74 +177,67 @@ e_font_fontconfig_name_parse(const char *font)
 static E_Font_Properties *
 _e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, const char *font)
 {
-        char *s1;
+   char *s1;
 
-        s1 = strchr(font, ':');
-        if (s1)
+   s1 = strchr(font, ':');
+   if (s1)
+     {
+        char *s2, *name, *style;
+        int len;
+
+        len = s1 - font;
+        name = calloc(sizeof(char), len + 1);
+        strncpy(name, font, len);
+
+        /* Get subname (should be english)  */
+        s2 = strchr(name, ',');
+        if (s2)
           {
-             char *s2;
-             char *name;
-             char *style;
-             int len;
-	     
-	     len = s1 - font;
-
-             name = calloc(sizeof(char), len + 1);
+             len = s2 - name;
+             name = realloc(name, sizeof(char) * len + 1);
+             memset(name, 0, sizeof(char) * len + 1);
              strncpy(name, font, len);
+          }
 
-	     /* Get subname (should be english)  */
-             s2 = strchr(name, ',');
+        if (strncmp(s1, E_TOK_STYLE, strlen(E_TOK_STYLE)) == 0)
+          {
+             style = s1 + strlen(E_TOK_STYLE);
+
+             if (font_hash) efp = evas_hash_find(*font_hash, name);
+             if (efp == NULL)
+               {
+                  efp = calloc(1, sizeof(E_Font_Properties));
+                  efp->name = evas_stringshare_add(name);
+                  if (font_hash) *font_hash = evas_hash_add(*font_hash, name, efp);
+               }
+             s2 = strchr(style, ',');
              if (s2)
                {
-                  len = s2 - name;
+                  char *style_old;
 
-                  name = realloc(name, sizeof(char) * len + 1);
-                  memset(name, 0, sizeof(char) * len + 1);
-                  strncpy(name, font, len);
+                  len = s2 - style;
+                  style_old = style;
+                  style = calloc(sizeof(char), len + 1);
+                  strncpy(style, style_old, len);
+                  efp->styles = evas_list_append(efp->styles, evas_stringshare_add(style));
+                  free(style);
                }
-
-             if (strncmp(s1, E_TOK_STYLE, strlen(E_TOK_STYLE)) == 0)
-               {
-                  style = s1 + strlen(E_TOK_STYLE);
-
-		  if (font_hash) efp = evas_hash_find(*font_hash, name);
-                  if (efp == NULL)
-                    {
-                       efp = calloc(1, sizeof(E_Font_Properties));
-                       efp->name = evas_stringshare_add(name);
-                       if (font_hash) *font_hash = evas_hash_add(*font_hash, name, efp);
-                    }
-		  s2 = strchr(style, ',');
-		  if (s2)
-		    {
-		       char *style_old;
-		       len = s2 - style;
-
-		       style_old = style;
-		       style = calloc(sizeof(char), len + 1);
-		       strncpy(style, style_old, len);
-		       efp->styles = evas_list_append(efp->styles, evas_stringshare_add(style));
-		       free(style);
-		    }
-		  else
-		    {
-		       efp->styles = evas_list_append(efp->styles, evas_stringshare_add(style));
-		    }
-               }
-
-             free(name);
+             else
+               efp->styles = evas_list_append(efp->styles, evas_stringshare_add(style));
           }
-	else 
-	  {
-	     if (font_hash) efp = evas_hash_find(*font_hash, font);
-	     if (efp == NULL)
-	       {
-		  efp = calloc(1, sizeof(E_Font_Properties));
-		  efp->name = evas_stringshare_add(font);
-		  if (font_hash) *font_hash = evas_hash_add(*font_hash, font, efp);
-	       }
-	  }
-        return efp;
+        free(name);
+     }
+   else 
+     {
+        if (font_hash) efp = evas_hash_find(*font_hash, font);
+        if (efp == NULL)
+          {
+             efp = calloc(1, sizeof(E_Font_Properties));
+             efp->name = evas_stringshare_add(font);
+             if (font_hash) *font_hash = evas_hash_add(*font_hash, font, efp);
+          }
+     }
+   return efp;
 }
 
 
@@ -252,7 +245,6 @@ static Evas_Hash *
 _e_font_available_hash_add(Evas_Hash *font_hash, const char *full_name)
 {
    _e_font_fontconfig_name_parse(&font_hash, NULL, full_name);
-
    return font_hash;
 }
 
@@ -281,9 +273,7 @@ e_font_available_list_parse(Evas_List *list)
    font_hash = _e_font_available_hash_add(font_hash, "Monospace:style=Bold Oblique");
 
    for (next = list; next; next = next->next)
-     {
-        font_hash = _e_font_available_hash_add(font_hash, next->data);
-     }
+     font_hash = _e_font_available_hash_add(font_hash, next->data);
 
    return font_hash;
 }
@@ -293,12 +283,11 @@ EAPI const char *
 e_font_fontconfig_name_get(const char *name, const char *style)
 {
    char buf[256];
+
    if (name == NULL) return NULL;
    if (style == NULL || style[0] == 0) return evas_stringshare_add(name);
-
    snprintf(buf, 256, "%s"E_TOK_STYLE"%s", name, style);
    return evas_stringshare_add(buf);
-
 }
 
 EAPI void
@@ -309,9 +298,8 @@ e_font_fallback_clear(void)
    while (e_config->font_fallbacks)
      {	
 	eff = e_config->font_fallbacks->data;
-	e_config->font_fallbacks = evas_list_remove_list(
-					e_config->font_fallbacks,
-					e_config->font_fallbacks);
+	e_config->font_fallbacks = 
+          evas_list_remove_list(e_config->font_fallbacks, e_config->font_fallbacks);
 	if (eff->name) evas_stringshare_del(eff->name);
 	E_FREE(eff);
     }
@@ -353,8 +341,8 @@ e_font_fallback_remove(const char *font)
 	eff = evas_list_data(next);
 	if (!strcmp(eff->name, font))
 	  {
-	     e_config->font_fallbacks = evas_list_remove_list(
-					e_config->font_fallbacks, next);
+	     e_config->font_fallbacks = 
+               evas_list_remove_list(e_config->font_fallbacks, next);
 	     if (eff->name) evas_stringshare_del(eff->name);
 	     E_FREE(eff);
 	     break;
@@ -384,10 +372,10 @@ e_font_default_set(const char *text_class, const char *font, Evas_Font_Size size
 	     efd->font = evas_stringshare_add(font);
 	     efd->size = size;
 	     /* move to the front of the list */
-	     e_config->font_defaults = evas_list_remove_list(
-					e_config->font_defaults, next);
-	     e_config->font_defaults = evas_list_prepend(
-					e_config->font_defaults, efd);
+	     e_config->font_defaults = 
+               evas_list_remove_list(e_config->font_defaults, next);
+	     e_config->font_defaults = 
+               evas_list_prepend(e_config->font_defaults, efd);
 	     return;
 	  }
      }
@@ -417,17 +405,15 @@ e_font_default_get(const char *text_class)
 	if (!strcmp(efd->text_class, text_class))
 	  {
 	     /* move to the front of the list */
-	     e_config->font_defaults = evas_list_remove_list(
-					e_config->font_defaults, next);
-	     e_config->font_defaults = evas_list_prepend(
-					e_config->font_defaults, efd);
+	     e_config->font_defaults = 
+               evas_list_remove_list(e_config->font_defaults, next);
+	     e_config->font_defaults = 
+               evas_list_prepend(e_config->font_defaults, efd);
 	     return efd;
 	  }
-	if (!strcmp(efd->text_class, "default"))
-	  defd = efd;
+	if (!strcmp(efd->text_class, "default")) defd = efd;
      }
-   if (!defd)
-     defd  = efd;
+   if (!defd) defd  = efd;
    return defd;
 }
 
@@ -443,8 +429,8 @@ e_font_default_remove(const char *text_class)
 	efd = evas_list_data(next);
 	if (!strcmp(efd->text_class, text_class))
 	  {
-	     e_config->font_defaults = evas_list_remove_list(
-					e_config->font_defaults, next);
+	     e_config->font_defaults = 
+               evas_list_remove_list(e_config->font_defaults, next);
 	     if (efd->text_class) evas_stringshare_del(efd->text_class);
 	     if (efd->font) evas_stringshare_del(efd->font);
 	     E_FREE(efd);
@@ -510,4 +496,3 @@ e_font_default_string_get(const char *text_class, Evas_Font_Size *size_ret)
    if (size_ret) *size_ret = efd->size;
    return _fn_buf;
 }
-

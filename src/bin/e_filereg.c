@@ -17,7 +17,7 @@ struct _Filereg_Item
    int ref_count;
 };
 
-static Evas_Bool _filereg_hash_cb_free(Evas_Hash *hash __UNUSED__, 
+static Evas_Bool _filereg_hash_cb_free(const Evas_Hash *hash __UNUSED__, 
 				       const char *key __UNUSED__, 
 				       void *data, void *fdata __UNUSED__);
 
@@ -86,7 +86,7 @@ e_filereg_file_protected(const char *path)
 
 /* Private Functions */
 static Evas_Bool 
-_filereg_hash_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
+_filereg_hash_cb_free(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		      void *data, void *fdata __UNUSED__) 
 {
    Filereg_Item *fi;

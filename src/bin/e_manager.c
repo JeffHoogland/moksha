@@ -14,7 +14,7 @@ static int _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev
 static int _e_manager_cb_ping(void *data, int ev_type, void *ev);
 static int _e_manager_cb_screensaver_notify(void *data, int ev_type, void *ev);
 
-static Evas_Bool _e_manager_frame_extents_free_cb(Evas_Hash *hash __UNUSED__,
+static Evas_Bool _e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__,
 						  const char *key __UNUSED__,
 						  void *data, void *fdata __UNUSED__);
 #if 0 /* use later - maybe */
@@ -776,7 +776,7 @@ _e_manager_cb_screensaver_notify(void *data, int ev_type __UNUSED__, void *ev)
 }
 
 static Evas_Bool
-_e_manager_frame_extents_free_cb(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
+_e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 				 void *data, void *fdata __UNUSED__)
 {
    free(data);
