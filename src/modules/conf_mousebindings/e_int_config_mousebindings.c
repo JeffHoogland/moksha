@@ -1299,7 +1299,8 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
    e_win_centered_set(cfdata->locals.dia->win, 1);
    e_win_borderless_set(cfdata->locals.dia->win, 1);
 
-   cfdata->locals.bind_win = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
+   cfdata->locals.bind_win = ecore_x_window_input_new(man->root, 0, 0,
+						      man->w, man->h);
    ecore_x_window_show(cfdata->locals.bind_win);
    e_grabinput_get(cfdata->locals.bind_win, 0, cfdata->locals.bind_win);
 
