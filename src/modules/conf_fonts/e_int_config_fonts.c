@@ -31,6 +31,8 @@ static void _size_list_load(E_Config_Dialog_Data *cfdata, Evas_List *size_list, 
 static void _class_list_load(E_Config_Dialog_Data *cfdata);
 static void _font_preview_update(E_Config_Dialog_Data *cfdata);
 
+static Evas_Bool _font_hash_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata);
+
 struct _E_Font_Size_Data
 {
    E_Config_Dialog_Data *cfdata;
@@ -415,7 +417,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Bool
-_font_hash_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
+_font_hash_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata)
 {
    E_Config_Dialog_Data *cfdata;
    E_Font_Properties *efp;
