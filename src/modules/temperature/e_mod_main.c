@@ -43,8 +43,8 @@ static void _temperature_face_cb_post_menu(void *data, E_Menu *m);
 static void _temperature_face_level_set(Config_Face *inst, double level);
 static void _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
-static Evas_Bool _temperature_face_shutdown(Evas_Hash *hash, const char *key, void *hdata, void *fdata);
-static Evas_Bool _temperature_face_id_max(Evas_Hash *hash, const char *key, void *hdata, void *fdata);
+static Evas_Bool _temperature_face_shutdown(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *hdata, void *fdata __UNUSED__);
+static Evas_Bool _temperature_face_id_max(const Evas_Hash *hash __UNUSED__, const char *key, void *hdata __UNUSED__, void *fdata);
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_face_edd = NULL;
@@ -360,7 +360,7 @@ _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static Evas_Bool
-_temperature_face_shutdown(Evas_Hash *hash, const char *key, void *hdata, void *fdata)
+_temperature_face_shutdown(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *hdata, void *fdata __UNUSED__)
 {
    Config_Face *inst;
 
@@ -373,11 +373,11 @@ _temperature_face_shutdown(Evas_Hash *hash, const char *key, void *hdata, void *
 }
 
 static Evas_Bool
-_temperature_face_id_max(Evas_Hash *hash, const char *key, void *hdata, void *fdata)
+_temperature_face_id_max(const Evas_Hash *hash __UNUSED__, const char *key, void *hdata __UNUSED__, void *fdata)
 {
    const char *p;
-   int        *max;
-   int         num = -1;
+   int *max;
+   int num = -1;
 
    max = fdata;
    p = strrchr(key, '.');
