@@ -87,7 +87,7 @@ static void _e_fwin_cb_exec_cmd_changed(void *data, void *data2);
 static void _e_fwin_cb_open(void *data, E_Dialog *dia);
 static void _e_fwin_cb_close(void *data, E_Dialog *dia);
 static void _e_fwin_cb_dialog_free(void *obj);
-static Evas_Bool _e_fwin_cb_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _e_fwin_cb_hash_foreach(const Evas_Hash *hash __UNUSED__, const char *key, void *data __UNUSED__, void *fdata);
 static E_Fwin_Exec_Type _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici);
 static void _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext);
 static void _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always);
@@ -154,12 +154,12 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    fwin->zone = zone;
    
    /* Add Event Handler for zone move/resize & del */
-   fwin->zone_handler = ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE, 
-						_e_fwin_zone_move_resize, 
-						fwin);
-   fwin->zone_del_handler = ecore_event_handler_add(E_EVENT_ZONE_DEL, 
-						    _e_fwin_zone_del,
-						    fwin);
+   fwin->zone_handler = 
+     ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE, 
+                             _e_fwin_zone_move_resize, fwin);
+   fwin->zone_del_handler = 
+     ecore_event_handler_add(E_EVENT_ZONE_DEL, 
+                             _e_fwin_zone_del, fwin);
    
    /* Trap the mouse_down on zone so we can unselect */
    evas_object_event_callback_add(zone->bg_event_object, 
@@ -295,7 +295,7 @@ e_fwin_reload_all(void)
 		  else 
 		    {
 		       char buf[256];
-		       
+
 		       if (fileman_config->view.show_desktop_icons) 
 			 {
 			    snprintf(buf, sizeof(buf), "%i", 
@@ -877,7 +877,7 @@ _e_fwin_cb_dialog_free(void *obj)
 }
 
 static Evas_Bool
-_e_fwin_cb_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata)
+_e_fwin_cb_hash_foreach(const Evas_Hash *hash __UNUSED__, const char *key, void *data __UNUSED__, void *fdata)
 {
    Evas_List **mlist;
    
