@@ -288,7 +288,7 @@ _e_msgbus_profile_get_cb(E_DBus_Object *obj, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
-   char *profile; 
+   const char *profile;
 
    profile = e_config_profile_get();
 

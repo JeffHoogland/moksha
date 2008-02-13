@@ -109,7 +109,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
    Evas_List *l;
-   char *cur_profile;
+   const char *cur_profile;
    
    if (!cfdata) return;
    if (!cfdata->o_list) return;
@@ -148,7 +148,7 @@ static void
 _ilist_cb_selected(void *data) 
 {
    E_Config_Dialog_Data *cfdata;
-   char *cur_profile;
+   const char *cur_profile;
    
    cfdata = data;
    if (!cfdata) return;

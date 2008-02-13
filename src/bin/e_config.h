@@ -426,20 +426,20 @@ EAPI int        e_config_save(void);
 EAPI void       e_config_save_flush(void);
 EAPI void       e_config_save_queue(void);
 
-EAPI char      *e_config_profile_get(void);
-EAPI void       e_config_profile_set(char *prof);
+EAPI const char *e_config_profile_get(void);
+EAPI void       e_config_profile_set(const char *prof);
 EAPI Evas_List *e_config_profile_list(void);
-EAPI void       e_config_profile_add(char *prof);
-EAPI void       e_config_profile_del(char *prof);
+EAPI void       e_config_profile_add(const char *prof);
+EAPI void       e_config_profile_del(const char *prof);
 
 EAPI Evas_List *e_config_engine_list(void);
 
 EAPI void       e_config_save_block_set(int block);
 EAPI int        e_config_save_block_get(void);
     
-EAPI void      *e_config_domain_load(char *domain, E_Config_DD *edd);
+EAPI void      *e_config_domain_load(const char *domain, E_Config_DD *edd);
 EAPI int        e_config_profile_save(void);
-EAPI int        e_config_domain_save(char *domain, E_Config_DD *edd, void *data);
+EAPI int        e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data);
 
 EAPI E_Config_Binding_Mouse  *e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in);
 EAPI E_Config_Binding_Key    *e_config_binding_key_match(E_Config_Binding_Key *eb_in);

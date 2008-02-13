@@ -204,14 +204,14 @@ _load_avail_gadgets(void *data)
      {
         E_Gadcon_Client_Class *cc;
         Evas_Object *icon = NULL;
-        char *lbl = NULL;
+        const char *lbl = NULL;
 
         if (!(cc = l->data)) continue;
         if (cc->func.label) lbl = cc->func.label();
         if (!lbl) lbl = cc->name;
         if (cc->func.icon) icon = cc->func.icon(evas);
         e_widget_ilist_append(cfdata->o_avail, icon, lbl, NULL, 
-                              cc->name, NULL);
+                              (void *)cc->name, NULL);
      }
    e_widget_ilist_go(cfdata->o_avail);
    e_widget_min_size_get(cfdata->o_avail, &w, NULL);
@@ -245,7 +245,7 @@ _load_sel_gadgets(void *data)
           {
              E_Gadcon_Client_Class *gcc;
              Evas_Object *icon = NULL;
-             char *lbl = NULL;
+             const char *lbl = NULL;
 
              if (!(gcc = l2->data)) continue;
              if ((cgc->name) && (gcc->name) && 
@@ -255,7 +255,7 @@ _load_sel_gadgets(void *data)
                   if (!lbl) lbl = gcc->name;
                   if (gcc->func.icon) icon = gcc->func.icon(evas);
                   e_widget_ilist_append(cfdata->o_sel, icon, lbl, NULL, 
-                                        gcc->name, NULL);
+                                        (void *)gcc->name, NULL);
                }
           }
      }
@@ -369,7 +369,7 @@ static int
 _gad_list_sort(void *data1, void *data2) 
 {
    E_Gadcon_Client_Class *cc, *cc2;
-   char *lbl1 = NULL, *lbl2 = NULL;
+   const char *lbl1 = NULL, *lbl2 = NULL;
 
    if (!(cc = data1)) return 1;
    if (!(cc2 = data2)) return -1;

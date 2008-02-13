@@ -1697,14 +1697,14 @@ e_config_save_queue(void)
 							  NULL);
 }
 
-EAPI char *
+EAPI const char *
 e_config_profile_get(void)
 {
    return _e_config_profile;
 }
 
 EAPI void
-e_config_profile_set(char *prof)
+e_config_profile_set(const char *prof)
 {
    E_FREE(_e_config_profile);
    _e_config_profile = strdup(prof);
@@ -1740,7 +1740,7 @@ e_config_profile_list(void)
 }
 
 EAPI void
-e_config_profile_add(char *prof)
+e_config_profile_add(const char *prof)
 {
    char buf[4096];
    const char *homedir;
@@ -1751,7 +1751,7 @@ e_config_profile_add(char *prof)
 }
 
 EAPI void
-e_config_profile_del(char *prof)
+e_config_profile_del(const char *prof)
 {
    Ecore_List *files;
    char buf[4096];
@@ -1809,7 +1809,7 @@ e_config_save_block_get(void)
 }
 
 EAPI void *
-e_config_domain_load(char *domain, E_Config_DD *edd)
+e_config_domain_load(const char *domain, E_Config_DD *edd)
 {
    Eet_File *ef;
    char buf[4096];
@@ -1864,7 +1864,7 @@ e_config_profile_save(void)
 }
 
 EAPI int
-e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
+e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
 {
    Eet_File *ef;
    char buf[4096], buf2[4096];

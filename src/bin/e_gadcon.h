@@ -100,7 +100,7 @@ struct _E_Gadcon_Client_Class
 {
    int   version;
    /* All members below are part of version 1 */
-   char *name;
+   const char *name;
    struct 
      {
 	E_Gadcon_Client *(*init)     (E_Gadcon *gc, const char *name, const char *id, const char *style);
