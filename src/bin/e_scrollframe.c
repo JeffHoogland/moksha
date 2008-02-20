@@ -21,8 +21,6 @@ struct _E_Smart_Data
    E_Scrollframe_Policy hbar_flags, vbar_flags;
 
    struct {
-      unsigned char now : 1;
-      unsigned char dragged : 1;
       Evas_Coord x, y;
       Evas_Coord sx, sy;
       Evas_Coord dx, dy;
@@ -32,6 +30,10 @@ struct _E_Smart_Data
       } history[20];
       double anim_start;
       Ecore_Animator *momentum_animator;
+      unsigned char now : 1;
+      unsigned char dragged : 1;
+      unsigned char dir_x : 1;
+      unsigned char dir_y : 1;
    } down;
    
    struct {
@@ -52,6 +54,7 @@ struct _E_Smart_Data
    unsigned char hbar_visible : 1;
    unsigned char vbar_visible : 1;
    unsigned char extern_pan : 1;
+   unsigned char one_dir_at_a_time : 1;
 }; 
 
 /* local subsystem functions */
@@ -329,6 +332,20 @@ e_scrollframe_edje_object_get(Evas_Object *obj)
    return sd->edje_obj;
 }
 
+EAPI void
+e_scrollframe_single_dir_set(Evas_Object *obj, Evas_Bool single_dir)
+{
+   API_ENTRY return;
+   sd->one_dir_at_a_time = single_dir;
+}
+
+EAPI Evas_Bool
+e_scrollframe_single_dir_get(Evas_Object *obj)
+{
+   API_ENTRY return 0;
+   return sd->one_dir_at_a_time;
+}
+
 /* local subsystem functions */
 static void
 _e_smart_edje_drag_v(void *data, Evas_Object *obj, const char *emission, const char *source)
@@ -420,6 +437,8 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	  {
 	     sd->down.now = 1;
 	     sd->down.dragged = 0;
+	     sd->down.dir_x = 0;
+	     sd->down.dir_y = 0;
 	     sd->down.x = ev->canvas.x;
 	     sd->down.y = ev->canvas.y;
 	     e_scrollframe_child_pos_get(sd->smart_obj, &x, &y);
@@ -547,6 +566,26 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     
 	     x = ev->cur.canvas.x - sd->down.x;
 	     y = ev->cur.canvas.y - sd->down.y;
+	     if ((sd->one_dir_at_a_time) && 
+		 (!sd->down.dir_x) && (!sd->down.dir_y))
+	       {
+		  if (x > y)
+		    {
+		       if (x > e_config->thumbscroll_threshhold)
+			 {
+			    sd->down.dir_x = 1;
+			    sd->down.dir_y = 0;
+			 }
+		    }
+		  else
+		    {
+		       if (y > e_config->thumbscroll_threshhold)
+			 {
+			    sd->down.dir_x = 0;
+			    sd->down.dir_y = 1;
+			 }
+		    }
+	       }
 	     if ((sd->down.dragged) ||
 		 (((x * x) + (y * y)) > 
 		  (e_config->thumbscroll_threshhold * 
@@ -557,6 +596,11 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	       }
 	     x = sd->down.sx - (ev->cur.canvas.x - sd->down.x);
 	     y = sd->down.sy - (ev->cur.canvas.y - sd->down.y);
+	     if ((sd->down.dir_x) || (sd->down.dir_y))
+	       {
+		  if (sd->down.dir_x) y = sd->down.sy;
+		  else x = sd->down.sx;
+	       }
 	     e_scrollframe_child_pos_set(sd->smart_obj, x, y);
 	  }
      }

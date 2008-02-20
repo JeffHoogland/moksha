@@ -11,11 +11,11 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    rel1 {
-	       offset: 4 4;
+	       to_y: "e.text.label";
+	       relative: 0.0 1.0;
+	       offset: 0 4;
 	    }
 	    rel2 {
-	       to_y: "e.text.label";
-	       relative: 1.0 0.0;
 	       offset: -5  -5;
 	    }
 	 }
@@ -38,21 +38,21 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    rel1 {
-	       relative: 0.0 1.0;
-	       offset: 4 -5;
+	       relative: 0.0 0.0;
+	       offset: 4 4;
 	    }
 	    rel2 {
-	       relative: 1.0 1.0;
-	       offset: -5 -5;
+	       relative: 1.0 0.0;
+	       offset: -5 4;
 	    }
-	    align: 0.0 1.0;
+	    align: 0.0 0.0;
 	    color: 255 255 255 255;
 	    color3: 0 0 0 16;
 	    text {
 	       font: "Sans:style=Bold,Edje-Vera-Bold";
-	       size: 10;
+	       size: 20;
 	       min: 0 1;
-	       align: 0.0 1.0;
+	       align: 0.0 0.0;
 	       text_class: "slidesel_label";
 	    }
 	 }
@@ -112,6 +112,24 @@ group {
 	 signal: "e,state,enabled";
 	 source: "e";
 //	 action: STATE_SET "default" 0.0;
+//	 target: "outline";
+//	 target: "event";
+//	 target: "e.text.label";
+      }
+      program {
+	 name: "hint_on";
+	 signal: "e,state,slide,hint,on";
+	 source: "e";
+//	 action: STATE_SET "disabled" 0.0;
+//	 target: "outline";
+//	 target: "event";
+//	 target: "e.text.label";
+      }
+      program {
+	 name: "hint_off";
+	 signal: "e,state,slide,hint,off";
+	 source: "e";
+//	 action: STATE_SET "disabled" 0.0;
 //	 target: "outline";
 //	 target: "event";
 //	 target: "e.text.label";

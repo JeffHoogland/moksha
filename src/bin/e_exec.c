@@ -13,22 +13,12 @@
  */
 
 typedef struct _E_Exec_Launch   E_Exec_Launch;
-typedef struct _E_Exec_Instance E_Exec_Instance;
 typedef struct _E_Exec_Search   E_Exec_Search;
 
 struct _E_Exec_Launch
 {
    E_Zone         *zone;
    const char     *launch_method;
-};
-
-struct _E_Exec_Instance
-{
-   Efreet_Desktop *desktop;
-   Ecore_Exe      *exe;
-   int             startup_id;
-   double          launch_time;
-   Ecore_Timer    *expire_timer;
 };
 
 struct _E_Exec_Search
@@ -53,7 +43,7 @@ struct _E_Config_Dialog_Data
 };
 
 /* local subsystem functions */
-static void _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining);
+static E_Exec_Instance *_e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining);
 static int  _e_exec_cb_expire_timer(void *data);
 static int  _e_exec_cb_exit(void *data, int type, void *event);
 
@@ -104,15 +94,16 @@ e_exec_shutdown(void)
    return 1;
 }
 
-EAPI int
+EAPI E_Exec_Instance *
 e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
        Ecore_List *files, const char *launch_method)
 {
    E_Exec_Launch *launch;
+   E_Exec_Instance *inst = NULL;
 
-   if ((!desktop) && (!exec)) return 0;
+   if ((!desktop) && (!exec)) return NULL;
    launch = E_NEW(E_Exec_Launch, 1);
-   if (!launch) return 0;
+   if (!launch) return NULL;
    if (zone)
      {
 	launch->zone = zone;
@@ -124,13 +115,13 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
    if (desktop)
      {
 	if (exec)
-	  _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
+	  inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
 	else
-	  efreet_desktop_command_get(desktop, files, _e_exec_cb_exec, launch);
+	  inst = efreet_desktop_command_get(desktop, files, _e_exec_cb_exec, launch);
      }
    else
-     _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
-   return 1;
+     inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
+   return inst;
 }
 
 EAPI Efreet_Desktop *
@@ -146,7 +137,7 @@ e_exec_startup_id_pid_find(int startup_id, pid_t pid)
 }
 
 /* local subsystem functions */
-static void
+static E_Exec_Instance *
 _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 {
    E_Exec_Instance *inst = NULL;
@@ -159,7 +150,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    if (desktop)
      {
 	inst = E_NEW(E_Exec_Instance, 1);
-	if (!inst) return;
+	if (!inst) return NULL;
      }
 
    if (startup_id == 0)
@@ -229,7 +220,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 			     "<br>"
 			     "%s<br>"),
 			   exec);
-	return;
+	return NULL;
      }
    /* reset env vars */
    if (launch->launch_method) e_exehist_add(launch->launch_method, exec);
@@ -264,8 +255,12 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	  }
 	e_exec_start_pending = evas_list_append(e_exec_start_pending, desktop);
      }
-   else if (exe) 
-     ecore_exe_free(exe);
+   else if (exe)
+     {
+	E_FREE(inst);
+	inst = NULL;
+	ecore_exe_free(exe);
+     }
    
    if (!remaining)
      {
@@ -273,6 +268,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	if (launch->zone) e_object_unref(E_OBJECT(launch->zone));
        	free(launch);
      }
+   return inst;
 }
 
 static int

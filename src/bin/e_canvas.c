@@ -53,6 +53,12 @@ e_canvas_engine_decide(int engine)
    /* if use default - use it */
    if (engine == E_EVAS_ENGINE_DEFAULT)
      engine = e_config->evas_engine_default;
+   /* if engine is software-16 - do we support it? */
+   if (engine == E_EVAS_ENGINE_SOFTWARE_X11_16)
+     {
+	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_X11_16))
+	  engine = E_EVAS_ENGINE_SOFTWARE_X11;
+     }
    /* if engine is gl - do we support it? */
    if (engine == E_EVAS_ENGINE_GL_X11)
      {
@@ -60,6 +66,7 @@ e_canvas_engine_decide(int engine)
 	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_GL_X11))
 	  engine = E_EVAS_ENGINE_SOFTWARE_X11;
      }
+   /* support xrender? */
    if (engine == E_EVAS_ENGINE_XRENDER_X11)
      {
 	/* if we dont - fall back to software x11 */
@@ -204,6 +211,19 @@ e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
 	     if (direct_resize) ecore_evas_xrender_x11_direct_resize_set(ee, 1);
 	     if (win_ret) *win_ret = ecore_evas_xrender_x11_window_get(ee);
 	     if (subwin_ret) *subwin_ret = ecore_evas_xrender_x11_subwindow_get(ee);
+	  }
+	else
+	  goto try2;
+     }
+   else if (engine == E_EVAS_ENGINE_SOFTWARE_X11_16)
+     {
+	ee = ecore_evas_software_x11_16_new(NULL, win, x, y, w, h);
+	if (ee)
+	  {
+	     ecore_evas_override_set(ee, override);
+	     if (direct_resize) ecore_evas_software_x11_16_direct_resize_set(ee, 1);
+	     if (win_ret) *win_ret = ecore_evas_software_x11_16_window_get(ee);
+	     if (subwin_ret) *subwin_ret = ecore_evas_software_x11_16_subwindow_get(ee);
 	  }
 	else
 	  goto try2;

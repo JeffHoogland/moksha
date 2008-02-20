@@ -97,6 +97,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
         if (!strcmp("SOFTWARE", l->data)) engine = E_EVAS_ENGINE_SOFTWARE_X11;
         else if (!strcmp("GL", l->data)) engine = E_EVAS_ENGINE_GL_X11;
         else if (!strcmp("XRENDER", l->data)) engine = E_EVAS_ENGINE_XRENDER_X11;
+        else if (!strcmp("SOFTWARE_16", l->data)) engine = E_EVAS_ENGINE_SOFTWARE_X11_16;
 	else continue;
         ob = e_widget_radio_add(evas, _(l->data), engine, rg);
         e_widget_framelist_object_append(of, ob);

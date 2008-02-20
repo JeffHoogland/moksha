@@ -36,10 +36,11 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 #define E_CONFIG_FILE_GENERATION 0x0124
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
-#define E_EVAS_ENGINE_DEFAULT      0
-#define E_EVAS_ENGINE_SOFTWARE_X11 1
-#define E_EVAS_ENGINE_GL_X11       2
-#define E_EVAS_ENGINE_XRENDER_X11  3
+#define E_EVAS_ENGINE_DEFAULT         0
+#define E_EVAS_ENGINE_SOFTWARE_X11    1
+#define E_EVAS_ENGINE_GL_X11          2
+#define E_EVAS_ENGINE_XRENDER_X11     3
+#define E_EVAS_ENGINE_SOFTWARE_X11_16 4
 
 typedef enum _E_Engine_Context
 {

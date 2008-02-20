@@ -20,7 +20,9 @@ struct _E_Smart_Data
    Evas_List *items;
    Evas_Coord down_x, down_y;
    E_Smart_Item *cur;
+   double down_time;
    unsigned char down : 1;
+   unsigned char down_cancel : 1;
 }; 
 
 struct _E_Smart_Item
@@ -123,9 +125,12 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
    ev = event_info;
    if (ev->button == 1)
      {
+	sd->down_time = ecore_time_get();
 	sd->down = 1;
+	sd->down_cancel = 0;
 	sd->down_x = ev->canvas.x;
 	sd->down_y = ev->canvas.y;
+	edje_object_signal_emit(sd->edje_obj, "e,state,slide,hint,on", "e");
      }
 }
 
@@ -139,18 +144,22 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    if (ev->button == 1)
      {
-	Evas_Coord d1, d2, d;
+	double t;
 	
-	d1 = ev->canvas.x - sd->down_x;
-	d2 = ev->canvas.y - sd->down_y;
-	d = (d1 * d1) + (d2 * d2);
-	if (d < (16 * 16))
+	t = ecore_time_get();
+	if (!sd->down_cancel)
 	  {
+	     edje_object_signal_emit(sd->edje_obj, "e,state,slide,hint,off", "e");
 	     if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD))
 	       {
 		  if (sd->cur)
 		    {
-		       if (sd->cur->func) sd->cur->func(sd->cur->data);
+		       /* get rid of accidental release and presses */
+		       if ((t - sd->down_time) > 0.2)
+			 {
+			    edje_object_signal_emit(sd->edje_obj, "e,action,select", "e");
+			    if (sd->cur->func) sd->cur->func(sd->cur->data);
+			 }
 		    }
 	       }
 	  }
@@ -166,6 +175,20 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 
    sd = data;
    ev = event_info;
+   if ((sd->down) && (!sd->down_cancel))
+     {
+	Evas_Coord d1, d2, d;
+	
+	printf("DRAG @ %3.3f\n", ecore_time_get());
+	d1 = ev->cur.canvas.x - sd->down_x;
+	d2 = ev->cur.canvas.y - sd->down_y;
+	d = (d1 * d1) + (d2 * d2);
+	if (d > (16 * 16))
+	  {
+	     edje_object_signal_emit(sd->edje_obj, "e,state,slide,hint,off", "e");
+	     sd->down_cancel = 1;
+	  }
+     }
 }
 
 static void

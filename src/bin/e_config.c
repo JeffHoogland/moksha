@@ -1792,7 +1792,10 @@ e_config_engine_list(void)
 #if 0
    l = evas_list_append(l, strdup("GL"));
 #endif
-   l = evas_list_append(l, strdup("XRENDER"));
+   if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_XRENDER_X11))
+     l = evas_list_append(l, strdup("XRENDER"));
+   if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_X11_16))
+     l = evas_list_append(l, strdup("SOFTWARE_16"));
    return l;
 }
 

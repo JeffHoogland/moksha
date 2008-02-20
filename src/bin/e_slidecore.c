@@ -210,6 +210,7 @@ _e_smart_reconfigure(E_Smart_Data *sd)
    evas_object_color_get(sd->smart_obj, &r, &g, &b, &a);
    
    evas_object_move(sd->o1, sd->x - sd->dist + dp, sd->y);
+//   printf("SZ: %ix%i\n", sd->w + sd->dist + sd->dist, sd->h);
    evas_object_resize(sd->o1, sd->w + sd->dist + sd->dist, sd->h);
    evas_object_color_set(sd->o1, r, g, b, a);
    
