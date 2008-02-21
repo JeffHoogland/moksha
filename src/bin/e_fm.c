@@ -453,7 +453,7 @@ EAPI void
 e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 {
    E_Fm2_Smart_Data *sd;
-   const char *realpath, *extended_path;
+   const char *realpath;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd || !path) return; // safety
@@ -491,12 +491,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 	sd->config->theme.fixed = 0;
      }
    
-   if (!strcmp(path, "~/")) 
-     extended_path = e_user_homedir_get();
-   else 
-     extended_path = path;
-
-   realpath = _e_fm2_dev_path_map(dev, extended_path);
+   realpath = _e_fm2_dev_path_map(dev, path);
    /* If the path doesn't exist, popup a dialog */
    if (dev && strncmp(dev, "removable:", 10)
        && !ecore_file_exists(realpath))
@@ -537,7 +532,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    sd->order_file = 0;
    
    if (dev) sd->dev = evas_stringshare_add(dev);
-   if (path) sd->path = evas_stringshare_add(extended_path);
+   if (path) sd->path = evas_stringshare_add(path);
    sd->realpath = realpath;
    _e_fm2_queue_free(obj);
    _e_fm2_regions_free(obj);
@@ -2267,7 +2262,6 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
    int len;
    
    /* map a device name to a mount point/path on the os (and append path) */
-   if (!dev) return evas_stringshare_add(path);
 
    /* FIXME: load mappings from config and use them first - maybe device
     * discovery should be done through config and not the below (except
@@ -2286,7 +2280,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	s = (char *)e_user_homedir_get();
 	PRT("%s%s", s, path);
      }
-   else if (dev[0] == '/') 
+   else if (dev && (dev[0] == '/'))
      {
 	/* dev is a full path - consider it a mountpoint device on its own */
 	PRT("%s%s", dev, path);
@@ -2349,6 +2343,8 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
    /* maybe make part of the device mappings config? */
    /* FIXME: add code for finding nfs shares, smb shares etc. */
    /* maybe make part of the device mappings config? */
+
+   if (!strlen (buf)) snprintf(buf, sizeof(buf), "%s", path);
 
    /* strip out excess multiple slashes */
    s = buf;
