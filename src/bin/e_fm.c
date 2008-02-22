@@ -2280,7 +2280,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	s = (char *)e_user_homedir_get();
 	PRT("%s%s", s, path);
      }
-   else if (dev && (dev[0] == '/'))
+   else if ((dev) && (dev[0] == '/'))
      {
 	/* dev is a full path - consider it a mountpoint device on its own */
 	PRT("%s%s", dev, path);
@@ -2344,7 +2344,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
    /* FIXME: add code for finding nfs shares, smb shares etc. */
    /* maybe make part of the device mappings config? */
 
-   if (!strlen (buf)) snprintf(buf, sizeof(buf), "%s", path);
+   if (!strlen(buf)) snprintf(buf, sizeof(buf), "%s", path);
 
    /* strip out excess multiple slashes */
    s = buf;
