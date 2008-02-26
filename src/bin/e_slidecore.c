@@ -10,9 +10,9 @@ typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Smart_Item E_Smart_Item;
 
 struct _E_Smart_Data
-{ 
+{
    Evas_Coord   x, y, w, h;
-   
+
    Evas_Object *smart_obj;
    Evas_Object *event_obj;
    Evas_Object *o1, *o2;
@@ -20,7 +20,7 @@ struct _E_Smart_Data
    Evas_Coord dist, pos;
    int p1, p2, pn;
    unsigned char down : 1;
-}; 
+};
 
 struct _E_Smart_Item
 {
@@ -70,7 +70,7 @@ EAPI void
 e_slidecore_item_add(Evas_Object *obj, const char *label, const char *icon,  void (*func) (void *data), void *data)
 {
    E_Smart_Item *it;
-   
+
    API_ENTRY return;
    it = calloc(1, sizeof(E_Smart_Item));
    if (!it) return;
@@ -133,10 +133,10 @@ _e_smart_reconfigure(E_Smart_Data *sd)
    Evas_Coord dp, pos;
    int p1, p2, at, pl1, pl2, n;
    int r, g, b, a;
-   
+
    evas_object_move(sd->event_obj, sd->x, sd->y);
    evas_object_resize(sd->event_obj, sd->w, sd->h);
-   
+
    pos = sd->pos;
    n = evas_list_count(sd->items);
    while (pos < 0) pos += (sd->dist * n);
@@ -144,7 +144,7 @@ _e_smart_reconfigure(E_Smart_Data *sd)
    p2 = (pos + sd->dist) / sd->dist;
    dp = pos - (p1 * sd->dist);
    at = (dp * 255) / (sd->dist - 1);
-   
+
    while ((p1 < 0) || (p2 < 0))
      {
 	p1 += n;
@@ -155,7 +155,7 @@ _e_smart_reconfigure(E_Smart_Data *sd)
    if ((sd->p1 != p1) || (sd->p2 != p2) || (sd->pn != n))
      {
 	E_Smart_Item *it1, *it2;
-	
+
 	/* FIXME: delete old o1, o2, create new o1, o2 */
 	sd->pn = n;
 	if (n > 0)
@@ -172,7 +172,7 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 	     it2 = evas_list_nth(sd->items, pl2);
 	     if (it1 && it2)
 	       {
-		  sd->o1 =  e_util_icon_theme_icon_add(it1->icon, "512x512", 
+		  sd->o1 =  e_util_icon_theme_icon_add(it1->icon, "512x512",
 						       evas_object_evas_get(sd->smart_obj));
 		  if (sd->o1)
 		    {
@@ -184,7 +184,7 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 		       evas_object_clip_set(sd->o1, evas_object_clip_get(sd->smart_obj));
 		       evas_object_show(sd->o1);
 		    }
-		  sd->o2 =  e_util_icon_theme_icon_add(it2->icon, "512x512", 
+		  sd->o2 =  e_util_icon_theme_icon_add(it2->icon, "512x512",
 						       evas_object_evas_get(sd->smart_obj));
 		  if (sd->o2)
 		    {
@@ -196,7 +196,7 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 		       evas_object_clip_set(sd->o2, evas_object_clip_get(sd->smart_obj));
 		       evas_object_show(sd->o2);
 		    }
-		  if (a < 128)
+		  if (at < 128)
 		    {
 		       if (it1->func) it1->func(it1->data);
 		    }
@@ -208,12 +208,12 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 	  }
      }
    evas_object_color_get(sd->smart_obj, &r, &g, &b, &a);
-   
+
    evas_object_move(sd->o1, sd->x - sd->dist + dp, sd->y);
 //   printf("SZ: %ix%i\n", sd->w + sd->dist + sd->dist, sd->h);
    evas_object_resize(sd->o1, sd->w + sd->dist + sd->dist, sd->h);
    evas_object_color_set(sd->o1, r, g, b, a);
-   
+
    evas_object_move(sd->o2, sd->x - sd->dist - sd->dist + dp, sd->y);
    evas_object_resize(sd->o2, sd->w + sd->dist + sd->dist, sd->h);
    evas_object_color_set(sd->o2, (r * at) / 255, (g * at) / 255, (b * at) / 255, (a * at) / 255);
@@ -224,24 +224,24 @@ _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    Evas_Object *o;
-   
+
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
    evas_object_smart_data_set(obj, sd);
-   
+
    sd->smart_obj = obj;
    sd->x = 0;
    sd->y = 0;
    sd->w = 0;
    sd->h = 0;
-   
+
    evas_object_propagate_events_set(obj, 0);
 
    sd->dist = 48;
    sd->pos = 0;
    sd->p1 = -1;
    sd->p2 = -1;
-   
+
    o = evas_object_rectangle_add(evas_object_evas_get(obj));
    sd->event_obj = o;
    evas_object_color_set(o, 0, 0, 0, 0);
@@ -256,7 +256,19 @@ static void
 _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
+   while (sd->items)
+     {
+	E_Smart_Item *it;
+	
+	it = sd->items->data;
+	sd->items = evas_list_remove_list(sd->items, sd->items);
+	if (it->label) evas_stringshare_del(it->label);
+	if (it->icon) evas_stringshare_del(it->icon);
+	free(it);
+     }
    evas_object_del(sd->event_obj);
+   if (sd->o1) evas_object_del(sd->o1);
+   if (sd->o2) evas_object_del(sd->o2);
    free(sd);
 }
 
@@ -314,7 +326,7 @@ _e_smart_clip_unset(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
    evas_object_clip_unset(sd->event_obj);
-}  
+}
 
 /* never need to touch this */
 
@@ -328,7 +340,7 @@ _e_smart_init(void)
 	     SMART_NAME,
 	       EVAS_SMART_CLASS_VERSION,
 	       _e_smart_add,
-	       _e_smart_del, 
+	       _e_smart_del,
 	       _e_smart_move,
 	       _e_smart_resize,
 	       _e_smart_show,

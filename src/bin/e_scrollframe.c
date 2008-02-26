@@ -30,10 +30,12 @@ struct _E_Smart_Data
       } history[20];
       double anim_start;
       Ecore_Animator *momentum_animator;
+      Evas_Coord locked_x, locked_y;
       unsigned char now : 1;
       unsigned char dragged : 1;
       unsigned char dir_x : 1;
       unsigned char dir_y : 1;
+      unsigned char locked : 1;
    } down;
    
    struct {
@@ -63,6 +65,7 @@ static void _e_smart_pan_changed_hook(void *data, Evas_Object *obj, void *event_
 static void _e_smart_pan_pan_changed_hook(void *data, Evas_Object *obj, void *event_info);
 static void _e_smart_event_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static int  _e_smart_momentum_animator(void *data);
 static void _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -435,6 +438,7 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	  }
 	if (ev->button == 1)
 	  {
+	     printf("down @ %3.3f\n", ecore_time_get());
 	     sd->down.now = 1;
 	     sd->down.dragged = 0;
 	     sd->down.dir_x = 0;
@@ -444,6 +448,7 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     e_scrollframe_child_pos_get(sd->smart_obj, &x, &y);
 	     sd->down.sx = x;
 	     sd->down.sy = y;
+	     sd->down.locked = 0;
 	     memset(&(sd->down.history[0]), 0, sizeof(sd->down.history[0]) * 20);
 	     sd->down.history[0].timestamp = ecore_time_get();
 	     sd->down.history[0].x = ev->canvas.x;
@@ -453,7 +458,7 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 }
 
 static int
-_e_cb_momentum_animator(void *data)
+_e_smart_momentum_animator(void *data)
 {
    E_Smart_Data *sd;
    double t, dt, p;
@@ -494,7 +499,7 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	if (ev->button == 1)
 	  {
-	     
+	     printf("up @ %3.3f\n", ecore_time_get());
 	     x = ev->canvas.x - sd->down.x;
 	     y = ev->canvas.y - sd->down.y;
 	     if (sd->down.dragged)
@@ -529,7 +534,7 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			   (vel > e_config->thumbscroll_momentum_threshhold))
 			 {
 			    if (!sd->down.momentum_animator)
-			      sd->down.momentum_animator = ecore_animator_add(_e_cb_momentum_animator, sd);
+			      sd->down.momentum_animator = ecore_animator_add(_e_smart_momentum_animator, sd);
 			    sd->down.dx = ((double)dx / at);
 			    sd->down.dy = ((double)dy / at);
 			    sd->down.anim_start = t;
@@ -565,7 +570,9 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     sd->down.history[0].y = ev->cur.canvas.y;
 	     
 	     x = ev->cur.canvas.x - sd->down.x;
+	     if (x < 0) x = -x;
 	     y = ev->cur.canvas.y - sd->down.y;
+	     if (y < 0) y = -y;
 	     if ((sd->one_dir_at_a_time) && 
 		 (!sd->down.dir_x) && (!sd->down.dir_y))
 	       {
@@ -598,8 +605,15 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     y = sd->down.sy - (ev->cur.canvas.y - sd->down.y);
 	     if ((sd->down.dir_x) || (sd->down.dir_y))
 	       {
-		  if (sd->down.dir_x) y = sd->down.sy;
-		  else x = sd->down.sx;
+		  if (!sd->down.locked)
+		    {
+		       printf("lock dir to x%iy%i\n", sd->down.dir_x, sd->down.dir_y);
+		       sd->down.locked_x = x;
+		       sd->down.locked_y = y;
+		       sd->down.locked = 1;
+		    }
+		  if (sd->down.dir_x) y = sd->down.locked_y;
+		  else x = sd->down.locked_x;
 	       }
 	     e_scrollframe_child_pos_set(sd->smart_obj, x, y);
 	  }

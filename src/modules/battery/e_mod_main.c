@@ -251,10 +251,10 @@ _battery_cb_check(void *data)
 #else
    if (battery_config->battery_check_mode == 0)
      {
-	if (ecore_file_is_dir("/proc/acpi")) /* <= 2.6.24 */
-	  battery_config->battery_check_mode = CHECK_ACPI;
-	else if (ecore_file_is_dir("/sys/class/power_supply")) /* >= 2.6.24 */
+	if (ecore_file_is_dir("/sys/class/power_supply")) /* >= 2.6.24 */
 	  battery_config->battery_check_mode = CHECK_SYS_ACPI;
+	else if (ecore_file_is_dir("/proc/acpi")) /* <= 2.6.24 */
+	  battery_config->battery_check_mode = CHECK_ACPI;
 	else if (ecore_file_exists("/proc/apm"))
 	  battery_config->battery_check_mode = CHECK_APM;
 	else if (ecore_file_is_dir("/proc/pmu"))
@@ -418,7 +418,7 @@ _battery_linux_sys_acpi_check(void)
 	     int rate = 1;
 	     int level = 0;
 
-	     if (name && strncmp("BAT",name,3)) continue;
+	     if (name && strncasecmp("BAT", name, 3)) continue;
              
 	     /* present */
 	     snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/present", name);

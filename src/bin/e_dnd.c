@@ -618,11 +618,13 @@ _e_drag_win_show(E_Drop_Handler *h)
 	switch (h->obj->type)
 	  {
 	   case E_GADCON_TYPE:
-	      e_shelf_toggle(e_gadcon_shelf_get((E_Gadcon *)(h->obj)), 1);
-	      break;
+	     /* FIXME: this is wrong - it ASSUMES the holder is a shelf */
+//	     e_shelf_toggle(e_gadcon_shelf_get((E_Gadcon *)(h->obj)), 1);
+	     break;
 	   case E_GADCON_CLIENT_TYPE:
-	      e_shelf_toggle(e_gadcon_shelf_get(((E_Gadcon_Client *)(h->obj))->gadcon), 1);
-	      break;
+	     /* FIXME: this is wrong - it ASSUMES the holder is a shelf */
+//	     e_shelf_toggle(e_gadcon_shelf_get(((E_Gadcon_Client *)(h->obj))->gadcon), 1);
+	     break;
 	     /* FIXME: add more types as needed */
 	   default:
 	     break;

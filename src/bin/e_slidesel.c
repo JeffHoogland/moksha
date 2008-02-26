@@ -183,7 +183,7 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	d1 = ev->cur.canvas.x - sd->down_x;
 	d2 = ev->cur.canvas.y - sd->down_y;
 	d = (d1 * d1) + (d2 * d2);
-	if (d > (16 * 16))
+	if (d > (64 * 64))
 	  {
 	     edje_object_signal_emit(sd->edje_obj, "e,state,slide,hint,off", "e");
 	     sd->down_cancel = 1;
