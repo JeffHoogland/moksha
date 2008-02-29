@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Profiles
 Name[de]=
+Name[eo]=Agordo - Profiloj
 Name[es]=Configuración - Perfiles
 Name[fr]=
 Name[it]=Configurazione - Profili
@@ -13,7 +14,8 @@ Name[zh_TW]=
 Icon=e-module-conf_profiles
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Allows management of configuration profiles.
 Comment[de]=
-Comment[es]=<hilight>Applet de copnfiguración de E17</hilight><br><br>Permite la administración de perfiles de configuración.
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Administri agordajn profilojn.
+Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Permite la administración de perfiles de configuración.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Consente la gestione dei profili di configurazione.
 Comment[ja]=

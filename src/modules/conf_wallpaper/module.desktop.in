@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Wallpaper
 Name[de]=
+Name[eo]=Agordo - Tapeto
 Name[es]=Configuración - Fondo de pantalla
 Name[fr]=
 Name[it]=Configurazione - Sfondo
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_wallpaper
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to pick a wallpaper.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Elekti tapeton.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Para elegir un fondo de pantalla.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per selezionare uno sfondo.

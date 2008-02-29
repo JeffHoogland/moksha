@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Startup
 Name[de]=
+Name[eo]=Agordo - Startigo
 Name[es]=Configuración - Inicio
 Name[fr]=
 Name[it]=Configurazione - Avvio
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_startup
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to configure the E17 splash screen.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Agordi la salutŝildon de E17.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Usado para configurar la pantalla de inicio de E17.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per configurare lo splash screen di E17.

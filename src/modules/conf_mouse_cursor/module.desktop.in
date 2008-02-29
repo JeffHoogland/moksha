@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Mouse Cursor
 Name[de]=
+Name[eo]=Agordo - Musa kursoro
 Name[es]=Configuración - Cursor del mouse
 Name[fr]=
 Name[it]=Configurazione - Cursore del mouse
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_mouse_cursor
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Select the mouse cursor style.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Elekti la stilon de la musa kursoro.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Seleccione el diseño del cursor del mouse.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Seleziona lo stile di puntatore per il mouse.

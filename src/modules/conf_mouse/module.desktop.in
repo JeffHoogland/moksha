@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Mouse Acceleration
 Name[de]=
+Name[eo]=Agordo - Musa plirapidigo
 Name[es]=Configuración - Aceleración del mouse
 Name[fr]=
 Name[it]=Configurazione - Accelerazione mouse
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_mouse
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Configure mouse cursor acceleration.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Agordi la musan plirapidigon.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Configure la aceleración del cursor del mouse.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Configura l'accelerazione del puntatore del mouse.

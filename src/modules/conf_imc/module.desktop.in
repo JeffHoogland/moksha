@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Input Methods
 Name[de]=
+Name[eo]=Agordo - Tajpo-metodoj
 Name[es]=Configuración - Método de entrada
 Name[fr]=
 Name[it]=Configurazione - Metodo di input
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_imc
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to select an input method.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Elekti tajpo-metodon.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Usado para elegir el método de entrada.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per selezionare un metodo di input.

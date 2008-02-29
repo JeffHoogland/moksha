@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Mouse Bindings
 Name[de]=
+Name[eo]=Agordo - Musaj bindoj
 Name[es]=Configuración - Atajos del mouse
 Name[fr]=
 Name[it]=Configurazione - Associazioni del mouse
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_mousebindings
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to configure your mouse bindings.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Agordi siajn musajn bindojn.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Usado para configurar los atajos del mouse.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per configurare le associazioni per i tasti del mouse.

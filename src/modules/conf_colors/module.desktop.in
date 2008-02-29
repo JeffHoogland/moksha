@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Colors
 Name[de]=
+Name[eo]=Agordo - Koloroj
 Name[es]=Configuración - Colores
 Name[fr]=
 Name[it]=Configurazione - Colori
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_colors
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to customize the color classes.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17-agordo</hilight><br><br>Adapti la kolorajn grupojn.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Usado para personalizar las clases de colores.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per la personalizzazione delle classi di colore.

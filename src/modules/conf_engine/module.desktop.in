@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Engine
 Name[de]=
+Name[eo]=Agordo - Motoro
 Name[es]=Configuración - Motor
 Name[fr]=
 Name[it]=Configurazione - Motore
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_engine
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to select the rendering engine.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17-agordo</hilight><br><br>Elekti la bildigan motoron.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Usado para seleccionar el motor de renderizado.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per selezionere il motore di rendering.

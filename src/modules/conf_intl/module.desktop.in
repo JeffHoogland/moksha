@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Language
 Name[de]=
+Name[eo]=Agordo - Lingvo
 Name[es]=Configuración - Idioma
 Name[fr]=
 Name[it]=Configurazione - Lingua
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_intl
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to select a default language.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Elekti propran lingvon.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Usado para elegir el idioma predeterminado.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per selezionare una lingua predefinita.

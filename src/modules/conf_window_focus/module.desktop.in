@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Window Focus
 Name[de]=
+Name[eo]=Agordo - Fokuso de fenestroj
 Name[es]=Configuración - Foco de la ventana
 Name[fr]=
 Name[it]=Configurazione - Fuoco delle finestre
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_window_focus
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Configure window focus behavior.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Agordi la konduton de enfokusiĝo de la fenestroj.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Configura el comportamiento del foco de las ventanas.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Configura il comportamento del fuoco delle finestre.

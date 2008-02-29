@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Fonts
 Name[de]=
+Name[eo]=Agordo - Tiparoj
 Name[es]=Configuración - Fuentes
 Name[fr]=
 Name[it]=Configurazione - Font
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_fonts
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Font configuration dialog.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17-agordo</hilight><br><br>Dialogo de agordo de tiparoj.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Diálogo de configuración de fuentes.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Interfaccia per la configurazione dei font.

@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Borders
 Name[de]=
+Name[eo]=Agordo - Randoj
 Name[es]=Configuración - Bordes
 Name[fr]=
 Name[it]=Configurazione - Bordi
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_borders
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to select a default border style.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17-agordo</hilight><br><br>Elekti pravaloran randan stilon.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>USado para elegir un diseño de borde predeterminado.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per selezionare uno stile di bordo predefinito.

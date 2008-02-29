@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration Panel
 Name[de]=
+Name[eo]=Panelo de agordado
 Name[es]=Panel de configuración
 Name[fr]=
 Name[it]=Pannello di configurazione
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf
 Comment=<hilight>The E17 Configuration Panel</hilight>
 Comment[de]=
+Comment[eo]=<hilight>La panelo de agordo de E17<hilight>
 Comment[es]=<hilight>El panel de configuración de E17</hilight>
 Comment[fr]=
 Comment[it]=<hilight>Il pannello di configurazione di E17</hilight>

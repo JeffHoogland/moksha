@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Run Command
 Name[de]=
+Name[eo]=Agordo - Lanĉi komandon
 Name[es]=Configuración - Ejecutar comando
 Name[fr]=
 Name[it]=Configurazione - Lanciacomandi
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_exebuf
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to configure the settings of the run command GUI.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17-agordo</hilight><br><br>Agordi la parametrojn de la uzulinterfaco por la lanĉo de komandoj.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Usado para configurar las opciones de la GUI para ejecutar un comando.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per configurare le impostazioni della GUI per l'esecuzione di comandi.

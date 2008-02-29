@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Screen Saver
 Name[de]=
+Name[eo]=Agordo - Ekrankurtenoj
 Name[es]=Configuración - Salvapantallas
 Name[fr]=
 Name[it]=Configurazione - Screensaver
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_screensaver
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Configures the X screensaver.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Agordi la ekrankurtenon de X.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Configura el salvapantallas de X.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Configura lo screensaver di X.

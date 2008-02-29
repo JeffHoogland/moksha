@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Applications
 Name[de]=
+Name[eo]=Agordo - Aplikaĵoj
 Name[es]=Configuración - Aplicaciones
 Name[fr]=
 Name[it]=Configurazione - Applicazioni
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_applications
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Allows configuration of Ibar, Restart, and Startup applications.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Agordi la breton IBar, restartigajn kaj startigajn aplikaĵojn.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Permite configurar la IBar, reiniciar, e iniciar aplicaciones.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Consente la configurazione delle applicazioni per l'avvio, il riavvio e la barra Ibar.

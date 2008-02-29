@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - File Icons
 Name[de]=
+Name[eo]=Agordo - Dosieraj piktogramoj
 Name[es]=Configuración - Íconos de archivo
 Name[fr]=
 Name[it]=Configurazione - Icone dei file
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_mime
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Configure E17 mime icons.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Agordi piktogramojn de E17 por MIME.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Configure los íconos mime de E17.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Configura le icone dei tipi MIME in E17.

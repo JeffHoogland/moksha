@@ -1,7 +1,9 @@
 [Desktop Entry]
 Type=Link
 Name=Temperature
+Name[eo]=Temperaturo
 Icon=e-module-temperature
 Comment=<hilight>Temperature Gadget</hilight><br><br>Temperature monitor.
+Comment[eo]=<hilight>Akcesoraĵo de temperaturo<hilight><br><br>Elrigardi temperaturon.
 Comment[it]=<hilight>Modulo Temperature</hilight><br><br>Monitor per le temperature.
 X-Enlightenment-ModuleType=system

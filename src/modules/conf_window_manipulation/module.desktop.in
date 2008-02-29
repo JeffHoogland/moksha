@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Window Manipulation
 Name[de]=
+Name[eo]=Agordo - Manipulado de fenestroj
 Name[es]=Configuración - Manipulación de ventanas
 Name[fr]=
 Name[it]=Configurazione - Manipolazione finestre
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_winmanip
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Configures window raise, resistance, and maximize policies.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Agordi fenestrajn altigon, rezistadon kaj maksimumajn tiparojn.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Configura las reglas para la subida, resistencia y maximización de las ventanas.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Configura le regole per l'elevazione, la resistenza e la massimizzazione delle finestre.

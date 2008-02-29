@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Transitions
 Name[de]=
+Name[eo]=Agordo - Transiroj
 Name[es]=Configuración - Transiciones
 Name[fr]=
 Name[it]=Configurazione - Transizioni
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_transitions
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to choose a default transition. Transitions are used upon wallpaper changes, among other things.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Elekti defaŭltan transiron. Transiroj estas uzataj dum ŝanĝoj de tapeto interalie.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Usado para elegir la transición predeterminada. Las transiciones se usan cuando se cambia el fondo de pantalla, entre otras cosas.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per scegliere una transizione predefinita. Le transizioni sono usate al cambio di sfondo, e per altre cose.

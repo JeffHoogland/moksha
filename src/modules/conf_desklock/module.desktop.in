@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Screen Lock
 Name[de]=
+Name[eo]=Agordo - Ekranŝlosilo
 Name[es]=Configuración - Bloqueo de pantalla
 Name[fr]=
 Name[it]=Configurazione - Bloccaschermo
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_desklock
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Configures the integrated desk lock.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17-agordo</hilight><br><br>Agordi la integritan labortablan ŝlosilon.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Configura el bloqueador de escritorio integrado.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Configura il bloccaschermo integrato.

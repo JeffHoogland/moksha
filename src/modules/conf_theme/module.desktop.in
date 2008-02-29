@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Theme
 Name[de]=
+Name[eo]=Agordo - Etoso
 Name[es]=Configuración - Tema
 Name[fr]=
 Name[it]=Configurazione - Temi
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_theme
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to configure your theme preferences.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17 agordo<hilight><br><br>Agordi siajn preferojn de etoso.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Usado para configurar sus preferencias del tema.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per configurare le preferenze per il vostro tema.

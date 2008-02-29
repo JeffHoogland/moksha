@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Screen Resolution
 Name[de]=
+Name[eo]=Agordo - Ekrandistingivo
 Name[es]=Configuración - Resolución de pantalla
 Name[fr]=
 Name[it]=Configurazione - Risoluzione schermo
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_display
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Used to configure your screen's resolution.
 Comment[de]=
+Comment[eo]=<hilight>Aplikaĵeto de E17-agordo</hilight><br><br>Agordi sian ekrandistingivon.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Usado para configurar su resolución de pantalla.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Usato per configurare la risoluzione del vostro schermo.

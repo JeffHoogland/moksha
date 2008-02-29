@@ -2,6 +2,7 @@
 Type=Link
 Name=Battery
 Name[de]=
+Name[eo]=Baterío
 Name[es]=Batería
 Name[fr]=
 Name[it]=
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-battery
 Comment=<hilight>Battery Gadget</hilight><br><br>A gadget to visualize your battery status.
 Comment[de]=
+Comment[eo]=<hilight>Modulo de baterio</hilight><br><br>Vidigi staton de sia baterio.
 Comment[es]=<hilight>Dispositivo batería</hilight><br><br>Un dispositivo para ver el estado de su batería.
 Comment[fr]=
 Comment[it]=<hilight>Modulo Battery</hilight><br><br>Un modulo per visualizzare lo stato della batteria.

@@ -2,6 +2,7 @@
 Type=Link
 Name=Clock
 Name[de]=
+Name[eo]=Horloĝo
 Name[es]=Reloj
 Name[fr]=
 Name[it]=
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-clock
 Comment=<hilight>Clock Gadget</hilight><br><br>Nice clock gadget to show current time.
 Comment[de]=
+Comment[eo]=<hilight>Modulo de horloĝoj</hilight><br><br>Vidigi la nunan horon.
 Comment[es]=<hilight>Dispositivo Reloj</hilight><br><br>Un lindo reloj para mostrar la hora actual.
 Comment[fr]=
 Comment[it]=<hilight>Modulo Clock</hilight><br><br>Un simpatico orologio per mostrare l'ora attuale.

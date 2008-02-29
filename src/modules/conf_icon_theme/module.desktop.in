@@ -2,6 +2,7 @@
 Type=Link
 Name=Configuration - Icon Theme
 Name[de]=
+Name[eo]=Agordo - Piktograma etoso
 Name[es]=Configuración - Tema de íconos
 Name[fr]=
 Name[it]=Configurazione - Temi di icone
@@ -13,6 +14,7 @@ Name[zh_TW]=
 Icon=e-module-conf_icon_theme
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Configuration applet used to select an icon theme for E17.
 Comment[de]=
+Comment[eo]=<hilight>Aplikajeto de E17-agordo</hilight><br><br>Elekti piktograman etoson por E17.
 Comment[es]=<hilight>Applet de configuración de E17</hilight><br><br>Applet de configuración usado para seleccionar el tema de íconos para E17.
 Comment[fr]=
 Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Applet di configurazione per la selezione di un tema di icone per E17.

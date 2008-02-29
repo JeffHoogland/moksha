@@ -1,9 +1,11 @@
 [Desktop Entry]
 Type=Link
 Name=IBox
+Name[eo]=Breto IBox
 Icon=e-module-ibox
 Comment=<hilight>IconBox Gadget</hilight><br><br>A home for your iconified applications.
 Comment[de]=
+Comment[eo]=<hilight>Akcesoraĵo IconBox<hilight><br><br>Ujo por siaj piktogramigitaj aplikaĵoj.
 Comment[es]=<hilight>Dispositivo IconBox</hilight><br><br>Un contenedor para sus aplicaciones iconificadas.
 Comment[fr]=
 Comment[it]=<hilight>Modulo IBox</hilight><br><br>Un contenitore per le applicazioni iconificate.
