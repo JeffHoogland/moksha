@@ -357,47 +357,50 @@ _battery_cb_exe_data(void *data, int type, void *event)
 		  int have_power = 0;
 		  Evas_List *l;
 		  
-		  sscanf(ev->lines[i].line, "%i %i %i %i", 
-			 &full, &time_left, &have_battery, &have_power);
-		  for (l = battery_config->instances; l; l = l->next)
+		  if (sscanf(ev->lines[i].line, "%i %i %i %i",
+			     &full, &time_left, &have_battery, &have_power)
+		      == 4)
 		    {
-		       Instance *inst;
-		       
-		       inst = l->data;
-		       if (have_power != battery_config->have_power)
+		       for (l = battery_config->instances; l; l = l->next)
 			 {
-			    if (have_power)
-			      edje_object_signal_emit(inst->o_battery, "e,state,charging", "e");
+			    Instance *inst;
+			    
+			    inst = l->data;
+			    if (have_power != battery_config->have_power)
+			      {
+				 if (have_power)
+				   edje_object_signal_emit(inst->o_battery, "e,state,charging", "e");
+				 else
+				   edje_object_signal_emit(inst->o_battery, "e,state,discharging", "e");
+			      }
+			    if (have_battery)
+			      {
+				 if (battery_config->full != full)
+				   {
+				      char buf[256];
+				      
+				      snprintf(buf, sizeof(buf), "%i%%", full);
+				      edje_object_part_text_set(inst->o_battery, "e.text.reading", buf);
+				      _battery_face_level_set(inst, (double)full / 100.0);
+				   }
+			      }
 			    else
-			      edje_object_signal_emit(inst->o_battery, "e,state,discharging", "e");
-			 }
-		       if (have_battery)
-			 {
-			    if (battery_config->full != full)
+			      {
+				 edje_object_part_text_set(inst->o_battery, "e.text.reading", _("N/A"));
+				 _battery_face_level_set(inst, 0.0);
+			      }
+			    if (time_left != battery_config->time_left)
 			      {
 				 char buf[256];
+				 int mins, hrs;
 				 
-				 snprintf(buf, sizeof(buf), "%i%%", full);
-				 edje_object_part_text_set(inst->o_battery, "e.text.reading", buf);
-				 _battery_face_level_set(inst, (double)full / 100.0);
+				 hrs = time_left / 3600;
+				 mins = (time_left) / 60 - (hrs * 60);
+				 snprintf(buf, sizeof(buf), "%i:%02i", hrs, mins);
+				 if (hrs < 0) hrs = 0;
+				 if (mins < 0) mins = 0;
+				 edje_object_part_text_set(inst->o_battery, "e.text.time", buf);
 			      }
-			 }
-		       else
-			 {
-			    edje_object_part_text_set(inst->o_battery, "e.text.reading", _("N/A"));
-			    _battery_face_level_set(inst, 0.0);
-			 }
-		       if (time_left != battery_config->time_left)
-			 {
-			    char buf[256];
-			    int mins, hrs;
-			    
-			    hrs = time_left / 3600;
-			    mins = (time_left) / 60 - (hrs * 60);
-			    snprintf(buf, sizeof(buf), "%i:%02i", hrs, mins);
-			    if (hrs < 0) hrs = 0;
-			    if (mins < 0) mins = 0;
-			    edje_object_part_text_set(inst->o_battery, "e.text.time", buf);
 			 }
 		    }
 		  battery_config->full = full;
