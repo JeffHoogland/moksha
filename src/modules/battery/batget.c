@@ -449,8 +449,8 @@ linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd
 			  (errno == EBADF) ||
 			  (errno == EPIPE) ||
 			  (errno == EINVAL) ||
-			  (errno == ENOSPC) ||
-			  (num == 0));
+			  (errno == ENOSPC));
+		  if (num == 0) break;
 	       }
 	  }
 	if (lost)
@@ -820,8 +820,8 @@ linux_acpi_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd_handler)
 			  (errno == EBADF) ||
 			  (errno == EPIPE) ||
 			  (errno == EINVAL) ||
-			  (errno == ENOSPC) ||
-			  (num == 0));
+			  (errno == ENOSPC));
+		  if (num == 0) break;
 	       }
 	  }
 	if (lost)
