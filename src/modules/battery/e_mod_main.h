@@ -25,40 +25,13 @@ struct _Config
    Evas_List       *instances;
    E_Menu          *menu;
    int              alarm_triggered;
-   int              battery_check_mode;
-   Ecore_Poller    *battery_check_poller;
-   int              battery_prev_drain;
-   int              battery_prev_ac;
-   int              battery_prev_battery;
-   int              battery_prev_level;
-};
-
-#ifdef __FreeBSD__
-#define BATTERY_STATE_NONE 0
-#define BATTERY_STATE_DISCHARGING 1
-#define BATTERY_STATE_CHARGING 2
-#define BATTERY_STATE_REMOVED 7
-#else
-#define BATTERY_STATE_NONE 0
-#define BATTERY_STATE_CHARGING 1
-#define BATTERY_STATE_DISCHARGING 2
-#endif
-
-struct _Status
-{
-   /* Low battery */
-   unsigned char alarm;
-   /* Is there a battery? */
-   unsigned char has_battery;
-   /* charging, discharging, none */
-   unsigned char state;
-   /* Battery level */
-   double level;
-   /* Text */
-   /* reading == % left */
-   char *reading;
-   /* time == time left to empty / full */
-   char *time;
+   Ecore_Exe           *batget_exe;
+   Ecore_Event_Handler *batget_data_handler;
+   Ecore_Event_Handler *batget_del_handler;
+   int                  full;
+   int                  time_left;
+   int                  have_battery;
+   int                  have_power;
 };
 
 EAPI extern E_Module_Api e_modapi;
