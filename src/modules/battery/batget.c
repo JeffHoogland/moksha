@@ -511,7 +511,7 @@ linux_sys_class_power_supply_init(void)
 		  sysev->fd_handler = ecore_main_fd_handler_add(sysev->fd,
 								ECORE_FD_READ,
 								linux_sys_class_power_supply_cb_event_fd_active,
-								NULL,
+								sysev,
 								NULL, NULL);
 		  ecore_list_append(events, sysev);
 	       }
