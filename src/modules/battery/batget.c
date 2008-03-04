@@ -725,7 +725,7 @@ linux_sys_class_power_supply_check(void)
 	     else
 	       {
  		  if (pwr_now < 0) 
-		    pwr_now = ((capacity * (pwr_full - pwr_empty)) / 100) + pwr_empty;
+		    pwr_now = (((long long)capacity * ((long long)pwr_full - (long long)pwr_empty)) / 100) + pwr_empty;
 	       }
 	     
 	     if (sysev->present) have_battery = 1;
@@ -744,7 +744,7 @@ linux_sys_class_power_supply_check(void)
 		       else if (current < 0) time_left = -1;
 		       else
 			 {
-			    pwr = ((pwr_full - pwr_now) * 3600) / -current;
+			    pwr = (((long long)pwr_full - (long long)pwr_now) * 3600) / -current;
 			    if (pwr > time_left) time_left = pwr;
 			 }
 		    }
@@ -759,7 +759,7 @@ linux_sys_class_power_supply_check(void)
 			 {
 			    if (current > 0)
 			      {
-				 pwr = ((pwr_now - pwr_empty) * 3600) / current;
+				 pwr = (((long long)pwr_now - (long long)pwr_empty) * 3600) / current;
 				 time_left += pwr;
 			      }
 			 }
@@ -1063,18 +1063,18 @@ linux_acpi_check(void)
 	  }
         ecore_list_destroy(bats);
 	if (acpi_max_full > 0)
-	  battery_full = 100 * capacity / acpi_max_full;
+	  battery_full = 100 * (long long)capacity / acpi_max_full;
 	else if (acpi_max_design > 0)
-	  battery_full = 100 * capacity / acpi_max_design;
+	  battery_full = 100 * (long long)capacity / acpi_max_design;
 	else
 	  battery_full = -1;
 	if (rate <= 0) time_left = -1;
 	else 
 	  {
 	     if (have_power)
-	       time_left = (3600 * (acpi_max_full - capacity)) / rate;
+	       time_left = (3600 * ((long long)acpi_max_full - (long long)capacity)) / rate;
 	     else
-	       time_left = (3600 * capacity) / rate;
+	       time_left = (3600 * (long long)capacity) / rate;
 	  }
      }
 }
@@ -1290,7 +1290,7 @@ linux_pmu_check(void)
 	       }
 	  }
         ecore_list_destroy(bats);
-	if (max_charge > 0) battery_full = (charge * 100) / max_charge;
+	if (max_charge > 0) battery_full = ((long long)charge * 100) / max_charge;
 	else battery_full = 0;
 	time_left = seconds;
      }

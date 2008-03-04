@@ -240,7 +240,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIMIT(battery_config->poll_interval, 4, 4096);
    E_CONFIG_LIMIT(battery_config->alarm, 0, 60);
    E_CONFIG_LIMIT(battery_config->alarm_p, 0, 100);
-   
+
    battery_config->module = m;
    
    battery_config->full = -2;
