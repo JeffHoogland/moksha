@@ -71,6 +71,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _button_cb_mouse_down, inst);
    battery_config->instances = evas_list_append(battery_config->instances, inst);
+   _battery_config_updated();
    return gcc;
 }
 
@@ -194,8 +195,11 @@ _battery_config_updated(void)
    char buf[4096];
    
    if (!battery_config) return;
-   ecore_exe_terminate(battery_config->batget_exe);
-   ecore_exe_free(battery_config->batget_exe);
+   if (battery_config->batget_exe)
+     {
+	ecore_exe_terminate(battery_config->batget_exe);
+	ecore_exe_free(battery_config->batget_exe);
+     }
    snprintf(buf, sizeof(buf),
 	    "%s/%s/batget %i",
 	    e_module_dir_get(battery_config->module), MODULE_ARCH,
@@ -248,14 +252,6 @@ e_modapi_init(E_Module *m)
    battery_config->have_battery = -2;
    battery_config->have_power = -2;
    
-   snprintf(buf, sizeof(buf),
-	    "%s/%s/batget %i",
-	    e_module_dir_get(battery_config->module), MODULE_ARCH,
-	    battery_config->poll_interval);
-   battery_config->batget_exe = ecore_exe_pipe_run(buf,
-					  ECORE_EXE_PIPE_READ |
-					  ECORE_EXE_PIPE_READ_LINE_BUFFERED,
-					  NULL);
    battery_config->batget_data_handler =
      ecore_event_handler_add(ECORE_EXE_EVENT_DATA,
 			     _battery_cb_exe_data,
