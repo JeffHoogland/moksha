@@ -277,10 +277,13 @@ e_modapi_shutdown(E_Module *m)
    e_configure_registry_category_del("advanced");
    
    e_gadcon_provider_unregister(&_gadcon_class);
-   
-   ecore_exe_terminate(battery_config->batget_exe);
-   ecore_exe_free(battery_config->batget_exe);
-   battery_config->batget_exe = NULL;
+
+   if (battery_config->batget_exe)
+     {
+	ecore_exe_terminate(battery_config->batget_exe);
+	ecore_exe_free(battery_config->batget_exe);
+	battery_config->batget_exe = NULL;
+     }
 
    if (battery_config->batget_data_handler)
      {
