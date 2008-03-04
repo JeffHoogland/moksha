@@ -1438,7 +1438,6 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
    if (gcc->style)
      gcc->cf->style = evas_stringshare_add(gcc->style);
    gcc->cf->resizable = gcc->resizable;
-
    e_config_save_queue();
 }
 
@@ -2866,7 +2865,8 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
    for (l = sd->items, i = 1; l; l = l->next, i++)
      {
 	bi = evas_object_data_get(l->data, "e_gadcon_layout_data"); 
-	bi->gcc->state_info.seq = i; 
+	if (bi->gcc->gadcon->editing)
+	  bi->gcc->state_info.seq = i; 
 
 	if (set_prev_pos)
 	  {
@@ -3533,7 +3533,6 @@ _e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd)
 
    sd->items = evas_list_sort(sd->items, evas_list_count(sd->items),
 			      _e_gadcon_layout_smart_sort_by_sequence_number_cb); 
-   
    for (l = sd->items; l; l = l->next) 
      { 
 	bi = evas_object_data_get(l->data, "e_gadcon_layout_data"); 
@@ -3542,7 +3541,7 @@ _e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd)
 	     if (bi->gcc->state_info.resist <= E_LAYOUT_ITEM_DRAG_RESIST_LEVEL) 
 	       { 
 		  bi->gcc->state_info.resist++; 
-		  bi->gcc->config.pos = bi->ask.pos = bi->gcc->state_info.prev_pos; 
+		  bi->gcc->config.pos = bi->ask.pos = bi->gcc->state_info.prev_pos;
 	       } 
 	     else 
 	       { 
@@ -3827,7 +3826,6 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Evas_List **list)
 	return;
      } 
 
-   printf("lc_moving->state = %i\n", lc_moving->state);
    lc_moving_prev_pos = lc_moving->prev_pos;
    if (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_DEC) 
      { 
