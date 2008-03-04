@@ -3826,7 +3826,8 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Evas_List **list)
 	_e_gadcon_layout_smart_gadcons_position_static(sd, list);
 	return;
      } 
-   
+
+   printf("lc_moving->state = %i\n", lc_moving->state);
    lc_moving_prev_pos = lc_moving->prev_pos;
    if (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_DEC) 
      { 
