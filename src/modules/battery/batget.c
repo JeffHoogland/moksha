@@ -770,7 +770,7 @@ linux_sys_class_power_supply_check(void)
 	     total_pwr_max += pwr_full - pwr_empty;
 	  }
 	if (total_pwr_max > 0)
-	  battery_full = (total_pwr_now * 100) / total_pwr_max;
+	  battery_full = ((long long)total_pwr_now * 100) / total_pwr_max;
      }
 }
 
