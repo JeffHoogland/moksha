@@ -43,7 +43,20 @@ e_module_shutdown(void)
     */
    VALGRIND_DO_LEAK_CHECK
 #endif
-
+     
+   for (l = _e_modules; l; l = l->next)
+     {
+	E_Module *m;
+	
+	m = l->data;
+	if ((m->enabled) && (!m->error))
+	  {
+	     printf("MOD: OFF SHUT %s\n", m->name);
+	     m->func.save(m);
+	     m->func.shutdown(m);
+	     m->enabled = 0;
+	  }
+     }
    l = _e_modules;
    _e_modules = NULL;
    while (l)
@@ -246,6 +259,7 @@ e_module_enable(E_Module *m)
    E_OBJECT_CHECK_RETURN(m, 0);
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
    if ((m->enabled) || (m->error)) return 0;
+   printf("MOD: ON %s\n", m->name);
    m->data = m->func.init(m);
    if (m->data)
      {
@@ -284,6 +298,7 @@ e_module_disable(E_Module *m)
    E_OBJECT_CHECK_RETURN(m, 0);
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
    if ((!m->enabled) || (m->error)) return 0;
+   printf("MOD: OFF %s\n", m->name);
    ret = m->func.shutdown(m);
    m->data = NULL;
    m->enabled = 0;
@@ -457,6 +472,7 @@ _e_module_free(E_Module *m)
    
    if ((m->enabled) && (!m->error))
      {
+	printf("MOD: OFF FREE %s\n", m->name);
 	m->func.save(m);
 	m->func.shutdown(m);
      }
