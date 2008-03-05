@@ -7,3 +7,4 @@ module.la
 *.lo
 *.la
 module.desktop
+batget

@@ -7,3 +7,4 @@ module.la
 *.la
 *.lo
 module.desktop
+tempget
