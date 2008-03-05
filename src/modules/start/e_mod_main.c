@@ -94,8 +94,14 @@ _gc_orient(E_Gadcon_Client *gcc)
    Evas_Coord mw, mh;
    
    inst = gcc->data;
-   edje_object_size_min_calc (inst->o_button, &mw, &mh);
-   e_gadcon_client_min_size_set (gcc, mw, mh);
+   mw = 0, mh = 0;
+   edje_object_size_min_get(inst->o_button, &mw, &mh);
+   if ((mw < 1) || (mh < 1))
+     edje_object_size_min_calc(inst->o_button, &mw, &mh);
+   if (mw < 4) mw = 4;
+   if (mh < 4) mh = 4;
+   e_gadcon_client_aspect_set(gcc, mw, mh);
+   e_gadcon_client_min_size_set(gcc, mw, mh);
 }
    
 static char *
