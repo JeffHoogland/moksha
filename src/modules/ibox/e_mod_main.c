@@ -378,7 +378,11 @@ _ibox_fill(IBox *b)
 	  }
 	else if((b->inst->ci->show_zone == 1) && (bd->iconic))
 	  {
-	     if ((b->inst->ci->show_desk == 0) && (bd->zone == b->zone))
+ 	     if (bd->sticky)
+ 	       {
+ 		  ok = 1;
+ 	       }
+ 	     else if ((b->inst->ci->show_desk == 0) && (bd->zone == b->zone))
 	       {
 		  ok = 1;
 	       }
@@ -1039,7 +1043,7 @@ _ibox_cb_event_border_add(void *data, int type, void *event)
 	  {
 	     b = l->data;
 	     if (_ibox_icon_find(b, ev->border)) continue;
-	     if ((b->inst->ci->show_desk) && (ev->border->desk != desk)) continue;
+	     if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
 	     ic = _ibox_icon_new(b, ev->border);
 	     if (!ic) continue;
 	     b->icons = evas_list_append(b->icons, ic);
@@ -1101,7 +1105,7 @@ _ibox_cb_event_border_iconify(void *data, int type, void *event)
      {
 	b = l->data;
 	if (_ibox_icon_find(b, ev->border)) continue;
-	if ((b->inst->ci->show_desk) && (ev->border->desk != desk)) continue;
+	if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
 	ic = _ibox_icon_new(b, ev->border);
 	if (!ic) continue;
 	b->icons = evas_list_append(b->icons, ic);

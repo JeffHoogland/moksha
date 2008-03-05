@@ -2265,6 +2265,7 @@ e_border_stick(E_Border *bd)
 	  }
      }
 
+   edje_object_signal_emit(bd->bg_object, "e,state,sticky", "e");
    ev = E_NEW(E_Event_Border_Stick, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
@@ -2300,6 +2301,7 @@ e_border_unstick(E_Border *bd)
 	  }
      }
 
+   edje_object_signal_emit(bd->bg_object, "e,state,unsticky", "e");
    ev = E_NEW(E_Event_Border_Unstick, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
@@ -5932,6 +5934,8 @@ _e_border_eval(E_Border *bd)
 		    }
 		  if (bd->shaded)
 		    edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
+		  if (bd->sticky)
+		    edje_object_signal_emit(bd->bg_object, "e,state,sticky", "e");
 		  if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN)
 		    edje_object_signal_emit(bd->bg_object, "e,action,maximize,fullscreen", "e");
 		  else if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
