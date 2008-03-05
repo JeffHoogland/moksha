@@ -93,6 +93,8 @@ struct _E_Gadcon
    E_Drop_Handler *drop_handler;
 
    E_Config_Gadcon *cf;
+
+   unsigned char          instant_edit : 1;
 };
 
 #define GADCON_CLIENT_CLASS_VERSION 2
