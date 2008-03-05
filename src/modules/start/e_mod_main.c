@@ -91,10 +91,11 @@ static void
 _gc_orient(E_Gadcon_Client *gcc)
 {
    Instance *inst;
+   Evas_Coord mw, mh;
    
    inst = gcc->data;
-   e_gadcon_client_aspect_set(gcc, 16, 16);
-   e_gadcon_client_min_size_set(gcc, 16, 16);
+   edje_object_size_min_calc (inst->o_button, &mw, &mh);
+   e_gadcon_client_min_size_set (gcc, mw, mh);
 }
    
 static char *
