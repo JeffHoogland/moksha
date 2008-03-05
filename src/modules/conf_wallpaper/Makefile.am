@@ -25,7 +25,9 @@ module_la_SOURCES      = e_mod_main.c \
 			 e_int_config_wallpaper_gradient.h \
 			 e_int_config_wallpaper.h \
 			 e_int_config_wallpaper_import.c \
-			 e_int_config_wallpaper_import.h
+			 e_int_config_wallpaper_import.h \
+			 e_int_config_wallpaper_web.c \
+			 e_int_config_wallpaper_web.h
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version

@@ -55,6 +55,7 @@ struct _E_Config_Dialog_Data
    /* dialogs */
    E_Win *win_import;
    E_Dialog *dia_gradient;
+   E_Dialog *dia_web;
 };
 
 EAPI E_Config_Dialog *
@@ -149,6 +150,15 @@ e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia)
    
    cfdata = dia->cfdata;
    cfdata->dia_gradient = NULL;
+}
+
+EAPI void
+e_int_config_wallpaper_web_done(E_Config_Dialog *dia)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = dia->cfdata;
+   cfdata->dia_web = NULL;
 }
 
 EAPI void 
@@ -381,6 +391,18 @@ _cb_gradient(void *data1, void *data2)
 }
 
 static void
+_cb_web(void *data1, void *data2)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data1;
+   if (cfdata->dia_web)
+      e_win_raise(cfdata->dia_web->win);
+   else
+      cfdata->dia_web = e_int_config_wallpaper_web(cfdata->cfd);   
+}
+
+static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    char path[4096];
@@ -460,6 +482,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      e_int_config_wallpaper_del(cfdata->win_import);
    if (cfdata->dia_gradient) 
      e_int_config_wallpaper_gradient_del(cfdata->dia_gradient);
+   if (cfdata->dia_web)
+     e_int_config_wallpaper_web_del(cfdata->dia_web);
    E_FREE(cfdata->bg);
    E_FREE(cfd->data);
    E_FREE(cfdata);
@@ -543,7 +567,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 				     e_fm2_pan_max_get,
 				     e_fm2_pan_child_size_get);
    cfdata->o_frame = of;
-   e_widget_min_size_set(of, 160, 160);
+   e_widget_min_size_set(of, 60, 60);//*******
    e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.0);
 
@@ -558,6 +582,12 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
 			    _cb_gradient, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
+   if (ecore_file_download_protocol_available("http://"))
+   {
+      ow = e_widget_button_add(evas, _("Online..."), "enlightenment/website",
+			       _cb_web, cfdata, NULL);
+      e_widget_table_object_append(ot, ow, 2, 1, 1, 1, 1, 0, 0, 0);
+   }
 
    mw = 320;
    mh = (320 * zone->h) / zone->w;
@@ -704,6 +734,12 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
 			    _cb_gradient, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
+   if (ecore_file_download_protocol_available("http://"))
+   {
+      ow = e_widget_button_add(evas, _("Online..."), "enlightenment/website",
+			       _cb_web, cfdata, NULL);
+      e_widget_table_object_append(ot, ow, 2, 1, 1, 1, 1, 0, 0, 0);
+   }
 
    mw = 320;
    mh = (320 * zone->h) / zone->w;
