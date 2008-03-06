@@ -1353,6 +1353,13 @@ e_border_raise_latest_set(E_Border *bd)
 EAPI void
 e_border_focus_set_with_pointer(E_Border *bd)
 {
+   /* note: this is here as it seems there are enough apps that do not even
+    * expect us to emulate a look of focus but not actually set x input
+    * focus as we do - so simply abort any focuse set on such windows */
+   /* be strict about accepting focus hint */
+//   printf(" 2accept:%i take:%i\n", bd->client.icccm.accepts_focus, bd->client.icccm.take_focus);
+   if (!bd->client.icccm.accepts_focus) return;
+   
    /* Try to grab the pointer to make sure it's not "in use" */
    if (!ecore_x_pointer_grab(bd->zone->container->win))
      return;
@@ -1381,7 +1388,14 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   //printf("e_border_focus_set(%p, %i %i);\n", bd, focus, set);
+   /* note: this is here as it seems there are enough apps that do not even
+    * expect us to emulate a look of focus but not actually set x input
+    * focus as we do - so simply abort any focuse set on such windows */
+   /* be strict about accepting focus hint */
+//   printf("e_border_focus_set(%p, %s, %i %i);\n", bd, bd->client.icccm.name, focus, set);
+//   printf(" accept:%i take:%i\n", bd->client.icccm.accepts_focus, bd->client.icccm.take_focus);
+   if (!bd->client.icccm.accepts_focus) return;
+   
    if ((bd->modal) && (bd->modal != bd))
      {
 	e_border_focus_set(bd->modal, focus, set);
