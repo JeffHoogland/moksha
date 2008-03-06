@@ -127,8 +127,29 @@ e_fm2_hal_volume_add(E_Volume *v)
 	  v->mount_point, 
 	  v->parent);
 
-   if (!v->mount_point)
-     v->mount_point = e_fm2_hal_volume_mountpoint_get(v);
+   if ((!v->mount_point) || (v->mount_point[0] == 0))
+     {
+	if (v->mount_point) free(v->mount_point);
+	v->mount_point = e_fm2_hal_volume_mountpoint_get(v);
+	if ((!v->mount_point) || (v->mount_point[0] == 0))
+	  {
+	     char buf[PATH_MAX];
+	     char *id;
+	     
+	     if (v->mount_point) free(v->mount_point);
+	     id = "disk";
+	     if ((v->uuid) && (v->uuid[0])) id = v->uuid;
+	     if (ecore_file_is_dir("/media"))
+	       snprintf(buf, sizeof(buf), "/media/%s", id);
+	     else if (ecore_file_is_dir("/mnt"))
+	       snprintf(buf, sizeof(buf), "/mnt/%s", id);
+	     else if (ecore_file_is_dir("/tmp"))
+	       snprintf(buf, sizeof(buf), "/tmp/%s", id);
+	     else
+	       snprintf(buf, sizeof(buf), "");
+	     v->mount_point = strdup(buf);
+	  }
+     }
 
    if ((s = e_fm2_hal_storage_find(v->parent)))
      {
@@ -198,25 +219,26 @@ _e_fm2_volume_write(E_Volume *v)
 	  }
 
 	/* Choose the label */
-	if (v->label)
+	if ((v->label) && (v->label[0]))
 	  snprintf(label, sizeof(label), "%s", v->label);
-	else if (v->partition_label)
+	else if ((v->partition_label) && (v->partition_label[0]))
 	  snprintf(label, sizeof(label) - 1, "%s", v->partition_label);
-	else if (v->storage->vendor && v->storage->model)
+	else if (((v->storage->vendor) && (v->storage->vendor[0])) && 
+		 ((v->storage->model) && (v->storage->model[0])))
 	  {
 	     if (size[0] != '\0')
 	       snprintf(label, sizeof(label) - 1, "%s %s - %s", v->storage->vendor, v->storage->model, size);
 	     else
 	       snprintf(label, sizeof(label) - 1, "%s %s", v->storage->vendor, v->storage->model);
 	  }
-	else if (v->storage->model)
+	else if ((v->storage->model) && (v->storage->model[0]))
 	  {
 	     if (size[0] != '\0')
 	       snprintf(label, sizeof(label) - 1, "%s - %s", v->storage->model, size);
 	     else
 	       snprintf(label, sizeof(label) - 1, "%s", v->storage->model);
 	  }
-	else if (v->storage->vendor)
+	else if ((v->storage->vendor) && (v->storage->vendor[0]))
 	  {
 	     if (size[0] != '\0')
 	       snprintf(label, sizeof(label) - 1, "%s - %s", v->storage->vendor, size);
@@ -416,7 +438,7 @@ e_fm2_hal_mount(E_Volume *v,
 
    v->mounts = evas_list_prepend(v->mounts, m);
 
-   printf("BEGIN MOUNT %p %s\n", m, v->mount_point);
+   printf("BEGIN MOUNT %p '%s'\n", m, v->mount_point);
    
    if (!v->mounted)
      {
@@ -453,7 +475,7 @@ _e_fm2_hal_mount_ok(E_Fm2_Mount *m)
 	m->timeout = NULL;
      }
    if (m->mount_ok) m->mount_ok(m->data);
-   printf("MOUNT OK %s\n", m->mount_point);
+   printf("MOUNT OK '%s'\n", m->mount_point);
 }
 
 static int
