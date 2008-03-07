@@ -764,9 +764,10 @@ e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *
    gcc->name = evas_stringshare_add(name);
    gcc->gadcon = gc;
    gcc->o_base = base_obj;
+   if (gc->clients)
+     gcc->id = E_GADCON_CLIENT(evas_list_data(evas_list_last(gc->clients)))->id + 1;
    gc->clients = evas_list_append(gc->clients, gcc);
    /* This must only be unique during runtime */
-   gcc->id = E_GADCON_CLIENT(evas_list_last(gc->clients))->id + 1;
    if (gcc->o_base)
      evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_DEL,
 				    _e_gadcon_client_del_hook, gcc);

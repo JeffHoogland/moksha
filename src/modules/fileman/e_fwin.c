@@ -443,12 +443,6 @@ static void
 _e_fwin_free(E_Fwin *fwin)
 {
    if (!fwin) return; //safety
-   if (fwin->fad)
-     {
-	e_object_del(E_OBJECT(fwin->fad->dia));
-	fwin->fad = NULL;
-     }
-   if (fwin->win) e_object_del(E_OBJECT(fwin->win));
    if (fwin->fm_obj) evas_object_del(fwin->fm_obj);
    if (fwin->tbar) e_object_del(E_OBJECT(fwin->tbar));
    if (fwin->scrollframe_obj) evas_object_del(fwin->scrollframe_obj);
@@ -469,6 +463,12 @@ _e_fwin_free(E_Fwin *fwin)
    if (fwin->overlay_file) evas_stringshare_del(fwin->overlay_file);
    if (fwin->scrollframe_file) evas_stringshare_del(fwin->scrollframe_file);
    if (fwin->theme_file) evas_stringshare_del(fwin->theme_file);
+   if (fwin->fad)
+     {
+	e_object_del(E_OBJECT(fwin->fad->dia));
+	fwin->fad = NULL;
+     }
+   if (fwin->win) e_object_del(E_OBJECT(fwin->win));
    free(fwin);
 }
 

@@ -5978,6 +5978,7 @@ _e_fm2_smart_del(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
 
+   _e_fm2_client_monitor_list_end(obj);
    if (sd->realpath) _e_fm2_client_monitor_del(sd->id, sd->realpath);
    _e_fm2_live_process_end(obj);
    _e_fm2_queue_free(obj);
