@@ -419,6 +419,14 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 		       bd->client.e.fetch.state = 1;
 		    }
 	       }
+	     /* loop to check for qtopia atoms */
+	     for (i = 0; i < at_num; i++)
+	       {
+		  if (atoms[i] == _QTOPIA_SOFT_MENU)
+		    bd->client.qtopia.fetch.soft_menu = 1;
+		  else if (atoms[i] == _QTOPIA_SOFT_MENUS)
+		    bd->client.qtopia.fetch.soft_menus = 1;
+	       }
 	     free(atoms);
 	  }
      }
@@ -3973,6 +3981,16 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
 	bd->client.netwm.fetch.icon = 1;
 	bd->changed = 1;
      }
+   else if (e->atom == _QTOPIA_SOFT_MENU)
+     {
+	bd->client.qtopia.fetch.soft_menu = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == _QTOPIA_SOFT_MENUS)
+     {
+	bd->client.qtopia.fetch.soft_menus = 1;
+	bd->changed = 1;
+     }
    /*
    else if (e->atom == ECORE_X_ATOM_NET_WM_USER_TIME)
      {
@@ -5454,6 +5472,18 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->client.netwm.fetch.strut = 0;
      }
+   if (bd->client.qtopia.fetch.soft_menu)
+     {
+	e_hints_window_qtopia_soft_menu_get(bd);
+	bd->client.qtopia.fetch.soft_menu = 0;
+	rem_change = 1;
+     }
+   if (bd->client.qtopia.fetch.soft_menus)
+     {
+	e_hints_window_qtopia_soft_menus_get(bd);
+	bd->client.qtopia.fetch.soft_menus = 0;
+	rem_change = 1;
+     }
    if (bd->changes.shape)
      {
 	Ecore_X_Rectangle *rects;
@@ -6842,6 +6872,7 @@ _e_border_eval(E_Border *bd)
 	e_object_ref(E_OBJECT(bd));
 	ecore_event_add(E_EVENT_BORDER_PROPERTY, event, _e_border_event_border_property_free, NULL);
      }
+   _e_border_hook_call(E_BORDER_HOOK_EVAL_END, bd);
 }
 
 static void
