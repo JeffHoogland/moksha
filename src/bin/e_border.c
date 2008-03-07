@@ -3266,6 +3266,8 @@ _e_border_free(E_Border *bd)
 	  free(bd->client.netwm.icons[i].data);
 	free(bd->client.netwm.icons);
      }
+   if (bd->client.netwm.extra_types)
+     free(bd->client.netwm.extra_types);
    if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
    if (bd->bordername) evas_stringshare_del(bd->bordername);
    if (bd->client.icccm.title) free(bd->client.icccm.title);
@@ -5054,6 +5056,7 @@ _e_border_eval(E_Border *bd)
    int rem_change = 0;
    int send_event = 1;
    
+   _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_FETCH, bd);
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.client_leader)
      {
@@ -5812,6 +5815,7 @@ _e_border_eval(E_Border *bd)
      }
 
    _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_FETCH, bd);
+   _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_BORDER_ASSIGN, bd);
    
    if ((bd->client.border.changed) && (!bd->shaded) &&
        (!(((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN))))
@@ -5989,6 +5993,9 @@ _e_border_eval(E_Border *bd)
 	  ecore_x_window_show(bd->client.win);
 	bd->need_reparent = 0;
      }
+   
+   _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_BORDER_ASSIGN, bd);
+   _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_NEW_BORDER, bd);
    
    if (bd->new_client)
      {
@@ -6209,6 +6216,8 @@ _e_border_eval(E_Border *bd)
 	       e_border_zone_set(bd, zone);
 	  }
      }
+   
+   _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_NEW_BORDER, bd);
    
    /* effect changes to the window border itself */
    if ((bd->changes.shading))
