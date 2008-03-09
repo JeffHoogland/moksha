@@ -3,14 +3,15 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
-DEB_FIXPERMS_EXCLUDE := enlightenment_sys freqset tempget
+DEB_FIXPERMS_EXCLUDE := enlightenment_sys freqset tempget batget
 
 install/enlightenment::
 	mkdir debian/enlightenment/etc
 	mv debian/tmp/usr/etc/enlightenment debian/enlightenment/etc/
 	find debian/tmp/usr/lib/enlightenment/modules/cpufreq/ -name 'freqset' -exec chmod 4755 {} \;
 	find debian/tmp/usr/lib/enlightenment/modules/temperature/ -name 'tempget' -exec chmod 4755 {} \;
-	chmod 4511 debian/tmp/usr/bin/enlightenment_sys
+	find debian/tmp/usr/lib/enlightenment/modules/temperature/ -name 'batget' -exec chmod 4755 {} \;
+	chmod 4555 debian/tmp/usr/bin/enlightenment_sys
 
 clean::
 	./autogen.sh --prefix=/usr

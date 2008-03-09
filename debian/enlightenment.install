@@ -5,6 +5,7 @@ debian/tmp/usr/lib/enlightenment/modules/*/*.desktop
 debian/tmp/usr/lib/enlightenment/modules/*/*.edj
 debian/tmp/usr/lib/enlightenment/modules/*/*/freqset
 debian/tmp/usr/lib/enlightenment/modules/*/*/tempget
+debian/tmp/usr/lib/enlightenment/modules/*/*/batget
 debian/tmp/usr/lib/enlightenment/preload/*.so
 debian/tmp/usr/share/enlightenment
 debian/tmp/usr/share/locale
