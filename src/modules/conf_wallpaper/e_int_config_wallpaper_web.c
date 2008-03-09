@@ -8,12 +8,16 @@
 #include "e_mod_main.h"
 #define D(x)  do {printf("### DBG line %d ### ", __LINE__); printf x; fflush(stdout);} while (0)
 
+#define	MAGIC_IMPORT	0x427781cb
+
 typedef struct _Import Import;
 
 struct _Import {
-   E_Config_Dialog *parent;
+   int			magic;
+
+   E_Config_Dialog	*parent;
    E_Config_Dialog_Data *cfdata;
-   E_Dialog *dia;
+   E_Dialog		*dia;
 };
 
 struct _E_Config_Dialog_Data 
@@ -73,6 +77,8 @@ e_int_config_wallpaper_web (E_Config_Dialog *parent)
    if (!import) 
       return NULL;
 
+   import->magic = MAGIC_IMPORT;
+
    dia = e_dialog_new (parent->con, "E", "_wallpaper_web_dialog");
    if (!dia) 
    {
@@ -89,6 +95,8 @@ e_int_config_wallpaper_web (E_Config_Dialog *parent)
    cfdata = E_NEW (E_Config_Dialog_Data, 1);
 
    ecore_con_url_init ();
+   ecore_file_download_init ();
+
    cfdata->ecu = ecore_con_url_new ("http://fake.url");
 
    cfdata->ready_for_edj = 0;
@@ -206,6 +214,7 @@ e_int_config_wallpaper_web_del (E_Dialog *dia)
    {
       ecore_event_handler_del (cfdata->hcomplete);
    }
+   ecore_file_download_shutdown();
    ecore_con_url_shutdown ();
 
    if (cfdata->tmpdir)
@@ -233,8 +242,13 @@ _feed_complete (void *data, int type, void *event)
 
    euc = (Ecore_Con_Event_Url_Complete *)event;
    import = data;
+   if (import->magic != MAGIC_IMPORT) return 1;
+
    cfdata = import->cfdata;
+   if (cfdata->ecu != euc->url_con) return 1;
+
    fclose (cfdata->feed);
+   cfdata->feed = NULL;
    ecore_event_handler_del (cfdata->hdata);
    ecore_event_handler_del (cfdata->hcomplete);
    cfdata->hdata = NULL;
@@ -262,7 +276,12 @@ _feed_data (void *data, int type, void *event)
 
    eud = (Ecore_Con_Event_Url_Data *)event;
    import = data;
+   if (import->magic != MAGIC_IMPORT) return 1;
+
    cfdata = import->cfdata;
+
+   if (cfdata->ecu != eud->url_con) return 1;
+
    fwrite (eud->data, sizeof(unsigned char), eud->size, cfdata->feed);
    return 0;
 }
@@ -597,6 +616,10 @@ _get_feed (char *url, void *data)
    cfdata->tmpdir = mkdtemp (strdup (tmpdir_tpl));
 
    ecore_con_url_url_set (cfdata->ecu, url);
+   ecore_file_download_abort_all ();
+   if (cfdata->hdata) ecore_event_handler_del (cfdata->hdata);
+   if (cfdata->hcomplete) ecore_event_handler_del (cfdata->hcomplete);
+   if (cfdata->feed) fclose (cfdata->feed);
 
    cfdata->hdata = ecore_event_handler_add (ECORE_CON_EVENT_URL_DATA,
                                             _feed_data, 

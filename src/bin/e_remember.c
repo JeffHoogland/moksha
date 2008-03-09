@@ -288,6 +288,8 @@ e_remember_update(E_Remember *rem, E_Border *bd)
      rem->prop.shaded = 50 + bd->shade.dir;
    
    rem->prop.skip_winlist = bd->user_skip_winlist;
+   rem->prop.skip_pager   = bd->client.netwm.state.skip_pager;
+   rem->prop.skip_taskbar = bd->client.netwm.state.skip_taskbar;
    rem->prop.icon_preference = bd->icon_preference;
 
    e_desk_xy_get(bd->desk, &rem->prop.desk_x, &rem->prop.desk_y);

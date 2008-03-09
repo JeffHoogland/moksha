@@ -5204,7 +5204,6 @@ _e_border_eval(E_Border *bd)
 
 	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
 	  {
-	     /* TODO: Make this user options */
 	     if (!bd->client.netwm.state.skip_pager)
 	       {
 		  bd->client.netwm.state.skip_pager = 1;
@@ -5837,6 +5836,10 @@ _e_border_eval(E_Border *bd)
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_SKIP_WINLIST)
 	       bd->user_skip_winlist = rem->prop.skip_winlist;
+	     if (rem->apply & E_REMEMBER_APPLY_SKIP_PAGER)
+	       bd->client.netwm.state.skip_pager = rem->prop.skip_pager;
+	     if (rem->apply & E_REMEMBER_APPLY_SKIP_TASKBAR)
+	       bd->client.netwm.state.skip_taskbar = rem->prop.skip_taskbar;
 	     if (rem->apply & E_REMEMBER_APPLY_ICON_PREF)
 	       bd->icon_preference = rem->prop.icon_preference;
 	     if (rem->apply & E_REMEMBER_SET_FOCUS_ON_START)
