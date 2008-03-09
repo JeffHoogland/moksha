@@ -56,6 +56,11 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    E_Gadcon_Client *gcc;
    Instance *inst;
    
+   battery_config->full = -2;
+   battery_config->time_left = -2;
+   battery_config->have_battery = -2;
+   battery_config->have_power = -2;
+   
    inst = E_NEW(Instance, 1);
    
    o = edje_object_add(gc->evas);
