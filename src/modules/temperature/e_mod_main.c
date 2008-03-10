@@ -91,16 +91,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->o_temp = o;
    inst->module = temperature_config->module;
    inst->have_temp = -1;
-   snprintf(buf, sizeof(buf),
-	    "%s/%s/tempget %i \"%s\" %i", 
-	    e_module_dir_get(temperature_config->module), MODULE_ARCH, 
-	    inst->sensor_type,
-	    (inst->sensor_name != NULL ? inst->sensor_name : "-null-"),
-	    inst->poll_interval);
-   inst->tempget_exe = ecore_exe_pipe_run(buf, 
-					  ECORE_EXE_PIPE_READ | 
-					  ECORE_EXE_PIPE_READ_LINE_BUFFERED,
-					  inst);
+
    inst->tempget_data_handler = 
      ecore_event_handler_add(ECORE_EXE_EVENT_DATA,
 			     _temperature_cb_exe_data,
@@ -109,6 +100,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
      ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
 			     _temperature_cb_exe_del,
 			     inst);
+   
+   temperature_face_update_config(inst);
    
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _temperature_face_cb_mouse_down, inst);
@@ -390,10 +383,13 @@ void
 temperature_face_update_config(Config_Face *inst)
 {
    char buf[PATH_MAX];
-   
-   ecore_exe_terminate(inst->tempget_exe);
-   ecore_exe_free(inst->tempget_exe);
-   inst->tempget_exe = NULL;
+
+   if (inst->tempget_exe)
+     {
+	ecore_exe_terminate(inst->tempget_exe);
+	ecore_exe_free(inst->tempget_exe);
+	inst->tempget_exe = NULL;
+     }
    snprintf(buf, sizeof(buf),
 	    "%s/%s/tempget %i \"%s\" %i", 
 	    e_module_dir_get(temperature_config->module), MODULE_ARCH, 
@@ -402,7 +398,8 @@ temperature_face_update_config(Config_Face *inst)
 	    inst->poll_interval);
    inst->tempget_exe = ecore_exe_pipe_run(buf, 
 					  ECORE_EXE_PIPE_READ | 
-					  ECORE_EXE_PIPE_READ_LINE_BUFFERED,
+					  ECORE_EXE_PIPE_READ_LINE_BUFFERED |
+					  ECORE_EXE_NOT_LEADER,
 					  inst);
 }
 

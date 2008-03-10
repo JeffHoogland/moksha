@@ -218,7 +218,8 @@ _battery_config_updated(void)
 	    battery_config->poll_interval);
    battery_config->batget_exe = ecore_exe_pipe_run(buf,
 						   ECORE_EXE_PIPE_READ |
-						   ECORE_EXE_PIPE_READ_LINE_BUFFERED,
+						   ECORE_EXE_PIPE_READ_LINE_BUFFERED |
+						   ECORE_EXE_NOT_LEADER,
 						   NULL);
 }
 
