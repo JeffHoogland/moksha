@@ -112,7 +112,9 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    o = e_widget_list_add(evas, 0, 1);
    cfdata->o = o;
    cfdata->thumbs = ecore_list_new();
+   ecore_list_free_cb_set(cfdata->thumbs, free);
    cfdata->medias = ecore_list_new();
+   ecore_list_free_cb_set(cfdata->medias, free);
    of = e_widget_framelist_add(evas, "Sources", 1);
    ol = e_widget_ilist_add(evas, 24, 24, &cfdata->ol_val);
    cfdata->ol = ol;
@@ -218,7 +220,10 @@ e_int_config_wallpaper_web_del(E_Dialog *dia)
 	     ecore_file_recursive_rm(cfdata->tmpdir);
 	     ecore_file_rmdir(cfdata->tmpdir);
 	  }
+	free(cfdata->tmpdir);
      }
+   ecore_list_destroy(cfdata->thumbs);
+   ecore_list_destroy(cfdata->medias);
 
    e_int_config_wallpaper_web_done(import->parent);
    E_FREE(import->cfdata);
@@ -308,13 +313,9 @@ _parse_feed(void *data)
    Import *import;
    E_Config_Dialog_Data *cfdata;
    FILE *fh;
-   char instr[255];
+   char instr[1024];
    char *edj;
    char *img;
-   char *tmpstr;
-   char *tinstr;
-   char *timg;
-   char *title;
 
    int state = -1;
 
@@ -323,7 +324,7 @@ _parse_feed(void *data)
 
    cfdata->pending_downloads = 0;
    fh = fopen("/tmp/feed.xml", "r");
-   while (fgets(instr, 255, fh) != NULL)
+   while (fgets(instr, sizeof(instr), fh) != NULL)
      {
 	if (strstr(instr, "<rss version") != NULL)
 	  state = 0;
@@ -337,40 +338,42 @@ _parse_feed(void *data)
 
 	if ((strstr(instr, "<link>") !=  NULL) && (state == 1))
 	  {
-	     tinstr = strdup(instr); 
-	     edj = strtok(tinstr, ">");
-	     edj = strtok(NULL, "<");
-	     tmpstr = strrchr(ecore_file_file_get(edj), '.');
-	     if (strstr(tmpstr, "edj") != NULL)
-	       state = 2;
+	     char *p;
+
+	     edj = strchr(instr, ">");
+	     edj++;
+	     p = strchr(edj, "<");
+	     *p = 0;
+	     p = strrchr(ecore_file_file_get(edj), '.');
+	     if (!strcmp(p, ".edj"))
+	       {
+		  edj = strdup(edj);
+		  state = 2;
+	       }
 	  }
 
 	if ((strstr(instr, "<enclosure") != NULL) && (state == 2))
 	  {
-	     tinstr = strdup(instr); 
-	     img = strtok(tinstr, "\"");
-	     img = strtok(NULL, "\"");
-	     strcat(img, "\n");
+	     char *p;
+
+	     img = strstr(instr, "url=");
+	     img += 5;
+	     p = strchr(img, '"');
+	     p = 0;
+	     img = strdup(img);
 	     state = 3;
 	  }
 
 	if ((strstr(instr, "</item>") != NULL) && (state == 3))
 	  {
-	     timg = strdup(img);
-	     timg[strlen(timg) - 1] = 0;
-	     ecore_list_append(cfdata->thumbs, strdup(timg));
-	     ecore_list_append(cfdata->medias, strdup(edj));
+	     ecore_list_append(cfdata->thumbs, img);
+	     ecore_list_append(cfdata->medias, edj);
 	     state = 0;
 	  }
-   }
-
-   if (timg)
-     free(timg);
-   if (tinstr)
-     free(tinstr);
+     }
    fclose(fh);
 
-   if ((state != -1) && (state == 0))
+   if (state == 0)
      {
 	asprintf(&title, _("[%s] Parsing feed... DONE!"), cfdata->source);
 	e_dialog_title_set(import->dia, title);
@@ -454,10 +457,7 @@ _file_click_cb(void *data, Evas_Object *obj, void *ev_info)
 static int
 _list_find(const char *str1, const char *str2)
 {
-   char *tmp;
-
-   tmp = strdup(str1);
-   return strcmp(ecore_file_file_get(tmp), str2);
+   return strcmp(ecore_file_file_get(str1), str2);
 }
 
 static void 
@@ -477,9 +477,7 @@ _dia_ok_cb(void *data, E_Dialog *dia)
    cfdata = import->cfdata;
    sels = e_fm2_selected_list_get(cfdata->ofm);
    if (sels)
-     {
-	_download_media(import);
-     }
+     _download_media(import);
    else
      e_int_config_wallpaper_web_del(dia);
 }
@@ -491,7 +489,6 @@ _download_media(Import *import)
    E_Config_Dialog_Data *cfdata;
    int num = 0;
    const char *file;
-   const char *homedir;
    char *buf;
    char *title;
 
@@ -500,8 +497,7 @@ _download_media(Import *import)
    
    cfdata->pending_downloads = 1;
    file = ecore_file_file_get(cfdata->edj);
-   homedir = e_user_homedir_get();
-   asprintf(&buf, "%s/.e/e/backgrounds/%s", homedir, file);
+   asprintf(&buf, "%s/.e/e/backgrounds/%s", e_user_homedir_get(), file);
    asprintf(&title, _("[%s] Downloading of edje file..."), cfdata->source);
    e_dialog_title_set(i->dia, title);
    ecore_file_download(cfdata->edj, buf,
@@ -597,9 +593,7 @@ _get_feed(char *url, void *data)
    import = data;
    cfdata = import->cfdata;
 
-   tpl = strdup(TEMPLATE);
-   cfdata->tmpdir = mkdtemp(tpl);
-   free(tpl);
+   cfdata->tmpdir = mkdtemp(strdup(TEMPLATE));
 
    ecore_con_url_url_set(cfdata->ecu, url);
    ecore_file_download_abort_all();
