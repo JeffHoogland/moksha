@@ -122,7 +122,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_clear(cfdata->o_list);
    e_widget_ilist_go(cfdata->o_list);
    
-   cur_profile = e_config_profile_get ();
+   cur_profile = e_config_profile_get();
    for (l = e_config_profile_list(); l; l = l->next) 
      {
 	Evas_Object *ob;
@@ -153,7 +153,7 @@ _ilist_cb_selected(void *data)
    cfdata = data;
    if (!cfdata) return;
    
-   cur_profile = e_config_profile_get ();
+   cur_profile = e_config_profile_get();
    if (!strcmp (cur_profile, cfdata->sel_profile))
      {
    e_widget_disabled_set(cfdata->o_select, 1);
@@ -175,7 +175,7 @@ _cb_add(void *data, void *data2)
    if (!cfdata) return;
 
    if (cfdata->dia_new_profile)
-     e_win_raise (cfdata->dia_new_profile->win);
+     e_win_raise(cfdata->dia_new_profile->win);
    else 
      cfdata->dia_new_profile = _dia_new_profile(cfdata);
 }
@@ -189,10 +189,10 @@ _cb_select(void *data, void *data2)
    cfdata = data;
    if (!cfdata) return;
 
-   e_config_save_flush ();
-   e_config_profile_set (cfdata->sel_profile);
-   e_config_profile_save ();
-   e_config_save_block_set (1);
+   e_config_save_flush();
+   e_config_profile_set(cfdata->sel_profile);
+   e_config_profile_save();
+   e_config_save_block_set(1);
 
    a = e_action_find("restart");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
@@ -225,7 +225,7 @@ _cb_dialog_yes(void *data)
    d = data;
    if (!data) return;
 
-   e_config_profile_del (d->cfdata->sel_profile);
+   e_config_profile_del(d->cfdata->sel_profile);
    e_config_save_queue();
    _ilist_fill(d->cfdata);
 }
@@ -316,17 +316,17 @@ _new_profile_cb_ok(void *data, E_Dialog *dia)
    cfdata = data;
    if (!cfdata) return;
    
-   snprintf (cur_profile, sizeof (cur_profile), "%s", e_config_profile_get ());
+   snprintf(cur_profile, sizeof (cur_profile), "%s", e_config_profile_get());
 
    if (cfdata->new_profile)
      {
-   e_config_profile_add(cfdata->new_profile);
-   if (cfdata->new_profile_type)
-     {
-   e_config_profile_set (cfdata->new_profile);
-   e_config_save();
-   e_config_profile_set (cur_profile);
-     }
+	e_config_profile_add(cfdata->new_profile);
+	if (cfdata->new_profile_type)
+	  {
+	     e_config_profile_set(cfdata->new_profile);
+	     e_config_save();
+	     e_config_profile_set(cur_profile);
+	  }
      }
 
    e_object_unref(E_OBJECT(dia));
