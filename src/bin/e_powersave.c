@@ -96,6 +96,8 @@ e_powersave_mode_set(E_Powersave_Mode mode)
 {
    if (mode < powersave_mode_min) mode = powersave_mode_min;
    else if (mode > powersave_mode_max) mode = powersave_mode_max;
+   if (powersave_mode == mode) return;
+   printf("CHANGE PW SAVE MODE TO %i / %i\n", (int)mode, E_POWERSAVE_MODE_EXTREME);
    powersave_mode = mode;
    _e_powersave_mode_eval();
 }

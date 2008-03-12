@@ -54,7 +54,7 @@ EAPI E_Action   *e_action_add(const char *name);
 EAPI void	e_action_del(const char *name);
 EAPI E_Action   *e_action_find(const char *name);
 
-EAPI void       e_action_predef_name_set(const char *act_grp, const char *act_name, const char *act_cmd, const char *act_params, const char *param_example, int editable); 
+EAPI void       e_action_predef_name_set(const char *act_grp, const char *act_name, const char *act_cmd, const char *act_params, const char *param_example, int editable);
 EAPI void       e_action_predef_name_del(const char *act_grp, const char *act_name);
 EAPI void       e_action_predef_name_all_del(void);
 EAPI Evas_List  *e_action_groups_get(void);

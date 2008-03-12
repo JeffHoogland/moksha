@@ -490,6 +490,7 @@ _e_pointer_active_handle(E_Pointer *p)
 	  edje_object_signal_emit(p->pointer_object, "e,state,mouse,active", "e");
 	p->idle = 0;
      }
+   if (e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM) return;
    /* and scedule a pre-idle check in 1 second if no more events happen */
    p->idle_timer = ecore_timer_add(1.0, _e_pointer_cb_idle_timer_pre, p);
 }
@@ -506,8 +507,11 @@ _e_pointer_cb_mouse_down(void *data, int type, void *event)
      {
 	p = l->data;
 	_e_pointer_active_handle(p);
-	if (p->pointer_object)
-	  edje_object_signal_emit(p->pointer_object, "e,action,mouse,down", "e");
+	if (e_powersave_mode_get() < E_POWERSAVE_MODE_EXTREME)
+	  {
+	     if (p->pointer_object)
+	       edje_object_signal_emit(p->pointer_object, "e,action,mouse,down", "e");
+	  }
      }
    return 1;
 }
@@ -524,8 +528,11 @@ _e_pointer_cb_mouse_up(void *data, int type, void *event)
      {
 	p = l->data;
 	_e_pointer_active_handle(p);
-	if (p->pointer_object)
-	  edje_object_signal_emit(p->pointer_object, "e,action,mouse,up", "e");
+	if (e_powersave_mode_get() < E_POWERSAVE_MODE_EXTREME)
+	  {
+	     if (p->pointer_object)
+	       edje_object_signal_emit(p->pointer_object, "e,action,mouse,up", "e");
+	  }
      }
    return 1;
 }
@@ -542,8 +549,11 @@ _e_pointer_cb_mouse_move(void *data, int type, void *event)
      {
 	p = l->data;
 	_e_pointer_active_handle(p);
-	if (p->pointer_object)
-	  edje_object_signal_emit(p->pointer_object, "e,action,mouse,move", "e");
+	if (e_powersave_mode_get() < E_POWERSAVE_MODE_HIGH)
+	  {
+	     if (p->pointer_object)
+	       edje_object_signal_emit(p->pointer_object, "e,action,mouse,move", "e");
+	  }
      }
    return 1;
 }
@@ -560,8 +570,11 @@ _e_pointer_cb_mouse_wheel(void *data, int type, void *event)
      {
 	p = l->data;
 	_e_pointer_active_handle(p);
-	if (p->pointer_object)
-	  edje_object_signal_emit(p->pointer_object, "e,action,mouse,wheel", "e");
+	if (e_powersave_mode_get() < E_POWERSAVE_MODE_EXTREME)
+	  {
+	     if (p->pointer_object)
+	       edje_object_signal_emit(p->pointer_object, "e,action,mouse,wheel", "e");
+	  }
      }
    return 1;
 }
@@ -586,6 +599,14 @@ _e_pointer_cb_idle_timer_wait(void *data)
    E_Pointer *p;
 
    p = data;
+   if (e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM)
+     {
+	if (p->idle_poller)
+	  ecore_poller_del(p->idle_poller);
+	p->idle_poller = NULL;
+	p->idle_timer = NULL;
+	return 0;
+     }
    if (!p->idle_poller)
      p->idle_poller = ecore_poller_add(ECORE_POLLER_CORE, 64,
 				       _e_pointer_cb_idle_poller, p);
@@ -600,6 +621,11 @@ _e_pointer_cb_idle_poller(void *data)
    int x, y;
    
    p = data;
+   if (e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM)
+     {
+	p->idle_poller = NULL;
+	return 0;
+     }
    /* check if pointer actually moved since the 1 second post-mouse move idle
     * pre-timer that fetches the position */
    ecore_x_pointer_xy_get(p->win, &x, &y);

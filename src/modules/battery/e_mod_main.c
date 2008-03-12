@@ -414,7 +414,20 @@ _battery_cb_exe_data(void *data, int type, void *event)
 				 edje_object_part_text_set(inst->o_battery, "e.text.time", buf);
 			      }
 			 }
+		       if (!have_battery)
+			 e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
+		       else
+			 {
+			    if ((have_power) || (full > 95))
+			      e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
+			    else if (full > 30)
+			      e_powersave_mode_set(E_POWERSAVE_MODE_HIGH);
+			    else
+			      e_powersave_mode_set(E_POWERSAVE_MODE_EXTREME);
+			 }
 		    }
+		  else
+		    e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
 		  battery_config->full = full;
 		  battery_config->time_left = time_left;
 		  battery_config->have_battery = have_battery;
