@@ -266,7 +266,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
      {
 	if (launch->launch_method) evas_stringshare_del(launch->launch_method);
 	if (launch->zone) e_object_unref(E_OBJECT(launch->zone));
-       	free(launch);
+      	free(launch);
      }
    return inst;
 }
@@ -290,12 +290,17 @@ _e_exec_cb_exit(void *data, int type, void *event)
    E_Exec_Instance *inst;
 
    ev = event;
+   printf("child exit...\n");
    if (!ev->exe) return 1;
+   if (ecore_exe_tag_get(ev->exe)) printf("  tag %s\n", ecore_exe_tag_get(ev->exe));
    if (!(ecore_exe_tag_get(ev->exe) && 
 	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/exec")))) return 1;
    inst = ecore_exe_data_get(ev->exe);
+   printf("  inst = %p\n", inst);
    if (!inst) return 1;
 
+   printf("  inst exec line -- '%s'\n", ecore_exe_cmd_get(inst->exe));
+   
    /* /bin/sh uses this if cmd not found */
    if ((ev->exited) &&
        ((ev->exit_code == 127) || (ev->exit_code == 255)))
@@ -331,14 +336,17 @@ _e_exec_cb_exit(void *data, int type, void *event)
 			     ecore_exe_event_data_get(ev->exe, ECORE_EXE_PIPE_ERROR),
 			     ecore_exe_event_data_get(ev->exe, ECORE_EXE_PIPE_READ));
      }
-   instances = evas_hash_find(e_exec_instances, inst->desktop->orig_path);
-   if (instances)
+   if (inst->desktop)
      {
-	instances = evas_list_remove(instances, inst);
+	instances = evas_hash_find(e_exec_instances, inst->desktop->orig_path);
 	if (instances)
-	  evas_hash_modify(e_exec_instances, inst->desktop->orig_path, instances);
-	else
-	  e_exec_instances = evas_hash_del(e_exec_instances, inst->desktop->orig_path, NULL);
+	  {
+	     instances = evas_list_remove(instances, inst);
+	     if (instances)
+	       evas_hash_modify(e_exec_instances, inst->desktop->orig_path, instances);
+	     else
+	       e_exec_instances = evas_hash_del(e_exec_instances, inst->desktop->orig_path, NULL);
+	  }
      }
    e_exec_start_pending = evas_list_remove(e_exec_start_pending, inst->desktop);
    if (inst->expire_timer) ecore_timer_del(inst->expire_timer);

@@ -1478,15 +1478,15 @@ ACT_FN_GO_KEY(menu_show)
 /***************************************************************************/
 ACT_FN_GO(exec)
 {
-   if (params)
+   E_Zone *zone;
+   
+   zone = _e_actions_zone_get(obj);
+   if (zone)
      {
-	Ecore_Exe *exe;
-
-	e_util_library_path_strip();
-	exe = ecore_exe_run(params, NULL);
-	e_util_library_path_restore();
-	e_exehist_add("action/exec", params);
-	if (exe) ecore_exe_free(exe);
+	if (params)
+	  {
+	     e_exec(zone, NULL, params, NULL, "action/exec");
+	  }
      }
 }
 
