@@ -12,8 +12,9 @@
 
 typedef struct _Import Import;
 
-struct _Import {
-   int			magic;
+struct _Import
+{
+   int			 magic;
 
    E_Config_Dialog	*parent;
    E_Config_Dialog_Data *cfdata;
@@ -41,7 +42,7 @@ struct _E_Config_Dialog_Data
    const char *source;
 };
 
-const char tmpdir_tpl[] = "/tmp/wallpXXXXXX";
+#define TEMPLATE "/tmp/wallpXXXXXX";
 
 static void _file_double_click_cb(void *data, Evas_Object *obj, void *ev_info);
 static void _file_click_cb(void *data, Evas_Object *obj, void *ev_info);
@@ -74,8 +75,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    E_Fm2_Config fmc;
 
    import = E_NEW(Import, 1);
-   if (!import) 
-      return NULL;
+   if (!import) return NULL;
 
    import->magic = MAGIC_IMPORT;
 
@@ -168,10 +168,10 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
                                   import);
 
    osfm = e_widget_scrollframe_pan_add(evas, ofm,
-                                     e_fm2_pan_set,
-                                     e_fm2_pan_get,
-                                     e_fm2_pan_max_get,
-                                     e_fm2_pan_child_size_get);
+                                       e_fm2_pan_set,
+                                       e_fm2_pan_get,
+                                       e_fm2_pan_max_get,
+                                       e_fm2_pan_child_size_get);
    cfdata->osfm = osfm;
    e_widget_list_object_append(cfdata->o, cfdata->osfm, 1, 1, 0.5);
    e_widget_min_size_set(osfm, 320, 320);
@@ -202,29 +202,23 @@ e_int_config_wallpaper_web_del(E_Dialog *dia)
    cfdata = import->cfdata;
 
    if (cfdata->pending_downloads == 1)
-   {
-      ecore_file_download_abort_all();
-   }
+     ecore_file_download_abort_all();
 
    if (cfdata->hdata)
-   {
-      ecore_event_handler_del(cfdata->hdata);
-   }
+     ecore_event_handler_del(cfdata->hdata);
    if (cfdata->hcomplete)
-   {
-      ecore_event_handler_del(cfdata->hcomplete);
-   }
+     ecore_event_handler_del(cfdata->hcomplete);
    ecore_file_download_shutdown();
    ecore_con_url_shutdown();
 
    if (cfdata->tmpdir)
-   {
-      if (ecore_file_is_dir(cfdata->tmpdir))
-      {
-         ecore_file_recursive_rm(cfdata->tmpdir);
-         ecore_file_rmdir(cfdata->tmpdir);
-      }
-   }
+     {
+	if (ecore_file_is_dir(cfdata->tmpdir))
+	  {
+	     ecore_file_recursive_rm(cfdata->tmpdir);
+	     ecore_file_rmdir(cfdata->tmpdir);
+	  }
+     }
 
    e_int_config_wallpaper_web_done(import->parent);
    E_FREE(import->cfdata);
@@ -253,17 +247,18 @@ _feed_complete(void *data, int type, void *event)
    ecore_event_handler_del(cfdata->hcomplete);
    cfdata->hdata = NULL;
    cfdata->hcomplete = NULL;
-   if (euc->status == 200) {
-      asprintf(&title, _("[%s] Getting feed... DONE!"), cfdata->source);
-      e_dialog_title_set(import->dia, title);
-      _parse_feed(data);
-      return 0;
-   }
+   if (euc->status == 200)
+     {
+	asprintf(&title, _("[%s] Getting feed... DONE!"), cfdata->source);
+	e_dialog_title_set(import->dia, title);
+	_parse_feed(data);
+	return 0;
+     }
    else
-   {
-      asprintf(&title, _("[%s] Getting feed... FAILED!"), cfdata->source);
-      e_dialog_title_set(import->dia, title);
-   }
+     {
+	asprintf(&title, _("[%s] Getting feed... FAILED!"), cfdata->source);
+	e_dialog_title_set(import->dia, title);
+     }
    return 0;
 }
 
@@ -295,16 +290,16 @@ _source_sel_cb(void *data)
    import = data;
    cfdata = import->cfdata;
    if ((cfdata->busy == 0) && (cfdata->pending_downloads == 0))
-   {
-      cfdata->source = e_widget_ilist_selected_label_get(cfdata->ol);
-      cfdata->busy = 1;
-      _reset(import);
-      _get_feed(cfdata->ol_val, import);
-   }
+     {
+	cfdata->source = e_widget_ilist_selected_label_get(cfdata->ol);
+	cfdata->busy = 1;
+	_reset(import);
+	_get_feed(cfdata->ol_val, import);
+     }
    else 
-   {
-      e_widget_ilist_unselect(cfdata->ol);
-   }
+     {
+	e_widget_ilist_unselect(cfdata->ol);
+     }
 }
 
 static void
@@ -329,67 +324,65 @@ _parse_feed(void *data)
    cfdata->pending_downloads = 0;
    fh = fopen("/tmp/feed.xml", "r");
    while (fgets(instr, 255, fh) != NULL)
-   {
-      if (strstr(instr, "<rss version") != NULL)
-      {
-         state = 0;
-      }
+     {
+	if (strstr(instr, "<rss version") != NULL)
+	  state = 0;
 
-      if ((strstr(instr, "<item>") != NULL) && (state == 0))
-      {
-         edj = NULL;
-         img = NULL;
-         state = 1;
-      }
+	if ((strstr(instr, "<item>") != NULL) && (state == 0))
+	  {
+	     edj = NULL;
+	     img = NULL;
+	     state = 1;
+	  }
 
-      if ((strstr(instr, "<link>") !=  NULL) && (state == 1))
-      {
-         tinstr = strdup(instr); 
-         edj = strtok(tinstr, ">");
-         edj = strtok(NULL, "<");
-         tmpstr = strrchr(ecore_file_file_get(edj), '.');
-         if (strstr(tmpstr, "edj") != NULL)
-            state = 2;
-      }
+	if ((strstr(instr, "<link>") !=  NULL) && (state == 1))
+	  {
+	     tinstr = strdup(instr); 
+	     edj = strtok(tinstr, ">");
+	     edj = strtok(NULL, "<");
+	     tmpstr = strrchr(ecore_file_file_get(edj), '.');
+	     if (strstr(tmpstr, "edj") != NULL)
+	       state = 2;
+	  }
 
-      if ((strstr(instr, "<enclosure") != NULL) && (state == 2))
-      {
-         tinstr = strdup(instr); 
-         img = strtok(tinstr, "\"");
-         img = strtok(NULL, "\"");
-         strcat(img, "\n");
-         state = 3;
-      }
+	if ((strstr(instr, "<enclosure") != NULL) && (state == 2))
+	  {
+	     tinstr = strdup(instr); 
+	     img = strtok(tinstr, "\"");
+	     img = strtok(NULL, "\"");
+	     strcat(img, "\n");
+	     state = 3;
+	  }
 
-      if ((strstr(instr, "</item>") != NULL) && (state == 3))
-      {
-         timg = strdup(img);
-         timg[strlen(timg) - 1] = 0;
-         ecore_list_append(cfdata->thumbs, strdup(timg));
-         ecore_list_append(cfdata->medias, strdup(edj));
-         state = 0;
-      }
+	if ((strstr(instr, "</item>") != NULL) && (state == 3))
+	  {
+	     timg = strdup(img);
+	     timg[strlen(timg) - 1] = 0;
+	     ecore_list_append(cfdata->thumbs, strdup(timg));
+	     ecore_list_append(cfdata->medias, strdup(edj));
+	     state = 0;
+	  }
    }
 
    if (timg)
-      free(timg);
+     free(timg);
    if (tinstr)
-      free(tinstr);
+     free(tinstr);
    fclose(fh);
 
    if ((state != -1) && (state == 0))
-   {
-      asprintf(&title, _("[%s] Parsing feed... DONE!"), cfdata->source);
-      e_dialog_title_set(import->dia, title);
-      e_fm2_path_set(cfdata->ofm, cfdata->tmpdir, "/");
-      _get_thumbs(import);
-   } 
+     {
+	asprintf(&title, _("[%s] Parsing feed... DONE!"), cfdata->source);
+	e_dialog_title_set(import->dia, title);
+	e_fm2_path_set(cfdata->ofm, cfdata->tmpdir, "/");
+	_get_thumbs(import);
+     } 
    else
-   {
-      asprintf(&title, _("[%s] Parsing feed... FAILED!"), cfdata->source);
-      cfdata->busy = 0;
-      e_dialog_title_set(import->dia, title);
-   }
+     {
+	asprintf(&title, _("[%s] Parsing feed... FAILED!"), cfdata->source);
+	cfdata->busy = 0;
+	e_dialog_title_set(import->dia, title);
+     }
 }
 
 static void
@@ -408,14 +401,10 @@ _get_thumbs(void *data)
    ecore_file_mkdir(dtmp);
    ecore_list_first_goto(cfdata->thumbs);
    while (src = ecore_list_next(cfdata->thumbs))
-   {
-      asprintf(&dest, "%s/%s", dtmp, ecore_file_file_get(src));
-      ecore_file_download(src,
-                          dest,
-                          _get_thumb_complete,
-                          NULL,
-                          import);
-   }
+     {
+	asprintf(&dest, "%s/%s", dtmp, ecore_file_file_get(src));
+	ecore_file_download(src, dest, _get_thumb_complete, NULL, import);
+     }
 }
 
 static void
@@ -454,13 +443,12 @@ _file_click_cb(void *data, Evas_Object *obj, void *ev_info)
    import = data;
    cfdata = import->cfdata;
    sels = e_fm2_selected_list_get(cfdata->ofm);
-   if (!sels)
-      return;
-   if (cfdata->ready_for_edj == 0)
-      return;
+   if (!sels) return;
+   if (cfdata->ready_for_edj == 0) return;
+
    icon_info = sels->data;
    if (ecore_list_find(cfdata->thumbs, ECORE_COMPARE_CB(_list_find), icon_info->file))
-      cfdata->edj = ecore_list_index_goto(cfdata->medias, ecore_list_index(cfdata->thumbs));
+     cfdata->edj = ecore_list_index_goto(cfdata->medias, ecore_list_index(cfdata->thumbs));
 }
 
 static int
@@ -489,12 +477,11 @@ _dia_ok_cb(void *data, E_Dialog *dia)
    cfdata = import->cfdata;
    sels = e_fm2_selected_list_get(cfdata->ofm);
    if (sels)
-   {
-      _download_media(import);
-      return;
-   }
-
-   e_int_config_wallpaper_web_del(dia);
+     {
+	_download_media(import);
+     }
+   else
+     e_int_config_wallpaper_web_del(dia);
 }
 
 static void 
@@ -550,32 +537,30 @@ _get_thumb_complete(void *data, const char *file, int status)
    import = data;
    cfdata = import->cfdata;
    if (got != ecore_list_count(cfdata->thumbs))
-   {
-      asprintf(&title,
-               _("[%s] Download %d images of %d"),
-               cfdata->source,
-               got,
-               ecore_list_index(cfdata->thumbs));
-      e_dialog_title_set(import->dia, title);
-      cfdata->ready_for_edj = 0;
-      asprintf(&dst, "%s/%s", cfdata->tmpdir, ecore_file_file_get(file));
-      ecore_file_mv(file, dst);
-      got++;
-   }
+     {
+	asprintf(&title, _("[%s] Download %d images of %d"),
+		 cfdata->source, got, ecore_list_index(cfdata->thumbs));
+	e_dialog_title_set(import->dia, title);
+	cfdata->ready_for_edj = 0;
+	asprintf(&dst, "%s/%s", cfdata->tmpdir, ecore_file_file_get(file));
+	ecore_file_mv(file, dst);
+	got++;
+     }
    else
-   {
-      got = 1;
-      cfdata->busy = 0;
-      cfdata->ready_for_edj = 1;
-      asprintf(&title, _("[%s] Choose an image from list"), cfdata->source);
-      e_dialog_title_set(import->dia, title);
-      e_dialog_button_disable_num_set(import->dia, 0, 0);
-      cfdata->pending_downloads = 0;
-   }
+     {
+	got = 1;
+	cfdata->busy = 0;
+	cfdata->ready_for_edj = 1;
+	asprintf(&title, _("[%s] Choose an image from list"), cfdata->source);
+	e_dialog_title_set(import->dia, title);
+	e_dialog_button_disable_num_set(import->dia, 0, 0);
+	cfdata->pending_downloads = 0;
+     }
 }
 
 int
-_download_media_progress_cb(void *data, const char *file, long int dltotal, long int dlnow, long int ultotal, long int ulnow)
+_download_media_progress_cb(void *data, const char *file, long int dltotal,
+			    long int dlnow, long int ultotal, long int ulnow)
 {
    Import *import;
    double status;
@@ -584,18 +569,16 @@ _download_media_progress_cb(void *data, const char *file, long int dltotal, long
 
    import = data;
 
-   if (dlnow == 0 || dltotal == 0)
-      return 0;
+   if ((dlnow == 0) || (dltotal == 0))
+     return 0;
 
    if (last)
-   {
-      status = (double) ((double) dlnow) / ((double) dltotal);
-      asprintf(&title,
-               _("[%s] Downloading of edje file... %d%% done"),
-               import->cfdata->source,
-               (int) (status * 100.0));
-      e_dialog_title_set(import->dia, title);
-   }
+     {
+	status = (double) ((double) dlnow) / ((double) dltotal);
+	asprintf(&title, _("[%s] Downloading of edje file... %d%% done"),
+		 import->cfdata->source, (int) (status * 100.0));
+	e_dialog_title_set(import->dia, title);
+     }
 
    last = dlnow;
 
@@ -614,7 +597,7 @@ _get_feed(char *url, void *data)
    import = data;
    cfdata = import->cfdata;
 
-   tpl = strdup(tmpdir_tpl);
+   tpl = strdup(TEMPLATE);
    cfdata->tmpdir = mkdtemp(tpl);
    free(tpl);
 
@@ -648,10 +631,10 @@ _reset(void *data)
 
    // If there's pending downloads, stop it
    if (cfdata->pending_downloads == 1)
-   {
-      ecore_file_download_abort_all();
-      //ecore_file_download_shutdown();
-   }
+     {
+	ecore_file_download_abort_all();
+	//ecore_file_download_shutdown();
+     }
    cfdata->pending_downloads = 0;
 
    // Reset busy state
@@ -659,23 +642,23 @@ _reset(void *data)
 
    // Clean lists
    if (!ecore_list_empty_is(cfdata->thumbs))
-      ecore_list_clear(cfdata->thumbs);
+     ecore_list_clear(cfdata->thumbs);
    if (!ecore_list_empty_is(cfdata->medias))
-      ecore_list_clear(cfdata->medias);
+     ecore_list_clear(cfdata->medias);
 
    // Clean existing data
    if (ecore_file_exists("/tmp/feed.xml"))
-      ecore_file_unlink("/tmp/feed.xml");
+     ecore_file_unlink("/tmp/feed.xml");
 
    // Remove temporary data
    if (cfdata->tmpdir)
-   {
-      if (ecore_file_is_dir(cfdata->tmpdir))
-      {
-         ecore_file_recursive_rm(cfdata->tmpdir);
-         ecore_file_rmdir(cfdata->tmpdir);
-      }
-   }
+     {
+	if (ecore_file_is_dir(cfdata->tmpdir))
+	  {
+	     ecore_file_recursive_rm(cfdata->tmpdir);
+	     ecore_file_rmdir(cfdata->tmpdir);
+	  }
+     }
 
    // Disable OK button
    e_dialog_button_disable_num_set(import->dia, 0, 1);
