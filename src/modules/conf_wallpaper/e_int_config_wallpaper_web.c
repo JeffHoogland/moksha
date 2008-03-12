@@ -41,7 +41,7 @@ struct _E_Config_Dialog_Data
    const char *source;
 };
 
-char tmpdir_tpl[17] = "/tmp/wallpXXXXXX";
+const char tmpdir_tpl[] = "/tmp/wallpXXXXXX";
 
 static void _file_double_click_cb(void *data, Evas_Object *obj, void *ev_info);
 static void _file_click_cb(void *data, Evas_Object *obj, void *ev_info);
@@ -609,11 +609,14 @@ _get_feed(char *url, void *data)
    E_Config_Dialog_Data *cfdata;
    extern int errno;
    char *title;
+   char *tpl;
 
    import = data;
    cfdata = import->cfdata;
 
-   cfdata->tmpdir = mkdtemp(strdup(tmpdir_tpl));
+   tpl = strdup(tmpdir_tpl);
+   cfdata->tmpdir = mkdtemp(tpl);
+   free(tpl);
 
    ecore_con_url_url_set(cfdata->ecu, url);
    ecore_file_download_abort_all();
