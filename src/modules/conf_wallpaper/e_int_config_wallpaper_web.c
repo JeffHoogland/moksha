@@ -42,7 +42,7 @@ struct _E_Config_Dialog_Data
    const char *source;
 };
 
-#define TEMPLATE "/tmp/wallpXXXXXX";
+#define TEMPLATE "/tmp/wallpXXXXXX"
 
 static void _file_double_click_cb(void *data, Evas_Object *obj, void *ev_info);
 static void _file_click_cb(void *data, Evas_Object *obj, void *ev_info);
@@ -316,6 +316,7 @@ _parse_feed(void *data)
    char instr[1024];
    char *edj;
    char *img;
+   char *title;
 
    int state = -1;
 
@@ -340,9 +341,9 @@ _parse_feed(void *data)
 	  {
 	     char *p;
 
-	     edj = strchr(instr, ">");
+	     edj = strchr(instr, '>');
 	     edj++;
-	     p = strchr(edj, "<");
+	     p = strchr(edj, '<');
 	     *p = 0;
 	     p = strrchr(ecore_file_file_get(edj), '.');
 	     if (!strcmp(p, ".edj"))
