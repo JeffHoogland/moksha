@@ -310,7 +310,7 @@ e_font_fallback_append(const char *font)
 {
    E_Font_Fallback *eff;
 
-   e_font_fallback_remove (font);
+   e_font_fallback_remove(font);
 
    eff = E_NEW(E_Font_Fallback, 1);
    eff->name = evas_stringshare_add(font);
@@ -322,7 +322,7 @@ e_font_fallback_prepend(const char *font)
 {
    E_Font_Fallback *eff;
 
-   e_font_fallback_remove (font);
+   e_font_fallback_remove(font);
 
    eff = E_NEW(E_Font_Fallback, 1);
    eff->name = evas_stringshare_add(font);

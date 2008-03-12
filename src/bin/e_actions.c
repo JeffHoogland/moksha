@@ -304,7 +304,7 @@ ACT_FN_GO(window_kill)
 
    if (e_config->cnfmdlg_disabled)
      {
-	_e_actions_cb_kill_dialog_ok (obj, NULL);
+	_e_actions_cb_kill_dialog_ok(obj, NULL);
 	return;
      }
 
@@ -1583,7 +1583,7 @@ ACT_FN_GO(exit)
 
    if (e_config->cnfmdlg_disabled)
      {
-	_e_actions_cb_exit_dialog_ok (NULL, NULL);
+	_e_actions_cb_exit_dialog_ok(NULL, NULL);
 	return;
      }
 
@@ -1654,7 +1654,7 @@ ACT_FN_GO(logout)
    
    if (e_config->cnfmdlg_disabled)
      {
-	_e_actions_cb_logout_dialog_ok (NULL, NULL);
+	_e_actions_cb_logout_dialog_ok(NULL, NULL);
 	return;
      }
 
@@ -1713,7 +1713,7 @@ ACT_FN_GO(halt)
 
    if (e_config->cnfmdlg_disabled)
      {
-	_e_actions_cb_halt_dialog_ok (NULL, NULL);
+	_e_actions_cb_halt_dialog_ok(NULL, NULL);
 	return;
      }
 
@@ -1772,7 +1772,7 @@ ACT_FN_GO(reboot)
 
    if (e_config->cnfmdlg_disabled)
      {
-	_e_actions_cb_reboot_dialog_ok (NULL, NULL);
+	_e_actions_cb_reboot_dialog_ok(NULL, NULL);
 	return;
      }
 
@@ -1831,7 +1831,7 @@ ACT_FN_GO(suspend)
 
    if (e_config->cnfmdlg_disabled)
      {
-	_e_actions_cb_suspend_dialog_ok (NULL, NULL);
+	_e_actions_cb_suspend_dialog_ok(NULL, NULL);
 	return;
      }
 
@@ -1890,7 +1890,7 @@ ACT_FN_GO(hibernate)
 
    if (e_config->cnfmdlg_disabled)
      {
-	_e_actions_cb_hibernate_dialog_ok (NULL, NULL);
+	_e_actions_cb_hibernate_dialog_ok(NULL, NULL);
 	return;
      }
 
