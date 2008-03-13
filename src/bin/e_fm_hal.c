@@ -146,7 +146,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 	     else if (ecore_file_is_dir("/tmp"))
 	       snprintf(buf, sizeof(buf), "/tmp/%s", id);
 	     else
-	       snprintf(buf, sizeof(buf), "");
+	       buf[0] = 0;
 	     v->mount_point = strdup(buf);
 	  }
      }
