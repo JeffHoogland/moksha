@@ -292,8 +292,8 @@ _source_sel_cb(void *data)
    if ((cfdata->busy == 0) && (cfdata->pending_downloads == 0))
      {
 	cfdata->source = e_widget_ilist_selected_label_get(cfdata->ol);
-	cfdata->busy = 1;
 	_reset(import);
+	cfdata->busy = 1;
 	_get_feed(cfdata->ol_val, import);
      }
    else 
@@ -355,7 +355,7 @@ _parse_feed(void *data)
 	     img = strstr(instr, "url=");
 	     img += 5;
 	     p = strchr(img, '"');
-	     p = 0;
+	     *p = 0;
 	     img = strdup(img);
 	     state = 3;
 	  }
