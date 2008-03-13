@@ -34,7 +34,6 @@
 #define CHECK_SYS_CLASS_POWER_SUPPLY  4
 
 static void init(void);
-static int check(void);
 static int poll_cb(void *data);
 
 static int poll_interval = 512;
@@ -490,7 +489,6 @@ linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd
 static void
 linux_sys_class_power_supply_sysev_init(Sys_Class_Power_Supply_Uevent *sysev)
 {
-   char *name;
    char buf[4096];
    
    sysev->basis = 0;
@@ -1108,9 +1106,8 @@ static void
 linux_apm_check(void)
 {
    FILE *f;
-   char s[256], s1[32], s2[32], s3[32], buf[4096];
+   char s[256], s1[32], s2[32], s3[32];
    int  apm_flags, ac_stat, bat_stat, bat_flags, bat_val, time_val;
-   int  hours, minutes;
    
    battery_full = -1;
    time_left = -1;
@@ -1214,8 +1211,6 @@ linux_pmu_check(void)
    int flags = 0;
    int charge = 0;
    int max_charge = 0;
-   int current = 0;
-   int timeleft = 0;
    int voltage = 0;
    int seconds = 0;
    int curcharge = 0;
