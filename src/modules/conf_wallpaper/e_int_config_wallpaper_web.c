@@ -70,7 +70,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    Import *import;
    E_Config_Dialog_Data *cfdata;
 
-   Evas_Object *o, *ol, *of, *ofm, *osfm, *otl;
+   Evas_Object *o, *ol, *of, *ofm, *osfm;
    Evas_Coord mw, mh;
    E_Fm2_Config fmc;
 
@@ -93,9 +93,6 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    evas = e_win_evas_get(dia->win);
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-
-   ecore_con_url_init();
-   ecore_file_download_init();
 
    cfdata->ecu = ecore_con_url_new("http://fake.url");
 
@@ -210,8 +207,6 @@ e_int_config_wallpaper_web_del(E_Dialog *dia)
      ecore_event_handler_del(cfdata->hdata);
    if (cfdata->hcomplete)
      ecore_event_handler_del(cfdata->hcomplete);
-   ecore_file_download_shutdown();
-   ecore_con_url_shutdown();
 
    if (cfdata->tmpdir)
      {
@@ -404,7 +399,7 @@ _get_thumbs(void *data)
    asprintf(&dtmp, "%s/.tmp", cfdata->tmpdir);
    ecore_file_mkdir(dtmp);
    ecore_list_first_goto(cfdata->thumbs);
-   while (src = ecore_list_next(cfdata->thumbs))
+   while ((src = ecore_list_next(cfdata->thumbs)))
      {
 	asprintf(&dest, "%s/%s", dtmp, ecore_file_file_get(src));
 	ecore_file_download(src, dest, _get_thumb_complete, NULL, import);
@@ -488,7 +483,6 @@ _download_media(Import *import)
 {
    Import *i;
    E_Config_Dialog_Data *cfdata;
-   int num = 0;
    const char *file;
    char *buf;
    char *title;
@@ -589,7 +583,6 @@ _get_feed(char *url, void *data)
    E_Config_Dialog_Data *cfdata;
    extern int errno;
    char *title;
-   char *tpl;
 
    import = data;
    cfdata = import->cfdata;
