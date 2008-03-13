@@ -1342,7 +1342,7 @@ e_hints_window_e_state_set(E_Border *bd)
 EAPI void
 e_hints_window_qtopia_soft_menu_get(E_Border *bd)
 {
-   int val;
+   unsigned int val;
    
    if (ecore_x_window_prop_card32_get(bd->client.win, _QTOPIA_SOFT_MENU, &val, 1))
      bd->client.qtopia.soft_menu = val;
@@ -1353,7 +1353,7 @@ e_hints_window_qtopia_soft_menu_get(E_Border *bd)
 EAPI void
 e_hints_window_qtopia_soft_menus_get(E_Border *bd)
 {
-   int val;
+   unsigned int val;
 
    if (ecore_x_window_prop_card32_get(bd->client.win, _QTOPIA_SOFT_MENUS, &val, 1))
      bd->client.qtopia.soft_menus = val;
