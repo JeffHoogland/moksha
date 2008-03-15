@@ -6,9 +6,11 @@
 
 #include "e.h"
 #include "e_mod_main.h"
+
 #define D(x)  do {printf("### DBG line %d ### ", __LINE__); printf x; fflush(stdout);} while (0)
 
-#define	MAGIC_IMPORT	0x427781cb
+#define	MAGIC_IMPORT 0x427781cb
+#define TEMPLATE "/tmp/wallpXXXXXX"
 
 typedef struct _Import Import;
 
@@ -23,26 +25,15 @@ struct _Import
 
 struct _E_Config_Dialog_Data 
 {
-   Evas_Object *ofm;
-   Evas_Object *o;
-   Evas_Object *osfm;
-   Evas_Object *ol;
-   Ecore_List *thumbs;
-   Ecore_List *medias;
+   Evas_Object *ofm, *o, *osfm, *ol;
+   Ecore_List *thumbs, *medias;
    Ecore_Con_Url *ecu;
-   Ecore_Event_Handler *hdata;
-   Ecore_Event_Handler *hcomplete;
+   Ecore_Event_Handler *hdata, *hcomplete;
    FILE *feed;
-   int ready_for_edj;
-   int pending_downloads;
-   int busy;
-   char *edj;
-   char *ol_val;
-   char *tmpdir;
+   int ready_for_edj, pending_downloads, busy;
+   char *edj, *ol_val, *tmpdir;
    const char *source;
 };
-
-#define TEMPLATE "/tmp/wallpXXXXXX"
 
 static void _file_double_click_cb(void *data, Evas_Object *obj, void *ev_info);
 static void _file_click_cb(void *data, Evas_Object *obj, void *ev_info);
@@ -51,7 +42,7 @@ static int  _feed_data(void *data, int type, void *event);
 static void _get_feed(char *url, void *data);
 static void _parse_feed(void *data);
 static void _get_thumbs(void *data);
-void        _get_thumb_complete(void *data, const char *file, int status);
+static void _get_thumb_complete(void *data, const char *file, int status);
 static void _source_sel_cb(void *data);
 static void _reset(void *data);
 static int  _list_find(const char *str1, const char *str2);
@@ -59,8 +50,8 @@ static void _dia_del_cb(void *obj);
 static void _dia_close_cb(void *data, E_Dialog *dia);
 static void _dia_ok_cb(void *data, E_Dialog *dia);
 static void _download_media(Import *import);
-int         _download_media_progress_cb(void *data, const char *file, long int dltotal, long int dlnow, long int ultotal, long int ulnow);
-void        _download_media_complete_cb(void *data, const char *file, int status);
+static int  _download_media_progress_cb(void *data, const char *file, long int dltotal, long int dlnow, long int ultotal, long int ulnow);
+static void _download_media_complete_cb(void *data, const char *file, int status);
 
 EAPI E_Dialog *
 e_int_config_wallpaper_web(E_Config_Dialog *parent)
@@ -69,7 +60,6 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    E_Dialog *dia;
    Import *import;
    E_Config_Dialog_Data *cfdata;
-
    Evas_Object *o, *ol, *of, *ofm, *osfm;
    Evas_Coord mw, mh;
    E_Fm2_Config fmc;
@@ -112,6 +102,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    ecore_list_free_cb_set(cfdata->thumbs, free);
    cfdata->medias = ecore_list_new();
    ecore_list_free_cb_set(cfdata->medias, free);
+
    of = e_widget_framelist_add(evas, "Sources", 1);
    ol = e_widget_ilist_add(evas, 24, 24, &cfdata->ol_val);
    cfdata->ol = ol;
@@ -128,10 +119,10 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
                          _source_sel_cb, import,
                          "http://api.flickr.com/services/feeds/photos_public.gne?tags=birro&lang=it-it&format=rss_200_enc");*/
    e_widget_ilist_go(ol);
-
-
+   e_widget_min_size_get(ol, &mw, NULL);
+   e_widget_min_size_set(ol, mw, 320);
    e_widget_framelist_object_append(of, ol);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    ofm = e_fm2_add(evas);
    memset(&fmc, 0, sizeof(E_Fm2_Config));
@@ -157,14 +148,10 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    e_fm2_config_set(ofm, &fmc);
    e_fm2_icon_menu_flags_set(ofm, E_FM2_MENU_NO_SHOW_HIDDEN);
 
-   evas_object_smart_callback_add(ofm, 
-                                  "selected",
-                                  _file_double_click_cb,
-                                  import);
-   evas_object_smart_callback_add(ofm, 
-                                  "selection_change",
-                                  _file_click_cb,
-                                  import);
+   evas_object_smart_callback_add(ofm, "selected",
+                                  _file_double_click_cb, import);
+   evas_object_smart_callback_add(ofm, "selection_change",
+                                  _file_click_cb, import);
 
    osfm = e_widget_scrollframe_pan_add(evas, ofm,
                                        e_fm2_pan_set,
@@ -175,9 +162,9 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    e_widget_list_object_append(cfdata->o, cfdata->osfm, 1, 1, 0.5);
    e_widget_min_size_set(osfm, 320, 320);
 
-   e_widget_min_size_set(o, 580, 370);
-   e_widget_min_size_get(o, &mw, &mh);
-   e_dialog_content_set(dia, o, mw, mh);
+//   e_widget_min_size_set(o, 580, 370);
+   e_widget_min_size_get(o, NULL, &mh);
+   e_dialog_content_set(dia, o, 480, mh);
 
    e_dialog_button_add(dia, _("OK"), NULL, _dia_ok_cb, import);
    e_dialog_button_add(dia, _("Cancel"), NULL, _dia_close_cb, import);
@@ -297,9 +284,7 @@ _source_sel_cb(void *data)
 	_get_feed(cfdata->ol_val, import);
      }
    else 
-     {
-	e_widget_ilist_unselect(cfdata->ol);
-     }
+     e_widget_ilist_unselect(cfdata->ol);
 }
 
 static void
@@ -309,10 +294,7 @@ _parse_feed(void *data)
    E_Config_Dialog_Data *cfdata;
    FILE *fh;
    char instr[1024];
-   char *edj;
-   char *img;
-   char *title;
-
+   char *edj, *img, *title;
    int state = -1;
 
    import = data;
@@ -322,9 +304,7 @@ _parse_feed(void *data)
    fh = fopen("/tmp/feed.xml", "r");
    while (fgets(instr, sizeof(instr), fh) != NULL)
      {
-	if (strstr(instr, "<rss version") != NULL)
-	  state = 0;
-
+	if (strstr(instr, "<rss version") != NULL) state = 0;
 	if ((strstr(instr, "<item>") != NULL) && (state == 0))
 	  {
 	     edj = NULL;
@@ -389,9 +369,7 @@ _get_thumbs(void *data)
 {
    Import *import;
    E_Config_Dialog_Data *cfdata;
-   char *src;
-   char *dest;
-   char *dtmp;
+   char *src, *dest, *dtmp;
 
    import = data;
    cfdata = import->cfdata;
@@ -484,8 +462,7 @@ _download_media(Import *import)
    Import *i;
    E_Config_Dialog_Data *cfdata;
    const char *file;
-   char *buf;
-   char *title;
+   char *buf, *title;
 
    i = import;
    cfdata = i->cfdata;
@@ -497,11 +474,10 @@ _download_media(Import *import)
    e_dialog_title_set(i->dia, title);
    ecore_file_download(cfdata->edj, buf,
                        _download_media_complete_cb,
-                       _download_media_progress_cb,
-                       i);
+                       _download_media_progress_cb, i);
 }
 
-void 
+static void 
 _download_media_complete_cb(void *data, const char *file, int status)
 {
    Import *import;
@@ -509,21 +485,19 @@ _download_media_complete_cb(void *data, const char *file, int status)
 
    import = data;
    import->cfdata->pending_downloads = 0;
-   asprintf(&dest, "%s/.e/e/backgrounds/%s",
-            e_user_homedir_get(),
+   asprintf(&dest, "%s/.e/e/backgrounds/%s", e_user_homedir_get(),
             ecore_file_file_get(import->cfdata->edj));
    e_int_config_wallpaper_update(import->parent, dest);
    e_int_config_wallpaper_web_del(import->dia);
 }
 
-void
+static void
 _get_thumb_complete(void *data, const char *file, int status)
 {
    Import *import;
    E_Config_Dialog_Data *cfdata;
-   char *title;
+   char *title, *dst;
    static int got = 1;
-   char *dst;
 
    import = data;
    cfdata = import->cfdata;
@@ -549,7 +523,7 @@ _get_thumb_complete(void *data, const char *file, int status)
      }
 }
 
-int
+static int
 _download_media_progress_cb(void *data, const char *file, long int dltotal,
 			    long int dlnow, long int ultotal, long int ulnow)
 {
@@ -560,8 +534,7 @@ _download_media_progress_cb(void *data, const char *file, long int dltotal,
 
    import = data;
 
-   if ((dlnow == 0) || (dltotal == 0))
-     return 0;
+   if ((dlnow == 0) || (dltotal == 0)) return 0;
 
    if (last)
      {
@@ -595,12 +568,11 @@ _get_feed(char *url, void *data)
    if (cfdata->hcomplete) ecore_event_handler_del(cfdata->hcomplete);
    if (cfdata->feed) fclose(cfdata->feed);
 
-   cfdata->hdata = ecore_event_handler_add(ECORE_CON_EVENT_URL_DATA,
-                                           _feed_data, 
-                                           import);
-   cfdata->hcomplete = ecore_event_handler_add(ECORE_CON_EVENT_URL_COMPLETE,
-                                                _feed_complete, 
-                                                import);
+   cfdata->hdata = 
+     ecore_event_handler_add(ECORE_CON_EVENT_URL_DATA, _feed_data, import);
+   cfdata->hcomplete = 
+     ecore_event_handler_add(ECORE_CON_EVENT_URL_COMPLETE, 
+                             _feed_complete, import);
 
    asprintf(&title, _("[%s] Getting feed..."), cfdata->source);
    e_dialog_title_set(import->dia, title); //
@@ -635,8 +607,7 @@ _reset(void *data)
      ecore_list_clear(cfdata->medias);
 
    // Clean existing data
-   if (ecore_file_exists("/tmp/feed.xml"))
-     ecore_file_unlink("/tmp/feed.xml");
+   if (ecore_file_exists("/tmp/feed.xml")) ecore_file_unlink("/tmp/feed.xml");
 
    // Remove temporary data
    if (cfdata->tmpdir)
