@@ -166,6 +166,8 @@ src/modules/conf_icon_theme/e_mod_main.c
 src/modules/conf_imc/e_int_config_imc.c
 src/modules/conf_imc/e_int_config_imc_import.c
 src/modules/conf_imc/e_mod_main.c
+src/modules/conf_interaction/e_int_config_interaction.c
+src/modules/conf_interaction/e_mod_main.c
 src/modules/conf_intl/e_int_config_intl.c
 src/modules/conf_intl/e_mod_main.c
 src/modules/conf_keybindings/e_int_config_keybindings.c
@@ -201,6 +203,7 @@ src/modules/conf_transitions/e_mod_main.c
 src/modules/conf_wallpaper/e_int_config_wallpaper.c
 src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c
 src/modules/conf_wallpaper/e_int_config_wallpaper_import.c
+src/modules/conf_wallpaper/e_int_config_wallpaper_web.c
 src/modules/conf_wallpaper/e_mod_main.c
 src/modules/conf_window_display/e_int_config_window_display.c
 src/modules/conf_window_display/e_mod_main.c
