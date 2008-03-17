@@ -59,7 +59,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    Config_Face *inst;
-   char buf[PATH_MAX];
 
    inst = evas_hash_find(temperature_config->faces, id);
    if (!inst)
