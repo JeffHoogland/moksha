@@ -189,6 +189,8 @@ e_int_config_wallpaper_web_del(E_Dialog *dia)
 
    if (cfdata->pending_downloads == 1)
      ecore_file_download_abort_all();
+   if (cfdata->ecu)
+     ecore_con_url_destroy(cfdata->ecu);
 
    if (cfdata->hdata)
      ecore_event_handler_del(cfdata->hdata);
