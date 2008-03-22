@@ -446,5 +446,5 @@ _battery_cb_exe_del(void *data, int type, void *event)
    ev = event;
    if (ev->exe != battery_config->batget_exe) return 1;
    battery_config->batget_exe = NULL;
-   return 0;
+   return 1;
 }
