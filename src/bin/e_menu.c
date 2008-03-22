@@ -1421,7 +1421,15 @@ _e_menu_realize(E_Menu *m)
    evas_object_show(o);
 
    if (m->shaped)
-     ecore_evas_shaped_set(m->ecore_evas, m->shaped);
+     {       
+	if (e_config->use_composite)
+	  {
+	     ecore_evas_alpha_set(m->ecore_evas, m->shaped);
+	     m->evas_win = ecore_evas_software_x11_window_get(m->ecore_evas);
+	  }
+	else
+	  ecore_evas_shaped_set(m->ecore_evas, m->shaped);
+     }
    
    o = e_box_add(m->evas);
    m->container_object = o;
