@@ -157,11 +157,11 @@ e_fm2_hal_volume_add(E_Volume *v)
 	s->volumes = evas_list_append(s->volumes, v);
      }
 
-   if ((v->storage)
-       && (!v->mount_point 
-	   || (strcmp(v->mount_point, "/") 
-	       && strcmp(v->mount_point, "/home") 
-	       && strcmp(v->mount_point, "/tmp"))))
+   if ((v->storage) &&
+       ((!v->mount_point) ||
+       	(strcmp(v->mount_point, "/") &&
+	 strcmp(v->mount_point, "/home") &&
+	 strcmp(v->mount_point, "/tmp"))))
      {
 	_e_fm2_volume_write(v);
      }
