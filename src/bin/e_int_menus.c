@@ -83,8 +83,8 @@ e_int_menus_main_new(void)
    E_Menu *m, *subm;
    E_Menu_Item *mi;
    Main_Data *dat;
-   Evas_List *l;
-   
+   Evas_List *l = NULL;
+
    dat = calloc(1, sizeof(Main_Data));
    m = e_menu_new();
    e_menu_title_set(m, _("Main"));
@@ -109,7 +109,7 @@ e_int_menus_main_new(void)
 	     e_menu_item_submenu_set(mi, subm);
 	  }
      }
-   
+
    if (e_config->menu_apps_show) 
      {
 	subm = e_int_menus_all_apps_new();
@@ -119,7 +119,7 @@ e_int_menus_main_new(void)
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
 	e_menu_item_submenu_set(mi, subm);
      }
-   
+
    l = evas_hash_find(_e_int_menus_augmentation, "main/1");
    if (l) _e_int_menus_augmentation_add(m, l);
 
@@ -135,7 +135,7 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Desktop"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
    e_menu_item_submenu_set(mi, subm);
-  
+
    subm = e_int_menus_clients_new();
    e_object_data_set(E_OBJECT(subm), dat);   
    dat->clients = subm;
@@ -179,13 +179,13 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Theme"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
    e_menu_item_callback_set(mi, _e_int_menus_themes_about, NULL);
-   
+
    l = evas_hash_find(_e_int_menus_augmentation, "main/5");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(subm);
    e_menu_item_separator_set(mi, 1);
-   
+
    l = evas_hash_find(_e_int_menus_augmentation, "main/6");
    if (l) _e_int_menus_augmentation_add(m, l);
 
@@ -241,7 +241,7 @@ EAPI E_Menu *
 e_int_menus_apps_new(const char *dir)
 {
    E_Menu *m;
- 
+
    m = e_menu_new();
    if (dir) e_object_data_set(E_OBJECT(m), strdup(dir));
    e_menu_pre_activate_callback_set(m, _e_int_menus_apps_start, NULL);
@@ -255,9 +255,9 @@ e_int_menus_desktops_new(void)
 {
    E_Menu *m, *subm;
    E_Menu_Item *mi;
-   
+
    m = e_menu_new();
-   
+
    subm = e_menu_new();
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Virtual"));
@@ -276,7 +276,7 @@ e_int_menus_desktops_new(void)
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-   
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Show/Hide All Windows"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/showhide");
@@ -290,14 +290,14 @@ EAPI E_Menu *
 e_int_menus_favorite_apps_new(void)
 {
    E_Menu *m = NULL;
-   char buf[4096];
+   char buf[PATH_MAX];
    const char *homedir;
-   
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite.menu", homedir);
 
-   if (ecore_file_exists(buf)) 
-     m = e_int_menus_apps_new(buf);
+   homedir = e_user_homedir_get();
+   snprintf(buf, sizeof(buf), 
+            "%s/.e/e/applications/menu/favorite.menu", homedir);
+
+   if (ecore_file_exists(buf)) m = e_int_menus_apps_new(buf);
    return m;
 }
 
@@ -305,6 +305,7 @@ EAPI E_Menu *
 e_int_menus_all_apps_new(void)
 {
    E_Menu *m;
+
    m = e_int_menus_apps_new(NULL);
    return m;
 }
@@ -313,10 +314,9 @@ EAPI E_Menu *
 e_int_menus_config_new(void)
 {
    E_Menu *m;
-   
+
    m = e_menu_new();
    e_menu_pre_activate_callback_set(m, _e_int_menus_config_pre_cb, NULL);
-
    return m;
 }
 
@@ -344,7 +344,7 @@ EAPI E_Menu *
 e_int_menus_sys_new(void)
 {
    E_Menu *m;
-   
+
    m = e_menu_new();
    e_menu_pre_activate_callback_set(m, _e_int_menus_sys_pre_cb, NULL);
    return m;
@@ -358,7 +358,7 @@ e_int_menus_menu_augmentation_add(const char *menu,
 				  void *data_del)
 {
    E_Int_Menu_Augmentation *maug;
-   Evas_List *l;
+   Evas_List *l = NULL;
 
    maug = E_NEW(E_Int_Menu_Augmentation, 1);
    if (!maug) return NULL;
@@ -371,10 +371,14 @@ e_int_menus_menu_augmentation_add(const char *menu,
 
    l = evas_hash_find(_e_int_menus_augmentation, menu);
    if (l) 
-     _e_int_menus_augmentation = evas_hash_del(_e_int_menus_augmentation, menu, l);
+     {
+        _e_int_menus_augmentation = 
+          evas_hash_del(_e_int_menus_augmentation, menu, l);
+     }
 
    l = evas_list_append(l, maug);
-   _e_int_menus_augmentation = evas_hash_add(_e_int_menus_augmentation, menu, l);
+   _e_int_menus_augmentation = 
+     evas_hash_add(_e_int_menus_augmentation, menu, l);
 
    return maug;
 }
@@ -382,7 +386,7 @@ e_int_menus_menu_augmentation_add(const char *menu,
 EAPI void
 e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *maug)
 {
-   Evas_List *l;
+   Evas_List *l = NULL;
 
    l = evas_hash_find(_e_int_menus_augmentation, menu);
    if (l)
@@ -391,13 +395,15 @@ e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *mau
 	 * We should always add the list to the hash, in case the list
 	 * becomes empty, or the first element is removed.
 	 */
-	_e_int_menus_augmentation = evas_hash_del(_e_int_menus_augmentation, 
-						  menu, l);
+	_e_int_menus_augmentation = 
+          evas_hash_del(_e_int_menus_augmentation, menu, l);
 
 	l = evas_list_remove(l, maug);
-	if (l)
-	  _e_int_menus_augmentation = evas_hash_add(_e_int_menus_augmentation, 
-						    menu, l);
+	if (l) 
+          {
+             _e_int_menus_augmentation = 
+               evas_hash_add(_e_int_menus_augmentation, menu, l);
+          }
      }
    free(maug);
 }
@@ -408,7 +414,7 @@ _e_int_menus_main_del_hook(void *obj)
 {
    Main_Data *dat;
    E_Menu *m;
-   
+
    m = obj;
    dat = e_object_data_get(E_OBJECT(obj));
    if (dat)
@@ -441,7 +447,7 @@ static void
 _e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_About *about;
-   
+
    about = e_about_new(e_container_current_get(e_manager_current_get()));
    if (about) e_about_show(about);
 }
@@ -450,7 +456,7 @@ static void
 _e_int_menus_themes_about(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Theme_About *about;
-   
+
    about = e_theme_about_new(e_container_current_get(e_manager_current_get()));
    if (about) e_theme_about_show(about);
 }
@@ -485,7 +491,7 @@ static void
 _e_int_menus_main_showhide(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Action *act;
-   
+
    act = e_action_find("desk_deskshow_toggle");
    if (act) act->func.go(E_OBJECT(m->zone), NULL);
 }
@@ -494,7 +500,7 @@ static void
 _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Action *a;
-   
+
    a = e_action_find("restart");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
@@ -503,7 +509,7 @@ static void
 _e_int_menus_main_logout(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Action *a;
-   
+
    a = e_action_find("logout");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
@@ -512,7 +518,7 @@ static void
 _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Action *a;
-   
+
    a = e_action_find("exit");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
@@ -521,7 +527,7 @@ static void
 _e_int_menus_main_halt(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Action *a;
-   
+
    a = e_action_find("halt");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
@@ -530,7 +536,7 @@ static void
 _e_int_menus_main_reboot(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Action *a;
-   
+
    a = e_action_find("reboot");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
@@ -539,7 +545,7 @@ static void
 _e_int_menus_main_suspend(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Action *a;
-   
+
    a = e_action_find("suspend");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
@@ -548,7 +554,7 @@ static void
 _e_int_menus_main_hibernate(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Action *a;
-   
+
    a = e_action_find("hibernate");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
@@ -561,14 +567,14 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
    if (menu->entries)
      {
 	Efreet_Menu *entry;
-	
+
         ecore_list_first_goto(menu->entries);
 	while ((entry = ecore_list_next(menu->entries)))
 	  {
 	     mi = e_menu_item_new(m);
-	     
+
 	     _e_int_menus_item_label_set(entry, mi);
-	     
+
 	     if (entry->icon)
 	       {
 		  if (entry->icon[0] == '/')
@@ -577,7 +583,8 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 		    {
 		       char *file;
 
-		       file = efreet_icon_path_find(e_config->icon_theme, entry->icon, "24x24");
+		       file = efreet_icon_path_find(e_config->icon_theme, 
+                                                    entry->icon, "24x24");
 		       e_menu_item_icon_file_set(mi, file);
 		       E_FREE(file);
 		    }
@@ -586,16 +593,21 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 	       e_menu_item_separator_set(mi, 1);
 	     else if (entry->type == EFREET_MENU_ENTRY_DESKTOP)
 	       {
-		  e_menu_item_callback_set(mi, _e_int_menus_apps_run, entry->desktop);
-		  e_menu_item_drag_callback_set(mi, _e_int_menus_apps_drag, entry->desktop);
+		  e_menu_item_callback_set(mi, _e_int_menus_apps_run, 
+                                           entry->desktop);
+		  e_menu_item_drag_callback_set(mi, _e_int_menus_apps_drag, 
+                                                entry->desktop);
 	       }
 	     else if (entry->type == EFREET_MENU_ENTRY_MENU)
 	       {
 		  E_Menu *subm;
 
 		  subm = e_menu_new();
-		  e_menu_pre_activate_callback_set(subm, _e_int_menus_apps_start, entry);
-		  e_object_del_attach_func_set(E_OBJECT(subm), _e_int_menus_items_del_hook);
+		  e_menu_pre_activate_callback_set(subm, 
+                                                   _e_int_menus_apps_start, 
+                                                   entry);
+		  e_object_del_attach_func_set(E_OBJECT(subm), 
+                                               _e_int_menus_items_del_hook);
 		  e_menu_item_submenu_set(mi, subm);
 	       }
 	     /* TODO: Highlight header
@@ -618,8 +630,8 @@ _e_int_menus_apps_start(void *data, E_Menu *m)
    menu = data;
    if (!menu)
      {
-	char *dir;
-	
+	char *dir = NULL;
+
 	dir = e_object_data_get(E_OBJECT(m));
 	if (dir)
 	  {
@@ -628,7 +640,8 @@ _e_int_menus_apps_start(void *data, E_Menu *m)
 	  }
 	else menu = efreet_menu_get();
 	e_object_data_set(E_OBJECT(m), menu);
-	e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_apps_free_hook2);
+	e_object_free_attach_func_set(E_OBJECT(m), 
+                                      _e_int_menus_apps_free_hook2);
      }
    if (menu) _e_int_menus_apps_scan(m, menu);
    e_menu_pre_activate_callback_set(m, NULL, NULL);
@@ -638,13 +651,13 @@ static void
 _e_int_menus_items_del_hook(void *obj)
 {
    E_Menu *m;
-   Evas_List *l;
-   
+   Evas_List *l = NULL;
+
    m = obj;
    for (l = m->items; l; l = l->next)
      {
 	E_Menu_Item *mi;
-	
+
 	mi = l->data;
 	if (mi->submenu) e_object_del(E_OBJECT(mi->submenu));
      }
@@ -655,7 +668,7 @@ _e_int_menus_apps_free_hook(void *obj)
 {
    E_Menu *m;
    char *dir;
-   
+
    m = obj;
    dir = e_object_data_get(E_OBJECT(m));
    E_FREE(dir);
@@ -666,7 +679,7 @@ _e_int_menus_apps_free_hook2(void *obj)
 {
    E_Menu *m;
    Efreet_Menu *menu;
-   
+
    m = obj;
    menu = e_object_data_get(E_OBJECT(m));
    if (menu) efreet_menu_free(menu);
@@ -676,7 +689,7 @@ static void
 _e_int_menus_apps_run(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Efreet_Desktop *desktop;
-   
+
    desktop = data;
    e_exec(m->zone, desktop, NULL, NULL, "menu/apps");
 }
@@ -685,7 +698,7 @@ static void
 _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Efreet_Desktop *desktop;
-   
+
    desktop = data;
 
    /* start drag! */
@@ -714,20 +727,21 @@ _e_int_menus_virtuals_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
    E_Menu *root;
-   
+
    e_menu_pre_activate_callback_set(m, NULL, NULL);
-   
+
    root = e_menu_root_get(m);
    if ((root) && (root->zone))
      {
-	int i;
 	E_Zone *zone;
-	
+	int i;
+
 	zone = root->zone;
 	for (i = 0; i < zone->desk_x_count * zone->desk_y_count; i++)
 	  {
-	     E_Desk *desk = zone->desks[i];
-	
+	     E_Desk *desk;
+
+             desk = zone->desks[i];
 	     mi = e_menu_item_new(m);
 	     e_menu_item_radio_group_set(mi, 1);
 	     e_menu_item_radio_set(mi, 1);
@@ -773,10 +787,10 @@ static void
 _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
-   Evas_List *l;
+   Evas_List *l = NULL;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
-   
+
    l = evas_hash_find(_e_int_menus_augmentation, "config/0");
    if (l)
      {
@@ -794,10 +808,7 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
      }
 
    l = evas_hash_find(_e_int_menus_augmentation, "config/1");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    l = evas_hash_find(_e_int_menus_augmentation, "config/2");
    if (l)
@@ -826,10 +837,10 @@ static void
 _e_int_menus_sys_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
-   Evas_List *l;
+   Evas_List *l = NULL;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
-   
+
    l = evas_hash_find(_e_int_menus_augmentation, "sys/0");
    if (l)
      {
@@ -843,10 +854,10 @@ _e_int_menus_sys_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Lock Screen"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/desklock_menu");
    e_menu_item_callback_set(mi, _e_int_menus_main_lock, NULL);
-   
+
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-   
+
    if (e_sys_action_possible_get(E_SYS_HALT) ||
        e_sys_action_possible_get(E_SYS_REBOOT) ||
        e_sys_action_possible_get(E_SYS_SUSPEND) ||
@@ -883,12 +894,12 @@ _e_int_menus_sys_pre_cb(void *data, E_Menu *m)
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
      }
-   
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Logout"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/logout");
    e_menu_item_callback_set(mi, _e_int_menus_main_logout, NULL);
-   
+
    l = evas_hash_find(_e_int_menus_augmentation, "sys/1");
    if (l)
      {
@@ -947,11 +958,11 @@ _e_int_menus_clients_group_class_cb(void *d1, void *d2)
    if (strcmp((const char*)bd1->client.icccm.class, 
 	      (const char*)bd2->client.icccm.class) > 0) 
      return 1;
-   
+
    if (strcmp((const char*)bd1->client.icccm.class, 
 	      (const char*)bd2->client.icccm.class) < 0) 
      return -1;
-   
+
    return -1;   /* Returning '-1' on equal is intentional */
 }
 
@@ -962,7 +973,7 @@ _e_int_menus_clients_sort_alpha_cb(void *d1, void *d2)
    E_Border *bd2;
    const char *name1;
    const char *name2;
-   
+
    if (!d1) return 1;
    if (!d2) return -1;
 
@@ -970,7 +981,7 @@ _e_int_menus_clients_sort_alpha_cb(void *d1, void *d2)
    bd2 = d2;
    name1 = e_border_name_get(bd1);
    name2 = e_border_name_get(bd2);
-   
+
    if (strcasecmp(name1, name2) > 0) return 1;
    if (strcasecmp(name1, name2) < 0) return -1;
    return 0;
@@ -979,8 +990,7 @@ _e_int_menus_clients_sort_alpha_cb(void *d1, void *d2)
 static int
 _e_int_menus_clients_sort_z_order_cb(void *d1, void *d2)
 {
-   E_Border *bd1;
-   E_Border *bd2;
+   E_Border *bd1, *bd2;
 
    if (!d1) return 1;
    if (!d2) return -1;
@@ -996,7 +1006,7 @@ _e_int_menus_clients_sort_z_order_cb(void *d1, void *d2)
 static void
 _e_int_menus_clients_menu_add_iconified(Evas_List *borders, E_Menu *m)
 {
-   Evas_List *l;
+   Evas_List *l = NULL;
    E_Menu_Item *mi;
 
    if (evas_list_count(borders) > 0)
@@ -1007,8 +1017,8 @@ _e_int_menus_clients_menu_add_iconified(Evas_List *borders, E_Menu *m)
 	for (l = borders; l; l = l->next)
 	  { 
 	     E_Border *bd; 
-	     bd = l->data; 
-	     
+
+	     bd = l->data;
 	     _e_int_menus_clients_item_create(bd, m);
 	  }
      }
@@ -1024,10 +1034,10 @@ _e_int_menus_clients_add_by_class(Evas_List *borders, E_Menu *m)
 
    class = strdup("");
    for (l = borders; l; l = l->next) 
-     { 
+     {
 	E_Border *bd; 
-	bd = l->data; 
 
+	bd = l->data; 
 	if ((bd->iconic) && 
 	    (e_config->clientlist_separate_iconified_apps == E_CLIENTLIST_GROUPICONS_SEP))
 	  { 
@@ -1040,8 +1050,7 @@ _e_int_menus_clients_add_by_class(Evas_List *borders, E_Menu *m)
 	  { 
 	     if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU) 
 	       { 
-		  if (subm && mi) 
-		    e_menu_item_submenu_set(mi, subm); 
+		  if ((subm) && (mi)) e_menu_item_submenu_set(mi, subm); 
 		  mi = e_menu_item_new(m); 
 		  e_menu_item_label_set(mi, bd->client.icccm.class); 
 		  e_util_menu_item_edje_icon_set(mi, "enlightenment/windows"); 
@@ -1061,7 +1070,7 @@ _e_int_menus_clients_add_by_class(Evas_List *borders, E_Menu *m)
      }
 
    if ((e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU) 
-       && subm && mi) 
+       && (subm) && (mi)) 
      e_menu_item_submenu_set(mi, subm);
 
    _e_int_menus_clients_menu_add_iconified(ico, m);
@@ -1079,7 +1088,7 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Evas_List *borders, E_Menu *
    for (l = borders; l; l = l->next)
      {
 	E_Border *bd;
-	
+
 	bd = l->data; 
 	if (bd->iconic && e_config->clientlist_separate_iconified_apps && E_CLIENTLIST_GROUPICONS_SEP) 
 	  { 
@@ -1110,23 +1119,21 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Evas_List *borders, E_Menu *
 	     mi = e_menu_item_new(m);
 	     e_menu_item_separator_set(mi, 1);
 	  }
-	
+
 	for (l = alt; l; l = l->next)
 	  { 
 	     E_Border *bd;
-	     
-	     bd = l->data; 
 
-	     if (bd->desk != desk && 
-		 e_config->clientlist_separate_with != E_CLIENTLIST_GROUP_SEP_NONE)
+	     bd = l->data; 
+	     if ((bd->desk != desk) && 
+		 (e_config->clientlist_separate_with != E_CLIENTLIST_GROUP_SEP_NONE))
 	       {
 		  if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU)
 		    { 
-		       if (subm && mi) 
-			 e_menu_item_submenu_set(mi, subm); 
+		       if (subm && mi) e_menu_item_submenu_set(mi, subm); 
 		       mi = e_menu_item_new(m); 
 		       e_menu_item_label_set(mi, bd->desk->name); 
-		       e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops"); 
+		       e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
 		       subm = e_menu_new(); 
 		    }
 		  else
@@ -1142,10 +1149,10 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Evas_List *borders, E_Menu *
 	       _e_int_menus_clients_item_create(bd, m);
 	  }
 	if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU 
-	    && subm && mi) 
+	    && (subm) && (mi)) 
 	  e_menu_item_submenu_set(mi, subm);
      }
-   
+
    _e_int_menus_clients_menu_add_iconified(ico, m);
 }
 
@@ -1153,13 +1160,14 @@ static void
 _e_int_menus_clients_add_by_none(Evas_List *borders, E_Menu *m)
 {
    Evas_List *l = NULL, *ico = NULL;
-   
+
    for (l = borders; l; l = l->next)
      {
 	E_Border *bd;
 
 	bd = l->data;
-	if (bd->iconic && e_config->clientlist_separate_iconified_apps && E_CLIENTLIST_GROUPICONS_SEP) 
+	if ((bd->iconic) && (e_config->clientlist_separate_iconified_apps) && 
+            (E_CLIENTLIST_GROUPICONS_SEP)) 
 	  { 
 	     ico = evas_list_append(ico, bd); 
 	     continue; 
@@ -1216,34 +1224,32 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	/* Sort the borders */
 	if (e_config->clientlist_sort_by == E_CLIENTLIST_SORT_ALPHA)
           borders = evas_list_sort(borders, evas_list_count(borders), 
-                              _e_int_menus_clients_sort_alpha_cb);
+                                   _e_int_menus_clients_sort_alpha_cb);
 
 	if (e_config->clientlist_sort_by == E_CLIENTLIST_SORT_ZORDER)
 	  borders = evas_list_sort(borders, evas_list_count(borders),
-		              _e_int_menus_clients_sort_z_order_cb);
+                                   _e_int_menus_clients_sort_z_order_cb);
 
 	/* Group the borders */
         if (e_config->clientlist_group_by == E_CLIENTLIST_GROUP_DESK)
 	  { 
              borders = evas_list_sort(borders, evas_list_count(borders), 
-                          _e_int_menus_clients_group_desk_cb);
+                                      _e_int_menus_clients_group_desk_cb);
              _e_int_menus_clients_add_by_desk(desk, borders, m);
 	  }
         if (e_config->clientlist_group_by == E_CLIENTLIST_GROUP_CLASS) 
 	  { 
 	     borders = evas_list_sort(borders, evas_list_count(borders), 
-		   _e_int_menus_clients_group_class_cb); 
+                                      _e_int_menus_clients_group_class_cb); 
 	     _e_int_menus_clients_add_by_class(borders, m);
 	  }
 	if (e_config->clientlist_group_by == E_CLIENTLIST_GROUP_NONE)
-	  {
-	     _e_int_menus_clients_add_by_none(borders, m);
-	  }
+          _e_int_menus_clients_add_by_none(borders, m);
      }
-   
+
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-   
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Cleanup Windows"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/windows");
@@ -1262,7 +1268,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/lost_windows");
 	e_menu_item_submenu_set(mi, subm);
      }
-   
+
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_clients_free_hook);
    e_object_data_set(E_OBJECT(m), borders);
 }
@@ -1297,7 +1303,7 @@ _e_int_menus_clients_item_create(E_Border *bd, E_Menu *m)
 {
    E_Menu_Item *mi;
    const char *title;
-	
+
    title = _e_int_menus_clients_title_abbrv(e_border_name_get(bd));
    mi = e_menu_item_new(m);
    e_menu_item_check_set(mi, 1);
@@ -1317,14 +1323,14 @@ static void
 _e_int_menus_clients_free_hook(void *obj)
 {
    E_Menu *m;
-   Evas_List *borders;
-   
+   Evas_List *borders = NULL;
+
    m = obj;
    borders = e_object_data_get(E_OBJECT(m));
    while (borders)
      {
 	E_Border *bd;
-	
+
 	bd = borders->data;
 	borders = evas_list_remove_list(borders, borders);
 	e_object_unref(E_OBJECT(bd));
@@ -1335,7 +1341,7 @@ static void
 _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
-   
+
    bd = data;
    E_OBJECT_CHECK(bd);
 
@@ -1349,9 +1355,7 @@ _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
      }
 
    if (!bd->iconic) e_desk_show(bd->desk);
-
-   if (!bd->lock_user_stacking)
-     e_border_raise(bd);
+   if (!bd->lock_user_stacking) e_border_raise(bd);
    if (!bd->lock_focus_out)
      {
 	if (e_config->focus_policy != E_FOCUS_CLICK)
@@ -1366,7 +1370,7 @@ _e_int_menus_clients_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    Evas_Object *o;
-   
+
    bd = data;
    E_OBJECT_CHECK(bd);
 
@@ -1379,7 +1383,7 @@ static void
 _e_int_menus_clients_cleanup_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Action *act;
-   
+
    act = e_action_find("cleanup_windows");
    if (act) act->func.go(E_OBJECT(m->zone), NULL);
 }
@@ -1395,8 +1399,7 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    root = e_menu_root_get(m);
    /* get the current clients */
-   if (root)
-     zone = root->zone;
+   if (root) zone = root->zone;
    borders = e_border_lost_windows_get(zone);
 
    if (!borders)
@@ -1408,9 +1411,10 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
      }
    for (l = borders; l; l = l->next)
      {
-	E_Border *bd = l->data;
+	E_Border *bd; 
 	const char *title = "";
-	
+
+        bd = l->data;
 	title = e_border_name_get(bd);
 	mi = e_menu_item_new(m);
 	if ((title) && (title[0]))
@@ -1420,7 +1424,8 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 	/* ref the border as we implicitly unref it in the callback */
 	e_object_ref(E_OBJECT(bd));
 	e_menu_item_callback_set(mi, _e_int_menus_lost_clients_item_cb, bd);
-	if (bd->desktop) e_util_desktop_menu_item_icon_add(bd->desktop, "24x24", mi);
+	if (bd->desktop) 
+          e_util_desktop_menu_item_icon_add(bd->desktop, "24x24", mi);
      }
    e_object_free_attach_func_set(E_OBJECT(m), 
 				 _e_int_menus_lost_clients_free_hook);
@@ -1431,14 +1436,14 @@ static void
 _e_int_menus_lost_clients_free_hook(void *obj)
 {
    E_Menu *m;
-   Evas_List *borders;
-   
+   Evas_List *borders = NULL;
+
    m = obj;
    borders = e_object_data_get(E_OBJECT(m));
    while (borders)
      {
 	E_Border *bd;
-	
+
 	bd = borders->data;
 	borders = evas_list_remove_list(borders, borders);
 	e_object_unref(E_OBJECT(bd));
@@ -1462,31 +1467,28 @@ _e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_augmentation_add(E_Menu *m, Evas_List *augmentation)
 {
-   Evas_List *l;
+   Evas_List *l = NULL;
 
    for (l = augmentation; l; l = l->next)
      {
 	E_Int_Menu_Augmentation *aug;
 
 	aug = l->data;
-	if (aug->add.func)
-	  aug->add.func(aug->add.data, m);
+	if (aug->add.func) aug->add.func(aug->add.data, m);
      }
 }
 
 static void
 _e_int_menus_augmentation_del(E_Menu *m, Evas_List *augmentation)
 {
-   Evas_List *l;
+   Evas_List *l = NULL;
 
    for (l = augmentation; l; l = l->next)
      {
 	E_Int_Menu_Augmentation *aug;
 
 	aug = l->data;
-
-	if (aug->del.func)
-	  aug->del.func(aug->del.data, m);
+	if (aug->del.func) aug->del.func(aug->del.data, m);
      }
 }
 
@@ -1497,11 +1499,11 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
    Evas_List *l, *shelves = NULL;
    E_Container *con;
    E_Zone *zone;
-   
+
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    con = e_container_current_get(e_manager_current_get());
    zone = e_zone_current_get(con);
-   
+
    /* get the current clients */
    shelves = e_shelf_list();
 
@@ -1516,12 +1518,11 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
 	E_Shelf *s;
 	const char *name;
 	char buf[4096];
-	
-	s = l->data;
-	if (!s) continue;
+
+	if (!(s = l->data)) continue;
 	if (s->zone->num != zone->num) continue;
 	if (s->cfg->container != con->num) continue;
-	
+
 	name = s->name;
 	if (!name) name = _("Shelf #");	
 	snprintf(buf, sizeof(buf), "%s %i", name, s->id);
@@ -1574,7 +1575,7 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
      }
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-   
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Add A Shelf"));
    e_menu_item_callback_set(mi, _e_int_menus_shelves_add_cb, NULL);
@@ -1602,7 +1603,7 @@ _e_int_menus_shelves_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Container *con;
    E_Zone *zone;
    E_Config_Shelf *cs;
-   
+
    con = e_container_current_get(e_manager_current_get());
    zone = e_zone_current_get(con);
    cs = E_NEW(E_Config_Shelf, 1);
@@ -1619,7 +1620,7 @@ _e_int_menus_shelves_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    cs->overlap = 0;
    e_config->shelves = evas_list_append(e_config->shelves, cs);
    e_config_save_queue();
-   
+
    e_shelf_config_init();
 }
 
@@ -1635,9 +1636,9 @@ _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi)
    Efreet_Desktop *desktop;
    char label[4096];
    int opt = 0;
-   
+
    if ((!entry) || (!mi)) return;
-   
+
    desktop = entry->desktop;
    if ((e_config->menu_eap_name_show) && (entry->name)) opt |= 0x4;
    if (desktop) 
@@ -1647,23 +1648,26 @@ _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi)
 	if ((e_config->menu_eap_comment_show) && (desktop->comment))
 	  opt |= 0x1;
      }
-   
+
    if (opt == 0x7) 
-     snprintf(label, sizeof(label), "%s (%s) [%s]", entry->name, desktop->generic_name, desktop->comment);
+     snprintf(label, sizeof(label), "%s (%s) [%s]", entry->name, 
+              desktop->generic_name, desktop->comment);
    else if (opt == 0x6) 
-     snprintf(label, sizeof(label), "%s (%s)", entry->name, desktop->generic_name);
+     snprintf(label, sizeof(label), "%s (%s)", entry->name, 
+              desktop->generic_name);
    else if (opt == 0x5) 
      snprintf(label, sizeof(label), "%s [%s]", entry->name, desktop->comment);
    else if (opt == 0x4) 
      snprintf(label, sizeof(label), "%s", entry->name);
    else if (opt == 0x3) 
-     snprintf(label, sizeof(label), "%s [%s]", desktop->generic_name, desktop->comment);
+     snprintf(label, sizeof(label), "%s [%s]", desktop->generic_name, 
+              desktop->comment);
    else if (opt == 0x2) 
      snprintf(label, sizeof(label), "%s", desktop->generic_name);
    else if (opt == 0x1) 
      snprintf(label, sizeof(label), "%s", desktop->comment);
    else
      snprintf(label, sizeof(label), "%s", entry->name);
-   
+
    e_menu_item_label_set(mi, label);
 }
