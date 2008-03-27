@@ -26,7 +26,7 @@ struct _Import
 struct _E_Config_Dialog_Data 
 {
    Evas_Object *ofm, *o, *osfm, *ol;
-   Ecore_List *thumbs, *medias;
+   Ecore_List *thumbs, *names, *medias;
    Ecore_Con_Url *ecu;
    Ecore_Event_Handler *hdata, *hcomplete;
    FILE *feed;
@@ -100,6 +100,8 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    cfdata->o = o;
    cfdata->thumbs = ecore_list_new();
    ecore_list_free_cb_set(cfdata->thumbs, free);
+   cfdata->names = ecore_list_new();
+   ecore_list_free_cb_set(cfdata->names, free);
    cfdata->medias = ecore_list_new();
    ecore_list_free_cb_set(cfdata->medias, free);
 
@@ -207,6 +209,7 @@ e_int_config_wallpaper_web_del(E_Dialog *dia)
 	free(cfdata->tmpdir);
      }
    ecore_list_destroy(cfdata->thumbs);
+   ecore_list_destroy(cfdata->names);
    ecore_list_destroy(cfdata->medias);
 
    e_int_config_wallpaper_web_done(import->parent);
@@ -296,7 +299,7 @@ _parse_feed(void *data)
    E_Config_Dialog_Data *cfdata;
    FILE *fh;
    char instr[1024];
-   char *edj, *img, *title;
+   char *edj, *img, *name, *title;
    int state = -1;
 
    import = data;
@@ -314,7 +317,19 @@ _parse_feed(void *data)
 	     state = 1;
 	  }
 
-	if ((strstr(instr, "<link>") !=  NULL) && (state == 1))
+	if ((strstr(instr, "<title>") !=  NULL) && (state == 1))
+	  {
+	     char *p;
+
+	     name = strchr(instr, '>');
+	     name++;
+	     p = strchr(name, '<');
+	     *p = 0;
+	     name = strdup(name);
+	     state = 2;
+	  }
+
+	if ((strstr(instr, "<link>") !=  NULL) && (state == 2))
 	  {
 	     char *p;
 
@@ -326,11 +341,11 @@ _parse_feed(void *data)
 	     if (!strcmp(p, ".edj"))
 	       {
 		  edj = strdup(edj);
-		  state = 2;
+		  state = 3;
 	       }
 	  }
 
-	if ((strstr(instr, "<enclosure") != NULL) && (state == 2))
+	if ((strstr(instr, "<enclosure") != NULL) && (state == 3))
 	  {
 	     char *p;
 
@@ -339,12 +354,13 @@ _parse_feed(void *data)
 	     p = strchr(img, '"');
 	     *p = 0;
 	     img = strdup(img);
-	     state = 3;
+	     state = 4;
 	  }
 
-	if ((strstr(instr, "</item>") != NULL) && (state == 3))
+	if ((strstr(instr, "</item>") != NULL) && (state == 4))
 	  {
 	     ecore_list_append(cfdata->thumbs, img);
+	     ecore_list_append(cfdata->names, name);
 	     ecore_list_append(cfdata->medias, edj);
 	     state = 0;
 	  }
@@ -371,7 +387,7 @@ _get_thumbs(void *data)
 {
    Import *import;
    E_Config_Dialog_Data *cfdata;
-   char *src, *dest, *dtmp;
+   char *src, *dest, *dtmp, *name, *ext;
 
    import = data;
    cfdata = import->cfdata;
@@ -379,9 +395,12 @@ _get_thumbs(void *data)
    asprintf(&dtmp, "%s/.tmp", cfdata->tmpdir);
    ecore_file_mkdir(dtmp);
    ecore_list_first_goto(cfdata->thumbs);
+   ecore_list_first_goto(cfdata->names);
    while ((src = ecore_list_next(cfdata->thumbs)))
      {
-	asprintf(&dest, "%s/%s", dtmp, ecore_file_file_get(src));
+	name = ecore_list_next(cfdata->names);
+	ext = strrchr(src, '.');
+	asprintf(&dest, "%s/%s%s", dtmp, name, ext);
 	ecore_file_download(src, dest, _get_thumb_complete, NULL, import);
      }
 }
@@ -426,14 +445,14 @@ _file_click_cb(void *data, Evas_Object *obj, void *ev_info)
    if (cfdata->ready_for_edj == 0) return;
 
    icon_info = sels->data;
-   if (ecore_list_find(cfdata->thumbs, ECORE_COMPARE_CB(_list_find), icon_info->file))
-     cfdata->edj = ecore_list_index_goto(cfdata->medias, ecore_list_index(cfdata->thumbs));
+   if (ecore_list_find(cfdata->names, ECORE_COMPARE_CB(_list_find), icon_info->file))
+     cfdata->edj = ecore_list_index_goto(cfdata->medias, ecore_list_index(cfdata->names));
 }
 
 static int
 _list_find(const char *str1, const char *str2)
 {
-   return strcmp(ecore_file_file_get(str1), str2);
+   return strcmp(str1, ecore_file_strip_ext(str2));
 }
 
 static void 
@@ -605,6 +624,8 @@ _reset(void *data)
    // Clean lists
    if (!ecore_list_empty_is(cfdata->thumbs))
      ecore_list_clear(cfdata->thumbs);
+   if (!ecore_list_empty_is(cfdata->names))
+     ecore_list_clear(cfdata->names);
    if (!ecore_list_empty_is(cfdata->medias))
      ecore_list_clear(cfdata->medias);
 
