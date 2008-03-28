@@ -265,6 +265,7 @@ AC_DEFINE(E_INTERNAL, 1, "This define can be used to wrap internal E stuff, as c
 AC_OUTPUT([
 Makefile
 enlightenment.spec
+enlightenment.pc
 src/Makefile
 src/bin/Makefile
 src/modules/Makefile

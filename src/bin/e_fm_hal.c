@@ -130,6 +130,7 @@ e_fm2_hal_volume_add(E_Volume *v)
    if ((!v->mount_point) || (v->mount_point[0] == 0))
      {
 	if (v->mount_point) free(v->mount_point);
+	v->mount_point = NULL;
 	v->mount_point = e_fm2_hal_volume_mountpoint_get(v);
 	if ((!v->mount_point) || (v->mount_point[0] == 0))
 	  {
@@ -137,6 +138,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 	     char *id;
 	     
 	     if (v->mount_point) free(v->mount_point);
+	     v->mount_point = NULL;
 	     id = "disk";
 	     if ((v->uuid) && (v->uuid[0])) id = v->uuid;
 	     if (ecore_file_is_dir("/media"))

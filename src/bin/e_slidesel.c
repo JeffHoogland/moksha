@@ -155,7 +155,7 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 		  if (sd->cur)
 		    {
 		       /* get rid of accidental release and presses */
-		       if ((t - sd->down_time) > 0.2)
+//		       if ((t - sd->down_time) > 0.2)
 			 {
 			    edje_object_signal_emit(sd->edje_obj, "e,action,select", "e");
 			    if (sd->cur->func) sd->cur->func(sd->cur->data);
