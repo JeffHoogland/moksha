@@ -543,6 +543,7 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			    sd->down.sy = y;
 			 }
 		    }
+		  evas_event_feed_hold(e, 0, ev->timestamp, ev->data);
 	       }
 	     sd->down.dragged = 0;
 	     sd->down.now = 0;
@@ -598,6 +599,8 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		  (e_config->thumbscroll_threshhold * 
 		   e_config->thumbscroll_threshhold)))
 	       {
+		  if (!sd->down.dragged)
+		    evas_event_feed_hold(e, 1, ev->timestamp, ev->data);
 		  ev->event_flags |= EVAS_EVENT_FLAG_ON_HOLD;
 		  sd->down.dragged = 1;
 	       }
