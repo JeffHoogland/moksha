@@ -1827,7 +1827,22 @@ e_config_domain_load(const char *domain, E_Config_DD *edd)
      {
 	data = eet_data_read(ef, edd, "config");
 	eet_close(ef);
+        return data;
      }
+
+   /* fallback to a system directory
+    * FIXME proper $PATH like handling might be wanted
+    */ 
+   snprintf(buf, sizeof(buf), "%s/data/config/%s/%s.cfg",
+	    e_prefix_data_get(), _e_config_profile, domain);
+   ef = eet_open(buf, EET_FILE_MODE_READ);
+   if (ef)
+     {
+	data = eet_data_read(ef, edd, "config");
+	eet_close(ef);
+        return data;
+     }
+
    return data;
 }
 
