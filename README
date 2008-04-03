@@ -1,5 +1,18 @@
 Enlightenment 0.17.0 - IN DEVELOPMENT... not a RELEASE.
 
+Requirements:
+-------------
+
+Must:
+  libc libm libX11 libXext evas ecore ecoreevas ecore-file ecore-ipc ecore-con
+  ecore-job ecore-imf ecore-img-evas edje eet embryo efreet efreet-mime
+  edbus ecore-txt
+  [png loader in evas, jpeg loader in evas, eet loader in evas, software_x11
+  engine in evas, buffer engine in evas]
+
+Recommended:
+  libpam [xrender engine in evas]
+
 NOTE: Users of DR16 will need to rename the $prefix/bin/enlightenment
 file prior to installing DR17 or it will be overwritten.
 
@@ -9,16 +22,6 @@ of its own (recommended) like:
   ./configure --prefix=/usr/local/e17
 
 You will, as usual need to add the subsequent bin dir to your $PATH etc.
-
-PREREQUISITES:
-
-The following Enlightenment Foundation Libraries are required by e17:
-  * eet
-  * evas
-  * ecore
-  * embryo
-  * edje
-  * efreet
 
 
 NOTES:
