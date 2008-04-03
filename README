@@ -4,7 +4,7 @@ Requirements:
 -------------
 
 Must:
-  libc libm libX11 libXext evas ecore ecoreevas ecore-file ecore-ipc ecore-con
+  libc libm libX11 libXext evas ecore ecore-evas ecore-file ecore-ipc ecore-con
   ecore-job ecore-imf ecore-img-evas edje eet embryo efreet efreet-mime
   edbus ecore-txt
   [png loader in evas, jpeg loader in evas, eet loader in evas, software_x11
