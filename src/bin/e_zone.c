@@ -996,6 +996,8 @@ _e_zone_cb_timer(void *data)
    
    zone->flip.timer = NULL;
    
+   current = e_desk_current_get(zone);
+   
    if (current)
      ecore_event_add(E_EVENT_POINTER_WARP, ev, NULL, NULL);
    else
