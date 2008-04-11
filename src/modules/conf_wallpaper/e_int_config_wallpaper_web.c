@@ -2,7 +2,9 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
-// Da usare per importare l'immagine : e_int_config_wallpaper_import(NULL);
+/* TODO
+   * notify user if the Flickr query doesn't return any result
+*/
 
 #include "e.h"
 #include "e_mod_main.h"
@@ -11,6 +13,7 @@
 
 #define	MAGIC_IMPORT 0x427781cb
 #define TEMPLATE "/tmp/wallpXXXXXX"
+#define FLICKR_QUERY "http://api.flickr.com/services/feeds/photos_public.gne?tags=%s&format=rss_200_enc"
 
 typedef struct _Import Import;
 
@@ -30,9 +33,23 @@ struct _E_Config_Dialog_Data
    Ecore_Con_Url *ecu;
    Ecore_Event_Handler *hdata, *hcomplete;
    FILE *feed;
-   int ready_for_edj, pending_downloads, busy;
-   char *edj, *ol_val, *tmpdir;
+   int ready_for_media, pending_downloads, busy;
+   char *media, *ol_val, *tmpdir, *flickr_query;
    const char *source;
+};
+
+enum parser_states
+{
+   PS_QUIET = -1,
+   PS_RSS_TAG_START,
+   PS_RSS_TAG_END,
+   PS_RSS_TAG_FOUND,
+   PS_GENERATOR_FOUND,
+   PS_ITEM_FOUND,
+   PS_XSM_LINK_FOUND,
+   PS_XSM_ENCLOSURE_FOUND,
+   PS_MEDIA_CONTENT_FOUND,
+   PS_MEDIA_THUMB_FOUND
 };
 
 static void _file_double_click_cb(void *data, Evas_Object *obj, void *ev_info);
@@ -52,6 +69,7 @@ static void _dia_ok_cb(void *data, E_Dialog *dia);
 static void _download_media(Import *import);
 static int  _download_media_progress_cb(void *data, const char *file, long int dltotal, long int dlnow, long int ultotal, long int ulnow);
 static void _download_media_complete_cb(void *data, const char *file, int status);
+static void _get_flickr_images(void *data, void *data2);
 
 EAPI E_Dialog *
 e_int_config_wallpaper_web(E_Config_Dialog *parent)
@@ -60,7 +78,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    E_Dialog *dia;
    Import *import;
    E_Config_Dialog_Data *cfdata;
-   Evas_Object *o, *ol, *of, *ofm, *osfm;
+   Evas_Object *o, *ol, *of, *ofm, *osfm, *ee, *b;
    Evas_Coord mw, mh;
    E_Fm2_Config fmc;
 
@@ -86,7 +104,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
 
    cfdata->ecu = ecore_con_url_new("http://fake.url");
 
-   cfdata->ready_for_edj = 0;
+   cfdata->ready_for_media = 0;
    cfdata->pending_downloads = 0;
    cfdata->busy = 0;
    import->cfdata = cfdata;
@@ -104,8 +122,8 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    ecore_list_free_cb_set(cfdata->names, free);
    cfdata->medias = ecore_list_new();
    ecore_list_free_cb_set(cfdata->medias, free);
-
-   of = e_widget_framelist_add(evas, "Sources", 1);
+   //of = e_widget_framelist_add(evas, "Sources", 1);
+   of = e_widget_frametable_add(evas, _("Sources"), 0);
    ol = e_widget_ilist_add(evas, 24, 24, &cfdata->ol_val);
    cfdata->ol = ol;
    e_widget_ilist_append(ol, NULL, _("get-e.org - Static"),
@@ -117,14 +135,24 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    /*e_widget_ilist_append(ol, NULL, _("get-e.org - Local copy"),
                          _source_sel_cb, import,
                          "http://localhost/get_e_feed.xml");*/
-   /*e_widget_ilist_append(ol, NULL, "Flickr test",
+   /*e_widget_ilist_append(ol, NULL, "Raster on Flickr",
                          _source_sel_cb, import,
-                         "http://api.flickr.com/services/feeds/photos_public.gne?tags=birro&lang=it-it&format=rss_200_enc");*/
+                         "http://api.flickr.com/services/feeds/photos_public.gne?tags=rasterman&lang=it-it&format=rss_200_enc");*/
    e_widget_ilist_go(ol);
+
    e_widget_min_size_get(ol, &mw, NULL);
    e_widget_min_size_set(ol, mw, 320);
-   e_widget_framelist_object_append(of, ol);
-   e_widget_list_object_append(o, of, 1, 0, 0.5);
+
+   //e_widget_framelist_object_append(of, ol);
+   e_widget_frametable_object_append(of, ol, 0, 0, 3, 1, 1, 1, 1, 1);
+
+   cfdata->flickr_query = strdup(_("Enter text here"));
+   ee = e_widget_entry_add(evas, &(cfdata->flickr_query), NULL, NULL, NULL);
+   b = e_widget_button_add(evas, _("Query Flickr"), NULL, _get_flickr_images, import, NULL);
+   e_widget_frametable_object_append(of, ee, 0, 1, 2, 1, 1, 1, 1, 0);
+   e_widget_frametable_object_append(of, b, 2, 1, 1, 1, 0, 1, 0, 0);
+
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    ofm = e_fm2_add(evas);
    memset(&fmc, 0, sizeof(E_Fm2_Config));
@@ -164,7 +192,6 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    e_widget_list_object_append(cfdata->o, cfdata->osfm, 1, 1, 0.5);
    e_widget_min_size_set(osfm, 320, 320);
 
-//   e_widget_min_size_set(o, 580, 370);
    e_widget_min_size_get(o, NULL, &mh);
    e_dialog_content_set(dia, o, 480, mh);
 
@@ -250,6 +277,7 @@ _feed_complete(void *data, int type, void *event)
      {
 	asprintf(&title, _("[%s] Getting feed... FAILED!"), cfdata->source);
 	e_dialog_title_set(import->dia, title);
+	cfdata->busy = 0;
      }
    return 0;
 }
@@ -289,7 +317,7 @@ _source_sel_cb(void *data)
 	_get_feed(cfdata->ol_val, import);
      }
    else 
-     e_widget_ilist_unselect(cfdata->ol);
+	e_widget_ilist_unselect(cfdata->ol);
 }
 
 static void
@@ -299,8 +327,9 @@ _parse_feed(void *data)
    E_Config_Dialog_Data *cfdata;
    FILE *fh;
    char instr[1024];
-   char *edj, *img, *name, *title;
-   int state = -1;
+   char *media, *img, *title, *tbuf, *ttbuf;
+   int state = PS_QUIET;
+   int have_ns_media, xsm_generator;
 
    import = data;
    cfdata = import->cfdata;
@@ -308,72 +337,152 @@ _parse_feed(void *data)
    cfdata->pending_downloads = 0;
    fh = fopen("/tmp/feed.xml", "r");
    while (fgets(instr, sizeof(instr), fh) != NULL)
-     {
-	if (strstr(instr, "<rss version") != NULL) state = 0;
-	if ((strstr(instr, "<item>") != NULL) && (state == 0))
-	  {
-	     edj = NULL;
-	     img = NULL;
-	     state = 1;
-	  }
-
-	if ((strstr(instr, "<title>") !=  NULL) && (state == 1))
-	  {
-	     char *p;
-
-	     name = strchr(instr, '>');
-	     name++;
-	     p = strchr(name, '<');
-	     *p = 0;
-	     name = strdup(name);
-	     state = 2;
-	  }
-
-	if ((strstr(instr, "<link>") !=  NULL) && (state == 2))
-	  {
-	     char *p;
-
-	     edj = strchr(instr, '>');
-	     edj++;
-	     p = strchr(edj, '<');
-	     *p = 0;
-	     p = strrchr(ecore_file_file_get(edj), '.');
-	     if (!strcmp(p, ".edj"))
-	       {
-		  edj = strdup(edj);
-		  state = 3;
-	       }
-	  }
-
-	if ((strstr(instr, "<enclosure") != NULL) && (state == 3))
-	  {
-	     char *p;
-
-	     img = strstr(instr, "url=");
-	     img += 5;
-	     p = strchr(img, '"');
-	     *p = 0;
-	     img = strdup(img);
-	     state = 4;
-	  }
-
-	if ((strstr(instr, "</item>") != NULL) && (state == 4))
-	  {
-	     ecore_list_append(cfdata->thumbs, img);
-	     ecore_list_append(cfdata->names, name);
-	     ecore_list_append(cfdata->medias, edj);
-	     state = 0;
-	  }
-     }
+    {
+       switch(state)
+	 {
+	  case PS_QUIET:
+	      {
+		 if (strstr(instr, "<rss ") != NULL)
+		   {
+		      if (strstr(instr, "xmlns:media") != NULL)
+			have_ns_media = 1;
+		      if (strstr(instr, ">") != NULL)
+			state = PS_RSS_TAG_FOUND;
+		      else
+			{
+			   tbuf = strdup(instr);
+			   state = PS_RSS_TAG_START;
+			}
+		   }
+		 break;
+	      }
+	  case PS_RSS_TAG_START:
+	      {
+		 ttbuf = strdup(tbuf);
+		 free(tbuf);
+		 asprintf(&tbuf, "%s%s", ttbuf, instr);
+		 free(ttbuf);
+		 if (strstr(tbuf, ">") != NULL)
+		   {
+		      if (strstr(tbuf, "xmlns:media") != NULL)
+			have_ns_media = 1;
+		      else
+			have_ns_media = 0;
+		      state = PS_RSS_TAG_FOUND;
+		      free(tbuf);
+		   }
+		 break;
+	      }
+	  case PS_RSS_TAG_FOUND:
+	      {
+		 if ((strstr(instr, "<generator>") != NULL))
+		   {
+		      if ((strstr(instr, "XSM") != NULL))
+			xsm_generator = 1;
+		      else
+			xsm_generator = 0;
+		      state = PS_GENERATOR_FOUND;
+		   }
+		 break;
+		 
+	      }
+	  case PS_GENERATOR_FOUND:
+	      {
+		 if (strstr(instr, "<item>") != NULL)
+		   {
+		      state = PS_ITEM_FOUND;
+		      media = NULL;
+		      img = NULL;
+		   }
+		 break;
+	      }
+	  case PS_ITEM_FOUND:
+	      {
+		 if (xsm_generator)
+		   {
+		      if (strstr(instr, "<link>") != NULL)
+			{
+			   char *p;
+			   media = strchr(instr, '>');
+			   media++;
+			   p = strchr(media, '<');
+			   *p = 0;
+			   p = strrchr(media, '.');
+			   if (!strcmp(p, ".edj"))
+			     {
+				media = strdup(media);
+				state = PS_XSM_LINK_FOUND;
+			     }
+			}
+		   }
+		 else if (have_ns_media)
+		   {
+		      if (strstr(instr, "media:content") != NULL)
+			{
+			   char *p;
+			   media = strchr(instr, '"');
+			   media++;
+			   p = strchr(media, '"');
+			   *p = 0;
+			   media = strdup(media);
+			   state = PS_MEDIA_CONTENT_FOUND;
+			}
+		   }
+		 break;
+	      }
+	  case PS_XSM_LINK_FOUND:
+	      {
+		 if (strstr(instr, "<enclosure") != NULL)
+		   {
+		      char *p;
+		      img = strstr(instr, "url=");
+		      img = 5;
+		      p = strchr(img, '"');
+		      *p = 0;
+		      img = strdup(img);
+		      state = PS_XSM_ENCLOSURE_FOUND;
+		   }
+		 break;
+	      }
+	  case PS_MEDIA_THUMB_FOUND:
+	  case PS_XSM_ENCLOSURE_FOUND:
+	      {
+		 if (strstr(instr, "</item>") != NULL)
+		   {
+		      ecore_list_append(cfdata->thumbs,img);
+		      ecore_list_append(cfdata->medias, media);
+		      state = PS_GENERATOR_FOUND;
+		   }
+		 break;
+	      }
+	  case PS_MEDIA_CONTENT_FOUND:
+	      {
+		 if (strstr(instr, "media:thumbnail") != NULL)
+		   {
+		      char *p;
+		      img = strchr(instr, '"');
+		      img++;
+		      p = strchr(img, '"');
+		      *p = 0;
+		      img = strdup(img);
+		      state = PS_MEDIA_THUMB_FOUND;
+		   }
+		 break;
+	      }
+	  default:
+	    break;
+	 }
+    }
+   
    fclose(fh);
 
-   if (state == 0)
+   if (state == PS_GENERATOR_FOUND)
      {
 	asprintf(&title, _("[%s] Parsing feed... DONE!"), cfdata->source);
 	e_dialog_title_set(import->dia, title);
 	e_fm2_path_set(cfdata->ofm, cfdata->tmpdir, "/");
 	_get_thumbs(import);
-     } 
+     }
    else
      {
 	asprintf(&title, _("[%s] Parsing feed... FAILED!"), cfdata->source);
@@ -442,11 +551,11 @@ _file_click_cb(void *data, Evas_Object *obj, void *ev_info)
    cfdata = import->cfdata;
    sels = e_fm2_selected_list_get(cfdata->ofm);
    if (!sels) return;
-   if (cfdata->ready_for_edj == 0) return;
-
+   if (cfdata->ready_for_media == 0) return;
+   
    icon_info = sels->data;
    if (ecore_list_find(cfdata->names, ECORE_COMPARE_CB(_list_find), icon_info->file))
-     cfdata->edj = ecore_list_index_goto(cfdata->medias, ecore_list_index(cfdata->names));
+     cfdata->media = ecore_list_index_goto(cfdata->medias, ecore_list_index(cfdata->thumbs));
 }
 
 static int
@@ -489,11 +598,11 @@ _download_media(Import *import)
    cfdata = i->cfdata;
    
    cfdata->pending_downloads = 1;
-   file = ecore_file_file_get(cfdata->edj);
+   file = ecore_file_file_get(cfdata->media);
    asprintf(&buf, "%s/.e/e/backgrounds/%s", e_user_homedir_get(), file);
-   asprintf(&title, _("[%s] Downloading of edje file..."), cfdata->source);
+   asprintf(&title, _("[%s] Downloading of media file..."), cfdata->source);
    e_dialog_title_set(i->dia, title);
-   ecore_file_download(cfdata->edj, buf,
+   ecore_file_download(cfdata->media, buf,
                        _download_media_complete_cb,
                        _download_media_progress_cb, i);
 }
@@ -507,8 +616,15 @@ _download_media_complete_cb(void *data, const char *file, int status)
    import = data;
    import->cfdata->pending_downloads = 0;
    asprintf(&dest, "%s/.e/e/backgrounds/%s", e_user_homedir_get(),
-            ecore_file_file_get(import->cfdata->edj));
-   e_int_config_wallpaper_update(import->parent, dest);
+            ecore_file_file_get(import->cfdata->media));
+   if (!strstr(ecore_file_file_get(import->cfdata->media), "edj"))
+   {
+      e_config->wallpaper_import_last_dev = evas_stringshare_add(ecore_file_dir_get(dest));
+      e_config->wallpaper_import_last_path = evas_stringshare_add("/");
+      e_int_config_wallpaper_import(NULL);
+   }
+   else
+      e_int_config_wallpaper_update(import->parent, dest);
    e_int_config_wallpaper_web_del(import->dia);
 }
 
@@ -527,7 +643,7 @@ _get_thumb_complete(void *data, const char *file, int status)
 	asprintf(&title, _("[%s] Download %d images of %d"),
 		 cfdata->source, got, ecore_list_index(cfdata->thumbs));
 	e_dialog_title_set(import->dia, title);
-	cfdata->ready_for_edj = 0;
+	cfdata->ready_for_media = 0;
 	asprintf(&dst, "%s/%s", cfdata->tmpdir, ecore_file_file_get(file));
 	ecore_file_mv(file, dst);
 	got++;
@@ -536,7 +652,7 @@ _get_thumb_complete(void *data, const char *file, int status)
      {
 	got = 1;
 	cfdata->busy = 0;
-	cfdata->ready_for_edj = 1;
+	cfdata->ready_for_media = 1;
 	asprintf(&title, _("[%s] Choose an image from list"), cfdata->source);
 	e_dialog_title_set(import->dia, title);
 	e_dialog_button_disable_num_set(import->dia, 0, 0);
@@ -560,7 +676,7 @@ _download_media_progress_cb(void *data, const char *file, long int dltotal,
    if (last)
      {
 	status = (double) ((double) dlnow) / ((double) dltotal);
-	asprintf(&title, _("[%s] Downloading of edje file... %d%% done"),
+	asprintf(&title, _("[%s] Downloading of media file... %d%% done"),
 		 import->cfdata->source, (int) (status * 100.0));
 	e_dialog_title_set(import->dia, title);
      }
@@ -644,4 +760,24 @@ _reset(void *data)
 
    // Disable OK button
    e_dialog_button_disable_num_set(import->dia, 0, 1);
+}
+
+static void
+_get_flickr_images(void *data, void *data2)
+{
+   Import *import;
+   E_Config_Dialog_Data *cfdata;
+   char *querystring;
+
+   import = data;
+   cfdata = import->cfdata;
+
+   if ((cfdata->busy == 0) && (cfdata->pending_downloads == 0))
+   {
+      cfdata->source = "Flickr";
+      _reset(import);
+      cfdata->busy = 1;
+      asprintf(&querystring, FLICKR_QUERY, cfdata->flickr_query);
+      _get_feed(querystring, import);
+   }
 }
