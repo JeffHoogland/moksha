@@ -462,8 +462,9 @@ linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd
 			  (errno == EBADF) ||
 			  (errno == EPIPE) ||
 			  (errno == EINVAL) ||
-			  (errno == ENOSPC));
-		  if (num == 0) break;
+			  (errno == ENOSPC) ||
+			  (errno == ENODEV));
+		  if (num <= 0) break;
 	       }
 	  }
 	if (lost)
