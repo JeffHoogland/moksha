@@ -582,7 +582,7 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
      }
    else
      {
-	o = e_widget_fsel_add(dia->win->evas, "/", "~/", NULL, NULL,
+	o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
 			      _e_desktop_edit_select_cb, cfdata,
 			      NULL, cfdata, 1);
      }
@@ -646,7 +646,7 @@ _e_desktop_editor_cb_exec_select(void *data1, void *data2)
      }
    else
      {
-	o = e_widget_fsel_add(dia->win->evas, "/", "~/", NULL, NULL,
+	o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
 			      _e_desktop_edit_select_cb, cfdata,
 			      NULL, cfdata, 1);
      }
