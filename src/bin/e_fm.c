@@ -509,10 +509,10 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 	dialog = e_dialog_new(con, "E", "_fm_file_unexisting_path_dialog");
 	e_dialog_button_add(dialog, _("Close"), NULL, NULL, dialog);
 	e_dialog_button_focus_num(dialog, 0);
-	e_dialog_title_set(dialog, _("Unexisting path"));
+	e_dialog_title_set(dialog, _("Nonexistent path"));
 
 	snprintf(text, sizeof(text), 
-		 _("%s doesn't exists"),
+		 _("%s doesn't exist."),
 		 realpath);
 
 	e_dialog_text_set(dialog, text);
