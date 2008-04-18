@@ -34,7 +34,8 @@ struct _E_Config_Dialog_Data
 
 /* Key pairs for module types 
  * 
- * Should be in alphabetic order */
+ * Should be in alphabetic order 
+*/
 const CFTypes _types[] = 
 {
      {"appearance", N_("Appearance")},
@@ -119,6 +120,7 @@ _create_data(E_Config_Dialog *cfd)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    if (!cfdata) return NULL;
+
    _fill_data(cfdata);
    return cfdata;
 }
@@ -136,8 +138,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      {
 	E_Path_Dir *epd = NULL;
 
-	epd = l->data;
-	if (!epd) continue;
+	if (!(epd = l->data)) continue;
 	if (!ecore_file_is_dir(epd->dir)) continue;
 	_load_modules(epd->dir);
      }
@@ -229,8 +230,7 @@ _load_modules(const char *dir)
    char *mod = NULL;
 
    if (!dir) return;
-   files = ecore_file_ls(dir);
-   if (!files) return;
+   if (!(files = ecore_file_ls(dir))) return;
 
    /* get all modules in this path_dir */
    ecore_list_first_goto(files);
@@ -245,8 +245,7 @@ _load_modules(const char *dir)
 	/* check that we have a desktop file for this module */
 	snprintf(buf, sizeof(buf), "%s/%s/module.desktop", dir, mod);
 	if (!ecore_file_exists(buf)) continue;
-	desk = efreet_desktop_get(buf);
-	if (!desk) continue;
+	if (!(desk = efreet_desktop_get(buf))) continue;
 
 	/* does the ModuleType exist in desktop? */
 	if (desk->x) 
@@ -308,8 +307,7 @@ _fill_list(Evas_Object *obj, int enabled)
 	     int count = 0;
 
 	     if (!_types[i].key) continue;
-	     cft = evas_hash_find(types_hash, _types[i].key);
-	     if (!cft) continue;
+	     if (!(cft = evas_hash_find(types_hash, _types[i].key))) continue;
 	     if (cft->modules)
 	       {
 		  if (!enabled)
@@ -324,6 +322,7 @@ _fill_list(Evas_Object *obj, int enabled)
 		  if (l) evas_list_free(l);
 		  continue;
 	       }
+
 	     /* We have at least one, append header */
 	     e_widget_ilist_header_append(obj, NULL, cft->name);
 
@@ -351,8 +350,7 @@ _types_hash_cb_free(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__
 {
    CFType *type = NULL;
 
-   type = data;
-   if (!type) return 1;
+   if (!(type = data)) return 1;
    if (type->key) evas_stringshare_del(type->key);
    if (type->name) evas_stringshare_del(type->name);
    if (type->modules) 
@@ -371,8 +369,7 @@ _mod_hash_cb_free(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 {
    CFModule *mod = NULL;
 
-   mod = data;
-   if (!mod) return 1;
+   if (!(mod = data)) return 1;
    if (mod->short_name) evas_stringshare_del(mod->short_name);
    if (mod->name) evas_stringshare_del(mod->name);
    if (mod->icon) evas_stringshare_del(mod->icon);
@@ -436,8 +433,7 @@ _list_widget_load(Evas_Object *obj, Evas_List *list)
 	char *path;
 	char buf[4096];
 
-	mod = ml->data;
-	if (!mod) continue;
+	if (!(mod = ml->data)) continue;
 	if (mod->orig_path) 
 	  {
 	     path = ecore_file_dir_get(mod->orig_path);
@@ -458,8 +454,7 @@ _avail_list_cb_change(void *data, Evas_Object *obj)
 {
    E_Config_Dialog_Data *cfdata = NULL;
 
-   cfdata = data;
-   if (!cfdata) return;
+   if (!(cfdata = data)) return;
 
    /* Unselect all in loaded list & disable buttons */
    e_widget_ilist_unselect(cfdata->l_loaded);
@@ -484,8 +479,7 @@ _load_list_cb_change(void *data, Evas_Object *obj)
 {
    E_Config_Dialog_Data *cfdata = NULL;
 
-   cfdata = data;
-   if (!cfdata) return;
+   if (!(cfdata = data)) return;
 
    /* Unselect all in avail list & disable button */
    e_widget_ilist_unselect(cfdata->l_avail);
@@ -530,8 +524,7 @@ _mod_hash_unselect(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 {
    CFModule *mod = NULL;
 
-   mod = data;
-   if (!mod) return 1;
+   if (!(mod = data)) return 1;
    mod->selected = 0;
    return 1;
 }
@@ -543,8 +536,7 @@ _select_all_modules(Evas_Object *obj, void *data)
    E_Config_Dialog_Data *cfdata = NULL;
    int i = 0;
 
-   cfdata = data;
-   if (!cfdata) return;
+   if (!(cfdata = data)) return;
    for (i = 0, l = e_widget_ilist_items_get(obj); l; l = l->next, i++) 
      {
 	E_Ilist_Item *item = NULL;
@@ -552,8 +544,7 @@ _select_all_modules(Evas_Object *obj, void *data)
 
 	item = l->data;
 	if ((!item) || (!item->selected)) continue;
-	mod = e_widget_ilist_nth_data_get(obj, i);
-	if (!mod) continue;
+	if (!(mod = e_widget_ilist_nth_data_get(obj, i))) continue;
 	mod->selected = 1;
 	if (mod->comment)
 	  e_widget_textblock_markup_set(cfdata->o_desc, mod->comment);
@@ -568,30 +559,50 @@ static void
 _btn_cb_unload(void *data, void *data2) 
 {
    E_Config_Dialog_Data *cfdata = NULL;
+   int sel = -1;
 
-   cfdata = data;
-   if (!cfdata) return;
+   if (!(cfdata = data)) return;
+
+   /* get what is currently selected in the list */
+   sel = e_widget_ilist_selected_get(cfdata->l_loaded);
 
    _enable_modules(0);
    e_widget_disabled_set(cfdata->b_unload, 1);
    e_widget_textblock_markup_set(cfdata->o_desc, _("Description: Unavailable"));
+
+   /* using a total reload here as it's simpler than parsing the list(s), 
+    * finding what was selected, removing it, checking for headers, etc */
    _fill_list(cfdata->l_avail, 0);
    _fill_list(cfdata->l_loaded, 1);
+
+   /* move the selection down one if possible. Ilist itself will check 
+    * for headers, etc, etc */
+   e_widget_ilist_selected_set(cfdata->l_loaded, sel);
 }
 
 static void 
 _btn_cb_load(void *data, void *data2) 
 {
    E_Config_Dialog_Data *cfdata = NULL;
+   int sel = -1;
 
-   cfdata = data;
-   if (!cfdata) return;
+   if (!(cfdata = data)) return;
+
+   /* get what is currently selected in the list */
+   sel = e_widget_ilist_selected_get(cfdata->l_avail);
 
    _enable_modules(1);
    e_widget_disabled_set(cfdata->b_load, 1);
    e_widget_textblock_markup_set(cfdata->o_desc, _("Description: Unavailable"));
+
+   /* using a total reload here as it's simpler than parsing the list(s), 
+    * finding what was selected, removing it, checking for headers, etc */
    _fill_list(cfdata->l_avail, 0);
    _fill_list(cfdata->l_loaded, 1);
+
+   /* move the selection down one if possible. Ilist itself will check 
+    * for headers, etc, etc */
+   e_widget_ilist_selected_set(cfdata->l_avail, sel);
 }
 
 static void 
