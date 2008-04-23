@@ -287,8 +287,6 @@ src/modules/ibox/Makefile
 src/modules/ibox/module.desktop
 src/modules/start/Makefile
 src/modules/start/module.desktop
-src/modules/layout/Makefile
-src/modules/layout/module.desktop
 src/modules/exebuf/Makefile
 src/modules/exebuf/module.desktop
 src/modules/winlist/Makefile

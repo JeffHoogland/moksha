@@ -25,14 +25,14 @@ module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
 freqsetdir = $(pkgdir)
-freqset_DATA = \
-freqset$(EXEEXT)
 
 setuid_root_mode = a=rx,u+xs
+setuid_root_user = root
 install-data-hook:
+	@chown $(setuid_root_user) $(DESTDIR)$(freqsetdir)/freqset$(EXEEXT) || true
 	@chmod $(setuid_root_mode) $(DESTDIR)$(freqsetdir)/freqset$(EXEEXT) || true
 
-noinst_PROGRAMS        = freqset
+freqset_PROGRAMS       = freqset
 freqset_SOURCES        = freqset.c
 
 uninstall:

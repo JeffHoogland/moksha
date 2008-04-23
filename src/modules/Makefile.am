@@ -8,7 +8,6 @@ battery \
 cpufreq \
 ibox \
 start \
-layout \
 exebuf \
 winlist \
 fileman \

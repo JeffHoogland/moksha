@@ -26,14 +26,8 @@ module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
 tempgetdir = $(pkgdir)
-tempget_DATA = \
-tempget$(EXEEXT)
 
-x_mode = a=rx,u+x
-install-data-hook:
-	@chmod $(x_mode) $(DESTDIR)$(tempgetdir)/tempget$(EXEEXT) || true
-
-noinst_PROGRAMS        = tempget
+tempget_PROGRAMS       = tempget
 tempget_SOURCES        = tempget.c
 tempget_LDFLAGS        = @TEMPERATURE_LIBS@
 

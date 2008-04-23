@@ -27,14 +27,8 @@ module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
 batgetdir = $(pkgdir)
-batget_DATA = \
-batget$(EXEEXT)
 
-x_mode = a=rx,u+x
-install-data-hook:
-	@chmod $(x_mode) $(DESTDIR)$(batgetdir)/batget$(EXEEXT) || true
-
-noinst_PROGRAMS        = batget
+batget_PROGRAMS        = batget
 batget_SOURCES         = batget.c
 batget_LDFLAGS         = @BATTERY_LIBS@
 
