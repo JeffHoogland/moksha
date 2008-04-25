@@ -45,7 +45,7 @@ static void _e_border_menu_cb_default_icon(void *data, E_Menu *m, E_Menu_Item *m
 static void _e_border_menu_cb_netwm_icon(void *data, E_Menu *m, E_Menu_Item *mi);
 
 EAPI void
-e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp)
+e_int_border_menu_create(E_Border *bd)
 {
    E_Menu *m;
    E_Menu_Item *mi;
@@ -372,10 +372,16 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	  }
      }
 
+}
+	
+EAPI void
+e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp)
+{
+   e_int_border_menu_create(bd);
    if (key)
-     e_menu_activate_key(m, bd->zone, x, y, 1, 1, E_MENU_POP_DIRECTION_DOWN);
+     e_menu_activate_key(bd->border_menu, bd->zone, x, y, 1, 1, E_MENU_POP_DIRECTION_DOWN);
    else
-     e_menu_activate_mouse(m, bd->zone, x, y, 1, 1,
+     e_menu_activate_mouse(bd->border_menu, bd->zone, x, y, 1, 1,
 			   E_MENU_POP_DIRECTION_DOWN, timestamp);
 }
 

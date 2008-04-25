@@ -7,6 +7,7 @@
 #ifndef E_INT_BORDER_MENU_H
 #define E_INT_BORDER_MENU_H
 
+EAPI void e_int_border_menu_create(E_Border *bd);
 EAPI void e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp);
 EAPI void e_int_border_menu_del(E_Border *bd);
 
