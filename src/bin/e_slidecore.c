@@ -17,7 +17,9 @@ struct _E_Smart_Data
    Evas_Object *event_obj;
    Evas_Object *o1, *o2;
    Evas_List *items;
-   Evas_Coord dist, pos;
+   double slide_time, slide_start;
+   Ecore_Animator *slide_animator;
+   Evas_Coord dist, pos, slide_pos, slide_start_pos;
    int p1, p2, pn;
    unsigned char down : 1;
 };
@@ -31,6 +33,7 @@ struct _E_Smart_Item
 };
 
 /* local subsystem functions */
+static int _e_smart_cb_slide_animator(void *data);
 static void _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -86,11 +89,47 @@ EAPI void
 e_slidecore_jump(Evas_Object *obj, int num)
 {
    API_ENTRY return;
-   _e_smart_reconfigure(sd);
+
+   sd->slide_start_pos = sd->pos;
+   sd->slide_pos = num * sd->dist;
+   if (!sd->slide_animator)
+     sd->slide_animator = ecore_animator_add(_e_smart_cb_slide_animator,
+					     sd);
+   sd->slide_start = ecore_time_get();
+}
+
+EAPI void
+e_slidecore_slide_time_set(Evas_Object *obj, double t)
+{
+   API_ENTRY return;
+   sd->slide_time = t;
 }
 
 
 /* local subsystem functions */
+
+static int
+_e_smart_cb_slide_animator(void *data)
+{
+   E_Smart_Data *sd;
+   double t;
+
+   sd = data;
+   t = (ecore_time_get() - sd->slide_start) / sd->slide_time;
+   if (t > 1.0) t = 1.0;
+   t = 1.0 - t;
+   t = 1.0 - (t * t * t * t); /* more t's - more curve */
+   if (t > 1.0) t = 1.0;
+   sd->pos = sd->slide_start_pos + (t * (sd->slide_pos - sd->slide_start_pos));
+   _e_smart_reconfigure(sd);
+   
+   if (t >= 1.0)
+     {
+	sd->slide_animator = NULL;
+	return 0;
+     }
+   return 1;
+}
 
 static void
 _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
@@ -101,6 +140,11 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
    sd = data;
    ev = event_info;
    if (ev->button == 1) sd->down = 1;
+   if (sd->slide_animator)
+     {
+	ecore_animator_del(sd->slide_animator);
+	sd->slide_animator = NULL;
+     }
 }
 
 static void
@@ -111,7 +155,23 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    sd = data;
    ev = event_info;
-   if (ev->button == 1) sd->down = 0;
+   if (ev->button == 1)
+     {
+	int gop = 0;
+	int n;
+	
+	sd->down = 0;
+	n = evas_list_count(sd->items);
+	
+	gop = sd->pos - (sd->p1 * sd->dist);
+	gop = ((gop / sd->dist) * sd->dist) + (sd->p1 * sd->dist);
+	sd->slide_start_pos = sd->pos;
+	sd->slide_pos = gop;
+	if (!sd->slide_animator)
+	  sd->slide_animator = ecore_animator_add(_e_smart_cb_slide_animator,
+						  sd);
+	sd->slide_start = ecore_time_get();
+     }
 }
 
 static void
@@ -156,7 +216,6 @@ _e_smart_reconfigure(E_Smart_Data *sd)
      {
 	E_Smart_Item *it1, *it2;
 
-	/* FIXME: delete old o1, o2, create new o1, o2 */
 	sd->pn = n;
 	if (n > 0)
 	  {
@@ -250,12 +309,15 @@ _e_smart_add(Evas_Object *obj)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_smart_event_mouse_move, sd);
    evas_object_smart_member_add(o, obj);
    evas_object_repeat_events_set(o, 1);
+
+   sd->slide_time = 0.5;
 }
 
 static void
 _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
+   if (sd->slide_animator) ecore_animator_del(sd->slide_animator);
    while (sd->items)
      {
 	E_Smart_Item *it;
