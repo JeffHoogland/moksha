@@ -1404,7 +1404,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 //   printf(" accept:%i take:%i\n", bd->client.icccm.accepts_focus, bd->client.icccm.take_focus);
    if (!bd->client.icccm.accepts_focus) return;
    /* dont focus an iconified window. that's silly! */
-   if ((focus) && (bd->iconic))return;
+   if ((focus) && (bd->iconic)) return;
    
    if ((bd->modal) && (bd->modal != bd))
      {
