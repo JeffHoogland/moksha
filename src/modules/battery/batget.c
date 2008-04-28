@@ -1348,7 +1348,8 @@ init(void)
 #elif defined(HAVE_CFBASE_H) /* OS X */
    darwin_init();
 #else
-   if (ecore_file_is_dir("/sys/class/power_supply")) /* >= 2.6.24 */
+   if ((ecore_file_is_dir("/sys/class/power_supply")) &&
+       (!ecore_file_exists("/proc/apm"))) /* >= 2.6.24 */
      {
 	mode = CHECK_SYS_CLASS_POWER_SUPPLY;
 	linux_sys_class_power_supply_init();
