@@ -4,6 +4,7 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
 DEB_FIXPERMS_EXCLUDE := enlightenment_sys freqset tempget batget
+DEB_MAKE_CLEAN_TARGET := clean
 
 install/enlightenment::
 	mkdir debian/enlightenment/etc
@@ -14,5 +15,5 @@ install/enlightenment::
 	chmod 4555 debian/tmp/usr/bin/enlightenment_sys
 
 clean::
-	./autogen.sh --prefix=/usr
+	./autogen.sh --prefix=/usr $(DEB_CONFIGURE_EXTRA_FLAGS)
 	

@@ -2,5 +2,5 @@ enlightenment (1:@VERSION@-1) unstable; urgency=low
 
   * a CVS snapshot release.
 
- -- E17 Debian Team <debian@edevelop.org>  Fri, 25 Mar 2005 15:09:23 -0700
+ -- Falko Schmidt <falko@alphagemini.org>  Mon, 28 Apr 2008 16:17:17 +0000
 
