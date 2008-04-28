@@ -106,6 +106,7 @@ struct _E_Fm2_Icon_Info
    const char       *icon;
    const char       *link;
    const char       *real_link;
+   const char       *category;
    struct stat       statinfo;
    unsigned char     icon_type;
    unsigned char     mount : 1;

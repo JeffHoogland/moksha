@@ -3377,6 +3377,7 @@ _e_fm2_icon_unfill(E_Fm2_Icon *ic)
    if (ic->info.icon) evas_stringshare_del(ic->info.icon);
    if (ic->info.link) evas_stringshare_del(ic->info.link);
    if (ic->info.real_link) evas_stringshare_del(ic->info.real_link);
+   if (ic->info.category) evas_stringshare_del(ic->info.category);
    ic->info.mime = NULL;
    ic->info.label = NULL;
    ic->info.comment = NULL;
@@ -3649,6 +3650,7 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
    if (ic->info.icon) evas_stringshare_del(ic->info.icon);
    if (ic->info.link) evas_stringshare_del(ic->info.link);
    if (ic->info.real_link) evas_stringshare_del(ic->info.real_link);
+   if (ic->info.category) evas_stringshare_del(ic->info.category);
    free(ic);
 }
 
@@ -3925,6 +3927,8 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	       }
 	  }
      }
+   /* FIXME: get category */
+   ic->info.category = NULL;
    efreet_desktop_free(desktop);
 
    return 1;
@@ -3934,11 +3938,13 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    if (ic->info.generic) evas_stringshare_del(ic->info.generic);
    if (ic->info.icon) evas_stringshare_del(ic->info.icon);
    if (ic->info.link) evas_stringshare_del(ic->info.link);
+   if (ic->info.category) evas_stringshare_del(ic->info.category);
    ic->info.label = NULL;
    ic->info.comment = NULL;
    ic->info.generic = NULL;
    ic->info.icon = NULL;
    ic->info.link = NULL;
+   ic->info.category = NULL;
    //Hack
    if (!strncmp(ic->info.file, "|storage_", 9)) ecore_file_unlink(buf);
    return 0;
@@ -5807,10 +5813,17 @@ _e_fm2_cb_icon_sort(void *data1, void *data2)
      {
 	char buf1[4096], buf2[4096], *p;
 	
-	strncpy(buf1, l1, sizeof(buf1) - 2);
-	strncpy(buf2, l2, sizeof(buf2) - 2);
-	buf1[sizeof(buf1) - 1] = 0;
-	buf2[sizeof(buf2) - 1] = 0;
+/*	if (ic1->sd->config->list.sort.category)
+	  {
+ * FIXME: implement category sorting
+	  }
+	else
+*/	  {
+	     strncpy(buf1, l1, sizeof(buf1) - 2);
+	     strncpy(buf2, l2, sizeof(buf2) - 2);
+	     buf1[sizeof(buf1) - 1] = 0;
+	     buf2[sizeof(buf2) - 1] = 0;
+	  }
 	p = buf1;
 	while (*p)
 	  {
