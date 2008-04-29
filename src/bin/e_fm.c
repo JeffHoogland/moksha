@@ -5013,7 +5013,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
        (ic->sd->config->view.single_click)
        )
      {
-	if (!up)
+	if (up)
 	  evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
      }
 }
