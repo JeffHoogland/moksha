@@ -1317,6 +1317,23 @@ linux_pmu_check(void)
 
 
 
+static int
+dir_has_contents(const char *dir)
+{
+   Ecore_List *bats;
+   char *name;
+	
+   bats = ecore_file_ls(dir);
+   if (bats)
+     {
+	int count;
+	
+	count = ecore_list_count(bats);
+	ecore_list_destroy(bats);
+	if (count > 0) return 1;
+     }
+   return 0;
+}
 
 static void
 init(void)
@@ -1349,6 +1366,7 @@ init(void)
    darwin_init();
 #else
    if ((ecore_file_is_dir("/sys/class/power_supply")) &&
+       (dir_has_contents("/sys/class/power_supply")) &&
        (!ecore_file_exists("/proc/apm"))) /* >= 2.6.24 */
      {
 	mode = CHECK_SYS_CLASS_POWER_SUPPLY;
