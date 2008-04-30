@@ -2,12 +2,14 @@
 Type=Link
 Name=Start
 Name[eo]=Starto
+Name[hu]=Start menü
 Icon=e-module-start
 Comment=<hilight>Start Button Gadget</hilight><br><br>E17's "Start" button equivalent.
 Comment[de]=
 Comment[eo]=<hilight>Akcesoraĵo de starto-butono<hilight><br><br>Ekvivalenta "starto"-butono por E17.
 Comment[es]=<hilight>Dispositivo botón de inicio</hilight><br><br>El equivalente al botón "Inicio" en E17.
 Comment[fr]=
+Comment[hu]=<hilight>Start menü gomb mudul</hilight><br><br>E17 Start menü gombja.
 Comment[it]=<hilight>Modulo Start</hilight><br><br>L'equivalente del pulsante "Avvio" in E17.
 Comment[ja]=
 Comment[pt]=
