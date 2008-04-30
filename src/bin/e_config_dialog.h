@@ -6,7 +6,8 @@
 typedef enum _E_Config_Dialog_CFData_Type
 {
    E_CONFIG_DIALOG_CFDATA_TYPE_BASIC,
-   E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED
+   E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED,
+   E_CONFIG_DIALOG_CFDATA_TYPE_NORMAL_WINDOW
 } E_Config_Dialog_CFData_Type;
 
 typedef struct _E_Config_Dialog      E_Config_Dialog;

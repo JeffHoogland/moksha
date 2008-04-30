@@ -9,8 +9,8 @@ e_configure_init(void)
    e_configure_registry_item_add("extensions/modules", 10, _("Modules"), NULL, "enlightenment/modules", e_int_config_modules);
 }
 
-EAPI void
-e_configure_registry_item_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params))
+static void
+_e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params))
 {
    Evas_List *l;
    char *cat;
@@ -30,6 +30,7 @@ e_configure_registry_item_add(const char *path, int pri, const char *label, cons
    if (icon_file) eci->icon_file = evas_stringshare_add(icon_file);
    if (icon) eci->icon = evas_stringshare_add(icon);
    eci->func = func;
+   eci->generic_func = generic_func;
    
    for (l = e_configure_registry; l; l = l->next)
      {
@@ -57,6 +58,18 @@ e_configure_registry_item_add(const char *path, int pri, const char *label, cons
      }
    done:
    free(cat);
+}
+
+EAPI void
+e_configure_registry_item_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params))
+{
+   _e_configure_registry_item_full_add(path, pri, label, icon_file, icon, func, NULL);
+}
+
+EAPI void
+e_configure_registry_generic_item_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, void (*generic_func) (E_Container *con, const char *params))
+{
+   _e_configure_registry_item_full_add(path, pri, label, icon_file, icon, NULL, generic_func);
 }
 
 EAPI void
@@ -187,6 +200,7 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
 		  if (!strcmp(item, eci->item))
 		    {
 		       if (eci->func) eci->func(con, params);
+		       else if (eci->generic_func) eci->generic_func(con, params);
 		       goto done;
 		    }
 	       }
