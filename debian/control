@@ -27,7 +27,7 @@ Description: Enlightenment headers, static libraries and documentation
 Package: e17
 Architecture: any
 Section: x11
-Depends: enlightenment (>= 0.16.999.000), e17-modules
+Depends: enlightenment (>= 0.16.999.000), emodules-all
 Description: Virtual package providing the E17 desktop shell 
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
