@@ -6,8 +6,6 @@
 
 #define POPUP_DEBOUNCE_CYCLES  2
 
-/***************************************************************************/
-/**/
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
@@ -15,6 +13,7 @@ static void _gc_orient(E_Gadcon_Client *gcc);
 static char *_gc_label(void);
 static Evas_Object *_gc_icon(Evas *evas);
 static const char *_gc_id_new(void);
+
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
@@ -25,13 +24,8 @@ static const E_Gadcon_Client_Class _gadcon_class =
      },
    E_GADCON_CLIENT_STYLE_PLAIN
 };
-/**/
-/***************************************************************************/
 
-/***************************************************************************/
-/**/
 /* actual module specifics */
-
 typedef struct _Instance Instance;
 
 struct _Instance
@@ -65,21 +59,21 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    Instance *inst;
-   
+
    battery_config->full = -2;
    battery_config->time_left = -2;
    battery_config->have_battery = -2;
    battery_config->have_power = -2;
-   
+
    inst = E_NEW(Instance, 1);
-   
+
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/battery",
 			   "e/modules/battery/main");
-   
+
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
-   
+
    inst->gcc = gcc;
    inst->o_battery = o;   
    inst->warning = NULL;
@@ -87,8 +81,10 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _button_cb_mouse_down, inst);
-   battery_config->instances = evas_list_append(battery_config->instances, inst);
+   battery_config->instances = 
+     evas_list_append(battery_config->instances, inst);
    _battery_config_updated();
+
    return gcc;
 }
 
@@ -96,16 +92,17 @@ static void
 _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Instance *inst;
-   
+
    inst = gcc->data;
-   battery_config->instances = evas_list_remove(battery_config->instances, inst);
+   battery_config->instances = 
+     evas_list_remove(battery_config->instances, inst);
    evas_object_del(inst->o_battery);
    if(inst->warning)
      {
         e_object_del(E_OBJECT(inst->warning));
         inst->popup_battery = NULL;
      }
-   free(inst);
+   E_FREE(inst);
 }
 
 static void
@@ -113,7 +110,7 @@ _gc_orient(E_Gadcon_Client *gcc)
 {
    Instance *inst;
    Evas_Coord mw, mh;
-   
+
    inst = gcc->data;
    mw = 0, mh = 0;
    edje_object_size_min_get(inst->o_battery, &mw, &mh);
@@ -136,7 +133,7 @@ _gc_icon(Evas *evas)
 {
    Evas_Object *o;
    char buf[4096];
-   
+
    o = edje_object_add(evas);
    snprintf(buf, sizeof(buf), "%s/e-module-battery.edj",
 	    e_module_dir_get(battery_config->module));
@@ -150,17 +147,12 @@ _gc_id_new(void)
    return _gadcon_class.name;
 }
 
-/**/
-/***************************************************************************/
-
-/***************************************************************************/
-/**/
 static void
 _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
-   
+
    inst = data;
    ev = event_info;
    if ((ev->button == 3) && (!battery_config->menu))
@@ -168,7 +160,7 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	E_Menu *mn;
 	E_Menu_Item *mi;
 	int cx, cy, cw, ch;
-	
+
 	mn = e_menu_new();
 	e_menu_post_deactivate_callback_set(mn, _menu_cb_post, inst);
 	battery_config->menu = mn;
@@ -177,9 +169,9 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_menu_item_label_set(mi, _("Configuration"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");   
 	e_menu_item_callback_set(mi, _battery_face_cb_menu_configure, NULL);
-	
+
 	e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
-	
+
 	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
 					  &cx, &cy, &cw, &ch);
 	e_menu_activate_mouse(mn,
@@ -189,8 +181,8 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_util_evas_fake_mouse_up_later(inst->gcc->gadcon->evas,
 					ev->button);
      }
-	 if (ev->button == 1)
-	   _battery_cb_warning_popup_hide(data, e, obj, event_info);
+   if (ev->button == 1)
+     _battery_cb_warning_popup_hide(data, e, obj, event_info);
 }
 
 static void
@@ -220,9 +212,9 @@ static void _battery_face_time_set(Evas_Object *battery, int time_left)
 {
    char buf[256];
    int hrs, mins;
-				 
-   hrs = time_left / 3600;
-   mins = (time_left) / 60 - (hrs * 60);
+
+   hrs = (time_left / 3600);
+   mins = ((time_left) / 60 - (hrs * 60));
    snprintf(buf, sizeof(buf), "%i:%02i", hrs, mins);
    if (hrs < 0) hrs = 0;
    if (mins < 0) mins = 0;
@@ -241,7 +233,7 @@ void
 _battery_config_updated(void)
 {
    char buf[4096];
-   
+
    if (!battery_config) return;
    if (battery_config->batget_exe)
      {
@@ -252,21 +244,20 @@ _battery_config_updated(void)
 	    "%s/%s/batget %i",
 	    e_module_dir_get(battery_config->module), MODULE_ARCH,
 	    battery_config->poll_interval);
-   battery_config->batget_exe = ecore_exe_pipe_run(buf,
-						   ECORE_EXE_PIPE_READ |
-						   ECORE_EXE_PIPE_READ_LINE_BUFFERED |
-						   ECORE_EXE_NOT_LEADER,
-						   NULL);
+
+   battery_config->batget_exe = 
+     ecore_exe_pipe_run(buf, ECORE_EXE_PIPE_READ |
+                        ECORE_EXE_PIPE_READ_LINE_BUFFERED |
+                        ECORE_EXE_NOT_LEADER, NULL);
 }
 
 static int
 _battery_warning_popup_destroy(void *data)
 {
    Instance *inst;
-   
-   inst = data;
 
-   if(!inst || !inst->warning) return;
+   inst = data;
+   if ((!inst) || (!inst->warning)) return;
 
    e_object_del(E_OBJECT(inst->warning));
    inst->warning = NULL;
@@ -281,8 +272,7 @@ _battery_cb_warning_popup_hide(void *data, Evas *e, Evas_Object *obj, void *even
    Instance *inst = NULL;
 
    inst = (Instance *)data;
-
-   if(!inst || !inst->warning) return;
+   if ((!inst) || (!inst->warning)) return;
 
    _battery_warning_popup_destroy(inst);
 }
@@ -304,23 +294,23 @@ _battery_warning_popup(Instance *inst, int time, double percent)
    Evas_Object *rect = NULL, *popup_bg = NULL;
    int x,y,w,h;
 
-   if(!inst || inst->warning) return;
+   if ((!inst) || (inst->warning)) return;
 
    inst->warning = e_gadcon_popup_new(inst->gcc, _battery_warning_popup_resize);
-   if(!inst->warning) return;
+   if (!inst->warning) return;
 
    e = inst->warning->win->evas;
 
    popup_bg = edje_object_add(e);
    inst->popup_battery = edje_object_add(e);
      
-   if(!popup_bg || !inst->popup_battery)
+   if ((!popup_bg) || (!inst->popup_battery))
      {
         e_object_free(E_OBJECT(inst->warning));
         inst->warning = NULL;
         return;
      }
-   
+
    e_theme_edje_object_set(popup_bg, "base/theme/modules/battery/popup",
      "e/modules/battery/popup");
    e_theme_edje_object_set(inst->popup_battery, "base/theme/modules/battery",
@@ -333,32 +323,32 @@ _battery_warning_popup(Instance *inst, int time, double percent)
    evas_object_geometry_get(inst->warning->o_bg, &x, &y, &w, &h);
 
    rect = evas_object_rectangle_add(e);
-   if(rect)
+   if (rect)
      {
         evas_object_move(rect, x, y);
         evas_object_resize(rect, w, h);
         evas_object_color_set(rect, 255, 255, 255, 0);
         evas_object_event_callback_add(rect, EVAS_CALLBACK_MOUSE_DOWN , 
-          _battery_cb_warning_popup_hide, inst);
+                                       _battery_cb_warning_popup_hide, inst);
         evas_object_repeat_events_set(rect, 1);
         evas_object_show(rect);
      }
-           
+
    _battery_face_time_set(inst->popup_battery, time);
    _battery_face_level_set(inst->popup_battery, percent);
    edje_object_signal_emit(inst->popup_battery, "e,state,discharging", "e");
 
-   if(battery_config->alert_timeout)
-     ecore_timer_add(battery_config->alert_timeout,_battery_warning_popup_destroy, inst);
+   if (battery_config->alert_timeout) 
+     {
+        ecore_timer_add(battery_config->alert_timeout, 
+                        _battery_warning_popup_destroy, inst);
+     }
 }
 
-/***************************************************************************/
-/**/
 /* module setup */
 EAPI E_Module_Api e_modapi = 
 {
-   E_MODULE_API_VERSION,
-     "Battery"
+   E_MODULE_API_VERSION, "Battery"
 };
 
 EAPI void *
@@ -391,27 +381,26 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIMIT(battery_config->alert_timeout, 0, 300);
 
    battery_config->module = m;
-   
    battery_config->full = -2;
    battery_config->time_left = -2;
    battery_config->have_battery = -2;
    battery_config->have_power = -2;
-   
+
    battery_config->batget_data_handler =
      ecore_event_handler_add(ECORE_EXE_EVENT_DATA,
-			     _battery_cb_exe_data,
-			     NULL);
+			     _battery_cb_exe_data, NULL);
    battery_config->batget_del_handler =
      ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
-			     _battery_cb_exe_del,
-			     NULL);
-   
+			     _battery_cb_exe_del, NULL);
+
    e_gadcon_provider_register(&_gadcon_class);
-   
+
    snprintf(buf, sizeof(buf), "%s/e-module-battery.edj", e_module_dir_get(m));
-   e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "enlightenment/advanced");
-   e_configure_registry_item_add("advanced/battery", 100, _("Battery Meter"), NULL, buf, e_int_config_battery_module);
-   
+   e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, 
+                                     "enlightenment/advanced");
+   e_configure_registry_item_add("advanced/battery", 100, _("Battery Meter"), 
+                                 NULL, buf, e_int_config_battery_module);
+
    return m;
 }
 
@@ -420,7 +409,6 @@ e_modapi_shutdown(E_Module *m)
 {
    e_configure_registry_item_del("advanced/battery");
    e_configure_registry_category_del("advanced");
-   
    e_gadcon_provider_unregister(&_gadcon_class);
 
    if (battery_config->batget_exe)
@@ -440,7 +428,7 @@ e_modapi_shutdown(E_Module *m)
 	ecore_event_handler_del(battery_config->batget_del_handler);
 	battery_config->batget_del_handler = NULL;
      }
-   
+
    if (battery_config->config_dialog)
      e_object_del(E_OBJECT(battery_config->config_dialog));
    if (battery_config->menu)
@@ -461,42 +449,44 @@ e_modapi_save(E_Module *m)
    e_config_domain_save("module.battery", conf_edd, battery_config);
    return 1;
 }
-/**/
-/***************************************************************************/
 
-/***************************************************************************/
-/**/
 static int
 _battery_cb_exe_data(void *data, int type, void *event)
 {
    Ecore_Exe_Event_Data *ev;
-                                
+
    ev = event;
    if (ev->exe != battery_config->batget_exe) return 1;
    if ((ev->lines) && (ev->lines[0].line))
      {
 	int i;
-	
+
 	for (i = 0; ev->lines[i].line; i++)
 	  {
 	     if (!strcmp(ev->lines[i].line, "ERROR"))
 	       {
 		  Evas_List *l;
-		  
+
 		  for (l = battery_config->instances; l; l = l->next)
 		    {
 		       Instance *inst;
-		       
+
 		       inst = l->data;
-		       edje_object_signal_emit(inst->o_battery, "e,state,unknown", "e");
-		       edje_object_part_text_set(inst->o_battery, "e.text.reading", _("ERROR"));
-		       edje_object_part_text_set(inst->o_battery, "e.text.time", _("ERROR"));
-                    
-                       if(inst->popup_battery)
+		       edje_object_signal_emit(inst->o_battery, 
+                                               "e,state,unknown", "e");
+		       edje_object_part_text_set(inst->o_battery, 
+                                                 "e.text.reading", _("ERROR"));
+		       edje_object_part_text_set(inst->o_battery, 
+                                                 "e.text.time", _("ERROR"));
+
+                       if (inst->popup_battery)
                          {
-                            edje_object_signal_emit(inst->popup_battery, "e,state,unknown", "e");
-                            edje_object_part_text_set(inst->popup_battery, "e.text.reading", _("ERROR"));
-                            edje_object_part_text_set(inst->popup_battery, "e.text.time", _("ERROR"));
+                            edje_object_signal_emit(inst->popup_battery, 
+                                                    "e,state,unknown", "e");
+                            edje_object_part_text_set(inst->popup_battery, 
+                                                      "e.text.reading", _("ERROR"));
+                            edje_object_part_text_set(inst->popup_battery, 
+                                                      "e.text.time", _("ERROR"));
                          }
 		    }
 	       }
@@ -509,7 +499,7 @@ _battery_cb_exe_data(void *data, int type, void *event)
 		  Evas_List *l;
                   int mins, hrs;
                   static int debounce_popup = 0;
-		  
+
 		  if (sscanf(ev->lines[i].line, "%i %i %i %i",
 			     &full, &time_left, &have_battery, &have_power)
 		      == 4)
@@ -517,50 +507,60 @@ _battery_cb_exe_data(void *data, int type, void *event)
 		       for (l = battery_config->instances; l; l = l->next)
 			 {
 			    Instance *inst;
-			    
+
 			    inst = l->data;
 			    if (have_power != battery_config->have_power)
 			      {
 				 if (have_power)
-				   edje_object_signal_emit(inst->o_battery, "e,state,charging", "e");
+				   edje_object_signal_emit(inst->o_battery, 
+                                                           "e,state,charging", 
+                                                           "e");
 				 else
                                    {
-                                      edje_object_signal_emit(inst->o_battery, "e,state,discharging", "e");
+                                      edje_object_signal_emit(inst->o_battery, 
+                                                              "e,state,discharging", 
+                                                              "e");
                                       if(inst->popup_battery)
-                                        edje_object_signal_emit(inst->popup_battery, "e,state,discharging", "e");
+                                        edje_object_signal_emit(inst->popup_battery, 
+                                                                "e,state,discharging", "e");
                                    }
 			      }
 			    if (have_battery)
 			      {
                                  if (battery_config->full != full)
                                    {
-                                      _battery_face_level_set(inst->o_battery, (double)full / 100.0);
+                                      _battery_face_level_set(inst->o_battery, 
+                                                              (double)full / 100.0);
                                       if(inst->popup_battery)
-                                        _battery_face_level_set(inst->popup_battery, (double)full / 100.0);
+                                        _battery_face_level_set(inst->popup_battery, 
+                                                                (double)full / 100.0);
                                    }
 			      }
 			    else
                               {
                                  _battery_face_level_set(inst->o_battery, 0.0);
-                                 edje_object_part_text_set(inst->o_battery, "e.text.reading", _("N/A"));
+                                 edje_object_part_text_set(inst->o_battery, 
+                                                           "e.text.reading", 
+                                                           _("N/A"));
                               }
-                           
+
 			    if (time_left != battery_config->time_left)
                               {
                                  _battery_face_time_set(inst->o_battery, time_left);
                                  if(inst->popup_battery)
-                                   _battery_face_time_set(inst->popup_battery, time_left);
+                                   _battery_face_time_set(inst->popup_battery, 
+                                                          time_left);
                               }
-                            
+
                             if (have_battery && !have_power && (full != 100) &&
                                 ((battery_config->alert && ((time_left/60) <= battery_config->alert)) || 
                                  (battery_config->alert_p && (full <= battery_config->alert_p)))
                                )
                               {
-                                 if(++debounce_popup == POPUP_DEBOUNCE_CYCLES)
+                                 if (++debounce_popup == POPUP_DEBOUNCE_CYCLES)
                                    _battery_warning_popup(inst, time_left, (double)full/100.0);
                               }
-                            else if(have_power)
+                            else if (have_power)
                               {
                                  _battery_warning_popup_destroy(inst);
                                  debounce_popup = 0;
@@ -594,7 +594,7 @@ static int
 _battery_cb_exe_del(void *data, int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
-   
+
    ev = event;
    if (ev->exe != battery_config->batget_exe) return 1;
    battery_config->batget_exe = NULL;
