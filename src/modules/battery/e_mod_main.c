@@ -44,9 +44,10 @@ static void _battery_face_level_set(Evas_Object *battery, double level);
 static void _battery_face_time_set(Evas_Object *battery, int time);
 static void _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static int  _battery_cb_warning_popup_timeout(void *data);
 static void _battery_cb_warning_popup_hide(void *data, Evas *e, Evas_Object *obj, void *event);
 static void _battery_warning_popup_resize(Evas_Object *obj, int *w, int *h);
-static int  _battery_warning_popup_destroy(void *data);
+static void _battery_warning_popup_destroy(Instance *inst);
 static void _battery_warning_popup(Instance *inst, int time, double percent);
 
 static E_Config_DD *conf_edd = NULL;
@@ -167,7 +168,7 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Configuration"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");   
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
 	e_menu_item_callback_set(mi, _battery_face_cb_menu_configure, NULL);
 
 	e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
@@ -232,9 +233,17 @@ _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 void
 _battery_config_updated(void)
 {
+   Evas_List *l = NULL;
    char buf[4096];
 
    if (!battery_config) return;
+
+   if(battery_config->instances)
+     {
+        for (l = battery_config->instances; l; l = l->next)
+          _battery_warning_popup_destroy(l->data);
+     }
+
    if (battery_config->batget_exe)
      {
 	ecore_exe_terminate(battery_config->batget_exe);
@@ -252,16 +261,13 @@ _battery_config_updated(void)
 }
 
 static int
-_battery_warning_popup_destroy(void *data)
+_battery_cb_warning_popup_timeout(void *data)
 {
    Instance *inst;
 
    inst = data;
-   if ((!inst) || (!inst->warning)) return;
 
-   e_object_del(E_OBJECT(inst->warning));
-   inst->warning = NULL;
-   inst->popup_battery = NULL;
+   e_gadcon_popup_hide(inst->warning);
 
    return 0;
 }
@@ -274,7 +280,17 @@ _battery_cb_warning_popup_hide(void *data, Evas *e, Evas_Object *obj, void *even
    inst = (Instance *)data;
    if ((!inst) || (!inst->warning)) return;
 
-   _battery_warning_popup_destroy(inst);
+   e_gadcon_popup_hide(inst->warning);
+}
+
+static void
+_battery_warning_popup_destroy(Instance *inst)
+{
+   if(!inst || !inst->warning) return;
+
+   e_object_del(E_OBJECT(inst->warning));
+   inst->warning = NULL;
+   inst->popup_battery = NULL;
 }
 
 static void
@@ -341,7 +357,7 @@ _battery_warning_popup(Instance *inst, int time, double percent)
    if (battery_config->alert_timeout) 
      {
         ecore_timer_add(battery_config->alert_timeout, 
-                        _battery_warning_popup_destroy, inst);
+                        _battery_cb_warning_popup_timeout, inst);
      }
 }
 
@@ -500,6 +516,9 @@ _battery_cb_exe_data(void *data, int type, void *event)
                   int mins, hrs;
                   static int debounce_popup = 0;
 
+                  if (debounce_popup > POPUP_DEBOUNCE_CYCLES)
+                    debounce_popup = 0;
+		  
 		  if (sscanf(ev->lines[i].line, "%i %i %i %i",
 			     &full, &time_left, &have_battery, &have_power)
 		      == 4)
@@ -560,11 +579,8 @@ _battery_cb_exe_data(void *data, int type, void *event)
                                  if (++debounce_popup == POPUP_DEBOUNCE_CYCLES)
                                    _battery_warning_popup(inst, time_left, (double)full/100.0);
                               }
-                            else if (have_power)
-                              {
-                                 _battery_warning_popup_destroy(inst);
-                                 debounce_popup = 0;
-                              }
+                            else if(have_power)
+                              _battery_warning_popup_destroy(inst);
 			 }
 		       if (!have_battery)
 			 e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
