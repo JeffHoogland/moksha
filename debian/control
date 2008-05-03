@@ -9,7 +9,7 @@ Homepage: http://www.enlightenment.org
 Package: enlightenment
 Section: x11
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, libevas-engine-buffer, libevas-engine-software-x11
 Suggests: entrance
 Description: Enlightenment themes, etc.
  Enlightenment is an advanced window manager for X11. Unique
