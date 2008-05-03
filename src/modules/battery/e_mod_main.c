@@ -98,7 +98,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    battery_config->instances = 
      evas_list_remove(battery_config->instances, inst);
    evas_object_del(inst->o_battery);
-   if(inst->warning)
+   if (inst->warning)
      {
         e_object_del(E_OBJECT(inst->warning));
         inst->popup_battery = NULL;
@@ -238,7 +238,7 @@ _battery_config_updated(void)
 
    if (!battery_config) return;
 
-   if(battery_config->instances)
+   if (battery_config->instances)
      {
         for (l = battery_config->instances; l; l = l->next)
           _battery_warning_popup_destroy(l->data);
@@ -286,7 +286,7 @@ _battery_cb_warning_popup_hide(void *data, Evas *e, Evas_Object *obj, void *even
 static void
 _battery_warning_popup_destroy(Instance *inst)
 {
-   if(!inst || !inst->warning) return;
+   if (!inst || !inst->warning) return;
 
    e_object_del(E_OBJECT(inst->warning));
    inst->warning = NULL;
@@ -539,7 +539,7 @@ _battery_cb_exe_data(void *data, int type, void *event)
                                       edje_object_signal_emit(inst->o_battery, 
                                                               "e,state,discharging", 
                                                               "e");
-                                      if(inst->popup_battery)
+                                      if (inst->popup_battery)
                                         edje_object_signal_emit(inst->popup_battery, 
                                                                 "e,state,discharging", "e");
                                    }
@@ -550,7 +550,7 @@ _battery_cb_exe_data(void *data, int type, void *event)
                                    {
                                       _battery_face_level_set(inst->o_battery, 
                                                               (double)full / 100.0);
-                                      if(inst->popup_battery)
+                                      if (inst->popup_battery)
                                         _battery_face_level_set(inst->popup_battery, 
                                                                 (double)full / 100.0);
                                    }
@@ -566,7 +566,7 @@ _battery_cb_exe_data(void *data, int type, void *event)
 			    if (time_left != battery_config->time_left)
                               {
                                  _battery_face_time_set(inst->o_battery, time_left);
-                                 if(inst->popup_battery)
+                                 if (inst->popup_battery)
                                    _battery_face_time_set(inst->popup_battery, 
                                                           time_left);
                               }
@@ -579,7 +579,7 @@ _battery_cb_exe_data(void *data, int type, void *event)
                                  if (++debounce_popup == POPUP_DEBOUNCE_CYCLES)
                                    _battery_warning_popup(inst, time_left, (double)full/100.0);
                               }
-                            else if(have_power)
+                            else if (have_power)
                               _battery_warning_popup_destroy(inst);
 			 }
 		       if (!have_battery)
