@@ -3,10 +3,12 @@
 
 struct _E_Config_Dialog_Data
 {
-   int show_alert;   
+   int show_alert;
    int poll_interval;
-   int alarm_time;
-   int alarm_percent;
+   int alert_time;
+   int alert_percent;
+   int dismiss_alert;
+   int alert_timeout;
 };
 
 /* Protos */
@@ -46,13 +48,20 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    if (!battery_config) return;
-   cfdata->alarm_time = battery_config->alarm;
-   cfdata->alarm_percent = battery_config->alarm_p;
+   cfdata->alert_time = battery_config->alert;
+   cfdata->alert_percent = battery_config->alert_p;
    cfdata->poll_interval = battery_config->poll_interval;
-   if (cfdata->alarm_time > 0 || cfdata->alarm_percent > 0) 
+   cfdata->alert_timeout = battery_config->alert_timeout;
+
+   if (cfdata->alert_time > 0 || cfdata->alert_percent > 0) 
      cfdata->show_alert = 1;
    else 
      cfdata->show_alert = 0;
+   
+   if (cfdata->alert_timeout > 0)
+     cfdata->dismiss_alert = 1;
+   else
+     cfdata->dismiss_alert = 0;
 }
 
 static void *
@@ -90,16 +99,23 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    if (!battery_config) return 0;
+
    if (cfdata->show_alert)
-   { 
-     battery_config->alarm = cfdata->alarm_time;
-     battery_config->alarm_p = cfdata->alarm_percent;
-   }
+     { 
+        battery_config->alert = cfdata->alert_time;
+        battery_config->alert_p = cfdata->alert_percent;
+     }
    else
-   { 
-     battery_config->alarm = 0;
-     battery_config->alarm_p = 0;
-   }
+     { 
+        battery_config->alert = 0;
+        battery_config->alert_p = 0;
+     }
+
+   if (cfdata->dismiss_alert)
+     battery_config->alert_timeout = cfdata->alert_timeout;
+   else
+     battery_config->alert_timeout = 0;
+   
    _battery_config_updated();
    e_config_save_queue();
    return 1;
@@ -117,7 +133,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_label_add(evas, _("Check battery every:"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
    
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 1, 1024, 4, 0, NULL, &(cfdata->poll_interval), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 1, 1024, 4, 0, NULL, &(cfdata->poll_interval), 256);
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    
    ob = e_widget_check_add(evas, _("Show alert when battery is low"), &(cfdata->show_alert));
@@ -126,11 +142,20 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_label_add(evas, _("Alert when battery is down to:"));
    e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 0, 1, 1);
    
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1, 60, 1, 0, NULL, &(cfdata->alarm_time), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 0, 60, 1, 0, NULL, &(cfdata->alert_time), 60);
    e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f percent"), 1, 100, 1, 0, NULL, &(cfdata->alarm_percent), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f percent"), 0, 100, 1, 0, NULL, &(cfdata->alert_percent), 100);
    e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 0, 1, 0);
+   
+   ob = e_widget_check_add(evas, _("Dismiss alert automatically"), &(cfdata->dismiss_alert));
+   e_widget_frametable_object_append(of, ob, 0, 6, 1, 1, 1, 1, 1, 0);   
+   
+   ob = e_widget_label_add(evas, _("Dismiss alert after:"));
+   e_widget_frametable_object_append(of, ob, 0, 7, 1, 1, 1, 0, 1, 0);
+   
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"), 1, 300, 1, 0, NULL, &(cfdata->alert_timeout), 150);
+   e_widget_frametable_object_append(of, ob, 0, 8, 1, 1, 1, 0, 1, 0);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
@@ -140,17 +165,25 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    if (!battery_config) return 0;
+
    battery_config->poll_interval = cfdata->poll_interval;
+
    if (cfdata->show_alert)
-   { 
-     battery_config->alarm = cfdata->alarm_time;
-     battery_config->alarm_p = cfdata->alarm_percent;
-   }
+     { 
+        battery_config->alert = cfdata->alert_time;
+        battery_config->alert_p = cfdata->alert_percent;
+     }
    else 
-   {
-     battery_config->alarm = 0;
-     battery_config->alarm_p = 0;
-   }
+     {
+        battery_config->alert = 0;
+        battery_config->alert_p = 0;
+     }
+
+   if (cfdata->dismiss_alert)
+     battery_config->alert_timeout = cfdata->alert_timeout;
+   else
+     battery_config->alert_timeout = 0;
+
    _battery_config_updated();
    e_config_save_queue();
    return 1;

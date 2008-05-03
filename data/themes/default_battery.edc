@@ -296,3 +296,90 @@ group {
       }
    }
 }
+group {
+   name: "e/modules/battery/popup";
+   max:  420 96;
+   min:  240 64;
+   parts {
+      part {
+         name: "battery";
+         type: SWALLOW;
+         mouse_events: 1;
+         repeat_events: 1;
+         description {
+            state: "default" 0.0;
+            min: 1 1;
+            max: 120 120;
+            color: 255 255 255 255;
+            rel1 {
+               relative: 0.0 0.0;
+            }
+            rel2 {
+               relative: 0.25 1.0;
+            }
+         }
+      }
+      part {
+         name: "text";
+         type: TEXT;
+         effect: SOFT_SHADOW;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 120 1;
+            max: 300 48;
+            fixed: 1 1;
+            color: 255 255 255 255;
+            rel1 {
+               relative: 1.0 0.5;
+               to_x:battery;
+               offset: 0 -7;
+            }
+            rel2 {
+               relative: 1.0 0.5;
+               offset: 0 -7;
+            }
+             
+            text {
+               text: "Your battery is low!";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
+               size: 10;
+               min: 1 1;
+               align: 0.5 1.0;
+               text_class: "module_large";
+            }
+         }
+      }
+      part {
+         name: "text2";
+         type: TEXT;
+         effect: SOFT_SHADOW;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            color: 255 255 255 255;
+            min: 120 1;
+            max: 300 48;
+            fixed: 1 1;
+            rel1 {
+               relative: 1.0 0.5;
+               to_x: battery;
+               offset: 5 7;
+            }
+            rel2 {
+               relative: 1.0 0.5;
+               offset: 0 7;
+            }
+            
+            text {
+               text: "AC power is recommended.";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
+               size: 10;
+               min: 1 1;
+               align: 0.5 1.0;
+               text_class: "module_large";
+            }
+         }
+      }
+   }
+}

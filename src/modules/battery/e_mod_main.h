@@ -17,14 +17,14 @@ struct _Config
 {
    /* saved * loaded config values */
    int              poll_interval;
-   int              alarm;	/* Alarm on minutes remaining */
-   int	            alarm_p;    /* Alarm on percentage remaining */
+   int              alert;	/* Alert on minutes remaining */
+   int	            alert_p;    /* Alert on percentage remaining */
+   int              alert_timeout;  /* Popup dismissal timeout */
    /* just config state */
    E_Module        *module;
    E_Config_Dialog *config_dialog;
    Evas_List       *instances;
    E_Menu          *menu;
-   int              alarm_triggered;
    Ecore_Exe           *batget_exe;
    Ecore_Event_Handler *batget_data_handler;
    Ecore_Event_Handler *batget_del_handler;
