@@ -442,6 +442,33 @@ linux_sys_class_powe_supply_cb_delay_check(void *data)
    return 0;
 }
 
+static Ecore_Timer *re_init_timer = NULL;
+
+static int
+linux_sys_class_powe_supply_cb_re_init(void *data)
+{
+   Sys_Class_Power_Supply_Uevent *sysev;
+   
+   if (events)
+     {
+	while ((sysev = ecore_list_first_goto(events)))
+	  {
+	     ecore_list_remove(events);
+	     
+	     if (sysev->fd_handler)
+	       ecore_main_fd_handler_del(sysev->fd_handler);
+	     if (sysev->fd >= 0) close(sysev->fd);
+	     free(sysev->name);
+	     free(sysev);
+	  }
+	ecore_list_destroy(events);
+	events = NULL;
+     }
+   linux_sys_class_power_supply_init();
+   re_init_timer = NULL;
+   return 0;
+}     
+
 static int
 linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd_handler)
 {
@@ -477,6 +504,9 @@ linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd
 	     if (sysev->fd >= 0) close(sysev->fd);
 	     free(sysev->name);
 	     free(sysev);
+	     
+	     if (re_init_timer) ecore_timer_del(re_init_timer);
+	     re_init_timer = ecore_timer_add(1.0, linux_sys_class_powe_supply_cb_re_init, NULL);
 	  }
 	else
 	  {
@@ -633,6 +663,7 @@ linux_sys_class_power_supply_check(void)
 	Sys_Class_Power_Supply_Uevent *sysev;
 	int total_pwr_now;
 	int total_pwr_max;
+	int nofull = 0;
 	
 	total_pwr_now = 0;
 	total_pwr_max = 0;
@@ -694,6 +725,7 @@ linux_sys_class_power_supply_check(void)
 	      * wrong. that's a buggy battery or driver */
 	     if (!full)
 	       {
+		  nofull++;
 		  if (charging)
 		    {
 		       snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/time_to_full_now", name);
@@ -764,12 +796,13 @@ linux_sys_class_power_supply_check(void)
 			 }
 		    }
 	       }
-	     
 	     total_pwr_now += pwr_now - pwr_empty;
 	     total_pwr_max += pwr_full - pwr_empty;
 	  }
 	if (total_pwr_max > 0)
 	  battery_full = ((long long)total_pwr_now * 100) / total_pwr_max;
+	if (nofull == 0)
+	  time_left = -1;
      }
 }
 
