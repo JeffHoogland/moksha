@@ -151,6 +151,7 @@ struct _E_Gadcon_Client
 	Evas_Coord        w, h;
      } pad, min, aspect;
    Ecore_Timer           *scroll_timer;
+   Ecore_Timer           *instant_edit_timer;
    Ecore_Animator        *scroll_animator;
    double                 scroll_pos;
    double                 scroll_wanted;

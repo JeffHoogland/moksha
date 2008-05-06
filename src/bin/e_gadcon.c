@@ -1328,6 +1328,11 @@ _e_gadcon_free(E_Gadcon *gc)
 static void
 _e_gadcon_client_free(E_Gadcon_Client *gcc)
 {
+   if (gcc->instant_edit_timer)
+     {
+	ecore_timer_del(gcc->instant_edit_timer);
+	gcc->instant_edit_timer = NULL;
+     }
    if (gcc->o_base)
      evas_object_event_callback_del(gcc->o_base,
 				    EVAS_CALLBACK_DEL,
@@ -2229,6 +2234,18 @@ _e_gadcon_client_cb_menu_post(void *data, E_Menu *m)
    gcc->menu = NULL;
 }
 
+static int
+_e_gadcon_client_cb_instant_edit_timer(void *data)
+{
+   E_Gadcon_Client *gcc;
+   
+   gcc = data;
+   e_gadcon_client_edit_begin(gcc);
+   _e_gadcon_client_move_start(gcc);
+   gcc->instant_edit_timer = NULL;
+   return 0;
+}
+
 static void
 _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
@@ -2265,9 +2282,10 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
      {
 	if ((!gcc->o_control) && (gcc->gadcon->instant_edit))
 	  {
-	     printf("EDIT\n");
-	     e_gadcon_client_edit_begin(gcc);
-	     _e_gadcon_client_move_start(gcc);
+	     if (gcc->instant_edit_timer) ecore_timer_del(gcc->instant_edit_timer);
+	     gcc->instant_edit_timer = 
+	       ecore_timer_add(1.0, _e_gadcon_client_cb_instant_edit_timer, 
+			       gcc);
 	  }
      }
 }
@@ -2283,6 +2301,11 @@ _e_gadcon_client_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_
    
    if ((ev->button == 1) && (gcc->gadcon->instant_edit))
      {
+	if (gcc->instant_edit_timer)
+	  {
+	     ecore_timer_del(gcc->instant_edit_timer);
+	     gcc->instant_edit_timer = NULL;
+	  }
 	if (gcc->o_control)
 	  {
 	     printf("EDIT END\n");
