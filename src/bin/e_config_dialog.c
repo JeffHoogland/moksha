@@ -177,7 +177,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    e_object_del_attach_func_set(E_OBJECT(cfd->dia), _e_config_dialog_cb_dialog_del);
    e_dialog_title_set(cfd->dia, cfd->title);
    if (!cfd->cfdata) cfd->cfdata = cfd->view->create_cfdata(cfd);
-   
+
    if (type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
      {
 	if (cfd->view->advanced.create_widgets)

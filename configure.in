@@ -351,6 +351,8 @@ src/modules/conf_window_display/Makefile
 src/modules/conf_window_display/module.desktop
 src/modules/conf_window_focus/Makefile
 src/modules/conf_window_focus/module.desktop
+src/modules/conf_window_remembers/Makefile
+src/modules/conf_window_remembers/module.desktop
 src/modules/conf_window_manipulation/Makefile
 src/modules/conf_window_manipulation/module.desktop
 src/modules/conf_menus/Makefile

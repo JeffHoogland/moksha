@@ -557,4 +557,6 @@ e17_tl_corner_logo.png \
 e17_tl_corner_logo_shadow.png \
 e17_whitev.png \
 e17_wiz_b1.png \
-e17_wiz_b2.png
+e17_wiz_b2.png \
+e17_icon_window_remembers.png
+
