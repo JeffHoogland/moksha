@@ -709,7 +709,7 @@ static void
 _e_fwin_cb_menu_open_with(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fwin *fwin;
-   Evas_List *selected;
+   Evas_List *selected = NULL;
    
    fwin = data;
    selected = e_fm2_selected_list_get(fwin->fm_obj);
@@ -784,6 +784,9 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
      desktop = efreet_util_desktop_file_id_find(fad->app1);
    else if (fad->app2) 
      desktop = efreet_util_desktop_file_id_find(fad->app2);
+
+   if ((!desktop) && (!fad->exec_cmd)) return;
+
    if ((desktop) || (strcmp(fad->exec_cmd, "")))
      {
 	getcwd(pcwd, sizeof(pcwd));
@@ -842,20 +845,18 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	     if (fad->fwin->win)
 	       {
 		  if (desktop)
-		     e_exec(fad->fwin->win->border->zone, desktop, NULL, files,
-			    "fwin");
+                    e_exec(fad->fwin->win->border->zone, desktop, NULL, files,
+                           "fwin");
 	       }
 	     else if (fad->fwin->zone)
 	       {
 		  if (desktop)
-		     e_exec(fad->fwin->zone, desktop, NULL, files, "fwin");
+                    e_exec(fad->fwin->zone, desktop, NULL, files, "fwin");
 	       }
 
 	     // Free fake .desktop
 	     if (!strcmp(fad->exec_cmd, ""))
-	       {
-		  efreet_desktop_free(desktop);
-	       }
+               efreet_desktop_free(desktop);
 
 	     ecore_list_destroy(files);	    
 	  }
@@ -1084,7 +1085,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	       {
 		  if (S_ISDIR(ici->statinfo.st_mode))
 		    {
-		       if (!fileman_config->view.open_dirs_in_place || fwin->zone) 
+		       if ((!fileman_config->view.open_dirs_in_place) || (fwin->zone)) 
 			 {
 			    if (fwin->win)
 			      fwin2 = _e_fwin_new(fwin->win->container, NULL, ici->real_link);
