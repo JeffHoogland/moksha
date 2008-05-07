@@ -17,7 +17,6 @@ install/e17-data::
 	rm debian/tmp/usr/share/enlightenment/data/fonts/*
 
 install/e17::
-	#rm -r debian/tmp/usr/lib/enlightenment/modules/layout
 	rm -r debian/tmp/usr/lib/enlightenment/modules/wizard
 
 binary-predeb/e17::
