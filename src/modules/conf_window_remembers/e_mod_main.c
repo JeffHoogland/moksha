@@ -13,7 +13,7 @@ e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("windows", 50, _("Windows"), NULL, 
                                      "enlightenment/windows");
-   e_configure_registry_item_add("windows/window_remembers", 20, 
+   e_configure_registry_item_add("windows/window_remembers", 40, 
                                  _("Window Remembers"), NULL, 
                                  "enlightenment/window_remembers", 
                                  e_int_config_remembers);
