@@ -14,6 +14,7 @@ static void _e_wid_focus_hook(Evas_Object *obj);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj,
 void *event_info);
+
 /* externally accessible functions */
 EAPI Evas_Object *
 e_widget_scrollframe_simple_add(Evas *evas, Evas_Object *child)
@@ -22,7 +23,7 @@ e_widget_scrollframe_simple_add(Evas *evas, Evas_Object *child)
    Evas_Object *obj, *o;
 
    obj = e_widget_add(evas);
-   
+
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
@@ -35,7 +36,8 @@ e_widget_scrollframe_simple_add(Evas *evas, Evas_Object *child)
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
+                                  _e_wid_focus_steal, obj);
 
    e_scrollframe_child_set(wd->o_scrollframe, child);
    evas_object_show(child);
@@ -52,9 +54,9 @@ e_widget_scrollframe_pan_add(Evas *evas, Evas_Object *pan, void (*pan_set) (Evas
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
-   
+
    obj = e_widget_add(evas);
-   
+
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
@@ -65,12 +67,14 @@ e_widget_scrollframe_pan_add(Evas *evas, Evas_Object *pan, void (*pan_set) (Evas
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
+                                  _e_wid_focus_steal, obj);
 
-   e_scrollframe_extern_pan_set(o, pan, pan_set, pan_get, pan_max_get, pan_child_size_get);
+   e_scrollframe_extern_pan_set(o, pan, pan_set, pan_get, pan_max_get, 
+                                pan_child_size_get);
    evas_object_show(pan);
    e_widget_sub_object_add(obj, pan);
-   
+
    return obj;
 }
 
@@ -105,7 +109,7 @@ EAPI void
 e_widget_scrollframe_focus_object_set(Evas_Object *obj, Evas_Object *fobj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    wd->o_fobj = fobj;
 }
@@ -114,7 +118,7 @@ EAPI Evas_Object *
 e_widget_scrollframe_object_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    return wd->o_scrollframe;
 }
@@ -124,7 +128,7 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    free(wd);
 }
@@ -133,7 +137,7 @@ static void
 _e_wid_focus_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
      {
@@ -159,7 +163,7 @@ static void
 _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Coord mw, mh, vw, vh, w, h;    
-   
+
    e_scrollframe_child_viewport_size_get(obj, &vw, &vh);
    e_widget_min_size_get(data, &mw, &mh);
    evas_object_geometry_get(data, NULL, NULL, &w, &h);
@@ -168,4 +172,3 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_
 	if (w != vw) evas_object_resize(data, vw, h);
      }
 }
-
