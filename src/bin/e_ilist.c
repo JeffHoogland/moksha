@@ -649,8 +649,7 @@ e_ilist_multi_select(Evas_Object *obj, int n)
    int i;
 
    API_ENTRY return;
-   if (!sd->items) return;
-   if (!sd->multi_select) return;
+   if ((!sd->items) || (!sd->multi_select)) return;
 
    i = evas_list_count(sd->items);
    if (n >= i) n = i - 1;
@@ -688,8 +687,7 @@ e_ilist_range_select(Evas_Object *obj, int n)
    int i, j, dir;
 
    API_ENTRY return;
-   if (!sd->items) return;
-   if (!sd->multi_select) return;
+   if ((!sd->items) || (!sd->multi_select)) return;
 
    i = evas_list_count(sd->items);
    if (n >= i) n = i - 1;
@@ -891,8 +889,7 @@ _e_smart_event_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_in
    /* NB: Remove if headers ever become selectable */
    if (si->header) return;
 
-   if (!sd->items) return;
-   if (!sd->selector) return;
+   if ((!sd->items) || (!sd->selector)) return;
    if (!(si = evas_list_nth(sd->items, sd->selected))) return;
    if (sd->on_hold)
      {
