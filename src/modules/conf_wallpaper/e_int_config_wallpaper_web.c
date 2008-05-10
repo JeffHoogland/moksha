@@ -16,11 +16,11 @@ typedef struct _Import Import;
 
 struct _Import
 {
-   int			 magic;
+   int magic;
 
-   E_Config_Dialog	*parent;
+   E_Config_Dialog *parent;
    E_Config_Dialog_Data *cfdata;
-   E_Dialog		*dia;
+   E_Dialog *dia;
 };
 
 struct _E_Config_Dialog_Data 
@@ -224,7 +224,7 @@ _feed_complete(void *data, int type, void *event)
    Ecore_Con_Event_Url_Complete *euc;
    E_Config_Dialog_Data *cfdata;
    Import *import;
-   char *title;
+   char title[4096];
 
    euc = (Ecore_Con_Event_Url_Complete *)event;
    import = data;
@@ -241,14 +241,16 @@ _feed_complete(void *data, int type, void *event)
    cfdata->hcomplete = NULL;
    if (euc->status == 200)
      {
-	asprintf(&title, _("[%s] Getting feed... DONE!"), cfdata->source);
+        snprintf(title, sizeof(title), _("[%s] Getting feed... DONE!"), 
+                 cfdata->source);
 	e_dialog_title_set(import->dia, title);
 	_parse_feed(data);
 	return 0;
      }
    else
      {
-	asprintf(&title, _("[%s] Getting feed... FAILED!"), cfdata->source);
+        snprintf(title, sizeof(title), _("[%s] Getting feed... FAILED!"), 
+                 cfdata->source);
 	e_dialog_title_set(import->dia, title);
      }
    return 0;
@@ -299,7 +301,8 @@ _parse_feed(void *data)
    E_Config_Dialog_Data *cfdata;
    FILE *fh;
    char instr[1024];
-   char *edj, *img, *name, *title;
+   char *edj, *img, *name;
+   char title[4096];
    int state = -1;
 
    import = data;
@@ -369,14 +372,16 @@ _parse_feed(void *data)
 
    if (state == 0)
      {
-	asprintf(&title, _("[%s] Parsing feed... DONE!"), cfdata->source);
+        snprintf(title, sizeof(title), _("[%s] Parsing feed... DONE!"), 
+                 cfdata->source);
 	e_dialog_title_set(import->dia, title);
 	e_fm2_path_set(cfdata->ofm, cfdata->tmpdir, "/");
 	_get_thumbs(import);
      } 
    else
      {
-	asprintf(&title, _("[%s] Parsing feed... FAILED!"), cfdata->source);
+        snprintf(title, sizeof(title), _("[%s] Parsing feed... FAILED!"), 
+                 cfdata->source);
 	cfdata->busy = 0;
 	e_dialog_title_set(import->dia, title);
      }
@@ -387,12 +392,13 @@ _get_thumbs(void *data)
 {
    Import *import;
    E_Config_Dialog_Data *cfdata;
-   char *src, *dest, *dtmp, *name, *ext;
+   char *src, *name, *ext;
+   char dtmp[4096], dest[4096];
 
    import = data;
    cfdata = import->cfdata;
    cfdata->pending_downloads = 1;
-   asprintf(&dtmp, "%s/.tmp", cfdata->tmpdir);
+   snprintf(dtmp, sizeof(dtmp), "%s/.tmp", cfdata->tmpdir);
    ecore_file_mkdir(dtmp);
    ecore_list_first_goto(cfdata->thumbs);
    ecore_list_first_goto(cfdata->names);
@@ -400,7 +406,7 @@ _get_thumbs(void *data)
      {
 	name = ecore_list_next(cfdata->names);
 	ext = strrchr(src, '.');
-	asprintf(&dest, "%s/%s%s", dtmp, name, ext);
+        snprintf(dest, sizeof(dest), "%s/%s%s", dtmp, name, ext);
 	ecore_file_download(src, dest, _get_thumb_complete, NULL, import);
      }
 }
@@ -483,15 +489,17 @@ _download_media(Import *import)
    Import *i;
    E_Config_Dialog_Data *cfdata;
    const char *file;
-   char *buf, *title;
+   char buf[4096], title[4096];
 
    i = import;
    cfdata = i->cfdata;
    
    cfdata->pending_downloads = 1;
    file = ecore_file_file_get(cfdata->edj);
-   asprintf(&buf, "%s/.e/e/backgrounds/%s", e_user_homedir_get(), file);
-   asprintf(&title, _("[%s] Downloading of edje file..."), cfdata->source);
+   snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s", 
+            e_user_homedir_get(), file);
+   snprintf(title, sizeof(title), _("[%s] Downloading of edje file..."), 
+            cfdata->source);
    e_dialog_title_set(i->dia, title);
    ecore_file_download(cfdata->edj, buf,
                        _download_media_complete_cb,
@@ -502,12 +510,12 @@ static void
 _download_media_complete_cb(void *data, const char *file, int status)
 {
    Import *import;
-   char *dest;
+   char dest[4096];
 
    import = data;
    import->cfdata->pending_downloads = 0;
-   asprintf(&dest, "%s/.e/e/backgrounds/%s", e_user_homedir_get(),
-            ecore_file_file_get(import->cfdata->edj));
+   snprintf(dest, sizeof(dest), "%s/.e/e/backgrounds/%s", 
+            e_user_homedir_get(), ecore_file_file_get(import->cfdata->edj));
    e_int_config_wallpaper_update(import->parent, dest);
    e_int_config_wallpaper_web_del(import->dia);
 }
@@ -517,18 +525,19 @@ _get_thumb_complete(void *data, const char *file, int status)
 {
    Import *import;
    E_Config_Dialog_Data *cfdata;
-   char *title, *dst;
+   char title[4096], dst[4096];
    static int got = 1;
 
    import = data;
    cfdata = import->cfdata;
    if (got != ecore_list_count(cfdata->thumbs))
      {
-	asprintf(&title, _("[%s] Download %d images of %d"),
-		 cfdata->source, got, ecore_list_index(cfdata->thumbs));
+        snprintf(title, sizeof(title), _("[%s] Download %d images of %d"), 
+                 cfdata->source, got, ecore_list_index(cfdata->thumbs));
 	e_dialog_title_set(import->dia, title);
 	cfdata->ready_for_edj = 0;
-	asprintf(&dst, "%s/%s", cfdata->tmpdir, ecore_file_file_get(file));
+        snprintf(dst, sizeof(dst), "%s/%s", cfdata->tmpdir, 
+                 ecore_file_file_get(file));
 	ecore_file_mv(file, dst);
 	got++;
      }
@@ -537,7 +546,8 @@ _get_thumb_complete(void *data, const char *file, int status)
 	got = 1;
 	cfdata->busy = 0;
 	cfdata->ready_for_edj = 1;
-	asprintf(&title, _("[%s] Choose an image from list"), cfdata->source);
+        snprintf(title, sizeof(title), _("[%s] Choose an image from list"), 
+                 cfdata->source);
 	e_dialog_title_set(import->dia, title);
 	e_dialog_button_disable_num_set(import->dia, 0, 0);
 	cfdata->pending_downloads = 0;
@@ -550,7 +560,7 @@ _download_media_progress_cb(void *data, const char *file, long int dltotal,
 {
    Import *import;
    double status;
-   char *title;
+   char title[4096];
    static long int last;
 
    import = data;
@@ -560,8 +570,8 @@ _download_media_progress_cb(void *data, const char *file, long int dltotal,
    if (last)
      {
 	status = (double) ((double) dlnow) / ((double) dltotal);
-	asprintf(&title, _("[%s] Downloading of edje file... %d%% done"),
-		 import->cfdata->source, (int) (status * 100.0));
+        snprintf(title, sizeof(title), _("[%s] Downloading of edje file... %d%% done"), 
+                 import->cfdata->source, (int) (status * 100.0));
 	e_dialog_title_set(import->dia, title);
      }
 
@@ -576,7 +586,7 @@ _get_feed(char *url, void *data)
    Import *import;
    E_Config_Dialog_Data *cfdata;
    extern int errno;
-   char *title;
+   char title[4096];
 
    import = data;
    cfdata = import->cfdata;
@@ -595,7 +605,7 @@ _get_feed(char *url, void *data)
      ecore_event_handler_add(ECORE_CON_EVENT_URL_COMPLETE, 
                              _feed_complete, import);
 
-   asprintf(&title, _("[%s] Getting feed..."), cfdata->source);
+   snprintf(title, sizeof(title), _("[%s] Getting feed..."), cfdata->source);
    e_dialog_title_set(import->dia, title); //
    cfdata->feed = fopen("/tmp/feed.xml", "w+");
    ecore_con_url_send(cfdata->ecu, NULL, 0, NULL);
