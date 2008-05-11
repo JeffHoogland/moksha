@@ -1399,8 +1399,7 @@ init(void)
    darwin_init();
 #else
    if ((ecore_file_is_dir("/sys/class/power_supply")) &&
-       (dir_has_contents("/sys/class/power_supply")) &&
-       (!ecore_file_exists("/proc/apm"))) /* >= 2.6.24 */
+       (dir_has_contents("/sys/class/power_supply")))
      {
 	mode = CHECK_SYS_CLASS_POWER_SUPPLY;
 	linux_sys_class_power_supply_init();
