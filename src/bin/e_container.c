@@ -39,7 +39,7 @@ e_container_init(void)
 {
    E_EVENT_CONTAINER_RESIZE = ecore_event_type_new();
    container_count = 0;
-   
+
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_container_cb_mouse_in, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_container_cb_mouse_out, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_container_cb_mouse_down, NULL));
@@ -71,7 +71,7 @@ e_container_new(E_Manager *man)
    int i;
    Ecore_X_Window mwin;
    static int container_num = 0;
-   
+
    con = E_OBJECT_ALLOC(E_Container, E_CONTAINER_TYPE, _e_container_free);
    if (!con) return NULL;
    con->manager = man;
@@ -86,9 +86,8 @@ e_container_new(E_Manager *man)
 	ecore_x_window_raise(con->win);
      }
    else
-     {
-	con->win = con->manager->win;
-     }
+     con->win = con->manager->win;
+
    con->bg_ecore_evas = e_canvas_new(e_config->evas_engine_container, con->win,
 				     0, 0, con->w, con->h, 1, 1,
 				     &(con->bg_win), NULL);
@@ -113,7 +112,7 @@ e_container_new(E_Manager *man)
    evas_object_name_set(o, "e/desktop/background");
    evas_object_data_set(o, "e_container", con);
    evas_object_show(o);
-   
+
    con->num = container_num;
    container_num++;
    snprintf(name, sizeof(name), _("Container %d"), con->num);
@@ -164,23 +163,22 @@ e_container_new(E_Manager *man)
 	for (l = screens; l; l = l->next)
 	  {
 	     E_Screen *scr;
-	     
+
 	     scr = l->data;
 	     zone = e_zone_new(con, scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
 	  }
      }
    else
-     {
-	zone = e_zone_new(con, 0, 0, 0, 0, con->w, con->h);
-     }
+     zone = e_zone_new(con, 0, 0, 0, 0, con->w, con->h);
    return con;
 }
-        
+
 EAPI void
 e_container_show(E_Container *con)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
+
    if (con->visible) return;
    ecore_evas_show(con->bg_ecore_evas);
    ecore_x_window_configure(con->bg_win,
@@ -193,12 +191,13 @@ e_container_show(E_Container *con)
    ecore_x_icccm_state_set(con->bg_win, ECORE_X_WINDOW_STATE_HINT_NORMAL);
    con->visible = 1;
 }
-        
+
 EAPI void
 e_container_hide(E_Container *con)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
+
    if (!con->visible) return;
    ecore_evas_hide(con->bg_ecore_evas);
    if (con->win != con->manager->win)
@@ -215,13 +214,14 @@ e_container_current_get(E_Manager *man)
 
    for (l = man->containers; l; l = l->next)
      {
-	E_Container *con = l->data;
-	if (con->visible)
-	  return con;
+	E_Container *con;
+        
+        if (!(con = l->data)) continue;
+	if (con->visible) return con;
      }
+
    /* If noone is available, return the first */
-   if (!man->containers)
-     return NULL;
+   if (!man->containers) return NULL;
    l = man->containers;
    return (E_Container *)l->data;
 }
@@ -236,10 +236,9 @@ e_container_number_get(E_Manager *man, int num)
    for (l = man->containers; l; l = l->next)
      {
 	E_Container *con;
-	
+
 	con = l->data;
-	if (con->num == num)
-	  return con;
+	if (con->num == num) return con;
      }
    return NULL;
 }
@@ -256,7 +255,7 @@ e_container_move(E_Container *con, int x, int y)
      ecore_x_window_move(con->win, con->x, con->y);
    evas_object_move(con->bg_blank_object, con->x, con->y);
 }
-        
+
 EAPI void
 e_container_resize(E_Container *con, int w, int h)
 {
@@ -307,14 +306,14 @@ e_container_lower(E_Container *con)
 EAPI E_Zone *
 e_container_zone_at_point_get(E_Container *con, int x, int y)
 {
-   Evas_List *l;
-   
+   Evas_List *l = NULL;
+
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
    for (l = con->zones; l; l = l->next)
      {
 	E_Zone *zone;
-	
+
 	zone = l->data;
 	if (E_INSIDE(x, y, zone->x, zone->y, zone->w, zone->h))
 	  return zone;
@@ -325,17 +324,16 @@ e_container_zone_at_point_get(E_Container *con, int x, int y)
 EAPI E_Zone *
 e_container_zone_number_get(E_Container *con, int num)
 {
-   Evas_List *l;
-   
+   Evas_List *l = NULL;
+
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
    for (l = con->zones; l; l = l->next)
      {
 	E_Zone *zone;
-	
+
 	zone = l->data;
-	if (zone->num == num)
-	  return zone;
+	if (zone->num == num) return zone;
      }
    return NULL;
 }
@@ -343,17 +341,16 @@ e_container_zone_number_get(E_Container *con, int num)
 EAPI E_Zone *
 e_container_zone_id_get(E_Container *con, int id)
 {
-   Evas_List *l;
-   
+   Evas_List *l = NULL;
+
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
    for (l = con->zones; l; l = l->next)
      {
 	E_Zone *zone;
-	
+
 	zone = l->data;
-	if (zone->id == id)
-	  return zone;
+	if (zone->id == id) return zone;
      }
    return NULL;
 }
@@ -362,10 +359,10 @@ EAPI E_Container_Shape *
 e_container_shape_add(E_Container *con)
 {
    E_Container_Shape *es;
-   
+
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, 0);
-   
+
    es = E_OBJECT_ALLOC(E_Container_Shape, E_CONTAINER_SHAPE_TYPE, _e_container_shape_free);
    E_OBJECT_DEL_SET(es, _e_container_shape_del);
    es->con = con;
@@ -449,7 +446,7 @@ EAPI void
 e_container_shape_change_callback_add(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data)
 {
    E_Container_Shape_Callback *cb;
-   
+
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    cb = calloc(1, sizeof(E_Container_Shape_Callback));
@@ -462,7 +459,7 @@ e_container_shape_change_callback_add(E_Container *con, void (*func) (void *data
 EAPI void
 e_container_shape_change_callback_del(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data)
 {
-   Evas_List *l;
+   Evas_List *l = NULL;
 
    /* FIXME: if we call this from within a callback we are in trouble */
    E_OBJECT_CHECK(con);
@@ -470,7 +467,7 @@ e_container_shape_change_callback_del(E_Container *con, void (*func) (void *data
    for (l = con->shape_change_cb; l; l = l->next)
      {
 	E_Container_Shape_Callback *cb;
-	
+
 	cb = l->data;
 	if ((cb->func == func) && (cb->data == data))
 	  {
@@ -492,10 +489,10 @@ e_container_shape_rects_get(E_Container_Shape *es)
 EAPI void
 e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int num)
 {
-   Evas_List *l;
+   Evas_List *l = NULL;
    int i;
    E_Rect *r;
-   
+
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_CONTAINER_SHAPE_TYPE);
    if (es->shape)
@@ -698,7 +695,7 @@ e_container_border_lower(E_Border *bd)
    E_Border *below = NULL;
    Evas_List *l;
    int pos = 0, i;
-   
+
    if (!bd->zone) return NULL;
    /* Remove from old layer */
    for (i = 0; i < 7; i++)
@@ -814,9 +811,9 @@ e_container_border_stack_below(E_Border *bd, E_Border *below)
 EAPI E_Border_List *
 e_container_border_list_first(E_Container *con)
 {
-   E_Border_List *list;
-   list = E_NEW(E_Border_List, 1);
-   if (!list) return NULL;
+   E_Border_List *list = NULL;
+
+   if (!(list = E_NEW(E_Border_List, 1))) return NULL;
    list->container = con;
    e_object_ref(E_OBJECT(con));
    list->layer = 0;
@@ -829,9 +826,9 @@ e_container_border_list_first(E_Container *con)
 EAPI E_Border_List *
 e_container_border_list_last(E_Container *con)
 {
-   E_Border_List *list;
-   list = E_NEW(E_Border_List, 1);
-   if (!list) return NULL;
+   E_Border_List *list = NULL;
+
+   if (!(list = E_NEW(E_Border_List, 1))) return NULL;
    list->container = con;
    e_object_ref(E_OBJECT(con));
    list->layer = 6;
@@ -867,7 +864,7 @@ e_container_border_list_prev(E_Border_List *list)
    E_Border *bd;
 
    if (!list->clients) return NULL;
-   
+
    bd = list->clients->data;
 
    list->clients = list->clients->prev;
@@ -891,18 +888,18 @@ EAPI void
 e_container_all_freeze(void)
 {
    Evas_List *managers, *l;
-   
+
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
      {
 	Evas_List *ll;
 	E_Manager *man;
-	
+
 	man = l->data;
 	for (ll = man->containers; ll; ll = ll->next)
 	  {
 	     E_Container *con;
-	     
+
 	     con = ll->data;
 	     evas_event_freeze(con->bg_evas);
 	  }
@@ -913,18 +910,18 @@ EAPI void
 e_container_all_thaw(void)
 {
    Evas_List *managers, *l;
-   
+
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
      {
 	Evas_List *ll;
 	E_Manager *man;
-	
+
 	man = l->data;
 	for (ll = man->containers; ll; ll = ll->next)
 	  {
 	     E_Container *con;
-	     
+
 	     con = ll->data;
 	     evas_event_thaw(con->bg_evas);
 	  }
@@ -978,18 +975,18 @@ static E_Container *
 _e_container_find_by_event_window(Ecore_X_Window win)
 {
    Evas_List *managers, *l;
-   
+
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
      {
 	Evas_List *ll;
 	E_Manager *man;
-	
+
 	man = l->data;
 	for (ll = man->containers; ll; ll = ll->next)
 	  {
 	     E_Container *con;
-	     
+
 	     con = ll->data;
 	     if (con->event_win == win) return con;
 	  }
@@ -1042,7 +1039,7 @@ _e_container_cb_mouse_in(void *data, int type, void *event)
    Ecore_X_Event_Mouse_In *ev;
    E_Border *bd;
    E_Container *con;
-   
+
    ev = event;
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
@@ -1060,7 +1057,7 @@ _e_container_cb_mouse_out(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Out *ev;
    E_Container *con;
-   
+
    ev = event;
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
@@ -1076,7 +1073,7 @@ _e_container_cb_mouse_down(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Button_Down *ev;
    E_Container *con;
-   
+
    ev = event;
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
@@ -1098,7 +1095,7 @@ _e_container_cb_mouse_up(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Button_Up *ev;
    E_Container *con;
-   
+
    ev = event;
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
@@ -1116,7 +1113,7 @@ _e_container_cb_mouse_move(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Move *ev;
    E_Container *con;
-   
+
    ev = event;
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
@@ -1132,7 +1129,7 @@ _e_container_cb_mouse_wheel(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Wheel *ev;
    E_Container *con;
-   
+
    ev = event;
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
@@ -1146,7 +1143,7 @@ _e_container_cb_mouse_wheel(void *data, int type, void *event)
      }
    return 1;
 }
-   
+
 static void
 _e_container_shape_del(E_Container_Shape *es)
 {
@@ -1156,7 +1153,7 @@ _e_container_shape_del(E_Container_Shape *es)
 static void
 _e_container_shape_free(E_Container_Shape *es)
 {
-   Evas_List *l;
+   Evas_List *l = NULL;
 
    es->con->shapes = evas_list_remove(es->con->shapes, es);
    for (l = es->shape; l; l = l->next)
@@ -1168,13 +1165,14 @@ _e_container_shape_free(E_Container_Shape *es)
 static void
 _e_container_shape_change_call(E_Container_Shape *es, E_Container_Shape_Change ch)
 {
-   Evas_List *l;
-   
+   Evas_List *l = NULL;
+
+   if ((!es) || (!es->con) || (!es->con->shape_change_cb)) return;
    for (l = es->con->shape_change_cb; l; l = l->next)
      {
 	E_Container_Shape_Callback *cb;
-	
-	cb = l->data;
+
+	if (!(cb = l->data)) continue;
 	cb->func(cb->data, es, ch);
      }
 }
@@ -1185,14 +1183,14 @@ _e_container_resize_handle(E_Container *con)
    E_Event_Container_Resize *ev;
    Evas_List *l, *screens, *zones = NULL;
    int i;
-   
+
    ev = calloc(1, sizeof(E_Event_Container_Resize));
    ev->container = con;
    e_object_ref(E_OBJECT(con));
-   
+
    e_xinerama_update();
    screens = (Evas_List *)e_xinerama_screens_get();
-   
+
    if (screens)
      {
 	for (l = con->zones; l; l = l->next)
@@ -1201,7 +1199,7 @@ _e_container_resize_handle(E_Container *con)
 	  {
 	     E_Screen *scr;
 	     E_Zone *zone;
-	     
+
 	     scr = l->data;
 	     zone = e_container_zone_id_get(con, scr->escreen);
 	     if (zone)
@@ -1213,13 +1211,13 @@ _e_container_resize_handle(E_Container *con)
 	     else
 	       {
 		  Evas_List *ll;
-		  
+
 		  zone = e_zone_new(con, scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
 		  /* find any shelves configured for this zone and add them in */
 		  for (ll = e_config->shelves; ll; ll = ll->next)
 		    {
 		       E_Config_Shelf *cf_es;
-		       
+
 		       cf_es = ll->data;
 		       if (e_util_container_zone_id_get(cf_es->container, cf_es->zone) == zone)
 			 e_shelf_config_new(zone, cf_es);
@@ -1230,7 +1228,7 @@ _e_container_resize_handle(E_Container *con)
 	  {
 	     E_Zone *spare_zone = NULL;
 	     Evas_List *ll;
-	     
+
 	     for (ll = con->zones; ll; ll = ll->next)
 	       {
 		  spare_zone = ll->data;
@@ -1244,7 +1242,7 @@ _e_container_resize_handle(E_Container *con)
 		  Evas_List *shelves, *ll, *del_shelves;
 		  E_Border_List *bl;
 		  E_Border *bd;
-		  
+
 		  zone = zones->data;
 		  /* delete any shelves on this zone */
 		  shelves = e_shelf_list();
@@ -1252,7 +1250,7 @@ _e_container_resize_handle(E_Container *con)
 		  for (ll = shelves; ll; ll = ll->next)
 		    {
 		       E_Shelf *es;
-		       
+
 		       es = ll->data;
 		       if (es->zone == zone)
 			 del_shelves = evas_list_append(del_shelves, es);
@@ -1283,14 +1281,14 @@ _e_container_resize_handle(E_Container *con)
    else
      {
 	E_Zone *zone;
-	
+
 	zone = e_container_zone_number_get(con, 0);
 	e_zone_move_resize(zone, 0, 0, con->w, con->h);
 	e_shelf_zone_move_resize_handle(zone);	
      }
-   
+
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);
-   
+
    for (i = 0; i < 7; i++)
      {
 	Evas_List *tmp = NULL;
@@ -1317,7 +1315,7 @@ static void
 _e_container_event_container_resize_free(void *data, void *ev)
 {
    E_Event_Container_Resize *e;
-   
+
    e = ev;
    e_object_unref(E_OBJECT(e->container));
    free(e);
