@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-04-24 23:18+0200\n"
-"PO-Revision-Date: 2008-04-25 09:28+0200\n"
+"POT-Creation-Date: 2008-05-12 19:46+0200\n"
+"PO-Revision-Date: 2008-05-12 19:54+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -209,6 +209,7 @@ msgstr "Desktop"
 #: src/modules/conf_window_focus/e_mod_main.c:34
 #: src/modules/conf_window_manipulation/e_mod_main.c:34
 #: src/modules/conf_winlist/e_mod_main.c:34
+#: src/modules/conf_window_remembers/e_mod_main.c:14
 msgid "Windows"
 msgstr "Finestre"
 
@@ -239,7 +240,7 @@ msgstr "Esci"
 #: src/modules/ibar/e_mod_main.c:315 src/modules/ibar/e_mod_main.c:830
 #: src/modules/ibox/e_mod_main.c:309 src/modules/ibox/e_mod_main.c:708
 #: src/modules/pager/e_mod_main.c:803 src/modules/temperature/e_mod_main.c:304
-#: src/modules/battery/e_mod_main.c:160
+#: src/modules/battery/e_mod_main.c:170
 msgid "Configuration"
 msgstr "Configurazione"
 
@@ -902,7 +903,7 @@ msgstr "Inizio spostamento/ridimensionamento oggetti"
 msgid "Configure Toolbar Contents"
 msgstr "Configura contenuti della barra strumenti"
 
-#: src/bin/e_config_dialog.c:189 src/modules/battery/e_mod_main.c:280
+#: src/bin/e_config_dialog.c:189 src/modules/battery/e_mod_main.c:415
 #: src/modules/conf_dialogs/e_mod_main.c:34
 #: src/modules/conf_engine/e_mod_main.c:34
 #: src/modules/conf_exebuf/e_mod_main.c:34
@@ -924,7 +925,7 @@ msgstr "Applica"
 #: src/bin/e_config_dialog.c:226 src/bin/e_fm.c:510
 #: src/bin/e_int_border_menu.c:329 src/bin/e_int_border_prop.c:81
 #: src/bin/e_actions.c:2019 src/modules/conf/e_conf.c:170
-#: src/modules/fileman/e_fwin.c:1321
+#: src/modules/fileman/e_fwin.c:1322
 msgid "Close"
 msgstr "Chiudi"
 
@@ -1586,7 +1587,7 @@ msgstr "Modulo %s di Enlightenment"
 msgid "Would you like to unload this module?<br>"
 msgstr "Volete disattivare questo modulo?<br>"
 
-#: src/bin/e_module.c:497 src/bin/e_fm.c:6999 src/bin/e_confirm_dialog.c:47
+#: src/bin/e_module.c:497 src/bin/e_fm.c:7012 src/bin/e_confirm_dialog.c:47
 #: src/bin/e_actions.c:327 src/bin/e_actions.c:1600 src/bin/e_actions.c:1671
 #: src/bin/e_actions.c:1730 src/bin/e_actions.c:1789 src/bin/e_actions.c:1848
 #: src/bin/e_actions.c:1907
@@ -1594,7 +1595,7 @@ msgstr "Volete disattivare questo modulo?<br>"
 msgid "Yes"
 msgstr "Sì"
 
-#: src/bin/e_module.c:498 src/bin/e_fm.c:7000 src/bin/e_confirm_dialog.c:48
+#: src/bin/e_module.c:498 src/bin/e_fm.c:7013 src/bin/e_confirm_dialog.c:48
 #: src/bin/e_actions.c:329 src/bin/e_actions.c:1602 src/bin/e_actions.c:1673
 #: src/bin/e_actions.c:1732 src/bin/e_actions.c:1791 src/bin/e_actions.c:1850
 #: src/bin/e_actions.c:1909
@@ -1660,45 +1661,45 @@ msgstr "%s non esiste."
 msgid "%i Files"
 msgstr "%i File"
 
-#: src/bin/e_fm.c:6184 src/bin/e_fm.c:6345
+#: src/bin/e_fm.c:6197 src/bin/e_fm.c:6358
 #: src/modules/fileman/e_mod_config.c:154
 msgid "View Mode"
 msgstr "Modalità visualizzazione"
 
-#: src/bin/e_fm.c:6191 src/bin/e_fm.c:6352
+#: src/bin/e_fm.c:6204 src/bin/e_fm.c:6365
 msgid "Refresh View"
 msgstr "Aggiorna vista"
 
-#: src/bin/e_fm.c:6202 src/bin/e_fm.c:6363
+#: src/bin/e_fm.c:6215 src/bin/e_fm.c:6376
 msgid "Show Hidden Files"
 msgstr "Mostra file nascosti"
 
-#: src/bin/e_fm.c:6217 src/bin/e_fm.c:6378
+#: src/bin/e_fm.c:6230 src/bin/e_fm.c:6391
 msgid "Remember Ordering"
 msgstr "Ricorda ordinamento"
 
-#: src/bin/e_fm.c:6229 src/bin/e_fm.c:6390
+#: src/bin/e_fm.c:6242 src/bin/e_fm.c:6403
 msgid "Sort Now"
 msgstr "Ordina adesso"
 
-#: src/bin/e_fm.c:6247 src/bin/e_fm.c:6408
+#: src/bin/e_fm.c:6260 src/bin/e_fm.c:6421
 #: src/modules/conf_paths/e_int_config_paths.c:211
 msgid "New Directory"
 msgstr "Nuova directory"
 
-#: src/bin/e_fm.c:6265 src/bin/e_fm.c:6455 src/bin/e_entry.c:505
+#: src/bin/e_fm.c:6278 src/bin/e_fm.c:6468 src/bin/e_entry.c:505
 msgid "Paste"
 msgstr "Incolla"
 
-#: src/bin/e_fm.c:6424 src/bin/e_entry.c:483
+#: src/bin/e_fm.c:6437 src/bin/e_entry.c:483
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_fm.c:6441 src/bin/e_entry.c:494
+#: src/bin/e_fm.c:6454 src/bin/e_entry.c:494
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_fm.c:6514 src/bin/e_entry.c:470
+#: src/bin/e_fm.c:6527 src/bin/e_entry.c:470
 #: src/modules/ibar/e_mod_config.c:111
 #: src/modules/conf_applications/e_int_config_apps.c:271
 #: src/modules/conf_profiles/e_int_config_profiles.c:93
@@ -1706,50 +1707,50 @@ msgstr "Copia"
 msgid "Delete"
 msgstr "Elimina"
 
-#: src/bin/e_fm.c:6525
+#: src/bin/e_fm.c:6538
 msgid "Rename"
 msgstr "Rinomina"
 
-#: src/bin/e_fm.c:6535
+#: src/bin/e_fm.c:6548
 msgid "Properties"
 msgstr "Proprietà"
 
-#: src/bin/e_fm.c:6696 src/modules/conf_paths/e_int_config_paths.c:83
+#: src/bin/e_fm.c:6709 src/modules/conf_paths/e_int_config_paths.c:83
 #: src/modules/fileman/e_mod_config.c:156
 msgid "Icons"
 msgstr "Icone"
 
-#: src/bin/e_fm.c:6704 src/modules/fileman/e_mod_config.c:169
+#: src/bin/e_fm.c:6717 src/modules/fileman/e_mod_config.c:169
 msgid "List"
 msgstr "Elenco"
 
-#: src/bin/e_fm.c:6842
+#: src/bin/e_fm.c:6855
 msgid "Create a new Directory"
 msgstr "Crea nuova directory"
 
-#: src/bin/e_fm.c:6843
+#: src/bin/e_fm.c:6856
 msgid "New Directory Name:"
 msgstr "Nome directory:"
 
-#: src/bin/e_fm.c:6902
+#: src/bin/e_fm.c:6915
 #, c-format
 msgid "Rename %s to:"
 msgstr "Rinomina %s in:"
 
-#: src/bin/e_fm.c:6904
+#: src/bin/e_fm.c:6917
 msgid "Rename File"
 msgstr "Rinomina file"
 
-#: src/bin/e_fm.c:7002
+#: src/bin/e_fm.c:7015
 msgid "Confirm Delete"
 msgstr "Conferma eliminazione"
 
-#: src/bin/e_fm.c:7006
+#: src/bin/e_fm.c:7019
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Siete sicuri di voler eliminare<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:7012
+#: src/bin/e_fm.c:7025
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1859,41 +1860,41 @@ msgstr "Abbassa"
 msgid "Iconify"
 msgstr "Iconifica"
 
-#: src/bin/e_int_border_menu.c:844
+#: src/bin/e_int_border_menu.c:850
 msgid "Select Border Style"
 msgstr "Seleziona stile del bordo"
 
-#: src/bin/e_int_border_menu.c:856
+#: src/bin/e_int_border_menu.c:862
 msgid "Use E17 Default Icon Preference"
 msgstr "Usa preferenza predefinita per l'icona"
 
-#: src/bin/e_int_border_menu.c:865
+#: src/bin/e_int_border_menu.c:871
 msgid "Use Application Provided Icon "
 msgstr "Usa icona fornita dall'applicazione"
 
-#: src/bin/e_int_border_menu.c:873
+#: src/bin/e_int_border_menu.c:879
 msgid "Use User Defined Icon"
 msgstr "Usa icona impostata dall'utente"
 
-#: src/bin/e_int_border_menu.c:937 src/bin/e_int_border_prop.c:473
+#: src/bin/e_int_border_menu.c:943 src/bin/e_int_border_prop.c:473
 msgid "Shaded"
 msgstr "Contratta"
 
-#: src/bin/e_int_border_menu.c:950 src/bin/e_int_border_prop.c:472
+#: src/bin/e_int_border_menu.c:956 src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr "Appiccicata"
 
-#: src/bin/e_int_border_menu.c:963 src/bin/e_int_border_prop.c:477
+#: src/bin/e_int_border_menu.c:969 src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:154
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:215
 msgid "Fullscreen"
 msgstr "A tutto schermo"
 
-#: src/bin/e_int_border_menu.c:988 src/modules/conf_winlist/e_mod_main.c:35
+#: src/bin/e_int_border_menu.c:994 src/modules/conf_winlist/e_mod_main.c:35
 msgid "Window List"
 msgstr "Lista finestre"
 
-#: src/bin/e_int_border_menu.c:998 src/modules/pager/e_mod_main.c:263
+#: src/bin/e_int_border_menu.c:1004 src/modules/pager/e_mod_main.c:263
 #: src/modules/pager/e_mod_main.c:2799 src/modules/pager/e_mod_main.c:2806
 #: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2813
 #: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2815
@@ -1902,11 +1903,11 @@ msgstr "Lista finestre"
 msgid "Pager"
 msgstr "Pager"
 
-#: src/bin/e_int_border_menu.c:1008
+#: src/bin/e_int_border_menu.c:1014
 msgid "Taskbar"
 msgstr "Taskbar"
 
-#: src/bin/e_container.c:119
+#: src/bin/e_container.c:118
 #, c-format
 msgid "Container %d"
 msgstr "Contenitore %d"
@@ -2715,7 +2716,7 @@ msgstr "Inizio spostamento/ridimensionamento di questo gadget"
 msgid "Remove this gadget"
 msgstr "Elimina questo gadget"
 
-#: src/bin/e_gadcon.c:1641
+#: src/bin/e_gadcon.c:1646
 msgid "Stop move/resize this gadget"
 msgstr "Fine spostamento/ridimensionamento di questo gadget"
 
@@ -3022,11 +3023,11 @@ msgstr "Mostra su tutti i desktop"
 msgid "Show on specified Desktops"
 msgstr "Mostra sui desktop specificati"
 
-#: src/bin/e_border.c:4471
+#: src/bin/e_border.c:4473
 msgid "Desktop files scan done"
 msgstr "Scansione file desktop eseguita"
 
-#: src/bin/e_border.c:4483
+#: src/bin/e_border.c:4485
 msgid "Desktop file scan"
 msgstr "Scansione file desktop"
 
@@ -3569,7 +3570,7 @@ msgid "Sensors"
 msgstr "Sensori"
 
 #: src/modules/temperature/e_mod_config.c:380
-#: src/modules/battery/e_mod_config.c:120
+#: src/modules/battery/e_mod_config.c:136
 #: src/modules/conf_performance/e_int_config_performance.c:133
 #, c-format
 msgid "%1.0f ticks"
@@ -3683,32 +3684,32 @@ msgstr "Molto chiara"
 msgid "Dropshadow"
 msgstr "Dropshadow"
 
-#: src/modules/battery/e_mod_config.c:38
+#: src/modules/battery/e_mod_config.c:40
 msgid "Battery Monitor Configuration"
 msgstr "Configurazione modulo Battery"
 
-#: src/modules/battery/e_mod_config.c:82
+#: src/modules/battery/e_mod_config.c:91
 msgid "Basic Settings"
 msgstr "Impostazioni di base"
 
-#: src/modules/battery/e_mod_config.c:83
-#: src/modules/battery/e_mod_config.c:123
+#: src/modules/battery/e_mod_config.c:92
+#: src/modules/battery/e_mod_config.c:139
 msgid "Show alert when battery is low"
 msgstr "Allarme se il livello batteria è basso"
 
-#: src/modules/battery/e_mod_config.c:115
+#: src/modules/battery/e_mod_config.c:131
 msgid "Advanced Settings"
 msgstr "Impostazioni avanzate"
 
-#: src/modules/battery/e_mod_config.c:117
+#: src/modules/battery/e_mod_config.c:133
 msgid "Check battery every:"
 msgstr "Controlla batteria ogni:"
 
-#: src/modules/battery/e_mod_config.c:126
+#: src/modules/battery/e_mod_config.c:142
 msgid "Alert when battery is down to:"
 msgstr "Allarme se l'autonomia della batteria è:"
 
-#: src/modules/battery/e_mod_config.c:129
+#: src/modules/battery/e_mod_config.c:145
 #: src/modules/conf_desklock/e_int_config_desklock.c:156
 #: src/modules/conf_dpms/e_int_config_dpms.c:193
 #: src/modules/conf_dpms/e_int_config_dpms.c:201
@@ -3719,24 +3720,39 @@ msgstr "Allarme se l'autonomia della batteria è:"
 msgid "%1.0f minutes"
 msgstr "%1.0f minuti"
 
-#: src/modules/battery/e_mod_config.c:132
+#: src/modules/battery/e_mod_config.c:148
 #, c-format
 msgid "%1.0f percent"
 msgstr "%1.0f percento"
 
-#: src/modules/battery/e_mod_main.c:114
+#: src/modules/battery/e_mod_config.c:151
+msgid "Dismiss alert automatically"
+msgstr "Rimuovi allarme automaticamente"
+
+#: src/modules/battery/e_mod_config.c:154
+msgid "Dismiss alert after:"
+msgstr "Rimuovi allarme dopo:"
+
+#: src/modules/battery/e_mod_config.c:157
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
+#, c-format
+msgid "%1.0f seconds"
+msgstr "%1.0f secondi"
+
+#: src/modules/battery/e_mod_main.c:129
 msgid "Battery"
 msgstr "Battery"
 
-#: src/modules/battery/e_mod_main.c:281
+#: src/modules/battery/e_mod_main.c:417
 msgid "Battery Meter"
 msgstr "Indicatore di carica"
 
-#: src/modules/battery/e_mod_main.c:360 src/modules/battery/e_mod_main.c:361
+#: src/modules/battery/e_mod_main.c:494 src/modules/battery/e_mod_main.c:496
+#: src/modules/battery/e_mod_main.c:503 src/modules/battery/e_mod_main.c:505
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: src/modules/battery/e_mod_main.c:401
+#: src/modules/battery/e_mod_main.c:563
 msgid "N/A"
 msgstr "N/D"
 
@@ -4467,42 +4483,42 @@ msgstr "get-e.org - Animati"
 msgid "[%s] Getting feed... DONE!"
 msgstr "[%s] Ricezione feed... FATTO!"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:251
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:252
 #, c-format
 msgid "[%s] Getting feed... FAILED!"
 msgstr "[%s] Ricezione feed... FALLITO!"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:372
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:375
 #, c-format
 msgid "[%s] Parsing feed... DONE!"
 msgstr "[%s] Elaborazione feed... FATTO!"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:379
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:383
 #, c-format
 msgid "[%s] Parsing feed... FAILED!"
 msgstr "[%s] Elaborazione feed... FALLITO!"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:494
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:501
 #, c-format
 msgid "[%s] Downloading of edje file..."
 msgstr "[%s] Scaricamento file edje..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:527
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:535
 #, c-format
 msgid "[%s] Download %d images of %d"
 msgstr "[%s] Scaricamento %d immagini di %d"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:540
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:549
 #, c-format
 msgid "[%s] Choose an image from list"
 msgstr "[%s] Scegliere un'immagine dalla lista"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:563
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:573
 #, c-format
 msgid "[%s] Downloading of edje file... %d%% done"
 msgstr "[%s] Scaricamento file edje... %d%% fatto"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:598
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:608
 #, c-format
 msgid "[%s] Getting feed..."
 msgstr "[%s] Ricezione feed..."
@@ -4529,7 +4545,7 @@ msgid "Restart Applications"
 msgstr "Applicazioni per il riavvio"
 
 #: src/modules/conf_applications/e_int_config_apps.c:238
-#: src/modules/fileman/e_fwin.c:1360
+#: src/modules/fileman/e_fwin.c:1361
 msgid "All Applications"
 msgstr "Tutte le applicazioni"
 
@@ -5684,11 +5700,6 @@ msgstr "Tempo per l'avvio dello screensaver"
 msgid "Time until X screensaver alternates"
 msgstr "Tempo per il cambio dello screensaver"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
-#, c-format
-msgid "%1.0f seconds"
-msgstr "%1.0f secondi"
-
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:162
 msgid "Blanking"
 msgstr "Oscuramento"
@@ -6106,19 +6117,19 @@ msgstr "Lanciacomandi"
 msgid "Go to Parent Directory"
 msgstr "Directory superiore"
 
-#: src/modules/fileman/e_fwin.c:680 src/modules/fileman/e_fwin.c:1319
+#: src/modules/fileman/e_fwin.c:680 src/modules/fileman/e_fwin.c:1320
 msgid "Open"
 msgstr "Apri"
 
-#: src/modules/fileman/e_fwin.c:687 src/modules/fileman/e_fwin.c:1317
+#: src/modules/fileman/e_fwin.c:687 src/modules/fileman/e_fwin.c:1318
 msgid "Open with..."
 msgstr "Apri con..."
 
-#: src/modules/fileman/e_fwin.c:1335
+#: src/modules/fileman/e_fwin.c:1336
 msgid "Specific Applications"
 msgstr "Applicazioni specifiche"
 
-#: src/modules/fileman/e_fwin.c:1406
+#: src/modules/fileman/e_fwin.c:1407
 msgid "Custom Command"
 msgstr "Comando personalizzato"
 
@@ -6285,3 +6296,13 @@ msgstr "Indietro"
 #: src/modules/wizard/page_010.c:25
 msgid "Choose Language"
 msgstr "Scegli lingua"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:29
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:58
+#: src/modules/conf_window_remembers/e_mod_main.c:17
+msgid "Window Remembers"
+msgstr "Impostazioni finestra da ricordare"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:60
+msgid "Delete Remember(s)"
+msgstr "Elimina impostazioni da ricordare"
