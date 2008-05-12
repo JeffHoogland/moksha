@@ -38,16 +38,14 @@ struct _E_Config_Wallpaper
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
-   Evas_Object *o_frame;
+//   Evas_Object *o_frame;
    Evas_Object *o_fm;
    Evas_Object *o_up_button;
    Evas_Object *o_preview;
    Evas_Object *o_theme_bg;
    Evas_Object *o_personal;
    Evas_Object *o_system;
-   int fmdir;
-
-   int use_theme_bg;
+   int fmdir, use_theme_bg;
    char *bg;
 
    /* advanced */
@@ -129,11 +127,11 @@ e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file)
    cfdata->use_theme_bg = 0;
    if (cfdata->o_theme_bg)
      e_widget_check_checked_set(cfdata->o_theme_bg, cfdata->use_theme_bg);
-   if (cfdata->o_fm) e_fm2_path_set(cfdata->o_fm, path, "/");
+   if (cfdata->o_fm) e_widget_flist_path_set(cfdata->o_fm, path, "/");
    if (cfdata->o_preview)
      e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, 
                                "e/desktop/background");
-   if (cfdata->o_frame) e_widget_change(cfdata->o_frame);
+   if (cfdata->o_fm) e_widget_change(cfdata->o_fm);
 }
 
 EAPI void
@@ -200,9 +198,7 @@ _cb_button_up(void *data1, void *data2)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data1;
-   if (cfdata->o_fm) e_fm2_parent_go(cfdata->o_fm);
-   if (cfdata->o_frame)
-     e_widget_scrollframe_child_pos_set(cfdata->o_frame, 0, 0);
+   if (cfdata->o_fm) e_widget_flist_parent_go(cfdata->o_fm);
 }
 
 static void
@@ -210,14 +206,11 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
 
-   cfdata = data;
+   if (!(cfdata = data)) return;
    if (!cfdata->o_fm) return;
    if (cfdata->o_up_button) 
      e_widget_disabled_set(cfdata->o_up_button, 
-                           !e_fm2_has_parent_get(cfdata->o_fm));
-
-   if (cfdata->o_frame)
-     e_widget_scrollframe_child_pos_set(cfdata->o_frame, 0, 0);
+                           !e_widget_flist_has_parent_get(cfdata->o_fm));
 }
 
 static void
@@ -231,10 +224,9 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
 
    cfdata = data;
    if (!cfdata->o_fm) return;
-   selected = e_fm2_selected_list_get(cfdata->o_fm);
-   if (!selected) return;
+   if (!(selected = e_widget_flist_selected_list_get(cfdata->o_fm))) return;
    ici = selected->data;
-   realpath = e_fm2_real_path_get(cfdata->o_fm);
+   realpath = e_widget_flist_real_path_get(cfdata->o_fm);
    if (!strcmp(realpath, "/"))
      snprintf(buf, sizeof(buf), "/%s", ici->file);
    else
@@ -250,7 +242,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
    if (cfdata->o_theme_bg)
      e_widget_check_checked_set(cfdata->o_theme_bg, 0);
    cfdata->use_theme_bg = 0;
-   if (cfdata->o_frame) e_widget_change(cfdata->o_frame);
+   e_widget_change(cfdata->o_fm);
 }
 
 static void
@@ -262,7 +254,7 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 
    cfdata = data;
    if ((!cfdata->bg) || (!cfdata->o_fm)) return;
-   p = e_fm2_real_path_get(cfdata->o_fm);
+   p = e_widget_flist_real_path_get(cfdata->o_fm);
    if (p)
      {
 	if (strncmp(p, cfdata->bg, strlen(p))) return;
@@ -281,8 +273,8 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 	  p = cfdata->bg;
      }
 
-   e_fm2_select_set(cfdata->o_fm, p, 1);
-   e_fm2_file_show(cfdata->o_fm, p);
+   e_widget_flist_select_set(cfdata->o_fm, p, 1);
+   e_widget_flist_file_show(cfdata->o_fm, p);
 }
 
 static void
@@ -295,10 +287,8 @@ _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info)
    cfdata = data;
    if ((!cfdata->bg) || (!cfdata->o_fm)) return;
 
-   all = e_fm2_all_list_get(cfdata->o_fm);
-   if (!all) return;
-   sel = e_fm2_selected_list_get(cfdata->o_fm);
-   if (!sel) return;
+   if (!(all = e_widget_flist_all_list_get(cfdata->o_fm))) return;
+   if (!(sel = e_widget_flist_selected_list_get(cfdata->o_fm))) return;
 
    ici = sel->data;
    all = evas_list_find_list(all, ici);
@@ -311,8 +301,8 @@ _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info)
 
    if (!(ic = n->data)) return;
 
-   e_fm2_select_set(cfdata->o_fm, ic->file, 1);
-   e_fm2_file_show(cfdata->o_fm, ic->file);
+   e_widget_flist_select_set(cfdata->o_fm, ic->file, 1);
+   e_widget_flist_file_show(cfdata->o_fm, ic->file);
 
    evas_list_free(n);
 
@@ -360,7 +350,7 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
      snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
    else
      snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
-   e_fm2_path_set(cfdata->o_fm, path, "/");
+   e_widget_flist_path_set(cfdata->o_fm, path, "/");
 }
 
 static void
@@ -410,6 +400,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (cw->specific_config)
      {
 	const char *bg;
+
 	/* specific config passed in. set for that only */
 	bg = e_bg_file_get(cw->con_num, cw->zone_num, cw->desk_x, cw->desk_y);
 	if (bg) cfdata->bg = strdup(bg);
@@ -450,11 +441,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
 	f = e_theme_edje_file_get("base/theme/backgrounds", 
                                   "e/desktop/background");
-	if (!strcmp(cfdata->bg, f))
-	  cfdata->use_theme_bg = 1;
-	snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
-	if (!strncmp(cfdata->bg, path, strlen(path)))
-	  cfdata->fmdir = 1;
+	if (!strcmp(cfdata->bg, f)) cfdata->use_theme_bg = 1;
+	snprintf(path, sizeof(path), "%s/data/backgrounds", 
+                 e_prefix_data_get());
+	if (!strncmp(cfdata->bg, path, strlen(path))) cfdata->fmdir = 1;
      }
    else
      cfdata->use_theme_bg = 1;
@@ -494,7 +484,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    E_Zone *zone = NULL;
    E_Radio_Group *rg;
    char path[PATH_MAX];
-   E_Fm2_Config fmc;
    int mw, mh;
    const char *f;
 
@@ -526,44 +515,20 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    else
      snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
 
-   /* add file selector */
-   ow = e_fm2_add(evas);
+   ow = e_widget_flist_add(evas);
    cfdata->o_fm = ow;
-   memset(&fmc, 0, sizeof(E_Fm2_Config));
-   fmc.view.mode = E_FM2_VIEW_MODE_LIST;
-   fmc.view.open_dirs_in_place = 1;
-   fmc.view.selector = 1;
-   fmc.view.single_click = 0;
-   fmc.view.no_subdir_jump = 0;
-   fmc.icon.list.w = 48;
-   fmc.icon.list.h = 48;
-   fmc.icon.fixed.w = 1;
-   fmc.icon.fixed.h = 1;
-   fmc.icon.extension.show = 0;
-   fmc.icon.key_hint = NULL;
-   fmc.list.sort.no_case = 1;
-   fmc.list.sort.dirs.first = 0;
-   fmc.list.sort.dirs.last = 1;
-   fmc.selection.single = 1;
-   fmc.selection.windows_modifiers = 0;
-   e_fm2_config_set(ow, &fmc);
-   e_fm2_icon_menu_flags_set(ow, E_FM2_MENU_NO_SHOW_HIDDEN);
    evas_object_smart_callback_add(ow, "dir_changed",
 				  _cb_files_changed, cfdata);
    evas_object_smart_callback_add(ow, "selection_change",
 				  _cb_files_selection_change, cfdata);
-   evas_object_smart_callback_add(ow, "changed",
-				  _cb_files_files_changed, cfdata);
+   evas_object_smart_callback_add(ow, "changed", 
+                                  _cb_files_files_changed, cfdata);
    evas_object_smart_callback_add(ow, "files_deleted",
 				  _cb_files_files_deleted, cfdata);
-   e_fm2_path_set(ow, path, "/");
+   e_widget_flist_path_set(ow, path, "/");
 
-   of = e_widget_scrollframe_pan_add(evas, ow, e_fm2_pan_set, e_fm2_pan_get,
-				     e_fm2_pan_max_get,
-				     e_fm2_pan_child_size_get);
-   cfdata->o_frame = of;
-   e_widget_min_size_set(of, 60, 60);
-   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_min_size_set(ow, 60, 60);
+   e_widget_table_object_append(ot, ow, 0, 2, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.0);
 
    ot = e_widget_table_add(evas, 0);
@@ -645,7 +610,6 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    E_Zone *zone = NULL;
    E_Radio_Group *rg;
    char path[PATH_MAX];
-   E_Fm2_Config fmc;
    int mw, mh;
    const char *f;
 
@@ -677,44 +641,18 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    else
      snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
 
-   /* add file selector */
-   ow = e_fm2_add(evas);
+   ow = e_widget_flist_add(evas);
    cfdata->o_fm = ow;
-   memset(&fmc, 0, sizeof(E_Fm2_Config));
-   fmc.view.mode = E_FM2_VIEW_MODE_LIST;
-   fmc.view.open_dirs_in_place = 1;
-   fmc.view.selector = 1;
-   fmc.view.single_click = 0;
-   fmc.view.no_subdir_jump = 0;
-   fmc.icon.list.w = 48;
-   fmc.icon.list.h = 48;
-   fmc.icon.fixed.w = 1;
-   fmc.icon.fixed.h = 1;
-   fmc.icon.extension.show = 0;
-   fmc.icon.key_hint = NULL;
-   fmc.list.sort.no_case = 1;
-   fmc.list.sort.dirs.first = 0;
-   fmc.list.sort.dirs.last = 1;
-   fmc.selection.single = 1;
-   fmc.selection.windows_modifiers = 0;
-   e_fm2_config_set(ow, &fmc);
-   e_fm2_icon_menu_flags_set(ow, E_FM2_MENU_NO_SHOW_HIDDEN);
    evas_object_smart_callback_add(ow, "dir_changed",
 				  _cb_files_changed, cfdata);
    evas_object_smart_callback_add(ow, "selection_change",
 				  _cb_files_selection_change, cfdata);
-   evas_object_smart_callback_add(ow, "changed",
-				  _cb_files_files_changed, cfdata);
-   evas_object_smart_callback_add(ow, "files_deleted",
-				  _cb_files_files_deleted, cfdata);
-   e_fm2_path_set(ow, path, "/");
+   evas_object_smart_callback_add(ow, "changed", 
+                                  _cb_files_files_changed, cfdata);
+   e_widget_flist_path_set(ow, path, "/");
 
-   of = e_widget_scrollframe_pan_add(evas, ow, e_fm2_pan_set, e_fm2_pan_get,
-				     e_fm2_pan_max_get,
-				     e_fm2_pan_child_size_get);
-   cfdata->o_frame = of;
-   e_widget_min_size_set(of, 160, 160);
-   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_min_size_set(ow, 160, 160);
+   e_widget_table_object_append(ot, ow, 0, 2, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.0);
 
    ot = e_widget_table_add(evas, 0);

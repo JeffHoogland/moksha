@@ -16,13 +16,13 @@ struct _Import
 {
    E_Config_Dialog *parent;
    E_Config_Dialog_Data *cfdata;
-   
+
    Evas_Object *bg_obj;
    Evas_Object *box_obj;
    Evas_Object *event_obj;
    Evas_Object *content_obj;
    Evas_Object *fsel_obj;
-   
+
    Evas_Object *ok_obj;
    Evas_Object *close_obj;
 
@@ -35,9 +35,9 @@ struct _Import
    Evas_Object *quality_obj;
    Evas_Object *frame_fill_obj;
    Evas_Object *frame_quality_obj;
-   
+
    E_Win *win;
-   
+
    Ecore_Exe *exe;
    Ecore_Event_Handler *exe_handler;
    char *tmpf;
@@ -77,7 +77,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    E_Config_Dialog_Data *cfdata;
    Evas_Modifier_Mask mask;
    const char *fdev, *fpath;
-   
+
    import = E_NEW(Import, 1);
    if (!import) return NULL;
 
@@ -88,34 +88,33 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
 
    if (!win) 
      { 
-	free(import);
+	E_FREE(import);
 	return NULL;	
      }
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->method = IMPORT_STRETCH;
    cfdata->external = 0;
    cfdata->quality = 90;
    import->cfdata = cfdata;
    import->win = win;
-   
+
    evas = e_win_evas_get(win);
 
-   if (parent)
-     import->parent = parent;
+   if (parent) import->parent = parent;
 
    e_win_title_set(win, _("Select a Picture..."));
    e_win_delete_callback_set(win, _import_cb_delete);
    e_win_resize_callback_set(win, _import_cb_resize);
    e_win_dialog_set(win, 1);
    e_win_name_class_set(win, "E", "_wallpaper_import_dialog");
-   
+
    o = edje_object_add(evas);
    import->bg_obj = o;
    e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/main");
    evas_object_move(o, 0, 0);
    evas_object_show(o);
-   
+
    o = e_widget_list_add(evas, 1, 1);
    e_widget_on_focus_hook_set(o, _import_cb_wid_on_focus, import);
    import->box_obj = o;
@@ -132,8 +131,9 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    mask = 0;
    evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    mask = 0;
-   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _import_cb_key_down, import);
-   
+   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, 
+                                  _import_cb_key_down, import);
+
    o = e_widget_list_add(evas, 0, 0);   
    import->content_obj = o;
 
@@ -152,7 +152,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    e_widget_list_object_append(o, ofm, 1, 1, 0.5);
 
    ot = e_widget_table_add(evas, 0);
-   
+
    of = e_widget_frametable_add(evas, _("Fill and Stretch Options"), 1);
    import->frame_fill_obj = of;
    rg = e_widget_radio_group_new(&cfdata->method);
@@ -182,7 +182,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    import->fill_fill_obj = ord;
    e_widget_frametable_object_append(of, ord, 4, 0, 1, 1, 1, 0, 1, 0);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 0);
-   
+
    of = e_widget_frametable_add(evas, _("File Quality"), 0);
    import->frame_quality_obj = of;
    ord = e_widget_check_add(evas, _("Use original file"), &(cfdata->external));
@@ -193,14 +193,14 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    import->quality_obj = ord;
    e_widget_frametable_object_append(of, ord, 0, 1, 1, 1, 1, 0, 1, 0);
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 0);
-   
+
    e_widget_list_object_append(o, ot, 0, 0, 0.5);
-   
+
    e_widget_min_size_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
    edje_object_part_swallow(import->bg_obj, "e.swallow.content", o);
    evas_object_show(o);
-   
+
    import->ok_obj = e_widget_button_add(evas, _("OK"), NULL, 
 					_import_cb_ok, win, cfdata);
    e_widget_list_object_append(import->box_obj, import->ok_obj, 1, 0, 0.5);
@@ -208,14 +208,14 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    import->close_obj = e_widget_button_add(evas, _("Cancel"), NULL, 
 					   _import_cb_close, win, NULL);
    e_widget_list_object_append(import->box_obj, import->close_obj, 1, 0, 0.5);
-   
+
    e_win_centered_set(win, 1);
-   
+
    o = import->box_obj;
    e_widget_min_size_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
    edje_object_part_swallow(import->bg_obj, "e.swallow.buttons", o);
-   
+
    edje_object_size_min_calc(import->bg_obj, &w, &h);
    evas_object_resize(import->bg_obj, w, h);
    e_win_resize(win, w, h);
@@ -223,12 +223,12 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    e_win_size_max_set(win, 99999, 99999);
    e_win_show(win);
    e_win_border_icon_set(win, "enlightenment/background");
-   
+
    if (!e_widget_focus_get(import->bg_obj))
      e_widget_focus_set(import->box_obj, 1);
-   
+
    win->data = import;
-   
+
    _import_opt_disabled_set(import, 1);
    return win;
 }
@@ -237,7 +237,7 @@ EAPI void
 e_int_config_wallpaper_del(E_Win *win)
 {
    Import *import;
-   
+
    import = win->data;
    _import_path_save(import);
    if (import->exe_handler) ecore_event_handler_del(import->exe_handler);
@@ -272,7 +272,7 @@ static void
 _import_cb_sel_selected(void *data, Evas_Object *obj)
 {
    Import *import;
-   
+
    import = data;
    _import_cb_ok(import->win, NULL);
 }
@@ -282,7 +282,7 @@ _import_cb_sel_change(void *data, Evas_Object *obj)
 {
    Import *import;
    const char *path, *p = NULL;
-   
+
    import = data;
    path = e_widget_fsel_selection_path_get(import->fsel_obj);
    E_FREE(import->cfdata->file);
@@ -298,7 +298,7 @@ static void
 _import_path_save(Import *import)
 {
    const char *fdev = NULL, *fpath = NULL;
-   
+
    e_widget_fsel_path_get(import->fsel_obj, &fdev, &fpath);
    if ((fdev) || (fpath))
      {
@@ -328,7 +328,7 @@ _import_edj_gen(Import *import)
    char *imgdir = NULL, *fstrip;
    int cr = 255, cg = 255, cb = 255, ca = 255;
    FILE *f;
-   
+
    evas = e_win_evas_get(import->win);
    file = ecore_file_file_get(import->cfdata->file);
    homedir = e_user_homedir_get();
@@ -350,14 +350,14 @@ _import_edj_gen(Import *import)
 	return;
      }
    close(fd);
-   
+
    f = fopen(tmpn, "w");
    if (!f) 
      {
 	printf("Cannot open %s for writing\n", tmpn);
 	return;
      }
-   
+
    imgdir = ecore_file_dir_get(import->cfdata->file);
    if (!imgdir) ipart[0] = '\0';
    else
@@ -370,7 +370,7 @@ _import_edj_gen(Import *import)
    evas_object_image_file_set(img, import->cfdata->file, NULL);
    evas_object_image_size_get(img, &w, &h);
    evas_object_del(img);   
-   
+
    if (import->cfdata->external)
      {
 	fstrip = strdup(e_util_filename_escape(import->cfdata->file));
@@ -475,7 +475,7 @@ _import_edj_gen(Import *import)
 	break;
      }
    free(fstrip);
-   
+
    fclose(f);
 
    snprintf(cmd, sizeof(cmd), "edje_cc -v %s %s %s", 
@@ -494,7 +494,7 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
 {
    Import *import;
    Ecore_Exe_Event_Del *ev;
-   
+
    ev = event;
    import = data;
    if (ev->exe != import->exe) return 1;
@@ -523,9 +523,8 @@ static void
 _import_cb_resize(E_Win *win) 
 {
    Import *import;
-   
-   import = win->data;
-   if (!import) return;
+
+   if (!(import = win->data)) return;
    evas_object_resize(import->bg_obj, win->w, win->h);
 }
 
@@ -533,7 +532,7 @@ static void
 _import_cb_close(void *data, void *data2) 
 {
    E_Win *win;
-   
+
    win = data;
    e_int_config_wallpaper_del(win);
 }
@@ -548,10 +547,9 @@ _import_cb_ok(void *data, void *data2)
    const char *homedir;
    char buf[4096];
    int is_bg, is_theme;
-   
+
    win = data;
-   import = win->data;
-   if (!import) return;
+   if (!(import = win->data)) return;
    path = e_widget_fsel_selection_path_get(import->fsel_obj);
    E_FREE(import->cfdata->file);
    if (path) import->cfdata->file = strdup(path);
@@ -571,7 +569,7 @@ _import_cb_ok(void *data, void *data2)
 	     is_theme = 
 	       edje_file_group_exists(import->cfdata->file, 
 				      "e/widgets/border/default/border");
-	     
+
 	     if ((is_bg) && (!is_theme)) 
 	       {
 		  if (!ecore_file_cp(import->cfdata->file, buf)) 
@@ -602,7 +600,7 @@ _import_cb_ok(void *data, void *data2)
 		  return;		  
 	       }
 	  }
-	
+
 	e_win_hide(win);
 	return;
      }
@@ -613,7 +611,7 @@ static void
 _import_cb_wid_on_focus(void *data, Evas_Object *obj) 
 {
    Import *import;
-   
+
    import = data;
    if (obj == import->content_obj)
      e_widget_focused_object_clear(import->box_obj);
@@ -671,7 +669,7 @@ _import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 	     (!strcmp(ev->keyname, "space"))))
      {
 	Evas_Object *o = NULL;
-	
+
 	if ((import->content_obj) && (e_widget_focus_get(import->content_obj)))
 	  o = e_widget_focused_object_get(import->content_obj);
 	else
