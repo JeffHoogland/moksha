@@ -38,7 +38,6 @@ struct _E_Config_Wallpaper
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
-//   Evas_Object *o_frame;
    Evas_Object *o_fm;
    Evas_Object *o_up_button;
    Evas_Object *o_preview;
