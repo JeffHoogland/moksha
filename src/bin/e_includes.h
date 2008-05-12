@@ -134,3 +134,4 @@
 #include "e_powersave.h"
 #include "e_slidesel.h"
 #include "e_slidecore.h"
+#include "e_widget_flist.h"
