@@ -182,7 +182,7 @@ static void
 _cb_delete(void *data, void *data2) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l = NULL;
+   Evas_List *l = NULL, *b = NULL;
    int i = 0, changed = 0;
 
    if (!(cfdata = data)) return;
@@ -194,6 +194,15 @@ _cb_delete(void *data, void *data2)
         item = l->data;
         if ((!item) || (!item->selected)) continue;
         if (!(rem = e_widget_ilist_nth_data_get(cfdata->list, i))) continue;
+        for (b = e_border_client_list(); b; b = b->next) 
+          {
+             E_Border *bd = NULL;
+
+             if (!(bd = b->data)) continue;
+             if (!bd->remember) continue;
+             if (bd->remember != rem) continue;
+             bd->remember = NULL;
+          }
         e_remember_unuse(rem);
         e_remember_del(rem);
         changed = 1;
@@ -201,6 +210,7 @@ _cb_delete(void *data, void *data2)
 
    if (changed) e_config_save_queue();
    if (1) evas_list_free(l);
+   if (b) evas_list_free(b);
 
    _fill_remembers(cfdata);
 }
