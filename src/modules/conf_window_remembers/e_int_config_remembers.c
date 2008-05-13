@@ -145,7 +145,8 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(cfdata->list);
    e_widget_ilist_clear(cfdata->list);
 
-   for (l = evas_list_sort(e_config->remembers, -1, _cb_sort); l; l = l->next) 
+   //for (l = evas_list_sort(e_config->remembers, -1, _cb_sort); l; l = l->next) 
+   for (l = e_config->remembers; l; l = l->next) 
      {
         E_Remember *rem = NULL;
 
