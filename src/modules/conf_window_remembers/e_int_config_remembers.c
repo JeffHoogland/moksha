@@ -41,10 +41,8 @@ _cb_sort(void *data1, void *data2)
    E_Remember *rem2 = NULL;
    const char *d1, *d2;
 
-   rem1 = data1;
-   rem2 = data2;
-   if (!rem1) return 1;
-   if (!rem2) return -1;
+   if (!(rem1 = data1)) return 1;
+   if (!(rem2 = data2)) return -1;
 
    if (rem1->name)
      d1 = rem1->name;
@@ -145,8 +143,9 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(cfdata->list);
    e_widget_ilist_clear(cfdata->list);
 
-   //for (l = evas_list_sort(e_config->remembers, -1, _cb_sort); l; l = l->next) 
-   for (l = e_config->remembers; l; l = l->next) 
+   l = e_config->remembers;
+   for (l = evas_list_sort(l, -1, _cb_sort); l; l = l->next) 
+   //for (l = e_config->remembers; l; l = l->next) 
      {
         E_Remember *rem = NULL;
 
@@ -167,6 +166,10 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
 
    e_widget_ilist_go(cfdata->list);
    e_widget_min_size_get(cfdata->list, &w, NULL);
+
+   /* NB: make the window look a bit better by not being so small */
+   if (w < 300) w = 300;
+
    e_widget_min_size_set(cfdata->list, w, 200);
    e_widget_ilist_thaw(cfdata->list);
    edje_thaw();
@@ -216,10 +219,14 @@ _cb_list_change(void *data, Evas_Object *obj)
    n = e_widget_ilist_selected_get(cfdata->list);
    if ((rem = e_widget_ilist_nth_data_get(cfdata->list, n)))
      {
-	e_widget_label_text_set(cfdata->name, rem->name ? rem->name : _("<No Name>"));
-	e_widget_label_text_set(cfdata->class, rem->class ? rem->class : _("<No Class>"));
-	e_widget_label_text_set(cfdata->title, rem->title ? rem->title : _("<No Title>"));
-	e_widget_label_text_set(cfdata->role, rem->role ? rem->role : _("<No Role>"));
+	e_widget_label_text_set(cfdata->name, rem->name ? 
+                                rem->name : _("<No Name>"));
+	e_widget_label_text_set(cfdata->class, rem->class ? 
+                                rem->class : _("<No Class>"));
+	e_widget_label_text_set(cfdata->title, rem->title ? 
+                                rem->title : _("<No Title>"));
+	e_widget_label_text_set(cfdata->role, rem->role ? 
+                                rem->role : _("<No Role>"));
      }
 
    if (e_widget_ilist_selected_count_get(cfdata->list) < 1)
