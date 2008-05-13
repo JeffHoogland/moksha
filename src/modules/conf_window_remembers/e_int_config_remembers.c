@@ -10,7 +10,7 @@ static void _cb_list_change(void *data, Evas_Object *obj);
 
 struct _E_Config_Dialog_Data 
 {
-   Evas_Object *list, *btn;
+   Evas_Object *list, *btn, *name, *class, *title, *role;
 };
 
 EAPI E_Config_Dialog *
@@ -52,7 +52,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *of, *ow;
+   Evas_Object *o, *of, *of2, *ow;
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_frametable_add(evas, _("Window Remembers"), 0);
@@ -67,8 +67,31 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_on_change_hook_set(ow, _cb_list_change, cfdata);
    _fill_remembers(cfdata);
 
+   of2 = e_widget_frametable_add(evas, _("Details"), 0);
+   ow = e_widget_label_add(evas, _("Name:"));
+   e_widget_frametable_object_append(of2, ow, 0, 0, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_label_add(evas, _("<No Name>"));
+   cfdata->name = ow;
+   e_widget_frametable_object_append(of2, cfdata->name, 1, 0, 1, 1, 1, 1, 1, 0);
+   ow = e_widget_label_add(evas, _("Class:"));
+   e_widget_frametable_object_append(of2, ow, 0, 1, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_label_add(evas, _("<No Class>"));
+   cfdata->class = ow;
+   e_widget_frametable_object_append(of2, cfdata->class, 1, 1, 1, 1, 1, 1, 1, 0);
+   ow = e_widget_label_add(evas, _("Title:"));
+   e_widget_frametable_object_append(of2, ow, 0, 2, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_label_add(evas, _("<No Title>"));
+   cfdata->title = ow;
+   e_widget_frametable_object_append(of2, cfdata->title, 1, 2, 1, 1, 1, 1, 1, 0);
+   ow = e_widget_label_add(evas, _("Role:"));
+   e_widget_frametable_object_append(of2, ow, 0, 3, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_label_add(evas, _("<No Role>"));
+   cfdata->role = ow;
+   e_widget_frametable_object_append(of2, cfdata->role, 1, 3, 1, 1, 1, 1, 1, 0);
+
    e_widget_frametable_object_append(of, cfdata->list, 0, 0, 1, 1, 1, 1, 1, 1);
-   e_widget_frametable_object_append(of, cfdata->btn, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_frametable_object_append(of, of2, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_frametable_object_append(of, cfdata->btn, 0, 2, 1, 1, 1, 1, 1, 0);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -149,12 +172,24 @@ static void
 _cb_list_change(void *data, Evas_Object *obj) 
 {
    E_Config_Dialog_Data *cfdata;
+   E_Ilist_Item *item = NULL;
+   E_Remember *rem = NULL;
+   int n = 0;
+   char *s;
 
    if (!(cfdata = data)) return;
-   if (e_widget_ilist_selected_count_get(cfdata->list) < 1) 
+
+   n = e_widget_ilist_selected_get(cfdata->list);
+   if ((rem = e_widget_ilist_nth_data_get(cfdata->list, n)))
      {
-        e_widget_disabled_set(cfdata->btn, 1);
-        return;
+	e_widget_label_text_set(cfdata->name, rem->name ? rem->name : _("<No Name>"));
+	e_widget_label_text_set(cfdata->class, rem->class ? rem->class : _("<No Class>"));
+	e_widget_label_text_set(cfdata->title, rem->title ? rem->title : _("<No Title>"));
+	e_widget_label_text_set(cfdata->role, rem->role ? rem->role : _("<No Role>"));
      }
-   e_widget_disabled_set(cfdata->btn, 0);
+
+   if (e_widget_ilist_selected_count_get(cfdata->list) < 1)
+     e_widget_disabled_set(cfdata->btn, 1);
+   else
+     e_widget_disabled_set(cfdata->btn, 0);
 }
