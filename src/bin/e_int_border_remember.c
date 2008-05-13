@@ -267,7 +267,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	cfdata->border->remember = e_remember_new();
 	if (cfdata->border->remember)
-	     e_remember_use(cfdata->border->remember);
+          e_remember_use(cfdata->border->remember);
      }
 
    if (cfdata->border->remember)
