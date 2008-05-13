@@ -34,6 +34,39 @@ e_int_config_remembers(E_Container *con, const char *params __UNUSED__)
 }
 
 /* private functions */
+static int
+_cb_sort(void *data1, void *data2)
+{
+   E_Remember *rem1 = NULL;
+   E_Remember *rem2 = NULL;
+   const char *d1, *d2;
+
+   rem1 = data1;
+   rem2 = data2;
+   if (!rem1) return 1;
+   if (!rem2) return -1;
+
+   if (rem1->name)
+     d1 = rem1->name;
+   else if (rem1->class)
+     d1 = rem1->class;
+   else if (rem1->title)
+     d1 = rem1->title;
+   else if (rem1->role)
+     d1 = rem1->role;
+
+   if (rem2->name)
+     d2 = rem2->name;
+   else if (rem2->class)
+     d2 = rem2->class;
+   else if (rem2->title)
+     d2 = rem2->title;
+   else if (rem2->role)
+     d2 = rem2->role;
+
+   return strcmp(d1, d2);
+}
+
 static void *
 _create_data(E_Config_Dialog *cfd) 
 {
@@ -112,7 +145,7 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(cfdata->list);
    e_widget_ilist_clear(cfdata->list);
 
-   for (l = e_config->remembers; l; l = l->next) 
+   for (l = evas_list_sort(e_config->remembers, -1, _cb_sort); l; l = l->next) 
      {
         E_Remember *rem = NULL;
 
