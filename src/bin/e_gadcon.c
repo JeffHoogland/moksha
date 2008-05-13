@@ -1762,12 +1762,12 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
    _e_gadcon_client_current_position_sync(gcc);
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
-	if (abs(cy - gcc->drag.y) > e_config->drag_resist)
+/*	if (abs(cy - gcc->drag.y) > e_config->drag_resist)
 	  {
 	     _e_gadcon_client_drag_begin(gcc, cx, cy);
 	     return;
 	  }
-	else if (x > 0)
+	else*/ if (x > 0)
 	  {
 	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
 	       gcc->state_info.resist = 0;
@@ -1782,12 +1782,12 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
      }
    else
      {
-	if (abs(cx - gcc->drag.x) > e_config->drag_resist)
+/*	if (abs(cx - gcc->drag.x) > e_config->drag_resist)
 	  {
 	     _e_gadcon_client_drag_begin(gcc, cx, cy);
 	     return;
 	  }
-	else if (y > 0)
+	else*/ if (y > 0)
 	  {
 	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
 	       gcc->state_info.resist = 0;
