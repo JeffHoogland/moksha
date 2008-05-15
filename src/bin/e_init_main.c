@@ -460,6 +460,13 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
 	ecore_evas_xrender_x11_direct_resize_set(ee, 1);
 	*winret = ecore_evas_xrender_x11_window_get(ee);
      }
+   else if (engine == 4)
+     {
+        ee = ecore_evas_software_x11_16_new(NULL, root, 0, 0, w, h);
+	ecore_evas_override_set(ee, 1);
+	ecore_evas_software_x11_16_direct_resize_set(ee, 1);
+	*winret = ecore_evas_software_x11_16_window_get(ee);
+     }
    
    e = ecore_evas_get(ee);
    
