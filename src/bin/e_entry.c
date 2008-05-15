@@ -1357,14 +1357,32 @@ _e_entry_cb_imf_event_commit(void *data, int type, void *event)
    Evas_Object *entry;
    E_Entry_Smart_Data *sd;
    Ecore_IMF_Event_Commit *ev = event;
+   Evas_Object *editable;
+   int cursor_pos, selection_pos;
+   int start_pos, end_pos;
+   int selecting;
+   int changed = 0;
 
    if ((!(entry = data)) || (!(sd = evas_object_smart_data_get(entry))))
      return 1;
 
    if (sd->imf_context != ev->ctx)
-      return 1;
+     return 1;
 
-   e_entry_text_set(entry, ev->str);
+   editable = sd->editable_object;
+   cursor_pos = e_editable_cursor_pos_get(editable);
+   selection_pos = e_editable_selection_pos_get(editable);
+   start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
+   end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
+   selecting = (start_pos != end_pos);
+
+   if (selecting)
+     changed |= e_editable_delete(editable, start_pos, end_pos);
+   changed |= e_editable_insert(editable, start_pos, ev->str);
+
+   if (changed)
+     evas_object_smart_callback_call(entry, "changed", NULL);
+
    return 0;
 }
 
@@ -1379,7 +1397,7 @@ _e_entry_cb_imf_event_delete_surrounding(void *data, int type, void *event)
    sd = data;
 
    if (sd->imf_context != ev->ctx)
-      return 1;
+     return 1;
 
    editable = sd->editable_object;
    cursor_pos = e_editable_cursor_pos_get(editable);
