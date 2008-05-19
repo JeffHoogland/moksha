@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-01-25 13:23+1100\n"
+"POT-Creation-Date: 2008-05-19 09:50+1000\n"
 "PO-Revision-Date: 2007-11-06 20:25+0800\n"
 "Last-Translator: Chia-I Wu <olv@openmoko.com>\n"
 "Language-Team: none\n"
@@ -20,8 +20,8 @@ msgstr ""
 msgid "About Enlightenment"
 msgstr "關於 Enlightenment"
 
-#: src/bin/e_about.c:74 src/bin/e_actions.c:2300 src/bin/e_actions.c:2304
-#: src/bin/e_actions.c:2308 src/bin/e_actions.c:2312 src/bin/e_int_menus.c:168
+#: src/bin/e_about.c:74 src/bin/e_actions.c:2301 src/bin/e_actions.c:2305
+#: src/bin/e_actions.c:2309 src/bin/e_actions.c:2313 src/bin/e_int_menus.c:168
 #: src/bin/e_main.c:563
 msgid "Enlightenment"
 msgstr "Enlightenment"
@@ -58,15 +58,15 @@ msgstr "您是否確定強制結束此視窗？"
 
 #: src/bin/e_actions.c:327 src/bin/e_actions.c:1600 src/bin/e_actions.c:1671
 #: src/bin/e_actions.c:1730 src/bin/e_actions.c:1789 src/bin/e_actions.c:1848
-#: src/bin/e_actions.c:1907 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:7002
-#: src/bin/e_module.c:485 src/modules/conf_display/e_int_config_display.c:215
+#: src/bin/e_actions.c:1907 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:7012
+#: src/bin/e_module.c:497 src/modules/conf_display/e_int_config_display.c:215
 msgid "Yes"
 msgstr "是"
 
 #: src/bin/e_actions.c:329 src/bin/e_actions.c:1602 src/bin/e_actions.c:1673
 #: src/bin/e_actions.c:1732 src/bin/e_actions.c:1791 src/bin/e_actions.c:1850
-#: src/bin/e_actions.c:1909 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:7003
-#: src/bin/e_module.c:486 src/modules/conf_display/e_int_config_display.c:216
+#: src/bin/e_actions.c:1909 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:7013
+#: src/bin/e_module.c:498 src/modules/conf_display/e_int_config_display.c:216
 msgid "No"
 msgstr "否"
 
@@ -123,334 +123,334 @@ msgid ""
 "suspend to disk?"
 msgstr "您要求進入休眠狀態。<br><br>您是否確定休眠？"
 
-#: src/bin/e_actions.c:1980 src/bin/e_actions.c:1990 src/bin/e_actions.c:2008
-#: src/bin/e_actions.c:2013 src/bin/e_actions.c:2018 src/bin/e_actions.c:2023
-#: src/bin/e_actions.c:2232 src/bin/e_actions.c:2237 src/bin/e_actions.c:2243
-#: src/bin/e_actions.c:2249 src/bin/e_actions.c:2255
+#: src/bin/e_actions.c:1981 src/bin/e_actions.c:1991 src/bin/e_actions.c:2009
+#: src/bin/e_actions.c:2014 src/bin/e_actions.c:2019 src/bin/e_actions.c:2024
+#: src/bin/e_actions.c:2233 src/bin/e_actions.c:2238 src/bin/e_actions.c:2244
+#: src/bin/e_actions.c:2250 src/bin/e_actions.c:2256
 msgid "Window : Actions"
 msgstr "視窗: 動作"
 
-#: src/bin/e_actions.c:1980
+#: src/bin/e_actions.c:1981
 msgid "Move"
 msgstr "移動"
 
-#: src/bin/e_actions.c:1990
+#: src/bin/e_actions.c:1991
 msgid "Resize"
 msgstr "改變大小"
 
-#: src/bin/e_actions.c:2000 src/bin/e_actions.c:2276 src/bin/e_actions.c:2278
-#: src/bin/e_actions.c:2280 src/bin/e_actions.c:2282 src/bin/e_actions.c:2284
+#: src/bin/e_actions.c:2001 src/bin/e_actions.c:2277 src/bin/e_actions.c:2279
+#: src/bin/e_actions.c:2281 src/bin/e_actions.c:2283 src/bin/e_actions.c:2285
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:345
 msgid "Menu"
 msgstr "選單"
 
-#: src/bin/e_actions.c:2000
+#: src/bin/e_actions.c:2001
 msgid "Window Menu"
 msgstr "視窗選單"
 
-#: src/bin/e_actions.c:2008 src/bin/e_int_border_menu.c:346
+#: src/bin/e_actions.c:2009 src/bin/e_int_border_menu.c:347
 msgid "Raise"
 msgstr "上移"
 
-#: src/bin/e_actions.c:2013 src/bin/e_int_border_menu.c:354
+#: src/bin/e_actions.c:2014 src/bin/e_int_border_menu.c:355
 msgid "Lower"
 msgstr "下移"
 
-#: src/bin/e_actions.c:2018 src/bin/e_config_dialog.c:226 src/bin/e_fm.c:515
-#: src/bin/e_int_border_menu.c:328 src/bin/e_int_border_prop.c:81
-#: src/modules/conf/e_conf.c:168 src/modules/fileman/e_fwin.c:1309
+#: src/bin/e_actions.c:2019 src/bin/e_config_dialog.c:226 src/bin/e_fm.c:510
+#: src/bin/e_int_border_menu.c:329 src/bin/e_int_border_prop.c:81
+#: src/modules/conf/e_conf.c:170 src/modules/fileman/e_fwin.c:1322
 msgid "Close"
 msgstr "關閉"
 
-#: src/bin/e_actions.c:2023 src/bin/e_int_border_menu.c:317
+#: src/bin/e_actions.c:2024 src/bin/e_int_border_menu.c:318
 msgid "Kill"
 msgstr "強制結束"
 
-#: src/bin/e_actions.c:2028 src/bin/e_actions.c:2035 src/bin/e_actions.c:2042
-#: src/bin/e_actions.c:2049 src/bin/e_actions.c:2051 src/bin/e_actions.c:2054
-#: src/bin/e_actions.c:2057 src/bin/e_actions.c:2059 src/bin/e_actions.c:2061
-#: src/bin/e_actions.c:2063 src/bin/e_actions.c:2070 src/bin/e_actions.c:2072
-#: src/bin/e_actions.c:2074 src/bin/e_actions.c:2076 src/bin/e_actions.c:2078
-#: src/bin/e_actions.c:2085 src/bin/e_actions.c:2090
+#: src/bin/e_actions.c:2029 src/bin/e_actions.c:2036 src/bin/e_actions.c:2043
+#: src/bin/e_actions.c:2050 src/bin/e_actions.c:2052 src/bin/e_actions.c:2055
+#: src/bin/e_actions.c:2058 src/bin/e_actions.c:2060 src/bin/e_actions.c:2062
+#: src/bin/e_actions.c:2064 src/bin/e_actions.c:2071 src/bin/e_actions.c:2073
+#: src/bin/e_actions.c:2075 src/bin/e_actions.c:2077 src/bin/e_actions.c:2079
+#: src/bin/e_actions.c:2086 src/bin/e_actions.c:2091
 msgid "Window : State"
 msgstr "視窗: 狀態"
 
-#: src/bin/e_actions.c:2028
+#: src/bin/e_actions.c:2029
 msgid "Sticky Mode Toggle"
 msgstr "切換相黏模式"
 
-#: src/bin/e_actions.c:2035
+#: src/bin/e_actions.c:2036
 msgid "Iconic Mode Toggle"
 msgstr "切換圖示化"
 
-#: src/bin/e_actions.c:2042
+#: src/bin/e_actions.c:2043
 msgid "Fullscreen Mode Toggle"
 msgstr "切換全螢幕模式"
 
-#: src/bin/e_actions.c:2049 src/bin/e_int_border_menu.c:107
-#: src/bin/e_int_border_menu.c:237
+#: src/bin/e_actions.c:2050 src/bin/e_int_border_menu.c:108
+#: src/bin/e_int_border_menu.c:238
 msgid "Maximize"
 msgstr "最大化"
 
-#: src/bin/e_actions.c:2051
+#: src/bin/e_actions.c:2052
 msgid "Maximize Vertically"
 msgstr "垂直最大化"
 
-#: src/bin/e_actions.c:2054
+#: src/bin/e_actions.c:2055
 msgid "Maximize Horizontally"
 msgstr "水平最大化"
 
-#: src/bin/e_actions.c:2057
+#: src/bin/e_actions.c:2058
 msgid "Maximize Fullscreen"
 msgstr "全螢幕最大化"
 
-#: src/bin/e_actions.c:2059
+#: src/bin/e_actions.c:2060
 msgid "Maximize Mode \"Smart\""
 msgstr "「智慧型」最大化模式"
 
-#: src/bin/e_actions.c:2061
+#: src/bin/e_actions.c:2062
 msgid "Maximize Mode \"Expand\""
 msgstr "「展開」最大化模式"
 
-#: src/bin/e_actions.c:2063
+#: src/bin/e_actions.c:2064
 msgid "Maximize Mode \"Fill\""
 msgstr "「填滿」最大化模式"
 
-#: src/bin/e_actions.c:2070
+#: src/bin/e_actions.c:2071
 msgid "Shade Up Mode Toggle"
 msgstr "切換上捲模式"
 
-#: src/bin/e_actions.c:2072
+#: src/bin/e_actions.c:2073
 msgid "Shade Down Mode Toggle"
 msgstr "切換下捲模式"
 
-#: src/bin/e_actions.c:2074
+#: src/bin/e_actions.c:2075
 msgid "Shade Left Mode Toggle"
 msgstr "切換左捲模式"
 
-#: src/bin/e_actions.c:2076
+#: src/bin/e_actions.c:2077
 msgid "Shade Right Mode Toggle"
 msgstr "切換右捲模式"
 
-#: src/bin/e_actions.c:2078
+#: src/bin/e_actions.c:2079
 msgid "Shade Mode Toggle"
 msgstr "切換捲起模式"
 
-#: src/bin/e_actions.c:2085
+#: src/bin/e_actions.c:2086
 msgid "Toggle Borderless State"
 msgstr "切換無邊框狀態"
 
-#: src/bin/e_actions.c:2090
+#: src/bin/e_actions.c:2091
 msgid "Toggle Pinned State"
 msgstr "切換固定於桌面狀態"
 
-#: src/bin/e_actions.c:2095 src/bin/e_actions.c:2097 src/bin/e_actions.c:2099
-#: src/bin/e_actions.c:2101 src/bin/e_actions.c:2103 src/bin/e_actions.c:2109
-#: src/bin/e_actions.c:2114 src/bin/e_actions.c:2120 src/bin/e_actions.c:2126
-#: src/bin/e_actions.c:2128 src/bin/e_actions.c:2130 src/bin/e_actions.c:2132
-#: src/bin/e_actions.c:2134 src/bin/e_actions.c:2136 src/bin/e_actions.c:2138
-#: src/bin/e_actions.c:2140 src/bin/e_actions.c:2142 src/bin/e_actions.c:2144
-#: src/bin/e_actions.c:2146 src/bin/e_actions.c:2148 src/bin/e_actions.c:2150
-#: src/bin/e_actions.c:2156 src/bin/e_actions.c:2158 src/bin/e_actions.c:2160
-#: src/bin/e_actions.c:2162 src/bin/e_actions.c:2164 src/bin/e_actions.c:2170
-#: src/bin/e_actions.c:2176 src/bin/e_actions.c:2182 src/bin/e_actions.c:2184
-#: src/bin/e_actions.c:2186 src/bin/e_actions.c:2188 src/bin/e_actions.c:2190
-#: src/bin/e_actions.c:2192 src/bin/e_actions.c:2194 src/bin/e_actions.c:2196
-#: src/bin/e_actions.c:2198 src/bin/e_actions.c:2200 src/bin/e_actions.c:2202
-#: src/bin/e_actions.c:2204 src/bin/e_actions.c:2206 src/bin/e_actions.c:2336
-#: src/bin/e_actions.c:2341 src/bin/e_int_menus.c:135
+#: src/bin/e_actions.c:2096 src/bin/e_actions.c:2098 src/bin/e_actions.c:2100
+#: src/bin/e_actions.c:2102 src/bin/e_actions.c:2104 src/bin/e_actions.c:2110
+#: src/bin/e_actions.c:2115 src/bin/e_actions.c:2121 src/bin/e_actions.c:2127
+#: src/bin/e_actions.c:2129 src/bin/e_actions.c:2131 src/bin/e_actions.c:2133
+#: src/bin/e_actions.c:2135 src/bin/e_actions.c:2137 src/bin/e_actions.c:2139
+#: src/bin/e_actions.c:2141 src/bin/e_actions.c:2143 src/bin/e_actions.c:2145
+#: src/bin/e_actions.c:2147 src/bin/e_actions.c:2149 src/bin/e_actions.c:2151
+#: src/bin/e_actions.c:2157 src/bin/e_actions.c:2159 src/bin/e_actions.c:2161
+#: src/bin/e_actions.c:2163 src/bin/e_actions.c:2165 src/bin/e_actions.c:2171
+#: src/bin/e_actions.c:2177 src/bin/e_actions.c:2183 src/bin/e_actions.c:2185
+#: src/bin/e_actions.c:2187 src/bin/e_actions.c:2189 src/bin/e_actions.c:2191
+#: src/bin/e_actions.c:2193 src/bin/e_actions.c:2195 src/bin/e_actions.c:2197
+#: src/bin/e_actions.c:2199 src/bin/e_actions.c:2201 src/bin/e_actions.c:2203
+#: src/bin/e_actions.c:2205 src/bin/e_actions.c:2207 src/bin/e_actions.c:2337
+#: src/bin/e_actions.c:2342 src/bin/e_int_menus.c:135
 #: src/bin/e_int_shelf_config.c:661
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:103
 #: src/modules/ibox/e_mod_config.c:141
 msgid "Desktop"
 msgstr "桌面"
 
-#: src/bin/e_actions.c:2095
+#: src/bin/e_actions.c:2096
 msgid "Flip Desktop Left"
 msgstr "切換到左方桌面"
 
-#: src/bin/e_actions.c:2097
+#: src/bin/e_actions.c:2098
 msgid "Flip Desktop Right"
 msgstr "切換到右方桌面"
 
-#: src/bin/e_actions.c:2099
+#: src/bin/e_actions.c:2100
 msgid "Flip Desktop Up"
 msgstr "切換到上方桌面"
 
-#: src/bin/e_actions.c:2101
+#: src/bin/e_actions.c:2102
 msgid "Flip Desktop Down"
 msgstr "切換到下方桌面"
 
-#: src/bin/e_actions.c:2103
+#: src/bin/e_actions.c:2104
 msgid "Flip Desktop By..."
 msgstr "切換到目前桌面之..."
 
-#: src/bin/e_actions.c:2109
+#: src/bin/e_actions.c:2110
 msgid "Show The Desktop"
 msgstr "顯示桌面"
 
-#: src/bin/e_actions.c:2114
+#: src/bin/e_actions.c:2115
 msgid "Flip Desktop To..."
 msgstr "二維切換桌面到..."
 
-#: src/bin/e_actions.c:2120
+#: src/bin/e_actions.c:2121
 msgid "Flip Desktop Linearly..."
 msgstr "切換到目前桌面之..."
 
-#: src/bin/e_actions.c:2126
+#: src/bin/e_actions.c:2127
 msgid "Switch To Desktop 0"
 msgstr "切換到桌面 0"
 
-#: src/bin/e_actions.c:2128
+#: src/bin/e_actions.c:2129
 msgid "Switch To Desktop 1"
 msgstr "切換到桌面 1"
 
-#: src/bin/e_actions.c:2130
+#: src/bin/e_actions.c:2131
 msgid "Switch To Desktop 2"
 msgstr "切換到桌面 2"
 
-#: src/bin/e_actions.c:2132
+#: src/bin/e_actions.c:2133
 msgid "Switch To Desktop 3"
 msgstr "切換到桌面 3"
 
-#: src/bin/e_actions.c:2134
+#: src/bin/e_actions.c:2135
 msgid "Switch To Desktop 4"
 msgstr "切換到桌面 4"
 
-#: src/bin/e_actions.c:2136
+#: src/bin/e_actions.c:2137
 msgid "Switch To Desktop 5"
 msgstr "切換到桌面 5"
 
-#: src/bin/e_actions.c:2138
+#: src/bin/e_actions.c:2139
 msgid "Switch To Desktop 6"
 msgstr "切換到桌面 6"
 
-#: src/bin/e_actions.c:2140
+#: src/bin/e_actions.c:2141
 msgid "Switch To Desktop 7"
 msgstr "切換到桌面 7"
 
-#: src/bin/e_actions.c:2142
+#: src/bin/e_actions.c:2143
 msgid "Switch To Desktop 8"
 msgstr "切換到桌面 8"
 
-#: src/bin/e_actions.c:2144
+#: src/bin/e_actions.c:2145
 msgid "Switch To Desktop 9"
 msgstr "切換到桌面 9"
 
-#: src/bin/e_actions.c:2146
+#: src/bin/e_actions.c:2147
 msgid "Switch To Desktop 10"
 msgstr "切換到桌面 10"
 
-#: src/bin/e_actions.c:2148
+#: src/bin/e_actions.c:2149
 msgid "Switch To Desktop 11"
 msgstr "切換到桌面 11"
 
-#: src/bin/e_actions.c:2150
+#: src/bin/e_actions.c:2151
 msgid "Switch To Desktop..."
 msgstr "切換桌面到..."
 
-#: src/bin/e_actions.c:2156
+#: src/bin/e_actions.c:2157
 #, fuzzy
 msgid "Flip Desktop Left (All Screens)"
 msgstr "切換到左方桌面"
 
-#: src/bin/e_actions.c:2158
+#: src/bin/e_actions.c:2159
 #, fuzzy
 msgid "Flip Desktop Right (All Screens)"
 msgstr "切換到右方桌面"
 
-#: src/bin/e_actions.c:2160
+#: src/bin/e_actions.c:2161
 #, fuzzy
 msgid "Flip Desktop Up (All Screens)"
 msgstr "切換到上方桌面"
 
-#: src/bin/e_actions.c:2162
+#: src/bin/e_actions.c:2163
 #, fuzzy
 msgid "Flip Desktop Down (All Screens)"
 msgstr "切換到下方桌面"
 
-#: src/bin/e_actions.c:2164
+#: src/bin/e_actions.c:2165
 #, fuzzy
 msgid "Flip Desktop By... (All Screens)"
 msgstr "切換到目前桌面之..."
 
-#: src/bin/e_actions.c:2170
+#: src/bin/e_actions.c:2171
 #, fuzzy
 msgid "Flip Desktop To... (All Screens)"
 msgstr "二維切換桌面到..."
 
-#: src/bin/e_actions.c:2176
+#: src/bin/e_actions.c:2177
 #, fuzzy
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "切換到目前桌面之..."
 
-#: src/bin/e_actions.c:2182
+#: src/bin/e_actions.c:2183
 #, fuzzy
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "切換到桌面 0"
 
-#: src/bin/e_actions.c:2184
+#: src/bin/e_actions.c:2185
 #, fuzzy
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "切換到桌面 1"
 
-#: src/bin/e_actions.c:2186
+#: src/bin/e_actions.c:2187
 #, fuzzy
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "切換到桌面 2"
 
-#: src/bin/e_actions.c:2188
+#: src/bin/e_actions.c:2189
 #, fuzzy
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "切換到桌面 3"
 
-#: src/bin/e_actions.c:2190
+#: src/bin/e_actions.c:2191
 #, fuzzy
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "切換到桌面 4"
 
-#: src/bin/e_actions.c:2192
+#: src/bin/e_actions.c:2193
 #, fuzzy
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "切換到桌面 5"
 
-#: src/bin/e_actions.c:2194
+#: src/bin/e_actions.c:2195
 #, fuzzy
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "切換到桌面 6"
 
-#: src/bin/e_actions.c:2196
+#: src/bin/e_actions.c:2197
 #, fuzzy
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "切換到桌面 7"
 
-#: src/bin/e_actions.c:2198
+#: src/bin/e_actions.c:2199
 #, fuzzy
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "切換到桌面 8"
 
-#: src/bin/e_actions.c:2200
+#: src/bin/e_actions.c:2201
 #, fuzzy
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "切換到桌面 9"
 
-#: src/bin/e_actions.c:2202
+#: src/bin/e_actions.c:2203
 #, fuzzy
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "切換到桌面 10"
 
-#: src/bin/e_actions.c:2204
+#: src/bin/e_actions.c:2205
 #, fuzzy
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "切換到桌面 11"
 
-#: src/bin/e_actions.c:2206
+#: src/bin/e_actions.c:2207
 #, fuzzy
 msgid "Switch To Desktop... (All Screens)"
 msgstr "切換桌面到..."
 
-#: src/bin/e_actions.c:2213 src/bin/e_actions.c:2215 src/bin/e_actions.c:2217
-#: src/bin/e_actions.c:2222 src/bin/e_actions.c:2224 src/bin/e_actions.c:2226
+#: src/bin/e_actions.c:2214 src/bin/e_actions.c:2216 src/bin/e_actions.c:2218
+#: src/bin/e_actions.c:2223 src/bin/e_actions.c:2225 src/bin/e_actions.c:2227
 #: src/modules/conf_desklock/e_mod_main.c:34
 #: src/modules/conf_desks/e_mod_main.c:34
 #: src/modules/conf_display/e_mod_main.c:34
@@ -460,136 +460,136 @@ msgstr "切換桌面到..."
 msgid "Screen"
 msgstr "螢幕"
 
-#: src/bin/e_actions.c:2213
+#: src/bin/e_actions.c:2214
 msgid "Send Mouse To Screen 0"
 msgstr "將滑鼠送到螢幕 0"
 
-#: src/bin/e_actions.c:2215
+#: src/bin/e_actions.c:2216
 msgid "Send Mouse To Screen 1"
 msgstr "將滑鼠送到螢幕 1"
 
-#: src/bin/e_actions.c:2217
+#: src/bin/e_actions.c:2218
 msgid "Send Mouse To Screen..."
 msgstr "將滑鼠送到其它螢幕..."
 
-#: src/bin/e_actions.c:2222
+#: src/bin/e_actions.c:2223
 msgid "Send Mouse Forward 1 Screen"
 msgstr "將滑鼠送到下一螢幕"
 
-#: src/bin/e_actions.c:2224
+#: src/bin/e_actions.c:2225
 msgid "Send Mouse Back 1 Screen"
 msgstr "將滑鼠送到上一螢幕"
 
-#: src/bin/e_actions.c:2226
+#: src/bin/e_actions.c:2227
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "將滑鼠送到目前螢幕之..."
 
-#: src/bin/e_actions.c:2260 src/bin/e_actions.c:2262 src/bin/e_actions.c:2264
-#: src/bin/e_actions.c:2270
+#: src/bin/e_actions.c:2261 src/bin/e_actions.c:2263 src/bin/e_actions.c:2265
+#: src/bin/e_actions.c:2271
 msgid "Window : Moving"
 msgstr "視窗: 移動"
 
-#: src/bin/e_actions.c:2260
+#: src/bin/e_actions.c:2261
 msgid "To Next Desktop"
 msgstr "送到下一桌面"
 
-#: src/bin/e_actions.c:2262
+#: src/bin/e_actions.c:2263
 msgid "To Previous Desktop"
 msgstr "送到上一桌面"
 
-#: src/bin/e_actions.c:2264
+#: src/bin/e_actions.c:2265
 msgid "By Desktop #..."
 msgstr "目前桌面之..."
 
-#: src/bin/e_actions.c:2270
+#: src/bin/e_actions.c:2271
 msgid "To Desktop..."
 msgstr "送到桌面..."
 
-#: src/bin/e_actions.c:2276
+#: src/bin/e_actions.c:2277
 msgid "Show Main Menu"
 msgstr "顯示主選單"
 
-#: src/bin/e_actions.c:2278
+#: src/bin/e_actions.c:2279
 msgid "Show Favorites Menu"
 msgstr "顯示「我的最愛」選單"
 
-#: src/bin/e_actions.c:2280
+#: src/bin/e_actions.c:2281
 msgid "Show All Applications Menu"
 msgstr "顯示「應用程式」選單"
 
-#: src/bin/e_actions.c:2282
+#: src/bin/e_actions.c:2283
 msgid "Show Clients Menu"
 msgstr "顯示「視窗列表」選單"
 
-#: src/bin/e_actions.c:2284
+#: src/bin/e_actions.c:2285
 msgid "Show Menu..."
 msgstr "顯示選單..."
 
-#: src/bin/e_actions.c:2291 src/bin/e_actions.c:2296
+#: src/bin/e_actions.c:2292 src/bin/e_actions.c:2297
 #: src/modules/conf/e_mod_main.c:46 src/modules/conf/e_mod_main.c:67
 #: src/modules/exebuf/e_mod_main.c:48 src/modules/exebuf/e_mod_main.c:68
 #: src/modules/fileman/e_mod_main.c:57 src/modules/fileman/e_mod_main.c:136
 msgid "Launch"
 msgstr "啟動"
 
-#: src/bin/e_actions.c:2291
+#: src/bin/e_actions.c:2292
 msgid "Defined Command"
 msgstr "指定命令"
 
-#: src/bin/e_actions.c:2296
+#: src/bin/e_actions.c:2297
 msgid "Application"
 msgstr "應用程式"
 
-#: src/bin/e_actions.c:2300 src/bin/e_int_menus.c:193
+#: src/bin/e_actions.c:2301 src/bin/e_int_menus.c:193
 msgid "Restart"
 msgstr "重新啟動"
 
-#: src/bin/e_actions.c:2304 src/bin/e_int_menus.c:198
+#: src/bin/e_actions.c:2305 src/bin/e_int_menus.c:198
 msgid "Exit"
 msgstr "退出"
 
-#: src/bin/e_actions.c:2308
+#: src/bin/e_actions.c:2309
 msgid "Log Out"
 msgstr "登入"
 
-#: src/bin/e_actions.c:2312
+#: src/bin/e_actions.c:2313
 msgid "Exit Immediately"
 msgstr "立即退出"
 
-#: src/bin/e_actions.c:2316 src/bin/e_actions.c:2320 src/bin/e_actions.c:2324
-#: src/bin/e_actions.c:2328 src/bin/e_int_config_modules.c:44
+#: src/bin/e_actions.c:2317 src/bin/e_actions.c:2321 src/bin/e_actions.c:2325
+#: src/bin/e_actions.c:2329 src/bin/e_int_config_modules.c:45
 #: src/bin/e_int_menus.c:230
 #: src/modules/conf_desklock/e_int_config_desklock.c:195
 #: src/modules/conf_imc/e_int_config_imc.c:823
 #: src/modules/conf_startup/e_int_config_startup.c:273
-#: src/modules/conf_theme/e_int_config_theme.c:379
-#: src/modules/conf_theme/e_int_config_theme.c:849
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:492
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:638
+#: src/modules/conf_theme/e_int_config_theme.c:335
+#: src/modules/conf_theme/e_int_config_theme.c:768
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:501
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:627
 msgid "System"
 msgstr "系統"
 
-#: src/bin/e_actions.c:2316 src/bin/e_int_menus.c:879
+#: src/bin/e_actions.c:2317 src/bin/e_int_menus.c:890
 msgid "Shut Down"
 msgstr "關機"
 
-#: src/bin/e_actions.c:2320 src/bin/e_int_menus.c:872
+#: src/bin/e_actions.c:2321 src/bin/e_int_menus.c:883
 msgid "Reboot"
 msgstr "重新開機"
 
-#: src/bin/e_actions.c:2324 src/bin/e_int_menus.c:858
+#: src/bin/e_actions.c:2325 src/bin/e_int_menus.c:869
 msgid "Suspend"
 msgstr "待機"
 
-#: src/bin/e_actions.c:2328
+#: src/bin/e_actions.c:2329
 msgid "Suspend to Disk"
 msgstr "休眠"
 
-#: src/bin/e_actions.c:2336
+#: src/bin/e_actions.c:2337
 msgid "Desktop Lock"
 msgstr "鎖定桌面"
 
-#: src/bin/e_actions.c:2341 src/bin/e_int_menus.c:1248
+#: src/bin/e_actions.c:2342 src/bin/e_int_menus.c:1254
 msgid "Cleanup Windows"
 msgstr "排列視窗"
 
@@ -597,11 +597,11 @@ msgstr "排列視窗"
 msgid "Set As Background"
 msgstr "設定為桌布"
 
-#: src/bin/e_border.c:4429
+#: src/bin/e_border.c:4476
 msgid "Desktop files scan done"
 msgstr "完成 desktop 檔案掃描"
 
-#: src/bin/e_border.c:4441
+#: src/bin/e_border.c:4488
 msgid "Desktop file scan"
 msgstr "掃描 desktop 檔案"
 
@@ -637,11 +637,11 @@ msgstr ""
 msgid "Desktop %i, %i"
 msgstr "桌面 %i, %i"
 
-#: src/bin/e_config.c:2209
+#: src/bin/e_config.c:2227
 msgid "Configuration Upgraded"
 msgstr "組態已經更新"
 
-#: src/bin/e_config.c:2234
+#: src/bin/e_config.c:2252
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>configuration to disk. The "
@@ -651,7 +651,7 @@ msgstr ""
 "當儲存 Enlightment 設定檔時有錯誤發生。<br>錯誤原因無法確定。<br><br>發生錯誤"
 "的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:2245
+#: src/bin/e_config.c:2263
 #, c-format
 msgid ""
 "Enlightenment's configuration files are too big<br>for the file system they "
@@ -664,7 +664,7 @@ msgstr ""
 "設定檔應該非常小。<br>請檢查您家目錄的設定。<br><br>發生錯誤的檔案為:<br>%"
 "s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:2258
+#: src/bin/e_config.c:2276
 #, c-format
 msgid ""
 "An output error occured when writing the configuration<br>files for "
@@ -675,7 +675,7 @@ msgstr ""
 "當寫入 Enlightment 設定檔時有錯誤發生。<br>您的磁碟有問題而且可能需要替換。"
 "<br><br>發生錯誤的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:2269
+#: src/bin/e_config.c:2287
 #, c-format
 msgid ""
 "Enlightenment cannot write its configuration file<br>because it ran out of "
@@ -687,7 +687,7 @@ msgstr ""
 "了磁碟配額。<br><br>發生錯誤的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設"
 "定。<br>"
 
-#: src/bin/e_config.c:2281
+#: src/bin/e_config.c:2299
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the configuration file<br>it was writing "
@@ -697,17 +697,16 @@ msgstr ""
 "Enlightment 要寫入的設定檔未預期的被關閉了。<br>這很不尋常。<br><br>發生錯誤"
 "的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:2306
+#: src/bin/e_config.c:2324
 msgid "Enlightenment Configuration Write Problems"
 msgstr "Enlightenment 組態寫入發生問題"
 
-#: src/bin/e_config.c:2310 src/bin/e_config_dialog.c:218
+#: src/bin/e_config.c:2328 src/bin/e_config_dialog.c:218
 #: src/bin/e_eap_editor.c:596 src/bin/e_eap_editor.c:660
-#: src/bin/e_entry_dialog.c:58 src/bin/e_exec.c:324 src/bin/e_fm_prop.c:513
-#: src/bin/e_int_border_remember.c:254 src/bin/e_int_border_remember.c:330
-#: src/bin/e_int_border_remember.c:372 src/bin/e_module.c:402
+#: src/bin/e_entry_dialog.c:58 src/bin/e_exec.c:325 src/bin/e_fm_prop.c:513
+#: src/bin/e_int_border_remember.c:259 src/bin/e_int_border_remember.c:339
+#: src/bin/e_int_border_remember.c:381 src/bin/e_module.c:414
 #: src/bin/e_sys.c:397 src/bin/e_sys.c:442 src/bin/e_utils.c:577
-#: src/modules/battery/e_mod_main.c:312
 #: src/modules/conf_dpms/e_int_config_dpms.c:60
 #: src/modules/conf_dpms/e_int_config_dpms.c:81
 #: src/modules/conf_imc/e_int_config_imc_import.c:112
@@ -716,19 +715,20 @@ msgstr "Enlightenment 組態寫入發生問題"
 #: src/modules/conf_theme/e_int_config_theme_import.c:112
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:204
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:171
 #: src/modules/cpufreq/e_mod_main.c:340 src/modules/cpufreq/e_mod_main.c:367
 #: src/modules/cpufreq/e_mod_main.c:386
 msgid "OK"
 msgstr "確定"
 
-#: src/bin/e_config_dialog.c:189 src/modules/battery/e_mod_main.c:1455
+#: src/bin/e_config_dialog.c:189 src/modules/battery/e_mod_main.c:415
 #: src/modules/conf_dialogs/e_mod_main.c:34
 #: src/modules/conf_engine/e_mod_main.c:34
 #: src/modules/conf_exebuf/e_mod_main.c:34
+#: src/modules/conf_interaction/e_mod_main.c:34
 #: src/modules/conf_paths/e_mod_main.c:34
 #: src/modules/conf_performance/e_mod_main.c:34
 #: src/modules/conf_profiles/e_mod_main.c:20
-#: src/modules/conf_winlist/e_mod_main.c:34
 msgid "Advanced"
 msgstr "進階設定"
 
@@ -744,14 +744,14 @@ msgstr "套用"
 msgid "Extensions"
 msgstr "擴充套件"
 
-#: src/bin/e_configure.c:9 src/bin/e_int_menus.c:791
+#: src/bin/e_configure.c:9 src/bin/e_int_menus.c:805
 #: src/modules/conf_colors/e_int_config_color_classes.c:83
-#: src/modules/conf_fonts/e_int_config_fonts.c:96
+#: src/modules/conf_fonts/e_int_config_fonts.c:99
 #: src/modules/conf_paths/e_int_config_paths.c:85
 msgid "Modules"
 msgstr "模組"
 
-#: src/bin/e_container.c:119
+#: src/bin/e_container.c:118
 #, c-format
 msgid "Container %d"
 msgstr "容器 %d"
@@ -815,7 +815,7 @@ msgid "Desktop Entry Editor"
 msgstr "Desktop Entry 編輯器"
 
 #: src/bin/e_eap_editor.c:444 src/bin/e_fm_prop.c:400
-#: src/modules/conf_fonts/e_int_config_fonts.c:94
+#: src/modules/conf_fonts/e_int_config_fonts.c:96
 #: src/modules/conf_mime/e_int_config_mime_edit.c:145
 msgid "Icon"
 msgstr "圖示"
@@ -851,7 +851,7 @@ msgstr "通用名稱"
 msgid "Window Class"
 msgstr "視窗類別"
 
-#: src/bin/e_eap_editor.c:507 src/modules/conf/e_conf.c:149
+#: src/bin/e_eap_editor.c:507 src/modules/conf/e_conf.c:151
 #: src/modules/conf_mime/e_int_config_mime.c:189
 msgid "Categories"
 msgstr "類別"
@@ -898,6 +898,7 @@ msgstr "選擇圖示"
 #: src/modules/conf_theme/e_int_config_theme_import.c:116
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:208
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:172
 msgid "Cancel"
 msgstr "取消"
 
@@ -905,7 +906,7 @@ msgstr "取消"
 msgid "Select an Executable"
 msgstr "選擇一個執行檔"
 
-#: src/bin/e_entry.c:470 src/bin/e_fm.c:6517
+#: src/bin/e_entry.c:470 src/bin/e_fm.c:6527
 #: src/modules/conf_applications/e_int_config_apps.c:271
 #: src/modules/conf_profiles/e_int_config_profiles.c:93
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -913,15 +914,15 @@ msgstr "選擇一個執行檔"
 msgid "Delete"
 msgstr "刪除"
 
-#: src/bin/e_entry.c:483 src/bin/e_fm.c:6427
+#: src/bin/e_entry.c:483 src/bin/e_fm.c:6437
 msgid "Cut"
 msgstr "剪下"
 
-#: src/bin/e_entry.c:494 src/bin/e_fm.c:6444
+#: src/bin/e_entry.c:494 src/bin/e_fm.c:6454
 msgid "Copy"
 msgstr "複製"
 
-#: src/bin/e_entry.c:505 src/bin/e_fm.c:6268 src/bin/e_fm.c:6458
+#: src/bin/e_entry.c:505 src/bin/e_fm.c:6278 src/bin/e_fm.c:6468
 msgid "Paste"
 msgstr "貼上"
 
@@ -929,216 +930,217 @@ msgstr "貼上"
 msgid "Select All"
 msgstr "全選"
 
-#: src/bin/e_exec.c:227 src/bin/e_utils.c:237
+#: src/bin/e_exec.c:218 src/bin/e_utils.c:237
 #: src/modules/conf_imc/e_int_config_imc.c:278
 #: src/modules/conf_imc/e_int_config_imc.c:516
 msgid "Run Error"
 msgstr "執行錯誤"
 
-#: src/bin/e_exec.c:228 src/bin/e_utils.c:238
+#: src/bin/e_exec.c:219 src/bin/e_utils.c:238
 #: src/modules/conf_imc/e_int_config_imc.c:279
 #: src/modules/conf_imc/e_int_config_imc.c:517
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr "Enlightenment 無法建立一個子程序:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:315
+#: src/bin/e_exec.c:316
 msgid "Application run error"
 msgstr "應用程式執行錯誤"
 
-#: src/bin/e_exec.c:317
+#: src/bin/e_exec.c:318
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr "Enlightment 無法執行應用程式:<br><br>%s<br><br>此程式無法啟動。"
 
-#: src/bin/e_exec.c:407
+#: src/bin/e_exec.c:412
 msgid "Application Execution Error"
 msgstr "應用程式執行錯誤"
 
-#: src/bin/e_exec.c:419
+#: src/bin/e_exec.c:424
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s 無預警地停止執行。"
 
-#: src/bin/e_exec.c:425
+#: src/bin/e_exec.c:430
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "錯誤代碼 %i 被 %s 傳回。"
 
-#: src/bin/e_exec.c:432
+#: src/bin/e_exec.c:437
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s 被 Interrupt Signal 中斷。"
 
-#: src/bin/e_exec.c:434
+#: src/bin/e_exec.c:439
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s 被 Quit Signal 中斷。"
 
-#: src/bin/e_exec.c:438
+#: src/bin/e_exec.c:443
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s 被 Abort Signal 中斷。"
 
-#: src/bin/e_exec.c:441
+#: src/bin/e_exec.c:446
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s 被 FPE Signal 中斷。"
 
-#: src/bin/e_exec.c:444
+#: src/bin/e_exec.c:449
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s 被 Kill Signal 中斷。"
 
-#: src/bin/e_exec.c:447
+#: src/bin/e_exec.c:452
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s 被 Segmentation Fault 中斷。"
 
-#: src/bin/e_exec.c:450
+#: src/bin/e_exec.c:455
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s 被 Broken Pipe 中斷。"
 
-#: src/bin/e_exec.c:453
+#: src/bin/e_exec.c:458
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s 被 Terminal Signal 中斷。"
 
-#: src/bin/e_exec.c:456
+#: src/bin/e_exec.c:461
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s 被 Bus Error 中斷。"
 
-#: src/bin/e_exec.c:459
+#: src/bin/e_exec.c:464
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s 被 Signal %i 中斷。"
 
-#: src/bin/e_exec.c:515
+#: src/bin/e_exec.c:520
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "*** 剩下的輸出被刪節了。儲存輸出以供檢視。***\n"
 
-#: src/bin/e_exec.c:579 src/bin/e_exec.c:653 src/bin/e_exec.c:659
+#: src/bin/e_exec.c:584 src/bin/e_exec.c:658 src/bin/e_exec.c:664
 msgid "Error Logs"
 msgstr "錯誤紀錄檔"
 
-#: src/bin/e_exec.c:584 src/bin/e_exec.c:660
+#: src/bin/e_exec.c:589 src/bin/e_exec.c:665
 msgid "There was no error message."
 msgstr "沒有錯誤訊息。"
 
-#: src/bin/e_exec.c:588 src/bin/e_exec.c:667
+#: src/bin/e_exec.c:593 src/bin/e_exec.c:672
 msgid "Save This Message"
 msgstr "儲存訊息"
 
-#: src/bin/e_exec.c:592 src/bin/e_exec.c:670
+#: src/bin/e_exec.c:597 src/bin/e_exec.c:675
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "錯誤紀錄檔已被儲存到 %s/%s.log"
 
-#: src/bin/e_exec.c:618
+#: src/bin/e_exec.c:623
 msgid "Error Information"
 msgstr "錯誤資訊"
 
-#: src/bin/e_exec.c:626
+#: src/bin/e_exec.c:631
 msgid "Error Signal Information"
 msgstr "錯誤 Signal 資訊"
 
-#: src/bin/e_exec.c:637 src/bin/e_exec.c:643
+#: src/bin/e_exec.c:642 src/bin/e_exec.c:648
 msgid "Output Data"
 msgstr "輸出資料"
 
-#: src/bin/e_exec.c:644
+#: src/bin/e_exec.c:649
 msgid "There was no output."
 msgstr "沒有輸入。"
 
-#: src/bin/e_fm.c:517
-msgid "Unexisting path"
+#: src/bin/e_fm.c:512
+#, fuzzy
+msgid "Nonexistent path"
 msgstr "不存在的路徑"
 
-#: src/bin/e_fm.c:520
-#, c-format
-msgid "%s doesn't exists"
+#: src/bin/e_fm.c:515
+#, fuzzy, c-format
+msgid "%s doesn't exist."
 msgstr "不存在 %s"
 
-#: src/bin/e_fm.c:2701
+#: src/bin/e_fm.c:2697
 #, c-format
 msgid "%i Files"
 msgstr "%i 筆檔案"
 
-#: src/bin/e_fm.c:6187 src/bin/e_fm.c:6348
+#: src/bin/e_fm.c:6197 src/bin/e_fm.c:6358
 #: src/modules/fileman/e_mod_config.c:154
 msgid "View Mode"
 msgstr "顯式模式"
 
-#: src/bin/e_fm.c:6194 src/bin/e_fm.c:6355
+#: src/bin/e_fm.c:6204 src/bin/e_fm.c:6365
 msgid "Refresh View"
 msgstr "重新整理"
 
-#: src/bin/e_fm.c:6205 src/bin/e_fm.c:6366
+#: src/bin/e_fm.c:6215 src/bin/e_fm.c:6376
 msgid "Show Hidden Files"
 msgstr "顯示隱藏的檔案"
 
-#: src/bin/e_fm.c:6220 src/bin/e_fm.c:6381
+#: src/bin/e_fm.c:6230 src/bin/e_fm.c:6391
 msgid "Remember Ordering"
 msgstr "記住順序"
 
-#: src/bin/e_fm.c:6232 src/bin/e_fm.c:6393
+#: src/bin/e_fm.c:6242 src/bin/e_fm.c:6403
 msgid "Sort Now"
 msgstr "排列檔案"
 
-#: src/bin/e_fm.c:6250 src/bin/e_fm.c:6411
+#: src/bin/e_fm.c:6260 src/bin/e_fm.c:6421
 #: src/modules/conf_paths/e_int_config_paths.c:211
 msgid "New Directory"
 msgstr "新目錄"
 
-#: src/bin/e_fm.c:6528
+#: src/bin/e_fm.c:6538
 msgid "Rename"
 msgstr "重新命名"
 
-#: src/bin/e_fm.c:6538
+#: src/bin/e_fm.c:6548
 msgid "Properties"
 msgstr "屬性"
 
-#: src/bin/e_fm.c:6699 src/modules/conf_paths/e_int_config_paths.c:83
+#: src/bin/e_fm.c:6709 src/modules/conf_paths/e_int_config_paths.c:83
 #: src/modules/fileman/e_mod_config.c:156
 msgid "Icons"
 msgstr "圖示"
 
-#: src/bin/e_fm.c:6707 src/modules/fileman/e_mod_config.c:169
+#: src/bin/e_fm.c:6717 src/modules/fileman/e_mod_config.c:169
 msgid "List"
 msgstr "列表"
 
-#: src/bin/e_fm.c:6845
+#: src/bin/e_fm.c:6855
 msgid "Create a new Directory"
 msgstr "建立新目錄"
 
-#: src/bin/e_fm.c:6846
+#: src/bin/e_fm.c:6856
 msgid "New Directory Name:"
 msgstr "新目錄名稱"
 
-#: src/bin/e_fm.c:6905
+#: src/bin/e_fm.c:6915
 #, c-format
 msgid "Rename %s to:"
 msgstr "重新命名 %s 成:"
 
-#: src/bin/e_fm.c:6907
+#: src/bin/e_fm.c:6917
 msgid "Rename File"
 msgstr "重新命名檔案"
 
-#: src/bin/e_fm.c:7005
+#: src/bin/e_fm.c:7015
 msgid "Confirm Delete"
 msgstr "確定刪除"
 
-#: src/bin/e_fm.c:7009
+#: src/bin/e_fm.c:7019
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "您是否確定刪除<br><hilight>%s</hilight>？"
 
-#: src/bin/e_fm.c:7015
+#: src/bin/e_fm.c:7025
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1191,7 +1193,7 @@ msgid "Owner can write"
 msgstr "擁有者可以寫入"
 
 #: src/bin/e_fm_prop.c:385 src/bin/e_widget_fsel.c:302
-#: src/modules/conf_theme/e_int_config_theme.c:1092
+#: src/modules/conf_theme/e_int_config_theme.c:1001
 #: src/modules/conf_transitions/e_int_config_transitions.c:167
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:154
 msgid "Preview"
@@ -1224,49 +1226,49 @@ msgstr "Link 資訊"
 msgid "Select an Image"
 msgstr "選擇一張圖片"
 
-#: src/bin/e_fm_hal.c:189
+#: src/bin/e_fm_hal.c:212
 #, c-format
 msgid "%llu TiB"
 msgstr ""
 
-#: src/bin/e_fm_hal.c:191
+#: src/bin/e_fm_hal.c:214
 #, c-format
 msgid "%llu GiB"
 msgstr ""
 
-#: src/bin/e_fm_hal.c:193
+#: src/bin/e_fm_hal.c:216
 #, c-format
 msgid "%llu MiB"
 msgstr ""
 
-#: src/bin/e_fm_hal.c:195
+#: src/bin/e_fm_hal.c:218
 #, c-format
 msgid "%llu KiB"
 msgstr ""
 
-#: src/bin/e_fm_hal.c:197
+#: src/bin/e_fm_hal.c:220
 #, c-format
 msgid "%llu B"
 msgstr ""
 
-#: src/bin/e_fm_hal.c:227
+#: src/bin/e_fm_hal.c:251
 #, fuzzy, c-format
 msgid "Unknown Volume"
 msgstr "末知"
 
-#: src/bin/e_fm_hal.c:267
+#: src/bin/e_fm_hal.c:291
 msgid "Removable Device"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1174
+#: src/bin/e_gadcon.c:1194
 msgid "Plain"
 msgstr "一般"
 
-#: src/bin/e_gadcon.c:1183
+#: src/bin/e_gadcon.c:1203
 msgid "Inset"
 msgstr "嵌入"
 
-#: src/bin/e_gadcon.c:1192 src/bin/e_int_config_modules.c:40
+#: src/bin/e_gadcon.c:1212 src/bin/e_int_config_modules.c:41
 #: src/modules/conf_borders/e_mod_main.c:34
 #: src/modules/conf_colors/e_mod_main.c:34
 #: src/modules/conf_fonts/e_mod_main.c:34
@@ -1280,27 +1282,27 @@ msgstr "嵌入"
 msgid "Appearance"
 msgstr "外觀"
 
-#: src/bin/e_gadcon.c:1198
+#: src/bin/e_gadcon.c:1218
 msgid "Automatically scroll contents"
 msgstr "自動捲動內容"
 
-#: src/bin/e_gadcon.c:1205
+#: src/bin/e_gadcon.c:1225
 msgid "Able to be resized"
 msgstr "可改變大小"
 
-#: src/bin/e_gadcon.c:1217
+#: src/bin/e_gadcon.c:1237
 msgid "Begin move/resize this gadget"
 msgstr "開始移動或改變這個小工具大小"
 
-#: src/bin/e_gadcon.c:1223
+#: src/bin/e_gadcon.c:1243
 msgid "Remove this gadget"
 msgstr "移除這個小工具"
 
-#: src/bin/e_gadcon.c:1609
+#: src/bin/e_gadcon.c:1646
 msgid "Stop move/resize this gadget"
 msgstr "停止移動或改變這個小工具大小"
 
-#: src/bin/e_hints.c:126
+#: src/bin/e_hints.c:131
 msgid ""
 "A previous instance of Enlightenment is still active\n"
 "on this screen. Aborting startup.\n"
@@ -1328,7 +1330,7 @@ msgstr ""
 "您正用在啟動畫面的佈景主題有錯誤。<br>它不回應啟動已完成的信號。<br>你應該用"
 "正確製作的啟動佈景，<br>或是把你用的修好。"
 
-#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:159
+#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:160
 msgid "Window Locks"
 msgstr "視窗鎖定"
 
@@ -1362,21 +1364,21 @@ msgid "Lock program changing:"
 msgstr "鎖定其它程式改變:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:496
+#: src/bin/e_int_border_remember.c:507
 msgid "Position"
 msgstr "位置"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:498 src/bin/e_int_shelf_config.c:515
+#: src/bin/e_int_border_remember.c:509 src/bin/e_int_shelf_config.c:515
 #: src/bin/e_int_shelf_config.c:596
-#: src/modules/conf_fonts/e_int_config_fonts.c:456
-#: src/modules/conf_fonts/e_int_config_fonts.c:650
+#: src/modules/conf_fonts/e_int_config_fonts.c:462
+#: src/modules/conf_fonts/e_int_config_fonts.c:657
 msgid "Size"
 msgstr "大小"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:225 src/bin/e_int_border_prop.c:469
-#: src/bin/e_int_border_remember.c:500 src/bin/e_int_shelf_config.c:552
+#: src/bin/e_int_border_menu.c:226 src/bin/e_int_border_prop.c:469
+#: src/bin/e_int_border_remember.c:511 src/bin/e_int_shelf_config.c:552
 msgid "Stacking"
 msgstr "堆疊"
 
@@ -1385,12 +1387,12 @@ msgid "Iconified state"
 msgstr "圖示化狀態"
 
 #: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
-#: src/bin/e_int_border_remember.c:508
+#: src/bin/e_int_border_remember.c:519
 msgid "Stickiness"
 msgstr "相黏性"
 
 #: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
-#: src/bin/e_int_border_remember.c:512
+#: src/bin/e_int_border_remember.c:523
 msgid "Shaded state"
 msgstr "捲起狀態"
 
@@ -1406,7 +1408,7 @@ msgstr "全螢幕狀態"
 msgid "Lock me from changing:"
 msgstr "鎖住我改變:"
 
-#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:504
+#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:515
 msgid "Border style"
 msgstr "邊框樣式"
 
@@ -1426,126 +1428,126 @@ msgstr "登出系統直到這個視窗被關閉"
 msgid "Remember these Locks"
 msgstr "記住這些鎖定值"
 
-#: src/bin/e_int_border_menu.c:64
+#: src/bin/e_int_border_menu.c:65
 msgid "Always On Top"
 msgstr "最上層顯示"
 
-#: src/bin/e_int_border_menu.c:75
-#: src/modules/conf_fonts/e_int_config_fonts.c:98
-#: src/modules/conf_fonts/e_int_config_fonts.c:261
-#: src/modules/temperature/e_mod_config.c:225
+#: src/bin/e_int_border_menu.c:76
+#: src/modules/conf_fonts/e_int_config_fonts.c:101
+#: src/modules/conf_fonts/e_int_config_fonts.c:265
+#: src/modules/temperature/e_mod_config.c:261
 msgid "Normal"
 msgstr "正常"
 
-#: src/bin/e_int_border_menu.c:86
+#: src/bin/e_int_border_menu.c:87
 msgid "Always Below"
 msgstr "最下層顯示"
 
-#: src/bin/e_int_border_menu.c:118
+#: src/bin/e_int_border_menu.c:119
 msgid "Maximize vertically"
 msgstr "垂直最大化"
 
-#: src/bin/e_int_border_menu.c:129
+#: src/bin/e_int_border_menu.c:130
 msgid "Maximize horizontally"
 msgstr "水平最大化"
 
-#: src/bin/e_int_border_menu.c:140
+#: src/bin/e_int_border_menu.c:141
 msgid "Unmaximize"
 msgstr "解除最大化"
 
-#: src/bin/e_int_border_menu.c:166
+#: src/bin/e_int_border_menu.c:167
 msgid "Remember"
 msgstr "記住"
 
-#: src/bin/e_int_border_menu.c:175 src/modules/conf_borders/e_mod_main.c:37
+#: src/bin/e_int_border_menu.c:176 src/modules/conf_borders/e_mod_main.c:37
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:341
 msgid "Border"
 msgstr "邊框"
 
-#: src/bin/e_int_border_menu.c:189
+#: src/bin/e_int_border_menu.c:190
 msgid "Send to Desktop"
 msgstr "送到桌面"
 
-#: src/bin/e_int_border_menu.c:201
+#: src/bin/e_int_border_menu.c:202
 msgid "Pin to Desktop"
 msgstr "固定於桌面"
 
-#: src/bin/e_int_border_menu.c:213
+#: src/bin/e_int_border_menu.c:214
 msgid "Unpin from Desktop"
 msgstr "解除固定於桌面"
 
-#: src/bin/e_int_border_menu.c:246 src/bin/e_int_border_prop.c:433
+#: src/bin/e_int_border_menu.c:247 src/bin/e_int_border_prop.c:433
 #: src/modules/conf_colors/e_int_config_color_classes.c:427
 msgid "State"
 msgstr "狀態"
 
-#: src/bin/e_int_border_menu.c:254
+#: src/bin/e_int_border_menu.c:255
 msgid "Skip"
 msgstr "略過"
 
-#: src/bin/e_int_border_menu.c:270
+#: src/bin/e_int_border_menu.c:271
 msgid "Edit Icon"
 msgstr "編輯圖示"
 
-#: src/bin/e_int_border_menu.c:275
+#: src/bin/e_int_border_menu.c:276
 msgid "Add To Favorites Menu"
 msgstr "加入到「我的最愛」選單"
 
-#: src/bin/e_int_border_menu.c:282
+#: src/bin/e_int_border_menu.c:283
 msgid "Add Keyboard Shortcut"
 msgstr "新增鍵盤快速鍵"
 
-#: src/bin/e_int_border_menu.c:287
+#: src/bin/e_int_border_menu.c:288
 msgid "Add To Launcher"
 msgstr "加入到 IBar"
 
-#: src/bin/e_int_border_menu.c:294
+#: src/bin/e_int_border_menu.c:295
 msgid "Create Icon"
 msgstr "建立圖示"
 
-#: src/bin/e_int_border_menu.c:304 src/bin/e_int_border_prop.c:75
+#: src/bin/e_int_border_menu.c:305 src/bin/e_int_border_prop.c:75
 msgid "Window Properties"
 msgstr "視窗屬性"
 
-#: src/bin/e_int_border_menu.c:365
+#: src/bin/e_int_border_menu.c:366
 msgid "Iconify"
 msgstr "圖示化"
 
-#: src/bin/e_int_border_menu.c:826
+#: src/bin/e_int_border_menu.c:850
 msgid "Select Border Style"
 msgstr "選擇邊框樣式"
 
-#: src/bin/e_int_border_menu.c:838
+#: src/bin/e_int_border_menu.c:862
 msgid "Use E17 Default Icon Preference"
 msgstr "使用 E17 預設圖示偏好"
 
-#: src/bin/e_int_border_menu.c:847
+#: src/bin/e_int_border_menu.c:871
 msgid "Use Application Provided Icon "
 msgstr "使用應用程式圖示"
 
-#: src/bin/e_int_border_menu.c:855
+#: src/bin/e_int_border_menu.c:879
 msgid "Use User Defined Icon"
 msgstr "使用使用者自訂圖示"
 
-#: src/bin/e_int_border_menu.c:919 src/bin/e_int_border_prop.c:473
+#: src/bin/e_int_border_menu.c:943 src/bin/e_int_border_prop.c:473
 msgid "Shaded"
 msgstr "捲起"
 
-#: src/bin/e_int_border_menu.c:932 src/bin/e_int_border_prop.c:472
+#: src/bin/e_int_border_menu.c:956 src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr "相黏"
 
-#: src/bin/e_int_border_menu.c:945 src/bin/e_int_border_prop.c:477
+#: src/bin/e_int_border_menu.c:969 src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:154
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:215
 msgid "Fullscreen"
 msgstr "全螢幕"
 
-#: src/bin/e_int_border_menu.c:970 src/modules/conf_winlist/e_mod_main.c:35
+#: src/bin/e_int_border_menu.c:994 src/modules/conf_winlist/e_mod_main.c:35
 msgid "Window List"
 msgstr "視窗列表"
 
-#: src/bin/e_int_border_menu.c:980 src/modules/pager/e_mod_main.c:263
+#: src/bin/e_int_border_menu.c:1004 src/modules/pager/e_mod_main.c:263
 #: src/modules/pager/e_mod_main.c:2799 src/modules/pager/e_mod_main.c:2806
 #: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2813
 #: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2815
@@ -1553,6 +1555,11 @@ msgstr "視窗列表"
 #: src/modules/pager/e_mod_main.c:2848 src/modules/pager/e_mod_main.c:2849
 msgid "Pager"
 msgstr "桌面切換器"
+
+#: src/bin/e_int_border_menu.c:1014
+#, fuzzy
+msgid "Taskbar"
+msgstr "略過工作列"
 
 #: src/bin/e_int_border_prop.c:363
 msgid "NetWM"
@@ -1566,7 +1573,7 @@ msgstr "ICCCM"
 msgid "ICCCM Properties"
 msgstr "ICCCM 屬性"
 
-#: src/bin/e_int_border_prop.c:419 src/bin/e_int_border_remember.c:465
+#: src/bin/e_int_border_prop.c:419 src/bin/e_int_border_remember.c:476
 msgid "Title"
 msgstr "標題"
 
@@ -1662,11 +1669,11 @@ msgstr "NetWM 屬性"
 msgid "Modal"
 msgstr ""
 
-#: src/bin/e_int_border_prop.c:474
+#: src/bin/e_int_border_prop.c:474 src/bin/e_int_border_remember.c:531
 msgid "Skip Taskbar"
 msgstr "略過工作列"
 
-#: src/bin/e_int_border_prop.c:475
+#: src/bin/e_int_border_prop.c:475 src/bin/e_int_border_remember.c:529
 msgid "Skip Pager"
 msgstr "略過桌面切換器"
 
@@ -1674,15 +1681,15 @@ msgstr "略過桌面切換器"
 msgid "Hidden"
 msgstr "隱藏"
 
-#: src/bin/e_int_border_remember.c:72
+#: src/bin/e_int_border_remember.c:74
 msgid "Window Remember"
 msgstr "記住視窗"
 
-#: src/bin/e_int_border_remember.c:237
+#: src/bin/e_int_border_remember.c:242
 msgid "Window properties are not a unique match"
 msgstr "視窗比對屬性並不唯一"
 
-#: src/bin/e_int_border_remember.c:240
+#: src/bin/e_int_border_remember.c:245
 msgid ""
 "You are trying to ask Enlightenment to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
@@ -1702,11 +1709,11 @@ msgstr ""
 "是，<br>你只需按下<hilight>套用</hilight>或者<hilight>確定</hilight>則你的設"
 "定就會被接受。<br>如果你不確定，按下<hilight>取消</hilight>就全無影響。"
 
-#: src/bin/e_int_border_remember.c:321 src/bin/e_int_border_remember.c:351
+#: src/bin/e_int_border_remember.c:330 src/bin/e_int_border_remember.c:360
 msgid "No match properties set"
 msgstr "未設定比對屬性"
 
-#: src/bin/e_int_border_remember.c:324
+#: src/bin/e_int_border_remember.c:333
 msgid ""
 "You are trying to ask Enlightenment to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window <hilight>without "
@@ -1717,7 +1724,7 @@ msgstr ""
 "視窗，卻<hilight>沒有指定如何記住</hilight>他們。<br><br>你必須至少指定一種的"
 "方法來記下此視窗。"
 
-#: src/bin/e_int_border_remember.c:354
+#: src/bin/e_int_border_remember.c:363
 msgid ""
 "You are trying to ask Enlightenment to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
@@ -1742,119 +1749,119 @@ msgstr ""
 "定</hilight>則你的設定就會被接受。<br>如果你不確定，按下<hilight>取消</"
 "hilight>就全無影響。"
 
-#: src/bin/e_int_border_remember.c:428
+#: src/bin/e_int_border_remember.c:439
 msgid "Nothing"
 msgstr "無"
 
-#: src/bin/e_int_border_remember.c:430
+#: src/bin/e_int_border_remember.c:441
 msgid "Size and Position"
 msgstr "大小與位置"
 
-#: src/bin/e_int_border_remember.c:432 src/bin/e_int_border_remember.c:502
+#: src/bin/e_int_border_remember.c:443 src/bin/e_int_border_remember.c:513
 msgid "Locks"
 msgstr "鎖定值"
 
-#: src/bin/e_int_border_remember.c:434
+#: src/bin/e_int_border_remember.c:445
 msgid "Size, Position and Locks"
 msgstr "大小、位置與鎖定值"
 
-#: src/bin/e_int_border_remember.c:436
+#: src/bin/e_int_border_remember.c:447
 msgid "Everything"
 msgstr "全部"
 
-#: src/bin/e_int_border_remember.c:449
+#: src/bin/e_int_border_remember.c:460
 msgid "Remember using"
 msgstr "使用下列特徵來記住視窗:"
 
-#: src/bin/e_int_border_remember.c:455
+#: src/bin/e_int_border_remember.c:466
 msgid "Window name and class"
 msgstr "視窗名稱與類別"
 
-#: src/bin/e_int_border_remember.c:475
+#: src/bin/e_int_border_remember.c:486
 msgid "Window Role"
 msgstr "視窗腳色"
 
-#: src/bin/e_int_border_remember.c:484
+#: src/bin/e_int_border_remember.c:495
 msgid "Window type"
 msgstr "視窗類型"
 
-#: src/bin/e_int_border_remember.c:491
+#: src/bin/e_int_border_remember.c:502
 msgid "Transience"
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:495
+#: src/bin/e_int_border_remember.c:506
 msgid "Properties to remember"
 msgstr "記住下列屬性:"
 
-#: src/bin/e_int_border_remember.c:506
+#: src/bin/e_int_border_remember.c:517
 msgid "Icon Preference"
 msgstr "圖示偏好"
 
-#: src/bin/e_int_border_remember.c:510
+#: src/bin/e_int_border_remember.c:521
 msgid "Virtual Desktop"
 msgstr "虛擬桌面"
 
-#: src/bin/e_int_border_remember.c:514
+#: src/bin/e_int_border_remember.c:525
 msgid "Current Screen"
 msgstr "目前螢幕"
 
-#: src/bin/e_int_border_remember.c:516
+#: src/bin/e_int_border_remember.c:527
 msgid "Skip Window List"
 msgstr "略過視窗列表"
 
-#: src/bin/e_int_border_remember.c:520
+#: src/bin/e_int_border_remember.c:535
 msgid "Match only one window"
 msgstr "只匹配單一視窗"
 
-#: src/bin/e_int_border_remember.c:525
+#: src/bin/e_int_border_remember.c:540
 msgid "Start this program on login"
 msgstr "登入時啟動此程式"
 
-#: src/bin/e_int_border_remember.c:529
+#: src/bin/e_int_border_remember.c:544
 msgid "Always focus on start"
 msgstr ""
 
-#: src/bin/e_int_config_modules.c:41 src/bin/e_int_menus.c:214
-#: src/modules/battery/e_mod_main.c:183 src/modules/ibar/e_mod_main.c:315
+#: src/bin/e_int_config_modules.c:42 src/bin/e_int_menus.c:214
+#: src/modules/battery/e_mod_main.c:170 src/modules/ibar/e_mod_main.c:315
 #: src/modules/ibar/e_mod_main.c:830 src/modules/ibox/e_mod_main.c:309
-#: src/modules/ibox/e_mod_main.c:704 src/modules/pager/e_mod_main.c:803
-#: src/modules/temperature/e_mod_main.c:312
+#: src/modules/ibox/e_mod_main.c:708 src/modules/pager/e_mod_main.c:803
+#: src/modules/temperature/e_mod_main.c:304
 msgid "Configuration"
 msgstr "組態"
 
-#: src/bin/e_int_config_modules.c:42 src/modules/conf_mime/e_mod_main.c:34
+#: src/bin/e_int_config_modules.c:43 src/modules/conf_mime/e_mod_main.c:34
 #: src/modules/fileman/e_mod_main.c:43 src/modules/fileman/e_mod_main.c:45
 #: src/modules/fileman/e_mod_main.c:57 src/modules/fileman/e_mod_main.c:136
 msgid "File Manager"
 msgstr "檔案管理員"
 
-#: src/bin/e_int_config_modules.c:43
+#: src/bin/e_int_config_modules.c:44
 #, fuzzy
 msgid "Shelf"
 msgstr "置物架 #"
 
-#: src/bin/e_int_config_modules.c:105
+#: src/bin/e_int_config_modules.c:106
 msgid "Module Settings"
 msgstr "設定模組"
 
-#: src/bin/e_int_config_modules.c:167
+#: src/bin/e_int_config_modules.c:168
 msgid "Available Modules"
 msgstr "可用模組"
 
-#: src/bin/e_int_config_modules.c:174
+#: src/bin/e_int_config_modules.c:175
 msgid "Load Module"
 msgstr "載入模組"
 
-#: src/bin/e_int_config_modules.c:181
+#: src/bin/e_int_config_modules.c:182
 msgid "Loaded Modules"
 msgstr "已載入模組"
 
-#: src/bin/e_int_config_modules.c:188
+#: src/bin/e_int_config_modules.c:189
 msgid "Unload Module"
 msgstr "卸除模組"
 
-#: src/bin/e_int_config_modules.c:198 src/bin/e_int_config_modules.c:562
-#: src/bin/e_int_config_modules.c:577 src/bin/e_int_config_modules.c:592
+#: src/bin/e_int_config_modules.c:199 src/bin/e_int_config_modules.c:553
+#: src/bin/e_int_config_modules.c:571 src/bin/e_int_config_modules.c:596
 #: src/bin/e_int_gadcon_config.c:121 src/bin/e_int_gadcon_config.c:156
 #: src/bin/e_int_gadcon_config.c:178
 msgid "Description: Unavailable"
@@ -1920,10 +1927,12 @@ msgstr "我的最愛"
 msgid "Applications"
 msgstr "應用程式"
 
-#: src/bin/e_int_menus.c:143 src/bin/e_int_menus.c:1205
+#: src/bin/e_int_menus.c:143 src/bin/e_int_menus.c:1213
 #: src/modules/conf_window_display/e_mod_main.c:34
 #: src/modules/conf_window_focus/e_mod_main.c:34
 #: src/modules/conf_window_manipulation/e_mod_main.c:34
+#: src/modules/conf_window_remembers/e_mod_main.c:14
+#: src/modules/conf_winlist/e_mod_main.c:34
 msgid "Windows"
 msgstr "視窗"
 
@@ -1949,52 +1958,52 @@ msgstr "置物架"
 msgid "Show/Hide All Windows"
 msgstr "顯示/隱藏所有視窗"
 
-#: src/bin/e_int_menus.c:609
+#: src/bin/e_int_menus.c:621
 msgid "(No Applications)"
 msgstr "（無任何應用程式）"
 
-#: src/bin/e_int_menus.c:747
+#: src/bin/e_int_menus.c:761
 msgid "Configure Virtual Desktops"
 msgstr "設定虛擬桌面"
 
-#: src/bin/e_int_menus.c:843
+#: src/bin/e_int_menus.c:854
 msgid "Lock Screen"
 msgstr "鎖定螢幕"
 
-#: src/bin/e_int_menus.c:865
+#: src/bin/e_int_menus.c:876
 msgid "Hibernate"
 msgstr "休眠"
 
-#: src/bin/e_int_menus.c:888
+#: src/bin/e_int_menus.c:899
 msgid "Logout"
 msgstr "登出"
 
-#: src/bin/e_int_menus.c:1211 src/bin/e_int_menus.c:1406
+#: src/bin/e_int_menus.c:1219 src/bin/e_int_menus.c:1409
 msgid "(No Windows)"
 msgstr "（無任何視窗）"
 
-#: src/bin/e_int_menus.c:1261
+#: src/bin/e_int_menus.c:1267
 msgid "Lost Windows"
 msgstr "迷路的視窗"
 
-#: src/bin/e_int_menus.c:1307 src/bin/e_int_menus.c:1419
+#: src/bin/e_int_menus.c:1313 src/bin/e_int_menus.c:1423
 msgid "No name!!"
 msgstr "無名稱！！"
 
-#: src/bin/e_int_menus.c:1512
+#: src/bin/e_int_menus.c:1514
 msgid "(No Shelves)"
 msgstr "(無任何置物架)"
 
-#: src/bin/e_int_menus.c:1526 src/bin/e_shelf.c:1069
+#: src/bin/e_int_menus.c:1527 src/bin/e_shelf.c:1069
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "置物架 #"
 
-#: src/bin/e_int_menus.c:1579
+#: src/bin/e_int_menus.c:1580
 msgid "Add A Shelf"
 msgstr "新增置物架"
 
-#: src/bin/e_int_menus.c:1585
+#: src/bin/e_int_menus.c:1586
 msgid "Delete A Shelf"
 msgstr "移除置物架"
 
@@ -2003,13 +2012,13 @@ msgid "Shelf Configuration"
 msgstr "置物架組態"
 
 #: src/bin/e_int_shelf_config.c:517
-#: src/modules/conf_fonts/e_int_config_fonts.c:249
+#: src/modules/conf_fonts/e_int_config_fonts.c:253
 msgid "Tiny"
 msgstr "微小"
 
 #: src/bin/e_int_shelf_config.c:519
-#: src/modules/conf_fonts/e_int_config_fonts.c:97
-#: src/modules/conf_fonts/e_int_config_fonts.c:255
+#: src/modules/conf_fonts/e_int_config_fonts.c:100
+#: src/modules/conf_fonts/e_int_config_fonts.c:259
 msgid "Small"
 msgstr "小"
 
@@ -2018,12 +2027,12 @@ msgid "Medium"
 msgstr "中"
 
 #: src/bin/e_int_shelf_config.c:523
-#: src/modules/conf_fonts/e_int_config_fonts.c:99
+#: src/modules/conf_fonts/e_int_config_fonts.c:102
 msgid "Large"
 msgstr "大"
 
 #: src/bin/e_int_shelf_config.c:525
-#: src/modules/conf_fonts/e_int_config_fonts.c:279
+#: src/modules/conf_fonts/e_int_config_fonts.c:283
 msgid "Huge"
 msgstr "巨大"
 
@@ -2061,7 +2070,7 @@ msgid "%3.0f pixels"
 msgstr "%3.0f 像素"
 
 #: src/bin/e_int_shelf_config.c:605
-#: src/modules/conf_fonts/e_int_config_fonts.c:641
+#: src/modules/conf_fonts/e_int_config_fonts.c:648
 msgid "Styles"
 msgstr "樣式"
 
@@ -2581,7 +2590,7 @@ msgstr "設定置物架"
 msgid "Almost Done"
 msgstr "快好了"
 
-#: src/bin/e_module.c:108
+#: src/bin/e_module.c:120
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
@@ -2589,11 +2598,11 @@ msgid ""
 msgstr ""
 "載入模組 %s 時發生錯誤。<br>在模組的搜尋路徑<br>沒有找到名為 %s 的模組。<br>"
 
-#: src/bin/e_module.c:112 src/bin/e_module.c:125 src/bin/e_module.c:146
+#: src/bin/e_module.c:124 src/bin/e_module.c:137 src/bin/e_module.c:158
 msgid "Error loading Module"
 msgstr "載入模組時發生錯誤"
 
-#: src/bin/e_module.c:119 src/bin/e_module.c:140
+#: src/bin/e_module.c:131 src/bin/e_module.c:152
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
@@ -2602,11 +2611,11 @@ msgstr ""
 "載入模組 %s 時發生錯誤。<br>該模組的完整路徑是:<br>%s<br>錯誤報告如下:<br>%"
 "s<br>"
 
-#: src/bin/e_module.c:145
+#: src/bin/e_module.c:157
 msgid "Module does not contain all needed functions"
 msgstr "模組並末包含所有必需之功能"
 
-#: src/bin/e_module.c:159
+#: src/bin/e_module.c:171
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -2616,12 +2625,12 @@ msgstr ""
 "模組 API 錯誤<br>模組初始化錯誤: %s<br>要求最小的模組 API 版本號: %i。"
 "<br>Enlightenment給的模組版本化: %i。<br>"
 
-#: src/bin/e_module.c:164
+#: src/bin/e_module.c:176
 #, c-format
 msgid "Enlightenment %s Module"
 msgstr "Enlightenment %s 模組"
 
-#: src/bin/e_module.c:480
+#: src/bin/e_module.c:492
 msgid "Would you like to unload this module?<br>"
 msgstr "您是否要卸除這個模組？<br>"
 
@@ -2910,9 +2919,9 @@ msgstr "加入「我的最愛」選單"
 #: src/modules/conf_desklock/e_int_config_desklock.c:199
 #: src/modules/conf_imc/e_int_config_imc.c:830
 #: src/modules/conf_startup/e_int_config_startup.c:281
-#: src/modules/conf_theme/e_int_config_theme.c:386
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:498
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:644
+#: src/modules/conf_theme/e_int_config_theme.c:342
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:507
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:633
 msgid "Go up a Directory"
 msgstr "到上一層目錄"
 
@@ -2949,39 +2958,39 @@ msgstr "禁止讀寫"
 msgid "Read-Write"
 msgstr "讀寫"
 
-#: src/modules/battery/e_mod_config.c:38
+#: src/modules/battery/e_mod_config.c:40
 msgid "Battery Monitor Configuration"
 msgstr "電池監控組態"
 
-#: src/modules/battery/e_mod_config.c:82
+#: src/modules/battery/e_mod_config.c:91
 msgid "Basic Settings"
 msgstr "基本設定"
 
-#: src/modules/battery/e_mod_config.c:83
-#: src/modules/battery/e_mod_config.c:123
+#: src/modules/battery/e_mod_config.c:92
+#: src/modules/battery/e_mod_config.c:139
 msgid "Show alert when battery is low"
 msgstr "電量不足時發出警告"
 
-#: src/modules/battery/e_mod_config.c:115
+#: src/modules/battery/e_mod_config.c:131
 msgid "Advanced Settings"
 msgstr "進階設定"
 
-#: src/modules/battery/e_mod_config.c:117
+#: src/modules/battery/e_mod_config.c:133
 msgid "Check battery every:"
 msgstr "電量檢查間隔:"
 
-#: src/modules/battery/e_mod_config.c:120
+#: src/modules/battery/e_mod_config.c:136
 #: src/modules/conf_performance/e_int_config_performance.c:133
-#: src/modules/temperature/e_mod_config.c:344
+#: src/modules/temperature/e_mod_config.c:380
 #, fuzzy, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f 筆"
 
-#: src/modules/battery/e_mod_config.c:126
+#: src/modules/battery/e_mod_config.c:142
 msgid "Alert when battery is down to:"
 msgstr "可用電量低於此時間時發出警告:"
 
-#: src/modules/battery/e_mod_config.c:129
+#: src/modules/battery/e_mod_config.c:145
 #: src/modules/conf_desklock/e_int_config_desklock.c:156
 #: src/modules/conf_dpms/e_int_config_dpms.c:193
 #: src/modules/conf_dpms/e_int_config_dpms.c:201
@@ -2992,70 +3001,52 @@ msgstr "可用電量低於此時間時發出警告:"
 msgid "%1.0f minutes"
 msgstr "%1.0f 分鐘"
 
-#: src/modules/battery/e_mod_config.c:132
+#: src/modules/battery/e_mod_config.c:148
 #, c-format
 msgid "%1.0f percent"
 msgstr "%1.0f%%"
 
-#: src/modules/battery/e_mod_main.c:137
+#: src/modules/battery/e_mod_config.c:151
+msgid "Dismiss alert automatically"
+msgstr ""
+
+#: src/modules/battery/e_mod_config.c:154
+msgid "Dismiss alert after:"
+msgstr ""
+
+#: src/modules/battery/e_mod_config.c:157
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
+#, c-format
+msgid "%1.0f seconds"
+msgstr "%1.0f 秒"
+
+#: src/modules/battery/e_mod_main.c:129
 msgid "Battery"
 msgstr "電池"
 
-#: src/modules/battery/e_mod_main.c:309
-msgid ""
-"Battery Running Low<br>Your battery is running low.<br>You may wish to "
-"switch to an AC source."
-msgstr "電池電量不足<br>您的電池電量不足。<br>您可能需要切換到交流電源"
-
-#: src/modules/battery/e_mod_main.c:355
-msgid "ERROR"
-msgstr ""
-
-#: src/modules/battery/e_mod_main.c:556 src/modules/battery/e_mod_main.c:873
-#: src/modules/battery/e_mod_main.c:1029
-msgid "N/A"
-msgstr ""
-
-#: src/modules/battery/e_mod_main.c:582 src/modules/battery/e_mod_main.c:1056
-msgid "BAD DRIVER"
-msgstr "錯誤的驅動程式"
-
-#: src/modules/battery/e_mod_main.c:606 src/modules/battery/e_mod_main.c:911
-#: src/modules/battery/e_mod_main.c:1080
-msgid "FULL"
-msgstr "滿"
-
-#: src/modules/battery/e_mod_main.c:667 src/modules/battery/e_mod_main.c:1141
-msgid "High"
-msgstr "高"
-
-#: src/modules/battery/e_mod_main.c:671 src/modules/battery/e_mod_main.c:1145
-msgid "Low"
-msgstr "低"
-
-#: src/modules/battery/e_mod_main.c:675 src/modules/battery/e_mod_main.c:1149
-msgid "Danger"
-msgstr "危險"
-
-#: src/modules/battery/e_mod_main.c:679 src/modules/battery/e_mod_main.c:1153
-#: src/modules/battery/e_mod_main.c:1324
-msgid "Charging"
-msgstr "充電中"
-
-#: src/modules/battery/e_mod_main.c:1456
+#: src/modules/battery/e_mod_main.c:417
 #, fuzzy
 msgid "Battery Meter"
 msgstr "電池"
 
-#: src/modules/clock/e_mod_main.c:91
+#: src/modules/battery/e_mod_main.c:494 src/modules/battery/e_mod_main.c:496
+#: src/modules/battery/e_mod_main.c:503 src/modules/battery/e_mod_main.c:505
+msgid "ERROR"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:563
+msgid "N/A"
+msgstr ""
+
+#: src/modules/clock/e_mod_main.c:98
 msgid "Clock"
 msgstr "時鐘"
 
-#: src/modules/conf/e_conf.c:122
+#: src/modules/conf/e_conf.c:122 src/modules/conf/e_conf.c:133
 msgid "Enlightenment Configuration"
 msgstr "Enlightenment 組態"
 
-#: src/modules/conf/e_conf.c:159
+#: src/modules/conf/e_conf.c:161
 msgid "Items"
 msgstr "項目"
 
@@ -3086,7 +3077,7 @@ msgid "Restart Applications"
 msgstr "自動重新啟動之應用程式"
 
 #: src/modules/conf_applications/e_int_config_apps.c:238
-#: src/modules/fileman/e_fwin.c:1348
+#: src/modules/fileman/e_fwin.c:1361
 msgid "All Applications"
 msgstr "全部應用程式"
 
@@ -3144,7 +3135,7 @@ msgstr "以下列方式分為群組:"
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:101
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:114
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:124
-#: src/modules/conf_fonts/e_int_config_fonts.c:669
+#: src/modules/conf_fonts/e_int_config_fonts.c:676
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:369
 #: src/modules/conf_transitions/e_int_config_transitions.c:152
 #: src/modules/conf_transitions/e_int_config_transitions.c:204
@@ -3246,7 +3237,7 @@ msgid "Error Text"
 msgstr "錯誤文字"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:50
-#: src/modules/conf_fonts/e_int_config_fonts.c:61
+#: src/modules/conf_fonts/e_int_config_fonts.c:63
 msgid "Menu Title"
 msgstr "選單標題"
 
@@ -3255,7 +3246,7 @@ msgid "Menu Title Active"
 msgstr "作用中選單標題"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:52
-#: src/modules/conf_fonts/e_int_config_fonts.c:60
+#: src/modules/conf_fonts/e_int_config_fonts.c:62
 msgid "Menu Item"
 msgstr "選單項目"
 
@@ -3264,12 +3255,12 @@ msgid "Menu Item Active"
 msgstr "作用中選單項目"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:54
-#: src/modules/conf_fonts/e_int_config_fonts.c:65
+#: src/modules/conf_fonts/e_int_config_fonts.c:67
 msgid "Move Text"
 msgstr "移動文字"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:55
-#: src/modules/conf_fonts/e_int_config_fonts.c:66
+#: src/modules/conf_fonts/e_int_config_fonts.c:68
 msgid "Resize Text"
 msgstr "改變大小文字"
 
@@ -3282,12 +3273,12 @@ msgid "Winlist Label"
 msgstr "視窗列表標籤"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:58
-#: src/modules/conf_fonts/e_int_config_fonts.c:67
+#: src/modules/conf_fonts/e_int_config_fonts.c:69
 msgid "Winlist Title"
 msgstr "視窗列表標題"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:64
-#: src/modules/conf_fonts/e_int_config_fonts.c:80
+#: src/modules/conf_fonts/e_int_config_fonts.c:82
 msgid "Widgets"
 msgstr "Widgets"
 
@@ -3324,7 +3315,7 @@ msgid "List Item Odd Text"
 msgstr "奇數列表項目文字"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:73
-#: src/modules/conf_fonts/e_int_config_fonts.c:90
+#: src/modules/conf_fonts/e_int_config_fonts.c:92
 msgid "List Header"
 msgstr "列表標頭"
 
@@ -3410,6 +3401,7 @@ msgstr "桌面名稱"
 #: src/modules/conf_desk/e_int_config_desk.c:150
 #: src/modules/conf_profiles/e_int_config_profiles.c:265
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:120
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:102
 msgid "Name:"
 msgstr "名稱:"
 
@@ -3451,10 +3443,10 @@ msgstr "超過此時間時視為閒置:"
 #: src/modules/conf_desklock/e_int_config_desklock.c:192
 #: src/modules/conf_imc/e_int_config_imc.c:818
 #: src/modules/conf_startup/e_int_config_startup.c:268
-#: src/modules/conf_theme/e_int_config_theme.c:375
-#: src/modules/conf_theme/e_int_config_theme.c:844
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:488
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:634
+#: src/modules/conf_theme/e_int_config_theme.c:331
+#: src/modules/conf_theme/e_int_config_theme.c:763
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:497
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:623
 msgid "Personal"
 msgstr "個人"
 
@@ -3787,12 +3779,12 @@ msgstr "啟用 Composite"
 msgid "Default Engine"
 msgstr "預設引擎"
 
-#: src/modules/conf_engine/e_int_config_engine.c:121
+#: src/modules/conf_engine/e_int_config_engine.c:122
 #, fuzzy
 msgid "Enable Composite Support ?"
 msgstr "啟用 Composite"
 
-#: src/modules/conf_engine/e_int_config_engine.c:123
+#: src/modules/conf_engine/e_int_config_engine.c:124
 msgid ""
 "You have chosen to enable composite support,<br>but your current screen does "
 "not support composite.<br><br>Are you sure you wish to enable composite "
@@ -3916,192 +3908,197 @@ msgstr "Y-軸排列"
 msgid "Run Command"
 msgstr "執行指令"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:58
+#: src/modules/conf_fonts/e_int_config_fonts.c:60
 msgid "Core"
 msgstr "核心"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:59
+#: src/modules/conf_fonts/e_int_config_fonts.c:61
 msgid "Title Bar"
 msgstr "標題列"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:62
+#: src/modules/conf_fonts/e_int_config_fonts.c:64
 msgid "Textblock Plain"
 msgstr "文字區塊 (一般)"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:63
+#: src/modules/conf_fonts/e_int_config_fonts.c:65
 msgid "Textblock Light"
 msgstr "文字區塊 (淡)"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:64
+#: src/modules/conf_fonts/e_int_config_fonts.c:66
 msgid "Textblock Big"
 msgstr "文字區塊 (大)"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:68
+#: src/modules/conf_fonts/e_int_config_fonts.c:70
 msgid "Configure Heading"
 msgstr "組態標題"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:69
+#: src/modules/conf_fonts/e_int_config_fonts.c:71
 msgid "About Title"
 msgstr "「關於」標題"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:70
+#: src/modules/conf_fonts/e_int_config_fonts.c:72
 msgid "About Version"
 msgstr "「關於」版本"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:71
+#: src/modules/conf_fonts/e_int_config_fonts.c:73
 msgid "About Text"
 msgstr "「關於」文字"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:72
+#: src/modules/conf_fonts/e_int_config_fonts.c:74
 msgid "Desklock Title"
 msgstr "「桌面鎖定」標題"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:73
+#: src/modules/conf_fonts/e_int_config_fonts.c:75
 msgid "Desklock Password"
 msgstr "「桌面鎖定」密碼"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:74
+#: src/modules/conf_fonts/e_int_config_fonts.c:76
 msgid "Dialog Error"
 msgstr "對話方塊錯誤"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:75
+#: src/modules/conf_fonts/e_int_config_fonts.c:77
 msgid "Exebuf Command"
 msgstr "Exebuf 命令"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:76
+#: src/modules/conf_fonts/e_int_config_fonts.c:78
 msgid "Splash Title"
 msgstr "啟動畫面標題"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:77
+#: src/modules/conf_fonts/e_int_config_fonts.c:79
 msgid "Splash Text"
 msgstr "啟動畫面文字"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:78
+#: src/modules/conf_fonts/e_int_config_fonts.c:80
 msgid "Splash Version"
 msgstr "啟動畫面版本"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:81
+#: src/modules/conf_fonts/e_int_config_fonts.c:83
 msgid "Entry"
 msgstr "輸入欄"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:82
+#: src/modules/conf_fonts/e_int_config_fonts.c:84
 msgid "Frame"
 msgstr "框架"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:83
+#: src/modules/conf_fonts/e_int_config_fonts.c:85
 msgid "Label"
 msgstr "標籤"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:84
+#: src/modules/conf_fonts/e_int_config_fonts.c:86
 msgid "Buttons"
 msgstr "按鈕"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:85
+#: src/modules/conf_fonts/e_int_config_fonts.c:87
 msgid "Slider"
 msgstr "滑尺"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:86
+#: src/modules/conf_fonts/e_int_config_fonts.c:88
 msgid "Radio Buttons"
 msgstr "單選按鈕"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:87
+#: src/modules/conf_fonts/e_int_config_fonts.c:89
 msgid "Check Buttons"
 msgstr "核取方塊"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:88
+#: src/modules/conf_fonts/e_int_config_fonts.c:90
 msgid "Text List Item"
 msgstr "文字列表項目"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:89
+#: src/modules/conf_fonts/e_int_config_fonts.c:91
 msgid "List Item"
 msgstr "列表項目"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:92
+#: src/modules/conf_fonts/e_int_config_fonts.c:94
 msgid "Filemanager"
 msgstr "檔案管理員"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:93
+#: src/modules/conf_fonts/e_int_config_fonts.c:95
 msgid "Typebuf"
 msgstr "類型緩衝"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:100
+#: src/modules/conf_fonts/e_int_config_fonts.c:97
+#, fuzzy
+msgid "Desktop Icon"
+msgstr "顯示桌面圖示"
+
+#: src/modules/conf_fonts/e_int_config_fonts.c:103
 msgid "Small Styled"
 msgstr "「小」樣式"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:101
+#: src/modules/conf_fonts/e_int_config_fonts.c:104
 msgid "Normal Styled"
 msgstr "「正常」樣式"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:102
+#: src/modules/conf_fonts/e_int_config_fonts.c:105
 msgid "Large Styled"
 msgstr "「大」樣式"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:165
+#: src/modules/conf_fonts/e_int_config_fonts.c:168
 msgid "Font Settings"
 msgstr "字型設定"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:267
+#: src/modules/conf_fonts/e_int_config_fonts.c:271
 msgid "Big"
 msgstr "大"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:273
+#: src/modules/conf_fonts/e_int_config_fonts.c:277
 msgid "Really Big"
 msgstr "真的很大"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:288
+#: src/modules/conf_fonts/e_int_config_fonts.c:292
 #, c-format
 msgid "%d pixels"
 msgstr "%d 像素"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:442
+#: src/modules/conf_fonts/e_int_config_fonts.c:447
 msgid "Enable Custom Font Classes"
 msgstr "啟用自訂字型類別"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:448
-#: src/modules/conf_fonts/e_int_config_fonts.c:633
+#: src/modules/conf_fonts/e_int_config_fonts.c:454
+#: src/modules/conf_fonts/e_int_config_fonts.c:640
 #: src/modules/conf_fonts/e_mod_main.c:35
 #: src/modules/conf_paths/e_int_config_paths.c:77
 msgid "Fonts"
 msgstr "字型"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:464
+#: src/modules/conf_fonts/e_int_config_fonts.c:471
 msgid "Basic preview text: 123: 我的天空！"
 msgstr "Basic preview text: 123: 我的天空！"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:617
+#: src/modules/conf_fonts/e_int_config_fonts.c:624
 msgid "Font Classes"
 msgstr "字型類別"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:626
+#: src/modules/conf_fonts/e_int_config_fonts.c:633
 msgid "Enable Font Class"
 msgstr "啟用字型類別"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:658
+#: src/modules/conf_fonts/e_int_config_fonts.c:665
 msgid "Hinting"
 msgstr "Hinting"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:661
+#: src/modules/conf_fonts/e_int_config_fonts.c:668
 msgid "Bytecode"
 msgstr "Bytecode"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:665
+#: src/modules/conf_fonts/e_int_config_fonts.c:672
 #: src/modules/cpufreq/e_mod_main.c:222
 msgid "Automatic"
 msgstr "自動"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:674
+#: src/modules/conf_fonts/e_int_config_fonts.c:681
 msgid "Font Fallbacks"
 msgstr "備用字型"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:675
+#: src/modules/conf_fonts/e_int_config_fonts.c:682
 msgid "Fallback Name"
 msgstr "備用字型名稱"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:688
+#: src/modules/conf_fonts/e_int_config_fonts.c:695
 msgid "Enable Fallbacks"
 msgstr "啟用備用字型"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:696
+#: src/modules/conf_fonts/e_int_config_fonts.c:703
 msgid "Advanced Preview Text.. 我真的会写中文"
 msgstr "Advanced Preview Text.. 我真的会写中文"
 
@@ -4140,7 +4137,7 @@ msgid "New"
 msgstr "新增"
 
 #: src/modules/conf_imc/e_int_config_imc.c:899
-#: src/modules/conf_theme/e_int_config_theme.c:444
+#: src/modules/conf_theme/e_int_config_theme.c:371
 msgid "Import..."
 msgstr "匯入..."
 
@@ -4188,22 +4185,64 @@ msgstr "語言"
 msgid "Input Method Settings"
 msgstr "輸入法設定"
 
+#: src/modules/conf_interaction/e_int_config_interaction.c:35
+#, fuzzy
+msgid "Interaction Settings"
+msgstr "選取設定"
+
+#: src/modules/conf_interaction/e_int_config_interaction.c:84
+msgid "Enable Thumbscroll"
+msgstr ""
+
+#: src/modules/conf_interaction/e_int_config_interaction.c:88
+msgid "Threshhold for a thumb drag"
+msgstr ""
+
+#: src/modules/conf_interaction/e_int_config_interaction.c:91
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:154
+#, c-format
+msgid "%1.0f pixels"
+msgstr "%1.0f 像素"
+
+#: src/modules/conf_interaction/e_int_config_interaction.c:95
+msgid "Threshhold for for applying drag momentum"
+msgstr ""
+
+#: src/modules/conf_interaction/e_int_config_interaction.c:98
+#, fuzzy, c-format
+msgid "%1.0f pixels/sec"
+msgstr "%5.0f 像素/秒"
+
+#: src/modules/conf_interaction/e_int_config_interaction.c:102
+msgid "Friction slowdown"
+msgstr ""
+
+#: src/modules/conf_interaction/e_int_config_interaction.c:105
+#, fuzzy, c-format
+msgid "%1.2f sec"
+msgstr "%1.1f 秒"
+
+#: src/modules/conf_interaction/e_mod_main.c:35
+#, fuzzy
+msgid "Interaction"
+msgstr "Interlingua"
+
 #: src/modules/conf_intl/e_int_config_intl.c:582
 msgid "Language Configuration"
 msgstr "語言組態"
 
-#: src/modules/conf_intl/e_int_config_intl.c:892
-#: src/modules/conf_intl/e_int_config_intl.c:969
+#: src/modules/conf_intl/e_int_config_intl.c:894
+#: src/modules/conf_intl/e_int_config_intl.c:971
 msgid "Language Selector"
 msgstr "語言選擇器"
 
-#: src/modules/conf_intl/e_int_config_intl.c:942
-#: src/modules/conf_intl/e_int_config_intl.c:1020
+#: src/modules/conf_intl/e_int_config_intl.c:944
+#: src/modules/conf_intl/e_int_config_intl.c:1022
 msgid "Locale Selected"
 msgstr "選取的 Locale"
 
-#: src/modules/conf_intl/e_int_config_intl.c:943
-#: src/modules/conf_intl/e_int_config_intl.c:1021
+#: src/modules/conf_intl/e_int_config_intl.c:945
+#: src/modules/conf_intl/e_int_config_intl.c:1023
 msgid "Locale"
 msgstr "Locale"
 
@@ -4519,11 +4558,6 @@ msgstr "使用 X 游標"
 msgid "Cursor Size"
 msgstr "游標大小"
 
-#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:154
-#, c-format
-msgid "%1.0f pixels"
-msgstr "%1.0f 像素"
-
 #: src/modules/conf_mouse_cursor/e_mod_main.c:35
 msgid "Mouse Cursor"
 msgstr "滑鼠游標"
@@ -4558,7 +4592,7 @@ msgid "Images"
 msgstr "圖片"
 
 #: src/modules/conf_paths/e_int_config_paths.c:79
-#: src/modules/conf_theme/e_int_config_theme.c:1072
+#: src/modules/conf_theme/e_int_config_theme.c:981
 msgid "Themes"
 msgstr "佈景主題"
 
@@ -4715,11 +4749,6 @@ msgstr "在此時間後啟動 X 螢幕保護程式"
 msgid "Time until X screensaver alternates"
 msgstr "在此時間後變換 X 螢幕保護程式"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
-#, c-format
-msgid "%1.0f seconds"
-msgstr "%1.0f 秒"
-
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:162
 msgid "Blanking"
 msgstr "空白"
@@ -4776,23 +4805,23 @@ msgstr "登入時顯示啟動畫面"
 msgid "Startup"
 msgstr "啟動"
 
-#: src/modules/conf_theme/e_int_config_theme.c:60
+#: src/modules/conf_theme/e_int_config_theme.c:59
 msgid "Theme Selector"
 msgstr "佈景主題選擇器"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1063
+#: src/modules/conf_theme/e_int_config_theme.c:972
 msgid "Theme Categories"
 msgstr "佈景主題分類"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1081
+#: src/modules/conf_theme/e_int_config_theme.c:990
 msgid "Assign"
 msgstr "指定"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1084
+#: src/modules/conf_theme/e_int_config_theme.c:993
 msgid "Clear"
 msgstr "清除"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1087
+#: src/modules/conf_theme/e_int_config_theme.c:996
 msgid "Clear All"
 msgstr "全部清除"
 
@@ -4837,38 +4866,43 @@ msgstr "背景改變"
 msgid "Transitions"
 msgstr "轉換"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:109
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:108
 msgid "Wallpaper Settings"
 msgstr "桌布設定"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:551
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:697
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:534
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:658
 msgid "Use Theme Wallpaper"
 msgstr "使用佈景主題桌布"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:555
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:701
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:539
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:663
 msgid "Picture..."
 msgstr "圖片..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:558
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:704
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:542
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:666
 msgid "Gradient..."
 msgstr "漸層..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:722
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:547
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:671
+msgid "Online..."
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:690
 msgid "Where to place the Wallpaper"
 msgstr "將桌布置於"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:723
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:691
 msgid "All Desktops"
 msgstr "所有桌面"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:725
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:693
 msgid "This Desktop"
 msgstr "此桌面"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:727
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:695
 msgid "This Screen"
 msgstr "此螢幕"
 
@@ -4918,7 +4952,7 @@ msgstr "產生漸層時發生錯誤"
 msgid "For some reason, Enlightenment was unable to create a gradient."
 msgstr "Enlightenment 無法產生漸層。"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:107
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:106
 msgid "Select a Picture..."
 msgstr "選擇圖片..."
 
@@ -4968,21 +5002,78 @@ msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr "轉檔時發生錯誤，Enlightenment 無法匯入此圖片。"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:580
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:597
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:578
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:595
 msgid "Wallpaper Import Error"
 msgstr "匯入桌布時發生錯誤"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:581
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:579
 msgid ""
 "Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr "複製檔案時發生錯誤，Enlightenment 無法匯入此桌布。"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:598
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:596
 msgid ""
 "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this "
 "is a valid wallpaper?"
 msgstr "Enlightenment 無法匯入此桌布。您是否確定這是合法的桌布？"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:97
+msgid "Choose a website from list..."
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:111
+msgid "get-e.org - Static"
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:114
+msgid "get-e.org  - Animated"
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:244
+#, c-format
+msgid "[%s] Getting feed... DONE!"
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:252
+#, c-format
+msgid "[%s] Getting feed... FAILED!"
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:375
+#, c-format
+msgid "[%s] Parsing feed... DONE!"
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:383
+#, c-format
+msgid "[%s] Parsing feed... FAILED!"
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:501
+#, c-format
+msgid "[%s] Downloading of edje file..."
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:535
+#, c-format
+msgid "[%s] Download %d images of %d"
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:549
+#, c-format
+msgid "[%s] Choose an image from list"
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:573
+#, c-format
+msgid "[%s] Downloading of edje file... %d%% done"
+msgstr ""
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:608
+#, c-format
+msgid "[%s] Getting feed..."
+msgstr ""
 
 #: src/modules/conf_wallpaper/e_mod_main.c:29
 #: src/modules/conf_wallpaper/e_mod_main.c:31
@@ -5272,6 +5363,62 @@ msgstr "允許視窗操作"
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:234
 msgid "Automatically move/resize windows on shelf autohide"
 msgstr "當置物架自動隱藏時移動或改變視窗大小"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:29
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:89
+#: src/modules/conf_window_remembers/e_mod_main.c:17
+#, fuzzy
+msgid "Window Remembers"
+msgstr "記住視窗"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:91
+#, fuzzy
+msgid "Delete Remember(s)"
+msgstr "設定記憶值"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:101
+#, fuzzy
+msgid "Details"
+msgstr "預設值"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:104
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:233
+#, fuzzy
+msgid "<No Name>"
+msgstr "圖示名稱"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:107
+#, fuzzy
+msgid "Class:"
+msgstr "類別"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:109
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:235
+#, fuzzy
+msgid "<No Class>"
+msgstr "類別"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:112
+#, fuzzy
+msgid "Title:"
+msgstr "標題"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:114
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:237
+#, fuzzy
+msgid "<No Title>"
+msgstr "標題"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:117
+#, fuzzy
+msgid "Role:"
+msgstr "角色"
+
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:119
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:239
+#, fuzzy
+msgid "<No Role>"
+msgstr "<無>"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:55
 msgid "Window List Settings"
@@ -5623,19 +5770,19 @@ msgstr "陰影顏色"
 msgid "Go to Parent Directory"
 msgstr "到上一層目錄"
 
-#: src/modules/fileman/e_fwin.c:680 src/modules/fileman/e_fwin.c:1307
+#: src/modules/fileman/e_fwin.c:680 src/modules/fileman/e_fwin.c:1320
 msgid "Open"
 msgstr "開啟"
 
-#: src/modules/fileman/e_fwin.c:687 src/modules/fileman/e_fwin.c:1305
+#: src/modules/fileman/e_fwin.c:687 src/modules/fileman/e_fwin.c:1318
 msgid "Open with..."
 msgstr "以特定程式開啟..."
 
-#: src/modules/fileman/e_fwin.c:1323
+#: src/modules/fileman/e_fwin.c:1336
 msgid "Specific Applications"
 msgstr "特定應用程式"
 
-#: src/modules/fileman/e_fwin.c:1394
+#: src/modules/fileman/e_fwin.c:1407
 #, fuzzy
 msgid "Custom Command"
 msgstr "執行指令"
@@ -5927,7 +6074,7 @@ msgstr "切換到上方桌面"
 msgid "Popup Desk Down"
 msgstr "切換到下方桌面"
 
-#: src/modules/start/e_mod_main.c:103
+#: src/modules/start/e_mod_main.c:110
 msgid "Start"
 msgstr "開始"
 
@@ -5935,111 +6082,111 @@ msgstr "開始"
 msgid "Temperature Configuration"
 msgstr "溫度組態"
 
-#: src/modules/temperature/e_mod_config.c:213
-#: src/modules/temperature/e_mod_config.c:316
+#: src/modules/temperature/e_mod_config.c:249
+#: src/modules/temperature/e_mod_config.c:352
 msgid "Display Units"
 msgstr "顯示單位"
 
-#: src/modules/temperature/e_mod_config.c:215
-#: src/modules/temperature/e_mod_config.c:318
+#: src/modules/temperature/e_mod_config.c:251
+#: src/modules/temperature/e_mod_config.c:354
 msgid "Celsius"
 msgstr "攝氏"
 
-#: src/modules/temperature/e_mod_config.c:217
-#: src/modules/temperature/e_mod_config.c:320
+#: src/modules/temperature/e_mod_config.c:253
+#: src/modules/temperature/e_mod_config.c:356
 msgid "Fahrenheit"
 msgstr "華氏"
 
-#: src/modules/temperature/e_mod_config.c:221
-#: src/modules/temperature/e_mod_config.c:343
+#: src/modules/temperature/e_mod_config.c:257
+#: src/modules/temperature/e_mod_config.c:379
 msgid "Check Interval"
 msgstr "檢查間隔"
 
-#: src/modules/temperature/e_mod_config.c:223
+#: src/modules/temperature/e_mod_config.c:259
 msgid "Fast"
 msgstr "快"
 
-#: src/modules/temperature/e_mod_config.c:227
+#: src/modules/temperature/e_mod_config.c:263
 msgid "Slow"
 msgstr "慢"
 
-#: src/modules/temperature/e_mod_config.c:229
+#: src/modules/temperature/e_mod_config.c:265
 msgid "Very Slow"
 msgstr "很慢"
 
-#: src/modules/temperature/e_mod_config.c:236
-#: src/modules/temperature/e_mod_config.c:260
-#: src/modules/temperature/e_mod_config.c:361
-#: src/modules/temperature/e_mod_config.c:373
+#: src/modules/temperature/e_mod_config.c:272
+#: src/modules/temperature/e_mod_config.c:296
+#: src/modules/temperature/e_mod_config.c:397
+#: src/modules/temperature/e_mod_config.c:409
 msgid "High Temperature"
 msgstr "高温"
 
-#: src/modules/temperature/e_mod_config.c:239
+#: src/modules/temperature/e_mod_config.c:275
 msgid "200 F"
 msgstr "200 F"
 
-#: src/modules/temperature/e_mod_config.c:241
+#: src/modules/temperature/e_mod_config.c:277
 msgid "150 F"
 msgstr "150 F"
 
-#: src/modules/temperature/e_mod_config.c:243
-#: src/modules/temperature/e_mod_config.c:252
+#: src/modules/temperature/e_mod_config.c:279
+#: src/modules/temperature/e_mod_config.c:288
 msgid "110 F"
 msgstr "110 F"
 
-#: src/modules/temperature/e_mod_config.c:247
-#: src/modules/temperature/e_mod_config.c:271
-#: src/modules/temperature/e_mod_config.c:366
-#: src/modules/temperature/e_mod_config.c:378
+#: src/modules/temperature/e_mod_config.c:283
+#: src/modules/temperature/e_mod_config.c:307
+#: src/modules/temperature/e_mod_config.c:402
+#: src/modules/temperature/e_mod_config.c:414
 msgid "Low Temperature"
 msgstr "低溫"
 
-#: src/modules/temperature/e_mod_config.c:250
+#: src/modules/temperature/e_mod_config.c:286
 msgid "130 F"
 msgstr "130 F"
 
-#: src/modules/temperature/e_mod_config.c:254
+#: src/modules/temperature/e_mod_config.c:290
 msgid "90 F"
 msgstr "90 F"
 
-#: src/modules/temperature/e_mod_config.c:263
+#: src/modules/temperature/e_mod_config.c:299
 msgid "93 C"
 msgstr "93 C"
 
-#: src/modules/temperature/e_mod_config.c:265
+#: src/modules/temperature/e_mod_config.c:301
 msgid "65 C"
 msgstr "65 C"
 
-#: src/modules/temperature/e_mod_config.c:267
-#: src/modules/temperature/e_mod_config.c:276
+#: src/modules/temperature/e_mod_config.c:303
+#: src/modules/temperature/e_mod_config.c:312
 msgid "43 C"
 msgstr "43 C"
 
-#: src/modules/temperature/e_mod_config.c:274
+#: src/modules/temperature/e_mod_config.c:310
 msgid "55 C"
 msgstr "55 C"
 
-#: src/modules/temperature/e_mod_config.c:278
+#: src/modules/temperature/e_mod_config.c:314
 msgid "32 C"
 msgstr "32 C"
 
-#: src/modules/temperature/e_mod_config.c:331
+#: src/modules/temperature/e_mod_config.c:367
 msgid "Sensors"
 msgstr "感應器"
 
-#: src/modules/temperature/e_mod_config.c:362
-#: src/modules/temperature/e_mod_config.c:367
+#: src/modules/temperature/e_mod_config.c:398
+#: src/modules/temperature/e_mod_config.c:403
 #, c-format
 msgid "%1.0f F"
 msgstr "%1.0f F"
 
-#: src/modules/temperature/e_mod_config.c:374
-#: src/modules/temperature/e_mod_config.c:379
+#: src/modules/temperature/e_mod_config.c:410
+#: src/modules/temperature/e_mod_config.c:415
 #, c-format
 msgid "%1.0f C"
 msgstr "%1.0f C"
 
-#: src/modules/temperature/e_mod_main.c:161
+#: src/modules/temperature/e_mod_main.c:153
 msgid "Temperature"
 msgstr "温度"
 
@@ -6059,6 +6206,29 @@ msgstr "上一步"
 #, fuzzy
 msgid "Choose Language"
 msgstr "語言"
+
+#~ msgid ""
+#~ "Battery Running Low<br>Your battery is running low.<br>You may wish to "
+#~ "switch to an AC source."
+#~ msgstr "電池電量不足<br>您的電池電量不足。<br>您可能需要切換到交流電源"
+
+#~ msgid "BAD DRIVER"
+#~ msgstr "錯誤的驅動程式"
+
+#~ msgid "FULL"
+#~ msgstr "滿"
+
+#~ msgid "High"
+#~ msgstr "高"
+
+#~ msgid "Low"
+#~ msgstr "低"
+
+#~ msgid "Danger"
+#~ msgstr "危險"
+
+#~ msgid "Charging"
+#~ msgstr "充電中"
 
 #~ msgid "NO INFO"
 #~ msgstr "沒有資訊"
@@ -6248,9 +6418,6 @@ msgstr "語言"
 
 #~ msgid "Armenian"
 #~ msgstr "Armenian"
-
-#~ msgid "Interlingua"
-#~ msgstr "Interlingua"
 
 #~ msgid "Indonesian"
 #~ msgstr "印尼文"

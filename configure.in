@@ -1,7 +1,7 @@
 # get rid of that stupid cache mechanism
 rm -f config.cache
 
-AC_INIT(enlightenment, 0.16.999.042, enlightenment-devel@lists.sourceforge.net)
+AC_INIT(enlightenment, 0.16.999.043, enlightenment-devel@lists.sourceforge.net)
 AC_PREREQ(2.52)
 AC_CONFIG_SRCDIR(configure.in)
 AC_CANONICAL_BUILD
@@ -191,7 +191,7 @@ PKG_CHECK_MODULES(E, [
   ecore-imf
   ecore-imf-evas
   edje
-  eet
+  eet >= 1.0.1
   embryo
   efreet
   efreet-mime
