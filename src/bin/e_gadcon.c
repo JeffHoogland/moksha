@@ -1214,7 +1214,8 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
 	e_menu_item_submenu_set(mi, mn);
 	e_object_del(E_OBJECT(mn));
      }
-   if (gcc->gadcon->shelf || gcc->gadcon->toolbar)
+
+   if ((gcc->gadcon->shelf) || (gcc->gadcon->toolbar))
      {
 	mi = e_menu_item_new(menu);
 	e_menu_item_label_set(mi, _("Automatically scroll contents"));
@@ -1262,15 +1263,21 @@ e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc)
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    if (gcc->o_frame)
      {
-	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_DOWN, _e_gadcon_client_cb_mouse_down, gcc);
-	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_UP, _e_gadcon_client_cb_mouse_up, gcc);
-	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_MOVE, _e_gadcon_client_cb_mouse_move, gcc);
+	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_DOWN, 
+                                       _e_gadcon_client_cb_mouse_down, gcc);
+	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_UP, 
+                                       _e_gadcon_client_cb_mouse_up, gcc);
+	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_MOVE, 
+                                       _e_gadcon_client_cb_mouse_move, gcc);
      }
    else if (gcc->o_base)
      {
-	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOUSE_DOWN, _e_gadcon_client_cb_mouse_down, gcc);
-	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOUSE_UP, _e_gadcon_client_cb_mouse_up, gcc);
-	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOUSE_MOVE, _e_gadcon_client_cb_mouse_move, gcc);
+	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOUSE_DOWN, 
+                                       _e_gadcon_client_cb_mouse_down, gcc);
+	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOUSE_UP, 
+                                       _e_gadcon_client_cb_mouse_up, gcc);
+	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOUSE_MOVE, 
+                                       _e_gadcon_client_cb_mouse_move, gcc);
      }
 }
 
@@ -1299,9 +1306,11 @@ e_gadcon_client_autoscroll_update(E_Gadcon_Client *gcc, Evas_Coord x, Evas_Coord
 	if (d < 0.0) d = 0.0;
 	else if (d > 1.0) d = 1.0;
 	if (!gcc->scroll_timer)
-	  gcc->scroll_timer = ecore_timer_add(0.01, _e_gadcon_cb_client_scroll_timer, gcc);
+	  gcc->scroll_timer = 
+          ecore_timer_add(0.01, _e_gadcon_cb_client_scroll_timer, gcc);
 	if (!gcc->scroll_animator)
-	  gcc->scroll_animator = ecore_animator_add(_e_gadcon_cb_client_scroll_animator, gcc);
+	  gcc->scroll_animator = 
+          ecore_animator_add(_e_gadcon_cb_client_scroll_animator, gcc);
 	gcc->scroll_wanted = d;
      }
 }
@@ -1438,7 +1447,8 @@ _e_gadcon_cb_client_frame_mouse_move(void *data, Evas *e, Evas_Object *obj, void
    ev = event_info;
    gcc = data;
    evas_object_geometry_get(gcc->o_box, &x, &y, NULL, NULL);
-   e_gadcon_client_autoscroll_update(gcc, ev->cur.output.x - x, ev->cur.output.y - y);
+   e_gadcon_client_autoscroll_update(gcc, ev->cur.output.x - x, 
+                                     ev->cur.output.y - y);
 }
 
 static void
@@ -1483,7 +1493,8 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
 
    e_object_ref(E_OBJECT(gcc));
    /* Remove this config from the current gadcon */
-   gcc->gadcon->cf->clients = evas_list_remove(gcc->gadcon->cf->clients, gcc->cf);
+   gcc->gadcon->cf->clients = 
+     evas_list_remove(gcc->gadcon->cf->clients, gcc->cf);
    gcc->state_info.state = E_LAYOUT_ITEM_STATE_NONE;
    gcc->state_info.resist = 0;
 
@@ -1558,9 +1569,7 @@ _e_gadcon_client_inject(E_Gadcon *gc, E_Gadcon_Client *gcc, int x, int y)
 		  gcc->state_info.seq = seq++;
 	       }
 	     else
-	       {
-		  gcc2->state_info.seq = seq++;
-	       }
+               gcc2->state_info.seq = seq++;
 	  }
 	else
 	  {
@@ -1575,9 +1584,7 @@ _e_gadcon_client_inject(E_Gadcon *gc, E_Gadcon_Client *gcc, int x, int y)
 		  gcc->state_info.seq = seq++;
 	       }
 	     else
-	       {
-		  gcc2->state_info.seq = seq++;
-	       }
+               gcc2->state_info.seq = seq++;
 	  }
      }
 }
@@ -1621,7 +1628,8 @@ _e_gadcon_cb_moveresize(void *data, Evas *evas, Evas_Object *obj, void *event_in
    gc = data;
    
    evas_object_geometry_get(gc->o_container, &x, &y, &w, &h);
-   if (gc->drop_handler) e_drop_handler_geometry_set(gc->drop_handler, x, y, w, h);
+   if (gc->drop_handler) 
+     e_drop_handler_geometry_set(gc->drop_handler, x, y, w, h);
 }
 
 static void
@@ -2273,9 +2281,9 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
 	e_menu_post_deactivate_callback_set(mn, _e_gadcon_client_cb_menu_post,
 					    gcc);
 	gcc->menu = mn;
-	
+
 	e_gadcon_client_util_menu_items_append(gcc, mn, 0);
-	
+
 	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
 	e_menu_activate_mouse(mn,
 			      e_util_zone_current_get(e_manager_current_get()),
