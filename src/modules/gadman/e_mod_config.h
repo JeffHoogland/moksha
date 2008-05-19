@@ -5,5 +5,5 @@
 
 EAPI E_Config_Dialog *e_int_config_gadman_module(E_Container *con, const char *params __UNUSED__);
 
-# endif
+#endif
 #endif
