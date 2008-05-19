@@ -583,7 +583,7 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
 
    /* Move / resize*/
    mi = e_menu_item_new(menu);
-   e_menu_item_label_set(mi, _("Move/resize this gadget"));
+   e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
    e_menu_item_icon_edje_set(mi, Man->icon_name, "move_icon");
    e_menu_item_callback_set(mi, on_menu_edit, gcc);
 
