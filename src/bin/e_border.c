@@ -4714,6 +4714,8 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 #endif
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
+   if (ev->mode == ECORE_X_EVENT_MODE_GRAB)
+     evas_event_feed_mouse_cancel(bd->bg_evas, ev->time, NULL);
    evas_event_feed_mouse_out(bd->bg_evas, ev->time, NULL);
    return 1;
 }

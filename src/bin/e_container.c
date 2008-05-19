@@ -1063,6 +1063,8 @@ _e_container_cb_mouse_out(void *data, int type, void *event)
    if (con)
      {
 	_e_container_modifiers_update(con->bg_evas, ev->modifiers);
+	if (ev->mode == ECORE_X_EVENT_MODE_GRAB)
+	  evas_event_feed_mouse_cancel(con->bg_evas, ev->time, NULL);
         evas_event_feed_mouse_out(con->bg_evas, ev->time, NULL);
      }
    return 1;

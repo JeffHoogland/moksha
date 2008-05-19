@@ -41,6 +41,7 @@ e_util_container_fake_mouse_up_later(E_Container *con, int button)
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
 
+   printf("FIXME: NO MORE CONTAINER FAKE UP! MUST REMOVE CODE\n");
    e_util_evas_fake_mouse_up_later(con->bg_evas, button);
 }
 
@@ -60,6 +61,8 @@ e_util_evas_fake_mouse_up_later(Evas *e, int button)
 {
    E_Util_Fake_Mouse_Up_Info *info;
 
+   printf("FIXME: NO MORE FAKE UP! MUST REMOVE CODE\n");
+   return;
    info = calloc(1, sizeof(E_Util_Fake_Mouse_Up_Info));
    if (info)
      {
