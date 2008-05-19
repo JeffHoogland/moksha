@@ -133,6 +133,17 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
         else if (px < zx)
           px = zx;
 	break;
+      case E_GADCON_ORIENT_FLOAT:
+	px = (gx + (gw / 2)) - (pop->w / 2);
+	if (gy >= zh / 2)
+	  py = gy - pop->h;
+	else
+	  py = gy + gh;
+	if (px + pop->w >= zw)
+	  px = zw - pop->w;
+        else if (px < zx)
+          px = zx;
+	break;
       default:
 	e_popup_move_resize(pop->win, 50, 50, pop->w, pop->h);
 	return;

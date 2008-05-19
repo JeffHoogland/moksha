@@ -96,6 +96,10 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, geom.pos, INT);
    E_CONFIG_VAL(D, T, geom.size, INT);
    E_CONFIG_VAL(D, T, geom.res, INT);
+   E_CONFIG_VAL(D, T, geom.pos_x, DOUBLE);
+   E_CONFIG_VAL(D, T, geom.pos_y, DOUBLE);
+   E_CONFIG_VAL(D, T, geom.size_w, DOUBLE);
+   E_CONFIG_VAL(D, T, geom.size_h, DOUBLE);
    E_CONFIG_VAL(D, T, state_info.seq, INT);
    E_CONFIG_VAL(D, T, state_info.flags, INT);
    E_CONFIG_VAL(D, T, style, STR);
@@ -188,6 +192,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, name, STR);
    E_CONFIG_VAL(D, T, enabled, UCHAR);
    E_CONFIG_VAL(D, T, delayed, UCHAR);
+   E_CONFIG_VAL(D, T, priority, INT);
 
    _e_config_font_default_edd = E_CONFIG_DD_NEW("E_Font_Default", 
 						E_Font_Default);
@@ -761,62 +766,64 @@ e_config_init(void)
      {
 	E_Config_Module *em;
 
-#define CFG_MODULE(_name, _enabled, _delayed) \
+#define CFG_MODULE(_name, _enabled, _delayed, _priority) \
    em = E_NEW(E_Config_Module, 1); \
    em->name = evas_stringshare_add(_name); \
    em->enabled = _enabled; \
    em->delayed = _delayed; \
+   em->priority = _priority; \
    e_config->modules = evas_list_append(e_config->modules, em)
 
-	CFG_MODULE("start", 1, 0);
-	CFG_MODULE("ibar", 1, 0);
-	CFG_MODULE("ibox", 1, 0);
-	CFG_MODULE("dropshadow", 1, 0);
-	CFG_MODULE("clock", 1, 0);
-	CFG_MODULE("battery", 1, 0);
-	CFG_MODULE("cpufreq", 1, 0);
-	CFG_MODULE("temperature", 1, 0);
-	CFG_MODULE("pager", 1, 0);
-	CFG_MODULE("exebuf", 1, 1);
-	CFG_MODULE("winlist", 1, 1);
-	CFG_MODULE("conf", 1, 1);
-	CFG_MODULE("conf_applications", 1, 1);
-	CFG_MODULE("conf_borders", 1, 1);
-	CFG_MODULE("conf_clientlist", 1, 1);
-	CFG_MODULE("conf_colors", 1, 1);
-	CFG_MODULE("conf_desk", 1, 1);
-	CFG_MODULE("conf_desklock", 1, 1);
-	CFG_MODULE("conf_desks", 1, 1);
-	CFG_MODULE("conf_dialogs", 1, 1);
-	CFG_MODULE("conf_display", 1, 1);
-	CFG_MODULE("conf_dpms", 1, 1);
-	CFG_MODULE("conf_exebuf", 1, 1);
-	CFG_MODULE("conf_fonts", 1, 1);
-	CFG_MODULE("conf_icon_theme", 1, 1);
-	CFG_MODULE("conf_imc", 1, 1);
-	CFG_MODULE("conf_intl", 1, 1);
-	CFG_MODULE("conf_keybindings", 1, 1);
-	CFG_MODULE("conf_menus", 1, 1);
-	CFG_MODULE("conf_mime", 1, 1);
-	CFG_MODULE("conf_mouse", 1, 1);
-	CFG_MODULE("conf_mousebindings", 1, 1);
-	CFG_MODULE("conf_mouse_cursor", 1, 1);
-	CFG_MODULE("conf_paths", 1, 1);
-	CFG_MODULE("conf_performance", 1, 1);
-	CFG_MODULE("conf_profiles", 1, 1);
-	CFG_MODULE("conf_screensaver", 1, 1);
-	CFG_MODULE("conf_shelves", 1, 1);
-	CFG_MODULE("conf_startup", 1, 1);
-	CFG_MODULE("conf_theme", 1, 1);
-	CFG_MODULE("conf_transitions", 1, 1);
-	CFG_MODULE("conf_wallpaper", 1, 1);
-	CFG_MODULE("conf_window_display", 1, 1);
-	CFG_MODULE("conf_window_focus", 1, 1);
-	CFG_MODULE("conf_window_manipulation", 1, 1);
-	CFG_MODULE("conf_winlist", 1, 1);
-	CFG_MODULE("conf_engine", 1, 1);
-	CFG_MODULE("fileman", 1, 1);
-	CFG_MODULE("conf_interaction", 1, 1);
+	CFG_MODULE("start", 1, 0, 0);
+	CFG_MODULE("ibar", 1, 0, 0);
+	CFG_MODULE("ibox", 1, 0, 0);
+	CFG_MODULE("dropshadow", 1, 0, 0);
+	CFG_MODULE("clock", 1, 0, 0);
+	CFG_MODULE("battery", 1, 0, 0);
+	CFG_MODULE("cpufreq", 1, 0, 0);
+	CFG_MODULE("temperature", 1, 0, 0);
+	CFG_MODULE("gadman", 1, 0, -100);
+	CFG_MODULE("pager", 1, 0, 0);
+	CFG_MODULE("exebuf", 1, 1, 0);
+	CFG_MODULE("winlist", 1, 1, 0);
+	CFG_MODULE("conf", 1, 1, 0);
+	CFG_MODULE("conf_applications", 1, 1, 0);
+	CFG_MODULE("conf_borders", 1, 1, 0);
+	CFG_MODULE("conf_clientlist", 1, 1, 0);
+	CFG_MODULE("conf_colors", 1, 1, 0);
+	CFG_MODULE("conf_desk", 1, 1, 0);
+	CFG_MODULE("conf_desklock", 1, 1, 0);
+	CFG_MODULE("conf_desks", 1, 1, 0);
+	CFG_MODULE("conf_dialogs", 1, 1, 0);
+	CFG_MODULE("conf_display", 1, 1, 0);
+	CFG_MODULE("conf_dpms", 1, 1, 0);
+	CFG_MODULE("conf_exebuf", 1, 1, 0);
+	CFG_MODULE("conf_fonts", 1, 1, 0);
+	CFG_MODULE("conf_icon_theme", 1, 1, 0);
+	CFG_MODULE("conf_imc", 1, 1, 0);
+	CFG_MODULE("conf_intl", 1, 1, 0);
+	CFG_MODULE("conf_keybindings", 1, 1, 0);
+	CFG_MODULE("conf_menus", 1, 1, 0);
+	CFG_MODULE("conf_mime", 1, 1, 0);
+	CFG_MODULE("conf_mouse", 1, 1, 0);
+	CFG_MODULE("conf_mousebindings", 1, 1, 0);
+	CFG_MODULE("conf_mouse_cursor", 1, 1, 0);
+	CFG_MODULE("conf_paths", 1, 1, 0);
+	CFG_MODULE("conf_performance", 1, 1, 0);
+	CFG_MODULE("conf_profiles", 1, 1, 0);
+	CFG_MODULE("conf_screensaver", 1, 1, 0);
+	CFG_MODULE("conf_shelves", 1, 1, 0);
+	CFG_MODULE("conf_startup", 1, 1, 0);
+	CFG_MODULE("conf_theme", 1, 1, 0);
+	CFG_MODULE("conf_transitions", 1, 1, 0);
+	CFG_MODULE("conf_wallpaper", 1, 1, 0);
+	CFG_MODULE("conf_window_display", 1, 1, 0);
+	CFG_MODULE("conf_window_focus", 1, 1, 0);
+	CFG_MODULE("conf_window_manipulation", 1, 1, 0);
+	CFG_MODULE("conf_winlist", 1, 1, 0);
+	CFG_MODULE("conf_engine", 1, 1, 0);
+	CFG_MODULE("fileman", 1, 1, 0);
+	CFG_MODULE("conf_interaction", 1, 1, 0);
      }
 #if 0
      {

@@ -654,7 +654,7 @@ e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h)
 
 EAPI void
 e_gadcon_util_menu_attach_func_set(E_Gadcon *gc, 
-				   void (*func) (void *data, E_Menu *menu),
+				   void (*func) (void *data, E_Gadcon_Client *gcc, E_Menu *menu),
 				   void *data)
 {
    E_OBJECT_CHECK(gc);
@@ -1187,7 +1187,7 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
    gcc->menu = menu;
    */
 
-   if (!gcc->gadcon->toolbar) 
+   if (gcc->gadcon->shelf) 
      {
 	mn = e_menu_new();
 	mi = e_menu_item_new(mn);
@@ -1214,42 +1214,44 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
 	e_menu_item_submenu_set(mi, mn);
 	e_object_del(E_OBJECT(mn));
      }
-   mi = e_menu_item_new(menu);
-   e_menu_item_label_set(mi, _("Automatically scroll contents"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/autoscroll");
-   e_menu_item_check_set(mi, 1);
-   if (gcc->autoscroll) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_autoscroll, gcc);
-
-   mi = e_menu_item_new(menu);
-   e_menu_item_label_set(mi, _("Able to be resized"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/resizable");
-   e_menu_item_check_set(mi, 1);
-   if (gcc->resizable) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_resizable, gcc);
-
-   mi = e_menu_item_new(menu);
-   e_menu_item_separator_set(mi, 1);
-   
-   if (!gcc->o_control) 
+   if (gcc->gadcon->shelf || gcc->gadcon->toolbar)
      {
 	mi = e_menu_item_new(menu);
-	e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
-	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
+	e_menu_item_label_set(mi, _("Automatically scroll contents"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/autoscroll");
+	e_menu_item_check_set(mi, 1);
+	if (gcc->autoscroll) e_menu_item_toggle_set(mi, 1);
+	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_autoscroll, gcc);
+
+	mi = e_menu_item_new(menu);
+	e_menu_item_label_set(mi, _("Able to be resized"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/resizable");
+	e_menu_item_check_set(mi, 1);
+	if (gcc->resizable) e_menu_item_toggle_set(mi, 1);
+	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_resizable, gcc);
+
+	mi = e_menu_item_new(menu);
+	e_menu_item_separator_set(mi, 1);
+   
+	if (!gcc->o_control) 
+	  {
+		mi = e_menu_item_new(menu);
+		e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
+		e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
+		e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
+	  }
+
+	mi = e_menu_item_new(menu);
+	e_menu_item_label_set(mi, _("Remove this gadget"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/remove");
+	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_remove, gcc);
      }
-
-   mi = e_menu_item_new(menu);
-   e_menu_item_label_set(mi, _("Remove this gadget"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/remove");
-   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_remove, gcc);
-
    if (gcc->gadcon->menu_attach.func)
      {
 	mi = e_menu_item_new(menu);
 	e_menu_item_separator_set(mi, 1);
 	
-	gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, menu);
+	gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, menu);
      }
 }
     
@@ -1454,6 +1456,10 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
    gcc->cf->geom.pos = gcc->config.pos;
    gcc->cf->geom.size = gcc->config.size;
    gcc->cf->geom.res = gcc->config.res;
+   gcc->cf->geom.pos_x = gcc->config.pos_x;
+   gcc->cf->geom.pos_y = gcc->config.pos_y;
+   gcc->cf->geom.size_w = gcc->config.size_w;
+   gcc->cf->geom.size_h = gcc->config.size_h;
    gcc->cf->state_info.seq = gcc->state_info.seq;
    gcc->cf->state_info.flags = gcc->state_info.flags;
    gcc->cf->autoscroll = gcc->autoscroll;
@@ -1652,7 +1658,7 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *e
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_separator_set(mi, 1);
 
-	     gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, mn);
+	     gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, mn);
 	  }
 	
 	if (gcc->gadcon->toolbar)

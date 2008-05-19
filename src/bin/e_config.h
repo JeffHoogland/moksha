@@ -293,6 +293,7 @@ struct _E_Config_Module
    const char    *name;
    unsigned char  enabled;
    unsigned char  delayed;
+   int            priority;
 };
 
 struct _E_Config_Theme
@@ -373,7 +374,8 @@ struct _E_Config_Gadcon_Client
    const char    *name;
    const char    *id;
    struct {
-      int pos, size, res;
+      int pos, size, res;                   //gadcon
+      double pos_x, pos_y, size_w, size_h;  //gadman
    } geom;
    struct {
       int seq, flags;

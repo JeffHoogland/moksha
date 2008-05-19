@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Gadgets
+Icon=e-module-gadman
+X-Enlightenment-ModuleType=appearance
+Comment=<hilight>Gadget Manager</hilight><br><br>Module to manage gadgets on the desktop.

@@ -16,6 +16,7 @@ static void _e_module_dialog_disable_show(const char *title, const char *body, E
 static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
 static void _e_module_event_update_free(void *data, void *event);
 static int _e_module_cb_idler(void *data);
+static int _e_module_sort_priority(void *d1, void *d2);
 
 /* local subsystem globals */
 static Evas_List *_e_modules = NULL;
@@ -43,7 +44,8 @@ e_module_shutdown(void)
     */
    VALGRIND_DO_LEAK_CHECK
 #endif
-     
+
+   _e_modules = evas_list_reverse(_e_modules);
    for (l = _e_modules; l; l = l->next)
      {
 	E_Module *m;
@@ -70,7 +72,9 @@ EAPI void
 e_module_all_load(void)
 {
    Evas_List *l;
-   
+   e_config->modules = evas_list_sort(e_config->modules,
+                                      evas_list_count(e_config->modules),
+                                      _e_module_sort_priority);
    for (l = e_config->modules; l; l = l->next)
      {
 	E_Config_Module *em;
@@ -445,6 +449,31 @@ e_module_delayed_set(E_Module *m, int delayed)
      }
 }
 
+EAPI void
+e_module_priority_set(E_Module *m, int priority)
+{
+   /* Set the loading order for a module.
+      More priority means load earlier */
+   Evas_List *l;
+   
+   for (l = e_config->modules; l; l = l->next)
+     {
+	E_Config_Module *em;
+	
+	em = l->data;
+	if (!em) continue;
+	if (!e_util_strcmp(m->name, em->name))
+	  {
+	     if (em->priority != priority)
+	       {
+		  em->priority = priority;
+		  e_config_save_queue();
+	       }
+	     break;
+	  }
+     }
+}
+
 /* local subsystem functions */
 
 static void
@@ -541,4 +570,14 @@ _e_module_cb_idler(void *data)
    if (_e_modules_delayed) return 1;
    _e_module_idler = NULL;
    return 0;
+}
+
+static int
+_e_module_sort_priority(void *d1, void *d2)
+{
+   E_Config_Module *m1, *m2;
+
+   m1 = d1;
+   m2 = d2;
+   return (m2->priority - m1->priority);
 }

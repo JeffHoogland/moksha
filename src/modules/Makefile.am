@@ -50,6 +50,7 @@ conf_exebuf \
 conf_paths \
 conf_mime \
 conf_interaction \
+gadman \
 conf_window_remembers
 
 if HAVE_TEMPERATURE
