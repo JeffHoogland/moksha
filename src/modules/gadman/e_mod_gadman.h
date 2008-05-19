@@ -20,7 +20,7 @@ struct _Manager
    Evas_Object *mover;
    Evas_Object *mover_top;
    Evas_Object *full_bg;
-   char        *icon_name;
+   const char        *icon_name;
    
    int             visible;
    int             use_composite;

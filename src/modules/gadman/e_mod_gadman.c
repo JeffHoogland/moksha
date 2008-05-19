@@ -1,5 +1,5 @@
 #include <e.h>
-#include <X11/extensions/shape.h>
+//#include <X11/extensions/shape.h>
 #include "config.h"
 #include "e_mod_main.h"
 #include "e_mod_gadman.h"
@@ -639,7 +639,7 @@ _get_bind_text(const char* action)
              strcat(b, l);
              free(l);
           }
-        return &b;
+        return strdup(b);
      }
    return "(You must define a binding)";
 }

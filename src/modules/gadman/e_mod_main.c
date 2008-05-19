@@ -41,8 +41,9 @@ e_modapi_init(E_Module *m)
    /* Menu augmentation */
    Man->icon_name = evas_stringshare_add(buf);
    Man->maug = NULL;
-   Man->maug = e_int_menus_menu_augmentation_add("config/1", _gadman_maug_add,
-                                                 Man->icon_name, NULL, NULL);
+   Man->maug = 
+     e_int_menus_menu_augmentation_add("config/1", _gadman_maug_add,
+                                       (void *)Man->icon_name, NULL, NULL);
    /* Create toggle action */
    Man->action = e_action_add("gadman_toggle");
    if (Man->action)
