@@ -62,7 +62,10 @@ _cb_sort(void *data1, void *data2)
    else if (rem2->role)
      d2 = rem2->role;
 
-   return strcmp(d1, d2);
+   if (!strcmp(d1, d2)) 
+     return -1;
+   else
+     return strcmp(d1, d2);
 }
 
 static void *
@@ -135,6 +138,7 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
    Evas_List *l = NULL;
+   Evas_List *ll = NULL;
    int w = 0;
 
    evas = evas_object_evas_get(cfdata->list);
@@ -143,9 +147,11 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(cfdata->list);
    e_widget_ilist_clear(cfdata->list);
 
-   l = e_config->remembers;
-   for (l = evas_list_sort(l, -1, _cb_sort); l; l = l->next) 
-   //for (l = e_config->remembers; l; l = l->next) 
+   ll = e_config->remembers;
+   ll = evas_list_sort(ll, -1, _cb_sort);
+
+   e_widget_ilist_header_append(cfdata->list, NULL, _("Applications"));
+   for (l = ll; l; l = l->next) 
      {
         E_Remember *rem = NULL;
 
@@ -153,15 +159,45 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
 
         /* Filter out E's own remember */
         if ((rem->name) && (!strcmp(rem->name, "E"))) continue;
+        /* Filter out the module config remembers */
+        if ((rem->class) && (rem->class[0] == '_')) continue;
 
-        if (rem->name) 
+        if (rem->name)
           e_widget_ilist_append(cfdata->list, NULL, rem->name, NULL, rem, NULL);
-        else if (rem->class) 
+        else if (rem->class)
           e_widget_ilist_append(cfdata->list, NULL, rem->class, NULL, rem, NULL);
-        else if (rem->title) 
+        else if (rem->title)
           e_widget_ilist_append(cfdata->list, NULL, rem->title, NULL, rem, NULL);
-        else if (rem->role) 
-          e_widget_ilist_append(cfdata->list, NULL, rem->role, NULL, rem, NULL);             
+        else if (rem->role)
+          e_widget_ilist_append(cfdata->list, NULL, rem->role, NULL, rem, NULL);
+     }
+
+   e_widget_ilist_header_append(cfdata->list, NULL, _("Enlightenment"));
+   for (l = ll; l; l = l->next)
+     {
+        E_Remember *rem = NULL;
+
+        if (!(rem = l->data)) continue;
+
+        /* Garuntee we add only E's internal remembers */
+        if ((rem->name) && (strcmp(rem->name, "E"))) continue;
+
+        e_widget_ilist_append(cfdata->list, NULL, rem->class, NULL, rem, NULL);
+     }
+
+   e_widget_ilist_header_append(cfdata->list, NULL, _("Modules"));
+   for (l = ll; l; l = l->next) 
+     {
+        E_Remember *rem = NULL;
+
+        if (!(rem = l->data)) continue;
+
+        /* Filter out E's own remember */
+        if ((rem->name) && (!strcmp(rem->name, "E"))) continue;
+        /* Filter out everything except the module config remembers */
+        if ((rem->name) && (rem->class[0] != '_')) continue;
+
+        e_widget_ilist_append(cfdata->list, NULL, rem->name, NULL, rem, NULL);
      }
 
    e_widget_ilist_go(cfdata->list);
@@ -219,10 +255,8 @@ static void
 _cb_list_change(void *data, Evas_Object *obj) 
 {
    E_Config_Dialog_Data *cfdata;
-   E_Ilist_Item *item = NULL;
    E_Remember *rem = NULL;
    int n = 0;
-   char *s;
 
    if (!(cfdata = data)) return;
 
