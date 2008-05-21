@@ -63,7 +63,6 @@ e_int_border_menu_create(E_Border *bd)
    bd->border_menu = m;
    e_menu_post_deactivate_callback_set(m, _e_border_cb_border_menu_end, NULL);
 
-#if 1
    if (!bd->internal)
      {
 	if (bd->desktop)
@@ -81,17 +80,16 @@ e_int_border_menu_create(E_Border *bd)
 				   "e/widgets/border/default/application_add"),
 				   "e/widgets/border/default/application_add");
 	  }
-	else if (bd->client.icccm.class) /* icons with no class useless to borders */
+	else if (bd->client.icccm.class) 
 	  {
+             /* icons with no class useless to borders */
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Create Icon"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd);
 	  }
-
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
      }
-#endif
 
    if (!bd->sticky)
      {
@@ -215,13 +213,14 @@ e_int_border_menu_create(E_Border *bd)
 							"e/widgets/border/default/close");
      }
 }
-	
+
 EAPI void
 e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp)
 {
    e_int_border_menu_create(bd);
    if (key)
-     e_menu_activate_key(bd->border_menu, bd->zone, x, y, 1, 1, E_MENU_POP_DIRECTION_DOWN);
+     e_menu_activate_key(bd->border_menu, bd->zone, x, y, 1, 1, 
+                         E_MENU_POP_DIRECTION_DOWN);
    else
      e_menu_activate_mouse(bd->border_menu, bd->zone, x, y, 1, 1,
 			   E_MENU_POP_DIRECTION_DOWN, timestamp);
@@ -296,8 +295,7 @@ _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   if (!bd->lock_close)
-     e_border_act_close_begin(bd);
+   if (!bd->lock_close) e_border_act_close_begin(bd);
 }
 
 static void
@@ -336,8 +334,7 @@ _e_border_menu_cb_maximize_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
    Evas *evas;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
@@ -387,7 +384,6 @@ _e_border_menu_cb_maximize_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 						   "e/widgets/border/default/maximize"),
 			     "e/widgets/border/default/maximize");
 }
-
 
 static void
 _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi)
@@ -471,8 +467,7 @@ _e_border_menu_cb_application_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
    Evas *evas;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
@@ -493,7 +488,8 @@ _e_border_menu_cb_application_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 
    submi = e_menu_item_new(subm);
    e_menu_item_label_set(submi, _("To Launcher"));
-   e_menu_item_submenu_pre_callback_set(submi, _e_border_menu_cb_ibar_add_pre, bd);
+   e_menu_item_submenu_pre_callback_set(submi, 
+                                        _e_border_menu_cb_ibar_add_pre, bd);
    e_util_menu_item_edje_icon_set(submi, "enlightenment/ibar_applications");
 }
 
@@ -505,8 +501,7 @@ _e_border_menu_cb_more_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
    Evas *evas;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
@@ -648,8 +643,7 @@ _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
    int toggle;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    if (!bd->lock_user_fullscreen)
      {
@@ -666,8 +660,7 @@ _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    if (((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus)) &&
        (!bd->client.netwm.state.skip_taskbar))
@@ -683,8 +676,7 @@ _e_border_menu_cb_skip_pager(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus))
      bd->client.netwm.state.skip_pager = e_menu_item_toggle_get(mi);
@@ -699,8 +691,7 @@ _e_border_menu_cb_skip_taskbar(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus))
      bd->client.netwm.state.skip_taskbar = e_menu_item_toggle_get(mi);
@@ -748,8 +739,7 @@ _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi)
 
    desk = data;
    bd = e_object_data_get(E_OBJECT(m));
-   if ((bd) && (desk))
-     e_border_desk_set(bd, desk);
+   if ((bd) && (desk)) e_border_desk_set(bd, desk);
 }
 
 static void
@@ -758,8 +748,7 @@ _e_border_menu_cb_pin(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = e_object_data_get(E_OBJECT(m));
-   if (bd)
-     e_border_pinned_set(bd, 1);
+   if (bd) e_border_pinned_set(bd, 1);
 }
 
 static void
@@ -768,8 +757,7 @@ _e_border_menu_cb_unpin(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = e_object_data_get(E_OBJECT(m));
-   if (bd)
-     e_border_pinned_set(bd, 0);
+   if (bd) e_border_pinned_set(bd, 0);
 }
 
 static void
@@ -780,8 +768,7 @@ _e_border_menu_cb_stacking_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
    Evas *evas;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
@@ -897,8 +884,7 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
    Evas *evas;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
@@ -949,8 +935,7 @@ _e_border_menu_cb_iconpref_e(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    bd->icon_preference = E_ICON_PREF_E_DEFAULT;
    bd->changes.icon = 1;
@@ -962,8 +947,7 @@ _e_border_menu_cb_iconpref_user(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    bd->icon_preference = E_ICON_PREF_USER;
    bd->changes.icon = 1;
@@ -975,8 +959,7 @@ _e_border_menu_cb_iconpref_netwm(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    bd->icon_preference = E_ICON_PREF_NETWM;
    bd->changes.icon = 1;
@@ -986,11 +969,11 @@ _e_border_menu_cb_iconpref_netwm(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Border *bd = data;
+   E_Border *bd;
    E_Menu *subm;
    E_Menu_Item *submi;
 
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
@@ -1040,11 +1023,11 @@ _e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_border_menu_cb_skip_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Border *bd = data;
+   E_Border *bd;
    E_Menu *subm;
    E_Menu_Item *submi;
 
-   if (!bd) return;
+   if (!(bd = data)) return;
 
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
@@ -1088,8 +1071,7 @@ _e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi)
    Efreet_Menu *menu;
    char buf[4096];
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite.menu",
 	    e_user_homedir_get());
    menu = efreet_menu_parse(buf);
@@ -1098,14 +1080,14 @@ _e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi)
    efreet_menu_save(menu, buf);
    efreet_menu_free(menu);
 }
+
 static void
 _e_border_menu_cb_kbdshrtct_add(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    E_Zone *zone;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
    zone = e_util_zone_current_get(e_manager_current_get());
    if(!zone) return;
    e_configure_registry_call("keyboard_and_mouse/key_bindings",
@@ -1121,8 +1103,7 @@ _e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    char buf[4096], *file;
    const char *homedir;
 
-   bd = data;
-   if (!bd) return;
+   if (!(bd = data)) return;
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar", homedir);
    dirs = ecore_file_ls(buf);
@@ -1154,8 +1135,7 @@ _e_border_menu_cb_ibar_add(void *data, E_Menu *m, E_Menu_Item *mi)
    char buf[4096];
 
    bd = e_object_data_get(E_OBJECT(m));
-   if (!bd) return;
-   if (!bd->desktop) return;
+   if ((!bd) || (!bd->desktop)) return;
 
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order",
 	    e_user_homedir_get(), (char *)data);
