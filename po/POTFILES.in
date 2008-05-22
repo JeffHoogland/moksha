@@ -224,6 +224,9 @@ src/modules/exebuf/e_exebuf.c
 src/modules/fileman/e_mod_main.c
 src/modules/fileman/e_mod_config.c
 src/modules/fileman/e_fwin.c
+src/modules/gadman/e_mod_config.c
+src/modules/gadman/e_mod_gadman.c
+src/modules/gadman/e_mod_main.c
 src/modules/winlist/e_mod_main.c
 src/modules/winlist/e_winlist.c
 src/modules/ibar/e_mod_config.c

@@ -1,6 +1,8 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Window Remembers
+Name[it]=Configurazione - Ricordi finestre
 Icon=e-module-conf_window_remembers
 Comment=<hilight>E17 Configuration Applet</hilight><br><br>Delete existing window remembers.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br><br>Rimuove le impostazioni da ricordare esistenti delle finestre.
 X-Enlightenment-ModuleType=config
