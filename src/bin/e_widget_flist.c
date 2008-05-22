@@ -11,7 +11,6 @@ struct _E_Widget_Data
 static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_hook(Evas_Object *obj);
 static void _e_wid_focus_steal(void *data, Evas *evas, Evas_Object *obj, void *event);
-static void _e_wid_cb_scroll_resize(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void _e_wid_cb_selected(void *data, Evas_Object *obj, void *event);
 static void _e_wid_cb_dir_changed(void *data, Evas_Object *obj, void *event);
 static void _e_wid_cb_changed(void *data, Evas_Object *obj, void *event);
@@ -69,9 +68,6 @@ e_widget_flist_add(Evas *evas)
                                   _e_wid_cb_changed, obj);
    evas_object_smart_callback_add(wd->o_fm, "files_deleted", 
                                   _e_wid_cb_file_deleted, obj);
-
-   evas_object_event_callback_add(wd->o_scroll, EVAS_CALLBACK_RESIZE, 
-                                  _e_wid_cb_scroll_resize, wd->o_fm);
 
    e_scrollframe_child_set(wd->o_scroll, o);
    e_scrollframe_extern_pan_set(wd->o_scroll, o, e_fm2_pan_set, 
@@ -205,19 +201,6 @@ static void
 _e_wid_focus_steal(void *data, Evas *evas, Evas_Object *obj, void *event) 
 {
    e_widget_focus_steal(data);
-}
-
-static void 
-_e_wid_cb_scroll_resize(void *data, Evas *evas, Evas_Object *obj, void *event) 
-{
-   int vw, vh, mw, mh, w, h;
-
-   e_scrollframe_child_viewport_size_get(obj, &vw, &vh);
-   evas_object_geometry_get(obj, NULL, NULL, &mw, &h);
-   if (vw >= mw)
-     {
-        if (w != vw) evas_object_resize(data, vw, h);
-     }
 }
 
 static void 
