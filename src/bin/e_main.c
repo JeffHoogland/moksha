@@ -421,9 +421,6 @@ main(int argc, char **argv)
    
    ecore_x_io_error_handler_set(_e_main_cb_x_fatal, NULL);
 
-   TS("configure");
-   e_configure_init();
-   
    TS("x hints");
    /* Init window manager hints */
    e_hints_init();
@@ -475,6 +472,9 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(efreet_util_shutdown);
    TS("efreet done");
+   
+   TS("configure");
+   e_configure_init();
    
    TS("dirs");
    /* setup directories we will be using for configurations storage etc. */
