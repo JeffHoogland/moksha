@@ -75,6 +75,8 @@ _e_configure_efreet_desktop_update(void)
      {
 	char *s;
 	char *cfg_cat_item;
+	char *cfg_cat_name;
+	char *cfg_cat_icon;
 	char *cfg_cat;
 	char *cfg_cat_cfg;
 	char *cfg_icon;
@@ -86,12 +88,24 @@ _e_configure_efreet_desktop_update(void)
 	cfg_icon = NULL;
 	cfg_cat_cfg = NULL;
 	cfg_pri = 1000;
+	cfg_cat_name = NULL;
+	cfg_cat_icon = NULL;
 	label = NULL;
 	if (desktop->x)
 	  {
 	     cfg_cat_cfg = ecore_hash_get(desktop->x, "X-Enlightenment-Config-Category");
 	     s = ecore_hash_get(desktop->x, "X-Enlightenment-Config-Priority");
 	     if (s) cfg_pri = atoi(s);
+	     cfg_cat_name = ecore_hash_get(desktop->x, "X-Enlightenment-Config-Category-Name");
+	     cfg_cat_icon = ecore_hash_get(desktop->x, "X-Enlightenment-Config-Category-Icon");
+	     if (cfg_cat_icon)
+	       {
+		  if (cfg_cat_icon[0] == '/')
+		    cfg_cat_icon = strdup(cfg_cat_icon);
+		  else
+		    cfg_cat_icon = efreet_icon_path_find(e_config->icon_theme,
+							 cfg_cat_icon, "64x64");
+	       }
 	  }
 	if (desktop->icon)
 	  {
@@ -106,12 +120,16 @@ _e_configure_efreet_desktop_update(void)
 	else label = "???";
 	if (!cfg_cat_cfg)
 	  {
+	     char *ic;
+	     
 	     snprintf(buf, sizeof(buf), "system/%s", label);
 	     cfg_cat_cfg = buf;
+	     ic = cfg_cat_icon;
+	     if (!ic) ic = "enlightenment/system";
 	     e_configure_registry_category_add("system",
 					       1000, _("System"),
 					       NULL, 
-					       "enlightenment/system"); // FIXME: another icon?
+					       ic);
 	  }
 	else
 	  {
@@ -119,10 +137,12 @@ _e_configure_efreet_desktop_update(void)
 	     if (!cfg_cat) cfg_cat = strdup(cfg_cat_cfg);
 	     if (cfg_cat)
 	       {
+		  if (!cfg_cat_name)
+		    cfg_cat_name = cfg_cat;
 		  e_configure_registry_category_add(cfg_cat,
-						    1000, cfg_cat,
+						    1000, cfg_cat_name,
 						    NULL, 
-						    NULL); // FIXME: icon?
+						    cfg_cat_icon);
 		  free(cfg_cat);
 		  cfg_cat = NULL;
 	       }
@@ -132,6 +152,7 @@ _e_configure_efreet_desktop_update(void)
 					    NULL, NULL,
 					    desktop);
 	if (cfg_icon) free(cfg_icon);
+	if (cfg_cat_icon) free(cfg_cat_icon);
      }
 }
 
