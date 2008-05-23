@@ -997,7 +997,7 @@ msgstr "%s s'est arrêté de façon inattendue."
 #: src/bin/e_exec.c:430
 #, c-format
 msgid "An exit code of %i was returned from %s."
-msgstr "%s a retourné le code de sortie %i."
+msgstr "%i est le code de sortie de %s."
 
 #: src/bin/e_exec.c:437
 #, c-format
