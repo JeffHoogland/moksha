@@ -57,8 +57,8 @@ e_int_border_menu_create(E_Border *bd)
    if (bd->border_menu) return;
 
    m = e_menu_new();
-   e_menu_category_set(m,"border");
-   e_menu_category_data_set("border",bd);
+   e_menu_category_set(m, "border");
+   e_menu_category_data_set("border", bd);
    e_object_data_set(E_OBJECT(m), bd);
    bd->border_menu = m;
    e_menu_post_deactivate_callback_set(m, _e_border_cb_border_menu_end, NULL);
