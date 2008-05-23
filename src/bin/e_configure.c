@@ -380,6 +380,12 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
 }
 
 
+EAPI void
+e_configure_registry_custom_desktop_exec_callback_set(void (*func) (const void *data, E_Container *con, const char *params, Efreet_Desktop *desktop), const void *data)
+{
+   custom_desktop_exec.func = func;
+   custom_desktop_exec.data = data;
+}
 
 EAPI int
 e_configure_registry_exists(const char *path)
