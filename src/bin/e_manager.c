@@ -17,6 +17,7 @@ static int _e_manager_cb_screensaver_notify(void *data, int ev_type, void *ev);
 static Evas_Bool _e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__,
 						  const char *key __UNUSED__,
 						  void *data, void *fdata __UNUSED__);
+static E_Manager *_e_manager_get_for_root(Ecore_X_Window root);
 #if 0 /* use later - maybe */
 static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev);
@@ -456,6 +457,8 @@ e_manager_current_get(void)
      {
 	man = l->data;
 	ecore_x_pointer_xy_get(man->win, &x, &y);
+	if (x == -1 && y == -1)
+	  continue;
 	if (E_INSIDE(x, y, man->x, man->y, man->w, man->h))
 	  return man;
      }
@@ -584,7 +587,9 @@ _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
    
    man = data;
    e = ev;
+
    if (e->event_win != man->root) return 1;
+   if (e->root_win != man->root) man = _e_manager_get_for_root(e->root_win);
    if (e_bindings_key_down_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
      return 0;
    return 1;
@@ -593,11 +598,6 @@ _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
 static int
 _e_manager_cb_key_up(void *data, int ev_type __UNUSED__, void *ev)
 {
-   E_Manager *man;
-   Ecore_X_Event_Key_Up *e;
-   
-   man = data;
-   e = ev;
    return 1;
 }
 
@@ -782,6 +782,24 @@ _e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__, const char *k
    free(data);
    return 1;
 }
+
+static E_Manager *
+_e_manager_get_for_root(Ecore_X_Window root)
+{
+   Evas_List *l;
+   E_Manager *man;
+   int x, y;
+   
+   if (!managers) return NULL;
+   for (l = managers; l; l = l->next)
+     {
+	man = l->data;
+	if (man->root == root)
+	  return man;
+     }
+   return managers->data;
+}
+
 
 #if 0 /* use later - maybe */
 static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev){return 1;}

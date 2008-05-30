@@ -2526,7 +2526,7 @@ _pager_popup_cb_mouse_down(void *data, int type, void *event)
    Pager_Popup *pp = act_popup;
 
    ev = event;
-   if (ev->win != input_window) return 1;
+   if (ev->event_win != input_window) return 1;
 
    evas_event_feed_mouse_down(pp->popup->evas, ev->button,
 			      0, ev->time, NULL);
@@ -2540,7 +2540,7 @@ _pager_popup_cb_mouse_up(void *data, int type, void *event)
    Pager_Popup *pp = act_popup;
 
    ev = event;
-   if (ev->win != input_window) return 1;
+   if (ev->event_win != input_window) return 1;
 
    evas_event_feed_mouse_up(pp->popup->evas, ev->button,
 			    0, ev->time, NULL);
@@ -2554,7 +2554,7 @@ _pager_popup_cb_mouse_move(void *data, int type, void *event)
    Pager_Popup *pp = act_popup;
 
    ev = event;
-   if (ev->win != input_window) return 1;
+   if (ev->event_win != input_window) return 1;
 
    evas_event_feed_mouse_move(pp->popup->evas,
 			      ev->x - pp->popup->x + pp->pager->zone->x,
@@ -2588,7 +2588,7 @@ _pager_popup_cb_key_down(void *data, int type, void *event)
    Ecore_X_Event_Key_Down *ev;
 
    ev = event;
-   if (ev->win != input_window) return 1;
+   if (ev->event_win != input_window) return 1;
    if      (!strcmp(ev->keysymbol, "Up"))
      _pager_popup_desk_switch(0, -1);
    else if (!strcmp(ev->keysymbol, "Down"))
