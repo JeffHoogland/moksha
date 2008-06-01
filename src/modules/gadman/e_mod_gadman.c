@@ -352,7 +352,8 @@ _gadman_gadcon_new(const char* name, int ontop)
         else
           ecore_evas_shaped_set(Man->top_ee, 1);
 
-        ecore_evas_avoid_damage_set(Man->top_ee, 1); //??
+// this isn't needed - we don't want to keep a pixmap of the whole canvas around!
+//        ecore_evas_avoid_damage_set(Man->top_ee, 1); //??
         e_canvas_add(Man->top_ee); //??
 
         e_container_window_raise(Man->container, Man->top_win, 250);
