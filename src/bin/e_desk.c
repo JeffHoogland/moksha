@@ -10,6 +10,7 @@
 
 static void _e_desk_free(E_Desk *desk);
 static void _e_border_event_desk_show_free(void *data, void *ev);
+static void _e_border_event_desk_before_show_free(void *data, void *ev);
 static void _e_border_event_desk_deskshow_free(void *data, void *ev);
 static void _e_border_event_desk_name_change_free(void *data, void *ev);
 
@@ -21,6 +22,7 @@ static void _e_desk_hide_end(E_Desk *desk);
 static int _e_desk_hide_animator(void *data);
 
 EAPI int E_EVENT_DESK_SHOW = 0;
+EAPI int E_EVENT_DESK_BEFORE_SHOW = 0;
 EAPI int E_EVENT_DESK_DESKSHOW = 0;
 EAPI int E_EVENT_DESK_NAME_CHANGE = 0;
 
@@ -28,6 +30,7 @@ EAPI int
 e_desk_init(void)
 {
    E_EVENT_DESK_SHOW = ecore_event_type_new();
+   E_EVENT_DESK_BEFORE_SHOW = ecore_event_type_new();
    E_EVENT_DESK_DESKSHOW = ecore_event_type_new();
    E_EVENT_DESK_NAME_CHANGE = ecore_event_type_new();
    return 1;
@@ -200,6 +203,7 @@ e_desk_show(E_Desk *desk)
    E_Border_List     *bl;
    E_Border          *bd;
    E_Event_Desk_Show *ev;
+   E_Event_Desk_Before_Show *eev;
    Evas_List *l;
    int                was_zone = 0;
    int                x, y, dx = 0, dy = 0;
@@ -207,6 +211,11 @@ e_desk_show(E_Desk *desk)
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (desk->visible) return;
+
+   eev = E_NEW(E_Event_Desk_Before_Show, 1);
+   eev->desk = e_desk_current_get(desk->zone);
+   e_object_ref(E_OBJECT(eev->desk));
+   ecore_event_add(E_EVENT_DESK_BEFORE_SHOW, eev, _e_border_event_desk_before_show_free, NULL);
 
    ecore_x_window_shadow_tree_flush();
    for (x = 0; x < desk->zone->desk_x_count; x++)
@@ -507,6 +516,17 @@ _e_border_event_desk_show_free(void *data, void *event)
    e_object_unref(E_OBJECT(ev->desk));
    free(ev);
 }
+
+static void
+_e_border_event_desk_before_show_free(void *data, void *event)
+{
+   E_Event_Desk_Before_Show *ev;
+
+   ev = event;
+   e_object_unref(E_OBJECT(ev->desk));
+   free(ev);
+}
+
 
 static void
 _e_border_event_desk_deskshow_free(void *data, void *event)
