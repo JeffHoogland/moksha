@@ -313,9 +313,9 @@ _e_desktop_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->desktop) efreet_desktop_free(cfdata->desktop);
    if (cfdata->editor->tmp_image_path) 
      {
-	if (!cfdata->desktop || !cfdata->editor->saved || 
-	    !cfdata->desktop->icon ||
-	    strcmp(cfdata->editor->tmp_image_path, cfdata->desktop->icon))
+	if ((!cfdata->desktop) || (!cfdata->editor->saved) || 
+	    (!cfdata->desktop->icon) ||
+	    (strcmp(cfdata->editor->tmp_image_path, cfdata->desktop->icon)))
 	  {
 	     ecore_file_unlink(cfdata->editor->tmp_image_path);
 	  }
@@ -330,6 +330,9 @@ _e_desktop_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    IFFREE(cfdata->categories);
    IFFREE(cfdata->icon);
    IFFREE(cfdata->mimes);
+
+   if (cfdata->editor->icon_fsel_dia) 
+     e_object_del(E_OBJECT(cfdata->editor->icon_fsel_dia));
 
    e_object_del(E_OBJECT(cfdata->editor));
    free(cfdata);
