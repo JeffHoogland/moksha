@@ -40,7 +40,7 @@ e_msgbus_init(void)
 	printf("WARNING: Cannot get DBUS_BUS_SESSION\n");
 	return 0;
      }
-   e_dbus_request_name(_e_msgbus_data->conn, "org.enlighenment.wm.service", 0, _e_msgbus_request_name_cb, NULL);
+   e_dbus_request_name(_e_msgbus_data->conn, "org.enlightenment.wm.service", 0, _e_msgbus_request_name_cb, NULL);
    _e_msgbus_data->obj = e_dbus_object_add(_e_msgbus_data->conn, "/org/enlightenment/wm/RemoteObject", NULL);
 
    iface = e_dbus_interface_new("org.enlightenment.wm.Core");

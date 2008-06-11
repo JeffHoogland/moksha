@@ -327,6 +327,7 @@ _cb_del(void *data, void *data2)
              if (strcmp(name, cgc->name)) continue;
              e_gadcon_client_config_del(cfdata->gc->cf, cgc);
              update = 1;
+	     break;
           }
      }
    if (update) 
