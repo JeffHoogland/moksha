@@ -164,6 +164,8 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop)
      edje_object_signal_emit(gcc->o_frame, "e,state,visibility,inset", "e");
    else
      edje_object_signal_emit(gcc->o_frame, "e,state,visibility,plain", "e");
+   
+   gcc->o_box = gcc->o_frame;
 
    /* swallow the client inside the frame */
    edje_object_part_swallow(gcc->o_frame, "e.swallow.content", gcc->o_base);
@@ -352,10 +354,7 @@ _gadman_gadcon_new(const char* name, int ontop)
         else
           ecore_evas_shaped_set(Man->top_ee, 1);
 
-// this isn't needed - we don't want to keep a pixmap of the whole canvas around!
-//        ecore_evas_avoid_damage_set(Man->top_ee, 1); //??
         e_canvas_add(Man->top_ee); //??
-
         e_container_window_raise(Man->container, Man->top_win, 250);
 
         ecore_evas_move_resize(Man->top_ee, 0, 0, Man->width, Man->height);
@@ -381,6 +380,8 @@ _gadman_gadcon_new(const char* name, int ontop)
      {
         gc->evas = Man->container->bg_evas;
         e_gadcon_ecore_evas_set(gc, Man->container->bg_ecore_evas);
+        e_gadcon_dnd_window_set(gc, Man->container->event_win);
+        e_drop_xdnd_register_set(Man->container->bg_win, 1);
      }
 
    e_gadcon_zone_set(gc, e_zone_current_get(Man->container));
@@ -525,6 +526,7 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
    E_Menu *mn;
    E_Menu_Item *mi;
    char buf[128];
+   char *key;
 
    //printf("Attach menu (gcc: %x id: %s) [%s]\n", gcc, gcc->cf->id, gcc->cf->style);
    if (!gcc) return;
@@ -567,8 +569,10 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
    e_menu_item_callback_set(mi, on_menu_layer_bg, gcc);
 
    mi = e_menu_item_new(mn);
+   key = _get_bind_text("gadman_toggle");
    snprintf(buf, sizeof(buf), "%s %s",
-            _("On top pressing"), _get_bind_text("gadman_toggle"));
+            _("On top pressing"), key);
+   free(key);
    e_menu_item_label_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
