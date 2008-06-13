@@ -1173,7 +1173,10 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
 
 	h = l->data;
 	if (h->active)
-	  active = 1;
+	  {
+	     active = 1;
+	     break;
+	  }
      }
    if (!active)
      {
