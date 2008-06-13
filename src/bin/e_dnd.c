@@ -637,15 +637,19 @@ _e_drag_win_show(E_Drop_Handler *h)
 static void
 _e_drag_win_hide(E_Drop_Handler *h)
 {
+   E_Shelf *shelf;
+
    if (h->obj)
      {
 	switch (h->obj->type)
 	  {
 	   case E_GADCON_TYPE:
-	      e_shelf_toggle(e_gadcon_shelf_get((E_Gadcon *)(h->obj)), 0);
+	      shelf = e_gadcon_shelf_get((E_Gadcon *)(h->obj));
+	      if (shelf) e_shelf_toggle(shelf, 0);
 	      break;
 	   case E_GADCON_CLIENT_TYPE:
-	      e_shelf_toggle(e_gadcon_shelf_get(((E_Gadcon_Client *)(h->obj))->gadcon), 0);
+	      shelf = e_gadcon_shelf_get(((E_Gadcon_Client *)(h->obj))->gadcon);
+	      if (shelf) e_shelf_toggle(shelf, 0);
 	      break;
 	     /* FIXME: add more types as needed */
 	   default:
