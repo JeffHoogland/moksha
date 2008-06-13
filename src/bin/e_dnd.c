@@ -1184,7 +1184,7 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
      }
    else
      {
-	_e_drag_update(_drag_win_root, ev->position.x, ev->position.y);
+	_e_drag_update(ev->win, ev->position.x, ev->position.y);
 	ecore_x_dnd_send_status(1, 0, rect, ECORE_X_DND_ACTION_PRIVATE);
      }
 //   double t2 = ecore_time_get() - t1; ////
