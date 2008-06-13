@@ -1102,7 +1102,7 @@ static int
 _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Leave *ev;
-   E_Event_Dnd_Leave *leave_ev;
+   E_Event_Dnd_Leave leave_ev;
    const char *id;
    Evas_List *l;
 
@@ -1112,10 +1112,8 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
    printf("Xdnd leave\n");
 
-   leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
-   /* FIXME: We don't need x and y in leave */
-   leave_ev->x = 0;
-   leave_ev->y = 0;
+   leave_ev.x = 0;
+   leave_ev.y = 0;
 
    if (_xdnd)
      {
@@ -1131,7 +1129,7 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
 	     if (h->entered)
 	       {
 		  if (h->cb.leave)
-		    h->cb.leave(h->cb.data, h->active_type, leave_ev);
+		    h->cb.leave(h->cb.data, h->active_type, &leave_ev);
 		  h->entered = 0;
 	       }
 	  }
@@ -1140,7 +1138,6 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
 	free(_xdnd);
 	_xdnd = NULL;
      }
-   free(leave_ev);
    return 1;
 }
 
