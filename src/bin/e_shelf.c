@@ -632,8 +632,8 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 	evas_object_layer_set(es->o_event, es->cfg->layer);
 	evas_object_layer_set(es->o_base, es->cfg->layer);
 
-	e_drop_xdnd_register_set(zone->container->event_win, 1);
-	e_gadcon_dnd_window_set(es->gadcon, zone->container->event_win);
+	e_drop_xdnd_register_set(es->zone->container->event_win, 1);
+	e_gadcon_dnd_window_set(es->gadcon, es->zone->container->event_win);
 	_e_shelf_edge_event_register(es, 0);
      }
 }
