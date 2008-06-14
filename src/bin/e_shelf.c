@@ -609,6 +609,7 @@ e_shelf_popup_set(E_Shelf *es, int popup)
      {
 	es->popup = e_popup_new(es->zone, es->x, es->y, es->w, es->h);
 	e_drop_xdnd_register_set(es->popup->evas_win, 1);
+	e_gadcon_dnd_window_set(es->gadcon, es->popup->evas_win);
 	e_popup_layer_set(es->popup, es->cfg->layer);
 
 	es->ee = es->popup->ecore_evas;
@@ -622,6 +623,7 @@ e_shelf_popup_set(E_Shelf *es, int popup)
      }
    else 
      {
+	e_drop_xdnd_register_set(es->popup->evas_win, 0);
 	e_object_del(E_OBJECT(es->popup));
 	es->popup = NULL;
 
@@ -630,6 +632,8 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 	evas_object_layer_set(es->o_event, es->cfg->layer);
 	evas_object_layer_set(es->o_base, es->cfg->layer);
 
+	e_drop_xdnd_register_set(zone->container->event_win, 1);
+	e_gadcon_dnd_window_set(es->gadcon, zone->container->event_win);
 	_e_shelf_edge_event_register(es, 0);
      }
 }
