@@ -606,6 +606,7 @@ _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win)
 	     break;
 	  }
      }
+   printf("0x%x == 0x%x\n", win, hwin);
    if (win == hwin) return 1;
    return 0;
 }
@@ -1184,6 +1185,7 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
      }
    else
      {
+	printf("Position over xdnd: 0x%x, 0x%x\n", ev->win, ev->source);
 	_e_drag_update(ev->win, ev->position.x, ev->position.y);
 	ecore_x_dnd_send_status(1, 0, rect, ECORE_X_DND_ACTION_PRIVATE);
      }
@@ -1268,8 +1270,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	for (i = 0; i < files->num_files; i++)
 	  l = evas_list_append(l, files->files[i]), printf("file: %s\n", files->files[i]);
 	_xdnd->data = l;
-	printf("_drag_win_root = %x\n", _drag_win_root);
-	_e_drag_xdnd_end(_drag_win_root, _xdnd->x, _xdnd->y);
+	_e_drag_xdnd_end(ev->win, _xdnd->x, _xdnd->y);
 	evas_list_free(l);
      }
    else if (!strcmp("text/x-moz-url", _xdnd->type))
@@ -1308,12 +1309,12 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	l = evas_list_append(l, file);
 
 	_xdnd->data = l;
-	_e_drag_xdnd_end(_drag_win_root, _xdnd->x, _xdnd->y);
+	_e_drag_xdnd_end(ev>win, _xdnd->x, _xdnd->y);
 	evas_list_free(l);
      }
    else
      {
-	_e_drag_xdnd_end(_drag_win_root, _xdnd->x, _xdnd->y);
+	_e_drag_xdnd_end(ev->win, _xdnd->x, _xdnd->y);
      }
    /* FIXME: When to execute this? It could be executed in ecore_x after getting
     * the drop property... */
