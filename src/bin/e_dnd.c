@@ -680,12 +680,8 @@ _e_drag_update(Ecore_X_Window root, int x, int y)
 //	win = ecore_x_window_at_xy_with_skip_get(x, y, ignore_win, 2);
      }
    else
-     /* FIXME: this is nasty. every x mouse event we go back to x and do
-      * a whole bunch of round-trips narrowing down the toplevel window
-      * which contains the mouse */
-     win = ecore_x_window_shadow_tree_at_xy_with_skip_get(root, x, y, NULL, 0);
-//     win = ecore_x_window_at_xy_with_skip_get(x, y, NULL, 0);
-   
+     win = root;
+
    if (_drag_current)
      {
 	_e_drag_show(_drag_current);
@@ -890,24 +886,13 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 }
 
 static void
-_e_drag_xdnd_end(Ecore_X_Window root, int x, int y)
+_e_drag_xdnd_end(Ecore_X_Window win, int x, int y)
 {
    Evas_List *l;
    E_Event_Dnd_Drop ev;
    int dx, dy, dw, dh;
-   Ecore_X_Window win, ignore_win[2];
 
    if (!_xdnd) return;
-   if (_drag_current)
-     {
-	ignore_win[0] = _drag_current->evas_win;
-	ignore_win[1] = _drag_win;
-	win = ecore_x_window_shadow_tree_at_xy_with_skip_get(root, x, y, ignore_win, 2);
-//	win = ecore_x_window_at_xy_with_skip_get(x, y, ignore_win, 2);
-     }
-   else
-     win = ecore_x_window_shadow_tree_at_xy_with_skip_get(root, x, y, NULL, 0);
-//     win = ecore_x_window_at_xy_with_skip_get(x, y, NULL, 0);
 
    ev.data = _xdnd->data;
 
