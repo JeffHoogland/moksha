@@ -251,7 +251,7 @@ e_drag_start(E_Drag *drag, int x, int y)
    _drag_win = ecore_x_window_input_new(drag->container->win, 
 					drag->container->x, drag->container->y,
 					drag->container->w, drag->container->h);
-   _drag_win_root= drag->container->manager->root;
+   _drag_win_root = drag->container->manager->root;
    ecore_x_window_show(_drag_win);
    if (!e_grabinput_get(_drag_win, 1, _drag_win))
      {
