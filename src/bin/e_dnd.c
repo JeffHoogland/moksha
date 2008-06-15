@@ -1307,7 +1307,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	l = evas_list_append(l, file);
 
 	_xdnd->data = l;
-	_e_drag_xdnd_end(ev>win, _xdnd->x, _xdnd->y);
+	_e_drag_xdnd_end(ev->win, _xdnd->x, _xdnd->y);
 	evas_list_free(l);
      }
    else
