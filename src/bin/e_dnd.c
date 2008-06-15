@@ -606,7 +606,6 @@ _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win)
 	     break;
 	  }
      }
-   printf("0x%x == 0x%x\n", win, hwin);
    if (win == hwin) return 1;
    return 0;
 }
@@ -1185,7 +1184,6 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
      }
    else
      {
-	printf("Position over xdnd: 0x%x, 0x%x\n", ev->win, ev->source);
 	_e_drag_update(ev->win, ev->position.x, ev->position.y);
 	ecore_x_dnd_send_status(1, 0, rect, ECORE_X_DND_ACTION_PRIVATE);
      }
