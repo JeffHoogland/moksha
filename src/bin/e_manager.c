@@ -598,6 +598,16 @@ _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
 static int
 _e_manager_cb_key_up(void *data, int ev_type __UNUSED__, void *ev)
 {
+   E_Manager *man;
+   Ecore_X_Event_Key_Up *e;
+   
+   man = data;
+   e = ev;
+
+   if (e->event_win != man->root) return 1;
+   if (e->root_win != man->root) man = _e_manager_get_for_root(e->root_win);
+   if (e_bindings_key_up_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
+     return 0;
    return 1;
 }
 
