@@ -798,8 +798,7 @@ _e_manager_get_for_root(Ecore_X_Window root)
 {
    Evas_List *l;
    E_Manager *man;
-   int x, y;
-   
+
    if (!managers) return NULL;
    for (l = managers; l; l = l->next)
      {

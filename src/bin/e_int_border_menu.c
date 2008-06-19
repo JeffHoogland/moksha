@@ -332,7 +332,6 @@ _e_border_menu_cb_maximize_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Menu *subm;
    E_Menu_Item *submi;
    E_Border *bd;
-   Evas *evas;
 
    if (!(bd = data)) return;
 
@@ -465,7 +464,6 @@ _e_border_menu_cb_application_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Menu *subm;
    E_Menu_Item *submi;
    E_Border *bd;
-   Evas *evas;
 
    if (!(bd = data)) return;
 
@@ -499,7 +497,6 @@ _e_border_menu_cb_more_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Menu *subm;
    E_Menu_Item *submi;
    E_Border *bd;
-   Evas *evas;
 
    if (!(bd = data)) return;
 
@@ -766,7 +763,6 @@ _e_border_menu_cb_stacking_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Menu *subm;
    E_Menu_Item *submi;
    E_Border *bd;
-   Evas *evas;
 
    if (!(bd = data)) return;
 
