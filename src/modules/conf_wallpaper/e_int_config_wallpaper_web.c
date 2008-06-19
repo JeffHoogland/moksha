@@ -23,7 +23,7 @@ struct _Import
    E_Dialog *dia;
 };
 
-struct _E_Config_Dialog_Data 
+struct _E_Config_Dialog_Data
 {
    Evas_Object *ofm, *o, *osfm, *ol;
    Ecore_List *thumbs, *names, *medias;
@@ -70,7 +70,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    import->magic = MAGIC_IMPORT;
 
    dia = e_dialog_new(parent->con, "E", "_wallpaper_web_dialog");
-   if (!dia) 
+   if (!dia)
      {
 	E_FREE(import);
 	return NULL;
@@ -218,7 +218,7 @@ e_int_config_wallpaper_web_del(E_Dialog *dia)
    e_object_unref(E_OBJECT(dia));
 }
 
-static int 
+static int
 _feed_complete(void *data, int type, void *event)
 {
    Ecore_Con_Event_Url_Complete *euc;
@@ -241,7 +241,7 @@ _feed_complete(void *data, int type, void *event)
    cfdata->hcomplete = NULL;
    if (euc->status == 200)
      {
-        snprintf(title, sizeof(title), _("[%s] Getting feed... DONE!"), 
+        snprintf(title, sizeof(title), _("[%s] Getting feed... DONE!"),
                  cfdata->source);
 	e_dialog_title_set(import->dia, title);
 	_parse_feed(data);
@@ -249,7 +249,7 @@ _feed_complete(void *data, int type, void *event)
      }
    else
      {
-        snprintf(title, sizeof(title), _("[%s] Getting feed... FAILED!"), 
+        snprintf(title, sizeof(title), _("[%s] Getting feed... FAILED!"),
                  cfdata->source);
 	e_dialog_title_set(import->dia, title);
      }
@@ -290,7 +290,7 @@ _source_sel_cb(void *data)
 	cfdata->busy = 1;
 	_get_feed(cfdata->ol_val, import);
      }
-   else 
+   else
      e_widget_ilist_unselect(cfdata->ol);
 }
 
@@ -372,15 +372,15 @@ _parse_feed(void *data)
 
    if (state == 0)
      {
-        snprintf(title, sizeof(title), _("[%s] Parsing feed... DONE!"), 
+        snprintf(title, sizeof(title), _("[%s] Parsing feed... DONE!"),
                  cfdata->source);
 	e_dialog_title_set(import->dia, title);
 	e_fm2_path_set(cfdata->ofm, cfdata->tmpdir, "/");
 	_get_thumbs(import);
-     } 
+     }
    else
      {
-        snprintf(title, sizeof(title), _("[%s] Parsing feed... FAILED!"), 
+        snprintf(title, sizeof(title), _("[%s] Parsing feed... FAILED!"),
                  cfdata->source);
 	cfdata->busy = 0;
 	e_dialog_title_set(import->dia, title);
@@ -419,7 +419,7 @@ _dia_del_cb(void *obj)
    e_int_config_wallpaper_web_del(dia);
 }
 
-static void 
+static void
 _file_double_click_cb(void *data, Evas_Object *obj, void *ev_info)
 {
    /*E_Config_Dialog_Data *cfdata;
@@ -432,11 +432,11 @@ _file_double_click_cb(void *data, Evas_Object *obj, void *ev_info)
       return;
    icon_info = sels->data;
    printf("[double click] %s\n", icon_info->file);*/
-   
+
    // Unused atm, interesting to simulate click on Ok button
 }
 
-static void 
+static void
 _file_click_cb(void *data, Evas_Object *obj, void *ev_info)
 {
    Import *import;
@@ -461,13 +461,13 @@ _list_find(const char *str1, const char *str2)
    return strcmp(str1, ecore_file_strip_ext(str2));
 }
 
-static void 
-_dia_close_cb(void *data, E_Dialog *dia) 
+static void
+_dia_close_cb(void *data, E_Dialog *dia)
 {
    e_int_config_wallpaper_web_del(dia);
 }
 
-static void 
+static void
 _dia_ok_cb(void *data, E_Dialog *dia)
 {
    Import *import;
@@ -483,7 +483,7 @@ _dia_ok_cb(void *data, E_Dialog *dia)
      e_int_config_wallpaper_web_del(dia);
 }
 
-static void 
+static void
 _download_media(Import *import)
 {
    Import *i;
@@ -493,12 +493,12 @@ _download_media(Import *import)
 
    i = import;
    cfdata = i->cfdata;
-   
+
    cfdata->pending_downloads = 1;
    file = ecore_file_file_get(cfdata->edj);
-   snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s", 
+   snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s",
             e_user_homedir_get(), file);
-   snprintf(title, sizeof(title), _("[%s] Downloading of edje file..."), 
+   snprintf(title, sizeof(title), _("[%s] Downloading of edje file..."),
             cfdata->source);
    e_dialog_title_set(i->dia, title);
    ecore_file_download(cfdata->edj, buf,
@@ -506,7 +506,7 @@ _download_media(Import *import)
                        _download_media_progress_cb, i);
 }
 
-static void 
+static void
 _download_media_complete_cb(void *data, const char *file, int status)
 {
    Import *import;
@@ -514,7 +514,7 @@ _download_media_complete_cb(void *data, const char *file, int status)
 
    import = data;
    import->cfdata->pending_downloads = 0;
-   snprintf(dest, sizeof(dest), "%s/.e/e/backgrounds/%s", 
+   snprintf(dest, sizeof(dest), "%s/.e/e/backgrounds/%s",
             e_user_homedir_get(), ecore_file_file_get(import->cfdata->edj));
    e_int_config_wallpaper_update(import->parent, dest);
    e_int_config_wallpaper_web_del(import->dia);
@@ -532,11 +532,11 @@ _get_thumb_complete(void *data, const char *file, int status)
    cfdata = import->cfdata;
    if (got != ecore_list_count(cfdata->thumbs))
      {
-        snprintf(title, sizeof(title), _("[%s] Download %d images of %d"), 
+        snprintf(title, sizeof(title), _("[%s] Download %d images of %d"),
                  cfdata->source, got, ecore_list_index(cfdata->thumbs));
 	e_dialog_title_set(import->dia, title);
 	cfdata->ready_for_edj = 0;
-        snprintf(dst, sizeof(dst), "%s/%s", cfdata->tmpdir, 
+        snprintf(dst, sizeof(dst), "%s/%s", cfdata->tmpdir,
                  ecore_file_file_get(file));
 	ecore_file_mv(file, dst);
 	got++;
@@ -546,7 +546,7 @@ _get_thumb_complete(void *data, const char *file, int status)
 	got = 1;
 	cfdata->busy = 0;
 	cfdata->ready_for_edj = 1;
-        snprintf(title, sizeof(title), _("[%s] Choose an image from list"), 
+        snprintf(title, sizeof(title), _("[%s] Choose an image from list"),
                  cfdata->source);
 	e_dialog_title_set(import->dia, title);
 	e_dialog_button_disable_num_set(import->dia, 0, 0);
@@ -561,21 +561,18 @@ _download_media_progress_cb(void *data, const char *file, long int dltotal,
    Import *import;
    double status;
    char title[4096];
-   static long int last;
 
    import = data;
 
    if ((dlnow == 0) || (dltotal == 0)) return 0;
 
-   if (last)
+   if (dlnow != dltotal)
      {
 	status = (double) ((double) dlnow) / ((double) dltotal);
-        snprintf(title, sizeof(title), _("[%s] Downloading of edje file... %d%% done"), 
+        snprintf(title, sizeof(title), _("[%s] Downloading of edje file... %d%% done"),
                  import->cfdata->source, (int) (status * 100.0));
 	e_dialog_title_set(import->dia, title);
      }
-
-   last = dlnow;
 
    return 0;
 }
@@ -599,10 +596,10 @@ _get_feed(char *url, void *data)
    if (cfdata->hcomplete) ecore_event_handler_del(cfdata->hcomplete);
    if (cfdata->feed) fclose(cfdata->feed);
 
-   cfdata->hdata = 
+   cfdata->hdata =
      ecore_event_handler_add(ECORE_CON_EVENT_URL_DATA, _feed_data, import);
-   cfdata->hcomplete = 
-     ecore_event_handler_add(ECORE_CON_EVENT_URL_COMPLETE, 
+   cfdata->hcomplete =
+     ecore_event_handler_add(ECORE_CON_EVENT_URL_COMPLETE,
                              _feed_complete, import);
 
    snprintf(title, sizeof(title), _("[%s] Getting feed..."), cfdata->source);
