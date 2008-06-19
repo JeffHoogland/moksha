@@ -1354,8 +1354,7 @@ static int
 dir_has_contents(const char *dir)
 {
    Ecore_List *bats;
-   char *name;
-	
+
    bats = ecore_file_ls(dir);
    if (bats)
      {

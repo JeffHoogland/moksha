@@ -510,7 +510,6 @@ _battery_cb_exe_data(void *data, int type, void *event)
 		  int have_battery = 0;
 		  int have_power = 0;
 		  Evas_List *l;
-                  int mins, hrs;
                   static int debounce_popup = 0;
 
                   if (debounce_popup > POPUP_DEBOUNCE_CYCLES)
