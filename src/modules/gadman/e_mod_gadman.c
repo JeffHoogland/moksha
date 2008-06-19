@@ -42,7 +42,7 @@ E_Gadcon_Client *current;
 void
 gadman_init(E_Module *m)
 {
-   Evas_List *managers, *l;
+   Evas_List *l;
 
    /* Create Manager */
    Man = calloc(1, sizeof(Manager));
@@ -188,7 +188,6 @@ gadman_gadget_add(E_Gadcon_Client_Class *cc, int ontop)
    E_Config_Gadcon_Client *cf = NULL;
    E_Gadcon_Client *gcc;
    E_Gadcon *gc;
-   char *id;
 
    if (ontop)
      gc = Man->gc_top;
@@ -492,9 +491,7 @@ _save_widget_position(E_Gadcon_Client *gcc)
 static void
 _apply_widget_position(E_Gadcon_Client *gcc)
 {
-   Evas_List *l;
    int x, y, w, h;
-   int fx, fy, fw, fh;
 
    x = gcc->cf->geom.pos_x * Man->width;
    y = gcc->cf->geom.pos_y * Man->height;
@@ -839,7 +836,7 @@ on_top(void *data, Evas_Object *o, const char *em, const char *src)
      }
    else if (action == DRAG_MOVE)
      {
-        int w, h;
+        int h;
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
 
@@ -879,7 +876,7 @@ on_right(void *data, Evas_Object *o, const char *em, const char *src)
      }
    else if (action == DRAG_MOVE)
      {
-        int w, h;
+        int w;
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
 
@@ -916,7 +913,7 @@ on_down(void *data, Evas_Object *o, const char *em, const char *src)
      }
    else if (action == DRAG_MOVE)
      {
-        int w, h;
+        int h;
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
         h = my - oy - 15;
@@ -952,7 +949,7 @@ on_left(void *data, Evas_Object *o, const char *em, const char *src)
      }
    else if (action == DRAG_MOVE)
      {
-        int w, h;
+        int w;
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
 

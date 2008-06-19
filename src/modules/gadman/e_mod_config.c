@@ -133,7 +133,6 @@ _cb_add(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
    Evas_List *l = NULL;
-   Evas_List *selected;
    int i;
 
    if (!(cfdata = data)) return;
@@ -141,7 +140,6 @@ _cb_add(void *data, void *data2)
    for (i = 0, l = e_widget_ilist_items_get(cfdata->o_avail); l; l = l->next, i++) 
      {
         E_Ilist_Item *item = NULL;
-        const char *name = NULL;
         E_Gadcon_Client_Class *cc;
         E_Gadcon_Client *gcc;
 
