@@ -19,8 +19,7 @@ typedef struct _E_Event_Zone_Add                E_Event_Zone_Add;
 typedef struct _E_Event_Zone_Del                E_Event_Zone_Del;
 /* TODO: Move this to a general place? */
 typedef struct _E_Event_Pointer_Warp            E_Event_Pointer_Warp;
-typedef struct _E_Event_Zone_Edge               E_Event_Zone_Edge_In;
-typedef struct _E_Event_Zone_Edge               E_Event_Zone_Edge_Out;
+typedef struct _E_Event_Zone_Edge               E_Event_Zone_Edge;
 
 #else
 #ifndef E_ZONE_H
@@ -144,6 +143,7 @@ extern EAPI int E_EVENT_ZONE_DEL;
 extern EAPI int E_EVENT_POINTER_WARP;
 extern EAPI int E_EVENT_ZONE_EDGE_IN;
 extern EAPI int E_EVENT_ZONE_EDGE_OUT;
+extern EAPI int E_EVENT_ZONE_EDGE_MOVE;
 
 #endif
 #endif

@@ -14,6 +14,7 @@ static void _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, v
 static void _e_zone_event_zone_desk_count_set_free(void *data, void *ev);
 static int  _e_zone_cb_mouse_in(void *data, int type, void *event);
 static int  _e_zone_cb_mouse_out(void *data, int type, void *event);
+static int  _e_zone_cb_mouse_move(void *data, int type, void *event);
 static int  _e_zone_cb_timer(void *data);
 static int  _e_zone_cb_desk_show(void *data, int type, void *event);
 static void _e_zone_update_flip(E_Zone *zone);
@@ -28,9 +29,9 @@ EAPI int E_EVENT_POINTER_WARP = 0;
 EAPI int E_EVENT_ZONE_MOVE_RESIZE = 0;
 EAPI int E_EVENT_ZONE_ADD = 0;
 EAPI int E_EVENT_ZONE_DEL = 0;
-/* FIXME: We need a EDGE_MOVE event */
 EAPI int E_EVENT_ZONE_EDGE_IN = 0;
 EAPI int E_EVENT_ZONE_EDGE_OUT = 0;
+EAPI int E_EVENT_ZONE_EDGE_MOVE = 0;
 
 #define E_ZONE_FLIP_LEFT(zone)  ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1)) || ((zone)->desk_x_current > 0))
 #define E_ZONE_FLIP_RIGHT(zone) ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1)) || (((zone)->desk_x_current + 1) < (zone)->desk_x_count))
@@ -47,6 +48,7 @@ e_zone_init(void)
    E_EVENT_ZONE_DEL = ecore_event_type_new();
    E_EVENT_ZONE_EDGE_IN = ecore_event_type_new();
    E_EVENT_ZONE_EDGE_OUT = ecore_event_type_new();
+   E_EVENT_ZONE_EDGE_MOVE = ecore_event_type_new();
    return 1;
 }
 
@@ -91,6 +93,9 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
    zone->handlers = evas_list_append(zone->handlers,
 				     ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT,
 							     _e_zone_cb_mouse_out, zone));
+   zone->handlers = evas_list_append(zone->handlers,
+				     ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
+							     _e_zone_cb_mouse_move, zone));
    zone->handlers = evas_list_append(zone->handlers,
 				     ecore_event_handler_add(E_EVENT_DESK_SHOW,
 							     _e_zone_cb_desk_show, zone));
@@ -827,7 +832,7 @@ static int
 _e_zone_cb_mouse_in(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_In *ev;
-   E_Event_Zone_Edge_In   *zev;
+   E_Event_Zone_Edge      *zev;
    E_Zone *zone;
 
    ev = event;
@@ -842,7 +847,7 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
 	     zone->flip.direction = E_DIRECTION_UP;
 	  }
 
-	zev = E_NEW(E_Event_Zone_Edge_In, 1);
+	zev = E_NEW(E_Event_Zone_Edge, 1);
 	zev->zone = zone;
 	zev->x = ev->x;
 	zev->y = ev->y;
@@ -858,7 +863,7 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
 	     zone->flip.direction = E_DIRECTION_RIGHT;
 	  }
 
-	zev = E_NEW(E_Event_Zone_Edge_In, 1);
+	zev = E_NEW(E_Event_Zone_Edge, 1);
 	zev->zone = zone;
 	zev->x = ev->x;
 	zev->y = ev->y;
@@ -874,7 +879,7 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
 	     zone->flip.direction = E_DIRECTION_DOWN;
 	  }
 
-	zev = E_NEW(E_Event_Zone_Edge_In, 1);
+	zev = E_NEW(E_Event_Zone_Edge, 1);
 	zev->zone = zone;
 	zev->x = ev->x;
 	zev->y = ev->y;
@@ -890,7 +895,7 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
 	     zone->flip.direction = E_DIRECTION_LEFT;
 	  }
 
-	zev = E_NEW(E_Event_Zone_Edge_In, 1);
+	zev = E_NEW(E_Event_Zone_Edge, 1);
 	zev->zone = zone;
 	zev->x = ev->x;
 	zev->y = ev->y;
@@ -904,7 +909,7 @@ static int
 _e_zone_cb_mouse_out(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Out *ev;
-   E_Event_Zone_Edge_Out   *zev;
+   E_Event_Zone_Edge       *zev;
    E_Zone *zone;
 
    ev = event;
@@ -918,7 +923,7 @@ _e_zone_cb_mouse_out(void *data, int type, void *event)
 	if (zone->flip.timer)
 	  ecore_timer_del(zone->flip.timer);
 	zone->flip.timer = NULL;
-	zev = E_NEW(E_Event_Zone_Edge_Out, 1);
+	zev = E_NEW(E_Event_Zone_Edge, 1);
 	zev->zone = zone;
 	zev->x = ev->x;
 	zev->y = ev->y;
@@ -927,6 +932,34 @@ _e_zone_cb_mouse_out(void *data, int type, void *event)
 	else if (ev->win == zone->edge.left) zev->edge = E_ZONE_EDGE_LEFT;
 	else if (ev->win == zone->edge.right) zev->edge = E_ZONE_EDGE_RIGHT;
 	ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
+     }
+   return 1;
+}
+
+static int
+_e_zone_cb_mouse_move(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Move *ev;
+   E_Event_Zone_Edge        *zev;
+   E_Zone *zone;
+
+   ev = event;
+   zone = data;
+
+   if ((ev->win == zone->edge.top) ||
+       (ev->win == zone->edge.bottom) ||
+       (ev->win == zone->edge.left) ||
+       (ev->win == zone->edge.right))
+     {
+	zev = E_NEW(E_Event_Zone_Edge, 1);
+	zev->zone = zone;
+	zev->x = ev->x;
+	zev->y = ev->y;
+	if (ev->win == zone->edge.top) zev->edge = E_ZONE_EDGE_TOP;
+	else if (ev->win == zone->edge.bottom) zev->edge = E_ZONE_EDGE_BOTTOM;
+	else if (ev->win == zone->edge.left) zev->edge = E_ZONE_EDGE_LEFT;
+	else if (ev->win == zone->edge.right) zev->edge = E_ZONE_EDGE_RIGHT;
+	ecore_event_add(E_EVENT_ZONE_EDGE_MOVE, zev, NULL, NULL);
      }
    return 1;
 }

@@ -128,9 +128,10 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    evas_object_resize(es->o_event, es->w, es->h);
    evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_DOWN, _e_shelf_cb_mouse_down, es);
 
-   /* FIXME: Need an EDGE_MOVE handler */
    es->handlers = evas_list_append(es->handlers,
 	 ecore_event_handler_add(E_EVENT_ZONE_EDGE_IN, _e_shelf_cb_mouse_in, es));
+   es->handlers = evas_list_append(es->handlers,
+	 ecore_event_handler_add(E_EVENT_ZONE_EDGE_MOVE, _e_shelf_cb_mouse_in, es));
    es->handlers = evas_list_append(es->handlers,
 	 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_shelf_cb_mouse_in, es));
    es->handlers = evas_list_append(es->handlers,
@@ -1238,10 +1239,10 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
    es = data;
    if (es->cfg->autohide_show_action) return 1;
 
-   if (type == E_EVENT_ZONE_EDGE_IN)
+   if ((type == E_EVENT_ZONE_EDGE_IN) || (type == E_EVENT_ZONE_EDGE_MOVE))
      {
-	E_Event_Zone_Edge_In *ev;
-	int                   show = 0;
+	E_Event_Zone_Edge *ev;
+	int                show = 0;
 
 	ev = event;
 	if (es->zone != ev->zone) return 1;
@@ -1312,7 +1313,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	if (ev->win == es->win)
 	  {
 	     edje_object_signal_emit(es->o_base, "e,state,focused", "e");
-	     if ((es->hide_animator) || (es->instant_timer))
+	     if ((es->hide_animator) || (es->hide_timer) || (es->instant_timer))
 	       e_shelf_toggle(es, 1);
 	  }
      }
