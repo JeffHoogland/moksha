@@ -11,6 +11,7 @@ config.status
 configure
 depcomp
 enlightenment-config
+enlightenment.pc
 install-sh
 libtool
 missing
