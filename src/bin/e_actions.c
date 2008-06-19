@@ -2050,7 +2050,7 @@ _delayed_action_list_parse_action(const char *str, double *delay, const char **a
      }
 }
 
-static int
+static void
 _delayed_action_list_parse(Delayed_Action *da, const char *params)
 {
    double delay = 2.0;
