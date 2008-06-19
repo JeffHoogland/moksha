@@ -45,6 +45,7 @@ static void _e_exebuf_next(void);
 static void _e_exebuf_prev(void);
 static void _e_exebuf_complete(void);
 static void _e_exebuf_backspace(void);
+static void _e_exebuf_clear(void);
 static void _e_exebuf_matches_update(void);
 static void _e_exebuf_hist_update(void);
 static void _e_exebuf_hist_clear(void);
@@ -830,6 +831,18 @@ _e_exebuf_backspace(void)
      }
 }
 
+static void
+_e_exebuf_clear(void)
+{
+   if (cmd_buf[0] != 0)
+     {
+	cmd_buf[0] = 0;
+	_e_exebuf_update();
+	if (!update_timer)
+	   update_timer = ecore_timer_add(MATCH_LAG, _e_exebuf_update_timer, NULL);
+     }
+}
+
 static int
 _e_exebuf_cb_sort_eap(void *data1, void *data2)
 {
@@ -1265,6 +1278,8 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
      _e_exebuf_exec_term();
    else if (!strcmp(ev->keysymbol, "KP_Enter"))
      _e_exebuf_exec();
+   else if (!strcmp(ev->keysymbol, "u") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
+     _e_exebuf_clear();
    else if (!strcmp(ev->keysymbol, "Escape"))
      e_exebuf_hide();
    else if (!strcmp(ev->keysymbol, "BackSpace"))
