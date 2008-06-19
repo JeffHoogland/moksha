@@ -74,7 +74,6 @@ _e_configure_efreet_desktop_update(void)
    while ((desktop = ecore_list_next(settings_desktops)))
      {
 	char *s;
-	char *cfg_cat_item;
 	char *cfg_cat_name;
 	char *cfg_cat_icon;
 	char *cfg_cat;
