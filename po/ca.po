@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Marc Furtià i Puig<br>\\\n"
+"Project-Id-Version: Marc Furtià  i Puig<br>\\\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-06-11 20:52+0100\n"
+"PO-Revision-Date: 2008-06-19 21:07+0100\n"
 "Last-Translator: Marc Furtià i Puig <marc.furtia@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/bin/e_about.c:66
@@ -1676,7 +1676,7 @@ msgstr "Ombrejat"
 #: src/bin/e_int_border_prop.c:474
 #: src/bin/e_int_border_menu.c:924
 msgid "Sticky"
-msgstr ""
+msgstr "﻿Enganxós"
 
 #: src/bin/e_int_border_menu.c:938
 #: src/bin/e_int_border_prop.c:479
@@ -1745,7 +1745,7 @@ msgstr "Passos de Re-dimensió "
 
 #: src/bin/e_int_border_prop.c:433
 msgid "Aspect Ratio"
-msgstr ""
+msgstr "Raó d'Aspecte"
 
 #: src/bin/e_int_border_prop.c:434
 msgid "Initial State"
@@ -1765,11 +1765,11 @@ msgstr "Transaent per a "
 
 #: src/bin/e_int_border_prop.c:439
 msgid "Client Leader"
-msgstr ""
+msgstr "﻿Líder de Client"
 
 #: src/bin/e_int_border_prop.c:440
 msgid "Gravity"
-msgstr ""
+msgstr "﻿Gravetat"
 
 #: src/bin/e_int_border_prop.c:441
 msgid "Command"
@@ -1903,7 +1903,7 @@ msgstr "Ignora la llista de Finestres"
 
 #: src/bin/e_int_border_remember.c:513
 msgid "Match only one window"
-msgstr ""
+msgstr "﻿Lligua només amb una finestra"
 
 #: src/bin/e_int_border_remember.c:518
 msgid "Start this program on login"
@@ -1945,7 +1945,7 @@ msgstr "Avall "
 
 #: src/bin/e_int_config_clientlist.c:40
 msgid "Client List Settings"
-msgstr ""
+msgstr "Preferències de Llista de Client"
 
 #: src/bin/e_int_config_modules.c:150
 msgid "Unload Module"
@@ -2001,7 +2001,7 @@ msgstr "Error del Mètode d'Entrada"
 
 #: src/bin/e_intl.c:363
 msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
-msgstr ""
+msgstr "Error arrancant l'executable del mètode d'entrada<br><br> Si us plau, assegura't que el teu mètode<br> de configuració d'entrada és correcte i <br> que els executables <br> de lesteves configuracions estan en el teu PATH<br>"
 
 #: src/bin/e_int_menus.c:91
 msgid "Main"
@@ -2136,7 +2136,7 @@ msgstr "Disposició "
 #: src/bin/e_int_shelf_config.c:422
 #: src/modules/conf_fonts/e_int_config_fonts.c:249
 msgid "Tiny"
-msgstr ""
+msgstr "Molt petit"
 
 #: src/bin/e_int_shelf_config.c:424
 #: src/modules/conf_fonts/e_int_config_fonts.c:97
@@ -2157,7 +2157,7 @@ msgstr "Gran"
 #: src/bin/e_int_shelf_config.c:430
 #: src/modules/conf_fonts/e_int_config_fonts.c:279
 msgid "Huge"
-msgstr ""
+msgstr "Enorme"
 
 #: src/bin/e_int_shelf_config.c:436
 #: src/bin/e_int_shelf_config.c:541
@@ -2166,7 +2166,7 @@ msgstr "Configura Continguts..."
 
 #: src/bin/e_int_shelf_config.c:459
 msgid "Above Everything"
-msgstr ""
+msgstr "﻿Damunt de tot"
 
 #: src/bin/e_int_shelf_config.c:461
 msgid "Below Windows"
@@ -2174,11 +2174,11 @@ msgstr "Sota Finestres"
 
 #: src/bin/e_int_shelf_config.c:463
 msgid "Below Everything"
-msgstr ""
+msgstr "Per sota de tot"
 
 #: src/bin/e_int_shelf_config.c:465
 msgid "Allow windows to overlap the shelf"
-msgstr ""
+msgstr "﻿Deixa solapar les finestres a la lleixa"
 
 #: src/bin/e_int_shelf_config.c:502
 msgid "Shrink to Content Size"
@@ -2191,7 +2191,7 @@ msgstr "Mida de la Lleixa"
 #: src/bin/e_int_shelf_config.c:506
 #, c-format
 msgid "%3.0f pixels"
-msgstr ""
+msgstr "%3.0f pixels"
 
 #: src/bin/e_int_shelf_config.c:510
 #: src/modules/conf_fonts/e_int_config_fonts.c:640
@@ -2313,15 +2313,15 @@ msgstr "Enlightenment ha trobat que Evas no pot crear el Bufer canvas. Si us pla
 
 #: src/bin/e_main.c:501
 msgid "Enlightenment found Evas can't load PNG files. Check Evas has PNG<br>loader support.<br>"
-msgstr ""
+msgstr "Enlightenment ha trocat que Evas no pot carregar fitxers PNG. Comproba que Evas<br> tingui suport per PNG.<br>"
 
 #: src/bin/e_main.c:510
 msgid "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG <br> loader support.<br> "
-msgstr ""
+msgstr "Enlightenment ha trocat que Evas no pot carregar fitxers JPEG. Comproba que Evas<br> tingui suport per JPEG.<br>"
 
 #: src/bin/e_main.c:519
 msgid "Enlightenment found Evas can't load EET files. Check Evas has EET<br>loader support.<br>"
-msgstr ""
+msgstr "Enlightenment ha trocat que Evas no pot carregar fitxers EET. Comproba que Evas<br> tingui suport per EET.<br>"
 
 #: src/bin/e_main.c:536
 msgid "Enlightenment cannot initialize the Thumbnailing system.<br>"
@@ -2454,7 +2454,7 @@ msgstr ""
 
 #: src/bin/e_main.c:836
 msgid "Enlightenment Starting. Please wait."
-msgstr "Carregant l'Enlightenment, Esperi si us plau."
+msgstr "Carregant l'Enlightenment, Espera si us plau."
 
 #: src/bin/e_main.c:863
 msgid "Enlightenment crashed early on start and has<br>been restarted. All modules have been disabled<br>and will not be loaded to help remove any problem<br>modules from your configuration. The module<br>configuration dialog should let you select your<br>modules again."
@@ -2462,16 +2462,16 @@ msgstr "Enlightenment s'ha trancat en iniciar-se <br> i ha estat re-iniciat.Tots
 
 #: src/bin/e_main.c:870
 msgid "Enlightenment crashed early on start and has been restarted"
-msgstr ""
+msgstr "Enlightenment ha fallat poc després d'arrencar i serà reiniciat."
 
 #: src/bin/e_main.c:871
 msgid "Enlightenment crashed early on start and has been restarted.<br>All modules have been disabled and will not be loaded to help<br>remove any problem modules from your configuration.<br><br>The module configuration dialog should let you select your<br>modules again."
-msgstr ""
+msgstr "Enlightenment ha fallat poc després d'arrencar i serà re-iniciat.<br> Tots els mòduls seran des-habilitats i no es podran carregar<br> per tal de poder comprovar que no hi hagi <br>cap problema en ells en la teva configuració<br>El mòdul de diàleg de configuració et permetrà seleccionar<br> el mòduls altra cop."
 
 #: src/bin/e_module.c:105
 #, c-format
 msgid "There was an error loading module named: %s<br>No module named %s could be found in the<br>module search directories.<br>"
-msgstr ""
+msgstr "Hi ha hagut un error carregant el mòdul : %s<br> No s'ha pogut trobar cap mòdul anomenat %s <br> en el directori de cerca de mòduls."
 
 #: src/bin/e_module.c:109
 #: src/bin/e_module.c:122
@@ -2502,7 +2502,7 @@ msgstr ""
 #: src/modules/conf_imc/e_int_config_imc.c:299
 #: src/modules/conf_imc/e_int_config_imc.c:889
 msgid "Use No Input Method"
-msgstr ""
+msgstr "Úsa cap mètode d'entrada"
 
 #: src/bin/e_module.c:172
 #, c-format
@@ -2512,7 +2512,7 @@ msgstr "Mòdul  %s de Enlightenment"
 #: src/modules/conf_imc/e_int_config_imc.c:304
 #: src/modules/conf_imc/e_int_config_imc.c:956
 msgid "Setup Selected Input Method"
-msgstr ""
+msgstr "Configuració  de la sel·lecció del mètode d'entrada"
 
 #: src/bin/e_module.c:463
 msgid "Would you like to unload this module?<br>"
@@ -2563,7 +2563,7 @@ msgstr "Configura els Continguts de la Lleixa"
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:65
 msgid "Select an Input Method Configuration..."
-msgstr ""
+msgstr "Sel·lecciona una configuració pel mètode d'entrada"
 
 #: src/bin/e_shelf.c:1507
 msgid "Delete this Shelf"
@@ -2581,7 +2581,7 @@ msgstr "Carregant %s"
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:281
 msgid "Enlightenment was unable to import the configuration.<br><br>Are you sure this is really a valid configuration?"
-msgstr ""
+msgstr "Enlightenment no ha pogut importar la configuració.<br><br> Estàs segur que aquesta és realment una configuració vàlida ?"
 
 #: src/bin/e_sys.c:266
 msgid "Logout problems"
@@ -2633,7 +2633,7 @@ msgstr "Xec "
 
 #: src/bin/e_sys.c:318
 msgid "Logout is currently in progress.<br><hilight>Please wait.</hilight>"
-msgstr "Sortir està en procés.<br><hilight> Si us plau, esperi </hilight>"
+msgstr "Sortir està en procés.<br><hilight> Si us plau, espera</hilight>"
 
 #: src/modules/conf_intl/e_int_config_intl.c:109
 #: src/modules/conf_intl/e_int_config_intl.c:149
@@ -2734,7 +2734,7 @@ msgstr "Portuguès "
 
 #: src/bin/e_sys.c:481
 msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "Parant l'ordinador.<br><hilight>Si us plau, esperi.</hilight>"
+msgstr "Parant l'ordinador.<br><hilight>Si us plau, espera.</hilight>"
 
 #: src/modules/conf_intl/e_int_config_intl.c:122
 #: src/modules/conf_intl/e_int_config_intl.c:227
@@ -2747,7 +2747,7 @@ msgstr "Re-iniciant"
 
 #: src/bin/e_sys.c:508
 msgid "Rebooting your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "Re-iniciant l'ordinador.<br> <hilight> Si us plau, esperi.</hilight>"
+msgstr "Re-iniciant l'ordinador.<br> <hilight> Si us plau, espera.</hilight>"
 
 #: src/modules/conf_intl/e_int_config_intl.c:123
 #: src/modules/conf_intl/e_int_config_intl.c:233
@@ -2765,7 +2765,7 @@ msgstr ""
 
 #: src/bin/e_sys.c:534
 msgid "Suspending your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "Suspenent l'ordinador.<br> <hilight> Si us plau, esperi.</hilight>"
+msgstr "Suspenent l'ordinador.<br> <hilight> Si us plau, espera.</hilight>"
 
 #: src/modules/conf_intl/e_int_config_intl.c:125
 #: src/modules/conf_intl/e_int_config_intl.c:157
@@ -2783,7 +2783,7 @@ msgstr "Suïs "
 
 #: src/bin/e_sys.c:560
 msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "Hibernant l'ordinador.<br><hilight>Si us plau, esperi</hilight>"
+msgstr "Hibernant l'ordinador.<br><hilight>Si us plau, espera</hilight>"
 
 #: src/modules/conf_intl/e_int_config_intl.c:131
 msgid "Afar"
@@ -3094,7 +3094,7 @@ msgstr "Avisa'm quan la bateria estigui per sota de :"
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:153
 #, c-format
 msgid "%1.0f minutes"
-msgstr ""
+msgstr "%1.0f minuts"
 
 #: src/modules/conf_intl/e_int_config_intl.c:179
 msgid "Indonesian"
@@ -3347,11 +3347,11 @@ msgstr "Usa menús "
 #: src/modules/conf_intl/e_int_config_intl.c:222
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:122
 msgid "Client Sort Order"
-msgstr ""
+msgstr "Ordenació de Client"
 
 #: src/modules/conf_intl/e_int_config_intl.c:224
 msgid "Pashto"
-msgstr ""
+msgstr "﻿Paixto"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:126
 msgid "Alphabetical"
@@ -3365,27 +3365,27 @@ msgstr ""
 #: src/modules/conf_intl/e_int_config_intl.c:228
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:130
 msgid "Most recently used"
-msgstr ""
+msgstr "Les més usades"
 
 #: src/modules/conf_intl/e_int_config_intl.c:229
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:134
 msgid "Iconified Windows"
-msgstr ""
+msgstr "Finestres Iconificades"
 
 #: src/modules/conf_intl/e_int_config_intl.c:230
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:136
 msgid "Group with owning desktop"
-msgstr ""
+msgstr "Grup amb Escriptori propi"
 
 #: src/modules/conf_intl/e_int_config_intl.c:231
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:138
 msgid "Group with current desktop"
-msgstr ""
+msgstr "Grup amb Escriptori actual"
 
 #: src/modules/conf_intl/e_int_config_intl.c:232
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:140
 msgid "Separate group"
-msgstr ""
+msgstr "Grup separat"
 
 #: src/modules/conf_intl/e_int_config_intl.c:235
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:142
@@ -3409,7 +3409,7 @@ msgstr ""
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:149
 #, c-format
 msgid "%1.0f Chars"
-msgstr ""
+msgstr "%1.0f Caràcters"
 
 #: src/modules/conf_intl/e_int_config_intl.c:239
 msgid "Southern Sotho"
@@ -3463,7 +3463,7 @@ msgstr "Títol de Vora"
 #: src/modules/conf_intl/e_int_config_intl.c:247
 #: src/modules/conf_colors/e_int_config_color_classes.c:48
 msgid "Configure Dialog Title"
-msgstr ""
+msgstr "Configura el Títol de Diàleg"
 
 #: src/modules/conf_intl/e_int_config_intl.c:248
 msgid "Tigre"
@@ -3514,7 +3514,7 @@ msgstr "Mou Text"
 #: src/modules/conf_colors/e_int_config_color_classes.c:55
 #: src/modules/conf_fonts/e_int_config_fonts.c:66
 msgid "Resize Text"
-msgstr ""
+msgstr "Redimenciona Text"
 
 #: src/modules/conf_intl/e_int_config_intl.c:255
 #: src/modules/conf_colors/e_int_config_color_classes.c:56
@@ -3589,7 +3589,7 @@ msgstr "Text d'Etiqueta"
 #: src/modules/conf_intl/e_int_config_intl.c:265
 #: src/modules/conf_colors/e_int_config_color_classes.c:71
 msgid "List Item Text"
-msgstr ""
+msgstr "﻿Text d'Element de Llista"
 
 #: src/modules/conf_intl/e_int_config_intl.c:270
 #: src/modules/conf_colors/e_int_config_color_classes.c:72
@@ -3600,7 +3600,7 @@ msgstr ""
 #: src/modules/conf_colors/e_int_config_color_classes.c:73
 #: src/modules/conf_fonts/e_int_config_fonts.c:90
 msgid "List Header"
-msgstr ""
+msgstr "Capçaleres de Llista"
 
 #: src/modules/conf_intl/e_int_config_intl.c:272
 #: src/modules/conf_colors/e_int_config_color_classes.c:74
@@ -3679,12 +3679,12 @@ msgstr "Mòdul de Colors"
 #: src/modules/conf_intl/e_int_config_intl.c:280
 #: src/modules/conf_colors/e_int_config_color_classes.c:414
 msgid "Color Classes"
-msgstr ""
+msgstr "Tipus de Color"
 
 #: src/modules/conf_intl/e_int_config_intl.c:281
 #: src/modules/conf_colors/e_int_config_color_classes.c:442
 msgid "Object Color"
-msgstr ""
+msgstr "Color d'Objecte"
 
 #: src/modules/conf_intl/e_int_config_intl.c:282
 #: src/modules/conf_colors/e_int_config_color_classes.c:451
@@ -3694,7 +3694,7 @@ msgstr ""
 #: src/modules/conf_intl/e_int_config_intl.c:283
 #: src/modules/conf_colors/e_int_config_color_classes.c:460
 msgid "Shadow Color"
-msgstr ""
+msgstr "Color d'Ombra"
 
 #: src/modules/conf_intl/e_int_config_intl.c:284
 msgid "Austria"
@@ -3866,7 +3866,7 @@ msgstr "Mostra en la zona de pantalla #:"
 #: src/modules/conf_mouse/e_int_config_mouse.c:101
 #, c-format
 msgid "%1.0f"
-msgstr ""
+msgstr "%1.0f"
 
 #: src/modules/conf_intl/e_int_config_intl.c:305
 msgid "Burundi"
@@ -3955,7 +3955,7 @@ msgstr "Salta Taula de Treball quan el ratolí estigui a l'extrem de la pantalla
 #: src/modules/conf_intl/e_int_config_intl.c:317
 #: src/modules/conf_desks/e_int_config_desks.c:216
 msgid "Animated flip"
-msgstr ""
+msgstr "Salts Animats"
 
 #: src/modules/conf_intl/e_int_config_intl.c:318
 msgid "Comoros"
@@ -3977,17 +3977,17 @@ msgstr "Mostra els icones de Taula de Treball"
 #: src/modules/conf_intl/e_int_config_intl.c:321
 #: src/modules/conf_desks/e_int_config_desks.c:256
 msgid "Flip when moving mouse to the screen edge"
-msgstr ""
+msgstr "Salta quan el Ratolí estigui a l'extrem de la pantalla"
 
 #: src/modules/conf_intl/e_int_config_intl.c:322
 #: src/modules/conf_desks/e_int_config_desks.c:258
 msgid "Flip when dragging objects to the screen edge"
-msgstr ""
+msgstr "Salta quan s'arrastrin objectes a l'extrem de la Pantalla"
 
 #: src/modules/conf_intl/e_int_config_intl.c:323
 #: src/modules/conf_desks/e_int_config_desks.c:260
 msgid "Time the mouse is at the edge before flipping:"
-msgstr ""
+msgstr "Temps que el Ratolí ha d'estar a l'extrem de la pantalla abans salti : "
 
 #: src/modules/conf_intl/e_int_config_intl.c:324
 #: src/modules/conf_desks/e_int_config_desks.c:262
@@ -3995,7 +3995,7 @@ msgstr ""
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:182
 #, c-format
 msgid "%1.1f sec"
-msgstr ""
+msgstr "%1.1f sec"
 
 #: src/modules/conf_intl/e_int_config_intl.c:325
 #: src/modules/conf_desks/e_int_config_desks.c:264
@@ -4366,7 +4366,7 @@ msgstr ""
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:180
 #: src/modules/conf_winlist/e_int_config_winlist.c:243
 msgid "Scroll Speed"
-msgstr ""
+msgstr "Velocitat d'Scroll"
 
 #: src/modules/conf_intl/e_int_config_intl.c:380
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:182
@@ -4378,7 +4378,7 @@ msgstr ""
 #: src/modules/conf_winlist/e_int_config_winlist.c:256
 #, c-format
 msgid "%1.2f"
-msgstr ""
+msgstr "%1.2f"
 
 #: src/modules/conf_intl/e_int_config_intl.c:381
 msgid "Jordan"
@@ -4406,7 +4406,7 @@ msgstr "Configuració de la Mida"
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:194
 #: src/modules/conf_winlist/e_int_config_winlist.c:261
 msgid "Minimum Width"
-msgstr ""
+msgstr "Mínima Amplada"
 
 #: src/modules/conf_intl/e_int_config_intl.c:385
 #: src/modules/conf_intl/e_int_config_intl.c:386
@@ -4420,25 +4420,25 @@ msgstr ""
 #: src/modules/conf_winlist/e_int_config_winlist.c:275
 #, c-format
 msgid "%4.0f"
-msgstr ""
+msgstr "%4.0f"
 
 #: src/modules/conf_intl/e_int_config_intl.c:387
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:198
 #: src/modules/conf_winlist/e_int_config_winlist.c:265
 msgid "Minimum Height"
-msgstr ""
+msgstr "Mínima Alçada"
 
 #: src/modules/conf_intl/e_int_config_intl.c:388
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:202
 #: src/modules/conf_winlist/e_int_config_winlist.c:269
 msgid "Maximum Width"
-msgstr ""
+msgstr "Màxima Amplada"
 
 #: src/modules/conf_intl/e_int_config_intl.c:389
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:206
 #: src/modules/conf_winlist/e_int_config_winlist.c:273
 msgid "Maximum Height"
-msgstr ""
+msgstr "Màxima Alçada"
 
 #: src/modules/conf_intl/e_int_config_intl.c:390
 msgid "Latvia"
@@ -4715,7 +4715,7 @@ msgstr ""
 #: src/modules/conf_fonts/e_int_config_fonts.c:288
 #, c-format
 msgid "%d pixels"
-msgstr ""
+msgstr "%d pixels"
 
 #: src/modules/conf_intl/e_int_config_intl.c:429
 #: src/modules/conf_fonts/e_int_config_fonts.c:442
@@ -4735,22 +4735,22 @@ msgstr "Tipus de Lletra"
 
 #: src/modules/conf_intl/e_int_config_intl.c:431
 #: src/modules/conf_fonts/e_int_config_fonts.c:464
-msgid "Basic preview text: 123: æçå€©ç©ºïŒ"
+msgid "Basic preview text: 123: æçå¤©ç©ºï¼"
 msgstr ""
 
 #: src/modules/conf_intl/e_int_config_intl.c:432
 #: src/modules/conf_fonts/e_int_config_fonts.c:621
 msgid "Font Classes"
-msgstr ""
+msgstr "Tipus de Lletra"
 
 #: src/modules/conf_intl/e_int_config_intl.c:433
 #: src/modules/conf_fonts/e_int_config_fonts.c:657
 msgid "Enable Font Class"
-msgstr ""
+msgstr "Autoritza Tipus de Lletra"
 
 #: src/modules/conf_intl/e_int_config_intl.c:434
 #: src/modules/conf_fonts/e_int_config_fonts.c:663
-msgid "Advanced Preview Text.. æççäŒåäžæ"
+msgid "Advanced Preview Text.. æççä¼åä¸æ"
 msgstr ""
 
 #: src/modules/conf_intl/e_int_config_intl.c:435
@@ -5756,7 +5756,7 @@ msgstr ""
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:209
 #, c-format
 msgid "%2.0f pixels"
-msgstr ""
+msgstr "%2.0f pixels"
 
 #: src/modules/conf_menus/e_int_config_menus.c:170
 msgid "Autoscroll Cursor Margin"
@@ -5774,7 +5774,7 @@ msgstr ""
 #: src/modules/conf_menus/e_int_config_menus.c:179
 #, c-format
 msgid "%5.0f pixels/sec"
-msgstr ""
+msgstr "%5.0f pixels/seg"
 
 #: src/modules/conf_menus/e_int_config_menus.c:181
 msgid "Fast Mouse Move Threshhold"
@@ -5784,7 +5784,7 @@ msgstr ""
 #: src/modules/conf_window_display/e_int_config_window_display.c:221
 #, c-format
 msgid "%4.0f pixels/sec"
-msgstr ""
+msgstr "%4.0f pixels/seg"
 
 #: src/modules/conf_menus/e_int_config_menus.c:185
 msgid "Click Drag Timeout"
@@ -5793,7 +5793,7 @@ msgstr ""
 #: src/modules/conf_menus/e_int_config_menus.c:187
 #, c-format
 msgid "%2.2f seconds"
-msgstr ""
+msgstr "%2.2f segons"
 
 #: src/modules/conf_menus/e_mod_main.c:61
 msgid "Enlightenment Configuration Module - Menu Settings"
@@ -5853,7 +5853,7 @@ msgstr ""
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:112
 msgid "Mouse Binding Settings"
-msgstr ""
+msgstr "Configuració del Bindatge del Ratolí"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:301
 msgid "Add Binding"
@@ -5930,7 +5930,7 @@ msgstr "Mida del Cursor "
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:154
 #, c-format
 msgid "%1.0f pixels"
-msgstr ""
+msgstr "%1.0f pixels"
 
 #: src/modules/conf_mouse_cursor/e_mod_main.c:35
 msgid "Mouse Cursor"
@@ -6034,7 +6034,7 @@ msgstr ""
 #: src/modules/conf_performance/e_int_config_performance.c:124
 #, c-format
 msgid "%1.0f fps"
-msgstr ""
+msgstr "%1.0f fps"
 
 #: src/modules/conf_performance/e_int_config_performance.c:128
 msgid "Cache Settings"
@@ -6048,7 +6048,7 @@ msgstr ""
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:159
 #, c-format
 msgid "%1.0f seconds"
-msgstr ""
+msgstr "%1.0f segons"
 
 #: src/modules/conf_performance/e_int_config_performance.c:134
 msgid "Size Of Font Cache"
@@ -6057,7 +6057,7 @@ msgstr "Mida de Fonts de Cache"
 #: src/modules/conf_performance/e_int_config_performance.c:136
 #, c-format
 msgid "%1.1f MB"
-msgstr ""
+msgstr "%1.1f MB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:139
 msgid "Size Of Image Cache"
@@ -6066,7 +6066,7 @@ msgstr "Mida d'Imatges de Cache"
 #: src/modules/conf_performance/e_int_config_performance.c:141
 #, c-format
 msgid "%1.0f MB"
-msgstr ""
+msgstr "%1.0f MB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:144
 msgid "Number Of Edje Files To Cache"
@@ -6084,7 +6084,7 @@ msgstr ""
 #: src/modules/conf_performance/e_int_config_performance.c:151
 #, c-format
 msgid "%1.0f collections"
-msgstr ""
+msgstr "%1.0f text d'element de llista"
 
 #: src/modules/conf_performance/e_mod_main.c:61
 msgid "Enlightenment Configuration Module - Performance"
@@ -6117,7 +6117,7 @@ msgstr "Estàs Segur que Vol Eliminar aquest Perfil?"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:260
 msgid "Add New Profile"
-msgstr ""
+msgstr "Afegeix Nou Perfil"
 
 #: src/modules/conf_profiles/e_mod_main.c:35
 msgid "Profiles"
@@ -6144,7 +6144,7 @@ msgstr "Autoritza el Salva-pantalla d' X"
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:115
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:149
 msgid "Screensaver Timer(s)"
-msgstr ""
+msgstr "Temps de Salvapantalla"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:117
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:151
@@ -6198,7 +6198,7 @@ msgstr "LLeixes Configurades"
 #: src/modules/conf_shelves/e_int_config_shelf.c:264
 #, c-format
 msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this shelf?"
-msgstr ""
+msgstr "Has demanat borrar \"%s\".<br><br>Estàs segur que vols borrar aquesta lleixa ?"
 
 #: src/modules/conf_shelves/e_mod_main.c:61
 msgid "Enlightenment Configuration Module - Shelves"
@@ -6239,7 +6239,7 @@ msgstr "Categories de Tema"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1078
 msgid "Assign"
-msgstr ""
+msgstr "Assigna"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1080
 msgid "Clear"
@@ -6260,11 +6260,11 @@ msgstr "Error en la Importació del Tema"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:277
 msgid "Enlightenment was unable to import the theme.<br><br>Are you sure this is really a valid theme?"
-msgstr ""
+msgstr "Enlightenment no ha pogut importar el tema.<br><br> Estàs segur que és un tema vàlid ?"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:286
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
-msgstr ""
+msgstr "Enlightenment no ha pogut importar el tema<br>degut a un error de còpia."
 
 #: src/modules/conf_theme/e_mod_main.c:61
 msgid "Enlightenment Configuration Module - Theme"
@@ -6281,7 +6281,7 @@ msgstr "Configuració del Diàleg per Tema"
 #: src/modules/conf_colors/e_int_config_color_classes.c:356
 #: src/modules/conf_transitions/e_int_config_transitions.c:44
 msgid "Transition Settings"
-msgstr ""
+msgstr "Paràmetres de Transició"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:126
 msgid "Events"
@@ -6298,7 +6298,7 @@ msgstr "Canvia el Fons de Pantalla"
 #: src/modules/conf_transitions/e_int_config_transitions.c:144
 #: src/modules/conf_transitions/e_mod_main.c:35
 msgid "Transitions"
-msgstr "Transaccions "
+msgstr "Transicions "
 
 #: src/modules/conf_transitions/e_mod_main.c:61
 msgid "Enlightenment Configuration Module - Transitions"
@@ -6428,7 +6428,7 @@ msgstr "Usa el fitxer original"
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:177
 #, c-format
 msgid "%3.0f%%"
-msgstr ""
+msgstr "%3.0f%%"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:474
 msgid "Picture Import Error"
@@ -6457,7 +6457,7 @@ msgstr "Configuració del Mòdul de l'Enlightenment - Fons de Pantalla"
 
 #: src/modules/conf_wallpaper/e_mod_main.c:66
 msgid "Configuration dialog for wallpaper configuration."
-msgstr ""
+msgstr "Configuració del fonts de pantalla"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:156
 msgid "Display"
@@ -6497,13 +6497,13 @@ msgstr ""
 #: src/modules/conf_window_display/e_int_config_window_display.c:169
 #: src/modules/conf_window_display/e_int_config_window_display.c:241
 msgid "Place at mouse pointer"
-msgstr ""
+msgstr "Col·loca al punter del Ratolí"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:669
 #: src/modules/conf_window_display/e_int_config_window_display.c:171
 #: src/modules/conf_window_display/e_int_config_window_display.c:243
 msgid "Place manually with the mouse"
-msgstr ""
+msgstr "Col·loca manualment amb el ratolí "
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:675
 #: src/modules/conf_window_display/e_int_config_window_display.c:173
@@ -6514,13 +6514,13 @@ msgstr ""
 #: src/modules/conf_fonts/e_int_config_fonts.c:683
 #: src/modules/conf_window_display/e_int_config_window_display.c:201
 msgid "Window Move Geometry"
-msgstr ""
+msgstr "Mou la Geometria de la Finestra"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:686
 #: src/modules/conf_window_display/e_int_config_window_display.c:203
 #: src/modules/conf_window_display/e_int_config_window_display.c:211
 msgid "Display information"
-msgstr ""
+msgstr "Mostra Informació"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:205
 msgid "Follow the window as it moves"
@@ -6529,7 +6529,7 @@ msgstr ""
 #: src/modules/conf_fonts/e_int_config_fonts.c:700
 #: src/modules/conf_window_display/e_int_config_window_display.c:209
 msgid "Window Resize Geometry"
-msgstr ""
+msgstr "Geometria de la Redimensió de la Finestra"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:701
 #: src/modules/conf_window_display/e_int_config_window_display.c:213
@@ -6725,19 +6725,19 @@ msgstr ""
 
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:196
 msgid "Resistance"
-msgstr ""
+msgstr "Resistència"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:197
 msgid "Resist moving or resizing a window over an obstacle"
-msgstr ""
+msgstr "Resisteix al moure o redimensionar finestres sobre un obstàcle"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:199
 msgid "Resistance between windows:"
-msgstr ""
+msgstr "Resistència entra finestres:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:203
 msgid "Resistance at the edge of the screen:"
-msgstr ""
+msgstr "Resistència "
 
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:207
 msgid "Resistance to desktop gadgets:"
@@ -6745,11 +6745,11 @@ msgstr ""
 
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:225
 msgid "Both directions"
-msgstr ""
+msgstr "Ambdues direccions"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:232
 msgid "Allow window manipulation"
-msgstr ""
+msgstr "Autoritza Manipulació de Finestres"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:234
 msgid "Automatically move/resize windows on shelf autohide"
@@ -6773,19 +6773,19 @@ msgstr "Mostra les Finestres Iconitzades"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:134
 msgid "Show iconified windows from other desks"
-msgstr ""
+msgstr "Mostra les Finestres Iconificades des de altres escriptoris "
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:136
 msgid "Show iconified windows from other screens"
-msgstr ""
+msgstr "Mostra les Finestres Iconificades des de altres pantalles"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:138
 msgid "Show windows from other desks"
-msgstr ""
+msgstr "Mostra les Finestres des de altres escriptoris "
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:140
 msgid "Show windows from other screens"
-msgstr ""
+msgstr "Mostra les Finestres des de altres pantalles"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:144
 #: src/modules/conf_winlist/e_int_config_winlist.c:218
@@ -6960,15 +6960,15 @@ msgstr "Inacabat"
 
 #: src/modules/dropshadow/e_mod_config.c:124
 msgid "Sharp"
-msgstr ""
+msgstr "Exactament"
 
 #: src/modules/dropshadow/e_mod_config.c:126
 msgid "Very Sharp"
-msgstr ""
+msgstr "Molt Exactament"
 
 #: src/modules/dropshadow/e_mod_config.c:130
 msgid "Shadow Distance"
-msgstr ""
+msgstr "Distància d'Ombra"
 
 #: src/modules/dropshadow/e_mod_config.c:133
 msgid "Very Far"
@@ -6996,7 +6996,7 @@ msgstr ""
 
 #: src/modules/dropshadow/e_mod_config.c:147
 msgid "Shadow Darkness"
-msgstr ""
+msgstr "Foscor d'Ombra"
 
 #: src/modules/dropshadow/e_mod_config.c:150
 msgid "Very Dark"
@@ -7185,7 +7185,7 @@ msgstr ""
 #: src/modules/pager/e_mod_config.c:235
 #, c-format
 msgid "Click to set"
-msgstr ""
+msgstr "Click al conjunt"
 
 #: src/modules/pager/e_mod_config.c:163
 msgid "Resistance to dragging"
@@ -7203,7 +7203,7 @@ msgstr "Paràmetres de Popups"
 #: src/modules/pager/e_mod_config.c:172
 #: src/modules/pager/e_mod_config.c:184
 msgid "Popup Speed"
-msgstr ""
+msgstr "Velocitat Desplegable"
 
 #: src/modules/pager/e_mod_config.c:177
 msgid "Urgent window"
