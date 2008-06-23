@@ -621,9 +621,9 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 	e_object_del(E_OBJECT(es->popup));
 	es->popup = NULL;
 
-	es->ee = zone->container->bg_ecore_evas;
-	es->evas = zone->container->bg_evas;
-	es->win = zone->container->event_win;
+	es->ee = es->zone->container->bg_ecore_evas;
+	es->evas = es->zone->container->bg_evas;
+	es->win = es->zone->container->event_win;
 
 	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
