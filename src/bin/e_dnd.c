@@ -19,7 +19,7 @@ static void _e_drag_show(E_Drag *drag);
 static void _e_drag_hide(E_Drag *drag);
 static void _e_drag_move(E_Drag *drag, int x, int y);
 static void _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh);
-static int  _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win);
+static int  _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win, int xdnd);
 static void _e_drag_win_show(E_Drop_Handler *h);
 static void _e_drag_win_hide(E_Drop_Handler *h);
 static void _e_drag_update(Ecore_X_Window root, int x, int y);
@@ -575,7 +575,7 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
 }
 
 static int
-_e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win)
+_e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win, int xdnd)
 {
    Ecore_X_Window hwin = 0;
    
@@ -584,10 +584,12 @@ _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win)
 	switch (h->obj->type)
 	  {
 	   case E_GADCON_TYPE:
-	     hwin = e_gadcon_dnd_window_get((E_Gadcon *)(h->obj));
+	     if (xdnd) hwin = e_gadcon_xdnd_window_get((E_Gadcon *)(h->obj));
+	     else hwin = e_gadcon_dnd_window_get((E_Gadcon *)(h->obj));
 	     break;
 	   case E_GADCON_CLIENT_TYPE:
-	     hwin = e_gadcon_dnd_window_get(((E_Gadcon_Client *)(h->obj))->gadcon);
+	     if (xdnd) hwin = e_gadcon_xdnd_window_get(((E_Gadcon_Client *)(h->obj))->gadcon);
+	     else hwin = e_gadcon_dnd_window_get(((E_Gadcon_Client *)(h->obj))->gadcon);
 	     break;
 	   case E_WIN_TYPE:
 	     hwin = ((E_Win *)(h->obj))->evas_win;
@@ -704,7 +706,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y)
 	     move_ev.y = y - dy;
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
-	     if (E_INSIDE(x, y, dx, dy, dw, dh) && _e_drag_win_matches(h, win))
+	     if (E_INSIDE(x, y, dx, dy, dw, dh) && _e_drag_win_matches(h, win, 0))
 	       {
 		  if (!h->entered)
 		    {
@@ -752,7 +754,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y)
 	     move_ev.y = y - dy;
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
-	     if (E_INSIDE(x, y, dx, dy, dw, dh) && _e_drag_win_matches(h, win))
+	     if (E_INSIDE(x, y, dx, dy, dw, dh) && _e_drag_win_matches(h, win, 1))
 	       {
 		  if (!h->entered)
 		    {
@@ -837,7 +839,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
 	     ev.x = x - dx;
 	     ev.y = y - dy;
-	     if ((_e_drag_win_matches(h, win)) &&
+	     if ((_e_drag_win_matches(h, win, 0)) &&
 		 ((h->cb.drop) &&
 		  (E_INSIDE(x, y, dx, dy, dw, dh))))
 	       {
@@ -910,7 +912,7 @@ _e_drag_xdnd_end(Ecore_X_Window win, int x, int y)
 	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
 	     ev.x = x - dx;
 	     ev.y = y - dy;
-	     if (_e_drag_win_matches(h, win) && h->cb.drop 
+	     if (_e_drag_win_matches(h, win, 1) && h->cb.drop 
 		 && E_INSIDE(x, y, dx, dy, dw, dh))
 	       {
 		  h->cb.drop(h->cb.data, h->active_type, &ev);

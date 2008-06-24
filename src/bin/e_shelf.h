@@ -23,7 +23,6 @@ struct _E_Shelf
    Evas_Object         *o_event;
    Ecore_Evas          *ee;
    Evas                *evas;
-   Ecore_X_Window       win;
    E_Gadcon            *gadcon;
    const char          *name;
    const char          *style;

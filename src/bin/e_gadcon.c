@@ -680,6 +680,22 @@ e_gadcon_dnd_window_get(E_Gadcon *gc)
 }
 
 EAPI void
+e_gadcon_xdnd_window_set(E_Gadcon *gc, Ecore_X_Window win)
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   gc->xdnd_win = win;
+}
+							 
+EAPI Ecore_X_Window
+e_gadcon_xdnd_window_get(E_Gadcon *gc)
+{
+   E_OBJECT_CHECK_RETURN(gc, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, 0);
+   return gc->xdnd_win;
+}
+
+EAPI void
 e_gadcon_shelf_set(E_Gadcon *gc, E_Shelf *shelf)
 {
    E_OBJECT_CHECK(gc);

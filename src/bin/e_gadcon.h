@@ -87,6 +87,7 @@ struct _E_Gadcon
    E_Config_Dialog    *config_dialog;
    unsigned char       editing : 1;
    Ecore_X_Window      dnd_win;
+   Ecore_X_Window      xdnd_win;
    E_Shelf            *shelf;
    E_Toolbar          *toolbar;
 
@@ -207,6 +208,8 @@ EAPI int              e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, in
 EAPI void             e_gadcon_util_menu_attach_func_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon_Client *gcc, E_Menu *menu), void *data);
 EAPI void             e_gadcon_dnd_window_set(E_Gadcon *gc, Ecore_X_Window win);
 EAPI Ecore_X_Window   e_gadcon_dnd_window_get(E_Gadcon *gc);
+EAPI void             e_gadcon_xdnd_window_set(E_Gadcon *gc, Ecore_X_Window win);
+EAPI Ecore_X_Window   e_gadcon_xdnd_window_get(E_Gadcon *gc);
 EAPI void             e_gadcon_shelf_set(E_Gadcon *gc, E_Shelf *shelf);
 EAPI E_Shelf         *e_gadcon_shelf_get(E_Gadcon *gc);
 EAPI void             e_gadcon_toolbar_set(E_Gadcon *gc, E_Toolbar *toolbar);
