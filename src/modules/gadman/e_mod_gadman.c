@@ -379,6 +379,7 @@ _gadman_gadcon_new(const char* name, int ontop)
      {
         gc->evas = Man->container->bg_evas;
         e_gadcon_ecore_evas_set(gc, Man->container->bg_ecore_evas);
+        e_gadcon_xdnd_window_set(gc, Man->container->bg_win);
         e_gadcon_dnd_window_set(gc, Man->container->event_win);
         e_drop_xdnd_register_set(Man->container->bg_win, 1);
      }
