@@ -118,7 +118,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	es->ee = zone->container->bg_ecore_evas;
 	es->evas = zone->container->bg_evas;
 	/* TODO: We should have a mouse out on the evas object if we are on the desktop */
-	es->win = zone->container->event_win;
+	es->win = zone->container->bg_win;
      }
    es->fit_along = 1;
    es->layer = layer;
@@ -623,7 +623,7 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 
 	es->ee = es->zone->container->bg_ecore_evas;
 	es->evas = es->zone->container->bg_evas;
-	es->win = es->zone->container->event_win;
+	es->win = es->zone->container->bg_win;
 
 	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
