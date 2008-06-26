@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Marc Furtià  i Puig<br>\\\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-06-19 21:07+0100\n"
-"Last-Translator: Marc Furtià i Puig <marc.furtia@gmail.com>\n"
+"PO-Revision-Date: 2008-06-26 11:22+0100\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -937,7 +937,7 @@ msgstr "El bloqueig de Taula de Treball ha fallat degut a què alguna aplicació
 
 #: src/bin/e_desklock.c:297
 msgid "Please enter your unlock password"
-msgstr "Si us plau, introduïu la vostre paraula clau de desbloqueig"
+msgstr "Si us plau, introdueix la teva paraula clau de desbloqueig"
 
 #: src/bin/e_desklock.c:639
 msgid "Authentication System Error"
@@ -1834,11 +1834,11 @@ msgstr "No s'han guardat els joc de propietats"
 
 #: src/bin/e_int_border_remember.c:319
 msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window <hilight>without specifying how to remember it</hilight>.<br><br>You must specify at least 1 way of remembering this window."
-msgstr "Estàs intentant de demanar a Enlightenment que recordi d'aplicar<br>propietats (com mida, localització, estil de vora etc.) a la finestra <br><hilight>sense especificar com recordar això</hilight>.<br><br> Vosté ha d'especificar com a mínim 1 manera de recordar aquesta finestra."
+msgstr "Estàs intentant de demanar a Enlightenment que recordi d'aplicar<br>propietats (com mida, localització, estil de vora etc.) a la finestra <br><hilight>sense especificar com recordar això</hilight>.<br><br> Has d'especificar com a mínim 1 manera de recordar aquesta finestra."
 
 #: src/bin/e_int_border_remember.c:349
 msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>You may wish to enable the <hilight>Match only one window</hilight> option if<br>you only intend one instance of this window to be modified, with<br>additional instances not being modified.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
-msgstr "Estàs intentant de demanar a Enlightenment que recordi d'aplicar<br>propietats (com mida, localització, estil de vora etc.) a la finestra <br><hilight>sense especificar com recordar això</hilight>.<br><br> Vosté ha d'especificar com a mínim 1 manera de recordar aquesta finestra."
+msgstr "Estàs intentant de demanar a Enlightenment que recordi d'aplicar<br>propietats (com mida, localització, estil de vora etc.) a la finestra <br><hilight>sense especificar com recordar això</hilight>.<br><br> Has d'especificar com a mínim 1 manera de recordar aquesta finestra."
 
 #: src/bin/e_int_border_remember.c:421
 msgid "Nothing"
@@ -1879,7 +1879,7 @@ msgstr "Tipus de Finestra"
 
 #: src/bin/e_int_border_remember.c:484
 msgid "Transience"
-msgstr ""
+msgstr " "
 
 #: src/bin/e_int_border_remember.c:488
 msgid "Properties to remember"
@@ -4213,7 +4213,7 @@ msgstr ""
 #: src/modules/conf_intl/e_int_config_intl.c:355
 #: src/modules/conf_display/e_int_config_display.c:584
 msgid "Your X Display Server is missing support for<br>the <hilight>XRandr</hilight> (X Resize and Rotate) extension.<br>You cannot change screen resolutions without<br>the support of this extension. It could also be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no XRandr support detected."
-msgstr "El vostre Servidor de X no té suport per l'extensió <br> el <hilight>XRandr</hilight>(Re-dimensionar i Girar les X) .<br> No es pot canviar la resolució de Pantalla sense <br> el suport per aquesta extensió. Això pot voler significar també<br> quan es va construir <hilight>ecore</hilight> <br>no hi havia suport per XRandr."
+msgstr "El  Servidor de X no té suport per l'extensió <br> el <hilight>XRandr</hilight>(Re-dimensionar i Girar les X) .<br> No es pot canviar la resolució de Pantalla sense <br> el suport per aquesta extensió. Això pot voler significar també<br> quan es va construir <hilight>ecore</hilight> <br>no hi havia suport per XRandr."
 
 #: src/modules/conf_intl/e_int_config_intl.c:356
 #: src/modules/conf_display/e_int_config_display.c:596
@@ -6912,7 +6912,7 @@ msgstr "Hi ha hagut un error quan s'intentava<br> posar el governador de freqü�
 
 #: src/modules/cpufreq/e_mod_main.c:355
 msgid "Your kernel does not support setting the<br>CPU frequency at all. You may be missing<br>Kernel modules or features, or your CPU<br>simply does not support this feature."
-msgstr "El vostre kernel no suporta posar <br> la freqüència de CPU. Potser ha oblidat els <br> mòduls del kernel, la seva CPU<br> simplement no suporta aquesta característica."
+msgstr "El  kernel no suporta posar <br> la freqüència de CPU. Potser ha oblidat els <br> mòduls del kernel, la seva CPU<br> simplement no suporta aquesta característica."
 
 #: src/modules/cpufreq/e_mod_main.c:375
 msgid "There was an error trying to set the<br>cpu frequency setting via the module's<br>setfreq utility."
