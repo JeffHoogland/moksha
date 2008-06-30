@@ -259,6 +259,7 @@ e_hints_client_list_set(void)
    E_Border_List *bl;
    E_Border *b;
    Ecore_X_Window *clients = NULL;
+   Ecore_X_Window *clients_focus = NULL;
 
    /* Get client count by adding client lists on all containers */
    for (ml = e_manager_list(); ml; ml = ml->next)
@@ -281,6 +282,7 @@ e_hints_client_list_set(void)
 	for (ml = e_manager_list(); ml; ml = ml->next)
 	  {
 	     m = ml->data;
+	     i = 0;
 	     for (cl = m->containers; cl; cl = cl->next)
 	       {
 		  c = cl->data;
@@ -289,12 +291,16 @@ e_hints_client_list_set(void)
 		    clients[i++] = b->client.win;
 		  e_container_border_list_free(bl);
 	       }
-	  }
-	for (ml = e_manager_list(); ml; ml = ml->next)
-	  {
-	     m = ml->data;
-	     ecore_x_netwm_client_list_set(m->root, clients, num);
-	     ecore_x_netwm_client_list_stacking_set(m->root, clients, num);
+	     if (i > 0)
+	       {
+		  ecore_x_netwm_client_list_stacking_set(m->root, clients, i);
+		  ecore_x_netwm_client_list_set(m->root, clients, i);
+	       }
+	     else
+	       {
+		  ecore_x_netwm_client_list_set(m->root, NULL, 0);
+		  ecore_x_netwm_client_list_stacking_set(m->root, NULL, 0);
+	       }
 	  }
      }
    else

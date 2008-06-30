@@ -13,6 +13,7 @@ static int _e_manager_cb_key_down(void *data, int ev_type, void *ev);
 static int _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev);
 static int _e_manager_cb_ping(void *data, int ev_type, void *ev);
 static int _e_manager_cb_screensaver_notify(void *data, int ev_type, void *ev);
+static int _e_manager_cb_client_message(void *data, int ev_type, void *ev);
 
 static Evas_Bool _e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__,
 						  const char *key __UNUSED__,
@@ -141,6 +142,8 @@ e_manager_new(Ecore_X_Window root, int num)
    h = ecore_event_handler_add(ECORE_X_EVENT_PING, _e_manager_cb_ping, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_manager_cb_screensaver_notify, man);
+   if (h) man->handlers = evas_list_append(man->handlers, h);
+   h = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _e_manager_cb_client_message, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
 
    man->pointer = e_pointer_window_new(man->root, 1);
@@ -785,6 +788,51 @@ _e_manager_cb_screensaver_notify(void *data, int ev_type __UNUSED__, void *ev)
    return 1;
 }
 
+static int
+_e_manager_cb_client_message(void *data, int ev_type, void *ev)
+{
+   E_Manager *man;
+   Ecore_X_Event_Client_Message *e;
+   E_Border *bd;
+   
+   man = data;
+   e = ev;
+   
+   if (e->message_type == ECORE_X_ATOM_NET_ACTIVE_WINDOW)
+     {
+	bd = e_border_find_by_client_window(e->win);
+	if ((bd) && (!bd->focused))
+	  {
+	     if (bd->iconic)
+	       {
+		  if (e_config->clientlist_warp_to_iconified_desktop == 1)
+		    e_desk_show(bd->desk);
+		  
+		  if (!bd->lock_user_iconify)
+		    e_border_uniconify(bd);
+	       }
+	     if (!bd->iconic) e_desk_show(bd->desk);
+	     if (!bd->lock_user_stacking) e_border_raise(bd);
+	     if (!bd->lock_focus_out)
+	       {  
+		  if (e_config->focus_policy != E_FOCUS_CLICK)
+		    ecore_x_pointer_warp(bd->zone->container->win,
+					 bd->x + (bd->w / 2), bd->y + (bd->h / 2));
+		  e_border_focus_set(bd, 1, 1);
+	       }
+#if 0 /* notes */	     
+	     if (e->data.l[0] == 0 /* 0 == old, 1 == client, 2 == pager */)
+	       {
+	       }
+	     timestamp = e->data.l[1];
+	     requestor_id e->data.l[2];
+#endif	     
+	  }
+     }
+   
+   return 1;
+}
+
 static Evas_Bool
 _e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 				 void *data, void *fdata __UNUSED__)
@@ -823,5 +871,4 @@ static int _e_manager_cb_window_stack_request(void *data, int ev_type, void *ev)
 static int _e_manager_cb_window_property(void *data, int ev_type, void *ev){return 1;}
 static int _e_manager_cb_window_colormap(void *data, int ev_type, void *ev){return 1;}
 static int _e_manager_cb_window_shape(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_client_message(void *data, int ev_type, void *ev){return 1;}
 #endif

@@ -110,16 +110,18 @@ static void
 _gc_orient(E_Gadcon_Client *gcc)
 {
    Instance *inst;
-   Evas_Coord mw, mh;
+   Evas_Coord mw, mh, mxw, mxh;
 
    inst = gcc->data;
    mw = 0, mh = 0;
    edje_object_size_min_get(inst->o_battery, &mw, &mh);
+   edje_object_size_max_get(inst->o_battery, &mxw, &mxh);
    if ((mw < 1) || (mh < 1))
      edje_object_size_min_calc(inst->o_battery, &mw, &mh); 
    if (mw < 4) mw = 4;
    if (mh < 4) mh = 4;
-   e_gadcon_client_aspect_set(gcc, mw, mh);
+   if ((mxw > 0) && (mxh > 0))
+     e_gadcon_client_aspect_set(gcc, mxw, mxh);
    e_gadcon_client_min_size_set(gcc, mw, mh);
 }
 
