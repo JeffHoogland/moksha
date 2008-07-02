@@ -448,7 +448,7 @@ _file_click_cb(void *data, Evas_Object *obj, void *ev_info)
    cfdata = import->cfdata;
    sels = e_fm2_selected_list_get(cfdata->ofm);
    if (!sels) return;
-   if (cfdata->ready_for_edj == 0) return;
+   //if (cfdata->ready_for_edj == 0) return;
 
    icon_info = sels->data;
    if (ecore_list_find(cfdata->names, ECORE_COMPARE_CB(_list_find), icon_info->file))
