@@ -803,7 +803,8 @@ _e_winlist_cb_key_down(void *data, int type, void *event)
 	     if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
 	     if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
 
-	     if (bind->key && (!strcmp(bind->key, ev->keyname)) && ((bind->modifiers == mod))) 
+	     if (bind->key && (!strcmp(bind->key, ev->keyname)) && 
+		 ((bind->modifiers == mod) || (bind->any_mod))) 
 	       {	
 		  act = e_action_find(bind->action);
 		  
@@ -868,7 +869,8 @@ _e_winlist_cb_key_up(void *data, int type, void *event)
 	if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
 	if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
 
-	if (bind->key && (!strcmp(bind->key, ev->keyname)) && ((bind->modifiers == mod))) 
+	if (bind->key && (!strcmp(bind->key, ev->keyname)) && 
+	    ((bind->modifiers == mod) || (bind->any_mod))) 
 	  {	
 	     act = e_action_find(bind->action);
 
