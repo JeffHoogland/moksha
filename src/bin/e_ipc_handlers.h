@@ -6749,7 +6749,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_DEFAULT_ENGINE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-default-engine-set", 1, "Set the default rendering engine to OPT1 (SOFTWARE or XRENDER)", 0, HDL)
+   OP("-default-engine-set", 1, "Set the default rendering engine to OPT1 (SOFTWARE or XRENDER or /usr/local/bin/enlightenment_start)", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_INT_START(HDL)
    int value = 0;
@@ -6761,6 +6761,7 @@ break;
 	exit(-1);
      }
    else if (!strcmp(params[0], "XRENDER")) value = E_EVAS_ENGINE_XRENDER_X11;
+   else if (!strcmp(params[0], "SOFTWARE_16")) value = E_EVAS_ENGINE_SOFTWARE_X11_16;
    else
      {
 	printf("engine must be SOFTWARE or XRENDER\n");
@@ -6802,6 +6803,8 @@ break;
      printf("REPLY: GL\n");
    else if (engine == E_EVAS_ENGINE_XRENDER_X11)
      printf("REPLY: XRENDER\n");
+   else if (engine == E_EVAS_ENGINE_SOFTWARE_X11_16)
+     printf("REPLY: SOFTWARE_16\n");
    else
      printf("REPLY: UNKNOWN ENGINE: %d\n", engine);
    END_INT
@@ -6875,6 +6878,7 @@ break;
 	exit(-1);
      }
    else if (!strcmp(params[1], "XRENDER")) engine = E_EVAS_ENGINE_XRENDER_X11;
+   else if (!strcmp(params[1], "SOFTWARE_16")) engine = E_EVAS_ENGINE_SOFTWARE_X11_16;
    else
      {
 	 printf("engine must be DEFAULT, SOFTWARE or XRENDER\n");
@@ -6998,6 +7002,8 @@ break;
      printf("REPLY: GL\n");
    else if (engine == E_EVAS_ENGINE_XRENDER_X11)
      printf("REPLY: XRENDER\n");
+   else if (engine == E_EVAS_ENGINE_SOFTWARE_X11_16)
+     printf("REPLY: SOFTWARE_16\n");
    else
      printf("REPLY: UNKNOWN ENGINE: %d\n", engine);
    END_INT;
