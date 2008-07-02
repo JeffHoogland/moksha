@@ -6749,7 +6749,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_DEFAULT_ENGINE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-default-engine-set", 1, "Set the default rendering engine to OPT1 (SOFTWARE or XRENDER or /usr/local/bin/enlightenment_start)", 0, HDL)
+   OP("-default-engine-set", 1, "Set the default rendering engine to OPT1 (SOFTWARE, SOFTWARE_16 or XRENDER)", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_INT_START(HDL)
    int value = 0;
