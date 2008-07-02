@@ -7,9 +7,11 @@
 #define E_TYPEDEFS 1
 #include "e_int_config_theme.h"
 #include "e_int_config_theme_import.h"
+#include "e_int_config_theme_web.h"
 #undef E_TYPEDEFS
 #include "e_int_config_theme.h"
 #include "e_int_config_theme_import.h"
+#include "e_int_config_theme_web.h"
 
 EAPI extern E_Module_Api e_modapi;
 

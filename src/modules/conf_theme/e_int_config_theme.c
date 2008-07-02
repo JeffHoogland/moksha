@@ -37,6 +37,7 @@ struct _E_Config_Dialog_Data
 
    /* Dialog */
    E_Win *win_import;
+   E_Win *win_web;
 };
 
 EAPI E_Config_Dialog *
@@ -69,6 +70,15 @@ e_int_config_theme_import_done(E_Config_Dialog *dia)
 
    cfdata = dia->cfdata;
    cfdata->win_import = NULL;
+}
+
+EAPI void
+e_int_config_theme_web_done(E_Config_Dialog *dia)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = dia->cfdata;
+   cfdata->win_web = NULL;
 }
 
 EAPI void
@@ -247,6 +257,18 @@ _cb_import(void *data1, void *data2)
 }
 
 static void
+_cb_web(void *data1, void *data2)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data1;
+   if (cfdata->win_web)
+     e_win_raise(cfdata->win_web);
+   else
+     cfdata->win_web = e_int_config_theme_web(cfdata->cfd);
+}
+
+static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Theme * c;
@@ -368,9 +390,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_list_add(evas, 0, 0);
 
    il = e_widget_list_add(evas, 0, 1);
-   o = e_widget_button_add(evas, _("Import..."), "enlightenment/themes",
+   o = e_widget_button_add(evas, _(" Import..."), "enlightenment/themes",
 			   _cb_import, cfdata, NULL);
    e_widget_list_object_append(il, o, 1, 0, 0.5);
+   if (ecore_file_download_protocol_available("http://"))
+   {
+      o = e_widget_button_add(evas, _(" Online..."), "enlightenment/website",
+			      _cb_web, cfdata, NULL);
+      e_widget_list_object_append(il, o, 1, 0, 0.5);
+   }	   
    e_widget_list_object_append(of, il, 1, 0, 0.0);
 
    {
