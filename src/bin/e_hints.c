@@ -44,7 +44,7 @@ e_hints_init(void)
 	/*ecore_x_netwm_supported(roots[supported_num], ECORE_X_ATOM_NET_RESTACK_WINDOW, 1);*/
 	supported[supported_num++] = ECORE_X_ATOM_NET_REQUEST_FRAME_EXTENTS;
 
-	/* Applsupported_numcatsupported_numon Wsupported_numndow Propertsupported_numes */
+	/* Application Window Properties */
 	supported[supported_num++] = ECORE_X_ATOM_NET_WM_NAME;
 	supported[supported_num++] = ECORE_X_ATOM_NET_WM_VISIBLE_NAME;
 	supported[supported_num++] = ECORE_X_ATOM_NET_WM_ICON_NAME;
