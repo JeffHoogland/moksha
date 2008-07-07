@@ -128,6 +128,7 @@ group {
 	    aspect_preference: BOTH;
 	    min: 128 128;
 	    max: 128 128;
+	    fixed: 1 1;
 	    align: 0.5 0.0;
 	    rel1 {
                relative: 0.0 0.0;
@@ -363,6 +364,7 @@ group {
 	    aspect_preference: BOTH;
 	    min: 128 128;
 	    max: 128 128;
+	    fixed: 1 1;
 	    align: 0.5 0.0;
 	    rel1 {
                relative: 0.0 0.0;
@@ -598,6 +600,7 @@ group {
 	    aspect_preference: BOTH;
 	    min: 128 128;
 	    max: 128 128;
+	    fixed: 1 1;
 	    align: 0.5 0.0;
 	    rel1 {
                relative: 0.0 0.0;
@@ -833,6 +836,7 @@ group {
 	    aspect_preference: BOTH;
 	    min: 128 128;
 	    max: 128 128;
+	    fixed: 1 1;
 	    align: 0.5 0.0;
 	    rel1 {
                relative: 0.0 0.0;
@@ -1068,6 +1072,7 @@ group {
 	    aspect_preference: BOTH;
 	    min: 128 128;
 	    max: 128 128;
+	    fixed: 1 1;
 	    align: 0.5 0.0;
 	    rel1 {
                relative: 0.0 0.0;
