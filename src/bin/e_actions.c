@@ -1579,6 +1579,11 @@ _e_actions_cb_exit_dialog_delete(E_Win *win)
 
 ACT_FN_GO(exit)
 {
+   if ((params) && (!strcmp(params, "now")))
+     {
+	e_sys_action_do(E_SYS_EXIT, NULL);
+	return;
+     }
    if (exit_dialog) e_object_del(E_OBJECT(exit_dialog));
 
    if (e_config->cnfmdlg_disabled)
@@ -1650,6 +1655,11 @@ _e_actions_cb_logout_dialog_delete(E_Win *win)
 
 ACT_FN_GO(logout)
 {
+   if ((params) && (!strcmp(params, "now")))
+     {
+	e_sys_action_do(E_SYS_LOGOUT, NULL);
+	return;
+     }
    if (logout_dialog) e_object_del(E_OBJECT(logout_dialog));
    
    if (e_config->cnfmdlg_disabled)
@@ -1709,6 +1719,11 @@ _e_actions_cb_halt_dialog_delete(E_Win *win)
 
 ACT_FN_GO(halt)
 {
+   if ((params) && (!strcmp(params, "now")))
+     {
+	e_sys_action_do(E_SYS_HALT, NULL);
+	return;
+     }
    if (halt_dialog) e_object_del(E_OBJECT(halt_dialog));
 
    if (e_config->cnfmdlg_disabled)
@@ -1768,6 +1783,11 @@ _e_actions_cb_reboot_dialog_delete(E_Win *win)
 
 ACT_FN_GO(reboot)
 {
+   if ((params) && (!strcmp(params, "now")))
+     {
+	e_sys_action_do(E_SYS_REBOOT, NULL);
+	return;
+     }
    if (reboot_dialog) e_object_del(E_OBJECT(reboot_dialog));
 
    if (e_config->cnfmdlg_disabled)
@@ -1827,6 +1847,11 @@ _e_actions_cb_suspend_dialog_delete(E_Win *win)
 
 ACT_FN_GO(suspend)
 {
+   if ((params) && (!strcmp(params, "now")))
+     {
+	e_sys_action_do(E_SYS_SUSPEND, NULL);
+	return;
+     }
    if (suspend_dialog) e_object_del(E_OBJECT(suspend_dialog));
 
    if (e_config->cnfmdlg_disabled)
@@ -1886,6 +1911,11 @@ _e_actions_cb_hibernate_dialog_delete(E_Win *win)
 
 ACT_FN_GO(hibernate)
 {
+   if ((params) && (!strcmp(params, "now")))
+     {
+	e_sys_action_do(E_SYS_HIBERNATE, NULL);
+	return;
+     }
    if (hibernate_dialog) e_object_del(E_OBJECT(hibernate_dialog));
 
    if (e_config->cnfmdlg_disabled)
