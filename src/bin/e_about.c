@@ -7,6 +7,7 @@
 static void _e_about_free(E_About *about);
 static void _e_about_cb_delete(E_Win *win);
 static void _e_about_cb_close(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_about_cb_resize(E_Win *win);
 
 static E_About *_e_about = NULL;
 
@@ -60,6 +61,7 @@ e_about_new(E_Container *con)
 	return NULL;
      }
    e_win_delete_callback_set(about->win, _e_about_cb_delete);
+   e_win_resize_callback_set(about->win, _e_about_cb_resize);
    about->win->data = about;
    e_win_dialog_set(about->win, 1);
    e_win_name_class_set(about->win, "E", "_about");
@@ -200,4 +202,13 @@ _e_about_cb_close(void *data, Evas_Object *obj, const char *emission, const char
    about = data;
    if (!about) return;
    e_util_defer_object_del(E_OBJECT(about));
+}
+
+static void
+_e_about_cb_resize(E_Win *win)
+{
+   E_About *about;
+   
+   about = win->data;
+   evas_object_resize(about->bg_object, about->win->w, about->win->h);
 }

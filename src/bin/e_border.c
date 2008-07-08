@@ -1376,7 +1376,8 @@ e_border_focus_set_with_pointer(E_Border *bd)
      {
 	if (e_border_under_pointer_get(bd->desk, bd))
 	  {
-	     if (!e_border_pointer_warp_to_center(bd))
+// FIXME: make this config. this is just annoying to warp all the time here!
+//	     if (!e_border_pointer_warp_to_center(bd))
 	       e_border_focus_set(bd, 1, 1);
 	  }
 	else
@@ -1385,7 +1386,8 @@ e_border_focus_set_with_pointer(E_Border *bd)
    else if (e_config->focus_policy == E_FOCUS_CLICK)
      e_border_focus_set(bd, 1, 1);
    else
-     if (!e_border_pointer_warp_to_center(bd))
+// FIXME: make this config. this is just annoying to warp all the time here!
+//     if (!e_border_pointer_warp_to_center(bd))
        e_border_focus_set(bd, 1, 1);
 
    ecore_x_pointer_ungrab();

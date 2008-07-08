@@ -7,6 +7,7 @@
 static void _e_obj_dialog_free(E_Obj_Dialog *od);
 static void _e_obj_dialog_cb_delete(E_Win *win);
 static void _e_obj_dialog_cb_close(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_obj_dialog_cb_resize(E_Win *win);
 
 /* local subsystem globals */
 
@@ -36,6 +37,7 @@ e_obj_dialog_new(E_Container *con, char *title, char *class_name, char *class_cl
 	return NULL;
      }
    e_win_delete_callback_set(od->win, _e_obj_dialog_cb_delete);
+   e_win_resize_callback_set(od->win, _e_obj_dialog_cb_resize);
    od->win->data = od;
    e_win_dialog_set(od->win, 1);
    e_win_name_class_set(od->win, class_name, class_class);
@@ -137,4 +139,13 @@ _e_obj_dialog_cb_close(void *data, Evas_Object *obj, const char *emission, const
    if (od->cb_delete)
      od->cb_delete(od);
    e_util_defer_object_del(E_OBJECT(od));
+}
+
+static void
+_e_obj_dialog_cb_resize(E_Win *win)
+{
+   E_Obj_Dialog *od;
+   
+   od = win->data;
+   evas_object_resize(od->bg_object, od->win->w, od->win->h);
 }
