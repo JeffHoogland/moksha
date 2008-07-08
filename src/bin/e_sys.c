@@ -71,7 +71,6 @@ e_sys_action_possible_get(E_Sys_Action a)
       case E_SYS_LOGOUT:
 	return 0;
       case E_SYS_HALT:
-	return _e_sys_can_halt;
       case E_SYS_HALT_NOW:
 	return _e_sys_can_halt;
       case E_SYS_REBOOT:
@@ -150,6 +149,7 @@ _e_sys_cb_exit(void *data, int type, void *event)
      {
 	if (ev->exit_code != 0) _e_sys_action_failed();
 	if (((_e_sys_action_current != E_SYS_HALT) &&
+	     (_e_sys_action_current != E_SYS_HALT_NOW) &&
 	     (_e_sys_action_current != E_SYS_REBOOT)) ||
 	    (ev->exit_code != 0))
 	  {
@@ -364,6 +364,7 @@ _e_sys_current_action(void)
 			  );
 	break;
       case E_SYS_HALT:
+      case E_SYS_HALT_NOW:
 	e_dialog_text_set(dia,
 			  _("Enlightenment is shutting the system down.<br>"
 			    "You cannot do any other system actions<br>"
@@ -417,6 +418,7 @@ _e_sys_action_failed(void)
    switch (_e_sys_action_current)
      {
       case E_SYS_HALT:
+      case E_SYS_HALT_NOW:
 	e_dialog_text_set(dia,
 			  _("Shutting down of your system failed.")
 			  );
@@ -470,6 +472,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	_e_sys_logout_begin(E_SYS_EXIT);
 	break;
       case E_SYS_HALT:
+      case E_SYS_HALT_NOW:
 	/* shutdown -h now */
 	if (e_util_immortal_check()) return 0;
 	snprintf(buf, sizeof(buf), "%s/enlightenment_sys halt",
