@@ -1433,7 +1433,7 @@ _e_menu_realize(E_Menu *m)
    
    o = e_box_add(m->evas);
    m->container_object = o;
-   evas_object_intercept_move_callback_add  (o, _e_menu_cb_intercept_container_move,   m);
+   evas_object_intercept_move_callback_add(o, _e_menu_cb_intercept_container_move, m);
    evas_object_intercept_resize_callback_add(o, _e_menu_cb_intercept_container_resize, m);
    e_box_freeze(o);
    evas_object_show(o);
