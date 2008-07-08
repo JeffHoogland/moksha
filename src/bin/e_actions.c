@@ -1624,6 +1624,12 @@ ACT_FN_GO(exit_now)
 }
 
 /***************************************************************************/
+ACT_FN_GO(halt_now)
+{
+   e_sys_action_do(E_SYS_HALT_NOW, NULL);
+}
+
+/***************************************************************************/
 static E_Dialog *logout_dialog = NULL;
 
 static void
@@ -2574,6 +2580,10 @@ e_actions_init(void)
    ACT_GO(exit_now);
    e_action_predef_name_set(_("Enlightenment"), _("Exit Immediately"), 
 			    "exit_now", NULL, NULL, 0);
+
+   ACT_GO(halt_now);
+   e_action_predef_name_set(_("Enlightenment"), _("Shut Down Immediately"), 
+			    "halt_now", NULL, NULL, 0);
 
    ACT_GO(halt);
    e_action_predef_name_set(_("System"), _("Shut Down"), "halt", 

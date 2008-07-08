@@ -13,6 +13,7 @@ enum _E_Sys_Action
    E_SYS_EXIT_NOW,
    E_SYS_LOGOUT,
    E_SYS_HALT,
+   E_SYS_HALT_NOW,
    E_SYS_REBOOT,
    E_SYS_SUSPEND,
    E_SYS_HIBERNATE

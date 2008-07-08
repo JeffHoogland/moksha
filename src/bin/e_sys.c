@@ -72,6 +72,8 @@ e_sys_action_possible_get(E_Sys_Action a)
 	return 0;
       case E_SYS_HALT:
 	return _e_sys_can_halt;
+      case E_SYS_HALT_NOW:
+	return _e_sys_can_halt;
       case E_SYS_REBOOT:
 	return _e_sys_can_reboot;
       case E_SYS_SUSPEND:
@@ -102,6 +104,7 @@ e_sys_action_do(E_Sys_Action a, char *param)
       case E_SYS_LOGOUT:
       case E_SYS_SUSPEND:
       case E_SYS_HIBERNATE:
+      case E_SYS_HALT_NOW:
 	ret = _e_sys_action_do(a, param);
 	break;
       case E_SYS_HALT:
