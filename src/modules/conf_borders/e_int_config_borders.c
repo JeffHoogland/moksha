@@ -139,18 +139,18 @@ _basic_apply_border(E_Config_Dialog_Data *cfdata)
      }
    if (cfdata->remember_border) 
      {
-         if (!cfdata->border->remember) 
+	if (!cfdata->border->remember) 
+	  {
              cfdata->border->remember = e_remember_new();
-         {
              if (cfdata->border->remember)
-                 e_remember_use(cfdata->border->remember);
-         }
-         if (cfdata->border->remember) 
-         {
+	       e_remember_use(cfdata->border->remember);
+	  }
+	if (cfdata->border->remember) 
+	  {
 	     cfdata->border->remember->apply |= E_REMEMBER_APPLY_BORDER;
              cfdata->border->remember->match = e_remember_default_match(cfdata->border);
              e_remember_update(cfdata->border->remember, cfdata->border);
-         }
+	  }
      }
    else 
      {
