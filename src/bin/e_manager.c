@@ -163,15 +163,23 @@ e_manager_manage_windows(E_Manager *man)
    if (windows)
      {
 	int i;
+	const char *atom_names[] =
+	  {
+	     "_XEMBED_INFO",
+	       "_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR",
+	       "KWM_DOCKWINDOW"
+	  };
+	Ecore_X_Atom atoms[3];
         Ecore_X_Atom atom_xmbed, atom_kde_netwm_systray, atom_kwm_dockwindow,
 	  atom_window;
 	unsigned char *data = NULL;
 	int count;
 	
-	atom_window = ecore_x_atom_get("WINDOW");
-	atom_xmbed = ecore_x_atom_get("_XEMBED_INFO");
-	atom_kde_netwm_systray = ecore_x_atom_get("_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR");
-	atom_kwm_dockwindow = ecore_x_atom_get("KWM_DOCKWINDOW");
+	atom_window = ECORE_X_ATOM_WINDOW;
+	ecore_x_atoms_get(atom_names, 3, atoms);
+	atom_xmbed = atoms[0];
+	atom_kde_netwm_systray = atoms[1];
+	atom_kwm_dockwindow = atoms[2];
 	for (i = 0; i < wnum; i++)
 	  {
 	     Ecore_X_Window_Attributes att;

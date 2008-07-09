@@ -19,17 +19,31 @@ EAPI Ecore_X_Atom E_ATOM_WINDOW_STATE_CENTERED = 0;
 EAPI int
 e_atoms_init(void)
 {
-   E_ATOM_MANAGED = ecore_x_atom_get("__E_WINDOW_MANAGED");
-   E_ATOM_CONTAINER = ecore_x_atom_get("__E_WINDOW_CONTAINER");
-   E_ATOM_ZONE = ecore_x_atom_get("__E_WINDOW_ZONE");
-   E_ATOM_DESK = ecore_x_atom_get("__E_WINDOW_DESK");
-   E_ATOM_MAPPED = ecore_x_atom_get("__E_WINDOW_MAPPED");
-   E_ATOM_SHADE_DIRECTION = ecore_x_atom_get("__E_WINDOW_SHADE_DIRECTION");
-   E_ATOM_HIDDEN = ecore_x_atom_get("__E_WINDOW_HIDDEN");
-   E_ATOM_BORDER_SIZE = ecore_x_atom_get("__E_WINDOW_BORDER_SIZE");
-   E_ATOM_WINDOW_STATE = ecore_x_atom_get("__E_ATOM_WINDOW_STATE");
-   E_ATOM_WINDOW_STATE_CENTERED = ecore_x_atom_get("__E_ATOM_WINDOW_STATE_CENTERED");
-
+   const char *atom_names[] = {
+      "__E_WINDOW_MANAGED",
+	"__E_WINDOW_CONTAINER",
+	"__E_WINDOW_ZONE",
+	"__E_WINDOW_DESK",
+	"__E_WINDOW_MAPPED",
+	"__E_WINDOW_SHADE_DIRECTION",
+	"__E_WINDOW_HIDDEN",
+	"__E_WINDOW_BORDER_SIZE",
+	"__E_ATOM_WINDOW_STATE",
+	"__E_ATOM_WINDOW_STATE_CENTERED"
+   };
+   Ecore_X_Atom atoms[10];
+   
+   ecore_x_atoms_get(atom_names, 10, atoms);
+   E_ATOM_MANAGED = atoms[0];
+   E_ATOM_CONTAINER = atoms[1];
+   E_ATOM_ZONE = atoms[2];
+   E_ATOM_DESK = atoms[3];
+   E_ATOM_MAPPED = atoms[4];
+   E_ATOM_SHADE_DIRECTION = atoms[5];
+   E_ATOM_HIDDEN = atoms[6];
+   E_ATOM_BORDER_SIZE = atoms[7];
+   E_ATOM_WINDOW_STATE = atoms[8];
+   E_ATOM_WINDOW_STATE_CENTERED = atoms[9];
    return 1;
 }
 

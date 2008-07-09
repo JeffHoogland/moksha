@@ -6,14 +6,31 @@
 Ecore_X_Atom _QTOPIA_SOFT_MENU = 0;
 Ecore_X_Atom _QTOPIA_SOFT_MENUS = 0;
 
+static Ecore_X_Atom gnome_atom = 0;
+static Ecore_X_Atom enlightenment_comms = 0;
+static Ecore_X_Atom enlightenment_version = 0;
+
 EAPI void
 e_hints_init(void)
 {
    Ecore_X_Window *roots = NULL;
    int num;
-
-   _QTOPIA_SOFT_MENU = ecore_x_atom_get("_QTOPIA_SOFT_MENU");
-   _QTOPIA_SOFT_MENUS = ecore_x_atom_get("_QTOPIA_SOFT_MENUS");
+   const char *atom_names[] = {
+      "_QTOPIA_SOFT_MENU",
+	"_QTOPIA_SOFT_MENUS",
+	"GNOME_SM_PROXY",
+	"ENLIGHTENMENT_COMMS",
+	"ENLIGHTENMENT_VERSION"
+   };
+   Ecore_X_Atom atoms[5];
+   
+   ecore_x_atoms_get(atom_names, 5, atoms);
+   _QTOPIA_SOFT_MENU = atoms[0];
+   _QTOPIA_SOFT_MENUS = atoms[1];
+   gnome_atom = atoms[2];
+   enlightenment_comms = atoms[3];
+   enlightenment_version = atoms[4];
+   
    roots = ecore_x_window_root_list(&num);
    if (roots)
      {
@@ -173,24 +190,19 @@ EAPI void
 e_hints_e16_comms_pretend(E_Manager *man)
 {
    Ecore_X_Window win;
-   Ecore_X_Atom enlightenment_comms, enlightenment_version, string;
    char buf[256];
-   
-   enlightenment_comms = ecore_x_atom_get("ENLIGHTENMENT_COMMS");
-   enlightenment_version = ecore_x_atom_get("ENLIGHTENMENT_VERSION");
-   string = ecore_x_atom_get("STRING");
    
    win = ecore_x_window_input_new(man->root, -100, -100, 1, 1);
 
    /* to help detect this is NOT e16 */
    snprintf(buf, sizeof(buf), "Enlightenment %s", VERSION);
-   ecore_x_window_prop_property_set(win, enlightenment_version, string, 8, buf, strlen(buf));
-   ecore_x_window_prop_property_set(man->root, enlightenment_version, string, 8, buf, strlen(buf));
+   ecore_x_window_prop_property_set(win, enlightenment_version, ECORE_X_ATOM_STRING, 8, buf, strlen(buf));
+   ecore_x_window_prop_property_set(man->root, enlightenment_version, ECORE_X_ATOM_STRING, 8, buf, strlen(buf));
    
    snprintf(buf, sizeof(buf), "WINID %8x", (int)win);
-   ecore_x_window_prop_property_set(win, enlightenment_comms, string, 8, buf, 14);
+   ecore_x_window_prop_property_set(win, enlightenment_comms, ECORE_X_ATOM_STRING, 8, buf, 14);
    
-   ecore_x_window_prop_property_set(man->root, enlightenment_comms, string, 8, buf, 14);
+   ecore_x_window_prop_property_set(man->root, enlightenment_comms, ECORE_X_ATOM_STRING, 8, buf, 14);
 }
 
 EAPI void
@@ -1370,12 +1382,9 @@ e_hints_window_qtopia_soft_menus_get(E_Border *bd)
 EAPI void
 e_hints_openoffice_gnome_fake(Ecore_X_Window root)
 {
-   Ecore_X_Atom gnome_atom, string_atom;
    const char *string = "GNOME_SM_PROXY";
    
-   gnome_atom = ecore_x_atom_get("GNOME_SM_PROXY");
-   string_atom = ecore_x_atom_get("STRING");
-   ecore_x_window_prop_property_set(root, gnome_atom, string_atom, 
+   ecore_x_window_prop_property_set(root, gnome_atom, ECORE_X_ATOM_STRING, 
 				    8, (void *)string, strlen(string));
 }
 
