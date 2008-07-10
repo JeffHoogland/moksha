@@ -63,7 +63,6 @@ group
 	    effect: SHADOW;
 	    description {
 	       state: "default" 0.0;
-	       color: 0 0 0 255;
 	       fixed: 0 1;
 	       align: 0.0 0.5;
 	       rel1 {
@@ -162,7 +161,6 @@ group
 	       clip_to: "passwd_entry_clip";
 	       description {
 		  state: "default" 0.0;
-		  color: 0 0 0 255;
 		  fixed: 0 1;
 		  align: 0.0 0.5;
 		  
