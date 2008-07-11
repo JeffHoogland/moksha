@@ -21,11 +21,11 @@ e_about_new(E_Container *con)
    E_Manager *man;
    Evas_Object *o;
    E_About *about;
-   
+
    if (_e_about) 
      {
 	E_Zone *z, *z2;
-	
+
 	about = _e_about;
 	z = e_util_zone_current_get(e_manager_current_get());
 	z2 = about->win->border->zone;
@@ -43,7 +43,7 @@ e_about_new(E_Container *con)
 	e_border_unshade(about->win->border, E_DIRECTION_DOWN);
 	return NULL;
      }
-   
+
    if (!con)
      {
 	man = e_manager_current_get();
@@ -66,19 +66,19 @@ e_about_new(E_Container *con)
    e_win_dialog_set(about->win, 1);
    e_win_name_class_set(about->win, "E", "_about");
    e_win_title_set(about->win, _("About Enlightenment"));
-   
+
    o = edje_object_add(e_win_evas_get(about->win));
    about->bg_object = o;
    e_theme_edje_object_set(o, "base/theme/about", "e/widgets/about/main");
    evas_object_move(o, 0, 0);
    evas_object_show(o);
-   
+
    edje_object_part_text_set(about->bg_object, "e.text.title", _("Enlightenment"));
    edje_object_part_text_set(about->bg_object, "e.text.version", VERSION);
    edje_object_part_text_set
      (about->bg_object, "e.textblock.about",
       _(
-	"Copyright &copy; 1999-2007, by the Enlightenment Development Team.<br>"
+	"Copyright &copy; 1999-2008, by the Enlightenment Development Team.<br>"
 	"<br>"
 	"We hope you enjoy using this software as much as we enjoyed "
 	"writing it.<br>"
@@ -98,7 +98,7 @@ e_about_new(E_Container *con)
      {
 	FILE *f;
 	char buf[4096], buf2[4096], *tbuf;
-	
+
 	snprintf(buf, sizeof(buf), "%s/AUTHORS", e_prefix_data_get());
 	f = fopen(buf, "r");
 	if (f)
@@ -107,7 +107,7 @@ e_about_new(E_Container *con)
 	     while (fgets(buf, sizeof(buf), f))
 	       {
 		  int len;
-		  
+
 		  len = strlen(buf);
 		  if (len > 0)
 		    {  
@@ -119,7 +119,7 @@ e_about_new(E_Container *con)
 		       if (len > 0)
 			 {
 			    char *p;
-			    
+
 			    do
 			      {
 				 p = strchr(buf, '<');
@@ -141,7 +141,8 @@ e_about_new(E_Container *con)
 	     fclose(f);
 	     if (tbuf)
 	       {
-		  edje_object_part_text_set(about->bg_object, "e.textblock.authors", tbuf);
+		  edje_object_part_text_set(about->bg_object, 
+                                            "e.textblock.authors", tbuf);
 		  free(tbuf);
 	       }
 	  }
@@ -155,7 +156,7 @@ EAPI void
 e_about_show(E_About *about)
 {
    Evas_Coord w, h, mw, mh;
-   
+
    edje_object_size_min_get(about->bg_object, &w, &h);
    edje_object_size_min_calc(about->bg_object, &mw, &mh);
    if (w > mw) mw = w;
@@ -163,7 +164,7 @@ e_about_show(E_About *about)
    evas_object_resize(about->bg_object, mw, mh);
    e_win_resize(about->win, mw, mh);
    e_win_size_min_set(about->win, mw, mh);
-   
+
    edje_object_size_max_get(about->bg_object, &w, &h);
    if ((w > 0) && (h > 0))
      {
@@ -188,9 +189,8 @@ static void
 _e_about_cb_delete(E_Win *win)
 {
    E_About *about;
-   
-   about = win->data;
-   if (!about) return;
+
+   if (!(about = win->data)) return;
    e_object_del(E_OBJECT(about));
 }
 
@@ -198,9 +198,8 @@ static void
 _e_about_cb_close(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_About *about;
-   
-   about = data;
-   if (!about) return;
+
+   if (!(about = data)) return;
    e_util_defer_object_del(E_OBJECT(about));
 }
 
@@ -208,7 +207,7 @@ static void
 _e_about_cb_resize(E_Win *win)
 {
    E_About *about;
-   
+
    about = win->data;
    evas_object_resize(about->bg_object, about->win->w, about->win->h);
 }
