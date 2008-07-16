@@ -48,11 +48,20 @@ EAPI void e_hints_window_e_state_get(E_Border *bd);
 EAPI void e_hints_window_qtopia_soft_menu_get(E_Border *bd);
 EAPI void e_hints_window_qtopia_soft_menus_get(E_Border *bd);
 
+EAPI void e_hints_window_virtual_keyboard_state_get(E_Border *bd);
+EAPI void e_hints_window_virtual_keyboard_get(E_Border *bd);
+
 EAPI void e_hints_openoffice_gnome_fake(Ecore_X_Window root);
 EAPI void e_hints_openoffice_kde_fake(Ecore_X_Window root);
 
 extern EAPI Ecore_X_Atom _QTOPIA_SOFT_MENU;
 extern EAPI Ecore_X_Atom _QTOPIA_SOFT_MENUS;
+extern EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD;
+extern EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD_STATE;
+extern EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD_OFF;
+extern EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD_ON;
+extern EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD_ALPHA;
+extern EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD_NUMERIC;
 
 #endif
 #endif

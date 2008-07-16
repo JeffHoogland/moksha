@@ -411,21 +411,24 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 		       bd->client.netwm.fetch.state = 1;
 		    }
 	       }
-	     /* loop to check for own atoms */
+	     /* other misc atoms */
 	     for (i = 0; i < at_num; i++)
 	       {
+		  /* loop to check for own atoms */
 		  if (atoms[i] == E_ATOM_WINDOW_STATE)
 		    {
 		       bd->client.e.fetch.state = 1;
 		    }
-	       }
-	     /* loop to check for qtopia atoms */
-	     for (i = 0; i < at_num; i++)
-	       {
+		  /* loop to check for qtopia atoms */
 		  if (atoms[i] == _QTOPIA_SOFT_MENU)
 		    bd->client.qtopia.fetch.soft_menu = 1;
 		  else if (atoms[i] == _QTOPIA_SOFT_MENUS)
 		    bd->client.qtopia.fetch.soft_menus = 1;
+		  /* loop to check for vkbd atoms */
+		  else if (atoms[i] == _E_VIRTUAL_KEYBOARD_STATE)
+		    bd->client.vkbd.fetch.state = 1;
+		  else if (atoms[i] == _E_VIRTUAL_KEYBOARD)
+		    bd->client.vkbd.fetch.vkbd = 1;
 	       }
 	     free(atoms);
 	  }
@@ -3998,6 +4001,16 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
 	bd->client.qtopia.fetch.soft_menus = 1;
 	bd->changed = 1;
      }
+   else if (e->atom == _E_VIRTUAL_KEYBOARD_STATE)
+     {
+	bd->client.vkbd.fetch.state = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == _E_VIRTUAL_KEYBOARD)
+     {
+	bd->client.vkbd.fetch.vkbd = 1;
+	bd->changed = 1;
+     }
    /*
    else if (e->atom == ECORE_X_ATOM_NET_WM_USER_TIME)
      {
@@ -5492,6 +5505,18 @@ _e_border_eval(E_Border *bd)
 	bd->client.qtopia.fetch.soft_menus = 0;
 	rem_change = 1;
      }
+   if (bd->client.vkbd.fetch.state)
+     {
+	e_hints_window_virtual_keyboard_state_get(bd);
+	bd->client.vkbd.fetch.state = 0;
+	rem_change = 1;
+     }
+   if (bd->client.vkbd.fetch.vkbd)
+     {
+	e_hints_window_virtual_keyboard_get(bd);
+	bd->client.vkbd.fetch.vkbd = 0;
+	rem_change = 1;
+     }
    if (bd->changes.shape)
      {
 	Ecore_X_Rectangle *rects;
@@ -5856,6 +5881,7 @@ _e_border_eval(E_Border *bd)
 	  }
      }
 
+   _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_POST_FETCH, bd);
    _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_FETCH, bd);
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_BORDER_ASSIGN, bd);
    

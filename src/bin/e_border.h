@@ -81,6 +81,7 @@ typedef enum _E_Window_Placement
 typedef enum _E_Border_Hook_Point
 {
    E_BORDER_HOOK_EVAL_PRE_FETCH,
+   E_BORDER_HOOK_EVAL_PRE_POST_FETCH,
    E_BORDER_HOOK_EVAL_POST_FETCH,
    E_BORDER_HOOK_EVAL_PRE_BORDER_ASSIGN,
    E_BORDER_HOOK_EVAL_POST_BORDER_ASSIGN,
@@ -347,6 +348,14 @@ struct _E_Border
 	 unsigned char soft_menu : 1;
 	 unsigned char soft_menus : 1;
       } qtopia;
+      struct {
+	 struct {
+	    unsigned char state : 1;
+	    unsigned char vkbd : 1;
+	 } fetch;
+	 Ecore_X_Atom state;
+	 unsigned char vkbd : 1;
+      } vkbd;
 
       Ecore_X_Window_Attributes initial_attributes;
    } client;
@@ -407,7 +416,9 @@ struct _E_Border
    unsigned int    lock_focus_in : 1; /*DONE*/
    unsigned int    lock_focus_out : 1; /*DONE*/
    unsigned int    lock_life : 1; /*DONE*/
+
    unsigned int    internal : 1;
+   unsigned int    stolen : 1;
    
    Ecore_Evas     *internal_ecore_evas;
    

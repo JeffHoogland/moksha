@@ -3,8 +3,14 @@
  */
 #include "e.h"
 
-Ecore_X_Atom _QTOPIA_SOFT_MENU = 0;
-Ecore_X_Atom _QTOPIA_SOFT_MENUS = 0;
+EAPI Ecore_X_Atom _QTOPIA_SOFT_MENU = 0;
+EAPI Ecore_X_Atom _QTOPIA_SOFT_MENUS = 0;
+EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD = 0;
+EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD_STATE = 0;
+EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD_OFF = 0;
+EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD_ON = 0;
+EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD_ALPHA = 0;
+EAPI Ecore_X_Atom _E_VIRTUAL_KEYBOARD_NUMERIC = 0;
 
 static Ecore_X_Atom gnome_atom = 0;
 static Ecore_X_Atom enlightenment_comms = 0;
@@ -20,16 +26,28 @@ e_hints_init(void)
 	"_QTOPIA_SOFT_MENUS",
 	"GNOME_SM_PROXY",
 	"ENLIGHTENMENT_COMMS",
-	"ENLIGHTENMENT_VERSION"
+	"ENLIGHTENMENT_VERSION",
+	"_E_VIRTUAL_KEYBOARD",
+	"_E_VIRTUAL_KEYBOARD_STATE",
+	"_E_VIRTUAL_KEYBOARD_OFF",
+	"_E_VIRTUAL_KEYBOARD_ON",
+	"_E_VIRTUAL_KEYBOARD_ALPHA",
+	"_E_VIRTUAL_KEYBOARD_NUMERIC"
    };
-   Ecore_X_Atom atoms[5];
+   Ecore_X_Atom atoms[11];
    
-   ecore_x_atoms_get(atom_names, 5, atoms);
+   ecore_x_atoms_get(atom_names, 11, atoms);
    _QTOPIA_SOFT_MENU = atoms[0];
    _QTOPIA_SOFT_MENUS = atoms[1];
    gnome_atom = atoms[2];
    enlightenment_comms = atoms[3];
    enlightenment_version = atoms[4];
+   _E_VIRTUAL_KEYBOARD = atoms[5];
+   _E_VIRTUAL_KEYBOARD_STATE = atoms[6];
+   _E_VIRTUAL_KEYBOARD_OFF = atoms[7];
+   _E_VIRTUAL_KEYBOARD_ON = atoms[8];
+   _E_VIRTUAL_KEYBOARD_ALPHA = atoms[9];
+   _E_VIRTUAL_KEYBOARD_NUMERIC = atoms[10];
    
    roots = ecore_x_window_root_list(&num);
    if (roots)
@@ -1377,6 +1395,25 @@ e_hints_window_qtopia_soft_menus_get(E_Border *bd)
      bd->client.qtopia.soft_menus = val;
    else
      bd->client.qtopia.soft_menus = 0;
+}
+
+EAPI void
+e_hints_window_virtual_keyboard_state_get(E_Border *bd)
+{
+   if (!ecore_x_window_prop_atom_get(bd->client.win, _E_VIRTUAL_KEYBOARD_STATE,
+				     &(bd->client.vkbd.state), 1))
+     bd->client.vkbd.state = 0;
+}
+
+EAPI void
+e_hints_window_virtual_keyboard_get(E_Border *bd)
+{
+   unsigned int val;
+   
+   if (ecore_x_window_prop_card32_get(bd->client.win, _E_VIRTUAL_KEYBOARD, &val, 1))
+     bd->client.vkbd.vkbd = val;
+   else
+     bd->client.vkbd.vkbd = 0;
 }
 
 EAPI void
