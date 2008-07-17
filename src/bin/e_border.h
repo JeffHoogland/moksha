@@ -418,6 +418,7 @@ struct _E_Border
    unsigned int    lock_life : 1; /*DONE*/
 
    unsigned int    internal : 1;
+   unsigned int    internal_no_remember : 1;
    unsigned int    stolen : 1;
    
    Ecore_Evas     *internal_ecore_evas;

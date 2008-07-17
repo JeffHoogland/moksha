@@ -94,6 +94,7 @@ e_win_show(E_Win *win)
 	  win->border->re_manage = 0;
 	win->border->internal = 1;
 	win->border->internal_ecore_evas = win->ecore_evas;
+	if (win->state.no_remember) win->border->internal_no_remember = 1;
      }
    _e_win_prop_update(win);
    e_border_show(win->border);
@@ -348,6 +349,14 @@ e_win_dialog_set(E_Win *win, int dialog)
 	win->state.dialog = 1;
 	_e_win_prop_update(win);
      }
+}
+
+EAPI void
+e_win_no_remember_set(E_Win *win, int no_remember)
+{
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
+   win->state.no_remember = no_remember;
 }
 
 EAPI E_Win *

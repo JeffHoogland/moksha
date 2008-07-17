@@ -6232,7 +6232,9 @@ _e_border_eval(E_Border *bd)
 	     bd->placed = 1;
 	  }
 
-	if ((bd->internal) && (!bd->remember) && (e_config->remember_internal_windows))
+	if ((bd->internal) && (!bd->remember) && 
+	    (e_config->remember_internal_windows) &&
+	    (!bd->internal_no_remember))
 	  {
 	     E_Remember *rem;
 	     
