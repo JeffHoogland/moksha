@@ -733,7 +733,8 @@ _e_desktop_edit_cb_exec_select_destroy(void *obj)
    E_Dialog *dia = obj;
    E_Config_Dialog_Data *cfdata = dia->data;
 
-   e_object_unref(E_OBJECT(dia));
+/* guess it should work like _e_desktop_edit_cb_icon_select_destroy */
+/*    e_object_unref(E_OBJECT(dia)); */
    _e_desktop_edit_cb_exec_select_cancel(cfdata, NULL);
 }
 
