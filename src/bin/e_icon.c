@@ -10,7 +10,8 @@ struct _E_Smart_Data
    Evas_Coord   x, y, w, h;
    Evas_Object *obj;
    int          size;
-   char         fill_inside : 1;
+   unsigned char fill_inside : 1;
+   unsigned char scale_up : 1;
 }; 
 
 /* local subsystem functions */
@@ -193,6 +194,29 @@ e_icon_fill_inside_set(Evas_Object *obj, int fill_inside)
    _e_icon_smart_reconfigure(sd);
 }
 
+EAPI int
+e_icon_scale_up_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (sd->scale_up) return 1;
+   return 0;
+}
+
+EAPI void
+e_icon_scale_up_set(Evas_Object *obj, int scale_up)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (((sd->scale_up) && (scale_up)) ||
+       ((!sd->scale_up) && (!scale_up))) return;
+   sd->scale_up = scale_up;
+   _e_icon_smart_reconfigure(sd);
+}
+
 EAPI void
 e_icon_data_set(Evas_Object *obj, void *data, int w, int h)
 {
@@ -287,6 +311,14 @@ _e_icon_smart_reconfigure(E_Smart_Data *sd)
 		  w = ((double)iw * h) / (double)ih;
 	       }	
 	  }
+	if (!sd->scale_up)
+	  {
+	     if ((w > iw) || (h > ih))
+	       {
+		  w = iw;
+		  h = ih;
+	       }
+	  }
 	x = sd->x + ((sd->w - w) / 2);
 	y = sd->y + ((sd->h - h) / 2);
 	evas_object_move(sd->obj, x, y);
@@ -332,6 +364,7 @@ _e_icon_smart_add(Evas_Object *obj)
    sd->w = 0;
    sd->h = 0;
    sd->fill_inside = 1;
+   sd->scale_up = 1;
    sd->size = 64;
    evas_object_smart_member_add(sd->obj, obj);
    evas_object_smart_data_set(obj, sd);

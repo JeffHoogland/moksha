@@ -19,6 +19,8 @@ EAPI int          e_icon_alpha_get        (Evas_Object *obj);
 EAPI void         e_icon_size_get         (Evas_Object *obj, int *w, int *h);
 EAPI int          e_icon_fill_inside_get  (Evas_Object *obj);
 EAPI void         e_icon_fill_inside_set  (Evas_Object *obj, int fill_inside);
+EAPI int          e_icon_scale_up_get     (Evas_Object *obj);
+EAPI void         e_icon_scale_up_set     (Evas_Object *obj, int scale_up);
 EAPI void         e_icon_data_set         (Evas_Object *obj, void *data, int w, int h);
 EAPI void        *e_icon_data_get         (Evas_Object *obj, int *w, int *h);
 EAPI void         e_icon_scale_size_set   (Evas_Object *obj, int size);
