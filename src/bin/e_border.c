@@ -2024,7 +2024,7 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	       {
 		  /* Remove vertical */
 		  h = bd->saved.h;
-		  y = bd->saved.y;
+		  y = bd->saved.y + bd->zone->y;
 		  bd->saved.h = bd->saved.y = 0;
 		  bd->maximized &= ~E_MAXIMIZE_VERTICAL;
 	       }
@@ -2032,13 +2032,13 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	       {
 		  /* Remove horizontal */
 		  w = bd->saved.w;
-		  x = bd->saved.x;
+		  x = bd->saved.x + bd->zone->x;
 		  bd->saved.w = bd->saved.x = 0;
 		  bd->maximized &= ~E_MAXIMIZE_HORIZONTAL;
 	       }
 
 	     e_border_resize_limit(bd, &w, &h);
-	     e_border_move_resize(bd, bd->zone->x + x, bd->zone->y + y, w, h);
+	     e_border_move_resize(bd, x, y, w, h);
 	     if (!(bd->maximized & E_MAXIMIZE_DIRECTION))
 	       {
 		  bd->maximized = E_MAXIMIZE_NONE;
