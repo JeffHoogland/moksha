@@ -3,6 +3,7 @@
  */
 #include "e.h"
 #include "e_fm_hal.h"
+#include "e_fm_op.h"
 
 #define OVERCLIP 128
 
@@ -300,6 +301,23 @@ static void _e_fm2_file_rename_yes_cb(char *text, void *data);
 static void _e_fm2_file_rename_no_cb(void *data);
 static void _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_properties_delete_cb(void *obj);
+
+static void _e_fm_overwrite_dialog(int pid, const char *str);
+static void _e_fm_overwrite_delete_cb(void *obj);
+static void _e_fm_send_overwrite_response(int id, E_Fm_Op_Type type);
+static void _e_fm_overwrite_no_cb(void *data, E_Dialog *dialog);
+static void _e_fm_overwrite_no_all_cb(void *data, E_Dialog *dialog);
+static void _e_fm_overwrite_yes_cb(void *data, E_Dialog *dialog);
+static void _e_fm_overwrite_yes_all_cb(void *data, E_Dialog *dialog);
+
+static void _e_fm_error_dialog(int pid, const char *str);
+static void _e_fm_error_delete_cb(void *obj);
+static void _e_fm_send_error_response(int id, E_Fm_Op_Type type);
+static void _e_fm_error_retry_cb(void *data, E_Dialog *dialog);
+static void _e_fm_error_abort_cb(void *data, E_Dialog *dialog);
+static void _e_fm_error_ignore_this_cb(void *data, E_Dialog *dialog);
+static void _e_fm_error_ignore_all_cb(void *data, E_Dialog *dialog);
+
 static void _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_delete_delete_cb(void *obj);
 static void _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog);
@@ -2233,8 +2251,29 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 		  v->mount_point = NULL;
 	       }
 	  }
+      case 14:/*error*/
+	printf("%s:%s(%d) Error from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, e->data);
+	_e_fm_error_dialog(e->ref, e->data);
 	break;
-      default:
+
+      case 15:/*overwrite*/
+	printf("%s:%s(%d) Overwrite from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, e->data);
+	_e_fm_overwrite_dialog(e->ref, e->data);
+	break;
+
+      case 16:/*progress*/
+	  {
+	     int percent, seconds;
+
+	     if(!e->data || e->size != 2 * sizeof(int)) return;
+
+	     percent = *(int *)e->data;
+	     seconds = *(int *)(e->data + sizeof(int));
+	     printf("%s:%s(%d) Progress from slave #%d: %d%% done, %d seconds left.\n", __FILE__, __FUNCTION__, __LINE__, e->ref, percent, seconds);
+	     break;
+	  }
+
+     default:
 	break;
      }
 }
@@ -6972,6 +7011,175 @@ _e_fm2_file_rename_no_cb(void *data)
    
    ic = data;
    ic->entry_dialog = NULL;
+}
+
+static void
+_e_fm_overwrite_dialog(int pid, const char *str)
+{
+   E_Manager *man;
+   E_Container *con;
+   E_Dialog *dialog;
+   int *id;
+   char text[4096 + PATH_MAX];
+   
+   man = e_manager_current_get();
+   if (!man) return;
+   con = e_container_current_get(man);
+   if (!con) return;
+   
+   id = malloc(sizeof(int));
+   *id = pid;
+   
+   dialog = e_dialog_new(con, "E", "_fm_overwrite_dialog");
+   E_OBJECT(dialog)->data = id;
+   e_object_del_attach_func_set(E_OBJECT(dialog), _e_fm_overwrite_delete_cb);
+   e_dialog_button_add(dialog, _("No"), NULL, _e_fm_overwrite_no_cb, NULL);
+   e_dialog_button_add(dialog, _("No to all"), NULL, _e_fm_overwrite_no_all_cb, NULL);
+   e_dialog_button_add(dialog, _("Yes"), NULL, _e_fm_overwrite_yes_cb, NULL);
+   e_dialog_button_add(dialog, _("Yes to all"), NULL, _e_fm_overwrite_yes_all_cb, NULL);
+
+   e_dialog_button_focus_num(dialog, 0);
+   e_dialog_title_set(dialog, _("Error"));
+   snprintf(text, sizeof(text), 
+	 _("%s"),
+	 str);
+   
+   e_dialog_text_set(dialog, text);
+   e_win_centered_set(dialog->win, 1);
+   e_dialog_show(dialog);
+}
+
+static void
+_e_fm_overwrite_delete_cb(void *obj)
+{
+   int *id = E_OBJECT(obj)->data;
+   free(id);
+}
+
+/* TODO: merge _e_fm_send_overwrite_response() and _e_fm_send_error_response() (???) */
+
+static void
+_e_fm_send_overwrite_response(int id, E_Fm_Op_Type type)
+{
+   ecore_ipc_client_send(_e_fm2_client_get()->cl, E_IPC_DOMAIN_FM, 15,
+	 id, 0, 0,
+	 &type, sizeof(E_Fm_Op_Type));
+}
+
+static void
+_e_fm_overwrite_no_cb(void *data, E_Dialog *dialog)
+{
+   int *id = E_OBJECT(dialog)->data;
+   _e_fm_send_overwrite_response(*id, E_FM_OP_OVERWRITE_RESPONSE_NO);
+   e_object_del(E_OBJECT(dialog));
+}
+
+static void
+_e_fm_overwrite_no_all_cb(void *data, E_Dialog *dialog)
+{
+   int *id = E_OBJECT(dialog)->data;
+   _e_fm_send_overwrite_response(*id, E_FM_OP_OVERWRITE_RESPONSE_NO_ALL);
+   e_object_del(E_OBJECT(dialog));
+}
+
+static void
+_e_fm_overwrite_yes_cb(void *data, E_Dialog *dialog)
+{
+   int *id = E_OBJECT(dialog)->data;
+   _e_fm_send_overwrite_response(*id, E_FM_OP_OVERWRITE_RESPONSE_YES);
+   e_object_del(E_OBJECT(dialog));
+}
+
+static void
+_e_fm_overwrite_yes_all_cb(void *data, E_Dialog *dialog)
+{
+   int *id = E_OBJECT(dialog)->data;
+   _e_fm_send_overwrite_response(*id, E_FM_OP_OVERWRITE_RESPONSE_YES_ALL);
+   e_object_del(E_OBJECT(dialog));
+}
+
+static void
+_e_fm_error_dialog(int pid, const char *str)
+{
+   E_Manager *man;
+   E_Container *con;
+   E_Dialog *dialog;
+   int *id;
+   char text[4096 + PATH_MAX];
+   
+   man = e_manager_current_get();
+   if (!man) return;
+   con = e_container_current_get(man);
+   if (!con) return;
+   
+   id = malloc(sizeof(int));
+   *id = pid;
+   
+   dialog = e_dialog_new(con, "E", "_fm_error_dialog");
+   E_OBJECT(dialog)->data = id;
+   e_object_del_attach_func_set(E_OBJECT(dialog), _e_fm_error_delete_cb);
+   e_dialog_button_add(dialog, _("Retry"), NULL, _e_fm_error_retry_cb, NULL);
+   e_dialog_button_add(dialog, _("Abort"), NULL, _e_fm_error_abort_cb, NULL);
+   e_dialog_button_add(dialog, _("Ignore this"), NULL, _e_fm_error_ignore_this_cb, NULL);
+   e_dialog_button_add(dialog, _("Ignore all"), NULL, _e_fm_error_ignore_all_cb, NULL);
+
+   e_dialog_button_focus_num(dialog, 0);
+   e_dialog_title_set(dialog, _("Error"));
+   snprintf(text, sizeof(text), 
+	 _("An error occured while performing an operation.<br>"
+	    "%s"),
+	 str);
+   
+   e_dialog_text_set(dialog, text);
+   e_win_centered_set(dialog->win, 1);
+   e_dialog_show(dialog);
+}
+
+static void
+_e_fm_error_delete_cb(void *obj)
+{
+   int *id = E_OBJECT(obj)->data;
+   free(id);
+}
+
+static void
+_e_fm_send_error_response(int id, E_Fm_Op_Type type)
+{
+   ecore_ipc_client_send(_e_fm2_client_get()->cl, E_IPC_DOMAIN_FM, 14,
+	 id, 0, 0,
+	 &type, sizeof(E_Fm_Op_Type));
+}
+
+static void
+_e_fm_error_retry_cb(void *data, E_Dialog *dialog)
+{
+   int *id = E_OBJECT(dialog)->data;
+   _e_fm_send_error_response(*id, E_FM_OP_ERROR_RESPONSE_RETRY);
+   e_object_del(E_OBJECT(dialog));
+}
+
+static void
+_e_fm_error_abort_cb(void *data, E_Dialog *dialog)
+{
+   int *id = E_OBJECT(dialog)->data;
+   _e_fm_send_error_response(*id, E_FM_OP_ERROR_RESPONSE_ABORT);
+   e_object_del(E_OBJECT(dialog));
+}
+
+static void
+_e_fm_error_ignore_this_cb(void *data, E_Dialog *dialog)
+{
+   int *id = E_OBJECT(dialog)->data;
+   _e_fm_send_error_response(*id, E_FM_OP_ERROR_RESPONSE_IGNORE_THIS);
+   e_object_del(E_OBJECT(dialog));
+}
+
+static void
+_e_fm_error_ignore_all_cb(void *data, E_Dialog *dialog)
+{
+   int *id = E_OBJECT(dialog)->data;
+   _e_fm_send_error_response(*id, E_FM_OP_ERROR_RESPONSE_IGNORE_ALL);
+   e_object_del(E_OBJECT(dialog));
 }
 
 static void

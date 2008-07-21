@@ -1,5 +1,5 @@
 /*
- * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ * vim:cindent:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #ifndef _FILE_OFFSET_BITS
 #define _FILE_OFFSET_BITS  64
@@ -35,6 +35,8 @@
 #include <Eet.h>
 #include "config.h"
 
+#include "e_fm_op.h"
+
 /* E_DBUS support */
 #ifdef HAVE_EDBUS
 #include <E_DBus.h>
@@ -57,6 +59,7 @@
 typedef struct _E_Dir E_Dir;
 typedef struct _E_Fop E_Fop;
 typedef struct _E_Mod E_Mod;
+typedef struct _E_Fm_Slave E_Fm_Slave;
 
 struct _E_Dir
 {
@@ -100,11 +103,29 @@ struct _E_Mod
    unsigned char  done : 1;
 };
 
+struct _E_Fm_Slave
+{
+   Ecore_Exe *exe;
+   int id;
+};
+
 /* local subsystem functions */
 static int _e_ipc_init(void);
 static int _e_ipc_cb_server_add(void *data, int type, void *event);
 static int _e_ipc_cb_server_del(void *data, int type, void *event);
 static int _e_ipc_cb_server_data(void *data, int type, void *event);
+
+
+static int _e_client_send_overwrite(int id, const char *data, int size);
+static int _e_client_send_error(int id, const char *data, int size);
+static int _e_client_send_progress(int id, const char *data, int size);
+
+static int _e_fm_slave_run(E_Fm_Op_Type type, const char *src, const char *dst, int id);
+static E_Fm_Slave *_e_fm_slave_get(int id);
+static int _e_fm_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size);
+static int _e_fm_slave_data_cb(void *data, int type, void *event);
+static int _e_fm_slave_error_cb(void *data, int type, void *event);
+static int _e_fm_slave_del_cb(void *data, int type, void *event);
 
 static void _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
 static int _e_cb_recent_clean(void *data);
@@ -124,6 +145,8 @@ static int _e_cb_fop_cp_idler(void *data);
 static char *_e_str_list_remove(Evas_List **list, char *str);
 static void _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y);
 static void _e_dir_del(E_Dir *ed);
+
+static const char *_e_prepare_command(E_Fm_Op_Type type, const char *src, const char *dst);
 
 #ifdef HAVE_EDBUS
 
@@ -168,6 +191,8 @@ static Ecore_Ipc_Server *_e_ipc_server = NULL;
 static Evas_List *_e_dirs = NULL;
 static Evas_List *_e_fops = NULL;
 static int _e_sync_num = 0;
+
+static Evas_List *_e_fm_slaves = NULL;
 #ifdef HAVE_EDBUS
 static E_DBus_Connection *_e_dbus_conn = NULL;
 
@@ -213,6 +238,21 @@ main(int argc, char **argv)
    ecore_file_init();
    ecore_ipc_init();
 
+   if (!e_prefix_determine(argv[0]))
+     {
+	fprintf(stderr,
+		"ERROR: Enlightenment cannot determine its installed\n"
+		"       prefix from the system or argv[0].\n"
+		"       This is because it is not on Linux AND has been\n"
+		"       Executed strangely. This is unusual.\n"
+		);
+	e_prefix_fallback();
+     }
+
+   ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _e_fm_slave_data_cb, NULL);
+   ecore_event_handler_add(ECORE_EXE_EVENT_ERROR, _e_fm_slave_error_cb, NULL);
+   ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_fm_slave_del_cb, NULL);
+
 #ifdef HAVE_EDBUS
    _e_storage_volume_edd_init();
    e_dbus_init();
@@ -254,6 +294,8 @@ main(int argc, char **argv)
    _e_storage_volume_edd_shutdown();
 #endif
    
+   e_prefix_shutdown();
+
    ecore_ipc_shutdown();
    ecore_file_shutdown();
    ecore_string_shutdown();
@@ -1111,16 +1153,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	break;
       case 3: /* fop delete file/dir */
 	  {
-	     E_Fop *fop;
-	     
-	     fop = calloc(1, sizeof(E_Fop));
-	     if (fop)
-	       {
-		  fop->id = e->ref;
-		  fop->src = evas_stringshare_add(e->data);
-		  _e_fops = evas_list_append(_e_fops, fop);
-		  fop->idler = ecore_idler_add(_e_cb_fop_rm_idler, fop);
-	       }
+	     _e_fm_slave_run(E_FM_OP_REMOVE, (const char *)e->data, NULL, e->ref);
 	  }
 	break;
       case 4: /* fop trash file/dir */
@@ -1143,66 +1176,38 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     
 	     src = e->data;
 	     dst = src + strlen(src) + 1;
-	     ecore_file_mv(src, dst);
-	     /* FIXME: send back if succeeded or failed - why */
-	     _e_path_fix_order(dst, ecore_file_file_get(src), 2, -9999, -9999);
+
+	     _e_fm_slave_run(E_FM_OP_MOVE, src, dst, e->ref);
 	  }
 	break;
       case 6: /* fop mv file/dir */
 	  {
-	     E_Fop *fop;
-	     
-	     fop = calloc(1, sizeof(E_Fop));
-	     if (fop)
-	       {
-		  const char *src, *dst, *rel;
-		  int rel_to, x, y;
+	     const char *src, *dst, *rel;
+	     int rel_to, x, y;
 		  
-		  src = e->data;
-		  dst = src + strlen(src) + 1;
-		  rel = dst + strlen(dst) + 1;
-		  memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
-		  memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
-		  memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
-		  fop->id = e->ref;
-		  fop->src = evas_stringshare_add(src);
-		  fop->dst = evas_stringshare_add(dst);
-		  fop->rel = evas_stringshare_add(rel);
-		  fop->rel_to = rel_to;
-		  fop->x = x;
-		  fop->y = y;
-		  printf("MV %s to %s\n", fop->src, fop->dst);
-		  _e_fops = evas_list_append(_e_fops, fop);
-		  fop->idler = ecore_idler_add(_e_cb_fop_mv_idler, fop);
-	       }
+	     src = e->data;
+	     dst = src + strlen(src) + 1;
+	     rel = dst + strlen(dst) + 1;
+	     memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
+	     memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
+	     memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
+
+	     _e_fm_slave_run(E_FM_OP_MOVE, src, dst, e->ref);
 	  }
 	break;
       case 7: /* fop cp file/dir */
 	  {
-	     E_Fop *fop;
-	     
-	     fop = calloc(1, sizeof(E_Fop));
-	     if (fop)
-	       {
-		  const char *src, *dst, *rel;
-		  int rel_to, x, y;
+	     const char *src, *dst, *rel;
+	     int rel_to, x, y;
 		  
-		  src = e->data;
-		  dst = src + strlen(src) + 1;
-		  rel = dst + strlen(dst) + 1;
-		  memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
-		  memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
-		  memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
-		  fop->id = e->ref;
-		  fop->src = evas_stringshare_add(src);
-		  fop->dst = evas_stringshare_add(dst);
-		  fop->rel = evas_stringshare_add(rel);
-		  fop->rel_to = rel_to;
-		  fop->x = x;
-		  fop->y = y;
-		  _e_fops = evas_list_append(_e_fops, fop);
-		  fop->idler = ecore_idler_add(_e_cb_fop_cp_idler, fop);
-	       }
+	     src = e->data;
+	     dst = src + strlen(src) + 1;
+	     rel = dst + strlen(dst) + 1;
+	     memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
+	     memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
+	     memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
+
+	     _e_fm_slave_run(E_FM_OP_COPY, src, dst, e->ref);
 	  }
 	break;
       case 8: /* fop mkdir */
@@ -1307,6 +1312,20 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
              /* FIXME: send back file add if succeeded */
 	  }
 	break;
+      case 14:/*error response*/
+	  {
+	     E_Fm_Op_Type type = *(E_Fm_Op_Type *)e->data;
+
+	     _e_fm_slave_send(_e_fm_slave_get(e->ref), type, NULL, 0);
+	  }
+	break;
+      case 15:/*overwrite response*/
+	  {
+	     E_Fm_Op_Type type = *(E_Fm_Op_Type *)e->data;
+	     
+	     _e_fm_slave_send(_e_fm_slave_get(e->ref), type, NULL, 0);
+	  }
+	break;
       default:
 	break;
      }
@@ -1318,6 +1337,184 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 			 6/*E_IPC_DOMAIN_FM*/,
 			 2/*req ok*/,
 			 0, e->ref, 0, NULL, 0);
+   return 1;
+}
+
+static int _e_client_send_overwrite(int id, const char *data, int size)
+{
+   return ecore_ipc_server_send(_e_ipc_server,
+	 6/*E_IPC_DOMAIN_FM*/,
+	 15/*overwrite*/,
+	 id, 0, 0, data, size);
+}
+
+static int _e_client_send_error(int id, const char *data, int size)
+{
+   return ecore_ipc_server_send(_e_ipc_server,
+	 6/*E_IPC_DOMAIN_FM*/,
+	 14/*error*/,
+	 id, 0, 0, data, size);
+}
+
+static int _e_client_send_progress(int id, const char *data, int size)
+{
+   return ecore_ipc_server_send(_e_ipc_server,
+	 6/*E_IPC_DOMAIN_FM*/,
+	 16/*error*/,
+	 id, 0, 0, data, size);
+}
+static int _e_fm_slave_run(E_Fm_Op_Type type, const char *src, const char *dst, int id)
+{
+   E_Fm_Slave *slave;
+   const char *command;
+   int result;
+
+   slave = malloc(sizeof(E_Fm_Slave));
+
+   if(!slave) return 0;
+	     
+   command = evas_stringshare_add(_e_prepare_command(type, src, dst));
+
+   slave->id = id;
+   slave->exe = ecore_exe_pipe_run(command, ECORE_EXE_PIPE_WRITE | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR, slave );
+   printf("EFM command: %s\n", command);
+   
+   evas_stringshare_del(command);
+
+   _e_fm_slaves = evas_list_append(_e_fm_slaves, slave);
+
+   return (slave->exe != NULL);
+}
+
+static E_Fm_Slave *_e_fm_slave_get(int id)
+{
+   Evas_List *l = _e_fm_slaves;
+   E_Fm_Slave *slave;
+
+   while(l)
+     {
+	slave = evas_list_data(l);
+
+	if(slave->id == id)
+	  return slave;
+
+	l = evas_list_next(l);
+     }
+
+   return NULL;
+}
+
+static int _e_fm_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size)
+{
+   void *sdata;
+   int ssize;
+   int magic = E_FM_OP_MAGIC;
+   int result;
+
+   ssize = 3 * sizeof(int) + size;
+   sdata = malloc(ssize);
+
+   if(!sdata) return 0;
+
+   memcpy(sdata,                                      &magic, sizeof(int));
+   memcpy(sdata + sizeof(int),                        &type, sizeof(E_Fm_Op_Type));
+   memcpy(sdata + sizeof(int) + sizeof(E_Fm_Op_Type), &size, sizeof(int));
+
+   memcpy(sdata + 2 * sizeof(int) + sizeof(E_Fm_Op_Type), data, size);
+
+   result = ecore_exe_send(slave->exe, sdata, ssize);
+
+   free(sdata);
+
+   return result;
+}
+
+static int _e_fm_slave_data_cb(void *data, int type, void *event)
+{
+   Ecore_Exe_Event_Data *e = event;
+   E_Fm_Slave *slave;
+   int magic, id, size;
+   int response[3];
+   void *sdata;
+   int ssize;
+
+   if(!e) return 1;
+
+   slave = ecore_exe_data_get(e->exe);
+
+   sdata = e->data;
+   ssize = e->size;
+
+   while(ssize)
+     {	
+	memcpy(&magic, sdata,                             sizeof(int));
+	memcpy(&id,    sdata + sizeof(int),               sizeof(int));
+	memcpy(&size,  sdata + sizeof(int) + sizeof(int), sizeof(int));
+
+	if(magic != E_FM_OP_MAGIC)
+	  {
+	     DEBUG("%s:%s(%d) Wrong magic number from slave #%d. ", __FILE__, __FUNCTION__, __LINE__, slave->id);
+	  }
+
+	sdata += 3 * sizeof(int);
+	ssize -= 3 * sizeof(int);
+
+	if(id == E_FM_OP_OVERWRITE)
+	  {
+	     response[0] = E_FM_OP_MAGIC;
+	     response[1] = E_FM_OP_OVERWRITE_RESPONSE_YES;
+	     response[2] = 0;
+	     
+	     _e_client_send_overwrite(slave->id, (const char *)sdata, size);
+	     printf("%s:%s(%d) Overwrite response sent to slave #%d.\n", __FILE__, __FUNCTION__, __LINE__, slave->id);
+	  }
+	else if(id == E_FM_OP_ERROR)
+	  {
+	     _e_client_send_error(slave->id, (const char *)sdata, size);
+	     printf("%s:%s(%d) Error sent to client from slave #%d.\n", __FILE__, __FUNCTION__, __LINE__, slave->id);
+	  }
+	else if(id == E_FM_OP_PROGRESS)
+	  {
+	     _e_client_send_progress(slave->id, (const char *)sdata, size);
+	     printf("%s:%s(%d) Progress sent to client from slave #%d.\n", __FILE__, __FUNCTION__, __LINE__, slave->id);
+
+	  }
+
+	sdata += size;
+	ssize -= size;
+     }
+
+   return 1;
+}
+
+static int _e_fm_slave_error_cb(void *data, int type, void *event)
+{
+   Ecore_Exe_Event_Data *e = event;
+   E_Fm_Slave *slave;
+
+   if(e == NULL) return 1;
+
+   slave = ecore_exe_data_get(e->exe);
+
+   printf("EFM: Data from STDERR of slave #%d: %.*s", slave->id, e->size, e->data);
+
+   return 1;
+}
+
+static int _e_fm_slave_del_cb(void *data, int type, void *event)
+{
+   Ecore_Exe_Event_Del *e = event;
+   E_Fm_Slave *slave;
+
+   if(!e) return 1;
+
+   slave = ecore_exe_data_get(e->exe);
+
+   if(!slave) return 1;
+
+   _e_fm_slaves = evas_list_remove(_e_fm_slaves, (void *)slave);
+   free(slave);
+
    return 1;
 }
 
@@ -2166,4 +2363,66 @@ _e_dir_del(E_Dir *ed)
 	ed->fq = evas_list_remove_list(ed->fq, ed->fq);
      }
    free(ed);
+}
+
+static void _e_append_char(char **str, int *size, int c)
+{
+   **str = c;
+   (*str) ++;
+   *size++;
+}
+
+static void _e_append_quoted(char **str, int *size, const char *src)
+{
+   while(*src)
+     {
+	if(*src == '\'')
+	  {
+	     _e_append_char(str, size, '\'');		
+	     _e_append_char(str, size, '\\');
+	     _e_append_char(str, size, '\'');
+	     _e_append_char(str, size, '\'');
+	  }
+	else
+	  _e_append_char(str, size, *src);
+
+	src++;
+     }
+}
+/* Returns a string like 
+ * /usr/bin/englightement_op cp 'src' 'dst'
+ * ready to pass to ecore_exe_pipe_run()
+ */
+
+static const char *_e_prepare_command(E_Fm_Op_Type type, const char *src, const char *dst)
+{
+   char buffer[PATH_MAX* 3 + 512];
+   int length = 0;
+   char *buf = &buffer[0];
+   char command[3];
+
+   if(type == E_FM_OP_MOVE)
+     strcpy(command, "mv");
+   else if(type == E_FM_OP_REMOVE)
+     strcpy(command, "rm");
+   else
+     strcpy(command, "cp");
+
+   length = snprintf(buf, sizeof(buffer), "%s/enlightenment_fm_op %s \'", e_prefix_bin_get(), command);
+   buf += length;
+
+   _e_append_quoted(&buf, &length, src);
+   _e_append_char(&buf, &length, '\'');
+
+   if(dst)
+     {
+	_e_append_char(&buf, &length, ' ');
+	_e_append_char(&buf, &length, '\'');
+	_e_append_quoted(&buf, &length, dst);
+	_e_append_char(&buf, &length, '\'');
+     }
+
+   _e_append_char(&buf, &length, '\x00');
+
+   return strdup(&buffer[0]);
 }
