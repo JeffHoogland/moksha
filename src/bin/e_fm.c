@@ -110,14 +110,11 @@ struct _E_Fm2_Smart_Data
    unsigned char       drop_all : 1;
    unsigned char       drag : 1;
    unsigned char       selecting : 1;
-   unsigned char       copying : 1;
-   unsigned char       cutting : 1;
    struct 
      {
 	int ox, oy;
 	int x, y, w, h;
      } selrect;
-   Evas_List *file_queue;
 };
  
 struct _E_Fm2_Region
@@ -208,6 +205,8 @@ static void _e_fm2_config_free(E_Fm2_Config *cfg);
 
 static Evas_Object *_e_fm2_file_fm2_find(const char *file);
 static E_Fm2_Icon *_e_fm2_icon_find(Evas_Object *obj, const char *file);
+static const char *_e_fm2_uri_escape(const char *path);
+static Evas_List *_e_fm2_uri_path_list_get(Evas_List *uri_list);
 static Evas_List *_e_fm2_uri_icon_list_get(Evas_List *uri);
 	   
 static E_Fm2_Icon *_e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file, E_Fm2_Finfo *finf);
@@ -306,6 +305,7 @@ static void _e_fm2_file_delete_delete_cb(void *obj);
 static void _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog);
 static void _e_fm2_file_delete_no_cb(void *data, E_Dialog *dialog);
 static void _e_fm2_refresh_job_cb(void *data);
+static void _e_fm_file_buffer_clear(void);
 static void _e_fm2_file_cut(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_copy(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -346,6 +346,9 @@ static int _e_fm2_list_walking = 0;
 static Evas_List *_e_fm2_client_list = NULL;
 static int _e_fm2_id = 0;
 static Evas_List *_e_fm2_menu_contexts = NULL;
+static Evas_List *_e_fm_file_buffer = NULL; /* Files for copy&paste are saved here. */
+static int _e_fm_file_buffer_cutting = 0;
+static int _e_fm_file_buffer_copying = 0;
 
 /* contains:
  * _e_volume_edd
@@ -2477,6 +2480,19 @@ _e_fm2_file_del(Evas_Object *obj, const char *file)
      }
 }
 
+static void
+_e_fm_file_buffer_clear(void)
+{
+   while(_e_fm_file_buffer)
+     {
+	evas_stringshare_del(evas_list_data(_e_fm_file_buffer));
+	_e_fm_file_buffer = evas_list_remove_list(_e_fm_file_buffer, _e_fm_file_buffer);
+     }
+
+   _e_fm_file_buffer_cutting = 0;
+   _e_fm_file_buffer_copying = 0;
+}
+
 static void 
 _e_fm2_file_cut(void *data, E_Menu *m, E_Menu_Item *mi) 
 {
@@ -2488,17 +2504,20 @@ _e_fm2_file_cut(void *data, E_Menu *m, E_Menu_Item *mi)
    if (!sd) return;
    sel = e_fm2_selected_list_get(sd->obj);
    if (!sel) return;
+
+   _e_fm_file_buffer_clear();
+
    realpath = e_fm2_real_path_get(sd->obj);
-   sd->cutting = 1;
+   _e_fm_file_buffer_cutting = 1;
    for (l = sel; l; l = l->next) 
      {
 	E_Fm2_Icon_Info *ici;
-	char buf[4096];
+	char buf[PATH_MAX];
 
 	ici = l->data;
 	if (!ici) continue;
 	snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-	sd->file_queue = evas_list_append(sd->file_queue, strdup(buf));
+	_e_fm_file_buffer = evas_list_append(_e_fm_file_buffer, _e_fm2_uri_escape(buf));
      }
 }
 
@@ -2513,17 +2532,20 @@ _e_fm2_file_copy(void *data, E_Menu *m, E_Menu_Item *mi)
    if (!sd) return;
    sel = e_fm2_selected_list_get(sd->obj);
    if (!sel) return;
+
+   _e_fm_file_buffer_clear();
+
    realpath = e_fm2_real_path_get(sd->obj);
-   sd->copying = 1;
+   _e_fm_file_buffer_copying = 1;
    for (l = sel; l; l = l->next) 
      {
 	E_Fm2_Icon_Info *ici;
-	char buf[4096];
+	char buf[PATH_MAX];
 
 	ici = l->data;
 	if (!ici) continue;
 	snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-	sd->file_queue = evas_list_append(sd->file_queue, strdup(buf));
+	_e_fm_file_buffer = evas_list_append(_e_fm_file_buffer, _e_fm2_uri_escape(buf));
      }
 }
 
@@ -2531,59 +2553,53 @@ static void
 _e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi) 
 {
    E_Fm2_Smart_Data *sd;
-   const char *realpath;
+   Evas_List *paths;
+   const char *dirpath;
    
    sd = data;
    if (!sd) return;
-   realpath = e_fm2_real_path_get(sd->obj);
-   while (sd->file_queue) 
-     {
-	char *f;
-	const char *tmp;
-	char buf[4096];
-	int can_w, protect = 0;
-	struct stat st;
 
-	f = sd->file_queue->data;
-	if (!f) continue;
-	tmp = ecore_file_file_get(f);
-	snprintf(buf, sizeof(buf), "%s/%s", realpath, tmp);
-	protect = e_filereg_file_protected(f);
-	if (lstat(buf, &st) == 0)
+   paths = _e_fm2_uri_path_list_get(_e_fm_file_buffer);
+
+   dirpath = e_fm2_real_path_get(sd->obj);
+   while (paths) 
+     {
+	char *filepath;
+	const char *filename;
+	char buf[PATH_MAX];
+	int protect = 0;
+
+	filepath = evas_list_data(paths);
+	if (!filepath) 
 	  {
-	     if (st.st_uid == getuid())
-	       {
-		  if (st.st_mode & S_IWUSR) can_w = 1;
-	       }
-	     else if (st.st_gid == getgid())
-	       {
-		  if (st.st_mode & S_IWGRP) can_w = 1;
-	       }
-	     else
-	       {
-		  if (st.st_mode & S_IWOTH) can_w = 1;
-	       }
+	     paths = evas_list_remove_list(paths, paths);
+	     continue;
 	  }
-	if ((!can_w) || (protect)) 
+
+	filename = ecore_file_file_get(filepath);
+	snprintf(buf, sizeof(buf), "%s/%s", dirpath, filename);
+	protect = e_filereg_file_protected(filepath);
+
+	if (protect) 
 	  {
-	     sd->file_queue = evas_list_remove_list(sd->file_queue, sd->file_queue);
+	     evas_stringshare_del(filepath);
+	     paths = evas_list_remove_list(paths, paths);
 	     continue;
 	  }
 	
-	if (sd->copying) 
+	if (_e_fm_file_buffer_copying) 
 	  {
-	     _e_fm2_client_file_copy(sd->id, f, buf, "", 0, 
+	     _e_fm2_client_file_copy(sd->id, filepath, buf, "", 0, 
 				     -9999, -9999, sd->w, sd->h);
 	  }
-	else if (sd->cutting) 
+	else if (_e_fm_file_buffer_cutting) 
 	  {
-	     _e_fm2_client_file_move(sd->id, f, buf, "", 0, 
+	     _e_fm2_client_file_move(sd->id, filepath, buf, "", 0, 
 				     -9999, -9999, sd->w, sd->h);
 	  }
-	sd->file_queue = evas_list_remove_list(sd->file_queue, sd->file_queue);
+	evas_stringshare_del(filepath);
+	paths = evas_list_remove_list(paths, paths);
      }
-   if (sd->copying) sd->copying = 0;
-   if (sd->cutting) sd->cutting = 0;
 }
 
 static void
@@ -6267,7 +6283,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	  }
 
 	if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) && 
-	    (evas_list_count(sd->file_queue) > 0))
+	    (evas_list_count(_e_fm_file_buffer) > 0))
 	  {
 	     if (ecore_file_can_write(sd->realpath))
 	       {
@@ -6460,7 +6476,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  }
 	
 	if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) && 
-	    (evas_list_count(sd->file_queue) > 0))
+	    (evas_list_count(_e_fm_file_buffer) > 0))
 	  {
 	     if (ecore_file_can_write(sd->realpath))
 	       {
