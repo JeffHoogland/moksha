@@ -1453,7 +1453,7 @@ static int _e_fm_slave_data_cb(void *data, int type, void *event)
 
 	if(magic != E_FM_OP_MAGIC)
 	  {
-	     DEBUG("%s:%s(%d) Wrong magic number from slave #%d. ", __FILE__, __FUNCTION__, __LINE__, slave->id);
+	     //DEBUG("%s:%s(%d) Wrong magic number from slave #%d. ", __FILE__, __FUNCTION__, __LINE__, slave->id);
 	  }
 
 	sdata += 3 * sizeof(int);
