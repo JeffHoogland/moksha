@@ -56,14 +56,14 @@ e_canvas_engine_decide(int engine)
    /* if engine is software-16 - do we support it? */
    if (engine == E_EVAS_ENGINE_SOFTWARE_X11_16)
      {
-	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_X11_16))
+	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_16_X11))
 	  engine = E_EVAS_ENGINE_SOFTWARE_X11;
      }
    /* if engine is gl - do we support it? */
    if (engine == E_EVAS_ENGINE_GL_X11)
      {
 	/* if we dont - fall back to software x11 */
-	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_GL_X11))
+	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_OPENGL_X11))
 	  engine = E_EVAS_ENGINE_SOFTWARE_X11;
      }
    /* support xrender? */
