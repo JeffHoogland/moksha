@@ -698,7 +698,7 @@ EAPI void
 e_hints_window_type_get(E_Border *bd)
 {
    Ecore_X_Window_Type *types = NULL;
-   int num, i;
+   int num, i, j;
    
    num = ecore_x_netwm_window_types_get(bd->client.win, &types);
    if (bd->client.netwm.extra_types)
@@ -708,21 +708,27 @@ e_hints_window_type_get(E_Border *bd)
 	bd->client.netwm.extra_types_num = 0;
      }
    if (num == 0) 
-     {
-	bd->client.netwm.type = ECORE_X_WINDOW_TYPE_UNKNOWN;
-     }
+     bd->client.netwm.type = ECORE_X_WINDOW_TYPE_UNKNOWN;
    else
      {
-	bd->client.netwm.type = types[0];
-	if (num > 1)
+	j = 0;
+	bd->client.netwm.type = types[j];
+	j++;
+	while ((j < num) && 
+	       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN))
+	  {
+	     j++;
+	     bd->client.netwm.type = types[j];
+	  }
+	if (num > j)
 	  {
 	     bd->client.netwm.extra_types = 
-	       malloc((num - 1) * sizeof(Ecore_X_Window_Type));
+	       malloc((num - j) * sizeof(Ecore_X_Window_Type));
 	     if (bd->client.netwm.extra_types)
 	       {
-		  for (i = 1; i < num; i++)
-		    bd->client.netwm.extra_types[i - 1] = types[i];
-		  bd->client.netwm.extra_types_num = num - 1;
+		  for (i = j + 1; i < num; i++)
+		    bd->client.netwm.extra_types[i - (j + 1)] = types[i];
+		  bd->client.netwm.extra_types_num = num - j;
 	       }
 	  }
 	free(types);
