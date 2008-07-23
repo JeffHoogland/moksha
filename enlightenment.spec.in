@@ -10,7 +10,7 @@ Packager: %{?_packager:%{_packager}}%{!?_packager:Michael Jennings <mej@eterm.or
 Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:The Enlightenment Project (http://www.enlightenment.org/)}
 Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
 Prefix: %{_prefix}
-#BuildSuggests: xorg-x11-devel, XFree86-devel
+#BuildSuggests: xorg-x11-devel, XFree86-devel, libX11-devel
 BuildRequires: evas-devel, edje-devel, edje-bin, ecore-devel, eet-devel
 BuildRequires: embryo-devel, embryo-bin
 Requires: evas-module_loader_eet evas-module_saver_eet
@@ -70,5 +70,6 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %defattr(-, root, root)
 %{_bindir}/enlightenment-config
 %{_includedir}/enlightenment
+%{_libdir}/pkgconfig/*.pc
 
 %changelog
