@@ -6456,7 +6456,6 @@ _e_border_eval(E_Border *bd)
 	bd->changes.pos = 0;
 	bd->changes.size = 0;
 	rem_change = 1;
-	send_event = 0;
     }
    else if (bd->changes.pos)
      {
@@ -6478,7 +6477,6 @@ _e_border_eval(E_Border *bd)
 	e_container_shape_move(bd->shape, bd->x + bd->fx.x, bd->y + bd->fx.y);
 	bd->changes.pos = 0;
 	rem_change = 1;
-	send_event = 0;
      }
    else if (bd->changes.size)
      {
@@ -6586,7 +6584,6 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->changes.size = 0;
 	rem_change = 1;
-	send_event = 0;
      }
 
    if (bd->changes.reset_gravity)
@@ -6903,7 +6900,8 @@ _e_border_eval(E_Border *bd)
    if ((bd->remember) && (rem_change))
      e_remember_update(bd->remember, bd);
 
-   if (send_event)
+   if (send_event) // FIXME: send only if a property changed - above need to
+     // check on that. for now - always send.
      {
 	event = calloc(1, sizeof(E_Event_Border_Property));
 	event->border = bd;
