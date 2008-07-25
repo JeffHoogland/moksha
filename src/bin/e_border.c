@@ -425,9 +425,9 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 		  else if (atoms[i] == _QTOPIA_SOFT_MENUS)
 		    bd->client.qtopia.fetch.soft_menus = 1;
 		  /* loop to check for vkbd atoms */
-		  else if (atoms[i] == _E_VIRTUAL_KEYBOARD_STATE)
+		  else if (atoms[i] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE)
 		    bd->client.vkbd.fetch.state = 1;
-		  else if (atoms[i] == _E_VIRTUAL_KEYBOARD)
+		  else if (atoms[i] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD)
 		    bd->client.vkbd.fetch.vkbd = 1;
 	       }
 	     free(atoms);
@@ -3999,12 +3999,12 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
 	bd->client.qtopia.fetch.soft_menus = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == _E_VIRTUAL_KEYBOARD_STATE)
+   else if (e->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE)
      {
 	bd->client.vkbd.fetch.state = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == _E_VIRTUAL_KEYBOARD)
+   else if (e->atom == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD)
      {
 	bd->client.vkbd.fetch.vkbd = 1;
 	bd->changed = 1;

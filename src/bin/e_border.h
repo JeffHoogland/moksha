@@ -353,7 +353,7 @@ struct _E_Border
 	    unsigned char state : 1;
 	    unsigned char vkbd : 1;
 	 } fetch;
-	 Ecore_X_Atom state;
+	 Ecore_X_Virtual_Keyboard_State state;
 	 unsigned char vkbd : 1;
       } vkbd;
 
