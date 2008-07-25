@@ -1085,7 +1085,7 @@ _e_border_menu_cb_kbdshrtct_add(void *data, E_Menu *m, E_Menu_Item *mi)
 
    if (!(bd = data)) return;
    zone = e_util_zone_current_get(e_manager_current_get());
-   if(!zone) return;
+   if (!zone) return;
    e_configure_registry_call("keyboard_and_mouse/key_bindings",
 			     zone->container, bd->desktop->exec);
 }

@@ -137,15 +137,15 @@ main(int argc, char **argv)
    last = argc - 1;
    i = 2;
 
-   if(strcmp(argv[1], "cp") == 0)
+   if (strcmp(argv[1], "cp") == 0)
      {
         type = E_FM_OP_COPY;
      }
-   else if(strcmp(argv[1], "mv") == 0)
+   else if (strcmp(argv[1], "mv") == 0)
      {
         type = E_FM_OP_MOVE;
      }
-   else if(strcmp(argv[1], "rm") == 0)
+   else if (strcmp(argv[1], "rm") == 0)
      {
         type = E_FM_OP_REMOVE;
      }
@@ -157,17 +157,17 @@ main(int argc, char **argv)
 	     return 0;
 	  }
 
-        if(type == E_FM_OP_MOVE)
+        if (type == E_FM_OP_MOVE)
           {
              _e_fm_op_work_queue = evas_list_append(_e_fm_op_work_queue, NULL);
              _e_fm_op_separator = _e_fm_op_work_queue;
           }
 
-        if(argc > 4 && ecore_file_is_dir(argv[last]))
+        if (argc > 4 && ecore_file_is_dir(argv[last]))
           {
-             if(argv[last][strlen(argv[last] - 1)] == '/') byte = "";
+             if (argv[last][strlen(argv[last] - 1)] == '/') byte = "";
 
-             while(i < last)
+             while (i < last)
                {
                   name = ecore_file_file_get(argv[i]);
                   task = _e_fm_op_task_new();
@@ -177,7 +177,7 @@ main(int argc, char **argv)
                   snprintf(buf, PATH_MAX, "%s%s%s", argv[last], byte, name);
                   task->dst.name = evas_stringshare_add(buf);
  
-                  if(type == E_FM_OP_MOVE && rename(task->src.name, task->dst.name) == 0)
+                  if (type == E_FM_OP_MOVE && rename(task->src.name, task->dst.name) == 0)
                     _e_fm_op_task_free(task);
                   else
                     _e_fm_op_scan_queue = evas_list_append(_e_fm_op_scan_queue, task);
@@ -187,7 +187,7 @@ main(int argc, char **argv)
           }
         else
           {
-             if(type == E_FM_OP_MOVE && rename(argv[2], argv[3]) == 0)
+             if (type == E_FM_OP_MOVE && rename(argv[2], argv[3]) == 0)
                goto quit;
 
              task = _e_fm_op_task_new();
@@ -205,7 +205,7 @@ main(int argc, char **argv)
 	     return 0;
 	  }
 
-        while(i <= last)
+        while (i <= last)
           {
              task = _e_fm_op_task_new();
              task->type = type;
@@ -277,14 +277,14 @@ _e_fm_op_task_free(void *t)
      {
         data = task->data;
 
-        if(task->type == E_FM_OP_COPY)
+        if (task->type == E_FM_OP_COPY)
           {
-             if(data->from)
+             if (data->from)
                {
                   fclose(data->from);
                }
  
-             if(data->to)
+             if (data->to)
                {
                   fclose(data->to);
                }
@@ -304,7 +304,7 @@ _e_fm_op_task_free(void *t)
 
 static void _e_fm_op_remove_link_task(E_Fm_Op_Task *task)
 {
-   if(task->link)
+   if (task->link)
      {
         _e_fm_op_work_queue = evas_list_remove_list(_e_fm_op_work_queue, task->link);
         _e_fm_op_task_free(task->link);
@@ -336,7 +336,7 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
    int msize;
    int identity;
 
-   if(!buf) 
+   if (!buf) 
      {
         buf = _e_fm_op_stdin_buffer;
         length = 0;
@@ -418,7 +418,7 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
 	       }
 	  }
 
-        if(length > 0)
+        if (length > 0)
           {
              memmove(_e_fm_op_stdin_buffer, begin, length);
           }
@@ -437,7 +437,7 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
         _e_fm_op_send_error(_task, _e_fm_op_error_type, _fmt, __VA_ARGS__, strerror(_errno));\
         return 1;\
      }\
-   while(0)
+   while (0)
 
 #define _E_FM_OP_ERROR_SEND_WORK(_task, _e_fm_op_error_type, _fmt, ...)\
     do\
@@ -447,7 +447,7 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
          _e_fm_op_send_error(_task, _e_fm_op_error_type, _fmt, __VA_ARGS__, strerror(_errno));\
          return 1;\
       }\
-    while(0)
+    while (0)
 
 /* Code to deal with overwrites and errors in idlers.
  * Basically, it checks if we got a response. 
@@ -456,9 +456,9 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
 
 static int _e_fm_op_idler_handle_error(int *mark, Evas_List **queue, Evas_List **node, E_Fm_Op_Task *task)
 {
-   if(_e_fm_op_overwrite)
+   if (_e_fm_op_overwrite)
      {
-        if(_e_fm_op_overwrite_response != E_FM_OP_NONE)
+        if (_e_fm_op_overwrite_response != E_FM_OP_NONE)
           {
              task->overwrite = _e_fm_op_overwrite_response;
              _e_fm_op_work_error = 0;
@@ -469,7 +469,7 @@ static int _e_fm_op_idler_handle_error(int *mark, Evas_List **queue, Evas_List *
              return 1;
           }
      }
-   else if(*mark)
+   else if (*mark)
      {
         if (_e_fm_op_error_response == E_FM_OP_NONE)
           { 
@@ -516,7 +516,7 @@ static int _e_fm_op_idler_handle_error(int *mark, Evas_List **queue, Evas_List *
                } 
           } 
      }
-   else if( _e_fm_op_work_error || _e_fm_op_scan_error)
+   else if ( _e_fm_op_work_error || _e_fm_op_scan_error)
      {
         return 1;
      }
@@ -546,19 +546,19 @@ _e_fm_op_work_idler(void *data)
    static Evas_List *node = NULL;
    E_Fm_Op_Task *task = NULL;
    
-   if(!node) node = _e_fm_op_work_queue;
+   if (!node) node = _e_fm_op_work_queue;
 
    task = evas_list_data(node);
 
-   if(!task) 
+   if (!task) 
      {
         node = _e_fm_op_work_queue;
         task = evas_list_data(node);
      }
 
-   if(!task)
+   if (!task)
      {
-        if( _e_fm_op_separator && _e_fm_op_work_queue == _e_fm_op_separator && _e_fm_op_scan_idler_p == NULL)
+        if ( _e_fm_op_separator && _e_fm_op_work_queue == _e_fm_op_separator && _e_fm_op_scan_idler_p == NULL)
           {
              /* You may want to look at the comment in _e_fm_op_scan_atom() about this separator thing. */
              _e_fm_op_work_queue = evas_list_remove_list(_e_fm_op_work_queue, _e_fm_op_separator);
@@ -574,19 +574,19 @@ _e_fm_op_work_idler(void *data)
         return 1;
      }
 
-   if(_e_fm_op_idler_handle_error(&_e_fm_op_work_error, &_e_fm_op_work_queue, &node, task)) return 1;
+   if (_e_fm_op_idler_handle_error(&_e_fm_op_work_error, &_e_fm_op_work_queue, &node, task)) return 1;
 
    task->started = 1;
    
-   if(task->type == E_FM_OP_COPY)
+   if (task->type == E_FM_OP_COPY)
      {
         _e_fm_op_copy_atom(task);
      }
-   else if(task->type == E_FM_OP_REMOVE)
+   else if (task->type == E_FM_OP_REMOVE)
      {
         _e_fm_op_remove_atom(task);
      }
-   else if(task->type == E_FM_OP_COPY_STAT_INFO)
+   else if (task->type == E_FM_OP_COPY_STAT_INFO)
      {
         _e_fm_op_copy_stat_info_atom(task);
      }
@@ -624,11 +624,11 @@ _e_fm_op_scan_idler(void *data)
    static DIR *dir = NULL;
    E_Fm_Op_Task *ntask = NULL;
 
-   if(!node) node = _e_fm_op_scan_queue;
+   if (!node) node = _e_fm_op_scan_queue;
    
    task = evas_list_data(node);
 
-   if(!task) 
+   if (!task) 
      {
         node = _e_fm_op_scan_queue;
         task = evas_list_data(node);
@@ -647,7 +647,7 @@ _e_fm_op_scan_idler(void *data)
 	return 0;
      }
 
-   if(_e_fm_op_idler_handle_error(&_e_fm_op_scan_error, &_e_fm_op_scan_queue, &node, task)) return 1;
+   if (_e_fm_op_idler_handle_error(&_e_fm_op_scan_error, &_e_fm_op_scan_queue, &node, task)) return 1;
 
    if (task->type == E_FM_OP_COPY_STAT_INFO)
      {
@@ -679,11 +679,11 @@ _e_fm_op_scan_idler(void *data)
         else
           task->started = 1;
      }
-   else if(!task->started)
+   else if (!task->started)
      {
         de = readdir(dir);
 
-        if(!de)
+        if (!de)
           {
              ntask = _e_fm_op_task_new();
              
@@ -701,7 +701,7 @@ _e_fm_op_scan_idler(void *data)
                   ntask->dst.name = NULL;
                }
              
-             if(task->type == E_FM_OP_REMOVE)
+             if (task->type == E_FM_OP_REMOVE)
                _e_fm_op_scan_queue = evas_list_prepend(_e_fm_op_scan_queue, ntask);
              else
                _e_fm_op_scan_queue = evas_list_append(_e_fm_op_scan_queue, ntask);
@@ -737,7 +737,7 @@ _e_fm_op_scan_idler(void *data)
              ntask->dst.name = NULL;
           }
 
-        if(task->type == E_FM_OP_REMOVE)
+        if (task->type == E_FM_OP_REMOVE)
           _e_fm_op_scan_queue = evas_list_prepend(_e_fm_op_scan_queue, ntask);
         else
           _e_fm_op_scan_queue = evas_list_append(_e_fm_op_scan_queue, ntask);
@@ -827,7 +827,7 @@ _e_fm_op_rollback(E_Fm_Op_Task * task)
 	FREE(task->data);
      }
 
-   if(task->type == E_FM_OP_COPY)
+   if (task->type == E_FM_OP_COPY)
      _e_fm_op_update_progress(-task->dst.done, -task->src.st.st_size);
    else
      _e_fm_op_update_progress(-REMOVECHUNKSIZE, -REMOVECHUNKSIZE);
@@ -859,24 +859,24 @@ _e_fm_op_update_progress(long long _plus_e_fm_op_done, long long _plus_e_fm_op_t
    _e_fm_op_done += _plus_e_fm_op_done;
    _e_fm_op_total += _plus_e_fm_op_total;
 
-   if(_e_fm_op_scan_idler_p) return; /* Do not send progress until scan is done.*/
+   if (_e_fm_op_scan_idler_p) return; /* Do not send progress until scan is done.*/
 
-   if(_e_fm_op_total != 0)
+   if (_e_fm_op_total != 0)
      {
 	percent = _e_fm_op_done * 100 / _e_fm_op_total % 101;	/* % 101 is for the case when somehow work queue works faster than scan queue. _e_fm_op_done * 100 should not cause arithmetic overflow, since long long can hold really big values. */
 
         eta = peta;
 
-        if(!stime) stime = ecore_time_get();
+        if (!stime) stime = ecore_time_get();
 
-        if(_e_fm_op_done && ecore_time_get() - ctime > 1.0 ) /* Update ETA once a second */
+        if (_e_fm_op_done && ecore_time_get() - ctime > 1.0 ) /* Update ETA once a second */
           {
              ctime = ecore_time_get();
              eta = (ctime - stime) * (_e_fm_op_total - _e_fm_op_done) / _e_fm_op_done;
              eta = (int) (eta + 0.5);
         }
 
-	if(percent != ppercent || eta != peta)
+	if (percent != ppercent || eta != peta)
 	  {
 	     ppercent = percent;
              peta = eta;
@@ -903,7 +903,7 @@ _e_fm_op_copy_stat_info(E_Fm_Op_Task *task)
 {
    struct utimbuf ut;
 
-   if(!task->dst.name) return;
+   if (!task->dst.name) return;
 
    chmod(task->dst.name, task->src.st.st_mode);
    chown(task->dst.name, task->src.st.st_uid,
@@ -918,20 +918,20 @@ _e_fm_op_handle_overwrite(E_Fm_Op_Task *task)
 {
    struct stat st;
 
-   if(task->overwrite == E_FM_OP_OVERWRITE_RESPONSE_YES_ALL 
+   if (task->overwrite == E_FM_OP_OVERWRITE_RESPONSE_YES_ALL 
          || _e_fm_op_overwrite_response == E_FM_OP_OVERWRITE_RESPONSE_YES_ALL)
      {
         _e_fm_op_overwrite = 0;
         return 0;
      }
-   else if(task->overwrite == E_FM_OP_OVERWRITE_RESPONSE_YES 
+   else if (task->overwrite == E_FM_OP_OVERWRITE_RESPONSE_YES 
          || _e_fm_op_overwrite_response == E_FM_OP_OVERWRITE_RESPONSE_YES)
      {
         _e_fm_op_overwrite_response = E_FM_OP_NONE;
         _e_fm_op_overwrite = 0;
         return 0;
      }
-   else if(task->overwrite == E_FM_OP_OVERWRITE_RESPONSE_NO 
+   else if (task->overwrite == E_FM_OP_OVERWRITE_RESPONSE_NO 
          || _e_fm_op_overwrite_response == E_FM_OP_OVERWRITE_RESPONSE_NO)
      {
         task->finished = 1;
@@ -941,7 +941,7 @@ _e_fm_op_handle_overwrite(E_Fm_Op_Task *task)
         _e_fm_op_overwrite = 0;
         return 1;
      }
-   else if(task->overwrite == E_FM_OP_OVERWRITE_RESPONSE_NO_ALL 
+   else if (task->overwrite == E_FM_OP_OVERWRITE_RESPONSE_NO_ALL 
          || _e_fm_op_overwrite_response == E_FM_OP_OVERWRITE_RESPONSE_NO_ALL)
      {
         task->finished = 1;
@@ -951,10 +951,10 @@ _e_fm_op_handle_overwrite(E_Fm_Op_Task *task)
         return 1;
      }
    
-   if( stat(task->dst.name, &st) == 0)
+   if ( stat(task->dst.name, &st) == 0)
      {
         /* File exists. */
-        if( _e_fm_op_overwrite_response == E_FM_OP_OVERWRITE_RESPONSE_NO_ALL)
+        if ( _e_fm_op_overwrite_response == E_FM_OP_OVERWRITE_RESPONSE_NO_ALL)
           {
              task->finished = 1;
              _e_fm_op_rollback(task);
@@ -987,9 +987,9 @@ _e_fm_op_copy_dir(E_Fm_Op_Task * task)
              if (!S_ISDIR(st.st_mode))
                {
                   /* Let's try to delete the file and create a dir */
-                  if(unlink(task->dst.name) == -1)
+                  if (unlink(task->dst.name) == -1)
                     _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
-                  if(mkdir(task->dst.name, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) == -1)
+                  if (mkdir(task->dst.name, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) == -1)
                     _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot make directory '%s': %s.", task->dst.name);
                }
           }
@@ -1017,13 +1017,13 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
    len = readlink(task->src.name, &path[0], PATH_MAX);
    path[len] = 0;
    
-   if(symlink(path, task->dst.name) != 0)
+   if (symlink(path, task->dst.name) != 0)
      {
-        if(errno == EEXIST)
+        if (errno == EEXIST)
           {
-             if(unlink(task->dst.name) == -1)
+             if (unlink(task->dst.name) == -1)
                _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
-             if(symlink(path, task->dst.name) == -1)
+             if (symlink(path, task->dst.name) == -1)
                _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", path, task->dst.name);
           }
         else
@@ -1045,13 +1045,13 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
 static int
 _e_fm_op_copy_fifo(E_Fm_Op_Task *task)
 {
-   if(mkfifo(task->dst.name, task->src.st.st_mode) == -1)
+   if (mkfifo(task->dst.name, task->src.st.st_mode) == -1)
      {
-        if(errno == EEXIST)
+        if (errno == EEXIST)
           {
-             if(unlink(task->dst.name) == -1)
+             if (unlink(task->dst.name) == -1)
                _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
-             if(mkfifo(task->dst.name, task->src.st.st_mode) == -1)
+             if (mkfifo(task->dst.name, task->src.st.st_mode) == -1)
                _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot make FIFO at '%s': %s.", task->dst.name);
           }
         else
@@ -1076,7 +1076,7 @@ _e_fm_op_open_files(E_Fm_Op_Task *task)
    E_Fm_Op_Copy_Data *data = task->data;
 
    /* Ordinary file. */
-   if(!data)
+   if (!data)
      {
         data = malloc(sizeof(E_Fm_Op_Copy_Data));
         task->data = data;
@@ -1084,7 +1084,7 @@ _e_fm_op_open_files(E_Fm_Op_Task *task)
         data->from = NULL;
      }
    
-   if(!data->from) 
+   if (!data->from) 
      {
         data->from = fopen(task->src.name, "rb");
         if (data->from == NULL)
@@ -1093,7 +1093,7 @@ _e_fm_op_open_files(E_Fm_Op_Task *task)
           }
      }
    
-   if(!data->to)
+   if (!data->to)
      {
         data->to = fopen(task->dst.name, "wb");
         if (data->to == NULL)
@@ -1205,28 +1205,28 @@ _e_fm_op_copy_atom(E_Fm_Op_Task * task)
 	     return 1;
 	  }
 
-        if(_e_fm_op_handle_overwrite(task)) return 1;
+        if (_e_fm_op_handle_overwrite(task)) return 1;
        
 	if (S_ISDIR(task->src.st.st_mode))
 	  {
-             if(_e_fm_op_copy_dir(task)) return 1;
+             if (_e_fm_op_copy_dir(task)) return 1;
 	  }
 	else if (S_ISLNK(task->src.st.st_mode))
 	  {
-             if(_e_fm_op_copy_link(task)) return 1;
+             if (_e_fm_op_copy_link(task)) return 1;
 	  }
 	else if (S_ISFIFO(task->src.st.st_mode))
 	  {
-             if(_e_fm_op_copy_fifo(task)) return 1;
+             if (_e_fm_op_copy_fifo(task)) return 1;
 	  }
 	else if (S_ISREG(task->src.st.st_mode))
 	  {
-             if(_e_fm_op_open_files(task)) return 1;
+             if (_e_fm_op_open_files(task)) return 1;
           }
      }
    else
      {
-        if(_e_fm_op_copy_chunk(task)) return 1;
+        if (_e_fm_op_copy_chunk(task)) return 1;
      }
 
    return 1;
@@ -1246,7 +1246,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
 
    /* Now push a new task to the work idler. */
 
-   if(task->type == E_FM_OP_COPY)
+   if (task->type == E_FM_OP_COPY)
      {
         _e_fm_op_update_progress(0, task->src.st.st_size);
 
@@ -1259,7 +1259,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
         
         _e_fm_op_work_queue = evas_list_append(_e_fm_op_work_queue, ctask);
      }
-   else if(task->type == E_FM_OP_COPY_STAT_INFO)
+   else if (task->type == E_FM_OP_COPY_STAT_INFO)
      {
         _e_fm_op_update_progress(0, REMOVECHUNKSIZE);
         
@@ -1272,7 +1272,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
         
         _e_fm_op_work_queue = evas_list_append(_e_fm_op_work_queue, ctask);
      }
-   else if(task->type == E_FM_OP_REMOVE)
+   else if (task->type == E_FM_OP_REMOVE)
      {
         _e_fm_op_update_progress(0, REMOVECHUNKSIZE);
 
@@ -1286,7 +1286,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
         _e_fm_op_work_queue = evas_list_prepend(_e_fm_op_work_queue, rtask);
 
      }
-   else if(task->type == E_FM_OP_MOVE)
+   else if (task->type == E_FM_OP_MOVE)
      {
         /* Copy task. */
         _e_fm_op_update_progress(0, task->src.st.st_size);

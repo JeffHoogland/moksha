@@ -2265,7 +2265,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	  {
 	     int percent, seconds;
 
-	     if(!e->data || e->size != 2 * sizeof(int)) return;
+	     if (!e->data || e->size != 2 * sizeof(int)) return;
 
 	     percent = *(int *)e->data;
 	     seconds = *(int *)(e->data + sizeof(int));
@@ -2522,7 +2522,7 @@ _e_fm2_file_del(Evas_Object *obj, const char *file)
 static void
 _e_fm_file_buffer_clear(void)
 {
-   while(_e_fm_file_buffer)
+   while (_e_fm_file_buffer)
      {
 	evas_stringshare_del(evas_list_data(_e_fm_file_buffer));
 	_e_fm_file_buffer = evas_list_remove_list(_e_fm_file_buffer, _e_fm_file_buffer);

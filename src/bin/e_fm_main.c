@@ -1371,7 +1371,7 @@ static int _e_fm_slave_run(E_Fm_Op_Type type, const char *src, const char *dst, 
 
    slave = malloc(sizeof(E_Fm_Slave));
 
-   if(!slave) return 0;
+   if (!slave) return 0;
 	     
    command = evas_stringshare_add(_e_prepare_command(type, src, dst));
 
@@ -1391,11 +1391,11 @@ static E_Fm_Slave *_e_fm_slave_get(int id)
    Evas_List *l = _e_fm_slaves;
    E_Fm_Slave *slave;
 
-   while(l)
+   while (l)
      {
 	slave = evas_list_data(l);
 
-	if(slave->id == id)
+	if (slave->id == id)
 	  return slave;
 
 	l = evas_list_next(l);
@@ -1414,7 +1414,7 @@ static int _e_fm_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, in
    ssize = 3 * sizeof(int) + size;
    sdata = malloc(ssize);
 
-   if(!sdata) return 0;
+   if (!sdata) return 0;
 
    memcpy(sdata,                                      &magic, sizeof(int));
    memcpy(sdata + sizeof(int),                        &type, sizeof(E_Fm_Op_Type));
@@ -1438,20 +1438,20 @@ static int _e_fm_slave_data_cb(void *data, int type, void *event)
    void *sdata;
    int ssize;
 
-   if(!e) return 1;
+   if (!e) return 1;
 
    slave = ecore_exe_data_get(e->exe);
 
    sdata = e->data;
    ssize = e->size;
 
-   while(ssize)
+   while (ssize)
      {	
 	memcpy(&magic, sdata,                             sizeof(int));
 	memcpy(&id,    sdata + sizeof(int),               sizeof(int));
 	memcpy(&size,  sdata + sizeof(int) + sizeof(int), sizeof(int));
 
-	if(magic != E_FM_OP_MAGIC)
+	if (magic != E_FM_OP_MAGIC)
 	  {
 	     //DEBUG("%s:%s(%d) Wrong magic number from slave #%d. ", __FILE__, __FUNCTION__, __LINE__, slave->id);
 	  }
@@ -1459,7 +1459,7 @@ static int _e_fm_slave_data_cb(void *data, int type, void *event)
 	sdata += 3 * sizeof(int);
 	ssize -= 3 * sizeof(int);
 
-	if(id == E_FM_OP_OVERWRITE)
+	if (id == E_FM_OP_OVERWRITE)
 	  {
 	     response[0] = E_FM_OP_MAGIC;
 	     response[1] = E_FM_OP_OVERWRITE_RESPONSE_YES;
@@ -1468,12 +1468,12 @@ static int _e_fm_slave_data_cb(void *data, int type, void *event)
 	     _e_client_send_overwrite(slave->id, (const char *)sdata, size);
 	     printf("%s:%s(%d) Overwrite response sent to slave #%d.\n", __FILE__, __FUNCTION__, __LINE__, slave->id);
 	  }
-	else if(id == E_FM_OP_ERROR)
+	else if (id == E_FM_OP_ERROR)
 	  {
 	     _e_client_send_error(slave->id, (const char *)sdata, size);
 	     printf("%s:%s(%d) Error sent to client from slave #%d.\n", __FILE__, __FUNCTION__, __LINE__, slave->id);
 	  }
-	else if(id == E_FM_OP_PROGRESS)
+	else if (id == E_FM_OP_PROGRESS)
 	  {
 	     _e_client_send_progress(slave->id, (const char *)sdata, size);
 	     printf("%s:%s(%d) Progress sent to client from slave #%d.\n", __FILE__, __FUNCTION__, __LINE__, slave->id);
@@ -1492,7 +1492,7 @@ static int _e_fm_slave_error_cb(void *data, int type, void *event)
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
 
-   if(e == NULL) return 1;
+   if (e == NULL) return 1;
 
    slave = ecore_exe_data_get(e->exe);
 
@@ -1506,11 +1506,11 @@ static int _e_fm_slave_del_cb(void *data, int type, void *event)
    Ecore_Exe_Event_Del *e = event;
    E_Fm_Slave *slave;
 
-   if(!e) return 1;
+   if (!e) return 1;
 
    slave = ecore_exe_data_get(e->exe);
 
-   if(!slave) return 1;
+   if (!slave) return 1;
 
    _e_fm_slaves = evas_list_remove(_e_fm_slaves, (void *)slave);
    free(slave);
@@ -2374,9 +2374,9 @@ static void _e_append_char(char **str, int *size, int c)
 
 static void _e_append_quoted(char **str, int *size, const char *src)
 {
-   while(*src)
+   while (*src)
      {
-	if(*src == '\'')
+	if (*src == '\'')
 	  {
 	     _e_append_char(str, size, '\'');		
 	     _e_append_char(str, size, '\\');
@@ -2401,9 +2401,9 @@ static const char *_e_prepare_command(E_Fm_Op_Type type, const char *src, const 
    char *buf = &buffer[0];
    char command[3];
 
-   if(type == E_FM_OP_MOVE)
+   if (type == E_FM_OP_MOVE)
      strcpy(command, "mv");
-   else if(type == E_FM_OP_REMOVE)
+   else if (type == E_FM_OP_REMOVE)
      strcpy(command, "rm");
    else
      strcpy(command, "cp");
@@ -2414,7 +2414,7 @@ static const char *_e_prepare_command(E_Fm_Op_Type type, const char *src, const 
    _e_append_quoted(&buf, &length, src);
    _e_append_char(&buf, &length, '\'');
 
-   if(dst)
+   if (dst)
      {
 	_e_append_char(&buf, &length, ' ');
 	_e_append_char(&buf, &length, '\'');
