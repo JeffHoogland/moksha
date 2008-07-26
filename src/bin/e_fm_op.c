@@ -1194,8 +1194,6 @@ _e_fm_op_copy_atom(E_Fm_Op_Task * task)
 
    if (!data || !data->to || !data->from)		/* Did not touch the files yet. */
      {
-        E_FM_OP_DEBUG("Copy: %s --> %s\n", task->src.name, task->dst.name);
-
         if (_e_fm_op_abort)
 	  {
 	     /* We're marked for abortion. Don't do anything. 
@@ -1207,7 +1205,9 @@ _e_fm_op_copy_atom(E_Fm_Op_Task * task)
 
         if (_e_fm_op_handle_overwrite(task)) return 1;
        
-	if (S_ISDIR(task->src.st.st_mode))
+        E_FM_OP_DEBUG("Copy: %s --> %s\n", task->src.name, task->dst.name);
+	
+        if (S_ISDIR(task->src.st.st_mode))
 	  {
              if (_e_fm_op_copy_dir(task)) return 1;
 	  }

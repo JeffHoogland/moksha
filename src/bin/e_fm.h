@@ -161,8 +161,8 @@ EAPI void        e_fm2_icon_geometry_get(E_Fm2_Icon *ic, int *x, int *y, int *w,
 EAPI void        e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e);
 EAPI void        e_fm2_client_del(Ecore_Ipc_Event_Client_Del *e);
 
-EAPI void        _e_fm2_client_mount(const char *udi, const char *mountpoint);
-EAPI void        _e_fm2_client_unmount(const char *udi);
+EAPI int        _e_fm2_client_mount(const char *udi, const char *mountpoint);
+EAPI int        _e_fm2_client_unmount(const char *udi);
 EAPI void        _e_fm2_file_force_update(const char *path);
     
 #endif
