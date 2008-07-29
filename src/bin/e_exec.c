@@ -331,10 +331,20 @@ _e_exec_cb_exit(void *data, int type, void *event)
    /* Let's hope that everything returns this properly. */
    else if (!((ev->exited) && (ev->exit_code == EXIT_SUCCESS))) 
      {
-     	/* Show the error dialog with details from the exe. */
-	_e_exec_error_dialog(inst->desktop, ecore_exe_cmd_get(ev->exe), ev,
-			     ecore_exe_event_data_get(ev->exe, ECORE_EXE_PIPE_ERROR),
-			     ecore_exe_event_data_get(ev->exe, ECORE_EXE_PIPE_READ));
+	/* filter out common exits via signals - int/term/quit. not really
+	 * worth popping up a dialog for */
+	if (!
+	    ((ev->signalled) &&
+	     ((ev->exit_signal == SIGINT) ||
+	      (ev->exit_signal == SIGQUIT) ||
+	      (ev->exit_signal == SIGTERM)))
+	    )
+	  {
+	     /* Show the error dialog with details from the exe. */
+	     _e_exec_error_dialog(inst->desktop, ecore_exe_cmd_get(ev->exe), ev,
+				  ecore_exe_event_data_get(ev->exe, ECORE_EXE_PIPE_ERROR),
+				  ecore_exe_event_data_get(ev->exe, ECORE_EXE_PIPE_READ));
+	  }
      }
    if (inst->desktop)
      {
