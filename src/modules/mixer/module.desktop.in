@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Link
+Name=Mixer
+Icon=e-module-mixer
+Comment=<hilight>Mixer Gadget</hilight><br><br>A module to provide a mixer for changing volume.

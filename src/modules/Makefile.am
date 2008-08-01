@@ -51,6 +51,7 @@ conf_paths \
 conf_mime \
 conf_interaction \
 gadman \
+mixer \
 conf_window_remembers
 
 if HAVE_TEMPERATURE

@@ -86,4 +86,5 @@ collections {
 #include "default_wizard.edc"
 #include "default_toolbar.edc"
 #include "default_slidesel.edc"
+#include "default_mixer.edc"
 }

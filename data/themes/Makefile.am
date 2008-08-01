@@ -62,7 +62,8 @@ default_deskpreview.edc \
 default_fontpreview.edc \
 default_wizard.edc \
 default_toolbar.edc \
-default_slidesel.edc
+default_slidesel.edc \
+default_mixer.edc
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \
