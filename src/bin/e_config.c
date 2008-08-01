@@ -1801,7 +1801,7 @@ e_config_engine_list(void)
 #endif
    if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_XRENDER_X11))
      l = evas_list_append(l, strdup("XRENDER"));
-   if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_X11_16))
+   if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_16_X11))
      l = evas_list_append(l, strdup("SOFTWARE_16"));
    return l;
 }
