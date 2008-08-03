@@ -95,9 +95,8 @@ void
 gadman_shutdown(void)
 {
    e_container_shape_change_callback_del(Man->container, on_shape_change, NULL);
-   printf("++++++++    UNPOPULATE BG\n");
-   e_gadcon_unpopulate(Man->gc); // TODO FIX ME !!
-   printf("++++++++    UNPOPULATE TOP\n");
+
+   e_gadcon_unpopulate(Man->gc);
    e_gadcon_unpopulate(Man->gc_top);
 
    /* free gadcons */
