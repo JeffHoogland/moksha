@@ -268,7 +268,7 @@ gadman_gadget_edit_end(void)
    Man->gc->editing = 0;
    Man->gc_top->editing = 0;
 
-   _save_widget_position(current);
+   if (current) _save_widget_position(current);
 }
 
 void
