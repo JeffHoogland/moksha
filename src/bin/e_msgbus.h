@@ -3,10 +3,6 @@
  */
 #ifdef E_TYPEDEFS
 
-#ifndef HAVE_EDBUS
-#define E_DBus_Interface void
-#endif
-
 typedef struct _E_Msgbus_Data E_Msgbus_Data;
 
 #else
@@ -15,18 +11,20 @@ typedef struct _E_Msgbus_Data E_Msgbus_Data;
 
 /* This is the dbus subsystem, but e_dbus namespace is taken by e_dbus */
 
+#ifdef HAVE_EDBUS
 struct _E_Msgbus_Data 
 {
-#ifdef HAVE_EDBUS
    E_DBus_Connection *conn;
    E_DBus_Object     *obj;
-#endif
 };
+#endif
 
 EAPI int e_msgbus_init(void);
 EAPI int e_msgbus_shutdown(void);
+#ifdef HAVE_EDBUS
 EAPI void e_msgbus_interface_attach(E_DBus_Interface *iface);
 EAPI void e_msgbus_interface_detach(E_DBus_Interface *iface);
+#endif
 
 #endif
 #endif

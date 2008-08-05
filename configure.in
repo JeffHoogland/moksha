@@ -221,14 +221,16 @@ PKG_CHECK_MODULES(E_HAL, ehal, have_ehal=yes, have_ehal=no)
 
 # this is used to conditionally build modules which depend on E_DBUS
 AM_CONDITIONAL(HAVE_EDBUS, test x$have_edbus = "xyes")
+define_e_dbus=""
 if test x$have_edbus = "xyes"; then
+  define_e_dbus="-DHAVE_EDBUS"
   if test x$have_ehal = "xyes"; then
     AC_DEFINE(HAVE_EDBUS, 1, [E_Dbus support])
   fi
 fi
 
 e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "
-e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "$E_DBUS_CFLAGS" "
+e_cflags="-DUSE_E_CONFIG_H "$define_e_dbus" "$E_CFLAGS" "$E_DBUS_CFLAGS" "
 AC_SUBST(e_libs)
 AC_SUBST(e_cflags)
 

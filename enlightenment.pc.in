@@ -6,6 +6,6 @@ includedir=@includedir@/@PACKAGE@
 Name: enlightenment
 Description: Enlightenmnt Window Manager
 Version: @VERSION@
-Libs: @libdir@/@PACKAGE@/modules
+Libs: -L${libdir}
 Libs.private: 
-Cflags: -I${includedir}
+Cflags: -I${includedir}  @e_cflags@
