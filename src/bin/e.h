@@ -4,7 +4,9 @@
 #ifndef E_H
 #define E_H
 
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 #define USE_IPC
 #if 0
