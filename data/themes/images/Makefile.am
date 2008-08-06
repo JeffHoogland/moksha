@@ -558,5 +558,14 @@ e17_tl_corner_logo_shadow.png \
 e17_whitev.png \
 e17_wiz_b1.png \
 e17_wiz_b2.png \
-e17_icon_window_remembers.png
+e17_icon_window_remembers.png \
+e17_mixer_base.png \
+e17_mixer_left_high.png \
+e17_mixer_left_low.png \
+e17_mixer_left_medium.png \
+e17_mixer_module_icon.png \
+e17_mixer_mute.png \
+e17_mixer_right_high.png \
+e17_mixer_right_low.png \
+e17_mixer_right_medium.png
 
