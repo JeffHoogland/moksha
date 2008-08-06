@@ -8,4 +8,4 @@ Description: Enlightenmnt Window Manager
 Version: @VERSION@
 Libs: -L${libdir}
 Libs.private: 
-Cflags: -I${includedir}  @e_cflags@
+Cflags: -I${includedir} @e_configflags@
