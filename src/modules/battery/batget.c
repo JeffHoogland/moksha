@@ -712,6 +712,8 @@ linux_sys_class_power_supply_check(void)
 	       {
 		  full = 0;
 		  if (!strncasecmp("discharging", tmp, 11)) charging = 0;
+		  else if (!strncasecmp("unknown", tmp, 7)) charging = 0;
+		  else if (!strncasecmp("not charging", tmp, 12)) charging = 0;
 		  else if (!strncasecmp("charging", tmp, 8)) charging = 1;
 		  else if (!strncasecmp("full", tmp, 4))
 		    {
@@ -1058,7 +1060,7 @@ linux_acpi_check(void)
 		  tmp = str_get(buf);
 		  if (tmp)
 		    {
-		       if (!strcmp(tmp, "yes")) have_battery = 1;
+		       if (!strcasecmp(tmp, "yes")) have_battery = 1;
 		       free(tmp);
 		    }
 		  /* capacity state: ok/? */
@@ -1070,7 +1072,7 @@ linux_acpi_check(void)
 		    {
 		       if (have_power == 0)
 			 {
-			    if (!strcmp(tmp, "charging")) have_power = 1;
+			    if (!strcasecmp(tmp, "charging")) have_power = 1;
 			 }
 		       free(tmp);
 		    }
@@ -1079,7 +1081,7 @@ linux_acpi_check(void)
                   tmp = str_get(buf);
                   if (tmp)
 		    {
-		       if (strcmp(tmp, "unknown")) rate += atoi(tmp);
+		       if (strcasecmp(tmp, "unknown")) rate += atoi(tmp);
 		       free(tmp);
 		    }
 		  /* remaining capacity: NNN */
@@ -1087,7 +1089,7 @@ linux_acpi_check(void)
                   tmp = str_get(buf);
                   if (tmp)
 		    {
-		       if (strcmp(tmp, "unknown")) capacity += atoi(tmp);
+		       if (strcasecmp(tmp, "unknown")) capacity += atoi(tmp);
 		       free(tmp);
 		    }
 		  fclose(f);
