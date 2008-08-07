@@ -1473,6 +1473,14 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	if ((bd->want_focus) && (set) && (!focus))
 	  bd->want_focus = 0;
      }
+   if (!bd->visible)
+     {
+	e_border_focus_latest_set(bd);
+	bd->want_focus = 1;
+	bd->changed = 1;
+	printf(" - SKIP AA F %p %i %i\n", bd, focus, set);
+	return;
+     }
    if ((focus) && (!bd->focused))
      {
 	if ((bd->visible) && (bd->changes.visible))
