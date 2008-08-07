@@ -1410,17 +1410,27 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 //   printf(" accept:%i take:%i\n", bd->client.icccm.accepts_focus, bd->client.icccm.take_focus);
 //   if (!bd->client.icccm.accepts_focus) return;
    if ((!bd->client.icccm.accepts_focus) &&
-       (!bd->client.icccm.take_focus)) return;
+       (!bd->client.icccm.take_focus))
+     {
+	     printf(" - SKIP I F %p %i %i\n", bd, focus, set);
+	return;
+     }
    /* dont focus an iconified window. that's silly! */
-   if ((focus) && (bd->iconic)) return;
+   if ((focus) && (bd->iconic))
+     {
+	     printf(" - SKIP H F %p %i %i\n", bd, focus, set);
+	return;
+     }
    if ((bd->modal) && (bd->modal != bd))
      {
 	e_border_focus_set(bd->modal, focus, set);
+	     printf(" - SKIP G F %p %i %i\n", bd, focus, set);
 	return;
      }
    else if ((bd->leader) && (bd->leader->modal) && (bd->leader->modal != bd))
      {
 	e_border_focus_set(bd->leader->modal, focus, set);
+	     printf(" - SKIP F F %p %i %i\n", bd, focus, set);
 	return;
      }
 
@@ -1434,9 +1444,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 		  e_border_focus_latest_set(bd);
 		  bd->want_focus = 1;
 		  bd->changed = 1;
+	     printf(" - SKIP E F %p %i %i\n", bd, focus, set);
 		  return;
 	       }
 	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
+	     printf(" - SKIP D F %p %i %i\n", bd, focus, set);
 	     return;
 	  }
 	else if ((!bd->client.icccm.accepts_focus) &&
@@ -1447,9 +1459,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 		  e_border_focus_latest_set(bd);
 		  bd->want_focus = 1;
 		  bd->changed = 1;
+	     printf(" - SKIP C F %p %i %i\n", bd, focus, set);
 		  return;
 	       }
 	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
+	     printf(" - SKIP B F %p %i %i\n", bd, focus, set);
 	     return;
 	  }
      }
@@ -1466,6 +1480,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     e_border_focus_latest_set(bd);
 	     bd->want_focus = 1;
 	     bd->changed = 1;
+	     printf(" - SKIP A F %p %i %i\n", bd, focus, set);
 	     return;
 	  }
 //	if (bd->visible)
@@ -1496,6 +1511,9 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     ecore_timer_del(bd->raise_timer);
 	     bd->raise_timer = NULL;
 	  }
+     }
+   if (bd->want_focus)
+     {
      }
    if (((bd->focused) && (!focus)) || ((!bd->focused) && (focus)))
      focus_changed = 1;
@@ -1538,7 +1556,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	       {
 		  E_Event_Border_Focus_Out *ev;
 	     
-//		  printf("unfocus previous\n");
+		  printf("unfocus previous\n");
 		  edje_object_signal_emit(focused->bg_object, "e,state,unfocused", "e");
 		  if (focused->icon_object)
 		    edje_object_signal_emit(focused->icon_object, "e,state,unfocused", "e");
@@ -1550,6 +1568,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 		  
 		  ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
 				  _e_border_event_border_focus_out_free, NULL);
+	     printf("FOUT %s\n", bd->client.netwm.name);
 		  
 		  /* FIXME: Sometimes we should leave the window fullscreen! */
 //		  if (focused->fullscreen) e_border_unfullscreen(focused);
@@ -1560,6 +1579,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 		       ecore_timer_del(focused->raise_timer);
 		       focused->raise_timer = NULL;
 		    }
+		  focused = NULL;
 	       }
 	  }
 	e_hints_active_window_set(bd->zone->container->manager, bd);
@@ -1568,6 +1588,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 #if 0
    /* i'm pretty sure this case is handled above -- this was resulting in the "passive"
     * event getting sent twice when going from a window to the desktop. --rephorm */
+/*   
    else if ((!bd->focused) && (focused == bd))
      {
 	if (focused)
@@ -1577,7 +1598,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     if (focused->icon_object)
 	       edje_object_signal_emit(focused->icon_object, "e,state,unfocused", "e");
 	     e_focus_event_focus_out(focused);
-	     /* FIXME: Sometimes we should leave the window fullscreen! */
+	     // FIXME: Sometimes we should leave the window fullscreen!
 	     if (focused->fullscreen) e_border_unfullscreen(focused);
 	     focused->focused = 0;
 //		  e_border_focus_set(focused, 0, 0);
@@ -1589,14 +1610,16 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  }
 	e_hints_active_window_set(bd->zone->container->manager, NULL);
      }
+ */
 #endif
-   printf("- F=%i, S=%i V=%i\n", focus, set, bd->visible);
+   printf("- F=%i, S=%i V=%i, W=%i\n", focus, set, bd->visible, bd->want_focus);
    if (focus_changed)
      {
 	if (bd->focused)
 	  {
 	     E_Event_Border_Focus_In	 *ev;
 	     
+	     printf(" - focused = %p\n", focused);
 	     focused = bd;
 	     //printf("set focused to %p\n", focused);
 	     
