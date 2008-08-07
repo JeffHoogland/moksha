@@ -759,6 +759,12 @@ _desklock_pam_init(E_Desklock_Auth *da)
      pam_prof = "system-auth";
    else if (ecore_file_exists("/etc/pam.d/system")) 
      pam_prof = "system";
+   else if (ecore_file_exists("/etc/pam.d/xdm"))
+     pam_prof = "xdm";
+   else if (ecore_file_exists("/etc/pam.d/gdm"))
+     pam_prof = "gdm";
+   else if (ecore_file_exists("/etc/pam.d/kdm"))
+     pam_prof = "kdm";
    
    if ((pamerr = pam_start(pam_prof, da->user, &(da->pam.conv),
 			   &(da->pam.handle))) != PAM_SUCCESS)
