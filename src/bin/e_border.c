@@ -1398,6 +1398,8 @@ e_border_focus_set_with_pointer(E_Border *bd)
 EAPI void
 e_border_focus_set(E_Border *bd, int focus, int set)
 {
+   int focus_changed = 0;
+   
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    /* note: this is here as it seems there are enough apps that do not even
@@ -1406,9 +1408,9 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    /* be strict about accepting focus hint */
 //   printf("e_border_focus_set(%p, %s, %i %i);\n", bd, bd->client.icccm.name, focus, set);
 //   printf(" accept:%i take:%i\n", bd->client.icccm.accepts_focus, bd->client.icccm.take_focus);
-   if (!bd->client.icccm.accepts_focus) return;
-//   if ((!bd->client.icccm.accepts_focus) &&
-//       (!bd->client.icccm.take_focus)) return;
+//   if (!bd->client.icccm.accepts_focus) return;
+   if ((!bd->client.icccm.accepts_focus) &&
+       (!bd->client.icccm.take_focus)) return;
    /* dont focus an iconified window. that's silly! */
    if ((focus) && (bd->iconic)) return;
    if ((bd->modal) && (bd->modal != bd))
@@ -1421,7 +1423,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	e_border_focus_set(bd->leader->modal, focus, set);
 	return;
      }
-/*   
+
    if ((focus) && (set) && (!bd->focused))
      {
 	if ((bd->client.icccm.accepts_focus) &&
@@ -1451,7 +1453,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     return;
 	  }
      }
- */
+
    if ((bd->visible) && (bd->changes.visible))
      {  
 	if ((bd->want_focus) && (set) && (!focus))
@@ -1495,6 +1497,8 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     bd->raise_timer = NULL;
 	  }
      }
+   if (((bd->focused) && (!focus)) || ((!bd->focused) && (focus)))
+     focus_changed = 1;
    bd->focused = focus;
    if (set)
      {
@@ -1586,15 +1590,15 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	e_hints_active_window_set(bd->zone->container->manager, NULL);
      }
 #endif
-   if (bd->focused)
+   if (focus_changed)
      {
-	E_Event_Border_Focus_In	 *ev;
-
-	focused = bd;
-	//printf("set focused to %p\n", focused);
-	
-	if (focus && set)
-	  { 
+	if (bd->focused)
+	  {
+	     E_Event_Border_Focus_In	 *ev;
+	     
+	     focused = bd;
+	     //printf("set focused to %p\n", focused);
+	     
 	     // Let send the focus event iff the focus is set explicitly,
 	     // not via callback
 	     ev = calloc(1, sizeof(E_Event_Border_Focus_In)); 
@@ -1604,16 +1608,13 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     ecore_event_add(E_EVENT_BORDER_FOCUS_IN, ev,
 			     _e_border_event_border_focus_in_free, NULL);
 	  }
-     }
-   else if ((!bd->focused) && (focused == bd))
-     {
-	E_Event_Border_Focus_Out *ev;
+	else
+	  {
+	     E_Event_Border_Focus_Out *ev;
 
-	focused = NULL;
-	//printf("set focused to %p\n", focused);
+	     focused = NULL;
+	     //printf("set focused to %p\n", focused);
 
-	if (set)
-	  { 
 	     // Let send the focus event iff the focus is set explicitly,
 	     // not via callback
 	     ev = calloc(1, sizeof(E_Event_Border_Focus_Out)); 
