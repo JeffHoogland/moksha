@@ -1607,6 +1607,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     
 	     ecore_event_add(E_EVENT_BORDER_FOCUS_IN, ev,
 			     _e_border_event_border_focus_in_free, NULL);
+	     printf("FIN %s\n", bd->client.netwm.name);
 	  }
 	else
 	  {
@@ -1623,6 +1624,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 
 	     ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
 			     _e_border_event_border_focus_out_free, NULL);
+	     printf("FOUT %s\n", bd->client.netwm.name);
 	  }
      }
 }
