@@ -811,6 +811,20 @@ _e_manager_cb_client_message(void *data, int ev_type, void *ev)
 	bd = e_border_find_by_client_window(e->win);
 	if ((bd) && (!bd->focused))
 	  {
+#if 0 /* notes */	     
+	     if (e->data.l[0] == 0 /* 0 == old, 1 == client, 2 == pager */)
+	       {
+		  // FIXME: need config for the below - what to do given each
+		  //  request (either do nothng, make app look urgent/want
+		  //  attention or actiually flip to app as below is the
+		  //  current default)
+		  // if 0 == just make app demand attention somehow
+		  // if 1 == just make app demand attention somehow
+		  // if 2 == activate window as below
+	       }
+	     timestamp = e->data.l[1];
+	     requestor_id e->data.l[2];
+#endif
 	     if (bd->iconic)
 	       {
 		  if (e_config->clientlist_warp_to_iconified_desktop == 1)
@@ -828,13 +842,6 @@ _e_manager_cb_client_message(void *data, int ev_type, void *ev)
 					 bd->x + (bd->w / 2), bd->y + (bd->h / 2));
 		  e_border_focus_set(bd, 1, 1);
 	       }
-#if 0 /* notes */	     
-	     if (e->data.l[0] == 0 /* 0 == old, 1 == client, 2 == pager */)
-	       {
-	       }
-	     timestamp = e->data.l[1];
-	     requestor_id e->data.l[2];
-#endif	     
 	  }
      }
    
