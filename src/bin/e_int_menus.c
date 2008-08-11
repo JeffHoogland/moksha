@@ -1461,7 +1461,8 @@ _e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    e_border_move(bd, bd->zone->x + ((bd->zone->w - bd->w) / 2), 
 		 bd->zone->y + ((bd->zone->h - bd->h) / 2));
    e_border_raise(bd);
-   e_border_focus_set(bd, 1, 1);
+   if (!bd->lock_focus_out)
+     e_border_focus_set(bd, 1, 1);
 }
 
 static void

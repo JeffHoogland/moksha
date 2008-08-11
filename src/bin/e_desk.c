@@ -367,7 +367,8 @@ e_desk_last_focused_focus(E_Desk *desk)
 	if ((!bd->iconic) && (bd->visible) && (bd->desk == desk))
 	  {
 	     /* this was the window last focused in this desktop */
-	     e_border_focus_set(bd, 1, 1);
+             if (!bd->lock_focus_out)
+	       e_border_focus_set(bd, 1, 1);
 	     break;
 	  }
      }

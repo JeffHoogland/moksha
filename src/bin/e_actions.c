@@ -984,7 +984,8 @@ ACT_FN_GO(window_desk_move_by)
 	     e_zone_desk_flip_by(bd->zone, to_x - dx, to_y - dy);
 	     /* send the border to the required desktop. */
 	     e_border_desk_set(bd, desk);
-	     e_border_focus_set(bd, 1, 1);
+	     if (!bd->lock_focus_out)
+	       e_border_focus_set(bd, 1, 1);
 	  }
      }
 }

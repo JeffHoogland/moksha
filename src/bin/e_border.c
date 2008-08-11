@@ -1371,7 +1371,8 @@ e_border_focus_set_with_pointer(E_Border *bd)
 //   printf(" 2accept:%i take:%i\n", bd->client.icccm.accepts_focus, bd->client.icccm.take_focus);
    if ((!bd->client.icccm.accepts_focus) &&
        (!bd->client.icccm.take_focus)) return;
-   
+   if (bd->lock_focus_out) return;
+ 
    /* Try to grab the pointer to make sure it's not "in use" */
    if (!ecore_x_pointer_grab(bd->zone->container->win))
      return;
@@ -1412,6 +1413,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    if ((!bd->client.icccm.accepts_focus) &&
        (!bd->client.icccm.take_focus))
 	return;
+   if ((set) && (focus) && (bd->lock_focus_out)) return;
    /* dont focus an iconified window. that's silly! */
    if ((focus) && (bd->iconic))
      return;
