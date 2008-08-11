@@ -587,6 +587,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, thumbscroll_momentum_threshhold, DOUBLE);
    E_CONFIG_VAL(D, T, thumbscroll_friction, DOUBLE);
    
+   E_CONFIG_VAL(D, T, hal_desktop, INT);
+
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -763,6 +765,7 @@ e_config_init(void)
    e_config->display_res_hz = 0;
    e_config->display_res_rotation = 0;
 
+   e_config->hal_desktop = 1;
      {
 	E_Config_Module *em;
 

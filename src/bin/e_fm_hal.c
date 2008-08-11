@@ -196,7 +196,7 @@ _e_fm2_volume_write(E_Volume *v)
    if (!v->storage) return;
    id = ecore_file_file_get(v->storage->udi);
    printf("vol write %s\n", id);
-   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s_%d.desktop",
+   snprintf(buf, sizeof(buf) - 1, "%s/.e/e/fileman/favorites/|%s_%d.desktop",
 	    e_user_homedir_get(), id, v->partition_number);
 
    f = fopen(buf, "w");
@@ -292,13 +292,17 @@ _e_fm2_volume_write(E_Volume *v)
 		v->udi);
 	fclose(f);
 
-	snprintf(buf2, sizeof(buf2), "%s/Desktop/|%s_%d.desktop",
-		 e_user_homedir_get(), id, v->partition_number);
-	ecore_file_symlink(buf, buf2);
+	if(e_config->hal_desktop)
+	  {
+	     snprintf(buf2, sizeof(buf2) - 1, "%s/Desktop/|%s_%d.desktop",
+		   e_user_homedir_get(), id, v->partition_number);
+	     ecore_file_symlink(buf, buf2);
+	  }
 
 	/* FIXME: manipulate icon directly */
 	_e_fm2_file_force_update(buf);
-	_e_fm2_file_force_update(buf2);
+	//_e_fm2_file_force_update(buf2);
+	e_config;
      }
 }
 
@@ -319,10 +323,14 @@ _e_fm2_volume_erase(E_Volume *v)
 	    e_user_homedir_get(), id, v->partition_number);
    ecore_file_unlink(buf);
    _e_fm2_file_force_update(buf);
-   snprintf(buf, sizeof(buf) - 1, "%s/.e/e/fileman/favorites/|%s_%d.desktop",
-	    e_user_homedir_get(), id, v->partition_number);
-   ecore_file_unlink(buf);
-   _e_fm2_file_force_update(buf);
+
+   if(e_config->hal_desktop)
+     {
+	snprintf(buf, sizeof(buf) - 1, "%s/.e/e/fileman/favorites/|%s_%d.desktop",
+	      e_user_homedir_get(), id, v->partition_number);
+	ecore_file_unlink(buf);
+	_e_fm2_file_force_update(buf);
+     }
 }
 
 EAPI E_Volume *
@@ -488,3 +496,62 @@ _e_fm2_hal_mount_timeout(E_Fm2_Mount *m)
    return 0;
 }
 
+EAPI void
+e_fm2_hal_show_desktop_icons(void)
+{
+   Evas_List *l;
+   E_Volume *v;
+   char buf[PATH_MAX] = {0};
+   char buf2[PATH_MAX] = {0};
+   const char *id;
+
+   for(l = _e_vols; l; l = evas_list_next(l))
+     {
+	v = evas_list_data(l);
+
+	if(!v) continue;	
+	if (!v->storage) continue;
+
+	id = ecore_file_file_get(v->storage->udi);
+
+	snprintf(buf, sizeof(buf) - 1, "%s/.e/e/fileman/favorites/|%s_%d.desktop",
+	      e_user_homedir_get(), id, v->partition_number);
+
+	snprintf(buf2, sizeof(buf2) - 1, "%s/Desktop/|%s_%d.desktop",
+	      e_user_homedir_get(), id, v->partition_number);
+
+	if(ecore_file_exists(buf) && !ecore_file_exists(buf2))
+	  {
+	     ecore_file_symlink(buf, buf2);
+	     _e_fm2_file_force_update(buf2);
+	  }
+     }
+}
+
+EAPI void
+e_fm2_hal_hide_desktop_icons(void)
+{
+   Evas_List *l;
+   E_Volume *v;
+   char buf[PATH_MAX] = {0};
+   const char *id;
+
+   for(l = _e_vols; l; l = evas_list_next(l))
+     {
+	v = evas_list_data(l);
+
+	if(!v) continue;	
+	if (!v->storage) continue;
+
+	id = ecore_file_file_get(v->storage->udi);
+
+	snprintf(buf, sizeof(buf) - 1, "%s/Desktop/|%s_%d.desktop",
+	      e_user_homedir_get(), id, v->partition_number);
+
+	if(ecore_file_exists(buf))
+	  {
+	     ecore_file_unlink(buf);
+	     _e_fm2_file_force_update(buf);
+	  }
+     }
+}

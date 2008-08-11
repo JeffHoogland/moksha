@@ -140,7 +140,7 @@ static void _e_fm_handle_error_response(int id, E_Fm_Op_Type type);
 
 static int _e_client_send(int id, E_Fm_Op_Type type, void *data, int size);
 
-static int _e_fm_slave_run(E_Fm_Op_Type type, const char *src, const char *dst, int id);
+static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id);
 static E_Fm_Slave *_e_fm_slave_get(int id);
 static int _e_fm_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size);
 static int _e_fm_slave_data_cb(void *data, int type, void *event);
@@ -160,10 +160,10 @@ static void _e_file_mon_list_sync(E_Dir *ed);
 static int _e_cb_file_mon_list_idler(void *data);
 static int _e_cb_fop_trash_idler(void *data);
 static char *_e_str_list_remove(Evas_List **list, char *str);
-static void _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y);
+static void _e_fm_reorder(const char *file, const char *dst, const char *relative, int after);
 static void _e_dir_del(E_Dir *ed);
 
-static const char *_e_prepare_command(E_Fm_Op_Type type, const char *src, const char *dst);
+static const char *_e_prepare_command(E_Fm_Op_Type type, const char *args);
 
 #ifdef HAVE_EDBUS
 
@@ -1256,7 +1256,7 @@ _e_fm_mkdir_try(E_Fm_Task *task)
      }
    else
      {
-	_e_path_fix_order(task->src, task->rel, task->rel_to, task->x, task->y);
+	_e_fm_reorder(ecore_file_file_get(task->src), ecore_file_dir_get(task->src), task->rel, task->rel_to);
 	_e_fm_task_remove(task);
      }
 }
@@ -1315,6 +1315,7 @@ _e_fm_handle_error_response(int id, E_Fm_Op_Type type)
      }
 }
 
+
 static int
 _e_ipc_cb_server_data(void *data, int type, void *event)
 {
@@ -1322,7 +1323,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
    
    e = event;
    if (e->major != 6/*E_IPC_DOMAIN_FM*/) return 1;
-   printf("EFM: %d\n", e->minor);
    switch (e->minor)
      {
       case E_FM_OP_MONITOR_START: /* monitor dir (and implicitly list) */
@@ -1332,12 +1332,13 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	break;
       case E_FM_OP_MONITOR_END: /* monitor dir end */
 	  {
+	     printf("End listing directory: %s\n", e->data);
 	     _e_fm_monitor_end(e->ref, e->data);
 	  }
 	break;
       case E_FM_OP_REMOVE: /* fop delete file/dir */
 	  {
-	     _e_fm_slave_run(E_FM_OP_REMOVE, (const char *)e->data, NULL, e->ref);
+	     _e_fm_slave_run(E_FM_OP_REMOVE, (const char *)e->data, e->ref);
 	  }
 	break;
       case E_FM_OP_TRASH: /* fop trash file/dir */
@@ -1356,32 +1357,12 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	break;
       case E_FM_OP_MOVE: /* fop mv file/dir */
 	  {
-	     const char *src, *dst, *rel;
-	     int rel_to, x, y;
-		  
-	     src = e->data;
-	     dst = src + strlen(src) + 1;
-	     rel = dst + strlen(dst) + 1;
-	     memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
-	     memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
-	     memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
-
-	     _e_fm_slave_run(E_FM_OP_MOVE, src, dst, e->ref);
+	     _e_fm_slave_run(E_FM_OP_MOVE, (const char *)e->data, e->ref);
 	  }
 	break;
       case E_FM_OP_COPY: /* fop cp file/dir */
 	  {
-	     const char *src, *dst, *rel;
-	     int rel_to, x, y;
-		  
-	     src = e->data;
-	     dst = src + strlen(src) + 1;
-	     rel = dst + strlen(dst) + 1;
-	     memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
-	     memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
-	     memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
-
-	     _e_fm_slave_run(E_FM_OP_COPY, src, dst, e->ref);
+	     _e_fm_slave_run(E_FM_OP_COPY, (const char *)e->data, e->ref);
 	  }
 	break;
       case E_FM_OP_MKDIR: /* fop mkdir */
@@ -1501,6 +1482,26 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     _e_fm_slave_send(_e_fm_slave_get(e->ref), e->minor, NULL, 0);
 	  }
 	break;
+      case E_FM_OP_REORDER:
+	  {
+	     const char *file, *dst, *relative;
+	     int after;
+	     void *p = e->data;
+
+	     file = p;
+	     p += strlen(file) + 1;
+
+	     dst = p;
+	     p += strlen(dst) + 1;
+
+	     relative = p;
+	     p += strlen(relative) + 1;
+
+	     after = *(int *)p;
+
+	     _e_fm_reorder(file, dst, relative, after);
+	  }
+	break;
       default:
 	break;
      }
@@ -1523,7 +1524,7 @@ static int _e_client_send(int id, E_Fm_Op_Type type, void *data, int size)
 	 id, 0, 0, data, size);
 }
 
-static int _e_fm_slave_run(E_Fm_Op_Type type, const char *src, const char *dst, int id)
+static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id)
 {
    E_Fm_Slave *slave;
    const char *command;
@@ -1533,7 +1534,7 @@ static int _e_fm_slave_run(E_Fm_Op_Type type, const char *src, const char *dst, 
 
    if (!slave) return 0;
 	     
-   command = evas_stringshare_add(_e_prepare_command(type, src, dst));
+   command = evas_stringshare_add(_e_prepare_command(type, args));
 
    slave->id = id;
    slave->exe = ecore_exe_pipe_run(command, ECORE_EXE_PIPE_WRITE | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR, slave );
@@ -2076,43 +2077,40 @@ _e_str_list_remove(Evas_List **list, char *str)
 }
 
 static void
-_e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y)
+_e_fm_reorder(const char *file, const char *dst, const char *relative, int after)
 {
-   char *d, buf[PATH_MAX];
-   const char *f;
-   
-   if (!path) return;
-   if (!rel[0]) return;
-   f = ecore_file_file_get(path);
-   if (!f) return;
-   if (!strcmp(f, rel)) return;
-   d = ecore_file_dir_get(path);
-   if (!d) return;
-   snprintf(buf, sizeof(buf), "%s/.order", d);
-   if (ecore_file_exists(buf))
+   char buffer[PATH_MAX];
+   char order[PATH_MAX];
+
+   if(!file || !dst || !relative) return;
+   if(after != 0 && after != 1 && after != 2) return;
+   printf("%s:%s(%d) Reorder:\n\tfile = %s\n\tdst = %s\n\trelative = %s\n\tafter = %d\n", __FILE__, __FUNCTION__, __LINE__, file, dst, relative, after);
+
+   snprintf(order, sizeof(order), "%s/.order", dst);
+   if(ecore_file_exists(order))
      {
-	FILE *fh;
+	FILE *forder;
 	Evas_List *files = NULL, *l;
 	
-	fh = fopen(buf, "r");
-	if (fh)
+	forder = fopen(order, "r");
+	if (forder)
 	  {
 	     int len;
 	     
 	     /* inset files in order if the existed in file 
 	      * list before */
-	     while (fgets(buf, sizeof(buf), fh))
+	     while (fgets(buffer, sizeof(buffer), forder))
 	       {
-		  len = strlen(buf);
-		  if (len > 0) buf[len - 1] = 0;
-		  files = evas_list_append(files, strdup(buf));
+		  len = strlen(buffer);
+		  if (len > 0) buffer[len - 1] = 0;
+		  files = evas_list_append(files, strdup(buffer));
 	       }
-	     fclose(fh);
+	     fclose(forder);
 	  }
 	/* remove dest file from .order - if there */
 	for (l = files; l; l = l->next)
 	  {
-	     if (!strcmp(l->data, f))
+	     if (!strcmp(l->data, file))
 	       {
 		  free(l->data);
 		  files = evas_list_remove_list(files, l);
@@ -2122,38 +2120,37 @@ _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y)
 	/* now insert dest into list or replace entry */
 	for (l = files; l; l = l->next)
 	  {
-	     if (!strcmp(l->data, rel))
+	     if (!strcmp(l->data, relative))
 	       {
-		  if (rel_to == 2) /* replace */
+		  if (after == 2) /* replace */
 		    {
 		       free(l->data);
-		       l->data = strdup(f);
+		       l->data = strdup(file);
 		    }
-		  else if (rel_to == 0) /* before */
+		  else if (after == 0) /* before */
 		    {
-		       files = evas_list_prepend_relative_list(files, strdup(f), l);
+		       files = evas_list_prepend_relative_list(files, strdup(file), l);
 		    }
-		  else if (rel_to == 1) /* after */
+		  else if (after == 1) /* after */
 		    {
-		       files = evas_list_append_relative_list(files, strdup(f), l);
+		       files = evas_list_append_relative_list(files, strdup(file), l);
 		    }
 		  break;
 	       }
 	  }
-	snprintf(buf, sizeof(buf), "%s/.order", d);
-	fh = fopen(buf, "w");
-	if (fh)
+
+	forder = fopen(order, "w");
+	if (forder)
 	  {
 	     while (files)
 	       {
-		  fprintf(fh, "%s\n", (char *)files->data);
+		  fprintf(forder, "%s\n", (char *)files->data);
 		  free(files->data);
 		  files = evas_list_remove_list(files, files);
 	       }
-	     fclose(fh);
+	     fclose(forder);
 	  }
      }
-   free(d);
 }
 
 static void
@@ -2180,40 +2177,10 @@ _e_dir_del(E_Dir *ed)
    free(ed);
 }
 
-static void _e_append_char(char **str, int *size, int c)
+static const char *_e_prepare_command(E_Fm_Op_Type type, const char *args)
 {
-   **str = c;
-   (*str) ++;
-   *size++;
-}
-
-static void _e_append_quoted(char **str, int *size, const char *src)
-{
-   while (*src)
-     {
-	if (*src == '\'')
-	  {
-	     _e_append_char(str, size, '\'');		
-	     _e_append_char(str, size, '\\');
-	     _e_append_char(str, size, '\'');
-	     _e_append_char(str, size, '\'');
-	  }
-	else
-	  _e_append_char(str, size, *src);
-
-	src++;
-     }
-}
-/* Returns a string like 
- * /usr/bin/englightement_op cp 'src' 'dst'
- * ready to pass to ecore_exe_pipe_run()
- */
-
-static const char *_e_prepare_command(E_Fm_Op_Type type, const char *src, const char *dst)
-{
-   char buffer[PATH_MAX* 3 + 512];
-   int length = 0;
-   char *buf = &buffer[0];
+   char *buffer;
+   unsigned int length = 0;
    char command[3];
 
    if (type == E_FM_OP_MOVE)
@@ -2223,21 +2190,9 @@ static const char *_e_prepare_command(E_Fm_Op_Type type, const char *src, const 
    else
      strcpy(command, "cp");
 
-   length = snprintf(buf, sizeof(buffer), "%s/enlightenment_fm_op %s \'", e_prefix_bin_get(), command);
-   buf += length;
+   length = 256 + strlen(e_prefix_bin_get()) + strlen(args);
+   buffer = malloc(length);
+   length = snprintf(buffer, length, "%s/enlightenment_fm_op %s %s", e_prefix_bin_get(), command, args);
 
-   _e_append_quoted(&buf, &length, src);
-   _e_append_char(&buf, &length, '\'');
-
-   if (dst)
-     {
-	_e_append_char(&buf, &length, ' ');
-	_e_append_char(&buf, &length, '\'');
-	_e_append_quoted(&buf, &length, dst);
-	_e_append_char(&buf, &length, '\'');
-     }
-
-   _e_append_char(&buf, &length, '\x00');
-
-   return strdup(&buffer[0]);
+   return buffer;
 }

@@ -25,4 +25,7 @@ EAPI E_Fm2_Mount *e_fm2_hal_mount(E_Volume *v,
 				  void *data);
 EAPI void         e_fm2_hal_unmount(E_Fm2_Mount *m);
 
+EAPI void         e_fm2_hal_show_desktop_icons(void);
+EAPI void         e_fm2_hal_hide_desktop_icons(void);
+
 #endif

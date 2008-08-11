@@ -34,7 +34,8 @@ static void _e_fm_op_task_free(void *t);
 
 static void _e_fm_op_remove_link_task(E_Fm_Op_Task *task);
 static int _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler);
-
+static void _e_fm_op_set_up_idlers();
+static void _e_fm_op_delete_idler(int *mark);
 static int _e_fm_op_idler_handle_error(int *mark, Evas_List **queue, Evas_List **node, E_Fm_Op_Task *task);
 
 static int _e_fm_op_work_idler(void *data);
@@ -42,7 +43,7 @@ static int _e_fm_op_scan_idler(void *data);
 
 static void _e_fm_op_send_error(E_Fm_Op_Task * task, E_Fm_Op_Type type, const char *fmt, ...);
 static void _e_fm_op_rollback(E_Fm_Op_Task * task);
-static void  _e_fm_op_update_progress(long long _plus_e_fm_op_done, long long _plus_e_fm_op_total);
+static void  _e_fm_op_update_progress(E_Fm_Op_Task *task, long long _plus_e_fm_op_done, long long _plus_e_fm_op_total);
 static void _e_fm_op_copy_stat_info(E_Fm_Op_Task *task);
 static int _e_fm_op_handle_overwrite(E_Fm_Op_Task *task);
 
@@ -154,7 +155,7 @@ main(int argc, char **argv)
      {
 	if (argc < 4)
 	  {
-	     return 0;
+             goto quit;
 	  }
 
         if (type == E_FM_OP_MOVE)
@@ -163,9 +164,9 @@ main(int argc, char **argv)
              _e_fm_op_separator = _e_fm_op_work_queue;
           }
 
-        if (argc > 4 && ecore_file_is_dir(argv[last]))
+        if (argc >= 4 && ecore_file_is_dir(argv[last]))
           {
-             if (argv[last][strlen(argv[last] - 1)] == '/') byte = "";
+             if (argv[last][strlen(argv[last]) - 1] == '/') byte = "";
 
              while (i < last)
                {
@@ -185,7 +186,7 @@ main(int argc, char **argv)
                   i++;
                }
           }
-        else
+        else if (argc == 4)
           {
              if (type == E_FM_OP_MOVE && rename(argv[2], argv[3]) == 0)
                goto quit;
@@ -196,6 +197,10 @@ main(int argc, char **argv)
              task->dst.name = evas_stringshare_add(argv[3]);
           
              _e_fm_op_scan_queue = evas_list_append(_e_fm_op_scan_queue, task);
+          }
+        else
+          {
+             goto quit;
           }
      }
    else if (type == E_FM_OP_REMOVE)
@@ -217,8 +222,7 @@ main(int argc, char **argv)
           }
      }
 
-   _e_fm_op_scan_idler_p = ecore_idler_add(_e_fm_op_scan_idler, NULL);
-   _e_fm_op_work_idler_p = ecore_idler_add(_e_fm_op_work_idler, NULL);
+   _e_fm_op_set_up_idlers();
 
    ecore_main_loop_begin();
 
@@ -406,6 +410,7 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
 	       case E_FM_OP_ERROR_RESPONSE_IGNORE_ALL:
                case E_FM_OP_ERROR_RESPONSE_RETRY:
 		  _e_fm_op_error_response = identity;
+                  _e_fm_op_set_up_idlers();
                   break;
 
                case E_FM_OP_OVERWRITE_RESPONSE_NO:
@@ -413,6 +418,7 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
                case E_FM_OP_OVERWRITE_RESPONSE_YES:
                case E_FM_OP_OVERWRITE_RESPONSE_YES_ALL:
                   _e_fm_op_overwrite_response = identity;
+                  _e_fm_op_set_up_idlers();
                   E_FM_OP_DEBUG("Overwrite response set.\n");
                   break;
 	       }
@@ -427,6 +433,15 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
      }
 
    return 1;
+}
+
+static void _e_fm_op_set_up_idlers()
+{
+   if(!_e_fm_op_scan_idler_p)
+     _e_fm_op_scan_idler_p = ecore_idler_add(_e_fm_op_scan_idler, NULL);
+   
+   if(!_e_fm_op_work_idler_p)
+     _e_fm_op_work_idler_p = ecore_idler_add(_e_fm_op_work_idler, NULL);
 }
 
 #define _E_FM_OP_ERROR_SEND_SCAN(_task, _e_fm_op_error_type, _fmt, ...)\
@@ -449,6 +464,20 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
       }\
     while (0)
 
+static void _e_fm_op_delete_idler(int *mark)
+{
+   if(mark == &_e_fm_op_work_error)
+     {
+        ecore_idler_del(_e_fm_op_work_idler_p);
+        _e_fm_op_work_idler_p = NULL;
+     }
+   else
+     {
+        ecore_idler_del(_e_fm_op_scan_idler_p);
+        _e_fm_op_scan_idler_p = NULL;
+     }
+}
+
 /* Code to deal with overwrites and errors in idlers.
  * Basically, it checks if we got a response. 
  * Returns 1 if we did; otherwise checks it and does what needs to be done.
@@ -466,6 +495,9 @@ static int _e_fm_op_idler_handle_error(int *mark, Evas_List **queue, Evas_List *
           }
         else
           {
+             /* No response yet. */
+             /* So, delete this idler. It'll be added back when response is there. */
+             _e_fm_op_delete_idler(mark);
              return 1;
           }
      }
@@ -474,6 +506,8 @@ static int _e_fm_op_idler_handle_error(int *mark, Evas_List **queue, Evas_List *
         if (_e_fm_op_error_response == E_FM_OP_NONE)
           { 
              /* No response yet. */
+             /* So, delete this idler. It'll be added back when response is there. */
+             _e_fm_op_delete_idler(mark);
              return 1;
           }
         else
@@ -604,7 +638,6 @@ _e_fm_op_work_idler(void *data)
 	ecore_main_loop_quit();
 	return 0;
      }
-
 
    return 1;
 }
@@ -828,9 +861,9 @@ _e_fm_op_rollback(E_Fm_Op_Task * task)
      }
 
    if (task->type == E_FM_OP_COPY)
-     _e_fm_op_update_progress(-task->dst.done, -task->src.st.st_size);
+     _e_fm_op_update_progress(task, -task->dst.done, -task->src.st.st_size);
    else
-     _e_fm_op_update_progress(-REMOVECHUNKSIZE, -REMOVECHUNKSIZE);
+     _e_fm_op_update_progress(task, -REMOVECHUNKSIZE, -REMOVECHUNKSIZE);
 }
 
 /* Updates progress.
@@ -844,7 +877,7 @@ _e_fm_op_rollback(E_Fm_Op_Task * task)
  */
 
 static void
-_e_fm_op_update_progress(long long _plus_e_fm_op_done, long long _plus_e_fm_op_total)
+_e_fm_op_update_progress(E_Fm_Op_Task *task, long long _plus_e_fm_op_done, long long _plus_e_fm_op_total)
 {
    static int ppercent = -1;
    int percent;
@@ -854,7 +887,13 @@ _e_fm_op_update_progress(long long _plus_e_fm_op_done, long long _plus_e_fm_op_t
    double eta = 0;
    static int peta = -1;
 
-   int data[5];
+   static E_Fm_Op_Task *ptask = NULL;
+
+   void *data;
+   void *p;
+   int magic = E_FM_OP_MAGIC;
+   int id = E_FM_OP_PROGRESS;
+   int size = 0;
 
    _e_fm_op_done += _plus_e_fm_op_done;
    _e_fm_op_total += _plus_e_fm_op_total;
@@ -876,21 +915,42 @@ _e_fm_op_update_progress(long long _plus_e_fm_op_done, long long _plus_e_fm_op_t
              eta = (int) (eta + 0.5);
         }
 
-	if (percent != ppercent || eta != peta)
+	if (percent != ppercent || eta != peta || (task && task != ptask))
 	  {
 	     ppercent = percent;
              peta = eta;
+             ptask = task;
 
-             data[0] = E_FM_OP_MAGIC;
-             data[1] = E_FM_OP_PROGRESS;
-             data[2] = 2*sizeof(int);
-             data[3] = percent;
-             data[4] = peta;
+             size = 2 * sizeof(int) + 2 * sizeof(size_t) + strlen(ptask->src.name) + 1 + strlen(ptask->dst.name) + 1;
+             data = malloc(3 * sizeof(int) + size);
 
-             write(STDOUT_FILENO, &data[0], 5*sizeof(int));
+             if (!data) return;
+             p = data;
+
+#define P(value) memcpy(p, &(value), sizeof(int)); p += sizeof(int)
+             P(magic);
+             P(id);
+             P(size);
+             P(ppercent);
+             P(peta);
+#undef P
+
+#define P(value) memcpy(p, &(value), sizeof(size_t)); p += sizeof(size_t)
+             P(ptask->dst.done);
+             P(ptask->src.st.st_size);
+#undef P
+
+#define P(value) memcpy(p, value, strlen(value) + 1); p += strlen(value) + 1
+             P(ptask->src.name);
+             P(ptask->dst.name);
+#undef P
+
+             write(STDOUT_FILENO, data, 3 * sizeof(int) + size);
 	
              E_FM_OP_DEBUG("Time left: %d at %e\n", peta, ctime - stime);
 	     E_FM_OP_DEBUG("Progress %d. \n", percent);
+
+             free(data);
 	  }
      }
 }
@@ -1000,7 +1060,7 @@ _e_fm_op_copy_dir(E_Fm_Op_Task * task)
      }
    
    task->dst.done += task->src.st.st_size;
-   _e_fm_op_update_progress(task->src.st.st_size, 0);
+   _e_fm_op_update_progress(task, task->src.st.st_size, 0);
 
    /* Finish with this task. */
    task->finished = 1;
@@ -1033,7 +1093,7 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
      }
    
    task->dst.done += task->src.st.st_size;
-   _e_fm_op_update_progress(task->src.st.st_size, 0);
+   _e_fm_op_update_progress(task, task->src.st.st_size, 0);
    
    _e_fm_op_copy_stat_info(task);
    
@@ -1063,7 +1123,7 @@ _e_fm_op_copy_fifo(E_Fm_Op_Task *task)
    _e_fm_op_copy_stat_info(task);
 
    task->dst.done += task->src.st.st_size;
-   _e_fm_op_update_progress(task->src.st.st_size, 0);
+   _e_fm_op_update_progress(task, task->src.st.st_size, 0);
    
    task->finished = 1;
 
@@ -1142,7 +1202,7 @@ _e_fm_op_copy_chunk(E_Fm_Op_Task *task)
         
         task->finished = 1;
         
-        _e_fm_op_update_progress(0, 0);
+        _e_fm_op_update_progress(task, 0, 0);
         
         return 1;
      }
@@ -1155,7 +1215,7 @@ _e_fm_op_copy_chunk(E_Fm_Op_Task *task)
      }
    
    task->dst.done += dread;
-   _e_fm_op_update_progress(dwrite, 0);
+   _e_fm_op_update_progress(task, dwrite, 0);
    
    return 0;
 }
@@ -1194,6 +1254,8 @@ _e_fm_op_copy_atom(E_Fm_Op_Task * task)
 
    if (!data || !data->to || !data->from)		/* Did not touch the files yet. */
      {
+        E_FM_OP_DEBUG("Copy: %s --> %s\n", task->src.name, task->dst.name);
+
         if (_e_fm_op_abort)
 	  {
 	     /* We're marked for abortion. Don't do anything. 
@@ -1205,9 +1267,7 @@ _e_fm_op_copy_atom(E_Fm_Op_Task * task)
 
         if (_e_fm_op_handle_overwrite(task)) return 1;
        
-        E_FM_OP_DEBUG("Copy: %s --> %s\n", task->src.name, task->dst.name);
-	
-        if (S_ISDIR(task->src.st.st_mode))
+	if (S_ISDIR(task->src.st.st_mode))
 	  {
              if (_e_fm_op_copy_dir(task)) return 1;
 	  }
@@ -1248,7 +1308,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
 
    if (task->type == E_FM_OP_COPY)
      {
-        _e_fm_op_update_progress(0, task->src.st.st_size);
+        _e_fm_op_update_progress(NULL, 0, task->src.st.st_size);
 
         ctask = _e_fm_op_task_new();
         ctask->src.name = evas_stringshare_add(task->src.name);
@@ -1261,7 +1321,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
      }
    else if (task->type == E_FM_OP_COPY_STAT_INFO)
      {
-        _e_fm_op_update_progress(0, REMOVECHUNKSIZE);
+        _e_fm_op_update_progress(NULL, 0, REMOVECHUNKSIZE);
         
         ctask = _e_fm_op_task_new();
         ctask->src.name = evas_stringshare_add(task->src.name);
@@ -1274,7 +1334,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
      }
    else if (task->type == E_FM_OP_REMOVE)
      {
-        _e_fm_op_update_progress(0, REMOVECHUNKSIZE);
+        _e_fm_op_update_progress(NULL, 0, REMOVECHUNKSIZE);
 
         rtask = _e_fm_op_task_new();
         rtask->src.name = evas_stringshare_add(task->src.name);
@@ -1289,7 +1349,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
    else if (task->type == E_FM_OP_MOVE)
      {
         /* Copy task. */
-        _e_fm_op_update_progress(0, task->src.st.st_size);
+        _e_fm_op_update_progress(NULL, 0, task->src.st.st_size);
         ctask = _e_fm_op_task_new();
 
         ctask->src.name = evas_stringshare_add(task->src.name);
@@ -1301,7 +1361,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
         _e_fm_op_work_queue = evas_list_prepend(_e_fm_op_work_queue, ctask);
 
         /* Remove task. */
-        _e_fm_op_update_progress(0, REMOVECHUNKSIZE);
+        _e_fm_op_update_progress(NULL, 0, REMOVECHUNKSIZE);
         rtask = _e_fm_op_task_new();
 
         rtask->src.name = evas_stringshare_add(task->src.name);
@@ -1337,7 +1397,7 @@ _e_fm_op_copy_stat_info_atom(E_Fm_Op_Task * task)
    task->finished = 1;
    task->dst.done += REMOVECHUNKSIZE;
 
-   _e_fm_op_update_progress(REMOVECHUNKSIZE, 0);
+   _e_fm_op_update_progress(task, REMOVECHUNKSIZE, 0);
 
    return 0;
 }
@@ -1376,7 +1436,7 @@ _e_fm_op_remove_atom(E_Fm_Op_Task * task)
      }
 
    task->dst.done += REMOVECHUNKSIZE;
-   _e_fm_op_update_progress(REMOVECHUNKSIZE, 0);
+   _e_fm_op_update_progress(task, REMOVECHUNKSIZE, 0);
 
    task->finished = 1;
 

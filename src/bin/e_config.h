@@ -286,6 +286,8 @@ struct _E_Config
    int thumbscroll_threshhold;
    double thumbscroll_momentum_threshhold;
    double thumbscroll_friction;
+
+   int hal_desktop;
 };
 
 struct _E_Config_Module

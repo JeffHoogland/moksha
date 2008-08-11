@@ -58,6 +58,11 @@ struct _E_Config_Dialog_Data
 	int fixed;
      } theme;
 
+   struct
+     {
+        int desktop;
+     } hal;
+
    E_Config_Dialog *cfd;
 };
 
@@ -110,6 +115,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->icon.icon.h = fileman_config->icon.icon.h;
    cfdata->icon.extension.show = fileman_config->icon.extension.show;
    cfdata->list.sort.dirs.first = fileman_config->list.sort.dirs.first;
+   cfdata->hal.desktop = e_config->hal_desktop;
 }
 
 static void 
@@ -136,6 +142,16 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    fileman_config->list.sort.dirs.first = cfdata->list.sort.dirs.first;
    fileman_config->list.sort.dirs.last = !(cfdata->list.sort.dirs.first);
+
+   e_config->hal_desktop = cfdata->hal.desktop;
+   if(e_config->hal_desktop) 
+     {
+        e_fm2_hal_show_desktop_icons();
+     }
+   else
+     {
+        e_fm2_hal_hide_desktop_icons();
+     }
      
    e_config_save_queue();
    
@@ -197,6 +213,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ob = e_widget_check_add(evas, _("Show Toolbar"), 
 			   &(cfdata->view.show_toolbar));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   
+   ob = e_widget_check_add(evas, _("Show HAL icons on desktop"), 
+			   &(cfdata->hal.desktop));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
    return o;
 }

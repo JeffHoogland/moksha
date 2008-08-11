@@ -19,10 +19,11 @@ static void _e_drag_show(E_Drag *drag);
 static void _e_drag_hide(E_Drag *drag);
 static void _e_drag_move(E_Drag *drag, int x, int y);
 static void _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh);
+static Ecore_X_Window _e_drag_win_get(E_Drop_Handler *h, int xdnd);
 static int  _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win, int xdnd);
 static void _e_drag_win_show(E_Drop_Handler *h);
 static void _e_drag_win_hide(E_Drop_Handler *h);
-static void _e_drag_update(Ecore_X_Window root, int x, int y);
+static int _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action);
 static void _e_drag_end(Ecore_X_Window root, int x, int y);
 static void _e_drag_xdnd_end(Ecore_X_Window root, int x, int y);
 static void _e_drag_free(E_Drag *drag);
@@ -62,6 +63,9 @@ static E_Drag    *_drag_current = NULL;
 
 static XDnd *_xdnd = NULL;
 
+static Evas_Hash *_drop_handlers_responsives;
+static Ecore_X_Atom _action;
+
 /* externally accessible functions */
 
 EAPI int
@@ -98,6 +102,8 @@ e_dnd_init(void)
    _event_handlers = evas_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_SELECTION_NOTIFY,
 							      _e_dnd_cb_event_dnd_selection, NULL));
+
+   _action = ECORE_X_ATOM_XDND_ACTION_PRIVATE;
    return 1;
 }
 
@@ -127,6 +133,8 @@ e_dnd_shutdown(void)
    evas_hash_free(_drop_win_hash);
    evas_list_free(_drop_handlers);
    _drop_handlers = NULL;
+
+   evas_hash_free(_drop_handlers_responsives);
 
    return 1;
 }
@@ -491,6 +499,36 @@ e_drag_idler_before(void)
      }
 }
 
+EAPI void
+e_drop_handler_responsive_set(E_Drop_Handler *handler)
+{
+   Ecore_X_Window hwin = _e_drag_win_get(handler, 1);
+   const char *wid = e_util_winid_str_get(hwin);
+
+   _drop_handlers_responsives = evas_hash_add(_drop_handlers_responsives, wid, (void *)handler);
+}
+
+EAPI int
+e_drop_handler_responsive_get(E_Drop_Handler *handler)
+{
+   Ecore_X_Window hwin = _e_drag_win_get(handler, 1);
+   const char *wid = e_util_winid_str_get(hwin);
+
+   return evas_hash_find(_drop_handlers_responsives, wid) == (void *)handler;
+}
+
+EAPI void
+e_drop_handler_action_set(Ecore_X_Atom action)
+{
+   _action = action;
+}
+
+EAPI Ecore_X_Atom
+e_drop_handler_action_get()
+{
+   return _action;
+}
+
 /* local subsystem functions */
 
 static void
@@ -574,8 +612,8 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
    *dy += py;
 }
 
-static int
-_e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win, int xdnd)
+static Ecore_X_Window
+_e_drag_win_get(E_Drop_Handler *h, int xdnd)
 {
    Ecore_X_Window hwin = 0;
    
@@ -608,6 +646,15 @@ _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win, int xdnd)
 	     break;
 	  }
      }
+
+   return hwin;
+}
+
+static int
+_e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win, int xdnd)
+{
+   Ecore_X_Window hwin = _e_drag_win_get(h, xdnd);
+
    if (win == hwin) return 1;
    return 0;
 }
@@ -660,8 +707,8 @@ _e_drag_win_hide(E_Drop_Handler *h)
      }
 }
 
-static void
-_e_drag_update(Ecore_X_Window root, int x, int y)
+static int
+_e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 {
    Evas_List *l;
    E_Event_Dnd_Enter enter_ev;
@@ -669,6 +716,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y)
    E_Event_Dnd_Leave leave_ev;
    int dx, dy, dw, dh;
    Ecore_X_Window win, ignore_win[2];
+   int responsive = 0;
 
 //   double t1 = ecore_time_get(); ////
    if (_drag_current)
@@ -702,12 +750,16 @@ _e_drag_update(Ecore_X_Window root, int x, int y)
 	     enter_ev.x = x - dx;
 	     enter_ev.y = y - dy;
 	     enter_ev.data = NULL;
+	     enter_ev.action = action;
 	     move_ev.x = x - dx;
 	     move_ev.y = y - dy;
+	     move_ev.action = action;
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
 	     if (E_INSIDE(x, y, dx, dy, dw, dh) && _e_drag_win_matches(h, win, 0))
 	       {
+		  if(e_drop_handler_responsive_get(h)) responsive = 1;
+
 		  if (!h->entered)
 		    {
 		       _e_drag_win_show(h);
@@ -750,12 +802,16 @@ _e_drag_update(Ecore_X_Window root, int x, int y)
 	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
 	     enter_ev.x = x - dx;
 	     enter_ev.y = y - dy;
+	     enter_ev.action = action;
 	     move_ev.x = x - dx;
 	     move_ev.y = y - dy;
+	     move_ev.action = action;
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
 	     if (E_INSIDE(x, y, dx, dy, dw, dh) && _e_drag_win_matches(h, win, 1))
 	       {
+		  if(e_drop_handler_responsive_get(h)) responsive = 1;
+
 		  if (!h->entered)
 		    {
 		       if (h->cb.enter)
@@ -776,6 +832,10 @@ _e_drag_update(Ecore_X_Window root, int x, int y)
 	       }
 	  }
      }
+
+   if(action == ECORE_X_ATOM_ATOM) responsive = 0;
+
+   return responsive;
 //   double t2 = ecore_time_get() - t1; ////
 //   printf("DND UPDATE %3.7f\n", t2); ////
 }
@@ -1009,7 +1069,7 @@ _e_dnd_cb_mouse_move(void *data, int type, void *event)
    ev = event;
    if (ev->win != _drag_win) return 1;
 
-   _e_drag_update(_drag_win_root, ev->x, ev->y);
+   _e_drag_update(_drag_win_root, ev->x, ev->y, ECORE_X_ATOM_ATOM);
    
    return 1;
 }
@@ -1133,10 +1193,13 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Position *ev;
    Ecore_X_Rectangle rect;
+   Ecore_X_Action action;
    const char *id;
+   const char *description = NULL;
    Evas_List *l;
 
    int active;
+   int responsive;
 
    ev = event;
 //   double t1 = ecore_time_get(); ////
@@ -1152,6 +1215,8 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
    rect.y = 0;
    rect.width = 0;
    rect.height = 0;
+
+   action = ev->action;
 
    active = 0;
    for (l = _drop_handlers; l; l = l->next)
@@ -1171,8 +1236,15 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
      }
    else
      {
-	_e_drag_update(ev->win, ev->position.x, ev->position.y);
-	ecore_x_dnd_send_status(1, 0, rect, ECORE_X_DND_ACTION_PRIVATE);
+	responsive = _e_drag_update(ev->win, ev->position.x, ev->position.y, ev->action);
+	if(responsive)
+	  {
+	     ecore_x_dnd_send_status(1, 0, rect, _action);
+	  }
+	else
+	  {
+	     ecore_x_dnd_send_status(1, 0, rect, ECORE_X_ATOM_XDND_ACTION_PRIVATE);
+	  }
      }
 //   double t2 = ecore_time_get() - t1; ////
 //   printf("DND POS EV 2 %3.7f\n", t2); ////

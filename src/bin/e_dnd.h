@@ -84,11 +84,13 @@ struct _E_Event_Dnd_Enter
 {
    void *data;
    int x, y;
+   Ecore_X_Atom action;
 };
 
 struct _E_Event_Dnd_Move
 {
    int x, y;
+   Ecore_X_Atom action;
 };
 
 struct _E_Event_Dnd_Leave
@@ -135,6 +137,10 @@ EAPI void e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int
 EAPI int  e_drop_inside(E_Drop_Handler *handler, int x, int y);
 EAPI void e_drop_handler_del(E_Drop_Handler *handler);
 EAPI int  e_drop_xdnd_register_set(Ecore_X_Window win, int reg);
+EAPI void e_drop_handler_responsive_set(E_Drop_Handler *handler);
+EAPI int  e_drop_handler_responsive_get(E_Drop_Handler *handler);
+EAPI void e_drop_handler_action_set(Ecore_X_Atom action);
+EAPI Ecore_X_Atom e_drop_handler_action_get();
 
 #endif
 #endif
