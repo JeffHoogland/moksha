@@ -12,6 +12,7 @@
 #include <dirent.h>
 #include <utime.h>
 #include <errno.h>
+#include <limits.h>
 
 #include <Evas_Data.h>
 
