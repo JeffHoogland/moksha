@@ -313,8 +313,10 @@ main(int argc, char **argv)
 			       "Perhaps you are out of memory?"));
 	exit(-1);
      }
+#ifdef HAVE_ECORE_IMF
    ecore_imf_init();
    _e_main_shutdown_push(ecore_imf_shutdown);
+#endif
 // FIXME: SEGV's on shutdown if fm2 windows up - disable for now.   
 //   _e_main_shutdown_push(ecore_shutdown);
    ecore_job_init();

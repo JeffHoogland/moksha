@@ -64,14 +64,13 @@
 #include <Evas_Engine_Buffer.h>
 #include <Ecore.h>
 #include <Ecore_X.h>
+#include <Ecore_X_Atoms.h>
+#include <Ecore_X_Cursor.h>
 #include <Ecore_Evas.h>
 #include <Ecore_Con.h>
 #include <Ecore_Ipc.h>
 #include <Ecore_Job.h>
-#include <Ecore_Txt.h>
 #include <Ecore_File.h>
-#include <Ecore_X_Atoms.h>
-#include <Ecore_X_Cursor.h>
 #include <Eet.h>
 #include <Edje.h>
 #include <Efreet.h>

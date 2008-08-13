@@ -183,34 +183,36 @@ AC_MSG_RESULT([$e_cv_enable_files])
 PKG_CHECK_MODULES(E, [
   evas
   ecore
+  ecore-x
   ecore-evas
-  ecore-file
-  ecore-ipc
   ecore-con
+  ecore-ipc
   ecore-job
-  ecore-imf
-  ecore-imf-evas
-  edje
+  ecore-file
   eet >= 1.0.1
-  embryo
+  edje
   efreet
   efreet-mime
 ])
+requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-job ecore-file eet edje efreet efreet-mime"
+
+PKG_CHECK_MODULES(ECORE_IMF, [
+  ecore-imf
+  ecore-imf-evas
+], [
+  have_ecore_imf="yes"
+  AC_DEFINE(HAVE_ECORE_IMF, 1, [Ecore IMF support])
+], [ have_ecore_imf="no" ]
+)
 
 PKG_CHECK_MODULES(ECORE_TXT, [
   ecore-txt
 ], [
   have_temp="yes"
-  have_battery="yes"
   # This test will succeed as these modules are also checked before
   PKG_CHECK_MODULES(TEMPERATURE, [
     ecore
     ecore-file
-  ])
-  PKG_CHECK_MODULES(BATTERY, [
-    ecore
-    ecore-file
-    ecore-con
   ])
 ], [ have_temp="no"])
 AM_CONDITIONAL(HAVE_TEMPERATURE, test x$have_temp = "xyes")
@@ -224,6 +226,7 @@ AM_CONDITIONAL(HAVE_EDBUS, test x$have_edbus = "xyes")
 define_e_dbus=""
 if test x$have_edbus = "xyes"; then
   define_e_dbus="-DHAVE_EDBUS"
+  requirements_e=$requirements_e" edbus"
   if test x$have_ehal = "xyes"; then
     AC_DEFINE(HAVE_EDBUS, 1, [E_Dbus support])
   fi
@@ -236,6 +239,7 @@ e_configflags="-DUSE_E_CONFIG_H "$define_e_dbus" "
 AC_SUBST(e_libs)
 AC_SUBST(e_cflags)
 AC_SUBST(e_configflags)
+AC_SUBST(requirements_e)
 
 profile="SLOW_PC"
 AC_ARG_WITH(profile,

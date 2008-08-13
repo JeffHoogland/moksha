@@ -4,6 +4,8 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+#include <Ecore_Txt.h>
+
 #ifdef __FreeBSD__
 #include <sys/types.h>
 #include <sys/sysctl.h>
