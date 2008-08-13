@@ -36,6 +36,7 @@
 #include "config.h"
 
 #include "e_fm_op.h"
+#include "e_prefix.h"
 
 /* E_DBUS support */
 #ifdef HAVE_EDBUS
@@ -2177,7 +2178,8 @@ _e_dir_del(E_Dir *ed)
    free(ed);
 }
 
-static const char *_e_prepare_command(E_Fm_Op_Type type, const char *args)
+static const char *
+_e_prepare_command(E_Fm_Op_Type type, const char *args)
 {
    char *buffer;
    unsigned int length = 0;
