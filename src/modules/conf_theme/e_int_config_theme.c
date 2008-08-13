@@ -4,6 +4,7 @@
 
 #include "e.h"
 #include "e_int_config_theme_import.h"
+#include "e_int_config_theme_web.h"
 
 static void        *_create_data               (E_Config_Dialog *cfd);
 static void         _free_data                 (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -36,8 +37,8 @@ struct _E_Config_Dialog_Data
    Evas_List   *parts_list;
 
    /* Dialog */
-   E_Win *win_import;
-   E_Win *win_web;
+   E_Win    *win_import;
+   E_Dialog *dia_web;
 };
 
 EAPI E_Config_Dialog *
@@ -78,7 +79,7 @@ e_int_config_theme_web_done(E_Config_Dialog *dia)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = dia->cfdata;
-   cfdata->win_web = NULL;
+   cfdata->dia_web = NULL;
 }
 
 EAPI void
@@ -262,10 +263,10 @@ _cb_web(void *data1, void *data2)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data1;
-   if (cfdata->win_web)
-     e_win_raise(cfdata->win_web);
+   if (cfdata->dia_web)
+     e_dialog_raise(cfdata->dia_web);
    else
-     cfdata->win_web = e_int_config_theme_web(cfdata->cfd);
+     cfdata->dia_web = e_int_config_theme_web(cfdata->cfd);
 }
 
 static void

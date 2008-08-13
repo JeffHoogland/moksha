@@ -4,6 +4,7 @@
 
 #include "e.h"
 #include "e_int_config_theme.h"
+#include "e_int_config_theme_web.h"
 
 #define	MAGIC_WEB 0x425581cb
 #define TEMPLATE "/tmp/themeXXXXXX"
