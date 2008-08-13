@@ -5,6 +5,7 @@ includedir=@includedir@/@PACKAGE@
 
 Name: enlightenment
 Description: Enlightenmnt Window Manager
+Requires: @requirements_e@
 Version: @VERSION@
 Libs: -L${libdir}
 Libs.private: 
