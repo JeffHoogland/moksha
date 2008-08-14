@@ -479,7 +479,7 @@ static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *rt, *ot;
-   Evas_Object *ow, *of, *oa;
+   Evas_Object *ow, *oa;
    E_Zone *zone = NULL;
    E_Radio_Group *rg;
    char path[PATH_MAX];
