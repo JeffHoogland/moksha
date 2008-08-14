@@ -45,5 +45,6 @@ void             gadman_gadget_del(E_Gadcon_Client *gcc);
 E_Gadcon_Client *gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop);
 void             gadman_gadget_edit_start(E_Gadcon_Client *gcc);
 void             gadman_gadget_edit_end(void);
+void             gadman_gadgets_toggle(void);
 
 #endif
