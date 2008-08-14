@@ -10,6 +10,7 @@ EAPI E_Config_Dialog *e_int_config_theme(E_Container *con, const char *params __
 
 EAPI void             e_int_config_theme_import_done(E_Config_Dialog *dia);
 EAPI void             e_int_config_theme_update(E_Config_Dialog *dia, char *file);
+EAPI void             e_int_config_theme_web_done(E_Config_Dialog *dia);
 
 #endif
 #endif
