@@ -353,7 +353,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		       Efreet_Desktop *desktop;
 		       desktop = efreet_util_desktop_exec_find(imc->e_im_setup_exec);
 		       if (desktop)
-			 icon = e_util_desktop_icon_add(desktop, "48x48", evas);
+			 icon = e_util_desktop_icon_add(desktop, 48, evas);
 		    }
 		  
 		  e_widget_ilist_append(cfdata->gui.imc_basic_list, icon, imc->e_im_name, NULL, NULL, imc_path);

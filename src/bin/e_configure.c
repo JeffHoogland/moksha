@@ -103,7 +103,7 @@ _e_configure_efreet_desktop_update(void)
 		    cfg_cat_icon = strdup(cfg_cat_icon);
 		  else
 		    cfg_cat_icon = efreet_icon_path_find(e_config->icon_theme,
-							 cfg_cat_icon, "64x64");
+							 cfg_cat_icon, 64);
 	       }
 	  }
 	if (desktop->icon)
@@ -112,7 +112,7 @@ _e_configure_efreet_desktop_update(void)
 	       cfg_icon = strdup(desktop->icon);
 	     else
 	       cfg_icon = efreet_icon_path_find(e_config->icon_theme,
-						desktop->icon, "64x64");
+						desktop->icon, 64);
 	  }
 	if (desktop->name) label = desktop->name;
 	else if (desktop->generic_name) label = desktop->generic_name;

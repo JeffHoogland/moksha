@@ -183,7 +183,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	  {
 	     char *path;
 
-	     path = efreet_icon_path_find(theme->name.internal, theme->example_icon, "24x24");
+	     path = efreet_icon_path_find(theme->name.internal, theme->example_icon, 24);
 	     if (path)
 	       {
 		  oc = e_icon_add(evas);
@@ -297,7 +297,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	  {
 	     char *path;
 
-	     path = efreet_icon_path_find(theme->name.internal, theme->example_icon, "24x24");
+	     path = efreet_icon_path_find(theme->name.internal, theme->example_icon, 24);
 	     if (path)
 	       {
 		  oc = e_icon_add(evas);

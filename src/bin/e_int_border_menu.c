@@ -70,7 +70,7 @@ e_int_border_menu_create(E_Border *bd)
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Edit Icon"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd);
-             e_util_desktop_menu_item_icon_add(bd->desktop, "16x16", mi);
+             e_util_desktop_menu_item_icon_add(bd->desktop, 16, mi);
 
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Add Application..."));
@@ -922,7 +922,7 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    e_menu_item_radio_set(submi, 1);
    e_menu_item_radio_group_set(submi, 2);
    e_menu_item_toggle_set(submi, (bd->icon_preference == E_ICON_PREF_USER ? 1 : 0));
-   e_util_desktop_menu_item_icon_add(bd->desktop, "16x16", submi);
+   e_util_desktop_menu_item_icon_add(bd->desktop, 16, submi);
    e_menu_item_callback_set(submi, _e_border_menu_cb_iconpref_user, bd);
 }
 

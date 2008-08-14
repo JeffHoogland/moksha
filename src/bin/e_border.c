@@ -2798,7 +2798,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
      {
 	if ((bd->desktop) && (bd->icon_preference != E_ICON_PREF_NETWM))
 	  {
-	     o = e_util_desktop_icon_add(bd->desktop, "24x24", evas);
+	     o = e_util_desktop_icon_add(bd->desktop, 24, evas);
 	     if (o)
 	       return o;
 	  }

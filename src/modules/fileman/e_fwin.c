@@ -1343,7 +1343,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	for (l = apps; l; l = l->next)
 	  {
 	     desk = l->data;
-	     oi = e_util_desktop_icon_add(desk, "24x24", evas);
+	     oi = e_util_desktop_icon_add(desk, 24, evas);
 	     e_widget_ilist_append(o, oi, desk->name, NULL, NULL, 
 				   efreet_util_path_to_file_id(desk->orig_path));
 	  }
@@ -1383,7 +1383,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 
 	desk = mlist->data;
 	if (!desk) continue;
-	icon = e_util_desktop_icon_add(desk, "24x24", evas);
+	icon = e_util_desktop_icon_add(desk, 24, evas);
 	e_widget_ilist_append(o, icon, desk->name, NULL, NULL, 
 			      efreet_util_path_to_file_id(desk->orig_path));
      }

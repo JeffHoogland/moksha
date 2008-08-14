@@ -397,7 +397,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
 	desktop = efreet_desktop_get(buf);
 	if ((desktop) && (desktop->icon))
 	  {
-	     icon = efreet_icon_path_find(e_config->icon_theme, desktop->icon, "64x64");
+	     icon = efreet_icon_path_find(e_config->icon_theme, desktop->icon, 64);
 	     if (!icon)
 	       {
 		  snprintf(buf, sizeof(buf), "%s/%s.edj",

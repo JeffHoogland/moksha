@@ -584,7 +584,7 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 		       char *file;
 
 		       file = efreet_icon_path_find(e_config->icon_theme, 
-                                                    entry->icon, "24x24");
+                                                    entry->icon, 24);
 		       e_menu_item_icon_file_set(mi, file);
 		       E_FREE(file);
 		    }
@@ -707,15 +707,15 @@ _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
 	 E_Drag *drag;
 	 Evas_Object *o = NULL;
 	 Evas_Coord x, y, w, h;
+	 unsigned int size;
 	 const char *drag_types[] = { "enlightenment/desktop" };
-	 char buf[128];
 
 	 evas_object_geometry_get(mi->icon_object, &x, &y, &w, &h);
 	 drag = e_drag_new(m->zone->container, x, y, drag_types, 1, desktop, -1,
 			      NULL, NULL);
 
-	 snprintf(buf, sizeof(buf), "%dx%d", w, h);
-         o = e_util_desktop_icon_add(desktop, buf, e_drag_evas_get(drag));
+	 size = MAX(w, h);
+         o = e_util_desktop_icon_add(desktop, size, e_drag_evas_get(drag));
 	 e_drag_object_set(drag, o);
          e_drag_resize(drag, w, h);
 	 e_drag_start(drag, mi->drag.x + w, mi->drag.y + h);
@@ -1425,7 +1425,7 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 	e_object_ref(E_OBJECT(bd));
 	e_menu_item_callback_set(mi, _e_int_menus_lost_clients_item_cb, bd);
 	if (bd->desktop) 
-          e_util_desktop_menu_item_icon_add(bd->desktop, "24x24", mi);
+          e_util_desktop_menu_item_icon_add(bd->desktop, 24, mi);
      }
    e_object_free_attach_func_set(E_OBJECT(m), 
 				 _e_int_menus_lost_clients_free_hook);

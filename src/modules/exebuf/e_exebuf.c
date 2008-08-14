@@ -419,7 +419,7 @@ _e_exebuf_update(void)
    if (!desktop) desktop = efreet_util_desktop_generic_name_find(cmd_buf);
    if (desktop)
      {
-	o = e_util_desktop_icon_add(desktop, "24x24", exebuf->evas);
+	o = e_util_desktop_icon_add(desktop, 24, exebuf->evas);
 	icon_object = o;
 	edje_object_part_swallow(bg_object, "e.swallow.icons", o);
 	evas_object_show(o);
@@ -1053,7 +1053,7 @@ _e_exebuf_matches_update(void)
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
-	     o = e_util_desktop_icon_add(exe->desktop, "24x24", exebuf->evas);
+	     o = e_util_desktop_icon_add(exe->desktop, 24, exebuf->evas);
 	     exe->icon_object = o;
 	     edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 	     evas_object_show(o);
@@ -1103,7 +1103,7 @@ _e_exebuf_matches_update(void)
 	     desktop = efreet_util_desktop_exec_find(exe->file);
 	     if (desktop)
 	       {
-		  o = e_util_desktop_icon_add(desktop, "24x24", exebuf->evas);
+		  o = e_util_desktop_icon_add(desktop, 24, exebuf->evas);
 		  exe->icon_object = o;
 		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 		  evas_object_show(o);
@@ -1157,7 +1157,7 @@ _e_exebuf_hist_update(void)
 	     desktop = efreet_util_desktop_exec_find(exe->file);
 	     if (desktop)
 	       {
-		  o = e_util_desktop_icon_add(desktop, "24x24", exebuf->evas);
+		  o = e_util_desktop_icon_add(desktop, 24, exebuf->evas);
 		  exe->icon_object = o;
 		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 		  evas_object_show(o);

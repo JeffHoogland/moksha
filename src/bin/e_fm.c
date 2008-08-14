@@ -1201,7 +1201,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		       snprintf(buf, sizeof(buf), "%s/%s", 
 				e_fm2_real_path_get(ic->info.fm), ic->info.file);
 		       ef = efreet_desktop_new(buf);
-		       if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
+		       if (ef) oic = e_util_desktop_icon_add(ef, 48, evas);
 		       if (type_ret) *type_ret = "DESKTOP";
 		       if (ef) efreet_desktop_free(ef);
 		    }
@@ -1278,7 +1278,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		  oic = NULL; 
 		  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 		  ef = efreet_desktop_new(buf);
-		  if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
+		  if (ef) oic = e_util_desktop_icon_add(ef, 48, evas);
 		  if (type_ret) *type_ret = "DESKTOP";
 		  if (ef) efreet_desktop_free(ef);
 	       }
@@ -1350,7 +1350,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 
 		  oic = NULL; 
 		  ef = efreet_desktop_new(buf);
-		  if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
+		  if (ef) oic = e_util_desktop_icon_add(ef, 48, evas);
 		  if (type_ret) *type_ret = "DESKTOP";
 		  if (ef) efreet_desktop_free(ef);
 	       }
@@ -1372,7 +1372,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 			    Efreet_Desktop *desktop;
 			    desktop = efreet_util_desktop_exec_find(imc->e_im_setup_exec);
 			    if (desktop) 
-			      oic = e_util_desktop_icon_add(desktop, "24x24", evas);
+			      oic = e_util_desktop_icon_add(desktop, 24, evas);
 			 }
 		       e_intl_input_method_config_free(imc);
 		    }

@@ -567,7 +567,7 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
 	if (ecore_file_exists(cfdata->icon))
 	  icon_path = strdup(cfdata->icon);
 	else
-	  icon_path = efreet_icon_path_find(e_config->icon_theme, cfdata->icon, "scalable");
+	  icon_path = efreet_icon_path_find(e_config->icon_theme, cfdata->icon, 64);
 
 	if (icon_path)
 	  {
@@ -721,7 +721,7 @@ _e_desktop_editor_icon_update(E_Config_Dialog_Data *cfdata)
    Evas_Object *o;
 
    if (!cfdata->editor->img_widget) return;
-   o = e_util_icon_theme_icon_add(cfdata->icon, "32x32", cfdata->editor->evas);
+   o = e_util_icon_theme_icon_add(cfdata->icon, 32, cfdata->editor->evas);
 
    /* NB this takes care of freeing any previous icon object */
    e_widget_button_icon_set(cfdata->editor->img_widget, o);

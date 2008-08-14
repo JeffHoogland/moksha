@@ -231,7 +231,7 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 	     it2 = evas_list_nth(sd->items, pl2);
 	     if (it1 && it2)
 	       {
-		  sd->o1 =  e_util_icon_theme_icon_add(it1->icon, "512x512",
+		  sd->o1 =  e_util_icon_theme_icon_add(it1->icon, 512,
 						       evas_object_evas_get(sd->smart_obj));
 		  if (sd->o1)
 		    {
@@ -243,7 +243,7 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 		       evas_object_clip_set(sd->o1, evas_object_clip_get(sd->smart_obj));
 		       evas_object_show(sd->o1);
 		    }
-		  sd->o2 =  e_util_icon_theme_icon_add(it2->icon, "512x512",
+		  sd->o2 =  e_util_icon_theme_icon_add(it2->icon, 512,
 						       evas_object_evas_get(sd->smart_obj));
 		  if (sd->o2)
 		    {
