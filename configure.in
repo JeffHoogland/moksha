@@ -209,14 +209,24 @@ PKG_CHECK_MODULES(ECORE_TXT, [
   ecore-txt
 ], [
   have_temp="yes"
-  # This test will succeed as these modules are also checked before
+  have_bat="yes"
+], [ have_temp="no"])
+
+AM_CONDITIONAL(HAVE_TEMPERATURE, test x$have_temp = "xyes")
+if test x$have_temp = "xyes"; then
   PKG_CHECK_MODULES(TEMPERATURE, [
     ecore
     ecore-file
   ])
-], [ have_temp="no"])
-AM_CONDITIONAL(HAVE_TEMPERATURE, test x$have_temp = "xyes")
+fi
 AM_CONDITIONAL(HAVE_BATTERY, test x$have_bat = "xyes")
+if test x$have_bat = "xyes"; then
+  PKG_CHECK_MODULES(BATTERY, [
+    ecore
+    ecore-file
+    ecore-con
+  ])
+fi
 
 PKG_CHECK_MODULES(E_DBUS, edbus, have_edbus=yes, have_edbus=no)
 PKG_CHECK_MODULES(E_HAL, ehal, have_ehal=yes, have_ehal=no)
@@ -232,8 +242,8 @@ if test x$have_edbus = "xyes"; then
   fi
 fi
 
-e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "
-e_cflags="-DUSE_E_CONFIG_H "$define_e_dbus" "$E_CFLAGS" "$E_DBUS_CFLAGS" "
+e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS" "
+e_cflags="-DUSE_E_CONFIG_H "$define_e_dbus" "$E_CFLAGS" "$E_DBUS_CFLAGS" "$ECORE_IMF_CFLAGS" "
 e_configflags="-DUSE_E_CONFIG_H "$define_e_dbus" "
 
 AC_SUBST(e_libs)

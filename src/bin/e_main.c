@@ -3,7 +3,9 @@
  */
 #include "e.h"
 
+#ifdef HAVE_ECORE_IMF
 #include <Ecore_IMF.h>
+#endif
 
 EAPI int e_precache_end = 0;
 
