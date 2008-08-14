@@ -264,7 +264,7 @@ _cb_web(void *data1, void *data2)
 
    cfdata = data1;
    if (cfdata->dia_web)
-     e_dialog_raise(cfdata->dia_web);
+     e_win_raise(cfdata->dia_web->win);
    else
      cfdata->dia_web = e_int_config_theme_web(cfdata->cfd);
 }
