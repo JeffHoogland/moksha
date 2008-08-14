@@ -1195,7 +1195,6 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
    Ecore_X_Rectangle rect;
    Ecore_X_Action action;
    const char *id;
-   const char *description = NULL;
    Evas_List *l;
 
    int active;

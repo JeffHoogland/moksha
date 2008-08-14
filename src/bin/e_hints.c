@@ -271,7 +271,6 @@ e_hints_client_list_set(void)
    E_Border_List *bl;
    E_Border *b;
    Ecore_X_Window *clients = NULL;
-   Ecore_X_Window *clients_focus = NULL;
 
    /* Get client count by adding client lists on all containers */
    for (ml = e_manager_list(); ml; ml = ml->next)
