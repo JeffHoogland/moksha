@@ -526,7 +526,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 				  _cb_files_files_deleted, cfdata);
    e_widget_flist_path_set(ow, path, "/");
 
-   e_widget_min_size_set(ow, 60, 60);
+   e_widget_min_size_set(ow, 160, 160);
    e_widget_table_object_append(ot, ow, 0, 2, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.0);
 
