@@ -48,16 +48,18 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int heade
 {
    E_Ilist_Item *si;
    Evas_Coord mw = 0, mh = 0;
+   int isodd;
 
    API_ENTRY return;
    si = E_NEW(E_Ilist_Item, 1);
    si->sd = sd;
    si->o_base = edje_object_add(evas_object_evas_get(sd->o_smart));
 
+   isodd = evas_list_count(sd->items) & 0x1;
    if (header) 
      e_theme_edje_object_set(si->o_base, "base/theme/widgets", 
 			     "e/widgets/ilist_header");
-   else if (evas_list_count(sd->items) & 0x1)
+   else if (isodd)
      e_theme_edje_object_set(si->o_base, "base/theme/widgets",
 			     "e/widgets/ilist_odd");
    else
@@ -84,6 +86,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int heade
    e_box_pack_end(sd->o_box, si->o_base);
    e_box_pack_options_set(si->o_base, 1, 1, 1, 1, 0.5, 0.5, 
 			  mw, mh, 99999, 99999);
+   if (isodd) evas_object_lower(si->o_base);
    e_box_thaw(sd->o_box);
 
    evas_object_lower(sd->o_box);
@@ -99,16 +102,18 @@ e_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, const char *label, 
 {
    E_Ilist_Item *si, *ri;
    Evas_Coord mw = 0, mh = 0;
+   int isodd;
 
    API_ENTRY return;
    si = E_NEW(E_Ilist_Item, 1);
    si->sd = sd;
    si->o_base = edje_object_add(evas_object_evas_get(sd->o_smart));
 
+   isodd = evas_list_count(sd->items) & 0x1;
    if (header) 
      e_theme_edje_object_set(si->o_base, "base/theme/widgets", 
 			     "e/widgets/ilist_header");
-   else if (evas_list_count(sd->items) & 0x1)
+   else if (isodd)
      e_theme_edje_object_set(si->o_base, "base/theme/widgets",
 			     "e/widgets/ilist_odd");
    else
@@ -143,6 +148,7 @@ e_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, const char *label, 
      e_box_pack_end(sd->o_box, si->o_base);
    e_box_pack_options_set(si->o_base, 1, 1, 1, 1, 0.5, 0.5, 
 			  mw, mh, 99999, 99999);
+   if (isodd) evas_object_lower(si->o_base);
    e_box_thaw(sd->o_box);
 
    evas_object_lower(sd->o_box);
@@ -389,7 +395,7 @@ e_ilist_selected_set(Evas_Object *obj, int n)
 
    si->selected = 1;
    sd->selected = n;
-   evas_object_raise(si->o_base);
+//   evas_object_raise(si->o_base);
    edje_object_signal_emit(si->o_base, "e,state,selected", "e");
    if (si->func_hilight) si->func_hilight(si->data, si->data2);
    if (sd->selector) return;
