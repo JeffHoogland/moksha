@@ -712,12 +712,12 @@ _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
 
 	 evas_object_geometry_get(mi->icon_object, &x, &y, &w, &h);
 	 drag = e_drag_new(m->zone->container, x, y, drag_types, 1, desktop, -1,
-			      NULL, NULL);
+			   NULL, NULL);
 
-	 size = MAX(w, h);
-         o = e_util_desktop_icon_add(desktop, size, e_drag_evas_get(drag));
+	 size = MIN(w, h);
+	  o = e_util_desktop_icon_add(desktop, size, e_drag_evas_get(drag));
 	 e_drag_object_set(drag, o);
-         e_drag_resize(drag, w, h);
+	  e_drag_resize(drag, w, h);
 	 e_drag_start(drag, mi->drag.x + w, mi->drag.y + h);
       }
 }
