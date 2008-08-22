@@ -51,18 +51,30 @@ e_config_init(void)
    E_EVENT_CONFIG_ICON_THEME = ecore_event_type_new();
 
    _e_config_profile = getenv("E_CONF_PROFILE");
-   if (!_e_config_profile)
+   if (_e_config_profile)
+     /* if environment var set - use this profile name */
+     _e_config_profile = strdup(_e_config_profile);
+   else 
      {
 	Eet_File *ef;
 	char buf[4096];
 	const char *homedir;
 
+	/* try user profile config */
 	homedir = e_user_homedir_get();
 	snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg",
 		 homedir);
 	ef = eet_open(buf, EET_FILE_MODE_READ);
+	if (!ef)
+	  {
+	     /* use system if no user profile config */
+	     snprintf(buf, sizeof(buf), "%s/data/config/profile.cfg",
+		      e_prefix_data_get());
+	     ef = eet_open(buf, EET_FILE_MODE_READ);
+	  }
 	if (ef)
 	  {
+	     /* profile config exists */
 	     char *data;
 	     int data_len = 0;
 
@@ -80,11 +92,25 @@ e_config_init(void)
 	     eet_close(ef);
 	  }
 	else
-	  _e_config_profile = strdup("default");
+	  {
+	     /* no profile config - try other means */
+	     char *link = NULL;
+	     
+	     /* check symlink - if default is a symlink to another dir */
+             snprintf(buf, sizeof(buf), "%s/data/config/default",
+		      e_prefix_data_get());
+	     link = ecore_file_readlink(buf);
+	     /* if so use just the filename as the priofle - must be a local link */
+	     if (link)
+	       {
+		  _e_config_profile = strdup(ecore_file_file_get(link));
+		  free(link);
+	       }
+	     else
+	       _e_config_profile = strdup("default");
+	  }
 	e_util_env_set("E_CONF_PROFILE", _e_config_profile);
      }
-   else 
-     _e_config_profile = strdup(_e_config_profile);
 
    _e_config_gadcon_client_edd = E_CONFIG_DD_NEW("E_Config_Gadcon_Client", E_Config_Gadcon_Client);
 #undef T

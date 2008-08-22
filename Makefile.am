@@ -1,4 +1,4 @@
-SUBDIRS = src data doc po
+SUBDIRS = src data doc po config
 
 MAINTAINERCLEANFILES = Makefile.in aclocal.m4 config.guess \
                        config.h.in config.sub configure install-sh \

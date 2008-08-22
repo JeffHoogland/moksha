@@ -275,6 +275,18 @@ AC_ARG_WITH(edje-cc,
 ])
 AC_SUBST(edje_cc)
 
+PKG_CHECK_MODULES(EET, [eet >= 1.0.1])
+AC_ARG_WITH(eet-eet,
+[  --with-eet-eet=PATH              specify a specific path to eet utility],
+[
+  v=$withval;
+  eet_eet=$v
+  echo "  Enlightenment eet explicitly set to "$eet_eet;
+],[
+  eet_eet=$(pkg-config --variable=prefix eet)/bin/eet
+])
+AC_SUBST(eet_eet)
+
 AC_DEFINE(E_INTERNAL, 1, "This define can be used to wrap internal E stuff, as config.h isn't exported")
 
 
@@ -438,6 +450,8 @@ data/backgrounds/Makefile
 data/etc/Makefile
 data/icons/Makefile
 doc/Makefile
+config/Makefile
+config/default/Makefile
 po/Makefile.in
 enlightenment-config
 ],[
