@@ -93,9 +93,9 @@ _basic_create_general(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data 
    ui = &cfdata->ui.general;
    ctxt = dialog->data;
 
-   ui->frame = e_widget_framelist_add(evas, D_("General Settings"), 0);
+   ui->frame = e_widget_framelist_add(evas, _("General Settings"), 0);
 
-   label = e_widget_label_add(evas, D_("Mixer to use for global actions:"));
+   label = e_widget_label_add(evas, _("Mixer to use for global actions:"));
    e_widget_framelist_object_append(ui->frame, label);
 
    ui->radio = e_widget_radio_group_new(&cfdata->default_instance);
@@ -149,7 +149,7 @@ _basic_create_mixer_call(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Da
 {
     Evas_Object *button;
 
-    button = e_widget_button_add(evas, D_("Launch mixer..."), NULL,
+    button = e_widget_button_add(evas, _("Launch mixer..."), NULL,
                                  cb_mixer_call, dialog->data, NULL);
     e_widget_list_object_append(cfdata->ui.list, button, 0, 0, 0.0);
 }
@@ -184,7 +184,7 @@ e_mixer_config_module_dialog_new(E_Container *con, E_Mixer_Module_Context *ctxt)
    view->basic.create_widgets = _basic_create;
    view->basic.apply_cfdata = _basic_apply;
 
-   dialog = e_config_dialog_new(con, D_("Mixer Module Configuration"),
+   dialog = e_config_dialog_new(con, _("Mixer Module Configuration"),
                                 _Name, "e_mixer_config_module_dialog_new",
                                 e_mixer_theme_path(), 0, view, ctxt);
 

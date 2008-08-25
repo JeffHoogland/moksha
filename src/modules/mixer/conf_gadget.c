@@ -194,16 +194,16 @@ _basic_create_general(Evas *evas, E_Config_Dialog_Data *cfdata)
 
    ui = &cfdata->ui.general;
 
-   ui->frame = e_widget_framelist_add(evas, D_("General Settings"), 0);
+   ui->frame = e_widget_framelist_add(evas, _("General Settings"), 0);
 
    ui->lock_sliders = e_widget_check_add(
-      evas, D_("Lock Sliders"), &cfdata->lock_sliders);
+      evas, _("Lock Sliders"), &cfdata->lock_sliders);
    evas_object_smart_callback_add(
       ui->lock_sliders, "changed", _lock_change, cfdata);
    e_widget_framelist_object_append(ui->frame, ui->lock_sliders);
 
    ui->show_locked = e_widget_check_add(
-      evas, D_("Show both sliders when locked"), &cfdata->show_locked);
+      evas, _("Show both sliders when locked"), &cfdata->show_locked);
    e_widget_disabled_set(ui->show_locked, !cfdata->lock_sliders);
    e_widget_framelist_object_append(ui->frame, ui->show_locked);
 }
@@ -282,7 +282,7 @@ _basic_create_channels(Evas *evas, E_Config_Dialog_Data *cfdata)
    ui = &cfdata->ui.channels;
    ui->list = e_widget_list_add(evas, 1, 0);
    ui->scroll = e_widget_scrollframe_simple_add(evas, ui->list);
-   ui->frame = e_widget_framelist_add(evas, D_("Channels"), 0);
+   ui->frame = e_widget_framelist_add(evas, _("Channels"), 0);
 
    _fill_channels(evas, cfdata);
 
@@ -324,7 +324,7 @@ _basic_create_cards(Evas *evas, E_Config_Dialog_Data *cfdata)
 
    ui = &cfdata->ui.cards;
 
-   ui->frame = e_widget_framelist_add(evas, D_("Sound Cards"), 0);
+   ui->frame = e_widget_framelist_add(evas, _("Sound Cards"), 0);
    ui->radio = e_widget_radio_group_new(&cfdata->card_num);
    for (i = 0, l = cfdata->cards_names; l != NULL; l = l->next, i++)
      {
@@ -380,7 +380,7 @@ e_mixer_config_dialog_new(E_Container *con, E_Mixer_Gadget_Config *conf)
    view->basic.create_widgets = _basic_create;
    view->basic.apply_cfdata = _basic_apply;
 
-   dialog = e_config_dialog_new(con, D_("Mixer Configuration"),
+   dialog = e_config_dialog_new(con, _("Mixer Configuration"),
                                 _Name, "e_mixer_config_dialog_new",
                                 e_mixer_theme_path(), 0, view, conf);
    e_dialog_resizable_set(dialog->dia, 1);

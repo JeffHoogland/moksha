@@ -163,9 +163,9 @@ _populate_channel_editor(E_Mixer_App_Dialog_Data *app)
    e_widget_entry_text_set(ui->channel, app->channel_name);
 
    if (e_mixer_system_has_capture(app->sys, app->channel_info->id))
-     e_widget_entry_text_set(ui->type, D_("Capture"));
+     e_widget_entry_text_set(ui->type, _("Capture"));
    else
-     e_widget_entry_text_set(ui->type, D_("Playback"));
+     e_widget_entry_text_set(ui->type, _("Playback"));
 
    e_mixer_system_get_state(app->sys, app->channel_info->id, &state);
    _update_channel_editor_state(app, state);
@@ -285,13 +285,13 @@ _populate_channels(E_Mixer_App_Dialog_Data *app)
 	struct channel_info *info = app->channels_infos->data;
 	if (info->has_capture)
 	  {
-	     e_widget_ilist_header_append(ilist, NULL, D_("Input"));
+	     e_widget_ilist_header_append(ilist, NULL, _("Input"));
 	     header_input = 1;
 	     i = 1;
 	  }
 	else
 	  {
-	     e_widget_ilist_header_append(ilist, NULL, D_("Output"));
+	     e_widget_ilist_header_append(ilist, NULL, _("Output"));
 	     header_input = 0;
 	     i = 1;
 	  }
@@ -303,7 +303,7 @@ _populate_channels(E_Mixer_App_Dialog_Data *app)
 
 	if ((!header_input) && info->has_capture)
 	  {
-	     e_widget_ilist_header_append(ilist, NULL, D_("Input"));
+	     e_widget_ilist_header_append(ilist, NULL, _("Input"));
 	     header_input = 1;
 	     i++;
 	  }
@@ -364,7 +364,7 @@ _create_cards(E_Dialog *dialog, Evas *evas, E_Mixer_App_Dialog_Data *app)
 	free(card_name);
      }
 
-   ui->frame = e_widget_framelist_add(evas, D_("Cards"), 0);
+   ui->frame = e_widget_framelist_add(evas, _("Cards"), 0);
    e_widget_framelist_object_append(ui->frame, ui->list);
    e_widget_list_object_append(app->ui.hlayout, ui->frame, 1, 0, 0.0);
 }
@@ -379,7 +379,7 @@ _create_channels(E_Dialog *dialog, Evas *evas, E_Mixer_App_Dialog_Data *app)
    e_widget_min_size_set(ui->list, 180, 100);
    e_widget_ilist_go(ui->list);
 
-   ui->frame = e_widget_framelist_add(evas, D_("Channels"), 0);
+   ui->frame = e_widget_framelist_add(evas, _("Channels"), 0);
    e_widget_framelist_object_append(ui->frame, ui->list);
    e_widget_list_object_append(app->ui.hlayout, ui->frame, 1, 1, 0.0);
 }
@@ -391,36 +391,36 @@ _create_channel_editor(E_Dialog *dialog, Evas *evas, E_Mixer_App_Dialog_Data *ap
 
    ui = &app->ui.channel_editor;
 
-   ui->label_card = e_widget_label_add(evas, D_("Card:"));
+   ui->label_card = e_widget_label_add(evas, _("Card:"));
    ui->card = e_widget_entry_add(evas, NULL, NULL, NULL, NULL);
    e_widget_entry_readonly_set(ui->card, 1);
 
-   ui->label_channel = e_widget_label_add(evas, D_("Channel:"));
+   ui->label_channel = e_widget_label_add(evas, _("Channel:"));
    ui->channel = e_widget_entry_add(evas, NULL, NULL, NULL, NULL);
    e_widget_entry_readonly_set(ui->channel, 1);
 
-   ui->label_type = e_widget_label_add(evas, D_("Type:"));
+   ui->label_type = e_widget_label_add(evas, _("Type:"));
    ui->type = e_widget_entry_add(evas, NULL, NULL, NULL, NULL);
    e_widget_entry_readonly_set(ui->type, 1);
 
-   ui->label_left = e_widget_label_add(evas, D_("Left:"));
+   ui->label_left = e_widget_label_add(evas, _("Left:"));
    ui->left = e_widget_slider_add(evas, 1, 0, "%3.0f", 0.0, 100.0, 10.0, 100.0,
 				  NULL, &app->state.left, 150);
    e_widget_on_change_hook_set(ui->left, _cb_changed_left, app);
 
-   ui->label_right = e_widget_label_add(evas, D_("Right:"));
+   ui->label_right = e_widget_label_add(evas, _("Right:"));
    ui->right = e_widget_slider_add(evas, 1, 0, "%3.0f", 0.0, 100.0, 10.0, 100.0,
 				   NULL, &app->state.right, 150);
    e_widget_on_change_hook_set(ui->right, _cb_changed_right, app);
 
-   ui->mute = e_widget_check_add(evas, D_("Mute"), &app->state.mute);
+   ui->mute = e_widget_check_add(evas, _("Mute"), &app->state.mute);
    e_widget_on_change_hook_set(ui->mute, _cb_changed_mute, app);
 
-   ui->lock_sliders = e_widget_check_add(evas, D_("Lock Sliders"),
+   ui->lock_sliders = e_widget_check_add(evas, _("Lock Sliders"),
 					 &app->lock_sliders);
    e_widget_on_change_hook_set(ui->lock_sliders, _cb_changed_lock_sliders, app);
 
-   ui->frame = e_widget_framelist_add(evas, D_("Edit"), 0);
+   ui->frame = e_widget_framelist_add(evas, _("Edit"), 0);
    e_widget_framelist_object_append(ui->frame, ui->label_card);
    e_widget_framelist_object_append(ui->frame, ui->card);
    e_widget_framelist_object_append(ui->frame, ui->label_channel);
@@ -527,14 +527,14 @@ e_mixer_app_dialog_new(E_Container *con, void (*func)(E_Dialog *dialog, void *da
    app->del.data = data;
    app->del.func = func;
 
-   e_dialog_title_set(dialog, D_(_Name));
+   e_dialog_title_set(dialog, _(_Name));
    e_dialog_resizable_set(dialog, 1);
 
    e_win_delete_callback_set(dialog->win, _cb_win_del);
 
    _create_ui(dialog, app);
 
-   e_dialog_button_add(dialog, D_("Close"), NULL, _cb_dialog_dismiss, app);
+   e_dialog_button_add(dialog, _("Close"), NULL, _cb_dialog_dismiss, app);
    e_dialog_button_focus_num(dialog, 1);
    e_win_centered_set(dialog->win, 1);
    e_dialog_show(dialog);

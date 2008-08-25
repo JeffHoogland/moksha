@@ -119,7 +119,7 @@ _mixer_gadget_configuration_free_foreach(const Evas_Hash *hash, const char *key,
 static int
 _mixer_module_configuration_alert(void *data)
 {
-   e_util_dialog_show(D_("Mixer Configuration Updated"), data);
+   e_util_dialog_show(_("Mixer Configuration Updated"), data);
    return 0;
 }
 
@@ -544,7 +544,7 @@ _mixer_popup_new(E_Mixer_Instance *inst)
 
    if (e_mixer_system_can_mute(inst->sys, inst->channel))
      {
-        inst->ui.mute = e_widget_check_add(evas, D_("Mute"), &state->mute);
+        inst->ui.mute = e_widget_check_add(evas, _("Mute"), &state->mute);
         evas_object_show(inst->ui.mute);
         e_widget_table_object_append(inst->ui.table, inst->ui.mute,
                                      0, 2, colspan, 1, 1, 1, 1, 0);
@@ -554,7 +554,7 @@ _mixer_popup_new(E_Mixer_Instance *inst)
    else
      inst->ui.mute = NULL;
 
-   inst->ui.button = e_widget_button_add(evas, D_(_Name), NULL,
+   inst->ui.button = e_widget_button_add(evas, _(_Name), NULL,
 					 _mixer_popup_cb_mixer, inst, NULL);
    e_widget_table_object_append(inst->ui.table, inst->ui.button,
                                 0, 7, colspan, 1, 1, 1, 1, 0);
@@ -609,7 +609,7 @@ _mixer_menu_new(E_Mixer_Instance *inst, Evas_Event_Mouse_Down *ev)
    inst->menu = mn;
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, D_("Configuration"));
+   e_menu_item_label_set(mi, _("Configuration"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
    e_menu_item_callback_set(mi, _mixer_menu_cb_cfg, inst);
 
@@ -898,7 +898,7 @@ _gc_orient(E_Gadcon_Client *gcc)
 static char *
 _gc_label(void)
 {
-   return D_(_Name);
+   return _(_Name);
 }
 
 static Evas_Object *
@@ -1020,9 +1020,9 @@ static const char _reg_item[] = "extensions/e";
 static void
 _mixer_configure_registry_register(void)
 {
-   e_configure_registry_category_add(_reg_cat, 90, D_("Extensions"), NULL,
+   e_configure_registry_category_add(_reg_cat, 90, _("Extensions"), NULL,
                                      "enlightenment/extensions");
-   e_configure_registry_item_add(_reg_item, 30, D_(_Name), NULL,
+   e_configure_registry_item_add(_reg_item, 30, _(_Name), NULL,
                                  "enlightenment/e",
 				 _mixer_module_config);
 }
@@ -1098,7 +1098,7 @@ _mixer_module_configuration_load(E_Config_DD *module_conf_edd)
 	  return NULL;
 
 	ecore_timer_add(1.0, _mixer_module_configuration_alert,
-			D_("Mixer Module Configuration data changed.<br>"
+			_("Mixer Module Configuration data changed.<br>"
 			   "Your old configuration has been replaced with "
 			   "new default.<br>Sorry for the inconvenience."));
 	return conf;
@@ -1133,7 +1133,7 @@ _mixer_actions_register(E_Mixer_Module_Context *ctxt)
    if (ctxt->actions.incr)
      {
         ctxt->actions.incr->func.go = _mixer_cb_volume_increase;
-        e_action_predef_name_set(D_(_Name), D_(_lbl_increase), _act_increase,
+        e_action_predef_name_set(_(_Name), _(_lbl_increase), _act_increase,
 				 NULL, NULL, 0);
      }
 
@@ -1141,7 +1141,7 @@ _mixer_actions_register(E_Mixer_Module_Context *ctxt)
    if (ctxt->actions.decr)
      {
         ctxt->actions.decr->func.go = _mixer_cb_volume_decrease;
-        e_action_predef_name_set(D_(_Name), D_(_lbl_decrease), _act_decrease,
+        e_action_predef_name_set(_(_Name), _(_lbl_decrease), _act_decrease,
 				 NULL, NULL, 0);
      }
 
@@ -1149,7 +1149,7 @@ _mixer_actions_register(E_Mixer_Module_Context *ctxt)
    if (ctxt->actions.mute)
      {
         ctxt->actions.mute->func.go = _mixer_cb_volume_mute;
-        e_action_predef_name_set(D_(_Name), D_(_lbl_mute), _act_mute,
+        e_action_predef_name_set(_(_Name), _(_lbl_mute), _act_mute,
                                  NULL, NULL, 0);
      }
 }
@@ -1159,19 +1159,19 @@ _mixer_actions_unregister(E_Mixer_Module_Context *ctxt)
 {
    if (ctxt->actions.incr)
      {
-        e_action_predef_name_del(D_(_Name), D_(_lbl_increase));
+        e_action_predef_name_del(_(_Name), _(_lbl_increase));
         e_action_del(_act_increase);
      }
 
    if (ctxt->actions.decr)
      {
-        e_action_predef_name_del(D_(_Name), D_(_lbl_decrease));
+        e_action_predef_name_del(_(_Name), _(_lbl_decrease));
         e_action_del(_act_decrease);
      }
 
    if (ctxt->actions.mute)
      {
-        e_action_predef_name_del(D_(_Name), D_(_lbl_mute));
+        e_action_predef_name_del(_(_Name), _(_lbl_mute));
         e_action_del(_act_mute);
      }
 }
