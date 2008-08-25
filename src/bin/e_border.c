@@ -1374,9 +1374,13 @@ e_border_focus_set_with_pointer(E_Border *bd)
    if (bd->lock_focus_out) return;
  
    /* Try to grab the pointer to make sure it's not "in use" */
+/* 
+ * this causes problems as the grab can cause an in/out event (by grab) that
+ * normally would be like a grab from a menu or something else and e gets into
+ * a slef-feeding loop. sorry - can't grab :(
    if (!ecore_x_pointer_grab(bd->zone->container->win))
      return;
-
+ */
    if (e_config->focus_policy == E_FOCUS_SLOPPY)
      {
 	if (e_border_under_pointer_get(bd->desk, bd))
@@ -6913,7 +6917,6 @@ _e_border_eval(E_Border *bd)
 	if ((e_config->focus_setting == E_FOCUS_NEW_WINDOW) ||
 	    (bd->want_focus))
 	  {
-	     bd->want_focus = 0;
 	     if (!bd->lock_focus_out)
 	       e_border_focus_set_with_pointer(bd);
 	  }
@@ -6931,6 +6934,7 @@ _e_border_eval(E_Border *bd)
 		    }
 	       }
 	  }
+	bd->want_focus = 0;
      }
 
    if (bd->need_maximize)
