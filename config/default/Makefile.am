@@ -13,7 +13,7 @@ EXTRA_DIST = \
 	module.pager.src \
 	module.temperature.src
 
-filesdir = $(edatadir)/config/default
+filesdir = $(datadir)/enlightenment/data/config/default
 files_DATA = \
 	e.cfg \
 	module.battery.cfg \

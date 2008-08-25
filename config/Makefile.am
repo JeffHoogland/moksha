@@ -5,7 +5,7 @@ EET_EET = @eet_eet@
 
 EXTRA_DIST = profile.src
 
-filesdir = $(edatadir)/config
+filesdir = $(datadir)/enlightenment/data/config
 
 files_DATA = profile.cfg
 
