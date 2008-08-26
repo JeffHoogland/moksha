@@ -96,13 +96,11 @@ e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method)
 {
    if (grab_key_win != 0)
      {
-	printf("      A\n");
 	focus_win = win;
 	focus_method = method;
      }
    else
      {
-	printf("      B\n");
 	_e_grabinput_focus(win, method);
      }
 }
@@ -120,23 +118,18 @@ _e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method)
    switch (method)
      {
       case E_FOCUS_METHOD_NO_INPUT:
-	printf("--a\n");
 	break;
       case E_FOCUS_METHOD_LOCALLY_ACTIVE:
-	printf("--b\n");
 	ecore_x_window_focus(win);
 	ecore_x_icccm_take_focus_send(win, ecore_x_current_time_get());
 	break;
       case E_FOCUS_METHOD_GLOBALLY_ACTIVE:
-	printf("--c\n");
 	ecore_x_icccm_take_focus_send(win, ecore_x_current_time_get());
 	break;
       case E_FOCUS_METHOD_PASSIVE:
-	printf("--d\n");
 	ecore_x_window_focus(win);
 	break;
       default:
-	printf("--x\n");
 	break;
      }
    last_focus_time = ecore_time_get();
