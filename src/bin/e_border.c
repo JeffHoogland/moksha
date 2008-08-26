@@ -391,12 +391,10 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 		    }
 		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT)
 		    {
-		       printf("ECORE_X_ATOM_NET_WM_STRUT\n");
 		       bd->client.netwm.fetch.strut = 1;
 		    }
 		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT_PARTIAL)
 		    {
-		       printf("ECORE_X_ATOM_NET_WM_STRUT_PARTIAL\n");
 		       bd->client.netwm.fetch.strut = 1;
 		    }
 		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_WINDOW_TYPE)
@@ -1392,7 +1390,9 @@ e_border_focus_set_with_pointer(E_Border *bd)
 	  e_border_focus_set(bd, 1, 1);
      }
    else if (e_config->focus_policy == E_FOCUS_CLICK)
-     e_border_focus_set(bd, 1, 1);
+     {
+	e_border_focus_set(bd, 1, 1);
+     }
    else
      if (!e_border_pointer_warp_to_center(bd))
        e_border_focus_set(bd, 1, 1);
@@ -1484,12 +1484,12 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     return;
 	  }
 //	if (bd->visible)
-	  {
-	     if (focus_track_frozen == 0)
-	       {
+//	  {
+//	     if (focus_track_frozen == 0)
+//	       {
 ////		  e_border_focus_latest_set(bd);
-	       }
-	  }
+//	       }
+//	  }
 //	printf("EMIT 0x%x activeve\n", bd->client.win);
 	e_border_focus_latest_set(bd);
 	edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
@@ -1512,9 +1512,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     ecore_timer_del(bd->raise_timer);
 	     bd->raise_timer = NULL;
 	  }
-     }
-   if (bd->want_focus)
-     {
      }
    if (((bd->focused) && (!focus)) || ((!bd->focused) && (focus)))
      focus_changed = 1;
@@ -6917,8 +6914,11 @@ _e_border_eval(E_Border *bd)
 	if ((e_config->focus_setting == E_FOCUS_NEW_WINDOW) ||
 	    (bd->want_focus))
 	  {
+	     bd->want_focus = 0;
 	     if (!bd->lock_focus_out)
-	       e_border_focus_set_with_pointer(bd);
+	       {
+		  e_border_focus_set_with_pointer(bd);
+	       }
 	  }
 	else
 	  {
@@ -6934,7 +6934,6 @@ _e_border_eval(E_Border *bd)
 		    }
 	       }
 	  }
-	bd->want_focus = 0;
      }
 
    if (bd->need_maximize)
