@@ -391,10 +391,12 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 		    }
 		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT)
 		    {
+		       printf("ECORE_X_ATOM_NET_WM_STRUT\n");
 		       bd->client.netwm.fetch.strut = 1;
 		    }
 		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT_PARTIAL)
 		    {
+		       printf("ECORE_X_ATOM_NET_WM_STRUT_PARTIAL\n");
 		       bd->client.netwm.fetch.strut = 1;
 		    }
 		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_WINDOW_TYPE)
@@ -1367,9 +1369,14 @@ e_border_focus_set_with_pointer(E_Border *bd)
     * focus as we do - so simply abort any focuse set on such windows */
    /* be strict about accepting focus hint */
 //   printf(" 2accept:%i take:%i\n", bd->client.icccm.accepts_focus, bd->client.icccm.take_focus);
+   printf("e_border_focus_set_with_pointer .. %i %i\n",
+	  bd->client.icccm.accepts_focus,
+	  bd->client.icccm.take_focus);
    if ((!bd->client.icccm.accepts_focus) &&
        (!bd->client.icccm.take_focus)) return;
+   printf("e_border_focus_set_with_pointer A\n");
    if (bd->lock_focus_out) return;
+   printf("e_border_focus_set_with_pointer B\n");
  
    /* Try to grab the pointer to make sure it's not "in use" */
 /* 
@@ -1391,6 +1398,7 @@ e_border_focus_set_with_pointer(E_Border *bd)
      }
    else if (e_config->focus_policy == E_FOCUS_CLICK)
      {
+	printf("e_border_focus_set_with_pointer C\n");
 	e_border_focus_set(bd, 1, 1);
      }
    else
@@ -1414,13 +1422,17 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 //   printf("e_border_focus_set(%p, %s, %i %i);\n", bd, bd->client.icccm.name, focus, set);
 //   printf(" accept:%i take:%i\n", bd->client.icccm.accepts_focus, bd->client.icccm.take_focus);
 //   if (!bd->client.icccm.accepts_focus) return;
+   printf("e_border_focus_set(%p, %i %i)\n", bd, focus, set);
    if ((!bd->client.icccm.accepts_focus) &&
        (!bd->client.icccm.take_focus))
 	return;
+   printf("  A\n");
    if ((set) && (focus) && (bd->lock_focus_out)) return;
+   printf("  B\n");
    /* dont focus an iconified window. that's silly! */
    if ((focus) && (bd->iconic))
      return;
+   printf("  C\n");
    if ((bd->modal) && (bd->modal != bd))
      {
 	e_border_focus_set(bd->modal, focus, set);
@@ -1431,6 +1443,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	e_border_focus_set(bd->leader->modal, focus, set);
 	return;
      }
+   printf("  D\n");
 
    if ((focus) && (set) && (!bd->focused))
      {
@@ -1442,8 +1455,10 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 ////		  e_border_focus_latest_set(bd);
 		  bd->want_focus = 1;
 		  bd->changed = 1;
+		  printf("    Ret1\n");
 		  return;
 	       }
+	     printf("    Foc1\n");
 	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
 	     return;
 	  }
@@ -1455,12 +1470,15 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 ////		  e_border_focus_latest_set(bd);
 		  bd->want_focus = 1;
 		  bd->changed = 1;
+		  printf("    Ret2\n");
 		  return;
 	       }
+	     printf("    Foc2\n");
 	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
 	     return;
 	  }
      }
+   printf("  E\n");
 
    if ((bd->visible) && (bd->changes.visible))
      {  
@@ -1474,6 +1492,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	bd->changed = 1;
 	return;
      }
+   printf("  F\n");
    if ((focus) && (!bd->focused))
      {
 	if ((bd->visible) && (bd->changes.visible))
@@ -1481,6 +1500,8 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 ////	     e_border_focus_latest_set(bd);
 	     bd->want_focus = 1;
 	     bd->changed = 1;
+	     printf("    %i %i needs to be visible - abort now\n",
+		    bd->visible, bd->changes.visible);
 	     return;
 	  }
 //	if (bd->visible)
@@ -1496,6 +1517,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	if (bd->icon_object)
 	  edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
 	e_focus_event_focus_in(bd);
+	printf("F IN %p %s\n", bd, (bd->client.icccm.title ? bd->client.icccm.title : bd->client.netwm.name));
      }
    else if ((!focus) && (bd->focused))
      {
@@ -1512,7 +1534,9 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     ecore_timer_del(bd->raise_timer);
 	     bd->raise_timer = NULL;
 	  }
+	printf("F OUT %p %s\n", bd, (bd->client.icccm.title ? bd->client.icccm.title : bd->client.netwm.name));
      }
+   printf("  G\n");
    if (((bd->focused) && (!focus)) || ((!bd->focused) && (focus)))
      focus_changed = 1;
    bd->focused = focus;
@@ -1576,6 +1600,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 		       focused->raise_timer = NULL;
 		    }
 		  focused = NULL;
+		  printf("F OUT %p %s\n", bd, (bd->client.icccm.title ? bd->client.icccm.title : bd->client.netwm.name));
 	       }
 	  }
 	e_hints_active_window_set(bd->zone->container->manager, bd);
@@ -1643,6 +1668,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 			     _e_border_event_border_focus_out_free, NULL);
 	  }
      }
+   printf("  Z\n");
 }
 
 EAPI void
@@ -2527,6 +2553,7 @@ e_border_idler_before(void)
 			    ecore_x_window_show(bd->win);
 			 }
 		       bd->changes.visible = 0;
+		       printf("reset visible changes to 0 A\n");
 		    }
 	       }
 	     e_container_border_list_free(bl);
@@ -2553,6 +2580,7 @@ e_border_idler_before(void)
 		       ecore_x_window_hide(bd->win);
 		       ecore_evas_hide(bd->bg_ecore_evas);
 		       bd->changes.visible = 0;
+		       printf("reset visible changes to 0 B\n");
 		    }
 		  if (bd->changed) _e_border_eval(bd);
 		  if ((bd->changes.visible) && (bd->visible) && 
@@ -2571,6 +2599,7 @@ e_border_idler_before(void)
 			    ecore_x_window_show(bd->win);
 			 }
 		       bd->changes.visible = 0;
+		       printf("reset visible changes to 0 C\n");
 		    }
 	       }
 	     e_container_border_list_free(bl);
@@ -6841,6 +6870,7 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->changes.visible = 0;
 	rem_change = 1;
+	printf("reset visible changes to 0 C\n");
      }
 
    if (bd->changes.icon)
@@ -6917,6 +6947,7 @@ _e_border_eval(E_Border *bd)
 	     bd->want_focus = 0;
 	     if (!bd->lock_focus_out)
 	       {
+		  printf("FF needs in... %p BLAH\n", bd);
 		  e_border_focus_set_with_pointer(bd);
 	       }
 	  }
