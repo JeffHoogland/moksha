@@ -137,8 +137,8 @@ e_exehist_newest_run_get(const char *exe)
 	if ((ei->exe) && (!strcmp(exe, ei->exe)))
 	  {
 	     _e_exehist_unload_queue();
-	  }
 	     return ei->exetime;
+	  }
      }
    _e_exehist_unload_queue();
    return 0.0;

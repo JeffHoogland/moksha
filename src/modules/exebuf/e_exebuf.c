@@ -1012,9 +1012,6 @@ _e_exebuf_matches_update(void)
    if (added) evas_hash_free(added);
    added = NULL;
 
-   /* FIXME: sort eap matches with most recently selected matches at the
-    * start and then from shortest to longest string
-    */
    eap_matches = evas_list_sort(eap_matches, evas_list_count(eap_matches), _e_exebuf_cb_sort_eap);
    
    max = e_config->exebuf_max_eap_list;
@@ -1070,9 +1067,6 @@ _e_exebuf_matches_update(void)
      }
    e_box_thaw(eap_list_object);
    
-   /* FIXME: sort exe matches with most recently selected matches at the
-    * start and then from shortest to longest string
-    */
    exe_matches = evas_list_sort(exe_matches, evas_list_count(exe_matches), _e_exebuf_cb_sort_exe);
    
    max = e_config->exebuf_max_exe_list;
