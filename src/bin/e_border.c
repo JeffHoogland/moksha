@@ -1424,6 +1424,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    /* dont focus an iconified window. that's silly! */
    if ((focus) && (bd->iconic))
      return;
+   printf("  actually try...\n");
    if ((bd->modal) && (bd->modal != bd))
      {
 	e_border_focus_set(bd->modal, focus, set);
@@ -4252,6 +4253,7 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
 	if (e->detail == ECORE_X_EVENT_DETAIL_ANCESTOR) return 1;
 	else if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
      }
+   printf("fout 1\n");
    e_border_focus_set(bd, 0, 0);
    return 1;
 }

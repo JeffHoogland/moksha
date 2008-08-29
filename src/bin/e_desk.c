@@ -361,10 +361,21 @@ e_desk_last_focused_focus(E_Desk *desk)
    Evas_List *l = NULL;
    E_Border *bd;
 
+   
+   printf("== e_desk_last_focused_focus\n");
    for (l = e_border_focus_stack_get(); l; l = l->next)
      {
 	bd = l->data;
-	if ((!bd->iconic) && (bd->visible) && (bd->desk == desk))
+	printf("LAST %p ic=%i vis=%i desk=%p==%p\n",
+	       bd, bd->iconic, bd->visible, bd->desk, desk);
+	if ((!bd->iconic) && (bd->visible) && (bd->desk == desk) &&
+	    (bd->client.icccm.accepts_focus || bd->client.icccm.take_focus) &&
+	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DOCK) &&
+	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_TOOLBAR) &&
+	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_MENU) &&
+	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_SPLASH) &&
+	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DESKTOP)
+	    )
 	  {
 	     /* this was the window last focused in this desktop */
              if (!bd->lock_focus_out)
