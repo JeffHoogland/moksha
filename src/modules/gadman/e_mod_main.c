@@ -57,7 +57,7 @@ e_modapi_init(E_Module *m)
    if (!e_bindings_key_get("gadman_toggle"))
      {
         e_managers_keys_ungrab();
-        e_bindings_key_add(E_BINDING_CONTEXT_ANY, "g", E_BINDING_MODIFIER_WIN,
+        e_bindings_key_add(E_BINDING_CONTEXT_ANY, "g", E_BINDING_MODIFIER_CTRL|E_BINDING_MODIFIER_ALT,
                            0, "gadman_toggle", NULL);
 
         e_managers_keys_grab();
