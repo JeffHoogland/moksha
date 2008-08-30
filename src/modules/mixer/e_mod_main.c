@@ -826,10 +826,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    e_mixer_system_callback_set(inst->sys, _mixer_system_cb_update, inst);
 
    inst->ui.gadget = edje_object_add(gc->evas);
-   if (!e_theme_edje_object_set(inst->ui.gadget, "base/theme/modules/mixer",
-                                "e/modules/mixer/main"))
-     edje_object_file_set(inst->ui.gadget, e_mixer_theme_path(),
-			  "e/modules/mixer/main");
+   e_theme_edje_object_set(inst->ui.gadget, "base/theme/modules/mixer",
+			   "e/modules/mixer/main");
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->ui.gadget);
    inst->gcc->data = inst;
