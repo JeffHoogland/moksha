@@ -85,7 +85,7 @@ main(int argc, char **argv)
    if (!_e_ipc_init())
      {
 	printf("ERROR: Enlightenment_remote cannot set up the IPC socket.\n"
-	       "Maybe try the '-display :0.0' option?\n");
+	       "Try setting DISPLAY=:0 in your environment.\n");
 	exit(-1);
      }
    e_ipc_codec_init();
