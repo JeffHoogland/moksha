@@ -506,15 +506,6 @@ _cb_dialog_dismiss(void *data, E_Dialog *dialog)
    _mixer_app_dialog_del(dialog, data);
 }
 
-static void
-_cb_dialog_del(void *obj)
-{
-   E_Dialog *dialog;
-   
-   dialog = obj;
-   _mixer_app_dialog_del(dialog, dialog->data);
-}
-
 E_Dialog *
 e_mixer_app_dialog_new(E_Container *con, void (*func)(E_Dialog *dialog, void *data), void *data)
 {
@@ -543,13 +534,13 @@ e_mixer_app_dialog_new(E_Container *con, void (*func)(E_Dialog *dialog, void *da
 
    _create_ui(dialog, app);
 
-   e_object_del_attach_func_set(E_OBJECT(dialog), _cb_dialog_del);
-   
    e_dialog_button_add(dialog, _("Close"), NULL, _cb_dialog_dismiss, app);
    e_dialog_button_focus_num(dialog, 1);
    e_win_centered_set(dialog->win, 1);
    e_dialog_show(dialog);
 
+   // FIXME: what if module unloaded while mixer_app dialog up? bad!
+   
    return dialog;
 }
 
