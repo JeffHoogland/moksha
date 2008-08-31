@@ -5,6 +5,17 @@
 #include "e_mod_main.h"
 #include "e_iface.h"
 
+// FUCK.
+// 
+// connman now completely changed api in git upstream (just found out) after
+// weeks of no changes - huge change. nothing seems compatible anymore.
+// 
+// ...
+// 
+// this basically puts this all on hold. hoo-ray!
+// 
+// back to ignoring network stuff.
+
 // FIXME: need config to
 // 1. list instance id -> iface config
 // 2. list networks (essid, password, dhcp?, ip, gw, netmask)
@@ -59,11 +70,14 @@ struct _Instance
    E_Dialog        *netlist_dia;
    
    struct {
-      int           ifmode;
-      char         *ifpath;
-      char         *bssid;
-      char         *sec;
-      Conf_Network *cfnet, *cfnet_new;
+      int             ifmode;
+      int             ifmode_tmp;
+      char           *ifpath;
+      char           *ifpath_tmp;
+      char           *bssid;
+      char           *sec;
+      Conf_Network   *cfnet, *cfnet_new;
+      Conf_Interface *cfif;
    } config;
 }; 
 
@@ -110,6 +124,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    Instance *inst;
+   Evas_List *l;
    
    inst = E_NEW(Instance, 1);
    
@@ -130,7 +145,36 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    e_gadcon_client_util_menu_attach(gcc);
 
    instances = evas_list_append(instances, inst);
-   
+
+   if (!conf)
+     {
+	conf = E_NEW(Conf, 1);
+	e_config_save_queue();
+     }
+   for (l = conf->interfaces; l; l = l->next)
+     {
+	Conf_Interface *cfif;
+	
+	cfif = l->data;
+	if ((cfif->name) && (!strcmp(name, cfif->name)) &&
+	    (cfif->id) && (!strcmp(name, cfif->id)))
+	  {
+	     inst->config.cfif = cfif;
+	     break;
+	  }
+     }
+   if (!inst->config.cfif)
+     {
+        Conf_Interface *cfif;
+	
+	cfif = E_NEW(Conf_Interface, 1);
+	cfif->name = evas_stringshare_add(name);
+	cfif->id = evas_stringshare_add(id);
+	conf->interfaces = evas_list_append(conf->interfaces, cfif);
+	inst->config.cfif = cfif;
+	e_config_save_queue();
+	// FIXME:  check interfaces - if one matches, do the if init
+     }
    return gcc;
 }
 
@@ -195,6 +239,7 @@ _gc_id_new(void)
 /**/
 static void if_dialog_hide(Instance *inst);
 static void popup_hide(Instance *inst);
+static void net_dialog_show(Instance *inst, Conf_Network *cfnet);
 static void net_dialog_hide(Instance *inst);
 static void popup_ifnet_nets_refresh(Instance *inst);
 
@@ -234,9 +279,9 @@ if_get(Instance *inst)
 }
 
 static int
-net_join(Interface *iface, Conf_Network *cfnet, const char *sec)
+net_join(Instance *inst, Interface *iface, Conf_Network *cfnet)
 {
-   if (!sec)
+   if (!inst->config.sec)
      {
 	iface_policy_set(iface, "auto");
 	iface_network_set(iface, cfnet->essid, "");
@@ -248,13 +293,17 @@ net_join(Interface *iface, Conf_Network *cfnet, const char *sec)
 	  iface_ipv4_set(iface, "static", 
 			 cfnet->ip, cfnet->gateway,
 			 cfnet->netmask);
+	if ((!cfnet->remember_password) && (cfnet->password))
+	  {
+	     evas_stringshare_del(cfnet->password);
+	     cfnet->password = NULL;
+	  }
      }
    else
      {
 	if (!cfnet->password)
 	  {
-	     // FIXME: ask for password
-	     return 1;
+	     net_dialog_show(inst, cfnet);
 	  }
 	else
 	  {
@@ -268,6 +317,11 @@ net_join(Interface *iface, Conf_Network *cfnet, const char *sec)
 	       iface_ipv4_set(iface, "static", 
 			      cfnet->ip, cfnet->gateway,
 			      cfnet->netmask);
+	     if ((!cfnet->remember_password) && (cfnet->password))
+	       {
+		  evas_stringshare_del(cfnet->password);
+		  cfnet->password = NULL;
+	       }
 	  }
      }
    return 0;
@@ -282,7 +336,6 @@ do { char *___s; ___s = (x); \
 do { char *___s; ___s = (x); \
    if (___s) { (x) = strdup(___s); evas_stringshare_del(___s); } \
 } while (0);
-
 
 static void
 net_dialog_cb_ok(void *data, E_Dialog *dialog)
@@ -306,8 +359,9 @@ net_dialog_cb_ok(void *data, E_Dialog *dialog)
    STR_SHARE(cfnet->netmask);
    net_dialog_hide(inst);
    iface = if_get(inst);
-   if (iface) net_join(iface, cfnet, inst->config.sec);
-   // FIXME: save config - effect changed
+   if (iface) net_join(inst, iface, cfnet);
+   // FIXME: if ethernet - save cfnet to instances->confnet
+   e_config_save_queue();
 }
 
 static void
@@ -328,6 +382,16 @@ net_dialog_cb_cancel(void *data, E_Dialog *dialog)
 	E_FREE(cfnet->gateway);
 	E_FREE(cfnet->netmask);
 	free(cfnet);
+     }
+   else if (inst->config.cfnet)
+     {
+	cfnet = inst->config.cfnet;
+	STR_SHARE(cfnet->name);
+	STR_SHARE(cfnet->essid);
+	STR_SHARE(cfnet->password);
+	STR_SHARE(cfnet->ip);
+	STR_SHARE(cfnet->gateway);
+	STR_SHARE(cfnet->netmask);
      }
    net_dialog_hide(inst);
 }
@@ -353,18 +417,21 @@ net_dialog_cb_del(E_Win *win)
 	E_FREE(cfnet->netmask);
 	free(cfnet);
      }
+   else if (inst->config.cfnet)
+     {
+	cfnet = inst->config.cfnet;
+	STR_SHARE(cfnet->name);
+	STR_SHARE(cfnet->essid);
+	STR_SHARE(cfnet->password);
+	STR_SHARE(cfnet->ip);
+	STR_SHARE(cfnet->gateway);
+	STR_SHARE(cfnet->netmask);
+     }
    net_dialog_hide(inst);
 }
 
-// FIXME: need password dialog with:
-// * entry "network name" (default ESSID if wifi)
-// * checkbox "use this network whenever it is available"
-// * checkbox "remember password for this network"  // wifi only
-// * entry "password" // wifi only
-// * button for "address settings" // default dhcp
-// 
-// if iface deleted - del dialog
-// if ifnet del (this ifnet) del dialog
+// FIXME: if iface deleted - del dialog
+// FIXME: if ifnet del (this ifnet) del dialog
 static void
 net_dialog_show(Instance *inst, Conf_Network *cfnet)
 {
@@ -391,7 +458,8 @@ net_dialog_show(Instance *inst, Conf_Network *cfnet)
    e_widget_min_size_set(o, mw, mh);
    e_widget_table_object_append(table, o, 1, row, 1, 1, 1, 1, 0, 0);
    row++;
-   
+
+   // FIXME: onyl for wifi - not LAN
    o = e_widget_label_add(evas, "ESSID");
    e_widget_table_object_append(table, o, 0, row, 1, 1, 1, 1, 0, 0);
    o = e_widget_label_add(evas, cfnet->essid);
@@ -417,7 +485,8 @@ net_dialog_show(Instance *inst, Conf_Network *cfnet)
 	e_widget_table_object_append(table, o, 0, row, 2, 1, 1, 1, 0, 0);
 	row++;
      }
-   
+
+   // FIXME: manual dialog needs to work
    button = e_widget_button_add(evas, "Address Details", NULL, NULL,
 				inst, NULL);
    e_widget_table_object_append(table, button, 0, row, 2, 1, 0, 0, 0, 0);
@@ -452,8 +521,6 @@ net_dialog_hide(Instance *inst)
 // * entry "ip"
 // * entry "gateway"
 // * entry "netmask"
-// 
-// if net_dialog del - del dialog
 static void
 manual_dialog_show(Instance *inst)
 {
@@ -467,12 +534,37 @@ manual_dialog_hide(Instance *inst)
 // FIXME: need saved networks list dialog
 // * ilist of saved network names
 // * delete button
-// 
-// if saved networks list add/del, refill list
-// if if_dialog parent del, del dialog
 static void
 netlist_dialog_show(Instance *inst)
 {
+   Conf_Network *cfnet;
+
+   cfnet = inst->config.cfnet_new;
+   inst->config.cfnet_new = NULL;
+   if ((cfnet) && (cfnet->addme))
+     {
+	E_FREE(cfnet->name);
+	E_FREE(cfnet->essid);
+	E_FREE(cfnet->password);
+	E_FREE(cfnet->ip);
+	E_FREE(cfnet->gateway);
+	E_FREE(cfnet->netmask);
+	free(cfnet);
+     }
+   else if (inst->config.cfnet)
+     {
+	cfnet = inst->config.cfnet;
+	STR_SHARE(cfnet->name);
+	STR_SHARE(cfnet->essid);
+	STR_SHARE(cfnet->password);
+	STR_SHARE(cfnet->ip);
+	STR_SHARE(cfnet->gateway);
+	STR_SHARE(cfnet->netmask);
+     }
+   net_dialog_hide(inst);
+   manual_dialog_hide(inst);
+   if_dialog_hide(inst);
+   E_FREE(inst->config.ifpath);
 }
 
 static void
@@ -497,7 +589,34 @@ if_dialog_cb_ok(void *data, E_Dialog *dialog)
    
    inst = data;
    if_dialog_hide(inst);
-   // FIXME: save config - effect changed
+   E_FREE(inst->config.ifpath);
+   inst->config.ifmode = inst->config.ifmode_tmp;
+   inst->config.ifpath = inst->config.ifpath_tmp;
+   inst->config.ifpath_tmp = NULL;
+
+   if (inst->config.cfif)
+     {
+	if (inst->config.cfif->ifpath)
+	  {
+	     evas_stringshare_del(inst->config.cfif->ifpath);
+	     inst->config.cfif->ifpath = NULL;
+	  }
+	if (inst->config.ifpath)
+	  inst->config.cfif->ifpath = evas_stringshare_add(inst->config.ifpath);
+	inst->config.cfif->ifmode = inst->config.ifmode;
+     }
+   popup_ifnet_nets_refresh(inst);
+   e_config_save_queue();
+}
+
+static void
+if_dialog_cb_cancel(void *data, E_Dialog *dialog)
+{
+   Instance *inst;
+   
+   inst = data;
+   if_dialog_hide(inst);
+   E_FREE(inst->config.ifpath_tmp);
 }
 
 static void
@@ -509,7 +628,7 @@ if_dialog_cb_del(E_Win *win)
    dialog = win->data;
    inst = dialog->data;
    if_dialog_hide(inst);
-   // FIXME: save config - effect changed
+   E_FREE(inst->config.ifpath_tmp);
 }
 
 static void
@@ -523,7 +642,6 @@ if_radio_cb_generic(void *data, Evas_Object *obj, void *event_info)
 	e_widget_ilist_unselect(inst->if_ilist_obj);
 	E_FREE(inst->config.ifpath);
      }
-   popup_ifnet_nets_refresh(inst);
 }
 
 static void
@@ -533,7 +651,6 @@ if_ilist_cb_if_sel(void *data)
    
    inst = data;
    e_widget_radio_toggle_set(inst->if_radio_device, 1);
-   popup_ifnet_nets_refresh(inst);
 }
 
 static void
@@ -621,8 +738,9 @@ if_dialog_show(Instance *inst)
    list = e_widget_list_add(evas, 0, 0);
 
    flist = e_widget_framelist_add(evas, "Network Device", 0);
-   
-   rg = e_widget_radio_group_new(&(inst->config.ifmode));
+
+   inst->config.ifmode_tmp = inst->config.ifmode;
+   rg = e_widget_radio_group_new(&(inst->config.ifmode_tmp));
    
    o = e_widget_radio_add(evas, "Wifi", 0, rg);
    evas_object_smart_callback_add(o, "changed", if_radio_cb_generic, inst);
@@ -634,7 +752,11 @@ if_dialog_show(Instance *inst)
    inst->if_radio_device = o;
    e_widget_framelist_object_append(flist, o);
 
-   ilist = e_widget_ilist_add(evas, 48, 48, &(inst->config.ifpath));
+   if (inst->config.ifpath)
+     inst->config.ifpath_tmp = strdup(inst->config.ifpath);
+   else
+     inst->config.ifpath_tmp = NULL;
+   ilist = e_widget_ilist_add(evas, 48, 48, &(inst->config.ifpath_tmp));
    inst->if_ilist_obj = ilist;
    
    e_widget_ilist_freeze(ilist);
@@ -649,6 +771,7 @@ if_dialog_show(Instance *inst)
    
    e_widget_list_object_append(list, flist, 1, 0, 0.5);
 
+   // FIXME: netlist needs to work
    button = e_widget_button_add(evas, "Networks", NULL, button_cb_netlist,
 				inst, NULL);
    e_widget_list_object_append(list, button, 1, 0, 0.5);
@@ -659,6 +782,7 @@ if_dialog_show(Instance *inst)
    e_win_delete_callback_set(dialog->win, if_dialog_cb_del);
    
    e_dialog_button_add(dialog, "OK", NULL, if_dialog_cb_ok, inst);
+   e_dialog_button_add(dialog, "Cancel", NULL, if_dialog_cb_cancel, inst);
    e_dialog_button_focus_num(dialog, 1);
    e_win_centered_set(dialog->win, 1);
    e_dialog_show(dialog);
@@ -688,6 +812,7 @@ popup_cb_setup(void *data, void *data2)
    Instance *inst;
    
    inst = data;
+   popup_hide(inst);
    if (!inst->if_dia) if_dialog_show(inst);
    else if_dialog_hide(inst);
 }
@@ -710,6 +835,8 @@ static void
 popup_ifnet_icon_adjust(Evas_Object *icon, Interface_Network *ifnet)
 {
    Edje_Message_Int_Set *msg;
+   Evas_List *l;
+   int saved = 0;
    
    msg = alloca(sizeof(Edje_Message_Int_Set) + (0 * sizeof(int)));
    msg->count = 1;
@@ -727,8 +854,25 @@ popup_ifnet_icon_adjust(Evas_Object *icon, Interface_Network *ifnet)
      }
    else
      edje_object_signal_emit(icon, "s,state,security,open", "e");
-   
-   // FIXME: adjust saved network state
+   if (conf)
+     {
+	for (l = conf->networks; l; l = l->next)
+	  {
+	     Conf_Network *cfnet;
+	     
+	     cfnet = l->data;
+	     if ((cfnet->essid) && (ifnet->essid) && 
+		 (!strcmp(cfnet->essid, ifnet->essid)))
+	       {
+		  saved = 1;
+		  break;
+	       }
+	  }
+     }
+   if (saved)
+     edje_object_signal_emit(icon, "s,state,saved,on", "e");
+   else
+     edje_object_signal_emit(icon, "s,state,saved,off", "e");
 }
 
 static void
@@ -813,6 +957,7 @@ popup_ifnet_net_add(Instance *inst, Interface_Network *ifnet)
    evas_object_show(icon);
 }
 
+/*
 static int
 popup_ifnet_cb_sort(void *data1, void *data2)
 {
@@ -822,7 +967,7 @@ popup_ifnet_cb_sort(void *data1, void *data2)
    ifnet2 = data2;
    return ifnet2->signal_strength - ifnet1->signal_strength;
 }
-
+*/
 static void
 popup_ifnet_nets_refresh(Instance *inst)
 {
@@ -844,11 +989,12 @@ popup_ifnet_nets_refresh(Instance *inst)
 	for (l = iface->networks; l; l = l->next)
 	  networks = evas_list_append(networks, l->data);
      }
-//   if (networks)
-//     networks = evas_list_sort(networks, 
-//			       evas_list_count(networks),
-//			       popup_ifnet_cb_sort);
-
+/*   
+   if (networks)
+     networks = evas_list_sort(networks, 
+			       evas_list_count(networks),
+			       popup_ifnet_cb_sort);
+ */
    for (l = networks; l; l = l->next)
      {
 	Interface_Network *ifnet;
@@ -918,9 +1064,10 @@ popup_ifnet_change(Instance *inst, Interface *iface, Interface_Network *ifnet)
 static void
 popup_show(Instance *inst)
 {
-   Evas_Object *base, *ilist, *button;
+   Evas_Object *base, *ilist, *button, *o;
    Evas *evas;
-
+   Evas_Coord mw, mh;
+   
    inst->popup = e_gadcon_popup_new(inst->gcc, popup_cb_resize);
    evas = inst->popup->win->evas;
 
@@ -928,9 +1075,15 @@ popup_show(Instance *inst)
 
    base = e_widget_table_add(evas, 0);
    
-   // FIXME: if iface set and this is wifi - then list, otherwise none
-   // FIXME: 96, 48 - get from min size from edje for icon...
-   ilist = e_widget_ilist_add(evas, 96, 48, &(inst->config.bssid));
+   o = edje_object_add(evas);
+   e_theme_edje_object_set(o, "base/theme/modules/connman",
+			   "e/modules/connman/network");
+   edje_object_size_min_get(o, &mw, &mh);
+   if ((mw < 1) || (mh < 1)) edje_object_size_min_calc(o, &mw, &mh);
+   if (mw < 4) mw = 4;
+   if (mh < 4) mh = 4;
+   evas_object_del(o);
+   ilist = e_widget_ilist_add(evas, mw, mh, &(inst->config.bssid));
    inst->popup_ilist_obj = ilist;
    
    e_widget_ilist_freeze(ilist);
@@ -1060,7 +1213,6 @@ cb_if_del(void *data, Interface *iface, Interface_Network *ifnet)
    
    printf("IF-- %s\n", iface->ifpath);
    ifaces = evas_list_remove(ifaces, iface);
-   // FIXME: any instances for this iface - set to disabled
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
@@ -1081,7 +1233,6 @@ cb_if_ipv4(void *data, Interface *iface, Interface_Network *ifnet)
    printf("  IPV4: [%s][%s][%s][%s]\n",
 	  iface->ipv4.method, iface->ipv4.address,
 	  iface->ipv4.gateway, iface->ipv4.netmask);
-   // FIXME: change status to say we connected fully now
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
@@ -1114,15 +1265,11 @@ cb_if_net_sel(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_if_scan_net_add(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
+   Evas_List *l, *l2;
    
 //   printf("IF   %s\n", iface->ifpath);
 //   printf("  SCAN NET ADD: [%s] %i \"%s\" %s\n",
 //	  ifnet->bssid, ifnet->signal_strength, ifnet->essid, ifnet->security);
-   // FIXME: if net strenght > current strength AND
-   //        if scan has essid we have config for:
-   //        iface_network_set(iface, "essid", "pass");
-   //        iface_ipv4_set(iface, "dhcp", NULL, NULL, NULL);
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
@@ -1130,6 +1277,22 @@ cb_if_scan_net_add(void *data, Interface *iface, Interface_Network *ifnet)
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
 	  popup_ifnet_add(l->data, iface, ifnet);
+	if (!inst->config.cfnet)
+	  {
+	     for (l2 = conf->networks; l2; l2 = l2->next)
+	       {
+		  Conf_Network *cfnet;
+		  
+		  cfnet = l2->data;
+		  if ((ifnet->essid) && (cfnet->essid) &&
+		      (!strcmp(ifnet->essid, cfnet->essid)))
+		    {
+		       inst->config.cfnet = cfnet;
+		       net_join(inst, iface, cfnet);
+		       break;
+		    }
+	       }
+	  }
      }
 }
 
@@ -1141,17 +1304,15 @@ cb_if_scan_net_del(void *data, Interface *iface, Interface_Network *ifnet)
 //   printf("IF   %s\n", iface->ifpath);
 //   printf("  SCAN NET DEL: [%s] %i \"%s\" %s\n",
 //	  ifnet->bssid, ifnet->signal_strength, ifnet->essid, ifnet->security);
-   // FIXME: walk networks - if any are in config, add to list, find strongest
-   //        for the stringest one:
-   //        iface_network_set(iface, "essid", "pass");
-   //        iface_ipv4_set(iface, "dhcp", NULL, NULL, NULL);
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
 	
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
-	  popup_ifnet_del(l->data, iface, ifnet);
+	  {
+	     popup_ifnet_del(l->data, iface, ifnet);
+	  }
      }
 }
 
@@ -1273,7 +1434,7 @@ cb_if_policy(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_main_if_add(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
+   Evas_List *l, *l2;
    
    printf("IF++ %s\n", iface->ifpath);
    ifaces = evas_list_append(ifaces, iface);
@@ -1306,14 +1467,10 @@ cb_main_if_add(void *data, Interface *iface, Interface_Network *ifnet)
 	     else if (!strcmp(iface->prop.policy, "ask"))
 	       inst_on(inst);
 	     
-	     // FIXME: if iface has manual config then:
-	     //        iface_policy_set(iface, "ask");
-	     //        if (80211) iface_network_set(iface, "essid", "pass");
-	     //        iface_ipv4_set(iface, "static", "ip", "gw", "mask");
-	     // 
-	     // FIXME: if no manual setup:
-	     //        iface_policy_set(iface, "auto");
-	     //        iface_scan(iface);
+	     if (inst->config.cfif->netconf)
+	       {
+		  // FIXME: must be ethernet - bring up netconf
+	       }
 	  }
 	if_ilist_update(l->data);
      }
@@ -1374,8 +1531,6 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
-   connman_module = NULL;
-
    // FIXME: free conf
    
    E_CONFIG_DD_FREE(conf_network_edd);
@@ -1399,11 +1554,14 @@ e_modapi_shutdown(E_Module *m)
 	connman_dbus = NULL;
      }
    
+   connman_module = NULL;
+
    return 1;
 }
 
 EAPI int
 e_modapi_save(E_Module *m)
 {
+   if (conf) e_config_domain_save("module.connman", conf_edd, conf);
    return 1;
 }
