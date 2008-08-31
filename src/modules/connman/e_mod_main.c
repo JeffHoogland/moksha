@@ -1550,7 +1550,7 @@ e_modapi_shutdown(E_Module *m)
 	     ifaces = NULL;
 	  }
 	iface_system_shutdown();
-	e_dbus_connection_close(connman_dbus);
+//	e_dbus_connection_close(connman_dbus);
 	connman_dbus = NULL;
      }
    
