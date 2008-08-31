@@ -52,7 +52,8 @@ conf_mime \
 conf_interaction \
 gadman \
 mixer \
-conf_window_remembers
+conf_window_remembers \
+connman
 
 if HAVE_TEMPERATURE
 SUBDIRS += temperature

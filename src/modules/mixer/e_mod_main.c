@@ -174,14 +174,14 @@ _mixer_gadget_update(E_Mixer_Instance *inst)
 
    e_mixer_system_get_state(inst->sys, inst->channel, &inst->mixer_state);
 
-   msg = alloca(sizeof(Edje_Message_Int_Set) + 2 * sizeof(int));
+   msg = alloca(sizeof(Edje_Message_Int_Set) + (2 * sizeof(int)));
    msg->count = 3;
    msg->val[0] = inst->mixer_state.mute;
    msg->val[1] = inst->mixer_state.left;
    msg->val[2] = inst->mixer_state.right;
    edje_object_message_send(inst->ui.gadget, EDJE_MESSAGE_INT_SET, 0, msg);
 
-   edje_object_signal_emit(inst->ui.gadget, "e,action,volume,change", "");
+   edje_object_signal_emit(inst->ui.gadget, "e,action,volume,change", "e");
 
    if (inst->popup)
      _mixer_popup_update(inst);

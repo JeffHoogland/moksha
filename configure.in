@@ -434,6 +434,8 @@ src/modules/gadman/Makefile
 src/modules/gadman/module.desktop
 src/modules/mixer/Makefile
 src/modules/mixer/module.desktop
+src/modules/connman/Makefile
+src/modules/connman/module.desktop
 src/preload/Makefile
 data/Makefile
 data/fonts/Makefile
