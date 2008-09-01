@@ -333,7 +333,10 @@ _e_pointer_free(E_Pointer *p)
    
    if (p->idle_timer) ecore_timer_del(p->idle_timer);
    if (p->idle_poller) ecore_poller_del(p->idle_poller);
-   
+
+   p->type = NULL;
+   p->idle_timer = NULL;
+   p->idle_poller = NULL;
    free(p);
 }
 
@@ -478,7 +481,11 @@ _e_pointer_active_handle(E_Pointer *p)
 {
    /* we got some mouse event - if there was an idle timer emit an active
     * signal as we WERE idle, NOW we are active */
-   if (p->idle_timer) ecore_timer_del(p->idle_timer);
+   if (p->idle_timer)
+     {
+	ecore_timer_del(p->idle_timer);
+	p->idle_timer = NULL;
+     }
    if (p->idle_poller)
      {
 	ecore_poller_del(p->idle_poller);
