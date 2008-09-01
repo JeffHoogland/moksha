@@ -2,5 +2,5 @@
 Type=Link
 Name=Connection Manager
 Icon=e-module-connman
-Comment=<hilight>Network Connection Manager Gadget</hilight><br><br>Control Wifi and wired networks as a user.
+Comment=<title>Network Connection Manager Gadget</title><br>Control Wifi and wired networks as a user.
 X-Enlightenment-ModuleType=system

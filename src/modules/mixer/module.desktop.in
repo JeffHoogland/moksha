@@ -2,6 +2,6 @@
 Type=Link
 Name=Mixer
 Icon=e-module-mixer
-Comment=<hilight>Mixer Gadget</hilight><br><br>A module to provide a mixer for changing volume.
-Comment[it]=<hilight>Modulo Mixer</hilight><br><br>Un modulo che fornisce un mixer per regolare il volume.
+Comment=<title>Mixer Gadget</title><br>A module to provide a mixer for changing volume.
+Comment[it]=<title>Modulo Mixer</title><br>Un modulo che fornisce un mixer per regolare il volume.
 X-Enlightenment-ModuleType=system
