@@ -5248,6 +5248,47 @@ _e_fm2_cb_drag_finished(E_Drag *drag, int dropped)
    free(drag->data);
 }
 
+void
+_e_fm_drag_key_down_cb(E_Drag *drag, Ecore_X_Event_Key_Down *e)
+{
+   if (!strncmp(e->keyname, "Alt", 3))
+     {
+	ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_ASK);
+	edje_object_signal_emit(drag->object, "e,state,ask", "e");
+     }
+   else if (!strncmp(e->keyname, "Shift", 5))
+     {
+	ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_MOVE);
+	edje_object_signal_emit(drag->object, "e,state,move", "e");
+     }
+   else if (!strncmp(e->keyname, "Control", 7))
+     {
+	ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_COPY);	
+	edje_object_signal_emit(drag->object, "e,state,copy", "e");
+     }
+}
+
+void
+_e_fm_drag_key_up_cb(E_Drag *drag, Ecore_X_Event_Key_Up *e)
+{
+   /* Default action would be move. ;) */
+
+   if (!strncmp(e->keyname, "Alt", 3))
+     {
+	ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_MOVE);
+     }
+   else if (!strncmp(e->keyname, "Shift", 5))
+     {
+	ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_MOVE);
+     }
+   else if (!strncmp(e->keyname, "Control", 7))
+     {
+	ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_MOVE);
+     }
+
+   edje_object_signal_emit(drag->object, "e,state,move", "e");
+}
+
 static void
 _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
@@ -5385,7 +5426,11 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     edje_object_signal_emit(o, "e,state,selected", "e");
 	     edje_object_signal_emit(o2, "e,state,selected", "e");
 	     e_drag_object_set(d, o);
+	     edje_object_signal_emit(o, "e,state,move", "e");
 	     e_drag_resize(d, w, h);
+
+	     e_drag_key_down_cb_set(d, _e_fm_drag_key_down_cb);
+	     e_drag_key_up_cb_set(d, _e_fm_drag_key_up_cb);
 
 	     e_drag_xdnd_start(d,
 			       ic->drag.x + ic->x + ic->sd->x - ic->sd->pos.x,

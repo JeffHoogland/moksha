@@ -30,6 +30,8 @@ static void _e_drag_free(E_Drag *drag);
 
 static int  _e_dnd_cb_window_shape(void *data, int type, void *event);
 
+static int  _e_dnd_cb_key_down(void *data, int type, void *event);
+static int  _e_dnd_cb_key_up(void *data, int type, void *event);
 static int  _e_dnd_cb_mouse_up(void *data, int type, void *event);
 static int  _e_dnd_cb_mouse_move(void *data, int type, void *event);
 static int  _e_dnd_cb_event_dnd_enter(void *data, int type, void *event);
@@ -102,6 +104,12 @@ e_dnd_init(void)
    _event_handlers = evas_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_SELECTION_NOTIFY,
 							      _e_dnd_cb_event_dnd_selection, NULL));
+   _event_handlers = evas_list_append(_event_handlers,
+                                      ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
+                                                              _e_dnd_cb_key_down, NULL));
+   _event_handlers = evas_list_append(_event_handlers,
+                                      ecore_event_handler_add(ECORE_X_EVENT_KEY_UP,
+                                                              _e_dnd_cb_key_up, NULL));
 
    _action = ECORE_X_ATOM_XDND_ACTION_PRIVATE;
    return 1;
@@ -205,6 +213,9 @@ e_drag_new(E_Container *container, int x, int y,
    ecore_x_window_shadow_tree_flush();
    
    _drag_win_root = drag->container->manager->root;
+
+   drag->cb.key_down = NULL;
+   drag->cb.key_up = NULL;
    
    return drag;
 }
@@ -529,6 +540,18 @@ e_drop_handler_action_get()
    return _action;
 }
 
+EAPI void
+e_drag_key_down_cb_set(E_Drag *drag, void (*func)(E_Drag *drag, Ecore_X_Event_Key_Down *e))
+{
+   drag->cb.key_down = func;
+}
+
+EAPI void
+e_drag_key_up_cb_set(E_Drag *drag, void (*func)(E_Drag *drag, Ecore_X_Event_Key_Up *e))
+{
+   drag->cb.key_up = func;
+}
+
 /* local subsystem functions */
 
 static void
@@ -717,6 +740,10 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
    int dx, dy, dw, dh;
    Ecore_X_Window win, ignore_win[2];
    int responsive = 0;
+   static struct 
+     {
+	Ecore_X_Window root, win;
+     } cache = {0, 0};
 
 //   double t1 = ecore_time_get(); ////
    if (_drag_current)
@@ -726,7 +753,13 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	/* FIXME: this is nasty. every x mouse event we go back to x and do
 	 * a whole bunch of round-trips narrowing down the toplevel window
 	 * which contains the mouse */
-	win = ecore_x_window_shadow_tree_at_xy_with_skip_get(root, x, y, ignore_win, 2);
+	if (cache.win != root)
+	  {
+	     /* A little bit of caching to avoid trips to X. */
+	     cache.win = root;
+	     cache.root = ecore_x_window_root_get(root);
+	  }
+	win = ecore_x_window_shadow_tree_at_xy_with_skip_get(cache.root, x, y, ignore_win, 2);
 //	win = ecore_x_window_at_xy_with_skip_get(x, y, ignore_win, 2);
      }
    else
@@ -832,8 +865,6 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	       }
 	  }
      }
-
-   if(action == ECORE_X_ATOM_ATOM) responsive = 0;
 
    return responsive;
 //   double t2 = ecore_time_get() - t1; ////
@@ -1049,6 +1080,38 @@ _e_dnd_cb_window_shape(void *data, int ev_type, void *ev)
 }
 
 static int
+_e_dnd_cb_key_down(void *data, int type, void *event)
+{
+   Ecore_X_Event_Key_Down *ev;
+
+   ev = event;
+   if (ev->win != _drag_win) return 1;
+
+   if (!_drag_current) return 1;
+
+   if (_drag_current->cb.key_down)
+     _drag_current->cb.key_down(_drag_current, ev);
+   
+   return 1;
+}
+
+static int
+_e_dnd_cb_key_up(void *data, int type, void *event)
+{
+   Ecore_X_Event_Key_Up *ev;
+
+   ev = event;
+   if (ev->win != _drag_win) return 1;
+
+   if (!_drag_current) return 1;
+
+   if (_drag_current->cb.key_up)
+     _drag_current->cb.key_up(_drag_current, ev);
+   
+   return 1;
+}
+
+static int
 _e_dnd_cb_mouse_up(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Button_Up *ev;
@@ -1069,7 +1132,7 @@ _e_dnd_cb_mouse_move(void *data, int type, void *event)
    ev = event;
    if (ev->win != _drag_win) return 1;
 
-   _e_drag_update(_drag_win_root, ev->x, ev->y, ECORE_X_ATOM_ATOM);
+   if(!_xdnd) _e_drag_update(_drag_win_root, ev->x, ev->y, ECORE_X_ATOM_XDND_ACTION_PRIVATE);
    
    return 1;
 }
