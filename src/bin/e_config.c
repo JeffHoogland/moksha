@@ -1904,12 +1904,10 @@ e_config_profile_save(void)
 	  {
 	     int ret;
 	     
-	     ret = rename(buf2, buf);
-	     if (ret < 0) 
+             ret = ecore_file_mv(buf2, buf);
+             if (!ret)
 	       {
-		  /* FIXME: do we want to trap individual errno
-		   and provide a short blurp to the user? */
-		  perror("rename");
+                  printf("*** Error saving profile. ***");
 	       }
 	  }
 	ecore_file_unlink(buf2);
@@ -1940,9 +1938,12 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
 	ok = eet_data_write(ef, edd, "config", data, 1);
 	if (_e_config_eet_close_handle(ef, buf2))
 	  {
-	     ret = rename(buf2, buf);
-	     if (ret < 0) perror("rename");
-	  }
+             ret = ecore_file_mv(buf2, buf);
+             if (!ret)
+	       {
+                  printf("*** Error saving profile. ***");
+	       }
+          }
 	ecore_file_unlink(buf2);
      }
    return ok;
