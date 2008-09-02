@@ -1903,11 +1903,11 @@ e_config_profile_save(void)
 	if (_e_config_eet_close_handle(ef, buf2))
 	  {
 	     int ret;
-	     
-             ret = ecore_file_mv(buf2, buf);
-             if (!ret)
+
+	     ret = ecore_file_mv(buf2, buf);
+	     if (!ret)
 	       {
-                  printf("*** Error saving profile. ***");
+		  printf("*** Error saving profile. ***");
 	       }
 	  }
 	ecore_file_unlink(buf2);
@@ -1938,12 +1938,12 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
 	ok = eet_data_write(ef, edd, "config", data, 1);
 	if (_e_config_eet_close_handle(ef, buf2))
 	  {
-             ret = ecore_file_mv(buf2, buf);
-             if (!ret)
+	     ret = ecore_file_mv(buf2, buf);
+	     if (!ret)
 	       {
-                  printf("*** Error saving profile. ***");
+		  printf("*** Error saving profile. ***");
 	       }
-          }
+	  }
 	ecore_file_unlink(buf2);
      }
    return ok;
