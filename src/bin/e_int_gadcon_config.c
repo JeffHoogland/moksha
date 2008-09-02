@@ -266,8 +266,6 @@ _load_sel_gadgets(void *data)
    e_widget_ilist_thaw(cfdata->o_sel);
    edje_thaw();
    evas_event_thaw(evas);
-   if (l) evas_list_free(l);
-   if (l2) evas_list_free(l2);
 }
 
 static void 
@@ -299,7 +297,6 @@ _cb_add(void *data, void *data2)
         _load_sel_gadgets(cfdata);
         e_widget_ilist_selected_set(cfdata->o_sel, i);
      }
-   if (l) evas_list_free(l);
 }
 
 static void 
@@ -319,7 +316,7 @@ _cb_del(void *data, void *data2)
         if (!item->selected) continue;
         name = (char *)e_widget_ilist_nth_data_get(cfdata->o_sel, i);
         if (!name) continue;
-        for (g = cfdata->gc->cf->clients; g; g = g->next) 
+        for (g = cfdata->gc->cf->clients; g; g = g->next)
           {
              E_Config_Gadcon_Client *cgc;
 
@@ -342,8 +339,6 @@ _cb_del(void *data, void *data2)
          * more than one selected */
         e_widget_ilist_selected_set(cfdata->o_sel, 0);
      }
-   if (g) evas_list_free(g);
-   if (l) evas_list_free(l);
 }
 
 static void 
