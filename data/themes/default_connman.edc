@@ -189,7 +189,7 @@ group {
 
 group {
    name: "e/modules/connman/network";
-   max: 128 128;
+   max: 96 48;
    min: 1 1;
 
    script {   
