@@ -3610,6 +3610,8 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    evas_object_stack_below(ic->obj, ic->sd->drop);
    if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
      {
+	const char *stacking;
+	
 //        if (ic->sd->config->icon.fixed.w)
 //	  {
 	if (ic->odd)
@@ -3620,6 +3622,15 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
 	  _e_fm2_theme_edje_object_set(ic->sd, ic->obj,
 				       "base/theme/widgets",
 				       "list/fixed");
+	stacking = edje_object_data_get(ic->obj, "stacking");
+	if (stacking)
+	  {
+	     if (!strcmp(stacking, "below"))
+	       evas_object_stack_above(ic->obj, ic->sd->underlay);
+	     else if (!strcmp(stacking, "above"))
+	       evas_object_stack_below(ic->obj, ic->sd->drop);
+	  }
+	
 //	  }
 //	else
 //	  {
@@ -3661,11 +3672,16 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
 
    if (ic->selected)
      {
+	const char *selectraise;
+	
 	/* FIXME: need new signal to INSTANTLY activate - no anim */
 	/* FIXME: while listing dirs need to use icons in-place and not
 	 * unrealize and re-realize */
 	edje_object_signal_emit(ic->obj, "e,state,selected", "e");
 	edje_object_signal_emit(ic->obj_icon, "e,state,selected", "e");
+	selectraise = edje_object_data_get(ic->obj, "selectraise");
+        if ((selectraise) && (!strcmp(selectraise, "on")))
+	  evas_object_stack_below(ic->obj, ic->sd->drop);
      }
 //   printf("realize %s full = %i\n", ic->info.file, (int)ic->info.removable_full);
    if (ic->info.removable_full)
@@ -3780,9 +3796,14 @@ _e_fm2_icon_select(E_Fm2_Icon *ic)
    ic->last_selected = 1;
    if (ic->realized)
      {
+	const char *selectraise;
+	
 	edje_object_signal_emit(ic->obj, "e,state,selected", "e");
 	edje_object_signal_emit(ic->obj_icon, "e,state,selected", "e");
 	evas_object_stack_below(ic->obj, ic->sd->drop);
+	selectraise = edje_object_data_get(ic->obj, "selectraise");
+        if ((selectraise) && (!strcmp(selectraise, "on")))
+	  evas_object_stack_below(ic->obj, ic->sd->drop);
      }
 }
 
@@ -3794,8 +3815,17 @@ _e_fm2_icon_deselect(E_Fm2_Icon *ic)
    ic->last_selected = 0;
    if (ic->realized)
      {
+	const char *stacking, *selectraise;
+	
 	edje_object_signal_emit(ic->obj, "e,state,unselected", "e");
 	edje_object_signal_emit(ic->obj_icon, "e,state,unselected", "e");
+        stacking = edje_object_data_get(ic->obj, "stacking");
+	selectraise = edje_object_data_get(ic->obj, "selectraise");
+	if ((selectraise) && (!strcmp(selectraise, "on")))
+	  {
+	     if ((stacking) && (!strcmp(stacking, "below")))
+	       evas_object_stack_above(ic->obj, ic->sd->underlay);
+	  }
      }
 }
 
