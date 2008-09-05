@@ -142,7 +142,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	if (!ecore_file_is_dir(epd->dir)) continue;
 	_load_modules(epd->dir);
      }
-   if (l) evas_list_free(l);
    if (mdirs) e_path_dir_list_free(mdirs);
 }
 
@@ -317,12 +316,8 @@ _fill_list(Evas_Object *obj, int enabled)
 	       }
 
 	     if (l) count = evas_list_count(l);
-	     if (count < 1) 
-	       {
-		  if (l) evas_list_free(l);
-		  continue;
-	       }
-
+	     else continue;
+	    
 	     /* We have at least one, append header */
 	     e_widget_ilist_header_append(obj, NULL, cft->name);
 
@@ -332,7 +327,11 @@ _fill_list(Evas_Object *obj, int enabled)
 
 	     _list_widget_load(obj, l);
 
-	     if (l) evas_list_free(l);
+	     if (l)
+	       {
+		  evas_list_free(l);
+		  l = NULL;
+	       }
 	  }
      }
 
@@ -446,7 +445,6 @@ _list_widget_load(Evas_Object *obj, Evas_List *list)
 	else if (mod->short_name)
 	  e_widget_ilist_append(obj, ic, mod->short_name, NULL, mod, NULL);
      }
-   if (ml) evas_list_free(ml);
 }
 
 static void 
@@ -552,7 +550,6 @@ _select_all_modules(Evas_Object *obj, void *data)
 	  e_widget_textblock_markup_set(cfdata->o_desc, 
 					_("Description: Unavailable"));
      }
-   if (l) evas_list_free(l);
 }
 
 static void 
