@@ -731,24 +731,24 @@ if_dialog_show(Instance *inst)
    Evas_List *l;
    
    dialog = e_dialog_new(inst->gcc->gadcon->zone->container, "e", "e_connman_iface_dialog");
-   e_dialog_title_set(dialog, "Network Connection Settings");
+   e_dialog_title_set(dialog, _("Network Connection Settings"));
    dialog->data = inst;
    evas = e_win_evas_get(dialog->win);
 
    list = e_widget_list_add(evas, 0, 0);
 
-   flist = e_widget_framelist_add(evas, "Network Device", 0);
+   flist = e_widget_framelist_add(evas, _("Network Device"), 0);
 
    inst->config.ifmode_tmp = inst->config.ifmode;
    rg = e_widget_radio_group_new(&(inst->config.ifmode_tmp));
    
-   o = e_widget_radio_add(evas, "Wifi", 0, rg);
+   o = e_widget_radio_add(evas, _("Wifi"), 0, rg);
    evas_object_smart_callback_add(o, "changed", if_radio_cb_generic, inst);
    e_widget_framelist_object_append(flist, o);
-   o = e_widget_radio_add(evas, "LAN", 1, rg);
+   o = e_widget_radio_add(evas, _("LAN"), 1, rg);
    evas_object_smart_callback_add(o, "changed", if_radio_cb_generic, inst);
    e_widget_framelist_object_append(flist, o);
-   o = e_widget_radio_add(evas, "Specific Device", 2, rg);
+   o = e_widget_radio_add(evas, _("Specific Device"), 2, rg);
    inst->if_radio_device = o;
    e_widget_framelist_object_append(flist, o);
 
@@ -772,7 +772,7 @@ if_dialog_show(Instance *inst)
    e_widget_list_object_append(list, flist, 1, 0, 0.5);
 
    // FIXME: netlist needs to work
-   button = e_widget_button_add(evas, "Networks", NULL, button_cb_netlist,
+   button = e_widget_button_add(evas, _("Networks"), NULL, button_cb_netlist,
 				inst, NULL);
    e_widget_list_object_append(list, button, 1, 0, 0.5);
    
@@ -781,8 +781,8 @@ if_dialog_show(Instance *inst)
    
    e_win_delete_callback_set(dialog->win, if_dialog_cb_del);
    
-   e_dialog_button_add(dialog, "OK", NULL, if_dialog_cb_ok, inst);
-   e_dialog_button_add(dialog, "Cancel", NULL, if_dialog_cb_cancel, inst);
+   e_dialog_button_add(dialog, _("OK"), NULL, if_dialog_cb_ok, inst);
+   e_dialog_button_add(dialog, _("Cancel"), NULL, if_dialog_cb_cancel, inst);
    e_dialog_button_focus_num(dialog, 1);
    e_win_centered_set(dialog->win, 1);
    e_dialog_show(dialog);
@@ -1097,7 +1097,7 @@ popup_show(Instance *inst)
    e_widget_table_object_append(base, ilist,
 			       0, 0, 1, 1, 1, 1, 1, 1);
 
-   button = e_widget_button_add(evas, "Settings", NULL, popup_cb_setup, 
+   button = e_widget_button_add(evas, _("Settings"), NULL, popup_cb_setup, 
 				inst, NULL);
    e_widget_table_object_append(base, button,
 			       0, 1, 1, 1, 0, 0, 0, 0);
