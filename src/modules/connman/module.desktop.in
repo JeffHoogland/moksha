@@ -1,6 +1,8 @@
 [Desktop Entry]
 Type=Link
 Name=Connection Manager
+Name[it]=Gestore connessioni
 Icon=e-module-connman
 Comment=<title>Network Connection Manager Gadget</title><br>Control Wifi and wired networks as a user.
+Comment[it]=<title>Gadget gestione connessioni di rete</title><br>Controlla le reti wireless e cablate come utente.
 X-Enlightenment-ModuleType=system
