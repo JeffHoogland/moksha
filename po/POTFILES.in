@@ -241,3 +241,9 @@ src/modules/temperature/e_mod_main.c
 src/modules/wizard/e_mod_main.c
 src/modules/wizard/e_wizard.c
 src/modules/wizard/page_010.c
+src/modules/mixer/app_mixer.c
+src/modules/mixer/conf_gadget.c
+src/modules/mixer/conf_module.c
+src/modules/mixer/e_mod_main.c
+src/modules/connman/e_iface.c
+src/modules/connman/e_mod_main.c
