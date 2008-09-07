@@ -345,6 +345,7 @@ _e_icon_smart_init(void)
 	       _e_icon_smart_color_set,
 	       _e_icon_smart_clip_set,
 	       _e_icon_smart_clip_unset,
+	       NULL,
 	       NULL
 	  };
 	_e_smart = evas_smart_class_new(&sc);

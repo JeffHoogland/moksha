@@ -99,6 +99,7 @@ e_entry_add(Evas *evas)
 	       _e_entry_color_set,
 	       _e_entry_clip_set,
 	       _e_entry_clip_unset,
+	       NULL,
 	       NULL
 	  };
 	_e_entry_smart = evas_smart_class_new(&sc);
