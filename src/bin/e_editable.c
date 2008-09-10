@@ -876,7 +876,8 @@ static int
 _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
 {
    E_Editable_Smart_Data *sd;
-   int char_length, unicode_length, prev_length;
+   int char_length, unicode_length;
+   int prev_char_length, new_char_length, new_unicode_length;
    int index;
    int i;
    
@@ -901,35 +902,48 @@ _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
    index = 0;
    for (i = 0; i < pos; i++)
      index = evas_string_char_next_get(sd->text, index, NULL);
-   
+
    if ((unicode_length <= 0) || (char_length <= 0))
      return 0;
    
-   prev_length = sd->char_length;
-   sd->char_length += char_length;
-   sd->unicode_length += unicode_length;
+   prev_char_length = sd->char_length;
+   new_char_length = sd->char_length + char_length;
+   new_unicode_length = sd->unicode_length + unicode_length;
    
-   if (sd->char_length > sd->allocated_length)
+   if (new_char_length > sd->allocated_length)
      {
+	int new_allocated_length = E_EDITABLE_SIZE_TO_ALLOC(new_char_length);
+	char *old = sd->text;
+
 	if (sd->password_mode)
 	  {
 	     /* security -- copy contents into new buffer, and overwrite old contents */
-	     char *old = sd->text;
-	     sd->text = malloc(E_EDITABLE_SIZE_TO_ALLOC(sd->char_length) + 1);
-	     memcpy(sd->text, old, sd->char_length + 1);
-	     memset(old, 0, sd->char_length);
+	     sd->text = malloc(new_allocated_length + 1);
+	     if (!sd->text)
+	       {
+		  sd->text = old;
+		  return 0;
+	       }
+	     memcpy(sd->text, old, prev_char_length + 1);
+	     memset(old, 0, prev_char_length);
 	     free(old);
 	  }
 	else
 	  {
-	     sd->text = realloc(sd->text,
-                           E_EDITABLE_SIZE_TO_ALLOC(sd->char_length) + 1);
+	     sd->text = realloc(sd->text, new_allocated_length + 1);
+	     if (!sd->text)
+	       {
+		  sd->text = old;
+		  return 0;
+	       }
 	  }
-        sd->allocated_length = E_EDITABLE_SIZE_TO_ALLOC(sd->char_length);
+        sd->unicode_length = new_unicode_length;
+        sd->char_length = new_char_length;
+        sd->allocated_length = new_allocated_length;
      }
    
-   if (prev_length > index)
-     memmove(&sd->text[index + char_length], &sd->text[index], prev_length - index);
+   if (prev_char_length > index)
+     memmove(&sd->text[index + char_length], &sd->text[index], prev_char_length - index);
    strncpy(&sd->text[index], text, char_length);
    sd->text[sd->char_length] = '\0';
    
