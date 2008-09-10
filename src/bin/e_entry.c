@@ -1143,7 +1143,7 @@ _e_entry_smart_del(Evas_Object *object)
 
    evas_object_event_callback_del(object, EVAS_CALLBACK_KEY_DOWN,
                                   _e_entry_key_down_cb);
-   evas_object_event_callback_del(object, EVAS_CALLBACK_KEY_DOWN,
+   evas_object_event_callback_del(object, EVAS_CALLBACK_KEY_UP,
                                   _e_entry_key_up_cb);
    evas_object_event_callback_del(object, EVAS_CALLBACK_MOUSE_DOWN,
                                   _e_entry_mouse_down_cb);
