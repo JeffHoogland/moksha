@@ -204,9 +204,9 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
    e_widget_min_size_get(cfdata->list, &w, NULL);
 
    /* NB: make the window look a bit better by not being so small */
-   if (w < 300) w = 300;
+//   if (w < 300) w = 300;
 
-   e_widget_min_size_set(cfdata->list, w, 200);
+   e_widget_min_size_set(cfdata->list, 400, 200);
    e_widget_ilist_thaw(cfdata->list);
    edje_thaw();
    evas_event_thaw(evas);
@@ -220,6 +220,7 @@ _cb_delete(void *data, void *data2)
    E_Config_Dialog_Data *cfdata;
    Evas_List *l = NULL, *b = NULL;
    int i = 0, changed = 0;
+   int last_selected = -1;
 
    if (!(cfdata = data)) return;
    for (i = 0, l = e_widget_ilist_items_get(cfdata->list); l; l = l->next, i++) 
@@ -230,6 +231,7 @@ _cb_delete(void *data, void *data2)
         item = l->data;
         if ((!item) || (!item->selected)) continue;
         if (!(rem = e_widget_ilist_nth_data_get(cfdata->list, i))) continue;
+        e_remember_del(rem);
         for (b = e_border_client_list(); b; b = b->next) 
           {
              E_Border *bd = NULL;
@@ -238,17 +240,17 @@ _cb_delete(void *data, void *data2)
              if (!bd->remember) continue;
              if (bd->remember != rem) continue;
              bd->remember = NULL;
+	     e_remember_unuse(rem);
           }
-        e_remember_unuse(rem);
-        e_remember_del(rem);
+	last_selected = i;
         changed = 1;
      }
 
    if (changed) e_config_save_queue();
-   if (1) evas_list_free(l);
-   if (b) evas_list_free(b);
 
    _fill_remembers(cfdata);
+   if (last_selected >= 0)
+     e_widget_ilist_selected_set(cfdata->list, last_selected);
 }
 
 static void 
