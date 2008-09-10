@@ -39,6 +39,8 @@ e_canvas_add(Ecore_Evas *ee)
      }
    else if (e_config->font_hinting == 2)
      evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
+// FIXME: testing.   
+//   edje_scale_set(2.0);
 }
 
 EAPI void
