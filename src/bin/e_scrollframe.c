@@ -603,22 +603,21 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		    evas_event_feed_hold(e, 1, ev->timestamp, ev->data);
 		  ev->event_flags |= EVAS_EVENT_FLAG_ON_HOLD;
 		  sd->down.dragged = 1;
-	       }
-	     x = sd->down.sx - (ev->cur.canvas.x - sd->down.x);
-	     y = sd->down.sy - (ev->cur.canvas.y - sd->down.y);
-	     if ((sd->down.dir_x) || (sd->down.dir_y))
-	       {
-		  if (!sd->down.locked)
+		  x = sd->down.sx - (ev->cur.canvas.x - sd->down.x);
+		  y = sd->down.sy - (ev->cur.canvas.y - sd->down.y);
+		  if ((sd->down.dir_x) || (sd->down.dir_y))
 		    {
-		       printf("lock dir to x%iy%i\n", sd->down.dir_x, sd->down.dir_y);
-		       sd->down.locked_x = x;
-		       sd->down.locked_y = y;
-		       sd->down.locked = 1;
+		       if (!sd->down.locked)
+			 {
+			    sd->down.locked_x = x;
+			    sd->down.locked_y = y;
+			    sd->down.locked = 1;
+			 }
+		       if (sd->down.dir_x) y = sd->down.locked_y;
+		       else x = sd->down.locked_x;
 		    }
-		  if (sd->down.dir_x) y = sd->down.locked_y;
-		  else x = sd->down.locked_x;
+		  e_scrollframe_child_pos_set(sd->smart_obj, x, y);
 	       }
-	     e_scrollframe_child_pos_set(sd->smart_obj, x, y);
 	  }
      }
 }
