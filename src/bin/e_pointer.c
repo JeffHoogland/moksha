@@ -307,7 +307,9 @@ _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
 
    p = data;
    if (!p->e_cursor) return;
-   evas_object_geometry_get(p->hot_object, &x, &y, NULL, NULL);
+   edje_object_part_geometry_get(p->pointer_object, "e.swallow.hotspot",
+				 &x, &y, NULL, NULL);
+   printf("@@@@@@@@@@@@@@@@@@@@@@ HOT CHANGE -> %i %i\n", x, y);
    if ((p->hot.x != x) || (p->hot.y != y))
      {
 	p->hot.x = x;
@@ -360,7 +362,8 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
      {
 	Evas_Object *o;
 	char cursor[1024];
-
+	Evas_Coord x, y;
+	
 	if (!p->evas) _e_pointer_canvas_add(p);
 	o = p->pointer_object;
 	if (p->color)
@@ -376,6 +379,14 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	       goto fallback;
 	  }
 	edje_object_part_swallow(p->pointer_object, "e.swallow.hotspot", p->hot_object);
+	edje_object_part_geometry_get(p->pointer_object, "e.swallow.hotspot", 
+				      &x, &y, NULL, NULL);
+	printf("@@@@@@@@@@@@@@@@@@@@@@ HOT @ -> %i %i\n", x, y);
+	if ((p->hot.x != x) || (p->hot.y != y))
+	  {
+	     p->hot.x = x;
+	     p->hot.y = y;
+	  }
 	p->hot.update = 1;
 	return 1;
      }

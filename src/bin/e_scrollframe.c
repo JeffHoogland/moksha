@@ -675,6 +675,8 @@ _e_smart_scrollbar_read(E_Smart_Data *sd)
    x = vx * (double)mx;
    y = vy * (double)my;
    sd->pan_func.set(sd->pan_obj, x, y);
+   if ((e_config->thumbscroll_enable) && (sd->down.now) && (!sd->down.dragged))
+     sd->down.now = 0;
 }
 
 static void
