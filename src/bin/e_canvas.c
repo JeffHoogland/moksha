@@ -39,8 +39,20 @@ e_canvas_add(Ecore_Evas *ee)
      }
    else if (e_config->font_hinting == 2)
      evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
-// FIXME: testing.   
-//   edje_scale_set(1.0);
+// FIXME: just a hack.
+     {
+	static scale = -1.0;
+	
+	if (scale == -1.0)
+	  {
+	     char *s;
+	     
+	     s = getenv("E_SCALE");
+	     if (s) scale = atof(s);
+	     else scale = 1.0;
+	  }
+	edje_scale_set(scale);
+     }
 }
 
 EAPI void
