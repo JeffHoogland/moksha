@@ -434,7 +434,7 @@ static Ecore_List *events = NULL;
 static Ecore_Timer *sys_class_delay_check = NULL;
 
 static int
-linux_sys_class_powe_supply_cb_delay_check(void *data)
+linux_sys_class_power_supply_cb_delay_check(void *data)
 {
    linux_sys_class_power_supply_init();
    poll_cb(NULL);
@@ -445,7 +445,7 @@ linux_sys_class_powe_supply_cb_delay_check(void *data)
 static Ecore_Timer *re_init_timer = NULL;
 
 static int
-linux_sys_class_powe_supply_cb_re_init(void *data)
+linux_sys_class_power_supply_cb_re_init(void *data)
 {
    Sys_Class_Power_Supply_Uevent *sysev;
    
@@ -506,12 +506,12 @@ linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd
 	     free(sysev);
 	     
 	     if (re_init_timer) ecore_timer_del(re_init_timer);
-	     re_init_timer = ecore_timer_add(1.0, linux_sys_class_powe_supply_cb_re_init, NULL);
+	     re_init_timer = ecore_timer_add(1.0, linux_sys_class_power_supply_cb_re_init, NULL);
 	  }
 	else
 	  {
 	     if (sys_class_delay_check) ecore_timer_del(sys_class_delay_check);
-	     sys_class_delay_check = ecore_timer_add(0.2, linux_sys_class_powe_supply_cb_delay_check, NULL);
+	     sys_class_delay_check = ecore_timer_add(0.2, linux_sys_class_power_supply_cb_delay_check, NULL);
 	  }
      }
    return 1;
@@ -603,6 +603,24 @@ linux_sys_class_power_supply_sysev_init(Sys_Class_Power_Supply_Uevent *sysev)
      }
 }
 
+static int
+linux_sys_class_power_supply_is_battery(char *name)
+{
+  int fd;
+  char buf[255];
+  char tmp[255];
+
+  memset(tmp, 0, 255);
+  snprintf(buf, 255, "/sys/class/power_supply/%s/type", name);
+  if (!(fd = open(buf, O_RDONLY)))
+    return 0;
+  if (read(fd, tmp, 255) < 1)
+    return 0;
+  if (!strncmp(tmp, "Battery", 7))
+    return 1;
+  return 0;
+}
+
 static void
 linux_sys_class_power_supply_init(void)
 {
@@ -627,8 +645,9 @@ linux_sys_class_power_supply_init(void)
 	     while ((name = ecore_list_next(bats)))
 	       {
 		  Sys_Class_Power_Supply_Uevent *sysev;
-	     
-		  if (strncasecmp("bat", name, 3)) continue;
+
+		  if (!(linux_sys_class_power_supply_is_battery(name)))
+		    continue;
 		  sysev = E_NEW(Sys_Class_Power_Supply_Uevent, 1);
 		  sysev->name = strdup(name);
 		  snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/uevent", name);
