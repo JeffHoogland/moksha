@@ -910,6 +910,7 @@ e_border_resize(E_Border *bd, int w, int h)
 				  bd->y + bd->fx.y + bd->client_inset.t,
 				  bd->client.w,
 				  bd->client.h);
+   _e_border_resize_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Resize));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
