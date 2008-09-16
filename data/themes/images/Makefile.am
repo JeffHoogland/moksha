@@ -289,6 +289,9 @@ e17_fileman_bg_shadow.png \
 e17_fileman_rubberband.png \
 e17_fileman_thumb_bg.png \
 e17_fileman_typebuf.png \
+e17_fileman_ask.png \
+e17_fileman_copy.png \
+e17_fileman_move.png \
 e17_frame_label_over.png \
 e17_frame_label_under.png \
 e17_frame_outline.png \
