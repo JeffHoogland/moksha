@@ -2608,6 +2608,285 @@ e_border_client_list()
    return borders;
 }
 
+static Ecore_X_Window action_input_win = 0;
+static E_Border *action_border = NULL;
+static Ecore_Event_Handler *action_handler_key = NULL;
+static Ecore_Event_Handler *action_handler_mouse = NULL;
+static Ecore_Timer *action_timer = NULL;
+static Ecore_X_Rectangle action_orig;
+
+static int
+_e_border_action_input_win_del(void)
+{
+   if (!action_input_win)
+     return 0;
+
+   e_grabinput_release(action_input_win, action_input_win);
+   ecore_x_window_del(action_input_win);
+   action_input_win = 0;
+   return 1;
+}
+
+static int
+_e_border_action_input_win_new(E_Border *bd)
+{
+   if (!action_input_win)
+     {
+	Ecore_X_Window parent = bd->zone->container->win;
+	action_input_win = ecore_x_window_input_new(parent, 0, 0, 1, 1);
+	if (!action_input_win)
+	  return 0;
+     }
+
+   ecore_x_window_show(action_input_win);
+   if (e_grabinput_get(action_input_win, 0, action_input_win))
+     return 1;
+
+   _e_border_action_input_win_del();
+   return 0;
+}
+
+static int
+_e_border_action_finish(void)
+{
+   _e_border_action_input_win_del();
+
+   if (action_timer)
+     {
+	ecore_timer_del(action_timer);
+	action_timer = NULL;
+     }
+
+   if (action_handler_key)
+     {
+	ecore_event_handler_del(action_handler_key);
+	action_handler_key = NULL;
+     }
+
+   if (action_handler_mouse)
+     {
+	ecore_event_handler_del(action_handler_mouse);
+	action_handler_mouse = NULL;
+     }
+
+   action_border = NULL;
+}
+
+static int
+_e_border_action_timeout(void *data)
+{
+   _e_border_action_finish();
+   return 0;
+}
+
+static void
+_e_border_action_timeout_add(void)
+{
+   if (action_timer)
+     ecore_timer_del(action_timer);
+   action_timer = ecore_timer_add(5.0, _e_border_action_timeout, NULL);
+}
+
+static void
+_e_border_action_init(E_Border *bd)
+{
+   action_orig.x = bd->x;
+   action_orig.y = bd->y;
+   action_orig.width = bd->w;
+   action_orig.height = bd->h;
+
+   action_border = bd;
+
+   _e_border_action_timeout_add();
+}
+
+static void
+_e_border_action_restore_orig(E_Border *bd)
+{
+   if (action_border != bd)
+     return;
+
+   e_border_move_resize(bd, action_orig.x, action_orig.y, action_orig.width, action_orig.height);
+}
+
+#define E_BORDER_MOVE_KEY_DX 5
+#define E_BORDER_MOVE_KEY_DY 5
+static int
+_e_border_move_key_down(void *data, int type, void *event)
+{
+   Ecore_X_Event_Key_Down *ev = event;
+   int x, y;
+
+   if (ev->event_win != action_input_win)
+     return 1;
+   if (!action_border)
+     {
+	fputs("ERROR: no action_border!\n", stderr);
+	goto stop;
+     }
+
+   x = action_border->x;
+   y = action_border->y;
+
+   if (strcmp(ev->keysymbol, "Up") == 0)
+     y -= E_BORDER_MOVE_KEY_DY;
+   else if (strcmp(ev->keysymbol, "Down") == 0)
+     y += E_BORDER_MOVE_KEY_DY;
+   else if (strcmp(ev->keysymbol, "Left") == 0)
+     x -= E_BORDER_MOVE_KEY_DX;
+   else if (strcmp(ev->keysymbol, "Right") == 0)
+     x += E_BORDER_MOVE_KEY_DX;
+   else if (strcmp(ev->keysymbol, "Return") == 0)
+     goto stop;
+   else if (strcmp(ev->keysymbol, "Escape") == 0)
+     {
+	_e_border_action_restore_orig(action_border);
+	goto stop;
+     }
+
+   e_border_move(action_border, x, y);
+   _e_border_action_timeout_add();
+
+   return 1;
+
+ stop:
+   _e_border_move_end(action_border);
+   _e_border_action_finish();
+   return 0;
+}
+
+static int
+_e_border_move_mouse_down(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Button_Down *ev = event;
+
+   if (ev->event_win != action_input_win)
+     return 1;
+
+   if (!action_border)
+     fputs("ERROR: no action_border!\n", stderr);
+
+   _e_border_move_end(action_border);
+   _e_border_action_finish();
+   return 0;
+}
+
+EAPI void
+e_border_act_move_keyboard(E_Border *bd)
+{
+   if (!bd)
+     return;
+
+   if (!_e_border_move_begin(bd))
+     return;
+
+   if (!_e_border_action_input_win_new(bd))
+     {
+	_e_border_move_end(bd);
+	return;
+     }
+
+   _e_border_action_init(bd);
+
+   if (action_handler_key)
+     ecore_event_handler_del(action_handler_key);
+   action_handler_key = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_border_move_key_down, NULL);
+
+   if (action_handler_mouse)
+     ecore_event_handler_del(action_handler_mouse);
+   action_handler_mouse = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_border_move_mouse_down, NULL);
+}
+
+#define E_BORDER_RESIZE_KEY_DX 5
+#define E_BORDER_RESIZE_KEY_DY 5
+static int
+_e_border_resize_key_down(void *data, int type, void *event)
+{
+   Ecore_X_Event_Key_Down *ev = event;
+   int w, h;
+
+   if (ev->event_win != action_input_win)
+     return 1;
+   if (!action_border)
+     {
+	fputs("ERROR: no action_border!\n", stderr);
+	goto stop;
+     }
+
+   w = action_border->w;
+   h = action_border->h;
+
+   if (strcmp(ev->keysymbol, "Up") == 0)
+     h -= E_BORDER_RESIZE_KEY_DY;
+   else if (strcmp(ev->keysymbol, "Down") == 0)
+     h += E_BORDER_RESIZE_KEY_DY;
+   else if (strcmp(ev->keysymbol, "Left") == 0)
+     w -= E_BORDER_RESIZE_KEY_DX;
+   else if (strcmp(ev->keysymbol, "Right") == 0)
+     w += E_BORDER_RESIZE_KEY_DX;
+   else if (strcmp(ev->keysymbol, "Return") == 0)
+     goto stop;
+   else if (strcmp(ev->keysymbol, "Escape") == 0)
+     {
+	_e_border_action_restore_orig(action_border);
+	goto stop;
+     }
+   else
+     goto stop;
+
+   e_border_resize(action_border, w, h);
+   _e_border_action_timeout_add();
+
+   return 1;
+
+ stop:
+   _e_border_resize_end(action_border);
+   _e_border_action_finish();
+   return 0;
+}
+
+static int
+_e_border_resize_mouse_down(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Button_Down *ev = event;
+
+   if (ev->event_win != action_input_win)
+     return 1;
+
+   if (!action_border)
+     fputs("ERROR: no action_border!\n", stderr);
+
+   _e_border_resize_end(action_border);
+   _e_border_action_finish();
+   return 0;
+}
+
+EAPI void
+e_border_act_resize_keyboard(E_Border *bd)
+{
+   if (!bd)
+     return;
+
+   if (!_e_border_resize_begin(bd))
+     return;
+
+   if (!_e_border_action_input_win_new(bd))
+     {
+	_e_border_resize_end(bd);
+	return;
+     }
+
+   _e_border_action_init(bd);
+
+   if (action_handler_key)
+     ecore_event_handler_del(action_handler_key);
+   action_handler_key = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_border_resize_key_down, NULL);
+
+   if (action_handler_mouse)
+     ecore_event_handler_del(action_handler_mouse);
+   action_handler_mouse = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_border_resize_mouse_down, NULL);
+}
+
 EAPI void
 e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 {

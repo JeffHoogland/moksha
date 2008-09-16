@@ -123,6 +123,19 @@ ACT_FN_END_MOUSE(window_move)
    e_border_act_move_end((E_Border *)obj, ev);
 }
 
+ACT_FN_GO(window_move_keyboard)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+   if (!((E_Border *)obj)->lock_user_location)
+     e_border_act_move_keyboard((E_Border *)obj);
+}
+
 /***************************************************************************/
 ACT_FN_GO(window_resize)
 {
@@ -172,6 +185,19 @@ ACT_FN_END_MOUSE(window_resize)
    if (!obj) return;
    if (obj->type != E_BORDER_TYPE) return;
    e_border_act_resize_end((E_Border *)obj, ev);
+}
+
+ACT_FN_GO(window_resize_keyboard)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+   if (!((E_Border *)obj)->lock_user_size)
+     e_border_act_resize_keyboard((E_Border *)obj);
 }
 
 /***************************************************************************/
@@ -2254,6 +2280,11 @@ e_actions_init(void)
    ACT_GO_SIGNAL(window_move);
    ACT_END(window_move);
    ACT_END_MOUSE(window_move);
+
+   ACT_GO(window_move_keyboard);
+   e_action_predef_name_set(_("Window : Actions"), _("Move with Keyboard"),
+			    "window_move_keyboard", NULL, NULL, 0);
+
    
    /* window_resize */
    ACT_GO(window_resize);
@@ -2264,6 +2295,10 @@ e_actions_init(void)
    ACT_GO_SIGNAL(window_resize);
    ACT_END(window_resize);
    ACT_END_MOUSE(window_resize);
+
+   ACT_GO(window_resize_keyboard);
+   e_action_predef_name_set(_("Window : Actions"), _("Resize with Keyboard"),
+			    "window_resize_keyboard", NULL, NULL, 0);
 
    /* window_menu */
    ACT_GO(window_menu);
