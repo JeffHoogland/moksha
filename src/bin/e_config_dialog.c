@@ -211,7 +211,6 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
      }
    
    e_widget_min_size_get(o, &mw, &mh);
-   printf("SET changed on %p @ %p\n", o, _e_config_dialog_cb_changed);
    e_widget_on_change_hook_set(o, _e_config_dialog_cb_changed, cfd);
    e_dialog_content_set(cfd->dia, o, mw, mh);
    
@@ -367,7 +366,6 @@ _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
    E_Config_Dialog *cfd;
  
    cfd = data;
-   printf("_e_config_dialog_cb_changed\n");
    if (!cfd->hide_buttons)
       {
 	 cfd->cfg_changed = 1;
