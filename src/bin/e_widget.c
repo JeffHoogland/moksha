@@ -170,7 +170,7 @@ e_widget_resize_object_set(Evas_Object *obj, Evas_Object *sobj)
    API_ENTRY return;
    if (sd->resize_obj) evas_object_smart_member_del(sd->resize_obj);
    sd->resize_obj = sobj;
-   evas_object_smart_member_add(obj, sobj);
+   evas_object_smart_member_add(sobj, obj);
    _e_smart_reconfigure(sd);
 }
 
