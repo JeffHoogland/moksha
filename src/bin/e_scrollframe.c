@@ -271,7 +271,7 @@ e_scrollframe_child_viewport_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coor
 {
    API_ENTRY return;
    edje_object_calc_force(sd->edje_obj);
-   evas_object_geometry_get(sd->pan_obj, NULL, NULL, w, h);
+   edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", NULL, NULL, w, h);
 }
 
 EAPI void
@@ -633,7 +633,7 @@ _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    e_scrollframe_child_pos_get(sd->smart_obj, &x, &y);
    sd->pan_func.max_get(sd->pan_obj, &mx, &my);
-   evas_object_geometry_get(sd->pan_obj, NULL, NULL, &vw, &vh);
+   edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", NULL, NULL, &vw, &vh);
    if (!strcmp(ev->keyname, "Left"))
      x -= sd->step.x;
    else if (!strcmp(ev->keyname, "Right"))
@@ -700,7 +700,7 @@ _e_smart_scrollbar_bar_v_visibility_adjust(E_Smart_Data *sd)
    
    w = sd->child.w;
    h = sd->child.h;
-   evas_object_geometry_get(sd->pan_obj, NULL, NULL, &vw, &vh);
+   edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", NULL, NULL, &vw, &vh);
    if (sd->vbar_visible)
      {
 	if (sd->vbar_flags == E_SCROLLFRAME_POLICY_AUTO)
@@ -764,7 +764,7 @@ _e_smart_scrollbar_bar_h_visibility_adjust(E_Smart_Data *sd)
    
    w = sd->child.w;
    h = sd->child.h;
-   evas_object_geometry_get(sd->pan_obj, NULL, NULL, &vw, &vh);
+   edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", NULL, NULL, &vw, &vh);
    if (sd->hbar_visible)
      {
 	if (sd->hbar_flags == E_SCROLLFRAME_POLICY_AUTO)
@@ -841,8 +841,8 @@ _e_smart_scrollbar_size_adjust(E_Smart_Data *sd)
      {
 	Evas_Coord x, y, w, h, mx = 0, my = 0, vw = 0, vh = 0;
 	double vx, vy, size;
-	
-	evas_object_geometry_get(sd->pan_obj, NULL, NULL, &vw, &vh);
+
+	edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", NULL, NULL, &vw, &vh);
 	w = sd->child.w;
 	if (w < 1) w = 1;
 	size = (double)vw / (double)w;
