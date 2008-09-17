@@ -134,22 +134,21 @@ EAPI void
 e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
 {
    API_ENTRY return;
-/* enable if i want to hunt bad things in widgets  
-   if (evas_list_find(sd->subobjs, sobj))
-     {
-	printf("----------EEEEEK! dupe sub obj is a sub obj!\n");
-	abort();
-     }
-  */
    sd->subobjs = evas_list_append(sd->subobjs, sobj);
    if (!sd->child_can_focus)
      {
 	if (e_widget_can_focus_get(sobj)) sd->child_can_focus = 1;
      }
+   printf("ADD SUB %p -> %p [%s]\n", obj, sobj, evas_object_type_get(sobj));
    if (!strcmp(evas_object_type_get(sobj), SMART_NAME))
      {
 	sd = evas_object_smart_data_get(sobj);
-	if (sd) sd->parent_obj = obj;
+	if (sd)
+	  {
+	     if (sd->parent_obj) e_widget_sub_object_del(sd->parent_obj, sobj);
+	     sd->parent_obj = obj;
+	  }
+	printf("  SD = %p\n", sd);
      }
 }
 
@@ -157,6 +156,7 @@ EAPI void
 e_widget_sub_object_del(Evas_Object *obj, Evas_Object *sobj)
 {
    API_ENTRY return;
+   printf("DEL SUB %p -> %p\n", obj, sobj);
    sd->subobjs = evas_list_remove(sd->subobjs, sobj);
    if (!sd->child_can_focus)
      {

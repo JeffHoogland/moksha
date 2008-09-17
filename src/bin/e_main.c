@@ -534,6 +534,21 @@ main(int argc, char **argv)
    /* setup edje to animate @ e_config->framerate frames per sec. */
    edje_frametime_set(1.0 / e_config->framerate);
 
+// FIXME: just a hack.
+     {
+	static scale = -1.0;
+	
+	if (scale == -1.0)
+	  {
+	     char *s;
+	     
+	     s = getenv("E_SCALE");
+	     if (s) scale = atof(s);
+	     else scale = 1.0;
+	  }
+	edje_scale_set(scale);
+     }
+
    TS("font");
    /* init font system */
    if (!e_font_init())

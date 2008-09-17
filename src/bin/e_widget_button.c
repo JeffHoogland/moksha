@@ -61,12 +61,12 @@ e_widget_button_add(Evas *evas, const char *label, const char *icon, void (*func
 	edje_object_part_text_set(o, "e.text.label", label);
 	wd->type |= E_WIDGET_BUTTON_TEXT;
      }
-   evas_object_show(o);
 
    e_widget_sub_object_add(obj, o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
 				  _e_wid_focus_steal, obj);
    e_widget_resize_object_set(obj, o);
+   evas_object_show(o);
 
    if (icon)
      {
@@ -74,8 +74,8 @@ e_widget_button_add(Evas *evas, const char *label, const char *icon, void (*func
 	wd->o_icon = o;
 	e_util_edje_icon_set(o, icon);
 	edje_object_part_swallow(wd->o_button, "e.swallow.icon", o);
-	evas_object_show(o);
 	e_widget_sub_object_add(obj, o);
+	evas_object_show(o);
 	wd->type |= E_WIDGET_BUTTON_ICON;
      }
 

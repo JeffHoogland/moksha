@@ -187,7 +187,7 @@ _e_test_internal(E_Container *con)
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_icon_add(dia->win->evas);
-   e_icon_file_set(o, "/home/rephorm/scroll.png");
+   e_icon_file_set(o, "/home/raster/scroll.png");
    evas_object_resize(o, 1024, 768);
    evas_object_focus_set(o, 1);
    evas_object_show(o);

@@ -173,6 +173,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    else
      snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "ADVANCED");
    cfd->dia = e_dialog_new(cfd->con, cfd->name, buf);
+   if (cfd->view->normal_win) e_win_dialog_set(cfd->dia->win, 0);
    cfd->dia->data = cfd;
    e_object_del_attach_func_set(E_OBJECT(cfd->dia), _e_config_dialog_cb_dialog_del);
    e_dialog_title_set(cfd->dia, cfd->title);
@@ -210,6 +211,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
      }
    
    e_widget_min_size_get(o, &mw, &mh);
+   printf("SET changed on %p @ %p\n", o, _e_config_dialog_cb_changed);
    e_widget_on_change_hook_set(o, _e_config_dialog_cb_changed, cfd);
    e_dialog_content_set(cfd->dia, o, mw, mh);
    
@@ -226,7 +228,8 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    e_dialog_button_add(cfd->dia, _("Close"), NULL, _e_config_dialog_cb_close, cfd);
    if (!pdia)
      {
-	e_win_centered_set(cfd->dia->win, 1);
+	if (!cfd->view->normal_win)
+	  e_win_centered_set(cfd->dia->win, 1);
 	e_dialog_show(cfd->dia);
 	if (cfd->icon) e_dialog_border_icon_set(cfd->dia, cfd->icon);
      }
@@ -364,6 +367,7 @@ _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
    E_Config_Dialog *cfd;
  
    cfd = data;
+   printf("_e_config_dialog_cb_changed\n");
    if (!cfd->hide_buttons)
       {
 	 cfd->cfg_changed = 1;
