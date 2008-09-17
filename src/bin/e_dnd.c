@@ -656,7 +656,10 @@ _e_drag_win_get(E_Drop_Handler *h, int xdnd)
 	     hwin = ((E_Win *)(h->obj))->evas_win;
 	     break;
 	   case E_ZONE_TYPE:
-	     hwin = ((E_Zone *)(h->obj))->container->event_win;
+	     /* Not quite sure about this, probably need to set up 
+	      * E_Container to pass DND events from event_win to bg_win. */
+	     // hwin = ((E_Zone *)(h->obj))->container->event_win;
+	     hwin = ((E_Zone *)(h->obj))->container->bg_win;
 	     break;
 	   case E_BORDER_TYPE:
 	     hwin = ((E_Border *)(h->obj))->event_win;
@@ -746,7 +749,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
      } cache = {0, 0};
 
 //   double t1 = ecore_time_get(); ////
-   if (_drag_current)
+   if (_drag_current && !_xdnd)
      {
 	ignore_win[0] = _drag_current->evas_win;
 	ignore_win[1] = _drag_win;
