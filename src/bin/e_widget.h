@@ -34,6 +34,7 @@ EAPI void e_widget_change(Evas_Object *obj);
 EAPI void e_widget_disabled_set(Evas_Object *obj, int disabled);
 EAPI int  e_widget_disabled_get(Evas_Object *obj);
 EAPI E_Pointer *e_widget_pointer_get(Evas_Object *obj);
+EAPI void e_widget_min_size_resize(Evas_Object *obj);
 
 #endif
 #endif

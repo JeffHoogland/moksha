@@ -139,7 +139,6 @@ e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
      {
 	if (e_widget_can_focus_get(sobj)) sd->child_can_focus = 1;
      }
-   printf("ADD SUB %p -> %p [%s]\n", obj, sobj, evas_object_type_get(sobj));
    if (!strcmp(evas_object_type_get(sobj), SMART_NAME))
      {
 	sd = evas_object_smart_data_get(sobj);
@@ -148,7 +147,6 @@ e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
 	     if (sd->parent_obj) e_widget_sub_object_del(sd->parent_obj, sobj);
 	     sd->parent_obj = obj;
 	  }
-	printf("  SD = %p\n", sd);
      }
 }
 
@@ -156,7 +154,6 @@ EAPI void
 e_widget_sub_object_del(Evas_Object *obj, Evas_Object *sobj)
 {
    API_ENTRY return;
-   printf("DEL SUB %p -> %p\n", obj, sobj);
    sd->subobjs = evas_list_remove(sd->subobjs, sobj);
    if (!sd->child_can_focus)
      {
@@ -460,6 +457,13 @@ e_widget_pointer_get(Evas_Object *obj)
    win = e_win_evas_object_win_get(obj);
    if (win) return win->pointer;
    return NULL;
+}
+
+EAPI void
+e_widget_min_size_resize(Evas_Object *obj)
+{
+   API_ENTRY return;
+   evas_object_resize(obj, sd->minw, sd->minh);
 }
 
 /* local subsystem functions */
