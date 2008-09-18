@@ -55,7 +55,7 @@ e_modapi_init(E_Module *m)
      {
 	act->func.go = _e_mod_action_fileman_cb;
 	e_action_predef_name_set(_("Launch"), _("File Manager"), 
-				 "fileman", NULL, NULL, 0);
+				 "fileman", NULL, "syntax: /path/to/dir or ~/path/to/dir or favorites or desktop, examples: /boot/grub, ~/downloads", 1);
      }
    maug = e_int_menus_menu_augmentation_add("main/1", _e_mod_menu_add, 
 					    NULL, NULL, NULL);
@@ -174,8 +174,12 @@ _e_mod_action_fileman_cb(E_Object *obj, const char *params)
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
    if (zone)
      {
-	if (params)
-	  e_fwin_new(zone->container, NULL, params);
+	if (params && params[0] == '/')
+	  e_fwin_new(zone->container, "/", params);
+	else if (params && params[0] == '~')
+	  e_fwin_new(zone->container, "~/", params + 1);
+	else if (params)
+	  e_fwin_new(zone->container, params, "/");
 	else
 	  e_fwin_new(zone->container, "favorites", "/");
      }
