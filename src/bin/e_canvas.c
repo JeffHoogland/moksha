@@ -124,7 +124,6 @@ e_canvas_cache_flush(void)
      }
    edje_file_cache_flush();
    edje_collection_cache_flush();
-   printf("...caches flushed.\n");
 }
 
 EAPI void
