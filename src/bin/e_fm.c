@@ -471,7 +471,6 @@ _e_fm2_cb_mount_fail(void *data)
    /* FIXME; some dialog */
    if (sd->mount)
      {
-	printf("UM1\n");
 	e_fm2_hal_unmount(sd->mount);
 	sd->mount = NULL;
 	evas_object_smart_callback_call(data, "dir_deleted", NULL);
@@ -573,7 +572,6 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
        && strncmp(sd->mount->mount_point, sd->realpath, 
 		  strlen(sd->mount->mount_point)))
      {
-	printf("UM2\n");
 	e_fm2_hal_unmount(sd->mount);
 	sd->mount = NULL;
      }
@@ -985,7 +983,8 @@ e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
 					 _e_fm2_cb_dnd_move,
 					 _e_fm2_cb_dnd_leave,
 					 _e_fm2_cb_dnd_drop,
-					 drop, 3, sd->x, sd->y, sd->w, sd->h);
+					 drop, 3, 
+					 sd->x, sd->y, sd->w, sd->h);
    e_drop_handler_responsive_set(sd->drop_handler);
 }
 
@@ -1726,7 +1725,6 @@ _e_fm2_client_mount(const char *udi, const char *mountpoint)
    d = alloca(l);
    strcpy(d, udi);
    strcpy(d + l1 + 1, mountpoint);
-   printf("SEND %s %s\n", udi, mountpoint);
 
    return _e_fm_client_send_new(E_FM_OP_MOUNT, (void *)d, l);
 }
@@ -1744,7 +1742,6 @@ _e_fm2_client_unmount(const char *udi)
    strcpy(d, udi);
 
    cl = _e_fm2_client_get();
-   printf("send UM %s\n", udi);
    
    return _e_fm_client_send_new(E_FM_OP_UNMOUNT, (void *)d, l);
 }
@@ -2919,8 +2916,6 @@ _e_fm2_icons_place_icon(E_Fm2_Icon *ic)
 	l = l->next;
         if ((ic2 != ic) && (ic2->saved_pos))
 	  {
-//	     printf("REMOVE %p [%s]\n", 
-//		    pl->data, ((E_Fm2_Icon *)pl->data)->info.file);
 //	     ic->sd->icons_place = evas_list_remove_list(ic->sd->icons_place, pl);
 	  }
      }
@@ -3474,7 +3469,6 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	 * fileman/list_odd/variable
 	 * 
 	 */
-//	printf("CALC ICON\n");
 	if ((!ic->sd->config->icon.fixed.w) || (!ic->sd->config->icon.fixed.h))
 	  {
 	     obj = ic->sd->tmp.obj;
@@ -3490,7 +3484,6 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 						 "base/theme/fileman",
 						 "icon/variable");
                   ic->sd->tmp.obj = obj;
-//		  printf("CALC OBJ %p\n", ic->sd->tmp.obj);
 	       }
 	     _e_fm2_icon_label_set(ic, obj);
 	     obj2 = ic->sd->tmp.obj2;
@@ -3504,7 +3497,6 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	     edje_extern_object_max_size_set(obj2, ic->sd->config->icon.icon.w, ic->sd->config->icon.icon.h);
 	     edje_object_part_swallow(obj, "e.swallow.icon", obj2);
 	     edje_object_size_min_calc(obj, &mw, &mh);
-//	     printf("CALC %ix%i\n", mw, mh);
 	  }
 	ic->w = mw;
 	ic->h = mh;
@@ -3684,7 +3676,6 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
         if ((selectraise) && (!strcmp(selectraise, "on")))
 	  evas_object_stack_below(ic->obj, ic->sd->drop);
      }
-//   printf("realize %s full = %i\n", ic->info.file, (int)ic->info.removable_full);
    if (ic->info.removable_full)
      edje_object_signal_emit(ic->obj_icon, "e,state,removable,full", "e");
 //   else
@@ -3862,7 +3853,6 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    if (!desktop) goto error;
 //   if (desktop->type != EFREET_DESKTOP_TYPE_LINK) goto error;
 
-//   printf("  mod time %lli\n", desktop->load_time);
    ic->info.removable = 0;
    ic->info.removable_full = 0;
    if (desktop->name)         ic->info.label   = evas_stringshare_add(desktop->name);
@@ -3882,18 +3872,15 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	     else if (!strcmp(type, "Removable"))
 	       {
 		  ic->info.removable = 1;
-//		  printf("REMOVABLE %s\n", ic->info.link);
 		  if ((!e_fm2_hal_storage_find(ic->info.link)) &&
 		       (!e_fm2_hal_volume_find(ic->info.link)))
 		    {
-//		       printf("REMOVE IT %s\n", ic->info.file);
 		       _e_fm2_live_file_del(ic->sd->obj, ic->info.file);
 		       efreet_desktop_free(desktop);
 		       goto error;
 		    }
 	       }
 	     type = ecore_hash_get(desktop->x, "X-Enlightenment-Removable-State");
-//	     printf(" rem state type = %s\n", type);
 	     if (type)
 	       {
 		  if (!strcmp(type, "Full"))
@@ -4416,7 +4403,6 @@ _e_fm2_dnd_drop_all_show(Evas_Object *obj)
      }
    if (!sd->drop_all)
      {
-	printf("DISP DROP ALL SHOW\n");
 	edje_object_signal_emit(sd->overlay, "e,state,drop,start", "e");
 	sd->drop_all = 1;
      }
@@ -4434,7 +4420,6 @@ _e_fm2_dnd_drop_all_hide(Evas_Object *obj)
    if (!sd) return;
    if (sd->drop_all)
      {
-	printf("DISP DROP ALL HIDE\n");
 	edje_object_signal_emit(sd->overlay, "e,state,drop,stop", "e");
 	sd->drop_all = 0;
      }
@@ -4459,7 +4444,6 @@ _e_fm2_dnd_drop_show(E_Fm2_Icon *ic, int after)
      {  
 	if (ic->sd->drop_after != -1)
 	  {
-	     printf("DISP DROP ON drop\n");
 	     edje_object_signal_emit(ic->sd->drop_in, "e,state,unselected", "e");
 	     edje_object_signal_emit(ic->sd->drop, "e,state,selected", "e");
 	     ic->sd->drop_in_show = 0;
@@ -4467,7 +4451,6 @@ _e_fm2_dnd_drop_show(E_Fm2_Icon *ic, int after)
 	  }
 	else
 	  {
-	     printf("DISP DROP ON drop_in\n");
 	     edje_object_signal_emit(ic->sd->drop, "e,state,unselected", "e");
 	     edje_object_signal_emit(ic->sd->drop_in, "e,state,selected", "e");
 	     ic->sd->drop_in_show = 1;
@@ -4486,7 +4469,6 @@ _e_fm2_dnd_drop_hide(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   printf("DISP DROP OFF BOTH\n");
    if (sd->drop_show)
      {
 	edje_object_signal_emit(sd->drop, "e,state,unselected", "e");
@@ -4534,7 +4516,6 @@ _e_fm2_cb_dnd_enter(void *data, const char *type, void *event)
    if (!type) return;
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Enter *)event;
-   printf("DND IN %i %i\n", ev->x, ev->y);
    e_drop_handler_action_set(ev->action);
 }
  
@@ -4550,14 +4531,12 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
    if (!type) return;
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Move *)event;
-   printf("DND MOVE %i %i\n", ev->x, ev->y);
    e_drop_handler_action_set(ev->action);
    for (l = sd->icons; l; l = l->next) /* FIXME: should only walk regions and skip non-visible ones */
      {
 	ic = l->data;
 	if (E_INSIDE(ev->x, ev->y, ic->x - ic->sd->pos.x, ic->y - ic->sd->pos.y, ic->w, ic->h))
 	  {
-	     printf("OVER %s\n", ic->info.file);
 	     if (ic->drag.dnd) continue;
 	     /* if list view */
 	     if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
@@ -4574,17 +4553,14 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 			    if (ev->y <= (ic->y - ic->sd->pos.y + (ic->h / 4)))
 			      {
 				 _e_fm2_dnd_drop_show(ic, 0);
-				 printf("DDD 0\n");
 			      }
 			    else if (ev->y > (ic->y - ic->sd->pos.y + ((ic->h * 3) / 4)))
 			      {
 				 _e_fm2_dnd_drop_show(ic, 1);
-				 printf("DDD 1\n");
 			      }
 			    else
 			      {
 				 _e_fm2_dnd_drop_show(ic, -1);
-				 printf("DDD -1\n");
 			      }
 			 }
 		       else
@@ -4660,7 +4636,6 @@ _e_fm2_cb_dnd_leave(void *data, const char *type, void *event)
    if (!type) return;
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Leave *)event;
-   printf("DND LEAVE %i %i\n", ev->x, ev->y);
    _e_fm2_dnd_drop_hide(sd->obj);
    _e_fm2_dnd_drop_all_hide(sd->obj);
 }
@@ -4832,15 +4807,9 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Drop *)event;
 
-   printf("DROP: %i %i\n", ev->x, ev->y);
    fsel = _e_fm2_uri_path_list_get(ev->data);
    isel = _e_fm2_uri_icon_list_get(fsel);
    if (!isel) return;
-   for (l = fsel; l; l = l->next)
-     {
-	fl = l->data;
-	printf("  %s\n", fl);
-     }
    dx = 0; dy = 0;
    ox = 0; oy = 0;
    for (l = isel; l; l = l->next)
@@ -4852,11 +4821,6 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	     oy = ic->y;
 	     dx = (ic->drag.x + ic->x - ic->sd->pos.x);
 	     dy = (ic->drag.y + ic->y - ic->sd->pos.y);
-	     printf("DND offset %i %i | %i %i | %i %i | %i %i\n", 
-		    dx, dy,
-		    ic->drag.x, ic->drag.y,
-		    ic->x, ic->y,
-		    ic->sd->pos.x, ic->sd->pos.y);
 	     break;
 	  }
      }
@@ -4870,7 +4834,6 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
     */
    if (sd->drop_all) /* drop arbitarily into the dir */
      {
-	printf("drop all\n");
 	/* move file into this fm dir */
 	for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 	  {
@@ -4931,7 +4894,6 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
      }
    else if (sd->drop_icon) /* inot or before/after an icon */
      {
-	printf("drop on/before/after icon\n");
 	if (sd->drop_after == -1) /* put into subdir in icon */
 	  {
 	     /* move file into dir that this icon is for */
@@ -4943,7 +4905,6 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  /* move the file into the subdir */
 		  snprintf(buf, sizeof(buf), "%s/%s/%s",
 			   sd->realpath, sd->drop_icon->info.file, ecore_file_file_get(fp));
-		  printf("mv %s %s\n", (char *)fp, buf);
 
 		  args = _e_fm_string_append_quoted(args, &size, &length, fp);
 		  args = _e_fm_string_append_char(args, &size, &length, ' ');
@@ -4967,7 +4928,6 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			     sd->realpath, ecore_file_file_get(fp));
 		       if (sd->config->view.link_drop)
 			 {
-			    printf("ln -s %s %s\n", (char *)fp, buf);
 			    _e_fm2_client_file_symlink(buf, fp, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->h, sd->h);
 			 }
 		       else
@@ -5060,7 +5020,6 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
 	else if (evas_key_modifier_is_set(modifiers, "Shift"))
 	  multi_sel = 1;
      }
-//   printf("MOUSE 1 range=%i multi=%i\n", range_sel, multi_sel);
    if (ic->sd->config->selection.single)
      {
 	multi_sel = 0;
@@ -5200,7 +5159,6 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	  {
 	     ic->drag.x = ev->output.x - ic->x - ic->sd->x + ic->sd->pos.x;
 	     ic->drag.y = ev->output.y - ic->y - ic->sd->y + ic->sd->pos.y;
-//	     printf("DX: %i %i\n", ic->drag.x, ic->drag.y);
 	     ic->drag.start = 1;
 	     ic->drag.dnd = 0;
 	     ic->drag.src = 1;
@@ -5906,7 +5864,6 @@ _e_fm2_cb_resize_job(void *data)
 	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_ICONS:
-	printf("CUSTOM ICONRESIZE HANDLE\n");
 	if (sd->config->view.fit_custom_pos)
 	  {
 	     for (l = sd->icons; l; l = l->next)
@@ -5938,7 +5895,6 @@ _e_fm2_cb_resize_job(void *data)
 	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_LIST:
-//	printf("LIST RESIZE HANDLE\n");
 	if (sd->iconlist_changed)
 	  {
 	     for (l = sd->icons; l; l = l->next)
@@ -6200,7 +6156,6 @@ _e_fm2_smart_del(Evas_Object *obj)
    if (sd->path) evas_stringshare_del(sd->path);
    if (sd->mount)
      {
-	printf("UM3\n");
 	e_fm2_hal_unmount(sd->mount);
 	sd->mount = NULL;
      }
@@ -7767,7 +7722,6 @@ _e_fm2_cb_live_idler(void *data)
    _e_fm2_cb_live_timer(data);
    if ((sd->order_file) || (sd->config->view.always_order))
      {
-	printf("refresh from .order\n");
 	e_fm2_refresh(data);
      }
    sd->live.idler = NULL;

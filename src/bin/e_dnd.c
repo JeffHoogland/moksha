@@ -241,7 +241,6 @@ e_drag_move(E_Drag *drag, int x, int y)
    drag->x = x;
    drag->y = y;
    drag->xy_update = 1;
-//   printf("DND MOVE %i %i\n", x, y);
 }
 
 EAPI void
@@ -335,7 +334,7 @@ e_drag_xdnd_start(E_Drag *drag, int x, int y)
 
    drag->dx = x - drag->x;
    drag->dy = y - drag->y;
-
+   
    ecore_x_dnd_aware_set(_drag_win, 1);
    ecore_x_dnd_types_set(_drag_win, drag->types, drag->num_types);
    ecore_x_dnd_actions_set(_drag_win, actions, 5);
@@ -502,7 +501,6 @@ e_drag_idler_before(void)
 	  }
         if (drag->xy_update)
 	  {
-//	     printf("DND REAL MOVE\n");
 	     ecore_evas_move(drag->ecore_evas, drag->x, drag->y);
 	     e_container_shape_move(drag->shape, drag->x, drag->y);
 	     drag->xy_update = 0;
@@ -587,7 +585,6 @@ _e_drag_move(E_Drag *drag, int x, int y)
    drag->x = x - drag->dx;
    drag->y = y - drag->dy;
    drag->xy_update = 1;
-//   printf("DND MOVE 2 %i %i\n", x, y);
 }
 
 static void
@@ -615,8 +612,8 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
 	     py = ((E_Win *)(h->obj))->y;
 	     break;
 	   case E_ZONE_TYPE:
-	     px = ((E_Zone *)(h->obj))->x;
-	     py = ((E_Zone *)(h->obj))->y;
+//	     px = ((E_Zone *)(h->obj))->x;
+//	     py = ((E_Zone *)(h->obj))->y;
 	     break;
 	   case E_BORDER_TYPE:
 	     px = ((E_Border *)(h->obj))->x + ((E_Border *)(h->obj))->fx.x;
@@ -633,6 +630,7 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
      }
    *dx += px;
    *dy += py;
+   printf("T: %x | dx = %i dy = %i\n", h->obj->type, *dx, *dy);
 }
 
 static Ecore_X_Window
@@ -776,6 +774,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 
    if (_drag_current)
      {
+	printf("--\n");
 	for (l = _drop_handlers; l; l = l->next)
 	  {
 	     E_Drop_Handler *h;
@@ -792,9 +791,16 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	     move_ev.action = action;
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
-	     if (E_INSIDE(x, y, dx, dy, dw, dh) && _e_drag_win_matches(h, win, 0))
+	     
+	     int inside, matches;
+	     
+	     inside = E_INSIDE(x, y, dx, dy, dw, dh);
+	     matches = _e_drag_win_matches(h, win, 0);
+	     printf(" inside = %i, matches = %i\n", inside, matches);
+	     if (E_INSIDE(x, y, dx, dy, dw, dh) && 
+		 _e_drag_win_matches(h, win, 0))
 	       {
-		  if(e_drop_handler_responsive_get(h)) responsive = 1;
+		  if (e_drop_handler_responsive_get(h)) responsive = 1;
 
 		  if (!h->entered)
 		    {
@@ -808,6 +814,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 			      }
 			    else
 			      enter_ev.data = _drag_current->data;
+			    printf("ENTER!\n");
 			    h->cb.enter(h->cb.data, h->active_type, &enter_ev);
 			 }
 		       h->entered = 1;
@@ -1223,7 +1230,6 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
 
    id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
-   printf("Xdnd leave\n");
 
    leave_ev.x = 0;
    leave_ev.y = 0;
@@ -1333,7 +1339,6 @@ _e_dnd_cb_event_dnd_finished(void *data, int type, void *event)
    Ecore_X_Event_Xdnd_Finished *ev;
 
    ev = event;
-   printf("Xdnd finished\n");
 
    if (!ev->completed)
      return 1;
@@ -1360,7 +1365,6 @@ _e_dnd_cb_event_dnd_drop(void *data, int type, void *event)
    ev = event;
    id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
-   printf("Xdnd drop %x %s\n", ev->win, _xdnd->type);
 
    ecore_x_selection_xdnd_request(ev->win, _xdnd->type);
 
@@ -1381,7 +1385,6 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
    id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
    if (ev->selection != ECORE_X_SELECTION_XDND) return 1;
-   printf("Xdnd selection\n");
 
    if (!strcmp("text/uri-list", _xdnd->type))
      {
@@ -1390,7 +1393,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 
 	files = ev->data;
 	for (i = 0; i < files->num_files; i++)
-	  l = evas_list_append(l, files->files[i]), printf("file: %s\n", files->files[i]);
+	  l = evas_list_append(l, files->files[i]);
 	_xdnd->data = l;
 	_e_drag_xdnd_end(ev->win, _xdnd->x, _xdnd->y);
 	evas_list_free(l);
@@ -1425,9 +1428,9 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	       }
 	       */
 	  }
-	printf("\n");
+//	printf("\n");
 	file[i] = '\0';
-	printf("file: %d \"%s\"\n", i, file);
+//	printf("file: %d \"%s\"\n", i, file);
 	l = evas_list_append(l, file);
 
 	_xdnd->data = l;
