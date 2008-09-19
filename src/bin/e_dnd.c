@@ -612,6 +612,8 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
 	     py = ((E_Win *)(h->obj))->y;
 	     break;
 	   case E_ZONE_TYPE:
+// zone based drag targets are in a container thus their coords should be
+// screen-relative as containers just cover the screen
 //	     px = ((E_Zone *)(h->obj))->x;
 //	     py = ((E_Zone *)(h->obj))->y;
 	     break;
@@ -630,7 +632,6 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
      }
    *dx += px;
    *dy += py;
-   printf("T: %x | dx = %i dy = %i\n", h->obj->type, *dx, *dy);
 }
 
 static Ecore_X_Window
@@ -774,7 +775,6 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 
    if (_drag_current)
      {
-	printf("--\n");
 	for (l = _drop_handlers; l; l = l->next)
 	  {
 	     E_Drop_Handler *h;
@@ -792,11 +792,6 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
 	     
-	     int inside, matches;
-	     
-	     inside = E_INSIDE(x, y, dx, dy, dw, dh);
-	     matches = _e_drag_win_matches(h, win, 0);
-	     printf(" inside = %i, matches = %i\n", inside, matches);
 	     if (E_INSIDE(x, y, dx, dy, dw, dh) && 
 		 _e_drag_win_matches(h, win, 0))
 	       {
@@ -814,7 +809,6 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 			      }
 			    else
 			      enter_ev.data = _drag_current->data;
-			    printf("ENTER!\n");
 			    h->cb.enter(h->cb.data, h->active_type, &enter_ev);
 			 }
 		       h->entered = 1;
