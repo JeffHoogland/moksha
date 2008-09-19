@@ -589,6 +589,7 @@ EAPI void      e_border_unstick(E_Border *bd);
 EAPI void      e_border_pinned_set(E_Border *bd, int set);
 
 EAPI E_Border *e_border_find_by_client_window(Ecore_X_Window win);
+EAPI E_Border *e_border_find_all_by_client_window(Ecore_X_Window win);
 EAPI E_Border *e_border_find_by_frame_window(Ecore_X_Window win);
 EAPI E_Border *e_border_find_by_window(Ecore_X_Window win);
 EAPI E_Border *e_border_find_by_alarm(Ecore_X_Sync_Alarm alarm);

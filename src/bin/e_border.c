@@ -222,7 +222,7 @@ e_border_shutdown(void)
 EAPI E_Border *
 e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 {
-   E_Border *bd;
+   E_Border *bd, *bd2;
    Ecore_X_Window_Attributes *att;
    unsigned int managed, desk[2];
    int deskx, desky;
@@ -484,6 +484,19 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    bd->desk = e_desk_current_get(bd->zone);
    e_container_border_add(bd);
    borders = evas_list_append(borders, bd);
+   bd2 = evas_hash_find(borders_hash, e_util_winid_str_get(bd->client.win));
+   if (bd2)
+     {
+	printf("EEEEK! 2 borders with same client window id in them! very bad!\n");
+	printf("optimisations failing due to bizarre client behavior. will\n");
+	printf("work around.\n");
+	printf("bd=%p, bd->references=%i, bd->deleted=%i, bd->client.win=%x\n",
+	       bd2, bd2->e_obj_inherit.references, bd2->e_obj_inherit.deleted,
+	       bd2->client.win);
+	borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd->client.win), bd2);
+	borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd2->bg_win), bd2);
+	borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd2->win), bd2);
+     }
    borders_hash = evas_hash_add(borders_hash, e_util_winid_str_get(bd->client.win), bd);
    borders_hash = evas_hash_add(borders_hash, e_util_winid_str_get(bd->bg_win), bd);
    borders_hash = evas_hash_add(borders_hash, e_util_winid_str_get(bd->win), bd);
@@ -1369,7 +1382,6 @@ e_border_focus_set_with_pointer(E_Border *bd)
     * expect us to emulate a look of focus but not actually set x input
     * focus as we do - so simply abort any focuse set on such windows */
    /* be strict about accepting focus hint */
-//   printf(" 2accept:%i take:%i\n", bd->client.icccm.accepts_focus, bd->client.icccm.take_focus);
    if ((!bd->client.icccm.accepts_focus) &&
        (!bd->client.icccm.take_focus)) return;
    if (bd->lock_focus_out) return;
@@ -1388,25 +1400,21 @@ e_border_focus_set_with_pointer(E_Border *bd)
 	  {
 	     if (!e_border_pointer_warp_to_center(bd))
 	       {
-//		  printf("F1\n");
 		  e_border_focus_set(bd, 1, 1);
 	       }
 	  }
 	else
 	  {
-//	     printf("F2\n");
 	     e_border_focus_set(bd, 1, 1);
 	  }
      }
    else if (e_config->focus_policy == E_FOCUS_CLICK)
      {
-//	printf("F3\n");
 	e_border_focus_set(bd, 1, 1);
      }
    else
      if (!e_border_pointer_warp_to_center(bd))
        {
-//	  printf("F4\n");
 	  e_border_focus_set(bd, 1, 1);
        }
 
@@ -1424,12 +1432,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
     * expect us to emulate a look of focus but not actually set x input
     * focus as we do - so simply abort any focuse set on such windows */
    /* be strict about accepting focus hint */
-//   printf("e_border_focus_set(%p, %s, %i %i);\n", bd, bd->client.icccm.name, focus, set);
-//   printf(" accept:%i take:%i\n", bd->client.icccm.accepts_focus, bd->client.icccm.take_focus);
-//   if (!bd->client.icccm.accepts_focus) return;
-//   printf("e_border_focus_set(%p [%s][%s], %i %i)\n", 
-//	  bd, bd->client.icccm.title, bd->client.netwm.name,
-//	  focus, set);
    if ((!bd->client.icccm.accepts_focus) &&
        (!bd->client.icccm.take_focus))
 	return;
@@ -1455,13 +1457,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  {
 	     if ((bd->visible) && (bd->changes.visible))
 	       {
-//		  printf("want!\n");
 ////		  e_border_focus_latest_set(bd);
 		  bd->want_focus = 1;
 		  bd->changed = 1;
 		  return;
 	       }
-//	     printf("  real foc - locally active...\n");
 	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
 	     return;
 	  }
@@ -1470,13 +1470,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  {
 	     if ((bd->visible) && (bd->changes.visible))
 	       {
-//		  printf("want2!\n");
 ////		  e_border_focus_latest_set(bd);
 		  bd->want_focus = 1;
 		  bd->changed = 1;
 		  return;
 	       }
-//	     printf("  real foc - globally active...\n");
 	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
 	     return;
 	  }
@@ -1489,7 +1487,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
      }
    if ((!bd->visible) && (focus))
      {
-//	printf("want3!\n");
 ////	e_border_focus_latest_set(bd);
 //	bd->want_focus = 1;
 //	bd->changed = 1;
@@ -1499,7 +1496,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
      {
 	if ((bd->visible) && (bd->changes.visible))
 	  {
-//	     printf("want4!\n");
 ////	     e_border_focus_latest_set(bd);
 	     bd->want_focus = 1;
 	     bd->changed = 1;
@@ -1512,7 +1508,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 ////		  e_border_focus_latest_set(bd);
 //	       }
 //	  }
-//	printf("EMIT 0x%x activeve\n", bd->client.win);
 	e_border_focus_latest_set(bd);
 	edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
 	if (bd->icon_object)
@@ -1521,7 +1516,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
      }
    else if ((!focus) && (bd->focused))
      {
-//	printf("EMIT 0x%x passive\n", bd->client.win);
 	edje_object_signal_emit(bd->bg_object, "e,state,unfocused", "e");
 	if (bd->icon_object)
 	  edje_object_signal_emit(bd->icon_object, "e,state,unfocused", "e");
@@ -1542,7 +1536,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
      {
 	if (bd->focused)
 	  {
-//	     printf("  real foc - GO...\n");
 	     if (bd->internal)
 	       e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
 	     else
@@ -1638,8 +1631,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     E_Event_Border_Focus_In	 *ev;
 	     
 	     focused = bd;
-	     //printf("set focused to %p\n", focused);
-	     
 	     // Let send the focus event iff the focus is set explicitly,
 	     // not via callback
 	     ev = calloc(1, sizeof(E_Event_Border_Focus_In)); 
@@ -1654,8 +1645,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     E_Event_Border_Focus_Out *ev;
 
 	     focused = NULL;
-	     //printf("set focused to %p\n", focused);
-
 	     // Let send the focus event iff the focus is set explicitly,
 	     // not via callback
 	     ev = calloc(1, sizeof(E_Event_Border_Focus_Out)); 
@@ -1682,8 +1671,6 @@ e_border_shade(E_Border *bd, E_Direction dir)
    ecore_x_window_shadow_tree_flush();
    if (!bd->shaded)
      {
-//	printf("SHADE!\n");
-
 	bd->shade.x = bd->x;
 	bd->shade.y = bd->y;
 	bd->shade.dir = dir;
@@ -1773,8 +1760,6 @@ e_border_unshade(E_Border *bd, E_Direction dir)
    ecore_x_window_shadow_tree_flush();
    if (bd->shaded)
      {
-//	printf("UNSHADE!\n");
-
 	bd->shade.dir = dir;
 
 	e_hints_window_shaded_set(bd, 0);
@@ -2231,7 +2216,6 @@ e_border_unfullscreen(E_Border *bd)
    if (bd->fullscreen)
      {
 	bd->pre_res_change.valid = 0;
-//	printf("UNFULLSCREEEN!\n");
 	bd->fullscreen = 0;
 	bd->need_fullscreen = 0;
 
@@ -2351,7 +2335,6 @@ e_border_stick(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->sticky) return;
-//   printf("STICK!\n");
    bd->sticky = 1;
    e_hints_window_sticky_set(bd, 1);
    e_border_show(bd);
@@ -2389,7 +2372,6 @@ e_border_unstick(E_Border *bd)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    /* Set the desk before we unstick the border */
    if (!bd->sticky) return;
-//   printf("UNSTICK!\n");
    bd->sticky = 0;
    e_hints_window_sticky_set(bd, 0);
 
@@ -2455,6 +2437,17 @@ e_border_find_by_client_window(Ecore_X_Window win)
    bd = evas_hash_find(borders_hash, e_util_winid_str_get(win));
    if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
        (bd->client.win == win))
+     return bd;
+   return NULL;
+}
+
+EAPI E_Border *
+e_border_find_all_by_client_window(Ecore_X_Window win)
+{
+   E_Border *bd;
+   
+   bd = evas_hash_find(borders_hash, e_util_winid_str_get(win));
+   if ((bd) && (bd->client.win == win))
      return bd;
    return NULL;
 }
@@ -3740,6 +3733,8 @@ _e_border_del(E_Border *bd)
 				bd->x + bd->client_inset.l,
 				bd->y + bd->client_inset.t);
 	ecore_x_window_save_set_del(bd->client.win);
+	bd->already_unparented = 1;
+//	bd->client.win = 0;
      }
    bd->already_unparented = 1;
 
@@ -3840,9 +3835,10 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
    E_Border *bd;
    Ecore_X_Event_Window_Hide *e;
 
-//   printf("in hide cb\n");
    bd = data;
    e = ev;
+// not interested in hide events from windows other than the window in question
+   if (e->win != e->event_win) return 1;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
    if (bd->ignore_first_unmap > 0)
@@ -3855,7 +3851,9 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
        (bd->await_hide_event > 0))
      {
 	if (bd->await_hide_event > 0)
-	  bd->await_hide_event--;
+	  {
+	     bd->await_hide_event--;
+	  }
 	else
 	  {
 	     /* Only hide the border if it is visible */
@@ -3902,10 +3900,14 @@ _e_border_cb_window_reparent(void *data, int ev_type, void *ev)
 
    bd = data;
    e = ev;
+   return 1;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-//   if (e->parent == bd->client.shell_win) return 1;
-   if (ecore_x_window_parent_get(e->win) == bd->client.shell_win) return 1;
+   if (e->parent == bd->client.shell_win) return 1;
+   if (ecore_x_window_parent_get(e->win) == bd->client.shell_win)
+     {
+	return 1;
+     }
    e_border_hide(bd, 0);
    e_object_del(E_OBJECT(bd));
    return 1;
@@ -3919,32 +3921,16 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 
    bd = data;
    e = ev;
-//   printf("##- CONF REQ 0x%x , %iX%i+%i+%i\n",
-//	  e->win, e->w, e->h, e->x, e->y);
    bd = e_border_find_by_client_window(e->win);
    if (!bd)
      {
 	if (e_stolen_win_get(e->win)) return 1;
-//	printf("generic config request 0x%x 0x%lx %i %i %ix%i %i 0x%x 0x%x...\n",
-//	       e->win, e->value_mask, e->x, e->y, e->w, e->h, e->border, e->abovewin, e->detail);
 	if (!e_util_container_window_find(e->win))
 	  ecore_x_window_configure(e->win, e->value_mask,
 				   e->x, e->y, e->w, e->h, e->border,
 				   e->abovewin, e->detail);
 	return 1;
      }
-#if 0
-   printf("##- CONFIGURE REQ 0x%0x mask: %c%c%c%c%c%c%c\n",
-	  e->win,
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ? 'X':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y) ? 'Y':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ? 'W':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H) ? 'H':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_BORDER_WIDTH) ? 'B':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING) ? 'C':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) ? 'S':' '
-	  );
-#endif
 
    if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ||
        (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y))
@@ -3953,13 +3939,6 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 
 	x = bd->x;
 	y = bd->y;
-#if 0
-	printf("##- ASK FOR 0x%x TO MOVE TO [FLG X%liY%li] %i,%i -> %i,%i\n",
-	       bd->client.win,
-	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X,
-	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y,
-	       x, y, e->x, e->y);
-#endif
 	if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X)
 	  x = e->x;
 	if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y)
@@ -3975,13 +3954,6 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	       w = e->w + bd->client_inset.l + bd->client_inset.r;
 	     if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H)
 	       h = e->h + bd->client_inset.t + bd->client_inset.b;
-#if 0
-	     printf("##- ASK FOR 0x%x TO RESIZE TO [FLG W%liH%li] %i,%i\n",
-		    bd->client.win,
-		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W,
-		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
-		    e->w, e->h);
-#endif
 	     if ((!bd->lock_client_location) && (!bd->lock_client_size))
 	       {
 		  if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
@@ -4061,13 +4033,6 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	  w = e->w + bd->client_inset.l + bd->client_inset.r;
 	if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H)
 	  h = e->h + bd->client_inset.t + bd->client_inset.b;
-#if 0
-	printf("##- ASK FOR 0x%x TO RESIZE TO [FLG W%liH%li] %i,%i\n",
-	       bd->client.win,
-	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W,
-	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
-	       e->w, e->h);
-#endif
 	if (!bd->lock_client_size)
 	  {
 	     if ((bd->shaded) || (bd->shading))
@@ -4162,18 +4127,13 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
 
    bd = data;
    e = ev;
-//   printf("##- RESZ REQ 0x%x , %iX%i\n",
-//	  e->win, e->w, e->h);
    bd = e_border_find_by_client_window(e->win);
    if (!bd)
      {
 	if (e_stolen_win_get(e->win)) return 1;
-//	printf("generic resize request %x %ix%i ...\n",
-//	       e->win, e->w, e->h);
 	ecore_x_window_resize(e->win, e->w, e->h);
 	return 1;
      }
-//   printf("##- RESIZE REQ 0x%x\n", bd->client.win);
      {
 	int w, h;
 
@@ -4181,8 +4141,6 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
 	w = bd->w;
 	w = e->w + bd->client_inset.l + bd->client_inset.r;
 	h = e->h + bd->client_inset.t + bd->client_inset.b;
-//	printf("##- ASK FOR 0x%x TO RESIZE TO %i,%i\n",
-//	       bd->client.win, e->w, e->h);
 	if ((bd->shaded) || (bd->shading))
 	  {
 	     int pw, ph;
@@ -4216,7 +4174,6 @@ _e_border_cb_window_gravity(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-//   printf("gravity for %0x\n", e->win);
    return 1;
 }
 
@@ -4228,7 +4185,6 @@ _e_border_cb_window_stack_request(void *data, int ev_type, void *ev)
 
    e = ev;
    bd = e_border_find_by_client_window(e->win);
-//   printf("stack req for %0x bd %p\n", e->win, bd);
    if (!bd)
      {
 	if (e_stolen_win_get(e->win)) return 1;
@@ -4551,7 +4507,6 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
 	if (e->detail == ECORE_X_EVENT_DETAIL_ANCESTOR) return 1;
 	else if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
      }
-   printf("fout 1\n");
    e_border_focus_set(bd, 0, 0);
    return 1;
 }
@@ -5158,7 +5113,6 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
      }
    if ((ev->win != bd->event_win) && (ev->event_win != bd->win))
      {
-//	printf("abort ev\n");
 	return 1;
      }
    if ((ev->button >= 1) && (ev->button <= 3))
@@ -5182,8 +5136,6 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 /*   
    if (bd->moving)
      {
-
- printf("moving\n");
      }
    else if (bd->resize_mode != RESIZE_NONE)
      {
@@ -5261,10 +5213,6 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 
    ev = event;
    bd = data;
-   if (ev->event_win == bd->win)
-     {
-//	printf("GRABMOVE2!\n");
-     }
    if ((ev->win != bd->event_win) &&
        (ev->event_win != bd->win)) return 1;
    bd->mouse.current.mx = ev->root.x;
@@ -5675,7 +5623,6 @@ _e_border_eval(E_Border *bd)
 	  }
 	else
 	  {
-//	     printf("##- NO SIZE HINTS!\n");
 	  }
 	if (bd->client.icccm.min_w > 32767) bd->client.icccm.min_w = 32767;
 	if (bd->client.icccm.min_h > 32767) bd->client.icccm.min_h = 32767;
@@ -5685,15 +5632,6 @@ _e_border_eval(E_Border *bd)
 	if (bd->client.icccm.base_h > 32767) bd->client.icccm.base_h = 32767;
 //	if (bd->client.icccm.step_w < 1) bd->client.icccm.step_w = 1;
 //	if (bd->client.icccm.step_h < 1) bd->client.icccm.step_h = 1;
-#if 0
-	printf("##- SIZE HINTS for 0x%x: min %ix%i, max %ix%i, base %ix%i, step %ix%i, aspect (%f, %f)\n",
-	       bd->client.win,
-	       bd->client.icccm.min_w, bd->client.icccm.min_h,
-	       bd->client.icccm.max_w, bd->client.icccm.max_h,
-	       bd->client.icccm.base_w, bd->client.icccm.base_h,
-	       bd->client.icccm.step_w, bd->client.icccm.step_h,
-	       bd->client.icccm.min_aspect, bd->client.icccm.max_aspect);
-#endif
 
 	bd->client.icccm.fetch.size_pos_hints = 0;
 	rem_change = 1;
@@ -5802,7 +5740,6 @@ _e_border_eval(E_Border *bd)
 	if (!ecore_x_netwm_icons_get(bd->client.win,
 				     &bd->client.netwm.icons, &bd->client.netwm.num_icons))
 	  {
-//	     printf("ERROR: Fetch icon from client\n");
 	     bd->client.netwm.icons = NULL;
 	     bd->client.netwm.num_icons = 0;
 	  }
@@ -5933,7 +5870,6 @@ _e_border_eval(E_Border *bd)
 	bd->client.mwm.borderless = 0;
 	if (bd->client.mwm.exists)
 	  {
-//	     printf("##- MWM HINTS SET 0x%x!\n", bd->client.win);
 	     if ((!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_ALL)) &&
 		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_TITLE)) &&
 		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_BORDER)))
@@ -6420,10 +6356,8 @@ _e_border_eval(E_Border *bd)
    
    if (bd->new_client)
      {
-//	printf("##- NEW CLIENT SETUP 0x%x\n", bd->client.win);
 	if (bd->re_manage)
 	  {
-//	     printf("##- REMANAGE!\n");
 	     bd->x -= bd->client_inset.l;
 	     bd->y -= bd->client_inset.t;
 	     bd->changes.pos = 1;
@@ -6437,8 +6371,6 @@ _e_border_eval(E_Border *bd)
 		  int bw;
 
 		  att = &bd->client.initial_attributes;
-//		  printf("##- REQUEST POS 0x%x [%i,%i]\n",
-//			 bd->client.win, att->x, att->y);
 		  bw = att->border * 2;
 		  switch (bd->client.icccm.gravity)
 		    {
@@ -6512,7 +6444,6 @@ _e_border_eval(E_Border *bd)
 		       Evas_List *skiplist = NULL;
 		       int new_x, new_y;
 
-//		  printf("##- AUTO POS 0x%x\n", bd->client.win);
 		       if (bd->zone->w > bd->w)
 			 new_x = bd->zone->x + (rand() % (bd->zone->w - bd->w));
 		       else
@@ -6696,7 +6627,6 @@ _e_border_eval(E_Border *bd)
 	  ecore_evas_managed_move(bd->internal_ecore_evas,
 				  bd->x + bd->fx.x + bd->client_inset.l,
 				  bd->y + bd->fx.y + bd->client_inset.t);
-//	printf("##- BORDER NEEDS POS/SIZE CHANGE 0x%x\n", bd->client.win);
 	if ((bd->shaded) && (!bd->shading))
 	  {
 	     evas_obscured_clear(bd->bg_evas);
@@ -6839,7 +6769,6 @@ _e_border_eval(E_Border *bd)
 	  ecore_evas_managed_move(bd->internal_ecore_evas,
 				  bd->x + bd->fx.x + bd->client_inset.l,
 				  bd->y + bd->fx.y + bd->client_inset.t);
-//	printf("##- BORDER NEEDS SIZE CHANGE 0x%x\n", bd->client.win);
 	if (bd->shaded && !bd->shading)
 	  {
 	     evas_obscured_clear(bd->bg_evas);
@@ -7214,14 +7143,12 @@ _e_border_eval(E_Border *bd)
    if ((bd->take_focus) || (bd->want_focus))
      {
 	bd->take_focus = 0;
-	printf("bd->want_focus = %i\n", bd->want_focus);
 	if ((e_config->focus_setting == E_FOCUS_NEW_WINDOW) ||
 	    (bd->want_focus))
 	  {
 	     bd->want_focus = 0;
 	     if (!bd->lock_focus_out)
 	       {
-		  printf("E1\n");
 		  e_border_focus_set_with_pointer(bd);
 	       }
 	  }
@@ -7235,10 +7162,7 @@ _e_border_eval(E_Border *bd)
 			e_border_focused_get())))
 		    {
 		       if (!bd->lock_focus_out)
-			 {
-			    printf("E2\n");
-			    e_border_focus_set_with_pointer(bd);
-			 }
+			 e_border_focus_set_with_pointer(bd);
 		    }
 	       }
 	  }
