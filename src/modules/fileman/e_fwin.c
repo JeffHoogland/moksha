@@ -44,6 +44,8 @@ struct _E_Fwin
    E_Toolbar          *tbar;
    Ecore_Event_Handler *zone_handler;
    Ecore_Event_Handler *zone_del_handler;
+   
+   unsigned char        geom_save_ready : 1;
 };
 
 struct _E_Fwin_Apps_Dialog
@@ -70,6 +72,7 @@ typedef enum
 static E_Fwin *_e_fwin_new(E_Container *con, const char *dev, const char *path);
 static void _e_fwin_free(E_Fwin *fwin);
 static void _e_fwin_cb_delete(E_Win *win);
+static void _e_fwin_cb_move(E_Win *win);
 static void _e_fwin_cb_resize(E_Win *win);
 static void _e_fwin_deleted(void *data, Evas_Object *obj, void *event_info);
 static const char *_e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev_path, const char *key);
@@ -341,6 +344,7 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
      }
    fwins = evas_list_append(fwins, fwin);
    e_win_delete_callback_set(fwin->win, _e_fwin_cb_delete);
+   e_win_move_callback_set(fwin->win, _e_fwin_cb_move);
    e_win_resize_callback_set(fwin->win, _e_fwin_cb_resize);
    fwin->win->data = fwin;
 
@@ -443,6 +447,7 @@ static void
 _e_fwin_free(E_Fwin *fwin)
 {
    if (!fwin) return; //safety
+
    if (fwin->fm_obj) evas_object_del(fwin->fm_obj);
    if (fwin->tbar) e_object_del(E_OBJECT(fwin->tbar));
    if (fwin->scrollframe_obj) evas_object_del(fwin->scrollframe_obj);
@@ -483,6 +488,38 @@ _e_fwin_cb_delete(E_Win *win)
 }
 
 static void
+_e_fwin_geom_save(E_Fwin *fwin)
+{
+   char buf[PATH_MAX];
+   E_Fm2_Custom_File *cf;
+
+   if (!fwin->geom_save_ready) return;
+   snprintf(buf, sizeof(buf), "dir::%s", e_fm2_real_path_get(fwin->fm_obj));
+   cf = e_fm2_custom_file_get(buf);
+   if (!cf)
+     {
+	cf = alloca(sizeof(E_Fm2_Custom_File));
+	memset(cf, 0, sizeof(E_Fm2_Custom_File));
+     }
+   cf->geom.x = fwin->win->x - fwin->win->border->client_inset.l;
+   cf->geom.y = fwin->win->y - fwin->win->border->client_inset.t;
+   cf->geom.w = fwin->win->w;
+   cf->geom.h = fwin->win->h;
+   cf->geom.valid = 1;
+   e_fm2_custom_file_set(buf, cf);
+}
+
+static void
+_e_fwin_cb_move(E_Win *win)
+{
+   E_Fwin *fwin;
+
+   if (!win) return; //safety
+   fwin = win->data;
+   _e_fwin_geom_save(fwin);
+}
+
+static void
 _e_fwin_cb_resize(E_Win *win)
 {
    E_Fwin *fwin;
@@ -505,6 +542,7 @@ _e_fwin_cb_resize(E_Win *win)
      }
    else if (fwin->zone)
      evas_object_resize(fwin->scrollframe_obj, fwin->zone->w, fwin->zone->h);
+   _e_fwin_geom_save(fwin);
 }
 
 static void
@@ -1129,13 +1167,14 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 		    {
 		       Evas_Object *oic;
 		       const char *itype = NULL;
-		       int ix, iy, iw, ih, nx, ny;
+		       int ix, iy, iw, ih, nx, ny, nw, nh;
 
 		       oic = e_fm2_icon_get(evas_object_evas_get(fwin->fm_obj),
 					    ici->ic, NULL, NULL, 0, &itype);
 		       if (oic)
 			 {
 			    const char *file = NULL, *group = NULL;
+			    E_Fm2_Custom_File *cf;
 			    
 			    if (fwin2->win->border->internal_icon)
 			      evas_stringshare_del(fwin2->win->border->internal_icon);
@@ -1163,18 +1202,74 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 				   evas_stringshare_add(file);
 			      }
 			    evas_object_del(oic);
-
-			    /* Move spawned window */
-			    e_fm2_icon_geometry_get(ici->ic, &ix, &iy, &iw, &ih);
-			    nx = ((ix + iw) / 2);
-			    ny = ((iy + ih) / 2);
-			    if (fwin->win) 
+			    
+			    snprintf(buf, sizeof(buf), "dir::%s",
+				     e_fm2_real_path_get(fwin2->fm_obj));
+			    cf = e_fm2_custom_file_get(buf);
+			    if ((cf) && (cf->geom.valid))
 			      {
-				 nx += fwin->win->x;
-				 ny += fwin->win->y;
+				 nx = cf->geom.x;
+				 ny = cf->geom.y;
+				 nw = cf->geom.w;
+				 nh = cf->geom.h;
+				 /* if it ended up too small - fix to a decent size  */
+				 if (nw < 24) nw = 200;
+				 if (nh < 24) nh = 280;
+				 printf("load @ %i %i, %ix%i inset %i %i\n",
+					nx, ny, nw, nh,
+					fwin2->win->border->client_inset.l,
+					fwin2->win->border->client_inset.t);
+				 /* if it ended up out of the zone */
+				 if (nx < fwin2->win->border->zone->x)
+				   nx = fwin2->win->border->zone->x +
+				   fwin2->win->border->client_inset.l;
+				 if (ny < fwin2->win->border->zone->y)
+				   ny = fwin2->win->border->zone->y + 
+				   fwin2->win->border->client_inset.t;
+				 if ((fwin2->win->border->zone->x + 
+				      fwin2->win->border->zone->w) <
+				     (fwin2->win->border->w + nx))
+				   nx = fwin2->win->border->zone->x + 
+				   fwin2->win->border->zone->w - 
+				   fwin2->win->border->w - 
+				   fwin2->win->border->client_inset.l;
+				 if ((fwin2->win->border->zone->y + 
+				      fwin2->win->border->zone->h) <
+				     (fwin2->win->border->h + ny))
+				   ny = fwin2->win->border->zone->y + 
+				   fwin2->win->border->zone->h - 
+				   fwin2->win->border->h - 
+				   fwin2->win->border->client_inset.t;
+				 e_win_move_resize
+				   (fwin2->win, 
+				    nx - fwin2->win->border->client_inset.l, 
+				    ny - fwin2->win->border->client_inset.t,
+				    nw, nh);
 			      }
-			    e_win_move(fwin2->win, nx, ny);
+			    else
+			      {
+				 /* No custom info, so just put window near icon */
+				 e_fm2_icon_geometry_get(ici->ic, &ix, &iy, &iw, &ih);
+				 nx = (ix + (iw / 2));
+				 ny = (iy + (ih / 2));
+				 if (fwin->win) 
+				   {
+				      nx += fwin->win->x;
+				      ny += fwin->win->y;
+				   }
+				 /* iff going out of zone - adjust to be in */
+				 if ((fwin2->win->border->zone->x + 
+				      fwin2->win->border->zone->w) <
+				     (fwin2->win->border->w + nx))
+				   nx -= fwin2->win->border->w;
+				 if ((fwin2->win->border->zone->y + 
+				      fwin2->win->border->zone->h) <
+				     (fwin2->win->border->h + ny))
+				   ny -= fwin2->win->border->h;
+				 e_win_move(fwin2->win, nx, ny);
+			      }
 			 }
+		       fwin2->geom_save_ready = 1;
 		       if (ici->label)
 			 e_win_title_set(fwin2->win, ici->label);
 		       else if (ici->file)
