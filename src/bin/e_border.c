@@ -2677,7 +2677,7 @@ _e_border_action_timeout_add(void)
 {
    if (action_timer)
      ecore_timer_del(action_timer);
-   action_timer = ecore_timer_add(5.0, _e_border_action_timeout, NULL);
+   action_timer = ecore_timer_add(e_config->border_keyboard.timeout, _e_border_action_timeout, NULL);
 }
 
 static void
@@ -2702,8 +2702,6 @@ _e_border_action_restore_orig(E_Border *bd)
    e_border_move_resize(bd, action_orig.x, action_orig.y, action_orig.width, action_orig.height);
 }
 
-#define E_BORDER_MOVE_KEY_DX 5
-#define E_BORDER_MOVE_KEY_DY 5
 static int
 _e_border_move_key_down(void *data, int type, void *event)
 {
@@ -2722,13 +2720,13 @@ _e_border_move_key_down(void *data, int type, void *event)
    y = action_border->y;
 
    if (strcmp(ev->keysymbol, "Up") == 0)
-     y -= E_BORDER_MOVE_KEY_DY;
+     y -= e_config->border_keyboard.move.dy;
    else if (strcmp(ev->keysymbol, "Down") == 0)
-     y += E_BORDER_MOVE_KEY_DY;
+     y += e_config->border_keyboard.move.dy;
    else if (strcmp(ev->keysymbol, "Left") == 0)
-     x -= E_BORDER_MOVE_KEY_DX;
+     x -= e_config->border_keyboard.move.dx;
    else if (strcmp(ev->keysymbol, "Right") == 0)
-     x += E_BORDER_MOVE_KEY_DX;
+     x += e_config->border_keyboard.move.dx;
    else if (strcmp(ev->keysymbol, "Return") == 0)
      goto stop;
    else if (strcmp(ev->keysymbol, "Escape") == 0)
@@ -2790,8 +2788,6 @@ e_border_act_move_keyboard(E_Border *bd)
    action_handler_mouse = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_border_move_mouse_down, NULL);
 }
 
-#define E_BORDER_RESIZE_KEY_DX 5
-#define E_BORDER_RESIZE_KEY_DY 5
 static int
 _e_border_resize_key_down(void *data, int type, void *event)
 {
@@ -2810,13 +2806,13 @@ _e_border_resize_key_down(void *data, int type, void *event)
    h = action_border->h;
 
    if (strcmp(ev->keysymbol, "Up") == 0)
-     h -= E_BORDER_RESIZE_KEY_DY;
+     h -= e_config->border_keyboard.resize.dy;
    else if (strcmp(ev->keysymbol, "Down") == 0)
-     h += E_BORDER_RESIZE_KEY_DY;
+     h += e_config->border_keyboard.resize.dy;
    else if (strcmp(ev->keysymbol, "Left") == 0)
-     w -= E_BORDER_RESIZE_KEY_DX;
+     w -= e_config->border_keyboard.resize.dx;
    else if (strcmp(ev->keysymbol, "Right") == 0)
-     w += E_BORDER_RESIZE_KEY_DX;
+     w += e_config->border_keyboard.resize.dx;
    else if (strcmp(ev->keysymbol, "Return") == 0)
      goto stop;
    else if (strcmp(ev->keysymbol, "Escape") == 0)

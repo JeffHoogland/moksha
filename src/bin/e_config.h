@@ -33,7 +33,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0125
+#define E_CONFIG_FILE_GENERATION 0x0126
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT         0
@@ -289,6 +289,18 @@ struct _E_Config
    double thumbscroll_friction;
 
    int hal_desktop;
+
+   struct {
+      double timeout;
+      struct {
+	 unsigned char dx;
+	 unsigned char dy;
+      } move;
+      struct {
+	 unsigned char dx;
+	 unsigned char dy;
+      } resize;
+   } border_keyboard;
 };
 
 struct _E_Config_Module

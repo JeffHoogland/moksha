@@ -616,6 +616,12 @@ e_config_init(void)
    
    E_CONFIG_VAL(D, T, hal_desktop, INT);
 
+   E_CONFIG_VAL(D, T, border_keyboard.timeout, DOUBLE);
+   E_CONFIG_VAL(D, T, border_keyboard.move.dx, UCHAR);
+   E_CONFIG_VAL(D, T, border_keyboard.move.dy, UCHAR);
+   E_CONFIG_VAL(D, T, border_keyboard.resize.dx, UCHAR);
+   E_CONFIG_VAL(D, T, border_keyboard.resize.dy, UCHAR);
+
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -793,6 +799,13 @@ e_config_init(void)
    e_config->display_res_rotation = 0;
 
    e_config->hal_desktop = 1;
+
+   e_config->border_keyboard.timeout = 5.0;
+   e_config->border_keyboard.move.dx = 5;
+   e_config->border_keyboard.move.dy = 5;
+   e_config->border_keyboard.resize.dx = 5;
+   e_config->border_keyboard.resize.dy = 5;
+
      {
 	E_Config_Module *em;
 
@@ -1535,6 +1548,15 @@ e_config_init(void)
    IFCFG(0x0125);
    e_config->mouse_hand = E_MOUSE_HAND_RIGHT;
    IFCFGEND;
+
+   IFCFG(0x0126);
+   e_config->border_keyboard.timeout = 5.0;
+   e_config->border_keyboard.move.dx = 5;
+   e_config->border_keyboard.move.dy = 5;
+   e_config->border_keyboard.resize.dx = 5;
+   e_config->border_keyboard.resize.dy = 5;
+   IFCFGEND;
+
    
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
