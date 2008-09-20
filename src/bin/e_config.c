@@ -1456,9 +1456,9 @@ e_config_init(void)
    e_config->dpms_standby_enable = 0;
    e_config->dpms_suspend_enable = 0;
    e_config->dpms_off_enable = 0;
-   e_config->dpms_standby_timeout = 0;
-   e_config->dpms_suspend_timeout = 0;
-   e_config->dpms_off_timeout = 0;
+   e_config->dpms_standby_timeout = 1;
+   e_config->dpms_suspend_timeout = 1;
+   e_config->dpms_off_timeout = 1;
    e_config->screensaver_enable = 0;
    e_config->screensaver_timeout = 0;
    e_config->screensaver_interval = 5;

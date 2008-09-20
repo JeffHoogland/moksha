@@ -1890,9 +1890,9 @@ group "E_Config" struct {
   value "dpms_standby_enable" int: 0;
   value "dpms_suspend_enable" int: 0;
   value "dpms_off_enable" int: 0;
-  value "dpms_standby_timeout" int: 0;
-  value "dpms_suspend_timeout" int: 0;
-  value "dpms_off_timeout" int: 0;
+  value "dpms_standby_timeout" int: 1;
+  value "dpms_suspend_timeout" int: 1;
+  value "dpms_off_timeout" int: 1;
   value "clientlist_group_by" int: 0;
   value "clientlist_include_all_zones" int: 0;
   value "clientlist_separate_with" int: 0;
