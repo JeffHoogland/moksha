@@ -62,7 +62,7 @@ EAPI void
 e_gadcon_popup_show(E_Gadcon_Popup *pop)
 {
    Evas_Object *o;
-   Evas_Coord gx, gy, gw, gh, zw, zh, zx;
+   Evas_Coord gx, gy, gw, gh, zw, zh, zx, zy;
    Evas_Coord px, py, ww, wh;
 
    if (!pop) return;
@@ -91,9 +91,10 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
 
    /* Popup positioning */
    e_gadcon_client_geometry_get(pop->gcc, &gx, &gy, &gw, &gh);
+   zx = pop->gcc->gadcon->zone->x;
+   zy = pop->gcc->gadcon->zone->y;
    zw = pop->gcc->gadcon->zone->w;
    zh = pop->gcc->gadcon->zone->h;
-   zx = pop->gcc->gadcon->zone->x;
    switch (pop->gcc->gadcon->orient)
      {
       case E_GADCON_ORIENT_CORNER_RT:
@@ -101,7 +102,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
       case E_GADCON_ORIENT_RIGHT:
 	px = gx - pop->w;
 	py = gy;
-	if (py + pop->h >= zh)
+	if (py + pop->h >= (zy + zh))
 	  py = gy + gh - pop->h;
 	break;
       case E_GADCON_ORIENT_LEFT:
@@ -109,7 +110,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
       case E_GADCON_ORIENT_CORNER_LB:
 	px = gx + gw;
 	py = gy;
-	if (py + pop->h >= zh)
+	if (py + pop->h >= (zy + zh))
 	  py = gy + gh - pop->h;
 	break;
 	break;
@@ -118,7 +119,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
       case E_GADCON_ORIENT_CORNER_TR:
 	py = gy + gh;
 	px = (gx + (gw / 2)) - (pop->w / 2);
-	if (px + pop->w >= zw)
+	if ((px + pop->w) >= (zx + zw))
 	  px = gx + gw - pop->w;
         else if (px < zx)
           px = zx;
@@ -128,19 +129,19 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
       case E_GADCON_ORIENT_CORNER_BR:
 	py = gy - pop->h;
 	px = (gx + (gw / 2)) - (pop->w / 2);
-	if (px + pop->w >= zw)
+	if ((px + pop->w) >= (zx + zw))
 	  px = gx + gw - pop->w;
         else if (px < zx)
           px = zx;
 	break;
       case E_GADCON_ORIENT_FLOAT:
 	px = (gx + (gw / 2)) - (pop->w / 2);
-	if (gy >= zh / 2)
+	if (gy >= (zy + (zh / 2)))
 	  py = gy - pop->h;
 	else
 	  py = gy + gh;
-	if (px + pop->w >= zw)
-	  px = zw - pop->w;
+	if ((px + pop->w) >= (zx + zw))
+	  px = gx + gw - pop->w;
         else if (px < zx)
           px = zx;
 	break;
@@ -148,7 +149,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
 	e_popup_move_resize(pop->win, 50, 50, pop->w, pop->h);
 	return;
      }
-   e_popup_move_resize(pop->win, px, py, pop->w, pop->h);
+   e_popup_move_resize(pop->win, px - zx, py - zy, pop->w, pop->h);
 }
 
 EAPI void
