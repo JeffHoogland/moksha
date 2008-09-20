@@ -1,5 +1,5 @@
 group "E_Config" struct {
-  value "config_version" int: 65829;
+  value "config_version" int: 65830;
   value "show_splash" int: 1;
   value "init_default_theme" string: "default.edj";
   value "desktop_default_name" string: "Desktop %i, %i";
@@ -1980,4 +1980,9 @@ group "E_Config" struct {
   value "thumbscroll_momentum_threshhold" double: 100.0;
   value "thumbscroll_friction" double: 1.0;
   value "hal_desktop" int: 1;
+  value "border_keyboard.timeout" double: 5.0000000000000000000000000;
+  value "border_keyboard.move.dx" uchar: 5;
+  value "border_keyboard.move.dy" uchar: 5;
+  value "border_keyboard.resize.dx" uchar: 5;
+  value "border_keyboard.resize.dy" uchar: 5;
 }
