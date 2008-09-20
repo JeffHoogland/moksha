@@ -188,6 +188,61 @@ _mixer_gadget_update(E_Mixer_Instance *inst)
 }
 
 static void
+_mixer_balance_left(E_Mixer_Instance *inst)
+{
+   E_Mixer_Channel_State *state;
+
+   state = &inst->mixer_state;
+   e_mixer_system_get_volume(inst->sys, inst->channel,
+			     &state->left, &state->right);
+   if (state->left >= 0)
+     {
+	if (state->left > 5)
+	  state->left -= 5;
+	else
+	  state->left = 0;
+     }
+   if (state->right >= 0)
+     {
+	if (state->right < 95)
+	  state->right += 5;
+	else
+	  state->right = 100;
+     }
+
+   e_mixer_system_set_volume(inst->sys, inst->channel,
+			     state->left, state->right);
+   _mixer_gadget_update(inst);
+}
+
+static void
+_mixer_balance_right(E_Mixer_Instance *inst)
+{
+   E_Mixer_Channel_State *state;
+
+   state = &inst->mixer_state;
+   e_mixer_system_get_volume(inst->sys, inst->channel,
+			     &state->left, &state->right);
+   if (state->left >= 0)
+     {
+	if (state->left < 95)
+	  state->left += 5;
+	else
+	  state->left = 100;
+     }
+   if (state->right >= 0)
+     {
+	if (state->right > 5)
+	  state->right -= 5;
+	else
+	  state->right = 0;
+     }
+   e_mixer_system_set_volume(inst->sys, inst->channel,
+			     state->left, state->right);
+   _mixer_gadget_update(inst);
+}
+
+static void
 _mixer_volume_increase(E_Mixer_Instance *inst)
 {
    E_Mixer_Channel_State *state;
@@ -662,6 +717,13 @@ _mixer_cb_mouse_wheel(void *data, Evas *evas, Evas_Object *obj, void *event)
 	  _mixer_volume_decrease(inst);
 	else if (ev->z < 0)
 	  _mixer_volume_increase(inst);
+     }
+   else if (ev->direction == 1)
+     {
+	if (ev->z > 0)
+	  _mixer_balance_left(inst);
+	else if (ev->z < 0)
+	  _mixer_balance_right(inst);
      }
 }
 
