@@ -858,7 +858,7 @@ main(int argc, char **argv)
    /* setup mouse accel */
    if (!e_mouse_init())
      {
-       e_error_message_show(_("Enlightenment cannot configure the mouse acceleration settings."));
+       e_error_message_show(_("Enlightenment cannot configure the mouse settings."));
        _e_main_shutdown(-1);
      }
 

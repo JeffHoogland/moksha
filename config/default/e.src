@@ -1,5 +1,5 @@
 group "E_Config" struct {
-  value "config_version" int: 65828;
+  value "config_version" int: 65829;
   value "show_splash" int: 1;
   value "init_default_theme" string: "default.edj";
   value "desktop_default_name" string: "Desktop %i, %i";
@@ -1901,6 +1901,7 @@ group "E_Config" struct {
   value "clientlist_warp_to_iconified_desktop" int: 0;
   value "clientlist_limit_caption_len" int: 0;
   value "clientlist_max_caption_len" int: 2;
+  value "mouse_hand" int: 1;
   value "mouse_accel_numerator" int: 2;
   value "mouse_accel_denominator" int: 1;
   value "mouse_accel_threshold" int: 4;

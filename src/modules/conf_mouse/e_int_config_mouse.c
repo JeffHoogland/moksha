@@ -10,6 +10,7 @@ struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
    
+   int mouse_hand;
    double numerator;
    double denominator;
    double threshold;
@@ -32,7 +33,7 @@ e_int_config_mouse(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create_widgets;
    v->override_auto_apply = 1;
    
-   cfd = e_config_dialog_new(con, _("Mouse Acceleration Settings"), "E", 
+   cfd = e_config_dialog_new(con, _("Mouse Settings"), "E", 
 			     "_config_mouse_dialog", 
 			     "enlightenment/mouse_clean", 0, v, NULL);
    return cfd;
@@ -41,6 +42,7 @@ e_int_config_mouse(E_Container *con, const char *params __UNUSED__)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
+   cfdata->mouse_hand = e_config->mouse_hand;
    cfdata->numerator = e_config->mouse_accel_numerator;
    cfdata->denominator = e_config->mouse_accel_denominator;
    cfdata->threshold = e_config->mouse_accel_threshold;
@@ -70,6 +72,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   e_config->mouse_hand = cfdata->mouse_hand;
+
    e_config->mouse_accel_numerator = cfdata->numerator;
    /* Force denominator to 1 for simplicity. */
    e_config->mouse_accel_denominator = 1;
@@ -86,7 +90,17 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob;
+   E_Radio_Group *rg;
+
    o = e_widget_list_add(evas, 0, 0);
+
+   of = e_widget_frametable_add(evas, _("Mouse Hand"), 0);
+   rg = e_widget_radio_group_new(&(cfdata->mouse_hand));
+   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/mouse_right", 48, 48, E_MOUSE_HAND_LEFT, rg);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/mouse_left", 48, 48, E_MOUSE_HAND_RIGHT, rg);
+   e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Mouse Acceleration"), 0);
 
