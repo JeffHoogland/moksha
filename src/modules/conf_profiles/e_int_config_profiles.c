@@ -147,11 +147,11 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 
 	ob = edje_object_add(evas);
 	e_widget_ilist_append(cfdata->o_list, ob, l->data, _ilist_cb_selected, cfdata, l->data);
-	if (!strcmp (cur_profile, l->data))
-     {
-   e_util_edje_icon_set(ob, "enlightenment/check");
-   e_widget_ilist_selected_set(cfdata->o_list, e_widget_ilist_count(cfdata->o_list));
-     }
+	if (!strcmp(cur_profile, l->data))
+	  {
+	     e_util_edje_icon_set(ob, "enlightenment/check");
+	     e_widget_ilist_selected_set(cfdata->o_list, e_widget_ilist_count(cfdata->o_list));
+	  }
      }
 
    e_widget_min_size_set(cfdata->o_list, 155, 250);
