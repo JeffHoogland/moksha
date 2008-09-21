@@ -302,7 +302,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
       
    /* Configure imc button */
-   ob = e_widget_button_add(evas, _("Setup Selected Input Method"), "widget/setup", _e_imc_setup_cb, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Setup Selected Input Method"), "widget/config", _e_imc_setup_cb, cfdata, NULL);
    cfdata->gui.imc_basic_setup = ob;
    e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 0);
  
@@ -894,7 +894,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
  
    ol = e_widget_list_add(evas, 1, 1);
    
-   o = e_widget_button_add(evas, _("New"), "enlightenment/new", _cb_new, cfdata, NULL);
+   o = e_widget_button_add(evas, _("New"), "widget/add", _cb_new, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Import..."), "enlightenment/imc", _cb_import, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);
@@ -954,7 +954,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(of, ol, 0, 1, 0.5);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
       
-   o = e_widget_button_add(evas, _("Setup Selected Input Method"), "widget/setup", _e_imc_adv_setup_cb, cfdata, NULL);
+   o = e_widget_button_add(evas, _("Setup Selected Input Method"), "widget/config", _e_imc_adv_setup_cb, cfdata, NULL);
    e_widget_table_object_append(ot, o, 0, 1, 1, 1, 1, 1, 1, 0);
    cfdata->gui.imc_advanced_setup = o;
  
