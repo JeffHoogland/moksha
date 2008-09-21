@@ -17,7 +17,7 @@ static void _new_profile_cb_ok(void *data, E_Dialog *dia);
 static void _new_profile_cb_dia_del(void *obj);
 
 
-struct _E_Config_Dialog_Data 
+struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
    Evas_Object *o_list;
@@ -37,14 +37,14 @@ struct _Del_Profile_Confirm_Data
 };
 
 EAPI E_Config_Dialog *
-e_int_config_profiles(E_Container *con, const char *params __UNUSED__) 
+e_int_config_profiles(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
    if (e_config_dialog_find("E", "_config_profiles_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
-   if (!v) return NULL; 
+   if (!v) return NULL;
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _create_widgets;
@@ -57,34 +57,34 @@ e_int_config_profiles(E_Container *con, const char *params __UNUSED__)
 }
 
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->cfd = cfd;
    return cfdata;
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_FREE(cfdata);
 }
 
 static Evas_Object *
-_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ot, *ob;
-   
+
    o = e_widget_list_add(evas, 0, 1);
-   
+
    of = e_widget_framelist_add(evas, _("Available Profiles"), 0);
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, &(cfdata->sel_profile));
    e_widget_min_size_set(cfdata->o_list, 155, 150);
-   e_widget_framelist_object_append(of, cfdata->o_list);   
+   e_widget_framelist_object_append(of, cfdata->o_list);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+
    ot = e_widget_table_add(evas, 0);
    ob = e_widget_button_add(evas, _("Add"), "widget/add", _cb_add, cfdata, NULL);
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 0, 0);
@@ -95,35 +95,35 @@ _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    e_widget_disabled_set(cfdata->o_select, 1);
    e_widget_disabled_set(cfdata->o_delete, 1);
-   
+
    e_widget_list_object_append(o, ot, 1, 0, 0.0);
-   
+
    _ilist_fill(cfdata);
-   
+
    e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
 
-static void 
-_ilist_fill(E_Config_Dialog_Data *cfdata) 
+static void
+_ilist_fill(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
    Evas_List *l;
    const char *cur_profile;
-   
+
    if (!cfdata) return;
    if (!cfdata->o_list) return;
-   
+
    evas = evas_object_evas_get(cfdata->o_list);
    evas_event_freeze(evas);
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_list);
-   
+
    e_widget_ilist_clear(cfdata->o_list);
    e_widget_ilist_go(cfdata->o_list);
-   
+
    cur_profile = e_config_profile_get();
-   for (l = e_config_profile_list(); l; l = l->next) 
+   for (l = e_config_profile_list(); l; l = l->next)
      {
 	Evas_Object *ob;
 
@@ -135,7 +135,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_selected_set(cfdata->o_list, e_widget_ilist_count(cfdata->o_list));
      }
      }
-   
+
    e_widget_min_size_set(cfdata->o_list, 155, 250);
    e_widget_ilist_go(cfdata->o_list);
 
@@ -144,15 +144,15 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    evas_event_thaw(evas);
 }
 
-static void 
-_ilist_cb_selected(void *data) 
+static void
+_ilist_cb_selected(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    const char *cur_profile;
-   
+
    cfdata = data;
    if (!cfdata) return;
-   
+
    cur_profile = e_config_profile_get();
    if (!strcmp (cur_profile, cfdata->sel_profile))
      {
@@ -166,26 +166,26 @@ _ilist_cb_selected(void *data)
      }	
 }
 
-static void 
-_cb_add(void *data, void *data2) 
+static void
+_cb_add(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = data;
    if (!cfdata) return;
 
    if (cfdata->dia_new_profile)
      e_win_raise(cfdata->dia_new_profile->win);
-   else 
+   else
      cfdata->dia_new_profile = _dia_new_profile(cfdata);
 }
 
-static void 
-_cb_select(void *data, void *data2) 
+static void
+_cb_select(void *data, void *data2)
 {
    E_Action *a;
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = data;
    if (!cfdata) return;
 
@@ -198,8 +198,8 @@ _cb_select(void *data, void *data2)
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
-static void 
-_cb_delete(void *data, void *data2) 
+static void
+_cb_delete(void *data, void *data2)
 {
    Del_Profile_Confirm_Data *d;
    char buf[4096];
@@ -212,13 +212,13 @@ _cb_delete(void *data, void *data2)
    snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br><br>"
 				"Are you sure you want to delete this profile?"),
                                 d->cfdata->sel_profile);
-   e_confirm_dialog_show(_("Are you sure you want to delete this profile?"), 
-			   "enlightenment/exit", buf, NULL, NULL, _cb_dialog_yes, NULL, d, NULL, 
+   e_confirm_dialog_show(_("Are you sure you want to delete this profile?"),
+			   "enlightenment/exit", buf, NULL, NULL, _cb_dialog_yes, NULL, d, NULL,
                            _cb_dialog_destroy, d);
 }
 
-static void 
-_cb_dialog_yes(void *data) 
+static void
+_cb_dialog_yes(void *data)
 {
    Del_Profile_Confirm_Data *d;
 
@@ -273,11 +273,11 @@ _dia_new_profile(E_Config_Dialog_Data *cfdata)
 				     1, 1, 1, 0);
 
    rg = e_widget_radio_group_new(&cfdata->new_profile_type);
-   ob = e_widget_radio_add(evas, _("Plain Profile"), 0, rg);   
+   ob = e_widget_radio_add(evas, _("Plain Profile"), 0, rg);
    e_widget_table_object_append(ot, ob,
 				     0, 1, 2, 1,
 				     1, 1, 1, 0);
-   ob = e_widget_radio_add(evas, _("Clone Current Profile"), 1, rg);   
+   ob = e_widget_radio_add(evas, _("Clone Current Profile"), 1, rg);
    e_widget_table_object_append(ot, ob,
 				     0, 2, 2, 1,
 				     1, 1, 1, 0);
@@ -294,8 +294,8 @@ _dia_new_profile(E_Config_Dialog_Data *cfdata)
    return dia;
 }
 
-static void 
-_new_profile_cb_close(void *data, E_Dialog *dia) 
+static void
+_new_profile_cb_close(void *data, E_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
    cfdata = data;
@@ -307,15 +307,15 @@ _new_profile_cb_close(void *data, E_Dialog *dia)
    cfdata->new_profile_type = 0;
 }
 
-static void 
-_new_profile_cb_ok(void *data, E_Dialog *dia) 
+static void
+_new_profile_cb_ok(void *data, E_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
    char cur_profile[1024];
-   
+
    cfdata = data;
    if (!cfdata) return;
-   
+
    snprintf(cur_profile, sizeof (cur_profile), "%s", e_config_profile_get());
 
    if (cfdata->new_profile)
@@ -341,7 +341,7 @@ _new_profile_cb_dia_del(void *obj)
 {
    E_Dialog *dia = obj;
    E_Config_Dialog_Data *cfdata = dia->data;
-     
+
    cfdata->dia_new_profile = NULL;
    cfdata->new_profile = NULL;
    cfdata->new_profile_type = 0;
