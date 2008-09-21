@@ -5,6 +5,7 @@ static void  _fill_data(E_Config_Dialog_Data *cfdata);
 static void  _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int   _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int   _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void _cb_composite_change(void *data, Evas_Object *obj);
 static void _cb_confirm_yes(void *data);
 static void _cb_confirm_no(void *data);
@@ -31,6 +32,7 @@ e_int_config_engine(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
+   v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con,
 			     _("Engine Settings"),
@@ -70,6 +72,13 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->evas_engine_default = cfdata->evas_engine_default;
    e_config_save_queue();
    return 1;
+}
+
+static int
+_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   return !((cfdata->use_composite == e_config->use_composite) &&
+	    (cfdata->evas_engine_default == e_config->evas_engine_default));
 }
 
 static Evas_Object *

@@ -379,13 +379,42 @@ _e_config_dialog_changed(E_Config_Dialog *cfd)
 }
 
 static void
+_e_config_dialog_unchanged(E_Config_Dialog *cfd)
+{
+   if (!cfd->hide_buttons)
+     {
+	e_dialog_button_disable_num_set(cfd->dia, 0, 1);
+	e_dialog_button_disable_num_set(cfd->dia, 1, 1);
+     }
+   else
+     {
+	if (cfd->auto_apply_timer)
+	  {
+	     ecore_timer_del(cfd->auto_apply_timer);
+	     cfd->auto_apply_timer = NULL;
+	  }
+     }
+}
+
+static void
 _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
 {
-   E_Config_Dialog *cfd;
+   E_Config_Dialog *cfd = data;
+   int changed;
 
-   cfd = data;
-   if (cfd->cfg_changed_auto)
-     _e_config_dialog_changed(data);
+   if (!cfd->cfg_changed_auto)
+     return;
+
+   if ((cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC) &&
+       (cfd->view->basic.check_changed))
+     changed = cfd->view->basic.check_changed(cfd, cfd->cfdata);
+   else if ((cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED) &&
+	    (cfd->view->advanced.check_changed))
+     changed = cfd->view->advanced.check_changed(cfd, cfd->cfdata);
+   else
+     changed = 1;
+
+   e_config_dialog_changed_set(cfd, changed);
 }
 
 static void
@@ -423,19 +452,5 @@ e_config_dialog_changed_set(E_Config_Dialog *cfd, unsigned char value)
    if (cfd->cfg_changed)
      _e_config_dialog_changed(cfd);
    else
-     {
-	if (!cfd->hide_buttons)
-	  {
-	     e_dialog_button_disable_num_set(cfd->dia, 0, 1);
-	     e_dialog_button_disable_num_set(cfd->dia, 1, 1);
-	  }
-	else
-	  {
-	     if (cfd->auto_apply_timer)
-	       {
-		  ecore_timer_del(cfd->auto_apply_timer);
-		  cfd->auto_apply_timer = NULL;
-	       }
-	  }
-     }
+     _e_config_dialog_unchanged(cfd);
 }

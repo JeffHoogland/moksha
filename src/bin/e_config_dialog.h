@@ -32,6 +32,7 @@ struct _E_Config_Dialog_View
    struct {
       int          (*apply_cfdata)      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
       Evas_Object *(*create_widgets)    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+      int          (*check_changed)     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
    } basic, advanced;   
 };
 
