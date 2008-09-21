@@ -827,7 +827,7 @@ _fill_categories_ilist(E_Config_Dialog_Data *cfdata)
 	if (theme->file)
 	  {
 	     ic = edje_object_add(evas);
-	     e_util_edje_icon_set(ic, "enlightenment/e");
+	     e_util_edje_icon_set(ic, "enlightenment/check");
 	  }
 	e_widget_ilist_append(o, ic, theme->category + 11, NULL, NULL, NULL);
 	themes = themes->next;

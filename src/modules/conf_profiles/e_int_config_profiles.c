@@ -131,7 +131,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 	e_widget_ilist_append(cfdata->o_list, ob, l->data, _ilist_cb_selected, cfdata, l->data);
 	if (!strcmp (cur_profile, l->data))
      {
-   e_util_edje_icon_set(ob, "enlightenment/e");
+   e_util_edje_icon_set(ob, "enlightenment/check");
    e_widget_ilist_selected_set(cfdata->o_list, e_widget_ilist_count(cfdata->o_list));
      }
      }

@@ -1358,7 +1358,7 @@ _lang_list_load(void *data)
 	     Evas_Object *ic;
 	
 	     ic = edje_object_add(cfdata->evas);
-	     e_util_edje_icon_set(ic, "enlightenment/e");
+	     e_util_edje_icon_set(ic, "enlightenment/check");
 	     e_widget_ilist_append(cfdata->gui.lang_list, ic, trans, NULL, NULL, ln->lang_code);
 	  }
 	else

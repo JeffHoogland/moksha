@@ -501,7 +501,7 @@ _load_color_classes(Evas_Object *obj, E_Config_Dialog_Data *cfdata)
 	     if (cfc->enabled) 
 	       {
 		  icon = edje_object_add(evas_object_evas_get(obj));
-		  e_util_edje_icon_set(icon, "enlightenment/e");
+		  e_util_edje_icon_set(icon, "enlightenment/check");
 	       }
 	     else
 	       icon = NULL;
@@ -542,7 +542,7 @@ _radio_cb_change(void *data, Evas_Object *obj, void *event_info)
 	if (c->enabled) 
 	  {
 	     icon = edje_object_add(evas_object_evas_get(cfdata->gui.ilist));
-	     e_util_edje_icon_set(icon, "enlightenment/e");
+	     e_util_edje_icon_set(icon, "enlightenment/check");
 	  }
 	else 
 	  icon = NULL;
