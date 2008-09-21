@@ -2,6 +2,7 @@
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void  _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int   _apply_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _ilist_fill(E_Config_Dialog_Data *cfdata);
 static void _ilist_cb_selected(void *data);
@@ -21,7 +22,6 @@ struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
    Evas_Object *o_list;
-   Evas_Object *o_select;
    Evas_Object *o_delete;
    char *sel_profile;
 
@@ -47,6 +47,7 @@ e_int_config_profiles(E_Container *con, const char *params __UNUSED__)
    if (!v) return NULL;
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
+   v->basic.apply_cfdata = _apply_cfdata;
    v->basic.create_widgets = _create_widgets;
 
    cfd = e_config_dialog_new(con,
@@ -72,6 +73,26 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    E_FREE(cfdata);
 }
 
+static int
+_apply_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   const char *cur_profile;
+   E_Action *a;
+
+   cur_profile = e_config_profile_get();
+   if (strcmp (cur_profile, cfdata->sel_profile) == 0)
+     return 1;
+
+   e_config_save_flush();
+   e_config_profile_set(cfdata->sel_profile);
+   e_config_profile_save();
+   e_config_save_block_set(1);
+
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+   return 1;
+}
+
 static Evas_Object *
 _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
@@ -88,12 +109,9 @@ _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ot = e_widget_table_add(evas, 0);
    ob = e_widget_button_add(evas, _("Add"), "widget/add", _cb_add, cfdata, NULL);
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 0, 0);
-   cfdata->o_select = e_widget_button_add(evas, _("Select"), "widget/select", _cb_select, cfdata, NULL);
-   e_widget_table_object_append(ot, cfdata->o_select, 0, 1, 1, 1, 1, 1, 0, 0);
    cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "widget/del", _cb_delete, cfdata, NULL);
-   e_widget_table_object_append(ot, cfdata->o_delete, 0, 2, 1, 1, 1, 1, 0, 0);
+   e_widget_table_object_append(ot, cfdata->o_delete, 0, 1, 1, 1, 1, 1, 0, 0);
 
-   e_widget_disabled_set(cfdata->o_select, 1);
    e_widget_disabled_set(cfdata->o_delete, 1);
 
    e_widget_list_object_append(o, ot, 1, 0, 0.0);
@@ -155,15 +173,9 @@ _ilist_cb_selected(void *data)
 
    cur_profile = e_config_profile_get();
    if (!strcmp (cur_profile, cfdata->sel_profile))
-     {
-   e_widget_disabled_set(cfdata->o_select, 1);
-   e_widget_disabled_set(cfdata->o_delete, 1);
-     }
+     e_widget_disabled_set(cfdata->o_delete, 1);
    else
-     {
-   e_widget_disabled_set(cfdata->o_select, 0);
-   e_widget_disabled_set(cfdata->o_delete, 0);
-     }	
+     e_widget_disabled_set(cfdata->o_delete, 0);
 }
 
 static void
@@ -178,24 +190,6 @@ _cb_add(void *data, void *data2)
      e_win_raise(cfdata->dia_new_profile->win);
    else
      cfdata->dia_new_profile = _dia_new_profile(cfdata);
-}
-
-static void
-_cb_select(void *data, void *data2)
-{
-   E_Action *a;
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = data;
-   if (!cfdata) return;
-
-   e_config_save_flush();
-   e_config_profile_set(cfdata->sel_profile);
-   e_config_profile_save();
-   e_config_save_block_set(1);
-
-   a = e_action_find("restart");
-   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
 static void
