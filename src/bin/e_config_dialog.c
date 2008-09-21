@@ -39,6 +39,7 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
    cfd->data = data;
    cfd->hide_buttons = 1;
    cfd->cfg_changed = 0;
+   cfd->cfg_changed_auto = 1;
 
    if (cfd->view->override_auto_apply)
      {
@@ -361,22 +362,30 @@ _e_config_dialog_cb_basic(void *data, void *data2)
 }
 
 static void
+_e_config_dialog_changed(E_Config_Dialog *cfd)
+{
+   if (!cfd->hide_buttons)
+     {
+	cfd->cfg_changed = 1;
+	e_dialog_button_disable_num_set(cfd->dia, 0, 0);
+	e_dialog_button_disable_num_set(cfd->dia, 1, 0);
+     }
+   else
+     {
+	if (cfd->auto_apply_timer)
+	  ecore_timer_del(cfd->auto_apply_timer);
+	cfd->auto_apply_timer = ecore_timer_add(0.5, _e_config_dialog_cb_auto_apply_timer, cfd);
+     }
+}
+
+static void
 _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
 {
    E_Config_Dialog *cfd;
- 
+
    cfd = data;
-   if (!cfd->hide_buttons)
-      {
-	 cfd->cfg_changed = 1;
-         e_dialog_button_disable_num_set(cfd->dia, 0, 0);
-         e_dialog_button_disable_num_set(cfd->dia, 1, 0);
-      }
-   else
-     {
-	if (cfd->auto_apply_timer) ecore_timer_del(cfd->auto_apply_timer);
-	cfd->auto_apply_timer = ecore_timer_add(0.5, _e_config_dialog_cb_auto_apply_timer, cfd);
-     }   
+   if (cfd->cfg_changed_auto)
+     _e_config_dialog_changed(data);
 }
 
 static void
@@ -392,4 +401,41 @@ _e_config_dialog_cb_close(void *data, E_Dialog *dia)
 
    if (ok)
      e_util_defer_object_del(E_OBJECT(cfd));
+}
+
+EAPI void
+e_config_dialog_changed_auto_set(E_Config_Dialog *cfd, unsigned char value)
+{
+   if (!cfd)
+     return;
+
+   cfd->cfg_changed_auto = !!value;
+}
+
+EAPI void
+e_config_dialog_changed_set(E_Config_Dialog *cfd, unsigned char value)
+{
+   if (!cfd)
+     return;
+
+   cfd->cfg_changed = !!value;
+
+   if (cfd->cfg_changed)
+     _e_config_dialog_changed(cfd);
+   else
+     {
+	if (!cfd->hide_buttons)
+	  {
+	     e_dialog_button_disable_num_set(cfd->dia, 0, 1);
+	     e_dialog_button_disable_num_set(cfd->dia, 1, 1);
+	  }
+	else
+	  {
+	     if (cfd->auto_apply_timer)
+	       {
+		  ecore_timer_del(cfd->auto_apply_timer);
+		  cfd->auto_apply_timer = NULL;
+	       }
+	  }
+     }
 }

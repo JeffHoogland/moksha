@@ -54,6 +54,7 @@ e_int_config_profiles(E_Container *con, const char *params __UNUSED__)
 			     _("Profile Selector"),
 			    "E", "_config_profiles_dialog",
 			     "enlightenment/profiles", 0, v, NULL);
+   e_config_dialog_changed_auto_set(cfd, 0);
    return cfd;
 }
 
@@ -167,15 +168,16 @@ _ilist_cb_selected(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    const char *cur_profile;
+   unsigned char v;
 
    cfdata = data;
    if (!cfdata) return;
 
    cur_profile = e_config_profile_get();
-   if (!strcmp (cur_profile, cfdata->sel_profile))
-     e_widget_disabled_set(cfdata->o_delete, 1);
-   else
-     e_widget_disabled_set(cfdata->o_delete, 0);
+
+   v = strcmp(cur_profile, cfdata->sel_profile) == 0;
+   e_widget_disabled_set(cfdata->o_delete, v);
+   e_config_dialog_changed_set(cfdata->cfd, !v);
 }
 
 static void
