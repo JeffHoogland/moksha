@@ -363,11 +363,11 @@ e_fm2_hal_volume_mountpoint_get(E_Volume *v)
      }
    
    if (v->uuid && v->uuid[0] != '\0')
-     snprintf(buf, sizeof(buf) - 1, "/media/%s", strdup(v->uuid));
+     snprintf(buf, sizeof(buf) - 1, "/media/%s", v->uuid);
    else if (v->label && v->label[0] != '\0')
-     snprintf(buf, sizeof(buf) - 1, "/media/%s", strdup(v->label));
+     snprintf(buf, sizeof(buf) - 1, "/media/%s", v->label);
    else if ((v->storage) && (v->storage->serial) && v->storage->serial[0] != '\0')
-     snprintf(buf, sizeof(buf) - 1, "/media/%s", strdup(v->storage->serial));
+     snprintf(buf, sizeof(buf) - 1, "/media/%s", v->storage->serial);
    else
      {
 	static int mount_count = 1;
