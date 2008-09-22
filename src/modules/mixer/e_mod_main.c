@@ -1078,12 +1078,15 @@ static const char _reg_cat[] = "extensions";
 static const char _reg_item[] = "extensions/e";
 
 static void
-_mixer_configure_registry_register(void)
+_mixer_configure_registry_register(E_Module *m)
 {
+   char buf[PATH_MAX];
+    
+   snprintf(buf, sizeof(buf), "%s/e-module-mixer.edj", e_module_dir_get(m));
    e_configure_registry_category_add(_reg_cat, 90, _("Extensions"), NULL,
                                      "enlightenment/extensions");
    e_configure_registry_item_add(_reg_item, 30, _(_Name), NULL,
-                                 "enlightenment/e",
+				  buf, 
 				 _mixer_module_config);
 }
 
@@ -1245,7 +1248,7 @@ e_modapi_init(E_Module *m)
    if (!ctxt)
      return NULL;
 
-   _mixer_configure_registry_register();
+   _mixer_configure_registry_register(m);
    _mixer_actions_register(ctxt);
    e_gadcon_provider_register(&_gc_class);
    mixer_mod = m;
