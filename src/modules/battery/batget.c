@@ -607,18 +607,25 @@ static int
 linux_sys_class_power_supply_is_battery(char *name)
 {
   int fd;
-  char buf[255];
-  char tmp[255];
+  int ret = 0;
+  char buf[256];
 
-  memset(tmp, 0, 255);
-  snprintf(buf, 255, "/sys/class/power_supply/%s/type", name);
-  if (!(fd = open(buf, O_RDONLY)))
-    return 0;
-  if (read(fd, tmp, 255) < 1)
-    return 0;
-  if (!strncmp(tmp, "Battery", 7))
-    return 1;
-  return 0;
+  snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/type", name);
+  fd = open(buf, O_RDONLY);
+  if (fd < 0)
+    {
+       ret = 0;
+       goto NO_OPEN;
+    }
+  else if (read(fd, buf, sizeof(buf)) < 1)
+    ret = 0;
+  else if (!strncmp(buf, "Battery", 7))
+    ret = 1;
+  
+  close(fd);
+  
+  NO_OPEN:
+  return ret;
 }
 
 static void
