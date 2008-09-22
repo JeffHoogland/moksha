@@ -455,10 +455,18 @@ _e_fm2_cb_mount_ok(void *data)
    
    sd = evas_object_smart_data_get(data);
    if (!sd) return; // safety
-   sd->id = _e_fm2_client_monitor_add(sd->realpath);
-   sd->listing = 1;
-   evas_object_smart_callback_call(data, "dir_changed", NULL);
-   sd->tmp.iter = 0;
+   
+   if (strcmp(sd->mount->mount_point, sd->realpath))
+     {
+	e_fm2_path_set(sd->obj, "/", sd->mount->mount_point);
+     }
+   else
+     {
+	sd->id = _e_fm2_client_monitor_add(sd->mount->mount_point);
+	sd->listing = 1;
+	evas_object_smart_callback_call(data, "dir_changed", NULL);
+	sd->tmp.iter = 0;
+     }
 }
 
 static void
