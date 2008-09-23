@@ -326,6 +326,7 @@ e17_icon_background.png \
 e17_icon_behavior.png \
 e17_icon_colors.png \
 e17_icon_configuration.png \
+e17_icon_check.png \
 e17_icon_desklock.png \
 e17_icon_desklock_menu.png \
 e17_icon_desktop.png \
