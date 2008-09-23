@@ -19,6 +19,9 @@
 #include <Ecore.h>
 #include <Ecore_File.h>
 
+#define E_TYPEDEFS
+#include "e_fm_op.h"
+#undef E_TYPEDEFS
 #include "e_fm_op.h"
 
 #define READBUFSIZE 65536

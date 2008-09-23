@@ -35,6 +35,10 @@
 #include <Eet.h>
 #include "config.h"
 
+#define E_TYPEDEFS
+#include "e_fm_op.h"
+#include "e_prefix.h"
+#undef E_TYPEDEFS
 #include "e_fm_op.h"
 #include "e_prefix.h"
 

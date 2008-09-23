@@ -1,8 +1,7 @@
 /*
  * vim:cindent:ts=8:sw=3:sts=8:expandtab:cino=>5n-3f0^-2{2
  */
-#ifndef _E_FM_OP_H
-#define _E_FM_OP_H
+#ifdef E_TYPEDEFS
 
 #define E_FM_OP_DEBUG(...) fprintf(stderr, __VA_ARGS__)
 
@@ -51,4 +50,9 @@ typedef enum _E_Fm_Op_Type
    E_FM_OP_REORDER
 } E_Fm_Op_Type;
 
+#else
+#ifndef E_FM_OP_H
+#define E_FM_OP_H
+
+#endif
 #endif

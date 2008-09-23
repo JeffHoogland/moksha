@@ -135,3 +135,4 @@
 #include "e_slidesel.h"
 #include "e_slidecore.h"
 #include "e_widget_flist.h"
+#include "e_fm_op.h"
