@@ -111,6 +111,9 @@ images {
    image: "e17_icon_window_remembers.png" COMP;
 
    image: "e17_icon_check.png" COMP;
+   image: "e17_icon_add.png" COMP;
+   image: "e17_icon_new.png" COMP;
+   image: "e17_icon_del.png" COMP;
 }
 
 group {
@@ -2335,6 +2338,87 @@ group {
 }
 
 group {
+   name: "e/icons/widget/add";
+   max:  32 32;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      32 32;
+	    image {
+	       normal: "e17_icon_add.png";
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "e/icons/widget/add_fav";
+   max:  32 32;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      32 32;
+	    image {
+	       normal: "e17_icon_favorites.png";
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "e/icons/widget/del";
+   max:  32 32;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      32 32;
+	    image {
+	       normal: "e17_icon_del.png";
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "e/icons/widget/new";
+   max:  32 32;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      32 32;
+	    image {
+	       normal: "e17_icon_new.png";
+	    }
+	 }
+      }
+   }
+}
+
+
+group {
    name: "e/icons/widget/config";
    max:  64 64;
    parts {
@@ -2353,6 +2437,7 @@ group {
       }
    }
 }
+
 
 // Dummy icon filler. Replace these with their own group and icon.
 group {
@@ -2380,32 +2465,3 @@ group {
       }
    }
 }
-
-
-group {
-   name: "e/icons/widget/add";
-   alias: "e/icons/widget/del";
-//alias: "e/icons/widget/config";
-   alias: "e/icons/widget/new";
-   max:  64 64;
-   parts {
-      part {
-	 name:          "icon";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    aspect:   1.0 1.0;
-	    aspect_preference: BOTH;
-	    max:      64 64;
-	    image {
-	       normal: "e17_icon_e_0.png";
-	    }
-	 }
-      }
-   }
-}
-
-
-
-
-

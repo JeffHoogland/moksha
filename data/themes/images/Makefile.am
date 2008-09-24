@@ -319,6 +319,7 @@ e17_ibar_lamp_r.png \
 e17_ibar_lamp_u.png \
 e17_ibar_over_h.png \
 e17_ibar_over_v.png \
+e17_icon_add.png \
 e17_icon_advanced.png \
 e17_icon_appearance.png \
 e17_icon_applications.png \
@@ -327,6 +328,7 @@ e17_icon_behavior.png \
 e17_icon_colors.png \
 e17_icon_configuration.png \
 e17_icon_check.png \
+e17_icon_del.png \
 e17_icon_desklock.png \
 e17_icon_desklock_menu.png \
 e17_icon_desktop.png \
@@ -399,6 +401,7 @@ e17_icon_mouse_left.png \
 e17_icon_mouse_middle.png \
 e17_icon_mouse_right.png \
 e17_icon_mouse_wheel.png \
+e17_icon_new.png \
 e17_icon_pager.png \
 e17_icon_performance.png \
 e17_icon_reboot.png \
