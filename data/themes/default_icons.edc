@@ -926,6 +926,7 @@ group {
 }
 group {
    name: "e/icons/enlightenment/background";
+   alias: "e/icons/enlightenment/picture";
    max:  64 64;
    parts {
       part {
@@ -1957,6 +1958,68 @@ group {
       }
    }
 }
+
+group {
+   name: "e/icons/enlightenment/gradient";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "base";
+         type: RECT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to: "screen";
+	       offset: 1 1;
+	    }
+	    rel2 {
+	       to: "screen";
+	       offset: -2 -2;
+	    }
+            color: 255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "bg";
+         type: GRADIENT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+
+	    rel1 {
+	       to: "screen";
+	    }
+	    rel2 {
+	       to: "screen";
+	    }
+            gradient {
+              spectrum: "black_to_trans";
+							rel1.relative: 0 0;
+							rel1.offset: 0 0;
+							rel2.relative: 1 1;
+							rel2.offset: -1 -1;
+            }
+	 }
+      }
+      part {
+	 name:          "screen";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    rel1.offset: 1 1;
+	    rel2.offset: -2 -2;
+	    image {
+	       normal: "e17_wallpaper_grad_screen.png";
+	       border: 2 2 2 2;
+	    }
+	 }
+      }
+   }
+}
+
 group {
    name: "e/icons/enlightenment/advanced";
    max:  64 64;
@@ -2446,8 +2509,6 @@ group {
    name: "e/icons/enlightenment/engine";
    alias: "e/icons/enlightenment/profiles";
    alias: "e/icons/enlightenment/add_application";
-   alias: "e/icons/enlightenment/picture";
-   alias: "e/icons/enlightenment/gradient";
    alias: "e/icons/enlightenment/website";
    alias: "e/icons/enlightenment/swap";
    alias: "e/icons/enlightenment/scale";
