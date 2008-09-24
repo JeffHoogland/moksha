@@ -9,6 +9,7 @@ EAPI Ecore_X_Atom _QTOPIA_SOFT_MENUS = 0;
 static Ecore_X_Atom gnome_atom = 0;
 static Ecore_X_Atom enlightenment_comms = 0;
 static Ecore_X_Atom enlightenment_version = 0;
+static Ecore_X_Atom enlightenment_scale = 0;
 
 EAPI void
 e_hints_init(void)
@@ -21,15 +22,17 @@ e_hints_init(void)
 	"GNOME_SM_PROXY",
 	"ENLIGHTENMENT_COMMS",
 	"ENLIGHTENMENT_VERSION",
+	"ENLIGHTENMENT_SCALE"
    };
-   Ecore_X_Atom atoms[5];
+   Ecore_X_Atom atoms[6];
    
-   ecore_x_atoms_get(atom_names, 5, atoms);
+   ecore_x_atoms_get(atom_names, 6, atoms);
    _QTOPIA_SOFT_MENU = atoms[0];
    _QTOPIA_SOFT_MENUS = atoms[1];
    gnome_atom = atoms[2];
    enlightenment_comms = atoms[3];
    enlightenment_version = atoms[4];
+   enlightenment_scale = atoms[5];
    
    roots = ecore_x_window_root_list(&num);
    if (roots)
@@ -176,6 +179,7 @@ e_hints_init(void)
 	     e_hints_openoffice_gnome_fake(roots[i]);
 
 	     ecore_x_netwm_supported_set(roots[i], supported, supported_num);
+
 	  }
         free(roots);
      }
@@ -525,7 +529,7 @@ e_hints_window_init(E_Border *bd)
      }
    if (bd->client.netwm.state.shaded)
      {
-	if (!bd->lock_client_shade)
+if (!bd->lock_client_shade)
 	  e_border_shade(bd, e_hints_window_shade_direction_get(bd));
 	else
 	  e_hints_window_shaded_set(bd, 0);
@@ -1414,3 +1418,18 @@ e_hints_openoffice_kde_fake(Ecore_X_Window root)
    ecore_x_netwm_wm_identify(root, win2, "KWin");
 }
 
+EAPI void e_hints_scale_update(void)
+{
+   Ecore_X_Window *roots = NULL;
+   int i, num;
+   int scale;
+   
+   roots = ecore_x_window_root_list(&num);
+   if (roots)
+     {
+	scale = e_scale * 1000;
+	for (i = 0; i < num; i++)
+	  ecore_x_window_prop_card32_set(roots[i], enlightenment_scale, &scale, 1);
+	free(roots);
+     }
+}

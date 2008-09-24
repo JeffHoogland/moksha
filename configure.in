@@ -430,6 +430,8 @@ src/modules/conf_mime/Makefile
 src/modules/conf_mime/module.desktop
 src/modules/conf_interaction/Makefile
 src/modules/conf_interaction/module.desktop
+src/modules/conf_scale/Makefile
+src/modules/conf_scale/module.desktop
 src/modules/gadman/Makefile
 src/modules/gadman/module.desktop
 src/modules/mixer/Makefile

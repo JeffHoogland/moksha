@@ -53,6 +53,7 @@ conf_interaction \
 gadman \
 mixer \
 conf_window_remembers \
+conf_scale \
 connman
 
 if HAVE_TEMPERATURE

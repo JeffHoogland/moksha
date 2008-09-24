@@ -1,5 +1,5 @@
 group "E_Config" struct {
-  value "config_version" int: 65830;
+  value "config_version" int: 65831;
   value "show_splash" int: 1;
   value "init_default_theme" string: "default.edj";
   value "desktop_default_name" string: "Desktop %i, %i";
@@ -31,7 +31,7 @@ group "E_Config" struct {
   value "evas_engine_drag" int: 0;
   value "evas_engine_win" int: 0;
   value "evas_engine_zone" int: 0;
-  value "use_composite" int: 0;
+ value "use_composite" int: 0;
   group "modules" list {
     group "E_Config_Module" struct {
       value "name" string: "conf_interaction";
@@ -1985,4 +1985,10 @@ group "E_Config" struct {
   value "border_keyboard.move.dy" uchar: 5;
   value "border_keyboard.resize.dx" uchar: 5;
   value "border_keyboard.resize.dy" uchar: 5;
+  value "scale.min" double: 1.0;
+  value "scale.max" double: 3.0;
+  value "scale.factor" double: 1.0;
+  value "scale.base_dpi" int: 142;
+  value "scale.use_dpi" uchar: 0;
+  value "scale.use_custom" uchar: 1;
 }

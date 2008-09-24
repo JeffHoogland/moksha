@@ -53,7 +53,7 @@ e_config_init(void)
    _e_config_profile = getenv("E_CONF_PROFILE");
    if (_e_config_profile)
      /* if environment var set - use this profile name */
-     _e_config_profile = strdup(_e_config_profile);
+    _e_config_profile = strdup(_e_config_profile);
    else 
      {
 	Eet_File *ef;
@@ -622,6 +622,15 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, border_keyboard.resize.dx, UCHAR);
    E_CONFIG_VAL(D, T, border_keyboard.resize.dy, UCHAR);
 
+   E_CONFIG_VAL(D, T, hal_desktop, INT);
+
+   E_CONFIG_VAL(D, T, scale.min, DOUBLE);
+   E_CONFIG_VAL(D, T, scale.max, DOUBLE);
+   E_CONFIG_VAL(D, T, scale.factor, DOUBLE);
+   E_CONFIG_VAL(D, T, scale.base_dpi, INT);
+   E_CONFIG_VAL(D, T, scale.use_dpi, UCHAR);
+   E_CONFIG_VAL(D, T, scale.use_custom, UCHAR);
+   
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -1556,7 +1565,15 @@ e_config_init(void)
    e_config->border_keyboard.resize.dx = 5;
    e_config->border_keyboard.resize.dy = 5;
    IFCFGEND;
-
+   
+   IFCFG(0x0127);
+   e_config->scale.min = 1.0;
+   e_config->scale.max = 3.0;
+   e_config->scale.factor = 1.0;
+   e_config->scale.base_dpi = 142;
+   e_config->scale.use_dpi = 0;
+   e_config->scale.use_custom = 1;
+   IFCFGEND;
    
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      

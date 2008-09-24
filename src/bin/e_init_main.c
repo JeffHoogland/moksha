@@ -59,6 +59,8 @@ int
 main(int argc, char **argv)
 {
    int i;
+   char *s;
+   double scale;
    
    for (i = 1; i < argc; i++)
      {
@@ -88,7 +90,11 @@ main(int argc, char **argv)
    evas_init();
    ecore_evas_init();
    edje_init();
-   edje_frametime_set(1.0 / 60.0);
+   edje_frametime_set(1.0 / 30.0);
+   s = getenv("E_SCALE");
+   scale = 1.0;
+   if (s) scale = atof(s);
+   edje_scale_set(scale);
    ecore_file_init();
    ecore_ipc_init();
 

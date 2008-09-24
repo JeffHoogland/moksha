@@ -508,6 +508,15 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_config_shutdown);
    
+   TS("scale");
+   /* init config system */
+   if (!e_scale_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its scale system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_scale_shutdown);
+   
    TS("pointer");
    if (!e_pointer_init())
      {
@@ -533,21 +542,6 @@ main(int argc, char **argv)
       
    /* setup edje to animate @ e_config->framerate frames per sec. */
    edje_frametime_set(1.0 / e_config->framerate);
-
-// FIXME: just a hack.
-     {
-	static scale = -1.0;
-	
-	if (scale == -1.0)
-	  {
-	     char *s;
-	     
-	     s = getenv("E_SCALE");
-	     if (s) scale = atof(s);
-	     else scale = 1.0;
-	  }
-	edje_scale_set(scale);
-     }
 
    TS("font");
    /* init font system */
