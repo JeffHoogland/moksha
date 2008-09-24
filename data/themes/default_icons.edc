@@ -1,21 +1,21 @@
 images {
    image: "e17_icon_e_0.png" LOSSY 90;
    image: "e17_icon_e_glow_0.png" LOSSY 90;
-   
+
    image: "e17_icon_icon_theme.png" LOSSY 90;
    image: "e17_icon_theme.png" LOSSY 90;
    image: "e17_icon_colors.png" LOSSY 90;
 
    image: "e17_icon_windows.png" LOSSY 90;
-	
-   image: "e17_icon_lost_windows.png" LOSSY 90;	
-  
+
+   image: "e17_icon_lost_windows.png" LOSSY 90;
+
    image: "e17_icon_module.png" LOSSY 90;
-   
+
    image: "e17_icon_favorites.png" LOSSY 90;
-   
+
    image: "e17_icon_desktop.png" LOSSY 90;
-   
+
    image: "e17_icon_configuration.png" LOSSY 90;
    image: "e17_icon_intl.png" LOSSY 90;
    image: "e17_icon_run.png" LOSSY 90;
@@ -41,7 +41,9 @@ images {
    image: "e17_icon_regenerate_menus.png" LOSSY 90;
 
    image: "e17_pager_window.png" COMP;
-   
+   image: "e17_icon_pager.png" COMP;
+   image: "e17_icon_mixer.png" COMP;
+
    image: "e17_icon_right_arrow.png" COMP;
    image: "e17_icon_up_arrow.png" COMP;
    image: "e17_icon_down_arrow.png" COMP;
@@ -52,7 +54,7 @@ images {
    image: "e17_icon_mouse_extra.png" COMP;
    image: "e17_icon_mouse_wheel.png" COMP;
    image: "e17_icon_mouse_clean.png" COMP;
-   
+
    image: "e17_shelf_bottom_left.png" COMP;
    image: "e17_shelf_bottom.png" COMP;
    image: "e17_shelf_bottom_right.png" COMP;
@@ -71,7 +73,7 @@ images {
    image: "e17_shelf_menu_bar.png" COMP;
    image: "e17_shelf_panel.png" COMP;
    image: "e17_shelf_top_desk.png" COMP;
-   
+
    image: "e17_icon_screen_around.png" COMP;
    image: "e17_icon_screen_hflip.png" COMP;
    image: "e17_icon_screen_left.png" COMP;
@@ -91,7 +93,7 @@ images {
    image: "e17_icon_halt.png" COMP;
    image: "e17_icon_reboot.png" COMP;
    image: "e17_icon_screen_setup.png" COMP;
-   
+
    image: "e17_icon_advanced.png" COMP;
    image: "e17_icon_behavior.png" COMP;
    image: "e17_icon_appearance.png" COMP;
@@ -107,7 +109,7 @@ images {
    image: "e17_icon_screensaver.png" COMP;
 
    image: "e17_icon_window_remembers.png" COMP;
-   
+
    image: "e17_icon_check.png" COMP;
 }
 
@@ -115,7 +117,7 @@ group {
    name: "e/icons/enlightenment/e";
    max:  64 64;
    parts {
-      part {      
+      part {
 	 name:          "e";
 	 mouse_events:  0;
 	 description {
@@ -154,7 +156,7 @@ group {
       }
    }
    programs {
-      program {	 
+      program {
 	 name:       "e_in";
 	 signal:     "e,state,selected";
 	 source:     "e";
@@ -190,7 +192,7 @@ group {
 	 }
       }
    }
-}   
+}
 group {
    name: "e/icons/enlightenment/exit";
    max:  64 64;
@@ -209,7 +211,7 @@ group {
 	 }
       }
    }
-}   
+}
 group {
    name: "e/icons/enlightenment/logout";
    max:  64 64;
@@ -228,7 +230,7 @@ group {
 	 }
       }
    }
-}   
+}
 group {
    name: "e/icons/enlightenment/halt";
    max:  64 64;
@@ -247,7 +249,7 @@ group {
 	 }
       }
    }
-}   
+}
 group {
    name: "e/icons/enlightenment/reboot";
    max:  64 64;
@@ -266,7 +268,7 @@ group {
 	 }
       }
    }
-}   
+}
 group {
    name: "e/icons/enlightenment/suspend";
    max:  64 64;
@@ -285,7 +287,7 @@ group {
 	 }
       }
    }
-}   
+}
 group {
    name: "e/icons/enlightenment/hibernate";
    max:  64 64;
@@ -304,17 +306,17 @@ group {
 	 }
       }
    }
-}   
+}
 group {
    name: "e/icons/enlightenment/screen_setup";
    max:  64 64;
-    parts { 
+    parts {
       part  {
      name:          "icon";
      mouse_events:  0;
      description {
         state:    "default" 0.0;
-        aspect:   1.0 1.0; 
+        aspect:   1.0 1.0;
         aspect_preference: BOTH;
         max:      64 64;
         image {
@@ -328,7 +330,7 @@ group {
    name: "e/icons/enlightenment/themes";
    max:  64 64;
    parts {
-      part {      
+      part {
 	 name:          "icon";
 	 mouse_events:  0;
 	 description {
@@ -342,12 +344,12 @@ group {
 	 }
       }
    }
-}   
+}
 group {
    name: "e/icons/enlightenment/colors";
    max:  64 64;
    parts {
-      part {      
+      part {
          name:          "icon";
          mouse_events:  0;
          description {
@@ -355,7 +357,7 @@ group {
             aspect:   1.0 1.0;
             aspect_preference: BOTH;
             max:      64 64;
-            image {   
+            image {
                normal: "e17_icon_colors.png";
             }
          }
@@ -576,7 +578,7 @@ group {
    name: "e/icons/enlightenment/fileman";
    max:  64 64;
    parts {
-      part {      
+      part {
 	 name:          "fileman_button";
 	 mouse_events:  0;
 	 description {
@@ -615,7 +617,7 @@ group {
       }
    }
    programs {
-      program {	 
+      program {
 	 name:       "fileman_button_in";
 	 signal:     "e,state,selected";
 	 source:     "e";
@@ -1032,8 +1034,8 @@ group {
 group {
    name: "e/icons/enlightenment/applications";
    max: 64 64;
-   parts { 
-      part {   
+   parts {
+      part {
      name:          "icon";
      mouse_events:  0;
      description {
@@ -1051,7 +1053,7 @@ group {
 group {
    name: "e/icons/enlightenment/transitions";
    max: 64 64;
-   parts { 
+   parts {
       part {
      name:          "icon";
      mouse_events:  0;
@@ -1829,7 +1831,7 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-            
+
 	    rel1 {
 	       to: "screen";
 	    }
@@ -1871,7 +1873,7 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-            
+
 	    rel1 {
 	       to: "screen";
 	    }
@@ -1909,7 +1911,7 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-            
+
 	    rel1 {
 	       to: "screen";
 	    }
@@ -1951,7 +1953,7 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-            
+
 	    rel1 {
 	       to: "screen";
 	    }
@@ -1993,7 +1995,7 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-            
+
 	    rel1 {
 	       to: "screen";
 	    }
@@ -2028,7 +2030,7 @@ group {
    name: "e/icons/enlightenment/advanced";
    max:  64 64;
    parts {
-      part {      
+      part {
          name:          "icon";
          mouse_events:  0;
          description {
@@ -2036,7 +2038,7 @@ group {
             aspect:   1.0 1.0;
             aspect_preference: BOTH;
             max:      64 64;
-            image {   
+            image {
                normal: "e17_icon_advanced.png";
             }
          }
@@ -2047,7 +2049,7 @@ group {
    name: "e/icons/enlightenment/behavior";
    max:  64 64;
    parts {
-      part {      
+      part {
          name:          "icon";
          mouse_events:  0;
          description {
@@ -2055,7 +2057,7 @@ group {
             aspect:   1.0 1.0;
             aspect_preference: BOTH;
             max:      64 64;
-            image {   
+            image {
                normal: "e17_icon_behavior.png";
             }
          }
@@ -2066,7 +2068,7 @@ group {
    name: "e/icons/enlightenment/appearance";
    max:  64 64;
    parts {
-      part {      
+      part {
          name:          "icon";
          mouse_events:  0;
          description {
@@ -2074,7 +2076,7 @@ group {
             aspect:   1.0 1.0;
             aspect_preference: BOTH;
             max:      64 64;
-            image {   
+            image {
                normal: "e17_icon_appearance.png";
             }
          }
@@ -2085,7 +2087,7 @@ group {
    name: "e/icons/enlightenment/extensions";
    max:  64 64;
    parts {
-      part {      
+      part {
          name:          "icon";
          mouse_events:  0;
          description {
@@ -2093,7 +2095,7 @@ group {
             aspect:   1.0 1.0;
             aspect_preference: BOTH;
             max:      64 64;
-            image {   
+            image {
                normal: "e17_icon_extensions.png";
             }
          }
@@ -2104,7 +2106,7 @@ group {
    name: "e/icons/enlightenment/imc";
    max:  64 64;
    parts {
-      part {      
+      part {
          name:          "icon";
          mouse_events:  0;
          description {
@@ -2112,7 +2114,7 @@ group {
             aspect:   1.0 1.0;
             aspect_preference: BOTH;
             max:      64 64;
-            image {   
+            image {
                normal: "e17_icon_imc.png";
             }
          }
@@ -2123,7 +2125,7 @@ group {
    name: "e/icons/enlightenment/file_icons";
    max:  64 64;
    parts {
-      part {      
+      part {
          name:          "icon";
          mouse_events:  0;
          description {
@@ -2131,7 +2133,7 @@ group {
             aspect:   1.0 1.0;
             aspect_preference: BOTH;
             max:      64 64;
-            image {   
+            image {
                normal: "e17_icon_file_icons.png";
             }
          }
@@ -2142,7 +2144,7 @@ group {
    name: "e/icons/enlightenment/menu_settings";
    max:  64 64;
    parts {
-      part {      
+      part {
          name:          "icon";
          mouse_events:  0;
          description {
@@ -2150,7 +2152,7 @@ group {
             aspect:   1.0 1.0;
             aspect_preference: BOTH;
             max:      64 64;
-            image {   
+            image {
                normal: "e17_icon_menu_settings.png";
             }
          }
@@ -2161,7 +2163,7 @@ group {
    name: "e/icons/enlightenment/ibar_applications";
    max:  64 64;
    parts {
-      part {      
+      part {
          name:          "icon";
          mouse_events:  0;
          description {
@@ -2169,7 +2171,7 @@ group {
             aspect:   1.0 1.0;
             aspect_preference: BOTH;
             max:      64 64;
-            image {   
+            image {
                normal: "e17_icon_ibar_applications.png";
             }
          }
@@ -2180,7 +2182,7 @@ group {
    name: "e/icons/enlightenment/restart_applications";
    max:  64 64;
    parts {
-      part {      
+      part {
          name:          "icon";
          mouse_events:  0;
          description {
@@ -2188,7 +2190,7 @@ group {
             aspect:   1.0 1.0;
             aspect_preference: BOTH;
             max:      64 64;
-            image {   
+            image {
                normal: "e17_icon_restart_applications.png";
             }
          }
@@ -2199,7 +2201,7 @@ group {
    name: "e/icons/enlightenment/startup_applications";
    max:  64 64;
    parts {
-      part {      
+      part {
          name:          "icon";
          mouse_events:  0;
          description {
@@ -2207,7 +2209,7 @@ group {
             aspect:   1.0 1.0;
             aspect_preference: BOTH;
             max:      64 64;
-            image {   
+            image {
                normal: "e17_icon_startup_applications.png";
             }
          }
@@ -2270,7 +2272,7 @@ group {
 	 }
       }
    }
-}   
+}
 
 group {
    name: "e/icons/enlightenment/check";
@@ -2290,8 +2292,118 @@ group {
 	 }
       }
    }
-}   
+}
 
+group {
+   name: "e/icons/enlightenment/pager";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_pager.png";
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "e/icons/enlightenment/mixer";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_mixer.png";
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "e/icons/widget/config";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_configuration.png";
+	    }
+	 }
+      }
+   }
+}
+
+// Dummy icon filler. Replace these with their own group and icon.
+group {
+   name: "e/icons/enlightenment/engine";
+   alias: "e/icons/enlightenment/profiles";
+   alias: "e/icons/enlightenment/add_application";
+   alias: "e/icons/enlightenment/picture";
+   alias: "e/icons/enlightenment/gradient";
+   alias: "e/icons/enlightenment/website";
+   alias: "e/icons/enlightenment/swap";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_e_0.png";
+	    }
+	 }
+      }
+   }
+}
+
+
+group {
+   name: "e/icons/widget/add";
+   alias: "e/icons/widget/del";
+//alias: "e/icons/widget/config";
+   alias: "e/icons/widget/new";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_e_0.png";
+	    }
+	 }
+      }
+   }
+}
 
 
 

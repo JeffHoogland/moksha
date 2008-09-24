@@ -390,6 +390,7 @@ e17_icon_logout.png \
 e17_icon_lost_windows.png \
 e17_icon_menu_settings.png \
 e17_icon_menus.png \
+e17_icon_mixer.png \
 e17_icon_module.png \
 e17_icon_mouse.png \
 e17_icon_mouse_clean.png \
@@ -398,6 +399,7 @@ e17_icon_mouse_left.png \
 e17_icon_mouse_middle.png \
 e17_icon_mouse_right.png \
 e17_icon_mouse_wheel.png \
+e17_icon_pager.png \
 e17_icon_performance.png \
 e17_icon_reboot.png \
 e17_icon_regenerate_menus.png \
