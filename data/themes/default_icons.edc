@@ -2448,6 +2448,7 @@ group {
    alias: "e/icons/enlightenment/gradient";
    alias: "e/icons/enlightenment/website";
    alias: "e/icons/enlightenment/swap";
+   alias: "e/icons/enlightenment/scale";
    max:  64 64;
    parts {
       part {
