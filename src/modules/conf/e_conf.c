@@ -149,7 +149,7 @@ e_configure_show(E_Container *con)
    
    /* Category List */
    of = e_widget_framelist_add(eco->evas, _("Categories"), 1);
-   eco->cat_list = e_widget_ilist_add(eco->evas, 32, 32, NULL);
+   eco->cat_list = e_widget_ilist_add(eco->evas, 32 * e_scale, 32 * e_scale, NULL);
    e_widget_ilist_selector_set(eco->cat_list, 1);
    /***--- fill ---***/
    _e_configure_fill_cat_list(eco);
@@ -159,7 +159,7 @@ e_configure_show(E_Container *con)
    
    /* Item List */
    of = e_widget_framelist_add(eco->evas, _("Items"), 1);
-   eco->item_list = e_widget_ilist_add(eco->evas, 32, 32, NULL);
+   eco->item_list = e_widget_ilist_add(eco->evas, 32 * e_scale, 32 * e_scale, NULL);
    e_widget_ilist_selector_set(eco->item_list, 1);
    e_widget_ilist_go(eco->item_list);
    e_widget_on_focus_hook_set(eco->item_list, _e_configure_focus_cb, eco->win);

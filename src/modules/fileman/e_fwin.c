@@ -428,7 +428,7 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    _e_fwin_window_title_set(fwin);
    
    e_win_size_min_set(fwin->win, 24, 24);
-   e_win_resize(fwin->win, 280, 200);
+   e_win_resize(fwin->win, 280 * e_scale, 200 * e_scale);
    e_win_show(fwin->win);
    if (fwin->win->evas_win)
      e_drop_xdnd_register_set(fwin->win->evas_win, 1);
@@ -1213,8 +1213,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 				 nw = cf->geom.w;
 				 nh = cf->geom.h;
 				 /* if it ended up too small - fix to a decent size  */
-				 if (nw < 24) nw = 200;
-				 if (nh < 24) nh = 280;
+				 if (nw < 24) nw = 200 * e_scale;
+				 if (nh < 24) nh = 280 * e_scale;
 				 printf("load @ %i %i, %ix%i inset %i %i\n",
 					nx, ny, nw, nh,
 					fwin2->win->border->client_inset.l,
@@ -1659,14 +1659,14 @@ _e_fwin_config_set(E_Fwin *fwin)
      {
 #if 0
 	fmc.view.mode = E_FM2_VIEW_MODE_LIST;
-	fmc.icon.list.w = 24;
-	fmc.icon.list.h = 24;
+	fmc.icon.list.w = 24 * e_scale;
+	fmc.icon.list.h = 24 * e_scale;
 	fmc.icon.fixed.w = 1;
 	fmc.icon.fixed.h = 1;
 #else   
 	fmc.view.mode = fileman_config->view.mode;
-	fmc.icon.icon.w = fileman_config->icon.icon.w;
-	fmc.icon.icon.h = fileman_config->icon.icon.h;
+	fmc.icon.icon.w = fileman_config->icon.icon.w * e_scale;
+	fmc.icon.icon.h = fileman_config->icon.icon.h * e_scale;
 	fmc.icon.fixed.w = 0;
 	fmc.icon.fixed.h = 0;
 #endif
@@ -1676,14 +1676,14 @@ _e_fwin_config_set(E_Fwin *fwin)
      {
 #if 0
 	fmc.view.mode = E_FM2_VIEW_MODE_LIST;
-	fmc.icon.list.w = 24;
-	fmc.icon.list.h = 24;
+	fmc.icon.list.w = 24 * e_scale;
+	fmc.icon.list.h = 24 * e_scale;
 	fmc.icon.fixed.w = 1;
 	fmc.icon.fixed.h = 1;
 #else   
 	fmc.view.mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
-	fmc.icon.icon.w = fileman_config->icon.icon.w;
-	fmc.icon.icon.h = fileman_config->icon.icon.h;
+	fmc.icon.icon.w = fileman_config->icon.icon.w * e_scale;
+	fmc.icon.icon.h = fileman_config->icon.icon.h * e_scale;
 	fmc.icon.fixed.w = 0;
 	fmc.icon.fixed.h = 0;
 #endif

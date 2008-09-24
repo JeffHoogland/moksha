@@ -417,7 +417,7 @@ e_shelf_save(E_Shelf *es)
 	cf_es->overlap = 0;
 	cf_es->autohide = 0; 
 	cf_es->hide_timeout = 1.0; 
-	cf_es->hide_duration = 1.0; 
+	cf_es->hide_duration = 1.0;
 	es->cfg = cf_es;
      }
    e_config_save_queue();
@@ -459,7 +459,7 @@ e_shelf_position_calc(E_Shelf *es)
    if (es->cfg)
      {
 	orient = es->cfg->orient;
-	size = es->cfg->size;
+	size = es->cfg->size * e_scale;
      }
    else
      orient = es->gadcon->orient;

@@ -169,11 +169,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Minimum"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f times"), 0.25, 8.0, 0.05, 0, &(cfdata->min), NULL, 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f times"), 0.25, 8.0, 0.05, 0, &(cfdata->min), NULL, 150);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Maximum"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f times"), 0.25, 8.0, 0.05, 0, &(cfdata->max), NULL, 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f times"), 0.25, 8.0, 0.05, 0, &(cfdata->max), NULL, 150);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
@@ -185,7 +185,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Personal scaling factor"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f times"), 0.25, 8.0, 0.05, 0, &(cfdata->factor), NULL, 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f times"), 0.25, 8.0, 0.05, 0, &(cfdata->factor), NULL, 150);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
