@@ -5946,7 +5946,7 @@ _e_border_eval(E_Border *bd)
 	if (bd->remember)
 	  {
 	     rem  = bd->remember;
-	     
+
 	     if (rem->apply & E_REMEMBER_APPLY_ZONE)
 	       {
 		  E_Zone *zone;
