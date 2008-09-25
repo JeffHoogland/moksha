@@ -305,7 +305,7 @@ e_init_init(void)
      }
    
    edje_object_part_text_set(_e_init_object, "e.text.disable_text", 
-			     "Disable this splash screen in the future?");
+			     "Disable this splash screen");
    edje_object_signal_callback_add(_e_init_object, "e,action,init,disable", "e",
 				   _e_init_cb_signal_disable, NULL);
    edje_object_signal_callback_add(_e_init_object, "e,action,init,enable", "e",
