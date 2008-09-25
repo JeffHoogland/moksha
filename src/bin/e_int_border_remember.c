@@ -114,8 +114,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	    (cfdata->remember.apply_border) && (cfdata->remember.apply_sticky) &&
 	    (cfdata->remember.apply_desktop) && (cfdata->remember.apply_shade) &&
 	    (cfdata->remember.apply_zone) && (cfdata->remember.apply_skip_winlist) &&
-	    (cfdata->remember.apply_skip_pager) && (cfdata->remember.apply_skip_taskbar) &&
-	    (cfdata->remember.set_focus_on_start))
+	    (cfdata->remember.apply_skip_pager) && (cfdata->remember.apply_skip_taskbar))
      cfdata->mode = MODE_ALL;
    else if ((cfdata->remember.apply_pos) && (cfdata->remember.apply_size) && 
 	    (cfdata->remember.apply_locks))
@@ -284,7 +283,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  cfdata->border->remember->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_LAYER | 
 					    E_REMEMBER_APPLY_LOCKS | E_REMEMBER_APPLY_BORDER | E_REMEMBER_APPLY_STICKY | 
 					    E_REMEMBER_APPLY_DESKTOP | E_REMEMBER_APPLY_SHADE | E_REMEMBER_APPLY_ZONE | 
-					    E_REMEMBER_APPLY_SKIP_WINLIST | E_REMEMBER_APPLY_SKIP_PAGER | E_REMEMBER_APPLY_SKIP_TASKBAR;
+					    E_REMEMBER_APPLY_SKIP_WINLIST | E_REMEMBER_APPLY_SKIP_PAGER | E_REMEMBER_APPLY_SKIP_TASKBAR |
+	                                    E_REMEMBER_APPLY_ICON_PREF;
 	cfdata->border->remember->apply_first_only = 0;
        e_remember_update(cfdata->border->remember, cfdata->border);
      }
