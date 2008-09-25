@@ -59,7 +59,6 @@ e_bindings_init(void)
 	  {
 	     char params[32];
 	     snprintf(params, sizeof(params), "resize_%s", eb->params);
-	     printf("########## ADD mouse,in + mouse,out\n");
 	     e_bindings_signal_add(eb->context, "mouse,in", eb->source, eb->modifiers,
 				   eb->any_mod, "pointer_resize_push", params);
 	     e_bindings_signal_add(eb->context, "mouse,out", eb->source, eb->modifiers,

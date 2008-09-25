@@ -5177,8 +5177,6 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
      {
 	if (!ic->selected) _e_fm2_mouse_1_handler(ic, 0, ev->modifiers);
 	_e_fm2_icon_menu(ic, ic->sd->obj, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(evas_object_evas_get(ic->sd->obj),
-					ev->button);
      }
 }
     
@@ -5432,8 +5430,6 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     e_drag_xdnd_start(d,
 			       ic->drag.x + ic->x + ic->sd->x - ic->sd->pos.x,
 			       ic->drag.y + ic->y + ic->sd->y - ic->sd->pos.y);
-	     e_util_evas_fake_mouse_up_later(evas_object_evas_get(ic->sd->obj),
-					     1);
 	  }
      }
 }
@@ -5708,8 +5704,6 @@ _e_fm2_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    else if (ev->button == 3)
      {
 	_e_fm2_menu(sd->obj, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(evas_object_evas_get(sd->obj),
-					ev->button);
      }
 }
     

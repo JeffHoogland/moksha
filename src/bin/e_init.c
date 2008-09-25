@@ -117,13 +117,13 @@ EAPI void
 e_init_status_set(const char *str)
 {
    if (!init_exe) return;
-   printf("---STAT %p %s\n", client, str);
+//   printf("---STAT %p %s\n", client, str);
    if (!client)
      {
 	stats = evas_list_append(stats, evas_stringshare_add(str));
 	return;
      }
-   printf("---SEND\n");
+//   printf("---SEND\n");
    ecore_ipc_client_send(client, E_IPC_DOMAIN_INIT, 1, 0, 0, 0, (void *)str,
 			 strlen(str) + 1);
    ecore_ipc_client_flush(client);
@@ -135,7 +135,7 @@ e_init_done(void)
    undone--;
    if (undone > 0) return;
    done = 1;
-   printf("---DONE %p\n", client);
+//   printf("---DONE %p\n", client);
    if (!client) return;
    ecore_ipc_client_send(client, E_IPC_DOMAIN_INIT, 2, 0, 0, 0, NULL, 0);
    ecore_ipc_client_flush(client);
@@ -151,7 +151,7 @@ e_init_undone(void)
 EAPI void
 e_init_client_data(Ecore_Ipc_Event_Client_Data *e)
 {
-   printf("---new init client\n");
+//   printf("---new init client\n");
    if (!client) client = e->client;
    if (e->minor == 1)
      {
@@ -185,7 +185,7 @@ e_init_client_data(Ecore_Ipc_Event_Client_Data *e)
 
 	     s = stats->data;
 	     stats = evas_list_remove_list(stats, stats);
-	     printf("---SPOOL %s\n", s);
+//	     printf("---SPOOL %s\n", s);
 	     e_init_status_set(s);
 	     evas_stringshare_del(s);
 	  }
@@ -201,7 +201,7 @@ e_init_client_data(Ecore_Ipc_Event_Client_Data *e)
 EAPI void
 e_init_client_del(Ecore_Ipc_Event_Client_Del *e)
 {
-   printf("---del init client\n");
+//   printf("---del init client\n");
    if (e->client == client)
      {
 	Evas_List *l;

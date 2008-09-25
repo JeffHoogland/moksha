@@ -291,7 +291,7 @@ _e_exec_cb_exit(void *data, int type, void *event)
 
    ev = event;
    if (!ev->exe) return 1;
-   if (ecore_exe_tag_get(ev->exe)) printf("  tag %s\n", ecore_exe_tag_get(ev->exe));
+//   if (ecore_exe_tag_get(ev->exe)) printf("  tag %s\n", ecore_exe_tag_get(ev->exe));
    if (!(ecore_exe_tag_get(ev->exe) && 
 	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/exec")))) return 1;
    inst = ecore_exe_data_get(ev->exe);

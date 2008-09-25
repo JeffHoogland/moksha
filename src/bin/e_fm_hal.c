@@ -22,6 +22,7 @@ e_fm2_hal_storage_add(E_Storage *s)
 
    s->validated = 1;
    _e_stores = evas_list_append(_e_stores, s);
+/*   
    printf("STO+\n"
 	  "  udi: %s\n"
 	  "  bus: %s\n"
@@ -52,7 +53,7 @@ e_fm2_hal_storage_add(E_Storage *s)
 	  s->media_check_enabled, 
 	  s->icon.drive, 
 	  s->icon.volume);
-
+ */
    if ((s->removable == 0) &&
 	 (s->media_available == 0) &&
 	 (s->media_size == 0) &&
@@ -60,7 +61,7 @@ e_fm2_hal_storage_add(E_Storage *s)
 	 (s->hotpluggable == 0) &&
 	 (s->media_check_enabled == 0))
      {
-	printf("      Ignore this storage\n");
+//	printf("      Ignore this storage\n");
      }
    else
      {
@@ -71,7 +72,7 @@ e_fm2_hal_storage_add(E_Storage *s)
 EAPI void
 e_fm2_hal_storage_del(E_Storage *s)
 {
-   printf("STO- %s\n", s->udi);
+//   printf("STO- %s\n", s->udi);
    _e_stores = evas_list_remove(_e_stores, s);
    _e_storage_free(s);
 }
@@ -102,6 +103,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 
    v->validated = 1;
    _e_vols = evas_list_append(_e_vols, v);
+/*   
    printf("VOL+\n"
 	  "  udi: %s\n"
 	  "  uuid: %s\n"
@@ -126,7 +128,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 	  v->mounted, 
 	  v->mount_point, 
 	  v->parent);
-
+ */
    if ((!v->mount_point) || (v->mount_point[0] == 0))
      {
 	if (v->mount_point) free(v->mount_point);
@@ -172,7 +174,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 EAPI void
 e_fm2_hal_volume_del(E_Volume *v)
 {
-   printf("VOL- %s\n", v->udi);
+//   printf("VOL- %s\n", v->udi);
    if (v->storage) 
      v->storage->volumes = evas_list_remove(v->storage->volumes, v);
    _e_vols = evas_list_remove(_e_vols, v);
@@ -195,7 +197,7 @@ _e_fm2_volume_write(E_Volume *v)
   
    if (!v->storage) return;
    id = ecore_file_file_get(v->storage->udi);
-   printf("vol write %s\n", id);
+//   printf("vol write %s\n", id);
    snprintf(buf, sizeof(buf) - 1, "%s/.e/e/fileman/favorites/|%s_%d.desktop",
 	    e_user_homedir_get(), id, v->partition_number);
 
@@ -358,7 +360,7 @@ e_fm2_hal_volume_mountpoint_get(E_Volume *v)
    if (!v) return NULL;
    if (v->mount_point)
      {
-	printf("GET MOUNTPOINT = %s\n", v->mount_point);
+//	printf("GET MOUNTPOINT = %s\n", v->mount_point);
 	return strdup(v->mount_point);
      }
    
@@ -373,7 +375,7 @@ e_fm2_hal_volume_mountpoint_get(E_Volume *v)
 	static int mount_count = 1;
 	snprintf(buf, sizeof(buf) - 1, "/media/unknown-%i", mount_count++);
      }
-   printf("GET MOUNTPOINT = %s\n", buf);
+//   printf("GET MOUNTPOINT = %s\n", buf);
    return strdup(buf);
 }
 
@@ -388,7 +390,7 @@ e_fm2_hal_mount_add(E_Volume *v, const char *mountpoint)
    for (l = v->mounts; l; l = l->next)
      _e_fm2_hal_mount_ok(l->data);
 
-   printf("MOUNT %s %s\n", v->udi, v->mount_point);
+//   printf("MOUNT %s %s\n", v->udi, v->mount_point);
 }
 
 EAPI void
@@ -448,7 +450,7 @@ e_fm2_hal_mount(E_Volume *v,
 
    v->mounts = evas_list_prepend(v->mounts, m);
 
-   printf("BEGIN MOUNT %p '%s'\n", m, v->mount_point);
+//   printf("BEGIN MOUNT %p '%s'\n", m, v->mount_point);
    
    if (!v->mounted)
      {
@@ -485,7 +487,7 @@ _e_fm2_hal_mount_ok(E_Fm2_Mount *m)
 	m->timeout = NULL;
      }
    if (m->mount_ok) m->mount_ok(m->data);
-   printf("MOUNT OK '%s'\n", m->mount_point);
+//   printf("MOUNT OK '%s'\n", m->mount_point);
 }
 
 static int

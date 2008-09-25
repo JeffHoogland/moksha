@@ -545,7 +545,6 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_menu_activate_mouse(sd->popup, e_util_zone_current_get(man),
 			      x, y, 1, 1, 
 			      E_MENU_POP_DIRECTION_DOWN, event->timestamp);
-	e_util_evas_fake_mouse_up_later(e, event->button);
      }
 
 #ifdef HAVE_ECORE_IMF

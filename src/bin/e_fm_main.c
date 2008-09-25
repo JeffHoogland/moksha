@@ -345,7 +345,7 @@ _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
    ecore_list_first_goto(ret->strings);
    while ((device = ecore_list_next(ret->strings)))
      {
-	printf("DB INIT DEV+: %s\n", device);
+//	printf("DB INIT DEV+: %s\n", device);
 	char *udi;
 
 	udi = device;
@@ -373,7 +373,7 @@ _e_dbus_cb_dev_store(void *user_data, void *reply_data, DBusError *error)
    ecore_list_first_goto(ret->strings);
    while ((device = ecore_list_next(ret->strings)))
      {
-	printf("DB STORE+: %s\n", device);
+//	printf("DB STORE+: %s\n", device);
 	e_storage_add(device);
      }
 }
@@ -395,7 +395,7 @@ _e_dbus_cb_dev_vol(void *user_data, void *reply_data, DBusError *error)
    ecore_list_first_goto(ret->strings);
    while ((device = ecore_list_next(ret->strings)))
      {
-	printf("DB VOL+: %s\n", device);
+//	printf("DB VOL+: %s\n", device);
 	e_volume_add(device);
      }
 }
@@ -414,7 +414,7 @@ _e_dbus_cb_store_is(void *user_data, void *reply_data, DBusError *error)
    
    if (ret && ret->boolean)
      {
-	printf("DB STORE IS+: %s\n", udi);
+//	printf("DB STORE IS+: %s\n", udi);
 	e_storage_add(udi);
      }
    
@@ -436,7 +436,7 @@ _e_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error)
    
    if (ret && ret->boolean)
      {
-	printf("DB VOL IS+: %s\n", udi);
+//	printf("DB VOL IS+: %s\n", udi);
 	e_volume_add(udi);
      }
    
@@ -454,7 +454,7 @@ _e_dbus_cb_dev_add(void *data, DBusMessage *msg)
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
    udi = strdup(udi);
-   printf("DB DEV+: %s\n", udi);
+//   printf("DB DEV+: %s\n", udi);
    ret = e_hal_device_query_capability(_e_dbus_conn, udi, "storage", 
 				       _e_dbus_cb_store_is, strdup(udi));
    e_hal_device_query_capability(_e_dbus_conn, udi, "volume",
@@ -472,7 +472,7 @@ _e_dbus_cb_dev_del(void *data, DBusMessage *msg)
    dbus_message_get_args(msg, 
 			 &err, DBUS_TYPE_STRING, 
 			 &udi, DBUS_TYPE_INVALID);
-   printf("DB DEV-: %s\n", udi);
+//   printf("DB DEV-: %s\n", udi);
    e_storage_del(udi);
    e_volume_del(udi);
 }
@@ -491,7 +491,7 @@ _e_dbus_cb_cap_add(void *data, DBusMessage *msg)
 			 &capability, DBUS_TYPE_INVALID);
    if (!strcmp(capability, "storage"))
      {
-        printf("DB STORE CAP+: %s\n", udi);
+//        printf("DB STORE CAP+: %s\n", udi);
 	e_storage_add(udi);
      }
 }
@@ -570,7 +570,6 @@ _e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
    s->serial = e_hal_property_string_get(ret, "storage.serial", &err);
 //   if (err) goto error;
    if (err) printf("Error getting serial for %s\n", s->udi);
-   printf("S6\n");
 
    s->removable = e_hal_property_bool_get(ret, "storage.removable", &err);
    
@@ -587,7 +586,7 @@ _e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
    s->icon.drive = e_hal_property_string_get(ret, "storage.icon.drive", &err);
    s->icon.volume = e_hal_property_string_get(ret, "storage.icon.volume", &err);
    
-   printf("++STO:\n  udi: %s\n  bus: %s\n  drive_type: %s\n  model: %s\n  vendor: %s\n  serial: %s\n  icon.drive: %s\n  icon.volume: %s\n\n", s->udi, s->bus, s->drive_type, s->model, s->vendor, s->serial, s->icon.drive, s->icon.volume);
+//   printf("++STO:\n  udi: %s\n  bus: %s\n  drive_type: %s\n  model: %s\n  vendor: %s\n  serial: %s\n  icon.drive: %s\n  icon.volume: %s\n\n", s->udi, s->bus, s->drive_type, s->model, s->vendor, s->serial, s->icon.drive, s->icon.volume);
    s->validated = 1;
      {
 	void *msg_data;
@@ -606,7 +605,7 @@ _e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
    return;
    
    error: 
-   printf("ERR %s\n", s->udi);
+//   printf("ERR %s\n", s->udi);
    e_storage_del(s->udi);
 }
 
@@ -637,7 +636,7 @@ e_storage_del(const char *udi)
    if (!s) return;
    if (s->validated)
      {
-	printf("--STO %s\n", s->udi);
+//	printf("--STO %s\n", s->udi);
 	ecore_ipc_server_send(_e_ipc_server,
 			      6/*E_IPC_DOMAIN_FM*/,
 			      E_FM_OP_STORAGE_DEL,
@@ -726,9 +725,9 @@ _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
 	  }
      }
    
-   printf("++VOL:\n  udi: %s\n  uuid: %s\n  fstype: %s\n  size: %llu\n label: %s\n  partition: %d\n  partition_number: %d\n partition_label: %s\n  mounted: %d\n  mount_point: %s\n", v->udi, v->uuid, v->fstype, v->size, v->label, v->partition, v->partition_number, v->partition ? v->partition_label : "(not a partition)", v->mounted, v->mount_point);
-   if (s) printf("  for storage: %s\n", s->udi);
-   else printf("  storage unknown\n");
+//   printf("++VOL:\n  udi: %s\n  uuid: %s\n  fstype: %s\n  size: %llu\n label: %s\n  partition: %d\n  partition_number: %d\n partition_label: %s\n  mounted: %d\n  mount_point: %s\n", v->udi, v->uuid, v->fstype, v->size, v->label, v->partition, v->partition_number, v->partition ? v->partition_label : "(not a partition)", v->mounted, v->mount_point);
+//   if (s) printf("  for storage: %s\n", s->udi);
+//   else printf("  storage unknown\n");
    v->validated = 1;
      {
 	void *msg_data;
@@ -772,7 +771,7 @@ _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *erro
    v->mount_point = e_hal_property_string_get(ret, "volume.mount_point", &err);
    if (err) printf("HAL Error : can't get volume.is_mount_point property");
    
-   printf("**VOL udi: %s mount_point: %s mounted: %d\n", v->udi, v->mount_point, v->mounted);
+//   printf("**VOL udi: %s mount_point: %s mounted: %d\n", v->udi, v->mount_point, v->mounted);
      {
 	char *buf;
 	int size;
@@ -806,7 +805,7 @@ e_volume_add(const char *udi)
    if (e_volume_find(udi)) return NULL;
    v = calloc(1, sizeof(E_Volume));
    if (!v) return NULL;
-   printf("VOL+ %s\n", udi);
+//   printf("VOL+ %s\n", udi);
    v->udi = strdup(udi);
    _e_vols = evas_list_append(_e_vols, v);
    e_hal_device_get_all_properties(_e_dbus_conn, v->udi,
@@ -829,7 +828,7 @@ e_volume_del(const char *udi)
    if (v->prop_handler) e_dbus_signal_handler_del(_e_dbus_conn, v->prop_handler);
    if (v->validated)
      {
-	printf("--VOL %s\n", v->udi);
+//	printf("--VOL %s\n", v->udi);
 	/* FIXME: send event of storage volume (disk) removed */
 	ecore_ipc_server_send(_e_ipc_server,
 			      6/*E_IPC_DOMAIN_FM*/,
@@ -868,7 +867,7 @@ _e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error)
 	return;
      }
    v->mounted = 1;
-   printf("MOUNT: %s from %s\n", v->udi, v->mount_point);
+//   printf("MOUNT: %s from %s\n", v->udi, v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
    buf = alloca(size);
    strcpy(buf, v->udi);
@@ -890,7 +889,7 @@ e_volume_mount(E_Volume *v)
      return;
 
    mount_point = v->mount_point + 7;
-   printf("mount %s %s [fs type = %s]\n", v->udi, v->mount_point, v->fstype);
+//   printf("mount %s %s [fs type = %s]\n", v->udi, v->mount_point, v->fstype);
 
    if ((!strcmp(v->fstype, "vfat")) || (!strcmp(v->fstype, "ntfs"))
 //       || (!strcmp(v->fstype, "iso9660")) || (!strcmp(v->fstype, "udf"))
@@ -918,7 +917,7 @@ _e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error)
 	return;
      }
    v->mounted = 0;
-   printf("UNMOUNT: %s from %s\n", v->udi, v->mount_point);
+//   printf("UNMOUNT: %s from %s\n", v->udi, v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
    buf = alloca(size);
    strcpy(buf, v->udi);
@@ -932,7 +931,7 @@ _e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error)
 EAPI void
 e_volume_unmount(E_Volume *v)
 {
-   printf("unmount %s %s\n", v->udi, v->mount_point);
+//   printf("unmount %s %s\n", v->udi, v->mount_point);
    e_hal_device_volume_unmount(_e_dbus_conn, v->udi, NULL,
 			       _e_dbus_cb_vol_unmounted, v);
 }
@@ -1337,7 +1336,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	break;
       case E_FM_OP_MONITOR_END: /* monitor dir end */
 	  {
-	     printf("End listing directory: %s\n", e->data);
+//	     printf("End listing directory: %s\n", e->data);
 	     _e_fm_monitor_end(e->ref, e->data);
 	  }
 	break;
@@ -1400,7 +1399,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		       if (v->mount_point) free(v->mount_point);
 		       v->mount_point = strdup(mountpoint);
 		    }
-		  printf("REQ M\n");
+//		  printf("REQ M\n");
 		  e_volume_mount(v);
 	       }
 	  }
@@ -1416,7 +1415,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     v = e_volume_find(udi);
 	     if (v)
 	       {
-		  printf("REQ UM\n");
+//		  printf("REQ UM\n");
 		  e_volume_unmount(v);
 	       }
 	  }
@@ -1543,7 +1542,7 @@ static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id)
 
    slave->id = id;
    slave->exe = ecore_exe_pipe_run(command, ECORE_EXE_PIPE_WRITE | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR, slave );
-   printf("EFM command: %s\n", command);
+//   printf("EFM command: %s\n", command);
    
    evas_stringshare_del(command);
 
@@ -2089,7 +2088,7 @@ _e_fm_reorder(const char *file, const char *dst, const char *relative, int after
 
    if(!file || !dst || !relative) return;
    if(after != 0 && after != 1 && after != 2) return;
-   printf("%s:%s(%d) Reorder:\n\tfile = %s\n\tdst = %s\n\trelative = %s\n\tafter = %d\n", __FILE__, __FUNCTION__, __LINE__, file, dst, relative, after);
+//   printf("%s:%s(%d) Reorder:\n\tfile = %s\n\tdst = %s\n\trelative = %s\n\tafter = %d\n", __FILE__, __FUNCTION__, __LINE__, file, dst, relative, after);
 
    snprintf(order, sizeof(order), "%s/.order", dst);
    if(ecore_file_exists(order))

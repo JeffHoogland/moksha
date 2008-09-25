@@ -36,43 +36,6 @@ static Ecore_Timer *_e_util_dummy_timer = NULL;
 
 /* externally accessible functions */
 EAPI void
-e_util_container_fake_mouse_up_later(E_Container *con, int button)
-{
-   E_OBJECT_CHECK(con);
-   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
-
-   printf("FIXME: NO MORE CONTAINER FAKE UP! MUST REMOVE CODE\n");
-   e_util_evas_fake_mouse_up_later(con->bg_evas, button);
-}
-
-EAPI void
-e_util_container_fake_mouse_up_all_later(E_Container *con)
-{
-   E_OBJECT_CHECK(con);
-   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
-
-   e_util_container_fake_mouse_up_later(con, 1);
-   e_util_container_fake_mouse_up_later(con, 2);
-   e_util_container_fake_mouse_up_later(con, 3);
-}
-
-EAPI void
-e_util_evas_fake_mouse_up_later(Evas *e, int button)
-{
-   E_Util_Fake_Mouse_Up_Info *info;
-
-   printf("FIXME: NO MORE FAKE UP! MUST REMOVE CODE\n");
-   return;
-   info = calloc(1, sizeof(E_Util_Fake_Mouse_Up_Info));
-   if (info)
-     {
-	info->evas = e;
-	info->button = button;
-	ecore_job_add(_e_util_container_fake_mouse_up_cb, info);
-     }
-}
-
-EAPI void
 e_util_wakeup(void)
 {
    if (_e_util_dummy_timer) return;

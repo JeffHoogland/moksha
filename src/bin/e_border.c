@@ -5314,7 +5314,6 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 
 			    e_drag_resize(drag, w, h);
 			    e_drag_start(drag, bd->drag.x, bd->drag.y);
-			    e_util_evas_fake_mouse_up_later(bd->bg_evas, 1);
 			 }
 		       bd->drag.start = 0;
 		    }

@@ -1538,7 +1538,6 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
 	     e_drag_start(drag, gcc->drag.x, gcc->drag.y);
 	  }
      }
-   e_util_evas_fake_mouse_up_later(gcc->gadcon->evas, 1);
 }
 
 static void
@@ -1695,7 +1694,6 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *e
 	  }
 	e_menu_activate_mouse(mn, zone, cx, cy, 1, 1, 
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(gcc->gadcon->evas, ev->button);
      }
 }
 
@@ -2305,8 +2303,6 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(gcc->gadcon->evas,
-					ev->button);
      }
    else if (ev->button == 1)
      {
