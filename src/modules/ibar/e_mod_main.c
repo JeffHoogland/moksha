@@ -327,8 +327,6 @@ _ibar_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(b->inst->gcc->gadcon->evas,
-					ev->button);
      }
 }
 
@@ -847,8 +845,6 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(ic->ibar->inst->gcc->gadcon->evas,
-					ev->button);
      }
 }
 
@@ -921,8 +917,6 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 
 	     e_drag_resize(d, w, h);
 	     e_drag_start(d, ic->drag.x, ic->drag.y);
-	     e_util_evas_fake_mouse_up_later(ic->ibar->inst->gcc->gadcon->evas,
-					     1);
 	     ic->ibar->icons = evas_list_remove(ic->ibar->icons, ic);
 	     _ibar_resize_handle(ic->ibar);
 	     _gc_orient(ic->ibar->inst->gcc);

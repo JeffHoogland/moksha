@@ -819,7 +819,6 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(inst->gcc->gadcon->evas, ev->button);
      }
 }
 
@@ -1881,8 +1880,6 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 	     pw->drag.from_pager = pw->desk->pager;
 	     pw->drag.from_pager->dragging = 1;
 	     pw->drag.in_pager = 0;
-	     e_util_evas_fake_mouse_up_later(evas_object_evas_get(pw->desk->pager->o_table),
-					     pw->drag.button);
 	  }
      }
 }
@@ -2287,8 +2284,6 @@ _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	pd->drag.from_pager = pd->pager;
 	pd->drag.from_pager->dragging = 1;
 	pd->drag.in_pager = 0;
-	e_util_evas_fake_mouse_up_later(evas_object_evas_get(pd->pager->o_table),
-					pd->drag.button);
      }
 }
 

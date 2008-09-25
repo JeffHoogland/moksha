@@ -1,4 +1,4 @@
-/*
+\/*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
@@ -181,8 +181,6 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(inst->gcc->gadcon->evas,
-					ev->button);
      }
    if (ev->button == 1)
      _battery_cb_warning_popup_hide(data, e, obj, event_info);
