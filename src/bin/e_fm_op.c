@@ -604,7 +604,7 @@ _e_fm_op_work_idler(void *data)
              return 1;
           }
 
-        if (_e_fm_op_scan_idler_p == NULL)
+        if (_e_fm_op_scan_idler_p == NULL && !_e_fm_op_work_error && !_e_fm_op_scan_error)
           {
              ecore_main_loop_quit();
           }
@@ -677,14 +677,14 @@ _e_fm_op_scan_idler(void *data)
 	return 0;
      }
 
+   if (_e_fm_op_idler_handle_error(&_e_fm_op_scan_error, &_e_fm_op_scan_queue, &node, task)) return 1;
+
    if (_e_fm_op_abort)
      {
 	/* We're marked for abortion. */
 	ecore_main_loop_quit();
 	return 0;
      }
-
-   if (_e_fm_op_idler_handle_error(&_e_fm_op_scan_error, &_e_fm_op_scan_queue, &node, task)) return 1;
 
    if (task->type == E_FM_OP_COPY_STAT_INFO)
      {
