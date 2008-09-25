@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-08-17 23:00+1000\n"
+"POT-Creation-Date: 2008-09-25 12:34+1000\n"
 "PO-Revision-Date: 2007-12-10 22:43+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -26,9 +26,9 @@ msgstr ""
 msgid "About Enlightenment"
 msgstr "Pri Enlightenment"
 
-#: src/bin/e_about.c:76 src/bin/e_actions.c:2570 src/bin/e_actions.c:2574
-#: src/bin/e_actions.c:2578 src/bin/e_actions.c:2582 src/bin/e_actions.c:2586
-#: src/bin/e_int_menus.c:168 src/bin/e_main.c:567
+#: src/bin/e_about.c:76 src/bin/e_actions.c:2597 src/bin/e_actions.c:2601
+#: src/bin/e_actions.c:2605 src/bin/e_actions.c:2609 src/bin/e_actions.c:2613
+#: src/bin/e_int_menus.c:168 src/bin/e_main.c:576
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:175
 msgid "Enlightenment"
 msgstr "Enlightenment"
@@ -59,7 +59,7 @@ msgstr ""
 msgid "<title>The Team</title>"
 msgstr "<title>La Skipo</title>"
 
-#: src/bin/e_actions.c:312
+#: src/bin/e_actions.c:338
 #, c-format
 msgid ""
 "You are about to kill %s.<br><br>Please keep in mind that all data of this "
@@ -70,49 +70,49 @@ msgstr ""
 "de ĉi tiu fenestro,<br>kiuj ne estas savitaj tamen estos perditaj!<br><br>Ĉu "
 "vi certas ke vi volas mortigi ĉi tiun fenestron?"
 
-#: src/bin/e_actions.c:324
+#: src/bin/e_actions.c:350
 msgid "Are you sure you want to kill this window?"
 msgstr "Ĉu vi cestas, ke vi deziras mortigi tiun fenestron?"
 
-#: src/bin/e_actions.c:327 src/bin/e_actions.c:1606 src/bin/e_actions.c:1688
-#: src/bin/e_actions.c:1752 src/bin/e_actions.c:1816 src/bin/e_actions.c:1880
-#: src/bin/e_actions.c:1944 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:7149
-#: src/bin/e_fm.c:7329 src/bin/e_module.c:526
+#: src/bin/e_actions.c:353 src/bin/e_actions.c:1631 src/bin/e_actions.c:1713
+#: src/bin/e_actions.c:1777 src/bin/e_actions.c:1841 src/bin/e_actions.c:1905
+#: src/bin/e_actions.c:1969 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:7182
+#: src/bin/e_fm.c:7362 src/bin/e_module.c:526
 #: src/modules/conf_display/e_int_config_display.c:215
 msgid "Yes"
 msgstr "Jes"
 
-#: src/bin/e_actions.c:329 src/bin/e_actions.c:1608 src/bin/e_actions.c:1690
-#: src/bin/e_actions.c:1754 src/bin/e_actions.c:1818 src/bin/e_actions.c:1882
-#: src/bin/e_actions.c:1946 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:7147
-#: src/bin/e_fm.c:7330 src/bin/e_module.c:527
+#: src/bin/e_actions.c:355 src/bin/e_actions.c:1633 src/bin/e_actions.c:1715
+#: src/bin/e_actions.c:1779 src/bin/e_actions.c:1843 src/bin/e_actions.c:1907
+#: src/bin/e_actions.c:1971 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:7180
+#: src/bin/e_fm.c:7363 src/bin/e_module.c:527
 #: src/modules/conf_display/e_int_config_display.c:216
 msgid "No"
 msgstr "Ne"
 
-#: src/bin/e_actions.c:1599
+#: src/bin/e_actions.c:1624
 msgid "Are you sure you want to exit?"
 msgstr "Ĉu vi cestas, ke vi deziras eliri ? "
 
-#: src/bin/e_actions.c:1601
+#: src/bin/e_actions.c:1626
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr ""
 "Vi petis eliri na Enlightenment.<br><br>Ĉu vi certas ke vi volas eliri ?"
 
-#: src/bin/e_actions.c:1681
+#: src/bin/e_actions.c:1706
 msgid "Are you sure you want to log out?"
 msgstr "Ĉu vi estas certa, ke vi volas adiaŭi?"
 
-#: src/bin/e_actions.c:1683
+#: src/bin/e_actions.c:1708
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 msgstr "Vi baldaŭ adiaŭos.<br><br>Ĉu vi certas ke vi volas agi tiel ?"
 
-#: src/bin/e_actions.c:1745 src/bin/e_actions.c:1873
+#: src/bin/e_actions.c:1770 src/bin/e_actions.c:1898
 msgid "Are you sure you want to turn off?"
 msgstr "Ĉu vi cestas, ke vi deziras estingi ? "
 
-#: src/bin/e_actions.c:1747
+#: src/bin/e_actions.c:1772
 msgid ""
 "You requested to turn off your Computer.<br><br>Are you sure you want to "
 "shut down?"
@@ -120,11 +120,11 @@ msgstr ""
 "Vi petis estingi vian komputilon.<br><br>Ĉu vi certas ke vi volas estingi "
 "ĝin ?"
 
-#: src/bin/e_actions.c:1809
+#: src/bin/e_actions.c:1834
 msgid "Are you sure you want to reboot?"
 msgstr "Ĉu vi cestas, ke vi deziras relanĉi ? "
 
-#: src/bin/e_actions.c:1811
+#: src/bin/e_actions.c:1836
 msgid ""
 "You requested to reboot your Computer.<br><br>Are you sure you want to "
 "restart it?"
@@ -132,18 +132,18 @@ msgstr ""
 "Vi petis relanĉi vian komputilon.<br><br>Ĉu vi certas ke vi volas relanĉi "
 "ĝin ?"
 
-#: src/bin/e_actions.c:1875
+#: src/bin/e_actions.c:1900
 msgid ""
 "You requested to suspend your Computer.<br><br>Are you sure you want to "
 "suspend?"
 msgstr ""
 "Vi petis paŭzi vian komputilon.<br><br>Ĉu vi certas ke vi volas paŭzi ?"
 
-#: src/bin/e_actions.c:1937
+#: src/bin/e_actions.c:1962
 msgid "Are you sure you want to hibernate?"
 msgstr "Ĉu vi cestas, ke vi deziras diskodormi ? "
 
-#: src/bin/e_actions.c:1939
+#: src/bin/e_actions.c:1964
 msgid ""
 "You requested to hibernate your Computer.<br><br>Are you sure you want to "
 "suspend to disk?"
@@ -151,334 +151,335 @@ msgstr ""
 "Vi petis diskodormi vian komputilon.<br><br>Ĉu vi certas ke vi volas dormigi "
 "ĝin ?"
 
-#: src/bin/e_actions.c:2250 src/bin/e_actions.c:2260 src/bin/e_actions.c:2278
-#: src/bin/e_actions.c:2283 src/bin/e_actions.c:2288 src/bin/e_actions.c:2293
-#: src/bin/e_actions.c:2502 src/bin/e_actions.c:2507 src/bin/e_actions.c:2513
-#: src/bin/e_actions.c:2519 src/bin/e_actions.c:2525
+#: src/bin/e_actions.c:2275 src/bin/e_actions.c:2286 src/bin/e_actions.c:2305
+#: src/bin/e_actions.c:2310 src/bin/e_actions.c:2315 src/bin/e_actions.c:2320
+#: src/bin/e_actions.c:2529 src/bin/e_actions.c:2534 src/bin/e_actions.c:2540
+#: src/bin/e_actions.c:2546 src/bin/e_actions.c:2552
 msgid "Window : Actions"
 msgstr "Fenestro : Agoj"
 
-#: src/bin/e_actions.c:2250 src/bin/e_fm.c:4742
+#: src/bin/e_actions.c:2275 src/bin/e_fm.c:4756
 msgid "Move"
 msgstr "Movi"
 
-#: src/bin/e_actions.c:2260
+#: src/bin/e_actions.c:2286
 msgid "Resize"
 msgstr "Grandecŝanĝi"
 
-#: src/bin/e_actions.c:2270 src/bin/e_actions.c:2546 src/bin/e_actions.c:2548
-#: src/bin/e_actions.c:2550 src/bin/e_actions.c:2552 src/bin/e_actions.c:2554
+#: src/bin/e_actions.c:2297 src/bin/e_actions.c:2573 src/bin/e_actions.c:2575
+#: src/bin/e_actions.c:2577 src/bin/e_actions.c:2579 src/bin/e_actions.c:2581
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:345
 msgid "Menu"
 msgstr "Menuo"
 
-#: src/bin/e_actions.c:2270
+#: src/bin/e_actions.c:2297
 msgid "Window Menu"
 msgstr "Fenestra Menuo"
 
-#: src/bin/e_actions.c:2278 src/bin/e_int_border_menu.c:182
+#: src/bin/e_actions.c:2305 src/bin/e_int_border_menu.c:182
 msgid "Raise"
 msgstr "Plialtigi"
 
-#: src/bin/e_actions.c:2283 src/bin/e_int_border_menu.c:174
+#: src/bin/e_actions.c:2310 src/bin/e_int_border_menu.c:174
 msgid "Lower"
 msgstr "Malplialtigi"
 
-#: src/bin/e_actions.c:2288 src/bin/e_config_dialog.c:226 src/bin/e_fm.c:538
+#: src/bin/e_actions.c:2315 src/bin/e_config_dialog.c:228 src/bin/e_fm.c:546
 #: src/bin/e_int_border_menu.c:208 src/bin/e_int_border_prop.c:81
-#: src/modules/conf/e_conf.c:170 src/modules/fileman/e_fwin.c:1322
+#: src/modules/conf/e_conf.c:170 src/modules/fileman/e_fwin.c:1417
+#: src/modules/mixer/app_mixer.c:537
 msgid "Close"
 msgstr "Fermi"
 
-#: src/bin/e_actions.c:2293 src/bin/e_int_border_menu.c:197
+#: src/bin/e_actions.c:2320 src/bin/e_int_border_menu.c:197
 msgid "Kill"
 msgstr "Mortigi"
 
-#: src/bin/e_actions.c:2298 src/bin/e_actions.c:2305 src/bin/e_actions.c:2312
-#: src/bin/e_actions.c:2319 src/bin/e_actions.c:2321 src/bin/e_actions.c:2324
-#: src/bin/e_actions.c:2327 src/bin/e_actions.c:2329 src/bin/e_actions.c:2331
-#: src/bin/e_actions.c:2333 src/bin/e_actions.c:2340 src/bin/e_actions.c:2342
-#: src/bin/e_actions.c:2344 src/bin/e_actions.c:2346 src/bin/e_actions.c:2348
-#: src/bin/e_actions.c:2355 src/bin/e_actions.c:2360
+#: src/bin/e_actions.c:2325 src/bin/e_actions.c:2332 src/bin/e_actions.c:2339
+#: src/bin/e_actions.c:2346 src/bin/e_actions.c:2348 src/bin/e_actions.c:2351
+#: src/bin/e_actions.c:2354 src/bin/e_actions.c:2356 src/bin/e_actions.c:2358
+#: src/bin/e_actions.c:2360 src/bin/e_actions.c:2367 src/bin/e_actions.c:2369
+#: src/bin/e_actions.c:2371 src/bin/e_actions.c:2373 src/bin/e_actions.c:2375
+#: src/bin/e_actions.c:2382 src/bin/e_actions.c:2387
 msgid "Window : State"
 msgstr "Fenestro : stato"
 
-#: src/bin/e_actions.c:2298
+#: src/bin/e_actions.c:2325
 msgid "Sticky Mode Toggle"
 msgstr "Inversigi Fiksan Modon"
 
-#: src/bin/e_actions.c:2305
+#: src/bin/e_actions.c:2332
 msgid "Iconic Mode Toggle"
 msgstr "Inversigi Piktograman Modon"
 
-#: src/bin/e_actions.c:2312
+#: src/bin/e_actions.c:2339
 msgid "Fullscreen Mode Toggle"
 msgstr "Inversigi Plenekranan Modon"
 
-#: src/bin/e_actions.c:2319 src/bin/e_int_border_menu.c:148
+#: src/bin/e_actions.c:2346 src/bin/e_int_border_menu.c:148
 #: src/bin/e_int_border_menu.c:343
 msgid "Maximize"
 msgstr "Maksimumigi"
 
-#: src/bin/e_actions.c:2321
+#: src/bin/e_actions.c:2348
 msgid "Maximize Vertically"
 msgstr "Maksimumigi Vertikale"
 
-#: src/bin/e_actions.c:2324
+#: src/bin/e_actions.c:2351
 msgid "Maximize Horizontally"
 msgstr "Maksimumigi Horizontale"
 
-#: src/bin/e_actions.c:2327
+#: src/bin/e_actions.c:2354
 msgid "Maximize Fullscreen"
 msgstr "Maksimumigi Plenekrane"
 
-#: src/bin/e_actions.c:2329
+#: src/bin/e_actions.c:2356
 msgid "Maximize Mode \"Smart\""
 msgstr "Maksimumiga Modo \"Inteligenta\""
 
-#: src/bin/e_actions.c:2331
+#: src/bin/e_actions.c:2358
 msgid "Maximize Mode \"Expand\""
 msgstr "Maksimumiga Modo \"Ekspansia\""
 
-#: src/bin/e_actions.c:2333
+#: src/bin/e_actions.c:2360
 msgid "Maximize Mode \"Fill\""
 msgstr "Maksimumiga Modo \"Pleniga\""
 
-#: src/bin/e_actions.c:2340
+#: src/bin/e_actions.c:2367
 msgid "Shade Up Mode Toggle"
 msgstr "Baskulo de Subvolva Modo"
 
-#: src/bin/e_actions.c:2342
+#: src/bin/e_actions.c:2369
 msgid "Shade Down Mode Toggle"
 msgstr "Baskulo de Suprvolva Modo"
 
-#: src/bin/e_actions.c:2344
+#: src/bin/e_actions.c:2371
 msgid "Shade Left Mode Toggle"
 msgstr "Baskulo de Maldesktrvolva Modo"
 
-#: src/bin/e_actions.c:2346
+#: src/bin/e_actions.c:2373
 msgid "Shade Right Mode Toggle"
 msgstr "Baskulo de Dekstrvolva Modo"
 
-#: src/bin/e_actions.c:2348
+#: src/bin/e_actions.c:2375
 msgid "Shade Mode Toggle"
 msgstr "Inversigo de Ombriga Modo"
 
-#: src/bin/e_actions.c:2355
+#: src/bin/e_actions.c:2382
 msgid "Toggle Borderless State"
 msgstr "Inversigi Senrandan Staton"
 
-#: src/bin/e_actions.c:2360
+#: src/bin/e_actions.c:2387
 msgid "Toggle Pinned State"
 msgstr "Inversigi Pinglatan Staton"
 
-#: src/bin/e_actions.c:2365 src/bin/e_actions.c:2367 src/bin/e_actions.c:2369
-#: src/bin/e_actions.c:2371 src/bin/e_actions.c:2373 src/bin/e_actions.c:2379
-#: src/bin/e_actions.c:2384 src/bin/e_actions.c:2390 src/bin/e_actions.c:2396
-#: src/bin/e_actions.c:2398 src/bin/e_actions.c:2400 src/bin/e_actions.c:2402
-#: src/bin/e_actions.c:2404 src/bin/e_actions.c:2406 src/bin/e_actions.c:2408
-#: src/bin/e_actions.c:2410 src/bin/e_actions.c:2412 src/bin/e_actions.c:2414
-#: src/bin/e_actions.c:2416 src/bin/e_actions.c:2418 src/bin/e_actions.c:2420
-#: src/bin/e_actions.c:2426 src/bin/e_actions.c:2428 src/bin/e_actions.c:2430
-#: src/bin/e_actions.c:2432 src/bin/e_actions.c:2434 src/bin/e_actions.c:2440
-#: src/bin/e_actions.c:2446 src/bin/e_actions.c:2452 src/bin/e_actions.c:2454
-#: src/bin/e_actions.c:2456 src/bin/e_actions.c:2458 src/bin/e_actions.c:2460
-#: src/bin/e_actions.c:2462 src/bin/e_actions.c:2464 src/bin/e_actions.c:2466
-#: src/bin/e_actions.c:2468 src/bin/e_actions.c:2470 src/bin/e_actions.c:2472
-#: src/bin/e_actions.c:2474 src/bin/e_actions.c:2476 src/bin/e_actions.c:2610
-#: src/bin/e_actions.c:2615 src/bin/e_int_menus.c:135
+#: src/bin/e_actions.c:2392 src/bin/e_actions.c:2394 src/bin/e_actions.c:2396
+#: src/bin/e_actions.c:2398 src/bin/e_actions.c:2400 src/bin/e_actions.c:2406
+#: src/bin/e_actions.c:2411 src/bin/e_actions.c:2417 src/bin/e_actions.c:2423
+#: src/bin/e_actions.c:2425 src/bin/e_actions.c:2427 src/bin/e_actions.c:2429
+#: src/bin/e_actions.c:2431 src/bin/e_actions.c:2433 src/bin/e_actions.c:2435
+#: src/bin/e_actions.c:2437 src/bin/e_actions.c:2439 src/bin/e_actions.c:2441
+#: src/bin/e_actions.c:2443 src/bin/e_actions.c:2445 src/bin/e_actions.c:2447
+#: src/bin/e_actions.c:2453 src/bin/e_actions.c:2455 src/bin/e_actions.c:2457
+#: src/bin/e_actions.c:2459 src/bin/e_actions.c:2461 src/bin/e_actions.c:2467
+#: src/bin/e_actions.c:2473 src/bin/e_actions.c:2479 src/bin/e_actions.c:2481
+#: src/bin/e_actions.c:2483 src/bin/e_actions.c:2485 src/bin/e_actions.c:2487
+#: src/bin/e_actions.c:2489 src/bin/e_actions.c:2491 src/bin/e_actions.c:2493
+#: src/bin/e_actions.c:2495 src/bin/e_actions.c:2497 src/bin/e_actions.c:2499
+#: src/bin/e_actions.c:2501 src/bin/e_actions.c:2503 src/bin/e_actions.c:2637
+#: src/bin/e_actions.c:2642 src/bin/e_int_menus.c:135
 #: src/bin/e_int_shelf_config.c:662
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:103
 #: src/modules/ibox/e_mod_config.c:141
 msgid "Desktop"
 msgstr "Labortablo"
 
-#: src/bin/e_actions.c:2365
+#: src/bin/e_actions.c:2392
 msgid "Flip Desktop Left"
 msgstr "Labortabla Ŝango al maldekstro"
 
-#: src/bin/e_actions.c:2367
+#: src/bin/e_actions.c:2394
 msgid "Flip Desktop Right"
 msgstr "Labortabla Ŝango al dekstro"
 
-#: src/bin/e_actions.c:2369
+#: src/bin/e_actions.c:2396
 msgid "Flip Desktop Up"
 msgstr "Labortabla Ŝango al supro"
 
-#: src/bin/e_actions.c:2371
+#: src/bin/e_actions.c:2398
 msgid "Flip Desktop Down"
 msgstr "Labortabla Ŝango al subo"
 
-#: src/bin/e_actions.c:2373
+#: src/bin/e_actions.c:2400
 msgid "Flip Desktop By..."
 msgstr "Labortabla Ŝango Laŭ..."
 
-#: src/bin/e_actions.c:2379
+#: src/bin/e_actions.c:2406
 msgid "Show The Desktop"
 msgstr "Vidigi la Labortablon"
 
-#: src/bin/e_actions.c:2384
+#: src/bin/e_actions.c:2411
 msgid "Flip Desktop To..."
 msgstr "Labortabla Ŝango por..."
 
-#: src/bin/e_actions.c:2390
+#: src/bin/e_actions.c:2417
 msgid "Flip Desktop Linearly..."
 msgstr "Labortabla Ŝango Linie..."
 
-#: src/bin/e_actions.c:2396
+#: src/bin/e_actions.c:2423
 msgid "Switch To Desktop 0"
 msgstr "InterŜanĝi kun la 0-a Labortablo"
 
-#: src/bin/e_actions.c:2398
+#: src/bin/e_actions.c:2425
 msgid "Switch To Desktop 1"
 msgstr "InterŜanĝi kun 1-a Labortablo"
 
-#: src/bin/e_actions.c:2400
+#: src/bin/e_actions.c:2427
 msgid "Switch To Desktop 2"
 msgstr "InterŜanĝi kun 2-a Labortablo"
 
-#: src/bin/e_actions.c:2402
+#: src/bin/e_actions.c:2429
 msgid "Switch To Desktop 3"
 msgstr "InterŜanĝi kun 3-a Labortablo"
 
-#: src/bin/e_actions.c:2404
+#: src/bin/e_actions.c:2431
 msgid "Switch To Desktop 4"
 msgstr "InterŜanĝi kun 4-a Labortablo"
 
-#: src/bin/e_actions.c:2406
+#: src/bin/e_actions.c:2433
 msgid "Switch To Desktop 5"
 msgstr "InterŜanĝi kun 5-a Labortablo"
 
-#: src/bin/e_actions.c:2408
+#: src/bin/e_actions.c:2435
 msgid "Switch To Desktop 6"
 msgstr "InterŜanĝi kun 6-a Labortablo"
 
-#: src/bin/e_actions.c:2410
+#: src/bin/e_actions.c:2437
 msgid "Switch To Desktop 7"
 msgstr "InterŜanĝi kun 7-a Labortablo"
 
-#: src/bin/e_actions.c:2412
+#: src/bin/e_actions.c:2439
 msgid "Switch To Desktop 8"
 msgstr "InterŜanĝi kun 8-a Labortablo"
 
-#: src/bin/e_actions.c:2414
+#: src/bin/e_actions.c:2441
 msgid "Switch To Desktop 9"
 msgstr "InterŜanĝi kun 9-a Labortablo"
 
-#: src/bin/e_actions.c:2416
+#: src/bin/e_actions.c:2443
 msgid "Switch To Desktop 10"
 msgstr "InterŜanĝi kun 10-a Labortablo"
 
-#: src/bin/e_actions.c:2418
+#: src/bin/e_actions.c:2445
 msgid "Switch To Desktop 11"
 msgstr "InterŜanĝi kun 11-a Labortablo"
 
-#: src/bin/e_actions.c:2420
+#: src/bin/e_actions.c:2447
 msgid "Switch To Desktop..."
 msgstr "InterŜanĝi kun la Labortablo..."
 
-#: src/bin/e_actions.c:2426
+#: src/bin/e_actions.c:2453
 #, fuzzy
 msgid "Flip Desktop Left (All Screens)"
 msgstr "Labortabla Ŝango al maldekstro"
 
-#: src/bin/e_actions.c:2428
+#: src/bin/e_actions.c:2455
 #, fuzzy
 msgid "Flip Desktop Right (All Screens)"
 msgstr "Labortabla Ŝango al dekstro"
 
-#: src/bin/e_actions.c:2430
+#: src/bin/e_actions.c:2457
 #, fuzzy
 msgid "Flip Desktop Up (All Screens)"
 msgstr "Labortabla Ŝango al supro"
 
-#: src/bin/e_actions.c:2432
+#: src/bin/e_actions.c:2459
 #, fuzzy
 msgid "Flip Desktop Down (All Screens)"
 msgstr "Labortabla Ŝango al subo"
 
-#: src/bin/e_actions.c:2434
+#: src/bin/e_actions.c:2461
 #, fuzzy
 msgid "Flip Desktop By... (All Screens)"
 msgstr "Labortabla Ŝango Laŭ..."
 
-#: src/bin/e_actions.c:2440
+#: src/bin/e_actions.c:2467
 #, fuzzy
 msgid "Flip Desktop To... (All Screens)"
 msgstr "Labortabla Ŝango por..."
 
-#: src/bin/e_actions.c:2446
+#: src/bin/e_actions.c:2473
 #, fuzzy
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "Labortabla Ŝango Linie..."
 
-#: src/bin/e_actions.c:2452
+#: src/bin/e_actions.c:2479
 #, fuzzy
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "InterŜanĝi kun la 0-a Labortablo"
 
-#: src/bin/e_actions.c:2454
+#: src/bin/e_actions.c:2481
 #, fuzzy
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "InterŜanĝi kun 1-a Labortablo"
 
-#: src/bin/e_actions.c:2456
+#: src/bin/e_actions.c:2483
 #, fuzzy
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "InterŜanĝi kun 2-a Labortablo"
 
-#: src/bin/e_actions.c:2458
+#: src/bin/e_actions.c:2485
 #, fuzzy
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "InterŜanĝi kun 3-a Labortablo"
 
-#: src/bin/e_actions.c:2460
+#: src/bin/e_actions.c:2487
 #, fuzzy
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "InterŜanĝi kun 4-a Labortablo"
 
-#: src/bin/e_actions.c:2462
+#: src/bin/e_actions.c:2489
 #, fuzzy
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "InterŜanĝi kun 5-a Labortablo"
 
-#: src/bin/e_actions.c:2464
+#: src/bin/e_actions.c:2491
 #, fuzzy
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "InterŜanĝi kun 6-a Labortablo"
 
-#: src/bin/e_actions.c:2466
+#: src/bin/e_actions.c:2493
 #, fuzzy
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "InterŜanĝi kun 7-a Labortablo"
 
-#: src/bin/e_actions.c:2468
+#: src/bin/e_actions.c:2495
 #, fuzzy
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "InterŜanĝi kun 8-a Labortablo"
 
-#: src/bin/e_actions.c:2470
+#: src/bin/e_actions.c:2497
 #, fuzzy
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "InterŜanĝi kun 9-a Labortablo"
 
-#: src/bin/e_actions.c:2472
+#: src/bin/e_actions.c:2499
 #, fuzzy
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "InterŜanĝi kun 10-a Labortablo"
 
-#: src/bin/e_actions.c:2474
+#: src/bin/e_actions.c:2501
 #, fuzzy
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "InterŜanĝi kun 11-a Labortablo"
 
-#: src/bin/e_actions.c:2476
+#: src/bin/e_actions.c:2503
 #, fuzzy
 msgid "Switch To Desktop... (All Screens)"
 msgstr "InterŜanĝi kun la Labortablo..."
 
-#: src/bin/e_actions.c:2483 src/bin/e_actions.c:2485 src/bin/e_actions.c:2487
-#: src/bin/e_actions.c:2492 src/bin/e_actions.c:2494 src/bin/e_actions.c:2496
+#: src/bin/e_actions.c:2510 src/bin/e_actions.c:2512 src/bin/e_actions.c:2514
+#: src/bin/e_actions.c:2519 src/bin/e_actions.c:2521 src/bin/e_actions.c:2523
 #: src/modules/conf_desklock/e_mod_main.c:34
 #: src/modules/conf_desks/e_mod_main.c:34
 #: src/modules/conf_display/e_mod_main.c:34
@@ -488,109 +489,109 @@ msgstr "InterŜanĝi kun la Labortablo..."
 msgid "Screen"
 msgstr "Ekrano"
 
-#: src/bin/e_actions.c:2483
+#: src/bin/e_actions.c:2510
 msgid "Send Mouse To Screen 0"
 msgstr "Sendi Muson al 0-a Ekrano"
 
-#: src/bin/e_actions.c:2485
+#: src/bin/e_actions.c:2512
 msgid "Send Mouse To Screen 1"
 msgstr "Sendi Muson al 1-a Ekrano"
 
-#: src/bin/e_actions.c:2487
+#: src/bin/e_actions.c:2514
 msgid "Send Mouse To Screen..."
 msgstr "Sendi Muson al Ekrano..."
 
-#: src/bin/e_actions.c:2492
+#: src/bin/e_actions.c:2519
 msgid "Send Mouse Forward 1 Screen"
 msgstr "Sendi Muson ĝis la proksima ekrano"
 
-#: src/bin/e_actions.c:2494
+#: src/bin/e_actions.c:2521
 msgid "Send Mouse Back 1 Screen"
 msgstr "Sendi muson ĝis la antaŭa ekrano"
 
-#: src/bin/e_actions.c:2496
+#: src/bin/e_actions.c:2523
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "Sendi muson ĝis la antaŭa/proksima ekranoj..."
 
-#: src/bin/e_actions.c:2530 src/bin/e_actions.c:2532 src/bin/e_actions.c:2534
-#: src/bin/e_actions.c:2540
+#: src/bin/e_actions.c:2557 src/bin/e_actions.c:2559 src/bin/e_actions.c:2561
+#: src/bin/e_actions.c:2567
 msgid "Window : Moving"
 msgstr "Fenestro : Movado"
 
-#: src/bin/e_actions.c:2530
+#: src/bin/e_actions.c:2557
 msgid "To Next Desktop"
 msgstr "Ĝis Sekvonta Labortablo"
 
-#: src/bin/e_actions.c:2532
+#: src/bin/e_actions.c:2559
 msgid "To Previous Desktop"
 msgstr "Ĝis Antaŭa Labortablo"
 
-#: src/bin/e_actions.c:2534
+#: src/bin/e_actions.c:2561
 msgid "By Desktop #..."
 msgstr "Laŭ Labortablo #..."
 
-#: src/bin/e_actions.c:2540
+#: src/bin/e_actions.c:2567
 msgid "To Desktop..."
 msgstr "Al Labortablo..."
 
-#: src/bin/e_actions.c:2546
+#: src/bin/e_actions.c:2573
 msgid "Show Main Menu"
 msgstr "Montri ĉefMenuon"
 
-#: src/bin/e_actions.c:2548
+#: src/bin/e_actions.c:2575
 msgid "Show Favorites Menu"
 msgstr "Montri Preferatajn Menuon"
 
-#: src/bin/e_actions.c:2550
+#: src/bin/e_actions.c:2577
 msgid "Show All Applications Menu"
 msgstr "Vidigi \"Ĉiuj Aplikaĵoj\" Menuon"
 
-#: src/bin/e_actions.c:2552
+#: src/bin/e_actions.c:2579
 msgid "Show Clients Menu"
 msgstr "Vidigi Klientan Menuon"
 
-#: src/bin/e_actions.c:2554
+#: src/bin/e_actions.c:2581
 msgid "Show Menu..."
 msgstr "Vidigi Menuon..."
 
-#: src/bin/e_actions.c:2561 src/bin/e_actions.c:2566
+#: src/bin/e_actions.c:2588 src/bin/e_actions.c:2593
 #: src/modules/conf/e_mod_main.c:46 src/modules/conf/e_mod_main.c:67
 #: src/modules/exebuf/e_mod_main.c:48 src/modules/exebuf/e_mod_main.c:68
 #: src/modules/fileman/e_mod_main.c:57 src/modules/fileman/e_mod_main.c:136
 msgid "Launch"
 msgstr "Lanĉi"
 
-#: src/bin/e_actions.c:2561
+#: src/bin/e_actions.c:2588
 msgid "Defined Command"
 msgstr "Difinita Komando"
 
-#: src/bin/e_actions.c:2566
+#: src/bin/e_actions.c:2593
 msgid "Application"
 msgstr "Aplikaĵo"
 
-#: src/bin/e_actions.c:2570 src/bin/e_int_menus.c:193
+#: src/bin/e_actions.c:2597 src/bin/e_int_menus.c:193
 msgid "Restart"
 msgstr "Relanĉi"
 
-#: src/bin/e_actions.c:2574 src/bin/e_int_menus.c:198
+#: src/bin/e_actions.c:2601 src/bin/e_int_menus.c:198
 msgid "Exit"
 msgstr "Eliri"
 
-#: src/bin/e_actions.c:2578
+#: src/bin/e_actions.c:2605
 msgid "Log Out"
 msgstr "Elsaluti"
 
-#: src/bin/e_actions.c:2582
+#: src/bin/e_actions.c:2609
 msgid "Exit Immediately"
 msgstr "Tuj Eliri"
 
-#: src/bin/e_actions.c:2586
+#: src/bin/e_actions.c:2613
 #, fuzzy
 msgid "Shut Down Immediately"
 msgstr "Tuj Eliri"
 
-#: src/bin/e_actions.c:2590 src/bin/e_actions.c:2594 src/bin/e_actions.c:2598
-#: src/bin/e_actions.c:2602 src/bin/e_configure.c:129
+#: src/bin/e_actions.c:2617 src/bin/e_actions.c:2621 src/bin/e_actions.c:2625
+#: src/bin/e_actions.c:2629 src/bin/e_configure.c:129
 #: src/bin/e_int_config_modules.c:45 src/bin/e_int_menus.c:230
 #: src/modules/conf_desklock/e_int_config_desklock.c:195
 #: src/modules/conf_imc/e_int_config_imc.c:823
@@ -602,36 +603,36 @@ msgstr "Tuj Eliri"
 msgid "System"
 msgstr "Sistemo"
 
-#: src/bin/e_actions.c:2590 src/bin/e_int_menus.c:890
+#: src/bin/e_actions.c:2617 src/bin/e_int_menus.c:890
 msgid "Shut Down"
 msgstr "Estingi"
 
-#: src/bin/e_actions.c:2594 src/bin/e_int_menus.c:883
+#: src/bin/e_actions.c:2621 src/bin/e_int_menus.c:883
 msgid "Reboot"
 msgstr "Relanĉi"
 
-#: src/bin/e_actions.c:2598 src/bin/e_int_menus.c:869
+#: src/bin/e_actions.c:2625 src/bin/e_int_menus.c:869
 msgid "Suspend"
 msgstr "Paŭzi"
 
-#: src/bin/e_actions.c:2602
+#: src/bin/e_actions.c:2629
 msgid "Suspend to Disk"
 msgstr "Diskodormigi"
 
-#: src/bin/e_actions.c:2610
+#: src/bin/e_actions.c:2637
 msgid "Desktop Lock"
 msgstr "Labortabla Ŝloso"
 
-#: src/bin/e_actions.c:2615 src/bin/e_int_menus.c:1254
+#: src/bin/e_actions.c:2642 src/bin/e_int_menus.c:1254
 msgid "Cleanup Windows"
 msgstr "Purigi Fenestrojn"
 
-#: src/bin/e_actions.c:2620
+#: src/bin/e_actions.c:2647
 #, fuzzy
 msgid "Generic : Actions"
 msgstr "Fenestro : Agoj"
 
-#: src/bin/e_actions.c:2620
+#: src/bin/e_actions.c:2647
 #, fuzzy
 msgid "Delayed Action"
 msgstr "Ordigi Aplikaĵojn"
@@ -640,15 +641,15 @@ msgstr "Ordigi Aplikaĵojn"
 msgid "Set As Background"
 msgstr "Difini kiel Tapeton"
 
-#: src/bin/e_border.c:4539
+#: src/bin/e_border.c:4795
 msgid "Desktop files scan done"
 msgstr "Legado de labortablaj dosieroj farita"
 
-#: src/bin/e_border.c:4551
+#: src/bin/e_border.c:4807
 msgid "Desktop file scan"
 msgstr "Legado de labortabla dosiero"
 
-#: src/bin/e_config.c:600
+#: src/bin/e_config.c:644
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -666,7 +667,7 @@ msgstr ""
 "aldonante ĝin en. Vi povas agordi de nove aferojn aktuale laŭ via<br>ŝato. "
 "Pardonon pro la momenta problemeto en via agordo.<br>"
 
-#: src/bin/e_config.c:614
+#: src/bin/e_config.c:658
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -680,16 +681,16 @@ msgstr ""
 "malbona kaj<br>kiel antauxzorgo via agordo estis restauxrita per defauxta."
 "<br>Bedauxrinde por la ĝeno.<br>"
 
-#: src/bin/e_config.c:636
+#: src/bin/e_config.c:680
 #, c-format
 msgid "Desktop %i, %i"
 msgstr "Labortablo %i, %i"
 
-#: src/bin/e_config.c:2237
+#: src/bin/e_config.c:2311
 msgid "Configuration Upgraded"
 msgstr "Agordo Aktualigita"
 
-#: src/bin/e_config.c:2262
+#: src/bin/e_config.c:2336
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>configuration to disk. The "
@@ -700,7 +701,7 @@ msgstr ""
 "eraro ne povas esti definata.<br><br>La dosiero kie la eraro okazis estis:"
 "<br>%s<br><br>Tiu dosiero estis forviŝita por eviti malbonigi datumojn.<br>"
 
-#: src/bin/e_config.c:2273
+#: src/bin/e_config.c:2347
 #, c-format
 msgid ""
 "Enlightenment's configuration files are too big<br>for the file system they "
@@ -716,7 +717,7 @@ msgstr ""
 "okazis, estis:<br>%s<br><br>Ĉi tiu dosiero estas forigita por eviti "
 "koruptadon de datumoj.<br>"
 
-#: src/bin/e_config.c:2286
+#: src/bin/e_config.c:2360
 #, c-format
 msgid ""
 "An output error occured when writing the configuration<br>files for "
@@ -729,7 +730,7 @@ msgstr ""
 "<br><br>La dosiero kie la eraro okazis estis:<br>%s<br><br>Ĉi tiu dosiero "
 "estas forigita por eviti koruptadon de datumoj.<br>"
 
-#: src/bin/e_config.c:2297
+#: src/bin/e_config.c:2371
 #, c-format
 msgid ""
 "Enlightenment cannot write its configuration file<br>because it ran out of "
@@ -743,7 +744,7 @@ msgstr ""
 "estis:<br>%s<br><br>Ĉi tiu dosiero estas forigita por eviti koruptadon de "
 "datumoj.<br>"
 
-#: src/bin/e_config.c:2309
+#: src/bin/e_config.c:2383
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the configuration file<br>it was writing "
@@ -755,31 +756,31 @@ msgstr ""
 "estis:<br>%s<br><br>Ĉi tiu dosiero estas forigita por eviti koruptadon de "
 "donitaĵoj.<br>"
 
-#: src/bin/e_config.c:2334
+#: src/bin/e_config.c:2408
 msgid "Enlightenment Configuration Write Problems"
 msgstr "Problemoj de skribo de Enlightenment Konfiguraĵo"
 
-#: src/bin/e_config.c:2338 src/bin/e_config_dialog.c:218
+#: src/bin/e_config.c:2412 src/bin/e_config_dialog.c:220
 #: src/bin/e_eap_editor.c:599 src/bin/e_eap_editor.c:663
-#: src/bin/e_entry_dialog.c:58 src/bin/e_exec.c:325 src/bin/e_fm_prop.c:513
-#: src/bin/e_int_border_remember.c:259 src/bin/e_int_border_remember.c:339
+#: src/bin/e_entry_dialog.c:58 src/bin/e_exec.c:321 src/bin/e_fm_prop.c:513
+#: src/bin/e_int_border_remember.c:258 src/bin/e_int_border_remember.c:339
 #: src/bin/e_int_border_remember.c:381 src/bin/e_module.c:418
-#: src/bin/e_sys.c:401 src/bin/e_sys.c:447 src/bin/e_utils.c:580
+#: src/bin/e_sys.c:401 src/bin/e_sys.c:447 src/bin/e_utils.c:543
 #: src/modules/conf_dpms/e_int_config_dpms.c:60
 #: src/modules/conf_dpms/e_int_config_dpms.c:81
 #: src/modules/conf_imc/e_int_config_imc_import.c:112
 #: src/modules/conf_mime/e_int_config_mime_edit.c:283
-#: src/modules/conf_profiles/e_int_config_profiles.c:288
+#: src/modules/conf_profiles/e_int_config_profiles.c:284
 #: src/modules/conf_theme/e_int_config_theme_import.c:113
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:204
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:171
-#: src/modules/cpufreq/e_mod_main.c:340 src/modules/cpufreq/e_mod_main.c:367
-#: src/modules/cpufreq/e_mod_main.c:386
+#: src/modules/cpufreq/e_mod_main.c:338 src/modules/cpufreq/e_mod_main.c:365
+#: src/modules/cpufreq/e_mod_main.c:384 src/modules/connman/e_mod_main.c:784
 msgid "OK"
 msgstr "Konfirmi"
 
-#: src/bin/e_config_dialog.c:189 src/modules/battery/e_mod_main.c:414
+#: src/bin/e_config_dialog.c:191 src/modules/battery/e_mod_main.c:412
 #: src/modules/conf_dialogs/e_mod_main.c:34
 #: src/modules/conf_engine/e_mod_main.c:34
 #: src/modules/conf_exebuf/e_mod_main.c:34
@@ -790,16 +791,16 @@ msgstr "Konfirmi"
 msgid "Advanced"
 msgstr "Plidetale"
 
-#: src/bin/e_config_dialog.c:204
+#: src/bin/e_config_dialog.c:206
 msgid "Basic"
 msgstr "Baze"
 
-#: src/bin/e_config_dialog.c:219
+#: src/bin/e_config_dialog.c:221
 msgid "Apply"
 msgstr "Apliki"
 
 #: src/bin/e_configure.c:15 src/modules/conf_shelves/e_mod_main.c:38
-#: src/modules/gadman/e_mod_main.c:30
+#: src/modules/gadman/e_mod_main.c:30 src/modules/mixer/e_mod_main.c:1083
 msgid "Extensions"
 msgstr "Etendiloj"
 
@@ -957,11 +958,12 @@ msgstr "Elekti Piktogramon"
 #: src/bin/e_entry_dialog.c:59 src/bin/e_fm_prop.c:514
 #: src/modules/conf_imc/e_int_config_imc_import.c:116
 #: src/modules/conf_mime/e_int_config_mime_edit.c:284
-#: src/modules/conf_profiles/e_int_config_profiles.c:289
+#: src/modules/conf_profiles/e_int_config_profiles.c:285
 #: src/modules/conf_theme/e_int_config_theme_import.c:117
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:208
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:172
+#: src/modules/connman/e_mod_main.c:785
 msgid "Cancel"
 msgstr "Rezigni"
 
@@ -969,48 +971,48 @@ msgstr "Rezigni"
 msgid "Select an Executable"
 msgstr "Elekti Lanĉeblon"
 
-#: src/bin/e_entry.c:490 src/bin/e_fm.c:6630
+#: src/bin/e_entry.c:491 src/bin/e_fm.c:6663
 #: src/modules/conf_applications/e_int_config_apps.c:271
-#: src/modules/conf_profiles/e_int_config_profiles.c:93
+#: src/modules/conf_profiles/e_int_config_profiles.c:113
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:111
 msgid "Delete"
 msgstr "Forviŝi"
 
-#: src/bin/e_entry.c:503 src/bin/e_fm.c:6540
+#: src/bin/e_entry.c:504 src/bin/e_fm.c:6573
 msgid "Cut"
 msgstr "Eltondi"
 
-#: src/bin/e_entry.c:514 src/bin/e_fm.c:4734 src/bin/e_fm.c:6557
+#: src/bin/e_entry.c:515 src/bin/e_fm.c:4748 src/bin/e_fm.c:6590
 msgid "Copy"
 msgstr "Kopii"
 
-#: src/bin/e_entry.c:525 src/bin/e_fm.c:6381 src/bin/e_fm.c:6571
+#: src/bin/e_entry.c:526 src/bin/e_fm.c:6414 src/bin/e_fm.c:6604
 msgid "Paste"
 msgstr "Alglui"
 
-#: src/bin/e_entry.c:537
+#: src/bin/e_entry.c:538
 msgid "Select All"
 msgstr "Elekti Ĉion"
 
-#: src/bin/e_exec.c:218 src/bin/e_utils.c:240
+#: src/bin/e_exec.c:218 src/bin/e_utils.c:203
 #: src/modules/conf_imc/e_int_config_imc.c:278
 #: src/modules/conf_imc/e_int_config_imc.c:516
 msgid "Run Error"
 msgstr "Lanĉa Eraro"
 
-#: src/bin/e_exec.c:219 src/bin/e_utils.c:241
+#: src/bin/e_exec.c:219 src/bin/e_utils.c:204
 #: src/modules/conf_imc/e_int_config_imc.c:279
 #: src/modules/conf_imc/e_int_config_imc.c:517
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr "Enlightenment ne povis forki idan procezo:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:316
+#: src/bin/e_exec.c:312
 msgid "Application run error"
 msgstr "Eraro dum lanĉo de aplikaĵo"
 
-#: src/bin/e_exec.c:318
+#: src/bin/e_exec.c:314
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -1019,235 +1021,235 @@ msgstr ""
 "Enlightenment ne povas lanĉi tiun aplikaĵon :<br><br>%s><br><br>La aplikaĵo "
 "malsukcesis komenci."
 
-#: src/bin/e_exec.c:422
+#: src/bin/e_exec.c:418
 msgid "Application Execution Error"
 msgstr "Eraro dum lanĉo de Aplikaĵo"
 
-#: src/bin/e_exec.c:434
+#: src/bin/e_exec.c:430
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s haltis ruladon senatendite."
 
-#: src/bin/e_exec.c:440
+#: src/bin/e_exec.c:436
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Elirsignala kodo %i sendita el %s."
 
-#: src/bin/e_exec.c:447
+#: src/bin/e_exec.c:443
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s interrompiĝis per InterrompSignalo."
 
-#: src/bin/e_exec.c:449
+#: src/bin/e_exec.c:445
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s interrompiĝis per ElirSignalo."
 
-#: src/bin/e_exec.c:453
+#: src/bin/e_exec.c:449
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s interrompiĝis per ĉesigSignalo."
 
-#: src/bin/e_exec.c:456
+#: src/bin/e_exec.c:452
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s interrompiĝis per glitpunkta eraro."
 
-#: src/bin/e_exec.c:459
+#: src/bin/e_exec.c:455
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s interrompiĝis per Neinterrompebla Mortiga Signalo"
 
-#: src/bin/e_exec.c:462
+#: src/bin/e_exec.c:458
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s interrompiĝis per Segmenta Misfunkcio."
 
-#: src/bin/e_exec.c:465
+#: src/bin/e_exec.c:461
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s interrompiĝis per Rompita Dukto."
 
-#: src/bin/e_exec.c:468
+#: src/bin/e_exec.c:464
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s interrompiĝis per FiniĝSignalo."
 
-#: src/bin/e_exec.c:471
+#: src/bin/e_exec.c:467
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s interrompiĝis per Busa Eraro."
 
-#: src/bin/e_exec.c:474
+#: src/bin/e_exec.c:470
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s interrompiĝis per Signala Numero %i."
 
-#: src/bin/e_exec.c:530
+#: src/bin/e_exec.c:526
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 "*** la restanta eligo estis distranĉita. Registru la eligon por vidi.***\n"
 
-#: src/bin/e_exec.c:594 src/bin/e_exec.c:668 src/bin/e_exec.c:674
+#: src/bin/e_exec.c:590 src/bin/e_exec.c:664 src/bin/e_exec.c:670
 msgid "Error Logs"
 msgstr "Eraraj Protokoloj"
 
-#: src/bin/e_exec.c:599 src/bin/e_exec.c:675
+#: src/bin/e_exec.c:595 src/bin/e_exec.c:671
 msgid "There was no error message."
 msgstr "Nenio erara mesaĝo ĉeestas."
 
-#: src/bin/e_exec.c:603 src/bin/e_exec.c:682
+#: src/bin/e_exec.c:599 src/bin/e_exec.c:678
 msgid "Save This Message"
 msgstr "Konservi Tiun Mesaĝon"
 
-#: src/bin/e_exec.c:607 src/bin/e_exec.c:685
+#: src/bin/e_exec.c:603 src/bin/e_exec.c:681
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "La erara protokolo estos registrata kiel %s/%s.log"
 
-#: src/bin/e_exec.c:633
+#: src/bin/e_exec.c:629
 msgid "Error Information"
 msgstr "Erara Informaĵo"
 
-#: src/bin/e_exec.c:641
+#: src/bin/e_exec.c:637
 msgid "Error Signal Information"
 msgstr "Erara Signala informaĵo"
 
-#: src/bin/e_exec.c:652 src/bin/e_exec.c:658
+#: src/bin/e_exec.c:648 src/bin/e_exec.c:654
 msgid "Output Data"
 msgstr "Eligitaj Datumoj"
 
-#: src/bin/e_exec.c:659
+#: src/bin/e_exec.c:655
 msgid "There was no output."
 msgstr "Neniu eligo ĉeestas"
 
-#: src/bin/e_fm.c:540
+#: src/bin/e_fm.c:548
 #, fuzzy
 msgid "Nonexistent path"
 msgstr "Neekzistanta vojo"
 
-#: src/bin/e_fm.c:543
+#: src/bin/e_fm.c:551
 #, fuzzy, c-format
 msgid "%s doesn't exist."
 msgstr "%s ne ekzistas"
 
-#: src/bin/e_fm.c:2640
+#: src/bin/e_fm.c:2646
 #, c-format
 msgid "%i Files"
 msgstr "%i Dosieroj"
 
-#: src/bin/e_fm.c:4750 src/bin/e_fm.c:7093 src/bin/e_fm.c:7223
+#: src/bin/e_fm.c:4764 src/bin/e_fm.c:7126 src/bin/e_fm.c:7256
 #, fuzzy
 msgid "Abort"
 msgstr "Pri"
 
-#: src/bin/e_fm.c:6304 src/bin/e_fm.c:6461
+#: src/bin/e_fm.c:6337 src/bin/e_fm.c:6494
 #: src/modules/fileman/e_mod_config.c:171
 msgid "View Mode"
 msgstr "Vidiga Modo"
 
-#: src/bin/e_fm.c:6311 src/bin/e_fm.c:6468
+#: src/bin/e_fm.c:6344 src/bin/e_fm.c:6501
 msgid "Refresh View"
 msgstr "Refreŝigi Rigardon"
 
-#: src/bin/e_fm.c:6322 src/bin/e_fm.c:6479
+#: src/bin/e_fm.c:6355 src/bin/e_fm.c:6512
 msgid "Show Hidden Files"
 msgstr "Vidigi Kaŝitajn Dosierojn"
 
-#: src/bin/e_fm.c:6337 src/bin/e_fm.c:6494
+#: src/bin/e_fm.c:6370 src/bin/e_fm.c:6527
 msgid "Remember Ordering"
 msgstr "Memorigi Ordon"
 
-#: src/bin/e_fm.c:6349 src/bin/e_fm.c:6506
+#: src/bin/e_fm.c:6382 src/bin/e_fm.c:6539
 msgid "Sort Now"
 msgstr "Tuj Ordigi"
 
-#: src/bin/e_fm.c:6364 src/bin/e_fm.c:6524
+#: src/bin/e_fm.c:6397 src/bin/e_fm.c:6557
 #: src/modules/conf_paths/e_int_config_paths.c:211
 msgid "New Directory"
 msgstr "Nova Dosierujo"
 
-#: src/bin/e_fm.c:6641
+#: src/bin/e_fm.c:6674
 msgid "Rename"
 msgstr "Renomi"
 
-#: src/bin/e_fm.c:6651
+#: src/bin/e_fm.c:6684
 msgid "Properties"
 msgstr "Ecoj"
 
-#: src/bin/e_fm.c:6812 src/modules/conf_paths/e_int_config_paths.c:83
+#: src/bin/e_fm.c:6845 src/modules/conf_paths/e_int_config_paths.c:83
 #: src/modules/fileman/e_mod_config.c:173
 msgid "Icons"
 msgstr "Piktogramoj"
 
-#: src/bin/e_fm.c:6820 src/modules/fileman/e_mod_config.c:186
+#: src/bin/e_fm.c:6853 src/modules/fileman/e_mod_config.c:186
 msgid "List"
 msgstr "Listo"
 
-#: src/bin/e_fm.c:6958
+#: src/bin/e_fm.c:6991
 msgid "Create a new Directory"
 msgstr "Krei novan dosierujon"
 
-#: src/bin/e_fm.c:6959
+#: src/bin/e_fm.c:6992
 msgid "New Directory Name:"
 msgstr "Nova Nomo de Dosierujo:"
 
-#: src/bin/e_fm.c:7018
+#: src/bin/e_fm.c:7051
 #, c-format
 msgid "Rename %s to:"
 msgstr "Renomi %s al:"
 
-#: src/bin/e_fm.c:7020
+#: src/bin/e_fm.c:7053
 msgid "Rename File"
 msgstr "Renomi Dosieron"
 
-#: src/bin/e_fm.c:7092 src/bin/e_fm.c:7222
+#: src/bin/e_fm.c:7125 src/bin/e_fm.c:7255
 #, fuzzy
 msgid "Retry"
 msgstr "Relanĉi"
 
-#: src/bin/e_fm.c:7096 src/bin/e_fm.c:7153 src/bin/e_fm.c:7228
+#: src/bin/e_fm.c:7129 src/bin/e_fm.c:7186 src/bin/e_fm.c:7261
 #, fuzzy
 msgid "Error"
 msgstr "Lanĉa Eraro"
 
-#: src/bin/e_fm.c:7098 src/bin/e_fm.c:7155
+#: src/bin/e_fm.c:7131 src/bin/e_fm.c:7188
 #, c-format
 msgid "%s"
 msgstr ""
 
-#: src/bin/e_fm.c:7148
+#: src/bin/e_fm.c:7181
 msgid "No to all"
 msgstr ""
 
-#: src/bin/e_fm.c:7150
+#: src/bin/e_fm.c:7183
 msgid "Yes to all"
 msgstr ""
 
-#: src/bin/e_fm.c:7224
+#: src/bin/e_fm.c:7257
 msgid "Ignore this"
 msgstr ""
 
-#: src/bin/e_fm.c:7225
+#: src/bin/e_fm.c:7258
 msgid "Ignore all"
 msgstr ""
 
-#: src/bin/e_fm.c:7230
+#: src/bin/e_fm.c:7263
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:7332
+#: src/bin/e_fm.c:7365
 msgid "Confirm Delete"
 msgstr "Konfirmi Forviŝon"
 
-#: src/bin/e_fm.c:7336
+#: src/bin/e_fm.c:7369
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Ĉu vi certas ke vi deziras forviŝi<br><hilight>%s</hilight>?"
 
-#: src/bin/e_fm.c:7342
+#: src/bin/e_fm.c:7375
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1334,37 +1336,37 @@ msgstr "Ligila Informaĵo"
 msgid "Select an Image"
 msgstr "Elekti bildon"
 
-#: src/bin/e_fm_hal.c:212
+#: src/bin/e_fm_hal.c:214
 #, c-format
 msgid "%llu TiB"
 msgstr ""
 
-#: src/bin/e_fm_hal.c:214
+#: src/bin/e_fm_hal.c:216
 #, c-format
 msgid "%llu GiB"
 msgstr ""
 
-#: src/bin/e_fm_hal.c:216
+#: src/bin/e_fm_hal.c:218
 #, c-format
 msgid "%llu MiB"
 msgstr ""
 
-#: src/bin/e_fm_hal.c:218
+#: src/bin/e_fm_hal.c:220
 #, c-format
 msgid "%llu KiB"
 msgstr ""
 
-#: src/bin/e_fm_hal.c:220
+#: src/bin/e_fm_hal.c:222
 #, c-format
 msgid "%llu B"
 msgstr ""
 
-#: src/bin/e_fm_hal.c:251
+#: src/bin/e_fm_hal.c:253
 #, c-format
 msgid "Unknown Volume"
 msgstr "Nekonata Datumportilo"
 
-#: src/bin/e_fm_hal.c:291
+#: src/bin/e_fm_hal.c:293
 msgid "Removable Device"
 msgstr "Demetebla Aparato"
 
@@ -1407,11 +1409,11 @@ msgstr "Komenci movon/regrandigon de ĉi tiun vanaĵon"
 msgid "Remove this gadget"
 msgstr "Forviŝi tiun vanaĵon"
 
-#: src/bin/e_gadcon.c:1676
+#: src/bin/e_gadcon.c:1675
 msgid "Stop move/resize this gadget"
 msgstr "Ĉesi movon/regrandigon ĉi tiun vanaĵon"
 
-#: src/bin/e_hints.c:148
+#: src/bin/e_hints.c:151
 msgid ""
 "A previous instance of Enlightenment is still active\n"
 "on this screen. Aborting startup.\n"
@@ -1674,11 +1676,11 @@ msgid "Window List"
 msgstr "Fenestrolisto"
 
 #: src/bin/e_int_border_menu.c:1043 src/modules/pager/e_mod_main.c:263
-#: src/modules/pager/e_mod_main.c:2799 src/modules/pager/e_mod_main.c:2806
-#: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2813
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2815
-#: src/modules/pager/e_mod_main.c:2846 src/modules/pager/e_mod_main.c:2847
-#: src/modules/pager/e_mod_main.c:2848 src/modules/pager/e_mod_main.c:2849
+#: src/modules/pager/e_mod_main.c:2794 src/modules/pager/e_mod_main.c:2801
+#: src/modules/pager/e_mod_main.c:2807 src/modules/pager/e_mod_main.c:2808
+#: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2810
+#: src/modules/pager/e_mod_main.c:2841 src/modules/pager/e_mod_main.c:2842
+#: src/modules/pager/e_mod_main.c:2843 src/modules/pager/e_mod_main.c:2844
 msgid "Pager"
 msgstr "Vokilo"
 
@@ -1811,11 +1813,11 @@ msgstr "Kaŝita"
 msgid "Window Remember"
 msgstr "Fenestra Memoro"
 
-#: src/bin/e_int_border_remember.c:242
+#: src/bin/e_int_border_remember.c:241
 msgid "Window properties are not a unique match"
 msgstr "Fenestraj ecoj ne estas unua kongrueco"
 
-#: src/bin/e_int_border_remember.c:245
+#: src/bin/e_int_border_remember.c:244
 msgid ""
 "You are trying to ask Enlightenment to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
@@ -1957,9 +1959,9 @@ msgstr ""
 
 #: src/bin/e_int_config_modules.c:42 src/bin/e_int_menus.c:214
 #: src/modules/battery/e_mod_main.c:172 src/modules/ibar/e_mod_main.c:315
-#: src/modules/ibar/e_mod_main.c:830 src/modules/ibox/e_mod_main.c:309
-#: src/modules/ibox/e_mod_main.c:708 src/modules/pager/e_mod_main.c:803
-#: src/modules/temperature/e_mod_main.c:306
+#: src/modules/ibar/e_mod_main.c:828 src/modules/ibox/e_mod_main.c:309
+#: src/modules/ibox/e_mod_main.c:707 src/modules/pager/e_mod_main.c:803
+#: src/modules/temperature/e_mod_main.c:306 src/modules/mixer/e_mod_main.c:667
 msgid "Configuration"
 msgstr "Konfiguraĵo"
 
@@ -1977,24 +1979,24 @@ msgstr "Breto"
 msgid "Module Settings"
 msgstr "Modulaj Agordoj"
 
-#: src/bin/e_int_config_modules.c:168
+#: src/bin/e_int_config_modules.c:167
 msgid "Available Modules"
 msgstr "Disponeblaj Moduloj"
 
-#: src/bin/e_int_config_modules.c:175
+#: src/bin/e_int_config_modules.c:174
 msgid "Load Module"
 msgstr "Ŝarĝi Modulon"
 
-#: src/bin/e_int_config_modules.c:182
+#: src/bin/e_int_config_modules.c:181
 msgid "Loaded Modules"
 msgstr "Ŝarĝitaj Moduloj"
 
-#: src/bin/e_int_config_modules.c:189
+#: src/bin/e_int_config_modules.c:188
 msgid "Unload Module"
 msgstr "Malŝarĝi Modulon"
 
-#: src/bin/e_int_config_modules.c:199 src/bin/e_int_config_modules.c:553
-#: src/bin/e_int_config_modules.c:571 src/bin/e_int_config_modules.c:596
+#: src/bin/e_int_config_modules.c:198 src/bin/e_int_config_modules.c:551
+#: src/bin/e_int_config_modules.c:568 src/bin/e_int_config_modules.c:593
 #: src/bin/e_int_gadcon_config.c:121 src/bin/e_int_gadcon_config.c:156
 #: src/bin/e_int_gadcon_config.c:178
 msgid "Description: Unavailable"
@@ -2024,7 +2026,7 @@ msgstr "Elektitaj Vanaĵoj"
 msgid "Remove Gadget"
 msgstr "Forviŝi Vanaĵon"
 
-#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:328
+#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:327
 msgid "Toolbar Configuration"
 msgstr "Konfiguraĵo de ilobreto"
 
@@ -2140,7 +2142,7 @@ msgstr "Aldoni Breton"
 msgid "Delete A Shelf"
 msgstr "Forviŝi Breton"
 
-#: src/bin/e_int_shelf_config.c:71 src/bin/e_shelf.c:1657
+#: src/bin/e_int_shelf_config.c:71 src/bin/e_shelf.c:1656
 msgid "Shelf Configuration"
 msgstr "Breta Konfiguraĵo"
 
@@ -2403,263 +2405,269 @@ msgstr "Enlightenment ne povas difini ĝian dosier-registrejan sistemon."
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment ne povas difini sian agordan sistemon."
 
-#: src/bin/e_main.c:514
+#: src/bin/e_main.c:515
+#, fuzzy
+msgid "Enlightenment cannot set up its scale system."
+msgstr "Enlightenment ne eblas difini sian bretan sistemon."
+
+#: src/bin/e_main.c:523
 msgid "Enlightenment cannot set up the pointer system."
 msgstr "Enlightenment ne povas difini sian referencan sistemon."
 
-#: src/bin/e_main.c:523
+#: src/bin/e_main.c:532
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 
-#: src/bin/e_main.c:541
+#: src/bin/e_main.c:550
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment ne povas difini sian tiparan sistemon."
 
-#: src/bin/e_main.c:552
+#: src/bin/e_main.c:561
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment ne povas difini sian etosan sistemon."
 
-#: src/bin/e_main.c:563
+#: src/bin/e_main.c:572
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 
-#: src/bin/e_main.c:574
+#: src/bin/e_main.c:583
 msgid "Testing Format Support"
 msgstr ""
 
-#: src/bin/e_main.c:584
+#: src/bin/e_main.c:593
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:594
+#: src/bin/e_main.c:603
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:603
+#: src/bin/e_main.c:612
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:612
+#: src/bin/e_main.c:621
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:625
+#: src/bin/e_main.c:634
 msgid "Starting International Support"
 msgstr ""
 
-#: src/bin/e_main.c:630
+#: src/bin/e_main.c:639
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment ne povas difini sian \"intl\"-sistemon."
 
-#: src/bin/e_main.c:635
+#: src/bin/e_main.c:644
 msgid "Setting up Paths"
 msgstr "Agordado de Vojoj"
 
-#: src/bin/e_main.c:652
+#: src/bin/e_main.c:661
 msgid "Setup Thumbnailer"
 msgstr "Agordi Bildetilo"
 
-#: src/bin/e_main.c:657
+#: src/bin/e_main.c:666
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment ne povas eki la Miniaturon sistemon.\n"
 
-#: src/bin/e_main.c:662
+#: src/bin/e_main.c:671
 msgid "Setup System Controls"
 msgstr "Agordi Sistemajn Kontrolojn"
 
-#: src/bin/e_main.c:667
+#: src/bin/e_main.c:676
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Enlightenment ne eblas difini sisteman komandan sistemon.\n"
 
-#: src/bin/e_main.c:672
+#: src/bin/e_main.c:681
 msgid "Setup Actions"
 msgstr "Agordi Agadojn"
 
-#: src/bin/e_main.c:677
+#: src/bin/e_main.c:686
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment ne povas difini sian agadan sistemon."
 
-#: src/bin/e_main.c:681
+#: src/bin/e_main.c:690
 msgid "Setup Bindings"
 msgstr "Agordi Bindojn"
 
-#: src/bin/e_main.c:686
+#: src/bin/e_main.c:695
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment ne povas difini sian bindan sistemon."
 
-#: src/bin/e_main.c:690
+#: src/bin/e_main.c:699
 msgid "Setup Popups"
 msgstr "Agordi Ŝprucfenestrojn"
 
-#: src/bin/e_main.c:695
+#: src/bin/e_main.c:704
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment ne povas difini sian spruĉajan sistemon."
 
-#: src/bin/e_main.c:700
+#: src/bin/e_main.c:709
 msgid "Setup Wallpaper"
 msgstr "Agordi Tapeton"
 
-#: src/bin/e_main.c:705
+#: src/bin/e_main.c:714
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Enlightenment ne povas difini sian tapetan sistemon."
 
-#: src/bin/e_main.c:709
+#: src/bin/e_main.c:718
 msgid "Setup Screens"
 msgstr "Agordi Ekranojn"
 
-#: src/bin/e_main.c:714
+#: src/bin/e_main.c:723
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
 
-#: src/bin/e_main.c:719
+#: src/bin/e_main.c:728
 msgid "Setup Execution System"
 msgstr ""
 
-#: src/bin/e_main.c:724
+#: src/bin/e_main.c:733
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Enlightenment ne povas difini sian lanĉeblan sistemon."
 
-#: src/bin/e_main.c:728
+#: src/bin/e_main.c:737
 msgid "Setup Remembers"
 msgstr "Agordi Memorojn"
 
-#: src/bin/e_main.c:733
+#: src/bin/e_main.c:742
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment ne povas difini memorigajn agordojn."
 
-#: src/bin/e_main.c:741
+#: src/bin/e_main.c:750
 msgid "Setup FM"
 msgstr ""
 
-#: src/bin/e_main.c:746
+#: src/bin/e_main.c:755
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment ne povas difini la dosiera administrilo.\n"
 
-#: src/bin/e_main.c:759
+#: src/bin/e_main.c:768
 msgid "Setup Message System"
 msgstr "Agordi Mesaĝan Sistemon"
 
-#: src/bin/e_main.c:764
+#: src/bin/e_main.c:773
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment ne povas difini sian \"msg\"-sistemon."
 
-#: src/bin/e_main.c:768
+#: src/bin/e_main.c:777
 msgid "Setup DND"
 msgstr "Agordi Ŝovon kaj Demeton"
 
-#: src/bin/e_main.c:773
+#: src/bin/e_main.c:782
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment ne povas difini sian \"dnd\"-sistemon."
 
-#: src/bin/e_main.c:777
+#: src/bin/e_main.c:786
 msgid "Setup Grab Input HAnding"
 msgstr ""
 
-#: src/bin/e_main.c:782
+#: src/bin/e_main.c:791
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr ""
 
-#: src/bin/e_main.c:786
+#: src/bin/e_main.c:795
 msgid "Setup Modules"
 msgstr "Agordi Modulojn"
 
-#: src/bin/e_main.c:791
+#: src/bin/e_main.c:800
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment ne povas difini sian sistemon de moduloj."
 
-#: src/bin/e_main.c:795
+#: src/bin/e_main.c:804
 msgid "Setup Color Classes"
 msgstr "Agordi Kolorajn Klasojn"
 
-#: src/bin/e_main.c:800
+#: src/bin/e_main.c:809
 msgid "Enlightenment cannot set up its color class system."
 msgstr ""
 
-#: src/bin/e_main.c:804
+#: src/bin/e_main.c:813
 msgid "Setup Gadcon"
 msgstr "Elekti Gadcon"
 
-#: src/bin/e_main.c:809
+#: src/bin/e_main.c:818
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment ne povas difini sian sistemon de kontrolo de vanaĵoj."
 
-#: src/bin/e_main.c:813
+#: src/bin/e_main.c:822
 msgid "Setup Shelves"
 msgstr "Agordi Bretojn"
 
-#: src/bin/e_main.c:818
+#: src/bin/e_main.c:827
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Enlightenment ne eblas difini sian bretan sistemon."
 
-#: src/bin/e_main.c:823
+#: src/bin/e_main.c:832
 msgid "Setup DPMS"
 msgstr ""
 
-#: src/bin/e_main.c:828
+#: src/bin/e_main.c:837
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment ne povas difini la DPMS-agordojn."
 
-#: src/bin/e_main.c:832
+#: src/bin/e_main.c:841
 msgid "Setup Screensaver"
 msgstr "Ebligi ekrankurtenon"
 
-#: src/bin/e_main.c:837
+#: src/bin/e_main.c:846
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "Enlightenment ne povas agordi la ekrankurtenon."
 
-#: src/bin/e_main.c:841
+#: src/bin/e_main.c:850
 msgid "Setup Mouse"
 msgstr "Agordi Muson"
 
-#: src/bin/e_main.c:846
-msgid "Enlightenment cannot configure the mouse acceleration settings."
-msgstr "Enlightenment ne povas difini la agordojn de musa plirapidigo."
+#: src/bin/e_main.c:855
+#, fuzzy
+msgid "Enlightenment cannot configure the mouse settings."
+msgstr "Enlightenment ne povas difini la DPMS-agordojn."
 
-#: src/bin/e_main.c:850
+#: src/bin/e_main.c:859
 msgid "Setup Desklock"
 msgstr "Agodi Labortablan Ŝloson"
 
-#: src/bin/e_main.c:855
+#: src/bin/e_main.c:864
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr ""
 
-#: src/bin/e_main.c:860
+#: src/bin/e_main.c:869
 msgid "Set Up File Ordering"
 msgstr ""
 
-#: src/bin/e_main.c:864
+#: src/bin/e_main.c:873
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment ne povas difini sian sistemon de dosiera ordigo."
 
-#: src/bin/e_main.c:869
+#: src/bin/e_main.c:878
 #, fuzzy
 msgid "Set Up Powersave modes"
 msgstr "Difini Agmetodon por ĉeforgana Potenco"
 
-#: src/bin/e_main.c:873
+#: src/bin/e_main.c:882
 #, fuzzy
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr "Enlightenment ne povas difini sian spruĉajan sistemon."
 
-#: src/bin/e_main.c:905
+#: src/bin/e_main.c:914
 msgid "Load Modules"
 msgstr "Ŝargi Modulojn"
 
-#: src/bin/e_main.c:913
+#: src/bin/e_main.c:922
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2667,11 +2675,11 @@ msgid ""
 "dialog should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:920
+#: src/bin/e_main.c:929
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr ""
 
-#: src/bin/e_main.c:921
+#: src/bin/e_main.c:930
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2679,11 +2687,11 @@ msgid ""
 "should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:929
+#: src/bin/e_main.c:938
 msgid "Configure Shelves"
 msgstr "Agordi Bretojn"
 
-#: src/bin/e_main.c:936
+#: src/bin/e_main.c:945
 msgid "Almost Done"
 msgstr "Preskaŭ Finita"
 
@@ -2739,23 +2747,23 @@ msgid ""
 msgstr ""
 "Vi petis foriviŝi tiun breton.<br><br>Ĉu vi certas ke vi volas foriviŝi ĝin ?"
 
-#: src/bin/e_shelf.c:1647 src/bin/e_toolbar.c:318
+#: src/bin/e_shelf.c:1646 src/bin/e_toolbar.c:317
 msgid "Stop Moving/Resizing Items"
 msgstr "Halti Movadon/GrandecŜanĝon de Elementoj"
 
-#: src/bin/e_shelf.c:1649 src/bin/e_toolbar.c:320
+#: src/bin/e_shelf.c:1648 src/bin/e_toolbar.c:319
 msgid "Begin Moving/Resizing Items"
 msgstr "Komenci Movadon/GrandecŜanĝon de Elementoj"
 
-#: src/bin/e_shelf.c:1662
+#: src/bin/e_shelf.c:1661
 msgid "Configure Shelf Contents"
 msgstr "Konfiguri Bretan Enhavon"
 
-#: src/bin/e_shelf.c:1667
+#: src/bin/e_shelf.c:1666
 msgid "Delete this Shelf"
 msgstr "Forviŝi tiun Breton"
 
-#: src/bin/e_startup.c:62
+#: src/bin/e_startup.c:61
 msgid "Starting"
 msgstr "Komencante"
 
@@ -2905,89 +2913,89 @@ msgstr "Pri tiu etoso"
 msgid "Set As Theme"
 msgstr "Difini kiel Etoson"
 
-#: src/bin/e_toolbar.c:333
+#: src/bin/e_toolbar.c:332
 msgid "Configure Toolbar Contents"
 msgstr "Konfiguri Bretan Enhavon"
 
-#: src/bin/e_utils.c:285
+#: src/bin/e_utils.c:248
 msgid "Cannot exit - immortal windows."
 msgstr "Ne eblas foriri - nemortigitaj fenestroj."
 
-#: src/bin/e_utils.c:286
+#: src/bin/e_utils.c:249
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Enlightenment will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 
-#: src/bin/e_utils.c:741
+#: src/bin/e_utils.c:704
 #, c-format
 msgid "%'.0f Bytes"
 msgstr "%'.0f Bytes"
 
-#: src/bin/e_utils.c:745
+#: src/bin/e_utils.c:708
 #, c-format
 msgid "%'.0f KB"
 msgstr "%'.0f KB"
 
-#: src/bin/e_utils.c:749
+#: src/bin/e_utils.c:712
 #, c-format
 msgid "%'.0f MB"
 msgstr "%'.0f MB"
 
-#: src/bin/e_utils.c:753
+#: src/bin/e_utils.c:716
 #, c-format
 msgid "%'.1f GB"
 msgstr "%'.1f GB"
 
-#: src/bin/e_utils.c:773
+#: src/bin/e_utils.c:736
 #, c-format
 msgid "In the Future"
 msgstr "Je futuro"
 
-#: src/bin/e_utils.c:778
+#: src/bin/e_utils.c:741
 #, c-format
 msgid "In the last Minute"
 msgstr "Je lasta minuto"
 
-#: src/bin/e_utils.c:780
+#: src/bin/e_utils.c:743
 #, c-format
 msgid "%li Years ago"
 msgstr "Antaŭ %li Jaroj"
 
-#: src/bin/e_utils.c:782
+#: src/bin/e_utils.c:745
 #, c-format
 msgid "%li Months ago"
 msgstr "Antaŭ %li Monatoj"
 
-#: src/bin/e_utils.c:784
+#: src/bin/e_utils.c:747
 #, c-format
 msgid "%li Weeks ago"
 msgstr "Antaŭ %li Semajnoj"
 
-#: src/bin/e_utils.c:786
+#: src/bin/e_utils.c:749
 #, c-format
 msgid "%li Days ago"
 msgstr "Antaŭ %li Tagoj"
 
-#: src/bin/e_utils.c:788
+#: src/bin/e_utils.c:751
 #, c-format
 msgid "%li Hours ago"
 msgstr "Antaŭ %li Horoj"
 
-#: src/bin/e_utils.c:790
+#: src/bin/e_utils.c:753
 #, c-format
 msgid "%li Minutes ago"
 msgstr "Antaŭ %li minutoj"
 
-#: src/bin/e_utils.c:796
+#: src/bin/e_utils.c:759
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1146
 msgid "Unknown"
 msgstr "Nekonata"
 
 #: src/bin/e_widget_config_list.c:54
 #: src/modules/conf_applications/e_int_config_apps.c:245
-#: src/modules/conf_profiles/e_int_config_profiles.c:89
+#: src/modules/conf_profiles/e_int_config_profiles.c:111
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:109
 msgid "Add"
@@ -3120,16 +3128,16 @@ msgstr "%1.0f sekundoj"
 msgid "Battery"
 msgstr "Baterio"
 
-#: src/modules/battery/e_mod_main.c:416
+#: src/modules/battery/e_mod_main.c:414
 msgid "Battery Meter"
 msgstr "Baterio-mesurilo"
 
-#: src/modules/battery/e_mod_main.c:493 src/modules/battery/e_mod_main.c:495
-#: src/modules/battery/e_mod_main.c:502 src/modules/battery/e_mod_main.c:504
+#: src/modules/battery/e_mod_main.c:491 src/modules/battery/e_mod_main.c:493
+#: src/modules/battery/e_mod_main.c:500 src/modules/battery/e_mod_main.c:502
 msgid "ERROR"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:561
+#: src/modules/battery/e_mod_main.c:559
 msgid "N/A"
 msgstr ""
 
@@ -3172,7 +3180,7 @@ msgid "Restart Applications"
 msgstr "Aplikaĵoj post relanĉo"
 
 #: src/modules/conf_applications/e_int_config_apps.c:238
-#: src/modules/fileman/e_fwin.c:1361
+#: src/modules/fileman/e_fwin.c:1456
 msgid "All Applications"
 msgstr "Ĉiuj Aplikaĵoj"
 
@@ -3493,7 +3501,7 @@ msgid "Desktop Name"
 msgstr "Labortabla Nomo"
 
 #: src/modules/conf_desk/e_int_config_desk.c:150
-#: src/modules/conf_profiles/e_int_config_profiles.c:265
+#: src/modules/conf_profiles/e_int_config_profiles.c:261
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:120
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:105
 msgid "Name:"
@@ -3571,8 +3579,8 @@ msgstr "Montri en ekrana zono #:"
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:164
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:168
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:172
-#: src/modules/conf_mouse/e_int_config_mouse.c:95
-#: src/modules/conf_mouse/e_int_config_mouse.c:101
+#: src/modules/conf_mouse/e_int_config_mouse.c:109
+#: src/modules/conf_mouse/e_int_config_mouse.c:115
 #: src/modules/fileman/e_mod_config.c:192
 #, c-format
 msgid "%1.0f"
@@ -3675,14 +3683,15 @@ msgid "Dialog Settings"
 msgstr "Agordoj de Dialogoj"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:84
-#: src/modules/conf_engine/e_int_config_engine.c:85
+#: src/modules/conf_engine/e_int_config_engine.c:94
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:109
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:161
 #: src/modules/conf_performance/e_int_config_performance.c:90
 #: src/modules/conf_performance/e_int_config_performance.c:123
 #: src/modules/conf_winlist/e_int_config_winlist.c:131
 #: src/modules/ibox/e_mod_config.c:93 src/modules/pager/e_mod_config.c:115
-#: src/modules/pager/e_mod_config.c:154
+#: src/modules/pager/e_mod_config.c:154 src/modules/mixer/conf_gadget.c:197
+#: src/modules/mixer/conf_module.c:96
 msgid "General Settings"
 msgstr "Ĝeneralaj Agordoj"
 
@@ -3843,24 +3852,24 @@ msgstr "Estinga tempo"
 msgid "Power Management"
 msgstr "Administrado de potenco"
 
-#: src/modules/conf_engine/e_int_config_engine.c:36
+#: src/modules/conf_engine/e_int_config_engine.c:38
 msgid "Engine Settings"
 msgstr "Motoraj Agordoj"
 
-#: src/modules/conf_engine/e_int_config_engine.c:86
+#: src/modules/conf_engine/e_int_config_engine.c:95
 msgid "Enable Composite"
 msgstr "Ebligi Composite-on"
 
-#: src/modules/conf_engine/e_int_config_engine.c:93
+#: src/modules/conf_engine/e_int_config_engine.c:102
 msgid "Default Engine"
 msgstr "Defaŭlta Motoro"
 
-#: src/modules/conf_engine/e_int_config_engine.c:122
+#: src/modules/conf_engine/e_int_config_engine.c:131
 #, fuzzy
 msgid "Enable Composite Support ?"
 msgstr "Ebligi Composite-on"
 
-#: src/modules/conf_engine/e_int_config_engine.c:124
+#: src/modules/conf_engine/e_int_config_engine.c:133
 msgid ""
 "You have chosen to enable composite support,<br>but your current screen does "
 "not support composite.<br><br>Are you sure you wish to enable composite "
@@ -4645,20 +4654,26 @@ msgstr "Kursora Grandeco"
 msgid "Mouse Cursor"
 msgstr "Musa kursoro"
 
-#: src/modules/conf_mouse/e_int_config_mouse.c:35
-msgid "Mouse Acceleration Settings"
-msgstr "Agordoj de Plirapidigo de musa movado"
-
-#: src/modules/conf_mouse/e_int_config_mouse.c:91
+#: src/modules/conf_mouse/e_int_config_mouse.c:36
 #: src/modules/conf_mouse/e_mod_main.c:35
+#, fuzzy
+msgid "Mouse Settings"
+msgstr "Modulaj Agordoj"
+
+#: src/modules/conf_mouse/e_int_config_mouse.c:97
+#, fuzzy
+msgid "Mouse Hand"
+msgstr "Musaj Bindoj"
+
+#: src/modules/conf_mouse/e_int_config_mouse.c:105
 msgid "Mouse Acceleration"
 msgstr "Akcelado de la muso"
 
-#: src/modules/conf_mouse/e_int_config_mouse.c:93
+#: src/modules/conf_mouse/e_int_config_mouse.c:107
 msgid "Acceleration"
 msgstr "Plirapidigo"
 
-#: src/modules/conf_mouse/e_int_config_mouse.c:99
+#: src/modules/conf_mouse/e_int_config_mouse.c:113
 msgid "Threshold"
 msgstr "Sojlo"
 
@@ -4770,19 +4785,15 @@ msgstr "%1.0f aroj"
 msgid "Performance"
 msgstr "Seanco"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:53
+#: src/modules/conf_profiles/e_int_config_profiles.c:54
 msgid "Profile Selector"
 msgstr "Aspekta Elektilo"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:82
+#: src/modules/conf_profiles/e_int_config_profiles.c:104
 msgid "Available Profiles"
 msgstr "Uzeblaj aspektoj"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:91
-msgid "Select"
-msgstr "Elekti"
-
-#: src/modules/conf_profiles/e_int_config_profiles.c:212
+#: src/modules/conf_profiles/e_int_config_profiles.c:208
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -4791,19 +4802,19 @@ msgstr ""
 "Vi petis forviŝi \"%s\".<br><br>Ĉu vi certas ke vi volas forviŝi tiun "
 "aspekton ?"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:215
+#: src/modules/conf_profiles/e_int_config_profiles.c:211
 msgid "Are you sure you want to delete this profile?"
 msgstr "Ĉu vi estas certa, ke vi deziras forviŝi tiun aspekton ?"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:262
+#: src/modules/conf_profiles/e_int_config_profiles.c:258
 msgid "Add New Profile"
 msgstr "Aldoni Novan Aspekton"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:276
+#: src/modules/conf_profiles/e_int_config_profiles.c:272
 msgid "Plain Profile"
 msgstr "Plata Aspekto"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:280
+#: src/modules/conf_profiles/e_int_config_profiles.c:276
 msgid "Clone Current Profile"
 msgstr "Kopii Nunan Aspekton"
 
@@ -5484,7 +5495,7 @@ msgid "Details"
 msgstr "Aprioraĵoj"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:107
-#: src/modules/conf_window_remembers/e_int_config_remembers.c:267
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:269
 #, fuzzy
 msgid "<No Name>"
 msgstr "Piktograma Nomo"
@@ -5495,7 +5506,7 @@ msgid "Class:"
 msgstr "Klaso"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:112
-#: src/modules/conf_window_remembers/e_int_config_remembers.c:269
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:271
 #, fuzzy
 msgid "<No Class>"
 msgstr "Klaso"
@@ -5506,7 +5517,7 @@ msgid "Title:"
 msgstr "Titolo"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:117
-#: src/modules/conf_window_remembers/e_int_config_remembers.c:271
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:273
 #, fuzzy
 msgid "<No Title>"
 msgstr "Titolo"
@@ -5517,7 +5528,7 @@ msgid "Role:"
 msgstr "Grado"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:122
-#: src/modules/conf_window_remembers/e_int_config_remembers.c:273
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:275
 #, fuzzy
 msgid "<No Role>"
 msgstr "<Neniom>"
@@ -5661,7 +5672,7 @@ msgstr "Difini Agmetodon por ĉeforgana Potenco"
 msgid "Set CPU Speed"
 msgstr "Difini Rapidecon de ĉeforgano"
 
-#: src/modules/cpufreq/e_mod_main.c:337
+#: src/modules/cpufreq/e_mod_main.c:335
 msgid ""
 "There was an error trying to set the<br>cpu frequency governor via the "
 "module's<br>setfreq utility."
@@ -5669,14 +5680,14 @@ msgstr ""
 "Okazis eraro provinte difini la agordon<br>de ĉeforgana ofteco per lailo de "
 "la ilo \"setfreq\"."
 
-#: src/modules/cpufreq/e_mod_main.c:363
+#: src/modules/cpufreq/e_mod_main.c:361
 msgid ""
 "Your kernel does not support setting the<br>CPU frequency at all. You may be "
 "missing<br>Kernel modules or features, or your CPU<br>simply does not "
 "support this feature."
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:383
+#: src/modules/cpufreq/e_mod_main.c:381
 msgid ""
 "There was an error trying to set the<br>cpu frequency setting via the "
 "module's<br>setfreq utility."
@@ -5780,11 +5791,11 @@ msgstr ""
 msgid "Run Command Dialog"
 msgstr "Lanĉi Dialogon de Komandoj"
 
-#: src/modules/fileman/e_mod_main.c:209
+#: src/modules/fileman/e_mod_main.c:213
 msgid "Files"
 msgstr "Dosieroj"
 
-#: src/modules/fileman/e_mod_main.c:261
+#: src/modules/fileman/e_mod_main.c:265
 msgid ""
 "Fileman Module Configuration data needed upgrading. Your old "
 "configuration<br>has been wiped and a new set of defaults initialized. "
@@ -5803,7 +5814,7 @@ msgstr ""
 "aktuale laŭ via<br>ŝato. Pardonon pro la momenta problemeto en via agordo."
 "<br>"
 
-#: src/modules/fileman/e_mod_main.c:274
+#: src/modules/fileman/e_mod_main.c:278
 msgid ""
 "Your Fileman Module configuration is NEWER than Fileman Module version. This "
 "is very<br>strange. This should not happen unless you downgraded<br>the "
@@ -5819,7 +5830,7 @@ msgstr ""
 "kaj<br>kiel antaŭzorgo via agordo estis restaŭrita per defaŭltaĵoj."
 "<br>Bonvolu pardoni por la ĝeno.<br>"
 
-#: src/modules/fileman/e_mod_main.c:343
+#: src/modules/fileman/e_mod_main.c:347
 msgid "Fileman Configuration Updated"
 msgstr "Agordo de Fileman Ĝisdatigita"
 
@@ -5880,23 +5891,23 @@ msgstr "Vidigi Ilobreton"
 msgid "Show HAL icons on desktop"
 msgstr "Vidigi en ĉiuj Labortabloj"
 
-#: src/modules/fileman/e_fwin.c:654
+#: src/modules/fileman/e_fwin.c:692
 msgid "Go to Parent Directory"
 msgstr "Iri al Patra Dosierujo"
 
-#: src/modules/fileman/e_fwin.c:680 src/modules/fileman/e_fwin.c:1320
+#: src/modules/fileman/e_fwin.c:718 src/modules/fileman/e_fwin.c:1415
 msgid "Open"
 msgstr "Malfermi"
 
-#: src/modules/fileman/e_fwin.c:687 src/modules/fileman/e_fwin.c:1318
+#: src/modules/fileman/e_fwin.c:725 src/modules/fileman/e_fwin.c:1413
 msgid "Open with..."
 msgstr "Malfermi per..."
 
-#: src/modules/fileman/e_fwin.c:1336
+#: src/modules/fileman/e_fwin.c:1431
 msgid "Specific Applications"
 msgstr "Specialaj Aplikaĵoj"
 
-#: src/modules/fileman/e_fwin.c:1407
+#: src/modules/fileman/e_fwin.c:1502
 msgid "Custom Command"
 msgstr "Propran komandon"
 
@@ -6004,25 +6015,25 @@ msgstr "Ĉu vi certas, ke vi deziras forviŝi tiun bar-fonton ?"
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:799
+#: src/modules/ibar/e_mod_main.c:797
 msgid "Change Icon Properties"
 msgstr "Ŝanĝi Piktogramajn Ecojn"
 
-#: src/modules/ibar/e_mod_main.c:804
+#: src/modules/ibar/e_mod_main.c:802
 msgid "Remove Icon"
 msgstr "Forviŝi Piktogramon"
 
-#: src/modules/ibar/e_mod_main.c:814
+#: src/modules/ibar/e_mod_main.c:812
 #, fuzzy
 msgid "Add An Icon"
 msgstr "Aldoni Aplikaĵon"
 
-#: src/modules/ibar/e_mod_main.c:821
+#: src/modules/ibar/e_mod_main.c:819
 #, fuzzy
 msgid "Create New Icon"
 msgstr "Krei Piktogramon"
 
-#: src/modules/ibar/e_mod_main.c:837
+#: src/modules/ibar/e_mod_main.c:835
 msgid "Add Application"
 msgstr "Aldoni Aplikaĵon"
 
@@ -6194,27 +6205,27 @@ msgstr "Butono %i"
 msgid "Virtual Desktops Configuration"
 msgstr "Agordoj de Virtualaj Labortabloj"
 
-#: src/modules/pager/e_mod_main.c:2806
+#: src/modules/pager/e_mod_main.c:2801
 #, fuzzy
 msgid "Show Pager Popup"
 msgstr "Paĝilaj Ŝprucaj Agordoj"
 
-#: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2846
+#: src/modules/pager/e_mod_main.c:2807 src/modules/pager/e_mod_main.c:2841
 #, fuzzy
 msgid "Popup Desk Right"
 msgstr "Labortabla Ŝango al dekstro"
 
-#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2847
+#: src/modules/pager/e_mod_main.c:2808 src/modules/pager/e_mod_main.c:2842
 #, fuzzy
 msgid "Popup Desk Left"
 msgstr "Labortabla Ŝango al maldekstro"
 
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2848
+#: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2843
 #, fuzzy
 msgid "Popup Desk Up"
 msgstr "Labortabla Ŝango al supro"
 
-#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2849
+#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2844
 #, fuzzy
 msgid "Popup Desk Down"
 msgstr "Labortabla Ŝango al subo"
@@ -6350,6 +6361,159 @@ msgstr "Reen"
 #: src/modules/wizard/page_010.c:25
 msgid "Choose Language"
 msgstr "Elekti Lingvon"
+
+#: src/modules/mixer/app_mixer.c:166
+#, fuzzy
+msgid "Capture"
+msgstr "Ĉeforgana Ofteco"
+
+#: src/modules/mixer/app_mixer.c:168
+msgid "Playback"
+msgstr ""
+
+#: src/modules/mixer/app_mixer.c:288 src/modules/mixer/app_mixer.c:306
+#, fuzzy
+msgid "Input"
+msgstr "Startigo"
+
+#: src/modules/mixer/app_mixer.c:294
+#, fuzzy
+msgid "Output"
+msgstr "Eligitaj Datumoj"
+
+#: src/modules/mixer/app_mixer.c:367
+#, fuzzy
+msgid "Cards"
+msgstr "Klaso"
+
+#: src/modules/mixer/app_mixer.c:382 src/modules/mixer/conf_gadget.c:285
+#, fuzzy
+msgid "Channels"
+msgstr "Rezigni"
+
+#: src/modules/mixer/app_mixer.c:394
+#, fuzzy
+msgid "Card:"
+msgstr "Forviŝi"
+
+#: src/modules/mixer/app_mixer.c:398
+#, fuzzy
+msgid "Channel:"
+msgstr "Rezigni"
+
+#: src/modules/mixer/app_mixer.c:402
+#, fuzzy
+msgid "Type:"
+msgstr "Dosiera Typo:"
+
+#: src/modules/mixer/app_mixer.c:406
+msgid "Left:"
+msgstr ""
+
+#: src/modules/mixer/app_mixer.c:411
+#, fuzzy
+msgid "Right:"
+msgstr "Hela"
+
+#: src/modules/mixer/app_mixer.c:416 src/modules/mixer/e_mod_main.c:602
+#, fuzzy
+msgid "Mute"
+msgstr "Menua Elemento"
+
+#: src/modules/mixer/app_mixer.c:419 src/modules/mixer/conf_gadget.c:200
+#, fuzzy
+msgid "Lock Sliders"
+msgstr "ŝovilo"
+
+#: src/modules/mixer/app_mixer.c:423
+#, fuzzy
+msgid "Edit"
+msgstr "Eliri"
+
+#: src/modules/mixer/conf_gadget.c:206
+msgid "Show both sliders when locked"
+msgstr ""
+
+#: src/modules/mixer/conf_gadget.c:327
+msgid "Sound Cards"
+msgstr ""
+
+#: src/modules/mixer/conf_gadget.c:383
+#, fuzzy
+msgid "Mixer Configuration"
+msgstr "Paĝila Konfiguro"
+
+#: src/modules/mixer/conf_module.c:98
+msgid "Mixer to use for global actions:"
+msgstr ""
+
+#: src/modules/mixer/conf_module.c:152
+#, fuzzy
+msgid "Launch mixer..."
+msgstr "Aldoni tiun Aplikaĵon en la Lanĉilon"
+
+#: src/modules/mixer/conf_module.c:187
+#, fuzzy
+msgid "Mixer Module Configuration"
+msgstr "Breta Konfiguraĵo"
+
+#: src/modules/mixer/e_mod_main.c:122
+#, fuzzy
+msgid "Mixer Configuration Updated"
+msgstr "Agordo de Fileman Ĝisdatigita"
+
+#: src/modules/mixer/e_mod_main.c:1161
+msgid ""
+"Mixer Module Configuration data changed.<br>Your old configuration has been "
+"replaced with new default.<br>Sorry for the inconvenience."
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:213
+#, fuzzy
+msgid "Connection Manager"
+msgstr "Fenestradministrilo"
+
+#: src/modules/connman/e_mod_main.c:734
+#, fuzzy
+msgid "Network Connection Settings"
+msgstr "Elektaj Agordoj"
+
+#: src/modules/connman/e_mod_main.c:740
+#, fuzzy
+msgid "Network Device"
+msgstr "Demetebla Aparato"
+
+#: src/modules/connman/e_mod_main.c:745
+#, fuzzy
+msgid "Wifi"
+msgstr "Ene de"
+
+#: src/modules/connman/e_mod_main.c:748
+msgid "LAN"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:751
+#, fuzzy
+msgid "Specific Device"
+msgstr "Specialaj Aplikaĵoj"
+
+#: src/modules/connman/e_mod_main.c:775
+msgid "Networks"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:1100
+#, fuzzy
+msgid "Settings"
+msgstr "Labortablaj Agordoj"
+
+#~ msgid "Enlightenment cannot configure the mouse acceleration settings."
+#~ msgstr "Enlightenment ne povas difini la agordojn de musa plirapidigo."
+
+#~ msgid "Mouse Acceleration Settings"
+#~ msgstr "Agordoj de Plirapidigo de musa movado"
+
+#~ msgid "Select"
+#~ msgstr "Elekti"
 
 #~ msgid "Add To Favorites Menu"
 #~ msgstr "Aldoni en la Menuon de Preferataĵoj"
