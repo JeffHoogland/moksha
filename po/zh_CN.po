@@ -10,12 +10,12 @@ msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-09-25 12:34+1000\n"
-"PO-Revision-Date: 2008-09-22 17:12+0800\n"
+"PO-Revision-Date: 2008-09-26 20:33+0800\n"
 "Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: zh_CN <i18n@linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: src/bin/e_about.c:68
 msgid "About Enlightenment"
@@ -489,7 +489,7 @@ msgstr "发送到下个桌面"
 
 #: src/bin/e_actions.c:2559
 msgid "To Previous Desktop"
-msgstr ""
+msgstr "到前一桌面"
 
 #: src/bin/e_actions.c:2561
 msgid "By Desktop #..."
@@ -756,16 +756,16 @@ msgstr "容器 %d"
 
 #: src/bin/e_desklock.c:144
 msgid "Error - no PAM support"
-msgstr ""
+msgstr "错误 - 无 PAM 支持"
 
 #: src/bin/e_desklock.c:145
 msgid ""
 "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
-msgstr ""
+msgstr "没有 PAM 支持被构建在 Enlightenment 中，所以<br>桌面锁定已禁用。"
 
 #: src/bin/e_desklock.c:211
 msgid "Lock Failed"
-msgstr ""
+msgstr "锁定失败"
 
 #: src/bin/e_desklock.c:212
 msgid ""
@@ -775,11 +775,11 @@ msgstr ""
 
 #: src/bin/e_desklock.c:298
 msgid "Please enter your unlock password"
-msgstr ""
+msgstr "请输入您的解锁密码"
 
 #: src/bin/e_desklock.c:648
 msgid "Authentication System Error"
-msgstr ""
+msgstr "认证系统错误"
 
 #: src/bin/e_desklock.c:649
 #, c-format
@@ -846,11 +846,11 @@ msgstr "窗口类"
 #: src/bin/e_eap_editor.c:510 src/modules/conf/e_conf.c:151
 #: src/modules/conf_mime/e_int_config_mime.c:189
 msgid "Categories"
-msgstr ""
+msgstr "分类"
 
 #: src/bin/e_eap_editor.c:514
 msgid "Mime Types"
-msgstr ""
+msgstr "Mime 类型"
 
 #: src/bin/e_eap_editor.c:520
 msgid "Options"
@@ -862,7 +862,7 @@ msgstr "启动时通知"
 
 #: src/bin/e_eap_editor.c:523
 msgid "Run in Terminal"
-msgstr ""
+msgstr "在终端中运行"
 
 #: src/bin/e_eap_editor.c:525
 msgid "Show in Menus"
@@ -947,7 +947,7 @@ msgstr ""
 
 #: src/bin/e_exec.c:418
 msgid "Application Execution Error"
-msgstr ""
+msgstr "应用程序执行出错"
 
 #: src/bin/e_exec.c:430
 #, c-format
@@ -1016,20 +1016,20 @@ msgstr ""
 
 #: src/bin/e_exec.c:590 src/bin/e_exec.c:664 src/bin/e_exec.c:670
 msgid "Error Logs"
-msgstr ""
+msgstr "错误日志"
 
 #: src/bin/e_exec.c:595 src/bin/e_exec.c:671
 msgid "There was no error message."
-msgstr ""
+msgstr "没有错误信息。"
 
 #: src/bin/e_exec.c:599 src/bin/e_exec.c:678
 msgid "Save This Message"
-msgstr ""
+msgstr "保存此信息"
 
 #: src/bin/e_exec.c:603 src/bin/e_exec.c:681
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
-msgstr ""
+msgstr "此错误日志将被保存为 %s/%s.log"
 
 #: src/bin/e_exec.c:629
 msgid "Error Information"
@@ -1037,15 +1037,15 @@ msgstr "错误信息"
 
 #: src/bin/e_exec.c:637
 msgid "Error Signal Information"
-msgstr ""
+msgstr "错误信号信息"
 
 #: src/bin/e_exec.c:648 src/bin/e_exec.c:654
 msgid "Output Data"
-msgstr ""
+msgstr "输出数据"
 
 #: src/bin/e_exec.c:655
 msgid "There was no output."
-msgstr ""
+msgstr "没有输出。"
 
 #: src/bin/e_fm.c:548
 msgid "Nonexistent path"
@@ -1054,12 +1054,12 @@ msgstr ""
 #: src/bin/e_fm.c:551
 #, c-format
 msgid "%s doesn't exist."
-msgstr ""
+msgstr "%s 不存在。"
 
 #: src/bin/e_fm.c:2646
 #, c-format
 msgid "%i Files"
-msgstr "%i  文件"
+msgstr "%i 个文件"
 
 #: src/bin/e_fm.c:4764 src/bin/e_fm.c:7126 src/bin/e_fm.c:7256
 msgid "Abort"
@@ -1072,11 +1072,11 @@ msgstr "显示模式"
 
 #: src/bin/e_fm.c:6344 src/bin/e_fm.c:6501
 msgid "Refresh View"
-msgstr ""
+msgstr "刷新视图"
 
 #: src/bin/e_fm.c:6355 src/bin/e_fm.c:6512
 msgid "Show Hidden Files"
-msgstr ""
+msgstr "显示隐藏文件"
 
 #: src/bin/e_fm.c:6370 src/bin/e_fm.c:6527
 msgid "Remember Ordering"
@@ -1110,11 +1110,11 @@ msgstr "列表"
 
 #: src/bin/e_fm.c:6991
 msgid "Create a new Directory"
-msgstr ""
+msgstr "创建新目录"
 
 #: src/bin/e_fm.c:6992
 msgid "New Directory Name:"
-msgstr ""
+msgstr "新目录名称："
 
 #: src/bin/e_fm.c:7051
 #, c-format
@@ -1136,19 +1136,19 @@ msgstr "错误"
 #: src/bin/e_fm.c:7131 src/bin/e_fm.c:7188
 #, c-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: src/bin/e_fm.c:7181
 msgid "No to all"
-msgstr ""
+msgstr "全部选否"
 
 #: src/bin/e_fm.c:7183
 msgid "Yes to all"
-msgstr ""
+msgstr "全部选是"
 
 #: src/bin/e_fm.c:7257
 msgid "Ignore this"
-msgstr ""
+msgstr "忽略"
 
 #: src/bin/e_fm.c:7258
 msgid "Ignore all"
@@ -1203,23 +1203,23 @@ msgstr "权限"
 
 #: src/bin/e_fm_prop.c:367 src/bin/e_widget_fsel.c:339
 msgid "Owner:"
-msgstr "拥有者："
+msgstr "所有者："
 
 #: src/bin/e_fm_prop.c:373
 msgid "Others can read"
-msgstr ""
+msgstr "其他人可读"
 
 #: src/bin/e_fm_prop.c:375
 msgid "Others can write"
-msgstr ""
+msgstr "其他人可写"
 
 #: src/bin/e_fm_prop.c:377
 msgid "Owner can read"
-msgstr ""
+msgstr "所有者可读"
 
 #: src/bin/e_fm_prop.c:379
 msgid "Owner can write"
-msgstr ""
+msgstr "所有者可写"
 
 #: src/bin/e_fm_prop.c:385 src/bin/e_widget_fsel.c:302
 #: src/modules/conf_theme/e_int_config_theme.c:1030
@@ -1482,7 +1482,7 @@ msgstr "解除固定"
 
 #: src/bin/e_int_border_menu.c:129
 msgid "More..."
-msgstr ""
+msgstr "更多…"
 
 #: src/bin/e_int_border_menu.c:162
 msgid "Iconify"
@@ -2099,7 +2099,7 @@ msgstr ""
 #: src/bin/e_int_shelf_config.c:602
 #, c-format
 msgid "%3.0f pixels"
-msgstr ""
+msgstr "%3.0f 像素"
 
 #: src/bin/e_int_shelf_config.c:606
 #: src/modules/conf_fonts/e_int_config_fonts.c:648
@@ -2366,7 +2366,7 @@ msgstr ""
 
 #: src/bin/e_main.c:583
 msgid "Testing Format Support"
-msgstr ""
+msgstr "测试格式支持"
 
 #: src/bin/e_main.c:593
 msgid ""
@@ -3774,7 +3774,7 @@ msgstr "计时器"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:191
 msgid "Standby time"
-msgstr ""
+msgstr "等待时间"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:199
 msgid "Suspend time"
@@ -4537,7 +4537,7 @@ msgstr ""
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:337
 msgid "Any"
-msgstr ""
+msgstr "任意"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:349
 msgid "Win List"
