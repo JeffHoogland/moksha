@@ -25,6 +25,7 @@ struct _E_Config_Dialog_View
    unsigned char override_auto_apply : 1;
    unsigned char basic_only : 1;
    unsigned char normal_win : 1;
+   unsigned char scroll : 1;
    
    void           *(*create_cfdata)     (E_Config_Dialog *cfd);
    void            (*free_cfdata)       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);

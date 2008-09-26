@@ -163,7 +163,7 @@ static void
 _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 {
    E_Dialog *pdia;
-   Evas_Object *o, *ob;
+   Evas_Object *o, *ob, *sf;
    Evas_Coord mw = 0, mh = 0;
    char buf[256];
    
@@ -186,14 +186,28 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	  {
 	     o = e_widget_list_add(e_win_evas_get(cfd->dia->win), 0, 0);
 	     ob = cfd->view->basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
-	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
+	     if (cfd->view->scroll)
+	       {
+		  e_widget_min_size_resize(ob);
+		  sf = e_widget_scrollframe_simple_add(e_win_evas_get(cfd->dia->win), ob);
+		  e_widget_list_object_append(o, sf, 1, 1, 0.0);
+	       }
+	     else
+	       e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win),
 				      _("Advanced"), "widget/new_dialog",
 				      _e_config_dialog_cb_advanced, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
 	else
-	  o = cfd->view->basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	  {
+	     o = cfd->view->basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	     if (cfd->view->scroll)
+	       {
+		  e_widget_min_size_resize(o);
+		  o = e_widget_scrollframe_simple_add(e_win_evas_get(cfd->dia->win), o);
+	       }
+	  }
      }
    else
      {
@@ -201,14 +215,28 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	  {
 	     o = e_widget_list_add(e_win_evas_get(cfd->dia->win), 0, 0);
 	     ob = cfd->view->advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
-	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
+	     if (cfd->view->scroll)
+	       {
+		  e_widget_min_size_resize(ob);
+		  sf = e_widget_scrollframe_simple_add(e_win_evas_get(cfd->dia->win), ob);
+		  e_widget_list_object_append(o, sf, 1, 1, 0.0);
+	       }
+	     else
+	       e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win), 
 				      _("Basic"), "widget/new_dialog",
 				      _e_config_dialog_cb_basic, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
 	else
-	  o = cfd->view->advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	  {
+	     o = cfd->view->advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	     if (cfd->view->scroll)
+	       {
+		  e_widget_min_size_resize(o);
+		  o = e_widget_scrollframe_simple_add(e_win_evas_get(cfd->dia->win), o);
+	       }
+	  }
      }
    
    e_widget_min_size_get(o, &mw, &mh);
