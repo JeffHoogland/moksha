@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-09-25 12:34+1000\n"
-"PO-Revision-Date: 2008-09-26 20:33+0800\n"
+"PO-Revision-Date: 2008-09-27 20:53+0800\n"
 "Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: zh_CN <i18n@linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -952,7 +952,7 @@ msgstr "应用程序执行出错"
 #: src/bin/e_exec.c:430
 #, c-format
 msgid "%s stopped running unexpectedly."
-msgstr ""
+msgstr "%s 意外终止。"
 
 #: src/bin/e_exec.c:436
 #, c-format
@@ -962,22 +962,22 @@ msgstr ""
 #: src/bin/e_exec.c:443
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
-msgstr ""
+msgstr "%s 被中断信号中断。"
 
 #: src/bin/e_exec.c:445
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
-msgstr ""
+msgstr "%s 被退出信号中断。"
 
 #: src/bin/e_exec.c:449
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
-msgstr ""
+msgstr "%s 被终止信号中断。"
 
 #: src/bin/e_exec.c:452
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
-msgstr ""
+msgstr "%s 被浮点书错误中断。"
 
 #: src/bin/e_exec.c:455
 #, c-format
@@ -987,22 +987,22 @@ msgstr ""
 #: src/bin/e_exec.c:458
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
-msgstr ""
+msgstr "%s 被错误信号中断。"
 
 #: src/bin/e_exec.c:461
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
-msgstr ""
+msgstr "%s 被管道错误中断。"
 
 #: src/bin/e_exec.c:464
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
-msgstr ""
+msgstr "%s 被终止信号中断。"
 
 #: src/bin/e_exec.c:467
 #, c-format
 msgid "%s was interrupted by a Bus Error."
-msgstr ""
+msgstr "%s 被总线错误中断。"
 
 #: src/bin/e_exec.c:470
 #, c-format
@@ -1049,7 +1049,7 @@ msgstr "没有输出。"
 
 #: src/bin/e_fm.c:548
 msgid "Nonexistent path"
-msgstr ""
+msgstr "不存在路径"
 
 #: src/bin/e_fm.c:551
 #, c-format
@@ -1152,7 +1152,7 @@ msgstr "忽略"
 
 #: src/bin/e_fm.c:7258
 msgid "Ignore all"
-msgstr ""
+msgstr "忽略所有"
 
 #: src/bin/e_fm.c:7263
 #, c-format
@@ -1236,7 +1236,7 @@ msgstr "默认"
 
 #: src/bin/e_fm_prop.c:435
 msgid "Thumbnail"
-msgstr ""
+msgstr "缩略图"
 
 #: src/bin/e_fm_prop.c:438
 #: src/modules/conf_desklock/e_int_config_desklock.c:312
@@ -1626,7 +1626,7 @@ msgstr ""
 
 #: src/bin/e_int_border_prop.c:424
 msgid "Role"
-msgstr ""
+msgstr "角色"
 
 #: src/bin/e_int_border_prop.c:426
 msgid "Minimum Size"
@@ -2104,7 +2104,7 @@ msgstr "%3.0f 像素"
 #: src/bin/e_int_shelf_config.c:606
 #: src/modules/conf_fonts/e_int_config_fonts.c:648
 msgid "Styles"
-msgstr ""
+msgstr "样式"
 
 #: src/bin/e_int_shelf_config.c:644
 msgid "Auto Hide"
@@ -2286,15 +2286,14 @@ msgstr ""
 "可能您的内存用完了？"
 
 #: src/bin/e_main.c:443
-#, fuzzy
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
-"Enlightenment 发现 ecore_evas 不支持Evas的软件X11\n"
-"渲染。请检查你的Evas和Ecore的安装并确认他们支持软\n"
-"件X11渲染。"
+"Enlightenment 发现 ecore_evas 不支持 Evas 的软件X11\n"
+"渲染。请检查您的 Evas 和 Ecore 安装并确认他们支持软\n"
+"件 X11 渲染。"
 
 #: src/bin/e_main.c:450
 msgid ""
@@ -2331,14 +2330,12 @@ msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment 无法建立它的配置系统。"
 
 #: src/bin/e_main.c:515
-#, fuzzy
 msgid "Enlightenment cannot set up its scale system."
-msgstr "Enlightenment 无法建立它的书架系统。"
+msgstr "Enlightenment 无法建立它的刻度系统。"
 
 #: src/bin/e_main.c:523
-#, fuzzy
 msgid "Enlightenment cannot set up the pointer system."
-msgstr "Enlightenment 无法建立它的国际化系统。"
+msgstr "Enlightenment 无法建立它的指针系统。"
 
 #: src/bin/e_main.c:532
 msgid ""
@@ -2402,20 +2399,19 @@ msgstr "Enlightenment 无法建立它的国际化系统。"
 
 #: src/bin/e_main.c:644
 msgid "Setting up Paths"
-msgstr ""
+msgstr "建立路径"
 
 #: src/bin/e_main.c:661
 msgid "Setup Thumbnailer"
-msgstr ""
+msgstr "设置缩略图"
 
 #: src/bin/e_main.c:666
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment 无法建立它的缩略图系统。\n"
 
 #: src/bin/e_main.c:671
-#, fuzzy
 msgid "Setup System Controls"
-msgstr "设定控制器"
+msgstr "设置系统控制"
 
 #: src/bin/e_main.c:676
 msgid "Enlightenment cannot initialize the System Command system.\n"
@@ -2439,7 +2435,7 @@ msgstr "Enlightenment 无法建立它的绑定系统。"
 
 #: src/bin/e_main.c:699
 msgid "Setup Popups"
-msgstr ""
+msgstr "设置弹出"
 
 #: src/bin/e_main.c:704
 msgid "Enlightenment cannot set up its popup system."
@@ -2455,7 +2451,7 @@ msgstr "Enlightenment 无法建立它的桌面背景系统。"
 
 #: src/bin/e_main.c:718
 msgid "Setup Screens"
-msgstr ""
+msgstr "设置屏幕"
 
 #: src/bin/e_main.c:723
 msgid ""
@@ -2467,12 +2463,11 @@ msgstr ""
 
 #: src/bin/e_main.c:728
 msgid "Setup Execution System"
-msgstr ""
+msgstr "设置运行系统"
 
 #: src/bin/e_main.c:733
-#, fuzzy
 msgid "Enlightenment cannot set up its exec system."
-msgstr "Enlightenment 无法建立它的 exebuf 系统。"
+msgstr "Enlightenment 无法建立它的 exec 系统。"
 
 #: src/bin/e_main.c:737
 msgid "Setup Remembers"
@@ -2484,7 +2479,7 @@ msgstr "Enlightenment 无法设定它的记忆设置。"
 
 #: src/bin/e_main.c:750
 msgid "Setup FM"
-msgstr ""
+msgstr "设置 FM"
 
 #: src/bin/e_main.c:755
 msgid "Enlightenment cannot initialize the File manager.\n"
@@ -2500,7 +2495,7 @@ msgstr "Enlightenment 无法建立它的消息系统。"
 
 #: src/bin/e_main.c:777
 msgid "Setup DND"
-msgstr ""
+msgstr "设置 DND"
 
 #: src/bin/e_main.c:782
 msgid "Enlightenment cannot set up its dnd system."
@@ -2548,12 +2543,11 @@ msgstr "Enlightenment 无法建立它的书架系统。"
 
 #: src/bin/e_main.c:832
 msgid "Setup DPMS"
-msgstr ""
+msgstr "设置 DPMS"
 
 #: src/bin/e_main.c:837
-#, fuzzy
 msgid "Enlightenment cannot configure the DPMS settings."
-msgstr "Enlightenment 无法设定它的记忆设置。"
+msgstr "Enlightenment 无法设定它的显示器电源管理设置。"
 
 #: src/bin/e_main.c:841
 msgid "Setup Screensaver"
@@ -2568,14 +2562,12 @@ msgid "Setup Mouse"
 msgstr "安装鼠标"
 
 #: src/bin/e_main.c:855
-#, fuzzy
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr "Enlightenment 无法设定它的记忆设置。"
 
 #: src/bin/e_main.c:859
-#, fuzzy
 msgid "Setup Desklock"
-msgstr "发送到桌面"
+msgstr "设置桌面锁定"
 
 #: src/bin/e_main.c:864
 msgid "Enlightenment cannot set up its desk locking system."
@@ -2586,18 +2578,16 @@ msgid "Set Up File Ordering"
 msgstr ""
 
 #: src/bin/e_main.c:873
-#, fuzzy
 msgid "Enlightenment cannot set up its order file system."
-msgstr "Enlightenment 无法建立它的模块系统。"
+msgstr "Enlightenment 无法建立它的文件组织系统。"
 
 #: src/bin/e_main.c:878
 msgid "Set Up Powersave modes"
 msgstr "设置省电模式"
 
 #: src/bin/e_main.c:882
-#, fuzzy
 msgid "Enlightenment cannot set up its powersave modes."
-msgstr "Enlightenment 无法建立它的弹出系统。"
+msgstr "Enlightenment 无法建立它的省点系统。"
 
 #: src/bin/e_main.c:914
 msgid "Load Modules"
@@ -3154,7 +3144,6 @@ msgid "Remember this Border for this window next time it appears"
 msgstr "为下次使用记住这个窗口边框"
 
 #: src/modules/conf_borders/e_mod_main.c:35
-#, fuzzy
 msgid "Borders"
 msgstr "边框"
 
@@ -3198,9 +3187,8 @@ msgid "Client Sort Order"
 msgstr ""
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:126
-#, fuzzy
 msgid "Alphabetical"
-msgstr "垂直"
+msgstr "按字母表顺序"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:128
 #, fuzzy
@@ -3417,7 +3405,7 @@ msgstr "目标颜色"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:451
 msgid "Outline Color"
-msgstr ""
+msgstr "轮廓颜色"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:460
 msgid "Shadow Color"
@@ -3556,7 +3544,7 @@ msgstr "桌面数目"
 #: src/modules/conf_desks/e_int_config_desks.c:208
 #: src/modules/conf_desks/e_int_config_desks.c:247
 msgid "Desktop Mouse Flip"
-msgstr ""
+msgstr "桌面鼠标翻转"
 
 #: src/modules/conf_desks/e_int_config_desks.c:209
 msgid "Flip desktops when mouse at screen edge"
@@ -3595,7 +3583,7 @@ msgstr ""
 
 #: src/modules/conf_desks/e_int_config_desks.c:260
 msgid "Flip Animation"
-msgstr ""
+msgstr "翻转动画"
 
 #: src/modules/conf_desks/e_int_config_desks.c:262
 msgid "Off"
@@ -3610,7 +3598,6 @@ msgid "Zoom"
 msgstr "缩放"
 
 #: src/modules/conf_desks/e_mod_main.c:35
-#, fuzzy
 msgid "Virtual Desktops"
 msgstr "虚拟桌面"
 
@@ -3793,9 +3780,8 @@ msgid "Engine Settings"
 msgstr ""
 
 #: src/modules/conf_engine/e_int_config_engine.c:95
-#, fuzzy
 msgid "Enable Composite"
-msgstr "启用弹出"
+msgstr "启用复合"
 
 #: src/modules/conf_engine/e_int_config_engine.c:102
 msgid "Default Engine"
@@ -4135,26 +4121,22 @@ msgid "Icon Theme"
 msgstr "图标主题"
 
 #: src/modules/conf_imc/e_int_config_imc.c:109
-#, fuzzy
 msgid "Input Method Configuration"
-msgstr "iBox 配置"
+msgstr "输入法配置"
 
 #: src/modules/conf_imc/e_int_config_imc.c:297
-#, fuzzy
 msgid "Input Method Selector"
-msgstr "输入法错误"
+msgstr "输入法选择器"
 
 #: src/modules/conf_imc/e_int_config_imc.c:300
 #: src/modules/conf_imc/e_int_config_imc.c:890
-#, fuzzy
 msgid "Use No Input Method"
-msgstr "输入法"
+msgstr "不使用输入法"
 
 #: src/modules/conf_imc/e_int_config_imc.c:305
 #: src/modules/conf_imc/e_int_config_imc.c:957
-#, fuzzy
 msgid "Setup Selected Input Method"
-msgstr "输入法"
+msgstr "设置选中的输入法"
 
 #: src/modules/conf_imc/e_int_config_imc.c:897
 msgid "New"
@@ -4209,9 +4191,8 @@ msgid "Input Method Settings"
 msgstr "输入法设置"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:35
-#, fuzzy
 msgid "Interaction Settings"
-msgstr "选取设置"
+msgstr "交互设置"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:84
 msgid "Enable Thumbscroll"
@@ -4513,19 +4494,16 @@ msgid "Mouse Bindings"
 msgstr "鼠标绑定"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:301
-#, fuzzy
 msgid "Add Binding"
-msgstr "键绑定"
+msgstr "添加绑定"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:303
-#, fuzzy
 msgid "Delete Binding"
-msgstr "键绑定"
+msgstr "删除绑定"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:307
-#, fuzzy
 msgid "Modify Binding"
-msgstr "鼠标绑定"
+msgstr "更改绑定"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:315
 msgid "Restore Mouse and Wheel Binding Defaults"
@@ -4589,9 +4567,8 @@ msgstr "鼠标指针"
 
 #: src/modules/conf_mouse/e_int_config_mouse.c:36
 #: src/modules/conf_mouse/e_mod_main.c:35
-#, fuzzy
 msgid "Mouse Settings"
-msgstr "模块设置"
+msgstr "鼠标设置"
 
 #: src/modules/conf_mouse/e_int_config_mouse.c:97
 #, fuzzy
@@ -4858,9 +4835,8 @@ msgid "Clear"
 msgstr "清除"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1025
-#, fuzzy
 msgid "Clear All"
-msgstr "删除所有"
+msgstr "清除所有"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:67
 msgid "Select a Theme..."
@@ -5924,9 +5900,8 @@ msgid "Add An Icon"
 msgstr "添加一个图标"
 
 #: src/modules/ibar/e_mod_main.c:819
-#, fuzzy
 msgid "Create New Icon"
-msgstr "创建图标"
+msgstr "创建新图标"
 
 #: src/modules/ibar/e_mod_main.c:835
 msgid "Add Application"
@@ -6039,7 +6014,6 @@ msgid "Popup pager height"
 msgstr ""
 
 #: src/modules/pager/e_mod_config.c:207 src/modules/pager/e_mod_config.c:221
-#, fuzzy
 msgid "Popup speed"
 msgstr "弹出速度"
 
@@ -6126,7 +6100,6 @@ msgstr "显示单元"
 
 #: src/modules/temperature/e_mod_config.c:251
 #: src/modules/temperature/e_mod_config.c:354
-#, fuzzy
 msgid "Celsius"
 msgstr "摄氏"
 
@@ -6229,8 +6202,7 @@ msgid "Temperature"
 msgstr "温度"
 
 #: src/modules/wizard/e_wizard.c:341
-#, fuzzy
-msgid "Welcome to Enlightenment 東京"
+msgid "Welcome to Enlightenment "
 msgstr "欢迎使用 Enlightenment"
 
 #: src/modules/wizard/e_wizard.c:343
@@ -6238,70 +6210,60 @@ msgid "Next"
 msgstr "下一步"
 
 #: src/modules/wizard/e_wizard.c:344
-#, fuzzy
 msgid "Back"
-msgstr "基本"
+msgstr "后退"
 
 #: src/modules/wizard/page_010.c:25
 msgid "Choose Language"
 msgstr "选择语言"
 
 #: src/modules/mixer/app_mixer.c:166
-#, fuzzy
 msgid "Capture"
-msgstr "CPU 频率"
+msgstr "节"
 
 #: src/modules/mixer/app_mixer.c:168
 msgid "Playback"
 msgstr ""
 
 #: src/modules/mixer/app_mixer.c:288 src/modules/mixer/app_mixer.c:306
-#, fuzzy
 msgid "Input"
-msgstr "初始"
+msgstr "输入"
 
 #: src/modules/mixer/app_mixer.c:294
 msgid "Output"
 msgstr ""
 
 #: src/modules/mixer/app_mixer.c:367
-#, fuzzy
 msgid "Cards"
-msgstr "类别"
+msgstr ""
 
 #: src/modules/mixer/app_mixer.c:382 src/modules/mixer/conf_gadget.c:285
-#, fuzzy
 msgid "Channels"
-msgstr "取消"
+msgstr "频道："
 
 #: src/modules/mixer/app_mixer.c:394
-#, fuzzy
 msgid "Card:"
-msgstr "清除"
+msgstr ""
 
 #: src/modules/mixer/app_mixer.c:398
-#, fuzzy
 msgid "Channel:"
-msgstr "取消"
+msgstr "频道："
 
 #: src/modules/mixer/app_mixer.c:402
-#, fuzzy
 msgid "Type:"
-msgstr "文件类型："
+msgstr "类型："
 
 #: src/modules/mixer/app_mixer.c:406
 msgid "Left:"
 msgstr ""
 
 #: src/modules/mixer/app_mixer.c:411
-#, fuzzy
 msgid "Right:"
-msgstr "亮"
+msgstr "右："
 
 #: src/modules/mixer/app_mixer.c:416 src/modules/mixer/e_mod_main.c:602
-#, fuzzy
 msgid "Mute"
-msgstr "菜单项目"
+msgstr ""
 
 #: src/modules/mixer/app_mixer.c:419 src/modules/mixer/conf_gadget.c:200
 #, fuzzy
@@ -6309,9 +6271,8 @@ msgid "Lock Sliders"
 msgstr "滚动条"
 
 #: src/modules/mixer/app_mixer.c:423
-#, fuzzy
 msgid "Edit"
-msgstr "退出"
+msgstr "编辑"
 
 #: src/modules/mixer/conf_gadget.c:206
 msgid "Show both sliders when locked"
@@ -6322,9 +6283,8 @@ msgid "Sound Cards"
 msgstr ""
 
 #: src/modules/mixer/conf_gadget.c:383
-#, fuzzy
 msgid "Mixer Configuration"
-msgstr "配置"
+msgstr ""
 
 #: src/modules/mixer/conf_module.c:98
 msgid "Mixer to use for global actions:"
@@ -6336,9 +6296,8 @@ msgid "Launch mixer..."
 msgstr "添加到启动器"
 
 #: src/modules/mixer/conf_module.c:187
-#, fuzzy
 msgid "Mixer Module Configuration"
-msgstr "书架配置"
+msgstr ""
 
 #: src/modules/mixer/e_mod_main.c:122
 #, fuzzy
@@ -6352,42 +6311,36 @@ msgid ""
 msgstr ""
 
 #: src/modules/connman/e_mod_main.c:213
-#, fuzzy
 msgid "Connection Manager"
-msgstr "窗口管理器"
+msgstr "网络连接管理器"
 
 #: src/modules/connman/e_mod_main.c:734
-#, fuzzy
 msgid "Network Connection Settings"
-msgstr "选取设置"
+msgstr "网络连接设置"
 
 #: src/modules/connman/e_mod_main.c:740
-#, fuzzy
 msgid "Network Device"
-msgstr "可移动设备"
+msgstr "网络设备"
 
 #: src/modules/connman/e_mod_main.c:745
-#, fuzzy
 msgid "Wifi"
-msgstr "内部"
+msgstr "Wifi"
 
 #: src/modules/connman/e_mod_main.c:748
 msgid "LAN"
 msgstr ""
 
 #: src/modules/connman/e_mod_main.c:751
-#, fuzzy
 msgid "Specific Device"
-msgstr "指定应用程序"
+msgstr "指定设备"
 
 #: src/modules/connman/e_mod_main.c:775
 msgid "Networks"
 msgstr ""
 
 #: src/modules/connman/e_mod_main.c:1100
-#, fuzzy
 msgid "Settings"
-msgstr "桌面设置"
+msgstr "设置"
 
 #~ msgid "Mouse Acceleration Settings"
 #~ msgstr "鼠标加速设置"
