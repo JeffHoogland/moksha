@@ -2,6 +2,10 @@
  * vim:cindent:ts=8:sw=3:sts=8:expandtab:cino=>5n-3f0^-2{2
  */
 
+#ifndef _FILE_OFFSET_BITS
+# define _FILE_OFFSET_BITS  64
+#endif
+
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
