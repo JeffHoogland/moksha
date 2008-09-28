@@ -2686,6 +2686,23 @@ _e_border_action_restore_orig(E_Border *bd)
 }
 
 static int
+_e_border_key_down_modifier_apply(int modifier, int value)
+{
+   if (modifier & ECORE_X_MODIFIER_CTRL)
+     return value * 2;
+   else if (modifier & ECORE_X_MODIFIER_ALT)
+     {
+	value /= 2;
+	if (value)
+	  return value;
+	else
+	  return 1;
+     }
+
+   return value;
+}
+
+static int
 _e_border_action_move_timeout(void *data)
 {
    _e_border_move_end(action_border);
@@ -2719,13 +2736,13 @@ _e_border_move_key_down(void *data, int type, void *event)
    y = action_border->y;
 
    if (strcmp(ev->keysymbol, "Up") == 0)
-     y -= e_config->border_keyboard.move.dy;
+     y -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dy);
    else if (strcmp(ev->keysymbol, "Down") == 0)
-     y += e_config->border_keyboard.move.dy;
+     y += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dy);
    else if (strcmp(ev->keysymbol, "Left") == 0)
-     x -= e_config->border_keyboard.move.dx;
+     x -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dx);
    else if (strcmp(ev->keysymbol, "Right") == 0)
-     x += e_config->border_keyboard.move.dx;
+     x += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dx);
    else if (strcmp(ev->keysymbol, "Return") == 0)
      goto stop;
    else if (strcmp(ev->keysymbol, "Escape") == 0)
@@ -2733,6 +2750,9 @@ _e_border_move_key_down(void *data, int type, void *event)
 	_e_border_action_restore_orig(action_border);
 	goto stop;
      }
+   else if ((strncmp(ev->keysymbol, "Control", sizeof("Control") - 1) != 0) &&
+	    (strncmp(ev->keysymbol, "Alt", sizeof("Alt") - 1) != 0))
+     goto stop;
 
    e_border_move(action_border, x, y);
    _e_border_action_move_timeout_add();
@@ -2823,13 +2843,13 @@ _e_border_resize_key_down(void *data, int type, void *event)
    h = action_border->h;
 
    if (strcmp(ev->keysymbol, "Up") == 0)
-     h -= e_config->border_keyboard.resize.dy;
+     h -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.resize.dy);
    else if (strcmp(ev->keysymbol, "Down") == 0)
-     h += e_config->border_keyboard.resize.dy;
+     h += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.resize.dy);
    else if (strcmp(ev->keysymbol, "Left") == 0)
-     w -= e_config->border_keyboard.resize.dx;
+     w -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.resize.dx);
    else if (strcmp(ev->keysymbol, "Right") == 0)
-     w += e_config->border_keyboard.resize.dx;
+     w += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.resize.dx);
    else if (strcmp(ev->keysymbol, "Return") == 0)
      goto stop;
    else if (strcmp(ev->keysymbol, "Escape") == 0)
@@ -2837,7 +2857,8 @@ _e_border_resize_key_down(void *data, int type, void *event)
 	_e_border_action_restore_orig(action_border);
 	goto stop;
      }
-   else
+   else if ((strncmp(ev->keysymbol, "Control", sizeof("Control") - 1) != 0) &&
+	    (strncmp(ev->keysymbol, "Alt", sizeof("Alt") - 1) != 0))
      goto stop;
 
    e_border_resize(action_border, w, h);
