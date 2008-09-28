@@ -2665,21 +2665,6 @@ _e_border_action_finish(void)
    action_border = NULL;
 }
 
-static int
-_e_border_action_timeout(void *data)
-{
-   _e_border_action_finish();
-   return 0;
-}
-
-static void
-_e_border_action_timeout_add(void)
-{
-   if (action_timer)
-     ecore_timer_del(action_timer);
-   action_timer = ecore_timer_add(e_config->border_keyboard.timeout, _e_border_action_timeout, NULL);
-}
-
 static void
 _e_border_action_init(E_Border *bd)
 {
@@ -2689,8 +2674,6 @@ _e_border_action_init(E_Border *bd)
    action_orig.height = bd->h;
 
    action_border = bd;
-
-   _e_border_action_timeout_add();
 }
 
 static void
@@ -2700,6 +2683,22 @@ _e_border_action_restore_orig(E_Border *bd)
      return;
 
    e_border_move_resize(bd, action_orig.x, action_orig.y, action_orig.width, action_orig.height);
+}
+
+static int
+_e_border_action_move_timeout(void *data)
+{
+   _e_border_move_end(action_border);
+   _e_border_action_finish();
+   return 0;
+}
+
+static void
+_e_border_action_move_timeout_add(void)
+{
+   if (action_timer)
+     ecore_timer_del(action_timer);
+   action_timer = ecore_timer_add(e_config->border_keyboard.timeout, _e_border_action_move_timeout, NULL);
 }
 
 static int
@@ -2736,7 +2735,7 @@ _e_border_move_key_down(void *data, int type, void *event)
      }
 
    e_border_move(action_border, x, y);
-   _e_border_action_timeout_add();
+   _e_border_action_move_timeout_add();
 
    return 1;
 
@@ -2778,6 +2777,8 @@ e_border_act_move_keyboard(E_Border *bd)
      }
 
    _e_border_action_init(bd);
+   _e_border_action_move_timeout_add();
+   _e_border_move_update(bd);
 
    if (action_handler_key)
      ecore_event_handler_del(action_handler_key);
@@ -2786,6 +2787,22 @@ e_border_act_move_keyboard(E_Border *bd)
    if (action_handler_mouse)
      ecore_event_handler_del(action_handler_mouse);
    action_handler_mouse = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_border_move_mouse_down, NULL);
+}
+
+static int
+_e_border_action_resize_timeout(void *data)
+{
+   _e_border_resize_end(action_border);
+   _e_border_action_finish();
+   return 0;
+}
+
+static void
+_e_border_action_resize_timeout_add(void)
+{
+   if (action_timer)
+     ecore_timer_del(action_timer);
+   action_timer = ecore_timer_add(e_config->border_keyboard.timeout, _e_border_action_resize_timeout, NULL);
 }
 
 static int
@@ -2824,7 +2841,7 @@ _e_border_resize_key_down(void *data, int type, void *event)
      goto stop;
 
    e_border_resize(action_border, w, h);
-   _e_border_action_timeout_add();
+   _e_border_action_resize_timeout_add();
 
    return 1;
 
@@ -2866,6 +2883,8 @@ e_border_act_resize_keyboard(E_Border *bd)
      }
 
    _e_border_action_init(bd);
+   _e_border_action_resize_timeout_add();
+   _e_border_resize_update(bd);
 
    if (action_handler_key)
      ecore_event_handler_del(action_handler_key);
