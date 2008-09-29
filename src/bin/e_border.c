@@ -3046,7 +3046,10 @@ e_border_act_close_begin(E_Border *bd)
 	  e_border_ping(bd);
      }
    else if (e_config->kill_if_close_not_possible)
-     e_border_act_kill_begin(bd);
+     {
+	printf("KILL win %x (dead)\n", bd->client.win);
+	e_border_act_kill_begin(bd);
+     }
 }
 
 EAPI void

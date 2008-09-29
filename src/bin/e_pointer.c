@@ -94,6 +94,8 @@ e_pointers_size_set(int size)
 {
    Evas_List *l;
 
+   if (!e_config->show_cursor) return;
+
    for (l = _e_pointers; l; l = l->next)
      {
 	E_Pointer *p;
@@ -133,6 +135,13 @@ e_pointers_size_set(int size)
 	       }
 	  }
      }
+}
+
+EAPI void
+e_pointer_hide(E_Pointer *p)
+{
+    if (p->win) ecore_x_window_cursor_set(p->win, 0);
+    if (p->evas) _e_pointer_canvas_del(p);
 }
 
 EAPI void
@@ -199,6 +208,7 @@ EAPI void
 e_pointer_idler_before(void)
 {
    Evas_List *l;
+   if (!e_config->show_cursor) return;
 
    for (l = _e_pointers; l; l = l->next)
      {
@@ -305,6 +315,8 @@ _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
    E_Pointer *p;
    Evas_Coord x, y;
 
+   if (!e_config->show_cursor) return;
+
    p = data;
    if (!p->e_cursor) return;
    edje_object_part_geometry_get(p->pointer_object, "e.swallow.hotspot",
@@ -357,6 +369,13 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
    if (p->type) evas_stringshare_del(p->type);
    p->type = evas_stringshare_add(type);
    
+   /* Do not set type if in "hidden mode" */
+   if (!e_config->show_cursor)
+     {
+	ecore_x_window_cursor_set(p->win, 0);
+	return 1;
+     }
+
    if (p->e_cursor)
      {
 	Evas_Object *o;
@@ -508,6 +527,7 @@ _e_pointer_active_handle(E_Pointer *p)
      }
    if (e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM) return;
    /* and scedule a pre-idle check in 1 second if no more events happen */
+   if (!e_config->idle_cursor) return;
    p->idle_timer = ecore_timer_add(1.0, _e_pointer_cb_idle_timer_pre, p);
 }
 
@@ -615,7 +635,8 @@ _e_pointer_cb_idle_timer_wait(void *data)
    E_Pointer *p;
 
    p = data;
-   if (e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM)
+   if ((e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM) ||
+       (!e_config->idle_cursor))
      {
 	if (p->idle_poller)
 	  ecore_poller_del(p->idle_poller);
@@ -637,7 +658,8 @@ _e_pointer_cb_idle_poller(void *data)
    int x, y;
    
    p = data;
-   if (e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM)
+   if ((e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM) ||
+       (!e_config->idle_cursor))
      {
 	p->idle_poller = NULL;
 	return 0;

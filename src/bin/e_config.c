@@ -632,6 +632,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, scale.base_dpi, INT);
    E_CONFIG_VAL(D, T, scale.use_dpi, UCHAR);
    E_CONFIG_VAL(D, T, scale.use_custom, UCHAR);
+
+   E_CONFIG_VAL(D, T, show_cursor, UCHAR); /**/
+   E_CONFIG_VAL(D, T, idle_cursor, UCHAR); /**/
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -756,6 +759,7 @@ e_config_init(void)
    e_config->focus_last_focused_per_desktop = 1;
    e_config->focus_revert_on_hide_or_close = 1;
    e_config->pointer_slide = 1;
+   e_config->show_cursor = 1;
    e_config->use_e_cursor = 1;
    e_config->cursor_size = 32;
    e_config->menu_autoscroll_margin = 0;
@@ -1577,6 +1581,11 @@ e_config_init(void)
    e_config->scale.use_custom = 1;
    IFCFGEND;
    
+   IFCFG(0x0128);
+   e_config->show_cursor = 1;
+   e_config->idle_cursor = 1;
+   IFCFGEND;
+   
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
 #if 0 /* example of new config */
@@ -1652,6 +1661,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->focus_last_focused_per_desktop, 0, 1);
    E_CONFIG_LIMIT(e_config->focus_revert_on_hide_or_close, 0, 1);
    E_CONFIG_LIMIT(e_config->pointer_slide, 0, 1);
+   E_CONFIG_LIMIT(e_config->show_cursor, 0, 1);
    E_CONFIG_LIMIT(e_config->use_e_cursor, 0, 1);
    E_CONFIG_LIMIT(e_config->cursor_size, 0, 1024);
    E_CONFIG_LIMIT(e_config->menu_autoscroll_margin, 0, 50);
