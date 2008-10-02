@@ -32,7 +32,9 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "enlightenment/windows");
-   e_configure_registry_item_add("windows/window_manipulation", 30, _("Window Manipulation"), NULL, "enlightenment/window_manipulation", e_int_config_window_manipulation);
+   e_configure_registry_item_add("windows/window_geometry", 30, _("Window Geometry"), NULL, "enlightenment/window_manipulation", e_int_config_window_geometry);
+   e_configure_registry_item_add("windows/window_stacking", 30, _("Window Stacking"), NULL, "enlightenment/window_manipulation", e_int_config_window_stacking);
+   e_configure_registry_item_add("windows/window_maxpolicy", 30, _("Window Maximize Policy"), NULL, "enlightenment/window_manipulation", e_int_config_window_maxpolicy);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;
@@ -42,8 +44,12 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
-   while ((cfd = e_config_dialog_get("E", "_config_window_manipulation_dialog"))) e_object_del(E_OBJECT(cfd));
-   e_configure_registry_item_del("windows/window_manipulation");
+   while ((cfd = e_config_dialog_get("E", "_config_window_geometry_dialog"))) e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "_config_window_stacking_dialog"))) e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "_config_window_maxpolicy_dialog"))) e_object_del(E_OBJECT(cfd));
+   e_configure_registry_item_del("windows/window_geometry");
+   e_configure_registry_item_del("windows/window_stacking");
+   e_configure_registry_item_del("windows/window_maxpolicy");
    e_configure_registry_category_del("windows");
    conf_module = NULL;
    return 1;
