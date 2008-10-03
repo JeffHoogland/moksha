@@ -209,7 +209,9 @@ src/modules/conf_window_display/e_int_config_window_display.c
 src/modules/conf_window_display/e_mod_main.c
 src/modules/conf_window_focus/e_int_config_focus.c
 src/modules/conf_window_focus/e_mod_main.c
-src/modules/conf_window_manipulation/e_int_config_window_manipulation.c
+src/modules/conf_window_manipulation/e_int_config_window_geometry.c
+src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c
+src/modules/conf_window_manipulation/e_int_config_window_stacking.c
 src/modules/conf_window_manipulation/e_mod_main.c
 src/modules/conf_window_remembers/e_int_config_remembers.c
 src/modules/conf_window_remembers/e_mod_main.c
