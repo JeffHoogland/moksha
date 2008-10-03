@@ -711,7 +711,7 @@ _pager_popup_new(E_Zone *zone, int keyaction)
    else
      height = pager_config->popup_height * y;
 
-   width = ((zone->w * x)/(zone->h * y)) * height;
+   width = height * (zone->w * x)/(zone->h * y);
 
    evas_object_move(pp->pager->o_table, 0, 0);
    evas_object_resize(pp->pager->o_table, width, height);
