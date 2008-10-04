@@ -414,6 +414,9 @@ _e_exebuf_update(void)
    edje_object_part_text_set(bg_object, "e.text.label", cmd_buf);
    if (icon_object) evas_object_del(icon_object);
    icon_object = NULL;
+
+   if (!cmd_buf[0]) return;
+
    desktop = efreet_util_desktop_exec_find(cmd_buf);
    if (!desktop) desktop = efreet_util_desktop_name_find(cmd_buf);
    if (!desktop) desktop = efreet_util_desktop_generic_name_find(cmd_buf);
