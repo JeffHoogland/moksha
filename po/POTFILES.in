@@ -189,6 +189,8 @@ src/modules/conf_performance/e_int_config_performance.c
 src/modules/conf_performance/e_mod_main.c
 src/modules/conf_profiles/e_int_config_profiles.c
 src/modules/conf_profiles/e_mod_main.c
+src/modules/conf_scale/e_int_config_scale.c
+src/modules/conf_scale/e_mod_main.c
 src/modules/conf_screensaver/e_int_config_screensaver.c
 src/modules/conf_screensaver/e_mod_main.c
 src/modules/conf_shelves/e_int_config_shelf.c
