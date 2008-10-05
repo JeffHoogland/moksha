@@ -1981,6 +1981,7 @@ _pager_update_drop_position(Pager *p, Evas_Coord x, Evas_Coord y)
    evas_object_geometry_get(p->o_table, &xx, &yy, NULL, NULL);
    if (p->inst) e_box_align_pixel_offset_get(p->inst->gcc->o_box, &ox, &oy);
    pd = _pager_desk_at_coord(p, x + xx + ox, y + yy + oy);
+   if (pd == p->active_drop_pd) return;
    for (l = p->desks; l; l = l->next)
      {
 	pd2 = l->data;
