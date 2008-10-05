@@ -442,6 +442,7 @@ _pager_desk_select(Pager_Desk *pd)
 	if (pd == pd2)
 	  {
 	     pd2->current = 1;
+	     evas_object_raise(pd2->o_desk);
 	     edje_object_signal_emit(pd2->o_desk, "e,state,selected", "e");
 	  }
 	else
