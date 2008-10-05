@@ -1358,8 +1358,8 @@ _e_exebuf_cb_mouse_move(void *data, int type, void *event)
           }
      }
 
-   evas_event_feed_mouse_move(exebuf->evas, ev->x - exebuf->x +
-        exebuf->zone->x, ev->y - exebuf->y + exebuf->zone->y, ev->time, NULL);
+   evas_event_feed_mouse_move(exebuf->evas, ev->x - exebuf->x,
+			      ev->y - exebuf->y, ev->time, NULL);
 
    return 1;
 }
