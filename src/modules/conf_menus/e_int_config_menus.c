@@ -111,11 +111,11 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ob = e_widget_check_add(evas, _("Show Name In Menu"), 
 			   &(cfdata->menu_eap_name_show));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Show Comment In Menu"), 
-			   &(cfdata->menu_eap_comment_show));
-   e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Show Generic In Menu"), 
 			   &(cfdata->menu_eap_generic_show));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Show Comment In Menu"), 
+			   &(cfdata->menu_eap_comment_show));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
@@ -170,11 +170,11 @@ _advanced_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ob = e_widget_check_add(evas, _("Show Name In Menu"), 
 			   &(cfdata->menu_eap_name_show));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Show Comment In Menu"), 
-			   &(cfdata->menu_eap_comment_show));
-   e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Show Generic In Menu"), 
 			   &(cfdata->menu_eap_generic_show));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Show Comment In Menu"), 
+			   &(cfdata->menu_eap_comment_show));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
