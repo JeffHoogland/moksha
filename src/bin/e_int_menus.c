@@ -1644,9 +1644,11 @@ _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi)
    if ((e_config->menu_eap_name_show) && (entry->name)) opt |= 0x4;
    if (desktop) 
      {
-	if ((e_config->menu_eap_generic_show) && (desktop->generic_name)) 
+	if ((e_config->menu_eap_generic_show) && (desktop->generic_name) &&
+	    (desktop->generic_name[0] != 0))
 	  opt |= 0x2;
-	if ((e_config->menu_eap_comment_show) && (desktop->comment))
+	if ((e_config->menu_eap_comment_show) && (desktop->comment) &&
+	    (desktop->comment[0] != 0))
 	  opt |= 0x1;
      }
 
