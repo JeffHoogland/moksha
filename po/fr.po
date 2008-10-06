@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-09-25 12:34+1000\n"
-"PO-Revision-Date: 2008-10-04 16:54+0400\n"
+"POT-Creation-Date: 2008-10-05 17:18+0400\n"
+"PO-Revision-Date: 2008-10-06 08:56+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -172,7 +172,7 @@ msgid "Lower"
 msgstr "Placer dessous"
 
 #: src/bin/e_actions.c:2315
-#: src/bin/e_config_dialog.c:228
+#: src/bin/e_config_dialog.c:256
 #: src/bin/e_fm.c:546
 #: src/bin/e_int_border_menu.c:208
 #: src/bin/e_int_border_prop.c:81
@@ -345,7 +345,7 @@ msgstr "Bascule vers le bureau du dessous"
 
 #: src/bin/e_actions.c:2400
 msgid "Flip Desktop By..."
-msgstr "Basculer le bureau par..."
+msgstr "Basculer le bureau de..."
 
 #: src/bin/e_actions.c:2406
 msgid "Show The Desktop"
@@ -429,7 +429,7 @@ msgstr "Basculer vers le bureau du dessous (tous les écrans)"
 
 #: src/bin/e_actions.c:2461
 msgid "Flip Desktop By... (All Screens)"
-msgstr "Basculer le bureau par... (tous les écrans)"
+msgstr "Basculer le bureau de... (tous les écrans)"
 
 #: src/bin/e_actions.c:2467
 msgid "Flip Desktop To... (All Screens)"
@@ -672,62 +672,62 @@ msgstr "Action reportée"
 msgid "Set As Background"
 msgstr "Utiliser comme fond d'écran"
 
-#: src/bin/e_border.c:4795
+#: src/bin/e_border.c:4838
 msgid "Desktop files scan done"
 msgstr "Analyse des fichiers desktop effectuée"
 
-#: src/bin/e_border.c:4807
+#: src/bin/e_border.c:4850
 msgid "Desktop file scan"
 msgstr "Analyse des fichiers desktop"
 
-#: src/bin/e_config.c:644
+#: src/bin/e_config.c:647
 msgid "Configuration data needed upgrading. Your old configuration<br>has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr "Les données de configuration ont dû être mises à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Ceci risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que Enlightenment a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout re-configurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:658
+#: src/bin/e_config.c:661
 msgid "Your configuration is NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the configuration from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Votre configuration est PLUS RÉCENTE que Enlightenment.<br>C'est vraiment étonnant. Cela ne devrait pas se produire à<br>moins que vous n'ayez installé une version antérieure ou copié<br>la configuration depuis une machine sur laquelle une version<br>plus récente était en cours. Ce n'est pas bon et, par<br>mesure de précaution, votre configuration a été<br>remise à zéro. Désolé pour le désagrément.<br>"
 
-#: src/bin/e_config.c:680
+#: src/bin/e_config.c:683
 #, c-format
 msgid "Desktop %i, %i"
 msgstr "Bureau %i, %i"
 
-#: src/bin/e_config.c:2311
+#: src/bin/e_config.c:2321
 msgid "Configuration Upgraded"
 msgstr "Configuration mise à jour"
 
-#: src/bin/e_config.c:2336
+#: src/bin/e_config.c:2346
 #, c-format
 msgid "An error occured while saving Enlightenment's<br>configuration to disk. The error could not be<br>deterimined.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur est survenue lors de la sauvegarde de<br>la configuration de Enlightenment sur le disque.<br>L'origine de cette erreur n'a pu être déterminée.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:2347
+#: src/bin/e_config.c:2357
 #, c-format
 msgid "Enlightenment's configuration files are too big<br>for the file system they are being saved to.<br>This error is very strange as the files should<br>be extremely small. Please check the settings<br>for your home directory.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Les fichiers de configuration de Enlightenment sont trop<br>gros pour le système de fichiers où ils doivent être<br>sauvegardés. Une erreur tout à fait étonnante car<br>ils devraient être vraiment très petits.<br> Vous devriez vérifier la configuration de<br>votre répertoire personnel.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:2360
+#: src/bin/e_config.c:2370
 #, c-format
 msgid "An output error occured when writing the configuration<br>files for Enlightenment. Your disk is having troubles<br>and possibly needs replacement.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur d'entrée/sortie est survenue lors de l'écriture<br>des fichiers de configuration de Enlightenment. Votre disque dur<br> est en cause et devra vraisemblablement être remplacé.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:2371
+#: src/bin/e_config.c:2381
 #, c-format
 msgid "Enlightenment cannot write its configuration file<br>because it ran out of space to write the file.<br>You have either run out of disk space or have<br>gone over your quota limit.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Enlightenment n'a pu écrire son fichier de configuration<br>car il n'y a pas suffisamment d'espace pour cela<br>Soit vous n'avez plus d'espace disque,<br>soit vous avez dépassé votre quota.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:2383
+#: src/bin/e_config.c:2393
 #, c-format
 msgid "Enlightenment unexpectedly had the configuration file<br>it was writing closed on it. This is very unusual.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Le fichier de configuration dans lequel Enlightenment était en train<br>d'écrire s'est fermé de façon inattendue. C'est exceptionnel.<br><br> Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
 
-#: src/bin/e_config.c:2408
+#: src/bin/e_config.c:2418
 msgid "Enlightenment Configuration Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
-#: src/bin/e_config.c:2412
-#: src/bin/e_config_dialog.c:220
+#: src/bin/e_config.c:2422
+#: src/bin/e_config_dialog.c:248
 #: src/bin/e_eap_editor.c:599
 #: src/bin/e_eap_editor.c:663
 #: src/bin/e_entry_dialog.c:58
@@ -756,7 +756,7 @@ msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config_dialog.c:191
+#: src/bin/e_config_dialog.c:198
 #: src/modules/battery/e_mod_main.c:412
 #: src/modules/conf_dialogs/e_mod_main.c:34
 #: src/modules/conf_engine/e_mod_main.c:34
@@ -768,11 +768,11 @@ msgstr "OK"
 msgid "Advanced"
 msgstr "Avancé"
 
-#: src/bin/e_config_dialog.c:206
+#: src/bin/e_config_dialog.c:227
 msgid "Basic"
 msgstr "Basique"
 
-#: src/bin/e_config_dialog.c:221
+#: src/bin/e_config_dialog.c:249
 msgid "Apply"
 msgstr "Appliquer"
 
@@ -1369,6 +1369,7 @@ msgstr "En creux"
 #: src/modules/conf_fonts/e_mod_main.c:34
 #: src/modules/conf_icon_theme/e_mod_main.c:34
 #: src/modules/conf_mouse_cursor/e_mod_main.c:34
+#: src/modules/conf_scale/e_mod_main.c:34
 #: src/modules/conf_startup/e_mod_main.c:34
 #: src/modules/conf_theme/e_mod_main.c:38
 #: src/modules/conf_transitions/e_mod_main.c:34
@@ -1416,8 +1417,8 @@ msgstr ""
 "alors qu'il y a %i écrans !\n"
 
 #: src/bin/e_init.c:362
-msgid "Disable this splash screen in the future?"
-msgstr "Désactiver cet écran d'accueil à l'avenir ?"
+msgid "Disable splash screen"
+msgstr "Désactiver l'écran d'accueil"
 
 #: src/bin/e_init.c:559
 msgid "Theme Bug Detected"
@@ -1661,8 +1662,8 @@ msgstr "Ancré"
 
 #: src/bin/e_int_border_menu.c:1008
 #: src/bin/e_int_border_prop.c:477
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:154
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:215
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:117
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:140
 msgid "Fullscreen"
 msgstr "Plein écran"
 
@@ -3607,7 +3608,7 @@ msgstr "Verrouillage de l'écran"
 
 #: src/modules/conf_desks/e_int_config_desks.c:56
 msgid "Virtual Desktops Settings"
-msgstr "Configuration des bureaux virtuels"
+msgstr "Paramètres des bureaux virtuels"
 
 #: src/modules/conf_desks/e_int_config_desks.c:189
 msgid "Number of Desktops"
@@ -3644,7 +3645,8 @@ msgstr "Délai avant le basculement quand la souris est au bord de l'écran:"
 
 #: src/modules/conf_desks/e_int_config_desks.c:254
 #: src/modules/conf_desks/e_int_config_desks.c:268
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:182
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:143
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:138
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f s"
@@ -3675,7 +3677,7 @@ msgstr "Bureaux virtuels"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:35
 msgid "Dialog Settings"
-msgstr "Paramétrage des boîtes de dialogues"
+msgstr "Paramètres des boîtes de dialogues"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:84
 #: src/modules/conf_engine/e_int_config_engine.c:94
@@ -4251,7 +4253,7 @@ msgid "Threshhold for a thumb drag"
 msgstr "Seuil du glissé du pouce"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:91
-#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:154
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:228
 #, c-format
 msgid "%1.0f pixels"
 msgstr "%1.0f pixels"
@@ -4437,9 +4439,11 @@ msgstr "Marge de défilement automatique"
 
 #: src/modules/conf_menus/e_int_config_menus.c:184
 #: src/modules/conf_menus/e_int_config_menus.c:189
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:201
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:205
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:209
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:128
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:132
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:136
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:147
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:151
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f pixels"
@@ -4449,7 +4453,7 @@ msgid "Autoscroll Cursor Margin"
 msgstr "Marge de défilement automatique du curseur"
 
 #: src/modules/conf_menus/e_int_config_menus.c:194
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:145
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:160
 msgid "Miscellaneous Options"
 msgstr "Autres options"
 
@@ -4583,23 +4587,33 @@ msgstr "Manager"
 msgid "Mouse Binding Sequence"
 msgstr "Séquence de raccourci-souris"
 
-#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:35
-#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:97
-#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:146
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:45
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:137
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:217
 msgid "Cursor Settings"
 msgstr "Paramètres du curseur"
 
-#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:99
-#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:148
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:129
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:209
+msgid "Show Cursor"
+msgstr "Afficher le curseur"
+
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:213
+msgid "Idle Cursor"
+msgstr "Curseur inactif"
+
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:141
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:221
 msgid "Use Enlightenment Cursor"
 msgstr "Utiliser le curseur de Enlightenment"
 
-#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:101
-#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:150
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:143
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:223
 msgid "Use X Cursor"
 msgstr "Utiliser le curseur du serveur X"
 
-#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:152
+#: src/modules/conf_mouse_cursor/e_int_config_cursor.c:225
 msgid "Cursor Size"
 msgstr "Taille du curseur"
 
@@ -4659,7 +4673,7 @@ msgstr "Messages"
 
 #: src/modules/conf_paths/e_int_config_paths.c:171
 msgid "E Paths"
-msgstr "Répertoires E"
+msgstr "Répertoires de E"
 
 #: src/modules/conf_paths/e_int_config_paths.c:202
 msgid "Default Directories"
@@ -4768,6 +4782,81 @@ msgstr "Copier le profil courant"
 #: src/modules/conf_profiles/e_mod_main.c:22
 msgid "Profiles"
 msgstr "Profils"
+
+#: src/modules/conf_scale/e_int_config_scale.c:41
+msgid "Scaling Settings"
+msgstr "Paramètres de mise à l'échelle"
+
+#: src/modules/conf_scale/e_int_config_scale.c:105
+msgid "Scale with DPI"
+msgstr "Échelle proportionnée au DPI"
+
+#: src/modules/conf_scale/e_int_config_scale.c:108
+msgid "Relative"
+msgstr "Rapport"
+
+#: src/modules/conf_scale/e_int_config_scale.c:109
+msgid "Base DPI to scale relative to"
+msgstr "DPI de base à proportionner"
+
+#: src/modules/conf_scale/e_int_config_scale.c:111
+#: src/modules/conf_scale/e_int_config_scale.c:184
+#, c-format
+msgid "%1.0f DPI"
+msgstr "%1.0f DPI"
+
+#: src/modules/conf_scale/e_int_config_scale.c:113
+#, c-format
+msgid "Currently %i DPI"
+msgstr "Actuellement %i DPI"
+
+#: src/modules/conf_scale/e_int_config_scale.c:162
+msgid "Policy"
+msgstr "Politique"
+
+#: src/modules/conf_scale/e_int_config_scale.c:164
+msgid "Don't Scale"
+msgstr "Pas d'échelle"
+
+#: src/modules/conf_scale/e_int_config_scale.c:166
+msgid "Scale relative to screen DPI"
+msgstr "Échelle en relation avec le DPI de l'écran"
+
+#: src/modules/conf_scale/e_int_config_scale.c:168
+msgid "Custom scaling factor"
+msgstr "Facteur d'échelle personnalisé"
+
+#: src/modules/conf_scale/e_int_config_scale.c:170
+msgid "Minimum"
+msgstr "Minimum"
+
+#: src/modules/conf_scale/e_int_config_scale.c:172
+#: src/modules/conf_scale/e_int_config_scale.c:176
+#: src/modules/conf_scale/e_int_config_scale.c:188
+#, c-format
+msgid "%1.2f times"
+msgstr "%1.2f fois"
+
+#: src/modules/conf_scale/e_int_config_scale.c:174
+msgid "Maximum"
+msgstr "Maximum"
+
+#: src/modules/conf_scale/e_int_config_scale.c:180
+msgid "Scaling Factors"
+msgstr "Facteurs d'échelle"
+
+#: src/modules/conf_scale/e_int_config_scale.c:181
+#, c-format
+msgid "Base DPI (Currently %i DPI)"
+msgstr "DPI de base (actuellement %i DPI)"
+
+#: src/modules/conf_scale/e_int_config_scale.c:186
+msgid "Personal scaling factor"
+msgstr "Facteur d'échelle personnel"
+
+#: src/modules/conf_scale/e_mod_main.c:35
+msgid "Scaling"
+msgstr "Mise à l'échelle"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:49
 msgid "Screen Saver Settings"
@@ -4969,12 +5058,12 @@ msgid "Fill Options"
 msgstr "Options de remplissage"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:227
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:229
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:154
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -5316,95 +5405,121 @@ msgstr "Déplacer le curseur automatiquement vers la nouvelle fenêtre focalisé
 msgid "Window Focus"
 msgstr "Focalisation des fenêtres"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:53
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:51
 #: src/modules/conf_window_manipulation/e_mod_main.c:35
-msgid "Window Manipulation"
-msgstr "Manipulation de la fenêtre"
+msgid "Window Geometry"
+msgstr "Géométrie de la fenêtre"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:146
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:178
-msgid "Automatically raise windows on mouse over"
-msgstr "Élever automatiquement les fenêtres lors du survol"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:148
-msgid "When moving or resizing windows, resist at the boundaries"
-msgstr "Résister aux bords lors du déplacement/redimensionnement des fenêtres"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:152
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:213
-msgid "Maximize Policy"
-msgstr "Politique de maximisation"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:156
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:217
-msgid "Smart expansion"
-msgstr "Expansion intelligente"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:158
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:219
-msgid "Expand the window"
-msgstr "Étendre la fenêtre"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:160
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:221
-msgid "Fill available space"
-msgstr "Remplir l'espace disponible"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:177
-msgid "Autoraise"
-msgstr "Élever automatiquement"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:180
-msgid "Delay before raising:"
-msgstr "Délai avant la mise au premier plan:"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:186
-msgid "Raise Window"
-msgstr "Élever la fenêtre"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:188
-msgid "Raise when starting to move or resize"
-msgstr "Élever lors du déplacement ou du redimensionnement"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:190
-msgid "Raise when clicking to focus"
-msgstr "Élever lors du clic de focalisation"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:192
-msgid "Allow windows to be above fullscreen window"
-msgstr "Autoriser les fenêtres à être au-dessus de la fenêtre en plein écran"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:196
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:123
 msgid "Resistance"
 msgstr "Résistance"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:197
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:124
 msgid "Resist moving or resizing a window over an obstacle"
 msgstr "Résister lors du déplacement/redimensionnement sur un obstacle"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:199
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:126
 msgid "Resistance between windows:"
 msgstr "Résistance entre les fenêtres:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:203
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:130
 msgid "Resistance at the edge of the screen:"
 msgstr "Résistance au bord de l'écran:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:207
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:134
 msgid "Resistance to desktop gadgets:"
 msgstr "Résistance aux gadgets du bureau:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:225
-msgid "Both directions"
-msgstr "Dans les deux directions"
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:140
+msgid "Keyboard move and resize"
+msgstr "Déplacement et redimensionnement au clavier"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:232
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:141
+msgid "Automatically accept changes after:"
+msgstr "Acceptation automatique des changements après:"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
+msgid "Move by:"
+msgstr "Déplacer de:"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:149
+msgid "Resize by:"
+msgstr "Redimensionner de:"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:44
+#: src/modules/conf_window_manipulation/e_mod_main.c:37
+msgid "Window Maximize Policy"
+msgstr "Politique de maximisation de la fenêtre"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:142
+msgid "Smart expansion"
+msgstr "Expansion intelligente"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:144
+msgid "Expand the window"
+msgstr "Étendre la fenêtre"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:123
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:146
+msgid "Fill available space"
+msgstr "Remplir l'espace disponible"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:138
+msgid "Maximize Policy"
+msgstr "Politique de maximisation"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:150
+msgid "Maximize Directions"
+msgstr "Directions de maximisation"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:156
+msgid "Both"
+msgstr "Les deux"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 msgid "Allow window manipulation"
 msgstr "Autoriser la manipulation des fenêtres"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:234
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
 msgid "Automatically move/resize windows on shelf autohide"
 msgstr "Déplacer/Redimensionner automatiquement les fenêtres lors de l'auto-masquage du rack"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:45
+#: src/modules/conf_window_manipulation/e_mod_main.c:36
+msgid "Window Stacking"
+msgstr "Empilement de la fenêtre"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:116
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:134
+msgid "Automatically raise windows on mouse over"
+msgstr "Élever automatiquement les fenêtres lors du survol"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:119
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:148
+msgid "Allow windows to be above fullscreen window"
+msgstr "Autoriser les fenêtres à être au-dessus de la fenêtre en plein écran"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:133
+msgid "Autoraise"
+msgstr "Élever automatiquement"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:136
+msgid "Delay before raising:"
+msgstr "Délai avant la mise au premier plan:"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:142
+msgid "Raise Window"
+msgstr "Élever la fenêtre"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:144
+msgid "Raise when starting to move or resize"
+msgstr "Élever lors du déplacement ou du redimensionnement"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:146
+msgid "Raise when clicking to focus"
+msgstr "Élever lors du clic de focalisation"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:29
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:92
@@ -6355,6 +6470,13 @@ msgstr "Réseaux"
 msgid "Settings"
 msgstr "Paramètres"
 
+#~ msgid "Window Manipulation"
+#~ msgstr "Manipulation de la fenêtre"
+#~ msgid "When moving or resizing windows, resist at the boundaries"
+#~ msgstr ""
+#~ "Résister aux bords lors du déplacement/redimensionnement des fenêtres"
+#~ msgid "Both directions"
+#~ msgstr "Dans les deux directions"
 #~ msgid "Enlightenment cannot configure the mouse acceleration settings."
 #~ msgstr "Enlightenment ne peut pas configurer l'accélération de la souris."
 #~ msgid "Mouse Acceleration Settings"
