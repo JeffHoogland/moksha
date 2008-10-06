@@ -124,7 +124,12 @@ _e_color_dialog_button2_click(void *data, E_Dialog *edia)
 static void
 _e_color_dialog_free(E_Color_Dialog *dia)
 {
-   e_object_unref(E_OBJECT(dia->dia));
+   if (dia->dia)
+     {
+	e_object_del_attach_func_set(E_OBJECT(dia->dia), NULL);
+	e_object_del(E_OBJECT(dia->dia));
+	dia->dia = NULL;
+     }
    E_FREE(dia->color);
    E_FREE(dia);
 }
@@ -134,5 +139,9 @@ _e_color_dialog_dia_del(void *obj)
 {
    E_Dialog *dia = obj;
    E_Color_Dialog *cdia = dia->data;
-   _e_color_dialog_button2_click(cdia, dia);
+   if (cdia->cancel_func && cdia->initial)
+     cdia->cancel_func(cdia, cdia->initial, cdia->cancel_data);
+
+   cdia->dia = NULL;
+   e_object_del(E_OBJECT(cdia));
 }
