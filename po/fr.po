@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-10-05 17:18+0400\n"
-"PO-Revision-Date: 2008-10-06 08:56+0400\n"
+"POT-Creation-Date: 2008-10-07 08:39+0400\n"
+"PO-Revision-Date: 2008-10-07 17:47+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -205,7 +205,7 @@ msgstr "Tuer"
 #: src/bin/e_actions.c:2382
 #: src/bin/e_actions.c:2387
 msgid "Window : State"
-msgstr "Fenêtre: état"
+msgstr "Fenêtre: État"
 
 #: src/bin/e_actions.c:2325
 msgid "Sticky Mode Toggle"
@@ -657,7 +657,7 @@ msgstr "Verrouillage du bureau"
 #: src/bin/e_actions.c:2642
 #: src/bin/e_int_menus.c:1254
 msgid "Cleanup Windows"
-msgstr "Réarranger les fenêtres"
+msgstr "Réorganiser les fenêtres"
 
 #: src/bin/e_actions.c:2647
 msgid "Generic : Actions"
@@ -828,7 +828,7 @@ msgstr "L'authentification via PAM a rencontré une erreur lors de<br>la session
 
 #: src/bin/e_eap_editor.c:156
 msgid "Incomplete Window Properties"
-msgstr "Propriétés de fenêtre incomplètes"
+msgstr "Propriétés de la fenêtre incomplètes"
 
 #: src/bin/e_eap_editor.c:157
 msgid "The window you are creating an icon for<br>does not contain window name and class<br>properties, so the needed properties for<br>the icon so that it will be used for this<br>window cannot be guessed. You will need to<br>use the window title instead. This will only<br>work if the window title is the same at<br>the time the window starts up, and does not<br>change."
@@ -1670,20 +1670,20 @@ msgstr "Plein écran"
 #: src/bin/e_int_border_menu.c:1033
 #: src/modules/conf_winlist/e_mod_main.c:35
 msgid "Window List"
-msgstr "Liste de fenêtres"
+msgstr "Liste des fenêtres"
 
 #: src/bin/e_int_border_menu.c:1043
 #: src/modules/pager/e_mod_main.c:263
-#: src/modules/pager/e_mod_main.c:2794
-#: src/modules/pager/e_mod_main.c:2801
-#: src/modules/pager/e_mod_main.c:2807
-#: src/modules/pager/e_mod_main.c:2808
-#: src/modules/pager/e_mod_main.c:2809
-#: src/modules/pager/e_mod_main.c:2810
-#: src/modules/pager/e_mod_main.c:2841
-#: src/modules/pager/e_mod_main.c:2842
-#: src/modules/pager/e_mod_main.c:2843
-#: src/modules/pager/e_mod_main.c:2844
+#: src/modules/pager/e_mod_main.c:2798
+#: src/modules/pager/e_mod_main.c:2805
+#: src/modules/pager/e_mod_main.c:2811
+#: src/modules/pager/e_mod_main.c:2812
+#: src/modules/pager/e_mod_main.c:2813
+#: src/modules/pager/e_mod_main.c:2814
+#: src/modules/pager/e_mod_main.c:2845
+#: src/modules/pager/e_mod_main.c:2846
+#: src/modules/pager/e_mod_main.c:2847
+#: src/modules/pager/e_mod_main.c:2848
 msgid "Pager"
 msgstr "Pager"
 
@@ -1755,7 +1755,7 @@ msgstr "Identifiant de fenêtre"
 
 #: src/bin/e_int_border_prop.c:435
 msgid "Window Group"
-msgstr "Groupe de fenêtres"
+msgstr "Groupe de la fenêtre"
 
 #: src/bin/e_int_border_prop.c:436
 msgid "Transient For"
@@ -1899,7 +1899,7 @@ msgstr "Écran actuel"
 
 #: src/bin/e_int_border_remember.c:527
 msgid "Skip Window List"
-msgstr "Enlever de la liste des fenêtres"
+msgstr "Ne pas afficher dans la liste des fenêtres"
 
 #: src/bin/e_int_border_remember.c:535
 msgid "Match only one window"
@@ -1920,7 +1920,7 @@ msgstr "Toujours focaliser au démarrage"
 #: src/modules/ibar/e_mod_main.c:828
 #: src/modules/ibox/e_mod_main.c:309
 #: src/modules/ibox/e_mod_main.c:707
-#: src/modules/pager/e_mod_main.c:803
+#: src/modules/pager/e_mod_main.c:804
 #: src/modules/temperature/e_mod_main.c:306
 #: src/modules/mixer/e_mod_main.c:667
 msgid "Configuration"
@@ -1941,7 +1941,7 @@ msgstr "Rack"
 
 #: src/bin/e_int_config_modules.c:106
 msgid "Module Settings"
-msgstr "Paramètres du module"
+msgstr "Paramètres des modules"
 
 #: src/bin/e_int_config_modules.c:167
 msgid "Available Modules"
@@ -3073,7 +3073,7 @@ msgstr "Paramètres avancés"
 
 #: src/modules/battery/e_mod_config.c:133
 msgid "Check battery every:"
-msgstr "Controller la batterie tous les :"
+msgstr "Contrôler la batterie tous les :"
 
 #: src/modules/battery/e_mod_config.c:136
 #: src/modules/conf_performance/e_int_config_performance.c:133
@@ -3224,7 +3224,7 @@ msgstr "Bordures"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:40
 msgid "Client List Settings"
-msgstr "Paramètres de la liste des fenêtres"
+msgstr "Paramètres des fenêtres clientes"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:99
 msgid "Group By"
@@ -3308,7 +3308,7 @@ msgstr "%1.0f Caractères"
 
 #: src/modules/conf_clientlist/e_mod_main.c:35
 msgid "Client List Menu"
-msgstr "liste de fenêtres"
+msgstr "Menu des fenêtres clientes"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:44
 msgid "Window Manager"
@@ -3341,7 +3341,7 @@ msgstr "Titre du menu"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:51
 msgid "Menu Title Active"
-msgstr "Titre de menu actif"
+msgstr "Titre du menu actif"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:52
 #: src/modules/conf_fonts/e_int_config_fonts.c:62
@@ -3350,7 +3350,7 @@ msgstr "Élément de menu"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:53
 msgid "Menu Item Active"
-msgstr "Élément actif de menu"
+msgstr "Élément actif du menu"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:54
 #: src/modules/conf_fonts/e_int_config_fonts.c:67
@@ -3904,7 +3904,7 @@ msgstr "%1.2f"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:185
 msgid "Terminal Settings"
-msgstr "Paramètres de terminal"
+msgstr "Paramètres du terminal"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:186
 msgid "Terminal Command (CTRL+RETURN to utilize)"
@@ -3969,7 +3969,7 @@ msgstr "Exécuter une commande"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:60
 msgid "Core"
-msgstr "Principale"
+msgstr "Base"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:61
 msgid "Title Bar"
@@ -3977,7 +3977,7 @@ msgstr "Barre de titre"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:64
 msgid "Textblock Plain"
-msgstr "Bloc de texte justifié"
+msgstr "Bloc de texte"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:65
 msgid "Textblock Light"
@@ -3985,7 +3985,7 @@ msgstr "Bloc de texte petit"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:66
 msgid "Textblock Big"
-msgstr "Gros bloc de texte"
+msgstr "Bloc de texte gros"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:70
 msgid "Configure Heading"
@@ -4158,7 +4158,7 @@ msgstr "Activer les polices de secours"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:703
 msgid "Advanced Preview Text.. 我真的会写中文"
-msgstr "Aperçu avancé de texte.. 我真的会写中文"
+msgstr "Prévisualisation avancée du texte...我真的会写中文"
 
 #: src/modules/conf_icon_theme/e_int_config_icon_themes.c:54
 msgid "Icon Theme Settings"
@@ -4397,7 +4397,7 @@ msgstr "Clavier & Souris"
 #: src/modules/conf_menus/e_int_config_menus.c:169
 #: src/modules/conf_menus/e_mod_main.c:35
 msgid "Menu Settings"
-msgstr "Paramètres de menu"
+msgstr "Paramètres du menu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:101
 #: src/modules/conf_menus/e_int_config_menus.c:160
@@ -4421,13 +4421,13 @@ msgstr "Afficher le nom dans le menu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:114
 #: src/modules/conf_menus/e_int_config_menus.c:173
-msgid "Show Comment In Menu"
-msgstr "Afficher le commentaire dans le menu"
+msgid "Show Generic In Menu"
+msgstr "Afficher l'information générique dans le menu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:117
 #: src/modules/conf_menus/e_int_config_menus.c:176
-msgid "Show Generic In Menu"
-msgstr "Afficher l'information générique dans le menu"
+msgid "Show Comment In Menu"
+msgstr "Afficher le commentaire dans le menu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:181
 msgid "Autoscroll Settings"
@@ -5569,7 +5569,7 @@ msgstr "<Sans Rôle>"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:55
 msgid "Window List Settings"
-msgstr "Paramètres de la liste de fenêtres"
+msgstr "Paramètres de la liste des fenêtres"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:132
 msgid "Show iconified windows"
@@ -6186,31 +6186,31 @@ msgstr "Vous ne pouvez pas utiliser le bouton droit de la souris dans le rack<br
 msgid "Button %i"
 msgstr "Bouton %i"
 
-#: src/modules/pager/e_mod_main.c:810
+#: src/modules/pager/e_mod_main.c:811
 msgid "Virtual Desktops Configuration"
 msgstr "Configuration des bureaux virtuels"
 
-#: src/modules/pager/e_mod_main.c:2801
+#: src/modules/pager/e_mod_main.c:2805
 msgid "Show Pager Popup"
 msgstr "Afficher le pop-up du Pager"
 
-#: src/modules/pager/e_mod_main.c:2807
-#: src/modules/pager/e_mod_main.c:2841
+#: src/modules/pager/e_mod_main.c:2811
+#: src/modules/pager/e_mod_main.c:2845
 msgid "Popup Desk Right"
 msgstr "Pop-up du bureau droit"
 
-#: src/modules/pager/e_mod_main.c:2808
-#: src/modules/pager/e_mod_main.c:2842
+#: src/modules/pager/e_mod_main.c:2812
+#: src/modules/pager/e_mod_main.c:2846
 msgid "Popup Desk Left"
 msgstr "Pop-up du bureau gauche"
 
-#: src/modules/pager/e_mod_main.c:2809
-#: src/modules/pager/e_mod_main.c:2843
+#: src/modules/pager/e_mod_main.c:2813
+#: src/modules/pager/e_mod_main.c:2847
 msgid "Popup Desk Up"
 msgstr "Pop-up du bureau au-dessus"
 
-#: src/modules/pager/e_mod_main.c:2810
-#: src/modules/pager/e_mod_main.c:2844
+#: src/modules/pager/e_mod_main.c:2814
+#: src/modules/pager/e_mod_main.c:2848
 msgid "Popup Desk Down"
 msgstr "Pop-up du bureau en dessous"
 
