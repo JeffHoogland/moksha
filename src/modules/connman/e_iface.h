@@ -82,7 +82,7 @@ struct _Interface
    Interface_Network_Selection network_selection;
    Evas_List *networks;
    int signal_strength;
-   
+
    /* private - don't touch */
    Evas_List *callbacks;
    struct {

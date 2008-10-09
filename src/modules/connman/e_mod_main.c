@@ -6,14 +6,14 @@
 #include "e_iface.h"
 
 // FUCK.
-// 
+//
 // connman now completely changed api in git upstream (just found out) after
 // weeks of no changes - huge change. nothing seems compatible anymore.
-// 
+//
 // ...
-// 
+//
 // this basically puts this all on hold. hoo-ray!
-// 
+//
 // back to ignoring network stuff.
 
 // FIXME: need config to
@@ -59,7 +59,7 @@ struct _Instance
 {
    E_Gadcon_Client *gcc;
    Evas_Object     *o_net; // FIXME: clock to go...
-   
+
    E_Gadcon_Popup  *popup;
    Evas_Object     *popup_ilist_obj;
    E_Dialog        *if_dia;
@@ -68,7 +68,7 @@ struct _Instance
    E_Dialog        *net_dia;
    E_Dialog        *manual_dia;
    E_Dialog        *netlist_dia;
-   
+
    struct {
       int             ifmode;
       int             ifmode_tmp;
@@ -79,7 +79,7 @@ struct _Instance
       Conf_Network   *cfnet, *cfnet_new;
       Conf_Interface *cfif;
    } config;
-}; 
+};
 
 struct _Conf_Interface
 {
@@ -125,9 +125,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    E_Gadcon_Client *gcc;
    Instance *inst;
    Evas_List *l;
-   
+
    inst = E_NEW(Instance, 1);
-   
+
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/connman",
 			   "e/modules/connman/main");
@@ -135,13 +135,13 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  gadget_cb_mouse_down, inst);
-    
+
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
-   
+
    inst->gcc = gcc;
    inst->o_net = o;
-   
+
    e_gadcon_client_util_menu_attach(gcc);
 
    instances = evas_list_append(instances, inst);
@@ -182,10 +182,10 @@ static void
 _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Instance *inst;
-   
+
    inst = gcc->data;
    instances = evas_list_remove(instances, inst);
-   
+
    evas_object_del(inst->o_net);
    free(inst);
 }
@@ -195,7 +195,7 @@ _gc_orient(E_Gadcon_Client *gcc)
 {
    Instance *inst;
    Evas_Coord mw, mh;
-   
+
    inst = gcc->data;
    mw = 0, mh = 0;
    edje_object_size_min_get(inst->o_net, &mw, &mh);
@@ -218,7 +218,7 @@ _gc_icon(Evas *evas)
 {
    Evas_Object *o;
    char buf[4096];
-   
+
    o = edje_object_add(evas);
    snprintf(buf, sizeof(buf), "%s/e-module-connman.edj",
 	    e_module_dir_get(connman_module));
@@ -248,10 +248,10 @@ static Evas_List *ifaces = NULL;
 static int
 inst_if_matches(Instance *inst, Interface *iface)
 {
-   if ((inst->config.ifmode == 0) && (iface->prop.type) && 
+   if ((inst->config.ifmode == 0) && (iface->prop.type) &&
        (!strcmp(iface->prop.type, "80211")))
      return 1;
-   if ((inst->config.ifmode == 1) && (iface->prop.type) && 
+   if ((inst->config.ifmode == 1) && (iface->prop.type) &&
        (!strcmp(iface->prop.type, "80203")))
      return 1;
    if ((inst->config.ifpath) && (!strcmp(iface->ifpath, inst->config.ifpath)))
@@ -264,7 +264,7 @@ if_get(Instance *inst)
 {
    Evas_List *l;
    Interface *iface = NULL;
-   
+
    if (inst->config.ifpath)
      iface = iface_find(inst->config.ifpath);
    else
@@ -290,7 +290,7 @@ net_join(Instance *inst, Interface *iface, Conf_Network *cfnet)
 	     iface_ipv4_set(iface, "dhcp", NULL, NULL, NULL);
 	  }
 	else
-	  iface_ipv4_set(iface, "static", 
+	  iface_ipv4_set(iface, "static",
 			 cfnet->ip, cfnet->gateway,
 			 cfnet->netmask);
 	if ((!cfnet->remember_password) && (cfnet->password))
@@ -314,7 +314,7 @@ net_join(Instance *inst, Interface *iface, Conf_Network *cfnet)
 		  iface_ipv4_set(iface, "dhcp", NULL, NULL, NULL);
 	       }
 	     else
-	       iface_ipv4_set(iface, "static", 
+	       iface_ipv4_set(iface, "static",
 			      cfnet->ip, cfnet->gateway,
 			      cfnet->netmask);
 	     if ((!cfnet->remember_password) && (cfnet->password))
@@ -344,7 +344,7 @@ net_dialog_cb_ok(void *data, E_Dialog *dialog)
    Conf_Network *cfnet;
    char *s;
    Interface *iface;
-   
+
    inst = data;
    cfnet = inst->config.cfnet_new;
    inst->config.cfnet = cfnet;
@@ -369,7 +369,7 @@ net_dialog_cb_cancel(void *data, E_Dialog *dialog)
 {
    Instance *inst;
    Conf_Network *cfnet;
-   
+
    inst = data;
    cfnet = inst->config.cfnet_new;
    inst->config.cfnet_new = NULL;
@@ -402,7 +402,7 @@ net_dialog_cb_del(E_Win *win)
    E_Dialog *dialog;
    Instance *inst;
    Conf_Network *cfnet;
-   
+
    dialog = win->data;
    inst = dialog->data;
    cfnet = inst->config.cfnet_new;
@@ -442,7 +442,7 @@ net_dialog_show(Instance *inst, Conf_Network *cfnet)
    E_Radio_Group *rg;
    Evas_List *l;
    int row = 0;
-   
+
    dialog = e_dialog_new(inst->gcc->gadcon->zone->container, "e", "e_connman_net_dialog");
    e_dialog_title_set(dialog, "Connection Details");
    dialog->data = inst;
@@ -465,11 +465,11 @@ net_dialog_show(Instance *inst, Conf_Network *cfnet)
    o = e_widget_label_add(evas, cfnet->essid);
    e_widget_table_object_append(table, o, 1, row, 1, 1, 1, 1, 0, 0);
    row++;
-   
+
    o = e_widget_check_add(evas, "Use when available", &(cfnet->use_always));
    e_widget_table_object_append(table, o, 0, row, 2, 1, 1, 1, 0, 0);
    row++;
-   
+
    if (inst->config.sec)
      {
 	o = e_widget_label_add(evas, "Password");
@@ -491,12 +491,12 @@ net_dialog_show(Instance *inst, Conf_Network *cfnet)
 				inst, NULL);
    e_widget_table_object_append(table, button, 0, row, 2, 1, 0, 0, 0, 0);
    row++;
-   
+
    e_widget_min_size_get(table, &mw, &mh);
    e_dialog_content_set(dialog, table, mw, mh);
-   
+
    e_win_delete_callback_set(dialog->win, net_dialog_cb_del);
-   
+
    e_dialog_button_add(dialog, "OK", NULL, net_dialog_cb_ok, inst);
    e_dialog_button_add(dialog, "Cancel", NULL, net_dialog_cb_cancel, inst);
    e_dialog_button_focus_num(dialog, 1);
@@ -576,7 +576,7 @@ static void
 button_cb_netlist(void *data, void *data2)
 {
    Instance *inst;
-   
+
    inst = data;
    if (!inst->netlist_dia) netlist_dialog_show(inst);
    else netlist_dialog_hide(inst);
@@ -586,7 +586,7 @@ static void
 if_dialog_cb_ok(void *data, E_Dialog *dialog)
 {
    Instance *inst;
-   
+
    inst = data;
    if_dialog_hide(inst);
    E_FREE(inst->config.ifpath);
@@ -613,7 +613,7 @@ static void
 if_dialog_cb_cancel(void *data, E_Dialog *dialog)
 {
    Instance *inst;
-   
+
    inst = data;
    if_dialog_hide(inst);
    E_FREE(inst->config.ifpath_tmp);
@@ -624,7 +624,7 @@ if_dialog_cb_del(E_Win *win)
 {
    E_Dialog *dialog;
    Instance *inst;
-   
+
    dialog = win->data;
    inst = dialog->data;
    if_dialog_hide(inst);
@@ -635,7 +635,7 @@ static void
 if_radio_cb_generic(void *data, Evas_Object *obj, void *event_info)
 {
    Instance *inst;
-   
+
    inst = data;
    if (inst->config.ifmode != 2)
      {
@@ -648,7 +648,7 @@ static void
 if_ilist_cb_if_sel(void *data)
 {
    Instance *inst;
-   
+
    inst = data;
    e_widget_radio_toggle_set(inst->if_radio_device, 1);
 }
@@ -659,12 +659,12 @@ if_ilist_update(Instance *inst)
    Evas_Object *ilist;
    Evas_List *l;
    int i;
-   
+
    ilist = inst->if_ilist_obj;
    if (!ilist) return;
    e_widget_ilist_freeze(ilist);
    e_widget_ilist_clear(ilist);
-   
+
    for (i = 0, l = ifaces; l; l = l->next, i++)
      {
 	Interface *iface;
@@ -709,13 +709,13 @@ if_ilist_update(Instance *inst)
 	if (!product) product = "Unknown";
 	if (!type) type = "Unknown";
 	snprintf(buf, sizeof(buf), "%s (%s)", type, product);
-	e_widget_ilist_append(ilist, icon, buf, if_ilist_cb_if_sel, inst, 
+	e_widget_ilist_append(ilist, icon, buf, if_ilist_cb_if_sel, inst,
 			      iface->ifpath);
 	if ((inst->config.ifpath) &&
 	    (!strcmp(inst->config.ifpath, iface->ifpath)))
 	  e_widget_ilist_selected_set(ilist, i);
      }
-   
+
    e_widget_ilist_go(ilist);
    e_widget_ilist_thaw(ilist);
 }
@@ -729,7 +729,7 @@ if_dialog_show(Instance *inst)
    Evas_Coord mw, mh;
    E_Radio_Group *rg;
    Evas_List *l;
-   
+
    dialog = e_dialog_new(inst->gcc->gadcon->zone->container, "e", "e_connman_iface_dialog");
    e_dialog_title_set(dialog, _("Network Connection Settings"));
    dialog->data = inst;
@@ -741,7 +741,7 @@ if_dialog_show(Instance *inst)
 
    inst->config.ifmode_tmp = inst->config.ifmode;
    rg = e_widget_radio_group_new(&(inst->config.ifmode_tmp));
-   
+
    o = e_widget_radio_add(evas, _("Wifi"), 0, rg);
    evas_object_smart_callback_add(o, "changed", if_radio_cb_generic, inst);
    e_widget_framelist_object_append(flist, o);
@@ -758,7 +758,7 @@ if_dialog_show(Instance *inst)
      inst->config.ifpath_tmp = NULL;
    ilist = e_widget_ilist_add(evas, 48, 48, &(inst->config.ifpath_tmp));
    inst->if_ilist_obj = ilist;
-   
+
    e_widget_ilist_freeze(ilist);
 
    if_ilist_update(inst);
@@ -768,19 +768,19 @@ if_dialog_show(Instance *inst)
 
    e_widget_min_size_set(ilist, 240, 180);
    e_widget_framelist_object_append(flist, ilist);
-   
+
    e_widget_list_object_append(list, flist, 1, 0, 0.5);
 
    // FIXME: netlist needs to work
    button = e_widget_button_add(evas, _("Networks"), NULL, button_cb_netlist,
 				inst, NULL);
    e_widget_list_object_append(list, button, 1, 0, 0.5);
-   
+
    e_widget_min_size_get(list, &mw, &mh);
    e_dialog_content_set(dialog, list, mw, mh);
-   
+
    e_win_delete_callback_set(dialog->win, if_dialog_cb_del);
-   
+
    e_dialog_button_add(dialog, _("OK"), NULL, if_dialog_cb_ok, inst);
    e_dialog_button_add(dialog, _("Cancel"), NULL, if_dialog_cb_cancel, inst);
    e_dialog_button_focus_num(dialog, 1);
@@ -810,7 +810,7 @@ static void
 popup_cb_setup(void *data, void *data2)
 {
    Instance *inst;
-   
+
    inst = data;
    popup_hide(inst);
    if (!inst->if_dia) if_dialog_show(inst);
@@ -821,12 +821,12 @@ static void
 popup_cb_resize(Evas_Object *obj, int *w, int *h)
 {
    int mw, mh;
-     
+
    e_widget_min_size_get(obj, &mw, &mh);
-   
+
    if (mh < 180) mh = 180;
    if (mw < 160) mw = 160;
-   
+
    if (*w) *w = (mw + 8);
    if (*h) *h = (mh + 8);
 }
@@ -837,7 +837,7 @@ popup_ifnet_icon_adjust(Evas_Object *icon, Interface_Network *ifnet)
    Edje_Message_Int_Set *msg;
    Evas_List *l;
    int saved = 0;
-   
+
    msg = alloca(sizeof(Edje_Message_Int_Set) + (0 * sizeof(int)));
    msg->count = 1;
    msg->val[0] = ifnet->signal_strength;
@@ -859,9 +859,9 @@ popup_ifnet_icon_adjust(Evas_Object *icon, Interface_Network *ifnet)
 	for (l = conf->networks; l; l = l->next)
 	  {
 	     Conf_Network *cfnet;
-	     
+	
 	     cfnet = l->data;
-	     if ((cfnet->essid) && (ifnet->essid) && 
+	     if ((cfnet->essid) && (ifnet->essid) &&
 		 (!strcmp(cfnet->essid, ifnet->essid)))
 	       {
 		  saved = 1;
@@ -881,7 +881,7 @@ popup_cb_ifnet_sel(void *data)
    Instance *inst;
    Evas_List *l;
    Interface *iface;
-   
+
    inst = data;
    if (!inst->config.bssid) return;
    iface = if_get(inst);
@@ -897,7 +897,7 @@ popup_cb_ifnet_sel(void *data)
 	  {
 	     Conf_Network *cfnet;
 	     char buf[256];
-		  
+		
 	     printf("SEL %s\n", ifnet->essid);
 	     if (!conf)
 	       conf = E_NEW(Conf, 1);
@@ -945,7 +945,7 @@ popup_ifnet_net_add(Instance *inst, Interface_Network *ifnet)
 {
    const char *label;
    Evas_Object *icon;
-   
+
    label = ifnet->essid;
    if (!label) label = "NONE";
    icon = edje_object_add(evas_object_evas_get(inst->popup_ilist_obj));
@@ -975,12 +975,12 @@ popup_ifnet_nets_refresh(Instance *inst)
    Interface *iface;
    Evas_Object *ilist;
    Evas_List *nets;
-   
+
    if (!inst->popup_ilist_obj) return;
    ilist = inst->popup_ilist_obj;
-   
+
    iface = if_get(inst);
-   
+
    e_widget_ilist_freeze(ilist);
    e_widget_ilist_clear(ilist);
 
@@ -989,9 +989,9 @@ popup_ifnet_nets_refresh(Instance *inst)
 	for (l = iface->networks; l; l = l->next)
 	  networks = evas_list_append(networks, l->data);
      }
-/*   
+/*
    if (networks)
-     networks = evas_list_sort(networks, 
+     networks = evas_list_sort(networks,
 			       evas_list_count(networks),
 			       popup_ifnet_cb_sort);
  */
@@ -1013,7 +1013,7 @@ ifnet_num_get(Interface *iface, Interface_Network *ifnet)
 {
    Evas_List *l;
    int i;
-   
+
    for (i = 0, l = iface->networks; l; l = l->next, i++)
      {
 	if (ifnet == l->data) return i;
@@ -1034,7 +1034,7 @@ static void
 popup_ifnet_del(Instance *inst, Interface *iface, Interface_Network *ifnet)
 {
    int i;
-   
+
    if (!inst->popup_ilist_obj) return;
    i = ifnet_num_get(iface, ifnet);
    if (i < 0) return;
@@ -1067,14 +1067,14 @@ popup_show(Instance *inst)
    Evas_Object *base, *ilist, *button, *o;
    Evas *evas;
    Evas_Coord mw, mh;
-   
+
    inst->popup = e_gadcon_popup_new(inst->gcc, popup_cb_resize);
    evas = inst->popup->win->evas;
 
    edje_freeze();
 
    base = e_widget_table_add(evas, 0);
-   
+
    o = edje_object_add(evas);
    e_theme_edje_object_set(o, "base/theme/modules/connman",
 			   "e/modules/connman/network");
@@ -1085,11 +1085,11 @@ popup_show(Instance *inst)
    evas_object_del(o);
    ilist = e_widget_ilist_add(evas, mw, mh, &(inst->config.bssid));
    inst->popup_ilist_obj = ilist;
-   
+
    e_widget_ilist_freeze(ilist);
 
    popup_ifnet_nets_refresh(inst);
-   
+
    e_widget_ilist_go(ilist);
    e_widget_ilist_thaw(ilist);
 
@@ -1097,13 +1097,13 @@ popup_show(Instance *inst)
    e_widget_table_object_append(base, ilist,
 			       0, 0, 1, 1, 1, 1, 1, 1);
 
-   button = e_widget_button_add(evas, _("Settings"), NULL, popup_cb_setup, 
+   button = e_widget_button_add(evas, _("Settings"), NULL, popup_cb_setup,
 				inst, NULL);
    e_widget_table_object_append(base, button,
 			       0, 1, 1, 1, 0, 0, 0, 0);
-   
+
    edje_thaw();
-   
+
    e_gadcon_popup_content_set(inst->popup, base);
    e_gadcon_popup_show(inst->popup);
 }
@@ -1124,7 +1124,7 @@ gadget_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
 {
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
-   
+
    ev = event;
    inst = data;
    if (ev->button == 1)
@@ -1210,7 +1210,7 @@ static void
 cb_if_del(void *data, Interface *iface, Interface_Network *ifnet)
 {
    Evas_List *l;
-   
+
    printf("IF-- %s\n", iface->ifpath);
    ifaces = evas_list_remove(ifaces, iface);
    for (l = instances; l; l = l->next)
@@ -1228,7 +1228,7 @@ static void
 cb_if_ipv4(void *data, Interface *iface, Interface_Network *ifnet)
 {
    Evas_List *l;
-   
+
    printf("IF   %s\n", iface->ifpath);
    printf("  IPV4: [%s][%s][%s][%s]\n",
 	  iface->ipv4.method, iface->ipv4.address,
@@ -1247,7 +1247,7 @@ static void
 cb_if_net_sel(void *data, Interface *iface, Interface_Network *ifnet)
 {
    Evas_List *l;
-   
+
    printf("IF   %s\n", iface->ifpath);
    printf("  NET_SEL: [%s] [%s]\n",
 	  iface->network_selection.id, iface->network_selection.pass);
@@ -1266,7 +1266,7 @@ static void
 cb_if_scan_net_add(void *data, Interface *iface, Interface_Network *ifnet)
 {
    Evas_List *l, *l2;
-   
+
 //   printf("IF   %s\n", iface->ifpath);
 //   printf("  SCAN NET ADD: [%s] %i \"%s\" %s\n",
 //	  ifnet->bssid, ifnet->signal_strength, ifnet->essid, ifnet->security);
@@ -1282,7 +1282,7 @@ cb_if_scan_net_add(void *data, Interface *iface, Interface_Network *ifnet)
 	     for (l2 = conf->networks; l2; l2 = l2->next)
 	       {
 		  Conf_Network *cfnet;
-		  
+		
 		  cfnet = l2->data;
 		  if ((ifnet->essid) && (cfnet->essid) &&
 		      (!strcmp(ifnet->essid, cfnet->essid)))
@@ -1300,7 +1300,7 @@ static void
 cb_if_scan_net_del(void *data, Interface *iface, Interface_Network *ifnet)
 {
    Evas_List *l;
-   
+
 //   printf("IF   %s\n", iface->ifpath);
 //   printf("  SCAN NET DEL: [%s] %i \"%s\" %s\n",
 //	  ifnet->bssid, ifnet->signal_strength, ifnet->essid, ifnet->security);
@@ -1320,7 +1320,7 @@ static void
 cb_if_scan_net_change(void *data, Interface *iface, Interface_Network *ifnet)
 {
    Evas_List *l;
-   
+
 //   printf("IF   %s\n", iface->ifpath);
 //   printf("  SCAN NET CHANGE: [%s] %i \"%s\" %s\n",
 //	  ifnet->bssid, ifnet->signal_strength, ifnet->essid, ifnet->security);
@@ -1338,7 +1338,7 @@ static void
 cb_if_signal(void *data, Interface *iface, Interface_Network *ifnet)
 {
    Evas_List *l;
-   
+
    printf("IF   %s\n", iface->ifpath);
    printf("  SIGNAL: %i\n", iface->signal_strength);
    for (l = instances; l; l = l->next)
@@ -1355,7 +1355,7 @@ static void
 cb_if_state(void *data, Interface *iface, Interface_Network *ifnet)
 {
    Evas_List *l;
-   
+
    // .. iface->prop.state:
    // scanning
    // carrier
@@ -1395,12 +1395,12 @@ cb_if_state(void *data, Interface *iface, Interface_Network *ifnet)
 	  }
      }
 }
-    
+
 static void
 cb_if_policy(void *data, Interface *iface, Interface_Network *ifnet)
 {
    Evas_List *l;
-   
+
    // .. iface->prop.policy:
    // unknown
    // off
@@ -1435,7 +1435,7 @@ static void
 cb_main_if_add(void *data, Interface *iface, Interface_Network *ifnet)
 {
    Evas_List *l, *l2;
-   
+
    printf("IF++ %s\n", iface->ifpath);
    ifaces = evas_list_append(ifaces, iface);
    iface_callback_add(iface, IFACE_EVENT_DEL, cb_if_del, NULL);
@@ -1466,7 +1466,7 @@ cb_main_if_add(void *data, Interface *iface, Interface_Network *ifnet)
 	       inst_on(inst);
 	     else if (!strcmp(iface->prop.policy, "ask"))
 	       inst_on(inst);
-	     
+	
 	     if (inst->config.cfif->netconf)
 	       {
 		  // FIXME: must be ethernet - bring up netconf
@@ -1510,11 +1510,11 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(conf_interface_edd, Conf_Interface, ifpath, STR);
    E_CONFIG_VAL(conf_interface_edd, Conf_Interface, ifmode, INT);
    E_CONFIG_SUB(conf_interface_edd, Conf_Interface, netconf, conf_network_edd);
-   
+
    conf_edd = E_CONFIG_DD_NEW("Conf", Conf);
    E_CONFIG_LIST(conf_edd, Conf, interfaces, conf_interface_edd);
    E_CONFIG_LIST(conf_edd, Conf, networks, conf_network_edd);
-   
+
    conf = e_config_domain_load("module.connman", conf_edd);
 
    connman_dbus = e_dbus_bus_get(DBUS_BUS_SYSTEM);
@@ -1523,7 +1523,7 @@ e_modapi_init(E_Module *m)
 	iface_system_callback_add(IFACE_EVENT_ADD, cb_main_if_add, NULL);
 	iface_system_init(connman_dbus);
      }
-   
+
    e_gadcon_provider_register(&_gadcon_class);
    return m;
 }
@@ -1532,15 +1532,15 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    // FIXME: free conf
-   
+
    E_CONFIG_DD_FREE(conf_network_edd);
    E_CONFIG_DD_FREE(conf_interface_edd);
    E_CONFIG_DD_FREE(conf_edd);
-   
+
    conf_network_edd = NULL;
    conf_interface_edd = NULL;
    conf_edd = NULL;
-   
+
    e_gadcon_provider_unregister(&_gadcon_class);
    if (connman_dbus)
      {
@@ -1553,7 +1553,7 @@ e_modapi_shutdown(E_Module *m)
 //	e_dbus_connection_close(connman_dbus);
 	connman_dbus = NULL;
      }
-   
+
    connman_module = NULL;
 
    return 1;
