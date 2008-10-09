@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-10-07 08:39+0400\n"
-"PO-Revision-Date: 2008-10-07 17:47+0400\n"
+"POT-Creation-Date: 2008-10-09 09:27+0400\n"
+"PO-Revision-Date: 2008-10-09 11:57+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr "Enlightenment"
 
 #: src/bin/e_about.c:81
 msgid "Copyright &copy; 1999-2008, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existant yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
-msgstr "Copyright &copy; 1999-2008, par l'Équipe de Développement de Enlightenment.<br><br>Nous espérons que vous prendrez autant de plaisir à utiliser ce logiciel que nous en avons pris lors de son développement.<br><br>Ce logiciel est fourni TEL QUEL sans aucune garantie explicite ou implicite. Ce logiciel est régi par des conditions de licence, veuillez consulter les fichiers de licence COPYING et COPYING-PLAIN installés sur votre système.<br><br>Enlightenment est en cours de <hilight>DÉVELOPPEMENT INTENSIF</hilight> et n'est donc pas stable. Beaucoup de fonctionnalités sont encore incomplètes ou non encore implémentées et peuvent contenir de nombreux bogues. Vous avez été <hilight>PRÉVENUS !</hilight>"
+msgstr "Copyright &copy; 1999-2008, par l'Équipe de Développement de Enlightenment.<br><br>Nous espérons que vous prendrez autant de plaisir à utiliser ce logiciel que nous en avons pris lors de son développement.<br><br>Ce logiciel est fourni TEL QUEL sans aucune garantie explicite ou implicite. Ce logiciel est régi par des conditions de licence, veuillez consulter les fichiers de licence COPYING et COPYING-PLAIN installés sur votre système.<br><br>Enlightenment est en cours de <hilight>DÉVELOPPEMENT INTENSIF</hilight> et n'est donc pas stable. Beaucoup de fonctionnalités sont encore incomplètes ou non encore implémentées et peuvent contenir de nombreux bogues. Vous avez été  <hilight>PRÉVENUS !</hilight>"
 
 #: src/bin/e_about.c:106
 msgid "<title>The Team</title>"
@@ -4240,38 +4240,42 @@ msgstr "Langue"
 msgid "Input Method Settings"
 msgstr "Paramètres de la méthode de saisie"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:35
+#: src/modules/conf_interaction/e_int_config_interaction.c:37
 msgid "Interaction Settings"
 msgstr "Paramètres d'interaction"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:84
+#: src/modules/conf_interaction/e_int_config_interaction.c:94
+msgid "Thumbscroll"
+msgstr "Défilement au doigt"
+
+#: src/modules/conf_interaction/e_int_config_interaction.c:96
 msgid "Enable Thumbscroll"
-msgstr "Activer le défilement avec le pouce"
+msgstr "Activer le défilement au doigt"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:88
-msgid "Threshhold for a thumb drag"
-msgstr "Seuil du glissé du pouce"
+#: src/modules/conf_interaction/e_int_config_interaction.c:100
+msgid "Threshold for a thumb drag"
+msgstr "Seuil du glissé du doigt"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:91
+#: src/modules/conf_interaction/e_int_config_interaction.c:103
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:228
 #, c-format
 msgid "%1.0f pixels"
 msgstr "%1.0f pixels"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:95
-msgid "Threshhold for for applying drag momentum"
+#: src/modules/conf_interaction/e_int_config_interaction.c:107
+msgid "Threshold for for applying drag momentum"
 msgstr "Seuil d'application de l'impulsion"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:98
+#: src/modules/conf_interaction/e_int_config_interaction.c:110
 #, c-format
 msgid "%1.0f pixels/sec"
 msgstr "%1.0f pixels/s"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:102
+#: src/modules/conf_interaction/e_int_config_interaction.c:114
 msgid "Friction slowdown"
 msgstr "Inertie"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:105
+#: src/modules/conf_interaction/e_int_config_interaction.c:117
 #, c-format
 msgid "%1.2f sec"
 msgstr "%1.2f s"
@@ -4488,7 +4492,7 @@ msgstr "%2.2f secondes"
 #: src/modules/conf_mime/e_int_config_mime.c:64
 #: src/modules/conf_mime/e_mod_main.c:35
 msgid "File Icons"
-msgstr "Icones de fichier"
+msgstr "Icones des fichiers"
 
 #: src/modules/conf_mime/e_int_config_mime.c:196
 msgid "File Types"
@@ -4496,7 +4500,7 @@ msgstr "Types Mime"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:69
 msgid "File Icon"
-msgstr "Icone de fichier"
+msgstr "Icone du fichier"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:137
 msgid "Mime:"
@@ -4870,7 +4874,7 @@ msgstr "Activer l'écran de veille de X"
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:115
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:147
 msgid "Screensaver Timer(s)"
-msgstr "Minuteur(s) écran de veille"
+msgstr "Minuteur(s) de l'écran de veille"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:117
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:149
@@ -5577,15 +5581,15 @@ msgstr "Afficher les fenêtres minimisées"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:134
 msgid "Show iconified windows from other desks"
-msgstr "Afficher les icones des fenêtres des autres bureaux"
+msgstr "Afficher les fenêtres minimisées des autres bureaux"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:136
 msgid "Show iconified windows from other screens"
-msgstr "Afficher les icones des fenêtres des autres écrans"
+msgstr "Afficher les fenêtres minimisées des autres écrans"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:138
 msgid "Show windows from other desks"
-msgstr "Afficher les fenêtres d'autres bureaux"
+msgstr "Afficher les fenêtres des autres bureaux"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:140
 msgid "Show windows from other screens"
@@ -5832,7 +5836,7 @@ msgstr "Paramètres de EFM"
 
 #: src/modules/fileman/e_mod_config.c:176
 msgid "Grid Icons"
-msgstr "Grille d'icones"
+msgstr "Icones alignés"
 
 #: src/modules/fileman/e_mod_config.c:178
 msgid "Custom Icons"
@@ -5840,11 +5844,11 @@ msgstr "Icones personnalisés"
 
 #: src/modules/fileman/e_mod_config.c:180
 msgid "Custom Grid Icons"
-msgstr "Grille d'icones personnalisée"
+msgstr "Alignement d'icones personnalisé"
 
 #: src/modules/fileman/e_mod_config.c:183
 msgid "Custom Smart Grid Icons"
-msgstr "Grille d'icones intelligente personnalisée"
+msgstr "Alignement intelligent personnalisé"
 
 #: src/modules/fileman/e_mod_config.c:190
 msgid "Icon Size"
@@ -5852,11 +5856,11 @@ msgstr "Taille de l'icone"
 
 #: src/modules/fileman/e_mod_config.c:196
 msgid "Open Dirs In Place"
-msgstr "Ouvrir les dossiers sur place"
+msgstr "Ne pas ouvrir dans une nouvelle fenêtre"
 
 #: src/modules/fileman/e_mod_config.c:199
 msgid "Sort Dirs First"
-msgstr "Classer les dossiers en premier"
+msgstr "Afficher les répertoires en premier"
 
 #: src/modules/fileman/e_mod_config.c:202
 msgid "Use Single Click"

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-10-05 10:35+0200\n"
-"PO-Revision-Date: 2008-10-05 10:54+0200\n"
+"POT-Creation-Date: 2008-10-09 13:31+0200\n"
+"PO-Revision-Date: 2008-10-09 13:36+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1432,7 +1432,7 @@ msgid "Delete this Shelf"
 msgstr "Elimina questa mensola"
 
 #: src/bin/e_int_config_modules.c:42 src/bin/e_int_menus.c:214
-#: src/modules/temperature/e_mod_main.c:306 src/modules/pager/e_mod_main.c:803
+#: src/modules/temperature/e_mod_main.c:306 src/modules/pager/e_mod_main.c:804
 #: src/modules/battery/e_mod_main.c:172 src/modules/ibar/e_mod_main.c:315
 #: src/modules/ibar/e_mod_main.c:828 src/modules/mixer/e_mod_main.c:667
 #: src/modules/ibox/e_mod_main.c:309 src/modules/ibox/e_mod_main.c:707
@@ -2581,11 +2581,11 @@ msgid "Window List"
 msgstr "Lista finestre"
 
 #: src/bin/e_int_border_menu.c:1043 src/modules/pager/e_mod_main.c:263
-#: src/modules/pager/e_mod_main.c:2794 src/modules/pager/e_mod_main.c:2801
-#: src/modules/pager/e_mod_main.c:2807 src/modules/pager/e_mod_main.c:2808
-#: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2810
-#: src/modules/pager/e_mod_main.c:2841 src/modules/pager/e_mod_main.c:2842
-#: src/modules/pager/e_mod_main.c:2843 src/modules/pager/e_mod_main.c:2844
+#: src/modules/pager/e_mod_main.c:2798 src/modules/pager/e_mod_main.c:2805
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2812
+#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2814
+#: src/modules/pager/e_mod_main.c:2845 src/modules/pager/e_mod_main.c:2846
+#: src/modules/pager/e_mod_main.c:2847 src/modules/pager/e_mod_main.c:2848
 msgid "Pager"
 msgstr "Pager"
 
@@ -3497,38 +3497,42 @@ msgstr "Directory definite dall'utente"
 msgid "Search Directories"
 msgstr "Directory predefinite"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:35
+#: src/modules/conf_interaction/e_int_config_interaction.c:37
 msgid "Interaction Settings"
 msgstr "Impostazioni interazione"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:84
+#: src/modules/conf_interaction/e_int_config_interaction.c:94
+msgid "Thumbscroll"
+msgstr "Trascinamento con dita"
+
+#: src/modules/conf_interaction/e_int_config_interaction.c:96
 msgid "Enable Thumbscroll"
 msgstr "Abilita trascinamento con dita"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:88
-msgid "Threshhold for a thumb drag"
-msgstr "Soglia per trascinamento"
+#: src/modules/conf_interaction/e_int_config_interaction.c:100
+msgid "Threshold for a thumb drag"
+msgstr "Soglia per trascinamento con dita"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:91
+#: src/modules/conf_interaction/e_int_config_interaction.c:103
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:228
 #, c-format
 msgid "%1.0f pixels"
 msgstr "%1.0f pixel"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:95
-msgid "Threshhold for for applying drag momentum"
-msgstr "Soglia per moto residuo"
+#: src/modules/conf_interaction/e_int_config_interaction.c:107
+msgid "Threshold for for applying drag momentum"
+msgstr "Soglia per applicazione moto residuo"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:98
+#: src/modules/conf_interaction/e_int_config_interaction.c:110
 #, c-format
 msgid "%1.0f pixels/sec"
 msgstr "%1.0f pixel/sec"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:102
+#: src/modules/conf_interaction/e_int_config_interaction.c:114
 msgid "Friction slowdown"
 msgstr "Rallentamento frizione"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:105
+#: src/modules/conf_interaction/e_int_config_interaction.c:117
 #, c-format
 msgid "%1.2f sec"
 msgstr "%1.2f sec"
@@ -4173,27 +4177,27 @@ msgstr "Invia solo alla fine"
 msgid "Warp Speed"
 msgstr "Velocità invio puntatore"
 
-#: src/modules/pager/e_mod_main.c:810
+#: src/modules/pager/e_mod_main.c:811
 msgid "Virtual Desktops Configuration"
 msgstr "Configurazione desktop virtuali"
 
-#: src/modules/pager/e_mod_main.c:2801
+#: src/modules/pager/e_mod_main.c:2805
 msgid "Show Pager Popup"
 msgstr "Mostra popup del pager"
 
-#: src/modules/pager/e_mod_main.c:2807 src/modules/pager/e_mod_main.c:2841
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2845
 msgid "Popup Desk Right"
 msgstr "Popup del desktop a destra"
 
-#: src/modules/pager/e_mod_main.c:2808 src/modules/pager/e_mod_main.c:2842
+#: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2846
 msgid "Popup Desk Left"
 msgstr "Popup del desktop a sinistra"
 
-#: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2843
+#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2847
 msgid "Popup Desk Up"
 msgstr "Popup del desktop sopra"
 
-#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2844
+#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2848
 msgid "Popup Desk Down"
 msgstr "Popup del desktop sotto"
 
@@ -5383,13 +5387,13 @@ msgstr "Mostra nome nel menù"
 
 #: src/modules/conf_menus/e_int_config_menus.c:114
 #: src/modules/conf_menus/e_int_config_menus.c:173
-msgid "Show Comment In Menu"
-msgstr "Mostra commento nel menù"
+msgid "Show Generic In Menu"
+msgstr "Mostra descrizione nel menù"
 
 #: src/modules/conf_menus/e_int_config_menus.c:117
 #: src/modules/conf_menus/e_int_config_menus.c:176
-msgid "Show Generic In Menu"
-msgstr "Mostra descrizione nel menù"
+msgid "Show Comment In Menu"
+msgstr "Mostra commento nel menù"
 
 #: src/modules/conf_menus/e_int_config_menus.c:181
 msgid "Autoscroll Settings"
