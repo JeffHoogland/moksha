@@ -154,7 +154,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    for (l = conf->interfaces; l; l = l->next)
      {
 	Conf_Interface *cfif;
-	
+
 	cfif = l->data;
 	if ((cfif->name) && (!strcmp(name, cfif->name)) &&
 	    (cfif->id) && (!strcmp(name, cfif->id)))
@@ -166,7 +166,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    if (!inst->config.cfif)
      {
         Conf_Interface *cfif;
-	
+
 	cfif = E_NEW(Conf_Interface, 1);
 	cfif->name = evas_stringshare_add(name);
 	cfif->id = evas_stringshare_add(id);
@@ -480,7 +480,7 @@ net_dialog_show(Instance *inst, Conf_Network *cfnet)
 	e_widget_min_size_set(o, mw, mh);
 	e_widget_table_object_append(table, o, 1, row, 1, 1, 1, 1, 0, 0);
 	row++;
-	
+
 	o = e_widget_check_add(evas, "Remember password", &(cfnet->remember_password));
 	e_widget_table_object_append(table, o, 0, row, 2, 1, 1, 1, 0, 0);
 	row++;
@@ -671,7 +671,7 @@ if_ilist_update(Instance *inst)
 	char buf[256];
 	const char *vendor, *product, *type;
 	Evas_Object *icon;
-	
+
 	iface = l->data;
 	vendor = iface->prop.vendor;
 	product = iface->prop.product;
@@ -859,7 +859,7 @@ popup_ifnet_icon_adjust(Evas_Object *icon, Interface_Network *ifnet)
 	for (l = conf->networks; l; l = l->next)
 	  {
 	     Conf_Network *cfnet;
-	
+
 	     cfnet = l->data;
 	     if ((cfnet->essid) && (ifnet->essid) &&
 		 (!strcmp(cfnet->essid, ifnet->essid)))
@@ -889,7 +889,7 @@ popup_cb_ifnet_sel(void *data)
    for (l = iface->networks; l; l = l->next)
      {
 	Interface_Network *ifnet;
-	
+
 	ifnet = l->data;
 	E_FREE(inst->config.sec);
 	if (ifnet->security) inst->config.sec = strdup(ifnet->security);
@@ -897,7 +897,7 @@ popup_cb_ifnet_sel(void *data)
 	  {
 	     Conf_Network *cfnet;
 	     char buf[256];
-		
+
 	     printf("SEL %s\n", ifnet->essid);
 	     if (!conf)
 	       conf = E_NEW(Conf, 1);
@@ -998,12 +998,12 @@ popup_ifnet_nets_refresh(Instance *inst)
    for (l = networks; l; l = l->next)
      {
 	Interface_Network *ifnet;
-	
+
 	ifnet = l->data;
 	popup_ifnet_net_add(inst, ifnet);
      }
    if (networks) evas_list_free(networks);
-	
+
    e_widget_ilist_go(ilist);
    e_widget_ilist_thaw(ilist);
 }
@@ -1216,7 +1216,7 @@ cb_if_del(void *data, Interface *iface, Interface_Network *ifnet)
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
-	
+
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
 	  inst_disable(inst);
@@ -1236,7 +1236,7 @@ cb_if_ipv4(void *data, Interface *iface, Interface_Network *ifnet)
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
-	
+
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
 	  inst_connected(inst);
@@ -1255,7 +1255,7 @@ cb_if_net_sel(void *data, Interface *iface, Interface_Network *ifnet)
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
-	
+
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
 	  inst_associating(inst);
@@ -1273,7 +1273,7 @@ cb_if_scan_net_add(void *data, Interface *iface, Interface_Network *ifnet)
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
-	
+
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
 	  popup_ifnet_add(l->data, iface, ifnet);
@@ -1282,7 +1282,7 @@ cb_if_scan_net_add(void *data, Interface *iface, Interface_Network *ifnet)
 	     for (l2 = conf->networks; l2; l2 = l2->next)
 	       {
 		  Conf_Network *cfnet;
-		
+
 		  cfnet = l2->data;
 		  if ((ifnet->essid) && (cfnet->essid) &&
 		      (!strcmp(ifnet->essid, cfnet->essid)))
@@ -1307,7 +1307,7 @@ cb_if_scan_net_del(void *data, Interface *iface, Interface_Network *ifnet)
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
-	
+
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
 	  {
@@ -1327,7 +1327,7 @@ cb_if_scan_net_change(void *data, Interface *iface, Interface_Network *ifnet)
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
-	
+
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
 	  popup_ifnet_change(l->data, iface, ifnet);
@@ -1344,7 +1344,7 @@ cb_if_signal(void *data, Interface *iface, Interface_Network *ifnet)
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
-	
+
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
 	  inst_signal(inst, iface->signal_strength);
@@ -1372,7 +1372,7 @@ cb_if_state(void *data, Interface *iface, Interface_Network *ifnet)
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
-	
+
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
 	  {
@@ -1413,7 +1413,7 @@ cb_if_policy(void *data, Interface *iface, Interface_Network *ifnet)
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
-	
+
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
 	  {
@@ -1451,7 +1451,7 @@ cb_main_if_add(void *data, Interface *iface, Interface_Network *ifnet)
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
-	
+
 	inst = l->data;
 	if (inst_if_matches(inst, iface))
 	  {
@@ -1466,7 +1466,7 @@ cb_main_if_add(void *data, Interface *iface, Interface_Network *ifnet)
 	       inst_on(inst);
 	     else if (!strcmp(iface->prop.policy, "ask"))
 	       inst_on(inst);
-	
+
 	     if (inst->config.cfif->netconf)
 	       {
 		  // FIXME: must be ethernet - bring up netconf

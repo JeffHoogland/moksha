@@ -17,7 +17,7 @@ iface_callback(Evas_List *callbacks, Interface_Event event, Interface *iface, In
    for (l = callbacks; l; l = l->next)
      {
 	Interface_Callback *cb;
-	
+
 	cb = l->data;
 	if (cb->delete_me)
 	  {
@@ -55,7 +55,7 @@ iface_ipv4_decode(DBusMessage *msg)
                   char *key, *v;
 		  int sig;
 		  int type;
-		
+
 		  dbus_message_iter_recurse(&iter, &item);
 		  key = NULL;
 		  dbus_message_iter_get_basic(&item, &key);
@@ -144,7 +144,7 @@ iface_network_selection_decode(DBusMessage *msg)
                   char *key, *v;
 		  int sig;
 		  int type;
-		
+
 		  dbus_message_iter_recurse(&iter, &item);
 		  key = NULL;
 		  dbus_message_iter_get_basic(&item, &key);
@@ -221,7 +221,7 @@ iface_getproperties_unmarhsall(DBusMessage *msg, DBusError *err)
                   char *key, *v;
 		  int sig;
 		  int type;
-		
+
 		  dbus_message_iter_recurse(&iter, &item);
 		  key = NULL;
 		  dbus_message_iter_get_basic(&item, &key);
@@ -319,7 +319,7 @@ iface_net_add(Interface *iface, const char *essid, const char *bssid, int signal
 	if (!strcmp(bssid, net->bssid))
 	  {
 	     int changes = 0;
-	
+
 	     net->last_seen_time = ecore_time_get();
 	     if (((essid) && (net->essid) &&
 		  (!strcmp(essid, net->essid))) ||
@@ -379,7 +379,7 @@ iface_sigh_network_found(void *data, DBusMessage *msg)
 	if (dbus_message_iter_get_arg_type(&array) == DBUS_TYPE_ARRAY)
 	  {
 	     Interface_Network *net;
-	
+
 	     dbus_message_iter_recurse(&array, &iter);
 	     net = calloc(1, sizeof(Interface_Network));
 	     if (net)
@@ -388,7 +388,7 @@ iface_sigh_network_found(void *data, DBusMessage *msg)
 		    {
 		       char *key, *v;
 		       int type;
-		
+
 		       dbus_message_iter_recurse(&iter, &item);
 		       key = NULL;
 		       dbus_message_iter_get_basic(&item, &key);
@@ -580,7 +580,7 @@ iface_system_listinterfaces_unmarhsall(DBusMessage *msg, DBusError *err)
 	     do
 	       {
 		  char *ifpath;
-		
+
 		  ifpath = NULL;
 		  dbus_message_iter_get_basic(&iter, &ifpath);
 		  if (ifpath)
@@ -803,7 +803,7 @@ iface_unref(Interface *iface)
    while (iface->networks)
      {
 	Interface_Network *net;
-	
+
 	net = iface->networks->data;
 	if (net->essid) evas_stringshare_del(net->essid);
 	if (net->bssid) evas_stringshare_del(net->bssid);
@@ -837,7 +837,7 @@ iface_find(const char *ifpath)
    for (l = interfaces; l; l = l->next)
      {
 	Interface *iface;
-	
+
 	iface = l->data;
 	if (!strcmp(iface->ifpath, ifpath)) return iface;
      }
@@ -1010,7 +1010,7 @@ iface_callback_del(Interface *iface, Interface_Event event, void (*func) (void *
    for (l = iface->callbacks; l; l = l->next)
      {
 	Interface_Callback *cb;
-	
+
 	cb = l->data;
 	if ((cb->event == event) && (cb->func == func) && (cb->data == data))
 	  {
@@ -1090,7 +1090,7 @@ iface_system_callback_del(Interface_Event event, void (*func) (void *data, Inter
    for (l = callbacks; l; l = l->next)
      {
 	Interface_Callback *cb;
-	
+
 	cb = l->data;
 	if ((cb->event == event) && (cb->func == func) && (cb->data == data))
 	  {
@@ -1276,7 +1276,7 @@ main(int argc, char **argv)
 
      {
 	int i;
-	
+
 	for (i = 0; i < argc; i++)
 	  {
 	     if (!strcmp(argv[i], "-ct"))
