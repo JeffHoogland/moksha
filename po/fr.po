@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-10-09 09:27+0400\n"
-"PO-Revision-Date: 2008-10-09 11:57+0400\n"
+"PO-Revision-Date: 2008-10-09 18:23+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr "Enlightenment"
 
 #: src/bin/e_about.c:81
 msgid "Copyright &copy; 1999-2008, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existant yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
-msgstr "Copyright &copy; 1999-2008, par l'Équipe de Développement de Enlightenment.<br><br>Nous espérons que vous prendrez autant de plaisir à utiliser ce logiciel que nous en avons pris lors de son développement.<br><br>Ce logiciel est fourni TEL QUEL sans aucune garantie explicite ou implicite. Ce logiciel est régi par des conditions de licence, veuillez consulter les fichiers de licence COPYING et COPYING-PLAIN installés sur votre système.<br><br>Enlightenment est en cours de <hilight>DÉVELOPPEMENT INTENSIF</hilight> et n'est donc pas stable. Beaucoup de fonctionnalités sont encore incomplètes ou non encore implémentées et peuvent contenir de nombreux bogues. Vous avez été  <hilight>PRÉVENUS !</hilight>"
+msgstr "Copyright &copy; 1999-2008, par l'Équipe de Développement de Enlightenment.<br><br>Nous espérons que vous prendrez autant de plaisir à utiliser ce logiciel que nous en avons pris lors de son développement.<br><br>Ce logiciel est fourni TEL QUEL sans aucune garantie explicite ou implicite. Ce logiciel est régi par des conditions de licence, veuillez consulter les fichiers de licence COPYING et COPYING-PLAIN installés sur votre système.<br><br>Enlightenment est en cours de <hilight>DÉVELOPPEMENT INTENSIF</hilight> et n'est donc pas stable. Beaucoup de fonctionnalités sont encore incomplètes ou non encore implémentées et peuvent contenir de nombreux bogues. Vous avez été  <hilight>PRÉVENU !</hilight>"
 
 #: src/bin/e_about.c:106
 msgid "<title>The Team</title>"
@@ -567,7 +567,7 @@ msgstr "Afficher le menu des applications"
 
 #: src/bin/e_actions.c:2579
 msgid "Show Clients Menu"
-msgstr "Afficher le menu détaillé"
+msgstr "Afficher le menu des clients"
 
 #: src/bin/e_actions.c:2581
 msgid "Show Menu..."
@@ -4454,7 +4454,7 @@ msgstr "%2.0f pixels"
 
 #: src/modules/conf_menus/e_int_config_menus.c:187
 msgid "Autoscroll Cursor Margin"
-msgstr "Marge de défilement automatique du curseur"
+msgstr "Marge du curseur de défilement automatique"
 
 #: src/modules/conf_menus/e_int_config_menus.c:194
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:160
@@ -4648,7 +4648,7 @@ msgstr "Seuil"
 
 #: src/modules/conf_paths/e_int_config_paths.c:62
 msgid "Search Path Configuration"
-msgstr "Configuration des dossiers de recherche"
+msgstr "Configuration des chemins de recherche"
 
 #: src/modules/conf_paths/e_int_config_paths.c:73
 msgid "Data"
@@ -4677,7 +4677,7 @@ msgstr "Messages"
 
 #: src/modules/conf_paths/e_int_config_paths.c:171
 msgid "E Paths"
-msgstr "Répertoires de E"
+msgstr "Chemins de E"
 
 #: src/modules/conf_paths/e_int_config_paths.c:202
 msgid "Default Directories"
@@ -4689,7 +4689,7 @@ msgstr "Dossiers définis par l'utilisateur"
 
 #: src/modules/conf_paths/e_mod_main.c:35
 msgid "Search Directories"
-msgstr "Dossiers de recherche"
+msgstr "Recherche de dossiers"
 
 #: src/modules/conf_performance/e_int_config_performance.c:39
 msgid "Performance Settings"
@@ -5860,7 +5860,7 @@ msgstr "Ne pas ouvrir dans une nouvelle fenêtre"
 
 #: src/modules/fileman/e_mod_config.c:199
 msgid "Sort Dirs First"
-msgstr "Afficher les répertoires en premier"
+msgstr "Afficher les dossiers en premier"
 
 #: src/modules/fileman/e_mod_config.c:202
 msgid "Use Single Click"
