@@ -139,7 +139,7 @@ _surebox_text_fill(SureBox *sb)
 	  snprintf(buf, sizeof(buf),
 		   _("Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>"
 		     "If you do not press a button, the old resolution of<br>"
-		     "%dx%d at will be restored in %d seconds."),
+		     "%dx%d will be restored in %d seconds."),
 		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
 		   sb->iterations);
      }
@@ -156,7 +156,7 @@ _surebox_text_fill(SureBox *sb)
 	  snprintf(buf, sizeof(buf),
 		   _("Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>"
 		     "If you do not press a button, the old resolution of<br>"
-		     "%dx%d at will be restored <hilight>IMMEDIATELY</hilight>."),
+		     "%dx%d will be restored <hilight>IMMEDIATELY</hilight>."),
 		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height);
      }
    e_dialog_text_set(sb->dia, buf);
