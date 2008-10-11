@@ -20,23 +20,54 @@ e_modapi_init(E_Module *m)
 {
    char buf[4096];
 
-   /* Set up module's message catalogue */
-   //snprintf(buf, sizeof(buf), "%s/locale", e_module_dir_get(m));
-   //bindtextdomain(PACKAGE, buf);
-   //bind_textdomain_codeset(PACKAGE, "UTF-8");
-
    /* Set up a new configuration panel */
    snprintf(buf, sizeof(buf), "%s/e-module-gadman.edj", m->dir);
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, 
                                      "enlightenment/extensions");
    e_configure_registry_item_add("extensions/gadman", 150, _("Gadgets"), NULL, 
-                                 buf, e_int_config_gadman_module);
+                                 buf, _config_gadman_module);
 
    /* Set this module to be loaded after all other modules, or we don't see
     modules loaded after this */
    e_module_priority_set(m, -100);
 
    gadman_init(m);
+
+   //Configuration values
+   Man->conf_edd = E_CONFIG_DD_NEW("Gadman_Config", Config);
+#undef T
+#undef D
+#define T Config
+#define D Man->conf_edd
+   E_CONFIG_VAL(D, T, bg_type, INT);
+   E_CONFIG_VAL(D, T, color_r, INT);
+   E_CONFIG_VAL(D, T, color_g, INT);
+   E_CONFIG_VAL(D, T, color_b, INT);
+   E_CONFIG_VAL(D, T, color_a, INT);
+   E_CONFIG_VAL(D, T, anim_bg, INT);
+   E_CONFIG_VAL(D, T, anim_gad, INT);
+   E_CONFIG_VAL(D, T, custom_bg, STR);
+   
+   Man->conf = e_config_domain_load("module.gadman", Man->conf_edd);
+   if (!Man->conf)
+     {
+	Man->conf = E_NEW(Config, 1);
+	Man->conf->bg_type = 0;
+	Man->conf->color_r = 255;
+	Man->conf->color_g = 255;
+	Man->conf->color_b = 255;
+	Man->conf->color_a = 255;
+	Man->conf->anim_bg = 1;
+	Man->conf->anim_gad = 1;
+	Man->conf->custom_bg = NULL;
+     }
+   E_CONFIG_LIMIT(Man->conf->bg_type, 0, 5);
+   E_CONFIG_LIMIT(Man->conf->color_r, 0, 255);
+   E_CONFIG_LIMIT(Man->conf->color_g, 0, 255);
+   E_CONFIG_LIMIT(Man->conf->color_b, 0, 255);
+   E_CONFIG_LIMIT(Man->conf->color_a, 0, 255);
+   E_CONFIG_LIMIT(Man->conf->anim_bg, 0, 1);
+   E_CONFIG_LIMIT(Man->conf->anim_gad, 0, 1);
 
    /* Menu augmentation */
    Man->icon_name = evas_stringshare_add(buf);
@@ -63,6 +94,8 @@ e_modapi_init(E_Module *m)
         e_managers_keys_grab();
         e_config_save_queue();
      }
+
+   gadman_update_bg();
 
    return Man;
 }
@@ -96,6 +129,7 @@ e_modapi_shutdown(E_Module *m)
 EAPI int
 e_modapi_save(E_Module *m)
 {
+   e_config_domain_save("module.gadman", Man->conf_edd, Man->conf);
    return 1;
 }
 

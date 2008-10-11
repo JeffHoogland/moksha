@@ -1430,36 +1430,114 @@ group {
 group {
    name: "e/gadman/full_bg";
    parts {
-      part{
-	 name:          "bg";
-	 type:          RECT;
-	 mouse_events:  1;
+      part {
+	 name:         "bg";
+	 type:         RECT;
+	 mouse_events: 0;
 	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 200;
+	    state:     "default" 0.0;
+	    color:     255 255 255 0;
 	 }
 	 description {
-	    state:    "hidden" 0.0;
-	    color: 255 255 255 0;
+	    state:     "visible" 0.0;
+	    color:     255 255 255 200;
          }
+      }
+      part {
+	 name:        "custom_bg";
+	 type:        RECT;
+	 description {
+	    state:    "default" 0.0;
+	    color:    255 255 255 0;
+	 }
+	 description {
+	    state:    "visible" 0.0;
+	    color:    255 255 255 200;
+         }
+      }
+      part {
+	 name:        "e.swallow.bg";
+	 type:        SWALLOW;
+	 clip_to:     "custom_bg";
+	 description {
+	    state:    "default" 0.0;
+	 }
+      }
+      part {
+	 name:          "grabber";
+	 type:          RECT;
+	 mouse_events:  1;
+	 repeat_events: 1;
+	 description {
+	    state:      "default" 0.0;
+	    color:      0 0 0 0;
+	 }
       }
    }
    programs {
       program {
-	 name:    "hide";
-	 signal:  "e,state,visibility,hide";
-	 source:  "e";
-	 action:  STATE_SET "hidden" 0.0;
-	 transition:  LINEAR 0.4;
-	 target:  "bg";
+	 name:       "show";
+	 signal:     "e,state,visibility,show";
+	 source:     "e";
+	 action:     STATE_SET "visible" 0.0;
+	 transition: LINEAR 0.4;
+	 target:     "bg";
       }
       program {
-	 name:    "show";
-	 signal:  "e,state,visibility,show";
-	 source:  "e";
-	 action:  STATE_SET "default" 0.0;
-	 transition:  LINEAR 0.4;
-	 target:  "bg";
+	 name:       "show_now";
+	 signal:     "e,state,visibility,show,now";
+	 source:     "e";
+	 action:     STATE_SET "visible" 0.0;
+	 transition: LINEAR 0.0;
+	 target:     "bg";
+      }
+      program {
+	 name:       "hide";
+	 signal:     "e,state,visibility,hide";
+	 source:     "e";
+	 action:     STATE_SET "default" 0.0;
+	 transition: LINEAR 0.4;
+	 target:     "bg";
+      }
+      program {
+	 name:       "hide_now";
+	 signal:     "e,state,visibility,hide,now";
+	 source:     "e";
+	 action:     STATE_SET "default" 0.0;
+	 transition: LINEAR 0.0;
+	 target:     "bg";
+      }
+      program {
+	 name:       "show_custom";
+	 signal:     "e,state,visibility,show,custom";
+	 source:     "e";
+	 action:     STATE_SET "visible" 0.0;
+	 transition: LINEAR 0.4;
+	 target:     "custom_bg";
+      }
+      program {
+	 name:       "show_custom_now";
+	 signal:     "e,state,visibility,show,custom,now";
+	 source:     "e";
+	 action:     STATE_SET "visible" 0.0;
+	 transition: LINEAR 0.0;
+	 target:     "custom_bg";
+      }
+      program {
+	 name:       "hide_custom";
+	 signal:     "e,state,visibility,hide,custom";
+	 source:     "e";
+	 action:     STATE_SET "default" 0.0;
+	 transition: LINEAR 0.4;
+	 target:     "custom_bg";
+      }
+      program {
+	 name:       "hide_custom_now";
+	 signal:     "e,state,visibility,hide,custom,now";
+	 source:     "e";
+	 action:     STATE_SET "default" 0.0;
+	 transition: LINEAR 0.0;
+	 target:     "custom_bg";
       }
    }
 }
@@ -1619,11 +1697,33 @@ group {
 	 target:  "e.swallow.content";
       }
       program {
+	 name:    "hide_now";
+	 signal:  "e,state,visibility,hide,now";
+	 source:  "e";
+	 action:  STATE_SET "hidden" 0.0;
+	 transition:  ACCELERATE 0.0;
+	 target:  "items_clip";
+	 target:  "background";
+	 target:  "overlay";
+	 target:  "e.swallow.content";
+      }
+      program {
 	 name:    "show";
 	 signal:  "e,state,visibility,show";
 	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 transition:  DECELERATE 0.4;
+	 target:  "items_clip";
+	 target:  "background";
+	 target:  "overlay";
+	 target:  "e.swallow.content";
+      }
+      program {
+	 name:    "show_now";
+	 signal:  "e,state,visibility,show,now";
+	 source:  "e";
+	 action:  STATE_SET "default" 0.0;
+	 transition:  DECELERATE 0.0;
 	 target:  "items_clip";
 	 target:  "background";
 	 target:  "overlay";

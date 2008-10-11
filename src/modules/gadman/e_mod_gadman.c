@@ -1,5 +1,4 @@
 #include <e.h>
-//#include <X11/extensions/shape.h>
 #include "config.h"
 #include "e_mod_main.h"
 #include "e_mod_gadman.h"
@@ -11,7 +10,7 @@ static void _save_widget_position(E_Gadcon_Client *gcc);
 static void _apply_widget_position(E_Gadcon_Client *gcc);
 static char *_get_bind_text(const char* action);
 
-static void _hide_finished(void *data, Evas_Object *o, const char *em, const char *src);
+//static void _hide_finished(void *data, Evas_Object *o, const char *em, const char *src);
 
 static Evas_Object* _create_mover(E_Gadcon *gc);
 static Evas_Object* _get_mover(E_Gadcon_Client *gcc);
@@ -163,7 +162,7 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop)
      edje_object_signal_emit(gcc->o_frame, "e,state,visibility,inset", "e");
    else
      edje_object_signal_emit(gcc->o_frame, "e,state,visibility,plain", "e");
-   
+
    gcc->o_box = gcc->o_frame;
 
    /* swallow the client inside the frame */
@@ -277,16 +276,37 @@ gadman_gadgets_show(void)
 
    Man->visible = 1;
    ecore_evas_show(Man->top_ee);
-
-   edje_object_signal_emit(Man->full_bg, "e,state,visibility,show", "e");
+   if (Man->conf->bg_type == BG_STD)
+     {
+	if (Man->conf->anim_bg)
+	 edje_object_signal_emit(Man->full_bg,
+	                        "e,state,visibility,show", "e");
+	else
+	 edje_object_signal_emit(Man->full_bg,
+	                         "e,state,visibility,show,now", "e");
+     }
+   else
+     {
+	if (Man->conf->anim_bg)
+	  edje_object_signal_emit(Man->full_bg,
+	                         "e,state,visibility,show,custom", "e");
+	else
+	 edje_object_signal_emit(Man->full_bg,
+	                        "e,state,visibility,show,custom,now", "e");
+     }
 
    for (l = Man->gadgets; l; l = l->next)
      {
-        E_Gadcon_Client *gcc;
+	E_Gadcon_Client *gcc;
 
-        if (!(gcc = l->data)) continue;
-        if (gcc->gadcon == Man->gc_top)
-          edje_object_signal_emit(gcc->o_frame, "e,state,visibility,show", "e");
+	if (!(gcc = l->data)) continue;
+	if (gcc->gadcon != Man->gc_top) continue;
+	if (Man->conf->anim_gad)
+	  edje_object_signal_emit(gcc->o_frame,
+	                          "e,state,visibility,show", "e");
+	else
+	  edje_object_signal_emit(gcc->o_frame,
+	                          "e,state,visibility,show,now", "e");
      }
 }
 
@@ -297,15 +317,33 @@ gadman_gadgets_hide(void)
 
    Man->visible = 0;
 
-   edje_object_signal_emit(Man->full_bg, "e,state,visibility,hide", "e");
+   if (Man->conf->anim_bg)
+     {
+	edje_object_signal_emit(Man->full_bg,
+	                       "e,state,visibility,hide", "e");
+	edje_object_signal_emit(Man->full_bg,
+	                       "e,state,visibility,hide,custom", "e");
+     }
+   else
+     {
+	edje_object_signal_emit(Man->full_bg,
+	                       "e,state,visibility,hide,now", "e");
+	edje_object_signal_emit(Man->full_bg,
+	                       "e,state,visibility,hide,custom,now", "e");
+     }
 
    for (l = Man->gadgets; l; l = l->next)
      {
         E_Gadcon_Client *gcc;
 
-        if (!(gcc = l->data)) continue;
-        if (gcc->gadcon == Man->gc_top)
-          edje_object_signal_emit(gcc->o_frame, "e,state,visibility,hide", "e");
+	if (!(gcc = l->data)) continue;
+	if (gcc->gadcon != Man->gc_top) continue;
+	if (Man->conf->anim_gad)
+	  edje_object_signal_emit(gcc->o_frame,
+	                          "e,state,visibility,hide", "e");
+	else
+	  edje_object_signal_emit(gcc->o_frame,
+	                          "e,state,visibility,hide,now", "e");
      }
 }
 
@@ -316,6 +354,54 @@ gadman_gadgets_toggle(void)
      gadman_gadgets_hide();
    else
      gadman_gadgets_show();
+}
+
+void
+gadman_update_bg(void)
+{
+   Evas_Object *obj;
+   const char *ext;
+
+   obj = edje_object_part_swallow_get(Man->full_bg, "e.swallow.bg");
+   if (obj)
+     {
+	edje_object_part_unswallow(Man->full_bg, obj);
+	evas_object_del(obj);
+     }
+
+   switch (Man->conf->bg_type)
+     {
+	case BG_STD:
+	case BG_TRANS:
+	  break;
+	case BG_COLOR:
+	  obj = evas_object_rectangle_add(Man->gc_top->evas);
+	  evas_object_color_set(obj, Man->conf->color_r, Man->conf->color_g,
+	                        Man->conf->color_b, 200);
+	  edje_object_part_swallow(Man->full_bg, "e.swallow.bg", obj);
+	  break;
+	case BG_CUSTOM:
+	  ext = strrchr(Man->conf->custom_bg, '.');
+	  if (!strcmp(ext, ".edj") || !strcmp(ext, ".EDJ"))
+	    {
+		//THIS IS FOR E17 backgrounds
+		obj = edje_object_add(Man->gc_top->evas);
+		edje_object_file_set(obj, Man->conf->custom_bg,
+		                     "e/desktop/background");
+	    }
+	  else
+	    {
+		//THIS IS FOR A NORMAL IMAGE
+		obj = evas_object_image_add(Man->gc_top->evas);
+		evas_object_image_file_set(obj, Man->conf->custom_bg, NULL);
+		evas_object_image_fill_set(obj, 0, 0, Man->container->w,
+		                           Man->container->h);
+	    }
+	  edje_object_part_swallow(Man->full_bg, "e.swallow.bg", obj);
+	  break;
+	default:
+	  break;
+     }
 }
 
 /* Internals */
@@ -336,18 +422,16 @@ _gadman_gadcon_new(const char* name, int ontop)
    /* Create ecore fullscreen window */
    if (ontop)
      {
-        Man->top_ee = 
-          e_canvas_new(e_config->evas_engine_popups, Man->container->win, 
-                       0, 0, 0, 0, 1, 1, &(Man->top_win), NULL);
+        Man->top_ee = e_canvas_new(e_config->evas_engine_popups,
+                                   Man->container->win, 0, 0, 0, 0, 1, 1,
+                                   &(Man->top_win), NULL);
 
         if (Man->use_composite)
           {
              ecore_evas_alpha_set(Man->top_ee, 1);
              Man->top_win = ecore_evas_software_x11_window_get(Man->top_ee);
-             // Leave 1px to switch desktop when mouse is on border
-             ecore_x_window_shape_rectangle_set(Man->top_win, 1, 1, 
-                                                (Man->width - 2), 
-                                                (Man->height - 2));
+             ecore_x_window_shape_rectangle_set(Man->top_win, 0, 0,
+                                                Man->width, Man->height);
           }
         else
           ecore_evas_shaped_set(Man->top_ee, 1);
@@ -363,12 +447,10 @@ _gadman_gadcon_new(const char* name, int ontop)
 
         /* create full background object */
         Man->full_bg = edje_object_add(gc->evas);
-        e_theme_edje_object_set(Man->full_bg, "base/theme/gadman", 
+        e_theme_edje_object_set(Man->full_bg, "base/theme/gadman",
                                 "e/gadman/full_bg");
-        edje_object_signal_callback_add(Man->full_bg, "mouse,down,*", "bg",
-                                        on_bg_click, NULL);
-        edje_object_signal_callback_add(Man->full_bg, "program,stop", "hide",
-                                        _hide_finished, NULL);
+        edje_object_signal_callback_add(Man->full_bg, "mouse,down,*",
+                                        "grabber", on_bg_click, NULL);
         evas_object_move(Man->full_bg, 0, 0);
         evas_object_resize(Man->full_bg, Man->width, Man->height);
         evas_object_show(Man->full_bg);
@@ -646,11 +728,12 @@ _get_bind_text(const char* action)
    return "(You must define a binding)";
 }
 
-static void
-_hide_finished(void *data, Evas_Object *o, const char *em, const char *src)
-{
-   ecore_evas_hide(Man->top_ee);
-}
+//~ static void
+//~ _hide_finished(void *data, Evas_Object *o, const char *em, const char *src)
+//~ {
+   //~ printf("MACOOMEEEE\n");
+   //~ ecore_evas_hide(Man->top_ee);
+//~ }
 
 /* Callbacks */
 static void
@@ -709,7 +792,6 @@ on_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Gadcon_Client *gcc;
 
    gcc = current;
-//   printf("Inset (%s)\n", gcc->name);
 
    if (gcc->style) evas_stringshare_del(gcc->style);
    gcc->style = evas_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
@@ -798,8 +880,6 @@ on_frame_click(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	int cx, cy, cw, ch;
 
 	mn = e_menu_new();
-	//e_menu_post_deactivate_callback_set(mn, _e_gadcon_client_cb_menu_post,
-	//				    gcc);
 	gcc->menu = mn;
 	e_gadcon_client_util_menu_items_append(gcc, mn, 0);
 	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
@@ -815,7 +895,7 @@ on_top(void *data, Evas_Object *o, const char *em, const char *src)
 {
    static int ox, oy, ow, oh; //Object coord
    int mx, my;                //Mouse coord
-   int action = (int)data;
+   int action = (int)(long)data;
    Evas_Object *mover;
 
    mover = _get_mover(current);
@@ -859,7 +939,7 @@ on_right(void *data, Evas_Object *o, const char *em, const char *src)
 
    mover = _get_mover(current);
 
-   action = (int)data;
+   action = (int)(long)data;
    if (action == DRAG_START)
      {
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
@@ -894,7 +974,7 @@ on_down(void *data, Evas_Object *o, const char *em, const char *src)
    int mx, my;                //Mouse coord
    int action;
 
-   action = (int)data;
+   action = (int)(long)data;
    mover = _get_mover(current);
 
    if (action == DRAG_START)
@@ -930,7 +1010,7 @@ on_left(void *data, Evas_Object *o, const char *em, const char *src)
    int mx, my;                //Mouse coord
    int action;
 
-   action = (int)data;
+   action = (int)(long)data;
    mover = _get_mover(current);
 
    if (action == DRAG_START)
@@ -972,7 +1052,7 @@ on_move(void *data, Evas_Object *o, const char *em, const char *src)
    int mx, my;         //Mouse coord
    int action;
 
-   action = (int)data;
+   action = (int)(long)data;
    mover = _get_mover(current);
 
    /* DRAG_START */
