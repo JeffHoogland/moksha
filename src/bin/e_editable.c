@@ -833,6 +833,7 @@ e_editable_char_size_get(Evas_Object *editable, int *w, int *h)
         style = evas_object_text_style_get(text_obj);
         
         obj = evas_object_text_add(evas);
+        evas_object_scale_set(obj, edje_scale_get());
         evas_object_text_font_source_set(obj, font_source);
         evas_object_text_font_set(obj, font, font_size);
         evas_object_text_style_set(obj, style);
