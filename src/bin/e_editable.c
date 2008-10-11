@@ -741,7 +741,7 @@ EAPI int
 e_editable_pos_get_from_coords(Evas_Object *editable, Evas_Coord x, Evas_Coord y)
 {
    E_Editable_Smart_Data *sd;
-   Evas_Object *text_obj;
+   const Evas_Object *text_obj;
    Evas_Coord ox, oy;
    Evas_Coord tx, ty, tw, th;
    Evas_Coord cx, cw;
@@ -807,7 +807,8 @@ e_editable_char_size_get(Evas_Object *editable, int *w, int *h)
 {
    int tw = 0, th = 0;
    Evas *evas;
-   Evas_Object *text_obj;
+   const Evas_Object *text_obj;
+   Evas_Object *obj;
    E_Editable_Smart_Data *sd;
    char *text = "Tout est bon dans l'abricot sauf le noyau!"
                 "Wakey wakey! Eggs and Bakey!";
@@ -831,13 +832,13 @@ e_editable_char_size_get(Evas_Object *editable, int *w, int *h)
         evas_object_text_font_get(text_obj, &font, &font_size);
         style = evas_object_text_style_get(text_obj);
         
-        text_obj = evas_object_text_add(evas);
-        evas_object_text_font_source_set(text_obj, font_source);
-        evas_object_text_font_set(text_obj, font, font_size);
-        evas_object_text_style_set(text_obj, style);
-        evas_object_text_text_set(text_obj, text);
-        evas_object_geometry_get(text_obj, NULL, NULL, &tw, &th);
-        evas_object_del(text_obj);
+        obj = evas_object_text_add(evas);
+        evas_object_text_font_source_set(obj, font_source);
+        evas_object_text_font_set(obj, font, font_size);
+        evas_object_text_style_set(obj, style);
+        evas_object_text_text_set(obj, text);
+        evas_object_geometry_get(obj, NULL, NULL, &tw, &th);
+        evas_object_del(obj);
         
         sd->average_char_w = tw / strlen(text);
         sd->average_char_h = th;
@@ -997,7 +998,7 @@ static void
 _e_editable_cursor_update(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
-   Evas_Object *text_obj;
+   const Evas_Object *text_obj;
    Evas_Coord tx, ty;
    Evas_Coord cx, cy, ch;
    
@@ -1028,7 +1029,7 @@ static void
 _e_editable_selection_update(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
-   Evas_Object *text_obj;
+   const Evas_Object *text_obj;
    Evas_Coord tx, ty;
    Evas_Coord cx, cy;
    Evas_Coord sx, sy, sw, sh;
@@ -1146,7 +1147,7 @@ static int
 _e_editable_char_geometry_get_from_pos(Evas_Object *editable, int utf_pos, Evas_Coord *cx, Evas_Coord *cy, Evas_Coord *cw, Evas_Coord *ch)
 {
    E_Editable_Smart_Data *sd;
-   Evas_Object *text_obj;
+   const Evas_Object *text_obj;
    const char *text;
    Evas_Coord x, w;
    int index, i;
