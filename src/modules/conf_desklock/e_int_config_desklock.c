@@ -197,7 +197,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(rt, ow, 1, 0, 1, 1, 1, 1, 0, 0);
    e_widget_table_object_append(ft, rt, 0, 0, 1, 1, 0, 0, 0, 0);
    cfdata->o_btn = e_widget_button_add(evas, _("Go up a Directory"), 
-				       "widgets/up_dir", _cb_button_up, 
+				       "widget/up_dir", _cb_button_up, 
 				       cfdata, NULL);
    e_widget_table_object_append(ft, cfdata->o_btn, 0, 1, 1, 1, 0, 0, 0, 0);
 

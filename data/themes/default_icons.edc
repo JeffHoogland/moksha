@@ -2429,6 +2429,26 @@ group {
 }
 
 group {
+   name: "e/icons/widget/resize";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_configuration.png";
+	    }
+	 }
+      }
+   }
+}
+
+group {
    name: "e/icons/widget/new_dialog";
    parts {
       part {

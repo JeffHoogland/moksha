@@ -304,7 +304,7 @@ _temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *eve
 	
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Configuration"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
+	e_util_menu_item_edje_icon_set(mi, "widget/config");
 	e_menu_item_callback_set(mi, _temperature_face_cb_menu_configure, inst);
 	
 	e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);

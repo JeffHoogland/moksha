@@ -1646,7 +1646,7 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
      e_menu_item_label_set(mi, _("Stop Moving/Resizing Items"));
    else
      e_menu_item_label_set(mi, _("Begin Moving/Resizing Items"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
+   e_util_menu_item_edje_icon_set(mi, "widget/resize");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_edit, es);
 
    mi = e_menu_item_new(m);
@@ -1654,7 +1654,7 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Shelf Configuration"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
+   e_util_menu_item_edje_icon_set(mi, "widget/config");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
    
    mi = e_menu_item_new(m);
@@ -1664,7 +1664,7 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Delete this Shelf"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/delete");
+   e_util_menu_item_edje_icon_set(mi, "widget/del");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);   
 }
 

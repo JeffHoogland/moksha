@@ -759,6 +759,7 @@ _e_int_menus_virtuals_pre_cb(void *data, E_Menu *m)
 
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Configure Virtual Desktops"));
+	e_util_menu_item_edje_icon_set(mi, "widget/config");
 	e_menu_item_callback_set(mi, _e_int_menus_desk_item_cb, NULL);
      }
 }
@@ -1579,12 +1580,14 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Add A Shelf"));
+   e_util_menu_item_edje_icon_set(mi, "widget/add");
    e_menu_item_callback_set(mi, _e_int_menus_shelves_add_cb, NULL);
 
    if (shelves)
      { 
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Delete A Shelf"));
+        e_util_menu_item_edje_icon_set(mi, "widget/del");
 	e_menu_item_callback_set(mi, _e_int_menus_shelves_del_cb, NULL);
      }	
 }

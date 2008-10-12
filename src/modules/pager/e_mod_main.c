@@ -802,14 +802,14 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Configuration"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
+	e_util_menu_item_edje_icon_set(mi, "widget/config");
 	e_menu_item_callback_set(mi, _pager_inst_cb_menu_configure, NULL);
 
 	if (e_configure_registry_exists("screen/virtual_desktops"))
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Virtual Desktops Configuration"));
-	     e_util_menu_item_edje_icon_set(mi, "enlightenment/vdesktops");
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
 	     e_menu_item_callback_set(mi, _pager_inst_cb_menu_virtual_desktops_dialog, inst);
 	  }
 
