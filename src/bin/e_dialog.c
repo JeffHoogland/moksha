@@ -66,6 +66,8 @@ e_dialog_new(E_Container *con, const char *name, const char *class)
    evas_object_key_grab(o, "Return", mask, ~mask, 0);
    mask = 0;
    evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   mask = 0;
+   evas_object_key_grab(o, "space", mask, ~mask, 0);
  
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_dialog_cb_key_down, dia);
 
