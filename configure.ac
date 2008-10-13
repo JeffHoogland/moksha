@@ -180,6 +180,8 @@ if test "[${e_cv_enable_files}]" = yes; then
 fi
 AC_MSG_RESULT([$e_cv_enable_files])
 
+PKG_CHECK_MODULES([EINA], [eina-0])
+
 PKG_CHECK_MODULES(E, [
   evas
   ecore
