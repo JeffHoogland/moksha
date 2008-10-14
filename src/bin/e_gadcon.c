@@ -48,7 +48,7 @@ static void _e_gadcon_cb_dnd_move(void *data, const char *type, void *event);
 static void _e_gadcon_cb_dnd_leave(void *data, const char *type, void *event);
 static void _e_gadcon_cb_drop(void *data, const char *type, void *event);
 
-static int _e_gadcon_client_class_feature_check(E_Gadcon_Client_Class *cc, const char *name, void *feature);
+static int _e_gadcon_client_class_feature_check(const E_Gadcon_Client_Class *cc, const char *name, void *feature);
 static void _e_gadcon_client_cb_menu_post(void *data, E_Menu *m);
 static void _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_gadcon_client_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -467,6 +467,10 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 	    (cf_gcc->id) && (cf_gcc->style))
 	  {
 	     E_Gadcon_Client *gcc;
+
+	     if ((!cf_gcc->id) &&
+		 (_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)))
+	       cf_gcc->id = evas_stringshare_add(cc->func.id_new());
 
 	     gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
 				 cf_gcc->style);
@@ -1372,6 +1376,8 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
      }
    e_gadcon_client_edit_end(gcc);
    gcc->client_class->func.shutdown(gcc);
+   if (gcc->client_class->func.id_del)
+     gcc->client_class->func.id_del(gcc->cf->id);
    gcc->gadcon->clients = evas_list_remove(gcc->gadcon->clients, gcc);
    if (gcc->o_box) evas_object_del(gcc->o_box);
    if (gcc->o_frame) evas_object_del(gcc->o_frame);
@@ -2236,7 +2242,7 @@ _e_gadcon_cb_drop(void *data, const char *type, void *event)
 }
 
 static int
-_e_gadcon_client_class_feature_check(E_Gadcon_Client_Class *cc, const char *name, void *feature)
+_e_gadcon_client_class_feature_check(const E_Gadcon_Client_Class *cc, const char *name, void *feature)
 {
    if (!feature)
      {
