@@ -383,7 +383,7 @@ _bd_go(void *data, void *data2)
       Evas_Coord mw, mh; \
       ob = e_widget_label_add(evas, label); \
       if (!cfdata->val) e_widget_disabled_set(ob, 1); \
-      e_widget_frametable_object_append(of, ob, x, y, 1, 1,    1, 1, 1, 1); \
+      e_widget_frametable_object_append(of, ob, x, y, 1, 1,    1, 1, 0, 1); \
       ob = e_widget_entry_add(evas, &(cfdata->val), NULL, NULL, NULL); \
       if (!cfdata->val) e_widget_disabled_set(ob, 1); \
       e_widget_entry_readonly_set(ob, 1); \
@@ -394,7 +394,7 @@ _bd_go(void *data, void *data2)
 #define CHK_ENTRY(label, x, y, val) \
    { \
       ob = e_widget_label_add(evas, label); \
-      e_widget_frametable_object_append(of, ob, x, y, 1, 1,    1, 1, 1, 1); \
+      e_widget_frametable_object_append(of, ob, x, y, 1, 1,    1, 1, 0, 1); \
       ob = e_widget_check_add(evas, "", &(cfdata->val)); \
       e_widget_disabled_set(ob, 1); \
       e_widget_frametable_object_append(of, ob, x + 1, y, 1, 1,    1, 1, 1, 1); \
