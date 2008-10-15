@@ -1005,7 +1005,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_multi_select_set(ob, 0);
    e_widget_min_size_set(ob, 150, 250);
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 0, 1);
 
    of = e_widget_framelist_add(evas, _("Themes"), 0);
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
@@ -1025,7 +1025,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_button_add(evas, _("Clear All"), NULL, 
 			    _cb_adv_btn_clearall, cfdata, NULL);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
-   e_widget_table_object_append(ot, ol, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, ol, 0, 1, 1, 1, 1, 0, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Preview"), 0);
    mw = 320;
@@ -1037,7 +1037,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
      e_widget_preview_edje_set(ob, cfdata->theme, "e/desktop/background");
    e_widget_aspect_child_set(oa, ob);
    e_widget_framelist_object_append(of, oa);
-   e_widget_table_object_append(ot, of, 2, 0, 1, 1, 1, 1, 0, 1);
+   e_widget_table_object_append(ot, of, 2, 0, 1, 1, 1, 1, 1, 1);
 
    _fill_files_ilist(cfdata);
    _fill_categories_ilist(cfdata);
