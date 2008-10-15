@@ -116,7 +116,7 @@ e_container_new(E_Manager *man)
    con->num = container_num;
    container_num++;
    snprintf(name, sizeof(name), _("Container %d"), con->num);
-   con->name = evas_stringshare_add(name);
+   con->name = eina_stringshare_add(name);
 
    /* init layers */
    for (i = 0; i < 7; i++)
@@ -967,7 +967,7 @@ _e_container_free(E_Container *con)
      {
 	ecore_x_window_del(con->win);
      }
-   if (con->name) evas_stringshare_del(con->name);
+   if (con->name) eina_stringshare_del(con->name);
    free(con);
 }
 

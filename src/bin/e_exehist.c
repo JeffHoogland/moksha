@@ -84,8 +84,8 @@ e_exehist_add(const char *launch_method, const char *exe)
 	_e_exehist_unload_queue();
 	return;
      }
-   ei->launch_method = evas_stringshare_add(launch_method);
-   ei->exe = evas_stringshare_add(exe);
+   ei->launch_method = eina_stringshare_add(launch_method);
+   ei->exe = eina_stringshare_add(exe);
    ei->exetime = ecore_time_get();
    _e_exehist->history = evas_list_append(_e_exehist->history, ei);
    _e_exehist_limit();
@@ -207,8 +207,8 @@ e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
 		  _e_exehist_unload_queue();
 		  return;
 	       }
-             if (ei->exe) evas_stringshare_del(ei->exe);
-	     if (ei->launch_method) evas_stringshare_del(ei->launch_method);
+             if (ei->exe) eina_stringshare_del(ei->exe);
+	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
 	     free(ei);
 	     _e_exehist->mimes = evas_list_remove_list(_e_exehist->mimes, l);
 	     _e_exehist_changes++;
@@ -221,8 +221,8 @@ e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
 	_e_exehist_unload_queue();
 	return;
      }
-   ei->launch_method = evas_stringshare_add(mime);
-   ei->exe = evas_stringshare_add(f);
+   ei->launch_method = eina_stringshare_add(mime);
+   ei->exe = eina_stringshare_add(f);
    ei->exetime = ecore_time_get();
    _e_exehist->mimes = evas_list_append(_e_exehist->mimes, ei);
    _e_exehist_limit();
@@ -287,8 +287,8 @@ _e_exehist_clear(void)
 	     E_Exehist_Item *ei;
 	     
 	     ei = _e_exehist->history->data;
-	     if (ei->exe) evas_stringshare_del(ei->exe);
-	     if (ei->launch_method) evas_stringshare_del(ei->launch_method);
+	     if (ei->exe) eina_stringshare_del(ei->exe);
+	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
 	     free(ei);
 	     _e_exehist->history = evas_list_remove_list(_e_exehist->history, _e_exehist->history);
 	  }
@@ -297,8 +297,8 @@ _e_exehist_clear(void)
 	     E_Exehist_Item *ei;
 	     
 	     ei = _e_exehist->mimes->data;
-	     if (ei->exe) evas_stringshare_del(ei->exe);
-	     if (ei->launch_method) evas_stringshare_del(ei->launch_method);
+	     if (ei->exe) eina_stringshare_del(ei->exe);
+	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
 	     free(ei);
 	     _e_exehist->mimes = evas_list_remove_list(_e_exehist->mimes, _e_exehist->mimes);
 	  }
@@ -327,8 +327,8 @@ _e_exehist_limit(void)
 	     E_Exehist_Item *ei;
 	     
 	     ei = _e_exehist->history->data;
-	     if (ei->exe) evas_stringshare_del(ei->exe);
-	     if (ei->launch_method) evas_stringshare_del(ei->launch_method);
+	     if (ei->exe) eina_stringshare_del(ei->exe);
+	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
 	     free(ei);
 	     _e_exehist->history = evas_list_remove_list(_e_exehist->history, _e_exehist->history);
 	  }
@@ -337,8 +337,8 @@ _e_exehist_limit(void)
 	     E_Exehist_Item *ei;
 	     
 	     ei = _e_exehist->mimes->data;
-	     if (ei->exe) evas_stringshare_del(ei->exe);
-	     if (ei->launch_method) evas_stringshare_del(ei->launch_method);
+	     if (ei->exe) eina_stringshare_del(ei->exe);
+	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
 	     free(ei);
 	     _e_exehist->mimes = evas_list_remove_list(_e_exehist->mimes, _e_exehist->mimes);
 	  }

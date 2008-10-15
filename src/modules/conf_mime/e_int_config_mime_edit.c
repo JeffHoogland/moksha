@@ -206,34 +206,34 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (found) 
      {
 	if (mi->icon)
-	  evas_stringshare_del(mi->icon);
+	  eina_stringshare_del(mi->icon);
      }
    else 
      {
 	if (cfdata->type == DEFAULT) return 1;
 	mi = E_NEW(E_Config_Mime_Icon, 1);
-	mi->mime = evas_stringshare_add(cfdata->mime);
+	mi->mime = eina_stringshare_add(cfdata->mime);
      }
 
    switch (cfdata->type) 
      {
       case THUMB:
-	mi->icon = evas_stringshare_add("THUMB");
+	mi->icon = eina_stringshare_add("THUMB");
 	break;
       case THEME:
 	snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", cfdata->mime);
-	mi->icon = evas_stringshare_add(buf);
+	mi->icon = eina_stringshare_add(buf);
 	break;
       case EDJ:
       case IMG:
-	mi->icon = evas_stringshare_add(cfdata->file);
+	mi->icon = eina_stringshare_add(cfdata->file);
 	break;
       case DEFAULT:
 	if (found)
 	  {
 	     e_config->mime_icons = evas_list_remove(e_config->mime_icons, mi);
-	     if (mi->mime) evas_stringshare_del(mi->mime);
-	     if (mi->icon) evas_stringshare_del(mi->icon);
+	     if (mi->mime) eina_stringshare_del(mi->mime);
+	     if (mi->icon) eina_stringshare_del(mi->icon);
 	     free(mi);
 	  }
 	break;

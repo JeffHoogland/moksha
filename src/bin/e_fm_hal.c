@@ -398,8 +398,8 @@ e_fm2_hal_mount_del(E_Fm2_Mount *m)
 {
    if (!m) return;
 
-   if (m->udi) evas_stringshare_del(m->udi);
-   if (m->mount_point) evas_stringshare_del(m->mount_point);
+   if (m->udi) eina_stringshare_del(m->udi);
+   if (m->mount_point) eina_stringshare_del(m->mount_point);
 
    if (m->timeout) 
      {
@@ -439,7 +439,7 @@ e_fm2_hal_mount(E_Volume *v,
 
    m = calloc(1, sizeof(E_Fm2_Mount));
    if (!m) return NULL;
-   m->udi          = evas_stringshare_add(v->udi);
+   m->udi          = eina_stringshare_add(v->udi);
    m->mount_ok     = mount_ok;
    m->mount_fail   = mount_fail;
    m->unmount_ok   = unmount_ok;
@@ -480,7 +480,7 @@ _e_fm2_hal_mount_ok(E_Fm2_Mount *m)
    if (!m) return;
 
    m->mounted = 1;
-   if (m->volume) m->mount_point = evas_stringshare_add(m->volume->mount_point);
+   if (m->volume) m->mount_point = eina_stringshare_add(m->volume->mount_point);
    if (m->timeout)
      {
 	ecore_timer_del(m->timeout);

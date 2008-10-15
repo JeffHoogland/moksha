@@ -126,8 +126,8 @@ e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod,
    bind->button = button;
    bind->mod = mod;
    bind->any_mod = any_mod;
-   if (action) bind->action = evas_stringshare_add(action);
-   if (params) bind->params = evas_stringshare_add(params);
+   if (action) bind->action = eina_stringshare_add(action);
+   if (params) bind->params = eina_stringshare_add(params);
    mouse_bindings = evas_list_append(mouse_bindings, bind);
 }
 
@@ -315,11 +315,11 @@ e_bindings_key_add(E_Binding_Context ctxt, const char *key, E_Binding_Modifier m
    
    bind = calloc(1, sizeof(E_Binding_Key));
    bind->ctxt = ctxt;
-   bind->key = evas_stringshare_add(key);
+   bind->key = eina_stringshare_add(key);
    bind->mod = mod;
    bind->any_mod = any_mod;
-   if (action) bind->action = evas_stringshare_add(action);
-   if (params) bind->params = evas_stringshare_add(params);
+   if (action) bind->action = eina_stringshare_add(action);
+   if (params) bind->params = eina_stringshare_add(params);
    key_bindings = evas_list_append(key_bindings, bind);
 }
 
@@ -523,12 +523,12 @@ e_bindings_signal_add(E_Binding_Context ctxt, const char *sig, const char *src, 
    
    bind = calloc(1, sizeof(E_Binding_Signal));
    bind->ctxt = ctxt;
-   if (sig) bind->sig = evas_stringshare_add(sig);
-   if (src) bind->src = evas_stringshare_add(src);
+   if (sig) bind->sig = eina_stringshare_add(sig);
+   if (src) bind->src = eina_stringshare_add(src);
    bind->mod = mod;
    bind->any_mod = any_mod;
-   if (action) bind->action = evas_stringshare_add(action);
-   if (params) bind->params = evas_stringshare_add(params);
+   if (action) bind->action = eina_stringshare_add(action);
+   if (params) bind->params = eina_stringshare_add(params);
    signal_bindings = evas_list_append(signal_bindings, bind);
 }
 
@@ -624,8 +624,8 @@ e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int z, E_Binding_Mod
    bind->z = z;
    bind->mod = mod;
    bind->any_mod = any_mod;
-   if (action) bind->action = evas_stringshare_add(action);
-   if (params) bind->params = evas_stringshare_add(params);
+   if (action) bind->action = eina_stringshare_add(action);
+   if (params) bind->params = eina_stringshare_add(params);
    wheel_bindings = evas_list_append(wheel_bindings, bind);
 }
 
@@ -787,35 +787,35 @@ e_bindings_wheel_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Eve
 static void
 _e_bindings_mouse_free(E_Binding_Mouse *bind)
 {
-   if (bind->action) evas_stringshare_del(bind->action);
-   if (bind->params) evas_stringshare_del(bind->params);
+   if (bind->action) eina_stringshare_del(bind->action);
+   if (bind->params) eina_stringshare_del(bind->params);
    free(bind);
 }
 
 static void
 _e_bindings_key_free(E_Binding_Key *bind)
 {
-   if (bind->key) evas_stringshare_del(bind->key);
-   if (bind->action) evas_stringshare_del(bind->action);
-   if (bind->params) evas_stringshare_del(bind->params);
+   if (bind->key) eina_stringshare_del(bind->key);
+   if (bind->action) eina_stringshare_del(bind->action);
+   if (bind->params) eina_stringshare_del(bind->params);
    free(bind);
 }
 
 static void
 _e_bindings_signal_free(E_Binding_Signal *bind)
 {
-   if (bind->sig) evas_stringshare_del(bind->sig);
-   if (bind->src) evas_stringshare_del(bind->src);
-   if (bind->action) evas_stringshare_del(bind->action);
-   if (bind->params) evas_stringshare_del(bind->params);
+   if (bind->sig) eina_stringshare_del(bind->sig);
+   if (bind->src) eina_stringshare_del(bind->src);
+   if (bind->action) eina_stringshare_del(bind->action);
+   if (bind->params) eina_stringshare_del(bind->params);
    free(bind);
 }
 
 static void
 _e_bindings_wheel_free(E_Binding_Wheel *bind)
 {
-   if (bind->action) evas_stringshare_del(bind->action);
-   if (bind->params) evas_stringshare_del(bind->params);
+   if (bind->action) eina_stringshare_del(bind->action);
+   if (bind->params) eina_stringshare_del(bind->params);
    free(bind);
 }
 

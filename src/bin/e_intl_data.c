@@ -65,12 +65,12 @@ e_intl_input_method_config_free(E_Input_Method_Config *imc)
 {
    if (imc != NULL)
      {
-	if (imc->e_im_name) evas_stringshare_del(imc->e_im_name);
-	if (imc->gtk_im_module) evas_stringshare_del(imc->gtk_im_module);
-	if (imc->qt_im_module) evas_stringshare_del(imc->qt_im_module);
-	if (imc->xmodifiers) evas_stringshare_del(imc->xmodifiers);
-	if (imc->e_im_exec) evas_stringshare_del(imc->e_im_exec);
-	if (imc->e_im_setup_exec) evas_stringshare_del(imc->e_im_setup_exec);
+	if (imc->e_im_name) eina_stringshare_del(imc->e_im_name);
+	if (imc->gtk_im_module) eina_stringshare_del(imc->gtk_im_module);
+	if (imc->qt_im_module) eina_stringshare_del(imc->qt_im_module);
+	if (imc->xmodifiers) eina_stringshare_del(imc->xmodifiers);
+	if (imc->e_im_exec) eina_stringshare_del(imc->e_im_exec);
+	if (imc->e_im_setup_exec) eina_stringshare_del(imc->e_im_setup_exec);
 	E_FREE(imc);
      }
 }

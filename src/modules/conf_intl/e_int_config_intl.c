@@ -656,7 +656,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			    /* create new node */
 			    lang_node = E_NEW(E_Intl_Language_Node, 1);
 
-		            lang_node->lang_code = evas_stringshare_add(locale_parts->lang);
+		            lang_node->lang_code = eina_stringshare_add(locale_parts->lang);
 
 		            /* Check if the language list exists */
 		            /* Linear Search */
@@ -702,7 +702,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			    
 				 /* create new node */
 				 region_node = E_NEW(E_Intl_Region_Node, 1);
-				 region_node->region_code = evas_stringshare_add(locale_parts->region);
+				 region_node->region_code = eina_stringshare_add(locale_parts->region);
 		       
 				 /* Get the region translation */
 				 /* Linear Search */
@@ -728,9 +728,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			    
 				 cs_trans = _intl_charset_upper_get(locale_parts->codeset);
 				 if (cs_trans == NULL) 
-				   cs = evas_stringshare_add(locale_parts->codeset);
+				   cs = eina_stringshare_add(locale_parts->codeset);
 				 else 
-				   cs = evas_stringshare_add(cs_trans);
+				   cs = eina_stringshare_add(cs_trans);
 			    
 				 /* Exclusive */
 				 /* Linear Search */
@@ -743,7 +743,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			      {
 				 const char *mod;
 
-				 mod = evas_stringshare_add(locale_parts->modifier);
+				 mod = eina_stringshare_add(locale_parts->modifier);
 				 /* Find only works here because we are using stringshare*/
 			    
 				 /* Exclusive */
@@ -814,7 +814,7 @@ _language_hash_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSE
    E_Intl_Language_Node *node;
 
    node = data;   
-   if (node->lang_code) evas_stringshare_del(node->lang_code);
+   if (node->lang_code) eina_stringshare_del(node->lang_code);
    evas_hash_foreach(node->region_hash, _region_hash_free_cb, NULL);
    evas_hash_free(node->region_hash);
    free(node); 
@@ -828,13 +828,13 @@ _region_hash_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED_
    E_Intl_Region_Node *node;
 
    node = data;   
-   if (node->region_code) evas_stringshare_del(node->region_code);
+   if (node->region_code) eina_stringshare_del(node->region_code);
    while (node->available_codesets) 
      {
 	const char *str;
 
 	str = node->available_codesets->data;
-	if (str) evas_stringshare_del(str);
+	if (str) eina_stringshare_del(str);
 	node->available_codesets = 
           evas_list_remove_list(node->available_codesets, node->available_codesets);
      }
@@ -844,7 +844,7 @@ _region_hash_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED_
 	const char *str;
 
 	str = node->available_modifiers->data;
-	if (str) evas_stringshare_del(str);
+	if (str) eina_stringshare_del(str);
 	node->available_modifiers = 
           evas_list_remove_list(node->available_modifiers, node->available_modifiers);
      }
@@ -858,8 +858,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	 
    if (cfdata->cur_language)
      {
-	if (e_config->language) evas_stringshare_del(e_config->language);
-	e_config->language = evas_stringshare_add(cfdata->cur_language);
+	if (e_config->language) eina_stringshare_del(e_config->language);
+	e_config->language = eina_stringshare_add(cfdata->cur_language);
 	e_intl_language_set(e_config->language);
      }
    
@@ -872,8 +872,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	 
    if (cfdata->cur_language)
      {	
-	if (e_config->language) evas_stringshare_del(e_config->language);
-	e_config->language = evas_stringshare_add(cfdata->cur_language);
+	if (e_config->language) eina_stringshare_del(e_config->language);
+	e_config->language = eina_stringshare_add(cfdata->cur_language);
 	e_intl_language_set(e_config->language);
      }
    
@@ -1038,17 +1038,17 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cs = NULL;
    mod = NULL;
    
-   if (cfdata->cur_lang) lang = evas_stringshare_add(cfdata->cur_lang);
-   if (cfdata->cur_reg) reg = evas_stringshare_add(cfdata->cur_reg);
-   if (cfdata->cur_cs) cs = evas_stringshare_add(cfdata->cur_cs);
-   if (cfdata->cur_mod) mod = evas_stringshare_add(cfdata->cur_mod);
+   if (cfdata->cur_lang) lang = eina_stringshare_add(cfdata->cur_lang);
+   if (cfdata->cur_reg) reg = eina_stringshare_add(cfdata->cur_reg);
+   if (cfdata->cur_cs) cs = eina_stringshare_add(cfdata->cur_cs);
+   if (cfdata->cur_mod) mod = eina_stringshare_add(cfdata->cur_mod);
    
    _cfdata_language_go(lang, reg, cs, mod, cfdata);
    
-   if (lang) evas_stringshare_del(lang); 
-   if (reg) evas_stringshare_del(reg); 
-   if (cs) evas_stringshare_del(cs); 
-   if (mod) evas_stringshare_del(mod); 
+   if (lang) eina_stringshare_del(lang); 
+   if (reg) eina_stringshare_del(reg); 
+   if (cs) eina_stringshare_del(cs); 
+   if (mod) eina_stringshare_del(mod); 
    
    e_widget_on_change_hook_set(cfdata->gui.lang_list, _ilist_language_cb_change, cfdata);
    e_widget_on_change_hook_set(cfdata->gui.reg_list, _ilist_region_cb_change, cfdata); 

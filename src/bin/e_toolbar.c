@@ -58,7 +58,7 @@ e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2)
    tbar->h = 32;
    tbar->w = fwin->w;
    tbar->evas = evas;
-   tbar->name = evas_stringshare_add(name);
+   tbar->name = eina_stringshare_add(name);
    tbar->fwin = fwin;
    tbar->fm2 = fm2;
 
@@ -264,7 +264,7 @@ _e_toolbar_free(E_Toolbar *tbar)
      }
    if (tbar->cfg_dlg) e_object_del(E_OBJECT(tbar->cfg_dlg));
    e_object_del(E_OBJECT(tbar->gadcon));
-   if (tbar->name) evas_stringshare_del(tbar->name);
+   if (tbar->name) eina_stringshare_del(tbar->name);
    evas_object_del(tbar->o_event);
    evas_object_del(tbar->o_base);
    E_FREE(tbar);

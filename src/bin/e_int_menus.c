@@ -1611,7 +1611,7 @@ _e_int_menus_shelves_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    con = e_container_current_get(e_manager_current_get());
    zone = e_zone_current_get(con);
    cs = E_NEW(E_Config_Shelf, 1);
-   cs->name = evas_stringshare_add("shelf");
+   cs->name = eina_stringshare_add("shelf");
    cs->container = con->num;
    cs->zone = zone->num;
    cs->popup = 1;
@@ -1619,7 +1619,7 @@ _e_int_menus_shelves_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    cs->orient = E_GADCON_ORIENT_CORNER_BR;
    cs->fit_along = 1;
    cs->fit_size = 0;
-   cs->style = evas_stringshare_add("default");
+   cs->style = eina_stringshare_add("default");
    cs->size = 40;
    cs->overlap = 0;
    e_config->shelves = evas_list_append(e_config->shelves, cs);

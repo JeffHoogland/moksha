@@ -131,7 +131,7 @@ e_pointers_size_set(int size)
 	       {
 		  p->type = NULL;
 		  _e_pointer_type_set(p, type);
-		  evas_stringshare_del(type);
+		  eina_stringshare_del(type);
 	       }
 	  }
      }
@@ -158,7 +158,7 @@ e_pointer_type_push(E_Pointer *p, void *obj, const char *type)
    stack = E_NEW(E_Pointer_Stack, 1);
    if (stack)
      {
-	stack->type = evas_stringshare_add(p->type);
+	stack->type = eina_stringshare_add(p->type);
 	stack->obj = p->obj;
 	p->stack = evas_list_prepend(p->stack, stack);
      }
@@ -188,7 +188,7 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
      {
 	if (p->evas) _e_pointer_canvas_del(p);
 	ecore_x_window_cursor_set(p->win, 0);
-	if (p->type) evas_stringshare_del(p->type);
+	if (p->type) eina_stringshare_del(p->type);
 	p->type = NULL;
 	return;
      }
@@ -196,8 +196,8 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
    stack = p->stack->data;
    _e_pointer_type_set(p, stack->type);
 
-   if (p->type) evas_stringshare_del(p->type);
-   p->type = evas_stringshare_add(stack->type);
+   if (p->type) eina_stringshare_del(p->type);
+   p->type = eina_stringshare_add(stack->type);
    p->obj = stack->obj;
 
    /* try the default cursor next time */
@@ -342,7 +342,7 @@ _e_pointer_free(E_Pointer *p)
 	p->stack = evas_list_remove_list(p->stack, p->stack);
      }
 
-   if (p->type) evas_stringshare_del(p->type);
+   if (p->type) eina_stringshare_del(p->type);
    
    if (p->idle_timer) ecore_timer_del(p->idle_timer);
    if (p->idle_poller) ecore_poller_del(p->idle_poller);
@@ -356,7 +356,7 @@ _e_pointer_free(E_Pointer *p)
 static void
 _e_pointer_stack_free(E_Pointer_Stack *elem)
 {
-   if (elem->type) evas_stringshare_del(elem->type);
+   if (elem->type) eina_stringshare_del(elem->type);
    free(elem);
 }
 
@@ -366,8 +366,8 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
    /* Check if this pointer is already set */
    if ((p->type) && (!strcmp(p->type, type))) return 1;
 
-   if (p->type) evas_stringshare_del(p->type);
-   p->type = evas_stringshare_add(type);
+   if (p->type) eina_stringshare_del(p->type);
+   p->type = eina_stringshare_add(type);
    
    /* Do not set type if in "hidden mode" */
    if (!e_config->show_cursor)

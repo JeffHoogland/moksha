@@ -216,8 +216,8 @@ _fill_type_hash(void)
 
 	cft = E_NEW(CFType, 1);
 	if (!cft) continue;
-	cft->key = evas_stringshare_add(_types[i].key);
-	cft->name = evas_stringshare_add(_types[i].name);
+	cft->key = eina_stringshare_add(_types[i].key);
+	cft->name = eina_stringshare_add(_types[i].name);
 	types_hash = evas_hash_direct_add(types_hash, cft->key, cft);
      }
 }
@@ -249,7 +249,7 @@ _load_modules(const char *dir)
 	/* does the ModuleType exist in desktop? */
 	if (desk->x) 
 	  type = ecore_hash_get(desk->x, "X-Enlightenment-ModuleType");
-	if (!type) type = evas_stringshare_add("shelf");
+	if (!type) type = eina_stringshare_add("shelf");
 
 	/* do we have this module already in it's type hash ? */
 	cft = evas_hash_find(types_hash, type);
@@ -257,7 +257,7 @@ _load_modules(const char *dir)
 	  {
 	     if (evas_hash_find(cft->modules, mod)) 
 	       {
-		  if ((!desk->x) && (type)) evas_stringshare_del(type);
+		  if ((!desk->x) && (type)) eina_stringshare_del(type);
 		  if (desk) efreet_desktop_free(desk);
 		  continue;
 	       }
@@ -266,13 +266,13 @@ _load_modules(const char *dir)
 	/* module not in it's type hash, add */
 	cfm = E_NEW(CFModule, 1);
 	if (!cfm) continue;
-	cfm->short_name = evas_stringshare_add(mod);
-	if (desk->name) cfm->name = evas_stringshare_add(desk->name);
-	if (desk->icon) cfm->icon = evas_stringshare_add(desk->icon);
-	if (desk->comment) cfm->comment = evas_stringshare_add(desk->comment);
+	cfm->short_name = eina_stringshare_add(mod);
+	if (desk->name) cfm->name = eina_stringshare_add(desk->name);
+	if (desk->icon) cfm->icon = eina_stringshare_add(desk->icon);
+	if (desk->comment) cfm->comment = eina_stringshare_add(desk->comment);
 	if (desk->orig_path) 
-	  cfm->orig_path = evas_stringshare_add(desk->orig_path);
-	if ((!desk->x) && (type)) evas_stringshare_del(type);
+	  cfm->orig_path = eina_stringshare_add(desk->orig_path);
+	if ((!desk->x) && (type)) eina_stringshare_del(type);
 	efreet_desktop_free(desk);
 
 	if (e_module_find(mod)) cfm->enabled = 1;
@@ -350,8 +350,8 @@ _types_hash_cb_free(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__
    CFType *type = NULL;
 
    if (!(type = data)) return 1;
-   if (type->key) evas_stringshare_del(type->key);
-   if (type->name) evas_stringshare_del(type->name);
+   if (type->key) eina_stringshare_del(type->key);
+   if (type->name) eina_stringshare_del(type->name);
    if (type->modules) 
      {
 	evas_hash_foreach(type->modules, _mod_hash_cb_free, NULL);
@@ -369,11 +369,11 @@ _mod_hash_cb_free(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
    CFModule *mod = NULL;
 
    if (!(mod = data)) return 1;
-   if (mod->short_name) evas_stringshare_del(mod->short_name);
-   if (mod->name) evas_stringshare_del(mod->name);
-   if (mod->icon) evas_stringshare_del(mod->icon);
-   if (mod->comment) evas_stringshare_del(mod->comment);
-   if (mod->orig_path) evas_stringshare_del(mod->orig_path);
+   if (mod->short_name) eina_stringshare_del(mod->short_name);
+   if (mod->name) eina_stringshare_del(mod->name);
+   if (mod->icon) eina_stringshare_del(mod->icon);
+   if (mod->comment) eina_stringshare_del(mod->comment);
+   if (mod->orig_path) eina_stringshare_del(mod->orig_path);
    E_FREE(mod);
    return 1;
 }

@@ -66,22 +66,22 @@ iface_ipv4_decode(DBusMessage *msg)
 		  if ((!strcmp(key, "Method")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->method = evas_stringshare_add(v);
+		       if (v) d->method = eina_stringshare_add(v);
 		    }
 		  else if ((!strcmp(key, "Address")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->address = evas_stringshare_add(v);
+		       if (v) d->address = eina_stringshare_add(v);
 		    }
 		  else if ((!strcmp(key, "Gateway")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->gateway = evas_stringshare_add(v);
+		       if (v) d->gateway = eina_stringshare_add(v);
 		    }
 		  else if ((!strcmp(key, "Netmask")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->netmask = evas_stringshare_add(v);
+		       if (v) d->netmask = eina_stringshare_add(v);
 		    }
 		  dbus_message_iter_next(&iter);
 	       }
@@ -107,10 +107,10 @@ iface_getipv4_callback(void *data, void *ret, DBusError *err)
 	iface_unref(iface);
 	return;
      }
-   if (iface->ipv4.method) evas_stringshare_del(iface->ipv4.method);
-   if (iface->ipv4.address) evas_stringshare_del(iface->ipv4.address);
-   if (iface->ipv4.gateway) evas_stringshare_del(iface->ipv4.gateway);
-   if (iface->ipv4.netmask) evas_stringshare_del(iface->ipv4.netmask);
+   if (iface->ipv4.method) eina_stringshare_del(iface->ipv4.method);
+   if (iface->ipv4.address) eina_stringshare_del(iface->ipv4.address);
+   if (iface->ipv4.gateway) eina_stringshare_del(iface->ipv4.gateway);
+   if (iface->ipv4.netmask) eina_stringshare_del(iface->ipv4.netmask);
    memcpy(&(iface->ipv4), d, sizeof(Interface_IPv4));
    iface->callbacks = iface_callback(iface->callbacks,
 				     IFACE_EVENT_IPV4_CHANGE,
@@ -155,12 +155,12 @@ iface_network_selection_decode(DBusMessage *msg)
 		  if ((!strcmp(key, "ESSID")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->id = evas_stringshare_add(v);
+		       if (v) d->id = eina_stringshare_add(v);
 		    }
 		  else if ((!strcmp(key, "PSK")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->pass = evas_stringshare_add(v);
+		       if (v) d->pass = eina_stringshare_add(v);
 		    }
 		  dbus_message_iter_next(&iter);
 	       }
@@ -186,8 +186,8 @@ iface_getnetwork_callback(void *data, void *ret, DBusError *err)
 	iface_unref(iface);
 	return;
      }
-   if (iface->network_selection.id) evas_stringshare_del(iface->network_selection.id);
-   if (iface->network_selection.pass) evas_stringshare_del(iface->network_selection.pass);
+   if (iface->network_selection.id) eina_stringshare_del(iface->network_selection.id);
+   if (iface->network_selection.pass) eina_stringshare_del(iface->network_selection.pass);
    memcpy(&(iface->network_selection), d, sizeof(Interface_Network_Selection));
    iface->callbacks = iface_callback(iface->callbacks,
 				     IFACE_EVENT_NETWORK_SELECTION_CHANGE,
@@ -232,32 +232,32 @@ iface_getproperties_unmarhsall(DBusMessage *msg, DBusError *err)
 		  if ((!strcmp(key, "Type")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->type = evas_stringshare_add(v);
+		       if (v) d->type = eina_stringshare_add(v);
 		    }
 		  else if ((!strcmp(key, "State")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->state = evas_stringshare_add(v);
+		       if (v) d->state = eina_stringshare_add(v);
 		    }
 		  else if ((!strcmp(key, "Policy")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->policy = evas_stringshare_add(v);
+		       if (v) d->policy = eina_stringshare_add(v);
 		    }
 		  else if ((!strcmp(key, "Driver")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->driver = evas_stringshare_add(v);
+		       if (v) d->driver = eina_stringshare_add(v);
 		    }
 		  else if ((!strcmp(key, "Vendor")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->vendor = evas_stringshare_add(v);
+		       if (v) d->vendor = eina_stringshare_add(v);
 		    }
 		  else if ((!strcmp(key, "Product")) && (type == DBUS_TYPE_STRING))
 		    {
 		       dbus_message_iter_get_basic(&val, &v);
-		       if (v) d->product = evas_stringshare_add(v);
+		       if (v) d->product = eina_stringshare_add(v);
 		    }
 		  else if ((!strcmp(key, "Signal")) && (type == DBUS_TYPE_UINT16))
 		    {
@@ -283,12 +283,12 @@ iface_getproperties_callback(void *data, void *ret, DBusError *err)
 	iface_unref(iface);
 	return;
      }
-   if (iface->prop.product) evas_stringshare_del(iface->prop.product);
-   if (iface->prop.vendor) evas_stringshare_del(iface->prop.vendor);
-   if (iface->prop.driver) evas_stringshare_del(iface->prop.driver);
-   if (iface->prop.state) evas_stringshare_del(iface->prop.state);
-   if (iface->prop.policy) evas_stringshare_del(iface->prop.policy);
-   if (iface->prop.type) evas_stringshare_del(iface->prop.type);
+   if (iface->prop.product) eina_stringshare_del(iface->prop.product);
+   if (iface->prop.vendor) eina_stringshare_del(iface->prop.vendor);
+   if (iface->prop.driver) eina_stringshare_del(iface->prop.driver);
+   if (iface->prop.state) eina_stringshare_del(iface->prop.state);
+   if (iface->prop.policy) eina_stringshare_del(iface->prop.policy);
+   if (iface->prop.type) eina_stringshare_del(iface->prop.type);
    memcpy(&(iface->prop), d, sizeof(Interface_Properties));
    if (!iface->newif)
      {
@@ -325,8 +325,8 @@ iface_net_add(Interface *iface, const char *essid, const char *bssid, int signal
 		  (!strcmp(essid, net->essid))) ||
 		 (!!essid != !!net->essid))
 	       {
-		  if (net->essid) evas_stringshare_del(net->essid);
-		  if (essid) net->essid = evas_stringshare_add(essid);
+		  if (net->essid) eina_stringshare_del(net->essid);
+		  if (essid) net->essid = eina_stringshare_add(essid);
 		  else net->essid = NULL;
 		  changes++;
 	       }
@@ -339,8 +339,8 @@ iface_net_add(Interface *iface, const char *essid, const char *bssid, int signal
 		  (!strcmp(security, net->security))) ||
 		 (!!security != !!net->security))
 	       {
-		  if (net->security) evas_stringshare_del(net->security);
-		  if (security) net->security = evas_stringshare_add(security);
+		  if (net->security) eina_stringshare_del(net->security);
+		  if (security) net->security = eina_stringshare_add(security);
 		  else net->security = NULL;
 		  changes++;
 	       }
@@ -355,10 +355,10 @@ iface_net_add(Interface *iface, const char *essid, const char *bssid, int signal
    if (net)
      {
 	net->last_seen_time = ecore_time_get();
-	if (essid) net->essid = evas_stringshare_add(essid);
-	net->bssid = evas_stringshare_add(bssid);
+	if (essid) net->essid = eina_stringshare_add(essid);
+	net->bssid = eina_stringshare_add(bssid);
 	net->signal_strength = signal_strength;
-	if (security) net->security = evas_stringshare_add(security);
+	if (security) net->security = eina_stringshare_add(security);
 	iface->networks = evas_list_append(iface->networks, net);
 	iface->callbacks = iface_callback(iface->callbacks,
 					  IFACE_EVENT_SCAN_NETWORK_ADD,
@@ -399,12 +399,12 @@ iface_sigh_network_found(void *data, DBusMessage *msg)
 		       if ((!strcmp(key, "ESSID")) && (type == DBUS_TYPE_STRING))
 			 {
 			    dbus_message_iter_get_basic(&val, &v);
-			    if (v) net->essid = evas_stringshare_add(v);
+			    if (v) net->essid = eina_stringshare_add(v);
 			 }
 		       else if ((!strcmp(key, "BSSID")) && (type == DBUS_TYPE_STRING))
 			 {
 			    dbus_message_iter_get_basic(&val, &v);
-			    if (v) net->bssid = evas_stringshare_add(v);
+			    if (v) net->bssid = eina_stringshare_add(v);
 			 }
 		       else if ((!strcmp(key, "Signal")) && (type == DBUS_TYPE_UINT16))
 			 {
@@ -415,16 +415,16 @@ iface_sigh_network_found(void *data, DBusMessage *msg)
 		       if ((!strcmp(key, "Security")) && (type == DBUS_TYPE_STRING))
 			 {
 			    dbus_message_iter_get_basic(&val, &v);
-			    if (v) net->security = evas_stringshare_add(v);
+			    if (v) net->security = eina_stringshare_add(v);
 			 }
 		       dbus_message_iter_next(&iter);
 		    }
 		  if (net->bssid)
 		    iface_net_add(iface, net->essid, net->bssid,
 				  net->signal_strength, net->security);
-		  if (net->essid) evas_stringshare_del(net->essid);
-		  if (net->bssid) evas_stringshare_del(net->bssid);
-		  if (net->security) evas_stringshare_del(net->security);
+		  if (net->essid) eina_stringshare_del(net->essid);
+		  if (net->bssid) eina_stringshare_del(net->bssid);
+		  if (net->security) eina_stringshare_del(net->security);
 		  free(net);
 	       }
 	  }
@@ -456,8 +456,8 @@ iface_sigh_state_changed(void *data, DBusMessage *msg)
    dbus_message_iter_init(msg, &iter);
    dbus_message_iter_get_basic(&iter, &(s));
    if (!s) return;
-   if (iface->prop.state) evas_stringshare_del(iface->prop.state);
-   iface->prop.state = evas_stringshare_add(s);
+   if (iface->prop.state) eina_stringshare_del(iface->prop.state);
+   iface->prop.state = eina_stringshare_add(s);
 
    msg = dbus_message_new_method_call("org.freedesktop.connman",
 				      iface->ifpath,
@@ -488,8 +488,8 @@ iface_sigh_policy_changed(void *data, DBusMessage *msg)
    dbus_message_iter_init(msg, &iter);
    dbus_message_iter_get_basic(&iter, &(s));
    if (!s) return;
-   if (iface->prop.policy) evas_stringshare_del(iface->prop.policy);
-   iface->prop.policy = evas_stringshare_add(s);
+   if (iface->prop.policy) eina_stringshare_del(iface->prop.policy);
+   iface->prop.policy = eina_stringshare_add(s);
    iface->callbacks = iface_callback(iface->callbacks,
 				     IFACE_EVENT_POLICY_CHANGE,
 				     iface, NULL);
@@ -505,8 +505,8 @@ iface_sigh_network_changed(void *data, DBusMessage *msg)
    d = iface_network_selection_decode(msg);
    if (!d) return;
 
-   if (iface->network_selection.id) evas_stringshare_del(iface->network_selection.id);
-   if (iface->network_selection.pass) evas_stringshare_del(iface->network_selection.pass);
+   if (iface->network_selection.id) eina_stringshare_del(iface->network_selection.id);
+   if (iface->network_selection.pass) eina_stringshare_del(iface->network_selection.pass);
    memcpy(&(iface->network_selection), d, sizeof(Interface_Network_Selection));
    free(d);
    iface->callbacks = iface_callback(iface->callbacks,
@@ -524,10 +524,10 @@ iface_sigh_ipv4_changed(void *data, DBusMessage *msg)
    d = iface_ipv4_decode(msg);
    if (!d) return;
 
-   if (iface->ipv4.method) evas_stringshare_del(iface->ipv4.method);
-   if (iface->ipv4.address) evas_stringshare_del(iface->ipv4.address);
-   if (iface->ipv4.gateway) evas_stringshare_del(iface->ipv4.gateway);
-   if (iface->ipv4.netmask) evas_stringshare_del(iface->ipv4.netmask);
+   if (iface->ipv4.method) eina_stringshare_del(iface->ipv4.method);
+   if (iface->ipv4.address) eina_stringshare_del(iface->ipv4.address);
+   if (iface->ipv4.gateway) eina_stringshare_del(iface->ipv4.gateway);
+   if (iface->ipv4.netmask) eina_stringshare_del(iface->ipv4.netmask);
    memcpy(&(iface->ipv4), d, sizeof(Interface_IPv4));
    free(d);
    iface->callbacks = iface_callback(iface->callbacks,
@@ -556,9 +556,9 @@ iface_timer_network_timeout(void *data)
 					       IFACE_EVENT_SCAN_NETWORK_DEL,
 					       iface, net);
 	     iface->networks = evas_list_remove_list(iface->networks, l_del);
-	     if (net->essid) evas_stringshare_del(net->essid);
-	     if (net->bssid) evas_stringshare_del(net->bssid);
-	     if (net->security) evas_stringshare_del(net->security);
+	     if (net->essid) eina_stringshare_del(net->essid);
+	     if (net->bssid) eina_stringshare_del(net->bssid);
+	     if (net->security) eina_stringshare_del(net->security);
 	     free(net);
 	  }
 	else
@@ -696,7 +696,7 @@ iface_add(const char *ifpath)
 
    iface = calloc(1, sizeof(Interface));
    iface->ref = 1;
-   iface->ifpath = evas_stringshare_add(ifpath);
+   iface->ifpath = eina_stringshare_add(ifpath);
 
    msg = dbus_message_new_method_call("org.freedesktop.connman",
 				      iface->ifpath,
@@ -704,7 +704,7 @@ iface_add(const char *ifpath)
 				      "GetProperties");
    if (!msg)
      {
-	evas_stringshare_del(iface->ifpath);
+	eina_stringshare_del(iface->ifpath);
 	free(iface);
 	return NULL;
      }
@@ -798,26 +798,26 @@ iface_unref(Interface *iface)
 
    if (iface->network_timeout)
      ecore_timer_del(iface->network_timeout);
-   if (iface->network_selection.id) evas_stringshare_del(iface->network_selection.id);
-   if (iface->network_selection.pass) evas_stringshare_del(iface->network_selection.pass);
+   if (iface->network_selection.id) eina_stringshare_del(iface->network_selection.id);
+   if (iface->network_selection.pass) eina_stringshare_del(iface->network_selection.pass);
    while (iface->networks)
      {
 	Interface_Network *net;
 
 	net = iface->networks->data;
-	if (net->essid) evas_stringshare_del(net->essid);
-	if (net->bssid) evas_stringshare_del(net->bssid);
-	if (net->security) evas_stringshare_del(net->security);
+	if (net->essid) eina_stringshare_del(net->essid);
+	if (net->bssid) eina_stringshare_del(net->bssid);
+	if (net->security) eina_stringshare_del(net->security);
 	free(net);
 	iface->networks = evas_list_remove_list(iface->networks, iface->networks);
      }
    if (iface->network_timeout) ecore_timer_del(iface->network_timeout);
-   if (iface->prop.product) evas_stringshare_del(iface->prop.product);
-   if (iface->prop.vendor) evas_stringshare_del(iface->prop.vendor);
-   if (iface->prop.driver) evas_stringshare_del(iface->prop.driver);
-   if (iface->prop.state) evas_stringshare_del(iface->prop.state);
-   if (iface->prop.policy) evas_stringshare_del(iface->prop.policy);
-   if (iface->prop.type) evas_stringshare_del(iface->prop.type);
+   if (iface->prop.product) eina_stringshare_del(iface->prop.product);
+   if (iface->prop.vendor) eina_stringshare_del(iface->prop.vendor);
+   if (iface->prop.driver) eina_stringshare_del(iface->prop.driver);
+   if (iface->prop.state) eina_stringshare_del(iface->prop.state);
+   if (iface->prop.policy) eina_stringshare_del(iface->prop.policy);
+   if (iface->prop.type) eina_stringshare_del(iface->prop.type);
    e_dbus_signal_handler_del(conn, iface->sigh.network_found);
    e_dbus_signal_handler_del(conn, iface->sigh.signal_changed);
    e_dbus_signal_handler_del(conn, iface->sigh.state_changed);
@@ -1316,7 +1316,7 @@ main(int argc, char **argv)
      }
 
    ecore_init();
-   ecore_string_init();
+   eina_stringshare_init();
    ecore_app_args_set(argc, (const char **)argv);
    e_dbus_init();
    evas_init();
@@ -1340,7 +1340,7 @@ main(int argc, char **argv)
    e_dbus_connection_close(c);
    evas_shutdown();
    e_dbus_shutdown();
-   ecore_string_shutdown();
+   eina_stringshare_shutdown();
    ecore_shutdown();
 
    return 0;

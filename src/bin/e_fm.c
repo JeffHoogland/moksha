@@ -397,6 +397,7 @@ e_fm2_init(void)
    const char *homedir;
    char  path[PATH_MAX];
 
+   eina_stringshare_init();
    ecore_job_init();
    _e_storage_volume_edd_init();
    homedir = e_user_homedir_get();
@@ -439,6 +440,7 @@ e_fm2_shutdown(void)
    _e_storage_volume_edd_shutdown();
    efreet_mime_shutdown();
    ecore_job_shutdown();
+   eina_stringshare_shutdown();
    return 1;
 }
 
@@ -560,15 +562,15 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    if (sd->realpath) _e_fm2_client_monitor_del(sd->id, sd->realpath);
    sd->listing = 0;
    
-   if (sd->dev) evas_stringshare_del(sd->dev);
-   if (sd->path) evas_stringshare_del(sd->path);
-   if (sd->realpath) evas_stringshare_del(sd->realpath);
+   if (sd->dev) eina_stringshare_del(sd->dev);
+   if (sd->path) eina_stringshare_del(sd->path);
+   if (sd->realpath) eina_stringshare_del(sd->realpath);
    sd->dev = sd->path = sd->realpath = NULL;
    
    sd->order_file = 0;
    
-   if (dev) sd->dev = evas_stringshare_add(dev);
-   if (path) sd->path = evas_stringshare_add(path);
+   if (dev) sd->dev = eina_stringshare_add(dev);
+   if (path) sd->path = eina_stringshare_add(path);
    sd->realpath = realpath;
    _e_fm2_queue_free(obj);
    _e_fm2_regions_free(obj);
@@ -663,9 +665,9 @@ e_fm2_custom_theme_set(Evas_Object *obj, const char *path)
    if (!sd) return; // safety
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
-   if (sd->custom_theme) evas_stringshare_del(sd->custom_theme);
+   if (sd->custom_theme) eina_stringshare_del(sd->custom_theme);
    if (path)
-     sd->custom_theme = evas_stringshare_add(path);
+     sd->custom_theme = eina_stringshare_add(path);
    else
      sd->custom_theme = NULL;
    _e_fm2_theme_edje_object_set(sd, sd->drop, "base/theme/fileman",
@@ -685,9 +687,9 @@ e_fm2_custom_theme_content_set(Evas_Object *obj, const char *content)
    if (!sd) return; // safety
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
-   if (sd->custom_theme) evas_stringshare_del(sd->custom_theme);
+   if (sd->custom_theme) eina_stringshare_del(sd->custom_theme);
    if (content)
-     sd->custom_theme_content = evas_stringshare_add(content);
+     sd->custom_theme_content = eina_stringshare_add(content);
    else
      sd->custom_theme_content = NULL;
    _e_fm2_theme_edje_object_set(sd, sd->drop, "base/theme/fileman",
@@ -803,10 +805,10 @@ e_fm2_config_set(Evas_Object *obj, E_Fm2_Config *cfg)
    sd->config = E_NEW(E_Fm2_Config, 1);
    if (!sd->config) return;
    memcpy(sd->config, cfg, sizeof(E_Fm2_Config));
-   if (cfg->icon.key_hint) sd->config->icon.key_hint = evas_stringshare_add(cfg->icon.key_hint);
-   if (cfg->theme.background) sd->config->theme.background = evas_stringshare_add(cfg->theme.background);
-   if (cfg->theme.frame) sd->config->theme.frame = evas_stringshare_add(cfg->theme.frame);
-   if (cfg->theme.icons) sd->config->theme.icons = evas_stringshare_add(cfg->theme.icons);
+   if (cfg->icon.key_hint) sd->config->icon.key_hint = eina_stringshare_add(cfg->icon.key_hint);
+   if (cfg->theme.background) sd->config->theme.background = eina_stringshare_add(cfg->theme.background);
+   if (cfg->theme.frame) sd->config->theme.frame = eina_stringshare_add(cfg->theme.frame);
+   if (cfg->theme.icons) sd->config->theme.icons = eina_stringshare_add(cfg->theme.icons);
 }
 
 EAPI E_Fm2_Config *
@@ -1014,7 +1016,7 @@ e_fm2_icons_update(Evas_Object *obj)
 	
 	ic = l->data;
 	
-	if (ic->info.icon) evas_stringshare_del(ic->info.icon);
+	if (ic->info.icon) eina_stringshare_del(ic->info.icon);
 	ic->info.icon = NULL;
 	ic->info.icon_type = 0;
 	
@@ -1028,10 +1030,10 @@ e_fm2_icons_update(Evas_Object *obj)
 	  {
 	     if (cf->icon.valid)
 	       {
-		  if (ic->info.icon) evas_stringshare_del(ic->info.icon);
+		  if (ic->info.icon) eina_stringshare_del(ic->info.icon);
 		  ic->info.icon = NULL;
 		  if (cf->icon.icon)
-		    ic->info.icon = evas_stringshare_add(cf->icon.icon);
+		    ic->info.icon = eina_stringshare_add(cf->icon.icon);
 		  ic->info.icon_type = cf->icon.type;
 	       }
 	  }
@@ -1818,16 +1820,16 @@ _e_fm2_file_force_update(const char *path)
 			 sizeof(struct stat));
 		  finf.broken_link = ic->info.broken_link;
 		  if (ic->info.link)
-		    finf.lnk = evas_stringshare_add(ic->info.link);
+		    finf.lnk = eina_stringshare_add(ic->info.link);
 		  if (ic->info.real_link)
-		    finf.rlnk = evas_stringshare_add(ic->info.real_link);
+		    finf.rlnk = eina_stringshare_add(ic->info.real_link);
 		  ic->removable_state_change = 1;
 		  _e_fm2_live_file_changed(l->data, ecore_file_file_get(path),
 					   &finf);
 		  if (ic->info.link)
-		    evas_stringshare_del(ic->info.link);
+		    eina_stringshare_del(ic->info.link);
 		  if (ic->info.real_link)
-		    evas_stringshare_del(ic->info.real_link);
+		    eina_stringshare_del(ic->info.real_link);
 	       }
 	  }
      }
@@ -2297,7 +2299,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	buf[len - 1] = 0;
 	len--;
      }
-   return evas_stringshare_add(buf);
+   return eina_stringshare_add(buf);
 }
 
 static void
@@ -2410,7 +2412,7 @@ _e_fm_file_buffer_clear(void)
 {
    while (_e_fm_file_buffer)
      {
-	evas_stringshare_del(evas_list_data(_e_fm_file_buffer));
+	eina_stringshare_del(evas_list_data(_e_fm_file_buffer));
 	_e_fm_file_buffer = evas_list_remove_list(_e_fm_file_buffer, _e_fm_file_buffer);
      }
 
@@ -2504,7 +2506,7 @@ _e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi)
 	/* Check if file is protected. */
 	if (e_filereg_file_protected(filepath)) 
 	  {
-	     evas_stringshare_del(filepath);
+	     eina_stringshare_del(filepath);
 	     paths = evas_list_remove_list(paths, paths);
 	     continue;
 	  }
@@ -2515,7 +2517,7 @@ _e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi)
 	args = _e_fm_string_append_quoted(args, &size, &length, filepath);
 	args = _e_fm_string_append_char(args, &size, &length, ' ');
 	
-	evas_stringshare_del(filepath);
+	eina_stringshare_del(filepath);
 	paths = evas_list_remove_list(paths, paths);
      }
 
@@ -3111,10 +3113,10 @@ _e_fm2_regions_eval(Evas_Object *obj)
 static void
 _e_fm2_config_free(E_Fm2_Config *cfg)
 {
-   if (cfg->icon.key_hint) evas_stringshare_del(cfg->icon.key_hint);
-   if (cfg->theme.background) evas_stringshare_del(cfg->theme.background);
-   if (cfg->theme.frame) evas_stringshare_del(cfg->theme.frame);
-   if (cfg->theme.icons) evas_stringshare_del(cfg->theme.icons);
+   if (cfg->icon.key_hint) eina_stringshare_del(cfg->icon.key_hint);
+   if (cfg->theme.background) eina_stringshare_del(cfg->theme.background);
+   if (cfg->theme.frame) eina_stringshare_del(cfg->theme.frame);
+   if (cfg->theme.icons) eina_stringshare_del(cfg->theme.icons);
    free(cfg);
 }
 
@@ -3157,7 +3159,7 @@ _e_fm2_icon_find(Evas_Object *obj, const char *file)
    return NULL;
 }
 
-/* Escape illegal caracters within an uri and return an evas_stringshare */
+/* Escape illegal caracters within an uri and return an eina_stringshare */
 static const char *
 _e_fm2_uri_escape(const char *path)
 {
@@ -3182,7 +3184,7 @@ _e_fm2_uri_escape(const char *path)
 	  }
      }
 
-   return evas_stringshare_add(dest);
+   return eina_stringshare_add(dest);
 }
 
 /* Parse a single uri and return an E_Fm2_Uri struct.
@@ -3228,9 +3230,9 @@ _e_fm2_uri_parse(const char *val)
      }
 
    uri = E_NEW(E_Fm2_Uri, 1);
-   if (hostname[0]) uri->hostname = evas_stringshare_add(hostname);
+   if (hostname[0]) uri->hostname = eina_stringshare_add(hostname);
    else uri->hostname = NULL;
-   uri->path = evas_stringshare_add(path);
+   uri->path = eina_stringshare_add(path);
 
    return uri;
 }
@@ -3257,9 +3259,9 @@ _e_fm2_uri_path_list_get(Evas_List *uri_list)
 	     path_list = evas_list_append(path_list, uri->path);
 	  }
 	else
-	  evas_stringshare_del(uri->path);
+	  eina_stringshare_del(uri->path);
 
-	if (uri->hostname) evas_stringshare_del(uri->hostname);
+	if (uri->hostname) eina_stringshare_del(uri->hostname);
 	E_FREE(uri);
      }
 
@@ -3303,11 +3305,11 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file, E_Fm2_Finfo *finf)
    ic = E_NEW(E_Fm2_Icon, 1);
    ic->info.fm = sd->obj;
    ic->info.ic = ic;
-   ic->info.file = evas_stringshare_add(file);
+   ic->info.file = eina_stringshare_add(file);
    ic->sd = sd;
    if (!_e_fm2_icon_fill(ic, finf))
      {
-	evas_stringshare_del(ic->info.file);
+	eina_stringshare_del(ic->info.file);
 	free(ic);
 	return NULL;
      }
@@ -3317,14 +3319,14 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file, E_Fm2_Finfo *finf)
 static void
 _e_fm2_icon_unfill(E_Fm2_Icon *ic)
 {
-   if (ic->info.mime) evas_stringshare_del(ic->info.mime);
-   if (ic->info.label) evas_stringshare_del(ic->info.label);
-   if (ic->info.comment) evas_stringshare_del(ic->info.comment);
-   if (ic->info.generic) evas_stringshare_del(ic->info.generic);
-   if (ic->info.icon) evas_stringshare_del(ic->info.icon);
-   if (ic->info.link) evas_stringshare_del(ic->info.link);
-   if (ic->info.real_link) evas_stringshare_del(ic->info.real_link);
-   if (ic->info.category) evas_stringshare_del(ic->info.category);
+   if (ic->info.mime) eina_stringshare_del(ic->info.mime);
+   if (ic->info.label) eina_stringshare_del(ic->info.label);
+   if (ic->info.comment) eina_stringshare_del(ic->info.comment);
+   if (ic->info.generic) eina_stringshare_del(ic->info.generic);
+   if (ic->info.icon) eina_stringshare_del(ic->info.icon);
+   if (ic->info.link) eina_stringshare_del(ic->info.link);
+   if (ic->info.real_link) eina_stringshare_del(ic->info.real_link);
+   if (ic->info.category) eina_stringshare_del(ic->info.category);
    ic->info.mime = NULL;
    ic->info.label = NULL;
    ic->info.comment = NULL;
@@ -3377,9 +3379,9 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
      {
 	memcpy(&(ic->info.statinfo), &(finf->st), sizeof(struct stat));
 	if ((finf->lnk) && (finf->lnk[0]))
-	  ic->info.link = evas_stringshare_add(finf->lnk);
+	  ic->info.link = eina_stringshare_add(finf->lnk);
 	if ((finf->rlnk) && (finf->rlnk[0]))
-	  ic->info.real_link = evas_stringshare_add(finf->rlnk);
+	  ic->info.real_link = eina_stringshare_add(finf->rlnk);
 	ic->info.broken_link = finf->broken_link;
      }
    else
@@ -3400,8 +3402,8 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	  {
 	     if (lnk[0] == '/')
 	       {
-		  ic->info.link = evas_stringshare_add(lnk);
-		  ic->info.real_link = evas_stringshare_add(lnk);
+		  ic->info.link = eina_stringshare_add(lnk);
+		  ic->info.real_link = eina_stringshare_add(lnk);
 	       }
 	     else
 	       {
@@ -3411,10 +3413,10 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 		  rp = ecore_file_realpath(buf);
 		  if (rp)
 		    {
-		       ic->info.link = evas_stringshare_add(rp);
+		       ic->info.link = eina_stringshare_add(rp);
 		       free(rp);
 		    }
-		  ic->info.real_link = evas_stringshare_add(lnk);
+		  ic->info.real_link = eina_stringshare_add(lnk);
 	       }
 	     free(lnk);
 	  }
@@ -3423,12 +3425,12 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
    
    if (S_ISDIR(ic->info.statinfo.st_mode))
      {
-       ic->info.mime = evas_stringshare_add("inode/directory");
+       ic->info.mime = eina_stringshare_add("inode/directory");
      }
    if (!ic->info.mime)
      {
 	mime = e_fm_mime_filename_get(ic->info.file);
-	if (mime) ic->info.mime = evas_stringshare_add(mime);
+	if (mime) ic->info.mime = eina_stringshare_add(mime);
      }
    
    if ((e_util_glob_case_match(ic->info.file, "*.desktop")) ||
@@ -3441,9 +3443,9 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	  {
 	     if (cf->icon.icon)
 	       {
-		  if (ic->info.icon) evas_stringshare_del(ic->info.icon);
+		  if (ic->info.icon) eina_stringshare_del(ic->info.icon);
 		  ic->info.icon = NULL;
-		  ic->info.icon = evas_stringshare_add(cf->icon.icon);
+		  ic->info.icon = eina_stringshare_add(cf->icon.icon);
 	       }
 	     ic->info.icon_type = cf->icon.type;
 	  }
@@ -3586,15 +3588,15 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
 	e_object_del(E_OBJECT(ic->prop_dialog));
 	ic->prop_dialog = NULL;
      }
-   if (ic->info.file) evas_stringshare_del(ic->info.file);
-   if (ic->info.mime) evas_stringshare_del(ic->info.mime);
-   if (ic->info.label) evas_stringshare_del(ic->info.label);
-   if (ic->info.comment) evas_stringshare_del(ic->info.comment);
-   if (ic->info.generic) evas_stringshare_del(ic->info.generic);
-   if (ic->info.icon) evas_stringshare_del(ic->info.icon);
-   if (ic->info.link) evas_stringshare_del(ic->info.link);
-   if (ic->info.real_link) evas_stringshare_del(ic->info.real_link);
-   if (ic->info.category) evas_stringshare_del(ic->info.category);
+   if (ic->info.file) eina_stringshare_del(ic->info.file);
+   if (ic->info.mime) eina_stringshare_del(ic->info.mime);
+   if (ic->info.label) eina_stringshare_del(ic->info.label);
+   if (ic->info.comment) eina_stringshare_del(ic->info.comment);
+   if (ic->info.generic) eina_stringshare_del(ic->info.generic);
+   if (ic->info.icon) eina_stringshare_del(ic->info.icon);
+   if (ic->info.link) eina_stringshare_del(ic->info.link);
+   if (ic->info.real_link) eina_stringshare_del(ic->info.real_link);
+   if (ic->info.category) eina_stringshare_del(ic->info.category);
    free(ic);
 }
 
@@ -3843,7 +3845,7 @@ _e_fm2_icon_desktop_url_eval(const char *val)
    path = p;
    while (*path == '/') path++;
    path--;
-   s = evas_stringshare_add(path);
+   s = eina_stringshare_add(path);
    free(p);
    return s;
 }
@@ -3863,10 +3865,10 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 
    ic->info.removable = 0;
    ic->info.removable_full = 0;
-   if (desktop->name)         ic->info.label   = evas_stringshare_add(desktop->name);
-   if (desktop->generic_name) ic->info.generic = evas_stringshare_add(desktop->generic_name);
-   if (desktop->comment)      ic->info.comment = evas_stringshare_add(desktop->comment);
-   if (desktop->icon)         ic->info.icon    = evas_stringshare_add(desktop->icon);
+   if (desktop->name)         ic->info.label   = eina_stringshare_add(desktop->name);
+   if (desktop->generic_name) ic->info.generic = eina_stringshare_add(desktop->generic_name);
+   if (desktop->comment)      ic->info.comment = eina_stringshare_add(desktop->comment);
+   if (desktop->icon)         ic->info.icon    = eina_stringshare_add(desktop->icon);
    if (desktop->url)
      ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->url);
    if (desktop->x)
@@ -3902,12 +3904,12 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 
    return 1;
    error:
-   if (ic->info.label) evas_stringshare_del(ic->info.label);
-   if (ic->info.comment) evas_stringshare_del(ic->info.comment);
-   if (ic->info.generic) evas_stringshare_del(ic->info.generic);
-   if (ic->info.icon) evas_stringshare_del(ic->info.icon);
-   if (ic->info.link) evas_stringshare_del(ic->info.link);
-   if (ic->info.category) evas_stringshare_del(ic->info.category);
+   if (ic->info.label) eina_stringshare_del(ic->info.label);
+   if (ic->info.comment) eina_stringshare_del(ic->info.comment);
+   if (ic->info.generic) eina_stringshare_del(ic->info.generic);
+   if (ic->info.icon) eina_stringshare_del(ic->info.icon);
+   if (ic->info.link) eina_stringshare_del(ic->info.link);
+   if (ic->info.category) eina_stringshare_del(ic->info.category);
    ic->info.label = NULL;
    ic->info.comment = NULL;
    ic->info.generic = NULL;
@@ -4882,7 +4884,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	     args = _e_fm_string_append_quoted(args, &size, &length, fp);
 	     args = _e_fm_string_append_char(args, &size, &length, ' ');
 
-	     evas_stringshare_del(fp);
+	     eina_stringshare_del(fp);
 	  }
 	if (adjust_icons)
 	  {
@@ -4917,7 +4919,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  args = _e_fm_string_append_quoted(args, &size, &length, fp);
 		  args = _e_fm_string_append_char(args, &size, &length, ' ');
 
-		  evas_stringshare_del(fp);
+		  eina_stringshare_del(fp);
 	       }
 
 	     snprintf(dirpath, sizeof(dirpath), "%s/%s", sd->realpath, sd->drop_icon->info.file);
@@ -4946,7 +4948,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 
 		       _e_fm_file_reorder(ecore_file_file_get(fp), sd->realpath, sd->drop_icon->info.file, sd->drop_after);
 
-		       evas_stringshare_del(fp);
+		       eina_stringshare_del(fp);
 		    }
 
 		  args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
@@ -4962,7 +4964,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		       args = _e_fm_string_append_quoted(args, &size, &length, fp);
 		       args = _e_fm_string_append_char(args, &size, &length, ' ');
 
-		       evas_stringshare_del(fp);
+		       eina_stringshare_del(fp);
 		    }
 		  args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
 	       }
@@ -5233,8 +5235,8 @@ _e_fm2_cb_drag_finished(E_Drag *drag, int dropped)
 		  if (ic->obj_icon) evas_object_show(ic->obj_icon);
 	       }
 
-	     if (uri->hostname) evas_stringshare_del(uri->hostname);
-	     evas_stringshare_del(uri->path);
+	     if (uri->hostname) eina_stringshare_del(uri->hostname);
+	     eina_stringshare_del(uri->path);
 	     E_FREE(uri);
 	  }
 	else
@@ -5365,7 +5367,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		    }
 		  sel = strcat(sel, s);
 		  sel = strcat(sel, "\r\n");
-		  evas_stringshare_del(s);
+		  eina_stringshare_del(s);
 
 		  ici->ic->drag.dnd = 1;
 		  if (ici->ic->obj) evas_object_hide(ici->ic->obj);
@@ -6152,10 +6154,10 @@ _e_fm2_smart_del(Evas_Object *obj)
    if (sd->scroll_job) ecore_job_del(sd->scroll_job);
    if (sd->resize_job) ecore_job_del(sd->resize_job);
    if (sd->refresh_job) ecore_job_del(sd->refresh_job);
-   if (sd->custom_theme) evas_stringshare_del(sd->custom_theme);
-   if (sd->custom_theme_content) evas_stringshare_del(sd->custom_theme_content);
-   if (sd->dev) evas_stringshare_del(sd->dev);
-   if (sd->path) evas_stringshare_del(sd->path);
+   if (sd->custom_theme) eina_stringshare_del(sd->custom_theme);
+   if (sd->custom_theme_content) eina_stringshare_del(sd->custom_theme_content);
+   if (sd->dev) eina_stringshare_del(sd->dev);
+   if (sd->path) eina_stringshare_del(sd->path);
    if (sd->mount)
      {
 	e_fm2_hal_unmount(sd->mount);
@@ -6163,7 +6165,7 @@ _e_fm2_smart_del(Evas_Object *obj)
      }
    if (sd->realpath)
      {
-	evas_stringshare_del(sd->realpath);
+	eina_stringshare_del(sd->realpath);
      }
    sd->dev = sd->path = sd->realpath = NULL;
    if (sd->config) _e_fm2_config_free(sd->config);
@@ -7522,12 +7524,12 @@ _e_fm2_live_file_add(Evas_Object *obj, const char *file, const char *file_rel, i
    if (!a) return;
    sd->live.actions = evas_list_append(sd->live.actions, a);
    a->type = FILE_ADD;
-   a->file = evas_stringshare_add(file);
-   if (file_rel) a->file2 = evas_stringshare_add(file_rel);
+   a->file = eina_stringshare_add(file);
+   if (file_rel) a->file2 = eina_stringshare_add(file_rel);
    a->flags = after;
    if (finf) memcpy(&(a->finf), finf, sizeof(E_Fm2_Finfo));
-   if (a->finf.lnk) a->finf.lnk = evas_stringshare_add(a->finf.lnk);
-   if (a->finf.rlnk) a->finf.rlnk = evas_stringshare_add(a->finf.rlnk);
+   if (a->finf.lnk) a->finf.lnk = eina_stringshare_add(a->finf.lnk);
+   if (a->finf.rlnk) a->finf.rlnk = eina_stringshare_add(a->finf.rlnk);
    _e_fm2_live_process_begin(obj);
 }
 
@@ -7543,7 +7545,7 @@ _e_fm2_live_file_del(Evas_Object *obj, const char *file)
    if (!a) return;
    sd->live.actions = evas_list_append(sd->live.actions, a);
    a->type = FILE_DEL;
-   a->file = evas_stringshare_add(file);
+   a->file = eina_stringshare_add(file);
    _e_fm2_live_process_begin(obj);
 }
 
@@ -7559,10 +7561,10 @@ _e_fm2_live_file_changed(Evas_Object *obj, const char *file, E_Fm2_Finfo *finf)
    if (!a) return;
    sd->live.actions = evas_list_append(sd->live.actions, a);
    a->type = FILE_CHANGE;
-   a->file = evas_stringshare_add(file);
+   a->file = eina_stringshare_add(file);
    if (finf) memcpy(&(a->finf), finf, sizeof(E_Fm2_Finfo));
-   if (a->finf.lnk) a->finf.lnk = evas_stringshare_add(a->finf.lnk);
-   if (a->finf.rlnk) a->finf.rlnk = evas_stringshare_add(a->finf.rlnk);
+   if (a->finf.lnk) a->finf.lnk = eina_stringshare_add(a->finf.lnk);
+   if (a->finf.rlnk) a->finf.rlnk = eina_stringshare_add(a->finf.rlnk);
    _e_fm2_live_process_begin(obj);
 }
 
@@ -7591,10 +7593,10 @@ _e_fm2_live_process_end(Evas_Object *obj)
      {
 	a = sd->live.actions->data;
 	sd->live.actions = evas_list_remove_list(sd->live.actions, sd->live.actions);
-	if (a->file) evas_stringshare_del(a->file);
-	if (a->file2) evas_stringshare_del(a->file2);
-	if (a->finf.lnk) evas_stringshare_del(a->finf.lnk);
-	if (a->finf.rlnk) evas_stringshare_del(a->finf.rlnk);
+	if (a->file) eina_stringshare_del(a->file);
+	if (a->file2) eina_stringshare_del(a->file2);
+	if (a->finf.lnk) eina_stringshare_del(a->finf.lnk);
+	if (a->finf.rlnk) eina_stringshare_del(a->finf.rlnk);
 	free(a);
      }
    if (sd->live.idler)
@@ -7697,10 +7699,10 @@ _e_fm2_live_process(Evas_Object *obj)
       default:
 	break;
      }
-   if (a->file) evas_stringshare_del(a->file);
-   if (a->file2) evas_stringshare_del(a->file2);
-   if (a->finf.lnk) evas_stringshare_del(a->finf.lnk);
-   if (a->finf.rlnk) evas_stringshare_del(a->finf.rlnk);
+   if (a->file) eina_stringshare_del(a->file);
+   if (a->file2) eina_stringshare_del(a->file2);
+   if (a->finf.lnk) eina_stringshare_del(a->finf.lnk);
+   if (a->finf.rlnk) eina_stringshare_del(a->finf.rlnk);
    free(a);
 }
 
@@ -7778,7 +7780,7 @@ _e_fm2_theme_edje_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *c
      {
 	if (!ecore_file_exists(sd->custom_theme))
 	  {
-	     evas_stringshare_del(sd->custom_theme);
+	     eina_stringshare_del(sd->custom_theme);
 	     sd->custom_theme = NULL;
 	  }
      }
@@ -7805,7 +7807,7 @@ _e_fm2_theme_edje_icon_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const ch
      {
 	if (!ecore_file_exists(sd->custom_theme))
 	  {
-	     evas_stringshare_del(sd->custom_theme);
+	     eina_stringshare_del(sd->custom_theme);
 	     sd->custom_theme = NULL;
 	  }
      }

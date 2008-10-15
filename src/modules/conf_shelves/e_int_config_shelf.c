@@ -225,7 +225,7 @@ _cb_add(void *data, void *data2)
    zone = e_zone_current_get(con);
 
    cfg = E_NEW(E_Config_Shelf, 1);
-   cfg->name = evas_stringshare_add("shelf");
+   cfg->name = eina_stringshare_add("shelf");
    cfg->container = con->num;
    cfg->zone = zone->id;
    cfg->popup = 1;
@@ -233,7 +233,7 @@ _cb_add(void *data, void *data2)
    cfg->orient = E_GADCON_ORIENT_CORNER_BR;
    cfg->fit_along = 1;
    cfg->fit_size = 0;
-   cfg->style = evas_stringshare_add("default");
+   cfg->style = eina_stringshare_add("default");
    cfg->size = 40;
    cfg->overlap = 0;
    cfg->autohide = 0;

@@ -39,6 +39,8 @@ e_modapi_init(E_Module *m)
    
    conf_module = m;
 
+   eina_stringshare_init();
+
    /* Setup Entry in Config Panel */
    e_configure_registry_category_add("fileman", 100, _("File Manager"), 
 				     NULL, "enlightenment/fileman");
@@ -143,6 +145,9 @@ e_modapi_shutdown(E_Module *m)
    
    _e_mod_fileman_config_free();
    E_CONFIG_DD_FREE(conf_edd);
+
+   eina_stringshare_shutdown();
+
    conf_module = NULL;
    return 1;
 }
@@ -333,11 +338,11 @@ static void
 _e_mod_fileman_config_free(void) 
 {
    if (fileman_config->theme.background)
-     evas_stringshare_del(fileman_config->theme.background);
+     eina_stringshare_del(fileman_config->theme.background);
    if (fileman_config->theme.frame)
-     evas_stringshare_del(fileman_config->theme.frame);
+     eina_stringshare_del(fileman_config->theme.frame);
    if (fileman_config->theme.icons)
-     evas_stringshare_del(fileman_config->theme.icons);
+     eina_stringshare_del(fileman_config->theme.icons);
    E_FREE(fileman_config);   
 }
 

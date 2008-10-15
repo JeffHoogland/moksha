@@ -263,12 +263,12 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, char *swallow
    gc = E_OBJECT_ALLOC(E_Gadcon, E_GADCON_TYPE, _e_gadcon_free);
    if (!gc) return NULL;
  
-   gc->name = evas_stringshare_add(name);
+   gc->name = eina_stringshare_add(name);
    gc->id = id;
    gc->layout_policy = E_GADCON_LAYOUT_POLICY_PANEL;
    
    gc->edje.o_parent = obj;
-   gc->edje.swallow_name = evas_stringshare_add(swallow_name);
+   gc->edje.swallow_name = eina_stringshare_add(swallow_name);
 
    gc->orient = E_GADCON_ORIENT_HORIZ;
    gc->evas = evas_object_evas_get(obj);
@@ -307,7 +307,7 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, char *swallow
    if (!gc->cf)
      {
 	gc->cf = E_NEW(E_Config_Gadcon, 1);
-	gc->cf->name = evas_stringshare_add(gc->name);
+	gc->cf->name = eina_stringshare_add(gc->name);
 	gc->cf->id = gc->id;
 	e_config->gadcons = evas_list_append(e_config->gadcons, gc->cf);
 	e_config_save_queue();
@@ -388,7 +388,7 @@ e_gadcon_populate(E_Gadcon *gc)
 
 	     if ((!cf_gcc->id) &&
 		 (_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)))
-	       cf_gcc->id = evas_stringshare_add(cc->func.id_new());
+	       cf_gcc->id = eina_stringshare_add(cc->func.id_new());
 
 	     if (!cf_gcc->style)
 	       {
@@ -470,7 +470,7 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 
 	     if ((!cf_gcc->id) &&
 		 (_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)))
-	       cf_gcc->id = evas_stringshare_add(cc->func.id_new());
+	       cf_gcc->id = eina_stringshare_add(cc->func.id_new());
 
 	     gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
 				 cf_gcc->style);
@@ -747,8 +747,8 @@ e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
 
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
    if (!cf_gcc) return NULL;
-   cf_gcc->name = evas_stringshare_add(name);
-   cf_gcc->id = evas_stringshare_add(cc->func.id_new());
+   cf_gcc->name = eina_stringshare_add(name);
+   cf_gcc->id = eina_stringshare_add(cc->func.id_new());
    cf_gcc->geom.res = 800;
    cf_gcc->geom.size = 80;
    cf_gcc->geom.pos = cf_gcc->geom.res - cf_gcc->geom.size;
@@ -765,9 +765,9 @@ e_gadcon_client_config_del(E_Config_Gadcon *cf_gc, E_Config_Gadcon_Client *cf_gc
 {
    if (!cf_gcc) return;
 
-   if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
-   if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
-   if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
+   if (cf_gcc->name) eina_stringshare_del(cf_gcc->name);
+   if (cf_gcc->id) eina_stringshare_del(cf_gcc->id);
+   if (cf_gcc->style) eina_stringshare_del(cf_gcc->style);
    if (cf_gc) cf_gc->clients = evas_list_remove(cf_gc->clients, cf_gcc);
    free(cf_gcc);
 }
@@ -781,7 +781,7 @@ e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
    gcc = E_OBJECT_ALLOC(E_Gadcon_Client, E_GADCON_CLIENT_TYPE, _e_gadcon_client_free);
    if (!gcc) return NULL;
-   gcc->name = evas_stringshare_add(name);
+   gcc->name = eina_stringshare_add(name);
    gcc->gadcon = gc;
    gcc->o_base = base_obj;
    if (gc->clients)
@@ -794,7 +794,7 @@ e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *
    if ((gc->frame_request.func) && (style))
      {
 	gcc->o_frame = gc->frame_request.func(gc->frame_request.data, gcc, style);
-	gcc->style = evas_stringshare_add(style);
+	gcc->style = eina_stringshare_add(style);
 	if (gcc->o_frame)
 	  {
 	     edje_object_size_min_calc(gcc->o_frame, &(gcc->pad.w), &(gcc->pad.h));
@@ -1349,8 +1349,8 @@ _e_gadcon_free(E_Gadcon *gc)
    e_gadcon_unpopulate(gc);
    gadcons = evas_list_remove(gadcons, gc);
    if (gc->o_container) evas_object_del(gc->o_container);
-   evas_stringshare_del(gc->name);
-   evas_stringshare_del(gc->edje.swallow_name);
+   eina_stringshare_del(gc->name);
+   eina_stringshare_del(gc->edje.swallow_name);
    if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
    if (gc->drop_handler) e_drop_handler_del(gc->drop_handler);
    free(gc);
@@ -1381,10 +1381,10 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
    gcc->gadcon->clients = evas_list_remove(gcc->gadcon->clients, gcc);
    if (gcc->o_box) evas_object_del(gcc->o_box);
    if (gcc->o_frame) evas_object_del(gcc->o_frame);
-   evas_stringshare_del(gcc->name);
+   eina_stringshare_del(gcc->name);
    if (gcc->scroll_timer) ecore_timer_del(gcc->scroll_timer);
    if (gcc->scroll_animator) ecore_animator_del(gcc->scroll_animator);
-   if (gcc->style) evas_stringshare_del(gcc->style);
+   if (gcc->style) eina_stringshare_del(gcc->style);
    free(gcc);
 }
 
@@ -1495,10 +1495,10 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
    gcc->cf->state_info.seq = gcc->state_info.seq;
    gcc->cf->state_info.flags = gcc->state_info.flags;
    gcc->cf->autoscroll = gcc->autoscroll;
-   if (gcc->cf->style) evas_stringshare_del(gcc->cf->style);
+   if (gcc->cf->style) eina_stringshare_del(gcc->cf->style);
    gcc->cf->style = NULL;
    if (gcc->style)
-     gcc->cf->style = evas_stringshare_add(gcc->style);
+     gcc->cf->style = eina_stringshare_add(gcc->style);
    gcc->cf->resizable = gcc->resizable;
    e_config_save_queue();
 }
@@ -2371,8 +2371,8 @@ _e_gadcon_client_cb_menu_style_plain(void *data, E_Menu *m, E_Menu_Item *mi)
    
    gcc = data;
    gc = gcc->gadcon;
-   if (gcc->style) evas_stringshare_del(gcc->style);
-   gcc->style = evas_stringshare_add(E_GADCON_CLIENT_STYLE_PLAIN);
+   if (gcc->style) eina_stringshare_del(gcc->style);
+   gcc->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_PLAIN);
    _e_gadcon_client_save(gcc);
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
@@ -2386,8 +2386,8 @@ _e_gadcon_client_cb_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi)
    
    gcc = data;
    gc = gcc->gadcon;
-   if (gcc->style) evas_stringshare_del(gcc->style);
-   gcc->style = evas_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
+   if (gcc->style) eina_stringshare_del(gcc->style);
+   gcc->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
    _e_gadcon_client_save(gcc);
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);

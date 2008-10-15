@@ -342,9 +342,9 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (e_config->desklock_background) 
 	  {
 	     e_filereg_deregister(e_config->desklock_background);
-	     evas_stringshare_del(e_config->desklock_background);
+	     eina_stringshare_del(e_config->desklock_background);
 	  }
-	e_config->desklock_background = evas_stringshare_add(cfdata->bg);
+	e_config->desklock_background = eina_stringshare_add(cfdata->bg);
 	e_filereg_register(e_config->desklock_background);
      }
 
@@ -361,9 +361,9 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->custom_lock_cmd) 
      {
 	if (e_config->desklock_custom_desklock_cmd)
-	  evas_stringshare_del(e_config->desklock_custom_desklock_cmd);
+	  eina_stringshare_del(e_config->desklock_custom_desklock_cmd);
 	e_config->desklock_custom_desklock_cmd = 
-	  evas_stringshare_add(cfdata->custom_lock_cmd);
+	  eina_stringshare_add(cfdata->custom_lock_cmd);
      }
    
    e_config_save_queue();

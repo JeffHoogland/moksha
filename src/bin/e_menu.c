@@ -401,10 +401,10 @@ e_menu_title_set(E_Menu *m, char *title)
      return;
    if (m->header.title)
      {
-	evas_stringshare_del(m->header.title);
+	eina_stringshare_del(m->header.title);
 	m->header.title = NULL;
      }
-   if (title) m->header.title = evas_stringshare_add(title);
+   if (title) m->header.title = eina_stringshare_add(title);
    else m->header.title = NULL;
    m->changed = 1;
 }
@@ -424,11 +424,11 @@ e_menu_category_set(E_Menu *m, char *category)
    E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    if (m->category)
      {
-	evas_stringshare_del(m->category);
+	eina_stringshare_del(m->category);
 	m->category = NULL;
      }
    if (category)
-      m->category = evas_stringshare_add(category);
+      m->category = eina_stringshare_add(category);
    else
       m->category = NULL;
    m->changed = 1;
@@ -470,7 +470,7 @@ e_menu_category_callback_add(char *category, void (*create) (E_Menu *m, void *ca
                cb->data = data;
                cb->create = create;
                cb->free = free;
-	       cb->category = evas_stringshare_add(category);
+	       cb->category = eina_stringshare_add(category);
                cat->callbacks = evas_list_append(cat->callbacks, cb);
 	    }
       }
@@ -487,7 +487,7 @@ e_menu_category_callback_del(E_Menu_Category_Callback *cb)
          cat = evas_hash_find(_e_menu_categories, cb->category);
 	 if (cat)
             cat->callbacks = evas_list_remove(cat->callbacks, cb);
-         evas_stringshare_del(cb->category);
+         eina_stringshare_del(cb->category);
          free(cb);
       }
 }
@@ -575,11 +575,11 @@ e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon)
    if (((mi->icon) && (icon) && (!strcmp(icon, mi->icon))) ||
        ((!mi->icon) && (!icon))) 
      return;
-   if (mi->icon) evas_stringshare_del(mi->icon);
-   if (mi->icon_key) evas_stringshare_del(mi->icon_key);
+   if (mi->icon) eina_stringshare_del(mi->icon);
+   if (mi->icon_key) eina_stringshare_del(mi->icon_key);
    mi->icon = NULL;
    mi->icon_key = NULL;
-   if (icon) mi->icon = evas_stringshare_add(icon);
+   if (icon) mi->icon = eina_stringshare_add(icon);
    mi->changed = 1;
    mi->menu->changed = 1;
 }
@@ -593,12 +593,12 @@ e_menu_item_icon_edje_set(E_Menu_Item *mi, const char *icon, const char *key)
        ((!mi->icon) && (!icon)) || 
        ((key) && (mi->icon_key) && (!strcmp(key, mi->icon_key))))
      return;
-   if (mi->icon) evas_stringshare_del(mi->icon);
-   if (mi->icon_key) evas_stringshare_del(mi->icon_key);
+   if (mi->icon) eina_stringshare_del(mi->icon);
+   if (mi->icon_key) eina_stringshare_del(mi->icon_key);
    mi->icon = NULL;
    mi->icon_key = NULL;
-   if (icon) mi->icon = evas_stringshare_add(icon);
-   if (key) mi->icon_key = evas_stringshare_add(key);
+   if (icon) mi->icon = eina_stringshare_add(icon);
+   if (key) mi->icon_key = eina_stringshare_add(key);
    mi->changed = 1;
    mi->menu->changed = 1;
 }
@@ -611,9 +611,9 @@ e_menu_item_label_set(E_Menu_Item *mi, const char *label)
    if (((mi->label) && (label) && (!strcmp(label, mi->label))) ||
        ((!mi->label) && (!label))) 
      return;
-   if (mi->label) evas_stringshare_del(mi->label);
+   if (mi->label) eina_stringshare_del(mi->label);
    mi->label = NULL;
-   if (label) mi->label = evas_stringshare_add(label);
+   if (label) mi->label = eina_stringshare_add(label);
    mi->changed = 1;
    mi->menu->changed = 1;
 }
@@ -1049,8 +1049,8 @@ _e_menu_free(E_Menu *m)
 	m->in_active_list = 0;
 	e_object_unref(E_OBJECT(m));
      }
-   if (m->header.title) evas_stringshare_del(m->header.title);
-   if (m->header.icon_file) evas_stringshare_del(m->header.icon_file);
+   if (m->header.title) eina_stringshare_del(m->header.title);
+   if (m->header.icon_file) eina_stringshare_del(m->header.icon_file);
    free(m);
 }
 
@@ -1065,9 +1065,9 @@ _e_menu_item_free(E_Menu_Item *mi)
      }
    if (mi->menu->realized) _e_menu_item_unrealize(mi);
    mi->menu->items = evas_list_remove(mi->menu->items, mi);
-   if (mi->icon) evas_stringshare_del(mi->icon);
-   if (mi->icon_key) evas_stringshare_del(mi->icon_key);
-   if (mi->label) evas_stringshare_del(mi->label);
+   if (mi->icon) eina_stringshare_del(mi->icon);
+   if (mi->icon_key) eina_stringshare_del(mi->icon_key);
+   if (mi->label) eina_stringshare_del(mi->label);
    free(mi);
 }
 

@@ -106,7 +106,7 @@ e_fm_mime_icon_get(const char *mime)
    return NULL;
    
    ok:
-   val = (char *)evas_stringshare_add(buf);
+   val = (char *)eina_stringshare_add(buf);
    icon_map = evas_hash_add(icon_map, mime, val);
    return val;
 }
@@ -119,7 +119,7 @@ e_fm_mime_icon_cache_flush(void)
    evas_hash_foreach(icon_map, _e_fm_mime_icon_foreach, &freelist);
    while (freelist)
      {
-	evas_stringshare_del(freelist->data);
+	eina_stringshare_del(freelist->data);
 	freelist = evas_list_remove_list(freelist, freelist);
      }
    evas_hash_free(icon_map);
@@ -141,8 +141,8 @@ e_fm2_mime_handler_new(const char *label, const char *icon_group,
    handler = E_NEW(E_Fm2_Mime_Handler, 1);
    if (!handler) return NULL;
 
-   handler->label = evas_stringshare_add(label);
-   handler->icon_group = icon_group ? evas_stringshare_add(icon_group) : NULL;
+   handler->label = eina_stringshare_add(label);
+   handler->icon_group = icon_group ? eina_stringshare_add(icon_group) : NULL;
    handler->action_func = action_func;
    handler->action_data = action_data;
    handler->test_func = test_func;
@@ -156,8 +156,8 @@ e_fm2_mime_handler_free(E_Fm2_Mime_Handler *handler)
 {
    if (!handler) return;
    
-   evas_stringshare_del(handler->label);
-   if (handler->icon_group) evas_stringshare_del(handler->icon_group);
+   eina_stringshare_del(handler->label);
+   if (handler->icon_group) eina_stringshare_del(handler->icon_group);
    E_FREE(handler);
 }
 

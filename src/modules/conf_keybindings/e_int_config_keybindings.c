@@ -122,11 +122,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
 	bi2 = E_NEW(E_Config_Binding_Key, 1);
 	bi2->context = bi->context;
-	bi2->key = bi->key == NULL ? NULL : evas_stringshare_add(bi->key);
+	bi2->key = bi->key == NULL ? NULL : eina_stringshare_add(bi->key);
 	bi2->modifiers = bi->modifiers;
 	bi2->any_mod = bi->any_mod;
-	bi2->action = bi->action == NULL ? NULL : evas_stringshare_add(bi->action);
-	bi2->params = bi->params == NULL ? NULL : evas_stringshare_add(bi->params);
+	bi2->action = bi->action == NULL ? NULL : eina_stringshare_add(bi->action);
+	bi2->params = bi->params == NULL ? NULL : eina_stringshare_add(bi->params);
 
 	cfdata->binding.key = evas_list_append(cfdata->binding.key, bi2);
      }
@@ -152,9 +152,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    while (cfdata->binding.key)
      {
 	bi = cfdata->binding.key->data;
-	if (bi->key) evas_stringshare_del(bi->key);
-	if (bi->action) evas_stringshare_del(bi->action);
-	if (bi->params) evas_stringshare_del(bi->params);
+	if (bi->key) eina_stringshare_del(bi->key);
+	if (bi->action) eina_stringshare_del(bi->action);
+	if (bi->params) eina_stringshare_del(bi->params);
 	E_FREE(bi);
 	cfdata->binding.key = evas_list_remove_list(cfdata->binding.key, cfdata->binding.key);
      }
@@ -184,9 +184,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_config->key_bindings =
 	   evas_list_remove_list(e_config->key_bindings, e_config->key_bindings);
 
-	if (bi->key) evas_stringshare_del(bi->key);
-	if (bi->action) evas_stringshare_del(bi->action);
-	if (bi->params) evas_stringshare_del(bi->params);
+	if (bi->key) eina_stringshare_del(bi->key);
+	if (bi->action) eina_stringshare_del(bi->action);
+	if (bi->params) eina_stringshare_del(bi->params);
 	E_FREE(bi);
      }
 
@@ -198,13 +198,13 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 	bi = E_NEW(E_Config_Binding_Key, 1);
 	bi->context = bi2->context;
-	bi->key = evas_stringshare_add(bi2->key);
+	bi->key = eina_stringshare_add(bi2->key);
 	bi->modifiers = bi2->modifiers;
 	bi->any_mod = bi2->any_mod;
 	bi->action =
-	   ((!bi2->action) || (!bi2->action[0])) ? NULL : evas_stringshare_add(bi2->action);
+	   ((!bi2->action) || (!bi2->action[0])) ? NULL : eina_stringshare_add(bi2->action);
 	bi->params =
-	   ((!bi2->params) || (!bi2->params[0])) ? NULL : evas_stringshare_add(bi2->params);
+	   ((!bi2->params) || (!bi2->params[0])) ? NULL : eina_stringshare_add(bi2->params);
 
 	e_config->key_bindings = evas_list_append(e_config->key_bindings, bi);
 	e_bindings_key_add(bi->context, bi->key, bi->modifiers, bi->any_mod,
@@ -377,9 +377,9 @@ _delete_all_key_binding_cb(void *data, void *data2)
    while (cfdata->binding.key)
      {
 	bi = cfdata->binding.key->data;
-	if (bi->key) evas_stringshare_del(bi->key);
-	if (bi->action) evas_stringshare_del(bi->action);
-	if (bi->params) evas_stringshare_del(bi->params);
+	if (bi->key) eina_stringshare_del(bi->key);
+	if (bi->action) eina_stringshare_del(bi->action);
+	if (bi->params) eina_stringshare_del(bi->params);
 	E_FREE(bi);
 
 	cfdata->binding.key = evas_list_remove_list(cfdata->binding.key, cfdata->binding.key);
@@ -418,9 +418,9 @@ _delete_key_binding_cb(void *data, void *data2)
 	if (l)
 	  {
 	     bi = l->data;
-	     if (bi->key) evas_stringshare_del(bi->key);
-	     if (bi->action) evas_stringshare_del(bi->action);
-	     if (bi->params) evas_stringshare_del(bi->params);
+	     if (bi->key) eina_stringshare_del(bi->key);
+	     if (bi->action) eina_stringshare_del(bi->action);
+	     if (bi->params) eina_stringshare_del(bi->params);
 	     E_FREE(bi);
 	     cfdata->binding.key = evas_list_remove_list(cfdata->binding.key, l);
 	  }
@@ -454,9 +454,9 @@ _restore_key_binding_defaults_cb(void *data, void *data2)
    while (cfdata->binding.key)
      {
 	bi = cfdata->binding.key->data;
-	if (bi->key) evas_stringshare_del(bi->key);
-	if (bi->action) evas_stringshare_del(bi->action);
-	if (bi->params) evas_stringshare_del(bi->params);
+	if (bi->key) eina_stringshare_del(bi->key);
+	if (bi->action) eina_stringshare_del(bi->action);
+	if (bi->params) eina_stringshare_del(bi->params);
 	E_FREE(bi);
 	cfdata->binding.key = evas_list_remove_list(cfdata->binding.key, cfdata->binding.key);
      }
@@ -464,11 +464,11 @@ _restore_key_binding_defaults_cb(void *data, void *data2)
 #define CFG_KEYBIND_DFLT(_context, _key, _modifiers, _anymod, _action, _params) \
    bi = E_NEW(E_Config_Binding_Key, 1); \
    bi->context = _context; \
-   bi->key = evas_stringshare_add(_key); \
+   bi->key = eina_stringshare_add(_key); \
    bi->modifiers = _modifiers; \
    bi->any_mod = _anymod; \
-   bi->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
-   bi->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
+   bi->action = _action == NULL ? NULL : eina_stringshare_add(_action); \
+   bi->params = _params == NULL ? NULL : eina_stringshare_add(_params); \
    cfdata->binding.key = evas_list_append(cfdata->binding.key, bi)
 
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Left",
@@ -1061,7 +1061,7 @@ _grab_key_down_cb(void *data, int type, void *event)
 
 		       bi->context = E_BINDING_CONTEXT_ANY;
 		       bi->modifiers = mod;
-		       bi->key = evas_stringshare_add(ev->keyname);
+		       bi->key = eina_stringshare_add(ev->keyname);
 		       bi->action = NULL;
 		       bi->params = NULL;
 		       bi->any_mod = 0;
@@ -1076,8 +1076,8 @@ _grab_key_down_cb(void *data, int type, void *event)
 			    bi = evas_list_nth(cfdata->binding.key, n);
 
 			    bi->modifiers = mod;
-			    if (bi->key) evas_stringshare_del(bi->key);
-			    bi->key = evas_stringshare_add(ev->keyname);
+			    if (bi->key) eina_stringshare_del(bi->key);
+			    bi->key = eina_stringshare_add(ev->keyname);
 			 }
 		    } 
 
@@ -1181,16 +1181,16 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
    actd = evas_list_nth(actg->acts, a);
    if (!actd) return;
 
-   if (bi->action) evas_stringshare_del(bi->action);
+   if (bi->action) eina_stringshare_del(bi->action);
    bi->action = NULL;
 
-   if (actd->act_cmd) bi->action = evas_stringshare_add(actd->act_cmd);
+   if (actd->act_cmd) bi->action = eina_stringshare_add(actd->act_cmd);
 
-   if (bi->params) evas_stringshare_del(bi->params);
+   if (bi->params) eina_stringshare_del(bi->params);
    bi->params = NULL;
 
    if (actd->act_params) 
-     bi->params = evas_stringshare_add(actd->act_params);
+     bi->params = eina_stringshare_add(actd->act_params);
    else
      {
 	ok = 1;
@@ -1206,7 +1206,7 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 	  ok = 0;
 
 	if (ok)
-	  bi->params = evas_stringshare_add(cfdata->locals.params);
+	  bi->params = eina_stringshare_add(cfdata->locals.params);
      }
 }
 

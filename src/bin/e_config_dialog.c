@@ -28,12 +28,12 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
    cfd = E_OBJECT_ALLOC(E_Config_Dialog, E_CONFIG_DIALOG_TYPE, _e_config_dialog_free);
    cfd->view = view;
    cfd->con = con;
-   cfd->title = evas_stringshare_add(title);
-   cfd->name = evas_stringshare_add(name);
-   cfd->class = evas_stringshare_add(class);
+   cfd->title = eina_stringshare_add(title);
+   cfd->name = eina_stringshare_add(name);
+   cfd->class = eina_stringshare_add(class);
    if (icon)
      {
-	cfd->icon = evas_stringshare_add(icon);
+	cfd->icon = eina_stringshare_add(icon);
 	cfd->icon_size = icon_size;
      }
    cfd->data = data;
@@ -140,10 +140,10 @@ _e_config_dialog_free(E_Config_Dialog *cfd)
 {
    _e_config_dialog_list = evas_list_remove(_e_config_dialog_list, cfd);
    if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
-   if (cfd->title) evas_stringshare_del(cfd->title);
-   if (cfd->name) evas_stringshare_del(cfd->name);
-   if (cfd->class) evas_stringshare_del(cfd->class);
-   if (cfd->icon) evas_stringshare_del(cfd->icon);
+   if (cfd->title) eina_stringshare_del(cfd->title);
+   if (cfd->name) eina_stringshare_del(cfd->name);
+   if (cfd->class) eina_stringshare_del(cfd->class);
+   if (cfd->icon) eina_stringshare_del(cfd->icon);
    if (cfd->cfdata)
      {
 	cfd->view->free_cfdata(cfd, cfd->cfdata);

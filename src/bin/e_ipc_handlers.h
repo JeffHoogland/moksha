@@ -1066,9 +1066,9 @@ break;
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
    /* TODO: Check if file exists */
-   if (e_config->desktop_default_background) evas_stringshare_del(e_config->desktop_default_background);
+   if (e_config->desktop_default_background) eina_stringshare_del(e_config->desktop_default_background);
    e_config->desktop_default_background = NULL;
-   if (s) e_config->desktop_default_background = evas_stringshare_add(s);
+   if (s) e_config->desktop_default_background = eina_stringshare_add(s);
    e_bg_update();
    SAVE;
    END_STRING(s);
@@ -1448,9 +1448,9 @@ break;
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
    /* TODO: Check if language exists */
-   if (e_config->language) evas_stringshare_del(e_config->language);
+   if (e_config->language) eina_stringshare_del(e_config->language);
    e_config->language = NULL;
-   if (s) e_config->language = evas_stringshare_add(s);
+   if (s) e_config->language = eina_stringshare_add(s);
    if ((e_config->language) && (e_config->language[0] != 0))
      e_intl_language_set(e_config->language);
    else
@@ -1508,9 +1508,9 @@ break;
      
    E_Path_Dir *p;
    if (s) {
-      dat = evas_list_append(dat, evas_stringshare_add(s));
+      dat = evas_list_append(dat, eina_stringshare_add(s));
       FOR(dir_list) { p = l->data;
-	 dat = evas_list_append(dat, evas_stringshare_add(p->dir));
+	 dat = evas_list_append(dat, eina_stringshare_add(p->dir));
       }
    }
 
@@ -1521,7 +1521,7 @@ break;
 	const char *dir;
 	
 	dir = dat->data;
-	evas_stringshare_del(dir);
+	eina_stringshare_del(dir);
 	dat = evas_list_remove_list(dat, dat);	
      }
    e_path_dir_list_free(dir_list);
@@ -2545,8 +2545,8 @@ break;
 	 d->button = v->val3;
 	 d->mod = v->val2;
 	 d->any_mod = v->val4;
-	 d->action = ((v->str1) ? evas_stringshare_add(v->str1) : NULL);
-	 d->params = ((v->str2) ? evas_stringshare_add(v->str2) : NULL);
+	 d->action = ((v->str1) ? eina_stringshare_add(v->str1) : NULL);
+	 d->params = ((v->str2) ? eina_stringshare_add(v->str2) : NULL);
 
 	 r->bindings[count] = d;
 	 count++;
@@ -2651,8 +2651,8 @@ break;
         eb->button = bind.button;
         eb->modifiers = bind.modifiers;
         eb->any_mod = bind.any_mod;
-        if (bind.action) eb->action = evas_stringshare_add(bind.action);
-        if (bind.params) eb->params = evas_stringshare_add(bind.params);
+        if (bind.action) eb->action = eina_stringshare_add(bind.action);
+        if (bind.params) eb->params = eina_stringshare_add(bind.params);
         e_border_button_bindings_ungrab_all();
         e_bindings_mouse_add(bind.context, bind.button, bind.modifiers,
                         bind.any_mod, bind.action, bind.params);
@@ -2752,8 +2752,8 @@ break;
    if (eb)
      {
 	e_config->mouse_bindings = evas_list_remove(e_config->mouse_bindings, eb);
-        if (eb->action) evas_stringshare_del(eb->action);
-        if (eb->params) evas_stringshare_del(eb->params);
+        if (eb->action) eina_stringshare_del(eb->action);
+        if (eb->params) eina_stringshare_del(eb->params);
         E_FREE(eb);
         e_border_button_bindings_ungrab_all();
         e_bindings_mouse_del(bind.context, bind.button, bind.modifiers,
@@ -2869,11 +2869,11 @@ break;
 
 	 d = malloc(sizeof(E_Response_Binding_Key_Data));
 	 d->ctx = v->val1;
-	 d->key = ((v->str1) ? evas_stringshare_add(v->str1) : NULL);
+	 d->key = ((v->str1) ? eina_stringshare_add(v->str1) : NULL);
 	 d->mod = v->val2;
 	 d->any_mod = v->val3;
-	 d->action = ((v->str2) ? evas_stringshare_add(v->str2) : NULL);
-	 d->params = ((v->str3) ? evas_stringshare_add(v->str3) : NULL);
+	 d->action = ((v->str2) ? eina_stringshare_add(v->str2) : NULL);
+	 d->params = ((v->str3) ? eina_stringshare_add(v->str3) : NULL);
 
 	 r->bindings[count] = d;
 	 count++;
@@ -2976,9 +2976,9 @@ break;
         eb->context = bind.context;
         eb->modifiers = bind.modifiers;
         eb->any_mod = bind.any_mod;
-        if (bind.key) eb->key = evas_stringshare_add(bind.key);
-        if (bind.action) eb->action = evas_stringshare_add(bind.action);
-        if (bind.params) eb->params = evas_stringshare_add(bind.params);
+        if (bind.key) eb->key = eina_stringshare_add(bind.key);
+        if (bind.action) eb->action = eina_stringshare_add(bind.action);
+        if (bind.params) eb->params = eina_stringshare_add(bind.params);
         e_managers_keys_ungrab();
         e_bindings_key_add(bind.context, bind.key, bind.modifiers,
                 bind.any_mod, bind.action, bind.params);
@@ -3076,9 +3076,9 @@ break;
    if (eb)
      {
        e_config->key_bindings = evas_list_remove(e_config->key_bindings, eb);
-       if (eb->key) evas_stringshare_del(eb->key);
-       if (eb->action) evas_stringshare_del(eb->action);
-       if (eb->params) evas_stringshare_del(eb->params);
+       if (eb->key) eina_stringshare_del(eb->key);
+       if (eb->action) eina_stringshare_del(eb->action);
+       if (eb->params) eina_stringshare_del(eb->params);
        E_FREE(eb);
        e_managers_keys_ungrab();
        e_bindings_key_del(bind.context, bind.key, bind.modifiers,
@@ -4528,14 +4528,14 @@ break;
    STRING(s, HDL);
    if (!s)
      {
-	if (e_config->transition_start) evas_stringshare_del(e_config->transition_start);
+	if (e_config->transition_start) eina_stringshare_del(e_config->transition_start);
 	e_config->transition_start = NULL;
      }
    if ((s) && (e_theme_transition_find(s)))
      {
-	if (e_config->transition_start) evas_stringshare_del(e_config->transition_start);
+	if (e_config->transition_start) eina_stringshare_del(e_config->transition_start);
 	e_config->transition_start = NULL;
-	if (s) e_config->transition_start = evas_stringshare_add(s);
+	if (s) e_config->transition_start = eina_stringshare_add(s);
 	SAVE;
      }
    END_STRING(s);
@@ -4578,14 +4578,14 @@ break;
    STRING(s, HDL);
    if (!s)
      {
-	if (e_config->transition_desk) evas_stringshare_del(e_config->transition_desk);
+	if (e_config->transition_desk) eina_stringshare_del(e_config->transition_desk);
 	e_config->transition_desk = NULL;
      }
    if ((s) && (e_theme_transition_find(s)))
      {
-	if (e_config->transition_desk) evas_stringshare_del(e_config->transition_desk);
+	if (e_config->transition_desk) eina_stringshare_del(e_config->transition_desk);
 	e_config->transition_desk = NULL;
-	if (s) e_config->transition_desk = evas_stringshare_add(s);
+	if (s) e_config->transition_desk = eina_stringshare_add(s);
      }
    SAVE;
    END_STRING(s);
@@ -4628,14 +4628,14 @@ break;
    STRING(s, HDL);
    if (!s)
      {
-	if (e_config->transition_change) evas_stringshare_del(e_config->transition_change);
+	if (e_config->transition_change) eina_stringshare_del(e_config->transition_change);
 	e_config->transition_change = NULL;
      }
    if ((s) && (e_theme_transition_find(s)))
      {
-	if (e_config->transition_change) evas_stringshare_del(e_config->transition_change);
+	if (e_config->transition_change) eina_stringshare_del(e_config->transition_change);
 	e_config->transition_change = NULL;
-	if (s) e_config->transition_change = evas_stringshare_add(s);
+	if (s) e_config->transition_change = eina_stringshare_add(s);
        	SAVE;
      }
    END_STRING(s);
@@ -5776,9 +5776,9 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   if (e_config->input_method) evas_stringshare_del(e_config->input_method);
+   if (e_config->input_method) eina_stringshare_del(e_config->input_method);
    e_config->input_method = NULL;
-   if (s) e_config->input_method = evas_stringshare_add(s);
+   if (s) e_config->input_method = eina_stringshare_add(s);
    if ((e_config->input_method) && (e_config->input_method[0] != 0))
      e_intl_input_method_set(e_config->input_method);
    else
@@ -5975,12 +5975,12 @@ break;
 
 	 d = malloc(sizeof(E_Response_Binding_Signal_Data));
 	 d->ctx = v->val1;
-	 d->signal = ((v->str1) ? evas_stringshare_add(v->str1) : NULL);
-	 d->source = ((v->str2) ? evas_stringshare_add(v->str2) : NULL);
+	 d->signal = ((v->str1) ? eina_stringshare_add(v->str1) : NULL);
+	 d->source = ((v->str2) ? eina_stringshare_add(v->str2) : NULL);
 	 d->mod = v->val2;
 	 d->any_mod = v->val3;
-	 d->action = ((v->str3) ? evas_stringshare_add(v->str3) : NULL);
-	 d->params = ((v->str4) ? evas_stringshare_add(v->str4) : NULL);
+	 d->action = ((v->str3) ? eina_stringshare_add(v->str3) : NULL);
+	 d->params = ((v->str4) ? eina_stringshare_add(v->str4) : NULL);
 
 	 r->bindings[count] = d;
 	 count++;
@@ -6084,12 +6084,12 @@ break;
         eb = E_NEW(E_Config_Binding_Signal, 1);
         e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
         eb->context = bind.context;
-        if (bind.signal) eb->signal = evas_stringshare_add(bind.signal);
-        if (bind.source) eb->source = evas_stringshare_add(bind.source);
+        if (bind.signal) eb->signal = eina_stringshare_add(bind.signal);
+        if (bind.source) eb->source = eina_stringshare_add(bind.source);
         eb->modifiers = bind.modifiers;
         eb->any_mod = bind.any_mod;
-        if (bind.action) eb->action = evas_stringshare_add(bind.action);
-        if (bind.params) eb->params = evas_stringshare_add(bind.params);
+        if (bind.action) eb->action = eina_stringshare_add(bind.action);
+        if (bind.params) eb->params = eina_stringshare_add(bind.params);
         e_bindings_signal_add(bind.context, bind.signal, bind.source, bind.modifiers,
 			      bind.any_mod, bind.action, bind.params);
         e_config_save_queue();  
@@ -6189,10 +6189,10 @@ break;
    if (eb)
      {
 	e_config->signal_bindings = evas_list_remove(e_config->signal_bindings, eb);
-        if (eb->signal) evas_stringshare_del(eb->signal);
-        if (eb->source) evas_stringshare_del(eb->source);
-        if (eb->action) evas_stringshare_del(eb->action);
-        if (eb->params) evas_stringshare_del(eb->params);
+        if (eb->signal) eina_stringshare_del(eb->signal);
+        if (eb->source) eina_stringshare_del(eb->source);
+        if (eb->action) eina_stringshare_del(eb->action);
+        if (eb->params) eina_stringshare_del(eb->params);
         E_FREE(eb);
         e_bindings_signal_del(bind.context, bind.signal, bind.source, bind.modifiers,
 			      bind.any_mod, bind.action, bind.params);
@@ -6309,8 +6309,8 @@ break;
 	 d->z = v->val3;
 	 d->mod = v->val4;
 	 d->any_mod = v->val5;
-	 d->action = ((v->str1) ? evas_stringshare_add(v->str1) : NULL);
-	 d->params = ((v->str2) ? evas_stringshare_add(v->str2) : NULL);
+	 d->action = ((v->str1) ? eina_stringshare_add(v->str1) : NULL);
+	 d->params = ((v->str2) ? eina_stringshare_add(v->str2) : NULL);
 
 	 r->bindings[count] = d;
 	 count++;
@@ -6418,8 +6418,8 @@ break;
         eb->z = bind.z;
         eb->modifiers = bind.modifiers;
         eb->any_mod = bind.any_mod;
-        if (bind.action) eb->action = evas_stringshare_add(bind.action);
-        if (bind.params) eb->params = evas_stringshare_add(bind.params);
+        if (bind.action) eb->action = eina_stringshare_add(bind.action);
+        if (bind.params) eb->params = eina_stringshare_add(bind.params);
         e_bindings_wheel_add(bind.context, bind.direction, bind.z, bind.modifiers,
 			     bind.any_mod, bind.action, bind.params);
         e_config_save_queue();  
@@ -6519,8 +6519,8 @@ break;
    if (eb)
      {
 	e_config->wheel_bindings = evas_list_remove(e_config->wheel_bindings, eb);
-        if (eb->action) evas_stringshare_del(eb->action);
-        if (eb->params) evas_stringshare_del(eb->params);
+        if (eb->action) eina_stringshare_del(eb->action);
+        if (eb->params) eina_stringshare_del(eb->params);
         E_FREE(eb);
         e_bindings_wheel_del(bind.context, bind.direction, bind.z, bind.modifiers,
 			     bind.any_mod, bind.action, bind.params);
@@ -7461,7 +7461,7 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   if (e_config->init_default_theme) evas_stringshare_del(e_config->init_default_theme);
+   if (e_config->init_default_theme) eina_stringshare_del(e_config->init_default_theme);
    e_config->init_default_theme = NULL;
    if (s) 
      {
@@ -7474,7 +7474,7 @@ break;
 	     printf("The edje file you selected does not contain any init information.\n");
 	     exit(-1);
 	  }
-	if (f) e_config->init_default_theme = evas_stringshare_add(f);
+	if (f) e_config->init_default_theme = eina_stringshare_add(f);
      }
   SAVE;
   END_STRING(s);
@@ -7767,8 +7767,8 @@ break;
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
    if (e_config->desklock_custom_desklock_cmd)
-	   evas_stringshare_del(e_config->desklock_custom_desklock_cmd);
-   e_config->desklock_custom_desklock_cmd = evas_stringshare_add(s);   
+	   eina_stringshare_del(e_config->desklock_custom_desklock_cmd);
+   e_config->desklock_custom_desklock_cmd = eina_stringshare_add(s);   
    END_STRING(s);
 #elif (TYPE == E_REMOTE_IN)
 #endif

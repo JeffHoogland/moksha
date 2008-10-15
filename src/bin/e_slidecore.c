@@ -77,8 +77,8 @@ e_slidecore_item_add(Evas_Object *obj, const char *label, const char *icon,  voi
    API_ENTRY return;
    it = calloc(1, sizeof(E_Smart_Item));
    if (!it) return;
-   if (label) it->label = evas_stringshare_add(label);
-   if (icon) it->icon = evas_stringshare_add(icon);
+   if (label) it->label = eina_stringshare_add(label);
+   if (icon) it->icon = eina_stringshare_add(icon);
    it->func = func;
    it->data = data;
    sd->items = evas_list_append(sd->items, it);
@@ -324,8 +324,8 @@ _e_smart_del(Evas_Object *obj)
 	
 	it = sd->items->data;
 	sd->items = evas_list_remove_list(sd->items, sd->items);
-	if (it->label) evas_stringshare_del(it->label);
-	if (it->icon) evas_stringshare_del(it->icon);
+	if (it->label) eina_stringshare_del(it->label);
+	if (it->icon) eina_stringshare_del(it->icon);
 	free(it);
      }
    evas_object_del(sd->event_obj);

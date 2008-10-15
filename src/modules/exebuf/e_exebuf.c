@@ -253,7 +253,7 @@ e_exebuf_show(E_Zone *zone)
 	     
 	     ee = el->list->data;
 	     exe_list = evas_list_append(exe_list, strdup(ee->path));
-	     evas_stringshare_del(ee->path);
+	     eina_stringshare_del(ee->path);
 	     free(ee);
 	     el->list = evas_list_remove_list(el->list, el->list);
 	  }
@@ -1500,7 +1500,7 @@ _e_exebuf_idler(void *data)
 		       ee = malloc(sizeof(E_Exe));
 		       if (ee)
 			 {
-			    ee->path = evas_stringshare_add(l->data);
+			    ee->path = eina_stringshare_add(l->data);
 			    el->list = evas_list_append(el->list, ee);
 			 }
 		    }
@@ -1508,7 +1508,7 @@ _e_exebuf_idler(void *data)
 		  while (el->list)
 		    {
 		       ee = el->list->data;
-		       evas_stringshare_del(ee->path);
+		       eina_stringshare_del(ee->path);
 		       free(ee);
 		       el->list = evas_list_remove_list(el->list, el->list);
 		    }

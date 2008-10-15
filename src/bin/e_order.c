@@ -46,7 +46,7 @@ e_order_new(const char *path)
    eo = E_OBJECT_ALLOC(E_Order, E_ORDER_TYPE, _e_order_free);
    if (!eo) return NULL;
 
-   if (path) eo->path = evas_stringshare_add(path);
+   if (path) eo->path = eina_stringshare_add(path);
    _e_order_read(eo);
    eo->monitor = ecore_file_monitor_add(path, _e_order_cb_monitor, eo);
 
@@ -167,7 +167,7 @@ _e_order_free(E_Order *eo)
 	efreet_desktop_free(eo->desktops->data);
 	eo->desktops = evas_list_remove_list(eo->desktops, eo->desktops);
      }
-   if (eo->path) evas_stringshare_del(eo->path);
+   if (eo->path) eina_stringshare_del(eo->path);
    if (eo->monitor) ecore_file_monitor_del(eo->monitor);
    orders = evas_list_remove(orders, eo);
    free(eo);

@@ -678,9 +678,9 @@ e_config_init(void)
 #define IFCFGEND }
    IFCFG(0x008d);
    e_config->show_splash = 1;
-   e_config->init_default_theme = evas_stringshare_add("default.edj");
+   e_config->init_default_theme = eina_stringshare_add("default.edj");
    e_config->desktop_default_background = NULL;
-   e_config->desktop_default_name = evas_stringshare_add(_("Desktop %i, %i"));
+   e_config->desktop_default_name = eina_stringshare_add(_("Desktop %i, %i"));
    e_config->menus_scroll_speed = 1000.0;
    e_config->menus_fast_mouse_move_threshhold = 300.0;
    e_config->menus_click_drag_timeout = DEF_MENUCLICK;
@@ -750,8 +750,8 @@ e_config_init(void)
    e_config->kill_timer_wait = 10.0;
    e_config->ping_clients = 1;
    e_config->transition_start = NULL;
-   e_config->transition_desk = evas_stringshare_add("vswipe");
-   e_config->transition_change = evas_stringshare_add("crossfade");
+   e_config->transition_desk = eina_stringshare_add("vswipe");
+   e_config->transition_change = eina_stringshare_add("crossfade");
    e_config->move_info_follows = 1;
    e_config->resize_info_follows = 1;
    e_config->move_info_visible = 1;
@@ -790,7 +790,7 @@ e_config_init(void)
    e_config->exebuf_pos_min_h = 160;
    e_config->exebuf_pos_max_w = 400;
    e_config->exebuf_pos_max_h = 320;
-   e_config->exebuf_term_cmd = evas_stringshare_add("xterm -hold -e");
+   e_config->exebuf_term_cmd = eina_stringshare_add("xterm -hold -e");
    e_config->color_classes = NULL;
    e_config->use_app_icon = 0;
    e_config->cnfmdlg_disabled = 0;
@@ -826,7 +826,7 @@ e_config_init(void)
 
 #define CFG_MODULE(_name, _enabled, _delayed, _priority) \
    em = E_NEW(E_Config_Module, 1); \
-   em->name = evas_stringshare_add(_name); \
+   em->name = eina_stringshare_add(_name); \
    em->enabled = _enabled; \
    em->delayed = _delayed; \
    em->priority = _priority; \
@@ -889,7 +889,7 @@ e_config_init(void)
 	
 #define CFG_FONTFALLBACK(_name) \
    eff = E_NEW(E_Font_Fallback, 1); \
-   eff->name = evas_stringshare_add(_name); \
+   eff->name = eina_stringshare_add(_name); \
    e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, eff)
 	
 	CFG_FONTFALLBACK("New-Sung");
@@ -902,8 +902,8 @@ e_config_init(void)
 	
 #define CFG_FONTDEFAULT(_tclass, _name, _size) \
    efd = E_NEW(E_Font_Default, 1); \
-   efd->text_class = evas_stringshare_add(_tclass); \
-   efd->font = evas_stringshare_add(_name); \
+   efd->text_class = eina_stringshare_add(_tclass); \
+   efd->font = eina_stringshare_add(_name); \
    efd->size = _size; \
    e_config->font_defaults = evas_list_append(e_config->font_defaults, efd)
 	
@@ -913,8 +913,8 @@ e_config_init(void)
 	E_Config_Theme *et;
 	
 	et = E_NEW(E_Config_Theme, 1);
-	et->category = evas_stringshare_add("theme");
-	et->file = evas_stringshare_add("default.edj");
+	et->category = eina_stringshare_add("theme");
+	et->file = eina_stringshare_add("default.edj");
 	e_config->themes = evas_list_append(e_config->themes, et);
      }
      {
@@ -926,8 +926,8 @@ e_config_init(void)
    eb->button = _button; \
    eb->modifiers = _modifiers; \
    eb->any_mod = _anymod; \
-   eb->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
-   eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
+   eb->action = _action == NULL ? NULL : eina_stringshare_add(_action); \
+   eb->params = _params == NULL ? NULL : eina_stringshare_add(_params); \
    e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb)
 
 	/*
@@ -953,11 +953,11 @@ e_config_init(void)
 #define CFG_KEYBIND(_context, _key, _modifiers, _anymod, _action, _params) \
    eb = E_NEW(E_Config_Binding_Key, 1); \
    eb->context = _context; \
-   eb->key = evas_stringshare_add(_key); \
+   eb->key = eina_stringshare_add(_key); \
    eb->modifiers = _modifiers; \
    eb->any_mod = _anymod; \
-   eb->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
-   eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
+   eb->action = _action == NULL ? NULL : eina_stringshare_add(_action); \
+   eb->params = _params == NULL ? NULL : eina_stringshare_add(_params); \
    e_config->key_bindings = evas_list_append(e_config->key_bindings, eb)
 
 	/*
@@ -1118,12 +1118,12 @@ e_config_init(void)
 #define CFG_SIGNALBIND(_context, _signal, _source, _modifiers, _anymod, _action, _params) \
    eb = E_NEW(E_Config_Binding_Signal, 1); \
    eb->context = _context; \
-   eb->signal = _signal == NULL ? NULL : evas_stringshare_add(_signal); \
-   eb->source = _source == NULL ? NULL : evas_stringshare_add(_source); \
+   eb->signal = _signal == NULL ? NULL : eina_stringshare_add(_signal); \
+   eb->source = _source == NULL ? NULL : eina_stringshare_add(_source); \
    eb->modifiers = _modifiers; \
    eb->any_mod = _anymod; \
-   eb->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
-   eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
+   eb->action = _action == NULL ? NULL : eina_stringshare_add(_action); \
+   eb->params = _params == NULL ? NULL : eina_stringshare_add(_params); \
    e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb)
    
 	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1,double", 
@@ -1249,8 +1249,8 @@ e_config_init(void)
    eb->z = _z; \
    eb->modifiers = _modifiers; \
    eb->any_mod = _anymod; \
-   eb->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
-   eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
+   eb->action = _action == NULL ? NULL : eina_stringshare_add(_action); \
+   eb->params = _params == NULL ? NULL : eina_stringshare_add(_params); \
    e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb)
 
 	/*
@@ -1308,7 +1308,7 @@ e_config_init(void)
 	
 #define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size, _overlap, _autohide, _autohide_show_action, _hide_timeout, _hide_duration, _desk_show_mode, _desk_list) \
    cf_es = E_NEW(E_Config_Shelf, 1); \
-   cf_es->name = evas_stringshare_add(_name); \
+   cf_es->name = eina_stringshare_add(_name); \
    cf_es->id = ++id; \
    cf_es->container = _con; \
    cf_es->zone = _zone; \
@@ -1317,7 +1317,7 @@ e_config_init(void)
    cf_es->orient = _orient; \
    cf_es->fit_along = _fita; \
    cf_es->fit_size = _fits; \
-   cf_es->style = evas_stringshare_add(_style); \
+   cf_es->style = eina_stringshare_add(_style); \
    cf_es->size = _size; \
    cf_es->overlap = _overlap; \
    cf_es->autohide = _autohide; \
@@ -1351,8 +1351,8 @@ e_config_init(void)
    IFCFGEND;
    
    IFCFG(0x0096); /* the version # where this value(s) was introduced */
-   e_config->wallpaper_import_last_dev = evas_stringshare_add("~/");
-   e_config->wallpaper_import_last_path = evas_stringshare_add("/");
+   e_config->wallpaper_import_last_dev = eina_stringshare_add("~/");
+   e_config->wallpaper_import_last_path = eina_stringshare_add("/");
    IFCFGEND;
 
    IFCFG(0x0098);
@@ -1376,8 +1376,8 @@ e_config_init(void)
 
 #define CFG_MIME_ICON(_mime, _icon) \
    mi = E_NEW(E_Config_Mime_Icon, 1); \
-   mi->mime = evas_stringshare_add(_mime); \
-   mi->icon = evas_stringshare_add(_icon); \
+   mi->mime = eina_stringshare_add(_mime); \
+   mi->icon = eina_stringshare_add(_icon); \
    e_config->mime_icons = evas_list_append(e_config->mime_icons, mi)
 	
 	CFG_MIME_ICON("image/jpeg", "THUMB");
@@ -1393,7 +1393,7 @@ e_config_init(void)
    IFCFGEND;
 
    IFCFG(0x00103);
-   e_config->theme_default_border_style = evas_stringshare_add("default");
+   e_config->theme_default_border_style = eina_stringshare_add("default");
    IFCFGEND;
 
    IFCFG(0x00104);
@@ -1419,19 +1419,19 @@ e_config_init(void)
 	e_config->gadcons = NULL;
 #define CFG_GADCON(_name) \
    cf_gc = E_NEW(E_Config_Gadcon, 1);\
-   cf_gc->name = evas_stringshare_add(_name); \
+   cf_gc->name = eina_stringshare_add(_name); \
    cf_gc->id = ++id; \
    e_config->gadcons = evas_list_append(e_config->gadcons, cf_gc)
 #define CFG_GADCON_CLIENT(_name, _res, _size, _pos, _style, _autoscr, _resizable) \
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1); \
-   cf_gcc->name = evas_stringshare_add(_name); \
+   cf_gcc->name = eina_stringshare_add(_name); \
    cf_gcc->id = NULL; \
    cf_gcc->geom.res = _res; \
    cf_gcc->geom.size = _size; \
    cf_gcc->geom.pos = _pos; \
    cf_gcc->state_info.seq = 0; \
    cf_gcc->state_info.flags = 0; \
-   if (_style) cf_gcc->style = evas_stringshare_add(_style); \
+   if (_style) cf_gcc->style = eina_stringshare_add(_style); \
    else cf_gcc->style = NULL; \
    cf_gcc->autoscroll = _autoscr; \
    cf_gcc->resizable = _resizable; \
@@ -1513,7 +1513,7 @@ e_config_init(void)
    e_config->mouse_accel_threshold = 4;
    IFCFGEND;
 
-   if (!e_config->icon_theme) e_config->icon_theme = evas_stringshare_add("hicolor");
+   if (!e_config->icon_theme) e_config->icon_theme = eina_stringshare_add("hicolor");
 
    IFCFG(0x113)
    e_config->clientlist_max_caption_len = 0;
@@ -1727,7 +1727,7 @@ e_config_init(void)
    /* FIXME: desklock personalized password id disabled for security reasons */
    e_config->desklock_auth_method = 0;
    if (e_config->desklock_personal_passwd)
-     evas_stringshare_del(e_config->desklock_personal_passwd);
+     eina_stringshare_del(e_config->desklock_personal_passwd);
    e_config->desklock_personal_passwd = NULL;
    
    e_config_save_queue();
@@ -2124,7 +2124,7 @@ _e_config_free(void)
 
 	     em = e_config->modules->data;
 	     e_config->modules = evas_list_remove_list(e_config->modules, e_config->modules);
-	     if (em->name) evas_stringshare_del(em->name);
+	     if (em->name) eina_stringshare_del(em->name);
 	     E_FREE(em);
 	  }
 	while (e_config->font_fallbacks)
@@ -2133,7 +2133,7 @@ _e_config_free(void)
 	     
 	     eff = e_config->font_fallbacks->data;
 	     e_config->font_fallbacks = evas_list_remove_list(e_config->font_fallbacks, e_config->font_fallbacks);
-	     if (eff->name) evas_stringshare_del(eff->name);
+	     if (eff->name) eina_stringshare_del(eff->name);
 	     E_FREE(eff);
 	  }
 	while (e_config->font_defaults)
@@ -2142,8 +2142,8 @@ _e_config_free(void)
 	     
 	     efd = e_config->font_defaults->data;
 	     e_config->font_defaults = evas_list_remove_list(e_config->font_defaults, e_config->font_defaults);
-	     if (efd->text_class) evas_stringshare_del(efd->text_class);
-	     if (efd->font) evas_stringshare_del(efd->font);
+	     if (efd->text_class) eina_stringshare_del(efd->text_class);
+	     if (efd->font) eina_stringshare_del(efd->font);
 	     E_FREE(efd);
 	  }
 	while (e_config->themes)
@@ -2152,8 +2152,8 @@ _e_config_free(void)
 	     
 	     et = e_config->themes->data;
 	     e_config->themes = evas_list_remove_list(e_config->themes, e_config->themes);
-	     if (et->category) evas_stringshare_del(et->category);
-	     if (et->file) evas_stringshare_del(et->file);
+	     if (et->category) eina_stringshare_del(et->category);
+	     if (et->file) eina_stringshare_del(et->file);
 	     E_FREE(et);
 	  }
 	while (e_config->mouse_bindings)
@@ -2162,8 +2162,8 @@ _e_config_free(void)
 	     
 	     eb = e_config->mouse_bindings->data;
 	     e_config->mouse_bindings  = evas_list_remove_list(e_config->mouse_bindings, e_config->mouse_bindings);
-	     if (eb->action) evas_stringshare_del(eb->action);
-	     if (eb->params) evas_stringshare_del(eb->params);
+	     if (eb->action) eina_stringshare_del(eb->action);
+	     if (eb->params) eina_stringshare_del(eb->params);
 	     E_FREE(eb);
 	  }
 	while (e_config->key_bindings)
@@ -2172,9 +2172,9 @@ _e_config_free(void)
 	     
 	     eb = e_config->key_bindings->data;
 	     e_config->key_bindings  = evas_list_remove_list(e_config->key_bindings, e_config->key_bindings);
-	     if (eb->key) evas_stringshare_del(eb->key);
-	     if (eb->action) evas_stringshare_del(eb->action);
-	     if (eb->params) evas_stringshare_del(eb->params);
+	     if (eb->key) eina_stringshare_del(eb->key);
+	     if (eb->action) eina_stringshare_del(eb->action);
+	     if (eb->params) eina_stringshare_del(eb->params);
 	     E_FREE(eb);
 	  }
 	while (e_config->signal_bindings)
@@ -2183,10 +2183,10 @@ _e_config_free(void)
 	     
 	     eb = e_config->signal_bindings->data;
 	     e_config->signal_bindings  = evas_list_remove_list(e_config->signal_bindings, e_config->signal_bindings);
-	     if (eb->signal) evas_stringshare_del(eb->signal);
-	     if (eb->source) evas_stringshare_del(eb->source);
-	     if (eb->action) evas_stringshare_del(eb->action);
-	     if (eb->params) evas_stringshare_del(eb->params);
+	     if (eb->signal) eina_stringshare_del(eb->signal);
+	     if (eb->source) eina_stringshare_del(eb->source);
+	     if (eb->action) eina_stringshare_del(eb->action);
+	     if (eb->params) eina_stringshare_del(eb->params);
 	     E_FREE(eb);
 	  }
 	while (e_config->wheel_bindings)
@@ -2195,8 +2195,8 @@ _e_config_free(void)
 	     
 	     eb = e_config->wheel_bindings->data;
 	     e_config->wheel_bindings  = evas_list_remove_list(e_config->wheel_bindings, e_config->wheel_bindings);
-	     if (eb->action) evas_stringshare_del(eb->action);
-	     if (eb->params) evas_stringshare_del(eb->params);
+	     if (eb->action) eina_stringshare_del(eb->action);
+	     if (eb->params) eina_stringshare_del(eb->params);
 	     E_FREE(eb);
 	  }
 	while (e_config->path_append_data)
@@ -2204,7 +2204,7 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_data->data;
 	     e_config->path_append_data = evas_list_remove_list(e_config->path_append_data, e_config->path_append_data);
-	     if (epd->dir) evas_stringshare_del(epd->dir);
+	     if (epd->dir) eina_stringshare_del(epd->dir);
 	     E_FREE(epd);
 	  }
 	while (e_config->path_append_images)
@@ -2212,7 +2212,7 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_images->data;
 	     e_config->path_append_images = evas_list_remove_list(e_config->path_append_images, e_config->path_append_images);
-	     if (epd->dir) evas_stringshare_del(epd->dir);
+	     if (epd->dir) eina_stringshare_del(epd->dir);
 	     E_FREE(epd);
 	  }
 	while (e_config->path_append_fonts)
@@ -2220,7 +2220,7 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_fonts->data;
 	     e_config->path_append_fonts = evas_list_remove_list(e_config->path_append_fonts, e_config->path_append_fonts);
-	     if (epd->dir) evas_stringshare_del(epd->dir);
+	     if (epd->dir) eina_stringshare_del(epd->dir);
 	     E_FREE(epd);
 	  }
 	while (e_config->path_append_themes)
@@ -2228,7 +2228,7 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_themes->data;
 	     e_config->path_append_themes = evas_list_remove_list(e_config->path_append_themes, e_config->path_append_themes);
-	     if (epd->dir) evas_stringshare_del(epd->dir);
+	     if (epd->dir) eina_stringshare_del(epd->dir);
 	     E_FREE(epd);
 	  }
 	while (e_config->path_append_init)
@@ -2236,7 +2236,7 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_init->data;
 	     e_config->path_append_init = evas_list_remove_list(e_config->path_append_init, e_config->path_append_init);
-	     if (epd->dir) evas_stringshare_del(epd->dir);
+	     if (epd->dir) eina_stringshare_del(epd->dir);
 	     E_FREE(epd);
 	  }
 	while (e_config->path_append_icons)
@@ -2244,7 +2244,7 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_icons->data;
 	     e_config->path_append_icons = evas_list_remove_list(e_config->path_append_icons, e_config->path_append_icons);
-	     if (epd->dir) evas_stringshare_del(epd->dir);
+	     if (epd->dir) eina_stringshare_del(epd->dir);
 	     E_FREE(epd);
 	  }
 	while (e_config->path_append_modules)
@@ -2252,7 +2252,7 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_modules->data;
 	     e_config->path_append_modules = evas_list_remove_list(e_config->path_append_modules, e_config->path_append_modules);
-	     if (epd->dir) evas_stringshare_del(epd->dir);
+	     if (epd->dir) eina_stringshare_del(epd->dir);
 	     E_FREE(epd);
 	  }
 	while (e_config->path_append_backgrounds)
@@ -2260,7 +2260,7 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_backgrounds->data;
 	     e_config->path_append_backgrounds = evas_list_remove_list(e_config->path_append_backgrounds, e_config->path_append_backgrounds);
-	     if (epd->dir) evas_stringshare_del(epd->dir);
+	     if (epd->dir) eina_stringshare_del(epd->dir);
 	     E_FREE(epd);
 	  }
 	while (e_config->path_append_messages)
@@ -2268,7 +2268,7 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_messages->data;
 	     e_config->path_append_messages = evas_list_remove_list(e_config->path_append_messages, e_config->path_append_messages);
-	     if (epd->dir) evas_stringshare_del(epd->dir);
+	     if (epd->dir) eina_stringshare_del(epd->dir);
 	     E_FREE(epd);
 	  }
 	while (e_config->remembers)
@@ -2277,12 +2277,12 @@ _e_config_free(void)
 	     rem = e_config->remembers->data;
 	     e_config->remembers = evas_list_remove_list(e_config->remembers, e_config->remembers);
 	     
-	     if (rem->name) evas_stringshare_del(rem->name);
-	     if (rem->class) evas_stringshare_del(rem->class);
-	     if (rem->title) evas_stringshare_del(rem->title);		   
-	     if (rem->role) evas_stringshare_del(rem->role);
-	     if (rem->prop.border) evas_stringshare_del(rem->prop.border);
-	     if (rem->prop.command) evas_stringshare_del(rem->prop.command);
+	     if (rem->name) eina_stringshare_del(rem->name);
+	     if (rem->class) eina_stringshare_del(rem->class);
+	     if (rem->title) eina_stringshare_del(rem->title);		   
+	     if (rem->role) eina_stringshare_del(rem->role);
+	     if (rem->prop.border) eina_stringshare_del(rem->prop.border);
+	     if (rem->prop.command) eina_stringshare_del(rem->prop.command);
 	     
 	     E_FREE(rem);
 	  }
@@ -2292,25 +2292,25 @@ _e_config_free(void)
 	     cc = e_config->color_classes->data;
 	     e_config->color_classes = evas_list_remove_list(e_config->color_classes, e_config->color_classes);
 
-	     if (cc->name) evas_stringshare_del(cc->name);
+	     if (cc->name) eina_stringshare_del(cc->name);
 	     E_FREE(cc);
 	  }
-	if (e_config->init_default_theme) evas_stringshare_del(e_config->init_default_theme);
-	if (e_config->desktop_default_background) evas_stringshare_del(e_config->desktop_default_background);
-	if (e_config->desktop_default_name) evas_stringshare_del(e_config->desktop_default_name);
-	if (e_config->language) evas_stringshare_del(e_config->language);
-	if (e_config->transition_start) evas_stringshare_del(e_config->transition_start);
-	if (e_config->transition_desk) evas_stringshare_del(e_config->transition_desk);
-	if (e_config->transition_change) evas_stringshare_del(e_config->transition_change);
-	if (e_config->input_method) evas_stringshare_del(e_config->input_method);
-	if (e_config->exebuf_term_cmd) evas_stringshare_del(e_config->exebuf_term_cmd);
-	if (e_config->desklock_personal_passwd) evas_stringshare_del(e_config->desklock_personal_passwd);
-	if (e_config->desklock_background) evas_stringshare_del(e_config->desklock_background);
-	if (e_config->icon_theme) evas_stringshare_del(e_config->icon_theme);
-	if (e_config->wallpaper_import_last_dev) evas_stringshare_del(e_config->wallpaper_import_last_dev);
-	if (e_config->wallpaper_import_last_path) evas_stringshare_del(e_config->wallpaper_import_last_path);
-	if (e_config->theme_default_border_style) evas_stringshare_del(e_config->theme_default_border_style);
-	if (e_config->desklock_custom_desklock_cmd) evas_stringshare_del(e_config->desklock_custom_desklock_cmd);
+	if (e_config->init_default_theme) eina_stringshare_del(e_config->init_default_theme);
+	if (e_config->desktop_default_background) eina_stringshare_del(e_config->desktop_default_background);
+	if (e_config->desktop_default_name) eina_stringshare_del(e_config->desktop_default_name);
+	if (e_config->language) eina_stringshare_del(e_config->language);
+	if (e_config->transition_start) eina_stringshare_del(e_config->transition_start);
+	if (e_config->transition_desk) eina_stringshare_del(e_config->transition_desk);
+	if (e_config->transition_change) eina_stringshare_del(e_config->transition_change);
+	if (e_config->input_method) eina_stringshare_del(e_config->input_method);
+	if (e_config->exebuf_term_cmd) eina_stringshare_del(e_config->exebuf_term_cmd);
+	if (e_config->desklock_personal_passwd) eina_stringshare_del(e_config->desklock_personal_passwd);
+	if (e_config->desklock_background) eina_stringshare_del(e_config->desklock_background);
+	if (e_config->icon_theme) eina_stringshare_del(e_config->icon_theme);
+	if (e_config->wallpaper_import_last_dev) eina_stringshare_del(e_config->wallpaper_import_last_dev);
+	if (e_config->wallpaper_import_last_path) eina_stringshare_del(e_config->wallpaper_import_last_path);
+	if (e_config->theme_default_border_style) eina_stringshare_del(e_config->theme_default_border_style);
+	if (e_config->desklock_custom_desklock_cmd) eina_stringshare_del(e_config->desklock_custom_desklock_cmd);
 	E_FREE(e_config);
      }
 }

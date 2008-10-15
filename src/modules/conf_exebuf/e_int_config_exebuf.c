@@ -143,10 +143,10 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->exebuf_pos_max_w = cfdata->pos_max_w;
    e_config->exebuf_pos_max_h = cfdata->pos_max_h;
    if (e_config->exebuf_term_cmd)
-     evas_stringshare_del(e_config->exebuf_term_cmd);
+     eina_stringshare_del(e_config->exebuf_term_cmd);
    e_config->exebuf_term_cmd = NULL;
    if (cfdata->term_cmd) 
-     e_config->exebuf_term_cmd = evas_stringshare_add(cfdata->term_cmd);
+     e_config->exebuf_term_cmd = eina_stringshare_add(cfdata->term_cmd);
    e_config_save_queue();
    return 1;
 }

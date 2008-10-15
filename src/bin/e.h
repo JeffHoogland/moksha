@@ -72,6 +72,7 @@
 #include <Ecore_Job.h>
 #include <Ecore_File.h>
 #include <Eet.h>
+#include <eina_stringshare.h>
 #include <Edje.h>
 #include <Efreet.h>
 #include <Efreet_Mime.h>

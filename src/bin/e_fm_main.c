@@ -33,6 +33,7 @@
 #include <Evas.h>
 #include <Efreet.h>
 #include <Eet.h>
+#include <eina_stringshare.h>
 #include "config.h"
 
 #define E_TYPEDEFS
@@ -256,7 +257,7 @@ main(int argc, char **argv)
      }
 
    ecore_init();
-   ecore_string_init();
+   eina_stringshare_init();
    ecore_app_args_set(argc, (const char **)argv);
    ecore_file_init();
    ecore_ipc_init();
@@ -321,7 +322,7 @@ main(int argc, char **argv)
 
    ecore_ipc_shutdown();
    ecore_file_shutdown();
-   ecore_string_shutdown();
+   eina_stringshare_shutdown();
    ecore_shutdown();
    
    return 0;
@@ -1001,7 +1002,7 @@ _e_fm_monitor_start(int id, const char *path)
    task->id = id;
    task->type = E_FM_OP_MONITOR_START;
    task->slave = NULL;
-   task->src = evas_stringshare_add(path);
+   task->src = eina_stringshare_add(path);
    task->dst = NULL;
    task->rel = NULL;
    task->rel_to = 0;
@@ -1055,7 +1056,7 @@ _e_fm_monitor_start_try(E_Fm_Task *task)
 	/* create a new dir entry */
 	ed = calloc(1, sizeof(E_Dir));
 	ed->id = task->id;
-	ed->dir = evas_stringshare_add(task->src);
+	ed->dir = eina_stringshare_add(task->src);
 	if (!ped)
 	  {
 	     /* if no previous monitoring dir exists - this one 
@@ -1241,9 +1242,9 @@ _e_fm_task_remove(E_Fm_Task *task)
 
    _e_fm_tasks = evas_list_remove_list(_e_fm_tasks, l);
 
-   if(task->src) evas_stringshare_del(task->src);
-   if(task->dst) evas_stringshare_del(task->dst);
-   if(task->rel) evas_stringshare_del(task->rel);
+   if(task->src) eina_stringshare_del(task->src);
+   if(task->dst) eina_stringshare_del(task->dst);
+   if(task->rel) eina_stringshare_del(task->rel);
 
    free(task);
 }
@@ -1275,9 +1276,9 @@ _e_fm_mkdir(int id, const char *src, const char *rel, int rel_to, int x, int y)
    task->id = id;
    task->type = E_FM_OP_MKDIR;
    task->slave = NULL;
-   task->src = evas_stringshare_add(src);
+   task->src = eina_stringshare_add(src);
    task->dst = NULL;
-   task->rel = evas_stringshare_add(rel);
+   task->rel = eina_stringshare_add(rel);
    task->x = x;
    task->y = y;
 
@@ -1353,7 +1354,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     if (fop)
 	       {
 		  fop->id = e->ref;
-		  fop->src = evas_stringshare_add(e->data);
+		  fop->src = eina_stringshare_add(e->data);
 		  _e_fops = evas_list_append(_e_fops, fop);
 		  fop->idler = ecore_idler_add(_e_cb_fop_trash_idler, fop);
 	       }
@@ -1538,13 +1539,13 @@ static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id)
 
    if (!slave) return 0;
 	     
-   command = evas_stringshare_add(_e_prepare_command(type, args));
+   command = eina_stringshare_add(_e_prepare_command(type, args));
 
    slave->id = id;
    slave->exe = ecore_exe_pipe_run(command, ECORE_EXE_PIPE_WRITE | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR, slave );
 //   printf("EFM command: %s\n", command);
    
-   evas_stringshare_del(command);
+   eina_stringshare_del(command);
 
    _e_fm_slaves = evas_list_append(_e_fm_slaves, slave);
 
@@ -1776,7 +1777,7 @@ _e_cb_recent_clean(void *data)
 	  {
 	     ed->recent_mods = evas_list_remove_list(ed->recent_mods, pl);
 	     if (!m->done) _e_file_add_mod(ed, m->path, 5, 0);
-	     evas_stringshare_del(m->path);
+	     eina_stringshare_del(m->path);
 	     free(m);
 	  }
      }
@@ -1824,7 +1825,7 @@ _e_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing)
 	if (!skip)
 	  {
 	     m = calloc(1, sizeof(E_Mod));
-	     m->path = evas_stringshare_add(path);
+	     m->path = eina_stringshare_add(path);
 	     m->mod = 1;
 	     m->done = 1;
 	     m->timestamp = t_now;
@@ -2000,15 +2001,15 @@ _e_cb_fop_trash_idler(void *data)
 
    /* Check that 'home trash' and subsequesnt dirs exists, create if not */
    snprintf(buf, sizeof(buf), "%s/Trash", efreet_data_home_get());
-   trash_dir = evas_stringshare_add(buf);
+   trash_dir = eina_stringshare_add(buf);
    snprintf(buf, sizeof(buf), "%s/files", trash_dir);
    if (!ecore_file_mkpath(buf)) return 0;
    snprintf(buf, sizeof(buf), "%s/info", trash_dir);
    if (!ecore_file_mkpath(buf)) return 0;
 
-   filename = evas_stringshare_add(strrchr(fop->src, '/'));
+   filename = eina_stringshare_add(strrchr(fop->src, '/'));
    escname = ecore_file_escape_name(filename);
-   evas_stringshare_del(filename);
+   eina_stringshare_del(filename);
 
    /* Find path for info file. Pointer address is part of the filename to
     * alleviate some of the looping in case of multiple filenames with the
@@ -2019,7 +2020,7 @@ _e_cb_fop_trash_idler(void *data)
 		 fop, i++);
      }
    while (ecore_file_exists(buf));
-   dest = evas_stringshare_add(buf);
+   dest = eina_stringshare_add(buf);
    
    /* Try to move the file */
    if (rename(fop->src, dest)) 
@@ -2052,10 +2053,10 @@ _e_cb_fop_trash_idler(void *data)
      /* Could not create info file. Spec says to put orig file back */
      rename(dest, fop->src);
 
-   if (dest) evas_stringshare_del(dest);
-   if (trash_dir) evas_stringshare_del(trash_dir);
-   evas_stringshare_del(fop->src);
-   evas_stringshare_del(fop->dst);
+   if (dest) eina_stringshare_del(dest);
+   if (trash_dir) eina_stringshare_del(trash_dir);
+   eina_stringshare_del(fop->src);
+   eina_stringshare_del(fop->dst);
    free(fop);
    _e_fops = evas_list_remove(_e_fops, fop);
    return 0;
@@ -2160,7 +2161,7 @@ _e_fm_reorder(const char *file, const char *dst, const char *relative, int after
 static void
 _e_dir_del(E_Dir *ed)
 {
-   evas_stringshare_del(ed->dir);
+   eina_stringshare_del(ed->dir);
    if (ed->idler) ecore_idler_del(ed->idler);
    if (ed->recent_clean)
      ecore_timer_del(ed->recent_clean);
@@ -2169,7 +2170,7 @@ _e_dir_del(E_Dir *ed)
 	E_Mod *m;
 	
 	m = ed->recent_mods->data;
-	evas_stringshare_del(m->path);
+	eina_stringshare_del(m->path);
 	free(m);
 	ed->recent_mods = evas_list_remove_list(ed->recent_mods, ed->recent_mods);
      }

@@ -47,8 +47,8 @@ static void         _e_desktop_edit_cb_exec_select_cancel(void *data, E_Dialog *
 static void         _e_desktop_editor_exec_update(E_Config_Dialog_Data *cfdata);
 static void         _e_desktop_edit_select_cb(void *data, Evas_Object *obj);
 
-#define IFADD(src, dst) if (src) dst = evas_stringshare_add(src); else dst = NULL
-#define IFDEL(src) if (src) evas_stringshare_del(src);  src = NULL;
+#define IFADD(src, dst) if (src) dst = eina_stringshare_add(src); else dst = NULL
+#define IFDEL(src) if (src) eina_stringshare_del(src);  src = NULL;
 #define IFDUP(src, dst) if (src) dst = strdup(src); else dst = NULL
 #define IFFREE(src) if (src) free(src);  src = NULL;
 

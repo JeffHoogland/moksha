@@ -224,7 +224,7 @@ _e_configure_free(E_Configure *eco)
 	cat = eco->cats->data;
 	if (!cat) continue;
 	if (cat->label)
-	  evas_stringshare_del(cat->label);
+	  eina_stringshare_del(cat->label);
 	
 	while (cat->items) 
 	  {
@@ -233,13 +233,13 @@ _e_configure_free(E_Configure *eco)
 	     ci = cat->items->data;
 	     if (!ci) continue;
 	     if (ci->label)
-	       evas_stringshare_del(ci->label);
+	       eina_stringshare_del(ci->label);
 	     if (ci->icon)
-	       evas_stringshare_del(ci->icon);
+	       eina_stringshare_del(ci->icon);
 	     if (ci->cb)
 	       {
 		  if (ci->cb->path)
-		    evas_stringshare_del(ci->cb->path);
+		    eina_stringshare_del(ci->cb->path);
 		  free(ci->cb);
 	       }
 	     cat->items = evas_list_remove_list(cat->items, cat->items);
@@ -300,7 +300,7 @@ _e_configure_category_add(E_Configure *eco, const char *label, const char *icon)
 
    cat = E_NEW(E_Configure_Category, 1);
    cat->eco = eco;
-   cat->label = evas_stringshare_add(label);
+   cat->label = eina_stringshare_add(label);
    if (icon) 
      {
 	if (e_util_edje_icon_check(icon)) 
@@ -372,10 +372,10 @@ _e_configure_item_add(E_Configure_Category *cat, const char *label, const char *
    ci = E_NEW(E_Configure_Item, 1);
    cb = E_NEW(E_Configure_CB, 1);
    cb->eco = cat->eco;
-   cb->path = evas_stringshare_add(path);
+   cb->path = eina_stringshare_add(path);
    ci->cb = cb;
-   ci->label = evas_stringshare_add(label);
-   if (icon) ci->icon = evas_stringshare_add(icon);
+   ci->label = eina_stringshare_add(label);
+   if (icon) ci->icon = eina_stringshare_add(icon);
    cat->items = evas_list_append(cat->items, ci);
 }
 

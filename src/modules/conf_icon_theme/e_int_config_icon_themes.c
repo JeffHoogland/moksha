@@ -105,7 +105,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    E_Event_Config_Icon_Theme *ev;
    
    /* Actually take our cfdata settings and apply them in real life */
-   e_config->icon_theme = evas_stringshare_add(cfdata->themename);
+   e_config->icon_theme = eina_stringshare_add(cfdata->themename);
    e_config_save_queue();
 
    ev = E_NEW(E_Event_Config_Icon_Theme, 1);

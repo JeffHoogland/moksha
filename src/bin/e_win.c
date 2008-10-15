@@ -383,11 +383,11 @@ e_win_border_icon_set(E_Win *win, const char *icon)
    if (!border) return;
    if (border->internal_icon)
      {
-	evas_stringshare_del(border->internal_icon);
+	eina_stringshare_del(border->internal_icon);
 	border->internal_icon = NULL;
      }
    if (icon)
-     border->internal_icon = evas_stringshare_add(icon);
+     border->internal_icon = eina_stringshare_add(icon);
 }
 
 EAPI void 
@@ -399,11 +399,11 @@ e_win_border_icon_key_set(E_Win *win, const char *key)
    if (!border) return;
    if (border->internal_icon_key) 
      {
-	evas_stringshare_del(border->internal_icon_key);
+	eina_stringshare_del(border->internal_icon_key);
 	border->internal_icon_key = NULL;
      }
    if (key)
-     border->internal_icon_key = evas_stringshare_add(key);
+     border->internal_icon_key = eina_stringshare_add(key);
 }
 
 /* local subsystem functions */

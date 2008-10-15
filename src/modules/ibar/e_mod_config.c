@@ -148,9 +148,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    Config_Item *ci;
    
    ci = cfd->data;
-   if (ci->dir) evas_stringshare_del(ci->dir);
+   if (ci->dir) eina_stringshare_del(ci->dir);
    ci->dir = NULL;
-   if (cfdata->dir) ci->dir = evas_stringshare_add(cfdata->dir);
+   if (cfdata->dir) ci->dir = eina_stringshare_add(cfdata->dir);
    ci->show_label = cfdata->show_label;
    ci->eap_label = cfdata->eap_label;
    _ibar_config_update(ci);

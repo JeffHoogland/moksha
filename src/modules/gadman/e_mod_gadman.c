@@ -101,10 +101,10 @@ gadman_shutdown(void)
    /* free gadcons */
    e_config->gadcons = evas_list_remove(e_config->gadcons, Man->gc);
    e_config->gadcons = evas_list_remove(e_config->gadcons, Man->gc_top);
-   evas_stringshare_del(Man->gc->name);
-   evas_stringshare_del(Man->gc_top->name);
+   eina_stringshare_del(Man->gc->name);
+   eina_stringshare_del(Man->gc_top->name);
    if (Man->gc->config_dialog) e_object_del(E_OBJECT(Man->gc->config_dialog));
-   if (Man->icon_name) evas_stringshare_del(Man->icon_name);
+   if (Man->icon_name) eina_stringshare_del(Man->icon_name);
    free(Man->gc);
    free(Man->gc_top);
 
@@ -194,7 +194,7 @@ gadman_gadget_add(E_Gadcon_Client_Class *cc, int ontop)
 
    /* Create Config_Gadcon_Client */
    cf = e_gadcon_client_config_new(gc, cc->name);
-   cf->style = evas_stringshare_add(cc->default_style);
+   cf->style = eina_stringshare_add(cc->default_style);
    cf->geom.pos_x = DEFAULT_POS_X;
    cf->geom.pos_y = DEFAULT_POS_Y;
    cf->geom.size_w = DEFAULT_SIZE_W;
@@ -415,7 +415,7 @@ _gadman_gadcon_new(const char* name, int ontop)
    gc = E_OBJECT_ALLOC(E_Gadcon, E_GADCON_TYPE, NULL);
    if (!gc) return NULL;
 
-   gc->name = evas_stringshare_add(name);
+   gc->name = eina_stringshare_add(name);
    gc->layout_policy = E_GADCON_LAYOUT_POLICY_PANEL;
    gc->orient = E_GADCON_ORIENT_FLOAT;
 
@@ -497,7 +497,7 @@ _gadman_gadcon_new(const char* name, int ontop)
    if (!gc->cf)
      {
         gc->cf = E_NEW(E_Config_Gadcon, 1);
-        gc->cf->name = evas_stringshare_add(name);
+        gc->cf->name = eina_stringshare_add(name);
         gc->cf->id = gc->id;
         gc->cf->clients = NULL;
         e_config->gadcons = evas_list_append(e_config->gadcons, gc->cf);
@@ -611,7 +611,7 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
    if (!gcc) return;
 
    if (!gcc->cf->style)
-     gcc->cf->style = evas_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
+     gcc->cf->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
 
    /* plain / inset */
    mn = e_menu_new();
@@ -775,11 +775,11 @@ on_menu_style_plain(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Gadcon_Client *gcc;
 
    gcc = current;
-   if (gcc->style) evas_stringshare_del(gcc->style);
-   gcc->style = evas_stringshare_add(E_GADCON_CLIENT_STYLE_PLAIN);
+   if (gcc->style) eina_stringshare_del(gcc->style);
+   gcc->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_PLAIN);
 
-   if (gcc->cf->style) evas_stringshare_del(gcc->cf->style);
-   gcc->cf->style = evas_stringshare_add(E_GADCON_CLIENT_STYLE_PLAIN);
+   if (gcc->cf->style) eina_stringshare_del(gcc->cf->style);
+   gcc->cf->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_PLAIN);
 
    edje_object_signal_emit(gcc->o_frame, "e,state,visibility,plain", "e");
 
@@ -793,11 +793,11 @@ on_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi)
 
    gcc = current;
 
-   if (gcc->style) evas_stringshare_del(gcc->style);
-   gcc->style = evas_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
+   if (gcc->style) eina_stringshare_del(gcc->style);
+   gcc->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
 
-   if (gcc->cf->style) evas_stringshare_del(gcc->cf->style);
-   gcc->cf->style = evas_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
+   if (gcc->cf->style) eina_stringshare_del(gcc->cf->style);
+   gcc->cf->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
 
    edje_object_signal_emit(gcc->o_frame, "e,state,visibility,inset", "e");
 

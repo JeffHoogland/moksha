@@ -37,8 +37,8 @@ _e_module_layout_cb_hook(void *data, E_Border *bd)
 		      bd->zone->x + (bd->zone->w / 2),
 		      bd->zone->y + (bd->zone->h / 2));
 	e_border_resize(bd, 1, 1);
-	if (bd->bordername) evas_stringshare_del(bd->bordername);
-	bd->bordername = evas_stringshare_add("borderless");
+	if (bd->bordername) eina_stringshare_del(bd->bordername);
+	bd->bordername = eina_stringshare_add("borderless");
 	bd->client.icccm.base_w = 1;
 	bd->client.icccm.base_h = 1;
 	bd->client.icccm.min_w = 1;

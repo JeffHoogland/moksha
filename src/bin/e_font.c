@@ -111,7 +111,7 @@ e_font_available_list(void)
 	
 	efa = E_NEW(E_Font_Available, 1);
 	evas_font = l->data;
-	efa->name = evas_stringshare_add(evas_font);
+	efa->name = eina_stringshare_add(evas_font);
 	e_fonts = evas_list_append(e_fonts, efa);
      }	
 
@@ -129,7 +129,7 @@ e_font_available_list_free(Evas_List *available)
      {	
 	efa = available->data;
 	available = evas_list_remove_list(available, available);
-	if (efa->name) evas_stringshare_del(efa->name);
+	if (efa->name) eina_stringshare_del(efa->name);
 	E_FREE(efa);
     }
 }
@@ -142,11 +142,11 @@ e_font_properties_free(E_Font_Properties *efp)
         const char *str;
 
         str = efp->styles->data;
-        if (str) evas_stringshare_del(str);
+        if (str) eina_stringshare_del(str);
         efp->styles = evas_list_remove_list(efp->styles, efp->styles);
 
      }
-   if (efp->name) evas_stringshare_del(efp->name);
+   if (efp->name) eina_stringshare_del(efp->name);
    free(efp);
 }
 
@@ -207,7 +207,7 @@ _e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, con
              if (efp == NULL)
                {
                   efp = calloc(1, sizeof(E_Font_Properties));
-                  efp->name = evas_stringshare_add(name);
+                  efp->name = eina_stringshare_add(name);
                   if (font_hash) *font_hash = evas_hash_add(*font_hash, name, efp);
                }
              s2 = strchr(style, ',');
@@ -219,11 +219,11 @@ _e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, con
                   style_old = style;
                   style = calloc(sizeof(char), len + 1);
                   strncpy(style, style_old, len);
-                  efp->styles = evas_list_append(efp->styles, evas_stringshare_add(style));
+                  efp->styles = evas_list_append(efp->styles, eina_stringshare_add(style));
                   free(style);
                }
              else
-               efp->styles = evas_list_append(efp->styles, evas_stringshare_add(style));
+               efp->styles = evas_list_append(efp->styles, eina_stringshare_add(style));
           }
         free(name);
      }
@@ -233,7 +233,7 @@ _e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, con
         if (efp == NULL)
           {
              efp = calloc(1, sizeof(E_Font_Properties));
-             efp->name = evas_stringshare_add(font);
+             efp->name = eina_stringshare_add(font);
              if (font_hash) *font_hash = evas_hash_add(*font_hash, font, efp);
           }
      }
@@ -285,9 +285,9 @@ e_font_fontconfig_name_get(const char *name, const char *style)
    char buf[256];
 
    if (name == NULL) return NULL;
-   if (style == NULL || style[0] == 0) return evas_stringshare_add(name);
+   if (style == NULL || style[0] == 0) return eina_stringshare_add(name);
    snprintf(buf, 256, "%s"E_TOK_STYLE"%s", name, style);
-   return evas_stringshare_add(buf);
+   return eina_stringshare_add(buf);
 }
 
 EAPI void
@@ -300,7 +300,7 @@ e_font_fallback_clear(void)
 	eff = e_config->font_fallbacks->data;
 	e_config->font_fallbacks = 
           evas_list_remove_list(e_config->font_fallbacks, e_config->font_fallbacks);
-	if (eff->name) evas_stringshare_del(eff->name);
+	if (eff->name) eina_stringshare_del(eff->name);
 	E_FREE(eff);
     }
 }
@@ -313,7 +313,7 @@ e_font_fallback_append(const char *font)
    e_font_fallback_remove(font);
 
    eff = E_NEW(E_Font_Fallback, 1);
-   eff->name = evas_stringshare_add(font);
+   eff->name = eina_stringshare_add(font);
    e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, eff);
 }
 
@@ -325,7 +325,7 @@ e_font_fallback_prepend(const char *font)
    e_font_fallback_remove(font);
 
    eff = E_NEW(E_Font_Fallback, 1);
-   eff->name = evas_stringshare_add(font);
+   eff->name = eina_stringshare_add(font);
    e_config->font_fallbacks = evas_list_prepend(e_config->font_fallbacks, eff);
 }
 
@@ -343,7 +343,7 @@ e_font_fallback_remove(const char *font)
 	  {
 	     e_config->font_fallbacks = 
                evas_list_remove_list(e_config->font_fallbacks, next);
-	     if (eff->name) evas_stringshare_del(eff->name);
+	     if (eff->name) eina_stringshare_del(eff->name);
 	     E_FREE(eff);
 	     break;
 	  }
@@ -368,8 +368,8 @@ e_font_default_set(const char *text_class, const char *font, Evas_Font_Size size
 	efd = evas_list_data(next);
 	if (!strcmp(efd->text_class, text_class))
 	  {
-	     if (efd->font) evas_stringshare_del(efd->font);
-	     efd->font = evas_stringshare_add(font);
+	     if (efd->font) eina_stringshare_del(efd->font);
+	     efd->font = eina_stringshare_add(font);
 	     efd->size = size;
 	     /* move to the front of the list */
 	     e_config->font_defaults = 
@@ -382,8 +382,8 @@ e_font_default_set(const char *text_class, const char *font, Evas_Font_Size size
 
    /* the text class doesnt exist */
    efd = E_NEW(E_Font_Default, 1);
-   efd->text_class = evas_stringshare_add(text_class);
-   efd->font = evas_stringshare_add(font);
+   efd->text_class = eina_stringshare_add(text_class);
+   efd->font = eina_stringshare_add(font);
    efd->size = size;
 
    e_config->font_defaults = evas_list_prepend(e_config->font_defaults, efd);
@@ -431,8 +431,8 @@ e_font_default_remove(const char *text_class)
 	  {
 	     e_config->font_defaults = 
                evas_list_remove_list(e_config->font_defaults, next);
-	     if (efd->text_class) evas_stringshare_del(efd->text_class);
-	     if (efd->font) evas_stringshare_del(efd->font);
+	     if (efd->text_class) eina_stringshare_del(efd->text_class);
+	     if (efd->font) eina_stringshare_del(efd->font);
 	     E_FREE(efd);
 	     edje_text_class_del(text_class);
 	     return;

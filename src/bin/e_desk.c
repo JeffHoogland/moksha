@@ -72,7 +72,7 @@ e_desk_new(E_Zone *zone, int x, int y)
 	    (zone->num != cfname->zone)) continue;
 	if ((cfname->desk_x != desk->x) || (cfname->desk_y != desk->y)) 
           continue;
-	desk->name = evas_stringshare_add(cfname->name);
+	desk->name = eina_stringshare_add(cfname->name);
 	ok = 1;
 	break;
      }
@@ -80,7 +80,7 @@ e_desk_new(E_Zone *zone, int x, int y)
    if (!ok)
      {
    	snprintf(name, sizeof(name), _(e_config->desktop_default_name), x, y);
-   	desk->name = evas_stringshare_add(name);
+   	desk->name = eina_stringshare_add(name);
      }
 
    return desk;
@@ -93,8 +93,8 @@ e_desk_name_set(E_Desk *desk, const char *name)
 
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
-   if (desk->name) evas_stringshare_del(desk->name);
-   desk->name = evas_stringshare_add(name);
+   if (desk->name) eina_stringshare_del(desk->name);
+   desk->name = eina_stringshare_add(name);
 
    ev = E_NEW(E_Event_Desk_Name_Change, 1);
    ev->desk = desk;
@@ -114,7 +114,7 @@ e_desk_name_add(int container, int zone, int desk_x, int desk_y, const char *nam
    cfname->zone = zone;
    cfname->desk_x = desk_x;
    cfname->desk_y = desk_y;
-   if (name) cfname->name = evas_stringshare_add(name);
+   if (name) cfname->name = eina_stringshare_add(name);
    e_config->desktop_names = evas_list_append(e_config->desktop_names, cfname);
 }
 
@@ -133,7 +133,7 @@ e_desk_name_del(int container, int zone, int desk_x, int desk_y)
 	  {
 	     e_config->desktop_names = 
 	       evas_list_remove_list(e_config->desktop_names, l);
-	     if (cfname->name) evas_stringshare_del(cfname->name);
+	     if (cfname->name) eina_stringshare_del(cfname->name);
 	     free(cfname);
 	     break;
 	  }
@@ -507,7 +507,7 @@ e_desk_prev(E_Zone *zone)
 static void
 _e_desk_free(E_Desk *desk)
 {
-   if (desk->name) evas_stringshare_del(desk->name);
+   if (desk->name) eina_stringshare_del(desk->name);
    if (desk->animator) ecore_animator_del(desk->animator);
    free(desk);
 }

@@ -86,9 +86,9 @@ e_intl_shutdown(void)
    E_FREE(_e_intl_orig_xmodifiers);
 
    if (_e_intl_imc_personal_path)
-     evas_stringshare_del(_e_intl_imc_personal_path);
+     eina_stringshare_del(_e_intl_imc_personal_path);
    if (_e_intl_imc_system_path)
-     evas_stringshare_del(_e_intl_imc_system_path);
+     eina_stringshare_del(_e_intl_imc_system_path);
 
    e_intl_data_shutdown();
 
@@ -409,7 +409,7 @@ e_intl_imc_personal_path_get(void)
 	char buf[4096];
 
 	snprintf(buf, sizeof(buf), "%s/.e/e/input_methods", e_user_homedir_get());
-	_e_intl_imc_personal_path = evas_stringshare_add(buf);
+	_e_intl_imc_personal_path = eina_stringshare_add(buf);
      }
    return _e_intl_imc_personal_path;
 }
@@ -422,7 +422,7 @@ e_intl_imc_system_path_get(void)
 	char buf[4096];
 
 	snprintf(buf, sizeof(buf), "%s/data/input_methods", e_prefix_data_get());
-	_e_intl_imc_system_path = evas_stringshare_add(buf);
+	_e_intl_imc_system_path = eina_stringshare_add(buf);
      }
    return _e_intl_imc_system_path;
 }
@@ -751,22 +751,22 @@ e_intl_locale_parts_get(const char *locale)
    if (language[0] != 0)
      {
 	locale_parts->mask |= E_INTL_LOC_LANG;
-	locale_parts->lang = evas_stringshare_add(language);
+	locale_parts->lang = eina_stringshare_add(language);
      }
    if (territory[0] != 0)
      {
 	locale_parts->mask |= E_INTL_LOC_REGION;
-	locale_parts->region = evas_stringshare_add(territory);
+	locale_parts->region = eina_stringshare_add(territory);
      }
    if (codeset[0] != 0)
      {
 	locale_parts->mask |= E_INTL_LOC_CODESET;
-	locale_parts->codeset = evas_stringshare_add(codeset);
+	locale_parts->codeset = eina_stringshare_add(codeset);
      }
    if (modifier[0] != 0)
      {
 	locale_parts->mask |= E_INTL_LOC_MODIFIER;
-	locale_parts->modifier = evas_stringshare_add(modifier);
+	locale_parts->modifier = eina_stringshare_add(modifier);
      }
 
    return locale_parts;
@@ -777,10 +777,10 @@ e_intl_locale_parts_free(E_Locale_Parts *locale_parts)
 {
    if (locale_parts != NULL)
      {
-	if (locale_parts->lang) evas_stringshare_del(locale_parts->lang);
-	if (locale_parts->region) evas_stringshare_del(locale_parts->region);
-	if (locale_parts->codeset) evas_stringshare_del(locale_parts->codeset);
-	if (locale_parts->modifier) evas_stringshare_del(locale_parts->modifier);
+	if (locale_parts->lang) eina_stringshare_del(locale_parts->lang);
+	if (locale_parts->region) eina_stringshare_del(locale_parts->region);
+	if (locale_parts->codeset) eina_stringshare_del(locale_parts->codeset);
+	if (locale_parts->modifier) eina_stringshare_del(locale_parts->modifier);
 	E_FREE(locale_parts);
      }
 }

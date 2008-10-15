@@ -96,12 +96,12 @@ e_thumb_icon_file_set(Evas_Object *obj, const char *file, const char *key)
 
    eth = evas_object_data_get(obj, "e_thumbdata");
    if (!eth) return;
-   if (eth->file) evas_stringshare_del(eth->file);
+   if (eth->file) eina_stringshare_del(eth->file);
    eth->file = NULL;
-   if (eth->key) evas_stringshare_del(eth->key);
+   if (eth->key) eina_stringshare_del(eth->key);
    eth->key = NULL;
-   if (file) eth->file = evas_stringshare_add(file);
-   if (key) eth->key = evas_stringshare_add(key);
+   if (file) eth->file = eina_stringshare_add(file);
+   if (key) eth->key = eina_stringshare_add(key);
 }
 
 EAPI void
@@ -305,8 +305,8 @@ _e_thumb_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
    if (eth->queued)
      _thumb_queue = evas_list_remove(_thumb_queue, eth);
-   if (eth->file) evas_stringshare_del(eth->file);
-   if (eth->key) evas_stringshare_del(eth->key);
+   if (eth->file) eina_stringshare_del(eth->file);
+   if (eth->key) eina_stringshare_del(eth->key);
    free(eth);
 }
 

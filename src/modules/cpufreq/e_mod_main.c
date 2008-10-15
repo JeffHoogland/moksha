@@ -813,8 +813,8 @@ _cpufreq_menu_restore_governor(void *data, E_Menu *m, E_Menu_Item *mi)
    if ((!cpufreq_config->governor) || 
        (strcmp(cpufreq_config->status->cur_governor, cpufreq_config->governor)))
      {
-	if (cpufreq_config->governor) evas_stringshare_del(cpufreq_config->governor);
-	cpufreq_config->governor = evas_stringshare_add(cpufreq_config->status->cur_governor);
+	if (cpufreq_config->governor) eina_stringshare_del(cpufreq_config->governor);
+	cpufreq_config->governor = eina_stringshare_add(cpufreq_config->status->cur_governor);
      }
    e_config_save_queue();
 }
@@ -828,8 +828,8 @@ _cpufreq_menu_governor(void *data, E_Menu *m, E_Menu_Item *mi)
    if (governor)
      {
 	_cpufreq_set_governor(governor);
-	if (cpufreq_config->governor) evas_stringshare_del(cpufreq_config->governor);
-	cpufreq_config->governor = evas_stringshare_add(governor);
+	if (cpufreq_config->governor) eina_stringshare_del(cpufreq_config->governor);
+	cpufreq_config->governor = eina_stringshare_add(governor);
      }
    e_config_save_queue();
 }
@@ -938,7 +938,7 @@ e_modapi_shutdown(E_Module *m)
 	cpufreq_config->menu_frequency = NULL;
      }
    if (cpufreq_config->governor)
-     evas_stringshare_del(cpufreq_config->governor);
+     eina_stringshare_del(cpufreq_config->governor);
    if (cpufreq_config->status) _cpufreq_status_free(cpufreq_config->status);
    E_FREE(cpufreq_config->set_exe_path);
    free(cpufreq_config);

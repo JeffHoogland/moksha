@@ -65,11 +65,11 @@ e_obj_dialog_icon_set(E_Obj_Dialog *od, char *icon)
    E_OBJECT_TYPE_CHECK(od, E_OBJ_DIALOG_TYPE);
    if (od->win->border->internal_icon)
      {
-	evas_stringshare_del(od->win->border->internal_icon);
+	eina_stringshare_del(od->win->border->internal_icon);
 	od->win->border->internal_icon = NULL;
      }
    if (icon)
-     od->win->border->internal_icon = evas_stringshare_add(icon);
+     od->win->border->internal_icon = eina_stringshare_add(icon);
 }
 
 EAPI void

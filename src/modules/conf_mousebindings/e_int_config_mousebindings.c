@@ -141,8 +141,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	eb2->button = eb->button;
 	eb2->modifiers = eb->modifiers;
 	eb2->any_mod = eb->any_mod;
-	eb2->action = eb->action == NULL ? NULL : evas_stringshare_add(eb->action);
-	eb2->params = eb->params == NULL ? NULL : evas_stringshare_add(eb->params);
+	eb2->action = eb->action == NULL ? NULL : eina_stringshare_add(eb->action);
+	eb2->params = eb->params == NULL ? NULL : eina_stringshare_add(eb->params);
 
 	cfdata->binding.mouse = evas_list_append(cfdata->binding.mouse, eb2);
      }
@@ -157,8 +157,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	bw2->z = bw->z;
 	bw2->modifiers = bw->modifiers;
 	bw2->any_mod = bw->any_mod;
-	bw2->action = bw->action == NULL ? NULL : evas_stringshare_add(bw->action);
-	bw2->params = bw->params == NULL ? NULL : evas_stringshare_add(bw->params);
+	bw2->action = bw->action == NULL ? NULL : eina_stringshare_add(bw->action);
+	bw2->params = bw->params == NULL ? NULL : eina_stringshare_add(bw->params);
 
 	cfdata->binding.wheel = evas_list_append(cfdata->binding.wheel, bw2);
      }
@@ -185,8 +185,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    while (cfdata->binding.mouse)
      {
 	eb = cfdata->binding.mouse->data;
-	if (eb->action) evas_stringshare_del(eb->action);
-	if (eb->params) evas_stringshare_del(eb->params);
+	if (eb->action) eina_stringshare_del(eb->action);
+	if (eb->params) eina_stringshare_del(eb->params);
 	E_FREE(eb);
 	cfdata->binding.mouse =
 	   evas_list_remove_list(cfdata->binding.mouse, cfdata->binding.mouse);
@@ -195,8 +195,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    while (cfdata->binding.wheel)
      {
 	bw = cfdata->binding.wheel->data;
-	if (bw->action) evas_stringshare_del(bw->action);
-	if (bw->params) evas_stringshare_del(bw->params);
+	if (bw->action) eina_stringshare_del(bw->action);
+	if (bw->params) eina_stringshare_del(bw->params);
 	E_FREE(bw);
 	cfdata->binding.wheel =
 	   evas_list_remove_list(cfdata->binding.wheel, cfdata->binding.wheel);
@@ -224,8 +224,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	eb = e_config->mouse_bindings->data;
 	e_bindings_mouse_del(eb->context, eb->button, eb->modifiers, eb->any_mod,
 			     eb->action, eb->params);
-	if (eb->action) evas_stringshare_del(eb->action);
-	if (eb->params) evas_stringshare_del(eb->params);
+	if (eb->action) eina_stringshare_del(eb->action);
+	if (eb->params) eina_stringshare_del(eb->params);
 	E_FREE(eb);
 	e_config->mouse_bindings = 
 	   evas_list_remove_list(e_config->mouse_bindings, e_config->mouse_bindings);
@@ -240,8 +240,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	eb2->button = eb->button;
 	eb2->modifiers = eb->modifiers;
 	eb2->any_mod = eb->any_mod;
-	eb2->action = eb->action == NULL ? NULL : evas_stringshare_add(eb->action);
-	eb2->params = eb->params == NULL ? NULL : evas_stringshare_add(eb->params);
+	eb2->action = eb->action == NULL ? NULL : eina_stringshare_add(eb->action);
+	eb2->params = eb->params == NULL ? NULL : eina_stringshare_add(eb->params);
 
 	e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb2);
 	e_bindings_mouse_add(eb2->context, eb2->button, eb2->modifiers, eb2->any_mod,
@@ -253,8 +253,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	bw = e_config->wheel_bindings->data;
 	e_bindings_wheel_del(bw->context, bw->direction, bw->z, bw->modifiers, bw->any_mod,
 			     bw->action, bw->params);
-	if (bw->action) evas_stringshare_del(bw->action);
-	if (bw->params) evas_stringshare_del(bw->params);
+	if (bw->action) eina_stringshare_del(bw->action);
+	if (bw->params) eina_stringshare_del(bw->params);
 	E_FREE(bw);
 
 	e_config->wheel_bindings = 
@@ -271,8 +271,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	bw2->z = bw->z;
 	bw2->modifiers = bw->modifiers;
 	bw2->any_mod = bw->any_mod;
-	bw2->action = bw->action == NULL ? NULL : evas_stringshare_add(bw->action);
-	bw2->params = bw->params == NULL ? NULL : evas_stringshare_add(bw->params);
+	bw2->action = bw->action == NULL ? NULL : eina_stringshare_add(bw->action);
+	bw2->params = bw->params == NULL ? NULL : eina_stringshare_add(bw->params);
 
 	e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, bw2);
 	e_bindings_wheel_add(bw2->context, bw2->direction, bw2->z, bw2->modifiers,
@@ -485,8 +485,8 @@ _delete_all_mouse_binding_cb(void *data, void *data2)
    while (cfdata->binding.mouse)
      {
 	eb = cfdata->binding.mouse->data;
-	if (eb->action) evas_stringshare_del(eb->action);
-	if (eb->params) evas_stringshare_del(eb->params);
+	if (eb->action) eina_stringshare_del(eb->action);
+	if (eb->params) eina_stringshare_del(eb->params);
 	E_FREE(eb);
 	cfdata->binding.mouse =
 	   evas_list_remove_list(cfdata->binding.mouse, cfdata->binding.mouse);
@@ -495,8 +495,8 @@ _delete_all_mouse_binding_cb(void *data, void *data2)
    while (cfdata->binding.wheel)
      {
 	bw = cfdata->binding.wheel->data;
-	if (bw->action) evas_stringshare_del(bw->action);
-	if (bw->params) evas_stringshare_del(bw->params);
+	if (bw->action) eina_stringshare_del(bw->action);
+	if (bw->params) eina_stringshare_del(bw->params);
 	E_FREE(bw);
 	cfdata->binding.wheel =
 	   evas_list_remove_list(cfdata->binding.wheel, cfdata->binding.wheel);
@@ -534,8 +534,8 @@ _delete_mouse_binding_cb(void *data, void *data2)
 	if (l)
 	  {
 	     eb = l->data;
-	     if (eb->action) evas_stringshare_del(eb->action);
-	     if (eb->params) evas_stringshare_del(eb->params);
+	     if (eb->action) eina_stringshare_del(eb->action);
+	     if (eb->params) eina_stringshare_del(eb->params);
 	     E_FREE(eb);
 	     cfdata->binding.mouse = evas_list_remove_list(cfdata->binding.mouse, l);
 	  }
@@ -547,8 +547,8 @@ _delete_mouse_binding_cb(void *data, void *data2)
 	if (l)
 	  {
 	     bw = l->data;
-	     if (bw->action) evas_stringshare_del(bw->action);
-	     if (bw->params) evas_stringshare_del(bw->params);
+	     if (bw->action) eina_stringshare_del(bw->action);
+	     if (bw->params) eina_stringshare_del(bw->params);
 	     E_FREE(bw);
 	     cfdata->binding.wheel = evas_list_remove_list(cfdata->binding.wheel, l);
 	  }
@@ -592,8 +592,8 @@ _restore_mouse_binding_defaults_cb(void *data, void *data2)
    while (cfdata->binding.mouse)
      {
 	eb = cfdata->binding.mouse->data;
-	if (eb->action) evas_stringshare_del(eb->action);
-	if (eb->params) evas_stringshare_del(eb->params);
+	if (eb->action) eina_stringshare_del(eb->action);
+	if (eb->params) eina_stringshare_del(eb->params);
 	E_FREE(eb);
 	cfdata->binding.mouse =
 	   evas_list_remove_list(cfdata->binding.mouse, cfdata->binding.mouse);
@@ -602,8 +602,8 @@ _restore_mouse_binding_defaults_cb(void *data, void *data2)
    while (cfdata->binding.wheel)
      {
 	bw = cfdata->binding.wheel->data;
-	if (bw->action) evas_stringshare_del(bw->action);
-	if (bw->params) evas_stringshare_del(bw->params);
+	if (bw->action) eina_stringshare_del(bw->action);
+	if (bw->params) eina_stringshare_del(bw->params);
 	E_FREE(bw);
 	cfdata->binding.wheel =
 	   evas_list_remove_list(cfdata->binding.wheel, cfdata->binding.wheel);
@@ -614,8 +614,8 @@ _restore_mouse_binding_defaults_cb(void *data, void *data2)
    eb->button = _button; \
    eb->modifiers = _modifiers; \
    eb->any_mod = _anymod; \
-   eb->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
-   eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
+   eb->action = _action == NULL ? NULL : eina_stringshare_add(_action); \
+   eb->params = _params == NULL ? NULL : eina_stringshare_add(_params); \
    cfdata->binding.mouse = evas_list_append(cfdata->binding.mouse, eb) 
    
    CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_BORDER, 1, E_BINDING_MODIFIER_ALT, 0, "window_move", NULL); 
@@ -632,8 +632,8 @@ _restore_mouse_binding_defaults_cb(void *data, void *data2)
    bw->z = _z; \
    bw->modifiers = _modifiers; \
    bw->any_mod = _anymod; \
-   bw->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
-   bw->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
+   bw->action = _action == NULL ? NULL : eina_stringshare_add(_action); \
+   bw->params = _params == NULL ? NULL : eina_stringshare_add(_params); \
    cfdata->binding.wheel = evas_list_append(cfdata->binding.wheel, bw) 
    
    CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 0, -1, E_BINDING_MODIFIER_ALT, 0, 
@@ -1052,8 +1052,8 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 	params = &(bw->params);
      } 
    
-   if (*action) evas_stringshare_del(*action); 
-   if (*params) evas_stringshare_del(*params); 
+   if (*action) eina_stringshare_del(*action); 
+   if (*params) eina_stringshare_del(*params); 
    *action = NULL; 
    *params = NULL;
 
@@ -1066,9 +1066,9 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
    actd = evas_list_nth(actg->acts, a);
    if (!actd) return;
 
-   if (actd->act_cmd) *action = evas_stringshare_add(actd->act_cmd);
+   if (actd->act_cmd) *action = eina_stringshare_add(actd->act_cmd);
    if (actd->act_params) 
-     *params = evas_stringshare_add(actd->act_params);
+     *params = eina_stringshare_add(actd->act_params);
    else
      {
 	int ok = 1;
@@ -1083,7 +1083,7 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 	  ok = 0;
 
 	if (ok)
-	  *params = evas_stringshare_add(cfdata->locals.params);
+	  *params = eina_stringshare_add(cfdata->locals.params);
      }
 }
 

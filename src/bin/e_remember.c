@@ -211,12 +211,12 @@ e_remember_update(E_Remember *rem, E_Border *bd)
 {
    if (!rem) return;
    if (bd->new_client) return;
-   if (rem->name) evas_stringshare_del(rem->name);
-   if (rem->class) evas_stringshare_del(rem->class);
-   if (rem->title) evas_stringshare_del(rem->title);
-   if (rem->role) evas_stringshare_del(rem->role);
-   if (rem->prop.border) evas_stringshare_del(rem->prop.border);
-   if (rem->prop.command) evas_stringshare_del(rem->prop.command);
+   if (rem->name) eina_stringshare_del(rem->name);
+   if (rem->class) eina_stringshare_del(rem->class);
+   if (rem->title) eina_stringshare_del(rem->title);
+   if (rem->role) eina_stringshare_del(rem->role);
+   if (rem->prop.border) eina_stringshare_del(rem->prop.border);
+   if (rem->prop.command) eina_stringshare_del(rem->prop.command);
    rem->name = NULL;
    rem->class = NULL;
    rem->title = NULL;
@@ -225,15 +225,15 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    rem->prop.command = NULL;
 
    if (bd->client.icccm.name)
-     rem->name = evas_stringshare_add(bd->client.icccm.name);
+     rem->name = eina_stringshare_add(bd->client.icccm.name);
    if (bd->client.icccm.class)
-     rem->class = evas_stringshare_add(bd->client.icccm.class);
+     rem->class = eina_stringshare_add(bd->client.icccm.class);
    if (bd->client.netwm.name)
-     rem->title = evas_stringshare_add(bd->client.netwm.name);
+     rem->title = eina_stringshare_add(bd->client.netwm.name);
    else if (bd->client.icccm.title)
-     rem->title = evas_stringshare_add(bd->client.icccm.title);
+     rem->title = eina_stringshare_add(bd->client.icccm.title);
    if (bd->client.icccm.window_role)
-     rem->role = evas_stringshare_add(bd->client.icccm.window_role);
+     rem->role = eina_stringshare_add(bd->client.icccm.window_role);
 
    e_remember_match_update(rem);
 
@@ -281,7 +281,7 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    rem->prop.lock_life = bd->lock_life;
 
    if (bd->bordername)
-     rem->prop.border = evas_stringshare_add(bd->bordername);
+     rem->prop.border = eina_stringshare_add(bd->bordername);
 
    rem->prop.sticky = bd->sticky;
 
@@ -339,7 +339,7 @@ e_remember_update(E_Remember *rem, E_Border *bd)
 	  }
 	buf[k] = 0;
 	done:
-	rem->prop.command = evas_stringshare_add(buf);
+	rem->prop.command = eina_stringshare_add(buf);
      }
 
    e_config_save_queue();
@@ -456,12 +456,12 @@ static void
 _e_remember_free(E_Remember *rem)
 {
    e_config->remembers = evas_list_remove(e_config->remembers, rem);
-   if (rem->name) evas_stringshare_del(rem->name);
-   if (rem->class) evas_stringshare_del(rem->class);
-   if (rem->title) evas_stringshare_del(rem->title);
-   if (rem->role) evas_stringshare_del(rem->role);
-   if (rem->prop.border) evas_stringshare_del(rem->prop.border);
-   if (rem->prop.command) evas_stringshare_del(rem->prop.command);
+   if (rem->name) eina_stringshare_del(rem->name);
+   if (rem->class) eina_stringshare_del(rem->class);
+   if (rem->title) eina_stringshare_del(rem->title);
+   if (rem->role) eina_stringshare_del(rem->role);
+   if (rem->prop.border) eina_stringshare_del(rem->prop.border);
+   if (rem->prop.command) eina_stringshare_del(rem->prop.command);
    free(rem);
 }
 

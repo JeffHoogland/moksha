@@ -266,8 +266,8 @@ _adv_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  {
 		snprintf(path, sizeof(path), "%s/%s", p, ic->file);
 		if (Man->conf->custom_bg)
-		  evas_stringshare_del(Man->conf->custom_bg);
-		Man->conf->custom_bg = evas_stringshare_add(path);
+		  eina_stringshare_del(Man->conf->custom_bg);
+		Man->conf->custom_bg = eina_stringshare_add(path);
 	  }
 	evas_list_free(sel);
      }

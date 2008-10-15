@@ -88,7 +88,7 @@ e_module_all_load(void)
 	       _e_module_idler = ecore_idler_add(_e_module_cb_idler, NULL);
 	     _e_modules_delayed = 
 	       evas_list_append(_e_modules_delayed,
-				evas_stringshare_add(em->name));
+				eina_stringshare_add(em->name));
 	  }
 	else if (em->enabled)
 	  {
@@ -118,7 +118,7 @@ e_module_new(const char *name)
 	modpath = e_path_find(path_modules, buf);
      }
    else
-     modpath = evas_stringshare_add(name);
+     modpath = eina_stringshare_add(name);
    if (!modpath)
      {
 	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"
@@ -193,7 +193,7 @@ e_module_new(const char *name)
 init_done:
 
    _e_modules = evas_list_append(_e_modules, m);
-   m->name = evas_stringshare_add(name);
+   m->name = eina_stringshare_add(name);
    if (modpath)
      {
 	s =  ecore_file_dir_get(modpath);
@@ -205,7 +205,7 @@ init_done:
 	     free(s);
 	     if (s2)
 	       {
-		  m->dir = evas_stringshare_add(s2);
+		  m->dir = eina_stringshare_add(s2);
 		  free(s2);
 	       }
 	  }
@@ -227,12 +227,12 @@ init_done:
 	E_Config_Module *em;
 	
 	em = E_NEW(E_Config_Module, 1);
-	em->name = evas_stringshare_add(m->name);
+	em->name = eina_stringshare_add(m->name);
 	em->enabled = 0;
 	e_config->modules = evas_list_append(e_config->modules, em);
 	e_config_save_queue();
      }
-   if (modpath) evas_stringshare_del(modpath);
+   if (modpath) eina_stringshare_del(modpath);
    return m;
 }
 
@@ -422,7 +422,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    if (!m) return;
    bd = dia->win->border;
    if (!bd) return;
-   bd->internal_icon = evas_stringshare_add(icon);
+   bd->internal_icon = eina_stringshare_add(icon);
    free(icon);
 }
 
@@ -490,7 +490,7 @@ _e_module_free(E_Module *m)
 	if (!e_util_strcmp(em->name, m->name))
 	  {
 	     e_config->modules = evas_list_remove(e_config->modules, em);
-	     if (em->name) evas_stringshare_del(em->name);
+	     if (em->name) eina_stringshare_del(em->name);
 	     E_FREE(em);
 	     break;
 	  }
@@ -501,8 +501,8 @@ _e_module_free(E_Module *m)
 	m->func.save(m);
 	m->func.shutdown(m);
      }
-   if (m->name) evas_stringshare_del(m->name);
-   if (m->dir) evas_stringshare_del(m->dir);
+   if (m->name) eina_stringshare_del(m->name);
+   if (m->dir) eina_stringshare_del(m->dir);
    if (m->handle) dlclose(m->handle);
    _e_modules = evas_list_remove(_e_modules, m);
    free(m);
@@ -565,7 +565,7 @@ _e_module_cb_idler(void *data)
 	m = NULL;
 	if (name) m = e_module_new(name);
 	if (m) e_module_enable(m);
-	evas_stringshare_del(name);
+	eina_stringshare_del(name);
      }
    if (_e_modules_delayed) return 1;
    _e_module_idler = NULL;

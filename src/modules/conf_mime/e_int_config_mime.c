@@ -145,9 +145,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	t = types->data;
 	if (!t) continue;
 	if (t->name)
-	  evas_stringshare_del(t->name);
+	  eina_stringshare_del(t->name);
 	if (t->type)
-	  evas_stringshare_del(t->type);
+	  eina_stringshare_del(t->type);
 	types = evas_list_remove_list(types, types);
 	E_FREE(t);
      }
@@ -165,12 +165,12 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     g = m->globs->data;
 	     if (!g) continue;
 	     if (g->name)
-	       evas_stringshare_del(g->name);
+	       eina_stringshare_del(g->name);
 	     m->globs = evas_list_remove_list(m->globs, m->globs);
 	     E_FREE(g);
 	  }
 	if (m->mime)
-	  evas_stringshare_del(m->mime);
+	  eina_stringshare_del(m->mime);
 	
 	cfdata->mimes = evas_list_remove_list(cfdata->mimes, cfdata->mimes);
 	E_FREE(m);
@@ -347,13 +347,13 @@ _load_mimes(E_Config_Dialog_Data *cfdata, char *file)
 		  mime = E_NEW(Config_Mime, 1);
 		  if (mime)
 		    {
-		       mime->mime = evas_stringshare_add(mimetype);
+		       mime->mime = eina_stringshare_add(mimetype);
 		       if (!mime->mime) 
 			 free(mime);
 		       else 
 			 {
 			    glob = E_NEW(Config_Glob, 1);
-			    glob->name = evas_stringshare_add(ext);
+			    glob->name = eina_stringshare_add(ext);
 			    mime->globs = evas_list_append(mime->globs, glob);
 			    cfdata->mimes = evas_list_append(cfdata->mimes, mime);
 			 }
@@ -404,13 +404,13 @@ _load_globs(E_Config_Dialog_Data *cfdata, char *file)
 	     mime = E_NEW(Config_Mime, 1);
 	     if (mime)
 	       {
-		  mime->mime = evas_stringshare_add(mimetype);
+		  mime->mime = eina_stringshare_add(mimetype);
 		  if (!mime->mime) 
 		    free(mime);
 		  else 
 		    {
 		       glob = E_NEW(Config_Glob, 1);
-		       glob->name = evas_stringshare_add(ext);
+		       glob->name = eina_stringshare_add(ext);
 		       mime->globs = evas_list_append(mime->globs, glob);
 		       cfdata->mimes = evas_list_append(cfdata->mimes, mime);
 		    }
@@ -422,7 +422,7 @@ _load_globs(E_Config_Dialog_Data *cfdata, char *file)
 	     if (!glob) 
 	       {
 		  glob = E_NEW(Config_Glob, 1);
-		  glob->name = evas_stringshare_add(ext);
+		  glob->name = eina_stringshare_add(ext);
 		  mime->globs = evas_list_append(mime->globs, glob);
 	       }
 	  }
@@ -460,9 +460,9 @@ _fill_types(E_Config_Dialog_Data *cfdata)
 	if (!found) 
 	  {
 	     tmp = E_NEW(Config_Type, 1);
-	     tmp->type = evas_stringshare_add(tok);
+	     tmp->type = eina_stringshare_add(tok);
 	     tok[0] = toupper(tok[0]);
-	     tmp->name = evas_stringshare_add(tok);
+	     tmp->name = eina_stringshare_add(tok);
 	     
 	     types = evas_list_append(types, tmp);
 	  }
@@ -565,7 +565,7 @@ _cb_config(void *data, void *data2)
    if (!found) 
      {
 	mi = E_NEW(E_Config_Mime_Icon, 1);
-	mi->mime = evas_stringshare_add(m);
+	mi->mime = eina_stringshare_add(m);
      }
    
    cfdata->edit_dlg = e_int_config_mime_edit(mi, cfdata);

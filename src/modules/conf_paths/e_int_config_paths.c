@@ -117,7 +117,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     const char *dir;
 	     
 	     dir = pcd->new_user_path->data;
-	     evas_stringshare_del(dir);
+	     eina_stringshare_del(dir);
 	     pcd->new_user_path = 
 	       evas_list_remove_list(pcd->new_user_path, pcd->new_user_path);
 	  }
@@ -269,7 +269,7 @@ _ilist_update(Evas_Object *obj, CFPath_Change_Data *old, CFPath_Change_Data *new
 	     const char *dir;
 	     
 	     dir = old->new_user_path->data;
-	     evas_stringshare_del(dir);
+	     eina_stringshare_del(dir);
 	     old->new_user_path = 
 	       evas_list_remove_list(old->new_user_path, old->new_user_path);
 	  }
@@ -280,7 +280,7 @@ _ilist_update(Evas_Object *obj, CFPath_Change_Data *old, CFPath_Change_Data *new
 
 	     dir = e_widget_config_list_nth_get(obj, i);
 	     old->new_user_path = 
-	       evas_list_append(old->new_user_path, evas_stringshare_add(dir));
+	       evas_list_append(old->new_user_path, eina_stringshare_add(dir));
 	  }
      }
 

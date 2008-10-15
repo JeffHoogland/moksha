@@ -70,7 +70,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIMIT(Man->conf->anim_gad, 0, 1);
 
    /* Menu augmentation */
-   Man->icon_name = evas_stringshare_add(buf);
+   Man->icon_name = eina_stringshare_add(buf);
    Man->maug = NULL;
    Man->maug = 
      e_int_menus_menu_augmentation_add("config/1", _gadman_maug_add,

@@ -23,6 +23,8 @@
 #include <Ecore.h>
 #include <Ecore_File.h>
 
+#include <eina_stringshare.h>
+
 #define E_TYPEDEFS
 #include "e_fm_op.h"
 #undef E_TYPEDEFS
@@ -181,10 +183,10 @@ main(int argc, char **argv)
                   name = ecore_file_file_get(argv[i]);
                   task = _e_fm_op_task_new();
                   task->type = type;
-                  task->src.name = evas_stringshare_add(argv[i]);
+                  task->src.name = eina_stringshare_add(argv[i]);
 
                   snprintf(buf, PATH_MAX, "%s%s%s", argv[last], byte, name);
-                  task->dst.name = evas_stringshare_add(buf);
+                  task->dst.name = eina_stringshare_add(buf);
  
                   if (type == E_FM_OP_MOVE && rename(task->src.name, task->dst.name) == 0)
                     _e_fm_op_task_free(task);
@@ -201,8 +203,8 @@ main(int argc, char **argv)
 
              task = _e_fm_op_task_new();
              task->type = type;
-             task->src.name = evas_stringshare_add(argv[2]);
-             task->dst.name = evas_stringshare_add(argv[3]);
+             task->src.name = eina_stringshare_add(argv[2]);
+             task->dst.name = eina_stringshare_add(argv[3]);
           
              _e_fm_op_scan_queue = evas_list_append(_e_fm_op_scan_queue, task);
           }
@@ -222,7 +224,7 @@ main(int argc, char **argv)
           {
              task = _e_fm_op_task_new();
              task->type = type;
-             task->src.name = evas_stringshare_add(argv[i]);
+             task->src.name = eina_stringshare_add(argv[i]);
              
              _e_fm_op_scan_queue = evas_list_append(_e_fm_op_scan_queue, task);
              
@@ -281,9 +283,9 @@ _e_fm_op_task_free(void *t)
       return;
 
    if (task->src.name)
-      evas_stringshare_del(task->src.name);
+      eina_stringshare_del(task->src.name);
    if (task->dst.name)
-      evas_stringshare_del(task->dst.name);
+      eina_stringshare_del(task->dst.name);
 
    if (task->data)
      {
@@ -730,12 +732,12 @@ _e_fm_op_scan_idler(void *data)
              
              ntask->type = E_FM_OP_COPY_STAT_INFO;
              
-             ntask->src.name = evas_stringshare_add(task->src.name);
+             ntask->src.name = eina_stringshare_add(task->src.name);
              memcpy(&(ntask->src.st), &(task->src.st), sizeof(struct stat));
              
              if (task->dst.name)
                {
-                  ntask->dst.name = evas_stringshare_add(task->dst.name);
+                  ntask->dst.name = eina_stringshare_add(task->dst.name);
                }
              else
                {
@@ -765,13 +767,13 @@ _e_fm_op_scan_idler(void *data)
         
         snprintf(buf, sizeof(buf), "%s/%s", task->src.name,
               de->d_name);
-        ntask->src.name = evas_stringshare_add(buf);
+        ntask->src.name = eina_stringshare_add(buf);
         
         if (task->dst.name)
           {
              snprintf(buf, sizeof(buf), "%s/%s", task->dst.name,
                    de->d_name);
-             ntask->dst.name = evas_stringshare_add(buf);
+             ntask->dst.name = eina_stringshare_add(buf);
           }
         else
           {
@@ -1319,10 +1321,10 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
         _e_fm_op_update_progress(NULL, 0, task->src.st.st_size);
 
         ctask = _e_fm_op_task_new();
-        ctask->src.name = evas_stringshare_add(task->src.name);
+        ctask->src.name = eina_stringshare_add(task->src.name);
         memcpy(&(ctask->src.st), &(task->src.st), sizeof(struct stat));
         if (task->dst.name)
-          ctask->dst.name = evas_stringshare_add(task->dst.name);
+          ctask->dst.name = eina_stringshare_add(task->dst.name);
         ctask->type = E_FM_OP_COPY;
         
         _e_fm_op_work_queue = evas_list_append(_e_fm_op_work_queue, ctask);
@@ -1332,10 +1334,10 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
         _e_fm_op_update_progress(NULL, 0, REMOVECHUNKSIZE);
         
         ctask = _e_fm_op_task_new();
-        ctask->src.name = evas_stringshare_add(task->src.name);
+        ctask->src.name = eina_stringshare_add(task->src.name);
         memcpy(&(ctask->src.st), &(task->src.st), sizeof(struct stat));
         if (task->dst.name)
-          ctask->dst.name = evas_stringshare_add(task->dst.name);
+          ctask->dst.name = eina_stringshare_add(task->dst.name);
         ctask->type = E_FM_OP_COPY_STAT_INFO;
         
         _e_fm_op_work_queue = evas_list_append(_e_fm_op_work_queue, ctask);
@@ -1345,10 +1347,10 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
         _e_fm_op_update_progress(NULL, 0, REMOVECHUNKSIZE);
 
         rtask = _e_fm_op_task_new();
-        rtask->src.name = evas_stringshare_add(task->src.name);
+        rtask->src.name = eina_stringshare_add(task->src.name);
         memcpy(&(rtask->src.st), &(task->src.st), sizeof(struct stat));
         if (task->dst.name)
-          rtask->dst.name = evas_stringshare_add(task->dst.name);
+          rtask->dst.name = eina_stringshare_add(task->dst.name);
         rtask->type = E_FM_OP_REMOVE;
         
         _e_fm_op_work_queue = evas_list_prepend(_e_fm_op_work_queue, rtask);
@@ -1360,10 +1362,10 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
         _e_fm_op_update_progress(NULL, 0, task->src.st.st_size);
         ctask = _e_fm_op_task_new();
 
-        ctask->src.name = evas_stringshare_add(task->src.name);
+        ctask->src.name = eina_stringshare_add(task->src.name);
         memcpy(&(ctask->src.st), &(task->src.st), sizeof(struct stat));
         if (task->dst.name)
-          ctask->dst.name = evas_stringshare_add(task->dst.name);
+          ctask->dst.name = eina_stringshare_add(task->dst.name);
         ctask->type = E_FM_OP_COPY;
 
         _e_fm_op_work_queue = evas_list_prepend(_e_fm_op_work_queue, ctask);
@@ -1372,10 +1374,10 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
         _e_fm_op_update_progress(NULL, 0, REMOVECHUNKSIZE);
         rtask = _e_fm_op_task_new();
 
-        rtask->src.name = evas_stringshare_add(task->src.name);
+        rtask->src.name = eina_stringshare_add(task->src.name);
         memcpy(&(rtask->src.st), &(task->src.st), sizeof(struct stat));
         if (task->dst.name)
-          rtask->dst.name = evas_stringshare_add(task->dst.name);
+          rtask->dst.name = eina_stringshare_add(task->dst.name);
         rtask->type = E_FM_OP_REMOVE;
 
         /* We put remove task after the separator. Work idler won't go 

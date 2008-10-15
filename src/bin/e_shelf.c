@@ -119,7 +119,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      }
    es->fit_along = 1;
    es->layer = layer;
-   es->style = evas_stringshare_add(style);
+   es->style = eina_stringshare_add(style);
 
    es->o_event = evas_object_rectangle_add(es->evas);
    evas_object_color_set(es->o_event, 0, 0, 0, 0);
@@ -137,7 +137,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_shelf_cb_mouse_out, es));
  
    es->o_base = edje_object_add(es->evas);
-   es->name = evas_stringshare_add(name);
+   es->name = eina_stringshare_add(name);
    snprintf(buf, sizeof(buf), "e/shelf/%s/base", es->style);
    evas_object_resize(es->o_base, es->w, es->h);
    if (!e_theme_edje_object_set(es->o_base, "base/theme/shelf", buf))
@@ -396,22 +396,22 @@ e_shelf_save(E_Shelf *es)
    if (es->cfg)
      {
 	es->cfg->orient = es->gadcon->orient;
-	if (es->cfg->style) evas_stringshare_del(es->cfg->style);
-	es->cfg->style = evas_stringshare_add(es->style);
+	if (es->cfg->style) eina_stringshare_del(es->cfg->style);
+	es->cfg->style = eina_stringshare_add(es->style);
      }
    else
      {
 	E_Config_Shelf *cf_es;
 	
 	cf_es = E_NEW(E_Config_Shelf, 1);
-	cf_es->name = evas_stringshare_add(es->name);
+	cf_es->name = eina_stringshare_add(es->name);
 	cf_es->container = es->zone->container->num;
 	cf_es->zone = es->zone->num;
 	if (es->popup) cf_es->popup = 1;
 	cf_es->layer = es->layer;
 	e_config->shelves = evas_list_append(e_config->shelves, cf_es);
 	cf_es->orient = es->gadcon->orient;
-	cf_es->style = evas_stringshare_add(es->style);
+	cf_es->style = eina_stringshare_add(es->style);
 	cf_es->fit_along = es->fit_along;
 	cf_es->fit_size = es->fit_size;
 	cf_es->overlap = 0;
@@ -431,8 +431,8 @@ e_shelf_unsave(E_Shelf *es)
    if (es->cfg)
      {
 	e_config->shelves = evas_list_remove(e_config->shelves, es->cfg);
-	evas_stringshare_del(es->cfg->name);
-	if (es->cfg->style) evas_stringshare_del(es->cfg->style);
+	eina_stringshare_del(es->cfg->name);
+	if (es->cfg->style) eina_stringshare_del(es->cfg->style);
 	free(es->cfg);
      }
 }
@@ -571,8 +571,8 @@ e_shelf_style_set(E_Shelf *es, const char *style)
    if (!es->o_base) return;
 
    if (es->style)
-     evas_stringshare_del(es->style);
-   es->style = evas_stringshare_add(style);
+     eina_stringshare_del(es->style);
+   es->style = eina_stringshare_add(style);
    
    if (style)
      snprintf(buf, sizeof(buf), "e/shelf/%s/base", style);
@@ -717,8 +717,8 @@ _e_shelf_free(E_Shelf *es)
    if (es->config_dialog) e_object_del(E_OBJECT(es->config_dialog));
    shelves = evas_list_remove(shelves, es);
    e_object_del(E_OBJECT(es->gadcon));
-   evas_stringshare_del(es->name);
-   evas_stringshare_del(es->style);
+   eina_stringshare_del(es->name);
+   eina_stringshare_del(es->style);
    evas_object_del(es->o_event);
    evas_object_del(es->o_base);
    if (es->popup)
@@ -1156,8 +1156,8 @@ _e_shelf_cb_confirm_dialog_yes(void *data)
    if (e_object_is_del(E_OBJECT(es))) return;
    e_object_del(E_OBJECT(es));
    e_config->shelves = evas_list_remove(e_config->shelves, cfg);
-   if (cfg->name) evas_stringshare_del(cfg->name);
-   if (cfg->style) evas_stringshare_del(cfg->style);
+   if (cfg->name) eina_stringshare_del(cfg->name);
+   if (cfg->style) eina_stringshare_del(cfg->style);
    E_FREE(cfg);
 
    e_config_save_queue();
@@ -1178,8 +1178,8 @@ _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 	if (e_object_is_del(E_OBJECT(es))) return;
 	e_object_del(E_OBJECT(es));
 	e_config->shelves = evas_list_remove(e_config->shelves, cfg);
-	if (cfg->name) evas_stringshare_del(cfg->name);
-	if (cfg->style) evas_stringshare_del(cfg->style);
+	if (cfg->name) eina_stringshare_del(cfg->name);
+	if (cfg->style) eina_stringshare_del(cfg->style);
 	E_FREE(cfg);
 	
 	e_config_save_queue();

@@ -89,8 +89,8 @@ e_slidesel_item_add(Evas_Object *obj, const char *label, const char *icon, void 
    it = calloc(1, sizeof(E_Smart_Item));
    if (!it) return;
    it->sd = sd;
-   if (label) it->label = evas_stringshare_add(label);
-   if (icon) it->icon = evas_stringshare_add(icon);
+   if (label) it->label = eina_stringshare_add(label);
+   if (icon) it->icon = eina_stringshare_add(icon);
    it->func = func;
    it->data = data;
    sd->items = evas_list_append(sd->items, it);

@@ -51,8 +51,8 @@ _mixer_gadget_configuration_defaults(E_Mixer_Gadget_Config *conf)
 	return 0;
      }
 
-   conf->card = evas_stringshare_add(card);
-   conf->channel_name = evas_stringshare_add(channel);
+   conf->card = eina_stringshare_add(card);
+   conf->channel_name = eina_stringshare_add(channel);
    conf->lock_sliders = 1;
    conf->show_locked = 0;
 
@@ -77,7 +77,7 @@ _mixer_gadget_configuration_new(E_Mixer_Module_Config *mod_conf, const char *id)
 	return NULL;
      }
 
-   conf->id = evas_stringshare_add(id);
+   conf->id = eina_stringshare_add(id);
    mod_conf->gadgets = evas_hash_direct_add(mod_conf->gadgets, conf->id, conf);
 
    return conf;
@@ -90,11 +90,11 @@ _mixer_gadget_configuration_free_int(E_Mixer_Gadget_Config *conf)
      e_object_del(E_OBJECT(conf->dialog));
 
    if (conf->card)
-     evas_stringshare_del(conf->card);
+     eina_stringshare_del(conf->card);
    if (conf->channel_name)
-     evas_stringshare_del(conf->channel_name);
+     eina_stringshare_del(conf->channel_name);
 
-   evas_stringshare_del(conf->id);
+   eina_stringshare_del(conf->id);
    free(conf);
 }
 
@@ -785,7 +785,7 @@ _mixer_sys_setup_default_card(E_Mixer_Instance *inst)
 
    conf = inst->conf;
    if (conf->card)
-     evas_stringshare_del(conf->card);
+     eina_stringshare_del(conf->card);
 
    card = e_mixer_system_get_default_card();
    if (!card)
@@ -795,7 +795,7 @@ _mixer_sys_setup_default_card(E_Mixer_Instance *inst)
    if (!inst->sys)
      goto system_error;
 
-   conf->card = evas_stringshare_add(card);
+   conf->card = eina_stringshare_add(card);
    free(card);
    return 1;
 
@@ -815,7 +815,7 @@ _mixer_sys_setup_default_channel(E_Mixer_Instance *inst)
 
    conf = inst->conf;
    if (conf->channel_name)
-     evas_stringshare_del(conf->channel_name);
+     eina_stringshare_del(conf->channel_name);
 
    channel_name = e_mixer_system_get_default_channel_name(inst->sys);
    if (!channel_name)
@@ -825,7 +825,7 @@ _mixer_sys_setup_default_channel(E_Mixer_Instance *inst)
    if (!inst->channel)
      goto system_error;
 
-   conf->channel_name = evas_stringshare_add(channel_name);
+   conf->channel_name = eina_stringshare_add(channel_name);
    free(channel_name);
    return 1;
 
@@ -904,7 +904,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    if (!ctxt->conf->default_gc_id)
      {
-	ctxt->conf->default_gc_id = evas_stringshare_add(id);
+	ctxt->conf->default_gc_id = eina_stringshare_add(id);
 	ctxt->default_instance = inst;
      }
    else if ((!ctxt->default_instance) ||

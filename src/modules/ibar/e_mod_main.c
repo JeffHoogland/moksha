@@ -135,7 +135,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    ci = _ibar_config_item_get(id);
    inst->ci = ci;
-   if (!ci->dir) ci->dir = evas_stringshare_add("default");
+   if (!ci->dir) ci->dir = eina_stringshare_add("default");
    b = _ibar_new(gc->evas, inst);
    o = b->o_box;
    gcc = e_gadcon_client_new(gc, name, id, style, o);
@@ -241,7 +241,7 @@ _gc_id_del(const char *id)
    ci = _ibar_config_item_get(id);
    if (ci)
      {
-	if (ci->id) evas_stringshare_del(ci->id);
+	if (ci->id) eina_stringshare_del(ci->id);
 	ibar_config->items = evas_list_remove(ibar_config->items, ci);
      }
 }
@@ -464,7 +464,7 @@ _ibar_config_item_get(const char *id)
 	  }
      }
    ci = E_NEW(Config_Item, 1);
-   ci->id = evas_stringshare_add(id);
+   ci->id = eina_stringshare_add(id);
    ci->show_label = 1;
    ci->eap_label = 0;
    ibar_config->items = evas_list_append(ibar_config->items, ci);
@@ -1229,8 +1229,8 @@ e_modapi_init(E_Module *m)
 	ibar_config = E_NEW(Config, 1);
 	
 	ci = E_NEW(Config_Item, 1);
-	ci->id = evas_stringshare_add("0");
-	ci->dir = evas_stringshare_add("default");
+	ci->id = eina_stringshare_add("0");
+	ci->dir = eina_stringshare_add("default");
 	ci->show_label = 1;
 	ci->eap_label = 0;
 	ibar_config->items = evas_list_append(ibar_config->items, ci);
@@ -1279,8 +1279,8 @@ e_modapi_shutdown(E_Module *m)
 	
 	ci = ibar_config->items->data;
 	ibar_config->items = evas_list_remove_list(ibar_config->items, ibar_config->items);
-	if (ci->id) evas_stringshare_del(ci->id);
-	if (ci->dir) evas_stringshare_del(ci->dir);
+	if (ci->id) eina_stringshare_del(ci->id);
+	if (ci->dir) eina_stringshare_del(ci->dir);
 	free(ci);
      }
    free(ibar_config);

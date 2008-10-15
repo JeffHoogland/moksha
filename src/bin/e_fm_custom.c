@@ -36,8 +36,8 @@ e_fm2_custom_file_init(void)
    eddc.version = EET_DATA_DESCRIPTOR_CLASS_VERSION;
    eddc.func.mem_alloc = NULL;
    eddc.func.mem_free = NULL;
-   eddc.func.str_alloc = (char *(*)(const char *)) evas_stringshare_add;
-   eddc.func.str_free = (void (*)(const char *)) evas_stringshare_del;
+   eddc.func.str_alloc = (char *(*)(const char *)) eina_stringshare_add;
+   eddc.func.str_free = (void (*)(const char *)) eina_stringshare_del;
    eddc.func.list_next = (void *(*)(void *)) evas_list_next;
    eddc.func.list_append = (void *(*)(void *l, void *d)) evas_list_append;
    eddc.func.list_data = (void *(*)(void *)) evas_list_data;
@@ -108,9 +108,9 @@ e_fm2_custom_file_set(const char *path, E_Fm2_Custom_File *cf)
 	  {
 	     memcpy(cf2, cf, sizeof(E_Fm2_Custom_File));
 	     if (cf->icon.icon)
-	       cf2->icon.icon = evas_stringshare_add(cf->icon.icon);
+	       cf2->icon.icon = eina_stringshare_add(cf->icon.icon);
 	     if (cf->label)
-	       cf2->label = evas_stringshare_add(cf->label);
+	       cf2->label = eina_stringshare_add(cf->label);
 	     _e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash, path, cf2);
 	  }
      }
@@ -137,8 +137,8 @@ e_fm2_custom_file_del(const char *path)
 	       {
 		  _e_fm2_custom_hash = evas_hash_del(_e_fm2_custom_hash,
 						     l->data, cf2);
-		  if (cf2->icon.icon) evas_stringshare_del(cf2->icon.icon);
-		  if (cf2->label) evas_stringshare_del(cf2->label);
+		  if (cf2->icon.icon) eina_stringshare_del(cf2->icon.icon);
+		  if (cf2->label) eina_stringshare_del(cf2->label);
 		  free(cf2);
 	       }
 	  }
@@ -163,8 +163,8 @@ e_fm2_custom_file_rename(const char *path, const char *new_path)
 	cf = evas_hash_find(_e_fm2_custom_hash, new_path);
 	if (cf)
 	  {
-	     if (cf->icon.icon) evas_stringshare_del(cf->icon.icon);
-	     if (cf->label) evas_stringshare_del(cf->label);
+	     if (cf->icon.icon) eina_stringshare_del(cf->icon.icon);
+	     if (cf->label) eina_stringshare_del(cf->label);
 	     free(cf);
 	  }
 	_e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash, new_path, cf2);
@@ -186,8 +186,8 @@ e_fm2_custom_file_rename(const char *path, const char *new_path)
 		  cf = evas_hash_find(_e_fm2_custom_hash, buf);
 		  if (cf)
 		    {
-		       if (cf->icon.icon) evas_stringshare_del(cf->icon.icon);
-		       if (cf->label) evas_stringshare_del(cf->label);
+		       if (cf->icon.icon) eina_stringshare_del(cf->icon.icon);
+		       if (cf->label) eina_stringshare_del(cf->label);
 		       free(cf);
 		    }
 		  _e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash,
@@ -276,8 +276,8 @@ _e_fm2_custom_file_hash_foreach(const Evas_Hash *hash, const char *key, void *da
    E_Fm2_Custom_File *cf;
    
    cf = data;
-   if (cf->icon.icon) evas_stringshare_del(cf->icon.icon);
-   if (cf->label) evas_stringshare_del(cf->label);
+   if (cf->icon.icon) eina_stringshare_del(cf->icon.icon);
+   if (cf->label) eina_stringshare_del(cf->label);
    free(cf);
    return 1;
 }

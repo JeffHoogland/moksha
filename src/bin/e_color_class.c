@@ -41,7 +41,7 @@ e_color_class_set(const char *color_class, int r, int g, int b, int a, int r2, i
     {
        cc = E_NEW(E_Color_Class, 1);
        e_config->color_classes = evas_list_append(e_config->color_classes, cc);
-       cc->name = evas_stringshare_add(color_class);
+       cc->name = eina_stringshare_add(color_class);
        cc->r = cc->g = cc->b = cc->a = 255;
        cc->r2 = cc->g2 = cc->b2 = cc->a2 = 255;
        cc->r3 = cc->g3 = cc->b3 = cc->a3 = 255;
@@ -77,7 +77,7 @@ e_color_class_del(const char *name)
     {
        e_config->color_classes = evas_list_remove(e_config->color_classes, cc);
        edje_color_class_del(cc->name);
-       evas_stringshare_del(cc->name);
+       eina_stringshare_del(cc->name);
        E_FREE(cc);
 
        e_config_save_queue();

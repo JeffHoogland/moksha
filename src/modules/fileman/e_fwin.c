@@ -117,6 +117,8 @@ static Evas_List *fwins = NULL;
 EAPI int
 e_fwin_init(void)
 {
+   eina_stringshare_init();
+
    return 1;
 }
 
@@ -132,6 +134,9 @@ e_fwin_shutdown(void)
 	e_object_del(E_OBJECT(l->data));
 	l = evas_list_remove_list(l, l);
      }
+
+   eina_stringshare_shutdown();
+
    return 1;
 }
 
@@ -435,9 +440,9 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    if (fwin->win->border)
      {
 	if (fwin->win->border->internal_icon)
-	  evas_stringshare_del(fwin->win->border->internal_icon);
+	  eina_stringshare_del(fwin->win->border->internal_icon);
 	fwin->win->border->internal_icon = 
-	  evas_stringshare_add("enlightenment/fileman");
+	  eina_stringshare_add("enlightenment/fileman");
      }
    
    return fwin;
@@ -464,10 +469,10 @@ _e_fwin_free(E_Fwin *fwin)
      ecore_event_handler_del(fwin->zone_del_handler);
    
    fwins = evas_list_remove(fwins, fwin);
-   if (fwin->wallpaper_file) evas_stringshare_del(fwin->wallpaper_file);
-   if (fwin->overlay_file) evas_stringshare_del(fwin->overlay_file);
-   if (fwin->scrollframe_file) evas_stringshare_del(fwin->scrollframe_file);
-   if (fwin->theme_file) evas_stringshare_del(fwin->theme_file);
+   if (fwin->wallpaper_file) eina_stringshare_del(fwin->wallpaper_file);
+   if (fwin->overlay_file) eina_stringshare_del(fwin->overlay_file);
+   if (fwin->scrollframe_file) eina_stringshare_del(fwin->scrollframe_file);
+   if (fwin->theme_file) eina_stringshare_del(fwin->theme_file);
    if (fwin->fad)
      {
 	e_object_del(E_OBJECT(fwin->fad->dia));
@@ -563,18 +568,18 @@ _e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev
    /* get a X-something custom tage from the .desktop for the dir */
    res = ecore_hash_get(ef->x, key);
    /* free the old path */
-   if (prev_path) evas_stringshare_del(prev_path);
+   if (prev_path) eina_stringshare_del(prev_path);
    /* if there was no key found - return NULL */
    if (!res) return NULL;
    
    /* it's a full path */
    if (res[0] == '/')
-     ret = evas_stringshare_add(res);
+     ret = eina_stringshare_add(res);
    /* relative path to the dir */
    else
      {
 	snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->fm_obj), res);
-	ret = evas_stringshare_add(buf);
+	ret = eina_stringshare_add(buf);
      }
    return ret;
 }
@@ -1177,10 +1182,10 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 			    E_Fm2_Custom_File *cf;
 			    
 			    if (fwin2->win->border->internal_icon)
-			      evas_stringshare_del(fwin2->win->border->internal_icon);
+			      eina_stringshare_del(fwin2->win->border->internal_icon);
 			    fwin2->win->border->internal_icon = NULL;
 			    if (fwin2->win->border->internal_icon_key)
-			      evas_stringshare_del(fwin2->win->border->internal_icon_key);
+			      eina_stringshare_del(fwin2->win->border->internal_icon_key);
 			    fwin2->win->border->internal_icon_key = NULL;
 			    
 			    if (!strcmp(evas_object_type_get(oic), "edje"))
@@ -1189,17 +1194,17 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 				 if (file)
 				   {
 				      fwin2->win->border->internal_icon = 
-					evas_stringshare_add(file);
+					eina_stringshare_add(file);
 				      if (group)
 					fwin2->win->border->internal_icon_key = 
-					evas_stringshare_add(group);
+					eina_stringshare_add(group);
 				   }
 			      }
 			    else
 			      {
 				 file = e_icon_file_get(oic);
 				 fwin2->win->border->internal_icon = 
-				   evas_stringshare_add(file);
+				   eina_stringshare_add(file);
 			      }
 			    evas_object_del(oic);
 			    

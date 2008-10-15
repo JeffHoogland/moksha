@@ -650,9 +650,9 @@ main(int argc, char **argv)
 	if (list)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/.e/e/icons", e_user_homedir_get());
-	     ecore_list_prepend(list, (void *)ecore_string_instance(buf));
+	     ecore_list_prepend(list, (void *)eina_stringshare_add(buf));
 	     snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
-	     ecore_list_prepend(list, (void *)ecore_string_instance(buf));
+	     ecore_list_prepend(list, (void *)eina_stringshare_add(buf));
 	  }
      }
    efreet_icon_extension_add(".edj");

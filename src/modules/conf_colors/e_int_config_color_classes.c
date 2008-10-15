@@ -171,8 +171,8 @@ _fill_data_hash(E_Config_Dialog_Data *cfdata, const CFColor_Hash *cfhash)
 
 	if (cfhash[i].key) 
 	  {
-	     cfc->key = evas_stringshare_add(cfhash[i].key);
-	     cfc->name = evas_stringshare_add(_(cfhash[i].name));
+	     cfc->key = eina_stringshare_add(cfhash[i].key);
+	     cfc->name = eina_stringshare_add(_(cfhash[i].name));
 	     cc = e_color_class_find(cfc->key);
 	     if (cc) 
 	       {
@@ -207,7 +207,7 @@ _fill_data_hash(E_Config_Dialog_Data *cfdata, const CFColor_Hash *cfhash)
 	       }
 	  }
 	else 
-	  cfc->name = evas_stringshare_add(cfhash[i].name);
+	  cfc->name = eina_stringshare_add(cfhash[i].name);
 	
 	cfdata->classes = evas_list_append(cfdata->classes, cfc);
      }
@@ -283,9 +283,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	cfc = cfdata->classes->data;
 	if (!cfc) continue;
 	if (cfc->name)
-	  evas_stringshare_del(cfc->name);
+	  eina_stringshare_del(cfc->name);
 	if (cfc->key)
-	  evas_stringshare_del(cfc->key);
+	  eina_stringshare_del(cfc->key);
         E_FREE(cfc);
 	
 	cfdata->classes = evas_list_remove_list(cfdata->classes, cfdata->classes);

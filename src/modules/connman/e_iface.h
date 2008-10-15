@@ -4,6 +4,7 @@
 #include <Ecore.h>
 #include <E_DBus.h>
 #include <Evas.h>
+#include <eina_stringshare.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>

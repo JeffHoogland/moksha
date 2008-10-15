@@ -3670,8 +3670,8 @@ _e_border_free(E_Border *bd)
      }
    if (bd->client.netwm.extra_types)
      free(bd->client.netwm.extra_types);
-   if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
-   if (bd->bordername) evas_stringshare_del(bd->bordername);
+   if (bd->client.border.name) eina_stringshare_del(bd->client.border.name);
+   if (bd->bordername) eina_stringshare_del(bd->bordername);
    if (bd->client.icccm.title) free(bd->client.icccm.title);
    if (bd->client.icccm.name) free(bd->client.icccm.name);
    if (bd->client.icccm.class) free(bd->client.icccm.class);
@@ -3689,8 +3689,8 @@ _e_border_free(E_Border *bd)
    if (bd->client.netwm.name) free(bd->client.netwm.name);
    if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
    e_object_del(E_OBJECT(bd->shape));
-   if (bd->internal_icon) evas_stringshare_del(bd->internal_icon);
-   if (bd->internal_icon_key) evas_stringshare_del(bd->internal_icon_key);
+   if (bd->internal_icon) eina_stringshare_del(bd->internal_icon);
+   if (bd->internal_icon_key) eina_stringshare_del(bd->internal_icon_key);
    if (bd->icon_object) evas_object_del(bd->icon_object);
    evas_object_del(bd->bg_object);
    e_canvas_del(bd->bg_ecore_evas);
@@ -6152,8 +6152,8 @@ _e_border_eval(E_Border *bd)
 	       {
 		  if (rem->prop.border)
 		    {
-		       if (bd->bordername) evas_stringshare_del(bd->bordername);
-		       if (rem->prop.border) bd->bordername = evas_stringshare_add(rem->prop.border);
+		       if (bd->bordername) eina_stringshare_del(bd->bordername);
+		       if (rem->prop.border) bd->bordername = eina_stringshare_add(rem->prop.border);
 		       else bd->bordername = NULL;
 		       bd->client.border.changed = 1;
 		    }
@@ -6257,8 +6257,8 @@ _e_border_eval(E_Border *bd)
 
 	if ((!bd->client.border.name) || (strcmp(bd->client.border.name, bordername)))
 	  {
-	     if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
-	     bd->client.border.name = evas_stringshare_add(bordername);
+	     if (bd->client.border.name) eina_stringshare_del(bd->client.border.name);
+	     bd->client.border.name = eina_stringshare_add(bordername);
 
 	     if (bd->bg_object)
 	       {
@@ -6283,8 +6283,8 @@ _e_border_eval(E_Border *bd)
 		    {
 		       /* Reset default border style to default */
 		       if (e_config->theme_default_border_style)
-			 evas_stringshare_del(e_config->theme_default_border_style);
-		       e_config->theme_default_border_style = evas_stringshare_add("default");
+			 eina_stringshare_del(e_config->theme_default_border_style);
+		       e_config->theme_default_border_style = eina_stringshare_add("default");
 		       e_config_save_queue();
 		    }
 	       }

@@ -233,7 +233,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  if (strcmp(mi->mime, cfdata->mime)) continue;
 		  if (mi->icon)
 		    {
-		       evas_stringshare_del(mi->icon);
+		       eina_stringshare_del(mi->icon);
 		       mi->icon = NULL;
 		    }
 		  found = 1;
@@ -242,7 +242,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     if ((!found) && (cfdata->icon_type != 0))
 	       {
 		  mi = E_NEW(E_Config_Mime_Icon, 1);
-		  mi->mime = evas_stringshare_add(cfdata->mime);
+		  mi->mime = eina_stringshare_add(cfdata->mime);
 		  e_config->mime_icons = evas_list_append(e_config->mime_icons, mi);
 	       }
 	     /* FIXME: modify mime info */
@@ -251,18 +251,18 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  if (found)
 		    {
 		       e_config->mime_icons = evas_list_remove(e_config->mime_icons, mi);
-		       if (mi->mime) evas_stringshare_del(mi->mime);
-		       if (mi->icon) evas_stringshare_del(mi->icon);
+		       if (mi->mime) eina_stringshare_del(mi->mime);
+		       if (mi->icon) eina_stringshare_del(mi->icon);
 		       free(mi);
 		    }
 	       }
 	     else if (cfdata->icon_type == 1)
 	       {
-		  mi->icon = evas_stringshare_add("THUMB");
+		  mi->icon = eina_stringshare_add("THUMB");
 	       }
 	     else if (cfdata->icon_type == 2)
 	       {
-		  mi->icon = evas_stringshare_add(cfdata->icon);
+		  mi->icon = eina_stringshare_add(cfdata->icon);
 	       }
 	     e_config_save_queue();
 	     e_fm_mime_icon_cache_flush();
@@ -276,10 +276,10 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	       {
 		  cf->icon.type = cfdata->icon_type;
 		  if (cf->icon.icon)
-		    evas_stringshare_del(cf->icon.icon);
+		    eina_stringshare_del(cf->icon.icon);
 		  cf->icon.icon = NULL;
 		  if (cfdata->icon_type == 2)
-		    cf->icon.icon = evas_stringshare_add(cfdata->icon);
+		    cf->icon.icon = eina_stringshare_add(cfdata->icon);
 		  if (cfdata->icon_type == 0)
 		    cf->icon.valid = 0;
 		  else

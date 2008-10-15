@@ -77,7 +77,7 @@ _mixer_fill_channels_info(E_Config_Dialog_Data *cfdata)
      return;
 
    cfdata->channel = 0;
-   cfdata->channel_name = evas_stringshare_add(cfdata->conf->channel_name);
+   cfdata->channel_name = eina_stringshare_add(cfdata->conf->channel_name);
    cfdata->channels_names = e_mixer_system_get_channels_names(sys);
    for (l = cfdata->channels_names, i = 0; l != NULL; l = l->next, i++)
      {
@@ -108,7 +108,7 @@ _create_data(E_Config_Dialog *dialog)
    cfdata->conf = conf;
    cfdata->lock_sliders = conf->lock_sliders;
    cfdata->show_locked = conf->show_locked;
-   cfdata->card = evas_stringshare_add(conf->card);
+   cfdata->card = eina_stringshare_add(conf->card);
    _mixer_fill_cards_info(cfdata);
    _mixer_fill_channels_info(cfdata);
 
@@ -139,9 +139,9 @@ _free_data(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
      e_mixer_system_free_cards(cfdata->cards);
 
    if (cfdata->card)
-     evas_stringshare_del(cfdata->card);
+     eina_stringshare_del(cfdata->card);
    if (cfdata->channel_name)
-     evas_stringshare_del(cfdata->channel_name);
+     eina_stringshare_del(cfdata->channel_name);
 
    evas_list_free(cfdata->ui.channels.radios);
 
@@ -162,16 +162,16 @@ _basic_apply(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
    if (card)
      {
 	if (conf->card && (strcmp(card, conf->card) != 0))
-	  evas_stringshare_del(conf->card);
-	conf->card = evas_stringshare_add(card);
+	  eina_stringshare_del(conf->card);
+	conf->card = eina_stringshare_add(card);
      }
 
    channel = evas_list_nth(cfdata->channels_names, cfdata->channel);
    if (channel)
      {
 	if (conf->channel_name && (strcmp(channel, conf->channel_name) != 0))
-	  evas_stringshare_del(conf->channel_name);
-	conf->channel_name = evas_stringshare_add(channel);
+	  eina_stringshare_del(conf->channel_name);
+	conf->channel_name = eina_stringshare_add(channel);
      }
 
    e_mixer_update(conf->instance);
@@ -300,14 +300,14 @@ _card_change(void *data, Evas_Object *obj, void *event)
    cfdata = data;
 
    if (cfdata->card)
-     evas_stringshare_del(cfdata->card);
+     eina_stringshare_del(cfdata->card);
 
    e_mixer_system_free_channels_names(cfdata->channels_names);
    if (cfdata->channel_name)
-     evas_stringshare_del(cfdata->channel_name);
+     eina_stringshare_del(cfdata->channel_name);
 
    card = evas_list_nth(cfdata->cards, cfdata->card_num);
-   cfdata->card = evas_stringshare_add(card);
+   cfdata->card = eina_stringshare_add(card);
    _mixer_fill_channels_info(cfdata);
 
    evas = evas_object_evas_get(obj);

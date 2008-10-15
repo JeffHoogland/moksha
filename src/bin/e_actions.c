@@ -2049,12 +2049,12 @@ static void
 _delayed_action_free(Delayed_Action *da)
 {
    if (da->obj) e_object_unref(da->obj);
-   if (da->keyname) evas_stringshare_del(da->keyname);
+   if (da->keyname) eina_stringshare_del(da->keyname);
    if (da->timer) ecore_timer_del(da->timer);
-   if (da->def.action) evas_stringshare_del(da->def.action);
-   if (da->def.params) evas_stringshare_del(da->def.params);
-   if (da->delayed.action) evas_stringshare_del(da->delayed.action);
-   if (da->delayed.params) evas_stringshare_del(da->delayed.params);
+   if (da->def.action) eina_stringshare_del(da->def.action);
+   if (da->def.params) eina_stringshare_del(da->def.params);
+   if (da->delayed.action) eina_stringshare_del(da->delayed.action);
+   if (da->delayed.params) eina_stringshare_del(da->delayed.params);
    free(da);
 }
 
@@ -2097,7 +2097,7 @@ _delayed_action_list_parse_action(const char *str, double *delay, const char **a
    
    buf[0] = 0;
    sscanf(str, "%10s %1000s", fbuf, buf);
-   *action = evas_stringshare_add(buf);
+   *action = eina_stringshare_add(buf);
    *delay = atof(fbuf);
    p = strchr(str, ' ');
    if (p)
@@ -2107,7 +2107,7 @@ _delayed_action_list_parse_action(const char *str, double *delay, const char **a
 	if (p)
 	  {
 	     p++;
-	     *params = evas_stringshare_add(p);
+	     *params = eina_stringshare_add(p);
 	  }
      }
 }
@@ -2175,7 +2175,7 @@ _delayed_action_key_add(E_Object *obj, const char *params, Ecore_X_Event_Key_Dow
 	e_object_ref(da->obj);
      }
    da->mouse = 0;
-   da->keyname = evas_stringshare_add(ev->keyname);
+   da->keyname = eina_stringshare_add(ev->keyname);
    if (params) _delayed_action_list_parse(da, params);
    _delayed_actions = evas_list_append(_delayed_actions, da);
 }
@@ -2731,7 +2731,7 @@ e_action_predef_name_set(const char *act_grp, const char *act_name, const char *
 	actg = E_NEW(E_Action_Group, 1);
 	if (!actg) return;
 
-	actg->act_grp = evas_stringshare_add(act_grp);
+	actg->act_grp = eina_stringshare_add(act_grp);
 	actg->acts = NULL;
 
 	action_groups = evas_list_append(action_groups, actg);
@@ -2753,10 +2753,10 @@ e_action_predef_name_set(const char *act_grp, const char *act_name, const char *
    actd = E_NEW(E_Action_Description, 1);
    if (!actd) return;
 
-   actd->act_name = evas_stringshare_add(act_name);
-   actd->act_cmd = act_cmd == NULL ? NULL : evas_stringshare_add(act_cmd);
-   actd->act_params = act_params == NULL ? NULL : evas_stringshare_add(act_params);
-   actd->param_example = param_example == NULL ? NULL : evas_stringshare_add(param_example);
+   actd->act_name = eina_stringshare_add(act_name);
+   actd->act_cmd = act_cmd == NULL ? NULL : eina_stringshare_add(act_cmd);
+   actd->act_params = act_params == NULL ? NULL : eina_stringshare_add(act_params);
+   actd->param_example = param_example == NULL ? NULL : eina_stringshare_add(param_example);
    actd->editable = editable;
 
    actg->acts = evas_list_append(actg->acts, actd);
@@ -2786,17 +2786,17 @@ e_action_predef_name_del(const char *act_grp, const char *act_name)
 	  {
 	     actg->acts = evas_list_remove(actg->acts, actd);
 
-	     if (actd->act_name) evas_stringshare_del(actd->act_name);
-	     if (actd->act_cmd) evas_stringshare_del(actd->act_cmd);
-	     if (actd->act_params) evas_stringshare_del(actd->act_params);
-	     if (actd->param_example) evas_stringshare_del(actd->param_example);
+	     if (actd->act_name) eina_stringshare_del(actd->act_name);
+	     if (actd->act_cmd) eina_stringshare_del(actd->act_cmd);
+	     if (actd->act_params) eina_stringshare_del(actd->act_params);
+	     if (actd->param_example) eina_stringshare_del(actd->param_example);
 
 	     E_FREE(actd); 
 	     
 	     if (!evas_list_count(actg->acts)) 
 	       { 
 		  action_groups = evas_list_remove(action_groups, actg); 
-		  if (actg->act_grp) evas_stringshare_del(actg->act_grp);
+		  if (actg->act_grp) eina_stringshare_del(actg->act_grp);
 		  E_FREE(actg);
 	       }
 	     break;
@@ -2818,16 +2818,16 @@ e_action_predef_name_all_del(void)
 	  {
 	     actd = actg->acts->data;
 
-	     if (actd->act_name) evas_stringshare_del(actd->act_name);
-	     if (actd->act_cmd) evas_stringshare_del(actd->act_cmd);
-	     if (actd->act_params) evas_stringshare_del(actd->act_params);
-	     if (actd->param_example) evas_stringshare_del(actd->param_example);
+	     if (actd->act_name) eina_stringshare_del(actd->act_name);
+	     if (actd->act_cmd) eina_stringshare_del(actd->act_cmd);
+	     if (actd->act_params) eina_stringshare_del(actd->act_params);
+	     if (actd->param_example) eina_stringshare_del(actd->param_example);
 
 	     E_FREE(actd);
 
 	     actg->acts = evas_list_remove_list(actg->acts, actg->acts);
 	  }
-	if (actg->act_grp) evas_stringshare_del(actg->act_grp);
+	if (actg->act_grp) eina_stringshare_del(actg->act_grp);
 	E_FREE(actg);
 
 	action_groups = evas_list_remove_list(action_groups, action_groups);

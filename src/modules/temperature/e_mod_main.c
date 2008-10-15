@@ -66,7 +66,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    if (!inst)
      {
 	inst = E_NEW(Config_Face, 1);
-	inst->id = evas_stringshare_add(id);
+	inst->id = eina_stringshare_add(id);
 	inst->poll_interval = 128;
 	inst->low = 30;
 	inst->high = 80;
@@ -75,7 +75,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 	inst->units = CELCIUS;
 	temperature_config->faces = evas_hash_direct_add(temperature_config->faces, inst->id, inst);
      }
-   if (!inst->id) evas_stringshare_add(id);
+   if (!inst->id) eina_stringshare_add(id);
    E_CONFIG_LIMIT(inst->poll_interval, 1, 1024);
    E_CONFIG_LIMIT(inst->low, 0, 100);
    E_CONFIG_LIMIT(inst->high, 0, 220);
@@ -177,7 +177,7 @@ _gc_id_new(void)
    snprintf(id, sizeof(id), "%s.%d", _gadcon_class.name, ++uuid);
 
    inst = E_NEW(Config_Face, 1);
-   inst->id = evas_stringshare_add(id);
+   inst->id = eina_stringshare_add(id);
    inst->poll_interval = 128;
    inst->low = 30;
    inst->high = 80;
@@ -197,7 +197,7 @@ _gc_id_del(const char *id)
    if (inst)
      {
 	temperature_config->faces = evas_hash_del(temperature_config->faces, id, inst);
-	if (inst->sensor_name) evas_stringshare_del(inst->sensor_name);
+	if (inst->sensor_name) eina_stringshare_del(inst->sensor_name);
 	free(inst);
      }
 }
@@ -358,8 +358,8 @@ _temperature_face_shutdown(const Evas_Hash *hash __UNUSED__, const char *key __U
 
    inst = hdata;
 
-   if (inst->sensor_name) evas_stringshare_del(inst->sensor_name);
-   if (inst->id) evas_stringshare_del(inst->id);
+   if (inst->sensor_name) eina_stringshare_del(inst->sensor_name);
+   if (inst->id) eina_stringshare_del(inst->id);
    free(inst);
    return 1;
 }

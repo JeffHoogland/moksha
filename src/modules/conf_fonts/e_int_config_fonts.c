@@ -209,9 +209,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
 			    efp = e_font_fontconfig_name_parse(efd->font);
 			    if (efp->name)
-			      tc->font = evas_stringshare_add(efp->name);
+			      tc->font = eina_stringshare_add(efp->name);
 			    if (efp->styles) 
-			      tc->style = evas_stringshare_add(efp->styles->data);
+			      tc->style = eina_stringshare_add(efp->styles->data);
 			    e_font_properties_free(efp);
 			 }
 		       tc->size = efd->size;
@@ -231,9 +231,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
 			    efp = e_font_fontconfig_name_parse(efd->font);
 			    if (efp->name)
-			      tc->font = evas_stringshare_add(efp->name);
+			      tc->font = eina_stringshare_add(efp->name);
 			    if (efp->styles) 
-			      tc->style = evas_stringshare_add(efp->styles->data);
+			      tc->style = eina_stringshare_add(efp->styles->data);
 			    e_font_properties_free(efp);
 			 }
 		       tc->size = efd->size;
@@ -250,37 +250,37 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    size_data = E_NEW(E_Font_Size_Data, 1);
    size_data->cfdata = cfdata;
-   size_data->size_str = evas_stringshare_add(_("Tiny"));
+   size_data->size_str = eina_stringshare_add(_("Tiny"));
    size_data->size = -50;
    cfdata->font_scale_list = evas_list_append(cfdata->font_scale_list, size_data);
 
    size_data = E_NEW(E_Font_Size_Data, 1);
    size_data->cfdata = cfdata;
-   size_data->size_str = evas_stringshare_add(_("Small"));
+   size_data->size_str = eina_stringshare_add(_("Small"));
    size_data->size = -80;
    cfdata->font_scale_list = evas_list_append(cfdata->font_scale_list, size_data);
 
    size_data = E_NEW(E_Font_Size_Data, 1);
    size_data->cfdata = cfdata;
-   size_data->size_str = evas_stringshare_add(_("Normal"));
+   size_data->size_str = eina_stringshare_add(_("Normal"));
    size_data->size = -100;
    cfdata->font_scale_list = evas_list_append(cfdata->font_scale_list, size_data);
 
    size_data = E_NEW(E_Font_Size_Data, 1);
    size_data->cfdata = cfdata;
-   size_data->size_str = evas_stringshare_add(_("Big"));
+   size_data->size_str = eina_stringshare_add(_("Big"));
    size_data->size = -150;
    cfdata->font_scale_list = evas_list_append(cfdata->font_scale_list, size_data);
 
    size_data = E_NEW(E_Font_Size_Data, 1);
    size_data->cfdata = cfdata;
-   size_data->size_str = evas_stringshare_add(_("Really Big"));
+   size_data->size_str = eina_stringshare_add(_("Really Big"));
    size_data->size = -190;
    cfdata->font_scale_list = evas_list_append(cfdata->font_scale_list, size_data);
 
    size_data = E_NEW(E_Font_Size_Data, 1);
    size_data->cfdata = cfdata;
-   size_data->size_str = evas_stringshare_add(_("Huge"));
+   size_data->size_str = eina_stringshare_add(_("Huge"));
    size_data->size = -250;
    cfdata->font_scale_list = evas_list_append(cfdata->font_scale_list, size_data);
 
@@ -293,7 +293,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
 	size_data = E_NEW(E_Font_Size_Data, 1);   
 	size_data->cfdata = cfdata;      
-	size_data->size_str = evas_stringshare_add(str);         
+	size_data->size_str = eina_stringshare_add(str);         
 	size_data->size = i;
 	cfdata->font_px_list = evas_list_append(cfdata->font_px_list, size_data);
      }
@@ -325,8 +325,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
         tc = l->data;
         cfdata->text_classes = evas_list_remove_list(cfdata->text_classes, l);
-        if (tc->font) evas_stringshare_del(tc->font);
-	if (tc->style) evas_stringshare_del(tc->style);
+        if (tc->font) eina_stringshare_del(tc->font);
+	if (tc->style) eina_stringshare_del(tc->style);
         E_FREE(tc);
      }
 
@@ -336,7 +336,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
         size_data = l->data;
         cfdata->font_scale_list = evas_list_remove_list(cfdata->font_scale_list, l);
- 	if (size_data->size_str) evas_stringshare_del(size_data->size_str);
+ 	if (size_data->size_str) eina_stringshare_del(size_data->size_str);
         E_FREE(size_data);
      }
 
@@ -346,7 +346,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
         size_data = l->data;
 	cfdata->font_px_list = evas_list_remove_list(cfdata->font_scale_list, l);
-        if (size_data->size_str) evas_stringshare_del(size_data->size_str);
+        if (size_data->size_str) eina_stringshare_del(size_data->size_str);
         E_FREE(size_data);
      }
 
@@ -381,7 +381,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     if (i == 1)
 	       e_font_default_set("e_basic_font", font_name, cfdata->cur_size);
 
-	     evas_stringshare_del(font_name);
+	     eina_stringshare_del(font_name);
 	  }
 	else
 	  {
@@ -402,15 +402,15 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	tc = next->data;
 	tc->size = cfdata->cur_size;
 
-	if (tc->font) evas_stringshare_del(tc->font);
+	if (tc->font) eina_stringshare_del(tc->font);
 	if (cfdata->cur_font)
-	  tc->font = evas_stringshare_add(cfdata->cur_font);
+	  tc->font = eina_stringshare_add(cfdata->cur_font);
 	else
 	  tc->font = NULL;
 
-	if (tc->style) evas_stringshare_del(tc->style);
+	if (tc->style) eina_stringshare_del(tc->style);
 	if (cfdata->cur_style)
-	  tc->style = evas_stringshare_add(cfdata->cur_style);
+	  tc->style = eina_stringshare_add(cfdata->cur_style);
 	else
 	  tc->style = NULL;
 	tc->enabled = cfdata->cur_enabled;
@@ -527,7 +527,7 @@ _basic_init_data_fill(E_Config_Dialog_Data *cfdata)
 	     E_Font_Properties *efp;
 
 	     efp = e_font_fontconfig_name_parse(efd->font);
-	     init_font = evas_stringshare_add(efp->name);
+	     init_font = eina_stringshare_add(efp->name);
 	     e_font_properties_free(efp);
 	  }
 	init_size = efd->size;		    
@@ -563,9 +563,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	tc->enabled = cfdata->cur_enabled;
 	tc->size = cfdata->cur_size;
 	if (cfdata->cur_font)
-	  tc->font = evas_stringshare_add(cfdata->cur_font);
+	  tc->font = eina_stringshare_add(cfdata->cur_font);
 	if (cfdata->cur_style)
-	  tc->style = evas_stringshare_add(cfdata->cur_style);
+	  tc->style = eina_stringshare_add(cfdata->cur_style);
      }
 
    for (next = cfdata->text_classes; next; next = next->next)
@@ -578,7 +578,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 	     name = e_font_fontconfig_name_get(tc->font, tc->style);
 	     e_font_default_set(tc->class_name, name, tc->size);
-	     evas_stringshare_del(name);
+	     eina_stringshare_del(name);
 	  }
 	else
 	  e_font_default_remove(tc->class_name);
@@ -768,14 +768,14 @@ _adv_class_cb_change(void *data, Evas_Object *obj)
 	tc = evas_list_nth(cfdata->text_classes, cfdata->cur_index);
 	tc->enabled = cfdata->cur_enabled;
 	tc->size = cfdata->cur_size;
-	if (tc->font) evas_stringshare_del(tc->font);
+	if (tc->font) eina_stringshare_del(tc->font);
 	if (cfdata->cur_font)
-	  tc->font = evas_stringshare_add(cfdata->cur_font);
+	  tc->font = eina_stringshare_add(cfdata->cur_font);
 	else
 	  tc->font = NULL;
-	if (tc->style) evas_stringshare_del(tc->style);
+	if (tc->style) eina_stringshare_del(tc->style);
 	if (cfdata->cur_style)
-	  tc->style = evas_stringshare_add(cfdata->cur_style);
+	  tc->style = eina_stringshare_add(cfdata->cur_style);
 	else
 	  tc->style = NULL;
 	if (cfdata->gui.style_list)
@@ -847,9 +847,9 @@ _adv_enabled_font_cb_change(void *data, Evas_Object *obj)
 	tc = evas_list_nth(cfdata->text_classes, n);
 	tc->enabled = cfdata->cur_enabled;
 	tc->size = cfdata->cur_size;
-	if (tc->font) evas_stringshare_del(tc->font);
+	if (tc->font) eina_stringshare_del(tc->font);
 	if (cfdata->cur_font)
-	  tc->font = evas_stringshare_add(cfdata->cur_font);
+	  tc->font = eina_stringshare_add(cfdata->cur_font);
 	if (cfdata->cur_enabled) 
 	  {
 	     icon = edje_object_add(cfdata->evas);
@@ -909,9 +909,9 @@ _adv_font_cb_change(void *data, Evas_Object *obj)
 	if (!i->selected) continue;
 
 	tc = evas_list_nth(cfdata->text_classes, n);
-	if (tc->font) evas_stringshare_del(tc->font);
+	if (tc->font) eina_stringshare_del(tc->font);
 	if (cfdata->cur_font)
-	  tc->font = evas_stringshare_add(cfdata->cur_font);
+	  tc->font = eina_stringshare_add(cfdata->cur_font);
      }
 
    /* Load the style list */
@@ -1103,9 +1103,9 @@ _adv_style_cb_change(void *data, Evas_Object *obj)
 	if (!i->selected) continue;
 
 	tc = evas_list_nth(cfdata->text_classes, n);
-	if (tc->style) evas_stringshare_del(tc->style);
+	if (tc->style) eina_stringshare_del(tc->style);
 	if (cfdata->cur_style)
-	  tc->style = evas_stringshare_add(cfdata->cur_style);
+	  tc->style = eina_stringshare_add(cfdata->cur_style);
 	else
 	  tc->style = NULL;
      }
@@ -1143,6 +1143,6 @@ _font_preview_update(E_Config_Dialog_Data *cfdata)
 	name = e_font_fontconfig_name_get(cfdata->cur_font, cfdata->cur_style);
 	e_widget_font_preview_font_set(cfdata->gui.preview, name, 
                                        cfdata->cur_size);
-	evas_stringshare_del(name);
+	eina_stringshare_del(name);
      }
 }

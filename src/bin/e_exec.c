@@ -110,7 +110,7 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
 	e_object_ref(E_OBJECT(launch->zone));
      }
    if (launch_method) 
-     launch->launch_method = evas_stringshare_add(launch_method);
+     launch->launch_method = eina_stringshare_add(launch_method);
 
    if (desktop)
      {
@@ -264,7 +264,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    
    if (!remaining)
      {
-	if (launch->launch_method) evas_stringshare_del(launch->launch_method);
+	if (launch->launch_method) eina_stringshare_del(launch->launch_method);
 	if (launch->zone) e_object_unref(E_OBJECT(launch->zone));
       	free(launch);
      }

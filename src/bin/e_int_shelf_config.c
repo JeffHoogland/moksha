@@ -229,40 +229,40 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
       case MODE_BOTTOM_MIDDLE:
 	cfdata->escfg->orient = E_GADCON_ORIENT_BOTTOM;
-	if (cfdata->escfg->style) evas_stringshare_del(cfdata->escfg->style);
-	cfdata->escfg->style = evas_stringshare_add("default");
+	if (cfdata->escfg->style) eina_stringshare_del(cfdata->escfg->style);
+	cfdata->escfg->style = eina_stringshare_add("default");
 	cfdata->escfg->fit_along = 1;
 	cfdata->escfg->popup = 1;
 	cfdata->escfg->layer = 200;
 	break;
       case MODE_BOTTOM_ALL:
 	cfdata->escfg->orient = E_GADCON_ORIENT_BOTTOM;
-	if (cfdata->escfg->style) evas_stringshare_del(cfdata->escfg->style);
-	cfdata->escfg->style = evas_stringshare_add("default");
+	if (cfdata->escfg->style) eina_stringshare_del(cfdata->escfg->style);
+	cfdata->escfg->style = eina_stringshare_add("default");
 	cfdata->escfg->fit_along = 0;
 	cfdata->escfg->popup = 1;
 	cfdata->escfg->layer = 200;
 	break;
       case MODE_BOTTOM_DESKTOP:
 	cfdata->escfg->orient = E_GADCON_ORIENT_BOTTOM;
-	if (cfdata->escfg->style) evas_stringshare_del(cfdata->escfg->style);
-	cfdata->escfg->style = evas_stringshare_add("invisible");
+	if (cfdata->escfg->style) eina_stringshare_del(cfdata->escfg->style);
+	cfdata->escfg->style = eina_stringshare_add("invisible");
 	cfdata->escfg->fit_along = 0;
 	cfdata->escfg->popup = 0;
 	cfdata->escfg->layer = 1;
 	break;
       case MODE_TOP_ALL:
 	cfdata->escfg->orient = E_GADCON_ORIENT_TOP;
-	if (cfdata->escfg->style) evas_stringshare_del(cfdata->escfg->style);
-	cfdata->escfg->style = evas_stringshare_add("default");
+	if (cfdata->escfg->style) eina_stringshare_del(cfdata->escfg->style);
+	cfdata->escfg->style = eina_stringshare_add("default");
 	cfdata->escfg->fit_along = 0;
 	cfdata->escfg->popup = 1;
 	cfdata->escfg->layer = 200;
 	break;
       case MODE_TOP_DESKTOP:
 	cfdata->escfg->orient = E_GADCON_ORIENT_TOP;
-	if (cfdata->escfg->style) evas_stringshare_del(cfdata->escfg->style);
-	cfdata->escfg->style = evas_stringshare_add("invisible");
+	if (cfdata->escfg->style) eina_stringshare_del(cfdata->escfg->style);
+	cfdata->escfg->style = eina_stringshare_add("invisible");
 	cfdata->escfg->fit_along = 0;
 	cfdata->escfg->popup = 0;
 	cfdata->escfg->layer = 1;
@@ -305,14 +305,14 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Only change style is we need to */
    if (!cfdata->escfg->style) 
      {
-	cfdata->escfg->style = evas_stringshare_add(cfdata->style);
+	cfdata->escfg->style = eina_stringshare_add(cfdata->style);
 	e_shelf_style_set(cfdata->es, cfdata->style);
      }
    else if ((cfdata->escfg->style) && 
 	    (strcmp(cfdata->escfg->style, cfdata->style))) 
      {
-	if (cfdata->escfg->style) evas_stringshare_del(cfdata->escfg->style);
-	cfdata->escfg->style = evas_stringshare_add(cfdata->style);
+	if (cfdata->escfg->style) eina_stringshare_del(cfdata->escfg->style);
+	cfdata->escfg->style = eina_stringshare_add(cfdata->style);
 	e_shelf_style_set(cfdata->es, cfdata->style);
      }
 

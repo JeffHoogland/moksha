@@ -50,7 +50,7 @@ e_filereg_register(const char *path)
      }
    fi = E_NEW(Filereg_Item, 1);
    if (!fi) return 0;
-   fi->path = evas_stringshare_add(path);
+   fi->path = eina_stringshare_add(path);
    fi->ref_count = 1;
    _e_filereg = evas_hash_add(_e_filereg, path, fi);
    return 1;
@@ -68,7 +68,7 @@ e_filereg_deregister(const char *path)
 	if (fi->ref_count == 0) 
 	  {
 	     _e_filereg = evas_hash_del(_e_filereg, path, fi);
-	     if (fi->path) evas_stringshare_del(fi->path);
+	     if (fi->path) eina_stringshare_del(fi->path);
 	     E_FREE(fi);
 	  }
      }
@@ -93,7 +93,7 @@ _filereg_hash_cb_free(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED
    
    fi = data;
    if (!fi) return 1;
-   if (fi->path) evas_stringshare_del(fi->path);
+   if (fi->path) eina_stringshare_del(fi->path);
    E_FREE(fi);
    return 1;
 }

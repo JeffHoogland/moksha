@@ -228,7 +228,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    e_config->show_splash = cfdata->show_splash;
    if (e_config->init_default_theme)
-     evas_stringshare_del(e_config->init_default_theme);
+     eina_stringshare_del(e_config->init_default_theme);
    e_config->init_default_theme = NULL;
    
    if (cfdata->splash)
@@ -238,7 +238,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     const char *f;
 	     
 	     f = ecore_file_file_get(cfdata->splash);
-	     e_config->init_default_theme = evas_stringshare_add(f);
+	     e_config->init_default_theme = eina_stringshare_add(f);
 	  }
      }
    

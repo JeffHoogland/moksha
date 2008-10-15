@@ -444,9 +444,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->inst->low = cfdata->low_temp;
    cfdata->inst->high = cfdata->high_temp;
    if (cfdata->inst->sensor_name)
-     evas_stringshare_del(cfdata->inst->sensor_name);
+     eina_stringshare_del(cfdata->inst->sensor_name);
    cfdata->inst->sensor_name =
-     evas_stringshare_add(ecore_list_index_goto(cfdata->sensors, cfdata->sensor));
+     eina_stringshare_add(ecore_list_index_goto(cfdata->sensors, cfdata->sensor));
 
    temperature_face_update_config(cfdata->inst);
    e_config_save_queue();

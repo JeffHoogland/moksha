@@ -119,8 +119,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    else if (cfdata->container)
      {
 	if (e_config->theme_default_border_style)
-	  evas_stringshare_del(e_config->theme_default_border_style);
-	e_config->theme_default_border_style = evas_stringshare_add(cfdata->bordername);
+	  eina_stringshare_del(e_config->theme_default_border_style);
+	e_config->theme_default_border_style = eina_stringshare_add(cfdata->bordername);
 	/* FIXME: Should this trigger an E Restart to reset all borders ? */
      }
    e_config_save_queue();
@@ -132,8 +132,8 @@ _basic_apply_border(E_Config_Dialog_Data *cfdata)
 {
    if ((!cfdata->border->lock_border) && (!cfdata->border->shaded)) 
      {
-	if (cfdata->border->bordername) evas_stringshare_del(cfdata->border->bordername);
-	cfdata->border->bordername = evas_stringshare_add(cfdata->bordername);
+	if (cfdata->border->bordername) eina_stringshare_del(cfdata->border->bordername);
+	cfdata->border->bordername = eina_stringshare_add(cfdata->bordername);
 	cfdata->border->client.border.changed = 1;
 	cfdata->border->changed = 1;
      }

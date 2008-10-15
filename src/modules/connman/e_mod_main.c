@@ -168,8 +168,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
         Conf_Interface *cfif;
 
 	cfif = E_NEW(Conf_Interface, 1);
-	cfif->name = evas_stringshare_add(name);
-	cfif->id = evas_stringshare_add(id);
+	cfif->name = eina_stringshare_add(name);
+	cfif->id = eina_stringshare_add(id);
 	conf->interfaces = evas_list_append(conf->interfaces, cfif);
 	inst->config.cfif = cfif;
 	e_config_save_queue();
@@ -295,7 +295,7 @@ net_join(Instance *inst, Interface *iface, Conf_Network *cfnet)
 			 cfnet->netmask);
 	if ((!cfnet->remember_password) && (cfnet->password))
 	  {
-	     evas_stringshare_del(cfnet->password);
+	     eina_stringshare_del(cfnet->password);
 	     cfnet->password = NULL;
 	  }
      }
@@ -319,7 +319,7 @@ net_join(Instance *inst, Interface *iface, Conf_Network *cfnet)
 			      cfnet->netmask);
 	     if ((!cfnet->remember_password) && (cfnet->password))
 	       {
-		  evas_stringshare_del(cfnet->password);
+		  eina_stringshare_del(cfnet->password);
 		  cfnet->password = NULL;
 	       }
 	  }
@@ -329,12 +329,12 @@ net_join(Instance *inst, Interface *iface, Conf_Network *cfnet)
 
 #define STR_SHARE(x) \
 do { char *___s; ___s = (x); \
-   if (___s) { (x) = evas_stringshare_add(___s); free(___s); } \
+   if (___s) { (x) = eina_stringshare_add(___s); free(___s); } \
 } while (0);
 
 #define STR_UNSHARE(x) \
 do { char *___s; ___s = (x); \
-   if (___s) { (x) = strdup(___s); evas_stringshare_del(___s); } \
+   if (___s) { (x) = strdup(___s); eina_stringshare_del(___s); } \
 } while (0);
 
 static void
@@ -598,11 +598,11 @@ if_dialog_cb_ok(void *data, E_Dialog *dialog)
      {
 	if (inst->config.cfif->ifpath)
 	  {
-	     evas_stringshare_del(inst->config.cfif->ifpath);
+	     eina_stringshare_del(inst->config.cfif->ifpath);
 	     inst->config.cfif->ifpath = NULL;
 	  }
 	if (inst->config.ifpath)
-	  inst->config.cfif->ifpath = evas_stringshare_add(inst->config.ifpath);
+	  inst->config.cfif->ifpath = eina_stringshare_add(inst->config.ifpath);
 	inst->config.cfif->ifmode = inst->config.ifmode;
      }
    popup_ifnet_nets_refresh(inst);

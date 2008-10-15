@@ -184,11 +184,11 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
    eci = E_NEW(E_Configure_It, 1);
    if (!eci) goto done;
    
-   eci->item = evas_stringshare_add(item);
+   eci->item = eina_stringshare_add(item);
    eci->pri = pri;
-   eci->label = evas_stringshare_add(label);
-   if (icon_file) eci->icon_file = evas_stringshare_add(icon_file);
-   if (icon) eci->icon = evas_stringshare_add(icon);
+   eci->label = eina_stringshare_add(label);
+   if (icon_file) eci->icon_file = eina_stringshare_add(icon_file);
+   if (icon) eci->icon = eina_stringshare_add(icon);
    eci->func = func;
    eci->generic_func = generic_func;
    eci->desktop = desktop;
@@ -262,10 +262,10 @@ e_configure_registry_item_del(const char *path)
 		  if (!strcmp(item, eci->item))
 		    {
 		       ecat->items = evas_list_remove_list(ecat->items, ll);
-		       evas_stringshare_del(eci->item);
-		       evas_stringshare_del(eci->label);
-		       evas_stringshare_del(eci->icon);
-		       if (eci->icon_file) evas_stringshare_del(eci->icon_file);
+		       eina_stringshare_del(eci->item);
+		       eina_stringshare_del(eci->label);
+		       eina_stringshare_del(eci->icon);
+		       if (eci->icon_file) eina_stringshare_del(eci->icon_file);
 		       if (eci->desktop) efreet_desktop_free(eci->desktop);
 		       free(eci);
 		       goto done;
@@ -296,11 +296,11 @@ e_configure_registry_category_add(const char *path, int pri, const char *label, 
    ecat = E_NEW(E_Configure_Cat, 1);
    if (!ecat) return;
    
-   ecat->cat = evas_stringshare_add(path);
+   ecat->cat = eina_stringshare_add(path);
    ecat->pri = pri;
-   ecat->label = evas_stringshare_add(label);
-   if (icon_file) ecat->icon_file = evas_stringshare_add(icon_file);
-   if (icon) ecat->icon = evas_stringshare_add(icon);
+   ecat->label = eina_stringshare_add(label);
+   if (icon_file) ecat->icon_file = eina_stringshare_add(icon_file);
+   if (icon) ecat->icon = eina_stringshare_add(icon);
    for (l = e_configure_registry; l; l = l->next)
      {
 	E_Configure_Cat *ecat2;
@@ -332,10 +332,10 @@ e_configure_registry_category_del(const char *path)
 	  {
 	     if (ecat->items) goto done;
 	     e_configure_registry = evas_list_remove_list(e_configure_registry, l);
-	     evas_stringshare_del(ecat->cat);
-	     evas_stringshare_del(ecat->label);
-	     if (ecat->icon) evas_stringshare_del(ecat->icon);
-	     if (ecat->icon_file) evas_stringshare_del(ecat->icon_file);
+	     eina_stringshare_del(ecat->cat);
+	     eina_stringshare_del(ecat->label);
+	     if (ecat->icon) eina_stringshare_del(ecat->icon);
+	     if (ecat->icon_file) eina_stringshare_del(ecat->icon_file);
 	     free(ecat);
 	     goto done;
 	  }

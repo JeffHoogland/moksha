@@ -255,13 +255,13 @@ e_bg_default_set(char *file)
    if (e_config->desktop_default_background)
      {
 	e_filereg_deregister(e_config->desktop_default_background);
-	evas_stringshare_del(e_config->desktop_default_background);
+	eina_stringshare_del(e_config->desktop_default_background);
      }
 
    if (file)
      {
 	e_filereg_register(file);
-	e_config->desktop_default_background = evas_stringshare_add(file);
+	e_config->desktop_default_background = eina_stringshare_add(file);
      }
    else
      e_config->desktop_default_background = NULL;
@@ -286,7 +286,7 @@ e_bg_add(int container, int zone, int desk_x, int desk_y, char *file)
    cfbg->zone = zone;
    cfbg->desk_x = desk_x;
    cfbg->desk_y = desk_y;
-   cfbg->file = evas_stringshare_add(file);
+   cfbg->file = eina_stringshare_add(file);
    e_config->desktop_backgrounds = evas_list_append(e_config->desktop_backgrounds, cfbg);
    
    e_filereg_register(cfbg->file);
@@ -316,7 +316,7 @@ e_bg_del(int container, int zone, int desk_x, int desk_y)
 	  {
 	     e_config->desktop_backgrounds = evas_list_remove_list(e_config->desktop_backgrounds, l);
 	     e_filereg_deregister(cfbg->file);
-	     if (cfbg->file) evas_stringshare_del(cfbg->file);
+	     if (cfbg->file) eina_stringshare_del(cfbg->file);
 	     free(cfbg);
 	     break;
 	  }

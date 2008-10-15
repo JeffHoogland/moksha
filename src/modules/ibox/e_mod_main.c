@@ -251,7 +251,7 @@ _gc_id_del(const char *id)
    ci = _ibox_config_item_get(id);
    if (ci)
      {
-	if (ci->id) evas_stringshare_del(ci->id);
+	if (ci->id) eina_stringshare_del(ci->id);
 	ibox_config->items = evas_list_remove(ibox_config->items, ci);
      }
 }
@@ -1266,7 +1266,7 @@ _ibox_config_item_get(const char *id)
 	  }
      }
    ci = E_NEW(Config_Item, 1);
-   ci->id = evas_stringshare_add(id);
+   ci->id = eina_stringshare_add(id);
    ci->show_label = 0;
    ci->show_zone = 1;
    ci->show_desk = 0;
@@ -1353,7 +1353,7 @@ e_modapi_init(E_Module *m)
 	ibox_config = E_NEW(Config, 1);
 	
 	ci = E_NEW(Config_Item, 1);
-	ci->id = evas_stringshare_add("0");
+	ci->id = eina_stringshare_add("0");
 	ci->show_label = 0;
 	ci->show_zone = 1;
 	ci->show_desk = 0;
@@ -1450,7 +1450,7 @@ e_modapi_shutdown(E_Module *m)
 	ci = ibox_config->items->data;
 	ibox_config->items = evas_list_remove_list(ibox_config->items, ibox_config->items);
 	if (ci->id)
-	  evas_stringshare_del(ci->id);
+	  eina_stringshare_del(ci->id);
 	free(ci);
      }
 

@@ -121,22 +121,22 @@ e_theme_shutdown(void)
      }
    while (categories)
      {
-	evas_stringshare_del(categories->data);
+	eina_stringshare_del(categories->data);
 	categories = evas_list_remove_list(categories, categories);
      }
    while (transitions)
      {
-	evas_stringshare_del(transitions->data);
+	eina_stringshare_del(transitions->data);
 	transitions = evas_list_remove_list(transitions, transitions);
      }
    while (borders)
      {
-	evas_stringshare_del(borders->data);
+	eina_stringshare_del(borders->data);
 	borders = evas_list_remove_list(borders, borders);
      }
    while (shelfs)
      {
-	evas_stringshare_del(shelfs->data);
+	eina_stringshare_del(shelfs->data);
 	shelfs = evas_list_remove_list(shelfs, shelfs);
      }
    return 1;
@@ -252,7 +252,7 @@ e_theme_edje_file_get(const char *category, const char *group)
 		       coll = edje_file_collection_list(str);
 		       for (l = coll; l; l = l->next)
 			 {
-			    q = evas_stringshare_add(l->data);
+			    q = eina_stringshare_add(l->data);
 			    res->quickfind = evas_hash_direct_add(res->quickfind, q, q);
 			 }
 		       if (coll) edje_file_collection_list_free(coll);
@@ -306,13 +306,13 @@ e_theme_file_set(const char *category, const char *file)
 	if (res->file) 
 	  {
 	     e_filereg_deregister(res->file);
-	     evas_stringshare_del(res->file);
+	     eina_stringshare_del(res->file);
 	  }
-	if (res->cache) evas_stringshare_del(res->cache);
+	if (res->cache) eina_stringshare_del(res->cache);
 	free(res);
      }
    res = calloc(1, sizeof(E_Theme_Result));
-   res->file = evas_stringshare_add(file);
+   res->file = eina_stringshare_add(file);
    e_filereg_register(res->file);
    mappings = evas_hash_add(mappings, category, res);
 }
@@ -334,16 +334,16 @@ e_theme_config_set(const char *category, const char *file)
 	ect = evas_list_data(next);
 	if (!strcmp(ect->category, category))
 	  {
-	     if (ect->file) evas_stringshare_del(ect->file);
-	     ect->file = evas_stringshare_add(file);
+	     if (ect->file) eina_stringshare_del(ect->file);
+	     ect->file = eina_stringshare_add(file);
 	     return 1;
 	  }
      }
 
    /* the text class doesnt exist */
    ect = E_NEW(E_Config_Theme, 1);
-   ect->category = evas_stringshare_add(category);
-   ect->file = evas_stringshare_add(file);
+   ect->category = eina_stringshare_add(category);
+   ect->file = eina_stringshare_add(file);
    
    e_config->themes = evas_list_append(e_config->themes, ect);
    return 1;
@@ -381,8 +381,8 @@ e_theme_config_remove(const char *category)
 	if (!strcmp(ect->category, category))
 	  {
 	     e_config->themes = evas_list_remove_list(e_config->themes, next);
-	     if (ect->category) evas_stringshare_del(ect->category);
-	     if (ect->file) evas_stringshare_del(ect->file);
+	     if (ect->category) eina_stringshare_del(ect->category);
+	     if (ect->file) eina_stringshare_del(ect->file);
 	     free(ect);
 	     return 1;
 	  }
@@ -500,8 +500,8 @@ _e_theme_mappings_free_cb(const Evas_Hash *hash, const char *key, void *data, vo
    E_Theme_Result *res;
    
    res = data;
-   if (res->file) evas_stringshare_del(res->file);
-   if (res->cache) evas_stringshare_del(res->cache);
+   if (res->file) eina_stringshare_del(res->file);
+   if (res->cache) eina_stringshare_del(res->cache);
    if (res->quickfind)
      {
 	evas_hash_foreach(res->quickfind, _e_theme_mappings_quickfind_free_cb, NULL);
@@ -514,7 +514,7 @@ _e_theme_mappings_free_cb(const Evas_Hash *hash, const char *key, void *data, vo
 static Evas_Bool
 _e_theme_mappings_quickfind_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
-   evas_stringshare_del(key);
+   eina_stringshare_del(key);
    return 1;
 }
 
@@ -528,7 +528,7 @@ _e_theme_category_register(const char *category)
 	if (!strcmp(category, l->data)) return;
      }
 
-   categories = evas_list_append(categories, evas_stringshare_add(category));
+   categories = evas_list_append(categories, eina_stringshare_add(category));
 }
 
 static Evas_List *
@@ -540,7 +540,7 @@ _e_theme_collection_item_register(Evas_List *list, const char *name)
      {
 	if (!strcmp(name, l->data)) return list;
      }
-   list = evas_list_append(list, evas_stringshare_add(name));
+   list = evas_list_append(list, eina_stringshare_add(name));
    return list;
 }
 

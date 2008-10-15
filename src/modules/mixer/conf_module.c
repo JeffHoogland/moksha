@@ -72,10 +72,10 @@ _basic_apply(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
 
 	conf = ctxt->conf;
 	if (conf->default_gc_id)
-	  evas_stringshare_del(conf->default_gc_id);
+	  eina_stringshare_del(conf->default_gc_id);
 
 	id = ctxt->default_instance->gcc->cf->id;
-	conf->default_gc_id = evas_stringshare_add(id);
+	conf->default_gc_id = eina_stringshare_add(id);
      }
 
    return 1;
