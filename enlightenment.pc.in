@@ -2,6 +2,8 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@/@PACKAGE@
+modules=@libdir@/@PACKAGE@/modules
+config_apps=@prefix@/share/@PACKAGE@/config-apps
 
 Name: enlightenment
 Description: Enlightenmnt Window Manager
