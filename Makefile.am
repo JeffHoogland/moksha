@@ -6,8 +6,6 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 config.guess \
 		       stamp-h.in acconfig.h \
 		       enlightenment.spec enlightenment.pc
 
-bin_SCRIPTS = enlightenment-config
-
 EXTRA_DIST = config.rpath  README AUTHORS COPYING COPYING-PLAIN \
              enlightenment.spec.in enlightenment.spec enlightenment.pc
 

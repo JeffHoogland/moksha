@@ -68,7 +68,6 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(-, root, root)
-%{_bindir}/enlightenment-config
 %{_includedir}/enlightenment
 %{_libdir}/pkgconfig/*.pc
 

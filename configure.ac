@@ -458,7 +458,4 @@ doc/Makefile
 config/Makefile
 config/default/Makefile
 po/Makefile.in
-enlightenment-config
-],[
-chmod +x enlightenment-config
 ])

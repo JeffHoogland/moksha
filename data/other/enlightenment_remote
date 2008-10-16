@@ -233,8 +233,8 @@ _enlightenment_remote() {
 		return 0
 		;;
 	-module-load)
-		extra_dir=$(enlightenment-config --module-dir)
-		# This is a hack. enlightenment-config should return extra dir and standard dir
+		extra_dir=$(pkg-config --variable=modules enlightenment)
+		# This is a hack. pkg-config should return extra dir and standard dir
 		dir=${extra_dir%_extra}
 		modules=$(cd ${dir} && /bin/ls && cd ${extra_dir} && /bin/ls)
 		COMPREPLY=($(compgen -W "${modules}" -- "${cur}"))

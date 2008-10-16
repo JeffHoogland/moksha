@@ -7,7 +7,6 @@ include /usr/share/cdbs/1/rules/simple-patchsys.mk
 DEB_FIXPERMS_EXCLUDE := enlightenment_sys freqset tempget batget
 DEB_MAKE_CLEAN_TARGET := clean
 DEB_INSTALL_MANPAGES_e17 := $(DEB_SRCDIR)/debian/enlightenment.1 $(DEB_SRCDIR)/debian/enlightenment_*.1
-DEB_INSTALL_MANPAGES_e17-dev := $(DEB_SRCDIR)/debian/enlightenment-config.1
 DEB_DH_STRIP_ARGS := --dbg-package=e17-dbg
 DEB_CONFIGURE_EXTRA_FLAGS := --disable-rpath
 
