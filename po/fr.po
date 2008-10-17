@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-10-09 09:27+0400\n"
-"PO-Revision-Date: 2008-10-09 18:23+0400\n"
+"POT-Creation-Date: 2008-10-14 08:23+0400\n"
+"PO-Revision-Date: 2008-10-14 12:41+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr "Enlightenment"
 
 #: src/bin/e_about.c:81
 msgid "Copyright &copy; 1999-2008, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existant yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
-msgstr "Copyright &copy; 1999-2008, par l'Équipe de Développement de Enlightenment.<br><br>Nous espérons que vous prendrez autant de plaisir à utiliser ce logiciel que nous en avons pris lors de son développement.<br><br>Ce logiciel est fourni TEL QUEL sans aucune garantie explicite ou implicite. Ce logiciel est régi par des conditions de licence, veuillez consulter les fichiers de licence COPYING et COPYING-PLAIN installés sur votre système.<br><br>Enlightenment est en cours de <hilight>DÉVELOPPEMENT INTENSIF</hilight> et n'est donc pas stable. Beaucoup de fonctionnalités sont encore incomplètes ou non encore implémentées et peuvent contenir de nombreux bogues. Vous avez été  <hilight>PRÉVENU !</hilight>"
+msgstr "Copyright &copy; 1999-2008, par l'Équipe de Développement de Enlightenment.<br><br>Nous espérons que vous prendrez autant de plaisir à utiliser ce logiciel que nous en avons pris lors de son développement.<br><br>Ce logiciel est fourni TEL QUEL sans aucune garantie explicite ou implicite. Ce logiciel est régi par des conditions de licence, veuillez consulter les fichiers de licence COPYING et COPYING-PLAIN installés sur votre système.<br><br>Enlightenment est en cours de <hilight>DÉVELOPPEMENT INTENSIF</hilight> et n'est donc pas stable. Beaucoup de fonctionnalités sont encore incomplètes ou non encore implémentées et peuvent contenir de nombreux bogues. Vous êtes  <hilight>PRÉVENU !</hilight>"
 
 #: src/bin/e_about.c:106
 msgid "<title>The Team</title>"
@@ -628,21 +628,22 @@ msgstr "Éteindre immédiatement"
 #: src/modules/conf_theme/e_int_config_theme.c:797
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:501
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:627
+#: src/modules/gadman/e_mod_config.c:189
 msgid "System"
 msgstr "Système"
 
 #: src/bin/e_actions.c:2617
-#: src/bin/e_int_menus.c:890
+#: src/bin/e_int_menus.c:891
 msgid "Shut Down"
 msgstr "Éteindre"
 
 #: src/bin/e_actions.c:2621
-#: src/bin/e_int_menus.c:883
+#: src/bin/e_int_menus.c:884
 msgid "Reboot"
 msgstr "Redémarrer"
 
 #: src/bin/e_actions.c:2625
-#: src/bin/e_int_menus.c:869
+#: src/bin/e_int_menus.c:870
 msgid "Suspend"
 msgstr "Mettre en veille"
 
@@ -655,7 +656,7 @@ msgid "Desktop Lock"
 msgstr "Verrouillage du bureau"
 
 #: src/bin/e_actions.c:2642
-#: src/bin/e_int_menus.c:1254
+#: src/bin/e_int_menus.c:1255
 msgid "Cleanup Windows"
 msgstr "Réorganiser les fenêtres"
 
@@ -778,13 +779,13 @@ msgstr "Appliquer"
 
 #: src/bin/e_configure.c:15
 #: src/modules/conf_shelves/e_mod_main.c:38
-#: src/modules/gadman/e_mod_main.c:30
+#: src/modules/gadman/e_mod_main.c:25
 #: src/modules/mixer/e_mod_main.c:1083
 msgid "Extensions"
 msgstr "Extensions"
 
 #: src/bin/e_configure.c:16
-#: src/bin/e_int_menus.c:805
+#: src/bin/e_int_menus.c:806
 #: src/modules/conf_colors/e_int_config_color_classes.c:83
 #: src/modules/conf_fonts/e_int_config_fonts.c:99
 #: src/modules/conf_paths/e_int_config_paths.c:85
@@ -1353,12 +1354,12 @@ msgid "Removable Device"
 msgstr "Périphérique amovible"
 
 #: src/bin/e_gadcon.c:1210
-#: src/modules/gadman/e_mod_gadman.c:537
+#: src/modules/gadman/e_mod_gadman.c:619
 msgid "Plain"
 msgstr "En plein"
 
 #: src/bin/e_gadcon.c:1219
-#: src/modules/gadman/e_mod_gadman.c:545
+#: src/modules/gadman/e_mod_gadman.c:627
 msgid "Inset"
 msgstr "En creux"
 
@@ -1375,7 +1376,7 @@ msgstr "En creux"
 #: src/modules/conf_transitions/e_mod_main.c:34
 #: src/modules/conf_wallpaper/e_mod_main.c:28
 #: src/modules/dropshadow/e_mod_main.c:89
-#: src/modules/gadman/e_mod_gadman.c:553
+#: src/modules/gadman/e_mod_gadman.c:635
 msgid "Appearance"
 msgstr "Apparence"
 
@@ -1388,12 +1389,12 @@ msgid "Able to be resized"
 msgstr "Permettre le redimensionnement"
 
 #: src/bin/e_gadcon.c:1256
-#: src/modules/gadman/e_mod_gadman.c:588
+#: src/modules/gadman/e_mod_gadman.c:670
 msgid "Begin move/resize this gadget"
 msgstr "Activer le déplacement/redimensionnement de ce gadget"
 
 #: src/bin/e_gadcon.c:1262
-#: src/modules/gadman/e_mod_gadman.c:594
+#: src/modules/gadman/e_mod_gadman.c:676
 msgid "Remove this gadget"
 msgstr "Supprimer ce gadget"
 
@@ -1978,12 +1979,12 @@ msgid "Toolbar Contents"
 msgstr "Contenu de la barre d'outils"
 
 #: src/bin/e_int_gadcon_config.c:93
-#: src/modules/gadman/e_mod_config.c:73
+#: src/modules/gadman/e_mod_config.c:106
 msgid "Available Gadgets"
 msgstr "Gadgets disponibles"
 
 #: src/bin/e_int_gadcon_config.c:100
-#: src/modules/gadman/e_mod_config.c:84
+#: src/modules/gadman/e_mod_config.c:117
 msgid "Add Gadget"
 msgstr "Ajouter un gadget"
 
@@ -2029,7 +2030,7 @@ msgid "Applications"
 msgstr "Applications"
 
 #: src/bin/e_int_menus.c:143
-#: src/bin/e_int_menus.c:1213
+#: src/bin/e_int_menus.c:1214
 #: src/modules/conf_window_display/e_mod_main.c:34
 #: src/modules/conf_window_focus/e_mod_main.c:34
 #: src/modules/conf_window_manipulation/e_mod_main.c:34
@@ -2070,47 +2071,47 @@ msgstr "(Aucune application)"
 msgid "Configure Virtual Desktops"
 msgstr "Configurer les bureaux virtuels"
 
-#: src/bin/e_int_menus.c:854
+#: src/bin/e_int_menus.c:855
 msgid "Lock Screen"
 msgstr "Écran de verrouillage"
 
-#: src/bin/e_int_menus.c:876
+#: src/bin/e_int_menus.c:877
 msgid "Hibernate"
 msgstr "Hiberner"
 
-#: src/bin/e_int_menus.c:899
+#: src/bin/e_int_menus.c:900
 msgid "Logout"
 msgstr "Fermer la session"
 
-#: src/bin/e_int_menus.c:1219
-#: src/bin/e_int_menus.c:1409
+#: src/bin/e_int_menus.c:1220
+#: src/bin/e_int_menus.c:1410
 msgid "(No Windows)"
 msgstr "(Aucune fenêtre)"
 
-#: src/bin/e_int_menus.c:1267
+#: src/bin/e_int_menus.c:1268
 msgid "Lost Windows"
 msgstr "Fenêtres orphelines"
 
-#: src/bin/e_int_menus.c:1313
-#: src/bin/e_int_menus.c:1423
+#: src/bin/e_int_menus.c:1314
+#: src/bin/e_int_menus.c:1424
 msgid "No name!!"
 msgstr "Pas de nom !!"
 
-#: src/bin/e_int_menus.c:1515
+#: src/bin/e_int_menus.c:1516
 msgid "(No Shelves)"
 msgstr "(Aucun rack)"
 
-#: src/bin/e_int_menus.c:1528
+#: src/bin/e_int_menus.c:1529
 #: src/bin/e_shelf.c:1081
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "Rack n°"
 
-#: src/bin/e_int_menus.c:1581
+#: src/bin/e_int_menus.c:1582
 msgid "Add A Shelf"
 msgstr "Ajouter un rack"
 
-#: src/bin/e_int_menus.c:1587
+#: src/bin/e_int_menus.c:1589
 msgid "Delete A Shelf"
 msgstr "Supprimer un rack"
 
@@ -3016,6 +3017,7 @@ msgstr "Ajouter aux favoris"
 #: src/modules/conf_theme/e_int_config_theme.c:365
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:507
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:633
+#: src/modules/gadman/e_mod_config.c:193
 msgid "Go up a Directory"
 msgstr "Remonter d'un niveau"
 
@@ -3545,6 +3547,7 @@ msgstr "Durée d'inactivité à dépasser"
 #: src/modules/conf_theme/e_int_config_theme.c:792
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:497
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:623
+#: src/modules/gadman/e_mod_config.c:186
 msgid "Personal"
 msgstr "Personnel"
 
@@ -3587,6 +3590,7 @@ msgid "Wallpaper Mode"
 msgstr "Type de fond d'écran"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:306
+#: src/modules/gadman/e_mod_config.c:149
 msgid "Theme Defined"
 msgstr "Défini par le thème"
 
@@ -3727,8 +3731,8 @@ msgstr "Ceci vous convient-il ? Cliquez sur <hilight>Oui</hilight> si c'est le c
 
 #: src/modules/conf_display/e_int_config_display.c:140
 #, c-format
-msgid "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>If you do not press a button, the old resolution of<br>%dx%d at will be restored in %d seconds."
-msgstr "Ceci vous convient-il ? Cliquez sur <hilight>Oui</hilight> si c'est le cas, sur Non sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d sera restaurée dans %d secondes."
+msgid "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>If you do not press a button, the old resolution of<br>%dx%d will be restored in %d seconds."
+msgstr "Cela vous convient-il ? Cliquez sur <hilight>Oui</hilight> si c'est le cas, sur Non sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d sera restaurée dans %d secondes."
 
 #: src/modules/conf_display/e_int_config_display.c:150
 #, c-format
@@ -3737,8 +3741,8 @@ msgstr "Ceci vous convient-il ? Cliquez sur <hilight>Oui</hilight> si c'est le c
 
 #: src/modules/conf_display/e_int_config_display.c:157
 #, c-format
-msgid "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>If you do not press a button, the old resolution of<br>%dx%d at will be restored <hilight>IMMEDIATELY</hilight>."
-msgstr "Ceci vous convient-il ? Cliquez sur <hilight>Oui</hilight> si c'est le cas, sur Non sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d sera restaurée <hilight>IMMÉDIATEMENT</hilight>."
+msgid "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>If you do not press a button, the old resolution of<br>%dx%d will be restored <hilight>IMMEDIATELY</hilight>."
+msgstr "Cela vous convient-il ? Cliquez sur <hilight>Oui</hilight> si c'est le cas, sur Non sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d sera restaurée <hilight>IMMÉDIATEMENT</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:212
 msgid "Resolution change"
@@ -4371,22 +4375,22 @@ msgid "Binding Key Error"
 msgstr "Erreur de raccourci-clavier"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1289
-#: src/modules/gadman/e_mod_gadman.c:614
+#: src/modules/gadman/e_mod_gadman.c:696
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1294
-#: src/modules/gadman/e_mod_gadman.c:619
+#: src/modules/gadman/e_mod_gadman.c:701
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1300
-#: src/modules/gadman/e_mod_gadman.c:625
+#: src/modules/gadman/e_mod_gadman.c:707
 msgid "SHIFT"
 msgstr "MAJ"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1306
-#: src/modules/gadman/e_mod_gadman.c:631
+#: src/modules/gadman/e_mod_gadman.c:713
 msgid "WIN"
 msgstr "WIN"
 
@@ -4549,7 +4553,7 @@ msgstr "Ajouter un raccourci"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:303
 msgid "Delete Binding"
-msgstr "Effacer le raccourci"
+msgstr "Supprimer le raccourci"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:307
 msgid "Modify Binding"
@@ -5908,35 +5912,57 @@ msgstr "Applications spécifiques"
 msgid "Custom Command"
 msgstr "Commande personnalisée"
 
-#: src/modules/gadman/e_mod_config.c:42
+#: src/modules/gadman/e_mod_config.c:58
 msgid "Gadgets Manager"
 msgstr "Gestionnaire de gadgets"
 
-#: src/modules/gadman/e_mod_gadman.c:561
+#: src/modules/gadman/e_mod_config.c:147
+msgid "Background Mode"
+msgstr "Type de fond"
+
+#: src/modules/gadman/e_mod_config.c:152
+#: src/modules/gadman/e_mod_config.c:184
+msgid "Custom Image"
+msgstr "Image personnalisée"
+
+#: src/modules/gadman/e_mod_config.c:156
+#: src/modules/gadman/e_mod_config.c:177
+msgid "Custom Color"
+msgstr "Couleur personnalisée"
+
+#: src/modules/gadman/e_mod_config.c:160
+msgid "Transparent"
+msgstr "Transparent"
+
+#: src/modules/gadman/e_mod_config.c:167
+msgid "Animations"
+msgstr "Animations"
+
+#: src/modules/gadman/e_mod_gadman.c:643
 msgid "Always on desktop"
 msgstr "Toujours sur le bureau"
 
-#: src/modules/gadman/e_mod_gadman.c:571
+#: src/modules/gadman/e_mod_gadman.c:653
 msgid "On top pressing"
 msgstr "Au-dessus en appuyant sur"
 
-#: src/modules/gadman/e_mod_gadman.c:581
+#: src/modules/gadman/e_mod_gadman.c:663
 msgid "Behavior"
 msgstr "Comportement"
 
-#: src/modules/gadman/e_mod_gadman.c:599
+#: src/modules/gadman/e_mod_gadman.c:681
 msgid "Add other gadgets"
 msgstr "Ajouter un autre gadget"
 
-#: src/modules/gadman/e_mod_main.c:32
-#: src/modules/gadman/e_mod_main.c:52
-#: src/modules/gadman/e_mod_main.c:86
-#: src/modules/gadman/e_mod_main.c:114
+#: src/modules/gadman/e_mod_main.c:27
+#: src/modules/gadman/e_mod_main.c:83
+#: src/modules/gadman/e_mod_main.c:119
+#: src/modules/gadman/e_mod_main.c:148
 msgid "Gadgets"
 msgstr "Gadgets"
 
-#: src/modules/gadman/e_mod_main.c:52
-#: src/modules/gadman/e_mod_main.c:86
+#: src/modules/gadman/e_mod_main.c:83
+#: src/modules/gadman/e_mod_main.c:119
 msgid "Show/hide gadgets"
 msgstr "Afficher/Cacher les gadgets"
 
