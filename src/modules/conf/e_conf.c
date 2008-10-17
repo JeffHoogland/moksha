@@ -165,7 +165,10 @@ e_configure_show(E_Container *con)
    e_widget_on_focus_hook_set(eco->item_list, _e_configure_focus_cb, eco->win);
    e_widget_framelist_object_append(of, eco->item_list);   
    e_widget_list_object_append(eco->o_list, of, 1, 1, 0.5);
-   
+
+   e_widget_min_size_get(eco->o_list, &mw, &mh);
+   edje_extern_object_min_size_set(eco->o_list, mw, mh);
+
    /* Close Button */
    eco->close = e_widget_button_add(eco->evas, _("Close"), NULL, 
 				    _e_configure_cb_close, eco, NULL);
