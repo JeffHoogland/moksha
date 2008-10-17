@@ -681,7 +681,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("Font Fallbacks"), 0);
    ob = e_widget_config_list_add(evas, e_widget_entry_add, _("Fallback Name"), 2);
    cfdata->gui.fallback_list = ob;
-   e_widget_framelist_object_append(of, ob);
    option_enable = 0;
    for (next = e_font_fallback_list(); next; next = next->next)
      {
@@ -698,6 +697,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_on_change_hook_set(ob, _adv_enabled_fallback_cb_change, cfdata);
    e_widget_check_checked_set(ob, option_enable);
    e_widget_change(ob);
+   e_widget_framelist_object_append(of, cfdata->gui.fallback_list);
    e_widget_table_object_append(ot, of, 3, 1, 1, 2, 1, 1, 1, 1);
 
    ob = e_widget_font_preview_add(evas, _("Advanced Preview Text.. 我真的会写中文"));
