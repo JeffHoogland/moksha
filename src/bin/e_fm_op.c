@@ -133,6 +133,7 @@ main(int argc, char **argv)
    E_Fm_Op_Type type;
 
    ecore_init();
+   eina_stringshare_init();
 
    _e_fm_op_stdin_buffer = malloc(READBUFSIZE);
 
@@ -237,6 +238,7 @@ main(int argc, char **argv)
    ecore_main_loop_begin();
 
 quit:
+   eina_stringshare_shutdown();
    ecore_shutdown();
 
    free(_e_fm_op_stdin_buffer);
