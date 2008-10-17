@@ -142,11 +142,14 @@ EAPI void
 e_widget_config_list_object_append(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h)
 {
    E_Widget_Data *wd;
+   Evas_Coord mw, mh;
 
    wd = e_widget_data_get(obj);
    e_widget_table_object_append(wd->gui.table, sobj, col, row, 
 				colspan, rowspan, fill_w, fill_h, 
 				expand_w, expand_h);
+   e_widget_min_size_get(wd->gui.table, &mw, &mh);
+   e_widget_min_size_set(obj, mw, mh);
 }
 
 /* Private Function defs */
