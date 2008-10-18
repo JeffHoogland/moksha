@@ -94,8 +94,12 @@ static Evas_Bool    _mod_hash_unload      (const Evas_Hash *hash __UNUSED__,
 					   const char *key __UNUSED__, 
 					   void *data, void *fdata __UNUSED__);
 static void         _enable_modules       (int enable);
-static Evas_Bool    _enable_modules_types_enable (const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata);
-static Evas_Bool    _enable_modules_types_disable (const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata);
+static Evas_Bool    _enable_modules_types_enable (const Evas_Hash *hash __UNUSED__,
+						  const char *key __UNUSED__,
+						  void *data, void *fdata);
+static Evas_Bool    _enable_modules_types_disable (const Evas_Hash *hash __UNUSED__,
+						   const char *key __UNUSED__,
+						   void *data, void *fdata);
 
 /* local variables */
 static Evas_Hash *types_hash = NULL;
@@ -339,7 +343,8 @@ _fill_list(Evas_Object *obj, int enabled)
 }
 
 static Evas_Bool
-_fill_list_types_avail(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata)
+_fill_list_types_avail(const Evas_Hash *hash __UNUSED__,
+		       const char *key __UNUSED__, void *data, void *fdata)
 {
    CFType *cft;
    Evas_Object *obj;
@@ -351,7 +356,8 @@ _fill_list_types_avail(const Evas_Hash *hash __UNUSED__, const char *key __UNUSE
 }
 
 static Evas_Bool
-_fill_list_types_load(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata)
+_fill_list_types_load(const Evas_Hash *hash __UNUSED__,
+		      const char *key __UNUSED__, void *data, void *fdata)
 {
    CFType *cft;
    Evas_Object *obj;
@@ -677,27 +683,12 @@ _enable_modules(int enable)
      evas_hash_foreach(types_hash, _enable_modules_types_enable, NULL);
    else
      evas_hash_foreach(types_hash, _enable_modules_types_disable, NULL);
-
-
-#if 0
-   /* loop types, getting all modules */
-   for (i = 0; _types[i].name; i++) 
-     {
-	CFType *cft = NULL;
-
-	if (!_types[i].key) continue;
-	cft = evas_hash_find(types_hash, _types[i].key);
-	if ((!cft) || (!cft->modules)) continue;
-	if (enable)
-	  evas_hash_foreach(cft->modules, _mod_hash_load, NULL);
-	else
-	  evas_hash_foreach(cft->modules, _mod_hash_unload, NULL);
-     }
-#endif
 }
 
 static Evas_Bool
-_enable_modules_types_enable(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata)
+_enable_modules_types_enable(const Evas_Hash *hash __UNUSED__,
+			     const char *key __UNUSED__, void *data,
+			     void *fdata)
 {
    CFType *cft;
 
@@ -708,7 +699,9 @@ _enable_modules_types_enable(const Evas_Hash *hash __UNUSED__, const char *key _
 }
 
 static Evas_Bool
-_enable_modules_types_disable(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata)
+_enable_modules_types_disable(const Evas_Hash *hash __UNUSED__,
+			      const char *key __UNUSED__, void *data,
+			      void *fdata)
 {
    CFType *cft;
 
