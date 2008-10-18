@@ -349,8 +349,8 @@ _create_cards(E_Dialog *dialog, Evas *evas, E_Mixer_App_Dialog_Data *app)
        return;
 
    ui = &app->ui.cards;
-   ui->list = e_widget_tlist_add(evas, &app->card);
-   e_widget_tlist_go(ui->list);
+   ui->list = e_widget_ilist_add(evas, 32, 32, &app->card);
+   e_widget_ilist_go(ui->list);
    for (l = app->cards; l != NULL; l = l->next)
      {
          char *card, *card_name;
@@ -358,7 +358,7 @@ _create_cards(E_Dialog *dialog, Evas *evas, E_Mixer_App_Dialog_Data *app)
 	card = l->data;
 	card_name = e_mixer_system_get_card_name(card);
 
-	e_widget_tlist_append(ui->list, card_name, _cb_card_selected,
+	e_widget_ilist_append(ui->list, NULL, card_name, _cb_card_selected,
 			      app, card);
 
 	free(card_name);
@@ -454,7 +454,7 @@ _create_ui(E_Dialog *dialog, E_Mixer_App_Dialog_Data *app)
    _create_channel_editor(dialog, evas, app);
 
    if (ui->cards.list)
-     e_widget_tlist_selected_set(ui->cards.list, 0);
+     e_widget_ilist_selected_set(ui->cards.list, 0);
    else
      select_card(app);
    e_widget_ilist_selected_set(ui->channels.list, 1);
@@ -606,7 +606,7 @@ e_mixer_app_dialog_select(E_Dialog *dialog, const char *card_name, const char *c
    if (n < 0)
      return 0;
    if (app->ui.cards.list)
-     e_widget_tlist_selected_set(app->ui.cards.list, n);
+     e_widget_ilist_selected_set(app->ui.cards.list, n);
 
    n = _find_channel_by_name(app, channel_name);
    if (n < 0)
