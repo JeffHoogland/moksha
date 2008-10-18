@@ -99,7 +99,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_frametable_add(evas, _("Selected Bar Source"), 0);
-   ol = e_widget_tlist_add(evas, &(cfdata->dir));
+   ol = e_widget_ilist_add(evas, 32, 32, &(cfdata->dir));
    cfdata->tlist = ol;
    _load_tlist(cfdata);
    e_widget_min_size_set(ol, 140, 140);
@@ -265,7 +265,7 @@ _load_tlist(E_Config_Dialog_Data *cfdata)
    char buf[4096], *file;
    int selnum = -1;
 
-   e_widget_tlist_clear(cfdata->tlist);
+   e_widget_ilist_clear(cfdata->tlist);
    
    home = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar", home);
@@ -282,7 +282,7 @@ _load_tlist(E_Config_Dialog_Data *cfdata)
 	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", home, file);
 	     if (ecore_file_is_dir(buf))
 	       {
-		  e_widget_tlist_append(cfdata->tlist, file, NULL, NULL, file);
+		  e_widget_ilist_append(cfdata->tlist, NULL, file, NULL, NULL, file);
 		  if ((cfdata->dir) && (!strcmp(cfdata->dir, file)))
 		    selnum = i;
 		  i++;
@@ -290,9 +290,9 @@ _load_tlist(E_Config_Dialog_Data *cfdata)
 	  }
 	ecore_list_destroy(dirs);
      }
-   e_widget_tlist_go(cfdata->tlist);
+   e_widget_ilist_go(cfdata->tlist);
    if (selnum >= 0)
-     e_widget_tlist_selected_set(cfdata->tlist, selnum);   
+     e_widget_ilist_selected_set(cfdata->tlist, selnum);   
 }
 
 static void 
