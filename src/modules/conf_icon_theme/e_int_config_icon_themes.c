@@ -10,6 +10,7 @@ typedef struct _CFIconTheme CFIconTheme;
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 //static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
@@ -45,6 +46,7 @@ e_int_config_icon_themes(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata             = _free_data;
    v->basic.create_widgets    = _basic_create_widgets;
    v->basic.apply_cfdata      = _basic_apply_data;
+   v->basic.check_changed     = _basic_check_changed;
    /*
    v->advanced.create_widgets = _advanced_create_widgets;
    v->advanced.apply_cfdata   = _basic_apply_data;
@@ -97,6 +99,12 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    evas_list_free(cfdata->icon_themes);
    E_FREE(cfdata->themename);
    E_FREE(cfdata);
+}
+
+static int
+_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   return strcmp(cfdata->themename, e_config->icon_theme);
 }
 
 static int
