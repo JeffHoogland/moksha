@@ -735,12 +735,12 @@ e_ilist_multi_select(Evas_Object *obj, int n)
 
    if (!(si = evas_list_nth(sd->items, n))) return;
    sd->selected = n;
+   selectraise = edje_object_data_get(si->o_base, "selectraise");
    if (si->selected) 
      {
 	edje_object_signal_emit(si->o_base, "e,state,unselected", "e");
 	si->selected = 0;
 	stacking = edje_object_data_get(si->o_base, "stacking");
-	selectraise = edje_object_data_get(si->o_base, "selectraise");
 	if ((selectraise) && (!strcmp(selectraise, "on")))
 	  {
 	     if ((stacking) && (!strcmp(stacking, "below")))
