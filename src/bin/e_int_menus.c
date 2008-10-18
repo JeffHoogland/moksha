@@ -56,6 +56,7 @@ static void _e_int_menus_clients_menu_add_iconified  (Evas_List *borders, E_Menu
 static const char *_e_int_menus_clients_title_abbrv (const char *title);
 static void _e_int_menus_virtuals_pre_cb     (void *data, E_Menu *m);
 static void _e_int_menus_virtuals_item_cb    (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_virtuals_icon_cb    (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_themes_about        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_lost_clients_pre_cb    (void *data, E_Menu *m);
 static void _e_int_menus_lost_clients_free_hook (void *obj);
@@ -749,6 +750,7 @@ _e_int_menus_virtuals_pre_cb(void *data, E_Menu *m)
 	     if (desk == e_desk_current_get(zone)) 
 	       e_menu_item_toggle_set(mi, 1); 
 	     e_menu_item_callback_set(mi, _e_int_menus_virtuals_item_cb, desk);
+	     e_menu_item_realize_callback_set(mi, _e_int_menus_virtuals_icon_cb, desk);
 	  }
      }
 
@@ -776,6 +778,28 @@ _e_int_menus_virtuals_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Desk *desk = data;
 
    e_desk_show(desk);
+}
+
+static void
+_e_int_menus_virtuals_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Desk *desk;
+   Evas_Object *o;
+   const char *bgfile;
+   int tw, th;
+
+   desk = data;
+   E_OBJECT_CHECK(desk);
+
+   tw = 50;
+   th = (tw * desk->zone->h) / desk->zone->w;
+
+   bgfile = e_bg_file_get(desk->zone->container->num, desk->zone->num, desk->x, desk->y);
+   o = e_thumb_icon_add(m->evas);
+   e_thumb_icon_file_set(o, bgfile, "e/desktop/background");
+   e_thumb_icon_size_set(o, tw, th);
+   e_thumb_icon_begin(o);
+   mi->icon_object = o;
 }
 
 static void
