@@ -460,6 +460,10 @@ e_ilist_selected_set(Evas_Object *obj, int n)
    if (!(si = evas_list_nth(sd->items, n))) return;
 
    /* NB: Remove this if headers ever become selectable */
+   while (si->header && ((++ n) < i))
+     if (!(si = evas_list_nth(sd->items, n))) return;
+   while (si->header && ((-- n) >= 0))
+     if (!(si = evas_list_nth(sd->items, n))) return;
    if (si->header) return;
 
    si->selected = 1;
