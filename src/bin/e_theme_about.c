@@ -69,8 +69,7 @@ e_theme_about_new(E_Container *con)
    
    o = edje_object_add(e_win_evas_get(about->win));
    about->bg_object = o;
-   e_theme_edje_object_set(o, "base/theme",
-			   "e/theme/about");
+   e_theme_edje_object_set(o, "base/theme", "e/theme/about");
    evas_object_move(o, 0, 0);
    evas_object_show(o);
    
@@ -85,9 +84,10 @@ e_theme_about_new(E_Container *con)
 EAPI void
 e_theme_about_show(E_Theme_About *about)
 {
-   Evas_Coord w, h, mw, mh;
+   Evas_Coord w, h, mw, mh, mcw, mch;
    
    edje_object_size_min_get(about->bg_object, &mw, &mh);
+   edje_object_size_min_restricted_calc(about->bg_object, &mw, &mh, mw, mh);
    evas_object_resize(about->bg_object, mw, mh);
    e_win_resize(about->win, mw, mh);
    e_win_size_min_set(about->win, mw, mh);
@@ -97,7 +97,7 @@ e_theme_about_show(E_Theme_About *about)
      {
 	if (w < mw) w = mw;
 	if (h < mh) h = mh;
-	e_win_size_max_set(about->win, mw, mh);
+	e_win_size_max_set(about->win, w, h);
      }
    e_win_show(about->win);
    e_win_border_icon_set(about->win, "enlightenment/themes");
