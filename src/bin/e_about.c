@@ -158,7 +158,7 @@ e_about_show(E_About *about)
    Evas_Coord w, h, mw, mh;
 
    edje_object_size_min_get(about->bg_object, &w, &h);
-   edje_object_size_min_calc(about->bg_object, &mw, &mh);
+   edje_object_size_min_restricted_calc(about->bg_object, &mw, &mh, w, h);
    if (w > mw) mw = w;
    if (h > mh) mh = h;
    evas_object_resize(about->bg_object, mw, mh);
@@ -170,7 +170,7 @@ e_about_show(E_About *about)
      {
 	if (w < mw) w = mw;
 	if (h < mh) h = mh;
-	e_win_size_max_set(about->win, mw, mh);
+	e_win_size_max_set(about->win, w, h);
      }
    e_win_show(about->win);
 }
