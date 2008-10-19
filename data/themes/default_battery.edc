@@ -320,7 +320,7 @@ group {
          }
       }
       part {
-         name: "text";
+         name: "e.text.title";
          type: TEXT;
          effect: SOFT_SHADOW;
          mouse_events: 0;
@@ -351,7 +351,7 @@ group {
          }
       }
       part {
-         name: "text2";
+         name: "e.text.label";
          type: TEXT;
          effect: SOFT_SHADOW;
          mouse_events: 0;
