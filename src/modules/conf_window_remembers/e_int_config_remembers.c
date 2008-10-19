@@ -91,8 +91,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_frametable_add(evas, _("Window Remembers"), 0);
 
-   ow = e_widget_button_add(evas, _("Delete Remember(s)"), NULL, _cb_delete, 
-                            cfdata, NULL);
+   ow = e_widget_button_add(evas, _("Delete Remember(s)"), "widget/del",
+			    _cb_delete, cfdata, NULL);
    cfdata->btn = ow;
 
    ow = e_widget_ilist_add(evas, 24, 24, NULL);
@@ -139,6 +139,7 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
    Evas *evas;
    Evas_List *l = NULL;
    Evas_List *ll = NULL;
+   Evas_Object *ic;
    int w = 0;
 
    evas = evas_object_evas_get(cfdata->list);
@@ -150,7 +151,10 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
    ll = e_config->remembers;
    ll = evas_list_sort(ll, -1, _cb_sort);
 
-   e_widget_ilist_header_append(cfdata->list, NULL, _("Applications"));
+   ic = edje_object_add(evas);
+   e_util_edje_icon_set(ic, "enlightenment/applications");
+   e_widget_ilist_header_append(cfdata->list, ic, _("Applications"));
+
    for (l = ll; l; l = l->next) 
      {
         E_Remember *rem = NULL;
@@ -172,7 +176,9 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
           e_widget_ilist_append(cfdata->list, NULL, rem->role, NULL, rem, NULL);
      }
 
-   e_widget_ilist_header_append(cfdata->list, NULL, _("Enlightenment"));
+   ic = edje_object_add(evas);
+   e_util_edje_icon_set(ic, "enlightenment/e");
+   e_widget_ilist_header_append(cfdata->list, ic, _("Enlightenment"));
    for (l = ll; l; l = l->next)
      {
         E_Remember *rem = NULL;
@@ -185,7 +191,9 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
         e_widget_ilist_append(cfdata->list, NULL, rem->class, NULL, rem, NULL);
      }
 
-   e_widget_ilist_header_append(cfdata->list, NULL, _("Modules"));
+   ic = edje_object_add(evas);
+   e_util_edje_icon_set(ic, "enlightenment/modules");
+   e_widget_ilist_header_append(cfdata->list, ic, _("Modules"));
    for (l = ll; l; l = l->next) 
      {
         E_Remember *rem = NULL;
@@ -218,8 +226,8 @@ static void
 _cb_delete(void *data, void *data2) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l = NULL, *b = NULL;
-   int i = 0, changed = 0;
+   Evas_List *l = NULL;
+   int i = 0, changed = 0, deleted = 0;
    int last_selected = -1;
 
    if (!(cfdata = data)) return;
@@ -232,25 +240,16 @@ _cb_delete(void *data, void *data2)
         if ((!item) || (!item->selected)) continue;
         if (!(rem = e_widget_ilist_nth_data_get(cfdata->list, i))) continue;
         e_remember_del(rem);
-        for (b = e_border_client_list(); b; b = b->next) 
-          {
-             E_Border *bd = NULL;
-
-             if (!(bd = b->data)) continue;
-             if (!bd->remember) continue;
-             if (bd->remember != rem) continue;
-             bd->remember = NULL;
-	     e_remember_unuse(rem);
-          }
 	last_selected = i;
         changed = 1;
+	++ deleted;
      }
 
    if (changed) e_config_save_queue();
 
    _fill_remembers(cfdata);
    if (last_selected >= 0)
-     e_widget_ilist_selected_set(cfdata->list, last_selected);
+     e_widget_ilist_selected_set(cfdata->list, last_selected - deleted + 1);
 }
 
 static void 
