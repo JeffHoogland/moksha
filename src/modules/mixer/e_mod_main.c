@@ -391,8 +391,8 @@ _mixer_popup_cb_resize(Evas_Object *obj, int *w, int *h)
    e_widget_min_size_get(obj, &mw, &mh);
    if (mh < 200) mh = 200;
    if (mw < 60) mw = 60;
-   if (*w) *w = (mw + 8);
-   if (*h) *h = (mh + 8);
+   if (w) *w = (mw + 8);
+   if (h) *h = (mh + 8);
 }
 
 static Evas_Object *
