@@ -846,14 +846,14 @@ popup_ifnet_icon_adjust(Evas_Object *icon, Interface_Network *ifnet)
    if (ifnet->security)
      {
 	if (!strcmp(ifnet->security, "WEP"))
-	  edje_object_signal_emit(icon, "s,state,security,wep", "e");
+	  edje_object_signal_emit(icon, "e,state,security,wep", "e");
 	else if (!strcmp(ifnet->security, "WPA"))
-	  edje_object_signal_emit(icon, "s,state,security,wpa", "e");
+	  edje_object_signal_emit(icon, "e,state,security,wpa", "e");
 	else if (!strcmp(ifnet->security, "RSN"))
-	  edje_object_signal_emit(icon, "s,state,security,rsn", "e");
+	  edje_object_signal_emit(icon, "e,state,security,rsn", "e");
      }
    else
-     edje_object_signal_emit(icon, "s,state,security,open", "e");
+     edje_object_signal_emit(icon, "e,state,security,open", "e");
    if (conf)
      {
 	for (l = conf->networks; l; l = l->next)
@@ -870,9 +870,9 @@ popup_ifnet_icon_adjust(Evas_Object *icon, Interface_Network *ifnet)
 	  }
      }
    if (saved)
-     edje_object_signal_emit(icon, "s,state,saved,on", "e");
+     edje_object_signal_emit(icon, "e,state,saved,on", "e");
    else
-     edje_object_signal_emit(icon, "s,state,saved,off", "e");
+     edje_object_signal_emit(icon, "e,state,saved,off", "e");
 }
 
 static void
