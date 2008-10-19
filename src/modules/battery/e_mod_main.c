@@ -46,7 +46,6 @@ static void _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *
 
 static int  _battery_cb_warning_popup_timeout(void *data);
 static void _battery_cb_warning_popup_hide(void *data, Evas *e, Evas_Object *obj, void *event);
-static void _battery_warning_popup_resize(Evas_Object *obj, int *w, int *h);
 static void _battery_warning_popup_destroy(Instance *inst);
 static void _battery_warning_popup(Instance *inst, int time, double percent);
 
@@ -290,16 +289,6 @@ _battery_warning_popup_destroy(Instance *inst)
 }
 
 static void
-_battery_warning_popup_resize(Evas_Object *obj, int *w, int *h)
-{
-   int mw, mh;
-
-   edje_object_size_min_get(obj,&mw,&mh);
-   if (w) *w = mw;
-   if (h) *h = mh;
-}
-
-static void
 _battery_warning_popup(Instance *inst, int time, double percent)
 {
    Evas *e = NULL;
@@ -309,7 +298,7 @@ _battery_warning_popup(Instance *inst, int time, double percent)
    if ((!inst) || (inst->warning)) return;
 
    inst->warning = 
-     e_gadcon_popup_new(inst->gcc, _battery_warning_popup_resize);
+     e_gadcon_popup_new(inst->gcc, NULL);
    if (!inst->warning) return;
 
    e = inst->warning->win->evas;
@@ -329,6 +318,11 @@ _battery_warning_popup(Instance *inst, int time, double percent)
    e_theme_edje_object_set(inst->popup_battery, "base/theme/modules/battery",
      "e/modules/battery/main");
    edje_object_part_swallow(popup_bg, "battery", inst->popup_battery);
+
+   edje_object_part_text_set(popup_bg, "e.text.title",
+			     _("Your battery is low!"));
+   edje_object_part_text_set(popup_bg, "e.text.label",
+			     _("AC power is recommended."));
 
    e_gadcon_popup_content_set(inst->warning, popup_bg);
    e_gadcon_popup_show(inst->warning);
