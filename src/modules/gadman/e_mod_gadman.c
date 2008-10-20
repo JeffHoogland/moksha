@@ -177,6 +177,9 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop)
 
    evas_object_show(gcc->o_frame);
 
+   /* Call the client orientation function */
+   if (cc->func.orient)
+       cc->func.orient(gcc);
    return gcc;
 }
 
