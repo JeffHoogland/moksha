@@ -75,16 +75,13 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
      {
 	Evas_Coord w = 0, h = 0;
 
-	if (pop->resize_func) pop->resize_func(o, &w, &h);
-	else
+	e_widget_min_size_get(o, &w, &h);
+	if ((!w) || (!h))
 	  {
-	     e_widget_min_size_get(o, &w, &h);
-	     if ((!w) || (!h))
-	       {
-		  edje_object_size_min_get(o, &w, &h);
-		  edje_object_size_min_restricted_calc(o, &w, &h, w, h);
-	       }
+	     edje_object_size_min_get(o, &w, &h);
+	     edje_object_size_min_restricted_calc(o, &w, &h, w, h);
 	  }
+	if (pop->resize_func) pop->resize_func(o, &w, &h);
 	edje_extern_object_min_size_set(o, w, h);
      }
 
