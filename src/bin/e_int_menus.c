@@ -173,7 +173,7 @@ e_int_menus_main_new(void)
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("About"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/about");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
 
    mi = e_menu_item_new(subm);
