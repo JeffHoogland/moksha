@@ -7,6 +7,53 @@
 #include <Ecore_IMF.h>
 #endif
 
+/*
+ * i need to make more use of these when i'm baffled as to when something is
+ * up. other hooks:
+ * 
+ *      void *(*__malloc_hook)(size_t size, const void *caller);
+ * 
+ *      void *(*__realloc_hook)(void *ptr, size_t size, const void *caller);
+ *
+ *      void *(*__memalign_hook)(size_t alignment, size_t size,
+ *                               const void *caller);
+ *
+ *      void (*__free_hook)(void *ptr, const void *caller);
+ *
+ *      void (*__malloc_initialize_hook)(void);
+ *
+ *      void (*__after_morecore_hook)(void);
+ *
+
+static void my_init_hook(void);
+static void my_free_hook(void *p, const void *caller);
+
+static void (*old_free_hook)(void *ptr, const void *caller) = NULL;
+void (*__free_hook)(void *ptr, const void *caller);
+
+void (*__malloc_initialize_hook) (void) = my_init_hook;
+static void
+my_init_hook(void)
+{
+   old_free_hook = __free_hook;
+   __free_hook = my_free_hook;
+}
+
+//void *magicfree = NULL;
+
+static void my_free_hook(void *p, const void *caller)
+{
+   __free_hook = old_free_hook;
+//   if ((p) && (p == magicfree))
+//     {
+//	printf("CAUGHT!!!!! %p ...\n", p);
+//	abort();
+//     }
+   free(p);
+   __free_hook = my_free_hook;
+}
+*/
+
 EAPI int e_precache_end = 0;
 
 /* local subsystem functions */
