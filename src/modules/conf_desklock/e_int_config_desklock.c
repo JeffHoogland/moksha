@@ -348,14 +348,12 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_filereg_register(e_config->desklock_background);
      }
 
-   e_config->desklock_login_box_zone = -1;
-   if (cfdata->zone_count > 1) 
+   if (cfdata->login_zone < 0)
      {
-	if (cfdata->login_zone >= 0) 
-	  e_config->desklock_login_box_zone = cfdata->zone;
-	else
-	  e_config->desklock_login_box_zone = cfdata->login_zone;
+	e_config->desklock_login_box_zone = cfdata->login_zone;
      }
+   else
+     e_config->desklock_login_box_zone = cfdata->zone;
 
    e_config->desklock_use_custom_desklock = cfdata->custom_lock;
    if (cfdata->custom_lock_cmd) 

@@ -296,18 +296,27 @@ e_desklock_show(void)
 					       "e/desklock/login_box");
 		       edje_object_part_text_set(edp->login_box, "e.text.title", 
 						 _("Please enter your unlock password"));
-		       edje_object_part_swallow(edp->bg_object, "e.swallow.login_box", edp->login_box);
 		       edje_object_size_min_calc(edp->login_box, &mw, &mh);
-		       evas_object_move(edp->login_box, (int)((zone->w - mw)/2),
-					(int)((zone->h - mh)/2));
-		       
+		       if (edje_file_group_exists(edp->bg_object, "e.swallow.login_box"))
+			 {
+			    edje_extern_object_min_size_set(edp->login_box, mw, mh);
+			    edje_object_part_swallow(edp->bg_object, "e.swallow.login_box", edp->login_box);
+			 }
+		       else
+			 {
+			    evas_object_resize(edp->login_box, mw, mh);
+			    evas_object_move(edp->login_box, 
+					     ((zone->w - mw) / 2),
+					     ((zone->h - mh) / 2));
+			 }
 		       if (total_zone_num > 1)
 			 {
 			    if (e_config->desklock_login_box_zone == -1)
 			      evas_object_show(edp->login_box);
-			    else if (e_config->desklock_login_box_zone == -2 && zone == current_zone)
+			    else if ((e_config->desklock_login_box_zone == -2) &&
+				     (zone == current_zone))
 			      evas_object_show(edp->login_box);
-			    else if (e_config->desklock_login_box_zone == zone_counter )
+			    else if (e_config->desklock_login_box_zone == zone_counter)
 			      evas_object_show(edp->login_box);
 			 }
 		       else
@@ -321,7 +330,6 @@ e_desklock_show(void)
 		       
 		       edd->elock_wnd_list = evas_list_append(edd->elock_wnd_list, edp);
 		    }
-
 		  zone_counter++;
 	       }
 	  }

@@ -75,17 +75,30 @@ e_obj_dialog_icon_set(E_Obj_Dialog *od, char *icon)
 EAPI void
 e_obj_dialog_show(E_Obj_Dialog *od)
 {
-   Evas_Coord mw, mh;
+   Evas_Coord w, h, mw, mh;
+   const char *s;
    
    E_OBJECT_CHECK(od);
    E_OBJECT_TYPE_CHECK(od, E_OBJ_DIALOG_TYPE);
 
-   edje_object_size_min_calc(od->bg_object, &mw, &mh);
+   edje_object_size_min_get(od->bg_object, &mw, &mh);
+   edje_object_size_min_restricted_calc(od->bg_object, &mw, &mh, mw, mh);
    evas_object_resize(od->bg_object, mw, mh);
    e_win_resize(od->win, mw, mh);
    e_win_size_min_set(od->win, mw, mh);
-   e_win_size_max_set(od->win, mw, mh);
-   
+   edje_object_size_max_get(od->bg_object, &w, &h);
+   if ((w > 0) && (h > 0))
+     {
+	if (w < mw) w = mw;
+	if (h < mh) h = mh;
+	e_win_size_max_set(od->win, w, h);
+     }
+   s = edje_object_data_get(od->bg_object, "borderless");
+   if (s && (!strcmp(s, "1")))
+     e_win_borderless_set(od->win, 1);
+   s = edje_object_data_get(od->bg_object, "shaped");
+   if (s && (!strcmp(s, "1")))
+     e_win_shaped_set(od->win, 1);
    e_win_show(od->win);
 }
 
