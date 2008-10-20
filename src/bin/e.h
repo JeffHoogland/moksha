@@ -60,6 +60,7 @@
 #endif
 #endif
 
+#include <Eina.h>
 #include <Evas.h>
 #include <Evas_Engine_Buffer.h>
 #include <Ecore.h>
@@ -72,18 +73,11 @@
 #include <Ecore_Job.h>
 #include <Ecore_File.h>
 #include <Eet.h>
-#include <eina_stringshare.h>
 #include <Edje.h>
 #include <Efreet.h>
 #include <Efreet_Mime.h>
 #ifdef HAVE_EDBUS
 #include <E_DBus.h>
-#endif
-
-#if HAVE___ATTRIBUTE__
-#define __UNUSED__ __attribute__((unused))
-#else
-#define __UNUSED__
 #endif
 
 #ifdef EAPI
