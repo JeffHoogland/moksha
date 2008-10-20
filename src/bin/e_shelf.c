@@ -697,6 +697,13 @@ static void
 _e_shelf_free(E_Shelf *es)
 {
    E_FREE_LIST(es->handlers, ecore_event_handler_del);
+
+   e_object_del(E_OBJECT(es->gadcon));
+   if (es->hide_timer)
+     {
+	ecore_timer_del(es->hide_timer);
+	es->hide_timer  = NULL;
+     }
    if (es->hide_animator)
      {
 	ecore_animator_del(es->hide_animator);
@@ -716,7 +723,6 @@ _e_shelf_free(E_Shelf *es)
      }
    if (es->config_dialog) e_object_del(E_OBJECT(es->config_dialog));
    shelves = evas_list_remove(shelves, es);
-   e_object_del(E_OBJECT(es->gadcon));
    eina_stringshare_del(es->name);
    eina_stringshare_del(es->style);
    evas_object_del(es->o_event);
