@@ -236,6 +236,10 @@ _gc_id_new(void)
 static void
 _gc_id_del(const char *id)
 {
+/* yes - don't do this. on shutdown gadgets are deleted and this means config
+ * for them is deleted - that means empty config is saved. keep them around
+ * as if u add a gadget back it can pick up its old config again
+ * 
    Config_Item *ci;
 
    ci = _ibar_config_item_get(id);
@@ -244,6 +248,7 @@ _gc_id_del(const char *id)
 	if (ci->id) eina_stringshare_del(ci->id);
 	ibar_config->items = evas_list_remove(ibar_config->items, ci);
      }
+ */
 }
 
 /**/
@@ -459,12 +464,17 @@ _ibar_config_item_get(const char *id)
 	for (l = ibar_config->items; l; l = l->next)
 	  {
 	     ci = l->data;
-	     if ((ci->id) && (ci->dir) && (!strcmp(ci->id, id)))
-	       return ci;
+	     if ((ci->id) && (!strcmp(ci->id, id)))
+	       {
+		  if (!ci->dir)
+		    ci->dir = eina_stringshare_add("default");
+		  return ci;
+	       }
 	  }
      }
    ci = E_NEW(Config_Item, 1);
    ci->id = eina_stringshare_add(id);
+   ci->dir = eina_stringshare_add("default");
    ci->show_label = 1;
    ci->eap_label = 0;
    ibar_config->items = evas_list_append(ibar_config->items, ci);
@@ -1227,9 +1237,9 @@ e_modapi_init(E_Module *m)
 	Config_Item *ci;
 	
 	ibar_config = E_NEW(Config, 1);
-	
+
 	ci = E_NEW(Config_Item, 1);
-	ci->id = eina_stringshare_add("0");
+	ci->id = eina_stringshare_add("ibar.1");
 	ci->dir = eina_stringshare_add("default");
 	ci->show_label = 1;
 	ci->eap_label = 0;
@@ -1237,13 +1247,56 @@ e_modapi_init(E_Module *m)
      }
    else
      {
-	Config_Item *ci;
-	const char *p;
+	Evas_List *removes = NULL;
+	Evas_List *l;
 
-	/* Init uuid */
-	ci = evas_list_last(ibar_config->items)->data;
-	p = strrchr(ci->id, '.');
-	if (p) uuid = atoi(p + 1);
+	for (l = ibar_config->items; l; l = l->next)
+	  {
+	     Config_Item *ci = l->data;
+	     if (!ci->id)
+	       removes = evas_list_append(removes, ci);
+	     else if (!ci->dir)
+	       removes = evas_list_append(removes, ci);
+	     else
+	       {
+		  Evas_List *ll;
+		  
+		  for (ll = l->next; ll; ll = ll->next)
+		    {
+		       Config_Item *ci2 = ll->data;
+		       if ((ci2->id) && (!strcmp(ci->id, ci2->id)))
+			 {
+			    removes = evas_list_append(removes, ci);
+			    break;
+			 }
+		    }
+	       }
+	  }
+	while (removes)
+	  {
+	     Config_Item *ci = removes->data;
+	     removes = evas_list_remove_list(removes, removes);
+	     ibar_config->items = evas_list_remove(ibar_config->items, ci);
+	     if (ci->id) eina_stringshare_del(ci->id);
+	     if (ci->dir) eina_stringshare_del(ci->dir);
+	     free(ci);
+	  }
+        for (l = ibar_config->items; l; l = l->next)
+          {
+             Config_Item *ci = l->data;
+	     if (ci->id)
+	       {
+		  const char *p;
+		  p = strrchr(ci->id, '.');
+		  if (p)
+		    {
+		       int id;
+		       
+		       id = atoi(p + 1);
+		       if (id > uuid) uuid = id;
+		    }
+	       }
+	  }
      }
  
    ibar_config->module = m;
@@ -1293,6 +1346,8 @@ e_modapi_shutdown(E_Module *m)
 EAPI int
 e_modapi_save(E_Module *m)
 {
+   Evas_List *l;
+   
    e_config_domain_save("module.ibar", conf_edd, ibar_config);
    return 1;
 }

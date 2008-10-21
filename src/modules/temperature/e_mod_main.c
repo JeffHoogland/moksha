@@ -191,6 +191,10 @@ _gc_id_new(void)
 static void
 _gc_id_del(const char *id)
 {
+/* yes - don't do this. on shutdown gadgets are deleted and this means config
+ * for them is deleted - that means empty config is saved. keep them around
+ * as if u add a gadget back it can pick up its old config again
+ *
    Config_Face *inst;
 
    inst = evas_hash_find(temperature_config->faces, id);
@@ -200,6 +204,7 @@ _gc_id_del(const char *id)
 	if (inst->sensor_name) eina_stringshare_del(inst->sensor_name);
 	free(inst);
      }
+ */
 }
 
 /**/

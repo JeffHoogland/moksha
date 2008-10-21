@@ -246,6 +246,9 @@ _gc_id_new(void)
 static void
 _gc_id_del(const char *id)
 {
+/* yes - don't do this. on shutdown gadgets are deleted and this means config
+ * for them is deleted - that means empty config is saved. keep them around
+ * as if u add a gadget back it can pick up its old config again
    Config_Item *ci;
 
    ci = _ibox_config_item_get(id);
@@ -254,6 +257,7 @@ _gc_id_del(const char *id)
 	if (ci->id) eina_stringshare_del(ci->id);
 	ibox_config->items = evas_list_remove(ibox_config->items, ci);
      }
+ */
 }
 
 /**/
@@ -1353,7 +1357,7 @@ e_modapi_init(E_Module *m)
 	ibox_config = E_NEW(Config, 1);
 	
 	ci = E_NEW(Config_Item, 1);
-	ci->id = eina_stringshare_add("0");
+	ci->id = eina_stringshare_add("ibox.1");
 	ci->show_label = 0;
 	ci->show_zone = 1;
 	ci->show_desk = 0;
@@ -1362,17 +1366,57 @@ e_modapi_init(E_Module *m)
      }
    else
      {
-	Config_Item *ci;
-	const char *p;
-
-	/* Init uuid */
-	ci = evas_list_last(ibox_config->items)->data;
-	p = strrchr(ci->id, '.');
-	if (p) uuid = atoi(p + 1);
+        Evas_List *removes = NULL;
+	Evas_List *l;
+	
+	for (l = ibox_config->items; l; l = l->next)
+	  {
+	     Config_Item *ci = l->data;
+	     if (!ci->id)
+	       removes = evas_list_append(removes, ci);
+	     else
+	       {
+		  Evas_List *ll;
+		  
+		  for (ll = l->next; ll; ll = ll->next)
+		    {
+		       Config_Item *ci2 = ll->data;
+		       if ((ci2->id) && (!strcmp(ci->id, ci2->id)))
+			 {
+			    removes = evas_list_append(removes, ci);
+			    break;
+			 }
+		    }
+	       }
+	  }
+	while (removes)
+	  {
+	     Config_Item *ci = removes->data;
+	     removes = evas_list_remove_list(removes, removes);
+	     ibox_config->items = evas_list_remove(ibox_config->items, ci);
+	     if (ci->id) eina_stringshare_del(ci->id);
+	     free(ci);
+	  }
+	for (l = ibox_config->items; l; l = l->next)
+	  {
+	     Config_Item *ci = l->data;
+	     if (ci->id)
+	       {
+		  const char *p;
+		  p = strrchr(ci->id, '.');
+		  if (p)
+		    {
+		       int id;
+		       
+		       id = atoi(p + 1);
+		       if (id > uuid) uuid = id;
+		    }
+	       }
+	  }
      }
-
+   
    ibox_config->module = m;
-
+   
    ibox_config->handlers = evas_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ADD, _ibox_cb_event_border_add, NULL));
