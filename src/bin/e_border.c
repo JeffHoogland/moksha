@@ -2861,6 +2861,7 @@ _e_border_resize_key_down(void *data, int type, void *event)
 	    (strncmp(ev->keysymbol, "Alt", sizeof("Alt") - 1) != 0))
      goto stop;
 
+   e_border_resize_limit(action_border, &w, &h);
    e_border_resize(action_border, w, h);
    _e_border_action_resize_timeout_add();
 
