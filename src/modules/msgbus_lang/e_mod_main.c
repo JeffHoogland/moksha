@@ -22,8 +22,8 @@ cb_langs(E_DBus_Object *obj, DBusMessage *message)
    DBusMessage *reply;
    DBusMessageIter iter;
    DBusMessageIter arr;
-   Evas_List * languages;
-   Evas_List * l;
+   Eina_List * languages;
+   Eina_List * l;
 
    memset(&arr, 0, sizeof(DBusMessageIter));
 

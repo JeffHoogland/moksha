@@ -16,7 +16,7 @@ static void _e_config_dialog_cb_changed(void *data, Evas_Object *obj);
 static void _e_config_dialog_cb_close(void *data, E_Dialog *dia);
 
 /* local subsystem globals */
-static Evas_List *_e_config_dialog_list = NULL;
+static Eina_List *_e_config_dialog_list = NULL;
 
 /* externally accessible functions */
 
@@ -72,7 +72,7 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
 	  _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);	
 	break;
      }
-   _e_config_dialog_list = evas_list_append(_e_config_dialog_list, cfd);
+   _e_config_dialog_list = eina_list_append(_e_config_dialog_list, cfd);
    
    return cfd;
 }
@@ -80,7 +80,7 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
 EAPI int
 e_config_dialog_find(const char *name, const char *class)
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Config_Dialog *cfd;
    
    for (l = _e_config_dialog_list; l; l = l->next)
@@ -116,7 +116,7 @@ e_config_dialog_find(const char *name, const char *class)
 EAPI E_Config_Dialog *
 e_config_dialog_get(const char *name, const char *class) 
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = _e_config_dialog_list; l; l = l->next)
      {
@@ -138,7 +138,7 @@ e_config_dialog_get(const char *name, const char *class)
 static void
 _e_config_dialog_free(E_Config_Dialog *cfd)
 {
-   _e_config_dialog_list = evas_list_remove(_e_config_dialog_list, cfd);
+   _e_config_dialog_list = eina_list_remove(_e_config_dialog_list, cfd);
    if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    if (cfd->title) eina_stringshare_del(cfd->title);
    if (cfd->name) eina_stringshare_del(cfd->name);

@@ -44,15 +44,15 @@ static E_Popup *winlist = NULL;
 static Evas_Object *bg_object = NULL;
 static Evas_Object *list_object = NULL;
 static Evas_Object *icon_object = NULL;
-static Evas_List *wins = NULL;
-static Evas_List *win_selected = NULL;
+static Eina_List *wins = NULL;
+static Eina_List *win_selected = NULL;
 static E_Desk *last_desk = NULL;
 static int last_pointer_x = 0;
 static int last_pointer_y = 0;
 static E_Border *last_border = NULL;
 static int hold_count = 0;
 static int hold_mod = 0;
-static Evas_List *handlers = NULL;
+static Eina_List *handlers = NULL;
 static Ecore_X_Window input_window = 0;
 static int warp_to = 0;
 static int warp_to_x = 0;
@@ -85,7 +85,7 @@ e_winlist_show(E_Zone *zone)
 {
    int x, y, w, h;
    Evas_Object *o;
-   Evas_List *l;
+   Eina_List *l;
    E_Desk *desk;
    
    E_OBJECT_CHECK_RETURN(zone, 0);
@@ -177,28 +177,28 @@ e_winlist_show(E_Zone *zone)
    evas_event_thaw(winlist->evas);
    _e_winlist_size_adjust();
 
-   handlers = evas_list_append
+   handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ADD, _e_winlist_cb_event_border_add, NULL));
-   handlers = evas_list_append
+   handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (E_EVENT_BORDER_REMOVE, _e_winlist_cb_event_border_remove, NULL));
-   handlers = evas_list_append
+   handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_KEY_DOWN, _e_winlist_cb_key_down, NULL));
-   handlers = evas_list_append
+   handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_KEY_UP, _e_winlist_cb_key_up, NULL));
-   handlers = evas_list_append
+   handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_winlist_cb_mouse_down, NULL));
-   handlers = evas_list_append
+   handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_MOUSE_BUTTON_UP, _e_winlist_cb_mouse_up, NULL));
-   handlers = evas_list_append
+   handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_MOUSE_WHEEL, _e_winlist_cb_mouse_wheel, NULL));
-   handlers = evas_list_append
+   handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_MOUSE_MOVE, _e_winlist_cb_mouse_move, NULL));
    
@@ -227,7 +227,7 @@ e_winlist_hide(void)
 	ww = wins->data;
 	evas_object_del(ww->bg_object);
 	if (ww->icon_object) evas_object_del(ww->icon_object);
-	wins = evas_list_remove_list(wins, wins);
+	wins = eina_list_remove_list(wins, wins);
 	if ((!bd) || (ww->border != bd))
 	  e_object_unref(E_OBJECT(ww->border));	
 	free(ww);
@@ -252,7 +252,7 @@ e_winlist_hide(void)
    while (handlers)
      {
 	ecore_event_handler_del(handlers->data);
-	handlers = evas_list_remove_list(handlers, handlers);
+	handlers = eina_list_remove_list(handlers, handlers);
      }
    ecore_x_window_del(input_window);
    e_grabinput_release(input_window, input_window);
@@ -309,7 +309,7 @@ EAPI void
 e_winlist_next(void)
 {
    if (!winlist) return;
-   if (evas_list_count(wins) == 1)
+   if (eina_list_count(wins) == 1)
      {
 	if (!win_selected)
 	  {
@@ -333,7 +333,7 @@ EAPI void
 e_winlist_prev(void)
 {
    if (!winlist) return;
-   if (evas_list_count(wins) == 1)
+   if (eina_list_count(wins) == 1)
      {
 	if (!win_selected)
 	  {
@@ -348,7 +348,7 @@ e_winlist_prev(void)
      win_selected = wins;
    else
      win_selected = win_selected->prev;
-   if (!win_selected) win_selected = evas_list_last(wins);
+   if (!win_selected) win_selected = eina_list_last(wins);
    _e_winlist_show_active();
    _e_winlist_activate();
 }
@@ -442,7 +442,7 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
    ww = calloc(1, sizeof(E_Winlist_Win));
    if (!ww) return;
    ww->border = bd;
-   wins = evas_list_append(wins, ww);
+   wins = eina_list_append(wins, ww);
    o = edje_object_add(winlist->evas);
    ww->bg_object = o;
    e_theme_edje_object_set(o, "base/theme/winlist",
@@ -485,7 +485,7 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 static void
 _e_winlist_border_del(E_Border *bd)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    if (bd == last_border) last_border = NULL;
    for (l = wins; l; l = l->next)
@@ -506,7 +506,7 @@ _e_winlist_border_del(E_Border *bd)
 	     evas_object_del(ww->bg_object);
 	     if (ww->icon_object) evas_object_del(ww->icon_object);
 	     free(ww);
-	     wins = evas_list_remove_list(wins, l);
+	     wins = eina_list_remove_list(wins, l);
 	     return;
 	  }
      }
@@ -515,13 +515,13 @@ _e_winlist_border_del(E_Border *bd)
 static void
 _e_winlist_activate_nth(int n)
 {
-   Evas_List *l;
+   Eina_List *l;
    int cnt;
    
    _e_winlist_deactivate();
-   cnt = evas_list_count(wins);
+   cnt = eina_list_count(wins);
    if (n >= cnt) n = cnt - 1;
-   l = evas_list_nth_list(wins, n);
+   l = eina_list_nth_list(wins, n);
    if (l)
      {
 	win_selected = l;
@@ -673,7 +673,7 @@ _e_winlist_deactivate(void)
 static void
 _e_winlist_show_active(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    int i, n;
    
    if (!wins) return;
@@ -681,7 +681,7 @@ _e_winlist_show_active(void)
      {
 	if (l == win_selected) break;
      }
-   n = evas_list_count(wins);
+   n = eina_list_count(wins);
    if (n <= 1) return;
    scroll_align_to = (double)i / (double)(n - 1);
    if (e_config->winlist_scroll_animate)
@@ -786,7 +786,7 @@ _e_winlist_cb_key_down(void *data, int type, void *event)
    else
      {
 	E_Action *act;
-	Evas_List *l;
+	Eina_List *l;
 	E_Config_Binding_Key *bind;
 	E_Binding_Modifier mod;
 
@@ -826,7 +826,7 @@ _e_winlist_cb_key_up(void *data, int type, void *event)
 {
    Ecore_X_Event_Key_Up *ev;
    E_Action *act;
-   Evas_List *l;
+   Eina_List *l;
    E_Config_Binding_Key *bind;
    E_Binding_Modifier mod;
    
@@ -1026,7 +1026,7 @@ _e_winlist_cb_item_mouse_in(void *data, Evas *evas, Evas_Object *obj,
       void *event_info)
 {
    E_Winlist_Win *ww;
-   Evas_List *l;
+   Eina_List *l;
 
    if (!(ww = data)) return;
    if (!wins) return;

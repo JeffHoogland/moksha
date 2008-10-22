@@ -43,7 +43,7 @@ struct _Frame_Extents
    int l, r, t, b;
 };
 
-static Evas_List *managers = NULL;
+static Eina_List *managers = NULL;
 static Evas_Hash *frame_extents = NULL;
     
 /* externally accessible functions */
@@ -57,14 +57,14 @@ e_manager_init(void)
 EAPI int
 e_manager_shutdown(void)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    l = managers;
    managers = NULL;
    while (l)
      {
 	e_object_del(E_OBJECT(l->data));
-	l = evas_list_remove_list(l, l);
+	l = eina_list_remove_list(l, l);
      }
    if (frame_extents)
      {
@@ -75,7 +75,7 @@ e_manager_shutdown(void)
    return 1;
 }
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_manager_list(void)
 {
    return managers;
@@ -90,7 +90,7 @@ e_manager_new(Ecore_X_Window root, int num)
    if (!ecore_x_window_manage(root)) return NULL;
    man = E_OBJECT_ALLOC(E_Manager, E_MANAGER_TYPE, _e_manager_free);
    if (!man) return NULL;
-   managers = evas_list_append(managers, man);
+   managers = eina_list_append(managers, man);
    man->root = root;
    man->num = num;
    ecore_x_window_size_get(man->root, &(man->w), &(man->h));
@@ -130,21 +130,21 @@ e_manager_new(Ecore_X_Window root, int num)
      }
    
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW_REQUEST, _e_manager_cb_window_show_request, man);
-   if (h) man->handlers = evas_list_append(man->handlers, h);
+   if (h) man->handlers = eina_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_manager_cb_window_configure, man);
-   if (h) man->handlers = evas_list_append(man->handlers, h);
+   if (h) man->handlers = eina_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_manager_cb_key_down, man);
-   if (h) man->handlers = evas_list_append(man->handlers, h);
+   if (h) man->handlers = eina_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_KEY_UP, _e_manager_cb_key_up, man);
-   if (h) man->handlers = evas_list_append(man->handlers, h);
+   if (h) man->handlers = eina_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_FRAME_EXTENTS_REQUEST, _e_manager_cb_frame_extents_request, man);
-   if (h) man->handlers = evas_list_append(man->handlers, h);
+   if (h) man->handlers = eina_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_PING, _e_manager_cb_ping, man);
-   if (h) man->handlers = evas_list_append(man->handlers, h);
+   if (h) man->handlers = eina_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_manager_cb_screensaver_notify, man);
-   if (h) man->handlers = evas_list_append(man->handlers, h);
+   if (h) man->handlers = eina_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _e_manager_cb_client_message, man);
-   if (h) man->handlers = evas_list_append(man->handlers, h);
+   if (h) man->handlers = eina_list_append(man->handlers, h);
 
    man->pointer = e_pointer_window_new(man->root, 1);
 
@@ -310,7 +310,7 @@ e_manager_manage_windows(E_Manager *man)
 EAPI void
 e_manager_show(E_Manager *man)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
@@ -344,7 +344,7 @@ e_manager_show(E_Manager *man)
 EAPI void
 e_manager_hide(E_Manager *man)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
@@ -378,7 +378,7 @@ e_manager_move(E_Manager *man, int x, int y)
 EAPI void
 e_manager_resize(E_Manager *man, int w, int h)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
@@ -402,7 +402,7 @@ e_manager_resize(E_Manager *man, int w, int h)
 EAPI void
 e_manager_move_resize(E_Manager *man, int x, int y, int w, int h)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
@@ -459,7 +459,7 @@ e_manager_lower(E_Manager *man)
 EAPI E_Manager *
 e_manager_current_get(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Manager *man;
    int x, y;
    
@@ -479,7 +479,7 @@ e_manager_current_get(void)
 EAPI E_Manager *
 e_manager_number_get(int num)
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Manager *man;
    
    if (!managers) return NULL;
@@ -495,7 +495,7 @@ e_manager_number_get(int num)
 EAPI void
 e_managers_keys_grab(void)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = managers; l; l = l->next)
      {
@@ -509,7 +509,7 @@ e_managers_keys_grab(void)
 EAPI void
 e_managers_keys_ungrab(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = managers; l; l = l->next)
      {
@@ -524,14 +524,14 @@ e_managers_keys_ungrab(void)
 static void
 _e_manager_free(E_Manager *man)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    while (man->handlers)
      {
 	Ecore_Event_Handler *h;
    
 	h = man->handlers->data;
-	man->handlers = evas_list_remove_list(man->handlers, man->handlers);
+	man->handlers = eina_list_remove_list(man->handlers, man->handlers);
 	ecore_event_handler_del(h);
      }
    l = man->containers;
@@ -539,14 +539,14 @@ _e_manager_free(E_Manager *man)
    while (l)
      {
 	e_object_del(E_OBJECT(l->data));
-	l = evas_list_remove_list(l, l);
+	l = eina_list_remove_list(l, l);
      }
    if (man->root != man->win)
      {
 	ecore_x_window_del(man->win);
      }
    if (man->pointer) e_object_del(E_OBJECT(man->pointer));
-   managers = evas_list_remove(managers, man);   
+   managers = eina_list_remove(managers, man);   
    free(man);
 }
 
@@ -866,7 +866,7 @@ _e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__, const char *k
 static E_Manager *
 _e_manager_get_for_root(Ecore_X_Window root)
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Manager *man;
 
    if (!managers) return NULL;

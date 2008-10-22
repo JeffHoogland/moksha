@@ -16,7 +16,7 @@ struct _E_Smart_Data
    Evas_Object *smart_obj;
    Evas_Object *event_obj;
    Evas_Object *o1, *o2;
-   Evas_List *items;
+   Eina_List *items;
    double slide_time, slide_start;
    Ecore_Animator *slide_animator;
    Evas_Coord dist, pos, slide_pos, slide_start_pos;
@@ -81,7 +81,7 @@ e_slidecore_item_add(Evas_Object *obj, const char *label, const char *icon,  voi
    if (icon) it->icon = eina_stringshare_add(icon);
    it->func = func;
    it->data = data;
-   sd->items = evas_list_append(sd->items, it);
+   sd->items = eina_list_append(sd->items, it);
    _e_smart_reconfigure(sd);
 }
 
@@ -161,7 +161,7 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	int n;
 	
 	sd->down = 0;
-	n = evas_list_count(sd->items);
+	n = eina_list_count(sd->items);
 	
 	gop = sd->pos - (sd->p1 * sd->dist);
 	gop = ((gop / sd->dist) * sd->dist) + (sd->p1 * sd->dist);
@@ -198,7 +198,7 @@ _e_smart_reconfigure(E_Smart_Data *sd)
    evas_object_resize(sd->event_obj, sd->w, sd->h);
 
    pos = sd->pos;
-   n = evas_list_count(sd->items);
+   n = eina_list_count(sd->items);
    while (pos < 0) pos += (sd->dist * n);
    p1 = pos / sd->dist;
    p2 = (pos + sd->dist) / sd->dist;
@@ -227,8 +227,8 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 	     sd->o2 = NULL;
 	     pl1 = sd->p1 % n;
 	     pl2 = sd->p2 % n;
-	     it1 = evas_list_nth(sd->items, pl1);
-	     it2 = evas_list_nth(sd->items, pl2);
+	     it1 = eina_list_nth(sd->items, pl1);
+	     it2 = eina_list_nth(sd->items, pl2);
 	     if (it1 && it2)
 	       {
 		  sd->o1 =  e_util_icon_theme_icon_add(it1->icon, 512,
@@ -323,7 +323,7 @@ _e_smart_del(Evas_Object *obj)
 	E_Smart_Item *it;
 	
 	it = sd->items->data;
-	sd->items = evas_list_remove_list(sd->items, sd->items);
+	sd->items = eina_list_remove_list(sd->items, sd->items);
 	if (it->label) eina_stringshare_del(it->label);
 	if (it->icon) eina_stringshare_del(it->icon);
 	free(it);

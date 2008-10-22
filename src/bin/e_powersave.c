@@ -16,7 +16,7 @@ static void _e_powersave_mode_eval(void);
 
 /* local subsystem globals */
 static int walking_deferred_actions = 0;
-static Evas_List *deferred_actions = NULL;
+static Eina_List *deferred_actions = NULL;
 static Ecore_Timer *deferred_timer = NULL;
 static E_Powersave_Mode powersave_mode_min = E_POWERSAVE_MODE_NONE;
 static E_Powersave_Mode powersave_mode_max = E_POWERSAVE_MODE_EXTREME;
@@ -50,7 +50,7 @@ e_powersave_deferred_action_add(void (*func) (void *data), const void *data)
 				    NULL);
    pa->func = func;
    pa->data = data;
-   deferred_actions = evas_list_append(deferred_actions, pa);
+   deferred_actions = eina_list_append(deferred_actions, pa);
    return pa;
 }
 
@@ -64,7 +64,7 @@ e_powersave_deferred_action_del(E_Powersave_Deferred_Action *pa)
      }
    else
      {
-	deferred_actions = evas_list_remove(deferred_actions, pa);
+	deferred_actions = eina_list_remove(deferred_actions, pa);
 	free(pa);
 	if (!deferred_actions)
 	  {
@@ -131,7 +131,7 @@ _e_powersave_cb_deferred_timer(void *data)
 	E_Powersave_Deferred_Action *pa;
 	
 	pa = deferred_actions->data;
-	deferred_actions = evas_list_remove_list(deferred_actions, deferred_actions);
+	deferred_actions = eina_list_remove_list(deferred_actions, deferred_actions);
 	if (!pa->delete_me) pa->func((void *)pa->data);
 	free(pa);
      }

@@ -21,7 +21,7 @@ static void _e_toolbar_fm2_selection_changed(void *data, Evas_Object *obj, void 
 static void _e_toolbar_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn);
 
 /* local vars */
-static Evas_List *toolbars = NULL;
+static Eina_List *toolbars = NULL;
 
 EAPI int 
 e_toolbar_init(void) 
@@ -53,7 +53,7 @@ e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2)
    tbar = E_OBJECT_ALLOC(E_Toolbar, E_TOOLBAR_TYPE, _e_toolbar_free);
    if (!tbar) return NULL;
    tbar->id = 1;
-//   tbar->id = evas_list_count(toolbars) + 1;
+//   tbar->id = eina_list_count(toolbars) + 1;
    tbar->x = tbar->y = 0;
    tbar->h = 32;
    tbar->w = fwin->w;
@@ -103,7 +103,7 @@ e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2)
 				      _e_toolbar_menu_items_append, tbar);
    e_gadcon_populate(tbar->gadcon);
 
-   toolbars = evas_list_append(toolbars, tbar);
+   toolbars = eina_list_append(toolbars, tbar);
    return tbar;
 }
 
@@ -254,7 +254,7 @@ e_toolbar_populate(E_Toolbar *tbar)
 static void 
 _e_toolbar_free(E_Toolbar *tbar) 
 {
-   toolbars = evas_list_remove(toolbars, tbar);
+   toolbars = eina_list_remove(toolbars, tbar);
 
    if (tbar->menu) 
      {
@@ -362,7 +362,7 @@ static void
 _e_toolbar_menu_del_hook(void *data) 
 {
    E_Menu *mn;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    mn = data;
    for (l = mn->items; l; l = l->next) 
@@ -508,7 +508,7 @@ static void
 _e_toolbar_fm2_changed(void *data, Evas_Object *obj, void *event_info) 
 {
    E_Toolbar *tbar;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    tbar = data;
    if (!tbar) return;
@@ -526,7 +526,7 @@ static void
 _e_toolbar_fm2_dir_changed(void *data, Evas_Object *obj, void *event_info) 
 {
    E_Toolbar *tbar;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    tbar = data;
    if (!tbar) return;
@@ -544,7 +544,7 @@ static void
 _e_toolbar_fm2_dir_deleted(void *data, Evas_Object *obj, void *event_info) 
 {
    E_Toolbar *tbar;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    tbar = data;
    if (!tbar) return;
@@ -562,7 +562,7 @@ static void
 _e_toolbar_fm2_files_deleted(void *data, Evas_Object *obj, void *event_info) 
 {
    E_Toolbar *tbar;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    tbar = data;
    if (!tbar) return;
@@ -580,7 +580,7 @@ static void
 _e_toolbar_fm2_selected(void *data, Evas_Object *obj, void *event_info) 
 {
    E_Toolbar *tbar;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    tbar = data;
    if (!tbar) return;
@@ -598,7 +598,7 @@ static void
 _e_toolbar_fm2_selection_changed(void *data, Evas_Object *obj, void *event_info) 
 {
    E_Toolbar *tbar;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    tbar = data;
    if (!tbar) return;

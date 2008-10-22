@@ -9,8 +9,8 @@ typedef struct _E_Exehist_Item E_Exehist_Item;
 
 struct _E_Exehist
 {
-   Evas_List *history;
-   Evas_List *mimes;
+   Eina_List *history;
+   Eina_List *mimes;
 };
 
 struct _E_Exehist_Item
@@ -87,7 +87,7 @@ e_exehist_add(const char *launch_method, const char *exe)
    ei->launch_method = eina_stringshare_add(launch_method);
    ei->exe = eina_stringshare_add(exe);
    ei->exetime = ecore_time_get();
-   _e_exehist->history = evas_list_append(_e_exehist->history, ei);
+   _e_exehist->history = eina_list_append(_e_exehist->history, ei);
    _e_exehist_limit();
    _e_exehist_changes++;
    _e_exehist_unload_queue();
@@ -106,7 +106,7 @@ e_exehist_clear(void)
 EAPI int
 e_exehist_popularity_get(const char *exe)
 {
-   Evas_List *l;
+   Eina_List *l;
    int count = 0;
    
    _e_exehist_load();
@@ -125,11 +125,11 @@ e_exehist_popularity_get(const char *exe)
 EAPI double
 e_exehist_newest_run_get(const char *exe)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    _e_exehist_load();
    if (!_e_exehist) return 0.0;
-   for (l = evas_list_last(_e_exehist->history); l; l = l->prev)
+   for (l = eina_list_last(_e_exehist->history); l; l = l->prev)
      {
 	E_Exehist_Item *ei;
 	
@@ -144,17 +144,17 @@ e_exehist_newest_run_get(const char *exe)
    return 0.0;
 }
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_exehist_list_get(void)
 {
-   Evas_List *list = NULL, *l, *m;
+   Eina_List *list = NULL, *l, *m;
    int count = 1;
    int max;
 
    max = e_config->exebuf_max_hist_list;
    if (!max) max = 20;
    _e_exehist_load();
-   for (l = evas_list_last(_e_exehist->history); l; l = l->prev)
+   for (l = eina_list_last(_e_exehist->history); l; l = l->prev)
      {
 	int bad = 0;
 	E_Exehist_Item *ei;
@@ -174,7 +174,7 @@ e_exehist_list_get(void)
 	  }
 	if (!(bad))
 	  {
-	     list = evas_list_append(list, ei->exe);
+	     list = eina_list_append(list, ei->exe);
 	     count++;
 	  }
 	if (count > max) break;
@@ -188,7 +188,7 @@ e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
 {
    const char *f;
    E_Exehist_Item *ei;
-   Evas_List *l;
+   Eina_List *l;
    
    if ((!mime) || (!desktop)) return;
    if (!desktop->orig_path) return;
@@ -210,7 +210,7 @@ e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
              if (ei->exe) eina_stringshare_del(ei->exe);
 	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
 	     free(ei);
-	     _e_exehist->mimes = evas_list_remove_list(_e_exehist->mimes, l);
+	     _e_exehist->mimes = eina_list_remove_list(_e_exehist->mimes, l);
 	     _e_exehist_changes++;
 	     break;
 	  }
@@ -224,7 +224,7 @@ e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
    ei->launch_method = eina_stringshare_add(mime);
    ei->exe = eina_stringshare_add(f);
    ei->exetime = ecore_time_get();
-   _e_exehist->mimes = evas_list_append(_e_exehist->mimes, ei);
+   _e_exehist->mimes = eina_list_append(_e_exehist->mimes, ei);
    _e_exehist_limit();
    _e_exehist_changes++;
    _e_exehist_unload_queue();
@@ -235,7 +235,7 @@ e_exehist_mime_desktop_get(const char *mime)
 {
    Efreet_Desktop *desktop;
    E_Exehist_Item *ei;
-   Evas_List *l;
+   Eina_List *l;
    
    if (!mime) return NULL;
    _e_exehist_load();
@@ -290,7 +290,7 @@ _e_exehist_clear(void)
 	     if (ei->exe) eina_stringshare_del(ei->exe);
 	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
 	     free(ei);
-	     _e_exehist->history = evas_list_remove_list(_e_exehist->history, _e_exehist->history);
+	     _e_exehist->history = eina_list_remove_list(_e_exehist->history, _e_exehist->history);
 	  }
 	while (_e_exehist->mimes)
 	  {
@@ -300,7 +300,7 @@ _e_exehist_clear(void)
 	     if (ei->exe) eina_stringshare_del(ei->exe);
 	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
 	     free(ei);
-	     _e_exehist->mimes = evas_list_remove_list(_e_exehist->mimes, _e_exehist->mimes);
+	     _e_exehist->mimes = eina_list_remove_list(_e_exehist->mimes, _e_exehist->mimes);
 	  }
      }
 }
@@ -322,7 +322,7 @@ _e_exehist_limit(void)
     */
    if (_e_exehist)
      {
-	while (evas_list_count(_e_exehist->history) > 500)
+	while (eina_list_count(_e_exehist->history) > 500)
 	  {
 	     E_Exehist_Item *ei;
 	     
@@ -330,9 +330,9 @@ _e_exehist_limit(void)
 	     if (ei->exe) eina_stringshare_del(ei->exe);
 	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
 	     free(ei);
-	     _e_exehist->history = evas_list_remove_list(_e_exehist->history, _e_exehist->history);
+	     _e_exehist->history = eina_list_remove_list(_e_exehist->history, _e_exehist->history);
 	  }
-	while (evas_list_count(_e_exehist->mimes) > 500)
+	while (eina_list_count(_e_exehist->mimes) > 500)
 	  {
 	     E_Exehist_Item *ei;
 	     
@@ -340,7 +340,7 @@ _e_exehist_limit(void)
 	     if (ei->exe) eina_stringshare_del(ei->exe);
 	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
 	     free(ei);
-	     _e_exehist->mimes = evas_list_remove_list(_e_exehist->mimes, _e_exehist->mimes);
+	     _e_exehist->mimes = eina_list_remove_list(_e_exehist->mimes, _e_exehist->mimes);
 	  }
      }
 }

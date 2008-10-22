@@ -360,7 +360,7 @@ break;
 # define FREE_LIST(__list) \
 while (__list) { \
    free(__list->data); \
-   __list = evas_list_remove_list(__list, __list); \
+   __list = eina_list_remove_list(__list, __list); \
 }
 
 # define SEND_DATA(__opcode) \
@@ -369,7 +369,7 @@ free(data);
 
 # define STRING_INT_LIST(__v, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_str_int_list_dec(e->data, e->size, &dat)) { \
        for (l = dat; l; l = l->next) { \
 	  E_Ipc_Str_Int *__v; \
@@ -378,14 +378,14 @@ free(data);
 	  E_FREE(__v->str); \
 	  free(__v); \
        } \
-       evas_list_free(dat); \
+       eina_list_free(dat); \
     } \
  } \
    break;
 
 #define SEND_STRING_INT_LIST(__list, __typ1, __v1, __v2, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
     for (l = __list; l; l = l->next) { \
        __typ1 *__v1; \
@@ -393,7 +393,7 @@ free(data);
        __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_Str_Int));
 #define END_SEND_STRING_INT_LIST(__v1, __op) \
-       dat = evas_list_append(dat, __v1); \
+       dat = eina_list_append(dat, __v1); \
     } \
     data = e_ipc_codec_str_int_list_enc(dat, &bytes); \
     SEND_DATA(__op); \
@@ -415,7 +415,7 @@ free(data);
 
 #define INT3_STRING3_LIST_START(__v, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_3int_3str_list_dec(e->data, e->size, &dat)) {
 #define INT3_STRING3_LIST_ITERATE(__v) \
        for (l = dat; l; l = l->next) { \
@@ -432,7 +432,7 @@ free(data);
           free(__v); \
        } 
 #define END_INT3_STRING3_LIST_START() \
-       evas_list_free(dat); \
+       eina_list_free(dat); \
     } \
  } \
   break;
@@ -448,7 +448,7 @@ free(data);
  */
 #define SEND_INT3_STRING3_LIST(__list, __typ1, __v1, __v2, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
     for (l = __list; l; l = l->next) { \
        __typ1 *__v1; \
@@ -456,7 +456,7 @@ free(data);
        __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_3Int_3Str));
 #define END_SEND_INT3_STRING3_LIST(__v1, __op) \
-       dat = evas_list_append(dat, __v1); \
+       dat = eina_list_append(dat, __v1); \
     } \
     data = e_ipc_codec_3int_3str_list_enc(dat, &bytes); \
     SEND_DATA(__op); \
@@ -478,7 +478,7 @@ free(data);
 
 #define INT4_STRING2_LIST_START(__v, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_4int_2str_list_dec(e->data, e->size, &dat)) { 
 #define INT4_STRING2_LIST_ITERATE(__v) \
        for (l = dat; l; l = l->next) { \
@@ -493,7 +493,7 @@ free(data);
           E_FREE(__v->str2); \
           free(__v); \
        } \
-       evas_list_free(dat);
+       eina_list_free(dat);
 #define END_INT4_STRING2_LIST_START() \
     } \
  } \
@@ -510,7 +510,7 @@ free(data);
  */
 #define SEND_INT4_STRING2_LIST(__list, __typ1, __v1, __v2, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
     for (l = __list; l; l = l->next) { \
        __typ1 *__v1; \
@@ -518,7 +518,7 @@ free(data);
        __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_4Int_2Str));
 #define END_SEND_INT4_STRING2_LIST(__v1, __op) \
-       dat = evas_list_append(dat, __v1); \
+       dat = eina_list_append(dat, __v1); \
     } \
     data = e_ipc_codec_4int_2str_list_enc(dat, &bytes); \
     SEND_DATA(__op); \
@@ -540,7 +540,7 @@ free(data);
 
 #define INT5_STRING2_LIST_START(__v, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_5int_2str_list_dec(e->data, e->size, &dat)) { 
 #define INT5_STRING2_LIST_ITERATE(__v) \
        for (l = dat; l; l = l->next) { \
@@ -555,7 +555,7 @@ free(data);
           E_FREE(__v->str2); \
           free(__v); \
        } \
-       evas_list_free(dat);
+       eina_list_free(dat);
 #define END_INT5_STRING2_LIST_START() \
     } \
  } \
@@ -572,7 +572,7 @@ free(data);
  */
 #define SEND_INT5_STRING2_LIST(__list, __typ1, __v1, __v2, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
     for (l = __list; l; l = l->next) { \
        __typ1 *__v1; \
@@ -580,7 +580,7 @@ free(data);
        __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_5Int_2Str));
 #define END_SEND_INT5_STRING2_LIST(__v1, __op) \
-       dat = evas_list_append(dat, __v1); \
+       dat = eina_list_append(dat, __v1); \
     } \
     data = e_ipc_codec_5int_2str_list_enc(dat, &bytes); \
     SEND_DATA(__op); \
@@ -602,7 +602,7 @@ free(data);
 
 #define INT3_STRING4_LIST_START(__v, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_3int_4str_list_dec(e->data, e->size, &dat)) { 
 #define INT3_STRING4_LIST_ITERATE(__v) \
        for (l = dat; l; l = l->next) { \
@@ -619,7 +619,7 @@ free(data);
           E_FREE(__v->str4); \
           free(__v); \
        } \
-       evas_list_free(dat);
+       eina_list_free(dat);
 #define END_INT3_STRING4_LIST_START() \
     } \
  } \
@@ -636,7 +636,7 @@ free(data);
  */
 #define SEND_INT3_STRING4_LIST(__list, __typ1, __v1, __v2, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
     for (l = __list; l; l = l->next) { \
        __typ1 *__v1; \
@@ -644,7 +644,7 @@ free(data);
        __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_3Int_4Str));
 #define END_SEND_INT3_STRING4_LIST(__v1, __op) \
-       dat = evas_list_append(dat, __v1); \
+       dat = eina_list_append(dat, __v1); \
     } \
     data = e_ipc_codec_3int_4str_list_enc(dat, &bytes); \
     SEND_DATA(__op); \
@@ -654,7 +654,7 @@ free(data);
 
 # define STRING_INT4_LIST(__v, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_str_4int_list_dec(e->data, e->size, &dat)) { \
        for (l = dat; l; l = l->next) { \
 	  E_Ipc_Str_4Int *__v; \
@@ -663,7 +663,7 @@ free(data);
 	  E_FREE(__v->str); \
 	  free(__v); \
        } \
-       evas_list_free(dat); \
+       eina_list_free(dat); \
     } \
  } \
    break;
@@ -679,7 +679,7 @@ free(data);
  */
 #define SEND_STRING_INT4_LIST(__list, __typ1, __v1, __v2, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
     for (l = __list; l; l = l->next) { \
        __typ1 *__v1; \
@@ -687,7 +687,7 @@ free(data);
        __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_Str_4Int));
 #define END_SEND_STRING_INT4_LIST(__v1, __op) \
-       dat = evas_list_append(dat, __v1); \
+       dat = eina_list_append(dat, __v1); \
     } \
     data = e_ipc_codec_str_4int_list_enc(dat, &bytes); \
     SEND_DATA(__op); \
@@ -706,7 +706,7 @@ free(data);
  */
 #define STRING2_INT_LIST(__v, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_2str_int_list_dec(e->data, e->size, &dat)) { \
        for (l = dat; l; l = l->next) { \
 	  E_Ipc_2Str_Int *__v; \
@@ -716,7 +716,7 @@ free(data);
 	  E_FREE(__v->str2); \
 	  free(__v); \
        } \
-       evas_list_free(dat); \
+       eina_list_free(dat); \
     } \
  } \
    break;
@@ -732,7 +732,7 @@ free(data);
  */
 #define SEND_STRING2_INT_LIST(__list, __typ1, __v1, __v2, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
     for (l = __list; l; l = l->next) { \
        __typ1 *__v1; \
@@ -740,7 +740,7 @@ free(data);
        __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_2Str_Int));
 #define END_SEND_STRING2_INT_LIST(__v1, __op) \
-       dat = evas_list_append(dat, __v1); \
+       dat = eina_list_append(dat, __v1); \
     } \
     data = e_ipc_codec_2str_int_list_enc(dat, &bytes); \
     SEND_DATA(__op); \
@@ -758,7 +758,7 @@ free(data);
  */
 #define STRING2_LIST(__v, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_2str_list_dec(e->data, e->size, &dat)) { \
        for (l = dat; l; l = l->next) { \
 	  E_Ipc_2Str *__v; \
@@ -768,7 +768,7 @@ free(data);
 	  E_FREE(__v->str2); \
 	  free(__v); \
        } \
-       evas_list_free(dat); \
+       eina_list_free(dat); \
     } \
  } \
    break;
@@ -784,7 +784,7 @@ free(data);
  */
 #define SEND_STRING2_LIST(__list, __typ1, __v1, __v2, HDL) \
  case HDL: { \
-    Evas_List *dat = NULL, *l; \
+    Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
     for (l = __list; l; l = l->next) { \
        __typ1 *__v1; \
@@ -792,7 +792,7 @@ free(data);
        __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_2Str));
 #define END_SEND_STRING2_LIST(__v1, __op) \
-       dat = evas_list_append(dat, __v1); \
+       dat = eina_list_append(dat, __v1); \
     } \
     data = e_ipc_codec_2str_list_enc(dat, &bytes); \
     SEND_DATA(__op); \
@@ -845,7 +845,7 @@ break;
    will be called 'dat' and the list to iterate will be l;
  */
 #define LIST_ENCODE_START() \
-   Evas_List *dat = NULL, *l; \
+   Eina_List *dat = NULL, *l; \
    void *data; int bytes;
 
 /* 
@@ -859,7 +859,7 @@ break;
    data = __enc(__dat, &bytes);
 
 /*
-   Iterate an evas_list starting with the pointer to __start. l 
+   Iterate an eina_list starting with the pointer to __start. l 
    is the pointer to the current position in the list. 
  */
 #define FOR(__start) \
@@ -872,7 +872,7 @@ break;
 break;
 
 #define LIST() \
-   Evas_List *dat = NULL, *l;
+   Eina_List *dat = NULL, *l;
 
 #define DECODE(__dec) \
    if (__dec(e->data, e->size, &dat))
@@ -1027,14 +1027,14 @@ break;
    END_STRING_INT_LIST(v);
 #elif (TYPE == E_LIB_IN)
    GENERIC(HDL);
-   Evas_List *dat = NULL;
+   Eina_List *dat = NULL;
    DECODE(e_ipc_codec_str_int_list_dec) {
       LIST();
       int count;
       RESPONSE(r, E_Response_Module_List);
 
       /* FIXME - this is a mess, needs to be merged into macros... */
-      count = evas_list_count(dat);
+      count = eina_list_count(dat);
       r->modules = malloc(sizeof(E_Response_Module_Data *) * count);
       r->count = count;
 
@@ -1117,14 +1117,14 @@ break;
    GENERIC(HDL);
    LIST_ENCODE_START();
    E_Font_Available *fa;
-   Evas_List *fa_list;
+   Eina_List *fa_list;
    fa_list = e_font_available_list();
    FOR(fa_list) { fa = l->data;
-      dat = evas_list_append(dat, fa->name);
+      dat = eina_list_append(dat, fa->name);
    }
    ENCODE(dat, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_FONT_AVAILABLE_LIST_REPLY);
-   evas_list_free(dat);
+   eina_list_free(dat);
    e_font_available_list_free(fa_list);
    END_GENERIC();
 #elif (TYPE == E_REMOTE_IN)
@@ -1215,11 +1215,11 @@ break;
    LIST_ENCODE_START();
    E_Font_Fallback *ff;
    FOR(e_config->font_fallbacks) { ff = l->data;
-      dat = evas_list_append(dat, ff->name);
+      dat = eina_list_append(dat, ff->name);
    }
    ENCODE(dat, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_FONT_FALLBACK_LIST_REPLY);
-   evas_list_free(dat);
+   eina_list_free(dat);
 
    END_GENERIC();
 #elif (TYPE == E_REMOTE_IN)
@@ -1410,7 +1410,7 @@ break;
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
    ENCODE_START();
-   Evas_List *languages;
+   Eina_List *languages;
    languages = e_intl_language_list();
    ENCODE(languages, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_LANG_LIST_REPLY);
@@ -1501,16 +1501,16 @@ break;
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
    LIST_ENCODE_START()
-   Evas_List *dir_list = NULL;
+   Eina_List *dir_list = NULL;
    E_PATH_GET(path, s);
    if (path)
       dir_list = e_path_dir_list_get(path);
      
    E_Path_Dir *p;
    if (s) {
-      dat = evas_list_append(dat, eina_stringshare_add(s));
+      dat = eina_list_append(dat, eina_stringshare_add(s));
       FOR(dir_list) { p = l->data;
-	 dat = evas_list_append(dat, eina_stringshare_add(p->dir));
+	 dat = eina_list_append(dat, eina_stringshare_add(p->dir));
       }
    }
 
@@ -1522,7 +1522,7 @@ break;
 	
 	dir = dat->data;
 	eina_stringshare_del(dir);
-	dat = evas_list_remove_list(dat, dat);	
+	dat = eina_list_remove_list(dat, dat);	
      }
    e_path_dir_list_free(dir_list);
    END_STRING(s)
@@ -1561,7 +1561,7 @@ break;
       RESPONSE(r, E_Response_Dirs_List);
 
       /* FIXME - this is a mess, needs to be merged into macros... */
-      count = evas_list_count(dat);
+      count = eina_list_count(dat);
       r->dirs = malloc(sizeof(char *) * count);
       r->count = count - 1; /* leave off the "type" */
 
@@ -2292,16 +2292,16 @@ break;
    E_CONFIG_LIMIT(e_config->zone_desks_x_count, 1, 64)
    E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64)
    {
-      Evas_List *l;
+      Eina_List *l;
       for (l = e_manager_list(); l; l = l->next)
 	{
 	   E_Manager *man;
-	   Evas_List *l2;
+	   Eina_List *l2;
 	   man = l->data;
 	   for (l2 = man->containers; l2; l2 = l2->next)
 	     {
 		E_Container *con;
-		Evas_List *l3;
+		Eina_List *l3;
 		con = l2->data;
 		for (l3 = con->zones; l3; l3 = l3->next)
 		  {
@@ -2531,7 +2531,7 @@ break;
    {
       int count;
       RESPONSE(r, E_Response_Binding_Mouse_List);
-      count = evas_list_count(dat);
+      count = eina_list_count(dat);
       r->bindings = malloc(sizeof(E_Response_Binding_Mouse_Data *) * count);
       r->count = count;
 
@@ -2646,7 +2646,7 @@ break;
    if (!eb)
      {
         eb = E_NEW(E_Config_Binding_Mouse, 1);
-        e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
+        e_config->mouse_bindings = eina_list_append(e_config->mouse_bindings, eb);
         eb->context = bind.context;
         eb->button = bind.button;
         eb->modifiers = bind.modifiers;
@@ -2751,7 +2751,7 @@ break;
    eb = e_config_binding_mouse_match(&bind);
    if (eb)
      {
-	e_config->mouse_bindings = evas_list_remove(e_config->mouse_bindings, eb);
+	e_config->mouse_bindings = eina_list_remove(e_config->mouse_bindings, eb);
         if (eb->action) eina_stringshare_del(eb->action);
         if (eb->params) eina_stringshare_del(eb->params);
         E_FREE(eb);
@@ -2858,7 +2858,7 @@ break;
    {
       int count = 0;
       RESPONSE(r, E_Response_Binding_Key_List);
-      count = evas_list_count(dat);
+      count = eina_list_count(dat);
       r->bindings = malloc(sizeof(E_Response_Binding_Key_Data *) * count);
       r->count = count;
 
@@ -2972,7 +2972,7 @@ break;
    if (!eb)
      {
         eb = E_NEW(E_Config_Binding_Key, 1);
-        e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
+        e_config->key_bindings = eina_list_append(e_config->key_bindings, eb);
         eb->context = bind.context;
         eb->modifiers = bind.modifiers;
         eb->any_mod = bind.any_mod;
@@ -3075,7 +3075,7 @@ break;
    eb = e_config_binding_key_match(&bind);
    if (eb)
      {
-       e_config->key_bindings = evas_list_remove(e_config->key_bindings, eb);
+       e_config->key_bindings = eina_list_remove(e_config->key_bindings, eb);
        if (eb->key) eina_stringshare_del(eb->key);
        if (eb->action) eina_stringshare_del(eb->action);
        if (eb->params) eina_stringshare_del(eb->params);
@@ -4736,7 +4736,7 @@ break;
 #elif (TYPE == E_WM_IN)
 	STRING2(actionName, paramList, e_2str, HDL);
 	{
-		Evas_List *m;
+		Eina_List *m;
 		E_Manager *man;
 		E_Action  *act;
 
@@ -5156,7 +5156,7 @@ break;
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
    ENCODE_START();
-   Evas_List *profiles;
+   Eina_List *profiles;
    profiles = e_config_profile_list();
    ENCODE(profiles, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_PROFILE_LIST_REPLY);
@@ -5299,7 +5299,7 @@ break;
    REQ_INT(atoi(params[0]), HDL);
 #elif (TYPE == E_WM_IN)
    START_INT(val, HDL);
-   Evas_List *ml;
+   Eina_List *ml;
    e_config->use_e_cursor = val;
    E_CONFIG_LIMIT(e_config->use_e_cursor, 0, 1);
    for (ml = e_manager_list(); ml; ml = ml->next)
@@ -5740,7 +5740,7 @@ break;
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
    ENCODE_START();
-   Evas_List *iml;
+   Eina_List *iml;
    iml = e_intl_input_method_list();
    ENCODE(iml, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_IM_LIST_REPLY);
@@ -5964,7 +5964,7 @@ break;
    {
       int count;
       RESPONSE(r, E_Response_Binding_Signal_List);
-      count = evas_list_count(dat);
+      count = eina_list_count(dat);
       r->bindings = malloc(sizeof(E_Response_Binding_Signal_Data *) * count);
       r->count = count;
 
@@ -6082,7 +6082,7 @@ break;
    if (!eb)
      {
         eb = E_NEW(E_Config_Binding_Signal, 1);
-        e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+        e_config->signal_bindings = eina_list_append(e_config->signal_bindings, eb);
         eb->context = bind.context;
         if (bind.signal) eb->signal = eina_stringshare_add(bind.signal);
         if (bind.source) eb->source = eina_stringshare_add(bind.source);
@@ -6188,7 +6188,7 @@ break;
    eb = e_config_binding_signal_match(&bind);
    if (eb)
      {
-	e_config->signal_bindings = evas_list_remove(e_config->signal_bindings, eb);
+	e_config->signal_bindings = eina_list_remove(e_config->signal_bindings, eb);
         if (eb->signal) eina_stringshare_del(eb->signal);
         if (eb->source) eina_stringshare_del(eb->source);
         if (eb->action) eina_stringshare_del(eb->action);
@@ -6294,7 +6294,7 @@ break;
    {
       int count;
       RESPONSE(r, E_Response_Binding_Wheel_List);
-      count = evas_list_count(dat);
+      count = eina_list_count(dat);
       r->bindings = malloc(sizeof(E_Response_Binding_Wheel_Data *) * count);
       r->count = count;
 
@@ -6412,7 +6412,7 @@ break;
    if (!eb)
      {
         eb = E_NEW(E_Config_Binding_Wheel, 1);
-        e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+        e_config->wheel_bindings = eina_list_append(e_config->wheel_bindings, eb);
         eb->context = bind.context;
         eb->direction = bind.direction;
         eb->z = bind.z;
@@ -6518,7 +6518,7 @@ break;
    eb = e_config_binding_wheel_match(&bind);
    if (eb)
      {
-	e_config->wheel_bindings = evas_list_remove(e_config->wheel_bindings, eb);
+	e_config->wheel_bindings = eina_list_remove(e_config->wheel_bindings, eb);
         if (eb->action) eina_stringshare_del(eb->action);
         if (eb->params) eina_stringshare_del(eb->params);
         E_FREE(eb);
@@ -6820,7 +6820,7 @@ break;
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
    ENCODE_START();
-   Evas_List *engines;
+   Eina_List *engines;
    engines = e_config_engine_list();
    ENCODE(engines, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_ENGINE_LIST_REPLY);

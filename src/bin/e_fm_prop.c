@@ -220,7 +220,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	if ((cfdata->icon_mime) && (cfdata->mime)) /* modify mimetype */
 	  {
-	     Evas_List *l;
+	     Eina_List *l;
 	     E_Config_Mime_Icon *mi = NULL;
 	     int found = 0;
 	     
@@ -243,14 +243,14 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	       {
 		  mi = E_NEW(E_Config_Mime_Icon, 1);
 		  mi->mime = eina_stringshare_add(cfdata->mime);
-		  e_config->mime_icons = evas_list_append(e_config->mime_icons, mi);
+		  e_config->mime_icons = eina_list_append(e_config->mime_icons, mi);
 	       }
 	     /* FIXME: modify mime info */
 	     if (cfdata->icon_type == 0)
 	       {
 		  if (found)
 		    {
-		       e_config->mime_icons = evas_list_remove(e_config->mime_icons, mi);
+		       e_config->mime_icons = eina_list_remove(e_config->mime_icons, mi);
 		       if (mi->mime) eina_stringshare_del(mi->mime);
 		       if (mi->icon) eina_stringshare_del(mi->icon);
 		       free(mi);

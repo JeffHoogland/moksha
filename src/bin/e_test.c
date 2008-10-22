@@ -8,7 +8,7 @@ static void _e_test_internal(E_Container *con);
 EAPI void
 e_test(void)
 {
-   Evas_List *managers, *l, *ll;
+   Eina_List *managers, *l, *ll;
    
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
@@ -31,7 +31,7 @@ static int
 _e_test_timer(void *data)
 {
    E_Menu *m;
-   Evas_List *managers, *l;
+   Eina_List *managers, *l;
    
    m = data;
    if (m)
@@ -122,7 +122,7 @@ static void
 _e_test_internal(E_Container *con)
 {
    E_Menu *m;
-   Evas_List *managers, *l;
+   Eina_List *managers, *l;
    
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
@@ -457,7 +457,7 @@ _e_test_cb_changed(void *data, Evas_Object *obj, void *event_info)
 static void
 _e_test_cb_favorites_selected(void *data, Evas_Object *obj, void *event_info)
 {
-   Evas_List *selected;
+   Eina_List *selected;
    E_Fm2_Icon_Info *ici;
    
    printf("FAV SELECTED\n");
@@ -470,13 +470,13 @@ _e_test_cb_favorites_selected(void *data, Evas_Object *obj, void *event_info)
      e_fm2_path_set(data, NULL, ici->link);
 // FIXME: this should happen on the scrollframe not the fm obj   
 //   e_widget_scrollframe_child_pos_set(data, 0, 0);
-   evas_list_free(selected);
+   eina_list_free(selected);
 }
     
 static void
 _e_test_cb_favorites_files_changed(void *data, Evas_Object *obj, void *event_info)
 {
-   Evas_List *icons, *l;
+   Eina_List *icons, *l;
    E_Fm2_Icon_Info *ici;
    const char *realpath;
    char *p1, *p2;
@@ -504,7 +504,7 @@ _e_test_cb_favorites_files_changed(void *data, Evas_Object *obj, void *event_inf
      }
    done:
    E_FREE(p1);
-   evas_list_free(icons);
+   eina_list_free(icons);
 }
     
 static void

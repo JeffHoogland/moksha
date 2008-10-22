@@ -123,13 +123,13 @@ typedef struct _E_Rect E_Rect;
     { \
        if (list) \
 	 { \
-	    Evas_List *tmp; \
+	    Eina_List *tmp; \
 	    tmp = list; \
 	    list = NULL; \
 	    while (tmp) \
 	      { \
 		 free(tmp->data); \
-		 tmp = evas_list_remove_list(tmp, tmp); \
+		 tmp = eina_list_remove_list(tmp, tmp); \
 	      } \
 	 } \
     } \

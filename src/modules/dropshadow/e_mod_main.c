@@ -24,7 +24,7 @@ static Shadow     *_ds_shadow_find(Dropshadow *ds, E_Container_Shape *es);
 static Shadow     *_ds_shadow_add(Dropshadow *ds, E_Container_Shape *es);
 static void        _ds_shadow_obj_clear(Shadow *sh);
 static void        _ds_shadow_obj_init(Shadow *sh);
-static void        _ds_shadow_obj_init_rects(Shadow *sh, Evas_List *rects);
+static void        _ds_shadow_obj_init_rects(Shadow *sh, Eina_List *rects);
 static void        _ds_shadow_obj_shutdown(Shadow *sh);
 static void        _ds_shadow_del(Shadow *sh);
 static void        _ds_shadow_show(Shadow *sh);
@@ -47,7 +47,7 @@ static Shpix      *_ds_shpix_new(int w, int h);
 static void        _ds_shpix_free(Shpix *sp);
 static void        _ds_shpix_fill(Shpix *sp, int x, int y, int w, int h, unsigned char val);
 static void        _ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, int blur_size, int q);
-static void        _ds_shpix_blur_rects(Shpix *sp, Evas_List *rects, unsigned char *blur_lut, int blur_size, int q);
+static void        _ds_shpix_blur_rects(Shpix *sp, Eina_List *rects, unsigned char *blur_lut, int blur_size, int q);
 static void        _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h);
 static void        _ds_shared_free(Dropshadow *ds);
 static void        _ds_shared_use(Dropshadow *ds, Shadow *sh);
@@ -64,8 +64,8 @@ static Tilebuf    *_tilebuf_new(int w, int h);
 static void        _tilebuf_free(Tilebuf *tb);
 static void        _tilebuf_set_tile_size(Tilebuf *tb, int tw, int th);
 static int         _tilebuf_add_redraw(Tilebuf *tb, int x, int y, int w, int h);
-static Evas_List  *_tilebuf_get_render_rects(Tilebuf *tb);
-static void        _tilebuf_free_render_rects(Evas_List *rects);
+static Eina_List  *_tilebuf_get_render_rects(Tilebuf *tb);
+static void        _tilebuf_free_render_rects(Eina_List *rects);
 
 #define TILE(tb, x, y) ((tb)->tiles.tiles[((y) * (tb)->tiles.w) + (x)])
 
@@ -130,7 +130,7 @@ static Dropshadow *
 _ds_init(E_Module *m)
 {
    Dropshadow *ds;
-   Evas_List *managers, *l, *l2;
+   Eina_List *managers, *l, *l2;
    
    ds = calloc(1, sizeof(Dropshadow));
    if (!ds) return  NULL;
@@ -183,7 +183,7 @@ _ds_init(E_Module *m)
 	     E_Container *con;
 	     
 	     con = l2->data;
-	     ds->cons = evas_list_append(ds->cons, con);
+	     ds->cons = eina_list_append(ds->cons, con);
 	     e_container_shape_change_callback_add(con, _ds_shape_change, ds);
 	     _ds_container_shapes_add(ds, con);
 	  }
@@ -202,7 +202,7 @@ _ds_shutdown(Dropshadow *ds)
 	E_Container *con;
 	
 	con = ds->cons->data;
-	ds->cons = evas_list_remove_list(ds->cons, ds->cons);
+	ds->cons = eina_list_remove_list(ds->cons, ds->cons);
 	e_container_shape_change_callback_del(con, _ds_shape_change, ds);
      }
    while (ds->shadows)
@@ -222,7 +222,7 @@ _ds_shutdown(Dropshadow *ds)
 static void
 _ds_container_shapes_add(Dropshadow *ds, E_Container *con)
 {
-   Evas_List *shapes, *l;
+   Eina_List *shapes, *l;
    
    shapes = e_container_shape_list_get(con);
    for (l = shapes; l; l = l->next)
@@ -287,7 +287,7 @@ _ds_shape_change(void *data, E_Container_Shape *es, E_Container_Shape_Change ch)
 static Shadow *
 _ds_shadow_find(Dropshadow *ds, E_Container_Shape *es)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = ds->shadows; l; l = l->next)
      {
@@ -305,7 +305,7 @@ _ds_shadow_add(Dropshadow *ds, E_Container_Shape *es)
    Shadow *sh;
    
    sh = calloc(1, sizeof(Shadow));
-   ds->shadows = evas_list_append(ds->shadows, sh);
+   ds->shadows = eina_list_append(ds->shadows, sh);
    sh->ds = ds;
    sh->shape = es;
    e_object_ref(E_OBJECT(sh->shape));
@@ -338,10 +338,10 @@ _ds_shadow_obj_init(Shadow *sh)
 }
 
 static void
-_ds_shadow_obj_init_rects(Shadow *sh, Evas_List *rects)
+_ds_shadow_obj_init_rects(Shadow *sh, Eina_List *rects)
 {
    E_Container *con;
-   Evas_List *l;
+   Eina_List *l;
    
    if (sh->initted) return;
    sh->initted = 1;
@@ -372,7 +372,7 @@ _ds_shadow_obj_init_rects(Shadow *sh, Evas_List *rects)
 	     so->y = r->y;
 	     so->w = r->w;
 	     so->h = r->h;
-	     sh->object_list = evas_list_append(sh->object_list, so);
+	     sh->object_list = eina_list_append(sh->object_list, so);
 	  }
      }
 }
@@ -381,7 +381,7 @@ static void
 _ds_shadow_obj_clear(Shadow *sh)
 {
    int i;
-   Evas_List *l;
+   Eina_List *l;
    
    for (i = 0; i < 4; i++)
      {
@@ -431,7 +431,7 @@ _ds_shadow_obj_shutdown(Shadow *sh)
 	so = sh->object_list->data;
 	evas_object_del(so->obj);
 	free(so);
-	sh->object_list = evas_list_remove_list(sh->object_list, sh->object_list);
+	sh->object_list = eina_list_remove_list(sh->object_list, sh->object_list);
      }
 }
 
@@ -443,7 +443,7 @@ _ds_shadow_del(Shadow *sh)
 	_ds_shared_unuse(sh->ds);
 	sh->use_shared = 0;
      }
-   sh->ds->shadows = evas_list_remove(sh->ds->shadows, sh);
+   sh->ds->shadows = eina_list_remove(sh->ds->shadows, sh);
    _ds_shadow_obj_shutdown(sh);
    e_object_unref(E_OBJECT(sh->shape));
    free(sh);
@@ -452,7 +452,7 @@ _ds_shadow_del(Shadow *sh)
 static void
 _ds_shadow_show(Shadow *sh)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    _ds_shadow_obj_init(sh);
    if (!sh->object_list)
@@ -485,7 +485,7 @@ _ds_shadow_show(Shadow *sh)
 static void
 _ds_shadow_hide(Shadow *sh)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    _ds_shadow_obj_init(sh);
    if (!sh->object_list)
@@ -518,7 +518,7 @@ _ds_shadow_hide(Shadow *sh)
 static void
 _ds_shadow_move(Shadow *sh, int x, int y)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    _ds_shadow_obj_init(sh);
    sh->x = x;
@@ -626,7 +626,7 @@ static int
 _ds_shadow_reshape(void *data)
 {
    Dropshadow *ds;
-   Evas_List *l;
+   Eina_List *l;
    
    ds = data;
    /* in idle time - if something needs a recalc... do it */
@@ -690,7 +690,7 @@ _ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int x1, int y1, int x2, int y2)
 static void
 _ds_shadow_recalc(Shadow *sh)
 {
-   Evas_List *rects = NULL;
+   Eina_List *rects = NULL;
    
    rects = e_container_shape_rects_get(sh->shape);
    if ((sh->w < ((sh->ds->conf->blur_size * 2) + 2)) ||
@@ -700,7 +700,7 @@ _ds_shadow_recalc(Shadow *sh)
      sh->toosmall = 0;
    if ((rects) || (sh->toosmall))
      {
-	Evas_List *l, *ll;
+	Eina_List *l, *ll;
 	Shpix *sp;
 	int shw, shh, bsz, shx, shy;
 	int x1, y1, x2, y2;
@@ -755,7 +755,7 @@ _ds_shadow_recalc(Shadow *sh)
 	     tb = _tilebuf_new(shw + (bsz * 2), shh + (bsz * 2));
 	     if (tb)
 	       {
-		  Evas_List *brects;
+		  Eina_List *brects;
 		  
 		  _tilebuf_set_tile_size(tb, 16, 16);
 		  /* find edges */
@@ -988,7 +988,7 @@ _ds_shadow_recalc(Shadow *sh)
 static void
 _ds_config_darkness_set(Dropshadow *ds, double v)
 {
-   Evas_List *l, *ll;
+   Eina_List *l, *ll;
    
    if (v < 0.0) v = 0.0;
    else if (v > 1.0) v = 1.0;
@@ -1023,7 +1023,7 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
 static void
 _ds_config_shadow_xy_set(Dropshadow *ds, int x, int y)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    if (ds->conf->shadow_x >= ds->conf->blur_size)
      ds->conf->shadow_x = ds->conf->blur_size - 1;
@@ -1043,7 +1043,7 @@ _ds_config_shadow_xy_set(Dropshadow *ds, int x, int y)
 static void
 _ds_config_blur_set(Dropshadow *ds, int blur)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    if (blur < 0) blur = 0;
    
@@ -1067,7 +1067,7 @@ _ds_config_blur_set(Dropshadow *ds, int blur)
 static void
 _ds_config_quality_set(Dropshadow *ds, int q)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    if (q < 1) q = 1;
    if (q > 4) q = 4;
@@ -1577,10 +1577,10 @@ _ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, i
 }
 
 static void
-_ds_shpix_blur_rects(Shpix *sp, Evas_List *rects, unsigned char *blur_lut, int blur_size, int q)
+_ds_shpix_blur_rects(Shpix *sp, Eina_List *rects, unsigned char *blur_lut, int blur_size, int q)
 {
    Shpix *sp2;
-   Evas_List *l;
+   Eina_List *l;
    
    if (!sp) return;
    if (blur_size < 1) return;
@@ -2049,10 +2049,10 @@ _tilebuf_add_redraw(Tilebuf *tb, int x, int y, int w, int h)
    return num;
 }
 
-static Evas_List *
+static Eina_List *
 _tilebuf_get_render_rects(Tilebuf *tb)
 {
-   Evas_List *rects = NULL;
+   Eina_List *rects = NULL;
    int x, y;
    
    for (y = 0; y < tb->tiles.h; y++)
@@ -2123,7 +2123,7 @@ _tilebuf_get_render_rects(Tilebuf *tb)
 		  if ((r->w <= 0) || (r->h <= 0))
 		    free(r);
 		  else
-		    rects = evas_list_append(rects, r);
+		    rects = eina_list_append(rects, r);
 		  x = x + (xx - 1);
 	       }
 	  }
@@ -2132,14 +2132,14 @@ _tilebuf_get_render_rects(Tilebuf *tb)
 }
 
 static void
-_tilebuf_free_render_rects(Evas_List *rects)
+_tilebuf_free_render_rects(Eina_List *rects)
 {
    while (rects)
      {
 	E_Rect *r;
 	
 	r = rects->data;
-	rects = evas_list_remove_list(rects, rects);
+	rects = eina_list_remove_list(rects, rects);
 	free(r);
      }
 }

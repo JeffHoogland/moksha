@@ -172,7 +172,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *ol, *ob, *oj, *orect, *of;
    Evas_Coord w, h;
-   Evas_List *borders, *l;
+   Eina_List *borders, *l;
    int n, sel = 0;
    char *tmp;
    

@@ -29,9 +29,9 @@ static int _e_thumb_cb_kill(void *data);
 static int _e_thumb_cb_exe_event_del(void *data, int type, void *event);
 
 /* local subsystem globals */
-static Evas_List *_thumbnailers = NULL;
-static Evas_List *_thumbnailers_exe = NULL;
-static Evas_List *_thumb_queue = NULL;
+static Eina_List *_thumbnailers = NULL;
+static Eina_List *_thumbnailers_exe = NULL;
+static Eina_List *_thumb_queue = NULL;
 static int _objid = 0;
 static Evas_Hash *_thumbs = NULL;
 static int _pending = 0;
@@ -56,13 +56,13 @@ e_thumb_shutdown(void)
    _e_thumb_cb_kill(NULL);
    ecore_event_handler_del(_exe_del_handler);
    _exe_del_handler = NULL;
-   _thumbnailers = evas_list_free(_thumbnailers);
+   _thumbnailers = eina_list_free(_thumbnailers);
    while (_thumbnailers_exe)
      {
 	ecore_exe_free(_thumbnailers_exe->data);
-	_thumbnailers_exe = evas_list_remove_list(_thumbnailers_exe, _thumbnailers_exe);
+	_thumbnailers_exe = eina_list_remove_list(_thumbnailers_exe, _thumbnailers_exe);
      }
-   _thumb_queue = evas_list_free(_thumb_queue);
+   _thumb_queue = eina_list_free(_thumb_queue);
    _objid = 0;
    evas_hash_free(_thumbs);
    _thumbs = NULL;
@@ -130,23 +130,23 @@ e_thumb_icon_begin(Evas_Object *obj)
    if (!eth->file) return;
    if (!_thumbnailers)
      {
-	while (evas_list_count(_thumbnailers_exe) < _num_thumbnailers)
+	while (eina_list_count(_thumbnailers_exe) < _num_thumbnailers)
 	  {
 	     Ecore_Exe *exe;
 
 	     snprintf(buf, sizeof(buf), "%s/enlightenment_thumb --nice=%d", e_prefix_bin_get(),
 		      e_config->thumb_nice);
 	     exe = ecore_exe_run(buf, NULL);
-	     _thumbnailers_exe = evas_list_append(_thumbnailers_exe, exe);
+	     _thumbnailers_exe = eina_list_append(_thumbnailers_exe, exe);
 	  }
-	_thumb_queue = evas_list_append(_thumb_queue, eth);
+	_thumb_queue = eina_list_append(_thumb_queue, eth);
 	eth->queued = 1;
 	return;
      }
    while (_thumb_queue)
      {
 	eth2 = _thumb_queue->data;
-	_thumb_queue = evas_list_remove_list(_thumb_queue, _thumb_queue);
+	_thumb_queue = eina_list_remove_list(_thumb_queue, _thumb_queue);
 	eth2->queued = 0;
 	eth2->busy = 1;
 	_pending++;
@@ -168,7 +168,7 @@ e_thumb_icon_end(Evas_Object *obj)
    if (!eth) return;
    if (eth->queued)
      {
-	_thumb_queue = evas_list_remove(_thumb_queue, eth);
+	_thumb_queue = eina_list_remove(_thumb_queue, eth);
 	eth->queued = 0;
      }
    if (eth->busy)
@@ -202,8 +202,8 @@ e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
    E_Thumb *eth;
    Evas_Object *obj;
 
-   if (!evas_list_find(_thumbnailers, e->client))
-     _thumbnailers = evas_list_prepend(_thumbnailers, e->client);
+   if (!eina_list_data_find(_thumbnailers, e->client))
+     _thumbnailers = eina_list_prepend(_thumbnailers, e->client);
    if (e->minor == 2)
      {
 	objid = e->ref;
@@ -232,7 +232,7 @@ e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
 	while (_thumb_queue)
 	  {
 	     eth = _thumb_queue->data;
-	     _thumb_queue = evas_list_remove_list(_thumb_queue, _thumb_queue);
+	     _thumb_queue = eina_list_remove_list(_thumb_queue, _thumb_queue);
 	     eth->queued = 0;
 	     eth->busy = 1;
 	     _pending++;
@@ -245,8 +245,8 @@ e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
 EAPI void
 e_thumb_client_del(Ecore_Ipc_Event_Client_Del *e)
 {
-   if (!evas_list_find(_thumbnailers, e->client)) return;
-   _thumbnailers = evas_list_remove(_thumbnailers, e->client);
+   if (!eina_list_data_find(_thumbnailers, e->client)) return;
+   _thumbnailers = eina_list_remove(_thumbnailers, e->client);
    if ((!_thumbs) && (!_thumbnailers)) _objid = 0;
 }
 
@@ -268,15 +268,15 @@ _e_thumb_gen_begin(int objid, const char *file, const char *key, int w, int h)
    else buf[l1 + 1] = 0;
    cli = _thumbnailers->data;
    if (!cli) return;
-   _thumbnailers = evas_list_remove_list(_thumbnailers, _thumbnailers);
-   _thumbnailers = evas_list_append(_thumbnailers, cli);
+   _thumbnailers = eina_list_remove_list(_thumbnailers, _thumbnailers);
+   _thumbnailers = eina_list_append(_thumbnailers, cli);
    ecore_ipc_client_send(cli, E_IPC_DOMAIN_THUMB, 1, objid, w, h, buf, l1 + 1 + l2 + 1);
 }
 
 static void
 _e_thumb_gen_end(int objid)
 {
-   Evas_List *l;
+   Eina_List *l;
    Ecore_Ipc_Client *cli;
 
    /* send thumb cancel */
@@ -304,7 +304,7 @@ _e_thumb_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	if (_pending == 0) _e_thumb_thumbnailers_kill();
      }
    if (eth->queued)
-     _thumb_queue = evas_list_remove(_thumb_queue, eth);
+     _thumb_queue = eina_list_remove(_thumb_queue, eth);
    if (eth->file) eina_stringshare_del(eth->file);
    if (eth->key) eina_stringshare_del(eth->key);
    free(eth);
@@ -355,7 +355,7 @@ _e_thumb_thumbnailers_kill_cancel(void)
 static int
 _e_thumb_cb_kill(void *data)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = _thumbnailers_exe; l; l = l->next)
      ecore_exe_terminate(l->data);
@@ -367,14 +367,14 @@ static int
 _e_thumb_cb_exe_event_del(void *data, int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
-   Evas_List *l;
+   Eina_List *l;
 
    ev = event;
    for (l = _thumbnailers_exe; l; l = l->next)
      {
 	if (l->data == ev->exe)
 	  {
-	     _thumbnailers_exe = evas_list_remove_list(_thumbnailers_exe, l);
+	     _thumbnailers_exe = eina_list_remove_list(_thumbnailers_exe, l);
 	     break;
 	  }
      }

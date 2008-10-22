@@ -42,13 +42,13 @@ struct _E_Action_Description
 struct _E_Action_Group
 {
    const char *act_grp;
-   Evas_List *acts;
+   Eina_List *acts;
 };
 
 EAPI int         e_actions_init(void);
 EAPI int         e_actions_shutdown(void);
 
-EAPI Evas_List  *e_action_name_list(void);
+EAPI Eina_List  *e_action_name_list(void);
 EAPI E_Action   *e_action_add(const char *name);
 /* e_action_del allows, for example, modules to define their own actions dynamically. */
 EAPI void	e_action_del(const char *name);
@@ -57,7 +57,7 @@ EAPI E_Action   *e_action_find(const char *name);
 EAPI void       e_action_predef_name_set(const char *act_grp, const char *act_name, const char *act_cmd, const char *act_params, const char *param_example, int editable);
 EAPI void       e_action_predef_name_del(const char *act_grp, const char *act_name);
 EAPI void       e_action_predef_name_all_del(void);
-EAPI Evas_List  *e_action_groups_get(void);
+EAPI Eina_List  *e_action_groups_get(void);
 
 #endif
 #endif

@@ -41,7 +41,7 @@ struct _E_Config_Dialog_Data
    double hide_duration;
 
    int desk_show_mode;
-   Evas_List *desk_list; 
+   Eina_List *desk_list; 
 
    Evas_Object *desk_sel_list;
 };
@@ -171,7 +171,7 @@ _desk_sel_list_load(E_Config_Dialog_Data *cfdata)
    for (x = 0; x < e_config->zone_desks_x_count; x++)
      {
 	E_Desk *desk;
-	Evas_List *l = NULL;
+	Eina_List *l = NULL;
 
 	desk = e_desk_at_xy_get(cfdata->es->zone, x, y);
 	e_widget_ilist_append(cfdata->desk_sel_list, NULL, desk->name, NULL, NULL, NULL);
@@ -405,8 +405,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->escfg->desk_list = NULL;
    if (cfdata->desk_show_mode)
      {
-	Evas_List *l;
-	Evas_List *desk_list = NULL;
+	Eina_List *l;
+	Eina_List *desk_list = NULL;
 	for (idx = 0, l = e_widget_ilist_items_get(cfdata->desk_sel_list); l; l = l->next, idx++)
 	  {
 	     E_Ilist_Item *item;
@@ -422,7 +422,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     sd = E_NEW(E_Config_Shelf_Desk, 1);
 	     sd->x = desk->x;
 	     sd->y = desk->y;
-	     desk_list = evas_list_append(desk_list, sd);
+	     desk_list = eina_list_append(desk_list, sd);
 	  }
 	cfdata->escfg->desk_list = desk_list;
      }
@@ -448,7 +448,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->escfg->desk_show_mode)
      {
 	E_Desk *desk;
-	Evas_List *l;
+	Eina_List *l;
 	int show_shelf=0;
 
 	desk = e_desk_current_get(cfdata->es->zone);
@@ -542,7 +542,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    Evas_Object *o, *o2, *of, *ob, *oi, *oj;
    E_Radio_Group *rg;
    Evas_Coord wmw, wmh;
-   Evas_List *styles, *l;
+   Eina_List *styles, *l;
    int sel, n;
    
    /* FIXME: this is just raw config now - it needs UI improvments */

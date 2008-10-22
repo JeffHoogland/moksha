@@ -137,8 +137,8 @@ static void
 _fill_remembers(E_Config_Dialog_Data *cfdata) 
 {
    Evas *evas;
-   Evas_List *l = NULL;
-   Evas_List *ll = NULL;
+   Eina_List *l = NULL;
+   Eina_List *ll = NULL;
    Evas_Object *ic;
    int w = 0;
 
@@ -149,7 +149,7 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_clear(cfdata->list);
 
    ll = e_config->remembers;
-   ll = evas_list_sort(ll, -1, _cb_sort);
+   ll = eina_list_sort(ll, -1, _cb_sort);
 
    ic = edje_object_add(evas);
    e_util_edje_icon_set(ic, "enlightenment/applications");
@@ -226,7 +226,7 @@ static void
 _cb_delete(void *data, void *data2) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    int i = 0, changed = 0, deleted = 0;
    int last_selected = -1;
 

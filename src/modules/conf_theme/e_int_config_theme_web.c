@@ -582,7 +582,7 @@ _file_click_cb(void *data, Evas_Object *obj, void *ev_info)
 {
    Web *web;
    E_Config_Dialog_Data *cfdata;
-   Evas_List *sels;
+   Eina_List *sels;
    E_Fm2_Icon_Info *icon_info;
 
    web = data;
@@ -600,7 +600,7 @@ static void
 _file_double_click_cb(void *data, Evas_Object *obj, void *ev_info)
 {
    /*E_Config_Dialog_Data *cfdata;
-   Evas_List *sels;
+   Eina_List *sels;
    E_Fm2_Icon_Info *icon_info;
 
    cfdata = data;
@@ -626,7 +626,7 @@ _web_ok_cb(void *data, E_Dialog *dia)
 {
    Web *web;
    E_Config_Dialog_Data *cfdata;
-   Evas_List *sels;
+   Eina_List *sels;
 
    web = data;
    cfdata = web->cfdata;

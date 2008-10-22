@@ -79,7 +79,7 @@ static void
 _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *selected;
+   Eina_List *selected;
    E_Fm2_Icon_Info *ici;
    const char *realpath;
    char buf[4096];
@@ -94,7 +94,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
      snprintf(buf, sizeof(buf), "/%s", ici->file);
    else
      snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-   evas_list_free(selected);
+   eina_list_free(selected);
    if (ecore_file_is_dir(buf)) return;
    E_FREE(cfdata->splash);
    cfdata->splash = strdup(buf);

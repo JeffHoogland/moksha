@@ -26,7 +26,7 @@ struct _E_Config_Dialog_Data
    int state;
    int wm_enabled, wid_enabled, mod_enabled;
    E_Color *color1, *color2, *color3;
-   Evas_List *classes;
+   Eina_List *classes;
    struct 
      {
 	Evas_Object *ilist, *button;
@@ -209,14 +209,14 @@ _fill_data_hash(E_Config_Dialog_Data *cfdata, const CFColor_Hash *cfhash)
 	else 
 	  cfc->name = eina_stringshare_add(cfhash[i].name);
 	
-	cfdata->classes = evas_list_append(cfdata->classes, cfc);
+	cfdata->classes = eina_list_append(cfdata->classes, cfc);
      }
 }
 
 static void 
 _fill_data_basic(E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *l;
+   Eina_List *l;
    int i;
 
    cfdata->wm_enabled = 0;
@@ -288,7 +288,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  eina_stringshare_del(cfc->key);
         E_FREE(cfc);
 	
-	cfdata->classes = evas_list_remove_list(cfdata->classes, cfdata->classes);
+	cfdata->classes = eina_list_remove_list(cfdata->classes, cfdata->classes);
      }
    E_FREE(cfdata->color1);
    E_FREE(cfdata->color2);
@@ -299,7 +299,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *l;
+   Eina_List *l;
    int i;
    
    for (l = cfdata->classes; l; l = l->next) 
@@ -376,7 +376,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int
 _adv_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = cfdata->classes; l; l = l->next) 
      {
@@ -480,7 +480,7 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
 static void 
 _load_color_classes(Evas_Object *obj, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *l;
+   Eina_List *l;
    Evas_Coord w, h;
 
    evas_event_freeze(evas_object_evas_get(obj));
@@ -521,7 +521,7 @@ static void
 _radio_cb_change(void *data, Evas_Object *obj, void *event_info) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
+   Eina_List *l;
    Evas_Object *icon;
    int n;
    
@@ -572,7 +572,7 @@ static void
 _list_cb_change(void *data, Evas_Object *obj) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
+   Eina_List *l;
    
    cfdata = data;
    if (!cfdata) return;
@@ -648,7 +648,7 @@ static void
 _color1_cb_change(void *data, Evas_Object *obj) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
+   Eina_List *l;
    
    cfdata = data;
    if (!cfdata) return;
@@ -677,7 +677,7 @@ static void
 _color2_cb_change(void *data, Evas_Object *obj) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
+   Eina_List *l;
    
    cfdata = data;
    if (!cfdata) return;
@@ -706,7 +706,7 @@ static void
 _color3_cb_change(void *data, Evas_Object *obj) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
+   Eina_List *l;
    
    cfdata = data;
    if (!cfdata) return;
@@ -735,7 +735,7 @@ static void
 _button_cb(void *data, void *data2) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
+   Eina_List *l;
    const char *name;
    
    cfdata = data;

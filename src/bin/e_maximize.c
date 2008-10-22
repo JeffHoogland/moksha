@@ -14,13 +14,13 @@ struct _E_Maximize_Rect
    { \
       r = E_NEW(E_Maximize_Rect, 1); \
       r->x1 = (_x1); r->y1 = (_y1); r->x2 = (_x2); r->y2 = (_y2); \
-      rects = evas_list_append(rects, r); \
+      rects = eina_list_append(rects, r); \
    }
 
-static void _e_maximize_border_rects_fill(E_Border *bd, Evas_List *list, int *x1, int *y1, int *x2, int *y2, E_Maximize dir);
-static void _e_maximize_border_rects_fill_both(E_Border *bd, Evas_List *rects, int *x1, int *y1, int *x2, int *y2); 
-static void _e_maximize_border_rects_fill_horiz(E_Border *bd, Evas_List *rects, int *x1, int *x2, int *bx, int *by, int *bw, int *bh);
-static void _e_maximize_border_rects_fill_vert(E_Border *bd, Evas_List *rects, int *y1, int *y2, int *bx, int *by, int *bw, int *bh);
+static void _e_maximize_border_rects_fill(E_Border *bd, Eina_List *list, int *x1, int *y1, int *x2, int *y2, E_Maximize dir);
+static void _e_maximize_border_rects_fill_both(E_Border *bd, Eina_List *rects, int *x1, int *y1, int *x2, int *y2); 
+static void _e_maximize_border_rects_fill_horiz(E_Border *bd, Eina_List *rects, int *x1, int *x2, int *bx, int *by, int *bw, int *bh);
+static void _e_maximize_border_rects_fill_vert(E_Border *bd, Eina_List *rects, int *y1, int *y2, int *bx, int *by, int *bw, int *bh);
 
 EAPI void
 e_maximize_border_shelf_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2, E_Maximize dir)
@@ -127,13 +127,13 @@ e_maximize_border_dock_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 EAPI void
 e_maximize_border_shelf_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2, E_Maximize dir)
 {
-   Evas_List *l, *rects = NULL;
+   Eina_List *l, *rects = NULL;
    E_Maximize_Rect *r;
 
    for (l = e_shelf_list(); l; l = l->next)
      {
 	E_Shelf *es;
-	Evas_List *ll;
+	Eina_List *ll;
 
 	es = l->data;
 	if (es->cfg->overlap) continue;
@@ -165,14 +165,14 @@ e_maximize_border_shelf_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2, E
 	_e_maximize_border_rects_fill(bd, rects, x1, y1, x2, y2, dir);
 	for (l = rects; l; l = l->next)
 	  free(l->data);
-	evas_list_free(rects);
+	eina_list_free(rects);
      }
 }
 
 EAPI void
 e_maximize_border_border_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2, E_Maximize dir)
 {
-   Evas_List *l, *rects = NULL;
+   Eina_List *l, *rects = NULL;
    E_Border_List *bl;
    E_Maximize_Rect *r;
    E_Border *bd2;
@@ -190,12 +190,12 @@ e_maximize_border_border_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2, 
 	_e_maximize_border_rects_fill(bd, rects, x1, y1, x2, y2, dir);
 	for (l = rects; l; l = l->next)
 	  free(l->data);
-	evas_list_free(rects);
+	eina_list_free(rects);
      }
 }
 
 static void
-_e_maximize_border_rects_fill(E_Border *bd, Evas_List *rects, int *x1, int *y1, int *x2, int *y2, E_Maximize dir)
+_e_maximize_border_rects_fill(E_Border *bd, Eina_List *rects, int *x1, int *y1, int *x2, int *y2, E_Maximize dir)
 {
    if ((dir & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
      {
@@ -218,7 +218,7 @@ _e_maximize_border_rects_fill(E_Border *bd, Evas_List *rects, int *x1, int *y1, 
 }
 
 static void
-_e_maximize_border_rects_fill_both(E_Border *bd, Evas_List *rects, int *x1, int *y1, int *x2, int *y2)
+_e_maximize_border_rects_fill_both(E_Border *bd, Eina_List *rects, int *x1, int *y1, int *x2, int *y2)
 {
    int hx1, hy1, hx2, hy2;
    int vx1, vy1, vx2, vy2;
@@ -270,9 +270,9 @@ _e_maximize_border_rects_fill_both(E_Border *bd, Evas_List *rects, int *x1, int 
 }
 
 static void
-_e_maximize_border_rects_fill_horiz(E_Border *bd, Evas_List *rects, int *x1, int *x2, int *bx, int *by, int *bw, int *bh)
+_e_maximize_border_rects_fill_horiz(E_Border *bd, Eina_List *rects, int *x1, int *x2, int *bx, int *by, int *bw, int *bh)
 {
-   Evas_List *l;
+   Eina_List *l;
    int cx1, cx2;
 
    cx1 = bd->zone->x;
@@ -315,9 +315,9 @@ _e_maximize_border_rects_fill_horiz(E_Border *bd, Evas_List *rects, int *x1, int
 }
 
 static void
-_e_maximize_border_rects_fill_vert(E_Border *bd, Evas_List *rects, int *y1, int *y2, int *bx, int *by, int *bw, int *bh)
+_e_maximize_border_rects_fill_vert(E_Border *bd, Eina_List *rects, int *y1, int *y2, int *bx, int *by, int *bw, int *bh)
 {
-   Evas_List *l;
+   Eina_List *l;
    int cy1, cy2;
 
    cy1 = bd->zone->y;

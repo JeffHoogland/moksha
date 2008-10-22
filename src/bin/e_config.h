@@ -61,9 +61,9 @@ struct _E_Config
    int         show_splash; // GUI
    const char *init_default_theme; // GUI
    const char *desktop_default_background; // GUI
-   Evas_List  *desktop_backgrounds; // GUI
+   Eina_List  *desktop_backgrounds; // GUI
    const char *desktop_default_name;
-   Evas_List  *desktop_names; // GUI
+   Eina_List  *desktop_names; // GUI
    double      menus_scroll_speed; // GUI
    double      menus_fast_mouse_move_threshhold; // GUI
    double      menus_click_drag_timeout; // GUI
@@ -94,23 +94,23 @@ struct _E_Config
    int         evas_engine_zone; // NO GUI - maybe remove?
    int	       use_composite; // GUI
    const char *language; // GUI
-   Evas_List  *modules; // GUI
-   Evas_List  *font_fallbacks; // GUI
-   Evas_List  *font_defaults; // GUI
-   Evas_List  *themes; // GUI
-   Evas_List  *mouse_bindings; // GUI
-   Evas_List  *key_bindings; // GUI
-   Evas_List  *signal_bindings;
-   Evas_List  *wheel_bindings; // GUI
-   Evas_List  *path_append_data; // GUI
-   Evas_List  *path_append_images; // GUI
-   Evas_List  *path_append_fonts; // GUI
-   Evas_List  *path_append_themes; // GUI
-   Evas_List  *path_append_init; // GUI
-   Evas_List  *path_append_icons; // GUI
-   Evas_List  *path_append_modules; // GUI
-   Evas_List  *path_append_backgrounds; // GUI
-   Evas_List  *path_append_messages; // GUI
+   Eina_List  *modules; // GUI
+   Eina_List  *font_fallbacks; // GUI
+   Eina_List  *font_defaults; // GUI
+   Eina_List  *themes; // GUI
+   Eina_List  *mouse_bindings; // GUI
+   Eina_List  *key_bindings; // GUI
+   Eina_List  *signal_bindings;
+   Eina_List  *wheel_bindings; // GUI
+   Eina_List  *path_append_data; // GUI
+   Eina_List  *path_append_images; // GUI
+   Eina_List  *path_append_fonts; // GUI
+   Eina_List  *path_append_themes; // GUI
+   Eina_List  *path_append_init; // GUI
+   Eina_List  *path_append_icons; // GUI
+   Eina_List  *path_append_modules; // GUI
+   Eina_List  *path_append_backgrounds; // GUI
+   Eina_List  *path_append_messages; // GUI
    int         window_placement_policy; // GUI
    int         focus_policy; // GUI
    int         focus_setting; // GUI
@@ -157,7 +157,7 @@ struct _E_Config
    const char *transition_start; // GUI
    const char *transition_desk; // GUI
    const char *transition_change; // GUI
-   Evas_List  *remembers;
+   Eina_List  *remembers;
    int         remember_internal_windows; // GUI
    int         move_info_follows; // GUI
    int         resize_info_follows; // GUI
@@ -201,13 +201,13 @@ struct _E_Config
    int         exebuf_pos_max_w; // GUI
    int         exebuf_pos_max_h; // GUI
    const char *exebuf_term_cmd; // GUI
-   Evas_List  *color_classes; // GUI
+   Eina_List  *color_classes; // GUI
    int         use_app_icon; // GUI
    int         cnfmdlg_disabled; // GUI
    int         cfgdlg_auto_apply; // GUI
    int         cfgdlg_default_mode; // GUI   
-   Evas_List  *gadcons; // GUI
-   Evas_List  *shelves; // GUI
+   Eina_List  *gadcons; // GUI
+   Eina_List  *shelves; // GUI
    int         font_hinting; // GUI
 
    const char *desklock_personal_passwd; // GUI
@@ -275,7 +275,7 @@ struct _E_Config
 
    const char *theme_default_border_style; // GUI
    
-   Evas_List *mime_icons; // GUI
+   Eina_List *mime_icons; // GUI
    int desk_auto_switch; // GUI;
 
    int thumb_nice;
@@ -393,7 +393,7 @@ struct _E_Config_Gadcon
 {
    const char *name;
    int         id;
-   Evas_List  *clients;
+   Eina_List  *clients;
 };
 
 struct _E_Config_Gadcon_Client
@@ -430,7 +430,7 @@ struct _E_Config_Shelf
    float	 hide_timeout;
    float	 hide_duration;
    int		 desk_show_mode;
-   Evas_List    *desk_list;
+   Eina_List    *desk_list;
 };
 
 struct _E_Config_Shelf_Desk
@@ -458,11 +458,11 @@ EAPI void       e_config_save_queue(void);
 
 EAPI const char *e_config_profile_get(void);
 EAPI void       e_config_profile_set(const char *prof);
-EAPI Evas_List *e_config_profile_list(void);
+EAPI Eina_List *e_config_profile_list(void);
 EAPI void       e_config_profile_add(const char *prof);
 EAPI void       e_config_profile_del(const char *prof);
 
-EAPI Evas_List *e_config_engine_list(void);
+EAPI Eina_List *e_config_engine_list(void);
 
 EAPI void       e_config_save_block_set(int block);
 EAPI int        e_config_save_block_get(void);

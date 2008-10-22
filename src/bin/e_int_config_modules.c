@@ -77,7 +77,7 @@ static Evas_Bool    _mod_hash_load_list   (const Evas_Hash *hash __UNUSED__,
 					   const char *key __UNUSED__, 
 					   void *data, void *fdata);
 static int          _mod_list_sort        (void *data1, void *data2);
-static void         _list_widget_load     (Evas_Object *obj, Evas_List *list);
+static void         _list_widget_load     (Evas_Object *obj, Eina_List *list);
 static void         _avail_list_cb_change (void *data, Evas_Object *obj);
 static void         _load_list_cb_change  (void *data, Evas_Object *obj);
 static void         _unselect_all_modules (void);
@@ -142,7 +142,7 @@ _create_data(E_Config_Dialog *cfd)
 static void 
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *mdirs = NULL, *l = NULL;
+   Eina_List *mdirs = NULL, *l = NULL;
 
    if (!cfdata) return;
 
@@ -372,7 +372,7 @@ static Evas_Bool
 _fill_list_types(Evas_Object *obj, CFType *cft, int enabled)
 {
    Evas *evas;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    Evas_Object *ic = NULL;
    int count;
 
@@ -386,7 +386,7 @@ _fill_list_types(Evas_Object *obj, CFType *cft, int enabled)
 	  evas_hash_foreach(cft->modules, _mod_hash_load_list, &l);
      }
 
-   if (l) count = evas_list_count(l);
+   if (l) count = eina_list_count(l);
    else return 1;
 
    /* We have at least one, append header */
@@ -399,13 +399,13 @@ _fill_list_types(Evas_Object *obj, CFType *cft, int enabled)
 
    /* sort the list if we have more than one */
    if (count > 1)
-     l = evas_list_sort(l, -1, _mod_list_sort);
+     l = eina_list_sort(l, -1, _mod_list_sort);
 
    _list_widget_load(obj, l);
 
    if (l)
      {
-	evas_list_free(l);
+	eina_list_free(l);
 	l = NULL;
      }
 
@@ -452,13 +452,13 @@ static Evas_Bool
 _mod_hash_avail_list(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		     void *data, void *fdata) 
 {
-   Evas_List **l;
+   Eina_List **l;
    CFModule *mod = NULL;
 
    mod = data;
    if ((!mod) || (mod->enabled)) return 1;
    l = fdata;
-   *l = evas_list_append(*l, mod);
+   *l = eina_list_append(*l, mod);
    return 1;
 }
 
@@ -466,13 +466,13 @@ static Evas_Bool
 _mod_hash_load_list(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
 		    void *data, void *fdata) 
 {
-   Evas_List **l;
+   Eina_List **l;
    CFModule *mod = NULL;
 
    mod = data;
    if ((!mod) || (!mod->enabled)) return 1;
    l = fdata;
-   *l = evas_list_append(*l, mod);
+   *l = eina_list_append(*l, mod);
    return 1;
 }
 
@@ -488,10 +488,10 @@ _mod_list_sort(void *data1, void *data2)
 
 /* nice generic function to load an ilist with items */
 static void 
-_list_widget_load(Evas_Object *obj, Evas_List *list) 
+_list_widget_load(Evas_Object *obj, Eina_List *list) 
 {
    Evas *evas;
-   Evas_List *ml = NULL;
+   Eina_List *ml = NULL;
 
    if ((!obj) || (!list)) return;
    evas = evas_object_evas_get(obj);
@@ -600,7 +600,7 @@ _mod_hash_unselect(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 static void 
 _select_all_modules(Evas_Object *obj, void *data) 
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    E_Config_Dialog_Data *cfdata = NULL;
    int i = 0;
 

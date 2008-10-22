@@ -24,16 +24,16 @@ e_mixer_system_callback_set(E_Mixer_System *self, int (*func)(void *data, E_Mixe
    return 0;
 }
 
-Evas_List *
+Eina_List *
 e_mixer_system_get_cards(void)
 {
-   return evas_list_append(NULL, _name);
+   return eina_list_append(NULL, _name);
 }
 
 void
-e_mixer_system_free_cards(Evas_List *cards)
+e_mixer_system_free_cards(Eina_List *cards)
 {
-   evas_list_free(cards);
+   eina_list_free(cards);
 }
 
 char *
@@ -51,28 +51,28 @@ e_mixer_system_get_card_name(const char *card)
      return NULL;
 }
 
-Evas_List *
+Eina_List *
 e_mixer_system_get_channels(E_Mixer_System *self)
 {
-   return evas_list_append(NULL, (void *)-2);
+   return eina_list_append(NULL, (void *)-2);
 }
 
 void
-e_mixer_system_free_channels(Evas_List *channels)
+e_mixer_system_free_channels(Eina_List *channels)
 {
-   evas_list_free(channels);
+   eina_list_free(channels);
 }
 
-Evas_List *
+Eina_List *
 e_mixer_system_get_channels_names(E_Mixer_System *self)
 {
-   return evas_list_append(NULL, _name);
+   return eina_list_append(NULL, _name);
 }
 
 void
-e_mixer_system_free_channels_names(Evas_List *channels_names)
+e_mixer_system_free_channels_names(Eina_List *channels_names)
 {
-   evas_list_free(channels_names);
+   eina_list_free(channels_names);
 }
 
 char *

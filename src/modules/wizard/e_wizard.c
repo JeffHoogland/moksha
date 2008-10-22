@@ -13,10 +13,10 @@ static void _e_wizard_cb_next(void *data, Evas_Object *obj, const char *emission
 static void _e_wizard_cb_back(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 static E_Popup *pop = NULL;
-static Evas_List *pops = NULL;
+static Eina_List *pops = NULL;
 static Evas_Object *o_bg = NULL;
 static Evas_Object *o_content = NULL;
-static Evas_List *pages = NULL;
+static Eina_List *pages = NULL;
 static E_Wizard_Page *curpage = NULL;
 static int next_ok = 1;
 static int back_ok = 1;
@@ -28,18 +28,18 @@ static int back_prev = 0;
 EAPI int
 e_wizard_init(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = e_manager_list(); l; l = l->next)
      {
 	E_Manager *man;
-	Evas_List *l2;
+	Eina_List *l2;
 	
 	man = l->data;
 	for (l2 = man->containers; l2; l2 = l2->next)
 	  {
 	     E_Container *con;
-	     Evas_List *l3;
+	     Eina_List *l3;
 	     
 	     con = l2->data;
 	     for (l3 = con->zones; l3; l3 = l3->next)
@@ -50,7 +50,7 @@ e_wizard_init(void)
 		  if (!pop)
 		    pop = _e_wizard_main_new(zone);
 		  else
-		    pops = evas_list_append(pops, _e_wizard_extra_new(zone));
+		    pops = eina_list_append(pops, _e_wizard_extra_new(zone));
 	       }
 	  }
      }
@@ -68,7 +68,7 @@ e_wizard_shutdown(void)
    while (pops)
      {
 	e_object_del(E_OBJECT(pops->data));
-	pops = evas_list_remove_list(pops, pops);
+	pops = eina_list_remove_list(pops, pops);
      }
    while (pages)
      {
@@ -103,7 +103,7 @@ e_wizard_go(void)
 EAPI void
 e_wizard_apply(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = pages; l; l = l->next)
      {  
@@ -117,7 +117,7 @@ e_wizard_apply(void)
 EAPI void
 e_wizard_next(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = pages; l; l = l->next)
      {
@@ -160,9 +160,9 @@ e_wizard_next(void)
 EAPI void
 e_wizard_back(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    
-   for (l = evas_list_last(pages); l; l = l->prev)
+   for (l = eina_list_last(pages); l; l = l->prev)
      {
 	if (l->data == curpage)
 	  {
@@ -239,7 +239,7 @@ e_wizard_page_add(void *handle,
    pg->hide = hide;
    pg->apply = apply;
    
-   pages = evas_list_append(pages, pg);
+   pages = eina_list_append(pages, pg);
    
    return pg;
 }
@@ -248,7 +248,7 @@ EAPI void
 e_wizard_page_del(E_Wizard_Page *pg)
 {
    if (pg->handle) dlclose(pg->handle);
-   pages = evas_list_remove(pages, pg);
+   pages = eina_list_remove(pages, pg);
    free(pg);
 }
 

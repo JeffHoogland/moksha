@@ -36,7 +36,7 @@ wizard_page_shutdown(E_Wizard_Page *pg)
 EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
-   Evas_List *fonts;
+   Eina_List *fonts;
    Evas_Hash *fonts_hash;
    int i;
    

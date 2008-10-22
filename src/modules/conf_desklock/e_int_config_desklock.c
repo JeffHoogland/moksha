@@ -372,7 +372,7 @@ static void
 _cb_method_change(void *data, Evas_Object *obj, void *event_info) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *sel;
+   Eina_List *sel;
    E_Fm2_Icon_Info *ic;
    char path[PATH_MAX];
    const char *f;
@@ -399,8 +399,8 @@ _cb_method_change(void *data, Evas_Object *obj, void *event_info)
 	sel = e_fm2_selected_list_get(cfdata->o_fm);
 	if (!sel) sel = e_fm2_all_list_get(cfdata->o_fm);
 	if (!sel) return;
-	ic = evas_list_nth(sel, 0);
-	evas_list_free(sel);
+	ic = eina_list_nth(sel, 0);
+	eina_list_free(sel);
 	if (!ic) return;
 	e_fm2_select_set(cfdata->o_fm, ic->file, 1);
 	if (cfdata->fmdir == 0)
@@ -473,7 +473,7 @@ static void
 _cb_fm_sel_change(void *data, Evas_Object *obj, void *event_info) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *sel;
+   Eina_List *sel;
    E_Fm2_Icon_Info *ic;
    char path[PATH_MAX];
    
@@ -482,7 +482,7 @@ _cb_fm_sel_change(void *data, Evas_Object *obj, void *event_info)
    sel = e_fm2_selected_list_get(cfdata->o_fm);
    if (!sel) return;
    ic = sel->data;
-   evas_list_free(sel);
+   eina_list_free(sel);
    
    if (cfdata->fmdir == 0) 
      {
@@ -540,7 +540,7 @@ static int
 _zone_count_get(void) 
 {
    int num = 0;
-   Evas_List *m, *c;
+   Eina_List *m, *c;
    
    for (m = e_manager_list(); m; m = m->next) 
      {
@@ -554,7 +554,7 @@ _zone_count_get(void)
 	     
 	     con = c->data;
 	     if (!con) continue;
-	     num += evas_list_count(con->zones);
+	     num += eina_list_count(con->zones);
 	  }
      }
    return num;

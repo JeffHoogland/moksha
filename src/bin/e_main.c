@@ -87,7 +87,7 @@ static int (*_e_main_shutdown_func[MAX_LEVEL]) (void);
 static int _e_main_level = 0;
 static int _e_cacheburst = 0;
 
-static Evas_List *_e_main_idler_before_list = NULL;
+static Eina_List *_e_main_idler_before_list = NULL;
 
 static Ecore_Idle_Enterer *_e_main_idle_enterer_before  = NULL;
 static Ecore_Idle_Enterer *_e_main_idle_enterer_after   = NULL;
@@ -1033,7 +1033,7 @@ e_main_idler_before_add(int (*func) (void *data), void *data, int once)
    eb->func = func;
    eb->data = data;
    eb->once = once;
-   _e_main_idler_before_list = evas_list_append(_e_main_idler_before_list, eb);
+   _e_main_idler_before_list = eina_list_append(_e_main_idler_before_list, eb);
    return eb;
 }
 
@@ -1493,7 +1493,7 @@ _e_main_cb_x_flusher(void *data __UNUSED__)
 static int
 _e_main_cb_idler_before(void *data __UNUSED__)
 {
-   Evas_List *l, *pl;
+   Eina_List *l, *pl;
    
    e_menu_idler_before();
    e_focus_idler_before();
@@ -1521,7 +1521,7 @@ _e_main_cb_idler_before(void *data __UNUSED__)
 	if ((eb->once) || (eb->delete_me))
 	  {
 	     _e_main_idler_before_list =
-	       evas_list_remove_list(_e_main_idler_before_list, pl);
+	       eina_list_remove_list(_e_main_idler_before_list, pl);
 	     free(eb);
 	  }
      }
@@ -1568,21 +1568,21 @@ _e_main_cb_startup_fake_end(void *data __UNUSED__)
 static void
 _e_main_desk_save(void)
 {
-   Evas_List *ml;
+   Eina_List *ml;
    char env[1024];
    char name[1024];
 
    for (ml = e_manager_list(); ml; ml = ml->next)
      {
 	E_Manager *man;
-	Evas_List *cl;
+	Eina_List *cl;
 
 	man = ml->data;
 
 	for (cl = man->containers; cl; cl = cl->next)
 	  {
 	     E_Container *con;
-	     Evas_List *zl;
+	     Eina_List *zl;
 
 	     con = cl->data;
 	     
@@ -1603,7 +1603,7 @@ _e_main_desk_save(void)
 static void
 _e_main_desk_restore(E_Manager *man, E_Container *con)
 {
-   Evas_List *zl;
+   Eina_List *zl;
    char *env;
    char name[1024];
 

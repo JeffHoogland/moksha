@@ -49,7 +49,7 @@ struct _E_Zone
    int                  desk_x_current, desk_y_current;
    E_Desk             **desks;
 
-   Evas_List           *handlers;
+   Eina_List           *handlers;
 
    struct {
 	unsigned char top : 1;
@@ -68,7 +68,7 @@ struct _E_Zone
    } show;
    
    E_Action *cur_mouse_action;
-   Evas_List *popups;
+   Eina_List *popups;
 
    Ecore_Evas          *black_ecore_evas;
    Evas                *black_evas;

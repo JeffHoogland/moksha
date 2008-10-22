@@ -21,7 +21,7 @@ struct _E_Configure
    Evas_Object *item_list;
    Evas_Object *close;
    
-   Evas_List *cats;
+   Eina_List *cats;
    Ecore_Event_Handler *mod_hdl;
 };
 
@@ -36,7 +36,7 @@ struct _E_Configure_Category
    E_Configure *eco;
    const char *label;
    
-   Evas_List *items;
+   Eina_List *items;
 };
 
 struct _E_Configure_Item
@@ -245,10 +245,10 @@ _e_configure_free(E_Configure *eco)
 		    eina_stringshare_del(ci->cb->path);
 		  free(ci->cb);
 	       }
-	     cat->items = evas_list_remove_list(cat->items, cat->items);
+	     cat->items = eina_list_remove_list(cat->items, cat->items);
 	     E_FREE(ci);
 	  }
-	eco->cats = evas_list_remove_list(eco->cats, eco->cats);
+	eco->cats = eina_list_remove_list(eco->cats, eco->cats);
 	E_FREE(cat);
      }
    evas_object_del(eco->close);
@@ -314,7 +314,7 @@ _e_configure_category_add(E_Configure *eco, const char *label, const char *icon)
 	else
 	  o = e_util_icon_add(icon, eco->evas);
      }
-   eco->cats = evas_list_append(eco->cats, cat);
+   eco->cats = eina_list_append(eco->cats, cat);
 
    e_widget_ilist_append(eco->cat_list, o, label, _e_configure_category_cb, cat, NULL);
    return cat;
@@ -325,7 +325,7 @@ _e_configure_category_cb(void *data)
 {
    E_Configure_Category *cat;
    E_Configure *eco;
-   Evas_List *l;
+   Eina_List *l;
    Evas_Coord w, h;
    
    cat = data;
@@ -379,7 +379,7 @@ _e_configure_item_add(E_Configure_Category *cat, const char *label, const char *
    ci->cb = cb;
    ci->label = eina_stringshare_add(label);
    if (icon) ci->icon = eina_stringshare_add(icon);
-   cat->items = evas_list_append(cat->items, ci);
+   cat->items = eina_list_append(cat->items, ci);
 }
 
 static void 
@@ -480,7 +480,7 @@ _e_configure_fill_cat_list(void *data)
    E_Configure *eco;
    Evas_Coord mw, mh;
    E_Configure_Category *cat;
-   Evas_List *l;
+   Eina_List *l;
 
    eco = data;
    if (!eco) return;
@@ -492,7 +492,7 @@ _e_configure_fill_cat_list(void *data)
 
    for (l = e_configure_registry; l; l = l->next)
      {
-	Evas_List *ll;
+	Eina_List *ll;
 	E_Configure_Cat *ecat;
 	
 	ecat = l->data;

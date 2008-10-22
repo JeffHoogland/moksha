@@ -27,7 +27,7 @@ EAPI void e_color_class_set(const char *color_class,
 EAPI E_Color_Class *e_color_class_find(const char *name);
 EAPI void e_color_class_del(const char *name);
 
-EAPI Evas_List *e_color_class_list(void);
+EAPI Eina_List *e_color_class_list(void);
 
 #endif
 #endif

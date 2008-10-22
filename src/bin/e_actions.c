@@ -1136,7 +1136,7 @@ ACT_FN_GO(desk_linear_flip_to)
 
 #define DESK_ACTION_ALL(zone, act) \
   E_Zone *zone;			   \
-  Evas_List *lm, *lc, *lz;	   \
+  Eina_List *lm, *lc, *lz;	   \
   E_Container *con;		   \
   E_Manager *man;				\
   \
@@ -1227,16 +1227,16 @@ ACT_FN_GO(screen_send_to)
 	       {
 		  E_Zone *zone2 = NULL;
 		  
-                  if (evas_list_count(e_manager_list()) > 1)
+                  if (eina_list_count(e_manager_list()) > 1)
 		    {
-		       scr = scr % evas_list_count(e_manager_list());
-		       if (scr < 0) scr += evas_list_count(e_manager_list());
+		       scr = scr % eina_list_count(e_manager_list());
+		       if (scr < 0) scr += eina_list_count(e_manager_list());
 		       zone2 = e_util_container_zone_number_get(scr, 0);
 		    }
 		  else
 		    {
-		       scr = scr % evas_list_count(zone->container->zones);
-		       if (scr < 0) scr += evas_list_count(zone->container->zones);
+		       scr = scr % eina_list_count(zone->container->zones);
+		       if (scr < 0) scr += eina_list_count(zone->container->zones);
 		       zone2 = e_util_container_zone_number_get(0, scr);
 		    }
 		  if ((zone2) && (zone != zone2))
@@ -1264,18 +1264,18 @@ ACT_FN_GO(screen_send_by)
 	       {
 		  E_Zone *zone2 = NULL;
 		  
-                  if (evas_list_count(e_manager_list()) > 1)
+                  if (eina_list_count(e_manager_list()) > 1)
 		    {
 		       scr += zone->container->num;
-		       scr = scr % evas_list_count(e_manager_list());
-		       if (scr < 0) scr += evas_list_count(e_manager_list());
+		       scr = scr % eina_list_count(e_manager_list());
+		       if (scr < 0) scr += eina_list_count(e_manager_list());
 		       zone2 = e_util_container_zone_number_get(scr, 0);
 		    }
 		  else
 		    {
                        scr += zone->num;
-		       scr = scr % evas_list_count(zone->container->zones);
-		       if (scr < 0) scr += evas_list_count(zone->container->zones);
+		       scr = scr % eina_list_count(zone->container->zones);
+		       if (scr < 0) scr += eina_list_count(zone->container->zones);
 		       zone2 = e_util_container_zone_number_get(0, scr);
 		    }
 		  if ((zone2) && (zone != zone2))
@@ -1290,7 +1290,7 @@ ACT_FN_GO(screen_send_by)
 #define ZONE_DESK_ACTION(con_num, zone_num, zone, act) \
 E_Zone *zone; \
 if ((con_num < 0) || (zone_num < 0)) { \
-   Evas_List *l, *ll, *lll; \
+   Eina_List *l, *ll, *lll; \
    E_Container *con; \
    E_Manager *man; \
    if ((con_num >= 0) && (zone_num < 0)) /* con=1 zone=all */ { \
@@ -2043,7 +2043,7 @@ struct _Delayed_Action
    } def, delayed;
 };
 
-static Evas_List *_delayed_actions = NULL;
+static Eina_List *_delayed_actions = NULL;
 
 static void
 _delayed_action_free(Delayed_Action *da)
@@ -2071,7 +2071,7 @@ _delayed_action_cb_timer(void *data)
      {
 	if (act->func.go) act->func.go(da->obj, da->delayed.params);
      }
-   _delayed_actions = evas_list_remove(_delayed_actions, da);
+   _delayed_actions = eina_list_remove(_delayed_actions, da);
    _delayed_action_free(da);
    return 0;
 }
@@ -2177,13 +2177,13 @@ _delayed_action_key_add(E_Object *obj, const char *params, Ecore_X_Event_Key_Dow
    da->mouse = 0;
    da->keyname = eina_stringshare_add(ev->keyname);
    if (params) _delayed_action_list_parse(da, params);
-   _delayed_actions = evas_list_append(_delayed_actions, da);
+   _delayed_actions = eina_list_append(_delayed_actions, da);
 }
 
 static void
 _delayed_action_key_del(E_Object *obj, const char *params, Ecore_X_Event_Key_Up *ev)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = _delayed_actions; l; l = l->next)
      {
@@ -2195,7 +2195,7 @@ _delayed_action_key_del(E_Object *obj, const char *params, Ecore_X_Event_Key_Up 
 	  {
 	     _delayed_action_do(da);
 	     _delayed_action_free(da);
-	     _delayed_actions = evas_list_remove_list(_delayed_actions, l);
+	     _delayed_actions = eina_list_remove_list(_delayed_actions, l);
 	     return;
 	  }
      }
@@ -2216,13 +2216,13 @@ _delayed_action_mouse_add(E_Object *obj, const char *params, Ecore_X_Event_Mouse
    da->mouse = 1;
    da->button = ev->button;
    if (params) _delayed_action_list_parse(da, params);
-   _delayed_actions = evas_list_append(_delayed_actions, da);
+   _delayed_actions = eina_list_append(_delayed_actions, da);
 }
 
 static void
 _delayed_action_mouse_del(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Button_Up *ev)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = _delayed_actions; l; l = l->next)
      {
@@ -2234,7 +2234,7 @@ _delayed_action_mouse_del(E_Object *obj, const char *params, Ecore_X_Event_Mouse
 	  {
 	     _delayed_action_do(da);
 	     _delayed_action_free(da);
-	     _delayed_actions = evas_list_remove_list(_delayed_actions, l);
+	     _delayed_actions = eina_list_remove_list(_delayed_actions, l);
 	     return;
 	  }
      }
@@ -2260,9 +2260,9 @@ ACT_FN_END_MOUSE(delayed_action)
 
 /* local subsystem globals */
 static Evas_Hash *actions = NULL;
-static Evas_List *action_list = NULL;
-static Evas_List *action_names = NULL;
-static Evas_List *action_groups = NULL;
+static Eina_List *action_list = NULL;
+static Eina_List *action_names = NULL;
+static Eina_List *action_groups = NULL;
 
 /* externally accessible functions */
 
@@ -2657,7 +2657,7 @@ EAPI int
 e_actions_shutdown(void)
 {
    e_action_predef_name_all_del();
-   action_names = evas_list_free(action_names);
+   action_names = eina_list_free(action_names);
    evas_hash_free(actions);
    actions = NULL;
 
@@ -2665,7 +2665,7 @@ e_actions_shutdown(void)
    return 1;
 }
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_action_name_list(void)
 {
    return action_names;
@@ -2683,8 +2683,8 @@ e_action_add(const char *name)
 	if (!act) return NULL;
 	act->name = name;
 	actions = evas_hash_direct_add(actions, act->name, act);
-	action_names = evas_list_append(action_names, name);
-	action_list = evas_list_append(action_list, act);
+	action_names = eina_list_append(action_names, name);
+	action_list = eina_list_append(action_list, act);
      }
    return act;
 }
@@ -2713,7 +2713,7 @@ e_action_predef_name_set(const char *act_grp, const char *act_name, const char *
 {
    E_Action_Group *actg = NULL;
    E_Action_Description *actd = NULL;
-   Evas_List *l;
+   Eina_List *l;
 
    if (!act_grp || !act_name) return;
 
@@ -2734,9 +2734,9 @@ e_action_predef_name_set(const char *act_grp, const char *act_name, const char *
 	actg->act_grp = eina_stringshare_add(act_grp);
 	actg->acts = NULL;
 
-	action_groups = evas_list_append(action_groups, actg);
+	action_groups = eina_list_append(action_groups, actg);
 	action_groups =
-	   evas_list_sort(action_groups, evas_list_count(action_groups), 
+	   eina_list_sort(action_groups, eina_list_count(action_groups), 
 			  _action_groups_sort_cb);
      }
 
@@ -2759,7 +2759,7 @@ e_action_predef_name_set(const char *act_grp, const char *act_name, const char *
    actd->param_example = param_example == NULL ? NULL : eina_stringshare_add(param_example);
    actd->editable = editable;
 
-   actg->acts = evas_list_append(actg->acts, actd);
+   actg->acts = eina_list_append(actg->acts, actd);
 }
 
 EAPI void
@@ -2767,7 +2767,7 @@ e_action_predef_name_del(const char *act_grp, const char *act_name)
 {
    E_Action_Group *actg = NULL;
    E_Action_Description *actd = NULL;
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = action_groups; l; l = l->next)
      {
@@ -2784,7 +2784,7 @@ e_action_predef_name_del(const char *act_grp, const char *act_name)
 	actd = l->data;
 	if (!strcmp(actd->act_name, act_name))
 	  {
-	     actg->acts = evas_list_remove(actg->acts, actd);
+	     actg->acts = eina_list_remove(actg->acts, actd);
 
 	     if (actd->act_name) eina_stringshare_del(actd->act_name);
 	     if (actd->act_cmd) eina_stringshare_del(actd->act_cmd);
@@ -2793,9 +2793,9 @@ e_action_predef_name_del(const char *act_grp, const char *act_name)
 
 	     E_FREE(actd); 
 	     
-	     if (!evas_list_count(actg->acts)) 
+	     if (!eina_list_count(actg->acts)) 
 	       { 
-		  action_groups = evas_list_remove(action_groups, actg); 
+		  action_groups = eina_list_remove(action_groups, actg); 
 		  if (actg->act_grp) eina_stringshare_del(actg->act_grp);
 		  E_FREE(actg);
 	       }
@@ -2825,17 +2825,17 @@ e_action_predef_name_all_del(void)
 
 	     E_FREE(actd);
 
-	     actg->acts = evas_list_remove_list(actg->acts, actg->acts);
+	     actg->acts = eina_list_remove_list(actg->acts, actg->acts);
 	  }
 	if (actg->act_grp) eina_stringshare_del(actg->act_grp);
 	E_FREE(actg);
 
-	action_groups = evas_list_remove_list(action_groups, action_groups);
+	action_groups = eina_list_remove_list(action_groups, action_groups);
      }
    action_groups = NULL;
 }
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_action_groups_get(void)
 {
    return action_groups;
@@ -2847,8 +2847,8 @@ static void
 _e_action_free(E_Action *act)
 {
    actions = evas_hash_del(actions, act->name, act);
-   action_names = evas_list_remove(action_names, act->name);
-   action_list = evas_list_remove(action_list, act);
+   action_names = eina_list_remove(action_names, act->name);
+   action_list = eina_list_remove(action_list, act);
    free(act);
 }
 

@@ -6,8 +6,8 @@ typedef struct _Config       Config;
 
 struct _Status
 {
-   Evas_List     *frequencies;
-   Evas_List     *governors;
+   Eina_List     *frequencies;
+   Eina_List     *governors;
    int            cur_frequency;
    int            can_set_frequency;
    char          *cur_governor;
@@ -22,7 +22,7 @@ struct _Config
    const char   *governor;
    /* just config state */
    E_Module     *module;
-   Evas_List    *instances;
+   Eina_List    *instances;
    E_Menu       *menu;
    E_Menu       *menu_poll;
    E_Menu       *menu_governor;

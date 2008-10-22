@@ -248,7 +248,7 @@ _e_sys_cb_logout_abort(void *data, E_Dialog *dia)
 static int
 _e_sys_cb_logout_timer(void *data)
 {
-   Evas_List *l;
+   Eina_List *l;
    int pending = 0;
 
    for (l = e_border_client_list(); l; l = l->next)
@@ -315,7 +315,7 @@ _e_sys_logout_after(void)
 static void
 _e_sys_logout_begin(E_Sys_Action a_after)
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Obj_Dialog *od;
 
    /* start logout - at end do the a_after action */

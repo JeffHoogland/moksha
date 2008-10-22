@@ -17,7 +17,7 @@ struct _E_Smart_Data
    Evas_Object     *clip;
    int              frozen;
    unsigned char    changed : 1;
-   Evas_List       *items;
+   Eina_List       *items;
 }; 
 
 struct _E_Layout_Item
@@ -132,7 +132,7 @@ e_layout_pack(Evas_Object *obj, Evas_Object *child)
    
    sd = evas_object_smart_data_get(obj);
    _e_layout_smart_adopt(sd, child);
-   sd->items = evas_list_append(sd->items, child);
+   sd->items = eina_list_append(sd->items, child);
    li = evas_object_data_get(child, "e_layout_data");
    _e_layout_smart_move_resize_item(li);
 }
@@ -172,12 +172,12 @@ e_layout_child_lower(Evas_Object *obj)
    
    li = evas_object_data_get(obj, "e_layout_data");
    if (!li) return;
-   if (!evas_list_find(li->sd->items, obj)) return;
+   if (!eina_list_data_find(li->sd->items, obj)) return;
    if ((li->sd->items) && (li->sd->items->next))
      {
-	li->sd->items = evas_list_remove(li->sd->items, obj);
+	li->sd->items = eina_list_remove(li->sd->items, obj);
 	evas_object_lower(obj);
-	li->sd->items = evas_list_prepend(li->sd->items, obj);
+	li->sd->items = eina_list_prepend(li->sd->items, obj);
      }
 }
 
@@ -188,12 +188,12 @@ e_layout_child_raise(Evas_Object *obj)
    
    li = evas_object_data_get(obj, "e_layout_data");
    if (!li) return;
-   if (!evas_list_find(li->sd->items, obj)) return;
+   if (!eina_list_data_find(li->sd->items, obj)) return;
    if ((li->sd->items) && (li->sd->items->next))
      {
-	li->sd->items = evas_list_remove(li->sd->items, obj);
+	li->sd->items = eina_list_remove(li->sd->items, obj);
 	evas_object_raise(obj);
-	li->sd->items = evas_list_append(li->sd->items, obj);
+	li->sd->items = eina_list_append(li->sd->items, obj);
      }
 }
 
@@ -204,13 +204,13 @@ e_layout_child_lower_below(Evas_Object *obj, Evas_Object *below)
    
    li = evas_object_data_get(obj, "e_layout_data");
    if (!li) return;
-   if (!evas_list_find(li->sd->items, below)) return;
-   if (!evas_list_find(li->sd->items, obj)) return;
+   if (!eina_list_data_find(li->sd->items, below)) return;
+   if (!eina_list_data_find(li->sd->items, obj)) return;
    if ((li->sd->items) && (li->sd->items->next))
      {
-	li->sd->items = evas_list_remove(li->sd->items, obj);
+	li->sd->items = eina_list_remove(li->sd->items, obj);
 	evas_object_stack_below(obj, below);
-	li->sd->items = evas_list_prepend_relative(li->sd->items, obj, below);
+	li->sd->items = eina_list_prepend_relative(li->sd->items, obj, below);
      }
 }
 
@@ -221,13 +221,13 @@ e_layout_child_raise_above(Evas_Object *obj, Evas_Object *above)
    
    li = evas_object_data_get(obj, "e_layout_data");
    if (!li) return;
-   if (!evas_list_find(li->sd->items, above)) return;
-   if (!evas_list_find(li->sd->items, obj)) return;
+   if (!eina_list_data_find(li->sd->items, above)) return;
+   if (!eina_list_data_find(li->sd->items, obj)) return;
    if ((li->sd->items) && (li->sd->items->next))
      {
-	li->sd->items = evas_list_remove(li->sd->items, obj);
+	li->sd->items = eina_list_remove(li->sd->items, obj);
 	evas_object_stack_above(obj, above);
-	li->sd->items = evas_list_append_relative(li->sd->items, obj, above);
+	li->sd->items = eina_list_append_relative(li->sd->items, obj, above);
      }
 }
 
@@ -254,7 +254,7 @@ e_layout_unpack(Evas_Object *obj)
    li = evas_object_data_get(obj, "e_layout_data");
    if (!li) return;
    sd = li->sd;
-   sd->items = evas_list_remove(sd->items, obj);
+   sd->items = eina_list_remove(sd->items, obj);
    _e_layout_smart_disown(obj);
 }
 
@@ -314,7 +314,7 @@ static void
 _e_layout_smart_reconfigure(E_Smart_Data *sd)
 {
    Evas_Coord x, y, w, h;
-   Evas_List *l;
+   Eina_List *l;
 
    if (!sd->changed) return;
    
@@ -421,7 +421,7 @@ _e_layout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if ((x == sd->x) && (y == sd->y)) return;
    if ((x == sd->x) && (y == sd->y)) return;
      {
-	Evas_List *l;
+	Eina_List *l;
 	Evas_Coord dx, dy;
 	
 	dx = x - sd->x;

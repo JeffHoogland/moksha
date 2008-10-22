@@ -54,7 +54,7 @@ struct _IBox
    Evas_Object    *o_empty;
    IBox_Icon      *ic_drop_before;
    int             drop_before;
-   Evas_List      *icons;
+   Eina_List      *icons;
    E_Zone          *zone;
    Evas_Coord      dnd_x, dnd_y;
 };
@@ -92,7 +92,7 @@ static void _ibox_icon_fill(IBox_Icon *ic);
 static void _ibox_icon_fill_label(IBox_Icon *ic);
 static void _ibox_icon_empty(IBox_Icon *ic);
 static void _ibox_icon_signal_emit(IBox_Icon *ic, char *sig, char *src);
-static Evas_List *_ibox_zone_find(E_Zone *zone);
+static Eina_List *_ibox_zone_find(E_Zone *zone);
 static void _ibox_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibox_cb_menu_post(void *data, E_Menu *m);
 static void _ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -164,7 +164,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 				  _ibox_cb_obj_moveresize, inst);
    evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE,
 				  _ibox_cb_obj_moveresize, inst);
-   ibox_config->instances = evas_list_append(ibox_config->instances, inst);
+   ibox_config->instances = eina_list_append(ibox_config->instances, inst);
    return gcc;
 }
 
@@ -174,7 +174,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
 
    inst = gcc->data;
-   ibox_config->instances = evas_list_remove(ibox_config->instances, inst);
+   ibox_config->instances = eina_list_remove(ibox_config->instances, inst);
    e_drop_handler_del(inst->drop_handler);
    _ibox_free(inst->ibox);
    free(inst);
@@ -197,7 +197,7 @@ _gc_orient(E_Gadcon_Client *gcc)
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_BR:
 	_ibox_orient_set(inst->ibox, 1);
-	e_gadcon_client_aspect_set(gcc, evas_list_count(inst->ibox->icons) * 16, 16);
+	e_gadcon_client_aspect_set(gcc, eina_list_count(inst->ibox->icons) * 16, 16);
 	break;
       case E_GADCON_ORIENT_VERT:
       case E_GADCON_ORIENT_LEFT:
@@ -207,7 +207,7 @@ _gc_orient(E_Gadcon_Client *gcc)
       case E_GADCON_ORIENT_CORNER_LB:
       case E_GADCON_ORIENT_CORNER_RB:
 	_ibox_orient_set(inst->ibox, 0);
-	e_gadcon_client_aspect_set(gcc, 16, evas_list_count(inst->ibox->icons) * 16);
+	e_gadcon_client_aspect_set(gcc, 16, eina_list_count(inst->ibox->icons) * 16);
 	break;
       default:
 	break;
@@ -255,7 +255,7 @@ _gc_id_del(const char *id)
    if (ci)
      {
 	if (ci->id) eina_stringshare_del(ci->id);
-	ibox_config->items = evas_list_remove(ibox_config->items, ci);
+	ibox_config->items = eina_list_remove(ibox_config->items, ci);
      }
  */
 }
@@ -399,7 +399,7 @@ _ibox_fill(IBox *b)
 	if (ok)
 	  {
 	     ic = _ibox_icon_new(b, bd);
-	     b->icons = evas_list_append(b->icons, ic);
+	     b->icons = eina_list_append(b->icons, ic);
 	     e_box_pack_end(b->o_box, ic->o_holder);
 	  }
      }
@@ -415,7 +415,7 @@ _ibox_empty(IBox *b)
    while (b->icons)
      {
 	_ibox_icon_free(b->icons->data);
-	b->icons = evas_list_remove_list(b->icons, b->icons);
+	b->icons = eina_list_remove_list(b->icons, b->icons);
      }
    _ibox_empty_handle(b);
 }
@@ -430,7 +430,7 @@ _ibox_orient_set(IBox *b, int horizontal)
 static void
 _ibox_resize_handle(IBox *b)
 {
-   Evas_List *l;
+   Eina_List *l;
    IBox_Icon *ic;
    Evas_Coord w, h;
 
@@ -466,7 +466,7 @@ _ibox_instance_drop_zone_recalc(Instance *inst)
 static IBox_Icon *
 _ibox_icon_find(IBox *b, E_Border *bd)
 {
-   Evas_List *l;
+   Eina_List *l;
    IBox_Icon *ic;
 
    for (l = b->icons; l; l = l->next)
@@ -481,7 +481,7 @@ _ibox_icon_find(IBox *b, E_Border *bd)
 static IBox_Icon *
 _ibox_icon_at_coord(IBox *b, Evas_Coord x, Evas_Coord y)
 {
-   Evas_List *l;
+   Eina_List *l;
    IBox_Icon *ic;
 
    for (l = b->icons; l; l = l->next)
@@ -615,11 +615,11 @@ _ibox_icon_signal_emit(IBox_Icon *ic, char *sig, char *src)
      edje_object_signal_emit(ic->o_icon2, sig, src);
 }
 
-static Evas_List *
+static Eina_List *
 _ibox_zone_find(E_Zone *zone)
 {
-   Evas_List *ibox = NULL;
-   Evas_List *l;
+   Eina_List *ibox = NULL;
+   Eina_List *l;
 
    for (l = ibox_config->instances; l; l = l->next)
      {
@@ -627,9 +627,9 @@ _ibox_zone_find(E_Zone *zone)
 
 	inst = l->data;
 	if (inst->ci->show_zone == 0)
-	  ibox = evas_list_append(ibox, inst->ibox);
+	  ibox = eina_list_append(ibox, inst->ibox);
 	else if ((inst->ci->show_zone == 1) && (inst->ibox->zone == zone))
-	  ibox = evas_list_append(ibox, inst->ibox);
+	  ibox = eina_list_append(ibox, inst->ibox);
      }
    return ibox;
 }
@@ -776,7 +776,7 @@ _ibox_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     e_drag_resize(d, w, h);
 	     e_drag_start(d, ic->drag.x, ic->drag.y);
 	     e_object_ref(E_OBJECT(ic->border));
-	     ic->ibox->icons = evas_list_remove(ic->ibox->icons, ic);
+	     ic->ibox->icons = eina_list_remove(ic->ibox->icons, ic);
 	     _ibox_resize_handle(ic->ibox);
 	     _gc_orient(ic->ibox->inst->gcc);
 	     _ibox_icon_free(ic);
@@ -964,7 +964,7 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
    E_Border *bd = NULL;
    IBox *b;
    IBox_Icon *ic, *ic2;
-   Evas_List *l;
+   Eina_List *l;
 
    ev = event_info;
    inst = data;
@@ -999,7 +999,7 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
 	if (_ibox_icon_find(b, bd)) return;
 	ic = _ibox_icon_new(b, bd);
 	if (!ic) return;
-	b->icons = evas_list_prepend_relative(b->icons, ic, ic2);
+	b->icons = eina_list_prepend_relative(b->icons, ic, ic2);
 	e_box_pack_before(b->o_box, ic->o_holder, ic2->o_holder);
      }
    else
@@ -1009,7 +1009,7 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
 	if (_ibox_icon_find(b, bd)) return;
 	ic = _ibox_icon_new(b, bd);
 	if (!ic) return;
-	b->icons = evas_list_append(b->icons, ic);
+	b->icons = eina_list_append(b->icons, ic);
 	e_box_pack_end(b->o_box, ic->o_holder);
      }
 
@@ -1036,7 +1036,7 @@ _ibox_cb_event_border_add(void *data, int type, void *event)
    desk = e_desk_current_get(ev->border->zone);
    if (ev->border->iconic)
      {
-	Evas_List *l, *ibox;
+	Eina_List *l, *ibox;
 	ibox = _ibox_zone_find(ev->border->zone);
 	for (l = ibox; l; l = l->next)
 	  {
@@ -1045,7 +1045,7 @@ _ibox_cb_event_border_add(void *data, int type, void *event)
 	     if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
 	     ic = _ibox_icon_new(b, ev->border);
 	     if (!ic) continue;
-	     b->icons = evas_list_append(b->icons, ic);
+	     b->icons = eina_list_append(b->icons, ic);
 	     e_box_pack_end(b->o_box, ic->o_holder);
 	     _ibox_empty_handle(b);
 	     _ibox_resize_handle(b);
@@ -1053,7 +1053,7 @@ _ibox_cb_event_border_add(void *data, int type, void *event)
 	  }
 
 	while (ibox)
-	  ibox = evas_list_remove_list(ibox, ibox);
+	  ibox = eina_list_remove_list(ibox, ibox);
      }
    return 1;
 }
@@ -1064,7 +1064,7 @@ _ibox_cb_event_border_remove(void *data, int type, void *event)
    E_Event_Border_Remove *ev;
    IBox *b;
    IBox_Icon *ic;
-   Evas_List *l, *ibox;
+   Eina_List *l, *ibox;
 
    ev = event;
    /* find icon and remove if there */
@@ -1075,13 +1075,13 @@ _ibox_cb_event_border_remove(void *data, int type, void *event)
 	ic = _ibox_icon_find(b, ev->border);
 	if (!ic) continue;
 	_ibox_icon_free(ic);
-	b->icons = evas_list_remove(b->icons, ic);
+	b->icons = eina_list_remove(b->icons, ic);
 	_ibox_empty_handle(b);
 	_ibox_resize_handle(b);
 	_gc_orient(b->inst->gcc);
      }
    while (ibox)
-     ibox = evas_list_remove_list(ibox, ibox);
+     ibox = eina_list_remove_list(ibox, ibox);
 
    return 1;
 }
@@ -1092,7 +1092,7 @@ _ibox_cb_event_border_iconify(void *data, int type, void *event)
    E_Event_Border_Iconify *ev;
    IBox *b;
    IBox_Icon *ic;
-   Evas_List *l, *ibox;
+   Eina_List *l, *ibox;
    E_Desk *desk;
 
    ev = event;
@@ -1107,7 +1107,7 @@ _ibox_cb_event_border_iconify(void *data, int type, void *event)
 	if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
 	ic = _ibox_icon_new(b, ev->border);
 	if (!ic) continue;
-	b->icons = evas_list_append(b->icons, ic);
+	b->icons = eina_list_append(b->icons, ic);
 	e_box_pack_end(b->o_box, ic->o_holder);
 	_ibox_empty_handle(b);
 	_ibox_resize_handle(b);
@@ -1115,7 +1115,7 @@ _ibox_cb_event_border_iconify(void *data, int type, void *event)
      }
 
    while (ibox)
-     ibox = evas_list_remove_list(ibox, ibox);
+     ibox = eina_list_remove_list(ibox, ibox);
    return 1;
 }
 
@@ -1125,7 +1125,7 @@ _ibox_cb_event_border_uniconify(void *data, int type, void *event)
    E_Event_Border_Uniconify *ev;
    IBox *b;
    IBox_Icon *ic;
-   Evas_List *l, *ibox;
+   Eina_List *l, *ibox;
 
    ev = event;
    /* del icon for ibox for right zone */
@@ -1137,14 +1137,14 @@ _ibox_cb_event_border_uniconify(void *data, int type, void *event)
 	ic = _ibox_icon_find(b, ev->border);
 	if (!ic) continue;
 	_ibox_icon_free(ic);
-	b->icons = evas_list_remove(b->icons, ic);
+	b->icons = eina_list_remove(b->icons, ic);
 	_ibox_empty_handle(b);
 	_ibox_resize_handle(b);
 	_gc_orient(b->inst->gcc);
      }
 
    while (ibox)
-     ibox = evas_list_remove_list(ibox, ibox);
+     ibox = eina_list_remove_list(ibox, ibox);
 
    return 1;
 }
@@ -1155,7 +1155,7 @@ _ibox_cb_event_border_icon_change(void *data, int type, void *event)
    E_Event_Border_Icon_Change *ev;
    IBox *b;
    IBox_Icon *ic;
-   Evas_List *l, *ibox;
+   Eina_List *l, *ibox;
 
    ev = event;
    /* update icon */
@@ -1170,7 +1170,7 @@ _ibox_cb_event_border_icon_change(void *data, int type, void *event)
      }
 
    while (ibox)
-     ibox = evas_list_remove_list(ibox, ibox);
+     ibox = eina_list_remove_list(ibox, ibox);
 
    return 1;
 }
@@ -1181,7 +1181,7 @@ _ibox_cb_event_border_urgent_change(void *data, int type, void *event)
    E_Event_Border_Urgent_Change *ev;
    IBox *b;
    IBox_Icon *ic;
-   Evas_List *l, *ibox;
+   Eina_List *l, *ibox;
 
    ev = event;
    /* update icon */
@@ -1224,7 +1224,7 @@ _ibox_cb_event_desk_show(void *data, int type, void *event)
 {
    E_Event_Desk_Show *ev;
    IBox *b;
-   Evas_List *l, *ibox;
+   Eina_List *l, *ibox;
 
    ev = event;
    /* delete all wins from ibox and add only for current desk */
@@ -1242,7 +1242,7 @@ _ibox_cb_event_desk_show(void *data, int type, void *event)
      }
 
    while (ibox)
-     ibox = evas_list_remove_list(ibox, ibox);
+     ibox = eina_list_remove_list(ibox, ibox);
 
    return 1;
 }
@@ -1250,7 +1250,7 @@ _ibox_cb_event_desk_show(void *data, int type, void *event)
 static Config_Item *
 _ibox_config_item_get(const char *id)
 {
-   Evas_List *l;
+   Eina_List *l;
    Config_Item *ci;
    char buf[128];
 
@@ -1275,14 +1275,14 @@ _ibox_config_item_get(const char *id)
    ci->show_zone = 1;
    ci->show_desk = 0;
    ci->icon_label = 0;
-   ibox_config->items = evas_list_append(ibox_config->items, ci);
+   ibox_config->items = eina_list_append(ibox_config->items, ci);
    return ci;
 }
 
 void
 _ibox_config_update(Config_Item *ci)
 {
-   Evas_List *l;
+   Eina_List *l;
    for (l = ibox_config->instances; l; l = l->next)
      {
 	Instance *inst;
@@ -1302,7 +1302,7 @@ _ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    IBox *b;
    int ok = 1;
-   Evas_List *l;
+   Eina_List *l;
 
    b = data;
    for (l = ibox_config->config_dialog; l; l = l->next)
@@ -1362,28 +1362,28 @@ e_modapi_init(E_Module *m)
 	ci->show_zone = 1;
 	ci->show_desk = 0;
 	ci->icon_label = 0;
-	ibox_config->items = evas_list_append(ibox_config->items, ci);
+	ibox_config->items = eina_list_append(ibox_config->items, ci);
      }
    else
      {
-        Evas_List *removes = NULL;
-	Evas_List *l;
+    Eina_List *removes = NULL;
+	Eina_List *l;
 	
 	for (l = ibox_config->items; l; l = l->next)
 	  {
 	     Config_Item *ci = l->data;
 	     if (!ci->id)
-	       removes = evas_list_append(removes, ci);
+	       removes = eina_list_append(removes, ci);
 	     else
 	       {
-		  Evas_List *ll;
+		  Eina_List *ll;
 		  
 		  for (ll = l->next; ll; ll = ll->next)
 		    {
 		       Config_Item *ci2 = ll->data;
 		       if ((ci2->id) && (!strcmp(ci->id, ci2->id)))
 			 {
-			    removes = evas_list_append(removes, ci);
+			    removes = eina_list_append(removes, ci);
 			    break;
 			 }
 		    }
@@ -1392,8 +1392,8 @@ e_modapi_init(E_Module *m)
 	while (removes)
 	  {
 	     Config_Item *ci = removes->data;
-	     removes = evas_list_remove_list(removes, removes);
-	     ibox_config->items = evas_list_remove(ibox_config->items, ci);
+	     removes = eina_list_remove_list(removes, removes);
+	     ibox_config->items = eina_list_remove(ibox_config->items, ci);
 	     if (ci->id) eina_stringshare_del(ci->id);
 	     free(ci);
 	  }
@@ -1417,46 +1417,46 @@ e_modapi_init(E_Module *m)
    
    ibox_config->module = m;
    
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ADD, _ibox_cb_event_border_add, NULL));
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_REMOVE, _ibox_cb_event_border_remove, NULL));
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ICONIFY, _ibox_cb_event_border_iconify, NULL));
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_UNICONIFY, _ibox_cb_event_border_uniconify, NULL));
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ICON_CHANGE, _ibox_cb_event_border_icon_change, NULL));
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_URGENT_CHANGE,
        _ibox_cb_event_border_urgent_change, NULL));
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ZONE_SET, _ibox_cb_event_border_zone_set, NULL));
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_DESK_SHOW, _ibox_cb_event_desk_show, NULL));
 
 /* FIXME: add these later for things taskbar-like functionality
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_DESK_SET, _ibox_cb_event_border_zone_set, NULL));
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_SHOW, _ibox_cb_event_border_zone_set, NULL));
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_HIDE, _ibox_cb_event_border_zone_set, NULL));
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_STACK, _ibox_cb_event_border_zone_set, NULL));
-   ibox_config->handlers = evas_list_append
+   ibox_config->handlers = eina_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_STICK, _ibox_cb_event_border_zone_set, NULL));
  */
@@ -1472,7 +1472,7 @@ e_modapi_shutdown(E_Module *m)
    while (ibox_config->handlers)
      {
 	ecore_event_handler_del(ibox_config->handlers->data);
-	ibox_config->handlers = evas_list_remove_list(ibox_config->handlers, ibox_config->handlers);
+	ibox_config->handlers = eina_list_remove_list(ibox_config->handlers, ibox_config->handlers);
      }
 
    while (ibox_config->config_dialog)
@@ -1492,7 +1492,7 @@ e_modapi_shutdown(E_Module *m)
 	Config_Item *ci;
 	
 	ci = ibox_config->items->data;
-	ibox_config->items = evas_list_remove_list(ibox_config->items, ibox_config->items);
+	ibox_config->items = eina_list_remove_list(ibox_config->items, ibox_config->items);
 	if (ci->id)
 	  eina_stringshare_del(ci->id);
 	free(ci);

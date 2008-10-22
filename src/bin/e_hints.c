@@ -215,14 +215,14 @@ e_hints_manager_init(E_Manager *man)
    /* Set desktop count, desktop names and workarea */
    int			i = 0, num = 0;
    unsigned int		*areas = NULL;
-   Evas_List		*cl;
+   Eina_List		*cl;
    Ecore_X_Window	*vroots = NULL;
    /* FIXME: Desktop names not yet implemented */
 /*   char			**names; */
 
    e_hints_e16_comms_pretend(man);
 
-   num = evas_list_count(man->containers);
+   num = eina_list_count(man->containers);
 
    vroots = calloc(num, sizeof(Ecore_X_Window));
    if (!vroots) return;
@@ -268,7 +268,7 @@ e_hints_manager_init(E_Manager *man)
 EAPI void
 e_hints_client_list_set(void)
 {
-   Evas_List *ml = NULL, *cl = NULL;
+   Eina_List *ml = NULL, *cl = NULL;
    unsigned int i = 0, num = 0;
    E_Manager *m;
    E_Container *c;
@@ -335,7 +335,7 @@ e_hints_client_list_set(void)
 EAPI void
 e_hints_client_stacking_set(void)
 {
-   Evas_List *ml = NULL, *cl = NULL;
+   Eina_List *ml = NULL, *cl = NULL;
    unsigned int i = 0, num = 0;
    E_Manager *m;
    E_Container *c;

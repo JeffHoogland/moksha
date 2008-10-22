@@ -15,7 +15,7 @@ struct _E_Smart_Data
    unsigned char    changed : 1;
    unsigned char    horizontal : 1;
    unsigned char    homogenous : 1;
-   Evas_List       *items;
+   Eina_List       *items;
    struct {
       Evas_Coord    w, h;
    } min, max;
@@ -137,7 +137,7 @@ e_box_pack_start(Evas_Object *obj, Evas_Object *child)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
-   sd->items = evas_list_prepend(sd->items, child);
+   sd->items = eina_list_prepend(sd->items, child);
    sd->changed = 1;
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
    return 0;
@@ -152,10 +152,10 @@ e_box_pack_end(Evas_Object *obj, Evas_Object *child)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
-   sd->items = evas_list_append(sd->items, child);   
+   sd->items = eina_list_append(sd->items, child);   
    sd->changed = 1;
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
-   return evas_list_count(sd->items) - 1;
+   return eina_list_count(sd->items) - 1;
 }
 
 EAPI int
@@ -163,13 +163,13 @@ e_box_pack_before(Evas_Object *obj, Evas_Object *child, Evas_Object *before)
 {
    E_Smart_Data *sd;
    int i = 0;
-   Evas_List *l;
+   Eina_List *l;
    
    if (!child) return 0;
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
-   sd->items = evas_list_prepend_relative(sd->items, child, before);
+   sd->items = eina_list_prepend_relative(sd->items, child, before);
    for (i = 0, l = sd->items; l; l = l->next, i++)
      {
 	if (l->data == child) break;
@@ -184,13 +184,13 @@ e_box_pack_after(Evas_Object *obj, Evas_Object *child, Evas_Object *after)
 {
    E_Smart_Data *sd;
    int i = 0;
-   Evas_List *l;
+   Eina_List *l;
    
    if (!child) return 0;
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
-   sd->items = evas_list_append_relative(sd->items, child, after);
+   sd->items = eina_list_append_relative(sd->items, child, after);
    for (i = 0, l = sd->items; l; l = l->next, i++)
      {
 	if (l->data == child) break;
@@ -207,7 +207,7 @@ e_box_pack_count_get(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
-   return evas_list_count(sd->items);
+   return eina_list_count(sd->items);
 }
 
 EAPI Evas_Object *
@@ -217,7 +217,7 @@ e_box_pack_object_nth(Evas_Object *obj, int n)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
-   return evas_list_nth(sd->items, n);
+   return eina_list_nth(sd->items, n);
 }
 
 EAPI Evas_Object *
@@ -227,7 +227,7 @@ e_box_pack_object_first(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
-   return evas_list_data(sd->items);
+   return eina_list_data_get(sd->items);
 }
 
 EAPI Evas_Object *
@@ -237,7 +237,7 @@ e_box_pack_object_last(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
-   return evas_list_data(evas_list_last(sd->items));
+   return eina_list_data_get(eina_list_last(sd->items));
 }
 
 EAPI void
@@ -272,7 +272,7 @@ e_box_unpack(Evas_Object *obj)
    if (!bi) return;
    sd = bi->sd;
    if (!sd) return;
-   sd->items = evas_list_remove(sd->items, obj);
+   sd->items = eina_list_remove(sd->items, obj);
    _e_box_smart_disown(obj);
    sd->changed = 1;
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
@@ -404,7 +404,7 @@ static void
 _e_box_smart_reconfigure(E_Smart_Data *sd)
 {
    Evas_Coord x, y, w, h, xx, yy;
-   Evas_List *l;
+   Eina_List *l;
    int minw, minh, wdif, hdif;
    int count, expand;
 
@@ -418,7 +418,7 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
    _e_box_smart_extents_calculate(sd);
    minw = sd->min.w;
    minh = sd->min.h;
-   count = evas_list_count(sd->items);
+   count = eina_list_count(sd->items);
    expand = 0;
    if (w < minw)
      {
@@ -577,7 +577,7 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
 static void
 _e_box_smart_extents_calculate(E_Smart_Data *sd)
 {
-   Evas_List *l;
+   Eina_List *l;
    int minw, minh;
 
    /* FIXME: need to calc max */
@@ -602,9 +602,9 @@ _e_box_smart_extents_calculate(E_Smart_Data *sd)
 	       }
 	  }
 	if (sd->horizontal)
-          minw *= evas_list_count(sd->items);	     
+          minw *= eina_list_count(sd->items);	     
 	else
-          minh *= evas_list_count(sd->items);	     
+          minh *= eina_list_count(sd->items);	     
      }
    else
      {
@@ -713,7 +713,7 @@ _e_box_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if (!sd) return;
    if ((x == sd->x) && (y == sd->y)) return;
      {
-	Evas_List *l;
+	Eina_List *l;
 	Evas_Coord dx, dy;
 	
 	dx = x - sd->x;

@@ -6,7 +6,7 @@
 struct _E_Radio_Group
 {
    int *valptr;
-   Evas_List *radios;
+   Eina_List *radios;
 };
 
 typedef struct _E_Widget_Data E_Widget_Data;
@@ -71,7 +71,7 @@ e_widget_radio_add(Evas *evas, const char *label, int valnum, E_Radio_Group *gro
      }
    if (wd->group)
      {
-	wd->group->radios = evas_list_append(wd->group->radios, obj);
+	wd->group->radios = eina_list_append(wd->group->radios, obj);
      }
    
    e_widget_sub_object_add(obj, o);
@@ -132,7 +132,7 @@ e_widget_radio_icon_add(Evas *evas, const char *label, const char *icon, int ico
      }
    if (wd->group)
      {
-	wd->group->radios = evas_list_append(wd->group->radios, obj);
+	wd->group->radios = eina_list_append(wd->group->radios, obj);
      }
    
    e_widget_sub_object_add(obj, o);
@@ -152,7 +152,7 @@ e_widget_radio_toggle_set(Evas_Object *obj, int toggle)
 
    if (toggle)
      {
-	Evas_List *l;
+	Eina_List *l;
 	
 	for (l = wd->group->radios; l; l = l->next)
 	  {
@@ -182,7 +182,7 @@ _e_wid_del_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    if (wd->group)
      {
-	wd->group->radios = evas_list_remove(wd->group->radios, obj);
+	wd->group->radios = eina_list_remove(wd->group->radios, obj);
 	if (!wd->group->radios) free(wd->group);
      }
    free(wd);
@@ -216,7 +216,7 @@ _e_wid_do(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    if ((wd->group) && (wd->group->valptr))
      {
-	Evas_List *l;
+	Eina_List *l;
 	int toggled = 0;
 	
 	for (l = wd->group->radios; l; l = l->next)

@@ -19,7 +19,7 @@ struct _E_Config_Dialog_Data
 static int
 _find_default_instance_index(E_Mixer_Module_Context *ctxt)
 {
-   Evas_List *l;
+   Eina_List *l;
    int i;
 
    for (i = 0, l = ctxt->instances; l != NULL; l = l->next, i++)
@@ -63,7 +63,7 @@ _basic_apply(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
    E_Mixer_Module_Context *ctxt;
 
    ctxt = dialog->data;
-   ctxt->default_instance = evas_list_nth(ctxt->instances,
+   ctxt->default_instance = eina_list_nth(ctxt->instances,
 					  cfdata->default_instance);
    if (ctxt->default_instance)
      {
@@ -87,7 +87,7 @@ _basic_create_general(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data 
    struct mixer_config_ui_general *ui;
    E_Mixer_Module_Context *ctxt;
    Evas_Object *label;
-   Evas_List *l;
+   Eina_List *l;
    int i;
 
    ui = &cfdata->ui.general;

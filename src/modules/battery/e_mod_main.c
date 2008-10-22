@@ -82,7 +82,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _button_cb_mouse_down, inst);
    battery_config->instances = 
-     evas_list_append(battery_config->instances, inst);
+     eina_list_append(battery_config->instances, inst);
    _battery_config_updated();
 
    return gcc;
@@ -95,7 +95,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 
    inst = gcc->data;
    battery_config->instances = 
-     evas_list_remove(battery_config->instances, inst);
+     eina_list_remove(battery_config->instances, inst);
    evas_object_del(inst->o_battery);
    if (inst->warning)
      {
@@ -233,7 +233,7 @@ _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 void
 _battery_config_updated(void)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    char buf[4096];
 
    if (!battery_config) return;
@@ -472,7 +472,7 @@ _battery_cb_exe_data(void *data, int type, void *event)
 	  {
 	     if (!strcmp(ev->lines[i].line, "ERROR"))
 	       {
-		  Evas_List *l;
+		  Eina_List *l;
 
 		  for (l = battery_config->instances; l; l = l->next)
 		    {
@@ -503,7 +503,7 @@ _battery_cb_exe_data(void *data, int type, void *event)
 		  int time_left = 0;
 		  int have_battery = 0;
 		  int have_power = 0;
-		  Evas_List *l;
+		  Eina_List *l;
                   static int debounce_popup = 0;
 
                   if (debounce_popup > POPUP_DEBOUNCE_CYCLES)

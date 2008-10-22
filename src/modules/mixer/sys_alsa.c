@@ -12,7 +12,7 @@ struct e_mixer_callback_desc
    void *data;
    E_Mixer_System *self;
    Ecore_Idler *idler;
-   Evas_List *handlers;
+   Eina_List *handlers;
 };
 
 
@@ -46,7 +46,7 @@ _cb_fd_handler(void *data, Ecore_Fd_Handler *fd_handler)
 
    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_ERROR))
      {
-	desc->handlers = evas_list_remove(desc->handlers, fd_handler);
+	desc->handlers = eina_list_remove(desc->handlers, fd_handler);
 	if (!desc->handlers)
 	  {
 	     E_Mixer_System *s;
@@ -103,7 +103,7 @@ _mixer_callback_add(E_Mixer_System *self, int (*func)(void *data, E_Mixer_System
 	len--;
 	fd_handler = ecore_main_fd_handler_add(
            pfds[len].fd, ECORE_FD_READ, _cb_fd_handler, desc, NULL, NULL);
-	desc->handlers = evas_list_prepend(desc->handlers, fd_handler);
+	desc->handlers = eina_list_prepend(desc->handlers, fd_handler);
      }
 
    snd_mixer_set_callback_private(self, desc);
@@ -114,14 +114,14 @@ _mixer_callback_add(E_Mixer_System *self, int (*func)(void *data, E_Mixer_System
 static int
 _mixer_callback_del(E_Mixer_System *self, struct e_mixer_callback_desc *desc)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    snd_mixer_set_callback_private(self, NULL);
 
    for (l = desc->handlers; l != NULL; l = l->next)
      ecore_main_fd_handler_del(l->data);
 
-   evas_list_free(desc->handlers);
+   eina_list_free(desc->handlers);
    free(desc);
 
    return 1;
@@ -209,11 +209,11 @@ e_mixer_system_callback_set(E_Mixer_System *self, int (*func)(void *data, E_Mixe
      }
 }
 
-Evas_List *
+Eina_List *
 e_mixer_system_get_cards(void)
 {
    int err, card_num;
-   Evas_List *cards;
+   Eina_List *cards;
 
    cards = NULL;
    card_num = -1;
@@ -227,7 +227,7 @@ e_mixer_system_get_cards(void)
 	if (snd_ctl_open(&control, buf, 0) < 0)
 	  break;
 	snd_ctl_close(control);
-        cards = evas_list_append(cards, strdup(buf));
+        cards = eina_list_append(cards, strdup(buf));
      }
 
    if (err < 0)
@@ -238,14 +238,14 @@ e_mixer_system_get_cards(void)
 }
 
 void
-e_mixer_system_free_cards(Evas_List *cards)
+e_mixer_system_free_cards(Eina_List *cards)
 {
-   Evas_List *e;
+   Eina_List *e;
 
    for (e = cards; e != NULL; e = e->next)
      free(e->data);
 
-   evas_list_free(cards);
+   eina_list_free(cards);
 }
 
 char *
@@ -297,10 +297,10 @@ e_mixer_system_get_card_name(const char *card)
    return strdup(name);
 }
 
-Evas_List *
+Eina_List *
 e_mixer_system_get_channels(E_Mixer_System *self)
 {
-   Evas_List *channels;
+   Eina_List *channels;
    snd_mixer_elem_t *elem;
 
    if (!self)
@@ -315,22 +315,22 @@ e_mixer_system_get_channels(E_Mixer_System *self)
 	    (!snd_mixer_selem_has_playback_volume(elem)))
 	  continue;
 
-        channels = evas_list_append(channels, elem);
+        channels = eina_list_append(channels, elem);
      }
 
    return channels;
 }
 
 void
-e_mixer_system_free_channels(Evas_List *channels)
+e_mixer_system_free_channels(Eina_List *channels)
 {
-   evas_list_free(channels);
+   eina_list_free(channels);
 }
 
-Evas_List *
+Eina_List *
 e_mixer_system_get_channels_names(E_Mixer_System *self)
 {
-   Evas_List *channels;
+   Eina_List *channels;
    snd_mixer_elem_t *elem;
    snd_mixer_selem_id_t *sid;
 
@@ -351,21 +351,21 @@ e_mixer_system_get_channels_names(E_Mixer_System *self)
         snd_mixer_selem_get_id(elem, sid);
 	name = snd_mixer_selem_id_get_name(sid);
 	if (name)
-	  channels = evas_list_append(channels, strdup(name));
+	  channels = eina_list_append(channels, strdup(name));
      }
 
    return channels;
 }
 
 void
-e_mixer_system_free_channels_names(Evas_List *channels_names)
+e_mixer_system_free_channels_names(Eina_List *channels_names)
 {
-   Evas_List *e;
+   Eina_List *e;
 
    for (e = channels_names; e != NULL; e = e->next)
      free(e->data);
 
-   evas_list_free(channels_names);
+   eina_list_free(channels_names);
 }
 
 char *

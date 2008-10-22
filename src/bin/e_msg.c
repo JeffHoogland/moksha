@@ -25,8 +25,8 @@ static int _e_msg_event_cb(void *data, int ev_type, void *ev);
 static void _e_msg_event_free(void *data, void *ev);
 
 /* local subsystem globals */
-static Evas_List *handlers = NULL;
-static Evas_List *del_handlers = NULL;
+static Eina_List *handlers = NULL;
+static Eina_List *del_handlers = NULL;
 static int processing_handlers = 0;
 static int E_EVENT_MSG = 0;
 static Ecore_Event_Handler *hand = NULL;
@@ -89,7 +89,7 @@ e_msg_handler_add(void (*func) (void *data, const char *name, const char *info, 
    if (!emsgh) return NULL;
    emsgh->func = func;
    emsgh->data = data;
-   handlers = evas_list_append(handlers, emsgh);
+   handlers = eina_list_append(handlers, emsgh);
    return emsgh;
 }
 
@@ -99,11 +99,11 @@ e_msg_handler_del(E_Msg_Handler *emsgh)
    if (processing_handlers > 0)
      {
 	emsgh->delete_me = 1;
-	del_handlers = evas_list_append(del_handlers, emsgh);
+	del_handlers = eina_list_append(del_handlers, emsgh);
      }
    else
      {
-	handlers = evas_list_remove(handlers, emsgh);
+	handlers = eina_list_remove(handlers, emsgh);
 	free(emsgh);
      }
 }
@@ -114,7 +114,7 @@ static int
 _e_msg_event_cb(void *data, int ev_type, void *ev)
 {
    E_Msg_Event *e;
-   Evas_List *l;
+   Eina_List *l;
 
    processing_handlers++;
    e = ev;
@@ -132,7 +132,7 @@ _e_msg_event_cb(void *data, int ev_type, void *ev)
 	while (del_handlers)
 	  {
 	     e_msg_handler_del(del_handlers->data);
-	     del_handlers = evas_list_remove_list(del_handlers, del_handlers);
+	     del_handlers = eina_list_remove_list(del_handlers, del_handlers);
 	  }
      }
    return 1;

@@ -101,7 +101,7 @@ static void
 _ilist_fill(E_Config_Dialog_Data *cfdata) 
 {
    Evas *evas;
-   Evas_List *l;
+   Eina_List *l;
    int n = -1;
    char buf[256];
 
@@ -237,7 +237,7 @@ _cb_add(void *data, void *data2)
    cfg->size = 40;
    cfg->overlap = 0;
    cfg->autohide = 0;
-   e_config->shelves = evas_list_append(e_config->shelves, cfg);
+   e_config->shelves = eina_list_append(e_config->shelves, cfg);
    e_config_save_queue();
 
    e_shelf_config_init();
@@ -256,7 +256,7 @@ _cb_delete(void *data, void *data2)
    d->cfdata = data;
    if (!d->cfdata) return;
    if (!d->cfdata->cur_shelf) return;
-   d->es = evas_list_nth(e_shelf_list(), 
+   d->es = eina_list_nth(e_shelf_list(), 
 			 e_widget_ilist_selected_get(d->cfdata->o_list));
    if (!d->es) return;
    e_object_ref(E_OBJECT(d->es));
@@ -317,7 +317,7 @@ _cb_config(void *data, void *data2)
    cfdata = data;
    if (!cfdata) return;
 
-   es = evas_list_nth(e_shelf_list(), 
+   es = eina_list_nth(e_shelf_list(), 
 		      e_widget_ilist_selected_get(cfdata->o_list));
    if (!es) return;
    if (!es->config_dialog) e_int_shelf_config(es);

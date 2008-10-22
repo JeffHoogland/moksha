@@ -31,9 +31,9 @@ struct _E_Desklock_Popup_Data
 
 struct _E_Desklock_Data
 {
-   Evas_List	  *elock_wnd_list;
+   Eina_List	  *elock_wnd_list;
    Ecore_X_Window  elock_wnd;
-   Evas_List	  *handlers;
+   Eina_List	  *handlers;
    Ecore_X_Window  elock_grab_break_wnd;
    char		   passwd[PASSWD_LEN];
    int		   state;	
@@ -119,7 +119,7 @@ e_desklock_shutdown(void)
 EAPI int
 e_desklock_show(void)
 {
-   Evas_List		  *managers, *l, *l2, *l3;
+   Eina_List		  *managers, *l, *l2, *l3;
    E_Desklock_Popup_Data  *edp;
    Evas_Coord		  mw, mh;
    E_Zone		  *current_zone;
@@ -328,7 +328,7 @@ e_desklock_show(void)
 		       
 		       e_popup_show(edp->popup_wnd);
 		       
-		       edd->elock_wnd_list = evas_list_append(edd->elock_wnd_list, edp);
+		       edd->elock_wnd_list = eina_list_append(edd->elock_wnd_list, edp);
 		    }
 		  zone_counter++;
 	       }
@@ -336,21 +336,21 @@ e_desklock_show(void)
      }
    
    /* handlers */
-   edd->handlers = evas_list_append(edd->handlers,
+   edd->handlers = eina_list_append(edd->handlers,
 				    ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
 							    _e_desklock_cb_key_down, NULL));
-   edd->handlers = evas_list_append(edd->handlers, 
+   edd->handlers = eina_list_append(edd->handlers, 
 				    ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
 							    _e_desklock_cb_mouse_down, NULL));
-   edd->handlers = evas_list_append(edd->handlers,
+   edd->handlers = eina_list_append(edd->handlers,
 				    ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
 							    _e_desklock_cb_mouse_up, NULL));
-   edd->handlers = evas_list_append(edd->handlers,
+   edd->handlers = eina_list_append(edd->handlers,
 				    ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
 							    _e_desklock_cb_mouse_wheel,
 							    NULL));
    if ((total_zone_num > 1) && (e_config->desklock_login_box_zone == -2))
-     edd->handlers = evas_list_append(edd->handlers,
+     edd->handlers = eina_list_append(edd->handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
 							      _e_desklock_cb_mouse_move,
 							      NULL));
@@ -394,13 +394,13 @@ e_desklock_hide(void)
 	     e_util_defer_object_del(E_OBJECT(edp->popup_wnd));
 	     E_FREE(edp);
 	  }
-	edd->elock_wnd_list = evas_list_remove_list(edd->elock_wnd_list, edd->elock_wnd_list);
+	edd->elock_wnd_list = eina_list_remove_list(edd->elock_wnd_list, edd->elock_wnd_list);
      }
    
    while (edd->handlers)
      {
 	ecore_event_handler_del(edd->handlers->data);
-	edd->handlers = evas_list_remove_list(edd->handlers, edd->handlers);
+	edd->handlers = eina_list_remove_list(edd->handlers, edd->handlers);
      }
    
    e_grabinput_release(edd->elock_wnd, edd->elock_wnd);
@@ -473,7 +473,7 @@ _e_desklock_cb_mouse_move(void *data, int type, void *event)
 {
    E_Desklock_Popup_Data *edp;
    E_Zone *current_zone;
-   Evas_List *l;
+   Eina_List *l;
    
    current_zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
    
@@ -500,7 +500,7 @@ _e_desklock_passwd_update(void)
 {
    char passwd_hidden[PASSWD_LEN] = "", *p, *pp;
    E_Desklock_Popup_Data *edp;
-   Evas_List *l;
+   Eina_List *l;
    
    if (!edd) return;
    
@@ -552,7 +552,7 @@ static int
 _e_desklock_zone_num_get(void)
 {
    int num;
-   Evas_List *l, *l2;
+   Eina_List *l, *l2;
    
    num = 0;
    for (l = e_manager_list(); l; l = l->next)
@@ -563,7 +563,7 @@ _e_desklock_zone_num_get(void)
 	  {
 	     E_Container *con = l2->data;
 	     
-	     num += evas_list_count(con->zones);
+	     num += eina_list_count(con->zones);
 	  }
      }
    
@@ -603,7 +603,7 @@ _e_desklock_check_auth(void)
 static void
 _e_desklock_state_set(int state)
 {
-   Evas_List *l;
+   Eina_List *l;
    const char *signal, *text;
    if (!edd) return;
 

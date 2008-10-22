@@ -2,17 +2,17 @@
 
 /* IFACE INTERNALS */
 static E_DBus_Connection *conn = NULL;
-static Evas_List *callbacks = NULL;
+static Eina_List *callbacks = NULL;
 static E_DBus_Signal_Handler *sigh_name_ownerchanged = NULL;
 static E_DBus_Signal_Handler *sigh_interface_added = NULL;
 static E_DBus_Signal_Handler *sigh_interface_removed = NULL;
-static Evas_List *interfaces = NULL;
+static Eina_List *interfaces = NULL;
 
-static Evas_List *
-iface_callback(Evas_List *callbacks, Interface_Event event, Interface *iface, Interface_Network *ifnet)
+static Eina_List *
+iface_callback(Eina_List *callbacks, Interface_Event event, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
-   Evas_List *deletes = NULL;
+   Eina_List *l;
+   Eina_List *deletes = NULL;
 
    for (l = callbacks; l; l = l->next)
      {
@@ -21,7 +21,7 @@ iface_callback(Evas_List *callbacks, Interface_Event event, Interface *iface, In
 	cb = l->data;
 	if (cb->delete_me)
 	  {
-	     deletes = evas_list_append(deletes, l->data);
+	     deletes = eina_list_append(deletes, l->data);
 	     continue;
 	  }
 	if (cb->event == event)
@@ -29,9 +29,9 @@ iface_callback(Evas_List *callbacks, Interface_Event event, Interface *iface, In
      }
    while (deletes)
      {
-	callbacks = evas_list_remove(callbacks, deletes->data);
+	callbacks = eina_list_remove(callbacks, deletes->data);
 	free(deletes->data);
-	deletes = evas_list_remove_list(deletes, deletes);
+	deletes = eina_list_remove_list(deletes, deletes);
      }
    return callbacks;
 }
@@ -311,7 +311,7 @@ static void
 iface_net_add(Interface *iface, const char *essid, const char *bssid, int signal_strength, const char *security)
 {
    Interface_Network *net;
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = iface->networks; l; l = l->next)
      {
@@ -359,7 +359,7 @@ iface_net_add(Interface *iface, const char *essid, const char *bssid, int signal
 	net->bssid = eina_stringshare_add(bssid);
 	net->signal_strength = signal_strength;
 	if (security) net->security = eina_stringshare_add(security);
-	iface->networks = evas_list_append(iface->networks, net);
+	iface->networks = eina_list_append(iface->networks, net);
 	iface->callbacks = iface_callback(iface->callbacks,
 					  IFACE_EVENT_SCAN_NETWORK_ADD,
 					  iface, net);
@@ -541,7 +541,7 @@ iface_timer_network_timeout(void *data)
    Interface *iface = data;
    double now;
    Interface_Network *net;
-   Evas_List *l, *l_del;
+   Eina_List *l, *l_del;
 
    now = ecore_time_get();
    iface_ref(iface);
@@ -555,7 +555,7 @@ iface_timer_network_timeout(void *data)
 	     iface->callbacks = iface_callback(iface->callbacks,
 					       IFACE_EVENT_SCAN_NETWORK_DEL,
 					       iface, net);
-	     iface->networks = evas_list_remove_list(iface->networks, l_del);
+	     iface->networks = eina_list_remove_list(iface->networks, l_del);
 	     if (net->essid) eina_stringshare_del(net->essid);
 	     if (net->bssid) eina_stringshare_del(net->bssid);
 	     if (net->security) eina_stringshare_del(net->security);
@@ -770,7 +770,7 @@ iface_add(const char *ifpath)
 
    iface->network_timeout = ecore_timer_add(10.0, iface_timer_network_timeout,
 					    iface);
-   interfaces = evas_list_append(interfaces, iface);
+   interfaces = eina_list_append(interfaces, iface);
    return iface;
 }
 
@@ -793,7 +793,7 @@ iface_unref(Interface *iface)
    while (iface->callbacks)
      {
 	free(iface->callbacks->data);
-	iface->callbacks = evas_list_remove_list(iface->callbacks, iface->callbacks);
+	iface->callbacks = eina_list_remove_list(iface->callbacks, iface->callbacks);
      }
 
    if (iface->network_timeout)
@@ -809,7 +809,7 @@ iface_unref(Interface *iface)
 	if (net->bssid) eina_stringshare_del(net->bssid);
 	if (net->security) eina_stringshare_del(net->security);
 	free(net);
-	iface->networks = evas_list_remove_list(iface->networks, iface->networks);
+	iface->networks = eina_list_remove_list(iface->networks, iface->networks);
      }
    if (iface->network_timeout) ecore_timer_del(iface->network_timeout);
    if (iface->prop.product) eina_stringshare_del(iface->prop.product);
@@ -824,14 +824,14 @@ iface_unref(Interface *iface)
    e_dbus_signal_handler_del(conn, iface->sigh.policy_changed);
    e_dbus_signal_handler_del(conn, iface->sigh.network_changed);
    e_dbus_signal_handler_del(conn, iface->sigh.ipv4_changed);
-   interfaces = evas_list_remove(interfaces, iface);
+   interfaces = eina_list_remove(interfaces, iface);
    free(iface);
 }
 
 Interface *
 iface_find(const char *ifpath)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    if (!ifpath) return NULL;
    for (l = interfaces; l; l = l->next)
@@ -999,13 +999,13 @@ iface_callback_add(Interface *iface, Interface_Event event, void (*func) (void *
    cb->event = event;
    cb->func = func;
    cb->data = data;
-   iface->callbacks = evas_list_append(iface->callbacks, cb);
+   iface->callbacks = eina_list_append(iface->callbacks, cb);
 }
 
 void
 iface_callback_del(Interface *iface, Interface_Event event, void (*func) (void *data, Interface *iface, Interface_Network *ifnet), void *data)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = iface->callbacks; l; l = l->next)
      {
@@ -1043,14 +1043,14 @@ iface_system_init(E_DBus_Connection *edbus_conn)
 void
 iface_system_shutdown(void)
 {
-   Evas_List *l, *tlist = NULL;
+   Eina_List *l, *tlist = NULL;
 
    for (l = interfaces; l; l = l->next)
-     tlist = evas_list_append(tlist, l->data);
+     tlist = eina_list_append(tlist, l->data);
    while (tlist)
      {
 	iface_unref(tlist->data);
-	tlist = evas_list_remove_list(tlist, tlist);
+	tlist = eina_list_remove_list(tlist, tlist);
      }
    if (sigh_name_ownerchanged)
      e_dbus_signal_handler_del(conn, sigh_name_ownerchanged);
@@ -1064,7 +1064,7 @@ iface_system_shutdown(void)
    while (callbacks)
      {
 	free(callbacks->data);
-	callbacks = evas_list_remove_list(callbacks, callbacks);
+	callbacks = eina_list_remove_list(callbacks, callbacks);
      }
    conn = NULL;
 }
@@ -1079,13 +1079,13 @@ iface_system_callback_add(Interface_Event event, void (*func) (void *data, Inter
    cb->event = event;
    cb->func = func;
    cb->data = data;
-   callbacks = evas_list_append(callbacks, cb);
+   callbacks = eina_list_append(callbacks, cb);
 }
 
 void
 iface_system_callback_del(Interface_Event event, void (*func) (void *data, Interface *iface, Interface_Network *ifnet), void *data)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = callbacks; l; l = l->next)
      {

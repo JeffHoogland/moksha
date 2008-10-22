@@ -101,7 +101,7 @@ static int
 _basic_apply_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
-   Evas_List *l, *ll, *lll;
+   Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
@@ -144,7 +144,7 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
-   Evas_List *l, *ll, *lll;
+   Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;

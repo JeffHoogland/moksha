@@ -106,13 +106,13 @@ struct _Conf_Network
 
 struct _Conf
 {
-   Evas_List *interfaces;
-   Evas_List *networks;
+   Eina_List *interfaces;
+   Eina_List *networks;
 };
 
 static E_Module *connman_module = NULL;
 static E_DBus_Connection *connman_dbus = NULL;
-static Evas_List *instances = NULL;
+static Eina_List *instances = NULL;
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_interface_edd = NULL;
 static E_Config_DD *conf_network_edd = NULL;
@@ -124,7 +124,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    Instance *inst;
-   Evas_List *l;
+   Eina_List *l;
 
    inst = E_NEW(Instance, 1);
 
@@ -144,7 +144,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    e_gadcon_client_util_menu_attach(gcc);
 
-   instances = evas_list_append(instances, inst);
+   instances = eina_list_append(instances, inst);
 
    if (!conf)
      {
@@ -170,7 +170,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 	cfif = E_NEW(Conf_Interface, 1);
 	cfif->name = eina_stringshare_add(name);
 	cfif->id = eina_stringshare_add(id);
-	conf->interfaces = evas_list_append(conf->interfaces, cfif);
+	conf->interfaces = eina_list_append(conf->interfaces, cfif);
 	inst->config.cfif = cfif;
 	e_config_save_queue();
 	// FIXME:  check interfaces - if one matches, do the if init
@@ -184,7 +184,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
 
    inst = gcc->data;
-   instances = evas_list_remove(instances, inst);
+   instances = eina_list_remove(instances, inst);
 
    evas_object_del(inst->o_net);
    free(inst);
@@ -243,7 +243,7 @@ static void net_dialog_show(Instance *inst, Conf_Network *cfnet);
 static void net_dialog_hide(Instance *inst);
 static void popup_ifnet_nets_refresh(Instance *inst);
 
-static Evas_List *ifaces = NULL;
+static Eina_List *ifaces = NULL;
 
 static int
 inst_if_matches(Instance *inst, Interface *iface)
@@ -262,7 +262,7 @@ inst_if_matches(Instance *inst, Interface *iface)
 static Interface *
 if_get(Instance *inst)
 {
-   Evas_List *l;
+   Eina_List *l;
    Interface *iface = NULL;
 
    if (inst->config.ifpath)
@@ -350,7 +350,7 @@ net_dialog_cb_ok(void *data, E_Dialog *dialog)
    inst->config.cfnet = cfnet;
    inst->config.cfnet_new = NULL;
    if (cfnet->addme)
-     conf->networks = evas_list_prepend(conf->networks, cfnet);
+     conf->networks = eina_list_prepend(conf->networks, cfnet);
    STR_SHARE(cfnet->name);
    STR_SHARE(cfnet->essid);
    STR_SHARE(cfnet->password);
@@ -440,7 +440,7 @@ net_dialog_show(Instance *inst, Conf_Network *cfnet)
    Evas_Object *table, *o, *button;
    Evas_Coord mw, mh;
    E_Radio_Group *rg;
-   Evas_List *l;
+   Eina_List *l;
    int row = 0;
 
    dialog = e_dialog_new(inst->gcc->gadcon->zone->container, "e", "e_connman_net_dialog");
@@ -657,7 +657,7 @@ static void
 if_ilist_update(Instance *inst)
 {
    Evas_Object *ilist;
-   Evas_List *l;
+   Eina_List *l;
    int i;
 
    ilist = inst->if_ilist_obj;
@@ -728,7 +728,7 @@ if_dialog_show(Instance *inst)
    Evas_Object *list, *flist, *o, *ilist, *button;
    Evas_Coord mw, mh;
    E_Radio_Group *rg;
-   Evas_List *l;
+   Eina_List *l;
 
    dialog = e_dialog_new(inst->gcc->gadcon->zone->container, "e", "e_connman_iface_dialog");
    e_dialog_title_set(dialog, _("Network Connection Settings"));
@@ -835,7 +835,7 @@ static void
 popup_ifnet_icon_adjust(Evas_Object *icon, Interface_Network *ifnet)
 {
    Edje_Message_Int_Set *msg;
-   Evas_List *l;
+   Eina_List *l;
    int saved = 0;
 
    msg = alloca(sizeof(Edje_Message_Int_Set) + (0 * sizeof(int)));
@@ -879,7 +879,7 @@ static void
 popup_cb_ifnet_sel(void *data)
 {
    Instance *inst;
-   Evas_List *l;
+   Eina_List *l;
    Interface *iface;
 
    inst = data;
@@ -919,7 +919,7 @@ popup_cb_ifnet_sel(void *data)
 		    }
 	       }
 	     cfnet = E_NEW(Conf_Network, 1);
-	     conf->networks = evas_list_prepend(conf->networks, cfnet);
+	     conf->networks = eina_list_prepend(conf->networks, cfnet);
 	     if (ifnet->essid)
 	       {
 		  snprintf(buf, sizeof(buf), ifnet->essid);
@@ -971,10 +971,10 @@ popup_ifnet_cb_sort(void *data1, void *data2)
 static void
 popup_ifnet_nets_refresh(Instance *inst)
 {
-   Evas_List *l, *networks = NULL;
+   Eina_List *l, *networks = NULL;
    Interface *iface;
    Evas_Object *ilist;
-   Evas_List *nets;
+   Eina_List *nets;
 
    if (!inst->popup_ilist_obj) return;
    ilist = inst->popup_ilist_obj;
@@ -987,12 +987,12 @@ popup_ifnet_nets_refresh(Instance *inst)
    if (iface)
      {
 	for (l = iface->networks; l; l = l->next)
-	  networks = evas_list_append(networks, l->data);
+	  networks = eina_list_append(networks, l->data);
      }
 /*
    if (networks)
-     networks = evas_list_sort(networks,
-			       evas_list_count(networks),
+     networks = eina_list_sort(networks,
+			       eina_list_count(networks),
 			       popup_ifnet_cb_sort);
  */
    for (l = networks; l; l = l->next)
@@ -1002,7 +1002,7 @@ popup_ifnet_nets_refresh(Instance *inst)
 	ifnet = l->data;
 	popup_ifnet_net_add(inst, ifnet);
      }
-   if (networks) evas_list_free(networks);
+   if (networks) eina_list_free(networks);
 
    e_widget_ilist_go(ilist);
    e_widget_ilist_thaw(ilist);
@@ -1011,7 +1011,7 @@ popup_ifnet_nets_refresh(Instance *inst)
 static int
 ifnet_num_get(Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
+   Eina_List *l;
    int i;
 
    for (i = 0, l = iface->networks; l; l = l->next, i++)
@@ -1209,10 +1209,10 @@ inst_on(Instance *inst)
 static void
 cb_if_del(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    printf("IF-- %s\n", iface->ifpath);
-   ifaces = evas_list_remove(ifaces, iface);
+   ifaces = eina_list_remove(ifaces, iface);
    for (l = instances; l; l = l->next)
      {
 	Instance *inst;
@@ -1227,7 +1227,7 @@ cb_if_del(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_if_ipv4(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    printf("IF   %s\n", iface->ifpath);
    printf("  IPV4: [%s][%s][%s][%s]\n",
@@ -1246,7 +1246,7 @@ cb_if_ipv4(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_if_net_sel(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    printf("IF   %s\n", iface->ifpath);
    printf("  NET_SEL: [%s] [%s]\n",
@@ -1265,7 +1265,7 @@ cb_if_net_sel(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_if_scan_net_add(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l, *l2;
+   Eina_List *l, *l2;
 
 //   printf("IF   %s\n", iface->ifpath);
 //   printf("  SCAN NET ADD: [%s] %i \"%s\" %s\n",
@@ -1299,7 +1299,7 @@ cb_if_scan_net_add(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_if_scan_net_del(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
+   Eina_List *l;
 
 //   printf("IF   %s\n", iface->ifpath);
 //   printf("  SCAN NET DEL: [%s] %i \"%s\" %s\n",
@@ -1319,7 +1319,7 @@ cb_if_scan_net_del(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_if_scan_net_change(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
+   Eina_List *l;
 
 //   printf("IF   %s\n", iface->ifpath);
 //   printf("  SCAN NET CHANGE: [%s] %i \"%s\" %s\n",
@@ -1337,7 +1337,7 @@ cb_if_scan_net_change(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_if_signal(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    printf("IF   %s\n", iface->ifpath);
    printf("  SIGNAL: %i\n", iface->signal_strength);
@@ -1354,7 +1354,7 @@ cb_if_signal(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_if_state(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    // .. iface->prop.state:
    // scanning
@@ -1399,7 +1399,7 @@ cb_if_state(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_if_policy(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    // .. iface->prop.policy:
    // unknown
@@ -1434,10 +1434,10 @@ cb_if_policy(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_main_if_add(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Evas_List *l, *l2;
+   Eina_List *l, *l2;
 
    printf("IF++ %s\n", iface->ifpath);
-   ifaces = evas_list_append(ifaces, iface);
+   ifaces = eina_list_append(ifaces, iface);
    iface_callback_add(iface, IFACE_EVENT_DEL, cb_if_del, NULL);
    iface_callback_add(iface, IFACE_EVENT_IPV4_CHANGE, cb_if_ipv4, NULL);
    iface_callback_add(iface, IFACE_EVENT_NETWORK_SELECTION_CHANGE, cb_if_net_sel, NULL);
@@ -1546,7 +1546,7 @@ e_modapi_shutdown(E_Module *m)
      {
 	if (ifaces)
 	  {
-	     evas_list_free(ifaces);
+	     eina_list_free(ifaces);
 	     ifaces = NULL;
 	  }
 	iface_system_shutdown();

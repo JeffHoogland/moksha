@@ -20,8 +20,8 @@ struct _E_Manager
    int                  x, y, w, h;
    char                 visible : 1;
    Ecore_X_Window       root;
-   Evas_List           *handlers;
-   Evas_List           *containers;
+   Eina_List           *handlers;
+   Eina_List           *containers;
 
    E_Pointer           *pointer;
    Ecore_X_Window       initwin;
@@ -29,7 +29,7 @@ struct _E_Manager
 
 EAPI int        e_manager_init(void);
 EAPI int        e_manager_shutdown(void);
-EAPI Evas_List *e_manager_list(void);
+EAPI Eina_List *e_manager_list(void);
     
 EAPI E_Manager      *e_manager_new(Ecore_X_Window root, int num);
 EAPI void            e_manager_manage_windows(E_Manager *man);

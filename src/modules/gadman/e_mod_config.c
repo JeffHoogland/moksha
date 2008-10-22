@@ -244,7 +244,7 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
 static int
 _adv_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   Evas_List *sel;
+   Eina_List *sel;
    const char *p = NULL;
    E_Fm2_Icon_Info *ic;
    char path[PATH_MAX];
@@ -269,7 +269,7 @@ _adv_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  eina_stringshare_del(Man->conf->custom_bg);
 		Man->conf->custom_bg = eina_stringshare_add(path);
 	  }
-	evas_list_free(sel);
+	eina_list_free(sel);
      }
 
    e_config_save_queue();
@@ -281,7 +281,7 @@ _adv_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static void 
 _fill_gadgets_list(Evas_Object *ilist)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    int w;
 
    e_widget_ilist_freeze(ilist);
@@ -311,7 +311,7 @@ static void
 _cb_add(void *data, void *data2) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    int i;
 
    if (!(cfdata = data)) return;
@@ -332,7 +332,7 @@ _cb_add(void *data, void *data2)
         gadman_gadget_edit_start(gcc);
      }
 
-   if (l) evas_list_free(l);
+   if (l) eina_list_free(l);
 }
 
 static void 

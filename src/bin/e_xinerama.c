@@ -7,9 +7,9 @@ static void _e_xinerama_clean(void);
 static void _e_xinerama_update(void);
 static int _e_xinerama_cb_screen_sort(void *data1, void *data2);
 
-static Evas_List *all_screens = NULL;
-static Evas_List *chosen_screens = NULL;
-static Evas_List *fake_screens = NULL;
+static Eina_List *all_screens = NULL;
+static Eina_List *chosen_screens = NULL;
+static Eina_List *fake_screens = NULL;
 
 EAPI int
 e_xinerama_init(void)
@@ -32,14 +32,14 @@ e_xinerama_update(void)
    _e_xinerama_update();
 }
 
-EAPI const Evas_List *
+EAPI const Eina_List *
 e_xinerama_screens_get(void)
 {
    if (fake_screens) return fake_screens;
    return chosen_screens;
 }
 
-EAPI const Evas_List *
+EAPI const Eina_List *
 e_xinerama_screens_all_get(void)
 {
    if (fake_screens) return fake_screens;
@@ -52,13 +52,13 @@ e_xinerama_fake_screen_add(int x, int y, int w, int h)
    E_Screen *scr;
 
    scr = calloc(1, sizeof(E_Screen));
-   scr->screen = evas_list_count(fake_screens);
+   scr->screen = eina_list_count(fake_screens);
    scr->escreen = scr->screen;
    scr->x = x;
    scr->y = y;
    scr->w = w;
    scr->h = h;
-   fake_screens = evas_list_append(fake_screens, scr);
+   fake_screens = eina_list_append(fake_screens, scr);
 }
 
 /* local subsystem functions */
@@ -68,16 +68,16 @@ _e_xinerama_clean(void)
    while (all_screens)
      {
 	free(all_screens->data);
-	all_screens = evas_list_remove_list(all_screens, all_screens);
+	all_screens = eina_list_remove_list(all_screens, all_screens);
      }
    while (chosen_screens)
      {
-	chosen_screens = evas_list_remove_list(chosen_screens, chosen_screens);
+	chosen_screens = eina_list_remove_list(chosen_screens, chosen_screens);
      }
    while (fake_screens)
      {
 	free(fake_screens->data);
-	fake_screens = evas_list_remove_list(fake_screens, fake_screens);
+	fake_screens = eina_list_remove_list(fake_screens, fake_screens);
      }
 }
 
@@ -86,7 +86,7 @@ _e_xinerama_update(void)
 {
    int n;
    Ecore_X_Window *roots;
-   Evas_List *l;
+   Eina_List *l;
 
    roots = ecore_x_window_root_list(&n);
    if (roots)
@@ -118,7 +118,7 @@ _e_xinerama_update(void)
 	     scr->y = 0;
 	     scr->w = rw;
 	     scr->h = rh;
-	     all_screens = evas_list_append(all_screens, scr);
+	     all_screens = eina_list_append(all_screens, scr);
 	  }
 	else
 	  {
@@ -140,7 +140,7 @@ _e_xinerama_update(void)
 		       scr->y = y;
 		       scr->w = w;
 		       scr->h = h;
-		       all_screens = evas_list_append(all_screens, scr);
+		       all_screens = eina_list_append(all_screens, scr);
 		    }
 	       }
 	  }
@@ -148,10 +148,10 @@ _e_xinerama_update(void)
    /* now go through all_screens... and build a list of chosen screens */
    for (l = all_screens; l; l = l->next)
      {
-	Evas_List *ll;
+	Eina_List *ll;
 	E_Screen *scr;
 	int add = 0;
-	Evas_List *removes;
+	Eina_List *removes;
 
 	scr = l->data;
 	add = 1;
@@ -173,7 +173,7 @@ _e_xinerama_update(void)
 		  sz2 = scr2->w * scr2->h;
 		  /* if the one we already have is bigger, DONT add the new */
 		  if (sz > sz2)
-		    removes = evas_list_append(removes, scr2);
+		    removes = eina_list_append(removes, scr2);
 		  /* add the old to a list to remove */
 		  else
 		    add = 0;
@@ -182,15 +182,15 @@ _e_xinerama_update(void)
 	/* if there are screens to remove - remove them */
 	while (removes)
 	  {
-	     chosen_screens = evas_list_remove(chosen_screens, removes->data);
-	     removes = evas_list_remove_list(removes, removes);
+	     chosen_screens = eina_list_remove(chosen_screens, removes->data);
+	     removes = eina_list_remove_list(removes, removes);
 	  }
 	/* if this screen is to be added, add it */
 	if (add)
-	  chosen_screens = evas_list_append(chosen_screens, scr);
+	  chosen_screens = eina_list_append(chosen_screens, scr);
      }
-   chosen_screens = evas_list_sort(chosen_screens,
-				   evas_list_count(chosen_screens),
+   chosen_screens = eina_list_sort(chosen_screens,
+				   eina_list_count(chosen_screens),
 				   _e_xinerama_cb_screen_sort);
    for (n = 0, l = chosen_screens; l; l = l->next, n++)
      {

@@ -14,7 +14,7 @@ struct _Config_Glob
 struct _Config_Mime 
 {
    const char *mime;
-   Evas_List *globs;
+   Eina_List *globs;
 };
 struct _Config_Type 
 {
@@ -23,7 +23,7 @@ struct _Config_Type
 };
 struct _E_Config_Dialog_Data 
 {
-   Evas_List *mimes;
+   Eina_List *mimes;
    char *cur_type;
    struct 
      {
@@ -46,7 +46,7 @@ static Config_Mime *_find_mime       (E_Config_Dialog_Data *cfdata, char *mime);
 static Config_Glob *_find_glob       (Config_Mime *mime, char *glob);
 static void         _cb_config       (void *data, void *data2);
 
-Evas_List *types = NULL;
+Eina_List *types = NULL;
 
 EAPI E_Config_Dialog *
 e_int_config_mime(E_Container *con, const char *params __UNUSED__) 
@@ -112,8 +112,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      _load_globs(cfdata, buf);
 
    if (cfdata->mimes)
-     cfdata->mimes = evas_list_sort(cfdata->mimes, 
-				    evas_list_count(cfdata->mimes), _sort_mimes);
+     cfdata->mimes = eina_list_sort(cfdata->mimes, 
+				    eina_list_count(cfdata->mimes), _sort_mimes);
    
    _fill_types(cfdata);
 }
@@ -148,7 +148,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  eina_stringshare_del(t->name);
 	if (t->type)
 	  eina_stringshare_del(t->type);
-	types = evas_list_remove_list(types, types);
+	types = eina_list_remove_list(types, types);
 	E_FREE(t);
      }
 
@@ -166,13 +166,13 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     if (!g) continue;
 	     if (g->name)
 	       eina_stringshare_del(g->name);
-	     m->globs = evas_list_remove_list(m->globs, m->globs);
+	     m->globs = eina_list_remove_list(m->globs, m->globs);
 	     E_FREE(g);
 	  }
 	if (m->mime)
 	  eina_stringshare_del(m->mime);
 	
-	cfdata->mimes = evas_list_remove_list(cfdata->mimes, cfdata->mimes);
+	cfdata->mimes = eina_list_remove_list(cfdata->mimes, cfdata->mimes);
 	E_FREE(m);
      }
    
@@ -211,7 +211,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 static void 
 _fill_list(E_Config_Dialog_Data *cfdata, const char *mtype) 
 {
-   Evas_List *l;
+   Eina_List *l;
    Evas_Coord w, h;
    Evas *evas;
 
@@ -276,7 +276,7 @@ _fill_list(E_Config_Dialog_Data *cfdata, const char *mtype)
 static void 
 _fill_tlist(E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *l;
+   Eina_List *l;
    Evas_Coord w, h;
 
    evas_event_freeze(evas_object_evas_get(cfdata->gui.tlist));
@@ -354,8 +354,8 @@ _load_mimes(E_Config_Dialog_Data *cfdata, char *file)
 			 {
 			    glob = E_NEW(Config_Glob, 1);
 			    glob->name = eina_stringshare_add(ext);
-			    mime->globs = evas_list_append(mime->globs, glob);
-			    cfdata->mimes = evas_list_append(cfdata->mimes, mime);
+			    mime->globs = eina_list_append(mime->globs, glob);
+			    cfdata->mimes = eina_list_append(cfdata->mimes, mime);
 			 }
 		    }
 	       }
@@ -411,8 +411,8 @@ _load_globs(E_Config_Dialog_Data *cfdata, char *file)
 		    {
 		       glob = E_NEW(Config_Glob, 1);
 		       glob->name = eina_stringshare_add(ext);
-		       mime->globs = evas_list_append(mime->globs, glob);
-		       cfdata->mimes = evas_list_append(cfdata->mimes, mime);
+		       mime->globs = eina_list_append(mime->globs, glob);
+		       cfdata->mimes = eina_list_append(cfdata->mimes, mime);
 		    }
 	       }
 	  }
@@ -423,7 +423,7 @@ _load_globs(E_Config_Dialog_Data *cfdata, char *file)
 	       {
 		  glob = E_NEW(Config_Glob, 1);
 		  glob->name = eina_stringshare_add(ext);
-		  mime->globs = evas_list_append(mime->globs, glob);
+		  mime->globs = eina_list_append(mime->globs, glob);
 	       }
 	  }
      }
@@ -433,7 +433,7 @@ _load_globs(E_Config_Dialog_Data *cfdata, char *file)
 static void
 _fill_types(E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *l, *ll;
+   Eina_List *l, *ll;
 
    for (l = cfdata->mimes; l; l = l->next) 
      {
@@ -464,7 +464,7 @@ _fill_types(E_Config_Dialog_Data *cfdata)
 	     tok[0] = toupper(tok[0]);
 	     tmp->name = eina_stringshare_add(tok);
 	     
-	     types = evas_list_append(types, tmp);
+	     types = eina_list_append(types, tmp);
 	  }
      }
 }
@@ -473,7 +473,7 @@ static void
 _tlist_cb_change(void *data) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
+   Eina_List *l;
 
    cfdata = data;
    if (!cfdata) return;
@@ -506,7 +506,7 @@ _sort_mimes(void *data1, void *data2)
 static Config_Mime *
 _find_mime(E_Config_Dialog_Data *cfdata, char *mime) 
 {
-   Evas_List *l;
+   Eina_List *l;
    
    if (!cfdata) return NULL;
    for (l = cfdata->mimes; l; l = l->next) 
@@ -524,7 +524,7 @@ _find_mime(E_Config_Dialog_Data *cfdata, char *mime)
 static Config_Glob *
 _find_glob(Config_Mime *mime, char *glob) 
 {
-   Evas_List *l;
+   Eina_List *l;
    
    if (!mime) return NULL;
    for (l = mime->globs; l; l = l->next) 
@@ -542,7 +542,7 @@ _find_glob(Config_Mime *mime, char *glob)
 static void 
 _cb_config(void *data, void *data2) 
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Config_Dialog_Data *cfdata;
    E_Config_Mime_Icon *mi = NULL;
    const char *m;

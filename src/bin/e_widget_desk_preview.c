@@ -10,7 +10,7 @@ struct _E_Widget_Data
    Evas_Object *obj;
    Evas_Object *aspect;
    Evas_Object *table;
-   Evas_List *desks;
+   Eina_List *desks;
 
    Ecore_Event_Handler *update_handler;
 
@@ -35,7 +35,7 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   Evas_List *l;
+   Eina_List *l;
 
    wd = e_widget_data_get(obj);
    if (!wd) return;
@@ -49,7 +49,7 @@ _e_wid_del_hook(Evas_Object *obj)
 	dd = e_widget_data_get(o);
 	e_thumb_icon_end(o);
      }
-   evas_list_free(wd->desks);
+   eina_list_free(wd->desks);
    free(wd);
 }
 
@@ -123,7 +123,7 @@ e_widget_deskpreview_desk_add(Evas *evas, E_Zone *zone, int x, int y, int tw, in
 static void
 _e_wid_reconfigure(E_Widget_Data *wd)
 {
-   Evas_List *l, *delete = NULL;
+   Eina_List *l, *delete = NULL;
    int x, y;
    int aw, ah; /* available */
    int mw, mh; /* min size for each desk */
@@ -179,7 +179,7 @@ _e_wid_reconfigure(E_Widget_Data *wd)
 	  }
 	else
 	  {
-	     delete = evas_list_append(delete, dw);
+	     delete = eina_list_append(delete, dw);
 	  }
      }
    while (delete)
@@ -187,8 +187,8 @@ _e_wid_reconfigure(E_Widget_Data *wd)
 	Evas_Object *dw = delete->data;
 	e_widget_table_unpack(wd->table, dw);
 	evas_object_del(dw);
-	wd->desks = evas_list_remove(wd->desks, dw);
-	delete = evas_list_remove_list(delete, delete);
+	wd->desks = eina_list_remove(wd->desks, dw);
+	delete = eina_list_remove_list(delete, delete);
      }
 
    for (y = 0; y < ny; y++)
@@ -204,7 +204,7 @@ _e_wid_reconfigure(E_Widget_Data *wd)
 	     e_widget_min_size_set(dw, mw, mh);
 
 	     e_widget_table_object_append(wd->table, dw, x, y, 1, 1, 1, 1, 1, 1);
-	     wd->desks = evas_list_append(wd->desks, dw);
+	     wd->desks = eina_list_append(wd->desks, dw);
 	  }
      }
 
@@ -271,7 +271,7 @@ _e_wid_cb_bg_update(void *data, int type, void *event)
 {
    E_Event_Bg_Update *ev;
    E_Widget_Data *wd;
-   Evas_List *l;
+   Eina_List *l;
 
    if (type != E_EVENT_BG_UPDATE) return 1;
 

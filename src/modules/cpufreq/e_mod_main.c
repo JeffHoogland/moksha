@@ -95,7 +95,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _button_cb_mouse_down, inst);
-   cpufreq_config->instances = evas_list_append(cpufreq_config->instances, inst);
+   cpufreq_config->instances = eina_list_append(cpufreq_config->instances, inst);
    if (cpufreq_config->status) _cpufreq_status_free(cpufreq_config->status);
    cpufreq_config->status = _cpufreq_status_new();
    _cpufreq_cb_check(NULL);
@@ -109,7 +109,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
    
    inst = gcc->data;
-   cpufreq_config->instances = evas_list_remove(cpufreq_config->instances, inst);
+   cpufreq_config->instances = eina_list_remove(cpufreq_config->instances, inst);
    evas_object_del(inst->o_cpu);
    free(inst);
 }
@@ -167,7 +167,7 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	E_Menu *mn;
 	E_Menu_Item *mi;
 	int cx, cy, cw, ch;
-	Evas_List *l;
+	Eina_List *l;
 	char buf[256];
 	
 	mn = e_menu_new();
@@ -391,7 +391,7 @@ static int
 _cpufreq_cb_check(void *data)
 {
    Instance *inst;
-   Evas_List *l;
+   Eina_List *l;
    int active;
 
    if (cpufreq_config->menu_poll) return 1;
@@ -433,13 +433,13 @@ _cpufreq_status_new()
 static void
 _cpufreq_status_free(Status *s)
 {
-   Evas_List *l;
+   Eina_List *l;
 
-   if (s->frequencies) evas_list_free(s->frequencies);
+   if (s->frequencies) eina_list_free(s->frequencies);
    if (s->governors)
      {
 	for (l = s->governors; l; l = l->next) free(l->data);
-	evas_list_free(s->governors);
+	eina_list_free(s->governors);
      }
    if (s->cur_governor) free(s->cur_governor);
    free(s);
@@ -461,7 +461,7 @@ static int
 _cpufreq_status_check_available(Status *s)
 {
    char buf[4096];
-   Evas_List *l;
+   Eina_List *l;
 #ifdef __FreeBSD__
    int freq, i;
    size_t len = 0;
@@ -474,7 +474,7 @@ _cpufreq_status_check_available(Status *s)
 	/* sysctl returns 0 on success */
 	if (s->frequencies)
 	  {
-	     evas_list_free(s->frequencies);
+	     eina_list_free(s->frequencies);
 	     s->frequencies = NULL;
 	  }
 
@@ -488,7 +488,7 @@ _cpufreq_status_check_available(Status *s)
 	     *q = '\0';
 	     freq = atoi(pos);
 	     freq *= 1000;
-	     s->frequencies = evas_list_append(s->frequencies, (void *)freq);
+	     s->frequencies = eina_list_append(s->frequencies, (void *)freq);
 
 	     pos = q + 1;
 	     pos = strchr(pos, ' ');
@@ -500,7 +500,7 @@ _cpufreq_status_check_available(Status *s)
    if (s->governors)
      {
 	for (l = s->governors; l; l = l->next) free(l->data);
-	evas_list_free(s->governors);
+	eina_list_free(s->governors);
 	s->governors = NULL;
      }
 #else
@@ -513,7 +513,7 @@ _cpufreq_status_check_available(Status *s)
 	
 	if (s->frequencies)
 	  {
-	     evas_list_free(s->frequencies);
+	     eina_list_free(s->frequencies);
 	     s->frequencies = NULL;
 	  }
 	
@@ -526,15 +526,15 @@ _cpufreq_status_check_available(Status *s)
 	  {
 	     if (atoi(freq) != 0) 
 	       {
-		  s->frequencies = evas_list_append(s->frequencies,	
+		  s->frequencies = eina_list_append(s->frequencies,	
 						    (void *) atoi(freq));
 	       }
 	     freq = strtok(NULL, " ");
 	  }
 	while (freq != NULL);
 
-	s->frequencies = evas_list_sort(s->frequencies,
-					evas_list_count(s->frequencies),
+	s->frequencies = eina_list_sort(s->frequencies,
+					eina_list_count(s->frequencies),
 					_cpufreq_cb_sort);
      }
 
@@ -547,7 +547,7 @@ _cpufreq_status_check_available(Status *s)
 	  {
 	     for (l = s->governors; l; l = l->next)
 	       free(l->data);
-	     evas_list_free(s->governors);
+	     eina_list_free(s->governors);
 	     s->governors = NULL;
 	  }
 
@@ -560,13 +560,13 @@ _cpufreq_status_check_available(Status *s)
 	  {
 	     while ((*gov) && (isspace(*gov))) gov++;
 	     if (strlen(gov) != 0)
-	       s->governors = evas_list_append(s->governors, strdup(gov));
+	       s->governors = eina_list_append(s->governors, strdup(gov));
 	     gov = strtok(NULL, " ");
 	  }
 	while (gov != NULL);
 
-	s->governors = evas_list_sort(s->governors,
-				      evas_list_count(s->governors),
+	s->governors = eina_list_sort(s->governors,
+				      eina_list_count(s->governors),
 				      (int (*)(void *, void *))strcmp);
      }
 #endif
@@ -659,11 +659,11 @@ _cpufreq_face_update_available(Instance *inst)
 {
    Edje_Message_Int_Set *frequency_msg;
    Edje_Message_String_Set *governor_msg;
-   Evas_List *l;
+   Eina_List *l;
    int i;
    int count;
 
-   count = evas_list_count(cpufreq_config->status->frequencies);
+   count = eina_list_count(cpufreq_config->status->frequencies);
    frequency_msg = malloc(sizeof(Edje_Message_Int_Set) + (count - 1) * sizeof(int));
    frequency_msg->count = count;
    for (l = cpufreq_config->status->frequencies, i = 0; l; l = l->next, i++) 
@@ -671,7 +671,7 @@ _cpufreq_face_update_available(Instance *inst)
    edje_object_message_send(inst->o_cpu, EDJE_MESSAGE_INT_SET, 1, frequency_msg);
    free(frequency_msg);
 
-   count = evas_list_count(cpufreq_config->status->governors);
+   count = eina_list_count(cpufreq_config->status->governors);
    governor_msg = malloc(sizeof(Edje_Message_String_Set) + (count - 1) * sizeof(char *));
    governor_msg->count = count;
    for (l = cpufreq_config->status->governors, i = 0; l; l = l->next, i++)
@@ -707,7 +707,7 @@ _cpufreq_face_update_current(Instance *inst)
 static void
 _cpufreq_face_cb_set_frequency(void *data, Evas_Object *obj, const char *emission, const char *src)
 {
-   Evas_List *l;
+   Eina_List *l;
    int next_frequency = 0;
 
    for (l = cpufreq_config->status->frequencies; l; l = l->next)
@@ -734,7 +734,7 @@ _cpufreq_face_cb_set_frequency(void *data, Evas_Object *obj, const char *emissio
 static void
 _cpufreq_face_cb_set_governor(void *data, Evas_Object *obj, const char *emission, const char *src)
 {
-   Evas_List *l;
+   Eina_List *l;
    char *next_governor = NULL;
 
    for (l = cpufreq_config->status->governors; l; l = l->next)
@@ -856,7 +856,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    char buf[4096];
-   Evas_List *l;
+   Eina_List *l;
    
    conf_edd = E_CONFIG_DD_NEW("Cpufreq_Config", Config);
 #undef T

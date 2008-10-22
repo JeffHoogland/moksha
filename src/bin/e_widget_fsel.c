@@ -114,7 +114,7 @@ static void
 _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Widget_Data *wd;
-   Evas_List *icons, *l;
+   Eina_List *icons, *l;
    E_Fm2_Icon_Info *ici;
    const char *realpath;
    char *p1, *p2;
@@ -148,14 +148,14 @@ _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj, void *event_in
    done:
    e_widget_entry_text_set(wd->o_entry, realpath);
    E_FREE(p1);
-   evas_list_free(icons);
+   eina_list_free(icons);
 }
 
 static void
 _e_wid_fsel_favorites_selected(void *data, Evas_Object *obj, void *event_info)
 {
    E_Widget_Data *wd;
-   Evas_List *selected;
+   Eina_List *selected;
    E_Fm2_Icon_Info *ici;
    
    wd = data;
@@ -168,7 +168,7 @@ _e_wid_fsel_favorites_selected(void *data, Evas_Object *obj, void *event_info)
      e_fm2_path_set(wd->o_files_fm, ici->link, "/");
    else if (ici->real_link)
      e_fm2_path_set(wd->o_files_fm, NULL, ici->real_link);
-   evas_list_free(selected);
+   eina_list_free(selected);
    e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
    e_widget_entry_text_set(wd->o_entry, 
 			   e_fm2_real_path_get(wd->o_files_fm));
@@ -204,7 +204,7 @@ static void
 _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_info)
 {
    E_Widget_Data *wd;
-   Evas_List *selected;
+   Eina_List *selected;
    E_Fm2_Icon_Info *ici;
    const char *realpath;
    char buf[4096];
@@ -235,7 +235,7 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
 	else
 	  e_widget_entry_text_set(wd->o_entry, wd->path);
      }
-   evas_list_free(selected);
+   eina_list_free(selected);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
 }
 

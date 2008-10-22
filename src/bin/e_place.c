@@ -7,7 +7,7 @@ EAPI void
 e_place_zone_region_smart_cleanup(E_Zone *zone)
 {
    E_Desk *desk;
-   Evas_List *borders = NULL;
+   Eina_List *borders = NULL;
    E_Border_List *bl;
    E_Border *border;
 
@@ -21,7 +21,7 @@ e_place_zone_region_smart_cleanup(E_Zone *zone)
 	    (!border->lock_user_location))
 	  {
 	     int area;
-	     Evas_List *ll;
+	     Eina_List *ll;
 
 	     /* Ordering windows largest to smallest gives better results */
 	     area = border->w * border->h;
@@ -35,12 +35,12 @@ e_place_zone_region_smart_cleanup(E_Zone *zone)
 		  /* Insert the border if larger than the current border */
 		  if (area >= testarea)
 		    {
-		       borders = evas_list_prepend_relative(borders, border, bd);
+		       borders = eina_list_prepend_relative(borders, border, bd);
 		       break;
 		    }
 	       }
 	     /* Looped over all borders without placing, so place at end */
-	     if (!ll) borders = evas_list_append(borders, border);
+	     if (!ll) borders = eina_list_append(borders, border);
 	  }
      }
    e_container_border_list_free(bl);
@@ -54,7 +54,7 @@ e_place_zone_region_smart_cleanup(E_Zone *zone)
 	e_place_zone_region_smart(zone, borders, border->x, border->y,
 				  border->w, border->h, &new_x, &new_y);
 	e_border_move(border, new_x, new_y);
-	borders = evas_list_remove(borders, border);
+	borders = eina_list_remove(borders, border);
      }
 }
 
@@ -65,9 +65,9 @@ _e_place_cb_sort_cmp(const void *v1, const void *v2)
 }
 
 static int
-_e_place_coverage_border_add(E_Zone *zone, Evas_List *skiplist, int ar, int x, int y, int w, int h)
+_e_place_coverage_border_add(E_Zone *zone, Eina_List *skiplist, int ar, int x, int y, int w, int h)
 {
-   Evas_List *ll;
+   Eina_List *ll;
    E_Border_List *bl;
    E_Border *bd;
    int x2, y2, w2, h2;
@@ -110,7 +110,7 @@ _e_place_coverage_border_add(E_Zone *zone, Evas_List *skiplist, int ar, int x, i
 static int
 _e_place_coverage_shelf_add(E_Zone *zone, int ar, int x, int y, int w, int h)
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Shelf *es;
    int x2, y2, w2, h2;
 
@@ -127,13 +127,13 @@ _e_place_coverage_shelf_add(E_Zone *zone, int ar, int x, int y, int w, int h)
 }
 
 EAPI int
-e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w, int h, int *rx, int *ry)
+e_place_zone_region_smart(E_Zone *zone, Eina_List *skiplist, int x, int y, int w, int h, int *rx, int *ry)
 {
    int                 a_w = 0, a_h = 0, a_alloc_w = 0, a_alloc_h = 0;
    int                *a_x = NULL, *a_y = NULL;
    int                 zw, zh;
    char               *u_x = NULL, *u_y = NULL;
-   Evas_List          *ll;
+   Eina_List          *ll;
    E_Border_List      *bl;
    E_Border           *bd;
 
@@ -178,7 +178,7 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 
    if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART)
      {
-	Evas_List *l;
+	Eina_List *l;
 
 	for (l = e_shelf_list(); l; l = l->next)
 	  {

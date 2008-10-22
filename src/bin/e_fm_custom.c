@@ -4,9 +4,9 @@
 #include "e.h"
 
 static Evas_Bool _e_fm2_custom_file_hash_foreach_list(const Evas_Hash *hash, const char *key, void *data, void *fdata);
-static Evas_List *_e_fm2_custom_hash_key_base_list(Evas_Hash *hash, const char *str);
+static Eina_List *_e_fm2_custom_hash_key_base_list(Evas_Hash *hash, const char *str);
 //static Evas_Bool _e_fm2_custom_file_hash_foreach_sub_list(Evas_Hash *hash, const char *key, void *data, void *fdata);
-//static Evas_List *_e_fm2_custom_hash_key_sub_list(Evas_Hash *hash, const char *str);
+//static Eina_List *_e_fm2_custom_hash_key_sub_list(Evas_Hash *hash, const char *str);
 static Evas_Bool _e_fm2_custom_file_hash_foreach(const Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_Bool _e_fm2_custom_file_hash_foreach_save(const Evas_Hash *hash, const char *key, void *data, void *fdata);
 static void _e_fm2_custom_file_info_load(void);
@@ -38,10 +38,10 @@ e_fm2_custom_file_init(void)
    eddc.func.mem_free = NULL;
    eddc.func.str_alloc = (char *(*)(const char *)) eina_stringshare_add;
    eddc.func.str_free = (void (*)(const char *)) eina_stringshare_del;
-   eddc.func.list_next = (void *(*)(void *)) evas_list_next;
-   eddc.func.list_append = (void *(*)(void *l, void *d)) evas_list_append;
-   eddc.func.list_data = (void *(*)(void *)) evas_list_data;
-   eddc.func.list_free = (void *(*)(void *)) evas_list_free;
+   eddc.func.list_next = (void *(*)(void *)) eina_list_next;
+   eddc.func.list_append = (void *(*)(void *l, void *d)) eina_list_append;
+   eddc.func.list_data = (void *(*)(void *)) eina_list_data_get;
+   eddc.func.list_free = (void *(*)(void *)) eina_list_free;
    eddc.func.hash_foreach =
      (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))
      evas_hash_foreach;
@@ -120,7 +120,7 @@ e_fm2_custom_file_set(const char *path, E_Fm2_Custom_File *cf)
 EAPI void
 e_fm2_custom_file_del(const char *path)
 {
-   Evas_List *list, *l;
+   Eina_List *list, *l;
    E_Fm2_Custom_File *cf2;
 	
    _e_fm2_custom_file_info_load();
@@ -142,7 +142,7 @@ e_fm2_custom_file_del(const char *path)
 		  free(cf2);
 	       }
 	  }
-	evas_list_free(list);
+	eina_list_free(list);
      }
    _e_fm2_custom_writes = 1;
 }
@@ -151,7 +151,7 @@ EAPI void
 e_fm2_custom_file_rename(const char *path, const char *new_path)
 {
    E_Fm2_Custom_File *cf, *cf2;
-   Evas_List *list, *l;
+   Eina_List *list, *l;
 
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
@@ -194,7 +194,7 @@ e_fm2_custom_file_rename(const char *path, const char *new_path)
 						     buf, cf2);
 	       }
 	  }
-	evas_list_free(list);
+	eina_list_free(list);
      }
    _e_fm2_custom_writes = 1;
 }
@@ -214,7 +214,7 @@ e_fm2_custom_file_flush(void)
 
 struct _E_Custom_List
 {
-   Evas_List  *l;
+   Eina_List  *l;
    const char *base;
    int         base_len;
 };
@@ -226,11 +226,11 @@ _e_fm2_custom_file_hash_foreach_list(const Evas_Hash *hash, const char *key, voi
    
    cl = fdata;
    if (!strncmp(cl->base, key, cl->base_len))
-     cl->l = evas_list_append(cl->l, key);
+     cl->l = eina_list_append(cl->l, key);
    return 1;
 }
     
-static Evas_List *
+static Eina_List *
 _e_fm2_custom_hash_key_base_list(Evas_Hash *hash, const char *str)
 {
    struct _E_Custom_List cl;
@@ -251,13 +251,13 @@ _e_fm2_custom_file_hash_foreach_sub_list(const Evas_Hash *hash, const char *key,
    
    cl = fdata;
    if (!strncmp(cl->base, key, strlen(key)))
-     cl->l = evas_list_append(cl->l, key);
+     cl->l = eina_list_append(cl->l, key);
    return 1;
 }
 */
 
 /*
-static Evas_List *
+static Eina_List *
 _e_fm2_custom_hash_key_sub_list(const Evas_Hash *hash, const char *str)
 {
    struct _E_Custom_List cl;

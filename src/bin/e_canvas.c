@@ -7,7 +7,7 @@
 static int _e_canvas_cb_flush(void *data);
 
 /* local subsystem globals */
-static Evas_List *_e_canvases = NULL;
+static Eina_List *_e_canvases = NULL;
 static Ecore_Poller *_e_canvas_cache_flush_poller = NULL;
 
 /* externally accessible functions */
@@ -16,7 +16,7 @@ e_canvas_add(Ecore_Evas *ee)
 {
    Evas *e;
    
-   _e_canvases = evas_list_prepend(_e_canvases, ee);
+   _e_canvases = eina_list_prepend(_e_canvases, ee);
    e = ecore_evas_get(ee);
    evas_image_cache_set(e, e_config->image_cache * 1024);
    evas_font_cache_set(e, e_config->font_cache * 1024);
@@ -44,7 +44,7 @@ e_canvas_add(Ecore_Evas *ee)
 EAPI void
 e_canvas_del(Ecore_Evas *ee)
 {
-   _e_canvases = evas_list_remove(_e_canvases, ee);
+   _e_canvases = eina_list_remove(_e_canvases, ee);
 }
 
 EAPI int
@@ -79,7 +79,7 @@ e_canvas_engine_decide(int engine)
 EAPI void
 e_canvas_recache(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = _e_canvases; l; l = l->next)
      {
@@ -110,7 +110,7 @@ e_canvas_recache(void)
 EAPI void
 e_canvas_cache_flush(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = _e_canvases; l; l = l->next)
      {
@@ -129,7 +129,7 @@ e_canvas_cache_flush(void)
 EAPI void
 e_canvas_cache_reload(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = _e_canvases; l; l = l->next)
      {
@@ -145,7 +145,7 @@ e_canvas_cache_reload(void)
 EAPI void
 e_canvas_idle_flush(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = _e_canvases; l; l = l->next)
      {
@@ -161,7 +161,7 @@ e_canvas_idle_flush(void)
 EAPI void
 e_canvas_rehint(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = _e_canvases; l; l = l->next)
      {

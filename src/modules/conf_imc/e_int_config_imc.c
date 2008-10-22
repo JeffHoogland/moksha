@@ -290,7 +290,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *of, *ob;
    int i;
-   Evas_List *imc_basic_list;
+   Eina_List *imc_basic_list;
 
    o = e_widget_list_add(evas, 0, 0);
 
@@ -318,8 +318,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    imc_basic_list = e_intl_input_method_list();
    /* Sort basic input method list */
-   imc_basic_list = evas_list_sort(imc_basic_list,
-				   evas_list_count(imc_basic_list),
+   imc_basic_list = eina_list_sort(imc_basic_list,
+				   eina_list_count(imc_basic_list),
 				   _basic_list_sort_cb);
 
    if (cfdata->imc_basic_map)
@@ -365,7 +365,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	       }
 	  }
 	free(imc_path);
-	imc_basic_list = evas_list_remove_list(imc_basic_list, imc_basic_list);
+	imc_basic_list = eina_list_remove_list(imc_basic_list, imc_basic_list);
      }
 
    _e_imc_setup_button_toggle(cfdata->gui.imc_basic_setup, evas_hash_find(cfdata->imc_basic_map, cfdata->imc_current));
@@ -550,7 +550,7 @@ static void
 _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *selected;
+   Eina_List *selected;
    E_Fm2_Icon_Info *ici;
    const char *realpath;
    char buf[4096];
@@ -573,7 +573,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
      snprintf(buf, sizeof(buf), "/%s", ici->file);
    else
      snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-   evas_list_free(selected);
+   eina_list_free(selected);
    if (ecore_file_is_dir(buf)) return;
    cfdata->imc_current = strdup(buf);
    _e_imc_form_fill(cfdata);
@@ -623,7 +623,7 @@ static void
 _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *sel, *all, *n;
+   Eina_List *sel, *all, *n;
    E_Fm2_Icon_Info *ici, *ic;
 
    cfdata = data;
@@ -637,11 +637,11 @@ _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info)
 
    ici = sel->data;
 
-   all = evas_list_find_list(all, ici);
-   n = evas_list_next(all);
+   all = eina_list_data_find_list(all, ici);
+   n = eina_list_next(all);
    if (!n)
      {
-	n = evas_list_prev(all);
+	n = eina_list_prev(all);
 	if (!n) return;
      }
 
@@ -651,7 +651,7 @@ _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info)
    e_fm2_select_set(cfdata->o_fm, ic->file, 1);
    e_fm2_file_show(cfdata->o_fm, ic->file);
 
-   evas_list_free(n);
+   eina_list_free(n);
 
    evas_object_smart_callback_call(cfdata->o_fm, "selection_change", cfdata);
 }

@@ -23,7 +23,7 @@ struct _E_Path_Pair
 struct _CFPath_Change_Data
 {
    E_Path		*path;
-   Evas_List		*new_user_path;
+   Eina_List		*new_user_path;
    int			 dirty;
    E_Config_Dialog_Data	*cfdata;
 };
@@ -35,7 +35,7 @@ struct _E_Config_Dialog_Data
    /* Current data */
    CFPath_Change_Data *cur_pcd;
 
-   Evas_List        *pcd_list;
+   Eina_List        *pcd_list;
    E_Path_Pair      *paths_available;
    struct
      {
@@ -119,11 +119,11 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     dir = pcd->new_user_path->data;
 	     eina_stringshare_del(dir);
 	     pcd->new_user_path = 
-	       evas_list_remove_list(pcd->new_user_path, pcd->new_user_path);
+	       eina_list_remove_list(pcd->new_user_path, pcd->new_user_path);
 	  }
 	free(pcd);
 	cfdata->pcd_list = 
-	  evas_list_remove_list(cfdata->pcd_list, cfdata->pcd_list);
+	  eina_list_remove_list(cfdata->pcd_list, cfdata->pcd_list);
      }
    free(cfdata->paths_available);
    E_FREE(cfdata);
@@ -132,8 +132,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	 
-   Evas_List *l;
-   Evas_List *ll;
+   Eina_List *l;
+   Eina_List *ll;
    
    _ilist_update(cfdata->gui.user_list, cfdata->cur_pcd, NULL);
 
@@ -185,7 +185,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	pcd = E_NEW(CFPath_Change_Data, 1);
 	pcd->path = cfdata->paths_available[i].path;
 	pcd->cfdata = cfdata;
-	cfdata->pcd_list = evas_list_append(cfdata->pcd_list, pcd);
+	cfdata->pcd_list = eina_list_append(cfdata->pcd_list, pcd);
 	e_widget_ilist_append(ob, NULL, 
 			      cfdata->paths_available[i].path_description, 
 			      _ilist_path_cb_change, pcd, NULL);
@@ -222,8 +222,8 @@ static void
 _ilist_path_cb_change(void *data)
 {
    CFPath_Change_Data *pcd;
-   Evas_List *default_list;
-   Evas_List *l;
+   Eina_List *default_list;
+   Eina_List *l;
    
    pcd = data;
    default_list = pcd->path->default_dir_list;
@@ -271,7 +271,7 @@ _ilist_update(Evas_Object *obj, CFPath_Change_Data *old, CFPath_Change_Data *new
 	     dir = old->new_user_path->data;
 	     eina_stringshare_del(dir);
 	     old->new_user_path = 
-	       evas_list_remove_list(old->new_user_path, old->new_user_path);
+	       eina_list_remove_list(old->new_user_path, old->new_user_path);
 	  }
 	
 	for (i = 0; i < e_widget_config_list_count(obj); i++)
@@ -280,7 +280,7 @@ _ilist_update(Evas_Object *obj, CFPath_Change_Data *old, CFPath_Change_Data *new
 
 	     dir = e_widget_config_list_nth_get(obj, i);
 	     old->new_user_path = 
-	       evas_list_append(old->new_user_path, eina_stringshare_add(dir));
+	       eina_list_append(old->new_user_path, eina_stringshare_add(dir));
 	  }
      }
 
@@ -292,8 +292,8 @@ _ilist_update(Evas_Object *obj, CFPath_Change_Data *old, CFPath_Change_Data *new
    
    if (new->new_user_path)
      {
-	Evas_List *l;
-	Evas_List *user_path;
+	Eina_List *l;
+	Eina_List *user_path;
 	
 	user_path = new->new_user_path;
 	
@@ -307,8 +307,8 @@ _ilist_update(Evas_Object *obj, CFPath_Change_Data *old, CFPath_Change_Data *new
      }
    else if (*(new->path->user_dir_list) && !new->dirty)
      {
-	Evas_List *l;
-	Evas_List *user_path;
+	Eina_List *l;
+	Eina_List *user_path;
 	
 	user_path = *(new->path->user_dir_list);
 

@@ -30,10 +30,10 @@ static Eet_Data_Descriptor *_e_ipc_str_4int_list_edd = NULL;
 
 #define E_IPC_DD_NEW(str, typ) \
    eet_data_descriptor_new(str, sizeof(typ), \
-			      (void *(*) (void *))evas_list_next, \
-			      (void *(*) (void *, void *))evas_list_append, \
-			      (void *(*) (void *))evas_list_data, \
-			      (void *(*) (void *))evas_list_free, \
+			      (void *(*) (void *))eina_list_next, \
+			      (void *(*) (void *, void *))eina_list_append, \
+			      (void *(*) (void *))eina_list_data_get, \
+			      (void *(*) (void *))eina_list_free, \
 			      (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))evas_hash_foreach, \
 			      (void *(*) (void *, const char *, void *))evas_hash_add, \
 			      (void  (*) (void *))evas_hash_free)
@@ -278,7 +278,7 @@ e_ipc_codec_2str_enc(const char *str1, const char *str2, int *size_ret)
 }
 
 EAPI int
-e_ipc_codec_2str_list_dec(char *data, int bytes, Evas_List **dest)
+e_ipc_codec_2str_list_dec(char *data, int bytes, Eina_List **dest)
 {
    E_Ipc_List *dat;
    
@@ -291,7 +291,7 @@ e_ipc_codec_2str_list_dec(char *data, int bytes, Evas_List **dest)
 }
 
 EAPI void *
-e_ipc_codec_2str_list_enc(Evas_List *list, int *size_ret)
+e_ipc_codec_2str_list_enc(Eina_List *list, int *size_ret)
 {
    E_Ipc_List dat;
    dat.list = list;
@@ -299,10 +299,10 @@ e_ipc_codec_2str_list_enc(Evas_List *list, int *size_ret)
 }
 
 EAPI int
-e_ipc_codec_str_list_dec(char *data, int bytes, Evas_List **dest)
+e_ipc_codec_str_list_dec(char *data, int bytes, Eina_List **dest)
 {
    E_Ipc_List *dat;
-   Evas_List *list = NULL, *l;
+   Eina_List *list = NULL, *l;
    
    if (!data) return 0;
    dat = eet_data_descriptor_decode(_e_ipc_str_list_edd, data, bytes);
@@ -312,23 +312,23 @@ e_ipc_codec_str_list_dec(char *data, int bytes, Evas_List **dest)
         E_Ipc_Str *str_node;
 	
         str_node = l->data;
-	list = evas_list_append(list, str_node->str);
+	list = eina_list_append(list, str_node->str);
      }
    if (dest) *dest = list;
    while (dat->list)
      {
 	free(dat->list->data);
-	dat->list = evas_list_remove_list(dat->list, dat->list);
+	dat->list = eina_list_remove_list(dat->list, dat->list);
      }
    free(dat);
    return 1;
 }
 
 EAPI void *
-e_ipc_codec_str_list_enc(Evas_List *list, int *size_ret)
+e_ipc_codec_str_list_enc(Eina_List *list, int *size_ret)
 {
    E_Ipc_List dat;
-   Evas_List *l;
+   Eina_List *l;
    void *data;
    
    dat.list = NULL;
@@ -338,13 +338,13 @@ e_ipc_codec_str_list_enc(Evas_List *list, int *size_ret)
 	
 	str_node = malloc(sizeof(E_Ipc_Str));
 	str_node->str = l->data;
-	dat.list = evas_list_append(dat.list, str_node);
+	dat.list = eina_list_append(dat.list, str_node);
      }
    data = eet_data_descriptor_encode(_e_ipc_str_list_edd, &dat, size_ret);
    while (dat.list)
      {
 	free(dat.list->data);
-	dat.list = evas_list_remove_list(dat.list, dat.list);
+	dat.list = eina_list_remove_list(dat.list, dat.list);
      }
    return data;
 }
@@ -372,7 +372,7 @@ e_ipc_codec_str_int_enc(const char *str, int val, int *size_ret)
 }
 
 EAPI int
-e_ipc_codec_str_int_list_dec(char *data, int bytes, Evas_List **dest)
+e_ipc_codec_str_int_list_dec(char *data, int bytes, Eina_List **dest)
 {
    E_Ipc_List *dat;
    
@@ -385,7 +385,7 @@ e_ipc_codec_str_int_list_dec(char *data, int bytes, Evas_List **dest)
 }
 
 EAPI void *
-e_ipc_codec_str_int_list_enc(Evas_List *list, int *size_ret)
+e_ipc_codec_str_int_list_enc(Eina_List *list, int *size_ret)
 {
    E_Ipc_List dat;
    dat.list = list;
@@ -416,7 +416,7 @@ e_ipc_codec_2str_int_enc(const char *str1, const char *str2, int val, int *size_
 }
 
 EAPI int
-e_ipc_codec_2str_int_list_dec(char *data, int bytes, Evas_List **dest)
+e_ipc_codec_2str_int_list_dec(char *data, int bytes, Eina_List **dest)
 {
    E_Ipc_List *dat;
    
@@ -429,7 +429,7 @@ e_ipc_codec_2str_int_list_dec(char *data, int bytes, Evas_List **dest)
 }
 
 EAPI void *
-e_ipc_codec_2str_int_list_enc(Evas_List *list, int *size_ret)
+e_ipc_codec_2str_int_list_enc(Eina_List *list, int *size_ret)
 {
    E_Ipc_List dat;
    dat.list = list;
@@ -463,7 +463,7 @@ e_ipc_codec_4int_2str_enc(int val1, int val2, int val3, int val4, const char *st
 }
 
 EAPI int
-e_ipc_codec_4int_2str_list_dec(char *data, int bytes, Evas_List **dest)
+e_ipc_codec_4int_2str_list_dec(char *data, int bytes, Eina_List **dest)
 {
    E_Ipc_List *dat;
 
@@ -476,7 +476,7 @@ e_ipc_codec_4int_2str_list_dec(char *data, int bytes, Evas_List **dest)
 }
 
 EAPI void *
-e_ipc_codec_4int_2str_list_enc(Evas_List *list, int *size_ret)
+e_ipc_codec_4int_2str_list_enc(Eina_List *list, int *size_ret)
 {
    E_Ipc_List dat;
    dat.list = list;
@@ -511,7 +511,7 @@ e_ipc_codec_5int_2str_enc(int val1, int val2, int val3, int val4, int val5, cons
 }
 
 EAPI int
-e_ipc_codec_5int_2str_list_dec(char *data, int bytes, Evas_List **dest)
+e_ipc_codec_5int_2str_list_dec(char *data, int bytes, Eina_List **dest)
 {
    E_Ipc_List *dat;
 
@@ -524,7 +524,7 @@ e_ipc_codec_5int_2str_list_dec(char *data, int bytes, Evas_List **dest)
 }
 
 EAPI void *
-e_ipc_codec_5int_2str_list_enc(Evas_List *list, int *size_ret)
+e_ipc_codec_5int_2str_list_enc(Eina_List *list, int *size_ret)
 {
    E_Ipc_List dat;
    dat.list = list;
@@ -559,7 +559,7 @@ e_ipc_codec_3int_4str_enc(int val1, int val2, int val3, const char *str1, const 
 }
 
 EAPI int
-e_ipc_codec_3int_4str_list_dec(char *data, int bytes, Evas_List **dest)
+e_ipc_codec_3int_4str_list_dec(char *data, int bytes, Eina_List **dest)
 {
    E_Ipc_List *dat;
 
@@ -572,7 +572,7 @@ e_ipc_codec_3int_4str_list_dec(char *data, int bytes, Evas_List **dest)
 }
 
 EAPI void *
-e_ipc_codec_3int_4str_list_enc(Evas_List *list, int *size_ret)
+e_ipc_codec_3int_4str_list_enc(Eina_List *list, int *size_ret)
 {
    E_Ipc_List dat;
    dat.list = list;
@@ -606,7 +606,7 @@ e_ipc_codec_3int_3str_enc(int val1, int val2, int val3, const char *str1, const 
 }
 
 EAPI int
-e_ipc_codec_3int_3str_list_dec(char *data, int bytes, Evas_List **dest)
+e_ipc_codec_3int_3str_list_dec(char *data, int bytes, Eina_List **dest)
 {
    E_Ipc_List *dat;
 
@@ -619,7 +619,7 @@ e_ipc_codec_3int_3str_list_dec(char *data, int bytes, Evas_List **dest)
 }
 
 EAPI void *
-e_ipc_codec_3int_3str_list_enc(Evas_List *list, int *size_ret)
+e_ipc_codec_3int_3str_list_enc(Eina_List *list, int *size_ret)
 {
    E_Ipc_List dat;
    dat.list = list;
@@ -653,7 +653,7 @@ e_ipc_codec_str_4int_enc(const char *str1, int val1, int val2, int val3, int val
 }
 
 EAPI int
-e_ipc_codec_str_4int_list_dec(char *data, int bytes, Evas_List **dest)
+e_ipc_codec_str_4int_list_dec(char *data, int bytes, Eina_List **dest)
 {
    E_Ipc_List *dat;
 
@@ -666,7 +666,7 @@ e_ipc_codec_str_4int_list_dec(char *data, int bytes, Evas_List **dest)
 }
 
 EAPI void *
-e_ipc_codec_str_4int_list_enc(Evas_List *list, int *size_ret)
+e_ipc_codec_str_4int_list_enc(Eina_List *list, int *size_ret)
 {
    E_Ipc_List dat;
    dat.list = list;

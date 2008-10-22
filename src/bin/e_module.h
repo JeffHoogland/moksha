@@ -65,7 +65,7 @@ EAPI int          e_module_disable(E_Module *m);
 EAPI int          e_module_enabled_get(E_Module *m);
 EAPI int          e_module_save_all(void);
 EAPI E_Module    *e_module_find(const char *name);
-EAPI Evas_List   *e_module_list(void);
+EAPI Eina_List   *e_module_list(void);
 EAPI void         e_module_dialog_show(E_Module *m, const char *title, const char *body);
 EAPI void         e_module_delayed_set(E_Module *m, int delayed);
 EAPI void         e_module_priority_set(E_Module *m, int priority);

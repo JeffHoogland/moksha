@@ -16,18 +16,18 @@ struct _E_Theme_Result
 static Evas_Bool _e_theme_mappings_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_Bool _e_theme_mappings_quickfind_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata);
 static void      _e_theme_category_register(const char *category);
-static Evas_List *_e_theme_collection_item_register(Evas_List *list, const char *name);
-static Evas_List *_e_theme_collection_items_find(const char *base, const char *collname);
+static Eina_List *_e_theme_collection_item_register(Eina_List *list, const char *name);
+static Eina_List *_e_theme_collection_items_find(const char *base, const char *collname);
 
 
 /* local subsystem globals */
 static Evas_Hash *mappings = NULL;
 static Evas_Hash *group_cache = NULL;
 
-static Evas_List *categories = NULL;
-static Evas_List *transitions = NULL;
-static Evas_List *borders = NULL;
-static Evas_List *shelfs = NULL;
+static Eina_List *categories = NULL;
+static Eina_List *transitions = NULL;
+static Eina_List *borders = NULL;
+static Eina_List *shelfs = NULL;
 static E_Fm2_Mime_Handler *theme_hdl = NULL;
 
 /* externally accessible functions */
@@ -35,7 +35,7 @@ static E_Fm2_Mime_Handler *theme_hdl = NULL;
 EAPI int
 e_theme_init(void)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    /* Register mime handler */
    theme_hdl = e_fm2_mime_handler_new(_("Set As Theme"), "enlightenment/themes", 
@@ -122,22 +122,22 @@ e_theme_shutdown(void)
    while (categories)
      {
 	eina_stringshare_del(categories->data);
-	categories = evas_list_remove_list(categories, categories);
+	categories = eina_list_remove_list(categories, categories);
      }
    while (transitions)
      {
 	eina_stringshare_del(transitions->data);
-	transitions = evas_list_remove_list(transitions, transitions);
+	transitions = eina_list_remove_list(transitions, transitions);
      }
    while (borders)
      {
 	eina_stringshare_del(borders->data);
-	borders = evas_list_remove_list(borders, borders);
+	borders = eina_list_remove_list(borders, borders);
      }
    while (shelfs)
      {
 	eina_stringshare_del(shelfs->data);
-	shelfs = evas_list_remove_list(shelfs, shelfs);
+	shelfs = eina_list_remove_list(shelfs, shelfs);
      }
    return 1;
 }
@@ -238,7 +238,7 @@ e_theme_edje_file_get(const char *category, const char *group)
 	if (str)
 	  {
 	     void *tres;
-	     Evas_List *coll, *l;
+	     Eina_List *coll, *l;
 	     int ok;
 	     
 	     snprintf(buf, sizeof(buf), "%s/::/%s", str, group);
@@ -321,7 +321,7 @@ EAPI int
 e_theme_config_set(const char *category, const char *file)
 {
    E_Config_Theme *ect;
-   Evas_List *next;
+   Eina_List *next;
 
    /* Don't accept unused categories */
 #if 0
@@ -331,7 +331,7 @@ e_theme_config_set(const char *category, const char *file)
    /* search for the category */
    for (next = e_config->themes; next; next = next->next)
      {
-	ect = evas_list_data(next);
+	ect = eina_list_data_get(next);
 	if (!strcmp(ect->category, category))
 	  {
 	     if (ect->file) eina_stringshare_del(ect->file);
@@ -345,7 +345,7 @@ e_theme_config_set(const char *category, const char *file)
    ect->category = eina_stringshare_add(category);
    ect->file = eina_stringshare_add(file);
    
-   e_config->themes = evas_list_append(e_config->themes, ect);
+   e_config->themes = eina_list_append(e_config->themes, ect);
    return 1;
 }
 
@@ -356,12 +356,12 @@ EAPI E_Config_Theme *
 e_theme_config_get(const char *category)
 {
    E_Config_Theme *ect = NULL;
-   Evas_List *next;
+   Eina_List *next;
 
    /* search for the category */
    for (next = e_config->themes; next; next = next->next)
      {
-	ect = evas_list_data(next);
+	ect = eina_list_data_get(next);
 	if (!strcmp(ect->category, category))
 	  return ect;
      }
@@ -372,15 +372,15 @@ EAPI int
 e_theme_config_remove(const char *category)
 {
    E_Config_Theme *ect;
-   Evas_List *next;
+   Eina_List *next;
    
    /* search for the category */
    for (next = e_config->themes; next; next = next->next)
      {
-	ect = evas_list_data(next);
+	ect = eina_list_data_get(next);
 	if (!strcmp(ect->category, category))
 	  {
-	     e_config->themes = evas_list_remove_list(e_config->themes, next);
+	     e_config->themes = eina_list_remove_list(e_config->themes, next);
 	     if (ect->category) eina_stringshare_del(ect->category);
 	     if (ect->file) eina_stringshare_del(ect->file);
 	     free(ect);
@@ -390,7 +390,7 @@ e_theme_config_remove(const char *category)
    return 1;
 }
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_theme_config_list(void)
 {
    return e_config->themes;
@@ -399,7 +399,7 @@ e_theme_config_list(void)
 EAPI int
 e_theme_category_find(const char *category)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = categories; l; l = l->next)
      {
@@ -409,7 +409,7 @@ e_theme_category_find(const char *category)
    return 0;
 }
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_theme_category_list(void)
 {
    return categories;
@@ -418,7 +418,7 @@ e_theme_category_list(void)
 EAPI int
 e_theme_transition_find(const char *transition)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = transitions; l; l = l->next)
      {
@@ -428,7 +428,7 @@ e_theme_transition_find(const char *transition)
    return 0;
 }
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_theme_transition_list(void)
 {
    return transitions;
@@ -437,7 +437,7 @@ e_theme_transition_list(void)
 EAPI int
 e_theme_border_find(const char *border)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = borders; l; l = l->next)
      {
@@ -447,7 +447,7 @@ e_theme_border_find(const char *border)
    return 0;
 }
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_theme_border_list(void)
 {
    return borders;
@@ -456,7 +456,7 @@ e_theme_border_list(void)
 EAPI int
 e_theme_shelf_find(const char *shelf)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = shelfs; l; l = l->next)
      {
@@ -466,7 +466,7 @@ e_theme_shelf_find(const char *shelf)
    return 0;
 }
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_theme_shelf_list(void)
 {
    return shelfs;
@@ -521,33 +521,33 @@ _e_theme_mappings_quickfind_free_cb(const Evas_Hash *hash, const char *key, void
 static void
 _e_theme_category_register(const char *category)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = categories; l; l = l->next)
      {
 	if (!strcmp(category, l->data)) return;
      }
 
-   categories = evas_list_append(categories, eina_stringshare_add(category));
+   categories = eina_list_append(categories, eina_stringshare_add(category));
 }
 
-static Evas_List *
-_e_theme_collection_item_register(Evas_List *list, const char *name)
+static Eina_List *
+_e_theme_collection_item_register(Eina_List *list, const char *name)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = list; l; l = l->next)
      {
 	if (!strcmp(name, l->data)) return list;
      }
-   list = evas_list_append(list, eina_stringshare_add(name));
+   list = eina_list_append(list, eina_stringshare_add(name));
    return list;
 }
 
-static Evas_List *
+static Eina_List *
 _e_theme_collection_items_find(const char *base, const char *collname)
 {
-   Evas_List *list = NULL;
+   Eina_List *list = NULL;
    E_Theme_Result *res;
    char *category, *p, *p2;
    int collname_len;
@@ -575,7 +575,7 @@ _e_theme_collection_items_find(const char *base, const char *collname)
 	       }
 	     if (str)
 	       {
-		  Evas_List *coll, *l;
+		  Eina_List *coll, *l;
 		  
 		  coll = edje_file_collection_list(str);
 		  if (coll)

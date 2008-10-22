@@ -14,7 +14,7 @@ struct _E_Smart_Data
    int              frozen;
    unsigned char    changed : 1;
    unsigned char    homogenous : 1;
-   Evas_List       *items;
+   Eina_List       *items;
    struct {
       Evas_Coord    w, h;
    } min, max;
@@ -113,7 +113,7 @@ e_table_pack(Evas_Object *obj, Evas_Object *child, int col, int row, int colspan
    
    sd = evas_object_smart_data_get(obj);
    _e_table_smart_adopt(sd, child);
-   sd->items = evas_list_append(sd->items, child);
+   sd->items = eina_list_append(sd->items, child);
    ti = evas_object_data_get(child, "e_table_data");
    if (ti)
      {
@@ -158,7 +158,7 @@ e_table_unpack(Evas_Object *obj)
    ti = evas_object_data_get(obj, "e_table_data");
    if (!ti) return;
    sd = ti->sd;
-   sd->items = evas_list_remove(sd->items, obj);
+   sd->items = eina_list_remove(sd->items, obj);
    _e_table_smart_disown(obj);
    sd->changed = 1;
    if (sd->frozen <= 0) _e_table_smart_reconfigure(sd);
@@ -288,7 +288,7 @@ static void
 _e_table_smart_reconfigure(E_Smart_Data *sd)
 {
    Evas_Coord x, y, w, h, xx, yy;
-   Evas_List *l;
+   Eina_List *l;
    int minw, minh, expandw, expandh;
 
    if (!sd->changed) return;
@@ -622,7 +622,7 @@ _e_table_smart_reconfigure(E_Smart_Data *sd)
 static void
 _e_table_smart_extents_calcuate(E_Smart_Data *sd)
 {
-   Evas_List *l;
+   Eina_List *l;
    int minw, minh;
 
    sd->max.w = -1; /* max < 0 == unlimited */
@@ -896,7 +896,7 @@ _e_table_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if ((x == sd->x) && (y == sd->y)) return;
    if ((x == sd->x) && (y == sd->y)) return;
      {
-	Evas_List *l;
+	Eina_List *l;
 	Evas_Coord dx, dy;
 	
 	dx = x - sd->x;

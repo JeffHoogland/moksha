@@ -32,8 +32,8 @@ EAPI void e_fm2_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char
 EAPI void e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, const char *glob);
 EAPI void e_fm2_mime_handler_mime_del(E_Fm2_Mime_Handler *handler, const char *mime);
 EAPI void e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob);
-EAPI Evas_List *e_fm2_mime_handler_mime_handlers_get(const char *mime);
-EAPI Evas_List *e_fm2_mime_handler_glob_handlers_get(const char *glob);
+EAPI Eina_List *e_fm2_mime_handler_mime_handlers_get(const char *mime);
+EAPI Eina_List *e_fm2_mime_handler_glob_handlers_get(const char *glob);
 
 #endif
 #endif

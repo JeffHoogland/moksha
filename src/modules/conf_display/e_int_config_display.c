@@ -25,7 +25,7 @@ struct _Resolution
 {
    int id;
    Ecore_X_Screen_Size size;
-   Evas_List *rates;
+   Eina_List *rates;
 };
 
 struct _SureBox
@@ -40,7 +40,7 @@ struct _SureBox
 struct _E_Config_Dialog_Data 
 {
    E_Config_Dialog *cfd;
-   Evas_List *resolutions;
+   Eina_List *resolutions;
    Ecore_X_Screen_Size orig_size;
    Ecore_X_Screen_Refresh_Rate orig_rate;
    int restore;
@@ -100,7 +100,7 @@ static void
 _surebox_dialog_cb_no(void *data, E_Dialog *dia)
 {
    SureBox *sb;
-   Evas_List *l;
+   Eina_List *l;
    
    sb = data;
    ecore_x_randr_screen_refresh_rate_set(sb->dia->win->container->manager->root,
@@ -172,7 +172,7 @@ _surebox_timer_cb(void *data)
    _surebox_text_fill(sb);
    if (sb->iterations == 0)
      {
-	Evas_List *l;
+	Eina_List *l;
 
 	ecore_x_randr_screen_refresh_rate_set(sb->dia->win->container->manager->root,
 	      sb->cfdata->orig_size, sb->cfdata->orig_rate);
@@ -301,7 +301,7 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *l, *ll;
+   Eina_List *l, *ll;
 
    if (cfdata->surebox)
      _surebox_dialog_cb_delete(cfdata->surebox->dia->win);
@@ -313,10 +313,10 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	for (ll = r->rates; ll; ll = ll->next)
 	  E_FREE(ll->data);
 
-	r->rates = evas_list_free(r->rates);
+	r->rates = eina_list_free(r->rates);
 	E_FREE(r);
      }
-   cfdata->resolutions = evas_list_free(cfdata->resolutions);
+   cfdata->resolutions = eina_list_free(cfdata->resolutions);
    E_FREE(cfdata);
 }
 
@@ -422,7 +422,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      ecore_timer_add(0.5, _deferred_noxrandr_error, NULL);
    else
      {
-	Evas_List *l;
+	Eina_List *l;
 
 	cfdata->orig_size = ecore_x_randr_current_screen_size_get(man->root);
 	cfdata->orig_rate = ecore_x_randr_current_screen_refresh_rate_get(man->root);
@@ -447,15 +447,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		  rt = E_NEW(Ecore_X_Screen_Refresh_Rate, 1);
 		  if (!rt) continue;
 		  rt->rate = rates[j].rate;
-		  res->rates = evas_list_append(res->rates, rt);
+		  res->rates = eina_list_append(res->rates, rt);
 	       }
 	     if (rates) E_FREE(rates);
-	     cfdata->resolutions = evas_list_append(cfdata->resolutions, res);
+	     cfdata->resolutions = eina_list_append(cfdata->resolutions, res);
 	  }
 
-	cfdata->resolutions = evas_list_sort(cfdata->resolutions, 
-	      evas_list_count(cfdata->resolutions), _sort_resolutions);
-	cfdata->resolutions = evas_list_reverse(cfdata->resolutions);
+	cfdata->resolutions = eina_list_sort(cfdata->resolutions, 
+	      eina_list_count(cfdata->resolutions), _sort_resolutions);
+	cfdata->resolutions = eina_list_reverse(cfdata->resolutions);
 
 	evas_event_freeze(evas_object_evas_get(cfdata->res_list));
 	edje_freeze();
@@ -543,7 +543,7 @@ _load_rates(E_Config_Dialog_Data *cfdata)
 {
    int r, k = 0, sel = 0;
    char buf[16];
-   Evas_List *l;
+   Eina_List *l;
 
    evas_event_freeze(evas_object_evas_get(cfdata->rate_list));
    edje_freeze();
@@ -558,7 +558,7 @@ _load_rates(E_Config_Dialog_Data *cfdata)
 
 	if (res->id == r)
 	  {
-	     Evas_List *ll;
+	     Eina_List *ll;
 	     for (ll = res->rates; ll; ll = ll->next)
 	       {
 		  Ecore_X_Screen_Refresh_Rate *rt;

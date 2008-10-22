@@ -142,7 +142,7 @@ struct _E_Border
    int             ref;
    E_Zone         *zone;
    E_Desk         *desk;
-   Evas_List      *handlers;
+   Eina_List      *handlers;
 
    struct {
       int          x, y;
@@ -458,13 +458,13 @@ struct _E_Border
       int modified;
    } shelf_fix;
 
-   Evas_List *stick_desks;
+   Eina_List *stick_desks;
    E_Menu *border_menu;
    E_Config_Dialog *border_locks_dialog;
    E_Config_Dialog *border_remember_dialog;
    E_Config_Dialog *border_border_dialog;
    E_Dialog *border_prop_dialog;
-   Evas_List *pending_move_resize;
+   Eina_List *pending_move_resize;
    
    struct {
       unsigned char visible : 1;
@@ -497,10 +497,10 @@ struct _E_Border
    E_Border *modal;
 
    E_Border  *leader;
-   Evas_List *group;
+   Eina_List *group;
 
    E_Border  *parent;
-   Evas_List *transients;
+   Eina_List *transients;
 
    Efreet_Desktop *desktop;
    E_Pointer *pointer;
@@ -597,7 +597,7 @@ EAPI E_Border *e_border_focused_get(void);
 
 EAPI void      e_border_idler_before(void);
 
-EAPI Evas_List *e_border_client_list(void);
+EAPI Eina_List *e_border_client_list(void);
 
 EAPI void e_border_act_move_keyboard(E_Border *bd);
 EAPI void e_border_act_resize_keyboard(E_Border *bd);
@@ -615,14 +615,14 @@ EAPI Evas_Object *e_border_icon_add(E_Border *bd, Evas *evas);
 EAPI void e_border_button_bindings_ungrab_all(void);
 EAPI void e_border_button_bindings_grab_all(void);
 
-EAPI Evas_List *e_border_focus_stack_get(void);
-EAPI Evas_List *e_border_lost_windows_get(E_Zone *zone);
+EAPI Eina_List *e_border_focus_stack_get(void);
+EAPI Eina_List *e_border_lost_windows_get(E_Zone *zone);
 
 EAPI void e_border_ping(E_Border *bd);
 EAPI void e_border_move_cancel(void);
 EAPI void e_border_resize_cancel(void);
 EAPI void e_border_frame_recalc(E_Border *bd);
-EAPI Evas_List *e_border_immortal_windows_get(void);
+EAPI Eina_List *e_border_immortal_windows_get(void);
 
 EAPI const char *e_border_name_get(E_Border *bd);
 

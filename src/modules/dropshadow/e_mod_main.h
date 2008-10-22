@@ -33,8 +33,8 @@ struct _Config
 struct _Dropshadow
 {
    E_Module       *module;
-   Evas_List      *shadows;
-   Evas_List      *cons;
+   Eina_List      *shadows;
+   Eina_List      *cons;
    E_Before_Idler *idler_before;
 
    E_Config_DD    *conf_edd;
@@ -62,7 +62,7 @@ struct _Shadow
    
    Evas_Object *object[4];
    
-   Evas_List *object_list;
+   Eina_List *object_list;
    
    unsigned char initted : 1;
    unsigned char reshape : 1;

@@ -63,7 +63,7 @@ typedef struct E_Mixer_Module_Context
    E_Mixer_Module_Config *conf;
    E_Config_Dialog *conf_dialog;
    E_Mixer_Instance *default_instance;
-   Evas_List *instances;
+   Eina_List *instances;
    E_Dialog *mixer_dialog;
    struct st_mixer_actions
      {

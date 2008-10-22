@@ -41,11 +41,11 @@ EAPI int		 e_intl_post_shutdown(void);
 EAPI void		 e_intl_language_set(const char *lang);
 EAPI const char		*e_intl_language_get(void);
 EAPI const char		*e_intl_language_alias_get(void);
-EAPI Evas_List		*e_intl_language_list(void);
+EAPI Eina_List		*e_intl_language_list(void);
 /* Setting & Getting Input Method */
 EAPI void                e_intl_input_method_set(const char *method);
 EAPI const char         *e_intl_input_method_get(void);
-EAPI Evas_List		*e_intl_input_method_list(void);
+EAPI Eina_List		*e_intl_input_method_list(void);
 EAPI const char		*e_intl_imc_personal_path_get(void);
 EAPI const char		*e_intl_imc_system_path_get(void);
 

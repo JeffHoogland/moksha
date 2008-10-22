@@ -43,7 +43,7 @@ struct _E_Menu
       Evas_Object      *icon;
    } header;
    
-   Evas_List           *items;
+   Eina_List           *items;
 
    /* the zone it belongs to */
    E_Zone              *zone;
@@ -101,7 +101,7 @@ struct _E_Menu_Item
 
    Evas_Object   *event_object;
 
-   Evas_List	 *list_position;
+   Eina_List	 *list_position;
    
    int            label_w, label_h;
    int            icon_w, icon_h;

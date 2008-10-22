@@ -48,7 +48,7 @@ _config_ibox_module(Config_Item *ci)
 			     _("IBox Configuration"),
 			     "E", "_e_mod_ibox_config_dialog",
 			     buf, 0, v, ci);
-   ibox_config->config_dialog = evas_list_append(ibox_config->config_dialog, cfd);
+   ibox_config->config_dialog = eina_list_append(ibox_config->config_dialog, cfd);
 }
 
 static void 
@@ -75,7 +75,7 @@ _create_data(E_Config_Dialog *cfd)
 static void 
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   ibox_config->config_dialog = evas_list_remove(ibox_config->config_dialog, cfd);
+   ibox_config->config_dialog = eina_list_remove(ibox_config->config_dialog, cfd);
    free(cfdata);
 }
 
@@ -85,7 +85,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    E_Radio_Group *rg;
    Evas_Object *o, *of, *ob;
 
-   Evas_List *l, *l2;
+   Eina_List *l, *l2;
    int zone_count;
 
    o = e_widget_list_add(evas, 0, 0);
@@ -120,7 +120,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	     E_Container *con;
 
 	     con = l2->data;
-	     zone_count += evas_list_count(con->zones);
+	     zone_count += eina_list_count(con->zones);
 	  }
      }
 

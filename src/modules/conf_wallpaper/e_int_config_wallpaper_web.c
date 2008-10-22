@@ -423,7 +423,7 @@ static void
 _file_double_click_cb(void *data, Evas_Object *obj, void *ev_info)
 {
    /*E_Config_Dialog_Data *cfdata;
-   Evas_List *sels;
+   Eina_List *sels;
    E_Fm2_Icon_Info *icon_info;
 
    cfdata = data;
@@ -441,7 +441,7 @@ _file_click_cb(void *data, Evas_Object *obj, void *ev_info)
 {
    Import *import;
    E_Config_Dialog_Data *cfdata;
-   Evas_List *sels;
+   Eina_List *sels;
    E_Fm2_Icon_Info *icon_info;
 
    import = data;
@@ -472,7 +472,7 @@ _dia_ok_cb(void *data, E_Dialog *dia)
 {
    Import *import;
    E_Config_Dialog_Data *cfdata;
-   Evas_List *sels;
+   Eina_List *sels;
 
    import = data;
    cfdata = import->cfdata;

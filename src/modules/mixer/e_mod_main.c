@@ -911,7 +911,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 	    (strcmp(id, ctxt->conf->default_gc_id) == 0))
      ctxt->default_instance = inst;
 
-   ctxt->instances = evas_list_append(ctxt->instances, inst);
+   ctxt->instances = eina_list_append(ctxt->instances, inst);
 
    return inst->gcc;
 }
@@ -943,7 +943,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    e_mixer_system_del(inst->sys);
 
    inst->conf->instance = NULL;
-   ctxt->instances = evas_list_remove(ctxt->instances, inst);
+   ctxt->instances = eina_list_remove(ctxt->instances, inst);
 
    E_FREE(inst);
 }
@@ -975,7 +975,7 @@ static const char *
 _gc_id_new(void)
 {
    E_Mixer_Module_Context *ctxt;
-   Evas_List *instances;
+   Eina_List *instances;
 
    if (!mixer_mod)
      return NULL;
@@ -985,7 +985,7 @@ _gc_id_new(void)
      return NULL;
 
    instances = ctxt->instances;
-   snprintf(tmpbuf, sizeof(tmpbuf), "mixer.%d", evas_list_count(instances));
+   snprintf(tmpbuf, sizeof(tmpbuf), "mixer.%d", eina_list_count(instances));
    return tmpbuf;
 }
 

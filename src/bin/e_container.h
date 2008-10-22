@@ -45,14 +45,14 @@ struct _E_Container
    Ecore_X_Window       bg_win;
    Ecore_X_Window       event_win;
    
-   Evas_List           *shapes;
-   Evas_List           *shape_change_cb;
-   Evas_List           *zones;
+   Eina_List           *shapes;
+   Eina_List           *shape_change_cb;
+   Eina_List           *zones;
 
    unsigned int clients;
    struct {
       Ecore_X_Window win;
-      Evas_List *clients;
+      Eina_List *clients;
    } layers[7];
 };
 
@@ -60,7 +60,7 @@ struct _E_Border_List
 {
    E_Container *container;
    int layer;
-   Evas_List *clients;
+   Eina_List *clients;
 };
 
 struct _E_Container_Shape
@@ -73,7 +73,7 @@ struct _E_Container_Shape
    struct {
       int x, y, w, h;
    } solid_rect;
-   Evas_List     *shape;
+   Eina_List     *shape;
 };
 
 struct _E_Container_Shape_Callback
@@ -116,12 +116,12 @@ EAPI void               e_container_shape_show(E_Container_Shape *es);
 EAPI void               e_container_shape_hide(E_Container_Shape *es);
 EAPI void               e_container_shape_move(E_Container_Shape *es, int x, int y);
 EAPI void               e_container_shape_resize(E_Container_Shape *es, int w, int h);
-EAPI Evas_List         *e_container_shape_list_get(E_Container *con);
+EAPI Eina_List         *e_container_shape_list_get(E_Container *con);
 EAPI void               e_container_shape_geometry_get(E_Container_Shape *es, int *x, int *y, int *w, int *h);
 EAPI E_Container       *e_container_shape_container_get(E_Container_Shape *es);
 EAPI void               e_container_shape_change_callback_add(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data);
 EAPI void               e_container_shape_change_callback_del(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data);
-EAPI Evas_List         *e_container_shape_rects_get(E_Container_Shape *es);
+EAPI Eina_List         *e_container_shape_rects_get(E_Container_Shape *es);
 EAPI void               e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int num);
 EAPI void               e_container_shape_solid_rect_set(E_Container_Shape *es, int x, int y, int w, int h);
 EAPI void               e_container_shape_solid_rect_get(E_Container_Shape *es, int *x, int *y, int *w, int *h);

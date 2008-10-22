@@ -13,17 +13,17 @@ static int _e_bindings_context_match(E_Binding_Context bctxt, E_Binding_Context 
 
 /* local subsystem globals */
 
-static Evas_List *mouse_bindings = NULL;
-static Evas_List *key_bindings = NULL;
-static Evas_List *signal_bindings = NULL;
-static Evas_List *wheel_bindings = NULL;
+static Eina_List *mouse_bindings = NULL;
+static Eina_List *key_bindings = NULL;
+static Eina_List *signal_bindings = NULL;
+static Eina_List *wheel_bindings = NULL;
 
 /* externally accessible functions */
 
 EAPI int
 e_bindings_init(void)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = e_config->mouse_bindings; l; l = l->next)
      {
@@ -86,7 +86,7 @@ e_bindings_shutdown(void)
 	E_Binding_Mouse *bind;
 	
 	bind = mouse_bindings->data;
-	mouse_bindings  = evas_list_remove_list(mouse_bindings, mouse_bindings);
+	mouse_bindings  = eina_list_remove_list(mouse_bindings, mouse_bindings);
 	_e_bindings_mouse_free(bind);
      }
    while (key_bindings)
@@ -94,7 +94,7 @@ e_bindings_shutdown(void)
 	E_Binding_Key *bind;
 	
 	bind = key_bindings->data;
-	key_bindings  = evas_list_remove_list(key_bindings, key_bindings);
+	key_bindings  = eina_list_remove_list(key_bindings, key_bindings);
 	_e_bindings_key_free(bind);
      }
    while (signal_bindings)
@@ -102,7 +102,7 @@ e_bindings_shutdown(void)
 	E_Binding_Signal *bind;
 	
 	bind = signal_bindings->data;
-	signal_bindings  = evas_list_remove_list(signal_bindings, signal_bindings);
+	signal_bindings  = eina_list_remove_list(signal_bindings, signal_bindings);
 	_e_bindings_signal_free(bind);
      }
    while (wheel_bindings)
@@ -110,7 +110,7 @@ e_bindings_shutdown(void)
 	E_Binding_Wheel *bind;
 	
 	bind = wheel_bindings->data;
-	wheel_bindings  = evas_list_remove_list(wheel_bindings, wheel_bindings);
+	wheel_bindings  = eina_list_remove_list(wheel_bindings, wheel_bindings);
 	_e_bindings_wheel_free(bind);
      }
    return 1;
@@ -128,13 +128,13 @@ e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod,
    bind->any_mod = any_mod;
    if (action) bind->action = eina_stringshare_add(action);
    if (params) bind->params = eina_stringshare_add(params);
-   mouse_bindings = evas_list_append(mouse_bindings, bind);
+   mouse_bindings = eina_list_append(mouse_bindings, bind);
 }
 
 EAPI void
 e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = mouse_bindings; l; l = l->next)
      {
@@ -151,7 +151,7 @@ e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod,
 	     ((!bind->params) && (!params))))
 	  {
 	     _e_bindings_mouse_free(bind);
-	     mouse_bindings = evas_list_remove_list(mouse_bindings, l);
+	     mouse_bindings = eina_list_remove_list(mouse_bindings, l);
 	     break;
 	  }
      }
@@ -160,7 +160,7 @@ e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod,
 EAPI void
 e_bindings_mouse_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = mouse_bindings; l; l = l->next)
      {
@@ -188,7 +188,7 @@ e_bindings_mouse_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 EAPI void
 e_bindings_mouse_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = mouse_bindings; l; l = l->next)
      {
@@ -214,7 +214,7 @@ EAPI E_Action *
 e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev, E_Binding_Mouse **bind_ret)
 {
    E_Binding_Modifier mod = 0;
-   Evas_List *l;
+   Eina_List *l;
    
    if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
    if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
@@ -263,7 +263,7 @@ EAPI E_Action *
 e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev, E_Binding_Mouse **bind_ret)
 {
    E_Binding_Modifier mod = 0;
-   Evas_List *l;
+   Eina_List *l;
    
    if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
    if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
@@ -320,13 +320,13 @@ e_bindings_key_add(E_Binding_Context ctxt, const char *key, E_Binding_Modifier m
    bind->any_mod = any_mod;
    if (action) bind->action = eina_stringshare_add(action);
    if (params) bind->params = eina_stringshare_add(params);
-   key_bindings = evas_list_append(key_bindings, bind);
+   key_bindings = eina_list_append(key_bindings, bind);
 }
 
 EAPI E_Binding_Key *
 e_bindings_key_get(const char *action)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = key_bindings; l; l = l->next)
      {
@@ -342,7 +342,7 @@ e_bindings_key_get(const char *action)
 EAPI void
 e_bindings_key_del(E_Binding_Context ctxt, const char *key, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = key_bindings; l; l = l->next)
      {
@@ -359,7 +359,7 @@ e_bindings_key_del(E_Binding_Context ctxt, const char *key, E_Binding_Modifier m
 	     ((!bind->params) && (!params))))
 	  {
 	     _e_bindings_key_free(bind);
-	     key_bindings = evas_list_remove_list(key_bindings, l);
+	     key_bindings = eina_list_remove_list(key_bindings, l);
 	     break;
 	  }
      }
@@ -368,7 +368,7 @@ e_bindings_key_del(E_Binding_Context ctxt, const char *key, E_Binding_Modifier m
 EAPI void
 e_bindings_key_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = key_bindings; l; l = l->next)
      {
@@ -396,7 +396,7 @@ e_bindings_key_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 EAPI void
 e_bindings_key_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = key_bindings; l; l = l->next)
      {
@@ -425,7 +425,7 @@ EAPI E_Action *
 e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Down *ev)
 {
    E_Binding_Modifier mod = 0;
-   Evas_List *l;
+   Eina_List *l;
    
    if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
    if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
@@ -479,7 +479,7 @@ EAPI E_Action *
 e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Up *ev)
 {
    E_Binding_Modifier mod = 0;
-   Evas_List *l;
+   Eina_List *l;
    
    if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
    if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
@@ -529,13 +529,13 @@ e_bindings_signal_add(E_Binding_Context ctxt, const char *sig, const char *src, 
    bind->any_mod = any_mod;
    if (action) bind->action = eina_stringshare_add(action);
    if (params) bind->params = eina_stringshare_add(params);
-   signal_bindings = evas_list_append(signal_bindings, bind);
+   signal_bindings = eina_list_append(signal_bindings, bind);
 }
 
 EAPI void
 e_bindings_signal_del(E_Binding_Context ctxt, const char *sig, const char *src, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = signal_bindings; l; l = l->next)
      {
@@ -555,7 +555,7 @@ e_bindings_signal_del(E_Binding_Context ctxt, const char *sig, const char *src, 
 	     ((!bind->params) && (!params))))
 	  {
 	     _e_bindings_signal_free(bind);
-	     signal_bindings = evas_list_remove_list(signal_bindings, l);
+	     signal_bindings = eina_list_remove_list(signal_bindings, l);
 	     break;
 	  }
      }
@@ -565,7 +565,7 @@ EAPI E_Action  *
 e_bindings_signal_find(E_Binding_Context ctxt, E_Object *obj, const char *sig, const char *src, E_Binding_Signal **bind_ret)
 {
    E_Binding_Modifier mod = 0;
-   Evas_List *l;
+   Eina_List *l;
    
    if (strstr(sig, "MOD:Shift")) mod |= E_BINDING_MODIFIER_SHIFT;
    if (strstr(sig, "MOD:Control")) mod |= E_BINDING_MODIFIER_CTRL;
@@ -626,13 +626,13 @@ e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int z, E_Binding_Mod
    bind->any_mod = any_mod;
    if (action) bind->action = eina_stringshare_add(action);
    if (params) bind->params = eina_stringshare_add(params);
-   wheel_bindings = evas_list_append(wheel_bindings, bind);
+   wheel_bindings = eina_list_append(wheel_bindings, bind);
 }
 
 EAPI void
 e_bindings_wheel_del(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = wheel_bindings; l; l = l->next)
      {
@@ -650,7 +650,7 @@ e_bindings_wheel_del(E_Binding_Context ctxt, int direction, int z, E_Binding_Mod
 	     ((!bind->params) && (!params))))
 	  {
 	     _e_bindings_wheel_free(bind);
-	     wheel_bindings = evas_list_remove_list(wheel_bindings, l);
+	     wheel_bindings = eina_list_remove_list(wheel_bindings, l);
 	     break;
 	  }
      }
@@ -659,7 +659,7 @@ e_bindings_wheel_del(E_Binding_Context ctxt, int direction, int z, E_Binding_Mod
 EAPI void
 e_bindings_wheel_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = wheel_bindings; l; l = l->next)
      {
@@ -698,7 +698,7 @@ e_bindings_wheel_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 EAPI void
 e_bindings_wheel_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = wheel_bindings; l; l = l->next)
      {
@@ -736,7 +736,7 @@ EAPI E_Action *
 e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Wheel *ev, E_Binding_Wheel **bind_ret)
 {
    E_Binding_Modifier mod = 0;
-   Evas_List *l;
+   Eina_List *l;
    
    if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
    if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;

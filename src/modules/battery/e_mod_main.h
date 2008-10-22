@@ -23,7 +23,7 @@ struct _Config
    /* just config state */
    E_Module        *module;
    E_Config_Dialog *config_dialog;
-   Evas_List       *instances;
+   Eina_List       *instances;
    E_Menu          *menu;
    Ecore_Exe           *batget_exe;
    Ecore_Event_Handler *batget_data_handler;

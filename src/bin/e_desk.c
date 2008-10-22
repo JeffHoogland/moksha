@@ -45,7 +45,7 @@ EAPI E_Desk *
 e_desk_new(E_Zone *zone, int x, int y)
 {
    E_Desk *desk;
-   Evas_List *l;
+   Eina_List *l;
    char name[40];
    int ok;
 
@@ -115,13 +115,13 @@ e_desk_name_add(int container, int zone, int desk_x, int desk_y, const char *nam
    cfname->desk_x = desk_x;
    cfname->desk_y = desk_y;
    if (name) cfname->name = eina_stringshare_add(name);
-   e_config->desktop_names = evas_list_append(e_config->desktop_names, cfname);
+   e_config->desktop_names = eina_list_append(e_config->desktop_names, cfname);
 }
 
 EAPI void
 e_desk_name_del(int container, int zone, int desk_x, int desk_y)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    for (l = e_config->desktop_names; l; l = l->next)
      {
@@ -132,7 +132,7 @@ e_desk_name_del(int container, int zone, int desk_x, int desk_y)
 	    (cfname->desk_x == desk_x) && (cfname->desk_y == desk_y))
 	  {
 	     e_config->desktop_names = 
-	       evas_list_remove_list(e_config->desktop_names, l);
+	       eina_list_remove_list(e_config->desktop_names, l);
 	     if (cfname->name) eina_stringshare_del(cfname->name);
 	     free(cfname);
 	     break;
@@ -143,7 +143,7 @@ e_desk_name_del(int container, int zone, int desk_x, int desk_y)
 EAPI void
 e_desk_name_update(void)
 {
-   Evas_List *m, *c, *z, *l;
+   Eina_List *m, *c, *z, *l;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
@@ -204,7 +204,7 @@ e_desk_show(E_Desk *desk)
    E_Border *bd;
    E_Event_Desk_Show *ev;
    E_Event_Desk_Before_Show *eev;
-   Evas_List *l;
+   Eina_List *l;
    int was_zone = 0, x, y, dx = 0, dy = 0;
 
    E_OBJECT_CHECK(desk);
@@ -279,7 +279,7 @@ e_desk_show(E_Desk *desk)
 
    for (l = e_shelf_list(); l; l = l->next)
      {
-	Evas_List *ll;
+	Eina_List *ll;
 	E_Shelf *es;
 	E_Config_Shelf *cf_es;
 	E_Zone *zone;
@@ -358,7 +358,7 @@ e_desk_deskshow(E_Zone *zone)
 EAPI void
 e_desk_last_focused_focus(E_Desk *desk)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    E_Border *bd;
    
    for (l = e_border_focus_stack_get(); l; l = l->next)

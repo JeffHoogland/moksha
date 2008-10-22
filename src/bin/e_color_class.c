@@ -6,7 +6,7 @@
 EAPI int
 e_color_class_init(void)
 {
-  Evas_List *l;
+  Eina_List *l;
 
   for (l = e_config->color_classes; l; l = l->next)
     {
@@ -40,7 +40,7 @@ e_color_class_set(const char *color_class, int r, int g, int b, int a, int r2, i
   if (!cc)
     {
        cc = E_NEW(E_Color_Class, 1);
-       e_config->color_classes = evas_list_append(e_config->color_classes, cc);
+       e_config->color_classes = eina_list_append(e_config->color_classes, cc);
        cc->name = eina_stringshare_add(color_class);
        cc->r = cc->g = cc->b = cc->a = 255;
        cc->r2 = cc->g2 = cc->b2 = cc->a2 = 255;
@@ -75,7 +75,7 @@ e_color_class_del(const char *name)
   cc = e_color_class_find(name);
   if (cc)
     {
-       e_config->color_classes = evas_list_remove(e_config->color_classes, cc);
+       e_config->color_classes = eina_list_remove(e_config->color_classes, cc);
        edje_color_class_del(cc->name);
        eina_stringshare_del(cc->name);
        E_FREE(cc);
@@ -87,7 +87,7 @@ e_color_class_del(const char *name)
 EAPI E_Color_Class *
 e_color_class_find(const char *name)
 {
-  Evas_List *l;
+  Eina_List *l;
   E_Color_Class *cc = NULL;
 
   for (l = e_config->color_classes; l; l = l->next)
@@ -105,7 +105,7 @@ e_color_class_find(const char *name)
 }
 
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_color_class_list(void)
 {
   return e_config->color_classes;

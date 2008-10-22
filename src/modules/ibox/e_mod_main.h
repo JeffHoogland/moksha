@@ -11,11 +11,11 @@ struct _Config
 {
    /* just config state */
    E_Module        *module;
-   Evas_List       *instances;
+   Eina_List       *instances;
    E_Menu          *menu;
-   Evas_List       *handlers;
-   Evas_List       *items;
-   Evas_List	   *config_dialog;
+   Eina_List       *handlers;
+   Eina_List       *items;
+   Eina_List	   *config_dialog;
 };
 
 struct _Config_Item 

@@ -46,7 +46,7 @@ static void _e_fm_op_remove_link_task(E_Fm_Op_Task *task);
 static int _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler);
 static void _e_fm_op_set_up_idlers();
 static void _e_fm_op_delete_idler(int *mark);
-static int _e_fm_op_idler_handle_error(int *mark, Evas_List **queue, Evas_List **node, E_Fm_Op_Task *task);
+static int _e_fm_op_idler_handle_error(int *mark, Eina_List **queue, Eina_List **node, E_Fm_Op_Task *task);
 
 static int _e_fm_op_work_idler(void *data);
 static int _e_fm_op_scan_idler(void *data);
@@ -70,7 +70,7 @@ static int _e_fm_op_remove_atom(E_Fm_Op_Task * task);
 
 Ecore_Fd_Handler *_e_fm_op_stdin_handler = NULL;
 
-Evas_List *_e_fm_op_work_queue = NULL, *_e_fm_op_scan_queue = NULL;
+Eina_List *_e_fm_op_work_queue = NULL, *_e_fm_op_scan_queue = NULL;
 Ecore_Idler *_e_fm_op_work_idler_p = NULL, *_e_fm_op_scan_idler_p = NULL;
 
 long long _e_fm_op_done, _e_fm_op_total; /* Type long long should be 64 bits wide everywhere,
@@ -87,7 +87,7 @@ int _e_fm_op_overwrite = 0;
 int _e_fm_op_error_response = E_FM_OP_NONE;
 int _e_fm_op_overwrite_response = E_FM_OP_NONE;
 
-Evas_List *_e_fm_op_separator = NULL;
+Eina_List *_e_fm_op_separator = NULL;
 
 void *_e_fm_op_stdin_buffer = NULL;
 
@@ -113,7 +113,7 @@ struct _E_Fm_Op_Task
    E_Fm_Op_Type type;
    E_Fm_Op_Type overwrite;
 
-   Evas_List *link;
+   Eina_List *link;
 };
 
 struct _E_Fm_Op_Copy_Data
@@ -171,7 +171,7 @@ main(int argc, char **argv)
 
         if (type == E_FM_OP_MOVE)
           {
-             _e_fm_op_work_queue = evas_list_append(_e_fm_op_work_queue, NULL);
+             _e_fm_op_work_queue = eina_list_append(_e_fm_op_work_queue, NULL);
              _e_fm_op_separator = _e_fm_op_work_queue;
           }
 
@@ -192,7 +192,7 @@ main(int argc, char **argv)
                   if (type == E_FM_OP_MOVE && rename(task->src.name, task->dst.name) == 0)
                     _e_fm_op_task_free(task);
                   else
-                    _e_fm_op_scan_queue = evas_list_append(_e_fm_op_scan_queue, task);
+                    _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, task);
                  
                   i++;
                }
@@ -207,7 +207,7 @@ main(int argc, char **argv)
              task->src.name = eina_stringshare_add(argv[2]);
              task->dst.name = eina_stringshare_add(argv[3]);
           
-             _e_fm_op_scan_queue = evas_list_append(_e_fm_op_scan_queue, task);
+             _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, task);
           }
         else
           {
@@ -227,7 +227,7 @@ main(int argc, char **argv)
              task->type = type;
              task->src.name = eina_stringshare_add(argv[i]);
              
-             _e_fm_op_scan_queue = evas_list_append(_e_fm_op_scan_queue, task);
+             _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, task);
              
              i++;
           }
@@ -322,7 +322,7 @@ static void _e_fm_op_remove_link_task(E_Fm_Op_Task *task)
 {
    if (task->link)
      {
-        _e_fm_op_work_queue = evas_list_remove_list(_e_fm_op_work_queue, task->link);
+        _e_fm_op_work_queue = eina_list_remove_list(_e_fm_op_work_queue, task->link);
         _e_fm_op_task_free(task->link);
         task->link = NULL;
      }
@@ -495,7 +495,7 @@ static void _e_fm_op_delete_idler(int *mark)
  * Returns 1 if we did; otherwise checks it and does what needs to be done.
  */
 
-static int _e_fm_op_idler_handle_error(int *mark, Evas_List **queue, Evas_List **node, E_Fm_Op_Task *task)
+static int _e_fm_op_idler_handle_error(int *mark, Eina_List **queue, Eina_List **node, E_Fm_Op_Task *task)
 {
    if (_e_fm_op_overwrite)
      {
@@ -542,7 +542,7 @@ static int _e_fm_op_idler_handle_error(int *mark, Evas_List **queue, Evas_List *
                { 
                   _e_fm_op_rollback(task);
                   _e_fm_op_remove_link_task(task);
-                  *queue = evas_list_remove_list(*queue, *node);
+                  *queue = eina_list_remove_list(*queue, *node);
                   _e_fm_op_error_response = E_FM_OP_NONE;
                   *mark = 0;
                   *node = NULL;
@@ -554,7 +554,7 @@ static int _e_fm_op_idler_handle_error(int *mark, Evas_List **queue, Evas_List *
                         task->src.name, task->dst.name);
                   _e_fm_op_rollback(task);
                   _e_fm_op_remove_link_task(task);
-                  *queue = evas_list_remove_list(*queue, *node);
+                  *queue = eina_list_remove_list(*queue, *node);
                   *node = NULL;
                   *mark = 0;
                   /* Do not clean out _e_fm_op_error_response. This way when another error occures, it would be handled automatically. */ 
@@ -589,17 +589,17 @@ _e_fm_op_work_idler(void *data)
     *
     * BTW, the same is propably right for the _e_fm_op_scan_idler().
     */
-   static Evas_List *node = NULL;
+   static Eina_List *node = NULL;
    E_Fm_Op_Task *task = NULL;
    
    if (!node) node = _e_fm_op_work_queue;
 
-   task = evas_list_data(node);
+   task = eina_list_data_get(node);
 
    if (!task) 
      {
         node = _e_fm_op_work_queue;
-        task = evas_list_data(node);
+        task = eina_list_data_get(node);
      }
 
    if (!task)
@@ -607,7 +607,7 @@ _e_fm_op_work_idler(void *data)
         if ( _e_fm_op_separator && _e_fm_op_work_queue == _e_fm_op_separator && _e_fm_op_scan_idler_p == NULL)
           {
              /* You may want to look at the comment in _e_fm_op_scan_atom() about this separator thing. */
-             _e_fm_op_work_queue = evas_list_remove_list(_e_fm_op_work_queue, _e_fm_op_separator);
+             _e_fm_op_work_queue = eina_list_remove_list(_e_fm_op_work_queue, _e_fm_op_separator);
              node = NULL;
              return 1;
           }
@@ -639,7 +639,7 @@ _e_fm_op_work_idler(void *data)
 
    if (task->finished)
      {
-       _e_fm_op_work_queue = evas_list_remove_list(_e_fm_op_work_queue, node);
+       _e_fm_op_work_queue = eina_list_remove_list(_e_fm_op_work_queue, node);
        _e_fm_op_task_free(task);
        node = NULL;
      }
@@ -662,7 +662,7 @@ _e_fm_op_work_idler(void *data)
 int
 _e_fm_op_scan_idler(void *data)
 {
-   static Evas_List *node = NULL;
+   static Eina_List *node = NULL;
    E_Fm_Op_Task *task = NULL;
    char buf[PATH_MAX];
    static struct dirent *de = NULL;
@@ -671,12 +671,12 @@ _e_fm_op_scan_idler(void *data)
 
    if (!node) node = _e_fm_op_scan_queue;
    
-   task = evas_list_data(node);
+   task = eina_list_data_get(node);
 
    if (!task) 
      {
         node = _e_fm_op_scan_queue;
-        task = evas_list_data(node);
+        task = eina_list_data_get(node);
      }
 
    if (!task)
@@ -699,7 +699,7 @@ _e_fm_op_scan_idler(void *data)
         _e_fm_op_scan_atom(task);
         if (task->finished)
           {
-             _e_fm_op_scan_queue = evas_list_remove_list(_e_fm_op_scan_queue, node);
+             _e_fm_op_scan_queue = eina_list_remove_list(_e_fm_op_scan_queue, node);
              _e_fm_op_task_free(task);
              node = NULL;
           }
@@ -747,9 +747,9 @@ _e_fm_op_scan_idler(void *data)
                }
              
              if (task->type == E_FM_OP_REMOVE)
-               _e_fm_op_scan_queue = evas_list_prepend(_e_fm_op_scan_queue, ntask);
+               _e_fm_op_scan_queue = eina_list_prepend(_e_fm_op_scan_queue, ntask);
              else
-               _e_fm_op_scan_queue = evas_list_append(_e_fm_op_scan_queue, ntask);
+               _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, ntask);
 
              task->started = 1;
              closedir(dir);
@@ -783,16 +783,16 @@ _e_fm_op_scan_idler(void *data)
           }
 
         if (task->type == E_FM_OP_REMOVE)
-          _e_fm_op_scan_queue = evas_list_prepend(_e_fm_op_scan_queue, ntask);
+          _e_fm_op_scan_queue = eina_list_prepend(_e_fm_op_scan_queue, ntask);
         else
-          _e_fm_op_scan_queue = evas_list_append(_e_fm_op_scan_queue, ntask);
+          _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, ntask);
      }
    else
      {
 	_e_fm_op_scan_atom(task);
 	if (task->finished)
           {
-             _e_fm_op_scan_queue = evas_list_remove_list(_e_fm_op_scan_queue, node);
+             _e_fm_op_scan_queue = eina_list_remove_list(_e_fm_op_scan_queue, node);
              _e_fm_op_task_free(task);
              node = NULL;
           }
@@ -1329,7 +1329,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
           ctask->dst.name = eina_stringshare_add(task->dst.name);
         ctask->type = E_FM_OP_COPY;
         
-        _e_fm_op_work_queue = evas_list_append(_e_fm_op_work_queue, ctask);
+        _e_fm_op_work_queue = eina_list_append(_e_fm_op_work_queue, ctask);
      }
    else if (task->type == E_FM_OP_COPY_STAT_INFO)
      {
@@ -1342,7 +1342,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
           ctask->dst.name = eina_stringshare_add(task->dst.name);
         ctask->type = E_FM_OP_COPY_STAT_INFO;
         
-        _e_fm_op_work_queue = evas_list_append(_e_fm_op_work_queue, ctask);
+        _e_fm_op_work_queue = eina_list_append(_e_fm_op_work_queue, ctask);
      }
    else if (task->type == E_FM_OP_REMOVE)
      {
@@ -1355,7 +1355,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
           rtask->dst.name = eina_stringshare_add(task->dst.name);
         rtask->type = E_FM_OP_REMOVE;
         
-        _e_fm_op_work_queue = evas_list_prepend(_e_fm_op_work_queue, rtask);
+        _e_fm_op_work_queue = eina_list_prepend(_e_fm_op_work_queue, rtask);
 
      }
    else if (task->type == E_FM_OP_MOVE)
@@ -1370,7 +1370,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
           ctask->dst.name = eina_stringshare_add(task->dst.name);
         ctask->type = E_FM_OP_COPY;
 
-        _e_fm_op_work_queue = evas_list_prepend(_e_fm_op_work_queue, ctask);
+        _e_fm_op_work_queue = eina_list_prepend(_e_fm_op_work_queue, ctask);
 
         /* Remove task. */
         _e_fm_op_update_progress(NULL, 0, REMOVECHUNKSIZE);
@@ -1392,7 +1392,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
          * copied.
          */
 
-        _e_fm_op_work_queue = evas_list_append_relative_list(_e_fm_op_work_queue, rtask, _e_fm_op_separator);
+        _e_fm_op_work_queue = eina_list_append_relative_list(_e_fm_op_work_queue, rtask, _e_fm_op_separator);
 
         ctask->link = _e_fm_op_separator->next;
      }

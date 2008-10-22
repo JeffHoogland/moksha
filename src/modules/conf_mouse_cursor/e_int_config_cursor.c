@@ -89,7 +89,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    if (changed) 
      {
-	Evas_List *l;
+	Eina_List *l;
 	
 	for (l = e_manager_list(); l; l = l->next) 
 	  {
@@ -167,7 +167,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    if (changed) 
      {
-	Evas_List *l;
+	Eina_List *l;
 	
 	e_pointers_size_set(e_config->cursor_size);
 	for (l = e_manager_list(); l; l = l->next) 

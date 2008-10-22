@@ -14,7 +14,7 @@ struct _E_Configure_Cat
    const char *label;
    const char *icon_file;
    const char *icon;
-   Evas_List  *items;
+   Eina_List  *items;
 };
 
 struct _E_Configure_It
@@ -39,7 +39,7 @@ EAPI int  e_configure_registry_exists(const char *path);
 EAPI void e_configure_registry_custom_desktop_exec_callback_set(void (*func) (const void *data, E_Container *con, const char *params, Efreet_Desktop *desktop), const void *data);
 EAPI void e_configure_init(void);
 
-EAPI Evas_List *e_configure_registry;
+EAPI Eina_List *e_configure_registry;
 
 #endif
 #endif

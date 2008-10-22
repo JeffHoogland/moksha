@@ -88,26 +88,26 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
    e_container_window_raise(zone->container, zone->edge.bottom, 999);
 
    zone->handlers = 
-     evas_list_append(zone->handlers,
+     eina_list_append(zone->handlers,
                       ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN,
                                               _e_zone_cb_mouse_in, zone));
    zone->handlers = 
-     evas_list_append(zone->handlers,
+     eina_list_append(zone->handlers,
                       ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT,
                                               _e_zone_cb_mouse_out, zone));
    zone->handlers = 
-     evas_list_append(zone->handlers,
+     eina_list_append(zone->handlers,
                       ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
                                               _e_zone_cb_mouse_move, zone));
    zone->handlers = 
-     evas_list_append(zone->handlers,
+     eina_list_append(zone->handlers,
                       ecore_event_handler_add(E_EVENT_DESK_SHOW,
                                               _e_zone_cb_desk_show, zone));
 
    snprintf(name, sizeof(name), "Zone %d", zone->num);
    zone->name = eina_stringshare_add(name);
 
-   con->zones = evas_list_append(con->zones, zone);
+   con->zones = eina_list_append(con->zones, zone);
 
    o = evas_object_rectangle_add(con->bg_evas);
    zone->bg_clip_object = o;
@@ -292,7 +292,7 @@ e_zone_fullscreen_set(E_Zone *zone, int on)
 EAPI E_Zone *
 e_zone_current_get(E_Container *con)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
@@ -335,17 +335,17 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 
    if (!e_config->edge_flip_dragging) return;
    /* if we have only 1 row we can flip up/down even if we have xinerama */
-   if (evas_list_count(zone->container->zones) > 1)
+   if (eina_list_count(zone->container->zones) > 1)
      {
-	Evas_List *zones;
+	Eina_List *zones;
 	E_Zone *next_zone;
 	int cx, cy;
 
 	zones = zone->container->zones;
-	next_zone = (E_Zone *)evas_list_data(zones);
+	next_zone = (E_Zone *)eina_list_data_get(zones);
 	cx = next_zone->x;
 	cy = next_zone->y;
-	zones = evas_list_next(zones);
+	zones = eina_list_next(zones);
 	while (zones)
 	  {
 	     next_zone = (E_Zone *)zones->data;
@@ -354,7 +354,7 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 	     zones = zones->next;
 	  }
      }
-   if (evas_list_count(zone->container->manager->containers) > 1)
+   if (eina_list_count(zone->container->manager->containers) > 1)
      goto noflip;
    if (!E_INSIDE(x, y, zone->x, zone->y, zone->w, zone->h))
      goto noflip;
@@ -535,7 +535,7 @@ e_zone_update_flip(E_Zone *zone)
 EAPI void
 e_zone_update_flip_all(void)
 {
-   Evas_List *l, *ll;
+   Eina_List *l, *ll;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
@@ -619,7 +619,7 @@ e_zone_desk_linear_flip_to(E_Zone *zone, int x)
 EAPI void
 e_zone_flip_win_disable(void)
 {
-   Evas_List *l, *ll, *lll;
+   Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
 
@@ -646,7 +646,7 @@ e_zone_flip_win_disable(void)
 EAPI void
 e_zone_flip_win_restore(void)
 {
-   Evas_List *l, *ll, *lll;
+   Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
 
@@ -697,7 +697,7 @@ static void
 _e_zone_free(E_Zone *zone)
 {
    E_Container *con;
-   Evas_List *l;
+   Eina_List *l;
    int x, y;
 
    /* Delete the edge windows if they exist */
@@ -736,12 +736,12 @@ _e_zone_free(E_Zone *zone)
 	h = l->data;
 	ecore_event_handler_del(h);
      }
-   evas_list_free(zone->handlers);
+   eina_list_free(zone->handlers);
    zone->handlers = NULL;
 
    con = zone->container;
    if (zone->name) eina_stringshare_del(zone->name);
-   con->zones = evas_list_remove(con->zones, zone);
+   con->zones = eina_list_remove(con->zones, zone);
    evas_object_del(zone->bg_event_object);
    evas_object_del(zone->bg_clip_object);
    evas_object_del(zone->bg_object);
@@ -1092,17 +1092,17 @@ _e_zone_update_flip(E_Zone *zone)
 	int one_row = 1;
 	int one_col = 1;
 
-	if (evas_list_count(zone->container->zones) > 1)
+	if (eina_list_count(zone->container->zones) > 1)
 	  {
-	     Evas_List *zones;
+	     Eina_List *zones;
 	     E_Zone *next_zone;
 	     int x, y;
 
 	     zones = zone->container->zones;
-	     next_zone = (E_Zone *)evas_list_data(zones);
+	     next_zone = (E_Zone *)eina_list_data_get(zones);
 	     x = next_zone->x;
 	     y = next_zone->y;
-	     zones = evas_list_next(zones);
+	     zones = eina_list_next(zones);
 	     while (zones)
 	       {
 		  next_zone = (E_Zone *)zones->data;
@@ -1111,7 +1111,7 @@ _e_zone_update_flip(E_Zone *zone)
 		  zones = zones->next;
 	       }
 	  }
-	if (evas_list_count(zone->container->manager->containers) > 1)
+	if (eina_list_count(zone->container->manager->containers) > 1)
 	  {
 	     one_col = 0;
 	     one_row = 0;

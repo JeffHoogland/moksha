@@ -49,10 +49,10 @@ static int  _e_int_menus_clients_group_desk_cb    (void *d1, void *d2);
 static int  _e_int_menus_clients_group_class_cb   (void *d1, void *d2);
 static int  _e_int_menus_clients_sort_alpha_cb    (void *d1, void *d2);
 static int  _e_int_menus_clients_sort_z_order_cb  (void *d1, void *d2);
-static void _e_int_menus_clients_add_by_class   (Evas_List *borders, E_Menu *m);
-static void _e_int_menus_clients_add_by_desk    (E_Desk *curr_desk, Evas_List *borders, E_Menu *m);
-static void _e_int_menus_clients_add_by_none    (Evas_List *borders, E_Menu *m);
-static void _e_int_menus_clients_menu_add_iconified  (Evas_List *borders, E_Menu *m);
+static void _e_int_menus_clients_add_by_class   (Eina_List *borders, E_Menu *m);
+static void _e_int_menus_clients_add_by_desk    (E_Desk *curr_desk, Eina_List *borders, E_Menu *m);
+static void _e_int_menus_clients_add_by_none    (Eina_List *borders, E_Menu *m);
+static void _e_int_menus_clients_menu_add_iconified  (Eina_List *borders, E_Menu *m);
 static const char *_e_int_menus_clients_title_abbrv (const char *title);
 static void _e_int_menus_virtuals_pre_cb     (void *data, E_Menu *m);
 static void _e_int_menus_virtuals_item_cb    (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -63,8 +63,8 @@ static void _e_int_menus_lost_clients_free_hook (void *obj);
 static void _e_int_menus_lost_clients_item_cb   (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_sys_pre_cb          (void *data, E_Menu *m);
 static void _e_int_menus_sys_free_hook       (void *obj);
-static void _e_int_menus_augmentation_add    (E_Menu *m, Evas_List *augmentation);
-static void _e_int_menus_augmentation_del    (E_Menu *m, Evas_List *augmentation);
+static void _e_int_menus_augmentation_add    (E_Menu *m, Eina_List *augmentation);
+static void _e_int_menus_augmentation_del    (E_Menu *m, Eina_List *augmentation);
 static void _e_int_menus_shelves_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_shelves_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_shelves_add_cb      (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -84,7 +84,7 @@ e_int_menus_main_new(void)
    E_Menu *m, *subm;
    E_Menu_Item *mi;
    Main_Data *dat;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    dat = calloc(1, sizeof(Main_Data));
    m = e_menu_new();
@@ -359,7 +359,7 @@ e_int_menus_menu_augmentation_add(const char *menu,
 				  void *data_del)
 {
    E_Int_Menu_Augmentation *maug;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    maug = E_NEW(E_Int_Menu_Augmentation, 1);
    if (!maug) return NULL;
@@ -377,7 +377,7 @@ e_int_menus_menu_augmentation_add(const char *menu,
           evas_hash_del(_e_int_menus_augmentation, menu, l);
      }
 
-   l = evas_list_append(l, maug);
+   l = eina_list_append(l, maug);
    _e_int_menus_augmentation = 
      evas_hash_add(_e_int_menus_augmentation, menu, l);
 
@@ -387,7 +387,7 @@ e_int_menus_menu_augmentation_add(const char *menu,
 EAPI void
 e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *maug)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    l = evas_hash_find(_e_int_menus_augmentation, menu);
    if (l)
@@ -399,7 +399,7 @@ e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *mau
 	_e_int_menus_augmentation = 
           evas_hash_del(_e_int_menus_augmentation, menu, l);
 
-	l = evas_list_remove(l, maug);
+	l = eina_list_remove(l, maug);
 	if (l) 
           {
              _e_int_menus_augmentation = 
@@ -652,7 +652,7 @@ static void
 _e_int_menus_items_del_hook(void *obj)
 {
    E_Menu *m;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    m = obj;
    for (l = m->items; l; l = l->next)
@@ -812,7 +812,7 @@ static void
 _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
 
@@ -862,7 +862,7 @@ static void
 _e_int_menus_sys_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
 
@@ -1029,12 +1029,12 @@ _e_int_menus_clients_sort_z_order_cb(void *d1, void *d2)
 }
 
 static void
-_e_int_menus_clients_menu_add_iconified(Evas_List *borders, E_Menu *m)
+_e_int_menus_clients_menu_add_iconified(Eina_List *borders, E_Menu *m)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    E_Menu_Item *mi;
 
-   if (evas_list_count(borders) > 0)
+   if (eina_list_count(borders) > 0)
      { 
 	mi = e_menu_item_new(m); 
 	e_menu_item_separator_set(mi, 1); 
@@ -1050,9 +1050,9 @@ _e_int_menus_clients_menu_add_iconified(Evas_List *borders, E_Menu *m)
 }
 
 static void
-_e_int_menus_clients_add_by_class(Evas_List *borders, E_Menu *m)
+_e_int_menus_clients_add_by_class(Eina_List *borders, E_Menu *m)
 {
-   Evas_List *l = NULL, *ico = NULL;
+   Eina_List *l = NULL, *ico = NULL;
    E_Menu *subm = NULL;
    E_Menu_Item *mi;
    char *class = NULL;
@@ -1066,7 +1066,7 @@ _e_int_menus_clients_add_by_class(Evas_List *borders, E_Menu *m)
 	if ((bd->iconic) && 
 	    (e_config->clientlist_separate_iconified_apps == E_CLIENTLIST_GROUPICONS_SEP))
 	  { 
-	     ico = evas_list_append(ico, bd); 
+	     ico = eina_list_append(ico, bd); 
 	     continue;
 	  }
 
@@ -1102,10 +1102,10 @@ _e_int_menus_clients_add_by_class(Evas_List *borders, E_Menu *m)
 }
 
 static void
-_e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Evas_List *borders, E_Menu *m)
+_e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Eina_List *borders, E_Menu *m)
 {
    E_Desk *desk = NULL;
-   Evas_List *l = NULL, *alt = NULL, *ico = NULL;
+   Eina_List *l = NULL, *alt = NULL, *ico = NULL;
    E_Menu *subm;
    E_Menu_Item *mi;
 
@@ -1117,7 +1117,7 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Evas_List *borders, E_Menu *
 	bd = l->data; 
 	if (bd->iconic && e_config->clientlist_separate_iconified_apps && E_CLIENTLIST_GROUPICONS_SEP) 
 	  { 
-	     ico = evas_list_append(ico, bd); 
+	     ico = eina_list_append(ico, bd); 
 	     continue; 
 	  }
 
@@ -1127,7 +1127,7 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Evas_List *borders, E_Menu *
 		 (bd->iconic && e_config->clientlist_separate_iconified_apps == 
 		  E_CLIENTLIST_GROUPICONS_OWNER))
 	       {
-		  alt = evas_list_append(alt, bd); 
+		  alt = eina_list_append(alt, bd); 
 		  continue;
 	       }
 	  }
@@ -1137,7 +1137,7 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Evas_List *borders, E_Menu *
 
    desk = NULL;
    subm = NULL;
-   if (evas_list_count(alt) > 0) 
+   if (eina_list_count(alt) > 0) 
      {
 	if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU)
 	  {
@@ -1182,9 +1182,9 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Evas_List *borders, E_Menu *
 }
 
 static void
-_e_int_menus_clients_add_by_none(Evas_List *borders, E_Menu *m)
+_e_int_menus_clients_add_by_none(Eina_List *borders, E_Menu *m)
 {
-   Evas_List *l = NULL, *ico = NULL;
+   Eina_List *l = NULL, *ico = NULL;
 
    for (l = borders; l; l = l->next)
      {
@@ -1194,7 +1194,7 @@ _e_int_menus_clients_add_by_none(Evas_List *borders, E_Menu *m)
 	if ((bd->iconic) && (e_config->clientlist_separate_iconified_apps) && 
             (E_CLIENTLIST_GROUPICONS_SEP)) 
 	  { 
-	     ico = evas_list_append(ico, bd); 
+	     ico = eina_list_append(ico, bd); 
 	     continue; 
 	  }
 	_e_int_menus_clients_item_create(bd, m);
@@ -1208,7 +1208,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 {
    E_Menu *subm;
    E_Menu_Item *mi;
-   Evas_List *l = NULL, *borders = NULL;
+   Eina_List *l = NULL, *borders = NULL;
    E_Zone *zone = NULL;
    E_Desk *desk = NULL;
    Main_Data *dat;
@@ -1231,7 +1231,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	if (border->user_skip_winlist) continue;
 	if ((border->zone == zone) || (border->iconic) ||
 	    (border->zone != zone && e_config->clientlist_include_all_zones))
-	  borders = evas_list_append(borders, border);
+	  borders = eina_list_append(borders, border);
      }
 
    dat = (Main_Data *)e_object_data_get(E_OBJECT(m));
@@ -1248,23 +1248,23 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
      {
 	/* Sort the borders */
 	if (e_config->clientlist_sort_by == E_CLIENTLIST_SORT_ALPHA)
-          borders = evas_list_sort(borders, evas_list_count(borders), 
+          borders = eina_list_sort(borders, eina_list_count(borders), 
                                    _e_int_menus_clients_sort_alpha_cb);
 
 	if (e_config->clientlist_sort_by == E_CLIENTLIST_SORT_ZORDER)
-	  borders = evas_list_sort(borders, evas_list_count(borders),
+	  borders = eina_list_sort(borders, eina_list_count(borders),
                                    _e_int_menus_clients_sort_z_order_cb);
 
 	/* Group the borders */
         if (e_config->clientlist_group_by == E_CLIENTLIST_GROUP_DESK)
 	  { 
-             borders = evas_list_sort(borders, evas_list_count(borders), 
+             borders = eina_list_sort(borders, eina_list_count(borders), 
                                       _e_int_menus_clients_group_desk_cb);
              _e_int_menus_clients_add_by_desk(desk, borders, m);
 	  }
         if (e_config->clientlist_group_by == E_CLIENTLIST_GROUP_CLASS) 
 	  { 
-	     borders = evas_list_sort(borders, evas_list_count(borders), 
+	     borders = eina_list_sort(borders, eina_list_count(borders), 
                                       _e_int_menus_clients_group_class_cb); 
 	     _e_int_menus_clients_add_by_class(borders, m);
 	  }
@@ -1348,7 +1348,7 @@ static void
 _e_int_menus_clients_free_hook(void *obj)
 {
    E_Menu *m;
-   Evas_List *borders = NULL;
+   Eina_List *borders = NULL;
 
    m = obj;
    borders = e_object_data_get(E_OBJECT(m));
@@ -1357,7 +1357,7 @@ _e_int_menus_clients_free_hook(void *obj)
 	E_Border *bd;
 
 	bd = borders->data;
-	borders = evas_list_remove_list(borders, borders);
+	borders = eina_list_remove_list(borders, borders);
 	e_object_unref(E_OBJECT(bd));
      }
 }
@@ -1417,7 +1417,7 @@ static void
 _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
-   Evas_List *l, *borders = NULL;
+   Eina_List *l, *borders = NULL;
    E_Menu *root;
    E_Zone *zone = NULL;
 
@@ -1461,7 +1461,7 @@ static void
 _e_int_menus_lost_clients_free_hook(void *obj)
 {
    E_Menu *m;
-   Evas_List *borders = NULL;
+   Eina_List *borders = NULL;
 
    m = obj;
    borders = e_object_data_get(E_OBJECT(m));
@@ -1470,7 +1470,7 @@ _e_int_menus_lost_clients_free_hook(void *obj)
 	E_Border *bd;
 
 	bd = borders->data;
-	borders = evas_list_remove_list(borders, borders);
+	borders = eina_list_remove_list(borders, borders);
 	e_object_unref(E_OBJECT(bd));
      }
 }
@@ -1491,9 +1491,9 @@ _e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_int_menus_augmentation_add(E_Menu *m, Evas_List *augmentation)
+_e_int_menus_augmentation_add(E_Menu *m, Eina_List *augmentation)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    for (l = augmentation; l; l = l->next)
      {
@@ -1505,9 +1505,9 @@ _e_int_menus_augmentation_add(E_Menu *m, Evas_List *augmentation)
 }
 
 static void
-_e_int_menus_augmentation_del(E_Menu *m, Evas_List *augmentation)
+_e_int_menus_augmentation_del(E_Menu *m, Eina_List *augmentation)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    for (l = augmentation; l; l = l->next)
      {
@@ -1522,7 +1522,7 @@ static void
 _e_int_menus_shelves_pre_cb(void *data, E_Menu *m) 
 {
    E_Menu_Item *mi;
-   Evas_List *l, *shelves = NULL;
+   Eina_List *l, *shelves = NULL;
    E_Container *con;
    E_Zone *zone;
 
@@ -1646,7 +1646,7 @@ _e_int_menus_shelves_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    cs->style = eina_stringshare_add("default");
    cs->size = 40;
    cs->overlap = 0;
-   e_config->shelves = evas_list_append(e_config->shelves, cs);
+   e_config->shelves = eina_list_append(e_config->shelves, cs);
    e_config_save_queue();
 
    e_shelf_config_init();

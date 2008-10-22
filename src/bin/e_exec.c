@@ -59,7 +59,7 @@ static Evas_Object *_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe
 static void         _dialog_save_cb(void *data, void *data2);
 
 /* local subsystem globals */
-static Evas_List   *e_exec_start_pending = NULL;
+static Eina_List   *e_exec_start_pending = NULL;
 static Evas_Hash   *e_exec_instances = NULL;
 static int          startup_id = 0;
 
@@ -90,7 +90,7 @@ e_exec_shutdown(void)
    if (_e_exec_exit_handler) ecore_event_handler_del(_e_exec_exit_handler);
    if (_e_exec_border_add_handler) ecore_event_handler_del(_e_exec_border_add_handler);
    evas_hash_free(e_exec_instances);
-   evas_list_free(e_exec_start_pending);
+   eina_list_free(e_exec_start_pending);
    return 1;
 }
 
@@ -233,7 +233,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 
    if (desktop)
      {
-	Evas_List *l;
+	Eina_List *l;
 
 	efreet_desktop_ref(desktop);
 	inst->desktop = desktop;
@@ -245,15 +245,15 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	l = evas_hash_find(e_exec_instances, desktop->orig_path);
 	if (l)
 	  {
-	     l = evas_list_append(l, inst);
+	     l = eina_list_append(l, inst);
 	     evas_hash_modify(e_exec_instances, desktop->orig_path, l);
 	  }
 	else
 	  {
-	     l = evas_list_append(l, inst);
+	     l = eina_list_append(l, inst);
 	     e_exec_instances = evas_hash_add(e_exec_instances, desktop->orig_path, l);
 	  }
-	e_exec_start_pending = evas_list_append(e_exec_start_pending, desktop);
+	e_exec_start_pending = eina_list_append(e_exec_start_pending, desktop);
      }
    else if (exe)
      {
@@ -277,7 +277,7 @@ _e_exec_cb_expire_timer(void *data)
    E_Exec_Instance *inst;
  
    inst = data;
-   e_exec_start_pending = evas_list_remove(e_exec_start_pending, inst->desktop);
+   e_exec_start_pending = eina_list_remove(e_exec_start_pending, inst->desktop);
    inst->expire_timer = NULL;
    return 0;
 }
@@ -285,7 +285,7 @@ _e_exec_cb_expire_timer(void *data)
 static int
 _e_exec_cb_exit(void *data, int type, void *event)
 {
-   Evas_List *instances;
+   Eina_List *instances;
    Ecore_Exe_Event_Del *ev;
    E_Exec_Instance *inst;
 
@@ -347,14 +347,14 @@ _e_exec_cb_exit(void *data, int type, void *event)
 	instances = evas_hash_find(e_exec_instances, inst->desktop->orig_path);
 	if (instances)
 	  {
-	     instances = evas_list_remove(instances, inst);
+	     instances = eina_list_remove(instances, inst);
 	     if (instances)
 	       evas_hash_modify(e_exec_instances, inst->desktop->orig_path, instances);
 	     else
 	       e_exec_instances = evas_hash_del(e_exec_instances, inst->desktop->orig_path, NULL);
 	  }
      }
-   e_exec_start_pending = evas_list_remove(e_exec_start_pending, inst->desktop);
+   e_exec_start_pending = eina_list_remove(e_exec_start_pending, inst->desktop);
    if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
    if (inst->desktop) efreet_desktop_free(inst->desktop);
    free(inst);
@@ -365,7 +365,7 @@ static Evas_Bool
 _e_exec_startup_id_pid_find(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *value, void *data)
 {
    E_Exec_Search *search;
-   Evas_List *instances, *l;
+   Eina_List *instances, *l;
 
    search = data;
    instances = value;

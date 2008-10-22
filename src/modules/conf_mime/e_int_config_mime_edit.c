@@ -189,7 +189,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Config_Mime_Icon *mi;
    char buf[4096];
    int found = 0;
@@ -231,7 +231,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
       case DEFAULT:
 	if (found)
 	  {
-	     e_config->mime_icons = evas_list_remove(e_config->mime_icons, mi);
+	     e_config->mime_icons = eina_list_remove(e_config->mime_icons, mi);
 	     if (mi->mime) eina_stringshare_del(mi->mime);
 	     if (mi->icon) eina_stringshare_del(mi->icon);
 	     free(mi);
@@ -240,7 +240,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
 
    if (!found)
-     e_config->mime_icons = evas_list_append(e_config->mime_icons, mi);
+     e_config->mime_icons = eina_list_append(e_config->mime_icons, mi);
    
    e_config_save_queue();
    e_fm_mime_icon_cache_flush();

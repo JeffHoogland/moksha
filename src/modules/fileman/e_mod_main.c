@@ -32,7 +32,7 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   Evas_List *l, *ll, *lll;
+   Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
@@ -102,7 +102,7 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
-   Evas_List *l, *ll, *lll;
+   Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;

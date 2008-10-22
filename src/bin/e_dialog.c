@@ -82,7 +82,7 @@ e_dialog_button_add(E_Dialog *dia, const char *label, const char *icon, void (*f
    if (!func) func = _e_dialog_del_func_cb;
    o = e_widget_button_add(e_win_evas_get(dia->win), label, icon, (void (*) (void*, void*)) func, data, dia);
    e_widget_list_object_append(dia->box_object, o, 1, 0, 0.5);
-   dia->buttons = evas_list_append(dia->buttons, o);
+   dia->buttons = eina_list_append(dia->buttons, o);
 }
 
 EAPI int
@@ -90,7 +90,7 @@ e_dialog_button_focus_num(E_Dialog *dia, int button)
 {
    Evas_Object *o;
    
-   o = evas_list_nth(dia->buttons, button);
+   o = eina_list_nth(dia->buttons, button);
    if (o) e_widget_focus_steal(o);
    return 1;
 }
@@ -100,7 +100,7 @@ e_dialog_button_disable_num_set(E_Dialog *dia, int button, int disabled)
 {
    Evas_Object *o;
    
-   o = evas_list_nth(dia->buttons, button);
+   o = eina_list_nth(dia->buttons, button);
    if (o) e_widget_disabled_set(o, disabled);
    return 1;
 }
@@ -111,7 +111,7 @@ e_dialog_button_disable_num_get(E_Dialog *dia, int button)
    Evas_Object *o;
    int ret = 0;
    
-   o = evas_list_nth(dia->buttons, button);
+   o = eina_list_nth(dia->buttons, button);
    if (o) ret = e_widget_disabled_get(o);
    return ret;
 }
@@ -232,7 +232,7 @@ e_dialog_show(E_Dialog *dia)
 static void
 _e_dialog_free(E_Dialog *dia)
 {
-   if (dia->buttons) evas_list_free(dia->buttons);
+   if (dia->buttons) eina_list_free(dia->buttons);
    if (dia->text_object) evas_object_del(dia->text_object);
    if (dia->icon_object) evas_object_del(dia->icon_object);
    if (dia->box_object) evas_object_del(dia->box_object);

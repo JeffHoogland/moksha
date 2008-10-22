@@ -17,7 +17,7 @@ struct _E_Smart_Data
    Evas_Object *edje_obj;
    Evas_Object *event_obj;
    Evas_Object *slide_obj;
-   Evas_List *items;
+   Eina_List *items;
    Evas_Coord down_x, down_y;
    E_Smart_Item *cur;
    double down_time;
@@ -93,7 +93,7 @@ e_slidesel_item_add(Evas_Object *obj, const char *label, const char *icon, void 
    if (icon) it->icon = eina_stringshare_add(icon);
    it->func = func;
    it->data = data;
-   sd->items = evas_list_append(sd->items, it);
+   sd->items = eina_list_append(sd->items, it);
    e_slidecore_item_add(sd->slide_obj, label, icon, _e_smart_label_change, it);
 }
 

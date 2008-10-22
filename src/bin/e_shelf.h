@@ -38,7 +38,7 @@ struct _E_Shelf
    int                  interrupted;
    float                instant_delay;
    Ecore_Timer         *instant_timer;
-   Evas_List           *handlers;
+   Eina_List           *handlers;
    unsigned char        fit_along : 1;
    unsigned char        fit_size  : 1;
    unsigned char        hidden    : 1;
@@ -50,7 +50,7 @@ struct _E_Shelf
 EAPI int              e_shelf_init(void);
 EAPI int              e_shelf_shutdown(void);
 EAPI void             e_shelf_config_init(void);
-EAPI Evas_List       *e_shelf_list(void);
+EAPI Eina_List       *e_shelf_list(void);
 EAPI E_Shelf         *e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer, int id);
 EAPI void             e_shelf_zone_move_resize_handle(E_Zone *zone);
 EAPI void             e_shelf_populate(E_Shelf *es);

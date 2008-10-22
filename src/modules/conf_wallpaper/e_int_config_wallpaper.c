@@ -216,7 +216,7 @@ static void
 _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *selected;
+   Eina_List *selected;
    E_Fm2_Icon_Info *ici;
    const char *realpath;
    char buf[PATH_MAX];
@@ -230,7 +230,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
      snprintf(buf, sizeof(buf), "/%s", ici->file);
    else
      snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-   evas_list_free(selected);
+   eina_list_free(selected);
    if (ecore_file_is_dir(buf)) return;
 
    E_FREE(cfdata->bg);
@@ -280,7 +280,7 @@ static void
 _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info) 
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *sel, *all, *n;
+   Eina_List *sel, *all, *n;
    E_Fm2_Icon_Info *ici, *ic;
 
    cfdata = data;
@@ -290,11 +290,11 @@ _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info)
    if (!(sel = e_widget_flist_selected_list_get(cfdata->o_fm))) return;
 
    ici = sel->data;
-   all = evas_list_find_list(all, ici);
-   n = evas_list_next(all);
+   all = eina_list_data_find_list(all, ici);
+   n = eina_list_next(all);
    if (!n) 
      {
-	n = evas_list_prev(all);
+	n = eina_list_prev(all);
 	if (!n) return;
      }
 
@@ -303,7 +303,7 @@ _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info)
    e_widget_flist_select_set(cfdata->o_fm, ic->file, 1);
    e_widget_flist_file_show(cfdata->o_fm, ic->file);
 
-   evas_list_free(n);
+   eina_list_free(n);
 
    evas_object_smart_callback_call(cfdata->o_fm, "selection_change", cfdata);
 }
@@ -711,7 +711,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 static int
 _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   Evas_List *fl = NULL, *l;
+   Eina_List *fl = NULL, *l;
    E_Zone *z;
    E_Desk *d;
 
@@ -758,7 +758,7 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  cfbg = l->data;
 		  if ((cfbg->container == z->container->num) &&
 		      (cfbg->zone == z->id))
-		    fl = evas_list_append(fl, cfbg);
+		    fl = eina_list_append(fl, cfbg);
 	       }
 	     while (fl)
 	       {
@@ -767,7 +767,7 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  cfbg = fl->data;
 		  e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, 
                            cfbg->desk_y);
-		  fl = evas_list_remove_list(fl, fl);
+		  fl = eina_list_remove_list(fl, fl);
 	       }
 	     e_bg_add(z->container->num, z->id, -1, -1, cfdata->bg);
 	  }

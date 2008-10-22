@@ -94,7 +94,7 @@ e_widget_flist_path_set(Evas_Object *obj, const char *dev, const char *path)
    e_scrollframe_child_pos_set(wd->o_scroll, 0, 0);
 }
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_widget_flist_all_list_get(Evas_Object *obj) 
 {
    E_Widget_Data *wd = NULL;
@@ -103,7 +103,7 @@ e_widget_flist_all_list_get(Evas_Object *obj)
    return e_fm2_all_list_get(wd->o_fm);
 }
 
-EAPI Evas_List *
+EAPI Eina_List *
 e_widget_flist_selected_list_get(Evas_Object *obj) 
 {
    E_Widget_Data *wd = NULL;

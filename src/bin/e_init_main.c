@@ -43,7 +43,7 @@ static int font_hinting = -1;
 static int engine = -1;
 static const char *title = NULL;
 static const char *verstr = NULL;
-static Evas_List *fpath = NULL;
+static Eina_List *fpath = NULL;
 static Ecore_X_Window *initwins = NULL;
 static int initwins_num = 0;
 static Ecore_Ipc_Server *server = NULL;
@@ -80,7 +80,7 @@ main(int argc, char **argv)
 	else if (font_hinting < 0) font_hinting = atoi(argv[i]);
 	else if (!title) title = argv[i];
 	else if (!verstr) verstr = argv[i];
-	else fpath = evas_list_append(fpath, argv[i]);
+	else fpath = eina_list_append(fpath, argv[i]);
      }
    
    ecore_init();
@@ -226,7 +226,7 @@ e_init_init(void)
    Ecore_X_Window *roots;
    int i, num;
    Evas_Object *o;
-   Evas_List *l, *screens;
+   Eina_List *l, *screens;
    const char *s;
 
    e_xinerama_init();
@@ -273,7 +273,7 @@ e_init_init(void)
    initwins[1] = _e_init_win;
    
    /* look at xinerama asto how to slice this up */
-   screens = (Evas_List *)e_xinerama_screens_get();
+   screens = (Eina_List *)e_xinerama_screens_get();
    if (screens)
      {
 	for (l = screens; l; l = l->next)
@@ -443,7 +443,7 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
 {
    Ecore_Evas *ee;
    Evas *e;
-   Evas_List *l;
+   Eina_List *l;
    
    if ((engine == 0) || (engine == 1))
      {

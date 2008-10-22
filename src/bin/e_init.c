@@ -12,7 +12,7 @@ static Ecore_Event_Handler *exe_del_handler = NULL;
 static Ecore_Ipc_Client *client = NULL;
 static int done = 0;
 static int undone = 0;
-static Evas_List *stats = NULL;
+static Eina_List *stats = NULL;
 
 static int
 _e_init_cb_exe_event_del(void *data, int type, void *event)
@@ -120,7 +120,7 @@ e_init_status_set(const char *str)
 //   printf("---STAT %p %s\n", client, str);
    if (!client)
      {
-	stats = evas_list_append(stats, eina_stringshare_add(str));
+	stats = eina_list_append(stats, eina_stringshare_add(str));
 	return;
      }
 //   printf("---SEND\n");
@@ -164,7 +164,7 @@ e_init_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     initwins = e->data;
 	     for (i = 0; i < num; i+= 2)
 	       {
-		  Evas_List *l;
+		  Eina_List *l;
 
 		  for (l = e_manager_list(); l; l = l->next)
 		    {
@@ -184,7 +184,7 @@ e_init_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     const char *s;
 
 	     s = stats->data;
-	     stats = evas_list_remove_list(stats, stats);
+	     stats = eina_list_remove_list(stats, stats);
 //	     printf("---SPOOL %s\n", s);
 	     e_init_status_set(s);
 	     eina_stringshare_del(s);
@@ -204,7 +204,7 @@ e_init_client_del(Ecore_Ipc_Event_Client_Del *e)
 //   printf("---del init client\n");
    if (e->client == client)
      {
-	Evas_List *l;
+	Eina_List *l;
 
 	client = NULL;
 	for (l = e_manager_list(); l; l = l->next)
@@ -273,7 +273,7 @@ static Ecore_Timer         *_e_init_timeout_timer = NULL;
 
 /* startup icons */
 static Evas_Coord _e_init_icon_size = 0;
-static Evas_List *_e_init_icon_list = NULL;
+static Eina_List *_e_init_icon_list = NULL;
 
 /* externally accessible functions */
 EAPI int
@@ -284,7 +284,7 @@ e_init_init(void)
    Ecore_X_Window *roots;
    int num;
    Evas_Object *o;
-   Evas_List *l, *screens;
+   Eina_List *l, *screens;
    const char *s;
 
    _e_init_configure_handler =
@@ -323,7 +323,7 @@ e_init_init(void)
    else
      s = e_path_find(path_init, e_config->init_default_theme);
 
-   screens = (Evas_List *)e_xinerama_screens_get();
+   screens = (Eina_List *)e_xinerama_screens_get();
    if (screens)
      {
 	for (l = screens; l; l = l->next)
@@ -492,7 +492,7 @@ e_init_icons_desktop_add(Efreet_Desktop *desktop)
 			       _e_init_icon_size, _e_init_icon_size,
 			       _e_init_icon_size, _e_init_icon_size);
 	evas_object_show(o);
-	_e_init_icon_list = evas_list_append(_e_init_icon_list, o);
+	_e_init_icon_list = eina_list_append(_e_init_icon_list, o);
      }
 }
 
@@ -505,7 +505,7 @@ _e_init_icons_del(void)
      {
 	next = _e_init_icon_list->data;
 	evas_object_del(next);
-	_e_init_icon_list = evas_list_remove(_e_init_icon_list, next);
+	_e_init_icon_list = eina_list_remove(_e_init_icon_list, next);
      }
    if (_e_init_icon_box)
      evas_object_del(_e_init_icon_box);

@@ -47,7 +47,7 @@ _e_startup(void)
 	e_init_done();
 	return;
      }
-   desktop = evas_list_nth(startup_apps->desktops, start_app_pos);
+   desktop = eina_list_nth(startup_apps->desktops, start_app_pos);
    start_app_pos++;
    if (!desktop)
      {

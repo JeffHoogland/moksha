@@ -227,8 +227,8 @@ _e_msgbus_module_disable_cb(E_DBus_Object *obj, DBusMessage *msg)
 static DBusMessage* 
 _e_msgbus_module_list_cb(E_DBus_Object *obj, DBusMessage *msg)
 {
-   Evas_List *mod_list;
-   Evas_List * l;
+   Eina_List *mod_list;
+   Eina_List * l;
    DBusMessage *reply;
    DBusMessageIter iter;
    DBusMessageIter arr;
@@ -298,8 +298,8 @@ _e_msgbus_profile_get_cb(E_DBus_Object *obj, DBusMessage *msg)
 static DBusMessage* 
 _e_msgbus_profile_list_cb(E_DBus_Object *obj, DBusMessage *msg)
 {
-   Evas_List *profiles;
-   Evas_List * l;
+   Eina_List *profiles;
+   Eina_List * l;
    DBusMessage *reply;
    DBusMessageIter iter;
    DBusMessageIter arr;

@@ -7,7 +7,7 @@
 typedef struct _E_Fm2_Mime_Handler_Tuple E_Fm2_Mime_Handler_Tuple;
 struct _E_Fm2_Mime_Handler_Tuple
 {
-   Evas_List *list;
+   Eina_List *list;
    const char *str;
 };
 
@@ -38,7 +38,7 @@ e_fm_mime_icon_get(const char *mime)
 {
    char buf[4096], buf2[4096], *val;
    const char *homedir = NULL;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    E_Config_Mime_Icon *mi;
    
    /* 0.0 clean out hash cache once it has mroe than 512 entries in it */
@@ -114,13 +114,13 @@ e_fm_mime_icon_get(const char *mime)
 EAPI void
 e_fm_mime_icon_cache_flush(void)
 {
-   Evas_List *freelist = NULL;
+   Eina_List *freelist = NULL;
    
    evas_hash_foreach(icon_map, _e_fm_mime_icon_foreach, &freelist);
    while (freelist)
      {
 	eina_stringshare_del(freelist->data);
-	freelist = evas_list_remove_list(freelist, freelist);
+	freelist = eina_list_remove_list(freelist, freelist);
      }
    evas_hash_free(icon_map);
    icon_map = NULL;
@@ -165,20 +165,20 @@ e_fm2_mime_handler_free(E_Fm2_Mime_Handler *handler)
 EAPI Evas_Bool
 e_fm2_mime_handler_mime_add(E_Fm2_Mime_Handler *handler, const char *mime)
 {
-   Evas_List *handlers = NULL;
+   Eina_List *handlers = NULL;
 
    if ((!handler) || (!mime)) return 0;
 
    /* if there's an entry for this mime already, then append to its list */
    if ((handlers = evas_hash_find(_mime_handlers, mime)))
      {
-	handlers = evas_list_append(handlers, handler);
+	handlers = eina_list_append(handlers, handler);
 	evas_hash_modify(_mime_handlers, mime, handlers);
      }
    else
      {
 	/* no previous entry for this mime, lets add one */
-	handlers = evas_list_append(handlers, handler);
+	handlers = eina_list_append(handlers, handler);
 	_mime_handlers = evas_hash_add(_mime_handlers, mime, handlers);
      }
 
@@ -189,20 +189,20 @@ e_fm2_mime_handler_mime_add(E_Fm2_Mime_Handler *handler, const char *mime)
 EAPI Evas_Bool
 e_fm2_mime_handler_glob_add(E_Fm2_Mime_Handler *handler, const char *glob)
 {
-   Evas_List *handlers = NULL;
+   Eina_List *handlers = NULL;
 
    if ((!handler) || (!glob)) return 0;
 
    /* if there's an entry for this glob already, then append to its list */
    if ((handlers = evas_hash_find(_glob_handlers, glob)))
      {
-	handlers = evas_list_append(handlers, handler);
+	handlers = eina_list_append(handlers, handler);
 	evas_hash_modify(_glob_handlers, glob, handlers);
      }
    else
      {
 	/* no previous entry for this glob, lets add one */
-	handlers = evas_list_append(handlers, handler);
+	handlers = eina_list_append(handlers, handler);
 	_glob_handlers = evas_hash_add(_glob_handlers, glob, handlers);
      }
 
@@ -213,14 +213,14 @@ e_fm2_mime_handler_glob_add(E_Fm2_Mime_Handler *handler, const char *glob)
 EAPI void
 e_fm2_mime_handler_mime_del(E_Fm2_Mime_Handler *handler, const char *mime) 
 {
-   Evas_List *handlers = NULL;
+   Eina_List *handlers = NULL;
 
    if ((!handler) || (!mime)) return;
 
    /* if there's an entry for this mime already, then remove from list */
    if ((handlers = evas_hash_find(_mime_handlers, mime)))
      {
-	handlers = evas_list_remove(handlers, handler);
+	handlers = eina_list_remove(handlers, handler);
 	if (handlers)
 	  evas_hash_modify(_mime_handlers, mime, handlers);
 	else
@@ -232,14 +232,14 @@ e_fm2_mime_handler_mime_del(E_Fm2_Mime_Handler *handler, const char *mime)
 EAPI void
 e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob) 
 {
-   Evas_List *handlers = NULL;
+   Eina_List *handlers = NULL;
 
    if ((!handler) || (!glob)) return;
 
    /* if there's an entry for this glob already, then remove from list */
    if ((handlers = evas_hash_find(_glob_handlers, glob)))
      {
-	handlers = evas_list_remove(handlers, handler);
+	handlers = eina_list_remove(handlers, handler);
 	if (handlers)
 	  evas_hash_modify(_glob_handlers, glob, handlers);
 	else
@@ -249,7 +249,7 @@ e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob)
 
 /* get the list of mime handlers for a mime. 
  NOTE: the list should be free()'ed */
-EAPI Evas_List *
+EAPI Eina_List *
 e_fm2_mime_handler_mime_handlers_get(const char *mime)
 {
    if ((!mime) || (!_mime_handlers)) return NULL;
@@ -258,11 +258,11 @@ e_fm2_mime_handler_mime_handlers_get(const char *mime)
 
 /* get the list of glob handlers for a glob. 
  NOTE: the list should be free()'ed */
-EAPI Evas_List *
+EAPI Eina_List *
 e_fm2_mime_handler_glob_handlers_get(const char *glob)
 {
    E_Fm2_Mime_Handler_Tuple *tuple = NULL;
-   Evas_List *handlers = NULL;
+   Eina_List *handlers = NULL;
 
    if ((!glob) || (!_glob_handlers)) return NULL;
 
@@ -301,8 +301,8 @@ e_fm2_mime_handler_call(E_Fm2_Mime_Handler *handler, Evas_Object *obj, const cha
 EAPI void
 e_fm2_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, const char *mime)
 {
-   Evas_List *handlers = NULL;
-   Evas_List *l = NULL;
+   Eina_List *handlers = NULL;
+   Eina_List *l = NULL;
 
    if ((!obj) || (!path) || (!mime)) return;
 
@@ -324,8 +324,8 @@ e_fm2_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, co
 EAPI void
 e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, const char *glob)
 {
-   Evas_List *handlers = NULL;
-   Evas_List *l = NULL;
+   Eina_List *handlers = NULL;
+   Eina_List *l = NULL;
 
    if ((!obj) || (!path) || (!glob)) return;
 
@@ -359,8 +359,8 @@ static Evas_Bool
 _e_fm2_mime_handler_glob_match_foreach(const Evas_Hash *hash __UNUSED__, const char *key, void *data, void *fdata)
 {
    E_Fm2_Mime_Handler_Tuple *tuple;
-   Evas_List *handlers = NULL;
-   Evas_List *l = NULL;
+   Eina_List *handlers = NULL;
+   Eina_List *l = NULL;
 
    tuple = fdata;
    if (e_util_glob_match(tuple->str, key)) 
@@ -369,7 +369,7 @@ _e_fm2_mime_handler_glob_match_foreach(const Evas_Hash *hash __UNUSED__, const c
 	for (l = handlers; l; l = l->next)
 	  {
 	     if (l->data)
-	       tuple->list = evas_list_append(tuple->list, l->data);
+	       tuple->list = eina_list_append(tuple->list, l->data);
 	  }
      }
    
@@ -379,9 +379,9 @@ _e_fm2_mime_handler_glob_match_foreach(const Evas_Hash *hash __UNUSED__, const c
 static Evas_Bool
 _e_fm_mime_icon_foreach(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata)
 {
-   Evas_List **freelist;
+   Eina_List **freelist;
    
    freelist = fdata;
-   *freelist = evas_list_append(*freelist, data);
+   *freelist = eina_list_append(*freelist, data);
    return 1;
 }

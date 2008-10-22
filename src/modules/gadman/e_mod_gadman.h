@@ -34,7 +34,7 @@ struct _Manager
 {
    E_Gadcon    *gc;
    E_Gadcon    *gc_top;
-   Evas_List   *gadgets;
+   Eina_List   *gadgets;
    Evas_Object *mover;
    Evas_Object *mover_top;
    Evas_Object *full_bg;

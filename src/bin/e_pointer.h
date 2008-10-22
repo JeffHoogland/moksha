@@ -31,7 +31,7 @@ struct _E_Pointer
 
    const char       *type;
    void             *obj;
-   Evas_List        *stack;
+   Eina_List        *stack;
 
    struct {
       int            x, y;

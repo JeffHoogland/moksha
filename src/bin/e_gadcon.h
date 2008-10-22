@@ -66,7 +66,7 @@ struct _E_Gadcon
    
    Evas                *evas;
    Evas_Object         *o_container;
-   Evas_List           *clients;
+   Eina_List           *clients;
    
    struct 
      {
@@ -186,7 +186,7 @@ EAPI int              e_gadcon_init(void);
 EAPI int              e_gadcon_shutdown(void);
 EAPI void             e_gadcon_provider_register(const E_Gadcon_Client_Class *cc);
 EAPI void             e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc);
-EAPI Evas_List       *e_gadcon_provider_list(void);
+EAPI Eina_List       *e_gadcon_provider_list(void);
 EAPI E_Gadcon        *e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, char *swallow_name);
 EAPI void             e_gadcon_swallowed_min_size_set(E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 EAPI void             e_gadcon_min_size_request_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data);

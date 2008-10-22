@@ -127,7 +127,7 @@ static void
 _ilist_fill(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
-   Evas_List *l;
+   Eina_List *l;
    const char *cur_profile;
 
    if (!cfdata) return;

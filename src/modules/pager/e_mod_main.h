@@ -38,9 +38,9 @@ struct _Config
    /* just config state */
    E_Module        *module;
    E_Config_Dialog *config_dialog;
-   Evas_List       *instances;
+   Eina_List       *instances;
    E_Menu          *menu;
-   Evas_List       *handlers;
+   Eina_List       *handlers;
 };
 
 EAPI extern E_Module_Api e_modapi;

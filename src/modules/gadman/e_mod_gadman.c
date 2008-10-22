@@ -41,7 +41,7 @@ E_Gadcon_Client *current;
 void
 gadman_init(E_Module *m)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    /* Create Manager */
    Man = calloc(1, sizeof(Manager));
@@ -99,8 +99,8 @@ gadman_shutdown(void)
    e_gadcon_unpopulate(Man->gc_top);
 
    /* free gadcons */
-   e_config->gadcons = evas_list_remove(e_config->gadcons, Man->gc);
-   e_config->gadcons = evas_list_remove(e_config->gadcons, Man->gc_top);
+   e_config->gadcons = eina_list_remove(e_config->gadcons, Man->gc);
+   e_config->gadcons = eina_list_remove(e_config->gadcons, Man->gc_top);
    eina_stringshare_del(Man->gc->name);
    eina_stringshare_del(Man->gc_top->name);
    if (Man->gc->config_dialog) e_object_del(E_OBJECT(Man->gc->config_dialog));
@@ -111,7 +111,7 @@ gadman_shutdown(void)
    /* free manager */
    evas_object_del(Man->mover);
    evas_object_del(Man->mover_top);
-   evas_list_free(Man->gadgets);
+   eina_list_free(Man->gadgets);
    if (Man->top_ee)
      {
         e_canvas_del(Man->top_ee);
@@ -127,7 +127,7 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop)
    E_Gadcon *gc;
    E_Gadcon_Client *gcc;
    E_Gadcon_Client_Class *cc = NULL;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    if (!cf->name) return NULL;
 
@@ -150,7 +150,7 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop)
    gcc->cf = cf;
    gcc->client_class = cc;
 
-   Man->gadgets = evas_list_append(Man->gadgets, gcc);
+   Man->gadgets = eina_list_append(Man->gadgets, gcc);
 
    //printf("Place Gadget %s (style: %s id: %s) (gadcon: %s)\n", gcc->name, cf->style, cf->id, gc->name);
 
@@ -212,12 +212,12 @@ gadman_gadget_add(E_Gadcon_Client_Class *cc, int ontop)
 void
 gadman_gadget_remove(E_Gadcon_Client *gcc)
 {
-   Man->gadgets = evas_list_remove(Man->gadgets, gcc);
+   Man->gadgets = eina_list_remove(Man->gadgets, gcc);
 
    edje_object_part_unswallow(gcc->o_frame, gcc->o_base);
    evas_object_del(gcc->o_frame);
 
-   gcc->gadcon->clients = evas_list_remove(gcc->gadcon->clients, gcc);
+   gcc->gadcon->clients = eina_list_remove(gcc->gadcon->clients, gcc);
 
    e_object_del(E_OBJECT(gcc));
    current = NULL;
@@ -226,13 +226,13 @@ gadman_gadget_remove(E_Gadcon_Client *gcc)
 void
 gadman_gadget_del(E_Gadcon_Client *gcc)
 {
-   Man->gadgets = evas_list_remove(Man->gadgets, gcc);
+   Man->gadgets = eina_list_remove(Man->gadgets, gcc);
 
    edje_object_part_unswallow(gcc->o_frame, gcc->o_base);
    evas_object_del(gcc->o_frame);
 
    e_gadcon_client_config_del(current->gadcon->cf, gcc->cf);
-   gcc->gadcon->clients = evas_list_remove(gcc->gadcon->clients, gcc);
+   gcc->gadcon->clients = eina_list_remove(gcc->gadcon->clients, gcc);
    e_object_del(E_OBJECT(gcc));
 
    current = NULL;
@@ -275,7 +275,7 @@ gadman_gadget_edit_end(void)
 void
 gadman_gadgets_show(void)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    Man->visible = 1;
    ecore_evas_show(Man->top_ee);
@@ -316,7 +316,7 @@ gadman_gadgets_show(void)
 void
 gadman_gadgets_hide(void)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    Man->visible = 0;
 
@@ -412,7 +412,7 @@ static E_Gadcon*
 _gadman_gadcon_new(const char* name, int ontop)
 {
    E_Gadcon *gc;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    /* Create Gadcon */
    gc = E_OBJECT_ALLOC(E_Gadcon, E_GADCON_TYPE, NULL);
@@ -503,7 +503,7 @@ _gadman_gadcon_new(const char* name, int ontop)
         gc->cf->name = eina_stringshare_add(name);
         gc->cf->id = gc->id;
         gc->cf->clients = NULL;
-        e_config->gadcons = evas_list_append(e_config->gadcons, gc->cf);
+        e_config->gadcons = eina_list_append(e_config->gadcons, gc->cf);
         e_config_save_queue();
      }
 
@@ -742,7 +742,7 @@ _get_bind_text(const char* action)
 static void
 on_shape_change(void *data, E_Container_Shape *es, E_Container_Shape_Change ch)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    E_Container  *con;
 
    con = e_container_shape_container_get(es);
@@ -818,8 +818,8 @@ on_menu_layer_bg(void *data, E_Menu *m, E_Menu_Item *mi)
    gadman_gadget_remove(current);
    current = gadman_gadget_place(cf, 0);
 
-   Man->gc_top->cf->clients = evas_list_remove(Man->gc_top->cf->clients, cf);
-   Man->gc->cf->clients = evas_list_append(Man->gc->cf->clients, cf);
+   Man->gc_top->cf->clients = eina_list_remove(Man->gc_top->cf->clients, cf);
+   Man->gc->cf->clients = eina_list_append(Man->gc->cf->clients, cf);
 
    e_config_save_queue();
 }
@@ -835,8 +835,8 @@ on_menu_layer_top(void *data, E_Menu *m, E_Menu_Item *mi)
    gadman_gadget_remove(current);
    current = gadman_gadget_place(cf, 1);
 
-   Man->gc->cf->clients = evas_list_remove(Man->gc->cf->clients, cf);
-   Man->gc_top->cf->clients = evas_list_append(Man->gc_top->cf->clients, cf);
+   Man->gc->cf->clients = eina_list_remove(Man->gc->cf->clients, cf);
+   Man->gc_top->cf->clients = eina_list_append(Man->gc_top->cf->clients, cf);
 
    e_config_save_queue();
 

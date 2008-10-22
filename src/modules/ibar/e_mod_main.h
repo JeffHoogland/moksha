@@ -10,13 +10,13 @@ typedef struct _Config_Item Config_Item;
 struct _Config
 {
    /* saved * loaded config values */
-   Evas_List       *items;
+   Eina_List       *items;
    /* just config state */
    E_Module        *module;
    E_Config_Dialog *config_dialog;
-   Evas_List       *instances;
+   Eina_List       *instances;
    E_Menu          *menu;
-   Evas_List       *handlers;
+   Eina_List       *handlers;
 };
 
 struct _Config_Item

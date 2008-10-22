@@ -19,7 +19,7 @@ static E_Remember  *_e_remember_find(E_Border *bd, int check_usable);
 EAPI int
 e_remember_init(E_Startup_Mode mode)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    int not_updated = 0;
 
    if (mode == E_STARTUP_START)
@@ -59,7 +59,7 @@ e_remember_init(E_Startup_Mode mode)
      }
 
    if (not_updated)
-     e_config->remembers = evas_list_sort(e_config->remembers, -1, 
+     e_config->remembers = eina_list_sort(e_config->remembers, -1, 
                                           _e_remember_sort_list);
 #endif
    return 1;
@@ -78,7 +78,7 @@ e_remember_new(void)
 
    rem = E_NEW(E_Remember, 1);
    if (!rem) return NULL;
-   e_config->remembers = evas_list_prepend(e_config->remembers, rem);
+   e_config->remembers = eina_list_prepend(e_config->remembers, rem);
    return rem;
 }
 
@@ -109,7 +109,7 @@ e_remember_del(E_Remember *rem)
    if (rem->delete_me) return;
    if (rem->used_count != 0)
      {
-	Evas_List *l = NULL;
+	Eina_List *l = NULL;
 
 	rem->delete_me = 1;
 	for (l = e_border_client_list(); l; l = l->next)
@@ -164,11 +164,11 @@ e_remember_match_update(E_Remember *rem)
 	/* The number of matches for this remember has changed so we
 	 * need to remove from list and insert back into the appropriate
 	 * loction. */
-	Evas_List *l = NULL;
+	Eina_List *l = NULL;
 	E_Remember *r; 
 
 	rem->max_score = max_count;
-	e_config->remembers = evas_list_remove(e_config->remembers, rem);
+	e_config->remembers = eina_list_remove(e_config->remembers, rem);
 
 	for (l = e_config->remembers; l; l = l->next)
 	  {
@@ -177,9 +177,9 @@ e_remember_match_update(E_Remember *rem)
 	  }
 
 	if (l)
-	   e_config->remembers = evas_list_prepend_relative_list(e_config->remembers, rem, l);
+	   e_config->remembers = eina_list_prepend_relative_list(e_config->remembers, rem, l);
 	else
-	   e_config->remembers = evas_list_append(e_config->remembers, rem);
+	   e_config->remembers = eina_list_append(e_config->remembers, rem);
      }
 }
 
@@ -349,7 +349,7 @@ e_remember_update(E_Remember *rem, E_Border *bd)
 static E_Remember *
 _e_remember_find(E_Border *bd, int check_usable)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
 #if REMEMBER_SIMPLE
    for (l = e_config->remembers; l; l = l->next)
@@ -455,7 +455,7 @@ _e_remember_find(E_Border *bd, int check_usable)
 static void
 _e_remember_free(E_Remember *rem)
 {
-   e_config->remembers = evas_list_remove(e_config->remembers, rem);
+   e_config->remembers = eina_list_remove(e_config->remembers, rem);
    if (rem->name) eina_stringshare_del(rem->name);
    if (rem->class) eina_stringshare_del(rem->class);
    if (rem->title) eina_stringshare_del(rem->title);

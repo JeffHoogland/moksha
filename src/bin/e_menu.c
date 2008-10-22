@@ -29,7 +29,7 @@ typedef struct _E_Menu_Category E_Menu_Category;
 struct _E_Menu_Category
 {
 	void *data;
-	Evas_List *callbacks;
+	Eina_List *callbacks;
 };
 
 /* local subsystem functions */
@@ -63,7 +63,7 @@ static void _e_menu_activate_nth                  (int n);
 #endif
 static E_Menu *_e_menu_active_get                 (void);
 static E_Menu_Item *_e_menu_item_active_get       (void);
-static Evas_List * _e_menu_list_item_active_get   (void);
+static Eina_List * _e_menu_list_item_active_get   (void);
 static int  _e_menu_outside_bounds_get            (int xdir, int ydir);
 static void _e_menu_scroll_by                     (int dx, int dy);
 static void _e_menu_mouse_autoscroll_check        (void);
@@ -90,7 +90,7 @@ static Evas_Bool _e_menu_categories_free_cb(const Evas_Hash *hash, const char *k
 
 /* local subsystem globals */
 static Ecore_X_Window       _e_menu_win                 = 0;
-static Evas_List           *_e_active_menus             = NULL;
+static Eina_List           *_e_active_menus             = NULL;
 static E_Menu_Item         *_e_active_menu_item         = NULL;
 /*static Evas_Hash	   *_e_menu_category_items	= NULL;*/
 static Evas_Hash	   *_e_menu_categories		= NULL;
@@ -145,7 +145,7 @@ e_menu_shutdown(void)
 	m = _e_active_menus->data;
 	m->active = 0;
 	_e_menu_unrealize(m);
-	_e_active_menus = evas_list_remove_list(_e_active_menus, _e_active_menus);
+	_e_active_menus = eina_list_remove_list(_e_active_menus, _e_active_menus);
 
 	m->in_active_list = 0;
 	e_object_unref(E_OBJECT(m));
@@ -471,7 +471,7 @@ e_menu_category_callback_add(char *category, void (*create) (E_Menu *m, void *ca
                cb->create = create;
                cb->free = free;
 	       cb->category = eina_stringshare_add(category);
-               cat->callbacks = evas_list_append(cat->callbacks, cb);
+               cat->callbacks = eina_list_append(cat->callbacks, cb);
 	    }
       }
    return cb;
@@ -486,7 +486,7 @@ e_menu_category_callback_del(E_Menu_Category_Callback *cb)
       {
          cat = evas_hash_find(_e_menu_categories, cb->category);
 	 if (cat)
-            cat->callbacks = evas_list_remove(cat->callbacks, cb);
+            cat->callbacks = eina_list_remove(cat->callbacks, cb);
          eina_stringshare_del(cb->category);
          free(cb);
       }
@@ -535,8 +535,8 @@ e_menu_item_new(E_Menu *m)
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, NULL);
    mi = E_OBJECT_ALLOC(E_Menu_Item, E_MENU_ITEM_TYPE, _e_menu_item_free);
    mi->menu = m;
-   mi->menu->items = evas_list_append(mi->menu->items, mi);
-   mi->list_position = evas_list_last(mi->menu->items);
+   mi->menu->items = eina_list_append(mi->menu->items, mi);
+   mi->list_position = eina_list_last(mi->menu->items);
    return mi;
 }
 
@@ -545,13 +545,13 @@ e_menu_item_nth(E_Menu *m, int n)
 {
    E_OBJECT_CHECK_RETURN(m, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, NULL);
-   return (E_Menu_Item *)evas_list_nth(m->items, n);
+   return (E_Menu_Item *)eina_list_nth(m->items, n);
 }
 
 EAPI int
 e_menu_item_num_get(E_Menu_Item *mi)
 {
-   Evas_List *l;
+   Eina_List *l;
    int i;
    
    E_OBJECT_CHECK_RETURN(mi, -1);
@@ -719,7 +719,7 @@ e_menu_item_toggle_set(E_Menu_Item *mi, int tog)
      {
 	if (mi->radio)
 	  {
-	     Evas_List *l;
+	     Eina_List *l;
 	     
 	     for (l = mi->menu->items; l; l = l->next)
 	       {
@@ -847,12 +847,12 @@ e_menu_idler_before(void)
    /* when e goes "idle" this gets called so leave all our hard work till */
    /* idle time to avoid falling behind the user. just evaluate the high */
    /* level state machine */
-   Evas_List *l, *removals = NULL, *tmp = NULL;
+   Eina_List *l, *removals = NULL, *tmp = NULL;
 
    /* add refcount to all menus we will work with */
    for (l = _e_active_menus; l; l = l->next)
      {
-	tmp = evas_list_append(tmp, l->data);
+	tmp = eina_list_append(tmp, l->data);
 	e_object_ref(E_OBJECT(l->data));
      }
    /* phase 1. hide all the menus that want to be hidden */
@@ -919,7 +919,7 @@ e_menu_idler_before(void)
 	if (!m->active)
 	  {
 	     _e_menu_unrealize(m);
-	     removals = evas_list_append(removals, m);
+	     removals = eina_list_append(removals, m);
 	  }
      }
    while (removals)
@@ -927,10 +927,10 @@ e_menu_idler_before(void)
 	E_Menu *m;
 	
 	m = removals->data;
-	removals = evas_list_remove(removals, m);
+	removals = eina_list_remove(removals, m);
 	if (m->in_active_list)
 	  {
-	     _e_active_menus = evas_list_remove(_e_active_menus, m);
+	     _e_active_menus = eina_list_remove(_e_active_menus, m);
 	     m->in_active_list = 0;
 	     e_object_unref(E_OBJECT(m));
 	  }
@@ -996,7 +996,7 @@ e_menu_idler_before(void)
    while (tmp)
      {
 	e_object_unref(E_OBJECT(tmp->data));
-	tmp = evas_list_remove_list(tmp, tmp);
+	tmp = eina_list_remove_list(tmp, tmp);
      }
    if (!_e_active_menus)
      {
@@ -1019,7 +1019,7 @@ e_menu_grab_window_get(void)
 static void
 _e_menu_free(E_Menu *m)
 {
-   Evas_List *l, *tmp;
+   Eina_List *l, *tmp;
    E_Menu_Category *cat;
    
    /* the foreign menu items */
@@ -1045,7 +1045,7 @@ _e_menu_free(E_Menu *m)
      }
    if (m->in_active_list)
      {
-	_e_active_menus = evas_list_remove(_e_active_menus, m);
+	_e_active_menus = eina_list_remove(_e_active_menus, m);
 	m->in_active_list = 0;
 	e_object_unref(E_OBJECT(m));
      }
@@ -1064,7 +1064,7 @@ _e_menu_item_free(E_Menu_Item *mi)
 	e_object_unref(E_OBJECT(mi->submenu));
      }
    if (mi->menu->realized) _e_menu_item_unrealize(mi);
-   mi->menu->items = evas_list_remove(mi->menu->items, mi);
+   mi->menu->items = eina_list_remove(mi->menu->items, mi);
    if (mi->icon) eina_stringshare_del(mi->icon);
    if (mi->icon_key) eina_stringshare_del(mi->icon_key);
    if (mi->label) eina_stringshare_del(mi->label);
@@ -1367,7 +1367,7 @@ static void
 _e_menu_realize(E_Menu *m)
 {
    Evas_Object *o;
-   Evas_List *l;
+   Eina_List *l;
  
    int ok;
    
@@ -1459,7 +1459,7 @@ _e_menu_realize(E_Menu *m)
 static void
 _e_menu_items_layout_update(E_Menu *m)
 {
-   Evas_List *l;
+   Eina_List *l;
    Evas_Coord bw, bh, mw, mh;
    int toggles_on = 0;
    int icons_on = 0;
@@ -1682,7 +1682,7 @@ _e_menu_item_unrealize(E_Menu_Item *mi)
 static void
 _e_menu_unrealize(E_Menu *m)
 {
-   Evas_List *l;
+   Eina_List *l;
  
    if (!m->realized) return;
    evas_event_freeze(m->evas);
@@ -1718,7 +1718,7 @@ _e_menu_unrealize(E_Menu *m)
 static void
 _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Menu_Category *cat;
 
    if (m->pre_activate_cb.func)
@@ -1750,11 +1750,11 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 	/* been removed from the list yet */
 	if (m->in_active_list)
 	  {
-	     _e_active_menus = evas_list_remove(_e_active_menus, m);
+	     _e_active_menus = eina_list_remove(_e_active_menus, m);
 	     m->in_active_list = 0;
 	     e_object_unref(E_OBJECT(m));
 	  }
-	_e_active_menus = evas_list_append(_e_active_menus, m);
+	_e_active_menus = eina_list_append(_e_active_menus, m);
 	m->in_active_list = 1;
 	m->active = 1;
 	e_object_ref(E_OBJECT(m));
@@ -1777,19 +1777,19 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 static void
 _e_menu_deactivate_all(void)
 {
-   Evas_List *l, *tmp = NULL;
+   Eina_List *l, *tmp = NULL;
 
    for (l = _e_active_menus; l; l = l->next)
      {
 	e_object_ref(E_OBJECT(l->data));
-	tmp = evas_list_append(tmp, l->data);
+	tmp = eina_list_append(tmp, l->data);
      }
    while (tmp)
      {
 	E_Menu *m;
 	
 	m = tmp->data;
-	tmp = evas_list_remove_list(tmp, tmp);
+	tmp = eina_list_remove_list(tmp, tmp);
 	e_menu_deactivate(m);
 	m->parent_item = NULL;
 	e_object_unref(E_OBJECT(m));
@@ -1802,20 +1802,20 @@ _e_menu_deactivate_all(void)
 static void
 _e_menu_deactivate_above(E_Menu *ma)
 {
-   Evas_List *l, *tmp = NULL;
+   Eina_List *l, *tmp = NULL;
    int above = 0;
 
    for (l = _e_active_menus; l; l = l->next)
      {
 	e_object_ref(E_OBJECT(l->data));
-	tmp = evas_list_append(tmp, l->data);
+	tmp = eina_list_append(tmp, l->data);
      }
    while (tmp)
      {
 	E_Menu *m;
 	
 	m = tmp->data;
-	tmp = evas_list_remove_list(tmp, tmp);
+	tmp = eina_list_remove_list(tmp, tmp);
 	if (above)
 	  {
 	     e_menu_deactivate(m);
@@ -1863,7 +1863,7 @@ _e_menu_submenu_deactivate(E_Menu_Item *mi)
 static void
 _e_menu_reposition(E_Menu *m)
 {
-   Evas_List *l, *tmp = NULL;
+   Eina_List *l, *tmp = NULL;
    int parent_item_bottom;
    
    if (!m->parent_item) return;
@@ -1894,7 +1894,7 @@ _e_menu_reposition(E_Menu *m)
    /* FIXME: this will suck for big menus */
    for (l = _e_active_menus; l; l = l->next)
      {
-	tmp = evas_list_append(tmp, l->data);
+	tmp = eina_list_append(tmp, l->data);
 	e_object_ref(E_OBJECT(l->data));
      }
    for (l = m->items; l; l = l->next)
@@ -1907,7 +1907,7 @@ _e_menu_reposition(E_Menu *m)
    while (tmp)
      {
 	e_object_unref(E_OBJECT(tmp->data));
-	tmp = evas_list_remove_list(tmp, tmp);
+	tmp = eina_list_remove_list(tmp, tmp);
      }
 }
 
@@ -1949,7 +1949,7 @@ static void
 _e_menu_item_activate_next(void)
 {
    E_Menu_Item *mi;
-   Evas_List *ll;
+   Eina_List *ll;
 
    ll = _e_menu_list_item_active_get();
    mi = _e_menu_item_active_get();
@@ -1983,7 +1983,7 @@ static void
 _e_menu_item_activate_previous(void)
 {
    E_Menu_Item *mi;
-   Evas_List *ll;
+   Eina_List *ll;
 
    ll = _e_menu_list_item_active_get();
    mi = _e_menu_item_active_get();
@@ -1992,14 +1992,14 @@ _e_menu_item_activate_previous(void)
 	/* Look at the prev item and then cycle until we're not on
 	 * a separator. */
 	if (!(ll->prev)) 
-	  ll = evas_list_last(ll);
+	  ll = eina_list_last(ll);
 	else
 	   ll = ll->prev;
 	mi = ll->data;
 	while (mi->separator)
 	  { 
 	     if (!(ll->prev)) 
-	       ll = evas_list_last(ll);
+	       ll = eina_list_last(ll);
 	     else
 	       ll = ll->prev;
 	     mi = ll->data;
@@ -2017,7 +2017,7 @@ static void
 _e_menu_item_activate_first(void)
 {
    E_Menu *m;
-   Evas_List *ll;
+   Eina_List *ll;
    E_Menu_Item *mi;
 
    m = _e_menu_active_get();
@@ -2042,13 +2042,13 @@ static void
 _e_menu_item_activate_last(void)
 {
    E_Menu *m;
-   Evas_List *ll;
+   Eina_List *ll;
    E_Menu_Item *mi;
 
    m = _e_menu_active_get();
    if (m)
      {
-	ll = evas_list_last(m->items);
+	ll = eina_list_last(m->items);
 	mi = ll->data;
 	while ((mi->separator) && (ll->prev))
 	  {
@@ -2068,7 +2068,7 @@ _e_menu_item_activate_nth(int n)
 {
    E_Menu *m;
    E_Menu_Item *mi;
-   Evas_List *ll;
+   Eina_List *ll;
    int i;
    
    mi = _e_menu_item_active_get();
@@ -2094,7 +2094,7 @@ _e_menu_item_activate_char(char * key_compose)
 {
    E_Menu *m;
    E_Menu_Item *mi;
-   Evas_List *ll, *ll_orig;
+   Eina_List *ll, *ll_orig;
 
    /* Ignore modifiers and such. */
    if (!key_compose) return;
@@ -2204,7 +2204,7 @@ _e_menu_activate_first(void)
 {
    E_Menu *m;
    E_Menu_Item *mi;
-   Evas_List *ll;
+   Eina_List *ll;
    
    if (!_e_active_menus) return;
    m = _e_active_menus->data;
@@ -2226,12 +2226,12 @@ _e_menu_activate_last(void)
 {
    E_Menu *m;
    E_Menu_Item *mi;
-   Evas_List *ll;
+   Eina_List *ll;
    
    if (!_e_active_menus) return;
    m = _e_active_menus->data;
    if (!m->items) return;
-   ll = evas_list_last(m->items);
+   ll = eina_list_last(m->items);
    mi = ll->data;
    while ((mi->separator) && (ll->prev))
      {
@@ -2249,7 +2249,7 @@ _e_menu_activate_nth(int n)
 {
    E_Menu *m;
    E_Menu_Item *mi;
-   Evas_List *ll;
+   Eina_List *ll;
    int i;
    
    mi = _e_menu_item_active_get();
@@ -2289,7 +2289,7 @@ _e_menu_item_active_get(void)
    return _e_active_menu_item;
 }
 
-static Evas_List * 
+static Eina_List * 
 _e_menu_list_item_active_get(void)
 {
    if (_e_active_menu_item)
@@ -2301,7 +2301,7 @@ _e_menu_list_item_active_get(void)
 static int
 _e_menu_outside_bounds_get(int xdir, int ydir)
 {
-   Evas_List *l;
+   Eina_List *l;
    int outl = 0;
    int outr = 0;
    int outt = 0;
@@ -2356,7 +2356,7 @@ _e_menu_outside_bounds_get(int xdir, int ydir)
 static void
 _e_menu_scroll_by(int dx, int dy)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = _e_active_menus; l; l = l->next)
      {
@@ -2706,7 +2706,7 @@ static int
 _e_menu_cb_mouse_move(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Move *ev;
-   Evas_List *l, *tmp = NULL;
+   Eina_List *l, *tmp = NULL;
    int dx, dy, d;
    double dt;
    double fast_move_threshold;
@@ -2725,7 +2725,7 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
 
    for (l = _e_active_menus; l; l = l->next)
      {
-	tmp = evas_list_append(tmp, l->data);
+	tmp = eina_list_append(tmp, l->data);
 	e_object_ref(E_OBJECT(l->data));
      }
    for (l = _e_active_menus; l; l = l->next)
@@ -2759,7 +2759,7 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
    while (tmp)
      {
 	e_object_unref(E_OBJECT(tmp->data));
-	tmp = evas_list_remove_list(tmp, tmp);
+	tmp = eina_list_remove_list(tmp, tmp);
      }
      
    _e_menu_x = ev->x;
@@ -2846,7 +2846,7 @@ _e_menu_cb_scroll_animator(void *data)
 static int
 _e_menu_cb_window_shape(void *data, int ev_type, void *ev)
 {
-   Evas_List *l;
+   Eina_List *l;
    Ecore_X_Event_Window_Shape *e;
    
    e = ev;
@@ -2877,15 +2877,15 @@ _e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi)
 static Evas_Bool
 _e_menu_categories_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Menu_Category *cat;
    
    cat = (E_Menu_Category *) data;
-   l = (Evas_List *) cat->callbacks;
+   l = (Eina_List *) cat->callbacks;
    while (l)
      {
 	free(l->data); /* free the callback struct */
-	l = evas_list_remove_list(l, l);
+	l = eina_list_remove_list(l, l);
      }
    free(cat);
    return 1;

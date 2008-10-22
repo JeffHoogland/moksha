@@ -7,8 +7,8 @@ typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
    Evas_Object *obj;
-   Evas_List *sliders;
-   Evas_List *entries;
+   Eina_List *sliders;
+   Eina_List *entries;
    Evas_Object *spectrum, *vert, *well;
    E_Color *cv;
    char **values;
@@ -31,8 +31,8 @@ _e_wid_del_hook(Evas_Object *obj)
      }
    E_FREE(wd->values);
 
-   evas_list_free(wd->sliders);
-   evas_list_free(wd->entries);
+   eina_list_free(wd->sliders);
+   eina_list_free(wd->entries);
 
    E_FREE(wd);
 }
@@ -50,7 +50,7 @@ static void
 _e_wid_cb_color_changed(void *data, Evas_Object *o)
 {
    E_Widget_Data *wd = data;
-   Evas_List *l;
+   Eina_List *l;
    int i;
    int changed = -1;
 
@@ -238,14 +238,14 @@ e_widget_csel_add(Evas *evas, E_Color *color)
 	o = e_widget_cslider_add(evas, i, wd->cv, 0, 0);
 	e_widget_sub_object_add(obj, o);
 	evas_object_show(o);
-	wd->sliders = evas_list_append(wd->sliders, o);
+	wd->sliders = eina_list_append(wd->sliders, o);
 	e_widget_on_change_hook_set(o, _e_wid_cb_color_changed, wd);
 	e_widget_table_object_append(frame, o, 1, i, 1, 1, 1, 1, 1, 0);
 
 	o = e_widget_entry_add(evas, &(wd->values[i]), NULL, NULL, NULL);
 	e_widget_sub_object_add(obj, o);
 	evas_object_show(o);
-	wd->entries = evas_list_append(wd->entries, o);
+	wd->entries = eina_list_append(wd->entries, o);
 	e_widget_table_object_append(frame, o, 2, i, 1, 1, 1, 1, 1, 1);
 	e_widget_on_change_hook_set(o, _e_wid_cb_color_changed, wd);
 

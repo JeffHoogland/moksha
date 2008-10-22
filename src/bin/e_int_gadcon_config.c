@@ -188,7 +188,7 @@ static void
 _load_avail_gadgets(void *data) 
 {
    E_Config_Dialog_Data *cfdata = NULL;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    Evas *evas;
    int w;
 
@@ -199,7 +199,7 @@ _load_avail_gadgets(void *data)
    e_widget_ilist_freeze(cfdata->o_avail);
    e_widget_ilist_clear(cfdata->o_avail);
 //   l = e_gadcon_provider_list();
-//   if (l) l = evas_list_sort(l, -1, _gad_list_sort);
+//   if (l) l = eina_list_sort(l, -1, _gad_list_sort);
    for (l = e_gadcon_provider_list(); l; l = l->next) 
      {
         E_Gadcon_Client_Class *cc;
@@ -226,7 +226,7 @@ static void
 _load_sel_gadgets(void *data) 
 {
    E_Config_Dialog_Data *cfdata = NULL;
-   Evas_List *l = NULL, *l2 = NULL;
+   Eina_List *l = NULL, *l2 = NULL;
    Evas *evas;
    int w;
 
@@ -272,7 +272,7 @@ static void
 _cb_add(void *data, void *data2) 
 {
    E_Config_Dialog_Data *cfdata = NULL;
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    int i = 0, update = 0;
 
    if (!(cfdata = data)) return;
@@ -303,7 +303,7 @@ static void
 _cb_del(void *data, void *data2) 
 {
    E_Config_Dialog_Data *cfdata = NULL;
-   Evas_List *l = NULL, *g = NULL;
+   Eina_List *l = NULL, *g = NULL;
    int i = 0, update = 0;
 
    if (!(cfdata = data)) return;

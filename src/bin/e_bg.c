@@ -15,7 +15,7 @@ static E_Fm2_Mime_Handler *bg_hdl = NULL;
 EAPI int 
 e_bg_init(void)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    /* Register mime handler */
    bg_hdl = e_fm2_mime_handler_new(_("Set As Background"), 
@@ -44,7 +44,7 @@ e_bg_init(void)
 EAPI int 
 e_bg_shutdown(void)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
 
    /* Deregister mime handler */
    if (bg_hdl) 
@@ -77,7 +77,7 @@ e_bg_shutdown(void)
 EAPI const E_Config_Desktop_Background *
 e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
 {
-   Evas_List *l, *ll, *entries;
+   Eina_List *l, *ll, *entries;
    E_Config_Desktop_Background *bg = NULL;
    int current_spec = 0; /* how specific the setting is - we want the least general one that applies */
 
@@ -125,7 +125,7 @@ EAPI const char *
 e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 {
    const E_Config_Desktop_Background *cfbg;
-   Evas_List *l, *entries;
+   Eina_List *l, *entries;
    const char *bgfile = "";
    int ok = 0;
 
@@ -287,7 +287,7 @@ e_bg_add(int container, int zone, int desk_x, int desk_y, char *file)
    cfbg->desk_x = desk_x;
    cfbg->desk_y = desk_y;
    cfbg->file = eina_stringshare_add(file);
-   e_config->desktop_backgrounds = evas_list_append(e_config->desktop_backgrounds, cfbg);
+   e_config->desktop_backgrounds = eina_list_append(e_config->desktop_backgrounds, cfbg);
    
    e_filereg_register(cfbg->file);
 
@@ -302,7 +302,7 @@ e_bg_add(int container, int zone, int desk_x, int desk_y, char *file)
 EAPI void
 e_bg_del(int container, int zone, int desk_x, int desk_y)
 {
-   Evas_List *l = NULL;
+   Eina_List *l = NULL;
    E_Event_Bg_Update *ev;
    
    for (l = e_config->desktop_backgrounds; l; l = l->next)
@@ -314,7 +314,7 @@ e_bg_del(int container, int zone, int desk_x, int desk_y)
 	if ((cfbg->container == container) && (cfbg->zone == zone) &&
 	    (cfbg->desk_x == desk_x) && (cfbg->desk_y == desk_y))
 	  {
-	     e_config->desktop_backgrounds = evas_list_remove_list(e_config->desktop_backgrounds, l);
+	     e_config->desktop_backgrounds = eina_list_remove_list(e_config->desktop_backgrounds, l);
 	     e_filereg_deregister(cfbg->file);
 	     if (cfbg->file) eina_stringshare_del(cfbg->file);
 	     free(cfbg);
@@ -333,7 +333,7 @@ e_bg_del(int container, int zone, int desk_x, int desk_y)
 EAPI void
 e_bg_update(void)
 {
-   Evas_List *l, *ll, *lll;
+   Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;

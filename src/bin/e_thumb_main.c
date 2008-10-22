@@ -36,7 +36,7 @@ static char *_e_thumb_file_id(char *file, char *key);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
-static Evas_List *_thumblist = NULL;
+static Eina_List *_thumblist = NULL;
 static Ecore_Timer *_timer = NULL;
 static char _thumbdir[4096] = "";
 
@@ -154,7 +154,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 {
    Ecore_Ipc_Event_Server_Data *e;
    E_Thumb *eth;
-   Evas_List *l;
+   Eina_List *l;
    char *file = NULL;
    char *key = NULL;
    
@@ -181,7 +181,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  eth->h = e->response;
 		  eth->file = strdup(file);
 		  if (key) eth->key = strdup(key);
-		  _thumblist = evas_list_append(_thumblist, eth);
+		  _thumblist = eina_list_append(_thumblist, eth);
 		  if (!_timer) _timer = ecore_timer_add(0.001, _e_cb_timer, NULL);
 	       }
 	  }
@@ -193,7 +193,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     eth = l->data;
 	     if (eth->objid == e->ref)
 	       {
-		  _thumblist = evas_list_remove_list(_thumblist, l);
+		  _thumblist = eina_list_remove_list(_thumblist, l);
 		  if (eth->file) free(eth->file);
 		  if (eth->key) free(eth->key);
 		  free(eth);
@@ -216,14 +216,14 @@ _e_cb_timer(void *data)
 {
    E_Thumb *eth;
    /*
-   Evas_List *del_list = NULL, *l;
+   Eina_List *del_list = NULL, *l;
    */
 
    /* take thumb at head of list */
    if (_thumblist)
      {
 	eth = _thumblist->data;
-	_thumblist = evas_list_remove_list(_thumblist, _thumblist);
+	_thumblist = eina_list_remove_list(_thumblist, _thumblist);
 	_e_thumb_generate(eth);
 	if (eth->file) free(eth->file);
 	if (eth->key) free(eth->key);

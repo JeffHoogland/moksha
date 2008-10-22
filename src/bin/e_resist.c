@@ -12,15 +12,15 @@ struct _E_Resist_Rect
    int resist_out;
 };
 
-static void _e_resist_rects(Evas_List *rects, int px, int py, int pw, int ph, int x, int y, int w, int h, int *rx, int *ry, int *rw, int *rh);
+static void _e_resist_rects(Eina_List *rects, int px, int py, int pw, int ph, int x, int y, int w, int h, int *rx, int *ry, int *rw, int *rh);
 
 EAPI int
-e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
+e_resist_container_border_position(E_Container *con, Eina_List *skiplist,
 				   int px, int py, int pw, int ph,
 				   int x, int y, int w, int h,
 				   int *rx, int *ry, int *rw, int *rh)
 {
-   Evas_List *l, *ll, *rects = NULL;
+   Eina_List *l, *ll, *rects = NULL;
    E_Resist_Rect *r;
    E_Border_List *bl;
    E_Border *bd;
@@ -41,14 +41,14 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
       r = E_NEW(E_Resist_Rect, 1); \
       r->x = _x; r->y = _y; r->w = _w; r->h = _h; r->v1 = _resist; \
       r->resist_out = 0; \
-      rects = evas_list_append(rects, r); \
+      rects = eina_list_append(rects, r); \
    }
 #define HOLDER(_x, _y, _w, _h, _resist) \
    { \
       r = E_NEW(E_Resist_Rect, 1); \
       r->x = _x; r->y = _y; r->w = _w; r->h = _h; r->v1 = _resist; \
       r->resist_out = 1; \
-      rects = evas_list_append(rects, r); \
+      rects = eina_list_append(rects, r); \
    }
 
    for (l = con->zones; l; l = l->next)
@@ -90,7 +90,7 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
    for (l = e_shelf_list(); l; l = l->next)
      {
 	E_Shelf *es;
-	Evas_List *ll;
+	Eina_List *ll;
 
 	es = l->data;
 	if (es->zone->container == con)
@@ -129,18 +129,18 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 	  {
 	     E_FREE(l->data);
 	  }
-	evas_list_free(rects);
+	eina_list_free(rects);
      }
    return 1;
 }
 
 EAPI int
-e_resist_container_gadman_position(E_Container *con, Evas_List *skiplist,
+e_resist_container_gadman_position(E_Container *con, Eina_List *skiplist,
 				   int px, int py, int pw, int ph,
 				   int x, int y, int w, int h,
 				   int *rx, int *ry)
 {
-   Evas_List *l, *rects = NULL;
+   Eina_List *l, *rects = NULL;
    E_Resist_Rect *r;
 
    if (!e_config->use_resist)
@@ -173,13 +173,13 @@ e_resist_container_gadman_position(E_Container *con, Evas_List *skiplist,
 	  {
 	     E_FREE(l->data);
 	  }
-	evas_list_free(rects);
+	eina_list_free(rects);
      }
    return 1;
 }
 
 static void
-_e_resist_rects(Evas_List *rects,
+_e_resist_rects(Eina_List *rects,
 		int px, int py, int pw, int ph,
 	       	int x, int y, int w, int h,
 	       	int *rx, int *ry, int *rw, int *rh)
@@ -187,7 +187,7 @@ _e_resist_rects(Evas_List *rects,
    int dx, dy, dw, dh, d, pd;
    int resist_x = 0, resist_y = 0;
    int resist_w = 0, resist_h = 0;
-   Evas_List *l;
+   Eina_List *l;
    E_Resist_Rect *r;
 
    dx = x - px;

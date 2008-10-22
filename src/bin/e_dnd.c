@@ -53,14 +53,14 @@ struct _XDnd
    void *data;
 };
 
-static Evas_List *_event_handlers = NULL;
-static Evas_List *_drop_handlers = NULL;
+static Eina_List *_event_handlers = NULL;
+static Eina_List *_drop_handlers = NULL;
 static Evas_Hash *_drop_win_hash = NULL;
 
 static Ecore_X_Window _drag_win = 0;
 static Ecore_X_Window _drag_win_root = 0;
 
-static Evas_List *_drag_list = NULL;
+static Eina_List *_drag_list = NULL;
 static E_Drag    *_drag_current = NULL;
 
 static XDnd *_xdnd = NULL;
@@ -73,41 +73,41 @@ static Ecore_X_Atom _action;
 EAPI int
 e_dnd_init(void)
 {
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
 							      _e_dnd_cb_mouse_up, NULL));
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
 							      _e_dnd_cb_mouse_move, NULL));
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
 							      _e_dnd_cb_window_shape, NULL));
 
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_XDND_ENTER,
 							      _e_dnd_cb_event_dnd_enter, NULL));
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_XDND_LEAVE,
 							      _e_dnd_cb_event_dnd_leave, NULL));
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_XDND_POSITION,
 							      _e_dnd_cb_event_dnd_position, NULL));
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_XDND_STATUS,
 							      _e_dnd_cb_event_dnd_status, NULL));
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_XDND_FINISHED,
 							      _e_dnd_cb_event_dnd_finished, NULL));
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_XDND_DROP,
 							      _e_dnd_cb_event_dnd_drop, NULL));
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_SELECTION_NOTIFY,
 							      _e_dnd_cb_event_dnd_selection, NULL));
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
                                       ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
                                                               _e_dnd_cb_key_down, NULL));
-   _event_handlers = evas_list_append(_event_handlers,
+   _event_handlers = eina_list_append(_event_handlers,
                                       ecore_event_handler_add(ECORE_X_EVENT_KEY_UP,
                                                               _e_dnd_cb_key_up, NULL));
 
@@ -118,7 +118,7 @@ e_dnd_init(void)
 EAPI int
 e_dnd_shutdown(void)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    while (_drag_list)
      {
@@ -135,11 +135,11 @@ e_dnd_shutdown(void)
 	h = l->data;
 	ecore_event_handler_del(h);
      }
-   evas_list_free(_event_handlers);
+   eina_list_free(_event_handlers);
    _event_handlers = NULL;
 
    evas_hash_free(_drop_win_hash);
-   evas_list_free(_drop_handlers);
+   eina_list_free(_drop_handlers);
    _drop_handlers = NULL;
 
    evas_hash_free(_drop_handlers_responsives);
@@ -208,7 +208,7 @@ e_drag_new(E_Container *container, int x, int y,
    drag->cb.convert = convert_cb;
    drag->cb.finished = finished_cb;
 
-   _drag_list = evas_list_append(_drag_list, drag);
+   _drag_list = eina_list_append(_drag_list, drag);
 
    ecore_x_window_shadow_tree_flush();
    
@@ -263,7 +263,7 @@ e_dnd_active(void)
 EAPI int
 e_drag_start(E_Drag *drag, int x, int y)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    if (_drag_win) return 0;
    _drag_win = ecore_x_window_input_new(drag->container->win, 
@@ -379,7 +379,7 @@ e_drop_handler_add(E_Object *obj,
    handler->obj = obj;
    handler->entered = 0;
    
-   _drop_handlers = evas_list_append(_drop_handlers, handler);
+   _drop_handlers = eina_list_append(_drop_handlers, handler);
 
    return handler;
 }
@@ -407,7 +407,7 @@ e_drop_handler_del(E_Drop_Handler *handler)
 {
    int i;
 
-   _drop_handlers = evas_list_remove(_drop_handlers, handler);
+   _drop_handlers = eina_list_remove(_drop_handlers, handler);
    if (handler->types)
      {
 	for (i = 0; i < handler->num_types; i++)
@@ -442,7 +442,7 @@ e_drop_xdnd_register_set(Ecore_X_Window win, int reg)
 EAPI void
 e_drag_idler_before(void)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    for (l = _drag_list; l; l = l->next)
      {
@@ -735,7 +735,7 @@ _e_drag_win_hide(E_Drop_Handler *h)
 static int
 _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Event_Dnd_Enter enter_ev;
    E_Event_Dnd_Move move_ev;
    E_Event_Dnd_Leave leave_ev;
@@ -879,7 +879,7 @@ static void
 _e_drag_end(Ecore_X_Window root, int x, int y)
 {
    E_Zone *zone;
-   Evas_List *l;
+   Eina_List *l;
    E_Event_Dnd_Drop ev;
    int dx, dy, dw, dh;
    Ecore_X_Window win, ignore_win[2];
@@ -985,7 +985,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 static void
 _e_drag_xdnd_end(Ecore_X_Window win, int x, int y)
 {
-   Evas_List *l;
+   Eina_List *l;
    E_Event_Dnd_Drop ev;
    int dx, dy, dw, dh;
 
@@ -1048,7 +1048,7 @@ _e_drag_free(E_Drag *drag)
 {
    int i;
 
-   _drag_list = evas_list_remove(_drag_list, drag);
+   _drag_list = eina_list_remove(_drag_list, drag);
 
    E_FREE(drag->shape_rects);
    drag->shape_rects_num = 0;
@@ -1068,7 +1068,7 @@ _e_drag_free(E_Drag *drag)
 static int
 _e_dnd_cb_window_shape(void *data, int ev_type, void *ev)
 {
-   Evas_List *l;
+   Eina_List *l;
    Ecore_X_Event_Window_Shape *e;
    
    e = ev;
@@ -1146,7 +1146,7 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Enter *ev;
    const char *id;
-   Evas_List *l;
+   Eina_List *l;
    int i, j;
 
    ev = event;
@@ -1218,7 +1218,7 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
    Ecore_X_Event_Xdnd_Leave *ev;
    E_Event_Dnd_Leave leave_ev;
    const char *id;
-   Evas_List *l;
+   Eina_List *l;
 
    ev = event;
 
@@ -1261,7 +1261,7 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
    Ecore_X_Rectangle rect;
    Ecore_X_Action action;
    const char *id;
-   Evas_List *l;
+   Eina_List *l;
 
    int active;
    int responsive;
@@ -1383,20 +1383,20 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
    if (!strcmp("text/uri-list", _xdnd->type))
      {
 	Ecore_X_Selection_Data_Files   *files;
-	Evas_List *l = NULL;
+	Eina_List *l = NULL;
 
 	files = ev->data;
 	for (i = 0; i < files->num_files; i++)
-	  l = evas_list_append(l, files->files[i]);
+	  l = eina_list_append(l, files->files[i]);
 	_xdnd->data = l;
 	_e_drag_xdnd_end(ev->win, _xdnd->x, _xdnd->y);
-	evas_list_free(l);
+	eina_list_free(l);
      }
    else if (!strcmp("text/x-moz-url", _xdnd->type))
      {
 	/* FIXME: Create a ecore x parser for this type */
 	Ecore_X_Selection_Data *data;
-	Evas_List *l = NULL;
+	Eina_List *l = NULL;
 	char file[PATH_MAX];
 	char *text;
 	int i, size;
@@ -1425,11 +1425,11 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 //	printf("\n");
 	file[i] = '\0';
 //	printf("file: %d \"%s\"\n", i, file);
-	l = evas_list_append(l, file);
+	l = eina_list_append(l, file);
 
 	_xdnd->data = l;
 	_e_drag_xdnd_end(ev->win, _xdnd->x, _xdnd->y);
-	evas_list_free(l);
+	eina_list_free(l);
      }
    else
      {

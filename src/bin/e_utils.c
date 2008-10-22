@@ -127,7 +127,7 @@ e_util_glob_case_match(const char *str, const char *glob)
 EAPI E_Container *
 e_util_container_number_get(int num)
 {
-   Evas_List *l;
+   Eina_List *l;
 
    for (l = e_manager_list(); l; l = l->next)
      {
@@ -240,7 +240,7 @@ e_util_both_str_empty(const char *s1, const char *s2)
 EAPI int
 e_util_immortal_check(void)
 {
-   Evas_List *wins;
+   Eina_List *wins;
 
    wins = e_border_immortal_windows_get();
    if (wins)
@@ -252,7 +252,7 @@ e_util_immortal_check(void)
 	/* FIXME: should really display a list of these lifespan locked */
 	/* windows in a dialog and let the user disable their locks in */
 	/* this dialog */
-	evas_list_free(wins);
+	eina_list_free(wins);
 	return 1;
      }
    return 0;
@@ -402,7 +402,7 @@ e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name)
 EAPI E_Container *
 e_util_container_window_find(Ecore_X_Window win)
 {
-   Evas_List *l, *ll;
+   Eina_List *l, *ll;
 
    for (l = e_manager_list(); l; l = l->next)
      {
@@ -426,7 +426,7 @@ EAPI E_Border *
 e_util_desk_border_above(E_Border *bd)
 {
    E_Border *above = NULL;
-   Evas_List *l;
+   Eina_List *l;
    int pos, i;
 
    E_OBJECT_CHECK_RETURN(bd, NULL);
@@ -439,7 +439,7 @@ e_util_desk_border_above(E_Border *bd)
    else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
    else pos = 5;
 
-   for (l = evas_list_find_list(bd->zone->container->layers[pos].clients, bd);
+   for (l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd);
 	(l) && (l->next) && (!above);
 	l = l->next)
      {
@@ -469,7 +469,7 @@ EAPI E_Border *
 e_util_desk_border_below(E_Border *bd)
 {
    E_Border *below = NULL;
-   Evas_List *l;
+   Eina_List *l;
    int pos, i;
 
    E_OBJECT_CHECK_RETURN(bd, NULL);
@@ -482,7 +482,7 @@ e_util_desk_border_below(E_Border *bd)
    else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
    else pos = 5;
 
-   for (l = evas_list_find_list(bd->zone->container->layers[pos].clients, bd);
+   for (l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd);
 	(l) && (l->prev) && (!below);
 	l = l->prev)
      {
@@ -497,7 +497,7 @@ e_util_desk_border_below(E_Border *bd)
 	  {
 	     if (bd->zone->container->layers[i].clients)
 	       {
-		  for (l = evas_list_last(bd->zone->container->layers[i].clients);
+		  for (l = eina_list_last(bd->zone->container->layers[i].clients);
 		       (l) && (!below);
 		       l = l->prev)
 		    {
@@ -515,7 +515,7 @@ e_util_desk_border_below(E_Border *bd)
 EAPI int
 e_util_edje_collection_exists(const char *file, const char *coll)
 {
-   Evas_List *clist, *l;
+   Eina_List *clist, *l;
 
    clist = edje_file_collection_list(file);
    for (l = clist; l; l = l->next)

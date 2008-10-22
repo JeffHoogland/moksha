@@ -251,13 +251,13 @@ void
 e_object_breadcrumb_add(E_Object *obj, char *crumb)
 {
    E_OBJECT_CHECK(obj);
-   obj->crumbs = evas_list_append(obj->crumbs, strdup(crumb));
+   obj->crumbs = eina_list_append(obj->crumbs, strdup(crumb));
 }
 
 void
 e_object_breadcrumb_del(E_Object *obj, char *crumb)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    E_OBJECT_CHECK(obj);
    for (l = obj->crumbs; l; l = l->next)
@@ -265,7 +265,7 @@ e_object_breadcrumb_del(E_Object *obj, char *crumb)
 	if (!strcmp(crumb, l->data))
 	  {
 	     free(l->data);
-	     obj->crumbs = evas_list_remove_list(obj->crumbs, l);
+	     obj->crumbs = eina_list_remove_list(obj->crumbs, l);
 	     return;
 	  }
      }
@@ -274,7 +274,7 @@ e_object_breadcrumb_del(E_Object *obj, char *crumb)
 void
 e_object_breadcrumb_debug(E_Object *obj)
 {
-   Evas_List *l;
+   Eina_List *l;
    
    E_OBJECT_CHECK(obj);
    for (l = obj->crumbs; l; l = l->next)

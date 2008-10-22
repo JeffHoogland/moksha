@@ -14,8 +14,8 @@ struct E_Mixer_Channel_State
 };
 typedef struct E_Mixer_Channel_State E_Mixer_Channel_State;
 
-Evas_List *e_mixer_system_get_cards(void);
-void e_mixer_system_free_cards(Evas_List *cards);
+Eina_List *e_mixer_system_get_cards(void);
+void e_mixer_system_free_cards(Eina_List *cards);
 char *e_mixer_system_get_default_card(void);
 char *e_mixer_system_get_card_name(const char *card);
 
@@ -25,10 +25,10 @@ void e_mixer_system_del(E_Mixer_System *self);
 
 int e_mixer_system_callback_set(E_Mixer_System *self, int (*func)(void *data, E_Mixer_System *self), void *data);
 
-Evas_List *e_mixer_system_get_channels(E_Mixer_System *self);
-void e_mixer_system_free_channels(Evas_List *channels);
-Evas_List *e_mixer_system_get_channels_names(E_Mixer_System *self);
-void e_mixer_system_free_channels_names(Evas_List *channels_names);
+Eina_List *e_mixer_system_get_channels(E_Mixer_System *self);
+void e_mixer_system_free_channels(Eina_List *channels);
+Eina_List *e_mixer_system_get_channels_names(E_Mixer_System *self);
+void e_mixer_system_free_channels_names(Eina_List *channels_names);
 char *e_mixer_system_get_default_channel_name(E_Mixer_System *self);
 E_Mixer_Channel *e_mixer_system_get_channel_by_name(E_Mixer_System *self, const char *name);
 char *e_mixer_system_get_channel_name(E_Mixer_System *self, E_Mixer_Channel *channel);

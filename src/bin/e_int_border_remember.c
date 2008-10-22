@@ -153,7 +153,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _check_matches(E_Border *bd, int matchflags)
 {
-   Evas_List *l;
+   Eina_List *l;
    int n = 0;
    const char *title;
    

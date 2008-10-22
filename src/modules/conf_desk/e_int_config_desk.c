@@ -57,7 +57,7 @@ e_int_config_desk(E_Container *con, const char *params)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *l;
+   Eina_List *l;
    const char *bg;
    char name[40];
    int ok = 0;
