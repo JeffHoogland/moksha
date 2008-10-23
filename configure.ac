@@ -441,7 +441,6 @@ src/modules/connman/Makefile
 src/modules/connman/module.desktop
 src/preload/Makefile
 data/Makefile
-data/fonts/Makefile
 data/images/Makefile
 data/input_methods/Makefile
 data/themes/Makefile
@@ -449,7 +448,6 @@ data/themes/images/Makefile
 data/other/Makefile
 data/xsession/Makefile
 data/xsession/enlightenment.desktop
-data/backgrounds/Makefile
 data/etc/Makefile
 data/icons/Makefile
 doc/Makefile
