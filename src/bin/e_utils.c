@@ -7,7 +7,6 @@ EAPI E_Path *path_data    = NULL;
 EAPI E_Path *path_images  = NULL;
 EAPI E_Path *path_fonts   = NULL;
 EAPI E_Path *path_themes  = NULL;
-EAPI E_Path *path_init    = NULL;
 EAPI E_Path *path_icons   = NULL;
 EAPI E_Path *path_modules = NULL;
 EAPI E_Path *path_backgrounds = NULL;

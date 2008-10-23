@@ -443,8 +443,6 @@ src/preload/Makefile
 data/Makefile
 data/fonts/Makefile
 data/images/Makefile
-data/init/Makefile
-data/init/images/Makefile
 data/input_methods/Makefile
 data/themes/Makefile
 data/themes/images/Makefile

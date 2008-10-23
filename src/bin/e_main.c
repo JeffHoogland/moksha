@@ -1107,7 +1107,6 @@ _e_main_dirs_init(void)
 	"%s/.e/e/images",
 	"%s/.e/e/fonts",
 	"%s/.e/e/themes",
-	"%s/.e/e/init",
 	"%s/.e/e/icons",
 	"%s/.e/e/backgrounds",
 	"%s/.e/e/applications",
@@ -1354,18 +1353,6 @@ _e_main_path_init(void)
    e_path_default_path_append(path_icons, buf);
    e_path_user_path_set(path_icons, &(e_config->path_append_icons));
 
-   /* setup init paths */
-   path_init = e_path_new();
-   if (!path_init)
-     {
-	e_error_message_show("Cannot allocate path for path_init\n");
-	return 0;
-     }
-   e_path_default_path_append(path_init, "~/.e/e/init");
-   snprintf(buf, sizeof(buf), "%s/data/init", e_prefix_data_get());
-   e_path_default_path_append(path_init, buf);
-   e_path_user_path_set(path_init, &(e_config->path_append_init));
-
    /* setup module paths */
    path_modules = e_path_new();
    if (!path_modules) 
@@ -1434,11 +1421,6 @@ _e_main_path_shutdown(void)
      {
 	e_object_del(E_OBJECT(path_icons));
 	path_icons = NULL;
-     }
-   if (path_init)
-     {
-	e_object_del(E_OBJECT(path_init));
-	path_init = NULL;
      }
    if (path_modules)
      {

@@ -887,8 +887,6 @@ break;
      __path = path_fonts; \
    else if (!strcmp(__str, "themes")) \
      __path = path_themes; \
-   else if (!strcmp(__str, "init")) \
-     __path = path_init; \
    else if (!strcmp(__str, "icons")) \
      __path = path_icons; \
    else if (!strcmp(__str, "modules")) \
@@ -7468,7 +7466,7 @@ break;
 	const char *i;
 	const char *f;
 	f = ecore_file_file_get(s);
-	i = e_path_find(path_init, f);
+	i = e_path_find(path_themes, f);
 	if (!e_util_edje_collection_exists(i, "init/splash")) 
 	  {
 	     printf("The edje file you selected does not contain any init information.\n");

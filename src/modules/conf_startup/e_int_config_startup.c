@@ -128,13 +128,13 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 	if (strncmp(p, cfdata->splash, strlen(p))) return;
      }
    homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/init", homedir);
+   snprintf(buf, sizeof(buf), "%s/.e/e/themes", homedir);
    if (!p) return;
    if (!strncmp(cfdata->splash, buf, strlen(buf)))
      p = cfdata->splash + strlen(buf) + 1;
    else
      {
-	snprintf(buf, sizeof(buf), "%s/data/init", e_prefix_data_get());
+	snprintf(buf, sizeof(buf), "%s/data/themes", e_prefix_data_get());
 	if (!strncmp(cfdata->splash, buf, strlen(buf)))
 	  p = cfdata->splash + strlen(buf) + 1;
 	else
@@ -154,12 +154,12 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
    cfdata = data;
    if (cfdata->fmdir == 1)
      {
-	snprintf(path, sizeof(path), "%s/data/init", e_prefix_data_get());
+	snprintf(path, sizeof(path), "%s/data/themes", e_prefix_data_get());
      }
    else
      {
 	homedir = e_user_homedir_get();
-	snprintf(path, sizeof(path), "%s/.e/e/init", homedir);
+	snprintf(path, sizeof(path), "%s/.e/e/themes", homedir);
      }
    e_fm2_path_set(cfdata->o_fm, path, "/");
 }
@@ -176,13 +176,13 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->splash = strdup(e_config->init_default_theme);
    else
      {
-        snprintf(path, sizeof(path), "%s/data/init/default.edj", e_prefix_data_get());
+        snprintf(path, sizeof(path), "%s/data/themes/default.edj", e_prefix_data_get());
 	cfdata->splash = strdup(path);
      }
    if (cfdata->splash[0] != '/')
      {
 	homedir = e_user_homedir_get();
-	snprintf(path, sizeof(path), "%s/.e/e/init/%s", homedir, cfdata->splash);
+	snprintf(path, sizeof(path), "%s/.e/e/themes/%s", homedir, cfdata->splash);
 	if (ecore_file_exists(path))
 	  {
 	     E_FREE(cfdata->splash);
@@ -190,7 +190,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	  }
 	else
 	  {
-	     snprintf(path, sizeof(path), "%s/data/init/%s", e_prefix_data_get(), cfdata->splash);
+	     snprintf(path, sizeof(path), "%s/data/themes/%s", e_prefix_data_get(), cfdata->splash);
 	     if (ecore_file_exists(path))
 	       {
 		  E_FREE(cfdata->splash);
@@ -199,7 +199,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	  }
      }
    
-   snprintf(path, sizeof(path), "%s/data/init", e_prefix_data_get());
+   snprintf(path, sizeof(path), "%s/data/themes", e_prefix_data_get());
    if (!strncmp(cfdata->splash, path, strlen(path)))
      cfdata->fmdir = 1;
 }
@@ -284,9 +284,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ol, o, 0, 1, 1, 1, 0, 0, 0, 0);
    
    if (cfdata->fmdir == 1)
-     snprintf(path, sizeof(path), "%s/data/init", e_prefix_data_get());
+     snprintf(path, sizeof(path), "%s/data/themes", e_prefix_data_get());
    else
-     snprintf(path, sizeof(path), "%s/.e/e/init", homedir);
+     snprintf(path, sizeof(path), "%s/.e/e/themes", homedir);
    
    o = e_fm2_add(evas);
    cfdata->o_fm = o;

@@ -68,7 +68,7 @@ e_int_config_paths(E_Container *con, const char *params __UNUSED__)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   cfdata->paths_available = E_NEW(E_Path_Pair, 11);
+   cfdata->paths_available = E_NEW(E_Path_Pair, 10);
    cfdata->paths_available[0].path =		 path_data;
    cfdata->paths_available[0].path_description = _("Data");
    cfdata->paths_available[1].path =		 path_images;
@@ -77,19 +77,16 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->paths_available[2].path_description = _("Fonts");
    cfdata->paths_available[3].path =		 path_themes;
    cfdata->paths_available[3].path_description = _("Themes");
-   cfdata->paths_available[4].path =		 path_init;
-   cfdata->paths_available[4].path_description = _("Init");
-   cfdata->paths_available[5].path =		 path_icons;
-   cfdata->paths_available[5].path_description = _("Icons");
-   cfdata->paths_available[6].path =		 path_modules;
-   cfdata->paths_available[6].path_description = _("Modules");
-   cfdata->paths_available[7].path =		 path_backgrounds;
-   cfdata->paths_available[7].path_description = _("Backgrounds");
-   cfdata->paths_available[8].path =		 path_messages;
-   cfdata->paths_available[8].path_description = _("Messages");
-   cfdata->paths_available[9].path =		 NULL;
-   cfdata->paths_available[9].path_description = NULL;
-   
+   cfdata->paths_available[4].path =		 path_icons;
+   cfdata->paths_available[4].path_description = _("Icons");
+   cfdata->paths_available[5].path =		 path_modules;
+   cfdata->paths_available[5].path_description = _("Modules");
+   cfdata->paths_available[6].path =		 path_backgrounds;
+   cfdata->paths_available[6].path_description = _("Backgrounds");
+   cfdata->paths_available[7].path =		 path_messages;
+   cfdata->paths_available[7].path_description = _("Messages");
+   cfdata->paths_available[8].path =		 NULL;
+   cfdata->paths_available[8].path_description = NULL;
    return;
 }
 
