@@ -5,7 +5,6 @@
 //	      - ilist e.swallow.icon should use e_ilist_icon_size_set to make a dummy box
 //		to compensate when there is no icon there.
 //	      - Make ibox/ibar use data.item: "selectraise" "on"; so it can do zooms correctly
-//	
 //
 
 /*
@@ -36,10 +35,10 @@
  * replacement you will need to methodically go through all of this file
  * and make sure you have replaced/provided everything here.
  */
- 
-/* Specturm used in all the gradient icons 
+
+/* Specturm used in all the gradient icons
  * This needs to be defined outside of the collections
- * 
+ *
  * FIXME: this is bad. namespacing! FIXME!
  */
 spectra {
@@ -458,7 +457,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 }
 	 part { name: "e.text.title"; /* this is a text part - the black
 				       * text on the white title top image */
-	    type: TEXT; 
+	    type: TEXT;
 	    mouse_events: 0;
 	    scale: 1; /* allow this part to scale by a scale factor (dpi) */
 	    description { state: "default" 0.0;
@@ -5352,7 +5351,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 }
       }
    }
-   
+
 /////////////////////////////////////////////////////////////////////////////
    /*** MENUS ***/
    /* this is the background for all menus. it also may optionally display a
@@ -6488,9 +6487,9 @@ collections { /* begin the collection of edje groups that are in this file */
        public message(Msg_Type:type, id, ...) {
 	  if ((type == MSG_INT_SET) && (id == 0)) {
 	     new sig;
-	     
+
 	     sig = getarg(2);
-	     
+
 	     if (sig <= 0)
 	       run_program(PROGRAM:"sig_none");
 	     else if (sig < 33)
@@ -11882,7 +11881,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       }
 	    }
 	 }
-	 
+
       }
       programs {
          program { name: "go1";
@@ -20797,7 +20796,7 @@ group { name: "e/toolbar/default/base";
 	    }
 	 }
       }
-      // FIXME: add e.button.next.label, e.button.back.label, 
+      // FIXME: add e.button.next.label, e.button.back.label,
       // e.text.title, e.swallow.content
       // FIXME: add programs that:
       //          action: SIGNAL_EMIT "e,action,back" "";
@@ -21184,7 +21183,7 @@ group { name: "e/toolbar/default/base";
 	    target: "e.textblock.about";
 	    after: "showa";
 	 }
-	 
+
 	 program { name: "showb";
 	    signal: "show";
 	    source: "";
@@ -21198,7 +21197,7 @@ group { name: "e/toolbar/default/base";
 	    target: "e.textblock.authors";
 	    after: "showb";
 	 }
-	 
+
 	 program {
 	    name:   "button_click";
 	    signal: "mouse,down,1";
@@ -21400,7 +21399,7 @@ group { name: "e/toolbar/default/base";
 /////////////////////////////////////////////////////////////////////////////
    /*** ICONS ***/
 
-/* 
+/*
 
 TODO: Icons (redo)
  EFM buttons. (Use same icon style as border icons).
@@ -21759,9 +21758,9 @@ MIMEBASE("application/x-font-pcf","icon_mime_font_generic.png", ".PCF", 128);
 MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 
 
-// Custom icons with actions or specific behaviours 
+// Custom icons with actions or specific behaviours
 
-   images { 
+   images {
       image: "icon_wallpaper_center_flat.png" COMP;
       image: "icon_wallpaper_center.png" COMP;
       image: "icon_wallpaper_screen.png" COMP;
@@ -22085,14 +22084,14 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	 image: "busy-8.png" COMP;
 	 image: "busy-9.png" COMP;
       }
-      script {      
+      script {
 	 public is_ready;
 	 public do_end;
       }
       parts {
 	 /* splash is fullscreen so we want a background of some sort. we have
 	  * taken the default desktop wallpaper here as it should look nice */
-         part {	 
+         part {
 	    name: "background_image";
 	    description {
 	       state: "default" 0.0;
@@ -22131,7 +22130,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 //	    }
 //	 }
 
-         part {	 
+         part {
 	    name: "e.text.title";
 	    type: TEXT;
 	    effect: SOFT_SHADOW;
@@ -22161,7 +22160,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	    }
 	 }
-         part {	 
+         part {
 	    name: "e.text.version";
 	    type: TEXT;
 	    effect: SOFT_SHADOW;
@@ -22188,7 +22187,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	    }
 	 }
-         part {	 
+         part {
 	    name: "e.text.status";
 	    type: TEXT;
 	    effect: SOFT_SHADOW;
@@ -22214,11 +22213,11 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		  size: 10;
 		  min:  1 1;
 		  align: 0.5 0.5;
-		  text_class: "init_text"; 
+		  text_class: "init_text";
 	       }
 	    }
 	 }
-         part {	 
+         part {
 	    name: "e.text.disable_text";
 	    type: TEXT;
 	    effect: SOFT_SHADOW;
@@ -22246,7 +22245,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	    }
 	 }
-         part {	 
+         part {
 	    name: "disable_check";
 	    mouse_events: 0;
 	    description {
@@ -22405,7 +22404,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	    name: "ready";
 	    script {
 	       new val;
-	       
+
 	       val = get_int(do_end);
 	       if (val == 1)
 		 run_program(PROGRAM:"done2");
@@ -22420,7 +22419,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	    source: "e";
 	    script {
 	       new val;
-	       
+
 	       val = get_int(is_ready);
 	       if (val == 1)
 		 run_program(PROGRAM:"done2");
@@ -22482,7 +22481,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
    group {
       name: "e/init/extra_screen";
       parts {
-         part {	 
+         part {
 	    name: "background_image";
 	    description {
 	       state: "default" 0.0;
