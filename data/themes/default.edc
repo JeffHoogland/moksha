@@ -472,7 +472,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       }
 	       rel2 {
 		  relative: 1.0 0.0; /* and the bottom right is inset by 8
-				      * pxiels from the right of "title_base"
+				      * pixels from the right of "title_base"
 				      * but as its aligned to the top we can
 				      * keep this at 2 pixels from the top of
 				      * the whole edje object and let alignment
@@ -486,8 +486,11 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color_class: "border_title"; /* give it a color class so people
 					     * can re-color it if they want */
 	       text {
-		  font: "Sans:style=Bold"; /* Use the Bold style of
-					    * the Sans font. */
+		  font: "Sans:style=Bold,Edje-Vera-Bold"; /* Use the Bold style
+							   * of the Sans font,
+							   * fallbacking to
+							   * Edje-Vera-Bold if
+							   * not available */
 		  size: 10; /* size in pixels - 10 */
 		  min: 0 1; /* the text will not determine minimum horizontal
 			     * size but WILL determine minimal vertical size
@@ -804,7 +807,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  text_source: "e.text.title"; /* and here is the magic. tell
 						* the text to be sourced from
 						* another part */
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
                   align: 0.0 0.0;
 		  min: 0 1;
@@ -1652,7 +1655,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 0 0 0 255;
 	       color_class: "border_title";
 	       text {
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min: 0 1;
 		  align: 0.0 0.0;
@@ -1936,7 +1939,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color_class: "border_title";
 	       text {
 		  text_source: "e.text.title";
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
                   align: 0.0 0.0;
 		  min: 0 1;
@@ -2707,7 +2710,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 0 0 0 255;
 	       color_class: "border_title";
 	       text {
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min: 0 1;
 		  align: 0.0 0.0;
@@ -2991,7 +2994,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color_class: "border_title";
 	       text {
 		  text_source: "e.text.title";
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
                   align: 0.0 0.0;
 		  min: 0 1;
@@ -3581,7 +3584,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 0 0 0 255;
 	       color_class: "border_title";
 	       text {
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min: 0 1;
 		  align: 0.0 0.0;
@@ -3763,7 +3766,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color_class: "border_title";
 	       text {
 		  text_source: "e.text.title";
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
                   align: 0.0 0.0;
 		  min: 0 1;
@@ -4480,7 +4483,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 0 0 0 255;
 	       color_class: "border_title";
 	       text {
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min: 0 1;
 		  align: 0.0 0.0;
@@ -4662,7 +4665,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color_class: "border_title";
 	       text {
 		  text_source: "e.text.title";
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
                   align: 0.0 0.0;
 		  min: 0 1;
@@ -5445,7 +5448,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color_class: "menu_title";
 	       text {
 		  text_source: "e.text.title";
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
                   align: 0.5 0.0;
 		  min: 0 0;
@@ -6702,7 +6705,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 224 224 224 255;
 	       color3: 0 0 0 64;
 	       text {
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
                   align: 0.5 0.0;
 		  min: 1 1;
@@ -6860,7 +6863,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 0 0 0 0;
 	       color_class: "module_label";
 	       text {
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 8;
 		  align: 0.5 0.5;
 		  text_class: "module_small";
@@ -7488,7 +7491,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color3: 0 0 0 0;
 	       color_class: "module_label";
 	       text {
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 8;
 		  min: 1 1;
 		  align: 0.5 0.0;
@@ -7522,7 +7525,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color3: 0 0 0 0;
 	       color_class: "module_label";
 	       text {
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 8;
 		  min: 1 1;
 		  align: 0.5 1.0;
@@ -7677,7 +7680,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       }
 	       color: 0 0 0 255;
 	       text { text: "Your battery is low!";
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min: 1 1;
 		  align: 0.5 0.5;
@@ -7805,7 +7808,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color3: 0 0 0 0;
 	       color_class: "module_label";
 	       text {
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 8;
 		  min: 1 1;
 		  align: 0.0 0.0;
@@ -8503,7 +8506,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color_class: "module_label";
 	       text {
 		  text: "??? Ghz";
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 6;
 		  align: 0.5 0.5;
 		  min: 1 1;
@@ -8911,7 +8914,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color3: 0 0 0 0;
 	       color_class: "module_label";
 	       text {
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min:  1 1;
 		  align: 0.5 0.5;
@@ -9526,7 +9529,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color_class: "winlist_label";
 	       text {
 		  text: "Title goes here";
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min:  0 1;
 		  align: 0.5 0.5;
@@ -9553,7 +9556,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 224 224 224 255;
 	       color3: 0 0 0 64;
 	       text {
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
                   align: 0.5 0.0;
 		  min: 1 1;
@@ -9925,7 +9928,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 255 255 255 255;
 	       color3: 0 0 0 64;
 	       text {
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 16;
 		  align: 0.0 0.5;
 		  min: 1 1;
@@ -12164,7 +12167,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 224 224 224 255;
 	       color3: 0 0 0 64;
 	       text {
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min: 1 1;
 		  align: 0.5 0.5;
@@ -12577,7 +12580,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 224 224 224 255;
 	       color3: 0 0 0 64;
 	       text {
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min: 0 1;
 		  align: 0.5 0.5;
@@ -12965,7 +12968,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 224 224 224 255;
 	       color3: 0 0 0 32;
 	       text {
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min: 1 1;
 		  align: 0.5 0.5;
@@ -13352,7 +13355,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 224 224 224 255;
 	       color3: 0 0 0 32;
 	       text {
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min: 0 1;
 		  align: 0.5 0.5;
@@ -15405,9 +15408,9 @@ collections { /* begin the collection of edje groups that are in this file */
       styles {
 	 style {
 	    name: "sys_style";
-	    base: "font=Sans:style=Bold font_size=12 text_class=tb_plain align=center valign=center color=#fff style=soft_shadow shadow_color=#0000001f wrap=word";
+	    base: "font=Sans:style=Bold,Edje-Vera-Bold font_size=12 text_class=tb_plain align=center valign=center color=#fff style=soft_shadow shadow_color=#0000001f wrap=word";
 	    tag:  "br" "\n";
-	    tag:  "hilight" "+ font=Sans:style=Bold text_class=tb_light";
+	    tag:  "hilight" "+ font=Sans:style=Bold,Edje-Vera-Bold text_class=tb_light";
 	 }
       }
       parts {
@@ -15638,7 +15641,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    name: "dialog_style";
 	    base: "font=Sans font_size=10 text_class=tb_plain align=center color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
 	    tag:  "br" "\n";
-	    tag:  "hilight" "+ font=Sans:style=Bold text_class=tb_light";
+	    tag:  "hilight" "+ font=Sans:style=Bold,Edje-Vera-Bold text_class=tb_light";
 	 }
       }
       parts {
@@ -18136,7 +18139,7 @@ group { name: "e/toolbar/default/base";
 	       color3: 0 0 0 32;
 	       color_class: "ilist_item";
 	       text {
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 16;
 		  min: 1 1;
 		  align: 0.0 0.5;
@@ -18315,7 +18318,7 @@ group { name: "e/toolbar/default/base";
 	       color3: 0 0 0 32;
 	       color_class: "ilist_item";
 	       text {
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 16;
 		  min: 1 1;
 		  align: 0.0 0.5;
@@ -19443,7 +19446,7 @@ group { name: "e/toolbar/default/base";
 	       }
 	       color: 0 0 0 64;
 	       text {
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min: 1 1;
 		  max: 1 1;
@@ -19519,10 +19522,10 @@ group { name: "e/toolbar/default/base";
       styles {
 	 style { name: "textblock_style";
 	    base: "font=Sans font_size=10 align=left color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
-	    tag:  "title" "+ font=Sans:style=Bold  font_size=12 style=soft_shadow color=#fff shadow_color=#00000021";
-	    tag:  "hilight" "+ font=Sans:style=Bold style=glow color=#fff glow2_color=#333333be glow_color=#0000005a";
-	    tag:  "urgent" "+ font=Sans:style=Bold style=glow color=#fff glow2_color=#333 glow_color=#b01010";
-	    tag:  "b" "+ font=Sans:style=Bold";
+	    tag:  "title" "+ font=Sans:style=Bold,Edje-Vera-Bold font_size=12 style=soft_shadow color=#fff shadow_color=#00000021";
+	    tag:  "hilight" "+ font=Sans:style=Bold,Edje-Vera-Bold style=glow color=#fff glow2_color=#333333be glow_color=#0000005a";
+	    tag:  "urgent" "+ font=Sans:style=Bold,Edje-Vera-Bold style=glow color=#fff glow2_color=#333 glow_color=#b01010";
+	    tag:  "b" "+ font=Sans:style=Bold,Edje-Vera-Bold";
 	    tag:  "br" "\n";
 	 }
       }
@@ -19617,7 +19620,7 @@ group { name: "e/toolbar/default/base";
 	       color3: 0 0 0 32;
 	       text {
 		  text: "Enter Password";
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  align: 0.5 0.5;
 		  min: 1 1;
@@ -19697,7 +19700,7 @@ group { name: "e/toolbar/default/base";
 	       color: 0 0 0 255;
 	       text {
 		  text: "****";
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 16;
 		  align: 0.0 0.5;
 		  min: 1 1;
@@ -20821,9 +20824,9 @@ group { name: "e/toolbar/default/base";
 //      data.item: "shaped" "1";
       styles {
 	 style { name: "about_style";
-	    base: "font=Sans:style=Bold font_size=10 align=center valign=center color=#e0e0e0ff style=soft_shadow shadow_color=#00000020 wrap=word";
-	    tag:  "hilight" "+ font=Sans:style=Bold text_class=tb_light color=#f00 style=soft_shadow";
-	    tag:  "title" "+ font_size=12 font=Sans:style=Bold text_class=tb_big style=soft_shadow color=#fff shadow_color=#00000020";
+	    base: "font=Sans:style=Bold,Edje-Vera-Bold font_size=10 align=center valign=center color=#e0e0e0ff style=soft_shadow shadow_color=#00000020 wrap=word";
+	    tag:  "hilight" "+ font=Sans:style=Bold,Edje-Vera-Bold text_class=tb_light color=#f00 style=soft_shadow";
+	    tag:  "title" "+ font_size=12 font=Sans:style=Bold,Edje-Vera-Bold text_class=tb_big style=soft_shadow color=#fff shadow_color=#00000020";
 	    tag:  "/title" "- \n \n";
 	    tag:  "br" "\n";
 	 }
@@ -21233,7 +21236,7 @@ group { name: "e/toolbar/default/base";
       }
       styles {
 	 style { name: "theme_about_style";
-	    base: "font=Sans:style=Bold font_size=10 align=center valign=center color=#e0e0e0ff style=soft_shadow shadow_color=#0000001f wrap=word";
+	    base: "font=Sans:style=Bold,Edje-Vera-Bold font_size=10 align=center valign=center color=#e0e0e0ff style=soft_shadow shadow_color=#0000001f wrap=word";
 	    tag:  "br" "\n";
 	 }
       }
@@ -21688,37 +21691,37 @@ MIMEICON("application/x-rar","icon_mime_package.png", 128);
 
 // Dynamic MIME Icons //
 
-#define MIMEBASE(MIME, FILE, NAME, SIZE)                \
-group { name: "e/icons/fileman/mime/"MIME;              \
-   max:  SIZE SIZE;                                     \
-   parts {                                              \
-      part { name: "base";                              \
-	 mouse_events:  0;                              \
-	 description { state: "default" 0.0;            \
-	    aspect: 1.0 1.0;                            \
-	    aspect_preference: BOTH;                    \
-	    image.image: FILE COMP;                     \
-	    image.normal: FILE ;                        \
-	 }                                              \
-      }                                                 \
-      part { name: "name";                              \
-	 type: TEXT;					\
-	 mouse_events:  0;                              \
-	 description { state: "default" 0.0;            \
-	    rel1.relative: 0.2444 0.6797;		\
-	    rel2.relative: 0.7478 0.8894;		\
-	    color: 245 245 245 255;			\
-	    text {					\
-	       text:     NAME;				\
-	       font:     "Sans:style=Bold";		\
-	       size:     4;				\
-	       fit:	 1 1;				\
-	       min:      1 1;				\
-	       align:    0.5 0.0;			\
-	    }						\
-	 }                                              \
-      }                                                 \
-   }                                                    \
+#define MIMEBASE(MIME, FILE, NAME, SIZE)                	\
+group { name: "e/icons/fileman/mime/"MIME;              	\
+   max:  SIZE SIZE;                                     	\
+   parts {							\
+      part { name: "base";					\
+	 mouse_events: 0;					\
+	 description { state: "default" 0.0;			\
+	    aspect: 1.0 1.0;					\
+	    aspect_preference: BOTH;				\
+	    image.image: FILE COMP;				\
+	    image.normal: FILE;					\
+	 }							\
+      }								\
+      part { name: "name";					\
+	 type: TEXT;						\
+	 mouse_events: 0;					\
+	 description { state: "default" 0.0;			\
+	    rel1.relative: 0.2444 0.6797;			\
+	    rel2.relative: 0.7478 0.8894;			\
+	    color: 245 245 245 255;				\
+	    text {						\
+	       text:	NAME;					\
+	       font:	"Sans:style=Bold,Edje-Vera-Bold";	\
+	       size:	4;					\
+	       fit:	1 1;					\
+	       min:	1 1;					\
+	       align:	0.5 0.0;				\
+	    }							\
+	 }							\
+      }								\
+   }								\
 }
 
 MIMEBASE("video/mpeg","icon_mime_video_generic.png", ".MPEG", 128);
@@ -21727,7 +21730,7 @@ MIMEBASE("video/x-theora+ogg","icon_mime_video_generic.png", ".OGG", 128);
 MIMEBASE("video/x-msvideo","icon_mime_video_generic.png", ".AVI", 128);
 
 MIMEBASE("image/png","icon_mime_image_generic.png", ".PNG", 128);
-MIMEBASE("image/jpeg","icon_mime_image_generic.png", ".JPG", 128);
+MIMEBASE("image/jpeg","icon_mime_image_generic.png", ".JPEG", 128);
 MIMEBASE("image/gif","icon_mime_image_generic.png", ".GIF", 128);
 MIMEBASE("image/bmp","icon_mime_image_generic.png", ".BMP", 128);
 MIMEBASE("application/x-xcf","icon_mime_image_generic.png", ".XCF", 128);
@@ -22150,7 +22153,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       color3: 0 0 0 32;
 	       text {
 		  text: "Enlightenment";
-                  font: "Sans:style=Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 20;
 		  min:  1 1;
 		  align: 0.5 0.5;
@@ -22207,7 +22210,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       color3: 0 0 0 32;
 	       text {
 		  text: "Starting Enlightenment. Please wait.";
-		  font: "Sans:style=Bold";
+		  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  min:  1 1;
 		  align: 0.5 0.5;
