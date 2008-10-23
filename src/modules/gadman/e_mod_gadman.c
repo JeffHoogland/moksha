@@ -10,8 +10,6 @@ static void _save_widget_position(E_Gadcon_Client *gcc);
 static void _apply_widget_position(E_Gadcon_Client *gcc);
 static char *_get_bind_text(const char* action);
 
-//static void _hide_finished(void *data, Evas_Object *o, const char *em, const char *src);
-
 static Evas_Object* _create_mover(E_Gadcon *gc);
 static Evas_Object* _get_mover(E_Gadcon_Client *gcc);
 static E_Gadcon* _gadman_gadcon_new(const char* name, int ontop);
@@ -26,6 +24,8 @@ static void on_move(void *data, Evas_Object *o, const char *em, const char *src)
 
 static void on_frame_click(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void on_bg_click(void *data, Evas_Object *o, const char *em, const char *src);
+static void on_hide_stop(void *data __UNUSED__, Evas_Object *o __UNUSED__,
+        const char *em __UNUSED__, const char *src __UNUSED__);
 
 static void on_menu_style_plain(void *data, E_Menu *m, E_Menu_Item *mi);
 static void on_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -454,6 +454,9 @@ _gadman_gadcon_new(const char* name, int ontop)
                                 "e/gadman/full_bg");
         edje_object_signal_callback_add(Man->full_bg, "mouse,down,*",
                                         "grabber", on_bg_click, NULL);
+        edje_object_signal_callback_add(Man->full_bg, "e,action,hide,stop",
+                                        "", on_hide_stop, NULL);
+        
         evas_object_move(Man->full_bg, 0, 0);
         evas_object_resize(Man->full_bg, Man->width, Man->height);
         evas_object_show(Man->full_bg);
@@ -730,13 +733,6 @@ _get_bind_text(const char* action)
      }
    return "(You must define a binding)";
 }
-
-//~ static void
-//~ _hide_finished(void *data, Evas_Object *o, const char *em, const char *src)
-//~ {
-   //~ printf("MACOOMEEEE\n");
-   //~ ecore_evas_hide(Man->top_ee);
-//~ }
 
 /* Callbacks */
 static void
@@ -1108,4 +1104,11 @@ static void
 on_bg_click(void *data, Evas_Object *o, const char *em, const char *src)
 {
    gadman_gadgets_hide();
+}
+
+static void
+on_hide_stop(void *data __UNUSED__, Evas_Object *o __UNUSED__,
+        const char *em __UNUSED__, const char *src __UNUSED__)
+{
+   ecore_evas_hide(Man->top_ee);
 }

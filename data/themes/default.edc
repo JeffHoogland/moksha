@@ -19884,6 +19884,7 @@ group { name: "e/toolbar/default/base";
 	    action: STATE_SET "default" 0.0;
 	    transition: LINEAR 0.4;
 	    target: "bg";
+            after: "hide_stop";
 	 }
 	 program { name: "hide_now";
 	    signal: "e,state,visibility,hide,now";
@@ -19891,6 +19892,7 @@ group { name: "e/toolbar/default/base";
 	    action: STATE_SET "default" 0.0;
 	    transition: LINEAR 0.0;
 	    target: "bg";
+            after: "hide_stop";
 	 }
 	 program { name: "show_custom";
 	    signal: "e,state,visibility,show,custom";
@@ -19912,6 +19914,7 @@ group { name: "e/toolbar/default/base";
 	    action: STATE_SET "default" 0.0;
 	    transition: LINEAR 0.4;
 	    target: "custom_bg";
+            after: "hide_stop";
 	 }
 	 program { name: "hide_custom_now";
 	    signal: "e,state,visibility,hide,custom,now";
@@ -19919,7 +19922,11 @@ group { name: "e/toolbar/default/base";
 	    action: STATE_SET "default" 0.0;
 	    transition: LINEAR 0.0;
 	    target: "custom_bg";
+            after: "hide_stop";
 	 }
+         program { name: "hide_stop";
+             action: SIGNAL_EMIT "e,action,hide,stop" "";
+         }
       }
    }
 
