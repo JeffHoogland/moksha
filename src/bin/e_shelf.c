@@ -158,6 +158,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      }
 
    es->gadcon = e_gadcon_swallowed_new(es->name, es->id, es->o_base, "e.swallow.content");
+   es->gadcon->instant_edit = 1;
    e_gadcon_min_size_request_callback_set(es->gadcon,
 					  _e_shelf_gadcon_min_size_request, es);
 
