@@ -15405,7 +15405,7 @@ collections { /* begin the collection of edje groups that are in this file */
       styles {
 	 style {
 	    name: "sys_style";
-	    base: "font=Sans:style=Bold font_size=12 text_class=tb_plain align=center valign=center color=#fff style=soft_shadow shadow_color=#0000001f wrap=word";
+	    base: "font=Sans:style=Bold font_size=12 text_class=tb_plain align=center color=#fff style=soft_shadow shadow_color=#0000001f wrap=word";
 	    tag:  "br" "\n";
 	    tag:  "hilight" "+ font=Sans:style=Bold text_class=tb_light";
 	 }
@@ -20821,7 +20821,7 @@ group { name: "e/toolbar/default/base";
 //      data.item: "shaped" "1";
       styles {
 	 style { name: "about_style";
-	    base: "font=Sans:style=Bold font_size=10 align=center valign=center color=#e0e0e0ff style=soft_shadow shadow_color=#00000020 wrap=word";
+	    base: "font=Sans:style=Bold font_size=10 align=center color=#e0e0e0ff style=soft_shadow shadow_color=#00000020 wrap=word";
 	    tag:  "hilight" "+ font=Sans:style=Bold text_class=tb_light color=#f00 style=soft_shadow";
 	    tag:  "title" "+ font_size=12 font=Sans:style=Bold text_class=tb_big style=soft_shadow color=#fff shadow_color=#00000020";
 	    tag:  "/title" "- \n \n";
@@ -21233,7 +21233,7 @@ group { name: "e/toolbar/default/base";
       }
       styles {
 	 style { name: "theme_about_style";
-	    base: "font=Sans:style=Bold font_size=10 align=center valign=center color=#e0e0e0ff style=soft_shadow shadow_color=#0000001f wrap=word";
+	    base: "font=Sans:style=Bold font_size=10 align=center color=#e0e0e0ff style=soft_shadow shadow_color=#0000001f wrap=word";
 	    tag:  "br" "\n";
 	 }
       }
