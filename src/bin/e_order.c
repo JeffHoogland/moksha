@@ -21,7 +21,7 @@ EAPI int
 e_order_init(void)
 {
    handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, _e_order_cb_efreet_desktop_change, NULL));
-
+   efreet_menu_file_set(e_config->default_system_menu);
    return 1;
 }
 

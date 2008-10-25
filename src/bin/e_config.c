@@ -635,6 +635,8 @@ e_config_init(void)
 
    E_CONFIG_VAL(D, T, show_cursor, UCHAR); /**/
    E_CONFIG_VAL(D, T, idle_cursor, UCHAR); /**/
+
+   E_CONFIG_VAL(D, T, default_system_menu, STR);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -1584,6 +1586,10 @@ e_config_init(void)
    IFCFG(0x0128);
    e_config->show_cursor = 1;
    e_config->idle_cursor = 1;
+   IFCFGEND;
+   
+   IFCFG(0x0129);
+   e_config->default_system_menu = NULL;
    IFCFGEND;
    
    e_config->config_version = E_CONFIG_FILE_VERSION;   

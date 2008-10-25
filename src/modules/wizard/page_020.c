@@ -83,6 +83,7 @@ wizard_page_show(E_Wizard_Page *pg)
 	snprintf(buf, sizeof(buf), "%s/profile.desktop", dir);
         desk = efreet_desktop_get(buf);
 	label = prof;
+	// FIXME: filter out wizard default profile
 	if ((desk) && (desk->name)) label = desk->name;
 	snprintf(buf, sizeof(buf), "%s/icon.edj", dir);
 	if ((desk) && (desk->icon))
@@ -133,5 +134,7 @@ EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {
    // FIXME: actually apply profile
+   if (!profile) profile = "default";
+   e_config_profile_set(profile);
    return 1;
 }

@@ -20,7 +20,8 @@ pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH
 pkg_LTLIBRARIES        = module.la \
                          page_000.la \
                          page_010.la \
-                         page_020.la
+                         page_020.la \
+                         page_030.la
 
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
@@ -45,6 +46,11 @@ page_020_la_SOURCES      = page_020.c
 page_020_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_020_la_LDFLAGS      = -module -avoid-version
 page_020_la_DEPENDENCIES = $(top_builddir)/config.h
+
+page_030_la_SOURCES      = page_030.c
+page_030_la_LIBADD       = @e_libs@ @dlopen_libs@
+page_030_la_LDFLAGS      = -module -avoid-version
+page_030_la_DEPENDENCIES = $(top_builddir)/config.h
 
 uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)

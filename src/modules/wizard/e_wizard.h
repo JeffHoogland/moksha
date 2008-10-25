@@ -38,6 +38,7 @@ EAPI E_Wizard_Page *
 EAPI void e_wizard_page_del(E_Wizard_Page *pg);
 EAPI void e_wizard_button_next_enable_set(int enable);
 EAPI void e_wizard_title_set(const char *title);
+EAPI void e_wizard_labels_update(void);
     
 #endif
 #endif

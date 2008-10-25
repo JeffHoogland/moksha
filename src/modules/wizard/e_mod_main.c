@@ -48,6 +48,11 @@ EAPI E_Module_Api e_modapi =
 };
 
 
+static int _cb_sort_files(char *f1, char *f2)
+{
+   return strcmp(f1, f2);
+}
+
 EAPI void *
 e_modapi_init(E_Module *m)
 {
@@ -64,6 +69,7 @@ e_modapi_init(E_Module *m)
 	char *file;
 	
 	ecore_list_first_goto(files);
+	ecore_list_sort(files, ECORE_COMPARE_CB(_cb_sort_files), ECORE_SORT_MIN);
 	while ((file = ecore_list_current(files)))
 	  {
 	     if (!strncmp(file, "page_", 5))
