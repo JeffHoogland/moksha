@@ -456,7 +456,8 @@ EAPI int        e_config_save(void);
 EAPI void       e_config_save_flush(void);
 EAPI void       e_config_save_queue(void);
 
-EAPI const char *e_config_profile_get(void);
+EAPI const char*e_config_profile_get(void);
+EAPI char      *e_config_profile_dir_get(const char *prof);
 EAPI void       e_config_profile_set(const char *prof);
 EAPI Eina_List *e_config_profile_list(void);
 EAPI void       e_config_profile_add(const char *prof);

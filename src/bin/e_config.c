@@ -1804,12 +1804,29 @@ e_config_profile_set(const char *prof)
    e_util_env_set("E_CONF_PROFILE", _e_config_profile);
 }
 
+EAPI char *
+e_config_profile_dir_get(const char *prof)
+{
+   char buf[PATH_MAX];
+   const char *homedir;
+   const char *dir;
+
+   homedir = e_user_homedir_get();
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, prof);
+   if (ecore_file_is_dir(buf)) return strdup(buf);
+   dir = e_prefix_data_get();
+   snprintf(buf, sizeof(buf), "%s/data/config/%s", dir, prof);
+   if (ecore_file_is_dir(buf)) return strdup(buf);
+   return NULL;
+}
+
 EAPI Eina_List *
 e_config_profile_list(void)
 {
    Ecore_List *files;
-   char buf[4096];
+   char buf[PATH_MAX];
    const char *homedir;
+   const char *dir;
    Eina_List *flist = NULL;
    
    homedir = e_user_homedir_get();
@@ -1828,6 +1845,31 @@ e_config_profile_list(void)
 	     ecore_list_next(files);
 	  }
         ecore_list_destroy(files);
+     }
+   dir = e_prefix_data_get();
+   snprintf(buf, sizeof(buf), "%s/data/config", dir);
+   files = ecore_file_ls(buf);
+   if (files)
+     {
+	char *file;
+	
+	ecore_list_first_goto(files);
+	while ((file = ecore_list_current(files)))
+	  {
+	     snprintf(buf, sizeof(buf), "%s/data/config/%s", dir, file);
+	     if (ecore_file_is_dir(buf))
+	       {
+		  Eina_List *l;
+		  
+		  for (l = flist; l; l = l->next)
+		    {
+		       if (!strcmp(file, l->data)) break;
+		    }
+		  if (!l) flist = eina_list_append(flist, strdup(file));
+	       }
+	     ecore_list_next(files);
+	  }
+	ecore_list_destroy(files);
      }
    return flist;
 }

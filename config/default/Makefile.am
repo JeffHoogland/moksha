@@ -15,6 +15,8 @@ EXTRA_DIST = \
 
 filesdir = $(datadir)/enlightenment/data/config/default
 files_DATA = \
+        profile.desktop \
+        icon.png \
 	e.cfg \
 	module.battery.cfg \
 	module.cpufreq.cfg \

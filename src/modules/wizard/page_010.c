@@ -11,34 +11,35 @@ static int  _basic_lang_list_sort(const void *data1, const void *data2);
 struct _E_Intl_Pair
 {
    const char *locale_key;
+   const char *locale_icon;
    const char *locale_translation;
 };
 
 const E_Intl_Pair basic_language_predefined_pairs[ ] = {
-     {"bg_BG.UTF-8", "Български"},
-     {"ca_ES.UTF-8", "Català"},
-     {"zh_CN.UTF-8", "Chinese (Simplified)"},
-     {"zh_TW.UTF-8", "Chinese (Traditional)"},
-     {"cs_CZ.UTF-8", "Čeština"},
-     {"da_DK.UTF-8", "Dansk"},
-     {"nl_NL.UTF-8", "Nederlands"},
-     {"en_US.UTF-8", "English"},
-     {"fi_FI.UTF-8", "Suomi"},
-     {"fr_FR.UTF-8", "Français"},
-     {"de_DE.UTF-8", "Deutsch"},
-     {"hu_HU.UTF-8", "Magyar"},
-     {"it_IT.UTF-8", "Italiano"},
-     {"ja_JP.UTF-8", "日本語"},
-     {"ko_KR.UTF-8", "한국어"},
-     {"nb_NO.UTF-8", "Norsk Bokmål"},
-     {"pl_PL.UTF-8", "Polski"},
-     {"pt_BR.UTF-8", "Português"},
-     {"ru_RU.UTF-8", "Русский"},
-     {"sk_SK.UTF-8", "Slovenčina"},
-     {"sl_SI.UTF-8", "Slovenščina"},
-     {"es_AR.UTF-8", "Español"},
-     {"sv_SE.UTF-8", "Svenska"},
-     { NULL, NULL }
+     {"bg_BG.UTF-8", "lang-bg_BG.png", "Български"},
+     {"ca_ES.UTF-8", "lang-ca_ES.png", "Català"},
+     {"zh_CN.UTF-8", "lang-zh_CN.png", "Chinese (Simplified)"},
+     {"zh_TW.UTF-8", "lang-zh_TW.png", "Chinese (Traditional)"},
+     {"cs_CZ.UTF-8", "lang-cs_CZ.png", "Čeština"},
+     {"da_DK.UTF-8", "lang-da_DK.png", "Dansk"},
+     {"nl_NL.UTF-8", "lang-nl_NL.png", "Nederlands"},
+     {"en_US.UTF-8", "lang-en_US.png", "English"},
+     {"fi_FI.UTF-8", "lang-fi_FI.png", "Suomi"},
+     {"fr_FR.UTF-8", "lang-fr_FR.png", "Français"},
+     {"de_DE.UTF-8", "lang-de_DE.png", "Deutsch"},
+     {"hu_HU.UTF-8", "lang-hu_HU.png", "Magyar"},
+     {"it_IT.UTF-8", "lang-it_IT.png", "Italiano"},
+     {"ja_JP.UTF-8", "lang-ja_JP.png", "日本語"},
+     {"ko_KR.UTF-8", "lang-ko_KR.png", "한국어"},
+     {"nb_NO.UTF-8", "lang-nb_NO.png", "Norsk Bokmål"},
+     {"pl_PL.UTF-8", "lang-pl_PL.png", "Polski"},
+     {"pt_BR.UTF-8", "lang-pt_BR.png", "Português"},
+     {"ru_RU.UTF-8", "lang-ru_RU.png", "Русский"},
+     {"sk_SK.UTF-8", "lang-sk_SK.png", "Slovenčina"},
+     {"sl_SI.UTF-8", "lang-sl_SI.png", "Slovenščina"},
+     {"es_AR.UTF-8", "lang-es_AR.png", "Español"},
+     {"sv_SE.UTF-8", "lang-sv_SE.png", "Svenska"},
+     { NULL, NULL, NULL }
 };
 
 static char *lang = NULL;
@@ -74,7 +75,6 @@ wizard_page_init(E_Wizard_Page *pg)
    
    e_lang_list = e_intl_language_list();
    
-   printf("init\n");
    output = popen("locale -a", "r");
    if (output) 
      {
@@ -146,7 +146,7 @@ wizard_page_show(E_Wizard_Page *pg)
    
    o = e_widget_list_add(pg->evas, 1, 0);
    e_wizard_title_set(_("Language"));
-   of = e_widget_framelist_add(pg->evas, _("Available"), 0);
+   of = e_widget_framelist_add(pg->evas, _("Select one"), 0);
    ob = e_widget_ilist_add(pg->evas, 32 * e_scale, 32 * e_scale, &lang);
    e_widget_min_size_set(ob, 140 * e_scale, 140 * e_scale);
    
@@ -155,9 +155,14 @@ wizard_page_show(E_Wizard_Page *pg)
    for (i = 0, l = blang_list; l; l = l->next, i++)
      {
 	E_Intl_Pair *pair;
+        Evas_Object *ic;
+	char buf[PATH_MAX], *dir;
 	
 	pair = l->data;
-	e_widget_ilist_append(ob, NULL, _(pair->locale_translation), 
+	dir = e_prefix_data_get();
+	snprintf(buf, sizeof(buf), "%s/data/images/%s", dir, pair->locale_icon);
+	ic = e_util_icon_add(buf, pg->evas);
+	e_widget_ilist_append(ob, ic, _(pair->locale_translation), 
 			      NULL, NULL, pair->locale_key);
 	if (e_intl_language_get())
 	  {
