@@ -87,8 +87,9 @@ wizard_page_show(E_Wizard_Page *pg)
 	snprintf(buf, sizeof(buf), "%s/icon.edj", dir);
 	if ((desk) && (desk->icon))
 	  snprintf(buf, sizeof(buf), "%s/%s", dir, desk->icon);
+	else
+	  snprintf(buf, sizeof(buf), "%s/data/images/enlightenment.png", e_prefix_data_get());
 	ic = e_util_icon_add(buf, pg->evas);
-	
 	e_widget_ilist_append(ob, ic, label, NULL, NULL, prof);
 	if (e_config_profile_get())
 	  {
