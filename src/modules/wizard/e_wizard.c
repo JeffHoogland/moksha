@@ -4,13 +4,11 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static void _e_wizard_back_eval(void);
 static void _e_wizard_next_eval(void);
 static E_Popup *_e_wizard_main_new(E_Zone *zone);
 static E_Popup *_e_wizard_extra_new(E_Zone *zone);
 static void _e_wizard_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
 static void _e_wizard_cb_next(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_wizard_cb_back(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 static E_Popup *pop = NULL;
 static Eina_List *pops = NULL;
@@ -19,11 +17,8 @@ static Evas_Object *o_content = NULL;
 static Eina_List *pages = NULL;
 static E_Wizard_Page *curpage = NULL;
 static int next_ok = 1;
-static int back_ok = 1;
 static int next_can = 0;
-static int back_can = 0;
 static int next_prev = 0;
-static int back_prev = 0;
 
 EAPI int
 e_wizard_init(void)
@@ -91,7 +86,6 @@ e_wizard_go(void)
    if (curpage)
      {
 	if ((!curpage->data) && (curpage->init)) curpage->init(curpage);
-	_e_wizard_back_eval();
 	_e_wizard_next_eval();
 	if ((curpage->show) && (!curpage->show(curpage)))
 	  {
@@ -137,9 +131,6 @@ e_wizard_next(void)
 			 curpage->init(curpage);
 		    }
 		  next_can = 1;
-		  if (l->prev) back_can = 1;
-		  else back_can = 0;
-		  _e_wizard_back_eval();
 		  _e_wizard_next_eval();
 		  if ((curpage->show) && (curpage->show(curpage)))
 		    {
@@ -152,46 +143,6 @@ e_wizard_next(void)
 		  e_wizard_apply();
 		  e_wizard_shutdown();
 		  return;
-	       }
-	  }
-     }
-}
-
-EAPI void
-e_wizard_back(void)
-{
-   Eina_List *l;
-   
-   for (l = eina_list_last(pages); l; l = l->prev)
-     {
-	if (l->data == curpage)
-	  {
-	     if (l->prev)
-	       {
-		  if (curpage)
-		    {
-                       if (curpage->hide)
-			 curpage->hide(curpage);
-		    }
-		  curpage = l->prev->data;
-		  if (!curpage->data)
-		    {
-                       if (curpage->init)
-			 curpage->init(curpage);
-		    }
-		  next_can = 1;
-		  if (l->prev) back_can = 1;
-		  else back_can = 0;
-		  _e_wizard_back_eval();
-		  _e_wizard_next_eval();
-                  if ((curpage->show) && (curpage->show(curpage)))
-		    {
-		       break;
-		    }
-	       }
-	     else
-	       {
-		  break;
 	       }
 	  }
      }
@@ -253,13 +204,6 @@ e_wizard_page_del(E_Wizard_Page *pg)
 }
 
 EAPI void
-e_wizard_button_back_enable_set(int enable)
-{
-   back_ok = enable;
-   _e_wizard_back_eval();
-}
-
-EAPI void
 e_wizard_button_next_enable_set(int enable)
 {
    next_ok = enable;
@@ -272,19 +216,10 @@ e_wizard_title_set(const char *title)
    edje_object_part_text_set(o_bg, "e.text.title", title);
 }
 
-static void
-_e_wizard_back_eval(void)
+EAPI void
+e_wizard_labels_update(void)
 {
-   int ok;
-   
-   ok = back_can;
-   if (!back_ok) ok = 0;
-   if (back_prev != ok)
-     {
-	if (ok) edje_object_signal_emit(o_bg, "e,state,back,enable", "e");
-	else edje_object_signal_emit(o_bg, "e,state,back,disable", "e");
-	back_prev = ok;
-     }
+   edje_object_part_text_set(o_bg, "e.text.label", _("Next"));
 }
 
 static void
@@ -312,16 +247,13 @@ _e_wizard_main_new(E_Zone *zone)
    pop = e_popup_new(zone, zone->x, zone->y, zone->w, zone->h);
    e_popup_layer_set(pop, 255);
    o = edje_object_add(pop->evas);
-   /* FIXME: need a theme */
-   e_theme_edje_object_set(o, "base/theme/wizard",
-			   "e/wizard/main");
+
+   e_theme_edje_object_set(o, "base/theme/wizard", "e/wizard/main");
    evas_object_move(o, 0, 0);
    evas_object_resize(o, zone->w, zone->h);
    evas_object_show(o);
    edje_object_signal_callback_add(o, "e,action,next", "",
 				   _e_wizard_cb_next, pop);
-   edje_object_signal_callback_add(o, "e,action,back", "",
-				   _e_wizard_cb_back, pop);
    o_bg = o;
    
    o = evas_object_rectangle_add(pop->evas);
@@ -338,12 +270,9 @@ _e_wizard_main_new(E_Zone *zone)
    o_ev = o;
 
    /* set up next/prev buttons */
-   edje_object_part_text_set(o_bg, "e.text.title", _("Welcome to Enlightenment 東京"));
-   edje_object_part_text_set(o_bg, "e.text.page", "");
-   edje_object_part_text_set(o_bg, "e.text.next", _("Next"));
-   edje_object_part_text_set(o_bg, "e.text.back", _("Back"));
+   edje_object_part_text_set(o_bg, "e.text.title", _("Welcome to Enlightenment"));
    edje_object_signal_emit(o_bg, "e,state,next,disable", "e");
-   edje_object_signal_emit(o_bg, "e,state,back,disable", "e");
+   e_wizard_labels_update();
    
    e_popup_edje_bg_object_set(pop, o_bg);
    e_popup_show(pop);
@@ -365,9 +294,7 @@ _e_wizard_extra_new(E_Zone *zone)
    pop = e_popup_new(zone, zone->x, zone->y, zone->w, zone->h);
    e_popup_layer_set(pop, 255);
    o = edje_object_add(pop->evas);
-   /* FIXME: need a theme */
-   e_theme_edje_object_set(o, "base/theme/wizard",
-			   "e/wizard/extra");
+   e_theme_edje_object_set(o, "base/theme/wizard", "e/wizard/extra");
    evas_object_move(o, 0, 0);
    evas_object_resize(o, zone->w, zone->h);
    evas_object_show(o);
@@ -407,10 +334,4 @@ static void
 _e_wizard_cb_next(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    e_wizard_next();
-}
-
-static void
-_e_wizard_cb_back(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   e_wizard_back();
 }

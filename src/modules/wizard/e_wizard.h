@@ -26,7 +26,6 @@ EAPI int e_wizard_shutdown(void);
 EAPI void e_wizard_go(void);
 EAPI void e_wizard_apply(void);
 EAPI void e_wizard_next(void);
-EAPI void e_wizard_back(void);
 EAPI void e_wizard_page_show(Evas_Object *obj);
 EAPI E_Wizard_Page *
   e_wizard_page_add(void *handle,
@@ -37,7 +36,6 @@ EAPI E_Wizard_Page *
 		    int (*apply)    (E_Wizard_Page *pg)
 		    );
 EAPI void e_wizard_page_del(E_Wizard_Page *pg);
-EAPI void e_wizard_button_back_enable_set(int enable);
 EAPI void e_wizard_button_next_enable_set(int enable);
 EAPI void e_wizard_title_set(const char *title);
     

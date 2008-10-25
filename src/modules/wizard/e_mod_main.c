@@ -20,39 +20,19 @@ static E_Module *conf_module = NULL;
  * These are the currently planned wizard pages:
  * 
  * o == interactive
- * . == automatic (no gui)
+ * . == automatic (no gui - none implemented currently)
  * 
  * --- THE LIST
- * .  look for system global profile - if it exists just copy it and exit
- *    wizard now.
- * .  find fonts like sans and other known fonts that have full intl. support
- *    and use them if found.
  * o  ask for language (default selection is current locale).
- * o  ask for font size to use.
- * o  xrender/engine speed test and detect and suggest best engine.
- * o  ask for one of N default config profiles to be set up. if profile is
- *    marked as "final" end wizard now.
+ * o  ask for initial profile
  * o  find XDG app menus/repositories and list them let user choose which
  *    one(s) are to be used.
- * o  find other secondary menus - like ubuntu's settings menu and build
- *    more app menus for this.
- * .  look for battery, cpufreq and temperature support - if there, enable the
- *    appropriate modules.
- * o  ask what apps you want in ibar by default (or none - no ibar).
+ * o  ask for ibar initial app set
  * o  ask if user wants desktop icons or not (enable fwin module but seed it
  *    with default config).
- * o  ask if the user wants virtual desktops (if so have 4x1 and page module
- *    loaded).
- * o  ask about what kind of default key and mouse bindings a user wants
- *    (current e defaults, windows-style or mac-style?).
- * o  ask for what default wallpaper to use.
- * o  ask if the user wants gnome or kde support
- *    (for gnome run gnome-settings-daemon, unknown for kde).
- * 
- * --- THINGS TO ADD?
- * o  choose one of n available default themes (if we have any).
- * o  do you want a taskbar or not.
-
+ * o  ask if you want links to home/system/tmp on desktop (if fileman above on)
+ * .  take some of current config (language, fileman, profile) and load
+ *    load profile, apply language to it and save, restart e.
  */
 
 /**/
