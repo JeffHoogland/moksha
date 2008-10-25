@@ -420,6 +420,8 @@ e_fm2_init(void)
 	       _e_fm2_smart_clip_set, /* clip_set */
 	       _e_fm2_smart_clip_unset, /* clip_unset */
 	       NULL,
+	       NULL,
+	       NULL,
 	       NULL
 	  };
 	_e_fm2_smart = evas_smart_class_new(&sc);

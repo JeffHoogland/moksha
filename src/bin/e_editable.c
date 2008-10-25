@@ -88,6 +88,8 @@ e_editable_add(Evas *evas)
 	       _e_editable_clip_set,
 	       _e_editable_clip_unset,
 	       NULL,
+	       NULL,
+	       NULL,
 	       NULL
 	  };
 	_e_editable_smart = evas_smart_class_new(&sc);

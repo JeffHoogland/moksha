@@ -653,6 +653,8 @@ _e_box_smart_init(void)
 	       _e_box_smart_clip_set,
 	       _e_box_smart_clip_unset,
 	       NULL,
+	       NULL,
+	       NULL,
 	       NULL
 	  };
 	_e_smart = evas_smart_class_new(&sc);
