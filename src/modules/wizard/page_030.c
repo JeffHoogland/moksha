@@ -143,7 +143,7 @@ wizard_page_show(E_Wizard_Page *pg)
    if (sel >= 0) e_widget_ilist_selected_set(ob, sel);
    
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 0, 0, 0.5);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    evas_object_show(ob);
    evas_object_show(of);

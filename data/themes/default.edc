@@ -20828,8 +20828,16 @@ group { name: "e/toolbar/default/base";
 	 part { name: "e.swallow.content";
 	    type: SWALLOW;
 	    description { state: "default" 0.0;
-	       rel1.relative: 0.5 0.5;
-	       rel2.relative: 0.5 0.5;
+	       rel1 {
+		  to_y: "e.text.title";
+		  relative: 0.5 1.0;
+		  offset: 0 8;
+	       }
+	       rel2 {
+		  to_y: "button_image";
+		  relative: 0.5 0.0;
+		  offset: 0 -9;
+	       }
 	    }
 	 }
 	 part { name: "button_image";
