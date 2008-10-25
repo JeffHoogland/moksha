@@ -23,9 +23,9 @@ static E_Module *conf_module = NULL;
  * . == automatic (no gui - none implemented currently)
  * 
  * --- THE LIST
- * o  ask for language (default selection is current locale).
- * o  ask for initial profile
- * o  find XDG app menus/repositories and list them let user choose which
+ * o *ask for language (default selection is current locale).
+ * o *ask for initial profile
+ * o *find XDG app menus/repositories and list them let user choose which
  *    one(s) are to be used.
  * o  ask for ibar initial app set
  * o  ask if user wants desktop icons or not (enable fwin module but seed it
