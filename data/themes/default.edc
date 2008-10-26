@@ -21873,6 +21873,8 @@ group { name: "e/icons/fileman/"NAME;                   \
 EFMICON("folder","icon_efm_folder.png", 128)
 EFMICON("file","icon_efm_file.png", 128)
 EFMICON("home","icon_efm_home.png", 128)
+EFMICON("root","icon_efm_root.png", 128)
+EFMICON("tmp","icon_efm_tmp.png", 128)
 EFMICON("desktop","icon_efm_desktop.png", 128)
 EFMICON("hdd","icon_efm_hdd.png", 128)
 EFMICON("hd","icon_efm_hdd.png", 128)
