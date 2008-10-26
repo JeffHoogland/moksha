@@ -61,92 +61,116 @@ wizard_page_show(E_Wizard_Page *pg)
    
    o = e_widget_list_add(pg->evas, 1, 0);
    e_wizard_title_set(_("Menus"));
-   of = e_widget_framelist_add(pg->evas, _("Select application menu"), 0);
    
-   ob = e_widget_ilist_add(pg->evas, 32 * e_scale, 32 * e_scale, &xdg_sel);
-   e_widget_min_size_set(ob, 140 * e_scale, 140 * e_scale);
-   
-   e_widget_ilist_freeze(ob);
-   for (i = 0, l = menus; l; l = l->next, i++)
+   if (!menus)
      {
-	char buf[PATH_MAX], *file, *p, *p2, *tlabel, *tdesc;
-	const char *label;
+	of = e_widget_framelist_add(pg->evas, _("Error"), 0);
 	
-	file = l->data;
-	label = file;
-	tlabel = NULL;
-	tdesc = NULL;
-	if (!strcmp("/etc/xdg/menus/applications.menu", file))
+	ob = e_widget_textblock_add(pg->evas);
+        e_widget_min_size_set(ob, 140 * e_scale, 140 * e_scale);
+        e_widget_textblock_markup_set
+	  (ob, 
+	   _("No menu files were<br>"
+	     "found on your system.<br>"
+	     "Please see the<br>"
+	     "documentation on<br>"
+	     "www.enlightenment.org<br>"
+	     "for more details on<br>"
+	     "how to get your<br>"
+	     "application menus<br>"
+	     "working."
+	     )
+	   );
+	e_widget_framelist_object_append(of, ob);
+	e_widget_list_object_append(o, of, 1, 1, 0.5);
+	evas_object_show(ob);
+	evas_object_show(of);
+     }
+   else
+     {
+	of = e_widget_framelist_add(pg->evas, _("Select application menu"), 0);
+	
+	ob = e_widget_ilist_add(pg->evas, 32 * e_scale, 32 * e_scale, &xdg_sel);
+	e_widget_min_size_set(ob, 140 * e_scale, 140 * e_scale);
+	
+	e_widget_ilist_freeze(ob);
+	for (i = 0, l = menus; l; l = l->next, i++)
 	  {
-	     label = _("System Default");
-	     sel = i;
-	  }
-	else
-	  {
-	     p = strrchr(file, '/');
-	     if (p)
+	     char buf[PATH_MAX], *file, *p, *p2, *tlabel, *tdesc;
+	     const char *label;
+	     
+	     file = l->data;
+	     label = file;
+	     tlabel = NULL;
+	     tdesc = NULL;
+	     if (!strcmp("/etc/xdg/menus/applications.menu", file))
 	       {
-		  p++;
-		  p2 = strchr(p, '-');
-		  if (!p2) p2 = strrchr(p, '.');
-		  if (p2)
+		  label = _("System Default");
+		  sel = i;
+	       }
+	     else
+	       {
+		  p = strrchr(file, '/');
+		  if (p)
 		    {
-		       tlabel = malloc(p2 - p + 1);
-		       if (tlabel)
+		       p++;
+		       p2 = strchr(p, '-');
+		       if (!p2) p2 = strrchr(p, '.');
+		       if (p2)
 			 {
-			    strncpy(tlabel, p, p2 - p);
-			    tlabel[p2 - p] = 0;
-			    tlabel[0] = toupper(tlabel[0]);
-			    if (*p2 == '-')
+			    tlabel = malloc(p2 - p + 1);
+			    if (tlabel)
 			      {
-				 p2++;
-				 p = strrchr(p2, '.');
-				 if (p)
+				 strncpy(tlabel, p, p2 - p);
+				 tlabel[p2 - p] = 0;
+				 tlabel[0] = toupper(tlabel[0]);
+				 if (*p2 == '-')
 				   {
-				      tdesc = malloc(p - p2 + 1);
-				      if (tdesc)
+				      p2++;
+				      p = strrchr(p2, '.');
+				      if (p)
 					{
-					   strncpy(tdesc, p2, p - p2);
-					   tdesc[p - p2] = 0;
-					   tdesc[0] = toupper(tdesc[0]);
-					   snprintf(buf, sizeof(buf), "%s (%s)", tlabel, tdesc);
+					   tdesc = malloc(p - p2 + 1);
+					   if (tdesc)
+					     {
+						strncpy(tdesc, p2, p - p2);
+						tdesc[p - p2] = 0;
+						tdesc[0] = toupper(tdesc[0]);
+						snprintf(buf, sizeof(buf), "%s (%s)", tlabel, tdesc);
+					     }
+					   else
+					     snprintf(buf, sizeof(buf), "%s", tlabel);
 					}
 				      else
 					snprintf(buf, sizeof(buf), "%s", tlabel);
 				   }
 				 else
 				   snprintf(buf, sizeof(buf), "%s", tlabel);
+				 label = buf;
 			      }
-			    else
-			      snprintf(buf, sizeof(buf), "%s", tlabel);
-			    label = buf;
 			 }
+		       else
+			 label = p;
 		    }
-		  else
-		    label = p;
 	       }
+	     e_widget_ilist_append(ob, NULL, label, NULL, NULL, file);
+	     if (tlabel) free(tlabel);
+	     if (tdesc) free(tdesc);
+	     free(file);
 	  }
-	e_widget_ilist_append(ob, NULL, label, NULL, NULL, file);
-	if (tlabel) free(tlabel);
-	if (tdesc) free(tdesc);
-	free(file);
-     }
-   if (!menus)
-     {
-	e_widget_ilist_append(ob, NULL, _("No menus found"), NULL, NULL, NULL);
-	sel = 0;
-     }
-   if (menus) evas_list_free(menus);
-   e_widget_ilist_go(ob);
-   e_widget_ilist_thaw(ob);
+	evas_list_free(menus);
+	menus = NULL;
+	e_widget_ilist_go(ob);
+	e_widget_ilist_thaw(ob);
    
-   if (sel >= 0) e_widget_ilist_selected_set(ob, sel);
+	if (sel >= 0) e_widget_ilist_selected_set(ob, sel);
    
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+	e_widget_framelist_object_append(of, ob);
+	e_widget_list_object_append(o, of, 1, 1, 0.5);
+	evas_object_show(ob);
+	evas_object_show(of);
+     }
 
-   evas_object_show(ob);
-   evas_object_show(of);
    e_wizard_page_show(o);
    pg->data = of;
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
