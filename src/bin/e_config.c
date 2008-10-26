@@ -1409,6 +1409,11 @@ e_config_profile_dir_get(const char *prof)
    return NULL;
 }
 
+static int _cb_sort_files(char *f1, char *f2)
+{
+   return strcmp(f1, f2);
+}
+
 EAPI Eina_List *
 e_config_profile_list(void)
 {
@@ -1425,6 +1430,7 @@ e_config_profile_list(void)
      {
 	char *file;
 	
+	ecore_list_sort(files, ECORE_COMPARE_CB(_cb_sort_files), ECORE_SORT_MIN);
 	ecore_list_first_goto(files);
 	while ((file = ecore_list_current(files)))
 	  {
@@ -1442,6 +1448,7 @@ e_config_profile_list(void)
      {
 	char *file;
 	
+	ecore_list_sort(files, ECORE_COMPARE_CB(_cb_sort_files), ECORE_SORT_MIN);
 	ecore_list_first_goto(files);
 	while ((file = ecore_list_current(files)))
 	  {
