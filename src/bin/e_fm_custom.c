@@ -3,12 +3,12 @@
  */
 #include "e.h"
 
-static Evas_Bool _e_fm2_custom_file_hash_foreach_list(const Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _e_fm2_custom_file_hash_foreach_list(const Evas_Hash *hash, const void *key, void *data, void *fdata);
 static Eina_List *_e_fm2_custom_hash_key_base_list(Evas_Hash *hash, const char *str);
 //static Evas_Bool _e_fm2_custom_file_hash_foreach_sub_list(Evas_Hash *hash, const char *key, void *data, void *fdata);
 //static Eina_List *_e_fm2_custom_hash_key_sub_list(Evas_Hash *hash, const char *str);
-static Evas_Bool _e_fm2_custom_file_hash_foreach(const Evas_Hash *hash, const char *key, void *data, void *fdata);
-static Evas_Bool _e_fm2_custom_file_hash_foreach_save(const Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _e_fm2_custom_file_hash_foreach(const Evas_Hash *hash, const void *key, void *data, void *fdata);
+static Evas_Bool _e_fm2_custom_file_hash_foreach_save(const Evas_Hash *hash, const void *key, void *data, void *fdata);
 static void _e_fm2_custom_file_info_load(void);
 static void _e_fm2_custom_file_info_save(void);
 static void _e_fm2_custom_file_info_free(void);
@@ -220,7 +220,7 @@ struct _E_Custom_List
 };
 
 static Evas_Bool
-_e_fm2_custom_file_hash_foreach_list(const Evas_Hash *hash, const char *key, void *data, void *fdata)
+_e_fm2_custom_file_hash_foreach_list(const Evas_Hash *hash, const void *key, void *data, void *fdata)
 {
    struct _E_Custom_List *cl;
    
@@ -245,7 +245,7 @@ _e_fm2_custom_hash_key_base_list(Evas_Hash *hash, const char *str)
 
 /*
 static Evas_Bool
-_e_fm2_custom_file_hash_foreach_sub_list(const Evas_Hash *hash, const char *key, void *data, void *fdata)
+_e_fm2_custom_file_hash_foreach_sub_list(const Evas_Hash *hash, const void *key, void *data, void *fdata)
 {
    struct _E_Custom_List *cl;
    
@@ -258,7 +258,7 @@ _e_fm2_custom_file_hash_foreach_sub_list(const Evas_Hash *hash, const char *key,
 
 /*
 static Eina_List *
-_e_fm2_custom_hash_key_sub_list(const Evas_Hash *hash, const char *str)
+_e_fm2_custom_hash_key_sub_list(const Evas_Hash *hash, const void *str)
 {
    struct _E_Custom_List cl;
    
@@ -271,7 +271,7 @@ _e_fm2_custom_hash_key_sub_list(const Evas_Hash *hash, const char *str)
 */
 
 static Evas_Bool
-_e_fm2_custom_file_hash_foreach(const Evas_Hash *hash, const char *key, void *data, void *fdata)
+_e_fm2_custom_file_hash_foreach(const Evas_Hash *hash, const void *key, void *data, void *fdata)
 {
    E_Fm2_Custom_File *cf;
    
@@ -283,7 +283,7 @@ _e_fm2_custom_file_hash_foreach(const Evas_Hash *hash, const char *key, void *da
 }
 
 static Evas_Bool
-_e_fm2_custom_file_hash_foreach_save(const Evas_Hash *hash, const char *key, void *data, void *fdata)
+_e_fm2_custom_file_hash_foreach_save(const Evas_Hash *hash, const void *key, void *data, void *fdata)
 {
    Eet_File *ef;
    E_Fm2_Custom_File *cf;

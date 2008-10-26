@@ -47,7 +47,7 @@ static Eina_List	*_e_intl_locale_system_locales_get(void);
 static Eina_List	*_e_intl_locale_search_order_get(const char *locale);
 static int		 _e_intl_locale_validate(const char *locale);
 static void 		 _e_intl_locale_hash_free(Evas_Hash *language_hash);
-static Evas_Bool 	 _e_intl_locale_hash_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool 	 _e_intl_locale_hash_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata);
 
 /* Input Method Configuration and Management */
 static int 		 _e_intl_cb_exit(void *data, int type, void *event);
@@ -451,7 +451,7 @@ _e_intl_locale_hash_free(Evas_Hash *locale_hash)
 }
 
 static Evas_Bool
-_e_intl_locale_hash_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
+_e_intl_locale_hash_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    free(data);
    return 1;

@@ -16,7 +16,7 @@ static int _e_manager_cb_screensaver_notify(void *data, int ev_type, void *ev);
 static int _e_manager_cb_client_message(void *data, int ev_type, void *ev);
 
 static Evas_Bool _e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__,
-						  const char *key __UNUSED__,
+						  const void *key __UNUSED__,
 						  void *data, void *fdata __UNUSED__);
 static E_Manager *_e_manager_get_for_root(Ecore_X_Window root);
 #if 0 /* use later - maybe */
@@ -856,7 +856,7 @@ _e_manager_cb_client_message(void *data, int ev_type, void *ev)
 }
 
 static Evas_Bool
-_e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
+_e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__,
 				 void *data, void *fdata __UNUSED__)
 {
    free(data);

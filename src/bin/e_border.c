@@ -2639,7 +2639,7 @@ _e_border_action_input_win_new(E_Border *bd)
    return 0;
 }
 
-static int
+static void
 _e_border_action_finish(void)
 {
    _e_border_action_input_win_del();

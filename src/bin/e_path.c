@@ -6,7 +6,7 @@
 /* local subsystem functions */
 static void      _e_path_free(E_Path *ep);
 static void      _e_path_cache_free(E_Path *ep);
-static Evas_Bool _e_path_cache_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _e_path_cache_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata);
 
 /* externally accessible functions */
 EAPI E_Path *
@@ -387,7 +387,7 @@ _e_path_cache_free(E_Path *ep)
 }
 
 static Evas_Bool
-_e_path_cache_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
+_e_path_cache_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    eina_stringshare_del(data);
    return 1;

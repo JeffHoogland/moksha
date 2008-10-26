@@ -5,7 +5,7 @@
 
 #define E_TOK_STYLE ":style="
 
-static Evas_Bool _font_hash_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static Evas_Bool _font_hash_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
 static Evas_Hash *_e_font_available_hash_add(Evas_Hash *font_hash, const char *full_name);
 static E_Font_Properties *_e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, const char *font);
 static char _fn_buf[1024];
@@ -151,7 +151,7 @@ e_font_properties_free(E_Font_Properties *efp)
 }
 
 static Evas_Bool
-_font_hash_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
+_font_hash_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    E_Font_Properties *efp;
 

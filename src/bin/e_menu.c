@@ -86,7 +86,7 @@ static int  _e_menu_cb_scroll_animator            (void *data);
 static int  _e_menu_cb_window_shape               (void *data, int ev_type, void *ev);
 
 static void _e_menu_cb_item_submenu_post_default  (void *data, E_Menu *m, E_Menu_Item *mi);
-static Evas_Bool _e_menu_categories_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _e_menu_categories_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata);
 
 /* local subsystem globals */
 static Ecore_X_Window       _e_menu_win                 = 0;
@@ -2875,7 +2875,7 @@ _e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi)
 
 
 static Evas_Bool
-_e_menu_categories_free_cb(const Evas_Hash *hash, const char *key, void *data, void *fdata)
+_e_menu_categories_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata)
 {
    Eina_List *l;
    E_Menu_Category *cat;
