@@ -317,7 +317,6 @@ _fill_list(Evas_Object *obj, int enabled)
 {
    Evas *evas;
    Evas_Coord w;
-   int i = 0;
 
    /* freeze evas, edje, and list widget */
    evas = evas_object_evas_get(obj);
@@ -675,8 +674,6 @@ _btn_cb_load(void *data, void *data2)
 static void 
 _enable_modules(int enable) 
 {
-   int i = 0;
-
    if (!types_hash) return;
 
    if (enable)
