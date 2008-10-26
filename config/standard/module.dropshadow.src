@@ -1,0 +1,7 @@
+group "Dropshadow_Config" struct {
+  value "shadow_x" int: 4;
+  value "shadow_y" int: 4;
+  value "blur_size" int: 10;
+  value "quality" int: 2;
+  value "shadow_darkness" double: 0.5;
+}

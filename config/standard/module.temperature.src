@@ -1,0 +1,13 @@
+group "Temperature_Config" struct {
+  group "faces" hash {
+    key "temperature.1";
+    group "Temperature_Config_Face" struct {
+      value "id" string: "temperature.1";
+      value "poll_interval" int: 128;
+      value "low" int: 30;
+      value "high" int: 80;
+      value "sensor_type" int: 0;
+      value "units" int: 0;
+    }
+  }
+}

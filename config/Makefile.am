@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
-SUBDIRS = default
+SUBDIRS = default standard
 
 EET_EET = @eet_eet@
 

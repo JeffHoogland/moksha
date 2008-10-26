@@ -453,5 +453,6 @@ data/icons/Makefile
 doc/Makefile
 config/Makefile
 config/default/Makefile
+config/standard/Makefile
 po/Makefile.in
 ])

@@ -160,7 +160,7 @@ wizard_page_hide(E_Wizard_Page *pg)
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {
-   if (!strcmp("/etc/xdg/menus/applications.menu", xdg_sel))
+   if ((xdg_sel) && (!strcmp("/etc/xdg/menus/applications.menu", xdg_sel)))
      xdg_sel = NULL;
    if (xdg_sel)
      e_config->default_system_menu = eina_stringshare_add(xdg_sel);
