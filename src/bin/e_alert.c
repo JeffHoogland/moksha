@@ -100,7 +100,7 @@ e_alert_show(const char *text)
 
    if ((!dd) || (!fs))
      {
-	fprintf(stderr, text);
+	fputs(text, stderr);
 	fflush(stderr);
 	exit(-1);
      }
