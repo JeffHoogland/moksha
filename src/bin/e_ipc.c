@@ -44,27 +44,21 @@ e_ipc_init(void)
 	       }
 	     else
 	       {
-		  snprintf(buf, sizeof(buf),
-			   _("Possible IPC Hack Attempt. The IPC socket\n"
-			     "directory already exists BUT has permissions\n"
-			     "that are too leanient (must only be readable\n"
-			     "and writable by the owner, and nobody else)\n"
-			     "or is not owned by you. Please check:\n"
-			     "%s/enlightenment-%s\n"),
-			   tmp, user);
-		  e_error_message_show(buf);
+		  e_error_message_show(_("Possible IPC Hack Attempt. The IPC socket\n"
+					 "directory already exists BUT has permissions\n"
+					 "that are too leanient (must only be readable\n" "and writable by the owner, and nobody else)\n"
+					 "or is not owned by you. Please check:\n"
+					 "%s/enlightenment-%s\n"), tmp, user);
 		  return 0;
 	       }
 	  }
 	else
 	  {
-	     snprintf(buf, sizeof(buf),
-		      _("The IPC socket directory cannot be created or\n"
-			"examined.\n"
-			"Please check:\n"
-			"%s/enlightenment-%s\n"),
-		      tmp, user);
-	     e_error_message_show(buf);
+	     e_error_message_show(_("The IPC socket directory cannot be created or\n"
+				    "examined.\n"
+				    "Please check:\n"
+				    "%s/enlightenment-%s\n"),
+				  tmp, user);
 	     return 0;
 	  }
      }
