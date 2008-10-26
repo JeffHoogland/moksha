@@ -1422,7 +1422,7 @@ EAPI void e_hints_scale_update(void)
 {
    Ecore_X_Window *roots = NULL;
    int i, num;
-   int scale;
+   unsigned int scale;
    
    roots = ecore_x_window_root_list(&num);
    if (roots)
