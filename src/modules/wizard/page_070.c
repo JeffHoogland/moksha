@@ -74,6 +74,12 @@ wizard_page_apply(E_Wizard_Page *pg)
    snprintf(buf, sizeof(buf), "%s/Desktop", homedir);
    ecore_file_mkpath(buf);
    // FIXME: ln -s the .desktop files in favorites	       
+   snprintf(buf, sizeof(buf), "%s/Desktop/home.desktop", homedir);
+   ecore_file_symlink("../.e/e/fileman/favorites/home.desktop", buf);
+   snprintf(buf, sizeof(buf), "%s/Desktop/root.desktop", homedir);
+   ecore_file_symlink("../.e/e/fileman/favorites/root.desktop", buf);
+   snprintf(buf, sizeof(buf), "%s/Desktop/tmp.desktop", homedir);
+   ecore_file_symlink("../.e/e/fileman/favorites/tmp.desktop", buf);
    
    // save the config now everyone has modified it
    e_config_save();
