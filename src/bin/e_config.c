@@ -1956,7 +1956,7 @@ _e_config_free(void)
 static int
 _e_config_cb_timer(void *data)
 {
-   e_util_dialog_show(_("Configuration Upgraded"), data);
+   e_util_dialog_show(_("Configuration Upgraded"), _("Configuration Upgraded"));
    return 0;
 }
 
