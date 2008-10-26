@@ -2829,7 +2829,7 @@ static int
 _e_border_resize_key_down(void *data, int type, void *event)
 {
    Ecore_X_Event_Key_Down *ev = event;
-   int w, h;
+   int w, h, dx, dy;
 
    if (ev->event_win != action_input_win)
      return 1;
@@ -2842,14 +2842,21 @@ _e_border_resize_key_down(void *data, int type, void *event)
    w = action_border->w;
    h = action_border->h;
 
+   dx = e_config->border_keyboard.resize.dx;
+   if (dx < action_border->client.icccm.step_w)
+     dx = action_border->client.icccm.step_w;
+   dy = e_config->border_keyboard.resize.dy;
+   if (dy < action_border->client.icccm.step_h)
+     dy = action_border->client.icccm.step_h;
+
    if (strcmp(ev->keysymbol, "Up") == 0)
-     h -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.resize.dy);
+     h -= _e_border_key_down_modifier_apply(ev->modifiers, dy);
    else if (strcmp(ev->keysymbol, "Down") == 0)
-     h += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.resize.dy);
+     h += _e_border_key_down_modifier_apply(ev->modifiers, dy);
    else if (strcmp(ev->keysymbol, "Left") == 0)
-     w -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.resize.dx);
+     w -= _e_border_key_down_modifier_apply(ev->modifiers, dx);
    else if (strcmp(ev->keysymbol, "Right") == 0)
-     w += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.resize.dx);
+     w += _e_border_key_down_modifier_apply(ev->modifiers, dx);
    else if (strcmp(ev->keysymbol, "Return") == 0)
      goto stop;
    else if (strcmp(ev->keysymbol, "Escape") == 0)
