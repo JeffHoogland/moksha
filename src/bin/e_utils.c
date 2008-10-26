@@ -27,7 +27,6 @@ struct _E_Util_Fake_Mouse_Up_Info
 
 /* local subsystem functions */
 static int _e_util_cb_delayed_del(void *data);
-static void _e_util_container_fake_mouse_up_cb(void *data);
 static int _e_util_wakeup_cb(void *data);
 
 /* local subsystem globals */
@@ -941,20 +940,6 @@ _e_util_cb_delayed_del(void *data)
 {
    e_object_del(E_OBJECT(data));
    return 0;
-}
-
-static void
-_e_util_container_fake_mouse_up_cb(void *data)
-{
-   E_Util_Fake_Mouse_Up_Info *info;
-
-   info = data;
-   if (info)
-     {
-	evas_event_feed_mouse_up(info->evas, info->button, EVAS_BUTTON_NONE,
-				 ecore_x_current_time_get(), NULL);
-	free(info);
-     }
 }
 
 static int
