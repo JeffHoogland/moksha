@@ -22,10 +22,13 @@ pkg_LTLIBRARIES        = module.la \
                          page_010.la \
                          page_020.la \
                          page_030.la \
-                         page_040.la \
-                         page_050.la \
-                         page_060.la \
                          page_070.la
+
+### disabled because profile selector really does the job. code here just for
+### informational purposes on how to make wizard pages
+# page_040.la
+# page_050.la
+# page_060.la
 
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
@@ -56,20 +59,20 @@ page_030_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_030_la_LDFLAGS      = -module -avoid-version
 page_030_la_DEPENDENCIES = $(top_builddir)/config.h
 
-page_040_la_SOURCES      = page_040.c
-page_040_la_LIBADD       = @e_libs@ @dlopen_libs@
-page_040_la_LDFLAGS      = -module -avoid-version
-page_040_la_DEPENDENCIES = $(top_builddir)/config.h
+#page_040_la_SOURCES      = page_040.c
+#page_040_la_LIBADD       = @e_libs@ @dlopen_libs@
+#page_040_la_LDFLAGS      = -module -avoid-version
+#page_040_la_DEPENDENCIES = $(top_builddir)/config.h
 
-page_050_la_SOURCES      = page_050.c
-page_050_la_LIBADD       = @e_libs@ @dlopen_libs@
-page_050_la_LDFLAGS      = -module -avoid-version
-page_050_la_DEPENDENCIES = $(top_builddir)/config.h
+#page_050_la_SOURCES      = page_050.c
+#page_050_la_LIBADD       = @e_libs@ @dlopen_libs@
+#page_050_la_LDFLAGS      = -module -avoid-version
+#page_050_la_DEPENDENCIES = $(top_builddir)/config.h
 
-page_060_la_SOURCES      = page_060.c
-page_060_la_LIBADD       = @e_libs@ @dlopen_libs@
-page_060_la_LDFLAGS      = -module -avoid-version
-page_060_la_DEPENDENCIES = $(top_builddir)/config.h
+#page_060_la_SOURCES      = page_060.c
+#page_060_la_LIBADD       = @e_libs@ @dlopen_libs@
+#page_060_la_LDFLAGS      = -module -avoid-version
+#page_060_la_DEPENDENCIES = $(top_builddir)/config.h
 
 page_070_la_SOURCES      = page_070.c
 page_070_la_LIBADD       = @e_libs@ @dlopen_libs@

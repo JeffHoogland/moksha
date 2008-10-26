@@ -6,5 +6,6 @@ other \
 xsession \
 input_methods \
 etc \
-icons
+icons \
+backgrounds
 

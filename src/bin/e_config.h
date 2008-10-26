@@ -454,6 +454,8 @@ struct _E_Event_Config_Icon_Theme
 EAPI int        e_config_init(void);
 EAPI int        e_config_shutdown(void);
 
+EAPI void       e_config_load(void);
+    
 EAPI int        e_config_save(void);
 EAPI void       e_config_save_flush(void);
 EAPI void       e_config_save_queue(void);

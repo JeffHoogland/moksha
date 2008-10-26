@@ -31,6 +31,8 @@ _profile_change(void *data, Evas_Object *obj)
      e_widget_textblock_markup_set(textblock, _("Unknown"));
    if (desk) efreet_desktop_free(desk);
    free(dir);
+   // enable next once you choose a profile
+   e_wizard_button_next_enable_set(1);
 }
 
 EAPI int
@@ -71,19 +73,31 @@ wizard_page_show(E_Wizard_Page *pg)
 	Evas_Object *ic;
 	
 	prof = l->data;
+	if (e_config_profile_get())
+	  {
+	     if (!strcmp(prof, e_config_profile_get()))
+	       {
+		  free(prof);
+		  continue;
+	       }
+	  }
 	dir = e_prefix_data_get();
 	snprintf(buf, sizeof(buf), "%s/data/config/%s", dir, prof);
+	// if it's not a system profile - don't offer it
+	if (!ecore_file_is_dir(buf))
+	  {
+	     free(prof);
+	     continue;
+	  }
 	dir = strdup(buf);
 	if (!dir)
 	  {
 	     free(prof);
 	     continue;
 	  }
-	
 	snprintf(buf, sizeof(buf), "%s/profile.desktop", dir);
         desk = efreet_desktop_get(buf);
 	label = prof;
-	// FIXME: filter out wizard default profile
 	if ((desk) && (desk->name)) label = desk->name;
 	snprintf(buf, sizeof(buf), "%s/icon.edj", dir);
 	if ((desk) && (desk->icon))
@@ -92,10 +106,6 @@ wizard_page_show(E_Wizard_Page *pg)
 	  snprintf(buf, sizeof(buf), "%s/data/images/enlightenment.png", e_prefix_data_get());
 	ic = e_util_icon_add(buf, pg->evas);
 	e_widget_ilist_append(ob, ic, label, NULL, NULL, prof);
-	if (e_config_profile_get())
-	  {
-	     if (!strcmp(prof, e_config_profile_get())) sel = i;
-	  }
 	free(dir);
 	free(prof);
         if (desk) efreet_desktop_free(desk);
@@ -122,19 +132,30 @@ wizard_page_show(E_Wizard_Page *pg)
    evas_object_show(of);
    e_wizard_page_show(o);
    pg->data = of;
+   e_wizard_button_next_enable_set(0);
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg)
 {
    evas_object_del(pg->data);
+   // actually apply profile
+   if (e_config_profile_get())
+     {
+	char buf[PATH_MAX];
+	const char *homedir;
+	homedir = e_user_homedir_get();
+	
+        snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, e_config_profile_get());
+	ecore_file_recursive_rm(buf);
+     }
+   if (!profile) profile = "standard";
+   e_config_profile_set(profile);
    return 1;
 }
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {
-   // FIXME: actually apply profile
-   if (!profile) profile = "default";
-   e_config_profile_set(profile);
+   // no need. done in page_070's wizard_page_show()
    return 1;
 }

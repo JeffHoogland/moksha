@@ -4,6 +4,8 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+static int focus_mode = 1;
+
 EAPI int
 wizard_page_init(E_Wizard_Page *pg)
 {
@@ -18,25 +20,23 @@ EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
    Evas_Object *o, *of, *ob;
-   Eina_List *l;
-   int i, sel = -1;
+   E_Radio_Group *rg;
    
    o = e_widget_list_add(pg->evas, 1, 0);
    e_wizard_title_set(_("Window Focus"));
    
-   of = e_widget_framelist_add(pg->evas, _("Focus Mode"), 0);
-	
-   ob = e_widget_ilist_add(pg->evas, 32 * e_scale, 32 * e_scale, NULL);
-   e_widget_min_size_set(ob, 140 * e_scale, 140 * e_scale);
-	
-   e_widget_ilist_freeze(ob);
-   e_widget_ilist_go(ob);
-   e_widget_ilist_thaw(ob);
+   of = e_widget_framelist_add(pg->evas, _("Focus mode"), 0);
+
+   rg = e_widget_radio_group_new(&focus_mode);
    
-   if (sel >= 0) e_widget_ilist_selected_set(ob, sel);
-   
+   ob = e_widget_radio_add(pg->evas, _("Click to focus windows"), 0, rg);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   evas_object_show(ob);
+   ob = e_widget_radio_add(pg->evas, _("Mouse over focuses windows"), 1, rg);
+   e_widget_framelist_object_append(of, ob);
+   evas_object_show(ob);
+   
+   e_widget_list_object_append(o, of, 0, 0, 0.5);
    evas_object_show(ob);
    evas_object_show(of);
 
@@ -53,5 +53,13 @@ wizard_page_hide(E_Wizard_Page *pg)
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {
+   if (!focus_mode)
+     {
+	// FIXME: click to focus
+     }
+   else
+     {
+	// FIXME: sloppy focus
+     }
    return 1;
 }

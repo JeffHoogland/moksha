@@ -637,7 +637,40 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, idle_cursor, UCHAR); /**/
 
    E_CONFIG_VAL(D, T, default_system_menu, STR);
+
+   e_config_load();
    
+   e_config_save_queue();
+   return 1;
+}
+
+EAPI int
+e_config_shutdown(void)
+{
+   E_FREE(_e_config_profile);
+   E_CONFIG_DD_FREE(_e_config_edd);
+   E_CONFIG_DD_FREE(_e_config_module_edd);
+   E_CONFIG_DD_FREE(_e_config_font_default_edd);
+   E_CONFIG_DD_FREE(_e_config_font_fallback_edd);
+   E_CONFIG_DD_FREE(_e_config_theme_edd);
+   E_CONFIG_DD_FREE(_e_config_bindings_mouse_edd);
+   E_CONFIG_DD_FREE(_e_config_bindings_key_edd);
+   E_CONFIG_DD_FREE(_e_config_bindings_signal_edd);
+   E_CONFIG_DD_FREE(_e_config_bindings_wheel_edd);
+   E_CONFIG_DD_FREE(_e_config_path_append_edd);
+   E_CONFIG_DD_FREE(_e_config_desktop_bg_edd);
+   E_CONFIG_DD_FREE(_e_config_desktop_name_edd);
+   E_CONFIG_DD_FREE(_e_config_remember_edd);
+   E_CONFIG_DD_FREE(_e_config_gadcon_edd);
+   E_CONFIG_DD_FREE(_e_config_gadcon_client_edd);
+   E_CONFIG_DD_FREE(_e_config_shelf_edd);
+   E_CONFIG_DD_FREE(_e_config_shelf_desk_edd);
+   return 1;
+}
+
+EAPI void
+e_config_load(void)
+{
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -694,11 +727,11 @@ e_config_init(void)
    e_config->font_cache = 512;
    e_config->edje_cache = 32;
    e_config->edje_collection_cache = 64;
-   e_config->zone_desks_x_count = 4;
+   e_config->zone_desks_x_count = 1;
    e_config->zone_desks_y_count = 1;
    e_config->use_virtual_roots = 0;
-   e_config->edge_flip_dragging = 1;
-   e_config->edge_flip_moving = 1;
+   e_config->edge_flip_dragging = 0;
+   e_config->edge_flip_moving = 0;
    e_config->edge_flip_timeout = 0.25;
    e_config->evas_engine_default = E_EVAS_ENGINE_SOFTWARE_X11;
    e_config->evas_engine_container = E_EVAS_ENGINE_DEFAULT;
@@ -834,120 +867,7 @@ e_config_init(void)
    em->priority = _priority; \
    e_config->modules = eina_list_append(e_config->modules, em)
 
-	CFG_MODULE("start", 1, 0, 0);
-	CFG_MODULE("ibar", 1, 0, 0);
-	CFG_MODULE("ibox", 1, 0, 0);
-	CFG_MODULE("dropshadow", 1, 0, 0);
-	CFG_MODULE("clock", 1, 0, 0);
-	CFG_MODULE("battery", 1, 0, 0);
-	CFG_MODULE("cpufreq", 1, 0, 0);
-	CFG_MODULE("temperature", 1, 0, 0);
-	CFG_MODULE("gadman", 1, 0, -100);
-	CFG_MODULE("pager", 1, 0, 0);
-	CFG_MODULE("exebuf", 1, 1, 0);
-	CFG_MODULE("winlist", 1, 1, 0);
-	CFG_MODULE("conf", 1, 1, 0);
-	CFG_MODULE("conf_applications", 1, 1, 0);
-	CFG_MODULE("conf_borders", 1, 1, 0);
-	CFG_MODULE("conf_clientlist", 1, 1, 0);
-	CFG_MODULE("conf_colors", 1, 1, 0);
-	CFG_MODULE("conf_desk", 1, 1, 0);
-	CFG_MODULE("conf_desklock", 1, 1, 0);
-	CFG_MODULE("conf_desks", 1, 1, 0);
-	CFG_MODULE("conf_dialogs", 1, 1, 0);
-	CFG_MODULE("conf_display", 1, 1, 0);
-	CFG_MODULE("conf_dpms", 1, 1, 0);
-	CFG_MODULE("conf_exebuf", 1, 1, 0);
-	CFG_MODULE("conf_fonts", 1, 1, 0);
-	CFG_MODULE("conf_icon_theme", 1, 1, 0);
-	CFG_MODULE("conf_imc", 1, 1, 0);
-	CFG_MODULE("conf_intl", 1, 1, 0);
-	CFG_MODULE("conf_keybindings", 1, 1, 0);
-	CFG_MODULE("conf_menus", 1, 1, 0);
-	CFG_MODULE("conf_mime", 1, 1, 0);
-	CFG_MODULE("conf_mouse", 1, 1, 0);
-	CFG_MODULE("conf_mousebindings", 1, 1, 0);
-	CFG_MODULE("conf_mouse_cursor", 1, 1, 0);
-	CFG_MODULE("conf_paths", 1, 1, 0);
-	CFG_MODULE("conf_performance", 1, 1, 0);
-	CFG_MODULE("conf_profiles", 1, 1, 0);
-	CFG_MODULE("conf_screensaver", 1, 1, 0);
-	CFG_MODULE("conf_shelves", 1, 1, 0);
-	CFG_MODULE("conf_startup", 1, 1, 0);
-	CFG_MODULE("conf_theme", 1, 1, 0);
-	CFG_MODULE("conf_transitions", 1, 1, 0);
-	CFG_MODULE("conf_wallpaper", 1, 1, 0);
-	CFG_MODULE("conf_window_display", 1, 1, 0);
-	CFG_MODULE("conf_window_focus", 1, 1, 0);
-	CFG_MODULE("conf_window_manipulation", 1, 1, 0);
-	CFG_MODULE("conf_winlist", 1, 1, 0);
-	CFG_MODULE("conf_engine", 1, 1, 0);
-	CFG_MODULE("fileman", 1, 1, 0);
-	CFG_MODULE("conf_interaction", 1, 1, 0);
-     }
-#if 0
-     {
-	E_Font_Fallback* eff;
-	
-#define CFG_FONTFALLBACK(_name) \
-   eff = E_NEW(E_Font_Fallback, 1); \
-   eff->name = eina_stringshare_add(_name); \
-   e_config->font_fallbacks = eina_list_append(e_config->font_fallbacks, eff)
-	
-	CFG_FONTFALLBACK("New-Sung");
-	CFG_FONTFALLBACK("Kochi-Gothic");
-	CFG_FONTFALLBACK("Baekmuk-Dotum");
-     }
-#endif
-     { 
-	E_Font_Default* efd;
-	
-#define CFG_FONTDEFAULT(_tclass, _name, _size) \
-   efd = E_NEW(E_Font_Default, 1); \
-   efd->text_class = eina_stringshare_add(_tclass); \
-   efd->font = eina_stringshare_add(_name); \
-   efd->size = _size; \
-   e_config->font_defaults = eina_list_append(e_config->font_defaults, efd)
-	
-	CFG_FONTDEFAULT("default", "Vera", 10);
-     }
-     {
-	E_Config_Theme *et;
-	
-	et = E_NEW(E_Config_Theme, 1);
-	et->category = eina_stringshare_add("theme");
-	et->file = eina_stringshare_add("default.edj");
-	e_config->themes = eina_list_append(e_config->themes, et);
-     }
-     {
-	E_Config_Binding_Mouse *eb;
-
-#define CFG_MOUSEBIND(_context, _button, _modifiers, _anymod, _action, _params) \
-   eb = E_NEW(E_Config_Binding_Mouse, 1); \
-   eb->context = _context; \
-   eb->button = _button; \
-   eb->modifiers = _modifiers; \
-   eb->any_mod = _anymod; \
-   eb->action = _action == NULL ? NULL : eina_stringshare_add(_action); \
-   eb->params = _params == NULL ? NULL : eina_stringshare_add(_params); \
-   e_config->mouse_bindings = eina_list_append(e_config->mouse_bindings, eb)
-
-	/*
-	 * FIXME:
-	 * If new mouse binding are added/changed/modified, then do not
-	 * forget to reflect those changes in e_int_config_mousebinding.c in
-	 * _restore_defaults_cb function
-	 */
-	
-	CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 1,
-		      E_BINDING_MODIFIER_ALT, 0, "window_move", NULL);
-	CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 2,
-		      E_BINDING_MODIFIER_ALT, 0, "window_resize", NULL);
-	CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 3,
-		      E_BINDING_MODIFIER_ALT, 0, "window_menu", NULL);
-	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 1, 0, 0, "menu_show", "main");
-	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 2, 0, 0, "menu_show", "clients");
-	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 3, 0, 0, "menu_show", "favorites");
+	CFG_MODULE("wizard", 1, 0, 0);
      }
      {
 	E_Config_Binding_Key *eb;
@@ -969,150 +889,15 @@ e_config_init(void)
 	 * _restore_key_binding_defaults_cb function
 	 */
 
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Left",
-		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
-		    "desk_flip_by", "-1 0");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Right",
-		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
-		    "desk_flip_by", "1 0");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Up",
-		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
-		    "desk_flip_by", "0 -1");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Down",
-		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
-		    "desk_flip_by", "0 1");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Up",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "window_raise", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Down",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "window_lower", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "x",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "window_close", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "k",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "window_kill", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "w",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "window_menu", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "s",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "window_sticky_toggle", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "i",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "window_iconic_toggle", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "f",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "window_maximized_toggle", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F10",
-		    E_BINDING_MODIFIER_SHIFT, 0,
-		    "window_maximized_toggle", "default vertical");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F10",
-		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
-		    "window_maximized_toggle", "default horizontal");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "r",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "window_shaded_toggle", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Left",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_by", "-1");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Right",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_by", "1");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F1",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "0");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F2",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "1");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F3",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "2");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F4",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "3");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F5",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "4");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F6",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "5");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F7",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "6");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F8",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "7");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F9",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "8");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F10",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "9");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F11",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "10");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F12",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "desk_linear_flip_to", "11");
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "m",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "menu_show", "main");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "a",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "menu_show", "favorites");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Menu",
-		    0, 0,
-		    "menu_show", "main");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Menu",
-		    E_BINDING_MODIFIER_CTRL, 0,
-		    "menu_show", "clients");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Menu",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "menu_show", "favorites");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Insert",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "exec", "Eterm");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Tab",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "winlist", "next");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Tab",
-		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
-		    "winlist", "prev");
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "End",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "restart", NULL);
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Delete",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "logout", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Escape",
-		    E_BINDING_MODIFIER_ALT, 0,
-		    "exebuf", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "l",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "desk_lock", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "d",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "desk_deskshow_toggle", NULL);
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Left",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
-		    "screen_send_by", "-1");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Right",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
-		    "screen_send_by", "1");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F1",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
-		    "screen_send_to", "0");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F2",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
-		    "screen_send_to", "1");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F3",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
-		    "screen_send_to", "2");
-	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F4",
-		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
-		    "screen_send_to", "3");
      }
      {
 	E_Config_Binding_Signal *eb;
@@ -1241,107 +1026,12 @@ e_config_init(void)
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_move", "end");
      }
-     {
-	E_Config_Binding_Wheel *eb;
-
-#define CFG_WHEELBIND(_context, _direction, _z, _modifiers, _anymod, _action, _params) \
-   eb = E_NEW(E_Config_Binding_Wheel, 1); \
-   eb->context = _context; \
-   eb->direction = _direction; \
-   eb->z = _z; \
-   eb->modifiers = _modifiers; \
-   eb->any_mod = _anymod; \
-   eb->action = _action == NULL ? NULL : eina_stringshare_add(_action); \
-   eb->params = _params == NULL ? NULL : eina_stringshare_add(_params); \
-   e_config->wheel_bindings = eina_list_append(e_config->wheel_bindings, eb)
-
-	/*
-	 * FIXME:
-	 * If new wheel binding are added/changed/modified, then do not
-	 * forget to reflect those changes in e_int_config_mousebinding.c in
-	 * _restore_defaults_cb function
-	 */
-
-	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, -1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "-1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, -1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "-1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, 1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, 1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 0, -1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "-1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 1, -1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "-1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 0, 1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 1, 1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 0, -1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "-1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 1, -1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "-1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 0, 1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 1, 1,
-		      E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "1");
-     }
    IFCFGEND;
+   
    IFCFG(0x0093); /* the version # where this value(s) was introduced */
    /* FIXME: wipe previous shelves and gadcons - remove this eventually */
    e_config->shelves = NULL;
    e_config->gadcons = NULL;
-     {
-	E_Config_Shelf *cf_es;
-	int             id = 0;
-	
-#define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size, _overlap, _autohide, _autohide_show_action, _hide_timeout, _hide_duration, _desk_show_mode, _desk_list) \
-   cf_es = E_NEW(E_Config_Shelf, 1); \
-   cf_es->name = eina_stringshare_add(_name); \
-   cf_es->id = ++id; \
-   cf_es->container = _con; \
-   cf_es->zone = _zone; \
-   cf_es->popup = _pop; \
-   cf_es->layer = _lay; \
-   cf_es->orient = _orient; \
-   cf_es->fit_along = _fita; \
-   cf_es->fit_size = _fits; \
-   cf_es->style = eina_stringshare_add(_style); \
-   cf_es->size = _size; \
-   cf_es->overlap = _overlap; \
-   cf_es->autohide = _autohide; \
-   cf_es->autohide_show_action = _autohide_show_action; \
-   cf_es->hide_timeout = _hide_timeout; \
-   cf_es->hide_duration = _hide_duration; \
-   cf_es->desk_show_mode = _desk_show_mode; \
-   cf_es->desk_list = eina_list_append(cf_es->desk_list, cf_es); \
-   e_config->shelves = eina_list_append(e_config->shelves, cf_es)
-	CFG_SHELF("shelf", 0, 0,
-		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
-	CFG_SHELF("shelf", 1, 0,
-		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
-	CFG_SHELF("shelf", 2, 0,
-		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
-	CFG_SHELF("shelf", 3, 0,
-		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
-     }
    IFCFGEND;
    
    IFCFG(0x0094); /* the version # where this value(s) was introduced */
@@ -1373,25 +1063,7 @@ e_config_init(void)
    IFCFGEND;
    
    IFCFG(0x0102);
-     {
-	E_Config_Mime_Icon *mi;
-
-#define CFG_MIME_ICON(_mime, _icon) \
-   mi = E_NEW(E_Config_Mime_Icon, 1); \
-   mi->mime = eina_stringshare_add(_mime); \
-   mi->icon = eina_stringshare_add(_icon); \
-   e_config->mime_icons = eina_list_append(e_config->mime_icons, mi)
-	
-	CFG_MIME_ICON("image/jpeg", "THUMB");
-	CFG_MIME_ICON("image/png", "THUMB");
-	CFG_MIME_ICON("image/x-pixmap", "THUMB");
-	CFG_MIME_ICON("image/x-xpixmap", "THUMB");
-	CFG_MIME_ICON("image/svg+xml", "THUMB");
-	CFG_MIME_ICON("image/gif", "THUMB");
-	CFG_MIME_ICON("image/tiff", "THUMB");
-
-	CFG_MIME_ICON("application/x-desktop", "DESKTOP");
-     }
+   e_config->mime_icons = NULL;
    IFCFGEND;
 
    IFCFG(0x00103);
@@ -1404,7 +1076,7 @@ e_config_init(void)
    IFCFGEND;
    
    IFCFG(0x00105);
-   e_config->remember_internal_windows = 1;
+   e_config->remember_internal_windows = 0;
    IFCFGEND;
      
    IFCFG(0x00106);
@@ -1413,69 +1085,7 @@ e_config_init(void)
    IFCFGEND;
 
    IFCFG(0x0121);
-     {
-	E_Config_Gadcon        *cf_gc;
-	E_Config_Gadcon_Client *cf_gcc;
-	int                     id = 0;
-
-	e_config->gadcons = NULL;
-#define CFG_GADCON(_name) \
-   cf_gc = E_NEW(E_Config_Gadcon, 1);\
-   cf_gc->name = eina_stringshare_add(_name); \
-   cf_gc->id = ++id; \
-   e_config->gadcons = eina_list_append(e_config->gadcons, cf_gc)
-#define CFG_GADCON_CLIENT(_name, _res, _size, _pos, _style, _autoscr, _resizable) \
-   cf_gcc = E_NEW(E_Config_Gadcon_Client, 1); \
-   cf_gcc->name = eina_stringshare_add(_name); \
-   cf_gcc->id = NULL; \
-   cf_gcc->geom.res = _res; \
-   cf_gcc->geom.size = _size; \
-   cf_gcc->geom.pos = _pos; \
-   cf_gcc->state_info.seq = 0; \
-   cf_gcc->state_info.flags = 0; \
-   if (_style) cf_gcc->style = eina_stringshare_add(_style); \
-   else cf_gcc->style = NULL; \
-   cf_gcc->autoscroll = _autoscr; \
-   cf_gcc->resizable = _resizable; \
-   cf_gc->clients = eina_list_append(cf_gc->clients, cf_gcc)
-
-	/* the default shelf on the default head/zone */
-	CFG_GADCON("shelf");
-	CFG_GADCON_CLIENT("start", 800, 32,
-			  0, NULL, 0, 0);
-	CFG_GADCON_CLIENT("pager", 800, 120,
-			  32, NULL, 0, 0);
-	CFG_GADCON_CLIENT("ibox", 800, 32,
-			  32 + 120, NULL, 0, 0);
-	CFG_GADCON_CLIENT("ibar", 800, 200,
-			  (800 / 2) - (100 / 2), NULL, 0, 0);
-	CFG_GADCON_CLIENT("temperature", 800, 32,
-			  800 - 128, NULL, 0, 0);
-	CFG_GADCON_CLIENT("cpufreq", 800, 32,
-			  800 - 96, NULL, 0, 0);
-	CFG_GADCON_CLIENT("battery", 800, 32,
-			  800 - 64, NULL, 0, 0);
-	CFG_GADCON_CLIENT("clock", 800, 32,
-			  800 - 32, NULL, 0, 0);
-	/* additional shelves for up to 3 more heads by default */
-	CFG_GADCON("shelf");
-	CFG_GADCON_CLIENT("pager", 800, 120,
-			  0, NULL, 0, 0);
-	CFG_GADCON_CLIENT("ibox", 800, 32,
-			  800 - 32, NULL, 0, 0);
-	
-	CFG_GADCON("shelf");
-	CFG_GADCON_CLIENT("pager", 800, 120,
-			  0, NULL, 0, 0);
-	CFG_GADCON_CLIENT("ibox", 800, 32,
-			  800 - 32, NULL, 0, 0);
-	
-	CFG_GADCON("shelf");
-	CFG_GADCON_CLIENT("pager", 800, 120,
-			  0, NULL, 0, 0);
-	CFG_GADCON_CLIENT("ibox", 800, 32,
-			  800 - 32, NULL, 0, 0);
-     }
+   e_config->gadcons = NULL;
    IFCFGEND;
 
    IFCFG(0x0108);
@@ -1556,8 +1166,8 @@ e_config_init(void)
    IFCFGEND;
    
    IFCFG(0x0124);
-   e_config->thumbscroll_enable = 0;
-   e_config->thumbscroll_threshhold = 8;
+   e_config->thumbscroll_enable = 1;
+   e_config->thumbscroll_threshhold = 24;
    e_config->thumbscroll_momentum_threshhold = 100.0;
    e_config->thumbscroll_friction = 1.0;
    IFCFGEND;
@@ -1585,7 +1195,7 @@ e_config_init(void)
    
    IFCFG(0x0128);
    e_config->show_cursor = 1;
-   e_config->idle_cursor = 1;
+   e_config->idle_cursor = 0;
    IFCFGEND;
    
    IFCFG(0x0129);
@@ -1735,33 +1345,6 @@ e_config_init(void)
    if (e_config->desklock_personal_passwd)
      eina_stringshare_del(e_config->desklock_personal_passwd);
    e_config->desklock_personal_passwd = NULL;
-   
-   e_config_save_queue();
-   return 1;
-}
-
-EAPI int
-e_config_shutdown(void)
-{
-   E_FREE(_e_config_profile);
-   E_CONFIG_DD_FREE(_e_config_edd);
-   E_CONFIG_DD_FREE(_e_config_module_edd);
-   E_CONFIG_DD_FREE(_e_config_font_default_edd);
-   E_CONFIG_DD_FREE(_e_config_font_fallback_edd);
-   E_CONFIG_DD_FREE(_e_config_theme_edd);
-   E_CONFIG_DD_FREE(_e_config_bindings_mouse_edd);
-   E_CONFIG_DD_FREE(_e_config_bindings_key_edd);
-   E_CONFIG_DD_FREE(_e_config_bindings_signal_edd);
-   E_CONFIG_DD_FREE(_e_config_bindings_wheel_edd);
-   E_CONFIG_DD_FREE(_e_config_path_append_edd);
-   E_CONFIG_DD_FREE(_e_config_desktop_bg_edd);
-   E_CONFIG_DD_FREE(_e_config_desktop_name_edd);
-   E_CONFIG_DD_FREE(_e_config_remember_edd);
-   E_CONFIG_DD_FREE(_e_config_gadcon_edd);
-   E_CONFIG_DD_FREE(_e_config_gadcon_client_edd);
-   E_CONFIG_DD_FREE(_e_config_shelf_edd);
-   E_CONFIG_DD_FREE(_e_config_shelf_desk_edd);
-   return 1;
 }
 
 EAPI int

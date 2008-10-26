@@ -450,9 +450,13 @@ data/xsession/Makefile
 data/xsession/enlightenment.desktop
 data/etc/Makefile
 data/icons/Makefile
+data/backgrounds/Makefile
 doc/Makefile
 config/Makefile
 config/default/Makefile
 config/standard/Makefile
+config/minimalist/Makefile
+config/scaleable/Makefile
+config/netbook/Makefile
 po/Makefile.in
 ])

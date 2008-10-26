@@ -10,13 +10,6 @@ group "IBar_Config" struct {
   group "items" list {
     group "IBar_Config_Item" struct {
       value "id" string: "ibar.1";
-      value "show_label" int: 1;
-      value "eap_label" int: 0;
-    }
-  }
-  group "items" list {
-    group "IBar_Config_Item" struct {
-      value "id" string: "ibar.1";
       value "dir" string: "default";
       value "show_label" int: 1;
       value "eap_label" int: 0;

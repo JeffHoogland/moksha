@@ -79,6 +79,7 @@ e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
 {
    Eina_List *l, *ll, *entries;
    E_Config_Desktop_Background *bg = NULL;
+   const char *bgfile = "";
    int current_spec = 0; /* how specific the setting is - we want the least general one that applies */
 
    /* look for desk specific background. */
@@ -102,8 +103,18 @@ e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
 	     else if (cfbg->desk_y >= 0) continue;
 
 	     if (spec <= current_spec) continue;
-
-	     entries = edje_file_collection_list(cfbg->file);
+	     bgfile = cfbg->file;
+	     if (bgfile)
+	       {
+		  if (bgfile[0] != '/')
+		    {
+		       const char *bf;
+		  
+		       bf = e_path_find(path_backgrounds, bgfile);
+		       if (bf) bgfile = bf;
+		    }
+	       }
+	     entries = edje_file_collection_list(bgfile);
 	     if (entries)
 	       {
 		  for (ll = entries; ll; ll = ll->next)
@@ -133,17 +144,39 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 
    /* fall back to default */
    if (cfbg)
-     bgfile = cfbg->file;
+     {
+	bgfile = cfbg->file;
+	if (bgfile)
+	  {
+	     if (bgfile[0] != '/')
+	       {
+		  const char *bf;
+		  
+		  bf = e_path_find(path_backgrounds, bgfile);
+		  if (bf) bgfile = bf;
+	       }
+	  }
+     }
    else
      {
-	entries = edje_file_collection_list(e_config->desktop_default_background);
+	bgfile = e_config->desktop_default_background;
+	if (bgfile)
+	  {
+	     if (bgfile[0] != '/')
+	       {
+		  const char *bf;
+		  
+		  bf = e_path_find(path_backgrounds, bgfile);
+		  if (bf) bgfile = bf;
+	       }
+	  }
+	entries = edje_file_collection_list(bgfile);
 	if (entries)
 	  {
 	     for (l = entries; l; l = l->next)
 	       {
 		  if (!strcmp(l->data, "e/desktop/background"))
 		    {
-		       bgfile = e_config->desktop_default_background;
 		       ok = 1;
 		       break;
 		    }

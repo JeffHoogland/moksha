@@ -1,0 +1,28 @@
+group "Fileman_Config" struct {
+  value "config_version" int: 65793;
+  value "view.mode" int: 1;
+  value "view.open_dirs_in_place" uchar: 0;
+  value "view.selector" uchar: 0;
+  value "view.single_click" uchar: 0;
+  value "view.no_subdir_jump" uchar: 0;
+  value "view.no_subdir_drop" uchar: 0;
+  value "view.always_order" uchar: 0;
+  value "view.link_drop" uchar: 0;
+  value "view.fit_custom_pos" uchar: 0;
+  value "view.show_full_path" uchar: 0;
+  value "view.show_desktop_icons" uchar: 1;
+  value "view.show_toolbar" uchar: 0;
+  value "icon.icon.w" int: 48;
+  value "icon.icon.h" int: 48;
+  value "icon.list.w" int: 16;
+  value "icon.list.h" int: 16;
+  value "icon.fixed.w" uchar: 0;
+  value "icon.fixed.h" uchar: 0;
+  value "icon.extension.show" uchar: 1;
+  value "list.sort.no_case" uchar: 1;
+  value "list.sort.dirs.first" uchar: 1;
+  value "list.sort.dirs.last" uchar: 0;
+  value "selection.single" uchar: 0;
+  value "selection.windows_modifiers" uchar: 0;
+  value "theme.fixed" uchar: 0;
+}

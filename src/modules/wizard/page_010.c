@@ -196,5 +196,11 @@ wizard_page_hide(E_Wizard_Page *pg)
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {
+   // do this again as we want it to apply to the new profile
+   if (e_config->language) eina_stringshare_del(e_config->language);
+   e_config->language = NULL;
+   if (lang) e_config->language = eina_stringshare_add(lang);
+   e_intl_language_set(e_config->language);
+   e_wizard_labels_update();
    return 1;
 }

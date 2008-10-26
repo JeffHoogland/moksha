@@ -1,10 +1,10 @@
 group "Pager_Config" struct {
   value "popup" uint: 1;
-  value "popup_speed" double: 1.0;
+  value "popup_speed" double: 1.0000000000000000000000000;
   value "popup_urgent" uint: 0;
   value "popup_urgent_stick" uint: 0;
-  value "popup_urgent_speed" double: 1.5;
-  value "show_desk_names" uint: 1;
+  value "popup_urgent_speed" double: 1.5000000000000000000000000;
+  value "show_desk_names" uint: 0;
   value "popup_height" int: 60;
   value "popup_act_height" int: 60;
   value "drag_resist" uint: 3;

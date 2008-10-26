@@ -22,17 +22,24 @@ static E_Module *conf_module = NULL;
  * o == interactive
  * . == automatic (no gui - none implemented currently)
  * 
+ * * = done
+ * - = code here, but disabled in build
+ * 
  * --- THE LIST
  * o *ask for language (default selection is current locale).
  * o *ask for initial profile
  * o *find XDG app menus/repositories and list them let user choose which
  *    one(s) are to be used.
- * o  ask for ibar initial app set
- * o  ask if user wants desktop icons or not (enable fwin module but seed it
+ * o -ask for ibar initial app set
+ * o -ask if user wants desktop icons or not (enable fwin module but seed it
  *    with default config icons on desktop and favorites).
- * o  ask click to focus or sloppy
- * .  take some of current config (language, fileman, profile) and load
+ * o -ask click to focus or sloppy
+ * . *take some of current config (language, fileman, profile) and load
  *    load profile, apply language to it and save, restart e.
+ * 
+ * why are some disabled? profiels take care of this and do a better job
+ * at collecting all the things together. for example illume makes no sense
+ * with pointer focus and ibar icons/desktop makes no sense.
  */
 
 /**/

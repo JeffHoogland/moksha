@@ -1140,50 +1140,6 @@ _e_main_dirs_init(void)
 	       }
 	  }
      }
-   
-   snprintf(buf, sizeof(buf), "%s/applications", efreet_data_home_get());
-   if (!ecore_file_mkpath(buf))
-     {
-	if (!ecore_file_is_dir(buf))
-	  {
-	     e_error_message_show("Error creating directory:\n"
-				  "%s",
-				  buf);
-	     return 0;
-	  }
-     }
-   
-   /* FIXME: THIS is a hack to get people started!!! */
-   /* err dont just disable it - replace it with a proper wizard tool */
-   /* outside e's main source to populate these directories from gnome/kde */
-   /* app menu data etc. */
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/default/.order", homedir);
-   if (!ecore_file_exists(buf))
-     {
-	snprintf(buf, sizeof(buf), 
-		 "gzip -d -c < %s/data/other/desktop_files.tar.gz | "
-		 "(cd %s/applications/ ; tar -xkf -)", 
-		 e_prefix_data_get(),
-		 efreet_data_home_get());
-	system(buf);
-	snprintf(buf, sizeof(buf), 
-		 "gzip -d -c < %s/data/other/desktop_order.tar.gz | "
-		 "(cd %s/.e/e/ ; tar -xkf -)", 
-		 e_prefix_data_get(),
-		 homedir);
-	system(buf);
-     }
-   /* FIXME: THIS is to get people started - shoudl be in a wizard */
-   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites", homedir);
-   if (!ecore_file_exists(buf))
-     {
-	snprintf(buf, sizeof(buf), 
-		 "gzip -d -c < %s/data/other/efm_favorites.tar.gz | "
-		 "(cd %s/.e/e/ ; tar -xkf -)", 
-		 e_prefix_data_get(),
-		 homedir);
-	system(buf);
-     }
 
    return 1;
 }
@@ -1379,6 +1335,8 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_backgrounds, "~/.e/e/backgrounds");
+   snprintf(buf, sizeof(buf), "%s/data/backgrounds", e_prefix_data_get());
+   e_path_default_path_append(path_backgrounds, buf);
    e_path_user_path_set(path_backgrounds, &(e_config->path_append_backgrounds));
 
    path_messages = e_path_new();
