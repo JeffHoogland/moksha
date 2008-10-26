@@ -297,8 +297,7 @@ e_desklock_show(void)
 		       edje_object_part_text_set(edp->login_box, "e.text.title", 
 						 _("Please enter your unlock password"));
 		       edje_object_size_min_calc(edp->login_box, &mw, &mh);
-		       /* FIXME: This is wrong, edje_file_group_exists needs a file, not an object! */
-		       if (edje_file_group_exists(edp->bg_object, "e.swallow.login_box"))
+		       if (edje_object_part_exists(edp->bg_object, "e.swallow.login_box"))
 			 {
 			    edje_extern_object_min_size_set(edp->login_box, mw, mh);
 			    edje_object_part_swallow(edp->bg_object, "e.swallow.login_box", edp->login_box);
