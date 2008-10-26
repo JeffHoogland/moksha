@@ -31,6 +31,7 @@ static E_Module *conf_module = NULL;
  * o  ask if user wants desktop icons or not (enable fwin module but seed it
  *    with default config).
  * o  ask if you want links to home/system/tmp on desktop (if fileman above on)
+ * o  ask click to focus or sloppy
  * .  take some of current config (language, fileman, profile) and load
  *    load profile, apply language to it and save, restart e.
  */

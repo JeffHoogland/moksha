@@ -11657,8 +11657,23 @@ collections { /* begin the collection of edje groups that are in this file */
 	 image: "gadman_border.png" COMP;
       }
       parts {
+	 part { name: "clipper";
+	    type: RECT;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.offset: -10 -10;
+	       rel2.offset: 9 9;
+	       visible: 0;
+	       color: 255 255 255 0;
+	    }
+	    description { state: "visible" 0.0;
+	       visible: 1;
+	       color: 255 255 255 255;
+	    }
+	 }
 	 part { name: "overlay";
-	    mouse_events:  1;
+	    mouse_events:  0;
+	    clip_to: "clipper";
 	    description { state: "default" 0.0;
 	       rel1 { to: "border"; offset: 4 4; }
 	       rel2 { to: "border"; offset: -5 -5; }
@@ -11668,8 +11683,8 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	 }
 	 part { name: "border";
-	    mouse_events:  1;
-	    repeat_events:  1;
+	    mouse_events:  0;
+	    clip_to: "clipper";
 	    description { state: "default" 0.0;
 	       rel1.offset: -5 -5;
 	       rel2.offset: 4 4;
@@ -11682,6 +11697,20 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	 }
       }
+      programs {
+	 program { name: "visible";
+	    signal: "e,state,selected";
+	    source: "e";
+	    action:  STATE_SET "visible" 0.0;
+	    target: "clipper";
+	 }
+	 program { name: "hidden";
+	    signal: "e,state,unselected";
+	    source: "e";
+	    action:  STATE_SET "default" 0.0;
+	    target: "clipper";
+	 }
+      }
    }
 
    group { name: "e/fileman/default/rubberband";
@@ -11690,6 +11719,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 image: "gadman_border.png" COMP;
       }
       parts {
+	 
 	 part { name: "overlay";
 	    mouse_events:  1;
 	    description { state: "default" 0.0;
