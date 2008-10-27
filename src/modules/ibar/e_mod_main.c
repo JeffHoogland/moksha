@@ -506,7 +506,7 @@ _ibar_config_update(Config_Item *ci)
 	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", homedir, inst->ci->dir);
 	  }
 	else
-	  nprintf(buf, sizeof(buf), inst->ci->dir);
+	  snprintf(buf, sizeof(buf), inst->ci->dir);
 	inst->ibar->apps = e_order_new(buf);
 	_ibar_fill(inst->ibar);
 	_ibar_resize_handle(inst->ibar);
