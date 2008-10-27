@@ -262,7 +262,7 @@ _ibar_new(Evas *evas, Instance *inst)
 {
    IBar *b;
    char buf[4096];
-   
+
    b = E_NEW(IBar, 1);
    inst->ibar = b;
    b->inst = inst;
