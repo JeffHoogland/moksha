@@ -107,7 +107,7 @@ static double t0, t1, t2;
 #define TS(x)
 #endif
 
-static int stdbg(void)
+static int stdbg(void *data __UNUSED__)
 {
 // enable to debug eina stringshare usage   
 //   eina_stringshare_dump();
