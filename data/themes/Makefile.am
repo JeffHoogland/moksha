@@ -10,15 +10,22 @@ EDJE_FLAGS = \
 
 filesdir = $(datadir)/enlightenment/data/themes
 files_DATA = \
-default.edj
+default.edj \
+illume.edj
 
 EXTRA_DIST = \
-default.edc
+default.edc \
+illume.edc
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \
 	$(top_srcdir)/data/themes/default.edc \
 	$(top_builddir)/data/themes/default.edj
+
+illume.edj: Makefile $(EXTRA_DIST)
+	$(EDJE_CC) $(EDJE_FLAGS) \
+	$(top_srcdir)/data/themes/illume.edc \
+	$(top_builddir)/data/themes/illume.edj
 
 clean-local:
 	rm -f *.edj

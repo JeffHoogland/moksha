@@ -1,0 +1,18 @@
+group "Illume_Cfg" struct {
+  value "config_version" int: 3;
+  value "launcher.mode" int: 1;
+  value "launcher.icon_size" int: 120;
+  value "launcher.single_click" int: 1;
+  value "power.auto_suspend" int: 1;
+  value "power.auto_suspend_delay" int: 1;
+  value "performance.cache_level" int: 3;
+  value "performance.fps" int: 30;
+  value "slipshelf.main_gadget_size" int: 56;
+  value "slipshelf.extra_gagdet_size" int: 48;
+  value "slipshelf.style" int: 1;
+  value "sliding.slipshelf.duration" int: 1000;
+  value "sliding.kbd.duration" int: 1000;
+  value "sliding.busywin.duration" int: 1000;
+  value "sliding.layout.duration" int: 0;
+  value "kbd.use_internal" int: 1;
+}

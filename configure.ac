@@ -458,5 +458,6 @@ config/standard/Makefile
 config/minimalist/Makefile
 config/scaleable/Makefile
 config/netbook/Makefile
+config/illume/Makefile
 po/Makefile.in
 ])

@@ -1,0 +1,2463 @@
+collections {
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** OVERRIDES FROM BASE ***/
+   group { name: "e/desktop/background";
+      images {
+	 image: "vgrad_dark.png" COMP;
+      }
+      parts {
+	 part { name: "background_image";
+	    description { state: "default" 0.0;
+	       image.normal: "vgrad_dark.png";
+	       fill {
+		  smooth: 0;
+		  size {
+		     relative: 0 1.0;
+		     offset: 36 0;
+		  }
+	       }
+	    }
+	 }
+      }
+   }
+   group { name: "e/pointer/enlightenment/default/color";
+      images.image: "pointer.png" COMP;
+      parts {
+	 part { name: "base";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       aspect: 0.71875 0.71875; 
+	       aspect_preference: BOTH;
+	       image.normal: "pointer.png";
+	    }
+	 }
+	 part { name: "e.swallow.hotspot";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       rel1 {
+		  to: "base";
+		  relative: 0.27 0.125;
+		  offset: 0 0;
+	       }
+	       rel2 {
+		  to: "base";
+		  relative: 0.27 0.125;
+		  offset: 0 0;
+	       }
+	    }
+	 }
+      }
+   }
+   
+/////////////////////////////////////////////////////////////////////////////
+   /*** ILLUME: SLIPSHELF ***/
+
+   group { name: "e/modules/slipshelf/base/default";
+      images {
+         image: "base_bg.png" COMP;
+	 image: "big_arrow_down.png" COMP;
+	 image: "big_arrow_up.png" COMP;
+      }
+//      data.item: "shaped" "1";
+      parts {
+         part {	  name: "base";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "base_bg.png";
+	       image.border: 2 2 2 2;
+	       fill.smooth: 0;
+	    }
+	 }
+	 
+ 	 part { name: "s1";
+	    mouse_events: 0;
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       rel1 {
+		  to_y: "e.swallow.extra";
+		  offset: 0 -4;
+	       }
+	       rel2 {
+		  to_y: "e.swallow.extra";
+		  offset: -1 5;
+	       }
+	    }
+	 }
+ 	 part { name: "s2";
+	    mouse_events: 0;
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       min: 1 64;
+	       rel1 {
+		  to: "s1";
+		  relative: 0.0 1.0;
+		  offset: 0 0;
+	       }
+	       rel2 {
+		  to: "s3";
+		  relative: 1.0 0.0;
+		  offset: -1 -1;
+	       }
+	    }
+	 }
+         part { name: "s3";
+	    mouse_events: 0;
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       rel1 {              
+		  to_y: "e.swallow.content";
+		  offset: 0 -4;
+	       }
+	       rel2 {
+		  to_y: "e.swallow.content";
+		  offset: -1 3;
+	       }
+	    }
+	 }
+	 part { name: "e.swallow.extra";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       fixed: 1 1;
+	       align: 0.5 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset: 4 4;
+	       }
+	       rel2 {
+		  relative: 1.0 0.0;
+		  offset: -5 4;
+	       }
+	    }
+	 }
+	 
+         part { name: "e.swallow.visible";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       rel1.to: "s3";
+	       rel2.to: "s3";
+	    }
+	 }
+	 part { name: "e.swallow.content";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       fixed: 1 1;
+	       align: 1.0 1.0;
+	       rel1 {
+		  relative: 1.0 1.0;
+		  offset: -5 -5;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset: -5 -5;
+	       }
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 0.0 0.5;
+	       rel1 {
+		  to_x: "kbd";
+		  to_y: "e.swallow.content";
+		  relative: 1.0 0.0;
+		  offset: 0 0;
+	       }
+	       rel2 {
+		  to_x: "inout";
+		  to_y: "e.swallow.content";
+		  relative: 0.0 1.0;
+		  offset: -1 -1;
+	       }
+	       color: 0 0 0 255;
+	       text {
+                  font: "Sans:style=Bold";
+		  size: 10;
+		  min: 0 1;
+		  align: 0.0 0.5;
+	       }
+	    }
+	 }
+ 	 part { name: "inout";
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       image.normal: "big_arrow_down.png";
+	       max: 22 22;
+	       aspect: 1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       rel1 {
+//		  to_x: "kbd";
+		  to_y: "e.swallow.content";
+		  relative: 0.0 0.0;
+		  offset: 0 0;
+	       }
+	       rel2 {
+		  to_y: "e.swallow.content";
+		  offset: 1 -1;
+	       }
+	    }
+	    description { state: "out1" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "big_arrow_up.png";
+	    }
+	    description { state: "out2" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "big_arrow_up.png";
+	    }
+	    description { state: "in1" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "big_arrow_down.png";
+	    }
+	 }
+ 	 part { name: "slider";
+	    type: RECT;
+	    repeat_events: 1;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+               rel1 {
+		  to_y: "e.swallow.content";
+		  offset: 0 0;
+	       }
+	       rel2 {
+		  to_x: "e.swallow.content";
+		  to_y: "e.swallow.content";
+		  relative: 0.0 1.0;
+		  offset: -1 -1;
+	       }
+	    }
+	 }
+ 	 part { name: "kbd";
+	    type: RECT;
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       visible: 1;
+//	       visible: 0; // sean wants it gone. don't look at me.
+	       color: 0 0 0 0;
+               rel1 {
+		  to_y: "e.swallow.content";
+		  to_x: "kbdtext";
+	       }
+	       rel2 {
+		  to_x: "kbdtext";
+		  to_y: "e.swallow.content";
+		  relative: 1.0 1.0;
+//		  relative: 0.0 1.0; // sean wants it gone. don't look at me.
+		  offset: -1 -1;
+	       }
+	    }
+	 }
+ 	 part { name: "kbdtext";
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+            description { state: "default" 0.0;
+	       visible: 1;
+//	       visible: 0; // sean wants it gone. don't look at me.
+	       align: 0.0 1.0;
+	       fixed: 1 1;
+	       rel1 {
+		  to_y: "e.swallow.content";
+		  offset: 1 0;
+	       }
+	       rel2 {
+		  to_y: "e.swallow.content";
+		  relative: 0.0 1.0;
+		  offset: 1 -1;
+	       }
+	       color: 0 0 0 255;
+	       text {
+                  font: "Sans:style=Bold";
+		  text: "qwerty";
+		  size: 8;
+		  min: 1 1;
+		  align: 0.0 1.0;
+		  text_class: "slipshelf_title";
+	       }
+	    }
+	 }
+	 part { name: "e.swallow.controls";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       align: 0.5 0.5;
+               rel1.to: "s2";
+	       rel2.to: "s2";
+	    }
+	 }
+      }
+      programs {
+	 program { name: "kbd";
+	    signal: "mouse,up,1";
+	    source: "kbd";
+	    action: SIGNAL_EMIT "e,action,do,keyboard" "";
+	 }
+	 program { name: "slide";
+	    signal: "mouse,up,1";
+	    source: "slider";
+	    action: SIGNAL_EMIT "e,action,toggle" "";
+	 }
+	 program { name: "out1";
+	    signal: "e,state,out,begin";
+	    source: "e";
+	    action: STATE_SET "out1" 0.0;
+	    transition: LINEAR 0.25;
+	    target: "inout";
+	 }
+	 program { name: "out2";
+	    signal: "e,state,out,end";
+	    source: "e";
+	    action: STATE_SET "out2" 0.0;
+	    transition: LINEAR 0.25;
+	    target: "inout";
+	 }
+	 program { name: "in1";
+	    signal: "e,state,in,begin";
+	    source: "e";
+	    action: STATE_SET "in1" 0.0;
+	    transition: LINEAR 0.25;
+	    target: "inout";
+	 }
+	 program { name: "in2";
+	    signal: "e,state,in,end";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    transition: LINEAR 0.25;
+	    target: "inout";
+	 }
+      }
+   }
+   
+   group { name: "e/modules/slipshelf/controls/default";
+      images {
+         image: "bt_base1.png" COMP;
+	 image: "bt_base2.png" COMP;
+	 image: "bt_hilight.png" COMP;
+	 image: "bt_shine.png" COMP;
+         image: "bt_dis_base.png" COMP;
+         image: "bt_dis_hilight.png" COMP;
+	 image: "illume-apps.png" COMP;
+	 image: "illume-home.png" COMP;
+	 image: "illume-close.png" COMP;
+      }
+      parts {
+ 	 part { name: "base";
+	    type: RECT;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       aspect: 3.0 3.0;
+	       aspect_preference: VERTICAL;
+	       min: 50 50;
+	       rel1.offset: 16 16;
+	       rel2.offset: -17 -17;
+	    }
+	 }
+	 part { name: "apps_image";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "apps";
+	       rel1.offset: -8 -8;
+	       rel2.to: "apps";
+	       rel2.offset: 7 7;
+	       image {
+		  normal: "bt_base2.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "bt_base1.png";
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       image {
+		  normal: "bt_dis_base.png";
+		  border: 4 4 4 4;
+	       }
+	    }
+	 }
+	 part { name: "apps_icon";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "apps_image";
+               rel1.offset: 8 8;
+	       rel2.to: "apps_image";
+               rel2.offset: -9 -9;
+               aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       max: 96 96;
+	       image.normal: "illume-apps.png";
+	    }
+	 }
+         part { name: "apps_over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "apps_image";
+	       rel2.to: "apps_image";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_hilight.png";
+		  border: 7 7 7 0;
+	       }
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       image {
+		  normal: "bt_dis_hilight.png";
+		  border: 4 4 4 0;
+	       }
+	    }
+	 }
+	 part { name: "apps_over2";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "apps_image";
+	       rel2.to: "apps_image";
+	       image {
+		  normal: "bt_shine.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+	 part { name: "apps";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       align: 0.0 0.5;
+	       rel1.offset: 16 16;
+	       rel2.offset: -17 -17;
+	       color: 0 0 0 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+	 
+	 part { name: "home_image";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "home";
+	       rel1.offset: -8 -8;
+	       rel2.to: "home";
+	       rel2.offset: 7 7;
+	       image {
+		  normal: "bt_base2.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "bt_base1.png";
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       image {
+		  normal: "bt_dis_base.png";
+		  border: 4 4 4 4;
+	       }
+	    }
+	 }
+	 part { name: "home_icon";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "home_image";
+               rel1.offset: 8 8;
+	       rel2.to: "home_image";
+               rel2.offset: -9 -9;
+               aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       max: 96 96;
+	       image.normal: "illume-home.png";
+	    }
+	 }
+         part { name: "home_over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "home_image";
+	       rel2.to: "home_image";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_hilight.png";
+		  border: 7 7 7 0;
+	       }
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       image {
+		  normal: "bt_dis_hilight.png";
+		  border: 4 4 4 0;
+	       }
+	    }
+	 }
+	 part { name: "home_over2";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "home_image";
+	       rel2.to: "home_image";
+	       image {
+		  normal: "bt_shine.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+ 	 part { name: "home";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       align: 0.5 0.5;
+	       rel1.offset: 16 16;
+	       rel2.offset: -17 -17;
+	       color: 0 0 0 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+	 
+	 part { name: "close_image";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "close";
+	       rel1.offset: -8 -8;
+	       rel2.to: "close";
+	       rel2.offset: 7 7;
+	       image {
+		  normal: "bt_base2.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "bt_base1.png";
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       image {
+		  normal: "bt_dis_base.png";
+		  border: 4 4 4 4;
+	       }
+	    }
+	 }
+	 part { name: "close_icon";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "close_image";
+               rel1.offset: 8 8;
+	       rel2.to: "close_image";
+               rel2.offset: -9 -9;
+               aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       max: 96 96;
+	       image.normal: "illume-close.png";
+	    }
+	 }
+         part { name: "close_over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "close_image";
+	       rel2.to: "close_image";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_hilight.png";
+		  border: 7 7 7 0;
+	       }
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       image {
+		  normal: "bt_dis_hilight.png";
+		  border: 4 4 4 0;
+	       }
+	    }
+	 }
+	 part { name: "close_over2";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "close_image";
+	       rel2.to: "close_image";
+	       image {
+		  normal: "bt_shine.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+ 	 part { name: "close";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       align: 1.0 0.5;
+	       rel1.offset: 16 16;
+	       rel2.offset: -17 -17;
+	       color: 0 0 0 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+      }
+      programs {
+	 program { name: "appsdown";
+	    signal: "mouse,down,1";
+	    source: "apps";
+	    action: STATE_SET "clicked" 0.0;
+	    target: "apps_image";
+	 }
+	 program { name: "appsup";
+	    signal: "mouse,up,1";
+	    source: "apps";
+	    action: STATE_SET "default" 0.0;
+	    target: "apps_image";
+	    after: "apps";
+	 }
+	 program { name: "apps";
+	    action: SIGNAL_EMIT "e,action,do,apps" "";
+	 }
+	 program { name: "appsenabled";
+	    signal: "e,state,action,apps,enabled";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "apps_image";
+	    target: "apps_icon";
+	    target: "apps_over1";
+	    target: "apps_over2";
+	    target: "apps";
+	 }
+	 program { name: "appsdisabled";
+	    signal: "e,state,action,apps,disabled";
+	    source: "e";
+	    action: STATE_SET "disabled" 0.0;
+	    target: "apps_image";
+	    target: "apps_icon";
+	    target: "apps_over1";
+	    target: "apps_over2";
+	    target: "apps";
+	 }
+	 
+	 program { name: "homedown";
+	    signal: "mouse,down,1";
+	    source: "home";
+	    action: STATE_SET "clicked" 0.0;
+	    target: "home_image";
+	 }
+	 program { name: "homeup";
+	    signal: "mouse,up,1";
+	    source: "home";
+	    action: STATE_SET "default" 0.0;
+	    target: "home_image";
+	    after: "home";
+	 }
+	 program { name: "home";
+	    action: SIGNAL_EMIT "e,action,do,home" "";
+	 }
+	 program { name: "homeenabled";
+	    signal: "e,state,action,home,enabled";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "home_image";
+	    target: "home_icon";
+	    target: "home_over1";
+	    target: "home_over2";
+	    target: "home";
+	 }
+	 program { name: "homedisabled";
+	    signal: "e,state,action,home,disabled";
+	    source: "e";
+	    action: STATE_SET "disabled" 0.0;
+	    target: "home_image";
+	    target: "home_icon";
+	    target: "home_over1";
+	    target: "home_over2";
+	    target: "home";
+	 }
+	 
+	 program { name: "closedown";
+	    signal: "mouse,down,1";
+	    source: "close";
+	    action: STATE_SET "clicked" 0.0;
+	    target: "close_image";
+	 }
+	 program { name: "closeup";
+	    signal: "mouse,up,1";
+	    source: "close";
+	    action: STATE_SET "default" 0.0;
+	    target: "close_image";
+	    after: "close";
+	 }
+	 program { name: "close";
+	    action: SIGNAL_EMIT "e,action,do,close" "";
+	 }
+	 program { name: "closeenabled";
+	    signal: "e,state,action,close,enabled";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "close_image";
+	    target: "close_icon";
+	    target: "close_over1";
+	    target: "close_over2";
+	    target: "close";
+	 }
+	 program { name: "closedisabled";
+	    signal: "e,state,action,close,disabled";
+	    source: "e";
+	    action: STATE_SET "disabled" 0.0;
+	    target: "close_image";
+	    target: "close_icon";
+	    target: "close_over1";
+	    target: "close_over2";
+	    target: "close";
+	 }
+      }
+   }
+
+   group { name: "e/modules/slipshelf/controls/applist";
+      images {
+      }
+      parts {
+	 part { name: "e.swallow.content";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	    }
+	 }
+/*	 
+	 part { name: "e.add.label";
+	    type: TEXT;
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       align: 1.0 0.0;
+	       color: 176 176 176 255;
+	       text {
+		  font: "Liberation-Bold";
+		  size: 20;
+		  min: 1 1;
+		  align: 1.0 0.0;
+		  text_class: "slipshelf_title";
+	       }
+	    }
+	    description { state: "pressed" 0.0;
+	       inherit: "default" 0.0;
+	       align: 1.0 1.0;
+	       color: 255 255 255 255;
+	    }
+	 }
+ */
+      }
+/*      
+      programs {
+	 program { name: "b4";
+	    signal: "mouse,down,1";
+	    source: "e.add.label";
+            action: STATE_SET "pressed" 0.0;
+	    target: "e.add.label";
+	 }
+	 program { name: "b5";
+	    signal: "mouse,up,1";
+	    source: "e.add.label";
+            action: STATE_SET "default" 0.0;
+	    target: "e.add.label";
+	 }
+	 program { name: "b6";
+	    signal: "mouse,clicked,1";
+	    source: "e.add.label";
+	    action: SIGNAL_EMIT "e,action,do,applist,add" "";
+	 }
+      }
+ */
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** ILLUME: SLIPWIN ***/
+
+   group { name: "e/modules/slipwin/base/default";
+      images {
+         image: "base_bg.png" COMP;
+      }
+//      data.item: "shaped" "1";
+      parts {
+         part {	  name: "base";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "base_bg.png";
+	       image.border: 2 2 2 2;
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "e.swallow.content";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+//	       fixed: 1 1;
+	       rel1.offset: 4 4;
+	       rel2.offset: -5 -5;
+	    }
+	 }
+      }
+   }
+   
+/////////////////////////////////////////////////////////////////////////////
+   /*** ILLUME: BUSYWIN ***/
+/*
+   group { name: "e/modules/busywin/base/default";
+      images {
+	 image: "busy-1.png" COMP;
+	 image: "busy-2.png" COMP;
+	 image: "busy-3.png" COMP;
+	 image: "busy-4.png" COMP;
+	 image: "busy-5.png" COMP;
+	 image: "busy-6.png" COMP;
+	 image: "busy-7.png" COMP;
+	 image: "busy-8.png" COMP;
+	 image: "busy-9.png" COMP;
+      }
+//      data.item: "shaped" "1";
+      parts {
+	 part { name: "base";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 255;
+	    }
+	 }
+	 part { name: "busy";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "busy-9.png";
+	       image.tween: "busy-1.png";
+	       image.tween: "busy-2.png";
+	       image.tween: "busy-3.png";
+	       image.tween: "busy-4.png";
+	       image.tween: "busy-5.png";
+	       image.tween: "busy-6.png";
+	       image.tween: "busy-7.png";
+	       image.tween: "busy-8.png";
+	       aspect_preference: VERTICAL;
+	       aspect: 1.0 1.0;
+	       min: 32 32;
+	       max: 64 64;
+	       align: 0.0 0.0;
+	       rel1.relative: 0.0 0.0;
+	       rel1.offset: 8 8;
+	       rel2.offset: -9 -9;
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "busy";
+               rel1.offset: 8 0;
+	       rel1.relative: 1.0 0.0;
+	       rel2.to_x: "base";
+	       rel2.to_y: "busy";
+	       rel2.offset: -9 -1;
+	       rel2.relative: 1.0 1.0;
+	       align: 0.0 0.5;
+	       color: 176 176 176 255;
+	       text {
+		  font: "Liberation";
+		  size: 20;
+		  min: 0 1;
+	       }
+	    }
+	 }
+      }
+      programs {
+	 program { name: "go1";
+	    signal: "e,state,out,begin";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    transition: LINEAR 0.4;
+	    target: "busy";
+	    after:  "go1";
+	 }
+	 program { name: "stop1";
+	    signal: "e,state,in,end";
+	    source: "e";
+	    action: ACTION_STOP;
+	    target: "go1";
+	 }
+      }
+   }
+*/
+   
+/////////////////////////////////////////////////////////////////////////////
+   /*** ILLUME: KBD ***/
+
+   group { name: "e/modules/kbd/base/default";
+      images {
+	 image: "k_wtgr.png" COMP;
+	 image: "k_tpsh.png" COMP;
+	 image: "k_tabl.png" COMP;
+	 image: "k_tabr.png" COMP;
+	 image: "k_tabhl.png" COMP;
+	 image: "k_tabhm.png" COMP;
+	 image: "k_tabhr.png" COMP;
+	 image: "k_grad.png" COMP;
+//	 image: "k_ltgry.png" COMP;
+//	 image: "grill_dark_tiny_pattern.png" COMP;
+	 image: "big_arrow_up.png" COMP;
+      }
+//      data.item: "shaped" "1";
+      parts {
+	 part { name: "base";
+	    description { state: "default" 0.0;
+	       rel1 {
+		  to_y: "compose_bg";
+		  relative: 0.0 1.0;
+		  offset: 0 0;
+	       }
+	       image.normal: "k_grad.png";
+	        fill {
+		   smooth: 0;
+		   size {
+		      relative: 0 1.0;
+		      offset: 36 0;
+		   }
+		}
+	    }
+	 }
+/*	 
+	 part { name: "base";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 51 51 51 255;
+	    }
+	 }
+	 part { name: "grill";
+	    description { state: "default" 0.0;
+	       rel1 {
+		  to_y: "compose_bg";
+		  relative: 0.0 1.0;
+		  offset: 0 0;
+	       }
+	       image.normal: "grill_dark_tiny_pattern.png";
+	        fill {
+		   size {
+		      relative: 0 0;
+		      offset: 144 144;
+		   }
+		}
+	    }
+	 }
+	 part { name: "light";
+	    description { state: "default" 0.0;
+	       rel1.to: "grill";
+	       rel2.to: "grill";
+	       image.normal: "k_ltgry.png";
+	       fill {
+		  smooth: 0;
+		  size {
+		     relative: 0 1.0;
+		     offset: 36 0;
+		  }
+	       }
+	    }
+	 }
+ */
+	 part { name: "compose_bg";
+	    description { state: "default" 0.0;
+	       image.normal: "k_wtgr.png";
+	       rel2.to: "e.swallow.label";
+	       rel2.offset: 1 2;
+	       fill {
+		  smooth: 0;
+		  size {
+		     relative: 0 1.0;
+		     offset: 36 0;
+		  }
+	       }
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       rel1.to_x: "tl_tab";
+	       rel1.relative: 1.0 0.0;
+               rel1.offset: 1 8;
+	       rel2.to_x: "rt_tab";
+	       rel2.relative: 0.0 0.0;
+	       rel2.offset: -2 8;
+	       align: 0.5 0.0;
+	       text {
+                  font: "Sans";
+		  size: 10;
+		  min: 0 1;
+	       }
+	    }
+	 }
+	 part { name: "e.swallow.label";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+               rel1.to: "e.text.label";
+	       rel1.offset: -8 -8;
+               rel2.to: "e.text.label";
+	       rel2.offset: 7 7;
+	       align: 0.5 0.0;
+	    }
+	 }
+	 part { name: "compose_sh";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tpsh.png";
+	       rel1 {
+		  to_x: "tl_tab";
+		  relative: 1.0 0.0;
+		  offset: -12 0;
+	       }
+	       rel2 {
+		  to_x: "rt_tab";
+		  to_y: "compose_bg";
+		  relative: 0.0 1.0;
+		  offset: 11 -1;
+	       }
+	       image.border: 12 12 12 12;
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "tl_tab";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tabl.png";
+	       image.border: 0 12 6 6;
+	       fill.smooth: 0;
+	       rel1.to: "lprev";
+	       rel2.to: "lprev";
+	       rel2.offset: 13 -1;
+	    }
+	 }
+	 part { name: "rt_tab";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tabr.png";
+	       image.border: 12 0 6 6;
+	       fill.smooth: 0;
+	       rel1.to: "lnext";
+	       rel1.offset: -12 0;
+	       rel2.to: "lnext";
+	    }
+	 }
+	 part { name: "lprev";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       aspect: 1.5 1.5;
+	       align: 0.0 0.5;
+	       aspect_preference: VERTICAL;
+	       color: 0 0 0 0;
+               rel2 {
+		  to_y: "compose_bg";
+		  relative: 0.0 1.0;
+		  offset: 0 -1;
+	       }
+	    }
+	 }
+	 part { name: "lnext";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       aspect: 1.5 1.5;
+	       align: 1.0 0.5;
+	       aspect_preference: VERTICAL;
+	       color: 0 0 0 0;
+	       rel1 {
+		  relative: 1.0 0.0;
+		  offset: -1 0;
+	       }
+	       rel2 {
+		  to_y: "compose_bg";
+		  relative: 1.0 1.0;
+		  offset: -1 -1;
+	       }
+	    }
+	 }
+	 
+	 part { name: "tl_tabh";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tabhl.png";
+	       image.border: 0 12 6 20;
+	       fill.smooth: 0;
+	       rel1.to: "tl_tab";
+	       rel2.to: "tl_tab";
+	       rel2.offset: -2 15;
+	    }
+	 }
+	 part { name: "tr_tabh";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tabhr.png";
+	       image.border: 12 0 6 20;
+	       fill.smooth: 0;
+	       rel1.to: "rt_tab";
+	       rel1.offset: 1 0;
+	       rel2.to: "rt_tab";
+	       rel2.offset: -1 15;
+	    }
+	 }
+	 part { name: "t_h";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tabhm.png";
+	       fill.smooth: 0;
+	       rel1 {
+		  to: "tl_tabh";
+		  relative: 1.0 1.0;
+		  offset: 0 -15;
+	       }
+	       rel2 {
+		  to: "tr_tabh";
+		  relative: 0.0 1.0;
+		  offset: -1 -1;
+	       }
+	    }
+	 }
+	 // dict/selection selector
+	 part { name: "lprev2";
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       max: 22 22;
+	       aspect: 1.39393939 1.39393939;
+	       aspect_preference: BOTH;
+	       image.normal: "big_arrow_up.png";
+	       color: 255 255 255 255;
+	       align: 0.5 0.5;
+	       rel1.to: "lprev";
+	       rel2.to: "lprev";
+	    }
+	 }
+	 
+	 // layout selector icon/config
+	 part { name: "e.swallow.layout";
+	    type: SWALLOW;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+               rel1.to: "lnext";
+               rel2.to: "lnext";
+	    }
+	 }
+	 
+	 
+	 part { name: "e.swallow.content";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  to_y: "e.swallow.label";
+		  relative: 0.0 1.0;
+		  offset: 0 4;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset: -1 -1;
+	       }
+	    }
+	 }
+      }
+      programs {
+	 program { name: "lprev";
+	    signal: "mouse,down,1";
+	    source: "lprev";
+            action: SIGNAL_EMIT "e,action,do,matches" "";
+	 }
+	 program { name: "lnext";
+	    signal: "mouse,down,1";
+	    source: "lnext";
+            action: SIGNAL_EMIT "e,action,do,layouts" "";
+	 }
+      }
+   }
+
+   group { name: "e/modules/kbd/match/word";
+      images {
+         image: "bt_basew.png" COMP;
+	 image: "bt_base2.png" COMP;
+	 image: "bt_hilight.png" COMP;
+	 image: "bt_shine.png" COMP;
+      }
+      parts {
+	 part { name: "button_image";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.text.label";
+	       rel1.offset: -3 -3;
+	       rel2.to_x: "e.text.label";
+	       rel2.offset: 2 2;
+	       image {
+		  normal: "bt_basew.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "active" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "bt_base2.png";
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+            effect: SOFT_SHADOW;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 255;
+               color3: 0 0 0 0;
+	       min: 32 0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   3   3;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -4  -4;
+	       }
+	       text {
+                  font: "Sans"; 
+		  size: 10;
+		  min: 1 1;
+	       }
+	    }
+	    description { state: "active" 0.0;
+	       inherit: "default" 0.0;
+	       color: 224 224 224 255;
+	       color3: 0 0 0 64;
+	    }
+	 }
+         part { name: "over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_hilight.png";
+		  border: 7 7 7 0;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       image {
+		  normal: "bt_dis_hilight.png";
+		  border: 4 4 4 0;
+	       }
+	    }
+	 }
+	 part { name: "over2";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       image {
+		  normal: "bt_shine.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+      }
+      programs {
+	 program { name: "select";
+	    signal: "mouse,up,1";
+	    source: "button_image";
+            action: SIGNAL_EMIT "e,action,do,select" "";
+	 }
+	 program { name: "default";
+	    signal: "e,state,selected";
+	    source: "e";
+            action: STATE_SET "active" 0.0;
+	    target: "button_image";
+            target: "e.text.label";
+	 }
+	 program { name: "select2";
+	    signal: "mouse,down,1";
+	    source: "button_image";
+            action: STATE_SET "active" 0.0;
+	    target: "button_image";
+	    target: "e.text.label";
+	 }
+	 program { name: "select3";
+	    signal: "mouse,up,1";
+	    source: "button_image";
+            action: STATE_SET "default" 0.0;
+	    target: "button_image";
+	    target: "e.text.label";
+	 }
+      }
+   }
+
+   group { name: "e/modules/kbd/key/default";
+      images {
+	 image: "bt_base2.png" COMP;
+         image: "bt_basew.png" COMP;
+         image: "bt_hilightw.png" COMP;
+	 image: "bt_shine.png" COMP;
+      }
+      parts {
+	 part { name: "button_image";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.swallow.content";
+	       rel1.offset: -3 -3;
+	       rel2.to_x: "e.swallow.content";
+	       rel2.offset: 2 2;
+	       image {
+		  normal: "bt_basew.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "active" 0.0;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "bt_base2.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	 }
+	 part { name: "content_clip";
+	    description { state: "default" 0.0;
+	       color: 0 0 0 255;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	    }
+	    description { state: "active" 0.0;
+               inherit: "default" 0.0;
+	       color: 255 255 255 255;
+	    }
+	 }
+	 part {
+	    name: "e.swallow.content";
+	    type: SWALLOW;
+	    clip_to: "content_clip";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   3   3;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -4  -4;
+	       }
+	    }
+	    description { state: "selected" 0.0;
+	       inherit: "default" 0.0;
+	       rel1 {
+		  relative: -0.5 -2.0;
+		  offset:   3   3;
+	       }
+	       rel2 {
+		  relative: 1.5 0.0;
+		  offset:   -4  -4;
+	       }
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    clip_to: "content_clip";
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.swallow.content";
+	       rel2.to: "e.swallow.content";
+	       color: 255 255 255 255;
+	       text {
+                  font: "Sans"; 
+		  size: 10;
+		  min: 1 1;
+	       }
+	    }
+	    description { state: "selected" 0.0;
+	       inherit: "default" 0.0;
+	       text {
+		  size: 24;
+	       }
+	    }
+	 }
+         part { name: "over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_hilightw.png";
+		  border: 7 7 7 0;
+	       }
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "over2";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       image {
+		  normal: "bt_shine.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+      }
+      programs {
+	 program { name: "down";
+	    signal: "e,state,pressed";
+	    source: "e";
+	    action: STATE_SET "selected" 0.0;
+	    target: "e.swallow.content";
+	    target: "e.text.label";
+	 }
+	 program { name: "up";
+	    signal: "e,state,released";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    transition: DECELERATE 0.25;
+	    target: "e.swallow.content";
+	    target: "e.text.label";
+	 }
+	 program { name: "selected";
+	    signal: "e,state,selected";
+	    source: "e";
+	    action: STATE_SET "active" 0.0;
+	    target: "button_image";
+	    target: "content_clip";
+	 }
+	 program { name: "sunelected";
+	    signal: "e,state,unselected";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "button_image";
+	    target: "content_clip";
+	 }
+      }
+   }
+
+   group { name: "e/modules/kbd/zoomkey/default";
+      images {
+	 image: "bt_base2.png" COMP;
+         image: "bt_basew.png" COMP;
+         image: "bt_hilightw.png" COMP;
+	 image: "bt_shine.png" COMP;
+      }
+      parts {
+	 part { name: "button_image";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.swallow.content";
+	       rel1.offset: -3 -3;
+	       rel2.to: "e.swallow.content";
+	       rel2.offset: 2 2;
+	       image {
+		  normal: "bt_basew.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "active" 0.0;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "bt_base2.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	 }
+	 part { name: "content_clip";
+	    description { state: "default" 0.0;
+	       color: 0 0 0 255;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	    }
+	    description { state: "active" 0.0;
+               inherit: "default" 0.0;
+	       color: 255 255 255 255;
+	    }
+	 }
+	 part {
+	    name: "e.swallow.content";
+	    type: SWALLOW;
+	    clip_to: "content_clip";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   3   3;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -4  -4;
+	       }
+	    }
+	    description { state: "selected" 0.0;
+	       inherit: "default" 0.0;
+	       rel1 {
+		  relative: -0.25 -0.25;
+		  offset:   3   3;
+	       }
+	       rel2 {
+		  relative: 1.25 1.25;
+		  offset:   -4  -4;
+	       }
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    clip_to: "content_clip";
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.swallow.content";
+	       rel2.to: "e.swallow.content";
+	       color: 255 255 255 255;
+	       text {
+                  font: "Sans"; 
+		  size: 40;
+		  min: 1 1;
+	       }
+	    }
+	    description { state: "selected" 0.0;
+	       inherit: "default" 0.0;
+	       text {
+		  size: 60;
+	       }
+	    }
+	 }
+         part { name: "over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_hilightw.png";
+		  border: 7 7 7 0;
+	       }
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "over2";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       image {
+		  normal: "bt_shine.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+      }
+      programs {
+	 program { name: "down";
+	    signal: "e,state,pressed";
+	    source: "e";
+	    action: STATE_SET "selected" 0.0;
+	    target: "e.swallow.content";
+	    target: "e.text.label";
+	 }
+	 program { name: "up";
+	    signal: "e,state,released";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    transition: DECELERATE 0.25;
+	    target: "e.swallow.content";
+	    target: "e.text.label";
+	 }
+	 program { name: "selected";
+	    signal: "e,state,selected";
+	    source: "e";
+	    action: STATE_SET "active" 0.0;
+	    target: "button_image";
+	    target: "content_clip";
+	 }
+	 program { name: "sunelected";
+	    signal: "e,state,unselected";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "button_image";
+	    target: "content_clip";
+	 }
+      }
+   }
+
+   group { name: "e/modules/kbd/zoom/default";
+//      data.item: "shaped" "1";
+//      max: 320 320; // hmm size here should be determined some other way
+      images {
+	 image: "base_bg.png" COMP;
+	 image: "inset_sunk.png" COMP;
+      }
+      parts {
+         part {	  name: "base";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "base_bg.png";
+	       image.border: 2 2 2 2;
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "clip";
+	    type: RECT;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "border";
+	       rel2.to: "border";
+	       rel1.offset: 1 1;
+	       rel2.offset: -2 -2;
+	    }
+	 }
+      	 part { name: "e.swallow.content";
+	    clip_to: "clip";
+	    type: SWALLOW;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       min: 120 120;
+	       max: 120 120;
+	       rel1.offset: 4 4;
+	       rel2.offset: -5 -5;
+	    }
+	 }
+	 part { name: "border";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.offset: 3 3;
+	       rel2.offset: -4 -4;
+	       image {
+		  normal: "inset_sunk.png";
+		  border: 7 7 7 7;
+		  middle: 0;
+	       }
+	       fill.smooth : 0;
+	    }
+	 }
+      }
+   }
+
+   group { name: "e/modules/kbd/match/default";
+//      data.item: "shaped" "1";
+      images {
+	 image: "base_bg.png" COMP;
+      }
+      parts {
+         part {	  name: "base";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "base_bg.png";
+	       image.border: 2 2 2 2;
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "e.swallow.content";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset: 4 4;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset: -5 -5;
+	       }
+	    }
+	 }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** MOD: ILLUME CFG ***/
+   // FIXME: will die
+   group { name: "e/modules/illume/config/dialog";
+      parts {
+	 part { name: "base";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 255 255 255 255;
+	    }
+	 }
+	 part { name: "e.swallow.content";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset: 0 0;
+	       }
+	       rel2 {
+		  to: "ok";
+		  relative: 1.0 0.0;
+		  offset: -1 -1;
+	       }
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 0.5 1.0;
+	       rel1 {
+		  relative: 0.0 1.0;
+		  offset:   0 -9;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -1 -9;
+	       }
+	       color: 0 0 0 255;
+	       text {
+                  font: "Sans"; 
+		  size: 24;
+		  min: 1 1;
+		  align: 0.5 1.0;
+	       }
+	    }
+	 }
+	 part { name: "ok";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1.to_y: "e.text.label";
+	       rel1.offset: 0 -15;
+	    }
+	 }
+      }
+      programs {
+         program { name: "press";
+	    signal: "mouse,up,1";
+	    source: "ok";
+	    action: SIGNAL_EMIT "e,action,do,ok" "";
+	 }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** MOD: ILLUME WIFI ***/
+   group { name: "e/modules/illume/gadget/wifi";
+      images {
+	 image: "wifi_0.png" COMP;
+	 image: "wifi_1.png" COMP;
+	 image: "wifi_2.png" COMP;
+	 image: "wifi_3.png" COMP;
+	 image: "wifi_4.png" COMP;
+      }
+      min: 19 23;
+      max: 19 42;
+      script {
+       public message(Msg_Type:type, id, ...) {
+	  if ((type == MSG_FLOAT) && (id == 1)) {
+	     new Float:val;
+	     val = getfarg(2);
+	     set_state(PART:"wifi", "default", val);
+	  }
+       }
+      }
+      parts {
+	 part { name: "base";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1.offset: 2 4;
+	       rel2.offset: -3 -5;
+	    }
+	 }
+	 part { name: "wifi";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       min: 5 5;
+	       max: 15 15;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       align: 0.5 1.0;
+	       color: 255 255 255 176;
+	       image.normal: "wifi_0.png";
+	       rel1.to: "base";
+	       rel2.to: "base";
+	    }
+	    description { state: "default" 0.25;
+	       inherit: "default" 0.0;
+	       image.normal: "wifi_1.png";
+	    }
+	    description { state: "default" 0.5;
+	       inherit: "default" 0.0;
+	       image.normal: "wifi_2.png";
+	    }
+	    description { state: "default" 0.75;
+	       inherit: "default" 0.0;
+	       image.normal: "wifi_3.png";
+	    }
+	    description { state: "default" 1.0;
+	       inherit: "default" 0.0;
+	       image.normal: "wifi_4.png";
+	    }
+	 }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** MOD: ILLUME GSM ***/
+   group { name: "e/modules/illume/gadget/gsm";
+      images {
+	 image: "gsm_no.png" COMP;
+	 image: "gsm_0.png" COMP;
+	 image: "gsm_1.png" COMP;
+	 image: "gsm_2.png" COMP;
+	 image: "gsm_3.png" COMP;
+	 image: "gsm_4.png" COMP;
+      }
+      min: 29 23;
+      max: 29 42;
+      script {
+       public message(Msg_Type:type, id, ...) {
+	  if ((type == MSG_FLOAT) && (id == 1)) {
+	     new Float:val;
+	     val = getfarg(2);
+	     set_state(PART:"gsm", "default", val);
+	  }
+	  if ((type == MSG_STRING) && (id == 1)) {
+	     new val[100];
+	     getsarg(2, val, 100);
+	     set_text(PART:"e.text.label", val);
+	  }
+       }
+      }
+      parts {
+	 part { name: "base";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1.offset: 2 4;
+	       rel2.offset: -3 -5;
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       color: 176 176 176 255;
+	       align: 1.0 0.0;
+	       text {
+		  align: 1.0 0.0;
+                  font: "Sans:style=Bold";
+		  size: 5;
+		  min: 1 1;
+	       }
+	    }
+	 }
+	 part { name: "nogsm";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       min: 7 5;
+	       max: 25 15;
+	       aspect: 1.6666666 1.6666666;
+	       aspect_preference: BOTH;
+	       align: 0.5 1.0;
+	       color: 255 255 255 176;
+	       image.normal: "gsm_no.png";
+	       rel1.to: "base";
+	       rel2.to: "base";
+	       visible: 0;
+	    }
+	    description { state: "nogsm" 0.0;
+	       inherit: "default" 0.0;
+	       visible: 1;
+	    }
+	 }
+	 part { name: "gsm_clip";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       visible: 1;
+	    }
+	    description { state: "nogsm" 0.0;
+	       visible: 0;
+	    }
+	 }
+	 part { name: "gsm";
+	    mouse_events: 0;
+	    clip_to: "gsm_clip";
+	    description { state: "default" 0.0;
+	       min: 7 5;
+	       max: 25 15;
+	       aspect: 1.6666666 1.6666666;
+	       aspect_preference: BOTH;
+	       align: 0.5 1.0;
+	       color: 255 255 255 176;
+	       image.normal: "gsm_0.png";
+	       rel1.to: "base";
+	       rel2.to: "base";
+	    }
+	    description { state: "default" 0.25;
+	       inherit: "default" 0.0;
+	       image.normal: "gsm_1.png";
+	    }
+	    description { state: "default" 0.5;
+	       inherit: "default" 0.0;
+	       image.normal: "gsm_2.png";
+	    }
+	    description { state: "default" 0.75;
+	       inherit: "default" 0.0;
+	       image.normal: "gsm_3.png";
+	    }
+	    description { state: "default" 1.0;
+	       inherit: "default" 0.0;
+	       image.normal: "gsm_4.png";
+	    }
+	 }
+      }
+      programs {
+	 program { name: "on";
+	    signal: "e,state,active";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "nogsm";
+	    target: "gsm_clip";
+	 }
+	 program { name: "off";
+	    signal: "e,state,passive";
+	    source: "e";
+	    action: STATE_SET "nogsm" 0.0;
+	    target: "nogsm";
+	    target: "gsm_clip";
+	 }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** MOD: ILLUME BLUETOOTH ***/
+   group { name: "e/modules/illume/gadget/bluetooth";
+      images {
+	 image: "bluetooth.png" COMP;
+      }
+      min: 32 32;
+      max: 256 256;
+      parts {
+	 part { name: "base";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1.offset: 0 0;
+	       rel2.offset: -1 -1;
+	    }
+	 }
+	 part { name: "bluetooth";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       min: 8 8;
+	       max: 24 24;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       align: 0.5 0.5;
+	       color: 255 255 255 176;
+	       image.normal: "bluetooth.png";
+	       rel1.to: "base";
+	       rel2.to: "base";
+	    }
+	    description { state: "off" 1.0;
+	       inherit: "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+      }
+      programs {
+	 program { name: "on";
+	    signal: "e,state,active";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "bluetooth";
+	 }
+	 program { name: "off";
+	    signal: "e,state,passive";
+	    source: "e";
+	    action: STATE_SET "off" 0.0;
+	    target: "bluetooth";
+	 }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** MOD: ILLUME CFG ***/
+   group { name: "e/modules/illume/gadget/cfg";
+      images {
+	 image: "cfg.png" COMP;
+      }
+      min: 32 32;
+      max: 256 256;
+      parts {
+	 part { name: "base";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1.offset: 0 0;
+	       rel2.offset: -1 -1;
+	    }
+	 }
+	 part { name: "cfg";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       min: 8 8;
+	       max: 24 24;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       align: 0.5 0.5;
+	       color: 255 255 255 176;
+	       image.normal: "cfg.png";
+	       rel1.to: "base";
+	       rel2.to: "base";
+	    }
+	    description { state: "off" 1.0;
+	       inherit: "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** MOD: ILLUME SIMPLELOCK ***/
+   group {
+      name: "e/modules/simplelock/base/default";
+      min: 0 1;
+      parts {
+	 part { name: "base";
+	    type: RECT;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 255;
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  offset: 40 40;
+	       }
+	       rel2 {
+		  offset: -41 -41;
+	       }
+	       color: 216 216 216 255;
+	       text {
+                  font: "Sans:style=Bold";
+		  text: "Locked";
+		  size: 24;
+		  min: 1 1;
+	       }
+	    }
+	 }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** MOD: ILLUME FLAUNCH ***/
+   group {
+      name: "e/modules/flaunch/button/default";
+      parts {
+/*	 	 
+	 part { name: "base";
+	    mouse_events: 0;
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 205;
+	       rel1.offset: 0 0;
+	       rel2.offset: -2 -2;
+	    }
+	 }
+	 part { name: "plus";
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 1.0 0.0;
+	       rel1.offset: -2 0;
+	       rel1.relative: 1.0 0.0;
+	       rel2.offset: -2 0;
+	       rel2.relative: 1.0 0.0;
+	       color: 255 255 255 255;
+	       text {
+                  font: "Sans:style=Bold";
+		  text: "+";
+		  size: 8;
+		  align: 1.0 0.0;
+		  min: 1 1;
+	       }
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 0.0 1.0;
+	       rel1.offset: 4 -1;
+	       rel1.relative: 0.0 1.0;
+	       rel2.offset: -5 -1;
+	       rel2.relative: 1.0 1.0;
+	       color: 255 255 255 255;
+	       text {
+                  font: "Sans:style=Bold";
+		  size: 8;
+		  align: 0.0 1.0;
+		  min: 0 1;
+	       }
+	    }
+	 }
+ */
+      }
+/*      
+      programs {
+	 program { name: "up";
+	    signal: "mouse,up,1";
+	    source: "base";
+            action: SIGNAL_EMIT "e,action,do,select" "";
+	 }
+      }
+ */
+   }
+
+   group {
+      name: "e/modules/flaunch/button/start";
+      parts {
+/*	 
+	 part { name: "base";
+	    type: RECT;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 205;
+	       rel1.offset: 0 0;
+	       rel2.offset: -2 -2;
+	    }
+	 }
+         part {
+	    name: "e.text.label";
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description {
+	       state: "default" 0.0;
+	       color: 255 255 255 255;
+	       text {
+		  text: "*";
+                  font: "Sans"; 
+		  size: 14;
+		  align: 0.0 1.0;
+	       }
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset: 4 8;
+//		  to: "asterisk.button";
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset: 0 11;
+//		  to: "asterisk.button";
+	       }
+	    }
+	 }
+ */
+/*	 
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       align: 0.0 1.0;
+	       rel1.offset: 4 10;
+	       rel1.relative: 0.0 1.0;
+	       rel2.offset: -5 10;
+	       rel2.relative: 1.0 1.0;
+	       color: 255 255 255 255;
+	       text {
+		  font: "Liberation";
+		  size: 32;
+		  align: 0.0 1.0;
+		  min: 0 1;
+	       }
+	    }
+	 }
+ */
+      }
+/*      
+      programs {
+	 program { name: "up";
+	    signal: "mouse,up,1";
+	    source: "base";
+            action: SIGNAL_EMIT "e,action,do,select" "";
+	 }
+      }
+ */
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** MOD: ILLUME SCROLLFRAME ***/
+   group { name: "e/modules/illume/launcher/scrollview";
+      parts {
+/*	 
+	 part { name: "clipper";
+	    type: RECT;
+	    mouse_events: 0;
+	    description { state: "default" 0.0; }
+	 }
+ */
+	 part { name: "e.swallow.content";
+//	    clip_to: "clipper";
+	    type: SWALLOW;
+	    description { state: "default" 0.0; }
+	 }
+/*	 
+	 part {
+	    name: "sb_vbar";
+	    type: RECT;
+	    mouse_events: 0;
+	    description {
+	       state: "default" 0.0;
+	    }
+	    description { state: "hidden" 0.0;
+	       visible: 0;
+	    }
+	 }
+	 part { name: "sb_vbar_base";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1 {
+		  relative: 1.0  0.0;
+		  offset:   -8    0;
+	       }
+	       rel2 {
+		  relative: 1.0  1.0;
+	       offset:   -1   -9;
+	       }
+	    }
+	 }
+	 part { name: "e.dragable.vbar";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 0;
+	    dragable {
+	       x: 0 0 0;
+	       y: 1 1 0;
+	       confine: "sb_vbar_base";
+	    }
+	    description { state: "default" 0.0;
+	       min: 8 8;
+	       rel1 {
+		  relative: 0.5  0.5;
+		  offset:   0    0;
+		  to: "sb_vbar_base";
+	       }
+	       rel2 {
+		  relative: 0.5  0.5;
+		  offset:   0    0;
+		  to: "sb_vbar_base";
+	       }
+	       color: 255 255 255 160;
+	    }
+	 }
+	 part {
+	    name: "sb_hbar";
+	    type: RECT;
+	    mouse_events: 0;
+	    description {
+	       state: "default" 0.0;
+	    }
+	    description { state: "hidden" 0.0;
+	       visible: 0;
+	    }
+	 }
+	 part { name: "sb_hbar_base";
+	    type: RECT;
+	    clip_to: "sb_hbar";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1 {
+		  relative: 0.0  1.0;
+		  offset:   0   -8;
+	       }
+	       rel2 {
+		  relative: 1.0  1.0;
+		  offset:   -9   -1;
+	       }
+	    }
+	 }
+	 part { name: "e.dragable.hbar";
+	    type: RECT;
+	    clip_to: "sb_hbar";
+	    mouse_events: 0;
+	    dragable {
+	       x: 1 1 0;
+	       y: 0 0 0;
+	       confine: "sb_hbar_base";
+	    }
+	    description { state: "default" 0.0;
+	       min: 8 8;
+	       rel1 {
+		  relative: 0.5  0.5;
+		  offset:   0    0;
+		  to: "sb_hbar_base";
+	       }
+	       rel2 {
+		  relative: 0.5  0.5;
+		  offset:   0    0;
+		  to: "sb_hbar_base";
+	       }
+	       color: 255 255 255 160;
+	    }
+	 }
+ */
+      }
+      programs {
+/*	 
+	 program {
+	    name: "sb_vbar_show";
+	    signal: "e,action,show,vbar";
+	    source: "e";
+	    action:  STATE_SET "default" 0.0;
+	    target: "sb_vbar";
+	 }
+	 program {
+	    name: "sb_vbar_hide";
+	    signal: "e,action,hide,vbar";
+	    source: "e";
+	    action:  STATE_SET "hidden" 0.0;
+	    target: "sb_vbar";
+	 }
+	 program {
+	    name: "sb_hbar_show";
+	    signal: "e,action,show,hbar";
+	    source: "e";
+	    action:  STATE_SET "default" 0.0;
+	    target: "sb_hbar";
+	 }
+	 program {
+	    name: "sb_hbar_hide";
+	    signal: "e,action,hide,hbar";
+	    source: "e";
+	    action:  STATE_SET "hidden" 0.0;
+	    target: "sb_hbar";
+	 }
+ */
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** MOD: ILLUME BUSYCOVER ***/
+   group {
+      name: "e/modules/busycover/default";
+      images {
+         image: "busy-1.png" COMP;
+	 image: "busy-2.png" COMP;
+	 image: "busy-3.png" COMP;
+	 image: "busy-4.png" COMP;
+	 image: "busy-5.png" COMP;
+	 image: "busy-6.png" COMP;
+	 image: "busy-7.png" COMP;
+	 image: "busy-8.png" COMP;
+	 image: "busy-9.png" COMP;
+      }
+      parts {
+	 part { name: "base";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 205;
+	    }
+	 }
+	 part { name: "busy";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image {
+		  normal: "busy-9.png";
+		  tween:  "busy-1.png";
+		  tween:  "busy-2.png";
+		  tween:  "busy-3.png";
+		  tween:  "busy-4.png";
+		  tween:  "busy-5.png";
+		  tween:  "busy-6.png";
+		  tween:  "busy-7.png";
+		  tween:  "busy-8.png";
+	       }
+	       min: 32 32;
+	       max: 32 32;
+	       align: 0.5 0.5;
+	    }
+	 }
+	 part { name: "e.text.title";
+	    mouse_events: 0;
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 0.5 0.0;
+	       rel1.to: "busy";
+	       rel1.relative: 0.5 1.0;
+	       rel1.offset: 0 4;
+	       rel2.to: "busy";
+	       rel2.relative: 0.5 1.0;
+	       rel2.offset: 0 4;
+	       color: 255 255 255 255;
+	       text {
+                  font: "Sans:style=Bold";
+		  text: "LOADING";
+		  size: 8;
+		  align: 0.5 0.0;
+		  min: 1 1;
+	       }
+	    }
+	 }
+      }
+      programs {
+	 program { name: "go1";
+	    signal: "show";
+	    source: "";
+	    action: STATE_SET "default" 0.0;
+	    transition: LINEAR 0.3333;
+	    target: "busy";
+	    after:  "go1";
+	 }
+	 program { name: "up";
+	    signal: "mouse,up,1";
+	    source: "base";
+            action: SIGNAL_EMIT "e,action,do,select" "";
+	 }
+      }
+   }
+
+}
+

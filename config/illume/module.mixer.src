@@ -1,0 +1,3 @@
+group "Mixer_Module_Config" struct {
+  value "version" int: 3;
+}
