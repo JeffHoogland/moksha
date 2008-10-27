@@ -52,7 +52,7 @@ static Status *_cpufreq_status_new();
 static void _cpufreq_status_free(Status *s);
 static int _cpufreq_status_check_available(Status *s);
 static int _cpufreq_status_check_current(Status *s);
-static int _cpufreq_cb_sort(void *item1, void *item2);
+static int _cpufreq_cb_sort(const void *item1, const void *item2);
 static void _cpufreq_face_update_available(Instance *inst);
 static void _cpufreq_face_update_current(Instance *inst);
 static void _cpufreq_face_cb_set_frequency(void *data, Evas_Object *o, const char *emission, const char *source);
@@ -446,7 +446,7 @@ _cpufreq_status_free(Status *s)
 }
 
 static int
-_cpufreq_cb_sort(void *item1, void *item2)
+_cpufreq_cb_sort(const void *item1, const void *item2)
 {
    int a, b;
 
@@ -567,7 +567,7 @@ _cpufreq_status_check_available(Status *s)
 
 	s->governors = eina_list_sort(s->governors,
 				      eina_list_count(s->governors),
-				      (int (*)(void *, void *))strcmp);
+				      (int (*)(const void *, const void *))strcmp);
      }
 #endif
    return 1;

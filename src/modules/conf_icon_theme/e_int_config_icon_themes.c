@@ -16,7 +16,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 //static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 static void _ilist_cb_change(void *data, Evas_Object *obj);
-static int _sort_icon_themes(void *data1, void *data2);
+static int _sort_icon_themes(const void *data1, const void *data2);
 
 struct _E_Config_Dialog_Data
 {
@@ -441,9 +441,9 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 }
 
 static int
-_sort_icon_themes(void *data1, void *data2)
+_sort_icon_themes(const void *data1, const void *data2)
 {
-   Efreet_Icon_Theme *m1, *m2;
+   const Efreet_Icon_Theme *m1, *m2;
 
    if (!data2) return -1;
 

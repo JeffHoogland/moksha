@@ -19,11 +19,11 @@ static void _ilist_language_cb_change       (void *data, Evas_Object *obj);
 static void _ilist_region_cb_change         (void *data, Evas_Object *obj);
 static void _ilist_codeset_cb_change        (void *data, Evas_Object *obj);
 static void _ilist_modifier_cb_change       (void *data, Evas_Object *obj);
-static int  _lang_list_sort                 (void *data1, void *data2);
+static int  _lang_list_sort                 (const void *data1, const void *data2);
 static void _lang_list_load                 (void *data);
-static int  _region_list_sort               (void *data1, void *data2);
+static int  _region_list_sort               (const void *data1, const void *data2);
 static void _region_list_load               (void *data);
-static int  _basic_lang_list_sort           (void *data1, void *data2);
+static int  _basic_lang_list_sort           (const void *data1, const void *data2);
 
 /* Fill the clear lists, fill with language, select */
 /* Update lanague */
@@ -1305,9 +1305,9 @@ _intl_current_locale_setup(E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_lang_list_sort(void *data1, void *data2) 
+_lang_list_sort(const void *data1, const void *data2) 
 {
-   E_Intl_Language_Node *ln1, *ln2;
+   const E_Intl_Language_Node *ln1, *ln2;
    const char *trans1;
    const char *trans2;
    
@@ -1378,9 +1378,9 @@ _lang_list_load(void *data)
 }
 
 static int 
-_region_list_sort(void *data1, void *data2) 
+_region_list_sort(const void *data1, const void *data2) 
 {
-   E_Intl_Region_Node *rn1, *rn2;
+   const E_Intl_Region_Node *rn1, *rn2;
    const char *trans1;
    const char *trans2;
    
@@ -1442,9 +1442,9 @@ _region_list_load(void *data)
 }
 
 static int 
-_basic_lang_list_sort(void *data1, void *data2) 
+_basic_lang_list_sort(const void *data1, const void *data2) 
 {
-   E_Intl_Pair *ln1, *ln2;
+   const E_Intl_Pair *ln1, *ln2;
    const char *trans1;
    const char *trans2;
    

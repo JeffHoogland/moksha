@@ -32,8 +32,8 @@ struct _E_Exe_List
 
 static void _e_exebuf_exe_free(E_Exebuf_Exe *exe);
 static void _e_exebuf_matches_clear(void);
-static int _e_exebuf_cb_sort_eap(void *data1, void *data2);
-static int _e_exebuf_cb_sort_exe(void *data1, void *data2);
+static int _e_exebuf_cb_sort_eap(const void *data1, const void *data2);
+static int _e_exebuf_cb_sort_exe(const void *data1, const void *data2);
 static void _e_exebuf_update(void);
 static void _e_exebuf_exec(void);
 static void _e_exebuf_exec_term(void);
@@ -847,9 +847,9 @@ _e_exebuf_clear(void)
 }
 
 static int
-_e_exebuf_cb_sort_eap(void *data1, void *data2)
+_e_exebuf_cb_sort_eap(const void *data1, const void *data2)
 {
-   Efreet_Desktop *a1, *a2;
+   const Efreet_Desktop *a1, *a2;
    const char *e1, *e2;
    double t1, t2;
    
@@ -863,9 +863,9 @@ _e_exebuf_cb_sort_eap(void *data1, void *data2)
 }
 
 static int
-_e_exebuf_cb_sort_exe(void *data1, void *data2)
+_e_exebuf_cb_sort_exe(const void *data1, const void *data2)
 {
-   char *e1, *e2;
+   const char *e1, *e2;
    double t1, t2;
    
    e1 = data1;

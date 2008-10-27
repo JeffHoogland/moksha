@@ -108,7 +108,7 @@ static void _e_fwin_config_set(E_Fwin *fwin);
 static void _e_fwin_window_title_set(E_Fwin *fwin);
 static void _e_fwin_toolbar_resize(E_Fwin *fwin);
 static int _e_fwin_dlg_cb_desk_sort(Efreet_Desktop *d1, Efreet_Desktop *d2);
-static int _e_fwin_dlg_cb_desk_list_sort(void *data1, void *data2);
+static int _e_fwin_dlg_cb_desk_list_sort(const void *data1, const void *data2);
 
 /* local subsystem globals */
 static Eina_List *fwins = NULL;
@@ -1777,9 +1777,9 @@ _e_fwin_dlg_cb_desk_sort(Efreet_Desktop *d1, Efreet_Desktop *d2)
 }
 
 static int 
-_e_fwin_dlg_cb_desk_list_sort(void *data1, void *data2) 
+_e_fwin_dlg_cb_desk_list_sort(const void *data1, const void *data2) 
 {
-   Efreet_Desktop *d1, *d2;
+   const Efreet_Desktop *d1, *d2;
 
    if (!(d1 = data1)) return 1;
    if (!(d2 = data2)) return -1;

@@ -140,9 +140,9 @@ _e_kbd_dict_normalized_strcpy(char *dst, const char *src)
 }
 
 static int
-_e_kbd_dict_matches_loolup_cb_sort(void *d1, void *d2)
+_e_kbd_dict_matches_loolup_cb_sort(const void *d1, const void *d2)
 {
-   E_Kbd_Dict_Word *kw1, *kw2;
+   const E_Kbd_Dict_Word *kw1, *kw2;
    
    kw1 = d1;
    kw2 = d2;
@@ -152,9 +152,9 @@ _e_kbd_dict_matches_loolup_cb_sort(void *d1, void *d2)
 }
 
 static int
-_e_kbd_dict_writes_cb_sort(void *d1, void *d2)
+_e_kbd_dict_writes_cb_sort(const void *d1, const void *d2)
 {
-   E_Kbd_Dict_Word *kw1, *kw2;
+   const E_Kbd_Dict_Word *kw1, *kw2;
    
    kw1 = d1;
    kw2 = d2;

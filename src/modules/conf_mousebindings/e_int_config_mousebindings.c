@@ -41,8 +41,8 @@ static char *_helper_modifier_name_get(int mod);
 static void _auto_apply_changes(E_Config_Dialog_Data *cfdata);
 
 /********* Sorting ***************/
-static int _mouse_binding_sort_cb(void *d1, void *d2);
-static int _wheel_binding_sort_cb(void *d1, void *d2);
+static int _mouse_binding_sort_cb(const void *d1, const void *d2);
+static int _wheel_binding_sort_cb(const void *d1, const void *d2);
 
 /********* grab window **********/
 static void _grab_wnd_show(E_Config_Dialog_Data *cfdata);
@@ -1240,9 +1240,9 @@ _helper_modifier_name_get(int mod)
 
 /********* Sorting ***************/
 static int
-_mouse_binding_sort_cb(void *d1, void *d2)
+_mouse_binding_sort_cb(const void *d1, const void *d2)
 {
-   E_Config_Binding_Mouse *eb, *eb2;
+   const E_Config_Binding_Mouse *eb, *eb2;
 
    eb = d1;
    eb2 = d2;
@@ -1258,9 +1258,9 @@ _mouse_binding_sort_cb(void *d1, void *d2)
 }
 
 static int
-_wheel_binding_sort_cb(void *d1, void *d2)
+_wheel_binding_sort_cb(const void *d1, const void *d2)
 {
-   E_Config_Binding_Wheel *bw, *bw2;
+   const E_Config_Binding_Wheel *bw, *bw2;
 
    bw = d1;
    bw2 = d2;

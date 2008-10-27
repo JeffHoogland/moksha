@@ -39,7 +39,7 @@ static void _auto_apply_changes(E_Config_Dialog_Data *cfdata);
 static void _find_key_binding_action(const char *action, const char *params, int *g, int *a, int *n);
 
 /********* Sorting ************************/
-static int _key_binding_sort_cb(void *d1, void *d2);
+static int _key_binding_sort_cb(const void *d1, const void *d2);
 
 /**************** grab window *******/
 static void _grab_wnd_show(E_Config_Dialog_Data *cfdata);
@@ -873,10 +873,10 @@ _update_buttons(E_Config_Dialog_Data *cfdata)
 
 /*************** Sorting *****************************/
 static int
-_key_binding_sort_cb(void *d1, void *d2)
+_key_binding_sort_cb(const void *d1, const void *d2)
 {
    int i, j;
-   E_Config_Binding_Key *bi, *bi2;
+   const E_Config_Binding_Key *bi, *bi2;
 
    bi = d1;
    bi2 = d2;

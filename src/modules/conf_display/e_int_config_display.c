@@ -16,7 +16,7 @@ static void         _load_rates              (E_Config_Dialog_Data *cfdata);
 static void         _ilist_item_change       (void *data);
 static int          _deferred_noxrandr_error (void *data);
 static int          _deferred_norates_error  (void *data);
-static int	    _sort_resolutions	     (void *d1, void *d2);
+static int	    _sort_resolutions	     (const void *d1, const void *d2);
 
 typedef struct _Resolution Resolution;
 typedef struct _SureBox SureBox;
@@ -526,10 +526,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 }
 
 static int
-_sort_resolutions(void *d1, void *d2)
+_sort_resolutions(const void *d1, const void *d2)
 {
-   Resolution *r1 = d1;
-   Resolution *r2 = d2;
+   const Resolution *r1 = d1;
+   const Resolution *r2 = d2;
 
    if (r1->size.width > r2->size.width) return 1;
    if (r1->size.width < r2->size.width) return -1;

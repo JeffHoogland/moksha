@@ -35,10 +35,10 @@ e_int_config_remembers(E_Container *con, const char *params __UNUSED__)
 
 /* private functions */
 static int
-_cb_sort(void *data1, void *data2)
+_cb_sort(const void *data1, const void *data2)
 {
-   E_Remember *rem1 = NULL;
-   E_Remember *rem2 = NULL;
+   const E_Remember *rem1 = NULL;
+   const E_Remember *rem2 = NULL;
    const char *d1, *d2;
 
    if (!(rem1 = data1)) return 1;

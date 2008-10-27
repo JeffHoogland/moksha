@@ -25,7 +25,7 @@ static void _adv_font_cb_change(void *data, Evas_Object *obj);
 static void _adv_style_cb_change(void *data, Evas_Object *obj);
 static void _size_cb_change(void *data);
 
-static int  _sort_fonts(void *data1, void *data2);
+static int  _sort_fonts(const void *data1, const void *data2);
 static void _font_list_load(E_Config_Dialog_Data *cfdata, const char *cur_font);
 static void _size_list_load(E_Config_Dialog_Data *cfdata, Eina_List *size_list, Evas_Font_Size cur_size, int clear);
 static void _class_list_load(E_Config_Dialog_Data *cfdata);
@@ -1125,7 +1125,7 @@ _adv_enabled_fallback_cb_change(void *data, Evas_Object *obj)
 }
 
 static int 
-_sort_fonts(void *data1, void *data2) 
+_sort_fonts(const void *data1, const void *data2) 
 {
    if (!data1) return 1;
    if (!data2) return -1;

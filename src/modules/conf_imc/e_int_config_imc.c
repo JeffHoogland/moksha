@@ -15,7 +15,7 @@ static Evas_Object *_basic_create_widgets    (E_Config_Dialog *cfd, Evas *evas, 
 static Evas_Object *_advanced_create_widgets (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 /* Basic Callbacks */
-static int	    _basic_list_sort_cb	     (void *d1, void *d2);
+static int	    _basic_list_sort_cb	     (const void *d1, const void *d2);
 static void	    _e_imc_disable_change_cb (void *data, Evas_Object *obj);
 static void	    _e_imc_list_change_cb    (void *data, Evas_Object *obj);
 static void	    _e_imc_setup_cb          (void *data, void *data2);
@@ -204,7 +204,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_list_sort_cb(void *d1, void *d2)
+_basic_list_sort_cb(const void *d1, const void *d2)
 {
    if (!d1) return 1;
    if (!d2) return -1;

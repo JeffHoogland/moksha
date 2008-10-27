@@ -448,7 +448,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
  */
 
 static int
-_cb_sort(void *data1, void *data2)
+_cb_sort(const void *data1, const void *data2)
 {
    const char *d1, *d2;
 

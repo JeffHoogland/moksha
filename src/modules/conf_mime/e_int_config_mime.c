@@ -41,7 +41,7 @@ static void         _load_mimes      (E_Config_Dialog_Data *cfdata, char *file);
 static void         _load_globs      (E_Config_Dialog_Data *cfdata, char *file);
 static void         _fill_types      (E_Config_Dialog_Data *cfdata);
 static void         _tlist_cb_change (void *data);
-static int          _sort_mimes      (void *data1, void *data2);
+static int          _sort_mimes      (const void *data1, const void *data2);
 static Config_Mime *_find_mime       (E_Config_Dialog_Data *cfdata, char *mime);
 static Config_Glob *_find_glob       (Config_Mime *mime, char *glob);
 static void         _cb_config       (void *data, void *data2);
@@ -490,9 +490,9 @@ _tlist_cb_change(void *data)
 }
 
 static int 
-_sort_mimes(void *data1, void *data2) 
+_sort_mimes(const void *data1, const void *data2) 
 {
-   Config_Mime *m1, *m2;
+   const Config_Mime *m1, *m2;
    
    if (!data1) return 1;
    if (!data2) return -1;

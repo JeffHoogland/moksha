@@ -186,9 +186,9 @@ _cb_channel_selected(void *data)
 }
 
 static int
-_channel_info_cmp(void *data_a, void *data_b)
+_channel_info_cmp(const void *data_a, const void *data_b)
 {
-   struct channel_info *a = data_a, *b = data_b;
+   const struct channel_info *a = data_a, *b = data_b;
 
    if (a->has_capture < b->has_capture)
      return -1;
