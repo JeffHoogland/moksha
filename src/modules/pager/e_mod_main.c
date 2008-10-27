@@ -2103,7 +2103,6 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
 	else if (!strcmp(type, "enlightenment/border"))
 	  {
 	     bd = ev->data;
-	     if (e_object_is_del(E_OBJECT(bd))) goto done;
 	     e_layout_coord_virtual_to_canvas(pd->o_layout, bd->x, bd->y, &wx, &wy);
 	     e_layout_coord_virtual_to_canvas(pd->o_layout, bd->x + bd->w, bd->y + bd->h, &wx2, &wy2);
 	     dx = (wx - wx2) / 2;
@@ -2133,7 +2132,6 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
 	  }
      }
 
-done:
    for (l = p->desks; l && p->active_drop_pd; l = l->next)
      {
 	pd = l->data;
