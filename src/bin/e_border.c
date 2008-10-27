@@ -57,6 +57,7 @@ static int  _e_border_cb_mouse_down(void *data, int type, void *event);
 static int  _e_border_cb_mouse_up(void *data, int type, void *event);
 static int  _e_border_cb_mouse_move(void *data, int type, void *event);
 static int  _e_border_cb_grab_replay(void *data, int type, void *event);
+static void _e_border_cb_drag_finished(E_Drag *drag, int dropped);
 
 static void _e_border_eval(E_Border *bd);
 static void _e_border_moveinfo_gather(E_Border *bd, const char *source);
@@ -111,6 +112,7 @@ static E_Border  *focused = NULL;
 
 static E_Border    *resize = NULL;
 static E_Border    *move = NULL;
+static E_Drag      *drag_border = NULL;
 
 static int grabbed = 0;
 
@@ -3743,6 +3745,7 @@ _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
 
+   printf("Border is gone\n");
    if (bd->border_menu) e_menu_deactivate(bd->border_menu);
 
    if (bd->border_locks_dialog)
@@ -5343,28 +5346,30 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 		       /* start drag! */
 		       if (bd->icon_object)
 			 {
-			    E_Drag *drag;
 			    Evas_Object *o = NULL;
 			    Evas_Coord x, y, w, h;
 			    const char *drag_types[] = { "enlightenment/border" };
 
+			    e_object_ref(E_OBJECT(bd));
 			    evas_object_geometry_get(bd->icon_object,
 						     &x, &y, &w, &h);
-			    drag = e_drag_new(bd->zone->container,
-					      bd->x + bd->fx.x + x, 
-					      bd->y + bd->fx.y + y,
-					      drag_types, 1, bd, -1, NULL, NULL);
-			    o = e_border_icon_add(bd, drag->evas);
+			    drag_border = e_drag_new(bd->zone->container,
+						     bd->x + bd->fx.x + x, 
+						     bd->y + bd->fx.y + y,
+						     drag_types, 1, bd, -1,
+						     NULL,
+						     _e_border_cb_drag_finished);
+			    o = e_border_icon_add(bd, drag_border->evas);
 			    if (!o)
 			      {
 				 /* FIXME: fallback icon for drag */
-				 o = evas_object_rectangle_add(drag->evas);
+				 o = evas_object_rectangle_add(drag_border->evas);
 				 evas_object_color_set(o, 255, 255, 255, 255);
 			      }
-			    e_drag_object_set(drag, o);
+			    e_drag_object_set(drag_border, o);
 
-			    e_drag_resize(drag, w, h);
-			    e_drag_start(drag, bd->drag.x, bd->drag.y);
+			    e_drag_resize(drag_border, w, h);
+			    e_drag_start(drag_border, bd->drag.x, bd->drag.y);
 			 }
 		       bd->drag.start = 0;
 		    }
@@ -5401,6 +5406,16 @@ _e_border_cb_grab_replay(void *data, int type, void *event)
 	  }
      }
    return 0;
+}
+
+static void
+_e_border_cb_drag_finished(E_Drag *drag, int dropped)
+{
+   E_Border *bd;
+
+   bd = drag->data;
+   e_object_unref(E_OBJECT(bd));
+   drag_border = NULL;
 }
 
 static int
