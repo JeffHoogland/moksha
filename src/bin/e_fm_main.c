@@ -1206,7 +1206,7 @@ _e_fm_task_node_get(int id)
    Eina_List *l = _e_fm_tasks;
    E_Fm_Task *task;
 
-   while(l)
+   while (l)
      {
 	task = eina_list_data_get(l);
 	if (task->id == id)
