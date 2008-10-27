@@ -1138,13 +1138,12 @@ _grab_key_down_cb(void *data, int type, void *event)
 
 		  if (actd) label = actd->act_name;
 
-		  snprintf(buf, sizeof(buf),
-			   _("The binding key sequence, that you choose,"
-			     " is already used by <br>" 
-			     "<hilight>%s</hilight> action.<br>" 
-			     "Please choose another binding key sequence."), 
-			   label ? label : _("Unknown")); 
-		  e_util_dialog_show(_("Binding Key Error"), buf);
+		  e_util_dialog_show(_("Binding Key Error"), 
+				     _("The binding key sequence, that you choose,"
+				       " is already used by <br>" 
+				       "<hilight>%s</hilight> action.<br>" 
+				       "Please choose another binding key sequence."), 
+				     label ? label : _("Unknown")); 
 	       }
 	     _grab_wnd_hide(cfdata);
 	  }

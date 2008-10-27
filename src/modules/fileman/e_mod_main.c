@@ -349,7 +349,7 @@ _e_mod_fileman_config_free(void)
 static int 
 _e_mod_cb_config_timer(void *data) 
 {
-   e_util_dialog_show(_("Fileman Configuration Updated"), data);
+   e_util_dialog_show(_("Fileman Configuration Updated"), "%s", (char *)data);
    return 0;
 }
 
