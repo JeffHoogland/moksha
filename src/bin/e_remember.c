@@ -8,7 +8,7 @@
 
 /* local subsystem functions */
 static void _e_remember_free(E_Remember *rem);
-static int _e_remember_sort_list(void * d1, void * d2);
+static int _e_remember_sort_list(const void * d1, const void * d2);
 static E_Remember  *_e_remember_find(E_Border *bd, int check_usable);
 
 /* FIXME: match netwm window type */
@@ -466,9 +466,9 @@ _e_remember_free(E_Remember *rem)
 }
 
 static int 
-_e_remember_sort_list(void * d1, void * d2)
+_e_remember_sort_list(const void * d1, const void * d2)
 {
-   E_Remember *r1, *r2;
+   const E_Remember *r1, *r2;
 
    r1 = d1;
    r2 = d2;

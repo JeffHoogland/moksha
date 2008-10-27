@@ -45,10 +45,10 @@ static void _e_int_menus_clients_free_hook   (void *obj);
 static void _e_int_menus_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_clients_icon_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_clients_cleanup_cb  (void *data, E_Menu *m, E_Menu_Item *mi);
-static int  _e_int_menus_clients_group_desk_cb    (void *d1, void *d2);
-static int  _e_int_menus_clients_group_class_cb   (void *d1, void *d2);
-static int  _e_int_menus_clients_sort_alpha_cb    (void *d1, void *d2);
-static int  _e_int_menus_clients_sort_z_order_cb  (void *d1, void *d2);
+static int  _e_int_menus_clients_group_desk_cb    (const void *d1, const void *d2);
+static int  _e_int_menus_clients_group_class_cb   (const void *d1, const void *d2);
+static int  _e_int_menus_clients_sort_alpha_cb    (const void *d1, const void *d2);
+static int  _e_int_menus_clients_sort_z_order_cb  (const void *d1, const void *d2);
 static void _e_int_menus_clients_add_by_class   (Eina_List *borders, E_Menu *m);
 static void _e_int_menus_clients_add_by_desk    (E_Desk *curr_desk, Eina_List *borders, E_Menu *m);
 static void _e_int_menus_clients_add_by_none    (Eina_List *borders, E_Menu *m);
@@ -948,11 +948,11 @@ _e_int_menus_sys_free_hook(void *obj)
 }
 
 static int
-_e_int_menus_clients_group_desk_cb(void *d1, void *d2)
+_e_int_menus_clients_group_desk_cb(const void *d1, const void *d2)
 {
-   E_Border *bd1;
-   E_Border *bd2;
-   int j,k;
+   const E_Border *bd1;
+   const E_Border *bd2;
+   int j, k;
 
    if (!d1) return 1;
    if (!d2) return -1;
@@ -969,10 +969,10 @@ _e_int_menus_clients_group_desk_cb(void *d1, void *d2)
 }
 
 static int
-_e_int_menus_clients_group_class_cb(void *d1, void *d2)
+_e_int_menus_clients_group_class_cb(const void *d1, const void *d2)
 {
-   E_Border *bd1;
-   E_Border *bd2;
+   const E_Border *bd1;
+   const E_Border *bd2;
 
    if (!d1) return 1;
    if (!d2) return -1;
@@ -992,10 +992,10 @@ _e_int_menus_clients_group_class_cb(void *d1, void *d2)
 }
 
 static int
-_e_int_menus_clients_sort_alpha_cb(void *d1, void *d2)
+_e_int_menus_clients_sort_alpha_cb(const void *d1, const void *d2)
 {
-   E_Border *bd1;
-   E_Border *bd2;
+   const E_Border *bd1;
+   const E_Border *bd2;
    const char *name1;
    const char *name2;
 
@@ -1013,9 +1013,9 @@ _e_int_menus_clients_sort_alpha_cb(void *d1, void *d2)
 }
 
 static int
-_e_int_menus_clients_sort_z_order_cb(void *d1, void *d2)
+_e_int_menus_clients_sort_z_order_cb(const void *d1, const void *d2)
 {
-   E_Border *bd1, *bd2;
+   const E_Border *bd1, *bd2;
 
    if (!d1) return 1;
    if (!d2) return -1;

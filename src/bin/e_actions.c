@@ -68,7 +68,7 @@
 /* local subsystem functions */
 static void _e_action_free(E_Action *act);
 static E_Maximize _e_actions_maximize_parse(const char *maximize);
-static int _action_groups_sort_cb(void *d1, void *d2);
+static int _action_groups_sort_cb(const void *d1, const void *d2);
 
 /* to save writing this in N places - the sctions are defined here */
 /***************************************************************************/
@@ -2881,9 +2881,9 @@ _e_actions_maximize_parse(const char *params)
 }
 
 static int
-_action_groups_sort_cb(void *d1, void *d2)
+_action_groups_sort_cb(const void *d1, const void *d2)
 {
-   E_Action_Group *g1, *g2;
+   const E_Action_Group *g1, *g2;
 
    g1 = d1;
    g2 = d2;

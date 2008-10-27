@@ -19,7 +19,7 @@ static void _e_shelf_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Me
 static void _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static int  _e_shelf_cb_mouse_in(void *data, int type, void *event);
 static int  _e_shelf_cb_mouse_out(void *data, int type, void *event);
-static int  _e_shelf_cb_id_sort(void *data1, void *data2);
+static int  _e_shelf_cb_id_sort(const void *data1, const void *data2);
 static int  _e_shelf_cb_hide_animator(void *data);
 static int  _e_shelf_cb_hide_animator_timer(void *data);
 static int  _e_shelf_cb_instant_hide_timer(void *data);
@@ -1354,9 +1354,9 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
 }
 
 static int
-_e_shelf_cb_id_sort(void *data1, void *data2)
+_e_shelf_cb_id_sort(const void *data1, const void *data2)
 {
-   E_Shelf *es1, *es2;
+   const E_Shelf *es1, *es2;
 
    es1 = data1;
    es2 = data2;

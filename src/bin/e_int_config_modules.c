@@ -76,7 +76,7 @@ static Evas_Bool    _mod_hash_avail_list  (const Evas_Hash *hash __UNUSED__,
 static Evas_Bool    _mod_hash_load_list   (const Evas_Hash *hash __UNUSED__, 
 					   const void *key __UNUSED__, 
 					   void *data, void *fdata);
-static int          _mod_list_sort        (void *data1, void *data2);
+static int          _mod_list_sort        (const void *data1, const void *data2);
 static void         _list_widget_load     (Evas_Object *obj, Eina_List *list);
 static void         _avail_list_cb_change (void *data, Evas_Object *obj);
 static void         _load_list_cb_change  (void *data, Evas_Object *obj);
@@ -476,9 +476,9 @@ _mod_hash_load_list(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__
 }
 
 static int 
-_mod_list_sort(void *data1, void *data2) 
+_mod_list_sort(const void *data1, const void *data2) 
 {
-   CFModule *m1, *m2;
+   const CFModule *m1, *m2;
 
    if (!(m1 = data1)) return 1;
    if (!(m2 = data2)) return -1;

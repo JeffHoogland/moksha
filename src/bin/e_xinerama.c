@@ -5,7 +5,7 @@
 
 static void _e_xinerama_clean(void);
 static void _e_xinerama_update(void);
-static int _e_xinerama_cb_screen_sort(void *data1, void *data2);
+static int _e_xinerama_cb_screen_sort(const void *data1, const void *data2);
 
 static Eina_List *all_screens = NULL;
 static Eina_List *chosen_screens = NULL;
@@ -204,9 +204,9 @@ _e_xinerama_update(void)
 }
 
 static int
-_e_xinerama_cb_screen_sort(void *data1, void *data2)
+_e_xinerama_cb_screen_sort(const void *data1, const void *data2)
 {
-   E_Screen *scr, *scr2;
+   const E_Screen *scr, *scr2;
    int dif;
 
    scr = data1;

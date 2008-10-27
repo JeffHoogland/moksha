@@ -3363,7 +3363,7 @@ e_border_immortal_windows_get(void)
 }
 
 EAPI const char *
-e_border_name_get(E_Border *bd)
+e_border_name_get(const E_Border *bd)
 {
    E_OBJECT_CHECK_RETURN(bd, "");
    E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, "");

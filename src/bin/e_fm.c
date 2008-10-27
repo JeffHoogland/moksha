@@ -264,7 +264,7 @@ static void _e_fm2_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *even
 static void _e_fm2_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_fm2_cb_scroll_job(void *data);
 static void _e_fm2_cb_resize_job(void *data);
-static int _e_fm2_cb_icon_sort(void *data1, void *data2);
+static int _e_fm2_cb_icon_sort(const void *data1, const void *data2);
 static int _e_fm2_cb_scan_timer(void *data);
 static int _e_fm2_cb_sort_idler(void *data);
 
@@ -359,7 +359,7 @@ static int _e_fm_client_file_copy(const char *args);
 
 static void _e_fm2_sel_rect_update(void *data);
 static inline void _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
-static int _e_fm2_context_list_sort(void *data1, void *data2);
+static int _e_fm2_context_list_sort(const void *data1, const void *data2);
 
 static char *_e_fm_string_append_char(char *str, size_t *size, size_t *len, char c);
 static char *_e_fm_string_append_quoted(char *str, size_t *size, size_t *len, const char *src);
@@ -5927,9 +5927,9 @@ _e_fm2_cb_resize_job(void *data)
 }
 
 static int
-_e_fm2_cb_icon_sort(void *data1, void *data2)
+_e_fm2_cb_icon_sort(const void *data1, const void *data2)
 {
-   E_Fm2_Icon *ic1, *ic2;
+   const E_Fm2_Icon *ic1, *ic2;
    char *l1, *l2;
    
    ic1 = data1;
@@ -6785,9 +6785,9 @@ _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_M
 }
 
 static int 
-_e_fm2_context_list_sort(void *data1, void *data2) 
+_e_fm2_context_list_sort(const void *data1, const void *data2) 
 {
-   E_Fm2_Mime_Handler *d1, *d2;
+   const E_Fm2_Mime_Handler *d1, *d2;
    
    if (!data1) return 1;
    if (!data2) return -1;

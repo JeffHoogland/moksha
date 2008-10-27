@@ -16,7 +16,7 @@ static void _e_module_dialog_disable_show(const char *title, const char *body, E
 static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
 static void _e_module_event_update_free(void *data, void *event);
 static int _e_module_cb_idler(void *data);
-static int _e_module_sort_priority(void *d1, void *d2);
+static int _e_module_sort_priority(const void *d1, const void *d2);
 
 /* local subsystem globals */
 static Eina_List *_e_modules = NULL;
@@ -573,9 +573,9 @@ _e_module_cb_idler(void *data)
 }
 
 static int
-_e_module_sort_priority(void *d1, void *d2)
+_e_module_sort_priority(const void *d1, const void *d2)
 {
-   E_Config_Module *m1, *m2;
+   const E_Config_Module *m1, *m2;
 
    m1 = d1;
    m2 = d2;

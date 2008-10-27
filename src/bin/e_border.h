@@ -624,7 +624,7 @@ EAPI void e_border_resize_cancel(void);
 EAPI void e_border_frame_recalc(E_Border *bd);
 EAPI Eina_List *e_border_immortal_windows_get(void);
 
-EAPI const char *e_border_name_get(E_Border *bd);
+EAPI const char *e_border_name_get(const E_Border *bd);
 
 EAPI void e_border_signal_move_begin(E_Border *bd, const char *sig, const char *src);
 EAPI void e_border_signal_move_end(E_Border *bd, const char *sig, const char *src);

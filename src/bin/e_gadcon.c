@@ -2518,8 +2518,8 @@ static void _e_gadcon_layout_smart_clip_unset(Evas_Object *obj);
 static void _e_gadcon_layout_smart_min_cur_size_calc(E_Smart_Data *sd, int *min, int *mino, int *cur);
 void _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur);
 
-static int _e_gadcon_layout_smart_sort_by_sequence_number_cb(void *d1, void *d2);
-static int _e_gadcon_layout_smart_sort_by_position_cb(void *d1, void *d2);
+static int _e_gadcon_layout_smart_sort_by_sequence_number_cb(const void *d1, const void *d2);
+static int _e_gadcon_layout_smart_sort_by_position_cb(const void *d1, const void *d2);
 
 /* local subsystem globals */
 static Evas_Smart *_e_smart = NULL;
@@ -3340,9 +3340,9 @@ _e_gadcon_layout_smart_min_cur_size_calc(E_Smart_Data *sd, int *min, int *mino, 
 }
 
 static int 
-_e_gadcon_layout_smart_width_smart_sort_reverse_cb(void *d1, void *d2)
+_e_gadcon_layout_smart_width_smart_sort_reverse_cb(const void *d1, const void *d2)
 {
-   E_Gadcon_Layout_Item *bi, *bi2;
+   const E_Gadcon_Layout_Item *bi, *bi2;
 
    bi = evas_object_data_get(d1, "e_gadcon_layout_data");
    bi2 = evas_object_data_get(d2, "e_gadcon_layout_data"); 
@@ -3571,9 +3571,9 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 }
 
 static int 
-_e_gadcon_layout_smart_sort_by_sequence_number_cb(void *d1, void *d2)
+_e_gadcon_layout_smart_sort_by_sequence_number_cb(const void *d1, const void *d2)
 {
-   E_Gadcon_Layout_Item *bi, *bi2;
+   const E_Gadcon_Layout_Item *bi, *bi2;
 
    bi = evas_object_data_get(d1, "e_gadcon_layout_data");
    bi2 = evas_object_data_get(d2, "e_gadcon_layout_data");
@@ -3586,9 +3586,9 @@ _e_gadcon_layout_smart_sort_by_sequence_number_cb(void *d1, void *d2)
 } 
 
 static int
-_e_gadcon_layout_smart_sort_by_position_cb(void *d1, void *d2)
+_e_gadcon_layout_smart_sort_by_position_cb(const void *d1, const void *d2)
 {
-   E_Gadcon_Layout_Item *bi, *bi2;
+   const E_Gadcon_Layout_Item *bi, *bi2;
 
    bi = evas_object_data_get(d1, "e_gadcon_layout_data");
    bi2 = evas_object_data_get(d2, "e_gadcon_layout_data");
@@ -3599,9 +3599,9 @@ _e_gadcon_layout_smart_sort_by_position_cb(void *d1, void *d2)
 }
 
 static int
-_e_gadcon_layout_smart_containers_sort_cb(void *d1, void *d2)
+_e_gadcon_layout_smart_containers_sort_cb(const void *d1, const void *d2)
 {
-   E_Layout_Item_Container *lc, *lc2;
+   const E_Layout_Item_Container *lc, *lc2;
 
    lc = d1;
    lc2 = d2;
@@ -3613,9 +3613,9 @@ _e_gadcon_layout_smart_containers_sort_cb(void *d1, void *d2)
 }
 
 static int
-_e_gadcon_layout_smart_seq_sort_cb(void *d1, void *d2)
+_e_gadcon_layout_smart_seq_sort_cb(const void *d1, const void *d2)
 {
-   E_Gadcon_Layout_Item *bi, *bi2;
+   const E_Gadcon_Layout_Item *bi, *bi2;
 
    bi = d1;
    bi2 = d2;
