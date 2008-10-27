@@ -156,7 +156,8 @@ wizard_page_show(E_Wizard_Page *pg)
      {
 	E_Intl_Pair *pair;
         Evas_Object *ic;
-	char buf[PATH_MAX], *dir;
+	char buf[PATH_MAX];
+	const char *dir;
 	
 	pair = l->data;
 	dir = e_prefix_data_get();
