@@ -506,7 +506,7 @@ e_fm2_hal_show_desktop_icons(void)
    char buf2[PATH_MAX] = {0};
    const char *id;
 
-   for(l = _e_vols; l; l = eina_list_next(l))
+   for (l = _e_vols; l; l = eina_list_next(l))
      {
 	v = eina_list_data_get(l);
 
@@ -537,7 +537,7 @@ e_fm2_hal_hide_desktop_icons(void)
    char buf[PATH_MAX] = {0};
    const char *id;
 
-   for(l = _e_vols; l; l = eina_list_next(l))
+   for (l = _e_vols; l; l = eina_list_next(l))
      {
 	v = eina_list_data_get(l);
 
