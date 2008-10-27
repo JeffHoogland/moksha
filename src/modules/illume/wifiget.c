@@ -15,6 +15,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <linux/types.h>
+#include <linux/if.h>
 #include <linux/wireless.h>
 #include <netinet/if_ether.h>
 
