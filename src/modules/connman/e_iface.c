@@ -555,6 +555,7 @@ iface_timer_network_timeout(void *data)
 	  l = l->next;
      }
    iface_unref(iface);
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void *
@@ -798,7 +799,6 @@ iface_unref(Interface *iface)
 	free(net);
 	iface->networks = eina_list_remove_list(iface->networks, iface->networks);
      }
-   if (iface->network_timeout) ecore_timer_del(iface->network_timeout);
    if (iface->prop.product) eina_stringshare_del(iface->prop.product);
    if (iface->prop.vendor) eina_stringshare_del(iface->prop.vendor);
    if (iface->prop.driver) eina_stringshare_del(iface->prop.driver);
