@@ -32,13 +32,18 @@ bd_title_bg.png \
 bd_title_over.png \
 bd_top_hilight.png \
 bd_top.png \
+big_arrow_down.png \
+big_arrow_up.png \
+bluetooth.png \
 bnw.png \
 bt_base1.png \
 bt_base2.png \
+bt_basew.png \
 bt_dis_base.png \
 bt_dis_hilight.png \
 bt_dis_shine.png \
 bt_hilight.png \
+bt_hilightw.png \
 bt_shine.png \
 bt_sm_base1.png \
 bt_sm_base2.png \
@@ -53,6 +58,7 @@ busy-6.png \
 busy-7.png \
 busy-8.png \
 busy-9.png \
+cfg.png \
 ch-00.png \
 ch-01.png \
 ch-02.png \
@@ -252,6 +258,12 @@ gadman_left.png \
 gadman_right.png \
 gadman_top.png \
 grill_dark_tiny_pattern.png \
+gsm_0.png \
+gsm_1.png \
+gsm_2.png \
+gsm_3.png \
+gsm_4.png \
+gsm_no.png \
 icon_add_fav.png \
 icon_add.png \
 icon_advanced.png \
@@ -307,8 +319,10 @@ icon_efm_paste.png \
 icon_efm_properties.png \
 icon_efm_refresh.png \
 icon_efm_rename.png \
+icon_efm_root.png \
 icon_efm_select.png \
 icon_efm_sort.png \
+icon_efm_tmp.png \
 icon_efm_view_details.png \
 icon_efm_view_name.png \
 icon_efm_view.png \
@@ -423,11 +437,22 @@ ilist_2.png \
 ilist_header_1.png \
 ilist_header_2.png \
 ilist_item_shadow.png \
+illume-apps.png \
+illume-close.png \
+illume-home.png \
 init_check1.png \
 init_check2.png \
 inset_raised.png \
 inset_sunk_dark.png \
 inset_sunk.png \
+k_grad.png \
+k_tabhl.png \
+k_tabhm.png \
+k_tabhr.png \
+k_tabl.png \
+k_tabr.png \
+k_tpsh.png \
+k_wtgr.png \
 logo_black_128.png \
 logo_white_128.png \
 menu_arrow_normal.png \
@@ -506,4 +531,9 @@ toolbar_top.png \
 topsh.png \
 transition_vswipe.png \
 vgrad_dark.png \
-vgrad_light.png
+vgrad_light.png \
+wifi_0.png \
+wifi_1.png \
+wifi_2.png \
+wifi_3.png \
+wifi_4.png
