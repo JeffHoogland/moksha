@@ -342,7 +342,6 @@ net_dialog_cb_ok(void *data, E_Dialog *dialog)
 {
    Instance *inst;
    Conf_Network *cfnet;
-   char *s;
    Interface *iface;
 
    inst = data;
@@ -439,8 +438,6 @@ net_dialog_show(Instance *inst, Conf_Network *cfnet)
    Evas *evas;
    Evas_Object *table, *o, *button;
    Evas_Coord mw, mh;
-   E_Radio_Group *rg;
-   Eina_List *l;
    int row = 0;
 
    dialog = e_dialog_new(inst->gcc->gadcon->zone->container, "e", "e_connman_net_dialog");
@@ -728,7 +725,6 @@ if_dialog_show(Instance *inst)
    Evas_Object *list, *flist, *o, *ilist, *button;
    Evas_Coord mw, mh;
    E_Radio_Group *rg;
-   Eina_List *l;
 
    dialog = e_dialog_new(inst->gcc->gadcon->zone->container, "e", "e_connman_iface_dialog");
    e_dialog_title_set(dialog, _("Network Connection Settings"));
@@ -972,7 +968,6 @@ popup_ifnet_nets_refresh(Instance *inst)
    Eina_List *l, *networks = NULL;
    Interface *iface;
    Evas_Object *ilist;
-   Eina_List *nets;
 
    if (!inst->popup_ilist_obj) return;
    ilist = inst->popup_ilist_obj;
@@ -1432,7 +1427,7 @@ cb_if_policy(void *data, Interface *iface, Interface_Network *ifnet)
 static void
 cb_main_if_add(void *data, Interface *iface, Interface_Network *ifnet)
 {
-   Eina_List *l, *l2;
+   Eina_List *l;
 
    printf("IF++ %s\n", iface->ifpath);
    ifaces = eina_list_append(ifaces, iface);
