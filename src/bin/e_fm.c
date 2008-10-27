@@ -1681,7 +1681,6 @@ _e_fm_client_file_move(const char *args)
 static int
 _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h)
 {
-   E_Fm2_Client *cl;
    char *d;
    int l1, l2, l3, l;
    
@@ -2483,7 +2482,6 @@ _e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fm2_Smart_Data *sd;
    Eina_List *paths;
-   const char *dirpath;
    const char *filepath;
    size_t length = 0;
    size_t size = 0;
@@ -4721,8 +4719,6 @@ _e_fm_drop_menu_move_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm_drop_menu_abort_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   char *args = data;
-
    if(!data) return;
 }
 
@@ -4804,7 +4800,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    E_Event_Dnd_Drop *ev;
    E_Fm2_Icon *ic;
    Eina_List *fsel, *l, *ll, *il, *isel;
-   char buf[4096], *fl;
+   char buf[4096];
    const char *fp;
    Evas_Coord dx, dy, ox, oy, x, y;
    int adjust_icons = 0;

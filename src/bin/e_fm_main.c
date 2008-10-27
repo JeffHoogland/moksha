@@ -1533,7 +1533,6 @@ static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id)
 {
    E_Fm_Slave *slave;
    const char *command;
-   int result;
 
    slave = malloc(sizeof(E_Fm_Slave));
 
@@ -1600,7 +1599,6 @@ static int _e_fm_slave_data_cb(void *data, int type, void *event)
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
    int magic, id, size;
-   int response[3];
    void *sdata;
    int ssize;
 
