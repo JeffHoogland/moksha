@@ -304,7 +304,6 @@ _e_fm2_volume_write(E_Volume *v)
 	/* FIXME: manipulate icon directly */
 	_e_fm2_file_force_update(buf);
 	//_e_fm2_file_force_update(buf2);
-	e_config;
      }
 }
 
