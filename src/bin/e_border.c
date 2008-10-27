@@ -3745,7 +3745,11 @@ _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
 
-   printf("Border is gone\n");
+   if ((drag_border) && (drag_border->data == bd))
+     {
+	e_object_del(E_OBJECT(drag_border));
+	drag_border = NULL;
+     }
    if (bd->border_menu) e_menu_deactivate(bd->border_menu);
 
    if (bd->border_locks_dialog)

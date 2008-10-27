@@ -883,6 +883,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
    E_Event_Dnd_Drop ev;
    int dx, dy, dw, dh;
    Ecore_X_Window win, ignore_win[2];
+   E_Drag *tmp;
 
    if (!_drag_current) return;
    ignore_win[0] = _drag_current->evas_win;
@@ -911,8 +912,9 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 
 	if (_drag_current && !_xdnd)
 	  {
-	     e_object_del(E_OBJECT(_drag_current));
+	     tmp = _drag_current;
 	     _drag_current = NULL;
+	     e_object_del(E_OBJECT(tmp));
 	  }
 	return;
      }
@@ -951,8 +953,10 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 	  }
 	if (_drag_current->cb.finished)
 	  _drag_current->cb.finished(_drag_current, dropped);
-	e_object_del(E_OBJECT(_drag_current));
+
+	tmp = _drag_current;
 	_drag_current = NULL;
+	e_object_del(E_OBJECT(tmp));
      }
    else
      {
@@ -1047,6 +1051,37 @@ static void
 _e_drag_free(E_Drag *drag)
 {
    int i;
+
+   if (drag == _drag_current)
+     {
+	Eina_List *l;
+	E_Event_Dnd_Leave leave_ev;
+
+	e_grabinput_release(_drag_win, _drag_win);
+	ecore_x_window_del(_drag_win);
+	_drag_win = 0;
+	_drag_win_root = 0;
+
+	leave_ev.x = 0;
+	leave_ev.y = 0;
+	for (l = _drop_handlers; l; l = l->next)
+	  {
+	     E_Drop_Handler *h;
+
+	     h = l->data;
+
+	     if ((h->active) && (h->entered))
+	       {
+		  if (h->cb.leave)
+		    h->cb.leave(h->cb.data, h->active_type, &leave_ev);
+		  _e_drag_win_hide(h);
+	       }
+	  }
+	if (drag->cb.finished)
+	  drag->cb.finished(drag, 0);
+     }
+
+   _drag_current = NULL;
 
    _drag_list = eina_list_remove(_drag_list, drag);
 
@@ -1339,8 +1374,11 @@ _e_dnd_cb_event_dnd_finished(void *data, int type, void *event)
 
    if (_drag_current)
      {
-	e_object_del(E_OBJECT(_drag_current));
+	E_Drag *tmp;
+
+	tmp = _drag_current;
 	_drag_current = NULL;
+	e_object_del(E_OBJECT(tmp));
      }
 
    e_grabinput_release(_drag_win, _drag_win);
