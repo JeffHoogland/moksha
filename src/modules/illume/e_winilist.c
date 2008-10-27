@@ -1,4 +1,4 @@
-#include <e.h>
+#include "e.h"
 #include "e_winilist.h"
 
 /* internal calls */

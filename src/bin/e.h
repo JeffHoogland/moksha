@@ -77,9 +77,8 @@
 #include <Edje.h>
 #include <Efreet.h>
 #include <Efreet_Mime.h>
-#ifdef HAVE_EDBUS
 #include <E_DBus.h>
-#endif
+#include <E_Hal.h>
 
 #ifdef EAPI
 #undef EAPI

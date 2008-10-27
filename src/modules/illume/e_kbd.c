@@ -1,12 +1,7 @@
-#include <e.h>
+#include "e.h"
 #include "e_kbd.h"
 #include "e_mod_layout.h"
 #include "e_cfg.h"
-
-#ifdef HAVE_EDBUS
-#include <E_DBus.h>
-#include <E_Hal.h>
-#endif
 
 static void _e_kbd_layout_send(E_Kbd *kbd);
 
@@ -668,7 +663,6 @@ _e_kbd_layout_send(E_Kbd *kbd)
      ecore_x_e_virtual_keyboard_state_send(kbd->border->client.win, type);
 }
 
-#ifdef HAVE_EDBUS
 // NOTES:
 // 
 // on freerunner these are always there:
@@ -941,7 +935,6 @@ _e_kbd_dbus_real_kbd_shutdown(void)
      }
    _e_kbd_dbus_have_real_keyboard = 0;
 }
-#endif
 
 EAPI int
 e_kbd_init(E_Module *m)
@@ -995,9 +988,7 @@ e_kbd_init(E_Module *m)
 				   (E_BORDER_HOOK_EVAL_END,
 				    _e_kbd_cb_border_hook_end,
 				    NULL));
-#ifdef HAVE_EDBUS
    _e_kbd_dbus_real_kbd_init();
-#endif   
    return 1;
 }
 
@@ -1005,9 +996,7 @@ EAPI int
 e_kbd_shutdown(void)
 {
    _e_kbd_apply_all_job_queue_end();
-#ifdef HAVE_EDBUS
    _e_kbd_dbus_real_kbd_shutdown();
-#endif   
    while (border_hooks)
      {
 	e_border_hook_del(border_hooks->data);

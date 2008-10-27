@@ -1,4 +1,4 @@
-#include <e.h>
+#include "e.h"
 #include "e_kbd_dict.h"
 
 #include <sys/types.h>

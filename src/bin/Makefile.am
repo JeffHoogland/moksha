@@ -7,7 +7,6 @@ INCLUDES = -I$(top_srcdir) \
 	   @cf_cflags@ \
 	   @VALGRIND_CFLAGS@ \
 	   @EDJE_DEF@ \
-	   @E_HAL_CFLAGS@ \
 	   -DPACKAGE_BIN_DIR=\"@PACKAGE_BIN_DIR@\" \
 	   -DPACKAGE_LIB_DIR=\"@PACKAGE_LIB_DIR@\" \
 	   -DPACKAGE_DATA_DIR=\"@PACKAGE_DATA_DIR@\" \
@@ -305,7 +304,7 @@ enlightenment_SOURCES = \
 e_main.c \
 $(enlightenment_src)
 
-enlightenment_LDFLAGS = -export-dynamic @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@ @VALGRIND_LIBS@ @E_DBUS_LIBS@ @E_HAL_LIBS@
+enlightenment_LDFLAGS = -export-dynamic @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@ @VALGRIND_LIBS@
 
 enlightenment_remote_SOURCES = \
 e.h \
@@ -341,8 +340,8 @@ e_user.c \
 e_sha1.c \
 e_prefix.c
 
-enlightenment_fm_LDFLAGS = @e_libs@ @dlopen_libs@ @E_DBUS_LIBS@ @E_HAL_LIBS@
-enlightenment_fm_CFLAGS = $(INCLUDES) @E_HAL_CFLAGS@
+enlightenment_fm_LDFLAGS = @e_libs@ @dlopen_libs@
+enlightenment_fm_CFLAGS = $(INCLUDES)
 
 enlightenment_fm_op_SOURCES = \
 e_fm_op.c 

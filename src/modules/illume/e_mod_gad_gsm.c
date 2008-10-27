@@ -1,8 +1,4 @@
-#include <e.h>
-/* for complex link stuff */
-#include "config.h"
-#include <Ecore.h>
-#include <E_DBus.h>
+#include "e.h"
 
 #include <stdio.h>
 #include <stdlib.h>

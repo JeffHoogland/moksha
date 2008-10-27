@@ -194,6 +194,8 @@ PKG_CHECK_MODULES(E, [
   efreet
   efreet-mime
   eina-0
+  edbus
+  ehal
 ])
 requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-job ecore-file eet edje efreet efreet-mime eina-0"
 
@@ -226,23 +228,9 @@ PKG_CHECK_MODULES(BATTERY, [
   ecore-con
 ])
 
-PKG_CHECK_MODULES(E_DBUS, edbus, have_edbus=yes, have_edbus=no)
-PKG_CHECK_MODULES(E_HAL, ehal, have_ehal=yes, have_ehal=no)
-
-# this is used to conditionally build modules which depend on E_DBUS
-AM_CONDITIONAL(HAVE_EDBUS, test x$have_edbus = "xyes")
-define_e_dbus=""
-if test x$have_edbus = "xyes"; then
-  define_e_dbus="-DHAVE_EDBUS"
-  requirements_e=$requirements_e" edbus"
-  if test x$have_ehal = "xyes"; then
-    AC_DEFINE(HAVE_EDBUS, 1, [E_Dbus support])
-  fi
-fi
-
-e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS" "
-e_cflags="-DUSE_E_CONFIG_H "$define_e_dbus" "$E_CFLAGS" "$E_DBUS_CFLAGS" "$ECORE_IMF_CFLAGS" "
-e_configflags="-DUSE_E_CONFIG_H "$define_e_dbus" "
+e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS
+e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "$ECORE_IMF_CFLAGS
+e_configflags="-DUSE_E_CONFIG_H"
 
 AC_SUBST(e_libs)
 AC_SUBST(e_cflags)

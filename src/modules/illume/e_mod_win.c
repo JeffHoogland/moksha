@@ -1,4 +1,4 @@
-#include <e.h>
+#include "e.h"
 #include "e_mod_win.h"
 #include "e_slipshelf.h"
 #include "e_slipwin.h"

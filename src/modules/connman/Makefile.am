@@ -19,7 +19,6 @@ INCLUDES          = -I. \
 
 pkgdir            = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
 
-if HAVE_EDBUS
 pkg_LTLIBRARIES   = module.la
 
 module_la_SOURCES = e_mod_main.h \
@@ -27,10 +26,9 @@ module_la_SOURCES = e_mod_main.h \
 		    e_iface.h \
 		    e_iface.c
 
-module_la_LIBADD       = @e_libs@ @dlopen_libs@ @E_DBUS_LIBS@
+module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
-endif
 
 uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)

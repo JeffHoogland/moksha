@@ -1,7 +1,6 @@
 #include "e.h"
 
 /* local subsystem functions */
-#ifdef HAVE_EDBUS
 static void _e_msgbus_request_name_cb(void *data, DBusMessage *msg, DBusError *err);
 
 static DBusMessage* _e_msgbus_core_restart_cb(E_DBus_Object *obj, DBusMessage *msg);
@@ -18,7 +17,6 @@ static DBusMessage* _e_msgbus_profile_get_cb(E_DBus_Object *obj, DBusMessage *ms
 static DBusMessage* _e_msgbus_profile_list_cb(E_DBus_Object *obj, DBusMessage *msg);
 static DBusMessage* _e_msgbus_profile_add_cb(E_DBus_Object *obj, DBusMessage *msg);
 static DBusMessage* _e_msgbus_profile_delete_cb(E_DBus_Object *obj, DBusMessage *msg);
-#endif
 
 /* local subsystem globals */
 static E_Msgbus_Data *_e_msgbus_data = NULL;
@@ -27,7 +25,6 @@ static E_Msgbus_Data *_e_msgbus_data = NULL;
 EAPI int
 e_msgbus_init(void)
 {
-#ifdef HAVE_EDBUS
    E_DBus_Interface *iface;
 
    _e_msgbus_data = E_NEW(E_Msgbus_Data, 1);
@@ -84,16 +81,13 @@ e_msgbus_init(void)
    e_dbus_interface_method_add(iface, "List", "", "as", _e_msgbus_profile_list_cb);
    e_dbus_interface_method_add(iface, "Add", "s", "", _e_msgbus_profile_add_cb);
    e_dbus_interface_method_add(iface, "Delete", "s", "", _e_msgbus_profile_delete_cb);
-
-
-#endif   
+   
    return 1;
 }
 
 EAPI int
 e_msgbus_shutdown(void)
 {
-#ifdef HAVE_EDBUS
    if (_e_msgbus_data->obj)
      {
         e_dbus_object_free(_e_msgbus_data->obj);
@@ -106,11 +100,9 @@ e_msgbus_shutdown(void)
 
    E_FREE(_e_msgbus_data);
    _e_msgbus_data = NULL;
-#endif
    return 1;
 }
 
-#ifdef HAVE_EDBUS
 EAPI void
 e_msgbus_interface_attach(E_DBus_Interface *iface)
 {
@@ -357,6 +349,3 @@ _e_msgbus_profile_delete_cb(E_DBus_Object *obj, DBusMessage *msg)
 
    return dbus_message_new_method_return(msg);
 }
-
-#endif
-

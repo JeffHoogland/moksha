@@ -1,4 +1,4 @@
-#include <e.h>
+#include "e.h"
 #include "e_slipwin.h"
 
 EAPI int E_EVENT_SLIPWIN_DEL = 0;

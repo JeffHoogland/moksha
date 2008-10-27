@@ -1,4 +1,4 @@
-#include <e.h>
+#include "e.h"
 #include "e_mod_main.h"
 #include "e_mod_layout.h"
 #include "e_kbd.h"

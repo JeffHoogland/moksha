@@ -33,6 +33,8 @@
 #include <Evas.h>
 #include <Efreet.h>
 #include <Eet.h>
+#include <E_DBus.h>
+#include <E_Hal.h>
 #include <eina_stringshare.h>
 #include "config.h"
 
@@ -42,12 +44,6 @@
 #undef E_TYPEDEFS
 #include "e_fm_op.h"
 #include "e_prefix.h"
-
-/* E_DBUS support */
-#ifdef HAVE_EDBUS
-#include <E_DBus.h>
-#include <E_Hal.h>
-#endif
 
 /* FIXME: things to add to the slave enlightenment_fm process and ipc to e:
  * 
@@ -171,8 +167,6 @@ static void _e_dir_del(E_Dir *ed);
 
 static const char *_e_prepare_command(E_Fm_Op_Type type, const char *args);
 
-#ifdef HAVE_EDBUS
-
 #ifndef EAPI
 #define EAPI
 #endif
@@ -206,7 +200,6 @@ EAPI E_Volume *e_volume_find(const char *udi);
 
 EAPI void      e_volume_mount(E_Volume *v);
 EAPI void      e_volume_unmount(E_Volume *v);
-#endif
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
@@ -217,7 +210,6 @@ static int _e_sync_num = 0;
 
 static Eina_List *_e_fm_slaves = NULL;
 static Eina_List *_e_fm_tasks = NULL;
-#ifdef HAVE_EDBUS
 static E_DBus_Connection *_e_dbus_conn = NULL;
 
 /* contains:
@@ -233,8 +225,6 @@ static E_DBus_Connection *_e_dbus_conn = NULL;
 #define E_FM_SHARED_CODEC
 #include "e_fm_shared.h"
 #undef E_FM_SHARED_CODEC
-
-#endif
 
 /* externally accessible functions */
 int
@@ -277,7 +267,6 @@ main(int argc, char **argv)
    ecore_event_handler_add(ECORE_EXE_EVENT_ERROR, _e_fm_slave_error_cb, NULL);
    ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_fm_slave_del_cb, NULL);
 
-#ifdef HAVE_EDBUS
    _e_storage_volume_edd_init();
    e_dbus_init();
    _e_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
@@ -302,7 +291,6 @@ main(int argc, char **argv)
 				  "org.freedesktop.Hal.Manager",
 				  "NewCapability", _e_dbus_cb_cap_add, NULL);
      }
-#endif
    
    if (_e_ipc_init()) ecore_main_loop_begin();
    
@@ -312,11 +300,9 @@ main(int argc, char **argv)
 	_e_ipc_server = NULL;
      }
 
-#ifdef HAVE_EDBUS
    if (_e_dbus_conn) e_dbus_connection_close(_e_dbus_conn);
    e_dbus_shutdown();
    _e_storage_volume_edd_shutdown();
-#endif
    
    e_prefix_shutdown();
 
@@ -328,7 +314,6 @@ main(int argc, char **argv)
    return 0;
 }
 
-#ifdef HAVE_EDBUS
 static void
 _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
 {
@@ -937,8 +922,6 @@ e_volume_unmount(E_Volume *v)
 			       _e_dbus_cb_vol_unmounted, v);
 }
 
-#endif
-
 /* local subsystem functions */
 static int
 _e_ipc_init(void)
@@ -1385,7 +1368,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	  }
 	break;
       case E_FM_OP_MOUNT: /* mount udi mountpoint */
-#ifdef HAVE_EDBUS
 	  {
 	     E_Volume *v;
 	     const char *udi, *mountpoint;
@@ -1404,10 +1386,8 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  e_volume_mount(v);
 	       }
 	  }
-#endif	
 	break;
       case E_FM_OP_UNMOUNT:/* unmount udi */
-#ifdef HAVE_EDBUS
 	  {
 	     E_Volume *v;
 	     const char *udi;
@@ -1420,7 +1400,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  e_volume_unmount(v);
 	       }
 	  }
-#endif	
 	break;
       case E_FM_OP_QUIT: /* quit */
 	ecore_main_loop_quit();

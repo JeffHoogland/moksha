@@ -1,14 +1,12 @@
 #include "config.h"
-#include <e.h>
+#include "e.h"
 #include "e_cfg.h"
 #include "e_slipshelf.h"
 #include "e_mod_win.h"
 
 /* internal calls */
-#ifdef HAVE_EDBUS
 static void _e_cfg_dbus_if_init(void);
 static void _e_cfg_dbus_if_shutdown(void);
-#endif
 
 static Evas_Object *_e_cfg_win_new(const char *title, const char *name, const char *themedir, void (*delfunc) (const void *data), const void *data);
 static void _e_cfg_win_complete(Evas_Object *ol);
@@ -119,18 +117,14 @@ e_cfg_init(E_Module *m)
    e_configure_registry_generic_item_add("display/thumbscroll", 0, "Finger Scrolling", NULL, "enlightenment/thumbscroll", e_cfg_thumbscroll);
    e_configure_registry_generic_item_add("display/gadgets", 0, "Shelf Gadgets", NULL, "enlightenment/gadgets", e_cfg_gadgets);
    e_configure_registry_generic_item_add("display/fps", 0, "Framerate", NULL, "enlightenment/fps", e_cfg_fps);
-#ifdef HAVE_EDBUS
    _e_cfg_dbus_if_init();
-#endif   
    return 1;
 }
 
 EAPI int
 e_cfg_shutdown(void)
 {
-#ifdef HAVE_EDBUS
    _e_cfg_dbus_if_shutdown();
-#endif   
    e_configure_registry_item_del("display/fps");
    e_configure_registry_item_del("display/gadgets");
    e_configure_registry_item_del("display/thumbscroll");
@@ -1280,7 +1274,6 @@ _theme_obj_new(Evas *e, const char *custom_dir, const char *group)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifdef HAVE_EDBUS
 typedef struct _DB_Method DB_Method;
 struct _DB_Method
 {
@@ -2053,4 +2046,3 @@ _e_cfg_dbus_if_shutdown(void)
 	dbus_if = NULL;
      }
 }
-#endif

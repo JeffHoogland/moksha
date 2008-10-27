@@ -1,4 +1,4 @@
-#include <e.h>
+#include "e.h"
 #include "e_kbd_buf.h"
 #include "e_kbd_dict.h"
 #include "e_cfg.h"
