@@ -136,7 +136,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *rt, *ow, *ft, *of;
+   Evas_Object *ow, *ft, *of;
    E_Radio_Group *rg;
    E_Fm2_Config fmc;
    char path[PATH_MAX];
