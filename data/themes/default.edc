@@ -22609,7 +22609,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	    signal: "load";
 	    source: "";
 	    script {
-	       set_int(is_ready, 0);
+	       set_int(is_ready, 1);
 	       set_int(do_end, 0);
 	    }
 	 }
