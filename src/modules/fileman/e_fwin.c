@@ -90,7 +90,7 @@ static void _e_fwin_cb_exec_cmd_changed(void *data, void *data2);
 static void _e_fwin_cb_open(void *data, E_Dialog *dia);
 static void _e_fwin_cb_close(void *data, E_Dialog *dia);
 static void _e_fwin_cb_dialog_free(void *obj);
-static Evas_Bool _e_fwin_cb_hash_foreach(const Evas_Hash *hash __UNUSED__, const char *key, void *data __UNUSED__, void *fdata);
+static Evas_Bool _e_fwin_cb_hash_foreach(const Evas_Hash *hash __UNUSED__, const void *key, void *data __UNUSED__, void *fdata);
 static E_Fwin_Exec_Type _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici);
 static void _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext);
 static void _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always);
@@ -933,7 +933,7 @@ _e_fwin_cb_dialog_free(void *obj)
 }
 
 static Evas_Bool
-_e_fwin_cb_hash_foreach(const Evas_Hash *hash __UNUSED__, const char *key, void *data __UNUSED__, void *fdata)
+_e_fwin_cb_hash_foreach(const Evas_Hash *hash __UNUSED__, const void *key, void *data __UNUSED__, void *fdata)
 {
    Eina_List **mlist;
    

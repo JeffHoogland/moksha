@@ -110,7 +110,7 @@ _mixer_gadget_configuration_free(E_Mixer_Module_Config *mod_conf, E_Mixer_Gadget
 }
 
 static Evas_Bool
-_mixer_gadget_configuration_free_foreach(const Evas_Hash *hash, const char *key, void *hdata, void *fdata)
+_mixer_gadget_configuration_free_foreach(const Evas_Hash *hash, const void *key, void *hdata, void *fdata)
 {
    _mixer_gadget_configuration_free_int(hdata);
    return 1;

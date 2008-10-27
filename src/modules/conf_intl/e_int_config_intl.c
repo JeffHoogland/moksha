@@ -28,10 +28,10 @@ static int  _basic_lang_list_sort           (const void *data1, const void *data
 /* Fill the clear lists, fill with language, select */
 /* Update lanague */
 static void      _cfdata_language_go        (const char *lang, const char *region, const char *codeset, const char *modifier, E_Config_Dialog_Data *cfdata);
-static Evas_Bool _lang_hash_cb              (const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata);
-static Evas_Bool _region_hash_cb            (const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata);
-static Evas_Bool _language_hash_free_cb     (const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__);
-static Evas_Bool _region_hash_free_cb       (const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static Evas_Bool _lang_hash_cb              (const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
+static Evas_Bool _region_hash_cb            (const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
+static Evas_Bool _language_hash_free_cb     (const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static Evas_Bool _region_hash_free_cb       (const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
 static void      _intl_current_locale_setup (E_Config_Dialog_Data *cfdata);
 static const char *_intl_charset_upper_get  (const char *charset);
 
@@ -809,7 +809,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Bool 
-_language_hash_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
+_language_hash_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    E_Intl_Language_Node *node;
 
@@ -823,7 +823,7 @@ _language_hash_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSE
 }
 
 static Evas_Bool 
-_region_hash_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
+_region_hash_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 { 
    E_Intl_Region_Node *node;
 
@@ -1237,7 +1237,7 @@ _cfdata_language_go(const char *lang, const char *region, const char *codeset, c
 }
 
 static Evas_Bool
-_lang_hash_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata)
+_lang_hash_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
 {
    E_Config_Dialog_Data *cfdata; 
    E_Intl_Language_Node *lang_node;
@@ -1250,7 +1250,7 @@ _lang_hash_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void
 }
 
 static Evas_Bool
-_region_hash_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata)
+_region_hash_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
 {
    E_Config_Dialog_Data *cfdata; 
    E_Intl_Region_Node *reg_node;

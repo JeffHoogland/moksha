@@ -36,8 +36,8 @@ static void         _e_imc_change_enqueue    (E_Config_Dialog_Data *cfdata);
 static void         _e_imc_entry_change_cb   (void *data, Evas_Object *obj);
 static void	    _e_imc_form_fill         (E_Config_Dialog_Data *cfdata);
 static const char*  _e_imc_file_name_new_get (void);
-static Evas_Bool    _change_hash_free_cb     (const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__);
-static Evas_Bool    _change_hash_apply_cb    (const Evas_Hash *hash __UNUSED__, const char *key, void *data, void *fdata __UNUSED__);
+static Evas_Bool    _change_hash_free_cb     (const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static Evas_Bool    _change_hash_apply_cb    (const Evas_Hash *hash __UNUSED__, const void *key, void *data, void *fdata __UNUSED__);
 
 struct _E_Config_Dialog_Data
 {
@@ -143,7 +143,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static Evas_Bool
-_change_hash_free_cb(const Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
+_change_hash_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    E_Input_Method_Config *imc;
 
@@ -385,7 +385,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
 /*** Start Advanced Dialog Logic ***/
 static Evas_Bool
-_change_hash_apply_cb(const Evas_Hash *hash __UNUSED__, const char *key, void *data, void *fdata __UNUSED__)
+_change_hash_apply_cb(const Evas_Hash *hash __UNUSED__, const void *key, void *data, void *fdata __UNUSED__)
 {
    E_Input_Method_Config *imc;
    Eet_File *ef;
