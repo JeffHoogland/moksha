@@ -1123,7 +1123,6 @@ _grab_key_down_cb(void *data, int type, void *event)
 	     else
 	       { 
 		  int g, a, j;
-		  char buf[1024]; 
 		  const char *label = NULL;
 		  E_Action_Group *actg = NULL;
 		  E_Action_Description *actd = NULL;
