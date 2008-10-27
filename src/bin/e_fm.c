@@ -2126,18 +2126,18 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	break;
 
       case E_FM_OP_ERROR:/*error*/
-	printf("%s:%s(%d) Error from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, e->data);
+	printf("%s:%s(%d) Error from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
 	_e_fm_error_dialog(e->ref, e->data);
 	break;
 
       case E_FM_OP_ERROR_RETRY_ABORT:/*error*/
-	printf("%s:%s(%d) Error from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, e->data);
-	_e_fm_retry_abort_dialog(e->ref, e->data);
+	printf("%s:%s(%d) Error from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
+	_e_fm_retry_abort_dialog(e->ref, (char *)e->data);
 	break;
 
       case E_FM_OP_OVERWRITE:/*overwrite*/
-	printf("%s:%s(%d) Overwrite from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, e->data);
-	_e_fm_overwrite_dialog(e->ref, e->data);
+	printf("%s:%s(%d) Overwrite from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
+	_e_fm_overwrite_dialog(e->ref, (char *)e->data);
 	break;
 
       case E_FM_OP_PROGRESS:/*progress*/
@@ -2158,7 +2158,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 #undef UP
 	     src = p;
 	     dst = p + strlen(src) + 1;
-	     printf("%s:%s(%d) Progress from slave #%d:\n\t%d%% done,\n\t%d seconds left,\n\t%lu done,\n\t%lu total,\n\tsrc = %s,\n\tdst = %s.\n", __FILE__, __FUNCTION__, __LINE__, e->ref, percent, seconds, done, total, src, dst);
+	     printf("%s:%s(%d) Progress from slave #%d:\n\t%d%% done,\n\t%d seconds left,\n\t%d done,\n\t%d total,\n\tsrc = %s,\n\tdst = %s.\n", __FILE__, __FUNCTION__, __LINE__, e->ref, percent, seconds, done, total, src, dst);
 	  }
 	break;
 

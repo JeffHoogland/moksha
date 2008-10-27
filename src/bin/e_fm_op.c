@@ -833,7 +833,7 @@ _e_fm_op_send_error(E_Fm_Op_Task * task, E_Fm_Op_Type type, const char *fmt, ...
 
         write(STDOUT_FILENO, buf, 3*sizeof(int) + len + 1);
 
-        E_FM_OP_DEBUG(str);
+        E_FM_OP_DEBUG("%s", str);
 	E_FM_OP_DEBUG(" Error sent.\n");
      }
 

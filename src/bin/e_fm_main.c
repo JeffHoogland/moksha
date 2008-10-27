@@ -1653,7 +1653,7 @@ static int _e_fm_slave_error_cb(void *data, int type, void *event)
 
    slave = ecore_exe_data_get(e->exe);
 
-   printf("EFM: Data from STDERR of slave #%d: %.*s", slave->id, e->size, e->data);
+   printf("EFM: Data from STDERR of slave #%d: %.*s", slave->id, e->size, (char *)e->data);
 
    return 1;
 }
