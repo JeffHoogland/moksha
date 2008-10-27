@@ -136,7 +136,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    of = e_widget_framelist_add(evas, _("Cursor Settings"), 0);
    rg = e_widget_radio_group_new(&cfdata->use_e_cursor);
-   cfdata->gui.radio_use_e_cursor = rg;
+   cfdata->gui.radio_use_e_cursor = of;
 
    ob = e_widget_radio_add(evas, _("Use Enlightenment Cursor"), 1, rg);   
    e_widget_framelist_object_append(of, ob);
@@ -216,7 +216,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    of = e_widget_framelist_add(evas, _("Cursor Settings"), 0);
    rg = e_widget_radio_group_new(&cfdata->use_e_cursor);
-   cfdata->gui.radio_use_e_cursor = rg;
+   cfdata->gui.radio_use_e_cursor = of;
 
    ob = e_widget_radio_add(evas, _("Use Enlightenment Cursor"), 1, rg);   
    e_widget_framelist_object_append(of, ob);
