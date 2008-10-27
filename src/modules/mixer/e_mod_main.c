@@ -119,7 +119,7 @@ _mixer_gadget_configuration_free_foreach(const Evas_Hash *hash, const char *key,
 static int
 _mixer_module_configuration_alert(void *data)
 {
-   e_util_dialog_show(_("Mixer Configuration Updated"), data);
+   e_util_dialog_show(_("Mixer Configuration Updated"), "%s", (char *)data);
    return 0;
 }
 
