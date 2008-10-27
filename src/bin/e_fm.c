@@ -2525,7 +2525,7 @@ _e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi)
    args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
 
    /* Roll the operation! */
-   if(_e_fm_file_buffer_copying)
+   if (_e_fm_file_buffer_copying)
      {
 	_e_fm_client_file_copy(args);
      }
@@ -4295,7 +4295,7 @@ _e_fm_typebuf_timer_cb(void *data)
    Evas_Object *obj = data;
    E_Fm2_Smart_Data *sd;
 
-   if(!data) return 0;
+   if (!data) return 0;
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
 
@@ -4325,7 +4325,7 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
    _e_fm2_typebuf_match(obj);
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
 
-   if(sd->typebuf.timer) 
+   if (sd->typebuf.timer) 
      {
 	ecore_timer_del(sd->typebuf.timer);
      }
@@ -4657,7 +4657,7 @@ _e_fm_file_reorder(const char *file, const char *dst, const char *relative, int 
    void *data, *p;
 
    data = alloca(length);
-   if(!data) return;
+   if (!data) return;
 
    p = data;
 
@@ -4677,10 +4677,10 @@ _e_fm_icon_save_position(const char *file, Evas_Coord x, Evas_Coord y, Evas_Coor
 {
    E_Fm2_Custom_File *cf, new;
 
-   if(!file) return;
+   if (!file) return;
 
    cf = e_fm2_custom_file_get(file);
-   if(!cf)
+   if (!cf)
      {
 	memset(&new, 0, sizeof(E_Fm2_Custom_File));
 	cf = &new;
@@ -4701,7 +4701,7 @@ _e_fm_drop_menu_copy_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    char *args = data;
 
-   if(!data) return;
+   if (!data) return;
 
    _e_fm_client_file_copy(args);
 }
@@ -4711,7 +4711,7 @@ _e_fm_drop_menu_move_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    char *args = data;
 
-   if(!data) return;
+   if (!data) return;
 
    _e_fm_client_file_move(args);
 }
@@ -4719,7 +4719,7 @@ _e_fm_drop_menu_move_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm_drop_menu_abort_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   if(!data) return;
+   if (!data) return;
 }
 
 static void
@@ -4727,7 +4727,7 @@ _e_fm_drop_menu_post_cb(void *data, E_Menu *m)
 {
    char *args = data;
 
-   if(!data) return;
+   if (!data) return;
 
    free(args);
 }
@@ -4742,7 +4742,7 @@ _e_fm_drop_menu(char *args)
    E_Zone *zone = NULL;
    int x, y;
 
-   if(!menu) return;
+   if (!menu) return;
 
    item = e_menu_item_new(menu);
    e_menu_item_label_set(item, _("Copy"));
@@ -4969,17 +4969,17 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	  }
      }
 
-   if(e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_COPY)
+   if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_COPY)
      {
 	_e_fm_client_file_copy(args);
 	free(args);
      }
-   else if(e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_MOVE)
+   else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_MOVE)
      {
 	_e_fm_client_file_move(args);
 	free(args);
      }
-   else if(e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_ASK)
+   else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_ASK)
      {
 	_e_fm_drop_menu(args);
      }
@@ -7396,7 +7396,7 @@ _e_fm2_file_delete_delete_cb(void *obj)
 static char *
 _e_fm_string_append_char(char *str, size_t *size, size_t *len, char c)
 {
-   if(str == NULL)
+   if (str == NULL)
      {
 	str = malloc(4096);
 	str[0] = '\x00';
@@ -7404,7 +7404,7 @@ _e_fm_string_append_char(char *str, size_t *size, size_t *len, char c)
 	*len = 0;
      }
 
-   if(*len >= *size - 1)
+   if (*len >= *size - 1)
      {
 	*size += 1024;
 	str = realloc(str, *size);
@@ -7467,7 +7467,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 	     if (e_filereg_file_protected(buf)) continue;
 
 	     files = _e_fm_string_append_quoted(files, &size, &len, buf);
-	     if(l->next) files = _e_fm_string_append_char(files, &size, &len, ' ');
+	     if (l->next) files = _e_fm_string_append_char(files, &size, &len, ' ');
 	  }
 
 	eina_list_free(sel);

@@ -997,7 +997,7 @@ _e_fm_monitor_start(int id, const char *path)
 {
    E_Fm_Task *task = malloc(sizeof(E_Fm_Task));
 
-   if(!task) return;
+   if (!task) return;
 
    task->id = id;
    task->type = E_FM_OP_MONITOR_START;
@@ -1209,7 +1209,7 @@ _e_fm_task_node_get(int id)
    while(l)
      {
 	task = eina_list_data_get(l);
-	if(task->id == id)
+	if (task->id == id)
 	  return l;
 
 	l = eina_list_next(l);
@@ -1242,9 +1242,9 @@ _e_fm_task_remove(E_Fm_Task *task)
 
    _e_fm_tasks = eina_list_remove_list(_e_fm_tasks, l);
 
-   if(task->src) eina_stringshare_del(task->src);
-   if(task->dst) eina_stringshare_del(task->dst);
-   if(task->rel) eina_stringshare_del(task->rel);
+   if (task->src) eina_stringshare_del(task->src);
+   if (task->dst) eina_stringshare_del(task->dst);
+   if (task->rel) eina_stringshare_del(task->rel);
 
    free(task);
 }
@@ -1254,7 +1254,7 @@ _e_fm_mkdir_try(E_Fm_Task *task)
 {
    char buf[PATH_MAX + 4096];
 
-   if(mkdir(task->src, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
+   if (mkdir(task->src, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
      {
 	snprintf(buf, sizeof(buf), "Cannot make directory '%s': %s.", task->src, strerror(errno));
 	_e_client_send(task->id, E_FM_OP_ERROR_RETRY_ABORT, buf, strlen(buf) + 1);
@@ -1293,18 +1293,18 @@ _e_fm_handle_error_response(int id, E_Fm_Op_Type type)
    E_Fm_Task *task = _e_fm_task_get(id);
    E_Fm_Slave *slave = NULL;
 
-   if(!task)
+   if (!task)
      {
 	slave = _e_fm_slave_get(id);
-	if(slave) _e_fm_slave_send(slave, type, NULL, 0);
+	if (slave) _e_fm_slave_send(slave, type, NULL, 0);
 	return;
      }
 
-   if(type == E_FM_OP_ERROR_RESPONSE_ABORT)
+   if (type == E_FM_OP_ERROR_RESPONSE_ABORT)
      {
 	_e_fm_task_remove(task);
      }
-   else if(type == E_FM_OP_ERROR_RESPONSE_RETRY)
+   else if (type == E_FM_OP_ERROR_RESPONSE_RETRY)
      {
 	switch(task->type)
 	  {
@@ -2085,12 +2085,12 @@ _e_fm_reorder(const char *file, const char *dst, const char *relative, int after
    char buffer[PATH_MAX];
    char order[PATH_MAX];
 
-   if(!file || !dst || !relative) return;
-   if(after != 0 && after != 1 && after != 2) return;
+   if (!file || !dst || !relative) return;
+   if (after != 0 && after != 1 && after != 2) return;
 //   printf("%s:%s(%d) Reorder:\n\tfile = %s\n\tdst = %s\n\trelative = %s\n\tafter = %d\n", __FILE__, __FUNCTION__, __LINE__, file, dst, relative, after);
 
    snprintf(order, sizeof(order), "%s/.order", dst);
-   if(ecore_file_exists(order))
+   if (ecore_file_exists(order))
      {
 	FILE *forder;
 	Eina_List *files = NULL, *l;

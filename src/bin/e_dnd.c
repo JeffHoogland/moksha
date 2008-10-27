@@ -847,7 +847,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	     leave_ev.y = y - dy;
 	     if (E_INSIDE(x, y, dx, dy, dw, dh) && _e_drag_win_matches(h, win, 1))
 	       {
-		  if(e_drop_handler_responsive_get(h)) responsive = 1;
+		  if (e_drop_handler_responsive_get(h)) responsive = 1;
 
 		  if (!h->entered)
 		    {
@@ -1136,7 +1136,7 @@ _e_dnd_cb_mouse_move(void *data, int type, void *event)
    ev = event;
    if (ev->win != _drag_win) return 1;
 
-   if(!_xdnd) _e_drag_update(_drag_win_root, ev->x, ev->y, ECORE_X_ATOM_XDND_ACTION_PRIVATE);
+   if (!_xdnd) _e_drag_update(_drag_win_root, ev->x, ev->y, ECORE_X_ATOM_XDND_ACTION_PRIVATE);
    
    return 1;
 }
@@ -1302,7 +1302,7 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
    else
      {
 	responsive = _e_drag_update(ev->win, ev->position.x, ev->position.y, ev->action);
-	if(responsive)
+	if (responsive)
 	  {
 	     ecore_x_dnd_send_status(1, 0, rect, _action);
 	  }

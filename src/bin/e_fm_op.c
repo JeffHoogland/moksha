@@ -449,10 +449,10 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
 
 static void _e_fm_op_set_up_idlers()
 {
-   if(!_e_fm_op_scan_idler_p)
+   if (!_e_fm_op_scan_idler_p)
      _e_fm_op_scan_idler_p = ecore_idler_add(_e_fm_op_scan_idler, NULL);
    
-   if(!_e_fm_op_work_idler_p)
+   if (!_e_fm_op_work_idler_p)
      _e_fm_op_work_idler_p = ecore_idler_add(_e_fm_op_work_idler, NULL);
 }
 
@@ -478,7 +478,7 @@ static void _e_fm_op_set_up_idlers()
 
 static void _e_fm_op_delete_idler(int *mark)
 {
-   if(mark == &_e_fm_op_work_error)
+   if (mark == &_e_fm_op_work_error)
      {
         ecore_idler_del(_e_fm_op_work_idler_p);
         _e_fm_op_work_idler_p = NULL;
