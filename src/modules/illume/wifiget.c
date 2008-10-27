@@ -1,4 +1,5 @@
 /* for complex link stuff */
+#ifdef __linux__
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -13,11 +14,10 @@
 #include <net/if_arp.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <netinet/if_ether.h>
 #include <net/if.h>
 #include <linux/types.h>
 #include <linux/wireless.h>
-#include <sys/socket.h>
+#include <netinet/if_ether.h>
 
 /* the complex way - thanks to simple being broken on gta02 */
 static int
@@ -177,3 +177,10 @@ main(int argc, char **argv)
      }
    return 0;
 }
+#else
+int
+main(int argc, char **argv)
+{
+   return 0;
+}
+#endif
