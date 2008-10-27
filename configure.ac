@@ -439,6 +439,8 @@ src/modules/mixer/Makefile
 src/modules/mixer/module.desktop
 src/modules/connman/Makefile
 src/modules/connman/module.desktop
+src/modules/illume/Makefile
+src/modules/illume/module.desktop
 src/preload/Makefile
 data/Makefile
 data/images/Makefile
