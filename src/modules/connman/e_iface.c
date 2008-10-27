@@ -53,7 +53,6 @@ iface_ipv4_decode(DBusMessage *msg)
 	     while (dbus_message_iter_get_arg_type(&iter) == DBUS_TYPE_DICT_ENTRY)
 	       {
                   char *key, *v;
-		  int sig;
 		  int type;
 
 		  dbus_message_iter_recurse(&iter, &item);
@@ -142,7 +141,6 @@ iface_network_selection_decode(DBusMessage *msg)
 	     while (dbus_message_iter_get_arg_type(&iter) == DBUS_TYPE_DICT_ENTRY)
 	       {
                   char *key, *v;
-		  int sig;
 		  int type;
 
 		  dbus_message_iter_recurse(&iter, &item);
@@ -219,7 +217,6 @@ iface_getproperties_unmarhsall(DBusMessage *msg, DBusError *err)
 	     while (dbus_message_iter_get_arg_type(&iter) == DBUS_TYPE_DICT_ENTRY)
 	       {
                   char *key, *v;
-		  int sig;
 		  int type;
 
 		  dbus_message_iter_recurse(&iter, &item);
@@ -369,10 +366,8 @@ iface_net_add(Interface *iface, const char *essid, const char *bssid, int signal
 static void
 iface_sigh_network_found(void *data, DBusMessage *msg)
 {
-   DBusError err;
    Interface *iface = data;
    DBusMessageIter array, iter, item, val;
-   Interface_Properties *d;
 
    if (dbus_message_iter_init(msg, &array))
      {
@@ -434,7 +429,6 @@ iface_sigh_network_found(void *data, DBusMessage *msg)
 static void
 iface_sigh_signal_changed(void *data, DBusMessage *msg)
 {
-   DBusError err;
    Interface *iface = data;
 
    /* FIXME: need to handle signal changed - and fix connman */
@@ -448,7 +442,6 @@ iface_sigh_signal_changed(void *data, DBusMessage *msg)
 static void
 iface_sigh_state_changed(void *data, DBusMessage *msg)
 {
-   DBusError err;
    Interface *iface = data;
    DBusMessageIter iter;
    const char *s = NULL;
@@ -480,7 +473,6 @@ iface_sigh_state_changed(void *data, DBusMessage *msg)
 static void
 iface_sigh_policy_changed(void *data, DBusMessage *msg)
 {
-   DBusError err;
    Interface *iface = data;
    DBusMessageIter iter;
    const char *s = NULL;
@@ -498,7 +490,6 @@ iface_sigh_policy_changed(void *data, DBusMessage *msg)
 static void
 iface_sigh_network_changed(void *data, DBusMessage *msg)
 {
-   DBusError err;
    Interface *iface = data;
    Interface_Network_Selection *d;
 
@@ -517,7 +508,6 @@ iface_sigh_network_changed(void *data, DBusMessage *msg)
 static void
 iface_sigh_ipv4_changed(void *data, DBusMessage *msg)
 {
-   DBusError err;
    Interface *iface = data;
    Interface_IPv4 *d;
 
@@ -611,7 +601,6 @@ iface_system_listinterfaces_result_free(void *data)
 static void
 iface_system_added(void *data, DBusMessage *msg)
 {
-   DBusError err;
    DBusMessageIter iter;
    const char *s = NULL;
 
@@ -626,7 +615,6 @@ iface_system_added(void *data, DBusMessage *msg)
 static void
 iface_system_removed(void *data, DBusMessage *msg)
 {
-   DBusError err;
    DBusMessageIter iter;
    const char *s = NULL;
    Interface *iface;
@@ -673,7 +661,6 @@ static void
 iface_system_name_ownerchanged(void *data, DBusMessage *msg)
 {
    DBusError err;
-   DBusMessageIter iter;
    const char *s1, *s2, *s3;
 
    dbus_error_init(&err);
