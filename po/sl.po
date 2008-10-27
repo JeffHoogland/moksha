@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-10-23 11:31+1100\n"
+"POT-Creation-Date: 2008-10-27 16:37+1100\n"
 "PO-Revision-Date: 2006-03-21 02:50+0100\n"
 "Last-Translator: Perat Tomaž <pithlit@gmail.com>\n"
 "Language-Team:  <pithlit@gmail.com>\n"
@@ -18,7 +18,7 @@ msgid "About Enlightenment"
 msgstr "O Enlightenment"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2315 src/bin/e_config_dialog.c:256
-#: src/bin/e_fm.c:548 src/bin/e_int_border_menu.c:208
+#: src/bin/e_fm.c:550 src/bin/e_int_border_menu.c:208
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:20
 #: src/modules/conf/e_conf.c:173 src/modules/fileman/e_fwin.c:1422
 #: src/modules/mixer/app_mixer.c:537
@@ -27,7 +27,7 @@ msgstr "Zapri"
 
 #: src/bin/e_about.c:21 src/bin/e_actions.c:2597 src/bin/e_actions.c:2601
 #: src/bin/e_actions.c:2605 src/bin/e_actions.c:2609 src/bin/e_actions.c:2613
-#: src/bin/e_int_menus.c:169 src/bin/e_main.c:623
+#: src/bin/e_int_menus.c:169 src/bin/e_main.c:630
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:181
 msgid "Enlightenment"
 msgstr "Enlightenment"
@@ -73,16 +73,16 @@ msgstr "Ste prepričani, da bi radi zapustili Enlightenment?"
 
 #: src/bin/e_actions.c:353 src/bin/e_actions.c:1631 src/bin/e_actions.c:1713
 #: src/bin/e_actions.c:1777 src/bin/e_actions.c:1841 src/bin/e_actions.c:1905
-#: src/bin/e_actions.c:1969 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:7184
-#: src/bin/e_fm.c:7364 src/bin/e_module.c:526
+#: src/bin/e_actions.c:1969 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:7186
+#: src/bin/e_fm.c:7366 src/bin/e_module.c:526
 #: src/modules/conf_display/e_int_config_display.c:215
 msgid "Yes"
 msgstr "Da"
 
 #: src/bin/e_actions.c:355 src/bin/e_actions.c:1633 src/bin/e_actions.c:1715
 #: src/bin/e_actions.c:1779 src/bin/e_actions.c:1843 src/bin/e_actions.c:1907
-#: src/bin/e_actions.c:1971 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:7182
-#: src/bin/e_fm.c:7365 src/bin/e_module.c:527
+#: src/bin/e_actions.c:1971 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:7184
+#: src/bin/e_fm.c:7367 src/bin/e_module.c:527
 #: src/modules/conf_display/e_int_config_display.c:216
 msgid "No"
 msgstr "Ne"
@@ -163,7 +163,7 @@ msgstr ""
 msgid "Window : Actions"
 msgstr "Izbira Okenskih Okvirjev"
 
-#: src/bin/e_actions.c:2275 src/bin/e_fm.c:4758
+#: src/bin/e_actions.c:2275 src/bin/e_fm.c:4760
 #, fuzzy
 msgid "Move"
 msgstr "Jaz"
@@ -689,17 +689,17 @@ msgstr "Dejanja Modula"
 msgid "Set As Background"
 msgstr "Nastavi Ozadje za"
 
-#: src/bin/e_border.c:4839
+#: src/bin/e_border.c:4846
 #, fuzzy
 msgid "Desktop files scan done"
 msgstr "Desktop"
 
-#: src/bin/e_border.c:4851
+#: src/bin/e_border.c:4858
 #, fuzzy
 msgid "Desktop file scan"
 msgstr "Desktop"
 
-#: src/bin/e_config.c:647
+#: src/bin/e_config.c:682
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -716,7 +716,7 @@ msgstr ""
 "stara nastavitvena datoteka ne vsebuje. Sedaj<br>pa lahko ponovno nastavite "
 "stvari po svoje. Opravičujemo se za kolcanje.<br>"
 
-#: src/bin/e_config.c:661
+#: src/bin/e_config.c:696
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -731,16 +731,16 @@ msgstr ""
 "nastavili na privzete vrednosti. Prosimo, sprejmite naše<br>opravičilo za "
 "vse nevšečnosti.<br>"
 
-#: src/bin/e_config.c:683
+#: src/bin/e_config.c:718
 #, fuzzy, c-format
 msgid "Desktop %i, %i"
 msgstr "Desktop"
 
-#: src/bin/e_config.c:2321
+#: src/bin/e_config.c:1959
 msgid "Configuration Upgraded"
 msgstr "Nastavitve Osvežene"
 
-#: src/bin/e_config.c:2346
+#: src/bin/e_config.c:1984
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>configuration to disk. The "
@@ -748,7 +748,7 @@ msgid ""
 "was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2357
+#: src/bin/e_config.c:1995
 #, c-format
 msgid ""
 "Enlightenment's configuration files are too big<br>for the file system they "
@@ -758,7 +758,7 @@ msgid ""
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2370
+#: src/bin/e_config.c:2008
 #, c-format
 msgid ""
 "An output error occured when writing the configuration<br>files for "
@@ -767,7 +767,7 @@ msgid ""
 "file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2381
+#: src/bin/e_config.c:2019
 #, c-format
 msgid ""
 "Enlightenment cannot write its configuration file<br>because it ran out of "
@@ -776,7 +776,7 @@ msgid ""
 "was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2393
+#: src/bin/e_config.c:2031
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the configuration file<br>it was writing "
@@ -784,17 +784,17 @@ msgid ""
 "was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2418
+#: src/bin/e_config.c:2056
 #, fuzzy
 msgid "Enlightenment Configuration Write Problems"
 msgstr "Nastavitev Enlightenment"
 
-#: src/bin/e_config.c:2422 src/bin/e_config_dialog.c:248
+#: src/bin/e_config.c:2060 src/bin/e_config_dialog.c:248
 #: src/bin/e_eap_editor.c:599 src/bin/e_eap_editor.c:663
 #: src/bin/e_entry_dialog.c:58 src/bin/e_exec.c:321 src/bin/e_fm_prop.c:513
 #: src/bin/e_int_border_remember.c:258 src/bin/e_int_border_remember.c:339
 #: src/bin/e_int_border_remember.c:381 src/bin/e_module.c:418
-#: src/bin/e_sys.c:401 src/bin/e_sys.c:447 src/bin/e_utils.c:542
+#: src/bin/e_sys.c:401 src/bin/e_sys.c:447 src/bin/e_utils.c:541
 #: src/modules/conf_dpms/e_int_config_dpms.c:60
 #: src/modules/conf_dpms/e_int_config_dpms.c:81
 #: src/modules/conf_imc/e_int_config_imc_import.c:112
@@ -1001,7 +1001,7 @@ msgstr "Pozabi"
 msgid "Select an Executable"
 msgstr "Izberi okno"
 
-#: src/bin/e_entry.c:491 src/bin/e_fm.c:6665
+#: src/bin/e_entry.c:493 src/bin/e_fm.c:6667
 #: src/modules/conf_applications/e_int_config_apps.c:271
 #: src/modules/conf_profiles/e_int_config_profiles.c:113
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -1009,32 +1009,32 @@ msgstr "Izberi okno"
 msgid "Delete"
 msgstr "Izbriši"
 
-#: src/bin/e_entry.c:504 src/bin/e_fm.c:6575
+#: src/bin/e_entry.c:506 src/bin/e_fm.c:6577
 #, fuzzy
 msgid "Cut"
 msgstr "Odreži"
 
-#: src/bin/e_entry.c:515 src/bin/e_fm.c:4750 src/bin/e_fm.c:6592
+#: src/bin/e_entry.c:517 src/bin/e_fm.c:4752 src/bin/e_fm.c:6594
 msgid "Copy"
 msgstr "Kopiraj"
 
-#: src/bin/e_entry.c:526 src/bin/e_fm.c:6416 src/bin/e_fm.c:6606
+#: src/bin/e_entry.c:528 src/bin/e_fm.c:6418 src/bin/e_fm.c:6608
 #, fuzzy
 msgid "Paste"
 msgstr "Hitro"
 
-#: src/bin/e_entry.c:538
+#: src/bin/e_entry.c:540
 #, fuzzy
 msgid "Select All"
 msgstr "Izbriši"
 
-#: src/bin/e_exec.c:218 src/bin/e_utils.c:202
+#: src/bin/e_exec.c:218 src/bin/e_utils.c:201
 #: src/modules/conf_imc/e_int_config_imc.c:278
 #: src/modules/conf_imc/e_int_config_imc.c:516
 msgid "Run Error"
 msgstr "Napaka pri zagonu"
 
-#: src/bin/e_exec.c:219 src/bin/e_utils.c:203
+#: src/bin/e_exec.c:219 src/bin/e_utils.c:202
 #: src/modules/conf_imc/e_int_config_imc.c:279
 #: src/modules/conf_imc/e_int_config_imc.c:517
 #, c-format
@@ -1156,138 +1156,138 @@ msgstr "Izhodni podatki"
 msgid "There was no output."
 msgstr "Ni bilo izhodnih podatkov"
 
-#: src/bin/e_fm.c:550
+#: src/bin/e_fm.c:552
 msgid "Nonexistent path"
 msgstr ""
 
-#: src/bin/e_fm.c:553
+#: src/bin/e_fm.c:555
 #, c-format
 msgid "%s doesn't exist."
 msgstr ""
 
-#: src/bin/e_fm.c:2648
+#: src/bin/e_fm.c:2650
 #, fuzzy, c-format
 msgid "%i Files"
 msgstr "%1.0f files"
 
-#: src/bin/e_fm.c:4766 src/bin/e_fm.c:7128 src/bin/e_fm.c:7258
+#: src/bin/e_fm.c:4768 src/bin/e_fm.c:7130 src/bin/e_fm.c:7260
 #, fuzzy
 msgid "Abort"
 msgstr "O"
 
-#: src/bin/e_fm.c:6339 src/bin/e_fm.c:6496
+#: src/bin/e_fm.c:6341 src/bin/e_fm.c:6498
 #: src/modules/fileman/e_mod_config.c:171
 #, fuzzy
 msgid "View Mode"
 msgstr "Urejevalni Način"
 
-#: src/bin/e_fm.c:6346 src/bin/e_fm.c:6503
+#: src/bin/e_fm.c:6348 src/bin/e_fm.c:6505
 #, fuzzy
 msgid "Refresh View"
 msgstr "Stopnja osveževanja"
 
-#: src/bin/e_fm.c:6357 src/bin/e_fm.c:6514
+#: src/bin/e_fm.c:6359 src/bin/e_fm.c:6516
 msgid "Show Hidden Files"
 msgstr ""
 
-#: src/bin/e_fm.c:6372 src/bin/e_fm.c:6529
+#: src/bin/e_fm.c:6374 src/bin/e_fm.c:6531
 #, fuzzy
 msgid "Remember Ordering"
 msgstr "Zapomni si uporabo"
 
-#: src/bin/e_fm.c:6384 src/bin/e_fm.c:6541
+#: src/bin/e_fm.c:6386 src/bin/e_fm.c:6543
 msgid "Sort Now"
 msgstr ""
 
-#: src/bin/e_fm.c:6399 src/bin/e_fm.c:6559
+#: src/bin/e_fm.c:6401 src/bin/e_fm.c:6561
 #: src/modules/conf_paths/e_int_config_paths.c:208
 #, fuzzy
 msgid "New Directory"
 msgstr "Mapa"
 
-#: src/bin/e_fm.c:6676
+#: src/bin/e_fm.c:6678
 msgid "Rename"
 msgstr "Preimenuj"
 
-#: src/bin/e_fm.c:6686
+#: src/bin/e_fm.c:6688
 #, fuzzy
 msgid "Properties"
 msgstr "Lastnosti"
 
-#: src/bin/e_fm.c:6847 src/modules/conf_paths/e_int_config_paths.c:81
+#: src/bin/e_fm.c:6849 src/modules/conf_paths/e_int_config_paths.c:81
 #: src/modules/fileman/e_mod_config.c:173
 msgid "Icons"
 msgstr "Ikone"
 
-#: src/bin/e_fm.c:6855 src/modules/fileman/e_mod_config.c:186
+#: src/bin/e_fm.c:6857 src/modules/fileman/e_mod_config.c:186
 #, fuzzy
 msgid "List"
 msgstr "Seznam Oken"
 
-#: src/bin/e_fm.c:6993
+#: src/bin/e_fm.c:6995
 msgid "Create a new Directory"
 msgstr ""
 
-#: src/bin/e_fm.c:6994
+#: src/bin/e_fm.c:6996
 #, fuzzy
 msgid "New Directory Name:"
 msgstr "Mapa"
 
-#: src/bin/e_fm.c:7053
+#: src/bin/e_fm.c:7055
 #, fuzzy, c-format
 msgid "Rename %s to:"
 msgstr "Preimenuj"
 
-#: src/bin/e_fm.c:7055
+#: src/bin/e_fm.c:7057
 #, fuzzy
 msgid "Rename File"
 msgstr "Preimenuj"
 
-#: src/bin/e_fm.c:7127 src/bin/e_fm.c:7257
+#: src/bin/e_fm.c:7129 src/bin/e_fm.c:7259
 msgid "Retry"
 msgstr ""
 
-#: src/bin/e_fm.c:7131 src/bin/e_fm.c:7188 src/bin/e_fm.c:7263
+#: src/bin/e_fm.c:7133 src/bin/e_fm.c:7190 src/bin/e_fm.c:7265
 msgid "Error"
 msgstr "Napaka"
 
-#: src/bin/e_fm.c:7133 src/bin/e_fm.c:7190
+#: src/bin/e_fm.c:7135 src/bin/e_fm.c:7192
 #, c-format
 msgid "%s"
 msgstr ""
 
-#: src/bin/e_fm.c:7183
+#: src/bin/e_fm.c:7185
 msgid "No to all"
 msgstr ""
 
-#: src/bin/e_fm.c:7185
+#: src/bin/e_fm.c:7187
 msgid "Yes to all"
 msgstr ""
 
-#: src/bin/e_fm.c:7259
+#: src/bin/e_fm.c:7261
 msgid "Ignore this"
 msgstr ""
 
-#: src/bin/e_fm.c:7260
+#: src/bin/e_fm.c:7262
 msgid "Ignore all"
 msgstr ""
 
-#: src/bin/e_fm.c:7265
+#: src/bin/e_fm.c:7267
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:7367
+#: src/bin/e_fm.c:7369
 #, fuzzy
 msgid "Confirm Delete"
 msgstr "Potrdi"
 
-#: src/bin/e_fm.c:7371
+#: src/bin/e_fm.c:7373
 #, fuzzy, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Ste prepričani, da hočete pobrisati <br><b>%s</b> ?"
 
-#: src/bin/e_fm.c:7377
+#: src/bin/e_fm.c:7379
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1415,11 +1415,11 @@ msgstr "Neznan"
 msgid "Removable Device"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1214 src/modules/gadman/e_mod_gadman.c:622
+#: src/bin/e_gadcon.c:1214 src/modules/gadman/e_mod_gadman.c:625
 msgid "Plain"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1223 src/modules/gadman/e_mod_gadman.c:630
+#: src/bin/e_gadcon.c:1223 src/modules/gadman/e_mod_gadman.c:633
 #, fuzzy
 msgid "Inset"
 msgstr "Ikone"
@@ -1436,7 +1436,7 @@ msgstr "Ikone"
 #: src/modules/conf_transitions/e_mod_main.c:34
 #: src/modules/conf_wallpaper/e_mod_main.c:28
 #: src/modules/dropshadow/e_mod_main.c:89
-#: src/modules/gadman/e_mod_gadman.c:638
+#: src/modules/gadman/e_mod_gadman.c:641
 msgid "Appearance"
 msgstr ""
 
@@ -1448,11 +1448,11 @@ msgstr ""
 msgid "Able to be resized"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1260 src/modules/gadman/e_mod_gadman.c:673
+#: src/bin/e_gadcon.c:1260 src/modules/gadman/e_mod_gadman.c:676
 msgid "Begin move/resize this gadget"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1266 src/modules/gadman/e_mod_gadman.c:679
+#: src/bin/e_gadcon.c:1266 src/modules/gadman/e_mod_gadman.c:682
 msgid "Remove this gadget"
 msgstr ""
 
@@ -2047,8 +2047,8 @@ msgstr "(Ni naloženih modulov)"
 msgid "Unload Module"
 msgstr "Napaka pri nalaganju modula"
 
-#: src/bin/e_int_config_modules.c:212 src/bin/e_int_config_modules.c:621
-#: src/bin/e_int_config_modules.c:638 src/bin/e_int_config_modules.c:663
+#: src/bin/e_int_config_modules.c:212 src/bin/e_int_config_modules.c:620
+#: src/bin/e_int_config_modules.c:637 src/bin/e_int_config_modules.c:662
 #: src/bin/e_int_gadcon_config.c:121 src/bin/e_int_gadcon_config.c:156
 #: src/bin/e_int_gadcon_config.c:178
 msgid "Description: Unavailable"
@@ -2191,7 +2191,7 @@ msgstr "Ni Imena!!"
 msgid "(No Shelves)"
 msgstr ""
 
-#: src/bin/e_int_menus.c:1553 src/bin/e_shelf.c:1087
+#: src/bin/e_int_menus.c:1553 src/bin/e_shelf.c:1089
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr ""
@@ -2205,7 +2205,7 @@ msgstr ""
 msgid "Delete A Shelf"
 msgstr "Izbriši"
 
-#: src/bin/e_int_shelf_config.c:71 src/bin/e_shelf.c:1662
+#: src/bin/e_int_shelf_config.c:71 src/bin/e_shelf.c:1664
 #, fuzzy
 msgid "Shelf Configuration"
 msgstr "Nastavitve"
@@ -2320,7 +2320,7 @@ msgstr "Prikaži ime namizja"
 msgid "Show on specified Desktops"
 msgstr "Prikaži ime namizja"
 
-#: src/bin/e_ipc.c:48
+#: src/bin/e_ipc.c:47
 #, c-format
 msgid ""
 "Possible IPC Hack Attempt. The IPC socket\n"
@@ -2331,7 +2331,7 @@ msgid ""
 "%s/enlightenment-%s\n"
 msgstr ""
 
-#: src/bin/e_ipc.c:62
+#: src/bin/e_ipc.c:57
 #, c-format
 msgid ""
 "The IPC socket directory cannot be created or\n"
@@ -2340,7 +2340,7 @@ msgid ""
 "%s/enlightenment-%s\n"
 msgstr ""
 
-#: src/bin/e_main.c:299
+#: src/bin/e_main.c:306
 #, c-format
 msgid ""
 "Options:\n"
@@ -2385,7 +2385,7 @@ msgstr ""
 "\t-psihotičen\n"
 "\t\tBodi psohotičen.\n"
 
-#: src/bin/e_main.c:361
+#: src/bin/e_main.c:368
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2393,7 +2393,7 @@ msgstr ""
 "Enlightenment ne more zagnati Ecore!\n"
 "Vam mogoče primankuje spomina?"
 
-#: src/bin/e_main.c:387
+#: src/bin/e_main.c:394
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2401,7 +2401,7 @@ msgstr ""
 "Enlightenment ne more zagnati datotečnega sistema.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:399
+#: src/bin/e_main.c:406
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2409,7 +2409,7 @@ msgstr ""
 "Enlightenment ne more nastaviti upravitelja izhodnih signalov.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:405
+#: src/bin/e_main.c:412
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2417,7 +2417,7 @@ msgstr ""
 "Enlightenment ne more nastaviti upravitelja HUP signalov.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:417
+#: src/bin/e_main.c:424
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2425,7 +2425,7 @@ msgstr ""
 "Enlightenment ne more ustvariti povezave z X serverjem.\n"
 "Ste že nastavili svojo DISPLAY spremenljivko?"
 
-#: src/bin/e_main.c:425
+#: src/bin/e_main.c:432
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2433,7 +2433,7 @@ msgstr ""
 "Enlightenment ne more pognati svojega alarmnega sistema.\n"
 "Ste že nastavili svojo DISPLAY spremenljivko?"
 
-#: src/bin/e_main.c:448
+#: src/bin/e_main.c:455
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -2441,7 +2441,7 @@ msgstr ""
 "Enlightenment ne more zagnati sistema povezav.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:456
+#: src/bin/e_main.c:463
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2449,7 +2449,7 @@ msgstr ""
 "Enlightenment ne more zagnati sistema IPC.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:465
+#: src/bin/e_main.c:472
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -2457,7 +2457,7 @@ msgstr ""
 "Enlightenment ne more nastaviti xinerama ovijanja.\n"
 "To se ne bi smelo dogajati."
 
-#: src/bin/e_main.c:484
+#: src/bin/e_main.c:491
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -2465,7 +2465,7 @@ msgstr ""
 "Enlightenment ne more zagnati sistema Evas.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:490
+#: src/bin/e_main.c:497
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2475,7 +2475,7 @@ msgstr ""
 "izrisovanja v Evas. Preverite vaše Evas in Ecore nastavitve in se\n"
 "prepričajte, da podpirajo software X11 izrisovanje."
 
-#: src/bin/e_main.c:497
+#: src/bin/e_main.c:504
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2485,7 +2485,7 @@ msgstr ""
 "Buffer spomina. Preverite vaše Evas in Ecore nastavitve in se\n"
 "prepričajte, da podpjo izrisovanje iz Software Buffer spomina."
 
-#: src/bin/e_main.c:513 src/bin/e_main.c:520
+#: src/bin/e_main.c:520 src/bin/e_main.c:527
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
@@ -2494,7 +2494,7 @@ msgstr ""
 "Enlightenment ne more zagnati datotečnega sistema.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:534
+#: src/bin/e_main.c:541
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2502,26 +2502,26 @@ msgstr ""
 "Enlightenment ne more ustvariti map v vaši domači mapi.\n"
 "Mogoče nimate domače mape ali pa imate poln disk?"
 
-#: src/bin/e_main.c:544
+#: src/bin/e_main.c:551
 #, fuzzy
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Enlightenment ne more nastaviti nastavitvenega sistema."
 
-#: src/bin/e_main.c:553
+#: src/bin/e_main.c:560
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment ne more nastaviti nastavitvenega sistema."
 
-#: src/bin/e_main.c:562
+#: src/bin/e_main.c:569
 #, fuzzy
 msgid "Enlightenment cannot set up its scale system."
 msgstr "Enlightenment ne more nastaviti svojega sistema razporejanja."
 
-#: src/bin/e_main.c:570
+#: src/bin/e_main.c:577
 #, fuzzy
 msgid "Enlightenment cannot set up the pointer system."
 msgstr "Enlightenment ne more nastaviti internacionalizacijskega sistema."
 
-#: src/bin/e_main.c:579
+#: src/bin/e_main.c:586
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2529,15 +2529,15 @@ msgstr ""
 "Enlightenment ne more nastaviti poti za iskanje datotek.\n"
 "Mogoče ste ostali brez spomina?"
 
-#: src/bin/e_main.c:597
+#: src/bin/e_main.c:604
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment ne more nastaviti sistema pisav."
 
-#: src/bin/e_main.c:608
+#: src/bin/e_main.c:615
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment ne more nastaviti tematskega sistema."
 
-#: src/bin/e_main.c:619
+#: src/bin/e_main.c:626
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2545,11 +2545,11 @@ msgstr ""
 "Enlightenment ne more nastaviti zagonskega okna.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:630
+#: src/bin/e_main.c:637
 msgid "Testing Format Support"
 msgstr ""
 
-#: src/bin/e_main.c:640
+#: src/bin/e_main.c:647
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2557,7 +2557,7 @@ msgstr ""
 "Enlightenment je ugotovil, da Evas ne more ustvariti Buffer Canvas.\n"
 "Prepričajte se, da Evas podpira Software Buffer pogon.\n"
 
-#: src/bin/e_main.c:650
+#: src/bin/e_main.c:657
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2565,7 +2565,7 @@ msgstr ""
 "Enlightenment je ugotovil, da Evas ne more odpirati PNG datotek.\n"
 "Prepričajte se, da Evas podpira PNG vtič.\n"
 
-#: src/bin/e_main.c:659
+#: src/bin/e_main.c:666
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2573,7 +2573,7 @@ msgstr ""
 "Enlightenment je ugotovil, da Evas ne more odpirati JPEG datotek.\n"
 "Prepričajte se, da Evas podpira JPEG vtič.\n"
 
-#: src/bin/e_main.c:668
+#: src/bin/e_main.c:675
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -2581,80 +2581,80 @@ msgstr ""
 "Enlightenment je ugotovil, da Evas ne more odpirati EET datotek.\n"
 "Prepričajte se, da Evas podpira EET vtič.\n"
 
-#: src/bin/e_main.c:681
+#: src/bin/e_main.c:688
 msgid "Starting International Support"
 msgstr ""
 
-#: src/bin/e_main.c:686
+#: src/bin/e_main.c:693
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment ne more nastaviti internacionalizacijskega sistema."
 
-#: src/bin/e_main.c:691
+#: src/bin/e_main.c:698
 #, fuzzy
 msgid "Setting up Paths"
 msgstr "Nastavitve Fokusa"
 
-#: src/bin/e_main.c:708
+#: src/bin/e_main.c:715
 msgid "Setup Thumbnailer"
 msgstr ""
 
-#: src/bin/e_main.c:713
+#: src/bin/e_main.c:720
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment ne more zagnati sistema za pomanjševanje slik.\n"
 
-#: src/bin/e_main.c:718
+#: src/bin/e_main.c:725
 #, fuzzy
 msgid "Setup System Controls"
 msgstr "Nastavi nadzornika"
 
-#: src/bin/e_main.c:723
+#: src/bin/e_main.c:730
 #, fuzzy
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Enlightenment ne more zagnati sistema za pomanjševanje slik.\n"
 
-#: src/bin/e_main.c:728
+#: src/bin/e_main.c:735
 #, fuzzy
 msgid "Setup Actions"
 msgstr "Priljubljeni programi"
 
-#: src/bin/e_main.c:733
+#: src/bin/e_main.c:740
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment ne more nastaviti svojega sistema akcij."
 
-#: src/bin/e_main.c:737
+#: src/bin/e_main.c:744
 #, fuzzy
 msgid "Setup Bindings"
 msgstr "Naveze tipk"
 
-#: src/bin/e_main.c:742
+#: src/bin/e_main.c:749
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment ne more nastaviti svojega sistema povezav."
 
-#: src/bin/e_main.c:746
+#: src/bin/e_main.c:753
 #, fuzzy
 msgid "Setup Popups"
 msgstr "Prikaži popup"
 
-#: src/bin/e_main.c:751
+#: src/bin/e_main.c:758
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment ne more nastaviti svojega Popup sistema."
 
-#: src/bin/e_main.c:756
+#: src/bin/e_main.c:763
 #, fuzzy
 msgid "Setup Wallpaper"
 msgstr "Preskok na namizje z miško"
 
-#: src/bin/e_main.c:761
+#: src/bin/e_main.c:768
 #, fuzzy
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Enlightenment ne more nastaviti svojega sistema zaklepanja namizja."
 
-#: src/bin/e_main.c:765
+#: src/bin/e_main.c:772
 #, fuzzy
 msgid "Setup Screens"
 msgstr "Zaslonsko Območje"
 
-#: src/bin/e_main.c:770
+#: src/bin/e_main.c:777
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -2663,154 +2663,154 @@ msgstr ""
 "vašega sistema in pri tem klavrno propadel. Mogoče uporabljate drug\n"
 "upravljalnik z okni?\n"
 
-#: src/bin/e_main.c:775
+#: src/bin/e_main.c:782
 msgid "Setup Execution System"
 msgstr ""
 
-#: src/bin/e_main.c:780
+#: src/bin/e_main.c:787
 #, fuzzy
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Enlightenment ne more nastaviti svojega exebuf sistema."
 
-#: src/bin/e_main.c:784
+#: src/bin/e_main.c:791
 #, fuzzy
 msgid "Setup Remembers"
 msgstr "Zapomni si"
 
-#: src/bin/e_main.c:789
+#: src/bin/e_main.c:796
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment ne more nastaviti shranjevanja nastavitev."
 
-#: src/bin/e_main.c:797
+#: src/bin/e_main.c:804
 msgid "Setup FM"
 msgstr ""
 
-#: src/bin/e_main.c:802
+#: src/bin/e_main.c:809
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment ne more zagnati upravitelja datotek.\n"
 
-#: src/bin/e_main.c:815
+#: src/bin/e_main.c:822
 msgid "Setup Message System"
 msgstr ""
 
-#: src/bin/e_main.c:820
+#: src/bin/e_main.c:827
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment ne more nastaviti sistema sporočil."
 
-#: src/bin/e_main.c:824
+#: src/bin/e_main.c:831
 msgid "Setup DND"
 msgstr ""
 
-#: src/bin/e_main.c:829
+#: src/bin/e_main.c:836
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment ne more nastaviti svojega sistema dnd."
 
-#: src/bin/e_main.c:833
+#: src/bin/e_main.c:840
 msgid "Setup Grab Input HAnding"
 msgstr ""
 
-#: src/bin/e_main.c:838
+#: src/bin/e_main.c:845
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment ne more nastaviti svojega sistema za delo z vnosi."
 
-#: src/bin/e_main.c:842
+#: src/bin/e_main.c:849
 #, fuzzy
 msgid "Setup Modules"
 msgstr "Moduli"
 
-#: src/bin/e_main.c:847
+#: src/bin/e_main.c:854
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment ne more nastaviti modularnega sistema."
 
-#: src/bin/e_main.c:851
+#: src/bin/e_main.c:858
 #, fuzzy
 msgid "Setup Color Classes"
 msgstr "Razred Ikone"
 
-#: src/bin/e_main.c:856
+#: src/bin/e_main.c:863
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment ne more nastaviti svojega sistema barvnih razredov."
 
-#: src/bin/e_main.c:860
+#: src/bin/e_main.c:867
 #, fuzzy
 msgid "Setup Gadcon"
 msgstr "Poženi ukaz"
 
-#: src/bin/e_main.c:865
+#: src/bin/e_main.c:872
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr ""
 "Enlightenment ne more nastaviti svojega sistema upravljanja s pripomočki."
 
-#: src/bin/e_main.c:869
+#: src/bin/e_main.c:876
 msgid "Setup Shelves"
 msgstr ""
 
-#: src/bin/e_main.c:874
+#: src/bin/e_main.c:881
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Enlightenment ne more nastaviti svojega sistema razporejanja."
 
-#: src/bin/e_main.c:879
+#: src/bin/e_main.c:886
 msgid "Setup DPMS"
 msgstr ""
 
-#: src/bin/e_main.c:884
+#: src/bin/e_main.c:891
 #, fuzzy
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment ne more nastaviti shranjevanja nastavitev."
 
-#: src/bin/e_main.c:888
+#: src/bin/e_main.c:895
 #, fuzzy
 msgid "Setup Screensaver"
 msgstr "Zaslonsko Območje"
 
-#: src/bin/e_main.c:893
+#: src/bin/e_main.c:900
 #, fuzzy
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "Enlightenment ne more zagnati upravitelja datotek.\n"
 
-#: src/bin/e_main.c:897
+#: src/bin/e_main.c:904
 #, fuzzy
 msgid "Setup Mouse"
 msgstr "Izbriši"
 
-#: src/bin/e_main.c:902
+#: src/bin/e_main.c:909
 #, fuzzy
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr "Enlightenment ne more nastaviti shranjevanja nastavitev."
 
-#: src/bin/e_main.c:906
+#: src/bin/e_main.c:913
 #, fuzzy
 msgid "Setup Desklock"
 msgstr "Pošlji na namizje"
 
-#: src/bin/e_main.c:911
+#: src/bin/e_main.c:918
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "Enlightenment ne more nastaviti svojega sistema zaklepanja namizja."
 
-#: src/bin/e_main.c:916
+#: src/bin/e_main.c:923
 msgid "Set Up File Ordering"
 msgstr ""
 
-#: src/bin/e_main.c:920
+#: src/bin/e_main.c:927
 #, fuzzy
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment ne more nastaviti modularnega sistema."
 
-#: src/bin/e_main.c:925
+#: src/bin/e_main.c:932
 msgid "Set Up Powersave modes"
 msgstr ""
 
-#: src/bin/e_main.c:929
+#: src/bin/e_main.c:936
 #, fuzzy
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr "Enlightenment ne more nastaviti svojega Popup sistema."
 
-#: src/bin/e_main.c:961
+#: src/bin/e_main.c:968
 #, fuzzy
 msgid "Load Modules"
 msgstr "(Ni naloženih modulov)"
 
-#: src/bin/e_main.c:969
+#: src/bin/e_main.c:976
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2818,11 +2818,11 @@ msgid ""
 "dialog should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:976
+#: src/bin/e_main.c:983
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr ""
 
-#: src/bin/e_main.c:977
+#: src/bin/e_main.c:984
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2830,12 +2830,12 @@ msgid ""
 "should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:985
+#: src/bin/e_main.c:992
 #, fuzzy
 msgid "Configure Shelves"
 msgstr "Nastavitve"
 
-#: src/bin/e_main.c:992
+#: src/bin/e_main.c:999
 msgid "Almost Done"
 msgstr ""
 
@@ -2884,12 +2884,12 @@ msgstr "Enlightenment %s Modul"
 msgid "Would you like to unload this module?<br>"
 msgstr "Bi radi razbremenili ta modul?<br>"
 
-#: src/bin/e_shelf.c:1196 src/modules/conf_shelves/e_int_config_shelf.c:281
+#: src/bin/e_shelf.c:1198 src/modules/conf_shelves/e_int_config_shelf.c:281
 #, fuzzy
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Ste prepričani, da hočete pobrisati <br><b>%s</b> ?"
 
-#: src/bin/e_shelf.c:1197
+#: src/bin/e_shelf.c:1199
 #, fuzzy
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
@@ -2897,19 +2897,19 @@ msgid ""
 msgstr ""
 "Zahtevali ste izhod iz Enlightenment.<br><br>Ste prepričani, da bi to radi?"
 
-#: src/bin/e_shelf.c:1652 src/bin/e_toolbar.c:317
+#: src/bin/e_shelf.c:1654 src/bin/e_toolbar.c:317
 msgid "Stop Moving/Resizing Items"
 msgstr ""
 
-#: src/bin/e_shelf.c:1654 src/bin/e_toolbar.c:319
+#: src/bin/e_shelf.c:1656 src/bin/e_toolbar.c:319
 msgid "Begin Moving/Resizing Items"
 msgstr ""
 
-#: src/bin/e_shelf.c:1667
+#: src/bin/e_shelf.c:1669
 msgid "Configure Shelf Contents"
 msgstr ""
 
-#: src/bin/e_shelf.c:1672
+#: src/bin/e_shelf.c:1674
 msgid "Delete this Shelf"
 msgstr ""
 
@@ -3064,11 +3064,11 @@ msgstr "O tej temi"
 msgid "Configure Toolbar Contents"
 msgstr "Nastavitve"
 
-#: src/bin/e_utils.c:247
+#: src/bin/e_utils.c:246
 msgid "Cannot exit - immortal windows."
 msgstr "Izhod nemogoč - nesmrtno okno"
 
-#: src/bin/e_utils.c:248
+#: src/bin/e_utils.c:247
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Enlightenment will not allow itself to exit until these "
@@ -3078,67 +3078,67 @@ msgstr ""
 "da izhod iz Enlightenment ne bo mogoč, dekler se ta<br>okna ne zaprejo "
 "oziroma se jim ne odstrani zaklep.<br>"
 
-#: src/bin/e_utils.c:703
+#: src/bin/e_utils.c:702
 #, fuzzy, c-format
 msgid "%'.0f Bytes"
 msgstr "%1.0f minut"
 
-#: src/bin/e_utils.c:707
+#: src/bin/e_utils.c:706
 #, fuzzy, c-format
 msgid "%'.0f KB"
 msgstr "%1.0f MB"
 
-#: src/bin/e_utils.c:711
+#: src/bin/e_utils.c:710
 #, fuzzy, c-format
 msgid "%'.0f MB"
 msgstr "%1.0f MB"
 
-#: src/bin/e_utils.c:715
+#: src/bin/e_utils.c:714
 #, fuzzy, c-format
 msgid "%'.1f GB"
 msgstr "%1.1f MB"
 
-#: src/bin/e_utils.c:735
+#: src/bin/e_utils.c:734
 #, c-format
 msgid "In the Future"
 msgstr ""
 
-#: src/bin/e_utils.c:740
+#: src/bin/e_utils.c:739
 #, c-format
 msgid "In the last Minute"
 msgstr ""
 
-#: src/bin/e_utils.c:742
+#: src/bin/e_utils.c:741
 #, c-format
 msgid "%li Years ago"
 msgstr ""
 
-#: src/bin/e_utils.c:744
+#: src/bin/e_utils.c:743
 #, c-format
 msgid "%li Months ago"
 msgstr ""
 
-#: src/bin/e_utils.c:746
+#: src/bin/e_utils.c:745
 #, c-format
 msgid "%li Weeks ago"
 msgstr ""
 
-#: src/bin/e_utils.c:748
+#: src/bin/e_utils.c:747
 #, c-format
 msgid "%li Days ago"
 msgstr ""
 
-#: src/bin/e_utils.c:750
+#: src/bin/e_utils.c:749
 #, c-format
 msgid "%li Hours ago"
 msgstr ""
 
-#: src/bin/e_utils.c:752
+#: src/bin/e_utils.c:751
 #, c-format
 msgid "%li Minutes ago"
 msgstr ""
 
-#: src/bin/e_utils.c:758
+#: src/bin/e_utils.c:757
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1146
 msgid "Unknown"
 msgstr "Neznan"
@@ -4548,6 +4548,7 @@ msgid ""
 msgstr "Enlightenment ni uspel odcepiti hčerinskega procesa:<br><br>%s<br>"
 
 #: src/modules/conf_imc/e_mod_main.c:34 src/modules/conf_intl/e_mod_main.c:34
+#: src/modules/wizard/page_010.c:148
 #, fuzzy
 msgid "Language"
 msgstr "Upravitelj"
@@ -4708,22 +4709,22 @@ msgid "Binding Key Error"
 msgstr "Napaka naveze tipk"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1289
-#: src/modules/gadman/e_mod_gadman.c:699
+#: src/modules/gadman/e_mod_gadman.c:702
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1294
-#: src/modules/gadman/e_mod_gadman.c:704
+#: src/modules/gadman/e_mod_gadman.c:707
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1300
-#: src/modules/gadman/e_mod_gadman.c:710
+#: src/modules/gadman/e_mod_gadman.c:713
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1306
-#: src/modules/gadman/e_mod_gadman.c:716
+#: src/modules/gadman/e_mod_gadman.c:719
 msgid "WIN"
 msgstr "WIN"
 
@@ -6448,20 +6449,20 @@ msgstr "Prehodnost"
 msgid "Animations"
 msgstr "Podatki prikazovanja"
 
-#: src/modules/gadman/e_mod_gadman.c:646
+#: src/modules/gadman/e_mod_gadman.c:649
 #, fuzzy
 msgid "Always on desktop"
 msgstr "Vedno na vrhu"
 
-#: src/modules/gadman/e_mod_gadman.c:656
+#: src/modules/gadman/e_mod_gadman.c:659
 msgid "On top pressing"
 msgstr ""
 
-#: src/modules/gadman/e_mod_gadman.c:666
+#: src/modules/gadman/e_mod_gadman.c:669
 msgid "Behavior"
 msgstr ""
 
-#: src/modules/gadman/e_mod_gadman.c:684
+#: src/modules/gadman/e_mod_gadman.c:687
 #, fuzzy
 msgid "Add other gadgets"
 msgstr "Pripomočki"
@@ -6906,24 +6907,19 @@ msgstr "%1.0f C"
 msgid "Temperature"
 msgstr "Nizka temperatura"
 
-#: src/modules/wizard/e_wizard.c:341
-#, fuzzy
-msgid "Welcome to Enlightenment 東京"
-msgstr "O Enlightenment"
-
-#: src/modules/wizard/e_wizard.c:343
+#: src/modules/wizard/e_wizard.c:222
 msgid "Next"
 msgstr ""
 
-#: src/modules/wizard/e_wizard.c:344
+#: src/modules/wizard/e_wizard.c:273
 #, fuzzy
-msgid "Back"
-msgstr "Osnovno"
+msgid "Welcome to Enlightenment"
+msgstr "O Enlightenment"
 
-#: src/modules/wizard/page_010.c:25
+#: src/modules/wizard/page_010.c:149
 #, fuzzy
-msgid "Choose Language"
-msgstr "Upravitelj"
+msgid "Select one"
+msgstr "Izberi okno"
 
 #: src/modules/mixer/app_mixer.c:166
 msgid "Capture"
@@ -7065,6 +7061,14 @@ msgstr ""
 #, fuzzy
 msgid "Settings"
 msgstr "Nastavitve Namizij"
+
+#, fuzzy
+#~ msgid "Back"
+#~ msgstr "Osnovno"
+
+#, fuzzy
+#~ msgid "Choose Language"
+#~ msgstr "Upravitelj"
 
 #~ msgid "X reports there are no root windows and %i screens!\n"
 #~ msgstr "X pravi da ni osnovnih oken in %i zaslonov!\n"

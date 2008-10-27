@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-10-23 11:31+1100\n"
+"POT-Creation-Date: 2008-10-27 16:37+1100\n"
 "PO-Revision-Date: 2008-07-18 21:02+0200\n"
 "Last-Translator: Lisovszki Sándor <lisovszki@gmail.com>\n"
 "Language-Team: hungarian <mypclinuxos.com>\n"
@@ -23,7 +23,7 @@ msgid "About Enlightenment"
 msgstr "Az Enlightenmentrõl"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2315 src/bin/e_config_dialog.c:256
-#: src/bin/e_fm.c:548 src/bin/e_int_border_menu.c:208
+#: src/bin/e_fm.c:550 src/bin/e_int_border_menu.c:208
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:20
 #: src/modules/conf/e_conf.c:173 src/modules/fileman/e_fwin.c:1422
 #: src/modules/mixer/app_mixer.c:537
@@ -32,7 +32,7 @@ msgstr "Bezárás"
 
 #: src/bin/e_about.c:21 src/bin/e_actions.c:2597 src/bin/e_actions.c:2601
 #: src/bin/e_actions.c:2605 src/bin/e_actions.c:2609 src/bin/e_actions.c:2613
-#: src/bin/e_int_menus.c:169 src/bin/e_main.c:623
+#: src/bin/e_int_menus.c:169 src/bin/e_main.c:630
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:181
 msgid "Enlightenment"
 msgstr "Enlightenment"
@@ -78,16 +78,16 @@ msgstr "Tényleg be akarod zárni ezt az ablakot?"
 
 #: src/bin/e_actions.c:353 src/bin/e_actions.c:1631 src/bin/e_actions.c:1713
 #: src/bin/e_actions.c:1777 src/bin/e_actions.c:1841 src/bin/e_actions.c:1905
-#: src/bin/e_actions.c:1969 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:7184
-#: src/bin/e_fm.c:7364 src/bin/e_module.c:526
+#: src/bin/e_actions.c:1969 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:7186
+#: src/bin/e_fm.c:7366 src/bin/e_module.c:526
 #: src/modules/conf_display/e_int_config_display.c:215
 msgid "Yes"
 msgstr "Igen"
 
 #: src/bin/e_actions.c:355 src/bin/e_actions.c:1633 src/bin/e_actions.c:1715
 #: src/bin/e_actions.c:1779 src/bin/e_actions.c:1843 src/bin/e_actions.c:1907
-#: src/bin/e_actions.c:1971 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:7182
-#: src/bin/e_fm.c:7365 src/bin/e_module.c:527
+#: src/bin/e_actions.c:1971 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:7184
+#: src/bin/e_fm.c:7367 src/bin/e_module.c:527
 #: src/modules/conf_display/e_int_config_display.c:216
 msgid "No"
 msgstr "Nem"
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Window : Actions"
 msgstr "Ablak : Műveletek"
 
-#: src/bin/e_actions.c:2275 src/bin/e_fm.c:4758
+#: src/bin/e_actions.c:2275 src/bin/e_fm.c:4760
 msgid "Move"
 msgstr "Mozgatás"
 
@@ -614,15 +614,15 @@ msgstr "Késleltetett folyamat"
 msgid "Set As Background"
 msgstr "Beállítás háttérként"
 
-#: src/bin/e_border.c:4839
+#: src/bin/e_border.c:4846
 msgid "Desktop files scan done"
 msgstr "Desktop fájlok keresése kész"
 
-#: src/bin/e_border.c:4851
+#: src/bin/e_border.c:4858
 msgid "Desktop file scan"
 msgstr "Desktop fájl keresés"
 
-#: src/bin/e_config.c:647
+#: src/bin/e_config.c:682
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -639,7 +639,7 @@ msgstr ""
 "és<br>ezek az elõzõ fájlokból hiányoztak. Mindent visszaállíthatsz,<br>ahogy "
 "neked tetszik. Az esetleges galibákért elnézést kérünk!<br>"
 
-#: src/bin/e_config.c:661
+#: src/bin/e_config.c:696
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -653,16 +653,16 @@ msgstr ""
 "Ez így nem túl jó, és figyelmez-<br>tetésként a beállítások visszaálltak az "
 "alapértelmezésre.<br>A galibákért elnézést kérünk!<br>"
 
-#: src/bin/e_config.c:683
+#: src/bin/e_config.c:718
 #, c-format
 msgid "Desktop %i, %i"
 msgstr "Asztal %i, %i"
 
-#: src/bin/e_config.c:2321
+#: src/bin/e_config.c:1959
 msgid "Configuration Upgraded"
 msgstr "A beállításokat frissítettem!"
 
-#: src/bin/e_config.c:2346
+#: src/bin/e_config.c:1984
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>configuration to disk. The "
@@ -673,7 +673,7 @@ msgstr ""
 "hiba nem hozható helyre<br>.<br><br>A fájl ahol a hiba keletkezett:<br>%"
 "s<br> A fájl törlésre kerül.<br>"
 
-#: src/bin/e_config.c:2357
+#: src/bin/e_config.c:1995
 #, c-format
 msgid ""
 "Enlightenment's configuration files are too big<br>for the file system they "
@@ -688,7 +688,7 @@ msgstr ""
 "beállításait. <br><br>A fájl, ahol a hiba keletkezett: <br>%s<br><br>A fájl "
 "törölve lett.<br>"
 
-#: src/bin/e_config.c:2370
+#: src/bin/e_config.c:2008
 #, c-format
 msgid ""
 "An output error occured when writing the configuration<br>files for "
@@ -701,7 +701,7 @@ msgstr ""
 "<br><br> A fájl, ahol a hiba keletkezett: <br>%s<br><br> A fájl törölve lett."
 "<br>"
 
-#: src/bin/e_config.c:2381
+#: src/bin/e_config.c:2019
 #, c-format
 msgid ""
 "Enlightenment cannot write its configuration file<br>because it ran out of "
@@ -713,7 +713,7 @@ msgstr ""
 "<br> Vagy nincs elég hely a lemezeden, vagy <br>nincs jogosultásgod írni rá."
 "<br><br> A hiba helye:<br>%s<br><br> A fájlt törölve lett.<br>"
 
-#: src/bin/e_config.c:2393
+#: src/bin/e_config.c:2031
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the configuration file<br>it was writing "
@@ -724,16 +724,16 @@ msgstr ""
 "megszakadt. Ez nagyon szokatlan.<br><br>A fájl, ahol a hiba keletkezett:<br>%"
 "s<br><br> A fájl törölve lett.<br>"
 
-#: src/bin/e_config.c:2418
+#: src/bin/e_config.c:2056
 msgid "Enlightenment Configuration Write Problems"
 msgstr "Enlightenment konfiguráció írási problémák"
 
-#: src/bin/e_config.c:2422 src/bin/e_config_dialog.c:248
+#: src/bin/e_config.c:2060 src/bin/e_config_dialog.c:248
 #: src/bin/e_eap_editor.c:599 src/bin/e_eap_editor.c:663
 #: src/bin/e_entry_dialog.c:58 src/bin/e_exec.c:321 src/bin/e_fm_prop.c:513
 #: src/bin/e_int_border_remember.c:258 src/bin/e_int_border_remember.c:339
 #: src/bin/e_int_border_remember.c:381 src/bin/e_module.c:418
-#: src/bin/e_sys.c:401 src/bin/e_sys.c:447 src/bin/e_utils.c:542
+#: src/bin/e_sys.c:401 src/bin/e_sys.c:447 src/bin/e_utils.c:541
 #: src/modules/conf_dpms/e_int_config_dpms.c:60
 #: src/modules/conf_dpms/e_int_config_dpms.c:81
 #: src/modules/conf_imc/e_int_config_imc_import.c:112
@@ -938,7 +938,7 @@ msgstr "Mégsem"
 msgid "Select an Executable"
 msgstr "Egy futtatható kiválasztása"
 
-#: src/bin/e_entry.c:491 src/bin/e_fm.c:6665
+#: src/bin/e_entry.c:493 src/bin/e_fm.c:6667
 #: src/modules/conf_applications/e_int_config_apps.c:271
 #: src/modules/conf_profiles/e_int_config_profiles.c:113
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -946,29 +946,29 @@ msgstr "Egy futtatható kiválasztása"
 msgid "Delete"
 msgstr "Törlés"
 
-#: src/bin/e_entry.c:504 src/bin/e_fm.c:6575
+#: src/bin/e_entry.c:506 src/bin/e_fm.c:6577
 msgid "Cut"
 msgstr "Kivágás"
 
-#: src/bin/e_entry.c:515 src/bin/e_fm.c:4750 src/bin/e_fm.c:6592
+#: src/bin/e_entry.c:517 src/bin/e_fm.c:4752 src/bin/e_fm.c:6594
 msgid "Copy"
 msgstr "Másolás"
 
-#: src/bin/e_entry.c:526 src/bin/e_fm.c:6416 src/bin/e_fm.c:6606
+#: src/bin/e_entry.c:528 src/bin/e_fm.c:6418 src/bin/e_fm.c:6608
 msgid "Paste"
 msgstr "Beillesztés"
 
-#: src/bin/e_entry.c:538
+#: src/bin/e_entry.c:540
 msgid "Select All"
 msgstr "Mindent kijelöl"
 
-#: src/bin/e_exec.c:218 src/bin/e_utils.c:202
+#: src/bin/e_exec.c:218 src/bin/e_utils.c:201
 #: src/modules/conf_imc/e_int_config_imc.c:278
 #: src/modules/conf_imc/e_int_config_imc.c:516
 msgid "Run Error"
 msgstr "Futási hiba"
 
-#: src/bin/e_exec.c:219 src/bin/e_utils.c:203
+#: src/bin/e_exec.c:219 src/bin/e_utils.c:202
 #: src/modules/conf_imc/e_int_config_imc.c:279
 #: src/modules/conf_imc/e_int_config_imc.c:517
 #, c-format
@@ -1091,131 +1091,131 @@ msgstr "Kimeneti adat"
 msgid "There was no output."
 msgstr "Nem volt kimenet"
 
-#: src/bin/e_fm.c:550
+#: src/bin/e_fm.c:552
 msgid "Nonexistent path"
 msgstr "Nem létező útvonal"
 
-#: src/bin/e_fm.c:553
+#: src/bin/e_fm.c:555
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s nem létezik."
 
-#: src/bin/e_fm.c:2648
+#: src/bin/e_fm.c:2650
 #, c-format
 msgid "%i Files"
 msgstr "%i fájlok"
 
-#: src/bin/e_fm.c:4766 src/bin/e_fm.c:7128 src/bin/e_fm.c:7258
+#: src/bin/e_fm.c:4768 src/bin/e_fm.c:7130 src/bin/e_fm.c:7260
 #, fuzzy
 msgid "Abort"
 msgstr "Névjegy"
 
-#: src/bin/e_fm.c:6339 src/bin/e_fm.c:6496
+#: src/bin/e_fm.c:6341 src/bin/e_fm.c:6498
 #: src/modules/fileman/e_mod_config.c:171
 msgid "View Mode"
 msgstr "Nézetmód"
 
-#: src/bin/e_fm.c:6346 src/bin/e_fm.c:6503
+#: src/bin/e_fm.c:6348 src/bin/e_fm.c:6505
 msgid "Refresh View"
 msgstr "A nézet frissítése"
 
-#: src/bin/e_fm.c:6357 src/bin/e_fm.c:6514
+#: src/bin/e_fm.c:6359 src/bin/e_fm.c:6516
 msgid "Show Hidden Files"
 msgstr "Rejtett fájlok megjelenítése"
 
-#: src/bin/e_fm.c:6372 src/bin/e_fm.c:6529
+#: src/bin/e_fm.c:6374 src/bin/e_fm.c:6531
 msgid "Remember Ordering"
 msgstr "Emlékezz az utasításokra"
 
-#: src/bin/e_fm.c:6384 src/bin/e_fm.c:6541
+#: src/bin/e_fm.c:6386 src/bin/e_fm.c:6543
 msgid "Sort Now"
 msgstr "Rendezés Most"
 
-#: src/bin/e_fm.c:6399 src/bin/e_fm.c:6559
+#: src/bin/e_fm.c:6401 src/bin/e_fm.c:6561
 #: src/modules/conf_paths/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Új könyvtár"
 
-#: src/bin/e_fm.c:6676
+#: src/bin/e_fm.c:6678
 msgid "Rename"
 msgstr "Átnevezés"
 
-#: src/bin/e_fm.c:6686
+#: src/bin/e_fm.c:6688
 msgid "Properties"
 msgstr "Tulajdonságok"
 
-#: src/bin/e_fm.c:6847 src/modules/conf_paths/e_int_config_paths.c:81
+#: src/bin/e_fm.c:6849 src/modules/conf_paths/e_int_config_paths.c:81
 #: src/modules/fileman/e_mod_config.c:173
 msgid "Icons"
 msgstr "Ikonok"
 
-#: src/bin/e_fm.c:6855 src/modules/fileman/e_mod_config.c:186
+#: src/bin/e_fm.c:6857 src/modules/fileman/e_mod_config.c:186
 msgid "List"
 msgstr "Lista"
 
-#: src/bin/e_fm.c:6993
+#: src/bin/e_fm.c:6995
 msgid "Create a new Directory"
 msgstr "Új könyvtár létrehozása"
 
-#: src/bin/e_fm.c:6994
+#: src/bin/e_fm.c:6996
 msgid "New Directory Name:"
 msgstr "Új könyvtár neve:"
 
-#: src/bin/e_fm.c:7053
+#: src/bin/e_fm.c:7055
 #, c-format
 msgid "Rename %s to:"
 msgstr "%s átnevezése erre:"
 
-#: src/bin/e_fm.c:7055
+#: src/bin/e_fm.c:7057
 msgid "Rename File"
 msgstr "Fájl átnevezése"
 
-#: src/bin/e_fm.c:7127 src/bin/e_fm.c:7257
+#: src/bin/e_fm.c:7129 src/bin/e_fm.c:7259
 #, fuzzy
 msgid "Retry"
 msgstr "Újraindítás"
 
-#: src/bin/e_fm.c:7131 src/bin/e_fm.c:7188 src/bin/e_fm.c:7263
+#: src/bin/e_fm.c:7133 src/bin/e_fm.c:7190 src/bin/e_fm.c:7265
 #, fuzzy
 msgid "Error"
 msgstr "Futási hiba"
 
-#: src/bin/e_fm.c:7133 src/bin/e_fm.c:7190
+#: src/bin/e_fm.c:7135 src/bin/e_fm.c:7192
 #, c-format
 msgid "%s"
 msgstr ""
 
-#: src/bin/e_fm.c:7183
+#: src/bin/e_fm.c:7185
 msgid "No to all"
 msgstr ""
 
-#: src/bin/e_fm.c:7185
+#: src/bin/e_fm.c:7187
 msgid "Yes to all"
 msgstr ""
 
-#: src/bin/e_fm.c:7259
+#: src/bin/e_fm.c:7261
 msgid "Ignore this"
 msgstr ""
 
-#: src/bin/e_fm.c:7260
+#: src/bin/e_fm.c:7262
 msgid "Ignore all"
 msgstr ""
 
-#: src/bin/e_fm.c:7265
+#: src/bin/e_fm.c:7267
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:7367
+#: src/bin/e_fm.c:7369
 msgid "Confirm Delete"
 msgstr "A törlés megerősítése"
 
-#: src/bin/e_fm.c:7371
+#: src/bin/e_fm.c:7373
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Biztosan törölni akarod a(z) <br><hilight>%s</hilight> nevû fájlt?"
 
-#: src/bin/e_fm.c:7377
+#: src/bin/e_fm.c:7379
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1336,11 +1336,11 @@ msgstr "Ismeretlen érték"
 msgid "Removable Device"
 msgstr "Cserélhető adathordozójú eszköz"
 
-#: src/bin/e_gadcon.c:1214 src/modules/gadman/e_mod_gadman.c:622
+#: src/bin/e_gadcon.c:1214 src/modules/gadman/e_mod_gadman.c:625
 msgid "Plain"
 msgstr "Egyszerű"
 
-#: src/bin/e_gadcon.c:1223 src/modules/gadman/e_mod_gadman.c:630
+#: src/bin/e_gadcon.c:1223 src/modules/gadman/e_mod_gadman.c:633
 msgid "Inset"
 msgstr "Beágyazott"
 
@@ -1356,7 +1356,7 @@ msgstr "Beágyazott"
 #: src/modules/conf_transitions/e_mod_main.c:34
 #: src/modules/conf_wallpaper/e_mod_main.c:28
 #: src/modules/dropshadow/e_mod_main.c:89
-#: src/modules/gadman/e_mod_gadman.c:638
+#: src/modules/gadman/e_mod_gadman.c:641
 msgid "Appearance"
 msgstr "Megjelenés"
 
@@ -1368,11 +1368,11 @@ msgstr "Tartalom automatikus görgetése"
 msgid "Able to be resized"
 msgstr "Átméretezhetõ"
 
-#: src/bin/e_gadcon.c:1260 src/modules/gadman/e_mod_gadman.c:673
+#: src/bin/e_gadcon.c:1260 src/modules/gadman/e_mod_gadman.c:676
 msgid "Begin move/resize this gadget"
 msgstr "Modul áthelyezésének/átméretezésének kezdése"
 
-#: src/bin/e_gadcon.c:1266 src/modules/gadman/e_mod_gadman.c:679
+#: src/bin/e_gadcon.c:1266 src/modules/gadman/e_mod_gadman.c:682
 msgid "Remove this gadget"
 msgstr "Modul eltávolítása"
 
@@ -1928,8 +1928,8 @@ msgstr "Betöltött modulok"
 msgid "Unload Module"
 msgstr "Modul kikapcsolása"
 
-#: src/bin/e_int_config_modules.c:212 src/bin/e_int_config_modules.c:621
-#: src/bin/e_int_config_modules.c:638 src/bin/e_int_config_modules.c:663
+#: src/bin/e_int_config_modules.c:212 src/bin/e_int_config_modules.c:620
+#: src/bin/e_int_config_modules.c:637 src/bin/e_int_config_modules.c:662
 #: src/bin/e_int_gadcon_config.c:121 src/bin/e_int_gadcon_config.c:156
 #: src/bin/e_int_gadcon_config.c:178
 msgid "Description: Unavailable"
@@ -2062,7 +2062,7 @@ msgstr "Nincs név!!!"
 msgid "(No Shelves)"
 msgstr "(Nincsenek polcok)"
 
-#: src/bin/e_int_menus.c:1553 src/bin/e_shelf.c:1087
+#: src/bin/e_int_menus.c:1553 src/bin/e_shelf.c:1089
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "Polc #"
@@ -2075,7 +2075,7 @@ msgstr "Polc hozzáadása"
 msgid "Delete A Shelf"
 msgstr "Polc törlése"
 
-#: src/bin/e_int_shelf_config.c:71 src/bin/e_shelf.c:1662
+#: src/bin/e_int_shelf_config.c:71 src/bin/e_shelf.c:1664
 msgid "Shelf Configuration"
 msgstr "Polc beállítása"
 
@@ -2179,7 +2179,7 @@ msgstr "Mutasd minden asztalon"
 msgid "Show on specified Desktops"
 msgstr "Mutrasd a kiválasztott asztalon"
 
-#: src/bin/e_ipc.c:48
+#: src/bin/e_ipc.c:47
 #, c-format
 msgid ""
 "Possible IPC Hack Attempt. The IPC socket\n"
@@ -2196,7 +2196,7 @@ msgstr ""
 "de nem te vagy a tulajdonos. Kérlek ellenőrizd:\n"
 "%s/enlightenment-%s\n"
 
-#: src/bin/e_ipc.c:62
+#: src/bin/e_ipc.c:57
 #, c-format
 msgid ""
 "The IPC socket directory cannot be created or\n"
@@ -2209,7 +2209,7 @@ msgstr ""
 "Kérlek ellenőrizd:\n"
 "%s/enlightenment-%s\n"
 
-#: src/bin/e_main.c:299
+#: src/bin/e_main.c:306
 #, c-format
 msgid ""
 "Options:\n"
@@ -2253,7 +2253,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tPszichopata leszek.\n"
 
-#: src/bin/e_main.c:361
+#: src/bin/e_main.c:368
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2261,7 +2261,7 @@ msgstr ""
 "Az E17 nem tudta elindítani az Ecore-t!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:387
+#: src/bin/e_main.c:394
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2269,7 +2269,7 @@ msgstr ""
 "Az E17 nem tudta betölteni a fájlrendszert.\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:399
+#: src/bin/e_main.c:406
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2277,7 +2277,7 @@ msgstr ""
 "Az E17 nem tudta betölteni a kilépési signál kezelõt!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:405
+#: src/bin/e_main.c:412
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2285,7 +2285,7 @@ msgstr ""
 "Az E17 nem tudta betölteni a HUP szignál kezelõt!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:417
+#: src/bin/e_main.c:424
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2293,7 +2293,7 @@ msgstr ""
 "Az E17 nem tudott csatlakozni az X szerverhez.\n"
 "Be van állítva a DISPLAY változó?"
 
-#: src/bin/e_main.c:425
+#: src/bin/e_main.c:432
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2301,7 +2301,7 @@ msgstr ""
 "Az E17 nem tudta elindítani a vészhelyzeti figyelmeztetõ rendszert!\n"
 "Be van állítva a DISPLAY változó?"
 
-#: src/bin/e_main.c:448
+#: src/bin/e_main.c:455
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -2309,7 +2309,7 @@ msgstr ""
 "Az E17 nem tudta elindítani a kapcsolódási rendszert!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:456
+#: src/bin/e_main.c:463
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2317,7 +2317,7 @@ msgstr ""
 "Az E17 nem tudta elindítani az IPC rendszert!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:465
+#: src/bin/e_main.c:472
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -2325,7 +2325,7 @@ msgstr ""
 "Az E17 nem tudta beállítani a xinerama keretrendszert!\n"
 "Ennek nem kéne megtörténnie"
 
-#: src/bin/e_main.c:484
+#: src/bin/e_main.c:491
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -2333,7 +2333,7 @@ msgstr ""
 "Az E17 nem tudta elindítani az Evas-t!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:490
+#: src/bin/e_main.c:497
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2343,7 +2343,7 @@ msgstr ""
 "Kérlek, ellenõrizd az Ecore, és Evas telepítéseket, hogy\n"
 "támogatják-e a fenti funkciót!"
 
-#: src/bin/e_main.c:497
+#: src/bin/e_main.c:504
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2353,7 +2353,7 @@ msgstr ""
 "Kérlek, ellenõrizd az Ecore, és Evas telepítéseket, hogy\n"
 "támogatják-e a fenti funkciót!"
 
-#: src/bin/e_main.c:513 src/bin/e_main.c:520
+#: src/bin/e_main.c:520 src/bin/e_main.c:527
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
@@ -2361,7 +2361,7 @@ msgstr ""
 "Az E17 nem tudta betölteni a fájlrendszert!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:534
+#: src/bin/e_main.c:541
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2369,24 +2369,24 @@ msgstr ""
 "Az E17 nem tudta létrehozni a könyvtárakat a könyvtáradban!\n"
 "Lehet, hogy nincs saját könyvtárad, vagy a lemez tele van?"
 
-#: src/bin/e_main.c:544
+#: src/bin/e_main.c:551
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Az E17 nem tudta beállítani konfigurációs rendszert."
 
-#: src/bin/e_main.c:553
+#: src/bin/e_main.c:560
 msgid "Enlightenment cannot set up its config system."
 msgstr "Az E17 nem tudta beállítani konfigurációs rendszert."
 
-#: src/bin/e_main.c:562
+#: src/bin/e_main.c:569
 #, fuzzy
 msgid "Enlightenment cannot set up its scale system."
 msgstr "Az E17 nem tudta elindítani a polc-rendszert."
 
-#: src/bin/e_main.c:570
+#: src/bin/e_main.c:577
 msgid "Enlightenment cannot set up the pointer system."
 msgstr "Az E17 nem tudta felállítani az intl rendszerét."
 
-#: src/bin/e_main.c:579
+#: src/bin/e_main.c:586
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2394,15 +2394,15 @@ msgstr ""
 "Az E17 nem tudta felállítani a fájlok elérési útjait.\n"
 "Talán nincs elég memória?"
 
-#: src/bin/e_main.c:597
+#: src/bin/e_main.c:604
 msgid "Enlightenment cannot set up its font system."
 msgstr "Az E17 nem tudta elindítani a betütípus-rendszert."
 
-#: src/bin/e_main.c:608
+#: src/bin/e_main.c:615
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Az E17 nem tudta elindítani a témázó-rendszert."
 
-#: src/bin/e_main.c:619
+#: src/bin/e_main.c:626
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2410,11 +2410,11 @@ msgstr ""
 "Az E17 nem tudta felállítani az induló képernyõt.\n"
 "Lehet, hogy kevés a memória?"
 
-#: src/bin/e_main.c:630
+#: src/bin/e_main.c:637
 msgid "Testing Format Support"
 msgstr "Formátum támogatás tesztelése"
 
-#: src/bin/e_main.c:640
+#: src/bin/e_main.c:647
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2422,7 +2422,7 @@ msgstr ""
 "Az Evas nem tudja megcsinálni a puffer vásznat. Kérlek ellenõrizd\n"
 "hogy az Evas támogatja-e a Software Buffer engine-t\n"
 
-#: src/bin/e_main.c:650
+#: src/bin/e_main.c:657
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2430,7 +2430,7 @@ msgstr ""
 "Az Evas nem tudja betölteni a PNG fájlokat. Kérlek ellenõrizd,\n"
 "hogy az Evas támogatja-e a PNG töltõt.\n"
 
-#: src/bin/e_main.c:659
+#: src/bin/e_main.c:666
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2438,7 +2438,7 @@ msgstr ""
 "Az Evas nem tudja betölteni a JPEG fájlokat. Kérlek ellenõrizd,\n"
 "hogy az Evas támogatja-e a JPEG töltõt.\n"
 
-#: src/bin/e_main.c:668
+#: src/bin/e_main.c:675
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -2446,71 +2446,71 @@ msgstr ""
 "Az Evas nem tudja betölteni a EET fájlokat. Kérlek ellenõrizd,\n"
 "hogy az Evas támogatja-e a EET töltõt.\n"
 
-#: src/bin/e_main.c:681
+#: src/bin/e_main.c:688
 msgid "Starting International Support"
 msgstr "Nemzetközi támogatás indítása"
 
-#: src/bin/e_main.c:686
+#: src/bin/e_main.c:693
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Az E17 nem tudta felállítani az intl rendszerét."
 
-#: src/bin/e_main.c:691
+#: src/bin/e_main.c:698
 msgid "Setting up Paths"
 msgstr "Útvonalak beállítása"
 
-#: src/bin/e_main.c:708
+#: src/bin/e_main.c:715
 msgid "Setup Thumbnailer"
 msgstr "Előkép beállítása"
 
-#: src/bin/e_main.c:713
+#: src/bin/e_main.c:720
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Az E17 nem tudta elindítani a elõkép-generátort!\n"
 
-#: src/bin/e_main.c:718
+#: src/bin/e_main.c:725
 msgid "Setup System Controls"
 msgstr "Vezérlőpult beállítása"
 
-#: src/bin/e_main.c:723
+#: src/bin/e_main.c:730
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Az E17 nem tudta elindítani a elõkép-generátort!\n"
 
-#: src/bin/e_main.c:728
+#: src/bin/e_main.c:735
 msgid "Setup Actions"
 msgstr "Folyamatok beállítása"
 
-#: src/bin/e_main.c:733
+#: src/bin/e_main.c:740
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Az E17 nem tudta elindítani az akció-rendszerét."
 
-#: src/bin/e_main.c:737
+#: src/bin/e_main.c:744
 msgid "Setup Bindings"
 msgstr "Billentyûkombinációk"
 
-#: src/bin/e_main.c:742
+#: src/bin/e_main.c:749
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Az e17 nem tudta felállítani a kombinációs rendszert."
 
-#: src/bin/e_main.c:746
+#: src/bin/e_main.c:753
 msgid "Setup Popups"
 msgstr "felugró ablakok beállítása"
 
-#: src/bin/e_main.c:751
+#: src/bin/e_main.c:758
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Az E17 nem tudta beállítani a felugró-ablak rendszert."
 
-#: src/bin/e_main.c:756
+#: src/bin/e_main.c:763
 msgid "Setup Wallpaper"
 msgstr "Háttérkép beállítása"
 
-#: src/bin/e_main.c:761
+#: src/bin/e_main.c:768
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Az E17 nem tudta beállítani az asztal háttér-rendszert."
 
-#: src/bin/e_main.c:765
+#: src/bin/e_main.c:772
 msgid "Setup Screens"
 msgstr "képernyők beállítása"
 
-#: src/bin/e_main.c:770
+#: src/bin/e_main.c:777
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -2518,140 +2518,140 @@ msgstr ""
 "Az E17 nem tudta elindítani az ablakkezelőt. Lehet, hogy fut már egy másik\n"
 "ablakkezelõ?\n"
 
-#: src/bin/e_main.c:775
+#: src/bin/e_main.c:782
 msgid "Setup Execution System"
 msgstr "Végrehajtó rendszer beállítása"
 
-#: src/bin/e_main.c:780
+#: src/bin/e_main.c:787
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Az E17 nem tudta elindítani a exec rendszert."
 
-#: src/bin/e_main.c:784
+#: src/bin/e_main.c:791
 msgid "Setup Remembers"
 msgstr "Emlékezések beállítása"
 
-#: src/bin/e_main.c:789
+#: src/bin/e_main.c:796
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Az E17 nem tudta felállítani az emlékezési beállításokat."
 
-#: src/bin/e_main.c:797
+#: src/bin/e_main.c:804
 msgid "Setup FM"
 msgstr "FM beállítása"
 
-#: src/bin/e_main.c:802
+#: src/bin/e_main.c:809
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
-#: src/bin/e_main.c:815
+#: src/bin/e_main.c:822
 msgid "Setup Message System"
 msgstr "Üzenet rendszer beállítása"
 
-#: src/bin/e_main.c:820
+#: src/bin/e_main.c:827
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Az E17 nem tudta felállítani az üzenet-rendszert."
 
-#: src/bin/e_main.c:824
+#: src/bin/e_main.c:831
 msgid "Setup DND"
 msgstr "FÉV beállítása"
 
-#: src/bin/e_main.c:829
+#: src/bin/e_main.c:836
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Az E17 nem tudta felállítani a fogd-és-vidd rendszert."
 
-#: src/bin/e_main.c:833
+#: src/bin/e_main.c:840
 msgid "Setup Grab Input HAnding"
 msgstr "Bejövő mozdulat kezelő beállítása"
 
-#: src/bin/e_main.c:838
+#: src/bin/e_main.c:845
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Az E17 nem tudta elindítani a bejövõ mozdulat-kezelõt."
 
-#: src/bin/e_main.c:842
+#: src/bin/e_main.c:849
 msgid "Setup Modules"
 msgstr "Modulok beállítása"
 
-#: src/bin/e_main.c:847
+#: src/bin/e_main.c:854
 msgid "Enlightenment cannot set up its module system."
 msgstr "Az E17 nem tudta elindítani a modul rendszert."
 
-#: src/bin/e_main.c:851
+#: src/bin/e_main.c:858
 msgid "Setup Color Classes"
 msgstr "szín osztályok beállítása"
 
-#: src/bin/e_main.c:856
+#: src/bin/e_main.c:863
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Az E17 nem tudta elindítani a szín-osztály rendszert."
 
-#: src/bin/e_main.c:860
+#: src/bin/e_main.c:867
 msgid "Setup Gadcon"
 msgstr "Modulkezelő beállítása"
 
-#: src/bin/e_main.c:865
+#: src/bin/e_main.c:872
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Az E17 nem tudta elindítani a modul kezelõ rendszert."
 
-#: src/bin/e_main.c:869
+#: src/bin/e_main.c:876
 msgid "Setup Shelves"
 msgstr "Polcok beállítása"
 
-#: src/bin/e_main.c:874
+#: src/bin/e_main.c:881
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Az E17 nem tudta elindítani a polc-rendszert."
 
-#: src/bin/e_main.c:879
+#: src/bin/e_main.c:886
 msgid "Setup DPMS"
 msgstr "DPMS Beállítás"
 
-#: src/bin/e_main.c:884
+#: src/bin/e_main.c:891
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Az E17 nem tudta felállítani az emlékezési beállításokat."
 
-#: src/bin/e_main.c:888
+#: src/bin/e_main.c:895
 msgid "Setup Screensaver"
 msgstr "Képernyőkímélő beállítása"
 
-#: src/bin/e_main.c:893
+#: src/bin/e_main.c:900
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "Az E17 nem tudta elindítani az X képernyővédőt!"
 
-#: src/bin/e_main.c:897
+#: src/bin/e_main.c:904
 msgid "Setup Mouse"
 msgstr "Egér beállítása"
 
-#: src/bin/e_main.c:902
+#: src/bin/e_main.c:909
 #, fuzzy
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr "Az E17 nem tudta felállítani az emlékezési beállításokat."
 
-#: src/bin/e_main.c:906
+#: src/bin/e_main.c:913
 msgid "Setup Desklock"
 msgstr "Asztal zárolás beállítása"
 
-#: src/bin/e_main.c:911
+#: src/bin/e_main.c:918
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "Az E17 nem tudta felállítani az asztalzár-rendszert."
 
-#: src/bin/e_main.c:916
+#: src/bin/e_main.c:923
 msgid "Set Up File Ordering"
 msgstr "Fájl utasítás beállítása"
 
-#: src/bin/e_main.c:920
+#: src/bin/e_main.c:927
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Az E17 nem tudta elindítani a fájl utasítás rendszert."
 
-#: src/bin/e_main.c:925
+#: src/bin/e_main.c:932
 msgid "Set Up Powersave modes"
 msgstr "Energiatakarékosság beállítása"
 
-#: src/bin/e_main.c:929
+#: src/bin/e_main.c:936
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr "Az e17 nem tudta felállítani az energiatakarékossági rendszert."
 
-#: src/bin/e_main.c:961
+#: src/bin/e_main.c:968
 msgid "Load Modules"
 msgstr "Modulok betöltése"
 
-#: src/bin/e_main.c:969
+#: src/bin/e_main.c:976
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2663,11 +2663,11 @@ msgstr ""
 "távolítod a hibákat<br>a beálításodból. a modul beállítások ablak<br>újra "
 "lehetővé teszi, hogy kiválaszd a <br>moduljaidat ismét."
 
-#: src/bin/e_main.c:976
+#: src/bin/e_main.c:983
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Az E17 sérült már az indítás elején, ezért újra lett indítva."
 
-#: src/bin/e_main.c:977
+#: src/bin/e_main.c:984
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2679,11 +2679,11 @@ msgstr ""
 "távolítod a hibákat<br>a beálításodból. a modul beállítások ablak<br>újra "
 "lehetővé teszi, hogy kiválaszd a <br>moduljaidat ismét."
 
-#: src/bin/e_main.c:985
+#: src/bin/e_main.c:992
 msgid "Configure Shelves"
 msgstr "Polcok beállítása"
 
-#: src/bin/e_main.c:992
+#: src/bin/e_main.c:999
 msgid "Almost Done"
 msgstr "Madnem kész"
 
@@ -2732,29 +2732,29 @@ msgstr "Enlightenment %s modul"
 msgid "Would you like to unload this module?<br>"
 msgstr "Szeretnéd a modult kikapcsolni?<br>"
 
-#: src/bin/e_shelf.c:1196 src/modules/conf_shelves/e_int_config_shelf.c:281
+#: src/bin/e_shelf.c:1198 src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Biztosan törölni akarod ezt a polcot?"
 
-#: src/bin/e_shelf.c:1197
+#: src/bin/e_shelf.c:1199
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "A polc törlését választottad.<br><br>Biztosan törölni akarod?"
 
-#: src/bin/e_shelf.c:1652 src/bin/e_toolbar.c:317
+#: src/bin/e_shelf.c:1654 src/bin/e_toolbar.c:317
 msgid "Stop Moving/Resizing Items"
 msgstr "Elemek mozgatásának/átméretezésének leállítása"
 
-#: src/bin/e_shelf.c:1654 src/bin/e_toolbar.c:319
+#: src/bin/e_shelf.c:1656 src/bin/e_toolbar.c:319
 msgid "Begin Moving/Resizing Items"
 msgstr "Elemek mozgatása/átméretezése"
 
-#: src/bin/e_shelf.c:1667
+#: src/bin/e_shelf.c:1669
 msgid "Configure Shelf Contents"
 msgstr "Tartalom konfigurálása"
 
-#: src/bin/e_shelf.c:1672
+#: src/bin/e_shelf.c:1674
 msgid "Delete this Shelf"
 msgstr "Polc törlése"
 
@@ -2913,11 +2913,11 @@ msgstr "Beállítás témának"
 msgid "Configure Toolbar Contents"
 msgstr "Eszköztár tartalom beállítása"
 
-#: src/bin/e_utils.c:247
+#: src/bin/e_utils.c:246
 msgid "Cannot exit - immortal windows."
 msgstr "Nem tudok kilépni - halhatatlan ablakok"
 
-#: src/bin/e_utils.c:248
+#: src/bin/e_utils.c:247
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Enlightenment will not allow itself to exit until these "
@@ -2927,67 +2927,67 @@ msgstr ""
 "Enlightenment nem tud addig kilépni, amíg ezek az ablakok nyitva "
 "vannak<br>vagy az Élettartam zár el nem lett távolítva<br>"
 
-#: src/bin/e_utils.c:703
+#: src/bin/e_utils.c:702
 #, c-format
 msgid "%'.0f Bytes"
 msgstr "%'.0f Bájt"
 
-#: src/bin/e_utils.c:707
+#: src/bin/e_utils.c:706
 #, c-format
 msgid "%'.0f KB"
 msgstr "%'.0f KB"
 
-#: src/bin/e_utils.c:711
+#: src/bin/e_utils.c:710
 #, c-format
 msgid "%'.0f MB"
 msgstr "%'.0f MB"
 
-#: src/bin/e_utils.c:715
+#: src/bin/e_utils.c:714
 #, c-format
 msgid "%'.1f GB"
 msgstr "%'.1f GB"
 
-#: src/bin/e_utils.c:735
+#: src/bin/e_utils.c:734
 #, c-format
 msgid "In the Future"
 msgstr "A jövőben"
 
-#: src/bin/e_utils.c:740
+#: src/bin/e_utils.c:739
 #, c-format
 msgid "In the last Minute"
 msgstr "Az utolsó percben"
 
-#: src/bin/e_utils.c:742
+#: src/bin/e_utils.c:741
 #, c-format
 msgid "%li Years ago"
 msgstr "%li éve"
 
-#: src/bin/e_utils.c:744
+#: src/bin/e_utils.c:743
 #, c-format
 msgid "%li Months ago"
 msgstr "%li hónapja"
 
-#: src/bin/e_utils.c:746
+#: src/bin/e_utils.c:745
 #, c-format
 msgid "%li Weeks ago"
 msgstr "%li hete"
 
-#: src/bin/e_utils.c:748
+#: src/bin/e_utils.c:747
 #, c-format
 msgid "%li Days ago"
 msgstr "%li napja"
 
-#: src/bin/e_utils.c:750
+#: src/bin/e_utils.c:749
 #, c-format
 msgid "%li Hours ago"
 msgstr "%li órája"
 
-#: src/bin/e_utils.c:752
+#: src/bin/e_utils.c:751
 #, c-format
 msgid "%li Minutes ago"
 msgstr "%li perce"
 
-#: src/bin/e_utils.c:758
+#: src/bin/e_utils.c:757
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1146
 msgid "Unknown"
 msgstr "Ismeretlen"
@@ -4296,6 +4296,7 @@ msgid ""
 msgstr "Az E17 nem tudja importálni a beállítást<br> egy másolási hiba miatt."
 
 #: src/modules/conf_imc/e_mod_main.c:34 src/modules/conf_intl/e_mod_main.c:34
+#: src/modules/wizard/page_010.c:148
 msgid "Language"
 msgstr "Nyelv"
 
@@ -4444,22 +4445,22 @@ msgid "Binding Key Error"
 msgstr "Billentyűkombináció hiba"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1289
-#: src/modules/gadman/e_mod_gadman.c:699
+#: src/modules/gadman/e_mod_gadman.c:702
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1294
-#: src/modules/gadman/e_mod_gadman.c:704
+#: src/modules/gadman/e_mod_gadman.c:707
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1300
-#: src/modules/gadman/e_mod_gadman.c:710
+#: src/modules/gadman/e_mod_gadman.c:713
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1306
-#: src/modules/gadman/e_mod_gadman.c:716
+#: src/modules/gadman/e_mod_gadman.c:719
 msgid "WIN"
 msgstr "WIN"
 
@@ -6084,19 +6085,19 @@ msgstr "Célszemély"
 msgid "Animations"
 msgstr "Váltás animáció"
 
-#: src/modules/gadman/e_mod_gadman.c:646
+#: src/modules/gadman/e_mod_gadman.c:649
 msgid "Always on desktop"
 msgstr "Mindig a munkaasztalon"
 
-#: src/modules/gadman/e_mod_gadman.c:656
+#: src/modules/gadman/e_mod_gadman.c:659
 msgid "On top pressing"
 msgstr "Fent nyomva"
 
-#: src/modules/gadman/e_mod_gadman.c:666
+#: src/modules/gadman/e_mod_gadman.c:669
 msgid "Behavior"
 msgstr "Viselkedés"
 
-#: src/modules/gadman/e_mod_gadman.c:684
+#: src/modules/gadman/e_mod_gadman.c:687
 msgid "Add other gadgets"
 msgstr "Egyéb bigyók hozzáadása"
 
@@ -6495,21 +6496,19 @@ msgstr "%1.0f C"
 msgid "Temperature"
 msgstr "Hőmérséklet"
 
-#: src/modules/wizard/e_wizard.c:341
-msgid "Welcome to Enlightenment 東京"
-msgstr "Üdvözlünk az Enlightenmentben 東京"
-
-#: src/modules/wizard/e_wizard.c:343
+#: src/modules/wizard/e_wizard.c:222
 msgid "Next"
 msgstr "Következő"
 
-#: src/modules/wizard/e_wizard.c:344
-msgid "Back"
-msgstr "Vissza"
+#: src/modules/wizard/e_wizard.c:273
+#, fuzzy
+msgid "Welcome to Enlightenment"
+msgstr "Üdvözlünk az Enlightenmentben 東京"
 
-#: src/modules/wizard/page_010.c:25
-msgid "Choose Language"
-msgstr "Nyelv választása"
+#: src/modules/wizard/page_010.c:149
+#, fuzzy
+msgid "Select one"
+msgstr "Válassz egy ikont"
 
 #: src/modules/mixer/app_mixer.c:166
 #, fuzzy
@@ -6654,6 +6653,12 @@ msgstr ""
 #, fuzzy
 msgid "Settings"
 msgstr "Asztal beállításai"
+
+#~ msgid "Back"
+#~ msgstr "Vissza"
+
+#~ msgid "Choose Language"
+#~ msgstr "Nyelv választása"
 
 #~ msgid "X reports there are no root windows and %i screens!\n"
 #~ msgstr "Az X jelenti, hogy nincsenek root ablakok és %i képernyők!\n"
