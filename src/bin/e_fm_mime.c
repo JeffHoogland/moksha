@@ -48,8 +48,7 @@ e_fm_mime_icon_get(const char *mime)
    val = evas_hash_find(icon_map, mime);
    if (val) return val;
    
-   strncpy(buf2, mime, sizeof(buf2) - 1);
-   buf2[sizeof(buf2) - 1] = 0;
+   ecore_strlcpy(buf2, mime, sizeof(buf2));
    val = strchr(buf2, '/');
    if (val) *val = 0;
    
@@ -59,8 +58,7 @@ e_fm_mime_icon_get(const char *mime)
 	mi = l->data;
 	if (e_util_glob_match(mi->mime, mime))
 	  {
-	     strncpy(buf, mi->icon, sizeof(buf) - 1);
-	     buf[sizeof(buf) - 1] = 0;
+	     ecore_strlcpy(buf, mi->icon, sizeof(buf));
 	     goto ok;
 	  }
      }

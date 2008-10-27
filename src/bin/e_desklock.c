@@ -701,8 +701,8 @@ _desklock_auth(char *passwd)
 	sigaction(SIGABRT, &action, NULL);
 	
 	current_user = _desklock_auth_get_current_user();
-	strncpy(da.user, current_user, PATH_MAX);
-	strncpy(da.passwd, passwd, PATH_MAX);
+	ecore_strlcpy(da.user, current_user, PATH_MAX);
+	ecore_strlcpy(da.passwd, passwd, PATH_MAX);
 	/* security - null out passwd string once we are done with it */
 	for (p = passwd; *p; p++) *p = 0;
 	da.pam.handle = NULL;

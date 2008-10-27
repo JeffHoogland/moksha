@@ -758,8 +758,8 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata, const char *header, const char *d
 		  e_util_edje_icon_set(ic, "enlightenment/themes");
 	       }
 	     tmp = strdup(strrchr(themefiles->data, '/') + 1);
-	     strncpy(themename, tmp, strlen(tmp)-3);
-	     themename[strlen(tmp)-4] = '\0';
+	     strncpy(themename, tmp, strlen(tmp) - 3);
+	     themename[strlen(tmp) - 4] = '\0';
 	     e_widget_ilist_append(o, ic, themename, NULL, NULL, NULL);
 	     free(tmp);
 

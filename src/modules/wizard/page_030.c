@@ -121,8 +121,7 @@ wizard_page_show(E_Wizard_Page *pg)
 			    tlabel = malloc(p2 - p + 1);
 			    if (tlabel)
 			      {
-				 strncpy(tlabel, p, p2 - p);
-				 tlabel[p2 - p] = 0;
+				 ecore_strlcpy(tlabel, p, p2 - p + 1);
 				 tlabel[0] = toupper(tlabel[0]);
 				 if (*p2 == '-')
 				   {
@@ -133,8 +132,7 @@ wizard_page_show(E_Wizard_Page *pg)
 					   tdesc = malloc(p - p2 + 1);
 					   if (tdesc)
 					     {
-						strncpy(tdesc, p2, p - p2);
-						tdesc[p - p2] = 0;
+						ecore_strlcpy(tdesc, p2, p - p2 + 1);
 						tdesc[0] = toupper(tdesc[0]);
 						snprintf(buf, sizeof(buf), "%s (%s)", tlabel, tdesc);
 					     }

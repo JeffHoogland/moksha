@@ -278,7 +278,7 @@ _ibar_new(Evas *evas, Instance *inst)
 	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", homedir, inst->ci->dir);
      }
    else
-     snprintf(buf, sizeof(buf), inst->ci->dir);
+     ecore_strlcpy(buf, inst->ci->dir, sizeof(buf));
    b->apps = e_order_new(buf);
    e_order_update_callback_set(b->apps, _ibar_cb_app_change, b);
    _ibar_fill(b);
@@ -506,7 +506,7 @@ _ibar_config_update(Config_Item *ci)
 	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", homedir, inst->ci->dir);
 	  }
 	else
-	  snprintf(buf, sizeof(buf), inst->ci->dir);
+	  ecore_strlcpy(buf, inst->ci->dir, sizeof(buf));
 	inst->ibar->apps = e_order_new(buf);
 	_ibar_fill(inst->ibar);
 	_ibar_resize_handle(inst->ibar);

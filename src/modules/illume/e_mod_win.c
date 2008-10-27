@@ -359,8 +359,7 @@ _desktop_run(Efreet_Desktop *desktop)
 	exename = malloc(p - desktop->exec + 1);
 	if (exename)
 	  {
-	     strncpy(exename, desktop->exec, p - desktop->exec);
-	     exename[p - desktop->exec] = 0;
+	     ecore_strlcpy(exename, desktop->exec, p - desktop->exec + 1);
 	  }
      }
    if (exename)

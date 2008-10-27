@@ -3738,9 +3738,8 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
 	 * also be fuzzy - up to 4 chars of extn is ok - eg .html but 5 or
 	 * more is considered part of the name
 	 */
-	strncpy(buf, ic->info.file, sizeof(buf) - 2);
-	buf[sizeof(buf) - 1] = 0;
-	
+	ecore_strlcpy(buf, ic->info.file, sizeof(buf));
+
 	len = strlen(buf);
 	p = strrchr(buf, '.');
 	if ((p) && ((len - (p - buf)) < 6))
@@ -5962,10 +5961,8 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
 	  }
 	else
 */	  {
-	     strncpy(buf1, l1, sizeof(buf1) - 2);
-	     strncpy(buf2, l2, sizeof(buf2) - 2);
-	     buf1[sizeof(buf1) - 1] = 0;
-	     buf2[sizeof(buf2) - 1] = 0;
+	     ecore_strlcpy(buf1, l1, sizeof(buf1));
+	     ecore_strlcpy(buf2, l2, sizeof(buf2));
 	  }
 	p = buf1;
 	while (*p)

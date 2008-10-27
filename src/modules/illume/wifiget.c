@@ -23,7 +23,7 @@
 static int
 link_ext_get(int fd, const char *name, int req, struct iwreq *rq)
 {
-   strncpy(rq->ifr_name, name, sizeof(rq->ifr_name));
+   ecore_strlcpy(rq->ifr_name, name, sizeof(rq->ifr_name));
    return (ioctl(fd, req, rq));
 }
 

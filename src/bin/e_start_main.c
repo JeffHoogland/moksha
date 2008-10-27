@@ -84,8 +84,7 @@ prefix_determine(char *argv0)
 		  _prefix_path = malloc(p - _exe_path + 1);
 		  if (_prefix_path)
 		    {
-		       strncpy(_prefix_path, _exe_path, p - _exe_path);
-		       _prefix_path[p - _exe_path] = 0;
+		       strlcpy(_prefix_path, _exe_path, p - _exe_path + 1);
 		       return 1;
 		    }
 		  else

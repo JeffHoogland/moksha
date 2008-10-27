@@ -91,8 +91,7 @@ e_prefix_determine(char *argv0)
 		  _prefix_path = malloc(p - _exe_path + 1);
 		  if (_prefix_path)
 		    {
-		       strncpy(_prefix_path, _exe_path, p - _exe_path);
-		       _prefix_path[p - _exe_path] = 0;
+		       ecore_strlcpy(_prefix_path, _exe_path, p - _exe_path + 1);
 
 		       /* bin and lib always together */
 		       snprintf(buf, sizeof(buf), "%s/bin", _prefix_path);
