@@ -106,7 +106,14 @@ static double t0, t1, t2;
 #else
 #define TS(x)
 #endif
-   
+
+static int stdbg(void)
+{
+// enable to debug eina stringshare usage   
+//   eina_stringshare_dump();
+   return 0;
+}
+
 /* externally accessible functions */
 int
 main(int argc, char **argv)
@@ -994,6 +1001,9 @@ main(int argc, char **argv)
    /* no longer starting up */
    starting = 0;
    /* start our main loop */
+   
+   ecore_timer_add(5.0, stdbg, NULL);
+   
    ecore_main_loop_begin();
 
    e_canvas_idle_flush();
