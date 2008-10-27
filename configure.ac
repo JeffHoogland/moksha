@@ -441,6 +441,8 @@ src/modules/connman/Makefile
 src/modules/connman/module.desktop
 src/modules/illume/Makefile
 src/modules/illume/module.desktop
+src/modules/illume/keyboards/Makefile
+src/modules/illume/dicts/Makefile
 src/preload/Makefile
 data/Makefile
 data/images/Makefile

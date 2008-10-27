@@ -3,6 +3,8 @@ MAINTAINERCLEANFILES = Makefile.in
 EET_EET = @eet_eet@
 
 EXTRA_DIST = \
+        profile.desktop \
+        icon.png \
 	e.src
 
 filesdir = $(datadir)/enlightenment/data/config/default

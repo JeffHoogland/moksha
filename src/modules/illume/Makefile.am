@@ -1,12 +1,14 @@
 MAINTAINERCLEANFILES = Makefile.in
 MODULE = illume
 
+SUBDIRS = keyboards dicts
+
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
 e-module-$(MODULE).edj module.desktop
 
-EXTRA_DIST = $(files_DATA)
+EXTRA_DIST = $(files_DATA) $(kbds_DATA) $(dicts_DATA)
 
 # the module .so file
 INCLUDES               = -I. \
@@ -73,28 +75,5 @@ wifiget_PROGRAMS        = wifiget
 wifiget_SOURCES         = wifiget.c
 wifiget_LDFLAGS         =
 
-kbdsdir = $(datadir)/keyboards
-kbds_DATA = \
-            keyboards/ignore_built_in_keyboards \
-            keyboards/Default.kbd \
-            keyboards/alpha.png \
-	    keyboards/Numbers.kbd \
-            keyboards/numeric.png \
-            keyboards/Terminal.kbd \
-	    keyboards/qwerty.png \
-	    keyboards/up.png \
-	    keyboards/down.png \
-	    keyboards/left.png \
-            keyboards/right.png \
-            keyboards/shift.png \
-	    keyboards/tab.png \
-	    keyboards/enter.png \
-	    keyboards/backspace.png
-
-dictsdir = $(datadir)/dicts
-dicts_DATA = \
-            dicts/English_(US).dic \
-            dicts/English_(US)_Small.dic
-			
 uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)
