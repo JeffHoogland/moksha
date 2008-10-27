@@ -896,7 +896,6 @@ popup_cb_ifnet_sel(void *data)
 	if (!strcmp(inst->config.bssid, ifnet->bssid))
 	  {
 	     Conf_Network *cfnet;
-	     char buf[256];
 
 	     printf("SEL %s\n", ifnet->essid);
 	     if (!conf)
@@ -922,8 +921,7 @@ popup_cb_ifnet_sel(void *data)
 	     conf->networks = eina_list_prepend(conf->networks, cfnet);
 	     if (ifnet->essid)
 	       {
-		  snprintf(buf, sizeof(buf), ifnet->essid);
-		  cfnet->name = strdup(buf);
+		  cfnet->name = strdup(ifnet->essid);
 		  cfnet->essid = strdup(ifnet->essid);
 	       }
 	     else
