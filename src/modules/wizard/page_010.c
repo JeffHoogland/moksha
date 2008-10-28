@@ -70,10 +70,7 @@ _basic_lang_list_sort(const void *data1, const void *data2)
 EAPI int
 wizard_page_init(E_Wizard_Page *pg)
 {
-   Eina_List    *e_lang_list;
    FILE		*output;
-   
-   e_lang_list = e_intl_language_list();
    
    output = popen("locale -a", "r");
    if (output) 
@@ -121,12 +118,6 @@ wizard_page_init(E_Wizard_Page *pg)
 	  }
 	/* Sort basic languages */	
 	blang_list = eina_list_sort(blang_list, eina_list_count(blang_list), _basic_lang_list_sort);
-
-        while (e_lang_list)
-	  {
-	     free(e_lang_list->data);
-	     e_lang_list = eina_list_remove_list(e_lang_list, e_lang_list);
-	  }	     
 	pclose(output);
      }
    return 1;
