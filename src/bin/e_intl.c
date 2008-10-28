@@ -143,6 +143,7 @@ EAPI void
 e_intl_language_set(const char *lang)
 {
    int set_envars;
+   int ok;
 
    set_envars = 1;
    /* NULL lang means set everything back to the original environment
@@ -172,12 +173,27 @@ e_intl_language_set(const char *lang)
    else
      _e_intl_language = NULL;
 
-   if ((!_e_intl_locale_validate(_e_intl_language_alias)) &&
-	 (strcmp(_e_intl_language_alias, "C")))
+   ok = 1;
+   if (strcmp(_e_intl_language_alias, "C"))
+     {
+	ok = _e_intl_locale_validate(_e_intl_language_alias);
+	if (!ok)
+	  {
+	     char *p, *new_lang;
+	     
+	     new_lang = _e_intl_language_alias;
+	     p = strchr(new_lang, '.');
+	     if (p) *p = 0;
+	     _e_intl_language_alias = strdup(new_lang);
+	     E_FREE(new_lang);
+	     ok = _e_intl_locale_validate(_e_intl_language_alias);
+	  }
+     }
+   if (!ok)
      {
 	fprintf(stderr, "The locale '%s' cannot be found on your "
-	       "system. Please install this locale or try "
-               "something else.", _e_intl_language_alias);
+		"system. Please install this locale or try "
+		"something else.", _e_intl_language_alias);
      }
    else
      {
@@ -563,6 +579,7 @@ _e_intl_locale_alias_get(const char *language)
    Evas_Hash *alias_hash;
    char *alias;
    char *lower_language;
+   char *noenc_language;
    int i;
 
    if ((language == NULL) || (!strncmp(language, "POSIX", strlen("POSIX"))))
@@ -900,7 +917,6 @@ _e_intl_locale_validate(const char *locale)
    locale_lr = 
      e_intl_locale_parts_combine(locale_parts, 
 				 E_INTL_LOC_LANG | E_INTL_LOC_REGION);
-
    if (locale_lr == NULL)
      {
 	/* Not valid locale, maybe its an alias */
