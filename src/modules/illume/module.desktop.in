@@ -3,4 +3,4 @@ Type=Link
 Name=Illume
 Icon=e-module-illume
 X-Enlightenment-ModuleType=system
-Comment=<hilight>Embedded</hilight><br>This is a module to make Enlightenment tuned for embedded touchscreen<br>displays such as on phones and web-pads with windows always<br>being fullscreen and having a simplified application<br>launcher and manager.
+Comment=<title>Illume for Embedded</title><br>This is a module to make Enlightenment tuned for embedded touchscreen<br>displays such as on phones and web-pads with windows always<br>being fullscreen and having a simplified application<br>launcher and manager.
