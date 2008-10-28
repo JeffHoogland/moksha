@@ -1213,9 +1213,28 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		       snprintf(buf, sizeof(buf), "%s/%s", 
 				e_fm2_real_path_get(ic->info.fm), ic->info.file);
 		       ef = efreet_desktop_new(buf);
-		       if (ef) oic = e_util_desktop_icon_add(ef, 48, evas);
-		       if (type_ret) *type_ret = "DESKTOP";
-		       if (ef) efreet_desktop_free(ef);
+		       if (ef)
+			 {
+			    if (ef->icon)
+			      {
+				 oic = edje_object_add(evas);
+				 if (!e_util_edje_icon_set(oic, ef->icon))
+				   {
+				      evas_object_del(oic);
+				      oic = NULL;
+				   }
+				 else
+				   {
+				      if (type_ret) *type_ret = "THEME_ICON";
+				   }
+			      }
+			    if (!oic)
+			      {
+				 oic = e_util_desktop_icon_add(ef, 48, evas);
+				 if (type_ret) *type_ret = "DESKTOP";
+			      }
+			    efreet_desktop_free(ef);
+			 }
 		    }
 	       }
 	     if (!oic)
