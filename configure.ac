@@ -197,7 +197,7 @@ PKG_CHECK_MODULES(E, [
   edbus
   ehal
 ])
-requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-job ecore-file eet edje efreet efreet-mime eina-0"
+requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-job ecore-file eet edje efreet efreet-mime eina-0 edbus ehal"
 
 PKG_CHECK_MODULES(ECORE_IMF, [
   ecore-imf
