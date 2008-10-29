@@ -31,12 +31,6 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m) 
 {
-   char buf[PATH_MAX];
-   
-   snprintf(buf, sizeof(buf), "%s/locale", e_module_dir_get(m));
-   bindtextdomain(PACKAGE, buf);
-   bind_textdomain_codeset(PACKAGE, "UTF-8");
-
    /* set up the virtual keyboard */
    e_cfg_init(m);
    e_kbd_init(m);
