@@ -1,7 +1,7 @@
 diff --git a/src/bin/e_fm.c b/src/bin/e_fm.c
 --- a/src/bin/e_fm.c
 +++ b/src/bin/e_fm.c
-@@ -1449,7 +1449,7 @@ _e_fm2_client_spawn(void)
+@@ -1476,7 +1476,7 @@ _e_fm2_client_spawn(void)
     char buf[4096];
     
     if (_e_fm2_client_spawning) return;
@@ -17,9 +17,9 @@ diff --git a/src/bin/e_init.c b/src/bin/e_init.c
     if (version) ver = strdup(e_util_filename_escape(version));
     else ver = strdup("XvX");
  
--   snprintf(buf, sizeof(buf), "%s/enlightenment_init %s %i %i %s %s",
+-   snprintf(buf, sizeof(buf), "%s/enlightenment_init \'%s\' \'%i\' \'%i\' \'%s\' \'%s\'",
 -	    e_prefix_bin_get(),
-+   snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_init %s %i %i %s %s",
++   snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_init \'%s\' \'%i\' \'%i\' \'%s\' \'%s\'",
 +	    e_prefix_lib_get(),
  	    theme,
  	    e_canvas_engine_decide(e_config->evas_engine_init),
@@ -27,7 +27,7 @@ diff --git a/src/bin/e_init.c b/src/bin/e_init.c
 diff --git a/src/bin/e_sys.c b/src/bin/e_sys.c
 --- a/src/bin/e_sys.c
 +++ b/src/bin/e_sys.c
-@@ -126,13 +126,13 @@ _e_sys_cb_timer(void *data)
+@@ -128,13 +128,13 @@ _e_sys_cb_timer(void *data)
     char buf[4096];
     
     e_init_status_set(_("Checking System Permissions"));
@@ -45,8 +45,8 @@ diff --git a/src/bin/e_sys.c b/src/bin/e_sys.c
     _e_sys_hibernate_check_exe = ecore_exe_run(buf, NULL);
     return 0;
  }
-@@ -469,8 +469,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
-       case E_SYS_HALT:
+@@ -475,8 +475,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
+       case E_SYS_HALT_NOW:
  	/* shutdown -h now */
  	if (e_util_immortal_check()) return 0;
 -	snprintf(buf, sizeof(buf), "%s/enlightenment_sys halt",
@@ -56,7 +56,7 @@ diff --git a/src/bin/e_sys.c b/src/bin/e_sys.c
  	if (_e_sys_exe)
  	  {
  	     _e_sys_current_action();
-@@ -496,8 +496,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
+@@ -502,8 +502,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
        case E_SYS_REBOOT:
  	/* shutdown -r now */
  	if (e_util_immortal_check()) return 0;
@@ -67,7 +67,7 @@ diff --git a/src/bin/e_sys.c b/src/bin/e_sys.c
  	if (_e_sys_exe)
  	  {
  	     _e_sys_current_action();
-@@ -522,8 +522,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
+@@ -528,8 +528,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
  	break;
        case E_SYS_SUSPEND:
  	/* /etc/acpi/sleep.sh force */
@@ -78,7 +78,7 @@ diff --git a/src/bin/e_sys.c b/src/bin/e_sys.c
  	if (_e_sys_exe)
  	  {
  	     _e_sys_current_action();
-@@ -548,8 +548,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
+@@ -554,8 +554,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
  	break;
        case E_SYS_HIBERNATE:
  	/* /etc/acpi/hibernate.sh force */
