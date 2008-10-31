@@ -203,12 +203,39 @@ collections {
 	    }
 	 }
  	 part { name: "prev_app";
-	    mouse_events: 1;
-	    scale: 1;
+	    mouse_events: 0;
 	    description { state: "default" 0.0;
 	       image.normal: "icon_left_arrow.png";
-	       max: 32 32;
 	       aspect: 1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       rel1.to: "prev";
+	       rel2.to: "prev";
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit: "default" 0.0;
+	       color: 255 255 255 64;
+	    }
+	 }
+ 	 part { name: "next_app";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "icon_right_arrow.png";
+	       aspect: 1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       rel1.to: "next";
+	       rel2.to: "next";
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit: "default" 0.0;
+	       color: 255 255 255 64;
+	    }
+	 }
+ 	 part { name: "prev";
+	    type: RECT;
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       aspect: 1.5 1.5;
 	       aspect_preference: VERTICAL;
 	       align: 0.0 0.5;
 	       rel1 {
@@ -220,18 +247,13 @@ collections {
 		  offset: 0 -1;
 	       }
 	    }
-	    description { state: "disabled" 0.0;
-	       inherit: "default" 0.0;
-	       color: 255 255 255 64;
-	    }
 	 }
- 	 part { name: "next_app";
+ 	 part { name: "next";
+	    type: RECT;
 	    mouse_events: 1;
-	    scale: 1;
 	    description { state: "default" 0.0;
-	       image.normal: "icon_right_arrow.png";
-	       max: 32 32;
-	       aspect: 1.0 1.0;
+	       color: 0 0 0 0;
+	       aspect: 1.5 1.5;
 	       aspect_preference: VERTICAL;
 	       align: 1.0 0.5;
 	       rel1 {
@@ -242,10 +264,6 @@ collections {
 	       rel2 {
 		  to_y: "e.swallow.content";
 	       }
-	    }
-	    description { state: "disabled" 0.0;
-	       inherit: "default" 0.0;
-	       color: 255 255 255 64;
 	    }
 	 }
 	 part { name: "e.text.label";
@@ -316,12 +334,12 @@ collections {
 	 }
 	 program { name: "prev";
 	    signal: "mouse,down,1";
-	    source: "prev_app";
+	    source: "prev";
 	    action: SIGNAL_EMIT "e,action,do,app,prev" "";
 	 }
 	 program { name: "next";
 	    signal: "mouse,down,1";
-	    source: "next_app";
+	    source: "next";
 	    action: SIGNAL_EMIT "e,action,do,app,next" "";
 	 }
 	 program { name: "next_enable";
