@@ -1,6 +1,15 @@
 #include "e.h"
 #include "e_slipwin.h"
 
+typedef struct _Win_Entry Win_Entry;
+
+struct _Win_Entry
+{
+   E_Slipwin   *slipwin;
+   E_Border    *border;
+   Evas_Object *icon;
+};
+
 EAPI int E_EVENT_SLIPWIN_DEL = 0;
 
 /* internal calls */
@@ -14,7 +23,7 @@ static int _e_slipwin_cb_zone_move_resize(void *data, int type, void *event);
 static int _e_slipwin_cb_zone_del(void *data, int type, void *event);
 static void _e_slipwin_event_simple_free(void *data, void *ev);
 static void _e_slipwin_object_del_attach(void *o);
-static void _e_slipwin_cb_item_sel(void *data, void *data2);
+static void _e_slipwin_cb_item_sel(void *data);
 
 static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
 
@@ -65,12 +74,13 @@ e_slipwin_new(E_Zone *zone, const char *themedir)
 
    esw->focused_border = e_border_focused_get();
 
-   o = e_scrollframe_add(esw->popup->evas);
+   edje_object_size_min_calc(esw->base_obj, &mw, &mh);
+
+   o = e_widget_ilist_add(esw->popup->evas, 32 * e_scale, 32 * e_scale, NULL);
+   esw->ilist_obj = o;
+   e_widget_ilist_selector_set(o, 1);
    edje_object_part_swallow(esw->base_obj, "e.swallow.content", o);
    evas_object_show(o);
-   esw->scrollframe_obj = o;
-      
-   edje_object_size_min_calc(esw->base_obj, &mw, &mh);
    
    x = zone->x;
    y = zone->y + zone->h;
@@ -104,33 +114,31 @@ e_slipwin_show(E_Slipwin *esw)
    Evas_Object *o;
    Evas_Coord mw, mh, vw, vh, w, h;
    Eina_List *borders, *l;
+   Win_Entry *ent;
    int i, selnum;
    
    E_OBJECT_CHECK(esw);
    E_OBJECT_TYPE_CHECK(esw, E_SLIPWIN_TYPE);
 
-   /* FIXME: build window list and free old onw if needed */
-   if (esw->ilist_obj)
-     {
-	evas_object_del(esw->ilist_obj);
-	esw->ilist_obj = NULL;
-     }
    while (esw->borders)
      {
-	e_object_unref(E_OBJECT(esw->borders->data));
+	ent = esw->borders->data;
+	evas_object_del(ent->icon);
+	e_object_unref(E_OBJECT(ent->border));
 	esw->borders = eina_list_remove_list(esw->borders, esw->borders);
+	free(ent);
      }
-   
-   o = e_ilist_add(esw->popup->evas);
-   e_ilist_selector_set(o, 1);
-   e_ilist_freeze(o);
+   e_widget_ilist_freeze(esw->ilist_obj);
+   e_widget_ilist_clear(esw->ilist_obj);
+   e_widget_ilist_thaw(esw->ilist_obj);
    
    borders = e_border_client_list();
-   i = 0;
    selnum = -1;
-   for (l = borders; l; l = l->next)
+   e_widget_ilist_freeze(esw->ilist_obj);
+   for (i = 0, l = borders; l; l = l->next)
      {
 	E_Border *bd;
+	Evas_Object *ic;
 	const char *title;
 	
 	bd = l->data;
@@ -139,50 +147,43 @@ e_slipwin_show(E_Slipwin *esw)
 	    (!bd->client.icccm.take_focus)) continue;
 	if (bd->client.netwm.state.skip_taskbar) continue;
 	if (bd->user_skip_winlist) continue;
-	
+
 	e_object_ref(E_OBJECT(bd));
 	title = "???";
 	if (bd->client.netwm.name) title = bd->client.netwm.name;
 	else if (bd->client.icccm.title) title = bd->client.icccm.title;
-	e_ilist_append(o, NULL/*icon*/, title, 0, _e_slipwin_cb_item_sel,
-		       NULL, esw, bd);
-	esw->borders = eina_list_append(esw->borders, bd);
+	ic = e_border_icon_add(bd, esw->popup->evas);
+	ent = calloc(1, sizeof(Win_Entry));
+	ent->slipwin = esw;
+	ent->border = bd;
+	ent->icon = ic;
+	esw->borders = evas_list_append(esw->borders, ent);
+	e_widget_ilist_append(esw->ilist_obj, ic, title, _e_slipwin_cb_item_sel, ent, NULL);
 	if (bd == e_border_focused_get()) selnum = i;
 	i++;
      }
-   e_ilist_thaw(o);
+   e_widget_ilist_thaw(esw->ilist_obj);
    
-   e_ilist_min_size_get(o, &mw, &mh);
-   
-   evas_object_resize(o, mw, mh);
-   e_scrollframe_child_set(esw->scrollframe_obj, o);
-   
-   e_scrollframe_child_viewport_size_get(esw->scrollframe_obj, &vw, &vh);
-   edje_object_part_geometry_get(esw->scrollframe_obj, "e.swallow.content", NULL, NULL, &vw, &vh);
-//   evas_object_geometry_get(esw->scrollframe_obj, NULL, NULL, &w, &h);
-   if (mw > vw) mw = mw + (w - vw);
-   else if (mw < vw) evas_object_resize(o, vw, mh);
-   
-   if (selnum >= 0) e_ilist_selected_set(o, selnum);
+   if (selnum >= 0) e_widget_ilist_selected_set(esw->ilist_obj, selnum);
 
-   evas_object_show(o);
-   esw->ilist_obj = o;
-   
-   edje_extern_object_min_size_set(esw->scrollframe_obj, mw, mh);
-   printf("min size %ix%i\n", mw, mh);
-   edje_object_part_swallow(esw->base_obj, "e.swallow.content", esw->scrollframe_obj);
+   e_widget_ilist_go(esw->ilist_obj);
+
+   e_widget_ilist_preferred_size_get(esw->ilist_obj, &mw, &mh);
+   edje_extern_object_min_size_set(esw->ilist_obj, mw, mh);
+   edje_object_part_swallow(esw->base_obj, "e.swallow.content", esw->ilist_obj);
+
    edje_object_size_min_calc(esw->base_obj, &mw, &mh);
+
+   edje_extern_object_min_size_set(esw->ilist_obj, 0, 0);
+
    
-   edje_extern_object_min_size_set(esw->scrollframe_obj, 0, 0);
-   edje_object_part_swallow(esw->base_obj, "e.swallow.content", esw->scrollframe_obj);
+   edje_object_part_swallow(esw->base_obj, "e.swallow.content", esw->ilist_obj);
    
    mw = esw->zone->w;
    if (mh > esw->zone->h) mh = esw->zone->h;
    e_popup_resize(esw->popup, mw, mh);
 
    evas_object_resize(esw->base_obj, esw->popup->w, esw->popup->h);
-   
-   printf("sw: %ix%i\n", esw->popup->w, esw->popup->h);
    
    _e_slipwin_slide(esw, 1, 1.0);
 }
@@ -248,16 +249,19 @@ _e_slipwin_cb_animate(void *data)
 	else
 	  {
 	     edje_object_signal_emit(esw->base_obj, "e,state,in,end", "e");
-	     if (esw->ilist_obj)
-	       {
-		  evas_object_del(esw->ilist_obj);
-		  esw->ilist_obj = NULL;
-	       }
 	     while (esw->borders)
 	       {
-		  e_object_unref(E_OBJECT(esw->borders->data));
+		  Win_Entry *ent;
+		  
+		  ent = esw->borders->data;
+		  evas_object_del(ent->icon);
+		  e_object_unref(E_OBJECT(ent->border));
 		  esw->borders = eina_list_remove_list(esw->borders, esw->borders);
+		  free(ent);
 	       }
+	     e_widget_ilist_freeze(esw->ilist_obj);
+	     e_widget_ilist_clear(esw->ilist_obj);
+	     e_widget_ilist_thaw(esw->ilist_obj);
 	  }
 	return 0;
      }
@@ -359,6 +363,16 @@ _e_slipwin_object_del_attach(void *o)
 
    if (e_object_is_del(E_OBJECT(o))) return;
    esw = o;
+   while (esw->borders)
+     {
+	Win_Entry *ent;
+	
+	ent = esw->borders->data;
+	evas_object_del(ent->icon);
+	e_object_unref(E_OBJECT(ent->border));
+	esw->borders = eina_list_remove_list(esw->borders, esw->borders);
+	free(ent);
+     }
    ev = calloc(1, sizeof(E_Event_Slipwin_Del));
    ev->slipwin = esw;
    e_object_ref(E_OBJECT(esw));
@@ -367,13 +381,14 @@ _e_slipwin_object_del_attach(void *o)
 }
 
 static void
-_e_slipwin_cb_item_sel(void *data, void *data2)
+_e_slipwin_cb_item_sel(void *data)
 {
-   E_Slipwin *esw;
-   
-   esw = data;
-   if (esw->callback.func) esw->callback.func(esw->callback.data, esw, data2);
-   e_slipwin_hide(esw);
+   Win_Entry *ent;
+
+   ent = data;
+   if (ent->slipwin->callback.func)
+     ent->slipwin->callback.func(ent->slipwin->callback.data, ent->slipwin, ent->border);
+   e_slipwin_hide(ent->slipwin);
 }
 
 

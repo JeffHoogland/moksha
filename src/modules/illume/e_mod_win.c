@@ -26,10 +26,10 @@ static void _cb_slipshelf_home(const void *data, E_Slipshelf *ess, E_Slipshelf_A
 static void _cb_slipshelf_close(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
 static void _cb_slipshelf_apps(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
 static void _cb_slipshelf_keyboard(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
+static void _cb_slipshelf_app_next(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
+static void _cb_slipshelf_app_prev(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
 static void _cb_slipwin_select(const void *data, E_Slipwin *esw, E_Border *bd);
 static void _cb_slipshelf_select(const void *data, E_Slipshelf *ess, E_Border *bd);
-static void _cb_slipshelf_add(const void *data, E_Slipshelf *ess, E_Border *bd);
-static void _cb_slipshelf_del(const void *data, E_Slipshelf *ess, E_Border *bd);
 static void _cb_slipshelf_home2(const void *data, E_Slipshelf *ess, E_Border *bd);
 static void _cb_selected(void *data, Evas_Object *obj, void *event_info);
 static int _cb_efreet_desktop_list_change(void *data, int type, void *event);
@@ -78,7 +78,11 @@ _e_mod_win_init(E_Module *m)
    slipshelf = e_slipshelf_new(zone, e_module_dir_get(m));
    e_slipshelf_default_title_set(slipshelf, "ILLUME");
    if (!_have_borders())
-     e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APPS, 0);
+     {
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APPS, 0);
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_NEXT, 0);
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_PREV, 0);
+     }
    e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_HOME,
 				   _cb_slipshelf_home, NULL);
    e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_CLOSE,
@@ -87,9 +91,11 @@ _e_mod_win_init(E_Module *m)
 				   _cb_slipshelf_apps, NULL);
    e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_KEYBOARD,
 				   _cb_slipshelf_keyboard, NULL);
+   e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_APP_NEXT,
+				   _cb_slipshelf_app_next, NULL);
+   e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_APP_PREV,
+				   _cb_slipshelf_app_prev, NULL);
    e_slipshelf_border_select_callback_set(slipshelf, _cb_slipshelf_select, NULL);
-   e_slipshelf_border_add_callback_set(slipshelf, _cb_slipshelf_add, NULL);
-   e_slipshelf_border_del_callback_set(slipshelf, _cb_slipshelf_del, NULL);
    e_slipshelf_border_home_callback_set(slipshelf, _cb_slipshelf_home2, NULL);
    
    slipwin = e_slipwin_new(zone, e_module_dir_get(m));
@@ -261,7 +267,11 @@ _e_mod_win_slipshelf_cfg_update(void)
    slipshelf = e_slipshelf_new(zone, e_module_dir_get(mod));
    e_slipshelf_default_title_set(slipshelf, "ILLUME");
    if (!_have_borders())
-     e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APPS, 0);
+     {
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APPS, 0);
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_NEXT, 0);
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_PREV, 0);
+     }
    e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_HOME,
 				   _cb_slipshelf_home, NULL);
    e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_CLOSE,
@@ -270,9 +280,11 @@ _e_mod_win_slipshelf_cfg_update(void)
 				   _cb_slipshelf_apps, NULL);
    e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_KEYBOARD,
 				   _cb_slipshelf_keyboard, NULL);
+   e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_APP_NEXT,
+				   _cb_slipshelf_app_next, NULL);
+   e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_APP_PREV,
+				   _cb_slipshelf_app_prev, NULL);
    e_slipshelf_border_select_callback_set(slipshelf, _cb_slipshelf_select, NULL);
-   e_slipshelf_border_add_callback_set(slipshelf, _cb_slipshelf_add, NULL);
-   e_slipshelf_border_del_callback_set(slipshelf, _cb_slipshelf_del, NULL);
    e_slipshelf_border_home_callback_set(slipshelf, _cb_slipshelf_home2, NULL);
    
    _cb_resize();
@@ -339,7 +351,9 @@ _desktop_run(Efreet_Desktop *desktop)
    E_Exec_Instance *eins;
    Instance *ins;
    char *exename, *p;
-   
+
+   if (!desktop) return;
+   if (!desktop->exec) return;
    for (l = instances; l; l = l->next)
      {
 	ins = l->data;
@@ -446,7 +460,11 @@ _cb_event_border_add(void *data, int type, void *event)
    
    ev = event;
    if (_have_borders())
-     e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APPS, 1);
+     {
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APPS, 1);
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_NEXT, 1);
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_PREV, 1);
+     }
    desktop = e_exec_startup_id_pid_find(ev->border->client.netwm.pid,
 					ev->border->client.netwm.startup_id);
    for (l = instances; l; l = l->next)
@@ -483,7 +501,11 @@ _cb_event_border_remove(void *data, int type, void *event)
    
    ev = event;
    if (!_have_borders())
-     e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APPS, 0);
+     {
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APPS, 0);
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_NEXT, 0);
+	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_PREV, 0);
+     }
    for (l = instances; l; l = l->next)
      {
 	ins = l->data;
@@ -630,6 +652,118 @@ _cb_slipshelf_keyboard(const void *data, E_Slipshelf *ess, E_Slipshelf_Action ac
 }
 
 static void
+_cb_slipshelf_app_next(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action)
+{
+   E_Border *bd, *bd2 = NULL;
+   Eina_List *l, *list, *tlist = NULL;
+   
+   bd = e_border_focused_get();
+   list = e_border_client_list();
+   for (l = list; l; l = l->next)
+     {
+	bd2 = l->data;
+	if (e_object_is_del(E_OBJECT(bd2))) continue;
+	if ((!bd2->client.icccm.accepts_focus) &&
+	    (!bd2->client.icccm.take_focus)) continue;
+	if (bd2->client.netwm.state.skip_taskbar) continue;
+	if (bd2->user_skip_winlist) continue;
+	tlist = evas_list_append(tlist, bd2);
+     }
+   if (!tlist) return;
+   if (!bd) bd2 = tlist->data;
+   else
+     {
+	for (l = tlist; l; l = l->next)
+	  {
+	     bd2 = l->data;
+	     if (bd2 == bd)
+	       {
+		  if (l->next) bd2 = l->next->data;
+		  else bd2 = NULL;
+		  break;
+	       }
+	  }
+     }
+   evas_list_free(tlist);
+   if (bd2 == bd) return;
+   if (bd2) _e_mod_layout_border_show(bd2);
+   else
+     {
+	Eina_List *l, *borders;
+	
+	borders = e_border_client_list();
+	for (l = borders; l; l = l->next)
+	  {
+	     E_Border *bd;
+	     
+	     bd = l->data;
+	     if (e_object_is_del(E_OBJECT(bd))) continue;
+	     if ((!bd->client.icccm.accepts_focus) &&
+		 (!bd->client.icccm.take_focus)) continue;
+	     if (bd->client.netwm.state.skip_taskbar) continue;
+	     if (bd->user_skip_winlist) continue;
+	     _e_mod_layout_border_hide(bd);
+	  }
+     }
+}
+
+static void
+_cb_slipshelf_app_prev(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action)
+{
+   E_Border *bd, *bd2 = NULL;
+   Eina_List *l, *list, *tlist = NULL;
+   
+   bd = e_border_focused_get();
+   list = e_border_client_list();
+   for (l = list; l; l = l->next)
+     {
+	bd2 = l->data;
+	if (e_object_is_del(E_OBJECT(bd2))) continue;
+	if ((!bd2->client.icccm.accepts_focus) &&
+	    (!bd2->client.icccm.take_focus)) continue;
+	if (bd2->client.netwm.state.skip_taskbar) continue;
+	if (bd2->user_skip_winlist) continue;
+	tlist = evas_list_append(tlist, bd2);
+     }
+   if (!tlist) return;
+   if (!bd) bd2 = evas_list_last(tlist)->data;
+   else
+     {
+	for (l = tlist; l; l = l->next)
+	  {
+	     bd2 = l->data;
+	     if (bd2 == bd)
+	       {
+		  if (l->prev) bd2 = l->prev->data;
+		  else bd2 = NULL;
+		  break;
+	       }
+	  }
+     }
+   evas_list_free(tlist);
+   if (bd2 == bd) return;
+   if (bd2) _e_mod_layout_border_show(bd2);
+   else
+     {
+	Eina_List *l, *borders;
+	
+	borders = e_border_client_list();
+	for (l = borders; l; l = l->next)
+	  {
+	     E_Border *bd;
+	     
+	     bd = l->data;
+	     if (e_object_is_del(E_OBJECT(bd))) continue;
+	     if ((!bd->client.icccm.accepts_focus) &&
+		 (!bd->client.icccm.take_focus)) continue;
+	     if (bd->client.netwm.state.skip_taskbar) continue;
+	     if (bd->user_skip_winlist) continue;
+	     _e_mod_layout_border_hide(bd);
+	  }
+     }
+}
+
+static void
 _cb_slipwin_select(const void *data, E_Slipwin *esw, E_Border *bd)
 {
    if (bd) _e_mod_layout_border_show(bd);
@@ -639,24 +773,6 @@ static void
 _cb_slipshelf_select(const void *data, E_Slipshelf *ess, E_Border *bd)
 {
    if (bd) _e_mod_layout_border_show(bd);
-}
-
-static void
-_cb_slipshelf_add(const void *data, E_Slipshelf *ess, E_Border *bd)
-{
-   printf("FIXME: implement add\n");
-}
-
-static void
-_cb_slipshelf_del(const void *data, E_Slipshelf *ess, E_Border *bd)
-{
-   if (!bd) return;
-   if (e_object_is_del(E_OBJECT(bd))) return;
-   if ((!bd->client.icccm.accepts_focus) &&
-       (!bd->client.icccm.take_focus)) return;
-   if (bd->client.netwm.state.skip_taskbar) return;
-   if (bd->user_skip_winlist) return;
-   _e_mod_layout_border_close(bd);
 }
 
 static void

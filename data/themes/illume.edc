@@ -57,8 +57,8 @@ collections {
    group { name: "e/modules/slipshelf/base/default";
       images {
          image: "base_bg.png" COMP;
-	 image: "big_arrow_down.png" COMP;
-	 image: "big_arrow_up.png" COMP;
+	 image: "icon_left_arrow.png" COMP;
+	 image: "icon_right_arrow.png" COMP;
       }
 //      data.item: "shaped" "1";
       parts {
@@ -104,18 +104,20 @@ collections {
 	       }
 	    }
 	 }
-         part { name: "s3";
-	    mouse_events: 0;
-	    type: RECT;
+	 part { name: "e.swallow.content";
+	    type: SWALLOW;
 	    description { state: "default" 0.0;
-	       visible: 0;
-	       rel1 {              
-		  to_y: "e.swallow.content";
-		  offset: 0 -4;
+	       fixed: 1 1;
+	       align: 1.0 1.0;
+	       rel1 {
+		  to_x: "next_app";
+		  relative: 0.0 1.0;
+		  offset: -1 -5;
 	       }
 	       rel2 {
-		  to_y: "e.swallow.content";
-		  offset: -1 3;
+		  to_x: "next_app";
+		  relative: 0.0 1.0;
+		  offset: -1 -5;
 	       }
 	    }
 	 }
@@ -129,33 +131,121 @@ collections {
 		  offset: 4 4;
 	       }
 	       rel2 {
-		  relative: 1.0 0.0;
+		  to_x: "kbd";
+		  relative: 0.0 0.0;
 		  offset: -5 4;
 	       }
 	    }
 	 }
+ 	 part { name: "kbd";
+	    // FIXME: make proper icon for kbd
+	    type: RECT;
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       aspect: 2.0 2.0;
+	       aspect_preference: VERTICAL;
+	       align: 1.0 0.5;
+	       color: 0 0 0 0;
+               rel1 {
+		  to_y: "e.swallow.extra";
+		  relative: 1.0 0.0;
+	       }
+	       rel2 {
+		  to_y: "e.swallow.extra";
+		  relative: 1.0 1.0;
+		  offset: -1 -1;
+	       }
+	    }
+	 }
+ 	 part { name: "kbdtext";
+	    // FIXME: make proper icon for kbd
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+            description { state: "default" 0.0;
+	       fixed: 1 1;
+	       rel1 {
+		  to: "kbd";
+	       }
+	       rel2 {
+		  to: "kbd";
+	       }
+	       color: 0 0 0 255;
+	       text {
+                  font: "Sans:style=Bold";
+		  text: "qwerty";
+		  size: 8;
+		  min: 1 1;
+	       }
+	    }
+	 }
 	 
+         part { name: "s3";
+	    mouse_events: 0;
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       rel1 {
+		  to_y: "e.swallow.content";
+		  offset: 0 -4;
+	       }
+	       rel2 {
+		  to_y: "e.swallow.content";
+		  offset: -1 3;
+	       }
+	    }
+	 }
          part { name: "e.swallow.visible";
 	    type: SWALLOW;
 	    description { state: "default" 0.0;
-	       visible: 0;
 	       rel1.to: "s3";
 	       rel2.to: "s3";
 	    }
 	 }
-	 part { name: "e.swallow.content";
-	    type: SWALLOW;
+ 	 part { name: "prev_app";
+	    mouse_events: 1;
+	    scale: 1;
 	    description { state: "default" 0.0;
-	       fixed: 1 1;
-	       align: 1.0 1.0;
+	       image.normal: "icon_left_arrow.png";
+	       max: 32 32;
+	       aspect: 1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       align: 0.0 0.5;
 	       rel1 {
-		  relative: 1.0 1.0;
-		  offset: -5 -5;
+		  to_y: "e.swallow.content";
 	       }
 	       rel2 {
-		  relative: 1.0 1.0;
-		  offset: -5 -5;
+		  to_y: "e.swallow.content";
+		  relative: 0.0 1.0;
+		  offset: 0 -1;
 	       }
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit: "default" 0.0;
+	       color: 255 255 255 64;
+	    }
+	 }
+ 	 part { name: "next_app";
+	    mouse_events: 1;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       image.normal: "icon_right_arrow.png";
+	       max: 32 32;
+	       aspect: 1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       align: 1.0 0.5;
+	       rel1 {
+		  to_y: "e.swallow.content";
+		  relative: 1.0 0.0;
+		  offset: -1 0;
+	       }
+	       rel2 {
+		  to_y: "e.swallow.content";
+	       }
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit: "default" 0.0;
+	       color: 255 255 255 64;
 	    }
 	 }
 	 part { name: "e.text.label";
@@ -165,13 +255,13 @@ collections {
 	    description { state: "default" 0.0;
 	       align: 0.0 0.5;
 	       rel1 {
-		  to_x: "kbd";
+		  to_x: "prev_app";
 		  to_y: "e.swallow.content";
 		  relative: 1.0 0.0;
 		  offset: 0 0;
 	       }
 	       rel2 {
-		  to_x: "inout";
+		  to_x: "e.swallow.content";
 		  to_y: "e.swallow.content";
 		  relative: 0.0 1.0;
 		  offset: -1 -1;
@@ -185,45 +275,15 @@ collections {
 	       }
 	    }
 	 }
- 	 part { name: "inout";
-	    mouse_events: 0;
-	    scale: 1;
-	    description { state: "default" 0.0;
-	       image.normal: "big_arrow_down.png";
-	       max: 22 22;
-	       aspect: 1.0 1.0;
-	       aspect_preference: VERTICAL;
-	       rel1 {
-//		  to_x: "kbd";
-		  to_y: "e.swallow.content";
-		  relative: 0.0 0.0;
-		  offset: 0 0;
-	       }
-	       rel2 {
-		  to_y: "e.swallow.content";
-		  offset: 1 -1;
-	       }
-	    }
-	    description { state: "out1" 0.0;
-	       inherit: "default" 0.0;
-	       image.normal: "big_arrow_up.png";
-	    }
-	    description { state: "out2" 0.0;
-	       inherit: "default" 0.0;
-	       image.normal: "big_arrow_up.png";
-	    }
-	    description { state: "in1" 0.0;
-	       inherit: "default" 0.0;
-	       image.normal: "big_arrow_down.png";
-	    }
-	 }
  	 part { name: "slider";
 	    type: RECT;
 	    repeat_events: 1;
 	    description { state: "default" 0.0;
 	       color: 0 0 0 0;
                rel1 {
+		  to_x: "prev_app";
 		  to_y: "e.swallow.content";
+		  relative: 1.0 0.0;
 		  offset: 0 0;
 	       }
 	       rel2 {
@@ -231,55 +291,6 @@ collections {
 		  to_y: "e.swallow.content";
 		  relative: 0.0 1.0;
 		  offset: -1 -1;
-	       }
-	    }
-	 }
- 	 part { name: "kbd";
-	    type: RECT;
-	    mouse_events: 1;
-	    description { state: "default" 0.0;
-	       visible: 1;
-//	       visible: 0; // sean wants it gone. don't look at me.
-	       color: 0 0 0 0;
-               rel1 {
-		  to_y: "e.swallow.content";
-		  to_x: "kbdtext";
-	       }
-	       rel2 {
-		  to_x: "kbdtext";
-		  to_y: "e.swallow.content";
-		  relative: 1.0 1.0;
-//		  relative: 0.0 1.0; // sean wants it gone. don't look at me.
-		  offset: -1 -1;
-	       }
-	    }
-	 }
- 	 part { name: "kbdtext";
-	    type: TEXT;
-	    mouse_events: 0;
-	    scale: 1;
-            description { state: "default" 0.0;
-	       visible: 1;
-//	       visible: 0; // sean wants it gone. don't look at me.
-	       align: 0.0 1.0;
-	       fixed: 1 1;
-	       rel1 {
-		  to_y: "e.swallow.content";
-		  offset: 1 0;
-	       }
-	       rel2 {
-		  to_y: "e.swallow.content";
-		  relative: 0.0 1.0;
-		  offset: 1 -1;
-	       }
-	       color: 0 0 0 255;
-	       text {
-                  font: "Sans:style=Bold";
-		  text: "qwerty";
-		  size: 8;
-		  min: 1 1;
-		  align: 0.0 1.0;
-		  text_class: "slipshelf_title";
 	       }
 	    }
 	 }
@@ -294,42 +305,52 @@ collections {
       }
       programs {
 	 program { name: "kbd";
-	    signal: "mouse,up,1";
+	    signal: "mouse,down,1";
 	    source: "kbd";
 	    action: SIGNAL_EMIT "e,action,do,keyboard" "";
 	 }
 	 program { name: "slide";
-	    signal: "mouse,up,1";
+	    signal: "mouse,down,1";
 	    source: "slider";
 	    action: SIGNAL_EMIT "e,action,toggle" "";
 	 }
-	 program { name: "out1";
-	    signal: "e,state,out,begin";
-	    source: "e";
-	    action: STATE_SET "out1" 0.0;
-	    transition: LINEAR 0.25;
-	    target: "inout";
+	 program { name: "prev";
+	    signal: "mouse,down,1";
+	    source: "prev_app";
+	    action: SIGNAL_EMIT "e,action,do,app,prev" "";
 	 }
-	 program { name: "out2";
-	    signal: "e,state,out,end";
-	    source: "e";
-	    action: STATE_SET "out2" 0.0;
-	    transition: LINEAR 0.25;
-	    target: "inout";
+	 program { name: "next";
+	    signal: "mouse,down,1";
+	    source: "next_app";
+	    action: SIGNAL_EMIT "e,action,do,app,next" "";
 	 }
-	 program { name: "in1";
-	    signal: "e,state,in,begin";
-	    source: "e";
-	    action: STATE_SET "in1" 0.0;
-	    transition: LINEAR 0.25;
-	    target: "inout";
-	 }
-	 program { name: "in2";
-	    signal: "e,state,in,end";
+	 program { name: "next_enable";
+	    signal: "e,state,action,app,next,enabled";
 	    source: "e";
 	    action: STATE_SET "default" 0.0;
-	    transition: LINEAR 0.25;
-	    target: "inout";
+	    transition: LINEAR 0.5;
+	    target: "next_app";
+	 }
+	 program { name: "next_disable";
+	    signal: "e,state,action,app,next,disabled";
+	    source: "e";
+	    action: STATE_SET "disabled" 0.0;
+	    transition: LINEAR 0.5;
+	    target: "next_app";
+	 }
+	 program { name: "prev_enable";
+	    signal: "e,state,action,app,prev,enabled";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    transition: LINEAR 0.5;
+	    target: "prev_app";
+	 }
+	 program { name: "prev_disable";
+	    signal: "e,state,action,app,prev,disabled";
+	    source: "e";
+	    action: STATE_SET "disabled" 0.0;
+	    transition: LINEAR 0.5;
+	    target: "prev_app";
 	 }
       }
    }

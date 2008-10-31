@@ -451,6 +451,22 @@ e_widget_ilist_range_select(Evas_Object *obj, int n)
    e_ilist_range_select(wd->o_ilist, n);
 }
 
+EAPI void
+e_widget_ilist_preferred_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
+{
+   Evas_Coord ww, hh, mw, mh, vw, vh;
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   evas_object_geometry_get(wd->o_scrollframe, NULL, NULL, &ww, &hh);
+   evas_object_resize(wd->o_scrollframe, 200, 200);
+   e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
+   e_ilist_min_size_get(wd->o_ilist, &mw, &mh);
+   evas_object_resize(wd->o_scrollframe, ww, hh);
+   if (w) *w = 200 - vw + mw;
+   if (h) *h = 200 - vh + mh;
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

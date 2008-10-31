@@ -13,7 +13,6 @@ struct _E_Slipwin
    E_Popup             *popup;
    Ecore_X_Window       clickwin;
    Evas_Object         *base_obj;
-   Evas_Object         *scrollframe_obj;
    Evas_Object         *ilist_obj;
    Eina_List           *handlers;
    E_Border            *focused_border;

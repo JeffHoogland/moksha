@@ -37,6 +37,6 @@ EAPI void         e_widget_ilist_multi_select_set(Evas_Object *obj, int multi);
 EAPI int          e_widget_ilist_multi_select_get(Evas_Object *obj);
 EAPI void         e_widget_ilist_multi_select(Evas_Object *obj, int n);
 EAPI void         e_widget_ilist_range_select(Evas_Object *obj, int n);
-
+EAPI void         e_widget_ilist_preferred_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
 #endif
 #endif

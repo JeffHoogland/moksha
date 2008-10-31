@@ -438,7 +438,6 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	  }
 	if (ev->button == 1)
 	  {
-	     printf("down @ %3.3f\n", ecore_time_get());
 	     sd->down.now = 1;
 	     sd->down.dragged = 0;
 	     sd->down.dir_x = 0;
@@ -499,7 +498,6 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	if (ev->button == 1)
 	  {
-	     printf("up @ %3.3f\n", ecore_time_get());
 	     x = ev->canvas.x - sd->down.x;
 	     y = ev->canvas.y - sd->down.y;
 	     if (sd->down.dragged)
@@ -829,8 +827,13 @@ _e_smart_scrollbar_bar_visibility_adjust(E_Smart_Data *sd)
    changed |= _e_smart_scrollbar_bar_v_visibility_adjust(sd);
    if (changed)
      {
-	_e_smart_scrollbar_bar_h_visibility_adjust(sd);
-	_e_smart_scrollbar_bar_v_visibility_adjust(sd);
+	changed |= _e_smart_scrollbar_bar_h_visibility_adjust(sd);
+	changed |= _e_smart_scrollbar_bar_v_visibility_adjust(sd);
+     }
+   if (changed)
+     {
+	changed |= _e_smart_scrollbar_bar_h_visibility_adjust(sd);
+	changed |= _e_smart_scrollbar_bar_v_visibility_adjust(sd);
      }
 }
 
@@ -842,6 +845,7 @@ _e_smart_scrollbar_size_adjust(E_Smart_Data *sd)
 	Evas_Coord x, y, w, h, mx = 0, my = 0, vw = 0, vh = 0;
 	double vx, vy, size;
 
+	edje_object_calc_force(sd->edje_obj);
 	edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", NULL, NULL, &vw, &vh);
 	w = sd->child.w;
 	if (w < 1) w = 1;

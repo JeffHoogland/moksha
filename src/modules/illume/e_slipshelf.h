@@ -13,7 +13,9 @@ typedef enum _E_Slipshelf_Action
    E_SLIPSHELF_ACTION_HOME,
    E_SLIPSHELF_ACTION_CLOSE,
    E_SLIPSHELF_ACTION_APPS,
-   E_SLIPSHELF_ACTION_KEYBOARD
+   E_SLIPSHELF_ACTION_KEYBOARD,
+   E_SLIPSHELF_ACTION_APP_NEXT,
+   E_SLIPSHELF_ACTION_APP_PREV
 } E_Slipshelf_Action;
 
 struct _E_Slipshelf
@@ -41,7 +43,7 @@ struct _E_Slipshelf
 	 void (*func) (const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
 	 const void *data;
 	 unsigned char enabled : 1;
-      } home, close, apps, keyboard;
+      } home, close, apps, keyboard, app_next, app_prev;
    } action;
    int                  main_size;
    int                  extra_size;
@@ -56,7 +58,7 @@ struct _E_Slipshelf
    struct {
       void (*func) (void *data, E_Slipshelf *ess, E_Border *bd);
       const void *data;
-   } callback_border_select, callback_border_add, callback_border_del, callback_border_home;
+   } callback_border_select, callback_border_home;
    
    double               start;
    double               len;
@@ -78,8 +80,6 @@ EAPI void e_slipshelf_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, 
 EAPI void e_slipshelf_default_title_set(E_Slipshelf *ess, const char *title);
 
 EAPI void e_slipshelf_border_select_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), const void *data);
-EAPI void e_slipshelf_border_add_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), const void *data);
-EAPI void e_slipshelf_border_del_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), const void *data);
 EAPI void e_slipshelf_border_home_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), const void *data);
 
 

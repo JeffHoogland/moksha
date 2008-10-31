@@ -15,9 +15,9 @@ static void _e_slipshelf_cb_toggle(void *data, Evas_Object *obj, const char *emi
 static void _e_slipshelf_cb_home(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_slipshelf_cb_close(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_slipshelf_cb_apps(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_slipshelf_cb_applist_add(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_slipshelf_cb_applist_del(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_slipshelf_cb_keyboard(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_slipshelf_cb_app_next(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_slipshelf_cb_app_prev(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_slipshelf_cb_item_sel(void *data, void *data2);
 static int _e_slipshelf_cb_animate(void *data);
 static void _e_slipshelf_slide(E_Slipshelf *ess, int out, double len);
@@ -100,12 +100,8 @@ e_slipshelf_new(E_Zone *zone, const char *themedir)
 	ess->control_obj = _theme_obj_new(ess->popup->evas,
 					  ess->themedir,
 					  "e/modules/slipshelf/controls/applist");
-	edje_object_part_text_set(ess->control_obj, "e.add.label",
-				  "ADD");
 	edje_object_part_text_set(ess->control_obj, "e.del.label",
 				  "REMOVE");
-	edje_object_part_text_set(ess->base_obj, "e.add.label",
-				  "ADD");
 	edje_object_part_text_set(ess->base_obj, "e.del.label",
 				  "REMOVE");
      }
@@ -199,18 +195,16 @@ e_slipshelf_new(E_Zone *zone, const char *themedir)
    edje_object_signal_callback_add(ess->base_obj, "e,action,do,home", "", _e_slipshelf_cb_home, ess);
    edje_object_signal_callback_add(ess->base_obj, "e,action,do,close", "", _e_slipshelf_cb_close, ess);
    edje_object_signal_callback_add(ess->base_obj, "e,action,do,apps", "", _e_slipshelf_cb_apps, ess);
-   edje_object_signal_callback_add(ess->base_obj, "e,action,do,applist,add", "", _e_slipshelf_cb_applist_add, ess);
-   edje_object_signal_callback_add(ess->base_obj, "e,action,do,applist,del", "", _e_slipshelf_cb_applist_del, ess);
+   edje_object_signal_callback_add(ess->base_obj, "e,action,do,app,next", "", _e_slipshelf_cb_app_next, ess);
+   edje_object_signal_callback_add(ess->base_obj, "e,action,do,app,prev", "", _e_slipshelf_cb_app_prev, ess);
    
    edje_object_signal_callback_add(ess->control_obj, "e,action,toggle", "", _e_slipshelf_cb_toggle, ess);
    edje_object_signal_callback_add(ess->control_obj, "e,action,do,keyboard", "", _e_slipshelf_cb_keyboard, ess);
    edje_object_signal_callback_add(ess->control_obj, "e,action,do,home", "", _e_slipshelf_cb_home, ess);
    edje_object_signal_callback_add(ess->control_obj, "e,action,do,close", "", _e_slipshelf_cb_close, ess);
    edje_object_signal_callback_add(ess->control_obj, "e,action,do,apps", "", _e_slipshelf_cb_apps, ess);
-   edje_object_signal_callback_add(ess->control_obj, "e,action,do,applist,add", "", _e_slipshelf_cb_applist_add, ess);
-   edje_object_signal_callback_add(ess->control_obj, "e,action,do,applist,del", "", _e_slipshelf_cb_applist_del, ess);
-   
-   /* FIXME: add callbacks for app remove/add */
+   edje_object_signal_callback_add(ess->control_obj, "e,action,do,app,next", "", _e_slipshelf_cb_app_next, ess);
+   edje_object_signal_callback_add(ess->control_obj, "e,action,do,app,prev", "", _e_slipshelf_cb_app_prev, ess);
    
    e_popup_show(ess->popup);
 
@@ -246,6 +240,8 @@ e_slipshelf_new(E_Zone *zone, const char *themedir)
    ess->action.close.enabled = 1;
    ess->action.apps.enabled = 1;
    ess->action.keyboard.enabled = 1;
+   ess->action.app_next.enabled = 1;
+   ess->action.app_prev.enabled = 1;
    
      {
 	E_Event_Slipshelf_Add *ev;
@@ -269,50 +265,64 @@ e_slipshelf_action_enabled_set(E_Slipshelf *ess, E_Slipshelf_Action action, Evas
 {
    E_OBJECT_CHECK(ess);
    E_OBJECT_TYPE_CHECK(ess, E_SLIPSHELF_TYPE);
+   const char *sig = NULL;
    switch (action)
      {
       case E_SLIPSHELF_ACTION_HOME:
  	if (ess->action.home.enabled != enabled)
 	  {
 	     ess->action.home.enabled = enabled;
-	     if (enabled)
-	       edje_object_signal_emit(ess->control_obj, "e,state,action,home,enabled", "e");
-	     else
-	       edje_object_signal_emit(ess->control_obj, "e,state,action,home,disabled", "e");
+	     if (enabled) sig = "e,state,action,home,enabled";
+	     else sig = "e,state,action,home,disabled";
 	  }
 	break;
       case E_SLIPSHELF_ACTION_CLOSE:
  	if (ess->action.close.enabled != enabled)
 	  {
 	     ess->action.close.enabled = enabled;
-	     if (enabled)
-	       edje_object_signal_emit(ess->control_obj, "e,state,action,close,enabled", "e");
-	     else
-	       edje_object_signal_emit(ess->control_obj, "e,state,action,close,disabled", "e");
+	     if (enabled) sig = "e,state,action,close,enabled";
+	     else sig = "e,state,action,close,disabled";
 	  }
 	break;
       case E_SLIPSHELF_ACTION_APPS:
  	if (ess->action.apps.enabled != enabled)
 	  {
 	     ess->action.apps.enabled = enabled;
-	     if (enabled)
-	       edje_object_signal_emit(ess->control_obj, "e,state,action,apps,enabled", "e");
-	     else
-	       edje_object_signal_emit(ess->control_obj, "e,state,action,apps,disabled", "e");
+	     if (enabled) sig = "e,state,action,apps,enabled";
+	     else sig = "e,state,action,apps,disabled";
 	  }
 	break;
       case E_SLIPSHELF_ACTION_KEYBOARD:
  	if (ess->action.keyboard.enabled != enabled)
 	  {
 	     ess->action.keyboard.enabled = enabled;
-	     if (enabled)
-	       edje_object_signal_emit(ess->control_obj, "e,state,action,keyboard,enabled", "e");
-	     else
-	       edje_object_signal_emit(ess->control_obj, "e,state,action,keyboard,disabled", "e");
+	     if (enabled) sig = "e,state,action,keyboard,enabled";
+	     else sig = "e,state,action,keyboard,disabled";
+	  }
+	break;
+      case E_SLIPSHELF_ACTION_APP_NEXT:
+ 	if (ess->action.app_next.enabled != enabled)
+	  {
+	     ess->action.app_next.enabled = enabled;
+	     if (enabled) sig = "e,state,action,app,next,enabled";
+	     else sig = "e,state,action,app,next,disabled";
+	  }
+	break;
+      case E_SLIPSHELF_ACTION_APP_PREV:
+ 	if (ess->action.app_prev.enabled != enabled)
+	  {
+	     ess->action.app_prev.enabled = enabled;
+	     if (enabled) sig = "e,state,action,app,prev,enabled";
+	     else sig = "e,state,action,app,prev,disabled";
 	  }
 	break;
       default:
 	break;
+     }
+   if (sig)
+     {
+	edje_object_signal_emit(ess->control_obj, sig, "e");
+	edje_object_signal_emit(ess->base_obj, sig, "e");
      }
 }
 
@@ -334,6 +344,12 @@ e_slipshelf_action_enabled_get(E_Slipshelf *ess, E_Slipshelf_Action action)
 	break;
       case E_SLIPSHELF_ACTION_KEYBOARD:
 	return ess->action.keyboard.enabled;
+	break;
+      case E_SLIPSHELF_ACTION_APP_NEXT:
+	return ess->action.app_next.enabled;
+	break;
+      case E_SLIPSHELF_ACTION_APP_PREV:
+	return ess->action.app_prev.enabled;
 	break;
       default:
 	break;
@@ -363,6 +379,14 @@ e_slipshelf_action_callback_set(E_Slipshelf *ess, E_Slipshelf_Action action, voi
       case E_SLIPSHELF_ACTION_KEYBOARD:
 	ess->action.keyboard.func = func;
 	ess->action.keyboard.data = data;
+	break;
+      case E_SLIPSHELF_ACTION_APP_NEXT:
+	ess->action.app_next.func = func;
+	ess->action.app_next.data = data;
+	break;
+      case E_SLIPSHELF_ACTION_APP_PREV:
+	ess->action.app_prev.func = func;
+	ess->action.app_prev.data = data;
 	break;
       default:
 	break;
@@ -420,24 +444,6 @@ e_slipshelf_border_select_callback_set(E_Slipshelf *ess, void (*func) (void *dat
    E_OBJECT_TYPE_CHECK(ess, E_SLIPSHELF_TYPE);
    ess->callback_border_select.func = func;
    ess->callback_border_select.data = data;
-}
-
-EAPI void
-e_slipshelf_border_add_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), const void *data)
-{
-   E_OBJECT_CHECK(ess);
-   E_OBJECT_TYPE_CHECK(ess, E_SLIPSHELF_TYPE);
-   ess->callback_border_add.func = func;
-   ess->callback_border_add.data = data;
-}
-
-EAPI void
-e_slipshelf_border_del_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), const void *data)
-{
-   E_OBJECT_CHECK(ess);
-   E_OBJECT_TYPE_CHECK(ess, E_SLIPSHELF_TYPE);
-   ess->callback_border_del.func = func;
-   ess->callback_border_del.data = data;
 }
 
 EAPI void
@@ -523,42 +529,6 @@ _e_slipshelf_cb_apps(void *data, Evas_Object *obj, const char *emission, const c
 }
 
 static void
-_e_slipshelf_cb_applist_add(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Slipshelf *ess;
-   
-   ess = data;
-   if (ess->callback_border_add.func)
-     {
-	if (ess->bsel)
-	  ess->callback_border_add.func(ess->callback_border_add.data, ess, ess->bsel);
-	else
-	  ess->callback_border_add.func(ess->callback_border_add.data, ess, e_border_focused_get());
-     }
-   if (ess->slide_down_timer) ecore_timer_del(ess->slide_down_timer);
-   ess->slide_down_timer = NULL;
-   _e_slipshelf_slide(ess, 0, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
-}
-
-static void
-_e_slipshelf_cb_applist_del(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Slipshelf *ess;
-   
-   ess = data;
-   if (ess->callback_border_del.func)
-     {
-	if (ess->bsel)
-	  ess->callback_border_del.func(ess->callback_border_del.data, ess, ess->bsel);
-	else
-	  ess->callback_border_del.func(ess->callback_border_del.data, ess, e_border_focused_get());
-     }
-   if (ess->slide_down_timer) ecore_timer_del(ess->slide_down_timer);
-   ess->slide_down_timer = NULL;
-   _e_slipshelf_slide(ess, 0, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
-}
-
-static void
 _e_slipshelf_cb_keyboard(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Slipshelf *ess;
@@ -566,6 +536,35 @@ _e_slipshelf_cb_keyboard(void *data, Evas_Object *obj, const char *emission, con
    ess = data;
    if ((ess->action.keyboard.func) && (ess->action.keyboard.enabled))
      ess->action.keyboard.func(ess->action.keyboard.data, ess, E_SLIPSHELF_ACTION_KEYBOARD);
+   if (ess->slide_down_timer) ecore_timer_del(ess->slide_down_timer);
+   ess->slide_down_timer = NULL;
+   _e_slipshelf_slide(ess, 0, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
+}
+
+static void
+_e_slipshelf_cb_app_next(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   E_Slipshelf *ess;
+   
+   ess = data;
+   if ((ess->action.app_next.func) && (ess->action.app_next.enabled))
+     ess->action.app_next.func(ess->action.app_next.data, ess, E_SLIPSHELF_ACTION_APP_NEXT);
+   if (ess->slide_down_timer) ecore_timer_del(ess->slide_down_timer);
+   ess->slide_down_timer = NULL;
+   _e_slipshelf_slide(ess, 0, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
+}
+
+static void
+_e_slipshelf_cb_app_prev(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   E_Slipshelf *ess;
+   
+   ess = data;
+   if ((ess->action.app_prev.func) && (ess->action.app_prev.enabled))
+     ess->action.app_prev.func(ess->action.app_prev.data, ess, E_SLIPSHELF_ACTION_APP_PREV);
+   if (ess->slide_down_timer) ecore_timer_del(ess->slide_down_timer);
+   ess->slide_down_timer = NULL;
+   _e_slipshelf_slide(ess, 0, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
 }
 
 static int
@@ -617,7 +616,6 @@ static void
 _e_slipshelf_applist_update(E_Slipshelf *ess)
 {
    Evas_Coord mw, mh, vx, vy, vw, vh, w, h, sfmw, sfmh, cmw, cmh, smw, smh;
-//   Eina_List *borders, *l;
    int i, selnum, x, y;
    int pw, ph;
    
@@ -625,62 +623,9 @@ _e_slipshelf_applist_update(E_Slipshelf *ess)
 
    pw = ess->popup->w;
    ph = ess->popup->h;
-   /*
-   borders = e_border_client_list();
-   e_ilist_freeze(ess->ilist_obj);
-   for (l = borders; l; l = l->next)
-     {
-	E_Border *bd;
-	const char *title;
-	
-	bd = l->data;
-	if (e_object_is_del(E_OBJECT(bd))) continue;
-	if ((!bd->client.icccm.accepts_focus) &&
-	    (!bd->client.icccm.take_focus)) continue;
-	if (bd->client.netwm.state.skip_taskbar) continue;
-	if (bd->user_skip_winlist) continue;
-	
-	e_object_ref(E_OBJECT(bd));
-	title = "???";
-	if (bd->client.netwm.name) title = bd->client.netwm.name;
-	else if (bd->client.icccm.title) title = bd->client.icccm.title;
-	e_ilist_append(ess->ilist_obj, NULL, title, 0, 
-		       _e_slipshelf_cb_item_sel,
-		       NULL, ess, bd);
-	ess->borders = eina_list_append(ess->borders, bd);
-	if (bd == e_border_focused_get()) selnum = i;
-	i++;
-     }
-   e_ilist_append(ess->ilist_obj, NULL, "Home", 0, 
-		  _e_slipshelf_cb_item_sel,
-		  NULL, ess, NULL);
-//   selnum = 0;
-   i++;
-   e_ilist_thaw(ess->ilist_obj);
-*/
    ess->bsel = e_border_focused_get();
    
-//   if (selnum >= 0) e_ilist_selected_set(ess->ilist_obj, selnum);
-
    e_winilist_optimial_size_get(ess->scrollframe_obj, &sfmw, &sfmh);
-/*   
-   e_scrollframe_child_viewport_size_get(ess->scrollframe_obj, &vw, &vh);
-   e_ilist_min_size_get(ess->ilist_obj, &mw, &mh);
-   
-   evas_object_geometry_get(ess->scrollframe_obj, NULL, NULL, &w, &h);
-   
-   if (mw > vw) mw = mw + (w - vw);
-   else if (mw < vw) mw = vw;
-   
-   evas_object_resize(ess->ilist_obj, mw, mh);
-   evas_object_resize(ess->scrollframe_obj, mw, mh);
-   printf("resize ilist + frame to %i %i\n", mw, mh);
-   
-   evas_object_geometry_get(ess->scrollframe_obj, NULL, NULL, &w, &h);
-   sfmw = mw + (mw - w);
-   sfmh = mh + (mh - h);
-   printf("adjust to %i %i\n", sfmw, sfmh);
- */   
 
    sfmw = 0;
    
@@ -705,13 +650,10 @@ _e_slipshelf_applist_update(E_Slipshelf *ess)
    smw = ess->zone->w;
    if (smh > ess->zone->h) smh = ess->zone->h;
    
-//   smh = 400;
-   
    evas_object_resize(ess->base_obj, smw, smh);
    edje_object_calc_force(ess->base_obj);
    edje_object_calc_force(ess->control_obj);
    edje_object_part_geometry_get(ess->base_obj, "e.swallow.controls", &vx, &vy, &vw, &vh);
-//   evas_object_geometry_get(ess->control_obj, &vx, &vy, &vw, &vh);
    ess->control.w = vw;
    ess->control.h = vh;
    edje_extern_object_min_size_set(ess->control_obj, ess->control.w, ess->control.h);
@@ -720,7 +662,6 @@ _e_slipshelf_applist_update(E_Slipshelf *ess)
    edje_object_calc_force(ess->base_obj);
    edje_object_calc_force(ess->control_obj);
    edje_object_part_geometry_get(ess->base_obj, "e.swallow.visible", &vx, &vy, &vw, &vh);
-//   evas_object_geometry_get(ess->vis_obj, &vx, &vy, &vw, &vh);
    
    ess->hidden = vy;
    x = ess->zone->x;
@@ -728,34 +669,6 @@ _e_slipshelf_applist_update(E_Slipshelf *ess)
    e_popup_move_resize(ess->popup, x, y, smw, smh);
    evas_object_resize(ess->base_obj, ess->popup->w, ess->popup->h);
 }
-
-/*
-static void
-_e_slipshelf_applist_clear(E_Slipshelf *ess)
-{
-   Evas_Coord mw, mh, vw, vh, w, h;
-
-   e_ilist_freeze(ess->ilist_obj);
-   e_ilist_clear(ess->ilist_obj);
-   e_ilist_thaw(ess->ilist_obj);
-   
-   ess->bsel = NULL;
-   while (ess->borders)
-     {
-	e_object_unref(E_OBJECT(ess->borders->data));
-	ess->borders = eina_list_remove_list(ess->borders, ess->borders);
-     }
-   
-   e_scrollframe_child_viewport_size_get(ess->scrollframe_obj, &vw, &vh);
-   e_ilist_min_size_get(ess->ilist_obj, &mw, &mh);
-   
-   evas_object_geometry_get(ess->scrollframe_obj, NULL, NULL, &w, &h);
-   
-   if (mw > vw) mw = mw + (w - vw);
-   else if (mw < vw) mw = vw;
-   evas_object_resize(ess->ilist_obj, mw, mh);
-}
-*/
 
 static int
 _e_slipshelf_cb_animate(void *data)
@@ -779,7 +692,6 @@ _e_slipshelf_cb_animate(void *data)
 	v = 1.0;
      }
    ess->adjust = (ess->adjust_target * v) + (ess->adjust_start  * (1.0 - v));
-//   printf("%i | %i\n", ess->hidden, ess->adjust);
    e_popup_move(ess->popup, 
 		ess->zone->x, 
 		ess->zone->y - ess->hidden + ess->adjust);
@@ -795,7 +707,6 @@ _e_slipshelf_cb_animate(void *data)
 	  {
 	     edje_object_signal_emit(ess->control_obj, "e,state,in,end", "e");
 	     edje_object_signal_emit(ess->base_obj, "e,state,in,end", "e");
-//	     _e_slipshelf_applist_clear(ess);
 	  }
 	return 0;
      }
@@ -812,7 +723,6 @@ _e_slipshelf_slide(E_Slipshelf *ess, int out, double len)
    ess->adjust_start = ess->adjust;
    if (ess->out)
      {
-//	_e_slipshelf_applist_clear(ess);
 	_e_slipshelf_applist_update(ess);
 	
 	edje_object_signal_emit(ess->control_obj, "e,state,out,begin", "e");
@@ -993,7 +903,6 @@ _e_slipshelf_cb_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, 
    
    evas_object_resize(ess->base_obj, mw, mh);
    edje_object_part_geometry_get(ess->base_obj, "e.swallow.visible", &vx, &vy, &vw, &vh);
-//   evas_object_geometry_get(ess->vis_obj, &vx, &vy, &vw, &vh);
    ess->hidden = vy;
    x = ess->zone->x;
    y = ess->zone->y - ess->hidden;
