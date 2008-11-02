@@ -63,7 +63,11 @@ module_la_SOURCES      = e_mod_main.c \
 			 e_flaunch.c \
                          e_flaunch.h \
                          e_busycover.c \
-		         e_busycover.h
+		         e_busycover.h \
+			 e_appwin.c \
+			 e_appwin.h \
+			 e_syswin.c \
+			 e_syswin.h
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version

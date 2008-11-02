@@ -834,6 +834,13 @@ collections {
    group { name: "e/modules/slipwin/base/default";
       images {
          image: "base_bg.png" COMP;
+	 image: "illume-apps.png" COMP;
+         image: "bt_base1.png" COMP;
+	 image: "bt_base2.png" COMP;
+	 image: "bt_hilight.png" COMP;
+	 image: "bt_shine.png" COMP;
+         image: "bt_dis_base.png" COMP;
+         image: "bt_dis_hilight.png" COMP;
       }
 //      data.item: "shaped" "1";
       parts {
@@ -850,8 +857,140 @@ collections {
 	    description { state: "default" 0.0;
 //	       fixed: 1 1;
 	       rel1.offset: 4 4;
-	       rel2.offset: -5 -5;
+	       rel2 {
+		  to_y: "apps";
+		  relative: 1.0 0.0;
+		  offset: -5 -17;
+	       }
 	    }
+	 }
+	 part { name: "apps_image";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "apps";
+	       rel1.offset: -8 -8;
+	       rel2.to: "apps";
+	       rel2.offset: 7 7;
+	       image {
+		  normal: "bt_base2.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "bt_base1.png";
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       image {
+		  normal: "bt_dis_base.png";
+		  border: 4 4 4 4;
+	       }
+	    }
+	 }
+	 part { name: "apps_icon";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "apps_image";
+               rel1.offset: 8 8;
+	       rel2.to: "apps_image";
+               rel2.offset: -9 -9;
+               aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       max: 96 96;
+	       image.normal: "illume-apps.png";
+	    }
+	 }
+         part { name: "apps_over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "apps_image";
+	       rel2.to: "apps_image";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_hilight.png";
+		  border: 7 7 7 0;
+	       }
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       image {
+		  normal: "bt_dis_hilight.png";
+		  border: 4 4 4 0;
+	       }
+	    }
+	 }
+	 part { name: "apps_over2";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "apps_image";
+	       rel2.to: "apps_image";
+	       image {
+		  normal: "bt_shine.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+ 	 part { name: "apps";
+	    type: RECT;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       aspect: 1.0 1.0;
+	       min: 48 48;
+	       aspect_preference: VERTICAL;
+	       align: 0.5 1.0;
+	       rel1.relative: 0.5 1.0;
+	       rel1.offset: 0 -17;
+	       rel2.relative: 0.5 1.0;
+	       rel2.offset: -1 -17;
+	       color: 0 0 0 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+      }
+      programs {
+	 program { name: "appsdown";
+	    signal: "mouse,down,1";
+	    source: "apps";
+	    action: STATE_SET "clicked" 0.0;
+	    target: "apps_image";
+	 }
+	 program { name: "appsup";
+	    signal: "mouse,up,1";
+	    source: "apps";
+	    action: STATE_SET "default" 0.0;
+	    target: "apps_image";
+	    after: "apps";
+	 }
+	 program { name: "apps";
+	    action: SIGNAL_EMIT "e,action,do,apps" "";
+	 }
+	 program { name: "appsenabled";
+	    signal: "e,state,action,apps,enabled";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "apps_image";
+	    target: "apps_icon";
+	    target: "apps_over1";
+	    target: "apps_over2";
+	    target: "apps";
+	 }
+	 program { name: "appsdisabled";
+	    signal: "e,state,action,apps,disabled";
+	    source: "e";
+	    action: STATE_SET "disabled" 0.0;
+	    target: "apps_image";
+	    target: "apps_icon";
+	    target: "apps_over1";
+	    target: "apps_over2";
+	    target: "apps";
 	 }
       }
    }

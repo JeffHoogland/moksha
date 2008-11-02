@@ -8,6 +8,9 @@
 #include "e_busywin.h"
 #include "e_simplelock.h"
 #include "e_flaunch.h"
+#include "e_slipwin.h"
+#include "e_appwin.h"
+#include "e_syswin.h"
 
 #include "e_mod_main.h"
 #include "e_mod_layout.h"
@@ -40,6 +43,8 @@ e_modapi_init(E_Module *m)
    e_pwr_init();
    e_flaunch_init();
    e_simplelock_init(m);
+   e_appwin_init();
+   e_syswin_init();
    _e_mod_layout_init(m);
    _e_mod_win_init(m);
    
@@ -65,6 +70,8 @@ e_modapi_shutdown(E_Module *m)
    
    _e_mod_win_shutdown();
    _e_mod_layout_shutdown();
+   e_syswin_shutdown();
+   e_appwin_shutdown();
    e_simplelock_shutdown();
    e_flaunch_shutdown();
    e_pwr_shutdown();

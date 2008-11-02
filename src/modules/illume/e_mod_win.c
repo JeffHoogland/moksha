@@ -10,6 +10,8 @@
 #include "e_cfg.h"
 #include "e_flaunch.h"
 #include "e_pwr.h"
+#include "e_appwin.h"
+#include "e_syswin.h"
 
 /* internal calls */
 static void _cb_cfg_exec(const void *data, E_Container *con, const char *params, Efreet_Desktop *desktop);
@@ -64,6 +66,8 @@ static E_Kbd_Int *vkbd_int = NULL;
 static E_Busywin *busywin = NULL;
 static E_Busywin *busycover = NULL;
 static E_Flaunch *flaunch = NULL;
+static E_Appwin *appwin = NULL;
+static E_Syswin *syswin = NULL;
 
 /* called from the module core */
 void
@@ -100,6 +104,9 @@ _e_mod_win_init(E_Module *m)
    
    slipwin = e_slipwin_new(zone, e_module_dir_get(m));
    e_slipwin_border_select_callback_set(slipwin, _cb_slipwin_select, NULL);
+
+   appwin = e_appwin_new(zone, e_module_dir_get(m));
+   syswin = e_syswin_new(zone, e_module_dir_get(m));
    
    vkbd = e_kbd_new(zone, 
 		    e_module_dir_get(m), 
@@ -167,6 +174,10 @@ _e_mod_win_shutdown(void)
    slipshelf = NULL;
    e_object_del(E_OBJECT(slipwin));
    slipwin = NULL;
+   e_object_del(E_OBJECT(appwin));
+   appwin = NULL;
+   e_object_del(E_OBJECT(syswin));
+   syswin = NULL;
 }
 
 static Ecore_Exe           *_kbd_exe = NULL;
@@ -633,7 +644,7 @@ _cb_slipshelf_close(const void *data, E_Slipshelf *ess, E_Slipshelf_Action actio
      }
    else
      {
-	// FIXME: poower/shutdown menu
+	e_syswin_show(slipwin);
      }
 }
 
