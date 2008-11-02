@@ -10,6 +10,8 @@
 // shutdown
 // suspend
 // config
+// 
+// maybe a list of extras?
 
 typedef struct _Win_Entry Win_Entry;
 
