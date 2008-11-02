@@ -920,14 +920,14 @@ on_top(void *data, Evas_Object *o, const char *em, const char *src)
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
 
-        h = (oy + oh) - my - 15;
+        h = (oy + oh) - my;
         if (h < current->min.h) h = current->min.h;
 
         evas_object_resize(mover, ow, h);
-        evas_object_move(mover, ox, my + 15);
+        evas_object_move(mover, ox, my);
 
         evas_object_resize(current->o_frame, ow, h);
-        evas_object_move(current->o_frame, ox, my + 15);
+        evas_object_move(current->o_frame, ox, my);
      }
 }
 
@@ -961,7 +961,7 @@ on_right(void *data, Evas_Object *o, const char *em, const char *src)
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
 
-        w = mx - ox - 15;
+        w = mx - ox;
         if (w < current->min.w) w = current->min.w;
 
         evas_object_resize(mover, w, oh);
@@ -998,7 +998,7 @@ on_down(void *data, Evas_Object *o, const char *em, const char *src)
         int h;
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
-        h = my - oy - 15;
+        h = my - oy;
         if (h < current->min.h) h = current->min.h;
 
         evas_object_resize(mover, ow, h);
@@ -1036,13 +1036,13 @@ on_left(void *data, Evas_Object *o, const char *em, const char *src)
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
 
-        w = (ox + ow) - mx - 15;
+        w = (ox + ow) - mx;
         if (w < current->min.w) w = current->min.w;
 
-        evas_object_move(mover, mx + 15, oy);
+        evas_object_move(mover, mx, oy);
         evas_object_resize(mover, w, oh);
 
-        evas_object_move(current->o_frame, mx + 15, oy);
+        evas_object_move(current->o_frame, mx, oy);
         evas_object_resize(current->o_frame, w, oh);
      }
 }
