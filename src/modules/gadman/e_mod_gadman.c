@@ -531,21 +531,21 @@ _create_mover(E_Gadcon *gc)
    edje_object_signal_callback_add(mover, "mouse,down,3", "overlay",
                                    gadman_gadget_edit_end, NULL);
 
-   edje_object_signal_callback_add(mover, "mouse,down,1", "h1",
+   edje_object_signal_callback_add(mover, "e,action,resize,left,start", "",
                                    on_left, (void*)DRAG_START);
-   edje_object_signal_callback_add(mover, "mouse,up,1", "h1",
+   edje_object_signal_callback_add(mover, "e,action,resize,left,stop", "",
                                    on_left, (void*)DRAG_STOP);
-   edje_object_signal_callback_add(mover, "mouse,down,1", "v2",
+   edje_object_signal_callback_add(mover, "e,action,resize,down,start", "",
                                    on_down, (void*)DRAG_START);
-   edje_object_signal_callback_add(mover, "mouse,up,1", "v2",
+   edje_object_signal_callback_add(mover, "e,action,resize,down,stop", "",
                                    on_down, (void*)DRAG_STOP);
-   edje_object_signal_callback_add(mover, "mouse,down,1", "h2",
+   edje_object_signal_callback_add(mover, "e,action,resize,right,start", "",
                                    on_right, (void*)DRAG_START);
-   edje_object_signal_callback_add(mover, "mouse,up,1", "h2",
+   edje_object_signal_callback_add(mover, "e,action,resize,right,stop", "",
                                    on_right, (void*)DRAG_STOP);
-   edje_object_signal_callback_add(mover, "mouse,down,1", "v1",
+   edje_object_signal_callback_add(mover, "e,action,resize,up,start", "",
                                    on_top, (void*)DRAG_START);
-   edje_object_signal_callback_add(mover, "mouse,up,1", "v1",
+   edje_object_signal_callback_add(mover, "e,action,resize,up,stop", "",
                                    on_top, (void*)DRAG_STOP);
 
    evas_object_move(mover, 20, 30);
@@ -905,12 +905,13 @@ on_top(void *data, Evas_Object *o, const char *em, const char *src)
      {
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        edje_object_signal_callback_add(o, "mouse,move", "v1",
-                                        on_top,(void*)DRAG_MOVE);
+        edje_object_signal_callback_add(o, "e,action,resize,up,go", "",
+                                        on_top, (void*)DRAG_MOVE);
      }
    else if (action == DRAG_STOP)
      {
-        edje_object_signal_callback_del(o, "mouse,move", "v1", on_top);
+        edje_object_signal_callback_del(o, "e,action,resize,up,go", "",
+					on_top);
         _save_widget_position(current);
      }
    else if (action == DRAG_MOVE)
@@ -945,12 +946,13 @@ on_right(void *data, Evas_Object *o, const char *em, const char *src)
      {
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        edje_object_signal_callback_add(o, "mouse,move", "h2",
-                                        on_right,(void*)DRAG_MOVE);
+        edje_object_signal_callback_add(o, "e,action,resize,right,go", "",
+                                        on_right, (void*)DRAG_MOVE);
      }
    else if (action == DRAG_STOP)
      {
-        edje_object_signal_callback_del(o, "mouse,move", "h2", on_right);
+        edje_object_signal_callback_del(o, "e,action,resize,right,go", "",
+					on_right);
         _save_widget_position(current);
      }
    else if (action == DRAG_MOVE)
@@ -982,12 +984,13 @@ on_down(void *data, Evas_Object *o, const char *em, const char *src)
      {
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        edje_object_signal_callback_add(o, "mouse,move", "v2",
-                                        on_down,(void*)DRAG_MOVE);
+        edje_object_signal_callback_add(o, "e,action,resize,down,go", "",
+                                        on_down, (void*)DRAG_MOVE);
      }
    else if (action == DRAG_STOP)
      {
-        edje_object_signal_callback_del(o, "mouse,move", "v2", on_down);
+        edje_object_signal_callback_del(o, "e,action,resize,down,go", "",
+					on_down);
         _save_widget_position(current);
      }
    else if (action == DRAG_MOVE)
@@ -1018,12 +1021,13 @@ on_left(void *data, Evas_Object *o, const char *em, const char *src)
      {
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        edje_object_signal_callback_add(o, "mouse,move", "h1",
-                                        on_left,(void*)DRAG_MOVE);
+        edje_object_signal_callback_add(o, "e,action,resize,left,go", "",
+                                        on_left, (void*)DRAG_MOVE);
      }
    else if (action == DRAG_STOP)
      {
-        edje_object_signal_callback_del(o, "mouse,move", "h1", on_left);
+        edje_object_signal_callback_del(o, "e,action,resize,left,go", "",
+					on_left);
         _save_widget_position(current);
      }
    else if (action == DRAG_MOVE)
