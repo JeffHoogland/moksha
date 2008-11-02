@@ -522,10 +522,12 @@ _create_mover(E_Gadcon *gc)
    mover = edje_object_add(gc->evas);
    e_theme_edje_object_set(mover, "base/theme/gadman", "e/gadman/control");
 
-   edje_object_signal_callback_add(mover, "mouse,down,1", "overlay",
+   edje_object_signal_callback_add(mover, "e,action,move,start", "",
                                    on_move, (void*)DRAG_START);
-   edje_object_signal_callback_add(mover, "mouse,up,1", "overlay",
+   edje_object_signal_callback_add(mover, "e,action,move,stop", "",
                                    on_move, (void*)DRAG_STOP);
+   edje_object_signal_callback_add(mover, "e,action,move,go", "",
+                                   on_move, (void*)DRAG_MOVE);
    edje_object_signal_callback_add(mover, "mouse,down,3", "overlay",
                                    gadman_gadget_edit_end, NULL);
 
@@ -1057,28 +1059,27 @@ on_move(void *data, Evas_Object *o, const char *em, const char *src)
    /* DRAG_START */
    if (action == DRAG_START)
      {
+	current->moving = 1;
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
 
         dx = mx - ox;
         dy = my - oy;
 
-        edje_object_signal_callback_add(o, "mouse,move", "overlay",
-                                        on_move,(void*)DRAG_MOVE);
         return;
      }
 
    /* DRAG_STOP */
    if (action == DRAG_STOP)
      {
-        edje_object_signal_callback_del(o, "mouse,move", "overlay", on_move);
+	current->moving = 0;
         dx = dy = 0;
         _save_widget_position(current);
         return;
      }
 
    /* DRAG_MOVE */
-   if (action == DRAG_MOVE)
+   if ((action == DRAG_MOVE) && current->moving)
      {
         int x, y;
 
