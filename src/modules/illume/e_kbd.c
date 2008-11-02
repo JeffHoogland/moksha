@@ -69,7 +69,7 @@ _e_kbd_cb_animate(void *data)
    double t, v;
    
    kbd = data;
-   t = ecore_time_get() - kbd->start;
+   t = ecore_loop_time_get() - kbd->start;
    if (t > kbd->len) t = kbd->len;
    if (kbd->len > 0.0)
      {
@@ -126,7 +126,7 @@ static void
 _e_kbd_slide(E_Kbd *kbd, int visible, double len)
 {
    _e_kbd_apply_all_job_queue();
-   kbd->start = ecore_time_get();
+   kbd->start = ecore_loop_time_get();
    kbd->len = len;
    kbd->adjust_start = kbd->adjust;
    kbd->adjust_end = 0;

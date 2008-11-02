@@ -132,5 +132,5 @@ _e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method)
       default:
 	break;
      }
-   last_focus_time = ecore_time_get();
+   last_focus_time = ecore_loop_time_get();
 }

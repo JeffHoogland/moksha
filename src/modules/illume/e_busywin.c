@@ -152,7 +152,7 @@ _e_busywin_cb_animate(void *data)
    double t, v;
    
    esw = data;
-   t = ecore_time_get() - esw->start;
+   t = ecore_loop_time_get() - esw->start;
    if (t > esw->len) t = esw->len;
    if (esw->len > 0.0)
      {
@@ -186,7 +186,7 @@ static void
 _e_busywin_slide(E_Busywin *esw, int out, double len)
 {
    if (out == esw->out) return;
-   esw->start = ecore_time_get();
+   esw->start = ecore_loop_time_get();
    esw->len = len;
    esw->out = out;
    esw->adjust_start = esw->adjust;

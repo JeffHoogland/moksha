@@ -95,7 +95,7 @@ e_slidecore_jump(Evas_Object *obj, int num)
    if (!sd->slide_animator)
      sd->slide_animator = ecore_animator_add(_e_smart_cb_slide_animator,
 					     sd);
-   sd->slide_start = ecore_time_get();
+   sd->slide_start = ecore_loop_time_get();
 }
 
 EAPI void
@@ -115,7 +115,7 @@ _e_smart_cb_slide_animator(void *data)
    double t;
 
    sd = data;
-   t = (ecore_time_get() - sd->slide_start) / sd->slide_time;
+   t = (ecore_loop_time_get() - sd->slide_start) / sd->slide_time;
    if (t > 1.0) t = 1.0;
    t = 1.0 - t;
    t = 1.0 - (t * t * t * t); /* more t's - more curve */
@@ -170,7 +170,7 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	if (!sd->slide_animator)
 	  sd->slide_animator = ecore_animator_add(_e_smart_cb_slide_animator,
 						  sd);
-	sd->slide_start = ecore_time_get();
+	sd->slide_start = ecore_loop_time_get();
      }
 }
 

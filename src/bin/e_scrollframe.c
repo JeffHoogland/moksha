@@ -449,7 +449,7 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     sd->down.sy = y;
 	     sd->down.locked = 0;
 	     memset(&(sd->down.history[0]), 0, sizeof(sd->down.history[0]) * 20);
-	     sd->down.history[0].timestamp = ecore_time_get();
+	     sd->down.history[0].timestamp = ecore_loop_time_get();
 	     sd->down.history[0].x = ev->canvas.x;
 	     sd->down.history[0].y = ev->canvas.y;
 	  }
@@ -464,7 +464,7 @@ _e_smart_momentum_animator(void *data)
    Evas_Coord x, y, dx, dy;
    
    sd = data;
-   t = ecore_time_get();
+   t = ecore_loop_time_get();
    dt = t - sd->down.anim_start;
    if (dt >= 0.0)
      {
@@ -506,7 +506,7 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 		  int i;
 		  Evas_Coord ax, ay, dx, dy, vel;
 		  
-		  t = ecore_time_get();
+		  t = ecore_loop_time_get();
 		  ev->event_flags |= EVAS_EVENT_FLAG_ON_HOLD;
 		  ax = ev->canvas.x;
 		  ay = ev->canvas.y;
@@ -564,7 +564,7 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	  {
 	     memmove(&(sd->down.history[1]), &(sd->down.history[0]),
 		     sizeof(sd->down.history[0]) * 19);
-	     sd->down.history[0].timestamp = ecore_time_get();
+	     sd->down.history[0].timestamp = ecore_loop_time_get();
 	     sd->down.history[0].x = ev->cur.canvas.x;
 	     sd->down.history[0].y = ev->cur.canvas.y;
 	     

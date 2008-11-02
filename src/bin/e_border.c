@@ -1682,7 +1682,7 @@ e_border_shade(E_Border *bd, E_Direction dir)
 
 	if (e_config->border_shade_animate)
 	  {
-	     bd->shade.start = ecore_time_get();
+	     bd->shade.start = ecore_loop_time_get();
 	     bd->shading = 1;
 	     bd->changes.shading = 1;
 	     bd->changed = 1;
@@ -1780,7 +1780,7 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 	  }
 	if (e_config->border_shade_animate)
 	  {
-	     bd->shade.start = ecore_time_get();
+	     bd->shade.start = ecore_loop_time_get();
 	     bd->shading = 1;
 	     bd->changes.shading = 1;
 	     bd->changed = 1;
@@ -3280,7 +3280,7 @@ e_border_ping(E_Border *bd)
    if (!e_config->ping_clients) return;
    bd->ping_ok = 0;
    ecore_x_netwm_ping_send(bd->client.win);
-   bd->ping = ecore_time_get();
+   bd->ping = ecore_loop_time_get();
    if (bd->ping_poller) ecore_poller_del(bd->ping_poller);
    bd->ping_poller = ecore_poller_add(ECORE_POLLER_CORE,
 				      e_config->ping_clients_interval,
@@ -4827,7 +4827,7 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
    bd = e_border_find_by_alarm(e->alarm);
    if (!bd) return 1;
    bd->client.netwm.sync.wait--;
-   bd->client.netwm.sync.send_time = ecore_time_get();
+   bd->client.netwm.sync.send_time = ecore_loop_time_get();
    if (bd->client.netwm.sync.wait <= 0)
      _e_border_resize_handle(bd);
    return 1;
@@ -5278,7 +5278,7 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	Eina_List *skiplist = NULL;
 
 #if 0
-	if ((ecore_time_get() - bd->client.netwm.sync.time) > 0.5)
+	if ((ecore_loop_time_get() - bd->client.netwm.sync.time) > 0.5)
 	  bd->client.netwm.sync.wait = 0;
 	if ((bd->client.netwm.sync.request) &&
 	    (bd->client.netwm.sync.alarm) &&
@@ -5320,8 +5320,8 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	/* ie our sync wait > 1 often - try eclipse - its slow enough to */
 	/* REALLY show how bad this is */
 	printf("SYNC %i - %3.3f\n", bd->client.netwm.sync.wait,
-	       ecore_time_get() - bd->client.netwm.sync.time);
-	if ((ecore_time_get() - bd->client.netwm.sync.time) > 0.5)
+	       ecore_loop_time_get() - bd->client.netwm.sync.time);
+	if ((ecore_loop_time_get() - bd->client.netwm.sync.time) > 0.5)
 	  bd->client.netwm.sync.wait = 0;
 	if ((bd->client.netwm.sync.request) &&
 	    (bd->client.netwm.sync.alarm) &&
@@ -7381,7 +7381,7 @@ _e_border_shade_animator(void *data)
    double dt, val;
    double dur = bd->client.h / e_config->border_shade_speed;
 
-   dt = ecore_time_get() - bd->shade.start;
+   dt = ecore_loop_time_get() - bd->shade.start;
    val = dt / dur;
 
    if (val < 0.0) val = 0.0;
@@ -7749,7 +7749,7 @@ _e_border_resize_begin(E_Border *bd)
 	bd->client.netwm.sync.alarm = ecore_x_sync_alarm_new(bd->client.netwm.sync.counter);
 	bd->client.netwm.sync.serial = 0;
 	bd->client.netwm.sync.wait = 0;
-	bd->client.netwm.sync.send_time = ecore_time_get();
+	bd->client.netwm.sync.send_time = ecore_loop_time_get();
      }
    if (e_config->resize_info_follows)
      e_move_resize_object_coords_set(bd->x + bd->fx.x, bd->y + bd->fx.y, bd->w, bd->h); 
@@ -7837,7 +7837,7 @@ _e_border_move_begin(E_Border *bd)
 	bd->client.netwm.sync.alarm = ecore_x_sync_alarm_new(bd->client.netwm.sync.counter);
 	bd->client.netwm.sync.serial = 0;
 	bd->client.netwm.sync.wait = 0;
-	bd->client.netwm.sync.time = ecore_time_get();
+	bd->client.netwm.sync.time = ecore_loop_time_get();
      }
 #endif
    if (e_config->move_info_follows)

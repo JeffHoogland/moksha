@@ -125,7 +125,7 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
    ev = event_info;
    if (ev->button == 1)
      {
-	sd->down_time = ecore_time_get();
+	sd->down_time = ecore_loop_time_get();
 	sd->down = 1;
 	sd->down_cancel = 0;
 	sd->down_x = ev->canvas.x;
@@ -146,7 +146,7 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	double t;
 	
-	t = ecore_time_get();
+	t = ecore_loop_time_get();
 	if (!sd->down_cancel)
 	  {
 	     edje_object_signal_emit(sd->edje_obj, "e,state,slide,hint,off", "e");
@@ -179,7 +179,6 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
      {
 	Evas_Coord d1, d2, d;
 	
-	printf("DRAG @ %3.3f\n", ecore_time_get());
 	d1 = ev->cur.canvas.x - sd->down_x;
 	d2 = ev->cur.canvas.y - sd->down_y;
 	d = (d1 * d1) + (d2 * d2);

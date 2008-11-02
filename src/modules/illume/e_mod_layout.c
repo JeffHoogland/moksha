@@ -207,7 +207,7 @@ _e_mod_layout_cb_effect_animator(void *data)
    double t, p;
    
    ef = data;
-   t = ecore_time_get() - ef->time_start;
+   t = ecore_loop_time_get() - ef->time_start;
    if (ef->in > 0.0)
      {
 	t /= ef->in;
@@ -262,7 +262,7 @@ _e_mod_layout_effect_slide_out(E_Border *bd, double in, int post)
    ef = E_NEW(Effect, 1);
    ef->border = bd;
    ef->animator = ecore_animator_add(_e_mod_layout_cb_effect_animator, ef);
-   ef->time_start = ecore_time_get();
+   ef->time_start = ecore_loop_time_get();
    ef->in = in;
    ef->direction = 0;
    ef->post = post;
@@ -286,7 +286,7 @@ _e_mod_layout_effect_slide_in(E_Border *bd, double in, int post)
    ef = E_NEW(Effect, 1);
    ef->border = bd;
    ef->animator = ecore_animator_add(_e_mod_layout_cb_effect_animator, ef);
-   ef->time_start = ecore_time_get();
+   ef->time_start = ecore_loop_time_get();
    ef->in = in;
    ef->direction = 1;
    ef->post = post;

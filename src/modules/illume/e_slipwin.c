@@ -231,7 +231,7 @@ _e_slipwin_cb_animate(void *data)
    double t, v;
    
    esw = data;
-   t = ecore_time_get() - esw->start;
+   t = ecore_loop_time_get() - esw->start;
    if (t > esw->len) t = esw->len;
    v = t / esw->len;
    v = 1.0 - v;
@@ -276,7 +276,7 @@ _e_slipwin_slide(E_Slipwin *esw, int out, double len)
    
    if (!esw->animator)
      esw->animator = ecore_animator_add(_e_slipwin_cb_animate, esw);
-   esw->start = ecore_time_get();
+   esw->start = ecore_loop_time_get();
    esw->len = len;
    esw->out = out;
    esw->adjust_start = esw->adjust;

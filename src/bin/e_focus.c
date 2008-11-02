@@ -64,7 +64,7 @@ e_focus_event_mouse_out(E_Border* bd)
 	 * since we entered root, we are ignoring mouse in's on the root
 	 * container for a bit after the mosue may have entered it
 	 */
-	if ((ecore_time_get() - e_grabinput_last_focus_time_get()) > 0.2)
+	if ((ecore_loop_time_get() - e_grabinput_last_focus_time_get()) > 0.2)
 	  {
 	     if (!bd->lock_focus_in)
 	       e_border_focus_set(bd, 0, 1);

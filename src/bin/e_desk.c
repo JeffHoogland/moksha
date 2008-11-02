@@ -559,7 +559,7 @@ _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy)
    E_Border *bd;
    double t;
 
-   t = ecore_time_get();
+   t = ecore_loop_time_get();
    bl = e_container_border_list_first(desk->zone->container);
    while ((bd = e_container_border_list_next(bl)))
      {
@@ -655,7 +655,7 @@ _e_desk_show_animator(void *data)
    double t, dt, spd;
 
    desk = data;
-   t = ecore_time_get();
+   t = ecore_loop_time_get();
    dt = -1.0;
    spd = e_config->desk_flip_animate_time;
    bl = e_container_border_list_first(desk->zone->container);
@@ -695,7 +695,7 @@ _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy)
    E_Border *bd;
    double t;
 
-   t = ecore_time_get();
+   t = ecore_loop_time_get();
    bl = e_container_border_list_first(desk->zone->container);
    while ((bd = e_container_border_list_next(bl)))
      {
@@ -791,7 +791,7 @@ _e_desk_hide_animator(void *data)
    double t, dt, spd;
 
    desk = data;
-   t = ecore_time_get();
+   t = ecore_loop_time_get();
    dt = -1.0;
    spd = e_config->desk_flip_animate_time;
    bl = e_container_border_list_first(desk->zone->container);

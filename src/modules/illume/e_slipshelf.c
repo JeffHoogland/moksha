@@ -677,7 +677,7 @@ _e_slipshelf_cb_animate(void *data)
    double t, v;
    
    ess = data;
-   t = ecore_time_get() - ess->start;
+   t = ecore_loop_time_get() - ess->start;
    if (t > ess->len) t = ess->len;
    if (ess->len > 0.0)
      {
@@ -717,7 +717,7 @@ static void
 _e_slipshelf_slide(E_Slipshelf *ess, int out, double len)
 {
    if (out == ess->out) return;
-   ess->start = ecore_time_get();
+   ess->start = ecore_loop_time_get();
    ess->len = len;
    ess->out = out;
    ess->adjust_start = ess->adjust;

@@ -2405,7 +2405,7 @@ _e_menu_mouse_autoscroll_check(void)
    if (_e_menu_scroll_animator) return;
    _e_menu_scroll_animator = ecore_animator_add(_e_menu_cb_scroll_animator,
 						NULL);
-   _e_menu_scroll_start = ecore_time_get();
+   _e_menu_scroll_start = ecore_loop_time_get();
 }
 
 static void
@@ -2801,7 +2801,7 @@ _e_menu_cb_scroll_animator(void *data)
    int out;
    double spd;
    
-   t = ecore_time_get();
+   t = ecore_loop_time_get();
    spd = e_config->menus_scroll_speed;
    dt = t - _e_menu_scroll_start;
    _e_menu_scroll_start = t;
