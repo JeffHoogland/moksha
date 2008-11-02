@@ -535,18 +535,26 @@ _create_mover(E_Gadcon *gc)
                                    on_left, (void*)DRAG_START);
    edje_object_signal_callback_add(mover, "e,action,resize,left,stop", "",
                                    on_left, (void*)DRAG_STOP);
+   edje_object_signal_callback_add(mover, "e,action,resize,left,go", "",
+                                   on_left, (void*)DRAG_MOVE);
    edje_object_signal_callback_add(mover, "e,action,resize,down,start", "",
                                    on_down, (void*)DRAG_START);
    edje_object_signal_callback_add(mover, "e,action,resize,down,stop", "",
                                    on_down, (void*)DRAG_STOP);
+   edje_object_signal_callback_add(mover, "e,action,resize,down,go", "",
+                                   on_down, (void*)DRAG_MOVE);
    edje_object_signal_callback_add(mover, "e,action,resize,right,start", "",
                                    on_right, (void*)DRAG_START);
    edje_object_signal_callback_add(mover, "e,action,resize,right,stop", "",
                                    on_right, (void*)DRAG_STOP);
+   edje_object_signal_callback_add(mover, "e,action,resize,right,go", "",
+                                   on_right, (void*)DRAG_MOVE);
    edje_object_signal_callback_add(mover, "e,action,resize,up,start", "",
                                    on_top, (void*)DRAG_START);
    edje_object_signal_callback_add(mover, "e,action,resize,up,stop", "",
                                    on_top, (void*)DRAG_STOP);
+   edje_object_signal_callback_add(mover, "e,action,resize,up,go", "",
+                                   on_top, (void*)DRAG_MOVE);
 
    evas_object_move(mover, 20, 30);
    evas_object_resize(mover, 100, 100);
@@ -895,6 +903,7 @@ static void
 on_top(void *data, Evas_Object *o, const char *em, const char *src)
 {
    static int ox, oy, ow, oh; //Object coord
+   static int dy;             //Mouse offset
    int mx, my;                //Mouse coord
    int action = (int)(long)data;
    Evas_Object *mover;
@@ -903,31 +912,42 @@ on_top(void *data, Evas_Object *o, const char *em, const char *src)
 
    if (action == DRAG_START)
      {
+	current->resizing = 1;
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        edje_object_signal_callback_add(o, "e,action,resize,up,go", "",
-                                        on_top, (void*)DRAG_MOVE);
+	dy = my - oy;
      }
    else if (action == DRAG_STOP)
      {
-        edje_object_signal_callback_del(o, "e,action,resize,up,go", "",
-					on_top);
+	current->resizing = 0;
+	dy = 0;
         _save_widget_position(current);
      }
-   else if (action == DRAG_MOVE)
+   else if ((action == DRAG_MOVE) && current->resizing)
      {
         int h;
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
 
-        h = (oy + oh) - my;
-        if (h < current->min.h) h = current->min.h;
+        h = oy + oh + dy - my;
+
+        if (h < current->min.h)
+	  {
+	     my -=current->min.h - h;
+	     h = current->min.h;
+	  }
+        /* don't go out of the screen */
+	if (my < dy)
+	  {
+	     h += my - dy;
+	     my = dy;
+	  }
 
         evas_object_resize(mover, ow, h);
-        evas_object_move(mover, ox, my);
+        evas_object_move(mover, ox, my - dy);
 
         evas_object_resize(current->o_frame, ow, h);
-        evas_object_move(current->o_frame, ox, my);
+        evas_object_move(current->o_frame, ox, my - dy);
      }
 }
 
@@ -936,6 +956,7 @@ on_right(void *data, Evas_Object *o, const char *em, const char *src)
 {
    Evas_Object *mover;
    static int ox, oy, ow, oh; //Object coord
+   static int dx;             //Mouse offset
    int mx, my;                //Mouse coord
    int action;
 
@@ -944,25 +965,27 @@ on_right(void *data, Evas_Object *o, const char *em, const char *src)
    action = (int)(long)data;
    if (action == DRAG_START)
      {
+	current->resizing = 1;
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        edje_object_signal_callback_add(o, "e,action,resize,right,go", "",
-                                        on_right, (void*)DRAG_MOVE);
+	dx = mx - ow;
      }
    else if (action == DRAG_STOP)
      {
-        edje_object_signal_callback_del(o, "e,action,resize,right,go", "",
-					on_right);
+	current->resizing = 0;
+	dx = 0;
         _save_widget_position(current);
      }
-   else if (action == DRAG_MOVE)
+   else if ((action == DRAG_MOVE) && current->resizing)
      {
         int w;
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
+        w = mx - dx;
 
-        w = mx - ox;
         if (w < current->min.w) w = current->min.w;
+        /* don't go out of the screen */
+	if (w > (Man->width - ox)) w = Man->width - ox;
 
         evas_object_resize(mover, w, oh);
         evas_object_resize(current->o_frame, w, oh);
@@ -974,6 +997,7 @@ on_down(void *data, Evas_Object *o, const char *em, const char *src)
 {
    Evas_Object *mover;
    static int ox, oy, ow, oh; //Object coord
+   static int dy;             //Mouse offset
    int mx, my;                //Mouse coord
    int action;
 
@@ -982,24 +1006,27 @@ on_down(void *data, Evas_Object *o, const char *em, const char *src)
 
    if (action == DRAG_START)
      {
+	current->resizing = 1;
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        edje_object_signal_callback_add(o, "e,action,resize,down,go", "",
-                                        on_down, (void*)DRAG_MOVE);
+	dy = my - oh;
      }
    else if (action == DRAG_STOP)
      {
-        edje_object_signal_callback_del(o, "e,action,resize,down,go", "",
-					on_down);
+	current->resizing = 0;
+	dy = 0;
         _save_widget_position(current);
      }
-   else if (action == DRAG_MOVE)
+   else if ((action == DRAG_MOVE) && current->resizing)
      {
         int h;
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
-        h = my - oy;
+        h = my - dy;
+
         if (h < current->min.h) h = current->min.h;
+        /* don't go out of the screen */
+	if (h > (Man->height - oy)) h = Man->height - oy;
 
         evas_object_resize(mover, ow, h);
         evas_object_resize(current->o_frame, ow, h);
@@ -1011,6 +1038,7 @@ on_left(void *data, Evas_Object *o, const char *em, const char *src)
 {
    Evas_Object *mover;
    static int ox, oy, ow, oh; //Object coord
+   static int dx;             //Mouse offset
    int mx, my;                //Mouse coord
    int action;
 
@@ -1019,31 +1047,42 @@ on_left(void *data, Evas_Object *o, const char *em, const char *src)
 
    if (action == DRAG_START)
      {
+	current->resizing = 1;
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        edje_object_signal_callback_add(o, "e,action,resize,left,go", "",
-                                        on_left, (void*)DRAG_MOVE);
+	dx = mx - ox;
      }
    else if (action == DRAG_STOP)
      {
-        edje_object_signal_callback_del(o, "e,action,resize,left,go", "",
-					on_left);
+	current->resizing = 0;
+	dx = 0;
         _save_widget_position(current);
      }
-   else if (action == DRAG_MOVE)
+   else if ((action == DRAG_MOVE) && current->resizing)
      {
         int w;
 
         evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
 
-        w = (ox + ow) - mx;
-        if (w < current->min.w) w = current->min.w;
+        w = ox + ow + dx - mx;
 
-        evas_object_move(mover, mx, oy);
+        if (w < current->min.w)
+	  {
+	     mx -= current->min.w - w;
+	     w = current->min.w;
+	  }
+        /* don't go out of the screen */
+	if (mx < dx)
+	  {
+	     w += mx - dx;
+	     mx = dx;
+	  }
+
         evas_object_resize(mover, w, oh);
+        evas_object_move(mover, mx - dx, oy);
 
-        evas_object_move(current->o_frame, mx, oy);
         evas_object_resize(current->o_frame, w, oh);
+        evas_object_move(current->o_frame, mx - dx, oy);
      }
 }
 
