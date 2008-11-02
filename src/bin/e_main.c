@@ -561,6 +561,9 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_config_shutdown);
+
+   /* set all execced stuff to pri 1 - nice. make this config later? */
+   ecore_exe_run_priority_set(1);
    
    TS("scale");
    /* init config system */
