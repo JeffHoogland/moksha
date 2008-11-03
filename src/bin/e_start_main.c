@@ -388,14 +388,27 @@ main(int argc, char **argv)
 	precache();
      }
    done:
+
+   /* try dbus-launch */
+   snprintf(buf, sizeof(buf), "%s/bin/enlightenment", _prefix_path);
    
-   args = alloca((argc + 1) * sizeof(char *));
+   args = alloca((argc + 3) * sizeof(char *));
+   if (!getenv("DBUS_SESSION_BUS_ADDRESS"))
+     {
+	args[0] = "dbus-launch";
+	args[1] = "--exit-with-session";
+	args[2] = buf;
+	for (i = 1; i < argc; i++) args[2 + i] = argv[i];
+	args[2 + i] = NULL;
+	execvp("dbus-launch", args);
+     }
+   
+   /* dbus-launch failed - run e direct */
    args[0] = "enlightenment";
    for (i = 1; i < argc; i++) args[i] = argv[i];
    args[i] = NULL;
-   
-   snprintf(buf, sizeof(buf), "%s/bin/enlightenment", _prefix_path);
    execv(buf, args);
+
    printf("FAILED TO RUN:\n");
    printf("  %s\n", buf);
    perror("execv");
