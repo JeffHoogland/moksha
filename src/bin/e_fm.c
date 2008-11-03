@@ -5155,18 +5155,17 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
      {
 	/* if its a directory && open dirs in-place is set then change the dir
 	 * to be the dir + file */
-	if ((S_ISDIR(ic->info.statinfo.st_mode)) && 
+	if (
+	    (S_ISDIR(ic->info.statinfo.st_mode)) && 
 	    (ic->sd->config->view.open_dirs_in_place) &&
 	    (!ic->sd->config->view.no_subdir_jump) &&
 	    (!ic->sd->config->view.single_click)
 	    )
 	  {
-	     char buf[4096], *dev = NULL;
+	     char buf[4096];
 	     
-	     if (ic->sd->dev) dev = strdup(ic->sd->dev);
 	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
-	     e_fm2_path_set(ic->sd->obj, dev, buf);
-	     E_FREE(dev);
+	     e_fm2_path_set(ic->sd->obj, ic->sd->dev, buf);
 	  }
 	else
 	  evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
@@ -5189,7 +5188,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     ic->drag.dnd = 0;
 	     ic->drag.src = 1;
 	  }
-	_e_fm2_mouse_1_handler(ic, 0, ev->modifiers);
+	  _e_fm2_mouse_1_handler(ic, 0, ev->modifiers);
      }
    else if (ev->button == 3)
      {
@@ -5214,6 +5213,24 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
         ic->drag.start = 0;
 	ic->drag.dnd = 0;
 	ic->drag.src = 0;
+
+        if (
+	    (S_ISDIR(ic->info.statinfo.st_mode)) &&
+            (ic->sd->config->view.open_dirs_in_place) &&
+            (!ic->sd->config->view.no_subdir_jump) &&
+            (ic->sd->config->view.single_click)
+            )
+          {
+             char buf[4096];
+
+             snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
+             e_fm2_path_set(ic->sd->obj, ic->sd->dev, buf);
+          }
+        else if ((S_ISDIR(ic->info.statinfo.st_mode)) && (ic->sd->config->view.single_click))
+          evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+
+
+
      }
    ic->down_sel = 0;
 }
