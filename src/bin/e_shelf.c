@@ -186,7 +186,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      {
 	e_drop_xdnd_register_set(es->zone->container->bg_win, 1);
 	e_gadcon_xdnd_window_set(es->gadcon, es->zone->container->bg_win);
-	e_gadcon_dnd_window_set(es->gadcon, es->zone->container->bg_win);
+	e_gadcon_dnd_window_set(es->gadcon, es->zone->container->event_win);
      }
    e_gadcon_util_menu_attach_func_set(es->gadcon,
 				      _e_shelf_cb_menu_items_append, es);
