@@ -658,13 +658,16 @@ _e_exebuf_prev(void)
 	else
 	  {
 	     _e_exebuf_hist_update();
-	     which_list = HIST_LIST;
-             ev_last_which_list = HIST_LIST;
-	     exe_sel = eaps->data;
-	     if (exe_sel)
-	       {
-		  _e_exebuf_exe_sel(exe_sel);
-		  _e_exebuf_eap_scroll_to(0);
+	     if (eaps)
+	       {     
+		  which_list = HIST_LIST;
+		  ev_last_which_list = HIST_LIST;
+		  exe_sel = eaps->data;
+		  if (exe_sel)
+		    {
+		       _e_exebuf_exe_sel(exe_sel);
+		       _e_exebuf_eap_scroll_to(0);
+		    }
 	       }
 	  }
      }
