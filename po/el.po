@@ -1,19 +1,21 @@
+# translation of el.po to Greek
 # translation of el.po to
 # Greek translation for Enlightenment17.
 # This file is put in the public domain.
 # Geo Kou <ragecryx@yahoo.gr>, 2008.
+#  <aronmalache@163.com>, 2008.
 # 
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: e17 HEAD\n"
+"Project-Id-Version: enlightenment e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-10-09 13:31+0200\n"
-"PO-Revision-Date: 2008-11-02 15:03+0800\n"
+"PO-Revision-Date: 2008-11-03 22:07+0800\n"
 "Last-Translator: Geo Kou <ragecryx@yahoo.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-7\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit"
 
 #: src/bin/e_fm.c:546 src/bin/e_actions.c:2315 src/bin/e_int_border_prop.c:81
@@ -21,67 +23,67 @@ msgstr ""
 #: src/modules/conf/e_conf.c:170 src/modules/mixer/app_mixer.c:537
 #: src/modules/fileman/e_fwin.c:1417
 msgid "Close"
-msgstr "Κλείσιμο"
+msgstr "ΞΞ»ΞµΞ―ΟƒΞΉΞΌΞΏ"
 
 #: src/bin/e_fm.c:548
 msgid "Nonexistent path"
-msgstr "Ανύπαρκτη διαδρομή"
+msgstr "Ξ‘Ξ½ΟΟ€Ξ±ΟΞΊΟ„Ξ· Ξ΄ΞΉΞ±Ξ΄ΟΞΏΞΌΞ®"
 
 #: src/bin/e_fm.c:551
 #, c-format
 msgid "%s doesn't exist."
-msgstr "%s δεν υπάρχει"
+msgstr "%s Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ"
 
 #: src/bin/e_fm.c:2646
 #, c-format
 msgid "%i Files"
-msgstr "%i Αρχεία"
+msgstr "%i Ξ‘ΟΟ‡ΞµΞ―Ξ±"
 
 #: src/bin/e_fm.c:4748 src/bin/e_fm.c:6590 src/bin/e_entry.c:515
 msgid "Copy"
-msgstr "Αντιγραφή"
+msgstr "Ξ‘Ξ½Ο„ΞΉΞ³ΟΞ±Ο†Ξ®"
 
 #: src/bin/e_fm.c:4756 src/bin/e_actions.c:2275
 msgid "Move"
-msgstr "Μετακίνηση"
+msgstr "ΞΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ·"
 
 #: src/bin/e_fm.c:4764 src/bin/e_fm.c:7126 src/bin/e_fm.c:7256
 msgid "Abort"
-msgstr "Ακύρωση"
+msgstr "Ξ‘ΞΊΟΟΟ‰ΟƒΞ·"
 
 #: src/bin/e_fm.c:6337 src/bin/e_fm.c:6494
 #: src/modules/fileman/e_mod_config.c:171
 msgid "View Mode"
-msgstr "Λειτουργία Προβολής"
+msgstr "Ξ›ΞµΞΉΟ„ΞΏΟ…ΟΞ³Ξ―Ξ± Ξ ΟΞΏΞ²ΞΏΞ»Ξ®Ο‚"
 
 #: src/bin/e_fm.c:6344 src/bin/e_fm.c:6501
 msgid "Refresh View"
-msgstr "Ανανέωση Προβολής"
+msgstr "Ξ‘Ξ½Ξ±Ξ½Ξ­Ο‰ΟƒΞ· Ξ ΟΞΏΞ²ΞΏΞ»Ξ®Ο‚"
 
 #: src/bin/e_fm.c:6355 src/bin/e_fm.c:6512
 msgid "Show Hidden Files"
-msgstr "Εμφάνιση Κρυφών Αρχείων"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΟΟ…Ο†ΟΞ½ Ξ‘ΟΟ‡ΞµΞ―Ο‰Ξ½"
 
 #: src/bin/e_fm.c:6370 src/bin/e_fm.c:6527
 msgid "Remember Ordering"
-msgstr "Απομνημόνευση Σειράς"
+msgstr "Ξ‘Ο€ΞΏΞΌΞ½Ξ·ΞΌΟΞ½ΞµΟ…ΟƒΞ· Ξ£ΞµΞΉΟΞ¬Ο‚"
 
 #: src/bin/e_fm.c:6382 src/bin/e_fm.c:6539
 msgid "Sort Now"
-msgstr "Ταξινόμηση Τώρα"
+msgstr "Ξ¤Ξ±ΞΎΞΉΞ½ΟΞΌΞ·ΟƒΞ· Ξ¤ΟΟΞ±"
 
 #: src/bin/e_fm.c:6397 src/bin/e_fm.c:6557
 #: src/modules/conf_paths/e_int_config_paths.c:211
 msgid "New Directory"
-msgstr "Νέος Κατάλογος"
+msgstr "ΞΞ­ΞΏΟ‚ ΞΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΟ‚"
 
 #: src/bin/e_fm.c:6414 src/bin/e_fm.c:6604 src/bin/e_entry.c:526
 msgid "Paste"
-msgstr "Επικόλληση"
+msgstr "Ξ•Ο€ΞΉΞΊΟΞ»Ξ»Ξ·ΟƒΞ·"
 
 #: src/bin/e_fm.c:6573 src/bin/e_entry.c:504
 msgid "Cut"
-msgstr "Αποκοπή"
+msgstr "Ξ‘Ο€ΞΏΞΊΞΏΟ€Ξ®"
 
 #: src/bin/e_fm.c:6663 src/bin/e_entry.c:491
 #: src/modules/ibar/e_mod_config.c:111
@@ -89,49 +91,49 @@ msgstr "Αποκοπή"
 #: src/modules/conf_profiles/e_int_config_profiles.c:113
 #: src/modules/conf_applications/e_int_config_apps.c:271
 msgid "Delete"
-msgstr "Διαγραφή"
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®"
 
 #: src/bin/e_fm.c:6674
 msgid "Rename"
-msgstr "Μετονομασία"
+msgstr "ΞΞµΟ„ΞΏΞ½ΞΏΞΌΞ±ΟƒΞ―Ξ±"
 
 #: src/bin/e_fm.c:6684
 msgid "Properties"
-msgstr "Ιδιότητες"
+msgstr "Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚"
 
 #: src/bin/e_fm.c:6845 src/modules/conf_paths/e_int_config_paths.c:83
 #: src/modules/fileman/e_mod_config.c:173
 msgid "Icons"
-msgstr "Εικονίδια"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞ±"
 
 #: src/bin/e_fm.c:6853 src/modules/fileman/e_mod_config.c:186
 msgid "List"
-msgstr "Λίστα"
+msgstr "Ξ›Ξ―ΟƒΟ„Ξ±"
 
 #: src/bin/e_fm.c:6991
 msgid "Create a new Directory"
-msgstr "Δημιούργησε νέο Κατάλογο"
+msgstr "Ξ”Ξ·ΞΌΞΉΞΏΟΟΞ³Ξ·ΟƒΞµ Ξ½Ξ­ΞΏ ΞΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ"
 
 #: src/bin/e_fm.c:6992
 msgid "New Directory Name:"
-msgstr "Όνομα Νέου Καταλόγου:"
+msgstr "ΞΞ½ΞΏΞΌΞ± ΞΞ­ΞΏΟ… ΞΞ±Ο„Ξ±Ξ»ΟΞ³ΞΏΟ…:"
 
 #: src/bin/e_fm.c:7051
 #, c-format
 msgid "Rename %s to:"
-msgstr "Μετονομασία %s σε:"
+msgstr "ΞΞµΟ„ΞΏΞ½ΞΏΞΌΞ±ΟƒΞ―Ξ± %s ΟƒΞµ:"
 
 #: src/bin/e_fm.c:7053
 msgid "Rename File"
-msgstr "Μετονομασία Αρχείου"
+msgstr "ΞΞµΟ„ΞΏΞ½ΞΏΞΌΞ±ΟƒΞ―Ξ± Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…"
 
 #: src/bin/e_fm.c:7125 src/bin/e_fm.c:7255
 msgid "Retry"
-msgstr "Προσπάθεια ξανά"
+msgstr "Ξ ΟΞΏΟƒΟ€Ξ¬ΞΈΞµΞΉΞ± ΞΎΞ±Ξ½Ξ¬"
 
 #: src/bin/e_fm.c:7129 src/bin/e_fm.c:7186 src/bin/e_fm.c:7261
 msgid "Error"
-msgstr "Σφάλμα"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ±"
 
 #: src/bin/e_fm.c:7131 src/bin/e_fm.c:7188
 #, c-format
@@ -144,11 +146,11 @@ msgstr "%s"
 #: src/bin/e_module.c:527 src/bin/e_confirm_dialog.c:48
 #: src/modules/conf_display/e_int_config_display.c:216
 msgid "No"
-msgstr "Όχι"
+msgstr "ΞΟ‡ΞΉ"
 
 #: src/bin/e_fm.c:7181
 msgid "No to all"
-msgstr "Όχι σε ολα"
+msgstr "ΞΟ‡ΞΉ ΟƒΞµ ΞΏΞ»Ξ±"
 
 #: src/bin/e_fm.c:7182 src/bin/e_fm.c:7362 src/bin/e_actions.c:353
 #: src/bin/e_actions.c:1631 src/bin/e_actions.c:1713 src/bin/e_actions.c:1777
@@ -156,33 +158,33 @@ msgstr "Όχι σε ολα"
 #: src/bin/e_module.c:526 src/bin/e_confirm_dialog.c:47
 #: src/modules/conf_display/e_int_config_display.c:215
 msgid "Yes"
-msgstr "Ναί"
+msgstr "ΞΞ±Ξ―"
 
 #: src/bin/e_fm.c:7183
 msgid "Yes to all"
-msgstr "Ναί σε όλα"
+msgstr "ΞΞ±Ξ― ΟƒΞµ ΟΞ»Ξ±"
 
 #: src/bin/e_fm.c:7257
 msgid "Ignore this"
-msgstr "Παράβλεψη αυτού"
+msgstr "Ξ Ξ±ΟΞ¬Ξ²Ξ»ΞµΟΞ· Ξ±Ο…Ο„ΞΏΟ"
 
 #: src/bin/e_fm.c:7258
 msgid "Ignore all"
-msgstr "Παράβλεψη όλων"
+msgstr "Ξ Ξ±ΟΞ¬Ξ²Ξ»ΞµΟΞ· ΟΞ»Ο‰Ξ½"
 
 #: src/bin/e_fm.c:7263
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
-msgstr "Ένα σφάλμα προέκυψε κατα την εκτέλεση μιας λειτουργίας.<br>%s"
+msgstr "ΞΞ½Ξ± ΟƒΟ†Ξ¬Ξ»ΞΌΞ± Ο€ΟΞΏΞ­ΞΊΟ…ΟΞµ ΞΊΞ±Ο„Ξ± Ο„Ξ·Ξ½ ΞµΞΊΟ„Ξ­Ξ»ΞµΟƒΞ· ΞΌΞΉΞ±Ο‚ Ξ»ΞµΞΉΟ„ΞΏΟ…ΟΞ³Ξ―Ξ±Ο‚.<br>%s"
 
 #: src/bin/e_fm.c:7365
 msgid "Confirm Delete"
-msgstr "Επιβεβαίωση Διαγραφής"
+msgstr "Ξ•Ο€ΞΉΞ²ΞµΞ²Ξ±Ξ―Ο‰ΟƒΞ· Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®Ο‚"
 
 #: src/bin/e_fm.c:7369
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
-msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε<br><hilight>%s</hilight> ?"
+msgstr "Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ ΟΟ„ΞΉ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm.c:7375
 #, c-format
@@ -190,12 +192,12 @@ msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
 "hilight> ?"
 msgstr ""
-"Είστε σίγουροι ότι θέλετε να διαγράψετε<br>τα %d επιλεγμένα αρχεία στο:<br><hilight>%s</"
+"Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ ΟΟ„ΞΉ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ<br>Ο„Ξ± %d ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ± Ξ±ΟΟ‡ΞµΞ―Ξ± ΟƒΟ„ΞΏ:<br><hilight>%s</"
 "hilight> ?"
 
 #: src/bin/e_eap_editor.c:156
 msgid "Incomplete Window Properties"
-msgstr "Ελλιπείς Ιδιότητες Παραθύρου"
+msgstr "Ξ•Ξ»Ξ»ΞΉΟ€ΞµΞ―Ο‚ Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/bin/e_eap_editor.c:157
 msgid ""
@@ -209,81 +211,81 @@ msgstr ""
 #: src/bin/e_eap_editor.c:210
 #, fuzzy
 msgid "Desktop Entry Editor"
-msgstr "Επεξεργαστής Καταχωρήσεων Επιφάνειας Εργασίας"
+msgstr "Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΟ„Ξ®Ο‚ ΞΞ±Ο„Ξ±Ο‡Ο‰ΟΞ®ΟƒΞµΟ‰Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/bin/e_eap_editor.c:447 src/bin/e_fm_prop.c:400
 #: src/modules/conf_mime/e_int_config_mime_edit.c:145
 #: src/modules/conf_fonts/e_int_config_fonts.c:96
 msgid "Icon"
-msgstr "Εικονίδιο"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞΏ"
 
 #: src/bin/e_eap_editor.c:458
 #: src/modules/conf_mime/e_int_config_mime_edit.c:136
 msgid "Basic Info"
-msgstr "Βασικές Πληροφορίες"
+msgstr "Ξ’Ξ±ΟƒΞΉΞΊΞ­Ο‚ Ξ Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―ΞµΟ‚"
 
 #: src/bin/e_eap_editor.c:459 src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467 src/modules/conf_imc/e_int_config_imc.c:907
 msgid "Name"
-msgstr "Όνομα"
+msgstr "ΞΞ½ΞΏΞΌΞ±"
 
 #: src/bin/e_eap_editor.c:465
 msgid "Executable"
-msgstr "Εκτελέσιμο"
+msgstr "Ξ•ΞΊΟ„ΞµΞ»Ξ­ΟƒΞΉΞΌΞΏ"
 
 #: src/bin/e_eap_editor.c:473
 msgid "Comment"
-msgstr "Σχόλιο"
+msgstr "Ξ£Ο‡ΟΞ»ΞΉΞΏ"
 
 #: src/bin/e_eap_editor.c:498
 msgid "General"
-msgstr "Γενικά"
+msgstr "Ξ“ΞµΞ½ΞΉΞΊΞ¬"
 
 #: src/bin/e_eap_editor.c:501
 msgid "Generic Name"
-msgstr "Γενικό Όνομα"
+msgstr "Ξ“ΞµΞ½ΞΉΞΊΟ ΞΞ½ΞΏΞΌΞ±"
 
 #: src/bin/e_eap_editor.c:506
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:105
 msgid "Window Class"
-msgstr "Κατηγορία Παραθύρου"
+msgstr "ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ± Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/bin/e_eap_editor.c:510 src/modules/conf/e_conf.c:151
 #: src/modules/conf_mime/e_int_config_mime.c:189
 msgid "Categories"
-msgstr "Κατηγορίες"
+msgstr "ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚"
 
 #: src/bin/e_eap_editor.c:514
 msgid "Mime Types"
-msgstr "Τύποι Mime"
+msgstr "Ξ¤ΟΟ€ΞΏΞΉ Mime"
 
 #: src/bin/e_eap_editor.c:520
 msgid "Options"
-msgstr "Επιλογές"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚"
 
 #: src/bin/e_eap_editor.c:521
 msgid "Startup Notify"
-msgstr "Ειδοποίηση Έναρξης"
+msgstr "Ξ•ΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· ΞΞ½Ξ±ΟΞΎΞ·Ο‚"
 
 #: src/bin/e_eap_editor.c:523
 msgid "Run in Terminal"
-msgstr "Εκτέλεση σε Τερματικό"
+msgstr "Ξ•ΞΊΟ„Ξ­Ξ»ΞµΟƒΞ· ΟƒΞµ Ξ¤ΞµΟΞΌΞ±Ο„ΞΉΞΊΟ"
 
 #: src/bin/e_eap_editor.c:525
 msgid "Show in Menus"
-msgstr "Εμφάνιση στα Μενού"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟƒΟ„Ξ± ΞΞµΞ½ΞΏΟ"
 
 #: src/bin/e_eap_editor.c:529
 msgid "Desktop file"
-msgstr "Αρχείο Επιφάνειας Εργασίας"
+msgstr "Ξ‘ΟΟ‡ΞµΞ―ΞΏ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/bin/e_eap_editor.c:530
 msgid "Filename"
-msgstr "Όνομα Αρχείου"
+msgstr "ΞΞ½ΞΏΞΌΞ± Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…"
 
 #: src/bin/e_eap_editor.c:559
 msgid "Select an Icon"
-msgstr "Επιλογή Εικονιδίου"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/bin/e_eap_editor.c:599 src/bin/e_eap_editor.c:663 src/bin/e_exec.c:321
 #: src/bin/e_entry_dialog.c:58 src/bin/e_fm_prop.c:513 src/bin/e_config.c:2422
@@ -305,7 +307,7 @@ msgstr "Επιλογή Εικονιδίου"
 #: src/modules/conf_dpms/e_int_config_dpms.c:81
 #: src/modules/connman/e_mod_main.c:784
 msgid "OK"
-msgstr "ΟΚ"
+msgstr "ΞΞΊ"
 
 #: src/bin/e_eap_editor.c:601 src/bin/e_eap_editor.c:665
 #: src/bin/e_entry_dialog.c:59 src/bin/e_fm_prop.c:514
@@ -319,28 +321,28 @@ msgstr "ΟΚ"
 #: src/modules/conf_theme/e_int_config_theme_web.c:159
 #: src/modules/connman/e_mod_main.c:785
 msgid "Cancel"
-msgstr "Ακύρωση"
+msgstr "Ξ‘ΞΊΟΟΟ‰ΟƒΞ·"
 
 #: src/bin/e_eap_editor.c:628
 msgid "Select an Executable"
-msgstr "Επιλογή ενός Εκτελέσιμου"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΞµΞ½ΟΟ‚ Ξ•ΞΊΟ„ΞµΞ»Ξ­ΟƒΞΉΞΌΞΏΟ…"
 
 #: src/bin/e_exec.c:218 src/bin/e_utils.c:203
 #: src/modules/conf_imc/e_int_config_imc.c:278
 #: src/modules/conf_imc/e_int_config_imc.c:516
 msgid "Run Error"
-msgstr "Σφάλμα Εκτέλεσης"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± Ξ•ΞΊΟ„Ξ­Ξ»ΞµΟƒΞ·Ο‚"
 
 #: src/bin/e_exec.c:219 src/bin/e_utils.c:204
 #: src/modules/conf_imc/e_int_config_imc.c:279
 #: src/modules/conf_imc/e_int_config_imc.c:517
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
-msgstr "Το Enlightenment δεν μπόρεσε να δημιουργήσει διεργασία παιδί:<br><br>%s<br>"
+msgstr "Ξ¤ΞΏ Enlightenment Ξ΄ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΟƒΞµΞΉ Ξ΄ΞΉΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ο€Ξ±ΞΉΞ΄Ξ―:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:312
 msgid "Application run error"
-msgstr "Σφάλμα εκκίνησης εφαρμογής"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·Ο‚ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚"
 
 #: src/bin/e_exec.c:314
 #, c-format
@@ -349,17 +351,17 @@ msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr ""
-"Το Enlightenment δεν μπόρεσε να εκτελέσει την εφαρμογή:<br><br>%"
-"s<br><br>Η εφαρμογή δεν κατάφερε να εκκινήσει."
+"Ξ¤ΞΏ Enlightenment Ξ΄ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± ΞµΞΊΟ„ΞµΞ»Ξ­ΟƒΞµΞΉ Ο„Ξ·Ξ½ ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®:<br><br>%"
+"s<br><br>Ξ— ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ® Ξ΄ΞµΞ½ ΞΊΞ±Ο„Ξ¬Ο†ΞµΟΞµ Ξ½Ξ± ΞµΞΊΞΊΞΉΞ½Ξ®ΟƒΞµΞΉ."
 
 #: src/bin/e_exec.c:418
 msgid "Application Execution Error"
-msgstr "Σφάλμα Εκτέλεσης Εφαρμογής"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± Ξ•ΞΊΟ„Ξ­Ξ»ΞµΟƒΞ·Ο‚ Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚"
 
 #: src/bin/e_exec.c:430
 #, c-format
 msgid "%s stopped running unexpectedly."
-msgstr "Η εκτέλεση του %s διακόπηκε απρόοπτα."
+msgstr "Ξ— ΞµΞΊΟ„Ξ­Ξ»ΞµΟƒΞ· Ο„ΞΏΟ… %s Ξ΄ΞΉΞ±ΞΊΟΟ€Ξ·ΞΊΞµ Ξ±Ο€ΟΟΞΏΟ€Ο„Ξ±."
 
 #: src/bin/e_exec.c:436
 #, c-format
@@ -422,45 +424,46 @@ msgstr ""
 
 #: src/bin/e_exec.c:590 src/bin/e_exec.c:664 src/bin/e_exec.c:670
 msgid "Error Logs"
-msgstr "Καταγραφές Σφαλμάτων"
+msgstr "ΞΞ±Ο„Ξ±Ξ³ΟΞ±Ο†Ξ­Ο‚ Ξ£Ο†Ξ±Ξ»ΞΌΞ¬Ο„Ο‰Ξ½"
 
 #: src/bin/e_exec.c:595 src/bin/e_exec.c:671
 msgid "There was no error message."
-msgstr "Δεν υπήρξε μήνυμα σφάλματος."
+msgstr "Ξ”ΞµΞ½ Ο…Ο€Ξ®ΟΞΎΞµ ΞΌΞ®Ξ½Ο…ΞΌΞ± ΟƒΟ†Ξ¬Ξ»ΞΌΞ±Ο„ΞΏΟ‚."
 
 #: src/bin/e_exec.c:599 src/bin/e_exec.c:678
 msgid "Save This Message"
-msgstr "Αποθήκευση αυτού του Μηνύματος"
+msgstr "Ξ‘Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… ΞΞ·Ξ½ΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_exec.c:603 src/bin/e_exec.c:681
 #, c-format
 #, fuzzy
 msgid "This error log will be saved as %s/%s.log"
-msgstr "Αυτή η καταγραφή σφάλματος θα αποθηκευτεί ως %s/%s.log"
+msgstr "Ξ‘Ο…Ο„Ξ® Ξ· ΞΊΞ±Ο„Ξ±Ξ³ΟΞ±Ο†Ξ® ΟƒΟ†Ξ¬Ξ»ΞΌΞ±Ο„ΞΏΟ‚ ΞΈΞ± Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟ…Ο„ΞµΞ― Ο‰Ο‚ %s/%s.log"
 
 #: src/bin/e_exec.c:629
 msgid "Error Information"
-msgstr "Πληροφορίες Σφάλματος"
+msgstr "Ξ Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―ΞµΟ‚ Ξ£Ο†Ξ¬Ξ»ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_exec.c:637
+#, fuzzy
 msgid "Error Signal Information"
-msgstr ""
+msgstr "Ξ Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―ΞµΟ‚ Ξ£Ξ®ΞΌΞ±Ο„ΞΏΟ‚ Ξ£Ο†Ξ¬Ξ»ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_exec.c:648 src/bin/e_exec.c:654
 msgid "Output Data"
-msgstr "Δεδομένα Εξόδου"
+msgstr "Ξ”ΞµΞ΄ΞΏΞΌΞ­Ξ½Ξ± Ξ•ΞΎΟΞ΄ΞΏΟ…"
 
 #: src/bin/e_exec.c:655
 msgid "There was no output."
-msgstr "Δεν υπήρξε έξοδος."
+msgstr "Ξ”ΞµΞ½ Ο…Ο€Ξ®ΟΞΎΞµ Ξ­ΞΎΞΏΞ΄ΞΏΟ‚."
 
 #: src/bin/e_gadcon.c:1210 src/modules/gadman/e_mod_gadman.c:537
 msgid "Plain"
-msgstr "Απλό"
+msgstr "Ξ‘Ο€Ξ»Ο"
 
 #: src/bin/e_gadcon.c:1219 src/modules/gadman/e_mod_gadman.c:545
 msgid "Inset"
-msgstr "Ένθεμα"
+msgstr "ΞΞ½ΞΈΞµΞΌΞ±"
 
 #: src/bin/e_gadcon.c:1228 src/bin/e_int_config_modules.c:41
 #: src/modules/conf_icon_theme/e_mod_main.c:34
@@ -476,37 +479,38 @@ msgstr "Ένθεμα"
 #: src/modules/dropshadow/e_mod_main.c:89
 #: src/modules/conf_scale/e_mod_main.c:34
 msgid "Appearance"
-msgstr "Εμφάνιση"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ·"
 
 #: src/bin/e_gadcon.c:1237
 msgid "Automatically scroll contents"
-msgstr ""
+msgstr "Ξ‘Ο…Ο„ΟΞΌΞ±Ο„Ξ· ΞΊΟΞ»ΞΉΟƒΞ· Ο€ΞµΟΞΉΞµΟ‡ΞΏΞΌΞ­Ξ½Ο‰Ξ½"
 
 #: src/bin/e_gadcon.c:1244
+#, fuzzy
 msgid "Able to be resized"
-msgstr ""
+msgstr "Ξ”Ο…Ξ½Ξ±Ο„ΟΟ„Ξ·Ο„Ξ± Ξ±Ξ»Ξ»Ξ±Ξ³Ξ®Ο‚ ΞΌΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚"
 
 #: src/bin/e_gadcon.c:1256 src/modules/gadman/e_mod_gadman.c:588
 msgid "Begin move/resize this gadget"
-msgstr "Έναρξη μετακίνησης/αλλαγής μεγέθους αυτού του Συστατικού"
+msgstr "ΞΞ½Ξ±ΟΞΎΞ· ΞΌΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ·Ο‚/Ξ±Ξ»Ξ»Ξ±Ξ³Ξ®Ο‚ ΞΌΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚ Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞΏΟ"
 
 #: src/bin/e_gadcon.c:1262 src/modules/gadman/e_mod_gadman.c:594
 msgid "Remove this gadget"
-msgstr "Αφαίρεση αυτού του Συστατικού"
+msgstr "Ξ‘Ο†Ξ±Ξ―ΟΞµΟƒΞ· Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞΏΟ"
 
 #: src/bin/e_gadcon.c:1675
 msgid "Stop move/resize this gadget"
-msgstr "Τέλος μετακίνησης/αλλαγής μεγέθους αυτού του Συστατικού"
+msgstr "Ξ¤Ξ­Ξ»ΞΏΟ‚ ΞΌΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ·Ο‚/Ξ±Ξ»Ξ»Ξ±Ξ³Ξ®Ο‚ ΞΌΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚ Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞΏΟ"
 
 #: src/bin/e_hints.c:151
 msgid ""
 "A previous instance of Enlightenment is still active\n"
 "on this screen. Aborting startup.\n"
-msgstr "Ένα προηγούμενο στιγμιότυπο του Enlightenment είναι ακόμη ενεργό\nσε αυτή την οθόνη. Αναβολή εκκίνησης.\n"
+msgstr "ΞΞ½Ξ± Ο€ΟΞΏΞ·Ξ³ΞΏΟΞΌΞµΞ½ΞΏ ΟƒΟ„ΞΉΞ³ΞΌΞΉΟΟ„Ο…Ο€ΞΏ Ο„ΞΏΟ… Enlightenment ΞµΞ―Ξ½Ξ±ΞΉ Ξ±ΞΊΟΞΌΞ· ΞµΞ½ΞµΟΞ³Ο\nΟƒΞµ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ ΞΏΞΈΟΞ½Ξ·. Ξ‘Ξ½Ξ±Ξ²ΞΏΞ»Ξ® ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·Ο‚.\n"
 
 #: src/bin/e_widget_fsel.c:288
 msgid "Add to Favorites"
-msgstr "Προσθήκη στα Αγαπημένα"
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· ΟƒΟ„Ξ± Ξ‘Ξ³Ξ±Ο€Ξ·ΞΌΞ­Ξ½Ξ±"
 
 #: src/bin/e_widget_fsel.c:294 src/modules/conf_imc/e_int_config_imc.c:830
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:507
@@ -516,125 +520,125 @@ msgstr "Προσθήκη στα Αγαπημένα"
 #: src/modules/conf_theme/e_int_config_theme.c:365
 #, fuzzy
 msgid "Go up a Directory"
-msgstr "Μετάβαση στον πάνω Κατάλογο"
+msgstr "ΞΞµΟ„Ξ¬Ξ²Ξ±ΟƒΞ· ΟƒΟ„ΞΏΞ½ Ο€Ξ¬Ξ½Ο‰ ΞΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ"
 
 #: src/bin/e_widget_fsel.c:302 src/bin/e_fm_prop.c:385
 #: src/modules/conf_transitions/e_int_config_transitions.c:167
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:154
 #: src/modules/conf_theme/e_int_config_theme.c:1030
 msgid "Preview"
-msgstr "Προεπισκόπηση"
+msgstr "Ξ ΟΞΏΞµΟ€ΞΉΟƒΞΊΟΟ€Ξ·ΟƒΞ·"
 
 #: src/bin/e_widget_fsel.c:323 src/bin/e_fm_prop.c:345
 msgid "Size:"
-msgstr "Μέγεθος:"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚:"
 
 #: src/bin/e_widget_fsel.c:339 src/bin/e_fm_prop.c:367
 msgid "Owner:"
-msgstr "Ιδιοκτήτης:"
+msgstr "Ξ™Ξ΄ΞΉΞΏΞΊΟ„Ξ®Ο„Ξ·Ο‚:"
 
 #: src/bin/e_widget_fsel.c:355
 msgid "Permissions:"
-msgstr "Δικαιώματα:"
+msgstr "Ξ”ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ±:"
 
 #: src/bin/e_widget_fsel.c:371
 msgid "Modified:"
-msgstr "Τροποποίηση:"
+msgstr "Ξ¤ΟΞΏΟ€ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·:"
 
 #: src/bin/e_widget_fsel.c:610
 #, c-format
 msgid "You"
-msgstr "Εσύ"
+msgstr "Ξ•ΟƒΟ"
 
 #: src/bin/e_widget_fsel.c:659
 #, c-format
 msgid "Protected"
-msgstr "Προστατευμένο"
+msgstr "Ξ ΟΞΏΟƒΟ„Ξ±Ο„ΞµΟ…ΞΌΞ­Ξ½ΞΏ"
 
 #: src/bin/e_widget_fsel.c:661 src/bin/e_widget_fsel.c:670
 #: src/bin/e_widget_fsel.c:679
 #, c-format
 msgid "Read Only"
-msgstr "Μόνο για Ανάγνωση"
+msgstr "ΞΟΞ½ΞΏ Ξ³ΞΉΞ± Ξ‘Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ·"
 
 #: src/bin/e_widget_fsel.c:668 src/bin/e_widget_fsel.c:677
 #, c-format
 msgid "Forbidden"
-msgstr "Απαγόρευση"
+msgstr "Ξ‘Ο€Ξ±Ξ³ΟΟΞµΟ…ΟƒΞ·"
 
 #: src/bin/e_widget_fsel.c:686
 msgid "Read-Write"
-msgstr "Ανάγνωση-Εγγραφή"
+msgstr "Ξ‘Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ·-Ξ•Ξ³Ξ³ΟΞ±Ο†Ξ®"
 
 #: src/bin/e_fm_prop.c:108
 msgid "File Properties"
-msgstr "Ιδιότητες Αρχείου"
+msgstr "Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…"
 
 #: src/bin/e_fm_prop.c:338
 msgid "File:"
-msgstr "Αρχείο:"
+msgstr "Ξ‘ΟΟ‡ΞµΞ―ΞΏ:"
 
 #: src/bin/e_fm_prop.c:352
 msgid "Last Modified:"
-msgstr "Τελευταία Τροποποίηση:"
+msgstr "Ξ¤ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―Ξ± Ξ¤ΟΞΏΟ€ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·:"
 
 #: src/bin/e_fm_prop.c:359
 msgid "File Type:"
-msgstr "Τύπος Αρχείου:"
+msgstr "Ξ¤ΟΟ€ΞΏΟ‚ Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…:"
 
 #: src/bin/e_fm_prop.c:366
 msgid "Permissions"
-msgstr "Δικαιώματα"
+msgstr "Ξ”ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ±"
 
 #: src/bin/e_fm_prop.c:373
 msgid "Others can read"
-msgstr "Ανάγνωση από άλλους"
+msgstr "Ξ‘Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· Ξ±Ο€Ο Ξ¬Ξ»Ξ»ΞΏΟ…Ο‚"
 
 #: src/bin/e_fm_prop.c:375
 msgid "Others can write"
-msgstr "Εγγραφή από άλλους"
+msgstr "Ξ•Ξ³Ξ³ΟΞ±Ο†Ξ® Ξ±Ο€Ο Ξ¬Ξ»Ξ»ΞΏΟ…Ο‚"
 
 #: src/bin/e_fm_prop.c:377
 msgid "Owner can read"
-msgstr "Ανάγνωση από ιδιοκτήτη"
+msgstr "Ξ‘Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· Ξ±Ο€Ο ΞΉΞ΄ΞΉΞΏΞΊΟ„Ξ®Ο„Ξ·"
 
 #: src/bin/e_fm_prop.c:379
 msgid "Owner can write"
-msgstr "Εγγραφή από ιδιοκτήτη"
+msgstr "Ξ•Ξ³Ξ³ΟΞ±Ο†Ξ® Ξ±Ο€Ο ΞΉΞ΄ΞΉΞΏΞΊΟ„Ξ®Ο„Ξ·"
 
 #: src/bin/e_fm_prop.c:432
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:164
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:174
 msgid "Default"
-msgstr "Προκαθορισμένο"
+msgstr "Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ"
 
 #: src/bin/e_fm_prop.c:435
 msgid "Thumbnail"
-msgstr "Εικόνα Επισκόπησης"
+msgstr "Ξ•ΞΉΞΊΟΞ½Ξ± Ξ•Ο€ΞΉΟƒΞΊΟΟ€Ξ·ΟƒΞ·Ο‚"
 
 #: src/bin/e_fm_prop.c:438
 #: src/modules/conf_desklock/e_int_config_desklock.c:312
 msgid "Custom"
-msgstr "Προσαρμοσμένο"
+msgstr "Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½ΞΏ"
 
 #: src/bin/e_fm_prop.c:448
 msgid "Use this icon for all files of this type"
-msgstr "Χρησιμοποίησε αυτό το εικονίδιο για αυτό τον τύπο αρχείων"
+msgstr "Ξ§ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞ―Ξ·ΟƒΞµ Ξ±Ο…Ο„Ο Ο„ΞΏ ΞµΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞΏ Ξ³ΞΉΞ± Ξ±Ο…Ο„Ο Ο„ΞΏΞ½ Ο„ΟΟ€ΞΏ Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½"
 
 #: src/bin/e_fm_prop.c:456
 #, fuzzy
 msgid "Link Information"
-msgstr "Πληροφορίες Συνδέσμου"
+msgstr "Ξ Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―ΞµΟ‚ Ξ£Ο…Ξ½Ξ΄Ξ­ΟƒΞΌΞΏΟ…"
 
 #: src/bin/e_fm_prop.c:502 src/modules/conf_mime/e_int_config_mime_edit.c:272
 #, fuzzy
 msgid "Select an Image"
-msgstr "Επιλογή Εικόνας"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ•ΞΉΞΊΟΞ½Ξ±Ο‚"
 
 #: src/bin/e_configure.c:15 src/modules/conf_shelves/e_mod_main.c:38
 #: src/modules/mixer/e_mod_main.c:1083 src/modules/gadman/e_mod_main.c:30
 msgid "Extensions"
-msgstr "Επεκτάσεις"
+msgstr "Ξ•Ο€ΞµΞΊΟ„Ξ¬ΟƒΞµΞΉΟ‚"
 
 #: src/bin/e_configure.c:16 src/bin/e_int_menus.c:805
 #: src/modules/conf_paths/e_int_config_paths.c:85
@@ -642,7 +646,7 @@ msgstr "Επεκτάσεις"
 #: src/modules/conf_colors/e_int_config_color_classes.c:83
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:188
 msgid "Modules"
-msgstr "¶ρθρωμα"
+msgstr "Ξ‘ΟΞΈΟΟΞΌΞ±Ο„Ξ±"
 
 #: src/bin/e_configure.c:129 src/bin/e_actions.c:2617 src/bin/e_actions.c:2621
 #: src/bin/e_actions.c:2625 src/bin/e_actions.c:2629
@@ -655,48 +659,48 @@ msgstr "¶ρθρωμα"
 #: src/modules/conf_theme/e_int_config_theme.c:358
 #: src/modules/conf_theme/e_int_config_theme.c:797
 msgid "System"
-msgstr "Σύστημα"
+msgstr "Ξ£ΟΟƒΟ„Ξ·ΞΌΞ±"
 
 #: src/bin/e_int_gadcon_config.c:32
 #, fuzzy
 msgid "Shelf Contents"
-msgstr "Περιεχόμενα Ραφιού"
+msgstr "Ξ ΞµΟΞΉΞµΟ‡ΟΞΌΞµΞ½Ξ± Ξ΅Ξ±Ο†ΞΉΞΏΟ"
 
 #: src/bin/e_int_gadcon_config.c:38
 msgid "Toolbar Contents"
-msgstr "Περιεχόμενα Γραμμής Εργαλείων"
+msgstr "Ξ ΞµΟΞΉΞµΟ‡ΟΞΌΞµΞ½Ξ± Ξ“ΟΞ±ΞΌΞΌΞ®Ο‚ Ξ•ΟΞ³Ξ±Ξ»ΞµΞ―Ο‰Ξ½"
 
 #: src/bin/e_int_gadcon_config.c:93 src/modules/gadman/e_mod_config.c:73
 msgid "Available Gadgets"
-msgstr "Διαθέσημα Συστατικά"
+msgstr "Ξ”ΞΉΞ±ΞΈΞ­ΟƒΞ·ΞΌΞ± Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞ¬"
 
 #: src/bin/e_int_gadcon_config.c:100 src/modules/gadman/e_mod_config.c:84
 msgid "Add Gadget"
-msgstr "Προσθήκη Συστατικού"
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞΏΟ"
 
 #: src/bin/e_int_gadcon_config.c:106
 msgid "Selected Gadgets"
-msgstr "Επιλεγμένα Συστατικά"
+msgstr "Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ± Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞ¬"
 
 #: src/bin/e_int_gadcon_config.c:113
 msgid "Remove Gadget"
-msgstr "Αφαίρεση Συστατικού"
+msgstr "Ξ‘Ο†Ξ±Ξ―ΟΞµΟƒΞ· Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞΏΟ"
 
 #: src/bin/e_int_gadcon_config.c:121 src/bin/e_int_gadcon_config.c:156
 #: src/bin/e_int_gadcon_config.c:178 src/bin/e_int_config_modules.c:198
 #: src/bin/e_int_config_modules.c:551 src/bin/e_int_config_modules.c:568
 #: src/bin/e_int_config_modules.c:593
 msgid "Description: Unavailable"
-msgstr "Περιγραφή: Μη Διαθέσιμη"
+msgstr "Ξ ΞµΟΞΉΞ³ΟΞ±Ο†Ξ®: ΞΞ· Ξ”ΞΉΞ±ΞΈΞ­ΟƒΞΉΞΌΞ·"
 
 #: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:327
 msgid "Toolbar Configuration"
-msgstr "Ρύθμιση Γραμμής Εργαλείων"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ“ΟΞ±ΞΌΞΌΞ®Ο‚ Ξ•ΟΞ³Ξ±Ξ»ΞµΞ―Ο‰Ξ½"
 
 #: src/bin/e_int_toolbar_config.c:82 src/bin/e_int_shelf_config.c:500
 #: src/bin/e_int_shelf_config.c:565
 msgid "Layout"
-msgstr "Διάταξη"
+msgstr "Ξ”ΞΉΞ¬Ο„Ξ±ΞΎΞ·"
 
 #: src/bin/e_ipc.c:48
 #, c-format
@@ -721,18 +725,18 @@ msgstr ""
 #: src/bin/e_border.c:4838
 #, fuzzy
 msgid "Desktop files scan done"
-msgstr "Σάρωση αρχείων Επιφάνειας Εργασίας ολοκληρώθηκε"
+msgstr "Ξ£Ξ¬ΟΟ‰ΟƒΞ· Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ ΞΏΞ»ΞΏΞΊΞ»Ξ·ΟΟΞΈΞ·ΞΊΞµ"
 
 #: src/bin/e_border.c:4850
 #, fuzzy
 msgid "Desktop file scan"
-msgstr "Σάρωση αρχείων Επιφάνειας Εργασίας"
+msgstr "Ξ£Ξ¬ΟΟ‰ΟƒΞ· Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/bin/e_container.c:118
 #, c-format
 #, fuzzy
 msgid "Container %d"
-msgstr "Υποδοχέας %d"
+msgstr "Ξ¥Ο€ΞΏΞ΄ΞΏΟ‡Ξ­Ξ±Ο‚ %d"
 
 #: src/bin/e_actions.c:338
 #, c-format
@@ -740,54 +744,54 @@ msgid ""
 "You are about to kill %s.<br><br>Please keep in mind that all data of this "
 "window,<br>which has not been saved yet will be lost!<br><br>Are you sure "
 "you want to kill this window?"
-msgstr "Πρόκειτε να σκοτώσετε το %s.<br><br>Παρακαλώ έχετε κατά νού ότι τα δεδομένα αυτού του παραθύρου<br>που δεν αποθηκεύτηκαν θα χαθούν!<br><br>Είστε σίγουροι για το σκότωμα του παραθύρου αυτού?"
+msgstr "Ξ ΟΟΞΊΞµΞΉΟ„Ξµ Ξ½Ξ± ΟƒΞΊΞΏΟ„ΟΟƒΞµΟ„Ξµ Ο„ΞΏ %s.<br><br>Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ξ­Ο‡ΞµΟ„Ξµ ΞΊΞ±Ο„Ξ¬ Ξ½ΞΏΟ ΟΟ„ΞΉ Ο„Ξ± Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ξ± Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ο€Ξ±ΟΞ±ΞΈΟΟΞΏΟ…<br>Ο€ΞΏΟ… Ξ΄ΞµΞ½ Ξ±Ο€ΞΏΞΈΞ·ΞΊΞµΟΟ„Ξ·ΞΊΞ±Ξ½ ΞΈΞ± Ο‡Ξ±ΞΈΞΏΟΞ½!<br><br>Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ Ξ³ΞΉΞ± Ο„ΞΏ ΟƒΞΊΟΟ„Ο‰ΞΌΞ± Ο„ΞΏΟ… Ο€Ξ±ΟΞ±ΞΈΟΟΞΏΟ… Ξ±Ο…Ο„ΞΏΟ?"
 
 #: src/bin/e_actions.c:350
 #, fuzzy
 msgid "Are you sure you want to kill this window?"
-msgstr "Είστε σίγουροι ότι θέλετε να σκοτώσετε αυτό το παράθυρο?"
+msgstr "Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ ΟΟ„ΞΉ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± ΟƒΞΊΞΏΟ„ΟΟƒΞµΟ„Ξµ Ξ±Ο…Ο„Ο Ο„ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ?"
 
 #: src/bin/e_actions.c:1624
 msgid "Are you sure you want to exit?"
-msgstr "Επιθυμείτε σίγουρα την έξοδο?"
+msgstr "Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞ± Ο„Ξ·Ξ½ Ξ­ΞΎΞΏΞ΄ΞΏ?"
 
 #: src/bin/e_actions.c:1626
 msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
-msgstr "Αιτήθηκε έξοδος από το Enlightenment.<br><br>Επιθυμείτε σίγουρα την έξοδο?"
+msgstr "Ξ‘ΞΉΟ„Ξ®ΞΈΞ·ΞΊΞµ Ξ­ΞΎΞΏΞ΄ΞΏΟ‚ Ξ±Ο€Ο Ο„ΞΏ Enlightenment.<br><br>Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞ± Ο„Ξ·Ξ½ Ξ­ΞΎΞΏΞ΄ΞΏ?"
 
 #: src/bin/e_actions.c:1706
 msgid "Are you sure you want to log out?"
-msgstr "Επιθυμείτε σίγουρα να αποσυνδεθείτε?"
+msgstr "Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞ± Ξ½Ξ± Ξ±Ο€ΞΏΟƒΟ…Ξ½Ξ΄ΞµΞΈΞµΞ―Ο„Ξµ?"
 
 #: src/bin/e_actions.c:1708
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
-msgstr "Πρόκειται να αποσυνδεθείτε.<br><br>Είστε σίγουροι για αυτό?"
+msgstr "Ξ ΟΟΞΊΞµΞΉΟ„Ξ±ΞΉ Ξ½Ξ± Ξ±Ο€ΞΏΟƒΟ…Ξ½Ξ΄ΞµΞΈΞµΞ―Ο„Ξµ.<br><br>Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ Ξ³ΞΉΞ± Ξ±Ο…Ο„Ο?"
 
 #: src/bin/e_actions.c:1770 src/bin/e_actions.c:1898
 msgid "Are you sure you want to turn off?"
-msgstr "Επιθυμείτε σίγουρα το κλείσιμο του συστήματος?"
+msgstr "Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞ± Ο„ΞΏ ΞΊΞ»ΞµΞ―ΟƒΞΉΞΌΞΏ Ο„ΞΏΟ… ΟƒΟ…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚?"
 
 #: src/bin/e_actions.c:1772
 msgid ""
 "You requested to turn off your Computer.<br><br>Are you sure you want to "
 "shut down?"
-msgstr "Αιτήθηκε κλείσιμο Η/Υ.<br><br>Είστε σίγουροι για το κλείσιμο?"
+msgstr "Ξ‘ΞΉΟ„Ξ®ΞΈΞ·ΞΊΞµ ΞΊΞ»ΞµΞ―ΟƒΞΉΞΌΞΏ Ξ—/Ξ¥.<br><br>Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ Ξ³ΞΉΞ± Ο„ΞΏ ΞΊΞ»ΞµΞ―ΟƒΞΉΞΌΞΏ?"
 
 #: src/bin/e_actions.c:1834
 msgid "Are you sure you want to reboot?"
-msgstr "Είστε σίγουροι ότι θέλετε να κάνετε επανεκκίνηση?"
+msgstr "Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ ΟΟ„ΞΉ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± ΞΊΞ¬Ξ½ΞµΟ„Ξµ ΞµΟ€Ξ±Ξ½ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·?"
 
 #: src/bin/e_actions.c:1836
 msgid ""
 "You requested to reboot your Computer.<br><br>Are you sure you want to "
 "restart it?"
-msgstr "Αιτήθηκε επανεκκίνηση Η/Υ.<br><br>Είστε σίγουροι για την επανεκκίνηση?"
+msgstr "Ξ‘ΞΉΟ„Ξ®ΞΈΞ·ΞΊΞµ ΞµΟ€Ξ±Ξ½ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ· Ξ—/Ξ¥.<br><br>Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ Ξ³ΞΉΞ± Ο„Ξ·Ξ½ ΞµΟ€Ξ±Ξ½ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·?"
 
 #: src/bin/e_actions.c:1900
 msgid ""
 "You requested to suspend your Computer.<br><br>Are you sure you want to "
 "suspend?"
-msgstr "Αιτήθηκε αναστολή Η/Υ.<br><br>Είστε σίγουροι για την αναστολή?"
+msgstr "Ξ‘ΞΉΟ„Ξ®ΞΈΞ·ΞΊΞµ Ξ±Ξ½Ξ±ΟƒΟ„ΞΏΞ»Ξ® Ξ—/Ξ¥.<br><br>Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ Ξ³ΞΉΞ± Ο„Ξ·Ξ½ Ξ±Ξ½Ξ±ΟƒΟ„ΞΏΞ»Ξ®?"
 
 #: src/bin/e_actions.c:1962
 msgid "Are you sure you want to hibernate?"
@@ -804,33 +808,33 @@ msgstr ""
 #: src/bin/e_actions.c:2529 src/bin/e_actions.c:2534 src/bin/e_actions.c:2540
 #: src/bin/e_actions.c:2546 src/bin/e_actions.c:2552
 msgid "Window : Actions"
-msgstr "Παράθυρο : Ενέργειες"
+msgstr "Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ : Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞµΟ‚"
 
 #: src/bin/e_actions.c:2286
 msgid "Resize"
-msgstr "Αλλαγή μεγέθους"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΞΌΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚"
 
 #: src/bin/e_actions.c:2297 src/bin/e_actions.c:2573 src/bin/e_actions.c:2575
 #: src/bin/e_actions.c:2577 src/bin/e_actions.c:2579 src/bin/e_actions.c:2581
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:345
 msgid "Menu"
-msgstr "Μενού"
+msgstr "ΞΞµΞ½ΞΏΟ"
 
 #: src/bin/e_actions.c:2297
 msgid "Window Menu"
-msgstr "Μενού Παραθύρου"
+msgstr "ΞΞµΞ½ΞΏΟ Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/bin/e_actions.c:2305 src/bin/e_int_border_menu.c:182
 msgid "Raise"
-msgstr "Ανύψωση"
+msgstr "Ξ‘Ξ½ΟΟΟ‰ΟƒΞ·"
 
 #: src/bin/e_actions.c:2310 src/bin/e_int_border_menu.c:174
 msgid "Lower"
-msgstr "Βύθιση"
+msgstr "Ξ’ΟΞΈΞΉΟƒΞ·"
 
 #: src/bin/e_actions.c:2320 src/bin/e_int_border_menu.c:197
 msgid "Kill"
-msgstr "Σκότωμα"
+msgstr "Ξ£ΞΊΟΟ„Ο‰ΞΌΞ±"
 
 #: src/bin/e_actions.c:2325 src/bin/e_actions.c:2332 src/bin/e_actions.c:2339
 #: src/bin/e_actions.c:2346 src/bin/e_actions.c:2348 src/bin/e_actions.c:2351
@@ -839,50 +843,50 @@ msgstr "Σκότωμα"
 #: src/bin/e_actions.c:2371 src/bin/e_actions.c:2373 src/bin/e_actions.c:2375
 #: src/bin/e_actions.c:2382 src/bin/e_actions.c:2387
 msgid "Window : State"
-msgstr "Παράθυρο : Κατάσταση"
+msgstr "Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ : ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·"
 
 #: src/bin/e_actions.c:2325
 #, fuzzy
 msgid "Sticky Mode Toggle"
-msgstr "Εναλλαγή σε Κολλημένη Λειτουργία"
+msgstr "Ξ•Ξ½Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΞµ ΞΞΏΞ»Ξ»Ξ·ΞΌΞ­Ξ½Ξ· Ξ›ΞµΞΉΟ„ΞΏΟ…ΟΞ³Ξ―Ξ±"
 
 #: src/bin/e_actions.c:2332
 #, fuzzy
 msgid "Iconic Mode Toggle"
-msgstr "Εναλλαγή σε Εικονιδιοποιημένη Λειτουργία"
+msgstr "Ξ•Ξ½Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΞµ Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄ΞΉΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½Ξ· Ξ›ΞµΞΉΟ„ΞΏΟ…ΟΞ³Ξ―Ξ±"
 
 #: src/bin/e_actions.c:2339
 msgid "Fullscreen Mode Toggle"
-msgstr "Εναλλαγή σε Λειτουργία Πλήρους Οθόνης"
+msgstr "Ξ•Ξ½Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΞµ Ξ›ΞµΞΉΟ„ΞΏΟ…ΟΞ³Ξ―Ξ± Ξ Ξ»Ξ®ΟΞΏΟ…Ο‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/bin/e_actions.c:2346 src/bin/e_int_border_menu.c:148
 #: src/bin/e_int_border_menu.c:343
 msgid "Maximize"
-msgstr "Μεγιστοποίηση"
+msgstr "ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·"
 
 #: src/bin/e_actions.c:2348
 msgid "Maximize Vertically"
-msgstr "Μεγιστοποίηση Κάθετα"
+msgstr "ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· ΞΞ¬ΞΈΞµΟ„Ξ±"
 
 #: src/bin/e_actions.c:2351
 msgid "Maximize Horizontally"
-msgstr "Μεγιστοποίηση Οριζόντια"
+msgstr "ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· ΞΟΞΉΞ¶ΟΞ½Ο„ΞΉΞ±"
 
 #: src/bin/e_actions.c:2354
 msgid "Maximize Fullscreen"
-msgstr "Μεγιστοποίηση σε Πλήρη Οθόνη"
+msgstr "ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· ΟƒΞµ Ξ Ξ»Ξ®ΟΞ· ΞΞΈΟΞ½Ξ·"
 
 #: src/bin/e_actions.c:2356
 msgid "Maximize Mode \"Smart\""
-msgstr "Κατάσταση Μεγιστοποίησης \"Έξυπνη\""
+msgstr "ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚ \"ΞΞΎΟ…Ο€Ξ½Ξ·\""
 
 #: src/bin/e_actions.c:2358
 msgid "Maximize Mode \"Expand\""
-msgstr "Κατάσταση Μεγιστοποίησης \"Επέκταση\""
+msgstr "ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚ \"Ξ•Ο€Ξ­ΞΊΟ„Ξ±ΟƒΞ·\""
 
 #: src/bin/e_actions.c:2360
 msgid "Maximize Mode \"Fill\""
-msgstr "Κατάσταση Μεγιστοποίησης \"Γέμισμα\""
+msgstr "ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚ \"Ξ“Ξ­ΞΌΞΉΟƒΞΌΞ±\""
 
 #: src/bin/e_actions.c:2367
 msgid "Shade Up Mode Toggle"
@@ -906,12 +910,12 @@ msgstr ""
 
 #: src/bin/e_actions.c:2382
 msgid "Toggle Borderless State"
-msgstr "Εναλλαγή σε Κατάσταση χωρίς Περίγραμμα"
+msgstr "Ξ•Ξ½Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΞµ ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· Ο‡Ο‰ΟΞ―Ο‚ Ξ ΞµΟΞ―Ξ³ΟΞ±ΞΌΞΌΞ±"
 
 #: src/bin/e_actions.c:2387
 #, fuzzy
 msgid "Toggle Pinned State"
-msgstr "Εναλλαγή σε Κατάσταση **"
+msgstr "Ξ•Ξ½Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΞµ ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· **"
 
 #: src/bin/e_actions.c:2392 src/bin/e_actions.c:2394 src/bin/e_actions.c:2396
 #: src/bin/e_actions.c:2398 src/bin/e_actions.c:2400 src/bin/e_actions.c:2406
@@ -932,187 +936,187 @@ msgstr "Εναλλαγή σε Κατάσταση **"
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:103
 #: src/modules/ibox/e_mod_config.c:141
 msgid "Desktop"
-msgstr "Επιφάνεια Εργασίας"
+msgstr "Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/bin/e_actions.c:2392
 msgid "Flip Desktop Left"
-msgstr "Γύρισμα Επιφάνειας Εργασίας Αριστερά"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ‘ΟΞΉΟƒΟ„ΞµΟΞ¬"
 
 #: src/bin/e_actions.c:2394
 msgid "Flip Desktop Right"
-msgstr "Γύρισμα Επιφάνειας Εργασίας Δεξιά"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ”ΞµΞΎΞΉΞ¬"
 
 #: src/bin/e_actions.c:2396
 msgid "Flip Desktop Up"
-msgstr "Γύρισμα Επιφάνειας Εργασίας Επάνω"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ•Ο€Ξ¬Ξ½Ο‰"
 
 #: src/bin/e_actions.c:2398
 msgid "Flip Desktop Down"
-msgstr "Γύρισμα Επιφάνειας Εργασίας Κάτω"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ ΞΞ¬Ο„Ο‰"
 
 #: src/bin/e_actions.c:2400
 #, fuzzy
 msgid "Flip Desktop By..."
-msgstr "Γύρισμα Επιφάνειας Εργασίας κατα..."
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ ΞΊΞ±Ο„Ξ±..."
 
 #: src/bin/e_actions.c:2406
 msgid "Show The Desktop"
-msgstr "Εμφάνιση Επιφάνειας Εργασίας"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/bin/e_actions.c:2411
 #, fuzzy
 msgid "Flip Desktop To..."
-msgstr "Γύρισμα Επιφάνειας Εργασίας σε..."
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ ΟƒΞµ..."
 
 #: src/bin/e_actions.c:2417
 #, fuzzy
 msgid "Flip Desktop Linearly..."
-msgstr "Γύρισμα Επιφάνειας Εργασίας γραμμικά"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ³ΟΞ±ΞΌΞΌΞΉΞΊΞ¬"
 
 #: src/bin/e_actions.c:2423
 #, fuzzy
 msgid "Switch To Desktop 0"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 0"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 0"
 
 #: src/bin/e_actions.c:2425
 #, fuzzy
 msgid "Switch To Desktop 1"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 1"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 1"
 
 #: src/bin/e_actions.c:2427
 #, fuzzy
 msgid "Switch To Desktop 2"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 2"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 2"
 
 #: src/bin/e_actions.c:2429
 #, fuzzy
 msgid "Switch To Desktop 3"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 3"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 3"
 
 #: src/bin/e_actions.c:2431
 #, fuzzy
 msgid "Switch To Desktop 4"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 4"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 4"
 
 #: src/bin/e_actions.c:2433
 #, fuzzy
 msgid "Switch To Desktop 5"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 5"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 5"
 
 #: src/bin/e_actions.c:2435
 #, fuzzy
 msgid "Switch To Desktop 6"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 6"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 6"
 
 #: src/bin/e_actions.c:2437
 #, fuzzy
 msgid "Switch To Desktop 7"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 7"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 7"
 
 #: src/bin/e_actions.c:2439
 #, fuzzy
 msgid "Switch To Desktop 8"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 8"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 8"
 
 #: src/bin/e_actions.c:2441
 #, fuzzy
 msgid "Switch To Desktop 9"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 9"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 9"
 
 #: src/bin/e_actions.c:2443
 #, fuzzy
 msgid "Switch To Desktop 10"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 10"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 10"
 
 #: src/bin/e_actions.c:2445
 #, fuzzy
 msgid "Switch To Desktop 11"
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας 11"
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 11"
 
 #: src/bin/e_actions.c:2447
 #, fuzzy
 msgid "Switch To Desktop..."
-msgstr "Ενναλαγή στην Επιφάνεια Εργασίας..."
+msgstr "Ξ•Ξ½Ξ½Ξ±Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚..."
 
 #: src/bin/e_actions.c:2453
 msgid "Flip Desktop Left (All Screens)"
-msgstr "Γύρισμα Desktop Αριστερά (Σε όλες τις Οθόνες)"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ‘ΟΞΉΟƒΟ„ΞµΟΞ¬ (Ξ£Ξµ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2455
 msgid "Flip Desktop Right (All Screens)"
-msgstr "Γύρισμα Desktop Δεξιά(Σε όλες τις Οθόνες)"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ”ΞµΞΎΞΉΞ¬(Ξ£Ξµ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2457
 msgid "Flip Desktop Up (All Screens)"
-msgstr "Γύρισμα Desktop Επάνω (Σε όλες τις Οθόνες)"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ•Ο€Ξ¬Ξ½Ο‰ (Ξ£Ξµ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2459
 msgid "Flip Desktop Down (All Screens)"
-msgstr "Γύρισμα Desktop Κάτω (Σε όλες τις Οθόνες)"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ ΞΞ¬Ο„Ο‰ (Ξ£Ξµ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2461
 msgid "Flip Desktop By... (All Screens)"
-msgstr "Γύρισμα Desktop κατα... (Σε όλες τις Οθόνες)"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ ΞΊΞ±Ο„Ξ±... (Ξ£Ξµ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2467
 msgid "Flip Desktop To... (All Screens)"
-msgstr "Γύρισμα Desktop σε... (Σε όλες τις Οθόνες)"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ ΟƒΞµ... (Ξ£Ξµ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2473
 msgid "Flip Desktop Linearly... (All Screens)"
-msgstr "Γύρισμα Desktop Γραμμικά... (Σε όλες τις Οθόνες)"
+msgstr "Ξ“ΟΟΞΉΟƒΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ Ξ“ΟΞ±ΞΌΞΌΞΉΞΊΞ¬... (Ξ£Ξµ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2479
 msgid "Switch To Desktop 0 (All Screens)"
-msgstr "Αλλαγή στο Desktop 0 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 0 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2481
 msgid "Switch To Desktop 1 (All Screens)"
-msgstr "Αλλαγή στο Desktop 1 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 1 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2483
 msgid "Switch To Desktop 2 (All Screens)"
-msgstr "Αλλαγή στο Desktop 2 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 2 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2485
 msgid "Switch To Desktop 3 (All Screens)"
-msgstr "Αλλαγή στο Desktop 3 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 3 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2487
 msgid "Switch To Desktop 4 (All Screens)"
-msgstr "Αλλαγή στο Desktop 4 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 4 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2489
 msgid "Switch To Desktop 5 (All Screens)"
-msgstr "Αλλαγή στο Desktop 5 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 5 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2491
 msgid "Switch To Desktop 6 (All Screens)"
-msgstr "Αλλαγή στο Desktop 6 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 6 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2493
 msgid "Switch To Desktop 7 (All Screens)"
-msgstr "Αλλαγή στο Desktop 7 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 7 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2495
 msgid "Switch To Desktop 8 (All Screens)"
-msgstr "Αλλαγή στο Desktop 8 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 8 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2497
 msgid "Switch To Desktop 9 (All Screens)"
-msgstr "Αλλαγή στο Desktop 9 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 9 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2499
 msgid "Switch To Desktop 10 (All Screens)"
-msgstr "Αλλαγή στο Desktop 10 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 10 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2501
 msgid "Switch To Desktop 11 (All Screens)"
-msgstr "Αλλαγή στο Desktop 11 (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ 11 (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2503
 msgid "Switch To Desktop... (All Screens)"
-msgstr "Αλλαγή στο Desktop... (Όλες Οθόνες)"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚... (ΞΞ»ΞµΟ‚ ΞΞΈΟΞ½ΞµΟ‚)"
 
 #: src/bin/e_actions.c:2510 src/bin/e_actions.c:2512 src/bin/e_actions.c:2514
 #: src/bin/e_actions.c:2519 src/bin/e_actions.c:2521 src/bin/e_actions.c:2523
@@ -1123,92 +1127,92 @@ msgstr "Αλλαγή στο Desktop... (Όλες Οθόνες)"
 #: src/modules/conf_dpms/e_mod_main.c:34
 #: src/modules/conf_display/e_mod_main.c:34
 msgid "Screen"
-msgstr "Οθόνη"
+msgstr "ΞΞΈΟΞ½Ξ·"
 
 #: src/bin/e_actions.c:2510
 msgid "Send Mouse To Screen 0"
-msgstr "Αποστολή Ποντικιού στη Οθόνη 0"
+msgstr "Ξ‘Ο€ΞΏΟƒΟ„ΞΏΞ»Ξ® Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ ΟƒΟ„Ξ· ΞΞΈΟΞ½Ξ· 0"
 
 #: src/bin/e_actions.c:2512
 msgid "Send Mouse To Screen 1"
-msgstr "Αποστολή Ποντικιού στη Οθόνη 1"
+msgstr "Ξ‘Ο€ΞΏΟƒΟ„ΞΏΞ»Ξ® Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ ΟƒΟ„Ξ· ΞΞΈΟΞ½Ξ· 1"
 
 #: src/bin/e_actions.c:2514
 msgid "Send Mouse To Screen..."
-msgstr "Αποστολή Ποντικιού στη Οθόνη..."
+msgstr "Ξ‘Ο€ΞΏΟƒΟ„ΞΏΞ»Ξ® Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ ΟƒΟ„Ξ· ΞΞΈΟΞ½Ξ·..."
 
 #: src/bin/e_actions.c:2519
 msgid "Send Mouse Forward 1 Screen"
-msgstr "Προώθηση Ποντικιού κατά 1 Οθόνη Μπροστά"
+msgstr "Ξ ΟΞΏΟΞΈΞ·ΟƒΞ· Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ ΞΊΞ±Ο„Ξ¬ 1 ΞΞΈΟΞ½Ξ· ΞΟ€ΟΞΏΟƒΟ„Ξ¬"
 
 #: src/bin/e_actions.c:2521
 msgid "Send Mouse Back 1 Screen"
-msgstr "Προώθηση Ποντικιού κατά 1 Οθόνη Πίσω"
+msgstr "Ξ ΟΞΏΟΞΈΞ·ΟƒΞ· Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ ΞΊΞ±Ο„Ξ¬ 1 ΞΞΈΟΞ½Ξ· Ξ Ξ―ΟƒΟ‰"
 
 #: src/bin/e_actions.c:2523
 msgid "Send Mouse Forward/Back Screens..."
-msgstr "Προώθηση Ποντικιού κατά ... Οθόνες"
+msgstr "Ξ ΟΞΏΟΞΈΞ·ΟƒΞ· Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ ΞΊΞ±Ο„Ξ¬ ... ΞΞΈΟΞ½ΞµΟ‚"
 
 #: src/bin/e_actions.c:2557 src/bin/e_actions.c:2559 src/bin/e_actions.c:2561
 #: src/bin/e_actions.c:2567
 msgid "Window : Moving"
-msgstr "Παράθυρο : Μετακίνηση"
+msgstr "Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ : ΞΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ·"
 
 #: src/bin/e_actions.c:2557
 #, fuzzy
 msgid "To Next Desktop"
-msgstr "Στην Επόμενη Επιφάνεια Εργασίας"
+msgstr "Ξ£Ο„Ξ·Ξ½ Ξ•Ο€ΟΞΌΞµΞ½Ξ· Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/bin/e_actions.c:2559
 #, fuzzy
 msgid "To Previous Desktop"
-msgstr "Στην Προηγούμενη Επιφάνεια Εργασίας"
+msgstr "Ξ£Ο„Ξ·Ξ½ Ξ ΟΞΏΞ·Ξ³ΞΏΟΞΌΞµΞ½Ξ· Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/bin/e_actions.c:2561
 msgid "By Desktop #..."
-msgstr ""
+msgstr "ΞΞ±Ο„Ξ¬ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ #..."
 
 #: src/bin/e_actions.c:2567
 #, fuzzy
 msgid "To Desktop..."
-msgstr "Στην Επιφάνεια Εργασίας..."
+msgstr "Ξ£Ο„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚..."
 
 #: src/bin/e_actions.c:2573
 msgid "Show Main Menu"
-msgstr "Εμφάνιση Κεντρικού Μενού"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞµΞ½Ο„ΟΞΉΞΊΞΏΟ ΞΞµΞ½ΞΏΟ"
 
 #: src/bin/e_actions.c:2575
 msgid "Show Favorites Menu"
-msgstr "Εμφάνιση Μενού Αγαπημένων"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞµΞ½ΞΏΟ Ξ‘Ξ³Ξ±Ο€Ξ·ΞΌΞ­Ξ½Ο‰Ξ½"
 
 #: src/bin/e_actions.c:2577
 #, fuzzy
 msgid "Show All Applications Menu"
-msgstr "Εμφάνιση Μενού Όλων των Εφαρμογών"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞµΞ½ΞΏΟ ΞΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ Ξ•Ο†Ξ±ΟΞΌΞΏΞ³ΟΞ½"
 
 #: src/bin/e_actions.c:2579
 msgid "Show Clients Menu"
-msgstr "Εμφάνιση Μενού Πελατων"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞµΞ½ΞΏΟ Ξ ΞµΞ»Ξ±Ο„Ο‰Ξ½"
 
 #: src/bin/e_actions.c:2581
 msgid "Show Menu..."
-msgstr "Εμφάνιση Μενού..."
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞµΞ½ΞΏΟ..."
 
 #: src/bin/e_actions.c:2588 src/bin/e_actions.c:2593
 #: src/modules/conf/e_mod_main.c:46 src/modules/conf/e_mod_main.c:67
 #: src/modules/exebuf/e_mod_main.c:48 src/modules/exebuf/e_mod_main.c:68
 #: src/modules/fileman/e_mod_main.c:57 src/modules/fileman/e_mod_main.c:136
 msgid "Launch"
-msgstr "Εκτέλεση"
+msgstr "Ξ•ΞΊΟ„Ξ­Ξ»ΞµΟƒΞ·"
 
 #: src/bin/e_actions.c:2588
 #, fuzzy
 msgid "Defined Command"
-msgstr "Καθορισμένη Εντολή"
+msgstr "ΞΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½Ξ· Ξ•Ξ½Ο„ΞΏΞ»Ξ®"
 
 #: src/bin/e_actions.c:2593
 msgid "Application"
-msgstr "Εφαρμογή"
+msgstr "Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®"
 
 #: src/bin/e_actions.c:2597 src/bin/e_actions.c:2601 src/bin/e_actions.c:2605
 #: src/bin/e_actions.c:2609 src/bin/e_actions.c:2613 src/bin/e_int_menus.c:168
@@ -1219,71 +1223,71 @@ msgstr "Enlightenment"
 
 #: src/bin/e_actions.c:2597 src/bin/e_int_menus.c:193
 msgid "Restart"
-msgstr "Επανεκκίνηση"
+msgstr "Ξ•Ο€Ξ±Ξ½ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·"
 
 #: src/bin/e_actions.c:2601 src/bin/e_int_menus.c:198
 msgid "Exit"
-msgstr "Έξοδος"
+msgstr "ΞΞΎΞΏΞ΄ΞΏΟ‚"
 
 #: src/bin/e_actions.c:2605
 msgid "Log Out"
-msgstr "Αποσύνδεση"
+msgstr "Ξ‘Ο€ΞΏΟƒΟΞ½Ξ΄ΞµΟƒΞ·"
 
 #: src/bin/e_actions.c:2609
 msgid "Exit Immediately"
-msgstr "¶μεση Έξοδος"
+msgstr "Ξ†ΞΌΞµΟƒΞ· ΞΞΎΞΏΞ΄ΞΏΟ‚"
 
 #: src/bin/e_actions.c:2613
 msgid "Shut Down Immediately"
-msgstr "¶μεση Απενεργοποίηση"
+msgstr "Ξ†ΞΌΞµΟƒΞ· Ξ‘Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·"
 
 #: src/bin/e_actions.c:2617 src/bin/e_int_menus.c:890
 msgid "Shut Down"
-msgstr "Τερματισμός"
+msgstr "Ξ¤ΞµΟΞΌΞ±Ο„ΞΉΟƒΞΌΟΟ‚"
 
 #: src/bin/e_actions.c:2621 src/bin/e_int_menus.c:883
 msgid "Reboot"
-msgstr "Επανεκκίνηση"
+msgstr "Ξ•Ο€Ξ±Ξ½ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·"
 
 #: src/bin/e_actions.c:2625 src/bin/e_int_menus.c:869
 msgid "Suspend"
-msgstr "Αναστολή"
+msgstr "Ξ‘Ξ½Ξ±ΟƒΟ„ΞΏΞ»Ξ®"
 
 #: src/bin/e_actions.c:2629
 msgid "Suspend to Disk"
-msgstr "Αναστολή στο Δίσκο"
+msgstr "Ξ‘Ξ½Ξ±ΟƒΟ„ΞΏΞ»Ξ® ΟƒΟ„ΞΏ Ξ”Ξ―ΟƒΞΊΞΏ"
 
 #: src/bin/e_actions.c:2637
 msgid "Desktop Lock"
-msgstr "Κλείδωμα Επιφάνειας Εργασίας"
+msgstr "ΞΞ»ΞµΞ―Ξ΄Ο‰ΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/bin/e_actions.c:2642 src/bin/e_int_menus.c:1254
 msgid "Cleanup Windows"
-msgstr "Καθαρισμός Παραθύρων"
+msgstr "ΞΞ±ΞΈΞ±ΟΞΉΟƒΞΌΟΟ‚ Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½"
 
 #: src/bin/e_actions.c:2647
 msgid "Generic : Actions"
-msgstr "Γενικά : Ενέργειες"
+msgstr "Ξ“ΞµΞ½ΞΉΞΊΞ¬ : Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞµΟ‚"
 
 #: src/bin/e_actions.c:2647
 msgid "Delayed Action"
-msgstr "Καθυστερημένη Ενέργεια"
+msgstr "ΞΞ±ΞΈΟ…ΟƒΟ„ΞµΟΞ·ΞΌΞ­Ξ½Ξ· Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞ±"
 
 #: src/bin/e_entry.c:538
 msgid "Select All"
-msgstr "Επιλογή Όλων"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΞΞ»Ο‰Ξ½"
 
 #: src/bin/e_toolbar.c:317 src/bin/e_shelf.c:1646
 msgid "Stop Moving/Resizing Items"
-msgstr "Τέλος Μετακίνησης/Αλλαγής μεγέθους Αντικειμένων"
+msgstr "Ξ¤Ξ­Ξ»ΞΏΟ‚ ΞΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ·Ο‚/Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ®Ο‚ ΞΌΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚ Ξ‘Ξ½Ο„ΞΉΞΊΞµΞΉΞΌΞ­Ξ½Ο‰Ξ½"
 
 #: src/bin/e_toolbar.c:319 src/bin/e_shelf.c:1648
 msgid "Begin Moving/Resizing Items"
-msgstr "Έναρξη Μετακίνησης/Αλλαγής μεγέθους Αντικειμένων"
+msgstr "ΞΞ½Ξ±ΟΞΎΞ· ΞΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ·Ο‚/Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ®Ο‚ ΞΌΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚ Ξ‘Ξ½Ο„ΞΉΞΊΞµΞΉΞΌΞ­Ξ½Ο‰Ξ½"
 
 #: src/bin/e_toolbar.c:332
 msgid "Configure Toolbar Contents"
-msgstr "Ρύθμιση Περιεχομένου Γραμμής Εργαλείων"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ ΞµΟΞΉΞµΟ‡ΞΏΞΌΞ­Ξ½ΞΏΟ… Ξ“ΟΞ±ΞΌΞΌΞ®Ο‚ Ξ•ΟΞ³Ξ±Ξ»ΞµΞ―Ο‰Ξ½"
 
 #: src/bin/e_config.c:647
 msgid ""
@@ -1308,11 +1312,11 @@ msgstr ""
 #: src/bin/e_config.c:683
 #, c-format
 msgid "Desktop %i, %i"
-msgstr "Επιφάνεια Εργασίας %i, %i"
+msgstr "Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ %i, %i"
 
 #: src/bin/e_config.c:2321
 msgid "Configuration Upgraded"
-msgstr "Ρύθμιση Αναβαθμισμένη"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ‘Ξ½Ξ±Ξ²Ξ±ΞΈΞΌΞΉΟƒΞΌΞ­Ξ½Ξ·"
 
 #: src/bin/e_config.c:2346
 #, c-format
@@ -1361,38 +1365,38 @@ msgstr ""
 #: src/bin/e_config.c:2418
 #, fuzzy
 msgid "Enlightenment Configuration Write Problems"
-msgstr "Προβλήματα Εγγραφής Ρυθμίσεων του Enlightenment"
+msgstr "Ξ ΟΞΏΞ²Ξ»Ξ®ΞΌΞ±Ο„Ξ± Ξ•Ξ³Ξ³ΟΞ±Ο†Ξ®Ο‚ Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΟ‰Ξ½ Ο„ΞΏΟ… Enlightenment"
 
 #: src/bin/e_bg.c:21 src/modules/conf_wallpaper/e_mod_main.c:34
 msgid "Set As Background"
-msgstr "Ορισμός ως Ταπετσαρία"
+msgstr "ΞΟΞΉΟƒΞΌΟΟ‚ Ο‰Ο‚ Ξ¤Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ±"
 
 #: src/bin/e_shelf.c:1081 src/bin/e_int_menus.c:1528
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
-msgstr "Ράφι #"
+msgstr "Ξ΅Ξ¬Ο†ΞΉ #"
 
 #: src/bin/e_shelf.c:1190 src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
-msgstr "Επιθυμείτε σίγουρα την διαγραφή αυτού του Ραφιού?"
+msgstr "Ξ•Ο€ΞΉΞΈΟ…ΞΌΞµΞ―Ο„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞ± Ο„Ξ·Ξ½ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ξ΅Ξ±Ο†ΞΉΞΏΟ?"
 
 #: src/bin/e_shelf.c:1191
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
-msgstr "Αιτήθηκε διαγραφή αυτού του ραφιού.<br><br>Είστε σίγουροι για τη διαγραφή του?"
+msgstr "Ξ‘ΞΉΟ„Ξ®ΞΈΞ·ΞΊΞµ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… ΟΞ±Ο†ΞΉΞΏΟ.<br><br>Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ Ξ³ΞΉΞ± Ο„Ξ· Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ο„ΞΏΟ…?"
 
 #: src/bin/e_shelf.c:1656 src/bin/e_int_shelf_config.c:71
 msgid "Shelf Configuration"
-msgstr "Ρύθμιση Ραφιού"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ΅Ξ±Ο†ΞΉΞΏΟ"
 
 #: src/bin/e_shelf.c:1661
 msgid "Configure Shelf Contents"
-msgstr "Ρύθμιση των περιεχωμένων του Ραφιού"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ο„Ο‰Ξ½ Ο€ΞµΟΞΉΞµΟ‡Ο‰ΞΌΞ­Ξ½Ο‰Ξ½ Ο„ΞΏΟ… Ξ΅Ξ±Ο†ΞΉΞΏΟ"
 
 #: src/bin/e_shelf.c:1666
 msgid "Delete this Shelf"
-msgstr "Διαγραφή του Ραφιού"
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ο„ΞΏΟ… Ξ΅Ξ±Ο†ΞΉΞΏΟ"
 
 #: src/bin/e_int_config_modules.c:42 src/bin/e_int_menus.c:214
 #: src/modules/temperature/e_mod_main.c:306 src/modules/pager/e_mod_main.c:804
@@ -1400,183 +1404,183 @@ msgstr "Διαγραφή του Ραφιού"
 #: src/modules/ibar/e_mod_main.c:828 src/modules/mixer/e_mod_main.c:667
 #: src/modules/ibox/e_mod_main.c:309 src/modules/ibox/e_mod_main.c:707
 msgid "Configuration"
-msgstr "Ρύθμιση"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ·"
 
 #: src/bin/e_int_config_modules.c:43 src/modules/conf_mime/e_mod_main.c:34
 #: src/modules/fileman/e_mod_main.c:43 src/modules/fileman/e_mod_main.c:45
 #: src/modules/fileman/e_mod_main.c:57 src/modules/fileman/e_mod_main.c:136
 msgid "File Manager"
-msgstr "Διαχειριστής Αρχείων"
+msgstr "Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚ Ξ‘ΟΟ‡ΞµΞ―Ο‰Ξ½"
 
 #: src/bin/e_int_config_modules.c:44
 msgid "Shelf"
-msgstr "Ράφι"
+msgstr "Ξ΅Ξ¬Ο†ΞΉ"
 
 #: src/bin/e_int_config_modules.c:106
 #, fuzzy
 msgid "Module Settings"
-msgstr "Ρυθμίσεις Αρθρώματος"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ‘ΟΞΈΟΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_int_config_modules.c:167
 msgid "Available Modules"
-msgstr "Διαθέσιμα Αρθρώματα"
+msgstr "Ξ”ΞΉΞ±ΞΈΞ­ΟƒΞΉΞΌΞ± Ξ‘ΟΞΈΟΟΞΌΞ±Ο„Ξ±"
 
 #: src/bin/e_int_config_modules.c:174
 msgid "Load Module"
-msgstr "Φόρτωση Αρθρώματος"
+msgstr "Ξ¦ΟΟΟ„Ο‰ΟƒΞ· Ξ‘ΟΞΈΟΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_int_config_modules.c:181
 msgid "Loaded Modules"
-msgstr "Φορτωμένα Αρθρώματα"
+msgstr "Ξ¦ΞΏΟΟ„Ο‰ΞΌΞ­Ξ½Ξ± Ξ‘ΟΞΈΟΟΞΌΞ±Ο„Ξ±"
 
 #: src/bin/e_int_config_modules.c:188
 msgid "Unload Module"
-msgstr "Αποφόρτωση Αρθρώματος"
+msgstr "Ξ‘Ο€ΞΏΟ†ΟΟΟ„Ο‰ΟƒΞ· Ξ‘ΟΞΈΟΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_theme_about.c:68
 msgid "About This Theme"
-msgstr "Σχετικά με αυτό το Θέμα"
+msgstr "Ξ£Ο‡ΞµΟ„ΞΉΞΊΞ¬ ΞΌΞµ Ξ±Ο…Ο„Ο Ο„ΞΏ ΞΞ­ΞΌΞ±"
 
 #: src/bin/e_widget_config_list.c:54 src/modules/ibar/e_mod_config.c:109
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/conf_profiles/e_int_config_profiles.c:111
 #: src/modules/conf_applications/e_int_config_apps.c:245
 msgid "Add"
-msgstr "Πρόσθεση"
+msgstr "Ξ ΟΟΟƒΞΈΞµΟƒΞ·"
 
 #: src/bin/e_widget_config_list.c:59
 msgid "Remove"
-msgstr "Αφαίρεση"
+msgstr "Ξ‘Ο†Ξ±Ξ―ΟΞµΟƒΞ·"
 
 #: src/bin/e_widget_config_list.c:73
 #: src/modules/conf_applications/e_int_config_apps.c:260
 msgid "Up"
-msgstr "Πάνω"
+msgstr "Ξ Ξ¬Ξ½Ο‰"
 
 #: src/bin/e_widget_config_list.c:79
 #: src/modules/conf_applications/e_int_config_apps.c:265
 msgid "Down"
-msgstr "Κάτω"
+msgstr "ΞΞ¬Ο„Ο‰"
 
 #: src/bin/e_sys.c:130
 msgid "Checking System Permissions"
-msgstr "Έλεγχος Δικαιωμάτων Συστήματος"
+msgstr "ΞΞ»ΞµΞ³Ο‡ΞΏΟ‚ Ξ”ΞΉΞΊΞ±ΞΉΟ‰ΞΌΞ¬Ο„Ο‰Ξ½ Ξ£Ο…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_sys.c:168 src/bin/e_sys.c:179 src/bin/e_sys.c:188
 #: src/bin/e_sys.c:197
 msgid "System Check Done"
-msgstr "Έλεγχος Συστήματος Ολοκληρώθηκε"
+msgstr "ΞΞ»ΞµΞ³Ο‡ΞΏΟ‚ Ξ£Ο…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚ ΞΞ»ΞΏΞΊΞ»Ξ·ΟΟΞΈΞ·ΞΊΞµ"
 
 #: src/bin/e_sys.c:274
 msgid "Logout problems"
-msgstr "Προβλήματα Αποσύνδεσης"
+msgstr "Ξ ΟΞΏΞ²Ξ»Ξ®ΞΌΞ±Ο„Ξ± Ξ‘Ο€ΞΏΟƒΟΞ½Ξ΄ΞµΟƒΞ·Ο‚"
 
 #: src/bin/e_sys.c:277
 msgid ""
 "Logout is taking too long. Some<br>applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?"
-msgstr "Η Αποσύνδεση καθυστερεί πολύ. Μερικές<br>εφαρμογές αρνούνται να κλείσουν.<br>Θέλετε να ολοκληρώσετε την αποσύνδεση<br>χωρίς τον τερματισμό αυτών<br>των εφαρμογών?"
+msgstr "Ξ— Ξ‘Ο€ΞΏΟƒΟΞ½Ξ΄ΞµΟƒΞ· ΞΊΞ±ΞΈΟ…ΟƒΟ„ΞµΟΞµΞ― Ο€ΞΏΞ»Ο. ΞΞµΟΞΉΞΊΞ­Ο‚<br>ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚ Ξ±ΟΞ½ΞΏΟΞ½Ο„Ξ±ΞΉ Ξ½Ξ± ΞΊΞ»ΞµΞ―ΟƒΞΏΟ…Ξ½.<br>ΞΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± ΞΏΞ»ΞΏΞΊΞ»Ξ·ΟΟΟƒΞµΟ„Ξµ Ο„Ξ·Ξ½ Ξ±Ο€ΞΏΟƒΟΞ½Ξ΄ΞµΟƒΞ·<br>Ο‡Ο‰ΟΞ―Ο‚ Ο„ΞΏΞ½ Ο„ΞµΟΞΌΞ±Ο„ΞΉΟƒΞΌΟ Ξ±Ο…Ο„ΟΞ½<br>Ο„Ο‰Ξ½ ΞµΟ†Ξ±ΟΞΌΞΏΞ³ΟΞ½?"
 
 #: src/bin/e_sys.c:283
 msgid "Logout now"
-msgstr "Αποσύνδεση τώρα"
+msgstr "Ξ‘Ο€ΞΏΟƒΟΞ½Ξ΄ΞµΟƒΞ· Ο„ΟΟΞ±"
 
 #: src/bin/e_sys.c:284
 msgid "Wait longer"
-msgstr "Περίμενε περισσότερο"
+msgstr "Ξ ΞµΟΞ―ΞΌΞµΞ½Ξµ Ο€ΞµΟΞΉΟƒΟƒΟΟ„ΞµΟΞΏ"
 
 #: src/bin/e_sys.c:285
 msgid "Cancel Logout"
-msgstr "Ακύρωση Αποσύνδεσης"
+msgstr "Ξ‘ΞΊΟΟΟ‰ΟƒΞ· Ξ‘Ο€ΞΏΟƒΟΞ½Ξ΄ΞµΟƒΞ·Ο‚"
 
 #: src/bin/e_sys.c:323
 msgid "Logout in progress"
-msgstr "Αποσύνδεση σε εξέλιξη"
+msgstr "Ξ‘Ο€ΞΏΟƒΟΞ½Ξ΄ΞµΟƒΞ· ΟƒΞµ ΞµΞΎΞ­Ξ»ΞΉΞΎΞ·"
 
 #: src/bin/e_sys.c:326
 msgid "Logout is currently in progress.<br><hilight>Please wait.</hilight>"
-msgstr "Η Αποσύνδεση βρίσκεται σε εξέλιξη.<br><hilight>Παρακαλώ Περιμένετε.</hilight>"
+msgstr "Ξ— Ξ‘Ο€ΞΏΟƒΟΞ½Ξ΄ΞµΟƒΞ· Ξ²ΟΞ―ΟƒΞΊΞµΟ„Ξ±ΞΉ ΟƒΞµ ΞµΞΎΞ­Ξ»ΞΉΞΎΞ·.<br><hilight>Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ξ ΞµΟΞΉΞΌΞ­Ξ½ΞµΟ„Ξµ.</hilight>"
 
 #: src/bin/e_sys.c:355 src/bin/e_sys.c:416
 msgid "Enlightenment is busy with another request"
-msgstr "Το Enlightenment είναι απασχολημένο με ένα άλλο αίτημα"
+msgstr "Ξ¤ΞΏ Enlightenment ΞµΞ―Ξ½Ξ±ΞΉ Ξ±Ο€Ξ±ΟƒΟ‡ΞΏΞ»Ξ·ΞΌΞ­Ξ½ΞΏ ΞΌΞµ Ξ­Ξ½Ξ± Ξ¬Ξ»Ξ»ΞΏ Ξ±Ξ―Ο„Ξ·ΞΌΞ±"
 
 #: src/bin/e_sys.c:361
 msgid ""
 "Enlightenment is busy logging out.<br>You cannot perform other system "
 "actions<br>once a logout has begun."
-msgstr "Το Enlightenment είναι απασχολημένο.<br>Δεν μπορείτε να εκτελέσετε άλλες ενέργειες συστήματος.<br>ενώ έχει ξεκιννησει η Αποσύνδεση."
+msgstr "Ξ¤ΞΏ Enlightenment ΞµΞ―Ξ½Ξ±ΞΉ Ξ±Ο€Ξ±ΟƒΟ‡ΞΏΞ»Ξ·ΞΌΞ­Ξ½ΞΏ.<br>Ξ”ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± ΞµΞΊΟ„ΞµΞ»Ξ­ΟƒΞµΟ„Ξµ Ξ¬Ξ»Ξ»ΞµΟ‚ ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞµΟ‚ ΟƒΟ…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚.<br>ΞµΞ½Ο Ξ­Ο‡ΞµΞΉ ΞΎΞµΞΊΞΉΞ½Ξ½Ξ·ΟƒΞµΞΉ Ξ· Ξ‘Ο€ΞΏΟƒΟΞ½Ξ΄ΞµΟƒΞ·."
 
 #: src/bin/e_sys.c:369
 msgid ""
 "Enlightenment is shutting the system down.<br>You cannot do any other system "
 "actions<br>once a shutdown has been started."
-msgstr "Το Enlightenment είναι απασχολημένο.<br>Δεν μπορείτε να εκτελέσετε άλλες ενέργειες συστήματος.<br>ενώ έχει ξεκιννησει ο Τερματισμός."
+msgstr "Ξ¤ΞΏ Enlightenment ΞµΞ―Ξ½Ξ±ΞΉ Ξ±Ο€Ξ±ΟƒΟ‡ΞΏΞ»Ξ·ΞΌΞ­Ξ½ΞΏ.<br>Ξ”ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± ΞµΞΊΟ„ΞµΞ»Ξ­ΟƒΞµΟ„Ξµ Ξ¬Ξ»Ξ»ΞµΟ‚ ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞµΟ‚ ΟƒΟ…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚.<br>ΞµΞ½Ο Ξ­Ο‡ΞµΞΉ ΞΎΞµΞΊΞΉΞ½Ξ½Ξ·ΟƒΞµΞΉ ΞΏ Ξ¤ΞµΟΞΌΞ±Ο„ΞΉΟƒΞΌΟΟ‚."
 
 #: src/bin/e_sys.c:376
 msgid ""
 "Enlightenment is rebooting the system.<br>You cannot do any other system "
 "actions<br>once a reboot has begun."
-msgstr "Το Enlightenment επανεκκινεί το σύστημα.<br>Δεν μπορείτε να εκτελέσετε άλλες ενέργειες συστήματος.<br>ενώ έχει ξεκιννησει η Επανεκκίνηση."
+msgstr "Ξ¤ΞΏ Enlightenment ΞµΟ€Ξ±Ξ½ΞµΞΊΞΊΞΉΞ½ΞµΞ― Ο„ΞΏ ΟƒΟΟƒΟ„Ξ·ΞΌΞ±.<br>Ξ”ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± ΞµΞΊΟ„ΞµΞ»Ξ­ΟƒΞµΟ„Ξµ Ξ¬Ξ»Ξ»ΞµΟ‚ ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞµΟ‚ ΟƒΟ…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚.<br>ΞµΞ½Ο Ξ­Ο‡ΞµΞΉ ΞΎΞµΞΊΞΉΞ½Ξ½Ξ·ΟƒΞµΞΉ Ξ· Ξ•Ο€Ξ±Ξ½ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·."
 
 #: src/bin/e_sys.c:383
 msgid ""
 "Enlightenment is suspending the system.<br>Until suspend is complete you "
 "cannot perform<br>any other system actions."
-msgstr "Το Enlightenment αναστέλει το σύστημα.<br>Δεν μπορείτε να εκτελέσετε άλλες ενέργειες συστήματος.<br>ενώ έχει ξεκιννησει η Αναστολή."
+msgstr "Ξ¤ΞΏ Enlightenment Ξ±Ξ½Ξ±ΟƒΟ„Ξ­Ξ»ΞµΞΉ Ο„ΞΏ ΟƒΟΟƒΟ„Ξ·ΞΌΞ±.<br>Ξ”ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± ΞµΞΊΟ„ΞµΞ»Ξ­ΟƒΞµΟ„Ξµ Ξ¬Ξ»Ξ»ΞµΟ‚ ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞµΟ‚ ΟƒΟ…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚.<br>ΞµΞ½Ο Ξ­Ο‡ΞµΞΉ ΞΎΞµΞΊΞΉΞ½Ξ½Ξ·ΟƒΞµΞΉ Ξ· Ξ‘Ξ½Ξ±ΟƒΟ„ΞΏΞ»Ξ®."
 
 #: src/bin/e_sys.c:390
 #, fuzzy
 msgid ""
 "Enlightenment is hibernating the system.<br>You cannot perform an other "
 "system actions<br>until this is complete."
-msgstr "Το Enlightenment **.<br>Δεν μπορείτε να εκτελέσετε άλλες ενέργειες συστήματος.<br>ενώ έχει ξεκιννησει **"
+msgstr "Ξ¤ΞΏ Enlightenment **.<br>Ξ”ΞµΞ½ ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± ΞµΞΊΟ„ΞµΞ»Ξ­ΟƒΞµΟ„Ξµ Ξ¬Ξ»Ξ»ΞµΟ‚ ΞµΞ½Ξ­ΟΞ³ΞµΞΉΞµΟ‚ ΟƒΟ…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚.<br>ΞµΞ½Ο Ξ­Ο‡ΞµΞΉ ΞΎΞµΞΊΞΉΞ½Ξ½Ξ·ΟƒΞµΞΉ **"
 
 #: src/bin/e_sys.c:397 src/bin/e_sys.c:443
 msgid "EEK! This should not happen"
-msgstr "ΕΕΚ! Αυτό δεν θα έπρεπε να συμβαίνει"
+msgstr "Ξ•Ξ•Ξ! Ξ‘Ο…Ο„Ο Ξ΄ΞµΞ½ ΞΈΞ± Ξ­Ο€ΟΞµΟ€Ξµ Ξ½Ξ± ΟƒΟ…ΞΌΞ²Ξ±Ξ―Ξ½ΞµΞΉ"
 
 #: src/bin/e_sys.c:423
 msgid "Shutting down of your system failed."
-msgstr "Ο Τερματισμός του Συστήματος απέτυχε."
+msgstr "Ξ Ξ¤ΞµΟΞΌΞ±Ο„ΞΉΟƒΞΌΟΟ‚ Ο„ΞΏΟ… Ξ£Ο…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚ Ξ±Ο€Ξ­Ο„Ο…Ο‡Ξµ."
 
 #: src/bin/e_sys.c:428
 msgid "Rebooting your system failed."
-msgstr "Η Επανεκκίνηση του Συστήματος απέτυχε."
+msgstr "Ξ— Ξ•Ο€Ξ±Ξ½ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ· Ο„ΞΏΟ… Ξ£Ο…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚ Ξ±Ο€Ξ­Ο„Ο…Ο‡Ξµ."
 
 #: src/bin/e_sys.c:433
 msgid "Suspend of your system failed."
-msgstr "Η Αναστολή του Συστήματος απέτυχε."
+msgstr "Ξ— Ξ‘Ξ½Ξ±ΟƒΟ„ΞΏΞ»Ξ® Ο„ΞΏΟ… Ξ£Ο…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚ Ξ±Ο€Ξ­Ο„Ο…Ο‡Ξµ."
 
 #: src/bin/e_sys.c:438
 #, fuzzy
 msgid "Hibernating your system failed."
-msgstr "** του Συστήματος απέτυχε."
+msgstr "** Ο„ΞΏΟ… Ξ£Ο…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚ Ξ±Ο€Ξ­Ο„Ο…Ο‡Ξµ."
 
 #: src/bin/e_sys.c:489
 msgid "Shutting down"
-msgstr "Τερματισμός"
+msgstr "Ξ¤ΞµΟΞΌΞ±Ο„ΞΉΟƒΞΌΟΟ‚"
 
 #: src/bin/e_sys.c:492
 msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "Τερματισμός του Η/Υ σας.<br><hilight>Παρακαλώ Περιμένετε.</hilight>"
+msgstr "Ξ¤ΞµΟΞΌΞ±Ο„ΞΉΟƒΞΌΟΟ‚ Ο„ΞΏΟ… Ξ—/Ξ¥ ΟƒΞ±Ο‚.<br><hilight>Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ξ ΞµΟΞΉΞΌΞ­Ξ½ΞµΟ„Ξµ.</hilight>"
 
 #: src/bin/e_sys.c:516
 msgid "Rebooting"
-msgstr "Επανεκκίνηση"
+msgstr "Ξ•Ο€Ξ±Ξ½ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·"
 
 #: src/bin/e_sys.c:519
 msgid "Rebooting your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "Επανεκκίνηση του Η/Υ σας.<br><hilight>Παρακαλώ Περιμένετε.</hilight>"
+msgstr "Ξ•Ο€Ξ±Ξ½ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ· Ο„ΞΏΟ… Ξ—/Ξ¥ ΟƒΞ±Ο‚.<br><hilight>Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ξ ΞµΟΞΉΞΌΞ­Ξ½ΞµΟ„Ξµ.</hilight>"
 
 #: src/bin/e_sys.c:542
 msgid "Suspending"
-msgstr "Αναστολή"
+msgstr "Ξ‘Ξ½Ξ±ΟƒΟ„ΞΏΞ»Ξ®"
 
 #: src/bin/e_sys.c:545
 msgid "Suspending your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "Αναστολή του Η/Υ σας.<br><hilight>Παρακαλώ περιμένετε.</hilight>"
+msgstr "Ξ‘Ξ½Ξ±ΟƒΟ„ΞΏΞ»Ξ® Ο„ΞΏΟ… Ξ—/Ξ¥ ΟƒΞ±Ο‚.<br><hilight>Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ο€ΞµΟΞΉΞΌΞ­Ξ½ΞµΟ„Ξµ.</hilight>"
 
 #: src/bin/e_sys.c:568
 msgid "Hibernating"
@@ -1585,44 +1589,44 @@ msgstr ""
 #: src/bin/e_sys.c:571
 #, fuzzy
 msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "** του Η/Υ σας.<br><hilight>Παρακαλώ περιμένετε.</hilight>"
+msgstr "** Ο„ΞΏΟ… Ξ—/Ξ¥ ΟƒΞ±Ο‚.<br><hilight>Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ο€ΞµΟΞΉΞΌΞ­Ξ½ΞµΟ„Ξµ.</hilight>"
 
 #: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:558
 msgid "Window Locks"
-msgstr "Κλειδώματα Παραθύρου"
+msgstr "ΞΞ»ΞµΞΉΞ΄ΟΞΌΞ±Ο„Ξ± Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/bin/e_int_border_locks.c:285
 msgid "Generic Locks"
-msgstr "Γενικά Κλειδώματα"
+msgstr "Ξ“ΞµΞ½ΞΉΞΊΞ¬ ΞΞ»ΞµΞΉΞ΄ΟΞΌΞ±Ο„Ξ±"
 
 #: src/bin/e_int_border_locks.c:286
 msgid "Lock the Window so it does only what I tell it to"
-msgstr "Κλείδωσε το Παράθυρο ώστε να κάνει μόνο ότι του λέω"
+msgstr "ΞΞ»ΞµΞ―Ξ΄Ο‰ΟƒΞµ Ο„ΞΏ Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ ΟΟƒΟ„Ξµ Ξ½Ξ± ΞΊΞ¬Ξ½ΞµΞΉ ΞΌΟΞ½ΞΏ ΟΟ„ΞΉ Ο„ΞΏΟ… Ξ»Ξ­Ο‰"
 
 #: src/bin/e_int_border_locks.c:288
 msgid "Protect this window from me accidentally changing it"
-msgstr "Προστάτεψε αυτό το παράθυρο από το να το τροποποιήσω κατα λάθος"
+msgstr "Ξ ΟΞΏΟƒΟ„Ξ¬Ο„ΞµΟΞµ Ξ±Ο…Ο„Ο Ο„ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ Ξ±Ο€Ο Ο„ΞΏ Ξ½Ξ± Ο„ΞΏ Ο„ΟΞΏΟ€ΞΏΟ€ΞΏΞΉΞ®ΟƒΟ‰ ΞΊΞ±Ο„Ξ± Ξ»Ξ¬ΞΈΞΏΟ‚"
 
 #: src/bin/e_int_border_locks.c:290
 msgid "Protect this window from being accidentally closed because it is important"
-msgstr "Προστάτεψε αυτό το παράθυρο από το να το κλείσω κατα λάθος"
+msgstr "Ξ ΟΞΏΟƒΟ„Ξ¬Ο„ΞµΟΞµ Ξ±Ο…Ο„Ο Ο„ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ Ξ±Ο€Ο Ο„ΞΏ Ξ½Ξ± Ο„ΞΏ ΞΊΞ»ΞµΞ―ΟƒΟ‰ ΞΊΞ±Ο„Ξ± Ξ»Ξ¬ΞΈΞΏΟ‚"
 
 #: src/bin/e_int_border_locks.c:292
 msgid "Do not allow the border to change on this window"
-msgstr "Μην αφήσεις το πλαίσιο του παραθύρου αυτού να αλλάξει"
+msgstr "ΞΞ·Ξ½ Ξ±Ο†Ξ®ΟƒΞµΞΉΟ‚ Ο„ΞΏ Ο€Ξ»Ξ±Ξ―ΟƒΞΉΞΏ Ο„ΞΏΟ… Ο€Ξ±ΟΞ±ΞΈΟΟΞΏΟ… Ξ±Ο…Ο„ΞΏΟ Ξ½Ξ± Ξ±Ξ»Ξ»Ξ¬ΞΎΞµΞΉ"
 
 #: src/bin/e_int_border_locks.c:295
 msgid "Remember these Locks for this window next time it appears"
-msgstr "Να θυμάσε αυτά τα Κλειδώματα την επόμενη φορά που θα εμφανιστεί το παράθυρο αυτό"
+msgstr "ΞΞ± ΞΈΟ…ΞΌΞ¬ΟƒΞµ Ξ±Ο…Ο„Ξ¬ Ο„Ξ± ΞΞ»ΞµΞΉΞ΄ΟΞΌΞ±Ο„Ξ± Ο„Ξ·Ξ½ ΞµΟ€ΟΞΌΞµΞ½Ξ· Ο†ΞΏΟΞ¬ Ο€ΞΏΟ… ΞΈΞ± ΞµΞΌΟ†Ξ±Ξ½ΞΉΟƒΟ„ΞµΞ― Ο„ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ Ξ±Ο…Ο„Ο"
 
 #: src/bin/e_int_border_locks.c:308
 msgid "Lock program changing:"
-msgstr "Κλείδωμα αλλαγής προγράμματος:"
+msgstr "ΞΞ»ΞµΞ―Ξ΄Ο‰ΞΌΞ± Ξ±Ξ»Ξ»Ξ±Ξ³Ξ®Ο‚ Ο€ΟΞΏΞ³ΟΞ¬ΞΌΞΌΞ±Ο„ΞΏΟ‚:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
 #: src/bin/e_int_border_remember.c:507
 msgid "Position"
-msgstr "Θέση"
+msgstr "ΞΞ­ΟƒΞ·"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
 #: src/bin/e_int_shelf_config.c:516 src/bin/e_int_shelf_config.c:597
@@ -1630,17 +1634,17 @@ msgstr "Θέση"
 #: src/modules/conf_fonts/e_int_config_fonts.c:462
 #: src/modules/conf_fonts/e_int_config_fonts.c:657
 msgid "Size"
-msgstr "Μέγεθος"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_prop.c:469 src/bin/e_int_shelf_config.c:553
 #: src/bin/e_int_border_remember.c:511 src/bin/e_int_border_menu.c:530
 msgid "Stacking"
-msgstr ""
+msgstr "Ξ£Ο„ΞΏΞ―Ξ²Ξ±Ξ³ΞΌΞ±"
 
 #: src/bin/e_int_border_locks.c:315 src/bin/e_int_border_locks.c:334
 msgid "Iconified state"
-msgstr "Εικονιδιοποιημένη κατάσταση"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄ΞΉΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½Ξ· ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·"
 
 #: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
 #: src/bin/e_int_border_remember.c:519
@@ -1650,11 +1654,11 @@ msgstr ""
 #: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
 #: src/bin/e_int_border_remember.c:523
 msgid "Shaded state"
-msgstr "Σκιασμένη κατάσταση"
+msgstr "Ξ£ΞΊΞΉΞ±ΟƒΞΌΞ­Ξ½Ξ· ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·"
 
 #: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
 msgid "Maximized state"
-msgstr "Μεγιστοποιημένη κατάσταση"
+msgstr "ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½Ξ· ΞΊΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·"
 
 #: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
 msgid "Fullscreen state"
@@ -1663,32 +1667,32 @@ msgstr "Stato a tutto schermo"
 #: src/bin/e_int_border_locks.c:327
 #, fuzzy
 msgid "Lock me from changing:"
-msgstr "Κλείδωσε με από το να αλλάξω:"
+msgstr "ΞΞ»ΞµΞ―Ξ΄Ο‰ΟƒΞµ ΞΌΞµ Ξ±Ο€Ο Ο„ΞΏ Ξ½Ξ± Ξ±Ξ»Ξ»Ξ¬ΞΎΟ‰:"
 
 #: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:515
 msgid "Border style"
-msgstr "Στυλ Περιγράμματος"
+msgstr "Ξ£Ο„Ο…Ξ» Ξ ΞµΟΞΉΞ³ΟΞ¬ΞΌΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_int_border_locks.c:348
 msgid "Stop me from:"
-msgstr "Σταμάτησε με από το να:"
+msgstr "Ξ£Ο„Ξ±ΞΌΞ¬Ο„Ξ·ΟƒΞµ ΞΌΞµ Ξ±Ο€Ο Ο„ΞΏ Ξ½Ξ±:"
 
 #: src/bin/e_int_border_locks.c:349
 msgid "Closing the window"
-msgstr "Κλείσω το παράθυρο"
+msgstr "ΞΞ»ΞµΞ―ΟƒΟ‰ Ο„ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ"
 
 #: src/bin/e_int_border_locks.c:351
 msgid "Exiting my login with this window open"
-msgstr "Έξοδος από τη συνεδρία με αυτό το παράθυρο ανοιχτό"
+msgstr "ΞΞΎΞΏΞ΄ΞΏΟ‚ Ξ±Ο€Ο Ο„Ξ· ΟƒΟ…Ξ½ΞµΞ΄ΟΞ―Ξ± ΞΌΞµ Ξ±Ο…Ο„Ο Ο„ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ Ξ±Ξ½ΞΏΞΉΟ‡Ο„Ο"
 
 #: src/bin/e_int_border_locks.c:355
 msgid "Remember these Locks"
-msgstr "Απομνημόνευση των Κελιδωμάτων"
+msgstr "Ξ‘Ο€ΞΏΞΌΞ½Ξ·ΞΌΟΞ½ΞµΟ…ΟƒΞ· Ο„Ο‰Ξ½ ΞΞµΞ»ΞΉΞ΄Ο‰ΞΌΞ¬Ο„Ο‰Ξ½"
 
 #: src/bin/e_desklock.c:144
 #, fuzzy
 msgid "Error - no PAM support"
-msgstr "Σφάλμα - μη υποστήριξη PAM"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± - ΞΌΞ· Ο…Ο€ΞΏΟƒΟ„Ξ®ΟΞΉΞΎΞ· PAM"
 
 #: src/bin/e_desklock.c:145
 msgid "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
@@ -1696,7 +1700,7 @@ msgstr ""
 
 #: src/bin/e_desklock.c:211
 msgid "Lock Failed"
-msgstr "Κλείδωμα Απέτυχε"
+msgstr "ΞΞ»ΞµΞ―Ξ΄Ο‰ΞΌΞ± Ξ‘Ο€Ξ­Ο„Ο…Ο‡Ξµ"
 
 #: src/bin/e_desklock.c:212
 msgid ""
@@ -1706,11 +1710,11 @@ msgstr ""
 
 #: src/bin/e_desklock.c:298
 msgid "Please enter your unlock password"
-msgstr "Παρακαλώ εισάγετε τον κωδικό ξεκλειδώματος"
+msgstr "Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο ΞµΞΉΟƒΞ¬Ξ³ΞµΟ„Ξµ Ο„ΞΏΞ½ ΞΊΟ‰Ξ΄ΞΉΞΊΟ ΞΎΞµΞΊΞ»ΞµΞΉΞ΄ΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_desklock.c:648
 msgid "Authentication System Error"
-msgstr "Σφάλμα Συστήματος Ταυτοποίησης"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± Ξ£Ο…ΟƒΟ„Ξ®ΞΌΞ±Ο„ΞΏΟ‚ Ξ¤Ξ±Ο…Ο„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚"
 
 #: src/bin/e_desklock.c:649
 #, c-format
@@ -1722,7 +1726,7 @@ msgstr ""
 
 #: src/bin/e_int_border_prop.c:75 src/bin/e_int_border_menu.c:566
 msgid "Window Properties"
-msgstr "Ιδιότητες Παραθύρου"
+msgstr "Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/bin/e_int_border_prop.c:363
 msgid "NetWM"
@@ -1734,69 +1738,69 @@ msgstr "ICCCM"
 
 #: src/bin/e_int_border_prop.c:418
 msgid "ICCCM Properties"
-msgstr "Ιδιότητες ICCCM"
+msgstr "Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ ICCCM"
 
 #: src/bin/e_int_border_prop.c:419 src/bin/e_int_border_remember.c:476
 msgid "Title"
-msgstr "Τίτλος"
+msgstr "Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚"
 
 #: src/bin/e_int_border_prop.c:421
 msgid "Class"
-msgstr "Κλάση"
+msgstr "ΞΞ»Ξ¬ΟƒΞ·"
 
 #: src/bin/e_int_border_prop.c:422 src/bin/e_int_border_prop.c:468
 msgid "Icon Name"
-msgstr "Όνομα Εικονιδίου"
+msgstr "ΞΞ½ΞΏΞΌΞ± Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/bin/e_int_border_prop.c:423
 msgid "Machine"
-msgstr "Μηχάνημα"
+msgstr "ΞΞ·Ο‡Ξ¬Ξ½Ξ·ΞΌΞ±"
 
 #: src/bin/e_int_border_prop.c:424
 msgid "Role"
-msgstr "Ρόλος"
+msgstr "Ξ΅ΟΞ»ΞΏΟ‚"
 
 #: src/bin/e_int_border_prop.c:426
 msgid "Minimum Size"
-msgstr "Ελάχιστο Μέγεθος"
+msgstr "Ξ•Ξ»Ξ¬Ο‡ΞΉΟƒΟ„ΞΏ ΞΞ­Ξ³ΞµΞΈΞΏΟ‚"
 
 #: src/bin/e_int_border_prop.c:427
 msgid "Maximum Size"
-msgstr "Μέγιστο Μέγεθος"
+msgstr "ΞΞ­Ξ³ΞΉΟƒΟ„ΞΏ ΞΞ­Ξ³ΞµΞΈΞΏΟ‚"
 
 #: src/bin/e_int_border_prop.c:428
 msgid "Base Size"
-msgstr "Βασικό Μέγεθος"
+msgstr "Ξ’Ξ±ΟƒΞΉΞΊΟ ΞΞ­Ξ³ΞµΞΈΞΏΟ‚"
 
 #: src/bin/e_int_border_prop.c:429
 msgid "Resize Steps"
-msgstr "Βήματα Αλλαγής Μεγέθους"
+msgstr "Ξ’Ξ®ΞΌΞ±Ο„Ξ± Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ®Ο‚ ΞΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚"
 
 #: src/bin/e_int_border_prop.c:431
 msgid "Aspect Ratio"
-msgstr "Αναλογία Διαστάσεων"
+msgstr "Ξ‘Ξ½Ξ±Ξ»ΞΏΞ³Ξ―Ξ± Ξ”ΞΉΞ±ΟƒΟ„Ξ¬ΟƒΞµΟ‰Ξ½"
 
 #: src/bin/e_int_border_prop.c:432
 msgid "Initial State"
-msgstr "Αρχική Κατάσταση"
+msgstr "Ξ‘ΟΟ‡ΞΉΞΊΞ® ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·"
 
 #: src/bin/e_int_border_prop.c:433 src/bin/e_int_border_menu.c:539
 #: src/modules/conf_colors/e_int_config_color_classes.c:427
 msgid "State"
-msgstr "Κατάσταση"
+msgstr "ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·"
 
 #: src/bin/e_int_border_prop.c:434
 msgid "Window ID"
-msgstr "ID Παραθύρου"
+msgstr "ID Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/bin/e_int_border_prop.c:435
 msgid "Window Group"
-msgstr "Ομάδα Παραθύρων"
+msgstr "ΞΞΌΞ¬Ξ΄Ξ± Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½"
 
 #: src/bin/e_int_border_prop.c:436
 #, fuzzy
 msgid "Transient For"
-msgstr "Επιβάτης Για"
+msgstr "Ξ•Ο€ΞΉΞ²Ξ¬Ο„Ξ·Ο‚ Ξ“ΞΉΞ±"
 
 #: src/bin/e_int_border_prop.c:437
 msgid "Client Leader"
@@ -1804,38 +1808,38 @@ msgstr ""
 
 #: src/bin/e_int_border_prop.c:438
 msgid "Gravity"
-msgstr "Βαρύτητα"
+msgstr "Ξ’Ξ±ΟΟΟ„Ξ·Ο„Ξ±"
 
 #: src/bin/e_int_border_prop.c:439
 msgid "Command"
-msgstr "Εντολή"
+msgstr "Ξ•Ξ½Ο„ΞΏΞ»Ξ®"
 
 #: src/bin/e_int_border_prop.c:441
 #, fuzzy
 msgid "Take Focus"
-msgstr "Πάρε Εστίαση"
+msgstr "Ξ Ξ¬ΟΞµ Ξ•ΟƒΟ„Ξ―Ξ±ΟƒΞ·"
 
 #: src/bin/e_int_border_prop.c:442
 #, fuzzy
 msgid "Accepts Focus"
-msgstr "Αποδοχή Εστίασης"
+msgstr "Ξ‘Ο€ΞΏΞ΄ΞΏΟ‡Ξ® Ξ•ΟƒΟ„Ξ―Ξ±ΟƒΞ·Ο‚"
 
 #: src/bin/e_int_border_prop.c:443
 msgid "Urgent"
-msgstr "Επείγων"
+msgstr "Ξ•Ο€ΞµΞ―Ξ³Ο‰Ξ½"
 
 #: src/bin/e_int_border_prop.c:444
 msgid "Request Delete"
-msgstr "Αίτηση Διαγραφής"
+msgstr "Ξ‘Ξ―Ο„Ξ·ΟƒΞ· Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®Ο‚"
 
 #: src/bin/e_int_border_prop.c:445
 #, fuzzy
 msgid "Request Position"
-msgstr "Αίτηση Θέσης"
+msgstr "Ξ‘Ξ―Ο„Ξ·ΟƒΞ· ΞΞ­ΟƒΞ·Ο‚"
 
 #: src/bin/e_int_border_prop.c:466
 msgid "NetWM Properties"
-msgstr "Ιδιότητες NetWM"
+msgstr "Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ NetWM"
 
 #: src/bin/e_int_border_prop.c:471
 msgid "Modal"
@@ -1847,30 +1851,30 @@ msgstr ""
 
 #: src/bin/e_int_border_prop.c:473 src/bin/e_int_border_menu.c:982
 msgid "Shaded"
-msgstr "Σκιασμένο"
+msgstr "Ξ£ΞΊΞΉΞ±ΟƒΞΌΞ­Ξ½ΞΏ"
 
 #: src/bin/e_int_border_prop.c:474 src/bin/e_int_border_remember.c:531
 msgid "Skip Taskbar"
-msgstr "Παράλειψη Γραμμής Εργασιών"
+msgstr "Ξ Ξ±ΟΞ¬Ξ»ΞµΞΉΟΞ· Ξ“ΟΞ±ΞΌΞΌΞ®Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞΉΟΞ½"
 
 #: src/bin/e_int_border_prop.c:475 src/bin/e_int_border_remember.c:529
 msgid "Skip Pager"
-msgstr "Παράλειψη Πίνακα Σελίδων"
+msgstr "Ξ Ξ±ΟΞ¬Ξ»ΞµΞΉΟΞ· Ξ Ξ―Ξ½Ξ±ΞΊΞ± Ξ£ΞµΞ»Ξ―Ξ΄Ο‰Ξ½"
 
 #: src/bin/e_int_border_prop.c:476
 #, fuzzy
 msgid "Hidden"
-msgstr "Κρυφό"
+msgstr "ΞΟΟ…Ο†Ο"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_menu.c:1008
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:117
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:140
 msgid "Fullscreen"
-msgstr "Πλήρης Οθόνη"
+msgstr "Ξ Ξ»Ξ®ΟΞ·Ο‚ ΞΞΈΟΞ½Ξ·"
 
 #: src/bin/e_utils.c:248
 msgid "Cannot exit - immortal windows."
-msgstr "Αδύνατη η εξοδος - αθάνατα παράθυρα."
+msgstr "Ξ‘Ξ΄ΟΞ½Ξ±Ο„Ξ· Ξ· ΞµΞΎΞΏΞ΄ΞΏΟ‚ - Ξ±ΞΈΞ¬Ξ½Ξ±Ο„Ξ± Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞ±."
 
 #: src/bin/e_utils.c:249
 msgid ""
@@ -1902,102 +1906,102 @@ msgstr "%'.1f MB"
 #: src/bin/e_utils.c:736
 #, c-format
 msgid "In the Future"
-msgstr "Στο μέλλον"
+msgstr "Ξ£Ο„ΞΏ ΞΌΞ­Ξ»Ξ»ΞΏΞ½"
 
 #: src/bin/e_utils.c:741
 #, c-format
 msgid "In the last Minute"
-msgstr "Στο τελευταίο Λεπτό"
+msgstr "Ξ£Ο„ΞΏ Ο„ΞµΞ»ΞµΟ…Ο„Ξ±Ξ―ΞΏ Ξ›ΞµΟ€Ο„Ο"
 
 #: src/bin/e_utils.c:743
 #, c-format
 msgid "%li Years ago"
-msgstr "%li Χρόνια πριν"
+msgstr "%li Ξ§ΟΟΞ½ΞΉΞ± Ο€ΟΞΉΞ½"
 
 #: src/bin/e_utils.c:745
 #, c-format
 msgid "%li Months ago"
-msgstr "%li Μήνες πριν"
+msgstr "%li ΞΞ®Ξ½ΞµΟ‚ Ο€ΟΞΉΞ½"
 
 #: src/bin/e_utils.c:747
 #, c-format
 msgid "%li Weeks ago"
-msgstr "%li Εβδομάδες πριν"
+msgstr "%li Ξ•Ξ²Ξ΄ΞΏΞΌΞ¬Ξ΄ΞµΟ‚ Ο€ΟΞΉΞ½"
 
 #: src/bin/e_utils.c:749
 #, c-format
 msgid "%li Days ago"
-msgstr "%li Ημέρες πριν"
+msgstr "%li Ξ—ΞΌΞ­ΟΞµΟ‚ Ο€ΟΞΉΞ½"
 
 #: src/bin/e_utils.c:751
 #, c-format
 msgid "%li Hours ago"
-msgstr "%li Ώρες πριν"
+msgstr "%li ΞΟΞµΟ‚ Ο€ΟΞΉΞ½"
 
 #: src/bin/e_utils.c:753
 #, c-format
 msgid "%li Minutes ago"
-msgstr "%li Λεπτά πριν"
+msgstr "%li Ξ›ΞµΟ€Ο„Ξ¬ Ο€ΟΞΉΞ½"
 
 #: src/bin/e_utils.c:759
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1146
 msgid "Unknown"
-msgstr "¶γνωστο"
+msgstr "Ξ†Ξ³Ξ½Ο‰ΟƒΟ„ΞΏ"
 
 #: src/bin/e_int_shelf_config.c:518
 #: src/modules/conf_fonts/e_int_config_fonts.c:253
 msgid "Tiny"
-msgstr "Πολύ Μικρό"
+msgstr "Ξ ΞΏΞ»Ο ΞΞΉΞΊΟΟ"
 
 #: src/bin/e_int_shelf_config.c:520
 #: src/modules/conf_fonts/e_int_config_fonts.c:100
 #: src/modules/conf_fonts/e_int_config_fonts.c:259
 msgid "Small"
-msgstr "Μικρό"
+msgstr "ΞΞΉΞΊΟΟ"
 
 #: src/bin/e_int_shelf_config.c:522 src/modules/dropshadow/e_mod_config.c:126
 msgid "Medium"
-msgstr "Μεσαίο"
+msgstr "ΞΞµΟƒΞ±Ξ―ΞΏ"
 
 #: src/bin/e_int_shelf_config.c:524
 #: src/modules/conf_fonts/e_int_config_fonts.c:102
 msgid "Large"
-msgstr "Μεγάλο"
+msgstr "ΞΞµΞ³Ξ¬Ξ»ΞΏ"
 
 #: src/bin/e_int_shelf_config.c:526
 #: src/modules/conf_fonts/e_int_config_fonts.c:283
 msgid "Huge"
-msgstr "Πολύ Μεγάλο"
+msgstr "Ξ ΞΏΞ»Ο ΞΞµΞ³Ξ¬Ξ»ΞΏ"
 
 #: src/bin/e_int_shelf_config.c:532 src/bin/e_int_shelf_config.c:637
 msgid "Configure Contents..."
-msgstr "Ρύθμιση Περιεχομένου..."
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ ΞµΟΞΉΞµΟ‡ΞΏΞΌΞ­Ξ½ΞΏΟ…..."
 
 #: src/bin/e_int_shelf_config.c:555
 msgid "Above Everything"
-msgstr "Πάνω από όλα"
+msgstr "Ξ Ξ¬Ξ½Ο‰ Ξ±Ο€Ο ΟΞ»Ξ±"
 
 #: src/bin/e_int_shelf_config.c:557
 msgid "Below Windows"
-msgstr "Κάτω από τα Παράθυρα"
+msgstr "ΞΞ¬Ο„Ο‰ Ξ±Ο€Ο Ο„Ξ± Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞ±"
 
 #: src/bin/e_int_shelf_config.c:559
 msgid "Below Everything"
-msgstr "Κάτω από τα Πάντα"
+msgstr "ΞΞ¬Ο„Ο‰ Ξ±Ο€Ο Ο„Ξ± Ξ Ξ¬Ξ½Ο„Ξ±"
 
 #: src/bin/e_int_shelf_config.c:561
 #, fuzzy
 msgid "Allow windows to overlap the shelf"
-msgstr "Επέτρεψε στα παράθυρα να καλύπτουν το Ράφι"
+msgstr "Ξ•Ο€Ξ­Ο„ΟΞµΟΞµ ΟƒΟ„Ξ± Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞ± Ξ½Ξ± ΞΊΞ±Ξ»ΟΟ€Ο„ΞΏΟ…Ξ½ Ο„ΞΏ Ξ΅Ξ¬Ο†ΞΉ"
 
 #: src/bin/e_int_shelf_config.c:598
 #, fuzzy
 msgid "Shrink to Content Size"
-msgstr "Συρρίκνωση στο Μέγεθος Περιεχομένου"
+msgstr "Ξ£Ο…ΟΟΞ―ΞΊΞ½Ο‰ΟƒΞ· ΟƒΟ„ΞΏ ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ ΞµΟΞΉΞµΟ‡ΞΏΞΌΞ­Ξ½ΞΏΟ…"
 
 #: src/bin/e_int_shelf_config.c:600
 msgid "Shelf Size"
-msgstr "Μέγεθος Ραφιού"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ΅Ξ±Ο†ΞΉΞΏΟ"
 
 #: src/bin/e_int_shelf_config.c:602
 #, c-format
@@ -2007,16 +2011,16 @@ msgstr "%3.0f pixels"
 #: src/bin/e_int_shelf_config.c:606
 #: src/modules/conf_fonts/e_int_config_fonts.c:648
 msgid "Styles"
-msgstr "Στυλ"
+msgstr "Ξ£Ο„Ο…Ξ»"
 
 #: src/bin/e_int_shelf_config.c:644
 msgid "Auto Hide"
-msgstr "Αυτόματη Απόκρυψη"
+msgstr "Ξ‘Ο…Ο„ΟΞΌΞ±Ο„Ξ· Ξ‘Ο€ΟΞΊΟΟ…ΟΞ·"
 
 #: src/bin/e_int_shelf_config.c:645
 #, fuzzy
 msgid "Auto-hide the shelf"
-msgstr "Αυτόματη απόκρυψη του Ραφιού"
+msgstr "Ξ‘Ο…Ο„ΟΞΌΞ±Ο„Ξ· Ξ±Ο€ΟΞΊΟΟ…ΟΞ· Ο„ΞΏΟ… Ξ΅Ξ±Ο†ΞΉΞΏΟ"
 
 #: src/bin/e_int_shelf_config.c:648
 msgid "Show on mouse in"
@@ -2024,41 +2028,41 @@ msgstr ""
 
 #: src/bin/e_int_shelf_config.c:650
 msgid "Show on mouse click"
-msgstr "Εμφάνιση με το κλικ του Ποντικιού"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΌΞµ Ο„ΞΏ ΞΊΞ»ΞΉΞΊ Ο„ΞΏΟ… Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ"
 
 #: src/bin/e_int_shelf_config.c:652
 msgid "Hide timeout"
-msgstr "Χρονικό Όριο Απόκρυψης"
+msgstr "Ξ§ΟΞΏΞ½ΞΉΞΊΟ ΞΟΞΉΞΏ Ξ‘Ο€ΟΞΊΟΟ…ΟΞ·Ο‚"
 
 #: src/bin/e_int_shelf_config.c:654 src/bin/e_int_shelf_config.c:658
 #, c-format
 msgid "%.1f seconds"
-msgstr "%.1f δευτερόλεπτα"
+msgstr "%.1f Ξ΄ΞµΟ…Ο„ΞµΟΟΞ»ΞµΟ€Ο„Ξ±"
 
 #: src/bin/e_int_shelf_config.c:656
 msgid "Hide duration"
-msgstr "Διάρκεια Απόκρυψης"
+msgstr "Ξ”ΞΉΞ¬ΟΞΊΞµΞΉΞ± Ξ‘Ο€ΟΞΊΟΟ…ΟΞ·Ο‚"
 
 #: src/bin/e_int_shelf_config.c:664
 msgid "Show on all Desktops"
-msgstr "Εμφάνιση σε όλες τις Επιφάνειες Εργασίας "
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟƒΞµ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞµΟ‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ "
 
 #: src/bin/e_int_shelf_config.c:666
 msgid "Show on specified Desktops"
-msgstr "Εμφάνιση σε επιλεγμένες Επιφάνειες Εργασίας"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟƒΞµ ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞµΟ‚ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞµΟ‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/bin/e_init.c:298
 #, c-format
 msgid "X reports there are no root windows and %i screens!\n"
-msgstr "Ο X αναφέρει ότι δεν υπάρχουν ριζικά παράθυρα και %i οθόνες!\n"
+msgstr "Ξ X Ξ±Ξ½Ξ±Ο†Ξ­ΟΞµΞΉ ΟΟ„ΞΉ Ξ΄ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞΏΟ…Ξ½ ΟΞΉΞ¶ΞΉΞΊΞ¬ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞ± ΞΊΞ±ΞΉ %i ΞΏΞΈΟΞ½ΞµΟ‚!\n"
 
 #: src/bin/e_init.c:362
 msgid "Disable splash screen"
-msgstr "Απενεργοποίηση Εισαγωγικής Οθόνης"
+msgstr "Ξ‘Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³ΞΉΞΊΞ®Ο‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/bin/e_init.c:559
 msgid "Theme Bug Detected"
-msgstr "Εντοπίστηκε Σφάλμα Θέματος"
+msgstr "Ξ•Ξ½Ο„ΞΏΟ€Ξ―ΟƒΟ„Ξ·ΞΊΞµ Ξ£Ο†Ξ¬Ξ»ΞΌΞ± ΞΞ­ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_init.c:560
 msgid ""
@@ -2069,7 +2073,7 @@ msgstr ""
 
 #: src/bin/e_intl.c:355
 msgid "Input Method Error"
-msgstr "Σφάλμα Μεθόδου Εισαγωγής"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± ΞΞµΞΈΟΞ΄ΞΏΟ… Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚"
 
 #: src/bin/e_intl.c:356
 msgid ""
@@ -2083,11 +2087,11 @@ msgstr ""
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
 "found in the<br>module search directories.<br>"
-msgstr "Υπήρξε σφάλμα κατα τη φόρτωση του αρθρώματος με όνομα: %s<br>Κανένα άρθρωμα με όνομα %s δεν βρέθηκε<br>στους καταλόγους αρθρωμάτων.<br>"
+msgstr "Ξ¥Ο€Ξ®ΟΞΎΞµ ΟƒΟ†Ξ¬Ξ»ΞΌΞ± ΞΊΞ±Ο„Ξ± Ο„Ξ· Ο†ΟΟΟ„Ο‰ΟƒΞ· Ο„ΞΏΟ… Ξ±ΟΞΈΟΟΞΌΞ±Ο„ΞΏΟ‚ ΞΌΞµ ΟΞ½ΞΏΞΌΞ±: %s<br>ΞΞ±Ξ½Ξ­Ξ½Ξ± Ξ¬ΟΞΈΟΟ‰ΞΌΞ± ΞΌΞµ ΟΞ½ΞΏΞΌΞ± %s Ξ΄ΞµΞ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞµ<br>ΟƒΟ„ΞΏΟ…Ο‚ ΞΊΞ±Ο„Ξ±Ξ»ΟΞ³ΞΏΟ…Ο‚ Ξ±ΟΞΈΟΟ‰ΞΌΞ¬Ο„Ο‰Ξ½.<br>"
 
 #: src/bin/e_module.c:128 src/bin/e_module.c:141 src/bin/e_module.c:162
 msgid "Error loading Module"
-msgstr "Σφάλμα φόρτωσης Αρθρώματος"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± Ο†ΟΟΟ„Ο‰ΟƒΞ·Ο‚ Ξ‘ΟΞΈΟΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_module.c:135 src/bin/e_module.c:156
 #, c-format
@@ -2098,7 +2102,7 @@ msgstr ""
 
 #: src/bin/e_module.c:161
 msgid "Module does not contain all needed functions"
-msgstr "Το ¶ρθρωμα δεν περιέχει όλες τις απαραίτητες λειτουργίες"
+msgstr "Ξ¤ΞΏ Ξ†ΟΞΈΟΟ‰ΞΌΞ± Ξ΄ΞµΞ½ Ο€ΞµΟΞΉΞ­Ο‡ΞµΞΉ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ Ξ±Ο€Ξ±ΟΞ±Ξ―Ο„Ξ·Ο„ΞµΟ‚ Ξ»ΞµΞΉΟ„ΞΏΟ…ΟΞ³Ξ―ΞµΟ‚"
 
 #: src/bin/e_module.c:175
 #, c-format
@@ -2119,16 +2123,16 @@ msgstr "Volete disattivare questo modulo?<br>"
 
 #: src/bin/e_int_menus.c:90
 msgid "Main"
-msgstr "Κεντρικό"
+msgstr "ΞΞµΞ½Ο„ΟΞΉΞΊΟ"
 
 #: src/bin/e_int_menus.c:107
 msgid "Favorite Applications"
-msgstr "Αγαπημένες Εφαρμογές"
+msgstr "Ξ‘Ξ³Ξ±Ο€Ξ·ΞΌΞ­Ξ½ΞµΟ‚ Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚"
 
 #: src/bin/e_int_menus.c:118 src/modules/conf_applications/e_mod_main.c:34
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:153
 msgid "Applications"
-msgstr "Εφαρμογές"
+msgstr "Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚"
 
 #: src/bin/e_int_menus.c:143 src/bin/e_int_menus.c:1213
 #: src/modules/conf_window_manipulation/e_mod_main.c:34
@@ -2137,29 +2141,29 @@ msgstr "Εφαρμογές"
 #: src/modules/conf_window_display/e_mod_main.c:34
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 msgid "Windows"
-msgstr "Παράθυρα"
+msgstr "Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞ±"
 
 #: src/bin/e_int_menus.c:174
 msgid "About"
-msgstr "Σχετικά"
+msgstr "Ξ£Ο‡ΞµΟ„ΞΉΞΊΞ¬"
 
 #: src/bin/e_int_menus.c:179 src/modules/conf_theme/e_mod_main.c:39
 #: src/modules/conf_theme/e_mod_main.c:84
 msgid "Theme"
-msgstr "Θέμα"
+msgstr "ΞΞ­ΞΌΞ±"
 
 #: src/bin/e_int_menus.c:263
 msgid "Virtual"
-msgstr "Εικονικό"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½ΞΉΞΊΟ"
 
 #: src/bin/e_int_menus.c:271 src/modules/conf_shelves/e_mod_main.c:39
 #: src/modules/conf_shelves/e_mod_main.c:84
 msgid "Shelves"
-msgstr "Ράφια"
+msgstr "Ξ΅Ξ¬Ο†ΞΉΞ±"
 
 #: src/bin/e_int_menus.c:281
 msgid "Show/Hide All Windows"
-msgstr "Εμφάνιση/Απόκρυψη Όλων των Παραθύρων"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ·/Ξ‘Ο€ΟΞΊΟΟ…ΟΞ· ΞΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½"
 
 #: src/bin/e_int_menus.c:621
 msgid "(No Applications)"
@@ -2167,11 +2171,11 @@ msgstr "(Nessuna Applicazione)"
 
 #: src/bin/e_int_menus.c:761
 msgid "Configure Virtual Desktops"
-msgstr "Ρύθμιση Εικονικών Desktop"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ•ΞΉΞΊΞΏΞ½ΞΉΞΊΟΞ½ Desktop"
 
 #: src/bin/e_int_menus.c:854
 msgid "Lock Screen"
-msgstr "Κλείδωμα Οθόνης"
+msgstr "ΞΞ»ΞµΞ―Ξ΄Ο‰ΞΌΞ± ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/bin/e_int_menus.c:876
 msgid "Hibernate"
@@ -2179,35 +2183,35 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:899
 msgid "Logout"
-msgstr "Αποσύνδεση"
+msgstr "Ξ‘Ο€ΞΏΟƒΟΞ½Ξ΄ΞµΟƒΞ·"
 
 #: src/bin/e_int_menus.c:1219 src/bin/e_int_menus.c:1409
 msgid "(No Windows)"
-msgstr "(Χωρίς Παράθυρα)"
+msgstr "(Ξ§Ο‰ΟΞ―Ο‚ Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞ±)"
 
 #: src/bin/e_int_menus.c:1267
 msgid "Lost Windows"
-msgstr "Χαμένα Παράθυρα"
+msgstr "Ξ§Ξ±ΞΌΞ­Ξ½Ξ± Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞ±"
 
 #: src/bin/e_int_menus.c:1313 src/bin/e_int_menus.c:1423
 msgid "No name!!"
-msgstr "Χωρίς Όνομα!!"
+msgstr "Ξ§Ο‰ΟΞ―Ο‚ ΞΞ½ΞΏΞΌΞ±!!"
 
 #: src/bin/e_int_menus.c:1515
 msgid "(No Shelves)"
-msgstr "(Χωρίς Ράφια)"
+msgstr "(Ξ§Ο‰ΟΞ―Ο‚ Ξ΅Ξ¬Ο†ΞΉΞ±)"
 
 #: src/bin/e_int_menus.c:1581
 msgid "Add A Shelf"
-msgstr "Προσθήκη Ραφιού"
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ΅Ξ±Ο†ΞΉΞΏΟ"
 
 #: src/bin/e_int_menus.c:1587
 msgid "Delete A Shelf"
-msgstr "Διαγραφή Ραφιού"
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ΅Ξ±Ο†ΞΉΞΏΟ"
 
 #: src/bin/e_startup.c:61
 msgid "Starting"
-msgstr "Εκκινεί"
+msgstr "Ξ•ΞΊΞΊΞΉΞ½ΞµΞ―"
 
 #: src/bin/e_int_border_remember.c:74
 msgid "Window Remember"
@@ -2262,23 +2266,23 @@ msgstr ""
 
 #: src/bin/e_int_border_remember.c:439
 msgid "Nothing"
-msgstr "Τίποτα"
+msgstr "Ξ¤Ξ―Ο€ΞΏΟ„Ξ±"
 
 #: src/bin/e_int_border_remember.c:441
 msgid "Size and Position"
-msgstr "Μέγεθος και Θέση"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ ΞΊΞ±ΞΉ ΞΞ­ΟƒΞ·"
 
 #: src/bin/e_int_border_remember.c:443 src/bin/e_int_border_remember.c:513
 msgid "Locks"
-msgstr "Κλειδώματα"
+msgstr "ΞΞ»ΞµΞΉΞ΄ΟΞΌΞ±Ο„Ξ±"
 
 #: src/bin/e_int_border_remember.c:445
 msgid "Size, Position and Locks"
-msgstr "Μέγεθος, Θέση και Κλειδώματα"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚, ΞΞ­ΟƒΞ· ΞΊΞ±ΞΉ ΞΞ»ΞµΞΉΞ΄ΟΞΌΞ±Ο„Ξ±"
 
 #: src/bin/e_int_border_remember.c:447
 msgid "Everything"
-msgstr "Τα Πάντα"
+msgstr "Ξ¤Ξ± Ξ Ξ¬Ξ½Ο„Ξ±"
 
 #: src/bin/e_int_border_remember.c:460
 msgid "Remember using"
@@ -2286,15 +2290,15 @@ msgstr ""
 
 #: src/bin/e_int_border_remember.c:466
 msgid "Window name and class"
-msgstr "Όνομα και κλάση Παραθύρου"
+msgstr "ΞΞ½ΞΏΞΌΞ± ΞΊΞ±ΞΉ ΞΊΞ»Ξ¬ΟƒΞ· Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/bin/e_int_border_remember.c:486
 msgid "Window Role"
-msgstr "Ρόλος Παραθύρου"
+msgstr "Ξ΅ΟΞ»ΞΏΟ‚ Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/bin/e_int_border_remember.c:495
 msgid "Window type"
-msgstr "Τύπος Παραθύρου"
+msgstr "Ξ¤ΟΟ€ΞΏΟ‚ Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/bin/e_int_border_remember.c:502
 msgid "Transience"
@@ -2306,15 +2310,15 @@ msgstr ""
 
 #: src/bin/e_int_border_remember.c:517
 msgid "Icon Preference"
-msgstr "Ρύθμιση Εικονιδίου"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/bin/e_int_border_remember.c:521
 msgid "Virtual Desktop"
-msgstr "Εικονικό Desktop"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½ΞΉΞΊΟ Desktop"
 
 #: src/bin/e_int_border_remember.c:525
 msgid "Current Screen"
-msgstr "Τρέχουσα Οθόνη"
+msgstr "Ξ¤ΟΞ­Ο‡ΞΏΟ…ΟƒΞ± ΞΞΈΟΞ½Ξ·"
 
 #: src/bin/e_int_border_remember.c:527
 msgid "Skip Window List"
@@ -2326,7 +2330,7 @@ msgstr ""
 
 #: src/bin/e_int_border_remember.c:540
 msgid "Start this program on login"
-msgstr "Εκκίνηση αυτού του προγράμματος κατά την σύνδεση"
+msgstr "Ξ•ΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ· Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ο€ΟΞΏΞ³ΟΞ¬ΞΌΞΌΞ±Ο„ΞΏΟ‚ ΞΊΞ±Ο„Ξ¬ Ο„Ξ·Ξ½ ΟƒΟΞ½Ξ΄ΞµΟƒΞ·"
 
 #: src/bin/e_int_border_remember.c:544
 msgid "Always focus on start"
@@ -2334,7 +2338,7 @@ msgstr ""
 
 #: src/bin/e_about.c:68
 msgid "About Enlightenment"
-msgstr "Σχετικά με το Enlightenment"
+msgstr "Ξ£Ο‡ΞµΟ„ΞΉΞΊΞ¬ ΞΌΞµ Ο„ΞΏ Enlightenment"
 
 #: src/bin/e_about.c:81
 msgid ""
@@ -2350,7 +2354,7 @@ msgstr ""
 
 #: src/bin/e_about.c:106
 msgid "<title>The Team</title>"
-msgstr "<title>Η Ομάδα</title>"
+msgstr "<title>Ξ— ΞΞΌΞ¬Ξ΄Ξ±</title>"
 
 #: src/bin/e_config_dialog.c:198 src/modules/conf_exebuf/e_mod_main.c:34
 #: src/modules/conf_paths/e_mod_main.c:34
@@ -2361,82 +2365,82 @@ msgstr "<title>Η Ομάδα</title>"
 #: src/modules/conf_profiles/e_mod_main.c:20
 #: src/modules/conf_performance/e_mod_main.c:34
 msgid "Advanced"
-msgstr "Προχωρημένα"
+msgstr "Ξ ΟΞΏΟ‡Ο‰ΟΞ·ΞΌΞ­Ξ½Ξ±"
 
 #: src/bin/e_config_dialog.c:227
 msgid "Basic"
-msgstr "Βασικά"
+msgstr "Ξ’Ξ±ΟƒΞΉΞΊΞ¬"
 
 #: src/bin/e_config_dialog.c:249
 msgid "Apply"
-msgstr "Εφαρμογή"
+msgstr "Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®"
 
 #: src/bin/e_int_border_menu.c:71
 msgid "Edit Icon"
-msgstr "Επεξεργασία Εικονιδίου"
+msgstr "Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ± Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/bin/e_int_border_menu.c:76
 msgid "Add Application..."
-msgstr "Προσθήκη Εφαρμογής..."
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚..."
 
 #: src/bin/e_int_border_menu.c:87
 msgid "Create Icon"
-msgstr "Δημιουργία Εικονιδίου"
+msgstr "Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/bin/e_int_border_menu.c:97
 #, fuzzy
 msgid "Send to Desktop"
-msgstr "Αποστολή στο Desktop"
+msgstr "Ξ‘Ο€ΞΏΟƒΟ„ΞΏΞ»Ξ® ΟƒΟ„ΞΏ Desktop"
 
 #: src/bin/e_int_border_menu.c:109
 #, fuzzy
 msgid "Pin to Desktop"
-msgstr "Καρφίτσωμα στο Desktop"
+msgstr "ΞΞ±ΟΟ†Ξ―Ο„ΟƒΟ‰ΞΌΞ± ΟƒΟ„ΞΏ Desktop"
 
 #: src/bin/e_int_border_menu.c:120
 msgid "Unpin from Desktop"
-msgstr "Ξεκαρφίτσωμα από το Desktop"
+msgstr "ΞΞµΞΊΞ±ΟΟ†Ξ―Ο„ΟƒΟ‰ΞΌΞ± Ξ±Ο€Ο Ο„ΞΏ Desktop"
 
 #: src/bin/e_int_border_menu.c:129
 msgid "More..."
-msgstr "Περισσότερα..."
+msgstr "Ξ ΞµΟΞΉΟƒΟƒΟΟ„ΞµΟΞ±..."
 
 #: src/bin/e_int_border_menu.c:162
 msgid "Iconify"
-msgstr "Εικονιδιοποίηση"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄ΞΉΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·"
 
 #: src/bin/e_int_border_menu.c:354
 msgid "Maximize vertically"
-msgstr "Μεγιστοποίηση κάθετα"
+msgstr "ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· ΞΊΞ¬ΞΈΞµΟ„Ξ±"
 
 #: src/bin/e_int_border_menu.c:365
 msgid "Maximize horizontally"
-msgstr "Μεγιστοποίηση οριζόντια"
+msgstr "ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· ΞΏΟΞΉΞ¶ΟΞ½Ο„ΞΉΞ±"
 
 #: src/bin/e_int_border_menu.c:376
 msgid "Unmaximize"
-msgstr "Απο-μεγιστοποίηση"
+msgstr "Ξ‘Ο€ΞΏ-ΞΌΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·"
 
 #: src/bin/e_int_border_menu.c:477
 msgid "Keyboard Shortcut"
-msgstr "Συντόμευση Πληκτρολογίου"
+msgstr "Ξ£Ο…Ξ½Ο„ΟΞΌΞµΟ…ΟƒΞ· Ξ Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΞΏΞ³Ξ―ΞΏΟ…"
 
 #: src/bin/e_int_border_menu.c:483
 msgid "To Favorites Menu"
-msgstr "Στο Μενού Αγαπημένων"
+msgstr "Ξ£Ο„ΞΏ ΞΞµΞ½ΞΏΟ Ξ‘Ξ³Ξ±Ο€Ξ·ΞΌΞ­Ξ½Ο‰Ξ½"
 
 #: src/bin/e_int_border_menu.c:488
 msgid "To Launcher"
-msgstr "Στον Εκκινητή"
+msgstr "Ξ£Ο„ΞΏΞ½ Ξ•ΞΊΞΊΞΉΞ½Ξ·Ο„Ξ®"
 
 #: src/bin/e_int_border_menu.c:510 src/modules/conf_borders/e_mod_main.c:37
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:341
 msgid "Border"
-msgstr "Περίγραμμα"
+msgstr "Ξ ΞµΟΞ―Ξ³ΟΞ±ΞΌΞΌΞ±"
 
 #: src/bin/e_int_border_menu.c:519
 msgid "Skip"
-msgstr "Παράλειψη"
+msgstr "Ξ Ξ±ΟΞ¬Ξ»ΞµΞΉΟΞ·"
 
 #: src/bin/e_int_border_menu.c:550
 msgid "Remember"
@@ -2444,37 +2448,37 @@ msgstr ""
 
 #: src/bin/e_int_border_menu.c:778
 msgid "Always On Top"
-msgstr "Πάντα στην Κορυφή"
+msgstr "Ξ Ξ¬Ξ½Ο„Ξ± ΟƒΟ„Ξ·Ξ½ ΞΞΏΟΟ…Ο†Ξ®"
 
 #: src/bin/e_int_border_menu.c:789 src/modules/temperature/e_mod_config.c:261
 #: src/modules/conf_fonts/e_int_config_fonts.c:101
 #: src/modules/conf_fonts/e_int_config_fonts.c:265
 msgid "Normal"
-msgstr "Κανονικό"
+msgstr "ΞΞ±Ξ½ΞΏΞ½ΞΉΞΊΟ"
 
 #: src/bin/e_int_border_menu.c:800
 msgid "Always Below"
-msgstr "Πάντα από Κάτω"
+msgstr "Ξ Ξ¬Ξ½Ο„Ξ± Ξ±Ο€Ο ΞΞ¬Ο„Ο‰"
 
 #: src/bin/e_int_border_menu.c:892
 msgid "Select Border Style"
-msgstr "Επιλογή Στύλ Περιγράμματος"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ£Ο„ΟΞ» Ξ ΞµΟΞΉΞ³ΟΞ¬ΞΌΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/bin/e_int_border_menu.c:904
 msgid "Use E17 Default Icon Preference"
-msgstr "Χρήση προκαθορισμένης ρύθμισης εικονιδίου του E17"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½Ξ·Ο‚ ΟΟΞΈΞΌΞΉΟƒΞ·Ο‚ ΞµΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ… Ο„ΞΏΟ… E17"
 
 #: src/bin/e_int_border_menu.c:913
 msgid "Use Application Provided Icon "
-msgstr "Χρήση εικονιδίου παρεχόμενου από την Εφαρμογή"
+msgstr "Ξ§ΟΞ®ΟƒΞ· ΞµΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ… Ο€Ξ±ΟΞµΟ‡ΟΞΌΞµΞ½ΞΏΟ… Ξ±Ο€Ο Ο„Ξ·Ξ½ Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®"
 
 #: src/bin/e_int_border_menu.c:921
 msgid "Use User Defined Icon"
-msgstr "Χρήση εικονιδίου καθορισμένου από το χρήστη"
+msgstr "Ξ§ΟΞ®ΟƒΞ· ΞµΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ… ΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏΟ… Ξ±Ο€Ο Ο„ΞΏ Ο‡ΟΞ®ΟƒΟ„Ξ·"
 
 #: src/bin/e_int_border_menu.c:1033 src/modules/conf_winlist/e_mod_main.c:35
 msgid "Window List"
-msgstr "Λίστα Παραθύρων"
+msgstr "Ξ›Ξ―ΟƒΟ„Ξ± Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½"
 
 #: src/bin/e_int_border_menu.c:1043 src/modules/pager/e_mod_main.c:263
 #: src/modules/pager/e_mod_main.c:2798 src/modules/pager/e_mod_main.c:2805
@@ -2487,7 +2491,7 @@ msgstr ""
 
 #: src/bin/e_int_border_menu.c:1053
 msgid "Taskbar"
-msgstr "Γραμμή Εργασιών"
+msgstr "Ξ“ΟΞ±ΞΌΞΌΞ® Ξ•ΟΞ³Ξ±ΟƒΞΉΟΞ½"
 
 #: src/bin/e_main.c:252
 #, c-format
@@ -2864,7 +2868,7 @@ msgstr ""
 
 #: src/bin/e_main.c:914
 msgid "Load Modules"
-msgstr "Φόρτωση Αρθρομάτων"
+msgstr "Ξ¦ΟΟΟ„Ο‰ΟƒΞ· Ξ‘ΟΞΈΟΞΏΞΌΞ¬Ο„Ο‰Ξ½"
 
 #: src/bin/e_main.c:922
 msgid ""
@@ -2888,11 +2892,11 @@ msgstr ""
 
 #: src/bin/e_main.c:938
 msgid "Configure Shelves"
-msgstr "Ρύθμιση Ραφιών"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ΅Ξ±Ο†ΞΉΟΞ½"
 
 #: src/bin/e_main.c:945
 msgid "Almost Done"
-msgstr ""
+msgstr "Ξ£Ο‡ΞµΞ΄ΟΞ½ ΞΞ»ΞΏΞΊΞ»Ξ·ΟΟΞΈΞ·ΞΊΞµ"
 
 #: src/bin/e_fm_hal.c:214
 #, c-format
@@ -2922,33 +2926,33 @@ msgstr "%llu B"
 #: src/bin/e_fm_hal.c:253
 #, c-format
 msgid "Unknown Volume"
-msgstr ""
+msgstr "'Ξ‘Ξ³Ξ½Ο‰ΟƒΟ„ΞΏΟ‚ ΞΞ³ΞΊΞΏΟ‚"
 
 #: src/bin/e_fm_hal.c:293
 msgid "Removable Device"
-msgstr ""
+msgstr "Ξ‘Ο†Ξ±ΞΉΟΞΏΟΞΌΞµΞ½Ξ· Ξ£Ο…ΟƒΞΊΞµΟ…Ξ®"
 
 #: src/bin/e_theme.c:41
 msgid "Set As Theme"
-msgstr ""
+msgstr "ΞΟΞΉΟƒΞΌΟΟ‚ Ο‰Ο‚ ΞΞ­ΞΌΞ±"
 
 #: src/modules/conf_icon_theme/e_int_config_icon_themes.c:54
 msgid "Icon Theme Settings"
-msgstr "Ρυθμίσεις Θέματος Εικονιδίων"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΞΞ­ΞΌΞ±Ο„ΞΏΟ‚ Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―Ο‰Ξ½"
 
 #: src/modules/conf_icon_theme/e_int_config_icon_themes.c:279
 msgid "Icon Themes"
-msgstr ""
+msgstr "ΞΞ­ΞΌΞ±Ο„Ξ± Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―Ο‰Ξ½"
 
 #: src/modules/conf_icon_theme/e_mod_main.c:35
 msgid "Icon Theme"
-msgstr "Θέμα Εικονιδίων"
+msgstr "ΞΞ­ΞΌΞ± Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―Ο‰Ξ½"
 
 #: src/modules/conf_clientlist/e_mod_main.c:34
 #: src/modules/conf_applications/e_mod_main.c:41
 #: src/modules/conf_menus/e_mod_main.c:34
 msgid "Menus"
-msgstr "Μενού"
+msgstr "ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_clientlist/e_mod_main.c:35
 msgid "Client List Menu"
@@ -2960,7 +2964,7 @@ msgstr ""
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:99
 msgid "Group By"
-msgstr ""
+msgstr "ΞΞΌΞ±Ξ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· ΞΊΞ±Ο„Ξ¬"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:101
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:114
@@ -2971,7 +2975,7 @@ msgstr ""
 #: src/modules/conf_fonts/e_int_config_fonts.c:676
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:369
 msgid "None"
-msgstr "Κανένα"
+msgstr "ΞΞ±Ξ½Ξ­Ξ½Ξ±"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:107
 msgid "Include windows from other screens"
@@ -2983,11 +2987,11 @@ msgstr ""
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:116
 msgid "Using separator bars"
-msgstr ""
+msgstr "Ξ§ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΟΞ½Ο„Ξ±Ο‚ ΞΌΟ€Ξ¬ΟΞµΟ‚ Ξ΄ΞΉΞ±Ο‡Ο‰ΟΞΉΟƒΞΌΞΏΟ"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:118
 msgid "Using menus"
-msgstr ""
+msgstr "Ξ§ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΟΞ½Ο„Ξ±Ο‚"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:122
 msgid "Client Sort Order"
@@ -2995,19 +2999,20 @@ msgstr ""
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:126
 msgid "Alphabetical"
-msgstr "Αλφαβητικά"
+msgstr "Ξ‘Ξ»Ο†Ξ±Ξ²Ξ·Ο„ΞΉΞΊΞ¬"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:128
+#, fuzzy
 msgid "Window stacking layer"
-msgstr ""
+msgstr "Ξ£Ο„ΟΟΞΌΞ± Ξ£Ο„ΞΏΞΉΞ²Ξ¬Ξ³ΞΌΞ±Ο„ΞΏΟ‚ Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:130
 msgid "Most recently used"
-msgstr ""
+msgstr "Ξ¤Ξ± Ο€ΞΉΞΏ Ο€ΟΟΟƒΟ†Ξ±Ο„Ξ± Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½Ξ±"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:134
 msgid "Iconified Windows"
-msgstr "Εικονιδιοποιημένα Παράθυρα"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄ΞΉΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½Ξ± Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞ±"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:136
 msgid "Group with owning desktop"
@@ -3027,7 +3032,7 @@ msgstr ""
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:146
 msgid "Menu Item Captions"
-msgstr ""
+msgstr "Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚ Ξ‘Ξ½Ο„ΞΉΞΊΞµΞΉΞΌΞ­Ξ½ΞΏΟ… ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:147
 msgid "Limit caption length"
@@ -3036,20 +3041,20 @@ msgstr ""
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:149
 #, c-format
 msgid "%1.0f Chars"
-msgstr "%1.0f Χαρακτήρες"
+msgstr "%1.0f Ξ§Ξ±ΟΞ±ΞΊΟ„Ξ®ΟΞµΟ‚"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:44
 msgid "Transition Settings"
-msgstr ""
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ•Ο†Ξ­ ΞΞµΟ„Ξ¬Ξ²Ξ±ΟƒΞ·Ο‚"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:126
 msgid "Events"
-msgstr ""
+msgstr "Ξ“ΞµΞ³ΞΏΞ½ΟΟ„Ξ±"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:134
 #: src/modules/conf_startup/e_mod_main.c:35
 msgid "Startup"
-msgstr ""
+msgstr "Ξ•ΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:135
 msgid "Desk Change"
@@ -3057,16 +3062,16 @@ msgstr ""
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:136
 msgid "Background Change"
-msgstr ""
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® Ξ¤Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ±Ο‚"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:144
 #: src/modules/conf_transitions/e_mod_main.c:35
 msgid "Transitions"
-msgstr "Μεταβάσεις"
+msgstr "ΞΞµΟ„Ξ±Ξ²Ξ¬ΟƒΞµΞΉΟ‚"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:46
 msgid "Run Command Settings"
-msgstr "Ρυθμίσεις Εκτέλεσης Εντολής"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ•ΞΊΟ„Ξ­Ξ»ΞµΟƒΞ·Ο‚ Ξ•Ξ½Ο„ΞΏΞ»Ξ®Ο‚"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:109
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:161
@@ -3079,7 +3084,7 @@ msgstr "Ρυθμίσεις Εκτέλεσης Εντολής"
 #: src/modules/conf_performance/e_int_config_performance.c:90
 #: src/modules/conf_performance/e_int_config_performance.c:123
 msgid "General Settings"
-msgstr "Γενικές Ρυθμίσεις"
+msgstr "Ξ“ΞµΞ½ΞΉΞΊΞ­Ο‚ Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:110
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:162
@@ -3119,19 +3124,19 @@ msgstr ""
 #: src/modules/conf_winlist/e_int_config_winlist.c:162
 #: src/modules/conf_winlist/e_int_config_winlist.c:240
 msgid "Scroll Settings"
-msgstr ""
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΞΟΞ»ΞΉΟƒΞ·Ο‚"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:125
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:177
 #: src/modules/conf_winlist/e_int_config_winlist.c:163
 #: src/modules/conf_winlist/e_int_config_winlist.c:241
 msgid "Scroll Animate"
-msgstr ""
+msgstr "ΞΞ―Ξ½Ξ·ΟƒΞ· ΞΟΞ»ΞΉΟƒΞ·Ο‚"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:179
 #: src/modules/conf_winlist/e_int_config_winlist.c:243
 msgid "Scroll Speed"
-msgstr ""
+msgstr "Ξ¤Ξ±Ο‡ΟΟ„Ξ·Ο„Ξ± ΞΟΞ»ΞΉΟƒΞ·Ο‚"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:181
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:216
@@ -3146,7 +3151,7 @@ msgstr "%1.2f"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:185
 msgid "Terminal Settings"
-msgstr "Ρυθμίσεις Τερματικού"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ¤ΞµΟΞΌΞ±Ο„ΞΉΞΊΞΏΟ"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:186
 msgid "Terminal Command (CTRL+RETURN to utilize)"
@@ -3155,12 +3160,12 @@ msgstr ""
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:194
 #: src/modules/conf_winlist/e_int_config_winlist.c:260
 msgid "Size Settings"
-msgstr "Ρυθμίσεις Διαστάσεων"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ”ΞΉΞ±ΟƒΟ„Ξ¬ΟƒΞµΟ‰Ξ½"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:195
 #: src/modules/conf_winlist/e_int_config_winlist.c:261
 msgid "Minimum Width"
-msgstr "Ελάχιστο Πλάτος"
+msgstr "Ξ•Ξ»Ξ¬Ο‡ΞΉΟƒΟ„ΞΏ Ξ Ξ»Ξ¬Ο„ΞΏΟ‚"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:197
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:201
@@ -3177,60 +3182,60 @@ msgstr "%4.0f"
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:199
 #: src/modules/conf_winlist/e_int_config_winlist.c:265
 msgid "Minimum Height"
-msgstr "Ελάχιστο Ύψος"
+msgstr "Ξ•Ξ»Ξ¬Ο‡ΞΉΟƒΟ„ΞΏ ΞΟΞΏΟ‚"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:203
 #: src/modules/conf_winlist/e_int_config_winlist.c:269
 msgid "Maximum Width"
-msgstr "Μέγιστο Πλάτος"
+msgstr "ΞΞ­Ξ³ΞΉΟƒΟ„ΞΏ Ξ Ξ»Ξ¬Ο„ΞΏΟ‚"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:207
 #: src/modules/conf_winlist/e_int_config_winlist.c:273
 msgid "Maximum Height"
-msgstr "Μέγιστο Ύψος"
+msgstr "ΞΞ­Ξ³ΞΉΟƒΟ„ΞΏ ΞΟΞΏΟ‚"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:213
 #: src/modules/conf_winlist/e_int_config_winlist.c:249
 msgid "Position Settings"
-msgstr "Ρύθμιση Θέσης"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· ΞΞ­ΟƒΞ·Ο‚"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:214
 #: src/modules/conf_winlist/e_int_config_winlist.c:250
 msgid "X-Axis Alignment"
-msgstr ""
+msgstr "Ξ£Ο„ΞΏΞ―Ο‡Ξ·ΟƒΞ· Ξ§-Ξ†ΞΎΞΏΞ½Ξ±"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:218
 #: src/modules/conf_winlist/e_int_config_winlist.c:254
 msgid "Y-Axis Alignment"
-msgstr ""
+msgstr "Ξ£Ο„ΞΏΞ―Ο‡Ξ·ΟƒΞ· Ξ¥-Ξ†ΞΎΞΏΞ½Ξ±"
 
 #: src/modules/conf_exebuf/e_mod_main.c:35 src/modules/exebuf/e_mod_main.c:128
 msgid "Run Command"
-msgstr "Εκτέλεση Εντολής"
+msgstr "Ξ•ΞΊΟ„Ξ­Ξ»ΞµΟƒΞ· Ξ•Ξ½Ο„ΞΏΞ»Ξ®Ο‚"
 
 #: src/modules/conf_paths/e_int_config_paths.c:62
 msgid "Search Path Configuration"
-msgstr ""
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ”ΞΉΞ±Ξ΄ΟΞΏΞΌΞ®Ο‚ Ξ‘Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·Ο‚"
 
 #: src/modules/conf_paths/e_int_config_paths.c:73
 msgid "Data"
-msgstr "Δεδομένα"
+msgstr "Ξ”ΞµΞ΄ΞΏΞΌΞ­Ξ½Ξ±"
 
 #: src/modules/conf_paths/e_int_config_paths.c:75
 msgid "Images"
-msgstr "Εικόνες"
+msgstr "Ξ•ΞΉΞΊΟΞ½ΞµΟ‚"
 
 #: src/modules/conf_paths/e_int_config_paths.c:77
 #: src/modules/conf_fonts/e_mod_main.c:35
 #: src/modules/conf_fonts/e_int_config_fonts.c:454
 #: src/modules/conf_fonts/e_int_config_fonts.c:640
 msgid "Fonts"
-msgstr "Γραμματοσειρές"
+msgstr "Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΞ­Ο‚"
 
 #: src/modules/conf_paths/e_int_config_paths.c:79
 #: src/modules/conf_theme/e_int_config_theme.c:1010
 msgid "Themes"
-msgstr "Θέματαi"
+msgstr "ΞΞ­ΞΌΞ±Ο„Ξ±i"
 
 #: src/modules/conf_paths/e_int_config_paths.c:81
 msgid "Init"
@@ -3238,31 +3243,31 @@ msgstr ""
 
 #: src/modules/conf_paths/e_int_config_paths.c:87
 msgid "Backgrounds"
-msgstr ""
+msgstr "Ξ¤Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―ΞµΟ‚"
 
 #: src/modules/conf_paths/e_int_config_paths.c:89
 msgid "Messages"
-msgstr "Μηνύματα"
+msgstr "ΞΞ·Ξ½ΟΞΌΞ±Ο„Ξ±"
 
 #: src/modules/conf_paths/e_int_config_paths.c:171
 msgid "E Paths"
-msgstr "Διαδρομές E"
+msgstr "Ξ”ΞΉΞ±Ξ΄ΟΞΏΞΌΞ­Ο‚ E"
 
 #: src/modules/conf_paths/e_int_config_paths.c:202
 msgid "Default Directories"
-msgstr "Προκαθορισμένοι Κατάλογοι"
+msgstr "Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏΞΉ ΞΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΞΉ"
 
 #: src/modules/conf_paths/e_int_config_paths.c:209
 msgid "User Defined Directories"
-msgstr "Κατάλογοι Καθορισμένοι από το Χρήστη"
+msgstr "ΞΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏΞΉ ΞΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏΞΉ Ξ±Ο€Ο Ο„ΞΏ Ξ§ΟΞ®ΟƒΟ„Ξ·"
 
 #: src/modules/conf_paths/e_mod_main.c:35
 msgid "Search Directories"
-msgstr "Αναζήτηση Καταλόγων"
+msgstr "Ξ‘Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ· ΞΞ±Ο„Ξ±Ξ»ΟΞ³Ο‰Ξ½"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:37
 msgid "Interaction Settings"
-msgstr "Ρυθμίσεις Διάδρασης"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ”ΞΉΞ¬Ξ΄ΟΞ±ΟƒΞ·Ο‚"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:94
 msgid "Thumbscroll"
@@ -3293,7 +3298,7 @@ msgstr "%1.0f pixel/sec"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:114
 msgid "Friction slowdown"
-msgstr ""
+msgstr "ΞΞ±ΞΈΟ…ΟƒΟ„Ξ­ΟΞ·ΟƒΞ· Ξ»ΟΞ³ΞΏ Ξ¤ΟΞΉΞ²Ξ®Ο‚"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:117
 #, c-format
@@ -3302,41 +3307,41 @@ msgstr "%1.2f sec"
 
 #: src/modules/conf_interaction/e_mod_main.c:35
 msgid "Interaction"
-msgstr "Διάδραση"
+msgstr "Ξ”ΞΉΞ¬Ξ΄ΟΞ±ΟƒΞ·"
 
 #: src/modules/conf/e_mod_main.c:46 src/modules/conf/e_mod_main.c:67
 #: src/modules/conf/e_mod_main.c:116
 msgid "Configuration Panel"
-msgstr "Ρύθμιση Πάνελ"
+msgstr "Ξ Ξ¬Ξ½ΞµΞ» Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΟ‰Ξ½"
 
 #: src/modules/conf/e_conf.c:122 src/modules/conf/e_conf.c:133
 msgid "Enlightenment Configuration"
-msgstr "Ρύθμιση του Enlightenment"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ο„ΞΏΟ… Enlightenment"
 
 #: src/modules/conf/e_conf.c:161
 msgid "Items"
-msgstr "Αντικείμενα"
+msgstr "Ξ‘Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ±"
 
 #: src/modules/winlist/e_mod_main.c:48 src/modules/winlist/e_mod_main.c:50
 #: src/modules/winlist/e_mod_main.c:63 src/modules/winlist/e_mod_main.c:64
 msgid "Window : List"
-msgstr "Παράθυρο : Λίστα"
+msgstr "Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ : Ξ›Ξ―ΟƒΟ„Ξ±"
 
 #: src/modules/winlist/e_mod_main.c:48 src/modules/winlist/e_mod_main.c:64
 msgid "Next Window"
-msgstr "Επόμενο Παράθυρο"
+msgstr "Ξ•Ο€ΟΞΌΞµΞ½ΞΏ Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ"
 
 #: src/modules/winlist/e_mod_main.c:50 src/modules/winlist/e_mod_main.c:63
 msgid "Previous Window"
-msgstr "Προηγούμενο Παράθυρο"
+msgstr "Ξ ΟΞΏΞ·Ξ³ΞΏΟΞΌΞµΞ½ΞΏ Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ"
 
 #: src/modules/winlist/e_winlist.c:141
 msgid "Select a window"
-msgstr "Επιλογή Παραθύρου"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:69
 msgid "File Icon"
-msgstr "Εικονίδιο Αρχείου"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞΏ Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:137
 msgid "Mime:"
@@ -3344,104 +3349,104 @@ msgstr "Mime:"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Use Generated Thumbnail"
-msgstr ""
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ·ΞΌΞ­Ξ½Ξ·Ο‚ Ξ•Ο€ΞΉΟƒΞΊΟΟ€Ξ·ΟƒΞ·Ο‚"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:150
 msgid "Use Theme Icon"
-msgstr "Χρήση Εικονιδίου Θέματος"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ… ΞΞ­ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:153
 msgid "Use Edje File"
-msgstr "Χρήση Αρχείου Edje"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ… Edje"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:156
 msgid "Use Image"
-msgstr "Χρήση Εικόνας"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ξ•ΞΉΞΊΟΞ½Ξ±Ο‚"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:159
 msgid "Use Default"
-msgstr "Χρήση Προκαθορισμένων"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½Ο‰Ξ½"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:270
 msgid "Select an Edj File"
-msgstr "Επιλογή ενός αρχείου Edj"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΞµΞ½ΟΟ‚ Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… Edj"
 
 #: src/modules/conf_mime/e_mod_main.c:35
 #: src/modules/conf_mime/e_int_config_mime.c:64
 msgid "File Icons"
-msgstr "Εικονίδια Αρχείων"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞ± Ξ‘ΟΟ‡ΞµΞ―Ο‰Ξ½"
 
 #: src/modules/conf_mime/e_int_config_mime.c:196
 msgid "File Types"
-msgstr "Τύποι Αρχείων"
+msgstr "Ξ¤ΟΟ€ΞΏΞΉ Ξ‘ΟΟ‡ΞµΞ―Ο‰Ξ½"
 
 #: src/modules/conf_mime/e_int_config_mime.c:203
 #: src/modules/ibar/e_mod_config.c:113
 #: src/modules/conf_shelves/e_int_config_shelf.c:84
 #: src/modules/conf_desk/e_int_config_desk.c:162
 msgid "Configure"
-msgstr "Ρύθμιση"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ·"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:35
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:51
 msgid "Window Geometry"
-msgstr ""
+msgstr "Ξ“ΞµΟ‰ΞΌΞµΟ„ΟΞ―Ξ± Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:36
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:45
 msgid "Window Stacking"
-msgstr ""
+msgstr "Ξ£Ο„ΞΏΞ―Ξ²Ξ±Ξ³ΞΌΞ± Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:37
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:44
 msgid "Window Maximize Policy"
-msgstr ""
+msgstr "Ξ ΞΏΞ»ΞΉΟ„ΞΉΞΊΞ® ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚ Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:142
 msgid "Smart expansion"
-msgstr ""
+msgstr "ΞΞΎΟ…Ο€Ξ½Ξ· Ξ•Ο€Ξ­ΞΊΟ„Ξ±ΟƒΞ·"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:144
 msgid "Expand the window"
-msgstr ""
+msgstr "Ξ•Ο€Ξ­ΞΊΟ„ΞµΞΉΞ½Ξµ Ο„ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:123
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:146
 msgid "Fill available space"
-msgstr ""
+msgstr "Ξ“Ξ­ΞΌΞΉΟƒΞΌΞ± Ξ΄ΞΉΞ±ΞΈΞ­ΟƒΞΉΞΌΞΏΟ… Ο‡ΟΟΞΏΟ…"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:138
 msgid "Maximize Policy"
-msgstr ""
+msgstr "Ξ ΞΏΞ»ΞΉΟ„ΞΉΞΊΞ® ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:150
 msgid "Maximize Directions"
-msgstr ""
+msgstr "ΞΞ±Ο„ΞµΟ…ΞΈΟΞ½ΟƒΞµΞΉΟ‚ ΞΞµΞ³ΞΉΟƒΟ„ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
 msgid "Horizontal"
-msgstr "Οριζόντια"
+msgstr "ΞΟΞΉΞ¶ΟΞ½Ο„ΞΉΞ±"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:154
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
 msgid "Vertical"
-msgstr "Κάθετα"
+msgstr "ΞΞ¬ΞΈΞµΟ„Ξ±"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:156
 msgid "Both"
-msgstr ""
+msgstr "ΞΞ±ΞΉ Ο„Ξ± Ξ΄ΟΞΏ"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:160
 #: src/modules/conf_menus/e_int_config_menus.c:194
 msgid "Miscellaneous Options"
-msgstr ""
+msgstr "Ξ”ΞΉΞ¬Ο†ΞΏΟΞµΟ‚ Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 msgid "Allow window manipulation"
-msgstr ""
+msgstr "Ξ•Ο€Ξ­Ο„ΟΞµΟΞµ ΞΌΞµΟ„Ξ±Ο‡ΞµΞ―ΟΞ·ΟƒΞ· Ο„ΞΏΟ… Ο€Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
 msgid "Automatically move/resize windows on shelf autohide"
@@ -3449,7 +3454,7 @@ msgstr ""
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:123
 msgid "Resistance"
-msgstr "Αντίσταση"
+msgstr "Ξ‘Ξ½Ο„Ξ―ΟƒΟ„Ξ±ΟƒΞ·"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:124
 msgid "Resist moving or resizing a window over an obstacle"
@@ -3476,7 +3481,7 @@ msgstr ""
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:134
 msgid "Resistance to desktop gadgets:"
-msgstr ""
+msgstr "Ξ‘Ξ½Ο„Ξ―ΟƒΟ„Ξ±ΟƒΞ· ΟƒΟ„Ξ± Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞ¬ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:140
 msgid "Keyboard move and resize"
@@ -3496,11 +3501,11 @@ msgstr "%1.1f sec"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
 msgid "Move by:"
-msgstr "Μετακίνησε κατά:"
+msgstr "ΞΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞµ ΞΊΞ±Ο„Ξ¬:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:149
 msgid "Resize by:"
-msgstr "Αλλαγή Μεγέθους κατά:"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΞΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚ ΞΊΞ±Ο„Ξ¬:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:116
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:134
@@ -3534,7 +3539,7 @@ msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:155
 msgid "Temperature"
-msgstr "Θερμοκρασία"
+msgstr "ΞΞµΟΞΌΞΏΞΊΟΞ±ΟƒΞ―Ξ±"
 
 #: src/modules/temperature/e_mod_config.c:63
 msgid "Temperature Configuration"
@@ -3543,41 +3548,41 @@ msgstr "Configurazione modulo Temperature"
 #: src/modules/temperature/e_mod_config.c:249
 #: src/modules/temperature/e_mod_config.c:352
 msgid "Display Units"
-msgstr "Εμφάνιση Μονάδων"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞΏΞ½Ξ¬Ξ΄Ο‰Ξ½"
 
 #: src/modules/temperature/e_mod_config.c:251
 #: src/modules/temperature/e_mod_config.c:354
 msgid "Celsius"
-msgstr "Κελσίου"
+msgstr "ΞΞµΞ»ΟƒΞ―ΞΏΟ…"
 
 #: src/modules/temperature/e_mod_config.c:253
 #: src/modules/temperature/e_mod_config.c:356
 msgid "Fahrenheit"
-msgstr "Φαρενάιτ"
+msgstr "Ξ¦Ξ±ΟΞµΞ½Ξ¬ΞΉΟ„"
 
 #: src/modules/temperature/e_mod_config.c:257
 #: src/modules/temperature/e_mod_config.c:379
 msgid "Check Interval"
-msgstr "Χρονικό Διάστημα Ελέγχου"
+msgstr "Ξ§ΟΞΏΞ½ΞΉΞΊΟ Ξ”ΞΉΞ¬ΟƒΟ„Ξ·ΞΌΞ± Ξ•Ξ»Ξ­Ξ³Ο‡ΞΏΟ…"
 
 #: src/modules/temperature/e_mod_config.c:259
 msgid "Fast"
-msgstr "Γρήγορο"
+msgstr "Ξ“ΟΞ®Ξ³ΞΏΟΞΏ"
 
 #: src/modules/temperature/e_mod_config.c:263
 msgid "Slow"
-msgstr "Αργό"
+msgstr "Ξ‘ΟΞ³Ο"
 
 #: src/modules/temperature/e_mod_config.c:265
 msgid "Very Slow"
-msgstr "Πολύ Αργό"
+msgstr "Ξ ΞΏΞ»Ο Ξ‘ΟΞ³Ο"
 
 #: src/modules/temperature/e_mod_config.c:272
 #: src/modules/temperature/e_mod_config.c:296
 #: src/modules/temperature/e_mod_config.c:397
 #: src/modules/temperature/e_mod_config.c:409
 msgid "High Temperature"
-msgstr "Υψηλή Θερμοκρασία"
+msgstr "Ξ¥ΟΞ·Ξ»Ξ® ΞΞµΟΞΌΞΏΞΊΟΞ±ΟƒΞ―Ξ±"
 
 #: src/modules/temperature/e_mod_config.c:275
 msgid "200 F"
@@ -3597,7 +3602,7 @@ msgstr "110 F"
 #: src/modules/temperature/e_mod_config.c:402
 #: src/modules/temperature/e_mod_config.c:414
 msgid "Low Temperature"
-msgstr "Χαμηλή Θερμοκρασία"
+msgstr "Ξ§Ξ±ΞΌΞ·Ξ»Ξ® ΞΞµΟΞΌΞΏΞΊΟΞ±ΟƒΞ―Ξ±"
 
 #: src/modules/temperature/e_mod_config.c:286
 msgid "130 F"
@@ -3630,7 +3635,7 @@ msgstr "32 C"
 
 #: src/modules/temperature/e_mod_config.c:367
 msgid "Sensors"
-msgstr "Αισθητήρες"
+msgstr "Ξ‘ΞΉΟƒΞΈΞ·Ο„Ξ®ΟΞµΟ‚"
 
 #: src/modules/temperature/e_mod_config.c:380
 #: src/modules/battery/e_mod_config.c:136
@@ -3653,7 +3658,7 @@ msgstr "%1.0f C"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:60
 msgid "Core"
-msgstr "Πυρίνας"
+msgstr "Ξ Ο…ΟΞ―Ξ½Ξ±Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:61
 msgid "Title Bar"
@@ -3662,12 +3667,12 @@ msgstr ""
 #: src/modules/conf_fonts/e_int_config_fonts.c:62
 #: src/modules/conf_colors/e_int_config_color_classes.c:52
 msgid "Menu Item"
-msgstr "Αντικείμενο Μενού"
+msgstr "Ξ‘Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½ΞΏ ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:63
 #: src/modules/conf_colors/e_int_config_color_classes.c:50
 msgid "Menu Title"
-msgstr "Τίτλος Μενού"
+msgstr "Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚ ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:64
 msgid "Textblock Plain"
@@ -3684,12 +3689,12 @@ msgstr ""
 #: src/modules/conf_fonts/e_int_config_fonts.c:67
 #: src/modules/conf_colors/e_int_config_color_classes.c:54
 msgid "Move Text"
-msgstr ""
+msgstr "ΞΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ· ΞΞµΞΉΞΌΞ­Ξ½ΞΏΟ…"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:68
 #: src/modules/conf_colors/e_int_config_color_classes.c:55
 msgid "Resize Text"
-msgstr ""
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® ΞΌΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚ ΞΞµΞΉΞΌΞ­Ξ½ΞΏΟ…"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:69
 #: src/modules/conf_colors/e_int_config_color_classes.c:58
@@ -3699,31 +3704,31 @@ msgstr ""
 #: src/modules/conf_fonts/e_int_config_fonts.c:70
 #, fuzzy
 msgid "Configure Heading"
-msgstr "Ρύθμιση Κεφαλίδας"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· ΞΞµΟ†Ξ±Ξ»Ξ―Ξ΄Ξ±Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:71
 msgid "About Title"
-msgstr "Τίτλος \"Σχετικά\""
+msgstr "Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚ \"Ξ£Ο‡ΞµΟ„ΞΉΞΊΞ¬\""
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:72
 msgid "About Version"
-msgstr "Έκδοση \"Σχετικά\""
+msgstr "ΞΞΊΞ΄ΞΏΟƒΞ· \"Ξ£Ο‡ΞµΟ„ΞΉΞΊΞ¬\""
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:73
 msgid "About Text"
-msgstr "Κείμενο \"Σχετικά\""
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ \"Ξ£Ο‡ΞµΟ„ΞΉΞΊΞ¬\""
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:74
 msgid "Desklock Title"
-msgstr ""
+msgstr "Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚ ΞΞ»ΞµΞΉΞ΄ΟΞΌΞ±Ο„ΞΏΟ‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:75
 msgid "Desklock Password"
-msgstr ""
+msgstr "ΞΟ‰Ξ΄ΞΉΞΊΟΟ‚ ΞΞ»ΞµΞΉΞ΄ΟΞΌΞ±Ο„ΞΏΟ‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:76
 msgid "Dialog Error"
-msgstr "Σφάλμα Διαλόγου"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± Ξ”ΞΉΞ±Ξ»ΟΞ³ΞΏΟ…"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:77
 msgid "Exebuf Command"
@@ -3731,65 +3736,65 @@ msgstr ""
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:78
 msgid "Splash Title"
-msgstr "Τίτλος Αρχικής Οθόνης"
+msgstr "Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚ Ξ‘ΟΟ‡ΞΉΞΊΞ®Ο‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:79
 msgid "Splash Text"
-msgstr "Κείμενο Αρχικής Οθόνης"
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ‘ΟΟ‡ΞΉΞΊΞ®Ο‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:80
 msgid "Splash Version"
-msgstr "Έκδοση Αρχικής Οθόνης"
+msgstr "ΞΞΊΞ΄ΞΏΟƒΞ· Ξ‘ΟΟ‡ΞΉΞΊΞ®Ο‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:82
 #: src/modules/conf_colors/e_int_config_color_classes.c:64
 msgid "Widgets"
-msgstr "Συστατικά"
+msgstr "Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞ¬"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:83
 msgid "Entry"
-msgstr "Καταχώρηση"
+msgstr "ΞΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:84
 msgid "Frame"
-msgstr "Πλαίσιο"
+msgstr "Ξ Ξ»Ξ±Ξ―ΟƒΞΉΞΏ"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:85
 msgid "Label"
-msgstr "Ετικέτα"
+msgstr "Ξ•Ο„ΞΉΞΊΞ­Ο„Ξ±"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:86
 msgid "Buttons"
-msgstr "Κουμπιά"
+msgstr "ΞΞΏΟ…ΞΌΟ€ΞΉΞ¬"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:87
 msgid "Slider"
-msgstr "Ολισθητής"
+msgstr "ΞΞ»ΞΉΟƒΞΈΞ·Ο„Ξ®Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:88
 msgid "Radio Buttons"
-msgstr "Κουμπιά Επιλογής"
+msgstr "ΞΞΏΟ…ΞΌΟ€ΞΉΞ¬ Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ®Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:89
 msgid "Check Buttons"
-msgstr "Κουμπιά Ενεργοποίησης"
+msgstr "ΞΞΏΟ…ΞΌΟ€ΞΉΞ¬ Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:90
 msgid "Text List Item"
-msgstr "Αντικείμενο Λίστας Κειμένου"
+msgstr "Ξ‘Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½ΞΏ Ξ›Ξ―ΟƒΟ„Ξ±Ο‚ ΞΞµΞΉΞΌΞ­Ξ½ΞΏΟ…"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:91
 msgid "List Item"
-msgstr "Αντικείμενο Λίστας"
+msgstr "Ξ‘Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½ΞΏ Ξ›Ξ―ΟƒΟ„Ξ±Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:92
 #: src/modules/conf_colors/e_int_config_color_classes.c:73
 msgid "List Header"
-msgstr "Επικεφαλίδα Λίστας"
+msgstr "Ξ•Ο€ΞΉΞΊΞµΟ†Ξ±Ξ»Ξ―Ξ΄Ξ± Ξ›Ξ―ΟƒΟ„Ξ±Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:94
 msgid "Filemanager"
-msgstr "Διαχειριστής Αρχείων"
+msgstr "Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚ Ξ‘ΟΟ‡ΞµΞ―Ο‰Ξ½"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:95
 msgid "Typebuf"
@@ -3797,31 +3802,31 @@ msgstr ""
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:97
 msgid "Desktop Icon"
-msgstr "Εικονίδιο Επιφάνειας Εργασίας"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞΏ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:103
 msgid "Small Styled"
-msgstr "Μικρό Στυλ"
+msgstr "ΞΞΉΞΊΟΟ Ξ£Ο„Ο…Ξ»"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:104
 msgid "Normal Styled"
-msgstr "Κανονικό Στυλ"
+msgstr "ΞΞ±Ξ½ΞΏΞ½ΞΉΞΊΟ Ξ£Ο„Ο…Ξ»"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:105
 msgid "Large Styled"
-msgstr "Μεγάλο Στυλ"
+msgstr "ΞΞµΞ³Ξ¬Ξ»ΞΏ Ξ£Ο„Ο…Ξ»"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:168
 msgid "Font Settings"
-msgstr "Ρυθμίσεις Γραμματοσειρών"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΟΞ½"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:271
 msgid "Big"
-msgstr "Μεγάλο"
+msgstr "ΞΞµΞ³Ξ¬Ξ»ΞΏ"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:277
 msgid "Really Big"
-msgstr "Πολύ Μεγάλο"
+msgstr "Ξ ΞΏΞ»Ο ΞΞµΞ³Ξ¬Ξ»ΞΏ"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:292
 #, c-format
@@ -3831,23 +3836,23 @@ msgstr "%d pixel"
 #: src/modules/conf_fonts/e_int_config_fonts.c:447
 #, fuzzy
 msgid "Enable Custom Font Classes"
-msgstr "Ενεργοποίηση Προσαρμοσμένων Κλάσεων Γραμματοσειρών"
+msgstr "Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ο‰Ξ½ ΞΞ»Ξ¬ΟƒΞµΟ‰Ξ½ Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΟΞ½"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:471
-msgid "Basic preview text: 123: ζ‘η„ε¤©η©ΊοΌ"
-msgstr "Ξ’Ξ±ΟƒΞΉΞΊΟ ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ ΟΞΏΞµΟ€ΞΉΟƒΞΊΟΟ€Ξ·ΟƒΞ·Ο‚: 123: ζ‘η„ε¤©η©ΊοΌ"
+msgid "Basic preview text: 123: Ξ¶ΒΒ‘Ξ·ΒΒ„ΞµοΏ½Β©Ξ·Β©ΞΞΏΞΒ"
+msgstr "Ξ’Ξ±ΟƒΞΉΞΊΟ ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ ΟΞΏΞµΟ€ΞΉΟƒΞΊΟΟ€Ξ·ΟƒΞ·Ο‚: Ξ¶ΒΒ‘Ξ·ΒΒ„ΞµοΏ½Β©Ξ·Β©ΞΞΏΞΒ"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:624
 msgid "Font Classes"
-msgstr "Κλάσεις Γραμματοσειρών"
+msgstr "ΞΞ»Ξ¬ΟƒΞµΞΉΟ‚ Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΟΞ½"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:633
 msgid "Enable Font Class"
-msgstr ""
+msgstr "Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· ΞΞ»Ξ¬ΟƒΞ·Ο‚ Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΞ¬Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:665
 msgid "Hinting"
-msgstr "Συμβούλευση"
+msgstr "Ξ£Ο…ΞΌΞ²ΞΏΟΞ»ΞµΟ…ΟƒΞ·"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:668
 msgid "Bytecode"
@@ -3856,31 +3861,31 @@ msgstr "Bytecode"
 #: src/modules/conf_fonts/e_int_config_fonts.c:672
 #: src/modules/cpufreq/e_mod_main.c:222
 msgid "Automatic"
-msgstr "Αυτόματα"
+msgstr "Ξ‘Ο…Ο„ΟΞΌΞ±Ο„Ξ±"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:681
 msgid "Font Fallbacks"
-msgstr "Αναπλήρωση Γραμματοσειρών"
+msgstr "Ξ‘Ξ½Ξ±Ο€Ξ»Ξ®ΟΟ‰ΟƒΞ· Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΟΞ½"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:682
 msgid "Fallback Name"
-msgstr ""
+msgstr "ΞΞ½ΞΏΞΌΞ± Ξ‘Ξ½Ξ±Ο€Ξ»Ξ®ΟΟ‰ΟƒΞ·Ο‚"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:695
 msgid "Enable Fallbacks"
-msgstr ""
+msgstr "Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ‘Ξ½Ξ±Ο€Ξ»Ξ·ΟΟΟƒΞµΟ‰Ξ½"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:703
-msgid "Advanced Preview Text.. ζ‘ηη„δΌε†™δΈ­ζ–‡"
-msgstr "Ξ ΟΞΏΟ‡Ο‰ΟΞ·ΞΌΞ­Ξ½ΞΏ ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ ΟΞΏΞµΟ€ΞΉΟƒΞΊΟΟ€ΞΉΟƒΞ·Ο‚.. ζ‘ηη„δΌε†™δΈ­ζ–‡"
+msgid "Advanced Preview Text.. Ξ¶ΒΒ‘Ξ·ΒΒΞ·ΒΒ„Ξ΄ΞΒΞµΒ†Β™Ξ΄ΞΒ­Ξ¶Β–Β‡"
+msgstr "Ξ ΟΞΏΟ‡Ο‰ΟΞ·ΞΌΞ­Ξ½ΞΏ ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ ΟΞΏΞµΟ€ΞΉΟƒΞΊΟΟ€Ξ·ΟƒΞ·Ο‚.. Ξ¶ΒΒ‘Ξ·ΒΒΞ·ΒΒ„Ξ΄ΞΒΞµΒ†Β™Ξ΄ΞΒ­Ξ¶Β–Β‡"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:55
 msgid "Window List Settings"
-msgstr "Ρυθμίσεις Λίστας Παραθύρων"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ›Ξ―ΟƒΟ„Ξ±Ο‚ Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:132
 msgid "Show iconified windows"
-msgstr "Εμφάνιση εικονιδιοποιημένων παραθύρων"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞµΞΉΞΊΞΏΞ½ΞΉΞ΄ΞΉΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½Ο‰Ξ½ Ο€Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:134
 msgid "Show iconified windows from other desks"
@@ -4021,20 +4026,20 @@ msgstr "%.0f px"
 
 #: src/modules/pager/e_mod_config.c:191
 msgid "Resistance to dragging"
-msgstr ""
+msgstr "Ξ‘Ξ½Ο„Ξ―ΟƒΟ„Ξ±ΟƒΞ· ΟƒΟ„ΞΏ Ο„ΟΞ¬Ξ²Ξ·Ξ³ΞΌΞ±"
 
 #: src/modules/pager/e_mod_config.c:202
 msgid "Popup pager height"
-msgstr ""
+msgstr "ΞΟΞΏΟ‚ Ο€Ξ»Ξ±ΞΉΟƒΞ―ΞΏΟ… Ξ•ΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚"
 
 #: src/modules/pager/e_mod_config.c:207 src/modules/pager/e_mod_config.c:221
 msgid "Popup speed"
-msgstr ""
+msgstr "Ξ¤Ξ±Ο‡ΟΟ„Ξ·Ο„Ξ± Ξ•ΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚"
 
 #: src/modules/pager/e_mod_config.c:209 src/modules/pager/e_mod_config.c:223
 #, c-format
 msgid "%1.1f seconds"
-msgstr "%1.1f δευτερόλεπτα"
+msgstr "%1.1f Ξ΄ΞµΟ…Ο„ΞµΟΟΞ»ΞµΟ€Ο„Ξ±"
 
 #: src/modules/pager/e_mod_config.c:214
 msgid "Urgent Window Settings"
@@ -4060,7 +4065,7 @@ msgstr ""
 
 #: src/modules/pager/e_mod_config.c:328
 msgid "Attetion"
-msgstr "Προσοχή"
+msgstr "Ξ ΟΞΏΟƒΞΏΟ‡Ξ®"
 
 #: src/modules/pager/e_mod_config.c:329
 msgid ""
@@ -4073,16 +4078,16 @@ msgstr ""
 #: src/modules/pager/e_mod_config.c:398
 #, c-format
 msgid "Button %i"
-msgstr "Κουμπί %i"
+msgstr "ΞΞΏΟ…ΞΌΟ€Ξ― %i"
 
 #: src/modules/conf_borders/e_int_config_borders.c:29
 #: src/modules/conf_borders/e_int_config_borders.c:185
 msgid "Default Border Style"
-msgstr "Προκαθορισμένο Στυλ Περιγράμματος"
+msgstr "Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ Ξ£Ο„Ο…Ξ» Ξ ΞµΟΞΉΞ³ΟΞ¬ΞΌΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/conf_borders/e_int_config_borders.c:49
 msgid "Window Border Selection"
-msgstr ""
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ ΞµΟΞΉΞΈΟ‰ΟΞ―Ο‰Ξ½ Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_borders/e_int_config_borders.c:230
 msgid "Remember this Border for this window next time it appears"
@@ -4090,7 +4095,7 @@ msgstr ""
 
 #: src/modules/conf_borders/e_mod_main.c:35
 msgid "Borders"
-msgstr ""
+msgstr "Ξ ΞµΟΞΉΞΈΟΟΞΉΞ±"
 
 #: src/modules/conf_borders/e_mod_main.c:36
 #: src/modules/conf_applications/e_mod_main.c:39
@@ -4105,27 +4110,27 @@ msgstr "Cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:177
 msgid "Fast (4 ticks)"
-msgstr "Γρήγορο (4 tick)"
+msgstr "Ξ“ΟΞ®Ξ³ΞΏΟΞΏ (4 tick)"
 
 #: src/modules/cpufreq/e_mod_main.c:184
 msgid "Medium (8 ticks)"
-msgstr "Μεσαίο (8 tick)"
+msgstr "ΞΞµΟƒΞ±Ξ―ΞΏ (8 tick)"
 
 #: src/modules/cpufreq/e_mod_main.c:191
 msgid "Normal (32 ticks)"
-msgstr "Κανονικό (32 tick)"
+msgstr "ΞΞ±Ξ½ΞΏΞ½ΞΉΞΊΟ (32 tick)"
 
 #: src/modules/cpufreq/e_mod_main.c:198
 msgid "Slow (64 ticks)"
-msgstr "Αργό (64 tick)"
+msgstr "Ξ‘ΟΞ³Ο (64 tick)"
 
 #: src/modules/cpufreq/e_mod_main.c:205
 msgid "Very Slow (256 ticks)"
-msgstr "Πολύ Αργό (256 tick)"
+msgstr "Ξ ΞΏΞ»Ο Ξ‘ΟΞ³Ο (256 tick)"
 
 #: src/modules/cpufreq/e_mod_main.c:220
 msgid "Manual"
-msgstr ""
+msgstr "Ξ§ΞµΞΉΟΞΏΞΊΞ―Ξ½Ξ·Ο„Ξ±"
 
 #: src/modules/cpufreq/e_mod_main.c:224
 msgid "Lower Power Automatic"
@@ -4133,11 +4138,11 @@ msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:226
 msgid "Minimum Speed"
-msgstr "Ελάχιστη Ταχύτητα"
+msgstr "Ξ•Ξ»Ξ¬Ο‡ΞΉΟƒΟ„Ξ· Ξ¤Ξ±Ο‡ΟΟ„Ξ·Ο„Ξ±"
 
 #: src/modules/cpufreq/e_mod_main.c:228
 msgid "Maximum Speed"
-msgstr "Μέγιστη Ταχύτητα"
+msgstr "ΞΞ­Ξ³ΞΉΟƒΟ„Ξ· Ξ¤Ξ±Ο‡ΟΟ„Ξ·Ο„Ξ±"
 
 #: src/modules/cpufreq/e_mod_main.c:250
 #, c-format
@@ -4151,7 +4156,7 @@ msgstr "%i.%i GHz"
 
 #: src/modules/cpufreq/e_mod_main.c:269
 msgid "Time Between Updates"
-msgstr ""
+msgstr "Ξ§ΟΟΞ½ΞΏΟ‚ Ξ‘Ξ½Ξ¬ΞΌΞµΟƒΞ± ΟƒΟ„ΞΉΟ‚ Ξ‘Ξ½Ξ±Ξ½ΞµΟΟƒΞµΞΉΟ‚"
 
 #: src/modules/cpufreq/e_mod_main.c:275
 msgid "Restore CPU Power Policy"
@@ -4186,19 +4191,19 @@ msgstr ""
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:44
 msgid "Window Manager"
-msgstr "Διαχειριστής Παραθύρων"
+msgstr "Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚ Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:45
 msgid "About Dialog Title"
-msgstr ""
+msgstr "Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚ Ξ”ΞΉΞ±Ξ»ΟΞ³ΞΏΟ… \"Ξ£Ο‡ΞµΟ„ΞΉΞΊΞ¬\""
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:46
 msgid "About Dialog Version"
-msgstr ""
+msgstr "ΞΞΊΞ΄ΞΏΟƒΞ· Ξ”ΞΉΞ±Ξ»ΟΞ³ΞΏΟ… \"Ξ£Ο‡ΞµΟ„ΞΉΞΊΞ¬\""
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:47
 msgid "Border Title"
-msgstr ""
+msgstr "Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚ Ξ ΞµΟΞΉΞ³ΟΞ¬ΞΌΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:48
 msgid "Configure Dialog Title"
@@ -4206,7 +4211,7 @@ msgstr ""
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:49
 msgid "Error Text"
-msgstr ""
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ£Ο†Ξ¬Ξ»ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:51
 msgid "Menu Title Active"
@@ -4226,11 +4231,11 @@ msgstr ""
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:65
 msgid "Button Text"
-msgstr ""
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ ΞΞΏΟ…ΞΌΟ€ΞΉΞΏΟ"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:66
 msgid "Button Text Disabled"
-msgstr ""
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ ΞΞΏΟ…ΞΌΟ€ΞΉΞΏΟ Ξ‘Ξ½ΞµΞ½ΞµΟΞ³Ο"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:67
 msgid "Check Text"
@@ -4242,11 +4247,11 @@ msgstr ""
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:69
 msgid "Entry Text"
-msgstr ""
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ ΞΞ±Ο„Ξ±Ο‡ΟΟΞ·ΟƒΞ·Ο‚"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:70
 msgid "Label Text"
-msgstr ""
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ•Ο„ΞΉΞΊΞ­Ο„Ξ±Ο‚"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:71
 msgid "List Item Text"
@@ -4258,87 +4263,87 @@ msgstr ""
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:74
 msgid "Radio Text"
-msgstr ""
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ·Ο‚"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:75
 msgid "Radio Text Disabled"
-msgstr ""
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ®Ο‚ Ξ‘Ξ½ΞµΞ½ΞµΟΞ³Ο"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:76
 msgid "Slider Text"
-msgstr ""
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞΏΟ ΞΟΞ»ΞΉΟƒΞ·Ο‚"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:77
 msgid "Slider Text Disabled"
-msgstr ""
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞΏΟ ΞΟΞ»ΞΉΟƒΞ·Ο‚ Ξ‘Ξ½ΞµΞ½ΞµΟΞ³Ο"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:84
 msgid "Module Label"
-msgstr ""
+msgstr "Ξ•Ο„ΞΉΞΊΞ­Ο„Ξ± Ξ‘ΟΞΈΟΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:124
 #: src/modules/conf_colors/e_mod_main.c:35
 msgid "Colors"
-msgstr "Χρώματα"
+msgstr "Ξ§ΟΟΞΌΞ±Ο„Ξ±"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:348
 msgid "Window Manager Colors"
-msgstr ""
+msgstr "Ξ§ΟΟΞΌΞ±Ο„Ξ± Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ® Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:350
 #: src/modules/conf_colors/e_int_config_color_classes.c:358
 #: src/modules/conf_colors/e_int_config_color_classes.c:366
 #: src/modules/conf_colors/e_int_config_color_classes.c:430
 msgid "Enabled"
-msgstr "Ενεργοποιημένο"
+msgstr "Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½ΞΏ"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:352
 #: src/modules/conf_colors/e_int_config_color_classes.c:360
 #: src/modules/conf_colors/e_int_config_color_classes.c:368
 #: src/modules/conf_colors/e_int_config_color_classes.c:435
 msgid "Disabled"
-msgstr "Απενεργοποιημένο"
+msgstr "Ξ‘Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞ·ΞΌΞ­Ξ½ΞΏ"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:356
 msgid "Widget Colors"
-msgstr ""
+msgstr "Ξ§ΟΟΞΌΞ±Ο„Ξ± Ξ“ΟΞ±Ο†ΞΉΞΊΟΞ½ Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΟΞ½"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:364
 msgid "Module Colors"
-msgstr ""
+msgstr "Ξ§ΟΟΞΌΞ±Ο„Ξ± Ξ‘ΟΞΈΟΟ‰ΞΌΞ¬Ο„Ο‰Ξ½"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:414
 msgid "Color Classes"
-msgstr ""
+msgstr "ΞΞ»Ξ¬ΟƒΞµΞΉΟ‚ Ξ§ΟΟ‰ΞΌΞ¬Ο„Ο‰Ξ½"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:442
 msgid "Object Color"
-msgstr "Χρώμα Αντικειμένου"
+msgstr "Ξ§ΟΟΞΌΞ± Ξ‘Ξ½Ο„ΞΉΞΊΞµΞΉΞΌΞ­Ξ½ΞΏΟ…"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:451
 msgid "Outline Color"
-msgstr ""
+msgstr "Ξ§ΟΟΞΌΞ± Ξ ΞµΟΞΉΞ³ΟΞ¬ΞΌΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:460
 msgid "Shadow Color"
-msgstr "Χρώμα Σκιάς"
+msgstr "Ξ§ΟΟΞΌΞ± Ξ£ΞΊΞΉΞ¬Ο‚"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:469
 msgid "Defaults"
-msgstr "Προκαθορισμένα"
+msgstr "Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½Ξ±"
 
 #: src/modules/battery/e_mod_main.c:131
 msgid "Battery"
-msgstr ""
+msgstr "ΞΟ€Ξ±Ο„Ξ±ΟΞ―Ξ±"
 
 #: src/modules/battery/e_mod_main.c:414
 msgid "Battery Meter"
-msgstr ""
+msgstr "ΞΞµΟ„ΟΞ·Ο„Ξ®Ο‚ ΞΟ€Ξ±Ο„Ξ±ΟΞ―Ξ±Ο‚"
 
 #: src/modules/battery/e_mod_main.c:491 src/modules/battery/e_mod_main.c:493
 #: src/modules/battery/e_mod_main.c:500 src/modules/battery/e_mod_main.c:502
 msgid "ERROR"
-msgstr "ΣΦΑΛΜΑ"
+msgstr "Ξ£Ξ¦Ξ‘Ξ›ΞΞ‘"
 
 #: src/modules/battery/e_mod_main.c:559
 #, fuzzy
@@ -4347,28 +4352,28 @@ msgstr "N/A"
 
 #: src/modules/battery/e_mod_config.c:40
 msgid "Battery Monitor Configuration"
-msgstr ""
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ•Ο€ΟΟ€Ο„Ξ· ΞΟ€Ξ±Ο„Ξ±ΟΞ―Ξ±Ο‚"
 
 #: src/modules/battery/e_mod_config.c:91
 msgid "Basic Settings"
-msgstr "Βασικές Ρυθμίσεις"
+msgstr "Ξ’Ξ±ΟƒΞΉΞΊΞ­Ο‚ Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚"
 
 #: src/modules/battery/e_mod_config.c:92
 #: src/modules/battery/e_mod_config.c:139
 msgid "Show alert when battery is low"
-msgstr ""
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο€ΟΞΏΞµΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ·Ο‚ ΟΟ„Ξ±Ξ½ Ξ· ΞΌΟ€Ξ±Ο„Ξ±ΟΞ―Ξ± Ο„ΞµΞ»ΞµΞΉΟΞ½ΞµΞΉ"
 
 #: src/modules/battery/e_mod_config.c:131
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Ξ ΟΞΏΟ‡Ο‰ΟΞ·ΞΌΞ­Ξ½ΞµΟ‚ Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚"
 
 #: src/modules/battery/e_mod_config.c:133
 msgid "Check battery every:"
-msgstr ""
+msgstr "ΞΞ»ΞµΞ³Ο‡ΞΏΟ‚ ΞΌΟ€Ξ±Ο„Ξ±ΟΞ―Ξ±Ο‚ ΞΊΞ¬ΞΈΞµ:"
 
 #: src/modules/battery/e_mod_config.c:142
 msgid "Alert when battery is down to:"
-msgstr ""
+msgstr "Ξ ΟΞΏΞµΞΉΞ΄ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· ΟΟ„Ξ±Ξ½ Ξ· ΞΌΟ€Ξ±Ο„Ξ±ΟΞ―Ξ± ΞµΞ―Ξ½Ξ±ΞΉ ΞΊΞ¬Ο„Ο‰ Ξ±Ο€Ο:"
 
 #: src/modules/battery/e_mod_config.c:145
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:119
@@ -4379,13 +4384,13 @@ msgstr ""
 #: src/modules/conf_dpms/e_int_config_dpms.c:209
 #, c-format
 msgid "%1.0f minutes"
-msgstr "%1.0f λεπτά"
+msgstr "%1.0f Ξ»ΞµΟ€Ο„Ξ¬"
 
 #: src/modules/battery/e_mod_config.c:148
 #, c-format
 #, fuzzy
 msgid "%1.0f percent"
-msgstr "%1.0f τις εκατό"
+msgstr "%1.0f Ο„ΞΉΟ‚ ΞµΞΊΞ±Ο„Ο"
 
 #: src/modules/battery/e_mod_config.c:151
 msgid "Dismiss alert automatically"
@@ -4399,27 +4404,27 @@ msgstr ""
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:157
 #, c-format
 msgid "%1.0f seconds"
-msgstr "%1.0f δευτερόλεπτα"
+msgstr "%1.0f Ξ΄ΞµΟ…Ο„ΞµΟΟΞ»ΞµΟ€Ο„Ξ±"
 
 #: src/modules/conf_engine/e_mod_main.c:35
 msgid "Engine"
-msgstr ""
+msgstr "ΞΞ·Ο‡Ξ±Ξ½Ξ®"
 
 #: src/modules/conf_engine/e_int_config_engine.c:38
 msgid "Engine Settings"
-msgstr ""
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΞΞ·Ο‡Ξ±Ξ½Ξ®Ο‚"
 
 #: src/modules/conf_engine/e_int_config_engine.c:95
 msgid "Enable Composite"
-msgstr ""
+msgstr "Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Composite"
 
 #: src/modules/conf_engine/e_int_config_engine.c:102
 msgid "Default Engine"
-msgstr ""
+msgstr "Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½Ξ· ΞΞ·Ο‡Ξ±Ξ½Ξ®"
 
 #: src/modules/conf_engine/e_int_config_engine.c:131
 msgid "Enable Composite Support ?"
-msgstr ""
+msgstr "Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ¥Ο€ΞΏΟƒΟ„Ξ®ΟΞΉΞΎΞ·Ο‚ Composite ?"
 
 #: src/modules/conf_engine/e_int_config_engine.c:133
 msgid ""
@@ -4430,11 +4435,11 @@ msgstr ""
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:50
 msgid "Focus Settings"
-msgstr ""
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ•ΟƒΟ„Ξ―Ξ±ΟƒΞ·Ο‚"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:165
 msgid "Click Window to Focus"
-msgstr ""
+msgstr "ΞΞ»ΞΉΞΊ ΟƒΟ„ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ Ξ³ΞΉΞ± ΞµΟƒΟ„Ξ―Ξ±ΟƒΞ·"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:167
 msgid "Window under the Mouse"
@@ -4446,7 +4451,7 @@ msgstr ""
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:183
 msgid "Focus"
-msgstr "Εστίαση"
+msgstr "Ξ•ΟƒΟ„Ξ―Ξ±ΟƒΞ·"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:185
 msgid "Click to focus"
@@ -4482,7 +4487,7 @@ msgstr ""
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:205
 msgid "Other Settings"
-msgstr "¶λλες Ρυθμίσεις"
+msgstr "Ξ†Ξ»Ξ»ΞµΟ‚ Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:206
 msgid "Always pass on caught click events to programs"
@@ -4510,7 +4515,7 @@ msgstr ""
 
 #: src/modules/conf_window_focus/e_mod_main.c:35
 msgid "Window Focus"
-msgstr ""
+msgstr "Ξ•ΟƒΟ„Ξ―Ξ±ΟƒΞ· Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:66
 msgid "Select an Input Method Configuration..."
@@ -4533,24 +4538,24 @@ msgstr ""
 
 #: src/modules/conf_imc/e_mod_main.c:34 src/modules/conf_intl/e_mod_main.c:34
 msgid "Language"
-msgstr "Γλώσσα"
+msgstr "Ξ“Ξ»ΟΟƒΟƒΞ±"
 
 #: src/modules/conf_imc/e_mod_main.c:35
 msgid "Input Method Settings"
-msgstr ""
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΞΞµΞΈΟΞ΄ΞΏΟ… Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚"
 
 #: src/modules/conf_imc/e_int_config_imc.c:109
 msgid "Input Method Configuration"
-msgstr ""
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· ΞΞµΞΈΟΞ΄ΞΏΟ… Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚"
 
 #: src/modules/conf_imc/e_int_config_imc.c:297
 msgid "Input Method Selector"
-msgstr ""
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ξ±Ο‚ ΞΞµΞΈΟΞ΄ΞΏΟ… Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚"
 
 #: src/modules/conf_imc/e_int_config_imc.c:300
 #: src/modules/conf_imc/e_int_config_imc.c:890
 msgid "Use No Input Method"
-msgstr ""
+msgstr "Ξ§Ο‰ΟΞ―Ο‚ Ξ§ΟΞ®ΟƒΞ· ΞΞµΞΈΟΞ΄ΞΏΟ… Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚"
 
 #: src/modules/conf_imc/e_int_config_imc.c:305
 #: src/modules/conf_imc/e_int_config_imc.c:957
@@ -4569,11 +4574,11 @@ msgstr ""
 
 #: src/modules/conf_imc/e_int_config_imc.c:897
 msgid "New"
-msgstr "Νέο"
+msgstr "ΞΞ­ΞΏ"
 
 #: src/modules/conf_imc/e_int_config_imc.c:899
 msgid "Import..."
-msgstr "Εισαγωγή..."
+msgstr "Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®..."
 
 #: src/modules/conf_imc/e_int_config_imc.c:904
 msgid "Input Method Parameters"
@@ -4581,7 +4586,7 @@ msgstr ""
 
 #: src/modules/conf_imc/e_int_config_imc.c:914
 msgid "Execute Command"
-msgstr ""
+msgstr "Ξ•ΞΊΟ„Ξ­Ξ»ΞµΟƒΞ· Ξ•Ξ½Ο„ΞΏΞ»Ξ®Ο‚"
 
 #: src/modules/conf_imc/e_int_config_imc.c:921
 msgid "Setup Command"
@@ -4597,85 +4602,86 @@ msgstr "IBar"
 
 #: src/modules/ibar/e_mod_main.c:797
 msgid "Change Icon Properties"
-msgstr ""
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΟ‰Ξ½ Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/modules/ibar/e_mod_main.c:802
 #, fuzzy
 msgid "Remove Icon"
-msgstr "Αφαίρεση Εικονιδίου"
+msgstr "Ξ‘Ο†Ξ±Ξ―ΟΞµΟƒΞ· Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/modules/ibar/e_mod_main.c:812
 #, fuzzy
 msgid "Add An Icon"
-msgstr "Προσθήκη Εικονιδίου"
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/modules/ibar/e_mod_main.c:819
 msgid "Create New Icon"
-msgstr "Δημιουργία Νέου Εικονιδίου"
+msgstr "Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± ΞΞ­ΞΏΟ… Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/modules/ibar/e_mod_main.c:835
 msgid "Add Application"
-msgstr "Προσθήκη Εφαρμογής"
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚"
 
 #: src/modules/ibar/e_mod_config.c:55
 msgid "IBar Configuration"
-msgstr "Ρύθμιση IBar"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· IBar"
 
 #: src/modules/ibar/e_mod_config.c:101
 msgid "Selected Bar Source"
-msgstr ""
+msgstr "Ξ•Ο€Ξ»ΞµΞ³ΞΌΞ­Ξ½Ξ· Ξ Ξ·Ξ³Ξ® ΞΟ€Ξ¬ΟΞ±Ο‚"
 
 #: src/modules/ibar/e_mod_config.c:122
 msgid "Icon Labels"
-msgstr "Ετικέτα Εικονιδίων"
+msgstr "Ξ•Ο„ΞΉΞΊΞ­Ο„Ξ± Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―Ο‰Ξ½"
 
 #: src/modules/ibar/e_mod_config.c:123 src/modules/ibox/e_mod_config.c:94
 msgid "Show Icon Label"
-msgstr "Εμφάνιση Ετικέτας Εικονιδίου"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ•Ο„ΞΉΞΊΞ­Ο„Ξ±Ο‚ Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/modules/ibar/e_mod_config.c:129
 msgid "Display App Name"
-msgstr "Εμφάνιση Όνοματος Εφαρμογής"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞ½ΞΏΞΌΞ±Ο„ΞΏΟ‚ Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚"
 
 #: src/modules/ibar/e_mod_config.c:133
 msgid "Display App Comment"
-msgstr "Εμφάνιση Σχολίου Εφαρμογής"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ£Ο‡ΞΏΞ»Ξ―ΞΏΟ… Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚"
 
 #: src/modules/ibar/e_mod_config.c:137
 #, fuzzy
 msgid "Display App Generic"
-msgstr "Εμφάνιση Εφαρμογής Γενικά"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®Ο‚ Ξ“ΞµΞ½ΞΉΞΊΞ¬"
 
 #: src/modules/ibar/e_mod_config.c:167
 msgid "Create new IBar source"
-msgstr "Δημιουργία μιας νέας πηγής IBar"
+msgstr "Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± ΞΌΞΉΞ±Ο‚ Ξ½Ξ­Ξ±Ο‚ Ο€Ξ·Ξ³Ξ®Ο‚ IBar"
 
 #: src/modules/ibar/e_mod_config.c:168
 msgid "Enter a name for this new source:"
-msgstr "Εισαγωγή ενός ονόματος για αυτή τη νέα πηγή:"
+msgstr "Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΞµΞ½ΟΟ‚ ΞΏΞ½ΟΞΌΞ±Ο„ΞΏΟ‚ Ξ³ΞΉΞ± Ξ±Ο…Ο„Ξ® Ο„Ξ· Ξ½Ξ­Ξ± Ο€Ξ·Ξ³Ξ®:"
 
 #: src/modules/ibar/e_mod_config.c:183
 #, c-format
+#, fuzzy
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "bar source?"
-msgstr ""
+msgstr "Ξ‘ΞΉΟ„Ξ®ΞΈΞ·ΞΊΞµ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® \"%s\".<br><br>Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ Ξ³ΞΉΞ± Ο„Ξ· Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ Ο€Ξ·Ξ³Ξ® ΞΌΟ€Ξ¬ΟΞ±Ο‚"
 
 #: src/modules/ibar/e_mod_config.c:187
 msgid "Are you sure you want to delete this bar source?"
-msgstr "Θέλετε να διαγράψετε αυτή την πηγή μπάρας?"
+msgstr "ΞΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ΄ΞΉΞ±Ξ³ΟΞ¬ΟΞµΟ„Ξµ Ξ±Ο…Ο„Ξ® Ο„Ξ·Ξ½ Ο€Ξ·Ξ³Ξ® ΞΌΟ€Ξ¬ΟΞ±Ο‚?"
 
 #: src/modules/conf_desks/e_mod_main.c:35
 msgid "Virtual Desktops"
-msgstr "Εικονικές Επιφάνειες Εργασίας"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½ΞΉΞΊΞ­Ο‚ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞµΟ‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/conf_desks/e_int_config_desks.c:56
 msgid "Virtual Desktops Settings"
-msgstr "Ρυθμίσεις Εικονικών Επιαφανειών Εργασίας"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ•ΞΉΞΊΞΏΞ½ΞΉΞΊΟΞ½ Ξ•Ο€ΞΉΞ±Ο†Ξ±Ξ½ΞµΞΉΟΞ½ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/conf_desks/e_int_config_desks.c:189
 msgid "Number of Desktops"
-msgstr "Αριθμός των Επιφανειών Εργασίας"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ο„Ο‰Ξ½ Ξ•Ο€ΞΉΟ†Ξ±Ξ½ΞµΞΉΟΞ½ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/conf_desks/e_int_config_desks.c:208
 #: src/modules/conf_desks/e_int_config_desks.c:247
@@ -4684,16 +4690,16 @@ msgstr ""
 
 #: src/modules/conf_desks/e_int_config_desks.c:209
 msgid "Flip desktops when mouse at screen edge"
-msgstr ""
+msgstr "Ξ•Ξ½Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® ΞµΟ€ΞΉΟ†Ξ±Ξ½ΞµΞΉΟΞ½ ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚ ΟΟ„Ξ±Ξ½ ΞΏ Ξ΄ΞµΞ―ΞΊΟ„Ξ·Ο‚ Ξ²ΟΞ―ΟƒΞΊΞµΟ„Ξ±ΞΉ ΟƒΟ„Ξ®Ξ½ Ξ±ΞΉΟ‡ΞΌΞ® Ο„Ξ·Ο‚ ΞΏΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_desks/e_int_config_desks.c:211
 msgid "Animated flip"
-msgstr "Κινούμενη Αναστροφή"
+msgstr "ΞΞΉΞ½ΞΏΟΞΌΞµΞ½Ξ· Ξ‘Ξ½Ξ±ΟƒΟ„ΟΞΏΟ†Ξ®"
 
 #: src/modules/conf_desks/e_int_config_desks.c:229
 #, fuzzy
 msgid "Desktops"
-msgstr "Επιφάνειες Εργασίας"
+msgstr "Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞµΟ‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/conf_desks/e_int_config_desks.c:248
 msgid "Flip when moving mouse to the screen edge"
@@ -4713,7 +4719,7 @@ msgstr ""
 
 #: src/modules/conf_desks/e_int_config_desks.c:260
 msgid "Flip Animation"
-msgstr "Κίνηση Αναστροφής"
+msgstr "ΞΞ―Ξ½Ξ·ΟƒΞ· Ξ‘Ξ½Ξ±ΟƒΟ„ΟΞΏΟ†Ξ®Ο‚"
 
 #: src/modules/conf_desks/e_int_config_desks.c:262
 msgid "Off"
@@ -4721,35 +4727,35 @@ msgstr ""
 
 #: src/modules/conf_desks/e_int_config_desks.c:264
 msgid "Pane"
-msgstr ""
+msgstr "Ξ Ξ»Ξ±Ξ―ΟƒΞΉΞΏ"
 
 #: src/modules/conf_desks/e_int_config_desks.c:266
 msgid "Zoom"
-msgstr "Εστίαση"
+msgstr "Ξ•ΟƒΟ„Ξ―Ξ±ΟƒΞ·"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
-msgstr "Ρυθμίσεις Ραφιού"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ΅Ξ±Ο†ΞΉΞΏΟ"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:71
 msgid "Configured Shelves"
-msgstr "Ρυθμισμένα Ράφια"
+msgstr "Ξ΅Ο…ΞΈΞΌΞΉΟƒΞΌΞ­Ξ½Ξ± Ξ΅Ξ¬Ο†ΞΉΞ±"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:277
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "shelf?"
-msgstr ""
+msgstr "Ξ‘ΞΉΟ„Ξ®ΞΈΞ·ΞΊΞµ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® \"%s\".<br><br>Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ Ξ³ΞΉΞ± Ο„Ξ· Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… ΟΞ±Ο†ΞΉΞΏΟ?"
 
 #: src/modules/exebuf/e_mod_main.c:48 src/modules/exebuf/e_mod_main.c:68
 #, fuzzy
 msgid "Run Command Dialog"
-msgstr "Διάλογος Εκτέλεσης Εντολής"
+msgstr "Ξ”ΞΉΞ¬Ξ»ΞΏΞ³ΞΏΟ‚ Ξ•ΞΊΟ„Ξ­Ξ»ΞµΟƒΞ·Ο‚ Ξ•Ξ½Ο„ΞΏΞ»Ξ®Ο‚"
 
 #: src/modules/mixer/conf_gadget.c:200 src/modules/mixer/app_mixer.c:419
 msgid "Lock Sliders"
-msgstr "Ολισθητές Κλειδώματος"
+msgstr "ΞΞ»ΞΉΟƒΞΈΞ·Ο„Ξ­Ο‚ ΞΞ»ΞµΞΉΞ΄ΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/mixer/conf_gadget.c:206
 msgid "Show both sliders when locked"
@@ -4757,68 +4763,68 @@ msgstr ""
 
 #: src/modules/mixer/conf_gadget.c:285 src/modules/mixer/app_mixer.c:382
 msgid "Channels"
-msgstr "Κανάλια"
+msgstr "ΞΞ±Ξ½Ξ¬Ξ»ΞΉΞ±"
 
 #: src/modules/mixer/conf_gadget.c:327
 msgid "Sound Cards"
-msgstr "Κάρτες Ήχου"
+msgstr "ΞΞ¬ΟΟ„ΞµΟ‚ Ξ‰Ο‡ΞΏΟ…"
 
 #: src/modules/mixer/conf_gadget.c:383
 msgid "Mixer Configuration"
-msgstr ""
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· ΞΞµΞ―ΞΊΟ„Ξ·"
 
 #: src/modules/mixer/app_mixer.c:166
 #, fuzzy
 msgid "Capture"
-msgstr "Καταγραφή"
+msgstr "ΞΞ±Ο„Ξ±Ξ³ΟΞ±Ο†Ξ®"
 
 #: src/modules/mixer/app_mixer.c:168
 msgid "Playback"
-msgstr ""
+msgstr "Ξ‘Ξ½Ξ±Ο€Ξ±ΟΞ±Ξ³Ο‰Ξ³Ξ®"
 
 #: src/modules/mixer/app_mixer.c:288 src/modules/mixer/app_mixer.c:306
 msgid "Input"
-msgstr "Είσοδος"
+msgstr "Ξ•Ξ―ΟƒΞΏΞ΄ΞΏΟ‚"
 
 #: src/modules/mixer/app_mixer.c:294
 msgid "Output"
-msgstr "Έξοδος"
+msgstr "ΞΞΎΞΏΞ΄ΞΏΟ‚"
 
 #: src/modules/mixer/app_mixer.c:367
 msgid "Cards"
-msgstr "Κάρτες"
+msgstr "ΞΞ¬ΟΟ„ΞµΟ‚"
 
 #: src/modules/mixer/app_mixer.c:394
 msgid "Card:"
-msgstr "Κάρτα:"
+msgstr "ΞΞ¬ΟΟ„Ξ±:"
 
 #: src/modules/mixer/app_mixer.c:398
 msgid "Channel:"
-msgstr "Κανάλι:"
+msgstr "ΞΞ±Ξ½Ξ¬Ξ»ΞΉ:"
 
 #: src/modules/mixer/app_mixer.c:402
 msgid "Type:"
-msgstr "Τύπος:"
+msgstr "Ξ¤ΟΟ€ΞΏΟ‚:"
 
 #: src/modules/mixer/app_mixer.c:406
 msgid "Left:"
-msgstr "Αριστερά"
+msgstr "Ξ‘ΟΞΉΟƒΟ„ΞµΟΞ¬"
 
 #: src/modules/mixer/app_mixer.c:411
 msgid "Right:"
-msgstr "Δεξιά:"
+msgstr "Ξ”ΞµΞΎΞΉΞ¬:"
 
 #: src/modules/mixer/app_mixer.c:416 src/modules/mixer/e_mod_main.c:602
 msgid "Mute"
-msgstr ""
+msgstr "Ξ£Ξ―Ξ³Ξ±ΟƒΞ·"
 
 #: src/modules/mixer/app_mixer.c:423
 msgid "Edit"
-msgstr "Επεξεργασία"
+msgstr "Ξ•Ο€ΞµΞΎΞµΟΞ³Ξ±ΟƒΞ―Ξ±"
 
 #: src/modules/mixer/e_mod_main.c:122
 msgid "Mixer Configuration Updated"
-msgstr ""
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· ΞΞµΞ―ΞΊΟ„Ξ· Ξ‘Ξ½Ξ±Ξ½ΞµΟΞΈΞ·ΞΊΞµ"
 
 #: src/modules/mixer/e_mod_main.c:1161
 msgid ""
@@ -4828,19 +4834,19 @@ msgstr ""
 
 #: src/modules/mixer/conf_module.c:98
 msgid "Mixer to use for global actions:"
-msgstr ""
+msgstr "ΞΞµΞ―ΞΊΟ„Ξ·Ο‚ Ο€ΟΞΏΟ‚ Ο‡ΟΞ®ΟƒΞ· ΞΊΞ±ΞΈΞΏΞ»ΞΉΞΊΟΞ½ ΞµΞ½ΞµΟΞ³ΞµΞΉΟΞ½:"
 
 #: src/modules/mixer/conf_module.c:152
 msgid "Launch mixer..."
-msgstr ""
+msgstr "Ξ•ΞΊΟ„Ξ­Ξ»ΞµΟƒΞ· ΞΌΞµΞ―ΞΊΟ„Ξ·..."
 
 #: src/modules/mixer/conf_module.c:187
 msgid "Mixer Module Configuration"
-msgstr ""
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ‘ΟΞΈΟΟΞΌΞ±Ο„ΞΏΟ‚ ΞΞµΞ―ΞΊΟ„Ξ·"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:49
 msgid "Screen Saver Settings"
-msgstr "Ρυθμίσεις Screen Saver"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Screen Saver"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:112
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:144
@@ -4879,11 +4885,11 @@ msgstr ""
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:176
 msgid "Allow"
-msgstr "Επέτρεψε"
+msgstr "Ξ•Ο€Ξ­Ο„ΟΞµΟΞµ"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:178
 msgid "Don't Allow"
-msgstr "Μην Επιτρέψεις"
+msgstr "ΞΞ·Ξ½ Ξ•Ο€ΞΉΟ„ΟΞ­ΟΞµΞΉΟ‚"
 
 #: src/modules/conf_screensaver/e_mod_main.c:35
 msgid "Screen Saver"
@@ -4891,11 +4897,11 @@ msgstr "Screen Saver"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:35
 msgid "Dialog Settings"
-msgstr "Ρυθμίσεις Διαλόγων"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ”ΞΉΞ±Ξ»ΟΞ³Ο‰Ξ½"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:86
 msgid "Disable Confirmation Dialogs"
-msgstr ""
+msgstr "Ξ‘Ο€ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ”ΞΉΞ±Ξ»ΟΞ³Ο‰Ξ½ Ξ•Ο€ΞΉΞ²ΞµΞ²Ξ±Ξ―Ο‰ΟƒΞ·Ο‚"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:93
 msgid "Default Configuration Dialogs Mode"
@@ -4904,38 +4910,38 @@ msgstr ""
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:96
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:134
 msgid "Basic Mode"
-msgstr ""
+msgstr "Ξ’Ξ±ΟƒΞΉΞΊΞ® Ξ›ΞµΞΉΟ„ΞΏΟ…ΟΞ³Ξ―Ξ±"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:98
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:136
 msgid "Advanced Mode"
-msgstr ""
+msgstr "Ξ ΟΞΏΟ‡Ο‰ΟΞ·ΞΌΞ­Ξ½Ξ· Ξ›ΞµΞΉΟ„ΞΏΟ…ΟΞ³Ξ―Ξ±"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:131
 msgid "Default Dialog Mode"
-msgstr ""
+msgstr "Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½Ξ· Ξ›ΞµΞΉΟ„ΞΏΟ…ΟΞ³Ξ―Ξ± Ξ”ΞΉΞ±Ξ»ΟΞ³ΞΏΟ…"
 
 #: src/modules/conf_dialogs/e_mod_main.c:35
 msgid "Dialogs"
-msgstr "Διάλογοι"
+msgstr "Ξ”ΞΉΞ¬Ξ»ΞΏΞ³ΞΏΞΉ"
 
 #: src/modules/gadman/e_mod_main.c:32 src/modules/gadman/e_mod_main.c:52
 #: src/modules/gadman/e_mod_main.c:86 src/modules/gadman/e_mod_main.c:114
 msgid "Gadgets"
-msgstr ""
+msgstr "Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞ¬"
 
 #: src/modules/gadman/e_mod_main.c:52 src/modules/gadman/e_mod_main.c:86
 msgid "Show/hide gadgets"
-msgstr ""
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ·/Ξ‘Ο€ΟΞΊΟΟ…ΟΞ· Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΟΞ½"
 
 #: src/modules/gadman/e_mod_config.c:42
 msgid "Gadgets Manager"
-msgstr ""
+msgstr "Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚ Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΟΞ½"
 
 #: src/modules/gadman/e_mod_gadman.c:561
 #, fuzzy
 msgid "Always on desktop"
-msgstr "Πάντα στην Επιφάνεια"
+msgstr "Ξ Ξ¬Ξ½Ο„Ξ± ΟƒΟ„Ξ·Ξ½ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±"
 
 #: src/modules/gadman/e_mod_gadman.c:571
 msgid "On top pressing"
@@ -4943,11 +4949,11 @@ msgstr ""
 
 #: src/modules/gadman/e_mod_gadman.c:581
 msgid "Behavior"
-msgstr "Συμπεριφορά"
+msgstr "Ξ£Ο…ΞΌΟ€ΞµΟΞΉΟ†ΞΏΟΞ¬"
 
 #: src/modules/gadman/e_mod_gadman.c:599
 msgid "Add other gadgets"
-msgstr ""
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ¬Ξ»Ξ»Ο‰Ξ½ Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΟΞ½"
 
 #: src/modules/gadman/e_mod_gadman.c:614
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1289
@@ -4975,195 +4981,195 @@ msgstr "WIN"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:54
 msgid "Profile Selector"
-msgstr "Επιλογέας Προφίλ"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ξ±Ο‚ Ξ ΟΞΏΟ†Ξ―Ξ»"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:104
 msgid "Available Profiles"
-msgstr "Διαθέσιμα Προφίλ"
+msgstr "Ξ”ΞΉΞ±ΞΈΞ­ΟƒΞΉΞΌΞ± Ξ ΟΞΏΟ†Ξ―Ξ»"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:208
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "profile?"
-msgstr ""
+msgstr "Ξ‘ΞΉΟ„Ξ®ΞΈΞ·ΞΊΞµ Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® \"%s\".<br><br>Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ Ξ³ΞΉΞ± Ο„Ξ· Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ο€ΟΞΏΟ†Ξ―Ξ»?"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:211
 msgid "Are you sure you want to delete this profile?"
-msgstr ""
+msgstr "Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ Ξ³ΞΉΞ± Ο„Ξ· Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… Ο€ΟΞΏΟ†Ξ―Ξ»?"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:258
 msgid "Add New Profile"
-msgstr "Προσθήκη νέου προφίλ"
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ½Ξ­ΞΏΟ… Ο€ΟΞΏΟ†Ξ―Ξ»"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:261
 #: src/modules/conf_desk/e_int_config_desk.c:150
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:120
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:105
 msgid "Name:"
-msgstr "Όνομα:"
+msgstr "ΞΞ½ΞΏΞΌΞ±:"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:272
 msgid "Plain Profile"
-msgstr "Απλό Προφίλ"
+msgstr "Ξ‘Ο€Ξ»Ο Ξ ΟΞΏΟ†Ξ―Ξ»"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:276
 msgid "Clone Current Profile"
-msgstr ""
+msgstr "ΞΞ»ΟΞ½ΞΏΟ‚ Ο„ΞΏΟ… Ξ¤ΟΞ­Ο‡Ο‰Ξ½ Ξ ΟΞΏΟ†Ξ―Ξ» "
 
 #: src/modules/conf_profiles/e_mod_main.c:22
 msgid "Profiles"
-msgstr "Προφίλ"
+msgstr "Ξ ΟΞΏΟ†Ξ―Ξ»"
 
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:45
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:137
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:217
 msgid "Cursor Settings"
-msgstr "Ρυθμίσεις Δείκτη"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ”ΞµΞ―ΞΊΟ„Ξ·"
 
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:129
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:209
 msgid "Show Cursor"
-msgstr "Εμφάνιση Δείκτη"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ”ΞµΞ―ΞΊΟ„Ξ·"
 
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:213
 msgid "Idle Cursor"
-msgstr ""
+msgstr "Ξ‘Ξ΄ΟΞ±Ξ½Ξ®Ο‚ Ξ”ΞµΞ―ΞΊΟ„Ξ·Ο‚"
 
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:141
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:221
 msgid "Use Enlightenment Cursor"
-msgstr "Χρήση Δείκτη Enlightenment"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ξ”ΞµΞ―ΞΊΟ„Ξ· Enlightenment"
 
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:143
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:223
 msgid "Use X Cursor"
-msgstr "Χρήση Δείκτη Χ"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ξ”ΞµΞ―ΞΊΟ„Ξ· Ξ§"
 
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:225
 msgid "Cursor Size"
-msgstr "Μέγεθος Δείκτη"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ”ΞµΞ―ΞΊΟ„Ξ·"
 
 #: src/modules/conf_mouse_cursor/e_mod_main.c:35
 msgid "Mouse Cursor"
-msgstr "Δείκτης Ποντικιού"
+msgstr "Ξ”ΞµΞ―ΞΊΟ„Ξ·Ο‚ Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ"
 
 #: src/modules/clock/e_mod_main.c:98
 #, fuzzy
 msgid "Clock"
-msgstr "Ρολόι"
+msgstr "Ξ΅ΞΏΞ»ΟΞΉ"
 
 #: src/modules/conf_applications/e_int_config_apps.c:51
 #: src/modules/conf_applications/e_mod_main.c:42
 msgid "Favorites Menu"
-msgstr "Μενού Αγαπημένων"
+msgstr "ΞΞµΞ½ΞΏΟ Ξ‘Ξ³Ξ±Ο€Ξ·ΞΌΞ­Ξ½Ο‰Ξ½"
 
 #: src/modules/conf_applications/e_int_config_apps.c:106
 #: src/modules/conf_applications/e_int_config_apps.c:121
 #: src/modules/conf_applications/e_mod_main.c:36
 msgid "IBar Applications"
-msgstr "Εφαρμογές IBar"
+msgstr "Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚ IBar"
 
 #: src/modules/conf_applications/e_int_config_apps.c:138
 #: src/modules/conf_applications/e_mod_main.c:38
 #, fuzzy
 msgid "Startup Applications"
-msgstr "Εφαρμογές κατα την εκκίνηση"
+msgstr "Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚ ΞΊΞ±Ο„Ξ± Ο„Ξ·Ξ½ ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·"
 
 #: src/modules/conf_applications/e_int_config_apps.c:155
 #: src/modules/conf_applications/e_mod_main.c:37
 msgid "Restart Applications"
-msgstr "Επαεκκίνηση Εφαρμογών"
+msgstr "Ξ•Ο€Ξ±ΞµΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ· Ξ•Ο†Ξ±ΟΞΌΞΏΞ³ΟΞ½"
 
 #: src/modules/conf_applications/e_int_config_apps.c:238
 #: src/modules/fileman/e_fwin.c:1456
 msgid "All Applications"
-msgstr "Όλες οι Εφαρμογές"
+msgstr "ΞΞ»ΞµΟ‚ ΞΏΞΉ Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚"
 
 #: src/modules/conf_applications/e_int_config_apps.c:252
 msgid "Selected Applications"
-msgstr "Επιλεγμένες Εφαρμογές"
+msgstr "Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞµΟ‚ Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚"
 
 #: src/modules/conf_applications/e_mod_main.c:35
 msgid "New Application"
-msgstr "Νέα Εφαρμογή"
+msgstr "ΞΞ­Ξ± Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®"
 
 #: src/modules/conf_applications/e_mod_main.c:40
 #, fuzzy
 msgid "IBar Other"
-msgstr "IBar άλλο"
+msgstr "IBar Ξ¬Ξ»Ξ»ΞΏ"
 
 #: src/modules/conf_desk/e_mod_main.c:35
 #, fuzzy
 msgid "Desk"
-msgstr "Επιφάνεια"
+msgstr "Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±"
 
 #: src/modules/conf_desk/e_int_config_desk.c:52
 #, fuzzy
 msgid "Desk Settings"
-msgstr "Ρυθμίσεις Επιφάνειας"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚"
 
 #: src/modules/conf_desk/e_int_config_desk.c:149
 msgid "Desktop Name"
-msgstr "Όνομα Επιφάνειας Εργασίας"
+msgstr "ΞΞ½ΞΏΞΌΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/conf_desk/e_int_config_desk.c:156
 msgid "Desktop Wallpaper"
-msgstr "Ταπετσαρία Επιφάνειας Εργασίας"
+msgstr "Ξ¤Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/conf_menus/e_mod_main.c:35
 #: src/modules/conf_menus/e_int_config_menus.c:44
 #: src/modules/conf_menus/e_int_config_menus.c:110
 #: src/modules/conf_menus/e_int_config_menus.c:169
 msgid "Menu Settings"
-msgstr "Ρυθμίσεις Μενού"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_menus/e_int_config_menus.c:101
 #: src/modules/conf_menus/e_int_config_menus.c:160
 msgid "Main Menu Settings"
-msgstr "Ρυθμίσεις Κεντρικού Μενού"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΞΞµΞ½Ο„ΟΞΉΞΊΞΏΟ ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_menus/e_int_config_menus.c:102
 #: src/modules/conf_menus/e_int_config_menus.c:161
 msgid "Show Favorites In Main Menu"
-msgstr "Εμφάνιση Αγαπημένων στο Κεντρικό Μενού"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ‘Ξ³Ξ±Ο€Ξ·ΞΌΞ­Ξ½Ο‰Ξ½ ΟƒΟ„ΞΏ ΞΞµΞ½Ο„ΟΞΉΞΊΟ ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_menus/e_int_config_menus.c:105
 #: src/modules/conf_menus/e_int_config_menus.c:164
 msgid "Show Applications In Main Menu"
-msgstr "Εμφάνιση Εφαρμογών στο Κεντρικό Μενού"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ•Ο†Ξ±ΟΞΌΞΏΞ³ΟΞ½ ΟƒΟ„ΞΏ ΞΞµΞ½Ο„ΟΞΉΞΊΟ ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_menus/e_int_config_menus.c:111
 #: src/modules/conf_menus/e_int_config_menus.c:170
 msgid "Show Name In Menu"
-msgstr "Εμφάνιση Ονόματος στο Μενού"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞ½ΟΞΌΞ±Ο„ΞΏΟ‚ ΟƒΟ„ΞΏ ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_menus/e_int_config_menus.c:114
 #: src/modules/conf_menus/e_int_config_menus.c:173
 msgid "Show Generic In Menu"
-msgstr ""
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ“ΞµΞ½ΞΉΞΊΞµΟ…ΞΌΞ­Ξ½Ο‰Ξ½ ΟƒΟ„ΞΏ ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_menus/e_int_config_menus.c:117
 #: src/modules/conf_menus/e_int_config_menus.c:176
 msgid "Show Comment In Menu"
-msgstr "Εμφάνιση Σχολίου στο Μενού"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ£Ο‡ΞΏΞ»Ξ―ΞΏΟ… ΟƒΟ„ΞΏ ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_menus/e_int_config_menus.c:181
 msgid "Autoscroll Settings"
-msgstr ""
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ‘Ο…Ο„ΟΞΌΞ±Ο„Ξ·Ο‚ ΞΟΞ»ΞΉΟƒΞ·Ο‚"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
 msgid "Autoscroll Margin"
-msgstr ""
+msgstr "Ξ ΞµΟΞΉΞΈΟΟΞΉΞΏ ΞΟΞ»ΞΉΟƒΞ·Ο‚"
 
 #: src/modules/conf_menus/e_int_config_menus.c:187
 msgid "Autoscroll Cursor Margin"
-msgstr ""
+msgstr "Ξ ΞµΟΞΉΞΈΟΟΞΉΞΏ ΞΟΞ»ΞΉΟƒΞ·Ο‚ Ξ”ΞµΞ―ΞΊΟ„Ξ·"
 
 #: src/modules/conf_menus/e_int_config_menus.c:195
 msgid "Menu Scroll Speed"
-msgstr "Ταχύτητα Κύλισης Μενού"
+msgstr "Ξ¤Ξ±Ο‡ΟΟ„Ξ·Ο„Ξ± ΞΟΞ»ΞΉΟƒΞ·Ο‚ ΞΞµΞ½ΞΏΟ"
 
 #: src/modules/conf_menus/e_int_config_menus.c:197
 #, c-format
@@ -5187,43 +5193,44 @@ msgstr ""
 #: src/modules/conf_menus/e_int_config_menus.c:208
 #, c-format
 msgid "%2.2f seconds"
-msgstr "%2.2f δευτερόλεπτα"
+msgstr "%2.2f Ξ΄ΞµΟ…Ο„ΞµΟΟΞ»ΞµΟ€Ο„Ξ±"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:106
 msgid "Select a Picture..."
-msgstr "Επιλογή μιας Εικόνας"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΞΌΞΉΞ±Ο‚ Ξ•ΞΉΞΊΟΞ½Ξ±Ο‚"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:156
 msgid "Fill and Stretch Options"
-msgstr "Επιλογές Γεμίσματος και Παραμόρφωσης"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚ Ξ“ΞµΞΌΞ―ΟƒΞΌΞ±Ο„ΞΏΟ‚ ΞΊΞ±ΞΉ Ξ Ξ±ΟΞ±ΞΌΟΟΟ†Ο‰ΟƒΞ·Ο‚"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:159
 msgid "Stretch"
-msgstr "Παραμόρφωση"
+msgstr "Ξ Ξ±ΟΞ±ΞΌΟΟΟ†Ο‰ΟƒΞ·"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:164
 msgid "Center"
-msgstr "Κέντρο"
+msgstr "ΞΞ­Ξ½Ο„ΟΞΏ"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:169
 msgid "Tile"
-msgstr "Παράθεση"
+msgstr "Ξ Ξ±ΟΞ¬ΞΈΞµΟƒΞ·"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:174
+#, fuzzy
 msgid "Within"
-msgstr ""
+msgstr "ΞΞ­ΟƒΞ±"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:179
 msgid "Fill"
-msgstr "Γέμισμα"
+msgstr "Ξ“Ξ­ΞΌΞΉΟƒΞΌΞ±"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:186
 msgid "File Quality"
-msgstr "Ποιότητα Αρχείου"
+msgstr "Ξ ΞΏΞΉΟΟ„Ξ·Ο„Ξ± Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:188
 msgid "Use original file"
-msgstr "Χρήση αυθεντικού αρχείου"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ξ±Ο…ΞΈΞµΞ½Ο„ΞΉΞΊΞΏΟ Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:191
 #, c-format
@@ -5232,156 +5239,156 @@ msgstr "%3.0f%%"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:504
 msgid "Picture Import Error"
-msgstr "Σφάλμα Εισαγωγής Εικόνας"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ Ξ•ΞΉΞΊΟΞ½Ξ±Ο‚"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:505
 #, fuzzy
 msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
-msgstr "Το Enlightenment δεν μπόρεσε να εισάγει την εικόνα<br>λόγω σφαλμάτων μετατροπής."
+msgstr "Ξ¤ΞΏ Enlightenment Ξ΄ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± ΞµΞΉΟƒΞ¬Ξ³ΞµΞΉ Ο„Ξ·Ξ½ ΞµΞΉΞΊΟΞ½Ξ±<br>Ξ»ΟΞ³Ο‰ ΟƒΟ†Ξ±Ξ»ΞΌΞ¬Ο„Ο‰Ξ½ ΞΌΞµΟ„Ξ±Ο„ΟΞΏΟ€Ξ®Ο‚."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:578
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:595
 msgid "Wallpaper Import Error"
-msgstr "Σφάλμα Εισαγωγής Ταπετσαρίας"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ Ξ¤Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ±Ο‚"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:579
 msgid "Enlightenment was unable to import the wallpaper<br>due to a copy error."
-msgstr "Το Enlightenment δεν μπόρεσε να εισάγει την ταπετσαρία<br>λόγω ενός σφάλματος αντιγραφής."
+msgstr "Ξ¤ΞΏ Enlightenment Ξ΄ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± ΞµΞΉΟƒΞ¬Ξ³ΞµΞΉ Ο„Ξ·Ξ½ Ο„Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ±<br>Ξ»ΟΞ³Ο‰ ΞµΞ½ΟΟ‚ ΟƒΟ†Ξ¬Ξ»ΞΌΞ±Ο„ΞΏΟ‚ Ξ±Ξ½Ο„ΞΉΞ³ΟΞ±Ο†Ξ®Ο‚."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:596
 msgid ""
 "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this "
 "is a valid wallpaper?"
-msgstr "Το Enlightenment δεν μπόρεσε να εισάγει την ταπετσαρία.<br><br>Είστε σίγουρος ότι είναι μια έγκυρη ταπετσαρία?"
+msgstr "Ξ¤ΞΏ Enlightenment Ξ΄ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± ΞµΞΉΟƒΞ¬Ξ³ΞµΞΉ Ο„Ξ·Ξ½ Ο„Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ±.<br><br>Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚ ΟΟ„ΞΉ ΞµΞ―Ξ½Ξ±ΞΉ ΞΌΞΉΞ± Ξ­Ξ³ΞΊΟ…ΟΞ· Ο„Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ±?"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:97
 msgid "Create a gradient..."
-msgstr "Δημιουργία μιας διαβάθμισης..."
+msgstr "Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± ΞΌΞΉΞ±Ο‚ Ξ΄ΞΉΞ±Ξ²Ξ¬ΞΈΞΌΞΉΟƒΞ·Ο‚..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:124
 msgid "Color 1:"
-msgstr "Χρώμα 1:"
+msgstr "Ξ§ΟΟΞΌΞ± 1:"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:128
 msgid "Color 2:"
-msgstr "Χρώμα 2:"
+msgstr "Ξ§ΟΟΞΌΞ± 2:"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:164
 msgid "Fill Options"
-msgstr "Επιλογές Γεμίσματος"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚ Ξ“ΞµΞΌΞ―ΟƒΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:177
 msgid "Diagonal Up"
-msgstr "Διαγώνια Πάνω"
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ½ΞΉΞ± Ξ Ξ¬Ξ½Ο‰"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:182
 msgid "Diagonal Down"
-msgstr "Διαγώνια Κάτω"
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ½ΞΉΞ± ΞΞ¬Ο„Ο‰"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:187
 msgid "Radial"
-msgstr "Ακτινική"
+msgstr "Ξ‘ΞΊΟ„ΞΉΞ½ΞΉΞΊΞ®"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:369
 msgid "Gradient Creation Error"
-msgstr "Σφάλμα Δημιουργίας Διαβάθμισης"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ±Ο‚ Ξ”ΞΉΞ±Ξ²Ξ¬ΞΈΞΌΞΉΟƒΞ·Ο‚"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:370
 msgid "For some reason, Enlightenment was unable to create a gradient."
-msgstr "Για κάποιο λόγο, το Enlightenment δεν μπόρεσε να δημιουργήσει μια διαβάθμιση."
+msgstr "Ξ“ΞΉΞ± ΞΊΞ¬Ο€ΞΏΞΉΞΏ Ξ»ΟΞ³ΞΏ, Ο„ΞΏ Enlightenment Ξ΄ΞµΞ½ ΞΌΟ€ΟΟΞµΟƒΞµ Ξ½Ξ± Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ®ΟƒΞµΞΉ ΞΌΞΉΞ± Ξ΄ΞΉΞ±Ξ²Ξ¬ΞΈΞΌΞΉΟƒΞ·."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:97
 #: src/modules/conf_theme/e_int_config_theme_web.c:92
 msgid "Choose a website from list..."
-msgstr "Επιλέξτε ιστότοπο από τη λίστα..."
+msgstr "Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΉΟƒΟ„ΟΟ„ΞΏΟ€ΞΏ Ξ±Ο€Ο Ο„Ξ· Ξ»Ξ―ΟƒΟ„Ξ±..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:111
 msgid "get-e.org - Static"
-msgstr "get-e.org - Στατικό"
+msgstr "get-e.org - Ξ£Ο„Ξ±Ο„ΞΉΞΊΟ"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:114
 msgid "get-e.org  - Animated"
-msgstr "get-e.org - Κινούμενο"
+msgstr "get-e.org - ΞΞΉΞ½ΞΏΟΞΌΞµΞ½ΞΏ"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:244
 #: src/modules/conf_theme/e_int_config_theme_web.c:521
 #, c-format
 msgid "[%s] Getting feed... DONE!"
-msgstr ""
+msgstr "[%s] Ξ‘Ξ½Ξ¬ΞΊΟ„Ξ·ΟƒΞ· Ξ΅ΞΏΞ®Ο‚... Ξ Ξ•Ξ¤Ξ¥Ξ§Ξ•!"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:252
 #: src/modules/conf_theme/e_int_config_theme_web.c:529
 #, c-format
 msgid "[%s] Getting feed... FAILED!"
-msgstr ""
+msgstr "[%s] Ξ‘Ξ½Ξ¬ΞΊΟ„Ξ·ΟƒΞ· Ξ΅ΞΏΞ®Ο‚... Ξ‘Ξ Ξ•Ξ¤Ξ¥Ξ§Ξ•!"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:375
 #: src/modules/conf_theme/e_int_config_theme_web.c:483
 #, c-format
 msgid "[%s] Parsing feed... DONE!"
-msgstr ""
+msgstr "[%s] Ξ‘Ξ½Ξ¬Ξ»Ο…ΟƒΞ· Ξ΅ΞΏΞ®Ο‚... Ξ Ξ•Ξ¤Ξ¥Ξ§Ξ•!"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:383
 #: src/modules/conf_theme/e_int_config_theme_web.c:491
 #, c-format
 msgid "[%s] Parsing feed... FAILED!"
-msgstr ""
+msgstr "[%s] Ξ‘Ξ½Ξ¬Ξ»Ο…ΟƒΞ· Ξ΅ΞΏΞ®Ο‚... Ξ‘Ξ Ξ•Ξ¤Ξ¥Ξ§Ξ•!"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:501
 #: src/modules/conf_theme/e_int_config_theme_web.c:260
 #, c-format
 msgid "[%s] Downloading of edje file..."
-msgstr "[%s] Κατέβασμα αρχείου edje..."
+msgstr "[%s] ΞΞ±Ο„Ξ­Ξ²Ξ±ΟƒΞΌΞ± Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… edje..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:535
 #: src/modules/conf_theme/e_int_config_theme_web.c:280
 #, c-format
 #, fuzzy
 msgid "[%s] Download %d images of %d"
-msgstr "[%s] Κατέβασμα %d εικόνες από %d"
+msgstr "[%s] ΞΞ±Ο„Ξ­Ξ²Ξ±ΟƒΞΌΞ± %d ΞµΞΉΞΊΟΞ½ΞµΟ‚ Ξ±Ο€Ο %d"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:549
 #: src/modules/conf_theme/e_int_config_theme_web.c:294
 #, c-format
 msgid "[%s] Choose an image from list"
-msgstr "[%s] Επέλεξε εικόνα από τη λίστα"
+msgstr "[%s] Ξ•Ο€Ξ­Ξ»ΞµΞΎΞµ ΞµΞΉΞΊΟΞ½Ξ± Ξ±Ο€Ο Ο„Ξ· Ξ»Ξ―ΟƒΟ„Ξ±"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:572
 #: src/modules/conf_theme/e_int_config_theme_web.c:223
 #, c-format
 msgid "[%s] Downloading of edje file... %d%% done"
-msgstr "[%s] Κατέβασμα του αρχείου edje... %d%% ολοκληρώθηκε"
+msgstr "[%s] ΞΞ±Ο„Ξ­Ξ²Ξ±ΟƒΞΌΞ± Ο„ΞΏΟ… Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… edje... %d%% ΞΏΞ»ΞΏΞΊΞ»Ξ·ΟΟΞΈΞ·ΞΊΞµ"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:605
 #: src/modules/conf_theme/e_int_config_theme_web.c:351
 #, c-format
 msgid "[%s] Getting feed..."
-msgstr ""
+msgstr "[%s] Ξ‘Ξ½Ξ¬ΞΊΟ„Ξ·ΟƒΞ· Ξ΅ΞΏΞ®Ο‚"
 
 #: src/modules/conf_wallpaper/e_mod_main.c:29
 #: src/modules/conf_wallpaper/e_mod_main.c:31
 #: src/modules/conf_wallpaper/e_mod_main.c:96
 msgid "Wallpaper"
-msgstr "Ταπετσαρία"
+msgstr "Ξ¤Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ±"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:108
 msgid "Wallpaper Settings"
-msgstr "Ρυθμίσεις Ταπετσαρίας"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ¤Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ±Ο‚"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:534
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:658
 msgid "Use Theme Wallpaper"
-msgstr "Χρήση της Ταπετσαρίας Θέματος"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ο„Ξ·Ο‚ Ξ¤Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ±Ο‚ ΞΞ­ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:539
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:663
 msgid "Picture..."
-msgstr "Εικόνα..."
+msgstr "Ξ•ΞΉΞΊΟΞ½Ξ±..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:542
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:666
 msgid "Gradient..."
-msgstr "Διαβάθμιση..."
+msgstr "Ξ”ΞΉΞ±Ξ²Ξ¬ΞΈΞΌΞΉΟƒΞ·..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:547
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:671
@@ -5390,67 +5397,67 @@ msgstr "Online..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:690
 msgid "Where to place the Wallpaper"
-msgstr "Που να τοποθετηθεί η Ταπετσαρία"
+msgstr "Ξ ΞΏΟ… Ξ½Ξ± Ο„ΞΏΟ€ΞΏΞΈΞµΟ„Ξ·ΞΈΞµΞ― Ξ· Ξ¤Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ±"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:691
 msgid "All Desktops"
-msgstr "Όλες οι Επιφάνειες Εργασίας"
+msgstr "ΞΞ»ΞµΟ‚ ΞΏΞΉ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞµΟ‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:693
 msgid "This Desktop"
-msgstr "Αυτή η Επιφάνεια Εργασίας"
+msgstr "Ξ‘Ο…Ο„Ξ® Ξ· Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:695
 msgid "This Screen"
-msgstr "Αυτή η Οθόνη"
+msgstr "Ξ‘Ο…Ο„Ξ® Ξ· ΞΞΈΟΞ½Ξ·"
 
 #: src/modules/conf_mouse/e_mod_main.c:34
 #: src/modules/conf_mousebindings/e_mod_main.c:34
 #: src/modules/conf_keybindings/e_mod_main.c:34
 msgid "Keyboard & Mouse"
-msgstr "Πληκτρολόγιο & Ποντίκι"
+msgstr "Ξ Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΟΞ³ΞΉΞΏ & Ξ ΞΏΞ½Ο„Ξ―ΞΊΞΉ"
 
 #: src/modules/conf_mouse/e_mod_main.c:35
 #: src/modules/conf_mouse/e_int_config_mouse.c:36
 msgid "Mouse Settings"
-msgstr "Ρυθμίσεις Ποντικιού"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ"
 
 #: src/modules/conf_mouse/e_int_config_mouse.c:97
 msgid "Mouse Hand"
-msgstr "Χέρι Ποντικιού"
+msgstr "Ξ§Ξ­ΟΞΉ Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ"
 
 #: src/modules/conf_mouse/e_int_config_mouse.c:105
 msgid "Mouse Acceleration"
-msgstr "Επιτάχυνση Ποντικιού"
+msgstr "Ξ•Ο€ΞΉΟ„Ξ¬Ο‡Ο…Ξ½ΟƒΞ· Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ"
 
 #: src/modules/conf_mouse/e_int_config_mouse.c:107
 msgid "Acceleration"
-msgstr "Επιτάχυνση"
+msgstr "Ξ•Ο€ΞΉΟ„Ξ¬Ο‡Ο…Ξ½ΟƒΞ·"
 
 #: src/modules/conf_mouse/e_int_config_mouse.c:113
 #, fuzzy
 msgid "Threshold"
-msgstr "Κατώφλι"
+msgstr "ΞΞ±Ο„ΟΟ†Ξ»ΞΉ"
 
 #: src/modules/start/e_mod_main.c:110
 msgid "Start"
-msgstr "Έναρξη"
+msgstr "ΞΞ½Ξ±ΟΞΎΞ·"
 
 #: src/modules/wizard/e_wizard.c:341
-msgid "Welcome to Enlightenment ζ±δΊ¬"
-msgstr "ΞΞ±Ξ»ΟΟ‚ ΞΟΞ―ΟƒΞ±Ο„Ξµ ΟƒΟ„ΞΏ Enlightenment ζ±δΊ¬"
+msgid "Welcome to Enlightenment Ξ¶ΒΒ±Ξ΄ΞΒ¬"
+msgstr "ΞΞ±Ξ»ΟΟ‚ ΞΟΞ―ΟƒΞ±Ο„Ξµ ΟƒΟ„ΞΏ Enlightenment"
 
 #: src/modules/wizard/e_wizard.c:343
 msgid "Next"
-msgstr "Επόμενο"
+msgstr "Ξ•Ο€ΟΞΌΞµΞ½ΞΏ"
 
 #: src/modules/wizard/e_wizard.c:344
 msgid "Back"
-msgstr "Πίσω"
+msgstr "Ξ Ξ―ΟƒΟ‰"
 
 #: src/modules/wizard/page_010.c:25
 msgid "Choose Language"
-msgstr "Επιλογή Γλώσσας"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ“Ξ»ΟΟƒΟƒΞ±Ο‚"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:54
 #: src/modules/conf_window_display/e_mod_main.c:35
@@ -5473,27 +5480,27 @@ msgstr ""
 #: src/modules/conf_window_display/e_int_config_window_display.c:168
 #: src/modules/conf_window_display/e_int_config_window_display.c:227
 msgid "Automatic New Window Placement"
-msgstr ""
+msgstr "Ξ‘Ο…Ο„ΟΞΌΞ±Ο„Ξ· Ξ¤ΞΏΟ€ΞΏΞΈΞ­Ο„Ξ·ΟƒΞ· ΞΞ­ΞΏΟ… Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:170
 #: src/modules/conf_window_display/e_int_config_window_display.c:230
 msgid "Smart Placement"
-msgstr "Έξυπνη Τοποθέτηση"
+msgstr "ΞΞΎΟ…Ο€Ξ½Ξ· Ξ¤ΞΏΟ€ΞΏΞΈΞ­Ο„Ξ·ΟƒΞ·"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:172
 #: src/modules/conf_window_display/e_int_config_window_display.c:232
 msgid "Don't hide Gadgets"
-msgstr ""
+msgstr "ΞΞ®Ξ½ ΞΊΟΟΞ²ΞµΞΉΟ‚ Ο„Ξ± Ξ£Ο…ΟƒΟ„Ξ±Ο„ΞΉΞΊΞ¬"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:174
 #: src/modules/conf_window_display/e_int_config_window_display.c:234
 msgid "Place at mouse pointer"
-msgstr "Τοποθέτηση στον δείκτη ποντικιού"
+msgstr "Ξ¤ΞΏΟ€ΞΏΞΈΞ­Ο„Ξ·ΟƒΞ· ΟƒΟ„ΞΏΞ½ Ξ΄ΞµΞ―ΞΊΟ„Ξ· Ο€ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:176
 #: src/modules/conf_window_display/e_int_config_window_display.c:236
 msgid "Place manually with the mouse"
-msgstr "Τοποθέτηση χειροκίνητα με το ποντίκι"
+msgstr "Ξ¤ΞΏΟ€ΞΏΞΈΞ­Ο„Ξ·ΟƒΞ· Ο‡ΞµΞΉΟΞΏΞΊΞ―Ξ½Ξ·Ο„Ξ± ΞΌΞµ Ο„ΞΏ Ο€ΞΏΞ½Ο„Ξ―ΞΊΞΉ"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:178
 #: src/modules/conf_window_display/e_int_config_window_display.c:238
@@ -5502,66 +5509,66 @@ msgstr ""
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:194
 msgid "Window Move Geometry"
-msgstr ""
+msgstr "Ξ“ΞµΟ‰ΞΌΞµΟ„ΟΞ―Ξ± ΞΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ·Ο‚ Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:196
 #: src/modules/conf_window_display/e_int_config_window_display.c:204
 #, fuzzy
 msgid "Display information"
-msgstr "Εμφάνιση πληροφοριών"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο€Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞΉΟΞ½"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:198
 msgid "Follow the window as it moves"
-msgstr ""
+msgstr "Ξ‘ΞΊΞΏΞ»ΞΏΟΞΈΞ± Ο„ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ ΞΊΞ±Ο„Ξ¬ Ο„Ξ·Ξ½ ΞΌΞµΟ„Ξ±ΞΊΞ―Ξ½Ξ·ΟƒΞ·"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:202
 msgid "Window Resize Geometry"
-msgstr ""
+msgstr "Ξ“ΞµΟ‰ΞΌΞµΟ„ΟΞ―Ξ± Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ®Ο‚ ΞΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚ Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:206
 msgid "Follow the window as it resizes"
-msgstr ""
+msgstr "Ξ‘ΞΊΞΏΞ»ΞΏΟΞΈΞ± Ο„ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ ΞΊΞ±Ο„Ξ¬ Ο„Ξ·Ξ½ Ξ±Ξ»Ξ»Ξ±Ξ³Ξ® ΞΌΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:210
 msgid "Window Shading"
-msgstr "Σκίαση Παραθύρου"
+msgstr "Ξ£ΞΊΞ―Ξ±ΟƒΞ· Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:217
 #, fuzzy
 msgid "Linear"
-msgstr "Γραμμικό"
+msgstr "Ξ“ΟΞ±ΞΌΞΌΞΉΞΊΟ"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:219
 msgid "Smooth accelerate and decelerate"
-msgstr "Ομαλή Επιτάχυνση και Επιβράδυνση"
+msgstr "ΞΞΌΞ±Ξ»Ξ® Ξ•Ο€ΞΉΟ„Ξ¬Ο‡Ο…Ξ½ΟƒΞ· ΞΊΞ±ΞΉ Ξ•Ο€ΞΉΞ²ΟΞ¬Ξ΄Ο…Ξ½ΟƒΞ·"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:221
 msgid "Accelerate"
-msgstr "Επιτάχυνση"
+msgstr "Ξ•Ο€ΞΉΟ„Ξ¬Ο‡Ο…Ξ½ΟƒΞ·"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:223
 msgid "Decelerate"
-msgstr "Επιβράδυνση"
+msgstr "Ξ•Ο€ΞΉΞ²ΟΞ¬Ξ΄Ο…Ξ½ΟƒΞ·"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:242
 msgid "Window Border"
-msgstr "Περίγραμμα Παραθύρου"
+msgstr "Ξ ΞµΟΞ―Ξ³ΟΞ±ΞΌΞΌΞ± Ξ Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:245
 msgid "Prefer user defined icon"
-msgstr "Προτίμησε εικονίδιο καθορισμένο από το χρήστη"
+msgstr "Ξ ΟΞΏΟ„Ξ―ΞΌΞ·ΟƒΞµ ΞµΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞΏ ΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞΏ Ξ±Ο€Ο Ο„ΞΏ Ο‡ΟΞ®ΟƒΟ„Ξ·"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:247
 msgid "Prefer application provided icon"
-msgstr "Προτίμησε το εικονίδιο που παρέχει η εφαρμογή"
+msgstr "Ξ ΟΞΏΟ„Ξ―ΞΌΞ·ΟƒΞµ Ο„ΞΏ ΞµΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞΏ Ο€ΞΏΟ… Ο€Ξ±ΟΞ­Ο‡ΞµΞΉ Ξ· ΞµΟ†Ξ±ΟΞΌΞΏΞ³Ξ®"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:251
 msgid "Internal Windows"
-msgstr "Εσωτερικά Παράθυρα"
+msgstr "Ξ•ΟƒΟ‰Ο„ΞµΟΞΉΞΊΞ¬ Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞ±"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:253
 msgid "Always remember internal windows"
-msgstr ""
+msgstr "Ξ•Ξ½ΞΈΟΞΌΞΉΟƒΞ· ΞµΟƒΟ‰Ο„ΞµΟΞΉΞΊΟΞ½ Ο€Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½ Ο€Ξ¬Ξ½Ο„Ξ±"
 
 #: src/modules/ibox/e_mod_main.c:221
 msgid "IBox"
@@ -5569,23 +5576,23 @@ msgstr "IBox"
 
 #: src/modules/ibox/e_mod_config.c:48
 msgid "IBox Configuration"
-msgstr "Ρύθμιση IBox"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· IBox"
 
 #: src/modules/ibox/e_mod_config.c:97
 msgid "Display Name"
-msgstr "Εμφάνιση Ονόματος"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞ½ΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/ibox/e_mod_config.c:99
 msgid "Display Title"
-msgstr "Εμφάνιση Τίτλου"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ¤Ξ―Ο„Ξ»ΞΏΟ…"
 
 #: src/modules/ibox/e_mod_config.c:101
 msgid "Display Class"
-msgstr "Εμφάνιση Κλάσης"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞ»Ξ¬ΟƒΞ·Ο‚"
 
 #: src/modules/ibox/e_mod_config.c:103
 msgid "Display Icon Name"
-msgstr "Εμφάνιση Ονόματος Εικονιδίου"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞ½ΟΞΌΞ±Ο„ΞΏΟ‚ Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Border Caption"
@@ -5593,91 +5600,91 @@ msgstr ""
 
 #: src/modules/ibox/e_mod_config.c:130
 msgid "Show windows from all screens"
-msgstr "Εμφάνιση Παραθύρων από όλες τις οθόνες"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½ Ξ±Ο€Ο ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ ΞΏΞΈΟΞ½ΞµΟ‚"
 
 #: src/modules/ibox/e_mod_config.c:135
 msgid "Show windows from current screen"
-msgstr "Εμφάνιση Παραθύρων από την τρέχουσα Επιφάνεια Εργασίας"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½ Ξ±Ο€Ο Ο„Ξ·Ξ½ Ο„ΟΞ­Ο‡ΞΏΟ…ΟƒΞ± Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/ibox/e_mod_config.c:144
 msgid "Show windows from all desktops"
-msgstr "Εμφάνιση Παραθύρων από όλες τις Επιφάνειες Εργασίας"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½ Ξ±Ο€Ο ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞµΟ‚ Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/ibox/e_mod_config.c:149
 msgid "Show windows from active desktop"
-msgstr "Εμφάνιση Παραθύρων από την ενεργή Επιφάνεια Εργασίας"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½ Ξ±Ο€Ο Ο„Ξ·Ξ½ ΞµΞ½ΞµΟΞ³Ξ® Ξ•Ο€ΞΉΟ†Ξ¬Ξ½ΞµΞΉΞ± Ξ•ΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:71
 msgid "Screen Lock Settings"
-msgstr "Ρυθμίσεις Κλειδώματος Οθόνης"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΞΞ»ΞµΞΉΞ΄ΟΞΌΞ±Ο„ΞΏΟ‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:143
 msgid "Automatic Locking"
-msgstr "Αυτόματο Κλείδωμα"
+msgstr "Ξ‘Ο…Ο„ΟΞΌΞ±Ο„ΞΏ ΞΞ»ΞµΞ―Ξ΄Ο‰ΞΌΞ±"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:145
 msgid "Lock when X screensaver activates"
-msgstr "Κλέιδωμα όταν το X Screensaver ενεργοποιείται"
+msgstr "ΞΞ»Ξ­ΞΉΞ΄Ο‰ΞΌΞ± ΟΟ„Ξ±Ξ½ Ο„ΞΏ X Screensaver ΞµΞ½ΞµΟΞ³ΞΏΟ€ΞΏΞΉΞµΞ―Ο„Ξ±ΞΉ"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:149
 msgid "Lock when idle time exceeded"
-msgstr "Κλείδωμα όταν ο χρόνος αδράνειας ξεπεραστεί"
+msgstr "ΞΞ»ΞµΞ―Ξ΄Ο‰ΞΌΞ± ΟΟ„Ξ±Ξ½ ΞΏ Ο‡ΟΟΞ½ΞΏΟ‚ Ξ±Ξ΄ΟΞ¬Ξ½ΞµΞΉΞ±Ο‚ ΞΎΞµΟ€ΞµΟΞ±ΟƒΟ„ΞµΞ―"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:153
 #, fuzzy
 msgid "Idle time to exceed"
-msgstr "Χρόνος Αδράνειας για ξεπέρασμα"
+msgstr "Ξ§ΟΟΞ½ΞΏΟ‚ Ξ‘Ξ΄ΟΞ¬Ξ½ΞµΞΉΞ±Ο‚ Ξ³ΞΉΞ± ΞΎΞµΟ€Ξ­ΟΞ±ΟƒΞΌΞ±"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:281
 #, fuzzy
 msgid "Login Box Settings"
-msgstr "Ρυθμίσεις Κουτιού Σύνδεσης"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΞΞΏΟ…Ο„ΞΉΞΏΟ Ξ£ΟΞ½Ξ΄ΞµΟƒΞ·Ο‚"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:284
 msgid "Show on all screen zones"
-msgstr "Εμφάνιση σε όλες τις ζώνες οθόνης"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟƒΞµ ΟΞ»ΞµΟ‚ Ο„ΞΉΟ‚ Ξ¶ΟΞ½ΞµΟ‚ ΞΏΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:288
 msgid "Show on current screen zone"
-msgstr "Εμφάνιση στην τρέχουσα ζώνη οθόνης"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟƒΟ„Ξ·Ξ½ Ο„ΟΞ­Ο‡ΞΏΟ…ΟƒΞ± Ξ¶ΟΞ½Ξ· ΞΏΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:292
 msgid "Show on screen zone #:"
-msgstr "Εμφάνιση στην ζώνη οθόνης #:"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΟƒΟ„Ξ·Ξ½ Ξ¶ΟΞ½Ξ· ΞΏΞΈΟΞ½Ξ·Ο‚ #:"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:304
 msgid "Wallpaper Mode"
-msgstr "Λειτουργία Ταπετσαρίας"
+msgstr "Ξ›ΞµΞΉΟ„ΞΏΟ…ΟΞ³Ξ―Ξ± Ξ¤Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ±Ο‚"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:306
 msgid "Theme Defined"
-msgstr "Θέμα Ορίστικε"
+msgstr "ΞΞ­ΞΌΞ± ΞΟΞ―ΟƒΟ„ΞΉΞΊΞµ"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:309
 msgid "Theme Wallpaper"
-msgstr "Ταπετσαρία Θέματος"
+msgstr "Ξ¤Ξ±Ο€ΞµΟ„ΟƒΞ±ΟΞ―Ξ± ΞΞ­ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:322
 msgid "Custom Screenlock"
-msgstr "Προσαρμοσμένο Κλείδωμα Οθόνης"
+msgstr "Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½ΞΏ ΞΞ»ΞµΞ―Ξ΄Ο‰ΞΌΞ± ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:323
 #, fuzzy
 msgid "Use custom screenlock"
-msgstr "Χρήση προσαρμοσμένου κλειδώματος οθόνης"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ο€ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½ΞΏΟ… ΞΊΞ»ΞµΞΉΞ΄ΟΞΌΞ±Ο„ΞΏΟ‚ ΞΏΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_desklock/e_mod_main.c:35
 msgid "Screen Lock"
-msgstr "Κλείδωμα Οθόνης"
+msgstr "ΞΞ»ΞµΞ―Ξ΄Ο‰ΞΌΞ± ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_performance/e_int_config_performance.c:39
 msgid "Performance Settings"
-msgstr "Ρυθμίσεις Επιδόσεων"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ•Ο€ΞΉΞ΄ΟΟƒΞµΟ‰Ξ½"
 
 #: src/modules/conf_performance/e_int_config_performance.c:91
 #: src/modules/conf_performance/e_int_config_performance.c:124
 msgid "Framerate"
-msgstr "Ρυθμός καρέ"
+msgstr "Ξ΅Ο…ΞΈΞΌΟΟ‚ ΞΊΞ±ΟΞ­"
 
 #: src/modules/conf_performance/e_int_config_performance.c:93
 #: src/modules/conf_performance/e_int_config_performance.c:126
@@ -5687,16 +5694,16 @@ msgstr "%1.0f fps"
 
 #: src/modules/conf_performance/e_int_config_performance.c:130
 msgid "Cache Settings"
-msgstr "Ρυθμίσεις Προσωρινής Μνήμης"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ ΟΞΏΟƒΟ‰ΟΞΉΞ½Ξ®Ο‚ ΞΞ½Ξ®ΞΌΞ·Ο‚"
 
 #: src/modules/conf_performance/e_int_config_performance.c:131
 #, fuzzy
 msgid "Cache Flush Interval"
-msgstr "Διάστημα Καθαρισμού Προσωρινής Μνήμης"
+msgstr "Ξ”ΞΉΞ¬ΟƒΟ„Ξ·ΞΌΞ± ΞΞ±ΞΈΞ±ΟΞΉΟƒΞΌΞΏΟ Ξ ΟΞΏΟƒΟ‰ΟΞΉΞ½Ξ®Ο‚ ΞΞ½Ξ®ΞΌΞ·Ο‚"
 
 #: src/modules/conf_performance/e_int_config_performance.c:136
 msgid "Size Of Font Cache"
-msgstr "Μέγεθος Προσωρινής Μνήμης Γραμματοσειρών"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ ΟΞΏΟƒΟ‰ΟΞΉΞ½Ξ®Ο‚ ΞΞ½Ξ®ΞΌΞ·Ο‚ Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΟΞ½"
 
 #: src/modules/conf_performance/e_int_config_performance.c:138
 #, c-format
@@ -5705,7 +5712,7 @@ msgstr "%1.1f MB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:141
 msgid "Size Of Image Cache"
-msgstr "Μέγεθος Προσωρινής Μνήμης Εικόνων"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ ΟΞΏΟƒΟ‰ΟΞΉΞ½Ξ®Ο‚ ΞΞ½Ξ®ΞΌΞ·Ο‚ Ξ•ΞΉΞΊΟΞ½Ο‰Ξ½"
 
 #: src/modules/conf_performance/e_int_config_performance.c:143
 #, c-format
@@ -5715,53 +5722,53 @@ msgstr "%1.0f MB"
 #: src/modules/conf_performance/e_int_config_performance.c:146
 #, fuzzy
 msgid "Number Of Edje Files To Cache"
-msgstr "Αριθμός των Αρχείων Edje προς **"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ο„Ο‰Ξ½ Ξ‘ΟΟ‡ΞµΞ―Ο‰Ξ½ Edje Ο€ΟΞΏΟ‚ **"
 
 #: src/modules/conf_performance/e_int_config_performance.c:148
 #, c-format
 msgid "%1.0f files"
-msgstr "%1.0f αρχεία"
+msgstr "%1.0f Ξ±ΟΟ‡ΞµΞ―Ξ±"
 
 #: src/modules/conf_performance/e_int_config_performance.c:151
 msgid "Number Of Edje Collections To Cache"
-msgstr "Αριθμός των Συλλογών Edje προς **"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ο„Ο‰Ξ½ Ξ£Ο…Ξ»Ξ»ΞΏΞ³ΟΞ½ Edje Ο€ΟΞΏΟ‚ **"
 
 #: src/modules/conf_performance/e_int_config_performance.c:153
 #, c-format
 msgid "%1.0f collections"
-msgstr "%1.0f συλλογές"
+msgstr "%1.0f ΟƒΟ…Ξ»Ξ»ΞΏΞ³Ξ­Ο‚"
 
 #: src/modules/conf_performance/e_mod_main.c:35
 #, fuzzy
 msgid "Performance"
-msgstr "Επίδοση"
+msgstr "Ξ•Ο€Ξ―Ξ΄ΞΏΟƒΞ·"
 
 #: src/modules/conf_startup/e_int_config_startup.c:39
 msgid "Startup Settings"
-msgstr "Ρυθμίσεις Εκκίνησης"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ•ΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·Ο‚"
 
 #: src/modules/conf_startup/e_int_config_startup.c:334
 msgid "Show Splash Screen on Login"
-msgstr "Εμφάνιση Αρχικής Οθόνης στη Σύνδεση"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ‘ΟΟ‡ΞΉΞΊΞ®Ο‚ ΞΞΈΟΞ½Ξ·Ο‚ ΟƒΟ„Ξ· Ξ£ΟΞ½Ξ΄ΞµΟƒΞ·"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:67
 msgid "Select a Theme..."
-msgstr "Επιλογή ενός Θέματος..."
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΞµΞ½ΟΟ‚ ΞΞ­ΞΌΞ±Ο„ΞΏΟ‚..."
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:277
 #: src/modules/conf_theme/e_int_config_theme_import.c:286
 msgid "Theme Import Error"
-msgstr "Σφάλμα Εισαγωγής Θέματος"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®Ο‚ ΞΞ­ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:278
 msgid ""
 "Enlightenment was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
-msgstr ""
+msgstr "Ξ”ΞµΞ½ Ξ®Ο„Ξ±Ξ½ Ξ΄Ο…Ξ½Ξ±Ο„Ξ® Ξ· ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ο„ΞΏΟ… ΞΈΞ­ΞΌΞ±Ο„ΞΏΟ‚.<br><br>Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΞΉ Ο€Ο‰Ο‚ ΞµΞ―Ξ½Ξ±ΞΉ Ξ­Ξ½Ξ± Ξ­Ξ³ΞΊΟ…ΟΞΏ ΞΈΞ­ΞΌΞ±?"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:287
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
-msgstr ""
+msgstr "Ξ”ΞµΞ½ Ξ®Ο„Ξ±Ξ½ Ξ΄Ο…Ξ½Ξ±Ο„Ξ® Ξ· ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ο„ΞΏΟ… ΞΈΞ­ΞΌΞ±Ο„ΞΏΟ‚<br>Ξ»ΟΞ³Ο‰ ΞµΞ½ΟΟ‚ ΟƒΟ†Ξ¬Ξ»ΞΌΞ±Ο„ΞΏΟ‚ Ξ±Ξ½Ο„ΞΉΞ³ΟΞ±Ο†Ξ®Ο‚"
 
 #: src/modules/conf_theme/e_int_config_theme_web.c:106
 msgid "get-e.org"
@@ -5769,11 +5776,11 @@ msgstr "get-e.org"
 
 #: src/modules/conf_theme/e_int_config_theme.c:61
 msgid "Theme Selector"
-msgstr "Επιλογέας Θέματος"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ξ±Ο‚ ΞΞ­ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/conf_theme/e_int_config_theme.c:394
 msgid " Import..."
-msgstr "Εισαγωγή..."
+msgstr "Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ®..."
 
 #: src/modules/conf_theme/e_int_config_theme.c:399
 msgid " Online..."
@@ -5781,19 +5788,19 @@ msgstr "Online..."
 
 #: src/modules/conf_theme/e_int_config_theme.c:1001
 msgid "Theme Categories"
-msgstr "Κατηγορίες Θεμάτων"
+msgstr "ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―ΞµΟ‚ ΞΞµΞΌΞ¬Ο„Ο‰Ξ½"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1019
 msgid "Assign"
-msgstr "Ορισμός"
+msgstr "ΞΟΞΉΟƒΞΌΟΟ‚"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1022
 msgid "Clear"
-msgstr "Καθαρισμός"
+msgstr "ΞΞ±ΞΈΞ±ΟΞΉΟƒΞΌΟΟ‚"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1025
 msgid "Clear All"
-msgstr "Καθαρισμός Όλων"
+msgstr "ΞΞ±ΞΈΞ±ΟΞΉΟƒΞΌΟΟ‚ ΞΞ»Ο‰Ξ½"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:56
 #: src/modules/conf_dpms/e_int_config_dpms.c:77
@@ -5802,33 +5809,33 @@ msgstr "DPMS (Display Power Management Signaling)"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:57
 msgid "The current display server is not <br>DPMS capable."
-msgstr ""
+msgstr "Ξ Ο„ΟΞ­Ο‡Ο‰Ξ½ ΞµΞΎΟ…Ο€Ξ·ΟΞµΟ„Ξ·Ο„Ξ®Ο‚ ΞΏΞΈΟΞ½Ξ·Ο‚ Ξ΄ΞµΞ½ Ξ­Ο‡ΞµΞΉ <br>Ξ΄Ο…Ξ½Ξ±Ο„ΟΟ„Ξ·Ο„ΞµΟ‚ DPMS."
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:78
 msgid "The current display server does not <br>have the DPMS extension."
-msgstr ""
+msgstr "Ξ Ο„ΟΞ­Ο‡Ο‰Ξ½ ΞµΞΎΟ…Ο€Ξ·ΟΞµΟ„Ξ·Ο„Ξ®Ο‚ ΞΏΞΈΟΞ½Ξ·Ο‚ Ξ΄ΞµΞ½ Ξ­Ο‡ΞµΞΉ <br>Ο„Ξ·Ξ½ ΞµΟ€Ξ­ΞΊΟ„Ξ±ΟƒΞ· DPMS."
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:107
 #, fuzzy
 msgid "Display Power Management Settings"
-msgstr "Ρυθμίσεις Διαχείρισης Ενέργειας Οθόνης"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ”ΞΉΞ±Ο‡ΞµΞ―ΟΞΉΟƒΞ·Ο‚ Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞ±Ο‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:185
 #, fuzzy
 msgid "Enable Display Power Management"
-msgstr "Ενεργοποίηση Διαχείρισης Ενέργειας Οθόνης"
+msgstr "Ξ•Ξ½ΞµΟΞ³ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ”ΞΉΞ±Ο‡ΞµΞ―ΟΞΉΟƒΞ·Ο‚ Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞ±Ο‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:189
 msgid "Timer(s)"
-msgstr "Χρονόμετρο"
+msgstr "Ξ§ΟΞΏΞ½ΟΞΌΞµΟ„ΟΞΏ"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:191
 msgid "Standby time"
-msgstr "Χρόνος Κατάστασης Αναμονής"
+msgstr "Ξ§ΟΟΞ½ΞΏΟ‚ ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ·Ο‚ Ξ‘Ξ½Ξ±ΞΌΞΏΞ½Ξ®Ο‚"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:199
 msgid "Suspend time"
-msgstr "Χρόνος Αναστολής"
+msgstr "Ξ§ΟΟΞ½ΞΏΟ‚ Ξ‘Ξ½Ξ±ΟƒΟ„ΞΏΞ»Ξ®Ο‚"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:207
 msgid "Off time"
@@ -5836,11 +5843,11 @@ msgstr ""
 
 #: src/modules/conf_dpms/e_mod_main.c:35
 msgid "Power Management"
-msgstr "Διαχείρηση Ενέργειας"
+msgstr "Ξ”ΞΉΞ±Ο‡ΞµΞ―ΟΞ·ΟƒΞ· Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞ±Ο‚"
 
 #: src/modules/conf_display/e_mod_main.c:35
 msgid "Screen Resolution"
-msgstr "Ανάλυση Οθόνης"
+msgstr "Ξ‘Ξ½Ξ¬Ξ»Ο…ΟƒΞ· ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_display/e_int_config_display.c:133
 #, c-format
@@ -5876,35 +5883,35 @@ msgstr ""
 
 #: src/modules/conf_display/e_int_config_display.c:212
 msgid "Resolution change"
-msgstr "Αλλαγή Ανάλυσης"
+msgstr "Ξ‘Ξ»Ξ»Ξ±Ξ³Ξ® Ξ‘Ξ½Ξ¬Ξ»Ο…ΟƒΞ·Ο‚"
 
 #: src/modules/conf_display/e_int_config_display.c:250
 msgid "Screen Resolution Settings"
-msgstr "Ρυθμίσεις Ανάλυσης Οθόνης"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ‘Ξ½Ξ¬Ξ»Ο…ΟƒΞ·Ο‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_display/e_int_config_display.c:398
 msgid "Resolution"
-msgstr "Ανάλυση"
+msgstr "Ξ‘Ξ½Ξ¬Ξ»Ο…ΟƒΞ·"
 
 #: src/modules/conf_display/e_int_config_display.c:405
 msgid "Restore on login"
-msgstr "Επαναφορά στη σύνδεση"
+msgstr "Ξ•Ο€Ξ±Ξ½Ξ±Ο†ΞΏΟΞ¬ ΟƒΟ„Ξ· ΟƒΟΞ½Ξ΄ΞµΟƒΞ·"
 
 #: src/modules/conf_display/e_int_config_display.c:410
 msgid "Refresh"
-msgstr "Ανανέωση"
+msgstr "Ξ‘Ξ½Ξ±Ξ½Ξ­Ο‰ΟƒΞ·"
 
 #: src/modules/conf_display/e_int_config_display.c:493
 msgid "Rotation"
-msgstr "Περιστροφή"
+msgstr "Ξ ΞµΟΞΉΟƒΟ„ΟΞΏΟ†Ξ®"
 
 #: src/modules/conf_display/e_int_config_display.c:512
 msgid "Mirroring"
-msgstr "Καθρέφτισμα"
+msgstr "ΞΞ±ΞΈΟΞ­Ο†Ο„ΞΉΟƒΞΌΞ±"
 
 #: src/modules/conf_display/e_int_config_display.c:593
 msgid "Missing Features"
-msgstr "Ελλειπή Χαρακτηριστικά"
+msgstr "Ξ•Ξ»Ξ»ΞµΞΉΟ€Ξ® Ξ§Ξ±ΟΞ±ΞΊΟ„Ξ·ΟΞΉΟƒΟ„ΞΉΞΊΞ¬"
 
 #: src/modules/conf_display/e_int_config_display.c:594
 msgid ""
@@ -5917,7 +5924,7 @@ msgstr ""
 
 #: src/modules/conf_display/e_int_config_display.c:606
 msgid "No Refresh Rates Found"
-msgstr "Δεν βρέθηκαν Ρυθμοί Ανανέωσης"
+msgstr "Ξ”ΞµΞ½ Ξ²ΟΞ­ΞΈΞ·ΞΊΞ±Ξ½ Ξ΅Ο…ΞΈΞΌΞΏΞ― Ξ‘Ξ½Ξ±Ξ½Ξ­Ο‰ΟƒΞ·Ο‚"
 
 #: src/modules/conf_display/e_int_config_display.c:607
 msgid ""
@@ -5930,106 +5937,106 @@ msgstr ""
 
 #: src/modules/dropshadow/e_mod_main.c:90
 msgid "Dropshadow"
-msgstr "Ρίψη Σκιάς"
+msgstr "Ξ΅Ξ―ΟΞ· Ξ£ΞΊΞΉΞ¬Ο‚"
 
 #: src/modules/dropshadow/e_mod_config.c:40
 msgid "Dropshadow Configuration"
-msgstr "Ρύθμιση Ρίψης Σκιάς"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ΅Ξ―ΟΞ·Ο‚ Ξ£ΞΊΞΉΞ¬Ο‚"
 
 #: src/modules/dropshadow/e_mod_config.c:108
 msgid "Quality"
-msgstr "Ποιότητα"
+msgstr "Ξ ΞΏΞΉΟΟ„Ξ·Ο„Ξ±"
 
 #: src/modules/dropshadow/e_mod_config.c:111
 msgid "High Quality"
-msgstr "Υψηλή Ποιότητα"
+msgstr "Ξ¥ΟΞ·Ξ»Ξ® Ξ ΞΏΞΉΟΟ„Ξ·Ο„Ξ±"
 
 #: src/modules/dropshadow/e_mod_config.c:113
 msgid "Medium Quality"
-msgstr "Μέση Ποιότητα"
+msgstr "ΞΞ­ΟƒΞ· Ξ ΞΏΞΉΟΟ„Ξ·Ο„Ξ±"
 
 #: src/modules/dropshadow/e_mod_config.c:115
 msgid "Low Quality"
-msgstr "Χαμηλή Ποιότητα"
+msgstr "Ξ§Ξ±ΞΌΞ·Ξ»Ξ® Ξ ΞΏΞΉΟΟ„Ξ·Ο„Ξ±"
 
 #: src/modules/dropshadow/e_mod_config.c:119
 msgid "Blur Type"
-msgstr "Τύπος Θολώματος"
+msgstr "Ξ¤ΟΟ€ΞΏΟ‚ ΞΞΏΞ»ΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/dropshadow/e_mod_config.c:122
 msgid "Very Fuzzy"
-msgstr "Πολύ Συγκεχυμένο"
+msgstr "Ξ ΞΏΞ»Ο Ξ£Ο…Ξ³ΞΊΞµΟ‡Ο…ΞΌΞ­Ξ½ΞΏ"
 
 #: src/modules/dropshadow/e_mod_config.c:124
 msgid "Fuzzy"
-msgstr "Συγκεχυμένο"
+msgstr "Ξ£Ο…Ξ³ΞΊΞµΟ‡Ο…ΞΌΞ­Ξ½ΞΏ"
 
 #: src/modules/dropshadow/e_mod_config.c:128
 msgid "Sharp"
-msgstr " Αιχμηρό"
+msgstr " Ξ‘ΞΉΟ‡ΞΌΞ·ΟΟ"
 
 #: src/modules/dropshadow/e_mod_config.c:130
 msgid "Very Sharp"
-msgstr "Πολύ Αιχμηρό"
+msgstr "Ξ ΞΏΞ»Ο Ξ‘ΞΉΟ‡ΞΌΞ·ΟΟ"
 
 #: src/modules/dropshadow/e_mod_config.c:134
 msgid "Shadow Distance"
-msgstr "Απόσταση Σκιάς"
+msgstr "Ξ‘Ο€ΟΟƒΟ„Ξ±ΟƒΞ· Ξ£ΞΊΞΉΞ¬Ο‚"
 
 #: src/modules/dropshadow/e_mod_config.c:137
 msgid "Very Far"
-msgstr "Πολύ Μακριά"
+msgstr "Ξ ΞΏΞ»Ο ΞΞ±ΞΊΟΞΉΞ¬"
 
 #: src/modules/dropshadow/e_mod_config.c:139
 msgid "Far"
-msgstr "Μακριά"
+msgstr "ΞΞ±ΞΊΟΞΉΞ¬"
 
 #: src/modules/dropshadow/e_mod_config.c:141
 msgid "Near"
-msgstr "Κοντά"
+msgstr "ΞΞΏΞ½Ο„Ξ¬"
 
 #: src/modules/dropshadow/e_mod_config.c:143
 msgid "Very Near"
-msgstr "Πολύ Κοντά"
+msgstr "Ξ ΞΏΞ»Ο ΞΞΏΞ½Ο„Ξ¬"
 
 #: src/modules/dropshadow/e_mod_config.c:145
 msgid "Extremely Near"
-msgstr "Estremamente vicina"
+msgstr "Ξ•ΞΎΞ±ΞΉΟΞµΟ„ΞΉΞΊΞ¬ ΞΊΞΏΞ½Ο„Ξ¬"
 
 #: src/modules/dropshadow/e_mod_config.c:147
 msgid "Underneath"
-msgstr "Απο Κάτω"
+msgstr "Ξ‘Ο€ΞΏ ΞΞ¬Ο„Ο‰"
 
 #: src/modules/dropshadow/e_mod_config.c:151
 msgid "Shadow Darkness"
-msgstr "Πυκνότητα Σκίασης"
+msgstr "Ξ Ο…ΞΊΞ½ΟΟ„Ξ·Ο„Ξ± Ξ£ΞΊΞ―Ξ±ΟƒΞ·Ο‚"
 
 #: src/modules/dropshadow/e_mod_config.c:154
 msgid "Very Dark"
-msgstr "Πολύ Σκοτεινό"
+msgstr "Ξ ΞΏΞ»Ο Ξ£ΞΊΞΏΟ„ΞµΞΉΞ½Ο"
 
 #: src/modules/dropshadow/e_mod_config.c:156
 msgid "Dark"
-msgstr "Σκοτεινό"
+msgstr "Ξ£ΞΊΞΏΟ„ΞµΞΉΞ½Ο"
 
 #: src/modules/dropshadow/e_mod_config.c:158
 msgid "Light"
-msgstr "Φωτεινό"
+msgstr "Ξ¦Ο‰Ο„ΞµΞΉΞ½Ο"
 
 #: src/modules/dropshadow/e_mod_config.c:160
 msgid "Very Light"
-msgstr "Πολύ Φωτεινό"
+msgstr "Ξ ΞΏΞ»Ο Ξ¦Ο‰Ο„ΞµΞΉΞ½Ο"
 
 #: src/modules/conf_mousebindings/e_mod_main.c:35
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:295
 msgid "Mouse Bindings"
-msgstr "Συνδυασμοί Ποντικιού"
+msgstr "Ξ£Ο…Ξ½Ξ΄Ο…Ξ±ΟƒΞΌΞΏΞ― Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:6
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:10
 msgid "<None>"
-msgstr "<Κανένα>"
+msgstr "<ΞΞ±Ξ½Ξ­Ξ½Ξ±>"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
 msgid ""
@@ -6040,46 +6047,46 @@ msgstr ""
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:112
 msgid "Mouse Binding Settings"
-msgstr "Ρυθμίσεις Συνδυασμών Ποντικιού"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ£Ο…Ξ½Ξ΄Ο…Ξ±ΟƒΞΌΟΞ½ Ξ ΞΏΞ½Ο„ΞΉΞΊΞΉΞΏΟ"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:301
 msgid "Add Binding"
-msgstr "Προσθήκη Συνδυασμού"
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ£Ο…Ξ½Ξ΄Ο…Ξ±ΟƒΞΌΞΏΟ"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:303
 msgid "Delete Binding"
-msgstr "Διαγραφή Συνδυασμού"
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ£Ο…Ξ½Ξ΄Ο…Ξ±ΟƒΞΌΞΏΟ"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:307
 msgid "Modify Binding"
-msgstr "Τροποποίηση Συνδυασμού"
+msgstr "Ξ¤ΟΞΏΟ€ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ£Ο…Ξ½Ξ΄Ο…Ξ±ΟƒΞΌΞΏΟ"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:311
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:243
 msgid "Delete All"
-msgstr "Διαγραφή Όλων"
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞΞ»Ο‰Ξ½"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:315
 msgid "Restore Mouse and Wheel Binding Defaults"
-msgstr ""
+msgstr "Ξ•Ο€Ξ±Ξ½Ξ±Ο†ΞΏΟΞ¬ Ο€ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½Ο‰Ξ½ Ξ΄ΞµΟƒΞΌΟΞ½ ΟƒΞµ Ξ ΞΏΞ½Ο„Ξ―ΞΊΞΉ ΞΊΞ±ΞΉ Ξ΅ΞΏΞ΄Ξ­Ξ»Ξ±."
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:252
 msgid "Action"
-msgstr "Ενέργεια"
+msgstr "Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞ±"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:328
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:259
 msgid "Action Params"
-msgstr "Parametri azione"
+msgstr "Ξ Ξ±ΟΞ¬ΞΌΞµΟ„ΟΞΏΞΉ Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞ±Ο‚"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:335
 msgid "Action Context"
-msgstr "Contesto azione"
+msgstr "Ξ ΞµΟΞΉΞµΟ‡ΟΞΌΞµΞ½ΞΏ Ξ•Ξ½Ξ­ΟΞ³ΞµΞΉΞ±Ο‚"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:337
 msgid "Any"
-msgstr "Οτιδήποτε"
+msgstr "ΞΟ„ΞΉΞ΄Ξ®Ο€ΞΏΟ„Ξµ"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:349
 msgid "Win List"
@@ -6087,11 +6094,11 @@ msgstr ""
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:353
 msgid "Popup"
-msgstr ""
+msgstr "Ξ¥Ο€ΞµΞ½ΞΈΟΞΌΞ·ΟƒΞ·"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:357
 msgid "Zone"
-msgstr "Ζώνη"
+msgstr "Ξ–ΟΞ½Ξ·"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:361
 msgid "Container"
@@ -6099,7 +6106,7 @@ msgstr ""
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:365
 msgid "Manager"
-msgstr "Διαχειριστής"
+msgstr "Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:1296
 msgid "Mouse Binding Sequence"
@@ -6108,37 +6115,37 @@ msgstr ""
 #: src/modules/conf_keybindings/e_mod_main.c:35
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:227
 msgid "Key Bindings"
-msgstr "Συνδυασμοί Πλήκτρων"
+msgstr "Ξ£Ο…Ξ½Ξ΄Ο…Ξ±ΟƒΞΌΞΏΞ― Ξ Ξ»Ξ®ΞΊΟ„ΟΟ‰Ξ½"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
 msgid "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
-msgstr ""
+msgstr "Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»Ο Ο€Ξ±Ο„Ξ®ΟƒΟ„Ξµ ΞΌΞΉΞ± Ξ±ΞΊΞΏΞ»ΞΏΟ…ΞΈΞ―Ξ± Ο€Ξ»Ξ®ΞΊΟ„ΟΟ‰Ξ½,<br><br>Ξ® <hilight>Escape</hilight> Ξ³ΞΉΞ± Ξ±ΞΊΟΟΟ‰ΟƒΞ·."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:91
 #, fuzzy
 msgid "Key Binding Settings"
-msgstr "Ρυθμίσεις Συνδυασμού Πλήκτρων"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ£Ο…Ξ½Ξ΄Ο…Ξ±ΟƒΞΌΞΏΟ Ξ Ξ»Ξ®ΞΊΟ„ΟΟ‰Ξ½"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:232
 msgid "Add Key"
-msgstr "Προσθήκη Πλήκτρου"
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ Ξ»Ξ®ΞΊΟ„ΟΞΏΟ…"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:235
 msgid "Delete Key"
-msgstr "Διαγραφή Πλήκτρου"
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ Ξ»Ξ®ΞΊΟ„ΟΞΏΟ…"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:239
 msgid "Modify Key"
-msgstr "Τροποποίηση Πλήκτρου"
+msgstr "Ξ¤ΟΞΏΟ€ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ Ξ»Ξ®ΞΊΟ„ΟΞΏΟ…"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:247
 #, fuzzy
 msgid "Restore Default Bindings"
-msgstr "Επαναφορά Προκαθορισμένων Συνδυασμών"
+msgstr "Ξ•Ο€Ξ±Ξ½Ξ±Ο†ΞΏΟΞ¬ Ξ ΟΞΏΞΊΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½Ο‰Ξ½ Ξ£Ο…Ξ½Ξ΄Ο…Ξ±ΟƒΞΌΟΞ½"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:927
 msgid "Key Binding Sequence"
-msgstr "Ακολουθία Συνδυασμού Πλήκτρων"
+msgstr "Ξ‘ΞΊΞΏΞ»ΞΏΟ…ΞΈΞ―Ξ± Ξ£Ο…Ξ½Ξ΄Ο…Ξ±ΟƒΞΌΞΏΟ Ξ Ξ»Ξ®ΞΊΟ„ΟΟ‰Ξ½"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1142
 #, c-format
@@ -6150,56 +6157,56 @@ msgstr ""
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1147
 #, fuzzy
 msgid "Binding Key Error"
-msgstr "Σφάλμα Συνδυασμού Πλήκτρου"
+msgstr "Ξ£Ο†Ξ¬Ξ»ΞΌΞ± Ξ£Ο…Ξ½Ξ΄Ο…Ξ±ΟƒΞΌΞΏΟ Ξ Ξ»Ξ®ΞΊΟ„ΟΞΏΟ…"
 
 #: src/modules/conf_intl/e_mod_main.c:35
 msgid "Language Settings"
-msgstr "Ρυθμίσεις Γλώσσας"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ“Ξ»ΟΟƒΟƒΞ±Ο‚"
 
 #: src/modules/conf_intl/e_int_config_intl.c:582
 msgid "Language Configuration"
-msgstr "Ρύθμιση Γλώσσας"
+msgstr "Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ξ“Ξ»ΟΟƒΟƒΞ±Ο‚"
 
 #: src/modules/conf_intl/e_int_config_intl.c:894
 #: src/modules/conf_intl/e_int_config_intl.c:971
 msgid "Language Selector"
-msgstr "Επιλογέας Γλώσσας"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ξ±Ο‚ Ξ“Ξ»ΟΟƒΟƒΞ±Ο‚"
 
 #: src/modules/conf_intl/e_int_config_intl.c:944
 #: src/modules/conf_intl/e_int_config_intl.c:1022
 msgid "Locale Selected"
-msgstr "Εντοπιότητα Επιλέχθηκε"
+msgstr "Ξ•Ξ½Ο„ΞΏΟ€ΞΉΟΟ„Ξ·Ο„Ξ± Ξ•Ο€ΞΉΞ»Ξ­Ο‡ΞΈΞ·ΞΊΞµ"
 
 #: src/modules/conf_intl/e_int_config_intl.c:945
 #: src/modules/conf_intl/e_int_config_intl.c:1023
 msgid "Locale"
-msgstr "Εντοπιότητα"
+msgstr "Ξ•Ξ½Ο„ΞΏΟ€ΞΉΟΟ„Ξ·Ο„Ξ±"
 
 #: src/modules/fileman/e_fwin.c:692
 msgid "Go to Parent Directory"
-msgstr "Στον Γονικό Κατάλογο"
+msgstr "Ξ£Ο„ΞΏΞ½ Ξ“ΞΏΞ½ΞΉΞΊΟ ΞΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ"
 
 #: src/modules/fileman/e_fwin.c:718 src/modules/fileman/e_fwin.c:1415
 msgid "Open"
-msgstr "¶νοιγμα"
+msgstr "Ξ†Ξ½ΞΏΞΉΞ³ΞΌΞ±"
 
 #: src/modules/fileman/e_fwin.c:725 src/modules/fileman/e_fwin.c:1413
 msgid "Open with..."
-msgstr "¶νοιγμα με..."
+msgstr "Ξ†Ξ½ΞΏΞΉΞ³ΞΌΞ± ΞΌΞµ..."
 
 #: src/modules/fileman/e_fwin.c:1431
 msgid "Specific Applications"
-msgstr "Καθορισμένες Εφαρμογές"
+msgstr "ΞΞ±ΞΈΞΏΟΞΉΟƒΞΌΞ­Ξ½ΞµΟ‚ Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ­Ο‚"
 
 #: src/modules/fileman/e_fwin.c:1502
 #, fuzzy
 msgid "Custom Command"
-msgstr "Προσαρμοσμένη Εντολή"
+msgstr "Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ· Ξ•Ξ½Ο„ΞΏΞ»Ξ®"
 
 #: src/modules/fileman/e_mod_main.c:213
 #, fuzzy
 msgid "Files"
-msgstr "Αρχεία"
+msgstr "Ξ‘ΟΟ‡ΞµΞ―Ξ±"
 
 #: src/modules/fileman/e_mod_main.c:265
 msgid ""
@@ -6224,125 +6231,125 @@ msgstr ""
 
 #: src/modules/fileman/e_mod_main.c:347
 msgid "Fileman Configuration Updated"
-msgstr "Η Ρύθμιση του Fileman Ανανεώθηκε"
+msgstr "Ξ— Ξ΅ΟΞΈΞΌΞΉΟƒΞ· Ο„ΞΏΟ… Fileman Ξ‘Ξ½Ξ±Ξ½ΞµΟΞΈΞ·ΞΊΞµ"
 
 #: src/modules/fileman/e_mod_config.c:88
 msgid "Fileman Settings"
-msgstr "Ρυθμίσεις Fileman"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Fileman"
 
 #: src/modules/fileman/e_mod_config.c:176
 msgid "Grid Icons"
-msgstr "Εικονίδια Πλέγματος"
+msgstr "Ξ•ΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞ± Ξ Ξ»Ξ­Ξ³ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/fileman/e_mod_config.c:178
 msgid "Custom Icons"
-msgstr "Προσαρμοσμένα Εικονίδια"
+msgstr "Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ± Ξ•ΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞ±"
 
 #: src/modules/fileman/e_mod_config.c:180
 msgid "Custom Grid Icons"
-msgstr "Προσαρμοσμένα Εικονίδια Πλέγματος"
+msgstr "Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ± Ξ•ΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞ± Ξ Ξ»Ξ­Ξ³ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/fileman/e_mod_config.c:183
 #, fuzzy
 msgid "Custom Smart Grid Icons"
-msgstr "Έξυπνα Προσαρμοσμένα Εικονίδια Πλέγματος"
+msgstr "ΞΞΎΟ…Ο€Ξ½Ξ± Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½Ξ± Ξ•ΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞ± Ξ Ξ»Ξ­Ξ³ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: src/modules/fileman/e_mod_config.c:190
 msgid "Icon Size"
-msgstr "Μέγεθος Εικονιδίου"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/modules/fileman/e_mod_config.c:196
 msgid "Open Dirs In Place"
-msgstr "¶νοιγμα Καταλόγων στο ίδιο Μέρος"
+msgstr "Ξ†Ξ½ΞΏΞΉΞ³ΞΌΞ± ΞΞ±Ο„Ξ±Ξ»ΟΞ³Ο‰Ξ½ ΟƒΟ„ΞΏ Ξ―Ξ΄ΞΉΞΏ ΞΞ­ΟΞΏΟ‚"
 
 #: src/modules/fileman/e_mod_config.c:199
 msgid "Sort Dirs First"
-msgstr "Ταξινόμηση Καταλόγων Πρώτα"
+msgstr "Ξ¤Ξ±ΞΎΞΉΞ½ΟΞΌΞ·ΟƒΞ· ΞΞ±Ο„Ξ±Ξ»ΟΞ³Ο‰Ξ½ Ξ ΟΟΟ„Ξ±"
 
 #: src/modules/fileman/e_mod_config.c:202
 msgid "Use Single Click"
-msgstr "Χρήση Ενός Κλικ"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ξ•Ξ½ΟΟ‚ ΞΞ»ΞΉΞΊ"
 
 #: src/modules/fileman/e_mod_config.c:205
 msgid "Show Icon Extension"
-msgstr "Εμφάνιση Επέκτασης Εικονιδίου"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ•Ο€Ξ­ΞΊΟ„Ξ±ΟƒΞ·Ο‚ Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…"
 
 #: src/modules/fileman/e_mod_config.c:208
 msgid "Show Full Path"
-msgstr "Εμφάνιση Ολόκληρης Διαδρομής"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· ΞΞ»ΟΞΊΞ»Ξ·ΟΞ·Ο‚ Ξ”ΞΉΞ±Ξ΄ΟΞΏΞΌΞ®Ο‚"
 
 #: src/modules/fileman/e_mod_config.c:211
 msgid "Show Desktop Icons"
-msgstr "Εμφάνιση Εικονιδίων Desktop"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―Ο‰Ξ½ Desktop"
 
 #: src/modules/fileman/e_mod_config.c:214
 msgid "Show Toolbar"
-msgstr "Εμφάνιση Γραμμής Εργαλείων"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ“ΟΞ±ΞΌΞΌΞ®Ο‚ Ξ•ΟΞ³Ξ±Ξ»ΞµΞ―Ο‰Ξ½"
 
 #: src/modules/fileman/e_mod_config.c:217
 msgid "Show HAL icons on desktop"
-msgstr "Εμφάνισε εικονίδια HAL στο Desktop"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞµ ΞµΞΉΞΊΞΏΞ½Ξ―Ξ΄ΞΉΞ± HAL ΟƒΟ„ΞΏ Desktop"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:29
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:92
 #: src/modules/conf_window_remembers/e_mod_main.c:17
 msgid "Window Remembers"
-msgstr ""
+msgstr "Ξ•Ξ½ΞΈΟ…ΞΌΞ®ΟƒΞµΞΉΟ‚ Ξ Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:94
 msgid "Delete Remember(s)"
-msgstr ""
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ•Ξ½ΞΈΟΞΌΞ·ΟƒΞ·Ο‚/ΟƒΞµΟ‰Ξ½"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:104
 msgid "Details"
-msgstr "Λεπτομέρειες"
+msgstr "Ξ›ΞµΟ€Ο„ΞΏΞΌΞ­ΟΞµΞΉΞµΟ‚"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:107
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:269
 msgid "<No Name>"
-msgstr "<Χωρίς Όνομα>"
+msgstr "<Ξ§Ο‰ΟΞ―Ο‚ ΞΞ½ΞΏΞΌΞ±>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:110
 #, fuzzy
 msgid "Class:"
-msgstr "Κλάση:"
+msgstr "ΞΞ»Ξ¬ΟƒΞ·:"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:112
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:271
 #, fuzzy
 msgid "<No Class>"
-msgstr "<Χωρίς Κλάση>"
+msgstr "<Ξ§Ο‰ΟΞ―Ο‚ ΞΞ»Ξ¬ΟƒΞ·>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:115
 msgid "Title:"
-msgstr "Τίτλος:"
+msgstr "Ξ¤Ξ―Ο„Ξ»ΞΏΟ‚:"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:117
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:273
 msgid "<No Title>"
-msgstr "<Χωρίς Τίτλο>"
+msgstr "<Ξ§Ο‰ΟΞ―Ο‚ Ξ¤Ξ―Ο„Ξ»ΞΏ>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:120
 msgid "Role:"
-msgstr "Ρόλος:"
+msgstr "Ξ΅ΟΞ»ΞΏΟ‚:"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:122
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:275
 msgid "<No Role>"
-msgstr "<Χωρίς Ρόλο>"
+msgstr "<Ξ§Ο‰ΟΞ―Ο‚ Ξ΅ΟΞ»ΞΏ>"
 
 #: src/modules/connman/e_mod_main.c:213
 msgid "Connection Manager"
-msgstr "Διαχειριστής Συνδέσεων"
+msgstr "Ξ”ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„Ξ®Ο‚ Ξ£Ο…Ξ½Ξ΄Ξ­ΟƒΞµΟ‰Ξ½"
 
 #: src/modules/connman/e_mod_main.c:734
 #, fuzzy
 msgid "Network Connection Settings"
-msgstr "Ρυθμίσεις Δικτυακών Συνδέσεων"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ Ξ”ΞΉΞΊΟ„Ο…Ξ±ΞΊΟΞ½ Ξ£Ο…Ξ½Ξ΄Ξ­ΟƒΞµΟ‰Ξ½"
 
 #: src/modules/connman/e_mod_main.c:740
 msgid "Network Device"
-msgstr "Συσκευή Δικτύου"
+msgstr "Ξ£Ο…ΟƒΞΊΞµΟ…Ξ® Ξ”ΞΉΞΊΟ„ΟΞΏΟ…"
 
 #: src/modules/connman/e_mod_main.c:745
 msgid "Wifi"
@@ -6354,23 +6361,23 @@ msgstr "LAN"
 
 #: src/modules/connman/e_mod_main.c:751
 msgid "Specific Device"
-msgstr "Συγκεκριμένη Συσκευή"
+msgstr "Ξ£Ο…Ξ³ΞΊΞµΞΊΟΞΉΞΌΞ­Ξ½Ξ· Ξ£Ο…ΟƒΞΊΞµΟ…Ξ®"
 
 #: src/modules/connman/e_mod_main.c:775
 msgid "Networks"
-msgstr "Δίκτυα"
+msgstr "Ξ”Ξ―ΞΊΟ„Ο…Ξ±"
 
 #: src/modules/connman/e_mod_main.c:1100
 msgid "Settings"
-msgstr "Ρυθμίσεις"
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚"
 
 #: src/modules/conf_scale/e_mod_main.c:35
 msgid "Scaling"
-msgstr ""
+msgstr "ΞΞ»ΞΉΞΌΞ¬ΞΊΟ‰ΟƒΞ·"
 
 #: src/modules/conf_scale/e_int_config_scale.c:41
 msgid "Scaling Settings"
-msgstr ""
+msgstr "Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚ ΞΞ»ΞΉΞΌΞ¬ΞΊΟ‰ΟƒΞ·Ο‚"
 
 #: src/modules/conf_scale/e_int_config_scale.c:105
 msgid "Scale with DPI"
@@ -6378,7 +6385,7 @@ msgstr ""
 
 #: src/modules/conf_scale/e_int_config_scale.c:108
 msgid "Relative"
-msgstr "Σχετικό"
+msgstr "Ξ£Ο‡ΞµΟ„ΞΉΞΊΟ"
 
 #: src/modules/conf_scale/e_int_config_scale.c:109
 msgid "Base DPI to scale relative to"
@@ -6393,11 +6400,11 @@ msgstr "%1.0f DPI"
 #: src/modules/conf_scale/e_int_config_scale.c:113
 #, c-format
 msgid "Currently %i DPI"
-msgstr "Τρέχον DPI %i"
+msgstr "Ξ¤ΟΞ­Ο‡ΞΏΞ½ DPI %i"
 
 #: src/modules/conf_scale/e_int_config_scale.c:162
 msgid "Policy"
-msgstr "Πολιτική"
+msgstr "Ξ ΞΏΞ»ΞΉΟ„ΞΉΞΊΞ®"
 
 #: src/modules/conf_scale/e_int_config_scale.c:164
 msgid "Don't Scale"
@@ -6405,38 +6412,39 @@ msgstr ""
 
 #: src/modules/conf_scale/e_int_config_scale.c:166
 msgid "Scale relative to screen DPI"
-msgstr ""
+msgstr "ΞΞ»ΞΉΞΌΞ¬ΞΊΟ‰ΟƒΞ· Ξ±Ξ½Ξ¬Ξ»ΞΏΞ³Ξ· Ο„Ο‰Ξ½ DPI Ο„Ξ·Ο‚ ΞΏΞΈΟΞ½Ξ·Ο‚"
 
 #: src/modules/conf_scale/e_int_config_scale.c:168
 msgid "Custom scaling factor"
-msgstr ""
+msgstr "Ξ ΟΞΏΟƒΞ±ΟΞΌΞΏΟƒΞΌΞ­Ξ½ΞΏΟ‚ Ο€Ξ±ΟΞ¬Ξ³ΞΏΞ½Ο„Ξ±Ο‚ ΞΊΞ»ΞΉΞΌΞ¬ΞΊΟ‰ΟƒΞ·Ο‚"
 
 #: src/modules/conf_scale/e_int_config_scale.c:170
 msgid "Minimum"
-msgstr "Ελάχιστο"
+msgstr "Ξ•Ξ»Ξ¬Ο‡ΞΉΟƒΟ„ΞΏ"
 
 #: src/modules/conf_scale/e_int_config_scale.c:172
 #: src/modules/conf_scale/e_int_config_scale.c:176
 #: src/modules/conf_scale/e_int_config_scale.c:188
 #, c-format
 msgid "%1.2f times"
-msgstr "%1.2f φορές"
+msgstr "%1.2f Ο†ΞΏΟΞ­Ο‚"
 
 #: src/modules/conf_scale/e_int_config_scale.c:174
 msgid "Maximum"
-msgstr "Μέγιστο"
+msgstr "ΞΞ­Ξ³ΞΉΟƒΟ„ΞΏ"
 
 #: src/modules/conf_scale/e_int_config_scale.c:180
 #, fuzzy
 msgid "Scaling Factors"
-msgstr "Βαθμός Κλιμάκωσης"
+msgstr "Ξ’Ξ±ΞΈΞΌΟΟ‚ ΞΞ»ΞΉΞΌΞ¬ΞΊΟ‰ΟƒΞ·Ο‚"
 
 #: src/modules/conf_scale/e_int_config_scale.c:181
 #, c-format
 msgid "Base DPI (Currently %i DPI)"
-msgstr "Βασικό DPI (Τρέχον DPI %i)"
+msgstr "Ξ’Ξ±ΟƒΞΉΞΊΟ DPI (Ξ¤ΟΞ­Ο‡ΞΏΞ½ DPI %i)"
 
 #: src/modules/conf_scale/e_int_config_scale.c:186
+#, fuzzy
 msgid "Personal scaling factor"
-msgstr "Fattore di scala personale"
+msgstr "Ξ ΟΞΏΟƒΟ‰Ο€ΞΉΞΊΟΟ‚ Ο€Ξ±ΟΞ¬Ξ³ΞΏΞ½Ο„Ξ±Ο‚ ΞΊΞ»ΞΉΞΌΞ¬ΞΊΟ‰ΟƒΞ·Ο‚"
 
