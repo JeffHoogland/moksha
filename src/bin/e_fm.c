@@ -5163,7 +5163,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	    )
 	  {
 	     char buf[4096];
-	     char *dev = eina_stringshare_add(ic->sd->dev);
+	     const char *dev = eina_stringshare_ref(ic->sd->dev);
 	     
 	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
 	     e_fm2_path_set(ic->sd->obj, dev, buf);
@@ -5225,7 +5225,7 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
             )
           {
              char buf[4096];
-	     char *dev = eina_stringshare_add(ic->sd->dev);
+	     const char *dev = eina_stringshare_ref(ic->sd->dev);
 
              snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
              e_fm2_path_set(ic->sd->obj, dev, buf);
