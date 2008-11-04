@@ -781,15 +781,16 @@ e_fm2_parent_go(Evas_Object *obj)
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
    if (!sd->path) return;
-   path = strdup(sd->path);
-   if (sd->dev) dev = strdup(sd->dev);
+   path = eina_stringshare_ref(sd->path);
+   if (sd->dev) dev = eina_stringshare_ref(sd->dev);
    if ((p = strrchr(path, '/'))) *p = 0;
    if (*path == 0)
      e_fm2_path_set(obj, dev, "/");
    else
      e_fm2_path_set(obj, dev, path);
-   E_FREE(dev);
-   E_FREE(path);
+
+   eina_stringshare_del(dev);
+   eina_stringshare_del(path);
 }
 
 EAPI void
@@ -4248,10 +4249,10 @@ _e_fm2_typebuf_run(Evas_Object *obj)
 	  {
 	     char buf[4096], *dev = NULL;
 	     
-	     if (ic->sd->dev) dev = strdup(ic->sd->dev);
+	     if (ic->sd->dev) dev = eina_stringshare_ref(ic->sd->dev);
 	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
 	     e_fm2_path_set(ic->sd->obj, dev, buf);
-	     E_FREE(dev);
+	     eina_stringshare_del(dev);
 	  }
 	else
 	  {
@@ -5639,10 +5640,10 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 		    {
 		       char buf[4096], *dev = NULL;
 		       
-		       if (ic->sd->dev) dev = strdup(ic->sd->dev);
+		       if (ic->sd->dev) dev = eina_stringshare_ref(ic->sd->dev);
 		       snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
 		       e_fm2_path_set(ic->sd->obj, dev, buf);
-		       E_FREE(dev);
+		       eina_stringshare_del(dev);
 		    }
 		  else
 		    {
