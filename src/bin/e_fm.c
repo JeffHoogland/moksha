@@ -5163,9 +5163,12 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	    )
 	  {
 	     char buf[4096];
+	     char *dev = eina_stringshare_add(ic->sd->dev);
 	     
 	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
-	     e_fm2_path_set(ic->sd->obj, ic->sd->dev, buf);
+	     e_fm2_path_set(ic->sd->obj, dev, buf);
+
+	     eina_stringshare_del(dev);
 	  }
 	else
 	  evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
@@ -5222,9 +5225,12 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
             )
           {
              char buf[4096];
+	     char *dev = eina_stringshare_add(ic->sd->dev);
 
              snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
-             e_fm2_path_set(ic->sd->obj, ic->sd->dev, buf);
+             e_fm2_path_set(ic->sd->obj, dev, buf);
+
+	     eina_stringshare_del(dev);
           }
         else if ((S_ISDIR(ic->info.statinfo.st_mode)) && (ic->sd->config->view.single_click))
           evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
