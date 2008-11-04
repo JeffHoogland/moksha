@@ -684,18 +684,19 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
    /* Move / resize*/
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
-   e_menu_item_icon_edje_set(mi, Man->icon_name, "move_icon");
+   e_util_menu_item_edje_icon_set(mi, "widget/resize");
    e_menu_item_callback_set(mi, on_menu_edit, gcc);
 
    /* Remove this gadgets */
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Remove this gadget"));
+   e_util_menu_item_edje_icon_set(mi, "widget/del");
    e_menu_item_callback_set(mi, on_menu_delete, gcc);
 
    /* Add other gadgets */
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Add other gadgets"));
-   e_menu_item_icon_edje_set(mi, Man->icon_name, "icon");
+   e_util_menu_item_edje_icon_set(mi, "widget/add");
    e_menu_item_callback_set(mi, on_menu_add, gcc);
 }
 
