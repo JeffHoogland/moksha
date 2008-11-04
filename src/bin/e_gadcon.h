@@ -98,7 +98,9 @@ struct _E_Gadcon
    unsigned char          instant_edit : 1;
 };
 
-#define GADCON_CLIENT_CLASS_VERSION 2
+#define GADCON_CLIENT_CLASS_VERSION 3
+/* Version 3 add the *client_class param to icon(),label(),id_new(), id_del() */
+/*           and the *orient param to orient() */
 struct _E_Gadcon_Client_Class
 {
    int   version;
@@ -108,14 +110,14 @@ struct _E_Gadcon_Client_Class
      {
 	E_Gadcon_Client *(*init)     (E_Gadcon *gc, const char *name, const char *id, const char *style);
 	void             (*shutdown) (E_Gadcon_Client *gcc);
-	void             (*orient)   (E_Gadcon_Client *gcc);
-	char            *(*label)    (void);
-	Evas_Object     *(*icon)     (Evas *evas);
+	void             (*orient)   (E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
+	char            *(*label)    (E_Gadcon_Client_Class *client_class);
+	Evas_Object     *(*icon)     (E_Gadcon_Client_Class *client_class, Evas *evas);
 	/* All members below are part of version 2 */
 	/* Create new id, so that the gadcon client can refer to a config set inside the module */
-	const char      *(*id_new)   (void);
+	const char      *(*id_new)   (E_Gadcon_Client_Class *client_class);
 	/* Del an id when a gadcon client is removed from the system */
-	void             (*id_del)   (const char *id);
+	void             (*id_del)   (E_Gadcon_Client_Class *client_class, const char *id);
 	/* All members below are part of version 3 */
      } func;
    char *default_style;

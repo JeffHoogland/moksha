@@ -949,20 +949,20 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 {
    e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 
 static char *
-_gc_label(void)
+_gc_label(E_Gadcon_Client_Class *client_class)
 {
    return _(_Name);
 }
 
 static Evas_Object *
-_gc_icon(Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 {
    Evas_Object *o;
 
@@ -972,7 +972,7 @@ _gc_icon(Evas *evas)
 }
 
 static const char *
-_gc_id_new(void)
+_gc_id_new(E_Gadcon_Client_Class *client_class)
 {
    E_Mixer_Module_Context *ctxt;
    Eina_List *instances;

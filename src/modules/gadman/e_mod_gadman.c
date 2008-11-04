@@ -179,7 +179,7 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop)
 
    /* Call the client orientation function */
    if (cc->func.orient)
-       cc->func.orient(gcc);
+       cc->func.orient(gcc, E_GADCON_ORIENT_FLOAT);  //TODO make this configurable per instance
    return gcc;
 }
 

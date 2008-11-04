@@ -294,9 +294,9 @@ _fill_gadgets_list(Evas_Object *ilist)
         const char *lbl = NULL;
 
         if (!(cc = l->data)) continue;
-        if (cc->func.label) lbl = cc->func.label();
+        if (cc->func.label) lbl = cc->func.label(cc);
         if (!lbl) lbl = cc->name;
-        if (cc->func.icon) icon = cc->func.icon(Man->gc->evas);
+        if (cc->func.icon) icon = cc->func.icon(cc, Man->gc->evas);
         e_widget_ilist_append(ilist, icon, lbl, NULL, (void *)cc, NULL);
      }
 

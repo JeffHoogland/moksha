@@ -388,7 +388,7 @@ e_gadcon_populate(E_Gadcon *gc)
 
 	     if ((!cf_gcc->id) &&
 		 (_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)))
-	       cf_gcc->id = eina_stringshare_add(cc->func.id_new());
+	       cf_gcc->id = eina_stringshare_add(cc->func.id_new(cc));
 
 	     if (!cf_gcc->style)
 	       {
@@ -416,7 +416,7 @@ e_gadcon_populate(E_Gadcon *gc)
 		  e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
 		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
 		  if (gcc->client_class->func.orient)
-		    gcc->client_class->func.orient(gcc);
+		    gcc->client_class->func.orient(gcc, gc->orient);
 
 		  _e_gadcon_client_save(gcc);
 		  if (gc->editing) e_gadcon_client_edit_begin(gcc);
@@ -470,7 +470,7 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 
 	     if ((!cf_gcc->id) &&
 		 (_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)))
-	       cf_gcc->id = eina_stringshare_add(cc->func.id_new());
+	       cf_gcc->id = eina_stringshare_add(cc->func.id_new(cc));
 
 	     gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
 				 cf_gcc->style);
@@ -489,7 +489,7 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 		    e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
 
 		  if (gcc->client_class->func.orient)
-		    gcc->client_class->func.orient(gcc); 
+		    gcc->client_class->func.orient(gcc, gc->orient); 
 
 		  _e_gadcon_client_save(gcc);
 		  if (gc->editing) e_gadcon_client_edit_begin(gcc);
@@ -544,7 +544,7 @@ e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient)
 	gcc = l->data;
 	e_box_orientation_set(gcc->o_box, horiz);
 	if (gcc->client_class->func.orient)
-	  gcc->client_class->func.orient(gcc);
+	  gcc->client_class->func.orient(gcc, gc->orient);
      }
    e_gadcon_layout_thaw(gc->o_container);
 }
@@ -748,7 +748,7 @@ e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
    if (!cf_gcc) return NULL;
    cf_gcc->name = eina_stringshare_add(name);
-   cf_gcc->id = eina_stringshare_add(cc->func.id_new());
+   cf_gcc->id = eina_stringshare_add(cc->func.id_new(cc));
    cf_gcc->geom.res = 800;
    cf_gcc->geom.size = 80;
    cf_gcc->geom.pos = cf_gcc->geom.res - cf_gcc->geom.size;
@@ -1377,7 +1377,7 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
    e_gadcon_client_edit_end(gcc);
    gcc->client_class->func.shutdown(gcc);
    if (gcc->client_class->func.id_del)
-     gcc->client_class->func.id_del(gcc->cf->id);
+     gcc->client_class->func.id_del(gcc->client_class, gcc->cf->id);
    gcc->gadcon->clients = eina_list_remove(gcc->gadcon->clients, gcc);
    if (gcc->o_box) evas_object_del(gcc->o_box);
    if (gcc->o_frame) evas_object_del(gcc->o_frame);
@@ -1530,7 +1530,7 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
 			  _e_gadcon_cb_drag_finished);
 	if (drag) 
 	  {
-	     o = gcc->client_class->func.icon(drag->evas);
+	     o = gcc->client_class->func.icon(gcc->client_class, drag->evas);
 	     evas_object_geometry_get(o, NULL, NULL, &w, &h);
 	     if (!o)
 	       {
@@ -2142,7 +2142,7 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type, void *event)
 		  e_gadcon_client_autoscroll_set(new_gcc, gcc->autoscroll);
 		  e_gadcon_client_resizable_set(new_gcc, gcc->resizable);
 		  if (new_gcc->client_class->func.orient)
-		    new_gcc->client_class->func.orient(new_gcc);
+		    new_gcc->client_class->func.orient(new_gcc, gc->orient);
 		  new_gcc->state_info.resist = 1;
 		  if (gc->instant_edit)
 		    e_gadcon_client_util_menu_attach(new_gcc);

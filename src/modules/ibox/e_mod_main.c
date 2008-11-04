@@ -9,11 +9,11 @@
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
-static void _gc_orient(E_Gadcon_Client *gcc);
-static char *_gc_label(void);
-static Evas_Object *_gc_icon(Evas *evas);
-static const char *_gc_id_new(void);
-static void _gc_id_del(const char *id);
+static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
+static char *_gc_label(E_Gadcon_Client_Class *client_class);
+static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
+static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
+static void _gc_id_del(E_Gadcon_Client_Class *client_class, const char *id);
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
@@ -181,12 +181,12 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 {
    Instance *inst;
 
    inst = gcc->data;
-   switch (gcc->gadcon->orient)
+   switch (orient)
      {
       case E_GADCON_ORIENT_FLOAT:
       case E_GADCON_ORIENT_HORIZ:
@@ -216,13 +216,13 @@ _gc_orient(E_Gadcon_Client *gcc)
 }
 
 static char *
-_gc_label(void)
+_gc_label(E_Gadcon_Client_Class *client_class)
 {
    return _("IBox");
 }
 
 static Evas_Object *
-_gc_icon(Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 {
    Evas_Object *o;
    char buf[4096];
@@ -235,7 +235,7 @@ _gc_icon(Evas *evas)
 }
 
 static const char *
-_gc_id_new(void)
+_gc_id_new(E_Gadcon_Client_Class *client_class)
 {
    Config_Item *ci;
 
@@ -244,7 +244,7 @@ _gc_id_new(void)
 }
 
 static void
-_gc_id_del(const char *id)
+_gc_id_del(E_Gadcon_Client_Class *client_class, const char *id)
 {
 /* yes - don't do this. on shutdown gadgets are deleted and this means config
  * for them is deleted - that means empty config is saved. keep them around
@@ -762,7 +762,7 @@ _ibox_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     Evas_Object *o;
 	     Evas_Coord x, y, w, h;
 	     const char *drag_types[] = { "enlightenment/border" };
-
+	     E_Gadcon_Client *gcc;
 	     ic->drag.dnd = 1;
 	     ic->drag.start = 0;
 
@@ -778,7 +778,8 @@ _ibox_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     e_object_ref(E_OBJECT(ic->border));
 	     ic->ibox->icons = eina_list_remove(ic->ibox->icons, ic);
 	     _ibox_resize_handle(ic->ibox);
-	     _gc_orient(ic->ibox->inst->gcc);
+	     gcc = ic->ibox->inst->gcc;
+	     _gc_orient(gcc, gcc->gadcon->orient);
 	     _ibox_icon_free(ic);
 	  }
      }
@@ -896,7 +897,7 @@ _ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 			  -1, -1 /* max */
 			  );
    _ibox_resize_handle(inst->ibox);
-   _gc_orient(inst->gcc);
+   _gc_orient(inst->gcc, inst->gcc->gadcon->orient);
 }
 
 static void
@@ -953,7 +954,7 @@ _ibox_inst_cb_leave(void *data, const char *type, void *event_info)
    inst->ibox->o_drop_over = NULL;
    e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
    _ibox_resize_handle(inst->ibox);
-   _gc_orient(inst->gcc);
+   _gc_orient(inst->gcc, inst->gcc->gadcon->orient);
 }
 
 static void
@@ -1020,7 +1021,7 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
    _ibox_empty_handle(b);
    e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
    _ibox_resize_handle(inst->ibox);
-   _gc_orient(inst->gcc);
+   _gc_orient(inst->gcc, inst->gcc->gadcon->orient);
 }
 
 static int
@@ -1049,7 +1050,7 @@ _ibox_cb_event_border_add(void *data, int type, void *event)
 	     e_box_pack_end(b->o_box, ic->o_holder);
 	     _ibox_empty_handle(b);
 	     _ibox_resize_handle(b);
-	     _gc_orient(b->inst->gcc);
+	     _gc_orient(b->inst->gcc, b->inst->gcc->gadcon->orient);
 	  }
 
 	while (ibox)
@@ -1078,7 +1079,7 @@ _ibox_cb_event_border_remove(void *data, int type, void *event)
 	b->icons = eina_list_remove(b->icons, ic);
 	_ibox_empty_handle(b);
 	_ibox_resize_handle(b);
-	_gc_orient(b->inst->gcc);
+	_gc_orient(b->inst->gcc, b->inst->gcc->gadcon->orient);
      }
    while (ibox)
      ibox = eina_list_remove_list(ibox, ibox);
@@ -1111,7 +1112,7 @@ _ibox_cb_event_border_iconify(void *data, int type, void *event)
 	e_box_pack_end(b->o_box, ic->o_holder);
 	_ibox_empty_handle(b);
 	_ibox_resize_handle(b);
-	_gc_orient(b->inst->gcc);
+	_gc_orient(b->inst->gcc, b->inst->gcc->gadcon->orient);
      }
 
    while (ibox)
@@ -1140,7 +1141,7 @@ _ibox_cb_event_border_uniconify(void *data, int type, void *event)
 	b->icons = eina_list_remove(b->icons, ic);
 	_ibox_empty_handle(b);
 	_ibox_resize_handle(b);
-	_gc_orient(b->inst->gcc);
+	_gc_orient(b->inst->gcc, b->inst->gcc->gadcon->orient);
      }
 
    while (ibox)
@@ -1237,7 +1238,7 @@ _ibox_cb_event_desk_show(void *data, int type, void *event)
 	     _ibox_empty(b);
 	     _ibox_fill(b);
 	     _ibox_resize_handle(b);
-	     _gc_orient(b->inst->gcc);
+	     _gc_orient(b->inst->gcc, b->inst->gcc->gadcon->orient);
 	  }
      }
 
@@ -1293,7 +1294,7 @@ _ibox_config_update(Config_Item *ci)
 	_ibox_empty(inst->ibox);
 	_ibox_fill(inst->ibox);
 	_ibox_resize_handle(inst->ibox);
-	_gc_orient(inst->gcc);
+	_gc_orient(inst->gcc, inst->gcc->gadcon->orient);
      }
 }
 

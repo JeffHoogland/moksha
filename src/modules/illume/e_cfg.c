@@ -885,7 +885,7 @@ _e_cfg_gadgets_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 	Gadit *gi;
 	
 	if (!(cc = l->data)) continue;
-	if (cc->func.label) lbl = cc->func.label();
+	if (cc->func.label) lbl = cc->func.label(cc);
 	if (!lbl) lbl = cc->name;
 	on = 0;
 	for (l3 = local_slipshelf->gadcon->cf->clients; l3; l3 = l3->next)
@@ -921,7 +921,7 @@ _e_cfg_gadgets_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 	Gadit *gi;
 	
 	if (!(cc = l->data)) continue;
-	if (cc->func.label) lbl = cc->func.label();
+	if (cc->func.label) lbl = cc->func.label(cc);
 	if (!lbl) lbl = cc->name;
 	on = 0;
 	for (l3 = local_slipshelf->gadcon_extra->cf->clients; l3; l3 = l3->next)
