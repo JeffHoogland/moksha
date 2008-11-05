@@ -41,6 +41,7 @@ struct _Instance
    IBar            *ibar;
    E_Drop_Handler  *drop_handler;
    Config_Item     *ci;
+   E_Gadcon_Orient orient;
 };
 
 struct _IBar
@@ -143,6 +144,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    inst->gcc = gcc;
    inst->o_ibar = o;
+   inst->orient = E_GADCON_ORIENT_HORIZ;
    
    evas_object_geometry_get(o, &x, &y, &w, &h);
    inst->drop_handler =
@@ -174,13 +176,12 @@ static void
 _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 {
    Instance *inst;
-   static last = E_GADCON_ORIENT_HORIZ;
-
-   if (orient != -1)
-      last = orient;
 
    inst = gcc->data;
-   switch (last)
+   if (orient != -1)
+      inst->orient = orient;
+
+   switch (inst->orient)
      {
       case E_GADCON_ORIENT_FLOAT:
       case E_GADCON_ORIENT_HORIZ:
