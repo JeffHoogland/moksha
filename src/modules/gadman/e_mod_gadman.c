@@ -189,6 +189,7 @@ gadman_gadget_add(E_Gadcon_Client_Class *cc, int ontop)
    E_Config_Gadcon_Client *cf = NULL;
    E_Gadcon_Client *gcc;
    E_Gadcon *gc;
+   int w, h;
 
    if (ontop)
      gc = Man->gc_top;
@@ -205,6 +206,19 @@ gadman_gadget_add(E_Gadcon_Client_Class *cc, int ontop)
 
    /* Place the new gadget */
    gcc = gadman_gadget_place(cf, ontop);
+
+   /* Respect Aspect */
+   evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
+   if (gcc->aspect.w && gcc->aspect.h)
+     {
+	if (gcc->aspect.w > gcc->aspect.h)
+	  w = ((float)h / (float)gcc->aspect.h) * (gcc->aspect.w);
+	else
+	  h =  ((float)w / (float)gcc->aspect.w) * (gcc->aspect.h);
+	if (h < gcc->min.h) h =  gcc->min.h;
+	if (w < gcc->min.w) w =  gcc->min.w;
+	evas_object_resize(gcc->o_frame, w, h);
+     }
 
    return gcc;
 }
