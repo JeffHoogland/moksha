@@ -174,9 +174,13 @@ static void
 _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 {
    Instance *inst;
-   
+   static last = E_GADCON_ORIENT_HORIZ;
+
+   if (orient != -1)
+      last = orient;
+
    inst = gcc->data;
-   switch (orient)
+   switch (last)
      {
       case E_GADCON_ORIENT_FLOAT:
       case E_GADCON_ORIENT_HORIZ:
@@ -510,7 +514,7 @@ _ibar_config_update(Config_Item *ci)
 	inst->ibar->apps = e_order_new(buf);
 	_ibar_fill(inst->ibar);
 	_ibar_resize_handle(inst->ibar);
-	_gc_orient(inst->gcc, inst->gcc->gadcon->orient);
+	_gc_orient(inst->gcc, -1);
 
 	for (i = inst->ibar->icons; i; i = i->next) 
 	  {
@@ -666,7 +670,7 @@ _ibar_cb_app_change(void *data, E_Order *eo)
    _ibar_fill(b);
    _ibar_resize_handle(b);
    if (b->inst)
-     _gc_orient(b->inst->gcc, b->inst->gcc->gadcon->orient);
+     _gc_orient(b->inst->gcc, -1);
 }
 
 static void
@@ -719,7 +723,7 @@ _ibar_cb_menu_icon_remove(void *data, E_Menu *m, E_Menu_Item *mi)
    ic->ibar->icons = eina_list_remove(ic->ibar->icons, ic);
    _ibar_resize_handle(ic->ibar);
    gc = ic->ibar->inst->gcc;
-   _gc_orient(gc, gc->gadcon->orient);
+   _gc_orient(gc, -1);
    e_order_remove(ic->ibar->apps, ic->app);
    _ibar_icon_free(ic);
 }
@@ -933,7 +937,7 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     ic->ibar->icons = eina_list_remove(ic->ibar->icons, ic);
 	     _ibar_resize_handle(ic->ibar);
              gc = ic->ibar->inst->gcc;
-	     _gc_orient(gc, gc->gadcon->orient);
+	     _gc_orient(gc, -1);
 	     e_order_remove(ic->ibar->apps, ic->app);
 	     _ibar_icon_free(ic);
 	  }
@@ -1062,7 +1066,7 @@ _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 			  -1, -1 /* max */
 			  );
    _ibar_resize_handle(inst->ibar);
-   _gc_orient(inst->gcc, inst->gcc->gadcon->orient);
+   _gc_orient(inst->gcc, -1);
 }
 
 static void
@@ -1121,7 +1125,7 @@ _ibar_inst_cb_leave(void *data, const char *type, void *event_info)
    inst->ibar->o_drop_over = NULL;
    _ibar_resize_handle(inst->ibar);
    e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
-   _gc_orient(inst->gcc, inst->gcc->gadcon->orient);
+   _gc_orient(inst->gcc, -1);
 }
 
 static void
@@ -1201,7 +1205,7 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
    e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
    _ibar_empty_handle(inst->ibar);
    _ibar_resize_handle(inst->ibar);
-   _gc_orient(inst->gcc, inst->gcc->gadcon->orient);
+   _gc_orient(inst->gcc, -1);
 
 }
 

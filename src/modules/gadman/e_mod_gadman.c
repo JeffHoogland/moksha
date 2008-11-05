@@ -29,6 +29,9 @@ static void on_hide_stop(void *data __UNUSED__, Evas_Object *o __UNUSED__,
 
 static void on_menu_style_plain(void *data, E_Menu *m, E_Menu_Item *mi);
 static void on_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi);
+static void on_menu_style_float(void *data, E_Menu *m, E_Menu_Item *mi);
+static void on_menu_style_horiz(void *data, E_Menu *m, E_Menu_Item *mi);
+static void on_menu_style_vert(void *data, E_Menu *m, E_Menu_Item *mi);
 static void on_menu_layer_bg(void *data, E_Menu *m, E_Menu_Item *mi);
 static void on_menu_layer_top(void *data, E_Menu *m, E_Menu_Item *mi);
 static void on_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -179,7 +182,7 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop)
 
    /* Call the client orientation function */
    if (cc->func.orient)
-       cc->func.orient(gcc, E_GADCON_ORIENT_FLOAT);  //TODO make this configurable per instance
+       cc->func.orient(gcc, gcc->cf->orient);
    return gcc;
 }
 
@@ -661,6 +664,34 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
      e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, on_menu_style_inset, gcc);
 
+   mi = e_menu_item_new(mn);
+   e_menu_item_separator_set(mi, 1);
+
+   /* orient */
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Free"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (gcc->cf->orient == E_GADCON_ORIENT_FLOAT)
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, on_menu_style_float, gcc);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Horizontal"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (gcc->cf->orient == E_GADCON_ORIENT_HORIZ)
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, on_menu_style_horiz, gcc);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Vertical"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (gcc->cf->orient == E_GADCON_ORIENT_VERT)
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, on_menu_style_vert, gcc);
+
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Appearance"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/appearance");
@@ -824,6 +855,48 @@ on_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi)
    gcc->cf->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
 
    edje_object_signal_emit(gcc->o_frame, "e,state,visibility,inset", "e");
+
+   e_config_save_queue();
+}
+
+static void
+on_menu_style_float(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadcon_Client *gcc;
+
+   gcc = data;
+   gcc->cf->orient = E_GADCON_ORIENT_FLOAT;
+
+   if (gcc->client_class->func.orient)
+       gcc->client_class->func.orient(gcc, E_GADCON_ORIENT_FLOAT);
+
+   e_config_save_queue();
+}
+
+static void
+on_menu_style_horiz(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadcon_Client *gcc;
+
+   gcc = data;
+   gcc->cf->orient = E_GADCON_ORIENT_HORIZ;
+
+   if (gcc->client_class->func.orient)
+       gcc->client_class->func.orient(gcc, E_GADCON_ORIENT_HORIZ);
+
+   e_config_save_queue();
+}
+
+static void
+on_menu_style_vert(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadcon_Client *gcc;
+
+   gcc = data;
+   gcc->cf->orient = E_GADCON_ORIENT_VERT;
+
+   if (gcc->client_class->func.orient)
+       gcc->client_class->func.orient(gcc, E_GADCON_ORIENT_VERT);
 
    e_config_save_queue();
 }

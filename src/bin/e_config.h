@@ -410,6 +410,7 @@ struct _E_Config_Gadcon_Client
       int seq, flags;
    } state_info;
    const char    *style;
+   int orient;
    unsigned char  autoscroll;
    unsigned char  resizable;
 };
