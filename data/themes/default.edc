@@ -6191,7 +6191,7 @@ collections { /* begin the collection of edje groups that are in this file */
       }
    }
 
-   /* This is the "invisible" shelf. Yes. Even it has visial config in edje.
+   /* This is the "invisible" shelf. Yes. Even it has visual config in edje.
     * The idea is that it will remain invisible, BUT will allow the designer
     * to do some layout and padding. This gets the same signals as the
     * default shelf and can provide the same data items */
