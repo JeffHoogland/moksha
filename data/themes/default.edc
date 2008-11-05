@@ -1,5 +1,12 @@
-// TODO: Items that need some revision
+// TODO: 
 // Add group{} locations to all sections. eg. "widget/preview" is found in Wallpaper selector"
+//	Icons:
+//		EFM - All popup icons ... eg, paste copy delete properties
+//		EFM - Desktop, folders, dynamic mime icons
+//		Toolbar 
+//		Icons - Favorite, system icons, window icons, icon theme
+//		           - Dialogs, Interactions, applications
+//
 //
 // TODO Code:
 //	      - ilist e.swallow.icon should use e_ilist_icon_size_set to make a dummy box
@@ -21618,27 +21625,6 @@ group { name: "e/toolbar/default/base";
 
 /////////////////////////////////////////////////////////////////////////////
    /*** ICONS ***/
-
-/*
-
-TODO: Icons (redo)
- EFM buttons. (Use same icon style as border icons).
- System buttons (restart,logout,hibernate, etc etc)
- Window icons (pager, window remembers, etc etc)
- Wallpaper
- Icon theme icon?
- Interactions
- Dialogs
- E icon
- Extensions
- Mixer
- Favorites
- Menu Icons
- Applications (different gear)
-
-TODO: Document how #define works.
-
-*/
 
 #define ICON(NAME, FILE, SIZE)                          \
 group { name: "e/icons/"NAME ;                          \
