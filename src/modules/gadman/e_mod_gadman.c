@@ -173,6 +173,10 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop)
    evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_DOWN, 
                                   on_frame_click, gcc);
 
+   /* Call the client orientation function */
+   if (cc->func.orient)
+       cc->func.orient(gcc, gcc->cf->orient);
+
    _apply_widget_position(gcc);
 
    if (gcc->gadcon == Man->gc_top)
@@ -180,9 +184,6 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop)
 
    evas_object_show(gcc->o_frame);
 
-   /* Call the client orientation function */
-   if (cc->func.orient)
-       cc->func.orient(gcc, gcc->cf->orient);
    return gcc;
 }
 
