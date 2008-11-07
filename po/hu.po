@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-11-04 02:43+0100\n"
+"POT-Creation-Date: 2008-11-07 07:27+0100\n"
 "PO-Revision-Date: 2008-07-18 21:02+0200\n"
 "Last-Translator: Lisovszki Sándor <lisovszki@gmail.com>\n"
 "Language-Team: hungarian <mypclinuxos.com>\n"
@@ -78,16 +78,16 @@ msgstr "Tényleg be akarod zárni ezt az ablakot?"
 
 #: src/bin/e_actions.c:353 src/bin/e_actions.c:1631 src/bin/e_actions.c:1713
 #: src/bin/e_actions.c:1777 src/bin/e_actions.c:1841 src/bin/e_actions.c:1905
-#: src/bin/e_actions.c:1969 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:7215
-#: src/bin/e_fm.c:7395 src/bin/e_module.c:526
+#: src/bin/e_actions.c:1969 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:7222
+#: src/bin/e_fm.c:7402 src/bin/e_module.c:526
 #: src/modules/conf_display/e_int_config_display.c:215
 msgid "Yes"
 msgstr "Igen"
 
 #: src/bin/e_actions.c:355 src/bin/e_actions.c:1633 src/bin/e_actions.c:1715
 #: src/bin/e_actions.c:1779 src/bin/e_actions.c:1843 src/bin/e_actions.c:1907
-#: src/bin/e_actions.c:1971 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:7213
-#: src/bin/e_fm.c:7396 src/bin/e_module.c:527
+#: src/bin/e_actions.c:1971 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:7220
+#: src/bin/e_fm.c:7403 src/bin/e_module.c:527
 #: src/modules/conf_display/e_int_config_display.c:216
 msgid "No"
 msgstr "Nem"
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Window : Actions"
 msgstr "Ablak : Műveletek"
 
-#: src/bin/e_actions.c:2273 src/bin/e_fm.c:4774
+#: src/bin/e_actions.c:2273 src/bin/e_fm.c:4775
 msgid "Move"
 msgstr "Mozgatás"
 
@@ -938,7 +938,7 @@ msgstr "Mégsem"
 msgid "Select an Executable"
 msgstr "Egy futtatható kiválasztása"
 
-#: src/bin/e_entry.c:493 src/bin/e_fm.c:6696
+#: src/bin/e_entry.c:493 src/bin/e_fm.c:6703
 #: src/modules/conf_applications/e_int_config_apps.c:271
 #: src/modules/conf_profiles/e_int_config_profiles.c:113
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -946,15 +946,15 @@ msgstr "Egy futtatható kiválasztása"
 msgid "Delete"
 msgstr "Törlés"
 
-#: src/bin/e_entry.c:506 src/bin/e_fm.c:6606
+#: src/bin/e_entry.c:506 src/bin/e_fm.c:6613
 msgid "Cut"
 msgstr "Kivágás"
 
-#: src/bin/e_entry.c:517 src/bin/e_fm.c:4766 src/bin/e_fm.c:6623
+#: src/bin/e_entry.c:517 src/bin/e_fm.c:4767 src/bin/e_fm.c:6630
 msgid "Copy"
 msgstr "Másolás"
 
-#: src/bin/e_entry.c:528 src/bin/e_fm.c:6447 src/bin/e_fm.c:6637
+#: src/bin/e_entry.c:528 src/bin/e_fm.c:6454 src/bin/e_fm.c:6644
 msgid "Paste"
 msgstr "Beillesztés"
 
@@ -1100,122 +1100,122 @@ msgstr "Nem létező útvonal"
 msgid "%s doesn't exist."
 msgstr "%s nem létezik."
 
-#: src/bin/e_fm.c:2667
+#: src/bin/e_fm.c:2668
 #, c-format
 msgid "%i Files"
 msgstr "%i fájlok"
 
-#: src/bin/e_fm.c:4782 src/bin/e_fm.c:7159 src/bin/e_fm.c:7289
+#: src/bin/e_fm.c:4783 src/bin/e_fm.c:7166 src/bin/e_fm.c:7296
 #, fuzzy
 msgid "Abort"
 msgstr "Névjegy"
 
-#: src/bin/e_fm.c:6370 src/bin/e_fm.c:6527
+#: src/bin/e_fm.c:6377 src/bin/e_fm.c:6534
 #: src/modules/fileman/e_mod_config.c:171
 msgid "View Mode"
 msgstr "Nézetmód"
 
-#: src/bin/e_fm.c:6377 src/bin/e_fm.c:6534
+#: src/bin/e_fm.c:6384 src/bin/e_fm.c:6541
 msgid "Refresh View"
 msgstr "A nézet frissítése"
 
-#: src/bin/e_fm.c:6388 src/bin/e_fm.c:6545
+#: src/bin/e_fm.c:6395 src/bin/e_fm.c:6552
 msgid "Show Hidden Files"
 msgstr "Rejtett fájlok megjelenítése"
 
-#: src/bin/e_fm.c:6403 src/bin/e_fm.c:6560
+#: src/bin/e_fm.c:6410 src/bin/e_fm.c:6567
 msgid "Remember Ordering"
 msgstr "Emlékezz az utasításokra"
 
-#: src/bin/e_fm.c:6415 src/bin/e_fm.c:6572
+#: src/bin/e_fm.c:6422 src/bin/e_fm.c:6579
 msgid "Sort Now"
 msgstr "Rendezés Most"
 
-#: src/bin/e_fm.c:6430 src/bin/e_fm.c:6590
+#: src/bin/e_fm.c:6437 src/bin/e_fm.c:6597
 #: src/modules/conf_paths/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Új könyvtár"
 
-#: src/bin/e_fm.c:6707
+#: src/bin/e_fm.c:6714
 msgid "Rename"
 msgstr "Átnevezés"
 
-#: src/bin/e_fm.c:6717
+#: src/bin/e_fm.c:6724
 msgid "Properties"
 msgstr "Tulajdonságok"
 
-#: src/bin/e_fm.c:6878 src/modules/conf_paths/e_int_config_paths.c:81
+#: src/bin/e_fm.c:6885 src/modules/conf_paths/e_int_config_paths.c:81
 #: src/modules/fileman/e_mod_config.c:173
 msgid "Icons"
 msgstr "Ikonok"
 
-#: src/bin/e_fm.c:6886 src/modules/fileman/e_mod_config.c:186
+#: src/bin/e_fm.c:6893 src/modules/fileman/e_mod_config.c:186
 msgid "List"
 msgstr "Lista"
 
-#: src/bin/e_fm.c:7024
+#: src/bin/e_fm.c:7031
 msgid "Create a new Directory"
 msgstr "Új könyvtár létrehozása"
 
-#: src/bin/e_fm.c:7025
+#: src/bin/e_fm.c:7032
 msgid "New Directory Name:"
 msgstr "Új könyvtár neve:"
 
-#: src/bin/e_fm.c:7084
+#: src/bin/e_fm.c:7091
 #, c-format
 msgid "Rename %s to:"
 msgstr "%s átnevezése erre:"
 
-#: src/bin/e_fm.c:7086
+#: src/bin/e_fm.c:7093
 msgid "Rename File"
 msgstr "Fájl átnevezése"
 
-#: src/bin/e_fm.c:7158 src/bin/e_fm.c:7288
+#: src/bin/e_fm.c:7165 src/bin/e_fm.c:7295
 #, fuzzy
 msgid "Retry"
 msgstr "Újraindítás"
 
-#: src/bin/e_fm.c:7162 src/bin/e_fm.c:7219 src/bin/e_fm.c:7294
+#: src/bin/e_fm.c:7169 src/bin/e_fm.c:7226 src/bin/e_fm.c:7301
 #, fuzzy
 msgid "Error"
 msgstr "Futási hiba"
 
-#: src/bin/e_fm.c:7164 src/bin/e_fm.c:7221
+#: src/bin/e_fm.c:7171 src/bin/e_fm.c:7228
 #, c-format
 msgid "%s"
 msgstr ""
 
-#: src/bin/e_fm.c:7214
+#: src/bin/e_fm.c:7221
 msgid "No to all"
 msgstr ""
 
-#: src/bin/e_fm.c:7216
+#: src/bin/e_fm.c:7223
 msgid "Yes to all"
 msgstr ""
 
-#: src/bin/e_fm.c:7290
+#: src/bin/e_fm.c:7297
 msgid "Ignore this"
 msgstr ""
 
-#: src/bin/e_fm.c:7291
+#: src/bin/e_fm.c:7298
 msgid "Ignore all"
 msgstr ""
 
-#: src/bin/e_fm.c:7296
+#: src/bin/e_fm.c:7303
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:7398
+#: src/bin/e_fm.c:7405
 msgid "Confirm Delete"
 msgstr "A törlés megerősítése"
 
-#: src/bin/e_fm.c:7402
+#: src/bin/e_fm.c:7409
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Biztosan törölni akarod a(z) <br><hilight>%s</hilight> nevû fájlt?"
 
-#: src/bin/e_fm.c:7408
+#: src/bin/e_fm.c:7415
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1336,11 +1336,11 @@ msgstr "Ismeretlen érték"
 msgid "Removable Device"
 msgstr "Cserélhető adathordozójú eszköz"
 
-#: src/bin/e_gadcon.c:1214 src/modules/gadman/e_mod_gadman.c:635
+#: src/bin/e_gadcon.c:1214 src/modules/gadman/e_mod_gadman.c:653
 msgid "Plain"
 msgstr "Egyszerű"
 
-#: src/bin/e_gadcon.c:1223 src/modules/gadman/e_mod_gadman.c:643
+#: src/bin/e_gadcon.c:1223 src/modules/gadman/e_mod_gadman.c:661
 msgid "Inset"
 msgstr "Beágyazott"
 
@@ -1356,7 +1356,7 @@ msgstr "Beágyazott"
 #: src/modules/conf_transitions/e_mod_main.c:34
 #: src/modules/conf_wallpaper/e_mod_main.c:28
 #: src/modules/dropshadow/e_mod_main.c:89
-#: src/modules/gadman/e_mod_gadman.c:651
+#: src/modules/gadman/e_mod_gadman.c:697
 msgid "Appearance"
 msgstr "Megjelenés"
 
@@ -1368,11 +1368,11 @@ msgstr "Tartalom automatikus görgetése"
 msgid "Able to be resized"
 msgstr "Átméretezhetõ"
 
-#: src/bin/e_gadcon.c:1260 src/modules/gadman/e_mod_gadman.c:686
+#: src/bin/e_gadcon.c:1260 src/modules/gadman/e_mod_gadman.c:732
 msgid "Begin move/resize this gadget"
 msgstr "Modul áthelyezésének/átméretezésének kezdése"
 
-#: src/bin/e_gadcon.c:1266 src/modules/gadman/e_mod_gadman.c:692
+#: src/bin/e_gadcon.c:1266 src/modules/gadman/e_mod_gadman.c:738
 msgid "Remove this gadget"
 msgstr "Modul eltávolítása"
 
@@ -1891,9 +1891,9 @@ msgid "Always focus on start"
 msgstr "Induláskor mindig figyeld"
 
 #: src/bin/e_int_config_modules.c:42 src/bin/e_int_menus.c:215
-#: src/modules/battery/e_mod_main.c:171 src/modules/ibar/e_mod_main.c:320
-#: src/modules/ibar/e_mod_main.c:838 src/modules/ibox/e_mod_main.c:313
-#: src/modules/ibox/e_mod_main.c:711 src/modules/pager/e_mod_main.c:804
+#: src/modules/battery/e_mod_main.c:171 src/modules/ibar/e_mod_main.c:325
+#: src/modules/ibar/e_mod_main.c:845 src/modules/ibox/e_mod_main.c:318
+#: src/modules/ibox/e_mod_main.c:716 src/modules/pager/e_mod_main.c:804
 #: src/modules/temperature/e_mod_main.c:311 src/modules/mixer/e_mod_main.c:667
 msgid "Configuration"
 msgstr "Beállítás"
@@ -4445,22 +4445,22 @@ msgstr ""
 "által.<br>Kérlek adj meg egy másik billenytûkombinációt."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1287
-#: src/modules/gadman/e_mod_gadman.c:712
+#: src/modules/gadman/e_mod_gadman.c:759
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1292
-#: src/modules/gadman/e_mod_gadman.c:717
+#: src/modules/gadman/e_mod_gadman.c:764
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1298
-#: src/modules/gadman/e_mod_gadman.c:723
+#: src/modules/gadman/e_mod_gadman.c:770
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1304
-#: src/modules/gadman/e_mod_gadman.c:729
+#: src/modules/gadman/e_mod_gadman.c:776
 msgid "WIN"
 msgstr "WIN"
 
@@ -5160,11 +5160,13 @@ msgstr "Kitöltés beállítások"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
+#: src/modules/gadman/e_mod_gadman.c:681
 msgid "Horizontal"
 msgstr "Vízszintes"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:154
+#: src/modules/gadman/e_mod_gadman.c:689
 msgid "Vertical"
 msgstr "Függőleges"
 
@@ -6085,19 +6087,24 @@ msgstr "Célszemély"
 msgid "Animations"
 msgstr "Váltás animáció"
 
-#: src/modules/gadman/e_mod_gadman.c:659
+#: src/modules/gadman/e_mod_gadman.c:673
+#, fuzzy
+msgid "Free"
+msgstr "Keret"
+
+#: src/modules/gadman/e_mod_gadman.c:705
 msgid "Always on desktop"
 msgstr "Mindig a munkaasztalon"
 
-#: src/modules/gadman/e_mod_gadman.c:669
+#: src/modules/gadman/e_mod_gadman.c:715
 msgid "On top pressing"
 msgstr "Fent nyomva"
 
-#: src/modules/gadman/e_mod_gadman.c:679
+#: src/modules/gadman/e_mod_gadman.c:725
 msgid "Behavior"
 msgstr "Viselkedés"
 
-#: src/modules/gadman/e_mod_gadman.c:697
+#: src/modules/gadman/e_mod_gadman.c:744
 msgid "Add other gadgets"
 msgstr "Egyéb bigyók hozzáadása"
 
@@ -6174,27 +6181,27 @@ msgstr "A \"%s\" törlését kérted.<br><br> Biztosan törölni szeretnéd?"
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Biztosan törölni szeretnéd?"
 
-#: src/modules/ibar/e_mod_main.c:211
+#: src/modules/ibar/e_mod_main.c:216
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:807
+#: src/modules/ibar/e_mod_main.c:814
 msgid "Change Icon Properties"
 msgstr "Ikon tulajdonságok módosítása"
 
-#: src/modules/ibar/e_mod_main.c:812
+#: src/modules/ibar/e_mod_main.c:819
 msgid "Remove Icon"
 msgstr "Ikon eltávolítása"
 
-#: src/modules/ibar/e_mod_main.c:822
+#: src/modules/ibar/e_mod_main.c:829
 msgid "Add An Icon"
 msgstr "Ikon hozzáadása"
 
-#: src/modules/ibar/e_mod_main.c:829
+#: src/modules/ibar/e_mod_main.c:836
 msgid "Create New Icon"
 msgstr "Új ikon létrehozása"
 
-#: src/modules/ibar/e_mod_main.c:845
+#: src/modules/ibar/e_mod_main.c:852
 msgid "Add Application"
 msgstr "Alkalmazás hozzáadása"
 
@@ -6238,7 +6245,7 @@ msgstr "Minden asztal ablakainak megjelenítése"
 msgid "Show windows from active desktop"
 msgstr "Ablakok megjelenítése az aktív asztalról"
 
-#: src/modules/ibox/e_mod_main.c:221
+#: src/modules/ibox/e_mod_main.c:226
 msgid "IBox"
 msgstr "IBox"
 
