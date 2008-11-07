@@ -5,7 +5,6 @@
 #define E_MOD_MAIN_H
 
 typedef struct _Config       Config;
-typedef struct _Status       Status;
 
 #define CHECK_NONE      0
 #define CHECK_ACPI      1
