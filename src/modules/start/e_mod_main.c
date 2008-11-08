@@ -145,11 +145,11 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (ev->button == 1)
      {
 	Evas_Coord x, y, w, h;
-	int cx, cy, cw, ch;
-	
+	int cx, cy;
+
 	evas_object_geometry_get(inst->o_button, &x, &y, &w, &h); 
 	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
-					  &cx, &cy, &cw, &ch);
+					  &cx, &cy, NULL, NULL);
 	x += cx;
 	y += cy;
 	if (!inst->main_menu)
