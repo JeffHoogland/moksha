@@ -301,8 +301,8 @@ _temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *eve
      {
 	E_Menu *mn;
 	E_Menu_Item *mi;
-	int cx, cy, cw, ch;
-	
+	int cx, cy;
+
 	mn = e_menu_new();
 	e_menu_post_deactivate_callback_set(mn, _temperature_face_cb_post_menu, inst);
 	inst->menu = mn;
@@ -315,7 +315,7 @@ _temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *eve
 	e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
 	
 	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
-					  &cx, &cy, &cw, &ch);
+					  &cx, &cy, NULL, NULL);
 	e_menu_activate_mouse(mn,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
