@@ -120,20 +120,20 @@ static void
 _surebox_text_fill(SureBox *sb)
 {
    char buf[4096];
-   
+
    if (!sb->dia) return;
    if (sb->iterations > 1)
      {
 	if (sb->cfdata->has_rates)
 	  snprintf(buf, sizeof(buf),
-		   _("Does this look OK? <hilight>Save</hilight> if it does, or restore if not.<br>"
+		   _("Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
 		     "If you do not press a button, the old resolution of<br>"
 		     "%dx%d at %d Hz will be restored in %d seconds."),
 		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
 		   sb->cfdata->orig_rate.rate, sb->iterations);
 	else
 	  snprintf(buf, sizeof(buf),
-		   _("Does this look OK? <hilight>Save</hilight> if it does, or restore if not.<br>"
+		   _("Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
 		     "If you do not press a button, the old resolution of<br>"
 		     "%dx%d will be restored in %d seconds."),
 		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
@@ -143,14 +143,14 @@ _surebox_text_fill(SureBox *sb)
      {
 	if (sb->cfdata->has_rates)
 	  snprintf(buf, sizeof(buf),
-		   _("Does this look OK? <hilight>Save</hilight> if it does, or restore if not.<br>"
+		   _("Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
 		     "If you do not press a button, the old resolution of<br>"
 		     "%dx%d at %d Hz will be restored <hilight>IMMEDIATELY</hilight>."),
 		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
 		   sb->cfdata->orig_rate.rate);
 	else
 	  snprintf(buf, sizeof(buf),
-		   _("Does this look OK? <hilight>Save</hilight> if it does, or restore if not.<br>"
+		   _("Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
 		     "If you do not press a button, the old resolution of<br>"
 		     "%dx%d will be restored <hilight>IMMEDIATELY</hilight>."),
 		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height);
@@ -162,7 +162,7 @@ static int
 _surebox_timer_cb(void *data)
 {
    SureBox *sb;
-   
+
    sb = data;
    sb->iterations--;
    _surebox_text_fill(sb);
@@ -203,7 +203,6 @@ _surebox_new(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    return sb;
 }
 
-
 EAPI E_Config_Dialog *
 e_int_config_display(E_Container *con, const char *params __UNUSED__) 
 {
@@ -226,8 +225,7 @@ e_int_config_display(E_Container *con, const char *params __UNUSED__)
    v->basic.check_changed = _basic_check_changed;
    v->override_auto_apply = 1;
 
-   cfd = e_config_dialog_new(con,
-			     _("Screen Resolution Settings"),
+   cfd = e_config_dialog_new(con, _("Screen Resolution Settings"),
 			    "E", "_config_display_dialog",
 			     "enlightenment/screen_resolution", 0, v, NULL);
    return cfd;
@@ -245,7 +243,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->restore = e_config->display_res_restore;
 
    rots = ecore_x_randr_screen_rotations_get(man->root);
-   if (rots && rots != ECORE_X_RANDR_ROT_0)
+   if ((rots) && (rots != ECORE_X_RANDR_ROT_0))
      {
 	cfdata->rotation = ecore_x_randr_screen_rotation_get(man->root);
 	cfdata->can_flip = rots & (ECORE_X_RANDR_FLIP_X | ECORE_X_RANDR_FLIP_Y);
@@ -370,16 +368,16 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 	cfdata->flip = cfdata->rotation;	
 	if (cfdata->flip_x)
-	  cfdata->flip = cfdata->flip | ECORE_X_RANDR_FLIP_X;
+	  cfdata->flip = (cfdata->flip | ECORE_X_RANDR_FLIP_X);
 	if (cfdata->flip_y)
-	  cfdata->flip = cfdata->flip | ECORE_X_RANDR_FLIP_Y;
+	  cfdata->flip = (cfdata->flip | ECORE_X_RANDR_FLIP_Y);
 
 	rot = ecore_x_randr_screen_rotation_get(man->root);
 	ecore_x_randr_screen_rotation_set(man->root,
-					  cfdata->rotation | cfdata->flip);
+					  (cfdata->rotation | cfdata->flip));
 	cfdata->orig_rotation = cfdata->rotation;
 	cfdata->orig_flip = cfdata->flip;
-	e_config->display_res_rotation = cfdata->rotation | cfdata->flip;
+	e_config->display_res_rotation = (cfdata->rotation | cfdata->flip);
      }
    else
      e_config->display_res_rotation = 0;
@@ -551,7 +549,8 @@ _load_resolutions(E_Config_Dialog_Data *cfdata)
 		  e_util_edje_icon_set(ob, "enlightenment/check");
 		  sel = res->id;
 	       }
-	     e_widget_ilist_append(cfdata->res_list, ob, buf, _ilist_item_change, cfdata, NULL);
+	     e_widget_ilist_append(cfdata->res_list, ob, buf, 
+                                   _ilist_item_change, cfdata, NULL);
 	  }
 
 	e_widget_ilist_go(cfdata->res_list);
@@ -602,6 +601,7 @@ _load_rates(E_Config_Dialog_Data *cfdata)
 	if (res->id == r)
 	  {
 	     Eina_List *ll;
+
 	     for (ll = res->rates; ll; ll = ll->next)
 	       {
 		  Ecore_X_Screen_Refresh_Rate *rt;
@@ -622,7 +622,7 @@ _load_rates(E_Config_Dialog_Data *cfdata)
 	     break;
 	  }
      }   
-   
+
    e_widget_ilist_go(cfdata->rate_list);
    e_widget_ilist_selected_set(cfdata->rate_list, sel);
    e_widget_ilist_thaw(cfdata->rate_list);
