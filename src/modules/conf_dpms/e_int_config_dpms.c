@@ -2,6 +2,7 @@
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int  _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int  _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object  *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 					      E_Config_Dialog_Data *cfdata);
@@ -102,6 +103,7 @@ e_int_config_dpms(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _advanced_apply_data;
    v->basic.create_widgets = _advanced_create_widgets;
+   v->basic.check_changed = _advanced_check_changed;
    v->override_auto_apply = 1;
    
    cfd = e_config_dialog_new(con, _("Display Power Management Settings"), "E", 
@@ -169,6 +171,18 @@ _apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 /* advanced window */
 static int
+_advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   return (e_config->dpms_enable != cfdata->enable_dpms) ||
+	  (e_config->dpms_standby_enable != cfdata->enable_standby) ||
+	  (e_config->dpms_suspend_enable != cfdata->enable_suspend) ||
+	  (e_config->dpms_off_enable != cfdata->enable_off) ||
+	  (e_config->dpms_standby_timeout / 60 != cfdata->standby_timeout) ||
+	  (e_config->dpms_suspend_timeout / 60 != cfdata->suspend_timeout) ||
+	  (e_config->dpms_off_timeout / 60 != cfdata->off_timeout);
+}
+
+static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    _apply_data(cfd, cfdata);
@@ -186,7 +200,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 			   &(cfdata->enable_dpms));
    e_widget_list_object_append(o, ob, 1, 1, 0);   
    
-   of = e_widget_framelist_add(evas, _("Timer(s)"), 0);
+   of = e_widget_framelist_add(evas, _("Timers"), 0);
 
    ob = e_widget_check_add(evas, _("Standby time"), &(cfdata->enable_standby));
    e_widget_framelist_object_append(of, ob);
