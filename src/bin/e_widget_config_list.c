@@ -51,36 +51,26 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    wd->gui.table = o;
    e_widget_sub_object_add(obj, o);
 
-   o = e_widget_button_add(evas, _("Add"), NULL, _button_cb_add, wd, obj); 
-   wd->gui.add = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_table_object_append(wd->gui.table, o, 0, 1, 1, 1, 1, 0, 1, 0);
-
-   o = e_widget_button_add(evas, _("Remove"), NULL, _button_cb_remove, wd, obj);
-   wd->gui.remove = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_table_object_append(wd->gui.table, o, 1, 1, 1, 1, 1, 0, 1, 0);
-
    o = e_widget_label_add(evas, label);
-   e_widget_table_object_append(wd->gui.table, o, 0, 2, 2, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(wd->gui.table, o, 0, 1, 2, 1, 1, 0, 1, 0);
 
    o = func_entry_add(evas, &(wd->cur_entry), NULL, NULL, NULL);
    wd->gui.entry = o;
    e_widget_disabled_set(o, 1);
    e_widget_min_size_set(o, 100, 25);
-   e_widget_table_object_append(wd->gui.table, o, 0, 3, 2, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(wd->gui.table, o, 0, 2, 2, 1, 1, 0, 1, 0);
 
-   o = e_widget_button_add(evas, _("Up"), "widget/up_arrow", 
-			   _button_cb_up, wd, NULL);
-   wd->gui.up = o;
+   o = e_widget_button_add(evas, _("Add"), "widget/add", _button_cb_add,
+			   wd, obj);
+   wd->gui.add = o;
    e_widget_disabled_set(o, 1);
-   e_widget_table_object_append(wd->gui.table, o, 0, 4, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(wd->gui.table, o, 0, 3, 1, 1, 1, 0, 1, 0);
 
-   o = e_widget_button_add(evas, _("Down"), "widget/down_arrow", 
-			   _button_cb_down, wd, NULL); 
-   wd->gui.down = o;
+   o = e_widget_button_add(evas, _("Remove"), "widget/del",
+			   _button_cb_remove, wd, obj);
+   wd->gui.remove = o;
    e_widget_disabled_set(o, 1);
-   e_widget_table_object_append(wd->gui.table, o, 1, 4, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(wd->gui.table, o, 1, 3, 1, 1, 1, 0, 1, 0);
 
    o = e_widget_ilist_add(evas, 0, 0, NULL);
    wd->gui.list = o;
@@ -88,7 +78,19 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    e_widget_min_size_set(o, 80, 40);
    e_widget_on_change_hook_set(o, _list_cb_change, wd);
    e_widget_ilist_go(o);
-   e_widget_table_object_append(wd->gui.table, o, 0, 5, 2, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(wd->gui.table, o, 0, 4, 2, 1, 1, 1, 1, 1);
+
+   o = e_widget_button_add(evas, _("Up"), "widget/up_arrow", 
+			   _button_cb_up, wd, NULL);
+   wd->gui.up = o;
+   e_widget_disabled_set(o, 1);
+   e_widget_table_object_append(wd->gui.table, o, 0, 5, 1, 1, 1, 0, 1, 0);
+
+   o = e_widget_button_add(evas, _("Down"), "widget/down_arrow", 
+			   _button_cb_down, wd, NULL); 
+   wd->gui.down = o;
+   e_widget_disabled_set(o, 1);
+   e_widget_table_object_append(wd->gui.table, o, 1, 5, 1, 1, 1, 0, 1, 0);
 
    e_widget_min_size_get(wd->gui.table, &mw, &mh);
    e_widget_min_size_set(obj, mw, mh);
