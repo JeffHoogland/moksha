@@ -101,6 +101,9 @@ gadman_shutdown(void)
    e_gadcon_unpopulate(Man->gc);
    e_gadcon_unpopulate(Man->gc_top);
 
+   e_gadcon_custom_del(Man->gc);
+   e_gadcon_custom_del(Man->gc_top);
+
    /* free gadcons */
    e_config->gadcons = eina_list_remove(e_config->gadcons, Man->gc);
    e_config->gadcons = eina_list_remove(e_config->gadcons, Man->gc_top);
@@ -527,6 +530,8 @@ _gadman_gadcon_new(const char* name, int ontop)
         e_config->gadcons = eina_list_append(e_config->gadcons, gc->cf);
         e_config_save_queue();
      }
+
+   e_gadcon_custom_new(gc);
 
    return gc;
 }

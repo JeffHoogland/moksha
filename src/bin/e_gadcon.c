@@ -252,6 +252,20 @@ e_gadcon_provider_list(void)
    return providers_list;
 }
 
+EAPI void
+e_gadcon_custom_new(E_Gadcon *gc)
+{
+   if (!gc) return;
+   gadcons = eina_list_append(gadcons, gc);
+}
+
+EAPI void
+e_gadcon_custom_del(E_Gadcon *gc)
+{
+   if (!gc) return;
+   gadcons = eina_list_remove(gadcons, gc);
+}
+
 EAPI E_Gadcon *
 e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, char *swallow_name)
 {
