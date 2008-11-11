@@ -1,3 +1,4 @@
+[encoding: UTF-8]
 src/bin/e_about.c
 src/bin/e_actions.c
 src/bin/e_alert.c
