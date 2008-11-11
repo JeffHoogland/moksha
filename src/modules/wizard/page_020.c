@@ -10,7 +10,8 @@ static Evas_Object *textblock = NULL;
 static void
 _profile_change(void *data, Evas_Object *obj)
 {
-   char buf[PATH_MAX], *dir;
+   char buf[PATH_MAX];
+   const char *dir;
    Efreet_Desktop *desk = NULL;
    
    dir = e_prefix_data_get();
@@ -24,13 +25,11 @@ _profile_change(void *data, Evas_Object *obj)
    snprintf(buf, sizeof(buf), "%s/profile.desktop", dir);
    desk = efreet_desktop_get(buf);
    if (desk)
-     {
-	e_widget_textblock_markup_set(textblock, desk->comment);
-     }
+     e_widget_textblock_markup_set(textblock, desk->comment);
    else
      e_widget_textblock_markup_set(textblock, _("Unknown"));
    if (desk) efreet_desktop_free(desk);
-   free(dir);
+
    // enable next once you choose a profile
    e_wizard_button_next_enable_set(1);
 }
@@ -68,8 +67,8 @@ wizard_page_show(E_Wizard_Page *pg)
    for (i = 0, l = profiles; l; l = l->next, i++)
      {
         Efreet_Desktop *desk = NULL;
-	char buf[PATH_MAX], *prof, *dir;
-	const char *label;
+	char buf[PATH_MAX], *prof;
+	const char *label, *dir;
 	Evas_Object *ic;
 	
 	prof = l->data;
@@ -106,7 +105,6 @@ wizard_page_show(E_Wizard_Page *pg)
 	  snprintf(buf, sizeof(buf), "%s/data/images/enlightenment.png", e_prefix_data_get());
 	ic = e_util_icon_add(buf, pg->evas);
 	e_widget_ilist_append(ob, ic, label, NULL, NULL, prof);
-	free(dir);
 	free(prof);
         if (desk) efreet_desktop_free(desk);
      }
