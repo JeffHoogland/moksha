@@ -215,7 +215,10 @@ e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
    for (l = gadcons; l; l = l->next)
      {
 	gc = l->data;
-	e_gadcon_populate_class(gc, cc);
+	if (gc->populate_class.func)
+	  gc->populate_class.func(gc->populate_class.data, gc, cc);
+	else
+	  e_gadcon_populate_class(gc, cc);
      }
 }
 
@@ -368,6 +371,16 @@ e_gadcon_frame_request_callback_set(E_Gadcon *gc, Evas_Object *(*func) (void *da
    
    gc->frame_request.func = func;
    gc->frame_request.data = data;
+}
+
+EAPI void
+e_gadcon_populate_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc), void *data)
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   
+   gc->populate_class.func = func;
+   gc->populate_class.data = data;
 }
 
 EAPI void

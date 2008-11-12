@@ -74,23 +74,6 @@ gadman_init(E_Module *m)
    /* Create 2 mover objects */
    Man->mover = _create_mover(Man->gc);
    Man->mover_top = _create_mover(Man->gc_top);
-
-   /* Start existing gadgets */
-   for (l = Man->gc->cf->clients; l; l = l->next)
-     {
-        E_Config_Gadcon_Client *cf_gcc;
-
-        if (!(cf_gcc = l->data)) continue;
-        gadman_gadget_place(cf_gcc, 0);
-     }
-
-   for (l = Man->gc_top->cf->clients; l; l = l->next)
-     {
-        E_Config_Gadcon_Client *cf_gcc;
-
-        if(!(cf_gcc = l->data)) continue;
-        gadman_gadget_place(cf_gcc, 1);
-     }
 }
 
 void
@@ -125,6 +108,22 @@ gadman_shutdown(void)
      }
    free(Man);
    Man = NULL;
+}
+
+void
+gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
+{
+   Eina_List *l;
+
+   for (l = gc->cf->clients; l; l = l->next)
+     {
+        E_Config_Gadcon_Client *cf_gcc;
+
+        if (!(cf_gcc = l->data)) continue;
+        printf("  cf_gcc name %s\n", cf_gcc->name);
+        if (cf_gcc->name && cc->name && !strcmp(cf_gcc->name, cc->name))
+         gadman_gadget_place(cf_gcc, (int)data);
+     }
 }
 
 E_Gadcon_Client *
@@ -494,6 +493,7 @@ _gadman_gadcon_new(const char* name, int ontop)
 
    e_gadcon_zone_set(gc, e_zone_current_get(Man->container));
    e_gadcon_util_menu_attach_func_set(gc, _attach_menu, NULL);
+   e_gadcon_populate_callback_set(gc, gadman_populate_class, (void*)ontop);
 
    gc->id = 114 + ontop; // TODO what's this ??????? 114 is a random number
    gc->edje.o_parent = NULL;

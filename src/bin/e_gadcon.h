@@ -83,6 +83,11 @@ struct _E_Gadcon
 	void (*func) (void *data, E_Gadcon_Client *gcc, E_Menu *menu);
 	void *data;
      } menu_attach;
+   struct 
+     {
+	void (*func) (void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc);
+	void *data;
+     } populate_class;
    
    E_Config_Dialog    *config_dialog;
    unsigned char       editing : 1;
@@ -196,6 +201,7 @@ EAPI void             e_gadcon_swallowed_min_size_set(E_Gadcon *gc, Evas_Coord w
 EAPI void             e_gadcon_min_size_request_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data);
 EAPI void             e_gadcon_size_request_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data);
 EAPI void             e_gadcon_frame_request_callback_set(E_Gadcon *gc, Evas_Object *(*func) (void *data, E_Gadcon_Client *gcc, const char *style), void *data);
+EAPI void             e_gadcon_populate_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc), void *data);
 EAPI void             e_gadcon_layout_policy_set(E_Gadcon *gc, E_Gadcon_Layout_Policy layout_policy);
 EAPI void             e_gadcon_populate(E_Gadcon *gc);
 EAPI void             e_gadcon_unpopulate(E_Gadcon *gc);
