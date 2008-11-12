@@ -120,7 +120,6 @@ gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
         E_Config_Gadcon_Client *cf_gcc;
 
         if (!(cf_gcc = l->data)) continue;
-        printf("  cf_gcc name %s\n", cf_gcc->name);
         if (cf_gcc->name && cc->name && !strcmp(cf_gcc->name, cc->name))
          gadman_gadget_place(cf_gcc, (int)data);
      }
