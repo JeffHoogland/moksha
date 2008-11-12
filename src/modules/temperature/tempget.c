@@ -30,9 +30,9 @@ temperature_get_bus_files(const char* bus)
 {
    Ecore_List *result;
    Ecore_List *therms;
-   char        path[PATH_MAX];
-   char		busdir[PATH_MAX];
-   
+   char path[PATH_MAX];
+   char busdir[PATH_MAX];
+
    result = ecore_list_new();
    if (result)
      {
@@ -43,27 +43,26 @@ temperature_get_bus_files(const char* bus)
 	if (therms)
 	  {
 	     char *name;
-	     
+
 	     while ((name = ecore_list_next(therms)))
 	       {
 		  Ecore_List *files;
-		  
+
 		  /* Search each device for temp*_input, these should be 
 		   * temperature devices. */
-		  snprintf(path, sizeof(path),
-			   "%s/%s", busdir, name);
+		  snprintf(path, sizeof(path),"%s/%s", busdir, name);
 		  files = ecore_file_ls(path);
 		  if (files)
 		    {
 		       char *file;
-		       
+
 		       while ((file = ecore_list_next(files)))
 			 {
 			    if ((!strncmp("temp", file, 4)) && 
 				(!strcmp("_input", &file[strlen(file) - 6])))
 			      {
 				 char *f;
-				 
+
 				 snprintf(path, sizeof(path),
 					  "%s/%s/%s", busdir, name, file);
 				 f = strdup(path);
@@ -84,11 +83,11 @@ static void
 init(void)
 {
    Ecore_List *therms;
-   char        path[PATH_MAX];
+   char path[PATH_MAX];
 #ifdef __FreeBSD__
-   int         len;
+   int len;
 #endif
-   
+
    if ((!sensor_type) || ((!sensor_name) || (sensor_name[0] == 0)))
      {
 	if (sensor_name) free(sensor_name);
@@ -103,7 +102,7 @@ init(void)
 	if ((therms) && (!ecore_list_empty_is(therms)))
 	  {
 	     char *name;
-	     
+
 	     name = ecore_list_next(therms);
 	     sensor_type = SENSOR_TYPE_LINUX_ACPI;
 	     sensor_name = strdup(name);
@@ -139,13 +138,13 @@ init(void)
 		  if (therms)
 		    {
 		       char *name;
-		       
+
 		       if ((name = ecore_list_next(therms)))
 			 {
 			    if (ecore_file_exists(name))
 			      {
 				 int len;
-				 
+
 				 snprintf(path, sizeof(path),
 					  "%s", ecore_file_file_get(name));
 				 len = strlen(path);
@@ -154,9 +153,9 @@ init(void)
 				 sensor_path = strdup(name);
 				 sensor_name = strdup(path);
 				 printf("sensor type = i2c\n"
-				       "sensor path = %s\n"
-				       "sensor name = %s\n",
-				       sensor_path, sensor_name);
+                                        "sensor path = %s\n"
+                                        "sensor name = %s\n",
+                                        sensor_path, sensor_name);
 			      }
 			 }
 		       ecore_list_destroy(therms);
@@ -176,16 +175,16 @@ init(void)
 				      int len;
 
 				      snprintf(path, sizeof(path),
-					    "%s", ecore_file_file_get(name));
+                                               "%s", ecore_file_file_get(name));
 				      len = strlen(path);
 				      if (len > 6) path[len - 6] = '\0';
 				      sensor_type = SENSOR_TYPE_LINUX_PCI;
 				      sensor_path = strdup(name);
 				      sensor_name = strdup(path);
 				      printf("sensor type = pci\n"
-					    "sensor path = %s\n"
-					    "sensor name = %s\n",
-					    sensor_path, sensor_name);
+                                             "sensor path = %s\n"
+                                             "sensor name = %s\n",
+                                             sensor_path, sensor_name);
 				   }
 			      }
 			    ecore_list_destroy(therms);
@@ -227,7 +226,7 @@ init(void)
 	     if (therms)
 	       {
 		  char *name;
-		  
+
 		  while ((name = ecore_list_next(therms)))
 		    {
 		       snprintf(path, sizeof(path),
@@ -249,7 +248,7 @@ init(void)
 	     if (therms)
 	       {
 		  char *name;
-		  
+
 		  while ((name = ecore_list_next(therms)))
 		    {
 		       snprintf(path, sizeof(path),
@@ -268,8 +267,7 @@ init(void)
 	     break;
 	   case SENSOR_TYPE_LINUX_ACPI:
 	     snprintf(path, sizeof(path),
-		      "/proc/acpi/thermal_zone/%s/temperature",
-		      sensor_name);
+		      "/proc/acpi/thermal_zone/%s/temperature", sensor_name);
 	     sensor_path = strdup(path);
 	     break;
 	  }
@@ -313,8 +311,9 @@ check(void)
 	if (f)
 	  {
 	     char dummy[4096];
-	     
-	     fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
+
+	     fgets(buf, sizeof(buf), f);
+             buf[sizeof(buf) - 1] = 0;
 	     if (sscanf(buf, "%s %s %i", dummy, dummy, &temp) == 3)
 	       ret = 1;
 	     else
@@ -329,7 +328,8 @@ check(void)
 	f = fopen(sensor_path, "rb");
 	if (f)
 	  {
-	     fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
+	     fgets(buf, sizeof(buf), f);
+             buf[sizeof(buf) - 1] = 0;
 	     if (sscanf(buf, "%i", &temp) == 1)
 	       ret = 1;
 	     else
@@ -346,7 +346,7 @@ check(void)
 	  {
 	     fgets(buf, sizeof(buf), f);
 	     buf[sizeof(buf) - 1] = 0;
-	     
+
 	     /* actually read the temp */
 	     if (sscanf(buf, "%i", &temp) == 1)
 	       ret = 1;
@@ -365,7 +365,7 @@ check(void)
 	  {
 	     fgets(buf, sizeof(buf), f);
 	     buf[sizeof(buf) - 1] = 0;
-	     
+
 	     /* actually read the temp */
 	     if (sscanf(buf, "%i", &temp) == 1)
 	       ret = 1;
@@ -383,7 +383,9 @@ check(void)
 	if (f)
 	  {
 	     char *p, *q;
-	     fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
+
+             fgets(buf, sizeof(buf), f);
+             buf[sizeof(buf) - 1] = 0;
 	     fclose(f);
 	     p = strchr(buf, ':');
 	     if (p)
@@ -402,9 +404,9 @@ check(void)
 	  goto error;
 	break;
      }
- 
+
    if (ret) return temp;
-   
+
    return -999;
    error:
    sensor_type = SENSOR_TYPE_NONE;
@@ -420,7 +422,7 @@ poll_cb(void *data)
 {
    int t;
    int pp;
-   
+
    t = check();
    pp = cur_poll_interval;
    if (t != ptemp)
@@ -469,18 +471,18 @@ main(int argc, char *argv[])
      }
    poll_interval = atoi(argv[3]);
    cur_poll_interval = poll_interval;
-   
+
    ecore_init();
-   
+
    init();
 
    if (poller) ecore_poller_del(poller);
    poller = ecore_poller_add(ECORE_POLLER_CORE, cur_poll_interval, 
 			     poll_cb, NULL);
    poll_cb(NULL);
-   
+
    ecore_main_loop_begin();
    ecore_shutdown();
-   
+
    return 0;
 }
