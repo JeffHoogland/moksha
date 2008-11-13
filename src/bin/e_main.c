@@ -86,6 +86,7 @@ static void _e_main_desk_restore(E_Manager *man, E_Container *con);
 static int (*_e_main_shutdown_func[MAX_LEVEL]) (void);
 static int _e_main_level = 0;
 static int _e_cacheburst = 0;
+static Evas_Bool locked = 0;
 
 static Eina_List *_e_main_idler_before_list = NULL;
 
@@ -321,9 +322,16 @@ main(int argc, char **argv)
 		  "\t\tBe evil.\n"
 		  "\t-psychotic\n"
 		  "\t\tBe psychotic.\n"
+		  "\t-locked\n"
+		  "\t\tstart with desklock on, so password will be asked.\n"
 		  )
 		);
 	     exit(0);
+	  }
+	else if (!strcmp(argv[i], "-locked"))
+	  {
+	     locked = 1;
+	     puts("enlightenment will start with desklock on.");
 	  }
      }
 
@@ -562,6 +570,8 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_config_shutdown);
 
+   locked |= e_config->desklock_start_locked;
+
    /* set all execced stuff to pri 1 - nice. make this config later? */
    ecore_exe_run_priority_set(1);
    
@@ -619,6 +629,16 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_theme_shutdown);
+
+   e_init_status_set(_("Starting International Support"));
+   TS("intl post");
+   /* init intl system */
+   if (!e_intl_post_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its intl system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_intl_post_shutdown);
    
    TS("splash");
    if (!((!e_config->show_splash) || (after_restart)))
@@ -683,20 +703,43 @@ main(int argc, char **argv)
 	ecore_evas_free(ee);
      }
    
+   e_init_status_set(_("Setup Screens"));
+   TS("screens");
+   /* manage the root window */
+   if (!_e_main_screens_init())
+     {
+	e_error_message_show(_("Enlightenment set up window management for all the screens on your system\n"
+			       "failed. Perhaps another window manager is running?\n"));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(_e_main_screens_shutdown);
+
+   e_init_status_set(_("Setup Screensaver"));
+   TS("screensaver");
+   /* setup screensaver */
+   if (!e_screensaver_init())
+     {
+       e_error_message_show(_("Enlightenment cannot configure the X screensaver."));
+       _e_main_shutdown(-1);
+     }
+
+   e_init_status_set(_("Setup Desklock"));
+   TS("desklock");
+   /* setup desklock */
+   if (!e_desklock_init())
+     {
+       e_error_message_show(_("Enlightenment cannot set up its desk locking system."));
+       _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_desklock_shutdown);
+
+   if (locked && ((!e_config->show_splash) && (!after_restart)))
+     e_desklock_show();
+
    TS("msgbus");
    /* setup e msgbus (DBUS) service */
    if (e_msgbus_init())
      _e_main_shutdown_push(e_msgbus_shutdown);
-
-   e_init_status_set(_("Starting International Support"));
-   TS("intl post");
-   /* init intl system */
-   if (!e_intl_post_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its intl system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_intl_post_shutdown);
 
    e_init_status_set(_("Setting up Paths"));
    TS("efreet paths");
@@ -715,16 +758,6 @@ main(int argc, char **argv)
    efreet_icon_extension_add(".edj");
    TS("efreet paths done");
 
-   e_init_status_set(_("Setup Thumbnailer"));
-   TS("thumb init");
-   /* init the enlightenment thumbnailing system */
-   if (!e_thumb_init())
-    {
-       e_error_message_show(_("Enlightenment cannot initialize the Thumbnailing system.\n"));
-       _e_main_shutdown(-1);
-    }
-   _e_main_shutdown_push(e_thumb_shutdown);
-   
    e_init_status_set(_("Setup System Controls"));
    TS("sys init");
    /* init the enlightenment sys command system */
@@ -743,45 +776,7 @@ main(int argc, char **argv)
 	e_error_message_show(_("Enlightenment cannot set up its actions system."));
 	_e_main_shutdown(-1);
      }
-   _e_main_shutdown_push(e_actions_shutdown);
-   e_init_status_set(_("Setup Bindings"));
-   TS("bindings");
-   /* init bindings system */
-   if (!e_bindings_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its bindings system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_bindings_shutdown);
-   e_init_status_set(_("Setup Popups"));
-   TS("popup");
-   /* init popup system */
-   if (!e_popup_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its popup system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_popup_shutdown);
-   
-   e_init_status_set(_("Setup Wallpaper"));
-   TS("bg");
-   /* init desktop background system */
-   if (!e_bg_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its desktop background system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_bg_init);
-   e_init_status_set(_("Setup Screens"));
-   TS("screens");
-   /* manage the root window */
-   if (!_e_main_screens_init())
-     {
-	e_error_message_show(_("Enlightenment set up window management for all the screens on your system\n"
-			       "failed. Perhaps another window manager is running?\n"));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(_e_main_screens_shutdown);
+
    e_init_status_set(_("Setup Execution System"));
    TS("exec");
    /* init app system */
@@ -840,7 +835,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_dnd_shutdown);
-   e_init_status_set(_("Setup Grab Input HAnding"));
+   e_init_status_set(_("Setup Grab Input Handing"));
    TS("grabinput");
    /* setup input grabbing co-operation system */
    if (!e_grabinput_init())
@@ -876,6 +871,64 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_gadcon_shutdown);
+
+   e_init_status_set(_("Setup DPMS"));
+   TS("dpms");     
+   /* setup dpms */
+   if (!e_dpms_init())
+     {
+       e_error_message_show(_("Enlightenment cannot configure the DPMS settings."));
+       _e_main_shutdown(-1);
+     }
+
+   e_init_status_set(_("Set Up Powersave modes"));
+   TS("powersave");
+   if (!e_powersave_init())
+     {
+       e_error_message_show(_("Enlightenment cannot set up its powersave modes."));
+       _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_powersave_shutdown);
+
+   e_init_status_set(_("Setup Wallpaper"));
+   TS("bg");
+   /* init desktop background system */
+   if (!e_bg_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its desktop background system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_bg_shutdown);
+
+   e_init_status_set(_("Setup Mouse"));
+   TS("mouse");     
+   /* setup mouse accel */
+   if (!e_mouse_init())
+     {
+       e_error_message_show(_("Enlightenment cannot configure the mouse settings."));
+       _e_main_shutdown(-1);
+     }
+
+   _e_main_shutdown_push(e_actions_shutdown);
+   e_init_status_set(_("Setup Bindings"));
+   TS("bindings");
+   /* init bindings system */
+   if (!e_bindings_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its bindings system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_bindings_shutdown);
+   e_init_status_set(_("Setup Popups"));
+   TS("popup");
+   /* init popup system */
+   if (!e_popup_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its popup system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_popup_shutdown);
+
    e_init_status_set(_("Setup Shelves"));
    TS("shelves");
    /* setup shelves */
@@ -886,42 +939,15 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_shelf_shutdown);
 
-   e_init_status_set(_("Setup DPMS"));
-   TS("dpms");     
-   /* setup dpms */
-   if (!e_dpms_init())
-     {
-       e_error_message_show(_("Enlightenment cannot configure the DPMS settings."));
+   e_init_status_set(_("Setup Thumbnailer"));
+   TS("thumb init");
+   /* init the enlightenment thumbnailing system */
+   if (!e_thumb_init())
+    {
+       e_error_message_show(_("Enlightenment cannot initialize the Thumbnailing system.\n"));
        _e_main_shutdown(-1);
-     }
-    
-   e_init_status_set(_("Setup Screensaver"));
-   TS("screensaver");
-   /* setup screensaver */
-   if (!e_screensaver_init())
-     {
-       e_error_message_show(_("Enlightenment cannot configure the X screensaver."));
-       _e_main_shutdown(-1);
-     }
-     
-   e_init_status_set(_("Setup Mouse"));
-   TS("mouse");     
-   /* setup mouse accel */
-   if (!e_mouse_init())
-     {
-       e_error_message_show(_("Enlightenment cannot configure the mouse settings."));
-       _e_main_shutdown(-1);
-     }
-
-   e_init_status_set(_("Setup Desklock"));
-   TS("desklock");
-   /* setup desklock */
-   if (!e_desklock_init())
-     {
-       e_error_message_show(_("Enlightenment cannot set up its desk locking system."));
-       _e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_desklock_shutdown);
+    }
+   _e_main_shutdown_push(e_thumb_shutdown);
 
    e_init_status_set(_("Set Up File Ordering"));
    TS("order");
@@ -931,15 +957,6 @@ main(int argc, char **argv)
        _e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_order_shutdown);
-
-   e_init_status_set(_("Set Up Powersave modes"));
-   TS("powersave");
-   if (!e_powersave_init())
-     {
-       e_error_message_show(_("Enlightenment cannot set up its powersave modes."));
-       _e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_powersave_shutdown);
 
    TS("add idle enterers");
    /* add in a handler that just before we go idle we flush x - will happen after ecore_evas's idle rendering as it's after ecore_evas_init() */
@@ -959,6 +976,9 @@ main(int argc, char **argv)
    if (!((!e_config->show_splash) || (after_restart)))
      {
 	ecore_timer_add(16.0, _e_main_cb_startup_fake_end, NULL);
+
+	if (locked)
+	  e_desklock_show();
      }
    
    e_container_all_thaw();

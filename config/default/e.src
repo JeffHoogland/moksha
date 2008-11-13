@@ -445,6 +445,7 @@ group "E_Config" struct {
   value "desklock_background" string: "theme_desklock_background";
   value "desklock_auth_method" int: 0;
   value "desklock_login_box_zone" int: -1;
+  value "desklock_start_locked" int: 0;
   value "desklock_autolock_screensaver" int: 0;
   value "desklock_autolock_idle" int: 0;
   value "desklock_autolock_idle_timeout" double: 300.0000000000000000000000000;

@@ -538,6 +538,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desklock_background, STR);
    E_CONFIG_VAL(D, T, desklock_auth_method, INT);
    E_CONFIG_VAL(D, T, desklock_login_box_zone, INT);
+   E_CONFIG_VAL(D, T, desklock_start_locked, INT);
    E_CONFIG_VAL(D, T, desklock_autolock_screensaver, INT);
    E_CONFIG_VAL(D, T, desklock_autolock_idle, INT);
    E_CONFIG_VAL(D, T, desklock_autolock_idle_timeout, DOUBLE);
@@ -838,6 +839,7 @@ e_config_load(void)
    e_config->desklock_background = NULL;
    e_config->desklock_auth_method = 0;
    e_config->desklock_login_box_zone = -1;
+   e_config->desklock_start_locked = 0;
    e_config->desklock_autolock_screensaver = 0;
    e_config->desklock_autolock_idle = 0;
    e_config->desklock_autolock_idle_timeout = 300.0;
@@ -1200,6 +1202,10 @@ e_config_load(void)
    
    IFCFG(0x0129);
    e_config->default_system_menu = NULL;
+   IFCFGEND;
+
+   IFCFG(0x012a);
+   e_config->desklock_start_locked = 0;
    IFCFGEND;
    
    e_config->config_version = E_CONFIG_FILE_VERSION;   
