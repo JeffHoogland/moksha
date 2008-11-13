@@ -37,6 +37,9 @@ EAPI E_Powersave_Mode             e_powersave_mode_get(void);
 /* FIXME: in powersave mode also add the ability to reduce framerate when
  * at a particular powersave mode */
 
+/* FIXME: in powersave mode also reduce ecore timer precision, so timers
+ * will be dispatched together and system will wakeup less. */
+
 /* FIXME: in powersave mode also add the ability to change screenblanker
  * preferences when in powersave mode as well as check in the screensaver
  * has kicked in */
