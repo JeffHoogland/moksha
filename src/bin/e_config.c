@@ -129,6 +129,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, state_info.seq, INT);
    E_CONFIG_VAL(D, T, state_info.flags, INT);
    E_CONFIG_VAL(D, T, style, STR);
+   E_CONFIG_VAL(D, T, orient, INT);
    E_CONFIG_VAL(D, T, autoscroll, UCHAR);
    E_CONFIG_VAL(D, T, resizable, UCHAR);
    
