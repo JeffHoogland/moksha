@@ -6926,14 +6926,6 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 255 255 255 255;
 	    }
 	 }
-	 part { name: "mouse_over";
-	    mouse_events: 1;
-	    repeat_events: 1;
-	    type: RECT;
-	    description { state: "default" 0.0;
-	       color: 0 0 0 0;
-	    }
-	 }
       }
       programs {
 	 program { name: "on";
