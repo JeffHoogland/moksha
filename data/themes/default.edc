@@ -21858,7 +21858,7 @@ EFMICON("hdd","icon_efm_hdd.png", 128)
 EFMICON("hd","icon_efm_hdd.png", 128)
 
 ICON("drive-harddisk","icon_efm_hdd.png", 128)
-/*ICON("drive-optical","icon_efm_cd.png", 128)*/
+ICON("drive-optical","icon_efm_cd.png", 128)
 
 
 // EFM Mime type icons //
