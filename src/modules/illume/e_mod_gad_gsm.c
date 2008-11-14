@@ -353,7 +353,7 @@ _fso_operator_unmarhsall(DBusMessage *msg)
 {
    /* We care only about the provider name right now. All the other status
     * informations get ingnored for the gadget for now */
-   const char *provider, *name, *reg_stat;
+   const char *provider = 0 , *name = 0, *reg_stat = 0;
    DBusMessageIter iter, a_iter, s_iter, v_iter;
    
    if (!dbus_message_has_signature(msg, "a{sv}")) return NULL;
@@ -380,10 +380,13 @@ _fso_operator_unmarhsall(DBusMessage *msg)
 	dbus_message_iter_next(&a_iter);
      }
    
+   if (!reg_stat) return NULL;
    if (strcmp(reg_stat, "unregistered") == 0) provider = "No Service";
    else if (strcmp(reg_stat, "busy") == 0) provider = "Searching...";
    else if (strcmp(reg_stat, "denied") == 0) provider = "SOS only";
-   
+
+   if (!provider) return NULL;
+
    return strdup(provider);
 }
 

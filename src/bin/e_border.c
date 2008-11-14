@@ -1734,7 +1734,6 @@ e_border_shade(E_Border *bd, E_Direction dir)
 		  bd->need_shape_export = 1;
 	       }
 	     edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
-	     edje_object_message_signal_process(bd->bg_object);
 	     e_border_frame_recalc(bd);
 	     ev = calloc(1, sizeof(E_Event_Border_Resize));
 	     ev->border = bd;
@@ -1844,7 +1843,6 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 		  bd->need_shape_export = 1;
 	       }
 	     edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
-	     edje_object_message_signal_process(bd->bg_object);
 	     e_border_frame_recalc(bd);
 	     ev = calloc(1, sizeof(E_Event_Border_Resize));
 	     ev->border = bd;
