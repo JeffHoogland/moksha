@@ -65,6 +65,7 @@ static int  _e_main_dirs_init(void);
 static int  _e_main_dirs_shutdown(void);
 static int  _e_main_screens_init(void);
 static int  _e_main_screens_shutdown(void);
+static void _e_main_manage_all(void);
 static int  _e_main_path_init(void);
 static int  _e_main_path_shutdown(void);
 
@@ -1016,6 +1017,9 @@ main(int argc, char **argv)
    TS("shelf config init");
    e_shelf_config_init();
 
+   TS("manage all windows");
+   _e_main_manage_all();
+   
    /* an idle enterer to be called after all others */
    _e_main_idle_enterer_after = ecore_idle_enterer_add(_e_main_cb_idler_after, NULL);
 
@@ -1242,7 +1246,7 @@ _e_main_screens_init(void)
 	     e_grabinput_focus(con->bg_win, E_FOCUS_METHOD_PASSIVE);
 	     e_hints_manager_init(man);
 	     _e_main_desk_restore(man, con);
-	     e_manager_manage_windows(man);
+//	     e_manager_manage_windows(man);
 	  }
 	else
 	  {
@@ -1276,6 +1280,15 @@ _e_main_screens_shutdown(void)
 //   e_manager_shutdown();
    e_atoms_shutdown();
    return 1;
+}
+
+static void
+_e_main_manage_all(void)
+{
+   Eina_List *l;
+   
+   for (l = e_manager_list(); l; l = l->next)
+     e_manager_manage_windows(l->data);
 }
 
 static int

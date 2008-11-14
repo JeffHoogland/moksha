@@ -285,7 +285,7 @@ e_manager_manage_windows(E_Manager *man)
 			    /* FIXME:
 			     * It's enough to set the desk, the zone will
 			     * be set according to the desk */
-			    if (zone) e_border_zone_set(bd, zone);
+//			    if (zone) e_border_zone_set(bd, zone);
 			    if (desk) e_border_desk_set(bd, desk);
 			 }
 		    }
