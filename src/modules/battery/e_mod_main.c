@@ -301,6 +301,8 @@ _battery_hal_update(void)
 
    int batnum = 0;
    int acnum = 0;
+   int disch = 0;
+   int chrg = 0;
    
    for (l = hal_ac_adapters; l; l = l->next)
      {
@@ -323,16 +325,17 @@ _battery_hal_update(void)
              if (time_left < 0) time_left = hbat->time_left;
              else time_left += hbat->time_left;
           }
+        disch += hbat->is_discharging;
+        chrg += hbat->is_charging;
      }
    if (batnum > 0) full /= batnum;
 
+   if ((disch == 0) && (chrg == 0)) time_left = -1;
+   if (time_left < 1) time_left = -1;
+   
+   _battery_update(full, time_left, have_battery, have_power);
    if ((acnum >= 0) && (batnum == 0))
-     _battery_update(full, time_left, have_battery, have_power);
-   else
-     {
-        _battery_update(full, time_left, have_battery, have_power);
-        e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
-     }
+     e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
 }
 
 static void
@@ -857,10 +860,8 @@ static void
 _battery_update(int full, int time_left, int have_battery, int have_power)
 {
    Eina_List *l;
-   static int debounce_popup = 0;
+   static double debounce_time = 0.0;
    
-   if (debounce_popup > POPUP_DEBOUNCE_CYCLES)
-     debounce_popup = 0;
    for (l = battery_config->instances; l; l = l->next)
      {
         Instance *inst;
@@ -914,15 +915,14 @@ _battery_update(int full, int time_left, int have_battery, int have_power)
              (battery_config->alert_p && (full <= battery_config->alert_p)))
             )
           {
-             if (++debounce_popup == POPUP_DEBOUNCE_CYCLES)
+             double t;
+             
+             t = ecore_time_get();
+             if ((t - debounce_time) > 30.0)
                {
-                  double t;
-                  
-                  t = ecore_time_get() - init_time;
-                  if (t > 5.0)
-                    _battery_warning_popup(inst, time_left, (double)full/100.0);
-                  else
-                    debounce_popup = 0;
+                  debounce_time = t;
+                  if ((t - init_time) > 5.0)
+                    _battery_warning_popup(inst, time_left, (double)full / 100.0);
                }
           }
         else if (have_power)
