@@ -44,6 +44,7 @@ bt_dis_hilight.png \
 bt_dis_shine.png \
 bt_hilight.png \
 bt_hilightw.png \
+bt_glow.png \
 bt_shine.png \
 bt_sm_base1.png \
 bt_sm_base2.png \

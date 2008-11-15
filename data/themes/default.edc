@@ -16756,6 +16756,7 @@ group { name: "e/toolbar/default/base";
 	 image: "bt_base2.png" COMP;
 	 image: "bt_hilight.png" COMP;
 	 image: "bt_shine.png" COMP;
+	 image: "bt_glow.png" COMP;
 	 image: "bt_dis_base.png" COMP;
 	 image: "bt_dis_hilight.png" COMP;
       }
@@ -16904,6 +16905,22 @@ group { name: "e/toolbar/default/base";
 	       visible: 0;
 	    }
 	 }
+	 part { name: "over3";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+	       image {
+		  normal: "bt_glow.png";
+		  border: 12 12 12 12;
+	       }
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 1;
+               color: 255 255 255 255;
+	    }
+	 }
  	 part { name: "disabler";
 	    type: RECT;
 	    description { state: "default" 0.0;
@@ -16923,6 +16940,7 @@ group { name: "e/toolbar/default/base";
 	    source: "button_image";
 	    action: STATE_SET "clicked" 0.0;
 	    target: "button_image";
+	    target: "over3";
 	 }
 	 program {
 	    name:   "button_unclick";
@@ -16930,6 +16948,7 @@ group { name: "e/toolbar/default/base";
 	    source: "button_image";
 	    action: STATE_SET "default" 0.0;
 	    target: "button_image";
+	    target: "over3";
 	 }
 	 program {
 	    name:   "button_unclick2";
@@ -20801,6 +20820,7 @@ group { name: "e/toolbar/default/base";
 	 image: "bt_base2.png" COMP;
 	 image: "bt_hilight.png" COMP;
 	 image: "bt_shine.png" COMP;
+         image: "bt_glow.png" COMP;
          image: "bt_dis_base.png" COMP;
 	 image: "bt_dis_hilight.png" COMP;
       }
@@ -20967,6 +20987,24 @@ group { name: "e/toolbar/default/base";
 	       visible: 0;
 	    }
 	 }
+	 part { name: "over3";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+               visible: 0;
+               color: 255 255 255 0;
+	       image {
+		  normal: "bt_glow.png";
+		  border: 12 12 12 12;
+	       }
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 1;
+               color: 255 255 255 255;
+	    }
+	 }
 	 part { name: "block";
 	    mouse_events: 1;
 	    description { state: "default" 0.0;
@@ -20987,12 +21025,14 @@ group { name: "e/toolbar/default/base";
 	    source: "button_image";
 	    action: STATE_SET "clicked" 0.0;
 	    target: "button_image";
+            target: "over3";
 	 }
 	 program { name: "button_unclick";
 	    signal: "mouse,up,1";
 	    source: "button_image";
 	    action: STATE_SET "default" 0.0;
 	    target: "button_image";
+            target: "over3";
 	 }
 	 program { name: "button_unclick2";
 	    signal: "mouse,clicked,1";
@@ -21037,6 +21077,7 @@ group { name: "e/toolbar/default/base";
 	 image: "bt_base2.png" COMP;
 	 image: "bt_hilight.png" COMP;
 	 image: "bt_shine.png" COMP;
+         image: "bt_glow.png" COMP;
       }
 //      data.item: "borderless" "1";
 //      data.item: "shaped" "1";
@@ -21387,6 +21428,24 @@ group { name: "e/toolbar/default/base";
 	       }
 	    }
 	 }
+	 part { name: "over3";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+               visible: 0;
+               color: 255 255 255 0;
+	       image {
+		  normal: "bt_glow.png";
+		  border: 12 12 12 12;
+	       }
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 1;
+               color: 255 255 255 255;
+	    }
+	 }
       }
       programs {
 	 program { name: "showa";
@@ -21423,6 +21482,7 @@ group { name: "e/toolbar/default/base";
 	    source: "button_image";
 	    action: STATE_SET "clicked" 0.0;
 	    target: "button_image";
+            target: "over3";
 	 }
 	 program {
 	    name:   "button_unclick";
@@ -21430,6 +21490,7 @@ group { name: "e/toolbar/default/base";
 	    source: "button_image";
 	    action: STATE_SET "default" 0.0;
 	    target: "button_image";
+            target: "over3";
 	 }
 	 program {
 	    name:   "button_unclick2";
@@ -21451,6 +21512,7 @@ group { name: "e/toolbar/default/base";
 	 image: "bt_base2.png" COMP;
 	 image: "bt_hilight.png" COMP;
 	 image: "bt_shine.png" COMP;
+         image: "bt_glow.png" COMP;
       }
       styles {
 	 style { name: "theme_about_style";
@@ -21590,6 +21652,24 @@ group { name: "e/toolbar/default/base";
 	       }
 	    }
 	 }
+	 part { name: "over3";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+               visible: 0;
+               color: 255 255 255 0;
+	       image {
+		  normal: "bt_glow.png";
+		  border: 12 12 12 12;
+	       }
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 1;
+               color: 255 255 255 255;
+	    }
+	 }
       }
       programs {
 	 program {
@@ -21598,6 +21678,7 @@ group { name: "e/toolbar/default/base";
 	    source: "button_image";
 	    action: STATE_SET "clicked" 0.0;
 	    target: "button_image";
+            target: "over3";
 	 }
 	 program {
 	    name:   "button_unclick";
@@ -21605,6 +21686,7 @@ group { name: "e/toolbar/default/base";
 	    source: "button_image";
 	    action: STATE_SET "default" 0.0;
 	    target: "button_image";
+            target: "over3";
 	 }
 	 program {
 	    name:   "button_unclick2";
