@@ -7,15 +7,19 @@
 static void _e_popup_free(E_Popup *pop);
 static int  _e_popup_cb_window_shape(void *data, int ev_type, void *ev);
 static E_Popup *_e_popup_find_by_window(Ecore_X_Window win);
+/*
 static int _e_popup_cb_mouse_down(void *data, int type, void *event);
 static int _e_popup_cb_mouse_up(void *data, int type, void *event);
 static int _e_popup_cb_mouse_wheel(void *data, int type, void *event);
+*/
 
 /* local subsystem globals */
 static Ecore_Event_Handler *_e_popup_window_shape_handler = NULL;
+/*
 static Ecore_Event_Handler *_e_popup_mouse_down_handler = NULL;
 static Ecore_Event_Handler *_e_popup_mouse_up_handler = NULL;
 static Ecore_Event_Handler *_e_popup_mouse_wheel_handler = NULL;
+ */
 static Eina_List *_e_popup_list = NULL;
 
 /* externally accessible functions */
@@ -25,12 +29,14 @@ e_popup_init(void)
 {
    _e_popup_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
 							   _e_popup_cb_window_shape, NULL);
+/*   
    _e_popup_mouse_down_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
 							 _e_popup_cb_mouse_down, NULL);
    _e_popup_mouse_up_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
 						       _e_popup_cb_mouse_up, NULL);
    _e_popup_mouse_wheel_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
 							  _e_popup_cb_mouse_wheel, NULL);
+ */
    return 1;
 }
 
@@ -38,9 +44,11 @@ EAPI int
 e_popup_shutdown(void)
 {
    E_FN_DEL(ecore_event_handler_del, _e_popup_window_shape_handler);
+/*   
    E_FN_DEL(ecore_event_handler_del, _e_popup_mouse_down_handler);
    E_FN_DEL(ecore_event_handler_del, _e_popup_mouse_up_handler);
    E_FN_DEL(ecore_event_handler_del, _e_popup_mouse_wheel_handler);
+ */
    return 1;
 }
 
@@ -315,7 +323,7 @@ _e_popup_find_by_window(Ecore_X_Window win)
      }
    return NULL;
 }
-
+/*
 static int
 _e_popup_cb_mouse_down(void *data, int type, void *event)
 {
@@ -373,3 +381,4 @@ _e_popup_cb_mouse_wheel(void *data, int type, void *event)
      }
    return 1;
 }
+*/
