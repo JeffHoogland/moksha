@@ -301,6 +301,7 @@ icon_dummy.png \
 icon_efm_arrange_name.png \
 icon_efm_arrange.png \
 icon_efm_arrange_time.png \
+icon_efm_cd.png \
 icon_efm_copy.png \
 icon_efm_cut.png \
 icon_efm_delete.png \
