@@ -1172,7 +1172,7 @@ _e_fm_monitor_end(int id, const char *path)
      }  
 
    task = _e_fm_task_get(id);
-   _e_fm_task_remove(task);
+   if (task) _e_fm_task_remove(task);
 }
 
 static E_Fm_Task *
