@@ -66,40 +66,6 @@ e_theme_init(void)
    return 1;
 }
 
-/*
- * this is used to sewt the theme for a CATEGORY of e17. "base" is always set
- * to the default theme - because if a selected theme for lest say base/theme
- * does not provide theme elements it can default back to the default theme.
- * 
- * the idea is you can actually set a different theme for different parts of
- * the desktop... :)
- * 
- * other possible categories...
- *  e_theme_file_set("base/theme/about", "default.edj");
- *  e_theme_file_set("base/theme/borders", "default.edj");
- *  e_theme_file_set("base/theme/background", "default.edj");
- *  e_theme_file_set("base/theme/configure", "default.edj");
- *  e_theme_file_set("base/theme/dialog", "default.edj");
- *  e_theme_file_set("base/theme/menus", "default.edj");
- *  e_theme_file_set("base/theme/error", "default.edj");
- *  e_theme_file_set("base/theme/gadman", "default.edj");
- *  e_theme_file_set("base/theme/dnd", "default.edj");
- *  e_theme_file_set("base/theme/icons", "default.edj");
- *  e_theme_file_set("base/theme/pointer", "default.edj");
- *  e_theme_file_set("base/theme/transitions", "default.edj");
- *  e_theme_file_set("base/theme/widgets", "default.edj");
- *  e_theme_file_set("base/theme/winlist", "default.edj");
- *  e_theme_file_set("base/theme/modules", "default.edj");
- *  e_theme_file_set("base/theme/modules/pager", "default.edj");
- *  e_theme_file_set("base/theme/modules/ibar", "default.edj");
- *  e_theme_file_set("base/theme/modules/ibox", "default.edj");
- *  e_theme_file_set("base/theme/modules/clock", "default.edj");
- *  e_theme_file_set("base/theme/modules/battery", "default.edj");
- *  e_theme_file_set("base/theme/modules/cpufreq", "default.edj");
- *  e_theme_file_set("base/theme/modules/start", "default.edj");
- *  e_theme_file_set("base/theme/modules/temperature", "default.edj");
- */
-
 EAPI int
 e_theme_shutdown(void)
 {
@@ -285,6 +251,40 @@ e_theme_edje_file_get(const char *category, const char *group)
    /* try this category */
    return e_theme_edje_file_get(buf, group);
 }
+
+/*
+ * this is used to set the theme for a CATEGORY of E17. "base" is always set
+ * to the default theme - because if a selected theme wants "base/theme", but
+ * does not provide theme elements, it can fall back to the default theme.
+ * 
+ * the idea is you can actually set a different theme for different parts of
+ * the desktop... :)
+ * 
+ * other possible categories...
+ *  e_theme_file_set("base/theme/about", "default.edj");
+ *  e_theme_file_set("base/theme/borders", "default.edj");
+ *  e_theme_file_set("base/theme/background", "default.edj");
+ *  e_theme_file_set("base/theme/configure", "default.edj");
+ *  e_theme_file_set("base/theme/dialog", "default.edj");
+ *  e_theme_file_set("base/theme/menus", "default.edj");
+ *  e_theme_file_set("base/theme/error", "default.edj");
+ *  e_theme_file_set("base/theme/gadman", "default.edj");
+ *  e_theme_file_set("base/theme/dnd", "default.edj");
+ *  e_theme_file_set("base/theme/icons", "default.edj");
+ *  e_theme_file_set("base/theme/pointer", "default.edj");
+ *  e_theme_file_set("base/theme/transitions", "default.edj");
+ *  e_theme_file_set("base/theme/widgets", "default.edj");
+ *  e_theme_file_set("base/theme/winlist", "default.edj");
+ *  e_theme_file_set("base/theme/modules", "default.edj");
+ *  e_theme_file_set("base/theme/modules/pager", "default.edj");
+ *  e_theme_file_set("base/theme/modules/ibar", "default.edj");
+ *  e_theme_file_set("base/theme/modules/ibox", "default.edj");
+ *  e_theme_file_set("base/theme/modules/clock", "default.edj");
+ *  e_theme_file_set("base/theme/modules/battery", "default.edj");
+ *  e_theme_file_set("base/theme/modules/cpufreq", "default.edj");
+ *  e_theme_file_set("base/theme/modules/start", "default.edj");
+ *  e_theme_file_set("base/theme/modules/temperature", "default.edj");
+ */
 
 EAPI void
 e_theme_file_set(const char *category, const char *file)
