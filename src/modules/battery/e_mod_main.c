@@ -319,11 +319,12 @@ _battery_hal_update(void)
         have_battery = 1;
         batnum++;
         if (hbat->is_charging) have_power = 1;
+        if (full == -1) full = 0;
         if (hbat->last_full_charge > 0)
           full += (hbat->current_charge * 100) / hbat->last_full_charge;
         else if (hbat->design_charge > 0)
           full += (hbat->current_charge * 100) / hbat->design_charge;
-        else
+        else if (hbat->percent >= 0)
           full += hbat->percent;
         if (hbat->time_left > 0)
           {
@@ -891,11 +892,13 @@ _battery_update(int full, int time_left, int have_battery, int have_power)
           {
              if (battery_config->full != full)
                {
-                  _battery_face_level_set(inst->o_battery, 
-                                          (double)full / 100.0);
+                  double val;
+                  
+                  if (full >= 100) val = 1.0;
+                  else val = (double)full / 100.0;
+                  _battery_face_level_set(inst->o_battery, val);
                   if (inst->popup_battery)
-                    _battery_face_level_set(inst->popup_battery, 
-                                            (double)full / 100.0);
+                    _battery_face_level_set(inst->popup_battery, val);
                }
           }
         else
