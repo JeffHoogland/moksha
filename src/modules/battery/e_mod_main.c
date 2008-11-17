@@ -330,6 +330,9 @@ _battery_hal_update(void)
      }
    if (batnum > 0) full /= batnum;
 
+   printf("full = %i, time_left = %i, have_battery = %i, have_power = %i\n",
+          full, time_left, have_battery, have_power);
+   
    if ((disch == 0) && (chrg == 0)) time_left = -1;
    if (time_left < 1) time_left = -1;
    
@@ -345,7 +348,6 @@ _battery_hal_shutdown(void)
    
    conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    if (!conn) return;
-   // FIXME: free all bat/ac adapters, cattery_config stuff etc.
    if (battery_config->hal.have)
      {
         dbus_pending_call_cancel(battery_config->hal.have);
@@ -911,7 +913,7 @@ _battery_update(int full, int time_left, int have_battery, int have_power)
           }
         
         if (have_battery && (!have_power) && (full != 100) &&
-            ((battery_config->alert && ((time_left / 60) <= battery_config->alert)) || 
+            (((time_left > 0) && battery_config->alert && ((time_left / 60) <= battery_config->alert)) || 
              (battery_config->alert_p && (full <= battery_config->alert_p)))
             )
           {
