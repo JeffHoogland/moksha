@@ -319,7 +319,12 @@ _battery_hal_update(void)
         have_battery = 1;
         batnum++;
         if (hbat->is_charging) have_power = 1;
-        full += hbat->percent;
+        if (hbat->last_full_charge > 0)
+          full += (hbat->current_charge * 100) / hbat->last_full_charge;
+        else if (hbat->design_charge > 0)
+          full += (hbat->current_charge * 100) / hbat->design_charge;
+        else
+          full += hbat->percent;
         if (hbat->time_left > 0)
           {
              if (time_left < 0) time_left = hbat->time_left;
@@ -330,9 +335,6 @@ _battery_hal_update(void)
      }
    if (batnum > 0) full /= batnum;
 
-   printf("full = %i, time_left = %i, have_battery = %i, have_power = %i\n",
-          full, time_left, have_battery, have_power);
-   
    if ((disch == 0) && (chrg == 0)) time_left = -1;
    if (time_left < 1) time_left = -1;
    
