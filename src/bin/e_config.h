@@ -475,6 +475,7 @@ EAPI void       e_config_save_block_set(int block);
 EAPI int        e_config_save_block_get(void);
     
 EAPI void      *e_config_domain_load(const char *domain, E_Config_DD *edd);
+EAPI void      *e_config_domain_system_load(const char *domain, E_Config_DD *edd);
 EAPI int        e_config_profile_save(void);
 EAPI int        e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data);
 

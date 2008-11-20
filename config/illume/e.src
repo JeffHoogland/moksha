@@ -21,7 +21,7 @@ group "E_Config" struct {
   value "edge_flip_dragging" int: 0;
   value "edge_flip_moving" int: 0;
   value "edge_flip_timeout" double: 0.2500000000000000000000000;
-  value "evas_engine_default" int: 4;
+  value "evas_engine_default" int: 1;
   value "evas_engine_container" int: 0;
   value "evas_engine_init" int: 0;
   value "evas_engine_menus" int: 0;

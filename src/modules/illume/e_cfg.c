@@ -4,6 +4,12 @@
 #include "e_slipshelf.h"
 #include "e_mod_win.h"
 
+/*
+ * FSO offers:
+ * 
+ * org.freesmartphone.Device.IdleNotifier.SetStateTimeout("suspend", 60);
+ */
+
 /* internal calls */
 static void _e_cfg_dbus_if_init(void);
 static void _e_cfg_dbus_if_shutdown(void);
