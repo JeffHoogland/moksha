@@ -662,8 +662,9 @@ main(int argc, char **argv)
    TS("test file format support");   
      {
 	Ecore_Evas *ee;
-	Evas_Object *im;
+	Evas_Object *im, *txt;
 	char buf[4096];
+        Evas_Coord tw, th;
 	
 	ee = ecore_evas_buffer_new(1, 1);
 	if (!ee)
@@ -672,6 +673,7 @@ main(int argc, char **argv)
 				    "Evas has Software Buffer engine support.\n"));
 	     _e_main_shutdown(-1);
 	  }
+        e_canvas_add(ee);
 	im = evas_object_image_add(ecore_evas_get(ee));
 
 	snprintf(buf, sizeof(buf), "%s/data/images/test.png", e_prefix_data_get());
@@ -701,6 +703,18 @@ main(int argc, char **argv)
 	     _e_main_shutdown(-1);
 	  }
 	evas_object_del(im);
+        txt = evas_object_text_add(ecore_evas_get(ee));
+        evas_object_text_font_set(txt, "Sans", 10);
+        evas_object_text_text_set(txt, "Hello");
+        evas_object_geometry_get(txt, NULL, NULL, &tw, &th);
+        if ((tw <= 0) && (th <= 0))
+          {
+	     e_error_message_show(_("Enlightenment found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
+				    "support and system fontconfig defines a 'Sans' font.\n"));
+	     _e_main_shutdown(-1);
+          }
+        evas_object_del(txt);
+        e_canvas_del(ee);
 	ecore_evas_free(ee);
      }
    
