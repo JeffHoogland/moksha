@@ -198,6 +198,7 @@ e_dialog_resizable_set(E_Dialog *dia, int resizable)
 	if (resizable)
 	  {
 	     e_win_size_max_set(dia->win, 99999, 99999);
+             e_util_win_auto_resize_fill(dia->win);
 	  }
 	else
 	  {
@@ -233,7 +234,11 @@ e_dialog_show(E_Dialog *dia)
    dia->min_w = mw;
    dia->min_h = mh;
    if (!dia->resizable) e_win_size_max_set(dia->win, mw, mh);
-   else e_win_size_max_set(dia->win, 99999, 99999);
+   else
+     {
+        e_win_size_max_set(dia->win, 99999, 99999);
+        e_util_win_auto_resize_fill(dia->win);
+     }
    e_win_show(dia->win);
    
    if (!e_widget_focus_get(dia->box_object))

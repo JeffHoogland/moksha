@@ -930,6 +930,28 @@ e_util_winid_str_get(Ecore_X_Window win)
    return id;
 }
 
+EAPI void
+e_util_win_auto_resize_fill(E_Win *win)
+{
+   E_Zone *zone = NULL;
+   
+   if (win->border)
+     zone = win->border->zone;
+   if ((!zone) && (win->container))
+     zone = e_util_zone_current_get(win->container->manager);
+   
+   if (zone)
+     {
+        int w, h;
+        
+        w = zone->w / 3;
+        h = zone->h / 3;
+        if (w < win->min_w) w = win->min_w;
+        if (h < win->min_h) h = win->min_h;
+        e_win_resize(win, w, h);
+     }
+}
+
 /* local subsystem functions */
 static int
 _e_util_cb_delayed_del(void *data)

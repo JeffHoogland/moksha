@@ -177,8 +177,8 @@ e_configure_show(E_Container *con)
    edje_object_part_swallow(eco->edje, "e.swallow.button", eco->close);
    
    edje_object_size_min_calc(eco->edje, &ew, &eh);
-   e_win_resize(eco->win, ew, eh);
    e_win_size_min_set(eco->win, ew, eh);
+   e_util_win_auto_resize_fill(eco->win);
 
    evas_object_show(eco->edje);
    e_win_show(eco->win);
