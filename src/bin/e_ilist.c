@@ -935,6 +935,27 @@ _e_smart_event_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_
    E_Smart_Data *sd;
    Evas_Event_Mouse_Down *ev;
    E_Ilist_Item *si;
+
+   ev = event_info;
+   si = data;
+   sd = si->sd;
+
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) sd->on_hold = 1;
+   else sd->on_hold = 0;
+
+   /* NB: Remove if headers ever become selectable */
+   if (si->header) return;
+
+   if (ev->flags & EVAS_BUTTON_DOUBLE_CLICK)
+     evas_object_smart_callback_call(sd->o_smart, "selected", NULL);
+}
+
+static void 
+_e_smart_event_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info) 
+{
+   E_Smart_Data *sd;
+   Evas_Event_Mouse_Up *ev;
+   E_Ilist_Item *si;
    Eina_List *l = NULL;
    int i;
 
@@ -948,7 +969,14 @@ _e_smart_event_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_
    /* NB: Remove if headers ever become selectable */
    if (si->header) return;
 
-   if (!sd->items) return;
+   if (sd->on_hold)
+     {
+	sd->on_hold = 0;
+	return;
+     }
+
+   if ((!sd->items)) return;
+
    for (i = 0, l = sd->items; l; l = l->next, i++) 
      {
 	if (l->data == si) 
@@ -968,34 +996,8 @@ _e_smart_event_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_
 	  }
      }
 
-   if (ev->flags & EVAS_BUTTON_DOUBLE_CLICK)
-     evas_object_smart_callback_call(sd->o_smart, "selected", NULL);
-}
-
-static void 
-_e_smart_event_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info) 
-{
-   E_Smart_Data *sd;
-   Evas_Event_Mouse_Up *ev;
-   E_Ilist_Item *si;
-
-   ev = event_info;
-   si = data;
-   sd = si->sd;
-
-   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) sd->on_hold = 1;
-   else sd->on_hold = 0;
-
-   /* NB: Remove if headers ever become selectable */
-   if (si->header) return;
-
-   if ((!sd->items) || (!sd->selector)) return;
-   if (!(si = eina_list_nth(sd->items, sd->selected))) return;
-   if (sd->on_hold)
-     {
-	sd->on_hold = 0;
-	return;
-     }
+   if(!sd->selector) return;
+   if (!(si = eina_list_nth(sd->items, sd->selected))) return;   
    if (si->func) si->func(si->data, si->data2);
 }
 
