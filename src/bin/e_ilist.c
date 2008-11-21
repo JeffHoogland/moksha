@@ -975,7 +975,7 @@ _e_smart_event_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_in
 	return;
      }
 
-   if ((!sd->items)) return;
+   if (!sd->items) return;
 
    for (i = 0, l = sd->items; l; l = l->next, i++) 
      {
@@ -1134,14 +1134,9 @@ _e_smart_event_key_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
 	  }
      }  
    else if (!strcmp(ev->keyname, "Escape"))
-     {
-	_e_typebuf_clean(obj);
-     }
+     _e_typebuf_clean(obj);
    else if (strcmp(ev->keyname, "BackSpace") && strcmp(ev->keyname, "Tab") && ev->string)
-     {
-	_e_typebuf_add(obj, ev->string);
-     }
-
+     _e_typebuf_add(obj, ev->string);
 
    sd->on_hold = 0;
 }
@@ -1166,7 +1161,6 @@ _e_typebuf_add(Evas_Object *obj, const char *s)
 	     _e_typebuf_clean(obj);
 	     return;
 	  }
-
      }
 
    len = strlen(sd->typebuf.buf);
@@ -1222,7 +1216,6 @@ _e_typebuf_match(Evas_Object *obj)
 		  break;
 	       }
 	  }
-
 	l = l->next;
 	n++;
      }
@@ -1236,7 +1229,6 @@ _e_typebuf_timer_cb(void *data)
    Evas_Object *obj = data;
 
    _e_typebuf_clean(obj);
-
    return 0;
 }
 
@@ -1246,9 +1238,7 @@ _e_typebuf_timer_update(Evas_Object *obj)
    INTERNAL_ENTRY;
    
    if (sd->typebuf.timer)
-     {
-	ecore_timer_del(sd->typebuf.timer);
-     }
+     ecore_timer_del(sd->typebuf.timer);
 
    sd->typebuf.timer = ecore_timer_add(3.0, _e_typebuf_timer_cb, obj);
 }
@@ -1257,7 +1247,7 @@ static void
 _e_typebuf_timer_delete(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   
+
    if (sd->typebuf.timer)
      {
 	ecore_timer_del(sd->typebuf.timer);
@@ -1272,6 +1262,5 @@ _e_typebuf_clean(Evas_Object *obj)
 
    E_FREE(sd->typebuf.buf);
    sd->typebuf.size = 0;
-   
    _e_typebuf_timer_delete(obj);
 }
