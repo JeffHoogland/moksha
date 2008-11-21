@@ -395,6 +395,7 @@ _e_mod_layout_cb_hook_post_fetch(void *data, E_Border *bd)
 	     bd->bordername = evas_stringshare_add("borderless");
 	     bd->client.border.changed = 1;
 	  }
+        bd->client.e.state.centered = 0;
      }
 }
 
@@ -418,6 +419,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
    e_slipshelf_safe_app_region_get(bd->zone, &wx, &wy, &ww, &wh);
    e_kbd_safe_app_region_get(bd->zone, &wx2, &wy2, &ww2, &wh2);
    E_RECTS_CLIP_TO_RECT(wx, wy, ww, wh, wx2, wy2, ww2, wh2);
+   bd->client.e.state.centered = 0;
    if ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK) ||
        (bd->client.qtopia.soft_menu))
      {

@@ -50,6 +50,14 @@ group "E_Config" struct {
   }
   group "modules" list {
     group "E_Config_Module" struct {
+      value "name" string: "conf";
+      value "enabled" uchar: 1;
+      value "delayed" uchar: 1;
+      value "priority" int: 0;
+    }
+  }
+  group "modules" list {
+    group "E_Config_Module" struct {
       value "name" string: "conf_desk";
       value "enabled" uchar: 1;
       value "delayed" uchar: 1;
@@ -99,46 +107,6 @@ group "E_Config" struct {
   group "modules" list {
     group "E_Config_Module" struct {
       value "name" string: "conf_transitions";
-      value "enabled" uchar: 1;
-      value "delayed" uchar: 1;
-      value "priority" int: 0;
-    }
-  }
-  group "modules" list {
-    group "E_Config_Module" struct {
-      value "name" string: "battery";
-      value "enabled" uchar: 1;
-      value "delayed" uchar: 1;
-      value "priority" int: 0;
-    }
-  }
-  group "modules" list {
-    group "E_Config_Module" struct {
-      value "name" string: "mixer";
-      value "enabled" uchar: 1;
-      value "delayed" uchar: 1;
-      value "priority" int: 0;
-    }
-  }
-  group "modules" list {
-    group "E_Config_Module" struct {
-      value "name" string: "clock";
-      value "enabled" uchar: 1;
-      value "delayed" uchar: 1;
-      value "priority" int: 0;
-    }
-  }
-  group "modules" list {
-    group "E_Config_Module" struct {
-      value "name" string: "pager";
-      value "enabled" uchar: 1;
-      value "delayed" uchar: 1;
-      value "priority" int: 0;
-    }
-  }
-  group "modules" list {
-    group "E_Config_Module" struct {
-      value "name" string: "connman";
       value "enabled" uchar: 1;
       value "delayed" uchar: 1;
       value "priority" int: 0;
@@ -238,6 +206,38 @@ group "E_Config" struct {
       value "enabled" uchar: 1;
       value "delayed" uchar: 1;
       value "priority" int: -100;
+    }
+  }
+  group "modules" list {
+    group "E_Config_Module" struct {
+      value "name" string: "battery";
+      value "enabled" uchar: 1;
+      value "delayed" uchar: 1;
+      value "priority" int: 0;
+    }
+  }
+  group "modules" list {
+    group "E_Config_Module" struct {
+      value "name" string: "mixer";
+      value "enabled" uchar: 1;
+      value "delayed" uchar: 1;
+      value "priority" int: 0;
+    }
+  }
+  group "modules" list {
+    group "E_Config_Module" struct {
+      value "name" string: "clock";
+      value "enabled" uchar: 1;
+      value "delayed" uchar: 1;
+      value "priority" int: 0;
+    }
+  }
+  group "modules" list {
+    group "E_Config_Module" struct {
+      value "name" string: "pager";
+      value "enabled" uchar: 1;
+      value "delayed" uchar: 1;
+      value "priority" int: 0;
     }
   }
   group "font_defaults" list {
