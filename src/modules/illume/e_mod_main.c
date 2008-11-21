@@ -52,7 +52,6 @@ e_modapi_init(E_Module *m)
    _e_mod_gad_gsm_init(m);
    _e_mod_gad_usb_init(m);
    _e_mod_gad_bluetooth_init(m);
-   _e_mod_gad_cfg_init(m);
    
    return m; /* return NULL on failure, anything else on success. the pointer
 	      * returned will be set as m->data for convenience tracking */
@@ -62,7 +61,6 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m) 
 {
-   _e_mod_gad_cfg_shutdown();
    _e_mod_gad_bluetooth_shutdown();
    _e_mod_gad_usb_shutdown();
    _e_mod_gad_gsm_shutdown();

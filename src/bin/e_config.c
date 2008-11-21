@@ -640,6 +640,8 @@ e_config_init(void)
 
    E_CONFIG_VAL(D, T, default_system_menu, STR);
 
+   E_CONFIG_VAL(D, T, cfgdlg_normal_wins, UCHAR); /**/
+   
    e_config_load();
    
    e_config_save_queue();
@@ -816,6 +818,10 @@ e_config_load(void)
         
         IFCFG(0x012a);
         COPYVAL(desklock_start_locked);
+        IFCFGEND;
+        
+        IFCFG(0x012b);
+        COPYVAL(cfgdlg_normal_wins);
         IFCFGEND;
         
         e_config->config_version = E_CONFIG_FILE_VERSION;   

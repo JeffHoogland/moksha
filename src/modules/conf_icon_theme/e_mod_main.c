@@ -31,7 +31,7 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("appearance", 10, _("Appearance"), NULL, "enlightenment/appearance");
+   e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "enlightenment/appearance");
    e_configure_registry_item_add("appearance/icon_theme", 60, _("Icon Theme"), NULL, "enlightenment/icon_theme", e_int_config_icon_themes);
    conf_module = m;
    e_module_delayed_set(m, 1);

@@ -173,8 +173,10 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
      snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "BASIC");
    else
      snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "ADVANCED");
-   cfd->dia = e_dialog_new(cfd->con, cfd->name, buf);
-   if (cfd->view->normal_win) e_win_dialog_set(cfd->dia->win, 0);
+   if ((cfd->view->normal_win) || (e_config->cfgdlg_normal_wins))
+     cfd->dia = e_dialog_normal_win_new(cfd->con, cfd->name, buf);
+   else
+     cfd->dia = e_dialog_new(cfd->con, cfd->name, buf);
    cfd->dia->data = cfd;
    e_object_del_attach_func_set(E_OBJECT(cfd->dia), _e_config_dialog_cb_dialog_del);
    e_dialog_title_set(cfd->dia, cfd->title);

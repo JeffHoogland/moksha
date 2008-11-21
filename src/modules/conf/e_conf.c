@@ -52,7 +52,7 @@ static void _e_configure_cb_del_req(E_Win *win);
 static void _e_configure_cb_resize(E_Win *win);
 static void _e_configure_cb_close(void *data, void *data2);
 static E_Configure_Category *_e_configure_category_add(E_Configure *eco, const char *label, const char *icon);
-static void _e_configure_category_cb(void *data);
+static void _e_configure_category_cb(void *data, void *data2);
 static void _e_configure_item_add(E_Configure_Category *cat, const char *label, const char *icon, const char *path);
 static void _e_configure_item_cb(void *data);
 static void _e_configure_focus_cb(void *data, Evas_Object *obj);
@@ -119,9 +119,9 @@ e_configure_show(E_Container *con)
    eco->mod_hdl = ecore_event_handler_add(E_EVENT_MODULE_UPDATE, 
 					  _e_configure_module_update_cb, eco);
 
-   e_win_title_set(eco->win, _("Enlightenment Configuration"));
+   e_win_title_set(eco->win, _("Configuration"));
    e_win_name_class_set(eco->win, "E", "_configure");
-   e_win_dialog_set(eco->win, 1);
+   e_win_dialog_set(eco->win, 0);
    e_win_delete_callback_set(eco->win, _e_configure_cb_del_req);
    e_win_resize_callback_set(eco->win, _e_configure_cb_resize);
    e_win_centered_set(eco->win, 1);
@@ -130,9 +130,9 @@ e_configure_show(E_Container *con)
    e_theme_edje_object_set(eco->edje, "base/theme/configure", 
 			   "e/widgets/configure/main");
    edje_object_part_text_set(eco->edje, "e.text.title", 
-			   _("Enlightenment Configuration"));
+			   _("Configuration"));
 
-   eco->o_list = e_widget_list_add(eco->evas, 1, 1);
+   eco->o_list = e_widget_list_add(eco->evas, 0, 0);
    edje_object_part_swallow(eco->edje, "e.swallow.content", eco->o_list);
 
    /* Event Obj for keydown */
@@ -146,25 +146,24 @@ e_configure_show(E_Container *con)
    mask = 0;
    evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_configure_keydown_cb, eco->win);
-   
+
    /* Category List */
-   of = e_widget_framelist_add(eco->evas, _("Categories"), 1);
-   eco->cat_list = e_widget_ilist_add(eco->evas, 32 * e_scale, 32 * e_scale, NULL);
-   e_widget_ilist_selector_set(eco->cat_list, 1);
+   eco->cat_list = e_widget_toolbar_add(eco->evas, 32 * e_scale, 32 * e_scale);
+   e_widget_toolbar_scrollable_set(eco->cat_list, 1);
    /***--- fill ---***/
    _e_configure_fill_cat_list(eco);
    e_widget_on_focus_hook_set(eco->cat_list, _e_configure_focus_cb, eco->win);
-   e_widget_framelist_object_append(of, eco->cat_list);
-   e_widget_list_object_append(eco->o_list, of, 1, 1, 0.5);
-   
+   e_widget_list_object_append(eco->o_list, eco->cat_list, 1, 0, 0.5);
    /* Item List */
-   of = e_widget_framelist_add(eco->evas, _("Items"), 1);
    eco->item_list = e_widget_ilist_add(eco->evas, 32 * e_scale, 32 * e_scale, NULL);
    e_widget_ilist_selector_set(eco->item_list, 1);
    e_widget_ilist_go(eco->item_list);
    e_widget_on_focus_hook_set(eco->item_list, _e_configure_focus_cb, eco->win);
-   e_widget_framelist_object_append(of, eco->item_list);   
-   e_widget_list_object_append(eco->o_list, of, 1, 1, 0.5);
+   e_widget_min_size_get(eco->item_list, &mw, &mh);
+   if (mw < (200 * e_scale)) mw = 200 * e_scale;
+   if (mh < (120 * e_scale)) mh = 120 * e_scale;
+   e_widget_min_size_set(eco->item_list, mw, mh);
+   e_widget_list_object_append(eco->o_list, eco->item_list, 1, 1, 0.5);
 
    e_widget_min_size_get(eco->o_list, &mw, &mh);
    edje_extern_object_min_size_set(eco->o_list, mw, mh);
@@ -187,14 +186,14 @@ e_configure_show(E_Container *con)
 
    /* Preselect "Appearance" */
    e_widget_focus_set(eco->cat_list, 1);
-   e_widget_ilist_selected_set(eco->cat_list, 0);
+   e_widget_toolbar_item_select(eco->cat_list, 0);
 
    if (eco->cats)
      {
 	E_Configure_Category *cat;
 	
 	cat = eco->cats->data;
-	_e_configure_category_cb(cat);
+	_e_configure_category_cb(cat, NULL);
      }
    
    _e_configure = eco;
@@ -316,12 +315,12 @@ _e_configure_category_add(E_Configure *eco, const char *label, const char *icon)
      }
    eco->cats = eina_list_append(eco->cats, cat);
 
-   e_widget_ilist_append(eco->cat_list, o, label, _e_configure_category_cb, cat, NULL);
+   e_widget_toolbar_item_append(eco->cat_list, o, label, _e_configure_category_cb, cat, NULL);
    return cat;
 }
 
 static void 
-_e_configure_category_cb(void *data) 
+_e_configure_category_cb(void *data, void *data2) 
 {
    E_Configure_Category *cat;
    E_Configure *eco;
@@ -487,8 +486,6 @@ _e_configure_fill_cat_list(void *data)
 
    evas_event_freeze(evas_object_evas_get(eco->cat_list));
    edje_freeze();
-   e_widget_ilist_freeze(eco->cat_list);
-   e_widget_ilist_clear(eco->cat_list);
 
    for (l = e_configure_registry; l; l = l->next)
      {
@@ -514,10 +511,8 @@ _e_configure_fill_cat_list(void *data)
 	  }
      }
    
-   e_widget_ilist_go(eco->cat_list);
    e_widget_min_size_get(eco->cat_list, &mw, &mh);
    e_widget_min_size_set(eco->cat_list, mw, mh);
-   e_widget_ilist_thaw(eco->cat_list);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(eco->cat_list));
 }

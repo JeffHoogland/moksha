@@ -46,8 +46,6 @@ module_la_SOURCES      = e_mod_main.c \
 		         e_busywin.c \
 			 e_cfg.h \
                          e_cfg.c \
-                         e_mod_gad_cfg.c \
-		         e_mod_gad_cfg.h \
 			 e_winilist.c \
                          e_winilist.h \
                          e_simplelock.c \

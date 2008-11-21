@@ -5358,6 +5358,271 @@ collections { /* begin the collection of edje groups that are in this file */
    }
 
 /////////////////////////////////////////////////////////////////////////////
+   /*** TOOLBAR */
+   group { name: "e/widgets/toolbar";
+      images {
+	 image: "bt_dis_base.png" COMP;
+	 image: "bt_dis_hilight.png" COMP;
+	 image: "bt_dis_shine.png" COMP;
+         image: "icon_left_arrow.png" COMP;
+         image: "icon_right_arrow.png" COMP;
+      }
+      parts {
+	 part { name: "base";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset: 2 2;
+	       }
+	       rel2.offset: -3 -3;
+	       image {
+		  normal: "bt_dis_base.png";
+		  border: 4 4 4 4;
+	       }
+	    }
+	 }
+	 part { name: "clipper";
+	    type: RECT;
+	    mouse_events: 0;
+	    description {
+	       state: "default" 0.0;
+	       rel1 {
+		  to: "base";
+		  offset: 2 2;
+	       }
+	       rel2 {
+		  to: "base";
+		  offset: -3 -3;
+	       }
+	    }
+	 }
+	 part { name: "e.swallow.content";
+	    clip_to: "clipper";
+	    type: SWALLOW;
+	    description {
+	       state: "default" 0.0;
+	       rel1.to: "clipper";
+	       rel2.to: "clipper";
+	    }
+	 }
+	 part { name: "over2";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "base";
+	       rel2.to: "base";
+	       image {
+		  normal: "bt_dis_shine.png";
+		  border: 4 4 4 4;
+	       }
+	    }
+	 }
+	 part { name: "over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "base";
+	       rel2.to: "base";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_dis_hilight.png";
+		  border: 4 4 4 0;
+	       }
+	    }
+	 }
+         part { name: "left_arrow";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               image.normal: "icon_left_arrow.png";
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               align: 0.0 0.5;
+               min: 32 32;
+               max: 32 32;
+            }
+            description { state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+            }
+         }
+         part { name: "right_arrow";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               image.normal: "icon_right_arrow.png";
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               align: 1.0 0.5;
+               min: 32 32;
+               max: 32 32;
+            }
+            description { state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+            }
+         }
+	 part { name: "event";
+	    type: RECT;
+	    mouse_events: 1;
+            repeat_events: 1;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	    }
+	 }
+      }
+      programs {
+         program { name: "sb_hbar_show";
+            signal: "e,action,show,hbar";
+            source: "e";
+            action:  STATE_SET "default" 0.0;
+            transition: LINEAR 0.5;
+            target: "left_arrow";
+            target: "right_arrow";
+         }
+         program { name: "sb_hbar_hide";
+            signal: "e,action,hide,hbar";
+            source: "e";
+            action:  STATE_SET "hidden" 0.0;
+            target: "left_arrow";
+            target: "right_arrow";
+            transition: LINEAR 0.5;
+         }
+      }
+   }
+
+   group { name: "e/widgets/toolbar/item";
+      images {
+         image: "toolbar_sel.png" COMP;
+      }
+      parts {
+	 part { name: "label2";
+	    type: TEXT;
+	    mouse_events:  0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 0.5 1.0;
+	       fixed: 0 1;
+	       rel1.to: "e.text.label";
+	       rel2.to: "e.text.label";
+	       color: 0 0 0 255;
+	       text {
+                  font: "Sans";
+		  text_source: "e.text.label";
+		  size: 10;
+		  min: 1 1;
+		  align: 0.5 0.5;
+		  text_class: "fileman_icon";
+	       }
+	    }
+	    description { state: "selected" 0.0;
+	       inherit: "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+	 part { name: "bg";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       color: 255 255 255 0;
+	       image {
+		  normal: "toolbar_sel.png";
+		  border: 3 3 0 0;
+	       }
+               fill.smooth: 0;
+	    }
+	    description { state: "selected" 0.0;
+	       inherit: "default" 0.0;
+	       visible: 1;
+	       color: 255 255 255 255;
+	    }
+	 }
+	 part { name: "e.swallow.icon";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       align: 0.5 0.5;
+	       aspect: 1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset: 2 2;
+	       }
+	       rel2 {
+		  to_y: "e.text.label";
+		  relative: 1.0 0.0;
+		  offset: -3 -1;
+	       }
+	       color: 0 0 0 0;
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    effect: SOFT_SHADOW;
+	    mouse_events:  0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 0.5 1.0;
+	       fixed: 0 1;
+	       rel1 {
+		  relative: 0.0 1.0;
+		  offset:   0 -1;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -1 -1;
+	       }
+	       visible: 0;
+	       color: 224 224 224 255;
+	       color3: 0 0 0 32;
+	       text {
+                  font: "Sans:style=Bold";
+		  size: 10;
+		  min: 1 1;
+		  align: 0.5 0.5;
+		  text_class: "fileman_icon";
+	       }
+	    }
+	    description { state: "selected" 0.0;
+	       inherit: "default" 0.0;
+	       visible: 1;
+	    }
+	 }
+	 part { name: "event";
+	    type: RECT;
+	    mouse_events: 1;
+            ignore_flags: ON_HOLD;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	    }
+	 }
+      }
+      programs {
+	 program { name: "go_active";
+	    signal:  "e,state,selected";
+	    source:  "e";
+	    action:  STATE_SET "selected" 0.0;
+	    target:  "bg";
+	    target:  "e.text.label";
+	    target:  "label2";
+	    transition: LINEAR 0.2;
+	 }
+	 program { name: "go_passive";
+	    signal:  "e,state,unselected";
+	    source:  "e";
+	    action:  STATE_SET "default" 0.0;
+	    target:  "bg";
+	    target:  "e.text.label";
+	    target:  "label2";
+	    transition: LINEAR 0.1;
+	 }
+	 program { name: "go";
+	    signal:  "mouse,up,1";
+	    source:  "event";
+	    action:  SIGNAL_EMIT "e,action,click" "e";
+	 }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
    /*** MENUS ***/
    /* this is the background for all menus. it also may optionally display a
     * title for the menu. this is wrapped around all the menu items that are
@@ -15767,11 +16032,11 @@ collections { /* begin the collection of edje groups that are in this file */
 	    type:          SWALLOW;
 	    description { state: "default" 0.0;
 	       align: 0.5 0.5;
-	       min: 320 200;
-	       rel1.offset: 24 5;
+	       min: 100 200;
+	       rel1.offset: 5 5;
 	       rel2 {
 		  relative: 1.0 0.0;
-		  offset: -25 -9;
+		  offset: -6 -9;
 		  to_y: "e.swallow.button";
 	       }
 	    }
@@ -21705,7 +21970,7 @@ group { name: "e/icons/"NAME ;                          \
    max: SIZE SIZE;                                      \
    parts {                                              \
       part { name: "icon";                              \
-	 mouse_events:  0;                              \
+	 repeat_events:  1;                             \
 	 description { state: "default" 0.0;            \
 	    aspect: 1.0 1.0;                            \
 	    aspect_preference: BOTH;                    \

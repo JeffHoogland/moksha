@@ -739,6 +739,70 @@ _e_test_internal(E_Container *con)
    e_win_resize(dia->win, 400, 400);
    
 }
+#elif 0
+static int
+_e_test_timer(void *data)
+{
+   E_Container *con;
+   E_Dialog *dia;
+   Evas_Object *o, *ic;
+   Evas_Coord mw, mh;
+   
+   con = data;
+   dia = e_dialog_new(con, "E", "_test");
+   e_dialog_title_set(dia, "A Test Dialog");
+
+   o = e_widget_toolbar_add(dia->win->evas, 48, 48);
+   ic = e_icon_add(dia->win->evas);
+   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_hdd.png");
+   e_widget_toolbar_item_append(o, ic, "HDD", NULL, NULL, NULL);
+   ic = e_icon_add(dia->win->evas);
+   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_cd.png");
+   e_widget_toolbar_item_append(o, ic, "CD", NULL, NULL, NULL);
+   ic = e_icon_add(dia->win->evas);
+   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_desktop.png");
+   e_widget_toolbar_item_append(o, ic, "Desktop", NULL, NULL, NULL);
+   ic = e_icon_add(dia->win->evas);
+   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_home.png");
+   e_widget_toolbar_item_append(o, ic, "Home", NULL, NULL, NULL);
+   ic = e_icon_add(dia->win->evas);
+   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_root.png");
+   e_widget_toolbar_item_append(o, ic, "Root", NULL, NULL, NULL);
+   ic = e_icon_add(dia->win->evas);
+   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_tmp.png");
+   e_widget_toolbar_item_append(o, ic, "Temp", NULL, NULL, NULL);
+   ic = e_icon_add(dia->win->evas);
+   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_globe.png");
+   e_widget_toolbar_item_append(o, ic, "World", NULL, NULL, NULL);
+   ic = e_icon_add(dia->win->evas);
+   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_mixer.png");
+   e_widget_toolbar_item_append(o, ic, "Mixer", NULL, NULL, NULL);
+   ic = e_icon_add(dia->win->evas);
+   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_performance.png");
+   e_widget_toolbar_item_append(o, ic, "Perform", NULL, NULL, NULL);
+
+   e_widget_toolbar_scrollable_set(o, 1);
+   e_widget_toolbar_item_select(o, 1);
+   
+   /* fixme... more */
+   e_widget_min_size_get(o, &mw, &mh);
+   e_dialog_content_set(dia, o, mw, mh);
+   evas_object_show(o);
+   
+   /* buttons at the bottom */
+   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_dialog_resizable_set(dia, 1);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   e_win_resize(dia->win, 400, 200);
+   
+   return 0;
+}
+static void
+_e_test_internal(E_Container *con)
+{
+   ecore_timer_add(1.0, _e_test_timer, con);
+}
 #else
 static void
 _e_test_internal(E_Container *con)

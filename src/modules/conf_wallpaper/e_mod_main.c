@@ -25,7 +25,7 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("appearance", 10, _("Appearance"), NULL, "enlightenment/appearance");
+   e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "enlightenment/appearance");
    e_configure_registry_item_add("appearance/wallpaper", 10, _("Wallpaper"), NULL, "enlightenment/background", e_int_config_wallpaper);
    e_configure_registry_category_add("internal", -1, _("Internal"), NULL, "enlightenment/internal");
    e_configure_registry_item_add("internal/wallpaper_desk", -1, _("Wallpaper"), NULL, "enlightenment/windows", e_int_config_wallpaper_desk);

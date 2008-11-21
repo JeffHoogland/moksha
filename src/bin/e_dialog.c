@@ -15,8 +15,8 @@ static void _e_dialog_cb_wid_on_focus(void *data, Evas_Object *obj);
 
 /* externally accessible functions */
 
-EAPI E_Dialog *
-e_dialog_new(E_Container *con, const char *name, const char *class)
+static E_Dialog *
+_e_dialog_internal_new(E_Container *con, const char *name, const char *class, int dialog)
 {
    E_Dialog *dia;
    E_Manager *man;
@@ -42,7 +42,7 @@ e_dialog_new(E_Container *con, const char *name, const char *class)
    e_win_delete_callback_set(dia->win, _e_dialog_cb_delete);
    e_win_resize_callback_set(dia->win, _e_dialog_cb_resize);
    dia->win->data = dia;
-   e_win_dialog_set(dia->win, 1);
+   if (dialog) e_win_dialog_set(dia->win, 1);
    e_win_name_class_set(dia->win, name, class);
    o = edje_object_add(e_win_evas_get(dia->win));
    dia->bg_object = o;
@@ -72,6 +72,18 @@ e_dialog_new(E_Container *con, const char *name, const char *class)
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_dialog_cb_key_down, dia);
 
    return dia;
+}
+
+EAPI E_Dialog *
+e_dialog_new(E_Container *con, const char *name, const char *class)
+{
+   return _e_dialog_internal_new(con, name, class, 1);
+}
+
+EAPI E_Dialog *
+e_dialog_normal_win_new(E_Container *con, const char *name, const char *class)
+{
+   return _e_dialog_internal_new(con, name, class, 0);
 }
 
 EAPI void

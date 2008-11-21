@@ -42,7 +42,7 @@ e_modapi_init(E_Module *m)
    eina_stringshare_init();
 
    /* Setup Entry in Config Panel */
-   e_configure_registry_category_add("fileman", 100, _("File Manager"), 
+   e_configure_registry_category_add("fileman", 100, _("Files"), 
 				     NULL, "enlightenment/fileman");
    e_configure_registry_item_add("fileman/fileman", 10, _("File Manager"), 
 				 NULL, "enlightenment/fileman", 

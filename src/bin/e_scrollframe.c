@@ -51,7 +51,9 @@ struct _E_Smart_Data
       void (*max_get) (Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
       void (*child_size_get) (Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
    } pan_func;
-   
+   struct {
+      Evas_Bool forced : 1;
+   } thumbscroll;
    
    unsigned char hbar_visible : 1;
    unsigned char vbar_visible : 1;
@@ -349,6 +351,13 @@ e_scrollframe_single_dir_get(Evas_Object *obj)
    return sd->one_dir_at_a_time;
 }
 
+EAPI void
+e_scrollframe_thumbscroll_force(Evas_Object *obj, Evas_Bool forced)
+{
+   API_ENTRY return;
+   sd->thumbscroll.forced = forced;
+}
+
 /* local subsystem functions */
 static void
 _e_smart_edje_drag_v(void *data, Evas_Object *obj, const char *emission, const char *source)
@@ -429,7 +438,7 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 
    sd = data;
    ev = event_info;
-   if (e_config->thumbscroll_enable)
+   if ((e_config->thumbscroll_enable) || (sd->thumbscroll.forced))
      {
 	if (sd->down.momentum_animator)
 	  {
@@ -494,7 +503,7 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    sd = data;
    ev = event_info;
-   if (e_config->thumbscroll_enable)
+   if ((e_config->thumbscroll_enable) || (sd->thumbscroll.forced))
      {
 	if (ev->button == 1)
 	  {
@@ -558,7 +567,7 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 
    sd = data;
    ev = event_info;
-   if (e_config->thumbscroll_enable)
+   if ((e_config->thumbscroll_enable) || (sd->thumbscroll.forced))
      {
 	if (sd->down.now)
 	  {
@@ -673,7 +682,8 @@ _e_smart_scrollbar_read(E_Smart_Data *sd)
    x = vx * (double)mx;
    y = vy * (double)my;
    sd->pan_func.set(sd->pan_obj, x, y);
-   if ((e_config->thumbscroll_enable) && (sd->down.now) && (!sd->down.dragged))
+   if (((e_config->thumbscroll_enable) || (sd->thumbscroll.forced))
+       && (sd->down.now) && (!sd->down.dragged))
      sd->down.now = 0;
 }
 

@@ -529,6 +529,7 @@ temp_base.png \
 temp_mid.png \
 temp_over.png \
 toolbar_bottom.png \
+toolbar_sel.png \
 toolbar_top.png \
 topsh.png \
 transition_vswipe.png \

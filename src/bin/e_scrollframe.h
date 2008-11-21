@@ -32,7 +32,7 @@ EAPI void e_scrollframe_policy_get              (Evas_Object *obj, E_Scrollframe
 EAPI Evas_Object *e_scrollframe_edje_object_get (Evas_Object *obj);
 EAPI void e_scrollframe_single_dir_set          (Evas_Object *obj, Evas_Bool single_dir);
 EAPI Evas_Bool e_scrollframe_single_dir_get     (Evas_Object *obj);
-
+EAPI void e_scrollframe_thumbscroll_force       (Evas_Object *obj, Evas_Bool forced);
     
 #endif
 #endif

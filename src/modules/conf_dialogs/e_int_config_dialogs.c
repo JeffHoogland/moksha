@@ -14,6 +14,7 @@ struct _E_Config_Dialog_Data
    int cnfmdlg_disabled;
    int cfgdlg_auto_apply;
    int cfgdlg_default_mode;
+   int cfgdlg_normal_wins;
 };
 
 EAPI E_Config_Dialog *
@@ -44,6 +45,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->cnfmdlg_disabled = e_config->cnfmdlg_disabled;
    cfdata->cfgdlg_auto_apply = e_config->cfgdlg_auto_apply;
    cfdata->cfgdlg_default_mode = e_config->cfgdlg_default_mode;
+   cfdata->cfgdlg_normal_wins =  e_config->cfgdlg_normal_wins;
 }
 
 static void *
@@ -69,6 +71,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Auto Apply is disabled in E for now */
    /* (e_config->cfgdlg_auto_apply = cfdata->cfgdlg_auto_apply; */
    e_config->cfgdlg_default_mode = cfdata->cfgdlg_default_mode;
+   e_config->cfgdlg_normal_wins = cfdata->cfgdlg_normal_wins;
    e_config_save_queue();
    return 1;
 }
@@ -84,6 +87,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
 
    ob = e_widget_check_add(evas, _("Disable Confirmation Dialogs"), &(cfdata->cnfmdlg_disabled));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Normal Windows"), &(cfdata->cfgdlg_normal_wins));
    e_widget_framelist_object_append(of, ob);
 //   ob = e_widget_check_add(evas, _("Auto-Apply Configuration Changes"), &(cfdata->cfgdlg_auto_apply));
 //   e_widget_framelist_object_append(of, ob);
@@ -111,6 +116,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* (e_config->cfgdlg_auto_apply = cfdata->auto_apply; */
 
    e_config->cfgdlg_default_mode = cfdata->default_mode;
+   e_config->cfgdlg_normal_wins = cfdata->cfgdlg_normal_wins;
    e_config_save_queue();
    return 1;
 }
