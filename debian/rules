@@ -13,10 +13,6 @@ DEB_CONFIGURE_EXTRA_FLAGS := --disable-rpath
 install/e17-data::
 	gzip -9 debian/tmp/usr/share/enlightenment/doc/*.txt
 	rm debian/tmp/usr/share/enlightenment/COPYING
-	rm debian/tmp/usr/share/enlightenment/data/fonts/*
-
-install/e17::
-	rm -r debian/tmp/usr/lib/enlightenment/modules/wizard
 
 binary-predeb/e17::
 	chmod 4755 debian/e17/usr/lib/enlightenment/enlightenment_sys
