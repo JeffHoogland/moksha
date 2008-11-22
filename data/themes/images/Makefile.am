@@ -311,6 +311,7 @@ icon_efm_dnd_ask.png \
 icon_efm_dnd_copy.png \
 icon_efm_dnd_move.png \
 icon_efm_file.png \
+icon_efm_flash.png \
 icon_efm_folder.png \
 icon_efm_hdd.png \
 icon_efm_home.png \
