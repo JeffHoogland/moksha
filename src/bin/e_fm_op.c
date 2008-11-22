@@ -167,15 +167,14 @@ main(int argc, char **argv)
           {
              if (argv[last][strlen(argv[last]) - 1] == '/') byte = "";
              p2 = ecore_file_realpath(argv[last]);
-          
-             for(;i < last; i++)
+
+             for(; i < last; i++)
                {
                   p = ecore_file_realpath(argv[i]);
- 
-                  // Don't move a dir into itself
-                  if (p && p2 && ecore_file_is_dir(argv[i]) && 
-                                 (strstr(p2,p) == p2)
-                     )
+
+                  /* Don't move a dir into itself */
+                  if ((p) && (p2) && (ecore_file_is_dir(argv[i])) && 
+                                 (strstr(p2, p) == p2))
                     continue;
 
                   name = ecore_file_file_get(argv[i]);
@@ -196,35 +195,31 @@ main(int argc, char **argv)
           }
         else if (argc == 4)
           {
-             snprintf(buf, sizeof(buf), "%s/%s", 
-                           ecore_file_realpath(argv[i]),
-                           ecore_file_file_get(argv[i])
-                     );
+             snprintf(buf, sizeof(buf), "%s/%s", ecore_file_realpath(argv[i]),
+                      ecore_file_file_get(argv[i]));
              p = strdup(buf);
-          
+
              snprintf(buf, sizeof(buf), "%s/%s", 
-                           ecore_file_realpath(argv[last]),
-                           ecore_file_file_get(argv[last])
-                     );
+                      ecore_file_realpath(argv[last]),
+                      ecore_file_file_get(argv[last]));
              p2 = strdup(buf);
 
-             // Don't move a file on top of itself.
+             /* Don't move a file on top of itself. */
              i = (strlen(p) == strlen(p2)) && !strncmp(p,p2,strlen(p));
              free(p);
              free(p2);
              if (i) goto quit;
 
-             // Try a rename
+             /* Try a rename */
              if ((type == E_FM_OP_MOVE) && (rename(argv[2], argv[3]) == 0))
                goto quit;
              
-             // If that does work, setup a copy and delete operation.
-             // It's not atomic, but it's the best we can do.
+             /* If that does work, setup a copy and delete operation. 
+              It's not atomic, but it's the best we can do. */
              task = _e_fm_op_task_new();
              task->type = type;
              task->src.name = eina_stringshare_add(argv[2]);
              task->dst.name = eina_stringshare_add(argv[3]);
-
              _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, task);
           }
         else
@@ -239,7 +234,6 @@ main(int argc, char **argv)
              task = _e_fm_op_task_new();
              task->type = type;
              task->src.name = eina_stringshare_add(argv[i]);
-
              _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, task);
              i++;
           }
@@ -261,7 +255,6 @@ quit:
 }
 
 /* Create new task. */
-
 static E_Fm_Op_Task *
 _e_fm_op_task_new()
 {
@@ -273,22 +266,17 @@ _e_fm_op_task_new()
 
    t->dst.name = NULL;
    t->dst.done = 0;
-
    t->started = 0;
    t->finished = 0;
-
    t->data = NULL;
-
    t->type = E_FM_OP_NONE;
    t->overwrite = E_FM_OP_NONE;
-
    t->link = NULL;
 
    return t;
 }
 
 /* Free task. */
-
 static void
 _e_fm_op_task_free(void *t)
 {
@@ -319,7 +307,6 @@ _e_fm_op_task_free(void *t)
  * occured and user chooses to ignore this), then the remove task is removed from 
  * queue with this functions.
  */
-
 static void 
 _e_fm_op_remove_link_task(E_Fm_Op_Task *task)
 {
@@ -344,7 +331,6 @@ _e_fm_op_remove_link_task(E_Fm_Op_Task *task)
  * variable _e_fm_op_stdin_buffer to deal with a situation, when read() 
  * did not actually read enough data.
  */
-
 static int
 _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
 {
@@ -414,7 +400,6 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
               * but currently commands here do not have any data.
               * msize is always 0.
               */
-
 	     switch (identity)
 	       {
 	       case E_FM_OP_ABORT:
@@ -438,9 +423,7 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
                   break;
 	       }
 	  }
-
         if (length > 0) memmove(_e_fm_op_stdin_buffer, begin, length);
-
         buf = _e_fm_op_stdin_buffer + length;
      }
 
@@ -495,7 +478,6 @@ _e_fm_op_delete_idler(int *mark)
  * Basically, it checks if we got a response. 
  * Returns 1 if we did; otherwise checks it and does what needs to be done.
  */
-
 static int 
 _e_fm_op_idler_handle_error(int *mark, Eina_List **queue, Eina_List **node, E_Fm_Op_Task *task)
 {
@@ -553,7 +535,7 @@ _e_fm_op_idler_handle_error(int *mark, Eina_List **queue, Eina_List **node, E_Fm
              else if (_e_fm_op_error_response == E_FM_OP_ERROR_RESPONSE_IGNORE_ALL)
                {
                   E_FM_OP_DEBUG("E_Fm_Op_Task '%s' --> '%s' was automatically aborted.\n",
-                        task->src.name, task->dst.name);
+                                task->src.name, task->dst.name);
                   _e_fm_op_rollback(task);
                   _e_fm_op_remove_link_task(task);
                   *queue = eina_list_remove_list(*queue, *node);
@@ -576,7 +558,6 @@ _e_fm_op_idler_handle_error(int *mark, Eina_List **queue, Eina_List **node, E_Fm
  * If we have an abort (_e_fm_op_abort = 1), then _atom() should recognize it and do smth. 
  * After this, just finish everything.
  */
-
 static int
 _e_fm_op_work_idler(void *data)
 {
@@ -603,7 +584,9 @@ _e_fm_op_work_idler(void *data)
 
    if (!task)
      {
-        if (_e_fm_op_separator && _e_fm_op_work_queue == _e_fm_op_separator && _e_fm_op_scan_idler_p == NULL)
+        if ((_e_fm_op_separator) && 
+            (_e_fm_op_work_queue == _e_fm_op_separator) && 
+            (_e_fm_op_scan_idler_p == NULL))
           {
              /* You may want to look at the comment in _e_fm_op_scan_atom() about this separator thing. */
              _e_fm_op_work_queue = eina_list_remove_list(_e_fm_op_work_queue, _e_fm_op_separator);
@@ -611,13 +594,15 @@ _e_fm_op_work_idler(void *data)
              return 1;
           }
 
-        if (_e_fm_op_scan_idler_p == NULL && !_e_fm_op_work_error && !_e_fm_op_scan_error)
+        if ((_e_fm_op_scan_idler_p == NULL) && (!_e_fm_op_work_error) && 
+            (!_e_fm_op_scan_error))
           ecore_main_loop_quit();
 
         return 1;
      }
 
-   if (_e_fm_op_idler_handle_error(&_e_fm_op_work_error, &_e_fm_op_work_queue, &node, task)) return 1;
+   if (_e_fm_op_idler_handle_error(&_e_fm_op_work_error, &_e_fm_op_work_queue, &node, task)) 
+     return 1;
 
    task->started = 1;
 
@@ -673,7 +658,8 @@ _e_fm_op_scan_idler(void *data)
 	return 0;
      }
 
-   if (_e_fm_op_idler_handle_error(&_e_fm_op_scan_error, &_e_fm_op_scan_queue, &node, task)) return 1;
+   if (_e_fm_op_idler_handle_error(&_e_fm_op_scan_error, &_e_fm_op_scan_queue, &node, task)) 
+     return 1;
 
    if (_e_fm_op_abort)
      {
@@ -687,7 +673,8 @@ _e_fm_op_scan_idler(void *data)
         _e_fm_op_scan_atom(task);
         if (task->finished)
           {
-             _e_fm_op_scan_queue = eina_list_remove_list(_e_fm_op_scan_queue, node);
+             _e_fm_op_scan_queue = 
+               eina_list_remove_list(_e_fm_op_scan_queue, node);
              _e_fm_op_task_free(task);
              node = NULL;
           }
@@ -695,7 +682,8 @@ _e_fm_op_scan_idler(void *data)
    else if (!dir && !task->started)
      {
 	if (lstat(task->src.name, &(task->src.st)) < 0)
-          _E_FM_OP_ERROR_SEND_SCAN(task, E_FM_OP_ERROR, "Cannot lstat '%s': %s.", task->src.name);
+          _E_FM_OP_ERROR_SEND_SCAN(task, E_FM_OP_ERROR, 
+                                   "Cannot lstat '%s': %s.", task->src.name);
 
 	if (S_ISDIR(task->src.st.st_mode))
 	  {
@@ -703,7 +691,9 @@ _e_fm_op_scan_idler(void *data)
 
              dir = opendir(task->src.name);
              if (!dir)
-               _E_FM_OP_ERROR_SEND_SCAN(task, E_FM_OP_ERROR, "Cannot open directory '%s': %s.", task->dst.name);
+               _E_FM_OP_ERROR_SEND_SCAN(task, E_FM_OP_ERROR, 
+                                        "Cannot open directory '%s': %s.", 
+                                        task->dst.name);
           }
         else
           task->started = 1;
@@ -725,9 +715,11 @@ _e_fm_op_scan_idler(void *data)
                ntask->dst.name = NULL;
 
              if (task->type == E_FM_OP_REMOVE)
-               _e_fm_op_scan_queue = eina_list_prepend(_e_fm_op_scan_queue, ntask);
+               _e_fm_op_scan_queue = 
+               eina_list_prepend(_e_fm_op_scan_queue, ntask);
              else
-               _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, ntask);
+               _e_fm_op_scan_queue = 
+               eina_list_append(_e_fm_op_scan_queue, ntask);
 
              task->started = 1;
              closedir(dir);
@@ -762,7 +754,8 @@ _e_fm_op_scan_idler(void *data)
 	_e_fm_op_scan_atom(task);
 	if (task->finished)
           {
-             _e_fm_op_scan_queue = eina_list_remove_list(_e_fm_op_scan_queue, node);
+             _e_fm_op_scan_queue = 
+               eina_list_remove_list(_e_fm_op_scan_queue, node);
              _e_fm_op_task_free(task);
              node = NULL;
           }
@@ -820,7 +813,6 @@ _e_fm_op_rollback(E_Fm_Op_Task *task)
    if (task->type == E_FM_OP_COPY)
      {
 	data = task->data;
-
 	if (data)
 	  {
 	     if (data->from)
@@ -834,7 +826,6 @@ _e_fm_op_rollback(E_Fm_Op_Task *task)
 		  data->to = NULL;
 	       }
 	  }
-
 	FREE(task->data);
      }
 
@@ -872,24 +863,29 @@ _e_fm_op_update_progress(E_Fm_Op_Task *task, long long _plus_e_fm_op_done, long 
    _e_fm_op_done += _plus_e_fm_op_done;
    _e_fm_op_total += _plus_e_fm_op_total;
 
-   if (_e_fm_op_scan_idler_p) return; /* Do not send progress until scan is done.*/
+   /* Do not send progress until scan is done.*/
+   if (_e_fm_op_scan_idler_p) return;
 
    if (_e_fm_op_total != 0)
      {
-	percent = _e_fm_op_done * 100 / _e_fm_op_total % 101;	/* % 101 is for the case when somehow work queue works faster than scan queue. _e_fm_op_done * 100 should not cause arithmetic overflow, since long long can hold really big values. */
+        /* % 101 is for the case when somehow work queue works faster 
+         than scan queue. _e_fm_op_done * 100 should not cause arithmetic 
+         overflow, since long long can hold really big values. */
+	percent = _e_fm_op_done * 100 / _e_fm_op_total % 101;	
 
         eta = peta;
 
         if (!stime) stime = ecore_time_get();
 
-        if (_e_fm_op_done && ecore_time_get() - ctime > 1.0 ) /* Update ETA once a second */
+        /* Update ETA once a second */
+        if ((_e_fm_op_done) && (ecore_time_get() - ctime > 1.0 )) 
           {
              ctime = ecore_time_get();
              eta = (ctime - stime) * (_e_fm_op_total - _e_fm_op_done) / _e_fm_op_done;
              eta = (int) (eta + 0.5);
-        }
+          }
 
-	if (percent != ppercent || eta != peta || (task && task != ptask))
+	if ((percent != ppercent) || (eta != peta) || ((task) && (task != ptask)))
 	  {
 	     ppercent = percent;
              peta = eta;
@@ -1014,18 +1010,26 @@ _e_fm_op_copy_dir(E_Fm_Op_Task * task)
         if (errno == EEXIST)
           {
              if (lstat(task->dst.name, &st) < 0)
-               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot lstat '%s': %s.", task->dst.name);
+               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, 
+                                        "Cannot lstat '%s': %s.", 
+                                        task->dst.name);
              if (!S_ISDIR(st.st_mode))
                {
                   /* Let's try to delete the file and create a dir */
                   if (unlink(task->dst.name) == -1)
-                    _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
+                    _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, 
+                                             "Cannot unlink '%s': %s.", 
+                                             task->dst.name);
                   if (mkdir(task->dst.name, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) == -1)
-                    _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot make directory '%s': %s.", task->dst.name);
+                    _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, 
+                                             "Cannot make directory '%s': %s.", 
+                                             task->dst.name);
                }
           }
         else
-          _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot make directory '%s': %s.", task->dst.name);
+          _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, 
+                                   "Cannot make directory '%s': %s.", 
+                                   task->dst.name);
      }
 
    task->dst.done += task->src.st.st_size;
