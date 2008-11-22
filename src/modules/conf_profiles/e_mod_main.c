@@ -11,15 +11,15 @@ static E_Module *conf_module = NULL;
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
-     "Configuration - Profiles"
+     "Settings - Profiles"
 };
 
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("advanced", 80, _("Advanced"),
-				     NULL, "enlightenment/advanced");
-   e_configure_registry_item_add("advanced/profiles", 50, _("Profiles"),
+   e_configure_registry_category_add("settings", 80, _("Settings"),
+				     NULL, "enlightenment/settings");
+   e_configure_registry_item_add("settings/profiles", 50, _("Profiles"),
 				 NULL, "enlightenment/profiles",
 				 e_int_config_profiles);
    conf_module = m;
@@ -34,8 +34,8 @@ e_modapi_shutdown(E_Module *m)
 
    while ((cfd = e_config_dialog_get("E", "_config_profiles_dialog")))
      e_object_del(E_OBJECT(cfd));
-   e_configure_registry_item_del("advanced/profiles");
-   e_configure_registry_category_del("advanced");
+   e_configure_registry_item_del("settings/profiles");
+   e_configure_registry_category_del("settings");
    conf_module = NULL;
    return 1;
 }

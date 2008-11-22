@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Window Display
+Name=Settings - Window Display
 Name[de]=
 Name[eo]=Agordo - Vidigo de fenestroj
 Name[es]=Configuración - Visualización de ventanas
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_window_display
-Comment=<title>E17 Configuration Applet</title><br>Configures default window properties such as default geometries, border icons, placement styles, etc.
+Comment=<title>E17 Settings Applet</title><br>Configures default window properties such as default geometries, border icons, placement styles, etc.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi la defaŭltjan ecojn de fenestroj kiel geometrio, stilo de pozicio, randaj piktogramoj, ktp.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configura las propiedades predefinidas de las ventanas, como su geometría, los íconos del borde, el diseño, ubicación, etc.

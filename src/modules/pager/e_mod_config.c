@@ -66,7 +66,7 @@ _config_pager_module(Config_Item *ci)
    v->advanced.apply_cfdata = _adv_apply;
 
    con = e_container_current_get(e_manager_current_get());
-   cfd = e_config_dialog_new(con, _("Pager Configuration"), "E", 
+   cfd = e_config_dialog_new(con, _("Pager Settings"), "E", 
 			     "_e_mod_pager_config_dialog", buf, 0, v, ci);
    pager_config->config_dialog = cfd;
 }

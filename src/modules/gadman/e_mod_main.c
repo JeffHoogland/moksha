@@ -33,7 +33,7 @@ e_modapi_init(E_Module *m)
 
    gadman_init(m);
 
-   //Configuration values
+   //Settings values
    Man->conf_edd = E_CONFIG_DD_NEW("Gadman_Config", Config);
 #undef T
 #undef D

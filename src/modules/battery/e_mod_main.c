@@ -173,7 +173,7 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	battery_config->menu = mn;
 
 	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Configuration"));
+	e_menu_item_label_set(mi, _("Settings"));
 	e_util_menu_item_edje_icon_set(mi, "widget/config");
 	e_menu_item_callback_set(mi, _battery_face_cb_menu_configure, NULL);
 

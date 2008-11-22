@@ -2029,7 +2029,7 @@ static E_DBus_Interface *dbus_if = NULL;
 static void
 _e_cfg_dbus_if_init(void)
 {
-   dbus_if = e_dbus_interface_new("org.enlightenment.wm.IllumeConfiguration");
+   dbus_if = e_dbus_interface_new("org.enlightenment.wm.IllumeSettings");
    if (dbus_if)
      {
 	int i;

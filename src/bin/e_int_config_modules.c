@@ -39,7 +39,7 @@ struct _E_Config_Dialog_Data
 const CFTypes _types[] = 
 {
      {"appearance", N_("Appearance"),    "enlightenment/appearance"},
-     {"config",     N_("Configuration"), "enlightenment/configuration"},
+     {"config",     N_("Settings"),      "enlightenment/configuration"},
      {"fileman",    N_("File Manager"),  "enlightenment/fileman"},
      {"shelf",      N_("Shelf"),         "enlightenment/shelf"},
      {"system",     N_("System"),        "enlightenment/system"},

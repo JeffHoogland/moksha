@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Power Management
+Name=Settings - Power Management
 Name[de]=
 Name[eo]=Agordo - Potenca Administrado
 Name[es]=Configuración - Administración de energía
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_dpms
-Comment=<title>E17 Configuration Applet</title><br>Configure the DPMS settings of your system.
+Comment=<title>E17 Settings Applet</title><br>Configure the DPMS settings of your system.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Agordi la parametrojn de DPMS (Signalado de potenca administrado de ekrano) de sia sistemo.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configura las opciones de DPMS de su sistema.

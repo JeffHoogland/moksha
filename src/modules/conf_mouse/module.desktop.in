@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Mouse Settings
+Name=Settings - Mouse Settings
 Name[de]=
 Name[eo]=Agordo - Musa plirapidigo
 Name[es]=Configuración - Aceleración del mouse
-Name[fr]=Configuration - Paramètres de la souris
+Name[fr]=Settings - Paramètres de la souris
 Name[hu]=Beállítások - Egér sebessége
 Name[it]=Configurazione - Accelerazione mouse
 Name[ja]=
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mouse
-Comment=<title>E17 Configuration Applet</title><br>Configure mouse behavior.
+Comment=<title>E17 Settings Applet</title><br>Configure mouse behavior.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi la musan plirapidigon.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configure la aceleración del cursor del mouse.

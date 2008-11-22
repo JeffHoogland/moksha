@@ -59,7 +59,7 @@ e_int_config_paths(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets    = _basic_create_widgets;
    v->basic.apply_cfdata      = _basic_apply_data;
    
-   cfd = e_config_dialog_new(con, _("Search Path Configuration"),
+   cfd = e_config_dialog_new(con, _("Search Path Settings"),
 			    "E", "_config_paths_dialog",
 			     "enlightenment/directories", 0, v, NULL);
    return cfd;

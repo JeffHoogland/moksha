@@ -690,14 +690,14 @@ e_config_load(void)
              e_config = NULL;
              reload = 1;
 	     ecore_timer_add(1.0, _e_config_cb_timer,
-			     _("Configuration data needed upgrading. Your old configuration<br>"
-			       "has been wiped and a new set of defaults initialized. This<br>"
+			     _("Settings data needed upgrading. Your old settings have<br>"
+			       "been wiped and a new set of defaults initialized. This<br>"
 			       "will happen regularly during development, so don't report a<br>"
-			       "bug. This simply means Enlightenment needs new configuration<br>"
+			       "bug. This simply means Enlightenment needs new settings<br>"
 			       "data by default for usable functionality that your old<br>"
-			       "configuration simply lacks. This new set of defaults will fix<br>"
+			       "settings simply lack. This new set of defaults will fix<br>"
 			       "that by adding it in. You can re-configure things now to your<br>"
-			       "liking. Sorry for the hiccup in your configuration.<br>"));
+			       "liking. Sorry for the hiccup in your settings.<br>"));
 	  }
         /* config is too new? odd! suspect corruption? */
 	else if (e_config->config_version > E_CONFIG_FILE_VERSION)
@@ -707,11 +707,11 @@ e_config_load(void)
              e_config = NULL;
              reload = 1;
 	     ecore_timer_add(1.0, _e_config_cb_timer,
-			     _("Your configuration is NEWER than Enlightenment. This is very<br>"
+			     _("Your settings are NEWER than Enlightenment. This is very<br>"
 			       "strange. This should not happen unless you downgraded<br>"
-			       "Enlightenment or copied the configuration from a place where<br>"
+			       "Enlightenment or copied the settings from a place where<br>"
 			       "a newer version of Enlightenment was running. This is bad and<br>"
-			       "as a precaution your configuration has been now restored to<br>"
+			       "as a precaution your settings have been now restored to<br>"
 			       "defaults. Sorry for the inconvenience.<br>"));
 	  }
         /* oldest minor version supported */
@@ -723,14 +723,14 @@ e_config_load(void)
              e_config = NULL;
              reload = 1;
 	     ecore_timer_add(1.0, _e_config_cb_timer,
-			     _("Configuration data needed upgrading. Your old configuration<br>"
-			       "has been wiped and a new set of defaults initialized. This<br>"
+			     _("Settings data needed upgrading. Your old settings have<br>"
+			       "been wiped and a new set of defaults initialized. This<br>"
 			       "will happen regularly during development, so don't report a<br>"
-			       "bug. This simply means Enlightenment needs new configuration<br>"
+			       "bug. This simply means Enlightenment needs new settings<br>"
 			       "data by default for usable functionality that your old<br>"
-			       "configuration simply lacks. This new set of defaults will fix<br>"
+			       "settings simply lack. This new set of defaults will fix<br>"
 			       "that by adding it in. You can re-configure things now to your<br>"
-			       "liking. Sorry for the hiccup in your configuration.<br>"));
+			       "liking. Sorry for the hiccup in your settings.<br>"));
           }
         if (reload)
           {
@@ -1579,7 +1579,7 @@ _e_config_free(E_Config *ecf)
 static int
 _e_config_cb_timer(void *data)
 {
-   e_util_dialog_show(_("Configuration Upgraded"), "%s", (char *)data);
+   e_util_dialog_show(_("Settings Upgraded"), "%s", (char *)data);
    return 0;
 }
 
@@ -1605,7 +1605,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
      {
       case EET_ERROR_WRITE_ERROR:
 	erstr = _("An error occured while saving Enlightenment's<br>"
-		  "configuration to disk. The error could not be<br>"
+		  "settings to disk. The error could not be<br>"
 		  "deterimined.<br>"
 		  "<br>"
 		  "The file where the error occured was:<br>"
@@ -1615,7 +1615,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 		  );
 	break;
       case EET_ERROR_WRITE_ERROR_FILE_TOO_BIG:
-	erstr = _("Enlightenment's configuration files are too big<br>"
+	erstr = _("Enlightenment's settings files are too big<br>"
 		  "for the file system they are being saved to.<br>"
 		  "This error is very strange as the files should<br>"
 		  "be extremely small. Please check the settings<br>"
@@ -1628,7 +1628,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 		  );
 	break;
       case EET_ERROR_WRITE_ERROR_IO_ERROR:
-	erstr = _("An output error occured when writing the configuration<br>"
+	erstr = _("An output error occured when writing the settings<br>"
 		  "files for Enlightenment. Your disk is having troubles<br>"
 		  "and possibly needs replacement.<br>"
 		  "<br>"
@@ -1639,7 +1639,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 		  );
 	break;
       case EET_ERROR_WRITE_ERROR_OUT_OF_SPACE:
-	erstr = _("Enlightenment cannot write its configuration file<br>"
+	erstr = _("Enlightenment cannot write its settings file<br>"
 		  "because it ran out of space to write the file.<br>"
 		  "You have either run out of disk space or have<br>"
 		  "gone over your quota limit.<br>"
@@ -1651,7 +1651,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 		  );
 	break;
       case EET_ERROR_WRITE_ERROR_FILE_CLOSED:
-	erstr = _("Enlightenment unexpectedly had the configuration file<br>"
+	erstr = _("Enlightenment unexpectedly had the settings file<br>"
 		  "it was writing closed on it. This is very unusual.<br>"
 		  "<br>"
 		  "The file where the error occured was:<br>"
@@ -1676,7 +1676,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 	       {
 		  char buf[8192];
 		  
-		  e_dialog_title_set(dia, _("Enlightenment Configuration Write Problems"));
+		  e_dialog_title_set(dia, _("Enlightenment Settings Write Problems"));
 		  e_dialog_icon_set(dia, "enlightenment/error", 64);
 		  snprintf(buf, sizeof(buf), erstr, file);
 		  e_dialog_text_set(dia, buf);

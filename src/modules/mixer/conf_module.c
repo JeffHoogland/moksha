@@ -184,7 +184,7 @@ e_mixer_config_module_dialog_new(E_Container *con, E_Mixer_Module_Context *ctxt)
    view->basic.create_widgets = _basic_create;
    view->basic.apply_cfdata = _basic_apply;
 
-   dialog = e_config_dialog_new(con, _("Mixer Module Configuration"),
+   dialog = e_config_dialog_new(con, _("Mixer Module Settings"),
                                 _Name, "e_mixer_config_module_dialog_new",
                                 e_mixer_theme_path(), 0, view, ctxt);
 

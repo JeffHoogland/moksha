@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Run Command
+Name=Settings - Run Command
 Name[de]=
 Name[eo]=Agordo - Lanĉi komandon
 Name[es]=Configuración - Ejecutar comando
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_exebuf
-Comment=<title>E17 Configuration Applet</title><br>Used to configure the settings of the run command GUI.
+Comment=<title>E17 Settings Applet</title><br>Used to configure the settings of the run command GUI.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Agordi la parametrojn de la uzulinterfaco por la lanĉo de komandoj.
 Comment[es]=<title>Applet de configuración de E17</title><br>Usado para configurar las opciones de la GUI para ejecutar un comando.

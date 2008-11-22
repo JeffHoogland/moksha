@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Shelves
+Name=Settings - Shelves
 Name[de]=
 Name[eo]=Agordo - Bretoj
 Name[es]=Configuración - Contenedores
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_shelves
-Comment=<title>E17 Configuration Applet</title><br>Shelf configuration dialog.
+Comment=<title>E17 Settings Applet</title><br>Shelf configuration dialog.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Dialogo de agordo de bretoj.
 Comment[es]=<title>Applet de configuración de E17</title><br>Diálogo de configuración del contenedor.

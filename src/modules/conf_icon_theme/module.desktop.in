@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Icon Theme
+Name=Settings - Icon Theme
 Name[de]=
 Name[eo]=Agordo - Piktograma etoso
 Name[es]=Configuración - Tema de íconos
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_icon_theme
-Comment=<title>E17 Configuration Applet</title><br>Configuration applet used to select an icon theme for E17.
+Comment=<title>E17 Settings Applet</title><br>Settings applet used to select an icon theme for E17.
 Comment[de]=
 Comment[eo]=<title>Aplikajeto de E17-agordo</title><br>Elekti piktograman etoson por E17.
 Comment[es]=<title>Applet de configuración de E17</title><br>Applet de configuración usado para seleccionar el tema de íconos para E17.

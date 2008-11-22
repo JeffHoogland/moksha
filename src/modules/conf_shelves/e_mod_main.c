@@ -29,7 +29,7 @@ static E_Int_Menu_Augmentation *maug = NULL;
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
-     "Configuration - Shelves"
+     "Settings - Shelves"
 };
 
 EAPI void *

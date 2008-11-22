@@ -119,7 +119,7 @@ e_configure_show(E_Container *con)
    eco->mod_hdl = ecore_event_handler_add(E_EVENT_MODULE_UPDATE, 
 					  _e_configure_module_update_cb, eco);
 
-   e_win_title_set(eco->win, _("Configuration"));
+   e_win_title_set(eco->win, _("Settings"));
    e_win_name_class_set(eco->win, "E", "_configure");
    e_win_dialog_set(eco->win, 0);
    e_win_delete_callback_set(eco->win, _e_configure_cb_del_req);
@@ -130,7 +130,7 @@ e_configure_show(E_Container *con)
    e_theme_edje_object_set(eco->edje, "base/theme/configure", 
 			   "e/widgets/configure/main");
    edje_object_part_text_set(eco->edje, "e.text.title", 
-			   _("Configuration"));
+			   _("Settings"));
 
    eco->o_list = e_widget_list_add(eco->evas, 0, 0);
    edje_object_part_swallow(eco->edje, "e.swallow.content", eco->o_list);

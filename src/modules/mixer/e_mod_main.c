@@ -119,7 +119,7 @@ _mixer_gadget_configuration_free_foreach(const Evas_Hash *hash, const void *key,
 static int
 _mixer_module_configuration_alert(void *data)
 {
-   e_util_dialog_show(_("Mixer Configuration Updated"), "%s", (char *)data);
+   e_util_dialog_show(_("Mixer Settings Updated"), "%s", (char *)data);
    return 0;
 }
 
@@ -664,7 +664,7 @@ _mixer_menu_new(E_Mixer_Instance *inst, Evas_Event_Mouse_Down *ev)
    inst->menu = mn;
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Configuration"));
+   e_menu_item_label_set(mi, _("Settings"));
    e_util_menu_item_edje_icon_set(mi, "widget/config");
    e_menu_item_callback_set(mi, _mixer_menu_cb_cfg, inst);
 
@@ -1158,7 +1158,7 @@ _mixer_module_configuration_load(E_Config_DD *module_conf_edd)
 	  return NULL;
 
 	ecore_timer_add(1.0, _mixer_module_configuration_alert,
-			_("Mixer Module Configuration data changed.<br>"
+			_("Mixer Module Settings data changed.<br>"
 			   "Your old configuration has been replaced with "
 			   "new default.<br>Sorry for the inconvenience."));
 	return conf;

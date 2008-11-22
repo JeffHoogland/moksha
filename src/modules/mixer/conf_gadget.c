@@ -380,7 +380,7 @@ e_mixer_config_dialog_new(E_Container *con, E_Mixer_Gadget_Config *conf)
    view->basic.create_widgets = _basic_create;
    view->basic.apply_cfdata = _basic_apply;
 
-   dialog = e_config_dialog_new(con, _("Mixer Configuration"),
+   dialog = e_config_dialog_new(con, _("Mixer Settings"),
                                 _Name, "e_mixer_config_dialog_new",
                                 e_mixer_theme_path(), 0, view, conf);
    e_dialog_resizable_set(dialog->dia, 1);

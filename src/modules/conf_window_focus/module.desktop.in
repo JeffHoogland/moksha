@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Window Focus
+Name=Settings - Window Focus
 Name[de]=
 Name[eo]=Agordo - Fokuso de fenestroj
 Name[es]=Configuración - Foco de la ventana
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_window_focus
-Comment=<title>E17 Configuration Applet</title><br>Configure window focus behavior.
+Comment=<title>E17 Settings Applet</title><br>Configure window focus behavior.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi la konduton de enfokusiĝo de la fenestroj.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configura el comportamiento del foco de las ventanas.

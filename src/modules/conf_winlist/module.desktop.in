@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Window List
+Name=Settings - Window List
 Name[de]=
 Name[eo]=Agordo - Fenestrolisto
 Name[es]=Configuración - Lista de ventanas
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_winlist
-Comment=<title>E17 Configuration Applet</title><br>Configure your window list properties.
+Comment=<title>E17 Settings Applet</title><br>Configure your window list properties.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo<title><br>Agordi la ecojn de la fenestrolisto.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configura las propiedades de su lista de ventanas.

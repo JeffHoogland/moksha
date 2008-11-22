@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Transitions
+Name=Settings - Transitions
 Name[de]=
 Name[eo]=Agordo - Transiroj
 Name[es]=Configuración - Transiciones
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_transitions
-Comment=<title>E17 Configuration Applet</title><br>Used to choose a default transition. Transitions are used upon wallpaper changes, among other things.
+Comment=<title>E17 Settings Applet</title><br>Used to choose a default transition. Transitions are used upon wallpaper changes, among other things.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Elekti defaŭltan transiron. Transiroj estas uzataj dum ŝanĝoj de tapeto interalie.
 Comment[es]=<title>Applet de configuración de E17</title><br>Usado para elegir la transición predeterminada. Las transiciones se usan cuando se cambia el fondo de pantalla, entre otras cosas.

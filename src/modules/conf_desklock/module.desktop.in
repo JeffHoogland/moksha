@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Screen Lock
+Name=Settings - Screen Lock
 Name[de]=
 Name[eo]=Agordo - Ekranŝlosilo
 Name[es]=Configuración - Bloqueo de pantalla
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_desklock
-Comment=<title>E17 Configuration Applet</title><br>Configures the integrated desk lock.
+Comment=<title>E17 Settings Applet</title><br>Configures the integrated desk lock.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Agordi la integritan labortablan ŝlosilon.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configura el bloqueador de escritorio integrado.

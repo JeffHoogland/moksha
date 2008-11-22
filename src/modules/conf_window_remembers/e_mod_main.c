@@ -5,7 +5,7 @@ static E_Module *conf_module = NULL;
 
 EAPI E_Module_Api e_modapi = 
 {
-   E_MODULE_API_VERSION, "Configuration - Window Remembers"
+   E_MODULE_API_VERSION, "Settings - Window Remembers"
 };
 
 EAPI void *

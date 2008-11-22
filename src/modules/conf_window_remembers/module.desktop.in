@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Window Remembers
+Name=Settings - Window Remembers
 Name[it]=Configurazione - Ricordi finestre
 Name[hu]=Beállítások - Ablak emlékek
 Icon=e-module-conf_window_remembers
-Comment=<title>E17 Configuration Applet</title><br>Delete existing window remembers.
+Comment=<title>E17 Settings Applet</title><br>Delete existing window remembers.
 Comment[it]=<title>Applet configurazione di E17</title><br>Rimuove le impostazioni da ricordare esistenti delle finestre.
 Comment[hu]=<title>E17 beállító kisalkalmazás</title><br>Meglévő ablak emlékek törlése.
 X-Enlightenment-ModuleType=config

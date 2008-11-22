@@ -37,7 +37,7 @@ e_int_config_battery_module(E_Container *con, const char *params __UNUSED__)
 
    snprintf(buf, sizeof(buf), "%s/e-module-battery.edj", e_module_dir_get(battery_config->module));
    cfd = e_config_dialog_new(con,
-			     _("Battery Monitor Configuration"), 
+			     _("Battery Monitor Settings"), 
 			     "E", "_e_mod_battery_config_dialog",
 			     buf, 0, v, NULL);
    battery_config->config_dialog = cfd;

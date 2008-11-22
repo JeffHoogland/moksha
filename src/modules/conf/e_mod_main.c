@@ -85,7 +85,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 static char *
 _gc_label(E_Gadcon_Client_Class *client_class)
 {
-   return "Configuration";
+   return "Settings";
 }
 
 static Evas_Object *
@@ -136,7 +136,7 @@ e_modapi_init(E_Module *m)
    if (act)
      {
 	act->func.go = _e_mod_action_conf_cb;
-	e_action_predef_name_set(_("Launch"), _("Configuration Panel"), "configuration",
+	e_action_predef_name_set(_("Launch"), _("Settings Panel"), "configuration",
 				 NULL, NULL, 0);
      }
    maug = e_int_menus_menu_augmentation_add("config/0", _e_mod_menu_add, NULL, NULL, NULL);
@@ -159,7 +159,7 @@ e_modapi_shutdown(E_Module *m)
    /* remove module-supplied action */
    if (act)
      {
-	e_action_predef_name_del(_("Launch"), _("Configuration Panel"));
+	e_action_predef_name_del(_("Launch"), _("Settings Panel"));
 	e_action_del("configuration");
 	act = NULL;
      }
@@ -208,7 +208,7 @@ _e_mod_menu_add(void *data, E_Menu *m)
    E_Menu_Item *mi;
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Configuration Panel"));
+   e_menu_item_label_set(mi, _("Settings Panel"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
    e_menu_item_callback_set(mi, _e_mod_conf_cb, NULL);
 }

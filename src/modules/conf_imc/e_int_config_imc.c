@@ -106,7 +106,7 @@ e_int_config_imc(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata      = _basic_apply_data;
 
    cfd = e_config_dialog_new(con,
-			     _("Input Method Configuration"),
+			     _("Input Method Settings"),
 			    "E", "_config_imc_dialog",
 			     "enlightenment/imc", 0, v, NULL);
    return cfd;

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Mouse Bindings
+Name=Settings - Mouse Bindings
 Name[de]=
 Name[eo]=Agordo - Musaj bindoj
 Name[es]=Configuración - Atajos del mouse
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mousebindings
-Comment=<title>E17 Configuration Applet</title><br>Used to configure your mouse bindings.
+Comment=<title>E17 Settings Applet</title><br>Used to configure your mouse bindings.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi siajn musajn bindojn.
 Comment[es]=<title>Applet de configuración de E17</title><br>Usado para configurar los atajos del mouse.

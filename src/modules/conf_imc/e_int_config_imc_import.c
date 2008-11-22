@@ -63,7 +63,7 @@ e_int_config_imc_import(E_Config_Dialog *parent)
    import->win = win;
    import->parent = parent;
    
-   e_win_title_set(win, _("Select an Input Method Configuration..."));
+   e_win_title_set(win, _("Select an Input Method Settings..."));
    e_win_delete_callback_set(win, _imc_import_cb_delete);
    e_win_resize_callback_set(win, _imc_import_cb_resize);
    e_win_dialog_set(win, 1);

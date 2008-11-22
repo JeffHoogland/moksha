@@ -25,14 +25,14 @@ static E_Module *conf_module = NULL;
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
-     "Configuration - Dialogs"
+     "Settings - Dialogs"
 };
 
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "enlightenment/advanced");
-   e_configure_registry_item_add("advanced/dialogs", 10, _("Dialogs"), NULL, "enlightenment/configuration", e_int_config_dialogs);
+   e_configure_registry_category_add("settings", 80, _("Settings"), NULL, "enlightenment/advanced");
+   e_configure_registry_item_add("settings/dialogs", 10, _("Dialogs"), NULL, "enlightenment/configuration", e_int_config_dialogs);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;
@@ -43,8 +43,8 @@ e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
    while ((cfd = e_config_dialog_get("E", "_config_config_dialog_dialog"))) e_object_del(E_OBJECT(cfd));
-   e_configure_registry_item_del("advanced/dialogs");
-   e_configure_registry_category_del("advanced");
+   e_configure_registry_item_del("settings/dialogs");
+   e_configure_registry_category_del("settings");
    conf_module = NULL;
    return 1;
 }

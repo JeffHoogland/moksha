@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Menu Settings
+Name=Settings - Menu Settings
 Name[de]=
 Name[eo]=Agordo - Menuaj agordoj
 Name[es]=Configuración - Opciones de menú
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_menus
-Comment=<title>E17 Configuration Applet</title><br>Configures menu behavior.
+Comment=<title>E17 Settings Applet</title><br>Configures menu behavior.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi la konduton de la menuo.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configura el comportamiento del menú.

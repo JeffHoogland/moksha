@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Mouse Cursor
+Name=Settings - Mouse Cursor
 Name[de]=
 Name[eo]=Agordo - Musa kursoro
 Name[es]=Configuración - Cursor del mouse
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mouse_cursor
-Comment=<title>E17 Configuration Applet</title><br>Select the mouse cursor style.
+Comment=<title>E17 Settings Applet</title><br>Select the mouse cursor style.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Elekti la stilon de la musa kursoro.
 Comment[es]=<title>Applet de configuración de E17</title><br>Seleccione el diseño del cursor del mouse.

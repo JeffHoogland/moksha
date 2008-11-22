@@ -68,7 +68,7 @@ e_int_shelf_config(E_Shelf *es)
 	
 	/* create config diaolg for bd object/data */
 	cfd = e_config_dialog_new(es->zone->container, 
-				  _("Shelf Configuration"),
+				  _("Shelf Settings"),
 				  "E", "_shelf_config_dialog",
 				  "enlightenment/shelf", 0, v, es);
 	es->config_dialog = cfd;

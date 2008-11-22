@@ -324,7 +324,7 @@ _e_toolbar_menu_cb_pre(void *data, E_Menu *mn)
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Toolbar Configuration"));
+   e_menu_item_label_set(mi, _("Toolbar Settings"));
    e_util_menu_item_edje_icon_set(mi, "widget/config");
    e_menu_item_callback_set(mi, _e_toolbar_menu_cb_config, tbar);
 

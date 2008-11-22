@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Window Manipulation
+Name=Settings - Window Manipulation
 Name[de]=
 Name[eo]=Agordo - Manipulado de fenestroj
 Name[es]=Configuración - Manipulación de ventanas
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_winmanip
-Comment=<title>E17 Configuration Applet</title><br>Configures window raise, resistance, and maximize policies.
+Comment=<title>E17 Settings Applet</title><br>Configures window raise, resistance, and maximize policies.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi fenestrajn altigon, rezistadon kaj maksimumajn tiparojn.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configura las reglas para la subida, resistencia y maximización de las ventanas.

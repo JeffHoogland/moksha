@@ -267,7 +267,7 @@ _e_mod_fileman_config_load(void)
 	  {
 	     _e_mod_fileman_config_free();
 	     ecore_timer_add(1.0, _e_mod_cb_config_timer,
-			     _("Fileman Module Configuration data needed upgrading. Your old configuration<br>"
+			     _("Fileman Module Settings data needed upgrading. Your old configuration<br>"
 			       "has been wiped and a new set of defaults initialized. This<br>"
 			       "will happen regularly during development, so don't report a<br>"
 			       "bug. This simply means Fileman module needs new configuration<br>"
@@ -349,7 +349,7 @@ _e_mod_fileman_config_free(void)
 static int 
 _e_mod_cb_config_timer(void *data) 
 {
-   e_util_dialog_show(_("Fileman Configuration Updated"), "%s", (char *)data);
+   e_util_dialog_show(_("Fileman Settings Updated"), "%s", (char *)data);
    return 0;
 }
 

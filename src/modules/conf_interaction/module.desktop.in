@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Interaction
+Name=Settings - Interaction
 Name[de]=
 Name[es]=
 Name[fr]=
@@ -12,7 +12,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_interaction
-Comment=<title>E17 Configuration Applet</title><br>Configure default user interaction settings.
+Comment=<title>E17 Settings Applet</title><br>Configure default user interaction settings.
 Comment[de]=
 Comment[es]=
 Comment[fr]=

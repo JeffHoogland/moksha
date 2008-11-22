@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Borders
+Name=Settings - Borders
 Name[de]=
 Name[eo]=Agordo - Randoj
 Name[es]=Configuración - Bordes
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_borders
-Comment=<title>E17 Configuration Applet</title><br>Used to select a default border style.
+Comment=<title>E17 Settings Applet</title><br>Used to select a default border style.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Elekti pravaloran randan stilon.
 Comment[es]=<title>Applet de configuración de E17</title><br>USado para elegir un diseño de borde predeterminado.

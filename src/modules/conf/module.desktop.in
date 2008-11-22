@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration Panel
+Name=Settings Panel
 Name[de]=
 Name[eo]=Panelo de agordado
 Name[es]=Panel de configuración
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf
-Comment=<title>The E17 Configuration Panel</title>
+Comment=<title>The E17 Settings Panel</title>
 Comment[de]=
 Comment[eo]=<title>La panelo de agordo de E17<title>
 Comment[es]=<title>El panel de configuración de E17</title>

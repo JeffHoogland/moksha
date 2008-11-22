@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Dialogs
+Name=Settings - Dialogs
 Name[de]=
 Name[eo]=Agordo - Dialogoj
 Name[es]=Configuración - Diálogos
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_dialogs
-Comment=<title>E17 Configuration Applet</title><br>Configure default dialog properties.
+Comment=<title>E17 Settings Applet</title><br>Configure default dialog properties.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Agordi la defaŭltajn ecojn de dialogoj.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configura las propiedades predefinidas de los diálogos.

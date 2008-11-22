@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Fonts
+Name=Settings - Fonts
 Name[de]=
 Name[eo]=Agordo - Tiparoj
 Name[es]=Configuración - Fuentes
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_fonts
-Comment=<title>E17 Configuration Applet</title><br>Font configuration dialog.
+Comment=<title>E17 Settings Applet</title><br>Font configuration dialog.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Dialogo de agordo de tiparoj.
 Comment[es]=<title>Applet de configuración de E17</title><br>Diálogo de configuración de fuentes.

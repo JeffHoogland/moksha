@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Client List Menu
+Name=Settings - Client List Menu
 Name[de]=
 Name[eo]=Agordo - Menuo de klienta listo
 Name[es]=Configuración - Menú de lista de clientes
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_clientlist
-Comment=<title>E17 Configuration Applet</title><br>Allows customization of the client list menu.
+Comment=<title>E17 Settings Applet</title><br>Allows customization of the client list menu.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Adapti la menuon de klienta listo..
 Comment[es]=<title>Applet de configuración de E17</title><br>Permite la personalización del menú de lista de clientes.

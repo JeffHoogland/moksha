@@ -212,7 +212,7 @@ e_int_menus_main_new(void)
    subm = e_int_menus_config_new();
    dat->config = subm;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Configuration"));
+   e_menu_item_label_set(mi, _("Settings"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
    e_menu_item_submenu_set(mi, subm);
 

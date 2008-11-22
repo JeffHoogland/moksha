@@ -45,7 +45,7 @@ _config_ibox_module(Config_Item *ci)
    /* Create The Dialog */
    snprintf(buf, sizeof(buf), "%s/e-module-ibox.edj", e_module_dir_get(ibox_config->module));
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
-			     _("IBox Configuration"),
+			     _("IBox Settings"),
 			     "E", "_e_mod_ibox_config_dialog",
 			     buf, 0, v, ci);
    ibox_config->config_dialog = eina_list_append(ibox_config->config_dialog, cfd);

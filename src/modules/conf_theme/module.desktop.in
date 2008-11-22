@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Configuration - Theme
+Name=Settings - Theme
 Name[de]=
 Name[eo]=Agordo - Etoso
 Name[es]=Configuración - Tema
@@ -13,7 +13,7 @@ Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_theme
-Comment=<title>E17 Configuration Applet</title><br>Used to configure your theme preferences.
+Comment=<title>E17 Settings Applet</title><br>Used to configure your theme preferences.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi siajn preferojn de etoso.
 Comment[es]=<title>Applet de configuración de E17</title><br>Usado para configurar sus preferencias del tema.
