@@ -130,6 +130,7 @@ main(int argc, char **argv)
    char buf[PATH_MAX];
    const char *name = NULL;
    E_Fm_Op_Type type;
+   char *p = NULL, *p2 = NULL;
 
    ecore_init();
    eina_stringshare_init();
@@ -165,9 +166,18 @@ main(int argc, char **argv)
         if ((argc >= 4) && (ecore_file_is_dir(argv[last])))
           {
              if (argv[last][strlen(argv[last]) - 1] == '/') byte = "";
-
-             while (i < last)
+             p2 = ecore_file_realpath(argv[last]);
+          
+             for(;i < last; i++)
                {
+                  p = ecore_file_realpath(argv[i]);
+ 
+                  // Don't move a dir into itself
+                  if (p && p2 && ecore_file_is_dir(argv[i]) && 
+                                 (strstr(p2,p) == p2)
+                     )
+                    continue;
+
                   name = ecore_file_file_get(argv[i]);
                   task = _e_fm_op_task_new();
                   task->type = type;
@@ -182,15 +192,34 @@ main(int argc, char **argv)
                   else
                     _e_fm_op_scan_queue = 
                     eina_list_append(_e_fm_op_scan_queue, task);
-
-                  i++;
                }
           }
         else if (argc == 4)
           {
+             snprintf(buf, sizeof(buf), "%s/%s", 
+                           ecore_file_realpath(argv[i]),
+                           ecore_file_file_get(argv[i])
+                     );
+             p = strdup(buf);
+          
+             snprintf(buf, sizeof(buf), "%s/%s", 
+                           ecore_file_realpath(argv[last]),
+                           ecore_file_file_get(argv[last])
+                     );
+             p2 = strdup(buf);
+
+             // Don't move a file on top of itself.
+             i = (strlen(p) == strlen(p2)) && !strncmp(p,p2,strlen(p));
+             free(p);
+             free(p2);
+             if (i) goto quit;
+
+             // Try a rename
              if ((type == E_FM_OP_MOVE) && (rename(argv[2], argv[3]) == 0))
                goto quit;
-
+             
+             // If that does work, setup a copy and delete operation.
+             // It's not atomic, but it's the best we can do.
              task = _e_fm_op_task_new();
              task->type = type;
              task->src.name = eina_stringshare_add(argv[2]);
