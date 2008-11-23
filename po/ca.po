@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Marc Furtià  i Puig<br>\\\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-11-11 21:43+0800\n"
+"POT-Creation-Date: 2008-11-23 20:19+0800\n"
 "PO-Revision-Date: 2008-06-26 11:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,9 +16,9 @@ msgstr "Sobre Enlightenment"
 
 #. Close Button
 #: ../src/bin/e_about.c:20 ../src/bin/e_actions.c:2313
-#: ../src/bin/e_config_dialog.c:256 ../src/bin/e_fm.c:550
+#: ../src/bin/e_config_dialog.c:258 ../src/bin/e_fm.c:550
 #: ../src/bin/e_int_border_menu.c:208 ../src/bin/e_int_border_prop.c:81
-#: ../src/bin/e_theme_about.c:20 ../src/modules/conf/e_conf.c:173
+#: ../src/bin/e_theme_about.c:20 ../src/modules/conf/e_conf.c:172
 #: ../src/modules/fileman/e_fwin.c:1422 ../src/modules/mixer/app_mixer.c:537
 msgid "Close"
 msgstr "Tanca"
@@ -26,7 +26,7 @@ msgstr "Tanca"
 #: ../src/bin/e_about.c:21 ../src/bin/e_actions.c:2595
 #: ../src/bin/e_actions.c:2599 ../src/bin/e_actions.c:2603
 #: ../src/bin/e_actions.c:2607 ../src/bin/e_actions.c:2611
-#: ../src/bin/e_int_menus.c:169 ../src/bin/e_main.c:633
+#: ../src/bin/e_int_menus.c:169 ../src/bin/e_main.c:654
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:181
 msgid "Enlightenment"
 msgstr "Enlightenment"
@@ -78,7 +78,6 @@ msgstr "Estàs segur que vols matar aquesta finestra ?"
 #: ../src/bin/e_actions.c:1841 ../src/bin/e_actions.c:1905
 #: ../src/bin/e_actions.c:1969 ../src/bin/e_confirm_dialog.c:47
 #: ../src/bin/e_fm.c:7222 ../src/bin/e_fm.c:7402 ../src/bin/e_module.c:526
-#: ../src/modules/conf_display/e_int_config_display.c:215
 msgid "Yes"
 msgstr "Si"
 
@@ -87,7 +86,6 @@ msgstr "Si"
 #: ../src/bin/e_actions.c:1843 ../src/bin/e_actions.c:1907
 #: ../src/bin/e_actions.c:1971 ../src/bin/e_confirm_dialog.c:48
 #: ../src/bin/e_fm.c:7220 ../src/bin/e_fm.c:7403 ../src/bin/e_module.c:527
-#: ../src/modules/conf_display/e_int_config_display.c:216
 msgid "No"
 msgstr "No"
 
@@ -561,7 +559,7 @@ msgid "Show Menu..."
 msgstr "Mostra Menú ..."
 
 #: ../src/bin/e_actions.c:2586 ../src/bin/e_actions.c:2591
-#: ../src/modules/conf/e_mod_main.c:46 ../src/modules/conf/e_mod_main.c:67
+#: ../src/modules/conf/e_mod_main.c:139 ../src/modules/conf/e_mod_main.c:162
 #: ../src/modules/exebuf/e_mod_main.c:48 ../src/modules/exebuf/e_mod_main.c:68
 #: ../src/modules/fileman/e_mod_main.c:59
 #: ../src/modules/fileman/e_mod_main.c:138
@@ -601,7 +599,7 @@ msgstr "Surt immediatament"
 #: ../src/bin/e_actions.c:2623 ../src/bin/e_actions.c:2627
 #: ../src/bin/e_configure.c:129 ../src/bin/e_int_config_modules.c:45
 #: ../src/bin/e_int_menus.c:231
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:195
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:202
 #: ../src/modules/conf_imc/e_int_config_imc.c:823
 #: ../src/modules/conf_startup/e_int_config_startup.c:273
 #: ../src/modules/conf_theme/e_int_config_theme.c:358
@@ -652,25 +650,26 @@ msgstr "Accions del Mòdul"
 msgid "Set As Background"
 msgstr "Fons de Pantalla"
 
-#: ../src/bin/e_border.c:4853
+#: ../src/bin/e_border.c:4851
 #, fuzzy
 msgid "Desktop files scan done"
 msgstr "Fitxer de Taula de Treball"
 
-#: ../src/bin/e_border.c:4865
+#: ../src/bin/e_border.c:4863
 #, fuzzy
 msgid "Desktop file scan"
 msgstr "Fitxer de Taula de Treball"
 
-#: ../src/bin/e_config.c:682
+#: ../src/bin/e_config.c:693 ../src/bin/e_config.c:726
+#, fuzzy
 msgid ""
-"Configuration data needed upgrading. Your old configuration<br>has been "
-"wiped and a new set of defaults initialized. This<br>will happen regularly "
-"during development, so don't report a<br>bug. This simply means "
-"Enlightenment needs new configuration<br>data by default for usable "
-"functionality that your old<br>configuration simply lacks. This new set of "
-"defaults will fix<br>that by adding it in. You can re-configure things now "
-"to your<br>liking. Sorry for the hiccup in your configuration.<br>"
+"Settings data needed upgrading. Your old settings have<br>been wiped and a "
+"new set of defaults initialized. This<br>will happen regularly during "
+"development, so don't report a<br>bug. This simply means Enlightenment needs "
+"new settings<br>data by default for usable functionality that your "
+"old<br>settings simply lack. This new set of defaults will fix<br>that by "
+"adding it in. You can re-configure things now to your<br>liking. Sorry for "
+"the hiccup in your settings.<br>"
 msgstr ""
 "La configuració de la data necessita ser actualitzada. La seva  configuració "
 "vella <br>  s'ha de re-inicialitzar per defecte. Això<br> sol succeïr "
@@ -680,13 +679,14 @@ msgstr ""
 "configuració.<br>Pot re-configurar les coses ara. Disculpa per les molèsties "
 "per la teva configuració<br>"
 
-#: ../src/bin/e_config.c:696
+#: ../src/bin/e_config.c:710
+#, fuzzy
 msgid ""
-"Your configuration is NEWER than Enlightenment. This is very<br>strange. "
-"This should not happen unless you downgraded<br>Enlightenment or copied the "
-"configuration from a place where<br>a newer version of Enlightenment was "
-"running. This is bad and<br>as a precaution your configuration has been now "
-"restored to<br>defaults. Sorry for the inconvenience.<br>"
+"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
+"should not happen unless you downgraded<br>Enlightenment or copied the "
+"settings from a place where<br>a newer version of Enlightenment was running. "
+"This is bad and<br>as a precaution your settings have been now restored "
+"to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 "La configuració és més NOVA que l'Enlightenment,Això és <br> molt extrany. "
 "Això podria haver passat per fer un downgran <br> de l'Enlightenment o bé "
@@ -695,31 +695,27 @@ msgstr ""
 "fitxers de configuració han estat <br> restaurats per defecte. Perdona els "
 "inconvenients.<br>"
 
-#: ../src/bin/e_config.c:718
-#, c-format
-msgid "Desktop %i, %i"
-msgstr "Taula de Treball %i, %i"
+#: ../src/bin/e_config.c:1582
+#, fuzzy
+msgid "Settings Upgraded"
+msgstr "Paràmetres de Pantalla"
 
-#: ../src/bin/e_config.c:1959
-msgid "Configuration Upgraded"
-msgstr "Configuració Actualitzada"
-
-#: ../src/bin/e_config.c:1984
-#, c-format
+#: ../src/bin/e_config.c:1607
+#, fuzzy, c-format
 msgid ""
-"An error occured while saving Enlightenment's<br>configuration to disk. The "
-"error could not be<br>deterimined.<br><br>The file where the error occured "
-"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"An error occured while saving Enlightenment's<br>settings to disk. The error "
+"could not be<br>deterimined.<br><br>The file where the error occured was:<br>"
+"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Ha succeït un error mentre Enlightenment<br> intentava guardar la "
 "configuració a disc <br> que no potser determinat.<br><br> El fitxer en el "
 "qual ha succeït l'error és <br>%s<br><br> Aquest fitxer serà  borrat"
 
-#: ../src/bin/e_config.c:1995
-#, c-format
+#: ../src/bin/e_config.c:1618
+#, fuzzy, c-format
 msgid ""
-"Enlightenment's configuration files are too big<br>for the file system they "
-"are being saved to.<br>This error is very strange as the files should<br>be "
+"Enlightenment's settings files are too big<br>for the file system they are "
+"being saved to.<br>This error is very strange as the files should<br>be "
 "extremely small. Please check the settings<br>for your home directory."
 "<br><br>The file where the error occured was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
@@ -730,10 +726,10 @@ msgstr ""
 "configuració<br> pel seu directori arrel(home).<br><br>El fitxer en el que "
 "ha succeït l'error és :<br>%s<br><br>Aquest fitxer serà borrat <br>"
 
-#: ../src/bin/e_config.c:2008
-#, c-format
+#: ../src/bin/e_config.c:1631
+#, fuzzy, c-format
 msgid ""
-"An output error occured when writing the configuration<br>files for "
+"An output error occured when writing the settings<br>files for "
 "Enlightenment. Your disk is having troubles<br>and possibly needs "
 "replacement.<br><br>The file where the error occured was:<br>%s<br><br>This "
 "file has been deleted to avoid corrupt data.<br>"
@@ -743,46 +739,46 @@ msgstr ""
 "emplaçat.<br><br> El fitxer on ha succeït l'error és :<br>%s<br><br> Aquest "
 "fitxer ha estat borrat."
 
-#: ../src/bin/e_config.c:2019
-#, c-format
+#: ../src/bin/e_config.c:1642
+#, fuzzy, c-format
 msgid ""
-"Enlightenment cannot write its configuration file<br>because it ran out of "
-"space to write the file.<br>You have either run out of disk space or "
-"have<br>gone over your quota limit.<br><br>The file where the error occured "
-"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"Enlightenment cannot write its settings file<br>because it ran out of space "
+"to write the file.<br>You have either run out of disk space or have<br>gone "
+"over your quota limit.<br><br>The file where the error occured was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment no pot escriure aquesta configuració<br> per què no resta "
 "espai en el disc.<br> Hauries d'ampliar la quota de disc o comprobar que "
 "quedi espai.<br> El fitxer on hi ha l'error era:<br>%s<br><br>Aquest fitxer "
 "ha estat borrat.<br>"
 
-#: ../src/bin/e_config.c:2031
-#, c-format
+#: ../src/bin/e_config.c:1654
+#, fuzzy, c-format
 msgid ""
-"Enlightenment unexpectedly had the configuration file<br>it was writing "
-"closed on it. This is very unusual.<br><br>The file where the error occured "
-"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"Enlightenment unexpectedly had the settings file<br>it was writing closed on "
+"it. This is very unusual.<br><br>The file where the error occured was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment tenia una fitxer de configuració.<br>Enlightenment l'estava "
 "escrivint abans de tancar. Això és força inusual.<br><br> El fitxer on ha "
 "succeït l'error és :<br> %s <br><br> Aquest fitxer ha estat borrat per dades "
 "incorrectes ."
 
-#: ../src/bin/e_config.c:2056
+#: ../src/bin/e_config.c:1679
 #, fuzzy
-msgid "Enlightenment Configuration Write Problems"
+msgid "Enlightenment Settings Write Problems"
 msgstr "Problemes al Escriure la Configuració de l'Enlightenment"
 
 #. buttons at the bottom
-#: ../src/bin/e_config.c:2060 ../src/bin/e_config_dialog.c:248
+#: ../src/bin/e_config.c:1683 ../src/bin/e_config_dialog.c:250
 #: ../src/bin/e_eap_editor.c:599 ../src/bin/e_eap_editor.c:663
 #: ../src/bin/e_entry_dialog.c:58 ../src/bin/e_exec.c:321
 #: ../src/bin/e_fm_prop.c:513 ../src/bin/e_int_border_remember.c:258
 #: ../src/bin/e_int_border_remember.c:339
 #: ../src/bin/e_int_border_remember.c:381 ../src/bin/e_module.c:418
 #: ../src/bin/e_sys.c:401 ../src/bin/e_sys.c:447 ../src/bin/e_utils.c:541
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:60
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:81
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:61
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:82
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:112
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:283
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:284
@@ -797,22 +793,19 @@ msgstr "Problemes al Escriure la Configuració de l'Enlightenment"
 msgid "OK"
 msgstr "D'acord"
 
-#: ../src/bin/e_config_dialog.c:198 ../src/modules/battery/e_mod_main.c:406
-#: ../src/modules/conf_dialogs/e_mod_main.c:34
+#: ../src/bin/e_config_dialog.c:200 ../src/modules/battery/e_mod_main.c:1076
 #: ../src/modules/conf_engine/e_mod_main.c:34
 #: ../src/modules/conf_exebuf/e_mod_main.c:34
-#: ../src/modules/conf_interaction/e_mod_main.c:34
 #: ../src/modules/conf_paths/e_mod_main.c:34
 #: ../src/modules/conf_performance/e_mod_main.c:34
-#: ../src/modules/conf_profiles/e_mod_main.c:20
 msgid "Advanced"
 msgstr "Avançat"
 
-#: ../src/bin/e_config_dialog.c:227
+#: ../src/bin/e_config_dialog.c:229
 msgid "Basic"
 msgstr "Bàsic"
 
-#: ../src/bin/e_config_dialog.c:249
+#: ../src/bin/e_config_dialog.c:251
 msgid "Apply"
 msgstr "Aplica"
 
@@ -939,8 +932,7 @@ msgstr "Nom Genèric"
 msgid "Window Class"
 msgstr "Classe de Finestra"
 
-#. Category List
-#: ../src/bin/e_eap_editor.c:510 ../src/modules/conf/e_conf.c:151
+#: ../src/bin/e_eap_editor.c:510
 #: ../src/modules/conf_mime/e_int_config_mime.c:189
 msgid "Categories"
 msgstr "Categories"
@@ -1352,7 +1344,7 @@ msgid "Thumbnail"
 msgstr "Ungla"
 
 #: ../src/bin/e_fm_prop.c:438
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:312
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:319
 msgid "Custom"
 msgstr "Costum"
 
@@ -1406,47 +1398,36 @@ msgstr "Desconegut"
 msgid "Removable Device"
 msgstr "Dispositiu Extraïble"
 
-#: ../src/bin/e_gadcon.c:1214 ../src/modules/gadman/e_mod_gadman.c:653
+#: ../src/bin/e_gadcon.c:1241 ../src/modules/gadman/e_mod_gadman.c:657
 msgid "Plain"
 msgstr "Text Pla"
 
-#: ../src/bin/e_gadcon.c:1223 ../src/modules/gadman/e_mod_gadman.c:661
+#: ../src/bin/e_gadcon.c:1250 ../src/modules/gadman/e_mod_gadman.c:665
 msgid "Inset"
 msgstr "Sagnat"
 
-#: ../src/bin/e_gadcon.c:1232 ../src/bin/e_int_config_modules.c:41
-#: ../src/modules/conf_borders/e_mod_main.c:34
-#: ../src/modules/conf_colors/e_mod_main.c:34
-#: ../src/modules/conf_fonts/e_mod_main.c:34
-#: ../src/modules/conf_icon_theme/e_mod_main.c:34
-#: ../src/modules/conf_mouse_cursor/e_mod_main.c:34
-#: ../src/modules/conf_scale/e_mod_main.c:34
-#: ../src/modules/conf_startup/e_mod_main.c:34
-#: ../src/modules/conf_theme/e_mod_main.c:38
-#: ../src/modules/conf_transitions/e_mod_main.c:34
-#: ../src/modules/conf_wallpaper/e_mod_main.c:28
-#: ../src/modules/dropshadow/e_mod_main.c:89
-#: ../src/modules/gadman/e_mod_gadman.c:697
+#: ../src/bin/e_gadcon.c:1259 ../src/bin/e_int_config_modules.c:41
+#: ../src/modules/gadman/e_mod_gadman.c:701
 msgid "Appearance"
 msgstr "Aparença"
 
-#: ../src/bin/e_gadcon.c:1241
+#: ../src/bin/e_gadcon.c:1268
 msgid "Automatically scroll contents"
 msgstr "Mostra automàticament els continguts"
 
-#: ../src/bin/e_gadcon.c:1248
+#: ../src/bin/e_gadcon.c:1275
 msgid "Able to be resized"
 msgstr "Autoritzat a ser re-dimensionat"
 
-#: ../src/bin/e_gadcon.c:1260 ../src/modules/gadman/e_mod_gadman.c:732
+#: ../src/bin/e_gadcon.c:1287 ../src/modules/gadman/e_mod_gadman.c:736
 msgid "Begin move/resize this gadget"
 msgstr "Inici de moviment/re-dimensió d'aquest Gadget"
 
-#: ../src/bin/e_gadcon.c:1266 ../src/modules/gadman/e_mod_gadman.c:738
+#: ../src/bin/e_gadcon.c:1293 ../src/modules/gadman/e_mod_gadman.c:742
 msgid "Remove this gadget"
 msgstr "Borra aquest Gadget"
 
-#: ../src/bin/e_gadcon.c:1681
+#: ../src/bin/e_gadcon.c:1708
 msgid "Stop move/resize this gadget"
 msgstr "Para de moure/re-dimensionar aquest gadget"
 
@@ -1977,20 +1958,21 @@ msgid "Always focus on start"
 msgstr ""
 
 #: ../src/bin/e_int_config_modules.c:42 ../src/bin/e_int_menus.c:215
-#: ../src/modules/battery/e_mod_main.c:171
+#: ../src/modules/battery/e_mod_main.c:176 ../src/modules/conf/e_conf.c:122
+#: ../src/modules/conf/e_conf.c:133
+#: ../src/modules/conf_dialogs/e_mod_main.c:34
+#: ../src/modules/conf_profiles/e_mod_main.c:20
 #: ../src/modules/ibar/e_mod_main.c:325 ../src/modules/ibar/e_mod_main.c:845
 #: ../src/modules/ibox/e_mod_main.c:318 ../src/modules/ibox/e_mod_main.c:716
 #: ../src/modules/pager/e_mod_main.c:804
-#: ../src/modules/temperature/e_mod_main.c:311
+#: ../src/modules/temperature/e_mod_main.c:277
 #: ../src/modules/mixer/e_mod_main.c:667
-msgid "Configuration"
-msgstr "Configuració"
+#: ../src/modules/connman/e_mod_main.c:1093
+#, fuzzy
+msgid "Settings"
+msgstr "Paràmetres de Pantalla"
 
-#. Setup Entry in Config Panel
-#: ../src/bin/e_int_config_modules.c:43
-#: ../src/modules/conf_mime/e_mod_main.c:34
-#: ../src/modules/fileman/e_mod_main.c:45
-#: ../src/modules/fileman/e_mod_main.c:47
+#: ../src/bin/e_int_config_modules.c:43 ../src/modules/fileman/e_mod_main.c:47
 #: ../src/modules/fileman/e_mod_main.c:59
 #: ../src/modules/fileman/e_mod_main.c:138
 #, fuzzy
@@ -2059,8 +2041,8 @@ msgstr "Borrar Gadget"
 
 #: ../src/bin/e_int_toolbar_config.c:30 ../src/bin/e_toolbar.c:327
 #, fuzzy
-msgid "Toolbar Configuration"
-msgstr "Configuració de l'iBar"
+msgid "Toolbar Settings"
+msgstr "Paràmetres"
 
 #: ../src/bin/e_int_toolbar_config.c:82 ../src/bin/e_int_shelf_config.c:500
 #: ../src/bin/e_int_shelf_config.c:565
@@ -2091,7 +2073,6 @@ msgid "Favorite Applications"
 msgstr "Aplicacions Preferents"
 
 #: ../src/bin/e_int_menus.c:119
-#: ../src/modules/conf_applications/e_mod_main.c:34
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:156
 msgid "Applications"
 msgstr "Aplicacions"
@@ -2177,8 +2158,9 @@ msgid "Delete A Shelf"
 msgstr "Elimina la Lleixa"
 
 #: ../src/bin/e_int_shelf_config.c:71 ../src/bin/e_shelf.c:1664
-msgid "Shelf Configuration"
-msgstr "Configuració de la Lleixa"
+#: ../src/modules/conf_shelves/e_int_config_shelf.c:43
+msgid "Shelf Settings"
+msgstr "Configuració de les LLeixes"
 
 #: ../src/bin/e_int_shelf_config.c:518
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:253
@@ -2303,7 +2285,7 @@ msgid ""
 "%s/enlightenment-%s\n"
 msgstr ""
 
-#: ../src/bin/e_main.c:306
+#: ../src/bin/e_main.c:308
 #, fuzzy, c-format
 msgid ""
 "Options:\n"
@@ -2326,6 +2308,8 @@ msgid ""
 "\t\tBe evil.\n"
 "\t-psychotic\n"
 "\t\tBe psychotic.\n"
+"\t-locked\n"
+"\t\tstart with desklock on, so password will be asked.\n"
 msgstr ""
 "Opcions:<br>\t-pantalla DISPLAY<br>\t\t Connexió a la Pantalla anomenada "
 "DISPLAY.<br>\t\tEX: -display :1.0<br>\t-fake-xinerama-screen WxH+X+Y<br>\t"
@@ -2337,7 +2321,7 @@ msgstr ""
 "configuració CONF_PROFILE creada per defecte<br>\t-Bo<br>\t\t Ser bo<br>\t "
 "dolent <br>\t\t ser dolent <br>\t psicòtic<br>\t\t ser psicòtic <br>"
 
-#: ../src/bin/e_main.c:368
+#: ../src/bin/e_main.c:377
 #, fuzzy
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
@@ -2346,7 +2330,7 @@ msgstr ""
 "Enlightenment no pot inicialitzat l'Ecore!!<br> Potser que estiguis fora de "
 "memòria ?"
 
-#: ../src/bin/e_main.c:394
+#: ../src/bin/e_main.c:403
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
@@ -2355,7 +2339,7 @@ msgstr ""
 "Enlightenment no pot inicialitzar el Sistema de Fitxers.<br> Potser que "
 "estigui fora de memòria ?"
 
-#: ../src/bin/e_main.c:406
+#: ../src/bin/e_main.c:415
 #, fuzzy
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
@@ -2364,7 +2348,7 @@ msgstr ""
 "Enlightenment no pot carregar aquesta pantalla d'inici.<br> Potser que "
 "estigui fora de memòria ?"
 
-#: ../src/bin/e_main.c:412
+#: ../src/bin/e_main.c:421
 #, fuzzy
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
@@ -2373,7 +2357,7 @@ msgstr ""
 "Enlightenment no pot carregar aquesta pantalla d'inici.<br> Potser que "
 "estigui fora de memòria ?"
 
-#: ../src/bin/e_main.c:424
+#: ../src/bin/e_main.c:433
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
@@ -2382,7 +2366,7 @@ msgstr ""
 "Enlightenment no pot inicialitzar la connexió a X.<br>Ha posat la variable "
 "Display ?"
 
-#: ../src/bin/e_main.c:432
+#: ../src/bin/e_main.c:441
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
@@ -2391,7 +2375,7 @@ msgstr ""
 "Enlightenment no pot inicialitzar l'alerta de sistema.<br>Ha posat la "
 "variable Display ?"
 
-#: ../src/bin/e_main.c:455
+#: ../src/bin/e_main.c:464
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
@@ -2400,7 +2384,7 @@ msgstr ""
 "Enlightenment no pot inicialitzar les connexions dels sistema.<br>Potser que "
 "estiguis fora de memòria ?"
 
-#: ../src/bin/e_main.c:463
+#: ../src/bin/e_main.c:472
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
@@ -2409,14 +2393,14 @@ msgstr ""
 "Enlightenment no pot inicialitzar l'IPC del sistema.<br>Potser que estiguis "
 "fora de memòria ?"
 
-#: ../src/bin/e_main.c:472
+#: ../src/bin/e_main.c:481
 #, fuzzy
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
 msgstr "Enlightenment no pot fer aquestes accions de sistema."
 
-#: ../src/bin/e_main.c:491
+#: ../src/bin/e_main.c:500
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
@@ -2425,7 +2409,7 @@ msgstr ""
 "Enlightenment no pot inicialitzar el sistema Evas.<br>Potser que estiguis "
 "fora de memòria ?"
 
-#: ../src/bin/e_main.c:497
+#: ../src/bin/e_main.c:506
 #, fuzzy
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
@@ -2436,7 +2420,7 @@ msgstr ""
 "Software X11 en Evas. Si us plau, miri la configuració de l'evas <br> i "
 "Ecore i miri si tenen suport pel Software X11 del motor de renderització."
 
-#: ../src/bin/e_main.c:504
+#: ../src/bin/e_main.c:513
 #, fuzzy
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
@@ -2448,7 +2432,7 @@ msgstr ""
 "<br> i Ecore i comprobi que aquests suportin el <br>motor de renderització "
 "de Buffer de software "
 
-#: ../src/bin/e_main.c:520 ../src/bin/e_main.c:527
+#: ../src/bin/e_main.c:529 ../src/bin/e_main.c:536
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
@@ -2457,7 +2441,7 @@ msgstr ""
 "Enlightenment no pot inicialitzar el FDO del sistema de Taules de Treball."
 "<br>Potser que estiguis fora de memòria ?"
 
-#: ../src/bin/e_main.c:541
+#: ../src/bin/e_main.c:550
 #, fuzzy
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
@@ -2466,25 +2450,25 @@ msgstr ""
 "Enlightenment no pot crear directoris en  el seu home.<br> Potser que no "
 "tingui home directori o bé el disc està ple ?"
 
-#: ../src/bin/e_main.c:551
+#: ../src/bin/e_main.c:560
 msgid "Enlightenment cannot set up its file registry system."
 msgstr ""
 
-#: ../src/bin/e_main.c:560
+#: ../src/bin/e_main.c:569
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment no pot carregar la configuració del sistema."
 
-#: ../src/bin/e_main.c:572
+#: ../src/bin/e_main.c:583
 #, fuzzy
 msgid "Enlightenment cannot set up its scale system."
 msgstr "Enlightenment no pot configurar el sistema de Lleixes."
 
-#: ../src/bin/e_main.c:580
+#: ../src/bin/e_main.c:591
 #, fuzzy
 msgid "Enlightenment cannot set up the pointer system."
 msgstr "Enlightenment no pot utilitzar aquesta font de sistema."
 
-#: ../src/bin/e_main.c:589
+#: ../src/bin/e_main.c:600
 #, fuzzy
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
@@ -2493,15 +2477,23 @@ msgstr ""
 "Enlightenment no pot trobar els directoris on estan els fitxers.<br> Potser "
 "que estigui fora de memòria ?"
 
-#: ../src/bin/e_main.c:607
+#: ../src/bin/e_main.c:618
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment no pot utilitzar aquesta font de sistema."
 
-#: ../src/bin/e_main.c:618
+#: ../src/bin/e_main.c:629
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment no pot carregar aquest tema de sistema."
 
-#: ../src/bin/e_main.c:629
+#: ../src/bin/e_main.c:634
+msgid "Starting International Support"
+msgstr ""
+
+#: ../src/bin/e_main.c:639
+msgid "Enlightenment cannot set up its intl system."
+msgstr ""
+
+#: ../src/bin/e_main.c:650
 #, fuzzy
 msgid ""
 "Enlightenment cannot set up init screen.\n"
@@ -2510,11 +2502,11 @@ msgstr ""
 "Enlightenment no pot carregar aquesta pantalla d'inici.<br> Potser que "
 "estigui fora de memòria ?"
 
-#: ../src/bin/e_main.c:640
+#: ../src/bin/e_main.c:661
 msgid "Testing Format Support"
 msgstr ""
 
-#: ../src/bin/e_main.c:650
+#: ../src/bin/e_main.c:672
 #, fuzzy
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
@@ -2523,7 +2515,7 @@ msgstr ""
 "Enlightenment ha trobat que Evas no pot crear el Bufer canvas. Si us plau, "
 "<br> comproba que Evas té suport pel motor del Bufer de Software.<br> "
 
-#: ../src/bin/e_main.c:660
+#: ../src/bin/e_main.c:683
 #, fuzzy
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
@@ -2532,7 +2524,7 @@ msgstr ""
 "Enlightenment ha trocat que Evas no pot carregar fitxers PNG. Comproba que "
 "Evas<br> tingui suport per PNG.<br>"
 
-#: ../src/bin/e_main.c:669
+#: ../src/bin/e_main.c:692
 #, fuzzy
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
@@ -2541,7 +2533,7 @@ msgstr ""
 "Enlightenment ha trocat que Evas no pot carregar fitxers JPEG. Comproba que "
 "Evas<br> tingui suport per JPEG.<br>"
 
-#: ../src/bin/e_main.c:678
+#: ../src/bin/e_main.c:701
 #, fuzzy
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
@@ -2550,79 +2542,22 @@ msgstr ""
 "Enlightenment ha trocat que Evas no pot carregar fitxers EET. Comproba que "
 "Evas<br> tingui suport per EET.<br>"
 
-#: ../src/bin/e_main.c:691
-msgid "Starting International Support"
-msgstr ""
-
-#: ../src/bin/e_main.c:696
-msgid "Enlightenment cannot set up its intl system."
-msgstr ""
-
-#: ../src/bin/e_main.c:701
-msgid "Setting up Paths"
-msgstr ""
-
-#: ../src/bin/e_main.c:718
+#: ../src/bin/e_main.c:712
 #, fuzzy
-msgid "Setup Thumbnailer"
-msgstr "Ungla"
-
-#: ../src/bin/e_main.c:723
-#, fuzzy
-msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
-msgstr "Enlightenment no pot inicialitzar el sistema d'Ungla.<br>"
-
-#: ../src/bin/e_main.c:728
-msgid "Setup System Controls"
+msgid ""
+"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
+"fontconfig\n"
+"support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
+"Enlightenment ha trocat que Evas no pot carregar fitxers PNG. Comproba que "
+"Evas<br> tingui suport per PNG.<br>"
 
-#: ../src/bin/e_main.c:733
-#, fuzzy
-msgid "Enlightenment cannot initialize the System Command system.\n"
-msgstr "Enlightenment no pot inicialitzar el sistema d'Ungla.<br>"
-
-#: ../src/bin/e_main.c:738
-#, fuzzy
-msgid "Setup Actions"
-msgstr "Inicia Aplicacions"
-
-#: ../src/bin/e_main.c:743
-msgid "Enlightenment cannot set up its actions system."
-msgstr "Enlightenment no pot fer aquestes accions de sistema."
-
-#: ../src/bin/e_main.c:747
-#, fuzzy
-msgid "Setup Bindings"
-msgstr "Bindatje de tecles"
-
-#: ../src/bin/e_main.c:752
-msgid "Enlightenment cannot set up its bindings system."
-msgstr ""
-"Enlightenment no pot carregar aquesta combinació de tecles del sistema."
-
-#: ../src/bin/e_main.c:756
-msgid "Setup Popups"
-msgstr ""
-
-#: ../src/bin/e_main.c:761
-msgid "Enlightenment cannot set up its popup system."
-msgstr ""
-
-#: ../src/bin/e_main.c:766
-#, fuzzy
-msgid "Setup Wallpaper"
-msgstr "Fons de Taula de Treball"
-
-#: ../src/bin/e_main.c:771
-msgid "Enlightenment cannot set up its desktop background system."
-msgstr "Enlightenment no pot carregar aquest fons de pantalla d'escriptori"
-
-#: ../src/bin/e_main.c:775
+#: ../src/bin/e_main.c:721
 #, fuzzy
 msgid "Setup Screens"
 msgstr "Pantalla Actual"
 
-#: ../src/bin/e_main.c:780
+#: ../src/bin/e_main.c:726
 #, fuzzy
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
@@ -2631,28 +2566,68 @@ msgstr ""
 "Enlightenment ha fallat quan intentava carregar totes les pantalles virtuals "
 "del sistema .Potser que hi hagi un altre sistema de finestres corrent ? <br> "
 
-#: ../src/bin/e_main.c:785
+#: ../src/bin/e_main.c:732
+#, fuzzy
+msgid "Setup Screensaver"
+msgstr "Salva Pantalles"
+
+#: ../src/bin/e_main.c:737
+msgid "Enlightenment cannot configure the X screensaver."
+msgstr "Enlightenment no pot configurar el Salva-Pantalles de X"
+
+#: ../src/bin/e_main.c:741
+#, fuzzy
+msgid "Setup Desklock"
+msgstr "Envia a la Taula de Treball"
+
+#: ../src/bin/e_main.c:746
+msgid "Enlightenment cannot set up its desk locking system."
+msgstr "Enlightenment no pot bloquejar la pantalla."
+
+#: ../src/bin/e_main.c:759
+msgid "Setting up Paths"
+msgstr ""
+
+#: ../src/bin/e_main.c:776
+msgid "Setup System Controls"
+msgstr ""
+
+#: ../src/bin/e_main.c:781
+#, fuzzy
+msgid "Enlightenment cannot initialize the System Command system.\n"
+msgstr "Enlightenment no pot inicialitzar el sistema d'Ungla.<br>"
+
+#: ../src/bin/e_main.c:786
+#, fuzzy
+msgid "Setup Actions"
+msgstr "Inicia Aplicacions"
+
+#: ../src/bin/e_main.c:791
+msgid "Enlightenment cannot set up its actions system."
+msgstr "Enlightenment no pot fer aquestes accions de sistema."
+
+#: ../src/bin/e_main.c:795
 msgid "Setup Execution System"
 msgstr ""
 
-#: ../src/bin/e_main.c:790
+#: ../src/bin/e_main.c:800
 msgid "Enlightenment cannot set up its exec system."
 msgstr ""
 
-#: ../src/bin/e_main.c:794
+#: ../src/bin/e_main.c:804
 #, fuzzy
 msgid "Setup Remembers"
 msgstr "Recorda"
 
-#: ../src/bin/e_main.c:799
+#: ../src/bin/e_main.c:809
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment no pot guardar les opcions de recordar."
 
-#: ../src/bin/e_main.c:807
+#: ../src/bin/e_main.c:817
 msgid "Setup FM"
 msgstr ""
 
-#: ../src/bin/e_main.c:812
+#: ../src/bin/e_main.c:822
 #, fuzzy
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment no pot inicialitzar el Manegador de Fitxers. <br>  "
@@ -2666,125 +2641,144 @@ msgstr "Enlightenment no pot inicialitzar el Manegador de Fitxers. <br>  "
 #. }
 #. _e_main_shutdown_push(e_fwin_shutdown);
 #.
-#: ../src/bin/e_main.c:825
+#: ../src/bin/e_main.c:835
 msgid "Setup Message System"
 msgstr ""
 
-#: ../src/bin/e_main.c:830
+#: ../src/bin/e_main.c:840
 msgid "Enlightenment cannot set up its msg system."
 msgstr ""
 
-#: ../src/bin/e_main.c:834
+#: ../src/bin/e_main.c:844
 msgid "Setup DND"
 msgstr ""
 
-#: ../src/bin/e_main.c:839
+#: ../src/bin/e_main.c:849
 msgid "Enlightenment cannot set up its dnd system."
 msgstr ""
 
-#: ../src/bin/e_main.c:843
-msgid "Setup Grab Input HAnding"
+#: ../src/bin/e_main.c:853
+msgid "Setup Grab Input Handing"
 msgstr ""
 
-#: ../src/bin/e_main.c:848
+#: ../src/bin/e_main.c:858
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr ""
 
-#: ../src/bin/e_main.c:852
+#: ../src/bin/e_main.c:862
 #, fuzzy
 msgid "Setup Modules"
 msgstr "Mòduls"
 
-#: ../src/bin/e_main.c:857
+#: ../src/bin/e_main.c:867
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment no pot carregar aquest mòdul de sistema."
 
-#: ../src/bin/e_main.c:861
+#: ../src/bin/e_main.c:871
 #, fuzzy
 msgid "Setup Color Classes"
 msgstr "Tipus de Color"
 
-#: ../src/bin/e_main.c:866
+#: ../src/bin/e_main.c:876
 msgid "Enlightenment cannot set up its color class system."
 msgstr ""
 
-#: ../src/bin/e_main.c:870
+#: ../src/bin/e_main.c:880
 #, fuzzy
 msgid "Setup Gadcon"
 msgstr "Configuració de la Comanda"
 
-#: ../src/bin/e_main.c:875
+#: ../src/bin/e_main.c:885
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment no pot carregar el gadjet de control de sistema."
 
-#: ../src/bin/e_main.c:879
-#, fuzzy
-msgid "Setup Shelves"
-msgstr "Lleixes"
-
-#: ../src/bin/e_main.c:884
-msgid "Enlightenment cannot set up its shelf system."
-msgstr "Enlightenment no pot configurar el sistema de Lleixes."
-
-#: ../src/bin/e_main.c:889
+#: ../src/bin/e_main.c:890
 msgid "Setup DPMS"
 msgstr ""
 
-#: ../src/bin/e_main.c:894
+#: ../src/bin/e_main.c:895
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment no pot configurar els paràmetres DPMS"
 
-#: ../src/bin/e_main.c:898
-#, fuzzy
-msgid "Setup Screensaver"
-msgstr "Salva Pantalles"
-
-#: ../src/bin/e_main.c:903
-msgid "Enlightenment cannot configure the X screensaver."
-msgstr "Enlightenment no pot configurar el Salva-Pantalles de X"
-
-#: ../src/bin/e_main.c:907
-msgid "Setup Mouse"
-msgstr ""
-
-#: ../src/bin/e_main.c:912
-#, fuzzy
-msgid "Enlightenment cannot configure the mouse settings."
-msgstr "Enlightenment no pot configurar els paràmetres DPMS"
-
-#: ../src/bin/e_main.c:916
-#, fuzzy
-msgid "Setup Desklock"
-msgstr "Envia a la Taula de Treball"
-
-#: ../src/bin/e_main.c:921
-msgid "Enlightenment cannot set up its desk locking system."
-msgstr "Enlightenment no pot bloquejar la pantalla."
-
-#: ../src/bin/e_main.c:926
-msgid "Set Up File Ordering"
-msgstr ""
-
-#: ../src/bin/e_main.c:930
-msgid "Enlightenment cannot set up its order file system."
-msgstr ""
-
-#: ../src/bin/e_main.c:935
+#: ../src/bin/e_main.c:899
 msgid "Set Up Powersave modes"
 msgstr ""
 
-#: ../src/bin/e_main.c:939
+#: ../src/bin/e_main.c:903
 #, fuzzy
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr "Enlightenment no pot carregar aquest mòdul de sistema."
 
-#. load modules
+#: ../src/bin/e_main.c:908
+#, fuzzy
+msgid "Setup Wallpaper"
+msgstr "Fons de Taula de Treball"
+
+#: ../src/bin/e_main.c:913
+msgid "Enlightenment cannot set up its desktop background system."
+msgstr "Enlightenment no pot carregar aquest fons de pantalla d'escriptori"
+
+#: ../src/bin/e_main.c:918
+msgid "Setup Mouse"
+msgstr ""
+
+#: ../src/bin/e_main.c:923
+#, fuzzy
+msgid "Enlightenment cannot configure the mouse settings."
+msgstr "Enlightenment no pot configurar els paràmetres DPMS"
+
+#: ../src/bin/e_main.c:928
+#, fuzzy
+msgid "Setup Bindings"
+msgstr "Bindatje de tecles"
+
+#: ../src/bin/e_main.c:933
+msgid "Enlightenment cannot set up its bindings system."
+msgstr ""
+"Enlightenment no pot carregar aquesta combinació de tecles del sistema."
+
+#: ../src/bin/e_main.c:937
+msgid "Setup Popups"
+msgstr ""
+
+#: ../src/bin/e_main.c:942
+msgid "Enlightenment cannot set up its popup system."
+msgstr ""
+
+#: ../src/bin/e_main.c:947
+#, fuzzy
+msgid "Setup Shelves"
+msgstr "Lleixes"
+
+#: ../src/bin/e_main.c:952
+msgid "Enlightenment cannot set up its shelf system."
+msgstr "Enlightenment no pot configurar el sistema de Lleixes."
+
+#: ../src/bin/e_main.c:957
+#, fuzzy
+msgid "Setup Thumbnailer"
+msgstr "Ungla"
+
+#: ../src/bin/e_main.c:962
+#, fuzzy
+msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
+msgstr "Enlightenment no pot inicialitzar el sistema d'Ungla.<br>"
+
+#: ../src/bin/e_main.c:967
+msgid "Set Up File Ordering"
+msgstr ""
+
 #: ../src/bin/e_main.c:971
+msgid "Enlightenment cannot set up its order file system."
+msgstr ""
+
+#. load modules
+#: ../src/bin/e_main.c:1006
 #, fuzzy
 msgid "Load Modules"
 msgstr "Carregant Mòdul"
 
-#: ../src/bin/e_main.c:979
+#: ../src/bin/e_main.c:1014
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2797,11 +2791,11 @@ msgstr ""
 "configuració del  mòdul <br> hauria de deixar-li carregar els mòduls un "
 "altra cop."
 
-#: ../src/bin/e_main.c:986
+#: ../src/bin/e_main.c:1021
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Enlightenment ha fallat poc després d'arrencar i serà reiniciat."
 
-#: ../src/bin/e_main.c:987
+#: ../src/bin/e_main.c:1022
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2814,12 +2808,12 @@ msgstr ""
 "configuració<br>El mòdul de diàleg de configuració et permetrà "
 "seleccionar<br> el mòduls altra cop."
 
-#: ../src/bin/e_main.c:995
+#: ../src/bin/e_main.c:1030
 #, fuzzy
 msgid "Configure Shelves"
 msgstr "LLeixes Configurades"
 
-#: ../src/bin/e_main.c:1002
+#: ../src/bin/e_main.c:1040
 msgid "Almost Done"
 msgstr ""
 
@@ -3131,7 +3125,7 @@ msgstr "%li Minuts"
 msgid "Unknown"
 msgstr "Desconegut"
 
-#: ../src/bin/e_widget_config_list.c:54
+#: ../src/bin/e_widget_config_list.c:63
 #: ../src/modules/conf_applications/e_int_config_apps.c:245
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:111
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:79
@@ -3139,16 +3133,16 @@ msgstr "Desconegut"
 msgid "Add"
 msgstr "Afegeix"
 
-#: ../src/bin/e_widget_config_list.c:59
+#: ../src/bin/e_widget_config_list.c:69
 msgid "Remove"
 msgstr "Borra"
 
-#: ../src/bin/e_widget_config_list.c:73
+#: ../src/bin/e_widget_config_list.c:83
 #: ../src/modules/conf_applications/e_int_config_apps.c:260
 msgid "Up"
 msgstr "Amunt"
 
-#: ../src/bin/e_widget_config_list.c:79
+#: ../src/bin/e_widget_config_list.c:89
 #: ../src/modules/conf_applications/e_int_config_apps.c:265
 msgid "Down"
 msgstr "Avall "
@@ -3158,7 +3152,7 @@ msgid "Add to Favorites"
 msgstr "Afegeix a Aplicacions Preferents"
 
 #: ../src/bin/e_widget_fsel.c:294
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:199
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:206
 #: ../src/modules/conf_imc/e_int_config_imc.c:830
 #: ../src/modules/conf_startup/e_int_config_startup.c:281
 #: ../src/modules/conf_theme/e_int_config_theme.c:365
@@ -3202,7 +3196,8 @@ msgid "Read-Write"
 msgstr "Escriptura-Lectura"
 
 #: ../src/modules/battery/e_mod_config.c:40
-msgid "Battery Monitor Configuration"
+#, fuzzy
+msgid "Battery Monitor Settings"
 msgstr "Configuració del Monitor de Bateria"
 
 #: ../src/modules/battery/e_mod_config.c:91
@@ -3234,10 +3229,10 @@ msgid "Alert when battery is down to:"
 msgstr "Avisa'm quan la bateria estigui per sota de :"
 
 #: ../src/modules/battery/e_mod_config.c:145
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:156
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:193
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:201
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:209
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:162
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:207
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:215
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:223
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:119
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:151
 #, c-format
@@ -3263,52 +3258,44 @@ msgstr ""
 msgid "%1.0f seconds"
 msgstr "%1.0f segons"
 
-#: ../src/modules/battery/e_mod_main.c:130
+#: ../src/modules/battery/e_mod_main.c:135
 msgid "Battery"
 msgstr "Bateria"
 
-#: ../src/modules/battery/e_mod_main.c:323
+#: ../src/modules/battery/e_mod_main.c:832
 #, fuzzy
 msgid "Your battery is low!"
 msgstr "Mostrem una alerta quan la bateria estigui baixa"
 
-#: ../src/modules/battery/e_mod_main.c:325
+#: ../src/modules/battery/e_mod_main.c:834
 msgid "AC power is recommended."
 msgstr ""
 
-#: ../src/modules/battery/e_mod_main.c:408
-#, fuzzy
-msgid "Battery Meter"
-msgstr "Bateria"
+#: ../src/modules/battery/e_mod_main.c:909
+msgid "N/A"
+msgstr ""
 
-#: ../src/modules/battery/e_mod_main.c:485
-#: ../src/modules/battery/e_mod_main.c:487
-#: ../src/modules/battery/e_mod_main.c:494
-#: ../src/modules/battery/e_mod_main.c:496
+#: ../src/modules/battery/e_mod_main.c:980
+#: ../src/modules/battery/e_mod_main.c:982
+#: ../src/modules/battery/e_mod_main.c:989
+#: ../src/modules/battery/e_mod_main.c:991
 msgid "ERROR"
 msgstr ""
 
-#: ../src/modules/battery/e_mod_main.c:553
-msgid "N/A"
-msgstr ""
+#: ../src/modules/battery/e_mod_main.c:1078
+#, fuzzy
+msgid "Battery Meter"
+msgstr "Bateria"
 
 #: ../src/modules/clock/e_mod_main.c:98
 msgid "Clock"
 msgstr "Rellotge"
 
-#: ../src/modules/conf/e_conf.c:122 ../src/modules/conf/e_conf.c:133
-msgid "Enlightenment Configuration"
-msgstr "Configuració de l'Enlightenment "
-
-#. Item List
-#: ../src/modules/conf/e_conf.c:161
-msgid "Items"
-msgstr "Elements"
-
-#: ../src/modules/conf/e_mod_main.c:46 ../src/modules/conf/e_mod_main.c:67
-#: ../src/modules/conf/e_mod_main.c:116
-msgid "Configuration Panel"
-msgstr "Panell de Configuració"
+#: ../src/modules/conf/e_mod_main.c:139 ../src/modules/conf/e_mod_main.c:162
+#: ../src/modules/conf/e_mod_main.c:211
+#, fuzzy
+msgid "Settings Panel"
+msgstr "Paràmetres de Pantalla"
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:51
 #: ../src/modules/conf_applications/e_mod_main.c:42
@@ -3341,6 +3328,11 @@ msgstr "Totes les Aplicacions"
 msgid "Selected Applications"
 msgstr "Aplicacions Específiques"
 
+#: ../src/modules/conf_applications/e_mod_main.c:34
+#, fuzzy
+msgid "Apps"
+msgstr "Aplica"
+
 #: ../src/modules/conf_applications/e_mod_main.c:35
 msgid "New Application"
 msgstr "Nova Aplicació "
@@ -3362,20 +3354,35 @@ msgstr "Altre IBar"
 msgid "Menus"
 msgstr "Menús"
 
-#: ../src/modules/conf_borders/e_int_config_borders.c:29
-#: ../src/modules/conf_borders/e_int_config_borders.c:185
+#: ../src/modules/conf_borders/e_int_config_borders.c:30
+#: ../src/modules/conf_borders/e_int_config_borders.c:198
 msgid "Default Border Style"
 msgstr "Estil de Vora per Defecte"
 
-#: ../src/modules/conf_borders/e_int_config_borders.c:49
+#: ../src/modules/conf_borders/e_int_config_borders.c:50
 msgid "Window Border Selection"
 msgstr "Selecció de la Vora de la Finestra"
 
-#: ../src/modules/conf_borders/e_int_config_borders.c:230
+#: ../src/modules/conf_borders/e_int_config_borders.c:243
 msgid "Remember this Border for this window next time it appears"
 msgstr ""
 "Recorda aquesta Vora per aquesta finestra la pròxima vegada que aquesta "
 "aparegui "
+
+#: ../src/modules/conf_borders/e_mod_main.c:34
+#: ../src/modules/conf_colors/e_mod_main.c:34
+#: ../src/modules/conf_fonts/e_mod_main.c:34
+#: ../src/modules/conf_icon_theme/e_mod_main.c:34
+#: ../src/modules/conf_mouse_cursor/e_mod_main.c:34
+#: ../src/modules/conf_scale/e_mod_main.c:34
+#: ../src/modules/conf_startup/e_mod_main.c:34
+#: ../src/modules/conf_theme/e_mod_main.c:38
+#: ../src/modules/conf_transitions/e_mod_main.c:34
+#: ../src/modules/conf_wallpaper/e_mod_main.c:28
+#: ../src/modules/dropshadow/e_mod_main.c:89
+#, fuzzy
+msgid "Look"
+msgstr "Bloquejos "
 
 #: ../src/modules/conf_borders/e_mod_main.c:35
 msgid "Borders"
@@ -3677,28 +3684,33 @@ msgstr "Configuració"
 msgid "Desk"
 msgstr "Desk"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:71
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:72
 msgid "Screen Lock Settings"
 msgstr "Configuració del Bloqueig de Pantalla "
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:143
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:145
 msgid "Automatic Locking"
 msgstr "Bloqueig Automàtic"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:145
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:147
+#, fuzzy
+msgid "Lock when Enlightenment starts"
+msgstr "Utilitza el Cursor d'Enlightenment "
+
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:151
 msgid "Lock when X screensaver activates"
 msgstr "Bloqueja quan el salva pantalles estigui activat"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:149
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:155
 msgid "Lock when idle time exceeded"
 msgstr "Bloqueja quan el temps d'espera hagi accedit "
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:153
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:159
 msgid "Idle time to exceed"
 msgstr "Temps d'espera per bloqueig"
 
 #. create dir radios
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:192
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:199
 #: ../src/modules/conf_imc/e_int_config_imc.c:818
 #: ../src/modules/conf_startup/e_int_config_startup.c:268
 #: ../src/modules/conf_theme/e_int_config_theme.c:354
@@ -3709,23 +3721,23 @@ msgstr "Temps d'espera per bloqueig"
 msgid "Personal"
 msgstr "Personal"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:281
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:288
 msgid "Login Box Settings"
 msgstr "Paràmetres de Configuració de la Finestra d'Entrada"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:284
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:291
 msgid "Show on all screen zones"
 msgstr "Mostra en totes les zones de pantalla"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:288
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:295
 msgid "Show on current screen zone"
 msgstr "Mostra en aquesta zona de pantalla"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:292
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:299
 msgid "Show on screen zone #:"
 msgstr "Mostra en la zona de pantalla #:"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:296
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:303
 #: ../src/modules/conf_desks/e_int_config_desks.c:197
 #: ../src/modules/conf_desks/e_int_config_desks.c:201
 #: ../src/modules/conf_desks/e_int_config_desks.c:236
@@ -3743,24 +3755,24 @@ msgstr "Mostra en la zona de pantalla #:"
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:304
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:311
 msgid "Wallpaper Mode"
 msgstr "Mode de Fons de Pantalla"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:306
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:313
 #: ../src/modules/gadman/e_mod_config.c:149
 msgid "Theme Defined"
 msgstr "Tema Definit"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:309
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:316
 msgid "Theme Wallpaper"
 msgstr "Fons de Pantalla del Tema"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:322
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:329
 msgid "Custom Screenlock"
 msgstr ""
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:323
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:330
 msgid "Use custom screenlock"
 msgstr ""
 
@@ -3769,6 +3781,7 @@ msgid "Screen Lock"
 msgstr "Bloqueig de Pantalla"
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:56
+#: ../src/modules/pager/e_mod_main.c:811
 msgid "Virtual Desktops Settings"
 msgstr "Configuració de Taules de Treball Virtuals "
 
@@ -3839,11 +3852,11 @@ msgstr "Zoom"
 msgid "Virtual Desktops"
 msgstr "Taules de Treball Virtuals"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:35
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:36
 msgid "Dialog Settings"
 msgstr "Configuració de Diàlegs"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:84
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:87
 #: ../src/modules/conf_engine/e_int_config_engine.c:94
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:109
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:161
@@ -3858,29 +3871,35 @@ msgstr "Configuració de Diàlegs"
 msgid "General Settings"
 msgstr "Configuracions Generals"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:86
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:89
 msgid "Disable Confirmation Dialogs"
 msgstr "Deshabilita els Diàlegs de Confirmació "
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:93
-msgid "Default Configuration Dialogs Mode"
-msgstr "Moda de Configuració de Diàlegs per Defecte "
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:91
+#, fuzzy
+msgid "Normal Windows"
+msgstr "(No Ha Ha Finestres)"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:96
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:134
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:98
+#, fuzzy
+msgid "Default Settings Dialogs Mode"
+msgstr "Mode de Diàleg per Defecte"
+
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:101
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:140
 msgid "Basic Mode"
 msgstr "Mode Bàsic"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:98
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:136
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:103
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:142
 msgid "Advanced Mode"
 msgstr "Mode avançat"
 
 #. of = e_widget_framelist_add(evas, _("General Settings"), 0);
-#. ob = e_widget_check_add(evas, _("Auto-Apply Configuration Changes"), &(cfdata->auto_apply));
+#. ob = e_widget_check_add(evas, _("Auto-Apply Settings Changes"), &(cfdata->auto_apply));
 #. e_widget_framelist_object_append(of, ob);
 #. e_widget_list_object_append(o, of, 1, 1, 0.5);
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:131
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:137
 msgid "Default Dialog Mode"
 msgstr "Mode de Diàleg per Defecte"
 
@@ -3888,10 +3907,10 @@ msgstr "Mode de Diàleg per Defecte"
 msgid "Dialogs"
 msgstr "Diàlegs "
 
-#: ../src/modules/conf_display/e_int_config_display.c:133
-#, c-format
+#: ../src/modules/conf_display/e_int_config_display.c:129
+#, fuzzy, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
 "will be restored in %d seconds."
 msgstr ""
@@ -3899,10 +3918,10 @@ msgstr ""
 "No si no ho és.<br>Si no pitja un botó, la vella resolució de<br>%dx%d at %d "
 "Hz serà  restaurada en %d segons"
 
-#: ../src/modules/conf_display/e_int_config_display.c:140
+#: ../src/modules/conf_display/e_int_config_display.c:136
 #, fuzzy, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored in %d seconds."
 msgstr ""
@@ -3910,10 +3929,10 @@ msgstr ""
 "sinó pitja No.<br> Si no es pitja un botó, la vella resolució de <br> %dx%d "
 "serà  restaurada en %d segons."
 
-#: ../src/modules/conf_display/e_int_config_display.c:150
-#, c-format
+#: ../src/modules/conf_display/e_int_config_display.c:146
+#, fuzzy, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
 "will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
@@ -3921,10 +3940,10 @@ msgstr ""
 "no es pitja cap botó, la vella resolució de %dx%d a %d Hz <br> serà "
 "<hilight>IMMEDIATAMENT<hilight> restaurada."
 
-#: ../src/modules/conf_display/e_int_config_display.c:157
+#: ../src/modules/conf_display/e_int_config_display.c:153
 #, fuzzy, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
@@ -3932,45 +3951,56 @@ msgstr ""
 "<br> Si no pitja cap botó, la vella resolució de <br> %dx%d serà  re-"
 "activada <hilight>IMMEDIATAMENT</hilight>"
 
-#: ../src/modules/conf_display/e_int_config_display.c:212
+#: ../src/modules/conf_display/e_int_config_display.c:190
 msgid "Resolution change"
 msgstr "Canvi de Resolució"
 
-#: ../src/modules/conf_display/e_int_config_display.c:250
+#: ../src/modules/conf_display/e_int_config_display.c:194
+#, fuzzy
+msgid "Save"
+msgstr "Estat"
+
+#: ../src/modules/conf_display/e_int_config_display.c:195
+#, fuzzy
+msgid "Restore"
+msgstr "Re-inicia "
+
+#: ../src/modules/conf_display/e_int_config_display.c:228
 msgid "Screen Resolution Settings"
 msgstr "Configuració de Resolució de Pantalla"
 
-#: ../src/modules/conf_display/e_int_config_display.c:398
+#: ../src/modules/conf_display/e_int_config_display.c:402
 msgid "Resolution"
 msgstr "Resolució"
 
-#: ../src/modules/conf_display/e_int_config_display.c:405
+#: ../src/modules/conf_display/e_int_config_display.c:409
 msgid "Restore on login"
 msgstr "Restaura en Entrar"
 
-#: ../src/modules/conf_display/e_int_config_display.c:410
+#: ../src/modules/conf_display/e_int_config_display.c:413
 msgid "Refresh"
 msgstr "Refresca"
 
-#: ../src/modules/conf_display/e_int_config_display.c:493
+#: ../src/modules/conf_display/e_int_config_display.c:472
 msgid "Rotation"
 msgstr "Rotació:"
 
-#: ../src/modules/conf_display/e_int_config_display.c:512
+#: ../src/modules/conf_display/e_int_config_display.c:491
 msgid "Mirroring"
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:593
+#: ../src/modules/conf_display/e_int_config_display.c:642
 msgid "Missing Features"
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:594
+#: ../src/modules/conf_display/e_int_config_display.c:643
+#, fuzzy
 msgid ""
-"Your X Display Server is missing support for<br>the <hilight>XRandr</"
+"Your X Display Server is missing support for<br>the <hilight>XRandR</"
 "hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
 "resolutions without<br>the support of this extension. It could also "
 "be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no "
-"XRandr support detected."
+"XRandR support detected."
 msgstr ""
 "El  Servidor de X no té suport per l'extensió <br> el <hilight>XRandr</"
 "hilight>(Re-dimensionar i Girar les X) .<br> No es pot canviar la resolució "
@@ -3978,11 +4008,11 @@ msgstr ""
 "significar també<br> quan es va construir <hilight>ecore</hilight> <br>no hi "
 "havia suport per XRandr."
 
-#: ../src/modules/conf_display/e_int_config_display.c:606
+#: ../src/modules/conf_display/e_int_config_display.c:655
 msgid "No Refresh Rates Found"
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:607
+#: ../src/modules/conf_display/e_int_config_display.c:656
 msgid ""
 "No refresh rates were reported by your X Display Server.<br>If you are "
 "running a nested X Display Server, then<br>this is to be expected. However, "
@@ -3995,40 +4025,41 @@ msgstr ""
 msgid "Screen Resolution"
 msgstr "Resolució de Pantalla"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:56
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:77
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:57
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:78
 msgid "Display Power Management Signaling"
 msgstr ""
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:57
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:58
 msgid "The current display server is not <br>DPMS capable."
 msgstr ""
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:78
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:79
 msgid "The current display server does not <br>have the DPMS extension."
 msgstr ""
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:107
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:109
 msgid "Display Power Management Settings"
 msgstr "Configuració per Mostrar el Manegament d'Energia"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:185
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:199
 msgid "Enable Display Power Management"
 msgstr "Autoritza Mostrar el Manegador d'Energia"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:189
-msgid "Timer(s)"
-msgstr ""
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:203
+#, fuzzy
+msgid "Timers"
+msgstr "Temes"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:191
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:205
 msgid "Standby time"
 msgstr ""
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:199
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:213
 msgid "Suspend time"
 msgstr ""
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:207
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:221
 msgid "Off time"
 msgstr ""
 
@@ -4388,8 +4419,9 @@ msgid "Icon Theme"
 msgstr "Tema d'Icones"
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:109
-msgid "Input Method Configuration"
-msgstr "Configuració del Mètode d'Entrada"
+#: ../src/modules/conf_imc/e_mod_main.c:35
+msgid "Input Method Settings"
+msgstr "Paràmetres del Mètode d'Entrada"
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:297
 msgid "Input Method Selector"
@@ -4432,7 +4464,8 @@ msgid "Exported Environment Variables"
 msgstr "Exporta les Variables d'Entorn"
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:66
-msgid "Select an Input Method Configuration..."
+#, fuzzy
+msgid "Select an Input Method Settings..."
 msgstr "Sel·lecciona una configuració pel mètode d'entrada"
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:281
@@ -4458,10 +4491,6 @@ msgstr ""
 #: ../src/modules/wizard/page_010.c:139
 msgid "Language"
 msgstr "Llengua"
-
-#: ../src/modules/conf_imc/e_mod_main.c:35
-msgid "Input Method Settings"
-msgstr "Paràmetres del Mètode d'Entrada"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:37
 #, fuzzy
@@ -4505,14 +4534,24 @@ msgstr ""
 msgid "%1.2f sec"
 msgstr "%1.1f sec"
 
+#: ../src/modules/conf_interaction/e_mod_main.c:34
+#: ../src/modules/conf_keybindings/e_mod_main.c:34
+#: ../src/modules/conf_mousebindings/e_mod_main.c:34
+#: ../src/modules/conf_mouse/e_mod_main.c:34
+#: ../src/modules/mixer/app_mixer.c:288 ../src/modules/mixer/app_mixer.c:306
+#, fuzzy
+msgid "Input"
+msgstr "Inici"
+
 #: ../src/modules/conf_interaction/e_mod_main.c:35
 #, fuzzy
 msgid "Interaction"
 msgstr "Intern"
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:582
-msgid "Language Configuration"
-msgstr "Configuració de Llenguatge"
+#: ../src/modules/conf_intl/e_mod_main.c:35
+msgid "Language Settings"
+msgstr "Paràmetres de Llengua"
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:894
 #: ../src/modules/conf_intl/e_int_config_intl.c:971
@@ -4529,10 +4568,6 @@ msgstr "Locals Seleccionades "
 #: ../src/modules/conf_intl/e_int_config_intl.c:1023
 msgid "Locale"
 msgstr "Locals"
-
-#: ../src/modules/conf_intl/e_mod_main.c:35
-msgid "Language Settings"
-msgstr "Paràmetres de Llengua"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:6
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:10
@@ -4605,30 +4640,24 @@ msgstr ""
 "l'acció <br> <hilight>%s</hilight>. Si us plau tria una altra seqüència."
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1287
-#: ../src/modules/gadman/e_mod_gadman.c:759
+#: ../src/modules/gadman/e_mod_gadman.c:763
 msgid "CTRL"
 msgstr "CTRL"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1292
-#: ../src/modules/gadman/e_mod_gadman.c:764
+#: ../src/modules/gadman/e_mod_gadman.c:768
 msgid "ALT"
 msgstr "ALT"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1298
-#: ../src/modules/gadman/e_mod_gadman.c:770
+#: ../src/modules/gadman/e_mod_gadman.c:774
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1304
-#: ../src/modules/gadman/e_mod_gadman.c:776
+#: ../src/modules/gadman/e_mod_gadman.c:780
 msgid "WIN"
 msgstr "WIN"
-
-#: ../src/modules/conf_keybindings/e_mod_main.c:34
-#: ../src/modules/conf_mousebindings/e_mod_main.c:34
-#: ../src/modules/conf_mouse/e_mod_main.c:34
-msgid "Keyboard & Mouse"
-msgstr "Teclat i Ratolí "
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:44
 #: ../src/modules/conf_menus/e_int_config_menus.c:110
@@ -4764,6 +4793,13 @@ msgstr "Ajusta a Predeterminat"
 msgid "Select an Edj File"
 msgstr "Seleccioneu Fitxer Edj"
 
+#. Setup Entry in Config Panel
+#: ../src/modules/conf_mime/e_mod_main.c:34
+#: ../src/modules/fileman/e_mod_main.c:45
+#: ../src/modules/fileman/e_mod_main.c:218
+msgid "Files"
+msgstr "Fitxers"
+
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
@@ -4888,8 +4924,9 @@ msgid "Threshold"
 msgstr ""
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:62
-msgid "Search Path Configuration"
-msgstr "Cerca el Directori de Configuració"
+#, fuzzy
+msgid "Search Path Settings"
+msgstr "Paràmetres d'Arrancada"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:73
 msgid "Data"
@@ -5162,10 +5199,6 @@ msgstr "No Autoritzat"
 msgid "Screen Saver"
 msgstr "Salva Pantalles"
 
-#: ../src/modules/conf_shelves/e_int_config_shelf.c:43
-msgid "Shelf Settings"
-msgstr "Configuració de les LLeixes"
-
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:71
 msgid "Configured Shelves"
 msgstr "LLeixes Configurades"
@@ -5322,13 +5355,13 @@ msgstr ""
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
-#: ../src/modules/gadman/e_mod_gadman.c:681
+#: ../src/modules/gadman/e_mod_gadman.c:685
 msgid "Horizontal"
 msgstr "Horitzontal"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:154
-#: ../src/modules/gadman/e_mod_gadman.c:689
+#: ../src/modules/gadman/e_mod_gadman.c:693
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -6031,8 +6064,9 @@ msgstr ""
 "mitjansant el<br> mòdul setfreq."
 
 #: ../src/modules/dropshadow/e_mod_config.c:40
-msgid "Dropshadow Configuration"
-msgstr ""
+#, fuzzy
+msgid "Dropshadow Settings"
+msgstr "Configuració de Diàlegs"
 
 #: ../src/modules/dropshadow/e_mod_config.c:108
 msgid "Quality"
@@ -6126,20 +6160,16 @@ msgstr ""
 msgid "Run Command Dialog"
 msgstr "Executar Comanda de Diàleg"
 
-#: ../src/modules/fileman/e_mod_main.c:218
-msgid "Files"
-msgstr "Fitxers"
-
 #: ../src/modules/fileman/e_mod_main.c:270
 #, fuzzy
 msgid ""
-"Fileman Module Configuration data needed upgrading. Your old "
-"configuration<br>has been wiped and a new set of defaults initialized. "
-"This<br>will happen regularly during development, so don't report a<br>bug. "
-"This simply means Fileman module needs new configuration<br>data by default "
-"for usable functionality that your old<br>configuration simply lacks. This "
-"new set of defaults will fix<br>that by adding it in. You can re-configure "
-"things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
+"Fileman Module Settings data needed upgrading. Your old configuration<br>has "
+"been wiped and a new set of defaults initialized. This<br>will happen "
+"regularly during development, so don't report a<br>bug. This simply means "
+"Fileman module needs new configuration<br>data by default for usable "
+"functionality that your old<br>configuration simply lacks. This new set of "
+"defaults will fix<br>that by adding it in. You can re-configure things now "
+"to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr ""
 "La configuració de la data necessita ser actualitzada. La seva  configuració "
 "vella <br>  s'ha de re-inicialitzar per defecte. Això<br> sol succeïr "
@@ -6168,8 +6198,8 @@ msgstr ""
 
 #: ../src/modules/fileman/e_mod_main.c:352
 #, fuzzy
-msgid "Fileman Configuration Updated"
-msgstr "Configuració Actualitzada"
+msgid "Fileman Settings Updated"
+msgstr "Paràmetres de Menú"
 
 #: ../src/modules/fileman/e_mod_config.c:88
 #, fuzzy
@@ -6292,25 +6322,25 @@ msgstr "Transaent per a "
 msgid "Animations"
 msgstr "Animació de Salt"
 
-#: ../src/modules/gadman/e_mod_gadman.c:673
+#: ../src/modules/gadman/e_mod_gadman.c:677
 #, fuzzy
 msgid "Free"
 msgstr "Feroès "
 
-#: ../src/modules/gadman/e_mod_gadman.c:705
+#: ../src/modules/gadman/e_mod_gadman.c:709
 #, fuzzy
 msgid "Always on desktop"
 msgstr "Sempre davant"
 
-#: ../src/modules/gadman/e_mod_gadman.c:715
+#: ../src/modules/gadman/e_mod_gadman.c:719
 msgid "On top pressing"
 msgstr ""
 
-#: ../src/modules/gadman/e_mod_gadman.c:725
+#: ../src/modules/gadman/e_mod_gadman.c:729
 msgid "Behavior"
 msgstr ""
 
-#: ../src/modules/gadman/e_mod_gadman.c:744
+#: ../src/modules/gadman/e_mod_gadman.c:748
 #, fuzzy
 msgid "Add other gadgets"
 msgstr "Afegir Gadget "
@@ -6349,8 +6379,9 @@ msgid "Select a window"
 msgstr "Seleccioneu una Finestra"
 
 #: ../src/modules/ibar/e_mod_config.c:55
-msgid "IBar Configuration"
-msgstr "Configuració de l'iBar"
+#, fuzzy
+msgid "IBar Settings"
+msgstr "Paràmetres"
 
 #: ../src/modules/ibar/e_mod_config.c:101
 msgid "Selected Bar Source"
@@ -6425,8 +6456,9 @@ msgid "Add Application"
 msgstr "Afegeix Aplicació"
 
 #: ../src/modules/ibox/e_mod_config.c:48
-msgid "IBox Configuration"
-msgstr "Configuració d'IBox"
+#, fuzzy
+msgid "IBox Settings"
+msgstr "Paràmetres de Configuració de la Finestra d'Entrada"
 
 #: ../src/modules/ibox/e_mod_config.c:97
 msgid "Display Name"
@@ -6470,8 +6502,8 @@ msgid "IBox"
 msgstr "IBox"
 
 #: ../src/modules/pager/e_mod_config.c:69
-msgid "Pager Configuration"
-msgstr "Configuració de Paginació "
+msgid "Pager Settings"
+msgstr "Paràmetres"
 
 #: ../src/modules/pager/e_mod_config.c:116
 #: ../src/modules/pager/e_mod_config.c:155
@@ -6605,10 +6637,6 @@ msgstr ""
 msgid "Button %i"
 msgstr "Botó %i"
 
-#: ../src/modules/pager/e_mod_main.c:811
-msgid "Virtual Desktops Configuration"
-msgstr "Configuració de Taules de Treball Virtuals"
-
 #: ../src/modules/pager/e_mod_main.c:2803
 #, fuzzy
 msgid "Show Pager Popup"
@@ -6643,8 +6671,9 @@ msgid "Start"
 msgstr "Inici"
 
 #: ../src/modules/temperature/e_mod_config.c:63
-msgid "Temperature Configuration"
-msgstr "Configuració de Temperatura"
+#, fuzzy
+msgid "Temperature Settings"
+msgstr "Configuracions Generals"
 
 #: ../src/modules/temperature/e_mod_config.c:249
 #: ../src/modules/temperature/e_mod_config.c:352
@@ -6750,7 +6779,7 @@ msgstr "%1.0f F"
 msgid "%1.0f C"
 msgstr "%1.0f C"
 
-#: ../src/modules/temperature/e_mod_main.c:155
+#: ../src/modules/temperature/e_mod_main.c:145
 msgid "Temperature"
 msgstr "Temperatura"
 
@@ -6778,11 +6807,6 @@ msgstr "Freqüència de Cpu"
 #: ../src/modules/mixer/app_mixer.c:168
 msgid "Playback"
 msgstr ""
-
-#: ../src/modules/mixer/app_mixer.c:288 ../src/modules/mixer/app_mixer.c:306
-#, fuzzy
-msgid "Input"
-msgstr "Inici"
 
 #: ../src/modules/mixer/app_mixer.c:294
 #, fuzzy
@@ -6847,8 +6871,8 @@ msgstr ""
 
 #: ../src/modules/mixer/conf_gadget.c:383
 #, fuzzy
-msgid "Mixer Configuration"
-msgstr "Configuració de Paginació "
+msgid "Mixer Settings"
+msgstr "Configuració de la Mida"
 
 #: ../src/modules/mixer/conf_module.c:98
 msgid "Mixer to use for global actions:"
@@ -6861,17 +6885,17 @@ msgstr "Afegir al Llançador"
 
 #: ../src/modules/mixer/conf_module.c:187
 #, fuzzy
-msgid "Mixer Module Configuration"
-msgstr "Configuració de la Lleixa"
+msgid "Mixer Module Settings"
+msgstr "Configuració del Mòdul"
 
 #: ../src/modules/mixer/e_mod_main.c:122
 #, fuzzy
-msgid "Mixer Configuration Updated"
+msgid "Mixer Settings Updated"
 msgstr "Configuració Actualitzada"
 
 #: ../src/modules/mixer/e_mod_main.c:1161
 msgid ""
-"Mixer Module Configuration data changed.<br>Your old configuration has been "
+"Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
 msgstr ""
 
@@ -6908,10 +6932,72 @@ msgstr "Aplicacions Específiques"
 msgid "Networks"
 msgstr ""
 
-#: ../src/modules/connman/e_mod_main.c:1093
+#~ msgid "Desktop %i, %i"
+#~ msgstr "Taula de Treball %i, %i"
+
+#~ msgid "Configuration Upgraded"
+#~ msgstr "Configuració Actualitzada"
+
+#~ msgid "Configuration"
+#~ msgstr "Configuració"
+
 #, fuzzy
-msgid "Settings"
-msgstr "Paràmetres de Pantalla"
+#~ msgid "Toolbar Configuration"
+#~ msgstr "Configuració de l'iBar"
+
+#~ msgid "Shelf Configuration"
+#~ msgstr "Configuració de la Lleixa"
+
+#~ msgid "Enlightenment Configuration"
+#~ msgstr "Configuració de l'Enlightenment "
+
+#~ msgid "Items"
+#~ msgstr "Elements"
+
+#~ msgid "Configuration Panel"
+#~ msgstr "Panell de Configuració"
+
+#~ msgid "Default Configuration Dialogs Mode"
+#~ msgstr "Moda de Configuració de Diàlegs per Defecte "
+
+#~ msgid "Input Method Configuration"
+#~ msgstr "Configuració del Mètode d'Entrada"
+
+#~ msgid "Language Configuration"
+#~ msgstr "Configuració de Llenguatge"
+
+#~ msgid "Keyboard & Mouse"
+#~ msgstr "Teclat i Ratolí "
+
+#~ msgid "Search Path Configuration"
+#~ msgstr "Cerca el Directori de Configuració"
+
+#, fuzzy
+#~ msgid "Fileman Configuration Updated"
+#~ msgstr "Configuració Actualitzada"
+
+#~ msgid "IBar Configuration"
+#~ msgstr "Configuració de l'iBar"
+
+#~ msgid "IBox Configuration"
+#~ msgstr "Configuració d'IBox"
+
+#~ msgid "Pager Configuration"
+#~ msgstr "Configuració de Paginació "
+
+#~ msgid "Virtual Desktops Configuration"
+#~ msgstr "Configuració de Taules de Treball Virtuals"
+
+#~ msgid "Temperature Configuration"
+#~ msgstr "Configuració de Temperatura"
+
+#, fuzzy
+#~ msgid "Mixer Configuration"
+#~ msgstr "Configuració de Paginació "
+
+#, fuzzy
+#~ msgid "Mixer Module Configuration"
+#~ msgstr "Configuració de la Lleixa"
 
 #, fuzzy
 #~ msgid "Back"
@@ -7754,9 +7840,6 @@ msgstr "Paràmetres de Pantalla"
 
 #~ msgid "Enlightenment Layout Module"
 #~ msgstr "Mòdul de disposició d'Enlightenment"
-
-#~ msgid "Pager Settings"
-#~ msgstr "Paràmetres"
 
 #~ msgid "Error - Invalid Button"
 #~ msgstr "Error - Botó Invàlid"

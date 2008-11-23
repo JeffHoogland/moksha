@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-11-11 21:43+0800\n"
+"POT-Creation-Date: 2008-11-23 20:19+0800\n"
 "PO-Revision-Date: 2006-02-08 04:03+0100\n"
 "Last-Translator: Morten Nilsen <morten@nilsen.com>\n"
 "Language-Team: E17-nb <LL@li.org>\n"
@@ -20,9 +20,9 @@ msgstr "Om Enlightenment"
 
 #. Close Button
 #: ../src/bin/e_about.c:20 ../src/bin/e_actions.c:2313
-#: ../src/bin/e_config_dialog.c:256 ../src/bin/e_fm.c:550
+#: ../src/bin/e_config_dialog.c:258 ../src/bin/e_fm.c:550
 #: ../src/bin/e_int_border_menu.c:208 ../src/bin/e_int_border_prop.c:81
-#: ../src/bin/e_theme_about.c:20 ../src/modules/conf/e_conf.c:173
+#: ../src/bin/e_theme_about.c:20 ../src/modules/conf/e_conf.c:172
 #: ../src/modules/fileman/e_fwin.c:1422 ../src/modules/mixer/app_mixer.c:537
 msgid "Close"
 msgstr "Lukk"
@@ -30,7 +30,7 @@ msgstr "Lukk"
 #: ../src/bin/e_about.c:21 ../src/bin/e_actions.c:2595
 #: ../src/bin/e_actions.c:2599 ../src/bin/e_actions.c:2603
 #: ../src/bin/e_actions.c:2607 ../src/bin/e_actions.c:2611
-#: ../src/bin/e_int_menus.c:169 ../src/bin/e_main.c:633
+#: ../src/bin/e_int_menus.c:169 ../src/bin/e_main.c:654
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:181
 msgid "Enlightenment"
 msgstr "Enlightenment"
@@ -78,7 +78,6 @@ msgstr "Vil du virkelig avslutte?"
 #: ../src/bin/e_actions.c:1841 ../src/bin/e_actions.c:1905
 #: ../src/bin/e_actions.c:1969 ../src/bin/e_confirm_dialog.c:47
 #: ../src/bin/e_fm.c:7222 ../src/bin/e_fm.c:7402 ../src/bin/e_module.c:526
-#: ../src/modules/conf_display/e_int_config_display.c:215
 msgid "Yes"
 msgstr "Ja"
 
@@ -87,7 +86,6 @@ msgstr "Ja"
 #: ../src/bin/e_actions.c:1843 ../src/bin/e_actions.c:1907
 #: ../src/bin/e_actions.c:1971 ../src/bin/e_confirm_dialog.c:48
 #: ../src/bin/e_fm.c:7220 ../src/bin/e_fm.c:7403 ../src/bin/e_module.c:527
-#: ../src/modules/conf_display/e_int_config_display.c:216
 msgid "No"
 msgstr "Nei"
 
@@ -610,7 +608,7 @@ msgid "Show Menu..."
 msgstr "Vis navn i meny"
 
 #: ../src/bin/e_actions.c:2586 ../src/bin/e_actions.c:2591
-#: ../src/modules/conf/e_mod_main.c:46 ../src/modules/conf/e_mod_main.c:67
+#: ../src/modules/conf/e_mod_main.c:139 ../src/modules/conf/e_mod_main.c:162
 #: ../src/modules/exebuf/e_mod_main.c:48 ../src/modules/exebuf/e_mod_main.c:68
 #: ../src/modules/fileman/e_mod_main.c:59
 #: ../src/modules/fileman/e_mod_main.c:138
@@ -652,7 +650,7 @@ msgstr ""
 #: ../src/bin/e_actions.c:2623 ../src/bin/e_actions.c:2627
 #: ../src/bin/e_configure.c:129 ../src/bin/e_int_config_modules.c:45
 #: ../src/bin/e_int_menus.c:231
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:195
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:202
 #: ../src/modules/conf_imc/e_int_config_imc.c:823
 #: ../src/modules/conf_startup/e_int_config_startup.c:273
 #: ../src/modules/conf_theme/e_int_config_theme.c:358
@@ -705,25 +703,25 @@ msgstr "Modulinnstillinger"
 msgid "Set As Background"
 msgstr "Sett bakgrunn for"
 
-#: ../src/bin/e_border.c:4853
+#: ../src/bin/e_border.c:4851
 msgid "Desktop files scan done"
 msgstr ""
 
-#: ../src/bin/e_border.c:4865
+#: ../src/bin/e_border.c:4863
 #, fuzzy
 msgid "Desktop file scan"
 msgstr "Skrivebord"
 
-#: ../src/bin/e_config.c:682
+#: ../src/bin/e_config.c:693 ../src/bin/e_config.c:726
 #, fuzzy
 msgid ""
-"Configuration data needed upgrading. Your old configuration<br>has been "
-"wiped and a new set of defaults initialized. This<br>will happen regularly "
-"during development, so don't report a<br>bug. This simply means "
-"Enlightenment needs new configuration<br>data by default for usable "
-"functionality that your old<br>configuration simply lacks. This new set of "
-"defaults will fix<br>that by adding it in. You can re-configure things now "
-"to your<br>liking. Sorry for the hiccup in your configuration.<br>"
+"Settings data needed upgrading. Your old settings have<br>been wiped and a "
+"new set of defaults initialized. This<br>will happen regularly during "
+"development, so don't report a<br>bug. This simply means Enlightenment needs "
+"new settings<br>data by default for usable functionality that your "
+"old<br>settings simply lack. This new set of defaults will fix<br>that by "
+"adding it in. You can re-configure things now to your<br>liking. Sorry for "
+"the hiccup in your settings.<br>"
 msgstr ""
 "Konfigurasjonsdata må oppgraderes. Dine gamle konfigurasjonsdata\n"
 "er slettet og blitt erstattet med et nytt standardoppsett. Dette\n"
@@ -732,14 +730,14 @@ msgstr ""
 "konfigurasjon\n"
 "og du kan nå selv justere ting slik du vil ha det.\n"
 
-#: ../src/bin/e_config.c:696
+#: ../src/bin/e_config.c:710
 #, fuzzy
 msgid ""
-"Your configuration is NEWER than Enlightenment. This is very<br>strange. "
-"This should not happen unless you downgraded<br>Enlightenment or copied the "
-"configuration from a place where<br>a newer version of Enlightenment was "
-"running. This is bad and<br>as a precaution your configuration has been now "
-"restored to<br>defaults. Sorry for the inconvenience.<br>"
+"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
+"should not happen unless you downgraded<br>Enlightenment or copied the "
+"settings from a place where<br>a newer version of Enlightenment was running. "
+"This is bad and<br>as a precaution your settings have been now restored "
+"to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 "Konfigurasjonsdataene dine er NYERE enn Enlightenment. Dette\n"
 "er veldig rart. Den eneste grunnen dette burde skje er om du\n"
@@ -748,74 +746,70 @@ msgstr ""
 "virke veldig dårlig har konfigurasjonsfilene dine nå blitt\n"
 "erstattet med et standardoppsett.\n"
 
-#: ../src/bin/e_config.c:718
-#, fuzzy, c-format
-msgid "Desktop %i, %i"
-msgstr "Skrivebord"
+#: ../src/bin/e_config.c:1582
+#, fuzzy
+msgid "Settings Upgraded"
+msgstr "Menyoppsett"
 
-#: ../src/bin/e_config.c:1959
-msgid "Configuration Upgraded"
-msgstr "Konfigurasjonen er oppgradert"
-
-#: ../src/bin/e_config.c:1984
+#: ../src/bin/e_config.c:1607
 #, c-format
 msgid ""
-"An error occured while saving Enlightenment's<br>configuration to disk. The "
-"error could not be<br>deterimined.<br><br>The file where the error occured "
-"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"An error occured while saving Enlightenment's<br>settings to disk. The error "
+"could not be<br>deterimined.<br><br>The file where the error occured was:<br>"
+"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: ../src/bin/e_config.c:1995
+#: ../src/bin/e_config.c:1618
 #, c-format
 msgid ""
-"Enlightenment's configuration files are too big<br>for the file system they "
-"are being saved to.<br>This error is very strange as the files should<br>be "
+"Enlightenment's settings files are too big<br>for the file system they are "
+"being saved to.<br>This error is very strange as the files should<br>be "
 "extremely small. Please check the settings<br>for your home directory."
 "<br><br>The file where the error occured was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: ../src/bin/e_config.c:2008
+#: ../src/bin/e_config.c:1631
 #, c-format
 msgid ""
-"An output error occured when writing the configuration<br>files for "
+"An output error occured when writing the settings<br>files for "
 "Enlightenment. Your disk is having troubles<br>and possibly needs "
 "replacement.<br><br>The file where the error occured was:<br>%s<br><br>This "
 "file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: ../src/bin/e_config.c:2019
+#: ../src/bin/e_config.c:1642
 #, c-format
 msgid ""
-"Enlightenment cannot write its configuration file<br>because it ran out of "
-"space to write the file.<br>You have either run out of disk space or "
-"have<br>gone over your quota limit.<br><br>The file where the error occured "
-"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"Enlightenment cannot write its settings file<br>because it ran out of space "
+"to write the file.<br>You have either run out of disk space or have<br>gone "
+"over your quota limit.<br><br>The file where the error occured was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: ../src/bin/e_config.c:2031
+#: ../src/bin/e_config.c:1654
 #, c-format
 msgid ""
-"Enlightenment unexpectedly had the configuration file<br>it was writing "
-"closed on it. This is very unusual.<br><br>The file where the error occured "
-"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"Enlightenment unexpectedly had the settings file<br>it was writing closed on "
+"it. This is very unusual.<br><br>The file where the error occured was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: ../src/bin/e_config.c:2056
+#: ../src/bin/e_config.c:1679
 #, fuzzy
-msgid "Enlightenment Configuration Write Problems"
+msgid "Enlightenment Settings Write Problems"
 msgstr "Konfigurasjon av Enlightenment"
 
 #. buttons at the bottom
-#: ../src/bin/e_config.c:2060 ../src/bin/e_config_dialog.c:248
+#: ../src/bin/e_config.c:1683 ../src/bin/e_config_dialog.c:250
 #: ../src/bin/e_eap_editor.c:599 ../src/bin/e_eap_editor.c:663
 #: ../src/bin/e_entry_dialog.c:58 ../src/bin/e_exec.c:321
 #: ../src/bin/e_fm_prop.c:513 ../src/bin/e_int_border_remember.c:258
 #: ../src/bin/e_int_border_remember.c:339
 #: ../src/bin/e_int_border_remember.c:381 ../src/bin/e_module.c:418
 #: ../src/bin/e_sys.c:401 ../src/bin/e_sys.c:447 ../src/bin/e_utils.c:541
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:60
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:81
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:61
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:82
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:112
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:283
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:284
@@ -830,22 +824,19 @@ msgstr "Konfigurasjon av Enlightenment"
 msgid "OK"
 msgstr "Ok"
 
-#: ../src/bin/e_config_dialog.c:198 ../src/modules/battery/e_mod_main.c:406
-#: ../src/modules/conf_dialogs/e_mod_main.c:34
+#: ../src/bin/e_config_dialog.c:200 ../src/modules/battery/e_mod_main.c:1076
 #: ../src/modules/conf_engine/e_mod_main.c:34
 #: ../src/modules/conf_exebuf/e_mod_main.c:34
-#: ../src/modules/conf_interaction/e_mod_main.c:34
 #: ../src/modules/conf_paths/e_mod_main.c:34
 #: ../src/modules/conf_performance/e_mod_main.c:34
-#: ../src/modules/conf_profiles/e_mod_main.c:20
 msgid "Advanced"
 msgstr "Avansert"
 
-#: ../src/bin/e_config_dialog.c:227
+#: ../src/bin/e_config_dialog.c:229
 msgid "Basic"
 msgstr "Grunnleggende"
 
-#: ../src/bin/e_config_dialog.c:249
+#: ../src/bin/e_config_dialog.c:251
 msgid "Apply"
 msgstr "Bruk"
 
@@ -962,8 +953,7 @@ msgstr "Generell informasjon"
 msgid "Window Class"
 msgstr "Vindusklasse"
 
-#. Category List
-#: ../src/bin/e_eap_editor.c:510 ../src/modules/conf/e_conf.c:151
+#: ../src/bin/e_eap_editor.c:510
 #: ../src/modules/conf_mime/e_int_config_mime.c:189
 msgid "Categories"
 msgstr ""
@@ -1392,7 +1382,7 @@ msgid "Thumbnail"
 msgstr ""
 
 #: ../src/bin/e_fm_prop.c:438
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:312
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:319
 #, fuzzy
 msgid "Custom"
 msgstr "Klipp ut"
@@ -1449,48 +1439,37 @@ msgstr ""
 msgid "Removable Device"
 msgstr ""
 
-#: ../src/bin/e_gadcon.c:1214 ../src/modules/gadman/e_mod_gadman.c:653
+#: ../src/bin/e_gadcon.c:1241 ../src/modules/gadman/e_mod_gadman.c:657
 msgid "Plain"
 msgstr ""
 
-#: ../src/bin/e_gadcon.c:1223 ../src/modules/gadman/e_mod_gadman.c:661
+#: ../src/bin/e_gadcon.c:1250 ../src/modules/gadman/e_mod_gadman.c:665
 #, fuzzy
 msgid "Inset"
 msgstr "Ikoner"
 
-#: ../src/bin/e_gadcon.c:1232 ../src/bin/e_int_config_modules.c:41
-#: ../src/modules/conf_borders/e_mod_main.c:34
-#: ../src/modules/conf_colors/e_mod_main.c:34
-#: ../src/modules/conf_fonts/e_mod_main.c:34
-#: ../src/modules/conf_icon_theme/e_mod_main.c:34
-#: ../src/modules/conf_mouse_cursor/e_mod_main.c:34
-#: ../src/modules/conf_scale/e_mod_main.c:34
-#: ../src/modules/conf_startup/e_mod_main.c:34
-#: ../src/modules/conf_theme/e_mod_main.c:38
-#: ../src/modules/conf_transitions/e_mod_main.c:34
-#: ../src/modules/conf_wallpaper/e_mod_main.c:28
-#: ../src/modules/dropshadow/e_mod_main.c:89
-#: ../src/modules/gadman/e_mod_gadman.c:697
+#: ../src/bin/e_gadcon.c:1259 ../src/bin/e_int_config_modules.c:41
+#: ../src/modules/gadman/e_mod_gadman.c:701
 msgid "Appearance"
 msgstr ""
 
-#: ../src/bin/e_gadcon.c:1241
+#: ../src/bin/e_gadcon.c:1268
 msgid "Automatically scroll contents"
 msgstr ""
 
-#: ../src/bin/e_gadcon.c:1248
+#: ../src/bin/e_gadcon.c:1275
 msgid "Able to be resized"
 msgstr ""
 
-#: ../src/bin/e_gadcon.c:1260 ../src/modules/gadman/e_mod_gadman.c:732
+#: ../src/bin/e_gadcon.c:1287 ../src/modules/gadman/e_mod_gadman.c:736
 msgid "Begin move/resize this gadget"
 msgstr ""
 
-#: ../src/bin/e_gadcon.c:1266 ../src/modules/gadman/e_mod_gadman.c:738
+#: ../src/bin/e_gadcon.c:1293 ../src/modules/gadman/e_mod_gadman.c:742
 msgid "Remove this gadget"
 msgstr ""
 
-#: ../src/bin/e_gadcon.c:1681
+#: ../src/bin/e_gadcon.c:1708
 msgid "Stop move/resize this gadget"
 msgstr ""
 
@@ -2047,20 +2026,21 @@ msgid "Always focus on start"
 msgstr ""
 
 #: ../src/bin/e_int_config_modules.c:42 ../src/bin/e_int_menus.c:215
-#: ../src/modules/battery/e_mod_main.c:171
+#: ../src/modules/battery/e_mod_main.c:176 ../src/modules/conf/e_conf.c:122
+#: ../src/modules/conf/e_conf.c:133
+#: ../src/modules/conf_dialogs/e_mod_main.c:34
+#: ../src/modules/conf_profiles/e_mod_main.c:20
 #: ../src/modules/ibar/e_mod_main.c:325 ../src/modules/ibar/e_mod_main.c:845
 #: ../src/modules/ibox/e_mod_main.c:318 ../src/modules/ibox/e_mod_main.c:716
 #: ../src/modules/pager/e_mod_main.c:804
-#: ../src/modules/temperature/e_mod_main.c:311
+#: ../src/modules/temperature/e_mod_main.c:277
 #: ../src/modules/mixer/e_mod_main.c:667
-msgid "Configuration"
-msgstr "Konfigurasjon"
+#: ../src/modules/connman/e_mod_main.c:1093
+#, fuzzy
+msgid "Settings"
+msgstr "Menyoppsett"
 
-#. Setup Entry in Config Panel
-#: ../src/bin/e_int_config_modules.c:43
-#: ../src/modules/conf_mime/e_mod_main.c:34
-#: ../src/modules/fileman/e_mod_main.c:45
-#: ../src/modules/fileman/e_mod_main.c:47
+#: ../src/bin/e_int_config_modules.c:43 ../src/modules/fileman/e_mod_main.c:47
 #: ../src/modules/fileman/e_mod_main.c:59
 #: ../src/modules/fileman/e_mod_main.c:138
 #, fuzzy
@@ -2134,8 +2114,8 @@ msgstr "Ikke skjul dingser"
 
 #: ../src/bin/e_int_toolbar_config.c:30 ../src/bin/e_toolbar.c:327
 #, fuzzy
-msgid "Toolbar Configuration"
-msgstr "IBar oppsett"
+msgid "Toolbar Settings"
+msgstr "Musepeker"
 
 #: ../src/bin/e_int_toolbar_config.c:82 ../src/bin/e_int_shelf_config.c:500
 #: ../src/bin/e_int_shelf_config.c:565
@@ -2170,7 +2150,6 @@ msgid "Favorite Applications"
 msgstr "Favoritter"
 
 #: ../src/bin/e_int_menus.c:119
-#: ../src/modules/conf_applications/e_mod_main.c:34
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:156
 #, fuzzy
 msgid "Applications"
@@ -2261,9 +2240,10 @@ msgid "Delete A Shelf"
 msgstr "Slett"
 
 #: ../src/bin/e_int_shelf_config.c:71 ../src/bin/e_shelf.c:1664
+#: ../src/modules/conf_shelves/e_int_config_shelf.c:43
 #, fuzzy
-msgid "Shelf Configuration"
-msgstr "Konfigurasjon"
+msgid "Shelf Settings"
+msgstr "Størrelsesoppsett"
 
 #: ../src/bin/e_int_shelf_config.c:518
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:253
@@ -2396,7 +2376,7 @@ msgid ""
 "%s/enlightenment-%s\n"
 msgstr ""
 
-#: ../src/bin/e_main.c:306
+#: ../src/bin/e_main.c:308
 #, fuzzy, c-format
 msgid ""
 "Options:\n"
@@ -2419,6 +2399,8 @@ msgid ""
 "\t\tBe evil.\n"
 "\t-psychotic\n"
 "\t\tBe psychotic.\n"
+"\t-locked\n"
+"\t\tstart with desklock on, so password will be asked.\n"
 msgstr ""
 "Valg:\n"
 "\t-display DISPLAY\n"
@@ -2441,7 +2423,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tVær psykotisk.\n"
 
-#: ../src/bin/e_main.c:368
+#: ../src/bin/e_main.c:377
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2449,7 +2431,7 @@ msgstr ""
 "Enlightenment klarer ikke å initialisere Ecore!\n"
 "Er du tom for minne?"
 
-#: ../src/bin/e_main.c:394
+#: ../src/bin/e_main.c:403
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2457,7 +2439,7 @@ msgstr ""
 "Enlightenment klarer ikke å initialisere filsystemet.\n"
 "Er du tom for minne?"
 
-#: ../src/bin/e_main.c:406
+#: ../src/bin/e_main.c:415
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2465,7 +2447,7 @@ msgstr ""
 "Enlightenment klarer ikke å sette opp håndtering av exit-signal.\n"
 "Er du tom for minne?"
 
-#: ../src/bin/e_main.c:412
+#: ../src/bin/e_main.c:421
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2473,7 +2455,7 @@ msgstr ""
 "Enlightenment klarer ikke å sette opp håndtering av HUP-signal.\n"
 "Er du tom for minne?"
 
-#: ../src/bin/e_main.c:424
+#: ../src/bin/e_main.c:433
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2481,7 +2463,7 @@ msgstr ""
 "Enlightenment klarer ikke å initialisere X-tilkoblingen.\n"
 "Har du satt DISPLAY-variablen?"
 
-#: ../src/bin/e_main.c:432
+#: ../src/bin/e_main.c:441
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2489,7 +2471,7 @@ msgstr ""
 "Enlightenment klarer ikke å initialisere feilrapporteringssystemet.\n"
 "Har du satt DISPLAY-variablen?"
 
-#: ../src/bin/e_main.c:455
+#: ../src/bin/e_main.c:464
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -2497,7 +2479,7 @@ msgstr ""
 "Enlightenment klarte ikke å sette opp tilkoblingssystemet.\n"
 "Er du tom for minne?"
 
-#: ../src/bin/e_main.c:463
+#: ../src/bin/e_main.c:472
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2505,7 +2487,7 @@ msgstr ""
 "Enlightenment klarte ikke å sette opp IPC-systemet.\n"
 "Er du tom for minne?"
 
-#: ../src/bin/e_main.c:472
+#: ../src/bin/e_main.c:481
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -2513,7 +2495,7 @@ msgstr ""
 "Enlightenment klarte ikke å sette opp xinerama-grensesnittet.\n"
 "Dette burde ikke skje."
 
-#: ../src/bin/e_main.c:491
+#: ../src/bin/e_main.c:500
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -2521,7 +2503,7 @@ msgstr ""
 "Enlightenment klarte ikke å initialisere Evas.\n"
 "Er du tom for minne?"
 
-#: ../src/bin/e_main.c:497
+#: ../src/bin/e_main.c:506
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2531,7 +2513,7 @@ msgstr ""
 "programvarerendret X11 i Evas. Sjekk ved installasjon av Evas og\n"
 "Ecore at de støtter programvarerendret X11."
 
-#: ../src/bin/e_main.c:504
+#: ../src/bin/e_main.c:513
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2542,7 +2524,7 @@ msgstr ""
 "Evas og\n"
 "Ecore at de støtter rendring til programvarebuffer."
 
-#: ../src/bin/e_main.c:520 ../src/bin/e_main.c:527
+#: ../src/bin/e_main.c:529 ../src/bin/e_main.c:536
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
@@ -2551,7 +2533,7 @@ msgstr ""
 "Enlightenment klarer ikke å initialisere filsystemet.\n"
 "Er du tom for minne?"
 
-#: ../src/bin/e_main.c:541
+#: ../src/bin/e_main.c:550
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2559,26 +2541,26 @@ msgstr ""
 "Enlightenment klarer ikke lage underkataloger på ditt hjemmeområde.\n"
 "Mangler du hjemmeområde eller er disken din full?"
 
-#: ../src/bin/e_main.c:551
+#: ../src/bin/e_main.c:560
 #, fuzzy
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Enlightenment klarte ikke å sette opp konfigurasjonssystemet."
 
-#: ../src/bin/e_main.c:560
+#: ../src/bin/e_main.c:569
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment klarte ikke å sette opp konfigurasjonssystemet."
 
-#: ../src/bin/e_main.c:572
+#: ../src/bin/e_main.c:583
 #, fuzzy
 msgid "Enlightenment cannot set up its scale system."
 msgstr "Enlightenment klarte ikke sette opp hyllesystemet."
 
-#: ../src/bin/e_main.c:580
+#: ../src/bin/e_main.c:591
 #, fuzzy
 msgid "Enlightenment cannot set up the pointer system."
 msgstr "Enlightenment klarte ikke sette opp skriftsystemet."
 
-#: ../src/bin/e_main.c:589
+#: ../src/bin/e_main.c:600
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2586,15 +2568,23 @@ msgstr ""
 "Enlightenment klarte ikke sette opp søkestier.\n"
 "Er du tom for minne?"
 
-#: ../src/bin/e_main.c:607
+#: ../src/bin/e_main.c:618
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment klarte ikke sette opp skriftsystemet."
 
-#: ../src/bin/e_main.c:618
+#: ../src/bin/e_main.c:629
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment klarte ikke sette opp draktsystemet."
 
-#: ../src/bin/e_main.c:629
+#: ../src/bin/e_main.c:634
+msgid "Starting International Support"
+msgstr ""
+
+#: ../src/bin/e_main.c:639
+msgid "Enlightenment cannot set up its intl system."
+msgstr ""
+
+#: ../src/bin/e_main.c:650
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2602,11 +2592,11 @@ msgstr ""
 "Enlightenment klarte ikke sette opp oppstartsskjermbilde.\n"
 "Er du tom for minne?"
 
-#: ../src/bin/e_main.c:640
+#: ../src/bin/e_main.c:661
 msgid "Testing Format Support"
 msgstr ""
 
-#: ../src/bin/e_main.c:650
+#: ../src/bin/e_main.c:672
 #, fuzzy
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
@@ -2616,7 +2606,7 @@ msgstr ""
 "Vennligst\n"
 "sjekk at Evas har støtte for Software Buffer engine\n"
 
-#: ../src/bin/e_main.c:660
+#: ../src/bin/e_main.c:683
 #, fuzzy
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
@@ -2625,7 +2615,7 @@ msgstr ""
 "Enlightenment har oppdaget at evas ikke kan laste PNG filer. Vennligst\n"
 "sjekk at Evas har støtte for lasting av PNG.\n"
 
-#: ../src/bin/e_main.c:669
+#: ../src/bin/e_main.c:692
 #, fuzzy
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
@@ -2634,7 +2624,7 @@ msgstr ""
 "Enlightenment har oppdaget at evas ikke kan laste JPEG filer. Vennligst\n"
 "sjekk at Evas har støtte for JPEG filer.\n"
 
-#: ../src/bin/e_main.c:678
+#: ../src/bin/e_main.c:701
 #, fuzzy
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
@@ -2643,79 +2633,22 @@ msgstr ""
 "Enlightenment har oppdaget at evas ikke kan laste EET filer. Vennligst\n"
 "sjekk at Evas har støtte for EET filer.\n"
 
-#: ../src/bin/e_main.c:691
-msgid "Starting International Support"
+#: ../src/bin/e_main.c:712
+#, fuzzy
+msgid ""
+"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
+"fontconfig\n"
+"support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
+"Enlightenment har oppdaget at evas ikke kan laste PNG filer. Vennligst\n"
+"sjekk at Evas har støtte for lasting av PNG.\n"
 
-#: ../src/bin/e_main.c:696
-msgid "Enlightenment cannot set up its intl system."
-msgstr ""
-
-#: ../src/bin/e_main.c:701
-msgid "Setting up Paths"
-msgstr ""
-
-#: ../src/bin/e_main.c:718
-msgid "Setup Thumbnailer"
-msgstr ""
-
-#: ../src/bin/e_main.c:723
-msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
-msgstr "Enlightenment klarte ikke sette opp miniatyrbildesystemet.\n"
-
-#: ../src/bin/e_main.c:728
-#, fuzzy
-msgid "Setup System Controls"
-msgstr "Sett kontroller"
-
-#: ../src/bin/e_main.c:733
-#, fuzzy
-msgid "Enlightenment cannot initialize the System Command system.\n"
-msgstr "Enlightenment klarte ikke sette opp miniatyrbildesystemet.\n"
-
-#: ../src/bin/e_main.c:738
-#, fuzzy
-msgid "Setup Actions"
-msgstr "Modulinnstillinger"
-
-#: ../src/bin/e_main.c:743
-msgid "Enlightenment cannot set up its actions system."
-msgstr "Enlightenment klarte ikke sette opp handlingssystemet."
-
-#: ../src/bin/e_main.c:747
-#, fuzzy
-msgid "Setup Bindings"
-msgstr "Modulinnstillinger"
-
-#: ../src/bin/e_main.c:752
-msgid "Enlightenment cannot set up its bindings system."
-msgstr "Enlightenment klarte ikke sette opp koblingssysstemet."
-
-#: ../src/bin/e_main.c:756
-#, fuzzy
-msgid "Setup Popups"
-msgstr "Vis liste ved skifte"
-
-#: ../src/bin/e_main.c:761
-msgid "Enlightenment cannot set up its popup system."
-msgstr "Enlightenment klarte ikke sette opp sprettoppsystemet."
-
-#: ../src/bin/e_main.c:766
-#, fuzzy
-msgid "Setup Wallpaper"
-msgstr "Endre skrivebordstema"
-
-#: ../src/bin/e_main.c:771
-#, fuzzy
-msgid "Enlightenment cannot set up its desktop background system."
-msgstr "Enlightenment klarer ikke å sette opp dra-og-slipp-systemet."
-
-#: ../src/bin/e_main.c:775
+#: ../src/bin/e_main.c:721
 #, fuzzy
 msgid "Setup Screens"
 msgstr "Skjermsone"
 
-#: ../src/bin/e_main.c:780
+#: ../src/bin/e_main.c:726
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -2723,29 +2656,71 @@ msgstr ""
 "Enlightenment klarte ikke sette opp vindushåndtering av alle skjermbildene.\n"
 "Kjører du en annen vindushåndterer?\n"
 
-#: ../src/bin/e_main.c:785
+#: ../src/bin/e_main.c:732
+msgid "Setup Screensaver"
+msgstr ""
+
+#: ../src/bin/e_main.c:737
+#, fuzzy
+msgid "Enlightenment cannot configure the X screensaver."
+msgstr "Enlightenment klarte ikke sette opp filbehandleren.\n"
+
+#: ../src/bin/e_main.c:741
+#, fuzzy
+msgid "Setup Desklock"
+msgstr "Send til skrivebord"
+
+#: ../src/bin/e_main.c:746
+#, fuzzy
+msgid "Enlightenment cannot set up its desk locking system."
+msgstr "Enlightenment klarer ikke å sette opp dra-og-slipp-systemet."
+
+#: ../src/bin/e_main.c:759
+msgid "Setting up Paths"
+msgstr ""
+
+#: ../src/bin/e_main.c:776
+#, fuzzy
+msgid "Setup System Controls"
+msgstr "Sett kontroller"
+
+#: ../src/bin/e_main.c:781
+#, fuzzy
+msgid "Enlightenment cannot initialize the System Command system.\n"
+msgstr "Enlightenment klarte ikke sette opp miniatyrbildesystemet.\n"
+
+#: ../src/bin/e_main.c:786
+#, fuzzy
+msgid "Setup Actions"
+msgstr "Modulinnstillinger"
+
+#: ../src/bin/e_main.c:791
+msgid "Enlightenment cannot set up its actions system."
+msgstr "Enlightenment klarte ikke sette opp handlingssystemet."
+
+#: ../src/bin/e_main.c:795
 msgid "Setup Execution System"
 msgstr ""
 
-#: ../src/bin/e_main.c:790
+#: ../src/bin/e_main.c:800
 #, fuzzy
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Enlightenment klarte ikke sette opp exebufsystemet."
 
-#: ../src/bin/e_main.c:794
+#: ../src/bin/e_main.c:804
 #, fuzzy
 msgid "Setup Remembers"
 msgstr "Husk"
 
-#: ../src/bin/e_main.c:799
+#: ../src/bin/e_main.c:809
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment klarer ikke å sette opp systemet som husker vindustatus."
 
-#: ../src/bin/e_main.c:807
+#: ../src/bin/e_main.c:817
 msgid "Setup FM"
 msgstr ""
 
-#: ../src/bin/e_main.c:812
+#: ../src/bin/e_main.c:822
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment klarte ikke sette opp filbehandleren.\n"
 
@@ -2758,128 +2733,145 @@ msgstr "Enlightenment klarte ikke sette opp filbehandleren.\n"
 #. }
 #. _e_main_shutdown_push(e_fwin_shutdown);
 #.
-#: ../src/bin/e_main.c:825
+#: ../src/bin/e_main.c:835
 msgid "Setup Message System"
 msgstr ""
 
-#: ../src/bin/e_main.c:830
+#: ../src/bin/e_main.c:840
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment klarer ikke å sette opp meldingssystemet."
 
-#: ../src/bin/e_main.c:834
+#: ../src/bin/e_main.c:844
 msgid "Setup DND"
 msgstr ""
 
-#: ../src/bin/e_main.c:839
+#: ../src/bin/e_main.c:849
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment klarer ikke å sette opp dra-og-slipp-systemet."
 
-#: ../src/bin/e_main.c:843
-msgid "Setup Grab Input HAnding"
+#: ../src/bin/e_main.c:853
+msgid "Setup Grab Input Handing"
 msgstr ""
 
-#: ../src/bin/e_main.c:848
+#: ../src/bin/e_main.c:858
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment klarer ikke å sette opp håndtering av innenheter."
 
-#: ../src/bin/e_main.c:852
+#: ../src/bin/e_main.c:862
 #, fuzzy
 msgid "Setup Modules"
 msgstr "Moduler"
 
-#: ../src/bin/e_main.c:857
+#: ../src/bin/e_main.c:867
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment klarer ikke å sette opp modulsystemet."
 
-#: ../src/bin/e_main.c:861
+#: ../src/bin/e_main.c:871
 #, fuzzy
 msgid "Setup Color Classes"
 msgstr "Ikonklasse:"
 
-#: ../src/bin/e_main.c:866
+#: ../src/bin/e_main.c:876
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment klarer ikke sette opp fargeklassesystemet."
 
-#: ../src/bin/e_main.c:870
+#: ../src/bin/e_main.c:880
 #, fuzzy
 msgid "Setup Gadcon"
 msgstr "Velg et vindu"
 
-#: ../src/bin/e_main.c:875
+#: ../src/bin/e_main.c:885
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment klarer ikke å sette opp dingskontrollsystemet."
 
-#: ../src/bin/e_main.c:879
-msgid "Setup Shelves"
-msgstr ""
-
-#: ../src/bin/e_main.c:884
-msgid "Enlightenment cannot set up its shelf system."
-msgstr "Enlightenment klarte ikke sette opp hyllesystemet."
-
-#: ../src/bin/e_main.c:889
+#: ../src/bin/e_main.c:890
 msgid "Setup DPMS"
 msgstr ""
 
-#: ../src/bin/e_main.c:894
+#: ../src/bin/e_main.c:895
 #, fuzzy
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment klarer ikke å sette opp systemet som husker vindustatus."
 
-#: ../src/bin/e_main.c:898
-msgid "Setup Screensaver"
+#: ../src/bin/e_main.c:899
+msgid "Set Up Powersave modes"
 msgstr ""
 
 #: ../src/bin/e_main.c:903
 #, fuzzy
-msgid "Enlightenment cannot configure the X screensaver."
-msgstr "Enlightenment klarte ikke sette opp filbehandleren.\n"
+msgid "Enlightenment cannot set up its powersave modes."
+msgstr "Enlightenment klarte ikke sette opp sprettoppsystemet."
 
-#: ../src/bin/e_main.c:907
+#: ../src/bin/e_main.c:908
+#, fuzzy
+msgid "Setup Wallpaper"
+msgstr "Endre skrivebordstema"
+
+#: ../src/bin/e_main.c:913
+#, fuzzy
+msgid "Enlightenment cannot set up its desktop background system."
+msgstr "Enlightenment klarer ikke å sette opp dra-og-slipp-systemet."
+
+#: ../src/bin/e_main.c:918
 #, fuzzy
 msgid "Setup Mouse"
 msgstr "Slett"
 
-#: ../src/bin/e_main.c:912
+#: ../src/bin/e_main.c:923
 #, fuzzy
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr "Enlightenment klarer ikke å sette opp systemet som husker vindustatus."
 
-#: ../src/bin/e_main.c:916
+#: ../src/bin/e_main.c:928
 #, fuzzy
-msgid "Setup Desklock"
-msgstr "Send til skrivebord"
+msgid "Setup Bindings"
+msgstr "Modulinnstillinger"
 
-#: ../src/bin/e_main.c:921
+#: ../src/bin/e_main.c:933
+msgid "Enlightenment cannot set up its bindings system."
+msgstr "Enlightenment klarte ikke sette opp koblingssysstemet."
+
+#: ../src/bin/e_main.c:937
 #, fuzzy
-msgid "Enlightenment cannot set up its desk locking system."
-msgstr "Enlightenment klarer ikke å sette opp dra-og-slipp-systemet."
+msgid "Setup Popups"
+msgstr "Vis liste ved skifte"
 
-#: ../src/bin/e_main.c:926
+#: ../src/bin/e_main.c:942
+msgid "Enlightenment cannot set up its popup system."
+msgstr "Enlightenment klarte ikke sette opp sprettoppsystemet."
+
+#: ../src/bin/e_main.c:947
+msgid "Setup Shelves"
+msgstr ""
+
+#: ../src/bin/e_main.c:952
+msgid "Enlightenment cannot set up its shelf system."
+msgstr "Enlightenment klarte ikke sette opp hyllesystemet."
+
+#: ../src/bin/e_main.c:957
+msgid "Setup Thumbnailer"
+msgstr ""
+
+#: ../src/bin/e_main.c:962
+msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
+msgstr "Enlightenment klarte ikke sette opp miniatyrbildesystemet.\n"
+
+#: ../src/bin/e_main.c:967
 msgid "Set Up File Ordering"
 msgstr ""
 
-#: ../src/bin/e_main.c:930
+#: ../src/bin/e_main.c:971
 #, fuzzy
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment klarer ikke å sette opp modulsystemet."
 
-#: ../src/bin/e_main.c:935
-msgid "Set Up Powersave modes"
-msgstr ""
-
-#: ../src/bin/e_main.c:939
-#, fuzzy
-msgid "Enlightenment cannot set up its powersave modes."
-msgstr "Enlightenment klarte ikke sette opp sprettoppsystemet."
-
 #. load modules
-#: ../src/bin/e_main.c:971
+#: ../src/bin/e_main.c:1006
 #, fuzzy
 msgid "Load Modules"
 msgstr "(Ingen moduler er lastet)"
 
-#: ../src/bin/e_main.c:979
+#: ../src/bin/e_main.c:1014
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2887,11 +2879,11 @@ msgid ""
 "dialog should let you select your<br>modules again."
 msgstr ""
 
-#: ../src/bin/e_main.c:986
+#: ../src/bin/e_main.c:1021
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr ""
 
-#: ../src/bin/e_main.c:987
+#: ../src/bin/e_main.c:1022
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2899,12 +2891,12 @@ msgid ""
 "should let you select your<br>modules again."
 msgstr ""
 
-#: ../src/bin/e_main.c:995
+#: ../src/bin/e_main.c:1030
 #, fuzzy
 msgid "Configure Shelves"
 msgstr "Konfigurér"
 
-#: ../src/bin/e_main.c:1002
+#: ../src/bin/e_main.c:1040
 msgid "Almost Done"
 msgstr ""
 
@@ -3213,7 +3205,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: ../src/bin/e_widget_config_list.c:54
+#: ../src/bin/e_widget_config_list.c:63
 #: ../src/modules/conf_applications/e_int_config_apps.c:245
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:111
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:79
@@ -3221,17 +3213,17 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: ../src/bin/e_widget_config_list.c:59
+#: ../src/bin/e_widget_config_list.c:69
 #, fuzzy
 msgid "Remove"
 msgstr "Gi nytt navn"
 
-#: ../src/bin/e_widget_config_list.c:73
+#: ../src/bin/e_widget_config_list.c:83
 #: ../src/modules/conf_applications/e_int_config_apps.c:260
 msgid "Up"
 msgstr ""
 
-#: ../src/bin/e_widget_config_list.c:79
+#: ../src/bin/e_widget_config_list.c:89
 #: ../src/modules/conf_applications/e_int_config_apps.c:265
 msgid "Down"
 msgstr ""
@@ -3241,7 +3233,7 @@ msgid "Add to Favorites"
 msgstr ""
 
 #: ../src/bin/e_widget_fsel.c:294
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:199
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:206
 #: ../src/modules/conf_imc/e_int_config_imc.c:830
 #: ../src/modules/conf_startup/e_int_config_startup.c:281
 #: ../src/modules/conf_theme/e_int_config_theme.c:365
@@ -3288,7 +3280,7 @@ msgstr ""
 
 #: ../src/modules/battery/e_mod_config.c:40
 #, fuzzy
-msgid "Battery Monitor Configuration"
+msgid "Battery Monitor Settings"
 msgstr "Batterioppsett"
 
 #: ../src/modules/battery/e_mod_config.c:91
@@ -3320,10 +3312,10 @@ msgid "Alert when battery is down to:"
 msgstr "Advarsel når batteriet er nede i:"
 
 #: ../src/modules/battery/e_mod_config.c:145
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:156
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:193
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:201
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:209
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:162
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:207
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:215
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:223
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:119
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:151
 #, c-format
@@ -3349,53 +3341,45 @@ msgstr ""
 msgid "%1.0f seconds"
 msgstr "%1.0f sekunder"
 
-#: ../src/modules/battery/e_mod_main.c:130
+#: ../src/modules/battery/e_mod_main.c:135
 msgid "Battery"
 msgstr ""
 
-#: ../src/modules/battery/e_mod_main.c:323
+#: ../src/modules/battery/e_mod_main.c:832
 #, fuzzy
 msgid "Your battery is low!"
 msgstr "Vis advarsel når batterinivået er lavt"
 
-#: ../src/modules/battery/e_mod_main.c:325
+#: ../src/modules/battery/e_mod_main.c:834
 msgid "AC power is recommended."
 msgstr ""
 
-#: ../src/modules/battery/e_mod_main.c:408
-#, fuzzy
-msgid "Battery Meter"
-msgstr "Sjekk batteriet med intervall:"
+#: ../src/modules/battery/e_mod_main.c:909
+msgid "N/A"
+msgstr ""
 
-#: ../src/modules/battery/e_mod_main.c:485
-#: ../src/modules/battery/e_mod_main.c:487
-#: ../src/modules/battery/e_mod_main.c:494
-#: ../src/modules/battery/e_mod_main.c:496
+#: ../src/modules/battery/e_mod_main.c:980
+#: ../src/modules/battery/e_mod_main.c:982
+#: ../src/modules/battery/e_mod_main.c:989
+#: ../src/modules/battery/e_mod_main.c:991
 msgid "ERROR"
 msgstr ""
 
-#: ../src/modules/battery/e_mod_main.c:553
-msgid "N/A"
-msgstr ""
+#: ../src/modules/battery/e_mod_main.c:1078
+#, fuzzy
+msgid "Battery Meter"
+msgstr "Sjekk batteriet med intervall:"
 
 #: ../src/modules/clock/e_mod_main.c:98
 #, fuzzy
 msgid "Clock"
 msgstr "Låser"
 
-#: ../src/modules/conf/e_conf.c:122 ../src/modules/conf/e_conf.c:133
-msgid "Enlightenment Configuration"
-msgstr "Konfigurasjon av Enlightenment"
-
-#. Item List
-#: ../src/modules/conf/e_conf.c:161
-msgid "Items"
-msgstr ""
-
-#: ../src/modules/conf/e_mod_main.c:46 ../src/modules/conf/e_mod_main.c:67
-#: ../src/modules/conf/e_mod_main.c:116
-msgid "Configuration Panel"
-msgstr "Kontrollpanel"
+#: ../src/modules/conf/e_mod_main.c:139 ../src/modules/conf/e_mod_main.c:162
+#: ../src/modules/conf/e_mod_main.c:211
+#, fuzzy
+msgid "Settings Panel"
+msgstr "Menyoppsett"
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:51
 #: ../src/modules/conf_applications/e_mod_main.c:42
@@ -3433,6 +3417,11 @@ msgstr "(Ingen programmer)"
 msgid "Selected Applications"
 msgstr "(Ingen programmer)"
 
+#: ../src/modules/conf_applications/e_mod_main.c:34
+#, fuzzy
+msgid "Apps"
+msgstr "Bruk"
+
 #: ../src/modules/conf_applications/e_mod_main.c:35
 #, fuzzy
 msgid "New Application"
@@ -3456,19 +3445,34 @@ msgstr ""
 msgid "Menus"
 msgstr ""
 
-#: ../src/modules/conf_borders/e_int_config_borders.c:29
-#: ../src/modules/conf_borders/e_int_config_borders.c:185
+#: ../src/modules/conf_borders/e_int_config_borders.c:30
+#: ../src/modules/conf_borders/e_int_config_borders.c:198
 #, fuzzy
 msgid "Default Border Style"
 msgstr "Vindusramme"
 
-#: ../src/modules/conf_borders/e_int_config_borders.c:49
+#: ../src/modules/conf_borders/e_int_config_borders.c:50
 msgid "Window Border Selection"
 msgstr "Valg av vindusbord"
 
-#: ../src/modules/conf_borders/e_int_config_borders.c:230
+#: ../src/modules/conf_borders/e_int_config_borders.c:243
 msgid "Remember this Border for this window next time it appears"
 msgstr "Alltid bruk denne borden for dette vinduet"
+
+#: ../src/modules/conf_borders/e_mod_main.c:34
+#: ../src/modules/conf_colors/e_mod_main.c:34
+#: ../src/modules/conf_fonts/e_mod_main.c:34
+#: ../src/modules/conf_icon_theme/e_mod_main.c:34
+#: ../src/modules/conf_mouse_cursor/e_mod_main.c:34
+#: ../src/modules/conf_scale/e_mod_main.c:34
+#: ../src/modules/conf_startup/e_mod_main.c:34
+#: ../src/modules/conf_theme/e_mod_main.c:38
+#: ../src/modules/conf_transitions/e_mod_main.c:34
+#: ../src/modules/conf_wallpaper/e_mod_main.c:28
+#: ../src/modules/dropshadow/e_mod_main.c:89
+#, fuzzy
+msgid "Look"
+msgstr "Låser"
 
 #: ../src/modules/conf_borders/e_mod_main.c:35
 msgid "Borders"
@@ -3799,30 +3803,35 @@ msgstr "Konfigurér"
 msgid "Desk"
 msgstr "Skrivebord"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:71
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:72
 #, fuzzy
 msgid "Screen Lock Settings"
 msgstr "Scrolleinnstillinger"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:143
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:145
 #, fuzzy
 msgid "Automatic Locking"
 msgstr "Automatisk høyde"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:145
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:147
+#, fuzzy
+msgid "Lock when Enlightenment starts"
+msgstr "Enlightenment: Feil!"
+
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:151
 msgid "Lock when X screensaver activates"
 msgstr ""
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:149
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:155
 msgid "Lock when idle time exceeded"
 msgstr ""
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:153
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:159
 msgid "Idle time to exceed"
 msgstr ""
 
 #. create dir radios
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:192
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:199
 #: ../src/modules/conf_imc/e_int_config_imc.c:818
 #: ../src/modules/conf_startup/e_int_config_startup.c:268
 #: ../src/modules/conf_theme/e_int_config_theme.c:354
@@ -3834,26 +3843,26 @@ msgstr ""
 msgid "Personal"
 msgstr "Permisjoner:"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:281
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:288
 #, fuzzy
 msgid "Login Box Settings"
 msgstr "Posisjonsoppsett"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:284
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:291
 #, fuzzy
 msgid "Show on all screen zones"
 msgstr "Skjermsone"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:288
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:295
 msgid "Show on current screen zone"
 msgstr ""
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:292
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:299
 #, fuzzy
 msgid "Show on screen zone #:"
 msgstr "Skjermsone"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:296
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:303
 #: ../src/modules/conf_desks/e_int_config_desks.c:197
 #: ../src/modules/conf_desks/e_int_config_desks.c:201
 #: ../src/modules/conf_desks/e_int_config_desks.c:236
@@ -3871,26 +3880,26 @@ msgstr "Skjermsone"
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:304
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:311
 msgid "Wallpaper Mode"
 msgstr ""
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:306
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:313
 #: ../src/modules/gadman/e_mod_config.c:149
 msgid "Theme Defined"
 msgstr ""
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:309
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:316
 #, fuzzy
 msgid "Theme Wallpaper"
 msgstr "Endre skrivebordstema"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:322
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:329
 #, fuzzy
 msgid "Custom Screenlock"
 msgstr "Skjermsone"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:323
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:330
 msgid "Use custom screenlock"
 msgstr ""
 
@@ -3900,6 +3909,7 @@ msgid "Screen Lock"
 msgstr "Skjermsone"
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:56
+#: ../src/modules/pager/e_mod_main.c:811
 #, fuzzy
 msgid "Virtual Desktops Settings"
 msgstr "Skrivebord"
@@ -3975,12 +3985,12 @@ msgstr "Bunn"
 msgid "Virtual Desktops"
 msgstr "Skrivebord"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:35
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:36
 #, fuzzy
 msgid "Dialog Settings"
 msgstr "Posisjonsoppsett"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:84
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:87
 #: ../src/modules/conf_engine/e_int_config_engine.c:94
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:109
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:161
@@ -3995,33 +4005,38 @@ msgstr "Posisjonsoppsett"
 msgid "General Settings"
 msgstr "Generelle innstillinger"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:86
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:89
 #, fuzzy
 msgid "Disable Confirmation Dialogs"
 msgstr "Kontrollpanel"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:93
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:91
 #, fuzzy
-msgid "Default Configuration Dialogs Mode"
+msgid "Normal Windows"
+msgstr "(Ingen vindu)"
+
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:98
+#, fuzzy
+msgid "Default Settings Dialogs Mode"
 msgstr "Kontrollpanel"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:96
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:134
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:101
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:140
 #, fuzzy
 msgid "Basic Mode"
 msgstr "Basisinformasjon"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:98
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:136
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:103
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:142
 #, fuzzy
 msgid "Advanced Mode"
 msgstr "Avansert"
 
 #. of = e_widget_framelist_add(evas, _("General Settings"), 0);
-#. ob = e_widget_check_add(evas, _("Auto-Apply Configuration Changes"), &(cfdata->auto_apply));
+#. ob = e_widget_check_add(evas, _("Auto-Apply Settings Changes"), &(cfdata->auto_apply));
 #. e_widget_framelist_object_append(of, ob);
 #. e_widget_list_object_append(o, of, 1, 1, 0.5);
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:131
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:137
 msgid "Default Dialog Mode"
 msgstr ""
 
@@ -4029,87 +4044,97 @@ msgstr ""
 msgid "Dialogs"
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:133
+#: ../src/modules/conf_display/e_int_config_display.c:129
 #, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
 "will be restored in %d seconds."
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:140
+#: ../src/modules/conf_display/e_int_config_display.c:136
 #, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored in %d seconds."
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:150
+#: ../src/modules/conf_display/e_int_config_display.c:146
 #, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
 "will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:157
+#: ../src/modules/conf_display/e_int_config_display.c:153
 #, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:212
+#: ../src/modules/conf_display/e_int_config_display.c:190
 msgid "Resolution change"
 msgstr "Endre oppløsning"
 
-#: ../src/modules/conf_display/e_int_config_display.c:250
+#: ../src/modules/conf_display/e_int_config_display.c:194
+#, fuzzy
+msgid "Save"
+msgstr "Opprullet"
+
+#: ../src/modules/conf_display/e_int_config_display.c:195
+#, fuzzy
+msgid "Restore"
+msgstr "Motstand"
+
+#: ../src/modules/conf_display/e_int_config_display.c:228
 #, fuzzy
 msgid "Screen Resolution Settings"
 msgstr "Oppløsning"
 
-#: ../src/modules/conf_display/e_int_config_display.c:398
+#: ../src/modules/conf_display/e_int_config_display.c:402
 msgid "Resolution"
 msgstr "Oppløsning"
 
-#: ../src/modules/conf_display/e_int_config_display.c:405
+#: ../src/modules/conf_display/e_int_config_display.c:409
 #, fuzzy
 msgid "Restore on login"
 msgstr "Sett hastighetsjustering ved oppstart"
 
-#: ../src/modules/conf_display/e_int_config_display.c:410
+#: ../src/modules/conf_display/e_int_config_display.c:413
 msgid "Refresh"
 msgstr "Oppdater"
 
-#: ../src/modules/conf_display/e_int_config_display.c:493
+#: ../src/modules/conf_display/e_int_config_display.c:472
 #, fuzzy
 msgid "Rotation"
 msgstr "Oppløsning"
 
-#: ../src/modules/conf_display/e_int_config_display.c:512
+#: ../src/modules/conf_display/e_int_config_display.c:491
 msgid "Mirroring"
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:593
+#: ../src/modules/conf_display/e_int_config_display.c:642
 msgid "Missing Features"
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:594
+#: ../src/modules/conf_display/e_int_config_display.c:643
 msgid ""
-"Your X Display Server is missing support for<br>the <hilight>XRandr</"
+"Your X Display Server is missing support for<br>the <hilight>XRandR</"
 "hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
 "resolutions without<br>the support of this extension. It could also "
 "be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no "
-"XRandr support detected."
+"XRandR support detected."
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:606
+#: ../src/modules/conf_display/e_int_config_display.c:655
 msgid "No Refresh Rates Found"
 msgstr ""
 
-#: ../src/modules/conf_display/e_int_config_display.c:607
+#: ../src/modules/conf_display/e_int_config_display.c:656
 msgid ""
 "No refresh rates were reported by your X Display Server.<br>If you are "
 "running a nested X Display Server, then<br>this is to be expected. However, "
@@ -4123,42 +4148,43 @@ msgstr ""
 msgid "Screen Resolution"
 msgstr "Oppløsning"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:56
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:77
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:57
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:78
 msgid "Display Power Management Signaling"
 msgstr ""
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:57
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:58
 msgid "The current display server is not <br>DPMS capable."
 msgstr ""
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:78
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:79
 msgid "The current display server does not <br>have the DPMS extension."
 msgstr ""
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:107
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:109
 #, fuzzy
 msgid "Display Power Management Settings"
 msgstr "Skjerminnstillinger"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:185
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:199
 msgid "Enable Display Power Management"
 msgstr ""
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:189
-msgid "Timer(s)"
-msgstr ""
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:203
+#, fuzzy
+msgid "Timers"
+msgstr "Tittel"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:191
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:205
 msgid "Standby time"
 msgstr ""
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:199
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:213
 #, fuzzy
 msgid "Suspend time"
 msgstr "Send til skrivebord"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:207
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:221
 msgid "Off time"
 msgstr ""
 
@@ -4541,9 +4567,10 @@ msgid "Icon Theme"
 msgstr "Ikonstørrelse"
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:109
+#: ../src/modules/conf_imc/e_mod_main.c:35
 #, fuzzy
-msgid "Input Method Configuration"
-msgstr "Oppsett av start-modul"
+msgid "Input Method Settings"
+msgstr "Feil ved skrivemetode"
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:297
 #, fuzzy
@@ -4593,7 +4620,7 @@ msgstr ""
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:66
 #, fuzzy
-msgid "Select an Input Method Configuration..."
+msgid "Select an Input Method Settings..."
 msgstr "Oppsett av start-modul"
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:281
@@ -4627,11 +4654,6 @@ msgstr ""
 #, fuzzy
 msgid "Language"
 msgstr "Fare"
-
-#: ../src/modules/conf_imc/e_mod_main.c:35
-#, fuzzy
-msgid "Input Method Settings"
-msgstr "Feil ved skrivemetode"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:37
 #, fuzzy
@@ -4674,15 +4696,25 @@ msgstr ""
 msgid "%1.2f sec"
 msgstr "%1.1f sek"
 
+#: ../src/modules/conf_interaction/e_mod_main.c:34
+#: ../src/modules/conf_keybindings/e_mod_main.c:34
+#: ../src/modules/conf_mousebindings/e_mod_main.c:34
+#: ../src/modules/conf_mouse/e_mod_main.c:34
+#: ../src/modules/mixer/app_mixer.c:288 ../src/modules/mixer/app_mixer.c:306
+#, fuzzy
+msgid "Input"
+msgstr "Ikoner"
+
 #: ../src/modules/conf_interaction/e_mod_main.c:35
 #, fuzzy
 msgid "Interaction"
 msgstr "Oppløsning"
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:582
+#: ../src/modules/conf_intl/e_mod_main.c:35
 #, fuzzy
-msgid "Language Configuration"
-msgstr "Pager oppsett"
+msgid "Language Settings"
+msgstr "Menyoppsett"
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:894
 #: ../src/modules/conf_intl/e_int_config_intl.c:971
@@ -4701,11 +4733,6 @@ msgstr ""
 #, fuzzy
 msgid "Locale"
 msgstr "Lastet"
-
-#: ../src/modules/conf_intl/e_mod_main.c:35
-#, fuzzy
-msgid "Language Settings"
-msgstr "Menyoppsett"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:6
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:10
@@ -4778,29 +4805,23 @@ msgid ""
 msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1287
-#: ../src/modules/gadman/e_mod_gadman.c:759
+#: ../src/modules/gadman/e_mod_gadman.c:763
 msgid "CTRL"
 msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1292
-#: ../src/modules/gadman/e_mod_gadman.c:764
+#: ../src/modules/gadman/e_mod_gadman.c:768
 msgid "ALT"
 msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1298
-#: ../src/modules/gadman/e_mod_gadman.c:770
+#: ../src/modules/gadman/e_mod_gadman.c:774
 msgid "SHIFT"
 msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1304
-#: ../src/modules/gadman/e_mod_gadman.c:776
+#: ../src/modules/gadman/e_mod_gadman.c:780
 msgid "WIN"
-msgstr ""
-
-#: ../src/modules/conf_keybindings/e_mod_main.c:34
-#: ../src/modules/conf_mousebindings/e_mod_main.c:34
-#: ../src/modules/conf_mouse/e_mod_main.c:34
-msgid "Keyboard & Mouse"
 msgstr ""
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:44
@@ -4948,6 +4969,14 @@ msgstr "Standard skrivebord"
 msgid "Select an Edj File"
 msgstr "Velg et vindu"
 
+#. Setup Entry in Config Panel
+#: ../src/modules/conf_mime/e_mod_main.c:34
+#: ../src/modules/fileman/e_mod_main.c:45
+#: ../src/modules/fileman/e_mod_main.c:218
+#, fuzzy
+msgid "Files"
+msgstr "Fil:"
+
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
@@ -5087,8 +5116,8 @@ msgstr ""
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:62
 #, fuzzy
-msgid "Search Path Configuration"
-msgstr "IBar oppsett"
+msgid "Search Path Settings"
+msgstr "Oppstartsinnstillinger"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:73
 msgid "Data"
@@ -5370,11 +5399,6 @@ msgstr ""
 msgid "Screen Saver"
 msgstr "Skjermsone"
 
-#: ../src/modules/conf_shelves/e_int_config_shelf.c:43
-#, fuzzy
-msgid "Shelf Settings"
-msgstr "Størrelsesoppsett"
-
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:71
 #, fuzzy
 msgid "Configured Shelves"
@@ -5542,14 +5566,14 @@ msgstr "Oppsett"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
-#: ../src/modules/gadman/e_mod_gadman.c:681
+#: ../src/modules/gadman/e_mod_gadman.c:685
 #, fuzzy
 msgid "Horizontal"
 msgstr "Sentrér vannrett"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:154
-#: ../src/modules/gadman/e_mod_gadman.c:689
+#: ../src/modules/gadman/e_mod_gadman.c:693
 #, fuzzy
 msgid "Vertical"
 msgstr "Sentrér loddrett"
@@ -6275,8 +6299,9 @@ msgstr ""
 "hjelp av modulens setfreq-verktøy."
 
 #: ../src/modules/dropshadow/e_mod_config.c:40
-msgid "Dropshadow Configuration"
-msgstr "Vinduskyggeoppsett"
+#, fuzzy
+msgid "Dropshadow Settings"
+msgstr "Posisjonsoppsett"
 
 #: ../src/modules/dropshadow/e_mod_config.c:108
 msgid "Quality"
@@ -6372,21 +6397,16 @@ msgstr ""
 msgid "Run Command Dialog"
 msgstr "Kjør ..."
 
-#: ../src/modules/fileman/e_mod_main.c:218
-#, fuzzy
-msgid "Files"
-msgstr "Fil:"
-
 #: ../src/modules/fileman/e_mod_main.c:270
 #, fuzzy
 msgid ""
-"Fileman Module Configuration data needed upgrading. Your old "
-"configuration<br>has been wiped and a new set of defaults initialized. "
-"This<br>will happen regularly during development, so don't report a<br>bug. "
-"This simply means Fileman module needs new configuration<br>data by default "
-"for usable functionality that your old<br>configuration simply lacks. This "
-"new set of defaults will fix<br>that by adding it in. You can re-configure "
-"things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
+"Fileman Module Settings data needed upgrading. Your old configuration<br>has "
+"been wiped and a new set of defaults initialized. This<br>will happen "
+"regularly during development, so don't report a<br>bug. This simply means "
+"Fileman module needs new configuration<br>data by default for usable "
+"functionality that your old<br>configuration simply lacks. This new set of "
+"defaults will fix<br>that by adding it in. You can re-configure things now "
+"to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr ""
 "Konfigurasjonsdata må oppgraderes. Dine gamle konfigurasjonsdata\n"
 "er slettet og blitt erstattet med et nytt standardoppsett. Dette\n"
@@ -6414,8 +6434,8 @@ msgstr ""
 
 #: ../src/modules/fileman/e_mod_main.c:352
 #, fuzzy
-msgid "Fileman Configuration Updated"
-msgstr "Konfigurasjonen er oppgradert"
+msgid "Fileman Settings Updated"
+msgstr "Menyoppsett"
 
 #: ../src/modules/fileman/e_mod_config.c:88
 #, fuzzy
@@ -6539,25 +6559,25 @@ msgstr ""
 msgid "Animations"
 msgstr "Vis informasjon"
 
-#: ../src/modules/gadman/e_mod_gadman.c:673
+#: ../src/modules/gadman/e_mod_gadman.c:677
 #, fuzzy
 msgid "Free"
 msgstr "Langt unna"
 
-#: ../src/modules/gadman/e_mod_gadman.c:705
+#: ../src/modules/gadman/e_mod_gadman.c:709
 #, fuzzy
 msgid "Always on desktop"
 msgstr "Alltid på toppen"
 
-#: ../src/modules/gadman/e_mod_gadman.c:715
+#: ../src/modules/gadman/e_mod_gadman.c:719
 msgid "On top pressing"
 msgstr ""
 
-#: ../src/modules/gadman/e_mod_gadman.c:725
+#: ../src/modules/gadman/e_mod_gadman.c:729
 msgid "Behavior"
 msgstr ""
 
-#: ../src/modules/gadman/e_mod_gadman.c:744
+#: ../src/modules/gadman/e_mod_gadman.c:748
 #, fuzzy
 msgid "Add other gadgets"
 msgstr "Dingser"
@@ -6600,8 +6620,9 @@ msgid "Select a window"
 msgstr "Velg et vindu"
 
 #: ../src/modules/ibar/e_mod_config.c:55
-msgid "IBar Configuration"
-msgstr "IBar oppsett"
+#, fuzzy
+msgid "IBar Settings"
+msgstr "Musepeker"
 
 #: ../src/modules/ibar/e_mod_config.c:101
 msgid "Selected Bar Source"
@@ -6682,8 +6703,9 @@ msgid "Add Application"
 msgstr "(Ingen programmer)"
 
 #: ../src/modules/ibox/e_mod_config.c:48
-msgid "IBox Configuration"
-msgstr "IBox oppsett"
+#, fuzzy
+msgid "IBox Settings"
+msgstr "Posisjonsoppsett"
 
 #: ../src/modules/ibox/e_mod_config.c:97
 #, fuzzy
@@ -6735,8 +6757,9 @@ msgid "IBox"
 msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:69
-msgid "Pager Configuration"
-msgstr "Pager oppsett"
+#, fuzzy
+msgid "Pager Settings"
+msgstr "Musepeker"
 
 #: ../src/modules/pager/e_mod_config.c:116
 #: ../src/modules/pager/e_mod_config.c:155
@@ -6866,11 +6889,6 @@ msgstr ""
 msgid "Button %i"
 msgstr "Bunn"
 
-#: ../src/modules/pager/e_mod_main.c:811
-#, fuzzy
-msgid "Virtual Desktops Configuration"
-msgstr "Skrivebord"
-
 #: ../src/modules/pager/e_mod_main.c:2803
 #, fuzzy
 msgid "Show Pager Popup"
@@ -6906,8 +6924,9 @@ msgid "Start"
 msgstr "Starter %s"
 
 #: ../src/modules/temperature/e_mod_config.c:63
-msgid "Temperature Configuration"
-msgstr "Temperaturoppsett"
+#, fuzzy
+msgid "Temperature Settings"
+msgstr "Generelle innstillinger"
 
 #: ../src/modules/temperature/e_mod_config.c:249
 #: ../src/modules/temperature/e_mod_config.c:352
@@ -7013,7 +7032,7 @@ msgstr "%1.0f°F"
 msgid "%1.0f C"
 msgstr "%1.0f°C"
 
-#: ../src/modules/temperature/e_mod_main.c:155
+#: ../src/modules/temperature/e_mod_main.c:145
 #, fuzzy
 msgid "Temperature"
 msgstr "Lav temperatur"
@@ -7040,11 +7059,6 @@ msgstr ""
 #: ../src/modules/mixer/app_mixer.c:168
 msgid "Playback"
 msgstr ""
-
-#: ../src/modules/mixer/app_mixer.c:288 ../src/modules/mixer/app_mixer.c:306
-#, fuzzy
-msgid "Input"
-msgstr "Ikoner"
 
 #: ../src/modules/mixer/app_mixer.c:294
 #, fuzzy
@@ -7110,8 +7124,8 @@ msgstr ""
 
 #: ../src/modules/mixer/conf_gadget.c:383
 #, fuzzy
-msgid "Mixer Configuration"
-msgstr "Pager oppsett"
+msgid "Mixer Settings"
+msgstr "Størrelsesoppsett"
 
 #: ../src/modules/mixer/conf_module.c:98
 msgid "Mixer to use for global actions:"
@@ -7123,17 +7137,17 @@ msgstr ""
 
 #: ../src/modules/mixer/conf_module.c:187
 #, fuzzy
-msgid "Mixer Module Configuration"
-msgstr "Oppsett av start-modul"
+msgid "Mixer Module Settings"
+msgstr "Modulinnstillinger"
 
 #: ../src/modules/mixer/e_mod_main.c:122
 #, fuzzy
-msgid "Mixer Configuration Updated"
+msgid "Mixer Settings Updated"
 msgstr "Konfigurasjonen er oppgradert"
 
 #: ../src/modules/mixer/e_mod_main.c:1161
 msgid ""
-"Mixer Module Configuration data changed.<br>Your old configuration has been "
+"Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
 msgstr ""
 
@@ -7170,10 +7184,72 @@ msgstr "(Ingen programmer)"
 msgid "Networks"
 msgstr ""
 
-#: ../src/modules/connman/e_mod_main.c:1093
 #, fuzzy
-msgid "Settings"
-msgstr "Menyoppsett"
+#~ msgid "Desktop %i, %i"
+#~ msgstr "Skrivebord"
+
+#~ msgid "Configuration Upgraded"
+#~ msgstr "Konfigurasjonen er oppgradert"
+
+#~ msgid "Configuration"
+#~ msgstr "Konfigurasjon"
+
+#, fuzzy
+#~ msgid "Toolbar Configuration"
+#~ msgstr "IBar oppsett"
+
+#, fuzzy
+#~ msgid "Shelf Configuration"
+#~ msgstr "Konfigurasjon"
+
+#~ msgid "Enlightenment Configuration"
+#~ msgstr "Konfigurasjon av Enlightenment"
+
+#~ msgid "Configuration Panel"
+#~ msgstr "Kontrollpanel"
+
+#, fuzzy
+#~ msgid "Input Method Configuration"
+#~ msgstr "Oppsett av start-modul"
+
+#, fuzzy
+#~ msgid "Language Configuration"
+#~ msgstr "Pager oppsett"
+
+#, fuzzy
+#~ msgid "Search Path Configuration"
+#~ msgstr "IBar oppsett"
+
+#~ msgid "Dropshadow Configuration"
+#~ msgstr "Vinduskyggeoppsett"
+
+#, fuzzy
+#~ msgid "Fileman Configuration Updated"
+#~ msgstr "Konfigurasjonen er oppgradert"
+
+#~ msgid "IBar Configuration"
+#~ msgstr "IBar oppsett"
+
+#~ msgid "IBox Configuration"
+#~ msgstr "IBox oppsett"
+
+#~ msgid "Pager Configuration"
+#~ msgstr "Pager oppsett"
+
+#, fuzzy
+#~ msgid "Virtual Desktops Configuration"
+#~ msgstr "Skrivebord"
+
+#~ msgid "Temperature Configuration"
+#~ msgstr "Temperaturoppsett"
+
+#, fuzzy
+#~ msgid "Mixer Configuration"
+#~ msgstr "Pager oppsett"
+
+#, fuzzy
+#~ msgid "Mixer Module Configuration"
+#~ msgstr "Oppsett av start-modul"
 
 #, fuzzy
 #~ msgid "Enlightenment was unable to process a command line:<br><br>%s %s<br>"

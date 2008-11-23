@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment (e17) CVS\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-11-11 21:43+0800\n"
+"POT-Creation-Date: 2008-11-23 20:19+0800\n"
 "PO-Revision-Date: 2008-01-23 02:45+0200\n"
 "Last-Translator: Jani väyrynen <janivayrynen@gmail.com>\n"
 "Language-Team: Finnish <janivayrynen@gmail.com>\n"
@@ -20,9 +20,9 @@ msgstr "Tietoa Enlightenmentista"
 
 #. Close Button
 #: ../src/bin/e_about.c:20 ../src/bin/e_actions.c:2313
-#: ../src/bin/e_config_dialog.c:256 ../src/bin/e_fm.c:550
+#: ../src/bin/e_config_dialog.c:258 ../src/bin/e_fm.c:550
 #: ../src/bin/e_int_border_menu.c:208 ../src/bin/e_int_border_prop.c:81
-#: ../src/bin/e_theme_about.c:20 ../src/modules/conf/e_conf.c:173
+#: ../src/bin/e_theme_about.c:20 ../src/modules/conf/e_conf.c:172
 #: ../src/modules/fileman/e_fwin.c:1422 ../src/modules/mixer/app_mixer.c:537
 msgid "Close"
 msgstr "Sulje"
@@ -30,7 +30,7 @@ msgstr "Sulje"
 #: ../src/bin/e_about.c:21 ../src/bin/e_actions.c:2595
 #: ../src/bin/e_actions.c:2599 ../src/bin/e_actions.c:2603
 #: ../src/bin/e_actions.c:2607 ../src/bin/e_actions.c:2611
-#: ../src/bin/e_int_menus.c:169 ../src/bin/e_main.c:633
+#: ../src/bin/e_int_menus.c:169 ../src/bin/e_main.c:654
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:181
 msgid "Enlightenment"
 msgstr "Enlightenment"
@@ -81,7 +81,6 @@ msgstr "Haluatko varmasti tappaa tämän ikkunan?"
 #: ../src/bin/e_actions.c:1841 ../src/bin/e_actions.c:1905
 #: ../src/bin/e_actions.c:1969 ../src/bin/e_confirm_dialog.c:47
 #: ../src/bin/e_fm.c:7222 ../src/bin/e_fm.c:7402 ../src/bin/e_module.c:526
-#: ../src/modules/conf_display/e_int_config_display.c:215
 msgid "Yes"
 msgstr "Kyllä"
 
@@ -90,7 +89,6 @@ msgstr "Kyllä"
 #: ../src/bin/e_actions.c:1843 ../src/bin/e_actions.c:1907
 #: ../src/bin/e_actions.c:1971 ../src/bin/e_confirm_dialog.c:48
 #: ../src/bin/e_fm.c:7220 ../src/bin/e_fm.c:7403 ../src/bin/e_module.c:527
-#: ../src/modules/conf_display/e_int_config_display.c:216
 msgid "No"
 msgstr "Ei"
 
@@ -565,7 +563,7 @@ msgid "Show Menu..."
 msgstr "Näytä valikko..."
 
 #: ../src/bin/e_actions.c:2586 ../src/bin/e_actions.c:2591
-#: ../src/modules/conf/e_mod_main.c:46 ../src/modules/conf/e_mod_main.c:67
+#: ../src/modules/conf/e_mod_main.c:139 ../src/modules/conf/e_mod_main.c:162
 #: ../src/modules/exebuf/e_mod_main.c:48 ../src/modules/exebuf/e_mod_main.c:68
 #: ../src/modules/fileman/e_mod_main.c:59
 #: ../src/modules/fileman/e_mod_main.c:138
@@ -605,7 +603,7 @@ msgstr "Poistu välittömästi"
 #: ../src/bin/e_actions.c:2623 ../src/bin/e_actions.c:2627
 #: ../src/bin/e_configure.c:129 ../src/bin/e_int_config_modules.c:45
 #: ../src/bin/e_int_menus.c:231
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:195
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:202
 #: ../src/modules/conf_imc/e_int_config_imc.c:823
 #: ../src/modules/conf_startup/e_int_config_startup.c:273
 #: ../src/modules/conf_theme/e_int_config_theme.c:358
@@ -655,23 +653,24 @@ msgstr "Valitut sovellukset"
 msgid "Set As Background"
 msgstr "Aseta taustakuvaksi"
 
-#: ../src/bin/e_border.c:4853
+#: ../src/bin/e_border.c:4851
 msgid "Desktop files scan done"
 msgstr "Työpöytätiedostojen skannaus valmis"
 
-#: ../src/bin/e_border.c:4865
+#: ../src/bin/e_border.c:4863
 msgid "Desktop file scan"
 msgstr "Työpöytätiedostojen skannaus"
 
-#: ../src/bin/e_config.c:682
+#: ../src/bin/e_config.c:693 ../src/bin/e_config.c:726
+#, fuzzy
 msgid ""
-"Configuration data needed upgrading. Your old configuration<br>has been "
-"wiped and a new set of defaults initialized. This<br>will happen regularly "
-"during development, so don't report a<br>bug. This simply means "
-"Enlightenment needs new configuration<br>data by default for usable "
-"functionality that your old<br>configuration simply lacks. This new set of "
-"defaults will fix<br>that by adding it in. You can re-configure things now "
-"to your<br>liking. Sorry for the hiccup in your configuration.<br>"
+"Settings data needed upgrading. Your old settings have<br>been wiped and a "
+"new set of defaults initialized. This<br>will happen regularly during "
+"development, so don't report a<br>bug. This simply means Enlightenment needs "
+"new settings<br>data by default for usable functionality that your "
+"old<br>settings simply lack. This new set of defaults will fix<br>that by "
+"adding it in. You can re-configure things now to your<br>liking. Sorry for "
+"the hiccup in your settings.<br>"
 msgstr ""
 "Asetustiedot tarvitsivat päivittämistä, Vanhat asetuksesi on poistettu<br>ja "
 "uudet asetukset on asetettu. Tämä tulee tapahtumaan<br>säännöllisesti "
@@ -681,13 +680,14 @@ msgstr ""
 "korjaavat tämän lisäämällä nämä uudet<br>ominaisuudet. Voit tehdä haluamasi "
 "asetukset uudelleen.<br>Olemme pahoillamme häiriöstä.<br>"
 
-#: ../src/bin/e_config.c:696
+#: ../src/bin/e_config.c:710
+#, fuzzy
 msgid ""
-"Your configuration is NEWER than Enlightenment. This is very<br>strange. "
-"This should not happen unless you downgraded<br>Enlightenment or copied the "
-"configuration from a place where<br>a newer version of Enlightenment was "
-"running. This is bad and<br>as a precaution your configuration has been now "
-"restored to<br>defaults. Sorry for the inconvenience.<br>"
+"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
+"should not happen unless you downgraded<br>Enlightenment or copied the "
+"settings from a place where<br>a newer version of Enlightenment was running. "
+"This is bad and<br>as a precaution your settings have been now restored "
+"to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 "Asetuksesi ovat UUDEMMAT kuin Enlightenment. Tämä on erittäin omituista,"
 "<br>eikä näin pitäisi tapahtua ellet ole vaihtanut Enlightenmentia "
@@ -696,31 +696,27 @@ msgstr ""
 "asetuksesi on nytpalautettu<br> oletusasetuksiin. Olemme pahoillamme "
 "häiriöstä.<br>"
 
-#: ../src/bin/e_config.c:718
-#, c-format
-msgid "Desktop %i, %i"
-msgstr "Työpöytä %i, %i"
+#: ../src/bin/e_config.c:1582
+#, fuzzy
+msgid "Settings Upgraded"
+msgstr "Työpöydän asetukset"
 
-#: ../src/bin/e_config.c:1959
-msgid "Configuration Upgraded"
-msgstr "Asetukset päivitetty"
-
-#: ../src/bin/e_config.c:1984
-#, c-format
+#: ../src/bin/e_config.c:1607
+#, fuzzy, c-format
 msgid ""
-"An error occured while saving Enlightenment's<br>configuration to disk. The "
-"error could not be<br>deterimined.<br><br>The file where the error occured "
-"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"An error occured while saving Enlightenment's<br>settings to disk. The error "
+"could not be<br>deterimined.<br><br>The file where the error occured was:<br>"
+"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Ilmeni virhe tallennettaessa Enlightenmentin<br>asetuksia levylle.Virhettä "
 "ei voitu tunnistaa<br><br>Tiedosto, jossa virhe ilmeni,oli:<br>%"
 "s<br><br>Tämä tiedosto on poistettu korruptoituneen datan välttämiseksi.<br>"
 
-#: ../src/bin/e_config.c:1995
-#, c-format
+#: ../src/bin/e_config.c:1618
+#, fuzzy, c-format
 msgid ""
-"Enlightenment's configuration files are too big<br>for the file system they "
-"are being saved to.<br>This error is very strange as the files should<br>be "
+"Enlightenment's settings files are too big<br>for the file system they are "
+"being saved to.<br>This error is very strange as the files should<br>be "
 "extremely small. Please check the settings<br>for your home directory."
 "<br><br>The file where the error occured was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
@@ -731,10 +727,10 @@ msgstr ""
 "asetukset.<br><br>Tiedosto, jossa virhe ilmeni, oli:<br>%s<br><br>Tämä "
 "tiedosto on poistettu korruptoituneen datan välttämiseksi.<br>"
 
-#: ../src/bin/e_config.c:2008
-#, c-format
+#: ../src/bin/e_config.c:1631
+#, fuzzy, c-format
 msgid ""
-"An output error occured when writing the configuration<br>files for "
+"An output error occured when writing the settings<br>files for "
 "Enlightenment. Your disk is having troubles<br>and possibly needs "
 "replacement.<br><br>The file where the error occured was:<br>%s<br><br>This "
 "file has been deleted to avoid corrupt data.<br>"
@@ -744,13 +740,13 @@ msgstr ""
 "<br><br>Tiedosto, jossa virhe ilmeni, oli:<br>%s<br><br>Tämä tiedosto on "
 "poistettu korruptoituneen datan välttämiseksi.<br>"
 
-#: ../src/bin/e_config.c:2019
-#, c-format
+#: ../src/bin/e_config.c:1642
+#, fuzzy, c-format
 msgid ""
-"Enlightenment cannot write its configuration file<br>because it ran out of "
-"space to write the file.<br>You have either run out of disk space or "
-"have<br>gone over your quota limit.<br><br>The file where the error occured "
-"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"Enlightenment cannot write its settings file<br>because it ran out of space "
+"to write the file.<br>You have either run out of disk space or have<br>gone "
+"over your quota limit.<br><br>The file where the error occured was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment ei voi kirjoittaa asetustiedostoaan,<br>koska sille ei ole "
 "tarpeeksi tilaa kirjoittaa tiedostoa.<br>Joko sinun levytilasi on lopussa "
@@ -758,32 +754,33 @@ msgstr ""
 "oli:<br>%s<br><br>Tämä tiedosto on poistettu korruptoituneen datan "
 "välttämiseksi.<br>"
 
-#: ../src/bin/e_config.c:2031
-#, c-format
+#: ../src/bin/e_config.c:1654
+#, fuzzy, c-format
 msgid ""
-"Enlightenment unexpectedly had the configuration file<br>it was writing "
-"closed on it. This is very unusual.<br><br>The file where the error occured "
-"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"Enlightenment unexpectedly had the settings file<br>it was writing closed on "
+"it. This is very unusual.<br><br>The file where the error occured was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenmentin asetustiedosto<br>sulkeutui juuri kun sitä oltiin "
 "kirjoittamassa. Tämä on hyvin epätavallista.<br><br>Tiedosto, jossa virhe "
 "ilmeni, oli:<br>%s<br><br>Tämä tiedosto on poistettu korruptoituneen datan "
 "välttämiseksi.<br>"
 
-#: ../src/bin/e_config.c:2056
-msgid "Enlightenment Configuration Write Problems"
+#: ../src/bin/e_config.c:1679
+#, fuzzy
+msgid "Enlightenment Settings Write Problems"
 msgstr "Enlightenmentin asetusten kirjoitusongelmat"
 
 #. buttons at the bottom
-#: ../src/bin/e_config.c:2060 ../src/bin/e_config_dialog.c:248
+#: ../src/bin/e_config.c:1683 ../src/bin/e_config_dialog.c:250
 #: ../src/bin/e_eap_editor.c:599 ../src/bin/e_eap_editor.c:663
 #: ../src/bin/e_entry_dialog.c:58 ../src/bin/e_exec.c:321
 #: ../src/bin/e_fm_prop.c:513 ../src/bin/e_int_border_remember.c:258
 #: ../src/bin/e_int_border_remember.c:339
 #: ../src/bin/e_int_border_remember.c:381 ../src/bin/e_module.c:418
 #: ../src/bin/e_sys.c:401 ../src/bin/e_sys.c:447 ../src/bin/e_utils.c:541
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:60
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:81
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:61
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:82
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:112
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:283
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:284
@@ -798,22 +795,19 @@ msgstr "Enlightenmentin asetusten kirjoitusongelmat"
 msgid "OK"
 msgstr "OK"
 
-#: ../src/bin/e_config_dialog.c:198 ../src/modules/battery/e_mod_main.c:406
-#: ../src/modules/conf_dialogs/e_mod_main.c:34
+#: ../src/bin/e_config_dialog.c:200 ../src/modules/battery/e_mod_main.c:1076
 #: ../src/modules/conf_engine/e_mod_main.c:34
 #: ../src/modules/conf_exebuf/e_mod_main.c:34
-#: ../src/modules/conf_interaction/e_mod_main.c:34
 #: ../src/modules/conf_paths/e_mod_main.c:34
 #: ../src/modules/conf_performance/e_mod_main.c:34
-#: ../src/modules/conf_profiles/e_mod_main.c:20
 msgid "Advanced"
 msgstr "Lisäasetukset"
 
-#: ../src/bin/e_config_dialog.c:227
+#: ../src/bin/e_config_dialog.c:229
 msgid "Basic"
 msgstr "Perusasetukset"
 
-#: ../src/bin/e_config_dialog.c:249
+#: ../src/bin/e_config_dialog.c:251
 msgid "Apply"
 msgstr "Käytä"
 
@@ -940,8 +934,7 @@ msgstr "Yleinen nimi"
 msgid "Window Class"
 msgstr "Ikkunan luokka"
 
-#. Category List
-#: ../src/bin/e_eap_editor.c:510 ../src/modules/conf/e_conf.c:151
+#: ../src/bin/e_eap_editor.c:510
 #: ../src/modules/conf_mime/e_int_config_mime.c:189
 msgid "Categories"
 msgstr "Kategoriat"
@@ -1348,7 +1341,7 @@ msgid "Thumbnail"
 msgstr "Pikkukuva"
 
 #: ../src/bin/e_fm_prop.c:438
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:312
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:319
 msgid "Custom"
 msgstr "Mukautettu"
 
@@ -1402,47 +1395,36 @@ msgstr "Tuntematon tilavuus"
 msgid "Removable Device"
 msgstr "Irroitettava laita"
 
-#: ../src/bin/e_gadcon.c:1214 ../src/modules/gadman/e_mod_gadman.c:653
+#: ../src/bin/e_gadcon.c:1241 ../src/modules/gadman/e_mod_gadman.c:657
 msgid "Plain"
 msgstr "Paljas"
 
-#: ../src/bin/e_gadcon.c:1223 ../src/modules/gadman/e_mod_gadman.c:661
+#: ../src/bin/e_gadcon.c:1250 ../src/modules/gadman/e_mod_gadman.c:665
 msgid "Inset"
 msgstr "Upotettu"
 
-#: ../src/bin/e_gadcon.c:1232 ../src/bin/e_int_config_modules.c:41
-#: ../src/modules/conf_borders/e_mod_main.c:34
-#: ../src/modules/conf_colors/e_mod_main.c:34
-#: ../src/modules/conf_fonts/e_mod_main.c:34
-#: ../src/modules/conf_icon_theme/e_mod_main.c:34
-#: ../src/modules/conf_mouse_cursor/e_mod_main.c:34
-#: ../src/modules/conf_scale/e_mod_main.c:34
-#: ../src/modules/conf_startup/e_mod_main.c:34
-#: ../src/modules/conf_theme/e_mod_main.c:38
-#: ../src/modules/conf_transitions/e_mod_main.c:34
-#: ../src/modules/conf_wallpaper/e_mod_main.c:28
-#: ../src/modules/dropshadow/e_mod_main.c:89
-#: ../src/modules/gadman/e_mod_gadman.c:697
+#: ../src/bin/e_gadcon.c:1259 ../src/bin/e_int_config_modules.c:41
+#: ../src/modules/gadman/e_mod_gadman.c:701
 msgid "Appearance"
 msgstr "Ulkoasu"
 
-#: ../src/bin/e_gadcon.c:1241
+#: ../src/bin/e_gadcon.c:1268
 msgid "Automatically scroll contents"
 msgstr "Vieritä sisältöä automaattisesti"
 
-#: ../src/bin/e_gadcon.c:1248
+#: ../src/bin/e_gadcon.c:1275
 msgid "Able to be resized"
 msgstr "Koko muutettavissa"
 
-#: ../src/bin/e_gadcon.c:1260 ../src/modules/gadman/e_mod_gadman.c:732
+#: ../src/bin/e_gadcon.c:1287 ../src/modules/gadman/e_mod_gadman.c:736
 msgid "Begin move/resize this gadget"
 msgstr "Vempain: siirrä/muuta kokoa"
 
-#: ../src/bin/e_gadcon.c:1266 ../src/modules/gadman/e_mod_gadman.c:738
+#: ../src/bin/e_gadcon.c:1293 ../src/modules/gadman/e_mod_gadman.c:742
 msgid "Remove this gadget"
 msgstr "Poista tämä vempain"
 
-#: ../src/bin/e_gadcon.c:1681
+#: ../src/bin/e_gadcon.c:1708
 msgid "Stop move/resize this gadget"
 msgstr "Vempain: lopeta siirtäminen/koon muuttaminen"
 
@@ -1980,20 +1962,21 @@ msgid "Always focus on start"
 msgstr "Aktivoi aina aloitettassa"
 
 #: ../src/bin/e_int_config_modules.c:42 ../src/bin/e_int_menus.c:215
-#: ../src/modules/battery/e_mod_main.c:171
+#: ../src/modules/battery/e_mod_main.c:176 ../src/modules/conf/e_conf.c:122
+#: ../src/modules/conf/e_conf.c:133
+#: ../src/modules/conf_dialogs/e_mod_main.c:34
+#: ../src/modules/conf_profiles/e_mod_main.c:20
 #: ../src/modules/ibar/e_mod_main.c:325 ../src/modules/ibar/e_mod_main.c:845
 #: ../src/modules/ibox/e_mod_main.c:318 ../src/modules/ibox/e_mod_main.c:716
 #: ../src/modules/pager/e_mod_main.c:804
-#: ../src/modules/temperature/e_mod_main.c:311
+#: ../src/modules/temperature/e_mod_main.c:277
 #: ../src/modules/mixer/e_mod_main.c:667
-msgid "Configuration"
-msgstr "Asetukset"
+#: ../src/modules/connman/e_mod_main.c:1093
+#, fuzzy
+msgid "Settings"
+msgstr "Työpöydän asetukset"
 
-#. Setup Entry in Config Panel
-#: ../src/bin/e_int_config_modules.c:43
-#: ../src/modules/conf_mime/e_mod_main.c:34
-#: ../src/modules/fileman/e_mod_main.c:45
-#: ../src/modules/fileman/e_mod_main.c:47
+#: ../src/bin/e_int_config_modules.c:43 ../src/modules/fileman/e_mod_main.c:47
 #: ../src/modules/fileman/e_mod_main.c:59
 #: ../src/modules/fileman/e_mod_main.c:138
 msgid "File Manager"
@@ -2059,8 +2042,9 @@ msgid "Remove Gadget"
 msgstr "Poista vempain"
 
 #: ../src/bin/e_int_toolbar_config.c:30 ../src/bin/e_toolbar.c:327
-msgid "Toolbar Configuration"
-msgstr "Työkalupalkin asetukset"
+#, fuzzy
+msgid "Toolbar Settings"
+msgstr "Ponnahduksen setukset"
 
 #: ../src/bin/e_int_toolbar_config.c:82 ../src/bin/e_int_shelf_config.c:500
 #: ../src/bin/e_int_shelf_config.c:565
@@ -2090,7 +2074,6 @@ msgid "Favorite Applications"
 msgstr "Suosikkisovellukset"
 
 #: ../src/bin/e_int_menus.c:119
-#: ../src/modules/conf_applications/e_mod_main.c:34
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:156
 msgid "Applications"
 msgstr "Sovellukset"
@@ -2176,7 +2159,8 @@ msgid "Delete A Shelf"
 msgstr "Poista hylly"
 
 #: ../src/bin/e_int_shelf_config.c:71 ../src/bin/e_shelf.c:1664
-msgid "Shelf Configuration"
+#: ../src/modules/conf_shelves/e_int_config_shelf.c:43
+msgid "Shelf Settings"
 msgstr "Hyllyn asetukset"
 
 #: ../src/bin/e_int_shelf_config.c:518
@@ -2310,8 +2294,8 @@ msgstr ""
 "Tarkistaisitko:\n"
 "%s/enlightenment-%s\n"
 
-#: ../src/bin/e_main.c:306
-#, c-format
+#: ../src/bin/e_main.c:308
+#, fuzzy, c-format
 msgid ""
 "Options:\n"
 "\t-display DISPLAY\n"
@@ -2333,6 +2317,8 @@ msgid ""
 "\t\tBe evil.\n"
 "\t-psychotic\n"
 "\t\tBe psychotic.\n"
+"\t-locked\n"
+"\t\tstart with desklock on, so password will be asked.\n"
 msgstr ""
 "Valinnat:\n"
 "\t-näyttö DISPLAY\n"
@@ -2355,7 +2341,7 @@ msgstr ""
 "\t-psykoottinen\n"
 "\t\tOle psykoottinen.\n"
 
-#: ../src/bin/e_main.c:368
+#: ../src/bin/e_main.c:377
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2363,7 +2349,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää Ecorea!\n"
 "Ehkäpä muisti on lopussa?"
 
-#: ../src/bin/e_main.c:394
+#: ../src/bin/e_main.c:403
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2371,7 +2357,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää tiedostojärjestelmää.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: ../src/bin/e_main.c:406
+#: ../src/bin/e_main.c:415
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2379,7 +2365,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää poistumissignaalinkäsittelijää.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: ../src/bin/e_main.c:412
+#: ../src/bin/e_main.c:421
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2387,7 +2373,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää HUP-signaalin käsittelijää.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: ../src/bin/e_main.c:424
+#: ../src/bin/e_main.c:433
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2395,7 +2381,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää X-yhteyttään.\n"
 "Oletko asettanut DISPLAY-muuttujan?"
 
-#: ../src/bin/e_main.c:432
+#: ../src/bin/e_main.c:441
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2403,7 +2389,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää hätähälytysjärjestelmäänsä.\n"
 "Oletko asettanut DISPLAY-muuttujan?"
 
-#: ../src/bin/e_main.c:455
+#: ../src/bin/e_main.c:464
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -2411,7 +2397,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää yhteysjärjestelmäänsä.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: ../src/bin/e_main.c:463
+#: ../src/bin/e_main.c:472
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2419,7 +2405,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää IPC-järjestelmäänsä.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: ../src/bin/e_main.c:472
+#: ../src/bin/e_main.c:481
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -2427,7 +2413,7 @@ msgstr ""
 "Enlightenment ei voi asettaa xineraman käärimistä.\n"
 "Tätä ei pitäisi tapahtua."
 
-#: ../src/bin/e_main.c:491
+#: ../src/bin/e_main.c:500
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -2435,7 +2421,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää Evas-järjestelmää.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: ../src/bin/e_main.c:497
+#: ../src/bin/e_main.c:506
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2445,7 +2431,7 @@ msgstr ""
 "X11-renderöintiä Evasissa. Tarkista Evas- ja Ecore-asennuksesi ja tarkista\n"
 "että ne tukevat ohjelmistopohjaista X11-renderöintiä."
 
-#: ../src/bin/e_main.c:504
+#: ../src/bin/e_main.c:513
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2457,7 +2443,7 @@ msgstr ""
 "että ne tukevat ohjelmistopohjaista ohjelmistopohjaista "
 "puskurirenderöintimoottoria."
 
-#: ../src/bin/e_main.c:520 ../src/bin/e_main.c:527
+#: ../src/bin/e_main.c:529 ../src/bin/e_main.c:536
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
@@ -2465,7 +2451,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää FDO-työpöytäjärjestelmää.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: ../src/bin/e_main.c:541
+#: ../src/bin/e_main.c:550
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2473,24 +2459,24 @@ msgstr ""
 "Enlightenment ei voi luoda hakemistoja kotihakemistoosi.\n"
 "Ehkä sinulla ei ole kotihakemistoa, tai levy on täynnä?"
 
-#: ../src/bin/e_main.c:551
+#: ../src/bin/e_main.c:560
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Enlightenment ei voi käynnistää tiedostorekisterijärjestelmäänsä."
 
-#: ../src/bin/e_main.c:560
+#: ../src/bin/e_main.c:569
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment ei voi käynnistää asetusjärjestelmäänsä."
 
-#: ../src/bin/e_main.c:572
+#: ../src/bin/e_main.c:583
 #, fuzzy
 msgid "Enlightenment cannot set up its scale system."
 msgstr "Enlightenment ei voi asettaa hyllyjärjestelmäänsä."
 
-#: ../src/bin/e_main.c:580
+#: ../src/bin/e_main.c:591
 msgid "Enlightenment cannot set up the pointer system."
 msgstr "Enlightenment ei voi käynnistää osoitinjärjestelmää."
 
-#: ../src/bin/e_main.c:589
+#: ../src/bin/e_main.c:600
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2498,15 +2484,23 @@ msgstr ""
 "Enlightenment ei voi asettaa reittejä tiedostojen löytämiselle.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: ../src/bin/e_main.c:607
+#: ../src/bin/e_main.c:618
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment ei voi käynnistää fonttijärjestelmäänsä."
 
-#: ../src/bin/e_main.c:618
+#: ../src/bin/e_main.c:629
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment ei voi käynnistää teemajärjestelmäänsä."
 
-#: ../src/bin/e_main.c:629
+#: ../src/bin/e_main.c:634
+msgid "Starting International Support"
+msgstr "Käynnistetään kansainvälisyyden tuki"
+
+#: ../src/bin/e_main.c:639
+msgid "Enlightenment cannot set up its intl system."
+msgstr "Enlightenment ei voi käynnistää kansainvälisyyden järjestelmäänsä."
+
+#: ../src/bin/e_main.c:650
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2514,11 +2508,11 @@ msgstr ""
 "Enlightenment ei voi käynnistää aloitusruutua.\n"
 "Ehkäpä muisti on vähänä?"
 
-#: ../src/bin/e_main.c:640
+#: ../src/bin/e_main.c:661
 msgid "Testing Format Support"
 msgstr "Testataan formaattitukea"
 
-#: ../src/bin/e_main.c:650
+#: ../src/bin/e_main.c:672
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2527,7 +2521,7 @@ msgstr ""
 "Tarkistaisitko,\n"
 "että Evasilla on ohjelmistopohjainen puskurimoottorin tuki.\n"
 
-#: ../src/bin/e_main.c:660
+#: ../src/bin/e_main.c:683
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2536,7 +2530,7 @@ msgstr ""
 "että\n"
 "Evasilla on PNG-latauksen tuki.\n"
 
-#: ../src/bin/e_main.c:669
+#: ../src/bin/e_main.c:692
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2544,7 +2538,7 @@ msgstr ""
 "Enlightenment selvitti, että Evas ei voi ladata JPEG-tiedostoja. Tarkista,\n"
 "että Evasilla on JPEG-latauksen tuki.\n"
 
-#: ../src/bin/e_main.c:678
+#: ../src/bin/e_main.c:701
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -2552,71 +2546,22 @@ msgstr ""
 "Enlightenment selvitti, että Evas ei voi ladata EET-tiedostoja. Tarkista,\n"
 "että Evasilla on EET-latauksen tuki.\n"
 
-#: ../src/bin/e_main.c:691
-msgid "Starting International Support"
-msgstr "Käynnistetään kansainvälisyyden tuki"
+#: ../src/bin/e_main.c:712
+#, fuzzy
+msgid ""
+"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
+"fontconfig\n"
+"support and system fontconfig defines a 'Sans' font.\n"
+msgstr ""
+"Enlightenment selvitti, että Evas ei voi ladata PNG-tiedostoja. Tarkista, "
+"että\n"
+"Evasilla on PNG-latauksen tuki.\n"
 
-#: ../src/bin/e_main.c:696
-msgid "Enlightenment cannot set up its intl system."
-msgstr "Enlightenment ei voi käynnistää kansainvälisyyden järjestelmäänsä."
-
-#: ../src/bin/e_main.c:701
-msgid "Setting up Paths"
-msgstr "Asetetaan polkuja"
-
-#: ../src/bin/e_main.c:718
-msgid "Setup Thumbnailer"
-msgstr "Asetetaan pikkukuvien tekijä"
-
-#: ../src/bin/e_main.c:723
-msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
-msgstr "Enlightenment ei voi käynnistää pikkukuvajärjestelmäänsä.\n"
-
-#: ../src/bin/e_main.c:728
-msgid "Setup System Controls"
-msgstr "Aseta järjestelmän kontrollit"
-
-#: ../src/bin/e_main.c:733
-msgid "Enlightenment cannot initialize the System Command system.\n"
-msgstr "Enlightenment ei voi käynnistää järjestelmäkomentojärjestelmää.\n"
-
-#: ../src/bin/e_main.c:738
-msgid "Setup Actions"
-msgstr "Aseta toiminnot"
-
-#: ../src/bin/e_main.c:743
-msgid "Enlightenment cannot set up its actions system."
-msgstr "Enlightenment ei voi asettaa toimintojärjestelmäänsä."
-
-#: ../src/bin/e_main.c:747
-msgid "Setup Bindings"
-msgstr "Aseta hiiri/näppäimistötoiminnot"
-
-#: ../src/bin/e_main.c:752
-msgid "Enlightenment cannot set up its bindings system."
-msgstr "Enlightenment ei voi asettaa hiiri/näppäimistötoimintojärjestelmäänsä."
-
-#: ../src/bin/e_main.c:756
-msgid "Setup Popups"
-msgstr "Aseta ponnahdukset"
-
-#: ../src/bin/e_main.c:761
-msgid "Enlightenment cannot set up its popup system."
-msgstr "Enlightenment ei voi asettaa ponnahdusjärjestelmäänsä."
-
-#: ../src/bin/e_main.c:766
-msgid "Setup Wallpaper"
-msgstr "Aseta taustakuva"
-
-#: ../src/bin/e_main.c:771
-msgid "Enlightenment cannot set up its desktop background system."
-msgstr "Enlightenment ei voi asettaa työpöydän taustakuvajärjestelmäänsä"
-
-#: ../src/bin/e_main.c:775
+#: ../src/bin/e_main.c:721
 msgid "Setup Screens"
 msgstr "Aseta näytöt"
 
-#: ../src/bin/e_main.c:780
+#: ../src/bin/e_main.c:726
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -2624,27 +2569,63 @@ msgstr ""
 "Enlightenment asettama ikkunanhallinta kaikille järjestelmäsi näytöille\n"
 "epäonnistui. Ehkäpä toinen ikkunamanageri on käynnissä?\n"
 
-#: ../src/bin/e_main.c:785
+#: ../src/bin/e_main.c:732
+msgid "Setup Screensaver"
+msgstr "Aseta näytönsäästäjä"
+
+#: ../src/bin/e_main.c:737
+msgid "Enlightenment cannot configure the X screensaver."
+msgstr "Enlightenment ei voi säätää X-näytönsäästäjää."
+
+#: ../src/bin/e_main.c:741
+msgid "Setup Desklock"
+msgstr "Aseta työpöydän lukko"
+
+#: ../src/bin/e_main.c:746
+msgid "Enlightenment cannot set up its desk locking system."
+msgstr "Enlightenment ei voi asettaa työpöydän lukitusjärjestelmäänsä."
+
+#: ../src/bin/e_main.c:759
+msgid "Setting up Paths"
+msgstr "Asetetaan polkuja"
+
+#: ../src/bin/e_main.c:776
+msgid "Setup System Controls"
+msgstr "Aseta järjestelmän kontrollit"
+
+#: ../src/bin/e_main.c:781
+msgid "Enlightenment cannot initialize the System Command system.\n"
+msgstr "Enlightenment ei voi käynnistää järjestelmäkomentojärjestelmää.\n"
+
+#: ../src/bin/e_main.c:786
+msgid "Setup Actions"
+msgstr "Aseta toiminnot"
+
+#: ../src/bin/e_main.c:791
+msgid "Enlightenment cannot set up its actions system."
+msgstr "Enlightenment ei voi asettaa toimintojärjestelmäänsä."
+
+#: ../src/bin/e_main.c:795
 msgid "Setup Execution System"
 msgstr "Aseta suoritusjärjestelmä"
 
-#: ../src/bin/e_main.c:790
+#: ../src/bin/e_main.c:800
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Enlighenment ei voi asettaa suoritusjärjestelmäänsä."
 
-#: ../src/bin/e_main.c:794
+#: ../src/bin/e_main.c:804
 msgid "Setup Remembers"
 msgstr "Aseta muistamiset"
 
-#: ../src/bin/e_main.c:799
+#: ../src/bin/e_main.c:809
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment ei voi asettaa muistamisasetuksia."
 
-#: ../src/bin/e_main.c:807
+#: ../src/bin/e_main.c:817
 msgid "Setup FM"
 msgstr "Aseta tiedostonhallinta"
 
-#: ../src/bin/e_main.c:812
+#: ../src/bin/e_main.c:822
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment ei voi aloittaa tiedostonhallintaa.\n"
 
@@ -2657,120 +2638,137 @@ msgstr "Enlightenment ei voi aloittaa tiedostonhallintaa.\n"
 #. }
 #. _e_main_shutdown_push(e_fwin_shutdown);
 #.
-#: ../src/bin/e_main.c:825
+#: ../src/bin/e_main.c:835
 msgid "Setup Message System"
 msgstr "Aseta viestijärjestelmä"
 
-#: ../src/bin/e_main.c:830
+#: ../src/bin/e_main.c:840
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment ei voi asettaa viestijärjestelmäänsä."
 
-#: ../src/bin/e_main.c:834
+#: ../src/bin/e_main.c:844
 msgid "Setup DND"
 msgstr "Aseta Drag & Drop (DND)"
 
-#: ../src/bin/e_main.c:839
+#: ../src/bin/e_main.c:849
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment ei voi asettaa Drag & Drop -järjestelmäänsä."
 
-#: ../src/bin/e_main.c:843
-msgid "Setup Grab Input HAnding"
+#: ../src/bin/e_main.c:853
+#, fuzzy
+msgid "Setup Grab Input Handing"
 msgstr "Aseta syötteenkaappauksen hallinta"
 
-#: ../src/bin/e_main.c:848
+#: ../src/bin/e_main.c:858
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr ""
 "Enlightenment ei voi asettaa syötteenkaappauksen hallintajärjestelmäänsä."
 
-#: ../src/bin/e_main.c:852
+#: ../src/bin/e_main.c:862
 msgid "Setup Modules"
 msgstr "Aseta moduulit"
 
-#: ../src/bin/e_main.c:857
+#: ../src/bin/e_main.c:867
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment ei voi asettaa moduulijärjestelmäänsä."
 
-#: ../src/bin/e_main.c:861
+#: ../src/bin/e_main.c:871
 msgid "Setup Color Classes"
 msgstr "Aseta väriluokat"
 
-#: ../src/bin/e_main.c:866
+#: ../src/bin/e_main.c:876
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment ei voi asettaa väriluokkajärjestelmäänsä."
 
-#: ../src/bin/e_main.c:870
+#: ../src/bin/e_main.c:880
 msgid "Setup Gadcon"
 msgstr "Aseta vempaimenhallinta (Gadcon)"
 
-#: ../src/bin/e_main.c:875
+#: ../src/bin/e_main.c:885
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment ei voi asettaa vempaimenhallintajärjestelmäänsä."
 
-#: ../src/bin/e_main.c:879
-msgid "Setup Shelves"
-msgstr "Aseta hyllyt"
-
-#: ../src/bin/e_main.c:884
-msgid "Enlightenment cannot set up its shelf system."
-msgstr "Enlightenment ei voi asettaa hyllyjärjestelmäänsä."
-
-#: ../src/bin/e_main.c:889
+#: ../src/bin/e_main.c:890
 msgid "Setup DPMS"
 msgstr "Aseta DPMS"
 
-#: ../src/bin/e_main.c:894
+#: ../src/bin/e_main.c:895
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Elightenment ei voi säätää DPMS-asetuksia."
 
-#: ../src/bin/e_main.c:898
-msgid "Setup Screensaver"
-msgstr "Aseta näytönsäästäjä"
-
-#: ../src/bin/e_main.c:903
-msgid "Enlightenment cannot configure the X screensaver."
-msgstr "Enlightenment ei voi säätää X-näytönsäästäjää."
-
-#: ../src/bin/e_main.c:907
-msgid "Setup Mouse"
-msgstr "Aseta hiiri"
-
-#: ../src/bin/e_main.c:912
-#, fuzzy
-msgid "Enlightenment cannot configure the mouse settings."
-msgstr "Elightenment ei voi säätää DPMS-asetuksia."
-
-#: ../src/bin/e_main.c:916
-msgid "Setup Desklock"
-msgstr "Aseta työpöydän lukko"
-
-#: ../src/bin/e_main.c:921
-msgid "Enlightenment cannot set up its desk locking system."
-msgstr "Enlightenment ei voi asettaa työpöydän lukitusjärjestelmäänsä."
-
-#: ../src/bin/e_main.c:926
-msgid "Set Up File Ordering"
-msgstr "Aseta tiedostojen järjestely"
-
-#: ../src/bin/e_main.c:930
-msgid "Enlightenment cannot set up its order file system."
-msgstr "Enlightenment ei voi asettaa tiedostojenjärjestelyjärjestelmäänsä."
-
-#: ../src/bin/e_main.c:935
+#: ../src/bin/e_main.c:899
 #, fuzzy
 msgid "Set Up Powersave modes"
 msgstr "Aseta CPU:n tehokäytäntö"
 
-#: ../src/bin/e_main.c:939
+#: ../src/bin/e_main.c:903
 #, fuzzy
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr "Enlightenment ei voi asettaa ponnahdusjärjestelmäänsä."
 
-#. load modules
+#: ../src/bin/e_main.c:908
+msgid "Setup Wallpaper"
+msgstr "Aseta taustakuva"
+
+#: ../src/bin/e_main.c:913
+msgid "Enlightenment cannot set up its desktop background system."
+msgstr "Enlightenment ei voi asettaa työpöydän taustakuvajärjestelmäänsä"
+
+#: ../src/bin/e_main.c:918
+msgid "Setup Mouse"
+msgstr "Aseta hiiri"
+
+#: ../src/bin/e_main.c:923
+#, fuzzy
+msgid "Enlightenment cannot configure the mouse settings."
+msgstr "Elightenment ei voi säätää DPMS-asetuksia."
+
+#: ../src/bin/e_main.c:928
+msgid "Setup Bindings"
+msgstr "Aseta hiiri/näppäimistötoiminnot"
+
+#: ../src/bin/e_main.c:933
+msgid "Enlightenment cannot set up its bindings system."
+msgstr "Enlightenment ei voi asettaa hiiri/näppäimistötoimintojärjestelmäänsä."
+
+#: ../src/bin/e_main.c:937
+msgid "Setup Popups"
+msgstr "Aseta ponnahdukset"
+
+#: ../src/bin/e_main.c:942
+msgid "Enlightenment cannot set up its popup system."
+msgstr "Enlightenment ei voi asettaa ponnahdusjärjestelmäänsä."
+
+#: ../src/bin/e_main.c:947
+msgid "Setup Shelves"
+msgstr "Aseta hyllyt"
+
+#: ../src/bin/e_main.c:952
+msgid "Enlightenment cannot set up its shelf system."
+msgstr "Enlightenment ei voi asettaa hyllyjärjestelmäänsä."
+
+#: ../src/bin/e_main.c:957
+msgid "Setup Thumbnailer"
+msgstr "Asetetaan pikkukuvien tekijä"
+
+#: ../src/bin/e_main.c:962
+msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
+msgstr "Enlightenment ei voi käynnistää pikkukuvajärjestelmäänsä.\n"
+
+#: ../src/bin/e_main.c:967
+msgid "Set Up File Ordering"
+msgstr "Aseta tiedostojen järjestely"
+
 #: ../src/bin/e_main.c:971
+msgid "Enlightenment cannot set up its order file system."
+msgstr "Enlightenment ei voi asettaa tiedostojenjärjestelyjärjestelmäänsä."
+
+#. load modules
+#: ../src/bin/e_main.c:1006
 msgid "Load Modules"
 msgstr "Lataa moduulit"
 
-#: ../src/bin/e_main.c:979
+#: ../src/bin/e_main.c:1014
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2782,12 +2780,12 @@ msgstr ""
 "poistaa<br>ongelmamoduulit kokoonpanostasi. Moduulien<br>asetusvalikon "
 "tulisi antaa sinun valita moduulisi<br>uudestaan."
 
-#: ../src/bin/e_main.c:986
+#: ../src/bin/e_main.c:1021
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr ""
 "Enlightenment kaatui varhaisessa vaiheessa ja on käynnistetty uudelleen."
 
-#: ../src/bin/e_main.c:987
+#: ../src/bin/e_main.c:1022
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2799,11 +2797,11 @@ msgstr ""
 "poistaa<br>ongelmamoduulit kokoonpanostasi. Moduulien<br>asetusvalikon "
 "tulisi antaa sinun valita moduulisi<br>uudestaan."
 
-#: ../src/bin/e_main.c:995
+#: ../src/bin/e_main.c:1030
 msgid "Configure Shelves"
 msgstr "Muokkaa hyllyjä"
 
-#: ../src/bin/e_main.c:1002
+#: ../src/bin/e_main.c:1040
 msgid "Almost Done"
 msgstr "Melkein valmis"
 
@@ -3119,7 +3117,7 @@ msgstr "%li minuuttia sitten"
 msgid "Unknown"
 msgstr "Tuntematon"
 
-#: ../src/bin/e_widget_config_list.c:54
+#: ../src/bin/e_widget_config_list.c:63
 #: ../src/modules/conf_applications/e_int_config_apps.c:245
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:111
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:79
@@ -3127,16 +3125,16 @@ msgstr "Tuntematon"
 msgid "Add"
 msgstr "Lisää"
 
-#: ../src/bin/e_widget_config_list.c:59
+#: ../src/bin/e_widget_config_list.c:69
 msgid "Remove"
 msgstr "Poista"
 
-#: ../src/bin/e_widget_config_list.c:73
+#: ../src/bin/e_widget_config_list.c:83
 #: ../src/modules/conf_applications/e_int_config_apps.c:260
 msgid "Up"
 msgstr "Ylös"
 
-#: ../src/bin/e_widget_config_list.c:79
+#: ../src/bin/e_widget_config_list.c:89
 #: ../src/modules/conf_applications/e_int_config_apps.c:265
 msgid "Down"
 msgstr "Alas"
@@ -3146,7 +3144,7 @@ msgid "Add to Favorites"
 msgstr "Lisää Suosikkeihin"
 
 #: ../src/bin/e_widget_fsel.c:294
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:199
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:206
 #: ../src/modules/conf_imc/e_int_config_imc.c:830
 #: ../src/modules/conf_startup/e_int_config_startup.c:281
 #: ../src/modules/conf_theme/e_int_config_theme.c:365
@@ -3190,7 +3188,8 @@ msgid "Read-Write"
 msgstr "Luku-Kirjoitus"
 
 #: ../src/modules/battery/e_mod_config.c:40
-msgid "Battery Monitor Configuration"
+#, fuzzy
+msgid "Battery Monitor Settings"
 msgstr "Akkumonitorin asetukset"
 
 #: ../src/modules/battery/e_mod_config.c:91
@@ -3222,10 +3221,10 @@ msgid "Alert when battery is down to:"
 msgstr "Hälytä akun tason ollessa:"
 
 #: ../src/modules/battery/e_mod_config.c:145
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:156
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:193
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:201
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:209
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:162
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:207
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:215
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:223
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:119
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:151
 #, c-format
@@ -3251,51 +3250,43 @@ msgstr ""
 msgid "%1.0f seconds"
 msgstr "%1.0f sekuntia"
 
-#: ../src/modules/battery/e_mod_main.c:130
+#: ../src/modules/battery/e_mod_main.c:135
 msgid "Battery"
 msgstr "Akku"
 
-#: ../src/modules/battery/e_mod_main.c:323
+#: ../src/modules/battery/e_mod_main.c:832
 #, fuzzy
 msgid "Your battery is low!"
 msgstr "Näytä varoitus akun ollessa vähänä"
 
-#: ../src/modules/battery/e_mod_main.c:325
+#: ../src/modules/battery/e_mod_main.c:834
 msgid "AC power is recommended."
 msgstr ""
 
-#: ../src/modules/battery/e_mod_main.c:408
-msgid "Battery Meter"
-msgstr "Akkumittari"
+#: ../src/modules/battery/e_mod_main.c:909
+msgid "N/A"
+msgstr ""
 
-#: ../src/modules/battery/e_mod_main.c:485
-#: ../src/modules/battery/e_mod_main.c:487
-#: ../src/modules/battery/e_mod_main.c:494
-#: ../src/modules/battery/e_mod_main.c:496
+#: ../src/modules/battery/e_mod_main.c:980
+#: ../src/modules/battery/e_mod_main.c:982
+#: ../src/modules/battery/e_mod_main.c:989
+#: ../src/modules/battery/e_mod_main.c:991
 msgid "ERROR"
 msgstr ""
 
-#: ../src/modules/battery/e_mod_main.c:553
-msgid "N/A"
-msgstr ""
+#: ../src/modules/battery/e_mod_main.c:1078
+msgid "Battery Meter"
+msgstr "Akkumittari"
 
 #: ../src/modules/clock/e_mod_main.c:98
 msgid "Clock"
 msgstr "Kello"
 
-#: ../src/modules/conf/e_conf.c:122 ../src/modules/conf/e_conf.c:133
-msgid "Enlightenment Configuration"
-msgstr "Enlightenmentin asetukset"
-
-#. Item List
-#: ../src/modules/conf/e_conf.c:161
-msgid "Items"
-msgstr "Kohteet"
-
-#: ../src/modules/conf/e_mod_main.c:46 ../src/modules/conf/e_mod_main.c:67
-#: ../src/modules/conf/e_mod_main.c:116
-msgid "Configuration Panel"
-msgstr "Asetuspaneeli"
+#: ../src/modules/conf/e_mod_main.c:139 ../src/modules/conf/e_mod_main.c:162
+#: ../src/modules/conf/e_mod_main.c:211
+#, fuzzy
+msgid "Settings Panel"
+msgstr "Työpöydän asetukset"
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:51
 #: ../src/modules/conf_applications/e_mod_main.c:42
@@ -3327,6 +3318,11 @@ msgstr "Kaikki sovellukset"
 msgid "Selected Applications"
 msgstr "Valitut sovellukset"
 
+#: ../src/modules/conf_applications/e_mod_main.c:34
+#, fuzzy
+msgid "Apps"
+msgstr "Käytä"
+
 #: ../src/modules/conf_applications/e_mod_main.c:35
 msgid "New Application"
 msgstr "Uusi sovellus"
@@ -3348,18 +3344,33 @@ msgstr "IBar muut"
 msgid "Menus"
 msgstr "Valikot"
 
-#: ../src/modules/conf_borders/e_int_config_borders.c:29
-#: ../src/modules/conf_borders/e_int_config_borders.c:185
+#: ../src/modules/conf_borders/e_int_config_borders.c:30
+#: ../src/modules/conf_borders/e_int_config_borders.c:198
 msgid "Default Border Style"
 msgstr "Kehysten oletustyyli"
 
-#: ../src/modules/conf_borders/e_int_config_borders.c:49
+#: ../src/modules/conf_borders/e_int_config_borders.c:50
 msgid "Window Border Selection"
 msgstr "Ikkunankehyksen valinta"
 
-#: ../src/modules/conf_borders/e_int_config_borders.c:230
+#: ../src/modules/conf_borders/e_int_config_borders.c:243
 msgid "Remember this Border for this window next time it appears"
 msgstr "Muista tämä kehys tälle ikkunalle, kun ikkuna seuraavan kerran avautuu"
+
+#: ../src/modules/conf_borders/e_mod_main.c:34
+#: ../src/modules/conf_colors/e_mod_main.c:34
+#: ../src/modules/conf_fonts/e_mod_main.c:34
+#: ../src/modules/conf_icon_theme/e_mod_main.c:34
+#: ../src/modules/conf_mouse_cursor/e_mod_main.c:34
+#: ../src/modules/conf_scale/e_mod_main.c:34
+#: ../src/modules/conf_startup/e_mod_main.c:34
+#: ../src/modules/conf_theme/e_mod_main.c:38
+#: ../src/modules/conf_transitions/e_mod_main.c:34
+#: ../src/modules/conf_wallpaper/e_mod_main.c:28
+#: ../src/modules/dropshadow/e_mod_main.c:89
+#, fuzzy
+msgid "Look"
+msgstr "Lukot"
 
 #: ../src/modules/conf_borders/e_mod_main.c:35
 msgid "Borders"
@@ -3676,28 +3687,33 @@ msgstr "Muokkaa"
 msgid "Desk"
 msgstr "Työpöytä"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:71
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:72
 msgid "Screen Lock Settings"
 msgstr "Näytön lukituksen asetukset"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:143
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:145
 msgid "Automatic Locking"
 msgstr "Automaattinen lukitus"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:145
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:147
+#, fuzzy
+msgid "Lock when Enlightenment starts"
+msgstr "Käytä Enlightenmentin kursoria"
+
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:151
 msgid "Lock when X screensaver activates"
 msgstr "Lukitse X-näytönsäästäjän aktivoituessa"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:149
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:155
 msgid "Lock when idle time exceeded"
 msgstr "Lukitse joutoajan ylittyessä"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:153
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:159
 msgid "Idle time to exceed"
 msgstr "Joutoaika"
 
 #. create dir radios
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:192
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:199
 #: ../src/modules/conf_imc/e_int_config_imc.c:818
 #: ../src/modules/conf_startup/e_int_config_startup.c:268
 #: ../src/modules/conf_theme/e_int_config_theme.c:354
@@ -3708,23 +3724,23 @@ msgstr "Joutoaika"
 msgid "Personal"
 msgstr "Oma"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:281
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:288
 msgid "Login Box Settings"
 msgstr "Sisäänkirjautumisikkunan asetukset"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:284
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:291
 msgid "Show on all screen zones"
 msgstr "Näytä kaikilla näytön alueilla"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:288
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:295
 msgid "Show on current screen zone"
 msgstr "Näytä nykyisen näytön alueella"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:292
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:299
 msgid "Show on screen zone #:"
 msgstr "Näytä näytön alueella #:"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:296
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:303
 #: ../src/modules/conf_desks/e_int_config_desks.c:197
 #: ../src/modules/conf_desks/e_int_config_desks.c:201
 #: ../src/modules/conf_desks/e_int_config_desks.c:236
@@ -3742,24 +3758,24 @@ msgstr "Näytä näytön alueella #:"
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:304
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:311
 msgid "Wallpaper Mode"
 msgstr "Taustakuvatila"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:306
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:313
 #: ../src/modules/gadman/e_mod_config.c:149
 msgid "Theme Defined"
 msgstr "Teema määritetty"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:309
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:316
 msgid "Theme Wallpaper"
 msgstr "Teeman taustakuva"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:322
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:329
 msgid "Custom Screenlock"
 msgstr "Mukautettu ruudun lukitus"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:323
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:330
 msgid "Use custom screenlock"
 msgstr "Käytä mukautettua ruudun lukitusta"
 
@@ -3768,6 +3784,7 @@ msgid "Screen Lock"
 msgstr "Näytön lukitus"
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:56
+#: ../src/modules/pager/e_mod_main.c:811
 msgid "Virtual Desktops Settings"
 msgstr "Virtuaalityöpöytien asetukset"
 
@@ -3836,11 +3853,11 @@ msgstr "Vieritys kulmista"
 msgid "Virtual Desktops"
 msgstr "Virtuaalityöpöydät"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:35
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:36
 msgid "Dialog Settings"
 msgstr "Valintaikkunan asetukset"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:84
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:87
 #: ../src/modules/conf_engine/e_int_config_engine.c:94
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:109
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:161
@@ -3855,29 +3872,35 @@ msgstr "Valintaikkunan asetukset"
 msgid "General Settings"
 msgstr "Yleisasetukset"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:86
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:89
 msgid "Disable Confirmation Dialogs"
 msgstr "Poista käytöstä vahvistusvalintaikkunat"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:93
-msgid "Default Configuration Dialogs Mode"
-msgstr "Oletusasetus valintaikkunoiden tilalle"
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:91
+#, fuzzy
+msgid "Normal Windows"
+msgstr "(Ei ikkunoita)"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:96
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:134
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:98
+#, fuzzy
+msgid "Default Settings Dialogs Mode"
+msgstr "Oletus valintaikkunan tilalle"
+
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:101
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:140
 msgid "Basic Mode"
 msgstr "Perustila"
 
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:98
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:136
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:103
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:142
 msgid "Advanced Mode"
 msgstr "Lisäasetustila"
 
 #. of = e_widget_framelist_add(evas, _("General Settings"), 0);
-#. ob = e_widget_check_add(evas, _("Auto-Apply Configuration Changes"), &(cfdata->auto_apply));
+#. ob = e_widget_check_add(evas, _("Auto-Apply Settings Changes"), &(cfdata->auto_apply));
 #. e_widget_framelist_object_append(of, ob);
 #. e_widget_list_object_append(o, of, 1, 1, 0.5);
-#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:131
+#: ../src/modules/conf_dialogs/e_int_config_dialogs.c:137
 msgid "Default Dialog Mode"
 msgstr "Oletus valintaikkunan tilalle"
 
@@ -3885,10 +3908,10 @@ msgstr "Oletus valintaikkunan tilalle"
 msgid "Dialogs"
 msgstr "Valintaikkunat"
 
-#: ../src/modules/conf_display/e_int_config_display.c:133
-#, c-format
+#: ../src/modules/conf_display/e_int_config_display.c:129
+#, fuzzy, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
 "will be restored in %d seconds."
 msgstr ""
@@ -3896,10 +3919,10 @@ msgstr ""
 "Ei.<br>Jos et paina mitään näppäintä, vanha resoluutio <br>%dx%d @ %d Hz "
 "palautetaan %d sekunnin päästä."
 
-#: ../src/modules/conf_display/e_int_config_display.c:140
+#: ../src/modules/conf_display/e_int_config_display.c:136
 #, fuzzy, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored in %d seconds."
 msgstr ""
@@ -3907,10 +3930,10 @@ msgstr ""
 "Ei.<br>Jos et paina mitään näppäintä, vanha resoluutio <br>%dx%d palautetaan "
 "%d sekunnin päästä."
 
-#: ../src/modules/conf_display/e_int_config_display.c:150
-#, c-format
+#: ../src/modules/conf_display/e_int_config_display.c:146
+#, fuzzy, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
 "will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
@@ -3918,10 +3941,10 @@ msgstr ""
 "Ei.<br>Jos et paina mitään näppäintä, vanha resoluutio <br>%dx%d @ %d Hz "
 "palautetaan <hilight>VÄLITTÖMÄSTI</hilight>."
 
-#: ../src/modules/conf_display/e_int_config_display.c:157
+#: ../src/modules/conf_display/e_int_config_display.c:153
 #, fuzzy, c-format
 msgid ""
-"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
@@ -3929,45 +3952,56 @@ msgstr ""
 "Ei.<br>Jos et paina mitään näppäintä, vanha resoluutio <br>%dx%d palautetaan "
 "<hilight>VÄLITTÖMÄSTI</hilight>."
 
-#: ../src/modules/conf_display/e_int_config_display.c:212
+#: ../src/modules/conf_display/e_int_config_display.c:190
 msgid "Resolution change"
 msgstr "Tarkkuuden vaihto"
 
-#: ../src/modules/conf_display/e_int_config_display.c:250
+#: ../src/modules/conf_display/e_int_config_display.c:194
+#, fuzzy
+msgid "Save"
+msgstr "Tila"
+
+#: ../src/modules/conf_display/e_int_config_display.c:195
+#, fuzzy
+msgid "Restore"
+msgstr "Käynnistä uudelleen"
+
+#: ../src/modules/conf_display/e_int_config_display.c:228
 msgid "Screen Resolution Settings"
 msgstr "Näytön tarkkuuden asetukset"
 
-#: ../src/modules/conf_display/e_int_config_display.c:398
+#: ../src/modules/conf_display/e_int_config_display.c:402
 msgid "Resolution"
 msgstr "Tarkkuus"
 
-#: ../src/modules/conf_display/e_int_config_display.c:405
+#: ../src/modules/conf_display/e_int_config_display.c:409
 msgid "Restore on login"
 msgstr "Palauta sisäänkirjautuessa"
 
-#: ../src/modules/conf_display/e_int_config_display.c:410
+#: ../src/modules/conf_display/e_int_config_display.c:413
 msgid "Refresh"
 msgstr "Päivitys"
 
-#: ../src/modules/conf_display/e_int_config_display.c:493
+#: ../src/modules/conf_display/e_int_config_display.c:472
 msgid "Rotation"
 msgstr "Kierto"
 
-#: ../src/modules/conf_display/e_int_config_display.c:512
+#: ../src/modules/conf_display/e_int_config_display.c:491
 msgid "Mirroring"
 msgstr "Peilaus"
 
-#: ../src/modules/conf_display/e_int_config_display.c:593
+#: ../src/modules/conf_display/e_int_config_display.c:642
 msgid "Missing Features"
 msgstr "Puuttuvia ominaisuuksia"
 
-#: ../src/modules/conf_display/e_int_config_display.c:594
+#: ../src/modules/conf_display/e_int_config_display.c:643
+#, fuzzy
 msgid ""
-"Your X Display Server is missing support for<br>the <hilight>XRandr</"
+"Your X Display Server is missing support for<br>the <hilight>XRandR</"
 "hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
 "resolutions without<br>the support of this extension. It could also "
 "be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no "
-"XRandr support detected."
+"XRandR support detected."
 msgstr ""
 "X-näyttöpalvelimestasi puuttuu tuki<br><hilight>XRandr</hilight> (X:n koon "
 "muuttaminen ja rotaatio)-laajennukselle.<br>Et voi vaihtaa näytön "
@@ -3975,11 +4009,11 @@ msgstr ""
 "silloin, kun <hilight>ecore</hilight> käännettiin,<br>ei XRandr-tukea "
 "havaittu."
 
-#: ../src/modules/conf_display/e_int_config_display.c:606
+#: ../src/modules/conf_display/e_int_config_display.c:655
 msgid "No Refresh Rates Found"
 msgstr "Ei löydettyjä ruudunpäivityksen arvoja"
 
-#: ../src/modules/conf_display/e_int_config_display.c:607
+#: ../src/modules/conf_display/e_int_config_display.c:656
 msgid ""
 "No refresh rates were reported by your X Display Server.<br>If you are "
 "running a nested X Display Server, then<br>this is to be expected. However, "
@@ -3997,40 +4031,41 @@ msgstr ""
 msgid "Screen Resolution"
 msgstr "Näytön tarkkuus"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:56
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:77
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:57
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:78
 msgid "Display Power Management Signaling"
 msgstr "Näytä virranhallinnan signalointi"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:57
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:58
 msgid "The current display server is not <br>DPMS capable."
 msgstr "Nykyinen näyttöpalvelin ei ole<br>DPMS-valmis"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:78
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:79
 msgid "The current display server does not <br>have the DPMS extension."
 msgstr "Nykyisellä näyttöpalvelimells ei ole<br>DPMS-laajennusta."
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:107
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:109
 msgid "Display Power Management Settings"
 msgstr "Näytä virranhallinnan asetukset"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:185
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:199
 msgid "Enable Display Power Management"
 msgstr "Ota käyttöön näytön virranhallinta"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:189
-msgid "Timer(s)"
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:203
+#, fuzzy
+msgid "Timers"
 msgstr "Ajastimet"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:191
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:205
 msgid "Standby time"
 msgstr "Valmiustilan viive"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:199
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:213
 msgid "Suspend time"
 msgstr "Lepotilan viive"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:207
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:221
 msgid "Off time"
 msgstr "Sammutuksen viive"
 
@@ -4407,7 +4442,8 @@ msgid "Icon Theme"
 msgstr "Kuvaketeema"
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:109
-msgid "Input Method Configuration"
+#: ../src/modules/conf_imc/e_mod_main.c:35
+msgid "Input Method Settings"
 msgstr "Syöttötavan asetukset"
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:297
@@ -4451,7 +4487,8 @@ msgid "Exported Environment Variables"
 msgstr "Viedyt ympäsirtömuuttujat"
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:66
-msgid "Select an Input Method Configuration..."
+#, fuzzy
+msgid "Select an Input Method Settings..."
 msgstr "Valitse syöttötavan asetukset..."
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:281
@@ -4477,10 +4514,6 @@ msgstr "Enlightenment ei voinut tuoda asetuksia kopiointivirheen<br>vuoksi."
 #: ../src/modules/wizard/page_010.c:139
 msgid "Language"
 msgstr "Kieli"
-
-#: ../src/modules/conf_imc/e_mod_main.c:35
-msgid "Input Method Settings"
-msgstr "Syöttötavan asetukset"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:37
 #, fuzzy
@@ -4524,14 +4557,24 @@ msgstr ""
 msgid "%1.2f sec"
 msgstr "%1.1f sekuntia"
 
+#: ../src/modules/conf_interaction/e_mod_main.c:34
+#: ../src/modules/conf_keybindings/e_mod_main.c:34
+#: ../src/modules/conf_mousebindings/e_mod_main.c:34
+#: ../src/modules/conf_mouse/e_mod_main.c:34
+#: ../src/modules/mixer/app_mixer.c:288 ../src/modules/mixer/app_mixer.c:306
+#, fuzzy
+msgid "Input"
+msgstr "Aloitus"
+
 #: ../src/modules/conf_interaction/e_mod_main.c:35
 #, fuzzy
 msgid "Interaction"
 msgstr "Sisäinen"
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:582
-msgid "Language Configuration"
-msgstr "Kielen asetukset"
+#: ../src/modules/conf_intl/e_mod_main.c:35
+msgid "Language Settings"
+msgstr "Kieliasetukset"
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:894
 #: ../src/modules/conf_intl/e_int_config_intl.c:971
@@ -4548,10 +4591,6 @@ msgstr "Valittu lokaali"
 #: ../src/modules/conf_intl/e_int_config_intl.c:1023
 msgid "Locale"
 msgstr "Lokaali"
-
-#: ../src/modules/conf_intl/e_mod_main.c:35
-msgid "Language Settings"
-msgstr "Kieliasetukset"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:6
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:10
@@ -4624,30 +4663,24 @@ msgstr ""
 "käytössä.<br>Valitse jokin toinen näppäinyhdistelmä, kiitos."
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1287
-#: ../src/modules/gadman/e_mod_gadman.c:759
+#: ../src/modules/gadman/e_mod_gadman.c:763
 msgid "CTRL"
 msgstr "CTRL"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1292
-#: ../src/modules/gadman/e_mod_gadman.c:764
+#: ../src/modules/gadman/e_mod_gadman.c:768
 msgid "ALT"
 msgstr "ALT"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1298
-#: ../src/modules/gadman/e_mod_gadman.c:770
+#: ../src/modules/gadman/e_mod_gadman.c:774
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1304
-#: ../src/modules/gadman/e_mod_gadman.c:776
+#: ../src/modules/gadman/e_mod_gadman.c:780
 msgid "WIN"
 msgstr "WIN"
-
-#: ../src/modules/conf_keybindings/e_mod_main.c:34
-#: ../src/modules/conf_mousebindings/e_mod_main.c:34
-#: ../src/modules/conf_mouse/e_mod_main.c:34
-msgid "Keyboard & Mouse"
-msgstr "Näppäimistö & hiiri"
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:44
 #: ../src/modules/conf_menus/e_int_config_menus.c:110
@@ -4783,6 +4816,13 @@ msgstr "Käytä oletusta"
 msgid "Select an Edj File"
 msgstr "Valitse edj-tiedosto"
 
+#. Setup Entry in Config Panel
+#: ../src/modules/conf_mime/e_mod_main.c:34
+#: ../src/modules/fileman/e_mod_main.c:45
+#: ../src/modules/fileman/e_mod_main.c:218
+msgid "Files"
+msgstr "Tiedostot"
+
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
@@ -4910,8 +4950,9 @@ msgid "Threshold"
 msgstr "Kynnys"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:62
-msgid "Search Path Configuration"
-msgstr "Hakupolun asetukset"
+#, fuzzy
+msgid "Search Path Settings"
+msgstr "Käynnistyksen asetukset"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:73
 msgid "Data"
@@ -5182,10 +5223,6 @@ msgstr "Älä salli"
 msgid "Screen Saver"
 msgstr "Näytönsäästäjä"
 
-#: ../src/modules/conf_shelves/e_int_config_shelf.c:43
-msgid "Shelf Settings"
-msgstr "Hyllyn asetukset"
-
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:71
 msgid "Configured Shelves"
 msgstr "Muokatut hyllyt"
@@ -5341,13 +5378,13 @@ msgstr "Täytön valinnat"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
-#: ../src/modules/gadman/e_mod_gadman.c:681
+#: ../src/modules/gadman/e_mod_gadman.c:685
 msgid "Horizontal"
 msgstr "Leveyssuuntaan"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:154
-#: ../src/modules/gadman/e_mod_gadman.c:689
+#: ../src/modules/gadman/e_mod_gadman.c:693
 msgid "Vertical"
 msgstr "Korkeussuuntaan"
 
@@ -6052,8 +6089,9 @@ msgstr ""
 "toiminnolla."
 
 #: ../src/modules/dropshadow/e_mod_config.c:40
-msgid "Dropshadow Configuration"
-msgstr "Ikkunavarjon asetukset"
+#, fuzzy
+msgid "Dropshadow Settings"
+msgstr "Valintaikkunan asetukset"
 
 #: ../src/modules/dropshadow/e_mod_config.c:108
 msgid "Quality"
@@ -6147,19 +6185,16 @@ msgstr "Ikkunavarjo"
 msgid "Run Command Dialog"
 msgstr "Suorita komento -valintaikkuna"
 
-#: ../src/modules/fileman/e_mod_main.c:218
-msgid "Files"
-msgstr "Tiedostot"
-
 #: ../src/modules/fileman/e_mod_main.c:270
+#, fuzzy
 msgid ""
-"Fileman Module Configuration data needed upgrading. Your old "
-"configuration<br>has been wiped and a new set of defaults initialized. "
-"This<br>will happen regularly during development, so don't report a<br>bug. "
-"This simply means Fileman module needs new configuration<br>data by default "
-"for usable functionality that your old<br>configuration simply lacks. This "
-"new set of defaults will fix<br>that by adding it in. You can re-configure "
-"things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
+"Fileman Module Settings data needed upgrading. Your old configuration<br>has "
+"been wiped and a new set of defaults initialized. This<br>will happen "
+"regularly during development, so don't report a<br>bug. This simply means "
+"Fileman module needs new configuration<br>data by default for usable "
+"functionality that your old<br>configuration simply lacks. This new set of "
+"defaults will fix<br>that by adding it in. You can re-configure things now "
+"to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr ""
 "Filemanmoduulin asennustiedot tarvitsivat päivitystä. Vanhat asetuksesi on "
 "<br>pyyhitty ja uudet oletusarvot asetettu. Tämä tulee tapahtumaan "
@@ -6187,8 +6222,9 @@ msgstr ""
 "aiheutetusta vaivasta.<br>"
 
 #: ../src/modules/fileman/e_mod_main.c:352
-msgid "Fileman Configuration Updated"
-msgstr "Filemanin asetukset päivitetty"
+#, fuzzy
+msgid "Fileman Settings Updated"
+msgstr "Filemanin asetukset"
 
 #: ../src/modules/fileman/e_mod_config.c:88
 msgid "Fileman Settings"
@@ -6303,25 +6339,25 @@ msgstr "Vaihtuma"
 msgid "Animations"
 msgstr "Vaihdon animaatio"
 
-#: ../src/modules/gadman/e_mod_gadman.c:673
+#: ../src/modules/gadman/e_mod_gadman.c:677
 #, fuzzy
 msgid "Free"
 msgstr "Ruudunpäivitys"
 
-#: ../src/modules/gadman/e_mod_gadman.c:705
+#: ../src/modules/gadman/e_mod_gadman.c:709
 #, fuzzy
 msgid "Always on desktop"
 msgstr "Aina päällä"
 
-#: ../src/modules/gadman/e_mod_gadman.c:715
+#: ../src/modules/gadman/e_mod_gadman.c:719
 msgid "On top pressing"
 msgstr ""
 
-#: ../src/modules/gadman/e_mod_gadman.c:725
+#: ../src/modules/gadman/e_mod_gadman.c:729
 msgid "Behavior"
 msgstr ""
 
-#: ../src/modules/gadman/e_mod_gadman.c:744
+#: ../src/modules/gadman/e_mod_gadman.c:748
 #, fuzzy
 msgid "Add other gadgets"
 msgstr "Lisää vempain"
@@ -6361,8 +6397,9 @@ msgid "Select a window"
 msgstr "Valitse ikkuna"
 
 #: ../src/modules/ibar/e_mod_config.c:55
-msgid "IBar Configuration"
-msgstr "IBar:n asetukset"
+#, fuzzy
+msgid "IBar Settings"
+msgstr "Ponnahduksen setukset"
 
 #: ../src/modules/ibar/e_mod_config.c:101
 msgid "Selected Bar Source"
@@ -6435,8 +6472,9 @@ msgid "Add Application"
 msgstr "Lisää sovellus"
 
 #: ../src/modules/ibox/e_mod_config.c:48
-msgid "IBox Configuration"
-msgstr "Asetukset"
+#, fuzzy
+msgid "IBox Settings"
+msgstr "Sisäänkirjautumisikkunan asetukset"
 
 #: ../src/modules/ibox/e_mod_config.c:97
 msgid "Display Name"
@@ -6480,8 +6518,9 @@ msgid "IBox"
 msgstr "IBox"
 
 #: ../src/modules/pager/e_mod_config.c:69
-msgid "Pager Configuration"
-msgstr "Sivuttajan asetukset"
+#, fuzzy
+msgid "Pager Settings"
+msgstr "Ponnahduksen setukset"
 
 #: ../src/modules/pager/e_mod_config.c:116
 #: ../src/modules/pager/e_mod_config.c:155
@@ -6606,10 +6645,6 @@ msgstr ""
 msgid "Button %i"
 msgstr "Painike %i"
 
-#: ../src/modules/pager/e_mod_main.c:811
-msgid "Virtual Desktops Configuration"
-msgstr "Virtuaalityöpöytien asetukset"
-
 #: ../src/modules/pager/e_mod_main.c:2803
 msgid "Show Pager Popup"
 msgstr ""
@@ -6643,8 +6678,9 @@ msgid "Start"
 msgstr "Aloita"
 
 #: ../src/modules/temperature/e_mod_config.c:63
-msgid "Temperature Configuration"
-msgstr "Lämpötilan asetukset"
+#, fuzzy
+msgid "Temperature Settings"
+msgstr "Yleisasetukset"
 
 #: ../src/modules/temperature/e_mod_config.c:249
 #: ../src/modules/temperature/e_mod_config.c:352
@@ -6750,7 +6786,7 @@ msgstr "%1.0f F"
 msgid "%1.0f C"
 msgstr "%1.0f C"
 
-#: ../src/modules/temperature/e_mod_main.c:155
+#: ../src/modules/temperature/e_mod_main.c:145
 msgid "Temperature"
 msgstr "Lämpötila"
 
@@ -6777,11 +6813,6 @@ msgstr "Cpufreq"
 #: ../src/modules/mixer/app_mixer.c:168
 msgid "Playback"
 msgstr ""
-
-#: ../src/modules/mixer/app_mixer.c:288 ../src/modules/mixer/app_mixer.c:306
-#, fuzzy
-msgid "Input"
-msgstr "Aloitus"
 
 #: ../src/modules/mixer/app_mixer.c:294
 #, fuzzy
@@ -6847,8 +6878,8 @@ msgstr ""
 
 #: ../src/modules/mixer/conf_gadget.c:383
 #, fuzzy
-msgid "Mixer Configuration"
-msgstr "Sivuttajan asetukset"
+msgid "Mixer Settings"
+msgstr "Koon asetukset"
 
 #: ../src/modules/mixer/conf_module.c:98
 msgid "Mixer to use for global actions:"
@@ -6861,17 +6892,17 @@ msgstr "Lisää käynnistimeen"
 
 #: ../src/modules/mixer/conf_module.c:187
 #, fuzzy
-msgid "Mixer Module Configuration"
-msgstr "Hyllyn asetukset"
+msgid "Mixer Module Settings"
+msgstr "Moduulien asetukset"
 
 #: ../src/modules/mixer/e_mod_main.c:122
 #, fuzzy
-msgid "Mixer Configuration Updated"
+msgid "Mixer Settings Updated"
 msgstr "Filemanin asetukset päivitetty"
 
 #: ../src/modules/mixer/e_mod_main.c:1161
 msgid ""
-"Mixer Module Configuration data changed.<br>Your old configuration has been "
+"Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
 msgstr ""
 
@@ -6909,10 +6940,73 @@ msgstr "Määritetyt sovellukset"
 msgid "Networks"
 msgstr ""
 
-#: ../src/modules/connman/e_mod_main.c:1093
+#~ msgid "Desktop %i, %i"
+#~ msgstr "Työpöytä %i, %i"
+
+#~ msgid "Configuration Upgraded"
+#~ msgstr "Asetukset päivitetty"
+
+#~ msgid "Configuration"
+#~ msgstr "Asetukset"
+
+#~ msgid "Toolbar Configuration"
+#~ msgstr "Työkalupalkin asetukset"
+
+#~ msgid "Shelf Configuration"
+#~ msgstr "Hyllyn asetukset"
+
+#~ msgid "Enlightenment Configuration"
+#~ msgstr "Enlightenmentin asetukset"
+
+#~ msgid "Items"
+#~ msgstr "Kohteet"
+
+#~ msgid "Configuration Panel"
+#~ msgstr "Asetuspaneeli"
+
+#~ msgid "Default Configuration Dialogs Mode"
+#~ msgstr "Oletusasetus valintaikkunoiden tilalle"
+
+#~ msgid "Input Method Configuration"
+#~ msgstr "Syöttötavan asetukset"
+
+#~ msgid "Language Configuration"
+#~ msgstr "Kielen asetukset"
+
+#~ msgid "Keyboard & Mouse"
+#~ msgstr "Näppäimistö & hiiri"
+
+#~ msgid "Search Path Configuration"
+#~ msgstr "Hakupolun asetukset"
+
+#~ msgid "Dropshadow Configuration"
+#~ msgstr "Ikkunavarjon asetukset"
+
+#~ msgid "Fileman Configuration Updated"
+#~ msgstr "Filemanin asetukset päivitetty"
+
+#~ msgid "IBar Configuration"
+#~ msgstr "IBar:n asetukset"
+
+#~ msgid "IBox Configuration"
+#~ msgstr "Asetukset"
+
+#~ msgid "Pager Configuration"
+#~ msgstr "Sivuttajan asetukset"
+
+#~ msgid "Virtual Desktops Configuration"
+#~ msgstr "Virtuaalityöpöytien asetukset"
+
+#~ msgid "Temperature Configuration"
+#~ msgstr "Lämpötilan asetukset"
+
 #, fuzzy
-msgid "Settings"
-msgstr "Työpöydän asetukset"
+#~ msgid "Mixer Configuration"
+#~ msgstr "Sivuttajan asetukset"
+
+#, fuzzy
+#~ msgid "Mixer Module Configuration"
+#~ msgstr "Hyllyn asetukset"
 
 #~ msgid "Back"
 #~ msgstr "Takaisin"
