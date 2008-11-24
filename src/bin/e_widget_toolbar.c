@@ -310,7 +310,31 @@ _e_wid_cb_key_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
                }
           }
      }
-   if ((it) && (it2))
+   else if ((!strcmp(ev->keyname, "Home")) || (!strcmp(ev->keyname, "KP_Home")))
+     {
+	for (l = wd->items; l; l = l->next)
+	  {
+	     it = l->data;
+	     if (it->selected)
+	       {
+		  it2 = wd->items->data;
+		  break;
+	       }
+	  }
+     }
+   else if ((!strcmp(ev->keyname, "End")) || (!strcmp(ev->keyname, "KP_End")))
+     {
+	for (l = wd->items; l; l = l->next)
+	  {
+	     it = l->data;
+	     if (it->selected)
+	       {
+		  it2 = eina_list_last(wd->items)->data;
+		  break;
+	       }
+	  }
+     }
+   if ((it) && (it2) && (it != it2))
      {
         it->selected = 0;
         edje_object_signal_emit(it->o_base, "e,state,unselected", "e");
