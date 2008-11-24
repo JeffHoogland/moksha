@@ -197,6 +197,7 @@ src/modules/conf_startup/e_int_config_startup.c
 src/modules/conf_startup/e_mod_main.c
 src/modules/conf_theme/e_int_config_theme.c
 src/modules/conf_theme/e_int_config_theme_import.c
+src/modules/conf_theme/e_int_config_theme_web.c
 src/modules/conf_theme/e_mod_main.c
 src/modules/conf_transitions/e_int_config_transitions.c
 src/modules/conf_transitions/e_mod_main.c
@@ -242,7 +243,14 @@ src/modules/temperature/e_mod_config.c
 src/modules/temperature/e_mod_main.c
 src/modules/wizard/e_mod_main.c
 src/modules/wizard/e_wizard.c
+src/modules/wizard/page_000.c
 src/modules/wizard/page_010.c
+src/modules/wizard/page_020.c
+src/modules/wizard/page_030.c
+src/modules/wizard/page_040.c
+src/modules/wizard/page_050.c
+src/modules/wizard/page_060.c
+src/modules/wizard/page_070.c
 src/modules/mixer/app_mixer.c
 src/modules/mixer/conf_gadget.c
 src/modules/mixer/conf_module.c
