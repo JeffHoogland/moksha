@@ -13,10 +13,18 @@ typedef enum _E_Powersave_Mode
 } E_Powersave_Mode;
 
 typedef struct _E_Powersave_Deferred_Action E_Powersave_Deferred_Action;
+typedef struct _E_Event_Powersave_Update E_Event_Powersave_Update;
 
 #else
 #ifndef E_POWERSAVE_H
 #define E_POWERSAVE_H
+
+extern EAPI int E_EVENT_POWERSAVE_UPDATE;
+
+struct _E_Event_Powersave_Update 
+{
+   E_Powersave_Mode	mode;
+};
 
 EAPI int e_powersave_init(void);
 EAPI int e_powersave_shutdown(void);

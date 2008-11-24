@@ -13,8 +13,10 @@ struct _E_Powersave_Deferred_Action
 /* local subsystem functions */
 static int _e_powersave_cb_deferred_timer(void *data);
 static void _e_powersave_mode_eval(void);
+static void _e_powersave_event_update_free(void *data __UNUSED__, void *event);
 
 /* local subsystem globals */
+EAPI int E_EVENT_POWERSAVE_UPDATE = 0;
 static int walking_deferred_actions = 0;
 static Eina_List *deferred_actions = NULL;
 static Ecore_Timer *deferred_timer = NULL;
@@ -28,6 +30,7 @@ EAPI int
 e_powersave_init(void)
 {
    _e_powersave_mode_eval();
+   E_EVENT_POWERSAVE_UPDATE = ecore_event_type_new();
    return 1;
 }
 
@@ -94,11 +97,17 @@ e_powersave_mode_max_set(E_Powersave_Mode mode)
 EAPI void
 e_powersave_mode_set(E_Powersave_Mode mode)
 {
+   E_Event_Powersave_Update *ev;
+
    if (mode < powersave_mode_min) mode = powersave_mode_min;
    else if (mode > powersave_mode_max) mode = powersave_mode_max;
    if (powersave_mode == mode) return;
    printf("CHANGE PW SAVE MODE TO %i / %i\n", (int)mode, E_POWERSAVE_MODE_EXTREME);
    powersave_mode = mode;
+
+   ev = E_NEW(E_Event_Powersave_Update, 1);
+   ev->mode = mode;
+   ecore_event_add(E_EVENT_POWERSAVE_UPDATE, ev, _e_powersave_event_update_free, NULL);
    _e_powersave_mode_eval();
 }
 
@@ -174,4 +183,10 @@ _e_powersave_mode_eval(void)
 					 _e_powersave_cb_deferred_timer,
 					 NULL);
      }
+}
+
+static void
+_e_powersave_event_update_free(void *data __UNUSED__, void *event)
+{
+   free(event);
 }
