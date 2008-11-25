@@ -848,6 +848,11 @@ e_config_load(void)
         IFCFGEND;
         
         IFCFG(0x012c);
+        COPYVAL(syscon.main.icon_size);
+        COPYVAL(syscon.secondary.icon_size);
+        COPYVAL(syscon.extra.icon_size);
+        COPYVAL(syscon.timeout);
+        COPYVAL(syscon.do_input);
         COPYPTR(syscon.actions);
         IFCFGEND;
         
