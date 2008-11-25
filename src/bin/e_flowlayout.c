@@ -758,6 +758,16 @@ _e_flowlayout_smart_extents_calcuate(E_Smart_Data *sd)
 	       sd->rows = 1;
 	     count = eina_list_count(sd->items);
 	     sd->cols = sd->w/minw;
+             if (count < sd->cols) sd->cols = count;
+             sd->rows = 0;
+             if (sd->cols > 0)
+               {
+                  while (count > 0)
+                    {
+                       count -= sd->cols;
+                       sd->rows++;
+                    }
+               }
 	  }
 	else
 	  {
@@ -766,6 +776,16 @@ _e_flowlayout_smart_extents_calcuate(E_Smart_Data *sd)
 	       sd->cols = 1;
 	     count = eina_list_count(sd->items);
 	     sd->rows = sd->h/minh;
+             if (count < sd->cols) sd->rows = count;
+             sd->cols = 0;
+             if (sd->rows > 0)
+               {
+                  while (count > 0)
+                    {
+                       count -= sd->rows;
+                       sd->cols++;
+                    }
+               }
 	  }
 
 	minw *= sd->cols;

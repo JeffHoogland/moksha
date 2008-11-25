@@ -644,7 +644,11 @@ _cb_slipshelf_close(const void *data, E_Slipshelf *ess, E_Slipshelf_Action actio
      }
    else
      {
-	e_syswin_show(slipwin);
+        E_Action *a;
+        
+        a = e_action_find("syscon");
+        if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+//	e_syswin_show(slipwin);
      }
 }
 

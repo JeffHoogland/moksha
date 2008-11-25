@@ -69,7 +69,7 @@ e_sys_action_possible_get(E_Sys_Action a)
       case E_SYS_EXIT_NOW:
 	return 1;
       case E_SYS_LOGOUT:
-	return 0;
+	return 1;
       case E_SYS_HALT:
       case E_SYS_HALT_NOW:
 	return _e_sys_can_halt;

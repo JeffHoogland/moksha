@@ -19,6 +19,7 @@ typedef struct _E_Config_Gadcon_Client      E_Config_Gadcon_Client;
 typedef struct _E_Config_Shelf              E_Config_Shelf;
 typedef struct _E_Config_Shelf_Desk         E_Config_Shelf_Desk;
 typedef struct _E_Config_Mime_Icon          E_Config_Mime_Icon;
+typedef struct _E_Config_Syscon_Action      E_Config_Syscon_Action;
 
 typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 
@@ -33,7 +34,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x012b
+#define E_CONFIG_FILE_GENERATION 0x012c
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT         0
@@ -284,10 +285,10 @@ struct _E_Config
    int ping_clients_interval;
    int cache_flush_poll_interval; // GUI
    
-   int thumbscroll_enable;
-   int thumbscroll_threshhold;
-   double thumbscroll_momentum_threshhold;
-   double thumbscroll_friction;
+   int thumbscroll_enable; // GUI
+   int thumbscroll_threshhold; // GUI
+   double thumbscroll_momentum_threshhold; // GUI
+   double thumbscroll_friction; // GUI
 
    int hal_desktop;
 
@@ -304,12 +305,12 @@ struct _E_Config
    } border_keyboard;
    
    struct {
-      double min;
-      double max;
-      double factor;
-      int base_dpi;
-      unsigned char use_dpi;
-      unsigned char use_custom;
+      double min; // GUI
+      double max; // GUI
+      double factor; // GUI
+      int base_dpi; // GUI
+      unsigned char use_dpi; // GUI
+      unsigned char use_custom; // GUI
    } scale;
 
    unsigned char show_cursor; // GUI
@@ -317,7 +318,25 @@ struct _E_Config
    
    const char *default_system_menu;
 
-   unsigned char cfgdlg_normal_wins;
+   unsigned char cfgdlg_normal_wins; // GUI
+   
+   struct {
+      struct {
+         int icon_size;
+      } main, secondary, extra;
+      double timeout;
+      unsigned char do_input;
+      Eina_List *actions;
+   } syscon;
+};
+
+struct _E_Config_Syscon_Action
+{
+   const char *action;
+   const char *params;
+   const char *button;
+   const char *icon;
+   int         is_main;
 };
 
 struct _E_Config_Module

@@ -1409,7 +1409,6 @@ _e_actions_menu_find(const char *name)
    else if (!strcmp(name, "clients")) return e_int_menus_clients_new();
    else if (!strcmp(name, "lost_clients")) return e_int_menus_lost_clients_new();
    else if (!strcmp(name, "configuration")) return e_int_menus_config_new();
-   else if (!strcmp(name, "system")) return e_int_menus_sys_new();
    return NULL;
 }
 ACT_FN_GO(menu_show)

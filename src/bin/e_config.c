@@ -41,6 +41,7 @@ static E_Config_DD *_e_config_gadcon_client_edd = NULL;
 static E_Config_DD *_e_config_shelf_edd = NULL;
 static E_Config_DD *_e_config_shelf_desk_edd = NULL;
 static E_Config_DD *_e_config_mime_icon_edd = NULL;
+static E_Config_DD *_e_config_syscon_action_edd = NULL;
 
 EAPI int E_EVENT_CONFIG_ICON_THEME = 0;
 
@@ -381,6 +382,18 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, mime, STR);
    E_CONFIG_VAL(D, T, icon, STR);
 
+   _e_config_syscon_action_edd = E_CONFIG_DD_NEW("E_Config_Syscon_Action",
+                                                 E_Config_Syscon_Action);
+#undef T
+#undef D
+#define T E_Config_Syscon_Action
+#define D _e_config_syscon_action_edd
+   E_CONFIG_VAL(D, T, action, STR);
+   E_CONFIG_VAL(D, T, params, STR);
+   E_CONFIG_VAL(D, T, button, STR);
+   E_CONFIG_VAL(D, T, icon, STR);
+   E_CONFIG_VAL(D, T, is_main, INT);
+
    _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);
 #undef T
 #undef D
@@ -635,12 +648,19 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, scale.use_dpi, UCHAR);
    E_CONFIG_VAL(D, T, scale.use_custom, UCHAR);
 
-   E_CONFIG_VAL(D, T, show_cursor, UCHAR); /**/
-   E_CONFIG_VAL(D, T, idle_cursor, UCHAR); /**/
+   E_CONFIG_VAL(D, T, show_cursor, UCHAR);
+   E_CONFIG_VAL(D, T, idle_cursor, UCHAR);
 
    E_CONFIG_VAL(D, T, default_system_menu, STR);
 
-   E_CONFIG_VAL(D, T, cfgdlg_normal_wins, UCHAR); /**/
+   E_CONFIG_VAL(D, T, cfgdlg_normal_wins, UCHAR);
+
+   E_CONFIG_VAL(D, T, syscon.main.icon_size, INT);
+   E_CONFIG_VAL(D, T, syscon.secondary.icon_size, INT);
+   E_CONFIG_VAL(D, T, syscon.extra.icon_size, INT);
+   E_CONFIG_VAL(D, T, syscon.timeout, DOUBLE);
+   E_CONFIG_VAL(D, T, syscon.do_input, UCHAR);
+   E_CONFIG_LIST(D, T, syscon.actions, _e_config_syscon_action_edd);
    
    e_config_load();
    
@@ -669,6 +689,8 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_gadcon_client_edd);
    E_CONFIG_DD_FREE(_e_config_shelf_edd);
    E_CONFIG_DD_FREE(_e_config_shelf_desk_edd);
+   E_CONFIG_DD_FREE(_e_config_mime_icon_edd);
+   E_CONFIG_DD_FREE(_e_config_syscon_action_edd);
    return 1;
 }
 
@@ -775,7 +797,8 @@ e_config_load(void)
 #define IFCFG(v) if ((e_config->config_version & 0xffff) < (v)) {
 #define IFCFGEND }
 #define COPYVAL(x) do {e_config->x = tcfg->x;} while (0)
-#define COPYSTR(x) do {e_config->x = tcfg->x; tcfg->x = NULL;} while (0)
+#define COPYPTR(x) do {e_config->x = tcfg->x; tcfg->x = NULL;} while (0)
+#define COPYSTR(x) COPYPTR(x)
    if (tcfg)
      {
         /* some sort of upgrade is needed */
@@ -822,6 +845,10 @@ e_config_load(void)
         
         IFCFG(0x012b);
         COPYVAL(cfgdlg_normal_wins);
+        IFCFGEND;
+        
+        IFCFG(0x012c);
+        COPYPTR(syscon.actions);
         IFCFGEND;
         
         e_config->config_version = E_CONFIG_FILE_VERSION;   
@@ -1573,6 +1600,18 @@ _e_config_free(E_Config *ecf)
    if (ecf->wallpaper_import_last_path) eina_stringshare_del(ecf->wallpaper_import_last_path);
    if (ecf->theme_default_border_style) eina_stringshare_del(ecf->theme_default_border_style);
    if (ecf->desklock_custom_desklock_cmd) eina_stringshare_del(ecf->desklock_custom_desklock_cmd);
+   while (ecf->syscon.actions)
+     {
+        E_Config_Syscon_Action *sca;
+        
+        sca = ecf->syscon.actions->data;
+        if (sca->action) eina_stringshare_del(sca->action);
+        if (sca->params) eina_stringshare_del(sca->params);
+        if (sca->button) eina_stringshare_del(sca->button);
+        if (sca->icon) eina_stringshare_del(sca->icon);
+        E_FREE(sca);
+        ecf->syscon.actions = eina_list_remove_list(ecf->syscon.actions, ecf->syscon.actions);
+     }
    E_FREE(ecf);
 }
 

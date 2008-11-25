@@ -55,7 +55,8 @@ mixer \
 conf_window_remembers \
 conf_scale \
 connman \
-illume
+illume \
+syscon
 
 if HAVE_TEMPERATURE
 SUBDIRS += temperature

@@ -1,5 +1,5 @@
 group "E_Config" struct {
-  value "config_version" int: 65834;
+  value "config_version" int: 65835;
   value "show_splash" int: 0;
   value "init_default_theme" string: "default.edj";
   value "desktop_default_name" string: "Desktop %i, %i";
@@ -522,4 +522,9 @@ group "E_Config" struct {
   value "idle_cursor" uchar: 1;
   value "default_system_menu" string: "";
   value "cfgdlg_normal_wins" uchar: 0;
+  value "syscon.main.icon_size" int: 64;
+  value "syscon.secondary.icon_size" int: 48;
+  value "syscon.extra.icon_size" int: 48;
+  value "syscon.timeout" double: 0.0;
+  value "syscon.do_input" uchar: 0;
 }

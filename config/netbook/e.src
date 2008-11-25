@@ -1,5 +1,5 @@
 group "E_Config" struct {
-  value "config_version" int: 65834;
+  value "config_version" int: 65835;
   value "show_splash" int: 1;
   value "init_default_theme" string: "default.edj";
   value "desktop_default_background" string: "Dark_Gradient.edj";
@@ -434,11 +434,12 @@ group "E_Config" struct {
       value "priority" int: 0;
     }
   }
-  group "font_defaults" list {
-    group "E_Font_Default" struct {
-      value "text_class" string: "default";
-      value "font" string: "Vera";
-      value "size" int: 10;
+  group "modules" list {
+    group "E_Config_Module" struct {
+      value "name" string: "syscon";
+      value "enabled" uchar: 1;
+      value "delayed" uchar: 1;
+      value "priority" int: 0;
     }
   }
   group "themes" list {
@@ -1999,4 +2000,62 @@ group "E_Config" struct {
   value "idle_cursor" uchar: 1;
   value "default_system_menu" string: "";
   value "cfgdlg_normal_wins" uchar: 0;
+  value "syscon.main.icon_size" int: 64;
+  value "syscon.secondary.icon_size" int: 48;
+  value "syscon.extra.icon_size" int: 48;
+  value "syscon.timeout" double: 5.0;
+  value "syscon.do_input" uchar: 1;
+  group "syscon.actions" list {
+    group "E_Config_Syscon_Action" struct {
+      value "action" string: "halt";
+      value "params" string: "now";
+      value "button" string: "button";
+      value "icon" string: "enlightenment/halt";
+      value "is_main" int: 1;
+    }
+  }
+  group "syscon.actions" list {
+    group "E_Config_Syscon_Action" struct {
+      value "action" string: "suspend";
+      value "params" string: "now";
+      value "button" string: "button";
+      value "icon" string: "enlightenment/suspend";
+      value "is_main" int: 1;
+    }
+  }
+  group "syscon.actions" list {
+    group "E_Config_Syscon_Action" struct {
+      value "action" string: "desk_lock";
+      value "button" string: "button";
+      value "icon" string: "enlightenment/desklock_menu";
+      value "is_main" int: 1;
+    }
+  }
+  group "syscon.actions" list {
+    group "E_Config_Syscon_Action" struct {
+      value "action" string: "reboot";
+      value "params" string: "now";
+      value "button" string: "button";
+      value "icon" string: "enlightenment/reboot";
+      value "is_main" int: 0;
+    }
+  }
+  group "syscon.actions" list {
+    group "E_Config_Syscon_Action" struct {
+      value "action" string: "hibernate";
+      value "params" string: "now";
+      value "button" string: "button";
+      value "icon" string: "enlightenment/hibernate";
+      value "is_main" int: 0;
+    }
+  }
+  group "syscon.actions" list {
+    group "E_Config_Syscon_Action" struct {
+      value "action" string: "logout";
+      value "params" string: "now";
+      value "button" string: "button";
+      value "icon" string: "enlightenment/logout";
+      value "is_main" int: 0;
+    }
+  }
 }
