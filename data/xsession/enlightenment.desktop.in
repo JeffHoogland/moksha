@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=Enlightenment
 Comment=Log in using Enlightenment (Version @VERSION@)
+Comment[it]=Effettua accesso con Enlightenment (Versione @VERSION@)
 Type=XSession
 Icon=@prefix@/share/enlightenment/data/images/enlightenment.png
 Exec=@prefix@/bin/enlightenment_start
