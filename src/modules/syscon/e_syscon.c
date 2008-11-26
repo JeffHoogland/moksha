@@ -13,6 +13,7 @@ static int _cb_mouse_wheel(void *data, int type, void *event);
 static void _cb_signal_close(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _cb_signal_syscon(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _cb_signal_action(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _cb_signal_action_extra(void *data, Evas_Object *obj, const char *emission, const char *source);
 static int _cb_timeout_defaction(void *data);
 
 /* local subsystem globals */
@@ -163,7 +164,8 @@ e_syscon_show(E_Zone *zone, const char *defact)
         else
           e_theme_edje_object_set(o, "base/theme/widgets",
                                   "e/widgets/syscon/item/button");
-//        edje_object_part_text_set(o, "e.text.label", sca->action);
+        edje_object_part_text_set(o, "e.text.label", 
+                                  e_action_predef_label_get(sca->action, sca->params));
         if (sca->icon)
           {
              o2 = edje_object_add(popup->evas);
@@ -189,7 +191,37 @@ e_syscon_show(E_Zone *zone, const char *defact)
                                       iw, ih, iw, ih);
         evas_object_show(o);
      }
-   // FIXME: "extra" list needs to be handled
+   for (l = (Eina_List *)e_sys_con_extra_action_list_get(); l; l = l->next)
+     {
+        E_Sys_Con_Action *sca;
+        char buf[1024];
+        
+        sca = l->data;
+        o = edje_object_add(popup->evas);
+        edje_object_signal_callback_add(o, "e,action,click", "", _cb_signal_action_extra, sca);
+        if (sca->button_name)
+          {
+             snprintf(buf, sizeof(buf), "e/widgets/syscon/item/%s",
+                      sca->button_name);
+             e_theme_edje_object_set(o, "base/theme/widgets", buf);
+          }
+        else
+          e_theme_edje_object_set(o, "base/theme/widgets",
+                                  "e/widgets/syscon/item/button");
+        edje_object_part_text_set(o, "e.text.label", sca->label);
+        if (sca->icon_group)
+          {
+             o2 = edje_object_add(popup->evas);
+             e_util_edje_icon_set(o2, sca->icon_group);
+             edje_object_part_swallow(o, "e.swallow.icon", o2);
+             evas_object_show(o2);
+          }
+        e_flowlayout_pack_end(o_flow_extra, o);
+        iw = ih = e_config->syscon.extra.icon_size * e_scale;
+        e_flowlayout_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, 
+                                      iw, ih, iw, ih);
+        evas_object_show(o);
+     }
 
    e_flowlayout_fill_set(o_flow_main, 1);
    edje_object_part_swallow(o_bg, "e.swallow.main", o_flow_main);
@@ -389,6 +421,17 @@ _cb_signal_action(void *data, Evas_Object *obj, const char *emission, const char
    a = e_action_find(sca->action);
    if (!a) return;
    if (a) a->func.go(NULL, sca->params);
+}
+
+static void
+_cb_signal_action_extra(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   E_Sys_Con_Action *sca;
+  
+   e_syscon_hide();
+   sca = data;
+   if (!sca) return;
+   if (sca->func) sca->func((void *)sca->data);
 }
 
 static int

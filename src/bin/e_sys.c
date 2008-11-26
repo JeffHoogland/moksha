@@ -118,6 +118,46 @@ e_sys_action_do(E_Sys_Action a, char *param)
    return ret;
 }
 
+static Eina_List *extra_actions = NULL;
+
+EAPI E_Sys_Con_Action *
+e_sys_con_extra_action_register(const char *label,
+                                const char *icon_group,
+                                const char *button_name,
+                                void (*func) (void *data),
+                                const void *data)
+{
+   E_Sys_Con_Action *sca;
+   
+   sca = E_NEW(E_Sys_Con_Action, 1);
+   if (label)
+     sca->label = eina_stringshare_add(label);
+   if (icon_group)
+     sca->icon_group = eina_stringshare_add(icon_group);
+   if (button_name)
+     sca->button_name = eina_stringshare_add(button_name);
+   sca->func = func;
+   sca->data = data;
+   extra_actions = eina_list_append(extra_actions, sca);
+   return sca;
+}
+
+EAPI void
+e_sys_con_extra_action_unregister(E_Sys_Con_Action *sca)
+{
+   extra_actions = eina_list_remove(extra_actions, sca);
+   if (sca->label) eina_stringshare_del(sca->label);
+   if (sca->icon_group) eina_stringshare_del(sca->icon_group);
+   if (sca->button_name) eina_stringshare_del(sca->button_name);
+   free(sca);
+}
+
+EAPI const Eina_List *
+e_sys_con_extra_action_list_get(void)
+{
+   return extra_actions;
+}
+
 /* local subsystem functions */
 static int
 _e_sys_cb_timer(void *data)

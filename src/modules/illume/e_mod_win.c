@@ -39,6 +39,8 @@ static int _cb_efreet_desktop_change(void *data, int type, void *event);
 static void _apps_unpopulate(void);
 static void _apps_populate(void);
 static int _cb_update_deferred(void *data);
+static void _cb_sys_con_close(void *data);
+static void _cb_sys_con_home(void *data);
 
 static void _e_illume_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _e_illume_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
@@ -68,6 +70,9 @@ static E_Busywin *busycover = NULL;
 static E_Flaunch *flaunch = NULL;
 static E_Appwin *appwin = NULL;
 static E_Syswin *syswin = NULL;
+
+static E_Sys_Con_Action *sys_con_act_close = NULL;
+static E_Sys_Con_Action *sys_con_act_home = NULL;
 
 /* called from the module core */
 void
@@ -144,11 +149,20 @@ _e_mod_win_init(E_Module *m)
    _apps_unpopulate();
    _apps_populate();
    e_configure_registry_custom_desktop_exec_callback_set(_cb_cfg_exec, NULL);
+
+   sys_con_act_close = e_sys_con_extra_action_register
+     (_("Close"), "enlightenment/close", "button", _cb_sys_con_close, NULL);
+   sys_con_act_home = e_sys_con_extra_action_register
+     (_("Home"), "enlightenment/home", "button", _cb_sys_con_home, NULL);
 }
 
 void
 _e_mod_win_shutdown(void)
 {
+   e_sys_con_extra_action_unregister(sys_con_act_close);
+   sys_con_act_close = NULL;
+   e_sys_con_extra_action_unregister(sys_con_act_home);
+   sys_con_act_home = NULL;
    e_object_del(E_OBJECT(flaunch));
    flaunch = NULL;
    if (busywin)
@@ -1106,6 +1120,44 @@ _cb_update_deferred(void *data)
    defer = NULL;
    return 0;
 }
+
+static void
+_cb_sys_con_close(void *data)
+{
+   E_Border *bd;
+   
+   bd = e_border_focused_get();
+   if (bd)
+     {
+	if (e_object_is_del(E_OBJECT(bd))) return;
+	if ((!bd->client.icccm.accepts_focus) &&
+	    (!bd->client.icccm.take_focus)) return;
+	if (bd->client.netwm.state.skip_taskbar) return;
+	if (bd->user_skip_winlist) return;
+	_e_mod_layout_border_close(bd);
+     }
+}
+
+static void
+_cb_sys_con_home(void *data)
+{
+   Eina_List *l, *borders;
+   
+   borders = e_border_client_list();
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+	
+	bd = l->data;
+	if (e_object_is_del(E_OBJECT(bd))) continue;
+	if ((!bd->client.icccm.accepts_focus) &&
+	    (!bd->client.icccm.take_focus)) continue;
+	if (bd->client.netwm.state.skip_taskbar) continue;
+	if (bd->user_skip_winlist) continue;
+	_e_mod_layout_border_hide(bd);
+     }
+}
+
 
 static void
 _e_illume_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)

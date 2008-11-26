@@ -372,6 +372,36 @@ collections {
 	 }
       }
    }
+
+   group { name: "e/icons/enlightenment/home";
+      images.image: "illume-home.png" COMP;
+      max: 96 96;
+      parts {
+         part { name: "icon";
+            repeat_events: 1;
+            description { state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image.normal: "illume-home.png";
+            }
+         }
+      }
+   }
+   
+   group { name: "e/icons/enlightenment/close";
+      images.image: "illume-close.png" COMP;
+      max: 96 96;
+      parts {
+         part { name: "icon";
+            repeat_events: 1;
+            description { state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image.normal: "illume-close.png";
+            }
+         }
+      }
+   }
    
    group { name: "e/modules/slipshelf/controls/default";
       images {

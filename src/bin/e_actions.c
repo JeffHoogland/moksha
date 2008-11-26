@@ -2705,6 +2705,33 @@ e_action_find(const char *name)
    return act;
 }
 
+EAPI const char *
+e_action_predef_label_get(const char *action, const char *params)
+{
+   E_Action_Group *actg = NULL;
+   E_Action_Description *actd = NULL;
+   Eina_List *l, *l2;
+   
+   for (l = action_groups; l; l = l->next)
+     {
+	actg = l->data;
+        for (l2 = actg->acts; l2; l2 = l2->next)
+          {
+             actd = l2->data;
+             if (!strcmp(actd->act_cmd, action))
+               {
+                  if ((params) && (actd->act_params) &&
+                      (!strcmp(params, actd->act_params)))
+                    {
+                       return actd->act_name;
+                    }
+               }
+          }
+     }
+   if (params) return e_action_predef_label_get(action, NULL);
+   return NULL;
+}
+
 EAPI void
 e_action_predef_name_set(const char *act_grp, const char *act_name, const char *act_cmd, const char *act_params, const char *param_example, int editable)
 {
