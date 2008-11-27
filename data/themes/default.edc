@@ -10314,7 +10314,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       text {
 		  font: "Sans";
 		  size: 10;
-		  min: 1 1;
+		  min: 0 1;
 		  align: 0.0 0.5;
 		  text_class: "menu_item";
 	       }
