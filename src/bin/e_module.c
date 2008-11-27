@@ -514,6 +514,7 @@ _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)
    E_Dialog *dia;
    char buf[4096];
 
+   printf("MODULE ERR:\n%s\n", body);
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_module_unload_dialog");
    if (!dia) return;
 

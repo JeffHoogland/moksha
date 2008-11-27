@@ -13,7 +13,22 @@
 #include "e_appwin.h"
 #include "e_syswin.h"
 
+// FIXME:
+// 
+// fix next/prev to keep a window list in order of most recently focused.
+
 /* internal calls */
+static void _app_fill(void);
+static void _app_clear(void);
+static void _app_add(E_Border *bd);
+static void _app_del(E_Border *bd);
+static void _app_promote_allow(E_Border *bd);
+static void _app_promote(E_Border *bd);
+static void _app_prev(void);
+static void _app_next(void);
+static void _app_home(void);
+static void _app_close(E_Border *bd);
+
 static void _cb_cfg_exec(const void *data, E_Container *con, const char *params, Efreet_Desktop *desktop);
 static void _desktop_run(Efreet_Desktop *desktop);
 static int _cb_zone_move_resize(void *data, int type, void *event);
@@ -21,6 +36,8 @@ static void _cb_resize(void);
 static void _cb_run(void *data);
 static int _cb_event_border_add(void *data, int type, void *event);
 static int _cb_event_border_remove(void *data, int type, void *event);
+static int _cb_event_border_focus_in(void *data, int type, void *event);
+static int _cb_event_border_focus_out(void *data, int type, void *event);
 static int _cb_event_exe_del(void *data, int type, void *event);
 static int _cb_run_timeout(void *data);
 static int _have_borders(void);
@@ -133,6 +150,12 @@ _e_mod_win_init(E_Module *m)
       (E_EVENT_BORDER_REMOVE, _cb_event_border_remove, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
+      (E_EVENT_BORDER_FOCUS_IN, _cb_event_border_focus_in, NULL));
+   handlers = eina_list_append
+     (handlers, ecore_event_handler_add
+      (E_EVENT_BORDER_FOCUS_OUT, _cb_event_border_focus_out, NULL));
+   handlers = eina_list_append
+     (handlers, ecore_event_handler_add
       (ECORE_EXE_EVENT_DEL, _cb_event_exe_del, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
@@ -152,17 +175,27 @@ _e_mod_win_init(E_Module *m)
 
    sys_con_act_close = e_sys_con_extra_action_register
      (_("Close"), "enlightenment/close", "button", _cb_sys_con_close, NULL);
+   if (sys_con_act_close) sys_con_act_close->disabled = 1;
    sys_con_act_home = e_sys_con_extra_action_register
      (_("Home"), "enlightenment/home", "button", _cb_sys_con_home, NULL);
+   if (sys_con_act_home) sys_con_act_home->disabled = 1;
+   _app_fill();
 }
 
 void
 _e_mod_win_shutdown(void)
 {
-   e_sys_con_extra_action_unregister(sys_con_act_close);
-   sys_con_act_close = NULL;
-   e_sys_con_extra_action_unregister(sys_con_act_home);
-   sys_con_act_home = NULL;
+   _app_clear();
+   if (sys_con_act_close)
+     {
+        e_sys_con_extra_action_unregister(sys_con_act_close);
+        sys_con_act_close = NULL;
+     }
+   if (sys_con_act_home)
+     {
+        e_sys_con_extra_action_unregister(sys_con_act_home);
+        sys_con_act_home = NULL;
+     }
    e_object_del(E_OBJECT(flaunch));
    flaunch = NULL;
    if (busywin)
@@ -317,6 +350,193 @@ _e_mod_win_slipshelf_cfg_update(void)
 }
 
 /* internal calls */
+/////////
+
+static Eina_List *applist = NULL;
+static E_Border *nopromote = NULL;
+
+static void
+_app_fill(void)
+{
+   Eina_List *l;
+
+   _app_clear();
+   for (l = e_border_client_list(); l; l = l->next)
+     applist = eina_list_append(applist, l->data);
+}
+
+static void
+_app_clear(void)
+{
+   nopromote = NULL;
+   if (applist)
+     {
+        eina_list_free(applist);
+        applist = NULL;
+     }
+}
+
+static void
+_app_add(E_Border *bd)
+{
+   if (eina_list_data_find(applist, bd)) return;
+   applist = eina_list_prepend(applist, bd);
+}
+
+static void
+_app_del(E_Border *bd)
+{
+   if (bd == nopromote) nopromote = NULL;
+   applist = eina_list_remove(applist, bd);
+}
+
+static void
+_app_promote_allow(E_Border *bd)
+{
+   if (bd == nopromote) nopromote = NULL;
+}
+
+static void
+_app_promote(E_Border *bd)
+{
+   if (bd == nopromote) return;
+   applist = eina_list_remove(applist, bd);
+   applist = eina_list_prepend(applist, bd);
+}
+
+static Eina_List *
+__app_list(void)
+{
+   Eina_List *tlist = NULL, *l;
+   
+   for (l = applist; l; l = l->next)
+     {
+        E_Border *bd;
+        
+	bd = l->data;
+	if (e_object_is_del(E_OBJECT(bd))) continue;
+	if ((!bd->client.icccm.accepts_focus) &&
+	    (!bd->client.icccm.take_focus)) continue;
+	if (bd->client.netwm.state.skip_taskbar) continue;
+	if (bd->user_skip_winlist) continue;
+	tlist = eina_list_append(tlist, bd);
+     }
+   return tlist;
+}
+
+static Eina_List *
+__app_find(Eina_List *list, E_Border *bd)
+{
+   Eina_List *l;
+   
+   for (l = list; l; l = l->next)
+     {
+        if (l->data == bd) return l;
+     }
+   return NULL;
+}
+
+static void
+_app_prev(void)
+{
+   E_Border *bd, *bd2;
+   Eina_List *apps, *bl;
+   
+   // go to the next bd in the list and focus it */
+   bd2 = e_border_focused_get();
+   apps = __app_list();
+   if (!apps) return;
+   if (!bd2)
+     {
+        bd = apps->data;
+        nopromote = bd;
+        _e_mod_layout_border_show(bd);
+        eina_list_free(apps);
+        return;
+     }
+   bl = __app_find(apps, bd2);
+   if (!bl)
+     {
+        eina_list_free(apps);
+        return;
+     }
+   if (!bl->next) _app_home();
+   else
+     {
+        bd = bl->next->data;
+        nopromote = bd;
+        _e_mod_layout_border_show(bd);
+     }
+   eina_list_free(apps);
+}
+
+static void
+_app_next(void)
+{
+   E_Border *bd, *bd2;
+   Eina_List *apps, *bl;
+   
+   // go to the prev bd in the list and focus it */
+   bd2 = e_border_focused_get();
+   apps = __app_list();
+   if (!apps) return;
+   if (!bd2)
+     {
+        bd = eina_list_last(apps)->data;
+        nopromote = bd;
+        _e_mod_layout_border_show(bd);
+        eina_list_free(apps);
+        return;
+     }
+   bl = __app_find(apps, bd2);
+   if (!bl)
+     {
+        eina_list_free(apps);
+        return;
+     }
+   if (!bl->prev) _app_home();
+   else
+     {
+        bd = bl->prev->data;
+        nopromote = bd;
+        _e_mod_layout_border_show(bd);
+     }
+   eina_list_free(apps);
+}
+
+static void
+_app_home(void)
+{
+   Eina_List *l, *borders;
+   
+   borders = e_border_client_list();
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+	
+	bd = l->data;
+	if (e_object_is_del(E_OBJECT(bd))) continue;
+	if ((!bd->client.icccm.accepts_focus) &&
+	    (!bd->client.icccm.take_focus)) continue;
+	if (bd->client.netwm.state.skip_taskbar) continue;
+	if (bd->user_skip_winlist) continue;
+	_e_mod_layout_border_hide(bd);
+     }
+}
+
+static void
+_app_close(E_Border *bd)
+{
+   if (e_object_is_del(E_OBJECT(bd))) return;
+   if ((!bd->client.icccm.accepts_focus) &&
+       (!bd->client.icccm.take_focus)) return;
+   if (bd->client.netwm.state.skip_taskbar) return;
+   if (bd->user_skip_winlist) return;
+   _e_mod_layout_border_close(bd);
+}
+
+/////////
+
 static int
 _cb_zone_move_resize(void *data, int type, void *event)
 {
@@ -484,6 +704,7 @@ _cb_event_border_add(void *data, int type, void *event)
    Eina_List *l;
    
    ev = event;
+   _app_add(ev->border);
    if (_have_borders())
      {
 	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APPS, 1);
@@ -525,6 +746,7 @@ _cb_event_border_remove(void *data, int type, void *event)
    Eina_List *l;
    
    ev = event;
+   _app_del(ev->border);
    if (!_have_borders())
      {
 	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APPS, 0);
@@ -546,6 +768,34 @@ _cb_event_border_remove(void *data, int type, void *event)
 	     return 1;
 	  }
      }
+   return 1;
+}
+
+static int 
+_cb_event_border_focus_in(void *data, int type, void *event)
+{
+   E_Event_Border_Focus_In *ev;
+   
+   ev = event;
+   _app_promote(ev->border);
+   if (sys_con_act_close)
+     sys_con_act_close->disabled = 0;
+   if (sys_con_act_home)
+     sys_con_act_home->disabled = 0;
+   return 1;
+}
+
+static int 
+_cb_event_border_focus_out(void *data, int type, void *event)
+{
+   E_Event_Border_Focus_Out *ev;
+   
+   ev = event;
+   _app_promote_allow(ev->border);
+   if (sys_con_act_close)
+     sys_con_act_close->disabled = 1;
+   if (sys_con_act_home)
+     sys_con_act_home->disabled = 1;
    return 1;
 }
 
@@ -624,21 +874,7 @@ _have_borders(void)
 static void
 _cb_slipshelf_home(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action)
 {
-   Eina_List *l, *borders;
-   
-   borders = e_border_client_list();
-   for (l = borders; l; l = l->next)
-     {
-	E_Border *bd;
-	
-	bd = l->data;
-	if (e_object_is_del(E_OBJECT(bd))) continue;
-	if ((!bd->client.icccm.accepts_focus) &&
-	    (!bd->client.icccm.take_focus)) continue;
-	if (bd->client.netwm.state.skip_taskbar) continue;
-	if (bd->user_skip_winlist) continue;
-	_e_mod_layout_border_hide(bd);
-     }
+   _app_home();
 }
 
 static void
@@ -648,14 +884,7 @@ _cb_slipshelf_close(const void *data, E_Slipshelf *ess, E_Slipshelf_Action actio
    
    bd = e_border_focused_get();
    if (bd)
-     {
-	if (e_object_is_del(E_OBJECT(bd))) return;
-	if ((!bd->client.icccm.accepts_focus) &&
-	    (!bd->client.icccm.take_focus)) return;
-	if (bd->client.netwm.state.skip_taskbar) return;
-	if (bd->user_skip_winlist) return;
-	_e_mod_layout_border_close(bd);
-     }
+     _app_close(bd);
    else
      {
         E_Action *a;
@@ -683,113 +912,13 @@ _cb_slipshelf_keyboard(const void *data, E_Slipshelf *ess, E_Slipshelf_Action ac
 static void
 _cb_slipshelf_app_next(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action)
 {
-   E_Border *bd, *bd2 = NULL;
-   Eina_List *l, *list, *tlist = NULL;
-   
-   bd = e_border_focused_get();
-   list = e_border_client_list();
-   for (l = list; l; l = l->next)
-     {
-	bd2 = l->data;
-	if (e_object_is_del(E_OBJECT(bd2))) continue;
-	if ((!bd2->client.icccm.accepts_focus) &&
-	    (!bd2->client.icccm.take_focus)) continue;
-	if (bd2->client.netwm.state.skip_taskbar) continue;
-	if (bd2->user_skip_winlist) continue;
-	tlist = evas_list_append(tlist, bd2);
-     }
-   if (!tlist) return;
-   if (!bd) bd2 = tlist->data;
-   else
-     {
-	for (l = tlist; l; l = l->next)
-	  {
-	     bd2 = l->data;
-	     if (bd2 == bd)
-	       {
-		  if (l->next) bd2 = l->next->data;
-		  else bd2 = NULL;
-		  break;
-	       }
-	  }
-     }
-   evas_list_free(tlist);
-   if (bd2 == bd) return;
-   if (bd2) _e_mod_layout_border_show(bd2);
-   else
-     {
-	Eina_List *l, *borders;
-	
-	borders = e_border_client_list();
-	for (l = borders; l; l = l->next)
-	  {
-	     E_Border *bd;
-	     
-	     bd = l->data;
-	     if (e_object_is_del(E_OBJECT(bd))) continue;
-	     if ((!bd->client.icccm.accepts_focus) &&
-		 (!bd->client.icccm.take_focus)) continue;
-	     if (bd->client.netwm.state.skip_taskbar) continue;
-	     if (bd->user_skip_winlist) continue;
-	     _e_mod_layout_border_hide(bd);
-	  }
-     }
+   _app_next();
 }
 
 static void
 _cb_slipshelf_app_prev(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action)
 {
-   E_Border *bd, *bd2 = NULL;
-   Eina_List *l, *list, *tlist = NULL;
-   
-   bd = e_border_focused_get();
-   list = e_border_client_list();
-   for (l = list; l; l = l->next)
-     {
-	bd2 = l->data;
-	if (e_object_is_del(E_OBJECT(bd2))) continue;
-	if ((!bd2->client.icccm.accepts_focus) &&
-	    (!bd2->client.icccm.take_focus)) continue;
-	if (bd2->client.netwm.state.skip_taskbar) continue;
-	if (bd2->user_skip_winlist) continue;
-	tlist = evas_list_append(tlist, bd2);
-     }
-   if (!tlist) return;
-   if (!bd) bd2 = evas_list_last(tlist)->data;
-   else
-     {
-	for (l = tlist; l; l = l->next)
-	  {
-	     bd2 = l->data;
-	     if (bd2 == bd)
-	       {
-		  if (l->prev) bd2 = l->prev->data;
-		  else bd2 = NULL;
-		  break;
-	       }
-	  }
-     }
-   evas_list_free(tlist);
-   if (bd2 == bd) return;
-   if (bd2) _e_mod_layout_border_show(bd2);
-   else
-     {
-	Eina_List *l, *borders;
-	
-	borders = e_border_client_list();
-	for (l = borders; l; l = l->next)
-	  {
-	     E_Border *bd;
-	     
-	     bd = l->data;
-	     if (e_object_is_del(E_OBJECT(bd))) continue;
-	     if ((!bd->client.icccm.accepts_focus) &&
-		 (!bd->client.icccm.take_focus)) continue;
-	     if (bd->client.netwm.state.skip_taskbar) continue;
-	     if (bd->user_skip_winlist) continue;
-	     _e_mod_layout_border_hide(bd);
-	  }
-     }
+   _app_prev();
 }
 
 static void
@@ -1127,35 +1256,13 @@ _cb_sys_con_close(void *data)
    E_Border *bd;
    
    bd = e_border_focused_get();
-   if (bd)
-     {
-	if (e_object_is_del(E_OBJECT(bd))) return;
-	if ((!bd->client.icccm.accepts_focus) &&
-	    (!bd->client.icccm.take_focus)) return;
-	if (bd->client.netwm.state.skip_taskbar) return;
-	if (bd->user_skip_winlist) return;
-	_e_mod_layout_border_close(bd);
-     }
+   if (bd) _app_close(bd);
 }
 
 static void
 _cb_sys_con_home(void *data)
 {
-   Eina_List *l, *borders;
-   
-   borders = e_border_client_list();
-   for (l = borders; l; l = l->next)
-     {
-	E_Border *bd;
-	
-	bd = l->data;
-	if (e_object_is_del(E_OBJECT(bd))) continue;
-	if ((!bd->client.icccm.accepts_focus) &&
-	    (!bd->client.icccm.take_focus)) continue;
-	if (bd->client.netwm.state.skip_taskbar) continue;
-	if (bd->user_skip_winlist) continue;
-	_e_mod_layout_border_hide(bd);
-     }
+   _app_home();
 }
 
 

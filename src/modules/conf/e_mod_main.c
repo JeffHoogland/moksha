@@ -110,8 +110,11 @@ _gc_id_new(E_Gadcon_Client_Class *client_class)
 static void
 _cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
+   Evas_Event_Mouse_Up *ev;
    E_Action *a;
-               
+
+   ev = event_info;
+   if (ev->button != 1) return;
    a = e_action_find("configuration");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }

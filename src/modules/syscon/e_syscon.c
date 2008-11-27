@@ -191,6 +191,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
                                       iw, ih, iw, ih);
         evas_object_show(o);
      }
+
    for (l = (Eina_List *)e_sys_con_extra_action_list_get(); l; l = l->next)
      {
         E_Sys_Con_Action *sca;
@@ -215,7 +216,11 @@ e_syscon_show(E_Zone *zone, const char *defact)
              e_util_edje_icon_set(o2, sca->icon_group);
              edje_object_part_swallow(o, "e.swallow.icon", o2);
              evas_object_show(o2);
+             if (sca->disabled)
+               edje_object_signal_emit(o2, "e,state,disabled", "e");
           }
+        if (sca->disabled)
+          edje_object_signal_emit(o, "e,state,disabled", "e");
         e_flowlayout_pack_end(o_flow_extra, o);
         iw = ih = e_config->syscon.extra.icon_size * e_scale;
         e_flowlayout_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, 
