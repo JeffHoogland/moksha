@@ -855,9 +855,12 @@ _e_exebuf_delete(void)
      }
 
    l = eina_list_last(eaps);
-   if (l) exe_l = l->data;
-   l = l->prev;
-   if (l) exe_p = l->data;
+   if (l)
+     {
+	exe_l = l->data;
+	l = l->prev;
+	if (l) exe_p = l->data;
+     }
    l = eina_list_last(list);
 
    if ((!exe_l) || (strcmp(exe_l->file, l->data) &&
