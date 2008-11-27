@@ -45,6 +45,7 @@ static void _e_exebuf_next(void);
 static void _e_exebuf_prev(void);
 static void _e_exebuf_complete(void);
 static void _e_exebuf_backspace(void);
+static void _e_exebuf_delete(void);
 static void _e_exebuf_clear(void);
 static void _e_exebuf_matches_update(void);
 static void _e_exebuf_hist_update(void);
@@ -835,6 +836,101 @@ _e_exebuf_backspace(void)
 }
 
 static void
+_e_exebuf_delete(void)
+{
+   E_Exebuf_Exe *exe_del, *exe_l = NULL, *exe_p = NULL;
+   Eina_List *list = NULL, *l = NULL;
+   int i;
+
+   if ((which_list != HIST_LIST) || !exe_sel) return;
+
+   exe_del = exe_sel;
+   e_exehist_del(exe_del->file);
+
+   list = e_exehist_list_get();
+   if (!list)
+     {
+	_e_exebuf_hist_clear();
+	return;
+     }
+
+   l = eina_list_last(eaps);
+   if (l) exe_l = l->data;
+   l = l->prev;
+   if (l) exe_p = l->data;
+   l = eina_list_last(list);
+
+   if ((!exe_l) || (strcmp(exe_l->file, l->data) &&
+		   ((!exe_p) || strcmp(exe_p->file, l->data))))
+     {
+	E_Exebuf_Exe *exe;
+	Evas_Coord mw, mh;
+	Evas_Object *o;
+	
+	exe = calloc(1, sizeof(E_Exebuf_Exe));
+	exe->file = l->data;
+        eaps = eina_list_append(eaps, exe);
+	o = edje_object_add(exebuf->evas);
+        exe->bg_object = o;
+	e_theme_edje_object_set(o, "base/theme/exebuf",
+				"e/widgets/exebuf/item");
+	edje_object_part_text_set(o, "e.text.title", exe->file);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
+				       _e_exebuf_cb_exe_item_mouse_in, exe);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT,
+				       _e_exebuf_cb_exe_item_mouse_out, exe);
+	evas_object_show(o);
+	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
+	  {
+	     Efreet_Desktop *desktop;
+
+	     desktop = efreet_util_desktop_exec_find(exe->file);
+	     if (desktop)
+	       {
+		  o = e_util_desktop_icon_add(desktop, 24, exebuf->evas);
+		  exe->icon_object = o;
+		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons",
+					   o);
+		  evas_object_show(o);
+		  exe->desktop = desktop;
+	       }
+	  }
+	edje_object_size_min_calc(exe->bg_object, &mw, &mh);
+	e_box_pack_start(eap_list_object, exe->bg_object);
+	e_box_pack_options_set(exe->bg_object,
+			       1, 1, /* fill */
+			       1, 0, /* expand */
+			       0.5, 0.5, /* align */
+			       mw, mh, /* min */
+			       9999, mh /* max */
+			       );
+     }
+   eina_list_free(list);
+
+   _e_exebuf_prev();
+   if (exe_sel == exe_del) _e_exebuf_next();
+   if (exe_sel)
+     {
+	evas_event_freeze(exebuf->evas);
+	e_box_freeze(eap_list_object);
+	e_box_freeze(exe_list_object);
+	_e_exebuf_exe_free(exe_del);
+	eaps = eina_list_remove(eaps, exe_del);
+	e_box_thaw(exe_list_object);
+	e_box_thaw(eap_list_object);
+	evas_event_thaw(exebuf->evas);
+	for (l = eaps, i = 0; l; l = l->next, i++)
+	  {
+	     if (l->data == exe_sel)
+	       {
+		  _e_exebuf_eap_scroll_to(i);
+		  break;
+	       }
+	  }
+     }
+}
+
+static void
 _e_exebuf_clear(void)
 {
    if (cmd_buf[0] != 0)
@@ -1282,7 +1378,7 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
    else if (!strcmp(ev->keysymbol, "BackSpace"))
      _e_exebuf_backspace();
    else if (!strcmp(ev->keysymbol, "Delete"))
-     _e_exebuf_backspace();
+     _e_exebuf_delete();
    else
      {
 	if (ev->key_compose)
