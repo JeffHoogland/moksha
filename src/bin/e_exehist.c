@@ -94,6 +94,30 @@ e_exehist_add(const char *launch_method, const char *exe)
 }
 
 EAPI void
+e_exehist_del(const char *exe)
+{
+   E_Exehist_Item *ei;
+   Eina_List *l;
+
+   _e_exehist_load();
+   if (!_e_exehist) return;
+   for (l = _e_exehist->history; l; l = l->next)
+     {
+	ei = l->data;
+	if ((ei->exe) && (!strcmp(exe, ei->exe)))
+	  {
+	     if (ei->exe) eina_stringshare_del(ei->exe);
+	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
+	     free(ei);
+	     _e_exehist->history = eina_list_remove_list(_e_exehist->history,
+							 l);
+	     _e_exehist_changes++;
+	     _e_exehist_unload_queue();
+	  }
+     }
+}
+
+EAPI void
 e_exehist_clear(void)
 {
    _e_exehist_load();
