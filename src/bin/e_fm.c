@@ -5832,11 +5832,16 @@ _e_fm2_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	E_Fm2_Icon *ic;
 	int ix, iy, iw, ih;
+	int ix_t, iy_t, iw_t, ih_t;
 	
 	ic = l->data;
 	if (!ic) continue;
 	evas_object_geometry_get(ic->obj_icon, &ix, &iy, &iw, &ih);
-	if E_INTERSECTS(x, y, w, h, ix, iy, iw, ih)
+	evas_object_geometry_get(edje_object_part_object_get(ic->obj,
+							     "e.text.label"),
+				 &ix_t, &iy_t, &iw_t, &ih_t);
+	if (E_INTERSECTS(x, y, w, h, ix, iy, iw, ih) ||
+	    E_INTERSECTS(x, y, w, h, ix_t, iy_t, iw_t, ih_t))
 	  {
 	     if (!ic->selected)
 	       {
