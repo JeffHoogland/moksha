@@ -75,6 +75,7 @@ e_int_menus_main_new(void)
    E_Menu_Item *mi;
    Main_Data *dat;
    Eina_List *l = NULL;
+   int separator = 0;
 
    dat = calloc(1, sizeof(Main_Data));
    m = e_menu_new();
@@ -209,14 +210,25 @@ e_int_menus_main_new(void)
    l = evas_hash_find(_e_int_menus_augmentation, "main/9");
    if (l) _e_int_menus_augmentation_add(m, l);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
    l = evas_hash_find(_e_int_menus_augmentation, "main/10");
-   if (l) _e_int_menus_augmentation_add(m, l);
+   if (l) 
+     {
+        separator = 1;
+        mi = e_menu_item_new(m);
+        e_menu_item_separator_set(mi, 1);
+        _e_int_menus_augmentation_add(m, l);
+     }
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/11");
-   if (l) _e_int_menus_augmentation_add(m, l);
+   if (l) 
+     {
+        if (!separator) 
+          {
+             mi = e_menu_item_new(m);
+             e_menu_item_separator_set(mi, 1);
+          }
+        _e_int_menus_augmentation_add(m, l);
+     }
 
    return m;
 }
@@ -749,7 +761,6 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
-
 	_e_int_menus_augmentation_add(m, l);
      }
 
