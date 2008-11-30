@@ -22,7 +22,8 @@ enlightenment_thumb \
 enlightenment_sys \
 enlightenment_fm \
 enlightenment_init \
-enlightenment_fm_op
+enlightenment_fm_op \
+enlightenment_fm_open
 
 ENLIGHTENMENTHEADERS = \
 e.h \
@@ -346,10 +347,17 @@ enlightenment_fm_LDFLAGS = @e_libs@ @dlopen_libs@
 enlightenment_fm_CFLAGS = $(INCLUDES)
 
 enlightenment_fm_op_SOURCES = \
-e_fm_op.c 
+e_fm_op.c
 
 enlightenment_fm_op_LDFLAGS = @e_libs@
 enlightenment_fm_op_CFLAGS = $(INCLUDES)
+
+enlightenment_fm_open_SOURCES = \
+e_fm_open.c \
+e_ipc_codec.c
+
+enlightenment_fm_open_LDFLAGS = @e_libs@
+enlightenment_fm_open_CFLAGS = $(INCLUDES)
 
 enlightenment_sys_SOURCES = \
 e_sys_main.c

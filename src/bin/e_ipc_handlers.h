@@ -4728,33 +4728,49 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_EXEC_ACTION
 #if (TYPE == E_REMOTE_OPTIONS)
-	OP("-exec-action", 2, "Executes an action given the name (OPT1) and a string of parameters (OPT2).", 0, HDL)
+	OP("-exec-action", 2, "Executes an action given the name (OPT1) and a string of parameters (OPT2).", 1, HDL)
 #elif (TYPE == E_REMOTE_OUT)
 	REQ_2STRING(params[0], params[1], HDL);
 #elif (TYPE == E_WM_IN)
 	STRING2(actionName, paramList, e_2str, HDL);
 	{
-		Eina_List *m;
-		E_Manager *man;
-		E_Action  *act;
-
-		man = NULL;
-
-		m = e_manager_list();
+		Eina_List *m = e_manager_list();
+		int ok = 0;
 		if (m) {
-			man = m->data;
+			E_Manager *man = m->data;
 
 			if (man) {
-				act = e_action_find(actionName);
+				E_Action *act = e_action_find(actionName);
 
 				if (act && act->func.go) {
 					act->func.go(E_OBJECT(man), paramList);
+					ok = 1;
 				}
 			}
+		}
+
+		void *d;
+		int len;
+		d = e_ipc_codec_int_enc(ok, &len);
+		if (d) {
+		   ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, E_IPC_OP_EXEC_ACTION_REPLY, 0, 0, 0, d, len);
+		   free(d);
 		}
 	}
 	END_STRING2(e_2str)
 #elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_EXEC_ACTION_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
 #endif
 #undef HDL
 
