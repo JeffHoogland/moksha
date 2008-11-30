@@ -4,6 +4,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 #include "e_mod_config.h"
+#include "e_mod_dbus.h"
 
 /* actual module specifics */
 static void  _e_mod_action_fileman_cb(E_Object *obj, const char *params);
@@ -96,6 +97,9 @@ e_modapi_init(E_Module *m)
    
    /* FIXME: add system event for new zone creation, and on creation, add an fwin to the zone */
    
+
+   e_fileman_dbus_init();
+
    return m;
 }
 
@@ -106,6 +110,8 @@ e_modapi_shutdown(E_Module *m)
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
+
+   e_fileman_dbus_shutdown();
 
    ecore_event_handler_del(zone_add_handler);
    zone_add_handler = NULL;

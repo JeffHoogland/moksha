@@ -22,6 +22,8 @@ module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
 			 e_mod_config.c \
 			 e_mod_config.h \
+			 e_mod_dbus.c \
+			 e_mod_dbus.h \
 			 e_fwin.c \
                          e_fwin.h
 
