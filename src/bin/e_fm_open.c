@@ -161,7 +161,7 @@ main(int argc, char **argv)
      {
 	arg = argv[nonargs];
 
-	if (strcmp(arg, "file://") == 0)
+	if (strncmp(arg, "file://", sizeof("file://") - 1) == 0)
 	  arg += sizeof("file://") - 1;
      }
 
