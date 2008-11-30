@@ -239,6 +239,8 @@ src/modules/ibox/e_mod_main.c
 src/modules/pager/e_mod_config.c
 src/modules/pager/e_mod_main.c
 src/modules/start/e_mod_main.c
+src/modules/syscon/e_mod_main.c
+src/modules/syscon/e_syscon.c
 src/modules/temperature/e_mod_config.c
 src/modules/temperature/e_mod_main.c
 src/modules/wizard/e_mod_main.c

@@ -1,6 +1,8 @@
 [Desktop Entry]
 Type=Link
 Name=System Controls
+Name[it]=Controlli di sistema
 Icon=e-module-syscon
 Comment=<title>System Controls Module</title><br>This module provides a unified popup<br>dialog for all the system actions<br>in Enlightenment.
+Comment=<title>Modulo controlli di sistema</title><br>Questo modulo fornisce una finestra di dialogo popup<br>unificata per tutte le azioni di sistema in Enlightenment.
 X-Enlightenment-ModuleType=system
