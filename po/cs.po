@@ -1229,7 +1229,7 @@ msgstr "Opravdu chcete odstranit<br><hilight>%s</hilight>?"
 #: src/bin/e_fm.c:7420
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
-msgstr "Opravdu chcete odstranit<br>vybrané soubory v:<br><hilight>%s</hilight>?"
+msgstr ""
 
 #: src/bin/e_fm_hal.c:214
 #, c-format
@@ -3927,7 +3927,7 @@ msgstr ""
 #: src/modules/conf_interaction/e_int_config_interaction.c:117
 #, c-format
 msgid "%1.2f sec"
-msgstr "%1.2 sek"
+msgstr "%1.2f sek"
 
 #: src/modules/conf_interaction/e_mod_main.c:34
 #: src/modules/conf_keybindings/e_mod_main.c:34
@@ -5394,7 +5394,7 @@ msgstr "%i MHz"
 #: src/modules/cpufreq/e_mod_main.c:304
 #, c-format
 msgid "%i.%i GHz"
-msgstr "%i,i% GHz"
+msgstr "%i,%i GHz"
 
 #: src/modules/cpufreq/e_mod_main.c:321
 msgid "Time Between Updates"
