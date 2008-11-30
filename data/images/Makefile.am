@@ -10,6 +10,7 @@ lang-ca_ES.png \
 lang-cs_CZ.png \
 lang-da_DK.png \
 lang-de_DE.png \
+lang-el_GR.png \
 lang-en_US.png \
 lang-es_AR.png \
 lang-es_ES.png \

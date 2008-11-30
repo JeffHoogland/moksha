@@ -39,6 +39,7 @@ const E_Intl_Pair basic_language_predefined_pairs[ ] = {
      {"sl_SI.UTF-8", "lang-sl_SI.png", "Slovenščina"},
      {"es_AR.UTF-8", "lang-es_AR.png", "Español"},
      {"sv_SE.UTF-8", "lang-sv_SE.png", "Svenska"},
+     {"el_GR.UTF-8", "lang-el_GR.png", "Ελληνικά"},
      { NULL, NULL, NULL }
 };
 
