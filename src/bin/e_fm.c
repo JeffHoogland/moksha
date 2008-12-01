@@ -76,6 +76,7 @@ struct _E_Fm2_Smart_Data
    unsigned char     typebuf_visible : 1;
    unsigned char     show_hidden_files : 1;
    unsigned char     listing : 1;
+   char              view_mode; /* -1 = unset */
    
    E_Fm2_Config     *config;
    const char       *custom_theme;
@@ -286,8 +287,10 @@ static void _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int time
 static void _e_fm2_icon_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_icon_menu_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_fm2_view_menu_grid_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_view_menu_grid_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_view_menu_custom_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_view_menu_list_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_view_menu_use_default_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -3047,6 +3050,14 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
      }
 }
 
+static inline char
+_e_fm2_view_mode_get(const E_Fm2_Smart_Data *sd)
+{
+   if (sd->view_mode > -1)
+     return sd->view_mode;
+   return sd->config->view.mode;
+}
+
 static void
 _e_fm2_icons_place(Evas_Object *obj)
 {
@@ -3057,7 +3068,7 @@ _e_fm2_icons_place(Evas_Object *obj)
    /* take the icon list and find a location for them */
    sd->max.w = 0;
    sd->max.h = 0;
-   switch (sd->config->view.mode)
+   switch (_e_fm2_view_mode_get(sd))
      {
       case E_FM2_VIEW_MODE_ICONS:
 	_e_fm2_icons_place_icons(sd);
@@ -3366,7 +3377,7 @@ _e_fm2_icon_geom_adjust(E_Fm2_Icon *ic, int saved_x, int saved_y, int saved_w, i
 {
    int qx, qy, rx, ry, x, y;
    
-   if (!((ic->sd->config->view.mode == E_FM2_VIEW_MODE_CUSTOM_ICONS) &&
+   if (!((_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_CUSTOM_ICONS) &&
 	 (ic->sd->config->view.fit_custom_pos) &&
 	 (saved_res_w > 0) &&
 	 (saved_res_h > 0)))
@@ -3482,7 +3493,8 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
    
    evas_event_freeze(evas_object_evas_get(ic->sd->obj));
    edje_freeze();
-   switch (ic->sd->config->view.mode)
+
+   switch (_e_fm2_view_mode_get(ic->sd))
      {
       case E_FM2_VIEW_MODE_ICONS:
       case E_FM2_VIEW_MODE_GRID_ICONS:
@@ -3631,7 +3643,7 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    edje_object_freeze(ic->obj);
    evas_object_smart_member_add(ic->obj, ic->sd->obj);
    evas_object_stack_below(ic->obj, ic->sd->drop);
-   if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+   if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
      {
 	const char *stacking;
 	
@@ -4015,7 +4027,7 @@ _e_fm2_region_visible(E_Fm2_Region *rg)
 static void
 _e_fm2_icon_make_visible(E_Fm2_Icon *ic)
 {
-   if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+   if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
      {
 	if (
 	    ((ic->y - ic->sd->pos.y) >= 0) &&
@@ -4568,7 +4580,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	  {
 	     if (ic->drag.dnd) continue;
 	     /* if list view */
-	     if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+	     if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
 	       {
 		  /* if there is a .order file - we can re-order files */
 		  if (ic->sd->order_file)
@@ -4628,7 +4640,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
    if (E_INSIDE(ev->x, ev->y, 0, 0, sd->w, sd->h))
      {
 	/* if listview - it is now after last file */
-	if (sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+	if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
 	  {
 	     /* if there is a .order file - we can re-order files */
 	     if (sd->order_file)
@@ -4868,7 +4880,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	     fp = ll->data;
 	     if (!fp) continue;
 
-	     if ((ic) && (sd->config->view.mode == E_FM2_VIEW_MODE_CUSTOM_ICONS))
+	     if ((ic) && (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_CUSTOM_ICONS))
 	       {
 		  /* dnd doesnt tell me all the co-ords of the icons being dragged so i can't place them accurately.
 		   * need to fix this. ev->data probably needs to become more compelx than a list of url's
@@ -4944,7 +4956,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	  }
 	else
 	  {
-	     if (sd->config->view.mode == E_FM2_VIEW_MODE_LIST && sd->order_file) /* list */
+	     if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST && sd->order_file) /* list */
 	       {
 		  for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 		    {
@@ -5420,7 +5432,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 			    x, y, drag_types, 1,
 			    sel, strlen(sel), NULL, _e_fm2_cb_drag_finished);
 	     o = edje_object_add(e_drag_evas_get(d));
-	     if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+	     if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
 	       {
 		  if (ic->sd->config->icon.fixed.w)
 		    {
@@ -5486,7 +5498,7 @@ _e_fm2_cb_icon_thumb_dnd_gen(void *data, Evas_Object *obj, void *event_info)
    o = data;
    e_icon_size_get(obj, &w, &h);
    have_alpha = e_icon_alpha_get(obj);
-//   if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+//   if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
      {
 	edje_extern_object_aspect_set(obj,
 				      EDJE_ASPECT_CONTROL_BOTH, w, h);
@@ -5511,7 +5523,7 @@ _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info)
 	
 	e_icon_size_get(obj, &w, &h);
 	have_alpha = e_icon_alpha_get(obj);
-//	if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+//	if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
 	  {
 	     edje_extern_object_aspect_set(obj,
 					   EDJE_ASPECT_CONTROL_BOTH, w, h);
@@ -5900,7 +5912,7 @@ _e_fm2_cb_resize_job(void *data)
    sd->resize_job = NULL;
    evas_event_freeze(evas_object_evas_get(sd->obj));
    edje_freeze();
-   switch (sd->config->view.mode)
+   switch (_e_fm2_view_mode_get(sd))
      {
       case E_FM2_VIEW_MODE_ICONS:
 	_e_fm2_regions_free(sd->obj);
@@ -6116,6 +6128,8 @@ _e_fm2_smart_add(Evas_Object *obj)
 
    sd = E_NEW(E_Fm2_Smart_Data, 1);
    if (!sd) return;
+
+   sd->view_mode = -1; /* unset */
    
    sd->obj = obj;
    sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
@@ -6268,8 +6282,8 @@ _e_fm2_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    evas_object_resize(sd->clip, sd->w + (OVERCLIP * 2), sd->h + (OVERCLIP * 2));
 
    /* for automatic layout - do this - NB; we could put this on a timer delay */
-   if ((sd->config->view.mode == E_FM2_VIEW_MODE_LIST) ||
-       (sd->config->view.mode == E_FM2_VIEW_MODE_GRID_ICONS))
+   if ((_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST) ||
+       (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_GRID_ICONS))
      {
 	if (wch)
 	  {
@@ -6282,7 +6296,7 @@ _e_fm2_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 	     sd->scroll_job = ecore_job_add(_e_fm2_cb_scroll_job, obj);
 	  }
      }
-   else if (sd->config->view.mode == E_FM2_VIEW_MODE_CUSTOM_ICONS)
+   else if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_CUSTOM_ICONS)
      {
 	if (sd->config->view.fit_custom_pos)
 	  {
@@ -6878,6 +6892,7 @@ _e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Menu *subm;
    E_Fm2_Smart_Data *sd;
    E_Fm2_Config *cfg;
+   char view_mode;
 
    sd = data;
    cfg = e_fm2_config_get(sd->obj);
@@ -6886,76 +6901,102 @@ _e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    e_object_data_set(E_OBJECT(subm), sd);
    e_menu_item_submenu_set(mi, subm);
 
+   view_mode = _e_fm2_view_mode_get(sd);
+
    mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("Icons"));
+   e_menu_item_label_set(mi, _("Grid Icons"));
    e_menu_item_radio_group_set(mi, 1);
    e_menu_item_radio_set(mi, 1);
-   if (cfg->view.mode == E_FM2_VIEW_MODE_GRID_ICONS)
+   if (view_mode == E_FM2_VIEW_MODE_GRID_ICONS)
      e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _e_fm2_view_menu_grid_cb, sd);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_grid_icons_cb, sd);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Custom Icons"));
+   e_menu_item_radio_group_set(mi, 1);
+   e_menu_item_radio_set(mi, 1);
+   if (view_mode == E_FM2_VIEW_MODE_CUSTOM_ICONS)
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_custom_icons_cb, sd);
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("List"));
    e_menu_item_radio_group_set(mi, 1);
    e_menu_item_radio_set(mi, 1);
-   if (cfg->view.mode == E_FM2_VIEW_MODE_LIST)
+   if (view_mode == E_FM2_VIEW_MODE_LIST)
      e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _e_fm2_view_menu_list_cb, sd);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Use default"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, sd->view_mode == -1);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_use_default_cb, sd);
 }
 
-static void 
-_e_fm2_view_menu_grid_cb(void *data, E_Menu *m, E_Menu_Item *mi) 
+static void
+_e_fm2_view_menu_grid_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fm2_Smart_Data *sd;
-   E_Fm2_Config cfg;
+   E_Fm2_Smart_Data *sd = data;
+   char old;
 
-   sd = data;
-   memset(&cfg, 0, sizeof(E_Fm2_Config));
-   cfg.view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
-   cfg.view.open_dirs_in_place = 1;
-   cfg.view.selector = 1;
-   cfg.view.single_click = 0;
-   cfg.view.no_subdir_jump = 0;
-   cfg.icon.icon.w = 48;
-   cfg.icon.icon.h = 48;
-   cfg.icon.fixed.w = 0;
-   cfg.icon.fixed.h = 0;
-   cfg.icon.extension.show = 0;
-   cfg.icon.key_hint = NULL;
-   cfg.list.sort.no_case = 1;
-   cfg.list.sort.dirs.first = 0;
-   cfg.list.sort.dirs.last = 1;
-   cfg.selection.single = 1;
-   cfg.selection.windows_modifiers = 0;
-   e_fm2_config_set(sd->obj, &cfg);
+   old = _e_fm2_view_mode_get(sd);
+   sd->view_mode = E_FM2_VIEW_MODE_GRID_ICONS;
+   if (old == E_FM2_VIEW_MODE_GRID_ICONS)
+     return;
+
    e_fm2_refresh(sd->obj);
 }
 
-static void 
-_e_fm2_view_menu_list_cb(void *data, E_Menu *m, E_Menu_Item *mi) 
+static void
+_e_fm2_view_menu_custom_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fm2_Smart_Data *sd;
-   E_Fm2_Config cfg;
+   E_Fm2_Smart_Data *sd = data;
+   char old;
 
-   sd = data;
-   memset(&cfg, 0, sizeof(E_Fm2_Config));
-   cfg.view.mode = E_FM2_VIEW_MODE_LIST;
-   cfg.view.open_dirs_in_place = 1;
-   cfg.view.selector = 1;
-   cfg.view.single_click = 0;
-   cfg.view.no_subdir_jump = 0;
-   cfg.icon.list.w = 48;
-   cfg.icon.list.h = 48;
-   cfg.icon.fixed.w = 1;
-   cfg.icon.fixed.h = 1;
-   cfg.icon.extension.show = 0;
-   cfg.icon.key_hint = NULL;
-   cfg.list.sort.no_case = 1;
-   cfg.list.sort.dirs.first = 0;
-   cfg.list.sort.dirs.last = 1;
-   cfg.selection.single = 1;
-   cfg.selection.windows_modifiers = 0;
-   e_fm2_config_set(sd->obj, &cfg);
+   old = _e_fm2_view_mode_get(sd);
+   sd->view_mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
+   if (old == E_FM2_VIEW_MODE_CUSTOM_ICONS)
+     return;
+
+   e_fm2_refresh(sd->obj);
+}
+
+static void
+_e_fm2_view_menu_list_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+   char old;
+
+   old = _e_fm2_view_mode_get(sd);
+   sd->view_mode = E_FM2_VIEW_MODE_LIST;
+   if (old == E_FM2_VIEW_MODE_LIST)
+     return;
+
+   e_fm2_refresh(sd->obj);
+}
+
+static void
+_e_fm2_view_menu_use_default_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+   char old, new;
+
+   old = _e_fm2_view_mode_get(sd);
+
+   if (sd->view_mode == -1)
+     sd->view_mode = sd->config->view.mode;
+   else
+     sd->view_mode = -1;
+
+   new = _e_fm2_view_mode_get(sd);
+
+   if (new == old)
+     return;
+
    e_fm2_refresh(sd->obj);
 }
 

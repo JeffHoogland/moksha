@@ -1707,7 +1707,6 @@ _e_fwin_config_set(E_Fwin *fwin)
    fmc.selection.single = 0;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(fwin->fm_obj, &fmc);
-   e_fm2_icon_menu_flags_set(fwin->fm_obj, E_FM2_MENU_NO_VIEW_MENU);
 }
 
 static void 
