@@ -77,6 +77,7 @@ struct _E_Fm2_Smart_Data
    unsigned char     show_hidden_files : 1;
    unsigned char     listing : 1;
    char              view_mode; /* -1 = unset */
+   short             icon_size; /* -1 = unset */
    
    E_Fm2_Config     *config;
    const char       *custom_theme;
@@ -3058,6 +3059,22 @@ _e_fm2_view_mode_get(const E_Fm2_Smart_Data *sd)
    return sd->config->view.mode;
 }
 
+static inline Evas_Coord
+_e_fm2_icon_w_get(const E_Fm2_Smart_Data *sd)
+{
+   if (sd->icon_size > -1)
+     return sd->icon_size * e_scale;
+   return sd->config->icon.icon.w;
+}
+
+static inline Evas_Coord
+_e_fm2_icon_h_get(const E_Fm2_Smart_Data *sd)
+{
+   if (sd->icon_size > -1)
+     return sd->icon_size * e_scale;
+   return sd->config->icon.icon.h;
+}
+
 static void
 _e_fm2_icons_place(Evas_Object *obj)
 {
@@ -3535,15 +3552,15 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 		  ic->sd->tmp.obj2 = obj2;
 	       }
 	     /* FIXME: if icons are allowed to have their own size - use it */
-	     edje_extern_object_min_size_set(obj2, ic->sd->config->icon.icon.w, ic->sd->config->icon.icon.h);
-	     edje_extern_object_max_size_set(obj2, ic->sd->config->icon.icon.w, ic->sd->config->icon.icon.h);
+	     edje_extern_object_min_size_set(obj2, _e_fm2_icon_w_get(ic->sd), _e_fm2_icon_h_get(ic->sd));
+	     edje_extern_object_max_size_set(obj2, _e_fm2_icon_w_get(ic->sd), _e_fm2_icon_h_get(ic->sd));
 	     edje_object_part_swallow(obj, "e.swallow.icon", obj2);
 	     edje_object_size_min_calc(obj, &mw, &mh);
 	  }
 	ic->w = mw;
 	ic->h = mh;
-	if (ic->sd->config->icon.fixed.w) ic->w = ic->sd->config->icon.icon.w;
-	if (ic->sd->config->icon.fixed.h) ic->h = ic->sd->config->icon.icon.h;
+	if (ic->sd->config->icon.fixed.w) ic->w = _e_fm2_icon_w_get(ic->sd);
+	if (ic->sd->config->icon.fixed.h) ic->h = _e_fm2_icon_h_get(ic->sd);
 	ic->min_w = mw;
 	ic->min_h = mh;
 	break;
@@ -6130,6 +6147,7 @@ _e_fm2_smart_add(Evas_Object *obj)
    if (!sd) return;
 
    sd->view_mode = -1; /* unset */
+   sd->icon_size = -1; /* unset */
    
    sd->obj = obj;
    sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
@@ -6886,6 +6904,105 @@ _e_fm2_icon_menu_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    e_fm2_mime_handler_call(md->handler, obj, buf);
 }
 
+struct e_fm2_view_menu_icon_size_data
+{
+   E_Fm2_Smart_Data *sd;
+   short size;
+};
+
+static void
+_e_fm2_view_menu_icon_size_data_free(void *obj)
+{
+   struct e_fm2_view_menu_icon_size_data *d = e_object_data_get(obj);
+   free(d);
+}
+
+static void
+_e_fm2_view_menu_icon_size_change(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   struct e_fm2_view_menu_icon_size_data *d = data;
+   short current_size = _e_fm2_icon_w_get(d->sd);
+   d->sd->icon_size = d->size;
+   if (current_size == d->size)
+     return;
+   e_fm2_refresh(d->sd->obj);
+}
+
+static void
+_e_fm2_view_menu_icon_size_use_default(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+   short old, new;
+
+   old = _e_fm2_icon_w_get(sd);
+
+   if (sd->icon_size == -1)
+     sd->icon_size = sd->config->icon.icon.w;
+   else
+     sd->icon_size = -1;
+
+   new = _e_fm2_icon_w_get(sd);
+
+   if (new == old)
+     return;
+
+   e_fm2_refresh(sd->obj);
+}
+
+static void
+_e_fm2_view_menu_icon_size_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+   E_Menu *subm;
+   const short *itr, sizes[] = {
+     22, 32, 48, 64, 96, 128, 256, -1
+   };
+   short current_size = _e_fm2_icon_w_get(sd);
+
+   if (e_scale > 0.0)
+     current_size /= e_scale;
+
+   subm = e_menu_new();
+   e_menu_item_submenu_set(mi, subm);
+
+   for (itr = sizes; *itr > -1; itr++)
+     {
+	char buf[32];
+	struct e_fm2_view_menu_icon_size_data *d;
+
+	d = malloc(sizeof(*d));
+	if (!d)
+	  continue;
+	d->sd = sd;
+	d->size = *itr;
+
+	snprintf(buf, sizeof(buf), "%hd", *itr);
+
+	mi = e_menu_item_new(subm);
+	e_object_data_set(E_OBJECT(mi), d);
+	e_object_del_attach_func_set
+	  (E_OBJECT(mi), _e_fm2_view_menu_icon_size_data_free);
+
+	e_menu_item_label_set(mi, buf);
+	e_menu_item_radio_group_set(mi, 1);
+	e_menu_item_radio_set(mi, 1);
+
+	if (current_size == *itr)
+	  e_menu_item_toggle_set(mi, 1);
+
+	e_menu_item_callback_set(mi, _e_fm2_view_menu_icon_size_change, d);
+     }
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Use default"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, sd->icon_size == -1);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_icon_size_use_default, sd);
+}
+
 static void 
 _e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi) 
 {
@@ -6935,6 +7052,21 @@ _e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, sd->view_mode == -1);
    e_menu_item_callback_set(mi, _e_fm2_view_menu_use_default_cb, sd);
+
+   if (view_mode == E_FM2_VIEW_MODE_LIST)
+     return;
+
+   char buf[64];
+   int icon_size = _e_fm2_icon_w_get(sd);
+
+   if (e_scale > 0.0)
+     icon_size /= e_scale;
+
+   snprintf(buf, sizeof(buf), _("Icon Size (%d)"), icon_size);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, buf);
+   e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_icon_size_pre, sd);
 }
 
 static void
