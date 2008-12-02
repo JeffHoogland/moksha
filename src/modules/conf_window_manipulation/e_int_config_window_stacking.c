@@ -44,7 +44,7 @@ e_int_config_window_stacking(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Window Stacking"),
 			     "E", "_config_window_stacking_dialog",
-			     "enlightenment/window_manipulation", 0, v, NULL);
+			     "enlightenment/window_stacking", 0, v, NULL);
    return cfd;
 }
 
