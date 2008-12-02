@@ -3054,6 +3054,7 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
 static inline char
 _e_fm2_view_mode_get(const E_Fm2_Smart_Data *sd)
 {
+// this breaks illume on openembedded. disable! :(   
 //   if (sd->view_mode > -1)
 //     return sd->view_mode;
    return sd->config->view.mode;
