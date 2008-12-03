@@ -3,14 +3,7 @@
 //	Icons:
 //		EFM - All popup icons ... eg, paste copy delete properties
 //		EFM - folders (perhaps?), dynamic mime icons
-//		Icons - Favorite, system icons, window icons, icon theme
-//		           - Dialogs, Interactions, applications, settings
-//
-//
-// TODO Code:
-//	      - ilist e.swallow.icon should use e_ilist_icon_size_set to make a dummy box
-//		to compensate when there is no icon there.
-//	      - Make ibox/ibar use data.item: "selectraise" "on"; so it can do zooms correctly
+//		Icons - Icon theme, Dialogs, Interactions, applications, settings
 //
 
 /*
@@ -22586,13 +22579,7 @@ group { name: "e/icons/"NAME ;                          \
    }                                                    \
 }
 
-
-ICON("enlightenment/website","icon_globe.png",64)
-ICON("enlightenment/background","icon_wallpaper.png",64)
-ICON("enlightenment/picture","icon_wallpaper.png",64)
-ICON("enlightenment/gradient","icon_gradient.png",64)
-ICON("enlightenment/e","logo_white_128.png",64)
-ICON("enlightenment/about","logo_black_128.png",64)
+// Widget Icons //
 
 ICON("enlightenment/check","icon_check.png",64)
 ICON("widget/swap","icon_swap.png",64)
@@ -22612,16 +22599,21 @@ ICON("widget/resize","icon_resize.png",64)
 ICON("enlightenment/engine","icon_dummy.png",64)
 ICON("enlightenment/add_application","icon_dummy.png",64)
 ICON("enlightenment/profiles","icon_dummy.png",64)
-ICON("enlightenment/scale","icon_dummy.png",64)
 ICON("enlightenment/autoscroll","icon_dummy.png",64)
 ICON("enlightenment/showhide","icon_dummy.png",64)
 ICON("enlightenment/toolbar","icon_dummy.png",64)
 ICON("enlightenment/settings","icon_dummy.png",64)
 
-/// Old Icons from Bling ///
+/// Normal Icons ///
 
+ICON("enlightenment/website","icon_globe.png",64)
+ICON("enlightenment/background","icon_wallpaper.png",64)
+ICON("enlightenment/picture","icon_wallpaper.png",64)
+ICON("enlightenment/gradient","icon_gradient.png",64)
+ICON("enlightenment/e","logo_white_128.png",64)
+ICON("enlightenment/about","logo_black_128.png",64)
 ICON("enlightenment/reset","icon_reset.png",128)
-ICON("enlightenment/exit","icon_exit.png",64)
+ICON("enlightenment/exit","icon_logout.png",64)
 ICON("enlightenment/logout","icon_logout.png",128)
 ICON("enlightenment/halt","icon_halt.png",128)
 ICON("enlightenment/reboot","icon_reboot.png",128)
@@ -22681,6 +22673,7 @@ ICON("enlightenment/power_management","icon_power_management.png",64)
 ICON("enlightenment/screensaver","icon_screensaver.png",64)
 ICON("enlightenment/pager","icon_pager.png",64)
 ICON("enlightenment/mixer","icon_mixer.png",64)
+ICON("enlightenment/scale","icon_scale.png",64)
 ICON("enlightenment/screen_normal","icon_screen_normal.png",64)
 ICON("enlightenment/screen_around","icon_screen_around.png",64)
 ICON("enlightenment/screen_left","icon_screen_left.png",64)

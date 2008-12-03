@@ -329,7 +329,6 @@ icon_efm_tmp.png \
 icon_efm_view_details.png \
 icon_efm_view_name.png \
 icon_efm_view.png \
-icon_exit.png \
 icon_extensions.png \
 icon_favorites.png \
 icon_file_icons.png \
@@ -390,6 +389,7 @@ icon_resize.png \
 icon_restart_applications.png \
 icon_right_arrow.png \
 icon_run.png \
+icon_scale.png \
 icon_screen_around.png \
 icon_screen_hflip.png \
 icon_screen_left.png \
