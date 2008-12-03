@@ -117,7 +117,6 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
 	if (py + pop->h >= (zy + zh))
 	  py = gy + gh - pop->h;
 	break;
-	break;
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_CORNER_TL:
       case E_GADCON_ORIENT_CORNER_TR:
