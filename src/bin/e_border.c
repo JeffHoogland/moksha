@@ -4168,6 +4168,11 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	       }
 	  }
      }
+   ecore_x_icccm_move_resize_send(bd->client.win,
+                                  bd->x + bd->fx.x + bd->client_inset.l,
+                                  bd->y + bd->fx.y + bd->client_inset.t,
+                                  bd->client.w,
+                                  bd->client.h);
    return 1;
 }
 
@@ -4214,6 +4219,11 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
 	else
 	  e_border_resize(bd, w, h);
      }
+   ecore_x_icccm_move_resize_send(bd->client.win,
+                                  bd->x + bd->fx.x + bd->client_inset.l,
+                                  bd->y + bd->fx.y + bd->client_inset.t,
+                                  bd->client.w,
+                                  bd->client.h);
    return 1;
 }
 
@@ -6686,10 +6696,6 @@ _e_border_eval(E_Border *bd)
 
    if ((bd->changes.pos) && (bd->changes.size))
      {
-	if (bd->internal_ecore_evas)
-	  ecore_evas_managed_move(bd->internal_ecore_evas,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t);
 	if ((bd->shaded) && (!bd->shading))
 	  {
 	     evas_obscured_clear(bd->bg_evas);
@@ -6801,16 +6807,21 @@ _e_border_eval(E_Border *bd)
 				    bd->x + bd->fx.x,
 				    bd->y + bd->fx.y);
 	  }
+	if (bd->internal_ecore_evas)
+	  ecore_evas_managed_move(bd->internal_ecore_evas,
+				  bd->x + bd->fx.x + bd->client_inset.l,
+				  bd->y + bd->fx.y + bd->client_inset.t);
+        ecore_x_icccm_move_resize_send(bd->client.win,
+                                       bd->x + bd->fx.x + bd->client_inset.l,
+                                       bd->y + bd->fx.y + bd->client_inset.t,
+                                       bd->client.w,
+                                       bd->client.h);
 	bd->changes.pos = 0;
 	bd->changes.size = 0;
 	rem_change = 1;
     }
    else if (bd->changes.pos)
      {
-	if (bd->internal_ecore_evas)
-	  ecore_evas_managed_move(bd->internal_ecore_evas,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t);
 	if (1)
 	  {
 	     if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
@@ -6823,15 +6834,20 @@ _e_border_eval(E_Border *bd)
 	     ecore_x_window_move(bd->win, bd->x + bd->fx.x, bd->y + bd->fx.y);
 	  }
 	e_container_shape_move(bd->shape, bd->x + bd->fx.x, bd->y + bd->fx.y);
+	if (bd->internal_ecore_evas)
+	  ecore_evas_managed_move(bd->internal_ecore_evas,
+				  bd->x + bd->fx.x + bd->client_inset.l,
+				  bd->y + bd->fx.y + bd->client_inset.t);
+	ecore_x_icccm_move_resize_send(bd->client.win,
+				       bd->x + bd->fx.x + bd->client_inset.l,
+				       bd->y + bd->fx.y + bd->client_inset.t,
+				       bd->client.w,
+				       bd->client.h);
 	bd->changes.pos = 0;
 	rem_change = 1;
      }
    else if (bd->changes.size)
      {
-	if (bd->internal_ecore_evas)
-	  ecore_evas_managed_move(bd->internal_ecore_evas,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t);
 	if (bd->shaded && !bd->shading)
 	  {
 	     evas_obscured_clear(bd->bg_evas);
@@ -6929,6 +6945,15 @@ _e_border_eval(E_Border *bd)
 	     evas_object_resize(bd->bg_object, bd->w, bd->h);
 	     e_container_shape_resize(bd->shape, bd->w, bd->h);
 	  }
+	if (bd->internal_ecore_evas)
+	  ecore_evas_managed_move(bd->internal_ecore_evas,
+				  bd->x + bd->fx.x + bd->client_inset.l,
+				  bd->y + bd->fx.y + bd->client_inset.t);
+	ecore_x_icccm_move_resize_send(bd->client.win,
+				       bd->x + bd->fx.x + bd->client_inset.l,
+				       bd->y + bd->fx.y + bd->client_inset.t,
+				       bd->client.w,
+				       bd->client.h);
 	bd->changes.size = 0;
 	rem_change = 1;
      }

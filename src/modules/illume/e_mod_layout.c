@@ -497,6 +497,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	if ((pbx != bd->x) || (pby != bd->y)  ||
 	    (pbw != bd->w) || (pbh != bd->h))
 	  {
+/*             
 	     if (bd->internal_ecore_evas)
 	       ecore_evas_managed_move(bd->internal_ecore_evas,
 				       bd->x + bd->fx.x + bd->client_inset.l,
@@ -506,7 +507,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 					    bd->y + bd->fx.y + bd->client_inset.t,
 					    bd->client.w,
 					    bd->client.h);
-	     bd->changed = 1;
+*/	     bd->changed = 1;
 	     bd->changes.pos = 1;
 	     bd->changes.size = 1;
 	  }
@@ -542,7 +543,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	     if ((pbx != bd->x) || (pby != bd->y)  ||
 		 (pbw != bd->w) || (pbh != bd->h))
 	       {
-		  if (bd->internal_ecore_evas)
+/*		  if (bd->internal_ecore_evas)
 		    ecore_evas_managed_move(bd->internal_ecore_evas,
 					    bd->x + bd->fx.x + bd->client_inset.l,
 					    bd->y + bd->fx.y + bd->client_inset.t);
@@ -551,7 +552,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 						 bd->y + bd->fx.y + bd->client_inset.t,
 						 bd->client.w,
 						 bd->client.h);
-		  bd->changed = 1;
+ */		  bd->changed = 1;
 		  bd->changes.pos = 1;
 	       }
 	     if (bd->remember)
@@ -598,7 +599,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	     if ((pbx != bd->x) || (pby != bd->y)  ||
 		 (pbw != bd->w) || (pbh != bd->h))
 	       {
-		  if (bd->internal_ecore_evas)
+/*		  if (bd->internal_ecore_evas)
 		    ecore_evas_managed_move(bd->internal_ecore_evas,
 					    bd->x + bd->fx.x + bd->client_inset.l,
 					    bd->y + bd->fx.y + bd->client_inset.t);
@@ -607,7 +608,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 						 bd->y + bd->fx.y + bd->client_inset.t,
 						 bd->client.w,
 						 bd->client.h);
-		  bd->changed = 1;
+ */		  bd->changed = 1;
 		  bd->changes.pos = 1;
 		  bd->changes.size = 1;
 	       }
@@ -623,7 +624,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	     if ((pbx != bd->x) || (pby != bd->y)  ||
 		 (pbw != bd->w) || (pbh != bd->h))
 	       {
-		  if (bd->internal_ecore_evas)
+/*		  if (bd->internal_ecore_evas)
 		    ecore_evas_managed_move(bd->internal_ecore_evas,
 					    bd->x + bd->fx.x + bd->client_inset.l,
 					    bd->y + bd->fx.y + bd->client_inset.t);
@@ -632,7 +633,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 						 bd->y + bd->fx.y + bd->client_inset.t,
 						 bd->client.w,
 						 bd->client.h);
-		  bd->changed = 1;
+ */		  bd->changed = 1;
 		  bd->changes.pos = 1;
 		  bd->changes.size = 1;
 	       }
