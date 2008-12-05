@@ -5419,6 +5419,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  normal: "bt_dis_hilight.png";
 		  border: 4 4 4 0;
 	       }
+	       color: 255 255 255 128;
 	    }
 	 }
          part { name: "left_arrow";
