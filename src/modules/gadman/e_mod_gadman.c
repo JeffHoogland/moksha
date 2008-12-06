@@ -151,6 +151,7 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop)
 
    /* init Gadcon_Client */
    gcc = cc->func.init(gc, cf->name, cf->id, cc->default_style);
+   if (!gcc) return NULL;
    gcc->cf = cf;
    gcc->client_class = cc;
 
@@ -864,46 +865,65 @@ on_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi)
    e_config_save_queue();
 }
 
+
+static void
+_menu_style_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
+{
+   int w, h;
+   gcc->cf->orient = orient;
+
+   if (gcc->client_class->func.orient)
+       gcc->client_class->func.orient(gcc, orient);
+
+   printf("GADMAN min: %d %d aspect: %d %d\n", gcc->min.w, gcc->min.h, gcc->aspect.w, gcc->aspect.h);
+   
+   if (orient == E_GADCON_ORIENT_VERT)
+   {
+      w = DEFAULT_SIZE_W * Man->width;
+      if (w < gcc->min.w) w = gcc->min.w;
+      
+      if (gcc->aspect.w && gcc->aspect.h)
+         h = ((float)gcc->aspect.h / (float)gcc->aspect.w) * w;
+      else
+      {
+         h = DEFAULT_SIZE_H * Man->height;
+         if (h < gcc->min.h) h = gcc->min.h;
+      }
+   }
+   else
+   {
+      h = DEFAULT_SIZE_H * Man->height;
+      if (h < gcc->min.h) h = gcc->min.h;
+      
+      if (gcc->aspect.w && gcc->aspect.h)
+         w = ((float)gcc->aspect.w / (float)gcc->aspect.h) * h;
+      else
+      {
+         w = DEFAULT_SIZE_W * Man->width;
+         if (w < gcc->min.w) w = gcc->min.w;
+      }
+   }
+   printf("GADMAN2 %d %d\n", w,h);
+   evas_object_resize(gcc->o_frame, w, h);
+   _save_widget_position(gcc);
+}
+
 static void
 on_menu_style_float(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Gadcon_Client *gcc;
-
-   gcc = data;
-   gcc->cf->orient = E_GADCON_ORIENT_FLOAT;
-
-   if (gcc->client_class->func.orient)
-       gcc->client_class->func.orient(gcc, E_GADCON_ORIENT_FLOAT);
-
-   e_config_save_queue();
+   _menu_style_orient(data, E_GADCON_ORIENT_FLOAT);
 }
 
 static void
 on_menu_style_horiz(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Gadcon_Client *gcc;
-
-   gcc = data;
-   gcc->cf->orient = E_GADCON_ORIENT_HORIZ;
-
-   if (gcc->client_class->func.orient)
-       gcc->client_class->func.orient(gcc, E_GADCON_ORIENT_HORIZ);
-
-   e_config_save_queue();
+   _menu_style_orient(data, E_GADCON_ORIENT_HORIZ);
 }
 
 static void
 on_menu_style_vert(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Gadcon_Client *gcc;
-
-   gcc = data;
-   gcc->cf->orient = E_GADCON_ORIENT_VERT;
-
-   if (gcc->client_class->func.orient)
-       gcc->client_class->func.orient(gcc, E_GADCON_ORIENT_VERT);
-
-   e_config_save_queue();
+   _menu_style_orient(data, E_GADCON_ORIENT_VERT);
 }
 
 static void
