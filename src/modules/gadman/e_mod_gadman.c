@@ -875,8 +875,6 @@ _menu_style_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
    if (gcc->client_class->func.orient)
        gcc->client_class->func.orient(gcc, orient);
 
-   printf("GADMAN min: %d %d aspect: %d %d\n", gcc->min.w, gcc->min.h, gcc->aspect.w, gcc->aspect.h);
-   
    if (orient == E_GADCON_ORIENT_VERT)
    {
       w = DEFAULT_SIZE_W * Man->width;
@@ -903,7 +901,7 @@ _menu_style_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
          if (w < gcc->min.w) w = gcc->min.w;
       }
    }
-   printf("GADMAN2 %d %d\n", w,h);
+
    evas_object_resize(gcc->o_frame, w, h);
    _save_widget_position(gcc);
 }
