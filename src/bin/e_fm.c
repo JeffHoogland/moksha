@@ -76,8 +76,8 @@ struct _E_Fm2_Smart_Data
    unsigned char     typebuf_visible : 1;
    unsigned char     show_hidden_files : 1;
    unsigned char     listing : 1;
-   char              view_mode; /* -1 = unset */
-   short             icon_size; /* -1 = unset */
+   signed char       view_mode; /* -1 = unset */
+   signed short      icon_size; /* -1 = unset */
    
    E_Fm2_Config     *config;
    const char       *custom_theme;
@@ -114,11 +114,10 @@ struct _E_Fm2_Smart_Data
    unsigned char       drop_all : 1;
    unsigned char       drag : 1;
    unsigned char       selecting : 1;
-   struct 
-     {
-	int ox, oy;
-	int x, y, w, h;
-     } selrect;
+   struct {
+      int ox, oy;
+      int x, y, w, h;
+   } selrect;
 };
  
 struct _E_Fm2_Region
