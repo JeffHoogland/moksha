@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-11-11 21:43+0800\n"
-"PO-Revision-Date: 2008-11-13 13:08+0200\n"
+"PO-Revision-Date: 2008-12-07 16:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: Greek <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1573,7 +1573,7 @@ msgstr "Κατάσταση"
 
 #: ../src/bin/e_int_border_menu.c:550
 msgid "Remember"
-msgstr ""
+msgstr "Ενθύμηση"
 
 #: ../src/bin/e_int_border_menu.c:566 ../src/bin/e_int_border_prop.c:75
 msgid "Window Properties"
@@ -1756,8 +1756,9 @@ msgid "NetWM Properties"
 msgstr "Ιδιότητες NetWM"
 
 #: ../src/bin/e_int_border_prop.c:471
+#, fuzzy
 msgid "Modal"
-msgstr ""
+msgstr "Ρυθμικό"
 
 #: ../src/bin/e_int_border_prop.c:474 ../src/bin/e_int_border_remember.c:531
 msgid "Skip Taskbar"
@@ -1774,7 +1775,7 @@ msgstr "Κρυφό"
 
 #: ../src/bin/e_int_border_remember.c:74
 msgid "Window Remember"
-msgstr ""
+msgstr "Ενθύμηση Παραθύρου"
 
 #: ../src/bin/e_int_border_remember.c:241
 msgid "Window properties are not a unique match"
@@ -2056,7 +2057,7 @@ msgstr "Κλείδωμα Οθόνης"
 
 #: ../src/bin/e_int_menus.c:901
 msgid "Hibernate"
-msgstr ""
+msgstr "Αδρανοποίηση"
 
 #: ../src/bin/e_int_menus.c:924
 msgid "Logout"
@@ -2367,8 +2368,9 @@ msgid ""
 msgstr ""
 
 #: ../src/bin/e_main.c:640
+#, fuzzy
 msgid "Testing Format Support"
-msgstr ""
+msgstr "Δοκιμή Υποστήριξης Τύπων Αρχείων"
 
 #: ../src/bin/e_main.c:650
 msgid ""
@@ -2396,7 +2398,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:691
 msgid "Starting International Support"
-msgstr ""
+msgstr "Έναρξη Πολυεθνικής Υποστήριξης"
 
 #: ../src/bin/e_main.c:696
 msgid "Enlightenment cannot set up its intl system."
@@ -2416,7 +2418,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:728
 msgid "Setup System Controls"
-msgstr ""
+msgstr "Ρύθμιση Χειρισμών Συστήματος"
 
 #: ../src/bin/e_main.c:733
 msgid "Enlightenment cannot initialize the System Command system.\n"
@@ -2424,7 +2426,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:738
 msgid "Setup Actions"
-msgstr ""
+msgstr "Ρύθμιση Ενεργειών"
 
 #: ../src/bin/e_main.c:743
 msgid "Enlightenment cannot set up its actions system."
@@ -2432,7 +2434,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:747
 msgid "Setup Bindings"
-msgstr ""
+msgstr "Ρύθμιση Συνδυασμών"
 
 #: ../src/bin/e_main.c:752
 msgid "Enlightenment cannot set up its bindings system."
@@ -2440,7 +2442,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:756
 msgid "Setup Popups"
-msgstr ""
+msgstr "Ρύθμιση Γρήγορων Ειδοποιήσεων"
 
 #: ../src/bin/e_main.c:761
 msgid "Enlightenment cannot set up its popup system."
@@ -2448,7 +2450,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:766
 msgid "Setup Wallpaper"
-msgstr ""
+msgstr "Ρύθμιση Ταπετσαρίας"
 
 #: ../src/bin/e_main.c:771
 msgid "Enlightenment cannot set up its desktop background system."
@@ -2456,7 +2458,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:775
 msgid "Setup Screens"
-msgstr ""
+msgstr "Ρύθμιση Οθονών"
 
 #: ../src/bin/e_main.c:780
 msgid ""
@@ -2466,7 +2468,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:785
 msgid "Setup Execution System"
-msgstr ""
+msgstr "Ρύθμιση Συστήματος Εκτέλεσης"
 
 #: ../src/bin/e_main.c:790
 msgid "Enlightenment cannot set up its exec system."
@@ -2474,7 +2476,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:794
 msgid "Setup Remembers"
-msgstr ""
+msgstr "Ρύθμιση Ενθυμήσεων"
 
 #: ../src/bin/e_main.c:799
 msgid "Enlightenment cannot setup remember settings."
@@ -2482,7 +2484,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:807
 msgid "Setup FM"
-msgstr ""
+msgstr "Ρύθμιση FM"
 
 #: ../src/bin/e_main.c:812
 msgid "Enlightenment cannot initialize the File manager.\n"
@@ -2499,7 +2501,7 @@ msgstr ""
 #.
 #: ../src/bin/e_main.c:825
 msgid "Setup Message System"
-msgstr ""
+msgstr "Ρύθμιση Συστήματος Μηνυμάτων"
 
 #: ../src/bin/e_main.c:830
 msgid "Enlightenment cannot set up its msg system."
@@ -2523,7 +2525,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:852
 msgid "Setup Modules"
-msgstr ""
+msgstr "Ρύθμιση Αρθρωμάτων"
 
 #: ../src/bin/e_main.c:857
 msgid "Enlightenment cannot set up its module system."
@@ -2531,7 +2533,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:861
 msgid "Setup Color Classes"
-msgstr ""
+msgstr "Ρύθμιση Κλάσεων Χρωμάτων"
 
 #: ../src/bin/e_main.c:866
 msgid "Enlightenment cannot set up its color class system."
@@ -2539,7 +2541,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:870
 msgid "Setup Gadcon"
-msgstr ""
+msgstr "Ρύθμιση Gadcon"
 
 #: ../src/bin/e_main.c:875
 msgid "Enlightenment cannot set up its gadget control system."
@@ -2547,7 +2549,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:879
 msgid "Setup Shelves"
-msgstr ""
+msgstr "Ρύθμιση Ραφιών"
 
 #: ../src/bin/e_main.c:884
 msgid "Enlightenment cannot set up its shelf system."
@@ -2555,7 +2557,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:889
 msgid "Setup DPMS"
-msgstr ""
+msgstr "Ρύθμιση DPMS"
 
 #: ../src/bin/e_main.c:894
 msgid "Enlightenment cannot configure the DPMS settings."
@@ -2563,7 +2565,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:898
 msgid "Setup Screensaver"
-msgstr ""
+msgstr "Ρύθμιση Προφύλαξης Οθόνης"
 
 #: ../src/bin/e_main.c:903
 msgid "Enlightenment cannot configure the X screensaver."
@@ -2571,7 +2573,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:907
 msgid "Setup Mouse"
-msgstr ""
+msgstr "Ρύθμιση Ποντικιού"
 
 #: ../src/bin/e_main.c:912
 msgid "Enlightenment cannot configure the mouse settings."
@@ -2579,7 +2581,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:916
 msgid "Setup Desklock"
-msgstr ""
+msgstr "Ρύθμιση Κλειδώματος Οθόνης"
 
 #: ../src/bin/e_main.c:921
 msgid "Enlightenment cannot set up its desk locking system."
@@ -2587,7 +2589,7 @@ msgstr ""
 
 #: ../src/bin/e_main.c:926
 msgid "Set Up File Ordering"
-msgstr ""
+msgstr "Ρύθμιση Ταξινόμησης Αρχείων"
 
 #: ../src/bin/e_main.c:930
 msgid "Enlightenment cannot set up its order file system."
@@ -2670,11 +2672,11 @@ msgstr ""
 #: ../src/bin/e_module.c:180
 #, c-format
 msgid "Enlightenment %s Module"
-msgstr "Modulo %s di Enlightenment"
+msgstr "Enlightenment %s Άρθρωμα"
 
 #: ../src/bin/e_module.c:521
 msgid "Would you like to unload this module?<br>"
-msgstr "Volete disattivare questo modulo?<br>"
+msgstr "Θέλετε να αποφορτώσετε αυτό το άρθρωμα?<br>"
 
 #: ../src/bin/e_shelf.c:1198
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:281
@@ -2789,13 +2791,12 @@ msgstr ""
 "ενέργειες συστήματος.<br>ενώ έχει ξεκιννησει η Αναστολή."
 
 #: ../src/bin/e_sys.c:390
-#, fuzzy
 msgid ""
 "Enlightenment is hibernating the system.<br>You cannot perform an other "
 "system actions<br>until this is complete."
 msgstr ""
-"Το Enlightenment **.<br>Δεν μπορείτε να εκτελέσετε άλλες ενέργειες "
-"συστήματος.<br>ενώ έχει ξεκιννησει **"
+"Το Enlightenment αδρανοποιεί το σύστημα.<br>Δεν μπορείτε να εκτελέσετε άλλες ενέργειες "
+"συστήματος.<br>μέχρι να ολοκληρωθεί η ενέργεια."
 
 #: ../src/bin/e_sys.c:397 ../src/bin/e_sys.c:443
 msgid "EEK! This should not happen"
@@ -2814,9 +2815,8 @@ msgid "Suspend of your system failed."
 msgstr "Η Αναστολή του Συστήματος απέτυχε."
 
 #: ../src/bin/e_sys.c:438
-#, fuzzy
 msgid "Hibernating your system failed."
-msgstr "** του Συστήματος απέτυχε."
+msgstr "Αδρανοποίηση του Συστήματος απέτυχε."
 
 #: ../src/bin/e_sys.c:489
 msgid "Shutting down"
@@ -2847,9 +2847,8 @@ msgid "Hibernating"
 msgstr ""
 
 #: ../src/bin/e_sys.c:571
-#, fuzzy
 msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "** του Η/Υ σας.<br><hilight>Παρακαλώ περιμένετε.</hilight>"
+msgstr "Αδρανοποίηση του Η/Υ σας.<br><hilight>Παρακαλώ περιμένετε.</hilight>"
 
 #: ../src/bin/e_theme_about.c:17
 #, fuzzy
@@ -2879,7 +2878,7 @@ msgstr ""
 #: ../src/bin/e_utils.c:702
 #, c-format
 msgid "%'.0f Bytes"
-msgstr "%'.0f Bytes"
+msgstr "%'.0f Byte"
 
 #: ../src/bin/e_utils.c:706
 #, c-format
@@ -3084,7 +3083,7 @@ msgstr "Εμφάνιση προειδοποίησης όταν η μπαταρί
 
 #: ../src/modules/battery/e_mod_main.c:325
 msgid "AC power is recommended."
-msgstr ""
+msgstr "Προτείνεται πηγή εναλλασσόμενου ρεύματος."
 
 #: ../src/modules/battery/e_mod_main.c:408
 msgid "Battery Meter"
@@ -3268,7 +3267,7 @@ msgstr "Τίτλος Αντικειμένου Μενού"
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:147
 msgid "Limit caption length"
-msgstr ""
+msgstr "Περιορισμός μήκους επιγραφής"
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:149
 #, c-format
@@ -3297,7 +3296,7 @@ msgstr "Τίτλος Περιγράμματος"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:48
 msgid "Configure Dialog Title"
-msgstr ""
+msgstr "Τίτλος Διαλόγου Ρύθμισης"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:49
 msgid "Error Text"
@@ -3310,7 +3309,7 @@ msgstr "Τίτλος Μενού"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:51
 msgid "Menu Title Active"
-msgstr ""
+msgstr "Τίτλος Μενού Ενεργός"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:52
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:62
@@ -3319,7 +3318,7 @@ msgstr "Αντικείμενο Μενού"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:53
 msgid "Menu Item Active"
-msgstr ""
+msgstr "Αντικείμενο Μενού Ενεργό"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:54
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:67
@@ -3375,7 +3374,7 @@ msgstr "Κείμενο Ετικέτας"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:71
 msgid "List Item Text"
-msgstr ""
+msgstr "Κείμενο Αντικειμένου Λίστας"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:72
 msgid "List Item Odd Text"
@@ -3458,7 +3457,6 @@ msgid "Defaults"
 msgstr "Προκαθορισμένα"
 
 #: ../src/modules/conf_desk/e_int_config_desk.c:52
-#, fuzzy
 msgid "Desk Settings"
 msgstr "Ρυθμίσεις Επιφάνειας"
 
@@ -3636,11 +3634,11 @@ msgstr "Κίνηση Εναλλαγής"
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:262
 msgid "Off"
-msgstr "Χωρίς Κίνηση Εναλλαγής"
+msgstr "Ανενεργό"
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:264
 msgid "Pane"
-msgstr "Πλαίσιο"
+msgstr ""
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:266
 msgid "Zoom"
@@ -3914,7 +3912,7 @@ msgstr "Ρυθμίσεις Τερματικού"
 
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:186
 msgid "Terminal Command (CTRL+RETURN to utilize)"
-msgstr ""
+msgstr "Εντολή Τερματικού (CTRL+ENTER για χρήση)"
 
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:194
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:260
@@ -3978,8 +3976,9 @@ msgid "Core"
 msgstr "Πυρίνας"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:61
+#, fuzzy
 msgid "Title Bar"
-msgstr ""
+msgstr "Μπάρα Τίτλου"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:64
 msgid "Textblock Plain"
@@ -4198,7 +4197,7 @@ msgstr "Χωρίς Χρήση Μεθόδου Εισαγωγής"
 #: ../src/modules/conf_imc/e_int_config_imc.c:305
 #: ../src/modules/conf_imc/e_int_config_imc.c:957
 msgid "Setup Selected Input Method"
-msgstr ""
+msgstr "Ρύθμιση Επιλεγμένης Μεθόδου Εισαγωγής"
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:897
 msgid "New"
@@ -4210,7 +4209,7 @@ msgstr "Εισαγωγή..."
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:904
 msgid "Input Method Parameters"
-msgstr ""
+msgstr "Παράμετροι Μεθόδου Εισαγωγής"
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:914
 msgid "Execute Command"
@@ -4334,7 +4333,6 @@ msgstr ""
 "για ακύρωση."
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:91
-#, fuzzy
 msgid "Key Binding Settings"
 msgstr "Ρυθμίσεις Συνδυασμού Πλήκτρων"
 
@@ -4496,7 +4494,7 @@ msgstr "%5.0f pixel/sec"
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:200
 msgid "Fast Mouse Move Threshhold"
-msgstr ""
+msgstr "Όριο Γρήγορης Μετακίνησης Ποντικιού"
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:202
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:214
@@ -4689,7 +4687,7 @@ msgstr "Εικόνες"
 #: ../src/modules/conf_paths/e_int_config_paths.c:79
 #: ../src/modules/conf_theme/e_int_config_theme.c:1010
 msgid "Themes"
-msgstr "Θέματαi"
+msgstr "Θέματα"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:85
 msgid "Backgrounds"
@@ -4924,15 +4922,15 @@ msgstr ""
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:166
 msgid "Preferred"
-msgstr ""
+msgstr "Προτιμώμενο"
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:168
 msgid "Not Preferred"
-msgstr ""
+msgstr "Μη Προτιμώμενο"
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:172
 msgid "Exposure Events"
-msgstr ""
+msgstr "Γεγονότα Έκθεσης"
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:176
 msgid "Allow"
@@ -5035,7 +5033,7 @@ msgstr "Γεγονότα"
 
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:135
 msgid "Desk Change"
-msgstr ""
+msgstr "Αλλαγή Επιφάνειας Εργασίας"
 
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:136
 msgid "Background Change"
@@ -6182,7 +6180,7 @@ msgstr "Εμφάνιση Ονόματος Εικονιδίου"
 
 #: ../src/modules/ibox/e_mod_config.c:105
 msgid "Display Border Caption"
-msgstr ""
+msgstr "Εμφάνιση Ετικέτας Περιγράμματος"
 
 #: ../src/modules/ibox/e_mod_config.c:130
 msgid "Show windows from all screens"
@@ -6235,7 +6233,7 @@ msgstr "Εμφάνιση ειδοποίησης για "
 
 #: ../src/modules/pager/e_mod_config.c:162
 msgid "Select and Slide button"
-msgstr ""
+msgstr "Επιλογή και Ολίσθηση κουμπιού"
 
 #: ../src/modules/pager/e_mod_config.c:164
 #: ../src/modules/pager/e_mod_config.c:171
@@ -6328,7 +6326,7 @@ msgstr "Κουμπί %i"
 
 #: ../src/modules/pager/e_mod_main.c:811
 msgid "Virtual Desktops Configuration"
-msgstr ""
+msgstr "Ρύθμιση Εικονικών Επιφανειών Εργασίας"
 
 #: ../src/modules/pager/e_mod_main.c:2803
 msgid "Show Pager Popup"
