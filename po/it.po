@@ -252,7 +252,7 @@ msgstr "Commento"
 
 #: src/bin/e_eap_editor.c:498
 msgid "General"
-msgstr "Generale"
+msgstr "Impostazioni generali"
 
 #: src/bin/e_eap_editor.c:501
 msgid "Generic Name"
