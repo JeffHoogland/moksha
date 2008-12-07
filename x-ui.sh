@@ -15,5 +15,5 @@ sleep 1
 export DISPLAY=:1
 unset E_RESTART E_START E_IPC_SOCKET E_START_TIME
 #E_CONF_PROFILE=default ltrace enlightenment_start
-E_CONF_PROFILE=default enlightenment_start
-#enlightenment_start -profile illume
+#E_CONF_PROFILE=default enlightenment_start
+enlightenment_start -profile illume
