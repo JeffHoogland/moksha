@@ -228,6 +228,23 @@ PKG_CHECK_MODULES(BATTERY, [
   ecore-con
 ])
 
+PKG_CHECK_MODULES(EXCHANGE,
+ [exchange],
+ [
+        HAVE_EXCHANGE=yes
+        AC_SUBST(EXCHANGE_LIBS)
+        AC_SUBST(EXCHANGE_CFLAGS)
+ ],
+ [
+        HAVE_EXCHANGE=no
+ ])
+AM_CONDITIONAL(HAVE_EXCHANGE, test x$HAVE_EXCHANGE = xyes)
+AC_SUBST(HAVE_EXCHANGE)
+if test x$HAVE_EXCHANGE = xyes; then
+        AC_DEFINE_UNQUOTED(HAVE_EXCHANGE, 1, Package exchange found.)
+fi
+
+
 e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS
 e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "$ECORE_IMF_CFLAGS
 e_configflags="-DUSE_E_CONFIG_H"
