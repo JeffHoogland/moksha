@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-11-30 10:34+0100\n"
-"PO-Revision-Date: 2008-11-30 10:41+0100\n"
+"POT-Creation-Date: 2008-12-07 09:16+0100\n"
+"PO-Revision-Date: 2008-12-07 09:20+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: src/bin/e_fm.c:550 src/bin/e_actions.c:2312 src/bin/e_theme_about.c:20
+#: src/bin/e_fm.c:554 src/bin/e_actions.c:2312 src/bin/e_theme_about.c:20
 #: src/bin/e_int_border_prop.c:81 src/bin/e_about.c:20
 #: src/bin/e_config_dialog.c:258 src/bin/e_int_border_menu.c:208
 #: src/modules/conf/e_conf.c:172 src/modules/mixer/app_mixer.c:537
@@ -22,67 +22,67 @@ msgstr ""
 msgid "Close"
 msgstr "Chiudi"
 
-#: src/bin/e_fm.c:552
+#: src/bin/e_fm.c:556
 msgid "Nonexistent path"
 msgstr "Percorso inesistente"
 
-#: src/bin/e_fm.c:555
+#: src/bin/e_fm.c:559
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s non esiste."
 
-#: src/bin/e_fm.c:2668
+#: src/bin/e_fm.c:2672
 #, c-format
 msgid "%i Files"
 msgstr "%i File"
 
-#: src/bin/e_fm.c:4767 src/bin/e_fm.c:6635 src/bin/e_entry.c:517
+#: src/bin/e_fm.c:4797 src/bin/e_fm.c:6668 src/bin/e_entry.c:517
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_fm.c:4775 src/bin/e_actions.c:2272
+#: src/bin/e_fm.c:4805 src/bin/e_actions.c:2272
 msgid "Move"
 msgstr "Sposta"
 
-#: src/bin/e_fm.c:4783 src/bin/e_fm.c:7171 src/bin/e_fm.c:7301
+#: src/bin/e_fm.c:4813 src/bin/e_fm.c:7345 src/bin/e_fm.c:7475
 msgid "Abort"
 msgstr "Abortisci"
 
-#: src/bin/e_fm.c:6382 src/bin/e_fm.c:6539
+#: src/bin/e_fm.c:6415 src/bin/e_fm.c:6572
 #: src/modules/fileman/e_mod_config.c:171
 msgid "View Mode"
 msgstr "Modalità visualizzazione"
 
-#: src/bin/e_fm.c:6389 src/bin/e_fm.c:6546
+#: src/bin/e_fm.c:6422 src/bin/e_fm.c:6579
 msgid "Refresh View"
 msgstr "Aggiorna vista"
 
-#: src/bin/e_fm.c:6400 src/bin/e_fm.c:6557
+#: src/bin/e_fm.c:6433 src/bin/e_fm.c:6590
 msgid "Show Hidden Files"
 msgstr "Mostra file nascosti"
 
-#: src/bin/e_fm.c:6415 src/bin/e_fm.c:6572
+#: src/bin/e_fm.c:6448 src/bin/e_fm.c:6605
 msgid "Remember Ordering"
 msgstr "Ricorda ordinamento"
 
-#: src/bin/e_fm.c:6427 src/bin/e_fm.c:6584
+#: src/bin/e_fm.c:6460 src/bin/e_fm.c:6617
 msgid "Sort Now"
 msgstr "Ordina adesso"
 
-#: src/bin/e_fm.c:6442 src/bin/e_fm.c:6602
+#: src/bin/e_fm.c:6475 src/bin/e_fm.c:6635
 #: src/modules/conf_paths/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Nuova directory"
 
-#: src/bin/e_fm.c:6459 src/bin/e_fm.c:6649 src/bin/e_entry.c:528
+#: src/bin/e_fm.c:6492 src/bin/e_fm.c:6682 src/bin/e_entry.c:528
 msgid "Paste"
 msgstr "Incolla"
 
-#: src/bin/e_fm.c:6618 src/bin/e_entry.c:506
+#: src/bin/e_fm.c:6651 src/bin/e_entry.c:506
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_fm.c:6708 src/bin/e_entry.c:493
+#: src/bin/e_fm.c:6741 src/bin/e_entry.c:493
 #: src/modules/ibar/e_mod_config.c:111
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/conf_profiles/e_int_config_profiles.c:113
@@ -90,99 +90,111 @@ msgstr "Taglia"
 msgid "Delete"
 msgstr "Elimina"
 
-#: src/bin/e_fm.c:6719
+#: src/bin/e_fm.c:6752
 msgid "Rename"
 msgstr "Rinomina"
 
-#: src/bin/e_fm.c:6729
+#: src/bin/e_fm.c:6762
 msgid "Properties"
 msgstr "Proprietà"
 
-#: src/bin/e_fm.c:6890 src/modules/conf_paths/e_int_config_paths.c:81
-#: src/modules/fileman/e_mod_config.c:173
-msgid "Icons"
-msgstr "Icone"
+#: src/bin/e_fm.c:7001 src/bin/e_fm.c:7052
+msgid "Use default"
+msgstr "Usa predefinito"
 
-#: src/bin/e_fm.c:6898 src/modules/fileman/e_mod_config.c:186
+#: src/bin/e_fm.c:7025 src/modules/fileman/e_mod_config.c:176
+msgid "Grid Icons"
+msgstr "Icone in griglia"
+
+#: src/bin/e_fm.c:7033 src/modules/fileman/e_mod_config.c:178
+msgid "Custom Icons"
+msgstr "Icone personalizzata"
+
+#: src/bin/e_fm.c:7041 src/modules/fileman/e_mod_config.c:186
 msgid "List"
 msgstr "Elenco"
 
-#: src/bin/e_fm.c:7036
+#: src/bin/e_fm.c:7066
+#, c-format
+msgid "Icon Size (%d)"
+msgstr "Dimensione icona (%d)"
+
+#: src/bin/e_fm.c:7210
 msgid "Create a new Directory"
 msgstr "Crea nuova directory"
 
-#: src/bin/e_fm.c:7037
+#: src/bin/e_fm.c:7211
 msgid "New Directory Name:"
 msgstr "Nome directory:"
 
-#: src/bin/e_fm.c:7096
+#: src/bin/e_fm.c:7270
 #, c-format
 msgid "Rename %s to:"
 msgstr "Rinomina %s in:"
 
-#: src/bin/e_fm.c:7098
+#: src/bin/e_fm.c:7272
 msgid "Rename File"
 msgstr "Rinomina file"
 
-#: src/bin/e_fm.c:7170 src/bin/e_fm.c:7300
+#: src/bin/e_fm.c:7344 src/bin/e_fm.c:7474
 msgid "Retry"
 msgstr "Ritenta"
 
-#: src/bin/e_fm.c:7174 src/bin/e_fm.c:7231 src/bin/e_fm.c:7306
+#: src/bin/e_fm.c:7348 src/bin/e_fm.c:7405 src/bin/e_fm.c:7480
 #: src/modules/wizard/page_030.c:67
 msgid "Error"
 msgstr "Errore"
 
-#: src/bin/e_fm.c:7176 src/bin/e_fm.c:7233
+#: src/bin/e_fm.c:7350 src/bin/e_fm.c:7407
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: src/bin/e_fm.c:7225 src/bin/e_fm.c:7408 src/bin/e_actions.c:355
+#: src/bin/e_fm.c:7399 src/bin/e_fm.c:7582 src/bin/e_actions.c:355
 #: src/bin/e_actions.c:1632 src/bin/e_actions.c:1714 src/bin/e_actions.c:1778
 #: src/bin/e_actions.c:1842 src/bin/e_actions.c:1906 src/bin/e_actions.c:1970
 #: src/bin/e_module.c:528 src/bin/e_confirm_dialog.c:48
 msgid "No"
 msgstr "No"
 
-#: src/bin/e_fm.c:7226
+#: src/bin/e_fm.c:7400
 msgid "No to all"
 msgstr "No a tutti"
 
-#: src/bin/e_fm.c:7227 src/bin/e_fm.c:7407 src/bin/e_actions.c:353
+#: src/bin/e_fm.c:7401 src/bin/e_fm.c:7581 src/bin/e_actions.c:353
 #: src/bin/e_actions.c:1630 src/bin/e_actions.c:1712 src/bin/e_actions.c:1776
 #: src/bin/e_actions.c:1840 src/bin/e_actions.c:1904 src/bin/e_actions.c:1968
 #: src/bin/e_module.c:527 src/bin/e_confirm_dialog.c:47
 msgid "Yes"
 msgstr "Sì"
 
-#: src/bin/e_fm.c:7228
+#: src/bin/e_fm.c:7402
 msgid "Yes to all"
 msgstr "Sì a tutti"
 
-#: src/bin/e_fm.c:7302
+#: src/bin/e_fm.c:7476
 msgid "Ignore this"
 msgstr "Ignora questo"
 
-#: src/bin/e_fm.c:7303
+#: src/bin/e_fm.c:7477
 msgid "Ignore all"
 msgstr "Ignora tutto"
 
-#: src/bin/e_fm.c:7308
+#: src/bin/e_fm.c:7482
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr "C'è stato un errore nell'esecuzione di un'operazione.<br>%s"
 
-#: src/bin/e_fm.c:7410
+#: src/bin/e_fm.c:7584
 msgid "Confirm Delete"
 msgstr "Conferma eliminazione"
 
-#: src/bin/e_fm.c:7414
+#: src/bin/e_fm.c:7588
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Siete sicuri di voler eliminare<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:7420
+#: src/bin/e_fm.c:7594
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -366,7 +378,7 @@ msgstr "L'esecuzione di %s è terminata inaspettatamente"
 #: src/bin/e_exec.c:436
 #, c-format
 msgid "An exit code of %i was returned from %s."
-msgstr "%2$s ha restituito il codice d'uscita %1$i"
+msgstr "%2$s ha restituito il codice d'uscita %1$i."
 
 #: src/bin/e_exec.c:443
 #, c-format
@@ -721,11 +733,11 @@ msgstr ""
 "del socket IPC. Controllare:\n"
 "%s/enlightenment-%s\n"
 
-#: src/bin/e_border.c:4851
+#: src/bin/e_border.c:4861
 msgid "Desktop files scan done"
 msgstr "Scansione file desktop eseguita"
 
-#: src/bin/e_border.c:4863
+#: src/bin/e_border.c:4873
 msgid "Desktop file scan"
 msgstr "Scansione file desktop"
 
@@ -3451,6 +3463,11 @@ msgstr "Font"
 msgid "Themes"
 msgstr "Temi"
 
+#: src/modules/conf_paths/e_int_config_paths.c:81
+#: src/modules/fileman/e_mod_config.c:173
+msgid "Icons"
+msgstr "Icone"
+
 #: src/modules/conf_paths/e_int_config_paths.c:85
 msgid "Backgrounds"
 msgstr "Sfondi"
@@ -4385,7 +4402,7 @@ msgstr "%i MHz"
 #: src/modules/cpufreq/e_mod_main.c:304
 #, c-format
 msgid "%i.%i GHz"
-msgstr "%i.%i GHz"
+msgstr "%i,%i GHz"
 
 #: src/modules/cpufreq/e_mod_main.c:321
 msgid "Time Between Updates"
@@ -4791,7 +4808,7 @@ msgstr ""
 "Enlightenment non ha potuto importare la configurazione<br>a causa di un "
 "errore di copia."
 
-#: src/modules/conf_imc/e_mod_main.c:34 src/modules/wizard/page_010.c:139
+#: src/modules/conf_imc/e_mod_main.c:34 src/modules/wizard/page_010.c:140
 #: src/modules/conf_intl/e_mod_main.c:34
 msgid "Language"
 msgstr "Lingua"
@@ -5720,7 +5737,7 @@ msgstr "Avanti"
 msgid "Welcome to Enlightenment"
 msgstr "Benvenuti in Enlightenment"
 
-#: src/modules/wizard/page_010.c:140 src/modules/wizard/page_020.c:57
+#: src/modules/wizard/page_010.c:141 src/modules/wizard/page_020.c:57
 msgid "Select one"
 msgstr "Selezionarne una"
 
@@ -6596,14 +6613,6 @@ msgstr "Impostazioni di Fileman aggiornate"
 #: src/modules/fileman/e_mod_config.c:88
 msgid "Fileman Settings"
 msgstr "Impostazioni di Fileman"
-
-#: src/modules/fileman/e_mod_config.c:176
-msgid "Grid Icons"
-msgstr "Icone in griglia"
-
-#: src/modules/fileman/e_mod_config.c:178
-msgid "Custom Icons"
-msgstr "Icone personalizzata"
 
 #: src/modules/fileman/e_mod_config.c:180
 msgid "Custom Grid Icons"
