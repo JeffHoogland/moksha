@@ -15810,7 +15810,7 @@ collections { /* begin the collection of edje groups that are in this file */
    }
 
    group { name: "e/fileman/default/list_odd/fixed";
-      name: "e/fileman/desktop/list_odd/fixed";
+      alias: "e/fileman/desktop/list_odd/fixed";
       data.item: "stacking" "below";
       data.item: "selectraise" "on";
       images {
