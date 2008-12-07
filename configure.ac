@@ -40,10 +40,20 @@ fi
 AC_SUBST(fnmatch_libs)
 
 have_pam=no
-AC_CHECK_HEADERS(security/pam_appl.h, [
-    LIBS="$LIBS -lpam"
-    have_pam=yes
-  AC_DEFINE(HAVE_PAM, 1, [PAM Authentication Support])])
+AC_ARG_ENABLE(pam,
+	AC_HELP_STRING([--enable-pam], [enable PAM support @<:@default=detect@:>@]),
+	[want_pam=$enableval],
+	[want_pam=auto]
+)
+if test "x$want_pam" != "xno" ; then
+	AC_CHECK_HEADERS(security/pam_appl.h, [
+		LIBS="$LIBS -lpam"
+		have_pam=yes
+		AC_DEFINE(HAVE_PAM, 1, [PAM Authentication Support])])
+	if test "x$want_pam$have_pam" = "xyesno" ; then
+		AC_MSG_ERROR([PAM support was requested but not found])
+	fi
+fi
 
 # Setting have_valgrind to "no" seems pointless, but we just need to
 # put something in as the 4th parameter, so configure doesn't abort
