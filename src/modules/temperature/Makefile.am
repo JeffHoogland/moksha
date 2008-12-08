@@ -29,7 +29,7 @@ tempgetdir = $(pkgdir)
 
 tempget_PROGRAMS       = tempget
 tempget_SOURCES        = tempget.c
-tempget_LDFLAGS        = @TEMPERATURE_LIBS@
+tempget_LDADD          = @TEMPERATURE_LIBS@
 
 uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)

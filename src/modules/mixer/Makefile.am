@@ -31,7 +31,7 @@ else
 module_la_SOURCES += sys_dummy.c
 endif
 
-module_la_LIBADD       = @SOUND_LDFLAGS@ @e_libs@ @dlopen_libs@
+module_la_LIBADD       = @SOUND_LIBS@ @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 

@@ -15,7 +15,7 @@
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
 #endif
-#include <Evas.h>
+#include <Eina.h>
 
 /* local subsystem functions */
 static int auth_action_ok(char *a, uid_t uid, gid_t gid, gid_t *gl, int gn, gid_t egid);
@@ -23,7 +23,7 @@ static int auth_etc_enlightenment_sysactions(char *a, char *u, char **g);
 static char *get_word(char *s, char *d);
 
 /* local subsystem globals */
-Evas_Hash *actions = NULL;
+static Eina_Hash *actions;
 
 /* externally accessible functions */
 int
@@ -78,7 +78,8 @@ main(int argc, char **argv)
 	exit(7);
      }
    
-   evas_init();
+   eina_init();
+   actions = eina_hash_string_superfast_new(NULL);
 
    if (!auth_action_ok(action, uid, gid, gl, gn, egid))
      {
@@ -87,15 +88,16 @@ main(int argc, char **argv)
      }
    /* we can add more levels of auth here */
    
-   cmd = evas_hash_find(actions, action);
+   cmd = eina_hash_find(actions, action);
    if (!cmd)
      {
 	printf("ERROR: UNDEFINED ACTION: %s\n", action);
 	exit(20);
      }
    if (!test) return system(cmd);
-   
-   evas_shutdown();
+
+   eina_hash_free(actions);
+   eina_shutdown();
    
    return 0;
 }
@@ -217,13 +219,13 @@ auth_etc_enlightenment_sysactions(char *a, char *u, char **g)
 	else if (!strcmp(id, "action:"))
 	  {
 	     while ((*pp) && (isspace(*pp))) pp++;
-	     s = evas_hash_find(actions, ugname);
+	     s = eina_hash_find(actions, ugname);
 	     if (s)
 	       {
-		  actions = evas_hash_del(actions, ugname, s);
+		  eina_hash_del(actions, ugname, s);
 		  free(s);
 	       }
-	     actions = evas_hash_add(actions, ugname, strdup(pp));
+	     eina_hash_add(actions, ugname, strdup(pp));
 	     continue;
 	  }
 	else if (id[0] == 0)

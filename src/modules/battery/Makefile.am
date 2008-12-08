@@ -30,7 +30,7 @@ batgetdir = $(pkgdir)
 
 batget_PROGRAMS        = batget
 batget_SOURCES         = batget.c
-batget_LDFLAGS         = @BATTERY_LIBS@
+batget_LDADD           = @BATTERY_LIBS@
 
 
 uninstall:

@@ -307,14 +307,15 @@ enlightenment_SOURCES = \
 e_main.c \
 $(enlightenment_src)
 
-enlightenment_LDFLAGS = -export-dynamic @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@ @VALGRIND_LIBS@
+enlightenment_LDFLAGS = -export-dynamic
+enlightenment_LDADD = @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@ @VALGRIND_LIBS@
 
 enlightenment_remote_SOURCES = \
 e.h \
 e_ipc_codec.c \
 e_remote_main.c
 
-enlightenment_remote_LDFLAGS = @e_libs@
+enlightenment_remote_LDADD = @E_REMOTE_LIBS@
 
 enlightenment_imc_SOURCES = \
 e.h \
@@ -323,19 +324,19 @@ e_config_data.c \
 e_imc_main.c
 # $(enlightenment_src)
 
-enlightenment_imc_LDFLAGS = @e_libs@ @dlopen_libs@
+enlightenment_imc_LDADD = @E_IMC_LIBS@
 
 enlightenment_start_SOURCES = \
 e_start_main.c
 
-enlightenment_start_LDFLAGS = @dlopen_libs@
+enlightenment_start_LDADD = @dlopen_libs@
 
 enlightenment_thumb_SOURCES = \
 e_thumb_main.c \
 e_user.c \
 e_sha1.c
 
-enlightenment_thumb_LDFLAGS = @e_libs@
+enlightenment_thumb_LDADD = @E_THUMB_LIBS@
 
 enlightenment_fm_SOURCES = \
 e_fm_main.c \
@@ -343,32 +344,32 @@ e_user.c \
 e_sha1.c \
 e_prefix.c
 
-enlightenment_fm_LDFLAGS = @e_libs@ @dlopen_libs@
+enlightenment_fm_LDADD = @E_FM_LIBS@
 enlightenment_fm_CFLAGS = $(INCLUDES)
 
 enlightenment_fm_op_SOURCES = \
 e_fm_op.c
 
-enlightenment_fm_op_LDFLAGS = @e_libs@
+enlightenment_fm_op_LDADD = @E_FM_OP_LIBS@
 enlightenment_fm_op_CFLAGS = $(INCLUDES)
 
 enlightenment_fm_open_SOURCES = \
 e_fm_open.c \
 e_ipc_codec.c
 
-enlightenment_fm_open_LDFLAGS = @e_libs@
+enlightenment_fm_open_LDADD = @E_FM_OPEN_LIBS@
 enlightenment_fm_open_CFLAGS = $(INCLUDES)
 
 enlightenment_sys_SOURCES = \
 e_sys_main.c
 
-enlightenment_sys_LDFLAGS = @e_libs@
+enlightenment_sys_LDADD = @E_SYS_LIBS@
 
 enlightenment_init_SOURCES = \
 e_init_main.c \
 e_xinerama.c
 
-enlightenment_init_LDFLAGS = @e_libs@
+enlightenment_init_LDADD = @E_INIT_LIBS@
 
 setuid_root_mode = a=rx,u+xs
 install-exec-hook:

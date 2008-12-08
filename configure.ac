@@ -1,6 +1,10 @@
 # get rid of that stupid cache mechanism
 rm -f config.cache
 
+define([AC_LIBTOOL_LANG_CXX_CONFIG], [:])
+define([AC_LIBTOOL_LANG_GCJ_CONFIG], [:])
+define([AC_LIBTOOL_LANG_F77_CONFIG], [:])
+
 AC_INIT(enlightenment, 0.16.999.050, enlightenment-devel@lists.sourceforge.net)
 AC_PREREQ(2.52)
 AC_CONFIG_SRCDIR(configure.ac)
@@ -12,10 +16,8 @@ AM_INIT_AUTOMAKE(1.6 dist-bzip2)
 AM_CONFIG_HEADER(config.h)
 
 AC_C_BIGENDIAN
-AC_PROG_CC
-AM_PROG_CC_STDC
+AC_PROG_CC_C99
 AM_PROG_CC_C_O
-AC_HEADER_STDC
 AC_C_CONST
 AM_ENABLE_SHARED
 AM_PROG_LIBTOOL
@@ -36,7 +38,7 @@ if test "x$res" = "xno"; then
 	        fnmatch_libs="-lfnmatch"
 	fi
 fi
-				
+
 AC_SUBST(fnmatch_libs)
 
 have_pam=no
@@ -55,31 +57,7 @@ if test "x$want_pam" != "xno" ; then
 	fi
 fi
 
-# Setting have_valgrind to "no" seems pointless, but we just need to
-# put something in as the 4th parameter, so configure doesn't abort
-# when valgrind.pc isn't found.
-#have_valgrind="no"
-#PKG_CHECK_MODULES(VALGRIND, valgrind >= 2.4.0, have_valgrind=yes, have_valgrind=no)
-#AC_ARG_ENABLE(valgrind,
-#  [  --enable-valgrind               enable valgrind support], [
-#      if test x"$enableval" = x"yes" ; then
-#        AC_MSG_RESULT(yes)
-#        have_valgrind="yes"
-#      else
-#        AC_MSG_RESULT(no)
-#	have_valgrind="no"
-#        VALGRIND_CFLAGS=""
-#        VALGRIND_LIBS=""
-#      fi
-#  ], [
-#    have_valgrind=$have_valgrind
-#  ]
-#)
-
-#if test x$have_valgrind = "xyes"; then
-#  AC_DEFINE(HAVE_VALGRIND, 1, [Valgrind support])
-#fi
-
+dnl AC_E_CHECK_PKG(VALGRIND, [valgrind >= 2.4.0], [], [:])
 AC_SUBST(VALGRIND_CFLAGS)
 AC_SUBST(VALGRIND_LIBS)
 
@@ -190,6 +168,70 @@ if test "[${e_cv_enable_files}]" = yes; then
 fi
 AC_MSG_RESULT([$e_cv_enable_files])
 
+# explicit libs for each binary to reduce linkage requirements
+PKG_CHECK_MODULES(E_REMOTE, [
+  ecore
+  ecore-ipc
+  eet >= 1.0.1
+  eina-0
+])
+
+PKG_CHECK_MODULES(E_IMC, [
+  ecore-file
+  eet >= 1.0.1
+  eina-0
+])
+
+PKG_CHECK_MODULES(E_THUMB, [
+  evas
+  ecore
+  ecore-evas
+  edje
+  ecore-file
+  ecore-ipc
+  eet >= 1.0.1
+  efreet
+])
+
+PKG_CHECK_MODULES(E_FM, [
+  ecore
+  ecore-file
+  ecore-ipc
+  eet >= 1.0.1
+  efreet
+  edbus
+  ehal
+  eina-0
+])
+
+PKG_CHECK_MODULES(E_FM_OP, [
+  ecore
+  ecore-file
+  eina-0
+])
+
+PKG_CHECK_MODULES(E_FM_OPEN, [
+  ecore
+  ecore-ipc
+  eet >= 1.0.1
+  eina-0
+])
+
+PKG_CHECK_MODULES(E_SYS, [
+  eina-0
+])
+
+PKG_CHECK_MODULES(E_INIT, [
+  evas
+  ecore
+  ecore-file
+  ecore-evas
+  edje
+  ecore-ipc
+  eet >= 1.0.1
+  eina-0
+])
+
 PKG_CHECK_MODULES(E, [
   evas
   ecore
@@ -209,50 +251,7 @@ PKG_CHECK_MODULES(E, [
 ])
 requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-job ecore-file eet edje efreet efreet-mime eina-0 edbus ehal"
 
-PKG_CHECK_MODULES(ECORE_IMF, [
-  ecore-imf
-  ecore-imf-evas
-], [
-  have_ecore_imf="yes"
-  AC_DEFINE(HAVE_ECORE_IMF, 1, [Ecore IMF support])
-], [ have_ecore_imf="no" ]
-)
-
-PKG_CHECK_MODULES(ECORE_TXT, [
-  ecore-txt
-], [
-  have_temp="yes"
-], [ have_temp="no"])
-
-AM_CONDITIONAL(HAVE_TEMPERATURE, test x$have_temp = "xyes")
-if test x$have_temp = "xyes"; then
-  PKG_CHECK_MODULES(TEMPERATURE, [
-    ecore
-    ecore-file
-  ])
-fi
-
-PKG_CHECK_MODULES(BATTERY, [
-  ecore
-  ecore-file
-  ecore-con
-])
-
-PKG_CHECK_MODULES(EXCHANGE,
- [exchange],
- [
-        HAVE_EXCHANGE=yes
-        AC_SUBST(EXCHANGE_LIBS)
-        AC_SUBST(EXCHANGE_CFLAGS)
- ],
- [
-        HAVE_EXCHANGE=no
- ])
-AM_CONDITIONAL(HAVE_EXCHANGE, test x$HAVE_EXCHANGE = xyes)
-AC_SUBST(HAVE_EXCHANGE)
-if test x$HAVE_EXCHANGE = xyes; then
-        AC_DEFINE_UNQUOTED(HAVE_EXCHANGE, 1, Package exchange found.)
-fi
+AC_E_CHECK_PKG(ECORE_IMF, [ecore-imf ecore-imf-evas], [], [:])
 
 
 e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS
@@ -305,23 +304,40 @@ AC_SUBST(eet_eet)
 
 AC_DEFINE(E_INTERNAL, 1, "This define can be used to wrap internal E stuff, as config.h isn't exported")
 
+AM_CONDITIONAL(HAVE_BATTERY, false)
+define([CHECK_MODULE_BATTERY],
+[
+        AC_E_CHECK_PKG(BATTERY, [ecore ecore-file ecore-con],
+                       [], [BATTERY=false])
+])
 
-dnl Check for Alsa
-AC_ARG_ENABLE(alsa, AS_HELP_STRING([--enable-alsa],
-		    [enable support for alsa(default=autodetect)]),
-		    [ enable_alsa=$enableval ], [ enable_alsa=default ])
+AM_CONDITIONAL(HAVE_TEMPERATURE, false)
+define([CHECK_MODULE_TEMPERATURE],
+[
+        AC_E_CHECK_PKG(ECORE_TXT, [ecore-txt], [], [TEMPERATURE=false])
+        AC_E_CHECK_PKG(TEMPERATURE, [ecore ecore-file], [], [TEMPERATURE=false])
+])
+
+AM_CONDITIONAL(HAVE_EXCHANGE, false)
+define([CHECK_MODULE_CONF_THEME],
+[
+        AC_E_CHECK_PKG(EXCHANGE, [exchange], [], [:])
+])
 
 AM_CONDITIONAL(HAVE_ALSA, false)
-if test "x$enable_alsa" = "xdefault" || test "x$enable_alsa" = "xyes"; then
-   PKG_CHECK_MODULES(ALSA, [alsa >= 1.0.8],
+define([CHECK_MODULE_MIXER],
+[
+if test "x$enable_alsa" = "x" || test "x$enable_alsa" = "xdefault" || test "x$enable_alsa" = "xyes"; then
+   AC_E_CHECK_PKG(ALSA, [alsa >= 1.0.8],
    [ SOUND_CFLAGS="$ALSA_CFLAGS -DHAVE_ALSA $SOUND_CFLAGS"
-     SOUND_LDFLAGS="$ALSA_LIBS $SOUND_LDFLAGS"
-     AM_CONDITIONAL(HAVE_ALSA, true)
-     have_alsa=yes ],
-     [ if test "x$enable_alsa" = "xyes"; then
-          AC_MSG_ERROR([alsa library >= 1.0.8 not found])
-       fi
-     ])
+     SOUND_LIBS="$ALSA_LIBS $SOUND_LDFLAGS"
+   ],
+   [ if test "x$enable_alsa" = "xyes"; then
+        AC_MSG_ERROR([alsa library >= 1.0.8 not found])
+     else
+        AC_MSG_WARN([alsa library development files not present. no alsa support.])
+     fi
+   ])
 else
   have_alsa=no
 fi
@@ -331,9 +347,70 @@ if test "$have_alsa" = "yes"; then
 else
     have_alsa=no
 fi
+])
 
 AC_SUBST(SOUND_CFLAGS)
-AC_SUBST(SOUND_LDFLAGS)
+AC_SUBST(SOUND_LIBS)
+
+AC_E_OPTIONAL_MODULE([ibar], true)
+AC_E_OPTIONAL_MODULE([ibar], true)
+AC_E_OPTIONAL_MODULE([dropshadow], true)
+AC_E_OPTIONAL_MODULE([clock], true)
+AC_E_OPTIONAL_MODULE([pager], true)
+AC_E_OPTIONAL_MODULE([battery], true, [CHECK_MODULE_BATTERY])
+AC_E_OPTIONAL_MODULE([temperature], true, [CHECK_MODULE_TEMPERATURE])
+AC_E_OPTIONAL_MODULE([cpufreq], true)
+AC_E_OPTIONAL_MODULE([ibox], true)
+AC_E_OPTIONAL_MODULE([start], true)
+AC_E_OPTIONAL_MODULE([exebuf], true)
+AC_E_OPTIONAL_MODULE([winlist], true)
+AC_E_OPTIONAL_MODULE([fileman], true)
+AC_E_OPTIONAL_MODULE([wizard], true)
+AC_E_OPTIONAL_MODULE([conf], true)
+AC_E_OPTIONAL_MODULE([conf_wallpaper], true)
+AC_E_OPTIONAL_MODULE([conf_theme], true, [CHECK_MODULE_CONF_THEME])
+AC_E_OPTIONAL_MODULE([conf_colors], true)
+AC_E_OPTIONAL_MODULE([conf_fonts], true)
+AC_E_OPTIONAL_MODULE([conf_borders], true)
+AC_E_OPTIONAL_MODULE([conf_icon_theme], true)
+AC_E_OPTIONAL_MODULE([conf_mouse_cursor], true)
+AC_E_OPTIONAL_MODULE([conf_transitions], true)
+AC_E_OPTIONAL_MODULE([conf_startup], true)
+AC_E_OPTIONAL_MODULE([conf_intl], true)
+AC_E_OPTIONAL_MODULE([conf_imc], true)
+AC_E_OPTIONAL_MODULE([conf_profiles], true)
+AC_E_OPTIONAL_MODULE([msgbus_lang], true)
+AC_E_OPTIONAL_MODULE([conf_engine], true)
+AC_E_OPTIONAL_MODULE([conf_applications], true)
+AC_E_OPTIONAL_MODULE([conf_desks], true)
+AC_E_OPTIONAL_MODULE([conf_desk], true)
+AC_E_OPTIONAL_MODULE([conf_display], true)
+AC_E_OPTIONAL_MODULE([conf_desklock], true)
+AC_E_OPTIONAL_MODULE([conf_screensaver], true)
+AC_E_OPTIONAL_MODULE([conf_dpms], true)
+AC_E_OPTIONAL_MODULE([conf_shelves], true)
+AC_E_OPTIONAL_MODULE([conf_keybindings], true)
+AC_E_OPTIONAL_MODULE([conf_mousebindings], true)
+AC_E_OPTIONAL_MODULE([conf_mouse], true)
+AC_E_OPTIONAL_MODULE([conf_window_display], true)
+AC_E_OPTIONAL_MODULE([conf_window_focus], true)
+AC_E_OPTIONAL_MODULE([conf_window_remembers], true)
+AC_E_OPTIONAL_MODULE([conf_window_manipulation], true)
+AC_E_OPTIONAL_MODULE([conf_menus], true)
+AC_E_OPTIONAL_MODULE([conf_clientlist], true)
+AC_E_OPTIONAL_MODULE([conf_dialogs], true)
+AC_E_OPTIONAL_MODULE([conf_performance], true)
+AC_E_OPTIONAL_MODULE([conf_winlist], true)
+AC_E_OPTIONAL_MODULE([conf_exebuf], true)
+AC_E_OPTIONAL_MODULE([conf_paths], true)
+AC_E_OPTIONAL_MODULE([conf_mime], true)
+AC_E_OPTIONAL_MODULE([conf_interaction], true)
+AC_E_OPTIONAL_MODULE([conf_scale], true)
+AC_E_OPTIONAL_MODULE([gadman], true)
+AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
+AC_E_OPTIONAL_MODULE([connman], true)
+AC_E_OPTIONAL_MODULE([illume], true)
+AC_E_OPTIONAL_MODULE([syscon], true)
 
 AC_OUTPUT([
 Makefile
@@ -482,3 +559,46 @@ config/netbook/Makefile
 config/illume/Makefile
 po/Makefile.in
 ])
+
+# report
+txt_strip() {
+        echo "[$]@" | sed -e 's/^[[ \t]]*\([[^ \t]]*\)[[ \t]]*$/\1/g'
+}
+
+MODS=""
+for mod in $OPTIONAL_MODULES; do
+        MODS="$MODS ${COLOR_HGREEN}+$mod${COLOR_END}"
+done
+MODS=$(txt_strip $MODS)
+
+UNUSED_MODS=""
+for mod in $UNUSED_OPTIONAL_MODULES; do
+        UNUSED_MODS="$UNUSED_MODS ${COLOR_HRED}-$mod${COLOR_END}"
+done
+UNUSED_MODS=$(txt_strip $UNUSED_MODS)
+
+cat << SUMMARY_EOF
+
+Summary:
+ * project.........: $PACKAGE $VERSION
+ * prefix..........: $(txt_strip $prefix)
+ * CFLAGS..........: $(txt_strip $CFLAGS)
+ * LDFLAGS.........: $(txt_strip $LDFLAGS)
+
+SUMMARY_EOF
+
+if test "x$MODS" != "x"; then
+   echo -e " * enabled modules.: $MODS"
+fi
+
+if test "x$UNUSED_MODS" != "x"; then
+   echo -e " * disabled modules: $UNUSED_MODS"
+fi
+
+cat << HINT_EOF
+
+now type:
+
+     make all install
+
+HINT_EOF
