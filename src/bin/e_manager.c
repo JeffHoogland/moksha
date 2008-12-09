@@ -186,6 +186,7 @@ e_manager_manage_windows(E_Manager *man)
 	     unsigned int ret_val, deskxy[2];
 	     int ret;
 
+             if (e_border_find_by_client_window(windows[i])) continue;
 	     ecore_x_window_attributes_get(windows[i], &att);
 	     if ((att.override) || (att.input_only))
 	       {
