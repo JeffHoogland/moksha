@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-12-01 14:01+0400\n"
-"PO-Revision-Date: 2008-12-01 17:05+0400\n"
+"POT-Creation-Date: 2008-12-09 14:12+0400\n"
+"PO-Revision-Date: 2008-12-09 18:19+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -23,11 +23,12 @@ msgstr "À propos de Enlightenment"
 #: src/bin/e_about.c:20
 #: src/bin/e_actions.c:2312
 #: src/bin/e_config_dialog.c:258
-#: src/bin/e_fm.c:554
+#: src/bin/e_fm.c:553
 #: src/bin/e_int_border_menu.c:208
 #: src/bin/e_int_border_prop.c:81
 #: src/bin/e_theme_about.c:20
 #: src/modules/conf/e_conf.c:172
+#: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/fileman/e_fwin.c:1422
 #: src/modules/mixer/app_mixer.c:537
 msgid "Close"
@@ -71,8 +72,8 @@ msgstr "Êtes-vous sûr de vouloir tuer cette fenêtre ?"
 #: src/bin/e_actions.c:1904
 #: src/bin/e_actions.c:1968
 #: src/bin/e_confirm_dialog.c:47
-#: src/bin/e_fm.c:7400
-#: src/bin/e_fm.c:7580
+#: src/bin/e_fm.c:7399
+#: src/bin/e_fm.c:7579
 #: src/bin/e_module.c:527
 msgid "Yes"
 msgstr "Oui"
@@ -85,8 +86,8 @@ msgstr "Oui"
 #: src/bin/e_actions.c:1906
 #: src/bin/e_actions.c:1970
 #: src/bin/e_confirm_dialog.c:48
-#: src/bin/e_fm.c:7398
-#: src/bin/e_fm.c:7581
+#: src/bin/e_fm.c:7397
+#: src/bin/e_fm.c:7580
 #: src/bin/e_module.c:528
 msgid "No"
 msgstr "Non"
@@ -151,7 +152,7 @@ msgid "Window : Actions"
 msgstr "Fenêtre: Actions"
 
 #: src/bin/e_actions.c:2272
-#: src/bin/e_fm.c:4804
+#: src/bin/e_fm.c:4803
 msgid "Move"
 msgstr "Déplacer"
 
@@ -624,8 +625,8 @@ msgstr "Éteindre immédiatement"
 #: src/modules/conf_desklock/e_int_config_desklock.c:202
 #: src/modules/conf_imc/e_int_config_imc.c:823
 #: src/modules/conf_startup/e_int_config_startup.c:273
-#: src/modules/conf_theme/e_int_config_theme.c:358
-#: src/modules/conf_theme/e_int_config_theme.c:797
+#: src/modules/conf_theme/e_int_config_theme.c:360
+#: src/modules/conf_theme/e_int_config_theme.c:798
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:503
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:631
 #: src/modules/gadman/e_mod_config.c:189
@@ -673,11 +674,11 @@ msgstr "Action reportée"
 msgid "Set As Background"
 msgstr "Utiliser comme fond d'écran"
 
-#: src/bin/e_border.c:4851
+#: src/bin/e_border.c:4861
 msgid "Desktop files scan done"
 msgstr "Analyse des fichiers desktop effectuée"
 
-#: src/bin/e_border.c:4863
+#: src/bin/e_border.c:4873
 msgid "Desktop file scan"
 msgstr "Analyse des fichiers desktop"
 
@@ -743,7 +744,6 @@ msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 #: src/modules/conf_mime/e_int_config_mime_edit.c:283
 #: src/modules/conf_profiles/e_int_config_profiles.c:284
 #: src/modules/conf_theme/e_int_config_theme_import.c:113
-#: src/modules/conf_theme/e_int_config_theme_web.c:158
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:204
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:171
@@ -918,7 +918,6 @@ msgstr "Sélectionner un icone"
 #: src/modules/conf_mime/e_int_config_mime_edit.c:284
 #: src/modules/conf_profiles/e_int_config_profiles.c:285
 #: src/modules/conf_theme/e_int_config_theme_import.c:117
-#: src/modules/conf_theme/e_int_config_theme_web.c:159
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:208
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:172
@@ -932,7 +931,7 @@ msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
 #: src/bin/e_entry.c:493
-#: src/bin/e_fm.c:6740
+#: src/bin/e_fm.c:6739
 #: src/modules/conf_applications/e_int_config_apps.c:271
 #: src/modules/conf_profiles/e_int_config_profiles.c:113
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -941,19 +940,19 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: src/bin/e_entry.c:506
-#: src/bin/e_fm.c:6650
+#: src/bin/e_fm.c:6649
 msgid "Cut"
 msgstr "Couper"
 
 #: src/bin/e_entry.c:517
-#: src/bin/e_fm.c:4796
-#: src/bin/e_fm.c:6667
+#: src/bin/e_fm.c:4795
+#: src/bin/e_fm.c:6666
 msgid "Copy"
 msgstr "Copier"
 
 #: src/bin/e_entry.c:528
-#: src/bin/e_fm.c:6491
-#: src/bin/e_fm.c:6681
+#: src/bin/e_fm.c:6490
+#: src/bin/e_fm.c:6680
 msgid "Paste"
 msgstr "Coller"
 
@@ -1092,157 +1091,157 @@ msgstr "Données de sortie"
 msgid "There was no output."
 msgstr "Il n'y a eu aucune sortie."
 
-#: src/bin/e_fm.c:556
+#: src/bin/e_fm.c:555
 msgid "Nonexistent path"
 msgstr "Chemin inexistant"
 
-#: src/bin/e_fm.c:559
+#: src/bin/e_fm.c:558
 #, c-format
 msgid "%s doesn't exist."
-msgstr "%s n'existe pas"
+msgstr "%s n'existe pas."
 
-#: src/bin/e_fm.c:2672
+#: src/bin/e_fm.c:2671
 #, c-format
 msgid "%i Files"
 msgstr "%i Fichiers"
 
-#: src/bin/e_fm.c:4812
-#: src/bin/e_fm.c:7344
-#: src/bin/e_fm.c:7474
+#: src/bin/e_fm.c:4811
+#: src/bin/e_fm.c:7343
+#: src/bin/e_fm.c:7473
 msgid "Abort"
 msgstr "Annuler"
 
-#: src/bin/e_fm.c:6414
-#: src/bin/e_fm.c:6571
+#: src/bin/e_fm.c:6413
+#: src/bin/e_fm.c:6570
 #: src/modules/fileman/e_mod_config.c:171
 msgid "View Mode"
 msgstr "Mode d'affichage"
 
-#: src/bin/e_fm.c:6421
-#: src/bin/e_fm.c:6578
+#: src/bin/e_fm.c:6420
+#: src/bin/e_fm.c:6577
 msgid "Refresh View"
 msgstr "Rafraîchir"
 
-#: src/bin/e_fm.c:6432
-#: src/bin/e_fm.c:6589
+#: src/bin/e_fm.c:6431
+#: src/bin/e_fm.c:6588
 msgid "Show Hidden Files"
 msgstr "Afficher les fichiers cachés"
 
-#: src/bin/e_fm.c:6447
-#: src/bin/e_fm.c:6604
+#: src/bin/e_fm.c:6446
+#: src/bin/e_fm.c:6603
 msgid "Remember Ordering"
 msgstr "Mémoriser l'ordre"
 
-#: src/bin/e_fm.c:6459
-#: src/bin/e_fm.c:6616
+#: src/bin/e_fm.c:6458
+#: src/bin/e_fm.c:6615
 msgid "Sort Now"
 msgstr "Classer maintenant"
 
-#: src/bin/e_fm.c:6474
-#: src/bin/e_fm.c:6634
+#: src/bin/e_fm.c:6473
+#: src/bin/e_fm.c:6633
 #: src/modules/conf_paths/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Nouveau dossier"
 
-#: src/bin/e_fm.c:6751
+#: src/bin/e_fm.c:6750
 msgid "Rename"
 msgstr "Renommer"
 
-#: src/bin/e_fm.c:6761
+#: src/bin/e_fm.c:6760
 msgid "Properties"
 msgstr "Propriétés"
 
-#: src/bin/e_fm.c:7000
-#: src/bin/e_fm.c:7051
+#: src/bin/e_fm.c:6999
+#: src/bin/e_fm.c:7050
 msgid "Use default"
 msgstr "Valeur par défaut"
 
-#: src/bin/e_fm.c:7024
+#: src/bin/e_fm.c:7023
 #: src/modules/fileman/e_mod_config.c:176
 msgid "Grid Icons"
 msgstr "Icones alignés"
 
-#: src/bin/e_fm.c:7032
+#: src/bin/e_fm.c:7031
 #: src/modules/fileman/e_mod_config.c:178
 msgid "Custom Icons"
 msgstr "Icones personnalisés"
 
-#: src/bin/e_fm.c:7040
+#: src/bin/e_fm.c:7039
 #: src/modules/fileman/e_mod_config.c:186
 msgid "List"
 msgstr "Liste"
 
-#: src/bin/e_fm.c:7065
+#: src/bin/e_fm.c:7064
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Taille de l'icone (%d)"
 
-#: src/bin/e_fm.c:7209
+#: src/bin/e_fm.c:7208
 msgid "Create a new Directory"
 msgstr "Créer un nouveau dossier"
 
-#: src/bin/e_fm.c:7210
+#: src/bin/e_fm.c:7209
 msgid "New Directory Name:"
 msgstr "Nom du nouveau dossier:"
 
-#: src/bin/e_fm.c:7269
+#: src/bin/e_fm.c:7268
 #, c-format
 msgid "Rename %s to:"
 msgstr "Renommer %s en:"
 
-#: src/bin/e_fm.c:7271
+#: src/bin/e_fm.c:7270
 msgid "Rename File"
 msgstr "Renommer le fichier"
 
-#: src/bin/e_fm.c:7343
-#: src/bin/e_fm.c:7473
+#: src/bin/e_fm.c:7342
+#: src/bin/e_fm.c:7472
 msgid "Retry"
 msgstr "Réessayer"
 
-#: src/bin/e_fm.c:7347
-#: src/bin/e_fm.c:7404
-#: src/bin/e_fm.c:7479
+#: src/bin/e_fm.c:7346
+#: src/bin/e_fm.c:7403
+#: src/bin/e_fm.c:7478
 #: src/modules/wizard/page_030.c:67
 msgid "Error"
 msgstr "Erreur"
 
-#: src/bin/e_fm.c:7349
-#: src/bin/e_fm.c:7406
+#: src/bin/e_fm.c:7348
+#: src/bin/e_fm.c:7405
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: src/bin/e_fm.c:7399
+#: src/bin/e_fm.c:7398
 msgid "No to all"
 msgstr "Non pour tout"
 
-#: src/bin/e_fm.c:7401
+#: src/bin/e_fm.c:7400
 msgid "Yes to all"
 msgstr "Oui pour tout"
 
-#: src/bin/e_fm.c:7475
+#: src/bin/e_fm.c:7474
 msgid "Ignore this"
 msgstr "Ignorer"
 
-#: src/bin/e_fm.c:7476
+#: src/bin/e_fm.c:7475
 msgid "Ignore all"
 msgstr "Ignorer tout"
 
-#: src/bin/e_fm.c:7481
+#: src/bin/e_fm.c:7480
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr "Une erreur s'est produite lors d'une opération.<br>%s"
 
-#: src/bin/e_fm.c:7583
+#: src/bin/e_fm.c:7582
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: src/bin/e_fm.c:7587
+#: src/bin/e_fm.c:7586
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:7593
+#: src/bin/e_fm.c:7592
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br>les %d fichiers sélectionnés dans:<br><hilight>%s</hilight> ?"
@@ -1295,7 +1294,7 @@ msgstr "Le propriétaire peut écrire"
 
 #: src/bin/e_fm_prop.c:385
 #: src/bin/e_widget_fsel.c:302
-#: src/modules/conf_theme/e_int_config_theme.c:1030
+#: src/modules/conf_theme/e_int_config_theme.c:1031
 #: src/modules/conf_transitions/e_int_config_transitions.c:167
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:154
 msgid "Preview"
@@ -1364,18 +1363,18 @@ msgid "Removable Device"
 msgstr "Périphérique amovible"
 
 #: src/bin/e_gadcon.c:1241
-#: src/modules/gadman/e_mod_gadman.c:657
+#: src/modules/gadman/e_mod_gadman.c:658
 msgid "Plain"
 msgstr "En plein"
 
 #: src/bin/e_gadcon.c:1250
-#: src/modules/gadman/e_mod_gadman.c:665
+#: src/modules/gadman/e_mod_gadman.c:666
 msgid "Inset"
 msgstr "En creux"
 
 #: src/bin/e_gadcon.c:1259
 #: src/bin/e_int_config_modules.c:41
-#: src/modules/gadman/e_mod_gadman.c:701
+#: src/modules/gadman/e_mod_gadman.c:702
 msgid "Appearance"
 msgstr "Apparence"
 
@@ -1388,12 +1387,12 @@ msgid "Able to be resized"
 msgstr "Permettre le redimensionnement"
 
 #: src/bin/e_gadcon.c:1287
-#: src/modules/gadman/e_mod_gadman.c:736
+#: src/modules/gadman/e_mod_gadman.c:737
 msgid "Begin move/resize this gadget"
 msgstr "Activer le déplacement/redimensionnement de ce gadget"
 
 #: src/bin/e_gadcon.c:1293
-#: src/modules/gadman/e_mod_gadman.c:742
+#: src/modules/gadman/e_mod_gadman.c:743
 msgid "Remove this gadget"
 msgstr "Supprimer ce gadget"
 
@@ -3000,7 +2999,7 @@ msgstr "Ajouter aux favoris"
 #: src/modules/conf_desklock/e_int_config_desklock.c:206
 #: src/modules/conf_imc/e_int_config_imc.c:830
 #: src/modules/conf_startup/e_int_config_startup.c:281
-#: src/modules/conf_theme/e_int_config_theme.c:365
+#: src/modules/conf_theme/e_int_config_theme.c:367
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:509
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:637
 #: src/modules/gadman/e_mod_config.c:193
@@ -3551,8 +3550,8 @@ msgstr "Durée d'inactivité à dépasser"
 #: src/modules/conf_desklock/e_int_config_desklock.c:199
 #: src/modules/conf_imc/e_int_config_imc.c:818
 #: src/modules/conf_startup/e_int_config_startup.c:268
-#: src/modules/conf_theme/e_int_config_theme.c:354
-#: src/modules/conf_theme/e_int_config_theme.c:792
+#: src/modules/conf_theme/e_int_config_theme.c:356
+#: src/modules/conf_theme/e_int_config_theme.c:793
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:499
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:627
 #: src/modules/gadman/e_mod_config.c:186
@@ -4317,23 +4316,23 @@ msgstr "Entrée"
 msgid "Interaction"
 msgstr "Interaction"
 
-#: src/modules/conf_intl/e_int_config_intl.c:582
+#: src/modules/conf_intl/e_int_config_intl.c:583
 #: src/modules/conf_intl/e_mod_main.c:35
 msgid "Language Settings"
 msgstr "Paramétrage de la langue"
 
-#: src/modules/conf_intl/e_int_config_intl.c:894
-#: src/modules/conf_intl/e_int_config_intl.c:971
+#: src/modules/conf_intl/e_int_config_intl.c:895
+#: src/modules/conf_intl/e_int_config_intl.c:972
 msgid "Language Selector"
 msgstr "Sélecteur de langue"
 
-#: src/modules/conf_intl/e_int_config_intl.c:944
-#: src/modules/conf_intl/e_int_config_intl.c:1022
+#: src/modules/conf_intl/e_int_config_intl.c:945
+#: src/modules/conf_intl/e_int_config_intl.c:1023
 msgid "Locale Selected"
 msgstr "Locale sélectionnée"
 
-#: src/modules/conf_intl/e_int_config_intl.c:945
-#: src/modules/conf_intl/e_int_config_intl.c:1023
+#: src/modules/conf_intl/e_int_config_intl.c:946
+#: src/modules/conf_intl/e_int_config_intl.c:1024
 msgid "Locale"
 msgstr "Locale"
 
@@ -4349,12 +4348,12 @@ msgstr "Veuillez composer votre séquence au clavier,<br><br>ou <hilight>Échap<
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:91
 msgid "Key Binding Settings"
-msgstr "Paramétrage des raccourcis-clavier"
+msgstr "Paramétrage des raccourcis clavier"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:227
 #: src/modules/conf_keybindings/e_mod_main.c:35
 msgid "Key Bindings"
-msgstr "Raccourcis-clavier"
+msgstr "Raccourcis clavier"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:232
 msgid "Add Key"
@@ -4375,7 +4374,7 @@ msgstr "Tout supprimer"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:247
 msgid "Restore Default Bindings"
-msgstr "Restaurer les raccourcis-clavier par défaut"
+msgstr "Restaurer les raccourcis clavier par défaut"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:252
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
@@ -4401,22 +4400,22 @@ msgid "The binding key sequence, that you choose, is already used by <br><hiligh
 msgstr "La séquence de raccourci-clavier que vous avez choisie est déjà utilisée<br>par l'action <hilight>%s</hilight>.<br>Veuillez choisir une autre séquence de raccourci-clavier."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1287
-#: src/modules/gadman/e_mod_gadman.c:763
+#: src/modules/gadman/e_mod_gadman.c:764
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1292
-#: src/modules/gadman/e_mod_gadman.c:768
+#: src/modules/gadman/e_mod_gadman.c:769
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1298
-#: src/modules/gadman/e_mod_gadman.c:774
+#: src/modules/gadman/e_mod_gadman.c:775
 msgid "SHIFT"
 msgstr "MAJ"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1304
-#: src/modules/gadman/e_mod_gadman.c:780
+#: src/modules/gadman/e_mod_gadman.c:781
 msgid "WIN"
 msgstr "WIN"
 
@@ -4566,12 +4565,12 @@ msgstr "Veuillez appuyer sur le modificateur de votre choix <br>et sur un bouton
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:112
 msgid "Mouse Binding Settings"
-msgstr "Paramétrage des raccourcis-souris"
+msgstr "Paramétrage des raccourcis souris"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:295
 #: src/modules/conf_mousebindings/e_mod_main.c:35
 msgid "Mouse Bindings"
-msgstr "Raccourcis-souris"
+msgstr "Raccourcis souris"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:301
 msgid "Add Binding"
@@ -4587,7 +4586,7 @@ msgstr "Modifier le raccourci"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:315
 msgid "Restore Mouse and Wheel Binding Defaults"
-msgstr "Restaurer les raccourcis-souris par défaut"
+msgstr "Restaurer les raccourcis souris par défaut"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:335
 msgid "Action Context"
@@ -4619,7 +4618,7 @@ msgstr "Manager"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:1296
 msgid "Mouse Binding Sequence"
-msgstr "Séquence de raccourci-souris"
+msgstr "Séquence du raccourci souris"
 
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:45
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:137
@@ -4689,7 +4688,7 @@ msgid "Images"
 msgstr "Images"
 
 #: src/modules/conf_paths/e_int_config_paths.c:79
-#: src/modules/conf_theme/e_int_config_theme.c:1010
+#: src/modules/conf_theme/e_int_config_theme.c:1011
 msgid "Themes"
 msgstr "Thèmes"
 
@@ -4970,27 +4969,27 @@ msgstr "Démarrage"
 msgid "Theme Selector"
 msgstr "Sélecteur de thème"
 
-#: src/modules/conf_theme/e_int_config_theme.c:394
+#: src/modules/conf_theme/e_int_config_theme.c:396
 msgid " Import..."
 msgstr "Importer..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:399
+#: src/modules/conf_theme/e_int_config_theme.c:400
 msgid " Online..."
 msgstr "En ligne..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1001
+#: src/modules/conf_theme/e_int_config_theme.c:1002
 msgid "Theme Categories"
 msgstr "Catégories de thèmes"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1019
+#: src/modules/conf_theme/e_int_config_theme.c:1020
 msgid "Assign"
 msgstr "Assigner"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1022
+#: src/modules/conf_theme/e_int_config_theme.c:1023
 msgid "Clear"
 msgstr "Effacer"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1025
+#: src/modules/conf_theme/e_int_config_theme.c:1026
 msgid "Clear All"
 msgstr "Tout effacer"
 
@@ -5011,68 +5010,9 @@ msgstr "Enlightenment n'a pu importer le thème.<br><br>Êtes-vous sûr que ce s
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
 msgstr "Enlightenment n'a pu importer le thème<br>dû à une erreur de copie."
 
-#: src/modules/conf_theme/e_int_config_theme_web.c:92
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:97
-msgid "Choose a website from list..."
-msgstr "Choisir un site web depuis une liste..."
-
-#: src/modules/conf_theme/e_int_config_theme_web.c:106
-msgid "get-e.org"
-msgstr "get-e.org"
-
-#: src/modules/conf_theme/e_int_config_theme_web.c:223
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:572
-#, c-format
-msgid "[%s] Downloading of edje file... %d%% done"
-msgstr "[%s] Téléchargement du fichier edj... %d%% OK"
-
-#: src/modules/conf_theme/e_int_config_theme_web.c:260
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:501
-#, c-format
-msgid "[%s] Downloading of edje file..."
-msgstr "[%s] Téléchargement du fichier edj..."
-
-#: src/modules/conf_theme/e_int_config_theme_web.c:280
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:535
-#, c-format
-msgid "[%s] Download %d images of %d"
-msgstr "[%s] Télécharge %d images de %d"
-
-#: src/modules/conf_theme/e_int_config_theme_web.c:294
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:549
-#, c-format
-msgid "[%s] Choose an image from list"
-msgstr "[%s] Choisir une image dans la liste"
-
-#: src/modules/conf_theme/e_int_config_theme_web.c:351
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:605
-#, c-format
-msgid "[%s] Getting feed..."
-msgstr "[%s] Recherche du flux..."
-
-#: src/modules/conf_theme/e_int_config_theme_web.c:483
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:375
-#, c-format
-msgid "[%s] Parsing feed... DONE!"
-msgstr "[%s] Analyse du flux... SUCCÈS !"
-
-#: src/modules/conf_theme/e_int_config_theme_web.c:491
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:383
-#, c-format
-msgid "[%s] Parsing feed... FAILED!"
-msgstr "[%s] Analyse du flux... ÉCHEC !"
-
-#: src/modules/conf_theme/e_int_config_theme_web.c:521
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:244
-#, c-format
-msgid "[%s] Getting feed... DONE!"
-msgstr "[%s] Recherche du flux... SUCCÈS !"
-
-#: src/modules/conf_theme/e_int_config_theme_web.c:529
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:252
-#, c-format
-msgid "[%s] Getting feed... FAILED!"
-msgstr "[%s] Recherche du flux... ÉCHEC !"
+#: src/modules/conf_theme/e_int_config_theme_web.c:127
+msgid "Exchange themes"
+msgstr "Thèmes Exchange"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:44
 msgid "Transition Settings"
@@ -5153,13 +5093,13 @@ msgstr "Options de remplissage"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
-#: src/modules/gadman/e_mod_gadman.c:685
+#: src/modules/gadman/e_mod_gadman.c:686
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:154
-#: src/modules/gadman/e_mod_gadman.c:693
+#: src/modules/gadman/e_mod_gadman.c:694
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -5245,6 +5185,10 @@ msgstr "Enlightenment n'a pu importer le fond d'écran<br>à cause d'une erreur 
 msgid "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this is a valid wallpaper?"
 msgstr "Enlightenment n'a pu importer le fond d'écran.<br><br>Êtes-vous sûr que ce soit un fond d'écran valide ?"
 
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:97
+msgid "Choose a website from list..."
+msgstr "Choisir un site web depuis une liste..."
+
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:111
 msgid "get-e.org - Static"
 msgstr "get-e.org - Statique"
@@ -5252,6 +5196,51 @@ msgstr "get-e.org - Statique"
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:114
 msgid "get-e.org  - Animated"
 msgstr "get-e.org - Animé"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:244
+#, c-format
+msgid "[%s] Getting feed... DONE!"
+msgstr "[%s] Recherche du flux... SUCCÈS !"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:252
+#, c-format
+msgid "[%s] Getting feed... FAILED!"
+msgstr "[%s] Recherche du flux... ÉCHEC !"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:375
+#, c-format
+msgid "[%s] Parsing feed... DONE!"
+msgstr "[%s] Analyse du flux... SUCCÈS !"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:383
+#, c-format
+msgid "[%s] Parsing feed... FAILED!"
+msgstr "[%s] Analyse du flux... ÉCHEC !"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:501
+#, c-format
+msgid "[%s] Downloading of edje file..."
+msgstr "[%s] Téléchargement du fichier edj..."
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:535
+#, c-format
+msgid "[%s] Download %d images of %d"
+msgstr "[%s] Télécharge %d images de %d"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:549
+#, c-format
+msgid "[%s] Choose an image from list"
+msgstr "[%s] Choisir une image dans la liste"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:572
+#, c-format
+msgid "[%s] Downloading of edje file... %d%% done"
+msgstr "[%s] Téléchargement du fichier edj... %d%% OK"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:605
+#, c-format
+msgid "[%s] Getting feed..."
+msgstr "[%s] Recherche du flux..."
 
 #: src/modules/conf_wallpaper/e_mod_main.c:29
 #: src/modules/conf_wallpaper/e_mod_main.c:31
@@ -5814,7 +5803,7 @@ msgstr "Précis"
 
 #: src/modules/dropshadow/e_mod_config.c:130
 msgid "Very Sharp"
-msgstr "Très dur"
+msgstr "Très précis"
 
 #: src/modules/dropshadow/e_mod_config.c:134
 msgid "Shadow Distance"
@@ -5981,23 +5970,23 @@ msgstr "Transparent"
 msgid "Animations"
 msgstr "Animations"
 
-#: src/modules/gadman/e_mod_gadman.c:677
+#: src/modules/gadman/e_mod_gadman.c:678
 msgid "Free"
 msgstr "Libre"
 
-#: src/modules/gadman/e_mod_gadman.c:709
+#: src/modules/gadman/e_mod_gadman.c:710
 msgid "Always on desktop"
 msgstr "Toujours sur le bureau"
 
-#: src/modules/gadman/e_mod_gadman.c:719
+#: src/modules/gadman/e_mod_gadman.c:720
 msgid "On top pressing"
 msgstr "Au-dessus en appuyant sur"
 
-#: src/modules/gadman/e_mod_gadman.c:729
+#: src/modules/gadman/e_mod_gadman.c:730
 msgid "Behavior"
 msgstr "Comportement"
 
-#: src/modules/gadman/e_mod_gadman.c:748
+#: src/modules/gadman/e_mod_gadman.c:749
 msgid "Add other gadgets"
 msgstr "Ajouter un autre gadget"
 
@@ -6250,7 +6239,7 @@ msgstr "Veuillez cliquer sur un bouton de la souris<br>Presser<hilight>Échap</h
 
 #: src/modules/pager/e_mod_config.c:328
 msgid "Attetion"
-msgstr "Atention"
+msgstr "Attention"
 
 #: src/modules/pager/e_mod_config.c:329
 msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus. <br>This button only works in the Popup"
@@ -6450,7 +6439,7 @@ msgstr "Barre de lancement"
 
 #: src/modules/wizard/page_040.c:27
 msgid "Select applications"
-msgstr "S"
+msgstr "Sélectionner les applications"
 
 #: src/modules/wizard/page_050.c:28
 msgid "Desktop Files"
@@ -6591,6 +6580,8 @@ msgstr "Périphérique spécifique"
 msgid "Networks"
 msgstr "Réseaux"
 
+#~ msgid "get-e.org"
+#~ msgstr "get-e.org"
 #~ msgid "Lock Screen"
 #~ msgstr "Écran de verrouillage"
 #~ msgid "Hibernate"
