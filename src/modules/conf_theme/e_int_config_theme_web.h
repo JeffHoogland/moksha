@@ -5,6 +5,6 @@
 
 EAPI E_Dialog *e_int_config_theme_web(E_Config_Dialog *parent);
 EAPI void      e_int_config_theme_web_del(E_Dialog *dia);
-    
+
 #endif
 #endif

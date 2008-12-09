@@ -260,6 +260,7 @@ _cb_import(void *data1, void *data2)
 static void
 _cb_web(void *data1, void *data2)
 {
+#ifdef HAVE_EXCHANGE
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data1;
@@ -267,6 +268,7 @@ _cb_web(void *data1, void *data2)
      e_win_raise(cfdata->dia_web->win);
    else
      cfdata->dia_web = e_int_config_theme_web(cfdata->cfd);
+#endif
 }
 
 static void
@@ -394,12 +396,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_button_add(evas, _(" Import..."), "enlightenment/themes",
 			   _cb_import, cfdata, NULL);
    e_widget_list_object_append(il, o, 1, 0, 0.5);
-   if (ecore_file_download_protocol_available("http://"))
-   {
-      o = e_widget_button_add(evas, _(" Online..."), "enlightenment/website",
-			      _cb_web, cfdata, NULL);
-      e_widget_list_object_append(il, o, 1, 0, 0.5);
-   }	   
+#ifdef HAVE_EXCHANGE
+   o = e_widget_button_add(evas, _(" Online..."), "enlightenment/website",
+			   _cb_web, cfdata, NULL);
+   e_widget_list_object_append(il, o, 1, 0, 0.5);
+#endif
    e_widget_list_object_append(of, il, 1, 0, 0.0);
 
    {
