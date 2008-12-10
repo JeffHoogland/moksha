@@ -52,6 +52,9 @@ e_widget_toolbar_add(Evas *evas, int icon_w, int icon_h)
    
    o = e_scrollframe_add(evas);
    wd->o_base = o;
+   o = e_box_add(evas);
+   wd->o_box = o;
+   o = wd->o_base;
    e_scrollframe_custom_theme_set(o, "base/theme/widgets", "e/widgets/toolbar");
    e_scrollframe_single_dir_set(o, 1);
    e_scrollframe_policy_set(o, E_SCROLLFRAME_POLICY_AUTO, E_SCROLLFRAME_POLICY_OFF);
@@ -66,9 +69,8 @@ e_widget_toolbar_add(Evas *evas, int icon_w, int icon_h)
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
-   
-   o = e_box_add(evas);
-   wd->o_box = o;
+
+   o = wd->o_box;
    e_box_orientation_set(o, 1);
    e_box_homogenous_set(o, 1);
    e_scrollframe_child_set(wd->o_base, o);
