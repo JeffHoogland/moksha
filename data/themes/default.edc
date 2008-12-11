@@ -22601,7 +22601,6 @@ ICON("widget/resize","icon_resize.png",64)
 /// No icons made yet ///
 
 ICON("enlightenment/engine","icon_dummy.png",64)
-ICON("enlightenment/add_application","icon_dummy.png",64)
 ICON("enlightenment/profiles","icon_dummy.png",64)
 ICON("enlightenment/autoscroll","icon_dummy.png",64)
 ICON("enlightenment/showhide","icon_dummy.png",64)
@@ -22656,13 +22655,14 @@ ICON("enlightenment/screen_resolution","icon_screen_resolution.png",64)
 ICON("enlightenment/shelf","icon_shelf.png",64)
 ICON("enlightenment/fonts","icon_fonts.png",64)
 ICON("enlightenment/icon_theme","icon_icon_theme.png",64)
-ICON("enlightenment/applications","icon_applications.png",64)
 ICON("enlightenment/transitions","icon_transitions.png",64)
 ICON("enlightenment/performance","icon_performance.png",64)
 ICON("enlightenment/startup","icon_startup.png",64)
 ICON("enlightenment/winlist","icon_winlist.png",64)
 ICON("enlightenment/window_manipulation","icon_window_manipulation.png",64)
+ICON("enlightenment/window_maximize","icon_window_manipulation.png",64)
 ICON("enlightenment/window_stacking","icon_winlist.png",64)
+ICON("enlightenment/window_geometry","icon_window_manipulation.png",64)
 ICON("enlightenment/menus","icon_menus.png",64)
 ICON("enlightenment/menu_settings","icon_menu_settings.png",64)
 ICON("enlightenment/advanced","icon_advanced.png",64)
@@ -22670,9 +22670,11 @@ ICON("enlightenment/behavior","icon_behavior.png",64)
 ICON("enlightenment/appearance","icon_appearance.png",64)
 ICON("enlightenment/extensions","icon_extensions.png",64)
 ICON("enlightenment/file_icons","icon_file_icons.png",64)
-ICON("enlightenment/ibar_applications","icon_ibar_applications.png",64)
-ICON("enlightenment/restart_applications","icon_restart_applications.png",64)
-ICON("enlightenment/startup_applications","icon_startup_applications.png",64)
+ICON("enlightenment/applications","icon_applications.png",64)
+ICON("enlightenment/add_application","icon_applications_new.png",64)
+ICON("enlightenment/ibar_applications","icon_applications_ibar.png",64)
+ICON("enlightenment/restart_applications","icon_applications_restart.png",64)
+ICON("enlightenment/startup_applications","icon_applications_startup.png",64)
 ICON("enlightenment/power_management","icon_power_management.png",64)
 ICON("enlightenment/screensaver","icon_screensaver.png",64)
 ICON("enlightenment/pager","icon_pager.png",64)
@@ -22906,8 +22908,8 @@ MIMEBASE("text/plain","icon_mime_text_generic.png", ".TXT", 128);
 MIMEBASE("application/x-msword","icon_mime_text_generic.png", ".DOC", 128);
 MIMEBASE("application/x-abiword","icon_mime_text_generic.png", ".ABW", 128);
 
-MIMEBASE("application/x-object","icon_mime_executable_generic.png", "", 128);
-MIMEBASE("application/x-shellscript","icon_mime_executable_generic.png", "", 128);
+MIMEBASE("application/x-object","icon_efm_file.png", "", 128);
+MIMEBASE("application/x-shellscript","icon_applications.png", "", 128);
 
 MIMEBASE("application/x-font-ttf","icon_mime_font_generic.png", ".TTF", 128);
 MIMEBASE("application/x-font-pcf","icon_mime_font_generic.png", ".PCF", 128);

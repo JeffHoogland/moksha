@@ -270,6 +270,10 @@ icon_add.png \
 icon_advanced.png \
 icon_appearance.png \
 icon_applications.png \
+icon_applications_ibar.png \
+icon_applications_new.png \
+icon_applications_restart.png \
+icon_applications_startup.png \
 icon_behavior.png \
 icon_border_border.png \
 icon_border_close.png \
@@ -337,7 +341,6 @@ icon_globe.png \
 icon_gradient.png \
 icon_halt.png \
 icon_hibernate.png \
-icon_ibar_applications.png \
 icon_icon_theme.png \
 icon_imc.png \
 icon_intl.png \
@@ -353,7 +356,6 @@ icon_mime_c.png \
 icon_mime_css.png \
 icon_mime_deb.png \
 icon_mime_doc.png \
-icon_mime_executable_generic.png \
 icon_mime_font_generic.png \
 icon_mime_h.png \
 icon_mime_html.png \
@@ -386,7 +388,6 @@ icon_reboot.png \
 icon_regenerate_menus.png \
 icon_reset.png \
 icon_resize.png \
-icon_restart_applications.png \
 icon_right_arrow.png \
 icon_run.png \
 icon_scale.png \
@@ -418,7 +419,6 @@ icon_shelf_top_desk.png \
 icon_shelf_top_left.png \
 icon_shelf_top.png \
 icon_shelf_top_right.png \
-icon_startup_applications.png \
 icon_startup.png \
 icon_suspend.png \
 icon_swap.png \
