@@ -656,7 +656,7 @@ _save_menu(E_Config_Dialog_Data *cfdata)
    Efreet_Menu *menu = NULL;
    int i, ret;
 
-   menu = efreet_menu_new();
+   menu = efreet_menu_new("Favorites");
    for (i = 0, l = e_widget_ilist_items_get(cfdata->o_sel); l; l = l->next, i++) 
      {
 	E_Ilist_Item *item = NULL;
