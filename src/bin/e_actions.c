@@ -2655,11 +2655,13 @@ EAPI int
 e_actions_shutdown(void)
 {
    e_action_predef_name_all_del();
+
+   E_FREE_LIST(action_list, e_object_del);
+
    action_names = eina_list_free(action_names);
    eina_hash_free(actions);
    actions = NULL;
 
-   E_FREE_LIST(action_list, e_object_del);
    return 1;
 }
 
