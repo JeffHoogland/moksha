@@ -55,7 +55,7 @@ struct _XDnd
 
 static Eina_List *_event_handlers = NULL;
 static Eina_List *_drop_handlers = NULL;
-static Evas_Hash *_drop_win_hash = NULL;
+static Eina_Hash *_drop_win_hash = NULL;
 
 static Ecore_X_Window _drag_win = 0;
 static Ecore_X_Window _drag_win_root = 0;
@@ -65,7 +65,7 @@ static E_Drag    *_drag_current = NULL;
 
 static XDnd *_xdnd = NULL;
 
-static Evas_Hash *_drop_handlers_responsives;
+static Eina_Hash *_drop_handlers_responsives;
 static Ecore_X_Atom _action;
 
 /* externally accessible functions */
@@ -73,6 +73,9 @@ static Ecore_X_Atom _action;
 EAPI int
 e_dnd_init(void)
 {
+   _drop_win_hash = eina_hash_string_superfast_new(NULL);
+   _drop_handlers_responsives = eina_hash_string_superfast_new(NULL);
+
    _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
 							      _e_dnd_cb_mouse_up, NULL));
@@ -138,11 +141,11 @@ e_dnd_shutdown(void)
    eina_list_free(_event_handlers);
    _event_handlers = NULL;
 
-   evas_hash_free(_drop_win_hash);
+   eina_hash_free(_drop_win_hash);
    eina_list_free(_drop_handlers);
    _drop_handlers = NULL;
 
-   evas_hash_free(_drop_handlers_responsives);
+   eina_hash_free(_drop_handlers_responsives);
 
    return 1;
 }
@@ -425,16 +428,16 @@ e_drop_xdnd_register_set(Ecore_X_Window win, int reg)
    id = e_util_winid_str_get(win);
    if (reg)
      {
-	if (!evas_hash_find(_drop_win_hash, id))
+	if (!eina_hash_find(_drop_win_hash, id))
 	  {
 	     ecore_x_dnd_aware_set(win, 1);
-	     _drop_win_hash = evas_hash_add(_drop_win_hash, id, (void *)1);
+	     eina_hash_add(_drop_win_hash, id, (void *)1);
 	  }
      }
    else
      {
 	ecore_x_dnd_aware_set(win, 0);
-	_drop_win_hash = evas_hash_del(_drop_win_hash, id, (void *) 1);
+	eina_hash_del(_drop_win_hash, id, (void *) 1);
      }
    return 1;
 }
@@ -514,7 +517,7 @@ e_drop_handler_responsive_set(E_Drop_Handler *handler)
    Ecore_X_Window hwin = _e_drag_win_get(handler, 1);
    const char *wid = e_util_winid_str_get(hwin);
 
-   _drop_handlers_responsives = evas_hash_add(_drop_handlers_responsives, wid, (void *)handler);
+   eina_hash_add(_drop_handlers_responsives, wid, (void *)handler);
 }
 
 EAPI int
@@ -523,7 +526,7 @@ e_drop_handler_responsive_get(E_Drop_Handler *handler)
    Ecore_X_Window hwin = _e_drag_win_get(handler, 1);
    const char *wid = e_util_winid_str_get(hwin);
 
-   return evas_hash_find(_drop_handlers_responsives, wid) == (void *)handler;
+   return eina_hash_find(_drop_handlers_responsives, wid) == (void *)handler;
 }
 
 EAPI void
@@ -1186,7 +1189,7 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
 
    ev = event;
    id = e_util_winid_str_get(ev->win);
-   if (!evas_hash_find(_drop_win_hash, id)) return 1;
+   if (!eina_hash_find(_drop_win_hash, id)) return 1;
    for (l = _drop_handlers; l; l = l->next)
      {
 	E_Drop_Handler *h;
@@ -1258,7 +1261,7 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
    ev = event;
 
    id = e_util_winid_str_get(ev->win);
-   if (!evas_hash_find(_drop_win_hash, id)) return 1;
+   if (!eina_hash_find(_drop_win_hash, id)) return 1;
 
    leave_ev.x = 0;
    leave_ev.y = 0;
@@ -1304,7 +1307,7 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
    ev = event;
 //   double t1 = ecore_time_get(); ////
    id = e_util_winid_str_get(ev->win);
-   if (!evas_hash_find(_drop_win_hash, id))
+   if (!eina_hash_find(_drop_win_hash, id))
      {
 //	double t2 = ecore_time_get() - t1; ////
 //	printf("DND POS EV 1 %3.7f\n", t2); ////
@@ -1396,7 +1399,7 @@ _e_dnd_cb_event_dnd_drop(void *data, int type, void *event)
 
    ev = event;
    id = e_util_winid_str_get(ev->win);
-   if (!evas_hash_find(_drop_win_hash, id)) return 1;
+   if (!eina_hash_find(_drop_win_hash, id)) return 1;
 
    ecore_x_selection_xdnd_request(ev->win, _xdnd->type);
 
@@ -1415,7 +1418,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 
    ev = event;
    id = e_util_winid_str_get(ev->win);
-   if (!evas_hash_find(_drop_win_hash, id)) return 1;
+   if (!eina_hash_find(_drop_win_hash, id)) return 1;
    if (ev->selection != ECORE_X_SELECTION_XDND) return 1;
 
    if (!strcmp("text/uri-list", _xdnd->type))

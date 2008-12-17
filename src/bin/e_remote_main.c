@@ -9,11 +9,11 @@ typedef struct _Opt Opt;
 
 struct _Opt
 {
-   const char *opt;
-   int         num_param;
-   const char *desc;
-   int         num_reply;
-   E_Ipc_Op    opcode;
+   char     *opt;
+   int       num_param;
+   char     *desc;
+   int       num_reply;
+   E_Ipc_Op  opcode;
 };
 
 Opt opts[] = {

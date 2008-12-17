@@ -6,14 +6,14 @@
 /* local subsystem functions */
 static void      _e_path_free(E_Path *ep);
 static void      _e_path_cache_free(E_Path *ep);
-static Evas_Bool _e_path_cache_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata);
+static Eina_Bool _e_path_cache_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 
 /* externally accessible functions */
 EAPI E_Path *
 e_path_new(void)
 {
    E_Path *ep;
-   
+
    ep = E_OBJECT_ALLOC(E_Path, E_PATH_TYPE, _e_path_free);
    return ep;
 }
@@ -239,30 +239,30 @@ EAPI const char *
 e_path_find(E_Path *ep, const char *file)
 {
    Eina_List *l;
+   E_Path_Dir *epd;
    char *str;
    char buf[PATH_MAX] = "";
-   
+
    E_OBJECT_CHECK_RETURN(ep, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(ep, E_PATH_TYPE, NULL);
 
    if (!file) return NULL;
-   str = evas_hash_find(ep->hash, file);
+   str = eina_hash_find(ep->hash, file);
    if (str) return eina_stringshare_add(str);
    /* Look in the default dir list */
-   for (l = ep->default_dir_list; l; l = l->next)
+   EINA_LIST_FOREACH(ep->default_dir_list, l, epd)
      {
-	E_Path_Dir *epd;
-
-	epd = l->data;
 	if (epd->dir)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/%s", epd->dir, file);
 	     if (ecore_file_exists(buf))
 	       {
-		  if (evas_hash_size(ep->hash) >= 512)
+		  if (eina_hash_population(ep->hash) >= 512)
 		    _e_path_cache_free(ep);
-		  ep->hash = evas_hash_add(ep->hash, file,
-					   eina_stringshare_add(buf));
+		  if (!ep->hash)
+		    ep->hash = eina_hash_string_superfast_new(NULL);
+		  eina_hash_add(ep->hash, file,
+				eina_stringshare_add(buf));
 		  return eina_stringshare_add(buf);
 	       }
 	  }
@@ -271,17 +271,19 @@ e_path_find(E_Path *ep, const char *file)
    for (l = *(ep->user_dir_list); l; l = l->next)
      {
 	E_Path_Dir *epd;
-	
+
 	epd = l->data;
 	if (epd->dir)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/%s", epd->dir, file);
 	     if (ecore_file_exists(buf))
 	       {
-		  if (evas_hash_size(ep->hash) >= 512)
+		  if (eina_hash_population(ep->hash) >= 512)
 		    _e_path_cache_free(ep);
-		  ep->hash = evas_hash_add(ep->hash, file,
-					   eina_stringshare_add(buf));
+		  if (!ep->hash)
+		    ep->hash = eina_hash_string_superfast_new(NULL);
+		  eina_hash_add(ep->hash, file,
+				eina_stringshare_add(buf));
 		  return eina_stringshare_add(buf);
 	       }
 	  }
@@ -381,13 +383,13 @@ static void
 _e_path_cache_free(E_Path *ep)
 {
    if (!ep->hash) return;
-   evas_hash_foreach(ep->hash, _e_path_cache_free_cb, NULL);
-   evas_hash_free(ep->hash);
+   eina_hash_foreach(ep->hash, _e_path_cache_free_cb, NULL);
+   eina_hash_free(ep->hash);
    ep->hash = NULL;
 }
 
-static Evas_Bool
-_e_path_cache_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
+static Eina_Bool
+_e_path_cache_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    eina_stringshare_del(data);
    return 1;

@@ -57,7 +57,7 @@ struct _Config_Face
 struct _Config
 {
    /* saved * loaded config values */
-   Evas_Hash *faces;
+   Eina_Hash *faces;
    /* config state */
    E_Module *module;
 };

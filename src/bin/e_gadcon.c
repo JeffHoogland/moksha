@@ -182,7 +182,7 @@ struct _E_Layout_Item_Container
      }
 /********************/
 
-static Evas_Hash *providers = NULL;
+static Eina_Hash *providers = NULL;
 static Eina_List *providers_list = NULL;
 static Eina_List *gadcons = NULL;
 
@@ -209,8 +209,9 @@ e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
 {
    Eina_List *l;
    E_Gadcon *gc;
-   
-   providers = evas_hash_direct_add(providers, cc->name, cc);
+
+   if (!providers) providers = eina_hash_string_superfast_new(NULL);
+   eina_hash_direct_add(providers, cc->name, cc);
    providers_list = eina_list_append(providers_list, cc);
    for (l = gadcons; l; l = l->next)
      {
@@ -245,7 +246,7 @@ e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc)
 	dlist = eina_list_remove_list(dlist, dlist);
 	e_object_del(E_OBJECT(gcc));
      }
-   providers = evas_hash_del(providers, cc->name, cc);
+   eina_hash_del(providers, cc->name, cc);
    providers_list = eina_list_remove(providers_list, cc);
 }
 
@@ -408,7 +409,7 @@ e_gadcon_populate(E_Gadcon *gc)
 
 	cf_gcc = l->data;
 	if (!cf_gcc->name) continue;
-	cc = evas_hash_find(providers, cf_gcc->name);
+	cc = eina_hash_find(providers, cf_gcc->name);
 	if (cc)
 	  {
 	     E_Gadcon_Client *gcc;
@@ -768,7 +769,7 @@ e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
    if (!name) return NULL;
 
-   cc = evas_hash_find(providers, name);
+   cc = eina_hash_find(providers, name);
    if (!cc) return NULL;
    if (!_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)) return NULL;
 
@@ -2140,7 +2141,7 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type, void *event)
 	E_Gadcon_Client_Class *cc;
 
 	gcc = ev->data;
-	cc = evas_hash_find(providers, gcc->name);
+	cc = eina_hash_find(providers, gcc->name);
 	if (cc)
 	  {
 	     if (!gcc->style)

@@ -47,7 +47,7 @@ static E_Exec_Instance *_e_exec_cb_exec(void *data, Efreet_Desktop *desktop, cha
 static int  _e_exec_cb_expire_timer(void *data);
 static int  _e_exec_cb_exit(void *data, int type, void *event);
 
-static Evas_Bool _e_exec_startup_id_pid_find(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *value, void *data);
+static Evas_Bool _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *value, void *data);
 
 static void         _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_Del *event, Ecore_Exe_Event_Data *error, Ecore_Exe_Event_Data *read);
 static void         _fill_data(E_Config_Dialog_Data *cfdata);
@@ -60,7 +60,7 @@ static void         _dialog_save_cb(void *data, void *data2);
 
 /* local subsystem globals */
 static Eina_List   *e_exec_start_pending = NULL;
-static Evas_Hash   *e_exec_instances = NULL;
+static Eina_Hash   *e_exec_instances = NULL;
 static int          startup_id = 0;
 
 static Ecore_Event_Handler *_e_exec_exit_handler = NULL;
@@ -70,6 +70,8 @@ static Ecore_Event_Handler *_e_exec_border_add_handler = NULL;
 EAPI int
 e_exec_init(void)
 {
+   e_exec_instances = eina_hash_string_superfast_new(NULL);
+
    _e_exec_exit_handler =
       ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_exec_cb_exit, NULL);
 #if 0
@@ -89,7 +91,7 @@ e_exec_shutdown(void)
 
    if (_e_exec_exit_handler) ecore_event_handler_del(_e_exec_exit_handler);
    if (_e_exec_border_add_handler) ecore_event_handler_del(_e_exec_border_add_handler);
-   evas_hash_free(e_exec_instances);
+   eina_hash_free(e_exec_instances);
    eina_list_free(e_exec_start_pending);
    return 1;
 }
@@ -132,7 +134,7 @@ e_exec_startup_id_pid_find(int startup_id, pid_t pid)
    search.desktop = NULL;
    search.startup_id = startup_id;
    search.pid = pid;
-   evas_hash_foreach(e_exec_instances, _e_exec_startup_id_pid_find, &search);
+   eina_hash_foreach(e_exec_instances, _e_exec_startup_id_pid_find, &search);
    return search.desktop;
 }
 
@@ -242,16 +244,16 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	inst->launch_time = ecore_time_get();
 	inst->expire_timer = ecore_timer_add(10.0, _e_exec_cb_expire_timer, inst);
 
-	l = evas_hash_find(e_exec_instances, desktop->orig_path);
+	l = eina_hash_find(e_exec_instances, desktop->orig_path);
 	if (l)
 	  {
 	     l = eina_list_append(l, inst);
-	     evas_hash_modify(e_exec_instances, desktop->orig_path, l);
+	     eina_hash_modify(e_exec_instances, desktop->orig_path, l);
 	  }
 	else
 	  {
 	     l = eina_list_append(l, inst);
-	     e_exec_instances = evas_hash_add(e_exec_instances, desktop->orig_path, l);
+	     eina_hash_add(e_exec_instances, desktop->orig_path, l);
 	  }
 	e_exec_start_pending = eina_list_append(e_exec_start_pending, desktop);
      }
@@ -344,14 +346,14 @@ _e_exec_cb_exit(void *data, int type, void *event)
      }
    if (inst->desktop)
      {
-	instances = evas_hash_find(e_exec_instances, inst->desktop->orig_path);
+	instances = eina_hash_find(e_exec_instances, inst->desktop->orig_path);
 	if (instances)
 	  {
 	     instances = eina_list_remove(instances, inst);
 	     if (instances)
-	       evas_hash_modify(e_exec_instances, inst->desktop->orig_path, instances);
+	       eina_hash_modify(e_exec_instances, inst->desktop->orig_path, instances);
 	     else
-	       e_exec_instances = evas_hash_del(e_exec_instances, inst->desktop->orig_path, NULL);
+	       eina_hash_del(e_exec_instances, inst->desktop->orig_path, NULL);
 	  }
      }
    e_exec_start_pending = eina_list_remove(e_exec_start_pending, inst->desktop);
@@ -362,7 +364,7 @@ _e_exec_cb_exit(void *data, int type, void *event)
 }
 
 static Evas_Bool
-_e_exec_startup_id_pid_find(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *value, void *data)
+_e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *value, void *data)
 {
    E_Exec_Search *search;
    Eina_List *instances, *l;

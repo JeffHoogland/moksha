@@ -3,12 +3,12 @@
  */
 #include "e.h"
 
-static Evas_Bool _e_fm2_custom_file_hash_foreach_list(const Evas_Hash *hash, const void *key, void *data, void *fdata);
-static Eina_List *_e_fm2_custom_hash_key_base_list(Evas_Hash *hash, const char *str);
-//static Evas_Bool _e_fm2_custom_file_hash_foreach_sub_list(Evas_Hash *hash, const char *key, void *data, void *fdata);
-//static Eina_List *_e_fm2_custom_hash_key_sub_list(Evas_Hash *hash, const char *str);
-static Evas_Bool _e_fm2_custom_file_hash_foreach(const Evas_Hash *hash, const void *key, void *data, void *fdata);
-static Evas_Bool _e_fm2_custom_file_hash_foreach_save(const Evas_Hash *hash, const void *key, void *data, void *fdata);
+static Eina_Bool _e_fm2_custom_file_hash_foreach_list(const Eina_Hash *hash, const void *key, void *data, void *fdata);
+static Eina_List *_e_fm2_custom_hash_key_base_list(Eina_Hash *hash, const char *str);
+//static Eina_Bool _e_fm2_custom_file_hash_foreach_sub_list(Eina_Hash *hash, const char *key, void *data, void *fdata);
+//static Eina_List *_e_fm2_custom_hash_key_sub_list(Eina_Hash *hash, const char *str);
+static Eina_Bool _e_fm2_custom_file_hash_foreach(const Eina_Hash *hash, const void *key, void *data, void *fdata);
+static Eina_Bool _e_fm2_custom_file_hash_foreach_save(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 static void _e_fm2_custom_file_info_load(void);
 static void _e_fm2_custom_file_info_save(void);
 static void _e_fm2_custom_file_info_free(void);
@@ -17,9 +17,8 @@ static void _e_fm2_custom_file_cb_defer_save(void *data);
 static E_Powersave_Deferred_Action*_e_fm2_flush_defer = NULL;
 static Eet_File *_e_fm2_custom_file = NULL;
 static Eet_Data_Descriptor *_e_fm2_custom_file_edd = NULL;
-static Evas_Hash *_e_fm2_custom_hash = NULL;
+static Eina_Hash *_e_fm2_custom_hash = NULL;
 static int _e_fm2_custom_writes = 0;
-
 
 /* FIXME: this uses a flat path key for custom file info. this is fine as
  * long as we only expect a limited number of custom info nodes. if we
@@ -44,14 +43,14 @@ e_fm2_custom_file_init(void)
    eddc.func.list_free = (void *(*)(void *)) eina_list_free;
    eddc.func.hash_foreach =
      (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))
-     evas_hash_foreach;
-   eddc.func.hash_add = (void *(*) (void *, const char *, void *)) evas_hash_add;
-   eddc.func.hash_free = (void  (*) (void *)) evas_hash_free;
+     eina_hash_foreach;
+   eddc.func.hash_add = (void* (*) (void *, const char *, void *)) eet_eina_hash_add_alloc;
+   eddc.func.hash_free = (void  (*) (Eina_Hash *)) eina_hash_free;
    eddc.name = "e_fm_custom_file";
    eddc.size = sizeof(E_Fm2_Custom_File);
 
    _e_fm2_custom_file_edd = eet_data_descriptor2_new(&eddc);
-#define DAT(x, y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(_e_fm2_custom_file_edd, E_Fm2_Custom_File, x, y, z)   
+#define DAT(x, y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(_e_fm2_custom_file_edd, E_Fm2_Custom_File, x, y, z)
    DAT("g.x", geom.x, EET_T_INT);
    DAT("g.y", geom.y, EET_T_INT);
    DAT("g.w", geom.w, EET_T_INT);
@@ -85,11 +84,11 @@ EAPI E_Fm2_Custom_File *
 e_fm2_custom_file_get(const char *path)
 {
    E_Fm2_Custom_File *cf;
-   
+
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return NULL;
    if (_e_fm2_flush_defer) e_fm2_custom_file_flush();
-   cf = evas_hash_find(_e_fm2_custom_hash, path);
+   cf = eina_hash_find(_e_fm2_custom_hash, path);
    return cf;
 }
 
@@ -99,10 +98,10 @@ e_fm2_custom_file_set(const char *path, E_Fm2_Custom_File *cf)
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
    if (_e_fm2_flush_defer) e_fm2_custom_file_flush();
-   if (evas_hash_find(_e_fm2_custom_hash, path) != cf)
+   if (eina_hash_find(_e_fm2_custom_hash, path) != cf)
      {
 	E_Fm2_Custom_File *cf2;
-	
+
 	cf2 = calloc(1, sizeof(E_Fm2_Custom_File));
 	if (cf2)
 	  {
@@ -111,7 +110,9 @@ e_fm2_custom_file_set(const char *path, E_Fm2_Custom_File *cf)
 	       cf2->icon.icon = eina_stringshare_add(cf->icon.icon);
 	     if (cf->label)
 	       cf2->label = eina_stringshare_add(cf->label);
-	     _e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash, path, cf2);
+	     if (!_e_fm2_custom_hash)
+	       _e_fm2_custom_hash = eina_hash_string_superfast_new(NULL);
+	     eina_hash_add(_e_fm2_custom_hash, path, cf2);
 	  }
      }
    _e_fm2_custom_writes = 1;
@@ -122,21 +123,20 @@ e_fm2_custom_file_del(const char *path)
 {
    Eina_List *list, *l;
    E_Fm2_Custom_File *cf2;
-	
+
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
    if (_e_fm2_flush_defer) e_fm2_custom_file_flush();
-   
+
    list = _e_fm2_custom_hash_key_base_list(_e_fm2_custom_hash, path);
    if (list)
      {
 	for (l = list; l; l = l->next)
 	  {
-	     cf2 = evas_hash_find(_e_fm2_custom_hash, l->data);
+	     cf2 = eina_hash_find(_e_fm2_custom_hash, l->data);
 	     if (cf2)
 	       {
-		  _e_fm2_custom_hash = evas_hash_del(_e_fm2_custom_hash,
-						     l->data, cf2);
+		  eina_hash_del(_e_fm2_custom_hash, l->data, cf2);
 		  if (cf2->icon.icon) eina_stringshare_del(cf2->icon.icon);
 		  if (cf2->label) eina_stringshare_del(cf2->label);
 		  free(cf2);
@@ -156,42 +156,40 @@ e_fm2_custom_file_rename(const char *path, const char *new_path)
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
    if (_e_fm2_flush_defer) e_fm2_custom_file_flush();
-   cf2 = evas_hash_find(_e_fm2_custom_hash, path);
+   cf2 = eina_hash_find(_e_fm2_custom_hash, path);
    if (cf2)
      {
-	_e_fm2_custom_hash = evas_hash_del(_e_fm2_custom_hash, path, cf2);
-	cf = evas_hash_find(_e_fm2_custom_hash, new_path);
+        eina_hash_del(_e_fm2_custom_hash, path, cf2);
+	cf = eina_hash_find(_e_fm2_custom_hash, new_path);
 	if (cf)
 	  {
 	     if (cf->icon.icon) eina_stringshare_del(cf->icon.icon);
 	     if (cf->label) eina_stringshare_del(cf->label);
 	     free(cf);
 	  }
-	_e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash, new_path, cf2);
+	eina_hash_add(_e_fm2_custom_hash, new_path, cf2);
      }
    list = _e_fm2_custom_hash_key_base_list(_e_fm2_custom_hash, path);
    if (list)
      {
 	for (l = list; l; l = l->next)
 	  {
-	     cf2 = evas_hash_find(_e_fm2_custom_hash, l->data);
+	     cf2 = eina_hash_find(_e_fm2_custom_hash, l->data);
 	     if (cf2)
 	       {
 		  char buf[PATH_MAX];
-		  
+
 		  strcpy(buf, new_path);
 		  strcat(buf, (char *)l->data + strlen(path));
-		  _e_fm2_custom_hash = evas_hash_del(_e_fm2_custom_hash,
-						     l->data, cf2);
-		  cf = evas_hash_find(_e_fm2_custom_hash, buf);
+		  eina_hash_del(_e_fm2_custom_hash, l->data, cf2);
+		  cf = eina_hash_find(_e_fm2_custom_hash, buf);
 		  if (cf)
 		    {
 		       if (cf->icon.icon) eina_stringshare_del(cf->icon.icon);
 		       if (cf->label) eina_stringshare_del(cf->label);
 		       free(cf);
 		    }
-		  _e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash,
-						     buf, cf2);
+		  eina_hash_add(_e_fm2_custom_hash, buf, cf2);
 	       }
 	  }
 	eina_list_free(list);
@@ -219,36 +217,35 @@ struct _E_Custom_List
    int         base_len;
 };
 
-static Evas_Bool
-_e_fm2_custom_file_hash_foreach_list(const Evas_Hash *hash, const void *key, void *data, void *fdata)
+static Eina_Bool
+_e_fm2_custom_file_hash_foreach_list(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
    struct _E_Custom_List *cl;
-   
+
    cl = fdata;
    if (!strncmp(cl->base, key, cl->base_len))
      cl->l = eina_list_append(cl->l, key);
    return 1;
 }
-    
+
 static Eina_List *
-_e_fm2_custom_hash_key_base_list(Evas_Hash *hash, const char *str)
+_e_fm2_custom_hash_key_base_list(Eina_Hash *hash, const char *str)
 {
    struct _E_Custom_List cl;
-   
+
    cl.l = NULL;
    cl.base = str;
    cl.base_len = strlen(cl.base);
-   evas_hash_foreach(hash,
-		     _e_fm2_custom_file_hash_foreach_list, &cl);
+   eina_hash_foreach(hash, _e_fm2_custom_file_hash_foreach_list, &cl);
    return cl.l;
 }
 
 /*
-static Evas_Bool
-_e_fm2_custom_file_hash_foreach_sub_list(const Evas_Hash *hash, const void *key, void *data, void *fdata)
+static Eina_Bool
+_e_fm2_custom_file_hash_foreach_sub_list(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
    struct _E_Custom_List *cl;
-   
+
    cl = fdata;
    if (!strncmp(cl->base, key, strlen(key)))
      cl->l = eina_list_append(cl->l, key);
@@ -258,23 +255,23 @@ _e_fm2_custom_file_hash_foreach_sub_list(const Evas_Hash *hash, const void *key,
 
 /*
 static Eina_List *
-_e_fm2_custom_hash_key_sub_list(const Evas_Hash *hash, const void *str)
+_e_fm2_custom_hash_key_sub_list(const Eina_Hash *hash, const void *str)
 {
    struct _E_Custom_List cl;
-   
+
    cl.l = NULL;
    cl.base = str;
-   evas_hash_foreach(hash,
+   eina_hash_foreach(hash,
 		     _e_fm2_custom_file_hash_foreach_sub_list, &cl);
    return cl.l;
 }
 */
 
-static Evas_Bool
-_e_fm2_custom_file_hash_foreach(const Evas_Hash *hash, const void *key, void *data, void *fdata)
+static Eina_Bool
+_e_fm2_custom_file_hash_foreach(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
    E_Fm2_Custom_File *cf;
-   
+
    cf = data;
    if (cf->icon.icon) eina_stringshare_del(cf->icon.icon);
    if (cf->label) eina_stringshare_del(cf->label);
@@ -282,12 +279,12 @@ _e_fm2_custom_file_hash_foreach(const Evas_Hash *hash, const void *key, void *da
    return 1;
 }
 
-static Evas_Bool
-_e_fm2_custom_file_hash_foreach_save(const Evas_Hash *hash, const void *key, void *data, void *fdata)
+static Eina_Bool
+_e_fm2_custom_file_hash_foreach_save(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
    Eet_File *ef;
    E_Fm2_Custom_File *cf;
-   
+
    ef = fdata;
    cf = data;
    eet_data_write(ef, _e_fm2_custom_file_edd, key, cf, 1);
@@ -320,8 +317,12 @@ _e_fm2_custom_file_info_load(void)
 		  cf = eet_data_read(_e_fm2_custom_file,
 				     _e_fm2_custom_file_edd, list[i]);
 		  if (cf)
-		    _e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash,
-						       list[i], cf);
+		    {
+		      if (!_e_fm2_custom_hash)
+			_e_fm2_custom_hash =
+			  eina_hash_string_superfast_new(NULL);
+		      eina_hash_add(_e_fm2_custom_hash, list[i], cf);
+		    }
 	       }
 	     free(list);
 	  }
@@ -341,7 +342,7 @@ _e_fm2_custom_file_info_save(void)
 	    e_user_homedir_get());
    ef = eet_open(buf, EET_FILE_MODE_WRITE);
    if (!ef) return;
-   evas_hash_foreach(_e_fm2_custom_hash,
+   eina_hash_foreach(_e_fm2_custom_hash,
 		     _e_fm2_custom_file_hash_foreach_save, ef);
    eet_close(ef);
    snprintf(buf2, sizeof(buf2), "%s/.e/e/fileman/custom.cfg",
@@ -368,9 +369,9 @@ _e_fm2_custom_file_info_free(void)
      }
    if (_e_fm2_custom_hash)
      {
-	evas_hash_foreach(_e_fm2_custom_hash,
+	eina_hash_foreach(_e_fm2_custom_hash,
 			  _e_fm2_custom_file_hash_foreach, NULL);
-	evas_hash_free(_e_fm2_custom_hash);
+	eina_hash_free(_e_fm2_custom_hash);
 	_e_fm2_custom_hash = NULL;
      }
 }

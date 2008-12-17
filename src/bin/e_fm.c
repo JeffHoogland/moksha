@@ -3922,7 +3922,7 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
      {
 	const char *type;
 
-	type = ecore_hash_get(desktop->x, "X-Enlightenment-Type");
+	type = eina_hash_find(desktop->x, "X-Enlightenment-Type");
 	if (type)
 	  {
 	     if (!strcmp(type, "Mount")) ic->info.mount = 1;
@@ -3937,7 +3937,7 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 		       goto error;
 		    }
 	       }
-	     type = ecore_hash_get(desktop->x, "X-Enlightenment-Removable-State");
+	     type = eina_hash_find(desktop->x, "X-Enlightenment-Removable-State");
 	     if (type)
 	       {
 		  if (!strcmp(type, "Full"))

@@ -33,7 +33,7 @@ static Eina_List *_thumbnailers = NULL;
 static Eina_List *_thumbnailers_exe = NULL;
 static Eina_List *_thumb_queue = NULL;
 static int _objid = 0;
-static Evas_Hash *_thumbs = NULL;
+static Eina_Hash *_thumbs = NULL;
 static int _pending = 0;
 static int _num_thumbnailers = 1;
 static Ecore_Event_Handler *_exe_del_handler = NULL;
@@ -46,6 +46,7 @@ e_thumb_init(void)
    _exe_del_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
 					      _e_thumb_cb_exe_event_del,
 					      NULL);
+   _thumbs = eina_hash_string_superfast_new(NULL);
    return 1;
 }
 
@@ -64,7 +65,7 @@ e_thumb_shutdown(void)
      }
    _thumb_queue = eina_list_free(_thumb_queue);
    _objid = 0;
-   evas_hash_free(_thumbs);
+   eina_hash_free(_thumbs);
    _thumbs = NULL;
    _pending = 0;
    return 1;
@@ -316,7 +317,7 @@ _e_thumb_hash_add(int objid, Evas_Object *obj)
    char buf[32];
 
    snprintf(buf, sizeof(buf), "%i", objid);
-   _thumbs = evas_hash_add(_thumbs, buf, obj);
+   eina_hash_add(_thumbs, buf, obj);
 }
 
 static void
@@ -325,7 +326,7 @@ _e_thumb_hash_del(int objid)
    char buf[32];
 
    snprintf(buf, sizeof(buf), "%i", objid);
-   _thumbs = evas_hash_del(_thumbs, buf, NULL);
+   eina_hash_del(_thumbs, buf, NULL);
    if ((!_thumbs) && (!_thumbnailers)) _objid = 0;
 }
 
@@ -335,7 +336,7 @@ _e_thumb_hash_find(int objid)
    char buf[32];
 
    snprintf(buf, sizeof(buf), "%i", objid);
-   return evas_hash_find(_thumbs, buf);
+   return eina_hash_find(_thumbs, buf);
 }
 
 static void

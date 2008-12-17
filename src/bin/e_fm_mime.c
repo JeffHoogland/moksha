@@ -12,12 +12,12 @@ struct _E_Fm2_Mime_Handler_Tuple
 };
 
 /* local subsystem functions */
-static Evas_Bool _e_fm2_mime_handler_glob_match_foreach(const Evas_Hash *hash __UNUSED__, const void *key, void *data, void *fdata);
-static Evas_Bool _e_fm_mime_icon_foreach(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
+static Eina_Bool _e_fm2_mime_handler_glob_match_foreach(const Eina_Hash *hash __UNUSED__, const void *key, void *data, void *fdata);
+static Eina_Bool _e_fm_mime_icon_foreach(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
 
-static Evas_Hash *icon_map = NULL;
-static Evas_Hash *_mime_handlers = NULL;
-static Evas_Hash *_glob_handlers = NULL;
+static Eina_Hash *icon_map = NULL;
+static Eina_Hash *_mime_handlers = NULL;
+static Eina_Hash *_glob_handlers = NULL;
 
 /* externally accessible functions */
 EAPI const char *
@@ -40,18 +40,18 @@ e_fm_mime_icon_get(const char *mime)
    const char *homedir = NULL;
    Eina_List *l = NULL;
    E_Config_Mime_Icon *mi;
-   
+
    /* 0.0 clean out hash cache once it has mroe than 512 entries in it */
-   if (evas_hash_size(icon_map) > 512) e_fm_mime_icon_cache_flush();
-   
+   if (eina_hash_population(icon_map) > 512) e_fm_mime_icon_cache_flush();
+
    /* 0. look in mapping cache */
-   val = evas_hash_find(icon_map, mime);
+   val = eina_hash_find(icon_map, mime);
    if (val) return val;
-   
+
    ecore_strlcpy(buf2, mime, sizeof(buf2));
    val = strchr(buf2, '/');
    if (val) *val = 0;
-   
+
    /* 1. look up in mapping to file or thumb (thumb has flag)*/
    for (l = e_config->mime_icons; l; l = l->next)
      {
@@ -100,12 +100,13 @@ e_fm_mime_icon_get(const char *mime)
    if (ecore_file_exists(buf)) goto ok;
    snprintf(buf, sizeof(buf), "%s/data/icons/%s.png", e_prefix_data_get(), buf2);
    if (ecore_file_exists(buf)) goto ok;
-   
+
    return NULL;
-   
+
    ok:
    val = (char *)eina_stringshare_add(buf);
-   icon_map = evas_hash_add(icon_map, mime, val);
+   if (!icon_map) icon_map = eina_hash_string_superfast_new(NULL);
+   eina_hash_add(icon_map, mime, val);
    return val;
 }
 
@@ -113,20 +114,20 @@ EAPI void
 e_fm_mime_icon_cache_flush(void)
 {
    Eina_List *freelist = NULL;
-   
-   evas_hash_foreach(icon_map, _e_fm_mime_icon_foreach, &freelist);
+
+   eina_hash_foreach(icon_map, _e_fm_mime_icon_foreach, &freelist);
    while (freelist)
      {
 	eina_stringshare_del(freelist->data);
 	freelist = eina_list_remove_list(freelist, freelist);
      }
-   evas_hash_free(icon_map);
+   eina_hash_free(icon_map);
    icon_map = NULL;
 }
 
 /* create (allocate), set properties, and return a new mime handler */
 EAPI E_Fm2_Mime_Handler *
-e_fm2_mime_handler_new(const char *label, const char *icon_group, 
+e_fm2_mime_handler_new(const char *label, const char *icon_group,
                       void (*action_func) (Evas_Object *obj, const char *path, void *data),
 		      void *action_data,
 		      int (test_func) (Evas_Object *obj, const char *path, void *data),
@@ -145,22 +146,22 @@ e_fm2_mime_handler_new(const char *label, const char *icon_group,
    handler->action_data = action_data;
    handler->test_func = test_func;
    handler->test_data = test_data;
-   
+
    return handler;
 }
 
 EAPI void
-e_fm2_mime_handler_free(E_Fm2_Mime_Handler *handler) 
+e_fm2_mime_handler_free(E_Fm2_Mime_Handler *handler)
 {
    if (!handler) return;
-   
+
    eina_stringshare_del(handler->label);
    if (handler->icon_group) eina_stringshare_del(handler->icon_group);
    E_FREE(handler);
 }
 
 /* associate a certain mime type with a handler */
-EAPI Evas_Bool
+EAPI Eina_Bool
 e_fm2_mime_handler_mime_add(E_Fm2_Mime_Handler *handler, const char *mime)
 {
    Eina_List *handlers = NULL;
@@ -168,23 +169,24 @@ e_fm2_mime_handler_mime_add(E_Fm2_Mime_Handler *handler, const char *mime)
    if ((!handler) || (!mime)) return 0;
 
    /* if there's an entry for this mime already, then append to its list */
-   if ((handlers = evas_hash_find(_mime_handlers, mime)))
+   if ((handlers = eina_hash_find(_mime_handlers, mime)))
      {
 	handlers = eina_list_append(handlers, handler);
-	evas_hash_modify(_mime_handlers, mime, handlers);
+	eina_hash_modify(_mime_handlers, mime, handlers);
      }
    else
      {
 	/* no previous entry for this mime, lets add one */
 	handlers = eina_list_append(handlers, handler);
-	_mime_handlers = evas_hash_add(_mime_handlers, mime, handlers);
+	if (!_mime_handlers) _mime_handlers = eina_hash_string_superfast_new(NULL);
+	eina_hash_add(_mime_handlers, mime, handlers);
      }
 
    return 1;
 }
 
 /* associate a certain glob with a handler */
-EAPI Evas_Bool
+EAPI Eina_Bool
 e_fm2_mime_handler_glob_add(E_Fm2_Mime_Handler *handler, const char *glob)
 {
    Eina_List *handlers = NULL;
@@ -192,16 +194,17 @@ e_fm2_mime_handler_glob_add(E_Fm2_Mime_Handler *handler, const char *glob)
    if ((!handler) || (!glob)) return 0;
 
    /* if there's an entry for this glob already, then append to its list */
-   if ((handlers = evas_hash_find(_glob_handlers, glob)))
+   if ((handlers = eina_hash_find(_glob_handlers, glob)))
      {
 	handlers = eina_list_append(handlers, handler);
-	evas_hash_modify(_glob_handlers, glob, handlers);
+	eina_hash_modify(_glob_handlers, glob, handlers);
      }
    else
      {
 	/* no previous entry for this glob, lets add one */
 	handlers = eina_list_append(handlers, handler);
-	_glob_handlers = evas_hash_add(_glob_handlers, glob, handlers);
+	if (!_glob_handlers) _glob_handlers = eina_hash_string_superfast_new(NULL);
+	eina_hash_add(_glob_handlers, glob, handlers);
      }
 
    return 1;
@@ -209,52 +212,66 @@ e_fm2_mime_handler_glob_add(E_Fm2_Mime_Handler *handler, const char *glob)
 
 /* delete a certain handler for a certian mime */
 EAPI void
-e_fm2_mime_handler_mime_del(E_Fm2_Mime_Handler *handler, const char *mime) 
+e_fm2_mime_handler_mime_del(E_Fm2_Mime_Handler *handler, const char *mime)
 {
    Eina_List *handlers = NULL;
 
    if ((!handler) || (!mime)) return;
 
    /* if there's an entry for this mime already, then remove from list */
-   if ((handlers = evas_hash_find(_mime_handlers, mime)))
+   if ((handlers = eina_hash_find(_mime_handlers, mime)))
      {
 	handlers = eina_list_remove(handlers, handler);
 	if (handlers)
-	  evas_hash_modify(_mime_handlers, mime, handlers);
+	  eina_hash_modify(_mime_handlers, mime, handlers);
 	else
-	  _mime_handlers = evas_hash_del(_mime_handlers, mime, handlers);
+	  {
+	    eina_hash_del(_mime_handlers, mime, handlers);
+	    if (!eina_hash_population(_mime_handlers))
+	      {
+		eina_hash_free(_mime_handlers);
+		_mime_handlers = NULL;
+	      }
+	  }
      }
 }
 
 /* delete a certain handler for a certain glob */
 EAPI void
-e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob) 
+e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob)
 {
    Eina_List *handlers = NULL;
 
    if ((!handler) || (!glob)) return;
 
    /* if there's an entry for this glob already, then remove from list */
-   if ((handlers = evas_hash_find(_glob_handlers, glob)))
+   if ((handlers = eina_hash_find(_glob_handlers, glob)))
      {
 	handlers = eina_list_remove(handlers, handler);
 	if (handlers)
-	  evas_hash_modify(_glob_handlers, glob, handlers);
+	  eina_hash_modify(_glob_handlers, glob, handlers);
 	else
-	  _glob_handlers = evas_hash_del(_glob_handlers, glob, handlers);
+	  {
+	    eina_hash_del(_glob_handlers, glob, handlers);
+	    if (!eina_hash_population(_glob_handlers))
+	      {
+		eina_hash_free(_glob_handlers);
+		_glob_handlers = NULL;
+	      }
+	  }
      }
 }
 
-/* get the list of mime handlers for a mime. 
+/* get the list of mime handlers for a mime.
  NOTE: the list should be free()'ed */
 EAPI Eina_List *
 e_fm2_mime_handler_mime_handlers_get(const char *mime)
 {
    if ((!mime) || (!_mime_handlers)) return NULL;
-   return evas_hash_find(_mime_handlers, mime);
+   return eina_hash_find(_mime_handlers, mime);
 }
 
-/* get the list of glob handlers for a glob. 
+/* get the list of glob handlers for a glob.
  NOTE: the list should be free()'ed */
 EAPI Eina_List *
 e_fm2_mime_handler_glob_handlers_get(const char *glob)
@@ -267,14 +284,14 @@ e_fm2_mime_handler_glob_handlers_get(const char *glob)
    tuple = E_NEW(E_Fm2_Mime_Handler_Tuple, 1);
    tuple->list = NULL;
    tuple->str = glob;
-   evas_hash_foreach(_glob_handlers, _e_fm2_mime_handler_glob_match_foreach, tuple);
+   eina_hash_foreach(_glob_handlers, _e_fm2_mime_handler_glob_match_foreach, tuple);
    handlers = tuple->list;
    E_FREE(tuple);
    return handlers;
 }
 
 /* call a certain handler */
-EAPI Evas_Bool
+EAPI Eina_Bool
 e_fm2_mime_handler_call(E_Fm2_Mime_Handler *handler, Evas_Object *obj, const char *path)
 {
    if ((!handler) || (!obj) || (!path) || (!handler->action_func))
@@ -353,15 +370,15 @@ e_fm2_mime_handler_test(E_Fm2_Mime_Handler *handler, Evas_Object *obj, const cha
 
 /* local subsystem functions */
 /* used to loop a glob hash and determine if the glob handler matches the filename */
-static Evas_Bool 
-_e_fm2_mime_handler_glob_match_foreach(const Evas_Hash *hash __UNUSED__, const void *key, void *data, void *fdata)
+static Eina_Bool
+_e_fm2_mime_handler_glob_match_foreach(const Eina_Hash *hash __UNUSED__, const void *key, void *data, void *fdata)
 {
    E_Fm2_Mime_Handler_Tuple *tuple;
    Eina_List *handlers = NULL;
    Eina_List *l = NULL;
 
    tuple = fdata;
-   if (e_util_glob_match(tuple->str, key)) 
+   if (e_util_glob_match(tuple->str, key))
      {
 	handlers = data;
 	for (l = handlers; l; l = l->next)
@@ -370,15 +387,15 @@ _e_fm2_mime_handler_glob_match_foreach(const Evas_Hash *hash __UNUSED__, const v
 	       tuple->list = eina_list_append(tuple->list, l->data);
 	  }
      }
-   
+
    return 1;
 }
 
-static Evas_Bool
-_e_fm_mime_icon_foreach(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
+static Eina_Bool
+_e_fm_mime_icon_foreach(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
 {
    Eina_List **freelist;
-   
+
    freelist = fdata;
    *freelist = eina_list_append(*freelist, data);
    return 1;

@@ -522,7 +522,7 @@ _e_kbd_dict_find(E_Kbd_Dict *kd, const char *word)
     */
    tword = alloca(strlen(word) + 1);
    _e_kbd_dict_normalized_strcpy(tword, word);
-   p = evas_hash_find(kd->matches.leads, tword);
+   p = eina_hash_find(kd->matches.leads, tword);
    if (p) return p;
    p2 = strlen(tword);
    while (tword[0])
@@ -530,7 +530,7 @@ _e_kbd_dict_find(E_Kbd_Dict *kd, const char *word)
 	p2 = evas_string_char_prev_get(tword, p2, &i);
 	if (p2 < 0) break;
 	tword[p2] = 0;
-	p = evas_hash_find(kd->matches.leads, tword);
+	p = eina_hash_find(kd->matches.leads, tword);
 	if (p)
 	  return _e_kbd_dict_find_pointer(kd, p, p2, word);
      }
@@ -628,18 +628,18 @@ e_kbd_dict_word_letter_clear(E_Kbd_Dict *kd)
      e_kbd_dict_word_letter_delete(kd);
    if (kd->matches.deadends)
      {
-	evas_hash_free(kd->matches.deadends);
+	eina_hash_free(kd->matches.deadends);
 	kd->matches.deadends = NULL;
      }
    if (kd->matches.leads)
      {
-	evas_hash_free(kd->matches.leads);
+	eina_hash_free(kd->matches.leads);
 	kd->matches.leads = NULL;
      }
    while (kd->matches.list)
      {
 	E_Kbd_Dict_Word *kw;
-	
+
 	kw = kd->matches.list->data;
 	evas_stringshare_del(kw->word);
 	free(kw);
@@ -695,7 +695,7 @@ e_kbd_dict_word_letter_delete(E_Kbd_Dict *kd)
 }
 
 static void
-_e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word, 
+_e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
 				Eina_List *more)
 {
    Eina_List *l, *l2, *list;
@@ -737,18 +737,24 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
      {
 	kl = l->data;
 	strcpy(bufapp, kl->letter);
-	if ((kd->matches.deadends) && evas_hash_find(kd->matches.deadends, buf))
+	if ((kd->matches.deadends) && eina_hash_find(kd->matches.deadends, buf))
 	  continue;
-	p = evas_hash_find(kd->matches.leads, buf);
+	p = eina_hash_find(kd->matches.leads, buf);
 	if (p) p = _e_kbd_dict_find_pointer(kd, p, baselen, buf);
 	else p = _e_kbd_dict_find(kd, buf);
 	if (!p)
 	  {
-	     kd->matches.deadends = evas_hash_add(kd->matches.deadends, buf, kd);
+	     if (!kd->matches.deadends)
+	       kd->matches.deadends = eina_hash_string_superfast_new(NULL);
+	     eina_hash_add(kd->matches.deadends, buf, kd);
 	     continue;
 	  }
 	else
-	  kd->matches.leads = evas_hash_add(kd->matches.leads, buf, p);
+	  {
+	     if (!kd->matches.leads)
+	       kd->matches.leads = eina_hash_string_superfast_new(NULL);
+	     eina_hash_add(kd->matches.leads, buf, p);
+	  }
 	if ((!more->next) || (!more->next->data))
 	  {
 	     d = dist + kl->dist;

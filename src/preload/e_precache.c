@@ -53,9 +53,9 @@ log_close(void)
 static void
 log_write(const char *type, const char *file)
 {
-   static Evas_Hash *s_hash = NULL;
-   static Evas_Hash *o_hash = NULL;
-   static Evas_Hash *d_hash = NULL;
+   static Eina_Hash *s_hash = NULL;
+   static Eina_Hash *o_hash = NULL;
+   static Eina_Hash *d_hash = NULL;
    char buf[2];
 
    if ((e_precache_end) && (*e_precache_end))
@@ -65,19 +65,22 @@ log_write(const char *type, const char *file)
      }
    if (type[0] == 's')
      {
-	if (evas_hash_find(s_hash, file)) return;
-	s_hash = evas_hash_add(s_hash, file, (void *)1);
+	if (eina_hash_find(s_hash, file)) return;
+	if (!s_hash) s_hash = eina_hash_string_superfast_new(NULL);
+	eina_hash_add(s_hash, file, (void *)1);
      }
    else if (type[0] == 'o')
      {
-	if (evas_hash_find(o_hash, file)) return;
-	o_hash = evas_hash_add(o_hash, file, (void *)1);
+	if (eina_hash_find(o_hash, file)) return;
+	if (!o_hash) o_hash = eina_hash_string_superfast_new(NULL);
+	eina_hash_add(o_hash, file, (void *)1);
      }
    else if (type[0] == 'd')
      {
-	if (evas_hash_find(d_hash, file)) return;
-	d_hash = evas_hash_add(d_hash, file, (void *)1);
-     } 
+	if (eina_hash_find(d_hash, file)) return;
+	if (!d_hash) d_hash = eina_hash_string_superfast_new(NULL);
+	eina_hash_add(d_hash, file, (void *)1);
+     }
    buf[0] = type[0]; buf[1] = ' ';
    write(log_fd, buf, 2);
    write(log_fd, file, strlen(file));

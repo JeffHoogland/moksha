@@ -5,9 +5,9 @@
 
 #define E_TOK_STYLE ":style="
 
-static Evas_Bool _font_hash_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
-static Evas_Hash *_e_font_available_hash_add(Evas_Hash *font_hash, const char *full_name);
-static E_Font_Properties *_e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, const char *font);
+static Eina_Bool _font_hash_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static Eina_Hash *_e_font_available_hash_add(Eina_Hash *font_hash, const char *full_name);
+static E_Font_Properties *_e_font_fontconfig_name_parse(Eina_Hash **font_hash, E_Font_Properties *efp, const char *font);
 static char _fn_buf[1024];
 
 EAPI int
@@ -150,8 +150,8 @@ e_font_properties_free(E_Font_Properties *efp)
    free(efp);
 }
 
-static Evas_Bool
-_font_hash_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
+static Eina_Bool
+_font_hash_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    E_Font_Properties *efp;
 
@@ -161,10 +161,10 @@ _font_hash_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__,
 }
 
 EAPI void
-e_font_available_hash_free(Evas_Hash *hash)
+e_font_available_hash_free(Eina_Hash *hash)
 {
-   evas_hash_foreach(hash, _font_hash_free_cb, NULL);
-   evas_hash_free(hash);
+   eina_hash_foreach(hash, _font_hash_free_cb, NULL);
+   eina_hash_free(hash);
 }
 
 EAPI E_Font_Properties *
@@ -175,7 +175,7 @@ e_font_fontconfig_name_parse(const char *font)
 }
 
 static E_Font_Properties *
-_e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, const char *font)
+_e_font_fontconfig_name_parse(Eina_Hash **font_hash, E_Font_Properties *efp, const char *font)
 {
    char *s1;
 
@@ -203,12 +203,16 @@ _e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, con
           {
              style = s1 + strlen(E_TOK_STYLE);
 
-             if (font_hash) efp = evas_hash_find(*font_hash, name);
+             if (font_hash) efp = eina_hash_find(*font_hash, name);
              if (efp == NULL)
                {
                   efp = calloc(1, sizeof(E_Font_Properties));
                   efp->name = eina_stringshare_add(name);
-                  if (font_hash) *font_hash = evas_hash_add(*font_hash, name, efp);
+                  if (font_hash) 
+		    {
+		      if (!*font_hash) *font_hash = eina_hash_string_superfast_new(NULL);
+		      eina_hash_add(*font_hash, name, efp);
+		    }
                }
              s2 = strchr(style, ',');
              if (s2)
@@ -229,29 +233,33 @@ _e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, con
      }
    else 
      {
-        if (font_hash) efp = evas_hash_find(*font_hash, font);
+        if (font_hash) efp = eina_hash_find(*font_hash, font);
         if (efp == NULL)
           {
              efp = calloc(1, sizeof(E_Font_Properties));
              efp->name = eina_stringshare_add(font);
-             if (font_hash) *font_hash = evas_hash_add(*font_hash, font, efp);
+             if (font_hash)
+	       {
+		 if (!*font_hash) *font_hash = eina_hash_string_superfast_new(NULL);
+		 eina_hash_add(*font_hash, font, efp);
+	       }
           }
      }
    return efp;
 }
 
 
-static Evas_Hash *
-_e_font_available_hash_add(Evas_Hash *font_hash, const char *full_name)
+static Eina_Hash *
+_e_font_available_hash_add(Eina_Hash *font_hash, const char *full_name)
 {
    _e_font_fontconfig_name_parse(&font_hash, NULL, full_name);
    return font_hash;
 }
 
-EAPI Evas_Hash *
+EAPI Eina_Hash *
 e_font_available_list_parse(Eina_List *list)
 {
-   Evas_Hash *font_hash;
+   Eina_Hash *font_hash;
    Eina_List *next;
 
    font_hash = NULL;

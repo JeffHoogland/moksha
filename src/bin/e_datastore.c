@@ -6,26 +6,30 @@
 /* local subsystem functions */
 
 /* local subsystem globals */
-static Evas_Hash *store = NULL;
+static Eina_Hash *store = NULL;
 
 /* externally accessible functions */
 EAPI void
 e_datastore_set(char *key, void *data)
 {
-   store = evas_hash_del(store, key, NULL);
-   store = evas_hash_add(store, key, data);
+   if (!store) store = eina_hash_string_superfast_new(NULL);
+   eina_hash_del(store, key, NULL);
+   eina_hash_add(store, key, data);
 }
 
 EAPI void *
 e_datastore_get(char *key)
 {
-   return evas_hash_find(store, key);
+   return eina_hash_find(store, key);
 }
 
 EAPI void
 e_datastore_del(char *key)
 {
-   store = evas_hash_del(store, key, NULL);
+   eina_hash_del(store, key, NULL);
+   if (eina_hash_population(store)) return;
+   eina_hash_free(store);
+   store = NULL;
 }
 
 /* local subsystem functions */

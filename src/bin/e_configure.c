@@ -92,11 +92,11 @@ _e_configure_efreet_desktop_update(void)
 	label = NULL;
 	if (desktop->x)
 	  {
-	     cfg_cat_cfg = ecore_hash_get(desktop->x, "X-Enlightenment-Config-Category");
-	     s = ecore_hash_get(desktop->x, "X-Enlightenment-Config-Priority");
+	     cfg_cat_cfg = eina_hash_find(desktop->x, "X-Enlightenment-Config-Category");
+	     s = eina_hash_find(desktop->x, "X-Enlightenment-Config-Priority");
 	     if (s) cfg_pri = atoi(s);
-	     cfg_cat_name = ecore_hash_get(desktop->x, "X-Enlightenment-Config-Category-Name");
-	     cfg_cat_icon = ecore_hash_get(desktop->x, "X-Enlightenment-Config-Category-Icon");
+	     cfg_cat_name = eina_hash_find(desktop->x, "X-Enlightenment-Config-Category-Name");
+	     cfg_cat_icon = eina_hash_find(desktop->x, "X-Enlightenment-Config-Category-Icon");
 	     if (cfg_cat_icon)
 	       {
 		  if (cfg_cat_icon[0] == '/')

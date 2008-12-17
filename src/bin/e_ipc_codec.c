@@ -28,15 +28,27 @@ static Eet_Data_Descriptor *_e_ipc_3int_3str_list_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_str_4int_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_str_4int_list_edd = NULL;
 
+static void *
+_e_ipc_codec_eina_hash_add(void *hash, const void *key, void *data)
+{
+   Eina_Hash *result = hash;
+
+   if (!result) result = eina_hash_string_superfast_new(NULL);
+   if (!result) return NULL;
+
+   eina_hash_add(result, key, data);
+   return result;
+}
+
 #define E_IPC_DD_NEW(str, typ) \
    eet_data_descriptor_new(str, sizeof(typ), \
 			      (void *(*) (void *))eina_list_next, \
 			      (void *(*) (void *, void *))eina_list_append, \
 			      (void *(*) (void *))eina_list_data_get, \
 			      (void *(*) (void *))eina_list_free, \
-			      (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))evas_hash_foreach, \
-			      (void *(*) (void *, const char *, void *))evas_hash_add, \
-			      (void  (*) (void *))evas_hash_free)
+                              (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))eina_hash_foreach, \
+			      (void *(*) (void *, const char *, void *))_e_ipc_codec_eina_hash_add, \
+			      (void  (*) (void *))eina_hash_free)
 
 /* externally accessible functions */
 EAPI int

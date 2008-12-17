@@ -24,7 +24,7 @@ typedef struct E_Mixer_Module_Config
 {
     int version;
     const char *default_gc_id;
-    Evas_Hash *gadgets;
+    Eina_Hash *gadgets;
 } E_Mixer_Module_Config;
 
 typedef struct E_Mixer_Instance

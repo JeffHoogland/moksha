@@ -65,7 +65,7 @@ static void _e_int_menus_items_del_hook      (void *obj);
 static void _e_int_menus_item_label_set      (Efreet_Menu *entry, E_Menu_Item *mi);
 
 /* local subsystem globals */
-static Evas_Hash *_e_int_menus_augmentation = NULL;
+static Eina_Hash *_e_int_menus_augmentation = NULL;
 
 /* externally accessible functions */
 EAPI E_Menu *
@@ -81,20 +81,20 @@ e_int_menus_main_new(void)
    m = e_menu_new();
    e_menu_title_set(m, _("Main"));
    dat->menu = m;
-   e_object_data_set(E_OBJECT(m), dat);   
+   e_object_data_set(E_OBJECT(m), dat);
    e_object_del_attach_func_set(E_OBJECT(m), _e_int_menus_main_del_hook);
 
    e_menu_category_set(m, "main");
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/0");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/0");
    if (l) _e_int_menus_augmentation_add(m, l);
 
-   if (e_config->menu_favorites_show) 
+   if (e_config->menu_favorites_show)
      {
 	subm = e_int_menus_favorite_apps_new();
 	if (subm)
 	  {
-	     dat->apps = subm; 
+	     dat->apps = subm;
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Favorite Applications"));
 	     e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
@@ -112,13 +112,13 @@ e_int_menus_main_new(void)
 	e_menu_item_submenu_set(mi, subm);
      }
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/1");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/1");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/2");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/2");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_int_menus_desktops_new();
@@ -145,13 +145,13 @@ e_int_menus_main_new(void)
    e_menu_item_submenu_set(mi, subm);
  */
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/3");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/3");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/4");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/4");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_menu_new();
@@ -172,13 +172,13 @@ e_int_menus_main_new(void)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
    e_menu_item_callback_set(mi, _e_int_menus_themes_about, NULL);
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/5");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/5");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(subm);
    e_menu_item_separator_set(mi, 1);
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/6");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/6");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(subm);
@@ -191,13 +191,13 @@ e_int_menus_main_new(void)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/exit");
    e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/7");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/7");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/8");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/8");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_int_menus_config_new();
@@ -207,7 +207,7 @@ e_int_menus_main_new(void)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
    e_menu_item_submenu_set(mi, subm);
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/9");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/9");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/10");
@@ -290,7 +290,7 @@ e_int_menus_favorite_apps_new(void)
    const char *homedir;
 
    homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), 
+   snprintf(buf, sizeof(buf),
             "%s/.e/e/applications/menu/favorite.menu", homedir);
 
    if (ecore_file_exists(buf)) m = e_int_menus_apps_new(buf);
@@ -355,16 +355,14 @@ e_int_menus_menu_augmentation_add(const char *menu,
    maug->del.func = func_del;
    maug->del.data = data_del;
 
-   l = evas_hash_find(_e_int_menus_augmentation, menu);
-   if (l) 
-     {
-        _e_int_menus_augmentation = 
-          evas_hash_del(_e_int_menus_augmentation, menu, l);
-     }
+   l = eina_hash_find(_e_int_menus_augmentation, menu);
+   if (l)
+     eina_hash_del(_e_int_menus_augmentation, menu, l);
 
    l = eina_list_append(l, maug);
-   _e_int_menus_augmentation = 
-     evas_hash_add(_e_int_menus_augmentation, menu, l);
+   if (!_e_int_menus_augmentation)
+     _e_int_menus_augmentation = eina_hash_string_superfast_new(NULL);
+   eina_hash_add(_e_int_menus_augmentation, menu, l);
 
    return maug;
 }
@@ -374,22 +372,28 @@ e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *mau
 {
    Eina_List *l = NULL;
 
-   l = evas_hash_find(_e_int_menus_augmentation, menu);
+   l = eina_hash_find(_e_int_menus_augmentation, menu);
    if (l)
      {
 	/*
 	 * We should always add the list to the hash, in case the list
 	 * becomes empty, or the first element is removed.
 	 */
-	_e_int_menus_augmentation = 
-          evas_hash_del(_e_int_menus_augmentation, menu, l);
+        eina_hash_del(_e_int_menus_augmentation, menu, l);
 
 	l = eina_list_remove(l, maug);
-	if (l) 
-          {
-             _e_int_menus_augmentation = 
-               evas_hash_add(_e_int_menus_augmentation, menu, l);
-          }
+	if (l)
+	  {
+	    eina_hash_add(_e_int_menus_augmentation, menu, l);
+	  }
+	else
+	  {
+	    if (!eina_hash_population(_e_int_menus_augmentation))
+	      {
+		eina_hash_free(_e_int_menus_augmentation);
+		_e_int_menus_augmentation = NULL;
+	      }
+	  }
      }
    free(maug);
 }
@@ -414,18 +418,18 @@ _e_int_menus_main_del_hook(void *obj)
 	if (dat->lost_clients) e_object_del(E_OBJECT(dat->lost_clients));
 	free(dat);
      }
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/0"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/1"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/2"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/3"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/4"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/5"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/6"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/7"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/8"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/9"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/10"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "main/11"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/0"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/1"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/2"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/3"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/4"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/5"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/6"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/7"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/8"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/9"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/10"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/11"));
 }
 
 static void
@@ -737,14 +741,14 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
 
-   l = evas_hash_find(_e_int_menus_augmentation, "config/0");
+   l = eina_hash_find(_e_int_menus_augmentation, "config/0");
    if (l)
      {
 	_e_int_menus_augmentation_add(m, l);
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
      }
-   
+
    if (e_configure_registry_exists("extensions/modules"))
      {
 	mi = e_menu_item_new(m);
@@ -753,14 +757,15 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 	e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
      }
 
-   l = evas_hash_find(_e_int_menus_augmentation, "config/1");
+   l = eina_hash_find(_e_int_menus_augmentation, "config/1");
    if (l) _e_int_menus_augmentation_add(m, l);
 
-   l = evas_hash_find(_e_int_menus_augmentation, "config/2");
+   l = eina_hash_find(_e_int_menus_augmentation, "config/2");
    if (l)
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
+
 	_e_int_menus_augmentation_add(m, l);
      }
 
@@ -773,9 +778,9 @@ _e_int_menus_config_free_hook(void *obj)
    E_Menu *m;
 
    m = obj;
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "config/0"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "config/1"));
-   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "config/2"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "config/0"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "config/1"));
+   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "config/2"));
 }
 
 static int

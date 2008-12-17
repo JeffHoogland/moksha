@@ -78,7 +78,9 @@ _mixer_gadget_configuration_new(E_Mixer_Module_Config *mod_conf, const char *id)
      }
 
    conf->id = eina_stringshare_add(id);
-   mod_conf->gadgets = evas_hash_direct_add(mod_conf->gadgets, conf->id, conf);
+   if (!mod_conf->gadgets)
+     mod_conf->gadgets = eina_hash_string_superfast_new(NULL);
+   eina_hash_direct_add(mod_conf->gadgets, conf->id, conf);
 
    return conf;
 }
@@ -105,12 +107,14 @@ _mixer_gadget_configuration_free(E_Mixer_Module_Config *mod_conf, E_Mixer_Gadget
      return;
    if (!conf)
      return;
-   mod_conf->gadgets = evas_hash_del(mod_conf->gadgets, conf->id, conf);
+   eina_hash_del(mod_conf->gadgets, conf->id, conf);
+   if (!eina_hash_population(mod_conf->gadgets))
+     eina_hash_free(mod_conf->gadgets);
    _mixer_gadget_configuration_free_int(conf);
 }
 
-static Evas_Bool
-_mixer_gadget_configuration_free_foreach(const Evas_Hash *hash, const void *key, void *hdata, void *fdata)
+static Eina_Bool
+_mixer_gadget_configuration_free_foreach(const Eina_Hash *hash, const void *key, void *hdata, void *fdata)
 {
    _mixer_gadget_configuration_free_int(hdata);
    return 1;
@@ -143,9 +147,9 @@ _mixer_module_configuration_free(E_Mixer_Module_Config *conf)
    if (!conf)
      return;
 
-   evas_hash_foreach(conf->gadgets,
+   eina_hash_foreach(conf->gadgets,
 		     _mixer_gadget_configuration_free_foreach, NULL);
-   evas_hash_free(conf->gadgets);
+   eina_hash_free(conf->gadgets);
    free(conf);
 }
 
@@ -866,7 +870,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 	  return NULL;
      }
 
-   conf = evas_hash_find(ctxt->conf->gadgets, id);
+   conf = eina_hash_find(ctxt->conf->gadgets, id);
    if (!conf)
      {
 	conf = _mixer_gadget_configuration_new(ctxt->conf, id);

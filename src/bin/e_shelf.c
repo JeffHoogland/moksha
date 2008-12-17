@@ -29,7 +29,7 @@ static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 static void _e_shelf_edge_event_register(E_Shelf *es, int reg);
 
 static Eina_List *shelves = NULL;
-static Evas_Hash *winid_shelves = NULL;
+static Eina_Hash *winid_shelves = NULL;
 
 /* externally accessible functions */
 EAPI int
@@ -177,7 +177,8 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    e_gadcon_shelf_set(es->gadcon, es);
    if (popup)
      {
-	winid_shelves = evas_hash_add(winid_shelves, e_util_winid_str_get(es->popup->evas_win), es);
+        if (!winid_shelves) winid_shelves = eina_hash_string_superfast_new(NULL);
+        eina_hash_add(winid_shelves, e_util_winid_str_get(es->popup->evas_win), es);
 	e_drop_xdnd_register_set(es->popup->evas_win, 1);
 	e_gadcon_xdnd_window_set(es->gadcon, es->popup->evas_win);
 	e_gadcon_dnd_window_set(es->gadcon, es->popup->evas_win);
@@ -733,7 +734,12 @@ _e_shelf_free(E_Shelf *es)
      {
 	_e_shelf_edge_event_register(es, 0);
 	e_drop_xdnd_register_set(es->popup->evas_win, 0);
-	winid_shelves = evas_hash_del(winid_shelves, e_util_winid_str_get(es->popup->evas_win), es);
+	eina_hash_del(winid_shelves, e_util_winid_str_get(es->popup->evas_win), es);
+	if (!eina_hash_population(winid_shelves))
+	  {
+	    eina_hash_free(winid_shelves);
+	    winid_shelves = NULL;
+	  }
 	e_object_del(E_OBJECT(es->popup));
      }
    free(es);

@@ -8,7 +8,7 @@
  * currently being used by E in core components should be registered
  * here and will be protected as best as E can. :)
  */
-static Evas_Hash *_e_filereg = NULL;
+static Eina_Hash *_e_filereg = NULL;
 
 typedef struct _Filereg_Item Filereg_Item;
 struct _Filereg_Item
@@ -17,33 +17,35 @@ struct _Filereg_Item
    int ref_count;
 };
 
-static Evas_Bool _filereg_hash_cb_free(const Evas_Hash *hash __UNUSED__, 
-				       const void *key __UNUSED__, 
+static Eina_Bool _filereg_hash_cb_free(const Eina_Hash *hash __UNUSED__,
+				       const void *key __UNUSED__,
 				       void *data, void *fdata __UNUSED__);
 
 /* Externally accessible functions */
 EAPI int
-e_filereg_init(void) 
+e_filereg_init(void)
 {
+   _e_filereg = eina_hash_string_superfast_new(NULL);
+
    return 1;
 }
 
 EAPI int
-e_filereg_shutdown(void) 
+e_filereg_shutdown(void)
 {
-   evas_hash_foreach(_e_filereg, _filereg_hash_cb_free, NULL);
-   evas_hash_free(_e_filereg);
+   eina_hash_foreach(_e_filereg, _filereg_hash_cb_free, NULL);
+   eina_hash_free(_e_filereg);
    _e_filereg = NULL;
    return 1;
 }
 
 EAPI int
-e_filereg_register(const char *path) 
+e_filereg_register(const char *path)
 {
    Filereg_Item *fi = NULL;
-   
-   fi = evas_hash_find(_e_filereg, path);
-   if (fi) 
+
+   fi = eina_hash_find(_e_filereg, path);
+   if (fi)
      {
 	fi->ref_count++;
 	return 1;
@@ -52,22 +54,22 @@ e_filereg_register(const char *path)
    if (!fi) return 0;
    fi->path = eina_stringshare_add(path);
    fi->ref_count = 1;
-   _e_filereg = evas_hash_add(_e_filereg, path, fi);
+   eina_hash_add(_e_filereg, path, fi);
    return 1;
 }
 
 EAPI void
-e_filereg_deregister(const char *path) 
+e_filereg_deregister(const char *path)
 {
    Filereg_Item *fi = NULL;
-   
-   fi = evas_hash_find(_e_filereg, path);
-   if (fi) 
+
+   fi = eina_hash_find(_e_filereg, path);
+   if (fi)
      {
 	fi->ref_count--;
-	if (fi->ref_count == 0) 
+	if (fi->ref_count == 0)
 	  {
-	     _e_filereg = evas_hash_del(_e_filereg, path, fi);
+	     eina_hash_del(_e_filereg, path, fi);
 	     if (fi->path) eina_stringshare_del(fi->path);
 	     E_FREE(fi);
 	  }
@@ -75,22 +77,22 @@ e_filereg_deregister(const char *path)
 }
 
 EAPI Evas_Bool
-e_filereg_file_protected(const char *path) 
+e_filereg_file_protected(const char *path)
 {
    Filereg_Item *fi = NULL;
-   
-   fi = evas_hash_find(_e_filereg, path);
+
+   fi = eina_hash_find(_e_filereg, path);
    if (!fi) return 0;
    else return 1;
 }
 
 /* Private Functions */
-static Evas_Bool 
-_filereg_hash_cb_free(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, 
-		      void *data, void *fdata __UNUSED__) 
+static Evas_Bool
+_filereg_hash_cb_free(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
+		      void *data, void *fdata __UNUSED__)
 {
    Filereg_Item *fi;
-   
+
    fi = data;
    if (!fi) return 1;
    if (fi->path) eina_stringshare_del(fi->path);

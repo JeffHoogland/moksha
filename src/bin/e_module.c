@@ -72,15 +72,15 @@ EAPI void
 e_module_all_load(void)
 {
    Eina_List *l;
+   E_Config_Module *em;
+
    e_config->modules = eina_list_sort(e_config->modules,
                                       eina_list_count(e_config->modules),
                                       _e_module_sort_priority);
-   for (l = e_config->modules; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->modules, l, em)
      {
-	E_Config_Module *em;
 	E_Module *m;
-	
-	em = l->data;
+
 	if (!em) continue;
 	if ((em->delayed) && (em->enabled))
 	  {
@@ -258,7 +258,8 @@ e_module_enable(E_Module *m)
 {
    Eina_List *l;
    E_Event_Module_Update *ev;
-   
+   E_Config_Module *em;
+
    E_OBJECT_CHECK_RETURN(m, 0);
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
    if ((m->enabled) || (m->error)) return 0;
@@ -266,21 +267,18 @@ e_module_enable(E_Module *m)
    if (m->data)
      {
 	m->enabled = 1;
-	for (l = e_config->modules; l; l = l->next)
+	EINA_LIST_FOREACH(e_config->modules, l, em)
 	  {
-	     E_Config_Module *em;
-	     
-	     em = l->data;
 	     if (!em) continue;
 	     if (!e_util_strcmp(em->name, m->name))
 	       {
 		  em->enabled = 1;
 		  e_config_save_queue();
-		  
+
 		  ev = E_NEW(E_Event_Module_Update, 1);
 		  ev->name = strdup(em->name);
 		  ev->enabled = 1;
-		  ecore_event_add(E_EVENT_MODULE_UPDATE, ev, 
+		  ecore_event_add(E_EVENT_MODULE_UPDATE, ev,
 				  _e_module_event_update_free, NULL);
 		  break;
 	       }
@@ -295,29 +293,27 @@ e_module_disable(E_Module *m)
 {
    E_Event_Module_Update *ev;
    Eina_List *l;
+   E_Config_Module *em;
    int ret;
-   
+
    E_OBJECT_CHECK_RETURN(m, 0);
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
    if ((!m->enabled) || (m->error)) return 0;
    ret = m->func.shutdown(m);
    m->data = NULL;
    m->enabled = 0;
-   for (l = e_config->modules; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->modules, l, em)
      {
-	E_Config_Module *em;
-	
-	em = l->data;
 	if (!em) continue;
 	if (!e_util_strcmp(em->name, m->name))
 	  {
 	     em->enabled = 0;
 	     e_config_save_queue();
-	     
+
 	     ev = E_NEW(E_Event_Module_Update, 1);
 	     ev->name = strdup(em->name);
 	     ev->enabled = 0;
-	     ecore_event_add(E_EVENT_MODULE_UPDATE, ev, 
+	     ecore_event_add(E_EVENT_MODULE_UPDATE, ev,
 			     _e_module_event_update_free, NULL);
 	     break;
 	  }
@@ -337,20 +333,18 @@ EAPI int
 e_module_save_all(void)
 {
    Eina_List *l;
+   E_Module *m;
    int ret = 1;
-   
-   for (l = _e_modules; l; l = l->next) e_object_ref(E_OBJECT(l->data));
-   for (l = _e_modules; l; l = l->next)
-     {
-	E_Module *m;
-	
-	m = l->data;
+
+   EINA_LIST_FOREACH(_e_modules, l, m)
+      e_object_ref(E_OBJECT(m));
+   EINA_LIST_FOREACH(_e_modules, l, m)
 	if ((m->enabled) && (!m->error))
 	  {
 	     if (!m->func.save(m)) ret = 0;
 	  }
-     }
-   for (l = _e_modules; l; l = l->next) e_object_unref(E_OBJECT(l->data));
+   EINA_LIST_FOREACH(_e_modules, l, m)
+      e_object_unref(E_OBJECT(m));
    return ret;
 }
 
@@ -358,15 +352,11 @@ EAPI E_Module *
 e_module_find(const char *name)
 {
    Eina_List *l;
-   
+   E_Module *m;
+
    if (!name) return NULL;
-   for (l = _e_modules; l; l = l->next)
-     {
-	E_Module *m;
-	
-	m = l->data;
-	if (!e_util_strcmp(name, m->name)) return m;
-     }
+   EINA_LIST_FOREACH(_e_modules, l, m)
+      if (!e_util_strcmp(name, m->name)) return m;
    return NULL;
 }
 

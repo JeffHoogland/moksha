@@ -1110,7 +1110,7 @@ _apps_populate(void)
 		       
 		       if ((desktop) && (desktop->x))
 			 {
-			    icon = ecore_hash_get(desktop->x, "X-Application-Screenshot");
+			    icon = eina_hash_find(desktop->x, "X-Application-Screenshot");
 			    if (icon) icon = strdup(icon);
 			 }
 		       if ((!icon) && (subentry->icon))

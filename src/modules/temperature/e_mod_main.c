@@ -37,8 +37,8 @@ static void _temperature_face_cb_post_menu(void *data, E_Menu *m);
 static void _temperature_face_level_set(Config_Face *inst, double level);
 static void _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
-static Evas_Bool _temperature_face_shutdown(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *hdata, void *fdata __UNUSED__);
-static Evas_Bool _temperature_face_id_max(const Evas_Hash *hash __UNUSED__, const void *key, void *hdata __UNUSED__, void *fdata);
+static Eina_Bool _temperature_face_shutdown(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *hdata, void *fdata __UNUSED__);
+static Eina_Bool _temperature_face_id_max(const Eina_Hash *hash __UNUSED__, const void *key, void *hdata __UNUSED__, void *fdata);
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_face_edd = NULL;
@@ -54,7 +54,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    E_Gadcon_Client *gcc;
    Config_Face *inst;
 
-   inst = evas_hash_find(temperature_config->faces, id);
+   inst = eina_hash_find(temperature_config->faces, id);
    if (!inst)
      {
 	inst = E_NEW(Config_Face, 1);
@@ -65,7 +65,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 	inst->sensor_type = SENSOR_TYPE_NONE;
 	inst->sensor_name = NULL;
 	inst->units = CELCIUS;
-	temperature_config->faces = evas_hash_direct_add(temperature_config->faces, inst->id, inst);
+	if (!temperature_config->faces)
+	  temperature_config->faces = eina_hash_string_superfast_new(NULL);
+	eina_hash_direct_add(temperature_config->faces, inst->id, inst);
      }
    if (!inst->id) eina_stringshare_add(id);
    E_CONFIG_LIMIT(inst->poll_interval, 1, 1024);
@@ -174,7 +176,9 @@ _gc_id_new(E_Gadcon_Client_Class *client_class)
    inst->sensor_type = SENSOR_TYPE_NONE;
    inst->sensor_name = NULL;
    inst->units = CELCIUS;
-   temperature_config->faces = evas_hash_direct_add(temperature_config->faces, inst->id, inst);
+   if (!temperature_config->faces)
+     temperature_config->faces = eina_hash_string_superfast_new(NULL);
+   eina_hash_direct_add(temperature_config->faces, inst->id, inst);
    return inst->id;
 }
 
@@ -321,8 +325,8 @@ _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
    config_temperature_module(inst);
 }
 
-static Evas_Bool
-_temperature_face_shutdown(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *hdata, void *fdata __UNUSED__)
+static Eina_Bool
+_temperature_face_shutdown(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *hdata, void *fdata __UNUSED__)
 {
    Config_Face *inst;
 
@@ -330,11 +334,11 @@ _temperature_face_shutdown(const Evas_Hash *hash __UNUSED__, const void *key __U
    if (inst->sensor_name) eina_stringshare_del(inst->sensor_name);
    if (inst->id) eina_stringshare_del(inst->id);
    free(inst);
-   return 1;
+   return EINA_TRUE;
 }
 
-static Evas_Bool
-_temperature_face_id_max(const Evas_Hash *hash __UNUSED__, const void *key, void *hdata __UNUSED__, void *fdata)
+static Eina_Bool
+_temperature_face_id_max(const Eina_Hash *hash __UNUSED__, const void *key, void *hdata __UNUSED__, void *fdata)
 {
    const char *p;
    int *max;
@@ -344,7 +348,7 @@ _temperature_face_id_max(const Evas_Hash *hash __UNUSED__, const void *key, void
    p = strrchr(key, '.');
    if (p) num = atoi(p + 1);
    if (num > *max) *max = num;
-   return 1;
+   return EINA_TRUE;
 }
 
 void 
@@ -458,7 +462,7 @@ e_modapi_init(E_Module *m)
    if (!temperature_config)
      temperature_config = E_NEW(Config, 1);
    else
-     evas_hash_foreach(temperature_config->faces, _temperature_face_id_max, &uuid);
+     eina_hash_foreach(temperature_config->faces, _temperature_face_id_max, &uuid);
    temperature_config->module = m;
 
    e_gadcon_provider_register(&_gadcon_class);
@@ -469,8 +473,8 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    e_gadcon_provider_unregister(&_gadcon_class);
-   evas_hash_foreach(temperature_config->faces, _temperature_face_shutdown, NULL);
-   evas_hash_free(temperature_config->faces);
+   eina_hash_foreach(temperature_config->faces, _temperature_face_shutdown, NULL);
+   eina_hash_free(temperature_config->faces);
    free(temperature_config);
    temperature_config = NULL;
    E_CONFIG_DD_FREE(conf_face_edd);

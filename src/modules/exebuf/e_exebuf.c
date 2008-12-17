@@ -419,8 +419,14 @@ _e_exebuf_update(void)
    if (!cmd_buf[0]) return;
 
    desktop = efreet_util_desktop_exec_find(cmd_buf);
+   fprintf(stderr, "0 %p\n", desktop);
+   if (desktop) fprintf(stderr, "[%s]\n", desktop->icon);
    if (!desktop) desktop = efreet_util_desktop_name_find(cmd_buf);
+   fprintf(stderr, "1 %p\n", desktop);
+   if (desktop) fprintf(stderr, "[%s]\n", desktop->icon);
    if (!desktop) desktop = efreet_util_desktop_generic_name_find(cmd_buf);
+   fprintf(stderr, "2 %p\n", desktop);
+   if (desktop) fprintf(stderr, "[%s]\n", desktop->icon);
    if (desktop)
      {
 	o = e_util_desktop_icon_add(desktop, 24, exebuf->evas);
@@ -450,7 +456,7 @@ static void
 _e_exebuf_exec_term(void)
 {
    char tmp[EXEBUFLEN];
-   const char *active_cmd;
+   const char *active_cmd = NULL;
 
    if (exe_sel)
      {
@@ -462,7 +468,7 @@ _e_exebuf_exec_term(void)
    else
      active_cmd = cmd_buf;
 
-   if (active_cmd[0])
+   if (active_cmd && active_cmd[0])
      {
 	/* Copy the terminal command to the start of the string...
 	 * making sure it has a null terminator if greater than EXEBUFLEN */
@@ -978,14 +984,14 @@ static void
 _e_exebuf_matches_update(void)
 {
    char *path, *file, buf[4096];
-   Evas_Hash *added = NULL;
+   Eina_Hash *added = NULL;
    Ecore_List *list;
    Eina_List *l;
    int i, max;
-   
+
    _e_exebuf_matches_clear();
    if (!cmd_buf[0]) return;
-   
+
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = efreet_util_desktop_name_glob_list(buf);
    if (list)
@@ -1000,10 +1006,12 @@ _e_exebuf_matches_update(void)
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
-		  if (!evas_hash_find(added, exe))
+		  if (!eina_hash_find(added, exe))
 		    {
 		       eap_matches = eina_list_append(eap_matches, desktop);
-		       added = evas_hash_add(added, exe, desktop);
+		       if (!added)
+			 added = eina_hash_string_superfast_new(NULL);
+		       eina_hash_add(added, exe, desktop);
 		    }
 		  free(exe);
 	       }
@@ -1025,17 +1033,19 @@ _e_exebuf_matches_update(void)
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
-		  if (!evas_hash_find(added, exe))
+		  if (!eina_hash_find(added, exe))
 		    {
 		       eap_matches = eina_list_append(eap_matches, desktop);
-		       added = evas_hash_add(added, exe, desktop);
+		       if (!added)
+			 added = eina_hash_string_superfast_new(NULL);
+		       eina_hash_add(added, exe, desktop);
 		    }
 		  free(exe);
 	       }
 	  }
 	ecore_list_destroy(list);
      }
- 
+
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = efreet_util_desktop_generic_name_glob_list(buf);
    if (list)
@@ -1050,17 +1060,19 @@ _e_exebuf_matches_update(void)
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
-		  if (!evas_hash_find(added, exe))
+		  if (!eina_hash_find(added, exe))
 		    {
 		       eap_matches = eina_list_append(eap_matches, desktop);
-		       added = evas_hash_add(added, exe, desktop);
+		       if (!added)
+			 added = eina_hash_string_superfast_new(NULL);
+		       eina_hash_add(added, exe, desktop);
 		    }
 		  free(exe);
 	       }
 	  }
 	ecore_list_destroy(list);
      }
- 
+
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = efreet_util_desktop_comment_glob_list(buf);
    if (list)
@@ -1075,10 +1087,12 @@ _e_exebuf_matches_update(void)
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
-		  if (!evas_hash_find(added, exe))
+		  if (!eina_hash_find(added, exe))
 		    {
 		       eap_matches = eina_list_append(eap_matches, desktop);
-		       added = evas_hash_add(added, exe, desktop);
+		       if (!added)
+			 added = eina_hash_string_superfast_new(NULL);
+		       eina_hash_add(added, exe, desktop);
 		    }
 		  free(exe);
 	       }
@@ -1086,9 +1100,9 @@ _e_exebuf_matches_update(void)
 	ecore_list_destroy(list);
      }
 
-   if (added) evas_hash_free(added);
+   if (added) eina_hash_free(added);
    added = NULL;
-   
+
    snprintf(buf, sizeof(buf), "%s*", cmd_buf);
    if (exe_list)
      {
@@ -1102,20 +1116,22 @@ _e_exebuf_matches_update(void)
 	       {
 		  if (e_util_glob_match(file, buf))
 		    {
-		       if (!evas_hash_find(added, file))
+		       if (!eina_hash_find(added, file))
 			 {
 			    exe_matches = eina_list_append(exe_matches, strdup(file));
-			    added = evas_hash_direct_add(added, file, file);
+			    if (!added)
+			      added = eina_hash_string_superfast_new(NULL);
+			    eina_hash_direct_add(added, file, file);
 			 }
 		    }
 	       }
 	  }
      }
-   if (added) evas_hash_free(added);
+   if (added) eina_hash_free(added);
    added = NULL;
 
    eap_matches = eina_list_sort(eap_matches, eina_list_count(eap_matches), _e_exebuf_cb_sort_eap);
-   
+
    max = e_config->exebuf_max_eap_list;
    evas_event_thaw(exebuf->evas);
    e_box_freeze(eap_list_object);

@@ -31,7 +31,7 @@ static void _size_list_load(E_Config_Dialog_Data *cfdata, Eina_List *size_list, 
 static void _class_list_load(E_Config_Dialog_Data *cfdata);
 static void _font_preview_update(E_Config_Dialog_Data *cfdata);
 
-static Evas_Bool _font_hash_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
+static Eina_Bool _font_hash_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
 
 struct _E_Font_Size_Data
 {
@@ -116,7 +116,7 @@ struct _E_Config_Dialog_Data
    Eina_List	*text_classes;
 
    /* Font Data */
-   Evas_Hash    *font_hash;
+   Eina_Hash    *font_hash;
    Eina_List    *font_list;
    Eina_List    *font_px_list;
    Eina_List    *font_scale_list;
@@ -920,7 +920,7 @@ _adv_font_cb_change(void *data, Evas_Object *obj)
 	E_Font_Properties *efp;
 	Eina_List *next;
 
-	efp = evas_hash_find(cfdata->font_hash, cfdata->cur_font);
+	efp = eina_hash_find(cfdata->font_hash, cfdata->cur_font);
 	evas_event_freeze(evas_object_evas_get(cfdata->gui.style_list));
 	edje_freeze();
 	e_widget_ilist_freeze(cfdata->gui.style_list);

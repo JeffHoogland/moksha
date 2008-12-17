@@ -41,13 +41,13 @@ static Eina_List 	*_e_intl_language_dir_scan(const char *dir);
 static int 		 _e_intl_language_list_find(Eina_List *language_list, char *language);
 
 /* Locale Validation and Discovery */
-static Evas_Hash	*_e_intl_locale_alias_hash_get(void);
+static Eina_Hash	*_e_intl_locale_alias_hash_get(void);
 static char		*_e_intl_locale_alias_get(const char *language);
 static Eina_List	*_e_intl_locale_system_locales_get(void);
 static Eina_List	*_e_intl_locale_search_order_get(const char *locale);
 static int		 _e_intl_locale_validate(const char *locale);
-static void 		 _e_intl_locale_hash_free(Evas_Hash *language_hash);
-static Evas_Bool 	 _e_intl_locale_hash_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata);
+static void 		 _e_intl_locale_hash_free(Eina_Hash *language_hash);
+static Evas_Bool 	 _e_intl_locale_hash_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 
 /* Input Method Configuration and Management */
 static int 		 _e_intl_cb_exit(void *data, int type, void *event);
@@ -459,15 +459,15 @@ _e_intl_cb_exit(void *data, int type, void *event)
 }
 
 static void
-_e_intl_locale_hash_free(Evas_Hash *locale_hash)
+_e_intl_locale_hash_free(Eina_Hash *locale_hash)
 {
    if (!locale_hash) return;
-   evas_hash_foreach(locale_hash, _e_intl_locale_hash_free_cb, NULL);
-   evas_hash_free(locale_hash);
+   eina_hash_foreach(locale_hash, _e_intl_locale_hash_free_cb, NULL);
+   eina_hash_free(locale_hash);
 }
 
-static Evas_Bool
-_e_intl_locale_hash_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
+static Eina_Bool
+_e_intl_locale_hash_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    free(data);
    return 1;
@@ -576,7 +576,7 @@ _e_intl_language_dir_scan(const char *dir)
 static char *
 _e_intl_locale_alias_get(const char *language)
 {
-   Evas_Hash *alias_hash;
+   Eina_Hash *alias_hash;
    char *alias;
    char *lower_language;
    char *noenc_language;
@@ -594,7 +594,7 @@ _e_intl_locale_alias_get(const char *language)
      lower_language[i] = tolower(language[i]);
    lower_language[i] = 0;
 
-   alias = evas_hash_find(alias_hash, lower_language);
+   alias = eina_hash_find(alias_hash, lower_language);
    free(lower_language);
 
    if (alias)
@@ -607,12 +607,12 @@ _e_intl_locale_alias_get(const char *language)
    return alias;
 }
 
-static Evas_Hash *
+static Eina_Hash *
 _e_intl_locale_alias_hash_get(void)
 {
    Eina_List *next;
    Eina_List *dir_list;
-   Evas_Hash *alias_hash;
+   Eina_Hash *alias_hash;
 
    dir_list = e_path_dir_list_get(path_messages);
    alias_hash = NULL;
@@ -639,10 +639,11 @@ _e_intl_locale_alias_hash_get(void)
 		    continue;
 
 		  /* skip dupes */
-		  if (evas_hash_find(alias_hash, alias))
+		  if (eina_hash_find(alias_hash, alias))
 		    continue;
 
-		  alias_hash = evas_hash_add(alias_hash, alias, strdup(locale));
+		  if (!alias_hash) alias_hash = eina_hash_string_superfast_new(NULL);
+		  eina_hash_add(alias_hash, alias, strdup(locale));
 	       }
 	     fclose (f);
 	  }

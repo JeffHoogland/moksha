@@ -10,19 +10,19 @@ struct _E_Theme_Result
 {
    const char *file;
    const char *cache;
-   Evas_Hash  *quickfind;
+   Eina_Hash  *quickfind;
 };
 
-static Evas_Bool _e_theme_mappings_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata);
-static Evas_Bool _e_theme_mappings_quickfind_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata);
+static Eina_Bool _e_theme_mappings_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
+static Eina_Bool _e_theme_mappings_quickfind_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 static void      _e_theme_category_register(const char *category);
 static Eina_List *_e_theme_collection_item_register(Eina_List *list, const char *name);
 static Eina_List *_e_theme_collection_items_find(const char *base, const char *collname);
 
 
 /* local subsystem globals */
-static Evas_Hash *mappings = NULL;
-static Evas_Hash *group_cache = NULL;
+static Eina_Hash *mappings = NULL;
+static Eina_Hash *group_cache = NULL;
 
 static Eina_List *categories = NULL;
 static Eina_List *transitions = NULL;
@@ -38,8 +38,8 @@ e_theme_init(void)
    Eina_List *l = NULL;
 
    /* Register mime handler */
-   theme_hdl = e_fm2_mime_handler_new(_("Set As Theme"), "enlightenment/themes", 
-				      e_theme_handler_set, NULL, 
+   theme_hdl = e_fm2_mime_handler_new(_("Set As Theme"), "enlightenment/themes",
+				      e_theme_handler_set, NULL,
 				      e_theme_handler_test, NULL);
    if (theme_hdl) e_fm2_mime_handler_glob_add(theme_hdl, "*.edj");
 
@@ -62,6 +62,9 @@ e_theme_init(void)
    transitions = _e_theme_collection_items_find("base/theme/transitions", "e/transitions");
    borders = _e_theme_collection_items_find("base/theme/borders", "e/widgets/border");
    shelfs = _e_theme_collection_items_find("base/theme/shelf", "e/shelf");
+   if (!mappings)
+      mappings = eina_hash_string_superfast_new(NULL);
+   group_cache = eina_hash_string_superfast_new(NULL);
 
    return 1;
 }
@@ -69,20 +72,20 @@ e_theme_init(void)
 EAPI int
 e_theme_shutdown(void)
 {
-   if (theme_hdl) 
+   if (theme_hdl)
      {
 	e_fm2_mime_handler_glob_del(theme_hdl, "*.edj");
 	e_fm2_mime_handler_free(theme_hdl);
      }
    if (mappings)
      {
-	evas_hash_foreach(mappings, _e_theme_mappings_free_cb, NULL);
-	evas_hash_free(mappings);
+	eina_hash_foreach(mappings, _e_theme_mappings_free_cb, NULL);
+	eina_hash_free(mappings);
 	mappings = NULL;
      }
    if (group_cache)
      {
-	evas_hash_free(group_cache);
+	eina_hash_free(group_cache);
 	group_cache = NULL;
      }
    while (categories)
@@ -117,11 +120,11 @@ e_theme_edje_object_set(Evas_Object *o, const char *category, const char *group)
 
    /* find category -> edje mapping */
    _e_theme_category_register(category);
-   res = evas_hash_find(mappings, category);
+   res = eina_hash_find(mappings, category);
    if (res)
      {
 	const char *str;
-	
+
 	/* if found check cached path */
 	str = res->cache;
 	if (!str)
@@ -138,17 +141,17 @@ e_theme_edje_object_set(Evas_Object *o, const char *category, const char *group)
 	  {
 	     void *tres;
 	     int ok;
-	     
+
 	     snprintf(buf, sizeof(buf), "%s/::/%s", str, group);
-	     tres = evas_hash_find(group_cache, buf);
+	     tres = eina_hash_find(group_cache, buf);
 	     if (!tres)
 	       {
 		  ok = edje_object_file_set(o, str, group);
                   /* save in the group cache hash */
 		  if (ok)
-		    group_cache = evas_hash_add(group_cache, buf, res);
+		    eina_hash_add(group_cache, buf, res);
 		  else
-		    group_cache = evas_hash_add(group_cache, buf, (void *)1);
+		    eina_hash_add(group_cache, buf, (void *)1);
 	       }
 	     else if (tres == (void *)1)
 	       ok = 0;
@@ -183,11 +186,11 @@ e_theme_edje_file_get(const char *category, const char *group)
 
    /* find category -> edje mapping */
    _e_theme_category_register(category);
-   res = evas_hash_find(mappings, category);
+   res = eina_hash_find(mappings, category);
    if (res)
      {
 	const char *str;
-	
+
 	/* if found check cached path */
 	str = res->cache;
 	if (!str)
@@ -205,32 +208,33 @@ e_theme_edje_file_get(const char *category, const char *group)
 	     void *tres;
 	     Eina_List *coll, *l;
 	     int ok;
-	     
+
 	     snprintf(buf, sizeof(buf), "%s/::/%s", str, group);
-	     tres = evas_hash_find(group_cache, buf);
+	     tres = eina_hash_find(group_cache, buf);
 	     if (!tres)
 	       {
 		  /* if the group exists - return */
 		  if (!res->quickfind)
 		    {
+		       res->quickfind = eina_hash_string_superfast_new(NULL);
 		       /* great a quick find hash of all group entires */
 		       coll = edje_file_collection_list(str);
 		       for (l = coll; l; l = l->next)
 			 {
 			    q = eina_stringshare_add(l->data);
-			    res->quickfind = evas_hash_direct_add(res->quickfind, q, q);
+			    eina_hash_direct_add(res->quickfind, q, q);
 			 }
 		       if (coll) edje_file_collection_list_free(coll);
 		    }
 		  /* save in the group cache hash */
-		  if (evas_hash_find(res->quickfind, group))
+		  if (eina_hash_find(res->quickfind, group))
 		    {
-		       group_cache = evas_hash_add(group_cache, buf, res);
+		       eina_hash_add(group_cache, buf, res);
 		       ok = 1;
 		    }
 		  else
 		    {
-		       group_cache = evas_hash_add(group_cache, buf, (void *)1);
+		       eina_hash_add(group_cache, buf, (void *)1);
 		       ok = 0;
 		    }
 	       }
@@ -293,15 +297,15 @@ e_theme_file_set(const char *category, const char *file)
 
    if (group_cache)
      {
-	evas_hash_free(group_cache);
+	eina_hash_free(group_cache);
 	group_cache = NULL;
      }
    _e_theme_category_register(category);
-   res = evas_hash_find(mappings, category);
+   res = eina_hash_find(mappings, category);
    if (res)
      {
-	mappings = evas_hash_del(mappings, category, res);
-	if (res->file) 
+        eina_hash_del(mappings, category, res);
+	if (res->file)
 	  {
 	     e_filereg_deregister(res->file);
 	     eina_stringshare_del(res->file);
@@ -312,7 +316,9 @@ e_theme_file_set(const char *category, const char *file)
    res = calloc(1, sizeof(E_Theme_Result));
    res->file = eina_stringshare_add(file);
    e_filereg_register(res->file);
-   mappings = evas_hash_add(mappings, category, res);
+   if (!mappings)
+      mappings = eina_hash_string_superfast_new(NULL);
+   eina_hash_add(mappings, category, res);
 }
 
 EAPI int
@@ -470,11 +476,11 @@ e_theme_shelf_list(void)
    return shelfs;
 }
 
-EAPI void 
-e_theme_handler_set(Evas_Object *obj, const char *path, void *data) 
+EAPI void
+e_theme_handler_set(Evas_Object *obj, const char *path, void *data)
 {
    E_Action *a;
-   
+
    if (!path) return;
    e_theme_config_set("theme", path);
    e_config_save_queue();
@@ -482,35 +488,35 @@ e_theme_handler_set(Evas_Object *obj, const char *path, void *data)
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
-EAPI int 
-e_theme_handler_test(Evas_Object *obj, const char *path, void *data) 
+EAPI int
+e_theme_handler_test(Evas_Object *obj, const char *path, void *data)
 {
    if (!path) return 0;
-   if (!edje_file_group_exists(path, "e/widgets/border/default/border")) 
+   if (!edje_file_group_exists(path, "e/widgets/border/default/border"))
      return 0;
    return 1;
 }
 
 /* local subsystem functions */
 static Evas_Bool
-_e_theme_mappings_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata)
+_e_theme_mappings_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
    E_Theme_Result *res;
-   
+
    res = data;
    if (res->file) eina_stringshare_del(res->file);
    if (res->cache) eina_stringshare_del(res->cache);
    if (res->quickfind)
      {
-	evas_hash_foreach(res->quickfind, _e_theme_mappings_quickfind_free_cb, NULL);
-	evas_hash_free(res->quickfind);
+	eina_hash_foreach(res->quickfind, _e_theme_mappings_quickfind_free_cb, NULL);
+	eina_hash_free(res->quickfind);
      }
    free(res);
    return 1;
 }
 
 static Evas_Bool
-_e_theme_mappings_quickfind_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata)
+_e_theme_mappings_quickfind_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
    eina_stringshare_del(key);
    return 1;
@@ -549,17 +555,17 @@ _e_theme_collection_items_find(const char *base, const char *collname)
    E_Theme_Result *res;
    char *category, *p, *p2;
    int collname_len;
-   
+
    collname_len = strlen(collname);
    category = alloca(strlen(base) + 1);
    strcpy(category, base);
    do
      {
-	res = evas_hash_find(mappings, category);
+	res = eina_hash_find(mappings, category);
 	if (res)
 	  {
 	     const char *str;
-	     
+
 	     /* if found check cached path */
 	     str = res->cache;
 	     if (!str)

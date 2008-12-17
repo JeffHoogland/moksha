@@ -139,12 +139,12 @@ _e_volume_edd_new(void)
    eddc.func.list_data = (void *(*)(void *)) eina_list_data_get;
    eddc.func.hash_foreach =
      (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))
-     evas_hash_foreach;
-   eddc.func.hash_add = (void *(*) (void *, const char *, void *)) evas_hash_add;
-   eddc.func.hash_free = (void  (*) (void *)) evas_hash_free;
+     eina_hash_foreach;
+   eddc.func.hash_add = (void* (*) (void *, const char *, void *)) eet_eina_hash_add_alloc;
+   eddc.func.hash_free = (void  (*) (void *)) eina_hash_free;
    eddc.name = "e_volume";
    eddc.size = sizeof(E_Volume);
-   
+
    edd = eet_data_descriptor2_new(&eddc);
 #define DAT(x, y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, E_Volume, x, y, z)
    DAT("type", type, EET_T_INT);
@@ -179,12 +179,12 @@ _e_storage_edd_new(void)
    eddc.func.list_data = (void *(*)(void *)) eina_list_data_get;
    eddc.func.hash_foreach =
      (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))
-     evas_hash_foreach;
-   eddc.func.hash_add = (void *(*) (void *, const char *, void *)) evas_hash_add;
-   eddc.func.hash_free = (void  (*) (void *)) evas_hash_free;
+     eina_hash_foreach;
+   eddc.func.hash_add = (void* (*) (void *, const char *, void *)) eet_eina_hash_add_alloc;
+   eddc.func.hash_free = (void  (*) (Eina_Hash *)) eina_hash_free;
    eddc.name = "e_storage";
    eddc.size = sizeof(E_Storage);
-   
+
    edd = eet_data_descriptor2_new(&eddc);
 #define DAT(x, y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, E_Storage, x, y, z)
    DAT("type", type, EET_T_INT);

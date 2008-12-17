@@ -29,6 +29,15 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 #ifndef E_CONFIG_DATA_H
 #define E_CONFIG_DATA_H
 
+static inline Eina_Hash *
+eet_eina_hash_add_alloc(Eina_Hash *hash, const void *key, void *data)
+{
+   if (!hash) hash = eina_hash_string_superfast_new(NULL);
+   if (!hash) return NULL;
+   eina_hash_add(hash, key, data);
+   return hash;
+}
+
 EAPI E_Config_DD *e_config_descriptor_new(const char *name, int size);
 
 #endif

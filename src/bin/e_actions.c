@@ -2256,7 +2256,7 @@ ACT_FN_END_MOUSE(delayed_action)
 }
 
 /* local subsystem globals */
-static Evas_Hash *actions = NULL;
+static Eina_Hash *actions = NULL;
 static Eina_List *action_list = NULL;
 static Eina_List *action_names = NULL;
 static Eina_List *action_groups = NULL;
@@ -2268,8 +2268,9 @@ e_actions_init(void)
 {
    E_Action *act;
 
+   actions = eina_hash_string_superfast_new(NULL);
    ACT_GO(window_move);
-   e_action_predef_name_set(_("Window : Actions"), _("Move"), 
+   e_action_predef_name_set(_("Window : Actions"), _("Move"),
 			    "window_move", NULL, NULL, 0);
 
    ACT_GO_MOUSE(window_move);
@@ -2655,7 +2656,7 @@ e_actions_shutdown(void)
 {
    e_action_predef_name_all_del();
    action_names = eina_list_free(action_names);
-   evas_hash_free(actions);
+   eina_hash_free(actions);
    actions = NULL;
 
    E_FREE_LIST(action_list, e_object_del);
@@ -2672,14 +2673,14 @@ EAPI E_Action *
 e_action_add(const char *name)
 {
    E_Action *act;
-   
+
    act = e_action_find(name);
    if (!act)
      {
 	act = E_OBJECT_ALLOC(E_Action, E_ACTION_TYPE, _e_action_free);
 	if (!act) return NULL;
 	act->name = name;
-	actions = evas_hash_direct_add(actions, act->name, act);
+	eina_hash_direct_add(actions, act->name, act);
 	action_names = eina_list_append(action_names, name);
 	action_list = eina_list_append(action_list, act);
      }
@@ -2691,7 +2692,7 @@ e_action_del(const char *name)
 {
    E_Action *act;
 
-   act = evas_hash_find(actions, name);
+   act = eina_hash_find(actions, name);
    if (act)
      _e_action_free(act);
 }
@@ -2700,8 +2701,7 @@ EAPI E_Action *
 e_action_find(const char *name)
 {
    E_Action *act;
-   
-   act = evas_hash_find(actions, name);
+   act = eina_hash_find(actions, name);
    return act;
 }
 
@@ -2870,7 +2870,7 @@ e_action_groups_get(void)
 static void
 _e_action_free(E_Action *act)
 {
-   actions = evas_hash_del(actions, act->name, act);
+   eina_hash_del(actions, act->name, act);
    action_names = eina_list_remove(action_names, act->name);
    action_list = eina_list_remove(action_list, act);
    free(act);

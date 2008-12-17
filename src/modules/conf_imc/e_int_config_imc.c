@@ -36,8 +36,8 @@ static void         _e_imc_change_enqueue    (E_Config_Dialog_Data *cfdata);
 static void         _e_imc_entry_change_cb   (void *data, Evas_Object *obj);
 static void	    _e_imc_form_fill         (E_Config_Dialog_Data *cfdata);
 static const char*  _e_imc_file_name_new_get (void);
-static Evas_Bool    _change_hash_free_cb     (const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
-static Evas_Bool    _change_hash_apply_cb    (const Evas_Hash *hash __UNUSED__, const void *key, void *data, void *fdata __UNUSED__);
+static Eina_Bool    _change_hash_free_cb     (const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static Eina_Bool    _change_hash_apply_cb    (const Eina_Hash *hash __UNUSED__, const void *key, void *data, void *fdata __UNUSED__);
 
 struct _E_Config_Dialog_Data
 {
@@ -51,7 +51,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_frame; /* scrollpane for file manager*/
 
    char *imc_current;
-   Evas_Hash *imc_basic_map;
+   Eina_Hash *imc_basic_map;
 
    int imc_disable; /* 0=enable, 1=disable */
    int fmdir; /* 0=Local, 1=System*/
@@ -67,7 +67,7 @@ struct _E_Config_Dialog_Data
 	char *xmodifiers;
      } imc;
 
-   Evas_Hash *imc_change_map;
+   Eina_Hash *imc_change_map;
 
    struct
      {
@@ -142,8 +142,8 @@ _create_data(E_Config_Dialog *cfd)
    return cfdata;
 }
 
-static Evas_Bool
-_change_hash_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
+static Eina_Bool
+_change_hash_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    E_Input_Method_Config *imc;
 
@@ -161,14 +161,14 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    if (cfdata->imc_basic_map)
      {
-	evas_hash_foreach(cfdata->imc_basic_map, _change_hash_free_cb, NULL);
-	evas_hash_free(cfdata->imc_basic_map);
+	eina_hash_foreach(cfdata->imc_basic_map, _change_hash_free_cb, NULL);
+	eina_hash_free(cfdata->imc_basic_map);
      }
 
    if (cfdata->imc_change_map)
      {
-	evas_hash_foreach(cfdata->imc_change_map, _change_hash_free_cb, NULL);
-	evas_hash_free(cfdata->imc_change_map);
+	eina_hash_foreach(cfdata->imc_change_map, _change_hash_free_cb, NULL);
+	eina_hash_free(cfdata->imc_change_map);
      }
    cfdata->imc_change_map = NULL;
 
@@ -245,7 +245,7 @@ _e_imc_list_change_cb(void *data, Evas_Object *obj)
 
    if (cfdata->imc_current)
      {
-	imc = evas_hash_find(cfdata->imc_basic_map, cfdata->imc_current);
+	imc = eina_hash_find(cfdata->imc_basic_map, cfdata->imc_current);
 	_e_imc_setup_button_toggle(cfdata->gui.imc_basic_setup, imc);
      }
 }
@@ -260,7 +260,7 @@ _e_imc_setup_cb(void *data, void *data2)
      {
 	E_Input_Method_Config *imc;
 
-	imc = evas_hash_find(cfdata->imc_basic_map, cfdata->imc_current);
+	imc = eina_hash_find(cfdata->imc_basic_map, cfdata->imc_current);
 
 	if ((imc) && (imc->e_im_setup_exec))
 	  {
@@ -324,8 +324,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    if (cfdata->imc_basic_map)
      {
-	evas_hash_foreach(cfdata->imc_basic_map, _change_hash_free_cb, NULL);
-	evas_hash_free(cfdata->imc_basic_map);
+	eina_hash_foreach(cfdata->imc_basic_map, _change_hash_free_cb, NULL);
+	eina_hash_free(cfdata->imc_basic_map);
 	cfdata->imc_basic_map = NULL;
      }
 
@@ -361,14 +361,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		    e_widget_ilist_selected_set(cfdata->gui.imc_basic_list, i);
 		  i++;
 
-		  cfdata->imc_basic_map = evas_hash_add(cfdata->imc_basic_map, imc_path, imc);
+		  if (!cfdata->imc_basic_map)
+		    cfdata->imc_basic_map = eina_hash_string_superfast_new(NULL);
+		  eina_hash_add(cfdata->imc_basic_map, imc_path, imc);
 	       }
 	  }
 	free(imc_path);
 	imc_basic_list = eina_list_remove_list(imc_basic_list, imc_basic_list);
      }
 
-   _e_imc_setup_button_toggle(cfdata->gui.imc_basic_setup, evas_hash_find(cfdata->imc_basic_map, cfdata->imc_current));
+   _e_imc_setup_button_toggle(cfdata->gui.imc_basic_setup, eina_hash_find(cfdata->imc_basic_map, cfdata->imc_current));
 
    e_widget_ilist_go(ob);
    e_widget_ilist_thaw(ob);
@@ -384,8 +386,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 /*** End Basic Dialog Logic ***/
 
 /*** Start Advanced Dialog Logic ***/
-static Evas_Bool
-_change_hash_apply_cb(const Evas_Hash *hash __UNUSED__, const void *key, void *data, void *fdata __UNUSED__)
+static Eina_Bool
+_change_hash_apply_cb(const Eina_Hash *hash __UNUSED__, const void *key, void *data, void *fdata __UNUSED__)
 {
    E_Input_Method_Config *imc;
    Eet_File *ef;
@@ -419,8 +421,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    if (cfdata->imc_change_map)
      {
-	evas_hash_foreach(cfdata->imc_change_map, _change_hash_apply_cb, NULL);
-	evas_hash_free(cfdata->imc_change_map);
+	eina_hash_foreach(cfdata->imc_change_map, _change_hash_apply_cb, NULL);
+	eina_hash_free(cfdata->imc_change_map);
      }
    cfdata->imc_change_map = NULL;
    return 1;
@@ -673,7 +675,7 @@ _e_imc_form_fill(E_Config_Dialog_Data *cfdata)
      }
 
    imc_free = 0;
-   imc = evas_hash_find(cfdata->imc_change_map, cfdata->imc_current);
+   imc = eina_hash_find(cfdata->imc_change_map, cfdata->imc_current);
 
    if (!imc)
      {
@@ -731,14 +733,16 @@ _e_imc_change_enqueue(E_Config_Dialog_Data *cfdata)
         imc_update->xmodifiers = eina_stringshare_add(cfdata->imc.xmodifiers);
 
 	/* look for changes to this file and remove them */
-	imc_update_old = evas_hash_find(cfdata->imc_change_map, cfdata->imc_current);
+	imc_update_old = eina_hash_find(cfdata->imc_change_map, cfdata->imc_current);
 	if (imc_update_old)
 	  {
-	     cfdata->imc_change_map = evas_hash_del(cfdata->imc_change_map, cfdata->imc_current, NULL);
+	     eina_hash_del(cfdata->imc_change_map, cfdata->imc_current, NULL);
 	     e_intl_input_method_config_free(imc_update_old);
 
 	  }
-	cfdata->imc_change_map = evas_hash_add(cfdata->imc_change_map, cfdata->imc_current, imc_update);
+	if (!cfdata->imc_change_map)
+	  cfdata->imc_change_map = eina_hash_string_superfast_new(NULL);
+	eina_hash_add(cfdata->imc_change_map, cfdata->imc_current, imc_update);
      }
 }
 

@@ -90,7 +90,7 @@ static void _e_fwin_cb_exec_cmd_changed(void *data, void *data2);
 static void _e_fwin_cb_open(void *data, E_Dialog *dia);
 static void _e_fwin_cb_close(void *data, E_Dialog *dia);
 static void _e_fwin_cb_dialog_free(void *obj);
-static Evas_Bool _e_fwin_cb_hash_foreach(const Evas_Hash *hash __UNUSED__, const void *key, void *data __UNUSED__, void *fdata);
+static Eina_Bool _e_fwin_cb_hash_foreach(const Eina_Hash *hash __UNUSED__, const void *key, void *data __UNUSED__, void *fdata);
 static E_Fwin_Exec_Type _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici);
 static void _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext);
 static void _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always);
@@ -566,7 +566,7 @@ _e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev
    const char *res, *ret = NULL;
    
    /* get a X-something custom tage from the .desktop for the dir */
-   res = ecore_hash_get(ef->x, key);
+   res = eina_hash_find(ef->x, key);
    /* free the old path */
    if (prev_path) eina_stringshare_del(prev_path);
    /* if there was no key found - return NULL */
@@ -932,8 +932,8 @@ _e_fwin_cb_dialog_free(void *obj)
    E_FREE(fad);
 }
 
-static Evas_Bool
-_e_fwin_cb_hash_foreach(const Evas_Hash *hash __UNUSED__, const void *key, void *data __UNUSED__, void *fdata)
+static Eina_Bool
+_e_fwin_cb_hash_foreach(const Eina_Hash *hash __UNUSED__, const void *key, void *data __UNUSED__, void *fdata)
 {
    Eina_List **mlist;
    
@@ -1075,7 +1075,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
    Evas *evas;
    Eina_List *l = NULL, *apps = NULL, *mlist = NULL;
    Ecore_List *cats = NULL;
-   Evas_Hash *mimes = NULL;
+   Eina_Hash *mimes = NULL;
    Efreet_Desktop *desk = NULL;
    E_Fwin_Apps_Dialog *fad;
    E_Fm2_Icon_Info *ici;
@@ -1298,15 +1298,19 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 		  if (ici->link)
 		    {
 		      f = e_fm_mime_filename_get(ici->link);
-		      mimes = evas_hash_del(mimes, f, (void *)1);
-		      mimes = evas_hash_direct_add(mimes, f, (void *)1);
+		      eina_hash_del(mimes, f, (void *)1);
+		      if (!mimes)
+			mimes = eina_hash_string_superfast_new(NULL);
+		      eina_hash_direct_add(mimes, f, (void *)1);
 		    }
 		  else
 		    {
 		      snprintf(buf, sizeof(buf), "%s/%s",
 			       e_fm2_real_path_get(fwin->fm_obj), ici->file);
-		      mimes = evas_hash_del(mimes, ici->mime, (void *)1);
-		      mimes = evas_hash_direct_add(mimes, ici->mime, (void *)1);
+		      eina_hash_del(mimes, ici->mime, (void *)1);
+		      if (!mimes)
+			mimes = eina_hash_string_superfast_new(NULL);
+		      eina_hash_direct_add(mimes, ici->mime, (void *)1);
 		    }
 	       }
 	  }
@@ -1314,8 +1318,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
    /* 2. for each mimetype list apps that handle it */
    if (mimes)
      {
-	evas_hash_foreach(mimes, _e_fwin_cb_hash_foreach, &mlist);
-	evas_hash_free(mimes);
+	eina_hash_foreach(mimes, _e_fwin_cb_hash_foreach, &mlist);
+	eina_hash_free(mimes);
      }
    /* 3. add apps to a list so its a unique app list */
    apps = NULL;
@@ -1707,6 +1711,7 @@ _e_fwin_config_set(E_Fwin *fwin)
    fmc.selection.single = 0;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(fwin->fm_obj, &fmc);
+   e_fm2_icon_menu_flags_set(fwin->fm_obj, E_FM2_MENU_NO_VIEW_MENU);
 }
 
 static void 

@@ -107,7 +107,7 @@ static void _e_border_hook_call(E_Border_Hook_Point hookpoint, E_Border *bd);
 /* local subsystem globals */
 static Eina_List *handlers = NULL;
 static Eina_List *borders = NULL;
-static Evas_Hash *borders_hash = NULL;
+static Eina_Hash *borders_hash = NULL;
 static E_Border  *focused = NULL;
 
 static E_Border    *resize = NULL;
@@ -183,11 +183,11 @@ e_border_init(void)
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_POINTER_WARP, _e_border_cb_pointer_warp, NULL));
-
    handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_LIST_CHANGE, _e_border_cb_efreet_desktop_list_change, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, _e_border_cb_efreet_desktop_change, NULL));
-
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME, _e_border_cb_config_icon_theme, NULL));
+
+   if (!borders_hash) borders_hash = eina_hash_string_superfast_new(NULL);
 
    E_EVENT_BORDER_ADD = ecore_event_type_new();
    E_EVENT_BORDER_REMOVE = ecore_event_type_new();
@@ -217,6 +217,9 @@ EAPI int
 e_border_shutdown(void)
 {
    E_FREE_LIST(handlers, ecore_event_handler_del);
+
+   if (borders_hash) eina_hash_free(borders_hash);
+   borders_hash = NULL;
 
    return 1;
 }
@@ -471,7 +474,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
     */
 /*   ecore_x_window_reparent(win, bd->client.shell_win, 0, 0); */
    bd->need_reparent = 1;
-   
+
    ecore_x_window_border_width_set(win, 0);
    ecore_x_window_show(bd->event_win);
    ecore_x_window_show(bd->client.shell_win);
@@ -486,7 +489,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    bd->desk = e_desk_current_get(bd->zone);
    e_container_border_add(bd);
    borders = eina_list_append(borders, bd);
-   bd2 = evas_hash_find(borders_hash, e_util_winid_str_get(bd->client.win));
+   bd2 = eina_hash_find(borders_hash, e_util_winid_str_get(bd->client.win));
    if (bd2)
      {
 	printf("EEEEK! 2 borders with same client window id in them! very bad!\n");
@@ -495,13 +498,13 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 	printf("bd=%p, bd->references=%i, bd->deleted=%i, bd->client.win=%x\n",
 	       bd2, bd2->e_obj_inherit.references, bd2->e_obj_inherit.deleted,
 	       bd2->client.win);
-	borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd->client.win), bd2);
-	borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd2->bg_win), bd2);
-	borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd2->win), bd2);
+	eina_hash_del(borders_hash, e_util_winid_str_get(bd->client.win), bd2);
+	eina_hash_del(borders_hash, e_util_winid_str_get(bd2->bg_win), bd2);
+	eina_hash_del(borders_hash, e_util_winid_str_get(bd2->win), bd2);
      }
-   borders_hash = evas_hash_add(borders_hash, e_util_winid_str_get(bd->client.win), bd);
-   borders_hash = evas_hash_add(borders_hash, e_util_winid_str_get(bd->bg_win), bd);
-   borders_hash = evas_hash_add(borders_hash, e_util_winid_str_get(bd->win), bd);
+   eina_hash_add(borders_hash, e_util_winid_str_get(bd->client.win), bd);
+   eina_hash_add(borders_hash, e_util_winid_str_get(bd->bg_win), bd);
+   eina_hash_add(borders_hash, e_util_winid_str_get(bd->win), bd);
    managed = 1;
    ecore_x_window_prop_card32_set(win, E_ATOM_MANAGED, &managed, 1);
    ecore_x_window_prop_card32_set(win, E_ATOM_CONTAINER, &bd->zone->container->num, 1);
@@ -2401,40 +2404,40 @@ e_border_unstick(E_Border *bd)
 }
 
 EAPI void
-e_border_pinned_set(E_Border *bd, int set) 
+e_border_pinned_set(E_Border *bd, int set)
 {
   int layer;
-  int stacking; 
+  int stacking;
 
-   if (bd) 
-     { 
-	bd->borderless = set; 
-	bd->user_skip_winlist = set; 
-	if (set) 
-	  { 
+   if (bd)
+     {
+	bd->borderless = set;
+	bd->user_skip_winlist = set;
+	if (set)
+	  {
 	     layer = 50;
 	     stacking = E_STACKING_BELOW;
-	  } 
-	else 
-	  { 
+	  }
+	else
+	  {
 	     layer = 100;
 	     stacking = E_STACKING_NONE;
-	  } 
-	
-	e_border_layer_set(bd, layer); 
-	e_hints_window_stacking_set(bd, stacking); 
+	  }
 
-	bd->client.border.changed = 1; 
-	bd->changed = 1; 
-     } 
-} 
+	e_border_layer_set(bd, layer);
+	e_hints_window_stacking_set(bd, stacking);
+
+	bd->client.border.changed = 1;
+	bd->changed = 1;
+     }
+}
 
 EAPI E_Border *
 e_border_find_by_client_window(Ecore_X_Window win)
 {
    E_Border *bd;
-   
-   bd = evas_hash_find(borders_hash, e_util_winid_str_get(win));
+
+   bd = eina_hash_find(borders_hash, e_util_winid_str_get(win));
    if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
        (bd->client.win == win))
      return bd;
@@ -2445,8 +2448,8 @@ EAPI E_Border *
 e_border_find_all_by_client_window(Ecore_X_Window win)
 {
    E_Border *bd;
-   
-   bd = evas_hash_find(borders_hash, e_util_winid_str_get(win));
+
+   bd = eina_hash_find(borders_hash, e_util_winid_str_get(win));
    if ((bd) && (bd->client.win == win))
      return bd;
    return NULL;
@@ -2456,8 +2459,8 @@ EAPI E_Border *
 e_border_find_by_frame_window(Ecore_X_Window win)
 {
    E_Border *bd;
-   
-   bd = evas_hash_find(borders_hash, e_util_winid_str_get(win));
+
+   bd = eina_hash_find(borders_hash, e_util_winid_str_get(win));
    if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
        (bd->bg_win == win))
      return bd;
@@ -2468,8 +2471,8 @@ EAPI E_Border *
 e_border_find_by_window(Ecore_X_Window win)
 {
    E_Border *bd;
-   
-   bd = evas_hash_find(borders_hash, e_util_winid_str_get(win));
+
+   bd = eina_hash_find(borders_hash, e_util_winid_str_get(win));
    if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
        (bd->win == win))
      return bd;
@@ -3709,13 +3712,13 @@ _e_border_free(E_Border *bd)
    e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
    ecore_x_window_del(bd->win);
 
-   borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd->client.win), bd);
-   borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd->bg_win), bd);
-   borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd->win), bd);
+   eina_hash_del(borders_hash, e_util_winid_str_get(bd->client.win), bd);
+   eina_hash_del(borders_hash, e_util_winid_str_get(bd->bg_win), bd);
+   eina_hash_del(borders_hash, e_util_winid_str_get(bd->win), bd);
    borders = eina_list_remove(borders, bd);
    focus_stack = eina_list_remove(focus_stack, bd);
    raise_stack = eina_list_remove(raise_stack, bd);
-   
+
    e_container_border_remove(bd);
    free(bd);
 }

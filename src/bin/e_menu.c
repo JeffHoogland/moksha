@@ -86,14 +86,14 @@ static int  _e_menu_cb_scroll_animator            (void *data);
 static int  _e_menu_cb_window_shape               (void *data, int ev_type, void *ev);
 
 static void _e_menu_cb_item_submenu_post_default  (void *data, E_Menu *m, E_Menu_Item *mi);
-static Evas_Bool _e_menu_categories_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata);
+static Evas_Bool _e_menu_categories_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 
 /* local subsystem globals */
 static Ecore_X_Window       _e_menu_win                 = 0;
 static Eina_List           *_e_active_menus             = NULL;
 static E_Menu_Item         *_e_active_menu_item         = NULL;
-/*static Evas_Hash	   *_e_menu_category_items	= NULL;*/
-static Evas_Hash	   *_e_menu_categories		= NULL;
+/*static Eina_Hash	   *_e_menu_category_items	= NULL;*/
+static Eina_Hash	   *_e_menu_categories		= NULL;
 static Ecore_X_Time         _e_menu_activate_time       = 0;
 static int                  _e_menu_activate_floating   = 0;
 static int                  _e_menu_activate_maybe_drag = 0;
@@ -124,6 +124,7 @@ e_menu_init(void)
    _e_menu_mouse_move_handler   = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,        _e_menu_cb_mouse_move,  NULL);
    _e_menu_mouse_wheel_handler  = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,       _e_menu_cb_mouse_wheel, NULL);
    _e_menu_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,     _e_menu_cb_window_shape, NULL);
+   _e_menu_categories = eina_hash_string_superfast_new(NULL);
    return 1;
 }
 
@@ -153,11 +154,11 @@ e_menu_shutdown(void)
    _e_active_menus = NULL;
    if (_e_menu_categories)
      {
-	evas_hash_foreach(_e_menu_categories, _e_menu_categories_free_cb, NULL);
-	evas_hash_free(_e_menu_categories);
+	eina_hash_foreach(_e_menu_categories, _e_menu_categories_free_cb, NULL);
+	eina_hash_free(_e_menu_categories);
 	_e_menu_categories = NULL;
      }
-  
+
    return 1;
 }
 
@@ -438,15 +439,15 @@ EAPI void
 e_menu_category_data_set(char *category, void *data)
 {
    E_Menu_Category *cat;
-   
-   cat = evas_hash_find(_e_menu_categories, category);
+
+   cat = eina_hash_find(_e_menu_categories, category);
    if (cat)
    	cat->data = data;
    else   /* if it isnt found create the new hash */
      {
 	cat = calloc(1, sizeof(E_Menu_Category));
 	cat->data = data;
-	_e_menu_categories = evas_hash_add(_e_menu_categories, category, cat);
+	eina_hash_add(_e_menu_categories, category, cat);
      }
 }
 
@@ -455,12 +456,12 @@ e_menu_category_callback_add(char *category, void (*create) (E_Menu *m, void *ca
 {
    E_Menu_Category *cat;
    E_Menu_Category_Callback *cb = NULL;
-   
-   cat = evas_hash_find(_e_menu_categories, category);
+
+   cat = eina_hash_find(_e_menu_categories, category);
    if (!cat)   /* if it isnt found create the new hash */
      {
 	cat = calloc(1, sizeof(E_Menu_Category));
-	_e_menu_categories = evas_hash_add(_e_menu_categories, category, cat);
+	eina_hash_add(_e_menu_categories, category, cat);
      }
    if (cat)
       {
@@ -484,7 +485,7 @@ e_menu_category_callback_del(E_Menu_Category_Callback *cb)
 
    if (cb)
       {
-         cat = evas_hash_find(_e_menu_categories, cb->category);
+         cat = eina_hash_find(_e_menu_categories, cb->category);
 	 if (cat)
             cat->callbacks = eina_list_remove(cat->callbacks, cb);
          eina_stringshare_del(cb->category);
@@ -1021,9 +1022,9 @@ _e_menu_free(E_Menu *m)
 {
    Eina_List *l, *tmp;
    E_Menu_Category *cat;
-   
+
    /* the foreign menu items */
-   cat = evas_hash_find(_e_menu_categories, m->category);
+   cat = eina_hash_find(_e_menu_categories, m->category);
    if (cat)
      {
 	for (l = cat->callbacks; l; l = l->next)
@@ -2875,11 +2876,11 @@ _e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi)
 
 
 static Evas_Bool
-_e_menu_categories_free_cb(const Evas_Hash *hash, const void *key, void *data, void *fdata)
+_e_menu_categories_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
    Eina_List *l;
    E_Menu_Category *cat;
-   
+
    cat = (E_Menu_Category *) data;
    l = (Eina_List *) cat->callbacks;
    while (l)

@@ -36,8 +36,8 @@ struct _E_Kbd_Dict
       Eina_List *letters;
    } word;
    struct {
-      Evas_Hash *deadends;
-      Evas_Hash *leads;
+      Eina_Hash *deadends;
+      Eina_Hash *leads;
       Eina_List *list;
       Eina_List *list_ptr;
    } matches;

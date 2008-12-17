@@ -23,7 +23,7 @@ static int auth_etc_enlightenment_sysactions(char *a, char *u, char **g);
 static char *get_word(char *s, char *d);
 
 /* local subsystem globals */
-static Eina_Hash *actions;
+static Eina_Hash *actions = NULL;
 
 /* externally accessible functions */
 int
@@ -79,7 +79,6 @@ main(int argc, char **argv)
      }
    
    eina_init();
-   actions = eina_hash_string_superfast_new(NULL);
 
    if (!auth_action_ok(action, uid, gid, gl, gn, egid))
      {
@@ -95,8 +94,7 @@ main(int argc, char **argv)
 	exit(20);
      }
    if (!test) return system(cmd);
-
-   eina_hash_free(actions);
+   
    eina_shutdown();
    
    return 0;
@@ -220,11 +218,8 @@ auth_etc_enlightenment_sysactions(char *a, char *u, char **g)
 	  {
 	     while ((*pp) && (isspace(*pp))) pp++;
 	     s = eina_hash_find(actions, ugname);
-	     if (s)
-	       {
-		  eina_hash_del(actions, ugname, s);
-		  free(s);
-	       }
+	     if (s) eina_hash_del(actions, ugname, s);
+	     if (!actions) actions = eina_hash_string_superfast_new(free);
 	     eina_hash_add(actions, ugname, strdup(pp));
 	     continue;
 	  }

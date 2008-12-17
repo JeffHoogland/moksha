@@ -15,7 +15,7 @@ static int _e_manager_cb_ping(void *data, int ev_type, void *ev);
 static int _e_manager_cb_screensaver_notify(void *data, int ev_type, void *ev);
 static int _e_manager_cb_client_message(void *data, int ev_type, void *ev);
 
-static Evas_Bool _e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__,
+static Eina_Bool _e_manager_frame_extents_free_cb(const Eina_Hash *hash __UNUSED__,
 						  const void *key __UNUSED__,
 						  void *data, void *fdata __UNUSED__);
 static E_Manager *_e_manager_get_for_root(Ecore_X_Window root);
@@ -44,13 +44,14 @@ struct _Frame_Extents
 };
 
 static Eina_List *managers = NULL;
-static Evas_Hash *frame_extents = NULL;
-    
+static Eina_Hash *frame_extents = NULL;
+
 /* externally accessible functions */
 EAPI int
 e_manager_init(void)
 {
    ecore_x_screensaver_event_listen_set(1);
+   frame_extents = eina_hash_string_superfast_new(NULL);
    return 1;
 }
 
@@ -68,8 +69,8 @@ e_manager_shutdown(void)
      }
    if (frame_extents)
      {
-	evas_hash_foreach(frame_extents, _e_manager_frame_extents_free_cb, NULL);
-	evas_hash_free(frame_extents);
+	eina_hash_foreach(frame_extents, _e_manager_frame_extents_free_cb, NULL);
+	eina_hash_free(frame_extents);
 	frame_extents = NULL;
      }
    return 1;
@@ -712,7 +713,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 	free(state);
      }
 
-   extents = evas_hash_find(frame_extents, key);
+   extents = eina_hash_find(frame_extents, key);
    if (!extents)
      {
 	extents = E_NEW(Frame_Extents, 1);
@@ -751,7 +752,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 		  extents->b = 0;
 	       }
 	     evas_object_del(o);
-	     frame_extents = evas_hash_add(frame_extents, key, extents);
+	     eina_hash_add(frame_extents, key, extents);
 	  }
      }
 
@@ -852,12 +853,12 @@ _e_manager_cb_client_message(void *data, int ev_type, void *ev)
 	       }
 	  }
      }
-   
+
    return 1;
 }
 
-static Evas_Bool
-_e_manager_frame_extents_free_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__,
+static Eina_Bool
+_e_manager_frame_extents_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
 				 void *data, void *fdata __UNUSED__)
 {
    free(data);
