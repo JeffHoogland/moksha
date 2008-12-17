@@ -118,7 +118,6 @@ _e_mod_menu_add(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
 
-   fprintf(stderr, "Adding SYSCON menu !!\n");
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("System"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/system");
