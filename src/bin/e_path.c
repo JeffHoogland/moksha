@@ -257,10 +257,10 @@ e_path_find(E_Path *ep, const char *file)
 	     snprintf(buf, sizeof(buf), "%s/%s", epd->dir, file);
 	     if (ecore_file_exists(buf))
 	       {
-		  if (eina_hash_population(ep->hash) >= 512)
-		    _e_path_cache_free(ep);
 		  if (!ep->hash)
 		    ep->hash = eina_hash_string_superfast_new(NULL);
+		  if (eina_hash_population(ep->hash) >= 512)
+		    _e_path_cache_free(ep);
 		  eina_hash_add(ep->hash, file,
 				eina_stringshare_add(buf));
 		  return eina_stringshare_add(buf);
@@ -278,10 +278,10 @@ e_path_find(E_Path *ep, const char *file)
 	     snprintf(buf, sizeof(buf), "%s/%s", epd->dir, file);
 	     if (ecore_file_exists(buf))
 	       {
-		  if (eina_hash_population(ep->hash) >= 512)
-		    _e_path_cache_free(ep);
 		  if (!ep->hash)
 		    ep->hash = eina_hash_string_superfast_new(NULL);
+		  if (eina_hash_population(ep->hash) >= 512)
+		    _e_path_cache_free(ep);
 		  eina_hash_add(ep->hash, file,
 				eina_stringshare_add(buf));
 		  return eina_stringshare_add(buf);
