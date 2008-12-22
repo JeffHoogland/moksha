@@ -49,16 +49,16 @@ struct _E_Kbd_Int
    } down;
    struct {
       E_Popup          *popup;
-      Evas_Object      *base_obj, *scrollframe_obj, *ilist_obj;
+      Evas_Object      *base_obj, *ilist_obj;
    } layoutlist;
    struct {
       E_Popup          *popup;
-      Evas_Object      *base_obj, *scrollframe_obj, *ilist_obj;
+      Evas_Object      *base_obj, *ilist_obj;
       Eina_List        *matches;
    } matchlist;
    struct {
       E_Popup          *popup;
-      Evas_Object      *base_obj, *scrollframe_obj, *ilist_obj;
+      Evas_Object      *base_obj, *ilist_obj;
       Eina_List        *matches;
    } dictlist;
    struct {

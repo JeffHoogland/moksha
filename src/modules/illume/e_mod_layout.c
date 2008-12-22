@@ -3,6 +3,7 @@
 #include "e_mod_layout.h"
 #include "e_kbd.h"
 #include "e_cfg.h"
+#include "e_slipshelf.h"
 
 /* FIXME: THIS CODE IS UGLY. MUST FIX!!!!! */
 

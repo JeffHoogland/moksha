@@ -3,6 +3,7 @@
 #include "e_kbd_int.h"
 #include "e_kbd_send.h"
 #include "e_cfg.h"
+#include "e_slipshelf.h"
 
 enum {
    NORMAL   = 0,
@@ -348,6 +349,8 @@ _e_kbd_int_matches_update(E_Kbd_Int *ki)
    edje_extern_object_min_size_set(ki->box_obj, 0, mh);
    edje_object_part_swallow(ki->base_obj, "e.swallow.label", ki->box_obj);
    evas_event_thaw(ki->win->evas);
+   
+   _e_kbd_int_matchlist_down(ki);
 }
 
 static void
@@ -376,7 +379,6 @@ _e_kbd_int_key_press_handle(E_Kbd_Int *ki, Evas_Coord dx, Evas_Coord dy)
 	else ki->layout.state |= CTRL;
 	if (e_kbd_buf_actual_string_get(ki->kbuf)) _e_kbd_int_buf_send(ki);
 	e_kbd_buf_clear(ki->kbuf);
-	ki->layout.state |= CTRL;
 	_e_kbd_int_layout_state_update(ki);
 	_e_kbd_int_matches_update(ki);
 	return;
@@ -387,7 +389,6 @@ _e_kbd_int_key_press_handle(E_Kbd_Int *ki, Evas_Coord dx, Evas_Coord dy)
 	else ki->layout.state |= ALT;
 	if (e_kbd_buf_actual_string_get(ki->kbuf)) _e_kbd_int_buf_send(ki);
 	e_kbd_buf_clear(ki->kbuf);
-	ki->layout.state |= ALT;
 	_e_kbd_int_layout_state_update(ki);
 	_e_kbd_int_matches_update(ki);
 	return;
@@ -1070,6 +1071,7 @@ _e_kbd_int_layout_build(E_Kbd_Int *ki)
    evas_object_show(o);
    ki->event_obj = o;
    evas_event_thaw(ki->win->evas);
+   _e_kbd_int_matchlist_down(ki);
 }
 
 static void
@@ -1358,13 +1360,15 @@ _e_kbd_int_dictlist_down(E_Kbd_Int *ki)
 }
 
 static void
-_e_kbd_int_cb_dictlist_item_sel(void *data, void *data2)
+_e_kbd_int_cb_dictlist_item_sel(void *data)
 {
    E_Kbd_Int *ki;
    const char *str;
+   int i;
    
    ki = data;
-   str = data2;
+   i = e_widget_ilist_selected_get(ki->dictlist.ilist_obj);
+   str = eina_list_nth(ki->dictlist.matches, i);
    e_kbd_buf_clear(ki->kbuf);
    if (ki->layout.state & (SHIFT | CTRL | ALT))
      {
@@ -1402,13 +1406,8 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 		      "e/modules/kbd/match/default");
    ki->dictlist.base_obj = o;
    
-   o = e_scrollframe_add(ki->dictlist.popup->evas);
-   edje_object_part_swallow(ki->dictlist.base_obj, "e.swallow.content", o);
-   evas_object_show(o);
-   ki->dictlist.scrollframe_obj = o;
-   
-   o = e_ilist_add(ki->dictlist.popup->evas);
-   e_ilist_selector_set(o, 1);
+   o = e_widget_ilist_add(ki->dictlist.popup->evas, 32 * e_scale, 32 * e_scale, NULL);
+   e_widget_ilist_selector_set(o, 1);
    e_ilist_freeze(o);
    ki->dictlist.ilist_obj = o;
 
@@ -1442,8 +1441,8 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 			    *pp = 0;
 			    str = evas_stringshare_add(file);
 			    ki->dictlist.matches = eina_list_append(ki->dictlist.matches, str);
-			    e_ilist_append(o, NULL, p, 0, _e_kbd_int_cb_dictlist_item_sel,
-					   NULL, ki, (char *)str);
+			    e_widget_ilist_append(o, NULL, p, _e_kbd_int_cb_dictlist_item_sel,
+						  ki, NULL);
 			    free(p);
 			 }
 		    }
@@ -1481,8 +1480,8 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 			    *pp = 0;
 			    str = evas_stringshare_add(file);
 			    ki->dictlist.matches = eina_list_append(ki->dictlist.matches, str);
-			    e_ilist_append(o, NULL, p, 0, _e_kbd_int_cb_dictlist_item_sel,
-					   NULL, ki, (char *)str);
+			    e_widget_ilist_append(o, NULL, p, _e_kbd_int_cb_dictlist_item_sel,
+						  ki, NULL);
 			    free(p);
 			 }
 		    }
@@ -1491,26 +1490,19 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 	  }
 	ecore_list_destroy(files);
      }
-   e_ilist_thaw(o);
+   e_widget_ilist_thaw(o);
+   e_widget_ilist_go(o);
    
-   e_ilist_min_size_get(o, &mw, &mh);
-   evas_object_resize(o, ki->win->w, mh);
-   e_scrollframe_child_set(ki->dictlist.scrollframe_obj, o);
-   
-   e_scrollframe_child_viewport_size_get(ki->dictlist.scrollframe_obj, &vw, &vh);
-   evas_object_geometry_get(ki->dictlist.scrollframe_obj, NULL, NULL, &w, &h);
-   if (mw > vw) mw = mw + (w - vw);
-   else if (mw < vw) evas_object_resize(o, vw, mh);
-   evas_object_show(o);
-   
-   edje_extern_object_min_size_set(ki->dictlist.scrollframe_obj, mw, mh);
+   e_widget_ilist_preferred_size_get(o, &mw, &mh);
+
+   edje_extern_object_min_size_set(ki->dictlist.ilist_obj, mw, mh);
    edje_object_part_swallow(ki->dictlist.base_obj, "e.swallow.content",
-			    ki->dictlist.scrollframe_obj);
+		   	    ki->dictlist.ilist_obj);
    edje_object_size_min_calc(ki->dictlist.base_obj, &mw, &mh);
    
-   edje_extern_object_min_size_set(ki->dictlist.scrollframe_obj, 0, 0);
+   edje_extern_object_min_size_set(ki->dictlist.ilist_obj, 0, 0);
    edje_object_part_swallow(ki->dictlist.base_obj, "e.swallow.content",
-			    ki->dictlist.scrollframe_obj);
+		   	    ki->dictlist.ilist_obj);
    
    e_slipshelf_safe_app_region_get(ki->win->border->zone, &sx, &sy, &sw, &sh);
    mw = ki->win->w;
@@ -1522,6 +1514,9 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    evas_object_show(ki->dictlist.base_obj);
    e_popup_edje_bg_object_set(ki->dictlist.popup, ki->dictlist.base_obj);
    e_popup_show(ki->dictlist.popup);
+   
+   _e_kbd_int_layoutlist_down(ki);
+   _e_kbd_int_matchlist_down(ki);
 }
 
 static void
@@ -1538,13 +1533,13 @@ _e_kbd_int_matchlist_down(E_Kbd_Int *ki)
 }
 
 static void
-_e_kbd_int_cb_matchlist_item_sel(void *data, void *data2)
+_e_kbd_int_cb_matchlist_item_sel(void *data)
 {
    E_Kbd_Int *ki;
    const char *str;
    
    ki = data;
-   str = data2;
+   str = e_widget_ilist_selected_label_get(ki->matchlist.ilist_obj);
    _e_kbd_int_string_send(ki, str);
    e_kbd_buf_clear(ki->kbuf);
    e_kbd_send_keysym_press("space", 0);
@@ -1574,16 +1569,12 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
 		      "e/modules/kbd/match/default");
    ki->matchlist.base_obj = o;
    
-   o = e_scrollframe_add(ki->matchlist.popup->evas);
+   o = e_widget_ilist_add(ki->matchlist.popup->evas, 32 * e_scale, 32 * e_scale, NULL);
+   e_widget_ilist_selector_set(o, 1);
+   ki->matchlist.ilist_obj = o;
    edje_object_part_swallow(ki->matchlist.base_obj, "e.swallow.content", o);
    evas_object_show(o);
-   ki->matchlist.scrollframe_obj = o;
    
-   o = e_ilist_add(ki->matchlist.popup->evas);
-   e_ilist_selector_set(o, 1);
-   e_ilist_freeze(o);
-   ki->matchlist.ilist_obj = o;
-
    for (l = e_kbd_buf_string_matches_get(ki->kbuf); l; l = l->next)
      {
 	const char *str;
@@ -1595,36 +1586,29 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
 	       {
 		  str = evas_stringshare_add(str);
 		  ki->matchlist.matches = eina_list_append(ki->matchlist.matches, str);
-		  e_ilist_append(o, NULL, str, 0, _e_kbd_int_cb_matchlist_item_sel,
-				 NULL, ki, (char *)str);
+		  e_widget_ilist_append(o, NULL, str, _e_kbd_int_cb_matchlist_item_sel,
+					ki, NULL);
 	       }
 	  }
 	str = l->data;
 	str = evas_stringshare_add(str);
 	ki->matchlist.matches = eina_list_append(ki->matchlist.matches, str);
-	e_ilist_append(o, NULL, str, 0, _e_kbd_int_cb_matchlist_item_sel,
-		       NULL, ki, (char *)str);
+	e_widget_ilist_append(o, NULL, str, _e_kbd_int_cb_matchlist_item_sel,
+			      ki, NULL);
      }
-   e_ilist_thaw(o);
+   e_widget_ilist_thaw(o);
+   e_widget_ilist_go(o);
    
-   e_ilist_min_size_get(o, &mw, &mh);
-   evas_object_resize(o, ki->win->w, mh);
-   e_scrollframe_child_set(ki->matchlist.scrollframe_obj, o);
+   e_widget_ilist_preferred_size_get(o, &mw, &mh);
    
-   e_scrollframe_child_viewport_size_get(ki->matchlist.scrollframe_obj, &vw, &vh);
-   evas_object_geometry_get(ki->matchlist.scrollframe_obj, NULL, NULL, &w, &h);
-   if (mw > vw) mw = mw + (w - vw);
-   else if (mw < vw) evas_object_resize(o, vw, mh);
-   evas_object_show(o);
-   
-   edje_extern_object_min_size_set(ki->matchlist.scrollframe_obj, mw, mh);
+   edje_extern_object_min_size_set(ki->matchlist.ilist_obj, mw, mh);
    edje_object_part_swallow(ki->matchlist.base_obj, "e.swallow.content",
-			    ki->matchlist.scrollframe_obj);
+		   	    ki->matchlist.ilist_obj);
    edje_object_size_min_calc(ki->matchlist.base_obj, &mw, &mh);
    
-   edje_extern_object_min_size_set(ki->matchlist.scrollframe_obj, 0, 0);
+   edje_extern_object_min_size_set(ki->matchlist.ilist_obj, 0, 0);
    edje_object_part_swallow(ki->matchlist.base_obj, "e.swallow.content",
-			    ki->matchlist.scrollframe_obj);
+		   	    ki->matchlist.ilist_obj);
    
    e_slipshelf_safe_app_region_get(ki->win->border->zone, &sx, &sy, &sw, &sh);
    mw = ki->win->w;
@@ -1636,6 +1620,9 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
    evas_object_show(ki->matchlist.base_obj);
    e_popup_edje_bg_object_set(ki->matchlist.popup, ki->matchlist.base_obj);
    e_popup_show(ki->matchlist.popup);
+   
+   _e_kbd_int_dictlist_down(ki);
+   _e_kbd_int_layoutlist_down(ki);
 }
 
 static void
@@ -1674,13 +1661,15 @@ _e_kbd_int_layoutlist_down(E_Kbd_Int *ki)
 }
 
 static void
-_e_kbd_int_cb_layoutlist_item_sel(void *data, void *data2)
+_e_kbd_int_cb_layoutlist_item_sel(void *data)
 {
    E_Kbd_Int *ki;
    E_Kbd_Int_Layout *kil;
+   int i;
    
    ki = data;
-   kil = data2;
+   i = e_widget_ilist_selected_get(ki->layoutlist.ilist_obj);
+   kil = eina_list_nth(ki->layouts, i);
    _e_kbd_int_layout_select(ki, kil);
    _e_kbd_int_layoutlist_down(ki);
 }
@@ -1690,7 +1679,7 @@ _e_kbd_int_layoutlist_up(E_Kbd_Int *ki)
 {
    Eina_List *l;
    Evas_Object *o, *o2;
-   Evas_Coord w, h, mw, mh, vw, vh;
+   Evas_Coord mw, mh;
    int sx, sy, sw, sh;
    
    if (ki->layoutlist.popup) return;
@@ -1701,16 +1690,13 @@ _e_kbd_int_layoutlist_up(E_Kbd_Int *ki)
 		      "e/modules/kbd/match/default");
    ki->layoutlist.base_obj = o;
    
-   o = e_scrollframe_add(ki->layoutlist.popup->evas);
+   o = e_widget_ilist_add(ki->layoutlist.popup->evas, 32 * e_scale, 32 * e_scale, NULL);
+   ki->layoutlist.ilist_obj = o;
+   e_widget_ilist_selector_set(o, 1);
    edje_object_part_swallow(ki->layoutlist.base_obj, "e.swallow.content", o);
    evas_object_show(o);
-   ki->layoutlist.scrollframe_obj = o;
    
-   o = e_ilist_add(ki->layoutlist.popup->evas);
-   e_ilist_selector_set(o, 1);
-   e_ilist_freeze(o);
-   ki->layoutlist.ilist_obj = o;
-   
+   e_widget_ilist_freeze(o);
    for (l = ki->layouts; l; l = l->next)
      {
 	E_Kbd_Int_Layout *kil;
@@ -1731,29 +1717,23 @@ _e_kbd_int_layoutlist_up(E_Kbd_Int *ki)
 	       e_icon_file_set(o2, kil->icon);
 	  }
 	evas_object_show(o2);
-	e_ilist_append(o, o2, kil->name, 0, _e_kbd_int_cb_layoutlist_item_sel,
-		       NULL, ki, kil);
+	e_widget_ilist_append(o, o2, kil->name,
+			      _e_kbd_int_cb_layoutlist_item_sel, ki, NULL);
      }
-   e_ilist_thaw(o);
+   e_widget_ilist_thaw(o);
+   e_widget_ilist_go(o);
    
-   e_ilist_min_size_get(o, &mw, &mh);
-   evas_object_resize(o, ki->win->w, mh);
-   e_scrollframe_child_set(ki->layoutlist.scrollframe_obj, o);
+   e_widget_ilist_preferred_size_get(o, &mw, &mh);
    
-   e_scrollframe_child_viewport_size_get(ki->layoutlist.scrollframe_obj, &vw, &vh);
-   evas_object_geometry_get(ki->layoutlist.scrollframe_obj, NULL, NULL, &w, &h);
-   if (mw > vw) mw = mw + (w - vw);
-   else if (mw < vw) evas_object_resize(o, vw, mh);
-   evas_object_show(o);
-   
-   edje_extern_object_min_size_set(ki->layoutlist.scrollframe_obj, mw, mh);
+   edje_extern_object_min_size_set(ki->layoutlist.ilist_obj, mw, mh);
    edje_object_part_swallow(ki->layoutlist.base_obj, "e.swallow.content",
-			    ki->layoutlist.scrollframe_obj);
+		   	    ki->layoutlist.ilist_obj);
+
    edje_object_size_min_calc(ki->layoutlist.base_obj, &mw, &mh);
    
-   edje_extern_object_min_size_set(ki->layoutlist.scrollframe_obj, 0, 0);
+   edje_extern_object_min_size_set(ki->layoutlist.ilist_obj, 0, 0);
    edje_object_part_swallow(ki->layoutlist.base_obj, "e.swallow.content",
-			    ki->layoutlist.scrollframe_obj);
+			    ki->layoutlist.ilist_obj);
    
    e_slipshelf_safe_app_region_get(ki->win->border->zone, &sx, &sy, &sw, &sh);
    mw = ki->win->w;
@@ -1765,6 +1745,9 @@ _e_kbd_int_layoutlist_up(E_Kbd_Int *ki)
    evas_object_show(ki->layoutlist.base_obj);
    e_popup_edje_bg_object_set(ki->layoutlist.popup, ki->layoutlist.base_obj);
    e_popup_show(ki->layoutlist.popup);
+   
+   _e_kbd_int_dictlist_down(ki);
+   _e_kbd_int_matchlist_down(ki);
 }
 
 static void

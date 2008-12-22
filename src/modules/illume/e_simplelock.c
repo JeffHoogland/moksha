@@ -151,7 +151,7 @@ e_simplelock_show(void)
 {
    Eina_List	     *managers, *l, *l2, *l3;
 
-   if (locks) return;
+   if (locks) return 1;
    for (l = e_manager_list(); l; l = l->next)
      {
 	E_Manager *man;

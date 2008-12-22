@@ -317,7 +317,9 @@ _new_profile_cb_ok(void *data, E_Dialog *dia)
    if (cfdata->new_profile)
      {
 	e_config_profile_add(cfdata->new_profile);
-	if (cfdata->new_profile_type)
+// FIXME: if we DONT run the below we start with an empty profile which ends
+// up inheriting from default... whihc runs the wizard! should copy standard
+//	if (cfdata->new_profile_type)
 	  {
 	     e_config_profile_set(cfdata->new_profile);
 	     e_config_save();

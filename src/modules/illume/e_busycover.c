@@ -1,6 +1,7 @@
 #include "e.h"
 #include "e_busycover.h"
 #include "e_cfg.h"
+#include "e_slipshelf.h"
 
 // FIXME: make code work - place busycover in safe area
 // FIXME: make theme for it
