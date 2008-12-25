@@ -423,7 +423,7 @@ signal_callback_qtopia(void *data, void *ret, DBusError *err)
 //	printf("GSM-gadget: Qtopia signal callback  else part called\n");
 	detected_system = PH_SYS_UNKNOWN;
 	if (try_again_timer) ecore_timer_del(try_again_timer);
-	try_again_timer = ecore_timer_add(1.0, try_again, data);
+	try_again_timer = ecore_timer_add(5.0, try_again, data);
      }
 }
 
@@ -454,7 +454,7 @@ signal_callback_fso(void *data, void *ret, DBusError *err)
 //	printf("GSM-gadget: FSO signal callback else part called\n");
 	detected_system = PH_SYS_UNKNOWN;
 	if (try_again_timer) ecore_timer_del(try_again_timer);
-	try_again_timer = ecore_timer_add(1.0, try_again, data);
+	try_again_timer = ecore_timer_add(5.0, try_again, data);
      }
 }
 
@@ -482,7 +482,7 @@ operator_callback_qtopia(void *data, void *ret, DBusError *err)
 //	printf("GSM-gadget: Qtopia operator callback else part called\n");
 	detected_system = PH_SYS_UNKNOWN;
 	if (try_again_timer) ecore_timer_del(try_again_timer);
-	try_again_timer = ecore_timer_add(1.0, try_again, data);
+	try_again_timer = ecore_timer_add(5.0, try_again, data);
      }
 }
 
@@ -510,7 +510,7 @@ operator_callback_fso(void *data, void *ret, DBusError *err)
 //	printf("GSM-gadget: FSO operator callback else part called\n");
 	detected_system = PH_SYS_UNKNOWN;
 	if (try_again_timer) ecore_timer_del(try_again_timer);
-	try_again_timer = ecore_timer_add(1.0, try_again, data);
+	try_again_timer = ecore_timer_add(5.0, try_again, data);
      }
 }
 
