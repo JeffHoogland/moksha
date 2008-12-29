@@ -1021,10 +1021,10 @@ static void
 _e_menu_free(E_Menu *m)
 {
    Eina_List *l, *tmp;
-   E_Menu_Category *cat;
+   E_Menu_Category *cat = NULL;
 
    /* the foreign menu items */
-   cat = eina_hash_find(_e_menu_categories, m->category);
+   if (m->category) cat = eina_hash_find(_e_menu_categories, m->category);
    if (cat)
      {
 	for (l = cat->callbacks; l; l = l->next)
@@ -1719,8 +1719,8 @@ _e_menu_unrealize(E_Menu *m)
 static void
 _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 {
+   E_Menu_Category *cat = NULL;
    Eina_List *l;
-   E_Menu_Category *cat;
 
    if (m->pre_activate_cb.func)
      m->pre_activate_cb.func(m->pre_activate_cb.data, m);
@@ -1761,15 +1761,18 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 	e_object_ref(E_OBJECT(m));
      }
    /* the foreign menu items */
-   cat = evas_hash_find(_e_menu_categories, m->category);
-   if (cat)
+   if (m->category)
      {
-	for (l = cat->callbacks; l; l = l->next)
+	cat = evas_hash_find(_e_menu_categories, m->category);
+	if (cat)
 	  {
-	     E_Menu_Category_Callback *cb;
+	     for (l = cat->callbacks; l; l = l->next)
+	       {
+		  E_Menu_Category_Callback *cb;
 	     
-	     cb = l->data;
-	     if (cb->create) cb->create(m, cat->data, cb->data);
+		  cb = l->data;
+		  if (cb->create) cb->create(m, cat->data, cb->data);
+	       }
 	  }
      }
    m->cur.visible = 1;
