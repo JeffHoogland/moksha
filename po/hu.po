@@ -1,4 +1,4 @@
-# translation of hu.po to hungarian
+# translation of hu.po to Hungarian
 # Copyright (C) YEAR Enlightenment development team
 # This file is distributed under the same license as the PACKAGE package.
 #
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-12-21 18:54+0800\n"
-"PO-Revision-Date: 2008-07-18 21:02+0200\n"
+"PO-Revision-Date: 2008-12-30 22:12+0100\n"
 "Last-Translator: Lisovszki Sándor <lisovszki@gmail.com>\n"
-"Language-Team: hungarian <mypclinuxos.com>\n"
+"Language-Team: Hungarian <pclinuxos-i18n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -101,8 +101,7 @@ msgid "Are you sure you want to exit?"
 msgstr "Tényleg ki akarsz lépni?"
 
 #: ../src/bin/e_actions.c:1625
-msgid ""
-"You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
@@ -125,8 +124,7 @@ msgstr "Tényleg ki akarod kapcsolni a gépet?"
 msgid ""
 "You requested to turn off your Computer.<br><br>Are you sure you want to "
 "shut down?"
-msgstr ""
-"A számítógép kikapcsolását választottad.<br><br>Biztosan ki akarod kapcsolni?"
+msgstr "A számítógép kikapcsolását választottad.<br><br>Biztosan ki akarod kapcsolni?"
 
 #: ../src/bin/e_actions.c:1833
 msgid "Are you sure you want to reboot?"
@@ -136,15 +134,13 @@ msgstr "Biztosan újra akarod indítani?"
 msgid ""
 "You requested to reboot your Computer.<br><br>Are you sure you want to "
 "restart it?"
-msgstr ""
-"A számítógép újraindítását választottad.<br><br>Biztos, hogy ezt akarod?"
+msgstr "A számítógép újraindítását választottad.<br><br>Biztos, hogy ezt akarod?"
 
 #: ../src/bin/e_actions.c:1899
 msgid ""
 "You requested to suspend your Computer.<br><br>Are you sure you want to "
 "suspend?"
-msgstr ""
-"Az számítógép felfüggesztését választottad.<br><br>Biztos, hogy ezt akarod?"
+msgstr "Az számítógép felfüggesztését választottad.<br><br>Biztos, hogy ezt akarod?"
 
 #: ../src/bin/e_actions.c:1961
 msgid "Are you sure you want to hibernate?"
@@ -154,8 +150,7 @@ msgstr "Tényleg hibernálni akarod a gépet?"
 msgid ""
 "You requested to hibernate your Computer.<br><br>Are you sure you want to "
 "suspend to disk?"
-msgstr ""
-"A számítógép hibernálását választottad.<br><br>Biztos, hogy ezt akarod?"
+msgstr "A számítógép hibernálását választottad.<br><br>Biztos, hogy ezt akarod?"
 
 #: ../src/bin/e_actions.c:2273 ../src/bin/e_actions.c:2284
 #: ../src/bin/e_actions.c:2303 ../src/bin/e_actions.c:2308
@@ -645,7 +640,6 @@ msgid "Desktop file scan"
 msgstr "Desktop fájl keresés"
 
 #: ../src/bin/e_config.c:715 ../src/bin/e_config.c:748
-#, fuzzy
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -663,7 +657,6 @@ msgstr ""
 "neked tetszik. Az esetleges galibákért elnézést kérünk!<br>"
 
 #: ../src/bin/e_config.c:732
-#, fuzzy
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -678,12 +671,11 @@ msgstr ""
 "alapértelmezésre.<br>A galibákért elnézést kérünk!<br>"
 
 #: ../src/bin/e_config.c:1626
-#, fuzzy
 msgid "Settings Upgraded"
-msgstr "Asztal beállításai"
+msgstr "Beállítások frissítve"
 
 #: ../src/bin/e_config.c:1651
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
 "could not be<br>deterimined.<br><br>The file where the error occured was:<br>"
@@ -694,7 +686,7 @@ msgstr ""
 "s<br> A fájl törlésre kerül.<br>"
 
 #: ../src/bin/e_config.c:1662
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
 "being saved to.<br>This error is very strange as the files should<br>be "
@@ -709,7 +701,7 @@ msgstr ""
 "törölve lett.<br>"
 
 #: ../src/bin/e_config.c:1675
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "An output error occured when writing the settings<br>files for "
 "Enlightenment. Your disk is having troubles<br>and possibly needs "
@@ -722,7 +714,7 @@ msgstr ""
 "<br>"
 
 #: ../src/bin/e_config.c:1686
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
 "to write the file.<br>You have either run out of disk space or have<br>gone "
@@ -734,7 +726,7 @@ msgstr ""
 "<br><br> A hiba helye:<br>%s<br><br> A fájlt törölve lett.<br>"
 
 #: ../src/bin/e_config.c:1698
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
 "it. This is very unusual.<br><br>The file where the error occured was:<br>%"
@@ -745,7 +737,6 @@ msgstr ""
 "s<br><br> A fájl törölve lett.<br>"
 
 #: ../src/bin/e_config.c:1723
-#, fuzzy
 msgid "Enlightenment Settings Write Problems"
 msgstr "Enlightenment konfiguráció írási problémák"
 
@@ -813,8 +804,7 @@ msgid "Error - no PAM support"
 msgstr "Hiba - nincs PAM támogatás"
 
 #: ../src/bin/e_desklock.c:145
-msgid ""
-"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+msgid "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr ""
 "Nem lett PAM támogatás beleépítve az ENlightenmentbe, ezért az <br>asztal "
 "zárolás nem engedélyezett."
@@ -999,8 +989,7 @@ msgstr "Futási hiba"
 #: ../src/modules/conf_imc/e_int_config_imc.c:519
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
-msgstr ""
-"Az Enlightenment képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
+msgstr "Az Enlightenment képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
 
 #: ../src/bin/e_exec.c:314
 msgid "Application run error"
@@ -1079,8 +1068,7 @@ msgid "%s was interrupted by the signal number %i."
 msgstr "%s futtatása megszakadt az %i számú szignál miatt"
 
 #: ../src/bin/e_exec.c:528
-msgid ""
-"***The remaining output has been truncated. Save the output to view.***\n"
+msgid "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 "***A megmaradt kimenet meg lett csonkítva. Mentsd el a kimenetet, hogy "
 "megnézhesd.***\n"
@@ -1136,9 +1124,8 @@ msgid "%i Files"
 msgstr "%i fájlok"
 
 #: ../src/bin/e_fm.c:4811 ../src/bin/e_fm.c:7343 ../src/bin/e_fm.c:7473
-#, fuzzy
 msgid "Abort"
-msgstr "Névjegy"
+msgstr "Megszakítás"
 
 #: ../src/bin/e_fm.c:6413 ../src/bin/e_fm.c:6570
 #: ../src/modules/fileman/e_mod_config.c:171
@@ -1175,9 +1162,8 @@ msgid "Properties"
 msgstr "Tulajdonságok"
 
 #: ../src/bin/e_fm.c:6999 ../src/bin/e_fm.c:7050
-#, fuzzy
 msgid "Use default"
-msgstr "Felhasználói alapértelmezés"
+msgstr "Alapértelmezés használata"
 
 #: ../src/bin/e_fm.c:7023 ../src/modules/fileman/e_mod_config.c:176
 msgid "Grid Icons"
@@ -1192,9 +1178,9 @@ msgid "List"
 msgstr "Lista"
 
 #: ../src/bin/e_fm.c:7064
-#, fuzzy, c-format
+#, c-format
 msgid "Icon Size (%d)"
-msgstr "Ikonméret"
+msgstr "Ikonméret (%d)"
 
 #: ../src/bin/e_fm.c:7208
 msgid "Create a new Directory"
@@ -1214,41 +1200,39 @@ msgid "Rename File"
 msgstr "Fájl átnevezése"
 
 #: ../src/bin/e_fm.c:7342 ../src/bin/e_fm.c:7472
-#, fuzzy
 msgid "Retry"
-msgstr "Újraindítás"
+msgstr "Újra"
 
 #: ../src/bin/e_fm.c:7346 ../src/bin/e_fm.c:7403 ../src/bin/e_fm.c:7478
 #: ../src/modules/wizard/page_030.c:67
-#, fuzzy
 msgid "Error"
-msgstr "Futási hiba"
+msgstr "Hiba"
 
 #: ../src/bin/e_fm.c:7348 ../src/bin/e_fm.c:7405
 #, c-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: ../src/bin/e_fm.c:7398
 msgid "No to all"
-msgstr ""
+msgstr "Nem, ne mindet"
 
 #: ../src/bin/e_fm.c:7400
 msgid "Yes to all"
-msgstr ""
+msgstr "Igen, mindet"
 
 #: ../src/bin/e_fm.c:7474
 msgid "Ignore this"
-msgstr ""
+msgstr "Elveti ezt"
 
 #: ../src/bin/e_fm.c:7475
 msgid "Ignore all"
-msgstr ""
+msgstr "Mindent elvet"
 
 #: ../src/bin/e_fm.c:7480
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
-msgstr ""
+msgstr "Hiba történt egy folyamat végzése közben.<br>%s"
 
 #: ../src/bin/e_fm.c:7582
 msgid "Confirm Delete"
@@ -1442,8 +1426,7 @@ msgid "Protect this window from me accidentally changing it"
 msgstr "Védd meg az ablakot, nehogy véletlenül megváltoztassam!"
 
 #: ../src/bin/e_int_border_locks.c:290
-msgid ""
-"Protect this window from being accidentally closed because it is important"
+msgid "Protect this window from being accidentally closed because it is important"
 msgstr "Védd meg az ablkakot, nehogy véletlen bezárjam, mert fontos!"
 
 #: ../src/bin/e_int_border_locks.c:292
@@ -1947,9 +1930,8 @@ msgstr "Induláskor mindig figyeld"
 #: ../src/modules/temperature/e_mod_main.c:281
 #: ../src/modules/mixer/e_mod_main.c:671
 #: ../src/modules/connman/e_mod_main.c:1093
-#, fuzzy
 msgid "Settings"
-msgstr "Asztal beállításai"
+msgstr "Beállítások"
 
 #: ../src/bin/e_int_config_modules.c:43 ../src/modules/fileman/e_mod_main.c:48
 #: ../src/modules/fileman/e_mod_main.c:60
@@ -2016,9 +1998,8 @@ msgid "Remove Gadget"
 msgstr "Modul eltávolítása"
 
 #: ../src/bin/e_int_toolbar_config.c:30 ../src/bin/e_toolbar.c:327
-#, fuzzy
 msgid "Toolbar Settings"
-msgstr "Görbítés beállítások"
+msgstr "Eszköztár beállítások"
 
 #: ../src/bin/e_int_toolbar_config.c:82 ../src/bin/e_int_shelf_config.c:500
 #: ../src/bin/e_int_shelf_config.c:565
@@ -2257,7 +2238,7 @@ msgstr ""
 "%s/enlightenment-%s\n"
 
 #: ../src/bin/e_main.c:308
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Options:\n"
 "\t-display DISPLAY\n"
@@ -2301,6 +2282,8 @@ msgstr ""
 "\t\tGonosz leszek.\n"
 "\t-psychotic\n"
 "\t\tPszichopata leszek.\n"
+"\t-locked\n"
+"\t\tablakzárolással indul, a jelszó meg lesz kérdezve.\n"
 
 #: ../src/bin/e_main.c:377
 msgid ""
@@ -2427,9 +2410,8 @@ msgid "Enlightenment cannot set up its config system."
 msgstr "Az E17 nem tudta beállítani konfigurációs rendszert."
 
 #: ../src/bin/e_main.c:583
-#, fuzzy
 msgid "Enlightenment cannot set up its scale system."
-msgstr "Az E17 nem tudta elindítani a polc-rendszert."
+msgstr "Az E17 nem tudja elindítani a héj rendszert."
 
 #: ../src/bin/e_main.c:591
 msgid "Enlightenment cannot set up the pointer system."
@@ -2504,14 +2486,13 @@ msgstr ""
 "hogy az Evas támogatja-e a EET töltõt.\n"
 
 #: ../src/bin/e_main.c:712
-#, fuzzy
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
-"Az Evas nem tudja betölteni a PNG fájlokat. Kérlek ellenõrizd,\n"
-"hogy az Evas támogatja-e a PNG töltõt.\n"
+"Az Evas nem tudja betölteni a 'Sans' betűtípust. Kérlek ellenõrizd,\n"
+"hogy az Evas támogatja-e a betűtípusbeállítást, és hogy a rendszer betűtípusa a 'Sans'-e.\n"
 
 #: ../src/bin/e_main.c:721
 msgid "Setup Screens"
@@ -2547,7 +2528,7 @@ msgstr "Útvonalak beállítása"
 
 #: ../src/bin/e_main.c:776
 msgid "Setup System Controls"
-msgstr "Vezérlőpult beállítása"
+msgstr "Rendszer felügyeletek beállítása"
 
 #: ../src/bin/e_main.c:781
 msgid "Enlightenment cannot initialize the System Command system.\n"
@@ -2611,13 +2592,12 @@ msgid "Enlightenment cannot set up its dnd system."
 msgstr "Az E17 nem tudta felállítani a fogd-és-vidd rendszert."
 
 #: ../src/bin/e_main.c:853
-#, fuzzy
 msgid "Setup Grab Input Handing"
-msgstr "Bejövő mozdulat kezelő beállítása"
+msgstr "Beviteli kezelő beállítása"
 
 #: ../src/bin/e_main.c:858
 msgid "Enlightenment cannot set up its input grab handling system."
-msgstr "Az E17 nem tudta elindítani a bejövõ mozdulat-kezelõt."
+msgstr "Az E17 nem tudta elindítani a beviteli mozdulat-kezelõt."
 
 #: ../src/bin/e_main.c:862
 msgid "Setup Modules"
@@ -2672,9 +2652,8 @@ msgid "Setup Mouse"
 msgstr "Egér beállítása"
 
 #: ../src/bin/e_main.c:923
-#, fuzzy
 msgid "Enlightenment cannot configure the mouse settings."
-msgstr "Az E17 nem tudta felállítani az emlékezési beállításokat."
+msgstr "Az Enlightenment nem tudja beállítani az egér opciókat."
 
 #: ../src/bin/e_main.c:928
 msgid "Setup Bindings"
@@ -2973,7 +2952,6 @@ msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
 msgstr "A rendszer hibernálása.<br><hilight>Kérlek várj.</hilight>"
 
 #: ../src/bin/e_theme_about.c:17
-#, fuzzy
 msgid "About Theme"
 msgstr "A témáról"
 
@@ -3137,7 +3115,6 @@ msgid "Read-Write"
 msgstr "Olvasás-Írás"
 
 #: ../src/modules/battery/e_mod_config.c:40
-#, fuzzy
 msgid "Battery Monitor Settings"
 msgstr "Telep töltöttség mérõ beállítások"
 
@@ -3204,13 +3181,12 @@ msgid "Battery"
 msgstr "Akkumulátor"
 
 #: ../src/modules/battery/e_mod_main.c:832
-#, fuzzy
 msgid "Your battery is low!"
-msgstr "Figyelmeztetés, ha a telep töltöttség alacsony"
+msgstr "Hamarosan le fog merülni az akku!"
 
 #: ../src/modules/battery/e_mod_main.c:834
 msgid "AC power is recommended."
-msgstr ""
+msgstr "AC áramforrás ajánlott."
 
 #: ../src/modules/battery/e_mod_main.c:909
 msgid "N/A"
@@ -3233,9 +3209,8 @@ msgstr "Óra"
 
 #: ../src/modules/conf/e_mod_main.c:142 ../src/modules/conf/e_mod_main.c:165
 #: ../src/modules/conf/e_mod_main.c:214
-#, fuzzy
 msgid "Settings Panel"
-msgstr "Asztal beállításai"
+msgstr "Beállító panel"
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:51
 #: ../src/modules/conf_applications/e_mod_main.c:42
@@ -3268,9 +3243,8 @@ msgid "Selected Applications"
 msgstr "Kiválasztott alkalmazások"
 
 #: ../src/modules/conf_applications/e_mod_main.c:34
-#, fuzzy
 msgid "Apps"
-msgstr "Alkalmaz"
+msgstr "Alkalmazások"
 
 #: ../src/modules/conf_applications/e_mod_main.c:35
 msgid "New Application"
@@ -3318,9 +3292,8 @@ msgstr "Megjegyez Szegély for ablak következő idő"
 #: ../src/modules/conf_transitions/e_mod_main.c:34
 #: ../src/modules/conf_wallpaper/e_mod_main.c:28
 #: ../src/modules/dropshadow/e_mod_main.c:89
-#, fuzzy
 msgid "Look"
-msgstr "Zárolások"
+msgstr "Kinézet"
 
 #: ../src/modules/conf_borders/e_mod_main.c:35
 msgid "Borders"
@@ -3631,9 +3604,8 @@ msgid "Automatic Locking"
 msgstr "Automatikus zárolás"
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:147
-#, fuzzy
 msgid "Lock when Enlightenment starts"
-msgstr "Enlightenment kurzor használata"
+msgstr "Zárolás, amikor az Enlightenment indul"
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:151
 msgid "Lock when X screensaver activates"
@@ -3812,12 +3784,10 @@ msgid "Disable Confirmation Dialogs"
 msgstr "Jóváhagyási párbeszédablakok tiltása"
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:91
-#, fuzzy
 msgid "Normal Windows"
-msgstr "(Nincsenek ablakok)"
+msgstr "Normál ablakok"
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:98
-#, fuzzy
 msgid "Default Settings Dialogs Mode"
 msgstr "Alapértelmezett párbeszédablak mód"
 
@@ -3844,47 +3814,47 @@ msgid "Dialogs"
 msgstr "Párbeszédablakok"
 
 #: ../src/modules/conf_display/e_int_config_display.c:129
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
 "will be restored in %d seconds."
 msgstr ""
-"Ez így jónak tûnik? Ha igen, nyomd meg az <hilight>Igen</hilight> gombot,"
-"<br>vagy a Nem gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
+"Ez így jónak tûnik? Ha igen, nyomd meg a <hilight>Mentés</hilight> gombot,"
+"<br>vagy a Helyreállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
 "eredeti, %dx%d @ %d Hz felbontás visszaáll, %d mp múlva"
 
 #: ../src/modules/conf_display/e_int_config_display.c:136
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored in %d seconds."
 msgstr ""
-"Ez így jónak tûnik? Ha igen, nyomd meg az <hilight>Igen</hilight> gombot,"
-"<br>vagy a Nem gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
+"Ez így jónak tûnik? Ha igen, nyomd meg a <hilight>Mentés</hilight> gombot,"
+"<br>vagy a Helyreállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
 "eredeti, %dx%d @ felbontás visszaáll, %d mp múlva"
 
 #: ../src/modules/conf_display/e_int_config_display.c:146
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
 "will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
-"Ez így jónak tûnik? Ha igen, nyomd meg az <hilight>Igen</hilight> gombot,"
-"<br>vagy a Nem gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
+"Ez így jónak tûnik? Ha igen, nyomd meg a <hilight>Mentés</hilight> gombot,"
+"<br>vagy a Viszaállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
 "eredeti, %dx%d @ %d Hz felbontás <hilight>AZONNAL</hilight> visszaáll."
 
 #: ../src/modules/conf_display/e_int_config_display.c:153
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
-"Ez így jónak tûnik? Ha igen, nyomd meg az <hilight>Igen</hilight> gombot,"
-"<br>vagy a Nem gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
+"Ez így jónak tûnik? Ha igen, nyomd meg a <hilight>Mentés</hilight> gombot,"
+"<br>vagy a Visszaállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
 "eredeti, %dx%d felbontás <hilight>AZONNAL</hilight> visszaáll."
 
 #: ../src/modules/conf_display/e_int_config_display.c:190
@@ -3892,14 +3862,12 @@ msgid "Resolution change"
 msgstr "Felbontás módosítása"
 
 #: ../src/modules/conf_display/e_int_config_display.c:194
-#, fuzzy
 msgid "Save"
-msgstr "Állapot"
+msgstr "Mentés"
 
 #: ../src/modules/conf_display/e_int_config_display.c:195
-#, fuzzy
 msgid "Restore"
-msgstr "Újraindítás"
+msgstr "Visszaállít"
 
 #: ../src/modules/conf_display/e_int_config_display.c:228
 msgid "Screen Resolution Settings"
@@ -3930,7 +3898,6 @@ msgid "Missing Features"
 msgstr "Hiányzó képességek"
 
 #: ../src/modules/conf_display/e_int_config_display.c:643
-#, fuzzy
 msgid ""
 "Your X Display Server is missing support for<br>the <hilight>XRandR</"
 "hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
@@ -3939,8 +3906,7 @@ msgid ""
 "XRandR support detected."
 msgstr ""
 "Az X szervered nem támogatja <br>a <hilight>XRandr</hilight><br> "
-"kiterjesztést(X Resize and Rotate).<br> <br>Enélkül a kiterjesztés nélkül "
-"nem válthatsz felbontást!br>"
+"kiterjesztést(X átméretezés és forgatás).<br> <br>Enélkül a kiterjesztés nélkül <br>nem változtathatod meg a kijelző felbontását</br>. <br>Előfordulhat, hogy az <hilight>ecore</hilight>, a forgatásakor nem érzékelt<br> XRandR támogatást."
 
 #: ../src/modules/conf_display/e_int_config_display.c:655
 msgid "No Refresh Rates Found"
@@ -3986,7 +3952,6 @@ msgid "Enable Display Power Management"
 msgstr "Energiakezelés megjelenítésének engedélyezése"
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:203
-#, fuzzy
 msgid "Timers"
 msgstr "Időmérő(k)"
 
@@ -4402,9 +4367,8 @@ msgid "Exported Environment Variables"
 msgstr "Környezeti változók exportálása"
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:66
-#, fuzzy
 msgid "Select an Input Method Settings..."
-msgstr "Válassz egy beviteli mód beállítást"
+msgstr "Válassz egy beviteli mód beállítást..."
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:281
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:296
@@ -4420,8 +4384,7 @@ msgstr ""
 "egy érvényes beállítás?"
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:297
-msgid ""
-"Enlightenment was unable to import the configuration<br>due to a copy error."
+msgid "Enlightenment was unable to import the configuration<br>due to a copy error."
 msgstr "Az E17 nem tudja importálni a beállítást<br> egy másolási hiba miatt."
 
 #: ../src/modules/conf_imc/e_mod_main.c:34
@@ -4435,16 +4398,14 @@ msgid "Interaction Settings"
 msgstr "Kölcsönhatás beállítások"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:94
-#, fuzzy
 msgid "Thumbscroll"
-msgstr "Thumbscroll engedélyezése"
+msgstr "Thumbscroll"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:96
 msgid "Enable Thumbscroll"
 msgstr "Thumbscroll engedélyezése"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:100
-#, fuzzy
 msgid "Threshold for a thumb drag"
 msgstr "Ikon húzás értékküszöb"
 
@@ -4455,7 +4416,6 @@ msgid "%1.0f pixels"
 msgstr "%1.0f pixel"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:107
-#, fuzzy
 msgid "Threshold for for applying drag momentum"
 msgstr "Értékküszöb a húzás pillanatának engedélyezéséhez"
 
@@ -4478,9 +4438,8 @@ msgstr "%1.2f mp"
 #: ../src/modules/conf_mousebindings/e_mod_main.c:34
 #: ../src/modules/conf_mouse/e_mod_main.c:34
 #: ../src/modules/mixer/app_mixer.c:288 ../src/modules/mixer/app_mixer.c:306
-#, fuzzy
 msgid "Input"
-msgstr "Init (indítókép)"
+msgstr "Bevitel"
 
 #: ../src/modules/conf_interaction/e_mod_main.c:35
 msgid "Interaction"
@@ -4514,8 +4473,7 @@ msgid "<None>"
 msgstr "<None>"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:7
-msgid ""
-"Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
+msgid "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
 msgstr ""
 "Kérlek üsd le a billentyûkombinációt,<br><br> vagy nyomd meg az "
 "<hilight>Escape</hilight> gombot a megszakításhoz."
@@ -4813,13 +4771,11 @@ msgstr "Kurzor Beállítások"
 
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:129
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:209
-#, fuzzy
 msgid "Show Cursor"
-msgstr "Árnyék szín"
+msgstr "Kurzor megjelenítése"
 
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:213
-#, fuzzy
 msgid "Idle Cursor"
 msgstr "X kurzor használata"
 
@@ -4843,14 +4799,12 @@ msgstr "Egér Kurzor"
 
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:36
 #: ../src/modules/conf_mouse/e_mod_main.c:35
-#, fuzzy
 msgid "Mouse Settings"
-msgstr "Modul beállítások"
+msgstr "Egér beállítások"
 
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:97
-#, fuzzy
 msgid "Mouse Hand"
-msgstr "Egér műveletek"
+msgstr "Egér kezelés"
 
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:105
 msgid "Mouse Acceleration"
@@ -4865,9 +4819,8 @@ msgid "Threshold"
 msgstr "Küszöb"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:62
-#, fuzzy
 msgid "Search Path Settings"
-msgstr "Indítási beállítások"
+msgstr "Keresési útvonal beállítások"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:73
 msgid "Data"
@@ -4987,8 +4940,7 @@ msgstr "A rendelkezésre álló profilok"
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "profile?"
-msgstr ""
-"A \"%s\" törlését kérted.<br><br>Biztosan törölni szeretnéd ezt a profilt?"
+msgstr "A \"%s\" törlését kérted.<br><br>Biztosan törölni szeretnéd ezt a profilt?"
 
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:211
 msgid "Are you sure you want to delete this profile?"
@@ -5011,85 +4963,79 @@ msgid "Profiles"
 msgstr "Profilok"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:41
-#, fuzzy
 msgid "Scaling Settings"
-msgstr "Párbeszédablak beállításai"
+msgstr "Skálázási beállításai"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:105
 msgid "Scale with DPI"
-msgstr ""
+msgstr "Arány DPI-vel"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:108
-#, fuzzy
 msgid "Relative"
-msgstr "Felemelés"
+msgstr "Relatív"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:109
 msgid "Base DPI to scale relative to"
-msgstr ""
+msgstr "Az alap DPI arány relatív ehhez:"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:111
 #: ../src/modules/conf_scale/e_int_config_scale.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f DPI"
-msgstr "%1.0f F"
+msgstr "%1.0f DPI"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:113
 #, c-format
 msgid "Currently %i DPI"
-msgstr ""
+msgstr "Jelenleg %i DPI"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:162
 msgid "Policy"
-msgstr ""
+msgstr "Szabályzat"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:164
-#, fuzzy
 msgid "Don't Scale"
-msgstr "Ne engedélyezd"
+msgstr "Ne skálázd"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:166
 msgid "Scale relative to screen DPI"
-msgstr ""
+msgstr "Az arány relatív a képernyő DPI-hez"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:168
 msgid "Custom scaling factor"
-msgstr ""
+msgstr "Egyéni skálázási tényező"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:170
-#, fuzzy
 msgid "Minimum"
-msgstr "Minimum méret"
+msgstr "Minimum"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:172
 #: ../src/modules/conf_scale/e_int_config_scale.c:176
 #: ../src/modules/conf_scale/e_int_config_scale.c:188
-#, fuzzy, c-format
+#, c-format
 msgid "%1.2f times"
-msgstr "%1.0f fájl"
+msgstr "%1.2f (szer)"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:174
-#, fuzzy
 msgid "Maximum"
-msgstr "Teljes méretû"
+msgstr "Maximum"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:180
 msgid "Scaling Factors"
-msgstr ""
+msgstr "Skálázási tényezők"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:181
 #, c-format
 msgid "Base DPI (Currently %i DPI)"
-msgstr ""
+msgstr "Alap DPI (Jelenleg %i DPI)"
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:186
 msgid "Personal scaling factor"
-msgstr ""
+msgstr "Személyes skálázási tényező"
 
 #: ../src/modules/conf_scale/e_mod_main.c:35
-#, fuzzy
 msgid "Scaling"
-msgstr "Halomba rakás"
+msgstr "Skálázás"
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:49
 msgid "Screen Saver Settings"
@@ -5151,8 +5097,7 @@ msgstr "Beállított polcok"
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "shelf?"
-msgstr ""
-"A \"%s\" törlését kérted. <br><br>biztosan törölni szeretnéd ezt a polcot?"
+msgstr "A \"%s\" törlését kérted. <br><br>biztosan törölni szeretnéd ezt a polcot?"
 
 #: ../src/modules/conf_startup/e_int_config_startup.c:39
 msgid "Startup Settings"
@@ -5214,13 +5159,11 @@ msgstr ""
 
 #: ../src/modules/conf_theme/e_int_config_theme_import.c:287
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
-msgstr ""
-"Az Enlightenment nem tudja importálni a témát, <br> másolási hiba miatt."
+msgstr "Az Enlightenment nem tudja importálni a témát, <br> másolási hiba miatt."
 
 #: ../src/modules/conf_theme/e_int_config_theme_web.c:127
-#, fuzzy
 msgid "Exchange themes"
-msgstr "Ikon témák"
+msgstr "Témák váltása"
 
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:44
 msgid "Transition Settings"
@@ -5377,10 +5320,8 @@ msgid "Picture Import Error"
 msgstr "Kép importálás hiba"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:505
-msgid ""
-"Enlightenment was unable to import the picture<br>due to conversion errors."
-msgstr ""
-"Az Enlightenment nem képes importálni a képet, <br> átalakítási hibák miatt."
+msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
+msgstr "Az Enlightenment nem képes importálni a képet, <br> átalakítási hibák miatt."
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:578
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:595
@@ -5388,8 +5329,7 @@ msgid "Wallpaper Import Error"
 msgstr "Háttérkép importálás hiba"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:579
-msgid ""
-"Enlightenment was unable to import the wallpaper<br>due to a copy error."
+msgid "Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr ""
 "Az Enlightenment nem tudja a háttérképet importálni, <br>egy másolási hiba "
 "miatt."
@@ -5476,8 +5416,7 @@ msgstr "Megjelenítés"
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:162
 msgid "Show window geometry information when moving or resizing"
-msgstr ""
-"Mutasd az ablak geometriai információit mozgatáskor, vagy átméretezéskor"
+msgstr "Mutasd az ablak geometriai információit mozgatáskor, vagy átméretezéskor"
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:164
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:212
@@ -5662,9 +5601,8 @@ msgstr "Ablak fókusz"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:51
 #: ../src/modules/conf_window_manipulation/e_mod_main.c:35
-#, fuzzy
 msgid "Window Geometry"
-msgstr "Ablak mozgatás geometria"
+msgstr "Ablak geometria"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:123
 msgid "Resistance"
@@ -5689,30 +5627,25 @@ msgid "Resistance to desktop gadgets:"
 msgstr "Ellenállás az asztali muduloknak"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:140
-#, fuzzy
 msgid "Keyboard move and resize"
-msgstr "Billentyűzet és egér"
+msgstr "Billentyűzet mozgás és átméretezés"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:141
-#, fuzzy
 msgid "Automatically accept changes after:"
-msgstr "Tartalom automatikus görgetése"
+msgstr "A változások alkamazása ....után:"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
-#, fuzzy
 msgid "Move by:"
-msgstr "Mozgatás"
+msgstr "Mozgatás:"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:149
-#, fuzzy
 msgid "Resize by:"
-msgstr "Átméretezés"
+msgstr "Átméretezés:"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:44
 #: ../src/modules/conf_window_manipulation/e_mod_main.c:37
-#, fuzzy
 msgid "Window Maximize Policy"
-msgstr "Maximalizálási házirend"
+msgstr "Ablak maximalizálási házirend"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:142
@@ -5734,13 +5667,12 @@ msgid "Maximize Policy"
 msgstr "Maximalizálási házirend"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:150
-#, fuzzy
 msgid "Maximize Directions"
 msgstr "Maximalizálás vízszintesen"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:156
 msgid "Both"
-msgstr ""
+msgstr "Mindkettő"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 msgid "Allow window manipulation"
@@ -5752,9 +5684,8 @@ msgstr "Automatikus ablak mozgatás/átméretezés polc elrejtéskor"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:45
 #: ../src/modules/conf_window_manipulation/e_mod_main.c:36
-#, fuzzy
 msgid "Window Stacking"
-msgstr "Ablak árnyékolás"
+msgstr "Ablak halomba rakás"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:116
 #: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:134
@@ -5960,12 +5891,11 @@ msgstr "CPU energiakezelési házirend helyreállítása"
 
 #: ../src/modules/cpufreq/e_mod_main.c:255
 msgid "Powersaving policy"
-msgstr ""
+msgstr "Energiatakarékossági szabályzat"
 
 #: ../src/modules/cpufreq/e_mod_main.c:283
-#, fuzzy
 msgid "Automatic powersaving"
-msgstr "Automatikus zárolás"
+msgstr "Automatikus energiatakarékosság"
 
 #: ../src/modules/cpufreq/e_mod_main.c:302
 #, c-format
@@ -5991,7 +5921,7 @@ msgstr "CPU sebesség beállítása"
 
 #: ../src/modules/cpufreq/e_mod_main.c:340
 msgid "Powersaving behavior"
-msgstr ""
+msgstr "Energiatakarékossági felügyelő"
 
 #: ../src/modules/cpufreq/e_mod_main.c:389
 msgid ""
@@ -6016,9 +5946,8 @@ msgid ""
 msgstr "Hiba történt a <br>processzor frekveciabeálítása közben.<br>"
 
 #: ../src/modules/dropshadow/e_mod_config.c:40
-#, fuzzy
 msgid "Dropshadow Settings"
-msgstr "Párbeszédablak beállításai"
+msgstr "Árnyékvető beállítások"
 
 #: ../src/modules/dropshadow/e_mod_config.c:108
 msgid "Quality"
@@ -6113,7 +6042,6 @@ msgid "Run Command Dialog"
 msgstr "Parancs párbeszédablak futtatása"
 
 #: ../src/modules/fileman/e_mod_main.c:276
-#, fuzzy
 msgid ""
 "Fileman Module Settings data needed upgrading. Your old configuration<br>has "
 "been wiped and a new set of defaults initialized. This<br>will happen "
@@ -6125,8 +6053,8 @@ msgid ""
 msgstr ""
 "A fájlkezelő modul konfigurációs adata frissítést igényel. A régi beállítás "
 "<br>törölve lett, és az új alap beállítás lett azonosítva. Ez <br>a "
-"feljelsztés közben természetes, ezért ne jelentsd <br>hibaként. Elnézésedet "
-"kérjük a kellemetlenségekért."
+"feljelsztés közben természetes, ezért ne jelentsd <br>hibaként. Ez egyszerűen csak azt jelenti, hogy a fájlkezelő<br>modulnak új alapértelmezett beállításokra van szüksége,<br> mert a régiek már elavultak. Ezek az új alapértelmezett beállítások helyjehozták a hibákat.<br>Most már testreszabhatod a modult.<br> Elnézésedet "
+"kérjük a kellemetlenségekért.<br>"
 
 #: ../src/modules/fileman/e_mod_main.c:289
 msgid ""
@@ -6145,9 +6073,8 @@ msgstr ""
 "kellemetlenségekért.<br>"
 
 #: ../src/modules/fileman/e_mod_main.c:358
-#, fuzzy
 msgid "Fileman Settings Updated"
-msgstr "Fájlkezelő beállítások"
+msgstr "Fájlkezelő beállítások frissítve"
 
 #: ../src/modules/fileman/e_mod_config.c:88
 msgid "Fileman Settings"
@@ -6194,9 +6121,8 @@ msgid "Show Toolbar"
 msgstr "Az eszköztár megjelenítése"
 
 #: ../src/modules/fileman/e_mod_config.c:217
-#, fuzzy
 msgid "Show HAL icons on desktop"
-msgstr "Mutasd minden asztalon"
+msgstr "HAL ikonok megjelenítése a munkaasztalon"
 
 #: ../src/modules/fileman/e_fwin.c:697
 msgid "Go to Parent Directory"
@@ -6224,39 +6150,33 @@ msgstr "Bígyó kezelő"
 
 #. Background mode
 #: ../src/modules/gadman/e_mod_config.c:147
-#, fuzzy
 msgid "Background Mode"
-msgstr "Hátterek"
+msgstr "Háttér mód"
 
 #. Background filemanager chooser
 #: ../src/modules/gadman/e_mod_config.c:152
 #: ../src/modules/gadman/e_mod_config.c:184
-#, fuzzy
 msgid "Custom Image"
-msgstr "Egyéni parancs"
+msgstr "Egyéni kép"
 
 #. Custom Color
 #: ../src/modules/gadman/e_mod_config.c:156
 #: ../src/modules/gadman/e_mod_config.c:177
-#, fuzzy
 msgid "Custom Color"
-msgstr "Egyéni parancs"
+msgstr "Egyéni szín"
 
 #: ../src/modules/gadman/e_mod_config.c:160
-#, fuzzy
 msgid "Transparent"
-msgstr "Célszemély"
+msgstr "Átlátszóság"
 
 #. Animations
 #: ../src/modules/gadman/e_mod_config.c:167
-#, fuzzy
 msgid "Animations"
-msgstr "Váltás animáció"
+msgstr "Animációk"
 
 #: ../src/modules/gadman/e_mod_gadman.c:678
-#, fuzzy
 msgid "Free"
-msgstr "Keret"
+msgstr "Szabad"
 
 #: ../src/modules/gadman/e_mod_gadman.c:710
 msgid "Always on desktop"
@@ -6307,9 +6227,8 @@ msgid "Select a window"
 msgstr "Válassz egy ablakot"
 
 #: ../src/modules/ibar/e_mod_config.c:55
-#, fuzzy
 msgid "IBar Settings"
-msgstr "Görbítés beállítások"
+msgstr "IBar beállítások"
 
 #: ../src/modules/ibar/e_mod_config.c:101
 msgid "Selected Bar Source"
@@ -6380,9 +6299,8 @@ msgid "Add Application"
 msgstr "Alkalmazás hozzáadása"
 
 #: ../src/modules/ibox/e_mod_config.c:48
-#, fuzzy
 msgid "IBox Settings"
-msgstr "Bejelentkező ablak beállításai"
+msgstr "IBox beállítások"
 
 #: ../src/modules/ibox/e_mod_config.c:97
 msgid "Display Name"
@@ -6425,9 +6343,8 @@ msgid "IBox"
 msgstr "IBox"
 
 #: ../src/modules/pager/e_mod_config.c:69
-#, fuzzy
 msgid "Pager Settings"
-msgstr "Görbítés beállítások"
+msgstr "Lapozó beállításai"
 
 #: ../src/modules/pager/e_mod_config.c:116
 #: ../src/modules/pager/e_mod_config.c:155
@@ -6580,19 +6497,16 @@ msgid "Start"
 msgstr "Indítás"
 
 #: ../src/modules/syscon/e_mod_main.c:34
-#, fuzzy
 msgid "System Control"
-msgstr "Vezérlőpult beállítása"
+msgstr "Rendszer felügyelet"
 
 #: ../src/modules/syscon/e_mod_main.c:55
-#, fuzzy
 msgid "System Controls"
-msgstr "Vezérlőpult beállítása"
+msgstr "Rendszer felügyelők"
 
 #: ../src/modules/temperature/e_mod_config.c:63
-#, fuzzy
 msgid "Temperature Settings"
-msgstr "Általános beállítások"
+msgstr "Hőmérsékleti beállítások"
 
 #: ../src/modules/temperature/e_mod_config.c:249
 #: ../src/modules/temperature/e_mod_config.c:352
@@ -6708,336 +6622,180 @@ msgstr "Következő"
 
 #. set up next/prev buttons
 #: ../src/modules/wizard/e_wizard.c:273
-#, fuzzy
 msgid "Welcome to Enlightenment"
-msgstr "Üdvözlünk az Enlightenmentben 東京"
+msgstr "Üdvözlünk az Enlightenmentben"
 
 #: ../src/modules/wizard/page_010.c:141 ../src/modules/wizard/page_020.c:57
-#, fuzzy
 msgid "Select one"
-msgstr "Válassz egy ikont"
+msgstr "Válassz egy"
 
 #: ../src/modules/wizard/page_020.c:56
-#, fuzzy
 msgid "Profile"
-msgstr "Profilok"
+msgstr "Profil"
 
 #: ../src/modules/wizard/page_020.c:120
-#, fuzzy
 msgid "Select a profile"
-msgstr "Válassz egy Edj fájlt"
+msgstr "Válassz egy profilt"
 
 #: ../src/modules/wizard/page_030.c:73
 msgid ""
 "No menu files were<br>found on your system.<br>Please see "
 "the<br>documentation on<br>www.enlightenment.org<br>for more details "
 "on<br>how to get your<br>application menus<br>working."
-msgstr ""
+msgstr "Nem találtam menü<br>fájlokat a rendszereden.<br>Bővebb információért olvasd<br>el a www.enlightenment.org<br> oldalon található,<br>hogyan bírhatom működésre<br>az alkalmazás menüt dokumentációt."
 
 #: ../src/modules/wizard/page_030.c:91
-#, fuzzy
 msgid "Select application menu"
-msgstr "Kiválasztott alkalmazások"
+msgstr "Alkalmazás menü választása"
 
 #: ../src/modules/wizard/page_030.c:108
-#, fuzzy
 msgid "System Default"
-msgstr "Felhasználói alapértelmezés"
+msgstr "Alapértelmezett"
 
 #: ../src/modules/wizard/page_040.c:25
-#, fuzzy
 msgid "Launcher Bar"
-msgstr "Az indítóhoz"
+msgstr "Indító pult"
 
 #: ../src/modules/wizard/page_040.c:27
-#, fuzzy
 msgid "Select applications"
-msgstr "Kiválasztott alkalmazások"
+msgstr "Alkalmazások kiválasztása"
 
 #: ../src/modules/wizard/page_050.c:28
-#, fuzzy
 msgid "Desktop Files"
-msgstr "Desktop fájl"
+msgstr "Munkaasztal fájlok"
 
 #: ../src/modules/wizard/page_050.c:32
-#, fuzzy
 msgid "No icons on desktop"
-msgstr "Mutasd minden asztalon"
+msgstr "Ne legyenek ikonok az asztalon"
 
 #: ../src/modules/wizard/page_050.c:35
-#, fuzzy
 msgid "Enable desktop icons"
 msgstr "Munkaasztal ikonok megjelenítése"
 
 #: ../src/modules/wizard/page_060.c:28
-#, fuzzy
 msgid "Focus mode"
-msgstr "Fókusz"
+msgstr "Fókusz mód"
 
 #: ../src/modules/wizard/page_060.c:32
-#, fuzzy
 msgid "Click to focus windows"
 msgstr "Kattints a fókuszáláshoz"
 
 #: ../src/modules/wizard/page_060.c:35
-#, fuzzy
 msgid "Mouse over focuses windows"
 msgstr "Csúsztasd a mutatót az újonnan megnyitot, fókuszált ablakra"
 
 #: ../src/modules/mixer/app_mixer.c:166
-#, fuzzy
 msgid "Capture"
-msgstr "Cpufrek"
+msgstr "Elkapás"
 
 #: ../src/modules/mixer/app_mixer.c:168
 msgid "Playback"
-msgstr ""
+msgstr "Lejátszás"
 
 #: ../src/modules/mixer/app_mixer.c:294
-#, fuzzy
 msgid "Output"
-msgstr "Kimeneti adat"
+msgstr "Kimenet"
 
 #: ../src/modules/mixer/app_mixer.c:367
-#, fuzzy
 msgid "Cards"
-msgstr "Osztály"
+msgstr "Kártyák"
 
 #: ../src/modules/mixer/app_mixer.c:382 ../src/modules/mixer/conf_gadget.c:285
-#, fuzzy
 msgid "Channels"
-msgstr "Mégsem"
+msgstr "Csatornák"
 
 #: ../src/modules/mixer/app_mixer.c:394
-#, fuzzy
 msgid "Card:"
-msgstr "Törlés"
+msgstr "Kártya:"
 
 #: ../src/modules/mixer/app_mixer.c:398
-#, fuzzy
 msgid "Channel:"
-msgstr "Mégsem"
+msgstr "Csatorna:"
 
 #: ../src/modules/mixer/app_mixer.c:402
-#, fuzzy
 msgid "Type:"
-msgstr "Fájl típus:"
+msgstr "Típus:"
 
 #: ../src/modules/mixer/app_mixer.c:406
 msgid "Left:"
-msgstr ""
+msgstr "Bal:"
 
 #: ../src/modules/mixer/app_mixer.c:411
-#, fuzzy
 msgid "Right:"
-msgstr "Világos"
+msgstr "Jobb:"
 
 #: ../src/modules/mixer/app_mixer.c:416 ../src/modules/mixer/e_mod_main.c:606
-#, fuzzy
 msgid "Mute"
-msgstr "Menüelem"
+msgstr "Némít"
 
 #: ../src/modules/mixer/app_mixer.c:419 ../src/modules/mixer/conf_gadget.c:200
-#, fuzzy
 msgid "Lock Sliders"
-msgstr "Csúszka"
+msgstr "Csúszka zárolása"
 
 #: ../src/modules/mixer/app_mixer.c:423
-#, fuzzy
 msgid "Edit"
-msgstr "Kilépés"
+msgstr "Szerkeszt"
 
 #: ../src/modules/mixer/conf_gadget.c:206
 msgid "Show both sliders when locked"
-msgstr ""
+msgstr "Mind a két csúszkát mutasd zároláskor"
 
 #: ../src/modules/mixer/conf_gadget.c:327
 msgid "Sound Cards"
-msgstr ""
+msgstr "Hangkártyák"
 
 #: ../src/modules/mixer/conf_gadget.c:383
-#, fuzzy
 msgid "Mixer Settings"
-msgstr "Méret beállítások"
+msgstr "Keverő beállítások"
 
 #: ../src/modules/mixer/conf_module.c:98
 msgid "Mixer to use for global actions:"
-msgstr ""
+msgstr "Keverő a globális folymatokhoz:"
 
 #: ../src/modules/mixer/conf_module.c:152
-#, fuzzy
 msgid "Launch mixer..."
-msgstr "Az indítóhoz"
+msgstr "Keverő indítása..."
 
 #: ../src/modules/mixer/conf_module.c:187
-#, fuzzy
 msgid "Mixer Module Settings"
-msgstr "Modul beállítások"
+msgstr "Keverő modul beállításai"
 
 #: ../src/modules/mixer/e_mod_main.c:126
-#, fuzzy
 msgid "Mixer Settings Updated"
-msgstr "Fájlkezelő beállítások frissítve"
+msgstr "Keverő beállításai frissítve"
 
 #: ../src/modules/mixer/e_mod_main.c:1165
 msgid ""
 "Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
-msgstr ""
+msgstr "A keverő modul beállításai meg lettek változtatva.<br> A régi beállításaid felül lettek írva az újakkal.<br> Elnézést a kellemetlenségekért."
 
 #: ../src/modules/connman/e_mod_main.c:213
-#, fuzzy
 msgid "Connection Manager"
-msgstr "Ablakkezelő"
+msgstr "Csatlakozás kezelő"
 
 #: ../src/modules/connman/e_mod_main.c:730
-#, fuzzy
 msgid "Network Connection Settings"
-msgstr "Kijelölés beállítások"
+msgstr "Hálózati kapcsolat beállításai"
 
 #: ../src/modules/connman/e_mod_main.c:736
-#, fuzzy
 msgid "Network Device"
-msgstr "Cserélhető adathordozójú eszköz"
+msgstr "Hálózati eszköz"
 
 #: ../src/modules/connman/e_mod_main.c:741
-#, fuzzy
 msgid "Wifi"
-msgstr "Belül"
+msgstr "Wifi"
 
 #: ../src/modules/connman/e_mod_main.c:744
 msgid "LAN"
-msgstr ""
+msgstr "LAN"
 
 #: ../src/modules/connman/e_mod_main.c:747
-#, fuzzy
 msgid "Specific Device"
-msgstr "Megadott alkalmazások"
+msgstr "Megadott eszköz"
 
 #. FIXME: netlist needs to work
 #: ../src/modules/connman/e_mod_main.c:771
 msgid "Networks"
-msgstr ""
+msgstr "Hálózatok"
 
-#~ msgid "Lock Screen"
-#~ msgstr "Képernyő zárolása"
-
-#~ msgid "Hibernate"
-#~ msgstr "Hibernálás"
-
-#~ msgid "Logout"
-#~ msgstr "Kijelentkezés"
-
-#~ msgid "Desktop %i, %i"
-#~ msgstr "Asztal %i, %i"
-
-#~ msgid "Configuration Upgraded"
-#~ msgstr "A beállításokat frissítettem!"
-
-#~ msgid "Configuration"
-#~ msgstr "Beállítás"
-
-#~ msgid "Toolbar Configuration"
-#~ msgstr "Eszköztár tulajdonságok"
-
-#~ msgid "Shelf Configuration"
-#~ msgstr "Polc beállítása"
-
-#~ msgid "Enlightenment Configuration"
-#~ msgstr "Az Enlightenment beállítása"
-
-#~ msgid "Items"
-#~ msgstr "Elemek"
-
-#~ msgid "Configuration Panel"
-#~ msgstr "Konfigurációs panel"
-
-#~ msgid "Default Configuration Dialogs Mode"
-#~ msgstr "Alapértelmezett konfigurációs párbeszéd mód"
-
-#~ msgid "Input Method Configuration"
-#~ msgstr "Beviteli mód beállítások"
-
-#~ msgid "Language Configuration"
-#~ msgstr "Nyelvi beállítások"
-
-#~ msgid "Keyboard & Mouse"
-#~ msgstr "Billentyűzet és egér"
-
-#~ msgid "Search Path Configuration"
-#~ msgstr "Keresési útvonal beállítások"
-
-#~ msgid "Dropshadow Configuration"
-#~ msgstr "Árnyékolási beállítások"
-
-#~ msgid "Fileman Configuration Updated"
-#~ msgstr "Fájlkezelő beállítások frissítve"
-
-#~ msgid "IBar Configuration"
-#~ msgstr "IBar beállítások"
-
-#~ msgid "IBox Configuration"
-#~ msgstr "IBox beállítás"
-
-#~ msgid "Pager Configuration"
-#~ msgstr "Lapozó beállítások"
-
-#~ msgid "Virtual Desktops Configuration"
-#~ msgstr "Virtuális asztal beállítások"
-
-#~ msgid "Temperature Configuration"
-#~ msgstr "Hőmérsékleti beállítások"
-
-#, fuzzy
-#~ msgid "Mixer Configuration"
-#~ msgstr "Lapozó beállítások"
-
-#, fuzzy
-#~ msgid "Mixer Module Configuration"
-#~ msgstr "Polc beállítása"
-
-#~ msgid "Back"
-#~ msgstr "Vissza"
-
-#~ msgid "Choose Language"
-#~ msgstr "Nyelv választása"
-
-#~ msgid "X reports there are no root windows and %i screens!\n"
-#~ msgstr "Az X jelenti, hogy nincsenek root ablakok és %i képernyők!\n"
-
-#~ msgid "Disable this splash screen in the future?"
-#~ msgstr "Letiltod ezt az indító képernyőt a jövőben?"
-
-#~ msgid "Theme Bug Detected"
-#~ msgstr "Téma hibát találtam"
-
-#~ msgid ""
-#~ "The theme you are using for your init splash<br>has a bug. It does not "
-#~ "respond to signals when<br>startup is complete. You should use an "
-#~ "init<br>splash theme that is correctly made or fix the<br>one you use."
-#~ msgstr ""
-#~ "A téma, amit az indításhoz használsz, <br>hibás. Nem nem küld "
-#~ "visszajelzést, amikor az<br>indítás befejeződött. Használj egy "
-#~ "másik<br>indító témát, ami jó, vagy javítsd ki a hibát a jelenlegi "
-#~ "témában<br>."
-
-#~ msgid "Init"
-#~ msgstr "Init (indítókép)"
-
-#~ msgid "Window Manipulation"
-#~ msgstr "Ablak manipuláció"
-
-#~ msgid "When moving or resizing windows, resist at the boundaries"
-#~ msgstr "Ablak áthelyzésekor, átméretezésekor, állj ellen a határoknál"
-
-#~ msgid "Both directions"
-#~ msgstr "Mindkettő"
-
-#~ msgid "Enlightenment cannot configure the mouse acceleration settings."
-#~ msgstr "Az E17 nem tudta beállítani az egér beállításokat"
-
-#~ msgid "Mouse Acceleration Settings"
-#~ msgstr "Egér sebesség beállítások"
-
-#~ msgid "Select"
-#~ msgstr "Kijelölés"

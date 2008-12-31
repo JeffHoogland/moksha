@@ -1,7 +1,9 @@
 [Desktop Entry]
 Type=Link
 Name=Illume
+Name[hu]=Érintő
 Icon=e-module-illume
 X-Enlightenment-ModuleType=system
 Comment=<title>Illume for Embedded</title><br>This is a module to make Enlightenment tuned for embedded touchscreen<br>displays such as on phones and web-pads with windows always<br>being fullscreen and having a simplified application<br>launcher and manager.
 Comment[it]=<title>Illume per embedded</title><br>Questo è un modulo per rendere Enlightenment adatto ai display touchscreen<br>embedded, come sui cellulari e i web-pad, con finestre sempre<br>a tutto schermo e gestori di applicazioni semplificati.
+Comment[hu]=<title>Érints meg</title><br>Ez a modul lehetővé teszi az Enlightenment finomhangolását a különböző érintőképernyő típusokhoz,<br> például telefonokhoz, web-padokhoz,<br> hogy elérhető legyen egy egyszerű alkamazásindító hozzájuk.
