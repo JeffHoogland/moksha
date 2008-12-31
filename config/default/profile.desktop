@@ -2,6 +2,8 @@
 Type=Link
 Name=Default
 Name[it]=Predefinito
+Name[hu]=Alapértelmezett
 Icon=icon.png
 Comment=Select this to begin<br>the initial setup again.
 Comment[it]=Selezionare questo per<br>riprendere la<br>configurazione iniziale.
+Comment[hu]=Válaszd ezt az alap<br>beállítáok megismétléséhez.
