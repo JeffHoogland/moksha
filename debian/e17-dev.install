@@ -1,0 +1,2 @@
+debian/tmp/usr/include/enlightenment/*.h
+debian/tmp/usr/lib/pkgconfig/*

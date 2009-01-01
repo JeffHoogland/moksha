@@ -1,0 +1,103 @@
+diff --git a/src/bin/e_fm.c b/src/bin/e_fm.c
+--- a/src/bin/e_fm.c
++++ b/src/bin/e_fm.c
+@@ -1476,7 +1476,7 @@ _e_fm2_client_spawn(void)
+    char buf[4096];
+    
+    if (_e_fm2_client_spawning) return;
+-   snprintf(buf, sizeof(buf), "%s/enlightenment_fm", e_prefix_bin_get());
++   snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_fm", e_prefix_lib_get());
+    exe = ecore_exe_run(buf, NULL);
+    _e_fm2_client_spawning = 1;
+ }
+diff --git a/src/bin/e_init.c b/src/bin/e_init.c
+--- a/src/bin/e_init.c
++++ b/src/bin/e_init.c
+@@ -79,8 +79,8 @@ e_init_show(void)
+    if (version) ver = strdup(e_util_filename_escape(version));
+    else ver = strdup("XvX");
+ 
+-   snprintf(buf, sizeof(buf), "%s/enlightenment_init \'%s\' \'%i\' \'%i\' \'%s\' \'%s\'",
+-	    e_prefix_bin_get(),
++   snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_init \'%s\' \'%i\' \'%i\' \'%s\' \'%s\'",
++	    e_prefix_lib_get(),
+ 	    theme,
+ 	    e_canvas_engine_decide(e_config->evas_engine_init),
+ 	    e_config->font_hinting,
+diff --git a/src/bin/e_sys.c b/src/bin/e_sys.c
+--- a/src/bin/e_sys.c
++++ b/src/bin/e_sys.c
+@@ -128,13 +128,13 @@ _e_sys_cb_timer(void *data)
+    char buf[4096];
+    
+    e_init_status_set(_("Checking System Permissions"));
+-   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t halt", e_prefix_bin_get());
++   snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_sys -t halt", e_prefix_lib_get());
+    _e_sys_halt_check_exe = ecore_exe_run(buf, NULL);
+-   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t reboot", e_prefix_bin_get());
++   snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_sys -t reboot", e_prefix_lib_get());
+    _e_sys_reboot_check_exe = ecore_exe_run(buf, NULL);
+-   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t suspend", e_prefix_bin_get());
++   snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_sys -t suspend", e_prefix_lib_get());
+    _e_sys_suspend_check_exe = ecore_exe_run(buf, NULL);
+-   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t hibernate", e_prefix_bin_get());
++   snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_sys -t hibernate", e_prefix_lib_get());
+    _e_sys_hibernate_check_exe = ecore_exe_run(buf, NULL);
+    return 0;
+ }
+@@ -475,8 +475,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
+       case E_SYS_HALT_NOW:
+ 	/* shutdown -h now */
+ 	if (e_util_immortal_check()) return 0;
+-	snprintf(buf, sizeof(buf), "%s/enlightenment_sys halt",
+-		 e_prefix_bin_get());
++	snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_sys halt",
++		 e_prefix_lib_get());
+ 	if (_e_sys_exe)
+ 	  {
+ 	     _e_sys_current_action();
+@@ -502,8 +502,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
+       case E_SYS_REBOOT:
+ 	/* shutdown -r now */
+ 	if (e_util_immortal_check()) return 0;
+-	snprintf(buf, sizeof(buf), "%s/enlightenment_sys reboot",
+-		 e_prefix_bin_get());
++	snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_sys reboot",
++		 e_prefix_lib_get());
+ 	if (_e_sys_exe)
+ 	  {
+ 	     _e_sys_current_action();
+@@ -528,8 +528,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
+ 	break;
+       case E_SYS_SUSPEND:
+ 	/* /etc/acpi/sleep.sh force */
+-	snprintf(buf, sizeof(buf), "%s/enlightenment_sys suspend",
+-		 e_prefix_bin_get());
++	snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_sys suspend",
++		 e_prefix_lib_get());
+ 	if (_e_sys_exe)
+ 	  {
+ 	     _e_sys_current_action();
+@@ -554,8 +554,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
+ 	break;
+       case E_SYS_HIBERNATE:
+ 	/* /etc/acpi/hibernate.sh force */
+-	snprintf(buf, sizeof(buf), "%s/enlightenment_sys hibernate",
+-		 e_prefix_bin_get());
++	snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_sys hibernate",
++		 e_prefix_lib_get());
+ 	if (_e_sys_exe)
+ 	  {
+ 	     _e_sys_current_action();
+diff --git a/src/bin/e_thumb.c b/src/bin/e_thumb.c
+--- a/src/bin/e_thumb.c
++++ b/src/bin/e_thumb.c
+@@ -134,7 +134,7 @@ e_thumb_icon_begin(Evas_Object *obj)
+ 	  {
+ 	     Ecore_Exe *exe;
+ 
+-	     snprintf(buf, sizeof(buf), "%s/enlightenment_thumb --nice=%d", e_prefix_bin_get(),
++	     snprintf(buf, sizeof(buf), "%s/enlightenment/enlightenment_thumb --nice=%d", e_prefix_lib_get(),
+ 		      e_config->thumb_nice);
+ 	     exe = ecore_exe_run(buf, NULL);
+ 	     _thumbnailers_exe = evas_list_append(_thumbnailers_exe, exe);

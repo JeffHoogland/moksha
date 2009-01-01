@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/rules/simple-patchsys.mk
+
+DEB_FIXPERMS_EXCLUDE := enlightenment_sys freqset tempget batget
+DEB_MAKE_CLEAN_TARGET := clean
+DEB_INSTALL_MANPAGES_e17 := $(DEB_SRCDIR)/debian/enlightenment.1 $(DEB_SRCDIR)/debian/enlightenment_*.1
+DEB_DH_STRIP_ARGS := --dbg-package=e17-dbg
+DEB_CONFIGURE_EXTRA_FLAGS := --disable-rpath
+
+install/e17-data::
+	gzip -9 debian/tmp/usr/share/enlightenment/doc/*.txt
+	rm debian/tmp/usr/share/enlightenment/COPYING
+
+install/e17::
+	rm -r debian/tmp/usr/lib/enlightenment/modules/connman
+
+binary-predeb/e17::
+	chmod 4755 debian/e17/usr/lib/enlightenment/enlightenment_sys
+	chmod 4755 debian/e17/usr/lib/enlightenment/modules/cpufreq/*/freqset
+	chmod 4755 debian/e17/usr/lib/enlightenment/modules/temperature/*/tempget
+
+clean::
+	./autogen.sh --prefix=/usr $(DEB_CONFIGURE_EXTRA_FLAGS)
