@@ -281,7 +281,7 @@ e_flaunch_new(E_Zone *zone, const char *themedir)
 }
 
 EAPI void
-e_flaunch_desktop_exec_callabck_set(E_Flaunch *fl, void (*func) (Efreet_Desktop *desktop))
+e_flaunch_desktop_exec_callback_set(E_Flaunch *fl, void (*func) (Efreet_Desktop *desktop))
 {
    fl->desktop_run_func = func;
 }

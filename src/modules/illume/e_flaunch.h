@@ -35,6 +35,6 @@ struct _E_Flaunch_App
 EAPI int e_flaunch_init(void);
 EAPI int e_flaunch_shutdown(void);
 EAPI E_Flaunch *e_flaunch_new(E_Zone *zone, const char *themedir);
-EAPI void e_flaunch_desktop_exec_cb_set(E_Flaunch *fl, void (*func) (Efreet_Desktop *desktop));
+EAPI void e_flaunch_desktop_exec_callback_set(E_Flaunch *fl, void (*func) (Efreet_Desktop *desktop));
 
 #endif

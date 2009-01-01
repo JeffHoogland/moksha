@@ -140,7 +140,7 @@ _e_mod_win_init(E_Module *m)
    busycover = e_busycover_new(zone, e_module_dir_get(m));
 
    flaunch = e_flaunch_new(zone, e_module_dir_get(m));
-   e_flaunch_desktop_exec_callabck_set(flaunch, _desktop_run);
+   e_flaunch_desktop_exec_callback_set(flaunch, _desktop_run);
    
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
