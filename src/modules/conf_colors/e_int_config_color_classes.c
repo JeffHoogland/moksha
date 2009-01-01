@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 typedef struct _CFColor_Class CFColor_Class;
@@ -85,6 +88,8 @@ const CFColor_Hash _mod_hash[] =
      {NULL, NULL}
 };
 
+Eina_List *color_classes;
+
 static void        *_create_data          (E_Config_Dialog *cfd);
 static void         _free_data            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int          _basic_apply_data     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -93,6 +98,7 @@ static int          _adv_apply_data       (E_Config_Dialog *cfd, E_Config_Dialog
 static Evas_Object *_adv_create_widgets   (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 static void         _fill_data_hash       (E_Config_Dialog_Data *cfdata, const CFColor_Hash *cfhash);
+static void         _fill_data_list       (E_Config_Dialog_Data *cfdata);
 static void         _fill_data_basic      (E_Config_Dialog_Data *cfdata);
 
 static void         _load_color_classes   (Evas_Object *obj, E_Config_Dialog_Data *cfdata);
@@ -149,10 +155,14 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    e_color_update_rgb(cfdata->color1);
    e_color_update_rgb(cfdata->color2);
    e_color_update_rgb(cfdata->color3);
-   
+
+   color_classes = edje_color_class_list();
+
    _fill_data_hash(cfdata, _wm_hash);
    _fill_data_hash(cfdata, _wid_hash);
    _fill_data_hash(cfdata, _mod_hash);
+
+   _fill_data_list(cfdata);
 }
 
 static void 
@@ -171,6 +181,17 @@ _fill_data_hash(E_Config_Dialog_Data *cfdata, const CFColor_Hash *cfhash)
 
 	if (cfhash[i].key) 
 	  {
+	     Eina_List *l;
+
+	     for (l = color_classes; l; l = l->next)
+	       {
+		  if (!strncmp(cfhash[i].key, l->data, strlen(cfhash[i].key)))
+		    {
+		       color_classes = eina_list_remove_list(color_classes, l);
+		       E_FREE(l->data);
+		    }
+	       }
+
 	     cfc->key = eina_stringshare_add(cfhash[i].key);
 	     cfc->name = eina_stringshare_add(_(cfhash[i].name));
 	     cc = e_color_class_find(cfc->key);
@@ -211,6 +232,70 @@ _fill_data_hash(E_Config_Dialog_Data *cfdata, const CFColor_Hash *cfhash)
 	
 	cfdata->classes = eina_list_append(cfdata->classes, cfc);
      }
+}
+
+static void 
+_fill_data_list(E_Config_Dialog_Data *cfdata) 
+{
+    Eina_List *l;
+    CFColor_Class *cfc;
+    E_Color_Class *cc;
+
+    if (eina_list_count(color_classes))
+      {
+	 cfc = E_NEW(CFColor_Class, 1);
+	 cfc->enabled = 0;
+	 cfc->key = NULL;
+	 cfc->name = eina_stringshare_add(_("Other"));
+
+	 cfdata->classes = eina_list_append(cfdata->classes, cfc);
+      }
+
+    for (l = color_classes; l; l = l->next)
+      {
+	 cfc = E_NEW(CFColor_Class, 1);
+	 cfc->enabled = 0;
+	 cfc->key = eina_stringshare_add((char *) l->data);
+	 cfc->name = eina_stringshare_add((char *) l->data);
+
+	 cc = e_color_class_find(cfc->key);
+	 if (cc) 
+	   {
+	      cfc->enabled = 1;
+	      cfc->r = cc->r;
+	      cfc->g = cc->g;
+	      cfc->b = cc->b;
+	      cfc->a = cc->a;
+	      cfc->r2 = cc->r2;
+	      cfc->g2 = cc->g2;
+	      cfc->b2 = cc->b2;
+	      cfc->a2 = cc->a2;
+	      cfc->r3 = cc->r3;
+	      cfc->g3 = cc->g3;
+	      cfc->b3 = cc->b3;
+	      cfc->a3 = cc->a3;
+	   }
+	 else 
+	   {
+	      cfc->r = 255;
+	      cfc->g = 255;
+	      cfc->b = 255;
+	      cfc->a = 255;
+	      cfc->r2 = 0;
+	      cfc->g2 = 0;
+	      cfc->b2 = 0;
+	      cfc->a2 = 255;
+	      cfc->r3 = 0;
+	      cfc->g3 = 0;
+	      cfc->b3 = 0;
+	      cfc->a3 = 255;
+	   }
+
+	 cfdata->classes = eina_list_append(cfdata->classes, cfc);
+	 E_FREE(l->data);
+      }
+
+    color_classes = eina_list_free(color_classes);
 }
 
 static void 

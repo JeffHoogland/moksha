@@ -199,6 +199,7 @@ collections { /* begin the collection of edje groups that are in this file */
 				       * rest is relative to the whole object
 				       * (because its not specified) */
 	       }
+               color_class: "border_top";
 	       image { /* define the image to use */
 		  normal: "bd_top.png"; /* the image */
 		  border: 2 2 2 2; /* border scaling attributes. this is the
@@ -223,6 +224,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0 1.0;
 		  offset: -1 -1;
 	       }
+               color_class: "border_bottom";
 	       image {
 		  normal: "bd_bottom.png";
 		  border: 2 2 0 0; /* the left and right pixels are not to
@@ -594,6 +596,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -1 0;
 		  to: "top";
 	       }
+               color_class: "border_top_hilight";
 	       image {
 		  normal: "bd_top_hilight.png";
 	       }
@@ -1448,6 +1451,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -1 -1;
 		  to_y: "title_base";
 	       }
+               color_class: "border_top";
 	       image {
 		  normal: "bd_top.png";
 		  border: 2 2 2 2;
@@ -1465,6 +1469,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0 1.0;
 		  offset: -1 -1;
 	       }
+               color_class: "border_bottom";
 	       image {
 		  normal: "bd_bottom.png";
 		  border: 2 2 0 0;
@@ -1749,6 +1754,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -1 0;
 		  to: "top";
 	       }
+               color_class: "border_top_hilight";
 	       image {
 		  normal: "bd_top_hilight.png";
 	       }
@@ -2528,6 +2534,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -1 -1;
 		  to_y: "title_base";
 	       }
+               color_class: "border_top";
 	       image {
 		  normal: "bd_top.png";
 		  border: 2 2 2 2;
@@ -2804,6 +2811,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -1 0;
 		  to: "top";
 	       }
+               color_class: "border_top_hilight";
 	       image {
 		  normal: "bd_top_hilight.png";
 	       }
@@ -3377,6 +3385,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -1 -1;
 		  to_y: "title_base";
 	       }
+               color_class: "border_top";
 	       image {
 		  normal: "bd_top.png";
 		  border: 2 2 2 2;
@@ -3394,6 +3403,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0 1.0;
 		  offset: -1 -1;
 	       }
+               color_class: "border_bottom";
 	       image {
 		  normal: "bd_bottom.png";
 		  border: 2 2 0 0;
@@ -3632,6 +3642,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -1 0;
 		  to: "top";
 	       }
+               color_class: "border_top_hilight";
 	       image {
 		  normal: "bd_top_hilight.png";
 	       }
@@ -4301,6 +4312,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -1 -1;
 		  to_y: "title_base";
 	       }
+               color_class: "border_top";
 	       image {
 		  normal: "bd_top.png";
 		  border: 2 2 2 2;
@@ -4531,6 +4543,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -1 0;
 		  to: "top";
 	       }
+               color_class: "border_top_hilight";
 	       image {
 		  normal: "bd_top_hilight.png";
 	       }
@@ -5633,6 +5646,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    mouse_events:  0;
 	    description { state: "default" 0.0;
 	       align: 0.5 0.0;
+               color_class: "menu_base";
 	       image {
 		  normal: "base_bg.png";
 		  border: 2 2 2 2;
@@ -6228,6 +6242,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 part { name: "base";
 	    mouse_events: 0;
 	    description { state: "default" 0.0;
+               color_class: "shelf_base";
 	       image.normal: "base_bg.png";
 	       image.border: 2 2 2 2;
 	       fill.smooth: 0;
@@ -6563,6 +6578,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 part { name: "base";
 	    mouse_events: 0;
 	    description { state: "default" 0.0;
+               color_class: "shelf_base";
 	       image.normal: "shelf_alt_bg.png";
 	       fill.smooth: 0;
 	    }
@@ -11171,6 +11187,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 part { name: "base";
 	    mouse_events: 0;
 	    description { state: "default" 0.0;
+               color_class: "fileman_base";
 	       image.normal: "dia_grad.png";
 	       fill {
 		  smooth: 0;
@@ -16416,6 +16433,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 part { name: "base";
 	    mouse_events:  0;
 	    description { state: "default" 0.0;
+               color_class: "dialog_base";
 	       image.normal: "dia_grad.png";
 	       fill {
 		  smooth: 0;
@@ -16568,6 +16586,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 part { name: "base";
 	    mouse_events:  0;
 	    description { state: "default" 0.0;
+               color_class: "configure_base";
 	       image.normal: "dia_grad.png";
 	       fill {
 		  smooth: 0;
@@ -20307,6 +20326,7 @@ group { name: "e/toolbar/default/base";
          part { name: "base0";
 	    mouse_events:  0;
 	    description { state: "default" 0.0;
+               color_class: "frame_base";
 	       image.normal: "dia_grad.png";
 	       rel1.to: "over";
 	       rel2.to: "over";
