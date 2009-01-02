@@ -1511,7 +1511,7 @@ _e_fm2_client_spawn(void)
    char buf[4096];
    
    if (_e_fm2_client_spawning) return;
-   snprintf(buf, sizeof(buf), "%s/enlightenment_fm", e_prefix_bin_get());
+   snprintf(buf, sizeof(buf), "%s/enlightenment/utils/enlightenment_fm", e_prefix_lib_get());
    exe = ecore_exe_run(buf, NULL);
    _e_fm2_client_spawning = 1;
 }

@@ -2177,7 +2177,7 @@ _e_prepare_command(E_Fm_Op_Type type, const char *args)
 
    length = 256 + strlen(e_prefix_bin_get()) + strlen(args);
    buffer = malloc(length);
-   length = snprintf(buffer, length, "%s/enlightenment_fm_op %s %s", e_prefix_bin_get(), command, args);
+   length = snprintf(buffer, length, "%s/enlightenment/utils/enlightenment_fm_op %s %s", e_prefix_lib_get(), command, args);
 
    return buffer;
 }

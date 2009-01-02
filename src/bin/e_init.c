@@ -77,8 +77,8 @@ e_init_show(void)
    if (version) ver = strdup(e_util_filename_escape(version));
    else ver = strdup("XvX");
 
-   snprintf(buf, sizeof(buf), "%s/enlightenment_init \'%s\' \'%i\' \'%i\' \'%s\' \'%s\'",
-	    e_prefix_bin_get(),
+   snprintf(buf, sizeof(buf), "%s/enlightenment/utils/enlightenment_init \'%s\' \'%i\' \'%i\' \'%s\' \'%s\'",
+	    e_prefix_lib_get(),
 	    theme,
 	    e_canvas_engine_decide(e_config->evas_engine_init),
 	    e_config->font_hinting,

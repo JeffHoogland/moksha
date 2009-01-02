@@ -1,4 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
+
 INCLUDES = -I$(top_srcdir) \
 	   -I$(top_srcdir)/src/bin \
 	   -I$(top_srcdir)/src/lib \
@@ -18,12 +19,15 @@ enlightenment \
 enlightenment_remote \
 enlightenment_imc \
 enlightenment_start \
-enlightenment_thumb \
-enlightenment_sys \
-enlightenment_fm \
-enlightenment_init \
-enlightenment_fm_op \
 enlightenment_fm_open
+
+internal_bindir = $(libdir)/enlightenment/utils
+internal_bin_PROGRAMS = \
+enlightenment_init \
+enlightenment_fm \
+enlightenment_fm_op \
+enlightenment_sys \
+enlightenment_thumb
 
 ENLIGHTENMENTHEADERS = \
 e.h \
