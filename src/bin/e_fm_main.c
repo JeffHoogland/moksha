@@ -41,11 +41,9 @@
 #define E_TYPEDEFS
 #include "e_config_data.h"
 #include "e_fm_op.h"
-#include "e_prefix.h"
 #undef E_TYPEDEFS
 #include "e_config_data.h"
 #include "e_fm_op.h"
-#include "e_prefix.h"
 
 /* FIXME: things to add to the slave enlightenment_fm process and ipc to e:
  * 
@@ -254,17 +252,6 @@ main(int argc, char **argv)
    ecore_file_init();
    ecore_ipc_init();
 
-   if (!e_prefix_determine(argv[0]))
-     {
-	fprintf(stderr,
-		"ERROR: Enlightenment cannot determine its installed\n"
-		"       prefix from the system or argv[0].\n"
-		"       This is because it is not on Linux AND has been\n"
-		"       Executed strangely. This is unusual.\n"
-		);
-	e_prefix_fallback();
-     }
-
    ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _e_fm_slave_data_cb, NULL);
    ecore_event_handler_add(ECORE_EXE_EVENT_ERROR, _e_fm_slave_error_cb, NULL);
    ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_fm_slave_del_cb, NULL);
@@ -306,8 +293,6 @@ main(int argc, char **argv)
    e_dbus_shutdown();
    _e_storage_volume_edd_shutdown();
    
-   e_prefix_shutdown();
-
    ecore_ipc_shutdown();
    ecore_file_shutdown();
    eina_stringshare_shutdown();
@@ -2175,9 +2160,11 @@ _e_prepare_command(E_Fm_Op_Type type, const char *args)
    else
      strcpy(command, "cp");
 
-   length = 256 + strlen(e_prefix_bin_get()) + strlen(args);
+   length = 256 + strlen(getenv("E_LIB_DIR")) + strlen(args);
    buffer = malloc(length);
-   length = snprintf(buffer, length, "%s/enlightenment/utils/enlightenment_fm_op %s %s", e_prefix_lib_get(), command, args);
+   length = snprintf(buffer, length, 
+                     "%s/enlightenment/utils/enlightenment_fm_op %s %s", 
+                     getenv("E_LIB_DIR"), command, args);
 
    return buffer;
 }

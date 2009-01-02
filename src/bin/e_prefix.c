@@ -29,6 +29,7 @@ e_prefix_determine(char *argv0)
 {
    char *p, buf[4096];
 
+   printf("e_prefix_determine()\n");
    e_prefix_shutdown();
 
    /* if user provides E_PREFIX - then use that or also more specific sub
@@ -37,28 +38,40 @@ e_prefix_determine(char *argv0)
      {
 	_prefix_path = strdup(getenv("E_PREFIX"));
 	if (getenv("E_BIN_DIR"))
-	  snprintf(buf, sizeof(buf), "%s/bin", getenv("E_BIN_DIR"));
+          _prefix_path_bin = strdup(getenv("E_BIN_DIR"));
 	else
-	  snprintf(buf, sizeof(buf), "%s/bin", _prefix_path);
-	_prefix_path_bin = strdup(buf);
+          {
+             snprintf(buf, sizeof(buf), "%s/bin", _prefix_path);
+             _prefix_path_bin = strdup(buf);
+             e_util_env_set("E_BIN_DIR", _prefix_path_bin);
+          }
 
 	if (getenv("E_LIB_DIR"))
-	  snprintf(buf, sizeof(buf), "%s/lib", getenv("E_LIB_DIR"));
+          _prefix_path_lib = strdup(getenv("E_LIB_DIR"));
 	else
-	  snprintf(buf, sizeof(buf), "%s/lib", _prefix_path);
-	_prefix_path_lib = strdup(buf);
+          {
+             snprintf(buf, sizeof(buf), "%s/lib", _prefix_path);
+             _prefix_path_lib = strdup(buf);
+             e_util_env_set("E_LIB_DIR", _prefix_path_lib);
+          }
 	
 	if (getenv("E_DATA_DIR"))
-	  snprintf(buf, sizeof(buf), "%s/"SHARE_D, getenv("E_DATA_DIR"));
+          _prefix_path_data = strdup(getenv("E_DATA_DIR"));
 	else
-	  snprintf(buf, sizeof(buf), "%s/"SHARE_D, _prefix_path);
-	_prefix_path_data = strdup(buf);
+          {
+             snprintf(buf, sizeof(buf), "%s/"SHARE_D, _prefix_path);
+             _prefix_path_data = strdup(buf);
+             e_util_env_set("E_DATA_DIR", _prefix_path_data);
+          }
 	
 	if (getenv("E_LOCALE_DIR"))
-	  snprintf(buf, sizeof(buf), "%s/"LOCALE_D, getenv("E_LOCALE_DIR"));
+          _prefix_path_locale = strdup(getenv("E_LOCALE_DIR"));
 	else
-	  snprintf(buf, sizeof(buf), "%s/"LOCALE_D, _prefix_path);
-	_prefix_path_locale = strdup(buf);
+          {
+             snprintf(buf, sizeof(buf), "%s/"LOCALE_D, _prefix_path);
+             _prefix_path_locale = strdup(buf);
+             e_util_env_set("E_LOCALE_DIR", _prefix_path_locale);
+          }
 	return 1;
      }
    /* no env var - examine process and possible argv0 */
@@ -67,6 +80,10 @@ e_prefix_determine(char *argv0)
 	if (!_e_prefix_try_argv(argv0))
 	  {
 	     e_prefix_fallback();
+             e_util_env_set("E_PREFIX", _prefix_path);
+             e_util_env_set("E_BIN_DIR", _prefix_path_bin);
+             e_util_env_set("E_LIB_DIR", _prefix_path_lib);
+             e_util_env_set("E_DATA_DIR", _prefix_path_data);
 	     return 0;
 	  }
      }
@@ -121,14 +138,26 @@ e_prefix_determine(char *argv0)
 			    else
 			      {
 				 e_prefix_fallback();
+                                 e_util_env_set("E_PREFIX", _prefix_path);
+                                 e_util_env_set("E_BIN_DIR", _prefix_path_bin);
+                                 e_util_env_set("E_LIB_DIR", _prefix_path_lib);
+                                 e_util_env_set("E_DATA_DIR", _prefix_path_data);
 				 return 0;
 			      }
 			 }
+                       e_util_env_set("E_PREFIX", _prefix_path);
+                       e_util_env_set("E_BIN_DIR", _prefix_path_bin);
+                       e_util_env_set("E_LIB_DIR", _prefix_path_lib);
+                       e_util_env_set("E_DATA_DIR", _prefix_path_data);
 		       return 1;
 		    }
 		  else
 		    {
 		       e_prefix_fallback();
+                       e_util_env_set("E_PREFIX", _prefix_path);
+                       e_util_env_set("E_BIN_DIR", _prefix_path_bin);
+                       e_util_env_set("E_LIB_DIR", _prefix_path_lib);
+                       e_util_env_set("E_DATA_DIR", _prefix_path_data);
 		       return 0;
 		    }
 	       }
@@ -136,6 +165,10 @@ e_prefix_determine(char *argv0)
 	  }
      }
    e_prefix_fallback();
+   e_util_env_set("E_PREFIX", _prefix_path);
+   e_util_env_set("E_BIN_DIR", _prefix_path_bin);
+   e_util_env_set("E_LIB_DIR", _prefix_path_lib);
+   e_util_env_set("E_DATA_DIR", _prefix_path_data);
    return 0;
 }
 

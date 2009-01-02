@@ -345,8 +345,7 @@ enlightenment_thumb_LDADD = @E_THUMB_LIBS@
 enlightenment_fm_SOURCES = \
 e_fm_main.c \
 e_user.c \
-e_sha1.c \
-e_prefix.c
+e_sha1.c
 
 enlightenment_fm_LDADD = @E_FM_LIBS@
 enlightenment_fm_CFLAGS = $(INCLUDES)
@@ -375,9 +374,12 @@ e_xinerama.c
 
 enlightenment_init_LDADD = @E_INIT_LIBS@
 
+# HACK! why install-data-hook? install-exec-hook is run after bin_PROGRAMS
+# and before internal_bin_PROGRAMS are installed. install-data-hook is
+# run after both
 setuid_root_mode = a=rx,u+xs
-install-exec-hook:
-	@chmod $(setuid_root_mode) $(DESTDIR)$(bindir)/enlightenment_sys$(EXEEXT) || true
+install-data-hook:
+	@chmod $(setuid_root_mode) $(DESTDIR)$(libdir)/enlightenment/utils/enlightenment_sys$(EXEEXT) || true
 
 installed_headersdir = $(prefix)/include/enlightenment
 installed_headers_DATA = $(ENLIGHTENMENTHEADERS)
