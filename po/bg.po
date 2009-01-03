@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-12-21 18:54+0800\n"
+"POT-Creation-Date: 2009-01-03 14:58+0800\n"
 "PO-Revision-Date: 2007-11-15 00:40+0200\n"
 "Last-Translator: Viktor Kojouharov <vkojouharov@abv.bg>\n"
 "Language-Team: English <en@li.org>\n"
@@ -792,7 +792,7 @@ msgid "Extensions"
 msgstr "Разширения"
 
 #: ../src/bin/e_configure.c:16 ../src/bin/e_int_menus.c:755
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:83
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:86
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:99
 #: ../src/modules/conf_paths/e_int_config_paths.c:83
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:196
@@ -1588,7 +1588,7 @@ msgid "Skip"
 msgstr "Пропускане"
 
 #: ../src/bin/e_int_border_menu.c:539 ../src/bin/e_int_border_prop.c:433
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:427
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:512
 msgid "State"
 msgstr "Фаза"
 
@@ -3384,181 +3384,186 @@ msgstr "%1.0f·Символа"
 msgid "Client List Menu"
 msgstr "Меню на списък с прозорци"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:44
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:47
 msgid "Window Manager"
 msgstr "Управление на прозорци"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:45
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:48
 msgid "About Dialog Title"
 msgstr "За (Заглавие)"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:46
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:49
 msgid "About Dialog Version"
 msgstr "За (Версия)"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:47
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:50
 msgid "Border Title"
 msgstr "Заглавие на рамка"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:48
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:51
 msgid "Configure Dialog Title"
 msgstr "Заглавие на конфигурационния диалог"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:49
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:52
 msgid "Error Text"
 msgstr "Текст на грешките"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:50
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:53
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:63
 msgid "Menu Title"
 msgstr "Заглавие на меню"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:51
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:54
 msgid "Menu Title Active"
 msgstr "Активирано заглавие на менюта"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:52
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:55
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:62
 msgid "Menu Item"
 msgstr "Елемент от меню"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:53
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:56
 msgid "Menu Item Active"
 msgstr "Активиран елемент от меню"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:54
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:57
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:67
 msgid "Move Text"
 msgstr "Преместване на текст"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:55
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:58
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:68
 msgid "Resize Text"
 msgstr "Текст на оразмеряване"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:56
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:59
 msgid "Winlist Item"
 msgstr "Елемент от списъка с прозорци"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:57
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:60
 msgid "Winlist Label"
 msgstr "Надпис на списък с прозорци"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:58
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:61
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:69
 msgid "Winlist Title"
 msgstr "Заглаение на списък с прозорци"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:64
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:67
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:82
 msgid "Widgets"
 msgstr "Части на интерфейса"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:65
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:68
 msgid "Button Text"
 msgstr "Текст на бутоните"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:66
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:69
 msgid "Button Text Disabled"
 msgstr "Текст на изключен бутон"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:67
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:70
 msgid "Check Text"
 msgstr "Текст на отметките"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:68
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:71
 msgid "Check Text Disabled"
 msgstr "Текст на изключена отметка"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:69
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:72
 msgid "Entry Text"
 msgstr "Текст на текстови полета"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:70
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:73
 msgid "Label Text"
 msgstr "Текст на надписите"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:71
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:74
 msgid "List Item Text"
 msgstr "Текст на елемент от лист"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:72
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:75
 msgid "List Item Odd Text"
 msgstr "Текст на нечетен елемент от лист"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:73
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:76
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:92
 msgid "List Header"
 msgstr "Заглавие от лист"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:74
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:77
 msgid "Radio Text"
 msgstr "Текст на радиобутон"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:75
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:78
 msgid "Radio Text Disabled"
 msgstr "Текст на изклчен радиобутон"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:76
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:79
 msgid "Slider Text"
 msgstr "Текст на плъзгач"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:77
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:80
 msgid "Slider Text Disabled"
 msgstr "Текст на изключен плъзгач"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:84
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:87
 msgid "Module Label"
 msgstr "Надпис на модул"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:124
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:130
 #: ../src/modules/conf_colors/e_mod_main.c:35
 msgid "Colors"
 msgstr "Цветове"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:348
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:249
+#, fuzzy
+msgid "Other"
+msgstr "Други"
+
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:433
 msgid "Window Manager Colors"
 msgstr "Цветове на манипулатора на прозорци"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:350
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:358
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:366
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:430
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:435
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:443
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:451
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:515
 msgid "Enabled"
 msgstr "Включване"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:352
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:360
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:368
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:435
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:437
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:445
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:453
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:520
 msgid "Disabled"
 msgstr "Недостъпен"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:356
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:441
 msgid "Widget Colors"
 msgstr "Цветове на частта"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:364
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:449
 msgid "Module Colors"
 msgstr "Цветове на модули"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:414
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:499
 msgid "Color Classes"
 msgstr "Цветови класове"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:442
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:527
 msgid "Object Color"
 msgstr "Цвят на обекта"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:451
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:536
 msgid "Outline Color"
 msgstr "Цвят на контура"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:460
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:545
 msgid "Shadow Color"
 msgstr "Цвят на сянката"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:469
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:554
 msgid "Defaults"
 msgstr "По подразбиране"
 

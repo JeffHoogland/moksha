@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-12-21 18:54+0800\n"
+"POT-Creation-Date: 2009-01-03 14:58+0800\n"
 "PO-Revision-Date: 2008-12-30 22:12+0100\n"
 "Last-Translator: Lisovszki Sándor <lisovszki@gmail.com>\n"
 "Language-Team: Hungarian <pclinuxos-i18n@googlegroups.com>\n"
@@ -101,7 +101,8 @@ msgid "Are you sure you want to exit?"
 msgstr "Tényleg ki akarsz lépni?"
 
 #: ../src/bin/e_actions.c:1625
-msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+msgid ""
+"You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
@@ -124,7 +125,8 @@ msgstr "Tényleg ki akarod kapcsolni a gépet?"
 msgid ""
 "You requested to turn off your Computer.<br><br>Are you sure you want to "
 "shut down?"
-msgstr "A számítógép kikapcsolását választottad.<br><br>Biztosan ki akarod kapcsolni?"
+msgstr ""
+"A számítógép kikapcsolását választottad.<br><br>Biztosan ki akarod kapcsolni?"
 
 #: ../src/bin/e_actions.c:1833
 msgid "Are you sure you want to reboot?"
@@ -134,13 +136,15 @@ msgstr "Biztosan újra akarod indítani?"
 msgid ""
 "You requested to reboot your Computer.<br><br>Are you sure you want to "
 "restart it?"
-msgstr "A számítógép újraindítását választottad.<br><br>Biztos, hogy ezt akarod?"
+msgstr ""
+"A számítógép újraindítását választottad.<br><br>Biztos, hogy ezt akarod?"
 
 #: ../src/bin/e_actions.c:1899
 msgid ""
 "You requested to suspend your Computer.<br><br>Are you sure you want to "
 "suspend?"
-msgstr "Az számítógép felfüggesztését választottad.<br><br>Biztos, hogy ezt akarod?"
+msgstr ""
+"Az számítógép felfüggesztését választottad.<br><br>Biztos, hogy ezt akarod?"
 
 #: ../src/bin/e_actions.c:1961
 msgid "Are you sure you want to hibernate?"
@@ -150,7 +154,8 @@ msgstr "Tényleg hibernálni akarod a gépet?"
 msgid ""
 "You requested to hibernate your Computer.<br><br>Are you sure you want to "
 "suspend to disk?"
-msgstr "A számítógép hibernálását választottad.<br><br>Biztos, hogy ezt akarod?"
+msgstr ""
+"A számítógép hibernálását választottad.<br><br>Biztos, hogy ezt akarod?"
 
 #: ../src/bin/e_actions.c:2273 ../src/bin/e_actions.c:2284
 #: ../src/bin/e_actions.c:2303 ../src/bin/e_actions.c:2308
@@ -787,7 +792,7 @@ msgid "Extensions"
 msgstr "Kiterjesztések"
 
 #: ../src/bin/e_configure.c:16 ../src/bin/e_int_menus.c:755
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:83
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:86
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:99
 #: ../src/modules/conf_paths/e_int_config_paths.c:83
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:196
@@ -804,7 +809,8 @@ msgid "Error - no PAM support"
 msgstr "Hiba - nincs PAM támogatás"
 
 #: ../src/bin/e_desklock.c:145
-msgid "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+msgid ""
+"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr ""
 "Nem lett PAM támogatás beleépítve az ENlightenmentbe, ezért az <br>asztal "
 "zárolás nem engedélyezett."
@@ -989,7 +995,8 @@ msgstr "Futási hiba"
 #: ../src/modules/conf_imc/e_int_config_imc.c:519
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
-msgstr "Az Enlightenment képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
+msgstr ""
+"Az Enlightenment képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
 
 #: ../src/bin/e_exec.c:314
 msgid "Application run error"
@@ -1068,7 +1075,8 @@ msgid "%s was interrupted by the signal number %i."
 msgstr "%s futtatása megszakadt az %i számú szignál miatt"
 
 #: ../src/bin/e_exec.c:528
-msgid "***The remaining output has been truncated. Save the output to view.***\n"
+msgid ""
+"***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 "***A megmaradt kimenet meg lett csonkítva. Mentsd el a kimenetet, hogy "
 "megnézhesd.***\n"
@@ -1426,7 +1434,8 @@ msgid "Protect this window from me accidentally changing it"
 msgstr "Védd meg az ablakot, nehogy véletlenül megváltoztassam!"
 
 #: ../src/bin/e_int_border_locks.c:290
-msgid "Protect this window from being accidentally closed because it is important"
+msgid ""
+"Protect this window from being accidentally closed because it is important"
 msgstr "Védd meg az ablkakot, nehogy véletlen bezárjam, mert fontos!"
 
 #: ../src/bin/e_int_border_locks.c:292
@@ -1573,7 +1582,7 @@ msgid "Skip"
 msgstr "Kihagyás"
 
 #: ../src/bin/e_int_border_menu.c:539 ../src/bin/e_int_border_prop.c:433
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:427
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:512
 msgid "State"
 msgstr "Állapot"
 
@@ -2492,7 +2501,8 @@ msgid ""
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
 "Az Evas nem tudja betölteni a 'Sans' betűtípust. Kérlek ellenõrizd,\n"
-"hogy az Evas támogatja-e a betűtípusbeállítást, és hogy a rendszer betűtípusa a 'Sans'-e.\n"
+"hogy az Evas támogatja-e a betűtípusbeállítást, és hogy a rendszer "
+"betűtípusa a 'Sans'-e.\n"
 
 #: ../src/bin/e_main.c:721
 msgid "Setup Screens"
@@ -3387,181 +3397,186 @@ msgstr "%1.0f Karakter"
 msgid "Client List Menu"
 msgstr "Kliens lista menü"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:44
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:47
 msgid "Window Manager"
 msgstr "Ablakkezelő"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:45
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:48
 msgid "About Dialog Title"
 msgstr "Névjegy Párbeszédablak Cím"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:46
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:49
 msgid "About Dialog Version"
 msgstr "Párbeszédablak verzió"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:47
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:50
 msgid "Border Title"
 msgstr "Keret stílus"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:48
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:51
 msgid "Configure Dialog Title"
 msgstr "Párbeszéd cím beállítás"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:49
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:52
 msgid "Error Text"
 msgstr "Hiba szöveg"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:50
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:53
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:63
 msgid "Menu Title"
 msgstr "Menü cím"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:51
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:54
 msgid "Menu Title Active"
 msgstr "Menü cím aktív"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:52
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:55
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:62
 msgid "Menu Item"
 msgstr "Menüelem"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:53
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:56
 msgid "Menu Item Active"
 msgstr "Menü elem aktív"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:54
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:57
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:67
 msgid "Move Text"
 msgstr "Szöveg mozgatása"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:55
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:58
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:68
 msgid "Resize Text"
 msgstr "Szöveg átméretezése"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:56
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:59
 msgid "Winlist Item"
 msgstr "Ablaklista elem"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:57
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:60
 msgid "Winlist Label"
 msgstr "Ablaklista címke"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:58
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:61
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:69
 msgid "Winlist Title"
 msgstr "Ablaklista cím"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:64
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:67
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:82
 msgid "Widgets"
 msgstr "Felületi elemek"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:65
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:68
 msgid "Button Text"
 msgstr "nyomógombszöveg"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:66
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:69
 msgid "Button Text Disabled"
 msgstr "Gomb szöveg tiltva"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:67
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:70
 msgid "Check Text"
 msgstr "Szöveg ellenőrzése"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:68
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:71
 msgid "Check Text Disabled"
 msgstr "Szöveg ellenőrzés tiltva"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:69
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:72
 msgid "Entry Text"
 msgstr "Szöveg bevitel"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:70
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:73
 msgid "Label Text"
 msgstr "Címke szöveg"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:71
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:74
 msgid "List Item Text"
 msgstr "Lista elem szöveg"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:72
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:75
 msgid "List Item Odd Text"
 msgstr "Lista elem páratlan szöveg"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:73
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:76
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:92
 msgid "List Header"
 msgstr "Lista fejléc"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:74
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:77
 msgid "Radio Text"
 msgstr "Rádió szöveg"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:75
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:78
 msgid "Radio Text Disabled"
 msgstr "Rádió szöveg tiltva"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:76
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:79
 msgid "Slider Text"
 msgstr "Csúszka szöveg"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:77
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:80
 msgid "Slider Text Disabled"
 msgstr "Csúszka szöveg tiltva"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:84
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:87
 msgid "Module Label"
 msgstr "Modul címke"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:124
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:130
 #: ../src/modules/conf_colors/e_mod_main.c:35
 msgid "Colors"
 msgstr "Színek"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:348
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:249
+#, fuzzy
+msgid "Other"
+msgstr "IBar egyéb"
+
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:433
 msgid "Window Manager Colors"
 msgstr "Ablak kezelő színek"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:350
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:358
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:366
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:430
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:435
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:443
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:451
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:515
 msgid "Enabled"
 msgstr "Engedélyezve"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:352
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:360
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:368
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:435
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:437
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:445
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:453
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:520
 msgid "Disabled"
 msgstr "Tiltva"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:356
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:441
 msgid "Widget Colors"
 msgstr "A grafikus elemek színei"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:364
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:449
 msgid "Module Colors"
 msgstr "Modul színek"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:414
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:499
 msgid "Color Classes"
 msgstr "Ikon osztályok"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:442
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:527
 msgid "Object Color"
 msgstr "Objektum szín"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:451
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:536
 msgid "Outline Color"
 msgstr "Körvonal Szín"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:460
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:545
 msgid "Shadow Color"
 msgstr "Árnyék szín"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:469
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:554
 msgid "Defaults"
 msgstr "Alapértelmezések"
 
@@ -3821,8 +3836,8 @@ msgid ""
 "will be restored in %d seconds."
 msgstr ""
 "Ez így jónak tûnik? Ha igen, nyomd meg a <hilight>Mentés</hilight> gombot,"
-"<br>vagy a Helyreállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
-"eredeti, %dx%d @ %d Hz felbontás visszaáll, %d mp múlva"
+"<br>vagy a Helyreállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot "
+"sem, az eredeti, %dx%d @ %d Hz felbontás visszaáll, %d mp múlva"
 
 #: ../src/modules/conf_display/e_int_config_display.c:136
 #, c-format
@@ -3832,8 +3847,8 @@ msgid ""
 "restored in %d seconds."
 msgstr ""
 "Ez így jónak tûnik? Ha igen, nyomd meg a <hilight>Mentés</hilight> gombot,"
-"<br>vagy a Helyreállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
-"eredeti, %dx%d @ felbontás visszaáll, %d mp múlva"
+"<br>vagy a Helyreállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot "
+"sem, az eredeti, %dx%d @ felbontás visszaáll, %d mp múlva"
 
 #: ../src/modules/conf_display/e_int_config_display.c:146
 #, c-format
@@ -3843,8 +3858,9 @@ msgid ""
 "will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 "Ez így jónak tûnik? Ha igen, nyomd meg a <hilight>Mentés</hilight> gombot,"
-"<br>vagy a Viszaállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
-"eredeti, %dx%d @ %d Hz felbontás <hilight>AZONNAL</hilight> visszaáll."
+"<br>vagy a Viszaállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot "
+"sem, az eredeti, %dx%d @ %d Hz felbontás <hilight>AZONNAL</hilight> "
+"visszaáll."
 
 #: ../src/modules/conf_display/e_int_config_display.c:153
 #, c-format
@@ -3854,8 +3870,8 @@ msgid ""
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 "Ez így jónak tûnik? Ha igen, nyomd meg a <hilight>Mentés</hilight> gombot,"
-"<br>vagy a Visszaállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
-"eredeti, %dx%d felbontás <hilight>AZONNAL</hilight> visszaáll."
+"<br>vagy a Visszaállít gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot "
+"sem, az eredeti, %dx%d felbontás <hilight>AZONNAL</hilight> visszaáll."
 
 #: ../src/modules/conf_display/e_int_config_display.c:190
 msgid "Resolution change"
@@ -3906,7 +3922,10 @@ msgid ""
 "XRandR support detected."
 msgstr ""
 "Az X szervered nem támogatja <br>a <hilight>XRandr</hilight><br> "
-"kiterjesztést(X átméretezés és forgatás).<br> <br>Enélkül a kiterjesztés nélkül <br>nem változtathatod meg a kijelző felbontását</br>. <br>Előfordulhat, hogy az <hilight>ecore</hilight>, a forgatásakor nem érzékelt<br> XRandR támogatást."
+"kiterjesztést(X átméretezés és forgatás).<br> <br>Enélkül a kiterjesztés "
+"nélkül <br>nem változtathatod meg a kijelző felbontását</br>. "
+"<br>Előfordulhat, hogy az <hilight>ecore</hilight>, a forgatásakor nem "
+"érzékelt<br> XRandR támogatást."
 
 #: ../src/modules/conf_display/e_int_config_display.c:655
 msgid "No Refresh Rates Found"
@@ -4384,7 +4403,8 @@ msgstr ""
 "egy érvényes beállítás?"
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:297
-msgid "Enlightenment was unable to import the configuration<br>due to a copy error."
+msgid ""
+"Enlightenment was unable to import the configuration<br>due to a copy error."
 msgstr "Az E17 nem tudja importálni a beállítást<br> egy másolási hiba miatt."
 
 #: ../src/modules/conf_imc/e_mod_main.c:34
@@ -4473,7 +4493,8 @@ msgid "<None>"
 msgstr "<None>"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:7
-msgid "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
+msgid ""
+"Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
 msgstr ""
 "Kérlek üsd le a billentyûkombinációt,<br><br> vagy nyomd meg az "
 "<hilight>Escape</hilight> gombot a megszakításhoz."
@@ -4940,7 +4961,8 @@ msgstr "A rendelkezésre álló profilok"
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "profile?"
-msgstr "A \"%s\" törlését kérted.<br><br>Biztosan törölni szeretnéd ezt a profilt?"
+msgstr ""
+"A \"%s\" törlését kérted.<br><br>Biztosan törölni szeretnéd ezt a profilt?"
 
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:211
 msgid "Are you sure you want to delete this profile?"
@@ -5097,7 +5119,8 @@ msgstr "Beállított polcok"
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "shelf?"
-msgstr "A \"%s\" törlését kérted. <br><br>biztosan törölni szeretnéd ezt a polcot?"
+msgstr ""
+"A \"%s\" törlését kérted. <br><br>biztosan törölni szeretnéd ezt a polcot?"
 
 #: ../src/modules/conf_startup/e_int_config_startup.c:39
 msgid "Startup Settings"
@@ -5159,7 +5182,8 @@ msgstr ""
 
 #: ../src/modules/conf_theme/e_int_config_theme_import.c:287
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
-msgstr "Az Enlightenment nem tudja importálni a témát, <br> másolási hiba miatt."
+msgstr ""
+"Az Enlightenment nem tudja importálni a témát, <br> másolási hiba miatt."
 
 #: ../src/modules/conf_theme/e_int_config_theme_web.c:127
 msgid "Exchange themes"
@@ -5320,8 +5344,10 @@ msgid "Picture Import Error"
 msgstr "Kép importálás hiba"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:505
-msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
-msgstr "Az Enlightenment nem képes importálni a képet, <br> átalakítási hibák miatt."
+msgid ""
+"Enlightenment was unable to import the picture<br>due to conversion errors."
+msgstr ""
+"Az Enlightenment nem képes importálni a képet, <br> átalakítási hibák miatt."
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:578
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:595
@@ -5329,7 +5355,8 @@ msgid "Wallpaper Import Error"
 msgstr "Háttérkép importálás hiba"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:579
-msgid "Enlightenment was unable to import the wallpaper<br>due to a copy error."
+msgid ""
+"Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr ""
 "Az Enlightenment nem tudja a háttérképet importálni, <br>egy másolási hiba "
 "miatt."
@@ -5416,7 +5443,8 @@ msgstr "Megjelenítés"
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:162
 msgid "Show window geometry information when moving or resizing"
-msgstr "Mutasd az ablak geometriai információit mozgatáskor, vagy átméretezéskor"
+msgstr ""
+"Mutasd az ablak geometriai információit mozgatáskor, vagy átméretezéskor"
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:164
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:212
@@ -6053,8 +6081,11 @@ msgid ""
 msgstr ""
 "A fájlkezelő modul konfigurációs adata frissítést igényel. A régi beállítás "
 "<br>törölve lett, és az új alap beállítás lett azonosítva. Ez <br>a "
-"feljelsztés közben természetes, ezért ne jelentsd <br>hibaként. Ez egyszerűen csak azt jelenti, hogy a fájlkezelő<br>modulnak új alapértelmezett beállításokra van szüksége,<br> mert a régiek már elavultak. Ezek az új alapértelmezett beállítások helyjehozták a hibákat.<br>Most már testreszabhatod a modult.<br> Elnézésedet "
-"kérjük a kellemetlenségekért.<br>"
+"feljelsztés közben természetes, ezért ne jelentsd <br>hibaként. Ez "
+"egyszerűen csak azt jelenti, hogy a fájlkezelő<br>modulnak új "
+"alapértelmezett beállításokra van szüksége,<br> mert a régiek már elavultak. "
+"Ezek az új alapértelmezett beállítások helyjehozták a hibákat.<br>Most már "
+"testreszabhatod a modult.<br> Elnézésedet kérjük a kellemetlenségekért.<br>"
 
 #: ../src/modules/fileman/e_mod_main.c:289
 msgid ""
@@ -6642,7 +6673,10 @@ msgid ""
 "No menu files were<br>found on your system.<br>Please see "
 "the<br>documentation on<br>www.enlightenment.org<br>for more details "
 "on<br>how to get your<br>application menus<br>working."
-msgstr "Nem találtam menü<br>fájlokat a rendszereden.<br>Bővebb információért olvasd<br>el a www.enlightenment.org<br> oldalon található,<br>hogyan bírhatom működésre<br>az alkalmazás menüt dokumentációt."
+msgstr ""
+"Nem találtam menü<br>fájlokat a rendszereden.<br>Bővebb információért "
+"olvasd<br>el a www.enlightenment.org<br> oldalon található,<br>hogyan "
+"bírhatom működésre<br>az alkalmazás menüt dokumentációt."
 
 #: ../src/modules/wizard/page_030.c:91
 msgid "Select application menu"
@@ -6768,7 +6802,9 @@ msgstr "Keverő beállításai frissítve"
 msgid ""
 "Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
-msgstr "A keverő modul beállításai meg lettek változtatva.<br> A régi beállításaid felül lettek írva az újakkal.<br> Elnézést a kellemetlenségekért."
+msgstr ""
+"A keverő modul beállításai meg lettek változtatva.<br> A régi beállításaid "
+"felül lettek írva az újakkal.<br> Elnézést a kellemetlenségekért."
 
 #: ../src/modules/connman/e_mod_main.c:213
 msgid "Connection Manager"
@@ -6798,4 +6834,3 @@ msgstr "Megadott eszköz"
 #: ../src/modules/connman/e_mod_main.c:771
 msgid "Networks"
 msgstr "Hálózatok"
-

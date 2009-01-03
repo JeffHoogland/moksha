@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-12-21 18:54+0800\n"
+"POT-Creation-Date: 2009-01-03 14:58+0800\n"
 "PO-Revision-Date: 2008-03-25 01:48+0100\n"
 "Last-Translator: Thomas Gstädtner <thomas@gstaedtner.net>\n"
 "Language-Team: E17-de\n"
@@ -828,7 +828,7 @@ msgid "Extensions"
 msgstr "Erweiterungen"
 
 #: ../src/bin/e_configure.c:16 ../src/bin/e_int_menus.c:755
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:83
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:86
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:99
 #: ../src/modules/conf_paths/e_int_config_paths.c:83
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:196
@@ -1636,7 +1636,7 @@ msgid "Skip"
 msgstr "Überspringen"
 
 #: ../src/bin/e_int_border_menu.c:539 ../src/bin/e_int_border_prop.c:433
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:427
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:512
 msgid "State"
 msgstr "Status"
 
@@ -3512,181 +3512,186 @@ msgstr "%1.0f Zeichen"
 msgid "Client List Menu"
 msgstr "Fensterlistenmenü"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:44
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:47
 msgid "Window Manager"
 msgstr "Fenstermanager"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:45
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:48
 msgid "About Dialog Title"
 msgstr "Über-Dialog-Titel"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:46
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:49
 msgid "About Dialog Version"
 msgstr "Über-Dialog-Version"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:47
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:50
 msgid "Border Title"
 msgstr "Rahmennamen"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:48
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:51
 msgid "Configure Dialog Title"
 msgstr "Konfiguration-Dialog-Text"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:49
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:52
 msgid "Error Text"
 msgstr "Fehlertext"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:50
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:53
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:63
 msgid "Menu Title"
 msgstr "Menütitel"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:51
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:54
 msgid "Menu Title Active"
 msgstr "Menütitel aktiv"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:52
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:55
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:62
 msgid "Menu Item"
 msgstr "Menügegenstand"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:53
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:56
 msgid "Menu Item Active"
 msgstr "Menügegenstand aktiv"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:54
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:57
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:67
 msgid "Move Text"
 msgstr "Verschieben Text"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:55
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:58
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:68
 msgid "Resize Text"
 msgstr "Verändere Textgröße"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:56
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:59
 msgid "Winlist Item"
 msgstr "Fensterlistengegenstand"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:57
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:60
 msgid "Winlist Label"
 msgstr "Fensterlistenbeschriftung"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:58
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:61
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:69
 msgid "Winlist Title"
 msgstr "Winlist-Titel"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:64
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:67
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:82
 msgid "Widgets"
 msgstr "Grafikobjekte"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:65
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:68
 msgid "Button Text"
 msgstr "Schaltflächentext"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:66
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:69
 msgid "Button Text Disabled"
 msgstr "Schaltflächentext deaktiviert"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:67
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:70
 msgid "Check Text"
 msgstr "Aktivierungsfeld-Text"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:68
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:71
 msgid "Check Text Disabled"
 msgstr "Aktivierungsfeld-Text deaktiviert"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:69
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:72
 msgid "Entry Text"
 msgstr "Eingabetext"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:70
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:73
 msgid "Label Text"
 msgstr "Beschriftungstext"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:71
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:74
 msgid "List Item Text"
 msgstr "Listengegenstand Text"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:72
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:75
 msgid "List Item Odd Text"
 msgstr "Listengegenstand übriger Text"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:73
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:76
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:92
 msgid "List Header"
 msgstr "Listenüberschrift"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:74
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:77
 msgid "Radio Text"
 msgstr "Auswahlfeld-Text"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:75
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:78
 msgid "Radio Text Disabled"
 msgstr "Auswahlfeld-Text deaktiviert"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:76
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:79
 msgid "Slider Text"
 msgstr "Schiebertext"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:77
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:80
 msgid "Slider Text Disabled"
 msgstr "Schiebertext deaktiviert"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:84
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:87
 msgid "Module Label"
 msgstr "Modulbeschriftung"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:124
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:130
 #: ../src/modules/conf_colors/e_mod_main.c:35
 msgid "Colors"
 msgstr "Farben"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:348
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:249
+#, fuzzy
+msgid "Other"
+msgstr "IBar Andere"
+
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:433
 msgid "Window Manager Colors"
 msgstr "Farben des Fenstermanagers"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:350
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:358
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:366
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:430
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:435
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:443
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:451
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:515
 msgid "Enabled"
 msgstr "Aktiviert"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:352
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:360
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:368
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:435
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:437
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:445
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:453
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:520
 msgid "Disabled"
 msgstr "Deaktiviert"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:356
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:441
 msgid "Widget Colors"
 msgstr "Grafikobjekt-Farben"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:364
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:449
 msgid "Module Colors"
 msgstr "Modulfarben"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:414
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:499
 msgid "Color Classes"
 msgstr "Farbklassen"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:442
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:527
 msgid "Object Color"
 msgstr "Objektfarbe"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:451
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:536
 msgid "Outline Color"
 msgstr "Randfarbe"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:460
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:545
 msgid "Shadow Color"
 msgstr "Schattenfarbe"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:469
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:554
 msgid "Defaults"
 msgstr "Standards"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-12-21 18:54+0800\n"
+"POT-Creation-Date: 2009-01-03 14:58+0800\n"
 "PO-Revision-Date: 2008-11-11 12:18+0800\n"
 "Last-Translator: gao stone <gaoghy@gmail.com>\n"
 "Language-Team: zh_CN <i18n@linux.net.cn>\n"
@@ -763,7 +763,7 @@ msgid "Extensions"
 msgstr "扩展"
 
 #: ../src/bin/e_configure.c:16 ../src/bin/e_int_menus.c:755
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:83
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:86
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:99
 #: ../src/modules/conf_paths/e_int_config_paths.c:83
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:196
@@ -1539,7 +1539,7 @@ msgid "Skip"
 msgstr "跳过"
 
 #: ../src/bin/e_int_border_menu.c:539 ../src/bin/e_int_border_prop.c:433
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:427
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:512
 msgid "State"
 msgstr "状态"
 
@@ -3309,181 +3309,186 @@ msgstr "%1.0f 字符"
 msgid "Client List Menu"
 msgstr "客户列表菜单"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:44
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:47
 msgid "Window Manager"
 msgstr "窗口管理器"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:45
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:48
 msgid "About Dialog Title"
 msgstr "关于对话标题"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:46
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:49
 msgid "About Dialog Version"
 msgstr "关于对话版本"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:47
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:50
 msgid "Border Title"
 msgstr "边框标题"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:48
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:51
 msgid "Configure Dialog Title"
 msgstr "配置对话标题"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:49
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:52
 msgid "Error Text"
 msgstr "文本错误"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:50
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:53
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:63
 msgid "Menu Title"
 msgstr "菜单标题"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:51
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:54
 msgid "Menu Title Active"
 msgstr "菜单标题活动"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:52
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:55
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:62
 msgid "Menu Item"
 msgstr "菜单项目"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:53
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:56
 msgid "Menu Item Active"
 msgstr "菜单条目活动"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:54
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:57
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:67
 msgid "Move Text"
 msgstr "移动文本"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:55
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:58
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:68
 msgid "Resize Text"
 msgstr "缩放文本"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:56
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:59
 msgid "Winlist Item"
 msgstr "窗口列表对象"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:57
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:60
 msgid "Winlist Label"
 msgstr "窗口列表标签"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:58
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:61
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:69
 msgid "Winlist Title"
 msgstr "窗口列表标题"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:64
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:67
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:82
 msgid "Widgets"
 msgstr "Widgets"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:65
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:68
 msgid "Button Text"
 msgstr "按钮文字"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:66
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:69
 msgid "Button Text Disabled"
 msgstr "按钮文字已禁用"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:67
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:70
 msgid "Check Text"
 msgstr "选择文本"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:68
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:71
 msgid "Check Text Disabled"
 msgstr "选择文本已禁用"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:69
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:72
 msgid "Entry Text"
 msgstr "输入文本"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:70
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:73
 msgid "Label Text"
 msgstr "标签文本"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:71
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:74
 msgid "List Item Text"
 msgstr "项目列表文本"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:72
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:75
 msgid "List Item Odd Text"
 msgstr ""
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:73
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:76
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:92
 msgid "List Header"
 msgstr "列表头"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:74
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:77
 msgid "Radio Text"
 msgstr ""
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:75
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:78
 msgid "Radio Text Disabled"
 msgstr ""
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:76
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:79
 msgid "Slider Text"
 msgstr ""
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:77
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:80
 msgid "Slider Text Disabled"
 msgstr ""
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:84
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:87
 msgid "Module Label"
 msgstr "模块标签"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:124
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:130
 #: ../src/modules/conf_colors/e_mod_main.c:35
 msgid "Colors"
 msgstr "颜色"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:348
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:249
+#, fuzzy
+msgid "Other"
+msgstr "IBar 其他"
+
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:433
 msgid "Window Manager Colors"
 msgstr "窗口管理器颜色"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:350
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:358
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:366
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:430
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:435
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:443
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:451
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:515
 msgid "Enabled"
 msgstr "已启用"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:352
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:360
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:368
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:435
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:437
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:445
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:453
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:520
 msgid "Disabled"
 msgstr "已禁用"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:356
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:441
 msgid "Widget Colors"
 msgstr "Widget 颜色"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:364
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:449
 msgid "Module Colors"
 msgstr "模块颜色"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:414
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:499
 msgid "Color Classes"
 msgstr "色彩类别"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:442
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:527
 msgid "Object Color"
 msgstr "目标颜色"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:451
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:536
 msgid "Outline Color"
 msgstr "轮廓颜色"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:460
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:545
 msgid "Shadow Color"
 msgstr "阴影颜色"
 
-#: ../src/modules/conf_colors/e_int_config_color_classes.c:469
+#: ../src/modules/conf_colors/e_int_config_color_classes.c:554
 msgid "Defaults"
 msgstr "默认"
 
