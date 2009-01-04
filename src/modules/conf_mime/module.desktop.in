@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - File Icons
+Name[cs]=Nastavení - ikony souborů
 Name[de]=
 Name[eo]=Agordo - Dosieraj piktogramoj
 Name[es]=Configuración - Íconos de archivo
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mime
 Comment=<title>E17 Settings Applet</title><br>Configure E17 mime icons.
+Comment[cs]=<title>E17 applet nastavení</title><br>Určen k nastavení MIME ikon.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi piktogramojn de E17 por MIME.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configure los íconos mime de E17.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Virtual Desktops
+Name[cs]=Nastavení - virtuální plochy
 Name[de]=
 Name[eo]=Agordo - Virtualaj labortabloj
 Name[es]=Configuración - Escritorios virtuales
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_desks
 Comment=<title>E17 Settings Applet</title><br>Configure the virtual desktop properties.
+Comment[cs]=<title>E17 applet nastavení</title><br>Volby pro virtuální plochy.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Agordi la ecojn de la virtualaj labortablaj.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configura las propiedades de los escritorios virtuales.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Engine
+Name[cs]=Nastavení - engine
 Name[de]=
 Name[eo]=Agordo - Motoro
 Name[es]=Configuración - Motor
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_engine
 Comment=<title>E17 Settings Applet</title><br>Used to select the rendering engine.
+Comment[cs]=<title>E17 applet nastavení</title><br>Použit pro volbu vykreslovacího enginu.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Elekti la bildigan motoron.
 Comment[es]=<title>Applet de configuración de E17</title><br>Usado para seleccionar el motor de renderizado.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Run Command
+Name[cs]=Dialog Spustit
 Name[de]=
 Name[eo]=Lanĉi komandojn
 Name[es]=Ejecutar comando
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-exebuf
 Comment=<title>Run Command Module</title><br>The run command module provides an application launcher dialog.
+Comment[cs]=<title>Modul dialogu Spustit</title><br>Poskytuje dialog pro spuštění aplikací.
 Comment[de]=
 Comment[eo]=<title>Modulo por lanĉi komandojn<title><br>La modulo de lanĉo de komandoj provizas dialogon de lanĉilo de aplikaĵoj.
 Comment[es]=<title>Módulo para ejecutar comandos</title><br>El módulo de ejecutar comandos provee un diálogo para ejecutar aplicaciones.

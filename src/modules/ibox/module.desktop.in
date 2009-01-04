@@ -4,6 +4,7 @@ Name=IBox
 Name[eo]=Breto IBox
 Icon=e-module-ibox
 Comment=<title>IconBox Gadget</title><br>A home for your iconified applications.
+Comment[cs]=<title>IconBox gadget</title><br>Zde se zobrazují všechny minimalizované aplikace.
 Comment[de]=
 Comment[eo]=<title>Akcesoraĵo IconBox</title><br>Ujo por siaj piktogramigitaj aplikaĵoj.
 Comment[es]=<title>Dispositivo IconBox</title><br>Un contenedor para sus aplicaciones iconificadas.

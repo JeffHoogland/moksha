@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Profiles
+Name[cs]=Nastavení - profily
 Name[de]=
 Name[eo]=Agordo - Profiloj
 Name[es]=Configuración - Perfiles
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_profiles
 Comment=<title>E17 Settings Applet</title><br>Allows management of configuration profiles.
+Comment[cs]=<title>E17 applet nastavení</title><br>Správa profilů.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Administri agordajn profilojn.
 Comment[es]=<title>Applet de configuración de E17</title><br>Permite la administración de perfiles de configuración.

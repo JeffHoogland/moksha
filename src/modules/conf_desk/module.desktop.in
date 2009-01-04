@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Desk
+Name[cs]=Nastavení - plocha
 Name[de]=
 Name[eo]=Agordo - Labortablo
 Name[es]=Configuración - Escritorio
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_desk
 Comment=<title>E17 Settings Applet</title><br>Used to configure the desktop name and wallpaper for individual virtual desktops.
+Comment[cs]=<title>E17 applet nastavení</title><br>Použit pro nastavení jména plochy a pozadí pro každou virtuální plochu.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Agordi la labortablan nomon kaj etoson por ĉiu virtuala labortablo.
 Comment[es]=<title>Applet de configuración de E17</title><br>Usado para configurar el nombre del escritorio y los fondos de pantalla para cada escritorio virtual individualmente.

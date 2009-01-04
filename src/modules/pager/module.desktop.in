@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Link
 Name=Pager
+Name[cs]=Přepínač ploch
 Name[eo]=Tabulpaĝilo
 Name[hu]=Lapozó
 Icon=e-module-pager
 Comment=<title>Pager Gadget</title><br>Gadget to allow you to visualize your virtual desktops and the windows they contain.
+Comment[cs]=<title>Přepínač ploch</title><br>Gadget pro zobrazení/přepínání virtuálních ploch a oken, které obsahují.
 Comment[de]=
 Comment[eo]=<title>Akcesoraĵo de tabulpaĝilo</title><br>Vidigi siajn virtualajn labortablojn kaj ties fenestrojn.
 Comment[es]=<title>Dispositivo paginador</title><br>Dispositivo que permite visualizar los escritorios virtuales y las ventanas que contienen.

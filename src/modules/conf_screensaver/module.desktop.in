@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Screen Saver
+Name[cs]=Nastavení - spořič obrazovky
 Name[de]=
 Name[eo]=Agordo - Ekrankurtenoj
 Name[es]=Configuración - Salvapantallas
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_screensaver
 Comment=<title>E17 Settings Applet</title><br>Configures the X screensaver.
+Comment[cs]=<title>E17 applet nastavení</title><br>Umožňuje nastavení X spořiče.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi la ekrankurtenon de X.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configura el salvapantallas de X.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Battery
+Name[cs]=Baterie
 Name[de]=
 Name[eo]=Baterío
 Name[es]=Batería
@@ -16,6 +17,7 @@ Icon=e-module-battery
 Comment=<title>Battery Gadget</title><br>A gadget to visualize your battery status.
 Comment[de]=
 Comment[eo]=<title>Modulo de baterio</title><br>Vidigi staton de sia baterio.
+Comment[cs]=<title>Modul Baterie</title><br>Gadget pro zobrazení stavu vaší baterie v notebooku.
 Comment[es]=<title>Dispositivo batería</title><br>Un dispositivo para ver el estado de su batería.
 Comment[fr]=
 Comment[hu]=<title>Akkumulátor modul</title><br>Nyomon követheted az akkumulátor töltöttségi szintjét.

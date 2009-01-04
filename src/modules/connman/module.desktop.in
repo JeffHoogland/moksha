@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Link
 Name=Connection Manager
+Name[cs]=Správce připojení
 Name[it]=Gestore connessioni
 Name[hu]=Hálózati kapcsolatok
 Icon=e-module-connman
 Comment=<title>Network Connection Manager Gadget</title><br>Control Wifi and wired networks as a user.
+Comment[cs]=<title>Gadget síťového připojení</title><br>Nastavení wifi a drátových sítí jako uživatel.
 Comment[it]=<title>Gadget gestione connessioni di rete</title><br>Controlla le reti wireless e cablate come utente.
 Comment[hu]=<title>Hálózati kapcsolat kezelő modul</title><br>Wifi és vezetékes hálózatok kezelését teszi lehetővé.
 X-Enlightenment-ModuleType=system

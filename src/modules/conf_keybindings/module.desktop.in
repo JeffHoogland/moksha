@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Key Bindings
+Name[cs]=Nastavení - klávesové zkratky
 Name[de]=
 Name[eo]=Agordo - Klavaraj bindoj
 Name[es]=Configuración - Atajos de teclado
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_keybindings
 Comment=<title>E17 Settings Applet</title><br>Configure your keybindings here.
+Comment[cs]=<title>E17 applet nastavení</title><br>Nastavení klávesových zkratek.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi siajn klavarajn bindojn.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configure sus atajos de teclado.

@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Link
 Name=Dropshadow
+Name[cs]=Stín okna
 Name[eo]=Ĵetita ombro 
 Name[hu]=Árnyékvető
 Icon=e-module-dropshadow
 Comment=<title>Dropshadow Module</title><br>Module to add a dropshadow to windows.
+Comment[cs]=<title>Stín okna</title><br>Modul k přidání stínu oknům.
 Comment[de]=
 Comment[eo]=<title>Modulo de ĵetita ombro<title><br>Aldoni ĵetitan ombron al la fenestroj.
 Comment[es]=<title>Módulo de sombra</title><br>Módulo para añadir una sombra a las ventanas.

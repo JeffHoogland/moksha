@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Link
 Name=Cpufreq
+Name[cs]=Frekvence procesoru
 Name[eo]=Ĉeforgana ofteco
 Name[hu]=Processzor frekvencia
 Icon=e-module-cpufreq
 Comment=<title>CPUfreq Gadget</title><br>Gadget to moitor and change the CPU frequency.
+Comment[cs]=<title>CPUfreq gadget</title><br>Gadget pro monitorování a změnu frekvence CPU.
 Comment[de]=
 Comment[eo]=<title>Modulo de ĉeforgana ofteco<title><br>Elrigardi kaj ŝanĝi ĉeforganan oftecon.
 Comment[es]=<title>Dispositivo de frecuencia de CPU</title><br>Dispositivo para monitorear y cambiar la frecuencia del CPU.

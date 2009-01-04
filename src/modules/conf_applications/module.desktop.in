@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Applications
+Name[cs]=Nastavení - aplikace
 Name[de]=
 Name[eo]=Agordo - Aplikaĵoj
 Name[es]=Configuración - Aplicaciones
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_applications
 Comment=<title>E17 Settings Applet</title><br>Allows configuration of Ibar, Restart, and Startup applications.
+Comment[cs]=<title>E17 applet nastavení</title><br>Umožňuje nastavit iBar spouštěče, aplikace při restartu a aplikace při startu.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi la breton IBar, restartigajn kaj startigajn aplikaĵojn.
 Comment[es]=<title>Applet de configuración de E17</title><br>Permite configurar la IBar, reiniciar, e iniciar aplicaciones.

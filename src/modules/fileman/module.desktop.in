@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=File Manager
+Name[cs]=Správce souborů
 Name[de]=
 Name[eo]=Dosieradministrilo
 Name[es]=Administrador de archivos
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-fileman
 Comment=<title>The E17 File Manager</title><br>E17's integrated file manager.<br><hilight>Under Construction!</hilight>
+Comment[cs]=<title>E17 Správce souborů</title><br>Integrovaný správce souborů v E17.<br><hilight>Ve vývoji!</hilight>
 Comment[de]=
 Comment[eo]=<title>La dosieradministrilo de E17</title><br>Integrita dosieradministrilo de E17.<br><hilight>Ĉiam en disvolviĝo</hilight>
 Comment[es]=<title>El Administrador de archivos de E17</title><br>El administrador de archivos integrado a E17.<br><hilight>¡Todavía en construcción!</hilight>

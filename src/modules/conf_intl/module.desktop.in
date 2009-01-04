@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Language
+Name[cs]=Nastavení - jazyk
 Name[de]=
 Name[eo]=Agordo - Lingvo
 Name[es]=Configuración - Idioma
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_intl
 Comment=<title>E17 Settings Applet</title><br>Used to select a default language.
+Comment[cs]=<title>E17 applet nastavení</title><br>Použit pro výběr výchozího jazyka.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Elekti propran lingvon.
 Comment[es]=<title>Applet de configuración de E17</title><br>Usado para elegir el idioma predeterminado.

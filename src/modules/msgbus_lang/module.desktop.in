@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=DBus Extension - Language
+Name[cs]=DBus rozšíření - jazyk
 Name[de]=
 Name[es]=Extensión DBus - Idioma
 Name[fr]=
@@ -11,6 +12,7 @@ Name[pt]=
 Name[pt_BR]=
 Name[zh_CN]=
 Name[zh_TW]=
+Comment[cs]=<title>DBus rozšíření - Jazyk</title>
 Comment[de]=
 Comment[es]=
 Comment[fr]=

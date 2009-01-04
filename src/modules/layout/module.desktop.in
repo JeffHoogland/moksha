@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Link
 Name=Layout
+Name[cs]=Rozvržení
 Name[eo]=Aranĝo
 Name[hu]=Kimenet
 Icon=e-module-layout
 Comment=<title>Layout Module</title><br>Used to enforce layout policies. Generally not applicable for a desktop PC.
+Comment[cs]=<title>Modul Rozvržení</title><br>Použit k vynucení politiky rozvržení. Nepoužitelné na desktopovém PC.
 Comment[de]=
 Comment[eo]=<title>Modulo de aranĝo</title><br>Efiikigi aranĝajn tiparojn. Kutime ne aplikebla por surtabla komputilo.
 Comment[es]=<title>Módulo distribución</title><br>Usado para forzar las reglas de la distribución en la pantalla. Generalmente no útil para computadoras de escritorio.

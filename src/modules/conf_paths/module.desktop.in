@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Search Directories
+Name[cs]=Nastavení - adresáře k hledání
 Name[de]=
 Name[eo]=Agordo - Dosierujoj de serĉo
 Name[es]=Configuración - Directorios de búsqueda
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_paths
 Comment=<title>E17 Settings Applet</title><br>Specifies the E17 search paths and default directories.
+Comment[cs]=<title>E17 applet nastavení</title><br>Určuje výchozí složky E17 a cesty k hledání témat aj.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Difini la vojojn de serĉo de E17 kaj defaŭltajn dosierujojn.
 Comment[es]=<title>Applet de configuración de E17</title><br>Especifica las rutas de búsqueda de E17 y los directorios predefinidos.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Performance
+Name[cs]=Nastavení - výkon
 Name[de]=
 Name[eo]=Agordo - Rendimento
 Name[es]=Configuración - Rendimiento
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_performance
 Comment=<title>E17 Settings Applet</title><br>Used to configure certain performance related items as frame rates and cache settings.
+Comment[cs]=<title>E17 applet nastavení</title><br>Použit k nastavení framerate, cache aj.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo</title><br>Agordi kelkajn erojn pri rendimento kiel kadrajn oftecojn kaj kaŝmemorajn agordojn.
 Comment[es]=<title>Applet de configuración de E17</title>><br>Usado para configurar ciertos elementos de rendimiento como opciones de caché y cuadros por segundo.

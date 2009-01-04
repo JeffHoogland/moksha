@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Wallpaper
+Name[cs]=Nastavení - pozadí plochy
 Name[de]=
 Name[eo]=Agordo - Tapeto
 Name[es]=Configuración - Fondo de pantalla
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_wallpaper
 Comment=<title>E17 Settings Applet</title><br>Used to pick a wallpaper.
+Comment[cs]=<title>E17 applet nastavení</title><br>Použit k volbě pozadí.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo<title><br>Elekti tapeton.
 Comment[es]=<title>Applet de configuración de E17</title><br>Para elegir un fondo de pantalla.

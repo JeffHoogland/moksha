@@ -1,11 +1,13 @@
 [Desktop Entry]
 Type=Link
 Name=Window Switcher List
+Name[cs]=Přepínač oken
 Name[eo]=Interŝanĝilo de fenestroj
 Name[hu]=Ablak lista/váltó
 Name[it]=Commutatore finestre
 Icon=e-module-winlist
 Comment=<title>Window List Module</title><br>A module to show the list of client applications presently running.
+Comment[cs]=<title>Modul Seznam oken</title><br>Modul pro zobrazení seznamu běžících aplikací.
 Comment[eo]=<title>Modulo de interŝanĝo de fenestroj</title><br>Vidigi liston de klientaj aplikaĵoj nune funkciantaj.
 Comment[hu]=<title>Ablak lista/váltó modul</title><br>A modul megmutatja az éppen futó alkalmazások ablakainak listáját.
 Comment[it]=<title>Modulo commutazione finestre</title><br>Un modulo per la visualizzazione e la navigazione tra le finestre aperte.

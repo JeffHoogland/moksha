@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Link
 Name=Temperature
+Name[cs]=Teplota
 Name[eo]=Temperaturo
 Name[hu]=Hőmérséklet
 Icon=e-module-temperature
 Comment=<title>Temperature Gadget</title><br>Temperature monitor.
+Comment[cs]=<title>Gadget Teplota</title><br>Měřič teploty.
 Comment[eo]=<title>Akcesoraĵo de temperaturo</title><br>Elrigardi temperaturon.
 Comment[hu]=<title>Hőmérséklet modul</title><br>Egy hőmérséklet monitorozó modul.
 Comment[it]=<title>Modulo Temperature</title><br>Monitor per le temperature.

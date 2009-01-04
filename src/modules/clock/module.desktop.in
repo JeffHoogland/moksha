@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Clock
+Name[cs]=Hodiny
 Name[de]=
 Name[eo]=Horloĝo
 Name[es]=Reloj
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-clock
 Comment=<title>Clock Gadget</title><br>Nice clock gadget to show current time.
+Comment[cs]=<title>Gadget Hodiny</title><br>Gadget pro zobrazení aktuálního času.
 Comment[de]=
 Comment[eo]=<title>Modulo de horloĝoj</title><br>Vidigi la nunan horon.
 Comment[es]=<title>Dispositivo Reloj</title><br>Un lindo reloj para mostrar la hora actual.

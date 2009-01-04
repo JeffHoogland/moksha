@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Scaling
+Name[cs]=Nastavení - škálování
 Name[de]=
 Name[eo]=
 Name[es]=
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_scale
 Comment=<title>E17 Settings Applet</title><br>Used to configure certain how Display scaling is handled.
+Comment[cs]=<title>E17 applet nastavení</title><br>Použit pro nastavení škálování displeje.
 Comment[de]=
 Comment[eo]=
 Comment[es]=

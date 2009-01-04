@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Colors
+Name[cs]=Nastavení - barvy
 Name[de]=
 Name[eo]=Agordo - Koloroj
 Name[es]=Configuración - Colores
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_colors
 Comment=<title>E17 Settings Applet</title><br>Used to customize the color classes.
+Comment[cs]=<title>E17 applet nastavení</title><br>Určen k nastavení tříd barev.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Adapti la kolorajn grupojn.
 Comment[es]=<title>Applet de configuración de E17</title><br>Usado para personalizar las clases de colores.

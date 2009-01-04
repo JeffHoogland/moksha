@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Interaction
+Name[cs]=Nastavení - interakce
 Name[de]=
 Name[es]=
 Name[fr]=
@@ -13,6 +14,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_interaction
 Comment=<title>E17 Settings Applet</title><br>Configure default user interaction settings.
+Comment[cs]=<title>E17 applet nastavení</title><br>Nastavte výchozí volby interakce s uživatelem.
 Comment[de]=
 Comment[es]=
 Comment[fr]=

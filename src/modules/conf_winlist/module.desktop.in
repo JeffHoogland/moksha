@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Window List
+Name[cs]=Nastavení - seznam oken
 Name[de]=
 Name[eo]=Agordo - Fenestrolisto
 Name[es]=Configuración - Lista de ventanas
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_winlist
 Comment=<title>E17 Settings Applet</title><br>Configure your window list properties.
+Comment[cs]=<title>E17 applet nastavení</title><br>Změna vlastností seznamu oken.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo<title><br>Agordi la ecojn de la fenestrolisto.
 Comment[es]=<title>Applet de configuración de E17</title><br>Configura las propiedades de su lista de ventanas.

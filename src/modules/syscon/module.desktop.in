@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Link
 Name=System Controls
+Name[cs]=Ovládací prvky
 Name[it]=Controlli di sistema
 Name[hu]=Rendszer felügyelő
 Icon=e-module-syscon
 Comment=<title>System Controls Module</title><br>This module provides a unified popup<br>dialog for all the system actions<br>in Enlightenment.
+Comment[cs]=<title>Modul Ovládací prvky</title><br>Poskytuje dialog pro všechny<br>systémové akce v Enlightenmentu.
 Comment[it]=<title>Modulo controlli di sistema</title><br>Questo modulo fornisce una finestra di dialogo popup<br>unificata per tutte le azioni di sistema in Enlightenment.
 Comment[hu]=<title>Rendszer felügyelő modul</title><br>Ez a modul egy felugró ablakocskát<br>biztosít, amely segítségével az<br>e17 folyamatait kísérhetjük figyelemmel
 X-Enlightenment-ModuleType=system

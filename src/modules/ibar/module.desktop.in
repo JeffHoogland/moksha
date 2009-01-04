@@ -1,9 +1,11 @@
 [Desktop Entry]
 Type=Link
 Name=IBar
+Name[cs]=Lišta spouštěčů
 Name[eo]=Breto IBar
 Icon=e-module-ibar
 Comment=<title>IconBar Gadget</title><br>Iconic application launcher.
+Comment[cs]=<title>IconBar gadget</title><br>Lišta se spouštěči.
 Comment[de]=
 Comment[eo]=<title>Akcesoraĵo de Piktograma breto</title><br>Lanĉilo de piktograma aplikaĵo.
 Comment[es]=<title>Dispositivo IconBar</title><br>Lanzador de aplicaciones con íconos.

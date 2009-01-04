@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Screen Resolution
+Name[cs]=Nastavení - rozlišení obrazovky
 Name[de]=
 Name[eo]=Agordo - Ekrandistingivo
 Name[es]=Configuración - Resolución de pantalla
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_display
 Comment=<title>E17 Settings Applet</title><br>Used to configure your screen's resolution.
+Comment[cs]=<title>E17 applet nastavení</title><br>Použit k nastavení rozlišení obrazovky.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17-agordo</title><br>Agordi sian ekrandistingivon.
 Comment[es]=<title>Applet de configuración de E17</title><br>Usado para configurar su resolución de pantalla.

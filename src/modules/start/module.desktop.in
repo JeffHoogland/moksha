@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Link
 Name=Start
+Name[cs]=Start menu
 Name[eo]=Starto
 Name[hu]=Start menü
 Icon=e-module-start
 Comment=<title>Start Button Gadget</title><br>E17's "Start" button equivalent.
+Comment[cs]=<title>Gadget Start menu</title><br>E17 Start menu.
 Comment[de]=
 Comment[eo]=<title>Akcesoraĵo de starto-butono</title><br>Ekvivalenta "starto"-butono por E17.
 Comment[es]=<title>Dispositivo botón de inicio</title><br>El equivalente al botón "Inicio" en E17.

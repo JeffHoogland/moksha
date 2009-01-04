@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Input Methods
+Name[cs]=Nastavení - vstupní metody
 Name[de]=
 Name[eo]=Agordo - Tajpo-metodoj
 Name[es]=Configuración - Método de entrada
@@ -14,6 +15,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_imc
 Comment=<title>E17 Settings Applet</title><br>Used to select an input method.
+Comment[cs]=<title>E17 applet nastavení</title><br>Pro výběr vstupní metody.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo<title><br>Elekti tajpo-metodon.
 Comment[es]=<title>Applet de configuración de E17</title><br>Usado para elegir el método de entrada.
