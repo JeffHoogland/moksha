@@ -1915,7 +1915,8 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	     if (bd->bg_object)
 	       {
 		  Evas_Coord cx, cy, cw, ch;
-		  
+
+		  edje_object_message_signal_process(bd->bg_object);
 		  edje_object_signal_emit(bd->bg_object, "e,action,maximize,fullscreen", "e");
 		  edje_object_message_signal_process(bd->bg_object);
 		  
@@ -2049,6 +2050,7 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	       {
 		  Evas_Coord cx, cy, cw, ch;
 		  
+		  edje_object_message_signal_process(bd->bg_object);
 		  edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
 		  edje_object_message_signal_process(bd->bg_object);
 		  
