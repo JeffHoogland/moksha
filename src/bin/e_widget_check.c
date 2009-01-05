@@ -120,13 +120,21 @@ e_widget_check_icon_add(Evas *evas, const char *label, const char *icon, int ico
      }
    if (icon) 
      {
-	o2 = edje_object_add(evas);
-	wd->o_icon = o2;
-	e_util_edje_icon_set(o2, icon);
-	edje_extern_object_min_size_set(o2, icon_w, icon_h);
+        if (icon[0] == '/')
+          {
+             o2 = e_icon_add(evas);
+             e_icon_file_set(o2, icon);
+          }
+        else
+          {
+             o2 = edje_object_add(evas);
+             e_util_edje_icon_set(o2, icon);
+          }
+        edje_extern_object_min_size_set(o2, icon_w, icon_h);
 	edje_object_part_swallow(wd->o_check, "e.swallow.icon", o2);
 	evas_object_show(o2);
 	e_widget_sub_object_add(obj, o2);
+	wd->o_icon = o2;
      }
    
    edje_object_size_min_calc(o, &mw, &mh);
