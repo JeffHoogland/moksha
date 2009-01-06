@@ -22,7 +22,9 @@ pkg_LTLIBRARIES        = module.la \
                          page_010.la \
                          page_020.la \
                          page_030.la \
-                         page_070.la
+                         page_070.la \
+                         page_080.la \
+                         page_200.la
 
 ### disabled because profile selector really does the job. code here just for
 ### informational purposes on how to make wizard pages
@@ -78,6 +80,16 @@ page_070_la_SOURCES      = page_070.c
 page_070_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_070_la_LDFLAGS      = -module -avoid-version
 page_070_la_DEPENDENCIES = $(top_builddir)/config.h
+
+page_080_la_SOURCES      = page_080.c
+page_080_la_LIBADD       = @e_libs@ @dlopen_libs@
+page_080_la_LDFLAGS      = -module -avoid-version
+page_080_la_DEPENDENCIES = $(top_builddir)/config.h
+
+page_200_la_SOURCES      = page_200.c
+page_200_la_LIBADD       = @e_libs@ @dlopen_libs@
+page_200_la_LDFLAGS      = -module -avoid-version
+page_200_la_DEPENDENCIES = $(top_builddir)/config.h
 
 uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)

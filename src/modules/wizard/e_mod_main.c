@@ -95,6 +95,8 @@ e_modapi_init(E_Module *m)
 					 dlsym(handle, "wizard_page_hide"),
 					 dlsym(handle, "wizard_page_apply"));
 		    }
+                  else
+                    printf("%s\n", dlerror());
 	       }
 	     ecore_list_next(files);
 	  }
