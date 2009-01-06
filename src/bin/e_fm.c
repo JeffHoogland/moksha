@@ -1901,16 +1901,20 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	switch (e->minor)
 	  {  
 	   case E_FM_OP_HELLO:/*hello*/
+//             printf("E_FM_OP_HELLO\n");
 	     break;
 	   case E_FM_OP_OK:/*req ok*/
+//             printf("E_FM_OP_OK\n");
 	     cl->req--;
 	     break;
 	   case E_FM_OP_FILE_ADD:/*file add*/
+//             printf("E_FM_OP_FILE_ADD\n");
 	   case E_FM_OP_FILE_CHANGE:/*file change*/
+//             printf("E_FM_OP_FILE_CHANGE\n");
 	       {
 		  E_Fm2_Finfo finf;
-					   
-		  p = e->data;
+                  
+                  p = e->data;
 		  /* NOTE: i am NOT converting this data to portable arch/os independant
 		   * format. i am ASSUMING e_fm_main and e are local and built together
 		   * and thus this will work. if this ever changes this here needs to
@@ -1936,9 +1940,10 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 		  finf.rlnk = rlnk;
 		  
 		  evdir = ecore_file_dir_get(path);
-		  if ((sd->id == e->ref_to) && 
+		  if ((evdir) && (sd->id == e->ref_to) && 
 		      ((!strcmp(evdir, "") || (!strcmp(dir, evdir)))))
 		    {
+//                       printf(" ch/add response = %i\n", e->response);
 		       if (e->response == 0)/*live changes*/
 			 {
 			    if (e->minor == E_FM_OP_FILE_ADD)/*file add*/
@@ -2003,8 +2008,10 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 		    }
 		  else
 		    {
+//                       printf(" ...\n");
 		       if ((sd->id == e->ref_to) && (path[0] == 0))
 			 {
+//                            printf(" end response = %i\n", e->response);
 			    if (e->response == 2)/* end of scan */
 			      {
 				 sd->listing = 0;
@@ -2023,10 +2030,11 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 			      }
 			 }
 		   }
-		  free(evdir);
+		  if (evdir) free(evdir);
 	       }
 	     break;
 	   case E_FM_OP_FILE_DEL:/*file del*/
+//             printf("E_FM_OP_FILE_DEL\n");
 	     path = e->data;
 	     evdir = ecore_file_dir_get(path);
 	     if ((sd->id == e->ref_to) && (!strcmp(dir, evdir)))
@@ -2037,6 +2045,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     free(evdir);
 	     break;
 	   case E_FM_OP_MONITOR_END:/*mon dir del*/
+//             printf("E_FM_OP_MONITOR_END\n");
 	     path = e->data;
 	     if ((sd->id == e->ref_to) && (!strcmp(dir, path)))
 	       {
