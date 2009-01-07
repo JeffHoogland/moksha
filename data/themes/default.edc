@@ -14459,9 +14459,10 @@ collections { /* begin the collection of edje groups that are in this file */
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
-	       aspect: 6.4 6.4;
-	       aspect_preference: HORIZONTAL;
+//	       aspect: 6.4 6.4;
+//	       aspect_preference: HORIZONTAL;
 	       align: 0.0 0.0;
+               min: 0 10;
 	       rel1 {
 		  to: "base";
 		  relative: 0.0 1.0;
@@ -14475,6 +14476,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       image {
 		  normal: "ilist_item_shadow.png";
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part {
@@ -14486,6 +14488,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  normal: "ilist_1.png";
 		  border: 2 2 2 2;
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part { name: "bg";
@@ -14922,9 +14925,10 @@ collections { /* begin the collection of edje groups that are in this file */
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
-	       aspect: 6.4 6.4;
-	       aspect_preference: HORIZONTAL;
+//	       aspect: 6.4 6.4;
+//	       aspect_preference: HORIZONTAL;
 	       align: 0.0 0.0;
+               min: 0 10;
 	       rel1 {
 		  to: "base";
 		  relative: 0.0 1.0;
@@ -14938,6 +14942,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       image {
 		  normal: "ilist_item_shadow.png";
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part {
@@ -14949,6 +14954,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  normal: "ilist_2.png";
 		  border: 2 2 2 2;
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part { name: "bg";
@@ -15386,9 +15392,10 @@ collections { /* begin the collection of edje groups that are in this file */
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
-	       aspect: 6.4 6.4;
-	       aspect_preference: HORIZONTAL;
+//	       aspect: 6.4 6.4;
+//	       aspect_preference: HORIZONTAL;
 	       align: 0.0 0.0;
+               min: 0 10;
 	       rel1 {
 		  to: "base";
 		  relative: 0.0 1.0;
@@ -15402,6 +15409,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       image {
 		  normal: "ilist_item_shadow.png";
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part {
@@ -15413,6 +15421,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  normal: "ilist_1.png";
 		  border: 2 2 2 2;
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part { name: "bg";
@@ -15850,9 +15859,10 @@ collections { /* begin the collection of edje groups that are in this file */
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
-	       aspect: 6.4 6.4;
-	       aspect_preference: HORIZONTAL;
+//	       aspect: 6.4 6.4;
+//	       aspect_preference: HORIZONTAL;
 	       align: 0.0 0.0;
+               min: 0 10;
 	       rel1 {
 		  to: "base";
 		  relative: 0.0 1.0;
@@ -15866,6 +15876,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       image {
 		  normal: "ilist_item_shadow.png";
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part {
@@ -15877,6 +15888,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  normal: "ilist_2.png";
 		  border: 2 2 2 2;
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part { name: "bg";
@@ -18587,9 +18599,10 @@ group { name: "e/toolbar/default/base";
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
-	       aspect: 6.4 6.4;
-	       aspect_preference: HORIZONTAL;
+//	       aspect: 6.4 6.4;
+//	       aspect_preference: HORIZONTAL;
 	       align: 0.0 0.0;
+               min: 0 10;
 	       rel1 {
 		  to: "base";
 		  relative: 0.0 1.0;
@@ -18603,6 +18616,7 @@ group { name: "e/toolbar/default/base";
 	       image {
 		  normal: "ilist_item_shadow.png";
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part {
@@ -18614,6 +18628,7 @@ group { name: "e/toolbar/default/base";
 		  normal: "ilist_1.png";
 		  border: 2 2 2 2;
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part { name: "bg";
@@ -18793,6 +18808,7 @@ group { name: "e/toolbar/default/base";
 		  normal: "ilist_2.png";
 		  border: 2 2 2 2;
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part { name: "bg";
@@ -18969,9 +18985,10 @@ group { name: "e/toolbar/default/base";
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
-	       aspect: 6.4 6.4;
-	       aspect_preference: HORIZONTAL;
+//	       aspect: 6.4 6.4;
+//	       aspect_preference: HORIZONTAL;
 	       align: 0.0 0.0;
+               min: 0 10;
 	       rel1 {
 		  to: "base";
 		  relative: 0.0 1.0;
@@ -18985,6 +19002,7 @@ group { name: "e/toolbar/default/base";
 	       image {
 		  normal: "ilist_item_shadow.png";
 	       }
+               fill.smooth: 0;
 	    }
 	 }
 	 part {
