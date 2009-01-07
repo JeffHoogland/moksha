@@ -70,7 +70,10 @@ main(int argc, char *argv[])
              fprintf(stderr, "Unable to open governor interface for writing.\n");
              return 1;
           }
-	
+        if (!strcmp(argv[2], "ondemand"))
+          sys_cpu_setall("ondemand/ignore_nice_load", "0");
+        else if (!strcmp(argv[2], "conservative"))
+          sys_cpu_setall("conservative/ignore_nice_load", "0");
         return 0;
      }
    else
