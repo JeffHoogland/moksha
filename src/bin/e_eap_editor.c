@@ -134,6 +134,7 @@ EAPI E_Desktop_Edit *
 e_desktop_border_edit(E_Container *con, E_Border *bd)
 {
    E_Desktop_Edit *editor;
+   int new_desktop;
 
    if (!con) return NULL;
    editor = E_OBJECT_ALLOC(E_Desktop_Edit, E_DESKTOP_EDIT_TYPE, _e_desktop_edit_free);
@@ -148,6 +149,7 @@ e_desktop_border_edit(E_Container *con, E_Border *bd)
 	editor->desktop = e_desktop_border_create(bd);
 	if ((editor->desktop) && (editor->desktop->icon))
 	  editor->tmp_image_path = strdup(editor->desktop->icon);
+	new_desktop = 1;
      }
 
 #if 0
@@ -170,6 +172,9 @@ e_desktop_border_edit(E_Container *con, E_Border *bd)
 	e_object_del(E_OBJECT(editor));
 	editor = NULL;
      }
+
+   e_config_dialog_changed_set(editor->cfd, new_desktop);
+
    return editor;
 }
 
@@ -210,6 +215,13 @@ _e_desktop_edit_view_create(E_Desktop_Edit *editor, E_Container *con)
      e_config_dialog_new(con, _("Desktop Entry Editor"), "E", 
 			 "_desktop_editor_dialog",
 			 "enlightenment/applications", 0, v, editor);
+   
+   if (!editor->cfd)
+     {
+	E_FREE(v);
+	return 0;
+     }
+   
    return 1;
 }
 
@@ -310,7 +322,6 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
 static void
 _e_desktop_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   if (cfdata->desktop) efreet_desktop_free(cfdata->desktop);
    if (cfdata->editor->tmp_image_path) 
      {
 	if ((!cfdata->desktop) || (!cfdata->editor->saved) || 
@@ -320,6 +331,7 @@ _e_desktop_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     ecore_file_unlink(cfdata->editor->tmp_image_path);
 	  }
      }
+   if (cfdata->desktop) efreet_desktop_free(cfdata->desktop);
 
    IFFREE(cfdata->name);
    IFFREE(cfdata->generic_name);
