@@ -253,6 +253,9 @@ main(int argc, char **argv)
    e_util_env_set("PANTS", "ON");
    e_util_env_set("DESKTOP", "Enlightenment-0.17.0");
 
+   TS("eina init");
+   eina_init();
+
    TS("intl init");
    e_intl_init();
    _e_main_shutdown_push(e_intl_shutdown);
@@ -1069,7 +1072,9 @@ main(int argc, char **argv)
      }
 
    e_prefix_shutdown();
-   
+
+   eina_shutdown();
+
    /* just return 0 to keep the compiler quiet */
    return 0;
 }
