@@ -14824,7 +14824,6 @@ collections { /* begin the collection of edje groups that are in this file */
 	    target:  "fg1";
 	    target:  "fg2";
 	    target:  "e.text.label";
-	    transition: LINEAR 0.2;
 	 }
 	 program { name: "go_passive";
 	    signal:  "e,state,unselected";
@@ -15290,7 +15289,6 @@ collections { /* begin the collection of edje groups that are in this file */
 	    target:  "fg1";
 	    target:  "fg2";
 	    target:  "e.text.label";
-	    transition: LINEAR 0.2;
 	 }
 	 program { name: "go_passive";
 	    signal:  "e,state,unselected";
@@ -15757,7 +15755,6 @@ collections { /* begin the collection of edje groups that are in this file */
 	    target:  "fg1";
 	    target:  "fg2";
 	    target:  "e.text.label";
-	    transition: LINEAR 0.2;
 	 }
 	 program { name: "go_passive";
 	    signal:  "e,state,unselected";
@@ -16224,7 +16221,6 @@ collections { /* begin the collection of edje groups that are in this file */
 	    target:  "fg1";
 	    target:  "fg2";
 	    target:  "e.text.label";
-	    transition: LINEAR 0.2;
 	 }
 	 program { name: "go_passive";
 	    signal:  "e,state,unselected";
@@ -18773,7 +18769,6 @@ group { name: "e/toolbar/default/base";
 	    target:  "fg1";
 	    target:  "fg2";
 	    target:  "e.text.label";
-	    transition: LINEAR 0.2;
 	 }
 	 program {
 	    name:    "go_passive";
@@ -18953,7 +18948,6 @@ group { name: "e/toolbar/default/base";
 	    target:  "fg1";
 	    target:  "fg2";
 	    target:  "e.text.label";
-	    transition: LINEAR 0.2;
 	 }
 	 program {
 	    name:    "go_passive";
@@ -19158,7 +19152,6 @@ group { name: "e/toolbar/default/base";
 	    target:  "fg1";
 	    target:  "fg2";
 	    target:  "e.text.label";
-	    transition: LINEAR 0.2;
 	 }
 	 program {
 	    name:    "go_passive";
@@ -19337,7 +19330,6 @@ group { name: "e/toolbar/default/base";
 	    target:  "fg1";
 	    target:  "fg2";
 	    target:  "e.text.label";
-	    transition: LINEAR 0.2;
 	 }
 	 program {
 	    name:    "go_passive";
