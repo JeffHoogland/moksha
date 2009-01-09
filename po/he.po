@@ -8,12 +8,14 @@ msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-intl@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-01-03 14:58+0800\n"
-"PO-Revision-Date: 2009-01-01 13:51+0000\n"
+"PO-Revision-Date: 2009-01-04 08:45+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-01-09 11:44+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: ../src/bin/e_about.c:17
 msgid "About Enlightenment"
@@ -41,21 +43,21 @@ msgstr "Enlightenment"
 #: ../src/bin/e_about.c:26
 msgid ""
 "Copyright &copy; 1999-2008, by the Enlightenment Development Team.<br><br>We "
-"hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>This software is provided as-is with no explicit or implied "
+"hope you enjoy using this software as much as we enjoyed writing "
+"it.<br><br>This software is provided as-is with no explicit or implied "
 "warranty. This software is governed by licensing conditions, so please see "
-"the COPYING and COPYING-PLAIN licence files installed on your system."
-"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
-"is not stable. Many features are incomplete or even non-existant yet and may "
-"have many bugs. You have been <hilight>WARNED!</hilight>"
+"the COPYING and COPYING-PLAIN licence files installed on your "
+"system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> "
+"and it is not stable. Many features are incomplete or even non-existant yet "
+"and may have many bugs. You have been <hilight>WARNED!</hilight>"
 msgstr ""
-"כל הזכויות שמורות &copy; 1999-2008, לקבוצת הפיתוח של Enlightenment."
-"<br><br>אנו מקווים כי הינך נהנה להשתמש בתוכנה זו כמו שאנחנו נהנינו ליצור "
-"אותה.<br><br>תוכנה זו מסופקת כמו שהיא ללא אחריות מפורשת או מרומזת. תוכנה זו "
-"כפופה לתנאי רישוי, אנא עיין בקבצי הרשיון COPYING ו־COPYING-PLAIN המותקנים "
-"במערכת שלך.<br><br>Enlightenment נמצאת <hilight>בתהליכי פיתוח כבדים</"
-"hilight> והיא אינה יציבה. תכונות רבות אינן מושלמות או שאינן קיימות ומכילות "
-"תקלות רבות. ראה <hilight>אוזהרת!</hilight>"
+"כל הזכויות שמורות &copy; 1999-2008, לקבוצת הפיתוח של "
+"Enlightenment.<br><br>אנו מקווים כי הינך נהנה להשתמש בתוכנה זו כמו שאנחנו "
+"נהנינו ליצור אותה.<br><br>תוכנה זו מסופקת כמו שהיא ללא אחריות מפורשת או "
+"מרומזת. תוכנה זו כפופה לתנאי רישוי, אנא עיין בקבצי הרשיון COPYING ו־COPYING-"
+"PLAIN המותקנים במערכת שלך.<br><br>Enlightenment נמצאת <hilight>בתהליכי פיתוח "
+"כבדים</hilight> והיא אינה יציבה. תכונות רבות אינן מושלמות או שאינן קיימות "
+"ומכילות תקלות רבות. ראה <hilight>אוזהרת!</hilight>"
 
 #: ../src/bin/e_about.c:50
 msgid "<title>The Team</title>"
@@ -661,8 +663,8 @@ msgstr ""
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
-"could not be<br>deterimined.<br><br>The file where the error occured was:<br>"
-"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"could not be<br>deterimined.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1662
@@ -670,9 +672,9 @@ msgstr ""
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
 "being saved to.<br>This error is very strange as the files should<br>be "
-"extremely small. Please check the settings<br>for your home directory."
-"<br><br>The file where the error occured was:<br>%s<br><br>This file has "
-"been deleted to avoid corrupt data.<br>"
+"extremely small. Please check the settings<br>for your home "
+"directory.<br><br>The file where the error occured was:<br>%s<br><br>This "
+"file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1675
@@ -689,16 +691,16 @@ msgstr ""
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
 "to write the file.<br>You have either run out of disk space or have<br>gone "
-"over your quota limit.<br><br>The file where the error occured was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"over your quota limit.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1698
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
-"it. This is very unusual.<br><br>The file where the error occured was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"it. This is very unusual.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1723
@@ -1209,11 +1211,11 @@ msgstr "האם אתה בטוח שברצונך למחוק את<br><hilight>%s</hi
 #: ../src/bin/e_fm.c:7592
 #, c-format
 msgid ""
-"Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
-"hilight> ?"
+"Are you sure you want to delete<br>the %d selected files "
+"in:<br><hilight>%s</hilight> ?"
 msgstr ""
-"האם אתה בטוח שברצונך למחוק את<br>%d הקבצים הנבחרים תחת:<br><hilight>%s</"
-"hilight> ?"
+"האם אתה בטוח שברצונך למחוק את<br>%d הקבצים הנבחרים "
+"תחת:<br><hilight>%s</hilight> ?"
 
 #: ../src/bin/e_fm_prop.c:108
 msgid "File Properties"
@@ -2179,8 +2181,8 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
+"800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -2280,6 +2282,9 @@ msgid ""
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
+"Enlightenment מצאה כי ecore_evas אינו תומך בעיבוד\n"
+"התוכנתי של X11 תחת Evas. אנא בדוק את התקנות ה־Evas\n"
+"וה־Ecore שלך ובדוק שהן תומכות במנוע העיבוד התוכנתי של X11."
 
 #: ../src/bin/e_main.c:513
 msgid ""
@@ -2287,90 +2292,109 @@ msgid ""
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
+"Enlightenment מצאה כי ecore_evas אינו תומך בעיבוד\n"
+"חוצץ תוכנתי תחת Evas. אנא בדוק את התקנות ה־Evas\n"
+"וה־Ecore שלך ובדוק שהם תומכים במנוע עיבוד החוצץ התוכנתי."
 
 #: ../src/bin/e_main.c:529 ../src/bin/e_main.c:536
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment לא הצליחה להפעיל את מערכת שולחן העבודה FDO.\n"
+"יתכן שאזל לך הזכרון?"
 
 #: ../src/bin/e_main.c:550
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
+"Enlightenment לא הצליחה ליצור תיקיות בתיקיית הבית שלך.\n"
+"יתכן שאין לך תיקיית בית או שהכונן מלא?"
 
 #: ../src/bin/e_main.c:560
 msgid "Enlightenment cannot set up its file registry system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת רישום הקבצים שלה."
 
 #: ../src/bin/e_main.c:569
 msgid "Enlightenment cannot set up its config system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת התצורה שלה."
 
 #: ../src/bin/e_main.c:583
 msgid "Enlightenment cannot set up its scale system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת המידה שלה."
 
 #: ../src/bin/e_main.c:591
 msgid "Enlightenment cannot set up the pointer system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת ההצבעה שלה."
 
 #: ../src/bin/e_main.c:600
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment לא הצליחה להגדיר את הנתיבים לחיפוש קבצים.\n"
+"יתכן שהזכרון אזל?"
 
 #: ../src/bin/e_main.c:618
 msgid "Enlightenment cannot set up its font system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת הגופנים שלה."
 
 #: ../src/bin/e_main.c:629
 msgid "Enlightenment cannot set up its theme system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת ערכות הנושא שלה."
 
 #: ../src/bin/e_main.c:634
 msgid "Starting International Support"
-msgstr ""
+msgstr "הפעלת התמיכה בבינאום"
 
 #: ../src/bin/e_main.c:639
 msgid "Enlightenment cannot set up its intl system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת הבינאום שלה."
 
 #: ../src/bin/e_main.c:650
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment לא הצליחה להגדיר את מסך הפתיחה שלה.\n"
+"יתכן שהזכרון אזל?"
 
 #: ../src/bin/e_main.c:661
 msgid "Testing Format Support"
-msgstr ""
+msgstr "בדיקת התמיכה בעיצוב."
 
 #: ../src/bin/e_main.c:672
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
+"Enlightenment מצאה כי Evas לא מצליח ליצור משטח עבודה לחוצץ. אנא בדוק\n"
+"את התמיכה של Evas במנוע חוצץ תוכנתי.\n"
 
 #: ../src/bin/e_main.c:683
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
 msgstr ""
+"Enlightenment מצאה כי Evas לא מצליח לטעון קבצי PNG. בדוק כי ל־Evas\n"
+"ישנה תמיכה בטעינת קבצי PNG.\n"
 
 #: ../src/bin/e_main.c:692
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
 msgstr ""
+"Enlightenment מצאה כי Evas לא מצליח לטעון קבצי JPEG. בדוק כי ל־Evas\n"
+"ישנה תמיכה בטעינת קבצי JPEG.\n"
 
 #: ../src/bin/e_main.c:701
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
 msgstr ""
+"Enlightenment מצאה כי Evas לא מצליח לטעון קבצי EET. בדוק כי ל־Evas\n"
+"ישנה תמיכה בטעינת קבצי EET.\n"
 
 #: ../src/bin/e_main.c:712
 msgid ""
@@ -2378,78 +2402,82 @@ msgid ""
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
+"Enlightenment מצאה כי Evas לא מצליח לטעון הגופן 'Sans'. בדוק כי ל־Evas\n"
+"ישנה תמיכה ב־fontconfig ושמערכת ה־fontconfig מגדירה את הגופן 'Sans'.\n"
 
 #: ../src/bin/e_main.c:721
 msgid "Setup Screens"
-msgstr ""
+msgstr "הגדרת מסכים"
 
 #: ../src/bin/e_main.c:726
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
+"הנסיון של Enlightenment להגדיר את ניהול החלונות עבור כל המסכים שבמערכת שלך\n"
+"נכשל. יתכן שישנו מנהל חלונות אחר פעיל?\n"
 
 #: ../src/bin/e_main.c:732
 msgid "Setup Screensaver"
-msgstr ""
+msgstr "הגדרת שומר המסך"
 
 #: ../src/bin/e_main.c:737
 msgid "Enlightenment cannot configure the X screensaver."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את שומר המסך של X."
 
 #: ../src/bin/e_main.c:741
 msgid "Setup Desklock"
-msgstr ""
+msgstr "הגדרת נעילת המסך"
 
 #: ../src/bin/e_main.c:746
 msgid "Enlightenment cannot set up its desk locking system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת נעילת המסך שלה."
 
 #: ../src/bin/e_main.c:759
 msgid "Setting up Paths"
-msgstr ""
+msgstr "הגדרת נתיבים"
 
 #: ../src/bin/e_main.c:776
 msgid "Setup System Controls"
-msgstr ""
+msgstr "הגדרת פקדי מערכת"
 
 #: ../src/bin/e_main.c:781
 msgid "Enlightenment cannot initialize the System Command system.\n"
-msgstr ""
+msgstr "Enlightenment לא הצליחה להפעיל את מערכת פיקוד המערכת.\n"
 
 #: ../src/bin/e_main.c:786
 msgid "Setup Actions"
-msgstr ""
+msgstr "הגדרת פעולות"
 
 #: ../src/bin/e_main.c:791
 msgid "Enlightenment cannot set up its actions system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת הפעולות שלה."
 
 #: ../src/bin/e_main.c:795
 msgid "Setup Execution System"
-msgstr ""
+msgstr "הגדרת מערכת הרצת הקבצים"
 
 #: ../src/bin/e_main.c:800
 msgid "Enlightenment cannot set up its exec system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת ה־exec שלה."
 
 #: ../src/bin/e_main.c:804
 msgid "Setup Remembers"
-msgstr ""
+msgstr "הגדרת זכרונות"
 
 #: ../src/bin/e_main.c:809
 msgid "Enlightenment cannot setup remember settings."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את הגדרות הזכרון."
 
 #: ../src/bin/e_main.c:817
 msgid "Setup FM"
-msgstr ""
+msgstr "הגדרת מנהל הקבצים"
 
 #: ../src/bin/e_main.c:822
 msgid "Enlightenment cannot initialize the File manager.\n"
-msgstr ""
+msgstr "Enlightenment לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#.
+#. 
 #. TS("fwin");
 #. if (!e_fwin_init())
 #. {
@@ -2457,131 +2485,131 @@ msgstr ""
 #. _e_main_shutdown(-1);
 #. }
 #. _e_main_shutdown_push(e_fwin_shutdown);
-#.
+#. 
 #: ../src/bin/e_main.c:835
 msgid "Setup Message System"
-msgstr ""
+msgstr "הגדרת מערכת ההודעות"
 
 #: ../src/bin/e_main.c:840
 msgid "Enlightenment cannot set up its msg system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה לטעון את מערכת ההודעות שלה."
 
 #: ../src/bin/e_main.c:844
 msgid "Setup DND"
-msgstr ""
+msgstr "הגדרת DND"
 
 #: ../src/bin/e_main.c:849
 msgid "Enlightenment cannot set up its dnd system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת ה־dnd שלה."
 
 #: ../src/bin/e_main.c:853
 msgid "Setup Grab Input Handing"
-msgstr ""
+msgstr "הגדרת הטיפול בקלט הגרירה"
 
 #: ../src/bin/e_main.c:858
 msgid "Enlightenment cannot set up its input grab handling system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להפעיל את מערכת הטיפול בקלט הגרירה."
 
 #: ../src/bin/e_main.c:862
 msgid "Setup Modules"
-msgstr ""
+msgstr "הגדרת מודולים"
 
 #: ../src/bin/e_main.c:867
 msgid "Enlightenment cannot set up its module system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת המודולים שלה."
 
 #: ../src/bin/e_main.c:871
 msgid "Setup Color Classes"
-msgstr ""
+msgstr "הגדרת מחלקות צבע."
 
 #: ../src/bin/e_main.c:876
 msgid "Enlightenment cannot set up its color class system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת מחלקות הצבע שלה."
 
 #: ../src/bin/e_main.c:880
 msgid "Setup Gadcon"
-msgstr ""
+msgstr "הגדרת בקרת היישומונים"
 
 #: ../src/bin/e_main.c:885
 msgid "Enlightenment cannot set up its gadget control system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת בקרת היישומונים שלה."
 
 #: ../src/bin/e_main.c:890
 msgid "Setup DPMS"
-msgstr ""
+msgstr "הגדרת DPMS"
 
 #: ../src/bin/e_main.c:895
 msgid "Enlightenment cannot configure the DPMS settings."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את תצורת ה־DPMS."
 
 #: ../src/bin/e_main.c:899
 msgid "Set Up Powersave modes"
-msgstr ""
+msgstr "הגדרת מצבי חסכון בחשמל"
 
 #: ../src/bin/e_main.c:903
 msgid "Enlightenment cannot set up its powersave modes."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מצבי החסכון בחשמל שלה."
 
 #: ../src/bin/e_main.c:908
 msgid "Setup Wallpaper"
-msgstr ""
+msgstr "הגדרת רקע שולחן העבודה"
 
 #: ../src/bin/e_main.c:913
 msgid "Enlightenment cannot set up its desktop background system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת הרקע לשולחן העבודה שלה."
 
 #: ../src/bin/e_main.c:918
 msgid "Setup Mouse"
-msgstr ""
+msgstr "הגדרת העכבר"
 
 #: ../src/bin/e_main.c:923
 msgid "Enlightenment cannot configure the mouse settings."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את תצורת העכבר."
 
 #: ../src/bin/e_main.c:928
 msgid "Setup Bindings"
-msgstr ""
+msgstr "הגדרת איגודים"
 
 #: ../src/bin/e_main.c:933
 msgid "Enlightenment cannot set up its bindings system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת האיגודים שלה."
 
 #: ../src/bin/e_main.c:937
 msgid "Setup Popups"
-msgstr ""
+msgstr "הגדרת חלוניות התרעה"
 
 #: ../src/bin/e_main.c:942
 msgid "Enlightenment cannot set up its popup system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת חלוניות ההתרעה שלה."
 
 #: ../src/bin/e_main.c:947
 msgid "Setup Shelves"
-msgstr ""
+msgstr "הגדרת מדפים"
 
 #: ../src/bin/e_main.c:952
 msgid "Enlightenment cannot set up its shelf system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת המדפים שלה."
 
 #: ../src/bin/e_main.c:957
 msgid "Setup Thumbnailer"
-msgstr ""
+msgstr "הגדרת ממזער התמונות"
 
 #: ../src/bin/e_main.c:962
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
-msgstr ""
+msgstr "Enlightenment לא הצליחה להפעיל את מערכת מיזעור התמונות.\n"
 
 #: ../src/bin/e_main.c:967
 msgid "Set Up File Ordering"
-msgstr ""
+msgstr "הגדרת סידור הקבצים"
 
 #: ../src/bin/e_main.c:971
 msgid "Enlightenment cannot set up its order file system."
-msgstr ""
+msgstr "Enlightenment לא הצליחה להגדיר את מערכת סידור הקבצים שלה."
 
 #. load modules
 #: ../src/bin/e_main.c:1006
 msgid "Load Modules"
-msgstr ""
+msgstr "טעינת מודולים"
 
 #: ../src/bin/e_main.c:1014
 msgid ""
@@ -2590,10 +2618,13 @@ msgid ""
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again."
 msgstr ""
+"Enlightenment קרסה מוקדם עם הפעלתה והיא<br>הופעלה מחדש. כל המודולים "
+"בוטלו<br>והם לא יטענו כדי לסייע בהסרת מודולים בעיתיים<br>כלשהם מהתצורה שלך. "
+"חלונית<br>תצורת המודולים אמורה לאפשר לך לבחור<br>במודולים שלך שוב."
 
 #: ../src/bin/e_main.c:1021
 msgid "Enlightenment crashed early on start and has been restarted"
-msgstr ""
+msgstr "Enlightenment קרסה מוקדם עם ההפעלה והופעלה מחדש"
 
 #: ../src/bin/e_main.c:1022
 msgid ""
@@ -2602,14 +2633,17 @@ msgid ""
 "modules from your configuration.<br><br>The module configuration dialog "
 "should let you select your<br>modules again."
 msgstr ""
+"Enlightenment קרסה מוקדם עם ההפעלה והופעלה מחדש.<br>כל המודולים בוטלו והם לא "
+"יטענו כדי<br>לסייע בהסרת מודולים בעיתיים כלשהם מהתצורה שלך.<br><br>חלונית "
+"תצורת המודולים אמורה לאפשר לך לבחור<br>במודולים שלך שוב."
 
 #: ../src/bin/e_main.c:1030
 msgid "Configure Shelves"
-msgstr ""
+msgstr "הגדרת מדפים"
 
 #: ../src/bin/e_main.c:1040
 msgid "Almost Done"
-msgstr ""
+msgstr "כמעט בוצע"
 
 #: ../src/bin/e_module.c:124
 #, c-format
@@ -2617,11 +2651,13 @@ msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
 "found in the<br>module search directories.<br>"
 msgstr ""
+"ארעה שגיאה בטעינת המודול בשם: %s<br>לא נמצא מודל בשם %s<br>בתיקיות חיפוש "
+"המודולים.<br>"
 
 #: ../src/bin/e_module.c:128 ../src/bin/e_module.c:141
 #: ../src/bin/e_module.c:162
 msgid "Error loading Module"
-msgstr ""
+msgstr "שגיאה בטעינת מודול"
 
 #: ../src/bin/e_module.c:135 ../src/bin/e_module.c:156
 #, c-format
@@ -2629,10 +2665,12 @@ msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
 "is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
+"ארעה שגיאה בטעינת מודול בשם: %s<br>הנתיב המלא למודול זה "
+"הינו:<br>%s<br>השגיאה שדווחה הינה:<br>%s<br>"
 
 #: ../src/bin/e_module.c:161
 msgid "Module does not contain all needed functions"
-msgstr ""
+msgstr "המודול אינו מכיל את כל הפונקציות הנחוצות"
 
 #: ../src/bin/e_module.c:175
 #, c-format
@@ -2641,59 +2679,62 @@ msgid ""
 "module API version of: %i.<br>The module API advertized by Enlightenment is: "
 "%i.<br>"
 msgstr ""
+"שגיאה ב־API של המודול<br>שגיאה בהפעלת המודול: %s<br>גירסת ה־API של המודול "
+"צריכה להיות לפחות: %i.<br>מודול ה־API המפורסם על ידי Enlightenment הינו: "
+"%i.<br>"
 
 #: ../src/bin/e_module.c:180
 #, c-format
 msgid "Enlightenment %s Module"
-msgstr ""
+msgstr "מודול ה־%s של Enlightenment"
 
 #: ../src/bin/e_module.c:512
 msgid "Would you like to unload this module?<br>"
-msgstr ""
+msgstr "האם ברצונך לפרוק מודול זה?<br>"
 
 #: ../src/bin/e_shelf.c:1204
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
-msgstr ""
+msgstr "האם אתה בטוח שברצונך למחוק מדף זה?"
 
 #: ../src/bin/e_shelf.c:1205
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
-msgstr ""
+msgstr "ביקשת למחוק מדף זה.<br><br>האם אתה בטוח שברצונך למחוק אותו?"
 
 #: ../src/bin/e_shelf.c:1660 ../src/bin/e_toolbar.c:317
 msgid "Stop Moving/Resizing Items"
-msgstr ""
+msgstr "הפסקת הזזה/שינוי גודל לפריטים"
 
 #: ../src/bin/e_shelf.c:1662 ../src/bin/e_toolbar.c:319
 msgid "Begin Moving/Resizing Items"
-msgstr ""
+msgstr "התחלת הזזה/שינוי גודל לפריטים"
 
 #: ../src/bin/e_shelf.c:1675
 msgid "Configure Shelf Contents"
-msgstr ""
+msgstr "הגדרת תכני המדף"
 
 #: ../src/bin/e_shelf.c:1680
 msgid "Delete this Shelf"
-msgstr ""
+msgstr "מחיקת מדף זה"
 
 #: ../src/bin/e_startup.c:61
 msgid "Starting"
-msgstr ""
+msgstr "מתחיל"
 
 #: ../src/bin/e_sys.c:170
 msgid "Checking System Permissions"
-msgstr ""
+msgstr "בדיקת הרשאות המערכת"
 
 #: ../src/bin/e_sys.c:208 ../src/bin/e_sys.c:219 ../src/bin/e_sys.c:228
 #: ../src/bin/e_sys.c:237
 msgid "System Check Done"
-msgstr ""
+msgstr "בדיקת המערכת הושלמה"
 
 #: ../src/bin/e_sys.c:314
 msgid "Logout problems"
-msgstr ""
+msgstr "בעיות ניתוק"
 
 #: ../src/bin/e_sys.c:317
 msgid ""
@@ -2701,129 +2742,143 @@ msgid ""
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?"
 msgstr ""
+"הניתוק אורך זמן רב מדי. כמה<br>מהיישומים מסרבים להסגר.<br>האם ברצונך לסיים "
+"את תהליך הניתוק<br>בכל זאת מבלי לסגור<br>יישומים אלו תחילה?"
 
 #: ../src/bin/e_sys.c:323
 msgid "Logout now"
-msgstr ""
+msgstr "התנתק כעת"
 
 #: ../src/bin/e_sys.c:324
 msgid "Wait longer"
-msgstr ""
+msgstr "המשך בהמתנה"
 
 #: ../src/bin/e_sys.c:325
 msgid "Cancel Logout"
-msgstr ""
+msgstr "ביטול הניתוק"
 
 #: ../src/bin/e_sys.c:363
 msgid "Logout in progress"
-msgstr ""
+msgstr "הניתוק מתבצע כעת"
 
 #: ../src/bin/e_sys.c:366
 msgid "Logout is currently in progress.<br><hilight>Please wait.</hilight>"
-msgstr ""
+msgstr "הניתוק נמצא כעת בהתליכים.<br><hilight>אנא המתן.</hilight>"
 
 #: ../src/bin/e_sys.c:395 ../src/bin/e_sys.c:456
 msgid "Enlightenment is busy with another request"
-msgstr ""
+msgstr "Enlightenment עסוקה בטיפול בבקשה אחרת."
 
 #: ../src/bin/e_sys.c:401
 msgid ""
 "Enlightenment is busy logging out.<br>You cannot perform other system "
 "actions<br>once a logout has begun."
 msgstr ""
+"Enlightenment עסוקה בתהליך הניתוק.<br>לא תוכל לבצע פעולות מערכת "
+"אחרות<br>לאחר התחלת תהליך הניתוק."
 
 #: ../src/bin/e_sys.c:409
 msgid ""
 "Enlightenment is shutting the system down.<br>You cannot do any other system "
 "actions<br>once a shutdown has been started."
 msgstr ""
+"Enlightenment מכבה את המערכת.<br>לא תוכלו לבצע פעולות מערכת אחרות<br>לאחר "
+"שתהליך הכיבוי החל."
 
 #: ../src/bin/e_sys.c:416
 msgid ""
 "Enlightenment is rebooting the system.<br>You cannot do any other system "
 "actions<br>once a reboot has begun."
 msgstr ""
+"Enlightenment מאתחל את המערכת.<br>לא תוכל לבצע פעולות מערכת אחרות<br>לאחר "
+"שפעולת האיתחול החלה."
 
 #: ../src/bin/e_sys.c:423
 msgid ""
 "Enlightenment is suspending the system.<br>Until suspend is complete you "
 "cannot perform<br>any other system actions."
 msgstr ""
+"Enlightenment משהה את המערכת.<br>עד להשלמת תהליך ההשהיה לא תוכל "
+"לבצע<br>פעולות מערכת אחרות."
 
 #: ../src/bin/e_sys.c:430
 msgid ""
 "Enlightenment is hibernating the system.<br>You cannot perform an other "
 "system actions<br>until this is complete."
 msgstr ""
+"Enlightenment מרדימה את המערכת שלך.<br>לא תוכל לבצע פעולות מערכת אחרות<br>עד "
+"להשלמת ההרדמה."
 
 #: ../src/bin/e_sys.c:437 ../src/bin/e_sys.c:483
 msgid "EEK! This should not happen"
-msgstr ""
+msgstr "לעזאזל! זה לא אמור לקרות"
 
 #: ../src/bin/e_sys.c:463
 msgid "Shutting down of your system failed."
-msgstr ""
+msgstr "כיבוי המערכת שלך נכשל."
 
 #: ../src/bin/e_sys.c:468
 msgid "Rebooting your system failed."
-msgstr ""
+msgstr "איתחול המערכת שלך נכשל."
 
 #: ../src/bin/e_sys.c:473
 msgid "Suspend of your system failed."
-msgstr ""
+msgstr "השהיית המערכת שלך נכשלה."
 
 #: ../src/bin/e_sys.c:478
 msgid "Hibernating your system failed."
-msgstr ""
+msgstr "הרדמת המערכת שלך."
 
 #: ../src/bin/e_sys.c:529
 msgid "Shutting down"
-msgstr ""
+msgstr "בתהליכי כיבוי"
 
 #: ../src/bin/e_sys.c:532
 msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
-msgstr ""
+msgstr "המערכת שלך נכבית כעת.<br><hilight>אנא המתן.</hilight>"
 
 #: ../src/bin/e_sys.c:556
 msgid "Rebooting"
-msgstr ""
+msgstr "בתהליכי איתחול"
 
 #: ../src/bin/e_sys.c:559
 msgid "Rebooting your Computer.<br><hilight>Please wait.</hilight>"
-msgstr ""
+msgstr "המערכת שלך מתאתחלת כעת.<br><hilight>אנא המתן.</hilight>"
 
 #: ../src/bin/e_sys.c:582
 msgid "Suspending"
-msgstr ""
+msgstr "לקראת השהייה"
 
 #: ../src/bin/e_sys.c:585
 msgid "Suspending your Computer.<br><hilight>Please wait.</hilight>"
 msgstr ""
+"המערכת שלך מתכוננת לכניסה למצב השהייה.<br><hilight>אנא המתן.</hilight>"
 
 #: ../src/bin/e_sys.c:608
 msgid "Hibernating"
-msgstr ""
+msgstr "לקראת תרדמת"
 
 #: ../src/bin/e_sys.c:611
 msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
 msgstr ""
+"המערכת שלך מתכוננת לכניסה למצב תרדמת.<br><hilight>אנא המתן.</hilight>"
 
 #: ../src/bin/e_theme_about.c:17
 msgid "About Theme"
-msgstr ""
+msgstr "אודות ערכות הנושא"
 
 #. Register mime handler
 #: ../src/bin/e_theme.c:41
 msgid "Set As Theme"
-msgstr ""
+msgstr "הגדרה כערכת נושא"
 
 #: ../src/bin/e_toolbar.c:332
 msgid "Configure Toolbar Contents"
-msgstr ""
+msgstr "הגדרת תוכן סרגל הכלים"
 
 #: ../src/bin/e_utils.c:246
 msgid "Cannot exit - immortal windows."
-msgstr ""
+msgstr "לא ניתן לצאת - חלונות חסיני חיסול."
 
 #: ../src/bin/e_utils.c:247
 msgid ""
@@ -2831,72 +2886,74 @@ msgid ""
 "means<br>that Enlightenment will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
+"לכמה מהחלונות נותרה נעילת משך החיים. כלומר<br>ש־Enlightenment לא תרשה לעצמה "
+"לצאת עד שחלונות אלו<br>יסגרו או שתוסר נעילת משך החיים.<br>"
 
 #: ../src/bin/e_utils.c:702
 #, c-format
 msgid "%'.0f Bytes"
-msgstr ""
+msgstr "%'.0f בתים"
 
 #: ../src/bin/e_utils.c:706
 #, c-format
 msgid "%'.0f KB"
-msgstr ""
+msgstr "%'.0f ק\"ב"
 
 #: ../src/bin/e_utils.c:710
 #, c-format
 msgid "%'.0f MB"
-msgstr ""
+msgstr "%'.0f מ\"ב"
 
 #: ../src/bin/e_utils.c:714
 #, c-format
 msgid "%'.1f GB"
-msgstr ""
+msgstr "%'.1f ג\"ב"
 
 #: ../src/bin/e_utils.c:734
 #, c-format
 msgid "In the Future"
-msgstr ""
+msgstr "בעתיד"
 
 #: ../src/bin/e_utils.c:739
 #, c-format
 msgid "In the last Minute"
-msgstr ""
+msgstr "בדקה האחרונה"
 
 #: ../src/bin/e_utils.c:741
 #, c-format
 msgid "%li Years ago"
-msgstr ""
+msgstr "לפני %li שנים"
 
 #: ../src/bin/e_utils.c:743
 #, c-format
 msgid "%li Months ago"
-msgstr ""
+msgstr "לפני %li חודשים"
 
 #: ../src/bin/e_utils.c:745
 #, c-format
 msgid "%li Weeks ago"
-msgstr ""
+msgstr "לפני %li שבועות"
 
 #: ../src/bin/e_utils.c:747
 #, c-format
 msgid "%li Days ago"
-msgstr ""
+msgstr "לפני %li ימים"
 
 #: ../src/bin/e_utils.c:749
 #, c-format
 msgid "%li Hours ago"
-msgstr ""
+msgstr "לפני %li שעות"
 
 #: ../src/bin/e_utils.c:751
 #, c-format
 msgid "%li Minutes ago"
-msgstr ""
+msgstr "לפני %li דקות"
 
 #: ../src/bin/e_utils.c:757
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1145
 #: ../src/modules/wizard/page_020.c:22 ../src/modules/wizard/page_020.c:30
 msgid "Unknown"
-msgstr ""
+msgstr "לא ידוע"
 
 #: ../src/bin/e_widget_config_list.c:63
 #: ../src/modules/conf_applications/e_int_config_apps.c:245
@@ -2904,25 +2961,25 @@ msgstr ""
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:79
 #: ../src/modules/ibar/e_mod_config.c:109
 msgid "Add"
-msgstr ""
+msgstr "הוסף"
 
 #: ../src/bin/e_widget_config_list.c:69
 msgid "Remove"
-msgstr ""
+msgstr "הסר"
 
 #: ../src/bin/e_widget_config_list.c:83
 #: ../src/modules/conf_applications/e_int_config_apps.c:260
 msgid "Up"
-msgstr ""
+msgstr "למעלה"
 
 #: ../src/bin/e_widget_config_list.c:89
 #: ../src/modules/conf_applications/e_int_config_apps.c:265
 msgid "Down"
-msgstr ""
+msgstr "למטה"
 
 #: ../src/bin/e_widget_fsel.c:288
 msgid "Add to Favorites"
-msgstr ""
+msgstr "הוסף למועדפים"
 
 #: ../src/bin/e_widget_fsel.c:294
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:206
@@ -2933,15 +2990,15 @@ msgstr ""
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper.c:637
 #: ../src/modules/gadman/e_mod_config.c:193
 msgid "Go up a Directory"
-msgstr ""
+msgstr "עלה לתיקיית המבוא"
 
 #: ../src/bin/e_widget_fsel.c:355
 msgid "Permissions:"
-msgstr ""
+msgstr "הרשאות:"
 
 #: ../src/bin/e_widget_fsel.c:371
 msgid "Modified:"
-msgstr ""
+msgstr "שונה:"
 
 #: ../src/bin/e_widget_fsel.c:610
 #, c-format
@@ -3674,32 +3731,32 @@ msgstr ""
 #: ../src/modules/conf_display/e_int_config_display.c:129
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
-"will be restored in %d seconds."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d "
+"Hz will be restored in %d seconds."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:136
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d will be "
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored in %d seconds."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:146
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
-"will be restored <hilight>IMMEDIATELY</hilight>."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d "
+"Hz will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:153
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d will be "
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 
@@ -3745,11 +3802,11 @@ msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:643
 msgid ""
-"Your X Display Server is missing support for<br>the <hilight>XRandR</"
-"hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
-"resolutions without<br>the support of this extension. It could also "
-"be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no "
-"XRandR support detected."
+"Your X Display Server is missing support for<br>the "
+"<hilight>XRandR</hilight> (X Resize and Rotate) extension.<br>You cannot "
+"change screen resolutions without<br>the support of this extension. It could "
+"also be<br>that at the time <hilight>ecore</hilight> was built, there<br>was "
+"no XRandR support detected."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:655
@@ -4364,8 +4421,9 @@ msgstr ""
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1141
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>%"
-"s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1287
@@ -4532,8 +4590,8 @@ msgstr ""
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
-"or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
-"highlight> to abort."
+"or roll a wheel, to assign mouse binding.<br>Press "
+"<hilight>Escape</highlight> to abort."
 msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:112
@@ -5612,7 +5670,7 @@ msgid "Show windows from other screens"
 msgstr ""
 
 #. REMOVED AS ADVANCED DOESN"T FIT INTO 640x480 WITH IT
-#.
+#. 
 #. of = e_widget_framelist_add(evas, _("General Settings"), 0);
 #. ob = e_widget_check_add(evas, _("Show iconified windows"), &(cfdata->list_show_iconified));
 #. e_widget_framelist_object_append(of, ob);
@@ -5621,7 +5679,7 @@ msgstr ""
 #. ob = e_widget_check_add(evas, _("Show windows from other screens"), &(cfdata->list_show_other_screen_windows));
 #. e_widget_framelist_object_append(of, ob);
 #. e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
-#.
+#. 
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:144
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:218
 msgid "Selection Settings"
@@ -6252,8 +6310,8 @@ msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:273
 msgid ""
-"Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
-"<br>Or <hilight>Del</hilight> to reset the button."
+"Please press a mouse button<br>Press <hilight>Escape</hilight> to "
+"abort.<br>Or <hilight>Del</hilight> to reset the button."
 msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:328
