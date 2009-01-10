@@ -157,7 +157,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
      }
    e_popup_move_resize(pop->win, px - zx, py - zy, pop->w, pop->h);
 
-   if (!pop->shelf_was_locked)
+   if (pop->shelf_lock && (!pop->shelf_was_locked))
      _e_gadcon_popup_shelf_lock_set(pop, 1);
 }
 
@@ -203,8 +203,8 @@ e_gadcon_popup_shelf_lock_set(E_Gadcon_Popup *pop, Eina_Bool setting)
    if (pop->shelf_lock == setting) return;
    pop->shelf_lock = setting;
 
-   if ((!setting) && pop->shelf_was_locked)
-     _e_gadcon_popup_shelf_lock_set(pop, 0);
+   if (setting != pop->shelf_was_locked)
+     _e_gadcon_popup_shelf_lock_set(pop, setting);
 }
 
 /* local subsystem functions */
