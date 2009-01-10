@@ -1083,6 +1083,13 @@ _e_shelf_toggle_border_fix(E_Shelf *es)
 }
 
 static void
+_e_shelf_menu_item_free(void *data)
+{
+   E_Shelf *es = e_object_data_get(data);
+   e_shelf_locked_set(es, 0);
+}
+
+static void
 _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
 {
    E_Menu_Item *mi;
@@ -1093,12 +1100,16 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
    name = es->name;
    if (!name) name = _("Shelf #");
    snprintf(buf, sizeof(buf), "%s %i", name, es->id);
-   
+
+   e_shelf_locked_set(es, 1);
+
    subm = e_menu_new();
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, buf);
    e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
    e_menu_pre_activate_callback_set(subm, _e_shelf_menu_pre_cb, es);
+   e_object_free_attach_func_set(E_OBJECT(mi), _e_shelf_menu_item_free);
+   e_object_data_set(E_OBJECT(mi), es);
    e_menu_item_submenu_set(mi, subm);
 }
 
