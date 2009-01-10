@@ -1260,7 +1260,6 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
 	e_menu_item_label_set(mi, _("Appearance"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/appearance");
 	e_menu_item_submenu_set(mi, mn);
-	e_object_del(E_OBJECT(mn));
      }
 
    if ((gcc->gadcon->shelf) || (gcc->gadcon->toolbar))

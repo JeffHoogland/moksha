@@ -6,7 +6,6 @@ static void _e_toolbar_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, v
 static void _e_toolbar_menu_cb_post(void *data, E_Menu *mn);
 static void _e_toolbar_menu_cb_pre(void *data, E_Menu *mn);
 static void _e_toolbar_menu_append(E_Toolbar *tbar, E_Menu *mn);
-static void _e_toolbar_menu_del_hook(void *data);
 static void _e_toolbar_menu_cb_edit(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _e_toolbar_menu_cb_config(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _e_toolbar_menu_cb_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
@@ -354,25 +353,7 @@ _e_toolbar_menu_append(E_Toolbar *tbar, E_Menu *mn)
    e_menu_item_label_set(mi, tbar->name);
    e_util_menu_item_edje_icon_set(mi, "enlightenment/toolbar");
    e_menu_pre_activate_callback_set(subm, _e_toolbar_menu_cb_pre, tbar);
-   e_object_free_attach_func_set(E_OBJECT(subm), _e_toolbar_menu_del_hook);
    e_menu_item_submenu_set(mi, subm);
-}
-
-static void 
-_e_toolbar_menu_del_hook(void *data) 
-{
-   E_Menu *mn;
-   Eina_List *l = NULL;
-
-   mn = data;
-   for (l = mn->items; l; l = l->next) 
-     {
-	E_Menu_Item *mi;
-
-	mi = l->data;
-	if (!mi) continue;
-	if (mi->submenu) e_object_del(E_OBJECT(mi->submenu));
-     }
 }
 
 static void 

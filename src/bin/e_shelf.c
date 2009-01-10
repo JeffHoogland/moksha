@@ -23,7 +23,6 @@ static int  _e_shelf_cb_id_sort(const void *data1, const void *data2);
 static int  _e_shelf_cb_hide_animator(void *data);
 static int  _e_shelf_cb_hide_animator_timer(void *data);
 static int  _e_shelf_cb_instant_hide_timer(void *data);
-static void _e_shelf_menu_del_hook(void *data);
 static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 
 static void _e_shelf_edge_event_register(E_Shelf *es, int reg);
@@ -1100,7 +1099,6 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
    e_menu_item_label_set(mi, buf);
    e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
    e_menu_pre_activate_callback_set(subm, _e_shelf_menu_pre_cb, es);
-   e_object_free_attach_func_set(E_OBJECT(subm), _e_shelf_menu_del_hook);
    e_menu_item_submenu_set(mi, subm);
 }
 
@@ -1628,22 +1626,6 @@ _e_shelf_cb_instant_hide_timer(void *data)
    es->instant_timer = NULL;
    _e_shelf_toggle_border_fix(es);
    return 0;
-}
-
-static void 
-_e_shelf_menu_del_hook(void *data) 
-{
-   E_Menu *m;
-   Eina_List *l;
-   
-   m = data;
-   for (l = m->items; l; l = l->next) 
-     {
-	E_Menu_Item *mi;
-	
-	mi = l->data;
-	if (mi->submenu) e_object_del(E_OBJECT(mi->submenu));
-     }
 }
 
 static void 

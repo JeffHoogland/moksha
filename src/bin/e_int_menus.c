@@ -61,7 +61,6 @@ static void _e_int_menus_main_showhide       (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit           (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desk_item_cb        (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_items_del_hook      (void *obj);
 static void _e_int_menus_item_label_set      (Efreet_Menu *entry, E_Menu_Item *mi);
 
 /* local subsystem globals */
@@ -159,7 +158,6 @@ e_int_menus_main_new(void)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Enlightenment"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
-   e_object_free_attach_func_set(E_OBJECT(subm), _e_int_menus_items_del_hook);
    e_menu_item_submenu_set(mi, subm);
 
    mi = e_menu_item_new(subm);
@@ -241,7 +239,6 @@ e_int_menus_apps_new(const char *dir)
    m = e_menu_new();
    if (dir) e_object_data_set(E_OBJECT(m), strdup(dir));
    e_menu_pre_activate_callback_set(m, _e_int_menus_apps_start, NULL);
-   e_object_del_attach_func_set(E_OBJECT(m), _e_int_menus_items_del_hook);
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_apps_free_hook);
    return m;
 }
@@ -259,7 +256,6 @@ e_int_menus_desktops_new(void)
    e_menu_item_label_set(mi, _("Virtual"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
    e_menu_pre_activate_callback_set(subm, _e_int_menus_virtuals_pre_cb, NULL);
-   e_object_free_attach_func_set(E_OBJECT(subm), _e_int_menus_items_del_hook);
    e_menu_item_submenu_set(mi, subm);
 
    subm = e_menu_new();
@@ -267,7 +263,6 @@ e_int_menus_desktops_new(void)
    e_menu_item_label_set(mi, _("Shelves"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
    e_menu_pre_activate_callback_set(subm, _e_int_menus_shelves_pre_cb, NULL);
-   e_object_free_attach_func_set(E_OBJECT(subm), _e_int_menus_items_del_hook);
    e_menu_item_submenu_set(mi, subm);
 
    mi = e_menu_item_new(m);
@@ -278,7 +273,6 @@ e_int_menus_desktops_new(void)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/showhide");
    e_menu_item_callback_set(mi, _e_int_menus_main_showhide, NULL);
 
-   e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_items_del_hook);
    return m;
 }
 
@@ -407,17 +401,7 @@ _e_int_menus_main_del_hook(void *obj)
 
    m = obj;
    dat = e_object_data_get(E_OBJECT(obj));
-   if (dat)
-     {
-	if (dat->apps) e_object_del(E_OBJECT(dat->apps));
-	if (dat->all_apps) e_object_del(E_OBJECT(dat->all_apps));
-	e_object_del(E_OBJECT(dat->desktops));
-	e_object_del(E_OBJECT(dat->clients));
-	e_object_del(E_OBJECT(dat->enlightenment));
-	e_object_del(E_OBJECT(dat->config));
-	if (dat->lost_clients) e_object_del(E_OBJECT(dat->lost_clients));
-	free(dat);
-     }
+   free(dat);
    _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/0"));
    _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/1"));
    _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/2"));
@@ -532,8 +516,6 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 		  e_menu_pre_activate_callback_set(subm, 
                                                    _e_int_menus_apps_start, 
                                                    entry);
-		  e_object_del_attach_func_set(E_OBJECT(subm), 
-                                               _e_int_menus_items_del_hook);
 		  e_menu_item_submenu_set(mi, subm);
 	       }
 	     /* TODO: Highlight header
@@ -571,22 +553,6 @@ _e_int_menus_apps_start(void *data, E_Menu *m)
      }
    if (menu) _e_int_menus_apps_scan(m, menu);
    e_menu_pre_activate_callback_set(m, NULL, NULL);
-}
-
-static void
-_e_int_menus_items_del_hook(void *obj)
-{
-   E_Menu *m;
-   Eina_List *l = NULL;
-
-   m = obj;
-   for (l = m->items; l; l = l->next)
-     {
-	E_Menu_Item *mi;
-
-	mi = l->data;
-	if (mi->submenu) e_object_del(E_OBJECT(mi->submenu));
-     }
 }
 
 static void
