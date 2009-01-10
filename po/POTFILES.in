@@ -253,6 +253,7 @@ src/modules/wizard/page_040.c
 src/modules/wizard/page_050.c
 src/modules/wizard/page_060.c
 src/modules/wizard/page_070.c
+src/modules/wizard/page_080.c
 src/modules/mixer/app_mixer.c
 src/modules/mixer/conf_gadget.c
 src/modules/mixer/conf_module.c
