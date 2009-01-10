@@ -2026,6 +2026,30 @@ ACT_FN_GO(desk_lock)
 }
 
 /***************************************************************************/
+ACT_FN_GO(shelf_show)
+{
+   Eina_List *l;
+   E_Shelf *es;
+
+   if (params)
+     {
+	for (; *params != '\0'; params++)
+	  if (!isspace(*params))
+	    break;
+	if (*params == '\0')
+	  params = NULL;
+     }
+
+   EINA_LIST_FOREACH(e_shelf_list(), l, es)
+     {
+	if ((!params) || (params && (fnmatch(params, es->name, 0) == 0)))
+	  {
+	     e_shelf_toggle(es, 1);
+	     e_shelf_toggle(es, 0);
+	  }
+     }
+}
+/***************************************************************************/
 
 typedef struct _Delayed_Action     Delayed_Action;
 
@@ -2403,7 +2427,12 @@ e_actions_init(void)
    ACT_GO(desk_deskshow_toggle);
    e_action_predef_name_set(_("Desktop"), _("Show The Desktop"), 
 			    "desk_deskshow_toggle", NULL, NULL, 0);
-   
+
+   /* shelf_show */
+   ACT_GO(shelf_show);
+   e_action_predef_name_set(_("Desktop"), _("Show The Shelf"), "shelf_show",
+			    NULL, "shelf name glob: Shelf-* ", 1);
+
    /* desk_linear_flip_to */
    ACT_GO(desk_flip_to);
    e_action_predef_name_set(_("Desktop"), _("Flip Desktop To..."), 
