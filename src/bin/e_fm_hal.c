@@ -7,10 +7,10 @@
 #include "e_fm_shared.h"
 #undef E_FM_SHARED_CODEC
 
-static void _e_fm2_volume_write(E_Volume *v);
-static void _e_fm2_volume_erase(E_Volume *v);
-static void _e_fm2_hal_mount_ok(E_Fm2_Mount *m);
-static int  _e_fm2_hal_mount_timeout(E_Fm2_Mount *m);
+static void _e_fm2_volume_write(E_Volume *v) EINA_ARG_NONNULL(1);
+static void _e_fm2_volume_erase(E_Volume *v) EINA_ARG_NONNULL(1);
+static void _e_fm2_hal_mount_ok(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
+static int  _e_fm2_hal_mount_timeout(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 
 static Eina_List *_e_stores = NULL;
 static Eina_List *_e_vols   = NULL;
@@ -476,8 +476,6 @@ e_fm2_hal_unmount(E_Fm2_Mount *m)
 static void
 _e_fm2_hal_mount_ok(E_Fm2_Mount *m)
 {
-   if (!m) return;
-
    m->mounted = 1;
    if (m->volume) m->mount_point = eina_stringshare_add(m->volume->mount_point);
    if (m->timeout)
@@ -492,7 +490,7 @@ _e_fm2_hal_mount_ok(E_Fm2_Mount *m)
 static int
 _e_fm2_hal_mount_timeout(E_Fm2_Mount *m)
 {
-   if (m) m->mount_fail(m->data);
+   m->mount_fail(m->data);
    m->timeout = NULL;
    return 0;
 }
