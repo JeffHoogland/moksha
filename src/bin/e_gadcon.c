@@ -678,8 +678,8 @@ e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h)
    ecore_evas_geometry_get(gc->ecore_evas, x, y, w, h);
    if (gc->zone)
      {
-	x -= gc->zone->x;
-	y -= gc->zone->y;
+	if (x) *x = *x - gc->zone->x;
+	if (y) *y = *y - gc->zone->y;
      }
    return 1;
 }
@@ -899,6 +899,7 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
      evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
    else if (gcc->o_base)
      evas_object_geometry_get(gcc->o_base, &x, &y, &w, &h);
+   else return; /* make clang happy */
    evas_object_move(gcc->o_control, x, y);
    evas_object_resize(gcc->o_control, w, h);
    e_theme_edje_object_set(gcc->o_control, "base/theme/gadman", "e/gadman/control");
@@ -1587,6 +1588,8 @@ _e_gadcon_client_inject(E_Gadcon *gc, E_Gadcon_Client *gcc, int x, int y)
 	  evas_object_geometry_get(gcc->o_frame, &cx, &cy, &cw, &ch);
 	else if (gcc->o_base)
 	  evas_object_geometry_get(gcc->o_base, &cx, &cy, &cw, &ch);
+	else return; /* make clang happy */
+
 	if (E_INSIDE(x, y, cx, cy, cw, ch)) return;
      }
 
@@ -1604,6 +1607,7 @@ _e_gadcon_client_inject(E_Gadcon *gc, E_Gadcon_Client *gcc, int x, int y)
 	  evas_object_geometry_get(gcc2->o_frame, &cx, &cy, &cw, &ch);
 	else if (gcc2->o_base)
 	  evas_object_geometry_get(gcc2->o_base, &cx, &cy, &cw, &ch);
+	else return; /* make clang happy */
 	if (e_gadcon_layout_orientation_get(gc->o_container))
 	  {
 	     if (E_INSIDE(x, y, cx, cy, cw / 2, ch))
@@ -1733,32 +1737,19 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *e
 static void
 _e_gadcon_cb_client_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
-   Evas_Event_Mouse_Up *ev;
-   E_Gadcon_Client *gcc;
-   
-   gcc = data;
-   ev = event_info;
 }
 
 static void
 _e_gadcon_cb_client_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
-   Evas_Event_Mouse_In *ev;
-   E_Gadcon_Client *gcc;
-   
-   gcc = data;
-   ev = event_info;
+   E_Gadcon_Client *gcc = data;
    edje_object_signal_emit(gcc->o_control, "e,state,focused", "e");
 }
 
 static void
 _e_gadcon_cb_client_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
-   Evas_Event_Mouse_Out *ev;
-   E_Gadcon_Client *gcc;
-   
-   gcc = data;
-   ev = event_info;
+   E_Gadcon_Client *gcc = data;
    edje_object_signal_emit(gcc->o_control, "e,state,unfocused", "e");
 }
 
@@ -1867,6 +1858,7 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
      evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
    else if (gcc->o_base)
      evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
+   else return; /* make clang happy */
 
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
@@ -1961,6 +1953,7 @@ _e_gadcon_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
      evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
    else if (gcc->o_base)
      evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
+   else return; /* make clang happy */
 
    _e_gadcon_client_current_position_sync(gcc);
 
@@ -2032,6 +2025,7 @@ _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
      evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
    else if (gcc->o_base)
      evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
+   else return; /* make clang happy */
 
    _e_gadcon_client_current_position_sync(gcc);
 
@@ -2233,11 +2227,7 @@ _e_gadcon_cb_dnd_move(void *data, const char *type, void *event)
 static void
 _e_gadcon_cb_dnd_leave(void *data, const char *type, void *event)
 {
-   E_Event_Dnd_Leave *ev;
-   E_Gadcon          *gc;
-
-   ev = event;
-   gc = data;
+   E_Gadcon *gc = data;
 
    /* If we exit the starting container hide the gadcon visual */
    if (drag_gcc->gadcon == gc) e_gadcon_client_hide(drag_gcc);
@@ -2253,14 +2243,12 @@ _e_gadcon_cb_dnd_leave(void *data, const char *type, void *event)
 static void
 _e_gadcon_cb_drop(void *data, const char *type, void *event)
 {
-   E_Event_Dnd_Drop *ev;
-   E_Gadcon         *gc;
+   E_Gadcon         *gc = data;
    E_Gadcon_Client  *gcc = NULL;
 
-   ev = event;
-   gc = data;
    if (drag_gcc->gadcon == gc) gcc = drag_gcc;
    else if ((new_gcc) && (new_gcc->gadcon == gc)) gcc = new_gcc;
+   else return;  /* make clang happy */
 
    gc->cf->clients = eina_list_append(gc->cf->clients, gcc->cf);
 
@@ -2377,12 +2365,8 @@ _e_gadcon_client_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_
 static void
 _e_gadcon_client_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   Evas_Event_Mouse_Move *ev;
-   E_Gadcon_Client *gcc;
-   
-   ev = event_info;
-   gcc = data;
-   
+   E_Gadcon_Client *gcc = data;
+
    if ((gcc->gadcon->instant_edit))
      {
 	if (gcc->o_control)
@@ -3675,7 +3659,8 @@ _e_gadcon_client_current_position_sync(E_Gadcon_Client *gcc)
 	bi = evas_object_data_get(o, "e_gadcon_layout_data");
 	if (!bi) return;
      }
-   
+   else return; /* make clang happy */
+
    gcc->state_info.prev_pos = gcc->config.pos;
    gcc->state_info.prev_size = gcc->config.size;
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container)) 
@@ -4280,7 +4265,7 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
 
 	if ((l) && (l->next))
 	  {
-	     Eina_List *stop;
+	     Eina_List *stop = NULL;
 	     int new_pos = 0;
 
 	     ok = 0;
@@ -4324,7 +4309,6 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
 
 	     if (ok)
 	       {
-		  new_pos = lc_moving->pos + lc_moving->size;
 		  for (l2 = l->next; l2 && l2 != stop; l2 = l2->next)
 		    {
 		       lc = l2->data;
@@ -4449,7 +4433,7 @@ _e_gadcon_layout_smart_gadcons_position_static(E_Smart_Data *sd, Eina_List **lis
 static E_Layout_Item_Container *
 _e_gadcon_layout_smart_containers_position_adjust(E_Smart_Data *sd, E_Layout_Item_Container *lc, E_Layout_Item_Container *lc2)
 {
-   int create_new;
+   int create_new = 0;
    Eina_List *l;
    E_Layout_Item_Container *lc3 = NULL;
    E_Layout_Item_Container_State new_state;
