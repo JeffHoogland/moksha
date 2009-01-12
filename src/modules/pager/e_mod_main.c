@@ -1365,7 +1365,8 @@ _pager_cb_event_border_urgent_change(void *data, int type, void *event)
 	     if (pp && !pager_config->popup_urgent_stick)
 	       pp->timer = ecore_timer_add(pager_config->popup_urgent_speed,
 					   _pager_popup_cb_timeout, pp);
-	     pp->urgent = 1;
+	     if (pp)
+	       pp->urgent = 1;
 	  }
      }
 
