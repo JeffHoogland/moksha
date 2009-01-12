@@ -979,6 +979,7 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
 	bd = ev->data;
 	if (!bd) return;
      }
+   else return;
 
    if (!bd->iconic) e_border_iconify(bd);
 
