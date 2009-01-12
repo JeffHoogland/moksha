@@ -702,16 +702,14 @@ _ds_shadow_recalc(Shadow *sh)
      {
 	Eina_List *l, *ll;
 	Shpix *sp;
-	int shw, shh, bsz, shx, shy;
+	int shw, shh, bsz;
 	int x1, y1, x2, y2;
 	
 	if ((!rects) && (sh->toosmall))
 	  sh->square = 1;
 	else
 	  sh->square = 0;
-	
-	shx = sh->ds->conf->shadow_x;
-	shy = sh->ds->conf->shadow_y;
+
 	shw = sh->w;
 	shh = sh->h;
 	bsz = sh->ds->conf->blur_size;
@@ -1005,17 +1003,13 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
 		  Shadow_Object *so;
 		  
 		  so = ll->data;
-		  evas_object_color_set(so->obj,
-					0, 0, 0,
-					255 * ds->conf->shadow_darkness);
+		  evas_object_color_set(so->obj, 0, 0, 0, 255 * v);
 	       }
 	  }
 	else
 	  {
 	     for (i = 0; i < 4; i++)
-	       evas_object_color_set(sh->object[i],
-				     0, 0, 0,
-				     255 * ds->conf->shadow_darkness);
+	       evas_object_color_set(sh->object[i], 0, 0, 0, 255 * v);
 	  }
      }
 }
@@ -1047,10 +1041,10 @@ _ds_config_blur_set(Dropshadow *ds, int blur)
    
    if (blur < 0) blur = 0;
    
-   if (ds->conf->shadow_x >= ds->conf->blur_size)
-     ds->conf->shadow_x = ds->conf->blur_size - 1;
-   if (ds->conf->shadow_y >= ds->conf->blur_size)
-     ds->conf->shadow_y = ds->conf->blur_size - 1;
+   if (ds->conf->shadow_x >= blur)
+     ds->conf->shadow_x = blur - 1;
+   if (ds->conf->shadow_y >= blur)
+     ds->conf->shadow_y = blur - 1;
 
    _ds_blur_init(ds);
    for (l = ds->shadows; l; l = l->next)
@@ -1172,7 +1166,6 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 	  {
 	     usefull = 0;
 	     l2 -= x2 - pix_w + 1;
-	     x2 = pix_w - 1;
 	  }
 	
 	pp = pix + x1 + (ry * pix_w);
@@ -1212,7 +1205,8 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		       p1++;
 		    }
 #endif		       
-		  *p2 = sum / full;
+		  if (full > 0)
+		    *p2 = sum / full;
 		  p2 += pix_w;
 		  pp += pix_w;
 	       }
@@ -1231,7 +1225,8 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		       sum += (int)(*p1) * (int)wt;
 		       p1++;
 		    }
-		  *p2 = sum / weight;
+		  if (weight > 0)
+		    *p2 = sum / weight;
 		  p2 += pix_w;
 		  pp += pix_w;
 	       }
@@ -1334,7 +1329,6 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 	  {
 	     usefull = 0;
 	     l2 -= y2 - pix_h + 1;
-	     y2 = pix_h - 1;
 	  }
 	
 	pp = pix + (y1 * pix_w) + rx;
@@ -1377,7 +1371,8 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		       p1 += pix_w;
 		    }
 #endif		  
-		  *p2 = sum / full;
+		  if (full > 0)
+		    *p2 = sum / full;
 		  p2++;
 		  pp++;
 	       }
@@ -1396,7 +1391,8 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		       sum += (int)(*p1) * wt;
 		       p1 += pix_w;
 		    }
-		  *p2 = sum / weight;
+		  if (weight > 0)
+		    *p2 = sum / weight;
 		  p2++;
 		  pp++;
 	       }
@@ -1969,7 +1965,7 @@ _tilebuf_intersect(int tsize, int tlen, int tnum, int x, int w, int *x1, int *x2
    *x2 = p2;
    
    return 1;
-   tnum = 0;
+   (void)tnum;
 }
 
 static void
