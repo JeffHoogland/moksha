@@ -1419,6 +1419,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
    else if (fwin->zone)
      dia = e_dialog_new(fwin->zone->container, 
 			"E", "_fwin_open_apps");
+   else return; /* make clang happy */
+
    e_dialog_title_set(dia, _("Open with..."));
    e_dialog_resizable_set(dia, 1);
    e_dialog_button_add(dia, _("Open"), "enlightenment/open",
@@ -1766,7 +1768,7 @@ _e_fwin_toolbar_resize(E_Fwin *fwin)
 	w = (fwin->win->w - fwin->tbar->w);
 	break;
       default:
-	break;
+	return;
      }
    evas_object_move(fwin->scrollframe_obj, x, y);
    evas_object_resize(fwin->scrollframe_obj, w, h);

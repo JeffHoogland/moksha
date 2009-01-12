@@ -152,6 +152,7 @@ main(int argc, char **argv)
      type = E_FM_OP_MOVE;
    else if (strcmp(argv[1], "rm") == 0)
      type = E_FM_OP_REMOVE;
+   else return 0;
 
    if ((type == E_FM_OP_COPY) || (type == E_FM_OP_MOVE))
      {
@@ -698,7 +699,7 @@ _e_fm_op_scan_idler(void *data)
         else
           task->started = 1;
      }
-   else if (!task->started)
+   else if (dir && !task->started)
      {
         de = readdir(dir);
 
