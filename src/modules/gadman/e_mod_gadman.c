@@ -38,7 +38,8 @@ static void on_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void on_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void on_menu_add(void *data, E_Menu *m, E_Menu_Item *mi);
 
-E_Gadcon_Client *current;
+E_Gadcon_Client *current = NULL;
+Manager *Man = NULL;
 
 /* Implementation */
 void
