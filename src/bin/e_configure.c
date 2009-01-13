@@ -5,7 +5,7 @@ static int _e_configure_cb_efreet_desktop_list_change(void *data, int type, void
 static int _e_configure_cb_efreet_desktop_change(void *data, int type, void *event);
 static void _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop);
 
-Eina_List *e_configure_registry = NULL;
+EAPI Eina_List *e_configure_registry = NULL;
 
 static Eina_List *handlers = NULL;
 

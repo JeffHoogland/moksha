@@ -57,7 +57,7 @@ struct _Manager
    Config         *conf;
 };
 
-Manager *Man;
+extern Manager *Man;
 
 void             gadman_init(E_Module *m);
 void             gadman_shutdown(void);

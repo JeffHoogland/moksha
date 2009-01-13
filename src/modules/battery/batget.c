@@ -1480,7 +1480,7 @@ poll_cb(void *data)
      }
 #elif defined(HAVE_CFBASE_H) /* OS X */
    darwin_check();
-   break;
+   return 1;
 #else
    switch (mode)
      {
