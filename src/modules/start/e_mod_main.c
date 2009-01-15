@@ -207,6 +207,9 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 		  dir = E_MENU_POP_DIRECTION_AUTO;
 		  break;
 	       }
+
+	     if (inst->gcc->gadcon && inst->gcc->gadcon->shelf)
+	       e_shelf_locked_set(inst->gcc->gadcon->shelf, 1);
 	     e_menu_activate_mouse(inst->main_menu,
 				   e_util_zone_current_get(e_manager_current_get()),
 				   x, y, w, h,
@@ -223,6 +226,8 @@ _menu_cb_post(void *data, E_Menu *m)
    
    inst = data;
    if (!inst->main_menu) return;
+   if (inst->gcc->gadcon && inst->gcc->gadcon->shelf)
+     e_shelf_locked_set(inst->gcc->gadcon->shelf, 0);
    edje_object_signal_emit(inst->o_button, "e,state,unfocused", "e");
    e_object_del(E_OBJECT(inst->main_menu));
    inst->main_menu = NULL;
