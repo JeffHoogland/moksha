@@ -1,13 +1,10 @@
 # get rid of that stupid cache mechanism
 rm -f config.cache
 
-define([AC_LIBTOOL_LANG_CXX_CONFIG], [:])
-define([AC_LIBTOOL_LANG_GCJ_CONFIG], [:])
-define([AC_LIBTOOL_LANG_F77_CONFIG], [:])
-
 AC_INIT(enlightenment, 0.16.999.050, enlightenment-devel@lists.sourceforge.net)
 AC_PREREQ(2.52)
 AC_CONFIG_SRCDIR(configure.ac)
+AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AC_ISC_POSIX
@@ -19,10 +16,14 @@ AC_C_BIGENDIAN
 AC_PROG_CC_C99
 AM_PROG_CC_C_O
 AC_C_CONST
-AM_ENABLE_SHARED
-AM_PROG_LIBTOOL
 AC_FUNC_ALLOCA
 AC_C___ATTRIBUTE__
+
+define([AC_LIBTOOL_LANG_CXX_CONFIG], [:])
+define([AC_LIBTOOL_LANG_GCJ_CONFIG], [:])
+define([AC_LIBTOOL_LANG_F77_CONFIG], [:])
+AC_DISABLE_STATIC
+AC_PROG_LIBTOOL
 
 AC_CHECK_FUNCS(setenv)
 AC_CHECK_FUNCS(unsetenv)
