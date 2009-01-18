@@ -13,7 +13,7 @@ install/e17::
 	rm -r debian/tmp/usr/lib/enlightenment/modules/connman
 
 binary-predeb/e17::
-	chmod 4755 debian/e17/usr/lib/enlightenment/enlightenment_sys
+	chmod 4755 debian/e17/usr/lib/enlightenment/utils/enlightenment_sys
 	chmod 4755 debian/e17/usr/lib/enlightenment/modules/cpufreq/*/freqset
 	chmod 4755 debian/e17/usr/lib/enlightenment/modules/temperature/*/tempget
 
