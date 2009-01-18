@@ -9,10 +9,6 @@ DEB_INSTALL_MANPAGES_e17 := $(DEB_SRCDIR)/debian/enlightenment.1 $(DEB_SRCDIR)/d
 DEB_DH_STRIP_ARGS := --dbg-package=e17-dbg
 DEB_CONFIGURE_EXTRA_FLAGS := --disable-rpath --sysconfdir=/etc
 
-install/e17-data::
-	gzip -9 debian/tmp/usr/share/enlightenment/doc/*.txt
-	rm debian/tmp/usr/share/enlightenment/COPYING
-
 install/e17::
 	rm -r debian/tmp/usr/lib/enlightenment/modules/connman
 
