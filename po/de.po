@@ -2,6 +2,7 @@
 # This file is put in the public domain.
 # vandango <vandango@toenda.com>, 2005, 2005/07/10
 # Azundris <edevel@azundris.com>, 2005/06/08.
+# Thomas Gstädtner <thomas@gstaedtner.net>, 2008.
 #
 #
 msgid ""

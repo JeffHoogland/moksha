@@ -3,6 +3,8 @@
 #
 # Jose Biosca Martin <danky@zone-sys.net>, 2005.
 # Francisco Perez Lopez, 2008.
+# Federico Vera <Unknown>, 2008.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
@@ -14,8 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-01-09 11:36+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+
 
 #: ../src/bin/e_about.c:17
 msgid "About Enlightenment"

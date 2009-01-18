@@ -2,7 +2,6 @@
 # This file is put in the public domain.
 # Grzegorz Gaczyński <grzewho@gmail.com>, 2005.
 # Adam Kisiel <lofwyrm@sourceforge.net>, 2006
-# , fuzzy
 #
 #
 msgid ""

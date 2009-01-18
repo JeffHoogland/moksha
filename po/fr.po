@@ -1,6 +1,7 @@
 # French translation for Enlightenment DR17
 # This file is put in the public domain.
 #  'Caro' <EMAIL@ADDRESS>, 2005.
+# batden <batden@orange.fr>, 2009.
 #
 msgid ""
 msgstr ""

@@ -1,20 +1,20 @@
 # Swedish translation of Enlightenment.
 # This file is put in the public domain.
 # Anders Trobäck <enlightenment@troback.com>, 2006.
-# , fuzzy
-# 				
+# Daniel Nylander <yeager@ubuntu.com>,2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-01-03 14:58+0800\n"
-"PO-Revision-Date: 2006-08-10 11:04+0200\n"
-"Last-Translator: Anders Trobäck <enlightenment@troback.com>\n"
+"PO-Revision-Date: 2009-01-10 12:45+0000\n"
+"Last-Translator: Daniel Nylander <yeager@ubuntu.com>\n"
 "Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
 
 #: ../src/bin/e_about.c:17
 msgid "About Enlightenment"
@@ -40,26 +40,16 @@ msgid "Enlightenment"
 msgstr "Enlightenment"
 
 #: ../src/bin/e_about.c:26
-#, fuzzy
 msgid ""
 "Copyright &copy; 1999-2008, by the Enlightenment Development Team.<br><br>We "
-"hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>This software is provided as-is with no explicit or implied "
+"hope you enjoy using this software as much as we enjoyed writing "
+"it.<br><br>This software is provided as-is with no explicit or implied "
 "warranty. This software is governed by licensing conditions, so please see "
-"the COPYING and COPYING-PLAIN licence files installed on your system."
-"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
-"is not stable. Many features are incomplete or even non-existant yet and may "
-"have many bugs. You have been <hilight>WARNED!</hilight>"
+"the COPYING and COPYING-PLAIN licence files installed on your "
+"system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> "
+"and it is not stable. Many features are incomplete or even non-existant yet "
+"and may have many bugs. You have been <hilight>WARNED!</hilight>"
 msgstr ""
-"Copyright &copy; 1999-2005, by the Enlightenment Development Team.<br><br>Vi "
-"hoppas att Du har lika mycket glädje av denna mjukvaran som vi har haft när "
-"vi skrev den.<br><br> Mjukvaran leverars som den är utan några garantier. "
-"Mjukvaran är kontrollerad av licensvillkor så vänligen läs COPYING och "
-"COPYING-PLAIN licensfiler som är installerade på ditt system."
-"<br><br>Enlightenment är under <hilight>KRAFTIG UTVECKLING</hilight> och är "
-"därför inte stabilt. Många funktioner är inte kompletta eller så kan de till "
-"och med saknas och innehålla många fel. Du har blivit <hilight>VARNAD!</"
-"hilight>"
 
 #: ../src/bin/e_about.c:50
 msgid "<title>The Team</title>"
@@ -74,9 +64,8 @@ msgid ""
 msgstr ""
 
 #: ../src/bin/e_actions.c:350
-#, fuzzy
 msgid "Are you sure you want to kill this window?"
-msgstr "Är du säker på att du vill avsluta?"
+msgstr ""
 
 #: ../src/bin/e_actions.c:353 ../src/bin/e_actions.c:1630
 #: ../src/bin/e_actions.c:1712 ../src/bin/e_actions.c:1776
@@ -106,67 +95,48 @@ msgstr ""
 "avsluta?"
 
 #: ../src/bin/e_actions.c:1705
-#, fuzzy
 msgid "Are you sure you want to log out?"
-msgstr "Är du säker på att du vill avsluta?"
+msgstr ""
 
 #: ../src/bin/e_actions.c:1707
-#, fuzzy
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 msgstr ""
-"Du har valt att ta bort \"%s\".<br><br>Är du säker på att du vill ta bort "
-"dennapanelen?"
 
 #: ../src/bin/e_actions.c:1769 ../src/bin/e_actions.c:1897
-#, fuzzy
 msgid "Are you sure you want to turn off?"
-msgstr "Är du säker på att du vill avsluta?"
+msgstr ""
 
 #: ../src/bin/e_actions.c:1771
-#, fuzzy
 msgid ""
 "You requested to turn off your Computer.<br><br>Are you sure you want to "
 "shut down?"
 msgstr ""
-"Du har valt att avsluta Enlightenment.<br><br>Är du säker på att du vill "
-"avsluta?"
 
 #: ../src/bin/e_actions.c:1833
-#, fuzzy
 msgid "Are you sure you want to reboot?"
-msgstr "Är du säker på att du vill avsluta?"
+msgstr ""
 
 #: ../src/bin/e_actions.c:1835
-#, fuzzy
 msgid ""
 "You requested to reboot your Computer.<br><br>Are you sure you want to "
 "restart it?"
 msgstr ""
-"Du har valt ta bort denna panelen.<br><br>Är du säker på att du vill ta bort "
-"den?"
 
 #: ../src/bin/e_actions.c:1899
-#, fuzzy
 msgid ""
 "You requested to suspend your Computer.<br><br>Are you sure you want to "
 "suspend?"
 msgstr ""
-"Du har valt att avsluta Enlightenment.<br><br>Är du säker på att du vill "
-"avsluta?"
 
 #: ../src/bin/e_actions.c:1961
-#, fuzzy
 msgid "Are you sure you want to hibernate?"
-msgstr "Är du säker på att du vill avsluta?"
+msgstr ""
 
 #: ../src/bin/e_actions.c:1963
-#, fuzzy
 msgid ""
 "You requested to hibernate your Computer.<br><br>Are you sure you want to "
 "suspend to disk?"
 msgstr ""
-"Du har valt ta bort denna panelen.<br><br>Är du säker på att du vill ta bort "
-"den?"
 
 #: ../src/bin/e_actions.c:2273 ../src/bin/e_actions.c:2284
 #: ../src/bin/e_actions.c:2303 ../src/bin/e_actions.c:2308
@@ -178,14 +148,12 @@ msgid "Window : Actions"
 msgstr "Fönster : Händelser"
 
 #: ../src/bin/e_actions.c:2273 ../src/bin/e_fm.c:4803
-#, fuzzy
 msgid "Move"
-msgstr "Flytta upp"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2284
-#, fuzzy
 msgid "Resize"
-msgstr "Resistens"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2295 ../src/bin/e_actions.c:2571
 #: ../src/bin/e_actions.c:2573 ../src/bin/e_actions.c:2575
@@ -288,9 +256,8 @@ msgid "Toggle Borderless State"
 msgstr "Gör ramlös"
 
 #: ../src/bin/e_actions.c:2385
-#, fuzzy
 msgid "Toggle Pinned State"
-msgstr "Gör ramlös"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2390 ../src/bin/e_actions.c:2392
 #: ../src/bin/e_actions.c:2394 ../src/bin/e_actions.c:2396
@@ -405,104 +372,84 @@ msgid "Switch To Desktop..."
 msgstr "Byt till skrivbord..."
 
 #: ../src/bin/e_actions.c:2451
-#, fuzzy
 msgid "Flip Desktop Left (All Screens)"
-msgstr "Skifta skrivbord vänster"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2453
-#, fuzzy
 msgid "Flip Desktop Right (All Screens)"
-msgstr "Skifta skrivbord höger"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2455
-#, fuzzy
 msgid "Flip Desktop Up (All Screens)"
-msgstr "Skifta skrivbord upp"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2457
-#, fuzzy
 msgid "Flip Desktop Down (All Screens)"
-msgstr "Skifta skrivbord ner"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2459
-#, fuzzy
 msgid "Flip Desktop By... (All Screens)"
-msgstr "Skifta skrivbord med..."
+msgstr ""
 
 #: ../src/bin/e_actions.c:2465
-#, fuzzy
 msgid "Flip Desktop To... (All Screens)"
-msgstr "Skifta skrivbord..."
+msgstr ""
 
 #: ../src/bin/e_actions.c:2471
-#, fuzzy
 msgid "Flip Desktop Linearly... (All Screens)"
-msgstr "Skifta skrivbord linjärt..."
+msgstr ""
 
 #: ../src/bin/e_actions.c:2477
-#, fuzzy
 msgid "Switch To Desktop 0 (All Screens)"
-msgstr "Byt till skrivbord 0"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2479
-#, fuzzy
 msgid "Switch To Desktop 1 (All Screens)"
-msgstr "Byt till skrivbord 1"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2481
-#, fuzzy
 msgid "Switch To Desktop 2 (All Screens)"
-msgstr "Byt till skrivbord 2"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2483
-#, fuzzy
 msgid "Switch To Desktop 3 (All Screens)"
-msgstr "Byt till skrivbord 3"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2485
-#, fuzzy
 msgid "Switch To Desktop 4 (All Screens)"
-msgstr "Byt till skrivbord 4"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2487
-#, fuzzy
 msgid "Switch To Desktop 5 (All Screens)"
-msgstr "Byt till skrivbord 5"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2489
-#, fuzzy
 msgid "Switch To Desktop 6 (All Screens)"
-msgstr "Byt till skrivbord 6"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2491
-#, fuzzy
 msgid "Switch To Desktop 7 (All Screens)"
-msgstr "Byt till skrivbord 7"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2493
-#, fuzzy
 msgid "Switch To Desktop 8 (All Screens)"
-msgstr "Byt till skrivbord 8"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2495
-#, fuzzy
 msgid "Switch To Desktop 9 (All Screens)"
-msgstr "Byt till skrivbord 9"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2497
-#, fuzzy
 msgid "Switch To Desktop 10 (All Screens)"
-msgstr "Byt till skrivbord 10"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2499
-#, fuzzy
 msgid "Switch To Desktop 11 (All Screens)"
-msgstr "Byt till skrivbord 11"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2501
-#, fuzzy
 msgid "Switch To Desktop... (All Screens)"
-msgstr "Byt till skrivbord..."
+msgstr ""
 
 #: ../src/bin/e_actions.c:2508 ../src/bin/e_actions.c:2510
 #: ../src/bin/e_actions.c:2512 ../src/bin/e_actions.c:2517
@@ -570,9 +517,8 @@ msgid "Show Favorites Menu"
 msgstr "Visa favoritprogramsmenyn"
 
 #: ../src/bin/e_actions.c:2575
-#, fuzzy
 msgid "Show All Applications Menu"
-msgstr "(Inga program)"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2577
 msgid "Show Clients Menu"
@@ -607,9 +553,8 @@ msgid "Exit"
 msgstr "Avsluta"
 
 #: ../src/bin/e_actions.c:2603
-#, fuzzy
 msgid "Log Out"
-msgstr "Placering"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2607
 msgid "Exit Immediately"
@@ -648,9 +593,8 @@ msgid "Suspend"
 msgstr ""
 
 #: ../src/bin/e_actions.c:2627
-#, fuzzy
 msgid "Suspend to Disk"
-msgstr "Skicka till skrivbord"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2635
 msgid "Desktop Lock"
@@ -661,32 +605,27 @@ msgid "Cleanup Windows"
 msgstr "Städa upp fönster"
 
 #: ../src/bin/e_actions.c:2645
-#, fuzzy
 msgid "Generic : Actions"
-msgstr "Fönster : Händelser"
+msgstr ""
 
 #: ../src/bin/e_actions.c:2645
-#, fuzzy
 msgid "Delayed Action"
-msgstr "Tangent & händelse"
+msgstr ""
 
 #. Register mime handler
 #: ../src/bin/e_bg.c:21 ../src/modules/conf_wallpaper/e_mod_main.c:34
-#, fuzzy
 msgid "Set As Background"
-msgstr "Använd bakgrund på"
+msgstr ""
 
 #: ../src/bin/e_border.c:4864
 msgid "Desktop files scan done"
 msgstr ""
 
 #: ../src/bin/e_border.c:4876
-#, fuzzy
 msgid "Desktop file scan"
-msgstr "Skrivbord %i, %i"
+msgstr ""
 
 #: ../src/bin/e_config.c:715 ../src/bin/e_config.c:748
-#, fuzzy
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -696,13 +635,8 @@ msgid ""
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
 "the hiccup in your settings.<br>"
 msgstr ""
-"Konfigurationen behöver att uppdateras. Din gamla konfiguration<br>har "
-"tagits bort och en ny standard konfiguration har skapats. Detta<br>kommer "
-"att hända regelbundet under utvecklingen så rapportera inte<br>detta som ett "
-"fel. Du kan nu konfigurera allt som du vill ha det.<br>Beklagar detta.<br>"
 
 #: ../src/bin/e_config.c:732
-#, fuzzy
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -710,24 +644,17 @@ msgid ""
 "This is bad and<br>as a precaution your settings have been now restored "
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
-"Din konfiguration är NYARE än Enlightenment. Detta är jätte<br>konstigt. "
-"Detta ska inte hända om inte du har nergraderat<br>Enlightenment eller "
-"kopierat konfigurationen från ett ställe<br>där det finns en nyare version "
-"av Enlightenment installerat.<br>Detta är inte bra och som en "
-"säkerhetsåtgärd så har din<br>konfiguration återställts till standard. "
-"Beklagar detta.<br>"
 
 #: ../src/bin/e_config.c:1626
-#, fuzzy
 msgid "Settings Upgraded"
-msgstr "Meny"
+msgstr ""
 
 #: ../src/bin/e_config.c:1651
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
-"could not be<br>deterimined.<br><br>The file where the error occured was:<br>"
-"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"could not be<br>deterimined.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1662
@@ -735,9 +662,9 @@ msgstr ""
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
 "being saved to.<br>This error is very strange as the files should<br>be "
-"extremely small. Please check the settings<br>for your home directory."
-"<br><br>The file where the error occured was:<br>%s<br><br>This file has "
-"been deleted to avoid corrupt data.<br>"
+"extremely small. Please check the settings<br>for your home "
+"directory.<br><br>The file where the error occured was:<br>%s<br><br>This "
+"file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1675
@@ -754,22 +681,21 @@ msgstr ""
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
 "to write the file.<br>You have either run out of disk space or have<br>gone "
-"over your quota limit.<br><br>The file where the error occured was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"over your quota limit.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1698
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
-"it. This is very unusual.<br><br>The file where the error occured was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"it. This is very unusual.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1723
-#, fuzzy
 msgid "Enlightenment Settings Write Problems"
-msgstr "Konfigurera Enlightenment"
+msgstr ""
 
 #. buttons at the bottom
 #: ../src/bin/e_config.c:1727 ../src/bin/e_config_dialog.c:250
@@ -914,9 +840,8 @@ msgstr "Allmänt"
 
 #. - general info -
 #: ../src/bin/e_eap_editor.c:501
-#, fuzzy
 msgid "Generic Name"
-msgstr "Allmän information"
+msgstr ""
 
 #: ../src/bin/e_eap_editor.c:506
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:105
@@ -933,9 +858,8 @@ msgid "Mime Types"
 msgstr ""
 
 #: ../src/bin/e_eap_editor.c:520
-#, fuzzy
 msgid "Options"
-msgstr "Alternativ"
+msgstr ""
 
 #: ../src/bin/e_eap_editor.c:521
 msgid "Startup Notify"
@@ -946,24 +870,20 @@ msgid "Run in Terminal"
 msgstr ""
 
 #: ../src/bin/e_eap_editor.c:525
-#, fuzzy
 msgid "Show in Menus"
-msgstr "Visa huvudmenyn"
+msgstr ""
 
 #: ../src/bin/e_eap_editor.c:529
-#, fuzzy
 msgid "Desktop file"
-msgstr "Skrivbordsbyte med mus"
+msgstr ""
 
 #: ../src/bin/e_eap_editor.c:530
-#, fuzzy
 msgid "Filename"
-msgstr "Byt namn"
+msgstr ""
 
 #: ../src/bin/e_eap_editor.c:559
-#, fuzzy
 msgid "Select an Icon"
-msgstr "Välj en ikon"
+msgstr ""
 
 #: ../src/bin/e_eap_editor.c:601 ../src/bin/e_eap_editor.c:665
 #: ../src/bin/e_entry_dialog.c:59 ../src/bin/e_fm_prop.c:514
@@ -979,9 +899,8 @@ msgid "Cancel"
 msgstr "Avbryt"
 
 #: ../src/bin/e_eap_editor.c:628
-#, fuzzy
 msgid "Select an Executable"
-msgstr "Exekverbar fil"
+msgstr ""
 
 #: ../src/bin/e_entry.c:493 ../src/bin/e_fm.c:6739
 #: ../src/modules/conf_applications/e_int_config_apps.c:271
@@ -992,23 +911,20 @@ msgid "Delete"
 msgstr "Ta bort"
 
 #: ../src/bin/e_entry.c:506 ../src/bin/e_fm.c:6649
-#, fuzzy
 msgid "Cut"
-msgstr "Klipp ut"
+msgstr ""
 
 #: ../src/bin/e_entry.c:517 ../src/bin/e_fm.c:4795 ../src/bin/e_fm.c:6666
 msgid "Copy"
 msgstr "Kopiera"
 
 #: ../src/bin/e_entry.c:528 ../src/bin/e_fm.c:6490 ../src/bin/e_fm.c:6680
-#, fuzzy
 msgid "Paste"
-msgstr "Snabb"
+msgstr ""
 
 #: ../src/bin/e_entry.c:540
-#, fuzzy
 msgid "Select All"
-msgstr "Ta bort"
+msgstr ""
 
 #: ../src/bin/e_exec.c:220 ../src/bin/e_utils.c:201
 #: ../src/modules/conf_imc/e_int_config_imc.c:278
@@ -1157,29 +1073,25 @@ msgid "%i Files"
 msgstr "%i filer"
 
 #: ../src/bin/e_fm.c:4811 ../src/bin/e_fm.c:7343 ../src/bin/e_fm.c:7473
-#, fuzzy
 msgid "Abort"
-msgstr "Om"
+msgstr ""
 
 #: ../src/bin/e_fm.c:6413 ../src/bin/e_fm.c:6570
 #: ../src/modules/fileman/e_mod_config.c:171
-#, fuzzy
 msgid "View Mode"
-msgstr "Redigeringsläge"
+msgstr ""
 
 #: ../src/bin/e_fm.c:6420 ../src/bin/e_fm.c:6577
-#, fuzzy
 msgid "Refresh View"
-msgstr "Uppdateringsintervall"
+msgstr ""
 
 #: ../src/bin/e_fm.c:6431 ../src/bin/e_fm.c:6588
 msgid "Show Hidden Files"
 msgstr ""
 
 #: ../src/bin/e_fm.c:6446 ../src/bin/e_fm.c:6603
-#, fuzzy
 msgid "Remember Ordering"
-msgstr "Minns med hjälp av"
+msgstr ""
 
 #: ../src/bin/e_fm.c:6458 ../src/bin/e_fm.c:6615
 msgid "Sort Now"
@@ -1195,59 +1107,50 @@ msgid "Rename"
 msgstr "Byt namn"
 
 #: ../src/bin/e_fm.c:6760
-#, fuzzy
 msgid "Properties"
-msgstr "Fönsteregenskaper"
+msgstr ""
 
 #: ../src/bin/e_fm.c:6999 ../src/bin/e_fm.c:7050
-#, fuzzy
 msgid "Use default"
-msgstr "Standardskrivbord"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7023 ../src/modules/fileman/e_mod_config.c:176
-#, fuzzy
 msgid "Grid Icons"
-msgstr "Ikoner"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7031 ../src/modules/fileman/e_mod_config.c:178
-#, fuzzy
 msgid "Custom Icons"
-msgstr "Anpassa ikoner automatiskt"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7039 ../src/modules/fileman/e_mod_config.c:186
-#, fuzzy
 msgid "List"
-msgstr "Fönsterlista"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7064
-#, fuzzy, c-format
+#, c-format
 msgid "Icon Size (%d)"
-msgstr "Storlek på ikoner"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7208
-#, fuzzy
 msgid "Create a new Directory"
-msgstr "Skapa en ny applikation"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7209
-#, fuzzy
 msgid "New Directory Name:"
-msgstr "Ny katalog"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7268
-#, fuzzy, c-format
+#, c-format
 msgid "Rename %s to:"
-msgstr "Byt namn"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7270
-#, fuzzy
 msgid "Rename File"
-msgstr "Byt namn"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7342 ../src/bin/e_fm.c:7472
-#, fuzzy
 msgid "Retry"
-msgstr "Starta om"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7346 ../src/bin/e_fm.c:7403 ../src/bin/e_fm.c:7478
 #: ../src/modules/wizard/page_030.c:67
@@ -1281,50 +1184,44 @@ msgid "An error occured while performing an operation.<br>%s"
 msgstr ""
 
 #: ../src/bin/e_fm.c:7582
-#, fuzzy
 msgid "Confirm Delete"
-msgstr "Bekräfta"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7586
-#, fuzzy, c-format
+#, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
-msgstr " Är du säker på att du vill ta bort <br><b>%s</b> ?"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7592
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
-"hilight> ?"
-msgstr " Är du säker på att du vill ta bort <br><b>%s</b> ?"
+"Are you sure you want to delete<br>the %d selected files "
+"in:<br><hilight>%s</hilight> ?"
+msgstr ""
 
 #: ../src/bin/e_fm_prop.c:108
-#, fuzzy
 msgid "File Properties"
-msgstr "Fönsteregenskaper"
+msgstr ""
 
 #: ../src/bin/e_fm_prop.c:338
-#, fuzzy
 msgid "File:"
-msgstr "Fil:"
+msgstr ""
 
 #: ../src/bin/e_fm_prop.c:345 ../src/bin/e_widget_fsel.c:323
 msgid "Size:"
 msgstr "Storlek:"
 
 #: ../src/bin/e_fm_prop.c:352
-#, fuzzy
 msgid "Last Modified:"
-msgstr "Senast ändrad:"
+msgstr ""
 
 #: ../src/bin/e_fm_prop.c:359
-#, fuzzy
 msgid "File Type:"
-msgstr "Kant typ"
+msgstr ""
 
 #: ../src/bin/e_fm_prop.c:366
-#, fuzzy
 msgid "Permissions"
-msgstr "Rättigheter:"
+msgstr ""
 
 #: ../src/bin/e_fm_prop.c:367 ../src/bin/e_widget_fsel.c:339
 msgid "Owner:"
@@ -1356,9 +1253,8 @@ msgstr "Förhandsgranska"
 #: ../src/bin/e_fm_prop.c:432
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:164
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:174
-#, fuzzy
 msgid "Default"
-msgstr "Standardskrivbord"
+msgstr ""
 
 #: ../src/bin/e_fm_prop.c:435
 msgid "Thumbnail"
@@ -1366,27 +1262,24 @@ msgstr ""
 
 #: ../src/bin/e_fm_prop.c:438
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:319
-#, fuzzy
 msgid "Custom"
-msgstr "Klipp ut"
+msgstr ""
 
 #: ../src/bin/e_fm_prop.c:448
 msgid "Use this icon for all files of this type"
 msgstr ""
 
 #: ../src/bin/e_fm_prop.c:456
-#, fuzzy
 msgid "Link Information"
-msgstr "Felinformation"
+msgstr ""
 
 #. if (cfdata->type == EDJ)
 #. e_dialog_title_set(dia, _("Select an Edj File"));
 #. else if (cfdata->type == IMG)
 #: ../src/bin/e_fm_prop.c:502
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:272
-#, fuzzy
 msgid "Select an Image"
-msgstr "Välj en annan bild"
+msgstr ""
 
 #: ../src/bin/e_fm_hal.c:214
 #, c-format
@@ -1414,14 +1307,13 @@ msgid "%llu B"
 msgstr ""
 
 #: ../src/bin/e_fm_hal.c:253
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown Volume"
-msgstr "Okänd"
+msgstr ""
 
 #: ../src/bin/e_fm_hal.c:293
-#, fuzzy
 msgid "Removable Device"
-msgstr "Ta bort"
+msgstr ""
 
 #: ../src/bin/e_gadcon.c:1242 ../src/modules/gadman/e_mod_gadman.c:658
 msgid "Plain"
@@ -1445,18 +1337,16 @@ msgid "Able to be resized"
 msgstr "Storlek kan ändras"
 
 #: ../src/bin/e_gadcon.c:1288 ../src/modules/gadman/e_mod_gadman.c:737
-#, fuzzy
 msgid "Begin move/resize this gadget"
-msgstr "Ta bort denna modul"
+msgstr ""
 
 #: ../src/bin/e_gadcon.c:1294 ../src/modules/gadman/e_mod_gadman.c:743
 msgid "Remove this gadget"
 msgstr "Ta bort denna modul"
 
 #: ../src/bin/e_gadcon.c:1709
-#, fuzzy
 msgid "Stop move/resize this gadget"
-msgstr "Ta bort denna modul"
+msgstr ""
 
 #: ../src/bin/e_hints.c:151
 msgid ""
@@ -1567,9 +1457,8 @@ msgid "Edit Icon"
 msgstr "Ändra ikon"
 
 #: ../src/bin/e_int_border_menu.c:76
-#, fuzzy
 msgid "Add Application..."
-msgstr "Applikation"
+msgstr ""
 
 #: ../src/bin/e_int_border_menu.c:87
 msgid "Create Icon"
@@ -1580,14 +1469,12 @@ msgid "Send to Desktop"
 msgstr "Skicka till skrivbord"
 
 #: ../src/bin/e_int_border_menu.c:109
-#, fuzzy
 msgid "Pin to Desktop"
-msgstr "Skicka till skrivbord"
+msgstr ""
 
 #: ../src/bin/e_int_border_menu.c:120
-#, fuzzy
 msgid "Unpin from Desktop"
-msgstr "Skicka till skrivbord"
+msgstr ""
 
 #: ../src/bin/e_int_border_menu.c:129
 msgid "More..."
@@ -1614,14 +1501,12 @@ msgid "Keyboard Shortcut"
 msgstr ""
 
 #: ../src/bin/e_int_border_menu.c:483
-#, fuzzy
 msgid "To Favorites Menu"
-msgstr "Visa favoritprogramsmenyn"
+msgstr ""
 
 #: ../src/bin/e_int_border_menu.c:488
-#, fuzzy
 msgid "To Launcher"
-msgstr "Kör"
+msgstr ""
 
 #: ../src/bin/e_int_border_menu.c:510
 #: ../src/modules/conf_borders/e_mod_main.c:37
@@ -1662,23 +1547,20 @@ msgid "Always Below"
 msgstr "Alltid underst"
 
 #: ../src/bin/e_int_border_menu.c:892
-#, fuzzy
 msgid "Select Border Style"
-msgstr "Ramstil"
+msgstr ""
 
 #: ../src/bin/e_int_border_menu.c:904
 msgid "Use E17 Default Icon Preference"
 msgstr ""
 
 #: ../src/bin/e_int_border_menu.c:913
-#, fuzzy
 msgid "Use Application Provided Icon "
-msgstr "Använd applikationens egen ikon"
+msgstr ""
 
 #: ../src/bin/e_int_border_menu.c:921
-#, fuzzy
 msgid "Use User Defined Icon"
-msgstr "Användardefinierade händelser"
+msgstr ""
 
 #: ../src/bin/e_int_border_menu.c:982 ../src/bin/e_int_border_prop.c:473
 msgid "Shaded"
@@ -1714,9 +1596,8 @@ msgid "Pager"
 msgstr "Sökare"
 
 #: ../src/bin/e_int_border_menu.c:1053
-#, fuzzy
 msgid "Taskbar"
-msgstr "Data"
+msgstr ""
 
 #: ../src/bin/e_int_border_prop.c:363
 msgid "NetWM"
@@ -1727,9 +1608,8 @@ msgid "ICCCM"
 msgstr "ICCCM"
 
 #: ../src/bin/e_int_border_prop.c:418
-#, fuzzy
 msgid "ICCCM Properties"
-msgstr "Fönsteregenskaper"
+msgstr ""
 
 #: ../src/bin/e_int_border_prop.c:419 ../src/bin/e_int_border_remember.c:476
 msgid "Title"
@@ -1820,23 +1700,20 @@ msgid "Request Position"
 msgstr "Begär position"
 
 #: ../src/bin/e_int_border_prop.c:466
-#, fuzzy
 msgid "NetWM Properties"
-msgstr "Fönsteregenskaper"
+msgstr ""
 
 #: ../src/bin/e_int_border_prop.c:471
-#, fuzzy
 msgid "Modal"
-msgstr "Module"
+msgstr ""
 
 #: ../src/bin/e_int_border_prop.c:474 ../src/bin/e_int_border_remember.c:531
 msgid "Skip Taskbar"
 msgstr ""
 
 #: ../src/bin/e_int_border_prop.c:475 ../src/bin/e_int_border_remember.c:529
-#, fuzzy
 msgid "Skip Pager"
-msgstr "Sökare"
+msgstr ""
 
 #: ../src/bin/e_int_border_prop.c:476
 msgid "Hidden"
@@ -1975,9 +1852,8 @@ msgid "Virtual Desktop"
 msgstr "Virtuellt skrivbord"
 
 #: ../src/bin/e_int_border_remember.c:525
-#, fuzzy
 msgid "Current Screen"
-msgstr "Skärm"
+msgstr ""
 
 #: ../src/bin/e_int_border_remember.c:527
 msgid "Skip Window List"
@@ -2006,45 +1882,38 @@ msgstr ""
 #: ../src/modules/temperature/e_mod_main.c:281
 #: ../src/modules/mixer/e_mod_main.c:671
 #: ../src/modules/connman/e_mod_main.c:1093
-#, fuzzy
 msgid "Settings"
-msgstr "Meny"
+msgstr ""
 
 #: ../src/bin/e_int_config_modules.c:43 ../src/modules/fileman/e_mod_main.c:48
 #: ../src/modules/fileman/e_mod_main.c:60
 #: ../src/modules/fileman/e_mod_main.c:144 ../src/modules/wizard/page_050.c:26
-#, fuzzy
 msgid "File Manager"
-msgstr "Test filhanterare"
+msgstr ""
 
 #: ../src/bin/e_int_config_modules.c:44
-#, fuzzy
 msgid "Shelf"
-msgstr "Paneler"
+msgstr ""
 
 #: ../src/bin/e_int_config_modules.c:120
 msgid "Module Settings"
 msgstr "Moduler"
 
 #: ../src/bin/e_int_config_modules.c:181
-#, fuzzy
 msgid "Available Modules"
-msgstr "Tillgängliga moduler"
+msgstr ""
 
 #: ../src/bin/e_int_config_modules.c:188
-#, fuzzy
 msgid "Load Module"
-msgstr "(Inga moduler laddade)"
+msgstr ""
 
 #: ../src/bin/e_int_config_modules.c:195
-#, fuzzy
 msgid "Loaded Modules"
-msgstr "(Inga moduler laddade)"
+msgstr ""
 
 #: ../src/bin/e_int_config_modules.c:202
-#, fuzzy
 msgid "Unload Module"
-msgstr "Fel vid öppnandet av modul"
+msgstr ""
 
 #: ../src/bin/e_int_config_modules.c:212 ../src/bin/e_int_config_modules.c:623
 #: ../src/bin/e_int_config_modules.c:640 ../src/bin/e_int_config_modules.c:665
@@ -2058,9 +1927,8 @@ msgid "Shelf Contents"
 msgstr "Panelens innehåll"
 
 #: ../src/bin/e_int_gadcon_config.c:38
-#, fuzzy
 msgid "Toolbar Contents"
-msgstr "Panelens innehåll"
+msgstr ""
 
 #: ../src/bin/e_int_gadcon_config.c:93
 #: ../src/modules/gadman/e_mod_config.c:106
@@ -2082,9 +1950,8 @@ msgid "Remove Gadget"
 msgstr "Ta bort"
 
 #: ../src/bin/e_int_toolbar_config.c:30 ../src/bin/e_toolbar.c:327
-#, fuzzy
 msgid "Toolbar Settings"
-msgstr "Moduler"
+msgstr ""
 
 #: ../src/bin/e_int_toolbar_config.c:82 ../src/bin/e_int_shelf_config.c:500
 #: ../src/bin/e_int_shelf_config.c:565
@@ -2115,9 +1982,8 @@ msgstr "Favoritprogram"
 
 #: ../src/bin/e_int_menus.c:110
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:156
-#, fuzzy
 msgid "Applications"
-msgstr "Applikation"
+msgstr ""
 
 #: ../src/bin/e_int_menus.c:135 ../src/bin/e_int_menus.c:1074
 #: ../src/modules/conf_window_display/e_mod_main.c:34
@@ -2138,9 +2004,8 @@ msgid "Theme"
 msgstr "Tema"
 
 #: ../src/bin/e_int_menus.c:259
-#, fuzzy
 msgid "Virtual"
-msgstr "Vertikalt"
+msgstr ""
 
 #: ../src/bin/e_int_menus.c:267 ../src/modules/conf_shelves/e_mod_main.c:39
 #: ../src/modules/conf_shelves/e_mod_main.c:84
@@ -2156,9 +2021,8 @@ msgid "(No Applications)"
 msgstr "(Inga program)"
 
 #: ../src/bin/e_int_menus.c:688
-#, fuzzy
 msgid "Configure Virtual Desktops"
-msgstr "Virtuella skrivbord"
+msgstr ""
 
 #: ../src/bin/e_int_menus.c:1080 ../src/bin/e_int_menus.c:1270
 msgid "(No Windows)"
@@ -2173,24 +2037,21 @@ msgid "No name!!"
 msgstr "Inget namn!!!"
 
 #: ../src/bin/e_int_menus.c:1376
-#, fuzzy
 msgid "(No Shelves)"
-msgstr "Paneler"
+msgstr ""
 
 #: ../src/bin/e_int_menus.c:1389 ../src/bin/e_shelf.c:1095
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:132
-#, fuzzy
 msgid "Shelf #"
-msgstr "Panelens storlek"
+msgstr ""
 
 #: ../src/bin/e_int_menus.c:1442
 msgid "Add A Shelf"
 msgstr ""
 
 #: ../src/bin/e_int_menus.c:1449
-#, fuzzy
 msgid "Delete A Shelf"
-msgstr "Ta bort denna panel"
+msgstr ""
 
 #: ../src/bin/e_int_shelf_config.c:71 ../src/bin/e_shelf.c:1670
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:43
@@ -2240,9 +2101,8 @@ msgid "Below Everything"
 msgstr "Alltid nederst"
 
 #: ../src/bin/e_int_shelf_config.c:561
-#, fuzzy
 msgid "Allow windows to overlap the shelf"
-msgstr "Tillåt fönster att överlappa detta tillbehör"
+msgstr ""
 
 #: ../src/bin/e_int_shelf_config.c:598
 msgid "Shrink to Content Size"
@@ -2263,18 +2123,16 @@ msgid "Styles"
 msgstr "Tema"
 
 #: ../src/bin/e_int_shelf_config.c:644
-#, fuzzy
 msgid "Auto Hide"
-msgstr "Anpassa automatiskt"
+msgstr ""
 
 #: ../src/bin/e_int_shelf_config.c:645
 msgid "Auto-hide the shelf"
 msgstr ""
 
 #: ../src/bin/e_int_shelf_config.c:648
-#, fuzzy
 msgid "Show on mouse in"
-msgstr "Visa på skärmområde #:"
+msgstr ""
 
 #: ../src/bin/e_int_shelf_config.c:650
 msgid "Show on mouse click"
@@ -2285,24 +2143,21 @@ msgid "Hide timeout"
 msgstr ""
 
 #: ../src/bin/e_int_shelf_config.c:654 ../src/bin/e_int_shelf_config.c:658
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f seconds"
-msgstr "%2.1f sekunder"
+msgstr ""
 
 #: ../src/bin/e_int_shelf_config.c:656
-#, fuzzy
 msgid "Hide duration"
-msgstr "Hinting"
+msgstr ""
 
 #: ../src/bin/e_int_shelf_config.c:664
-#, fuzzy
 msgid "Show on all Desktops"
-msgstr "Visa skrivbordet"
+msgstr ""
 
 #: ../src/bin/e_int_shelf_config.c:666
-#, fuzzy
 msgid "Show on specified Desktops"
-msgstr "Visa skrivbordet"
+msgstr ""
 
 #: ../src/bin/e_ipc.c:47
 #, c-format
@@ -2325,7 +2180,7 @@ msgid ""
 msgstr ""
 
 #: ../src/bin/e_main.c:308
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Options:\n"
 "\t-display DISPLAY\n"
@@ -2336,8 +2191,8 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
+"800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -2350,26 +2205,6 @@ msgid ""
 "\t-locked\n"
 "\t\tstart with desklock on, so password will be asked.\n"
 msgstr ""
-"Valmöjlighter:\n"
-"\t-display DISPLAY\n"
-"\t\tAnslut till bildskärmen som heter DISPLAY.\n"
-"\t\tEx: -display :1.0\n"
-"\t-fake-xinerama-screen WxH+X+Y\n"
-"\t\tLägg till en falsk xinerama skärm (istället för de äkta)\n"
-"\t\tmed angiven geometri. Lägg till så många du vill. De kommer\n"
-"\t\talla att ersätta de äkta xinerama skärmarna, om det finns några.\n"
-"\t\tDetta kan användas för att simulera xinerama.\n"
-"\t\tEx: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
-"\t-profile CONF_PROFILE\n"
-"\t\tAnvänd konfigurationen CONF_PROFILE i stället för användarstandard eller "
-"bara \"default\".\n"
-"\t-good\n"
-"\t\tVar snäll.\n"
-"\t-evil\n"
-"\t\tVar elak.\n"
-"\t-psychotic\n"
-"\t\tVar psykotisk.\n"
 
 #: ../src/bin/e_main.c:377
 msgid ""
@@ -2472,13 +2307,10 @@ msgstr ""
 "av Evas och Ecore stödjer Software X11 rendering."
 
 #: ../src/bin/e_main.c:529 ../src/bin/e_main.c:536
-#, fuzzy
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment kan inte initiera Filsystemet!\n"
-"Ditt minne kanske är slut?"
 
 #: ../src/bin/e_main.c:550
 msgid ""
@@ -2489,23 +2321,20 @@ msgstr ""
 "Du kanske inte har någon hemkatalog eller är disken full?"
 
 #: ../src/bin/e_main.c:560
-#, fuzzy
 msgid "Enlightenment cannot set up its file registry system."
-msgstr "Enlightenment kan inte starta sitt konfigurationsystem."
+msgstr ""
 
 #: ../src/bin/e_main.c:569
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment kan inte starta sitt konfigurationsystem."
 
 #: ../src/bin/e_main.c:583
-#, fuzzy
 msgid "Enlightenment cannot set up its scale system."
-msgstr "Enlightenment kan inte starta sitt panel system."
+msgstr ""
 
 #: ../src/bin/e_main.c:591
-#, fuzzy
 msgid "Enlightenment cannot set up the pointer system."
-msgstr "Enlightenment kan inte konfigurera sitt intl system."
+msgstr ""
 
 #: ../src/bin/e_main.c:600
 msgid ""
@@ -2576,19 +2405,15 @@ msgstr ""
 "att Evas har EET loader support.\n"
 
 #: ../src/bin/e_main.c:712
-#, fuzzy
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
-"Enlightenment upptäckte att Evas inte kan ladda PNG filer. Kontrollera\n"
-"att Evas har PNG loader support.\n"
 
 #: ../src/bin/e_main.c:721
-#, fuzzy
 msgid "Setup Screens"
-msgstr "Skärm"
+msgstr ""
 
 #: ../src/bin/e_main.c:726
 msgid ""
@@ -2599,19 +2424,16 @@ msgstr ""
 "Kanske en annan fönsterhanterare körs?\n"
 
 #: ../src/bin/e_main.c:732
-#, fuzzy
 msgid "Setup Screensaver"
-msgstr "Aktivera skärmsläckare"
+msgstr ""
 
 #: ../src/bin/e_main.c:737
-#, fuzzy
 msgid "Enlightenment cannot configure the X screensaver."
-msgstr "Enlightenment kan inte starta Filhanteraren.\n"
+msgstr ""
 
 #: ../src/bin/e_main.c:741
-#, fuzzy
 msgid "Setup Desklock"
-msgstr "Skicka till skrivbord"
+msgstr ""
 
 #: ../src/bin/e_main.c:746
 msgid "Enlightenment cannot set up its desk locking system."
@@ -2622,19 +2444,16 @@ msgid "Setting up Paths"
 msgstr ""
 
 #: ../src/bin/e_main.c:776
-#, fuzzy
 msgid "Setup System Controls"
-msgstr "Ställ kontroller"
+msgstr ""
 
 #: ../src/bin/e_main.c:781
-#, fuzzy
 msgid "Enlightenment cannot initialize the System Command system.\n"
-msgstr "Enlightenment kan inte starta Thumbnailing·systemet.\n"
+msgstr ""
 
 #: ../src/bin/e_main.c:786
-#, fuzzy
 msgid "Setup Actions"
-msgstr "Modulhändelser"
+msgstr ""
 
 #: ../src/bin/e_main.c:791
 msgid "Enlightenment cannot set up its actions system."
@@ -2645,14 +2464,12 @@ msgid "Setup Execution System"
 msgstr ""
 
 #: ../src/bin/e_main.c:800
-#, fuzzy
 msgid "Enlightenment cannot set up its exec system."
-msgstr "Enlightenment kan inte starta sitt exebuf system."
+msgstr ""
 
 #: ../src/bin/e_main.c:804
-#, fuzzy
 msgid "Setup Remembers"
-msgstr "Minne"
+msgstr ""
 
 #: ../src/bin/e_main.c:809
 msgid "Enlightenment cannot setup remember settings."
@@ -2666,7 +2483,7 @@ msgstr ""
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment kan inte starta Filhanteraren.\n"
 
-#.
+#. 
 #. TS("fwin");
 #. if (!e_fwin_init())
 #. {
@@ -2674,7 +2491,7 @@ msgstr "Enlightenment kan inte starta Filhanteraren.\n"
 #. _e_main_shutdown(-1);
 #. }
 #. _e_main_shutdown_push(e_fwin_shutdown);
-#.
+#. 
 #: ../src/bin/e_main.c:835
 msgid "Setup Message System"
 msgstr ""
@@ -2700,27 +2517,24 @@ msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment kan inte starta sitt input grab handling system."
 
 #: ../src/bin/e_main.c:862
-#, fuzzy
 msgid "Setup Modules"
-msgstr "Moduler"
+msgstr ""
 
 #: ../src/bin/e_main.c:867
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment kan inte starta sitt modulsystem"
 
 #: ../src/bin/e_main.c:871
-#, fuzzy
 msgid "Setup Color Classes"
-msgstr "Ikonklass"
+msgstr ""
 
 #: ../src/bin/e_main.c:876
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment kan inte starta sitt color·class system."
 
 #: ../src/bin/e_main.c:880
-#, fuzzy
 msgid "Setup Gadcon"
-msgstr "Välj en ikon"
+msgstr ""
 
 #: ../src/bin/e_main.c:885
 msgid "Enlightenment cannot set up its gadget control system."
@@ -2731,61 +2545,52 @@ msgid "Setup DPMS"
 msgstr ""
 
 #: ../src/bin/e_main.c:895
-#, fuzzy
 msgid "Enlightenment cannot configure the DPMS settings."
-msgstr "Enlightenment kan inte starta komihåg inställningar."
+msgstr ""
 
 #: ../src/bin/e_main.c:899
 msgid "Set Up Powersave modes"
 msgstr ""
 
 #: ../src/bin/e_main.c:903
-#, fuzzy
 msgid "Enlightenment cannot set up its powersave modes."
-msgstr "Enlightenment kan inte starta sitt popup system."
+msgstr ""
 
 #: ../src/bin/e_main.c:908
-#, fuzzy
 msgid "Setup Wallpaper"
-msgstr "Bakgrund"
+msgstr ""
 
 #: ../src/bin/e_main.c:913
-#, fuzzy
 msgid "Enlightenment cannot set up its desktop background system."
-msgstr "Enlightenment kan inte starta sitt desk locking system."
+msgstr ""
 
 #: ../src/bin/e_main.c:918
-#, fuzzy
 msgid "Setup Mouse"
-msgstr "Ta bort"
+msgstr ""
 
 #: ../src/bin/e_main.c:923
-#, fuzzy
 msgid "Enlightenment cannot configure the mouse settings."
-msgstr "Enlightenment kan inte starta komihåg inställningar."
+msgstr ""
 
 #: ../src/bin/e_main.c:928
-#, fuzzy
 msgid "Setup Bindings"
-msgstr "Kortkommando"
+msgstr ""
 
 #: ../src/bin/e_main.c:933
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment kan inte starta sitt bindningssystem."
 
 #: ../src/bin/e_main.c:937
-#, fuzzy
 msgid "Setup Popups"
-msgstr "Visa popup"
+msgstr ""
 
 #: ../src/bin/e_main.c:942
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment kan inte starta sitt popup system."
 
 #: ../src/bin/e_main.c:947
-#, fuzzy
 msgid "Setup Shelves"
-msgstr "Paneler"
+msgstr ""
 
 #: ../src/bin/e_main.c:952
 msgid "Enlightenment cannot set up its shelf system."
@@ -2804,15 +2609,13 @@ msgid "Set Up File Ordering"
 msgstr ""
 
 #: ../src/bin/e_main.c:971
-#, fuzzy
 msgid "Enlightenment cannot set up its order file system."
-msgstr "Enlightenment kan inte starta sitt modulsystem"
+msgstr ""
 
 #. load modules
 #: ../src/bin/e_main.c:1006
-#, fuzzy
 msgid "Load Modules"
-msgstr "(Inga moduler laddade)"
+msgstr ""
 
 #: ../src/bin/e_main.c:1014
 msgid ""
@@ -2835,9 +2638,8 @@ msgid ""
 msgstr ""
 
 #: ../src/bin/e_main.c:1030
-#, fuzzy
 msgid "Configure Shelves"
-msgstr "Befintliga paneler"
+msgstr ""
 
 #: ../src/bin/e_main.c:1040
 msgid "Almost Done"
@@ -2878,8 +2680,8 @@ msgid ""
 "%i.<br>"
 msgstr ""
 "Modul API Fel<br>Fel vid initiering av modul: %s<br>Den kräver minst version "
-"%i av modul API<br>Versionen på API som rapporteras av Enlightenment är: %i."
-"<br>"
+"%i av modul API<br>Versionen på API som rapporteras av Enlightenment är: "
+"%i.<br>"
 
 #: ../src/bin/e_module.c:180
 #, c-format
@@ -2920,9 +2722,8 @@ msgid "Delete this Shelf"
 msgstr "Ta bort denna panel"
 
 #: ../src/bin/e_startup.c:61
-#, fuzzy
 msgid "Starting"
-msgstr "Startar %s"
+msgstr ""
 
 #: ../src/bin/e_sys.c:170
 msgid "Checking System Permissions"
@@ -2945,18 +2746,16 @@ msgid ""
 msgstr ""
 
 #: ../src/bin/e_sys.c:323
-#, fuzzy
 msgid "Logout now"
-msgstr "Förlorade fönster"
+msgstr ""
 
 #: ../src/bin/e_sys.c:324
 msgid "Wait longer"
 msgstr ""
 
 #: ../src/bin/e_sys.c:325
-#, fuzzy
 msgid "Cancel Logout"
-msgstr "Avbryt"
+msgstr ""
 
 #: ../src/bin/e_sys.c:363
 msgid "Logout in progress"
@@ -2967,9 +2766,8 @@ msgid "Logout is currently in progress.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
 #: ../src/bin/e_sys.c:395 ../src/bin/e_sys.c:456
-#, fuzzy
 msgid "Enlightenment is busy with another request"
-msgstr "Enlightenment kan inte starta sitt tema system."
+msgstr ""
 
 #: ../src/bin/e_sys.c:401
 msgid ""
@@ -3030,47 +2828,41 @@ msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
 #: ../src/bin/e_sys.c:556
-#, fuzzy
 msgid "Rebooting"
-msgstr "Upplösning"
+msgstr ""
 
 #: ../src/bin/e_sys.c:559
 msgid "Rebooting your Computer.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
 #: ../src/bin/e_sys.c:582
-#, fuzzy
 msgid "Suspending"
-msgstr "Sluta redigera"
+msgstr ""
 
 #: ../src/bin/e_sys.c:585
 msgid "Suspending your Computer.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
 #: ../src/bin/e_sys.c:608
-#, fuzzy
 msgid "Hibernating"
-msgstr "Hinting"
+msgstr ""
 
 #: ../src/bin/e_sys.c:611
 msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
 #: ../src/bin/e_theme_about.c:17
-#, fuzzy
 msgid "About Theme"
-msgstr "Om detta tema"
+msgstr ""
 
 #. Register mime handler
 #: ../src/bin/e_theme.c:41
-#, fuzzy
 msgid "Set As Theme"
-msgstr "Välj en bild..."
+msgstr ""
 
 #: ../src/bin/e_toolbar.c:332
-#, fuzzy
 msgid "Configure Toolbar Contents"
-msgstr "Konfigurera panelens innehåll"
+msgstr ""
 
 #: ../src/bin/e_utils.c:246
 msgid "Cannot exit - immortal windows."
@@ -3087,24 +2879,24 @@ msgstr ""
 "fönster<br>är stängda eller livslängdslåset är borttaget.<br>"
 
 #: ../src/bin/e_utils.c:702
-#, fuzzy, c-format
+#, c-format
 msgid "%'.0f Bytes"
-msgstr "%1.0f minuter"
+msgstr ""
 
 #: ../src/bin/e_utils.c:706
-#, fuzzy, c-format
+#, c-format
 msgid "%'.0f KB"
-msgstr "%1.0f MB"
+msgstr ""
 
 #: ../src/bin/e_utils.c:710
-#, fuzzy, c-format
+#, c-format
 msgid "%'.0f MB"
-msgstr "%1.0f MB"
+msgstr ""
 
 #: ../src/bin/e_utils.c:714
-#, fuzzy, c-format
+#, c-format
 msgid "%'.1f GB"
-msgstr "%1.1f MB"
+msgstr ""
 
 #: ../src/bin/e_utils.c:734
 #, c-format
@@ -3171,14 +2963,12 @@ msgstr ""
 
 #: ../src/bin/e_widget_config_list.c:89
 #: ../src/modules/conf_applications/e_int_config_apps.c:265
-#, fuzzy
 msgid "Down"
-msgstr "Flytta ner"
+msgstr ""
 
 #: ../src/bin/e_widget_fsel.c:288
-#, fuzzy
 msgid "Add to Favorites"
-msgstr "Visa favoritprogramsmenyn"
+msgstr ""
 
 #: ../src/bin/e_widget_fsel.c:294
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:206
@@ -3196,9 +2986,8 @@ msgid "Permissions:"
 msgstr "Rättigheter:"
 
 #: ../src/bin/e_widget_fsel.c:371
-#, fuzzy
 msgid "Modified:"
-msgstr "Senast ändrad:"
+msgstr ""
 
 #: ../src/bin/e_widget_fsel.c:610
 #, c-format
@@ -3206,15 +2995,15 @@ msgid "You"
 msgstr ""
 
 #: ../src/bin/e_widget_fsel.c:659
-#, fuzzy, c-format
+#, c-format
 msgid "Protected"
-msgstr "Egenskaper"
+msgstr ""
 
 #: ../src/bin/e_widget_fsel.c:661 ../src/bin/e_widget_fsel.c:670
 #: ../src/bin/e_widget_fsel.c:679
-#, fuzzy, c-format
+#, c-format
 msgid "Read Only"
-msgstr "Endast namn"
+msgstr ""
 
 #: ../src/bin/e_widget_fsel.c:668 ../src/bin/e_widget_fsel.c:677
 #, c-format
@@ -3226,9 +3015,8 @@ msgid "Read-Write"
 msgstr ""
 
 #: ../src/modules/battery/e_mod_config.c:40
-#, fuzzy
 msgid "Battery Monitor Settings"
-msgstr "Batterikonfiguration"
+msgstr ""
 
 #: ../src/modules/battery/e_mod_config.c:91
 msgid "Basic Settings"
@@ -3250,9 +3038,9 @@ msgstr "Kontrollera batteri varje:"
 #: ../src/modules/battery/e_mod_config.c:136
 #: ../src/modules/conf_performance/e_int_config_performance.c:133
 #: ../src/modules/temperature/e_mod_config.c:380
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f ticks"
-msgstr "%1.0f filer"
+msgstr ""
 
 #: ../src/modules/battery/e_mod_config.c:142
 msgid "Alert when battery is down to:"
@@ -3270,9 +3058,9 @@ msgid "%1.0f minutes"
 msgstr "%1.0f minuter"
 
 #: ../src/modules/battery/e_mod_config.c:148
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f percent"
-msgstr "%1.0f sekunder"
+msgstr ""
 
 #: ../src/modules/battery/e_mod_config.c:151
 msgid "Dismiss alert automatically"
@@ -3293,9 +3081,8 @@ msgid "Battery"
 msgstr "Batteri"
 
 #: ../src/modules/battery/e_mod_main.c:832
-#, fuzzy
 msgid "Your battery is low!"
-msgstr "Visa varning vid låg batteri nivå"
+msgstr ""
 
 #: ../src/modules/battery/e_mod_main.c:834
 msgid "AC power is recommended."
@@ -3313,9 +3100,8 @@ msgid "ERROR"
 msgstr ""
 
 #: ../src/modules/battery/e_mod_main.c:1078
-#, fuzzy
 msgid "Battery Meter"
-msgstr "Batteri"
+msgstr ""
 
 #: ../src/modules/clock/e_mod_main.c:98
 msgid "Clock"
@@ -3323,63 +3109,53 @@ msgstr "Klocka"
 
 #: ../src/modules/conf/e_mod_main.c:142 ../src/modules/conf/e_mod_main.c:165
 #: ../src/modules/conf/e_mod_main.c:214
-#, fuzzy
 msgid "Settings Panel"
-msgstr "Meny"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:51
 #: ../src/modules/conf_applications/e_mod_main.c:42
-#, fuzzy
 msgid "Favorites Menu"
-msgstr "Visa favoritprogramsmenyn"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:106
 #: ../src/modules/conf_applications/e_int_config_apps.c:121
 #: ../src/modules/conf_applications/e_mod_main.c:36
-#, fuzzy
 msgid "IBar Applications"
-msgstr "Applikation"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:138
 #: ../src/modules/conf_applications/e_mod_main.c:38
-#, fuzzy
 msgid "Startup Applications"
-msgstr "Favoritprogram"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:155
 #: ../src/modules/conf_applications/e_mod_main.c:37
-#, fuzzy
 msgid "Restart Applications"
-msgstr "Favoritprogram"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:238
 #: ../src/modules/fileman/e_fwin.c:1465
-#, fuzzy
 msgid "All Applications"
-msgstr "Applikation"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:252
-#, fuzzy
 msgid "Selected Applications"
-msgstr "Applikation"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_mod_main.c:34
-#, fuzzy
 msgid "Apps"
-msgstr "Verkställ"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_mod_main.c:35
-#, fuzzy
 msgid "New Application"
-msgstr "Applikation"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_mod_main.c:39
 #: ../src/modules/conf_borders/e_mod_main.c:36
 #: ../src/modules/conf_desk/e_mod_main.c:34
 #: ../src/modules/conf_wallpaper/e_mod_main.c:30
-#, fuzzy
 msgid "Internal"
-msgstr "Allmänt"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_mod_main.c:40
 msgid "IBar Other"
@@ -3394,9 +3170,8 @@ msgstr "Menyer"
 
 #: ../src/modules/conf_borders/e_int_config_borders.c:30
 #: ../src/modules/conf_borders/e_int_config_borders.c:198
-#, fuzzy
 msgid "Default Border Style"
-msgstr "Ramstil"
+msgstr ""
 
 #: ../src/modules/conf_borders/e_int_config_borders.c:50
 msgid "Window Border Selection"
@@ -3417,23 +3192,20 @@ msgstr "Kom ihåg ramen för detta fönster nästa gång det används"
 #: ../src/modules/conf_transitions/e_mod_main.c:34
 #: ../src/modules/conf_wallpaper/e_mod_main.c:28
 #: ../src/modules/dropshadow/e_mod_main.c:89
-#, fuzzy
 msgid "Look"
-msgstr "Lås"
+msgstr ""
 
 #: ../src/modules/conf_borders/e_mod_main.c:35
 msgid "Borders"
 msgstr "Ramar"
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:40
-#, fuzzy
 msgid "Client List Settings"
-msgstr "Fönsterlista"
+msgstr ""
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:99
-#, fuzzy
 msgid "Group By"
-msgstr "Grupp:"
+msgstr ""
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:101
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:114
@@ -3447,9 +3219,8 @@ msgid "None"
 msgstr "Ingen"
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:107
-#, fuzzy
 msgid "Include windows from other screens"
-msgstr "Visa fönster från andra skärmar"
+msgstr ""
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:111
 msgid "Separate Groups By"
@@ -3468,23 +3239,20 @@ msgid "Client Sort Order"
 msgstr ""
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:126
-#, fuzzy
 msgid "Alphabetical"
-msgstr "Vertikalt"
+msgstr ""
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:128
-#, fuzzy
 msgid "Window stacking layer"
-msgstr "Fönsterhanterare"
+msgstr ""
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:130
 msgid "Most recently used"
 msgstr ""
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:134
-#, fuzzy
 msgid "Iconified Windows"
-msgstr "Visa minimerade fönster"
+msgstr ""
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:136
 msgid "Group with owning desktop"
@@ -3503,57 +3271,50 @@ msgid "Warp to owning desktop"
 msgstr ""
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:146
-#, fuzzy
 msgid "Menu Item Captions"
-msgstr "Menyobjekt"
+msgstr ""
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:147
 msgid "Limit caption length"
 msgstr ""
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f Chars"
-msgstr "%1.0f C"
+msgstr ""
 
 #: ../src/modules/conf_clientlist/e_mod_main.c:35
-#, fuzzy
 msgid "Client List Menu"
-msgstr "Textlistobjekt"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:47
 msgid "Window Manager"
 msgstr "Fönsterhanterare"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:48
-#, fuzzy
 msgid "About Dialog Title"
-msgstr "Om titel"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:49
 msgid "About Dialog Version"
 msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:50
-#, fuzzy
 msgid "Border Title"
-msgstr "Ramstil"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:51
-#, fuzzy
 msgid "Configure Dialog Title"
-msgstr "Konfigurationsdialoger"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:52
-#, fuzzy
 msgid "Error Text"
-msgstr "Fel"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:53
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:63
-#, fuzzy
 msgid "Menu Title"
-msgstr "Menyobjekt"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:54
 msgid "Menu Title Active"
@@ -3565,9 +3326,8 @@ msgid "Menu Item"
 msgstr "Menyobjekt"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:56
-#, fuzzy
 msgid "Menu Item Active"
-msgstr "Menyobjekt"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:57
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:67
@@ -3580,14 +3340,12 @@ msgid "Resize Text"
 msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:59
-#, fuzzy
 msgid "Winlist Item"
-msgstr "Fönstertitel"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:60
-#, fuzzy
 msgid "Winlist Label"
-msgstr "Fönstertitel"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:61
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:69
@@ -3596,47 +3354,40 @@ msgstr "Fönstertitel"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:67
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:82
-#, fuzzy
 msgid "Widgets"
-msgstr "Skrivbordsprogram"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:68
-#, fuzzy
 msgid "Button Text"
-msgstr "Knappar"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:69
 msgid "Button Text Disabled"
 msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:70
-#, fuzzy
 msgid "Check Text"
-msgstr "Flytta text"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:71
 msgid "Check Text Disabled"
 msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:72
-#, fuzzy
 msgid "Entry Text"
-msgstr "Om text"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:73
-#, fuzzy
 msgid "Label Text"
-msgstr "Etikett"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:74
-#, fuzzy
 msgid "List Item Text"
-msgstr "Listobjekt"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:75
-#, fuzzy
 msgid "List Item Odd Text"
-msgstr "Listobjekt"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:76
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:92
@@ -3644,43 +3395,37 @@ msgid "List Header"
 msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:77
-#, fuzzy
 msgid "Radio Text"
-msgstr "Flytta text"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:78
 msgid "Radio Text Disabled"
 msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:79
-#, fuzzy
 msgid "Slider Text"
-msgstr "Flytta text"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:80
 msgid "Slider Text Disabled"
 msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:87
-#, fuzzy
 msgid "Module Label"
-msgstr "Modulstatus"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:130
 #: ../src/modules/conf_colors/e_mod_main.c:35
-#, fuzzy
 msgid "Colors"
-msgstr "Stäng"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:249
-#, fuzzy
 msgid "Other"
-msgstr "Andra"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:433
-#, fuzzy
 msgid "Window Manager Colors"
-msgstr "Fönsterhanterare"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:435
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:443
@@ -3697,19 +3442,16 @@ msgid "Disabled"
 msgstr "Inaktiverad"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:441
-#, fuzzy
 msgid "Widget Colors"
-msgstr "Skrivbordsprogram"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:449
-#, fuzzy
 msgid "Module Colors"
-msgstr "Moduler"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:499
-#, fuzzy
 msgid "Color Classes"
-msgstr "Ikonklass"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:527
 msgid "Object Color"
@@ -3720,37 +3462,31 @@ msgid "Outline Color"
 msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:545
-#, fuzzy
 msgid "Shadow Color"
-msgstr "Visa följeslagare"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:554
-#, fuzzy
 msgid "Defaults"
-msgstr "Standardskrivbord"
+msgstr ""
 
 #: ../src/modules/conf_desk/e_int_config_desk.c:52
-#, fuzzy
 msgid "Desk Settings"
-msgstr "Skrivbord"
+msgstr ""
 
 #: ../src/modules/conf_desk/e_int_config_desk.c:149
-#, fuzzy
 msgid "Desktop Name"
-msgstr "Skrivbord"
+msgstr ""
 
 #: ../src/modules/conf_desk/e_int_config_desk.c:150
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:261
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:120
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:105
-#, fuzzy
 msgid "Name:"
-msgstr "Namn"
+msgstr ""
 
 #: ../src/modules/conf_desk/e_int_config_desk.c:156
-#, fuzzy
 msgid "Desktop Wallpaper"
-msgstr "Personliga bakgrunder"
+msgstr ""
 
 #: ../src/modules/conf_desk/e_int_config_desk.c:162
 #: ../src/modules/conf_mime/e_int_config_mime.c:203
@@ -3760,28 +3496,24 @@ msgid "Configure"
 msgstr "Konfigurera"
 
 #: ../src/modules/conf_desk/e_mod_main.c:35
-#, fuzzy
 msgid "Desk"
-msgstr "Skrivbord"
+msgstr ""
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:72
-#, fuzzy
 msgid "Screen Lock Settings"
-msgstr "Rulla"
+msgstr ""
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:145
 msgid "Automatic Locking"
 msgstr "Automatisk lås"
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:147
-#, fuzzy
 msgid "Lock when Enlightenment starts"
-msgstr "Använd E-muspekare"
+msgstr ""
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:151
-#, fuzzy
 msgid "Lock when X screensaver activates"
-msgstr "Lås när skärmsläckaren startar"
+msgstr ""
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:155
 msgid "Lock when idle time exceeded"
@@ -3838,9 +3570,8 @@ msgid "%1.0f"
 msgstr "%1.0f"
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:311
-#, fuzzy
 msgid "Wallpaper Mode"
-msgstr "Bakgrund"
+msgstr ""
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:313
 #: ../src/modules/gadman/e_mod_config.c:149
@@ -3848,14 +3579,12 @@ msgid "Theme Defined"
 msgstr ""
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:316
-#, fuzzy
 msgid "Theme Wallpaper"
-msgstr "Använd temats bakgrund"
+msgstr ""
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:329
-#, fuzzy
 msgid "Custom Screenlock"
-msgstr "Skärmlås"
+msgstr ""
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:330
 msgid "Use custom screenlock"
@@ -3867,9 +3596,8 @@ msgstr "Skärmlås"
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:56
 #: ../src/modules/pager/e_mod_main.c:811
-#, fuzzy
 msgid "Virtual Desktops Settings"
-msgstr "Virtuella skrivbord"
+msgstr ""
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:189
 msgid "Number of Desktops"
@@ -3917,18 +3645,16 @@ msgid "Wrap desktops around when flipping"
 msgstr ""
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:260
-#, fuzzy
 msgid "Flip Animation"
-msgstr "Visa geometriinformation"
+msgstr ""
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:262
 msgid "Off"
 msgstr ""
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:264
-#, fuzzy
 msgid "Pane"
-msgstr "Sökare"
+msgstr ""
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:266
 msgid "Zoom"
@@ -3939,9 +3665,8 @@ msgid "Virtual Desktops"
 msgstr "Virtuella skrivbord"
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:36
-#, fuzzy
 msgid "Dialog Settings"
-msgstr "Konfigurationsdialog"
+msgstr ""
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:87
 #: ../src/modules/conf_engine/e_int_config_engine.c:94
@@ -3959,19 +3684,16 @@ msgid "General Settings"
 msgstr "Allmänt"
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:89
-#, fuzzy
 msgid "Disable Confirmation Dialogs"
-msgstr "Konfigurationsdialoger"
+msgstr ""
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:91
-#, fuzzy
 msgid "Normal Windows"
-msgstr "(Inga fönster)"
+msgstr ""
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:98
-#, fuzzy
 msgid "Default Settings Dialogs Mode"
-msgstr "Standardläge för dialoger"
+msgstr ""
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:101
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:140
@@ -3992,39 +3714,38 @@ msgid "Default Dialog Mode"
 msgstr "Standardläge för dialoger"
 
 #: ../src/modules/conf_dialogs/e_mod_main.c:35
-#, fuzzy
 msgid "Dialogs"
-msgstr "Fel dialog"
+msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:129
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
-"will be restored in %d seconds."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d "
+"Hz will be restored in %d seconds."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:136
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d will be "
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored in %d seconds."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:146
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
-"will be restored <hilight>IMMEDIATELY</hilight>."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d "
+"Hz will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:153
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d will be "
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 
@@ -4033,19 +3754,16 @@ msgid "Resolution change"
 msgstr "Ändra upplösning"
 
 #: ../src/modules/conf_display/e_int_config_display.c:194
-#, fuzzy
 msgid "Save"
-msgstr "Tillstånd"
+msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:195
-#, fuzzy
 msgid "Restore"
-msgstr "Starta om"
+msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:228
-#, fuzzy
 msgid "Screen Resolution Settings"
-msgstr "Skärmupplösning"
+msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:402
 msgid "Resolution"
@@ -4073,11 +3791,11 @@ msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:643
 msgid ""
-"Your X Display Server is missing support for<br>the <hilight>XRandR</"
-"hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
-"resolutions without<br>the support of this extension. It could also "
-"be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no "
-"XRandR support detected."
+"Your X Display Server is missing support for<br>the "
+"<hilight>XRandR</hilight> (X Resize and Rotate) extension.<br>You cannot "
+"change screen resolutions without<br>the support of this extension. It could "
+"also be<br>that at the time <hilight>ecore</hilight> was built, there<br>was "
+"no XRandR support detected."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:655
@@ -4111,50 +3829,44 @@ msgid "The current display server does not <br>have the DPMS extension."
 msgstr ""
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:109
-#, fuzzy
 msgid "Display Power Management Settings"
-msgstr "Bildskärm"
+msgstr ""
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:199
 msgid "Enable Display Power Management"
 msgstr ""
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:203
-#, fuzzy
 msgid "Timers"
-msgstr "Teman"
+msgstr ""
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:205
 msgid "Standby time"
 msgstr ""
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:213
-#, fuzzy
 msgid "Suspend time"
-msgstr "Skicka till skrivbord"
+msgstr ""
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:221
 msgid "Off time"
 msgstr ""
 
 #: ../src/modules/conf_dpms/e_mod_main.c:35
-#, fuzzy
 msgid "Power Management"
-msgstr "Fönsterhanterare"
+msgstr ""
 
 #: ../src/modules/conf_engine/e_int_config_engine.c:38
-#, fuzzy
 msgid "Engine Settings"
-msgstr "Storlek"
+msgstr ""
 
 #: ../src/modules/conf_engine/e_int_config_engine.c:95
 msgid "Enable Composite"
 msgstr ""
 
 #: ../src/modules/conf_engine/e_int_config_engine.c:102
-#, fuzzy
 msgid "Default Engine"
-msgstr "Standardskrivbord"
+msgstr ""
 
 #. pop dialog
 #: ../src/modules/conf_engine/e_int_config_engine.c:131
@@ -4178,15 +3890,13 @@ msgstr "Kör kommando"
 
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:110
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:162
-#, fuzzy
 msgid "Maximum Number of Matched Apps to List"
-msgstr "Maximalt antal Eaps i lista"
+msgstr ""
 
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:114
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:166
-#, fuzzy
 msgid "Maximum Number of Matched Exes to List"
-msgstr "Maximalt antal Exes i lista"
+msgstr ""
 
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:118
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:170
@@ -4224,9 +3934,8 @@ msgid "%1.2f"
 msgstr "%1.2f"
 
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:185
-#, fuzzy
 msgid "Terminal Settings"
-msgstr "Allmänt"
+msgstr ""
 
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:186
 msgid "Terminal Command (CTRL+RETURN to utilize)"
@@ -4290,9 +3999,8 @@ msgid "Run Command"
 msgstr "Kör kommando"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:60
-#, fuzzy
 msgid "Core"
-msgstr "Stäng"
+msgstr ""
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:61
 msgid "Title Bar"
@@ -4391,18 +4099,16 @@ msgid "List Item"
 msgstr "Listobjekt"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:94
-#, fuzzy
 msgid "Filemanager"
-msgstr "Test filhanterare"
+msgstr ""
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:95
 msgid "Typebuf"
 msgstr ""
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:97
-#, fuzzy
 msgid "Desktop Icon"
-msgstr "Skrivbordslås"
+msgstr ""
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:103
 msgid "Small Styled"
@@ -4429,14 +4135,13 @@ msgid "Really Big"
 msgstr ""
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:292
-#, fuzzy, c-format
+#, c-format
 msgid "%d pixels"
-msgstr "%2.0f pixlar"
+msgstr ""
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:447
-#, fuzzy
 msgid "Enable Custom Font Classes"
-msgstr "Ikonklass"
+msgstr ""
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:454
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:640
@@ -4450,9 +4155,8 @@ msgid "Basic preview text: 123: 我的天空！"
 msgstr ""
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:624
-#, fuzzy
 msgid "Font Classes"
-msgstr "Ikonklass"
+msgstr ""
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:633
 msgid "Enable Font Class"
@@ -4489,14 +4193,12 @@ msgid "Advanced Preview Text.. 我真的会写中文"
 msgstr ""
 
 #: ../src/modules/conf_icon_theme/e_int_config_icon_themes.c:56
-#, fuzzy
 msgid "Icon Theme Settings"
-msgstr "Buffertinställningar"
+msgstr ""
 
 #: ../src/modules/conf_icon_theme/e_int_config_icon_themes.c:287
-#, fuzzy
 msgid "Icon Themes"
-msgstr "Ikon tema"
+msgstr ""
 
 #: ../src/modules/conf_icon_theme/e_mod_main.c:35
 msgid "Icon Theme"
@@ -4504,28 +4206,24 @@ msgstr "Ikon tema"
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:109
 #: ../src/modules/conf_imc/e_mod_main.c:35
-#, fuzzy
 msgid "Input Method Settings"
-msgstr "Inmatningsmetoder"
+msgstr ""
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:297
-#, fuzzy
 msgid "Input Method Selector"
-msgstr "Inmatningsfel"
+msgstr ""
 
 #. Disable imc checkbox
 #: ../src/modules/conf_imc/e_int_config_imc.c:300
 #: ../src/modules/conf_imc/e_int_config_imc.c:894
-#, fuzzy
 msgid "Use No Input Method"
-msgstr "Inmatningsmetoder"
+msgstr ""
 
 #. Configure imc button
 #: ../src/modules/conf_imc/e_int_config_imc.c:305
 #: ../src/modules/conf_imc/e_int_config_imc.c:961
-#, fuzzy
 msgid "Setup Selected Input Method"
-msgstr "Inmatningsmetoder"
+msgstr ""
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:901
 msgid "New"
@@ -4536,65 +4234,50 @@ msgid "Import..."
 msgstr ""
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:908
-#, fuzzy
 msgid "Input Method Parameters"
-msgstr "Inmatningsfel"
+msgstr ""
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:918
-#, fuzzy
 msgid "Execute Command"
-msgstr "Kör kommando"
+msgstr ""
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:925
-#, fuzzy
 msgid "Setup Command"
-msgstr "Kör kommando"
+msgstr ""
 
 #: ../src/modules/conf_imc/e_int_config_imc.c:934
 msgid "Exported Environment Variables"
 msgstr ""
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:66
-#, fuzzy
 msgid "Select an Input Method Settings..."
-msgstr "Konfiguration av modulen Start"
+msgstr ""
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:281
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:296
-#, fuzzy
 msgid "Input Method Config Import Error"
-msgstr "Inmatningsfel"
+msgstr ""
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:282
-#, fuzzy
 msgid ""
 "Enlightenment was unable to import the configuration.<br><br>Are you sure "
 "this is really a valid configuration?"
 msgstr ""
-"Enlightenment kunde inte köra programmet:\n"
-"\n"
-"%s\n"
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:297
-#, fuzzy
 msgid ""
 "Enlightenment was unable to import the configuration<br>due to a copy error."
 msgstr ""
-"Enlightenment kunde inte köra programmet:\n"
-"\n"
-"%s\n"
 
 #: ../src/modules/conf_imc/e_mod_main.c:34
 #: ../src/modules/conf_intl/e_mod_main.c:34
 #: ../src/modules/wizard/page_010.c:140
-#, fuzzy
 msgid "Language"
-msgstr "Meny"
+msgstr ""
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:37
-#, fuzzy
 msgid "Interaction Settings"
-msgstr "Bläddringsinställningar"
+msgstr ""
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:94
 msgid "Thumbscroll"
@@ -4619,44 +4302,40 @@ msgid "Threshold for for applying drag momentum"
 msgstr ""
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f pixels/sec"
-msgstr "%4.0f pixlar/sek"
+msgstr ""
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:114
 msgid "Friction slowdown"
 msgstr ""
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:117
-#, fuzzy, c-format
+#, c-format
 msgid "%1.2f sec"
-msgstr "%1.1f sek"
+msgstr ""
 
 #: ../src/modules/conf_interaction/e_mod_main.c:34
 #: ../src/modules/conf_keybindings/e_mod_main.c:34
 #: ../src/modules/conf_mousebindings/e_mod_main.c:34
 #: ../src/modules/conf_mouse/e_mod_main.c:34
 #: ../src/modules/mixer/app_mixer.c:288 ../src/modules/mixer/app_mixer.c:306
-#, fuzzy
 msgid "Input"
-msgstr "Infälld"
+msgstr ""
 
 #: ../src/modules/conf_interaction/e_mod_main.c:35
-#, fuzzy
 msgid "Interaction"
-msgstr "Rotation"
+msgstr ""
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:583
 #: ../src/modules/conf_intl/e_mod_main.c:35
-#, fuzzy
 msgid "Language Settings"
-msgstr "Meny"
+msgstr ""
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:899
 #: ../src/modules/conf_intl/e_int_config_intl.c:976
-#, fuzzy
 msgid "Language Selector"
-msgstr "Tema"
+msgstr ""
 
 #. Locale selector
 #: ../src/modules/conf_intl/e_int_config_intl.c:949
@@ -4666,9 +4345,8 @@ msgstr ""
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:950
 #: ../src/modules/conf_intl/e_int_config_intl.c:1028
-#, fuzzy
 msgid "Locale"
-msgstr "Kan inte låsa"
+msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:6
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:10
@@ -4695,9 +4373,8 @@ msgid "Add Key"
 msgstr "Lägg till"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:235
-#, fuzzy
 msgid "Delete Key"
-msgstr "Ta bort"
+msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:239
 msgid "Modify Key"
@@ -4705,14 +4382,12 @@ msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:243
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:311
-#, fuzzy
 msgid "Delete All"
-msgstr "Ta bort"
+msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:247
-#, fuzzy
 msgid "Restore Default Bindings"
-msgstr "Ta bort"
+msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:252
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
@@ -4721,14 +4396,12 @@ msgstr "Händelse"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:259
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:328
-#, fuzzy
 msgid "Action Params"
-msgstr "Händelse :"
+msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:927
-#, fuzzy
 msgid "Key Binding Sequence"
-msgstr "Inställningar för kortkommandon"
+msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1140
 msgid "Binding Key Error"
@@ -4737,8 +4410,9 @@ msgstr ""
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1141
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>%"
-"s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1287
@@ -4770,21 +4444,18 @@ msgstr "Meny"
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:101
 #: ../src/modules/conf_menus/e_int_config_menus.c:160
-#, fuzzy
 msgid "Main Menu Settings"
-msgstr "Meny"
+msgstr ""
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:102
 #: ../src/modules/conf_menus/e_int_config_menus.c:161
-#, fuzzy
 msgid "Show Favorites In Main Menu"
-msgstr "Visa favoritprogramsmenyn"
+msgstr ""
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:105
 #: ../src/modules/conf_menus/e_int_config_menus.c:164
-#, fuzzy
 msgid "Show Applications In Main Menu"
-msgstr "(Inga program)"
+msgstr ""
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:111
 #: ../src/modules/conf_menus/e_int_config_menus.c:170
@@ -4853,108 +4524,93 @@ msgid "Click Drag Timeout"
 msgstr "Tidsgräns för klicka och drag"
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:208
-#, fuzzy, c-format
+#, c-format
 msgid "%2.2f seconds"
-msgstr "%2.1f sekunder"
+msgstr ""
 
 #: ../src/modules/conf_mime/e_int_config_mime.c:64
 #: ../src/modules/conf_mime/e_mod_main.c:35
-#, fuzzy
 msgid "File Icons"
-msgstr "Fil info:"
+msgstr ""
 
 #: ../src/modules/conf_mime/e_int_config_mime.c:196
-#, fuzzy
 msgid "File Types"
-msgstr "Fil:"
+msgstr ""
 
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:69
-#, fuzzy
 msgid "File Icon"
-msgstr "Fil info:"
+msgstr ""
 
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:137
-#, fuzzy
 msgid "Mime:"
-msgstr "Maximera"
+msgstr ""
 
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Use Generated Thumbnail"
 msgstr ""
 
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:150
-#, fuzzy
 msgid "Use Theme Icon"
-msgstr "Ikon tema"
+msgstr ""
 
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:153
 msgid "Use Edje File"
 msgstr ""
 
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:156
-#, fuzzy
 msgid "Use Image"
-msgstr "Sida vid sida"
+msgstr ""
 
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:159
-#, fuzzy
 msgid "Use Default"
-msgstr "Standardskrivbord"
+msgstr ""
 
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:270
-#, fuzzy
 msgid "Select an Edj File"
-msgstr "Välj en ikon"
+msgstr ""
 
 #. Setup Entry in Config Panel
 #: ../src/modules/conf_mime/e_mod_main.c:34
 #: ../src/modules/fileman/e_mod_main.c:46
 #: ../src/modules/fileman/e_mod_main.c:224
-#, fuzzy
 msgid "Files"
-msgstr "Fil:"
+msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
-"or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
-"highlight> to abort."
+"or roll a wheel, to assign mouse binding.<br>Press "
+"<hilight>Escape</highlight> to abort."
 msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:112
-#, fuzzy
 msgid "Mouse Binding Settings"
-msgstr "Inställningar för kortkommandon"
+msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:295
 #: ../src/modules/conf_mousebindings/e_mod_main.c:35
-#, fuzzy
 msgid "Mouse Bindings"
-msgstr "Kortkommando"
+msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:301
-#, fuzzy
 msgid "Add Binding"
-msgstr "Kortkommando"
+msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:303
-#, fuzzy
 msgid "Delete Binding"
-msgstr "Nästa"
+msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:307
-#, fuzzy
 msgid "Modify Binding"
-msgstr "Kortkommando"
+msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:315
 msgid "Restore Mouse and Wheel Binding Defaults"
 msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:335
-#, fuzzy
 msgid "Action Context"
-msgstr "Omgivning"
+msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:337
 msgid "Any"
@@ -4981,9 +4637,8 @@ msgid "Manager"
 msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:1296
-#, fuzzy
 msgid "Mouse Binding Sequence"
-msgstr "Inställningar för kortkommandon"
+msgstr ""
 
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:45
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:137
@@ -4993,15 +4648,13 @@ msgstr "Muspekare"
 
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:129
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:209
-#, fuzzy
 msgid "Show Cursor"
-msgstr "Muspekare"
+msgstr ""
 
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:213
-#, fuzzy
 msgid "Idle Cursor"
-msgstr "Muspekare"
+msgstr ""
 
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:141
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:221
@@ -5023,33 +4676,28 @@ msgstr "Muspekare"
 
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:36
 #: ../src/modules/conf_mouse/e_mod_main.c:35
-#, fuzzy
 msgid "Mouse Settings"
-msgstr "Moduler"
+msgstr ""
 
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:97
-#, fuzzy
 msgid "Mouse Hand"
-msgstr "Kortkommando"
+msgstr ""
 
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:105
-#, fuzzy
 msgid "Mouse Acceleration"
-msgstr "Modulhändelser"
+msgstr ""
 
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:107
-#, fuzzy
 msgid "Acceleration"
-msgstr "Accelerera"
+msgstr ""
 
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:113
 msgid "Threshold"
 msgstr ""
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:62
-#, fuzzy
 msgid "Search Path Settings"
-msgstr "Uppstart"
+msgstr ""
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:73
 msgid "Data"
@@ -5157,28 +4805,23 @@ msgid "Performance"
 msgstr "Prestanda"
 
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:54
-#, fuzzy
 msgid "Profile Selector"
-msgstr "Tema"
+msgstr ""
 
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:104
-#, fuzzy
 msgid "Available Profiles"
-msgstr "Tillgängliga moduler"
+msgstr ""
 
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:208
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "profile?"
 msgstr ""
-"Du har valt att ta bort \"%s\".<br><br>Är du säker på att du vill ta bort "
-"dennapanelen?"
 
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:211
-#, fuzzy
 msgid "Are you sure you want to delete this profile?"
-msgstr "Är du säker på att du vill ta bort denna panelen?"
+msgstr ""
 
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:258
 msgid "Add New Profile"
@@ -5193,23 +4836,20 @@ msgid "Clone Current Profile"
 msgstr ""
 
 #: ../src/modules/conf_profiles/e_mod_main.c:22
-#, fuzzy
 msgid "Profiles"
-msgstr "Fil:"
+msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:41
-#, fuzzy
 msgid "Scaling Settings"
-msgstr "Rulla"
+msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:105
 msgid "Scale with DPI"
 msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:108
-#, fuzzy
 msgid "Relative"
-msgstr "Höj"
+msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:109
 msgid "Base DPI to scale relative to"
@@ -5217,9 +4857,9 @@ msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:111
 #: ../src/modules/conf_scale/e_int_config_scale.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f DPI"
-msgstr "%1.0f F"
+msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:113
 #, c-format
@@ -5231,35 +4871,31 @@ msgid "Policy"
 msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:164
-#, fuzzy
 msgid "Don't Scale"
-msgstr "Storlek"
+msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:166
 msgid "Scale relative to screen DPI"
 msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:168
-#, fuzzy
 msgid "Custom scaling factor"
-msgstr "Anpassade inställningar"
+msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:170
-#, fuzzy
 msgid "Minimum"
-msgstr "Minimal storlek"
+msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:172
 #: ../src/modules/conf_scale/e_int_config_scale.c:176
 #: ../src/modules/conf_scale/e_int_config_scale.c:188
-#, fuzzy, c-format
+#, c-format
 msgid "%1.2f times"
-msgstr "%1.0f filer"
+msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:174
-#, fuzzy
 msgid "Maximum"
-msgstr "Maximal storlek"
+msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:180
 msgid "Scaling Factors"
@@ -5271,25 +4907,21 @@ msgid "Base DPI (Currently %i DPI)"
 msgstr ""
 
 #: ../src/modules/conf_scale/e_int_config_scale.c:186
-#, fuzzy
 msgid "Personal scaling factor"
-msgstr "Personliga bakgrunder"
+msgstr ""
 
 #: ../src/modules/conf_scale/e_mod_main.c:35
-#, fuzzy
 msgid "Scaling"
-msgstr "Stapla"
+msgstr ""
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:49
-#, fuzzy
 msgid "Screen Saver Settings"
-msgstr "Rulla"
+msgstr ""
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:112
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:144
-#, fuzzy
 msgid "Enable X screensaver"
-msgstr "Aktivera skärmsläckare"
+msgstr ""
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:115
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:147
@@ -5298,19 +4930,16 @@ msgstr ""
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:117
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:149
-#, fuzzy
 msgid "Time until X screensaver starts"
-msgstr "Tid innan skärmsläckare startar"
+msgstr ""
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:155
-#, fuzzy
 msgid "Time until X screensaver alternates"
-msgstr "Tid innan skärmsläckare startar"
+msgstr ""
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:162
-#, fuzzy
 msgid "Blanking"
-msgstr "Enkel"
+msgstr ""
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:166
 msgid "Preferred"
@@ -5325,18 +4954,16 @@ msgid "Exposure Events"
 msgstr ""
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:176
-#, fuzzy
 msgid "Allow"
-msgstr "Långsam"
+msgstr ""
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:178
 msgid "Don't Allow"
 msgstr ""
 
 #: ../src/modules/conf_screensaver/e_mod_main.c:35
-#, fuzzy
 msgid "Screen Saver"
-msgstr "Skärmområde"
+msgstr ""
 
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:71
 msgid "Configured Shelves"
@@ -5356,9 +4983,8 @@ msgid "Startup Settings"
 msgstr "Uppstart"
 
 #: ../src/modules/conf_startup/e_int_config_startup.c:334
-#, fuzzy
 msgid "Show Splash Screen on Login"
-msgstr "Visa animation vid start"
+msgstr ""
 
 #: ../src/modules/conf_startup/e_mod_main.c:35
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:134
@@ -5378,28 +5004,24 @@ msgid " Online..."
 msgstr ""
 
 #: ../src/modules/conf_theme/e_int_config_theme.c:1002
-#, fuzzy
 msgid "Theme Categories"
-msgstr "Bakgrund från tema"
+msgstr ""
 
 #: ../src/modules/conf_theme/e_int_config_theme.c:1020
 msgid "Assign"
 msgstr ""
 
 #: ../src/modules/conf_theme/e_int_config_theme.c:1023
-#, fuzzy
 msgid "Clear"
-msgstr "Nära"
+msgstr ""
 
 #: ../src/modules/conf_theme/e_int_config_theme.c:1026
-#, fuzzy
 msgid "Clear All"
-msgstr "Ta bort"
+msgstr ""
 
 #: ../src/modules/conf_theme/e_int_config_theme_import.c:67
-#, fuzzy
 msgid "Select a Theme..."
-msgstr "Välj en bild..."
+msgstr ""
 
 #: ../src/modules/conf_theme/e_int_config_theme_import.c:277
 #: ../src/modules/conf_theme/e_int_config_theme_import.c:286
@@ -5413,22 +5035,16 @@ msgid ""
 msgstr ""
 
 #: ../src/modules/conf_theme/e_int_config_theme_import.c:287
-#, fuzzy
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
 msgstr ""
-"Enlightenment kunde inte köra programmet:\n"
-"\n"
-"%s\n"
 
 #: ../src/modules/conf_theme/e_int_config_theme_web.c:127
-#, fuzzy
 msgid "Exchange themes"
-msgstr "Ikon tema"
+msgstr ""
 
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:44
-#, fuzzy
 msgid "Transition Settings"
-msgstr "Position"
+msgstr ""
 
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:126
 msgid "Events"
@@ -5439,15 +5055,13 @@ msgid "Desk Change"
 msgstr ""
 
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:136
-#, fuzzy
 msgid "Background Change"
-msgstr "Bakgrund"
+msgstr ""
 
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:144
 #: ../src/modules/conf_transitions/e_mod_main.c:35
-#, fuzzy
 msgid "Transitions"
-msgstr "Transience för"
+msgstr ""
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper.c:108
 msgid "Wallpaper Settings"
@@ -5502,9 +5116,8 @@ msgid "Color 2:"
 msgstr ""
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:164
-#, fuzzy
 msgid "Fill Options"
-msgstr "Alternativ"
+msgstr ""
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
@@ -5531,17 +5144,12 @@ msgid "Radial"
 msgstr ""
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:369
-#, fuzzy
 msgid "Gradient Creation Error"
-msgstr "Programexekveringsfel"
+msgstr ""
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:370
-#, fuzzy
 msgid "For some reason, Enlightenment was unable to create a gradient."
 msgstr ""
-"Enlightenment kunde inte köra programmet:\n"
-"\n"
-"%s\n"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:106
 msgid "Select a Picture..."
@@ -5589,28 +5197,19 @@ msgid "Picture Import Error"
 msgstr ""
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:505
-#, fuzzy
 msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr ""
-"Enlightenment kunde inte köra programmet:\n"
-"\n"
-"%s\n"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:578
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:595
-#, fuzzy
 msgid "Wallpaper Import Error"
-msgstr "Använd bakgrund på"
+msgstr ""
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:579
-#, fuzzy
 msgid ""
 "Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr ""
-"Enlightenment kunde inte köra programmet:\n"
-"\n"
-"%s\n"
 
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:596
 msgid ""
@@ -5771,24 +5370,20 @@ msgid "Decelerate"
 msgstr "Deacceleration"
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:242
-#, fuzzy
 msgid "Window Border"
-msgstr "Fönsterroll"
+msgstr ""
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:245
-#, fuzzy
 msgid "Prefer user defined icon"
-msgstr "Användardefinierade händelser"
+msgstr ""
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:247
-#, fuzzy
 msgid "Prefer application provided icon"
-msgstr "Använd applikationens egen ikon"
+msgstr ""
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:251
-#, fuzzy
 msgid "Internal Windows"
-msgstr "Under fönster"
+msgstr ""
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:253
 msgid "Always remember internal windows"
@@ -5881,9 +5476,8 @@ msgstr "Fönsterfokus"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:51
 #: ../src/modules/conf_window_manipulation/e_mod_main.c:35
-#, fuzzy
 msgid "Window Geometry"
-msgstr "Flytta fönster"
+msgstr ""
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:123
 msgid "Resistance"
@@ -5910,25 +5504,21 @@ msgid "Keyboard move and resize"
 msgstr ""
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:141
-#, fuzzy
 msgid "Automatically accept changes after:"
-msgstr "Rulla innehåll automatiskt"
+msgstr ""
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
-#, fuzzy
 msgid "Move by:"
-msgstr "Flytta upp"
+msgstr ""
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:149
-#, fuzzy
 msgid "Resize by:"
-msgstr "Resistens"
+msgstr ""
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:44
 #: ../src/modules/conf_window_manipulation/e_mod_main.c:37
-#, fuzzy
 msgid "Window Maximize Policy"
-msgstr "Maximeringspolicy"
+msgstr ""
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:142
@@ -5950,9 +5540,8 @@ msgid "Maximize Policy"
 msgstr "Maximeringspolicy"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:150
-#, fuzzy
 msgid "Maximize Directions"
-msgstr "Maximera horisontalt"
+msgstr ""
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:156
 msgid "Both"
@@ -5963,15 +5552,13 @@ msgid "Allow window manipulation"
 msgstr ""
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
-#, fuzzy
 msgid "Automatically move/resize windows on shelf autohide"
-msgstr "Höj fönster under musen automatiskt"
+msgstr ""
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:45
 #: ../src/modules/conf_window_manipulation/e_mod_main.c:36
-#, fuzzy
 msgid "Window Stacking"
-msgstr "Skymma fönster"
+msgstr ""
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:116
 #: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:134
@@ -6006,58 +5593,48 @@ msgstr "Höj vid klick för fokus"
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:29
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:92
 #: ../src/modules/conf_window_remembers/e_mod_main.c:17
-#, fuzzy
 msgid "Window Remembers"
-msgstr "Fönsterminne"
+msgstr ""
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:94
-#, fuzzy
 msgid "Delete Remember(s)"
-msgstr "Minne"
+msgstr ""
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:104
-#, fuzzy
 msgid "Details"
-msgstr "Standardskrivbord"
+msgstr ""
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:107
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:268
-#, fuzzy
 msgid "<No Name>"
-msgstr "Inget namn!!!"
+msgstr ""
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:110
-#, fuzzy
 msgid "Class:"
-msgstr "Klass"
+msgstr ""
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:112
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:270
-#, fuzzy
 msgid "<No Class>"
-msgstr "Ikonklass"
+msgstr ""
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:115
-#, fuzzy
 msgid "Title:"
-msgstr "Titel"
+msgstr ""
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:117
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:272
-#, fuzzy
 msgid "<No Title>"
-msgstr "Titel"
+msgstr ""
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:120
-#, fuzzy
 msgid "Role:"
-msgstr "Roll"
+msgstr ""
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:122
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:274
-#, fuzzy
 msgid "<No Role>"
-msgstr "<Ingen>"
+msgstr ""
 
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:55
 msgid "Window List Settings"
@@ -6068,14 +5645,12 @@ msgid "Show iconified windows"
 msgstr "Visa minimerade fönster"
 
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:134
-#, fuzzy
 msgid "Show iconified windows from other desks"
-msgstr "Visa fönster från andra skrivbord"
+msgstr ""
 
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:136
-#, fuzzy
 msgid "Show iconified windows from other screens"
-msgstr "Visa fönster från andra skärmar"
+msgstr ""
 
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:138
 msgid "Show windows from other desks"
@@ -6086,7 +5661,7 @@ msgid "Show windows from other screens"
 msgstr "Visa fönster från andra skärmar"
 
 #. REMOVED AS ADVANCED DOESN"T FIT INTO 640x480 WITH IT
-#.
+#. 
 #. of = e_widget_framelist_add(evas, _("General Settings"), 0);
 #. ob = e_widget_check_add(evas, _("Show iconified windows"), &(cfdata->list_show_iconified));
 #. e_widget_framelist_object_append(of, ob);
@@ -6095,7 +5670,7 @@ msgstr "Visa fönster från andra skärmar"
 #. ob = e_widget_check_add(evas, _("Show windows from other screens"), &(cfdata->list_show_other_screen_windows));
 #. e_widget_framelist_object_append(of, ob);
 #. e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
-#.
+#. 
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:144
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:218
 msgid "Selection Settings"
@@ -6145,29 +5720,24 @@ msgid "Cpufreq"
 msgstr "Cpufreq"
 
 #: ../src/modules/cpufreq/e_mod_main.c:185
-#, fuzzy
 msgid "Fast (4 ticks)"
-msgstr "Snabb (0,5 sek)"
+msgstr ""
 
 #: ../src/modules/cpufreq/e_mod_main.c:192
-#, fuzzy
 msgid "Medium (8 ticks)"
-msgstr "Medium (1 sek)"
+msgstr ""
 
 #: ../src/modules/cpufreq/e_mod_main.c:199
-#, fuzzy
 msgid "Normal (32 ticks)"
-msgstr "Normal (2 sek)"
+msgstr ""
 
 #: ../src/modules/cpufreq/e_mod_main.c:206
-#, fuzzy
 msgid "Slow (64 ticks)"
-msgstr "Långsam (5 sek)"
+msgstr ""
 
 #: ../src/modules/cpufreq/e_mod_main.c:213
-#, fuzzy
 msgid "Very Slow (256 ticks)"
-msgstr "Väldigt långsam (30 sek)"
+msgstr ""
 
 #: ../src/modules/cpufreq/e_mod_main.c:228
 msgid "Manual"
@@ -6197,9 +5767,8 @@ msgid "Powersaving policy"
 msgstr ""
 
 #: ../src/modules/cpufreq/e_mod_main.c:283
-#, fuzzy
 msgid "Automatic powersaving"
-msgstr "Automatisk lås"
+msgstr ""
 
 #: ../src/modules/cpufreq/e_mod_main.c:302
 #, c-format
@@ -6251,9 +5820,8 @@ msgstr ""
 "setfreq verktyg."
 
 #: ../src/modules/dropshadow/e_mod_config.c:40
-#, fuzzy
 msgid "Dropshadow Settings"
-msgstr "Konfigurationsdialog"
+msgstr ""
 
 #: ../src/modules/dropshadow/e_mod_config.c:108
 msgid "Quality"
@@ -6312,9 +5880,8 @@ msgid "Very Near"
 msgstr "Väldigt nära"
 
 #: ../src/modules/dropshadow/e_mod_config.c:145
-#, fuzzy
 msgid "Extremely Near"
-msgstr "Väldigt nära"
+msgstr ""
 
 #: ../src/modules/dropshadow/e_mod_config.c:147
 msgid "Underneath"
@@ -6349,7 +5916,6 @@ msgid "Run Command Dialog"
 msgstr "Kör kommando"
 
 #: ../src/modules/fileman/e_mod_main.c:276
-#, fuzzy
 msgid ""
 "Fileman Module Settings data needed upgrading. Your old configuration<br>has "
 "been wiped and a new set of defaults initialized. This<br>will happen "
@@ -6359,13 +5925,8 @@ msgid ""
 "defaults will fix<br>that by adding it in. You can re-configure things now "
 "to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr ""
-"Konfigurationen behöver att uppdateras. Din gamla konfiguration<br>har "
-"tagits bort och en ny standard konfiguration har skapats. Detta<br>kommer "
-"att hända regelbundet under utvecklingen så rapportera inte<br>detta som ett "
-"fel. Du kan nu konfigurera allt som du vill ha det.<br>Beklagar detta.<br>"
 
 #: ../src/modules/fileman/e_mod_main.c:289
-#, fuzzy
 msgid ""
 "Your Fileman Module configuration is NEWER than Fileman Module version. This "
 "is very<br>strange. This should not happen unless you downgraded<br>the "
@@ -6374,27 +5935,18 @@ msgid ""
 "precaution your configuration has been now restored to<br>defaults. Sorry "
 "for the inconvenience.<br>"
 msgstr ""
-"Din konfiguration är NYARE än Enlightenment. Detta är jätte<br>konstigt. "
-"Detta ska inte hända om inte du har nergraderat<br>Enlightenment eller "
-"kopierat konfigurationen från ett ställe<br>där det finns en nyare version "
-"av Enlightenment installerat.<br>Detta är inte bra och som en "
-"säkerhetsåtgärd så har din<br>konfiguration återställts till standard. "
-"Beklagar detta.<br>"
 
 #: ../src/modules/fileman/e_mod_main.c:358
-#, fuzzy
 msgid "Fileman Settings Updated"
-msgstr "Meny"
+msgstr ""
 
 #: ../src/modules/fileman/e_mod_config.c:88
-#, fuzzy
 msgid "Fileman Settings"
-msgstr "Meny"
+msgstr ""
 
 #: ../src/modules/fileman/e_mod_config.c:180
-#, fuzzy
 msgid "Custom Grid Icons"
-msgstr "Anpassa ikoner automatiskt"
+msgstr ""
 
 #: ../src/modules/fileman/e_mod_config.c:183
 msgid "Custom Smart Grid Icons"
@@ -6417,98 +5969,82 @@ msgid "Use Single Click"
 msgstr ""
 
 #: ../src/modules/fileman/e_mod_config.c:205
-#, fuzzy
 msgid "Show Icon Extension"
-msgstr "Visa ikonens beskrivning"
+msgstr ""
 
 #: ../src/modules/fileman/e_mod_config.c:208
 msgid "Show Full Path"
 msgstr ""
 
 #: ../src/modules/fileman/e_mod_config.c:211
-#, fuzzy
 msgid "Show Desktop Icons"
-msgstr "Visa skrivbordet"
+msgstr ""
 
 #: ../src/modules/fileman/e_mod_config.c:214
-#, fuzzy
 msgid "Show Toolbar"
-msgstr "Visa följeslagare"
+msgstr ""
 
 #: ../src/modules/fileman/e_mod_config.c:217
-#, fuzzy
 msgid "Show HAL icons on desktop"
-msgstr "Visa fönster från alla skrivbord"
+msgstr ""
 
 #: ../src/modules/fileman/e_fwin.c:697
-#, fuzzy
 msgid "Go to Parent Directory"
-msgstr "Gå upp en katalog"
+msgstr ""
 
 #: ../src/modules/fileman/e_fwin.c:723 ../src/modules/fileman/e_fwin.c:1424
 msgid "Open"
 msgstr "Öppna"
 
 #: ../src/modules/fileman/e_fwin.c:730 ../src/modules/fileman/e_fwin.c:1422
-#, fuzzy
 msgid "Open with..."
-msgstr "Öppna med"
+msgstr ""
 
 #: ../src/modules/fileman/e_fwin.c:1440
-#, fuzzy
 msgid "Specific Applications"
-msgstr "Applikation"
+msgstr ""
 
 #: ../src/modules/fileman/e_fwin.c:1511
-#, fuzzy
 msgid "Custom Command"
-msgstr "Kör kommando"
+msgstr ""
 
 #: ../src/modules/gadman/e_mod_config.c:58
-#, fuzzy
 msgid "Gadgets Manager"
-msgstr "Moduler"
+msgstr ""
 
 #. Background mode
 #: ../src/modules/gadman/e_mod_config.c:147
-#, fuzzy
 msgid "Background Mode"
-msgstr "Bakgrunder"
+msgstr ""
 
 #. Background filemanager chooser
 #: ../src/modules/gadman/e_mod_config.c:152
 #: ../src/modules/gadman/e_mod_config.c:184
-#, fuzzy
 msgid "Custom Image"
-msgstr "Klipp ut"
+msgstr ""
 
 #. Custom Color
 #: ../src/modules/gadman/e_mod_config.c:156
 #: ../src/modules/gadman/e_mod_config.c:177
-#, fuzzy
 msgid "Custom Color"
-msgstr "Klipp ut"
+msgstr ""
 
 #: ../src/modules/gadman/e_mod_config.c:160
-#, fuzzy
 msgid "Transparent"
-msgstr "Transience"
+msgstr ""
 
 #. Animations
 #: ../src/modules/gadman/e_mod_config.c:167
-#, fuzzy
 msgid "Animations"
-msgstr "Visa geometriinformation"
+msgstr ""
 
 #: ../src/modules/gadman/e_mod_gadman.c:678
-#, fuzzy
 msgid "Free"
-msgstr "Avlägsen"
+msgstr ""
 
 #: ../src/modules/gadman/e_mod_gadman.c:710
-#, fuzzy
 msgid "Always on desktop"
-msgstr "Alltid överst"
+msgstr ""
 
 #: ../src/modules/gadman/e_mod_gadman.c:720
 msgid "On top pressing"
@@ -6519,9 +6055,8 @@ msgid "Behavior"
 msgstr "Beteende"
 
 #: ../src/modules/gadman/e_mod_gadman.c:749
-#, fuzzy
 msgid "Add other gadgets"
-msgstr "Lägg till"
+msgstr ""
 
 #: ../src/modules/gadman/e_mod_main.c:27 ../src/modules/gadman/e_mod_main.c:83
 #: ../src/modules/gadman/e_mod_main.c:119
@@ -6531,9 +6066,8 @@ msgstr "Moduler"
 
 #: ../src/modules/gadman/e_mod_main.c:83
 #: ../src/modules/gadman/e_mod_main.c:119
-#, fuzzy
 msgid "Show/hide gadgets"
-msgstr "Dölj inte moduler"
+msgstr ""
 
 #: ../src/modules/winlist/e_mod_main.c:48
 #: ../src/modules/winlist/e_mod_main.c:50
@@ -6557,9 +6091,8 @@ msgid "Select a window"
 msgstr "Välj ett fönster"
 
 #: ../src/modules/ibar/e_mod_config.c:55
-#, fuzzy
 msgid "IBar Settings"
-msgstr "Grundinställningar"
+msgstr ""
 
 #: ../src/modules/ibar/e_mod_config.c:101
 msgid "Selected Bar Source"
@@ -6572,32 +6105,27 @@ msgstr "Ikonbeskrivning"
 #: ../src/modules/ibar/e_mod_config.c:123
 #: ../src/modules/ibox/e_mod_config.c:94
 msgid "Show Icon Label"
-msgstr "Visa ikonens beskrivning"
+msgstr "Visa ikonetikett"
 
 #: ../src/modules/ibar/e_mod_config.c:129
-#, fuzzy
 msgid "Display App Name"
-msgstr "Visa Eap namn"
+msgstr ""
 
 #: ../src/modules/ibar/e_mod_config.c:133
-#, fuzzy
 msgid "Display App Comment"
-msgstr "Visa Eap kommentar"
+msgstr ""
 
 #: ../src/modules/ibar/e_mod_config.c:137
-#, fuzzy
 msgid "Display App Generic"
-msgstr "Visa Eap allmän information"
+msgstr ""
 
 #: ../src/modules/ibar/e_mod_config.c:167
-#, fuzzy
 msgid "Create new IBar source"
-msgstr "Skapa ny källa till iBar"
+msgstr ""
 
 #: ../src/modules/ibar/e_mod_config.c:168
-#, fuzzy
 msgid "Enter a name for this new source:"
-msgstr "Ange namn för den nya källan"
+msgstr ""
 
 #: ../src/modules/ibar/e_mod_config.c:183
 #, c-format
@@ -6610,7 +6138,7 @@ msgstr ""
 
 #: ../src/modules/ibar/e_mod_config.c:187
 msgid "Are you sure you want to delete this bar source?"
-msgstr " Är du säker på att du vill ta bort denna källa?"
+msgstr "Är du säker på att du vill ta bort denna källa?"
 
 #: ../src/modules/ibar/e_mod_main.c:216
 msgid "IBar"
@@ -6625,24 +6153,20 @@ msgid "Remove Icon"
 msgstr "Ta bort ikon"
 
 #: ../src/modules/ibar/e_mod_main.c:829
-#, fuzzy
 msgid "Add An Icon"
-msgstr "Applikation"
+msgstr ""
 
 #: ../src/modules/ibar/e_mod_main.c:836
-#, fuzzy
 msgid "Create New Icon"
-msgstr "Skapa ikon"
+msgstr ""
 
 #: ../src/modules/ibar/e_mod_main.c:852
-#, fuzzy
 msgid "Add Application"
-msgstr "Applikation"
+msgstr ""
 
 #: ../src/modules/ibox/e_mod_config.c:48
-#, fuzzy
 msgid "IBox Settings"
-msgstr "Inloggningsruta"
+msgstr ""
 
 #: ../src/modules/ibox/e_mod_config.c:97
 msgid "Display Name"
@@ -6661,19 +6185,16 @@ msgid "Display Icon Name"
 msgstr "Visa ikonnamn"
 
 #: ../src/modules/ibox/e_mod_config.c:105
-#, fuzzy
 msgid "Display Border Caption"
-msgstr "Visa geometriinformation"
+msgstr ""
 
 #: ../src/modules/ibox/e_mod_config.c:130
-#, fuzzy
 msgid "Show windows from all screens"
-msgstr "Visa fönster från andra skärmar"
+msgstr ""
 
 #: ../src/modules/ibox/e_mod_config.c:135
-#, fuzzy
 msgid "Show windows from current screen"
-msgstr "Visa fönster från aktuell zon"
+msgstr ""
 
 #: ../src/modules/ibox/e_mod_config.c:144
 msgid "Show windows from all desktops"
@@ -6688,21 +6209,18 @@ msgid "IBox"
 msgstr "IBox"
 
 #: ../src/modules/pager/e_mod_config.c:69
-#, fuzzy
 msgid "Pager Settings"
-msgstr "Buffertinställningar"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:116
 #: ../src/modules/pager/e_mod_config.c:155
-#, fuzzy
 msgid "Flip desktop on mouse wheel"
-msgstr "Byt skrivbord när musen kommer till kanten på skärmen"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:119
 #: ../src/modules/pager/e_mod_config.c:158
-#, fuzzy
 msgid "Show desktop names"
-msgstr "Visa skrivbordet"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:124
 #: ../src/modules/pager/e_mod_config.c:198
@@ -6715,14 +6233,12 @@ msgid "Show popup on desktop change"
 msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:128
-#, fuzzy
 msgid "Show popup for urgent windows"
-msgstr "Visa minimerade fönster"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:162
-#, fuzzy
 msgid "Select and Slide button"
-msgstr "Välj en ikon"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:164
 #: ../src/modules/pager/e_mod_config.c:171
@@ -6730,18 +6246,17 @@ msgstr "Välj en ikon"
 #: ../src/modules/pager/e_mod_config.c:386
 #: ../src/modules/pager/e_mod_config.c:391
 #: ../src/modules/pager/e_mod_config.c:396
-#, fuzzy, c-format
+#, c-format
 msgid "Click to set"
-msgstr "Klicka för fokus"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:169
 msgid "Drag and Drop button"
 msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:176
-#, fuzzy
 msgid "Drag whole desktop"
-msgstr "Virtuellt skrivbord"
+msgstr ""
 
 #. TODO find better name
 #: ../src/modules/pager/e_mod_config.c:185
@@ -6756,20 +6271,17 @@ msgid "%.0f px"
 msgstr "%.0f px"
 
 #: ../src/modules/pager/e_mod_config.c:191
-#, fuzzy
 msgid "Resistance to dragging"
-msgstr "Resistent mot att dra fönster:"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:202
-#, fuzzy
 msgid "Popup pager height"
-msgstr "Popup hastighet"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:207
 #: ../src/modules/pager/e_mod_config.c:221
-#, fuzzy
 msgid "Popup speed"
-msgstr "Popup hastighet"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:209
 #: ../src/modules/pager/e_mod_config.c:223
@@ -6778,14 +6290,12 @@ msgid "%1.1f seconds"
 msgstr "%1.1f sekunder"
 
 #: ../src/modules/pager/e_mod_config.c:214
-#, fuzzy
 msgid "Urgent Window Settings"
-msgstr "Fönsterlista"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:215
-#, fuzzy
 msgid "Show popup on urgent window"
-msgstr "Visa minimerade fönster"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:218
 msgid "Popup on urgent window sticks on the screen"
@@ -6797,14 +6307,13 @@ msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:273
 msgid ""
-"Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
-"<br>Or <hilight>Del</hilight> to reset the button."
+"Please press a mouse button<br>Press <hilight>Escape</hilight> to "
+"abort.<br>Or <hilight>Del</hilight> to reset the button."
 msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:328
-#, fuzzy
 msgid "Attetion"
-msgstr "Händelse"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:329
 msgid ""
@@ -6816,57 +6325,49 @@ msgstr ""
 #: ../src/modules/pager/e_mod_config.c:388
 #: ../src/modules/pager/e_mod_config.c:393
 #: ../src/modules/pager/e_mod_config.c:398
-#, fuzzy, c-format
+#, c-format
 msgid "Button %i"
-msgstr "Knappar"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_main.c:2803
-#, fuzzy
 msgid "Show Pager Popup"
-msgstr "Visa popup"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_main.c:2809
 #: ../src/modules/pager/e_mod_main.c:2843
-#, fuzzy
 msgid "Popup Desk Right"
-msgstr "Skifta skrivbord höger"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_main.c:2810
 #: ../src/modules/pager/e_mod_main.c:2844
-#, fuzzy
 msgid "Popup Desk Left"
-msgstr "Skifta skrivbord vänster"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_main.c:2811
 #: ../src/modules/pager/e_mod_main.c:2845
-#, fuzzy
 msgid "Popup Desk Up"
-msgstr "Skifta skrivbord upp"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_main.c:2812
 #: ../src/modules/pager/e_mod_main.c:2846
-#, fuzzy
 msgid "Popup Desk Down"
-msgstr "Skifta skrivbord ner"
+msgstr ""
 
 #: ../src/modules/start/e_mod_main.c:110
 msgid "Start"
 msgstr "Start"
 
 #: ../src/modules/syscon/e_mod_main.c:34
-#, fuzzy
 msgid "System Control"
-msgstr "Ställ kontroller"
+msgstr ""
 
 #: ../src/modules/syscon/e_mod_main.c:55
-#, fuzzy
 msgid "System Controls"
-msgstr "Ställ kontroller"
+msgstr ""
 
 #: ../src/modules/temperature/e_mod_config.c:63
-#, fuzzy
 msgid "Temperature Settings"
-msgstr "Allmänt"
+msgstr ""
 
 #: ../src/modules/temperature/e_mod_config.c:249
 #: ../src/modules/temperature/e_mod_config.c:352
@@ -6982,24 +6483,20 @@ msgstr ""
 
 #. set up next/prev buttons
 #: ../src/modules/wizard/e_wizard.c:273
-#, fuzzy
 msgid "Welcome to Enlightenment"
-msgstr "Om Enlightenment"
+msgstr ""
 
 #: ../src/modules/wizard/page_010.c:141 ../src/modules/wizard/page_020.c:57
-#, fuzzy
 msgid "Select one"
-msgstr "Välj en ikon"
+msgstr ""
 
 #: ../src/modules/wizard/page_020.c:56
-#, fuzzy
 msgid "Profile"
-msgstr "Fil:"
+msgstr ""
 
 #: ../src/modules/wizard/page_020.c:120
-#, fuzzy
 msgid "Select a profile"
-msgstr "Välj en ikon"
+msgstr ""
 
 #: ../src/modules/wizard/page_030.c:73
 msgid ""
@@ -7009,116 +6506,96 @@ msgid ""
 msgstr ""
 
 #: ../src/modules/wizard/page_030.c:91
-#, fuzzy
 msgid "Select application menu"
-msgstr "Applikation"
+msgstr ""
 
 #: ../src/modules/wizard/page_030.c:108
-#, fuzzy
 msgid "System Default"
-msgstr "Standardskrivbord"
+msgstr ""
 
 #: ../src/modules/wizard/page_040.c:25
-#, fuzzy
 msgid "Launcher Bar"
-msgstr "Kör"
+msgstr ""
 
 #: ../src/modules/wizard/page_040.c:27
-#, fuzzy
 msgid "Select applications"
-msgstr "Applikation"
+msgstr ""
 
 #: ../src/modules/wizard/page_050.c:28
-#, fuzzy
 msgid "Desktop Files"
-msgstr "Skrivbordsbyte med mus"
+msgstr ""
 
 #: ../src/modules/wizard/page_050.c:32
-#, fuzzy
 msgid "No icons on desktop"
-msgstr "Visa fönster från alla skrivbord"
+msgstr ""
 
 #: ../src/modules/wizard/page_050.c:35
-#, fuzzy
 msgid "Enable desktop icons"
-msgstr "Visa skrivbordet"
+msgstr ""
 
 #: ../src/modules/wizard/page_060.c:28
-#, fuzzy
 msgid "Focus mode"
-msgstr "Fokus"
+msgstr ""
 
 #: ../src/modules/wizard/page_060.c:32
-#, fuzzy
 msgid "Click to focus windows"
-msgstr "Klicka för fokus"
+msgstr ""
 
 #: ../src/modules/wizard/page_060.c:35
 msgid "Mouse over focuses windows"
 msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:166
-#, fuzzy
 msgid "Capture"
-msgstr "Cpufreq"
+msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:168
 msgid "Playback"
 msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:294
-#, fuzzy
 msgid "Output"
-msgstr "Utdata"
+msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:367
-#, fuzzy
 msgid "Cards"
-msgstr "Skymt"
+msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:382 ../src/modules/mixer/conf_gadget.c:285
-#, fuzzy
 msgid "Channels"
-msgstr "Avbryt"
+msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:394
-#, fuzzy
 msgid "Card:"
-msgstr "Skymt"
+msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:398
-#, fuzzy
 msgid "Channel:"
-msgstr "Avbryt"
+msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:402
-#, fuzzy
 msgid "Type:"
-msgstr "Typ:"
+msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:406
 msgid "Left:"
 msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:411
-#, fuzzy
 msgid "Right:"
-msgstr "Ljus"
+msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:416 ../src/modules/mixer/e_mod_main.c:606
-#, fuzzy
 msgid "Mute"
-msgstr "Jag"
+msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:419 ../src/modules/mixer/conf_gadget.c:200
-#, fuzzy
 msgid "Lock Sliders"
-msgstr "Lås skärmen"
+msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:423
-#, fuzzy
 msgid "Edit"
-msgstr "Avsluta"
+msgstr ""
 
 #: ../src/modules/mixer/conf_gadget.c:206
 msgid "Show both sliders when locked"
@@ -7129,9 +6606,8 @@ msgid "Sound Cards"
 msgstr ""
 
 #: ../src/modules/mixer/conf_gadget.c:383
-#, fuzzy
 msgid "Mixer Settings"
-msgstr "Storlek"
+msgstr ""
 
 #: ../src/modules/mixer/conf_module.c:98
 msgid "Mixer to use for global actions:"
@@ -7142,14 +6618,12 @@ msgid "Launch mixer..."
 msgstr ""
 
 #: ../src/modules/mixer/conf_module.c:187
-#, fuzzy
 msgid "Mixer Module Settings"
-msgstr "Moduler"
+msgstr ""
 
 #: ../src/modules/mixer/e_mod_main.c:126
-#, fuzzy
 msgid "Mixer Settings Updated"
-msgstr "Konfigurationen uppgraderad"
+msgstr ""
 
 #: ../src/modules/mixer/e_mod_main.c:1165
 msgid ""
@@ -7158,45 +6632,35 @@ msgid ""
 msgstr ""
 
 #: ../src/modules/connman/e_mod_main.c:213
-#, fuzzy
 msgid "Connection Manager"
-msgstr "Fönsterhanterare"
+msgstr ""
 
 #: ../src/modules/connman/e_mod_main.c:730
-#, fuzzy
 msgid "Network Connection Settings"
-msgstr "Bläddringsinställningar"
+msgstr ""
 
 #: ../src/modules/connman/e_mod_main.c:736
 msgid "Network Device"
 msgstr ""
 
 #: ../src/modules/connman/e_mod_main.c:741
-#, fuzzy
 msgid "Wifi"
-msgstr "Inom"
+msgstr ""
 
 #: ../src/modules/connman/e_mod_main.c:744
 msgid "LAN"
 msgstr ""
 
 #: ../src/modules/connman/e_mod_main.c:747
-#, fuzzy
 msgid "Specific Device"
-msgstr "Applikation"
+msgstr ""
 
 #. FIXME: netlist needs to work
 #: ../src/modules/connman/e_mod_main.c:771
 msgid "Networks"
 msgstr ""
 
-#~ msgid "Lock Screen"
-#~ msgstr "Lås skärmen"
-
-#, fuzzy
-#~ msgid "Logout"
-#~ msgstr "Placering"
-
+#, c-format
 #~ msgid "Desktop %i, %i"
 #~ msgstr "Skrivbord %i, %i"
 
@@ -7206,9 +6670,8 @@ msgstr ""
 #~ msgid "Configuration"
 #~ msgstr "Konfiguration"
 
-#, fuzzy
-#~ msgid "Toolbar Configuration"
-#~ msgstr "IBar konfiguration"
+#~ msgid "Lock Screen"
+#~ msgstr "Lås skärmen"
 
 #~ msgid "Shelf Configuration"
 #~ msgstr "Panelkonfiguration"
@@ -7219,27 +6682,11 @@ msgstr ""
 #~ msgid "Configuration Panel"
 #~ msgstr "Konfigurationspanel"
 
-#, fuzzy
-#~ msgid "Default Configuration Dialogs Mode"
-#~ msgstr "Konfigurationsdialoger"
-
-#, fuzzy
-#~ msgid "Input Method Configuration"
-#~ msgstr "Konfiguration av modulen Start"
-
-#, fuzzy
-#~ msgid "Language Configuration"
-#~ msgstr "Pager konfiguration"
-
 #~ msgid "Search Path Configuration"
 #~ msgstr "Konfiguration av sökvägar"
 
 #~ msgid "Dropshadow Configuration"
 #~ msgstr "Inställningar för skuggkastning"
-
-#, fuzzy
-#~ msgid "Fileman Configuration Updated"
-#~ msgstr "Konfigurationen uppgraderad"
 
 #~ msgid "IBar Configuration"
 #~ msgstr "IBar konfiguration"
@@ -7250,28 +6697,8 @@ msgstr ""
 #~ msgid "Pager Configuration"
 #~ msgstr "Pager konfiguration"
 
-#, fuzzy
-#~ msgid "Virtual Desktops Configuration"
-#~ msgstr "Virtuella skrivbord"
-
 #~ msgid "Temperature Configuration"
 #~ msgstr "Temperaturkonfigurering"
-
-#, fuzzy
-#~ msgid "Mixer Configuration"
-#~ msgstr "Pager konfiguration"
-
-#, fuzzy
-#~ msgid "Mixer Module Configuration"
-#~ msgstr "Konfiguration av modulen Start"
-
-#, fuzzy
-#~ msgid "Enlightenment was unable to process a command line:<br><br>%s %s<br>"
-#~ msgstr "Enlightenment kunde inte skapa en underprocess:<br><br>%s<br>"
-
-#, fuzzy
-#~ msgid "Enlightenment was unable to fork a child process:<br><br>%s %s<br>"
-#~ msgstr "Enlightenment kunde inte skapa en underprocess:<br><br>%s<br>"
 
 #~ msgid "X reports there are no root windows and %i screens!\n"
 #~ msgstr ""
@@ -7298,308 +6725,8 @@ msgstr ""
 #~ msgid "Window Manipulation"
 #~ msgstr "Hantera fönster"
 
-#, fuzzy
-#~ msgid "Danish"
-#~ msgstr "Detaljer"
-
-#, fuzzy
-#~ msgid "French"
-#~ msgstr "Fahrenheit"
-
-#, fuzzy
-#~ msgid "German"
-#~ msgstr "Allmänt"
-
-#, fuzzy
-#~ msgid "Portuguese"
-#~ msgstr "Egenskaper"
-
-#, fuzzy
-#~ msgid "Slovak"
-#~ msgstr "Långsam"
-
-#, fuzzy
-#~ msgid "Amharic"
-#~ msgstr "Automatiskt"
-
-#, fuzzy
-#~ msgid "Aragonese"
-#~ msgstr "Ordna Ikoner"
-
-#, fuzzy
-#~ msgid "Assamese"
-#~ msgstr "Meddelande"
-
-#, fuzzy
-#~ msgid "Breton"
-#~ msgstr "Knappar"
-
-#, fuzzy
-#~ msgid "Persian"
-#~ msgstr "Personlig"
-
-#, fuzzy
-#~ msgid "Manx"
-#~ msgstr "Manuellt"
-
-#, fuzzy
-#~ msgid "Hindi"
-#~ msgstr "Hinting"
-
-#, fuzzy
-#~ msgid "Croatian"
-#~ msgstr "Rotation"
-
-#, fuzzy
-#~ msgid "Lingala"
-#~ msgstr "Linjär"
-
-#, fuzzy
-#~ msgid "Lao"
-#~ msgstr "Låg"
-
-#, fuzzy
-#~ msgid "Lithuanian"
-#~ msgstr "Inom"
-
-#, fuzzy
-#~ msgid "Nepali"
-#~ msgstr "Nära"
-
-#, fuzzy
-#~ msgid "Romanian"
-#~ msgstr "Rotation"
-
-#, fuzzy
-#~ msgid "Sanskrit"
-#~ msgstr "Start"
-
-#, fuzzy
-#~ msgid "Somali"
-#~ msgstr "Små"
-
-#, fuzzy
-#~ msgid "Albanian"
-#~ msgstr "Enkel"
-
-#, fuzzy
-#~ msgid "Swati"
-#~ msgstr "Start"
-
-#, fuzzy
-#~ msgid "Tamil"
-#~ msgstr "Sida vid sida"
-
-#, fuzzy
-#~ msgid "Tigre"
-#~ msgstr "Sida vid sida"
-
-#, fuzzy
-#~ msgid "Vietnamese"
-#~ msgstr "Byt namn"
-
-#, fuzzy
-#~ msgid "Antarctica"
-#~ msgstr "Automatiskt"
-
-#, fuzzy
-#~ msgid "Australia"
-#~ msgstr "Autohöj"
-
-#, fuzzy
-#~ msgid "Austria"
-#~ msgstr "Autohöj"
-
-#, fuzzy
-#~ msgid "Bahamas"
-#~ msgstr "Parametrar"
-
-#, fuzzy
-#~ msgid "Belgium"
-#~ msgstr "Medium"
-
-#, fuzzy
-#~ msgid "Belize"
-#~ msgstr "Grundstorlek"
-
-#, fuzzy
-#~ msgid "Benin"
-#~ msgstr "Genväg"
-
-#, fuzzy
-#~ msgid "Bhutan"
-#~ msgstr "Knappar"
-
-#, fuzzy
-#~ msgid "Canada"
-#~ msgstr "Kommando"
-
-#, fuzzy
-#~ msgid "Chile"
-#~ msgstr "Sida vid sida"
-
-#, fuzzy
-#~ msgid "China"
-#~ msgstr "Laddar"
-
-#, fuzzy
-#~ msgid "Congo"
-#~ msgstr "Kontroll"
-
-#, fuzzy
-#~ msgid "Denmark"
-#~ msgstr "Mörk"
-
-#, fuzzy
-#~ msgid "Djibouti"
-#~ msgstr "Om"
-
-#, fuzzy
-#~ msgid "Eritrea"
-#~ msgstr "Extra"
-
-#, fuzzy
-#~ msgid "France"
-#~ msgstr "Ram"
-
-#, fuzzy
-#~ msgid "Guinea"
-#~ msgstr "Linjär"
-
-#, fuzzy
-#~ msgid "Haiti"
-#~ msgstr "Hinting"
-
-#, fuzzy
-#~ msgid "Kenya"
-#~ msgstr "Tangent:"
-
-#, fuzzy
-#~ msgid "Kuwait"
-#~ msgstr "Kvalitet"
-
-#, fuzzy
-#~ msgid "Latvia"
-#~ msgstr "Data"
-
-#, fuzzy
-#~ msgid "Liberia"
-#~ msgstr "Linjär"
-
-#, fuzzy
-#~ msgid "Mali"
-#~ msgstr "Manuellt"
-
-#, fuzzy
-#~ msgid "Malta"
-#~ msgstr "Data"
-
-#, fuzzy
-#~ msgid "Mayotte"
-#~ msgstr "Placering"
-
-#, fuzzy
-#~ msgid "Mexico"
-#~ msgstr "Övrigt"
-
-#, fuzzy
-#~ msgid "Myanmar"
-#~ msgstr "Manuellt"
-
-#, fuzzy
-#~ msgid "Nauru"
-#~ msgstr "Nära"
-
-#, fuzzy
-#~ msgid "Nepal"
-#~ msgstr "Nära"
-
-#, fuzzy
-#~ msgid "Niger"
-#~ msgstr "Nära"
-
-#, fuzzy
-#~ msgid "Norway"
-#~ msgstr "Normal"
-
-#, fuzzy
-#~ msgid "Pakistan"
-#~ msgstr "Enkel"
-
-#, fuzzy
-#~ msgid "Palau"
-#~ msgstr "Enkel"
-
-#, fuzzy
-#~ msgid "Panama"
-#~ msgstr "Parametrar"
-
-#, fuzzy
-#~ msgid "Peru"
-#~ msgstr "Sökare"
-
-#, fuzzy
-#~ msgid "Pitcairn"
-#~ msgstr "Position"
-
-#, fuzzy
-#~ msgid "Poland"
-#~ msgstr "Enkel"
-
-#, fuzzy
-#~ msgid "Qatar"
-#~ msgstr "Data"
-
-#, fuzzy
-#~ msgid "Reunion"
-#~ msgstr "Upplösning"
-
-#, fuzzy
-#~ msgid "Samoa"
-#~ msgstr "Små"
-
-#, fuzzy
-#~ msgid "Senegal"
-#~ msgstr "Allmänt"
-
-#, fuzzy
-#~ msgid "Seychelles"
-#~ msgstr "Paneler"
-
-#, fuzzy
-#~ msgid "Somalia"
-#~ msgstr "Små"
-
-#, fuzzy
-#~ msgid "Suriname"
-#~ msgstr "Ram"
-
-#, fuzzy
-#~ msgid "Sweden"
-#~ msgstr "Skärm"
-
-#, fuzzy
-#~ msgid "United States"
-#~ msgstr "Initialt tillstånd"
-
-#, fuzzy
-#~ msgid "Uzbekistan"
-#~ msgstr "Resistens"
-
-#, fuzzy
-#~ msgid "Vanuatu"
-#~ msgstr "Manuellt"
-
-#, fuzzy
-#~ msgid "Yemen"
-#~ msgstr "Tema"
-
 #~ msgid "Window list skip"
 #~ msgstr "Ej i fönsterlista"
-
-#, fuzzy
-#~ msgid "Application Editor"
-#~ msgstr "Applikation"
 
 #~ msgid "Window"
 #~ msgstr "Fönster"
@@ -7613,9 +6740,6 @@ msgstr ""
 #~ msgid "Misc"
 #~ msgstr "Övrigt"
 
-#~ msgid "Wait Exit"
-#~ msgstr "Vänta på avslut"
-
 #~ msgid "Window Frame"
 #~ msgstr "Fönsterram"
 
@@ -7623,80 +6747,17 @@ msgstr ""
 #~ msgstr ""
 #~ "När fönster flyttas eller ändrar storlek, gör då motstånd vid gränser"
 
-#~ msgid "Both directions"
-#~ msgstr "Båda riktningar"
-
 #~ msgid "Module State"
 #~ msgstr "Modulstatus"
 
-#~ msgid "Stop editing"
-#~ msgstr "Sluta redigera"
-
-#, fuzzy
-#~ msgid "Terminal Command"
-#~ msgstr "Definierat kommando"
-
 #~ msgid "Widget"
 #~ msgstr "Skrivbordsprogram"
-
-#~ msgid "EFM"
-#~ msgstr "EFM"
-
-#, fuzzy
-#~ msgid "Font Size:"
-#~ msgstr "Storlek"
 
 #~ msgid "%2.1f pixels"
 #~ msgstr "%2.1f pixlar"
 
 #~ msgid "Font Class Configuration"
 #~ msgstr "Fontklass"
-
-#~ msgid "Font"
-#~ msgstr "Typsnitt"
-
-#~ msgid "Move Up"
-#~ msgstr "Flytta upp"
-
-#, fuzzy
-#~ msgid "Could not create directory:<br><hilight>%s</hilight>"
-#~ msgstr "Kan inte ta bort  <br><b>%s</b>"
-
-#, fuzzy
-#~ msgid "Could not delete <br><hilight>%s</hilight>"
-#~ msgstr "Kan inte ta bort  <br><b>%s</b>"
-
-#, fuzzy
-#~ msgid "Add Mouse"
-#~ msgstr "Avancerat"
-
-#, fuzzy
-#~ msgid "Modify"
-#~ msgstr "Minimera"
-
-#, fuzzy
-#~ msgid "Edit Application"
-#~ msgstr "Applikation"
-
-#, fuzzy
-#~ msgid "Available Applications"
-#~ msgstr "Favoritprogram"
-
-#, fuzzy
-#~ msgid "Create a new application"
-#~ msgstr "Skapa en ny applikation"
-
-#, fuzzy
-#~ msgid "Regenerate \"Applications\" Menu"
-#~ msgstr "Favoritprogram"
-
-#, fuzzy
-#~ msgid "Move application up"
-#~ msgstr "(Inga program)"
-
-#, fuzzy
-#~ msgid "Move application down"
-#~ msgstr "(Inga program)"
 
 #~ msgid ""
 #~ "Battery Running Low<br>Your battery is running low.<br>You may wish to "
@@ -7734,8 +6795,8 @@ msgstr ""
 #~ msgid ""
 #~ "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 #~ "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
-#~ "adaptor<br>status. This will work under Linux and FreeBSD and is "
-#~ "only<br>as accurate as your BIOS or kernel drivers."
+#~ "adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as "
+#~ "accurate as your BIOS or kernel drivers."
 #~ msgstr ""
 #~ "En enkel batterimätare som antingen använder<hilight>ACPI</hilight> eller "
 #~ "<hilight>APM</hilight><br>på Linux för att övervaka ditt batteri och din "
@@ -7752,20 +6813,19 @@ msgstr ""
 #~ msgstr "Enlightenment skuggkastingsmodul"
 
 #~ msgid ""
-#~ "This is the dropshadow module that allows dropshadows to be cast<br>on "
-#~ "the desktop background - without special X-Server extensions<br>or "
-#~ "hardware acceleration."
+#~ "This is the dropshadow module that allows dropshadows to be cast<br>on the "
+#~ "desktop background - without special X-Server extensions<br>or hardware "
+#~ "acceleration."
 #~ msgstr ""
-#~ "Detta är skuggkastinings modulen som gör skuggor "
-#~ "på<br>skrivbordsbakgrunden - utan speciella X server tilllägg "
-#~ "eller<br>hårdvaruacceleration."
+#~ "Detta är skuggkastinings modulen som gör skuggor på<br>skrivbordsbakgrunden -"
+#~ " utan speciella X server tilllägg eller<br>hårdvaruacceleration."
 
 #~ msgid "Cannot add icon"
 #~ msgstr "Kan inte lägga till ikon"
 
 #~ msgid ""
-#~ "You tried to drop an icon of an application that<br>does not have a "
-#~ "matching application file.<br><br>The icon cannot be added to IBar."
+#~ "You tried to drop an icon of an application that<br>does not have a matching "
+#~ "application file.<br><br>The icon cannot be added to IBar."
 #~ msgstr ""
 #~ "Du försökte att släppa en ikon av ett program<br>som inte har någon "
 #~ "matchande applikations fil.<br>Ikonen kan inte läggas till i IBar."
@@ -7774,30 +6834,25 @@ msgstr ""
 #~ msgstr "Enlightenment IBarmodul"
 
 #~ msgid ""
-#~ "This is the IBar Application Launcher bar module for Enlightenment.<br>It "
-#~ "is a first example module and is being used to flesh out "
-#~ "several<br>interfaces in Enlightenment 0.17.0. It is under heavy "
-#~ "development,<br>so expect it to <hilight>break often</hilight> and change "
-#~ "as it improves."
+#~ "This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
+#~ "a first example module and is being used to flesh out several<br>interfaces "
+#~ "in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
+#~ "<hilight>break often</hilight> and change as it improves."
 #~ msgstr ""
-#~ "Detta är IBar applikations startar modulen till Enlightenment.<br>Det är "
-#~ "ett första exempel på hur moduler använder olika gränssnitt<br>i "
-#~ "Enlightenment·0.17.0. Den är under kraftig utveckling så du "
-#~ "kan<br>förvänta dig att den <hilight>går sönder ofta</hilight> och att "
-#~ "den ändrar sig mycket."
+#~ "Detta är IBar applikations startar modulen till Enlightenment.<br>Det är ett "
+#~ "första exempel på hur moduler använder olika gränssnitt<br>i "
+#~ "Enlightenment·0.17.0. Den är under kraftig utveckling så du kan<br>förvänta "
+#~ "dig att den <hilight>går sönder ofta</hilight> och att den ändrar sig mycket."
 
 #~ msgid "Enlightenment IBox Module"
 #~ msgstr "Enlightenment IBoxmodul"
 
 #~ msgid ""
-#~ "This is the IBox Iconified Application module for Enlightenment.<br>It "
-#~ "will hold minimized applications"
+#~ "This is the IBox Iconified Application module for Enlightenment.<br>It will "
+#~ "hold minimized applications"
 #~ msgstr ""
-#~ "Detta är IBox applikation ikon modul till Enlightenment.<br>Den kommer "
-#~ "att innehålla minimerade applikationer."
-
-#~ msgid "Show windows from all zones"
-#~ msgstr "Visa fönster från alla zoner"
+#~ "Detta är IBox applikation ikon modul till Enlightenment.<br>Den kommer att "
+#~ "innehålla minimerade applikationer."
 
 #~ msgid "Enlightenment Pager Module"
 #~ msgstr "Enlightenment Sökarmodul"
@@ -7809,8 +6864,8 @@ msgstr ""
 #~ msgstr "Enlightenment Temeraturmodul"
 
 #~ msgid ""
-#~ "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
-#~ "<br>It is especially useful for modern Laptops with high speed<br>CPUs "
+#~ "A module to measure the <hilight>ACPI Thermal sensor</hilight> on "
+#~ "Linux.<br>It is especially useful for modern Laptops with high speed<br>CPUs "
 #~ "that generate a lot of heat."
 #~ msgstr ""
 #~ "En modul för att mäta <hilight>ACPI temperatur censorer</hilight> på "
@@ -7826,10 +6881,6 @@ msgstr ""
 #~ msgid "Temp 3"
 #~ msgstr "Temp 3"
 
-#, fuzzy
-#~ msgid "ACPI Temperature"
-#~ msgstr "Temperatur"
-
 #~ msgid "CPU Frequency Controller Module"
 #~ msgstr "CPU frekvenskontrollmodul"
 
@@ -7837,8 +6888,8 @@ msgstr ""
 #~ "A simple module to control the frequency of the system CPU.<br>This is "
 #~ "especially useful to save power on laptops."
 #~ msgstr ""
-#~ "En enkel modul för att kontrollera frekvensen på din system CPU.<br>Det "
-#~ "är speciellt användbart på Laptops för att spara ström."
+#~ "En enkel modul för att kontrollera frekvensen på din system CPU.<br>Det är "
+#~ "speciellt användbart på Laptops för att spara ström."
 
 #~ msgid "Enlightenment Start Module"
 #~ msgstr "Enlightenment Startmodul"
@@ -7849,14 +6900,186 @@ msgstr ""
 #~ msgid "ITray Configuration"
 #~ msgstr "ITray konfiguration"
 
-#~ msgid "Number of Rows"
-#~ msgstr "Antal rader"
-
-#~ msgid "%3.0f"
-#~ msgstr "%3.0f"
-
 #~ msgid "Enlightenment ITray Module"
 #~ msgstr "Enlightenment modul ITray"
+
+#~ msgid "The border style"
+#~ msgstr "Ramstilen"
+
+#~ msgid "Restart Enlightenment"
+#~ msgstr "Starta om Enlightenment"
+
+#~ msgid "Eap Editor"
+#~ msgstr "Eap Editor"
+
+#~ msgid "(Unused)"
+#~ msgstr "(Används ej)"
+
+#~ msgid "Protect this file"
+#~ msgstr "Skydda denna fil"
+
+#~ msgid "Let others see this file"
+#~ msgstr "Låt andra se denna fil"
+
+#~ msgid "Let others modify this file"
+#~ msgstr "Låt andra ändra denna fil"
+
+#~ msgid "Dont let others see or modify this file"
+#~ msgstr "Låt inte andra se eller ändra denna fil"
+
+#~ msgid "r"
+#~ msgstr "r"
+
+#~ msgid "w"
+#~ msgstr "w"
+
+#~ msgid "x"
+#~ msgstr "x"
+
+#~ msgid ""
+#~ "Enlightenment cannot set up the IPC socket.\n"
+#~ "It likely is already in use by an existing copy of Enlightenment.\n"
+#~ "Double check to see if Enlightenment is not already on this display,\n"
+#~ "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+#~ "and try running again.\n"
+#~ "\n"
+#~ "If you use AFS then maybe you might want to make a symlink from\n"
+#~ "~/.ecore to /tmp/my_directory/ecore where sockets can be made."
+#~ msgstr ""
+#~ "Enlightenment kan inte starta IPC socket.\n"
+#~ "Det är mest troligt att det redan existerar en kopia av Enlightenment.\n"
+#~ "Kontrollera om Enlightenment redan körs på denna skärmen,\n"
+#~ "men om det inte är så prova ta bort  ~/.ecore/enlightenment-*\n"
+#~ "och prova starta igen.\n"
+#~ "\n"
+#~ "Om du använder AFS då behöver du kanske göra en länk från\n"
+#~ "~/.ecore till /tmp/my_directory/ecore där det går att skapa en socket."
+
+#~ msgid "Enlightenment IPC setup error!"
+#~ msgstr "Enlightenment IPC uppstartsfel!"
+
+#~ msgid ""
+#~ "Enlightenment cannot set up the IPC socket.\n"
+#~ "It likely is already in use by an existing copy of Enlightenment.\n"
+#~ "Double check to see if Enlightenment is not already on this display,\n"
+#~ "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+#~ "and try running again."
+#~ msgstr ""
+#~ "Enlightenment kan inte starta IPC socket.\n"
+#~ "Det är troligt att redan används av en annan kopia\n"
+#~ "av Enlightenment. Kontrollera att Enlightenment redan\n"
+#~ "körs på den skärmen. Om inte försök med att ta bort alla\n"
+#~ "filer i ~/.ecore/enlightenment-* och prova igen."
+
+#~ msgid "Automatic Width"
+#~ msgstr "Automatisk bredd"
+
+#~ msgid "Half Screen Width"
+#~ msgstr "Halv skärm bredd"
+
+#~ msgid "Full Screen Width"
+#~ msgstr "Hela skärmens bredd"
+
+#~ msgid "Half Screen Height"
+#~ msgstr "Halv skärm höjd"
+
+#~ msgid "Full Screen Height"
+#~ msgstr "Hela skärmens höjd"
+
+#~ msgid "End Edit Mode"
+#~ msgstr "Avsluta redigeringsläge"
+
+#~ msgid "Follower"
+#~ msgstr "Följe|slagare"
+
+#~ msgid "Module Config Menu Item 1"
+#~ msgstr "Modulkonfiguration meny 1"
+
+#~ msgid "Module Config Menu Item 2"
+#~ msgstr "Modulkonfiguration meny 2"
+
+#~ msgid "Module Config Menu Item 3"
+#~ msgstr "Modulkonfiguration meny 3"
+
+#~ msgid "Something Else"
+#~ msgstr "Något annat"
+
+#~ msgid "Enlightenment Test Module"
+#~ msgstr "Enlightenment Testmodul"
+
+#~ msgid ""
+#~ "This module is VERY simple and is only used to test the basic<br>interface "
+#~ "of the Enlightenment 0.17.0 module system. Please<br>ignore this module "
+#~ "unless you are working on the module system."
+#~ msgstr ""
+#~ "Denna modul är väldigt enkel och är endast till för att testa "
+#~ "grundgränssnittet<br>på Enlightenment 0.17.0 modulsystem. Var snäll och "
+#~ "ignorera denna modul<br>om du inte jobbar med modulsystemet."
+
+#~ msgid "Set Poll Time"
+#~ msgstr "Ställ updateringsintervall"
+
+#~ msgid "Restore Controller on Startup"
+#~ msgstr "Återställ kontroller vid uppstart"
+
+#~ msgid "Ok"
+#~ msgstr "Ok"
+
+#~ msgid "No Digital Display"
+#~ msgstr "Ingen digital visning"
+
+#~ msgid "Top"
+#~ msgstr "Överkant"
+
+#~ msgid "Fix Aspect (Keep Height)"
+#~ msgstr "Fast aspekt (Behåll höjd)"
+
+#~ msgid "Fix Aspect (Keep Width)"
+#~ msgstr "Fast aspekt (Behåll bredd)"
+
+#~ msgid "Enlightenment Randr Module"
+#~ msgstr "Enlightenment Randrmodul"
+
+#~ msgid "Module to change screen resolution for E17"
+#~ msgstr "Modul till E17 för att andra skärmupplösningen"
+
+#~ msgid ""
+#~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
+#~ "resolution %dx%d in %d seconds."
+#~ msgstr ""
+#~ "Behålla den nya upplösningen <hilight>%dx%d</hilight>?<br><br>Återställer "
+#~ "tidigare upplösning %dx%d om %d sekunder."
+
+#~ msgid ""
+#~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
+#~ "resolution %dx%d NOW!"
+#~ msgstr ""
+#~ "Behålla den nya upplösningen <hilight>%dx%d</hilight>?<br><br>Återställer "
+#~ "tidigare upplösning %dx%d NU!"
+
+#~ msgid "Both directions"
+#~ msgstr "Båda riktningar"
+
+#~ msgid "EFM"
+#~ msgstr "EFM"
+
+#~ msgid "Move Up"
+#~ msgstr "Flytta upp"
+
+#~ msgid "Show windows from all zones"
+#~ msgstr "Visa fönster från alla zoner"
+
+#~ msgid "Font"
+#~ msgstr "Typsnitt"
+
+#~ msgid "Stop editing"
+#~ msgstr "Sluta redigera"
+
+#~ msgid "Desktop Lock Settings"
+#~ msgstr "Skrivbordslås"
+
+#~ msgid "Number of Rows"
+#~ msgstr "Antal rader"
 
 #~ msgid "To Desktop 0"
 #~ msgstr "Till skrivbord 0"
@@ -7894,20 +7117,36 @@ msgstr ""
 #~ msgid "To Desktop 11"
 #~ msgstr "Till skrivbord 11"
 
-#~ msgid "Toggle Edit Mode"
-#~ msgstr "Gå in i redigeringsläge"
+#~ msgid "Borderless"
+#~ msgstr "Ramlöst"
 
-#~ msgid "Eap Editor"
-#~ msgstr "Eap Editor"
+#~ msgid "Choose a Key"
+#~ msgstr "Välj en tangent"
+
+#~ msgid "Unsorted"
+#~ msgstr "Osorterat"
+
+#~ msgid "Parameters"
+#~ msgstr "Parametrar"
+
+#~ msgid ""
+#~ "You requested to delete \"%s\" keybinding.<br><br>Are you sure you want to "
+#~ "delete it?"
+#~ msgstr ""
+#~ "Du har valt att ta bort kortkommandot \"%s\".<br><br>Är du säker på att du "
+#~ "vill ta bort det?"
+
+#~ msgid "Delete?"
+#~ msgstr "Ta bort?"
+
+#~ msgid "Exit Enlightenment"
+#~ msgstr "Avsluta·Enlightenment"
 
 #~ msgid "App name"
 #~ msgstr "Program namn"
 
 #~ msgid "Enlightenment: Error!"
 #~ msgstr "Enlightenment: Fel!"
-
-#~ msgid "Places"
-#~ msgstr "Platser"
 
 #~ msgid "Home"
 #~ msgstr "Hem"
@@ -7923,29 +7162,8 @@ msgstr ""
 #~ "%s\n"
 #~ "\n"
 
-#~ msgid "Protect this file"
-#~ msgstr "Skydda denna fil"
-
-#~ msgid "Let others see this file"
-#~ msgstr "Låt andra se denna fil"
-
-#~ msgid "Let others modify this file"
-#~ msgstr "Låt andra ändra denna fil"
-
-#~ msgid "Dont let others see or modify this file"
-#~ msgstr "Låt inte andra se eller ändra denna fil"
-
 #~ msgid "Last Access:"
 #~ msgstr "Senast öppnad:"
-
-#~ msgid "r"
-#~ msgstr "r"
-
-#~ msgid "w"
-#~ msgstr "w"
-
-#~ msgid "x"
-#~ msgstr "x"
 
 #~ msgid "My Group"
 #~ msgstr "Min grupp"
@@ -7965,14 +7183,8 @@ msgstr ""
 #~ msgid "View"
 #~ msgstr "Visa"
 
-#~ msgid "Automatic Width"
-#~ msgstr "Automatisk bredd"
-
-#~ msgid "Half Screen Width"
-#~ msgstr "Halv skärm bredd"
-
-#~ msgid "Full Screen Width"
-#~ msgstr "Hela skärmens bredd"
+#~ msgid "Toggle Edit Mode"
+#~ msgstr "Gå in i redigeringsläge"
 
 #~ msgid "Center Horizontally"
 #~ msgstr "Centrera horisentalt"
@@ -7980,66 +7192,41 @@ msgstr ""
 #~ msgid "Automatic Height"
 #~ msgstr "Automatisk höjd"
 
-#~ msgid "Half Screen Height"
-#~ msgstr "Halv skärm höjd"
-
-#~ msgid "Full Screen Height"
-#~ msgstr "Hela skärmens höjd"
-
 #~ msgid "Center Vertically"
 #~ msgstr "Centrera vertikalt"
 
 #~ msgid "Allow Overlap"
 #~ msgstr "Tillåt överlappning"
 
-#~ msgid "End Edit Mode"
-#~ msgstr "Avsluta redigeringsläge"
-
-#~ msgid "Borderless"
-#~ msgstr "Ramlöst"
-
-#~ msgid "Restart Enlightenment"
-#~ msgstr "Starta om Enlightenment"
-
-#~ msgid "Exit Enlightenment"
-#~ msgstr "Avsluta·Enlightenment"
-
-#~ msgid "(Unused)"
-#~ msgstr "(Används ej)"
-
 #~ msgid "System Wallpapers"
 #~ msgstr "System bakgrunder"
 
-#~ msgid "Perfect"
-#~ msgstr "Perfekt"
+#~ msgid "Theme Desklock Background"
+#~ msgstr "Bakgrund från tema"
 
-#~ msgid "Choose a Key"
-#~ msgstr "Välj en tangent"
-
-#~ msgid "Unsorted"
-#~ msgstr "Osorterat"
-
-#~ msgid ":"
-#~ msgstr ":"
-
-#~ msgid "Parameters"
-#~ msgstr "Parametrar"
-
-#~ msgid ""
-#~ "You requested to delete \"%s\" keybinding.<br><br>Are you sure you want "
-#~ "to delete it?"
-#~ msgstr ""
-#~ "Du har valt att ta bort kortkommandot \"%s\".<br><br>Är du säker på att "
-#~ "du vill ta bort det?"
-
-#~ msgid "Delete?"
-#~ msgstr "Ta bort?"
+#~ msgid "Theme Background"
+#~ msgstr "Bakgrund från tema"
 
 #~ msgid "Exebuf Settings"
 #~ msgstr "Exebuf inställningar"
 
-#~ msgid "Desktop Lock Settings"
-#~ msgstr "Skrivbordslås"
+#~ msgid "Font Hinting Settings"
+#~ msgstr "Typsnittshinting"
+
+#~ msgid "Bytecode Hinting"
+#~ msgstr "Bytecode hinting"
+
+#~ msgid "Automatic Hinting"
+#~ msgstr "Automatisk hinting"
+
+#~ msgid "No Hinting"
+#~ msgstr "Ingen hinting"
+
+#~ msgid "Import An Image"
+#~ msgstr "Importera en bild"
+
+#~ msgid "Scale Image"
+#~ msgstr "Anpassa"
 
 #~ msgid "Password Type"
 #~ msgstr "Lösenordstyp"
@@ -8056,76 +7243,11 @@ msgstr ""
 #~ msgid "Show password"
 #~ msgstr "Visa lösenord"
 
-#~ msgid "Theme Desklock Background"
-#~ msgstr "Bakgrund från tema"
-
-#~ msgid "Theme Background"
-#~ msgstr "Bakgrund från tema"
-
-#~ msgid "Font Hinting Settings"
-#~ msgstr "Typsnittshinting"
-
-#~ msgid "Bytecode Hinting"
-#~ msgstr "Bytecode hinting"
-
-#~ msgid "Automatic Hinting"
-#~ msgstr "Automatisk hinting"
-
-#~ msgid "No Hinting"
-#~ msgstr "Ingen hinting"
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#~ msgid "Import An Image"
-#~ msgstr "Importera en bild"
-
-#~ msgid "Scale Image"
-#~ msgstr "Anpassa"
-
-#~ msgid ""
-#~ "Enlightenment cannot set up the IPC socket.\n"
-#~ "It likely is already in use by an existing copy of Enlightenment.\n"
-#~ "Double check to see if Enlightenment is not already on this display,\n"
-#~ "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-#~ "and try running again.\n"
-#~ "\n"
-#~ "If you use AFS then maybe you might want to make a symlink from\n"
-#~ "~/.ecore to /tmp/my_directory/ecore where sockets can be made."
-#~ msgstr ""
-#~ "Enlightenment kan inte starta IPC socket.\n"
-#~ "Det är mest troligt att det redan existerar en kopia av Enlightenment.\n"
-#~ "Kontrollera om Enlightenment redan körs på denna skärmen,\n"
-#~ "men om det inte är så prova ta bort  ~/.ecore/enlightenment-*\n"
-#~ "och prova starta igen.\n"
-#~ "\n"
-#~ "Om du använder AFS då behöver du kanske göra en länk från\n"
-#~ "~/.ecore till /tmp/my_directory/ecore där det går att skapa en socket."
-
-#~ msgid "Enlightenment IPC setup error!"
-#~ msgstr "Enlightenment IPC uppstartsfel!"
-
-#~ msgid ""
-#~ "Enlightenment cannot set up the IPC socket.\n"
-#~ "It likely is already in use by an existing copy of Enlightenment.\n"
-#~ "Double check to see if Enlightenment is not already on this display,\n"
-#~ "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-#~ "and try running again."
-#~ msgstr ""
-#~ "Enlightenment kan inte starta IPC socket.\n"
-#~ "Det är troligt att redan används av en annan kopia\n"
-#~ "av Enlightenment. Kontrollera att Enlightenment redan\n"
-#~ "körs på den skärmen. Om inte försök med att ta bort alla\n"
-#~ "filer i ~/.ecore/enlightenment-* och prova igen."
-
 #~ msgid "About…"
 #~ msgstr "Om..."
 
 #~ msgid "Background Settings"
 #~ msgstr "Bakgrund"
-
-#~ msgid "Begin editing"
-#~ msgstr "Redigera"
 
 #~ msgid "To the left"
 #~ msgstr "Till vänster"
@@ -8142,45 +7264,26 @@ msgstr ""
 #~ msgid "Vertically"
 #~ msgstr "Vertikalt"
 
-#~ msgid "Shelf Location and Appearance Settings"
-#~ msgstr "Panelens placering och utseende"
-
 #~ msgid "Assign Key Binding..."
 #~ msgstr "Lägg till tangentbordsgenväg..."
 
 #~ msgid "Contents Settings"
 #~ msgstr "Konfigurera innehåll"
 
+#~ msgid "Begin editing"
+#~ msgstr "Redigera"
+
 #~ msgid "Maximized"
 #~ msgstr "Maximerat"
 
-#~ msgid "Status"
-#~ msgstr "Status"
+#~ msgid "Shelf Location and Appearance Settings"
+#~ msgstr "Panelens placering och utseende"
 
 #~ msgid "Auto-Apply Configuration Changes"
 #~ msgstr "Verkställ konfigurationsändringar automatiskt"
 
-#~ msgid "Top"
-#~ msgstr "Överkant"
-
-#, fuzzy
-#~ msgid "Bottom Left"
-#~ msgstr "Underkant"
-
-#, fuzzy
-#~ msgid "Bottom Right"
-#~ msgstr "Underkant"
-
-#, fuzzy
-#~ msgid "Left Bottom"
-#~ msgstr "Underkant"
-
-#, fuzzy
-#~ msgid "Right Bottom"
-#~ msgstr "Underkant"
-
-#~ msgid "Follower"
-#~ msgstr "Följe|slagare"
+#~ msgid "Allow shading/resizing"
+#~ msgstr "Tillåt skuggat/ändra storlek"
 
 #~ msgid "Visible"
 #~ msgstr "Synlig"
@@ -8194,8 +7297,11 @@ msgstr ""
 #~ msgid "Autoscroll Speed:"
 #~ msgstr "Hastighet på Autoscroll:"
 
-#~ msgid "Font Display Hinting"
-#~ msgstr "Typsnitts hinting"
+#~ msgid "Loaded"
+#~ msgstr "Laddad"
+
+#~ msgid "Unloaded"
+#~ msgstr "Ej laddad"
 
 #~ msgid "Window Display Settings"
 #~ msgstr "Visa fönster"
@@ -8203,143 +7309,45 @@ msgstr ""
 #~ msgid "Window Manipulation Settings"
 #~ msgstr "Fönsterhantering"
 
-#~ msgid "Allow shading/resizing"
-#~ msgstr "Tillåt skuggat/ändra storlek"
-
-#~ msgid "Loaded"
-#~ msgstr "Laddad"
-
-#~ msgid "Unloaded"
-#~ msgstr "Ej laddad"
-
-#~ msgid "No Digital Display"
-#~ msgstr "Ingen digital visning"
-
 #~ msgid "12 Hour Display"
 #~ msgstr "12 timmar visning"
 
 #~ msgid "24 Hour Display"
 #~ msgstr "24 timmars visning"
 
-#~ msgid "Set Poll Time"
-#~ msgstr "Ställ updateringsintervall"
-
-#~ msgid "Restore Controller on Startup"
-#~ msgstr "Återställ kontroller vid uppstart"
-
 #~ msgid "Restore Governor on Startup"
 #~ msgstr "Återställ Governor vid start"
-
-#~ msgid "Fix Aspect (Keep Height)"
-#~ msgstr "Fast aspekt (Behåll höjd)"
-
-#~ msgid "Fix Aspect (Keep Width)"
-#~ msgstr "Fast aspekt (Behåll bredd)"
 
 #~ msgid "Desktop Name Position"
 #~ msgstr "Position på skrivbordsnamn"
 
+#~ msgid "Font Display Hinting"
+#~ msgstr "Typsnitts hinting"
+
 #~ msgid "Select Another Image..."
 #~ msgstr "Välj en annan bild..."
-
-#~ msgid "Background Preview"
-#~ msgstr "Förhandsgranska bakgrund"
 
 #~ msgid "Prev Key Binding"
 #~ msgstr "Föregående"
 
-#~ msgid "Shift"
-#~ msgstr "Shift"
-
-#~ msgid "Alt"
-#~ msgstr "Alt"
-
-#~ msgid "Enlightenment Randr Module"
-#~ msgstr "Enlightenment Randrmodul"
-
-#~ msgid "Module to change screen resolution for E17"
-#~ msgstr "Modul till E17 för att andra skärmupplösningen"
+#~ msgid "Background Preview"
+#~ msgstr "Förhandsgranska bakgrund"
 
 #~ msgid ""
-#~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
-#~ "resolution %dx%d in %d seconds."
+#~ "There was an error loading module named: %s<br>The full path to this module "
+#~ "is:<br>%s<br>The error reported was:<br>Module does not contain all needed "
+#~ "functions<br>"
 #~ msgstr ""
-#~ "Behålla den nya upplösningen <hilight>%dx%d</hilight>?<br><br>Återställer "
-#~ "tidigare upplösning %dx%d om %d sekunder."
-
-#~ msgid ""
-#~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
-#~ "resolution %dx%d NOW!"
-#~ msgstr ""
-#~ "Behålla den nya upplösningen <hilight>%dx%d</hilight>?<br><br>Återställer "
-#~ "tidigare upplösning %dx%d NU!"
-
-#~ msgid "Module Config Menu Item 1"
-#~ msgstr "Modulkonfiguration meny 1"
-
-#~ msgid "Module Config Menu Item 2"
-#~ msgstr "Modulkonfiguration meny 2"
-
-#~ msgid "Module Config Menu Item 3"
-#~ msgstr "Modulkonfiguration meny 3"
-
-#~ msgid "Something Else"
-#~ msgstr "Något annat"
-
-#~ msgid "Enlightenment Test Module"
-#~ msgstr "Enlightenment Testmodul"
-
-#~ msgid ""
-#~ "This module is VERY simple and is only used to test the "
-#~ "basic<br>interface of the Enlightenment 0.17.0 module system. "
-#~ "Please<br>ignore this module unless you are working on the module system."
-#~ msgstr ""
-#~ "Denna modul är väldigt enkel och är endast till för att testa "
-#~ "grundgränssnittet<br>på Enlightenment 0.17.0 modulsystem. Var snäll och "
-#~ "ignorera denna modul<br>om du inte jobbar med modulsystemet."
-
-#~ msgid "Gadget test"
-#~ msgstr "Gadget test"
-
-#~ msgid "Test Face Menu Item"
-#~ msgstr "Test Utseende Meny Val"
-
-#~ msgid "Enlightenment Desktop Lock!"
-#~ msgstr "Enlightenment skrivbordslås"
-
-#~ msgid "The border style"
-#~ msgstr "Ramstilen"
-
-#~ msgid ""
-#~ "There was an error loading module named: %s<br>The full path to this "
-#~ "module is:<br>%s<br>The error reported was:<br>Module does not contain "
-#~ "all needed functions<br>"
-#~ msgstr ""
-#~ "Det gick inte att ladda modul: %s<br>den fullständiga sökvägen till "
-#~ "modulen  är:<br>%s<br>Felet som rapporterades var:<br>Modulen innehåller "
-#~ "inte alla funktioner som behövs<br>"
+#~ "Det gick inte att ladda modul: %s<br>den fullständiga sökvägen till modulen  "
+#~ "är:<br>%s<br>Felet som rapporterades var:<br>Modulen innehåller inte alla "
+#~ "funktioner som behövs<br>"
 
 #~ msgid ""
 #~ "This is the ITray system tray module for Enlightenment.<br>It will hold "
 #~ "system tray icons."
 #~ msgstr ""
-#~ "Detta är modulen ITray som är en Aktivitetsfältsmodul till Enlightenment."
-#~ "<br>Den kommer att innehålla aktivitetsfältsikoner."
-
-#~ msgid "Use E  Cursor"
-#~ msgstr "Använd E  muspekare"
-
-#~ msgid "Mouse Pointer Settings"
-#~ msgstr "Inställningar för muspekare"
-
-#~ msgid "Run error, wtf?  That sux."
-#~ msgstr "Körfel! Det var inte bra."
-
-#~ msgid "Exit code"
-#~ msgstr "Avslutningskod"
-
-#~ msgid "Signal"
-#~ msgstr "Signal"
+#~ "Detta är modulen ITray som är en Aktivitetsfältsmodul till "
+#~ "Enlightenment.<br>Den kommer att innehålla aktivitetsfältsikoner."
 
 #~ msgid ""
 #~ "3 Enlightenment was unable to fork a child process:\n"
@@ -8351,3 +7359,51 @@ msgstr ""
 #~ "\n"
 #~ "%s\n"
 #~ "\n"
+
+#~ msgid "Mouse Pointer Settings"
+#~ msgstr "Inställningar för muspekare"
+
+#~ msgid "Wait Exit"
+#~ msgstr "Vänta på avslut"
+
+#~ msgid "%3.0f"
+#~ msgstr "%3.0f"
+
+#~ msgid "Places"
+#~ msgstr "Platser"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "Gadget test"
+#~ msgstr "Gadget test"
+
+#~ msgid "Test Face Menu Item"
+#~ msgstr "Test Utseende Meny Val"
+
+#~ msgid "Perfect"
+#~ msgstr "Perfekt"
+
+#~ msgid "Shift"
+#~ msgstr "Shift"
+
+#~ msgid "Alt"
+#~ msgstr "Alt"
+
+#~ msgid "Enlightenment Desktop Lock!"
+#~ msgstr "Enlightenment skrivbordslås"
+
+#~ msgid "Use E  Cursor"
+#~ msgstr "Använd E  muspekare"
+
+#~ msgid "Run error, wtf?  That sux."
+#~ msgstr "Körfel! Det var inte bra."
+
+#~ msgid "Exit code"
+#~ msgstr "Avslutningskod"
+
+#~ msgid "Signal"
+#~ msgstr "Signal"
