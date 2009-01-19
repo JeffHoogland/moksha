@@ -187,8 +187,8 @@ _fill_data_hash(E_Config_Dialog_Data *cfdata, const CFColor_Hash *cfhash)
 	       {
 		  if (!strncmp(cfhash[i].key, l->data, strlen(cfhash[i].key)))
 		    {
-		       color_classes = eina_list_remove_list(color_classes, l);
 		       E_FREE(l->data);
+		       color_classes = eina_list_remove_list(color_classes, l);
 		    }
 	       }
 
