@@ -181,14 +181,15 @@ _fill_data_hash(E_Config_Dialog_Data *cfdata, const CFColor_Hash *cfhash)
 
 	if (cfhash[i].key) 
 	  {
-	     Eina_List *l;
+	     Eina_List *l, *l_next;
+	     char *key;
+	     int len = strlen(cfhash[i].key);
 
-	     for (l = color_classes; l; l = l->next)
+	     EINA_LIST_FOREACH_SAFE(color_classes, l, l_next, key)
 	       {
-		  if (!strncmp(cfhash[i].key, l->data, strlen(cfhash[i].key)))
+		  if (!strncmp(cfhash[i].key, key, len))
 		    {
-                       /* FIXME: use EINA_LIST_FOREACH_SAFE() */
-		       E_FREE(l->data);
+		       E_FREE(key);
 		       color_classes = eina_list_remove_list(color_classes, l);
 		    }
 	       }
