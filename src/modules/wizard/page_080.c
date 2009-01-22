@@ -62,11 +62,10 @@ wizard_page_show(E_Wizard_Page *pg)
    Eina_List *l;
    int i;
 
-   printf("desktops = %p\n", desktops);
    if (!desktops) return 0;
    
    o = e_widget_list_add(pg->evas, 1, 0);
-   e_wizard_title_set(_("IBar Quick Launch"));
+   e_wizard_title_set(_("Quick Launch"));
    
    of = e_widget_framelist_add(pg->evas, _("Select Applications"), 0);
 

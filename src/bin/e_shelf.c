@@ -1236,6 +1236,7 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
    E_Shelf *es;
    E_Menu *mn;
    int cx, cy, cw, ch;
+   E_Zone *zone;
    
    es = data;
    ev = event_info;
@@ -1251,10 +1252,13 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 	
 	_e_shelf_menu_append(es, mn);
 	
-	e_gadcon_canvas_zone_geometry_get(es->gadcon, &cx, &cy, &cw, &ch);
+        zone = es->gadcon->zone;
+        if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
+        e_gadcon_canvas_zone_geometry_get(es->gadcon, &cx, &cy, &cw, &ch);
 	e_menu_activate_mouse(mn,
 			      e_util_zone_current_get(e_manager_current_get()),
-			      cx + ev->output.x, cy + ev->output.y, 1, 1,
+			      cx + ev->output.x, 
+                              cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	break;
      }

@@ -676,6 +676,12 @@ e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h)
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, 0);
    if (!gc->ecore_evas) return 0;
    ecore_evas_geometry_get(gc->ecore_evas, x, y, w, h);
+// so much relies on this down here to have been broken... ie return container-relative coords.
+//   if (gc->zone)
+//     {
+//	if (x) *x = *x - gc->zone->x;
+//	if (y) *y = *y - gc->zone->y;
+//     }
    return 1;
 }
 
@@ -2303,6 +2309,7 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
    if (ev->button == 3)
      {
 	E_Menu *mn;
+        E_Zone *zone;
 	int cx, cy, cw, ch;
 
 	if (gcc->gadcon->shelf)
@@ -2315,9 +2322,11 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
 	e_gadcon_client_util_menu_items_append(gcc, mn, 0);
 
 	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
-	e_menu_activate_mouse(mn,
-			      e_util_zone_current_get(e_manager_current_get()),
-			      cx + ev->output.x, cy + ev->output.y, 1, 1,
+        zone = gcc->gadcon->zone;
+        if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
+	e_menu_activate_mouse(mn, zone, 
+			      cx + ev->output.x, 
+                              cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
      }
    else if (ev->button == 1)

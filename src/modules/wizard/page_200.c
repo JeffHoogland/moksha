@@ -25,7 +25,6 @@ wizard_page_show(E_Wizard_Page *pg)
 	// delete profile
 	homedir = e_user_homedir_get();
 	snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, e_config_profile_get());
-	printf("del %s\n", buf);
 	if (ecore_file_is_dir(buf)) ecore_file_recursive_rm(buf);
      }
    // load profile as e_config
@@ -48,23 +47,6 @@ wizard_page_apply(E_Wizard_Page *pg)
    // ~/.e/e/applications/bar/default, maybe ~/.e/e/applications/startup/.order
 
    homedir = e_user_homedir_get();
-
-   // FIXME: this is going into page 070
-   // setup default .desktop files
-//   snprintf(buf, sizeof(buf), "%s/applications", efreet_data_home_get());
-//   ecore_file_mkpath(buf);
-//   snprintf(buf, sizeof(buf),
-//	    "gzip -d -c < %s/data/other/desktop_files.tar.gz | "
-//	    "(cd %s/applications/ ; tar -xkf -)",
-//	    e_prefix_data_get(), efreet_data_home_get());
-//   system(buf);
-   // FIXME: this is going into page 070
-   // setup ibar
-//   snprintf(buf, sizeof(buf),
-//	    "gzip -d -c < %s/data/other/desktop_order.tar.gz | "
-//	    "(cd %s/.e/e/ ; tar -xkf -)",
-//	    e_prefix_data_get(), homedir);
-//   system(buf);
 
    // FIXME: should become a wizard page on its own
    // setup fileman favorites
