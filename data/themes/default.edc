@@ -3,7 +3,7 @@
 //	Icons:
 //		EFM - All popup icons ... eg, paste copy delete properties
 //		EFM - folders (perhaps?), dynamic mime icons
-//		Icons - Icon theme, Dialogs, Interactions, applications, settings, show/hide all windows
+//		Icons - Dialogs, Interactions,  settings,
 //			-Automatically Scroll Contents, better looking SD card.
 //
 
@@ -22419,7 +22419,6 @@ ICON("widget/resize","icon_resize.png",64)
 ICON("enlightenment/engine","icon_dummy.png",64)
 ICON("enlightenment/profiles","icon_dummy.png",64)
 ICON("enlightenment/autoscroll","icon_dummy.png",64)
-ICON("enlightenment/showhide","icon_dummy.png",64)
 ICON("enlightenment/toolbar","icon_dummy.png",64)
 ICON("enlightenment/settings","icon_dummy.png",64)
 
@@ -22442,6 +22441,7 @@ ICON("enlightenment/colors","icon_colors.png",64)
 ICON("enlightenment/themes","icon_theme.png",64)
 ICON("enlightenment/screen_setup","icon_screen_setup.png",64)
 ICON("enlightenment/windows","icon_windows.png",64)
+ICON("enlightenment/showhide","icon_windows.png",64)
 ICON("enlightenment/lost_windows","icon_lost_windows.png",64)
 ICON("enlightenment/window_remembers","icon_window_remembers.png",64)
 ICON("enlightenment/focus","icon_window_focus.png",64)
@@ -23034,7 +23034,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	 }
       }
    }
-
+   
+/////////////////////////////////////////////////////////////////////////////
+   /*** INIT SPLASH ***/
    /* this first group is used for the primary screen (or only screen) so in
     * a multi-monitor setup whichever is first (screen 0) will get this
     * splash on it */
