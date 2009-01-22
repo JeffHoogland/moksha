@@ -2612,7 +2612,7 @@ e_actions_init(void)
 
    /* exec */
    ACT_GO(exec);
-   e_action_predef_name_set(_("Launch"), _("Defined Command"), "exec", NULL,
+   e_action_predef_name_set(_("Launch"), _("Command"), "exec", NULL,
 			    "syntax: CommandName, example: /usr/bin/xmms", 1);
 
    /* app */
@@ -2628,20 +2628,20 @@ e_actions_init(void)
    e_action_predef_name_set(_("Enlightenment"), _("Exit"), "exit", 
 			    NULL, NULL, 0);
 
-   ACT_GO(logout);
-   e_action_predef_name_set(_("Enlightenment"), _("Log Out"), "logout", 
-			    NULL, NULL, 0);
-
    ACT_GO(exit_now);
-   e_action_predef_name_set(_("Enlightenment"), _("Exit Immediately"), 
+   e_action_predef_name_set(_("Enlightenment"), _("Exit Now"), 
 			    "exit_now", NULL, NULL, 0);
 
+   ACT_GO(logout);
+   e_action_predef_name_set(_("System"), _("Log Out"), "logout", 
+			    NULL, NULL, 0);
+
    ACT_GO(halt_now);
-   e_action_predef_name_set(_("Enlightenment"), _("Off Now"),
+   e_action_predef_name_set(_("System"), _("Power Off Now"),
 			    "halt_now", NULL, NULL, 0);
 
    ACT_GO(halt);
-   e_action_predef_name_set(_("System"), _("Off"), "halt", 
+   e_action_predef_name_set(_("System"), _("Power Off"), "halt", 
 			    NULL, NULL, 0);
 
    ACT_GO(reboot);

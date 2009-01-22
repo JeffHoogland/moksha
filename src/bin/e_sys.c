@@ -363,7 +363,7 @@ _e_sys_logout_begin(E_Sys_Action a_after)
 			 _("Logout in progress"), "E", "_sys_logout");
    e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/logout");
    e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
-				  _("Logout is currently in progress.<br>"
+				  _("Logout in progress.<br>"
 				    "<hilight>Please wait.</hilight>"));
    e_obj_dialog_show(od);
    e_obj_dialog_icon_set(od, "enlightenment/logout");
@@ -398,7 +398,7 @@ _e_sys_current_action(void)
      {
       case E_SYS_LOGOUT:
 	e_dialog_text_set(dia,
-			  _("Enlightenment is busy logging out.<br>"
+			  _("Logging out.<br>"
 			    "You cannot perform other system actions<br>"
 			    "once a logout has begun.")
 			  );
@@ -406,28 +406,28 @@ _e_sys_current_action(void)
       case E_SYS_HALT:
       case E_SYS_HALT_NOW:
 	e_dialog_text_set(dia,
-			  _("Enlightenment is shutting the system down.<br>"
+			  _("Powering off.<br>"
 			    "You cannot do any other system actions<br>"
 			    "once a shutdown has been started.")
 			  );
 	break;
       case E_SYS_REBOOT:
 	e_dialog_text_set(dia,
-			  _("Enlightenment is rebooting the system.<br>"
+			  _("Resetting.<br>"
 			    "You cannot do any other system actions<br>"
 			    "once a reboot has begun.")
 			  );
 	break;
       case E_SYS_SUSPEND:
 	e_dialog_text_set(dia,
-			  _("Enlightenment is suspending the system.<br>"
+			  _("Suspending.<br>"
 			    "Until suspend is complete you cannot perform<br>"
 			    "any other system actions.")
 			  );
 	break;
       case E_SYS_HIBERNATE:
 	e_dialog_text_set(dia,
-			  _("Enlightenment is hibernating the system.<br>"
+			  _("Hibernating.<br>"
 			    "You cannot perform an other system actions<br>"
 			    "until this is complete.")
 			  );
@@ -460,22 +460,22 @@ _e_sys_action_failed(void)
       case E_SYS_HALT:
       case E_SYS_HALT_NOW:
 	e_dialog_text_set(dia,
-			  _("Shutting down of your system failed.")
+			  _("Power off failed.")
 			  );
 	break;
       case E_SYS_REBOOT:
 	e_dialog_text_set(dia,
-			  _("Rebooting your system failed.")
+			  _("Reset failed.")
 			  );
 	break;
       case E_SYS_SUSPEND:
 	e_dialog_text_set(dia,
-			  _("Suspend of your system failed.")
+			  _("Suspend failed.")
 			  );
 	break;
       case E_SYS_HIBERNATE:
 	e_dialog_text_set(dia,
-			  _("Hibernating your system failed.")
+			  _("Hibernate failed.")
 			  );
 	break;
       default:
@@ -526,10 +526,10 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	  {
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
 	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
-				   _("Shutting down"), "E", "_sys_halt");
+				   _("Power off"), "E", "_sys_halt");
 	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/halt");
 	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
-					    _("Shutting down your Computer.<br>"
+					    _("Power off.<br>"
 					      "<hilight>Please wait.</hilight>"));
 	     e_obj_dialog_show(od);
 	     e_obj_dialog_icon_set(od, "enlightenment/halt");
@@ -553,10 +553,10 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	  {
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
 	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
-				   _("Rebooting"), "E", "_sys_reboot");
+				   _("Resetting"), "E", "_sys_reboot");
 	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/reboot");
 	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
-					    _("Rebooting your Computer.<br>"
+					    _("Resetting.<br>"
 					      "<hilight>Please wait.</hilight>"));
 	     e_obj_dialog_show(od);
 	     e_obj_dialog_icon_set(od, "enlightenment/reboot");
@@ -582,7 +582,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 				   _("Suspending"), "E", "_sys_suspend");
 	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/suspend");
 	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
-					    _("Suspending your Computer.<br>"
+					    _("Suspending.<br>"
 					      "<hilight>Please wait.</hilight>"));
 	     e_obj_dialog_show(od);
 	     e_obj_dialog_icon_set(od, "enlightenment/suspend");
@@ -608,7 +608,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 				   _("Hibernating"), "E", "_sys_hibernate");
 	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/hibernate");
 	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
-					    _("Hibernating your Computer.<br>"
+					    _("Hibernating.<br>"
 					      "<hilight>Please wait.</hilight>"));
 	     e_obj_dialog_show(od);
 	     e_obj_dialog_icon_set(od, "enlightenment/hibernate");
