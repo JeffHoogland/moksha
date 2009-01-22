@@ -2637,15 +2637,15 @@ e_actions_init(void)
 			    "exit_now", NULL, NULL, 0);
 
    ACT_GO(halt_now);
-   e_action_predef_name_set(_("Enlightenment"), _("Shut Down Immediately"), 
+   e_action_predef_name_set(_("Enlightenment"), _("Off Now"),
 			    "halt_now", NULL, NULL, 0);
 
    ACT_GO(halt);
-   e_action_predef_name_set(_("System"), _("Shut Down"), "halt", 
+   e_action_predef_name_set(_("System"), _("Off"), "halt", 
 			    NULL, NULL, 0);
 
    ACT_GO(reboot);
-   e_action_predef_name_set(_("System"), _("Reboot"), "reboot", 
+   e_action_predef_name_set(_("System"), _("Reset"), "reboot", 
 			    NULL, NULL, 0);
 
    ACT_GO(suspend);
@@ -2653,7 +2653,7 @@ e_actions_init(void)
 			    NULL, NULL, 0);
 
    ACT_GO(hibernate);
-   e_action_predef_name_set(_("System"), _("Suspend to Disk"), "hibernate", 
+   e_action_predef_name_set(_("System"), _("Hibernate"), "hibernate", 
 			    NULL, NULL, 0);
    
    ACT_GO(pointer_resize_push);
@@ -2661,7 +2661,7 @@ e_actions_init(void)
    
    /* desk_lock */
    ACT_GO(desk_lock);
-   e_action_predef_name_set(_("Desktop"), _("Desktop Lock"), "desk_lock", 
+   e_action_predef_name_set(_("Desktop"), _("Lock"), "desk_lock", 
 			    NULL, NULL, 0);
 
    /* cleanup_windows */
@@ -2751,11 +2751,12 @@ e_action_predef_label_get(const char *action, const char *params)
              actd = l2->data;
              if (!strcmp(actd->act_cmd, action))
                {
-                  if ((params) && (actd->act_params) &&
-                      (!strcmp(params, actd->act_params)))
+                  if ((params) && (actd->act_params))
                     {
-                       return actd->act_name;
+                       if (!strcmp(params, actd->act_params))
+                         return actd->act_name;
                     }
+                  else return actd->act_name;
                }
           }
      }

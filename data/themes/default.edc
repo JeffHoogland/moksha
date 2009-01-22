@@ -10644,6 +10644,42 @@ collections { /* begin the collection of edje groups that are in this file */
 	       }
 	    }
 	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    effect: SOFT_SHADOW;
+	    mouse_events:  0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+               fixed: 0 1;
+               align: 0.5 1.0;
+	       rel1 {
+		  relative: 0.0  1.0;
+		  offset:   3    -4;
+		  to:     "button_image";
+	       }
+	       rel2 {
+		  relative: 1.0  1.0;
+		  offset:   -4   -4;
+		  to:     "button_image";
+	       }
+	       color: 224 224 224 255;
+	       color3: 0 0 0 64;
+	       color_class: "button_text";
+	       text {
+		  font:     "Sans";
+		  size:     10;
+		  min:      1 1;
+		  align:    0.5 1.0;
+		  text_class: "button";
+	       }
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit: "default" 0.0;
+	       color: 0 0 0 128;
+	       color3: 0 0 0 0;
+	       color_class: "button_text_disabled";
+	    }
+	 }
 	 part {
 	    name: "e.swallow.icon";
 	    type: SWALLOW;
@@ -10658,9 +10694,10 @@ collections { /* begin the collection of edje groups that are in this file */
 		  to: "button_image";
 	       }
 	       rel2 {
-		  relative: 1.0 1.0;
-		  offset:   -4   -4;
-		  to: "button_image";
+		  relative: 1.0 0.0;
+		  offset:   -4   -1;
+		  to_x: "button_image";
+		  to_y: "e.text.label";
 	       }
 	    }
 	 }

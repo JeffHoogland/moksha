@@ -816,7 +816,7 @@ group "E_Config" struct {
       value "context" int: 9;
       value "modifiers" int: 6;
       value "key" string: "Delete";
-      value "action" string: "logout";
+      value "action" string: "syscon";
       value "any_mod" uchar: 0;
     }
   }

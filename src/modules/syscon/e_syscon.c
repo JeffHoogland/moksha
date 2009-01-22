@@ -187,6 +187,10 @@ e_syscon_show(E_Zone *zone, const char *defact)
              e_flowlayout_pack_end(o_flow_secondary, o);
              iw = ih = e_config->syscon.secondary.icon_size * e_scale;
           }
+        edje_object_message_signal_process(o);
+        edje_object_size_min_calc(o, &mw, &mh);
+        if (mw > iw) iw = mw;
+        if (mh > ih) ih = mh;
         e_flowlayout_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, 
                                       iw, ih, iw, ih);
         evas_object_show(o);
