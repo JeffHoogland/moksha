@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-01-14 16:09+0400\n"
-"PO-Revision-Date: 2009-01-14 19:08+0400\n"
+"POT-Creation-Date: 2009-01-22 14:43+0400\n"
+"PO-Revision-Date: 2009-01-22 15:42+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -619,8 +619,8 @@ msgid "Exit Immediately"
 msgstr "Quitter immédiatement"
 
 #: src/bin/e_actions.c:2640
-msgid "Shut Down Immediately"
-msgstr "Éteindre immédiatement"
+msgid "Off Now"
+msgstr "Éteindre"
 
 #: src/bin/e_actions.c:2644
 #: src/bin/e_actions.c:2648
@@ -643,11 +643,12 @@ msgid "System"
 msgstr "Système"
 
 #: src/bin/e_actions.c:2644
-msgid "Shut Down"
-msgstr "Éteindre"
+#: src/modules/conf_desks/e_int_config_desks.c:262
+msgid "Off"
+msgstr "Aucune"
 
 #: src/bin/e_actions.c:2648
-msgid "Reboot"
+msgid "Reset"
 msgstr "Redémarrer"
 
 #: src/bin/e_actions.c:2652
@@ -655,12 +656,12 @@ msgid "Suspend"
 msgstr "Mettre en veille"
 
 #: src/bin/e_actions.c:2656
-msgid "Suspend to Disk"
+msgid "Hibernate"
 msgstr "Hiberner"
 
 #: src/bin/e_actions.c:2664
-msgid "Desktop Lock"
-msgstr "Verrouillage du bureau"
+msgid "Lock"
+msgstr "Verrouiller"
 
 #: src/bin/e_actions.c:2669
 #: src/bin/e_int_menus.c:1081
@@ -1368,41 +1369,41 @@ msgstr "Volume inconnu"
 msgid "Removable Device"
 msgstr "Périphérique amovible"
 
-#: src/bin/e_gadcon.c:1243
+#: src/bin/e_gadcon.c:1244
 #: src/modules/gadman/e_mod_gadman.c:659
 msgid "Plain"
 msgstr "En plein"
 
-#: src/bin/e_gadcon.c:1252
+#: src/bin/e_gadcon.c:1253
 #: src/modules/gadman/e_mod_gadman.c:667
 msgid "Inset"
 msgstr "En creux"
 
-#: src/bin/e_gadcon.c:1261
+#: src/bin/e_gadcon.c:1262
 #: src/bin/e_int_config_modules.c:41
 #: src/modules/gadman/e_mod_gadman.c:703
 msgid "Appearance"
 msgstr "Apparence"
 
-#: src/bin/e_gadcon.c:1269
+#: src/bin/e_gadcon.c:1270
 msgid "Automatically scroll contents"
 msgstr "Défilement automatique du contenu"
 
-#: src/bin/e_gadcon.c:1276
+#: src/bin/e_gadcon.c:1277
 msgid "Able to be resized"
 msgstr "Permettre le redimensionnement"
 
-#: src/bin/e_gadcon.c:1288
+#: src/bin/e_gadcon.c:1289
 #: src/modules/gadman/e_mod_gadman.c:738
 msgid "Begin move/resize this gadget"
 msgstr "Activer le déplacement/redimensionnement de ce gadget"
 
-#: src/bin/e_gadcon.c:1294
+#: src/bin/e_gadcon.c:1295
 #: src/modules/gadman/e_mod_gadman.c:744
 msgid "Remove this gadget"
 msgstr "Supprimer ce gadget"
 
-#: src/bin/e_gadcon.c:1712
+#: src/bin/e_gadcon.c:1713
 msgid "Stop move/resize this gadget"
 msgstr "Arrêter de déplacer/redimensionner ce gadget"
 
@@ -1592,7 +1593,7 @@ msgstr "Ignorer"
 
 #: src/bin/e_int_border_menu.c:539
 #: src/bin/e_int_border_prop.c:433
-#: src/modules/conf_colors/e_int_config_color_classes.c:512
+#: src/modules/conf_colors/e_int_config_color_classes.c:514
 msgid "State"
 msgstr "État"
 
@@ -2093,7 +2094,7 @@ msgid "Delete A Shelf"
 msgstr "Supprimer un rack"
 
 #: src/bin/e_int_shelf_config.c:71
-#: src/bin/e_shelf.c:1663
+#: src/bin/e_shelf.c:1667
 #: src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "Paramétrage du rack"
@@ -2750,21 +2751,21 @@ msgstr "Êtes-vous sûr de vouloir supprimer ce rack ?"
 msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
 msgstr "Vous avez demandé à supprimer ce rack.<br><br>Êtes-vous sûr de vouloir le supprimer ?"
 
-#: src/bin/e_shelf.c:1653
+#: src/bin/e_shelf.c:1657
 #: src/bin/e_toolbar.c:316
 msgid "Stop Moving/Resizing Items"
 msgstr "Arrêter de déplacer/redimensionner des éléments"
 
-#: src/bin/e_shelf.c:1655
+#: src/bin/e_shelf.c:1659
 #: src/bin/e_toolbar.c:318
 msgid "Begin Moving/Resizing Items"
 msgstr "Déplacer/Redimensionner des éléments"
 
-#: src/bin/e_shelf.c:1668
+#: src/bin/e_shelf.c:1672
 msgid "Configure Shelf Contents"
 msgstr "Configurer le contenu du rack"
 
-#: src/bin/e_shelf.c:1673
+#: src/bin/e_shelf.c:1677
 msgid "Delete this Shelf"
 msgstr "Supprimer ce rack"
 
@@ -3454,53 +3455,53 @@ msgstr "Étiquette du module"
 msgid "Colors"
 msgstr "Couleurs"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:249
+#: src/modules/conf_colors/e_int_config_color_classes.c:251
 msgid "Other"
 msgstr "Autre"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:433
+#: src/modules/conf_colors/e_int_config_color_classes.c:435
 msgid "Window Manager Colors"
 msgstr "Couleurs du gestionnaire de fenêtres"
-
-#: src/modules/conf_colors/e_int_config_color_classes.c:435
-#: src/modules/conf_colors/e_int_config_color_classes.c:443
-#: src/modules/conf_colors/e_int_config_color_classes.c:451
-#: src/modules/conf_colors/e_int_config_color_classes.c:515
-msgid "Enabled"
-msgstr "Activé"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:437
 #: src/modules/conf_colors/e_int_config_color_classes.c:445
 #: src/modules/conf_colors/e_int_config_color_classes.c:453
-#: src/modules/conf_colors/e_int_config_color_classes.c:520
+#: src/modules/conf_colors/e_int_config_color_classes.c:517
+msgid "Enabled"
+msgstr "Activé"
+
+#: src/modules/conf_colors/e_int_config_color_classes.c:439
+#: src/modules/conf_colors/e_int_config_color_classes.c:447
+#: src/modules/conf_colors/e_int_config_color_classes.c:455
+#: src/modules/conf_colors/e_int_config_color_classes.c:522
 msgid "Disabled"
 msgstr "Désactivé"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:441
+#: src/modules/conf_colors/e_int_config_color_classes.c:443
 msgid "Widget Colors"
 msgstr "Couleurs des composants graphiques"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:449
+#: src/modules/conf_colors/e_int_config_color_classes.c:451
 msgid "Module Colors"
 msgstr "Couleurs des modules"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:499
+#: src/modules/conf_colors/e_int_config_color_classes.c:501
 msgid "Color Classes"
 msgstr "Classes de couleurs"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:527
+#: src/modules/conf_colors/e_int_config_color_classes.c:529
 msgid "Object Color"
 msgstr "Couleur de l'objet"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:536
+#: src/modules/conf_colors/e_int_config_color_classes.c:538
 msgid "Outline Color"
 msgstr "Couleur de la bordure"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:545
+#: src/modules/conf_colors/e_int_config_color_classes.c:547
 msgid "Shadow Color"
 msgstr "Couleur de l'ombre"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:554
+#: src/modules/conf_colors/e_int_config_color_classes.c:556
 msgid "Defaults"
 msgstr "Valeurs par défaut"
 
@@ -3681,10 +3682,6 @@ msgstr "Tourner en boucle lors du basculement"
 #: src/modules/conf_desks/e_int_config_desks.c:260
 msgid "Flip Animation"
 msgstr "Animation du basculement"
-
-#: src/modules/conf_desks/e_int_config_desks.c:262
-msgid "Off"
-msgstr "Aucune"
 
 #: src/modules/conf_desks/e_int_config_desks.c:264
 msgid "Pane"
@@ -6430,7 +6427,7 @@ msgstr "Profil"
 
 #: src/modules/wizard/page_020.c:120
 msgid "Select a profile"
-msgstr "Sélectionner un profil"
+msgstr "Sélectionnez un profil"
 
 #: src/modules/wizard/page_030.c:73
 msgid "No menu files were<br>found on your system.<br>Please see the<br>documentation on<br>www.enlightenment.org<br>for more details on<br>how to get your<br>application menus<br>working."
@@ -6438,7 +6435,7 @@ msgstr "Aucun fichier de menus<br>n'a été trouvé.<br>Veuillez consulter la<br
 
 #: src/modules/wizard/page_030.c:91
 msgid "Select application menu"
-msgstr "Sélectionner le menu"
+msgstr "Sélectionnez le menu"
 
 #: src/modules/wizard/page_030.c:108
 msgid "System Default"
@@ -6480,11 +6477,11 @@ msgstr "Focalisation des fenêtres au passage de la souris "
 msgid "Select Icons to Add"
 msgstr "Sélectionner les icones à ajouter"
 
-#: src/modules/wizard/page_080.c:69
-msgid "IBar Quick Launch"
-msgstr "Lanceur IBar"
+#: src/modules/wizard/page_080.c:68
+msgid "Quick Launch"
+msgstr "Lanceur"
 
-#: src/modules/wizard/page_080.c:71
+#: src/modules/wizard/page_080.c:70
 msgid "Select Applications"
 msgstr "Sélectionner les applications"
 
@@ -6603,12 +6600,20 @@ msgstr "Périphérique spécifique"
 msgid "Networks"
 msgstr "Réseaux"
 
+#~ msgid "Shut Down Immediately"
+#~ msgstr "Éteindre immédiatement"
+#~ msgid "Shut Down"
+#~ msgstr "Éteindre"
+#~ msgid "Reboot"
+#~ msgstr "Redémarrer"
+#~ msgid "Suspend to Disk"
+#~ msgstr "Hiberner"
+#~ msgid "Desktop Lock"
+#~ msgstr "Verrouillage du bureau"
 #~ msgid "get-e.org"
 #~ msgstr "get-e.org"
 #~ msgid "Lock Screen"
 #~ msgstr "Écran de verrouillage"
-#~ msgid "Hibernate"
-#~ msgstr "Hiberner"
 #~ msgid "Logout"
 #~ msgstr "Fermer la session"
 #~ msgid "Desktop %i, %i"
