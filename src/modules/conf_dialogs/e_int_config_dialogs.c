@@ -35,7 +35,7 @@ e_int_config_dialogs(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Dialog Settings"),
 			     "E", "_config_config_dialog_dialog",
-			     "enlightenment/configuration", 0, v, NULL);
+			     "enlightenment/dialogs", 0, v, NULL);
    return cfd;
 }
 
