@@ -274,6 +274,7 @@ icon_applications_ibar.png \
 icon_applications_new.png \
 icon_applications_restart.png \
 icon_applications_startup.png \
+icon_autoscroll.png \
 icon_behavior.png \
 icon_border_border.png \
 icon_border_close.png \
@@ -314,6 +315,7 @@ icon_efm_desktop.png \
 icon_efm_dnd_ask.png \
 icon_efm_dnd_copy.png \
 icon_efm_dnd_move.png \
+icon_efm_eject.png \
 icon_efm_file.png \
 icon_efm_flash.png \
 icon_efm_folder.png \

@@ -3,8 +3,7 @@
 //	Icons:
 //		EFM - All popup icons ... eg, paste copy delete properties
 //		EFM - folders (perhaps?), dynamic mime icons
-//		Icons - Dialogs, Interactions,  settings,
-//			-Automatically Scroll Contents, better looking SD card.
+//		Icons - Interactions,  settings, better looking SD card.
 //
 
 /*
@@ -22418,7 +22417,6 @@ ICON("widget/resize","icon_resize.png",64)
 
 ICON("enlightenment/engine","icon_dummy.png",64)
 ICON("enlightenment/profiles","icon_dummy.png",64)
-ICON("enlightenment/autoscroll","icon_dummy.png",64)
 ICON("enlightenment/toolbar","icon_dummy.png",64)
 ICON("enlightenment/settings","icon_dummy.png",64)
 
@@ -22449,6 +22447,7 @@ ICON("enlightenment/modules","icon_modules.png",64)
 ICON("enlightenment/favorites","icon_favorites.png",64)
 ICON("enlightenment/desktops","icon_desktops.png",64)
 ICON("enlightenment/configuration","icon_configuration.png",64)
+ICON("enlightenment/dialogs","icon_dummy.png",64)
 ICON("enlightenment/intl","icon_intl.png",64)
 ICON("enlightenment/imc","icon_imc.png",64)
 ICON("enlightenment/system","icon_system.png",64)
@@ -22489,6 +22488,7 @@ ICON("enlightenment/file_icons","icon_file_icons.png",64)
 ICON("enlightenment/applications","icon_applications.png",64)
 ICON("enlightenment/add_application","icon_applications_new.png",64)
 ICON("enlightenment/ibar_applications","icon_applications_ibar.png",64)
+ICON("enlightenment/autoscroll","icon_autoscroll.png",64)
 ICON("enlightenment/restart_applications","icon_applications_restart.png",64)
 ICON("enlightenment/startup_applications","icon_applications_startup.png",64)
 ICON("enlightenment/power_management","icon_power_management.png",64)
