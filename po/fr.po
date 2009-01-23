@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-01-22 14:43+0400\n"
-"PO-Revision-Date: 2009-01-22 15:42+0400\n"
+"POT-Creation-Date: 2009-01-23 07:57+0400\n"
+"PO-Revision-Date: 2009-01-23 10:08+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -39,8 +39,6 @@ msgstr "Fermer"
 #: src/bin/e_actions.c:2624
 #: src/bin/e_actions.c:2628
 #: src/bin/e_actions.c:2632
-#: src/bin/e_actions.c:2636
-#: src/bin/e_actions.c:2640
 #: src/bin/e_int_menus.c:159
 #: src/bin/e_main.c:657
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:181
@@ -593,8 +591,9 @@ msgid "Launch"
 msgstr "Lancer"
 
 #: src/bin/e_actions.c:2615
-msgid "Defined Command"
-msgstr "Commande définie"
+#: src/bin/e_int_border_prop.c:439
+msgid "Command"
+msgstr "Commande"
 
 #: src/bin/e_actions.c:2620
 msgid "Application"
@@ -611,17 +610,11 @@ msgid "Exit"
 msgstr "Quitter"
 
 #: src/bin/e_actions.c:2632
-msgid "Log Out"
-msgstr "Fermer la session"
+msgid "Exit Now"
+msgstr "Quitter à l'instant"
 
 #: src/bin/e_actions.c:2636
-msgid "Exit Immediately"
-msgstr "Quitter immédiatement"
-
 #: src/bin/e_actions.c:2640
-msgid "Off Now"
-msgstr "Éteindre"
-
 #: src/bin/e_actions.c:2644
 #: src/bin/e_actions.c:2648
 #: src/bin/e_actions.c:2652
@@ -642,10 +635,17 @@ msgstr "Éteindre"
 msgid "System"
 msgstr "Système"
 
+#: src/bin/e_actions.c:2636
+msgid "Log Out"
+msgstr "Se déconnecter"
+
+#: src/bin/e_actions.c:2640
+msgid "Power Off Now"
+msgstr "Éteindre à l'instant"
+
 #: src/bin/e_actions.c:2644
-#: src/modules/conf_desks/e_int_config_desks.c:262
-msgid "Off"
-msgstr "Aucune"
+msgid "Power Off"
+msgstr "Éteindre"
 
 #: src/bin/e_actions.c:2648
 msgid "Reset"
@@ -1756,10 +1756,6 @@ msgstr "Fenêtre parente"
 msgid "Gravity"
 msgstr "Gravité"
 
-#: src/bin/e_int_border_prop.c:439
-msgid "Command"
-msgstr "Commande"
-
 #: src/bin/e_int_border_prop.c:441
 msgid "Take Focus"
 msgstr "Prend le focus"
@@ -2809,8 +2805,8 @@ msgid "Logout in progress"
 msgstr "Fermeture de la session en cours"
 
 #: src/bin/e_sys.c:366
-msgid "Logout is currently in progress.<br><hilight>Please wait.</hilight>"
-msgstr "Fermeture de votre session en cours.<br><hilight>Veuillez patienter.</hilight>"
+msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
+msgstr "Fermeture de session en cours.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_sys.c:395
 #: src/bin/e_sys.c:456
@@ -2818,24 +2814,24 @@ msgid "Enlightenment is busy with another request"
 msgstr "Enlightenment est occupé à traiter une autre requête"
 
 #: src/bin/e_sys.c:401
-msgid "Enlightenment is busy logging out.<br>You cannot perform other system actions<br>once a logout has begun."
-msgstr "Enlightenment est en train de fermer votre session.<br>Vous ne pouvez pas effectuer d'autres actions système<br>une fois que la fermeture de session est amorcée."
+msgid "Logging out.<br>You cannot perform other system actions<br>once a logout has begun."
+msgstr "Fermeture de session en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>une fois que la fermeture de session est amorcée."
 
 #: src/bin/e_sys.c:409
-msgid "Enlightenment is shutting the system down.<br>You cannot do any other system actions<br>once a shutdown has been started."
-msgstr "Enlightenment est train d'éteindre votre système.<br>Vous ne pouvez pas effectuer d'autres actions système<br>pendant l'arrêt de votre ordinateur."
+msgid "Powering off.<br>You cannot do any other system actions<br>once a shutdown has been started."
+msgstr "Extinction du système en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>pendant l'arrêt de votre ordinateur."
 
 #: src/bin/e_sys.c:416
-msgid "Enlightenment is rebooting the system.<br>You cannot do any other system actions<br>once a reboot has begun."
-msgstr "Enlightenment est en train de redémarrer votre système.<br>Vous ne pouvez pas effectuer d'autres actions système<br>lorsqu'un redémarrage est amorcé."
+msgid "Resetting.<br>You cannot do any other system actions<br>once a reboot has begun."
+msgstr "Redémarrage en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>lorsqu'un redémarrage est amorcé."
 
 #: src/bin/e_sys.c:423
-msgid "Enlightenment is suspending the system.<br>Until suspend is complete you cannot perform<br>any other system actions."
-msgstr "Enlightenment est en train de mettre votre système en veille.<br>Vous ne pouvez pas effectuer d'autres actions système<br>pendant ce temps."
+msgid "Suspending.<br>Until suspend is complete you cannot perform<br>any other system actions."
+msgstr "Mise en veille en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>pendant ce temps."
 
 #: src/bin/e_sys.c:430
-msgid "Enlightenment is hibernating the system.<br>You cannot perform an other system actions<br>until this is complete."
-msgstr "Enlightenment est en train de mettre votre système en hibernation.<br>Vous ne pouvez pas effectuer d'autres actions système<br>tant que ce n'est pas terminé."
+msgid "Hibernating.<br>You cannot perform an other system actions<br>until this is complete."
+msgstr "Mise en hibernation en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>tant que ce n'est pas terminé."
 
 #: src/bin/e_sys.c:437
 #: src/bin/e_sys.c:483
@@ -2843,52 +2839,52 @@ msgid "EEK! This should not happen"
 msgstr "ARGH ! Ceci ne devrait pas arriver"
 
 #: src/bin/e_sys.c:463
-msgid "Shutting down of your system failed."
-msgstr "L'arrêt de votre système a échoué."
+msgid "Power off failed."
+msgstr "Échec de l'extinction."
 
 #: src/bin/e_sys.c:468
-msgid "Rebooting your system failed."
-msgstr "Le redémarrage de votre système a échoué."
+msgid "Reset failed."
+msgstr "Échec du redémarrage."
 
 #: src/bin/e_sys.c:473
-msgid "Suspend of your system failed."
-msgstr "La mise en veille de votre système a échoué."
+msgid "Suspend failed."
+msgstr "Échec de la mise en veille."
 
 #: src/bin/e_sys.c:478
-msgid "Hibernating your system failed."
-msgstr "L'hibernation de votre système a échoué."
+msgid "Hibernate failed."
+msgstr "Échec de la mise en hibernation."
 
 #: src/bin/e_sys.c:529
-msgid "Shutting down"
-msgstr "Arrêt"
+msgid "Power off"
+msgstr "Extinction"
 
 #: src/bin/e_sys.c:532
-msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "Arrêt de votre ordinateur.<br><hilight>Veuillez patienter.</hilight>"
+msgid "Power off.<br><hilight>Please wait.</hilight>"
+msgstr "Extinction.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_sys.c:556
-msgid "Rebooting"
-msgstr "Rédémarrage"
+msgid "Resetting"
+msgstr "Redémarrage"
 
 #: src/bin/e_sys.c:559
-msgid "Rebooting your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "Redémarrage de votre ordinateur.<br><hilight>Veuillez patienter.</hilight>"
+msgid "Resetting.<br><hilight>Please wait.</hilight>"
+msgstr "Redémarrage.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_sys.c:582
 msgid "Suspending"
 msgstr "Mise en veille"
 
 #: src/bin/e_sys.c:585
-msgid "Suspending your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "Mise en veille de votre ordinateur.<br><hilight>Veuillez patienter.</hilight>"
+msgid "Suspending.<br><hilight>Please wait.</hilight>"
+msgstr "Mise en veille.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_sys.c:608
 msgid "Hibernating"
 msgstr "Mise en hibernation"
 
 #: src/bin/e_sys.c:611
-msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
-msgstr "Mise en hibernation de votre ordinateur.<br><hilight>Veuillez patienter.</hilight>"
+msgid "Hibernating.<br><hilight>Please wait.</hilight>"
+msgstr "Mise en hibernation.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_theme_about.c:17
 msgid "About Theme"
@@ -3682,6 +3678,10 @@ msgstr "Tourner en boucle lors du basculement"
 #: src/modules/conf_desks/e_int_config_desks.c:260
 msgid "Flip Animation"
 msgstr "Animation du basculement"
+
+#: src/modules/conf_desks/e_int_config_desks.c:262
+msgid "Off"
+msgstr "Aucune"
 
 #: src/modules/conf_desks/e_int_config_desks.c:264
 msgid "Pane"
@@ -6600,6 +6600,23 @@ msgstr "Périphérique spécifique"
 msgid "Networks"
 msgstr "Réseaux"
 
+#~ msgid "Defined Command"
+#~ msgstr "Commande définie"
+#~ msgid "Exit Immediately"
+#~ msgstr "Quitter immédiatement"
+#~ msgid "Shutting down of your system failed."
+#~ msgstr "L'arrêt de votre système a échoué."
+#~ msgid "Rebooting your system failed."
+#~ msgstr "Le redémarrage de votre système a échoué."
+#~ msgid "Suspend of your system failed."
+#~ msgstr "La mise en veille de votre système a échoué."
+#~ msgid "Shutting down"
+#~ msgstr "Arrêt"
+#~ msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
+#~ msgstr ""
+#~ "Arrêt de votre ordinateur.<br><hilight>Veuillez patienter.</hilight>"
+#~ msgid "Rebooting"
+#~ msgstr "Rédémarrage"
 #~ msgid "Shut Down Immediately"
 #~ msgstr "Éteindre immédiatement"
 #~ msgid "Shut Down"
