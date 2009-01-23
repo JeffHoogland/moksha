@@ -10,12 +10,14 @@ msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-01-03 14:58+0800\n"
-"PO-Revision-Date: 2008-11-11 12:18+0800\n"
-"Last-Translator: gao stone <gaoghy@gmail.com>\n"
+"PO-Revision-Date: 2009-01-22 17:35+0000\n"
+"Last-Translator: Aron Xu <aronmalache@163.com>\n"
 "Language-Team: zh_CN <i18n@linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-01-23 08:20+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: ../src/bin/e_about.c:17
 msgid "About Enlightenment"
@@ -43,21 +45,21 @@ msgstr "Enlightenment"
 #: ../src/bin/e_about.c:26
 msgid ""
 "Copyright &copy; 1999-2008, by the Enlightenment Development Team.<br><br>We "
-"hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>This software is provided as-is with no explicit or implied "
+"hope you enjoy using this software as much as we enjoyed writing "
+"it.<br><br>This software is provided as-is with no explicit or implied "
 "warranty. This software is governed by licensing conditions, so please see "
-"the COPYING and COPYING-PLAIN licence files installed on your system."
-"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
-"is not stable. Many features are incomplete or even non-existant yet and may "
-"have many bugs. You have been <hilight>WARNED!</hilight>"
+"the COPYING and COPYING-PLAIN licence files installed on your "
+"system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> "
+"and it is not stable. Many features are incomplete or even non-existant yet "
+"and may have many bugs. You have been <hilight>WARNED!</hilight>"
 msgstr ""
-"版权所有 拷贝(&c); 1999-2008, Enlightenment 开发小组。<br><br>我们希望您喜欢"
-"使用这个软件，就像我们喜欢编写它一样。<br><br>This software is provided as-"
+"版权所有 拷贝(&c); 1999-2008, Enlightenment "
+"开发小组。<br><br>我们希望您喜欢使用这个软件，就像我们喜欢编写它一样。<br><br>This software is provided as-"
 "is with no explicit or implied warranty. This software is governed by "
 "licensing conditions, so please see the COPYING and COPYING-PLAIN licence "
-"files installed on your system.<br><br>Enlightenment 仍在 <hilight>密集开发</"
-"hilight>中并且不稳定。很多特性尚不完全或不存在，也可能存在很多瑕疵。可别说我"
-"<hilight>没警告过你哦!</hilight>"
+"files installed on your system.<br><br>Enlightenment 仍在 "
+"<hilight>密集开发</hilight>中并且不稳定。很多特性尚不完全或不存在，也可能存在很多瑕疵。可别说我<hilight>没警告过你哦!</hi"
+"light>"
 
 #: ../src/bin/e_about.c:50
 msgid "<title>The Team</title>"
@@ -447,7 +449,7 @@ msgstr "切换到桌面 9"
 
 #: ../src/bin/e_actions.c:2497
 msgid "Switch To Desktop 10 (All Screens)"
-msgstr "切换到桌面 10 "
+msgstr "切换到桌面 10"
 
 #: ../src/bin/e_actions.c:2499
 msgid "Switch To Desktop 11 (All Screens)"
@@ -632,7 +634,6 @@ msgid "Desktop file scan"
 msgstr "桌面文件扫描"
 
 #: ../src/bin/e_config.c:715 ../src/bin/e_config.c:748
-#, fuzzy
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -642,14 +643,8 @@ msgid ""
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
 "the hiccup in your settings.<br>"
 msgstr ""
-"配置数据需要升级。您的旧的配置文件已经被抹去，一系列新的配置文件已按默认状态"
-"生成。这种情况在开发中发生是正常的，所以请不要报告错误。这只是意味着"
-"Enlightenment 需要新的配置文件数据，而您的旧配置里没有这些数据。新版本的配置"
-"文件修正了这个问题，方法就是加入这些数据。现在您可以重新配置您的桌面设置。很"
-"抱歉打断了您的配置。"
 
 #: ../src/bin/e_config.c:732
-#, fuzzy
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -657,22 +652,17 @@ msgid ""
 "This is bad and<br>as a precaution your settings have been now restored "
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
-"您的配置文件比当前的Enlightenment要“新”。这是非常奇怪的事。除非您降级了"
-"Enlightenment，或者复制了其它地方的某个新版本的配置文件，否则这种情况不应该发"
-"生。这是不好的情况，以防万一，您的配置文件已经被恢复到默认状态。对任何的不便"
-"表示歉意。"
 
 #: ../src/bin/e_config.c:1626
-#, fuzzy
 msgid "Settings Upgraded"
-msgstr "设置"
+msgstr ""
 
 #: ../src/bin/e_config.c:1651
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
-"could not be<br>deterimined.<br><br>The file where the error occured was:<br>"
-"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"could not be<br>deterimined.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1662
@@ -680,9 +670,9 @@ msgstr ""
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
 "being saved to.<br>This error is very strange as the files should<br>be "
-"extremely small. Please check the settings<br>for your home directory."
-"<br><br>The file where the error occured was:<br>%s<br><br>This file has "
-"been deleted to avoid corrupt data.<br>"
+"extremely small. Please check the settings<br>for your home "
+"directory.<br><br>The file where the error occured was:<br>%s<br><br>This "
+"file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1675
@@ -699,22 +689,21 @@ msgstr ""
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
 "to write the file.<br>You have either run out of disk space or have<br>gone "
-"over your quota limit.<br><br>The file where the error occured was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"over your quota limit.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1698
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
-"it. This is very unusual.<br><br>The file where the error occured was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"it. This is very unusual.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: ../src/bin/e_config.c:1723
-#, fuzzy
 msgid "Enlightenment Settings Write Problems"
-msgstr "Enlightenment 配置写入问题"
+msgstr ""
 
 #. buttons at the bottom
 #: ../src/bin/e_config.c:1727 ../src/bin/e_config_dialog.c:250
@@ -855,7 +844,7 @@ msgstr "评论"
 
 #: ../src/bin/e_eap_editor.c:498
 msgid "General"
-msgstr "通用"
+msgstr "常规"
 
 #. - general info -
 #: ../src/bin/e_eap_editor.c:501
@@ -1128,9 +1117,8 @@ msgid "Properties"
 msgstr "属性"
 
 #: ../src/bin/e_fm.c:6999 ../src/bin/e_fm.c:7050
-#, fuzzy
 msgid "Use default"
-msgstr "使用默认"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7023 ../src/modules/fileman/e_mod_config.c:176
 msgid "Grid Icons"
@@ -1145,9 +1133,9 @@ msgid "List"
 msgstr "列表"
 
 #: ../src/bin/e_fm.c:7064
-#, fuzzy, c-format
+#, c-format
 msgid "Icon Size (%d)"
-msgstr "图标尺寸"
+msgstr ""
 
 #: ../src/bin/e_fm.c:7208
 msgid "Create a new Directory"
@@ -1213,11 +1201,10 @@ msgstr "您确定删除<br><hilight>%s</hilight>吗？"
 #: ../src/bin/e_fm.c:7592
 #, c-format
 msgid ""
-"Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
-"hilight> ?"
+"Are you sure you want to delete<br>the %d selected files "
+"in:<br><hilight>%s</hilight> ?"
 msgstr ""
-"您确定删除在以下文件夹中<hilight>被选中的 %d 个文件</hilight>么："
-"<br><hilight>%s</hilight>吗？"
+"您确定删除在以下文件夹中<hilight>被选中的 %d 个文件</hilight>么：<br><hilight>%s</hilight>吗？"
 
 #: ../src/bin/e_fm_prop.c:108
 msgid "File Properties"
@@ -1760,13 +1747,11 @@ msgid ""
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
 msgstr ""
-"你正试着让 Enlightenment 记住把某些属性（诸如大小、位置、边框样式等）<br>应用"
-"到一个窗口，而这个窗口<hilight>并没有单一的属性</hilight>。<br><br>这意味着它"
-"是跟其它一个或多个窗口共享名字／类、Transience、角色等属性的，<br>记住这个窗"
-"口的这些属性也会应用到匹配的那些窗口。<br><br>这只是个警告，如果你不想这个操"
-"作发生的话。<br>如果这是你所要做的，按一下<hilight>应用</hilight>或者"
-"<hilight>OK</hilight>按钮，你的操作就会生效。<br>如果你不想，按下<hilight>取"
-"消</hilight>，那就什么都不会发生。"
+"你正试着让 Enlightenment "
+"记住把某些属性（诸如大小、位置、边框样式等）<br>应用到一个窗口，而这个窗口<hilight>并没有单一的属性</hilight>。<br><br>这意"
+"味着它是跟其它一个或多个窗口共享名字／类、Transience、角色等属性的，<br>记住这个窗口的这些属性也会应用到匹配的那些窗口。<br><br>这只"
+"是个警告，如果你不想这个操作发生的话。<br>如果这是你所要做的，按一下<hilight>应用</hilight>或者<hilight>OK</hilig"
+"ht>按钮，你的操作就会生效。<br>如果你不想，按下<hilight>取消</hilight>，那就什么都不会发生。"
 
 #: ../src/bin/e_int_border_remember.c:330
 #: ../src/bin/e_int_border_remember.c:360
@@ -1780,9 +1765,9 @@ msgid ""
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
 msgstr ""
-"你正试着让 Enlightenment 记住把某些属性（诸如大小、位置、边框样式等）<br>应用"
-"到一个窗口，却<hilight>不指定如何记住它</hilight>。<br><br>你必须指定至少一种"
-"记住这个窗口的方法。"
+"你正试着让 Enlightenment "
+"记住把某些属性（诸如大小、位置、边框样式等）<br>应用到一个窗口，却<hilight>不指定如何记住它</hilight>。<br><br>你必须指定至"
+"少一种记住这个窗口的方法。"
 
 #: ../src/bin/e_int_border_remember.c:363
 msgid ""
@@ -1800,14 +1785,12 @@ msgid ""
 "<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
 "affected."
 msgstr ""
-"你正试着让 Enlightenment 记住把某些属性（诸如大小、位置、边框样式等）<br>应用"
-"到一个窗口，而这个窗口<hilight>并没有单一的属性</hilight>。<br><br>这意味着它"
-"是跟其它一个或多个窗口共享名字／类、Transience、角色等属性的，<br>记住这个窗"
-"口的这些属性也会应用到匹配的那些窗口。<br><br>你可能需要启用<hilight>只匹配一"
-"个窗口</hilight>选项，如果你只是想要仅仅这个窗口的实例被修改，而保留其它窗口"
-"不变。<br><br>这只是个警告，如果你不想这个操作发生的话。<br>如果这是你所要做"
-"的，按一下<hilight>应用</hilight>或者<hilight>OK</hilight>按钮，你的操作就会"
-"生效。<br>如果你不想，按下<hilight>取消</hilight>，那就什么都不会发生。"
+"你正试着让 Enlightenment "
+"记住把某些属性（诸如大小、位置、边框样式等）<br>应用到一个窗口，而这个窗口<hilight>并没有单一的属性</hilight>。<br><br>这意"
+"味着它是跟其它一个或多个窗口共享名字／类、Transience、角色等属性的，<br>记住这个窗口的这些属性也会应用到匹配的那些窗口。<br><br>你可"
+"能需要启用<hilight>只匹配一个窗口</hilight>选项，如果你只是想要仅仅这个窗口的实例被修改，而保留其它窗口不变。<br><br>这只是个警"
+"告，如果你不想这个操作发生的话。<br>如果这是你所要做的，按一下<hilight>应用</hilight>或者<hilight>OK</hilight>"
+"按钮，你的操作就会生效。<br>如果你不想，按下<hilight>取消</hilight>，那就什么都不会发生。"
 
 #: ../src/bin/e_int_border_remember.c:439
 msgid "Nothing"
@@ -1961,9 +1944,8 @@ msgid "Remove Gadget"
 msgstr "移除组件"
 
 #: ../src/bin/e_int_toolbar_config.c:30 ../src/bin/e_toolbar.c:327
-#, fuzzy
 msgid "Toolbar Settings"
-msgstr "模块设置"
+msgstr ""
 
 #: ../src/bin/e_int_toolbar_config.c:82 ../src/bin/e_int_shelf_config.c:500
 #: ../src/bin/e_int_shelf_config.c:565
@@ -2189,7 +2171,7 @@ msgid ""
 msgstr ""
 
 #: ../src/bin/e_main.c:308
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Options:\n"
 "\t-display DISPLAY\n"
@@ -2200,8 +2182,8 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
+"800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -2214,23 +2196,6 @@ msgid ""
 "\t-locked\n"
 "\t\tstart with desklock on, so password will be asked.\n"
 msgstr ""
-"选项：\n"
-"\t-display DISPLAY\n"
-"\t\t连接到名为 DISPLAY 的一个显示终端。\n"
-"\t\t例如： -display :1.0\n"
-"\t-fake-xinerama-screen WxH+X+Y\n"
-"\t\t加入一个伪 xinerama 屏幕（代替真实的那个），\n"
-"\t\t并给定尺寸。只要您愿意，就可以一直加上去。\n"
-"\t\t它们都会替代真实的 xinerama 屏幕，如果有存在\n"
-"\t\t的话。这个功能可以拿来模拟 xinerama。\n"
-"\t\t例如： -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600"
-"+800+0\n"
-"\t-profile CONF_PROFILE\n"
-"\t\t使用配置文件 CONF_PROFILE 代替用户选择的配置文件，或者就使用“default”。\n"
-"\t-good\n"
-"\t\t好。\n"
-"\t-evil\n"
-"\t\t不好。\n"
 
 #: ../src/bin/e_main.c:377
 msgid ""
@@ -2503,7 +2468,7 @@ msgstr "设置 FM"
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment 无法启动文件管理器。\n"
 
-#.
+#. 
 #. TS("fwin");
 #. if (!e_fwin_init())
 #. {
@@ -2511,7 +2476,7 @@ msgstr "Enlightenment 无法启动文件管理器。\n"
 #. _e_main_shutdown(-1);
 #. }
 #. _e_main_shutdown_push(e_fwin_shutdown);
-#.
+#. 
 #: ../src/bin/e_main.c:835
 msgid "Setup Message System"
 msgstr "安装消息系统"
@@ -2670,8 +2635,7 @@ msgstr "接近完成"
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
 "found in the<br>module search directories.<br>"
-msgstr ""
-"导入模块 %s 时发生错误。<br>在模块搜索路径中<br>没有找到名为 %s 的模块。<br>"
+msgstr "导入模块 %s 时发生错误。<br>在模块搜索路径中<br>没有找到名为 %s 的模块。<br>"
 
 #: ../src/bin/e_module.c:128 ../src/bin/e_module.c:141
 #: ../src/bin/e_module.c:162
@@ -2683,9 +2647,7 @@ msgstr "载入模块出错"
 msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
 "is:<br>%s<br>The error reported was:<br>%s<br>"
-msgstr ""
-"导入模块 %s 时发生错误。<br>该模块的全路径是：<br>%s<br>错误报告如下：<br>%"
-"s<br>"
+msgstr "导入模块 %s 时发生错误。<br>该模块的全路径是：<br>%s<br>错误报告如下：<br>%s<br>"
 
 #: ../src/bin/e_module.c:161
 msgid "Module does not contain all needed functions"
@@ -2698,8 +2660,7 @@ msgid ""
 "module API version of: %i.<br>The module API advertized by Enlightenment is: "
 "%i.<br>"
 msgstr ""
-"模块 API 错误<br>启动模块错误：%s<br>要求最小的模块 API 版本号：%i。"
-"<br>Enlightenment给的模块版本号：%i。<br>"
+"模块 API 错误<br>启动模块错误：%s<br>要求最小的模块 API 版本号：%i。<br>Enlightenment给的模块版本号：%i。<br>"
 
 #: ../src/bin/e_module.c:180
 #, c-format
@@ -2759,9 +2720,7 @@ msgid ""
 "Logout is taking too long. Some<br>applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?"
-msgstr ""
-"注销花费了太多的时间。一些<br>应用程序拒绝关闭。<br>您是否要强行注销而不手工"
-"退出那些应用程序？"
+msgstr "注销花费了太多的时间。一些<br>应用程序拒绝关闭。<br>您是否要强行注销而不手工退出那些应用程序？"
 
 #: ../src/bin/e_sys.c:323
 msgid "Logout now"
@@ -2803,8 +2762,7 @@ msgstr "Enlightenment 正在关闭系统。<br>在关机开始后，您不能进
 msgid ""
 "Enlightenment is rebooting the system.<br>You cannot do any other system "
 "actions<br>once a reboot has begun."
-msgstr ""
-"Enlightenment 正在重新起动系统。<br>在重启开始后，您不能进行其他系统操作。"
+msgstr "Enlightenment 正在重新起动系统。<br>在重启开始后，您不能进行其他系统操作。"
 
 #: ../src/bin/e_sys.c:423
 msgid ""
@@ -2893,8 +2851,8 @@ msgid ""
 "means<br>that Enlightenment will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
-"一些窗口仍然处在被生命周期锁定之中。<br>这意味着 Enlightenment 不允许它自己退"
-"出，除非这些窗口已经被关闭，<br>或者被去除生命周期锁。<br>"
+"一些窗口仍然处在被生命周期锁定之中。<br>这意味着 Enlightenment "
+"不允许它自己退出，除非这些窗口已经被关闭，<br>或者被去除生命周期锁。<br>"
 
 #: ../src/bin/e_utils.c:702
 #, c-format
@@ -3033,9 +2991,8 @@ msgid "Read-Write"
 msgstr "读写"
 
 #: ../src/modules/battery/e_mod_config.c:40
-#, fuzzy
 msgid "Battery Monitor Settings"
-msgstr "电池监视器设置"
+msgstr ""
 
 #: ../src/modules/battery/e_mod_config.c:91
 msgid "Basic Settings"
@@ -3128,9 +3085,8 @@ msgstr "时钟"
 
 #: ../src/modules/conf/e_mod_main.c:142 ../src/modules/conf/e_mod_main.c:165
 #: ../src/modules/conf/e_mod_main.c:214
-#, fuzzy
 msgid "Settings Panel"
-msgstr "设置"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:51
 #: ../src/modules/conf_applications/e_mod_main.c:42
@@ -3163,9 +3119,8 @@ msgid "Selected Applications"
 msgstr "已选择的应用程序"
 
 #: ../src/modules/conf_applications/e_mod_main.c:34
-#, fuzzy
 msgid "Apps"
-msgstr "应用"
+msgstr ""
 
 #: ../src/modules/conf_applications/e_mod_main.c:35
 msgid "New Application"
@@ -3213,9 +3168,8 @@ msgstr "为下次使用记住这个窗口边框"
 #: ../src/modules/conf_transitions/e_mod_main.c:34
 #: ../src/modules/conf_wallpaper/e_mod_main.c:28
 #: ../src/modules/dropshadow/e_mod_main.c:89
-#, fuzzy
 msgid "Look"
-msgstr "锁定"
+msgstr ""
 
 #: ../src/modules/conf_borders/e_mod_main.c:35
 msgid "Borders"
@@ -3442,9 +3396,8 @@ msgid "Colors"
 msgstr "颜色"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:249
-#, fuzzy
 msgid "Other"
-msgstr "IBar 其他"
+msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:433
 msgid "Window Manager Colors"
@@ -3531,9 +3484,8 @@ msgid "Automatic Locking"
 msgstr "自动锁定"
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:147
-#, fuzzy
 msgid "Lock when Enlightenment starts"
-msgstr "使用 Enlightenment 指针"
+msgstr ""
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:151
 msgid "Lock when X screensaver activates"
@@ -3712,14 +3664,12 @@ msgid "Disable Confirmation Dialogs"
 msgstr "禁用确认对话"
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:91
-#, fuzzy
 msgid "Normal Windows"
-msgstr "（无窗口）"
+msgstr ""
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:98
-#, fuzzy
 msgid "Default Settings Dialogs Mode"
-msgstr "默认对话模式"
+msgstr ""
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:101
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:140
@@ -3746,32 +3696,32 @@ msgstr "对话"
 #: ../src/modules/conf_display/e_int_config_display.c:129
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
-"will be restored in %d seconds."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d "
+"Hz will be restored in %d seconds."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:136
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d will be "
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored in %d seconds."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:146
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
-"will be restored <hilight>IMMEDIATELY</hilight>."
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d "
+"Hz will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:153
 #, c-format
 msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d will be "
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
+"not.<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 
@@ -3780,14 +3730,12 @@ msgid "Resolution change"
 msgstr "分辨率改变"
 
 #: ../src/modules/conf_display/e_int_config_display.c:194
-#, fuzzy
 msgid "Save"
-msgstr "状态"
+msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:195
-#, fuzzy
 msgid "Restore"
-msgstr "重启"
+msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:228
 msgid "Screen Resolution Settings"
@@ -3819,11 +3767,11 @@ msgstr "缺失的特性"
 
 #: ../src/modules/conf_display/e_int_config_display.c:643
 msgid ""
-"Your X Display Server is missing support for<br>the <hilight>XRandR</"
-"hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
-"resolutions without<br>the support of this extension. It could also "
-"be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no "
-"XRandR support detected."
+"Your X Display Server is missing support for<br>the "
+"<hilight>XRandR</hilight> (X Resize and Rotate) extension.<br>You cannot "
+"change screen resolutions without<br>the support of this extension. It could "
+"also be<br>that at the time <hilight>ecore</hilight> was built, there<br>was "
+"no XRandR support detected."
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:655
@@ -3865,9 +3813,8 @@ msgid "Enable Display Power Management"
 msgstr "启用显示电源管理"
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:203
-#, fuzzy
 msgid "Timers"
-msgstr "计时器"
+msgstr ""
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:205
 msgid "Standby time"
@@ -4279,9 +4226,8 @@ msgid "Exported Environment Variables"
 msgstr "导出环境变量"
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:66
-#, fuzzy
 msgid "Select an Input Method Settings..."
-msgstr "选择一个输入法配置…"
+msgstr ""
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:281
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:296
@@ -4440,8 +4386,9 @@ msgstr "绑定按键错误"
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1141
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>%"
-"s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1287
@@ -4608,8 +4555,8 @@ msgstr "文件"
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
-"or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
-"highlight> to abort."
+"or roll a wheel, to assign mouse binding.<br>Press "
+"<hilight>Escape</highlight> to abort."
 msgstr ""
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:112
@@ -4725,9 +4672,8 @@ msgid "Threshold"
 msgstr "临界值"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:62
-#, fuzzy
 msgid "Search Path Settings"
-msgstr "启动设置"
+msgstr ""
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:73
 msgid "Data"
@@ -5067,9 +5013,8 @@ msgid "Enlightenment was unable to import the theme<br>due to a copy error."
 msgstr ""
 
 #: ../src/modules/conf_theme/e_int_config_theme_web.c:127
-#, fuzzy
 msgid "Exchange themes"
-msgstr "图标主题"
+msgstr ""
 
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:44
 msgid "Transition Settings"
@@ -5690,7 +5635,7 @@ msgid "Show windows from other screens"
 msgstr "显示其他屏幕窗口"
 
 #. REMOVED AS ADVANCED DOESN"T FIT INTO 640x480 WITH IT
-#.
+#. 
 #. of = e_widget_framelist_add(evas, _("General Settings"), 0);
 #. ob = e_widget_check_add(evas, _("Show iconified windows"), &(cfdata->list_show_iconified));
 #. e_widget_framelist_object_append(of, ob);
@@ -5699,7 +5644,7 @@ msgstr "显示其他屏幕窗口"
 #. ob = e_widget_check_add(evas, _("Show windows from other screens"), &(cfdata->list_show_other_screen_windows));
 #. e_widget_framelist_object_append(of, ob);
 #. e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
-#.
+#. 
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:144
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:218
 msgid "Selection Settings"
@@ -5796,9 +5741,8 @@ msgid "Powersaving policy"
 msgstr ""
 
 #: ../src/modules/cpufreq/e_mod_main.c:283
-#, fuzzy
 msgid "Automatic powersaving"
-msgstr "自动锁定"
+msgstr ""
 
 #: ../src/modules/cpufreq/e_mod_main.c:302
 #, c-format
@@ -5846,9 +5790,8 @@ msgid ""
 msgstr "试着通过模块 setfreq 功能设定 CPU 频率设置<br>时发生一个错误。"
 
 #: ../src/modules/dropshadow/e_mod_config.c:40
-#, fuzzy
 msgid "Dropshadow Settings"
-msgstr "对话设置"
+msgstr ""
 
 #: ../src/modules/dropshadow/e_mod_config.c:108
 msgid "Quality"
@@ -5943,7 +5886,6 @@ msgid "Run Command Dialog"
 msgstr "运行命令对话框"
 
 #: ../src/modules/fileman/e_mod_main.c:276
-#, fuzzy
 msgid ""
 "Fileman Module Settings data needed upgrading. Your old configuration<br>has "
 "been wiped and a new set of defaults initialized. This<br>will happen "
@@ -5953,11 +5895,6 @@ msgid ""
 "defaults will fix<br>that by adding it in. You can re-configure things now "
 "to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr ""
-"配置数据需要被升级。您的旧的配置文件已经被抹去，一系列新的配置文件已按默认状"
-"态生成。这种情况在开发中发生是正常的，所以请不要报告错误。这只是意味着"
-"Enlightenment 需要新的配置文件数据，而您的旧配置里没有这些数据。新版本的配置"
-"文件修复了这个问题，方法就是加入这些数据。现在您可以重新配置您的桌面设置。很"
-"抱歉打断了您的配置。"
 
 #: ../src/modules/fileman/e_mod_main.c:289
 msgid ""
@@ -5968,15 +5905,13 @@ msgid ""
 "precaution your configuration has been now restored to<br>defaults. Sorry "
 "for the inconvenience.<br>"
 msgstr ""
-"您的配置文件比当前的 Enlightenment 更新。这是非常奇怪的事。除非您降级了"
-"Enlightenment，或者复制了其它地方的某个新版本的配置文件，否则这种情况不应该发"
-"生。这是不好的情况，以防万一，您的配置文件已经被恢复到默认状态。对任何的不便"
-"表示歉意。<br>"
+"您的配置文件比当前的 Enlightenment "
+"更新。这是非常奇怪的事。除非您降级了Enlightenment，或者复制了其它地方的某个新版本的配置文件，否则这种情况不应该发生。这是不好的情况，以防万一"
+"，您的配置文件已经被恢复到默认状态。对任何的不便表示歉意。<br>"
 
 #: ../src/modules/fileman/e_mod_main.c:358
-#, fuzzy
 msgid "Fileman Settings Updated"
-msgstr "文件管理器设置"
+msgstr ""
 
 #: ../src/modules/fileman/e_mod_config.c:88
 msgid "Fileman Settings"
@@ -6129,9 +6064,8 @@ msgid "Select a window"
 msgstr "选择一个窗口"
 
 #: ../src/modules/ibar/e_mod_config.c:55
-#, fuzzy
 msgid "IBar Settings"
-msgstr "基本设置"
+msgstr ""
 
 #: ../src/modules/ibar/e_mod_config.c:101
 msgid "Selected Bar Source"
@@ -6202,9 +6136,8 @@ msgid "Add Application"
 msgstr "添加应用程序"
 
 #: ../src/modules/ibox/e_mod_config.c:48
-#, fuzzy
 msgid "IBox Settings"
-msgstr "登陆框设置"
+msgstr ""
 
 #: ../src/modules/ibox/e_mod_config.c:97
 msgid "Display Name"
@@ -6247,9 +6180,8 @@ msgid "IBox"
 msgstr "IBox"
 
 #: ../src/modules/pager/e_mod_config.c:69
-#, fuzzy
 msgid "Pager Settings"
-msgstr "缓存设置"
+msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:116
 #: ../src/modules/pager/e_mod_config.c:155
@@ -6346,8 +6278,8 @@ msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:273
 msgid ""
-"Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
-"<br>Or <hilight>Del</hilight> to reset the button."
+"Please press a mouse button<br>Press <hilight>Escape</hilight> to "
+"abort.<br>Or <hilight>Del</hilight> to reset the button."
 msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:328
@@ -6397,19 +6329,16 @@ msgid "Start"
 msgstr "开始"
 
 #: ../src/modules/syscon/e_mod_main.c:34
-#, fuzzy
 msgid "System Control"
-msgstr "设置系统控制"
+msgstr ""
 
 #: ../src/modules/syscon/e_mod_main.c:55
-#, fuzzy
 msgid "System Controls"
-msgstr "设置系统控制"
+msgstr ""
 
 #: ../src/modules/temperature/e_mod_config.c:63
-#, fuzzy
 msgid "Temperature Settings"
-msgstr "常规设置"
+msgstr ""
 
 #: ../src/modules/temperature/e_mod_config.c:249
 #: ../src/modules/temperature/e_mod_config.c:352
@@ -6533,14 +6462,12 @@ msgid "Select one"
 msgstr "选择一个"
 
 #: ../src/modules/wizard/page_020.c:56
-#, fuzzy
 msgid "Profile"
-msgstr "用户环境"
+msgstr ""
 
 #: ../src/modules/wizard/page_020.c:120
-#, fuzzy
 msgid "Select a profile"
-msgstr "选择一个 Edje 文件"
+msgstr ""
 
 #: ../src/modules/wizard/page_030.c:73
 msgid ""
@@ -6550,54 +6477,44 @@ msgid ""
 msgstr ""
 
 #: ../src/modules/wizard/page_030.c:91
-#, fuzzy
 msgid "Select application menu"
-msgstr "已选择的应用程序"
+msgstr ""
 
 #: ../src/modules/wizard/page_030.c:108
-#, fuzzy
 msgid "System Default"
-msgstr "使用默认"
+msgstr ""
 
 #: ../src/modules/wizard/page_040.c:25
-#, fuzzy
 msgid "Launcher Bar"
-msgstr "添加到启动器"
+msgstr ""
 
 #: ../src/modules/wizard/page_040.c:27
-#, fuzzy
 msgid "Select applications"
-msgstr "已选择的应用程序"
+msgstr ""
 
 #: ../src/modules/wizard/page_050.c:28
-#, fuzzy
 msgid "Desktop Files"
-msgstr "桌面文件"
+msgstr ""
 
 #: ../src/modules/wizard/page_050.c:32
-#, fuzzy
 msgid "No icons on desktop"
-msgstr "在桌面上显示 HAL 图标"
+msgstr ""
 
 #: ../src/modules/wizard/page_050.c:35
-#, fuzzy
 msgid "Enable desktop icons"
-msgstr "显示桌面图标"
+msgstr ""
 
 #: ../src/modules/wizard/page_060.c:28
-#, fuzzy
 msgid "Focus mode"
-msgstr "焦点"
+msgstr ""
 
 #: ../src/modules/wizard/page_060.c:32
-#, fuzzy
 msgid "Click to focus windows"
-msgstr "点击获得焦点"
+msgstr ""
 
 #: ../src/modules/wizard/page_060.c:35
-#, fuzzy
 msgid "Mouse over focuses windows"
-msgstr "滑动指针到新聚焦的窗口"
+msgstr ""
 
 #: ../src/modules/mixer/app_mixer.c:166
 msgid "Capture"
@@ -6660,9 +6577,8 @@ msgid "Sound Cards"
 msgstr "声卡"
 
 #: ../src/modules/mixer/conf_gadget.c:383
-#, fuzzy
 msgid "Mixer Settings"
-msgstr "尺寸设置"
+msgstr ""
 
 #: ../src/modules/mixer/conf_module.c:98
 msgid "Mixer to use for global actions:"
@@ -6673,14 +6589,12 @@ msgid "Launch mixer..."
 msgstr "启动混音器..."
 
 #: ../src/modules/mixer/conf_module.c:187
-#, fuzzy
 msgid "Mixer Module Settings"
-msgstr "模块设置"
+msgstr ""
 
 #: ../src/modules/mixer/e_mod_main.c:126
-#, fuzzy
 msgid "Mixer Settings Updated"
-msgstr "混音器配置已更新"
+msgstr ""
 
 #: ../src/modules/mixer/e_mod_main.c:1165
 msgid ""
@@ -6717,15 +6631,7 @@ msgstr "指定设备"
 msgid "Networks"
 msgstr "网络"
 
-#~ msgid "Lock Screen"
-#~ msgstr "锁定屏幕"
-
-#~ msgid "Hibernate"
-#~ msgstr "休眠"
-
-#~ msgid "Logout"
-#~ msgstr "退出"
-
+#, c-format
 #~ msgid "Desktop %i, %i"
 #~ msgstr "桌面  %i, %i"
 
@@ -6737,6 +6643,15 @@ msgstr "网络"
 
 #~ msgid "Toolbar Configuration"
 #~ msgstr "工具栏配置"
+
+#~ msgid "Lock Screen"
+#~ msgstr "锁定屏幕"
+
+#~ msgid "Hibernate"
+#~ msgstr "休眠"
+
+#~ msgid "Logout"
+#~ msgstr "退出"
 
 #~ msgid "Shelf Configuration"
 #~ msgstr "书架配置"
@@ -6792,62 +6707,14 @@ msgstr "网络"
 #~ msgid "Mixer Module Configuration"
 #~ msgstr "混音器模块设置"
 
-#~ msgid "Back"
-#~ msgstr "后退"
-
-#~ msgid "Choose Language"
-#~ msgstr "选择语言"
+#~ msgid "Enlightenment was unable to process a command line:<br><br>%s %s<br>"
+#~ msgstr "Enlightenment无法创建一个命令行：<br><br>%s %s<br>"
 
 #~ msgid "X reports there are no root windows and %i screens!\n"
 #~ msgstr "X 报告没有找到窗口和屏幕 %i ！\n"
 
 #~ msgid "Disable this splash screen in the future?"
 #~ msgstr "以后不显示这个 Splash？"
-
-#~ msgid "Theme Bug Detected"
-#~ msgstr "检测到主题 Bug"
-
-#~ msgid "Init"
-#~ msgstr "初始"
-
-#~ msgid "Window Manipulation"
-#~ msgstr "窗口管理"
-
-#~ msgid "Mouse Acceleration Settings"
-#~ msgstr "鼠标加速设置"
-
-#~ msgid "Select"
-#~ msgstr "选择"
-
-#, fuzzy
-#~ msgid "Add To Favorites Menu"
-#~ msgstr "显示“我的最爱”菜单"
-
-#~ msgid ""
-#~ "Battery Running Low<br>Your battery is running low.<br>You may wish to "
-#~ "switch to an AC source."
-#~ msgstr "电池电量低<br>您的电池电量低。<br>您可能需要切换到使用交流电源。"
-
-#~ msgid "BAD DRIVER"
-#~ msgstr "错误的驱动"
-
-#~ msgid "FULL"
-#~ msgstr "满"
-
-#~ msgid "High"
-#~ msgstr "高"
-
-#~ msgid "Low"
-#~ msgstr "低"
-
-#~ msgid "Danger"
-#~ msgstr "危险"
-
-#~ msgid "Charging"
-#~ msgstr "充电中"
-
-#~ msgid "Enlightenment was unable to process a command line:<br><br>%s %s<br>"
-#~ msgstr "Enlightenment无法创建一个命令行：<br><br>%s %s<br>"
 
 #~ msgid "Enlightenment cannot set up its app system."
 #~ msgstr "Enlightenment 无法建立它的应用系统。"
@@ -6864,11 +6731,8 @@ msgstr "网络"
 #~ msgid "Miscellaneous"
 #~ msgstr "杂项"
 
-#~ msgid "Chinese (Simplified)"
-#~ msgstr "中文 (简体)"
-
-#~ msgid "Chinese (Traditional)"
-#~ msgstr "中文（繁体）"
+#~ msgid "Window Manipulation"
+#~ msgstr "窗口管理"
 
 #~ msgid "French"
 #~ msgstr "法国的"
@@ -6894,9 +6758,6 @@ msgstr "网络"
 #~ msgid "France"
 #~ msgstr "法国"
 
-#~ msgid "Hong Kong"
-#~ msgstr "香港"
-
 #~ msgid "Mexico"
 #~ msgstr "墨西哥"
 
@@ -6906,23 +6767,11 @@ msgstr "网络"
 #~ msgid "Norway"
 #~ msgstr "挪威"
 
-#~ msgid "Peru"
-#~ msgstr "秘鲁"
-
-#~ msgid "Qatar"
-#~ msgstr "卡塔尔"
-
-#~ msgid "Rwanda"
-#~ msgstr "卢旺达"
-
 #~ msgid "Samoa"
 #~ msgstr "萨摩亚"
 
 #~ msgid "Senegal"
 #~ msgstr "塞内加尔"
-
-#~ msgid "Spain"
-#~ msgstr "西班牙"
 
 #~ msgid "Taiwan"
 #~ msgstr "台湾"
@@ -6954,9 +6803,6 @@ msgstr "网络"
 #~ msgid "Misc"
 #~ msgstr "杂项"
 
-#~ msgid "Wait Exit"
-#~ msgstr "等待推出"
-
 #~ msgid "Window Frame"
 #~ msgstr "窗口帧"
 
@@ -6975,9 +6821,6 @@ msgstr "网络"
 #~ msgid "Font Class Configuration"
 #~ msgstr "字体类别配置"
 
-#~ msgid "Modify"
-#~ msgstr "修改"
-
 #~ msgid "Edit Application"
 #~ msgstr "编辑应用程序"
 
@@ -6990,11 +6833,34 @@ msgstr "网络"
 #~ msgid "Move application up"
 #~ msgstr "应用程序上移"
 
+#~ msgid ""
+#~ "Battery Running Low<br>Your battery is running low.<br>You may wish to "
+#~ "switch to an AC source."
+#~ msgstr "电池电量低<br>您的电池电量低。<br>您可能需要切换到使用交流电源。"
+
 #~ msgid "NO INFO"
 #~ msgstr "没有信息"
 
 #~ msgid "NO BAT"
 #~ msgstr "没有电池"
+
+#~ msgid "BAD DRIVER"
+#~ msgstr "错误的驱动"
+
+#~ msgid "FULL"
+#~ msgstr "满"
+
+#~ msgid "High"
+#~ msgstr "高"
+
+#~ msgid "Low"
+#~ msgstr "低"
+
+#~ msgid "Danger"
+#~ msgstr "危险"
+
+#~ msgid "Charging"
+#~ msgstr "充电中"
 
 #~ msgid "Enlightenment Battery Module"
 #~ msgstr "Enlightenment电池模块"
@@ -7002,13 +6868,12 @@ msgstr "网络"
 #~ msgid ""
 #~ "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 #~ "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
-#~ "adaptor<br>status. This will work under Linux and FreeBSD and is "
-#~ "only<br>as accurate as your BIOS or kernel drivers."
+#~ "adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as "
+#~ "accurate as your BIOS or kernel drivers."
 #~ msgstr ""
-#~ "一个简单的电池指示计，使用Linux下的 <hilight>ACPI</hilight> 或者 "
-#~ "<hilight>APM</hilight> <br>模块来监视您的电池和交流电源适配器状态。<br>它"
-#~ "能在 Linux 和 FreeBSD 下工作，且能和您的 BIOS 或内核驱动<br>一样精确地工"
-#~ "作。"
+#~ "一个简单的电池指示计，使用Linux下的 <hilight>ACPI</hilight> 或者 <hilight>APM</hilight> "
+#~ "<br>模块来监视您的电池和交流电源适配器状态。<br>它能在 Linux 和 FreeBSD 下工作，且能和您的 BIOS "
+#~ "或内核驱动<br>一样精确地工作。"
 
 #~ msgid "Enlightenment Clock Module"
 #~ msgstr "Enlightenment时钟模块"
@@ -7020,47 +6885,38 @@ msgstr "网络"
 #~ msgstr "Enlightenment阴影模块"
 
 #~ msgid ""
-#~ "This is the dropshadow module that allows dropshadows to be cast<br>on "
-#~ "the desktop background - without special X-Server extensions<br>or "
-#~ "hardware acceleration."
-#~ msgstr ""
-#~ "这是 阴影 模块，它使得可以在桌面背景上产生投影。<br>不需要特殊的X服务器扩"
-#~ "展，或是硬件加速。"
+#~ "This is the dropshadow module that allows dropshadows to be cast<br>on the "
+#~ "desktop background - without special X-Server extensions<br>or hardware "
+#~ "acceleration."
+#~ msgstr "这是 阴影 模块，它使得可以在桌面背景上产生投影。<br>不需要特殊的X服务器扩展，或是硬件加速。"
 
 #~ msgid "Cannot add icon"
 #~ msgstr "不能加入图标"
 
 #~ msgid ""
-#~ "You tried to drop an icon of an application that<br>does not have a "
-#~ "matching application file.<br><br>The icon cannot be added to IBar."
-#~ msgstr ""
-#~ "你试着将一个没有 application 文件的应用程序图标拖放进来。<br><br>这个图标"
-#~ "无法被加入到 IBar。"
+#~ "You tried to drop an icon of an application that<br>does not have a matching "
+#~ "application file.<br><br>The icon cannot be added to IBar."
+#~ msgstr "你试着将一个没有 application 文件的应用程序图标拖放进来。<br><br>这个图标无法被加入到 IBar。"
 
 #~ msgid "Enlightenment IBar Module"
 #~ msgstr "Enlightenment IBar 模块"
 
 #~ msgid ""
-#~ "This is the IBar Application Launcher bar module for Enlightenment.<br>It "
-#~ "is a first example module and is being used to flesh out "
-#~ "several<br>interfaces in Enlightenment 0.17.0. It is under heavy "
-#~ "development,<br>so expect it to <hilight>break often</hilight> and change "
-#~ "as it improves."
+#~ "This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
+#~ "a first example module and is being used to flesh out several<br>interfaces "
+#~ "in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
+#~ "<hilight>break often</hilight> and change as it improves."
 #~ msgstr ""
-#~ "这是为 Enlightenment 设计的 IBar 应用程序启动栏 模块。<br>它是第一个示例模"
-#~ "块且被用来充实了其它几个 Enlightenment 0.17.0<br>里的接口。它正处理活跃开"
-#~ "发之中，所以请注意它可能经常<hilight>坏掉</hilight>或发生变化，<br>因为它"
-#~ "在增强。"
+#~ "这是为 Enlightenment 设计的 IBar 应用程序启动栏 模块。<br>它是第一个示例模块且被用来充实了其它几个 Enlightenment "
+#~ "0.17.0<br>里的接口。它正处理活跃开发之中，所以请注意它可能经常<hilight>坏掉</hilight>或发生变化，<br>因为它在增强。"
 
 #~ msgid "Enlightenment IBox Module"
 #~ msgstr "Enlightenment IBox 模块"
 
 #~ msgid ""
-#~ "This is the IBox Iconified Application module for Enlightenment.<br>It "
-#~ "will hold minimized applications"
-#~ msgstr ""
-#~ "这是 Enlightenment 的 IBox 最小化应用程序模块。<br>它会显示最小化了的应用"
-#~ "程序。"
+#~ "This is the IBox Iconified Application module for Enlightenment.<br>It will "
+#~ "hold minimized applications"
+#~ msgstr "这是 Enlightenment 的 IBox 最小化应用程序模块。<br>它会显示最小化了的应用程序。"
 
 #~ msgid "Enlightenment Pager Module"
 #~ msgstr "Enlightenment桌面切换器模块"
@@ -7072,24 +6928,12 @@ msgstr "网络"
 #~ msgstr "Enlightenment 温度模块"
 
 #~ msgid ""
-#~ "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
-#~ "<br>It is especially useful for modern Laptops with high speed<br>CPUs "
+#~ "A module to measure the <hilight>ACPI Thermal sensor</hilight> on "
+#~ "Linux.<br>It is especially useful for modern Laptops with high speed<br>CPUs "
 #~ "that generate a lot of heat."
 #~ msgstr ""
-#~ "一个 Linux 下报告 <hilight>ACPI 温度监视器</hilight>状态的模块。<br>尤其对"
-#~ "于有着产生大量热量的高速 CPU 的现代笔记本电脑来说，<br>这个模块特别有用。"
-
-#, fuzzy
-#~ msgid "Temp 1"
-#~ msgstr "温度一"
-
-#, fuzzy
-#~ msgid "Temp 2"
-#~ msgstr "温度二"
-
-#, fuzzy
-#~ msgid "Temp 3"
-#~ msgstr "温度三"
+#~ "一个 Linux 下报告 <hilight>ACPI 温度监视器</hilight>状态的模块。<br>尤其对于有着产生大量热量的高速 CPU "
+#~ "的现代笔记本电脑来说，<br>这个模块特别有用。"
 
 #~ msgid "ACPI Temperature"
 #~ msgstr "ACPI 温度"
@@ -7100,22 +6944,13 @@ msgstr "网络"
 #~ msgid ""
 #~ "A simple module to control the frequency of the system CPU.<br>This is "
 #~ "especially useful to save power on laptops."
-#~ msgstr ""
-#~ "一个控制系统CPU频率的简单模块。<br>在为笔记本电脑节省电力时特别有用。"
+#~ msgstr "一个控制系统CPU频率的简单模块。<br>在为笔记本电脑节省电力时特别有用。"
 
 #~ msgid "Enlightenment Start Module"
 #~ msgstr "Enlightenment开始菜单模块"
 
 #~ msgid "Experimental Button module for E17"
 #~ msgstr "E17的试验性的按键模块"
-
-#, fuzzy
-#~ msgid "ITray Configuration"
-#~ msgstr "配置"
-
-#, fuzzy
-#~ msgid "Enlightenment ITray Module"
-#~ msgstr "Enlightenment IBar 模块"
 
 #~ msgid "The border style"
 #~ msgstr "边框样式"
@@ -7188,8 +7023,7 @@ msgstr "网络"
 #~ "如果没有，试着删除 ~/.ecore/enlightenment-* 下的所有文件，\n"
 #~ "然后再试着运行一遍。\n"
 #~ "\n"
-#~ "如果您使用AFS，那么你可能需要创建一个从 ~/.ecore 到 /tmp/my_directory/"
-#~ "ecore\n"
+#~ "如果您使用AFS，那么你可能需要创建一个从 ~/.ecore 到 /tmp/my_directory/ecore\n"
 #~ "的符号链接，以便套接字的建立。"
 
 #~ msgid "Enlightenment IPC setup error!"
@@ -7207,20 +7041,6 @@ msgstr "网络"
 #~ "请确认没有其它Enlightenment在同一个display上运行，\n"
 #~ "如果没有，试着删除 ~/.ecore/enlightenment-* 下的所有文件，\n"
 #~ "然后再试着运行一遍。"
-
-#~ msgid "Icon Edit Error"
-#~ msgstr "图标编辑错误"
-
-#~ msgid ""
-#~ "Error starting icon editor\n"
-#~ "\n"
-#~ "please install e_util_eapp_edit\n"
-#~ "or make sure it is in your PATH\n"
-#~ msgstr ""
-#~ "启动图标编辑器错误\n"
-#~ "\n"
-#~ "请安装 e_util_eapp_edit\n"
-#~ "或者确认它已经在你的路径设置中\n"
 
 #~ msgid "Half Screen Width"
 #~ msgstr "半屏幕宽度"
@@ -7271,12 +7091,11 @@ msgstr "网络"
 #~ msgstr "Enlightenment 测试模块"
 
 #~ msgid ""
-#~ "This module is VERY simple and is only used to test the "
-#~ "basic<br>interface of the Enlightenment 0.17.0 module system. "
-#~ "Please<br>ignore this module unless you are working on the module system."
+#~ "This module is VERY simple and is only used to test the basic<br>interface "
+#~ "of the Enlightenment 0.17.0 module system. Please<br>ignore this module "
+#~ "unless you are working on the module system."
 #~ msgstr ""
-#~ "这是一个非常简单的模块，它仅供测试 Enlightenment 0.17.0 的模块<br>系统。请"
-#~ "忽略这个模块，除非您正在为模块系统开发东西。"
+#~ "这是一个非常简单的模块，它仅供测试 Enlightenment 0.17.0 的模块<br>系统。请忽略这个模块，除非您正在为模块系统开发东西。"
 
 #~ msgid "Set Poll Time"
 #~ msgstr "设置检查时间"
@@ -7336,15 +7155,12 @@ msgstr "网络"
 #~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
 #~ "resolution %dx%d in %d seconds."
 #~ msgstr ""
-#~ "保持使用新的分辨率 <hilight>%dx%d</hilight> 吗？<br><br>将会恢复旧的分辨"
-#~ "率 %dx%d （%d秒之内）。"
+#~ "保持使用新的分辨率 <hilight>%dx%d</hilight> 吗？<br><br>将会恢复旧的分辨率 %dx%d （%d秒之内）。"
 
 #~ msgid ""
 #~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
 #~ "resolution %dx%d NOW!"
-#~ msgstr ""
-#~ "保持使用新的分辨率 <hilight>%dx%d</hilight> 吗？<br><br>现在要立即恢复旧的"
-#~ "分辨率 %dx%d 了！"
+#~ msgstr "保持使用新的分辨率 <hilight>%dx%d</hilight> 吗？<br><br>现在要立即恢复旧的分辨率 %dx%d 了！"
 
 #~ msgid "Set Alarm"
 #~ msgstr "设定警报"
@@ -7379,6 +7195,48 @@ msgstr "网络"
 #~ msgid "Check Very Slow (60 sec)"
 #~ msgstr "极缓慢检查（60秒）"
 
+#~ msgid "Back"
+#~ msgstr "后退"
+
+#~ msgid "Choose Language"
+#~ msgstr "选择语言"
+
+#~ msgid "Theme Bug Detected"
+#~ msgstr "检测到主题 Bug"
+
+#~ msgid "Init"
+#~ msgstr "初始"
+
+#~ msgid "Mouse Acceleration Settings"
+#~ msgstr "鼠标加速设置"
+
+#~ msgid "Select"
+#~ msgstr "选择"
+
+#~ msgid "Chinese (Simplified)"
+#~ msgstr "中文 (简体)"
+
+#~ msgid "Chinese (Traditional)"
+#~ msgstr "中文（繁体）"
+
+#~ msgid "Hong Kong"
+#~ msgstr "香港"
+
+#~ msgid "Peru"
+#~ msgstr "秘鲁"
+
+#~ msgid "Qatar"
+#~ msgstr "卡塔尔"
+
+#~ msgid "Rwanda"
+#~ msgstr "卢旺达"
+
+#~ msgid "Spain"
+#~ msgstr "西班牙"
+
+#~ msgid "Modify"
+#~ msgstr "修改"
+
 #~ msgid "User"
 #~ msgstr "用户"
 
@@ -7390,9 +7248,6 @@ msgstr "网络"
 
 #~ msgid "Remember This Instance Only"
 #~ msgstr "只记住这个实例"
-
-#~ msgid "Match by Name"
-#~ msgstr "名称匹配"
 
 #~ msgid "Match by Class"
 #~ msgstr "类匹配"
@@ -7420,6 +7275,23 @@ msgstr "网络"
 
 #~ msgid "Send To"
 #~ msgstr "发送到"
+
+#~ msgid ""
+#~ "Error starting icon editor\n"
+#~ "\n"
+#~ "please install e_util_eapp_edit\n"
+#~ "or make sure it is in your PATH\n"
+#~ msgstr ""
+#~ "启动图标编辑器错误\n"
+#~ "\n"
+#~ "请安装 e_util_eapp_edit\n"
+#~ "或者确认它已经在你的路径设置中\n"
+
+#~ msgid "Icon Edit Error"
+#~ msgstr "图标编辑错误"
+
+#~ msgid "Match by Name"
+#~ msgstr "名称匹配"
 
 #~ msgid ""
 #~ "This is Enlightenment %s.\n"
@@ -7615,3 +7487,6 @@ msgstr "网络"
 #~ "要求最小的模块API版本号：%i 。\n"
 #~ "Enlightenment给的模块版本号：%i 。\n"
 #~ "中止模块。"
+
+#~ msgid "Wait Exit"
+#~ msgstr "等待推出"
