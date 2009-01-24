@@ -26,7 +26,7 @@ e_color_dialog_new(E_Container *con, const E_Color *color)
    dia = E_OBJECT_ALLOC(E_Color_Dialog, E_COLOR_DIALOG_TYPE, _e_color_dialog_free);
    if (!dia) return NULL;
    dia->dia = e_dialog_new(con, "E", "_color_dialog");
-   e_dialog_title_set(dia->dia, "Color Selector");
+   e_dialog_title_set(dia->dia, _("Color Selector"));
    
    dia->color = calloc(1, sizeof(E_Color));
    dia->initial = calloc(1, sizeof(E_Color));
@@ -45,8 +45,8 @@ e_color_dialog_new(E_Container *con, const E_Color *color)
    e_widget_on_change_hook_set(o, _e_color_dialog_cb_csel_change, dia);
 
    /* buttons at the bottom */
-   e_dialog_button_add(dia->dia, "OK", NULL,  _e_color_dialog_button1_click, dia);
-   e_dialog_button_add(dia->dia, "Cancel", NULL,  _e_color_dialog_button2_click, dia);
+   e_dialog_button_add(dia->dia, _("OK"), NULL,  _e_color_dialog_button1_click, dia);
+   e_dialog_button_add(dia->dia, _("Cancel"), NULL,  _e_color_dialog_button2_click, dia);
    e_dialog_resizable_set(dia->dia, 1);
    e_win_centered_set(dia->dia->win, 1);
 

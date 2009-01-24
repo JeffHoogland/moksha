@@ -236,6 +236,7 @@ src/modules/ibar/e_mod_config.c
 src/modules/ibar/e_mod_main.c
 src/modules/ibox/e_mod_config.c
 src/modules/ibox/e_mod_main.c
+src/modules/illume/e_mod_win.c
 src/modules/pager/e_mod_config.c
 src/modules/pager/e_mod_main.c
 src/modules/start/e_mod_main.c

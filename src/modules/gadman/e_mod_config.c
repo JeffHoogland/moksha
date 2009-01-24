@@ -165,10 +165,10 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
 
    //Animations
    of = e_widget_frametable_add(evas, _("Animations"), 0);
-   ow = e_widget_check_add(evas, "Background", &(cfdata->anim_bg));
+   ow = e_widget_check_add(evas, _("Background"), &(cfdata->anim_bg));
    e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 0, 1, 0);
    
-   ow = e_widget_check_add(evas, "Gadgets", &(cfdata->anim_gad));
+   ow = e_widget_check_add(evas, _("Gadgets"), &(cfdata->anim_gad));
    e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
    
    e_widget_table_object_append(ft, of, 0, 1, 1, 1, 1, 1, 1, 1);
