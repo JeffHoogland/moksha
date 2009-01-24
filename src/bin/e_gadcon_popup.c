@@ -5,7 +5,7 @@
 
 /* local subsystem functions */
 static void _e_gadcon_popup_free(E_Gadcon_Popup *pop);
-static void _e_gadcon_popup_shelf_lock_set(E_Gadcon_Popup *pop, Eina_Bool locked);
+static void _e_gadcon_popup_locked_set(E_Gadcon_Popup *pop, Eina_Bool locked);
 
 /* externally accessible functions */
 
@@ -30,8 +30,8 @@ e_gadcon_popup_new(E_Gadcon_Client *gcc, void (*resize_func) (Evas_Object *obj, 
    pop->o_bg = o;
 
    pop->gcc = gcc;
-   pop->shelf_lock = 1;
-   pop->shelf_was_locked = 0;
+   pop->gadcon_lock = 1;
+   pop->gadcon_was_locked = 0;
    pop->resize_func = resize_func;
 
    return pop;
@@ -157,8 +157,8 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
      }
    e_popup_move_resize(pop->win, px - zx, py - zy, pop->w, pop->h);
 
-   if (pop->shelf_lock && (!pop->shelf_was_locked))
-     _e_gadcon_popup_shelf_lock_set(pop, 1);
+   if (pop->gadcon_lock && (!pop->gadcon_was_locked))
+     _e_gadcon_popup_locked_set(pop, 1);
 }
 
 EAPI void
@@ -169,8 +169,8 @@ e_gadcon_popup_hide(E_Gadcon_Popup *pop)
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
    if (pop->pinned) return;
    e_popup_hide(pop->win);
-   if (pop->shelf_was_locked)
-     _e_gadcon_popup_shelf_lock_set(pop, 0);
+   if (pop->gadcon_was_locked)
+     _e_gadcon_popup_locked_set(pop, 0);
 }
 
 EAPI void
@@ -193,18 +193,18 @@ e_gadcon_popup_toggle_pinned(E_Gadcon_Popup *pop)
 }
 
 EAPI void
-e_gadcon_popup_shelf_lock_set(E_Gadcon_Popup *pop, Eina_Bool setting)
+e_gadcon_popup_lock_set(E_Gadcon_Popup *pop, Eina_Bool setting)
 {
    if (!pop) return;
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
 
    setting = !!setting;
-   if (pop->shelf_lock == setting) return;
-   pop->shelf_lock = setting;
+   if (pop->gadcon_lock == setting) return;
+   pop->gadcon_lock = setting;
 
-   if (setting != pop->shelf_was_locked)
-     _e_gadcon_popup_shelf_lock_set(pop, setting);
+   if (setting != pop->gadcon_was_locked)
+     _e_gadcon_popup_locked_set(pop, setting);
 }
 
 /* local subsystem functions */
@@ -212,19 +212,19 @@ e_gadcon_popup_shelf_lock_set(E_Gadcon_Popup *pop, Eina_Bool setting)
 static void
 _e_gadcon_popup_free(E_Gadcon_Popup *pop)
 {
-   if (pop->shelf_was_locked)
-     _e_gadcon_popup_shelf_lock_set(pop, 0);
+   if (pop->gadcon_was_locked)
+     _e_gadcon_popup_locked_set(pop, 0);
    pop->gcc = NULL;
    e_object_del(E_OBJECT(pop->win));
    free(pop);
 }
 
 static void
-_e_gadcon_popup_shelf_lock_set(E_Gadcon_Popup *pop, Eina_Bool locked)
+_e_gadcon_popup_locked_set(E_Gadcon_Popup *pop, Eina_Bool locked)
 {
-   if ((!pop->gcc) || (!pop->gcc->gadcon) || (!pop->gcc->gadcon->shelf))
+   if (!pop->gcc)
      return;
 
-   e_shelf_locked_set(pop->gcc->gadcon->shelf, locked);
-   pop->shelf_was_locked = locked;
+   e_gadcon_locked_set(pop->gcc->gadcon, locked);
+   pop->gadcon_was_locked = locked;
 }

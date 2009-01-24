@@ -42,9 +42,9 @@ struct _E_Shelf
    unsigned char        fit_along : 1;
    unsigned char        fit_size  : 1;
    unsigned char        hidden    : 1;
-   unsigned char        locked    : 1;
    unsigned char        toggle    : 1;
    unsigned char        edge      : 1;
+   unsigned int         locked; 
 };
 
 EAPI int              e_shelf_init(void);

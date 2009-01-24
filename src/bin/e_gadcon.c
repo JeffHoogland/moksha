@@ -585,7 +585,7 @@ e_gadcon_edit_begin(E_Gadcon *gc)
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    e_gadcon_layout_freeze(gc->o_container);
-   if (gc->shelf) e_shelf_locked_set(gc->shelf, 1);
+   e_gadcon_locked_set(gc, 1);
    gc->editing = 1;
    for (l = gc->clients; l; l = l->next)
      {
@@ -614,7 +614,7 @@ e_gadcon_edit_end(E_Gadcon *gc)
 	e_gadcon_client_edit_end(gcc);
      }
    e_gadcon_layout_thaw(gc->o_container);
-   if (gc->shelf) e_shelf_locked_set(gc->shelf, 0);
+   e_gadcon_locked_set(gc, 0);
 }
 
 EAPI void
@@ -694,6 +694,17 @@ e_gadcon_util_menu_attach_func_set(E_Gadcon *gc,
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    gc->menu_attach.func = func;
    gc->menu_attach.data = data;
+}
+
+EAPI void
+e_gadcon_util_lock_func_set(E_Gadcon *gc, 
+				   void (*func) (void *data, int lock),
+				   void *data)
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   gc->locked_set.func = func;
+   gc->locked_set.data = data;
 }
 
 EAPI void
@@ -892,7 +903,7 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
 
    if (gcc->o_control) return;
 
-   if (gcc->gadcon->shelf) e_shelf_locked_set(gcc->gadcon->shelf, 1);
+   e_gadcon_locked_set(gcc->gadcon, 1);
    gcc->gadcon->editing = 1;
    gcc->o_control = edje_object_add(gcc->gadcon->evas);
    evas_object_layer_set(gcc->o_control, 100);
@@ -1015,7 +1026,7 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
 	if (client->o_control) return;
      }
    gcc->gadcon->editing = 0;
-   if (gcc->gadcon->shelf) e_shelf_locked_set(gcc->gadcon->shelf, 0);
+   e_gadcon_locked_set(gcc->gadcon, 0);
 }
 
 EAPI void
@@ -1230,13 +1241,6 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
 
-   /*
-   if (gcc->gadcon->shelf) 
-     e_shelf_locked_set(gcc->gadcon->shelf, 1);
-   e_menu_post_deactivate_callback_set(menu, _e_gadcon_client_cb_menu_post, gcc);
-   gcc->menu = menu;
-   */
-
    if (gcc->gadcon->shelf) 
      {
 	mn = e_menu_new();
@@ -1327,6 +1331,15 @@ e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc)
                                        _e_gadcon_client_cb_mouse_up, gcc);
 	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOUSE_MOVE, 
                                        _e_gadcon_client_cb_mouse_move, gcc);
+     }
+}
+
+EAPI void
+e_gadcon_locked_set(E_Gadcon *gc, int lock)
+{
+   if (gc->locked_set.func)
+     {
+	gc->locked_set.func(gc->locked_set.data, lock);
      }
 }
 
@@ -1702,8 +1715,7 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *e
 
 	zone = e_util_zone_current_get(e_manager_current_get());
 
-	if (gcc->gadcon->shelf)
-	  e_shelf_locked_set(gcc->gadcon->shelf, 1);
+	e_gadcon_locked_set(gcc->gadcon, 1);
 	mn = e_menu_new();
 	e_menu_post_deactivate_callback_set(mn, _e_gadcon_client_cb_menu_post,
 					    gcc);
@@ -2277,8 +2289,8 @@ _e_gadcon_client_cb_menu_post(void *data, E_Menu *m)
 
    gcc = data;
    if (!gcc) return;
-   if ((gcc->gadcon) && (gcc->gadcon->shelf))
-     e_shelf_locked_set(gcc->gadcon->shelf, 0);
+   if (gcc->gadcon)
+     e_gadcon_locked_set(gcc->gadcon, 0);
    if (!gcc->menu) return;
    e_object_del(E_OBJECT(gcc->menu));
    gcc->menu = NULL;
@@ -2312,8 +2324,7 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
         E_Zone *zone;
 	int cx, cy, cw, ch;
 
-	if (gcc->gadcon->shelf)
-	  e_shelf_locked_set(gcc->gadcon->shelf, 1);
+	e_gadcon_locked_set(gcc->gadcon, 1);
 	mn = e_menu_new();
 	e_menu_post_deactivate_callback_set(mn, _e_gadcon_client_cb_menu_post,
 					    gcc);

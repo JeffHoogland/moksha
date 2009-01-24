@@ -21,8 +21,8 @@ struct _E_Gadcon_Popup
    Evas_Object	       *o_bg;
 
    Eina_Bool            pinned : 1;
-   Eina_Bool            shelf_lock : 1;
-   Eina_Bool            shelf_was_locked : 1;
+   Eina_Bool            gadcon_lock : 1;
+   Eina_Bool            gadcon_was_locked : 1;
 
    void			(*resize_func) (Evas_Object *obj, int *w, int *h);
 };
@@ -32,7 +32,7 @@ EAPI void e_gadcon_popup_content_set(E_Gadcon_Popup *pop, Evas_Object *o);
 EAPI void e_gadcon_popup_show(E_Gadcon_Popup *pop);
 EAPI void e_gadcon_popup_hide(E_Gadcon_Popup *pop);
 EAPI void e_gadcon_popup_toggle_pinned(E_Gadcon_Popup *pop);
-EAPI void e_gadcon_popup_shelf_lock_set(E_Gadcon_Popup *pop, Eina_Bool setting);
+EAPI void e_gadcon_popup_lock_set(E_Gadcon_Popup *pop, Eina_Bool setting);
 
 #endif
 #endif
