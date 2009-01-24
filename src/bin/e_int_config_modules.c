@@ -231,7 +231,7 @@ _fill_type_hash(void)
 	cft = E_NEW(CFType, 1);
 	if (!cft) continue;
 	cft->key = eina_stringshare_add(_types[i].key);
-	cft->name = eina_stringshare_add(_types[i].name);
+	cft->name = eina_stringshare_add(_(_types[i].name));
 	cft->icon = eina_stringshare_add(_types[i].icon);
 	if (!types_hash) types_hash = eina_hash_string_superfast_new(NULL);
 	eina_hash_direct_add(types_hash, cft->key, cft);
