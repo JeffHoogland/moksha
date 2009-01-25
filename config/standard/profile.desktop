@@ -2,7 +2,9 @@
 Type=Link
 Name=Standard
 Name[hu]=Általános
+Name[fr]=Standard
 Icon=icon.png
 Comment=This is the standard<br>profile that is<br>universal for most<br>desktop and laptop<br>systems. Choose this<br>if you are not<br>sure what to choose.
 Comment[it]=Questo è il profilo<br>standard, universale<br>per la maggior<br>parte dei sistemi<br>desktop e portatili.<br>Scegliete questo se<br>non siete sicuri di<br>cosa scegliere.
 Comment[hu]=Ez az általános,<br>alap beállítás,<br>amely megfelelő a<br>legtöbb laptop és<br>asztali gép számára.
+Comment[fr]=C'est le profil standard<br>adapté à la quasi totalité<br>des systèmes de bureau<br>et ordinateurs portables.<br>Choisissez ce profil si<br>vous n'êtes pas sûr. 
