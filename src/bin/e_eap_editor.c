@@ -172,8 +172,8 @@ e_desktop_border_edit(E_Container *con, E_Border *bd)
 	e_object_del(E_OBJECT(editor));
 	editor = NULL;
      }
-
-   e_config_dialog_changed_set(editor->cfd, new_desktop);
+   else 
+	e_config_dialog_changed_set(editor->cfd, new_desktop);
 
    return editor;
 }
