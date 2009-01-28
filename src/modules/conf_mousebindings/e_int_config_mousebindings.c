@@ -765,8 +765,10 @@ _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
 	button = _helper_button_name_get(eb);
 	mods = _helper_modifier_name_get(eb->modifiers);
 
-	snprintf(label, sizeof(label), "%s%s%s", button ? button : "", mods[0] ? " + ": "",
-	         mods ? mods : "");
+	if (mods && mods[0])
+	  snprintf(label, sizeof(label), "%s + %s", button ? button : "", mods);
+	else
+	  snprintf(label, sizeof(label), "%s", button ? button : "");
 	if (button) free(button);
 	if (mods) free(mods);
 
