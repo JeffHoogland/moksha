@@ -386,6 +386,7 @@ icon_new.png \
 icon_pager.png \
 icon_performance.png \
 icon_power_management.png \
+icon_profiles.png \
 icon_reboot.png \
 icon_regenerate_menus.png \
 icon_reset.png \
