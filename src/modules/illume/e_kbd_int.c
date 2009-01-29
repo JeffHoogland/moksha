@@ -1408,7 +1408,7 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    
    o = e_widget_ilist_add(ki->dictlist.popup->evas, 32 * e_scale, 32 * e_scale, NULL);
    e_widget_ilist_selector_set(o, 1);
-   e_ilist_freeze(o);
+   e_widget_ilist_freeze(o);
    ki->dictlist.ilist_obj = o;
 
    homedir = e_user_homedir_get();

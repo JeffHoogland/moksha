@@ -9,10 +9,12 @@ typedef struct _E_Ilist_Item E_Ilist_Item;
 struct _E_Ilist_Item 
 {
    void *sd;
+   const char *label;
    Evas_Object *o_base;
    Evas_Object *o_icon;
    unsigned char header : 1;
    unsigned char selected : 1;
+   unsigned char queued : 1;
 
    void (*func) (void *data, void *data2);
    void (*func_hilight) (void *data, void *data2);
