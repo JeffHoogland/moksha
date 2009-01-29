@@ -15202,6 +15202,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+               fixed: 1 1;
 //	       aspect: 6.4 6.4;
 //	       aspect_preference: HORIZONTAL;
 	       align: 0.0 0.0;
@@ -18792,6 +18793,7 @@ group { name: "e/toolbar/default/base";
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+               fixed: 1 1;
 //	       aspect: 6.4 6.4;
 //	       aspect_preference: HORIZONTAL;
 	       align: 0.0 0.0;
