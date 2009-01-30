@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-01-23 07:57+0400\n"
-"PO-Revision-Date: 2009-01-23 10:08+0400\n"
+"POT-Creation-Date: 2009-01-26 17:12+0400\n"
+"PO-Revision-Date: 2009-01-30 07:12+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -31,6 +31,7 @@ msgstr "À propos de Enlightenment"
 #: src/modules/conf/e_conf.c:172
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/fileman/e_fwin.c:1428
+#: src/modules/illume/e_mod_win.c:177
 #: src/modules/mixer/app_mixer.c:537
 msgid "Close"
 msgstr "Fermer"
@@ -689,6 +690,58 @@ msgstr "Analyse des fichiers desktop effectuée"
 msgid "Desktop file scan"
 msgstr "Analyse des fichiers desktop"
 
+#: src/bin/e_color_dialog.c:29
+msgid "Color Selector"
+msgstr "Sélecteur de couleurs"
+
+#: src/bin/e_color_dialog.c:48
+#: src/bin/e_config.c:1727
+#: src/bin/e_config_dialog.c:250
+#: src/bin/e_eap_editor.c:611
+#: src/bin/e_eap_editor.c:675
+#: src/bin/e_entry_dialog.c:58
+#: src/bin/e_exec.c:323
+#: src/bin/e_fm_prop.c:513
+#: src/bin/e_int_border_remember.c:258
+#: src/bin/e_int_border_remember.c:339
+#: src/bin/e_int_border_remember.c:381
+#: src/bin/e_module.c:408
+#: src/bin/e_sys.c:441
+#: src/bin/e_sys.c:487
+#: src/bin/e_utils.c:541
+#: src/modules/conf_dpms/e_int_config_dpms.c:61
+#: src/modules/conf_dpms/e_int_config_dpms.c:82
+#: src/modules/conf_imc/e_int_config_imc_import.c:112
+#: src/modules/conf_mime/e_int_config_mime_edit.c:283
+#: src/modules/conf_profiles/e_int_config_profiles.c:284
+#: src/modules/conf_theme/e_int_config_theme_import.c:113
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:204
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:171
+#: src/modules/cpufreq/e_mod_main.c:392
+#: src/modules/cpufreq/e_mod_main.c:419
+#: src/modules/cpufreq/e_mod_main.c:438
+#: src/modules/connman/e_mod_main.c:780
+msgid "OK"
+msgstr "OK"
+
+#: src/bin/e_color_dialog.c:49
+#: src/bin/e_eap_editor.c:613
+#: src/bin/e_eap_editor.c:677
+#: src/bin/e_entry_dialog.c:59
+#: src/bin/e_fm_prop.c:514
+#: src/modules/conf_imc/e_int_config_imc_import.c:116
+#: src/modules/conf_mime/e_int_config_mime_edit.c:284
+#: src/modules/conf_profiles/e_int_config_profiles.c:285
+#: src/modules/conf_theme/e_int_config_theme_import.c:117
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:208
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:172
+#: src/modules/syscon/e_syscon.c:97
+#: src/modules/connman/e_mod_main.c:781
+msgid "Cancel"
+msgstr "Annuler"
+
 #: src/bin/e_config.c:715
 #: src/bin/e_config.c:748
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
@@ -730,36 +783,6 @@ msgstr "Le fichier de configuration dans lequel Enlightenment était en train<br
 #: src/bin/e_config.c:1723
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
-
-#: src/bin/e_config.c:1727
-#: src/bin/e_config_dialog.c:250
-#: src/bin/e_eap_editor.c:611
-#: src/bin/e_eap_editor.c:675
-#: src/bin/e_entry_dialog.c:58
-#: src/bin/e_exec.c:323
-#: src/bin/e_fm_prop.c:513
-#: src/bin/e_int_border_remember.c:258
-#: src/bin/e_int_border_remember.c:339
-#: src/bin/e_int_border_remember.c:381
-#: src/bin/e_module.c:408
-#: src/bin/e_sys.c:441
-#: src/bin/e_sys.c:487
-#: src/bin/e_utils.c:541
-#: src/modules/conf_dpms/e_int_config_dpms.c:61
-#: src/modules/conf_dpms/e_int_config_dpms.c:82
-#: src/modules/conf_imc/e_int_config_imc_import.c:112
-#: src/modules/conf_mime/e_int_config_mime_edit.c:283
-#: src/modules/conf_profiles/e_int_config_profiles.c:284
-#: src/modules/conf_theme/e_int_config_theme_import.c:113
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:204
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:171
-#: src/modules/cpufreq/e_mod_main.c:392
-#: src/modules/cpufreq/e_mod_main.c:419
-#: src/modules/cpufreq/e_mod_main.c:438
-#: src/modules/connman/e_mod_main.c:780
-msgid "OK"
-msgstr "OK"
 
 #: src/bin/e_config_dialog.c:200
 #: src/modules/battery/e_mod_main.c:1076
@@ -916,22 +939,6 @@ msgstr "Nom de fichier"
 #: src/bin/e_eap_editor.c:571
 msgid "Select an Icon"
 msgstr "Sélectionner un icone"
-
-#: src/bin/e_eap_editor.c:613
-#: src/bin/e_eap_editor.c:677
-#: src/bin/e_entry_dialog.c:59
-#: src/bin/e_fm_prop.c:514
-#: src/modules/conf_imc/e_int_config_imc_import.c:116
-#: src/modules/conf_mime/e_int_config_mime_edit.c:284
-#: src/modules/conf_profiles/e_int_config_profiles.c:285
-#: src/modules/conf_theme/e_int_config_theme_import.c:117
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:208
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:172
-#: src/modules/syscon/e_syscon.c:97
-#: src/modules/connman/e_mod_main.c:781
-msgid "Cancel"
-msgstr "Annuler"
 
 #: src/bin/e_eap_editor.c:640
 msgid "Select an Executable"
@@ -1369,41 +1376,41 @@ msgstr "Volume inconnu"
 msgid "Removable Device"
 msgstr "Périphérique amovible"
 
-#: src/bin/e_gadcon.c:1244
+#: src/bin/e_gadcon.c:1248
 #: src/modules/gadman/e_mod_gadman.c:659
 msgid "Plain"
 msgstr "En plein"
 
-#: src/bin/e_gadcon.c:1253
+#: src/bin/e_gadcon.c:1257
 #: src/modules/gadman/e_mod_gadman.c:667
 msgid "Inset"
 msgstr "En creux"
 
-#: src/bin/e_gadcon.c:1262
+#: src/bin/e_gadcon.c:1266
 #: src/bin/e_int_config_modules.c:41
 #: src/modules/gadman/e_mod_gadman.c:703
 msgid "Appearance"
 msgstr "Apparence"
 
-#: src/bin/e_gadcon.c:1270
+#: src/bin/e_gadcon.c:1274
 msgid "Automatically scroll contents"
 msgstr "Défilement automatique du contenu"
 
-#: src/bin/e_gadcon.c:1277
+#: src/bin/e_gadcon.c:1281
 msgid "Able to be resized"
 msgstr "Permettre le redimensionnement"
 
-#: src/bin/e_gadcon.c:1289
+#: src/bin/e_gadcon.c:1293
 #: src/modules/gadman/e_mod_gadman.c:738
 msgid "Begin move/resize this gadget"
 msgstr "Activer le déplacement/redimensionnement de ce gadget"
 
-#: src/bin/e_gadcon.c:1295
+#: src/bin/e_gadcon.c:1299
 #: src/modules/gadman/e_mod_gadman.c:744
 msgid "Remove this gadget"
 msgstr "Supprimer ce gadget"
 
-#: src/bin/e_gadcon.c:1713
+#: src/bin/e_gadcon.c:1725
 msgid "Stop move/resize this gadget"
 msgstr "Arrêter de déplacer/redimensionner ce gadget"
 
@@ -2076,7 +2083,7 @@ msgid "(No Shelves)"
 msgstr "(Aucun rack)"
 
 #: src/bin/e_int_menus.c:1355
-#: src/bin/e_shelf.c:1101
+#: src/bin/e_shelf.c:1108
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "Rack #"
@@ -2090,7 +2097,7 @@ msgid "Delete A Shelf"
 msgstr "Supprimer un rack"
 
 #: src/bin/e_int_shelf_config.c:71
-#: src/bin/e_shelf.c:1667
+#: src/bin/e_shelf.c:1683
 #: src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "Paramétrage du rack"
@@ -2738,30 +2745,30 @@ msgstr "Module %s de Enlightenment"
 msgid "Would you like to unload this module?<br>"
 msgstr "Voulez-vous désactiver ce module ?<br>"
 
-#: src/bin/e_shelf.c:1213
+#: src/bin/e_shelf.c:1229
 #: src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Êtes-vous sûr de vouloir supprimer ce rack ?"
 
-#: src/bin/e_shelf.c:1214
+#: src/bin/e_shelf.c:1230
 msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
 msgstr "Vous avez demandé à supprimer ce rack.<br><br>Êtes-vous sûr de vouloir le supprimer ?"
 
-#: src/bin/e_shelf.c:1657
+#: src/bin/e_shelf.c:1673
 #: src/bin/e_toolbar.c:316
 msgid "Stop Moving/Resizing Items"
 msgstr "Arrêter de déplacer/redimensionner des éléments"
 
-#: src/bin/e_shelf.c:1659
+#: src/bin/e_shelf.c:1675
 #: src/bin/e_toolbar.c:318
 msgid "Begin Moving/Resizing Items"
 msgstr "Déplacer/Redimensionner des éléments"
 
-#: src/bin/e_shelf.c:1672
+#: src/bin/e_shelf.c:1688
 msgid "Configure Shelf Contents"
 msgstr "Configurer le contenu du rack"
 
-#: src/bin/e_shelf.c:1677
+#: src/bin/e_shelf.c:1693
 msgid "Delete this Shelf"
 msgstr "Supprimer ce rack"
 
@@ -5292,12 +5299,12 @@ msgstr "Ne pas cacher les gadgets"
 #: src/modules/conf_window_display/e_int_config_window_display.c:174
 #: src/modules/conf_window_display/e_int_config_window_display.c:234
 msgid "Place at mouse pointer"
-msgstr "Positionner au curseur de la souris"
+msgstr "Placer au curseur de la souris"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:176
 #: src/modules/conf_window_display/e_int_config_window_display.c:236
 msgid "Place manually with the mouse"
-msgstr "Positionner manuellement à la souris"
+msgstr "Placer manuellement à la souris"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:178
 #: src/modules/conf_window_display/e_int_config_window_display.c:238
@@ -5978,6 +5985,18 @@ msgstr "Transparent"
 msgid "Animations"
 msgstr "Animations"
 
+#: src/modules/gadman/e_mod_config.c:168
+msgid "Background"
+msgstr "Fond d'écran"
+
+#: src/modules/gadman/e_mod_config.c:171
+#: src/modules/gadman/e_mod_main.c:27
+#: src/modules/gadman/e_mod_main.c:83
+#: src/modules/gadman/e_mod_main.c:119
+#: src/modules/gadman/e_mod_main.c:148
+msgid "Gadgets"
+msgstr "Gadgets"
+
 #: src/modules/gadman/e_mod_gadman.c:679
 msgid "Free"
 msgstr "Libre"
@@ -5997,13 +6016,6 @@ msgstr "Comportement"
 #: src/modules/gadman/e_mod_gadman.c:750
 msgid "Add other gadgets"
 msgstr "Ajouter un autre gadget"
-
-#: src/modules/gadman/e_mod_main.c:27
-#: src/modules/gadman/e_mod_main.c:83
-#: src/modules/gadman/e_mod_main.c:119
-#: src/modules/gadman/e_mod_main.c:148
-msgid "Gadgets"
-msgstr "Gadgets"
 
 #: src/modules/gadman/e_mod_main.c:83
 #: src/modules/gadman/e_mod_main.c:119
@@ -6144,6 +6156,10 @@ msgstr "Afficher les fenêtres du bureau actif"
 #: src/modules/ibox/e_mod_main.c:226
 msgid "IBox"
 msgstr "IBox"
+
+#: src/modules/illume/e_mod_win.c:180
+msgid "Home"
+msgstr "Dossier personnel"
 
 #: src/modules/pager/e_mod_config.c:69
 msgid "Pager Settings"
@@ -6483,7 +6499,7 @@ msgstr "Lanceur"
 
 #: src/modules/wizard/page_080.c:70
 msgid "Select Applications"
-msgstr "Sélectionner les applications"
+msgstr "Sélectionnez les applications"
 
 #: src/modules/mixer/app_mixer.c:166
 msgid "Capture"
