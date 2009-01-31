@@ -2645,7 +2645,7 @@ e_actions_init(void)
 			    NULL, NULL, 0);
 
    ACT_GO(reboot);
-   e_action_predef_name_set(_("System"), _("Reset"), "reboot", 
+   e_action_predef_name_set(_("System"), _("Reboot"), "reboot", 
 			    NULL, NULL, 0);
 
    ACT_GO(suspend);
