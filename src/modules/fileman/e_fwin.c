@@ -1423,9 +1423,9 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 
    e_dialog_title_set(dia, _("Open with..."));
    e_dialog_resizable_set(dia, 1);
-   e_dialog_button_add(dia, _("Open"), "enlightenment/open",
+   e_dialog_button_add(dia, _("Open"), "widget/open",
 		       _e_fwin_cb_open, fad);
-   e_dialog_button_add(dia, _("Close"), "enlightenment/close",
+   e_dialog_button_add(dia, _("Close"), "widget/close",
 		       _e_fwin_cb_close, fad);
 
    fad->dia = dia;
