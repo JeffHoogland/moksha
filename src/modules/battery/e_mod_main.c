@@ -762,6 +762,12 @@ _battery_config_updated(void)
         E_DBus_Connection *conn;
         DBusPendingCall *call;
         
+        if (battery_config->batget_exe)
+          {
+             ecore_exe_terminate(battery_config->batget_exe);
+             ecore_exe_free(battery_config->batget_exe);
+             battery_config->batget_exe = NULL;
+          }
         conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
         if (conn)
           battery_config->hal.have = 
