@@ -39,6 +39,15 @@ e_widget_table_add(Evas *evas, int homogenous)
 EAPI void
 e_widget_table_object_append(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h)
 {
+   e_widget_table_object_align_append(obj, sobj, 
+                                      col, row, colspan, rowspan, 
+                                      fill_w, fill_h, expand_w, expand_h, 
+                                      0.5, 0.5);
+}
+
+EAPI void
+e_widget_table_object_align_append(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h, double ax, double ay)
+{
    E_Widget_Data *wd;
    Evas_Coord mw = 0, mh = 0;
    
@@ -49,7 +58,7 @@ e_widget_table_object_append(Evas_Object *obj, Evas_Object *sobj, int col, int r
    e_table_pack_options_set(sobj,
 			  fill_w, fill_h, /* fill */
 			  expand_w, expand_h, /* expand */
-			  0.5, 0.5, /* align */
+			  ax, ay, /* align */
 			  mw, mh, /* min */
 			  99999, 99999 /* max */
 			  );
