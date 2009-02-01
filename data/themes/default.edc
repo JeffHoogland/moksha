@@ -3,7 +3,8 @@
 //	Icons:
 //		EFM - All popup icons ... eg, paste copy delete properties
 //		EFM - folders (perhaps?), dynamic mime icons
-//		Icons - Interactions,  settings, engine, better looking SD card, open, close (Open With dialog)
+//		Icons - Interactions,  settings, engine, better looking SD card
+//		Icons for all modules in Module list.
 //
 
 /*
@@ -22442,14 +22443,14 @@ ICON("widget/up_dir","icon_up_arrow.png",64)
 ICON("widget/new_dialog","icon_right_arrow.png",64)
 ICON("widget/config","icon_config.png",64)
 ICON("widget/resize","icon_resize.png",64)
+ICON("widget/open","icon_check.png",64)
+ICON("widget/close","icon_close.png",64)
 
 /// No icons made yet ///
 
 ICON("enlightenment/engine","icon_dummy.png",64)
 ICON("enlightenment/toolbar","icon_dummy.png",64)
 ICON("enlightenment/settings","icon_dummy.png",64)
-ICON("widget/open","icon_dummy.png",64)
-ICON("widget/close","icon_dummy.png",64)
 
 /// Normal Icons ///
 

@@ -294,6 +294,7 @@ icon_border_stack_bot.png \
 icon_border_stack_norm.png \
 icon_border_stack_top.png \
 icon_check.png \
+icon_close.png \
 icon_colors.png \
 icon_config.png \
 icon_configuration.png \
