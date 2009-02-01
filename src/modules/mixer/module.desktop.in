@@ -2,8 +2,10 @@
 Type=Link
 Name=Mixer
 Name[cs]=Ovládání hlasitosti
+Name[fr]=Mélangeur
 Icon=e-module-mixer
 Comment=<title>Mixer Gadget</title><br>A module to provide a mixer for changing volume.
 Comment[cs]=<title>Mixer gadget</title><br>Modul pro ovládání hlasitosti.
 Comment[it]=<title>Modulo Mixer</title><br>Un modulo che fornisce un mixer per regolare il volume.
+Comment[fr]=<title>Gadget Mélangeur</title><br>Fournit un mélangeur pour régler le volume.
 X-Enlightenment-ModuleType=system
