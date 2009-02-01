@@ -739,7 +739,8 @@ _battery_config_updated(void)
           battery_config->have_hal = NOHAL;
      }
 
-   if (battery_config->have_hal == NOHAL)
+   if ((battery_config->have_hal == NOHAL) ||
+       (battery_config->force_mode == 1))
      {
         if (battery_config->batget_exe)
           {
@@ -755,7 +756,8 @@ _battery_config_updated(void)
                              ECORE_EXE_PIPE_READ_LINE_BUFFERED |
                              ECORE_EXE_NOT_LEADER, NULL);
      }
-   else if (battery_config->have_hal == UNKNOWN)
+   else if ((battery_config->have_hal == UNKNOWN) ||
+            (battery_config->force_mode == 2))
      {
         E_DBus_Connection *conn;
         DBusPendingCall *call;
@@ -775,6 +777,7 @@ _battery_cb_warning_popup_timeout(void *data)
 
    inst = data;
    e_gadcon_popup_hide(inst->warning);
+   battery_config->alert_timer = NULL;
    return 0;
 }
 
@@ -791,6 +794,11 @@ _battery_cb_warning_popup_hide(void *data, Evas *e, Evas_Object *obj, void *even
 static void
 _battery_warning_popup_destroy(Instance *inst)
 {
+   if (battery_config->alert_timer)
+     {
+        ecore_timer_del(battery_config->alert_timer);
+        battery_config->alert_timer = NULL;
+     }
    if ((!inst) || (!inst->warning)) return;
    e_object_del(E_OBJECT(inst->warning));
    inst->warning = NULL;
@@ -854,10 +862,12 @@ _battery_warning_popup(Instance *inst, int time, double percent)
    _battery_face_level_set(inst->popup_battery, percent);
    edje_object_signal_emit(inst->popup_battery, "e,state,discharging", "e");
 
-   if (battery_config->alert_timeout) 
+   if ((battery_config->alert_timeout > 0) &&
+       (!battery_config->alert_timer))
      {
-        ecore_timer_add(battery_config->alert_timeout, 
-                        _battery_cb_warning_popup_timeout, inst);
+        battery_config->alert_timer =
+          ecore_timer_add(battery_config->alert_timeout, 
+                          _battery_cb_warning_popup_timeout, inst);
      }
 }
 
@@ -1042,6 +1052,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, alert, INT);
    E_CONFIG_VAL(D, T, alert_p, INT);
    E_CONFIG_VAL(D, T, alert_timeout, INT);
+   E_CONFIG_VAL(D, T, force_mode, INT);
 
    battery_config = e_config_domain_load("module.battery", conf_edd);
    if (!battery_config)
@@ -1051,11 +1062,13 @@ e_modapi_init(E_Module *m)
        battery_config->alert = 30;
        battery_config->alert_p = 10;
        battery_config->alert_timeout = 0;
+       battery_config->force_mode = 0;
      }
    E_CONFIG_LIMIT(battery_config->poll_interval, 4, 4096);
    E_CONFIG_LIMIT(battery_config->alert, 0, 60);
    E_CONFIG_LIMIT(battery_config->alert_p, 0, 100);
    E_CONFIG_LIMIT(battery_config->alert_timeout, 0, 300);
+   E_CONFIG_LIMIT(battery_config->force_mode, 0, 2);
 
    battery_config->module = m;
    battery_config->full = -2;
@@ -1088,6 +1101,9 @@ e_modapi_shutdown(E_Module *m)
    e_configure_registry_category_del("advanced");
    e_gadcon_provider_unregister(&_gadcon_class);
 
+   if (battery_config->alert_timer)
+     ecore_timer_del(battery_config->alert_timer);
+   
    if (battery_config->batget_exe)
      {
 	ecore_exe_terminate(battery_config->batget_exe);

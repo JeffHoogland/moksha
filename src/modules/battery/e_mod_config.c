@@ -9,6 +9,7 @@ struct _E_Config_Dialog_Data
    int alert_percent;
    int dismiss_alert;
    int alert_timeout;
+   int force_mode; // 0 == auto, 1 == batget, 2 == hal
 };
 
 /* Protos */
@@ -115,7 +116,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      battery_config->alert_timeout = cfdata->alert_timeout;
    else
      battery_config->alert_timeout = 0;
-   
+
    _battery_config_updated();
    e_config_save_queue();
    return 1;
@@ -125,10 +126,11 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
+   E_Radio_Group *rg;
    
    /* Use Sliders for both cfg options */
    o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_frametable_add(evas, _("Advanced Settings"), 1);
+   of = e_widget_frametable_add(evas, _("Polling (Internal)"), 1);
    
    ob = e_widget_label_add(evas, _("Check battery every:"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
@@ -136,28 +138,45 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 1, 1024, 4, 0, NULL, &(cfdata->poll_interval), 256);
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   of = e_widget_frametable_add(evas, _("Alert"), 1);
+   
    ob = e_widget_check_add(evas, _("Show alert when battery is low"), &(cfdata->show_alert));
-   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 0);   
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 0);   
    
    ob = e_widget_label_add(evas, _("Alert when battery is down to:"));
-   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 0, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 1);
    
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 0, 60, 1, 0, NULL, &(cfdata->alert_time), 60);
-   e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f percent"), 0, 100, 1, 0, NULL, &(cfdata->alert_percent), 100);
-   e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 0, 1, 0);
    
    ob = e_widget_check_add(evas, _("Dismiss alert automatically"), &(cfdata->dismiss_alert));
-   e_widget_frametable_object_append(of, ob, 0, 6, 1, 1, 1, 1, 1, 0);   
+   e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 1, 1, 0);   
    
    ob = e_widget_label_add(evas, _("Dismiss alert after:"));
-   e_widget_frametable_object_append(of, ob, 0, 7, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 0, 1, 0);
    
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"), 1, 300, 1, 0, NULL, &(cfdata->alert_timeout), 150);
-   e_widget_frametable_object_append(of, ob, 0, 8, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ob, 0, 6, 1, 1, 1, 0, 1, 0);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   of = e_widget_framelist_add(evas, _("Hardware Interface"), 0);
+   
+   rg = e_widget_radio_group_new(&(cfdata->force_mode));
+   ob = e_widget_radio_add(evas, _("Auto Detect"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Internal"), 1, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("HAL"), 2, rg);
+   e_widget_framelist_object_append(of, ob);
+
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
    return o;
 }
 
@@ -184,6 +203,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    else
      battery_config->alert_timeout = 0;
 
+   battery_config->force_mode = cfdata->force_mode;
+   
    _battery_config_updated();
    e_config_save_queue();
    return 1;

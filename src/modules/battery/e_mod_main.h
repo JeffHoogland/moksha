@@ -19,6 +19,7 @@ struct _Config
    int              alert;	/* Alert on minutes remaining */
    int	            alert_p;    /* Alert on percentage remaining */
    int              alert_timeout;  /* Popup dismissal timeout */
+   int              force_mode; /* force use of batget or hal */
    /* just config state */
    E_Module        *module;
    E_Config_Dialog *config_dialog;
@@ -27,6 +28,7 @@ struct _Config
    Ecore_Exe           *batget_exe;
    Ecore_Event_Handler *batget_data_handler;
    Ecore_Event_Handler *batget_del_handler;
+   Ecore_Timer         *alert_timer;
    int                  have_hal;
    int                  full;
    int                  time_left;
