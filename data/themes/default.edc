@@ -22452,8 +22452,6 @@ ICON("enlightenment/engine","icon_dummy.png",64)
 ICON("enlightenment/toolbar","icon_dummy.png",64)
 ICON("enlightenment/settings","icon_dummy.png",64)
 ICON("enlightenment/warning","icon_dummy.png",64)
-ICON("widget/open","icon_dummy.png",64)
-ICON("widget/close","icon_dummy.png",64)
 ICON("widget/reset","icon_dummy.png",64)
 
 /// Normal Icons ///
