@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-01-26 17:12+0400\n"
-"PO-Revision-Date: 2009-01-30 07:12+0400\n"
+"POT-Creation-Date: 2009-02-02 07:08+0400\n"
+"PO-Revision-Date: 2009-02-02 11:27+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -649,7 +649,7 @@ msgid "Power Off"
 msgstr "Éteindre"
 
 #: src/bin/e_actions.c:2648
-msgid "Reset"
+msgid "Reboot"
 msgstr "Redémarrer"
 
 #: src/bin/e_actions.c:2652
@@ -713,7 +713,7 @@ msgstr "Sélecteur de couleurs"
 #: src/modules/conf_dpms/e_int_config_dpms.c:82
 #: src/modules/conf_imc/e_int_config_imc_import.c:112
 #: src/modules/conf_mime/e_int_config_mime_edit.c:283
-#: src/modules/conf_profiles/e_int_config_profiles.c:284
+#: src/modules/conf_profiles/e_int_config_profiles.c:369
 #: src/modules/conf_theme/e_int_config_theme_import.c:113
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:204
@@ -732,7 +732,7 @@ msgstr "OK"
 #: src/bin/e_fm_prop.c:514
 #: src/modules/conf_imc/e_int_config_imc_import.c:116
 #: src/modules/conf_mime/e_int_config_mime_edit.c:284
-#: src/modules/conf_profiles/e_int_config_profiles.c:285
+#: src/modules/conf_profiles/e_int_config_profiles.c:370
 #: src/modules/conf_theme/e_int_config_theme_import.c:117
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:208
@@ -785,7 +785,7 @@ msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
 #: src/bin/e_config_dialog.c:200
-#: src/modules/battery/e_mod_main.c:1076
+#: src/modules/battery/e_mod_main.c:1095
 #: src/modules/conf_engine/e_mod_main.c:34
 #: src/modules/conf_exebuf/e_mod_main.c:34
 #: src/modules/conf_paths/e_mod_main.c:34
@@ -947,7 +947,7 @@ msgstr "Sélectionner un exécutable"
 #: src/bin/e_entry.c:493
 #: src/bin/e_fm.c:6720
 #: src/modules/conf_applications/e_int_config_apps.c:271
-#: src/modules/conf_profiles/e_int_config_profiles.c:113
+#: src/modules/conf_profiles/e_int_config_profiles.c:124
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:111
 msgid "Delete"
@@ -2975,6 +2975,7 @@ msgstr "il y a %li minutes"
 
 #: src/bin/e_utils.c:757
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1145
+#: src/modules/conf_profiles/e_int_config_profiles.c:255
 #: src/modules/wizard/page_020.c:22
 #: src/modules/wizard/page_020.c:30
 msgid "Unknown"
@@ -2982,7 +2983,7 @@ msgstr "Inconnu"
 
 #: src/bin/e_widget_config_list.c:63
 #: src/modules/conf_applications/e_int_config_apps.c:245
-#: src/modules/conf_profiles/e_int_config_profiles.c:111
+#: src/modules/conf_profiles/e_int_config_profiles.c:122
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:109
 msgid "Add"
@@ -3052,39 +3053,43 @@ msgstr "Interdit"
 msgid "Read-Write"
 msgstr "Lecture-Écriture"
 
-#: src/modules/battery/e_mod_config.c:40
+#: src/modules/battery/e_mod_config.c:41
 msgid "Battery Monitor Settings"
 msgstr "Paramétrage du moniteur de batterie"
 
-#: src/modules/battery/e_mod_config.c:91
+#: src/modules/battery/e_mod_config.c:92
 msgid "Basic Settings"
 msgstr "Paramètres basiques"
 
-#: src/modules/battery/e_mod_config.c:92
-#: src/modules/battery/e_mod_config.c:139
+#: src/modules/battery/e_mod_config.c:93
+#: src/modules/battery/e_mod_config.c:145
 msgid "Show alert when battery is low"
 msgstr "Afficher une alerte dès que la batterie est faible"
 
-#: src/modules/battery/e_mod_config.c:131
-msgid "Advanced Settings"
-msgstr "Paramètres avancés"
-
 #: src/modules/battery/e_mod_config.c:133
+msgid "Polling (Internal)"
+msgstr "Interrogation (interne]"
+
+#: src/modules/battery/e_mod_config.c:135
 msgid "Check battery every:"
 msgstr "Contrôler la batterie tous les :"
 
-#: src/modules/battery/e_mod_config.c:136
+#: src/modules/battery/e_mod_config.c:138
 #: src/modules/conf_performance/e_int_config_performance.c:133
 #: src/modules/temperature/e_mod_config.c:380
 #, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f tics"
 
-#: src/modules/battery/e_mod_config.c:142
+#: src/modules/battery/e_mod_config.c:143
+msgid "Alert"
+msgstr "Alerte"
+
+#: src/modules/battery/e_mod_config.c:148
 msgid "Alert when battery is down to:"
 msgstr "Alerte dès que le niveau de batterie est inférieur à:"
 
-#: src/modules/battery/e_mod_config.c:145
+#: src/modules/battery/e_mod_config.c:151
 #: src/modules/conf_desklock/e_int_config_desklock.c:162
 #: src/modules/conf_dpms/e_int_config_dpms.c:207
 #: src/modules/conf_dpms/e_int_config_dpms.c:215
@@ -3095,49 +3100,69 @@ msgstr "Alerte dès que le niveau de batterie est inférieur à:"
 msgid "%1.0f minutes"
 msgstr "%1.0f minutes"
 
-#: src/modules/battery/e_mod_config.c:148
+#: src/modules/battery/e_mod_config.c:154
 #, c-format
 msgid "%1.0f percent"
 msgstr "%1.0f pour cent"
 
-#: src/modules/battery/e_mod_config.c:151
+#: src/modules/battery/e_mod_config.c:157
 msgid "Dismiss alert automatically"
 msgstr "Effacer l'alerte automatiquement"
 
-#: src/modules/battery/e_mod_config.c:154
+#: src/modules/battery/e_mod_config.c:160
 msgid "Dismiss alert after:"
 msgstr "Effacer l'alerte après:"
 
-#: src/modules/battery/e_mod_config.c:157
+#: src/modules/battery/e_mod_config.c:163
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:157
 #, c-format
 msgid "%1.0f seconds"
 msgstr "%1.0f secondes"
 
+#: src/modules/battery/e_mod_config.c:168
+msgid "Hardware Interface"
+msgstr "Interface matérielle"
+
+#: src/modules/battery/e_mod_config.c:171
+msgid "Auto Detect"
+msgstr "Auto-détection"
+
+#: src/modules/battery/e_mod_config.c:173
+#: src/modules/conf_applications/e_mod_main.c:39
+#: src/modules/conf_borders/e_mod_main.c:36
+#: src/modules/conf_desk/e_mod_main.c:34
+#: src/modules/conf_wallpaper/e_mod_main.c:30
+msgid "Internal"
+msgstr "Interne"
+
+#: src/modules/battery/e_mod_config.c:175
+msgid "HAL"
+msgstr "HAL"
+
 #: src/modules/battery/e_mod_main.c:135
 msgid "Battery"
 msgstr "Batterie"
 
-#: src/modules/battery/e_mod_main.c:832
+#: src/modules/battery/e_mod_main.c:846
 msgid "Your battery is low!"
 msgstr "La batterie est faible !"
 
-#: src/modules/battery/e_mod_main.c:834
+#: src/modules/battery/e_mod_main.c:848
 msgid "AC power is recommended."
 msgstr "Branchement sur le secteur recommandé."
 
-#: src/modules/battery/e_mod_main.c:909
+#: src/modules/battery/e_mod_main.c:925
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:980
-#: src/modules/battery/e_mod_main.c:982
-#: src/modules/battery/e_mod_main.c:989
-#: src/modules/battery/e_mod_main.c:991
+#: src/modules/battery/e_mod_main.c:996
+#: src/modules/battery/e_mod_main.c:998
+#: src/modules/battery/e_mod_main.c:1005
+#: src/modules/battery/e_mod_main.c:1007
 msgid "ERROR"
 msgstr "ERREUR"
 
-#: src/modules/battery/e_mod_main.c:1078
+#: src/modules/battery/e_mod_main.c:1097
 msgid "Battery Meter"
 msgstr "Surveillance de la batterie"
 
@@ -3188,13 +3213,6 @@ msgstr "Applications"
 #: src/modules/conf_applications/e_mod_main.c:35
 msgid "New Application"
 msgstr "Nouvelle application"
-
-#: src/modules/conf_applications/e_mod_main.c:39
-#: src/modules/conf_borders/e_mod_main.c:36
-#: src/modules/conf_desk/e_mod_main.c:34
-#: src/modules/conf_wallpaper/e_mod_main.c:30
-msgid "Internal"
-msgstr "Interne"
 
 #: src/modules/conf_applications/e_mod_main.c:40
 msgid "IBar Other"
@@ -3517,7 +3535,7 @@ msgid "Desktop Name"
 msgstr "Nom du bureau"
 
 #: src/modules/conf_desk/e_int_config_desk.c:150
-#: src/modules/conf_profiles/e_int_config_profiles.c:261
+#: src/modules/conf_profiles/e_int_config_profiles.c:357
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:120
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:105
 msgid "Name:"
@@ -3787,39 +3805,39 @@ msgstr "Restaurer"
 msgid "Screen Resolution Settings"
 msgstr "Paramétrage de la résolution de l'écran"
 
-#: src/modules/conf_display/e_int_config_display.c:402
+#: src/modules/conf_display/e_int_config_display.c:406
 msgid "Resolution"
 msgstr "Résolution"
 
-#: src/modules/conf_display/e_int_config_display.c:409
+#: src/modules/conf_display/e_int_config_display.c:413
 msgid "Restore on login"
 msgstr "Restaurer à l'ouverture de session"
 
-#: src/modules/conf_display/e_int_config_display.c:413
+#: src/modules/conf_display/e_int_config_display.c:417
 msgid "Refresh"
 msgstr "Rafraîchir"
 
-#: src/modules/conf_display/e_int_config_display.c:472
+#: src/modules/conf_display/e_int_config_display.c:476
 msgid "Rotation"
 msgstr "Rotation"
 
-#: src/modules/conf_display/e_int_config_display.c:491
+#: src/modules/conf_display/e_int_config_display.c:495
 msgid "Mirroring"
 msgstr "Miroir"
 
-#: src/modules/conf_display/e_int_config_display.c:642
+#: src/modules/conf_display/e_int_config_display.c:646
 msgid "Missing Features"
 msgstr "Fonctionnalités manquantes"
 
-#: src/modules/conf_display/e_int_config_display.c:643
+#: src/modules/conf_display/e_int_config_display.c:647
 msgid "Your X Display Server is missing support for<br>the <hilight>XRandR</hilight> (X Resize and Rotate) extension.<br>You cannot change screen resolutions without<br>the support of this extension. It could also be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no XRandR support detected."
 msgstr "Votre serveur X ne supporte pas l'extension<br><hilight>XRandr</hilight> (Redimensionnement et Rotation X).<br>Vous ne pouvez modifier la résolution de l'écran sans le<br>support de cette extension. Il se peut aussi qu'au moment de la compilation<br>de<hilight>ecore</hilight>, le support de XRandr n'ait pas été détecté."
 
-#: src/modules/conf_display/e_int_config_display.c:655
+#: src/modules/conf_display/e_int_config_display.c:659
 msgid "No Refresh Rates Found"
 msgstr "Aucun taux de rafraîchissement trouvé"
 
-#: src/modules/conf_display/e_int_config_display.c:656
+#: src/modules/conf_display/e_int_config_display.c:660
 msgid "No refresh rates were reported by your X Display Server.<br>If you are running a nested X Display Server, then<br>this is to be expected. However, if you are not, then<br>the current refresh rate will be used when setting<br>the resolution, which may cause <hilight>damage</hilight> to your screen."
 msgstr "Aucun taux de rafraîchissement n'a été rapporté par votre serveur X.<br>Si vous utilisez un serveur X incorporé, alors ceci est normal.<br>Néanmoins, si ce n'est pas le cas, le taux de rafraîchissement actuel<br>sera utilisé lors de la sélection de la résolution, ce qui pourrait<br><hilight>endommager</hilight> votre écran."
 
@@ -4631,7 +4649,7 @@ msgstr "Conteneur"
 msgid "Manager"
 msgstr "Manager"
 
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:1296
+#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:1298
 msgid "Mouse Binding Sequence"
 msgstr "Séquence du raccourci souris"
 
@@ -4799,34 +4817,35 @@ msgstr "%1.0f collections"
 msgid "Performance"
 msgstr "Performance"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:54
+#: src/modules/conf_profiles/e_int_config_profiles.c:56
 msgid "Profile Selector"
 msgstr "Sélecteur de profil"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:104
+#: src/modules/conf_profiles/e_int_config_profiles.c:108
 msgid "Available Profiles"
 msgstr "Profils disponibles"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:208
+#: src/modules/conf_profiles/e_int_config_profiles.c:117
+#: src/modules/wizard/page_020.c:120
+msgid "Select a profile"
+msgstr "Sélectionnez un profil"
+
+#: src/modules/conf_profiles/e_int_config_profiles.c:126
+msgid "Reset"
+msgstr "Redémarrer"
+
+#: src/modules/conf_profiles/e_int_config_profiles.c:285
 #, c-format
-msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this profile?"
-msgstr "Vous avez demandé à supprimer \"%s\".<br><br>Êtes-vous sûr de vouloir supprimer ce profil ?"
+msgid "You want to delete the \"%s\" profile.<br><br>Are you sure?"
+msgstr "Vous avez demandé à supprimer le profil \"%s\".<br><br>Êtes-vous sûr ?"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:211
-msgid "Are you sure you want to delete this profile?"
-msgstr "Êtes-vous sûr de vouloir supprimer ce profil ?"
+#: src/modules/conf_profiles/e_int_config_profiles.c:289
+msgid "Delete OK?"
+msgstr "Supprimer OK ?"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:258
+#: src/modules/conf_profiles/e_int_config_profiles.c:354
 msgid "Add New Profile"
 msgstr "Ajouter un nouveau profil"
-
-#: src/modules/conf_profiles/e_int_config_profiles.c:272
-msgid "Plain Profile"
-msgstr "Profil complet"
-
-#: src/modules/conf_profiles/e_int_config_profiles.c:276
-msgid "Clone Current Profile"
-msgstr "Copier le profil courant"
 
 #: src/modules/conf_profiles/e_mod_main.c:22
 msgid "Profiles"
@@ -6441,10 +6460,6 @@ msgstr "Choisissez"
 msgid "Profile"
 msgstr "Profil"
 
-#: src/modules/wizard/page_020.c:120
-msgid "Select a profile"
-msgstr "Sélectionnez un profil"
-
 #: src/modules/wizard/page_030.c:73
 msgid "No menu files were<br>found on your system.<br>Please see the<br>documentation on<br>www.enlightenment.org<br>for more details on<br>how to get your<br>application menus<br>working."
 msgstr "Aucun fichier de menus<br>n'a été trouvé.<br>Veuillez consulter la<br>documentation disponible<br>sur www.enlightenment.org<br>pour savoir comment<br>générer les menus<br>d'applications."
@@ -6570,7 +6585,7 @@ msgstr "Paramétrage du mélangeur"
 
 #: src/modules/mixer/conf_module.c:98
 msgid "Mixer to use for global actions:"
-msgstr "Mélangeur général"
+msgstr "Mélangeur général:"
 
 #: src/modules/mixer/conf_module.c:152
 msgid "Launch mixer..."
@@ -6616,6 +6631,20 @@ msgstr "Périphérique spécifique"
 msgid "Networks"
 msgstr "Réseaux"
 
+#~ msgid "Advanced Settings"
+#~ msgstr "Paramètres avancés"
+#~ msgid ""
+#~ "You requested to delete \"%s\".<br><br>Are you sure you want to delete "
+#~ "this profile?"
+#~ msgstr ""
+#~ "Vous avez demandé à supprimer \"%s\".<br><br>Êtes-vous sûr de vouloir "
+#~ "supprimer ce profil ?"
+#~ msgid "Are you sure you want to delete this profile?"
+#~ msgstr "Êtes-vous sûr de vouloir supprimer ce profil ?"
+#~ msgid "Plain Profile"
+#~ msgstr "Profil complet"
+#~ msgid "Clone Current Profile"
+#~ msgstr "Copier le profil courant"
 #~ msgid "Defined Command"
 #~ msgstr "Commande définie"
 #~ msgid "Exit Immediately"
@@ -6637,8 +6666,6 @@ msgstr "Réseaux"
 #~ msgstr "Éteindre immédiatement"
 #~ msgid "Shut Down"
 #~ msgstr "Éteindre"
-#~ msgid "Reboot"
-#~ msgstr "Redémarrer"
 #~ msgid "Suspend to Disk"
 #~ msgstr "Hiberner"
 #~ msgid "Desktop Lock"
