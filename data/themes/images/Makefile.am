@@ -346,6 +346,7 @@ icon_halt.png \
 icon_hibernate.png \
 icon_icon_theme.png \
 icon_imc.png \
+icon_interaction.png \
 icon_intl.png \
 icon_keys.png \
 icon_left_arrow.png \
