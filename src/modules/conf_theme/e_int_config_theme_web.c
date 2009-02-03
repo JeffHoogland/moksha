@@ -35,6 +35,7 @@ static void
 _web_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 {
    if (!x || !y) return;
+
    exchange_smart_object_offset_get(obj, x, y);
 }
 
@@ -111,7 +112,6 @@ e_int_config_theme_web(E_Config_Dialog *parent)
    Evas_Object *ol, *exsm, *sf;
    Evas_Coord mw, mh;
    E_Fm2_Config fmc;
-   char sys_dir[PATH_MAX];
    char usr_dir[PATH_MAX];
    
    
@@ -137,12 +137,10 @@ e_int_config_theme_web(E_Config_Dialog *parent)
    ol = e_widget_list_add(e_win_evas_get(dia->win), 0, 1);
 
    /* The Exchange Smart Object*/
-   snprintf(sys_dir, sizeof(sys_dir), "%s/data/themes", e_prefix_data_get());
    snprintf(usr_dir, sizeof(usr_dir), "%s/.e/e/themes", e_user_homedir_get());
    exsm = exchange_smart_object_add(e_win_evas_get(dia->win));
    exchange_smart_object_remote_group_set(exsm, "Border");
-   exchange_smart_object_local_path_set(exsm, usr_dir, sys_dir);
-   exchange_smart_object_mode_set(exsm, EXCHANGE_SMART_SHOW_BOTH);
+   exchange_smart_object_local_path_set(exsm, usr_dir);
    exchange_smart_object_apply_cb_set(exsm, _web_apply, NULL);
 
    /* The Scroll Frame */
