@@ -136,3 +136,4 @@
 #include "e_fm_op.h"
 #include "e_scale.h"
 #include "e_widget_toolbar.h"
+#include "e_widget_toolbook.h"

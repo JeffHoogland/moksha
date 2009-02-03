@@ -16304,11 +16304,11 @@ collections { /* begin the collection of edje groups that are in this file */
 	       fixed: 1 0;
 	       rel1 {
 		  relative: 0.0 0.0;
-		  offset:   4  4;
+		  offset:   2  2;
 	       }
 	       rel2 {
 		  relative: 0.0 0.0;
-		  offset:   4  -5;
+		  offset:   2  -5;
 		  to_y: "e.swallow.buttons";
 	       }
 	    }
@@ -16318,12 +16318,12 @@ collections { /* begin the collection of edje groups that are in this file */
 	    description { state: "default" 0.0;
 	       rel1 {
 		  relative: 1.0 0.0;
-		  offset:   4   4;
+		  offset:   2   2;
 		  to_x:     "e.swallow.icon";
 	       }
 	       rel2 {
 		  relative: 1.0 0.0;
-		  offset:   -5  -9;
+		  offset:   -3  -5;
 		  to_y: "e.swallow.buttons";
 	       }
 	    }
@@ -16476,10 +16476,10 @@ collections { /* begin the collection of edje groups that are in this file */
 	    description { state: "default" 0.0;
 	       align: 0.5 0.5;
 	       min: 100 200;
-	       rel1.offset: 5 5;
+	       rel1.offset: 2 2;
 	       rel2 {
 		  relative: 1.0 0.0;
-		  offset: -6 -9;
+		  offset: -3 -5;
 		  to_y: "e.swallow.button";
 	       }
 	    }

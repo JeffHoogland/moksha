@@ -169,7 +169,8 @@ e_slidesel.h \
 e_slidecore.h \
 e_widget_flist.h \
 e_scale.h \
-e_widget_toolbar.h
+e_widget_toolbar.h \
+e_widget_toolbook.h
 
 enlightenment_src = \
 e_user.c \
@@ -305,6 +306,7 @@ e_slidecore.c \
 e_widget_flist.c \
 e_scale.c \
 e_widget_toolbar.c \
+e_widget_toolbook.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

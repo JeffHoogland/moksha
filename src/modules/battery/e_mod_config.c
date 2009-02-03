@@ -125,59 +125,49 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *of, *ob;
+   Evas_Object *o, *ob, *of, *otb;
    E_Radio_Group *rg;
+
+   otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
    
    /* Use Sliders for both cfg options */
+   o = e_widget_table_add(evas, 0);
+   
+   ob = e_widget_label_add(evas, _("Check every:"));
+   e_widget_table_object_append(o, ob, 0, 0, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 1, 256, 4, 0, NULL, &(cfdata->poll_interval), 180);
+   e_widget_table_object_append(o, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_toolbook_page_append(otb, NULL, _("Polling"), o, 0, 0, 0, 0, 0.5, 0.0);
+
+   o = e_widget_table_add(evas, 0);
+   ob = e_widget_check_add(evas, _("Show alert on low battery"), &(cfdata->show_alert));
+   e_widget_table_object_append(o, ob, 0, 0, 1, 1, 1, 1, 1, 0);   
+   ob = e_widget_label_add(evas, _("Alert when at:"));
+   e_widget_table_object_append(o, ob, 0, 1, 1, 1, 1, 0, 1, 1);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f min"), 0, 60, 1, 0, NULL, &(cfdata->alert_time), 180);
+   e_widget_table_object_append(o, ob, 0, 2, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f %%"), 0, 100, 1, 0, NULL, &(cfdata->alert_percent), 180);
+   e_widget_table_object_append(o, ob, 0, 3, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_check_add(evas, _("Auto dismiss in..."), &(cfdata->dismiss_alert));
+   e_widget_table_object_append(o, ob, 0, 4, 1, 1, 1, 1, 1, 0);   
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f sec"), 1, 300, 1, 0, NULL, &(cfdata->alert_timeout), 180);
+   e_widget_table_object_append(o, ob, 0, 5, 1, 1, 1, 0, 1, 0);
+   e_widget_toolbook_page_append(otb, NULL, _("Alert"), o, 0, 0, 0, 0, 0.5, 0.0);
+   
    o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_frametable_add(evas, _("Polling (Internal)"), 1);
-   
-   ob = e_widget_label_add(evas, _("Check battery every:"));
-   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
-   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 1, 1024, 4, 0, NULL, &(cfdata->poll_interval), 256);
-   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-   
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
-   of = e_widget_frametable_add(evas, _("Alert"), 1);
-   
-   ob = e_widget_check_add(evas, _("Show alert when battery is low"), &(cfdata->show_alert));
-   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 0);   
-   
-   ob = e_widget_label_add(evas, _("Alert when battery is down to:"));
-   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 1);
-   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 0, 60, 1, 0, NULL, &(cfdata->alert_time), 60);
-   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 0, 1, 0);
-
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f percent"), 0, 100, 1, 0, NULL, &(cfdata->alert_percent), 100);
-   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 0, 1, 0);
-   
-   ob = e_widget_check_add(evas, _("Dismiss alert automatically"), &(cfdata->dismiss_alert));
-   e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 1, 1, 0);   
-   
-   ob = e_widget_label_add(evas, _("Dismiss alert after:"));
-   e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 0, 1, 0);
-   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"), 1, 300, 1, 0, NULL, &(cfdata->alert_timeout), 150);
-   e_widget_frametable_object_append(of, ob, 0, 6, 1, 1, 1, 0, 1, 0);
-
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
-   of = e_widget_framelist_add(evas, _("Hardware Interface"), 0);
    
    rg = e_widget_radio_group_new(&(cfdata->force_mode));
    ob = e_widget_radio_add(evas, _("Auto Detect"), 0, rg);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, ob, 1, 0, 0.0);
    ob = e_widget_radio_add(evas, _("Internal"), 1, rg);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, ob, 1, 0, 0.0);
    ob = e_widget_radio_add(evas, _("HAL"), 2, rg);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, ob, 1, 0, 0.0);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
-   return o;
+   e_widget_toolbook_page_append(otb, NULL, _("Hardware"), o, 0, 0, 0, 0, 0.5, 0.0);
+
+   e_widget_toolbook_page_show(otb, 0);
+   return otb;
 }
 
 static int 
