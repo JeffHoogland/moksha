@@ -201,7 +201,7 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    e_dialog_resizable_set(dia, 0);
    e_dialog_show(dia);
    
-   e_dialog_border_icon_set(dia, "enlightenment/background");
+   e_dialog_border_icon_set(dia, "enlightenment/gradient");
    return dia;
 }
 
