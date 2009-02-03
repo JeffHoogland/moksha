@@ -436,6 +436,7 @@ icon_wallpaper_center.png \
 icon_wallpaper_grad_screen.png \
 icon_wallpaper.png \
 icon_wallpaper_screen.png \
+icon_warning.png \
 icon_window_focus.png \
 icon_window_manipulation.png \
 icon_window_remembers.png \
