@@ -429,6 +429,7 @@ icon_startup.png \
 icon_suspend.png \
 icon_swap.png \
 icon_system.png \
+icon_toolbar.png \
 icon_theme.png \
 icon_transitions.png \
 icon_up_arrow.png \
