@@ -3,7 +3,7 @@
 //	Icons:
 //		EFM - All popup icons ... eg, paste copy delete properties
 //		EFM - folders (perhaps?), dynamic mime icons
-//		Icons - engine, better looking SD card
+//		Icons - better looking SD card, toolbar(use ibar icon)
 //		Icons for all modules in Module list.
 //
 
@@ -22449,7 +22449,6 @@ ICON("widget/reset","icon_reset.png",64)
 
 /// No icons made yet ///
 
-ICON("enlightenment/engine","icon_dummy.png",64)
 ICON("enlightenment/toolbar","icon_dummy.png",64)
 
 /// Normal Icons ///
@@ -22481,6 +22480,7 @@ ICON("enlightenment/favorites","icon_favorites.png",64)
 ICON("enlightenment/desktops","icon_desktops.png",64)
 ICON("enlightenment/configuration","icon_configuration.png",64)
 ICON("enlightenment/settings","icon_configuration.png",64)
+ICON("enlightenment/engine","icon_engine.png",64)
 ICON("enlightenment/dialogs","icon_dummy.png",64)
 ICON("enlightenment/intl","icon_intl.png",64)
 ICON("enlightenment/interaction","icon_interaction.png",64)

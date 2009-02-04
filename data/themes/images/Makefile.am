@@ -336,6 +336,7 @@ icon_efm_tmp.png \
 icon_efm_view_details.png \
 icon_efm_view_name.png \
 icon_efm_view.png \
+icon_engine.png \
 icon_extensions.png \
 icon_favorites.png \
 icon_file_icons.png \
