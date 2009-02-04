@@ -53,7 +53,9 @@ struct _E_Config_Dialog_Data
    /* dialogs */
    E_Win *win_import;
    E_Dialog *dia_gradient;
+#ifdef HAVE_EXCHANGE
    E_Dialog *dia_web;
+#endif   
 };
 
 EAPI E_Config_Dialog *
@@ -151,6 +153,7 @@ e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia)
    cfdata->dia_gradient = NULL;
 }
 
+#ifdef HAVE_EXCHANGE
 EAPI void
 e_int_config_wallpaper_web_done(E_Config_Dialog *dia)
 {
@@ -159,6 +162,7 @@ e_int_config_wallpaper_web_done(E_Config_Dialog *dia)
    cfdata = dia->cfdata;
    cfdata->dia_web = NULL;
 }
+#endif
 
 EAPI void 
 e_int_config_wallpaper_handler_set(Evas_Object *obj, const char *path, void *data) 
@@ -376,6 +380,7 @@ _cb_gradient(void *data1, void *data2)
      cfdata->dia_gradient = e_int_config_wallpaper_gradient(cfdata->cfd);
 }
 
+#ifdef HAVE_EXCHANGE
 static void
 _cb_web(void *data1, void *data2)
 {
@@ -387,6 +392,7 @@ _cb_web(void *data1, void *data2)
    else
       cfdata->dia_web = e_int_config_wallpaper_web(cfdata->cfd);   
 }
+#endif   
 
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
@@ -468,8 +474,10 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      e_int_config_wallpaper_del(cfdata->win_import);
    if (cfdata->dia_gradient) 
      e_int_config_wallpaper_gradient_del(cfdata->dia_gradient);
+#ifdef HAVE_EXCHANGE
    if (cfdata->dia_web)
      e_int_config_wallpaper_web_del(cfdata->dia_web);
+#endif   
    E_FREE(cfdata->bg);
    E_FREE(cfd->data);
    E_FREE(cfdata);
@@ -544,13 +552,15 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
 			    _cb_gradient, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
+#ifdef HAVE_EXCHANGE
    if (online)
-   {
-      ow = e_widget_button_add(evas, _("Online..."), "enlightenment/website",
-			       _cb_web, cfdata, NULL);
-      e_widget_table_object_append(ot, ow, 2, 1, 1, 1, 1, 0, 0, 0);
-   }
-
+     {
+        ow = e_widget_button_add(evas, _("Online..."), "enlightenment/website",
+                                 _cb_web, cfdata, NULL);
+        e_widget_table_object_append(ot, ow, 2, 1, 1, 1, 1, 0, 0, 0);
+     }
+#endif
+   
    mw = 320;
    mh = (320 * zone->h) / zone->w;
    oa = e_widget_aspect_add(evas, mw, mh);
@@ -670,13 +680,15 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
 			    _cb_gradient, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
+#ifdef HAVE_EXCHANGE
    if (online)
-   {
-      ow = e_widget_button_add(evas, _("Online..."), "enlightenment/website",
-			       _cb_web, cfdata, NULL);
-      e_widget_table_object_append(ot, ow, 2, 1, 1, 1, 1, 0, 0, 0);
-   }
-
+     {
+        ow = e_widget_button_add(evas, _("Online..."), "enlightenment/website",
+                                 _cb_web, cfdata, NULL);
+        e_widget_table_object_append(ot, ow, 2, 1, 1, 1, 1, 0, 0, 0);
+     }
+#endif
+   
    mw = 320;
    mh = (320 * zone->h) / zone->w;
    oa = e_widget_aspect_add(evas, mw, mh);
