@@ -258,6 +258,7 @@ struct _Hal_Battery
    const char *model;
    const char *vendor;
    const char *type;
+   Eina_Bool got_prop:1;
 };
 
 struct _Hal_Ac_Adapter
@@ -316,6 +317,8 @@ _battery_hal_update(void)
         Hal_Battery *hbat;
         
         hbat = l->data;
+	if (!hbat->got_prop)
+	  continue;
         have_battery = 1;
         batnum++;
         if (hbat->is_charging) have_power = 1;
@@ -334,6 +337,10 @@ _battery_hal_update(void)
         disch += hbat->is_discharging;
         chrg += hbat->is_charging;
      }
+
+   if ((hal_batteries) && (batnum == 0))
+     return; /* not ready yet, no properties received for any battery */
+
    if (batnum > 0) full /= batnum;
 
    if ((disch == 0) && (chrg == 0)) time_left = -1;
@@ -429,7 +436,8 @@ _battery_hal_battery_props(void *data, void *reply_data, DBusError *error)
    GET_INT(time_left, "battery.remaining_time");
    GET_BOOL(is_charging, "battery.rechargeable.is_charging");
    GET_BOOL(is_discharging, "battery.rechargeable.is_discharging");
-   
+
+   hbat->got_prop = 1;
    _battery_hal_update();
 }
 
