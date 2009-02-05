@@ -414,6 +414,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, border_shade_transition, INT); /**/
    E_CONFIG_VAL(D, T, border_shade_speed, DOUBLE); /**/
    E_CONFIG_VAL(D, T, framerate, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, priority, INT); /**/
    E_CONFIG_VAL(D, T, image_cache, INT); /**/
    E_CONFIG_VAL(D, T, font_cache, INT); /**/
    E_CONFIG_VAL(D, T, edje_cache, INT); /**/
@@ -856,6 +857,10 @@ e_config_load(void)
         COPYPTR(syscon.actions);
         IFCFGEND;
         
+        IFCFG(0x012d);
+        COPYVAL(priority);
+        IFCFGEND;
+        
         e_config->config_version = E_CONFIG_FILE_VERSION;   
         _e_config_free(tcfg);
      }
@@ -869,6 +874,7 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->border_shade_transition, 0, 3);
    E_CONFIG_LIMIT(e_config->border_shade_speed, 1.0, 20000.0);
    E_CONFIG_LIMIT(e_config->framerate, 1.0, 200.0);
+   E_CONFIG_LIMIT(e_config->priority, 0, 19);
    E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
    E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
    E_CONFIG_LIMIT(e_config->edje_cache, 0, 256);

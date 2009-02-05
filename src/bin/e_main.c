@@ -576,8 +576,8 @@ main(int argc, char **argv)
 
    locked |= e_config->desklock_start_locked;
 
-   /* set all execced stuff to pri 1 - nice. make this config later? */
-   ecore_exe_run_priority_set(1);
+   /* set all execced stuff to configured priority */
+   ecore_exe_run_priority_set(e_config->priority);
    
    TS("scale");
    /* init config system */

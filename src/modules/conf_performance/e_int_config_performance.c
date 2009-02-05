@@ -10,6 +10,7 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E
 struct _E_Config_Dialog_Data 
 {
    double framerate;
+   int priority;
 
    /* Advanced */   
    int cache_flush_poll_interval;
@@ -46,6 +47,7 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    cfdata->framerate = e_config->framerate;
+   cfdata->priority = e_config->priority;
    cfdata->font_cache = ((double)e_config->font_cache / 1024);
    cfdata->image_cache = ((double)e_config->image_cache / 1024);
    cfdata->edje_cache = e_config->edje_cache;
@@ -75,6 +77,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->framerate <= 0.0) cfdata->framerate = 1.0;
    e_config->framerate = cfdata->framerate;
    edje_frametime_set(1.0 / e_config->framerate);
+   e_config->priority = cfdata->priority;
+   ecore_exe_run_priority_set(e_config->priority);
    e_canvas_recache();
    e_config_save_queue();
    return 1;
@@ -93,6 +97,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 5.0, 200.0, 5.0, 0, &(cfdata->framerate), NULL, 150);
    e_widget_framelist_object_append(of, ob);
 
+   ob = e_widget_label_add(evas, _("Application Priority"));
+   e_widget_framelist_object_append(of, ob);   
+   ob = e_widget_slider_add(evas, 1, 0, "%1.0f", 0, 19, 1, 0, NULL, &(cfdata->priority), 150);
+   e_widget_framelist_object_append(of, ob);
+
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
    return o;
 }
@@ -108,6 +117,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->edje_cache = cfdata->edje_cache;
    e_config->edje_collection_cache = cfdata->edje_collection_cache;
    edje_frametime_set(1.0 / e_config->framerate);
+   e_config->priority = cfdata->priority;
+   ecore_exe_run_priority_set(e_config->priority);
    e_canvas_recache();
    e_config_save_queue();
    return 1;
@@ -124,6 +135,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_label_add(evas, _("Framerate"));
    e_widget_framelist_object_append(of, ob);   
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 5.0, 240.0, 1.0, 0, &(cfdata->framerate), NULL, 150);
+   e_widget_framelist_object_append(of, ob);
+
+   ob = e_widget_label_add(evas, _("Application Priority"));
+   e_widget_framelist_object_append(of, ob);   
+   ob = e_widget_slider_add(evas, 1, 0, "%1.0f", 0, 19, 1, 0, NULL, &(cfdata->priority), 150);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
 
