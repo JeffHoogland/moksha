@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-02-02 07:08+0400\n"
-"PO-Revision-Date: 2009-02-02 11:27+0400\n"
+"POT-Creation-Date: 2009-02-05 13:28+0400\n"
+"PO-Revision-Date: 2009-02-05 14:46+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -30,6 +30,7 @@ msgstr "À propos de Enlightenment"
 #: src/bin/e_theme_about.c:20
 #: src/modules/conf/e_conf.c:172
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:125
 #: src/modules/fileman/e_fwin.c:1428
 #: src/modules/illume/e_mod_win.c:177
 #: src/modules/mixer/app_mixer.c:537
@@ -627,8 +628,8 @@ msgstr "Quitter à l'instant"
 #: src/modules/conf_startup/e_int_config_startup.c:273
 #: src/modules/conf_theme/e_int_config_theme.c:360
 #: src/modules/conf_theme/e_int_config_theme.c:798
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:503
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:631
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:511
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:641
 #: src/modules/gadman/e_mod_config.c:189
 #: src/modules/syscon/e_mod_main.c:34
 #: src/modules/syscon/e_mod_main.c:55
@@ -717,7 +718,6 @@ msgstr "Sélecteur de couleurs"
 #: src/modules/conf_theme/e_int_config_theme_import.c:113
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:204
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:171
 #: src/modules/cpufreq/e_mod_main.c:392
 #: src/modules/cpufreq/e_mod_main.c:419
 #: src/modules/cpufreq/e_mod_main.c:438
@@ -736,7 +736,6 @@ msgstr "OK"
 #: src/modules/conf_theme/e_int_config_theme_import.c:117
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:208
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:172
 #: src/modules/syscon/e_syscon.c:97
 #: src/modules/connman/e_mod_main.c:781
 msgid "Cancel"
@@ -785,7 +784,7 @@ msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
 #: src/bin/e_config_dialog.c:200
-#: src/modules/battery/e_mod_main.c:1095
+#: src/modules/battery/e_mod_main.c:1099
 #: src/modules/conf_engine/e_mod_main.c:34
 #: src/modules/conf_exebuf/e_mod_main.c:34
 #: src/modules/conf_paths/e_mod_main.c:34
@@ -3012,8 +3011,8 @@ msgstr "Ajouter aux favoris"
 #: src/modules/conf_imc/e_int_config_imc.c:834
 #: src/modules/conf_startup/e_int_config_startup.c:281
 #: src/modules/conf_theme/e_int_config_theme.c:367
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:509
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:637
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:517
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:647
 #: src/modules/gadman/e_mod_config.c:193
 msgid "Go up a Directory"
 msgstr "Remonter d'un niveau"
@@ -3062,17 +3061,12 @@ msgid "Basic Settings"
 msgstr "Paramètres basiques"
 
 #: src/modules/battery/e_mod_config.c:93
-#: src/modules/battery/e_mod_config.c:145
 msgid "Show alert when battery is low"
 msgstr "Afficher une alerte dès que la batterie est faible"
 
-#: src/modules/battery/e_mod_config.c:133
-msgid "Polling (Internal)"
-msgstr "Interrogation (interne]"
-
-#: src/modules/battery/e_mod_config.c:135
-msgid "Check battery every:"
-msgstr "Contrôler la batterie tous les :"
+#: src/modules/battery/e_mod_config.c:136
+msgid "Check every:"
+msgstr "Contrôler tous les:"
 
 #: src/modules/battery/e_mod_config.c:138
 #: src/modules/conf_performance/e_int_config_performance.c:133
@@ -3081,53 +3075,46 @@ msgstr "Contrôler la batterie tous les :"
 msgid "%1.0f ticks"
 msgstr "%1.0f tics"
 
+#: src/modules/battery/e_mod_config.c:140
+msgid "Polling"
+msgstr "Interrogation"
+
 #: src/modules/battery/e_mod_config.c:143
+msgid "Show alert on low battery"
+msgstr "Afficher une alerte dès que la batterie est faible"
+
+#: src/modules/battery/e_mod_config.c:145
+msgid "Alert when at:"
+msgstr "Alerte quand le niveau est à:"
+
+#: src/modules/battery/e_mod_config.c:147
+#, c-format
+msgid "%1.0f min"
+msgstr "%1.0f min"
+
+#: src/modules/battery/e_mod_config.c:149
+#, c-format
+msgid "%1.0f %%"
+msgstr "%1.0f %%"
+
+#: src/modules/battery/e_mod_config.c:151
+msgid "Auto dismiss in..."
+msgstr "Éliminer automatiquement dans..."
+
+#: src/modules/battery/e_mod_config.c:153
+#, c-format
+msgid "%1.0f sec"
+msgstr "%1.0f s"
+
+#: src/modules/battery/e_mod_config.c:155
 msgid "Alert"
 msgstr "Alerte"
 
-#: src/modules/battery/e_mod_config.c:148
-msgid "Alert when battery is down to:"
-msgstr "Alerte dès que le niveau de batterie est inférieur à:"
-
-#: src/modules/battery/e_mod_config.c:151
-#: src/modules/conf_desklock/e_int_config_desklock.c:162
-#: src/modules/conf_dpms/e_int_config_dpms.c:207
-#: src/modules/conf_dpms/e_int_config_dpms.c:215
-#: src/modules/conf_dpms/e_int_config_dpms.c:223
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:119
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:151
-#, c-format
-msgid "%1.0f minutes"
-msgstr "%1.0f minutes"
-
-#: src/modules/battery/e_mod_config.c:154
-#, c-format
-msgid "%1.0f percent"
-msgstr "%1.0f pour cent"
-
-#: src/modules/battery/e_mod_config.c:157
-msgid "Dismiss alert automatically"
-msgstr "Effacer l'alerte automatiquement"
-
 #: src/modules/battery/e_mod_config.c:160
-msgid "Dismiss alert after:"
-msgstr "Effacer l'alerte après:"
-
-#: src/modules/battery/e_mod_config.c:163
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
-#, c-format
-msgid "%1.0f seconds"
-msgstr "%1.0f secondes"
-
-#: src/modules/battery/e_mod_config.c:168
-msgid "Hardware Interface"
-msgstr "Interface matérielle"
-
-#: src/modules/battery/e_mod_config.c:171
 msgid "Auto Detect"
 msgstr "Auto-détection"
 
-#: src/modules/battery/e_mod_config.c:173
+#: src/modules/battery/e_mod_config.c:162
 #: src/modules/conf_applications/e_mod_main.c:39
 #: src/modules/conf_borders/e_mod_main.c:36
 #: src/modules/conf_desk/e_mod_main.c:34
@@ -3135,34 +3122,38 @@ msgstr "Auto-détection"
 msgid "Internal"
 msgstr "Interne"
 
-#: src/modules/battery/e_mod_config.c:175
+#: src/modules/battery/e_mod_config.c:164
 msgid "HAL"
 msgstr "HAL"
+
+#: src/modules/battery/e_mod_config.c:167
+msgid "Hardware"
+msgstr "Interface"
 
 #: src/modules/battery/e_mod_main.c:135
 msgid "Battery"
 msgstr "Batterie"
 
-#: src/modules/battery/e_mod_main.c:846
+#: src/modules/battery/e_mod_main.c:850
 msgid "Your battery is low!"
 msgstr "La batterie est faible !"
 
-#: src/modules/battery/e_mod_main.c:848
+#: src/modules/battery/e_mod_main.c:852
 msgid "AC power is recommended."
 msgstr "Branchement sur le secteur recommandé."
 
-#: src/modules/battery/e_mod_main.c:925
+#: src/modules/battery/e_mod_main.c:929
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:996
-#: src/modules/battery/e_mod_main.c:998
-#: src/modules/battery/e_mod_main.c:1005
-#: src/modules/battery/e_mod_main.c:1007
+#: src/modules/battery/e_mod_main.c:1000
+#: src/modules/battery/e_mod_main.c:1002
+#: src/modules/battery/e_mod_main.c:1009
+#: src/modules/battery/e_mod_main.c:1011
 msgid "ERROR"
 msgstr "ERREUR"
 
-#: src/modules/battery/e_mod_main.c:1097
+#: src/modules/battery/e_mod_main.c:1101
 msgid "Battery Meter"
 msgstr "Surveillance de la batterie"
 
@@ -3580,13 +3571,23 @@ msgstr "Verrouiller quand le temps d'attente est dépassé"
 msgid "Idle time to exceed"
 msgstr "Durée d'inactivité à dépasser"
 
+#: src/modules/conf_desklock/e_int_config_desklock.c:162
+#: src/modules/conf_dpms/e_int_config_dpms.c:207
+#: src/modules/conf_dpms/e_int_config_dpms.c:215
+#: src/modules/conf_dpms/e_int_config_dpms.c:223
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:119
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:151
+#, c-format
+msgid "%1.0f minutes"
+msgstr "%1.0f minutes"
+
 #: src/modules/conf_desklock/e_int_config_desklock.c:199
 #: src/modules/conf_imc/e_int_config_imc.c:822
 #: src/modules/conf_startup/e_int_config_startup.c:268
 #: src/modules/conf_theme/e_int_config_theme.c:356
 #: src/modules/conf_theme/e_int_config_theme.c:793
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:499
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:627
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:507
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:637
 #: src/modules/gadman/e_mod_config.c:186
 msgid "Personal"
 msgstr "Personnel"
@@ -4949,6 +4950,11 @@ msgstr "Délai avant le démarrage de l'écran de veille de X"
 msgid "Time until X screensaver alternates"
 msgstr "Délai avant le changement d'écran de veille de X"
 
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
+#, c-format
+msgid "%1.0f seconds"
+msgstr "%1.0f secondes"
+
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:162
 msgid "Blanking"
 msgstr "Masquer"
@@ -5069,43 +5075,43 @@ msgstr "Changement de fond d'écran"
 msgid "Transitions"
 msgstr "Transitions"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:108
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:110
 msgid "Wallpaper Settings"
 msgstr "Paramétrage du fond d'écran"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:536
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:662
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:544
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:672
 msgid "Use Theme Wallpaper"
 msgstr "Utiliser le fond d'écran du thème"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:541
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:667
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:549
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:677
 msgid "Picture..."
 msgstr "Image..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:544
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:670
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:552
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:680
 msgid "Gradient..."
 msgstr "Dégradé..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:549
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:675
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:558
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:686
 msgid "Online..."
 msgstr "En ligne..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:694
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:706
 msgid "Where to place the Wallpaper"
 msgstr "Où placer ce fond d'écran"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:695
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:707
 msgid "All Desktops"
 msgstr "Tous les bureaux"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:697
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:709
 msgid "This Desktop"
 msgstr "Ce bureau"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:699
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:711
 msgid "This Screen"
 msgstr "Cet écran"
 
@@ -5219,62 +5225,9 @@ msgstr "Enlightenment n'a pu importer le fond d'écran<br>à cause d'une erreur 
 msgid "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this is a valid wallpaper?"
 msgstr "Enlightenment n'a pu importer le fond d'écran.<br><br>Êtes-vous sûr que ce soit un fond d'écran valide ?"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:97
-msgid "Choose a website from list..."
-msgstr "Choisir un site web depuis une liste..."
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:111
-msgid "get-e.org - Static"
-msgstr "get-e.org - Statique"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:114
-msgid "get-e.org  - Animated"
-msgstr "get-e.org - Animé"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:244
-#, c-format
-msgid "[%s] Getting feed... DONE!"
-msgstr "[%s] Recherche du flux... SUCCÈS !"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:252
-#, c-format
-msgid "[%s] Getting feed... FAILED!"
-msgstr "[%s] Recherche du flux... ÉCHEC !"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:375
-#, c-format
-msgid "[%s] Parsing feed... DONE!"
-msgstr "[%s] Analyse du flux... SUCCÈS !"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:383
-#, c-format
-msgid "[%s] Parsing feed... FAILED!"
-msgstr "[%s] Analyse du flux... ÉCHEC !"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:501
-#, c-format
-msgid "[%s] Downloading of edje file..."
-msgstr "[%s] Téléchargement du fichier edj..."
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:535
-#, c-format
-msgid "[%s] Download %d images of %d"
-msgstr "[%s] Télécharge %d images de %d"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:549
-#, c-format
-msgid "[%s] Choose an image from list"
-msgstr "[%s] Choisir une image dans la liste"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:572
-#, c-format
-msgid "[%s] Downloading of edje file... %d%% done"
-msgstr "[%s] Téléchargement du fichier edj... %d%% OK"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:605
-#, c-format
-msgid "[%s] Getting feed..."
-msgstr "[%s] Recherche du flux..."
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:122
+msgid "Exchange wallpapers"
+msgstr "Fonds d'écran Exchange "
 
 #: src/modules/conf_wallpaper/e_mod_main.c:29
 #: src/modules/conf_wallpaper/e_mod_main.c:31
@@ -6631,6 +6584,38 @@ msgstr "Périphérique spécifique"
 msgid "Networks"
 msgstr "Réseaux"
 
+#~ msgid "Polling (Internal)"
+#~ msgstr "Interrogation (interne]"
+#~ msgid "%1.0f percent"
+#~ msgstr "%1.0f pour cent"
+#~ msgid "Dismiss alert automatically"
+#~ msgstr "Effacer l'alerte automatiquement"
+#~ msgid "Dismiss alert after:"
+#~ msgstr "Effacer l'alerte après:"
+#~ msgid "Choose a website from list..."
+#~ msgstr "Choisir un site web depuis une liste..."
+#~ msgid "get-e.org - Static"
+#~ msgstr "get-e.org - Statique"
+#~ msgid "get-e.org  - Animated"
+#~ msgstr "get-e.org - Animé"
+#~ msgid "[%s] Getting feed... DONE!"
+#~ msgstr "[%s] Recherche du flux... SUCCÈS !"
+#~ msgid "[%s] Getting feed... FAILED!"
+#~ msgstr "[%s] Recherche du flux... ÉCHEC !"
+#~ msgid "[%s] Parsing feed... DONE!"
+#~ msgstr "[%s] Analyse du flux... SUCCÈS !"
+#~ msgid "[%s] Parsing feed... FAILED!"
+#~ msgstr "[%s] Analyse du flux... ÉCHEC !"
+#~ msgid "[%s] Downloading of edje file..."
+#~ msgstr "[%s] Téléchargement du fichier edj..."
+#~ msgid "[%s] Download %d images of %d"
+#~ msgstr "[%s] Télécharge %d images de %d"
+#~ msgid "[%s] Choose an image from list"
+#~ msgstr "[%s] Choisir une image dans la liste"
+#~ msgid "[%s] Downloading of edje file... %d%% done"
+#~ msgstr "[%s] Téléchargement du fichier edj... %d%% OK"
+#~ msgid "[%s] Getting feed..."
+#~ msgstr "[%s] Recherche du flux..."
 #~ msgid "Advanced Settings"
 #~ msgstr "Paramètres avancés"
 #~ msgid ""
