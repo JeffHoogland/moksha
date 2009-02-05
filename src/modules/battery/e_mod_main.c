@@ -274,7 +274,6 @@ static void _battery_hal_shutdown(void);
 static void _battery_hal_battery_props(void *data, void *reply_data, DBusError *error);
 static void _battery_hal_ac_adapter_props(void *data, void *reply_data, DBusError *error);
 static void _battery_hal_battery_property_changed(void *data, DBusMessage *msg);
-static void _battery_hal_ac_adatper_property_changed(void *data, DBusMessage *msg);
 static void _battery_hal_battery_add(const char *udi);
 static void _battery_hal_battery_del(const char *udi);
 static void _battery_hal_ac_adapter_add(const char *udi);
@@ -400,7 +399,6 @@ _battery_hal_battery_props(void *data, void *reply_data, DBusError *error)
 {
    E_Hal_Properties *ret = reply_data;
    int err = 0;
-   int i;
    char *str;
    Hal_Battery *hbat;
    
@@ -446,7 +444,6 @@ _battery_hal_ac_adapter_props(void *data, void *reply_data, DBusError *error)
 {
    E_Hal_Properties *ret = reply_data;
    int err = 0;
-   int i;
    char *str;
    Hal_Ac_Adapter *hac;
 
@@ -768,8 +765,7 @@ _battery_config_updated(void)
             (battery_config->force_mode == 2))
      {
         E_DBus_Connection *conn;
-        DBusPendingCall *call;
-        
+
         if (battery_config->batget_exe)
           {
              ecore_exe_terminate(battery_config->batget_exe);
