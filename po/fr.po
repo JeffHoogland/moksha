@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-02-05 13:28+0400\n"
-"PO-Revision-Date: 2009-02-05 14:46+0400\n"
+"POT-Creation-Date: 2009-02-06 08:34+0400\n"
+"PO-Revision-Date: 2009-02-08 10:09+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -696,7 +696,7 @@ msgid "Color Selector"
 msgstr "Sélecteur de couleurs"
 
 #: src/bin/e_color_dialog.c:48
-#: src/bin/e_config.c:1727
+#: src/bin/e_config.c:1733
 #: src/bin/e_config_dialog.c:250
 #: src/bin/e_eap_editor.c:611
 #: src/bin/e_eap_editor.c:675
@@ -741,45 +741,45 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:715
-#: src/bin/e_config.c:748
+#: src/bin/e_config.c:716
+#: src/bin/e_config.c:749
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "Les données de configuration ont dû être mises à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Ceci risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que Enlightenment a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:732
+#: src/bin/e_config.c:733
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Votre configuration est PLUS RÉCENTE que Enlightenment.<br>C'est vraiment étonnant. Cela ne devrait pas se produire à<br>moins que vous n'ayez installé une version antérieure ou copié<br>la configuration depuis une machine sur laquelle une version<br>plus récente était en cours. Ce n'est pas bon et, par<br>mesure de précaution, votre configuration a été<br>remise à zéro. Désolé pour le désagrément.<br>"
 
-#: src/bin/e_config.c:1626
+#: src/bin/e_config.c:1632
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:1651
+#: src/bin/e_config.c:1657
 #, c-format
 msgid "An error occured while saving Enlightenment's<br>settings to disk. The error could not be<br>deterimined.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur est survenue lors de l'enregistrement de<br>la configuration de Enlightenment sur le disque.<br>L'origine de cette erreur n'a pu être déterminée.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:1662
+#: src/bin/e_config.c:1668
 #, c-format
 msgid "Enlightenment's settings files are too big<br>for the file system they are being saved to.<br>This error is very strange as the files should<br>be extremely small. Please check the settings<br>for your home directory.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Les fichiers de configuration de Enlightenment sont trop<br>gros pour le système de fichiers où ils doivent être<br>enregistrés. Une erreur tout à fait étonnante car<br>ils devraient être vraiment très petits.<br> Veuillez vérifier la configuration de<br>votre répertoire personnel.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:1675
+#: src/bin/e_config.c:1681
 #, c-format
 msgid "An output error occured when writing the settings<br>files for Enlightenment. Your disk is having troubles<br>and possibly needs replacement.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur d'entrée/sortie est survenue lors de l'écriture<br>des fichiers de configuration de Enlightenment. Votre disque dur<br> est en cause et devra vraisemblablement être remplacé.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:1686
+#: src/bin/e_config.c:1692
 #, c-format
 msgid "Enlightenment cannot write its settings file<br>because it ran out of space to write the file.<br>You have either run out of disk space or have<br>gone over your quota limit.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Enlightenment n'a pu écrire son fichier de configuration<br>car il n'y a pas suffisamment d'espace pour cela.<br>Soit vous n'avez plus d'espace disque,<br>soit vous avez dépassé votre quota.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:1698
+#: src/bin/e_config.c:1704
 #, c-format
 msgid "Enlightenment unexpectedly had the settings file<br>it was writing closed on it. This is very unusual.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Le fichier de configuration dans lequel Enlightenment était en train<br>d'écrire s'est fermé de façon inattendue. C'est exceptionnel.<br><br> Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
 
-#: src/bin/e_config.c:1723
+#: src/bin/e_config.c:1729
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
@@ -3069,7 +3069,7 @@ msgid "Check every:"
 msgstr "Contrôler tous les:"
 
 #: src/modules/battery/e_mod_config.c:138
-#: src/modules/conf_performance/e_int_config_performance.c:133
+#: src/modules/conf_performance/e_int_config_performance.c:149
 #: src/modules/temperature/e_mod_config.c:380
 #, c-format
 msgid "%1.0f ticks"
@@ -3729,8 +3729,8 @@ msgstr "Paramétrage des boîtes de dialogues"
 #: src/modules/conf_engine/e_int_config_engine.c:94
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:109
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:161
-#: src/modules/conf_performance/e_int_config_performance.c:90
-#: src/modules/conf_performance/e_int_config_performance.c:123
+#: src/modules/conf_performance/e_int_config_performance.c:94
+#: src/modules/conf_performance/e_int_config_performance.c:134
 #: src/modules/conf_winlist/e_int_config_winlist.c:131
 #: src/modules/ibox/e_mod_config.c:93
 #: src/modules/pager/e_mod_config.c:115
@@ -4755,61 +4755,66 @@ msgstr "Dossiers définis par l'utilisateur"
 msgid "Search Directories"
 msgstr "Recherche de dossiers"
 
-#: src/modules/conf_performance/e_int_config_performance.c:39
+#: src/modules/conf_performance/e_int_config_performance.c:40
 msgid "Performance Settings"
 msgstr "Paramétrage des performances"
 
-#: src/modules/conf_performance/e_int_config_performance.c:91
-#: src/modules/conf_performance/e_int_config_performance.c:124
+#: src/modules/conf_performance/e_int_config_performance.c:95
+#: src/modules/conf_performance/e_int_config_performance.c:135
 msgid "Framerate"
 msgstr "Taux de rafraîchissement"
 
-#: src/modules/conf_performance/e_int_config_performance.c:93
-#: src/modules/conf_performance/e_int_config_performance.c:126
+#: src/modules/conf_performance/e_int_config_performance.c:97
+#: src/modules/conf_performance/e_int_config_performance.c:137
 #, c-format
 msgid "%1.0f fps"
 msgstr "%1.0f images/s"
 
-#: src/modules/conf_performance/e_int_config_performance.c:130
+#: src/modules/conf_performance/e_int_config_performance.c:100
+#: src/modules/conf_performance/e_int_config_performance.c:140
+msgid "Application Priority"
+msgstr "Priorité des applications"
+
+#: src/modules/conf_performance/e_int_config_performance.c:146
 msgid "Cache Settings"
 msgstr "Paramétrage des tampons"
 
-#: src/modules/conf_performance/e_int_config_performance.c:131
+#: src/modules/conf_performance/e_int_config_performance.c:147
 msgid "Cache Flush Interval"
 msgstr "Intervalle de vidage des tampons"
 
-#: src/modules/conf_performance/e_int_config_performance.c:136
+#: src/modules/conf_performance/e_int_config_performance.c:152
 msgid "Size Of Font Cache"
 msgstr "Taille du tampon de polices"
 
-#: src/modules/conf_performance/e_int_config_performance.c:138
+#: src/modules/conf_performance/e_int_config_performance.c:154
 #, c-format
 msgid "%1.1f MB"
 msgstr "%1.1f Mo"
 
-#: src/modules/conf_performance/e_int_config_performance.c:141
+#: src/modules/conf_performance/e_int_config_performance.c:157
 msgid "Size Of Image Cache"
 msgstr "Taille du tampon d'images"
 
-#: src/modules/conf_performance/e_int_config_performance.c:143
+#: src/modules/conf_performance/e_int_config_performance.c:159
 #, c-format
 msgid "%1.0f MB"
 msgstr "%1.0f Mo"
 
-#: src/modules/conf_performance/e_int_config_performance.c:146
+#: src/modules/conf_performance/e_int_config_performance.c:162
 msgid "Number Of Edje Files To Cache"
 msgstr "Nombre de fichiers edj à mettre en tampon"
 
-#: src/modules/conf_performance/e_int_config_performance.c:148
+#: src/modules/conf_performance/e_int_config_performance.c:164
 #, c-format
 msgid "%1.0f files"
 msgstr "%1.0f fichiers"
 
-#: src/modules/conf_performance/e_int_config_performance.c:151
+#: src/modules/conf_performance/e_int_config_performance.c:167
 msgid "Number Of Edje Collections To Cache"
 msgstr "Nombre de collections edj à mettre en tampon"
 
-#: src/modules/conf_performance/e_int_config_performance.c:153
+#: src/modules/conf_performance/e_int_config_performance.c:169
 #, c-format
 msgid "%1.0f collections"
 msgstr "%1.0f collections"

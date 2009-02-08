@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-02-02 19:16+0100\n"
-"PO-Revision-Date: 2009-02-02 19:24+0100\n"
+"POT-Creation-Date: 2009-02-08 11:09+0100\n"
+"PO-Revision-Date: 2009-02-08 11:20+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,7 @@ msgstr ""
 #: src/bin/e_int_border_prop.c:81 src/bin/e_about.c:20
 #: src/bin/e_config_dialog.c:258 src/bin/e_int_border_menu.c:208
 #: src/modules/conf/e_conf.c:172 src/modules/mixer/app_mixer.c:537
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:125
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/fileman/e_fwin.c:1428 src/modules/illume/e_mod_win.c:177
 msgid "Close"
@@ -301,7 +302,7 @@ msgid "Select an Icon"
 msgstr "Seleziona un'icona"
 
 #: src/bin/e_eap_editor.c:611 src/bin/e_eap_editor.c:675 src/bin/e_exec.c:323
-#: src/bin/e_entry_dialog.c:58 src/bin/e_fm_prop.c:513 src/bin/e_config.c:1727
+#: src/bin/e_entry_dialog.c:58 src/bin/e_fm_prop.c:513 src/bin/e_config.c:1733
 #: src/bin/e_sys.c:441 src/bin/e_sys.c:487 src/bin/e_utils.c:541
 #: src/bin/e_module.c:408 src/bin/e_int_border_remember.c:258
 #: src/bin/e_int_border_remember.c:339 src/bin/e_int_border_remember.c:381
@@ -313,7 +314,6 @@ msgstr "Seleziona un'icona"
 #: src/modules/conf_profiles/e_int_config_profiles.c:369
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:204
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:171
 #: src/modules/conf_theme/e_int_config_theme_import.c:113
 #: src/modules/conf_dpms/e_int_config_dpms.c:61
 #: src/modules/conf_dpms/e_int_config_dpms.c:82
@@ -329,7 +329,6 @@ msgstr "OK"
 #: src/modules/conf_profiles/e_int_config_profiles.c:370
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:208
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:172
 #: src/modules/conf_theme/e_int_config_theme_import.c:117
 #: src/modules/connman/e_mod_main.c:781 src/modules/syscon/e_syscon.c:97
 msgid "Cancel"
@@ -516,8 +515,8 @@ msgstr "Aggiungi ai preferiti"
 
 #: src/bin/e_widget_fsel.c:294 src/modules/conf_imc/e_int_config_imc.c:834
 #: src/modules/gadman/e_mod_config.c:193
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:509
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:637
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:517
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:647
 #: src/modules/conf_desklock/e_int_config_desklock.c:206
 #: src/modules/conf_startup/e_int_config_startup.c:281
 #: src/modules/conf_theme/e_int_config_theme.c:367
@@ -653,8 +652,8 @@ msgstr "Moduli"
 #: src/bin/e_actions.c:2656 src/bin/e_int_config_modules.c:45
 #: src/modules/conf_imc/e_int_config_imc.c:827
 #: src/modules/gadman/e_mod_config.c:189
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:503
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:631
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:511
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:641
 #: src/modules/conf_desklock/e_int_config_desklock.c:202
 #: src/modules/conf_startup/e_int_config_startup.c:273
 #: src/modules/conf_theme/e_int_config_theme.c:360
@@ -1290,7 +1289,7 @@ msgstr "Inizio spostamento/ridimensionamento oggetti"
 msgid "Configure Toolbar Contents"
 msgstr "Configura contenuti della barra strumenti"
 
-#: src/bin/e_config.c:715 src/bin/e_config.c:748
+#: src/bin/e_config.c:716 src/bin/e_config.c:749
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -1310,7 +1309,7 @@ msgstr ""
 "funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_config.c:732
+#: src/bin/e_config.c:733
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -1325,11 +1324,11 @@ msgstr ""
 "male, quindi la vostra configurazione è<br>stata ripristinata a scopo "
 "precauzionale ai valori predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/bin/e_config.c:1626
+#: src/bin/e_config.c:1632
 msgid "Settings Upgraded"
 msgstr "Impostazioni aggiornate"
 
-#: src/bin/e_config.c:1651
+#: src/bin/e_config.c:1657
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
@@ -1341,7 +1340,7 @@ msgstr ""
 "dove è avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1662
+#: src/bin/e_config.c:1668
 #, c-format
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
@@ -1357,7 +1356,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1675
+#: src/bin/e_config.c:1681
 #, c-format
 msgid ""
 "An output error occured when writing the settings<br>files for "
@@ -1371,7 +1370,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1686
+#: src/bin/e_config.c:1692
 #, c-format
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
@@ -1385,7 +1384,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1698
+#: src/bin/e_config.c:1704
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
@@ -1397,7 +1396,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1723
+#: src/bin/e_config.c:1729
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemi scrittura configurazione di Enlightenment"
 
@@ -2422,7 +2421,7 @@ msgstr "<title>Il Team</title>"
 
 #: src/bin/e_config_dialog.c:200 src/modules/conf_exebuf/e_mod_main.c:34
 #: src/modules/conf_paths/e_mod_main.c:34
-#: src/modules/battery/e_mod_main.c:1095
+#: src/modules/battery/e_mod_main.c:1099
 #: src/modules/conf_engine/e_mod_main.c:34
 #: src/modules/conf_performance/e_mod_main.c:34
 msgid "Advanced"
@@ -3304,8 +3303,8 @@ msgstr "Impostazioni del lanciacomandi"
 #: src/modules/mixer/conf_gadget.c:197 src/modules/mixer/conf_module.c:96
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:87
 #: src/modules/ibox/e_mod_config.c:93
-#: src/modules/conf_performance/e_int_config_performance.c:90
-#: src/modules/conf_performance/e_int_config_performance.c:123
+#: src/modules/conf_performance/e_int_config_performance.c:94
+#: src/modules/conf_performance/e_int_config_performance.c:134
 msgid "General Settings"
 msgstr "Impostazioni generali"
 
@@ -3870,7 +3869,7 @@ msgstr "Sensori"
 
 #: src/modules/temperature/e_mod_config.c:380
 #: src/modules/battery/e_mod_config.c:138
-#: src/modules/conf_performance/e_int_config_performance.c:133
+#: src/modules/conf_performance/e_int_config_performance.c:149
 #, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f tick"
@@ -4333,7 +4332,7 @@ msgid "Borders"
 msgstr "Bordi"
 
 #: src/modules/conf_borders/e_mod_main.c:36
-#: src/modules/battery/e_mod_config.c:173
+#: src/modules/battery/e_mod_config.c:162
 #: src/modules/conf_applications/e_mod_main.c:39
 #: src/modules/conf_desk/e_mod_main.c:34
 #: src/modules/conf_wallpaper/e_mod_main.c:30
@@ -4595,24 +4594,24 @@ msgstr "Predefiniti"
 msgid "Battery"
 msgstr "Battery"
 
-#: src/modules/battery/e_mod_main.c:846
+#: src/modules/battery/e_mod_main.c:850
 msgid "Your battery is low!"
 msgstr "Basso livello batteria!"
 
-#: src/modules/battery/e_mod_main.c:848
+#: src/modules/battery/e_mod_main.c:852
 msgid "AC power is recommended."
 msgstr "Consigliata alimentazione AC."
 
-#: src/modules/battery/e_mod_main.c:925
+#: src/modules/battery/e_mod_main.c:929
 msgid "N/A"
 msgstr "N/D"
 
-#: src/modules/battery/e_mod_main.c:996 src/modules/battery/e_mod_main.c:998
-#: src/modules/battery/e_mod_main.c:1005 src/modules/battery/e_mod_main.c:1007
+#: src/modules/battery/e_mod_main.c:1000 src/modules/battery/e_mod_main.c:1002
+#: src/modules/battery/e_mod_main.c:1009 src/modules/battery/e_mod_main.c:1011
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: src/modules/battery/e_mod_main.c:1097
+#: src/modules/battery/e_mod_main.c:1101
 msgid "Battery Meter"
 msgstr "Indicatore di carica"
 
@@ -4625,67 +4624,59 @@ msgid "Basic Settings"
 msgstr "Impostazioni di base"
 
 #: src/modules/battery/e_mod_config.c:93
-#: src/modules/battery/e_mod_config.c:145
 msgid "Show alert when battery is low"
 msgstr "Allarme se il livello batteria è basso"
 
-#: src/modules/battery/e_mod_config.c:133
-msgid "Polling (Internal)"
-msgstr "Campionamento (interno)"
+#: src/modules/battery/e_mod_config.c:136
+msgid "Check every:"
+msgstr "Controlla ogni:"
 
-#: src/modules/battery/e_mod_config.c:135
-msgid "Check battery every:"
-msgstr "Controlla batteria ogni:"
+#: src/modules/battery/e_mod_config.c:140
+msgid "Polling"
+msgstr "Campionamento"
 
 #: src/modules/battery/e_mod_config.c:143
+msgid "Show alert on low battery"
+msgstr "Mostra allarme a batteria quasi scarica"
+
+#: src/modules/battery/e_mod_config.c:145
+msgid "Alert when at:"
+msgstr "Soglia allarme batteria:"
+
+#: src/modules/battery/e_mod_config.c:147
+#, c-format
+msgid "%1.0f min"
+msgstr "%1.0f min"
+
+#: src/modules/battery/e_mod_config.c:149
+#, c-format
+msgid "%1.0f %%"
+msgstr "%1.0f %%"
+
+#: src/modules/battery/e_mod_config.c:151
+msgid "Auto dismiss in..."
+msgstr "Soglia distacco automatico:"
+
+#: src/modules/battery/e_mod_config.c:153
+#, c-format
+msgid "%1.0f sec"
+msgstr "%1.0f sec"
+
+#: src/modules/battery/e_mod_config.c:155
 msgid "Alert"
 msgstr "Allarme"
 
-#: src/modules/battery/e_mod_config.c:148
-msgid "Alert when battery is down to:"
-msgstr "Allarme se l'autonomia della batteria è:"
-
-#: src/modules/battery/e_mod_config.c:151
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:119
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:151
-#: src/modules/conf_desklock/e_int_config_desklock.c:162
-#: src/modules/conf_dpms/e_int_config_dpms.c:207
-#: src/modules/conf_dpms/e_int_config_dpms.c:215
-#: src/modules/conf_dpms/e_int_config_dpms.c:223
-#, c-format
-msgid "%1.0f minutes"
-msgstr "%1.0f minuti"
-
-#: src/modules/battery/e_mod_config.c:154
-#, c-format
-msgid "%1.0f percent"
-msgstr "%1.0f percento"
-
-#: src/modules/battery/e_mod_config.c:157
-msgid "Dismiss alert automatically"
-msgstr "Rimuovi allarme automaticamente"
-
 #: src/modules/battery/e_mod_config.c:160
-msgid "Dismiss alert after:"
-msgstr "Rimuovi allarme dopo:"
-
-#: src/modules/battery/e_mod_config.c:163
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
-#, c-format
-msgid "%1.0f seconds"
-msgstr "%1.0f secondi"
-
-#: src/modules/battery/e_mod_config.c:168
-msgid "Hardware Interface"
-msgstr "Interfaccia hardware"
-
-#: src/modules/battery/e_mod_config.c:171
 msgid "Auto Detect"
 msgstr "Rileva automaticamente"
 
-#: src/modules/battery/e_mod_config.c:175
+#: src/modules/battery/e_mod_config.c:164
 msgid "HAL"
 msgstr "HAL"
+
+#: src/modules/battery/e_mod_config.c:167
+msgid "Hardware"
+msgstr "Hardware"
 
 #: src/modules/conf_engine/e_mod_main.c:35
 msgid "Engine"
@@ -4852,8 +4843,8 @@ msgstr "Configura metodo di input selezionato"
 
 #: src/modules/conf_imc/e_int_config_imc.c:822
 #: src/modules/gadman/e_mod_config.c:186
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:499
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:627
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:507
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:637
 #: src/modules/conf_desklock/e_int_config_desklock.c:199
 #: src/modules/conf_startup/e_int_config_startup.c:268
 #: src/modules/conf_theme/e_int_config_theme.c:356
@@ -5140,9 +5131,24 @@ msgstr "Timer dello screensaver"
 msgid "Time until X screensaver starts"
 msgstr "Tempo per l'avvio dello screensaver"
 
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:119
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:151
+#: src/modules/conf_desklock/e_int_config_desklock.c:162
+#: src/modules/conf_dpms/e_int_config_dpms.c:207
+#: src/modules/conf_dpms/e_int_config_dpms.c:215
+#: src/modules/conf_dpms/e_int_config_dpms.c:223
+#, c-format
+msgid "%1.0f minutes"
+msgstr "%1.0f minuti"
+
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:155
 msgid "Time until X screensaver alternates"
 msgstr "Tempo per il cambio dello screensaver"
+
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
+#, c-format
+msgid "%1.0f seconds"
+msgstr "%1.0f secondi"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:162
 msgid "Blanking"
@@ -5309,7 +5315,9 @@ msgstr "Riavvia"
 #: src/modules/conf_profiles/e_int_config_profiles.c:285
 #, c-format
 msgid "You want to delete the \"%s\" profile.<br><br>Are you sure?"
-msgstr "Avete chiesto di eliminare il profilo \"%s\".<br><br>Siete sicuri di volerlo fare?"
+msgstr ""
+"Avete chiesto di eliminare il profilo \"%s\".<br><br>Siete sicuri di volerlo "
+"fare?"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:289
 msgid "Delete OK?"
@@ -5611,62 +5619,9 @@ msgstr "Errore creazione gradiente"
 msgid "For some reason, Enlightenment was unable to create a gradient."
 msgstr "Per qualche ragione Enlightenment non ha potuto creare il gradiente."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:97
-msgid "Choose a website from list..."
-msgstr "Scegliere un sito dalla lista..."
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:111
-msgid "get-e.org - Static"
-msgstr "get-e.org - Statici"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:114
-msgid "get-e.org  - Animated"
-msgstr "get-e.org - Animati"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:244
-#, c-format
-msgid "[%s] Getting feed... DONE!"
-msgstr "[%s] Ricezione feed... FATTO!"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:252
-#, c-format
-msgid "[%s] Getting feed... FAILED!"
-msgstr "[%s] Ricezione feed... FALLITO!"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:375
-#, c-format
-msgid "[%s] Parsing feed... DONE!"
-msgstr "[%s] Elaborazione feed... FATTO!"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:383
-#, c-format
-msgid "[%s] Parsing feed... FAILED!"
-msgstr "[%s] Elaborazione feed... FALLITO!"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:501
-#, c-format
-msgid "[%s] Downloading of edje file..."
-msgstr "[%s] Scaricamento file edje..."
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:535
-#, c-format
-msgid "[%s] Download %d images of %d"
-msgstr "[%s] Scaricamento %d immagini di %d"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:549
-#, c-format
-msgid "[%s] Choose an image from list"
-msgstr "[%s] Scegliere un'immagine dalla lista"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:572
-#, c-format
-msgid "[%s] Downloading of edje file... %d%% done"
-msgstr "[%s] Scaricamento file edje... %d%% fatto"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:605
-#, c-format
-msgid "[%s] Getting feed..."
-msgstr "[%s] Ricezione feed..."
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:122
+msgid "Exchange wallpapers"
+msgstr "Sfondi su Exchange"
 
 #: src/modules/conf_wallpaper/e_mod_main.c:29
 #: src/modules/conf_wallpaper/e_mod_main.c:31
@@ -5674,43 +5629,43 @@ msgstr "[%s] Ricezione feed..."
 msgid "Wallpaper"
 msgstr "Sfondo"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:108
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:110
 msgid "Wallpaper Settings"
 msgstr "Impostazioni sfondo"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:536
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:662
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:544
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:672
 msgid "Use Theme Wallpaper"
 msgstr "Usa sfondo del tema"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:541
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:667
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:549
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:677
 msgid "Picture..."
 msgstr "Immagine..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:544
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:670
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:552
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:680
 msgid "Gradient..."
 msgstr "Gradiente..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:549
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:675
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:558
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:686
 msgid "Online..."
 msgstr "Online..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:694
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:706
 msgid "Where to place the Wallpaper"
 msgstr "Posizionamento dello sfondo"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:695
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:707
 msgid "All Desktops"
 msgstr "Tutti i desktop"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:697
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:709
 msgid "This Desktop"
 msgstr "Questo desktop"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:699
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:711
 msgid "This Screen"
 msgstr "Questo schermo"
 
@@ -6030,61 +5985,66 @@ msgstr "Usa bloccaschermo personalizzato"
 msgid "Screen Lock"
 msgstr "Bloccaschermo"
 
-#: src/modules/conf_performance/e_int_config_performance.c:39
+#: src/modules/conf_performance/e_int_config_performance.c:40
 msgid "Performance Settings"
 msgstr "Regolazione prestazioni"
 
-#: src/modules/conf_performance/e_int_config_performance.c:91
-#: src/modules/conf_performance/e_int_config_performance.c:124
+#: src/modules/conf_performance/e_int_config_performance.c:95
+#: src/modules/conf_performance/e_int_config_performance.c:135
 msgid "Framerate"
 msgstr "Numero di frame al secondo"
 
-#: src/modules/conf_performance/e_int_config_performance.c:93
-#: src/modules/conf_performance/e_int_config_performance.c:126
+#: src/modules/conf_performance/e_int_config_performance.c:97
+#: src/modules/conf_performance/e_int_config_performance.c:137
 #, c-format
 msgid "%1.0f fps"
 msgstr "%1.0f fps"
 
-#: src/modules/conf_performance/e_int_config_performance.c:130
+#: src/modules/conf_performance/e_int_config_performance.c:100
+#: src/modules/conf_performance/e_int_config_performance.c:140
+msgid "Application Priority"
+msgstr "Priorità applicazioni"
+
+#: src/modules/conf_performance/e_int_config_performance.c:146
 msgid "Cache Settings"
 msgstr "Impostazioni delle cache"
 
-#: src/modules/conf_performance/e_int_config_performance.c:131
+#: src/modules/conf_performance/e_int_config_performance.c:147
 msgid "Cache Flush Interval"
 msgstr "Frequenza di svuotamento delle cache"
 
-#: src/modules/conf_performance/e_int_config_performance.c:136
+#: src/modules/conf_performance/e_int_config_performance.c:152
 msgid "Size Of Font Cache"
 msgstr "Dimensione cache dei font"
 
-#: src/modules/conf_performance/e_int_config_performance.c:138
+#: src/modules/conf_performance/e_int_config_performance.c:154
 #, c-format
 msgid "%1.1f MB"
 msgstr "%1.1f MB"
 
-#: src/modules/conf_performance/e_int_config_performance.c:141
+#: src/modules/conf_performance/e_int_config_performance.c:157
 msgid "Size Of Image Cache"
 msgstr "Dimensione cache delle immagini"
 
-#: src/modules/conf_performance/e_int_config_performance.c:143
+#: src/modules/conf_performance/e_int_config_performance.c:159
 #, c-format
 msgid "%1.0f MB"
 msgstr "%1.0f MB"
 
-#: src/modules/conf_performance/e_int_config_performance.c:146
+#: src/modules/conf_performance/e_int_config_performance.c:162
 msgid "Number Of Edje Files To Cache"
 msgstr "Numero di file Edje in cache"
 
-#: src/modules/conf_performance/e_int_config_performance.c:148
+#: src/modules/conf_performance/e_int_config_performance.c:164
 #, c-format
 msgid "%1.0f files"
 msgstr "%1.0f file"
 
-#: src/modules/conf_performance/e_int_config_performance.c:151
+#: src/modules/conf_performance/e_int_config_performance.c:167
 msgid "Number Of Edje Collections To Cache"
 msgstr "Numero di collezioni edje in cache"
 
-#: src/modules/conf_performance/e_int_config_performance.c:153
+#: src/modules/conf_performance/e_int_config_performance.c:169
 #, c-format
 msgid "%1.0f collections"
 msgstr "%1.0f collezioni"
