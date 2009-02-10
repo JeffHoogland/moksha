@@ -7,9 +7,34 @@
 static char *xdg_sel = NULL;
 static Eina_List *menus = NULL;
 
+static void
+check_menu_dir(const char *dir)
+{
+   char buf[PATH_MAX], *file;
+   Ecore_List *files;
+   
+   snprintf(buf, sizeof(buf), "%s/menus", dir);
+   files = ecore_file_ls(buf);
+   if (files)
+     {
+        ecore_list_first_goto(files);
+        while ((file = ecore_list_current(files)))
+          {
+             if (e_util_glob_match(file, "*.menu"))
+               {
+                  snprintf(buf, sizeof(buf), "%s/menus/%s", dir, file);
+                  menus = eina_list_append(menus, strdup(buf));
+               }
+             ecore_list_next(files);
+          }
+        ecore_list_destroy(files);
+     }
+}
+
 EAPI int
 wizard_page_init(E_Wizard_Page *pg)
 {
+   char buf[PATH_MAX];
    const char *dirs[] = 
      {
 	"/etc/xdg",
@@ -17,33 +42,27 @@ wizard_page_init(E_Wizard_Page *pg)
 	  "/usr/local/etc/xdg",
 	  "/usr/opt/etc/xdg",
 	  "/usr/opt/xdg",
+	  "/usr/local/opt/etc/xdg",
+	  "/usr/local/opt/xdg",
+          "/opt/etc/xdg",
+          "/opt/xdg",
 	  // FIXME: add more "known locations"
 	  NULL
      };
-   int i;
+   int i, newdir;
 
+   for (i = 0; dirs[i]; i++) check_menu_dir(dirs[i]);
+   newdir = 1;
+   snprintf(buf, sizeof(buf), "%s/etc/xdg", e_prefix_get());
    for (i = 0; dirs[i]; i++)
      {
-	Ecore_List *files;
-	char buf[PATH_MAX], *file;
-	
-	snprintf(buf, sizeof(buf), "%s/menus", dirs[i]);
-	files = ecore_file_ls(buf);
-	if (files)
-	  {
-	     ecore_list_first_goto(files);
-	     while ((file = ecore_list_current(files)))
-	       {
-		  if (e_util_glob_match(file, "*.menu"))
-		    {
-		       snprintf(buf, sizeof(buf), "%s/menus/%s", dirs[i], file);
-		       menus = eina_list_append(menus, strdup(buf));
-		    }
-		  ecore_list_next(files);
-	       }
-	     ecore_list_destroy(files);
-	  }
+        if (!strcmp(dirs[i], buf))
+          {
+             newdir = 0;
+             break;
+          }
      }
+   if (newdir) check_menu_dir(buf);
    return 1;
 }
 EAPI int
