@@ -2554,23 +2554,26 @@ _e_fm2_file_paste(Evas_Object *obj)
 }
 
 static void
-_e_fm2_file_cut_menu(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_fm2_file_cut_menu(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Fm2_Smart_Data *sd = data;
+   if (!sd) return;
    _e_fm2_file_cut(sd->obj);
 }
 
 static void
-_e_fm2_file_copy_menu(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_fm2_file_copy_menu(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Fm2_Smart_Data *sd = data;
+   if (!sd) return;
    _e_fm2_file_copy(sd->obj);
 }
 
 static void
-_e_fm2_file_paste_menu(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_fm2_file_paste_menu(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Fm2_Smart_Data *sd;
+   if (!sd) return;
    _e_fm2_file_paste(sd->obj);
 }
 
@@ -7578,9 +7581,10 @@ _e_fm2_file_properties_delete_cb(void *obj)
 }
 
 static void
-_e_fm2_file_delete_menu(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_fm2_file_delete_menu(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Fm2_Icon *ic = data;
+   if (!ic) return;
    _e_fm2_file_delete(ic->obj);
 }
 
