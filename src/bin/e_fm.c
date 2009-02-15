@@ -76,6 +76,7 @@ struct _E_Fm2_Smart_Data
    unsigned char     typebuf_visible : 1;
    unsigned char     show_hidden_files : 1;
    unsigned char     listing : 1;
+   unsigned char     inherited_dir_props : 1;
    signed char       view_mode; /* -1 = unset */
    signed short      icon_size; /* -1 = unset */
    
@@ -206,6 +207,9 @@ static void _e_fm2_icons_free(Evas_Object *obj);
 static void _e_fm2_regions_eval(Evas_Object *obj);
 static void _e_fm2_config_free(E_Fm2_Config *cfg);
 
+static void _e_fm2_dir_load_props(E_Fm2_Smart_Data *sd);
+static void _e_fm2_dir_save_props(E_Fm2_Smart_Data *sd);
+
 static Evas_Object *_e_fm2_file_fm2_find(const char *file);
 static E_Fm2_Icon *_e_fm2_icon_find(Evas_Object *obj, const char *file);
 static const char *_e_fm2_uri_escape(const char *path);
@@ -286,6 +290,7 @@ static void _e_fm2_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp);
 static void _e_fm2_icon_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_icon_menu_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_toggle_inherit_dir_props(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_view_menu_grid_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_view_menu_custom_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -590,6 +595,8 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    _e_fm2_icons_free(obj);
    edje_object_part_text_set(sd->overlay, "e.text.busy_label", "");
 
+   _e_fm2_dir_load_props(sd);
+
    /* If the path change from a mountpoint to something else, we fake-unmount */
    if (sd->mount && sd->mount->mount_point 
        && strncmp(sd->mount->mount_point, sd->realpath, 
@@ -720,6 +727,126 @@ e_fm2_path_get(Evas_Object *obj, const char **dev, const char **path)
    if (path) *path = sd->path;
 }
 
+static E_Fm2_Custom_File *
+_e_fm2_dir_load_props_from_parent(const char *path)
+{
+   E_Fm2_Custom_File *cf;
+   char *parent;
+
+   if ((!path) || (path[0] == '\0') || (strcmp(path, "/") == 0))
+     return NULL;
+
+   parent = ecore_file_dir_get(path);
+   cf = e_fm2_custom_file_get(parent);
+   if ((cf) && (cf->dir) && (cf->dir->prop.in_use))
+     {
+	free(parent);
+	return cf;
+     }
+
+   cf = _e_fm2_dir_load_props_from_parent(parent);
+   free(parent);
+   return cf;
+}
+
+static void
+_e_fm2_dir_load_props(E_Fm2_Smart_Data *sd)
+{
+   E_Fm2_Custom_File *cf;
+
+   cf = e_fm2_custom_file_get(sd->realpath);
+   if ((cf) && (cf->dir))
+     {
+	Evas_Coord x, y;
+
+	if (sd->max.w - sd->w > 0)
+	  x = (sd->max.w - sd->w) * cf->dir->pos.x;
+	else
+	  x = 0;
+
+	if (sd->max.h - sd->h > 0)
+	  y = (sd->max.h - sd->h) * cf->dir->pos.y;
+	else
+	  y = 0;
+
+	e_fm2_pan_set(sd->obj, x, y);
+
+	if (cf->dir->prop.in_use)
+	  {
+	     sd->view_mode = cf->dir->prop.view_mode;
+	     sd->icon_size = cf->dir->prop.icon_size;
+	     sd->order_file = !!cf->dir->prop.order_file;
+	     sd->show_hidden_files = !!cf->dir->prop.show_hidden_files;
+	     sd->inherited_dir_props = 0;
+	     return;
+	  }
+     }
+   else
+     {
+	sd->pos.x = 0;
+	sd->pos.y = 0;
+     }
+
+   sd->inherited_dir_props = 1;
+
+   cf = _e_fm2_dir_load_props_from_parent(sd->realpath);
+   if ((cf) && (cf->dir) && (cf->dir->prop.in_use))
+     {
+	sd->view_mode = cf->dir->prop.view_mode;
+	sd->icon_size = cf->dir->prop.icon_size;
+	sd->order_file = !!cf->dir->prop.order_file;
+	sd->show_hidden_files = !!cf->dir->prop.show_hidden_files;
+     }
+   else
+     {
+	sd->view_mode = -1;
+	sd->icon_size = -1;
+	sd->order_file = 0;
+	sd->show_hidden_files = 0;
+     }
+}
+
+static void
+_e_fm2_dir_save_props(E_Fm2_Smart_Data *sd)
+{
+   E_Fm2_Custom_File *cf, cf0;
+   E_Fm2_Custom_Dir dir0;
+
+   cf = e_fm2_custom_file_get(sd->realpath);
+   if (!cf)
+     {
+	cf = &cf0;
+	memset(cf, 0, sizeof(*cf));
+	cf->dir = &dir0;
+     }
+   else if (!cf->dir)
+     {
+	E_Fm2_Custom_File *cf2 = cf;
+	cf = &cf0;
+	memcpy(cf, cf2, sizeof(*cf2));
+	cf->dir = &dir0;
+     }
+
+   if (sd->max.w - sd->w > 0)
+     cf->dir->pos.x = sd->pos.x / (double)(sd->max.w - sd->w);
+   else
+     cf->dir->pos.x = 0.0;
+
+   if (sd->max.h - sd->h)
+     cf->dir->pos.y = sd->pos.y / (double)(sd->max.h - sd->h);
+   else
+     cf->dir->pos.y = 0.0;
+
+   cf->dir->prop.icon_size = sd->icon_size;
+   cf->dir->prop.view_mode = sd->view_mode;
+   cf->dir->prop.order_file = sd->order_file;
+   cf->dir->prop.show_hidden_files = sd->show_hidden_files;
+   cf->dir->prop.in_use = !sd->inherited_dir_props;
+
+   e_fm2_custom_file_set(sd->realpath, cf);
+   e_fm2_custom_file_flush();
+}
+
 EAPI void
 e_fm2_refresh(Evas_Object *obj)
 {
@@ -729,6 +856,8 @@ e_fm2_refresh(Evas_Object *obj)
    if (!sd) return; // safety
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+
+   _e_fm2_dir_save_props(sd);
 
    _e_fm2_queue_free(obj);
    _e_fm2_regions_free(obj);
@@ -5942,6 +6071,7 @@ _e_fm2_cb_scroll_job(void *data)
    _e_fm2_obj_icons_place(sd);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(sd->obj));
+   _e_fm2_dir_save_props(sd);
 }
 
 static void
@@ -6022,6 +6152,17 @@ _e_fm2_cb_resize_job(void *data)
    sd->iconlist_changed = 0;
    sd->pw = sd->w;
    sd->ph = sd->h;
+
+   if ((sd->max.w > 0) && (sd->max.h > 0) && (sd->w > 0) && (sd->h > 0))
+     {
+	E_Fm2_Custom_File *cf = e_fm2_custom_file_get(sd->realpath);
+	if ((cf) && (cf->dir))
+	  {
+	     sd->pos.x = cf->dir->pos.x * (sd->max.w - sd->w);
+	     sd->pos.y = cf->dir->pos.y * (sd->max.h - sd->h);
+	     evas_object_smart_callback_call(sd->obj, "pan_changed", NULL);
+	  }
+     }
 }
 
 static int
@@ -6432,6 +6573,18 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_separator_set(mi, 1);
 	  }
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT))
+	  {
+	     mi = e_menu_item_new(mn);
+	     e_menu_item_label_set(mi, _("Inherit parent settings"));
+	     e_menu_item_icon_edje_set(mi,
+				       e_theme_edje_file_get("base/theme/fileman",
+							     "e/fileman/default/button/inherit"),
+				       "e/fileman/default/button/inherit");
+	     e_menu_item_check_set(mi, 1);
+	     e_menu_item_toggle_set(mi, sd->inherited_dir_props);
+	     e_menu_item_callback_set(mi, _e_fm2_toggle_inherit_dir_props, sd);
+	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_VIEW_MENU)) 
 	  {
 	     mi = e_menu_item_new(mn);
@@ -6589,6 +6742,18 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_separator_set(mi, 1);
 	  }
 
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT))
+	  {
+	     mi = e_menu_item_new(mn);
+	     e_menu_item_label_set(mi, _("Inherit parent settings"));
+	     e_menu_item_icon_edje_set(mi,
+				       e_theme_edje_file_get("base/theme/fileman",
+							     "e/fileman/default/button/inherit"),
+				       "e/fileman/default/button/inherit");
+	     e_menu_item_check_set(mi, 1);
+	     e_menu_item_toggle_set(mi, sd->inherited_dir_props);
+	     e_menu_item_callback_set(mi, _e_fm2_toggle_inherit_dir_props, sd);
+	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_VIEW_MENU)) 
 	  {
 	     mi = e_menu_item_new(mn);
@@ -6947,9 +7112,10 @@ _e_fm2_view_menu_icon_size_change(void *data, E_Menu *m, E_Menu_Item *mi)
    struct e_fm2_view_menu_icon_size_data *d = data;
    short current_size = _e_fm2_icon_w_get(d->sd);
    d->sd->icon_size = d->size;
+   d->sd->inherited_dir_props = 0;
    if (current_size == d->size)
      return;
-   e_fm2_refresh(d->sd->obj);
+   _e_fm2_refresh(d->sd, m, mi);
 }
 
 static void
@@ -6966,11 +7132,12 @@ _e_fm2_view_menu_icon_size_use_default(void *data, E_Menu *m, E_Menu_Item *mi)
      sd->icon_size = -1;
 
    new = _e_fm2_icon_w_get(sd);
+   sd->inherited_dir_props = 0;
 
    if (new == old)
      return;
 
-   e_fm2_refresh(sd->obj);
+   _e_fm2_refresh(sd, m, mi);
 }
 
 static void
@@ -7025,6 +7192,17 @@ _e_fm2_view_menu_icon_size_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, sd->icon_size == -1);
    e_menu_item_callback_set(mi, _e_fm2_view_menu_icon_size_use_default, sd);
+}
+
+static void
+_e_fm2_toggle_inherit_dir_props(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   sd->inherited_dir_props = !sd->inherited_dir_props;
+   _e_fm2_dir_save_props(sd);
+   _e_fm2_dir_load_props(sd);
+   _e_fm2_refresh(sd, m, mi);
 }
 
 static void 
@@ -7101,10 +7279,11 @@ _e_fm2_view_menu_grid_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 
    old = _e_fm2_view_mode_get(sd);
    sd->view_mode = E_FM2_VIEW_MODE_GRID_ICONS;
+   sd->inherited_dir_props = 0;
    if (old == E_FM2_VIEW_MODE_GRID_ICONS)
      return;
 
-   e_fm2_refresh(sd->obj);
+   _e_fm2_refresh(sd, m, mi);
 }
 
 static void
@@ -7115,10 +7294,11 @@ _e_fm2_view_menu_custom_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 
    old = _e_fm2_view_mode_get(sd);
    sd->view_mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
+   sd->inherited_dir_props = 0;
    if (old == E_FM2_VIEW_MODE_CUSTOM_ICONS)
      return;
 
-   e_fm2_refresh(sd->obj);
+   _e_fm2_refresh(sd, m, mi);
 }
 
 static void
@@ -7129,10 +7309,11 @@ _e_fm2_view_menu_list_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 
    old = _e_fm2_view_mode_get(sd);
    sd->view_mode = E_FM2_VIEW_MODE_LIST;
+   sd->inherited_dir_props = 0;
    if (old == E_FM2_VIEW_MODE_LIST)
      return;
 
-   e_fm2_refresh(sd->obj);
+   _e_fm2_refresh(sd, m, mi);
 }
 
 static void
@@ -7149,11 +7330,12 @@ _e_fm2_view_menu_use_default_cb(void *data, E_Menu *m, E_Menu_Item *mi)
      sd->view_mode = -1;
 
    new = _e_fm2_view_mode_get(sd);
+   sd->inherited_dir_props = 0;
 
    if (new == old)
      return;
 
-   e_fm2_refresh(sd->obj);
+   _e_fm2_refresh(sd, m, mi);
 }
 
 static void
@@ -7177,6 +7359,7 @@ _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi)
    else
      sd->show_hidden_files = 1;
 
+   sd->inherited_dir_props = 0;
    _e_fm2_refresh(data, m, mi);
 }
 
@@ -7201,6 +7384,7 @@ _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi)
 	f = fopen(buf, "w");
 	if (f) fclose(f);
      }
+   sd->inherited_dir_props = 0;
    _e_fm2_refresh(data, m, mi);
 }
 
