@@ -5547,6 +5547,26 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    sd = data;
    ev = event_info;
+
+   if (evas_key_modifier_is_set(ev->modifiers, "Control"))
+     {
+	if (!strcmp(ev->keyname, "x"))
+	  {
+	     _e_fm2_file_cut(sd, NULL, NULL);
+	     return;
+	  }
+	else if (!strcmp(ev->keyname, "c"))
+	  {
+	     _e_fm2_file_copy(sd, NULL, NULL);
+	     return;
+	  }
+	else if (!strcmp(ev->keyname, "v"))
+	  {
+	     _e_fm2_file_paste(sd, NULL, NULL);
+	     return;
+	  }
+     }
+
    if (!strcmp(ev->keyname, "Left"))
      { 
 	/* FIXME: icon mode, typebuf extras */
