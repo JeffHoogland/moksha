@@ -325,15 +325,19 @@ static void _e_fm_error_abort_cb(void *data, E_Dialog *dialog);
 static void _e_fm_error_ignore_this_cb(void *data, E_Dialog *dialog);
 static void _e_fm_error_ignore_all_cb(void *data, E_Dialog *dialog);
 
-static void _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_file_delete(Evas_Object *obj);
+static void _e_fm2_file_delete_menu(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_delete_delete_cb(void *obj);
 static void _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog);
 static void _e_fm2_file_delete_no_cb(void *data, E_Dialog *dialog);
 static void _e_fm2_refresh_job_cb(void *data);
 static void _e_fm_file_buffer_clear(void);
-static void _e_fm2_file_cut(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_fm2_file_copy(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_file_cut(Evas_Object *obj);
+static void _e_fm2_file_copy(Evas_Object *obj);
+static void _e_fm2_file_paste(Evas_Object *obj);
+static void _e_fm2_file_cut_menu(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_file_copy_menu(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_file_paste_menu(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void _e_fm2_live_file_add(Evas_Object *obj, const char *file, const char *file_rel, int after, E_Fm2_Finfo *finf);
 static void _e_fm2_live_file_del(Evas_Object *obj, const char *file);
@@ -2439,21 +2443,18 @@ _e_fm_file_buffer_clear(void)
    _e_fm_file_buffer_copying = 0;
 }
 
-static void 
-_e_fm2_file_cut(void *data, E_Menu *m, E_Menu_Item *mi) 
+static void
+_e_fm2_file_cut(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
    Eina_List *sel = NULL, *l = NULL;
    const char *realpath;
 
-   sd = data;
-   if (!sd) return;
-   sel = e_fm2_selected_list_get(sd->obj);
+   sel = e_fm2_selected_list_get(obj);
    if (!sel) return;
 
    _e_fm_file_buffer_clear();
 
-   realpath = e_fm2_real_path_get(sd->obj);
+   realpath = e_fm2_real_path_get(obj);
    _e_fm_file_buffer_cutting = 1;
    for (l = sel; l; l = l->next) 
      {
@@ -2467,21 +2468,18 @@ _e_fm2_file_cut(void *data, E_Menu *m, E_Menu_Item *mi)
      }
 }
 
-static void 
-_e_fm2_file_copy(void *data, E_Menu *m, E_Menu_Item *mi) 
+static void
+_e_fm2_file_copy(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
    Eina_List *sel = NULL, *l = NULL;
    const char *realpath;
 
-   sd = data;
-   if (!sd) return;
-   sel = e_fm2_selected_list_get(sd->obj);
+   sel = e_fm2_selected_list_get(obj);
    if (!sel) return;
 
    _e_fm_file_buffer_clear();
 
-   realpath = e_fm2_real_path_get(sd->obj);
+   realpath = e_fm2_real_path_get(obj);
    _e_fm_file_buffer_copying = 1;
    for (l = sel; l; l = l->next) 
      {
@@ -2495,8 +2493,8 @@ _e_fm2_file_copy(void *data, E_Menu *m, E_Menu_Item *mi)
      }
 }
 
-static void 
-_e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi) 
+static void
+_e_fm2_file_paste(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
    Eina_List *paths;
@@ -2504,8 +2502,8 @@ _e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi)
    size_t length = 0;
    size_t size = 0;
    char *args = NULL;
-   
-   sd = data;
+
+   sd = evas_object_smart_data_get(obj);
    if (!sd) return;
 
    /* Convert URI list to a list of real paths. */
@@ -2553,6 +2551,27 @@ _e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi)
      }
 
    free(args);
+}
+
+static void
+_e_fm2_file_cut_menu(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+   _e_fm2_file_cut(sd->obj);
+}
+
+static void
+_e_fm2_file_copy_menu(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+   _e_fm2_file_copy(sd->obj);
+}
+
+static void
+_e_fm2_file_paste_menu(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd;
+   _e_fm2_file_paste(sd->obj);
 }
 
 static void
@@ -5552,17 +5571,17 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	if (!strcmp(ev->keyname, "x"))
 	  {
-	     _e_fm2_file_cut(sd, NULL, NULL);
+	     _e_fm2_file_cut(obj);
 	     return;
 	  }
 	else if (!strcmp(ev->keyname, "c"))
 	  {
-	     _e_fm2_file_copy(sd, NULL, NULL);
+	     _e_fm2_file_copy(obj);
 	     return;
 	  }
 	else if (!strcmp(ev->keyname, "v"))
 	  {
-	     _e_fm2_file_paste(sd, NULL, NULL);
+	     _e_fm2_file_paste(obj);
 	     return;
 	  }
      }
@@ -5705,11 +5724,7 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	if (sd->typebuf_visible)
 	  { /* typebuf mode: delete */ }
 	else
-	  {
-	     ic = _e_fm2_icon_first_selected_find(obj);
-	     if (ic)
-	       _e_fm2_file_delete(ic, NULL, NULL);
-	  }
+	  _e_fm2_file_delete(obj);
      }
    else
      {
@@ -6499,7 +6514,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 					    e_theme_edje_file_get("base/theme/fileman",
 								  "e/fileman/default/button/paste"),
 					    "e/fileman/default/button/paste");
-		  e_menu_item_callback_set(mi, _e_fm2_file_paste, sd);
+		  e_menu_item_callback_set(mi, _e_fm2_file_paste_menu, sd);
 	       }
 	  }
 	
@@ -6658,7 +6673,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 					    e_theme_edje_file_get("base/theme/fileman",
 								  "e/fileman/default/button/cut"),
 					    "e/fileman/default/button/cut");
-		  e_menu_item_callback_set(mi, _e_fm2_file_cut, sd);
+		  e_menu_item_callback_set(mi, _e_fm2_file_cut_menu, sd);
 	       }
 	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_COPY)) 
@@ -6675,7 +6690,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 				       e_theme_edje_file_get("base/theme/fileman",
 							     "e/fileman/default/button/copy"),
 				       "e/fileman/default/button/copy");
-	     e_menu_item_callback_set(mi, _e_fm2_file_copy, sd);
+	     e_menu_item_callback_set(mi, _e_fm2_file_copy_menu, sd);
 	  }
 	
 	if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) && 
@@ -6689,7 +6704,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 					    e_theme_edje_file_get("base/theme/fileman",
 								  "e/fileman/default/button/paste"),
 					    "e/fileman/default/button/paste");
-		  e_menu_item_callback_set(mi, _e_fm2_file_paste, sd);
+		  e_menu_item_callback_set(mi, _e_fm2_file_paste_menu, sd);
 	       }
 	  }
 	
@@ -6748,7 +6763,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 					    e_theme_edje_file_get("base/theme/fileman",
 								  "e/fileman/default/button/delete"),
 					    "e/fileman/default/button/delete");
-		  e_menu_item_callback_set(mi, _e_fm2_file_delete, ic);
+		  e_menu_item_callback_set(mi, _e_fm2_file_delete_menu, ic);
 	       }
 	     
 	     if (!(sd->icon_menu.flags & E_FM2_MENU_NO_RENAME))
@@ -7563,7 +7578,14 @@ _e_fm2_file_properties_delete_cb(void *obj)
 }
 
 static void
-_e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_fm2_file_delete_menu(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Icon *ic = data;
+   _e_fm2_file_delete(ic->obj);
+}
+
+static void
+_e_fm2_file_delete(Evas_Object *obj)
 {
    E_Manager *man;
    E_Container *con;
@@ -7571,13 +7593,13 @@ _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Fm2_Icon *ic;
    char text[4096 + 256];
    Eina_List *sel;
-   
+
    man = e_manager_current_get();
    if (!man) return;
    con = e_container_current_get(man);
    if (!con) return;
-   
-   ic = data;
+   ic = _e_fm2_icon_first_selected_find(obj);
+   if (!ic) return;
    if (ic->dialog) return;
    dialog = e_dialog_new(con, "E", "_fm_file_delete_dialog");
    ic->dialog = dialog;
@@ -7587,7 +7609,7 @@ _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    e_dialog_button_add(dialog, _("No"), NULL, _e_fm2_file_delete_no_cb, ic);
    e_dialog_button_focus_num(dialog, 1);
    e_dialog_title_set(dialog, _("Confirm Delete"));
-   sel = e_fm2_selected_list_get(ic->sd->obj);
+   sel = e_fm2_selected_list_get(obj);
    if ((!sel) || (eina_list_count(sel) == 1))
      snprintf(text, sizeof(text), 
 	      _("Are you sure you want to delete<br>"
