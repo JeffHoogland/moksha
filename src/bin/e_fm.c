@@ -5681,9 +5681,15 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
    else if (!strcmp(ev->keyname, "Delete"))
      {
-	/* FIXME: all */
-	/* delete file dialog */
-	/* typebuf mode: delete */
+	/* FIXME: typebuf extras */
+	if (sd->typebuf_visible)
+	  { /* typebuf mode: delete */ }
+	else
+	  {
+	     ic = _e_fm2_icon_first_selected_find(obj);
+	     if (ic)
+	       _e_fm2_file_delete(ic, NULL, NULL);
+	  }
      }
    else
      {
