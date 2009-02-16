@@ -2701,7 +2701,7 @@ _e_fm2_file_copy_menu(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED
 static void
 _e_fm2_file_paste_menu(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   E_Fm2_Smart_Data *sd;
+   E_Fm2_Smart_Data *sd = data;
    if (!sd) return;
    _e_fm2_file_paste(sd->obj);
 }
@@ -7768,8 +7768,8 @@ static void
 _e_fm2_file_delete_menu(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Fm2_Icon *ic = data;
-   if (!ic) return;
-   _e_fm2_file_delete(ic->obj);
+   if ((!ic) || (!ic->sd)) return;
+   _e_fm2_file_delete(ic->sd->obj);
 }
 
 static void
