@@ -1,11 +1,10 @@
-// TODO: 
+// TODO:
 // Add group{} locations to all sections. eg. "widget/preview" is found in Wallpaper selector"
 //	Icons:
 //		EFM - All popup icons ... eg, paste copy delete properties
 //		EFM - folders (perhaps?), dynamic mime icons
-//		Add Warning Icon to delete confirm dialog in EFM 
+//		Add Warning Icon to delete confirm dialog in EFM
 //		Icons for Menus modules (Why do I keep finding myself more work?)
-//		Icon for battery module
 //
 
 /*
@@ -12414,7 +12413,6 @@ collections { /* begin the collection of edje groups that are in this file */
 	 image: "gadman_border.png" COMP;
       }
       parts {
-	 
 	 part { name: "overlay";
 	    mouse_events:  1;
 	    description { state: "default" 0.0;
@@ -22497,7 +22495,6 @@ ICON("enlightenment/mouse_clean","icon_mouse_clean.png",64)
 ICON("enlightenment/keys","icon_keys.png",64)
 ICON("enlightenment/desklock","icon_desklock.png",64)
 ICON("enlightenment/desklock_menu","icon_desklock_menu.png",128)
-ICON("enlightenment/regenerate_menus","icon_regenerate_menus.png",64)
 ICON("enlightenment/screen_resolution","icon_screen_resolution.png",64)
 ICON("enlightenment/shelf","icon_shelf.png",64)
 ICON("enlightenment/fonts","icon_fonts.png",64)
@@ -23068,7 +23065,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	 }
       }
    }
-   
+
 /////////////////////////////////////////////////////////////////////////////
    /*** INIT SPLASH ***/
    /* this first group is used for the primary screen (or only screen) so in
