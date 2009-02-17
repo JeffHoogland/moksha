@@ -80,13 +80,18 @@ _queue_timer(void *data)
              wcb->func = qi->func;
              wcb->data = qi->data;
              if (qi->val) wcb->value = strdup(qi->val);
-             wd->callbacks = eina_list_append(wd->callbacks, wcb);
              if (qi->use_relative == 0) // append
+	     {
+               wd->callbacks = eina_list_append(wd->callbacks, wcb);
                e_ilist_append(wd->o_ilist, qi->icon, qi->label, qi->header,
                               _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
+	     }
              else if (qi->use_relative == 2) // prepend
+	     {
+               wd->callbacks = eina_list_append(wd->callbacks, wcb);
                e_ilist_prepend(wd->o_ilist, qi->icon, qi->label, qi->header,
                                _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
+	     }
              else if (qi->use_relative == 1) // append relative
                {
                   rcb = eina_list_nth(wd->callbacks, qi->relative);
