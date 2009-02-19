@@ -181,6 +181,7 @@ e_appwin_show(E_Appwin *esw)
    e_widget_ilist_go(esw->ilist_obj);
 
    e_widget_ilist_preferred_size_get(esw->ilist_obj, &mw, &mh);
+   if (mh < (120 *e_scale)) mh = 120 * e_scale;
    edje_extern_object_min_size_set(esw->ilist_obj, mw, mh);
    edje_object_part_swallow(esw->base_obj, "e.swallow.content", esw->ilist_obj);
 

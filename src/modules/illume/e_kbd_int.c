@@ -1494,6 +1494,7 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    e_widget_ilist_go(o);
    
    e_widget_ilist_preferred_size_get(o, &mw, &mh);
+   if (mh < (120 *e_scale)) mh = 120 * e_scale;
 
    edje_extern_object_min_size_set(ki->dictlist.ilist_obj, mw, mh);
    edje_object_part_swallow(ki->dictlist.base_obj, "e.swallow.content",
@@ -1600,6 +1601,7 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
    e_widget_ilist_go(o);
    
    e_widget_ilist_preferred_size_get(o, &mw, &mh);
+   if (mh < (120 *e_scale)) mh = 120 * e_scale;
    
    edje_extern_object_min_size_set(ki->matchlist.ilist_obj, mw, mh);
    edje_object_part_swallow(ki->matchlist.base_obj, "e.swallow.content",
@@ -1724,6 +1726,7 @@ _e_kbd_int_layoutlist_up(E_Kbd_Int *ki)
    e_widget_ilist_go(o);
    
    e_widget_ilist_preferred_size_get(o, &mw, &mh);
+   if (mh < (120 *e_scale)) mh = 120 * e_scale;
    
    edje_extern_object_min_size_set(ki->layoutlist.ilist_obj, mw, mh);
    edje_object_part_swallow(ki->layoutlist.base_obj, "e.swallow.content",
