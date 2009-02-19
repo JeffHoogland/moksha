@@ -6,13 +6,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/mman.h>
-#define _GNU_SOURCE
-#include <wchar.h>
-#include <wctype.h>
 
-/** A lookup table for normalising strings for dictionary lookups
- * We currently limit the normalisation to characters in the latin1 charset.
- */
+
 #define MAXLATIN 0x100
 static unsigned char _e_kbd_normalise_base[MAXLATIN];
 static unsigned char _e_kbd_normalise_ready = 0;
@@ -90,16 +85,16 @@ _e_kbd_normalise_init(void)
    
    if (_e_kbd_normalise_ready) return;
    _e_kbd_normalise_ready = 1;
-   for (i = 0; i < 128; i++) // The 7-bit asci characters map to their lower case
+   for (i = 0; i < 128; i++)
      _e_kbd_normalise_base[i] = tolower(i);
-   for (;i < MAXLATIN; i++) // Map the rest of the latin1 charset according to the table above
+   for (;i < MAXLATIN; i++)
      {
 	int glyph;
 	int j;
 	
-	for (j = 0; j < 63; j++) // Iterate over the table
+	for (j = 0; j < 63; j++)
 	  {
-	     evas_string_char_next_get(table[j][0], 0, &glyph); // Decode a multi byte UTF8 string
+	     evas_string_char_next_get(table[j][0], 0, &glyph);
 	     if (glyph == i)
 	       {
 		  _e_kbd_normalise_base[i] = *table[j][1];
@@ -109,47 +104,20 @@ _e_kbd_normalise_init(void)
      }
 }
 
-/** Normalise a wide character according to a normalisation mapping (e.g. ü -> u) */
 static int
 _e_kbd_dict_letter_normalise(int glyph)
 {
-   if (glyph > 0 && glyph < MAXLATIN) return _e_kbd_normalise_base[glyph];
-   return towlower(glyph);
+   // FIXME: ö -> o, ä -> a, Ó -> o etc. - ie normalise to latin-1
+   if (glyph < MAXLATIN) return _e_kbd_normalise_base[glyph];
+   return tolower(glyph) & 0x7f;
 }
 
-/** Normalise a wide character string according to a normalisation mapping (e.g. ü -> u) */
-static void _e_kbd_dict_string_normalise(wchar_t *str)
-{
-   while(*str) {
-      *str = _e_kbd_dict_letter_normalise(*str);
-      str++;
-   }
-}
-
-/** Normalise and compare two strings
- *
- * Normalise the string using _e_kbd_dict_string_normalise and then compare
- * them in a case-insensitive way.
- * @param a The first string
- * @param b The second string
- * @param Result according to strcasecmp(a, b) after normalisation
- */
 static int
 _e_kbd_dict_normalized_strncmp(const char *a, const char *b, int len)
 {
-   mbstate_t shiftState; memset(&shiftState, 0, sizeof(mbstate_t));
-   // Calculate the size of the wchar buffer we will need to convert a and b (the number of codepoints in a/b)
-   size_t n_codep_a = len > 0 ? mbsnrtowcs(NULL, &a, len, 0, &shiftState) : mbsrtowcs(NULL, &a, 0, &shiftState);
-   size_t n_codep_b = len > 0 ? mbsnrtowcs(NULL, &a, len, 0, &shiftState) : mbsrtowcs(NULL, &a, 0, &shiftState);
-   wchar_t awc[n_codep_a+1]; awc[n_codep_a] = '\0';
-   wchar_t bwc[n_codep_b+1]; bwc[n_codep_a] = '\0';
-   // Convert a and b to wchar strings so we can nomalise them with the lookup table
-   len > 0 ? mbsnrtowcs(awc, &a, len, n_codep_a, &shiftState) : mbsrtowcs(awc, &a, n_codep_a, &shiftState);
-   len > 0 ? mbsnrtowcs(bwc, &b, len, n_codep_b, &shiftState) : mbsrtowcs(bwc, &b, n_codep_b, &shiftState);
-   _e_kbd_dict_string_normalise(awc);
-   _e_kbd_dict_string_normalise(bwc);
-   if(len > 0) return wcsncasecmp(awc, bwc, n_codep_a > n_codep_b ? n_codep_b : n_codep_a);
-   return wcscasecmp(awc, bwc);
+   // FIXME: normalise 2 strings and then compare
+   if (len < 0) return strcasecmp(a, b);
+   return strncasecmp(a, b, len);
 }
 
 static int
@@ -158,7 +126,6 @@ _e_kbd_dict_normalized_strcmp(const char *a, const char *b)
    return _e_kbd_dict_normalized_strncmp(a, b, -1);
 }
 
-// FIXME: Does not support multi byte UTF8, does it?
 static void
 _e_kbd_dict_normalized_strcpy(char *dst, const char *src)
 {
@@ -241,14 +208,7 @@ _e_kbd_dict_lookup_build_line(E_Kbd_Dict *kd, const char *p, const char *eol,
    s[eol - p] = 0;
    p2 = evas_string_char_next_get(s, 0, &(glyphs[0]));
    if ((p2 > 0) && (glyphs[0] > 0))
-   {
-      glyphs[0] = _e_kbd_dict_letter_normalise(glyphs[0]);
-      p2 = evas_string_char_next_get(s, p2, &(glyphs[1]));
-      if ((p2 > 0) && (glyphs[1] > 0))
-      {
-         glyphs[1] = _e_kbd_dict_letter_normalise(glyphs[1]);
-      }
-   }
+     p2 = evas_string_char_next_get(s, p2, &(glyphs[1]));
 }
 
 static void
@@ -562,27 +522,6 @@ _e_kbd_dict_find(E_Kbd_Dict *kd, const char *word)
     */
    tword = alloca(strlen(word) + 1);
    _e_kbd_dict_normalized_strcpy(tword, word);
-
-/*
-   printf("search: %s\n", word);
-   // Convert word to wide character and normalise it
-   wchar_t *wtword;
-   mbstate_t shiftState; memset(&shiftState, 0, sizeof(mbstate_t));
-   size_t n_codep = mbsrtowcs(NULL, &word, 0, &shiftState);
-   printf("cp: %d\n", n_codep);
-   wtword = alloca(n_codep + 1);
-   wtword[n_codep] = '\0';
-   mbsrtowcs(wtword, &word, n_codep, &shiftState);
-   _e_kbd_dict_string_normalise(wtword);
-   printf("wchar: %ls\n", wtword);
-   // Convert it back to multi byte string
-   n_codep = wcsrtombs(NULL, (const wchar_t**)&wtword, 0, &shiftState);
-   printf("cp: %d\n", n_codep);
-   tword = alloca(n_codep + 1);
-   tword[n_codep] = '\0';
-   wcsrtombs(tword, (const wchar_t**)&wtword, n_codep, &shiftState);
-   printf("after conv: %s\n", tword);
-*/  
    p = eina_hash_find(kd->matches.leads, tword);
    if (p) return p;
    p2 = strlen(tword);
