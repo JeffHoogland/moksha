@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-02-06 08:34+0400\n"
-"PO-Revision-Date: 2009-02-08 10:09+0400\n"
+"POT-Creation-Date: 2009-02-20 12:05+0400\n"
+"PO-Revision-Date: 2009-02-20 14:05+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "À propos de Enlightenment"
 #: src/bin/e_about.c:20
 #: src/bin/e_actions.c:2337
 #: src/bin/e_config_dialog.c:258
-#: src/bin/e_fm.c:563
+#: src/bin/e_fm.c:572
 #: src/bin/e_int_border_menu.c:208
 #: src/bin/e_int_border_prop.c:81
 #: src/bin/e_theme_about.c:20
@@ -73,8 +73,8 @@ msgstr "Êtes-vous sûr de vouloir tuer cette fenêtre ?"
 #: src/bin/e_actions.c:1904
 #: src/bin/e_actions.c:1968
 #: src/bin/e_confirm_dialog.c:47
-#: src/bin/e_fm.c:7380
-#: src/bin/e_fm.c:7560
+#: src/bin/e_fm.c:7608
+#: src/bin/e_fm.c:7796
 #: src/bin/e_module.c:517
 msgid "Yes"
 msgstr "Oui"
@@ -87,8 +87,8 @@ msgstr "Oui"
 #: src/bin/e_actions.c:1906
 #: src/bin/e_actions.c:1970
 #: src/bin/e_confirm_dialog.c:48
-#: src/bin/e_fm.c:7378
-#: src/bin/e_fm.c:7561
+#: src/bin/e_fm.c:7606
+#: src/bin/e_fm.c:7797
 #: src/bin/e_module.c:518
 msgid "No"
 msgstr "Non"
@@ -153,7 +153,7 @@ msgid "Window : Actions"
 msgstr "Fenêtre: Actions"
 
 #: src/bin/e_actions.c:2297
-#: src/bin/e_fm.c:4797
+#: src/bin/e_fm.c:4948
 msgid "Move"
 msgstr "Déplacer"
 
@@ -944,7 +944,7 @@ msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
 #: src/bin/e_entry.c:493
-#: src/bin/e_fm.c:6720
+#: src/bin/e_fm.c:6929
 #: src/modules/conf_applications/e_int_config_apps.c:271
 #: src/modules/conf_profiles/e_int_config_profiles.c:124
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -953,19 +953,19 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: src/bin/e_entry.c:506
-#: src/bin/e_fm.c:6630
+#: src/bin/e_fm.c:6839
 msgid "Cut"
 msgstr "Couper"
 
 #: src/bin/e_entry.c:517
-#: src/bin/e_fm.c:4789
-#: src/bin/e_fm.c:6647
+#: src/bin/e_fm.c:4940
+#: src/bin/e_fm.c:6856
 msgid "Copy"
 msgstr "Copier"
 
 #: src/bin/e_entry.c:528
-#: src/bin/e_fm.c:6471
-#: src/bin/e_fm.c:6661
+#: src/bin/e_fm.c:6668
+#: src/bin/e_fm.c:6870
 msgid "Paste"
 msgstr "Coller"
 
@@ -1104,157 +1104,162 @@ msgstr "Données de sortie"
 msgid "There was no output."
 msgstr "Il n'y a eu aucune sortie."
 
-#: src/bin/e_fm.c:565
+#: src/bin/e_fm.c:574
 msgid "Nonexistent path"
 msgstr "Chemin inexistant"
 
-#: src/bin/e_fm.c:568
+#: src/bin/e_fm.c:577
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s n'existe pas."
 
-#: src/bin/e_fm.c:2666
+#: src/bin/e_fm.c:2817
 #, c-format
 msgid "%i Files"
 msgstr "%i Fichiers"
 
-#: src/bin/e_fm.c:4805
-#: src/bin/e_fm.c:7324
-#: src/bin/e_fm.c:7454
+#: src/bin/e_fm.c:4956
+#: src/bin/e_fm.c:7552
+#: src/bin/e_fm.c:7682
 msgid "Abort"
 msgstr "Annuler"
 
-#: src/bin/e_fm.c:6394
-#: src/bin/e_fm.c:6551
+#: src/bin/e_fm.c:6579
+#: src/bin/e_fm.c:6748
+msgid "Inherit parent settings"
+msgstr "Hériter des propriétés du parent"
+
+#: src/bin/e_fm.c:6591
+#: src/bin/e_fm.c:6760
 #: src/modules/fileman/e_mod_config.c:171
 msgid "View Mode"
 msgstr "Mode d'affichage"
 
-#: src/bin/e_fm.c:6401
-#: src/bin/e_fm.c:6558
+#: src/bin/e_fm.c:6598
+#: src/bin/e_fm.c:6767
 msgid "Refresh View"
 msgstr "Rafraîchir"
 
-#: src/bin/e_fm.c:6412
-#: src/bin/e_fm.c:6569
+#: src/bin/e_fm.c:6609
+#: src/bin/e_fm.c:6778
 msgid "Show Hidden Files"
 msgstr "Afficher les fichiers cachés"
 
-#: src/bin/e_fm.c:6427
-#: src/bin/e_fm.c:6584
+#: src/bin/e_fm.c:6624
+#: src/bin/e_fm.c:6793
 msgid "Remember Ordering"
 msgstr "Mémoriser l'ordre"
 
-#: src/bin/e_fm.c:6439
-#: src/bin/e_fm.c:6596
+#: src/bin/e_fm.c:6636
+#: src/bin/e_fm.c:6805
 msgid "Sort Now"
 msgstr "Classer maintenant"
 
-#: src/bin/e_fm.c:6454
-#: src/bin/e_fm.c:6614
+#: src/bin/e_fm.c:6651
+#: src/bin/e_fm.c:6823
 #: src/modules/conf_paths/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Nouveau dossier"
 
-#: src/bin/e_fm.c:6731
+#: src/bin/e_fm.c:6940
 msgid "Rename"
 msgstr "Renommer"
 
-#: src/bin/e_fm.c:6741
+#: src/bin/e_fm.c:6950
 msgid "Properties"
 msgstr "Propriétés"
 
-#: src/bin/e_fm.c:6980
-#: src/bin/e_fm.c:7031
+#: src/bin/e_fm.c:7191
+#: src/bin/e_fm.c:7253
 msgid "Use default"
 msgstr "Valeur par défaut"
 
-#: src/bin/e_fm.c:7004
+#: src/bin/e_fm.c:7226
 #: src/modules/fileman/e_mod_config.c:176
 msgid "Grid Icons"
 msgstr "Icones alignés"
 
-#: src/bin/e_fm.c:7012
+#: src/bin/e_fm.c:7234
 #: src/modules/fileman/e_mod_config.c:178
 msgid "Custom Icons"
 msgstr "Icones personnalisés"
 
-#: src/bin/e_fm.c:7020
+#: src/bin/e_fm.c:7242
 #: src/modules/fileman/e_mod_config.c:186
 msgid "List"
 msgstr "Liste"
 
-#: src/bin/e_fm.c:7045
+#: src/bin/e_fm.c:7267
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Taille de l'icone (%d)"
 
-#: src/bin/e_fm.c:7189
+#: src/bin/e_fm.c:7417
 msgid "Create a new Directory"
 msgstr "Créer un nouveau dossier"
 
-#: src/bin/e_fm.c:7190
+#: src/bin/e_fm.c:7418
 msgid "New Directory Name:"
 msgstr "Nom du nouveau dossier:"
 
-#: src/bin/e_fm.c:7249
+#: src/bin/e_fm.c:7477
 #, c-format
 msgid "Rename %s to:"
 msgstr "Renommer %s en:"
 
-#: src/bin/e_fm.c:7251
+#: src/bin/e_fm.c:7479
 msgid "Rename File"
 msgstr "Renommer le fichier"
 
-#: src/bin/e_fm.c:7323
-#: src/bin/e_fm.c:7453
+#: src/bin/e_fm.c:7551
+#: src/bin/e_fm.c:7681
 msgid "Retry"
 msgstr "Réessayer"
 
-#: src/bin/e_fm.c:7327
-#: src/bin/e_fm.c:7384
-#: src/bin/e_fm.c:7459
-#: src/modules/wizard/page_030.c:67
+#: src/bin/e_fm.c:7555
+#: src/bin/e_fm.c:7612
+#: src/bin/e_fm.c:7687
+#: src/modules/wizard/page_030.c:86
 msgid "Error"
 msgstr "Erreur"
 
-#: src/bin/e_fm.c:7329
-#: src/bin/e_fm.c:7386
+#: src/bin/e_fm.c:7557
+#: src/bin/e_fm.c:7614
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: src/bin/e_fm.c:7379
+#: src/bin/e_fm.c:7607
 msgid "No to all"
 msgstr "Non pour tout"
 
-#: src/bin/e_fm.c:7381
+#: src/bin/e_fm.c:7609
 msgid "Yes to all"
 msgstr "Oui pour tout"
 
-#: src/bin/e_fm.c:7455
+#: src/bin/e_fm.c:7683
 msgid "Ignore this"
 msgstr "Ignorer"
 
-#: src/bin/e_fm.c:7456
+#: src/bin/e_fm.c:7684
 msgid "Ignore all"
 msgstr "Ignorer tout"
 
-#: src/bin/e_fm.c:7461
+#: src/bin/e_fm.c:7689
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr "Une erreur s'est produite lors d'une opération.<br>%s"
 
-#: src/bin/e_fm.c:7563
+#: src/bin/e_fm.c:7799
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: src/bin/e_fm.c:7567
+#: src/bin/e_fm.c:7803
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:7573
+#: src/bin/e_fm.c:7809
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br>les %d fichiers sélectionnés dans:<br><hilight>%s</hilight> ?"
@@ -3212,7 +3217,7 @@ msgstr "IBar (autres)"
 #: src/modules/conf_applications/e_mod_main.c:41
 #: src/modules/conf_clientlist/e_mod_main.c:34
 #: src/modules/conf_menus/e_mod_main.c:34
-#: src/modules/wizard/page_030.c:63
+#: src/modules/wizard/page_030.c:82
 msgid "Menus"
 msgstr "Menus"
 
@@ -6418,15 +6423,15 @@ msgstr "Choisissez"
 msgid "Profile"
 msgstr "Profil"
 
-#: src/modules/wizard/page_030.c:73
+#: src/modules/wizard/page_030.c:92
 msgid "No menu files were<br>found on your system.<br>Please see the<br>documentation on<br>www.enlightenment.org<br>for more details on<br>how to get your<br>application menus<br>working."
 msgstr "Aucun fichier de menus<br>n'a été trouvé.<br>Veuillez consulter la<br>documentation disponible<br>sur www.enlightenment.org<br>pour savoir comment<br>générer les menus<br>d'applications."
 
-#: src/modules/wizard/page_030.c:91
+#: src/modules/wizard/page_030.c:110
 msgid "Select application menu"
 msgstr "Sélectionnez le menu"
 
-#: src/modules/wizard/page_030.c:108
+#: src/modules/wizard/page_030.c:127
 msgid "System Default"
 msgstr "Paramètres par défaut"
 
