@@ -613,7 +613,7 @@ _mixer_popup_new(E_Mixer_Instance *inst)
    else
      inst->ui.mute = NULL;
 
-   inst->ui.button = e_widget_button_add(evas, _(_Name), NULL,
+   inst->ui.button = e_widget_button_add(evas, _("Controls"), NULL,
 					 _mixer_popup_cb_mixer, inst, NULL);
    e_widget_table_object_append(inst->ui.table, inst->ui.button,
                                 0, 7, colspan, 1, 1, 1, 1, 0);
