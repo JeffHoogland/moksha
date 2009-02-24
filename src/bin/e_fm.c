@@ -340,9 +340,11 @@ static void _e_fm_file_buffer_clear(void);
 static void _e_fm2_file_cut(Evas_Object *obj);
 static void _e_fm2_file_copy(Evas_Object *obj);
 static void _e_fm2_file_paste(Evas_Object *obj);
+static void _e_fm2_file_symlink(Evas_Object *obj);
 static void _e_fm2_file_cut_menu(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_copy_menu(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_paste_menu(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_file_symlink_menu(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void _e_fm2_live_file_add(Evas_Object *obj, const char *file, const char *file_rel, int after, E_Fm2_Finfo *finf);
 static void _e_fm2_live_file_del(Evas_Object *obj, const char *file);
@@ -368,6 +370,7 @@ static int _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_t
 static int _e_fm_client_file_move(const char *args);
 static int _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h);
 static int _e_fm_client_file_copy(const char *args);
+static int _e_fm_client_file_symlink(const char *args);
 
 static void _e_fm2_sel_rect_update(void *data);
 static inline void _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
@@ -1829,6 +1832,7 @@ _e_fm_client_file_move(const char *args)
 static int
 _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h)
 {
+#if 0
    char *d;
    int l1, l2, l3, l;
    
@@ -1864,12 +1868,31 @@ _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, 
      }
 
    return _e_fm_client_send_new(E_FM_OP_SYMLINK, (void *)d, l);
+#else
+   char *args = NULL;
+   size_t size = 0, length = 0;
+
+   args = _e_fm_string_append_quoted(args, &size, &length, path);
+   args = _e_fm_string_append_char(args, &size, &length, ' ');
+   args = _e_fm_string_append_quoted(args, &size, &length, dest);
+
+   fputs("WARNING: using new E_FM_OP_SYMLINK, remove deprecated ASAP\n", stderr);
+   int r = _e_fm_client_file_symlink(args);
+   free(args);
+   return r;
+#endif
 }
 
 static int
 _e_fm_client_file_copy(const char *args)
 {
    return _e_fm_client_send_new(E_FM_OP_COPY, (void *)args, strlen(args) + 1);
+}
+
+static int
+_e_fm_client_file_symlink(const char *args)
+{
+   return _e_fm_client_send_new(E_FM_OP_SYMLINK, (void *)args, strlen(args) + 1);
 }
 
 EAPI int
@@ -2683,6 +2706,60 @@ _e_fm2_file_paste(Evas_Object *obj)
 }
 
 static void
+_e_fm2_file_symlink(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   Eina_List *paths;
+   const char *filepath;
+   size_t length = 0;
+   size_t size = 0;
+   char *args = NULL;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+
+   /* Convert URI list to a list of real paths. */
+   paths = _e_fm2_uri_path_list_get(_e_fm_file_buffer);
+
+   while (paths)
+     {
+	/* Get file's full path. */
+	filepath = eina_list_data_get(paths);
+	if (!filepath)
+	  {
+	     paths = eina_list_remove_list(paths, paths);
+	     continue;
+	  }
+
+	/* Check if file is protected. */
+	if (e_filereg_file_protected(filepath))
+	  {
+	     eina_stringshare_del(filepath);
+	     paths = eina_list_remove_list(paths, paths);
+	     continue;
+	  }
+
+	/* Put filepath into a string of args.
+	 * If there are more files, put an additional space.
+	 */
+	args = _e_fm_string_append_quoted(args, &size, &length, filepath);
+	args = _e_fm_string_append_char(args, &size, &length, ' ');
+
+	eina_stringshare_del(filepath);
+	paths = eina_list_remove_list(paths, paths);
+     }
+
+   /* Add destination to the arguments. */
+   args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+
+   /* Roll the operation! */
+   if (_e_fm_file_buffer_copying)
+     _e_fm_client_file_symlink(args);
+
+   free(args);
+}
+
+static void
 _e_fm2_file_cut_menu(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Fm2_Smart_Data *sd = data;
@@ -2704,6 +2781,14 @@ _e_fm2_file_paste_menu(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    E_Fm2_Smart_Data *sd = data;
    if (!sd) return;
    _e_fm2_file_paste(sd->obj);
+}
+
+static void
+_e_fm2_file_symlink_menu(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Fm2_Smart_Data *sd = data;
+   if (!sd) return;
+   _e_fm2_file_symlink(sd->obj);
 }
 
 static void
@@ -4909,6 +4994,16 @@ _e_fm_drop_menu_move_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_fm_drop_menu_symlink_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   char *args = data;
+
+   if (!data) return;
+
+   _e_fm_client_file_symlink(args);
+}
+
+static void
 _e_fm_drop_menu_abort_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    if (!data) return;
@@ -4951,6 +5046,17 @@ _e_fm_drop_menu(char *args)
 	 e_theme_edje_file_get("base/theme/fileman",
 	    "e/fileman/default/button/move"),
 	 "e/fileman/default/button/move");
+
+   item = e_menu_item_new(menu);
+   e_menu_item_label_set(item, _("Link"));
+   e_menu_item_callback_set(item, _e_fm_drop_menu_symlink_cb, args);
+   e_menu_item_icon_edje_set(item,
+	 e_theme_edje_file_get("base/theme/fileman",
+	    "e/fileman/default/button/symlink"),
+	 "e/fileman/default/button/symlink");
+
+   item = e_menu_item_new(menu);
+   e_menu_item_separator_set(item, 1);
 
    item = e_menu_item_new(menu);
    e_menu_item_label_set(item, _("Abort"));
@@ -6656,14 +6762,16 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_callback_set(mi, _e_fm2_new_directory, sd);
 	  }
 
-	if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) && 
-	    (eina_list_count(_e_fm_file_buffer) > 0))
+	if (((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) ||
+	     (!(sd->icon_menu.flags & E_FM2_MENU_NO_SYMLINK))) &&
+	    (eina_list_count(_e_fm_file_buffer) > 0) &&
+	    ecore_file_can_write(sd->realpath))
 	  {
-	     if (ecore_file_can_write(sd->realpath))
+	     mi = e_menu_item_new(mn);
+	     e_menu_item_separator_set(mi, 1);
+
+	     if (!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE))
 	       {
-		  mi = e_menu_item_new(mn);
-		  e_menu_item_separator_set(mi, 1);
-		  
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Paste"));
 		  e_menu_item_icon_edje_set(mi,
@@ -6672,8 +6780,19 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 					    "e/fileman/default/button/paste");
 		  e_menu_item_callback_set(mi, _e_fm2_file_paste_menu, sd);
 	       }
+
+	     if (!(sd->icon_menu.flags & E_FM2_MENU_NO_SYMLINK))
+	       {
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_label_set(mi, _("Link"));
+		  e_menu_item_icon_edje_set(mi,
+					    e_theme_edje_file_get("base/theme/fileman",
+								  "e/fileman/default/button/symlink"),
+					    "e/fileman/default/button/symlink");
+		  e_menu_item_callback_set(mi, _e_fm2_file_symlink_menu, sd);
+	       }
 	  }
-	
+
 	if (sd->icon_menu.end.func)
 	  sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, NULL);
      }
@@ -6861,10 +6980,12 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_callback_set(mi, _e_fm2_file_copy_menu, sd);
 	  }
 	
-	if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) && 
-	    (eina_list_count(_e_fm_file_buffer) > 0))
+	if (((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) ||
+	     (!(sd->icon_menu.flags & E_FM2_MENU_NO_SYMLINK))) &&
+	    (eina_list_count(_e_fm_file_buffer) > 0) &&
+	    ecore_file_can_write(sd->realpath))
 	  {
-	     if (ecore_file_can_write(sd->realpath))
+	     if (!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE))
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Paste"));
@@ -6874,8 +6995,19 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 					    "e/fileman/default/button/paste");
 		  e_menu_item_callback_set(mi, _e_fm2_file_paste_menu, sd);
 	       }
+
+	     if (!(sd->icon_menu.flags & E_FM2_MENU_NO_SYMLINK))
+	       {
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_label_set(mi, _("Link"));
+		  e_menu_item_icon_edje_set(mi,
+					    e_theme_edje_file_get("base/theme/fileman",
+								  "e/fileman/default/button/symlink"),
+					    "e/fileman/default/button/symlink");
+		  e_menu_item_callback_set(mi, _e_fm2_file_symlink_menu, sd);
+	       }
 	  }
-	
+
 	can_w = 0;
 	can_w2 = 1;
 	if (ic->sd->order_file)

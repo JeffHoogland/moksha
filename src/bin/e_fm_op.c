@@ -66,6 +66,7 @@ static int _e_fm_op_copy_chunk(E_Fm_Op_Task *task);
 static int _e_fm_op_copy_atom(E_Fm_Op_Task * task);
 static int _e_fm_op_scan_atom(E_Fm_Op_Task * task);
 static int _e_fm_op_copy_stat_info_atom(E_Fm_Op_Task * task);
+static int _e_fm_op_symlink_atom(E_Fm_Op_Task * task);
 static int _e_fm_op_remove_atom(E_Fm_Op_Task * task);
 
 Ecore_Fd_Handler *_e_fm_op_stdin_handler = NULL;
@@ -152,9 +153,11 @@ main(int argc, char **argv)
      type = E_FM_OP_MOVE;
    else if (strcmp(argv[1], "rm") == 0)
      type = E_FM_OP_REMOVE;
+   else if (strcmp(argv[1], "lns") == 0)
+     type = E_FM_OP_SYMLINK;
    else return 0;
 
-   if ((type == E_FM_OP_COPY) || (type == E_FM_OP_MOVE))
+   if ((type == E_FM_OP_COPY) || (type == E_FM_OP_MOVE) || (type == E_FM_OP_SYMLINK))
      {
 	if (argc < 4) goto quit;
 
@@ -189,6 +192,9 @@ main(int argc, char **argv)
                   if ((type == E_FM_OP_MOVE) && 
                       (rename(task->src.name, task->dst.name) == 0))
                     _e_fm_op_task_free(task);
+		  else if ((type == E_FM_OP_SYMLINK) &&
+			   (symlink(task->src.name, task->dst.name) == 0))
+		    _e_fm_op_task_free(task);
                   else
                     _e_fm_op_scan_queue = 
                     eina_list_append(_e_fm_op_scan_queue, task);
@@ -214,7 +220,10 @@ main(int argc, char **argv)
              /* Try a rename */
              if ((type == E_FM_OP_MOVE) && (rename(argv[2], argv[3]) == 0))
                goto quit;
-             
+             else if ((type == E_FM_OP_SYMLINK) &&
+		      (symlink(task->src.name, task->dst.name) == 0))
+	       goto quit;
+
              /* If that does work, setup a copy and delete operation. 
               It's not atomic, but it's the best we can do. */
              task = _e_fm_op_task_new();
@@ -613,6 +622,8 @@ _e_fm_op_work_idler(void *data)
      _e_fm_op_remove_atom(task);
    else if (task->type == E_FM_OP_COPY_STAT_INFO)
      _e_fm_op_copy_stat_info_atom(task);
+   else if (task->type == E_FM_OP_SYMLINK)
+     _e_fm_op_symlink_atom(task);
 
    if (task->finished)
      {
@@ -1338,6 +1349,19 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
 
         ctask->link = _e_fm_op_separator->next;
      }
+   else if (task->type == E_FM_OP_SYMLINK)
+     {
+        _e_fm_op_update_progress(NULL, 0, REMOVECHUNKSIZE);
+
+        rtask = _e_fm_op_task_new();
+        rtask->src.name = eina_stringshare_add(task->src.name);
+        memcpy(&(rtask->src.st), &(task->src.st), sizeof(struct stat));
+        if (task->dst.name)
+	  rtask->dst.name = eina_stringshare_add(task->dst.name);
+        rtask->type = E_FM_OP_SYMLINK;
+
+        _e_fm_op_work_queue = eina_list_prepend(_e_fm_op_work_queue, rtask);
+     }
 
    return 1;
 }
@@ -1352,6 +1376,23 @@ _e_fm_op_copy_stat_info_atom(E_Fm_Op_Task * task)
    task->dst.done += REMOVECHUNKSIZE;
 
    _e_fm_op_update_progress(task, REMOVECHUNKSIZE, 0);
+
+   return 0;
+}
+
+static int
+_e_fm_op_symlink_atom(E_Fm_Op_Task *task)
+{
+   if (_e_fm_op_abort) return 1;
+
+   E_FM_OP_DEBUG("Symlink: %s -> %s\n", task->src.name, task->dst.name);
+
+   if (symlink(task->src.name, task->dst.name) != 0)
+     _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", task->src.name, task->dst.name);
+
+   task->dst.done += REMOVECHUNKSIZE;
+   _e_fm_op_update_progress(task, REMOVECHUNKSIZE, 0);
+   task->finished = 1;
 
    return 0;
 }

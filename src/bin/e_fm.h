@@ -30,8 +30,9 @@ typedef enum _E_Fm2_Menu_Flags
    E_FM2_MENU_NO_CUT               = (1 << 6),
    E_FM2_MENU_NO_COPY              = (1 << 7),
    E_FM2_MENU_NO_PASTE             = (1 << 8),
-   E_FM2_MENU_NO_VIEW_MENU         = (1 << 9),
-   E_FM2_MENU_NO_INHERIT_PARENT    = (1 << 10)
+   E_FM2_MENU_NO_SYMLINK           = (1 << 9),
+   E_FM2_MENU_NO_VIEW_MENU         = (1 << 10),
+   E_FM2_MENU_NO_INHERIT_PARENT    = (1 << 11)
 } E_Fm2_Menu_Flags;
 
 typedef struct _E_Fm2_Config      E_Fm2_Config;

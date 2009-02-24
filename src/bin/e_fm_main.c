@@ -1340,6 +1340,11 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     _e_fm_slave_run(E_FM_OP_COPY, (const char *)e->data, e->ref);
 	  }
 	break;
+      case E_FM_OP_SYMLINK: /* fop ln -s */
+	  {
+	     _e_fm_slave_run(E_FM_OP_SYMLINK, (const char *)e->data, e->ref);
+	  }
+	break;
       case E_FM_OP_MKDIR: /* fop mkdir */
 	  {
 	     const char *src, *rel;
@@ -1420,21 +1425,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 			 }
 		    }
 	       }
-	  }
-	break;
-      case E_FM_OP_SYMLINK: /* dop ln -s */
-	  {
-	     const char *src, *dst, *rel;
-	     int rel_to, x, y;
-	     
-	     src = e->data;
-	     dst = src + strlen(src) + 1;
-	     rel = dst + strlen(dst) + 1;
-	     memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
-	     memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
-	     memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
-	     ecore_file_symlink(src, dst);
-             /* FIXME: send back file add if succeeded */
 	  }
 	break;
       case E_FM_OP_ERROR_RESPONSE_IGNORE_THIS:
@@ -2151,14 +2141,18 @@ _e_prepare_command(E_Fm_Op_Type type, const char *args)
 {
    char *buffer;
    unsigned int length = 0;
-   char command[3];
+   char command[4];
 
    if (type == E_FM_OP_MOVE)
      strcpy(command, "mv");
    else if (type == E_FM_OP_REMOVE)
      strcpy(command, "rm");
-   else
+   else if (type == E_FM_OP_COPY)
      strcpy(command, "cp");
+   else if (type == E_FM_OP_SYMLINK)
+     strcpy(command, "lns");
+   else
+     strcpy(command, "???");
 
    length = 256 + strlen(getenv("E_LIB_DIR")) + strlen(args);
    buffer = malloc(length);
