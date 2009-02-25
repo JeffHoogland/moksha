@@ -22630,6 +22630,8 @@ EFMBUTTON("select","icon_efm_select.png")
 EFMBUTTON("sort","icon_efm_sort.png")
 EFMBUTTON("ordering","icon_efm_sort.png")
 EFMBUTTON("hidden_files","icon_efm_view.png")
+EFMBUTTON("inherit","icon_dummy.png")
+EFMBUTTON("symlink","icon_dummy.png")
 
 // EFM icons //
 
