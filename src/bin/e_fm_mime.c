@@ -359,7 +359,7 @@ e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, co
 }
 
 /* run a handlers test function */
-EAPI Evas_Bool
+EAPI Eina_Bool
 e_fm2_mime_handler_test(E_Fm2_Mime_Handler *handler, Evas_Object *obj, const char *path)
 {
    if ((!handler) || (!obj) || (!path)) return 0;

@@ -803,16 +803,11 @@ E_Slipshelf *local_slipshelf = NULL;
 Eina_List *gadits = NULL;
 Ecore_Timer *_e_cfg_gadgets_change_timer = NULL;
 static int _e_cfg_gadgets_change_timeout(void *data) {
-   Eina_List *l, *l2, *l3;
-   int update;
-   E_Gadcon *up_gc1;
-   
-   update = 0;
-   for (l = gadits; l; l = l->next)
-     {
+   Eina_List *l2;
 	Gadit *gi;
+   int update = 0;
 	
-	gi = l->data;
+   EINA_LIST_FREE(gadits, gi)
 	if (gi->enabled != gi->was_enabled)
 	  {
 	     if (gi->enabled)
@@ -821,11 +816,10 @@ static int _e_cfg_gadgets_change_timeout(void *data) {
 	       }
 	     else
 	       {
-		  for (l2 = gi->gc->cf->clients; l2; l2 = l2->next)
-		    {
 		       E_Config_Gadcon_Client *gccc;
 		       
-		       gccc = l2->data;
+	       EINA_LIST_FOREACH(gi->gc->cf->clients, l2, gccc)
+		 {
 		       if (strcmp(gi->name, gccc->name)) continue;
 		       e_gadcon_client_config_del(gi->gc->cf, gccc);
 		    }
@@ -833,7 +827,6 @@ static int _e_cfg_gadgets_change_timeout(void *data) {
 	     update = 1;
 	     gi->was_enabled = gi->enabled;
 	  }
-     }
    if (update)
      {
         e_gadcon_unpopulate(local_slipshelf->gadcon);
@@ -861,14 +854,12 @@ _e_cfg_gadgets_create(E_Config_Dialog *cfd)
 static void 
 _e_cfg_gadgets_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 { // free cfd->cfdata
-   while (gadits)
-     {
 	Gadit *gi;
 	
-	gi = gadits->data;
+   EINA_LIST_FREE(gadits, gi)
+     {
 	evas_stringshare_del(gi->name);
 	free(gi);
-	gadits = eina_list_remove_list(gadits, gadits);
      }
    e_object_unref(E_OBJECT(local_slipshelf));
    local_slipshelf = NULL;
@@ -878,28 +869,25 @@ static Evas_Object *
 _e_cfg_gadgets_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *list, *o, *frame;
-   E_Radio_Group *rg;
-   Eina_List *l, *l2, *l3;
+   E_Gadcon_Client_Class *cc;
+   Eina_List *l, *l3;
 
    list = e_widget_list_add(e, 0, 0);
    
    frame = e_widget_framelist_add(e, "Visible Gadgets", 0);
-   for (l = e_gadcon_provider_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_gadcon_provider_list(), l, cc)
      {
-	E_Gadcon_Client_Class *cc;
+	E_Config_Gadcon_Client *gccc;
 	const char *lbl = NULL;
 	int on;
 	Gadit *gi;
 	
-	if (!(cc = l->data)) continue;
+	if (!cc) continue;
 	if (cc->func.label) lbl = cc->func.label(cc);
 	if (!lbl) lbl = cc->name;
 	on = 0;
-	for (l3 = local_slipshelf->gadcon->cf->clients; l3; l3 = l3->next)
+	EINA_LIST_FOREACH(local_slipshelf->gadcon->cf->clients, l3, gccc)
 	  {
-	     E_Config_Gadcon_Client *gccc;
-	     
-	     gccc = l3->data;
 	     if (!strcmp(cc->name, gccc->name))
 	       {
 		  on = 1;
@@ -920,28 +908,23 @@ _e_cfg_gadgets_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(list, frame, 1, 0, 0.0); // fill, expand, align
    
    frame = e_widget_framelist_add(e, "Hidden Gadgets", 0);
-   for (l = e_gadcon_provider_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_gadcon_provider_list(), l, cc)
      {
-	E_Gadcon_Client_Class *cc;
+	E_Config_Gadcon_Client *gccc;
 	const char *lbl = NULL;
 	int on;
 	Gadit *gi;
 	
-	if (!(cc = l->data)) continue;
+	if (!cc) continue;
 	if (cc->func.label) lbl = cc->func.label(cc);
 	if (!lbl) lbl = cc->name;
 	on = 0;
-	for (l3 = local_slipshelf->gadcon_extra->cf->clients; l3; l3 = l3->next)
-	  {
-	     E_Config_Gadcon_Client *gccc;
-	     
-	     gccc = l3->data;
+	EINA_LIST_FOREACH(local_slipshelf->gadcon_extra->cf->clients, l3, gccc)
 	     if (!strcmp(cc->name, gccc->name))
 	       {
 		  on = 1;
 		  break;
 	       }
-	  }
 	
 	gi = E_NEW(Gadit, 1);
 	gi->gc = local_slipshelf->gadcon_extra;
@@ -981,7 +964,11 @@ e_cfg_gadgets(E_Container *con, const char *params)
 ///////////////////////////////////////////////////////////////////////////////
 int external_keyboard = 0;
 Ecore_Timer *_e_cfg_keyboard_change_timer = NULL;
-static int _e_cfg_keyboard_change_timeout(void *data) {
+
+static int _e_cfg_keyboard_change_timeout(void *data)
+{
+   Eina_List *l;
+
    illume_cfg->kbd.use_internal = 0;
    if (illume_cfg->kbd.run_keyboard)
      {
@@ -998,16 +985,15 @@ static int _e_cfg_keyboard_change_timeout(void *data) {
      }
    else
      {
-	Ecore_List *kbds;
+	Eina_List *kbds;
 	Efreet_Desktop *desktop;
 	int nn;
 	
 	kbds = efreet_util_desktop_category_list("Keyboard");
 	if (kbds)
 	  {
-	     ecore_list_first_goto(kbds);
 	     nn = 2;
-	     while ((desktop = ecore_list_next(kbds)))
+	     EINA_LIST_FOREACH(kbds, l, desktop)
 	       {
                   const char *dname;
 		  
@@ -1050,7 +1036,7 @@ _e_cfg_keyboard_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *list, *o, *frame;
    E_Radio_Group *rg;
-   Eina_List *l, *l2, *l3;
+   Eina_List *l;
 
    list = e_widget_list_add(e, 0, 0);
    
@@ -1063,7 +1049,7 @@ _e_cfg_keyboard_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
      }
    else
      {
-	Ecore_List *kbds;
+	Eina_List *kbds;
 	Efreet_Desktop *desktop;
 	int nn;
 	
@@ -1071,9 +1057,8 @@ _e_cfg_keyboard_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 	kbds = efreet_util_desktop_category_list("Keyboard");
 	if (kbds)
 	  {
-	     ecore_list_first_goto(kbds);
 	     nn = 2;
-	     while ((desktop = ecore_list_next(kbds)))
+	     EINA_LIST_FOREACH(kbds, l, desktop)
 	       {
                   const char *dname;
 		  
@@ -1100,16 +1085,12 @@ _e_cfg_keyboard_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
    e_widget_framelist_object_append(frame, o);
    evas_object_smart_callback_add(o, "changed", _e_cfg_keyboard_change, NULL);
      {
-	Ecore_List *kbds;
+	Eina_List *kbds;
 	Efreet_Desktop *desktop;
-	int nn;
+	int nn = 2;
 	
 	kbds = efreet_util_desktop_category_list("Keyboard");
-	if (kbds)
-	  {
-	     ecore_list_first_goto(kbds);
-	     nn = 2;
-	     while ((desktop = ecore_list_next(kbds)))
+	EINA_LIST_FOREACH(kbds, l, desktop)
 	       {
                   const char *dname;
 		  
@@ -1120,7 +1101,6 @@ _e_cfg_keyboard_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 		  nn++;
 	       }
 	  }
-     }
    e_widget_list_object_append(list, frame, 1, 0, 0.0); // fill, expand, align
    
    return list;
@@ -1749,16 +1729,15 @@ _dbcb_gadget_list_get(E_DBus_Object *obj, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter, arr;
+   E_Gadcon_Client_Class *cc;
    Eina_List *l;
      
    reply = dbus_message_new_method_return(msg);
    dbus_message_iter_init_append(reply, &iter);
    dbus_message_iter_open_container(&iter, DBUS_TYPE_ARRAY, "s", &arr);
-   for (l = e_gadcon_provider_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_gadcon_provider_list(), l, cc)
      {
-	E_Gadcon_Client_Class *cc;
-	
-	if (!(cc = l->data)) continue;
+	if (!cc) continue;
         dbus_message_iter_append_basic(&arr, DBUS_TYPE_STRING, &(cc->name));
      }
    dbus_message_iter_close_container(&iter, &arr);
@@ -1770,17 +1749,16 @@ static DBusMessage *
 _dbcb_slipshelf_main_gadget_list_get(E_DBus_Object *obj, DBusMessage *msg)
 {
    DBusMessage *reply;
+   E_Config_Gadcon_Client *gccc;
    DBusMessageIter iter, arr;
    Eina_List *l;
      
    reply = dbus_message_new_method_return(msg);
    dbus_message_iter_init_append(reply, &iter);
    dbus_message_iter_open_container(&iter, DBUS_TYPE_ARRAY, "s", &arr);
-   for (l = slipshelf->gadcon->cf->clients; l; l = l->next)
+   EINA_LIST_FOREACH(slipshelf->gadcon->cf->clients, l, gccc)
      {
-	E_Config_Gadcon_Client *gccc;
-
-	if (!(gccc = l->data)) continue;
+	if (!gccc) continue;
         dbus_message_iter_append_basic(&arr, DBUS_TYPE_STRING, &(gccc->name));
      }
    dbus_message_iter_close_container(&iter, &arr);
@@ -1825,13 +1803,12 @@ _dbcb_slipshelf_main_gadget_del(E_DBus_Object *obj, DBusMessage *msg)
    dbus_message_iter_get_basic(&iter, &(s));
    if (s)
      {
+	E_Config_Gadcon_Client *cgc;
 	Eina_List *l;
 	
-	for (l = slipshelf->gadcon->clients; l; l = l->next)
+	EINA_LIST_FOREACH(slipshelf->gadcon->clients, l, cgc)
 	  {
-	     E_Config_Gadcon_Client *cgc;
-	     
-	     if (!(cgc = l->data)) continue;
+	     if (!cgc) continue;
 	     if (strcmp(s, cgc->name)) continue;
 	     e_gadcon_client_config_del(slipshelf->gadcon->cf, cgc);
 	     break;
@@ -1853,16 +1830,15 @@ _dbcb_slipshelf_extra_gadget_list_get(E_DBus_Object *obj, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter, arr;
+   E_Config_Gadcon_Client *gccc;
    Eina_List *l;
      
    reply = dbus_message_new_method_return(msg);
    dbus_message_iter_init_append(reply, &iter);
    dbus_message_iter_open_container(&iter, DBUS_TYPE_ARRAY, "s", &arr);
-   for (l = slipshelf->gadcon_extra->cf->clients; l; l = l->next)
+   EINA_LIST_FOREACH(slipshelf->gadcon_extra->cf->clients, l, gccc)
      {
-	E_Config_Gadcon_Client *gccc;
-
-	if (!(gccc = l->data)) continue;
+	if (!gccc) continue;
         dbus_message_iter_append_basic(&arr, DBUS_TYPE_STRING, &(gccc->name));
      }
    dbus_message_iter_close_container(&iter, &arr);
@@ -1907,13 +1883,12 @@ _dbcb_slipshelf_extra_gadget_del(E_DBus_Object *obj, DBusMessage *msg)
    dbus_message_iter_get_basic(&iter, &(s));
    if (s)
      {
+	E_Config_Gadcon_Client *cgc;
 	Eina_List *l;
 	
-	for (l = slipshelf->gadcon_extra->clients; l; l = l->next)
+	EINA_LIST_FOREACH(slipshelf->gadcon_extra->clients, l, cgc)
 	  {
-	     E_Config_Gadcon_Client *cgc;
-	     
-	     if (!(cgc = l->data)) continue;
+	     if (!cgc) continue;
 	     if (strcmp(s, cgc->name)) continue;
 	     e_gadcon_client_config_del(slipshelf->gadcon_extra->cf, cgc);
 	     break;

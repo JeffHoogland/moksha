@@ -1,3 +1,5 @@
+#include <Eina.h>
+
 #include "e.h"
 #include "e_kbd_buf.h"
 #include "e_kbd_int.h"
@@ -52,24 +54,18 @@ _e_kbd_int_at_coord_get(E_Kbd_Int *ki, Evas_Coord x, Evas_Coord y)
 {
    Eina_List *l;
    Evas_Coord dist;
-   E_Kbd_Int_Key *closest_ky = NULL;
-
-   for (l = ki->layout.keys; l; l = l->next)
-     {
 	E_Kbd_Int_Key *ky;  
+   E_Kbd_Int_Key *closest_ky = NULL;
 	   
-	ky = l->data;
+   EINA_LIST_FOREACH(ki->layout.keys, l, ky)
 	if ((x >= ky->x) && (y >= ky->y) &&
 	    (x < (ky->x + ky->w)) && (y < (ky->y + ky->h)))
 	  return ky;
-     }
    dist = 0x7fffffff;
-   for (l = ki->layout.keys; l; l = l->next)
+   EINA_LIST_FOREACH(ki->layout.keys, l, ky)
      {
-	E_Kbd_Int_Key *ky;  
 	Evas_Coord dx, dy;
 	
-	ky = l->data;
 	dx = x - (ky->x + (ky->w / 2));
 	dy = y - (ky->y + (ky->h / 2));
 	dx = (dx * dx) + (dy * dy);
@@ -85,46 +81,38 @@ _e_kbd_int_at_coord_get(E_Kbd_Int *ki, Evas_Coord x, Evas_Coord y)
 static E_Kbd_Int_Key_State *
 _e_kbd_int_key_state_get(E_Kbd_Int *ki, E_Kbd_Int_Key *ky)
 {
+   E_Kbd_Int_Key_State *found = NULL;
+   E_Kbd_Int_Key_State *st;
    Eina_List *l;
    
-   for (l = ky->states; l; l = l->next)
+   EINA_LIST_FOREACH(ky->states, l, st)
      {
-	E_Kbd_Int_Key_State *st;
-	
-	st = l->data;
 	if (st->state & ki->layout.state) return st;
+	if (!found && st->state == NORMAL) found = st;
      }
-   for (l = ky->states; l; l = l->next)
-     {
-	E_Kbd_Int_Key_State *st;
-	
-	st = l->data;
-	if (st->state == NORMAL) return st;
-     }
-   return NULL;
+   return found;
 }
 
 static void
 _e_kbd_int_layout_buf_update(E_Kbd_Int *ki)
 {
+   E_Kbd_Int_Key *ky;
    Eina_List *l, *l2;
 
    e_kbd_buf_layout_clear(ki->kbuf);
    e_kbd_buf_layout_size_set(ki->kbuf, ki->layout.w, ki->layout.h);
    e_kbd_buf_layout_fuzz_set(ki->kbuf, ki->layout.fuzz);
-   for (l = ki->layout.keys; l; l = l->next)
+   EINA_LIST_FOREACH(ki->layout.keys, l, ky)
      {
-	E_Kbd_Int_Key *ky;
 	E_Kbd_Int_Key_State *st;
 	const char *out, *out_shift, *out_capslock;
 	
-	ky = l->data;
 	out = NULL;
 	out_shift = NULL;
 	out_capslock = NULL;
-	for (l2 = ky->states; l2; l2 = l2->next)
+
+	EINA_LIST_FOREACH(ky->states, l2, st)
 	  {
-	     st = l2->data;
 	     if (st->state == NORMAL)
 	       out = st->out;
 	     else if (st->state == SHIFT)
@@ -154,15 +142,14 @@ _e_kbd_int_layout_buf_update(E_Kbd_Int *ki)
 static void
 _e_kbd_int_layout_state_update(E_Kbd_Int *ki)
 {
+   E_Kbd_Int_Key *ky;
    Eina_List *l;
    
-   for (l = ki->layout.keys; l; l = l->next)
+   EINA_LIST_FOREACH(ki->layout.keys, l, ky)
      {
-	E_Kbd_Int_Key *ky;
 	E_Kbd_Int_Key_State *st;
 	int selected;
 	
-	ky = l->data;
 	st = _e_kbd_int_key_state_get(ki, ky);
 	if (st)
 	  {
@@ -290,15 +277,13 @@ _e_kbd_int_matches_add(E_Kbd_Int *ki, const char *str, int num)
 static void
 _e_kbd_int_matches_free(E_Kbd_Int *ki)
 {
-   while (ki->matches)
-     {
 	E_Kbd_Int_Match *km;
 	
-	km = ki->matches->data;
+   EINA_LIST_FREE(ki->matches, km)
+     {
 	if (km->str) evas_stringshare_del(km->str);
 	evas_object_del(km->obj);
 	free(km);
-	ki->matches = eina_list_remove_list(ki->matches, ki->matches);
      }
 }
 
@@ -336,10 +321,10 @@ _e_kbd_int_matches_update(E_Kbd_Int *ki)
 	     actual = e_kbd_buf_actual_string_get(ki->kbuf);
 	     if (actual)
 	       {
-		  for (l = matches; l; l = l->next)
-		    {
-		       if (!strcmp(l->data, actual)) break;
-		    }
+		  const char *str;
+
+		  EINA_LIST_FOREACH(matches, l, str)
+		    if (!strcmp(str, actual)) break;
 		  if (!l) _e_kbd_int_matches_add(ki, actual, i);
 	       }
 	  }
@@ -850,62 +835,50 @@ _e_kbd_int_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 static E_Kbd_Int_Layout *
 _e_kbd_int_layouts_list_default_get(E_Kbd_Int *ki)
 {
-   Eina_List *l;
-   
-   for (l = ki->layouts; l; l = l->next)
-     {
 	E_Kbd_Int_Layout *kil;
+   Eina_List *l;
 	
-	kil = l->data;
+   EINA_LIST_FOREACH(ki->layouts, l, kil)
 	if ((!strcmp(ecore_file_file_get(kil->path), "Default.kbd")))
 	  return kil;
-     }
    return NULL;
 }
 
 static E_Kbd_Int_Layout *
 _e_kbd_int_layouts_type_get(E_Kbd_Int *ki, int type)
 {
-   Eina_List *l;
-   
-   for (l = ki->layouts; l; l = l->next)
-     {
 	E_Kbd_Int_Layout *kil;
+   Eina_List *l;
 	
-	kil = l->data;
+   EINA_LIST_FOREACH(ki->layouts, l, kil)
 	if (kil->type == type)
 	  return kil;
-     }
    return NULL;
 }
 
 static void
 _e_kbd_int_layout_free(E_Kbd_Int *ki)
 {
+   E_Kbd_Int_Key *ky;
+
    if (ki->layout.directory) free(ki->layout.directory);
    if (ki->layout.file) evas_stringshare_del(ki->layout.file);
    ki->layout.directory = NULL;
    ki->layout.file = NULL;
-   while (ki->layout.keys)
-     {
-	E_Kbd_Int_Key *ky;
-
-	ky = ki->layout.keys->data;
-	while (ky->states)
+   EINA_LIST_FREE(ki->layout.keys, ky)
 	  {
 	     E_Kbd_Int_Key_State *st;
 	     
-	     st = ky->states->data;
+	EINA_LIST_FREE(ky->states, st)
+	  {
 	     if (st->label) evas_stringshare_del(st->label);
 	     if (st->icon) evas_stringshare_del(st->icon);
 	     if (st->out) evas_stringshare_del(st->out);
 	     free(st);
-	     ky->states = eina_list_remove_list(ky->states, ky->states);
 	  }
 	if (ky->obj) evas_object_del(ky->obj);
 	if (ky->icon_obj) evas_object_del(ky->icon_obj);
 	free(ky);
-	ki->layout.keys = eina_list_remove_list(ki->layout.keys, ki->layout.keys);
      }
    if (ki->event_obj) evas_object_del(ki->event_obj);
    ki->event_obj = NULL;
@@ -1000,6 +973,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 static void
 _e_kbd_int_layout_build(E_Kbd_Int *ki)
 {
+   E_Kbd_Int_Key *ky;
    Evas_Object *o, *o2;
    Evas_Coord lw, lh;
    Eina_List *l;
@@ -1014,13 +988,11 @@ _e_kbd_int_layout_build(E_Kbd_Int *ki)
    edje_extern_object_min_size_set(ki->layout_obj, lw, lh);
    edje_object_part_swallow(ki->base_obj, "e.swallow.content", ki->layout_obj);
 
-   for (l = ki->layout.keys; l; l = l->next)
+   EINA_LIST_FOREACH(ki->layout.keys, l, ky)
      {
-	E_Kbd_Int_Key *ky;
 	E_Kbd_Int_Key_State *st;
 	const char *label, *icon;
 	
-	ky = l->data;
 	o = _theme_obj_new(ki->win->evas, ki->themedir,
 			   "e/modules/kbd/key/default");
 	ky->obj = o;
@@ -1077,36 +1049,33 @@ _e_kbd_int_layout_build(E_Kbd_Int *ki)
 static void
 _e_kbd_int_layouts_free(E_Kbd_Int *ki)
 {
-   while (ki->layouts)
-     {
 	E_Kbd_Int_Layout *kil;
 	
-	kil = ki->layouts->data;
+   EINA_LIST_FREE(ki->layouts, kil)
+     {
 	evas_stringshare_del(kil->path);
 	evas_stringshare_del(kil->dir);
 	evas_stringshare_del(kil->icon);
 	evas_stringshare_del(kil->name);
 	free(kil);
-	ki->layouts = eina_list_remove_list(ki->layouts, ki->layouts);
      }
 }
 
 static void
 _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 {
-   Ecore_List *files;
+   Eina_List *files;
+   Eina_List *l;
    char buf[PATH_MAX], *p, *file;
    const char *homedir, *fl;
-   Eina_List *kbs = NULL, *l, *layouts = NULL;
+   char *path;
+   Eina_List *kbs = NULL, *layouts = NULL;
    int ok;
    
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/keyboards", homedir);
    files = ecore_file_ls(buf);
-   if (files)
-     {
-	ecore_list_first_goto(files);
-	while ((file = ecore_list_current(files)))
+   EINA_LIST_FREE(files, file)
 	  {
 	     p = strrchr(file, '.');
 	     if ((p) && (!strcmp(p, ".kbd")))
@@ -1114,16 +1083,12 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 		  snprintf(buf, sizeof(buf), "%s/.e/e/keyboards/%s", homedir, file);
 		  kbs = eina_list_append(kbs, evas_stringshare_add(buf));
 	       }
-	     ecore_list_next(files);
-	  }
-	ecore_list_destroy(files);
+	free(file);
      }
+
    snprintf(buf, sizeof(buf), "%s/keyboards", ki->syskbds);
    files = ecore_file_ls(buf);
-   if (files)
-     {
-	ecore_list_first_goto(files);
-	while ((file = ecore_list_current(files)))
+   EINA_LIST_FREE(files, file)
 	  {
              p = strrchr(file, '.');
 	     if ((p) && (!strcmp(p, ".kbd")))
@@ -1144,11 +1109,13 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 		       kbs = eina_list_append(kbs, evas_stringshare_add(buf));
 		    }
 	       }
-	     ecore_list_next(files);
-	  }
-	ecore_list_destroy(files);
+	free(file);
      }
-   for (l = kbs; l; l = l->next)
+   /* Previous loop could break before destroying all items. */
+   EINA_LIST_FREE(files, file)
+     free(file);
+
+   EINA_LIST_FREE(kbs, path)
      {
 	E_Kbd_Int_Layout *kil;
 	
@@ -1158,8 +1125,7 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 	     char *s, *p;
 	     FILE *f;
 	     
-	     kil->path = l->data;
-	     l->data = NULL;
+	     kil->path = path;
 	     s = strdup(ecore_file_file_get(kil->path));
 	     if (s)
 	       {
@@ -1228,7 +1194,6 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 	     layouts = eina_list_append(layouts, kil);
 	  }
      }
-   eina_list_free(kbs);
    _e_kbd_int_layouts_free(ki);
    ki->layouts = layouts;
 }
@@ -1268,15 +1233,12 @@ _e_kbd_int_layout_next(E_Kbd_Int *ki)
    const char *nextlay = NULL;
    E_Kbd_Int_Layout *kil;
    
-   for (l = ki->layouts; l; l = l->next)
-     {
-	kil = l->data;
+   EINA_LIST_FOREACH(ki->layouts, l, kil)
 	if (!strcmp(kil->path, ki->layout.file))
 	  {
 	     ln = l->next;
 	     break;
 	  }
-     }
    if (!ln) ln = ki->layouts;
    if (!ln) return;
    kil = ln->data;
@@ -1349,14 +1311,13 @@ _e_kbd_int_cb_client_message(void *data, int type, void *event)
 static void
 _e_kbd_int_dictlist_down(E_Kbd_Int *ki)
 {
+   char *str;
+
    if (!ki->dictlist.popup) return;
    e_object_del(E_OBJECT(ki->dictlist.popup));
    ki->dictlist.popup = NULL;
-   while (ki->dictlist.matches)
-     {
-	evas_stringshare_del(ki->dictlist.matches->data);
-	ki->dictlist.matches = eina_list_remove_list(ki->dictlist.matches, ki->dictlist.matches);
-     }
+   EINA_LIST_FREE(ki->dictlist.matches, str)
+     evas_stringshare_del(str);
 }
 
 static void
@@ -1392,10 +1353,10 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    Evas_Object *o;
    Evas_Coord w, h, mw, mh, vw, vh;
    int sx, sy, sw, sh;
-   Ecore_List *files;
+   Eina_List *files;
+   Eina_List *l;
    char buf[PATH_MAX], *p, *file, *pp;
    const char *homedir, *str;
-   Eina_List *l;
    int used;
    
    if (ki->dictlist.popup) return;
@@ -1414,25 +1375,23 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/dicts", homedir);
    files = ecore_file_ls(buf);
-   if (files)
-     {
-	ecore_list_first_goto(files);
-	while ((file = ecore_list_current(files)))
+
+   EINA_LIST_FREE(files, file)
 	  {
 	     p = strrchr(file, '.');
 	     if ((p) && (!strcmp(p, ".dic")))
 	       {
+	     const char *match;
 		  used = 0;
 		  
-		  for (l = ki->dictlist.matches; l; l = l->next)
-		    {
-		       if (!strcmp(l->data, file)) used = 1;
-		    }
-		  if (!used)
-		    {
+	     EINA_LIST_FOREACH(ki->dictlist.matches, l, match)
+	       if (!strcmp(match, file)) used = 1;
+
+	     if (used) goto next1;
+
 		       p = strdup(file);
-		       if (p)
-			 {
+	     if (!p) goto next1;
+
 			    for (pp = p; *pp; pp++)
 			      {
 				 if (*pp == '_') *pp = ' ';
@@ -1445,33 +1404,29 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 						  ki, NULL);
 			    free(p);
 			 }
+
+     next1:
+	free(file);
 		    }
-	       }
-	     ecore_list_next(files);
-	  }
-	ecore_list_destroy(files);
-     }
+
    snprintf(buf, sizeof(buf), "%s/dicts", ki->sysdicts);
    files = ecore_file_ls(buf);
-   if (files)
-     {
-	ecore_list_first_goto(files);
-	while ((file = ecore_list_current(files)))
+   EINA_LIST_FREE(files, file)
 	  {
 	     p = strrchr(file, '.');
 	     if ((p) && (!strcmp(p, ".dic")))
 	       {
+	     const char *match;
 		  used = 0;
 		  
-		  for (l = ki->dictlist.matches; l; l = l->next)
-		    {
-		       if (!strcmp(l->data, file)) used = 1;
-		    }
-		  if (!used)
-		    {
+	     EINA_LIST_FOREACH(ki->dictlist.matches, l, match)
+	       if (!strcmp(match, file)) used = 1;
+
+	     if (used) goto next2;
+
 		       p = strdup(file);
-		       if (p)
-			 {
+	     if (!p) goto next2;
+
 			    for (pp = p; *pp; pp++)
 			      {
 				 if (*pp == '_') *pp = ' ';
@@ -1484,11 +1439,8 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 						  ki, NULL);
 			    free(p);
 			 }
-		    }
-	       }
-	     ecore_list_next(files);
-	  }
-	ecore_list_destroy(files);
+     next2:
+	free(file);
      }
    e_widget_ilist_thaw(o);
    e_widget_ilist_go(o);
@@ -1523,14 +1475,13 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 static void
 _e_kbd_int_matchlist_down(E_Kbd_Int *ki)
 {
+   char *str;
+
    if (!ki->matchlist.popup) return;
    e_object_del(E_OBJECT(ki->matchlist.popup));
    ki->matchlist.popup = NULL;
-   while (ki->matchlist.matches)
-     {
-	evas_stringshare_del(ki->matchlist.matches->data);
-	ki->matchlist.matches = eina_list_remove_list(ki->matchlist.matches, ki->matchlist.matches);
-     }
+   EINA_LIST_FREE(ki->matchlist.matches, str)
+     evas_stringshare_del(str);
 }
 
 static void

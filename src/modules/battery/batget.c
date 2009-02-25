@@ -430,7 +430,7 @@ struct _Sys_Class_Power_Supply_Uevent
    unsigned char have_current_now : 1;
 };
 
-static Ecore_List *events = NULL;
+static Eina_List *events = NULL;
 static Ecore_Timer *sys_class_delay_check = NULL;
 
 static int
@@ -451,18 +451,14 @@ linux_sys_class_power_supply_cb_re_init(void *data)
    
    if (events)
      {
-	while ((sysev = ecore_list_first_goto(events)))
+	EINA_LIST_FREE(events, sysev)
 	  {
-	     ecore_list_remove(events);
-	     
 	     if (sysev->fd_handler)
 	       ecore_main_fd_handler_del(sysev->fd_handler);
 	     if (sysev->fd >= 0) close(sysev->fd);
 	     free(sysev->name);
 	     free(sysev);
 	  }
-	ecore_list_destroy(events);
-	events = NULL;
      }
    linux_sys_class_power_supply_init();
    re_init_timer = NULL;
@@ -496,8 +492,7 @@ linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd
 	  }
 	if (lost)
 	  {
-	     ecore_list_goto(events, sysev);
-	     ecore_list_remove(events);
+	     events = eina_list_remove(events, sysev);
 	     
 	     if (sysev->fd_handler)
 	       ecore_main_fd_handler_del(sysev->fd_handler);
@@ -631,32 +626,38 @@ linux_sys_class_power_supply_is_battery(char *name)
 static void
 linux_sys_class_power_supply_init(void)
 {
+   Eina_List *l;
+
    if (events)
      {
 	Sys_Class_Power_Supply_Uevent *sysev;
 	
-        ecore_list_first_goto(events);
-	while ((sysev = ecore_list_next(events)))
+	EINA_LIST_FOREACH(events, l, sysev)
 	  linux_sys_class_power_supply_sysev_init(sysev);
      }
    else
      {
-	Ecore_List *bats;
+	Eina_List *bats;
 	char *name;
 	char buf[4096];
 	
 	bats = ecore_file_ls("/sys/class/power_supply/");
 	if (bats)
 	  {
-	     events = ecore_list_new();
-	     while ((name = ecore_list_next(bats)))
+	     events = NULL;
+
+	     EINA_LIST_FREE(bats, name)
 	       {
 		  Sys_Class_Power_Supply_Uevent *sysev;
 
 		  if (!(linux_sys_class_power_supply_is_battery(name)))
+		    {
+		       free(name);
 		    continue;
+		    }
+
 		  sysev = E_NEW(Sys_Class_Power_Supply_Uevent, 1);
-		  sysev->name = strdup(name);
+		  sysev->name = name;
 		  snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/uevent", name);
 		  sysev->fd = open(buf, O_RDONLY);
 		  if (sysev->fd >= 0)
@@ -665,10 +666,9 @@ linux_sys_class_power_supply_init(void)
 								  linux_sys_class_power_supply_cb_event_fd_active,
 								  sysev,
 								  NULL, NULL);
-		  ecore_list_append(events, sysev);
+		  events = eina_list_append(events, sysev);
 		  linux_sys_class_power_supply_sysev_init(sysev);
 	       }
-	     ecore_list_destroy(bats);
 	  }
      }
 }
@@ -676,6 +676,7 @@ linux_sys_class_power_supply_init(void)
 static void
 linux_sys_class_power_supply_check(void)
 {
+   Eina_List *l;
    char *name;
    char buf[4096];
    
@@ -694,8 +695,7 @@ linux_sys_class_power_supply_check(void)
 	total_pwr_now = 0;
 	total_pwr_max = 0;
 	time_left = 0;
-	ecore_list_first_goto(events);
-	while ((sysev = ecore_list_next(events)))
+	EINA_LIST_FOREACH(events, l, sysev)
 	  {
 	     char *tmp;
 	     int present = 0;
@@ -944,8 +944,8 @@ linux_acpi_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd_handler)
 static void
 linux_acpi_init(void)
 {
-   Ecore_List *powers;
-   Ecore_List *bats;
+   Eina_List *powers;
+   Eina_List *bats;
 
    bats = ecore_file_ls("/proc/acpi/battery");
    if (bats)
@@ -957,7 +957,8 @@ linux_acpi_init(void)
 	if (powers)
 	  {
 	     char *name;
-	     while ((name = ecore_list_next(powers)))
+
+	     EINA_LIST_FREE(powers, name)
 	       {
 		  char buf[4096];
 		  FILE *f;
@@ -977,14 +978,15 @@ linux_acpi_init(void)
 			    free(tmp);
 			 }
 		    }
+
+		  free(name);
 	       }
-	     ecore_list_destroy(powers);
 	  }
    
 	have_battery = 0;
 	acpi_max_full = 0;
 	acpi_max_design = 0;
-	while ((name = ecore_list_next(bats)))
+	EINA_LIST_FREE(bats, name)
 	  {
 	     char buf[4096];
 	     FILE *f;
@@ -1021,8 +1023,9 @@ linux_acpi_init(void)
 		    }
 		  fclose(f);
 	       }
+
+	     free(name);
 	  }
-        ecore_list_destroy(bats);
      }
    if (!acpid)
      {
@@ -1056,7 +1059,7 @@ linux_acpi_init(void)
 static void
 linux_acpi_check(void)
 {
-   Ecore_List *bats;
+   Eina_List *bats;
 
    battery_full = -1;
    time_left = -1;
@@ -1070,7 +1073,7 @@ linux_acpi_check(void)
 	int rate = 0;
 	int capacity = 0;
 	
-        while ((name = ecore_list_next(bats)))
+	EINA_LIST_FREE(bats, name)
 	  {
 	     char buf[4096];
 	     FILE *f;
@@ -1120,8 +1123,9 @@ linux_acpi_check(void)
 		    }
 		  fclose(f);
 	       }
+
+	     free(name);
 	  }
-        ecore_list_destroy(bats);
 	if (acpi_max_full > 0)
 	  battery_full = 100 * (long long)capacity / acpi_max_full;
 	else if (acpi_max_design > 0)
@@ -1267,7 +1271,7 @@ linux_pmu_check(void)
 {
    FILE *f;
    char buf[4096];
-   Ecore_List *bats;
+   Eina_List *bats;
    char *name;
    int ac = 0;
    int flags = 0;
@@ -1295,7 +1299,7 @@ linux_pmu_check(void)
      {
 	have_battery = 1;
 	have_power = ac;
-	while ((name = ecore_list_next(bats)))
+	EINA_LIST_FREE(bats, name)
 	  {
 	     if (strncmp(name, "battery", 7)) continue;
 	     snprintf(buf, sizeof(buf), "/proc/pmu/%s", name);
@@ -1345,8 +1349,9 @@ linux_pmu_check(void)
 		       seconds = MAX(timeleft, seconds);
 		    }
 	       }
+
+	     free(name);
 	  }
-        ecore_list_destroy(bats);
 	if (max_charge > 0) battery_full = ((long long)charge * 100) / max_charge;
 	else battery_full = 0;
 	time_left = seconds;
@@ -1381,17 +1386,16 @@ linux_pmu_check(void)
 static int
 dir_has_contents(const char *dir)
 {
-   Ecore_List *bats;
+   Eina_List *bats;
+   char *file;
+   int count;
 
    bats = ecore_file_ls(dir);
-   if (bats)
-     {
-	int count;
 	
-	count = ecore_list_count(bats);
-	ecore_list_destroy(bats);
+   count = eina_list_count(bats);
+   EINA_LIST_FREE(bats, file)
+     free(file);
 	if (count > 0) return 1;
-     }
    return 0;
 }
 

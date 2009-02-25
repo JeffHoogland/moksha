@@ -45,8 +45,6 @@ Manager *Man = NULL;
 void
 gadman_init(E_Module *m)
 {
-   Eina_List *l;
-
    /* Create Manager */
    Man = calloc(1, sizeof(Manager));
    if (!Man) return;

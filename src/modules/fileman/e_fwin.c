@@ -125,15 +125,10 @@ e_fwin_init(void)
 EAPI int
 e_fwin_shutdown(void)
 {
-   Eina_List *l;
+   E_Fwin *fwin;
 
-   l = fwins;
-   fwins = NULL;
-   while (l)
-     {
-	e_object_del(E_OBJECT(l->data));
-	l = eina_list_remove_list(l, l);
-     }
+   EINA_LIST_FREE(fwins, fwin)
+     e_object_del(E_OBJECT(fwin));
 
    eina_stringshare_shutdown();
 
@@ -248,12 +243,10 @@ EAPI void
 e_fwin_zone_shutdown(E_Zone *zone) 
 {
    Eina_List *f;
-   
-   for (f = fwins; f; f = f->next) 
-     {
 	E_Fwin *win;
 	
-	win = f->data;
+   EINA_LIST_FOREACH(fwins, f, win)
+     {
 	if (win->zone != zone) continue;
 	e_object_del(E_OBJECT(win));
 	win = NULL;
@@ -264,15 +257,14 @@ EAPI void
 e_fwin_reload_all(void) 
 {
    Eina_List *l, *ll, *lll;
-   E_Manager *man;
    E_Container *con;
+   E_Manager *man;
+   E_Fwin *fwin;
+   E_Zone *zone;
 
    /* Reload/recreate zones cause of property changes */
-   for (l = fwins; l; l = l->next) 
+   EINA_LIST_FOREACH(fwins, l, fwin)
      {
-	E_Fwin *fwin;
-	
-	fwin = l->data;
 	if (!fwin) continue; //safety
 	if (fwin->zone)
 	  e_fwin_zone_shutdown(fwin->zone);
@@ -285,17 +277,10 @@ e_fwin_reload_all(void)
      }
 
    /* Hook into zones */
-   for (l = e_manager_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
+     EINA_LIST_FOREACH(man->containers, ll, con)
+       EINA_LIST_FOREACH(con->zones, lll, zone)
      {
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
-	  {
-	     con = ll->data;
-	     for (lll = con->zones; lll; lll = lll->next)
-	       {
-		  E_Zone *zone;
-
-		  zone = lll->data;
 		  if (e_fwin_zone_find(zone)) continue;
 		  if ((zone->container->num == 0) && (zone->num == 0) && 
 		      (fileman_config->view.show_desktop_icons))
@@ -312,22 +297,16 @@ e_fwin_reload_all(void)
 			 }
 		    }
 	       }
-	  }
-     }
 }
 
 EAPI int
 e_fwin_zone_find(E_Zone *zone)
 {
    Eina_List *f;
-   
-   for (f = fwins; f; f = f->next)
-     {
 	E_Fwin *win;
 	
-	win = f->data;
+   EINA_LIST_FOREACH(fwins, f, win)
 	if (win->zone == zone) return 1;
-     }
    return 0;
 }
 
@@ -820,7 +799,8 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
    char pcwd[4096], buf[4096];
    Eina_List *selected, *l;
    E_Fm2_Icon_Info *ici;
-   Ecore_List *files = NULL;
+   Eina_List *files = NULL;
+   char *file;
    
    fad = data;
    if (fad->app1) 
@@ -838,8 +818,7 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	selected = e_fm2_selected_list_get(fad->fwin->fm_obj);
 	if (selected)
 	  {
-	     files = ecore_list_new();
-	     ecore_list_free_cb_set(files, free);
+	     files = NULL;
 	     for (l = selected; l; l = l->next)
 	       {
 		  E_Fwin_Exec_Type ext;
@@ -873,7 +852,7 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 		    {
 		       if (ici->mime && desktop)
 			 e_exehist_mime_desktop_add(ici->mime, desktop);
-		       ecore_list_append(files, strdup(ici->file));
+		       files = eina_list_append(files, strdup(ici->file));
 		    }
 	       }
 	     eina_list_free(selected);
@@ -901,7 +880,8 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	     if (!strcmp(fad->exec_cmd, ""))
                efreet_desktop_free(desktop);
 
-	     ecore_list_destroy(files);	    
+	     EINA_LIST_FREE(files, file)
+	       free(file);
 	  }
 	chdir(pcwd);
      }
@@ -1073,14 +1053,16 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
    Evas_Coord mw, mh;
    Evas_Object *o, *of, *oi, *ot;
    Evas *evas;
-   Eina_List *l = NULL, *apps = NULL, *mlist = NULL;
-   Ecore_List *cats = NULL;
+   Eina_List *l = NULL, *ll, *apps = NULL, *mlist = NULL;
+   Eina_List *ml;
+   Eina_List *cats = NULL;
    Eina_Hash *mimes = NULL;
    Efreet_Desktop *desk = NULL;
    E_Fwin_Apps_Dialog *fad;
    E_Fm2_Icon_Info *ici;
    char buf[PATH_MAX];
    const char *f;
+   char *mime;
    int need_dia = 0;
 
    if (fwin->fad)
@@ -1090,9 +1072,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
      }
    if (!always)
      {
-	for (l = files; l; l = l->next)
+	EINA_LIST_FOREACH(files, l, ici)
 	  {
-	     ici = l->data;
 	     if ((ici->link) && (ici->mount))
 	       {
 		  if (!fileman_config->view.open_dirs_in_place || fwin->zone) 
@@ -1288,9 +1269,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
      }
    
    /* 1. build hash of mimetypes */
-   for (l = files; l; l = l->next)
-     {
-	ici = l->data;
+   EINA_LIST_FOREACH(files, l, ici)
         if (!((ici->link) && (ici->mount)))
 	  {
 	     if (_e_fwin_file_is_exec(ici) == E_FWIN_EXEC_NONE)
@@ -1314,7 +1293,6 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 		    }
 	       }
 	  }
-     }
    /* 2. for each mimetype list apps that handle it */
    if (mimes)
      {
@@ -1323,21 +1301,10 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
      }
    /* 3. add apps to a list so its a unique app list */
    apps = NULL;
-   if (mlist)
-     {
-	Ecore_List *ml;
-
-	for (l = mlist; l; l = l->next)
+   EINA_LIST_FOREACH(mlist, l, mime)
 	  {
-	     ml = efreet_util_desktop_mime_list(l->data);
-	     if (ml)
-	       {
-		  ecore_list_first_goto(ml);
-		  while ((desk = ecore_list_next(ml)))
-		    apps = eina_list_append(apps, desk);
-		  ecore_list_destroy(ml);
-	       }
-	  }
+	ml = efreet_util_desktop_mime_list(mime);
+	apps = eina_list_merge(apps, ml);
      }
 
    if (!always)
@@ -1358,27 +1325,23 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 	 */
 	if (eina_list_count(mlist) <= 1)
 	  {
+	     char *file;
 	     char pcwd[4096];
-	     Ecore_List *files_list = NULL;
+	     Eina_List *files_list = NULL;
 	   
 	     need_dia = 1;
 	     if (mlist) desk = e_exehist_mime_desktop_get(mlist->data);
 	     getcwd(pcwd, sizeof(pcwd));
 	     chdir(e_fm2_real_path_get(fwin->fm_obj));
 	     
-	     files_list = ecore_list_new();
-	     ecore_list_free_cb_set(files_list, free);
-	     for (l = files; l; l = l->next)
-	       {
-		  ici = l->data;
+	     files_list = NULL;
+	     EINA_LIST_FOREACH(files, l, ici)
 		  if (_e_fwin_file_is_exec(ici) == E_FWIN_EXEC_NONE)
-		    ecore_list_append(files_list, strdup(ici->file));
-	       }
-	     for (l = files; l; l = l->next)
+		 files_list = eina_list_append(files_list, strdup(ici->file));
+	     EINA_LIST_FOREACH(files, l, ici)
 	       {
 		  E_Fwin_Exec_Type ext;
 		  
-		  ici = l->data;
 		  ext = _e_fwin_file_is_exec(ici);
 		  if (ext != E_FWIN_EXEC_NONE)
 		    {
@@ -1399,18 +1362,19 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 			 need_dia = 0;
 		    }
 	       }
-	     ecore_list_destroy(files_list);
+	     EINA_LIST_FREE(files_list, file)
+	       free(file);
 	     
 	     chdir(pcwd);
 	     if (!need_dia)
 	       {
-		  if (apps) eina_list_free(apps);
-		  eina_list_free(mlist);
+		  apps = eina_list_free(apps);
+		  mlist = eina_list_free(mlist);
 		  return;
 	       }
 	  }
      }
-   if (mlist) eina_list_free(mlist);
+   mlist = eina_list_free(mlist);
    
    fad = E_NEW(E_Fwin_Apps_Dialog, 1);
    if (fwin->win)
@@ -1462,7 +1426,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 	e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
      }
 
-   if (l) eina_list_free(l);
+   l = eina_list_free(l);
 
    of = e_widget_framelist_add(evas, _("All Applications"), 0);
    o = e_widget_ilist_add(evas, 24, 24, &(fad->app2));
@@ -1472,29 +1436,22 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
    edje_freeze();
    e_widget_ilist_freeze(o);
    cats = efreet_util_desktop_name_glob_list("*");
-   ecore_list_sort(cats, ECORE_COMPARE_CB(_e_fwin_dlg_cb_desk_sort), ECORE_SORT_MIN);
-   ecore_list_first_goto(cats);
-   while ((desk = ecore_list_next(cats))) 
-     {
+   cats = eina_list_sort(cats, 0, _e_fwin_dlg_cb_desk_sort);
+   EINA_LIST_FREE(cats, desk)
 	if (!eina_list_data_find(l, desk))
 	  l = eina_list_append(l, desk);
-     }
-   if (cats) ecore_list_destroy(cats);
-   if (l) l = eina_list_sort(l, -1, _e_fwin_dlg_cb_desk_list_sort);
+   l = eina_list_sort(l, -1, _e_fwin_dlg_cb_desk_list_sort);
 
    /* reuse mlist var here */
-   for (mlist = l; mlist; mlist = mlist->next) 
+   EINA_LIST_FREE(mlist, desk)
      {
 	Evas_Object *icon = NULL;
 
-	desk = mlist->data;
 	if (!desk) continue;
 	icon = e_util_desktop_icon_add(desk, 24, evas);
 	e_widget_ilist_append(o, icon, desk->name, NULL, NULL, 
 			      efreet_util_path_to_file_id(desk->orig_path));
      }
-   if (mlist) eina_list_free(mlist);
-   if (l) eina_list_free(l);
 
    e_widget_ilist_go(o);
    e_widget_ilist_thaw(o);

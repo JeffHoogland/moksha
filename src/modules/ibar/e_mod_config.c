@@ -260,23 +260,18 @@ _cb_confirm_dialog_destroy(void *data)
 static void 
 _load_tlist(E_Config_Dialog_Data *cfdata) 
 {
-   Ecore_List *dirs;
+   Eina_List *dirs;
    const char *home;
    char buf[4096], *file;
    int selnum = -1;
+   int i = 0;
 
    e_widget_ilist_clear(cfdata->tlist);
    
    home = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar", home);
    dirs = ecore_file_ls(buf);
-   
-   if (dirs)
-     {
-	int i;
-	
-	i = 0;
-	while ((file = ecore_list_next(dirs)))
+   EINA_LIST_FREE(dirs, file)
 	  {
 	     if (file[0] == '.') continue;
 	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", home, file);
@@ -287,9 +282,10 @@ _load_tlist(E_Config_Dialog_Data *cfdata)
 		    selnum = i;
 		  i++;
 	       }
+
+	free(file);
 	  }
-	ecore_list_destroy(dirs);
-     }
+
    e_widget_ilist_go(cfdata->tlist);
    if (selnum >= 0)
      e_widget_ilist_selected_set(cfdata->tlist, selnum);   

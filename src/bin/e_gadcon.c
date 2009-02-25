@@ -3473,11 +3473,12 @@ _e_gadcon_layout_smart_width_smart_sort_reverse_cb(const void *d1, const void *d
 void 
 _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 { 
+   E_Gadcon_Layout_Item *bi2 = NULL;
+   E_Gadcon_Layout_Item *bi = NULL;
+   Eina_List *l, *l2;
    int need, limit, reduce_total, reduce;
    int max_size;
    int c;
-   Eina_List *l, *l2;
-   E_Gadcon_Layout_Item *bi, *bi2;
 
    if (sd->horizontal)
      {

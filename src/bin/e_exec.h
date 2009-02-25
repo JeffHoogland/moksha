@@ -20,7 +20,7 @@ struct _E_Exec_Instance
 
 EAPI int  e_exec_init(void);
 EAPI int  e_exec_shutdown(void);
-EAPI E_Exec_Instance *e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec, Ecore_List *files, const char *launch_method);
+EAPI E_Exec_Instance *e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec, Eina_List *files, const char *launch_method);
 
 EAPI Efreet_Desktop *e_exec_startup_id_pid_find(int startup_id, pid_t pid);
 

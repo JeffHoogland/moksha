@@ -444,6 +444,7 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
    Ecore_Evas *ee;
    Evas *e;
    Eina_List *l;
+   const char *path;
    
    if ((engine == 0) || (engine == 1))
      {
@@ -479,7 +480,7 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
    evas_image_cache_set(e, 4096 * 1024);
    evas_font_cache_set(e, 512 * 1024);
    
-   for (l = fpath; l; l = l->next) evas_font_path_append(e, l->data);
+   EINA_LIST_FOREACH(fpath, l, path) evas_font_path_append(e, l->data);
    
    if (font_hinting == 0)
      {

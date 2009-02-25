@@ -29,7 +29,7 @@ struct _E_Config_Dialog_Data
    int high_temp;
 
    int sensor;
-   Ecore_List *sensors;
+   Eina_List *sensors;
 
    Config_Face *inst;
 };
@@ -71,7 +71,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 {
    double      p;
    int         pi;
-   Ecore_List *therms;
+   Eina_List *therms;
+   Eina_List *l;
    char       *name;
    char        path[PATH_MAX];
    
@@ -130,7 +131,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	   {
               char *name;
 
-	      while ((name = ecore_list_next(therms)))
+	      EINA_LIST_FREE(therms, name)
 	        {
 		   if (ecore_file_exists(name))
 		     {
@@ -140,7 +141,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			len = strlen(path);
 			if (len > 6)
 			   path[len - 6] = '\0';
-	                ecore_list_append(cfdata->sensors, strdup(path));
+	                cfdata->sensors = eina_list_append(cfdata->sensors, strdup(path));
 			/* TODO: Track down the user friendly names and display them instead.
 			 * User friendly names are not available on the system, lm-sensors 
 			 * contains a database in /etc/sensors.conf, but the format may change,
@@ -148,12 +149,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			 * don't want to add any more library dependencies. 
 			 */
 		     }
+		   free(name);
 		}
-	      ecore_list_destroy(therms);
 	   }
 
-	 ecore_list_first_goto(cfdata->sensors);
-	 while ((name = ecore_list_next(cfdata->sensors)))
+	 EINA_LIST_FOREACH(cfdata->sensors, l, name)
 	   {
 	      if (!strcmp(cfdata->inst->sensor_name, name)) 
 		break;
@@ -166,7 +166,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	   {
               char *name;
 
-	      while ((name = ecore_list_next(therms)))
+	      EINA_LIST_FREE(therms, name)
 	        {
 		   if (ecore_file_exists(name))
 		     {
@@ -176,7 +176,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			len = strlen(path);
 			if (len > 6)
 			   path[len - 6] = '\0';
-	                ecore_list_append(cfdata->sensors, strdup(path));
+	                cfdata->sensors = eina_list_append(cfdata->sensors, strdup(path));
 			/* TODO: Track down the user friendly names and display them instead.
 			 * User friendly names are not available on the system, lm-sensors 
 			 * contains a database in /etc/sensors.conf, but the format may change,
@@ -184,12 +184,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			 * don't want to add any more library dependencies. 
 			 */
 		     }
+		   free(name);
 		}
-	      ecore_list_destroy(therms);
 	   }
 
-	 ecore_list_first_goto(cfdata->sensors);
-	 while ((name = ecore_list_next(cfdata->sensors)))
+	 EINA_LIST_FOREACH(cfdata->sensors, l, name)
 	   {
 	      if (!strcmp(cfdata->inst->sensor_name, name)) 
 		break;
@@ -202,16 +201,15 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	   {
 	      int n = 0;
 
-	      while ((name = ecore_list_next(therms)))
+	      EINA_LIST_FREE(therms, name)
 		{
-		   ecore_list_append(cfdata->sensors, strdup(name));
+		   cfdata->sensors = eina_list_append(cfdata->sensors, name);
 		   if (!strcmp(cfdata->inst->sensor_name, name))
 		     {
 			cfdata->sensor = n;
 		     }
 		   n++;
 		}
-	      ecore_list_destroy(therms);
 	   }
 	 break;
      }
@@ -224,8 +222,7 @@ _create_data(E_Config_Dialog *cfd)
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->inst = cfd->data;
-   cfdata->sensors = ecore_list_new();
-   ecore_list_free_cb_set(cfdata->sensors, free);
+   cfdata->sensors = NULL;
    _fill_data(cfdata);
    return cfdata;
 }
@@ -233,9 +230,11 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   char *sensor;
+
    cfdata->inst->config_dialog = NULL;
-   if (cfdata->sensors) ecore_list_destroy(cfdata->sensors);
-   cfdata->sensors = NULL;
+   EINA_LIST_FREE(cfdata->sensors, sensor)
+     free(sensor);
    free(cfdata);
 }
 
@@ -347,6 +346,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
+   Eina_List *l;
    
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Display Units"), 0);
@@ -357,7 +357,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   if (!ecore_list_empty_is(cfdata->sensors))
+   if (cfdata->sensors)
      {
 	/* TODO: Notify user which thermal system is in use */
 	/* TODO: Let the user choose the wanted thermal system */
@@ -366,8 +366,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
 	of = e_widget_framelist_add(evas, _("Sensors"), 0);
 	rg = e_widget_radio_group_new(&(cfdata->sensor));
-	ecore_list_first_goto(cfdata->sensors);
-	while ((name = ecore_list_next(cfdata->sensors)))
+	EINA_LIST_FOREACH(cfdata->sensors, l, name)
 	  {
 	     ob = e_widget_radio_add(evas, _(name), n, rg);
 	     e_widget_framelist_object_append(of, ob);
@@ -446,7 +445,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->inst->sensor_name)
      eina_stringshare_del(cfdata->inst->sensor_name);
    cfdata->inst->sensor_name =
-     eina_stringshare_add(ecore_list_index_goto(cfdata->sensors, cfdata->sensor));
+     eina_stringshare_add(eina_list_nth(cfdata->sensors, cfdata->sensor));
 
    temperature_face_update_config(cfdata->inst);
    e_config_save_queue();

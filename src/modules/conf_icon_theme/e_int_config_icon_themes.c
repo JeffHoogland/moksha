@@ -62,20 +62,20 @@ e_int_config_icon_themes(E_Container *con, const char *params __UNUSED__)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   Ecore_List *icon_themes;
+   Eina_List *icon_themes;
+   Eina_List *l;
 
    icon_themes = efreet_icon_theme_list_get();
    if (icon_themes)
      {
 	Efreet_Icon_Theme *theme;
 
-	ecore_list_first_goto(icon_themes);
-	while ((theme = ecore_list_next(icon_themes)))
+	EINA_LIST_FOREACH(icon_themes, l, theme)
 	  cfdata->icon_themes = eina_list_append(cfdata->icon_themes, theme);
 	cfdata->icon_themes = eina_list_sort(cfdata->icon_themes,
 					     eina_list_count(cfdata->icon_themes),
 					     _sort_icon_themes);
-	ecore_list_destroy(icon_themes);
+	icon_themes = eina_list_free(icon_themes);
      }
    cfdata->themename = strdup(e_config->icon_theme);
 
@@ -338,9 +338,13 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 {
    E_Config_Dialog_Data *cfdata;
    Efreet_Icon_Theme *theme;
+   Eina_List *l;
    char *dir = NULL;
    char *text;
    size_t length = 0, size = 4096;
+   const char *inherit;
+   char *path;
+   int first = 1;
 
    cfdata = data;
    if (!cfdata->gui.comment) return;
@@ -360,28 +364,10 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 	strcat(text, theme->comment);
 	strcat(text, "\n");
      }
-   if (theme->paths.count == 1)
-     {
-	length += strlen(theme->paths.path) + 8;
-	while (length >= size)
-	  {
-	     size += 4096;
-	     text = realloc(text, size);
-	  }
-	dir = theme->paths.path;
-	strcat(text, "path = ");
-	strcat(text, dir);
-	strcat(text, "\n");
-     }
-   else if (theme->paths.count > 1)
-     {
-	char *path;
-	int first = 1;
 
-	ecore_list_first_goto(theme->paths.path);
-	while ((path = ecore_list_next(theme->paths.path)))
+   EINA_LIST_FOREACH(theme->paths, l, path)
 	  {
-	     length += strlen(theme->paths.path) + 16;
+	length += strlen(path) + 16;
 	     while (length >= size)
 	       {
 		  size += 4096;
@@ -400,17 +386,12 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 		  strcat(text, path);
 	       }
 	  }
-	strcat(text, "\n");
-     }
-   if (theme->inherits)
-     {
-	const char *inherit;
-	int first = 1;
+   if (theme->paths) strcat(text, "\n");
 
-	ecore_list_first_goto(theme->inherits);
-	while ((inherit = ecore_list_next(theme->inherits)))
+   first = 1;
+   EINA_LIST_FOREACH(theme->inherits, l, inherit)
 	  {
-	     length += strlen(theme->paths.path) + 32;
+	length += strlen(inherit) + 32;
 	     while (length >= size)
 	       {
 		  size += 4096;
@@ -428,8 +409,8 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 		  strcat(text, inherit);
 	       }
 	  }
-	strcat(text, "\n");
-     }
+   if (theme->inherits) strcat(text, "\n");
+
    e_widget_textblock_plain_set(cfdata->gui.comment, text);
    free(text);
    if (dir)

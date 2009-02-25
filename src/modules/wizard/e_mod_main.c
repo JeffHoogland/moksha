@@ -63,21 +63,17 @@ static int _cb_sort_files(char *f1, char *f2)
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   Ecore_List *files;
+   Eina_List *files;
    char buf[PATH_MAX];
+   char *file;
    
    conf_module = m;
    e_wizard_init();
    
    snprintf(buf, sizeof(buf), "%s/%s", e_module_dir_get(m), MODULE_ARCH);
    files = ecore_file_ls(buf);
-   if (files)
-     {
-	char *file;
-	
-	ecore_list_first_goto(files);
-	ecore_list_sort(files, ECORE_COMPARE_CB(_cb_sort_files), ECORE_SORT_MIN);
-	while ((file = ecore_list_current(files)))
+   files = eina_list_sort(files, 0, (Eina_Compare_Cb)_cb_sort_files);
+   EINA_LIST_FREE(files, file)
 	  {
 	     if (!strncmp(file, "page_", 5))
 	       {
@@ -98,11 +94,8 @@ e_modapi_init(E_Module *m)
                   else
                     printf("%s\n", dlerror());
 	       }
-	     ecore_list_next(files);
-	  }
-	ecore_list_destroy(files);
+	free(file);
      }
-   
    e_wizard_go();
    
    return m;

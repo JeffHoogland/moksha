@@ -618,7 +618,9 @@ e_util_shell_env_path_eval(char *path)
     * $HOME/bin/$HOSTNAME/blah -> /home/user/bin/localhost/blah
     * etc. etc.
     */
-   char buf[4096], *pd, *p, *v1, *v2, *s, *v, *vp;
+   char buf[4096], *pd, *p, *v2, *s, *vp;
+   char *v = NULL;
+   char *v1 = NULL;
    int esc = 0, invar = 0;
 
    for (p = path, pd = buf; (pd < (buf + sizeof(buf) - 1)); p++)

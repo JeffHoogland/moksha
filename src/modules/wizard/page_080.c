@@ -19,19 +19,15 @@ _cb_sort_desks(Efreet_Desktop *d1, Efreet_Desktop *d2)
 EAPI int
 wizard_page_init(E_Wizard_Page *pg)
 {
-   Ecore_List *desks = NULL;
+   Eina_List *desks = NULL;
+   Efreet_Desktop *desk;
    int i;
    
    efreet_util_init();
                   
    desks = efreet_util_desktop_name_glob_list("*");
-   if (desks)
-     {
-        Efreet_Desktop *desk;
-        
-        ecore_list_sort(desks, ECORE_COMPARE_CB(_cb_sort_desks), ECORE_SORT_MIN);
-        ecore_list_first_goto(desks);
-        while ((desk = ecore_list_next(desks)))
+   desks = eina_list_sort(desks, 0, (Eina_Compare_Cb)_cb_sort_desks);
+   EINA_LIST_FREE(desks, desk)
           {
              char dbuf[4096];
 
@@ -39,8 +35,6 @@ wizard_page_init(E_Wizard_Page *pg)
              efreet_desktop_ref(desk);
              desktops = eina_list_append(desktops, desk);
           }
-        ecore_list_destroy(desks);
-     }
    efreet_util_shutdown();
    if (desktops)
      {
@@ -113,6 +107,7 @@ wizard_page_hide(E_Wizard_Page *pg)
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {
+   Efreet_Desktop *desk;
    Eina_List *l;
    int i;
    FILE *f;
@@ -130,7 +125,6 @@ wizard_page_apply(E_Wizard_Page *pg)
           {
              if (desktops_add[i])
                {
-                  Efreet_Desktop *desk;
                   char *p;
                   
                   desk = l->data;
@@ -142,11 +136,9 @@ wizard_page_apply(E_Wizard_Page *pg)
           }
         fclose(f);
      }
-   while (desktops)
-     {
-        efreet_desktop_free(desktops->data);
-        desktops = eina_list_remove_list(desktops, desktops);
-     }
+   EINA_LIST_FREE(desktops, desk)
+     efreet_desktop_free(desk);
+
    if (desktops_add)
      {
         free(desktops_add);

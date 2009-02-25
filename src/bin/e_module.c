@@ -36,7 +36,7 @@ e_module_init(void)
 EAPI int
 e_module_shutdown(void)
 {
-   Eina_List *l;
+   E_Module *m;
 
 #ifdef HAVE_VALGRIND
    /* do a leak check now before we dlclose() all those plugins, cause
@@ -46,25 +46,18 @@ e_module_shutdown(void)
 #endif
 
    _e_modules = eina_list_reverse(_e_modules);
-   for (l = _e_modules; l; l = l->next)
-     {
-	E_Module *m;
 	
-	m = l->data;
-	if ((m->enabled) && (!m->error))
+   EINA_LIST_FREE(_e_modules, m)
+     {
+	if (m && m->enabled && !m->error)
 	  {
 	     m->func.save(m);
 	     m->func.shutdown(m);
 	     m->enabled = 0;
 	  }
+	e_object_del(E_OBJECT(m));
      }
-   l = _e_modules;
-   _e_modules = NULL;
-   while (l)
-     {
-	e_object_del(E_OBJECT(l->data));
-	l = eina_list_remove_list(l, l);
-     }
+
    return 1;
 }
 
@@ -469,13 +462,11 @@ e_module_priority_set(E_Module *m, int priority)
 static void
 _e_module_free(E_Module *m)
 {
+   E_Config_Module *em;
    Eina_List *l;
    
-   for (l = e_config->modules; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->modules, l, em)
      {
-	E_Config_Module *em;
-	
-	em = l->data;
 	if (!em) continue;
 	if (!e_util_strcmp(em->name, m->name))
 	  {

@@ -122,18 +122,14 @@ _app_write(App *a)
 EAPI int
 wizard_page_init(E_Wizard_Page *pg)
 {
-   Ecore_List *desks = NULL;
+   Eina_List *desks = NULL;
+   Efreet_Desktop *desk;
    int i;
    
    efreet_util_init();
                   
    desks = efreet_util_desktop_name_glob_list("*");
-   if (desks)
-     {
-        Efreet_Desktop *desk;
-        
-        ecore_list_first_goto(desks);
-        while ((desk = ecore_list_next(desks)))
+   EINA_LIST_FREE(desks, desk)
           {
              char dbuf[4096];
 
@@ -172,8 +168,7 @@ wizard_page_init(E_Wizard_Page *pg)
                     }
                }
           }
-        ecore_list_destroy(desks);
-     }
+
    efreet_util_shutdown();
    // FIXME: list all apps and of the apps either already installed, or to be
    // created, offer them to be added to ibar by default. (actually should be

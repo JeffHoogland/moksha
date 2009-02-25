@@ -158,14 +158,11 @@ _gc_id_new(E_Gadcon_Client_Class *client_class)
 static int
 _find_interface_class(int iclass)
 {
-   Ecore_List *devs;
-   
-   devs = ecore_file_ls("/sys/bus/usb/devices");
-   if (devs)
-     {
+   Eina_List *devs;
 	char *name;
 	
-	while ((name = ecore_list_next(devs)))
+   devs = ecore_file_ls("/sys/bus/usb/devices");
+   EINA_LIST_FREE(devs, name)
 	  {
 	     char buf[PATH_MAX];
 	     FILE *f;
@@ -182,15 +179,16 @@ _find_interface_class(int iclass)
 		       sscanf(buf, "%x", &id);
 		       if (iclass == id)
 			 {
-			    ecore_list_destroy(devs);
+		       EINA_LIST_FREE(devs, name)
+			 free(name);
 			    fclose(f);
 			    return 1;
 			 }
 		    }
 		  fclose(f);
 	       }
-	  }
-	ecore_list_destroy(devs);
+
+	free(name);
      }
    return 0;
 }

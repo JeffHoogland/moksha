@@ -354,6 +354,8 @@ static void
 _battery_hal_shutdown(void)
 {
    E_DBus_Connection *conn;
+   Hal_Ac_Adapter *hac;
+   Hal_Battery *hbat;
    
    conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    if (!conn) return;
@@ -372,25 +374,17 @@ _battery_hal_shutdown(void)
         e_dbus_signal_handler_del(conn, battery_config->hal.dev_del);
         battery_config->hal.dev_del = NULL;
      }
-   while (hal_ac_adapters)
+   EINA_LIST_FREE(hal_ac_adapters, hac)
      {
-        Hal_Ac_Adapter *hac;
-        
-        hac = hal_ac_adapters->data;
         e_dbus_signal_handler_del(conn, hac->prop_change);
         eina_stringshare_del(hac->udi);
         free(hac);
-        hal_ac_adapters = eina_list_remove_list(hal_ac_adapters, hal_ac_adapters);
      }
-   while (hal_batteries)
+   EINA_LIST_FREE(hal_batteries, hbat)
      {
-        Hal_Battery *hbat;
-        
-        hbat = hal_batteries->data;
         e_dbus_signal_handler_del(conn, hbat->prop_change);
         eina_stringshare_del(hbat->udi);
         free(hbat);
-        hal_batteries = eina_list_remove_list(hal_batteries, hal_batteries);
      }
 }
 
@@ -593,26 +587,27 @@ _battery_hal_ac_adapter_del(const char *udi)
 static void
 _battery_hal_find_battery(void *user_data, void *reply_data, DBusError *error)
 {
+   Eina_List *l;
    char *device;
+
    E_Hal_Manager_Find_Device_By_Capability_Return *ret;
    
    ret = reply_data;
-   if (ecore_list_count(ret->strings) < 1) return;
-   ecore_list_first_goto(ret->strings);
-   while ((device = ecore_list_next(ret->strings)))
+   if (eina_list_count(ret->strings) < 1) return;
+   EINA_LIST_FOREACH(ret->strings, l, device)
      _battery_hal_battery_add(device);
 }
 
 static void
 _battery_hal_find_ac(void *user_data, void *reply_data, DBusError *err)
 {
+   Eina_List *l;
    char *device;
    E_Hal_Manager_Find_Device_By_Capability_Return *ret;
    
    ret = reply_data;
-   if (ecore_list_count(ret->strings) < 1) return;
-   ecore_list_first_goto(ret->strings);
-   while ((device = ecore_list_next(ret->strings)))
+   if (eina_list_count(ret->strings) < 1) return;
+   EINA_LIST_FOREACH(ret->strings, l, device)
      _battery_hal_ac_adapter_add(device);
 }
 
@@ -885,13 +880,11 @@ static void
 _battery_update(int full, int time_left, int have_battery, int have_power)
 {
    Eina_List *l;
+   Instance *inst;
    static double debounce_time = 0.0;
    
-   for (l = battery_config->instances; l; l = l->next)
+   EINA_LIST_FOREACH(battery_config->instances, l, inst)
      {
-        Instance *inst;
-        
-        inst = l->data;
         if (have_power != battery_config->have_power)
           {
              if (have_power)

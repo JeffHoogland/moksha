@@ -1063,7 +1063,7 @@ _e_menu_item_free(E_Menu_Item *mi)
      {
 	mi->submenu->parent_item = NULL;
 	e_object_unref(E_OBJECT(mi->submenu)); /* added on submenu_set() */
-	e_object_del(E_OBJECT(mi->submenu));
+/* 	e_object_del(E_OBJECT(mi->submenu)); */
      }
    if (mi->menu->realized) _e_menu_item_unrealize(mi);
    mi->menu->items = eina_list_remove(mi->menu->items, mi);

@@ -106,19 +106,15 @@ _e_kbd_cb_animate(void *data)
 static void
 _e_kbd_free(E_Kbd *kbd)
 {
+   E_Border *bd;
+
    kbds = eina_list_remove(kbds, kbd);
    if (kbd->animator) ecore_animator_del(kbd->animator);
    if (kbd->delay_hide) ecore_timer_del(kbd->delay_hide);
 // FIXME: thought right - on shutdoiwn, this might point to freed data
 //   if (kbd->border) kbd->border->stolen = 0;
-   while (kbd->waiting_borders)
-     {
-	E_Border *bd;
-	
-	bd = kbd->waiting_borders->data;
+   EINA_LIST_FREE(kbd->waiting_borders, bd)
 	bd->stolen = 0;
-	kbd->waiting_borders = eina_list_remove_list(kbd->waiting_borders, kbd->waiting_borders);
-     }
    free(kbd);
 }
 
@@ -189,18 +185,15 @@ static E_Kbd *
 _e_kbd_by_border_get(E_Border *bd)
 {
    Eina_List *l, *l2;
+   E_Border *over;
+   E_Kbd *kbd;
    
    if (!bd->stolen) return NULL;
-   for (l = kbds; l; l = l->next)
+   EINA_LIST_FOREACH(kbds, l, kbd)
      {
-	E_Kbd *kbd;
-	
-	kbd = l->data;
 	if (kbd->border == bd) return kbd;
-	for (l2 = kbd->waiting_borders; l2; l2 = l2->next)
-	  {
-	     if (l2->data == bd) return kbd;
-	  }
+	EINA_LIST_FOREACH(kbd->waiting_borders, l2, over)
+	  if (over == bd) return kbd;
      }
    return NULL;
 }
@@ -220,85 +213,61 @@ static void
 _e_kbd_all_enable(void)
 {
    Eina_List *l;
-   
-   for (l = kbds; l; l = l->next)
-     {
 	E_Kbd *kbd;
 	
-	kbd = l->data;
+   EINA_LIST_FOREACH(kbds, l, kbd)
 	e_kbd_enable(kbd);
-     }
 }
 
 static void
 _e_kbd_all_disable(void)
 {
    Eina_List *l;
-   
-   for (l = kbds; l; l = l->next)
-     {
 	E_Kbd *kbd;
 	
-	kbd = l->data;
+   EINA_LIST_FOREACH(kbds, l, kbd)
 	e_kbd_disable(kbd);
-     }
 }
 
 static void
 _e_kbd_all_show(void)
 {
    Eina_List *l;
-   
-   for (l = kbds; l; l = l->next)
-     {
 	E_Kbd *kbd;
 	
-	kbd = l->data;
+   EINA_LIST_FOREACH(kbds, l, kbd)
 	e_kbd_show(kbd);
-     }
 }
 
 static void
 _e_kbd_all_layout_set(E_Kbd_Layout layout)
 {
    Eina_List *l;
-   
-   for (l = kbds; l; l = l->next)
-     {
 	E_Kbd *kbd;
 	
-	kbd = l->data;
+   EINA_LIST_FOREACH(kbds, l, kbd)
 	e_kbd_layout_set(kbd, layout);
-     }
 }
 
 static void
 _e_kbd_all_hide(void)
 {
    Eina_List *l;
-   
-   for (l = kbds; l; l = l->next)
-     {
 	E_Kbd *kbd;
 	
-	kbd = l->data;
+   EINA_LIST_FOREACH(kbds, l, kbd)
 	e_kbd_hide(kbd);
-     }
 }
 
 static void
 _e_kbd_all_toggle(void)
 {
    Eina_List *l;
-   
-   for (l = kbds; l; l = l->next)
-     {
 	E_Kbd *kbd;
 	
-	kbd = l->data;
+   EINA_LIST_FOREACH(kbds, l, kbd)
 	if (kbd->visible) e_kbd_hide(kbd);
 	else e_kbd_show(kbd);
-     }
 }
 
 static int
@@ -332,7 +301,6 @@ static int
 _e_kbd_cb_border_remove(void *data, int type, void *event)
 {
    E_Event_Border_Remove *ev;
-   Eina_List *l;
    E_Kbd *kbd;
    
    ev = event;
@@ -485,12 +453,10 @@ _e_kbd_cb_border_hook_pre_post_fetch(void *data, E_Border *bd)
    if (_e_kbd_border_is_keyboard(bd))
      {
 	Eina_List *l;
-
-	for (l = kbds; l; l = l->next)
-          {
 	     E_Kbd *kbd;
 	     
-	     kbd = l->data;
+	EINA_LIST_FOREACH(kbds, l, kbd)
+          {
 	     if (!kbd->border)
 	       {
 		  _e_kbd_border_adopt(kbd, bd);
@@ -700,12 +666,12 @@ static Eina_List *_e_kbd_dbus_real_ignore = NULL;
 static void
 _e_kbd_dbus_keyboard_add(const char *udi)
 {
+   const char *str;
    Eina_List *l;
    
-   for (l = _e_kbd_dbus_keyboards; l; l = l->next)
-     {
-	if (!strcmp(l->data, udi)) return;
-     }
+   EINA_LIST_FOREACH(_e_kbd_dbus_keyboards, l, str)
+     if (!strcmp(str, udi)) return;
+
    _e_kbd_dbus_keyboards = eina_list_append
      (_e_kbd_dbus_keyboards, evas_stringshare_add(udi));
 }
@@ -714,16 +680,15 @@ static void
 _e_kbd_dbus_keyboard_del(const char *udi)
 {
    Eina_List *l;
+   char *str;
    
-   for (l = _e_kbd_dbus_keyboards; l; l = l->next)
+   EINA_LIST_FOREACH(_e_kbd_dbus_keyboards, l, str)
+     if (!strcmp(str, udi))
      {
-	if (!strcmp(l->data, udi))
-	  {
-	     evas_stringshare_del(l->data);
+	  evas_stringshare_del(str);
 	     _e_kbd_dbus_keyboards = eina_list_remove_list(_e_kbd_dbus_keyboards, l);
 	     return;
 	  }
-     }
 }
 
 static void
@@ -731,19 +696,17 @@ _e_kbd_dbus_keyboard_eval(void)
 {
    int have_real = 0;
    Eina_List *l, *ll;
+   const char *g, *gg;
    
    have_real = eina_list_count(_e_kbd_dbus_keyboards);
-   for (l = _e_kbd_dbus_keyboards; l; l = l->next)
-     {
-	for (ll = _e_kbd_dbus_real_ignore; ll; ll = ll->next)
-	  {
-	     if (e_util_glob_match(l->data, ll->data))
+   EINA_LIST_FOREACH(_e_kbd_dbus_keyboards, l, g)
+     EINA_LIST_FOREACH(_e_kbd_dbus_real_ignore, ll, gg)
+       if (e_util_glob_match(g, gg))
 	       {
 		  have_real--;
 		  break;
 	       }
-	  }
-     }
+
    if (have_real != _e_kbd_dbus_have_real_keyboard)
      {
 	_e_kbd_dbus_have_real_keyboard = have_real;
@@ -758,6 +721,7 @@ static void
 _e_kbd_dbus_cb_dev_input_keyboard(void *user_data, void *reply_data, DBusError *error)
 {
    E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply_data;
+   Eina_List *l;
    char *device;
                                      
    if (!ret || !ret->strings) return;
@@ -768,8 +732,7 @@ _e_kbd_dbus_cb_dev_input_keyboard(void *user_data, void *reply_data, DBusError *
 	return;
      }
    
-   ecore_list_first_goto(ret->strings);
-   while ((device = ecore_list_next(ret->strings)))
+   EINA_LIST_FOREACH(ret->strings, l, device)
      {
 	_e_kbd_dbus_keyboard_add(device);
 	_e_kbd_dbus_keyboard_eval();
@@ -917,22 +880,18 @@ _e_kbd_dbus_real_kbd_init(void)
 static void
 _e_kbd_dbus_real_kbd_shutdown(void)
 {
+   char *str;
+
    if (_e_kbd_dbus_conn)
      {
 	e_dbus_signal_handler_del(_e_kbd_dbus_conn, _e_kbd_dbus_handler_dev_add);
 	e_dbus_signal_handler_del(_e_kbd_dbus_conn, _e_kbd_dbus_handler_dev_del);
 	e_dbus_signal_handler_del(_e_kbd_dbus_conn, _e_kbd_dbus_handler_dev_chg);
      }
-   while (_e_kbd_dbus_real_ignore)
-     {
-	evas_stringshare_del(_e_kbd_dbus_real_ignore->data);
-	_e_kbd_dbus_real_ignore = eina_list_remove_list(_e_kbd_dbus_real_ignore, _e_kbd_dbus_real_ignore);
-     }
-   while (_e_kbd_dbus_keyboards)
-     {
-	evas_stringshare_del(_e_kbd_dbus_keyboards->data);
-	_e_kbd_dbus_keyboards = eina_list_remove_list(_e_kbd_dbus_keyboards, _e_kbd_dbus_keyboards);
-     }
+   EINA_LIST_FREE(_e_kbd_dbus_real_ignore, str)
+     evas_stringshare_del(str);
+   EINA_LIST_FREE(_e_kbd_dbus_keyboards, str)
+     evas_stringshare_del(str);
    _e_kbd_dbus_have_real_keyboard = 0;
 }
 
@@ -995,18 +954,15 @@ e_kbd_init(E_Module *m)
 EAPI int
 e_kbd_shutdown(void)
 {
+   E_Border_Hook *bh;
+   Ecore_Event *ev;
+
    _e_kbd_apply_all_job_queue_end();
    _e_kbd_dbus_real_kbd_shutdown();
-   while (border_hooks)
-     {
-	e_border_hook_del(border_hooks->data);
-	border_hooks = eina_list_remove_list(border_hooks, border_hooks);
-     }
-   while (handlers)
-     {
-	ecore_event_handler_del(handlers->data);
-	handlers = eina_list_remove_list(handlers, handlers);
-     }
+   EINA_LIST_FREE(border_hooks, bh)
+     e_border_hook_del(bh);
+   EINA_LIST_FREE(handlers, ev)
+     ecore_event_handler_del(ev);
    focused_border = NULL;
    focused_vkbd_state = 0;
    mod = NULL;
@@ -1129,12 +1085,9 @@ EAPI void
 e_kbd_fullscreen_set(E_Zone *zone, int fullscreen)
 {
    Eina_List *l;
-   
-   for (l = kbds; l; l = l->next)
-     {
 	E_Kbd *kbd;
 	
-	kbd = l->data;
+   EINA_LIST_FOREACH(kbds, l, kbd)
 	if ((!!fullscreen) != kbd->fullscreen)
 	  {
 	     kbd->fullscreen = fullscreen;
@@ -1143,5 +1096,4 @@ e_kbd_fullscreen_set(E_Zone *zone, int fullscreen)
 	     else
 	       e_border_layer_set(kbd->border, 100);
 	  }
-     }
 }

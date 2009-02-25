@@ -283,7 +283,8 @@ _e_prefix_share_hunt(void)
     */
    if (!_prefix_path_data)
      {
-	Ecore_List *files;
+	Eina_List *files;
+	Eina_List *l;
 	
 	snprintf(buf, sizeof(buf), "%s", _prefix_path);
 	p = strrchr(buf, '/');
@@ -293,8 +294,7 @@ _e_prefix_share_hunt(void)
 	  {
 	     char *file;
 	     
-	     ecore_list_first_goto(files);
-	     while ((file = ecore_list_current(files)))
+	     EINA_LIST_FOREACH(files, l, file)
 	       {
 		  snprintf(buf2, sizeof(buf2), "%s/%s/"MAGIC_DAT, buf, file);
 		  if (ecore_file_exists(buf2))
@@ -305,9 +305,12 @@ _e_prefix_share_hunt(void)
 		       _prefix_path_locale = strdup(buf2);
 		       break;
 		    }
-		  ecore_list_next(files);
 	       }
-	     ecore_list_destroy(files);
+	     while (files)
+	       {
+		  free(eina_list_data_get(files));
+		  files = eina_list_remove_list(files, files);
+	       }
 	  }
      }
    

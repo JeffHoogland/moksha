@@ -39,7 +39,8 @@ _cb_sort(const void *data1, const void *data2)
 {
    const E_Remember *rem1 = NULL;
    const E_Remember *rem2 = NULL;
-   const char *d1, *d2;
+   const char *d1 = NULL;
+   const char *d2 = NULL;
 
    if (!(rem1 = data1)) return 1;
    if (!(rem2 = data2)) return -1;

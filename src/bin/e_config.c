@@ -1074,7 +1074,7 @@ static int _cb_sort_files(char *f1, char *f2)
 EAPI Eina_List *
 e_config_profile_list(void)
 {
-   Ecore_List *files;
+   Eina_List *files;
    char buf[PATH_MAX];
    const char *homedir;
    const char *dir;
@@ -1087,16 +1087,15 @@ e_config_profile_list(void)
      {
 	char *file;
 	
-	ecore_list_sort(files, ECORE_COMPARE_CB(_cb_sort_files), ECORE_SORT_MIN);
-	ecore_list_first_goto(files);
-	while ((file = ecore_list_current(files)))
+	files = eina_list_sort(files, 0, (Eina_Compare_Cb)_cb_sort_files);
+	EINA_LIST_FREE(files, file)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, file);
 	     if (ecore_file_is_dir(buf))
-	       flist = eina_list_append(flist, strdup(file));
-	     ecore_list_next(files);
+	       flist = eina_list_append(flist, file);
+	     else
+	       free(file);
 	  }
-        ecore_list_destroy(files);
      }
    dir = e_prefix_data_get();
    snprintf(buf, sizeof(buf), "%s/data/config", dir);
@@ -1105,24 +1104,24 @@ e_config_profile_list(void)
      {
 	char *file;
 	
-	ecore_list_sort(files, ECORE_COMPARE_CB(_cb_sort_files), ECORE_SORT_MIN);
-	ecore_list_first_goto(files);
-	while ((file = ecore_list_current(files)))
+	files = eina_list_sort(files, 0, (Eina_Compare_Cb)_cb_sort_files);
+	EINA_LIST_FREE(files, file)
 	  {
+	     const char *tmp;
+	     Eina_List *l;
+
 	     snprintf(buf, sizeof(buf), "%s/data/config/%s", dir, file);
 	     if (ecore_file_is_dir(buf))
 	       {
-		  Eina_List *l;
+		  EINA_LIST_FOREACH(flist, l, tmp)
+		    if (!strcmp(file, tmp)) break;
 		  
-		  for (l = flist; l; l = l->next)
-		    {
-		       if (!strcmp(file, l->data)) break;
-		    }
-		  if (!l) flist = eina_list_append(flist, strdup(file));
+		  if (!l) flist = eina_list_append(flist, file);
+		  else free(file);
 	       }
-	     ecore_list_next(files);
+	     else
+	       free(file);
 	  }
-	ecore_list_destroy(files);
      }
    return flist;
 }
@@ -1141,7 +1140,7 @@ e_config_profile_add(const char *prof)
 EAPI void
 e_config_profile_del(const char *prof)
 {
-   Ecore_List *files;
+   Eina_List *files;
    char buf[4096];
    const char *homedir;
    
@@ -1152,15 +1151,13 @@ e_config_profile_del(const char *prof)
      {
 	char *file;
 	
-	ecore_list_first_goto(files);
-	while ((file = ecore_list_current(files)))
+	EINA_LIST_FREE(files, file)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s",
 		      homedir, prof, file);
 	     ecore_file_unlink(buf);
-	     ecore_list_next(files);
+	     free(file);
 	  }
-        ecore_list_destroy(files);
      }
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, prof);
    ecore_file_rmdir(buf);
@@ -1417,181 +1414,127 @@ _e_config_save_cb(void *data)
 static void
 _e_config_free(E_Config *ecf)
 {
-   if (!ecf) return;
-   while (ecf->modules)
-     {
+   E_Config_Binding_Signal *ebs;
+   E_Config_Binding_Mouse *ebm;
+   E_Config_Binding_Wheel *ebw;
+   E_Config_Syscon_Action *sca;
+   E_Config_Binding_Key *ebk;
+   E_Font_Fallback *eff;
         E_Config_Module *em;
+   E_Font_Default *efd;
+   E_Config_Theme *et;
+   E_Color_Class *cc;
+   E_Path_Dir *epd;
+   E_Remember *rem;
         
-        em = ecf->modules->data;
-        ecf->modules = eina_list_remove_list(ecf->modules, ecf->modules);
+   if (!ecf) return;
+
+   EINA_LIST_FREE(ecf->modules, em)
+     {
         if (em->name) eina_stringshare_del(em->name);
         E_FREE(em);
      }
-   while (ecf->font_fallbacks)
+   EINA_LIST_FREE(ecf->font_fallbacks, eff)
      {
-        E_Font_Fallback *eff;
-        
-        eff = ecf->font_fallbacks->data;
-        ecf->font_fallbacks = eina_list_remove_list(ecf->font_fallbacks, ecf->font_fallbacks);
         if (eff->name) eina_stringshare_del(eff->name);
         E_FREE(eff);
      }
-   while (ecf->font_defaults)
+   EINA_LIST_FREE(ecf->font_defaults, efd)
      {
-        E_Font_Default *efd;
-        
-        efd = ecf->font_defaults->data;
-        ecf->font_defaults = eina_list_remove_list(ecf->font_defaults, ecf->font_defaults);
         if (efd->text_class) eina_stringshare_del(efd->text_class);
         if (efd->font) eina_stringshare_del(efd->font);
         E_FREE(efd);
      }
-   while (ecf->themes)
+   EINA_LIST_FREE(ecf->themes, et)
      {
-        E_Config_Theme *et;
-        
-        et = ecf->themes->data;
-        ecf->themes = eina_list_remove_list(ecf->themes, ecf->themes);
         if (et->category) eina_stringshare_del(et->category);
         if (et->file) eina_stringshare_del(et->file);
         E_FREE(et);
      }
-   while (ecf->mouse_bindings)
+   EINA_LIST_FREE(ecf->mouse_bindings, ebm)
      {
-        E_Config_Binding_Mouse *eb;
-        
-        eb = ecf->mouse_bindings->data;
-        ecf->mouse_bindings  = eina_list_remove_list(ecf->mouse_bindings, ecf->mouse_bindings);
-        if (eb->action) eina_stringshare_del(eb->action);
-        if (eb->params) eina_stringshare_del(eb->params);
-        E_FREE(eb);
+        if (ebm->action) eina_stringshare_del(ebm->action);
+        if (ebm->params) eina_stringshare_del(ebm->params);
+        E_FREE(ebm);
      }
-   while (ecf->key_bindings)
+   EINA_LIST_FREE(ecf->key_bindings, ebk)
      {
-        E_Config_Binding_Key *eb;
-        
-        eb = ecf->key_bindings->data;
-        ecf->key_bindings  = eina_list_remove_list(ecf->key_bindings, ecf->key_bindings);
-        if (eb->key) eina_stringshare_del(eb->key);
-        if (eb->action) eina_stringshare_del(eb->action);
-        if (eb->params) eina_stringshare_del(eb->params);
-        E_FREE(eb);
+        if (ebk->key) eina_stringshare_del(ebk->key);
+        if (ebk->action) eina_stringshare_del(ebk->action);
+        if (ebk->params) eina_stringshare_del(ebk->params);
+        E_FREE(ebk);
      }
-   while (ecf->signal_bindings)
+   EINA_LIST_FREE(ecf->signal_bindings, ebs)
      {
-        E_Config_Binding_Signal *eb;
-        
-        eb = ecf->signal_bindings->data;
-        ecf->signal_bindings  = eina_list_remove_list(ecf->signal_bindings, ecf->signal_bindings);
-        if (eb->signal) eina_stringshare_del(eb->signal);
-        if (eb->source) eina_stringshare_del(eb->source);
-        if (eb->action) eina_stringshare_del(eb->action);
-        if (eb->params) eina_stringshare_del(eb->params);
-        E_FREE(eb);
+        if (ebs->signal) eina_stringshare_del(ebs->signal);
+        if (ebs->source) eina_stringshare_del(ebs->source);
+        if (ebs->action) eina_stringshare_del(ebs->action);
+        if (ebs->params) eina_stringshare_del(ebs->params);
+        E_FREE(ebs);
      }
-   while (ecf->wheel_bindings)
+   EINA_LIST_FREE(ecf->wheel_bindings, ebw)
      {
-        E_Config_Binding_Wheel *eb;
-        
-        eb = ecf->wheel_bindings->data;
-        ecf->wheel_bindings  = eina_list_remove_list(ecf->wheel_bindings, ecf->wheel_bindings);
-        if (eb->action) eina_stringshare_del(eb->action);
-        if (eb->params) eina_stringshare_del(eb->params);
-        E_FREE(eb);
+        if (ebw->action) eina_stringshare_del(ebw->action);
+        if (ebw->params) eina_stringshare_del(ebw->params);
+        E_FREE(ebw);
      }
-   while (ecf->path_append_data)
+   EINA_LIST_FREE(ecf->path_append_data, epd)
      {
-        E_Path_Dir *epd;
-        epd = ecf->path_append_data->data;
-        ecf->path_append_data = eina_list_remove_list(ecf->path_append_data, ecf->path_append_data);
         if (epd->dir) eina_stringshare_del(epd->dir);
         E_FREE(epd);
      }
-   while (ecf->path_append_images)
+   EINA_LIST_FREE(ecf->path_append_images, epd)
      {
-        E_Path_Dir *epd;
-        epd = ecf->path_append_images->data;
-        ecf->path_append_images = eina_list_remove_list(ecf->path_append_images, ecf->path_append_images);
         if (epd->dir) eina_stringshare_del(epd->dir);
         E_FREE(epd);
      }
-   while (ecf->path_append_fonts)
+   EINA_LIST_FREE(ecf->path_append_fonts, epd)
      {
-        E_Path_Dir *epd;
-        epd = ecf->path_append_fonts->data;
-        ecf->path_append_fonts = eina_list_remove_list(ecf->path_append_fonts, ecf->path_append_fonts);
         if (epd->dir) eina_stringshare_del(epd->dir);
         E_FREE(epd);
      }
-   while (ecf->path_append_themes)
+   EINA_LIST_FREE(ecf->path_append_themes, epd)
      {
-        E_Path_Dir *epd;
-        epd = ecf->path_append_themes->data;
-        ecf->path_append_themes = eina_list_remove_list(ecf->path_append_themes, ecf->path_append_themes);
         if (epd->dir) eina_stringshare_del(epd->dir);
         E_FREE(epd);
      }
-   while (ecf->path_append_init)
+   EINA_LIST_FREE(ecf->path_append_init, epd)
      {
-        E_Path_Dir *epd;
-        epd = ecf->path_append_init->data;
-        ecf->path_append_init = eina_list_remove_list(ecf->path_append_init, ecf->path_append_init);
         if (epd->dir) eina_stringshare_del(epd->dir);
         E_FREE(epd);
      }
-   while (ecf->path_append_icons)
+   EINA_LIST_FREE(ecf->path_append_icons, epd)
      {
-        E_Path_Dir *epd;
-        epd = ecf->path_append_icons->data;
-        ecf->path_append_icons = eina_list_remove_list(ecf->path_append_icons, ecf->path_append_icons);
         if (epd->dir) eina_stringshare_del(epd->dir);
         E_FREE(epd);
      }
-   while (ecf->path_append_modules)
+   EINA_LIST_FREE(ecf->path_append_modules, epd)
      {
-        E_Path_Dir *epd;
-        epd = ecf->path_append_modules->data;
-        ecf->path_append_modules = eina_list_remove_list(ecf->path_append_modules, ecf->path_append_modules);
         if (epd->dir) eina_stringshare_del(epd->dir);
         E_FREE(epd);
      }
-   while (ecf->path_append_backgrounds)
+   EINA_LIST_FREE(ecf->path_append_backgrounds, epd)
      {
-        E_Path_Dir *epd;
-        epd = ecf->path_append_backgrounds->data;
-        ecf->path_append_backgrounds = eina_list_remove_list(ecf->path_append_backgrounds, ecf->path_append_backgrounds);
         if (epd->dir) eina_stringshare_del(epd->dir);
         E_FREE(epd);
      }
-   while (ecf->path_append_messages)
+   EINA_LIST_FREE(ecf->path_append_messages, epd)
      {
-        E_Path_Dir *epd;
-        epd = ecf->path_append_messages->data;
-        ecf->path_append_messages = eina_list_remove_list(ecf->path_append_messages, ecf->path_append_messages);
         if (epd->dir) eina_stringshare_del(epd->dir);
         E_FREE(epd);
      }
-   while (ecf->remembers)
+   EINA_LIST_FREE(ecf->remembers, rem)
      {
-        E_Remember *rem;
-        rem = ecf->remembers->data;
-        ecf->remembers = eina_list_remove_list(ecf->remembers, ecf->remembers);
-        
         if (rem->name) eina_stringshare_del(rem->name);
         if (rem->class) eina_stringshare_del(rem->class);
         if (rem->title) eina_stringshare_del(rem->title);		   
         if (rem->role) eina_stringshare_del(rem->role);
         if (rem->prop.border) eina_stringshare_del(rem->prop.border);
         if (rem->prop.command) eina_stringshare_del(rem->prop.command);
-        
         E_FREE(rem);
      }
-   while (ecf->color_classes)
+   EINA_LIST_FREE(ecf->color_classes, cc)
      {
-        E_Color_Class *cc;
-        cc = ecf->color_classes->data;
-        ecf->color_classes = eina_list_remove_list(ecf->color_classes, ecf->color_classes);
-        
         if (cc->name) eina_stringshare_del(cc->name);
         E_FREE(cc);
      }
@@ -1611,17 +1554,13 @@ _e_config_free(E_Config *ecf)
    if (ecf->wallpaper_import_last_path) eina_stringshare_del(ecf->wallpaper_import_last_path);
    if (ecf->theme_default_border_style) eina_stringshare_del(ecf->theme_default_border_style);
    if (ecf->desklock_custom_desklock_cmd) eina_stringshare_del(ecf->desklock_custom_desklock_cmd);
-   while (ecf->syscon.actions)
+   EINA_LIST_FREE(ecf->syscon.actions, sca)
      {
-        E_Config_Syscon_Action *sca;
-        
-        sca = ecf->syscon.actions->data;
         if (sca->action) eina_stringshare_del(sca->action);
         if (sca->params) eina_stringshare_del(sca->params);
         if (sca->button) eina_stringshare_del(sca->button);
         if (sca->icon) eina_stringshare_del(sca->icon);
         E_FREE(sca);
-        ecf->syscon.actions = eina_list_remove_list(ecf->syscon.actions, ecf->syscon.actions);
      }
    E_FREE(ecf);
 }

@@ -308,13 +308,13 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    Ecore_X_Screen_Refresh_Rate *rt;
 
    r = e_widget_ilist_selected_get(cfdata->res_list);
-   if (r < 0) return;
+   if (r < 0) return 0;
    res = evas_list_nth(cfdata->resolutions, r);
-   if (!res) return;
+   if (!res) return 0;
    r = e_widget_ilist_selected_get(cfdata->rate_list);
-   if (r < 0) return;
+   if (r < 0) return 0;
    rt = evas_list_nth(res->rates, r);
-   if (!rt) return;
+   if (!rt) return 0;
 
    return (e_config->display_res_restore != cfdata->restore) ||
 	  (res->size.width != cfdata->orig_size.width) ||

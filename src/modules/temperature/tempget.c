@@ -25,38 +25,31 @@ static void init(void);
 static int check(void);
 static int poll_cb(void *data);
 
-Ecore_List *
+Eina_List *
 temperature_get_bus_files(const char* bus)
 {
-   Ecore_List *result;
-   Ecore_List *therms;
+   Eina_List *result;
+   Eina_List *therms;
    char path[PATH_MAX];
    char busdir[PATH_MAX];
+   char *name;
 
-   result = ecore_list_new();
-   if (result)
-     {
-	ecore_list_free_cb_set(result, free);
+   result = NULL;
+
 	snprintf(busdir, sizeof(busdir), "/sys/bus/%s/devices", bus);
 	/* Look through all the devices for the given bus. */
 	therms = ecore_file_ls(busdir);
-	if (therms)
-	  {
-	     char *name;
 
-	     while ((name = ecore_list_next(therms)))
+   EINA_LIST_FREE(therms, name)
 	       {
-		  Ecore_List *files;
+	Eina_List *files;
+	char *file;
 
 		  /* Search each device for temp*_input, these should be 
 		   * temperature devices. */
 		  snprintf(path, sizeof(path),"%s/%s", busdir, name);
 		  files = ecore_file_ls(path);
-		  if (files)
-		    {
-		       char *file;
-
-		       while ((file = ecore_list_next(files)))
+	EINA_LIST_FREE(files, file)
 			 {
 			    if ((!strncmp("temp", file, 4)) && 
 				(!strcmp("_input", &file[strlen(file) - 6])))
@@ -66,15 +59,11 @@ temperature_get_bus_files(const char* bus)
 				 snprintf(path, sizeof(path),
 					  "%s/%s/%s", busdir, name, file);
 				 f = strdup(path);
-				 if (f) ecore_list_append(result, f);
-			      }
-			 }
-		       ecore_list_destroy(files);
-		    }
+		  if (f) result = eina_list_append(result, f);
 	       }
-	     ecore_list_destroy(therms);
+	     free(file);
 	  }
-	ecore_list_first_goto(result);
+	free(name);
      }
    return result;
 }
@@ -82,7 +71,7 @@ temperature_get_bus_files(const char* bus)
 static void
 init(void)
 {
-   Ecore_List *therms;
+   Eina_List *therms;
    char path[PATH_MAX];
 #ifdef __FreeBSD__
    int len;
@@ -99,18 +88,19 @@ init(void)
 	sensor_name = strdup("tz0");
 #else
 	therms = ecore_file_ls("/proc/acpi/thermal_zone");
-	if ((therms) && (!ecore_list_empty_is(therms)))
+	if (therms)
 	  {
 	     char *name;
 
-	     name = ecore_list_next(therms);
+	     name = eina_list_data_get(therms);
 	     sensor_type = SENSOR_TYPE_LINUX_ACPI;
 	     sensor_name = strdup(name);
-	     ecore_list_destroy(therms);
+
+	     therms = eina_list_free(therms);
 	  }
 	else
 	  {
-	     if (therms) ecore_list_destroy(therms);
+	     therms = eina_list_free(therms);
 	     if (ecore_file_exists("/proc/omnibook/temperature"))
 	       {
 		  sensor_type = SENSOR_TYPE_OMNIBOOK;
@@ -139,7 +129,7 @@ init(void)
 		    {
 		       char *name;
 
-		       if ((name = ecore_list_next(therms)))
+		       if ((name = eina_list_data_get(therms)))
 			 {
 			    if (ecore_file_exists(name))
 			      {
@@ -158,7 +148,7 @@ init(void)
                                         sensor_path, sensor_name);
 			      }
 			 }
-		       ecore_list_destroy(therms);
+		       therms = eina_list_free(therms);
 		    }
 		  if (!sensor_path)
 		    {
@@ -168,7 +158,7 @@ init(void)
 			 {
 			    char *name;
 
-			    if ((name = ecore_list_next(therms)))
+			    if ((name = eina_list_data_get(therms)))
 			      {
 				 if (ecore_file_exists(name))
 				   {
@@ -187,7 +177,7 @@ init(void)
                                              sensor_path, sensor_name);
 				   }
 			      }
-			    ecore_list_destroy(therms);
+			    therms = eina_list_free(therms);
 			 }
 		    }
 	       }
@@ -196,6 +186,8 @@ init(void)
      }
    if ((sensor_type) && (sensor_name) && (!sensor_path))
      {
+	char *name;
+
 	switch (sensor_type)
 	  {
 	   case SENSOR_TYPE_NONE:
@@ -223,11 +215,8 @@ init(void)
 	     break;
 	   case SENSOR_TYPE_LINUX_I2C:
 	     therms = ecore_file_ls("/sys/bus/i2c/devices");
-	     if (therms)
-	       {
-		  char *name;
 
-		  while ((name = ecore_list_next(therms)))
+	     EINA_LIST_FREE(therms, name)
 		    {
 		       snprintf(path, sizeof(path),
 				"/sys/bus/i2c/devices/%s/%s_input",
@@ -239,17 +228,13 @@ init(void)
 			     * one for the default. */
 			    break;
 			 }
-		    }
-		  ecore_list_destroy(therms);
+		  free(name);
 	       }
 	     break;
 	   case SENSOR_TYPE_LINUX_PCI:
 	     therms = ecore_file_ls("/sys/bus/pci/devices");
-	     if (therms)
-	       {
-		  char *name;
 
-		  while ((name = ecore_list_next(therms)))
+	     EINA_LIST_FREE(therms, name)
 		    {
 		       snprintf(path, sizeof(path),
 				"/sys/bus/pci/devices/%s/%s_input",
@@ -261,8 +246,7 @@ init(void)
 			     * one for the default. */
 			    break;
 			 }
-		    }
-		  ecore_list_destroy(therms);
+		  free(name);
 	       }
 	     break;
 	   case SENSOR_TYPE_LINUX_ACPI:

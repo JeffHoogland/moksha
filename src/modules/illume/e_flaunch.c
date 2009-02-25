@@ -82,18 +82,18 @@ _e_flaunch_app_add(E_Flaunch *fl, const char *deskfile)
 static void
 _e_flaunch_apps_clear(E_Flaunch *fl)
 {
-   while (fl->apps)
-     {
-	_e_flaunch_button_del(fl->apps->data);
-	fl->apps = eina_list_remove_list(fl->apps, fl->apps);
-     }
+   E_Flaunch_App *fla;
+
+   EINA_LIST_FREE(fl->apps, fla)
+     _e_flaunch_button_del(fla);
 }
 
 static void
 _e_flaunch_apps_populate(E_Flaunch *fl)
 {
    E_Flaunch_App *fla;
-   Ecore_List *bar_desktops;
+   Eina_List *bar_desktops;
+   Eina_List *l;
    int num = 0, max, count;
    
    // FIXME: 3 should become config here
@@ -105,7 +105,7 @@ _e_flaunch_apps_populate(E_Flaunch *fl)
      {
 	Efreet_Desktop *desktop;
 	
-	count = ecore_list_count(bar_desktops);
+	count = eina_list_count(bar_desktops);
 	if (count < max)
 	  {
 	     int i;
@@ -116,8 +116,7 @@ _e_flaunch_apps_populate(E_Flaunch *fl)
 		  num++;
 	       }
 	  }
-	ecore_list_first_goto(bar_desktops);
-	while ((desktop = ecore_list_next(bar_desktops)))
+	EINA_LIST_FOREACH(bar_desktops, l, desktop)
 	  {
 	     if (desktop->orig_path)
 	       {
@@ -149,17 +148,16 @@ _e_fluanch_cb_home_button(void *data)
 static void
 _e_flaunch_free(E_Flaunch *fl)
 {
+   Ecore_Event *ev;
+
    if (fl->repopulate_timer) ecore_timer_del(fl->repopulate_timer);
    _e_flaunch_apps_clear(fl);
    _e_flaunch_button_del(fl->start_button);
    evas_stringshare_del(fl->themedir);
    evas_object_del(fl->app_box_obj);
    evas_object_del(fl->box_obj);
-   while (fl->handlers)
-     {
-	ecore_event_handler_del(fl->handlers->data);
-	fl->handlers = eina_list_remove_list(fl->handlers, fl->handlers);
-     }
+   EINA_LIST_FREE(fl->handlers, ev)
+     ecore_event_handler_del(ev);
    free(fl);
 }
 

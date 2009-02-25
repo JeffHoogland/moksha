@@ -473,13 +473,13 @@ static void
 _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 {
    E_Menu_Item *mi;
+   Eina_List *l;
 
    if (menu->entries)
      {
 	Efreet_Menu *entry;
 
-        ecore_list_first_goto(menu->entries);
-	while ((entry = ecore_list_next(menu->entries)))
+	EINA_LIST_FOREACH(menu->entries, l, entry)
 	  {
 	     mi = e_menu_item_new(m);
 
@@ -1149,19 +1149,14 @@ _e_int_menus_clients_item_create(E_Border *bd, E_Menu *m)
 static void
 _e_int_menus_clients_free_hook(void *obj)
 {
+   Eina_List *borders;
+   E_Border *bd;
    E_Menu *m;
-   Eina_List *borders = NULL;
 
    m = obj;
    borders = e_object_data_get(E_OBJECT(m));
-   while (borders)
-     {
-	E_Border *bd;
-
-	bd = borders->data;
-	borders = eina_list_remove_list(borders, borders);
+   EINA_LIST_FREE(borders, bd)
 	e_object_unref(E_OBJECT(bd));
-     }
 }
 
 static void 
@@ -1262,19 +1257,14 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 static void
 _e_int_menus_lost_clients_free_hook(void *obj)
 {
+   Eina_List *borders;
+   E_Border *bd;
    E_Menu *m;
-   Eina_List *borders = NULL;
 
    m = obj;
    borders = e_object_data_get(E_OBJECT(m));
-   while (borders)
-     {
-	E_Border *bd;
-
-	bd = borders->data;
-	borders = eina_list_remove_list(borders, borders);
+   EINA_LIST_FREE(borders, bd)
 	e_object_unref(E_OBJECT(bd));
-     }
 }
 
 static void 
@@ -1295,29 +1285,21 @@ _e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_augmentation_add(E_Menu *m, Eina_List *augmentation)
 {
-   Eina_List *l = NULL;
-
-   for (l = augmentation; l; l = l->next)
-     {
 	E_Int_Menu_Augmentation *aug;
+   Eina_List *l;
 
-	aug = l->data;
+   EINA_LIST_FOREACH(augmentation, l, aug)
 	if (aug->add.func) aug->add.func(aug->add.data, m);
-     }
 }
 
 static void
 _e_int_menus_augmentation_del(E_Menu *m, Eina_List *augmentation)
 {
-   Eina_List *l = NULL;
-
-   for (l = augmentation; l; l = l->next)
-     {
 	E_Int_Menu_Augmentation *aug;
+   Eina_List *l;
 
-	aug = l->data;
+   EINA_LIST_FOREACH(augmentation, l, aug)
 	if (aug->del.func) aug->del.func(aug->del.data, m);
-     }
 }
 
 static void 

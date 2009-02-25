@@ -1029,7 +1029,7 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 
    E_Action_Group *actg;
    E_Action_Description *actd;
-   const char **action, **params;
+   const char **action = NULL, **params = NULL;
 
    if ((!cfdata->locals.cur) || (!cfdata->locals.cur[0])) return;
 
@@ -1345,7 +1345,7 @@ _grab_mouse_down_cb(void *data, int type, void *event)
 {
    Eina_List *l;
    E_Config_Dialog_Data *cfdata;
-   E_Config_Binding_Mouse *eb;
+   E_Config_Binding_Mouse *eb = NULL;
    E_Config_Binding_Wheel *bw;
    int mod = E_BINDING_MODIFIER_NONE, n;
 

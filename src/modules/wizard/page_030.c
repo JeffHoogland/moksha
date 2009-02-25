@@ -11,23 +11,18 @@ static void
 check_menu_dir(const char *dir)
 {
    char buf[PATH_MAX], *file;
-   Ecore_List *files;
+   Eina_List *files;
    
    snprintf(buf, sizeof(buf), "%s/menus", dir);
    files = ecore_file_ls(buf);
-   if (files)
-     {
-        ecore_list_first_goto(files);
-        while ((file = ecore_list_current(files)))
+   EINA_LIST_FREE(files, file)
           {
              if (e_util_glob_match(file, "*.menu"))
                {
                   snprintf(buf, sizeof(buf), "%s/menus/%s", dir, file);
                   menus = eina_list_append(menus, strdup(buf));
                }
-             ecore_list_next(files);
-          }
-        ecore_list_destroy(files);
+	free(file);
      }
 }
 

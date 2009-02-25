@@ -45,7 +45,6 @@ static void _e_exebuf_next(void);
 static void _e_exebuf_prev(void);
 static void _e_exebuf_complete(void);
 static void _e_exebuf_backspace(void);
-static void _e_exebuf_delete(void);
 static void _e_exebuf_clear(void);
 static void _e_exebuf_matches_update(void);
 static void _e_exebuf_hist_update(void);
@@ -248,15 +247,13 @@ e_exebuf_show(E_Zone *zone)
    el = e_config_domain_load("exebuf_exelist_cache", exelist_edd);
    if (el)
      {
-	while (el->list)
-	  {
 	     E_Exe *ee;
 	     
-	     ee = el->list->data;
+	EINA_LIST_FREE(el->list, ee)
+	  {
 	     exe_list = eina_list_append(exe_list, strdup(ee->path));
 	     eina_stringshare_del(ee->path);
 	     free(ee);
-	     el->list = eina_list_remove_list(el->list, el->list);
 	  }
 	free(el);
      }
@@ -287,6 +284,9 @@ e_exebuf_show(E_Zone *zone)
 EAPI void
 e_exebuf_hide(void)
 {
+   Ecore_Event *ev;
+   char *str;
+
    if (!exebuf) return;
    
    evas_event_freeze(exebuf->evas);
@@ -317,11 +317,10 @@ e_exebuf_hide(void)
    evas_event_thaw(exebuf->evas);
    e_object_del(E_OBJECT(exebuf));
    exebuf = NULL;
-   while (handlers)
-     {
-	ecore_event_handler_del(handlers->data);
-	handlers = eina_list_remove_list(handlers, handlers);
-     }
+
+   EINA_LIST_FREE(handlers, ev)
+     ecore_event_handler_del(ev);
+
    ecore_x_window_del(input_window);
    e_grabinput_release(input_window, input_window);
    input_window = 0;
@@ -332,26 +331,18 @@ e_exebuf_hide(void)
 	closedir(exe_dir);
 	exe_dir = NULL;
      }
-   while (exe_path)
-     {
-	free(exe_path->data);
-	exe_path = eina_list_remove_list(exe_path, exe_path);
-     }
+   EINA_LIST_FREE(exe_path, str)
+     free(str);
+
    if (exe_list_idler)
      {
 	ecore_idler_del(exe_list_idler);
 	exe_list_idler = NULL;
      }
-   while (exe_list)
-     {
-	free(exe_list->data);
-	exe_list = eina_list_remove_list(exe_list, exe_list);
-     }
-   while (exe_list2)
-     {
-	free(exe_list2->data);
-	exe_list2 = eina_list_remove_list(exe_list2, exe_list2);
-     }
+   EINA_LIST_FREE(exe_list, str)
+     free(str);
+   EINA_LIST_FREE(exe_list2, str)
+     free(str);
    which_list = NO_LIST;
    exe_sel = NULL;
 }
@@ -372,30 +363,22 @@ _e_exebuf_exe_free(E_Exebuf_Exe *exe)
 static void
 _e_exebuf_matches_clear(void)
 {
-   while (eap_matches)
-     {
-	e_object_unref(E_OBJECT(eap_matches->data));
-	eap_matches = eina_list_remove_list(eap_matches, eap_matches);
-     }
-   while (exe_matches)
-     {
-	free(exe_matches->data);
-	exe_matches = eina_list_remove_list(exe_matches, exe_matches);
-     }
+   Efreet_Desktop *desktop;
+   E_Exebuf_Exe *exe;
+   char *file;
+
+   EINA_LIST_FREE(eap_matches, desktop)
+     e_object_unref(E_OBJECT(desktop));
+   EINA_LIST_FREE(exe_matches, file)
+     free(file);
    
    evas_event_freeze(exebuf->evas);
    e_box_freeze(eap_list_object);
    e_box_freeze(exe_list_object);
-   while (exes)
-     {
-	_e_exebuf_exe_free((E_Exebuf_Exe *)(exes->data));
-	exes = eina_list_remove_list(exes, exes);
-     }
-   while (eaps)
-     {
-	_e_exebuf_exe_free((E_Exebuf_Exe *)(eaps->data));
-	eaps = eina_list_remove_list(eaps, eaps);
-     }
+   EINA_LIST_FREE(exes, exe)
+     _e_exebuf_exe_free(exe);
+   EINA_LIST_FREE(eaps, exe)
+     _e_exebuf_exe_free(exe);
    e_box_thaw(exe_list_object);
    e_box_thaw(eap_list_object);
    evas_event_thaw(exebuf->evas);
@@ -984,9 +967,11 @@ static void
 _e_exebuf_matches_update(void)
 {
    char *path, *file, buf[4096];
+   Efreet_Desktop *desktop;
    Eina_Hash *added = NULL;
-   Ecore_List *list;
+   Eina_List *list;
    Eina_List *l;
+   char *exe;
    int i, max;
 
    _e_exebuf_matches_clear();
@@ -994,15 +979,8 @@ _e_exebuf_matches_update(void)
 
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = efreet_util_desktop_name_glob_list(buf);
-   if (list)
-     {
-	Efreet_Desktop *desktop;
-
-	ecore_list_first_goto(list);
-	while ((desktop = ecore_list_next(list)))
+   EINA_LIST_FREE(list, desktop)
 	  {
-	     char *exe;
-
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
@@ -1016,20 +994,11 @@ _e_exebuf_matches_update(void)
 		  free(exe);
 	       }
 	  }
-	ecore_list_destroy(list);
-     }
 
    snprintf(buf, sizeof(buf), "%s*", cmd_buf);
    list = efreet_util_desktop_exec_glob_list(buf);
-   if (list)
-     {
-	Efreet_Desktop *desktop;
-
-	ecore_list_first_goto(list);
-	while ((desktop = ecore_list_next(list)))
+   EINA_LIST_FREE(list, desktop)
 	  {
-	     char *exe;
-
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
@@ -1043,20 +1012,11 @@ _e_exebuf_matches_update(void)
 		  free(exe);
 	       }
 	  }
-	ecore_list_destroy(list);
-     }
 
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = efreet_util_desktop_generic_name_glob_list(buf);
-   if (list)
+   EINA_LIST_FREE(list, desktop)
      {
-	Efreet_Desktop *desktop;
-
-	ecore_list_first_goto(list);
-	while ((desktop = ecore_list_next(list)))
-	  {
-	     char *exe;
-
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
@@ -1070,20 +1030,11 @@ _e_exebuf_matches_update(void)
 		  free(exe);
 	       }
 	  }
-	ecore_list_destroy(list);
-     }
 
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = efreet_util_desktop_comment_glob_list(buf);
-   if (list)
+   EINA_LIST_FREE(list, desktop)
      {
-	Efreet_Desktop *desktop;
-
-	ecore_list_first_goto(list);
-	while ((desktop = ecore_list_next(list)))
-	  {
-	     char *exe;
-
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
@@ -1097,20 +1048,13 @@ _e_exebuf_matches_update(void)
 		  free(exe);
 	       }
 	  }
-	ecore_list_destroy(list);
-     }
 
    if (added) eina_hash_free(added);
    added = NULL;
 
    snprintf(buf, sizeof(buf), "%s*", cmd_buf);
-   if (exe_list)
+   EINA_LIST_FOREACH(exe_list, l, path)
      {
-	Eina_List *l;
-
-	for (l = exe_list; l; l = l->next)
-	  {
-	     path = l->data;
 	     file = (char *)ecore_file_file_get(path);
 	     if (file)
 	       {
@@ -1126,7 +1070,6 @@ _e_exebuf_matches_update(void)
 		    }
 	       }
 	  }
-     }
    if (added) eina_hash_free(added);
    added = NULL;
 
@@ -1239,18 +1182,19 @@ _e_exebuf_matches_update(void)
 static void
 _e_exebuf_hist_update(void)
 {
-   Eina_List *list = NULL, *l = NULL;
+   Eina_List *list;
+   char *file;
 
    edje_object_signal_emit(bg_object, "e,action,show,history", "e");
    list = eina_list_reverse(e_exehist_list_get());
-   for (l = list; l; l = l->next)
+   EINA_LIST_FREE(list, file)
      {
 	E_Exebuf_Exe *exe;
 	Evas_Coord mw, mh;
 	Evas_Object *o;
 	
 	exe = calloc(1, sizeof(E_Exebuf_Exe));
-	exe->file = l->data;
+	exe->file = file;
         eaps = eina_list_prepend(eaps, exe);
 	o = edje_object_add(exebuf->evas);
         exe->bg_object = o;
@@ -1286,21 +1230,19 @@ _e_exebuf_hist_update(void)
 			       9999, mh /* max */
 			       );
      }
-   eina_list_free(list);
 }
 
 static void
 _e_exebuf_hist_clear(void)
 {
+   E_Exebuf_Exe *exe;
+
    edje_object_signal_emit(bg_object, "e,action,hide,history", "e");
    evas_event_freeze(exebuf->evas);
    e_box_freeze(eap_list_object);
    e_box_freeze(exe_list_object);
-   while (eaps)
-     {
-	_e_exebuf_exe_free((E_Exebuf_Exe *)(eaps->data));
-	eaps = eina_list_remove_list(eaps, eaps);
-     }
+   EINA_LIST_FREE(eaps, exe)
+     _e_exebuf_exe_free(exe);
    e_box_thaw(exe_list_object);
    e_box_thaw(eap_list_object);
    evas_event_thaw(exebuf->evas);
@@ -1309,7 +1251,6 @@ _e_exebuf_hist_clear(void)
    e_box_align_set(exe_list_object, 0.5, 1.0);
    exe_sel = NULL;
    which_list = NO_LIST;
-
 }
 
 static void 
@@ -1397,7 +1338,7 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
    else if (!strcmp(ev->keysymbol, "BackSpace"))
      _e_exebuf_backspace();
    else if (!strcmp(ev->keysymbol, "Delete"))
-     _e_exebuf_delete();
+     _e_exebuf_backspace();
    else
      {
 	if (ev->key_compose)
@@ -1598,7 +1539,7 @@ _e_exebuf_idler(void *data)
 	  {
 	     while (exe_list)
 	       {
-		  free(exe_list->data);
+		  free(eina_list_data_get(exe_list));
 		  exe_list = eina_list_remove_list(exe_list, exe_list);
 	       }
 	     exe_list = exe_list2;
@@ -1622,7 +1563,7 @@ _e_exebuf_idler(void *data)
 		  e_config_domain_save("exebuf_exelist_cache", exelist_edd, el);
 		  while (el->list)
 		    {
-		       ee = el->list->data;
+		       ee = eina_list_data_get(el->list);
 		       eina_stringshare_del(ee->path);
 		       free(ee);
 		       el->list = eina_list_remove_list(el->list, el->list);
@@ -1669,14 +1610,14 @@ _e_exebuf_idler(void *data)
 	      */
 	     closedir(exe_dir);
 	     exe_dir = NULL;
-	     free(exe_path->data);
+	     free(eina_list_data_get(exe_path));
 	     exe_path = eina_list_remove_list(exe_path, exe_path);
 	  }
      }
    /* obviously the dir open failed - so remove the first path item */
    else
      {
-	free(exe_path->data);
+	free(eina_list_data_get(exe_path));
 	exe_path = eina_list_remove_list(exe_path, exe_path);
      }
    /* we have mroe scannign to do */

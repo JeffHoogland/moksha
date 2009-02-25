@@ -278,23 +278,18 @@ e_intl_language_list(void)
    Eina_List *next;
    Eina_List *dir_list;
    Eina_List *all_languages;
+   E_Path_Dir *epd;
 
    all_languages = NULL;
    dir_list = e_path_dir_list_get(path_messages);
-   for (next = dir_list ; next ; next = next->next)
+   EINA_LIST_FOREACH(dir_list, next, epd)
      {
-	E_Path_Dir *epd;
 	Eina_List *dir_languages;
-
-	epd = next->data;
-	dir_languages = _e_intl_language_dir_scan(epd->dir);
-	while (dir_languages)
-	  {
 	     char *language;
 
-	     language = dir_languages->data;
-	     dir_languages = eina_list_remove_list(dir_languages, dir_languages);
+	dir_languages = _e_intl_language_dir_scan(epd->dir);
 
+	EINA_LIST_FREE(dir_languages, language)
 	     if ((_e_intl_language_list_find(all_languages, language)) || 
 		 ((strlen(language) > 2) && (!_e_intl_locale_validate(language))))
 	       {
@@ -303,7 +298,6 @@ e_intl_language_list(void)
 	     else
 	       all_languages = eina_list_append(all_languages, language);
 	  }
-     }
 
    e_path_dir_list_free(dir_list);
 
@@ -314,17 +308,13 @@ static int
 _e_intl_language_list_find(Eina_List *language_list, char *language)
 {
    Eina_List *l;
+   char *lang;
 
    if (!language_list) return 0;
    if (!language) return 0;
 
-   for (l = language_list; l; l = l->next)
-     {
-	char *lang;
-
-	lang = l->data;
+   EINA_LIST_FOREACH(language_list, l, lang)
 	if (!strcmp(lang, language)) return 1;
-     }
 
    return 0;
 }
@@ -387,32 +377,15 @@ e_intl_input_method_list(void)
 {
    Eina_List *input_methods;
    Eina_List *im_list;
-   Eina_List *l;
-   char *imc_path;
 
    im_list = NULL;
 
    /* Personal Path */
-   input_methods = _e_intl_imc_dir_scan(e_intl_imc_personal_path_get());
-   for (l = input_methods; l; l = l->next)
-     {
-	imc_path = l->data;
-	im_list = eina_list_append(im_list, imc_path);
-     }
-
-   while (input_methods)
-     input_methods = eina_list_remove_list(input_methods, input_methods);
+   im_list = _e_intl_imc_dir_scan(e_intl_imc_personal_path_get());
 
    /* System Path */
    input_methods = _e_intl_imc_dir_scan(e_intl_imc_system_path_get());
-   for (l = input_methods; l; l = l->next)
-     {
-	imc_path = l->data;
-	im_list = eina_list_append(im_list, imc_path);
-     }
-
-   while (input_methods)
-     input_methods = eina_list_remove_list(input_methods, input_methods);
+   im_list = eina_list_merge(im_list, input_methods);
 
    return im_list;
 }
@@ -488,6 +461,7 @@ static char *
 _e_intl_language_path_find(char *language)
 {
    char		*directory;
+   char         *data;
    Eina_List	*dir_list;
    Eina_List	*search_list;
    Eina_List	*next_dir;
@@ -527,13 +501,8 @@ _e_intl_language_path_find(char *language)
 
    e_path_dir_list_free(dir_list);
 
-   while (search_list)
-     {
-	char *data;
-	data = search_list->data;
+   EINA_LIST_FREE(search_list, data)
 	free(data);
-	search_list = eina_list_remove_list(search_list, search_list);
-     }
 
    return directory;
 }
@@ -542,7 +511,7 @@ static Eina_List *
 _e_intl_language_dir_scan(const char *dir)
 {
    Eina_List *languages;
-   Ecore_List *files;
+   Eina_List *files;
    char *file;
 
    languages = NULL;
@@ -550,19 +519,19 @@ _e_intl_language_dir_scan(const char *dir)
    files = ecore_file_ls(dir);
    if (!files) return NULL;
 
-   ecore_list_first_goto(files);
    if (files)
      {
-	while ((file = ecore_list_next(files)))
+	EINA_LIST_FREE(files, file)
 	  {
 	     char file_path[PATH_MAX];
 
 	     snprintf(file_path, sizeof(file_path),"%s/%s/LC_MESSAGES/%s.mo",
 		   dir, file, PACKAGE);
 	     if (ecore_file_exists(file_path) && !ecore_file_is_dir(file_path))
-	       languages = eina_list_append(languages, strdup(file));
+	       languages = eina_list_append(languages, file);
+	     else
+	       free(file);
 	  }
-	ecore_list_destroy(files);
      }
    return languages;
 }
@@ -579,7 +548,6 @@ _e_intl_locale_alias_get(const char *language)
    Eina_Hash *alias_hash;
    char *alias;
    char *lower_language;
-   char *noenc_language;
    int i;
 
    if ((language == NULL) || (!strncmp(language, "POSIX", strlen("POSIX"))))
@@ -906,6 +874,7 @@ _e_intl_locale_validate(const char *locale)
 {
    Eina_List *all_locales;
    E_Locale_Parts *locale_parts;
+   char *locale_next;
    char *locale_lr;
    char *locale_cs_canonic;
    int   found;
@@ -936,11 +905,7 @@ _e_intl_locale_validate(const char *locale)
    all_locales = _e_intl_locale_system_locales_get();
 
    /* Match locale with one from the list */
-   while (all_locales)
-     {
-	char *locale_next;
-	locale_next = all_locales->data;
-
+   EINA_LIST_FREE(all_locales, locale_next)
 	if (found == 0)
 	  {
 	     E_Locale_Parts *locale_parts_next;
@@ -1009,9 +974,6 @@ _e_intl_locale_validate(const char *locale)
 	     E_FREE(locale_lr_next);
 	  }
 
-	all_locales = eina_list_remove_list(all_locales, all_locales);
-	free(locale_next);
-     }
    e_intl_locale_parts_free(locale_parts);
    free(locale_lr);
    E_FREE(locale_cs_canonic);
@@ -1055,19 +1017,13 @@ _e_intl_locale_search_order_get(const char *locale)
 static Eina_List *
 _e_intl_imc_dir_scan(const char *dir)
 {
-   Eina_List *imcs;
-   Ecore_List *files;
+   Eina_List *imcs = NULL;
+   Eina_List *files;
    char *file;
 
-   imcs = NULL;
-
    files = ecore_file_ls(dir);
-   if (!files) return NULL;
 
-   ecore_list_first_goto(files);
-   if (files)
-     {
-	while ((file = ecore_list_next(files)))
+   EINA_LIST_FREE(files, file)
 	  {
 	     if (strstr(file, ".imc") != NULL)
 	       {
@@ -1076,8 +1032,8 @@ _e_intl_imc_dir_scan(const char *dir)
 		  snprintf(buf, sizeof(buf), "%s/%s", dir, file);
 		  imcs = eina_list_append(imcs, strdup(buf));
 	       }
+	free(file);
 	  }
-	ecore_list_destroy(files);
-     }
+
    return imcs;
 }

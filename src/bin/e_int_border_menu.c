@@ -1095,7 +1095,8 @@ _e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Menu *sm;
    E_Border *bd;
-   Ecore_List *dirs;
+   Eina_List *dirs;
+   Eina_List *l;
    char buf[4096], *file;
    const char *homedir;
 
@@ -1106,7 +1107,7 @@ _e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    if (!dirs) return;
 
    sm = e_menu_new();
-   while ((file = ecore_list_next(dirs)))
+   EINA_LIST_FOREACH(dirs, l, file)
      {
 	E_Menu_Item *smi;
 

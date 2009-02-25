@@ -194,10 +194,10 @@ ecore_file_can_exec(const char *file)
    return (*func) (file);
 }
 
-Ecore_List *
+Eina_List *
 ecore_file_ls(const char *file)
 {
-   static Ecore_List * (*func) (const char *file) = NULL;
+   static Eina_List * (*func) (const char *file) = NULL;
    if (!func)
      func = lib_func("libecore_file.so", "libecore_file.so.1", 
 		     "ecore_file_ls", "lib_ecore_file", &lib_ecore_file);

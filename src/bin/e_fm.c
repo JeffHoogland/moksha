@@ -2911,30 +2911,26 @@ static void
 _e_fm2_queue_free(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
+   E_Fm2_Icon *ic;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    /* just free the icons in the queue  and the queue itself */
-   while (sd->queue)
-     {
-	_e_fm2_icon_free(sd->queue->data);
-	sd->queue = eina_list_remove_list(sd->queue, sd->queue);
-     }
+   EINA_LIST_FREE(sd->queue, ic)
+     _e_fm2_icon_free(ic);
 }
 
 static void
 _e_fm2_regions_free(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
+   E_Fm2_Region *rg;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    /* free up all regions */
-   while (sd->regions.list)
-     {
-	_e_fm2_region_free(sd->regions.list->data);
-        sd->regions.list = eina_list_remove_list(sd->regions.list, sd->regions.list);
-     }
+   EINA_LIST_FREE(sd->regions.list, rg)
+     _e_fm2_region_free(rg);
 }
 
 static void
@@ -4217,12 +4213,8 @@ _e_fm2_region_free(E_Fm2_Region *rg)
 {
    E_Fm2_Icon *ic;
    
-   while (rg->list)
-     {
-	ic = rg->list->data;
+   EINA_LIST_FREE(rg->list, ic)
 	ic->region = NULL;
-	rg->list = eina_list_remove_list(rg->list, rg->list);
-     }
    free(rg);
 }
 
@@ -7195,19 +7187,13 @@ _e_fm2_context_list_sort(const void *data1, const void *data2)
 static void
 _e_fm2_icon_menu_post_cb(void *data, E_Menu *m)
 {
+   E_Fm2_Context_Menu_Data *md;
    E_Fm2_Icon *ic;
    
    ic = data;
    ic->menu = NULL;
-   while (_e_fm2_menu_contexts) 
-     {
-	E_Fm2_Context_Menu_Data *md;
-	
-	md = _e_fm2_menu_contexts->data;
-	_e_fm2_menu_contexts = eina_list_remove_list(_e_fm2_menu_contexts, 
-						     _e_fm2_menu_contexts);
+   EINA_LIST_FREE(_e_fm2_menu_contexts, md)
 	E_FREE(md);
-     }
 }
 
 static void 
@@ -8153,10 +8139,8 @@ _e_fm2_live_process_end(Evas_Object *obj)
    E_Fm2_Action *a;
    
    sd = evas_object_smart_data_get(obj);
-   while (sd->live.actions)
+   EINA_LIST_FREE(sd->live.actions, a)
      {
-	a = sd->live.actions->data;
-	sd->live.actions = eina_list_remove_list(sd->live.actions, sd->live.actions);
 	eina_stringshare_del(a->file);
 	eina_stringshare_del(a->file2);
 	eina_stringshare_del(a->finf.lnk);

@@ -98,7 +98,7 @@ e_exec_shutdown(void)
 
 EAPI E_Exec_Instance *
 e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
-       Ecore_List *files, const char *launch_method)
+       Eina_List *files, const char *launch_method)
 {
    E_Exec_Launch *launch;
    E_Exec_Instance *inst = NULL;
@@ -367,15 +367,12 @@ static Evas_Bool
 _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *value, void *data)
 {
    E_Exec_Search *search;
-   Eina_List *instances, *l;
+   E_Exec_Instance *inst;
+   Eina_List *l;
 
    search = data;
-   instances = value;
-   for (l = instances; l; l = l->next)
-     {
-	E_Exec_Instance *inst;
 
-	inst = l->data;
+   EINA_LIST_FOREACH(value, l, inst)
 	if (((search->startup_id > 0) && (search->startup_id == inst->startup_id)) ||
 	    ((inst->exe) && (search->pid > 1) && 
              (search->pid == ecore_exe_pid_get(inst->exe))))
@@ -383,7 +380,7 @@ _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __
 	     search->desktop = inst->desktop;
 	     return 0;
 	  }
-     }
+
    return 1;
 }
 

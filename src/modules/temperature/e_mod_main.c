@@ -69,7 +69,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 	  temperature_config->faces = eina_hash_string_superfast_new(NULL);
 	eina_hash_direct_add(temperature_config->faces, inst->id, inst);
      }
-   if (!inst->id) eina_stringshare_add(id);
+   if (!inst->id) inst->id = eina_stringshare_add(id);
    E_CONFIG_LIMIT(inst->poll_interval, 1, 1024);
    E_CONFIG_LIMIT(inst->low, 0, 100);
    E_CONFIG_LIMIT(inst->high, 0, 220);
@@ -375,17 +375,16 @@ temperature_face_update_config(Config_Face *inst)
 					  inst);
 }
 
-Ecore_List *
+Eina_List *
 temperature_get_bus_files(const char* bus)
 {
-   Ecore_List *result, *therms;
+   Eina_List *result, *therms;
    char path[PATH_MAX];
    char busdir[PATH_MAX];
 
-   result = ecore_list_new();
+   result = NULL;
    if (result)
      {
-	ecore_list_free_cb_set(result, free);
 	snprintf(busdir, sizeof(busdir), "/sys/bus/%s/devices", bus);
 	/* Look through all the devices for the given bus. */
 	therms = ecore_file_ls(busdir);
@@ -393,19 +392,16 @@ temperature_get_bus_files(const char* bus)
 	  {
 	     char *name;
 
-	     while ((name = ecore_list_next(therms)))
+	     EINA_LIST_FREE(therms, name)
 	       {
-		  Ecore_List *files;
+		  Eina_List *files;
+		  char *file;
 		  
 		  /* Search each device for temp*_input, these should be 
 		   * temperature devices. */
 		  snprintf(path, sizeof(path), "%s/%s", busdir, name);
 		  files = ecore_file_ls(path);
-		  if (files)
-		    {
-		       char *file;
-
-		       while ((file = ecore_list_next(files)))
+		  EINA_LIST_FREE(files, file)
 			 {
 			    if ((!strncmp("temp", file, 4)) && 
 				(!strcmp("_input", &file[strlen(file) - 6])))
@@ -415,15 +411,14 @@ temperature_get_bus_files(const char* bus)
 				 snprintf(path, sizeof(path),
 					  "%s/%s/%s", busdir, name, file);
 				 f = strdup(path);
-				 if (f) ecore_list_append(result, f);
-			      }
+			    if (f) result = eina_list_append(result, f);
 			 }
-		       ecore_list_destroy(files);
+		       free(file);
 		    }
+
+		  free(name);
 	       }
-	     ecore_list_destroy(therms);
 	  }
-	ecore_list_first_goto(result);
      }
    return result;
 }

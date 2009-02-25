@@ -27,22 +27,22 @@ e_configure_init(void)
 static void
 _e_configure_efreet_desktop_update(void)
 {
-   Ecore_List *settings_desktops, *system_desktops;
+   Eina_List *settings_desktops, *system_desktops;
+   Eina_List *remove_items = NULL;
+   Eina_List *remove_cats = NULL;
+   Eina_List *l;
    Efreet_Desktop *desktop;
-   Eina_List *l, *ll, *remove_items = NULL, *remove_cats = NULL;
+   E_Configure_Cat *ecat;
+   void *data;
    char buf[1024];
 
    /* remove anything with a desktop entry */
-   for (l = e_configure_registry; l; l = l->next)
-     {
-	E_Configure_Cat *ecat;
-	
-	ecat = l->data;
-	for (ll = ecat->items; ll; ll = ll->next)
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat)
 	  {
 	     E_Configure_It *eci;
+	Eina_List *ll;
 	     
-	     eci = ll->data;
+	EINA_LIST_FOREACH(ecat->items, ll, eci)
 	     if (eci->desktop)
 	       {
 		  snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
@@ -50,18 +50,15 @@ _e_configure_efreet_desktop_update(void)
 		  remove_cats = eina_list_append(remove_cats, strdup(ecat->cat));
 	       }
 	  }
-     }
-   while (remove_items)
+   EINA_LIST_FREE(remove_items, data)
      {
-	e_configure_registry_item_del(remove_items->data);
-	free(remove_items->data);
-	remove_items = eina_list_remove_list(remove_items, remove_items);
+	e_configure_registry_item_del(data);
+	free(data);
      }
-   while (remove_cats)
+   EINA_LIST_FREE(remove_cats, data)
      {
-	e_configure_registry_category_del(remove_cats->data);
-	free(remove_cats->data);
-	remove_cats = eina_list_remove_list(remove_cats, remove_cats);
+	e_configure_registry_category_del(data);
+	free(data);
      }
    
    /* get desktops */
@@ -70,8 +67,7 @@ _e_configure_efreet_desktop_update(void)
    if ((!settings_desktops) || (!system_desktops)) return;
    
    /* get ones in BOTH lists */
-   ecore_list_first_goto(settings_desktops);
-   while ((desktop = ecore_list_next(settings_desktops)))
+   EINA_LIST_FOREACH(settings_desktops, l, desktop)
      {
 	char *s;
 	char *cfg_cat_name;
@@ -82,7 +78,7 @@ _e_configure_efreet_desktop_update(void)
 	char *label;
 	int cfg_pri;
 	
-	if (!ecore_list_goto(system_desktops, desktop)) continue;
+	if (!eina_list_data_find(system_desktops, desktop)) continue;
 	cfg_cat = NULL;
 	cfg_icon = NULL;
 	cfg_cat_cfg = NULL;
@@ -237,61 +233,51 @@ e_configure_registry_generic_item_add(const char *path, int pri, const char *lab
 EAPI void
 e_configure_registry_item_del(const char *path)
 {
+   E_Configure_Cat *ecat;
    Eina_List *l;
-   char *cat;
    const char *item;
+   char *cat;
    
    /* path is "category/item" */
    cat = ecore_file_dir_get(path);
    if (!cat) return;
    item = ecore_file_file_get(path);
-   for (l = e_configure_registry; l; l = l->next)
-     {
-	E_Configure_Cat *ecat;
 	
-	ecat = l->data;
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat)
 	if (!strcmp(cat, ecat->cat))
 	  {
-	     Eina_List *ll;
-	     
-	     for (ll = ecat->items; ll; ll = ll->next)
-	       {
 		  E_Configure_It *eci;
+	  Eina_List *ll;
 		  
-		  eci = ll->data;
+	  EINA_LIST_FOREACH(ecat->items, ll, eci)
 		  if (!strcmp(item, eci->item))
 		    {
 		       ecat->items = eina_list_remove_list(ecat->items, ll);
+
 		       eina_stringshare_del(eci->item);
 		       eina_stringshare_del(eci->label);
 		       eina_stringshare_del(eci->icon);
 		       if (eci->icon_file) eina_stringshare_del(eci->icon_file);
 		       if (eci->desktop) efreet_desktop_free(eci->desktop);
 		       free(eci);
-		       goto done;
-		    }
-	       }
-	     goto done;
+		 break;
 	  }
+	  break;
      }
-   done:
+
    free(cat);
 }
 
 EAPI void
 e_configure_registry_category_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon)
 {
+   E_Configure_Cat *ecat2;
    E_Configure_Cat *ecat;
    Eina_List *l;
 
    /* if it exists - ignore this */
-   for (l = e_configure_registry; l; l = l->next)
-     {
-	E_Configure_Cat *ecat2;
-	
-	ecat2 = l->data;
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat2)
 	if (!strcmp(ecat2->cat, path)) return;
-     }
    
    ecat = E_NEW(E_Configure_Cat, 1);
    if (!ecat) return;
@@ -301,46 +287,37 @@ e_configure_registry_category_add(const char *path, int pri, const char *label, 
    ecat->label = eina_stringshare_add(label);
    if (icon_file) ecat->icon_file = eina_stringshare_add(icon_file);
    if (icon) ecat->icon = eina_stringshare_add(icon);
-   for (l = e_configure_registry; l; l = l->next)
-     {
-	E_Configure_Cat *ecat2;
-	
-	ecat2 = l->data;
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat2)
 	if (ecat2->pri > ecat->pri)
 	  {
 	     e_configure_registry = eina_list_prepend_relative_list(e_configure_registry, ecat, l);
 	     return;
 	  }
-     }
    e_configure_registry = eina_list_append(e_configure_registry, ecat);
 }
 
 EAPI void
 e_configure_registry_category_del(const char *path)
 {
+   E_Configure_Cat *ecat;
    Eina_List *l;
    char *cat;
    
    cat = ecore_file_dir_get(path);
    if (!cat) return;
-   for (l = e_configure_registry; l; l = l->next)
-     {
-	E_Configure_Cat *ecat;
-	
-	ecat = l->data;
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat)
         if (!strcmp(cat, ecat->cat))
 	  {
-	     if (ecat->items) goto done;
+	  if (ecat->items) break;
 	     e_configure_registry = eina_list_remove_list(e_configure_registry, l);
 	     eina_stringshare_del(ecat->cat);
 	     eina_stringshare_del(ecat->label);
 	     if (ecat->icon) eina_stringshare_del(ecat->icon);
 	     if (ecat->icon_file) eina_stringshare_del(ecat->icon_file);
 	     free(ecat);
-	     goto done;
-	  }
+	  break;
      }
-   done:
+
    free(cat);
 }
 
@@ -352,6 +329,7 @@ static struct {
 EAPI void
 e_configure_registry_call(const char *path, E_Container *con, const char *params)
 {
+   E_Configure_Cat *ecat;
    Eina_List *l;
    char *cat;
    const char *item;
@@ -360,20 +338,13 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
    cat = ecore_file_dir_get(path);
    if (!cat) return;
    item = ecore_file_file_get(path);
-   for (l = e_configure_registry; l; l = l->next)
-     {
-	E_Configure_Cat *ecat;
-	
-	ecat = l->data;
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat)
 	if (!strcmp(cat, ecat->cat))
 	  {
-	     Eina_List *ll;
-	     
-	     for (ll = ecat->items; ll; ll = ll->next)
-	       {
 		  E_Configure_It *eci;
+	  Eina_List *ll;
 		  
-		  eci = ll->data;
+	  EINA_LIST_FOREACH(ecat->items, ll, eci)
 		  if (!strcmp(item, eci->item))
 		    {
 		       if (eci->func) eci->func(con, params);
@@ -389,13 +360,11 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
 			      e_exec(e_util_zone_current_get(con->manager),
 				     eci->desktop, NULL, NULL, "config");
 			 }
-		       goto done;
-		    }
-	       }
-	     goto done;
+		 break;
 	  }
+	  break;
      }
-   done:
+
    free(cat);
 }
 
@@ -410,6 +379,7 @@ e_configure_registry_custom_desktop_exec_callback_set(void (*func) (const void *
 EAPI int
 e_configure_registry_exists(const char *path)
 {
+   E_Configure_Cat *ecat;
    Eina_List *l;
    char *cat;
    const char *item;
@@ -419,35 +389,26 @@ e_configure_registry_exists(const char *path)
    cat = ecore_file_dir_get(path);
    if (!cat) return 0;
    item = ecore_file_file_get(path);
-   for (l = e_configure_registry; l; l = l->next)
-     {
-	E_Configure_Cat *ecat;
-	
-	ecat = l->data;
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat)
 	if (!strcmp(cat, ecat->cat))
 	  {
+	  E_Configure_It *eci;
 	     Eina_List *ll;
 
 	     if (!item)
 	       {
 		  ret = 1;
-		  goto done;
+	       break;
 	       }
-	     for (ll = ecat->items; ll; ll = ll->next)
-	       {
-		  E_Configure_It *eci;
-		  
-		  eci = ll->data;
+	  EINA_LIST_FOREACH(ecat->items, ll, eci)
 		  if (!strcmp(item, eci->item))
 		    {
 		       ret = 1;
-		       goto done;
+		 break;
 		    }
+	  break;
 	       }
-	     goto done;
-	  }
-     }
-   done:
+
    free(cat);
    return ret;
 }

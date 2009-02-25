@@ -305,7 +305,8 @@ static void
 _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
 {
    E_Hal_Manager_Get_All_Devices_Return *ret = reply_data;
-   char *device;
+   Eina_List *l;
+   char *udi;
    
    if (!ret || !ret->strings) return;
    
@@ -315,13 +316,9 @@ _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
 	return;
      }
 
-   ecore_list_first_goto(ret->strings);
-   while ((device = ecore_list_next(ret->strings)))
+   EINA_LIST_FOREACH(ret->strings, l, udi)
      {
-//	printf("DB INIT DEV+: %s\n", device);
-	char *udi;
-
-	udi = device;
+//	printf("DB INIT DEV+: %s\n", udi);
 	e_hal_device_query_capability(_e_dbus_conn, udi, "storage",
 	      _e_dbus_cb_store_is, strdup(udi));
 	e_hal_device_query_capability(_e_dbus_conn, udi, "volume", 
@@ -333,6 +330,7 @@ static void
 _e_dbus_cb_dev_store(void *user_data, void *reply_data, DBusError *error)
 {
    E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply_data;
+   Eina_List *l;
    char *device;
    
    if (!ret || !ret->strings) return;
@@ -343,8 +341,7 @@ _e_dbus_cb_dev_store(void *user_data, void *reply_data, DBusError *error)
 	return;
      }
    
-   ecore_list_first_goto(ret->strings);
-   while ((device = ecore_list_next(ret->strings)))
+   EINA_LIST_FOREACH(ret->strings, l, device)
      {
 //	printf("DB STORE+: %s\n", device);
 	e_storage_add(device);
@@ -355,6 +352,7 @@ static void
 _e_dbus_cb_dev_vol(void *user_data, void *reply_data, DBusError *error)
 {
    E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply_data;
+   Eina_List *l;
    char *device;
    
    if (!ret || !ret->strings) return;
@@ -365,8 +363,7 @@ _e_dbus_cb_dev_vol(void *user_data, void *reply_data, DBusError *error)
 	return;
      }
    
-   ecore_list_first_goto(ret->strings);
-   while ((device = ecore_list_next(ret->strings)))
+   EINA_LIST_FOREACH(ret->strings, l, device)
      {
 //	printf("DB VOL+: %s\n", device);
 	e_volume_add(device);
@@ -856,7 +853,7 @@ e_volume_mount(E_Volume *v)
 {
    char buf[256];
    char *mount_point;
-   Ecore_List *opt = NULL;
+   Eina_List *opt = NULL;
 
    if (!v || !v->mount_point || strncmp(v->mount_point, "/media/", 7))
      return;
@@ -868,13 +865,12 @@ e_volume_mount(E_Volume *v)
 //       || (!strcmp(v->fstype, "iso9660")) || (!strcmp(v->fstype, "udf"))
        )
      {
-	opt = ecore_list_new();
 	snprintf(buf, sizeof(buf), "uid=%i", (int)getuid());
-	ecore_list_append(opt, buf);
+	opt = eina_list_append(opt, buf);
      }
    e_hal_device_volume_mount(_e_dbus_conn, v->udi, mount_point,
 			     v->fstype, opt, NULL, v);
-   if (opt) ecore_list_destroy(opt);
+   opt = eina_list_free(opt);
 }
 
 static void
@@ -1077,12 +1073,7 @@ _e_fm_monitor_start_try(E_Fm_Task *task)
 		    }
 		  fclose(f);
 		  /* append whats left */
-		  while (files)
-		    {
-		       f2 = eina_list_append(f2, files->data);
-		       files = eina_list_remove_list(files, files);
-		    }
-		  files = f2;
+		  files = eina_list_merge(f2, files);
 	       }
 	  }
 	ed->fq = files;
@@ -1119,15 +1110,12 @@ _e_fm_monitor_start_try(E_Fm_Task *task)
 static void
 _e_fm_monitor_end(int id, const char *path)
 {
-   Eina_List *l;
    E_Fm_Task *task;
-   
-   for (l = _e_dirs; l; l = l->next)
-     {
+   Eina_List *l;
 	E_Dir *ed;
 	
+   EINA_LIST_FOREACH(_e_dirs, l, ed)
 	/* look for the dire entry to stop monitoring */
-	ed = l->data;
 	if ((id == ed->id) && (!strcmp(ed->dir, path)))
 	  {
 	     /* if this is not the real monitoring node - unref the
@@ -1156,7 +1144,6 @@ _e_fm_monitor_end(int id, const char *path)
 	     _e_dirs = eina_list_remove_list(_e_dirs, l);
 	     break;
 	  }
-     }  
 
    task = _e_fm_task_get(id);
    if (task) _e_fm_task_remove(task);
@@ -1173,17 +1160,12 @@ _e_fm_task_get(int id)
 static Eina_List *
 _e_fm_task_node_get(int id)
 {
-   Eina_List *l = _e_fm_tasks;
    E_Fm_Task *task;
+   Eina_List *l;
 
-   while (l)
-     {
-	task = eina_list_data_get(l);
+   EINA_LIST_FOREACH(_e_fm_tasks, l, task)
 	if (task->id == id)
 	  return l;
-
-	l = eina_list_next(l);
-     }
 
    return NULL;
 }
@@ -1722,11 +1704,7 @@ _e_cb_recent_clean(void *data)
    ed = data;
    ed->cleaning = 1;
    t_now = ecore_time_get();
-   for (l = ed->recent_mods; l;)
-     {
-	m = l->data;
-	pl = l;
-	l = l->next;
+   EINA_LIST_FOREACH_SAFE(ed->recent_mods, pl, l, m)
 	if ((m->mod) && ((t_now - m->timestamp) >= DEF_MOD_BACKOFF))
 	  {
 	     ed->recent_mods = eina_list_remove_list(ed->recent_mods, pl);
@@ -1734,7 +1712,6 @@ _e_cb_recent_clean(void *data)
 	     eina_stringshare_del(m->path);
 	     free(m);
 	  }
-     }
    ed->cleaning = 0;
    if (ed->recent_mods) return 1;
    ed->recent_clean = NULL;
@@ -2020,18 +1997,15 @@ static char *
 _e_str_list_remove(Eina_List **list, char *str)
 {
    Eina_List *l;
-   
-   for (l = *list; l; l = l->next)
-     {
 	char *s;
 	
-	s = l->data;
+   EINA_LIST_FOREACH(*list, l, s)
 	if (!strcmp(s, str))
 	  {
 	     *list = eina_list_remove_list(*list, l);
 	     return s;
 	  }
-     }
+
    return NULL;
 }
 
@@ -2050,6 +2024,7 @@ _e_fm_reorder(const char *file, const char *dst, const char *relative, int after
      {
 	FILE *forder;
 	Eina_List *files = NULL, *l;
+	char *str;
 	
 	forder = fopen(order, "r");
 	if (forder)
@@ -2067,23 +2042,21 @@ _e_fm_reorder(const char *file, const char *dst, const char *relative, int after
 	     fclose(forder);
 	  }
 	/* remove dest file from .order - if there */
-	for (l = files; l; l = l->next)
-	  {
-	     if (!strcmp(l->data, file))
+	EINA_LIST_FOREACH(files, l, str)
+	  if (!strcmp(str, file))
 	       {
-		  free(l->data);
+	       free(str);
 		  files = eina_list_remove_list(files, l);
 		  break;
 	       }
-	  }
 	/* now insert dest into list or replace entry */
-	for (l = files; l; l = l->next)
+	EINA_LIST_FOREACH(files, l, str)
 	  {
-	     if (!strcmp(l->data, relative))
+	     if (!strcmp(str, relative))
 	       {
 		  if (after == 2) /* replace */
 		    {
-		       free(l->data);
+		       free(str);
 		       l->data = strdup(file);
 		    }
 		  else if (after == 0) /* before */
@@ -2101,11 +2074,10 @@ _e_fm_reorder(const char *file, const char *dst, const char *relative, int after
 	forder = fopen(order, "w");
 	if (forder)
 	  {
-	     while (files)
+	     EINA_LIST_FREE(files, str)
 	       {
-		  fprintf(forder, "%s\n", (char *)files->data);
-		  free(files->data);
-		  files = eina_list_remove_list(files, files);
+		  fprintf(forder, "%s\n", str);
+		  free(str);
 	       }
 	     fclose(forder);
 	  }
@@ -2115,24 +2087,20 @@ _e_fm_reorder(const char *file, const char *dst, const char *relative, int after
 static void
 _e_dir_del(E_Dir *ed)
 {
+   void *data;
+   E_Mod *m;
+
    eina_stringshare_del(ed->dir);
    if (ed->idler) ecore_idler_del(ed->idler);
    if (ed->recent_clean)
      ecore_timer_del(ed->recent_clean);
-   while (ed->recent_mods)
+   EINA_LIST_FREE(ed->recent_mods, m)
      {
-	E_Mod *m;
-	
-	m = ed->recent_mods->data;
 	eina_stringshare_del(m->path);
 	free(m);
-	ed->recent_mods = eina_list_remove_list(ed->recent_mods, ed->recent_mods);
      }
-   while (ed->fq)
-     {
-	free(ed->fq->data);
-	ed->fq = eina_list_remove_list(ed->fq, ed->fq);
-     }
+   EINA_LIST_FREE(ed->fq, data)
+     free(data);
    free(ed);
 }
 

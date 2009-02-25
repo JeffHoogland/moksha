@@ -420,7 +420,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Bool
-_font_hash_cb(const Evas_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
+_font_hash_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
 {
    E_Config_Dialog_Data *cfdata;
    E_Font_Properties *efp;
@@ -1034,7 +1034,7 @@ _font_list_load(E_Config_Dialog_Data *cfdata, const char *cur_font)
 
 	fonts = evas_font_available_list(evas);
 	cfdata->font_hash = e_font_available_list_parse(fonts);
-	evas_hash_foreach(cfdata->font_hash, _font_hash_cb, cfdata);
+	eina_hash_foreach(cfdata->font_hash, _font_hash_cb, cfdata);
 	if (cfdata->font_list)
 	  {
 	     cfdata->font_list = 

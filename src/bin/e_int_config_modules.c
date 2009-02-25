@@ -17,7 +17,7 @@ struct _CFModule
 struct _CFType 
 {
    const char *key, *name, *icon;
-   Evas_Hash *modules;
+   Eina_Hash *modules;
 };
 
 struct _CFTypes 
@@ -241,15 +241,16 @@ _fill_type_hash(void)
 static void
 _load_modules(const char *dir)
 {
-   Ecore_List *files = NULL;
+   Eina_List *files = NULL;
+   Eina_List *l;
    char *mod = NULL;
+   char *file;
 
    if (!dir) return;
    if (!(files = ecore_file_ls(dir))) return;
 
    /* get all modules in this path_dir */
-   ecore_list_first_goto(files);
-   while ((mod = ecore_list_next(files))) 
+   EINA_LIST_FOREACH(files, l, mod)
      {
 	Efreet_Desktop *desk = NULL;
 	CFType *cft = NULL;
@@ -312,7 +313,8 @@ _load_modules(const char *dir)
 	eina_hash_direct_add(cft->modules, cfm->short_name, cfm);
      }
    free(mod);
-   if (files) ecore_list_destroy(files);
+   EINA_LIST_FREE(files, file)
+     free(file);
 }
 
 static void
@@ -494,17 +496,17 @@ _list_widget_load(Evas_Object *obj, Eina_List *list)
 {
    Evas *evas;
    Eina_List *ml = NULL;
+   CFModule *mod;
 
    if ((!obj) || (!list)) return;
    evas = evas_object_evas_get(obj);
-   for (ml = list; ml; ml = ml->next)
+   EINA_LIST_FOREACH(list, ml, mod)
      {
-	CFModule *mod = NULL;
 	Evas_Object *ic = NULL;
 	char *path;
 	char buf[4096];
 
-	if (!(mod = ml->data)) continue;
+	if (!mod) continue;
 	if (mod->orig_path)
 	  {
 	     path = ecore_file_dir_get(mod->orig_path);

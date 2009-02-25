@@ -83,7 +83,7 @@ static Ecore_Timer *defer = NULL;
 static E_Kbd *vkbd = NULL;
 static E_Kbd_Int *vkbd_int = NULL;
 static E_Busywin *busywin = NULL;
-static E_Busywin *busycover = NULL;
+static E_Busycover *busycover = NULL;
 static E_Flaunch *flaunch = NULL;
 static E_Appwin *appwin = NULL;
 static E_Syswin *syswin = NULL;
@@ -243,6 +243,8 @@ _e_mod_win_win_cfg_kbd_cb_exit(void *data, int type, void *event)
 void
 e_mod_win_cfg_kbd_start(void)
 {
+   Eina_List *l;
+
    if (illume_cfg->kbd.use_internal)
      {
 	vkbd_int = e_kbd_int_new(e_module_dir_get(mod),
@@ -257,13 +259,12 @@ e_mod_win_cfg_kbd_start(void)
 	desktop = efreet_util_desktop_file_id_find(illume_cfg->kbd.run_keyboard);
 	if (!desktop)
 	  {
-	     Ecore_List *kbds;
+	     Eina_List *kbds;
 	     
 	     kbds = efreet_util_desktop_category_list("Keyboard");
 	     if (kbds)
 	       {
-		  ecore_list_first_goto(kbds);
-		  while ((desktop = ecore_list_next(kbds)))
+		  EINA_LIST_FOREACH(kbds, l, desktop)
 		    {
 		       const char *dname;
 		       
@@ -408,12 +409,10 @@ static Eina_List *
 __app_list(void)
 {
    Eina_List *tlist = NULL, *l;
-   
-   for (l = applist; l; l = l->next)
-     {
         E_Border *bd;
         
-	bd = l->data;
+   EINA_LIST_FOREACH(applist, l, bd)
+     {
 	if (e_object_is_del(E_OBJECT(bd))) continue;
 	if ((!bd->client.icccm.accepts_focus) &&
 	    (!bd->client.icccm.take_focus)) continue;
@@ -428,11 +427,11 @@ static Eina_List *
 __app_find(Eina_List *list, E_Border *bd)
 {
    Eina_List *l;
+   E_Border *over;
+
+   EINA_LIST_FOREACH(list, l, over)
+     if (over == bd) return l;
    
-   for (l = list; l; l = l->next)
-     {
-        if (l->data == bd) return l;
-     }
    return NULL;
 }
 
@@ -507,14 +506,13 @@ _app_next(void)
 static void
 _app_home(void)
 {
-   Eina_List *l, *borders;
+   Eina_List *borders;
+   Eina_List *l;
+   E_Border *bd;
    
    borders = e_border_client_list();
-   for (l = borders; l; l = l->next)
+   EINA_LIST_FOREACH(borders, l, bd)
      {
-	E_Border *bd;
-	
-	bd = l->data;
 	if (e_object_is_del(E_OBJECT(bd))) continue;
 	if ((!bd->client.icccm.accepts_focus) &&
 	    (!bd->client.icccm.take_focus)) continue;
@@ -592,23 +590,21 @@ _cb_cfg_exec(const void *data, E_Container *con, const char *params, Efreet_Desk
 static void
 _desktop_run(Efreet_Desktop *desktop)
 {
-   Eina_List *l, *borders;
    E_Exec_Instance *eins;
    Instance *ins;
+   E_Border *bd;
+   Eina_List *l;
    char *exename, *p;
 
    if (!desktop) return;
    if (!desktop->exec) return;
-   for (l = instances; l; l = l->next)
-     {
-	ins = l->data;
+   EINA_LIST_FOREACH(instances, l, ins)
 	if (ins->desktop == desktop)
 	  {
 	     if (ins->border)
 	       _e_mod_layout_border_show(ins->border);
 	     return;
 	  }
-     }
    exename = NULL;
    p = strchr(desktop->exec, ' ');
    if (!p)
@@ -626,12 +622,8 @@ _desktop_run(Efreet_Desktop *desktop)
 	p = strrchr(exename, '/');
 	if (p) strcpy(exename, p + 1);
      }
-   borders = e_border_client_list();
-   for (l = borders; l; l = l->next)
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
-	E_Border *bd;
-	
-	bd = l->data;
 	if (e_exec_startup_id_pid_find(bd->client.netwm.pid,
 				       bd->client.netwm.startup_id) == desktop)
 	  {
@@ -713,9 +705,7 @@ _cb_event_border_add(void *data, int type, void *event)
      }
    desktop = e_exec_startup_id_pid_find(ev->border->client.netwm.pid,
 					ev->border->client.netwm.startup_id);
-   for (l = instances; l; l = l->next)
-     {
-	ins = l->data;
+   EINA_LIST_FOREACH(instances, l, ins)
 	if (!ins->border)
 	  {
 	     if ((ins->startup_id == ev->border->client.netwm.startup_id) ||
@@ -734,7 +724,6 @@ _cb_event_border_add(void *data, int type, void *event)
 		  return 1;
 	       }
 	  }
-     }
    return 1;
 }
 
@@ -753,9 +742,7 @@ _cb_event_border_remove(void *data, int type, void *event)
 	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_NEXT, 0);
 	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_PREV, 0);
      }
-   for (l = instances; l; l = l->next)
-     {
-	ins = l->data;
+   EINA_LIST_FOREACH(instances, l, ins)
 	if (ins->border == ev->border)
 	  {
 	     if (ins->handle)
@@ -767,7 +754,6 @@ _cb_event_border_remove(void *data, int type, void *event)
 	     ins->border = NULL;
 	     return 1;
 	  }
-     }
    return 1;
 }
 
@@ -807,9 +793,8 @@ _cb_event_exe_del(void *data, int type, void *event)
    Eina_List *l;
    
    ev = event;
-   for (l = instances; l; l = l->next)
+   EINA_LIST_FOREACH(instances, l, ins)
      {
-	ins = l->data;
 	if (ins->pid == ev->pid)
 	  {
 	     if (ins->handle)
@@ -852,15 +837,12 @@ _cb_run_timeout(void *data)
 static int
 _have_borders(void)
 {
-   Eina_List *borders, *l;
+   Eina_List *l;
+   E_Border *bd;
    int num = 0;
    
-   borders = e_border_client_list();
-   for (l = borders; l; l = l->next)
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
-	E_Border *bd;
-	
-	bd = l->data;
 	if (e_object_is_del(E_OBJECT(bd))) continue;
 	if ((!bd->client.icccm.accepts_focus) &&
 	    (!bd->client.icccm.take_focus)) continue;
@@ -934,16 +916,13 @@ _cb_slipshelf_select(const void *data, E_Slipshelf *ess, E_Border *bd)
 }
 
 static void
-_cb_slipshelf_home2(const void *data, E_Slipshelf *ess, E_Border *bd)
+_cb_slipshelf_home2(const void *data, E_Slipshelf *ess, E_Border *pbd)
 {
-   Eina_List *l, *borders;
-   
-   borders = e_border_client_list();
-   for (l = borders; l; l = l->next)
-     {
+   Eina_List *l;
 	E_Border *bd;
 	
-	bd = l->data;
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
+     {
 	if (e_object_is_del(E_OBJECT(bd))) continue;
 	if ((!bd->client.icccm.accepts_focus) &&
 	    (!bd->client.icccm.take_focus)) continue;
@@ -957,43 +936,34 @@ static void
 _apps_unpopulate(void)
 {
    char buf[PATH_MAX], *homedir;
-   Ecore_List *files;
-   
-   while (sels)
-     {
-	evas_object_del(sels->data);
-	sels = eina_list_remove_list(sels, sels);
-     }
-   while (desks)
-     {
 	Efreet_Desktop *desktop;
+   Evas_Object *obj;
+   Eina_List *files;
+   char *file;
 	
-	desktop = desks->data;
+   EINA_LIST_FREE(sels, obj)
+     evas_object_del(obj);
+
+   EINA_LIST_FREE(desks, desktop)
 	efreet_desktop_free(desktop);
-	desks = eina_list_remove_list(desks, desks);
-     }
+
    if (bx) evas_object_del(bx);
    bx = NULL;
+
    if (fm) evas_object_del(fm);
    fm = NULL;
+
    if (sf) evas_object_del(sf);
    sf = NULL;
 
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/appshadow", homedir);
    files = ecore_file_ls(buf);
-   if (files)
-     {
-	char *file;
-	
-	ecore_list_first_goto(files);
-	while ((file = ecore_list_current(files)))
+   EINA_LIST_FREE(files, file)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/.e/e/appshadow/%s", homedir, file);
 	     ecore_file_unlink(buf);
-	     ecore_list_next(files);
-	  }
-	ecore_list_destroy(files);
+	free(file);
      }
 }
 
@@ -1026,8 +996,9 @@ static void
 _apps_populate(void)
 {
    Evas_Coord mw, mh, sfw, sfh;
-   Evas_Object *o;
-   char buf[PATH_MAX], *homedir;
+   Evas_Object *o = NULL;
+   char buf[PATH_MAX];
+   char *homedir = NULL;
    int num = 0;
    
    sf = e_scrollframe_add(evas);
@@ -1066,7 +1037,8 @@ _apps_populate(void)
 	Efreet_Menu *menu, *entry, *subentry;
 	Efreet_Desktop *desktop;
 	char *label, *icon, *plabel;
-	Ecore_List *settings_desktops, *system_desktops, *keyboard_desktops;
+	Eina_List *settings_desktops, *system_desktops, *keyboard_desktops;
+	Eina_List *l, *ll;
 	
 	settings_desktops = efreet_util_desktop_category_list("Settings");
 	system_desktops = efreet_util_desktop_category_list("System");
@@ -1074,8 +1046,7 @@ _apps_populate(void)
 	menu = efreet_menu_get();
 	if (menu)
 	  {
-	     ecore_list_first_goto(menu->entries);
-	     while ((entry = ecore_list_next(menu->entries)))
+	     EINA_LIST_FOREACH(menu->entries, l, entry)
 	       {
 		  if (entry->type != EFREET_MENU_ENTRY_MENU) continue;
 		  
@@ -1092,8 +1063,7 @@ _apps_populate(void)
 		       e_slidesel_item_distance_set(o, 128);
 		    }
 		  
-		  ecore_list_first_goto(entry->entries);
-		  while ((subentry = ecore_list_next(entry->entries)))
+		  EINA_LIST_FOREACH(entry->entries, ll, subentry)
 		    {
 		       if (subentry->type != EFREET_MENU_ENTRY_DESKTOP) continue;
 
@@ -1103,10 +1073,10 @@ _apps_populate(void)
 		       if (!desktop) continue;
 		       
 		       if ((settings_desktops) && (system_desktops) &&
-			   (ecore_list_goto(settings_desktops, desktop)) &&
-			   (ecore_list_goto(system_desktops, desktop))) continue;
+			   (eina_list_data_find(settings_desktops, desktop)) &&
+			   (eina_list_data_find(system_desktops, desktop))) continue;
 		       if ((keyboard_desktops) &&
-			   (ecore_list_goto(keyboard_desktops, desktop))) continue;
+			   (eina_list_data_find(keyboard_desktops, desktop))) continue;
 		       
 		       if ((desktop) && (desktop->x))
 			 {
@@ -1207,20 +1177,18 @@ _apps_populate(void)
 static void
 _cb_selected(void *data, Evas_Object *obj, void *event_info)
 {
-   Eina_List *selected, *l;
+   Eina_List *selected;
+   E_Fm2_Icon_Info *ici;
    
    selected = e_fm2_selected_list_get(obj);
    if (!selected) return;
-   for (l = selected; l; l = l->next)
+   EINA_LIST_FREE(selected, ici)
      {
-	E_Fm2_Icon_Info *ici;
 	Efreet_Desktop *desktop;
 	
-	ici = l->data;
 	desktop = efreet_desktop_get(ici->real_link);
 	if (desktop) _desktop_run(desktop);
      }
-   eina_list_free(selected);
 }
 
 static int
