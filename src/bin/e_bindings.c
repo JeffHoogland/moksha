@@ -7,16 +7,29 @@
 
 static void _e_bindings_mouse_free(E_Binding_Mouse *bind);
 static void _e_bindings_key_free(E_Binding_Key *bind);
+static void _e_bindings_edge_free(E_Binding_Edge *bind);
 static void _e_bindings_signal_free(E_Binding_Signal *bind);
 static void _e_bindings_wheel_free(E_Binding_Wheel *bind);
 static int _e_bindings_context_match(E_Binding_Context bctxt, E_Binding_Context ctxt);
+static int  _e_bindings_edge_cb_timer(void *data);
 
 /* local subsystem globals */
 
-static Eina_List *mouse_bindings = NULL;
-static Eina_List *key_bindings = NULL;
+static Eina_List *mouse_bindings  = NULL;
+static Eina_List *key_bindings    = NULL;
+static Eina_List *edge_bindings   = NULL;
 static Eina_List *signal_bindings = NULL;
-static Eina_List *wheel_bindings = NULL;
+static Eina_List *wheel_bindings  = NULL;
+
+typedef struct _E_Binding_Edge_Data E_Binding_Edge_Data;
+
+struct _E_Binding_Edge_Data
+{
+   E_Binding_Edge    *bind;
+   E_Event_Zone_Edge *ev;
+   E_Action          *act;
+   E_Object	     *obj;
+};
 
 /* externally accessible functions */
 
@@ -41,6 +54,15 @@ e_bindings_init(void)
 	eb = l->data;
 	e_bindings_key_add(eb->context, eb->key, eb->modifiers,
 			   eb->any_mod, eb->action, eb->params);
+     }
+
+   for (l = e_config->edge_bindings; l; l = l->next)
+     {
+	E_Config_Binding_Edge *eb;
+
+	eb = l->data;
+	e_bindings_edge_add(eb->context, eb->edge, eb->modifiers,
+			   eb->any_mod, eb->action, eb->params, eb->delay);
      }
 
    for (l = e_config->signal_bindings; l; l = l->next)
@@ -96,6 +118,14 @@ e_bindings_shutdown(void)
 	bind = key_bindings->data;
 	key_bindings  = eina_list_remove_list(key_bindings, key_bindings);
 	_e_bindings_key_free(bind);
+     }
+   while (edge_bindings)
+     {
+	E_Binding_Edge *bind;
+	
+	bind = edge_bindings->data;
+	edge_bindings  = eina_list_remove_list(edge_bindings, edge_bindings);
+	_e_bindings_edge_free(bind);
      }
    while (signal_bindings)
      {
@@ -517,6 +547,146 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Ev
 }
 
 EAPI void
+e_bindings_edge_add(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier mod, int any_mod, const char *action, const char *params, float delay)
+{
+   E_Binding_Edge *bind;
+   
+   bind = calloc(1, sizeof(E_Binding_Edge));
+   bind->ctxt = ctxt;
+   bind->edge = edge;
+   bind->mod = mod;
+   bind->any_mod = any_mod;
+   bind->delay = delay;
+   if (action) bind->action = eina_stringshare_add(action);
+   if (params) bind->params = eina_stringshare_add(params);
+   edge_bindings = eina_list_append(edge_bindings, bind);
+}
+
+EAPI E_Binding_Edge *
+e_bindings_edge_get(const char *action, E_Zone_Edge edge)
+{
+   Eina_List *l;
+   
+   for (l = edge_bindings; l; l = l->next)
+     {
+	E_Binding_Edge *bind;
+	
+	bind = l->data;
+	if ((bind->edge == edge) && bind->action &&
+	      action && !strcmp(action, bind->action))
+	  return bind;
+     }
+   return NULL;
+}
+
+EAPI void
+e_bindings_edge_del(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier mod, int any_mod, const char *action, const char *params, float delay)
+{
+   Eina_List *l;
+   
+   for (l = edge_bindings; l; l = l->next)
+     {
+	E_Binding_Edge *bind;
+	
+	bind = l->data;
+	if ((bind->ctxt == ctxt) &&
+	    (bind->edge == edge) &&
+	    (bind->mod == mod) &&
+	    ((bind->delay * 1000) == (delay * 1000)) &&
+	    (bind->any_mod == any_mod) &&
+	    (((bind->action) && (action) && (!strcmp(bind->action, action))) ||
+	     ((!bind->action) && (!action))) &&
+	    (((bind->params) && (params) && (!strcmp(bind->params, params))) ||
+	     ((!bind->params) && (!params))))
+	  {
+	     _e_bindings_edge_free(bind);
+	     edge_bindings = eina_list_remove_list(edge_bindings, l);
+	     break;
+	  }
+     }
+}
+
+EAPI E_Action *
+e_bindings_edge_in_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Zone_Edge *ev)
+{
+   E_Binding_Modifier mod = 0;
+   E_Action *act = NULL;
+   Eina_List *l;
+   
+   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
+   if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
+   if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
+   if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+   for (l = edge_bindings; l; l = l->next)
+     {
+	E_Binding_Edge *bind;
+	
+	bind = l->data;
+	if (((bind->edge == ev->edge)) &&
+	    ((bind->any_mod) || (bind->mod == mod)))
+	  {
+	     if (_e_bindings_context_match(bind->ctxt, ctxt))
+	       {
+		  act = e_action_find(bind->action);
+		  if (act)
+		    {
+		       E_Binding_Edge_Data *ed = E_NEW(E_Binding_Edge_Data, 1);
+		       E_Event_Zone_Edge *ev2 = E_NEW(E_Event_Zone_Edge, 1);
+
+		       /* The original event will be freed before it can be
+			* used again */
+		       ev2->zone  = ev->zone;
+		       ev2->edge  = ev->edge;
+		       ev2->x     = ev->x;
+		       ev2->y     = ev->y;
+
+		       ed->bind = bind;
+		       ed->obj  = obj;
+		       ed->act  = act;
+		       ed->ev   = ev2;
+		       bind->timer = ecore_timer_add(((double) bind->delay), _e_bindings_edge_cb_timer, ed);
+		    }
+	       }
+	  }
+     }
+   return act;
+}
+
+EAPI E_Action *
+e_bindings_edge_out_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Zone_Edge *ev)
+{
+   E_Binding_Modifier mod = 0;
+   E_Action *act = NULL;
+   Eina_List *l;
+   
+   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
+   if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
+   if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
+   if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+   for (l = edge_bindings; l; l = l->next)
+     {
+	E_Binding_Edge *bind;
+	
+	bind = l->data;
+	if ((bind->edge == ev->edge) &&
+	    ((bind->any_mod) || (bind->mod == mod)))
+	  {
+	     if (_e_bindings_context_match(bind->ctxt, ctxt))
+	       {
+		  if (bind->timer)
+		    ecore_timer_del(bind->timer);
+		  bind->timer = NULL;
+
+		  act = e_action_find(bind->action);
+		  if (act && act->func.end)
+		    act->func.end(obj, bind->params);
+	       }
+	  }
+     }
+   return act;
+}
+
+EAPI void
 e_bindings_signal_add(E_Binding_Context ctxt, const char *sig, const char *src, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
    E_Binding_Signal *bind;
@@ -802,6 +972,21 @@ _e_bindings_key_free(E_Binding_Key *bind)
 }
 
 static void
+_e_bindings_edge_free(E_Binding_Edge *bind)
+{
+   if (bind->action) eina_stringshare_del(bind->action);
+   if (bind->params) eina_stringshare_del(bind->params);
+   if (bind->timer)
+     {
+	E_Binding_Edge_Data *ed;
+
+	ed = ecore_timer_del(bind->timer);
+	E_FREE(ed);
+     }
+   free(bind);
+}
+
+static void
 _e_bindings_signal_free(E_Binding_Signal *bind)
 {
    if (bind->sig) eina_stringshare_del(bind->sig);
@@ -827,3 +1012,34 @@ _e_bindings_context_match(E_Binding_Context bctxt, E_Binding_Context ctxt)
    if (bctxt == ctxt) return 1;
    return 0;
 }
+
+static int
+_e_bindings_edge_cb_timer(void *data)
+{
+   E_Binding_Edge_Data *ed;
+   E_Event_Zone_Edge *ev;
+   E_Binding_Edge *bind;
+   E_Action *act;
+   E_Object *obj;
+
+   ed = data;
+   bind = ed->bind;
+   act = ed->act;
+   obj = ed->obj;
+   ev = ed->ev;
+
+   E_FREE(ed);
+
+   if (act->func.go_edge)
+     act->func.go_edge(obj, bind->params, ev);
+   else if (act->func.go)
+     act->func.go(obj, bind->params);
+
+   bind->timer = NULL;
+
+   /* Duplicate event */
+   E_FREE(ev);
+
+   return 0;
+}
+

@@ -11,6 +11,7 @@ group "E_Config" struct {
   value "border_shade_transition" int: 3;
   value "border_shade_speed" double: 3000.0000000000000000000000000;
   value "framerate" double: 30.0000000000000000000000000;
+  value "priority" int: 1;
   value "image_cache" int: 4096;
   value "font_cache" int: 512;
   value "edje_cache" int: 32;
@@ -20,8 +21,6 @@ group "E_Config" struct {
   value "use_virtual_roots" int: 0;
   value "show_desktop_icons" int: 1;
   value "edge_flip_dragging" int: 1;
-  value "edge_flip_moving" int: 1;
-  value "edge_flip_timeout" double: 0.2500000000000000000000000;
   value "evas_engine_default" int: 1;
   value "evas_engine_container" int: 0;
   value "evas_engine_init" int: 0;
@@ -293,6 +292,14 @@ group "E_Config" struct {
   group "modules" list {
     group "E_Config_Module" struct {
       value "name" string: "conf_performance";
+      value "enabled" uchar: 1;
+      value "delayed" uchar: 1;
+      value "priority" int: 0;
+    }
+  }
+  group "modules" list {
+    group "E_Config_Module" struct {
+      value "name" string: "conf_edgebindings";
       value "enabled" uchar: 1;
       value "delayed" uchar: 1;
       value "priority" int: 0;
@@ -969,6 +976,46 @@ group "E_Config" struct {
       value "action" string: "screen_send_to";
       value "params" string: "3";
       value "any_mod" uchar: 0;
+    }
+  }
+  group "edge_bindings" list {
+    group "E_Config_Binding_Edge" struct {
+      value "context" int: 3;
+      value "modifiers" int: 0;
+      value "action" string: "desk_flip_in_direction";
+      value "edge" uchar: 1;
+      value "any_mod" uchar: 0;
+      value "delay" float: 0.3000000000000000000000000;
+    }
+  }
+  group "edge_bindings" list {
+    group "E_Config_Binding_Edge" struct {
+      value "context" int: 3;
+      value "modifiers" int: 0;
+      value "action" string: "desk_flip_in_direction";
+      value "edge" uchar: 2;
+      value "any_mod" uchar: 0;
+      value "delay" float: 0.3000000000000000000000000;
+    }
+  }
+  group "edge_bindings" list {
+    group "E_Config_Binding_Edge" struct {
+      value "context" int: 3;
+      value "modifiers" int: 0;
+      value "action" string: "desk_flip_in_direction";
+      value "edge" uchar: 3;
+      value "any_mod" uchar: 0;
+      value "delay" float: 0.3000000000000000000000000;
+    }
+  }
+  group "edge_bindings" list {
+    group "E_Config_Binding_Edge" struct {
+      value "context" int: 3;
+      value "modifiers" int: 0;
+      value "action" string: "desk_flip_in_direction";
+      value "edge" uchar: 4;
+      value "any_mod" uchar: 0;
+      value "delay" float: 0.3000000000000000000000000;
     }
   }
   group "signal_bindings" list {

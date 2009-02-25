@@ -1792,47 +1792,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-#define HDL E_IPC_OP_EDGE_FLIP_MOVING_SET
-#if (TYPE == E_REMOTE_OPTIONS)
-   OP("-edge-flip-moving-set", 1, "Set the edge flip while moving policy flag (0/1)", 0, HDL)
-#elif (TYPE == E_REMOTE_OUT)
-   REQ_INT(atoi(params[0]), HDL);
-#elif (TYPE == E_WM_IN)
-   START_INT(value, HDL);
-   e_config->edge_flip_moving = value;
-   E_CONFIG_LIMIT(e_config->edge_flip_moving, 0, 1);
-   e_zone_update_flip_all();
-   SAVE;
-   END_INT;
-#elif (TYPE == E_REMOTE_IN)
-#endif
-#undef HDL
-
-/****************************************************************************/
-#define HDL E_IPC_OP_EDGE_FLIP_MOVING_GET
-#if (TYPE == E_REMOTE_OPTIONS)
-   OP("-edge-flip-moving-get", 0, "Get the edge flip while moving policy flag", 1, HDL)
-#elif (TYPE == E_REMOTE_OUT)
-   REQ_NULL(HDL)
-#elif (TYPE == E_WM_IN)
-   SEND_INT(e_config->edge_flip_moving, E_IPC_OP_EDGE_FLIP_MOVING_GET_REPLY, HDL);
-#elif (TYPE == E_REMOTE_IN)
-#endif
-#undef HDL
-
-/****************************************************************************/
-#define HDL E_IPC_OP_EDGE_FLIP_MOVING_GET_REPLY
-#if (TYPE == E_REMOTE_OPTIONS)
-#elif (TYPE == E_REMOTE_OUT)
-#elif (TYPE == E_WM_IN)
-#elif (TYPE == E_REMOTE_IN)
-   START_INT(val, HDL)
-   printf("REPLY: %i\n", val);
-   END_INT;
-#endif
-#undef HDL
-
-/****************************************************************************/
 #define HDL E_IPC_OP_EDGE_FLIP_DRAGGING_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-edge-flip-dragging-set", 1, "Set the edge flip while dragging policy flag (0/1)", 0, HDL)
@@ -1842,7 +1801,6 @@ break;
    START_INT(value, HDL);
    e_config->edge_flip_dragging = value;
    E_CONFIG_LIMIT(e_config->edge_flip_dragging, 0, 1);
-   e_zone_update_flip_all();
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)
@@ -1870,46 +1828,6 @@ break;
    START_INT(val, HDL)
    printf("REPLY: %i\n", val);
    END_INT;
-#endif
-#undef HDL
-
-/****************************************************************************/
-#define HDL E_IPC_OP_EDGE_FLIP_TIMEOUT_SET
-#if (TYPE == E_REMOTE_OPTIONS)
-   OP("-edge-flip-timeout-set", 1, "Set the edge flip timeout (sec)", 0, HDL)
-#elif (TYPE == E_REMOTE_OUT)
-   REQ_DOUBLE(atof(params[0]), HDL)
-#elif (TYPE == E_WM_IN)
-   START_DOUBLE(dbl, HDL);
-   e_config->edge_flip_timeout = dbl;
-   E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
-   SAVE;
-   END_DOUBLE;
-#elif (TYPE == E_REMOTE_IN)
-#endif
-#undef HDL
-
-/****************************************************************************/
-#define HDL E_IPC_OP_EDGE_FLIP_TIMEOUT_GET
-#if (TYPE == E_REMOTE_OPTIONS)
-   OP("-edge-flip-timeout-get", 0, "Get the edge flip timeout", 1, HDL)
-#elif (TYPE == E_REMOTE_OUT)
-   REQ_NULL(HDL)
-#elif (TYPE == E_WM_IN)
-   SEND_DOUBLE(e_config->edge_flip_timeout, E_IPC_OP_EDGE_FLIP_TIMEOUT_GET_REPLY, HDL);
-#elif (TYPE == E_REMOTE_IN)
-#endif
-#undef HDL
-
-/****************************************************************************/
-#define HDL E_IPC_OP_EDGE_FLIP_TIMEOUT_GET_REPLY
-#if (TYPE == E_REMOTE_OPTIONS)
-#elif (TYPE == E_REMOTE_OUT)
-#elif (TYPE == E_WM_IN)
-#elif (TYPE == E_REMOTE_IN)
-   START_DOUBLE(val, HDL)
-   printf("REPLY: %3.3f\n", val);
-   END_DOUBLE;
 #endif
 #undef HDL
 

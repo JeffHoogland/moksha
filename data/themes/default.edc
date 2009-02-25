@@ -6874,6 +6874,215 @@ collections { /* begin the collection of edje groups that are in this file */
    }
 
 /////////////////////////////////////////////////////////////////////////////
+   /*** MOD: CONF_EDGEBINDINGS ***/
+   /* This group draws the edge and corners for the user to pick.
+    * XXX: Needs some love from masters of the brush! */
+   group {
+      name: "e/modules/conf_edgebindings/selection"; // for gadget
+      parts {
+         part { name: "e.swallow.background";
+            type: SWALLOW;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               min: 210 150;
+               rel1.offset: 4 4;
+               rel2 {
+                  relative: 0.5 1;
+                  offset: -2 -5;
+               }
+            }
+         }
+         part { name: "e.edge.top_left";
+            type: RECT;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "e.swallow.background";
+               }
+               rel2 {
+                  relative: 0 0;
+                  offset: 20 20;
+                  to: "e.swallow.background";
+               }
+               color: 255 0 0 150;
+            }
+         }
+         part { name: "e.edge.top";
+            type: RECT;
+            description { state: "default" 0.0;
+               rel1 {
+                  offset: 20 0;
+                  to: "e.swallow.background";
+               }
+               rel2 {
+                  relative: 1 0;
+                  offset: -20 15;
+                  to: "e.swallow.background";
+               }
+               color: 255 255 0 150;
+            }
+         }
+         part { name: "e.edge.top_right";
+            type: RECT;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 1 0;
+                  offset: -20 0;
+                  to: "e.swallow.background";
+               }
+               rel2 {
+                  relative: 1 0;
+                  offset: 0 20;
+                  to: "e.swallow.background";
+               }
+               color: 255 0 0 150;
+            }
+         }
+         part { name: "e.edge.right";
+            type: RECT;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 1 0;
+                  offset: -15 20;
+                  to: "e.swallow.background";
+               }
+               rel2 {
+                  relative: 1 1;
+                  offset: 0 -20;
+                  to: "e.swallow.background";
+               }
+               color: 255 255 0 150;
+            }
+         }
+         part { name: "e.edge.bottom_right";
+            type: RECT;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 1 1;
+                  offset: -20 -20;
+                  to: "e.swallow.background";
+               }
+               rel2 {
+                  relative: 1 1;
+                  offset: 0 0;
+                  to: "e.swallow.background";
+               }
+               color: 255 0 0 150;
+            }
+         }
+         part { name: "e.edge.bottom";
+            type: RECT;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0 1;
+                  offset: 20 -15;
+                  to: "e.swallow.background";
+               }
+               rel2 {
+                  relative: 1 1;
+                  offset: -20 0;
+                  to: "e.swallow.background";
+               }
+               color: 255 255 0 150;
+            }
+         }
+         part { name: "e.edge.bottom_left";
+            type: RECT;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0 1;
+                  offset: 0 -20;
+                  to: "e.swallow.background";
+               }
+               rel2 {
+                  relative: 0 1;
+                  offset: 20 0;
+                  to: "e.swallow.background";
+               }
+               color: 255 0 0 150;
+            }
+         }
+         part { name: "e.edge.left";
+            type: RECT;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0 0;
+                  offset: 0 20;
+                  to: "e.swallow.background";
+               }
+               rel2 {
+                  relative: 0 1;
+                  offset: 15 -20;
+                  to: "e.swallow.background";
+               }
+               color: 255 255 0 150;
+            }
+         }
+         part { name: "e.swallow.slider";
+            type: SWALLOW;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 1 1;
+                  offset: 5 4;
+                  to_x: "e.swallow.background";
+                  to_y: "e.text.description";
+               }
+               rel2 {
+                  relative: 1 1;
+                  offset: -5 -5;
+                  to_y: "e.swallow.background";
+               }
+            }
+         }
+         part { name: "e.text.description";
+            type: TEXTBLOCK;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+               rel1 {
+                  relative: 1 0;
+                  offset: 5 4;
+                  to_x: "e.swallow.background";
+               }
+	       rel2 {
+                  relative: 1 1;
+                  offset: -5 -45;
+               }
+	       text {
+		  style:    "dialog_style";
+		  min:      1 1;
+	       }
+	    }
+         }
+         part { name: "e.text.selection";
+            type: TEXT;
+            effect: SOFT_SHADOW;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+	       align: 0.5 0.5;
+	       rel1 {
+                  relative: 1 1;
+		  offset: 5 5;
+                  to: "e.edge.top_left";
+	       }
+	       rel2 {
+                  relative: 0 0;
+		  offset: -5 -5;
+                  to: "e.edge.bottom_right";
+	       }
+	       color: 224 224 224 255;
+	       color3: 0 0 0 64;
+	       text {
+                  font: "Sans:style=Bold";
+		  size: 12;
+                  align: 0.5 0.5;
+                  fit: 1 1;
+	       }
+            }
+         }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
    /*** MOD: START ***/
    /* This is for the "start" module - i.e. a "start" button. It simply
     * provides such a button/gadget in a shelf that pops up E's main

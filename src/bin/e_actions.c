@@ -29,6 +29,13 @@
    }
 #define ACT_FN_GO_WHEEL(act) \
    static void _e_actions_act_##act##_go_wheel(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Wheel *ev)
+#define ACT_GO_EDGE(name) \
+   { \
+      act = e_action_add(#name); \
+      if (act) act->func.go_edge = _e_actions_act_##name##_go_edge; \
+   }
+#define ACT_FN_GO_EDGE(act) \
+   static void _e_actions_act_##act##_go_edge(E_Object *obj, const char *params, E_Event_Zone_Edge *ev)
 #define ACT_GO_SIGNAL(name) \
    { \
       act = e_action_add(#name); \
@@ -1094,6 +1101,118 @@ ACT_FN_GO(desk_flip_to)
 	       e_zone_desk_flip_to(zone, dx, dy);
 	  }
      }
+}
+
+/***************************************************************************/
+#define ACT_FLIP_LEFT(zone)  ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1)) || ((zone)->desk_x_current > 0))
+#define ACT_FLIP_RIGHT(zone) ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1)) || (((zone)->desk_x_current + 1) < (zone)->desk_x_count))
+#define ACT_FLIP_UP(zone)    ((e_config->desk_flip_wrap && ((zone)->desk_y_count > 1)) || ((zone)->desk_y_current > 0))
+#define ACT_FLIP_DOWN(zone)  ((e_config->desk_flip_wrap && ((zone)->desk_y_count > 1)) || (((zone)->desk_y_current + 1) < (zone)->desk_y_count))
+#define ACT_FLIP_UP_LEFT(zone)  ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1) && ((zone)->desk_y_count > 1)) || (((zone)->desk_x_current > 0) && ((zone)->desk_y_current > 0)))
+#define ACT_FLIP_UP_RIGHT(zone)  ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1) && ((zone)->desk_y_count > 1)) || ((((zone)->desk_x_current + 1) < (zone)->desk_x_count) && ((zone)->desk_y_current > 0)))
+#define ACT_FLIP_DOWN_RIGHT(zone)  ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1) && ((zone)->desk_y_count > 1)) || ((((zone)->desk_x_current + 1) < (zone)->desk_x_count) && (((zone)->desk_y_current + 1) < (zone)->desk_y_count)))
+#define ACT_FLIP_DOWN_LEFT(zone)  ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1) && ((zone)->desk_y_count > 1)) || (((zone)->desk_x_current > 0) && (((zone)->desk_y_current + 1) < (zone)->desk_y_count)))
+
+ACT_FN_GO_EDGE(desk_flip_in_direction)
+{
+   E_Zone *zone;
+   E_Desk *prev = NULL, *current = NULL;
+   E_Event_Pointer_Warp *wev;
+   int x, y, offset = 25;
+
+   zone = _e_actions_zone_get(obj);
+   wev = E_NEW(E_Event_Pointer_Warp, 1);
+   if ((!wev) || (!zone)) return;
+   ecore_x_pointer_xy_get(zone->container->win, &x, &y);
+   wev->prev.x = x;
+   wev->prev.y = y;
+   prev = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current);
+   if (params)
+     {
+	if (sscanf(params, "%i", &offset) != 1)
+	  offset = 25;
+     }
+   switch(ev->edge)
+     {
+      case E_ZONE_EDGE_LEFT:
+	if (ACT_FLIP_LEFT(zone))
+	  {
+	     e_zone_desk_flip_by(zone, -1, 0);
+	     ecore_x_pointer_warp(zone->container->win, zone->w - offset, y);
+	     wev->curr.y = y;
+	     wev->curr.x = zone->w - offset;
+	  }
+	 break;
+      case E_ZONE_EDGE_RIGHT:
+	 if (ACT_FLIP_RIGHT(zone))
+	   {
+	      e_zone_desk_flip_by(zone, 1, 0);
+	      ecore_x_pointer_warp(zone->container->win, offset, y);
+	      wev->curr.y = y;
+	      wev->curr.x = offset;
+	   }
+	 break;
+      case E_ZONE_EDGE_TOP:
+	 if (ACT_FLIP_UP(zone))
+	   {
+	      e_zone_desk_flip_by(zone, 0, -1);
+	      ecore_x_pointer_warp(zone->container->win, x, zone->h - offset);
+	      wev->curr.x = x;
+	      wev->curr.y = zone->h - offset;
+	   }
+	 break;
+      case E_ZONE_EDGE_BOTTOM:
+	if (ACT_FLIP_DOWN(zone))
+	  {
+	     e_zone_desk_flip_by(zone, 0, 1);
+	     ecore_x_pointer_warp(zone->container->win, x, offset);
+	     wev->curr.x = x;
+	     wev->curr.y = offset;
+	  }
+	 break;
+      case E_ZONE_EDGE_TOP_LEFT:
+	 if (ACT_FLIP_UP_LEFT(zone))
+	   {
+	      e_zone_desk_flip_by(zone, -1, -1);
+	      ecore_x_pointer_warp(zone->container->win, zone->w - offset, zone->h - offset);
+	      wev->curr.x = zone->w - offset;
+	      wev->curr.y = zone->h - offset;
+	   }
+	 break;
+      case E_ZONE_EDGE_TOP_RIGHT:
+	 if (ACT_FLIP_UP_RIGHT(zone))
+	   {
+	      e_zone_desk_flip_by(zone, 1, -1);
+	      ecore_x_pointer_warp(zone->container->win, offset, zone->h - offset);
+	      wev->curr.x = offset;
+	      wev->curr.y = zone->h - offset;
+	   }
+	 break;
+      case E_ZONE_EDGE_BOTTOM_LEFT:
+	if (ACT_FLIP_DOWN_LEFT(zone))
+	  {
+	     e_zone_desk_flip_by(zone, -1, 1);
+	     ecore_x_pointer_warp(zone->container->win, zone->w - offset, offset);
+	     wev->curr.y = offset;
+	     wev->curr.x = zone->w - offset;
+	  }
+	 break;
+      case E_ZONE_EDGE_BOTTOM_RIGHT:
+	if (ACT_FLIP_DOWN_RIGHT(zone))
+	  {
+	     e_zone_desk_flip_by(zone, 1, 1);
+	     ecore_x_pointer_warp(zone->container->win, offset, offset);
+	     wev->curr.y = offset;
+	     wev->curr.x = offset;
+	  }
+	 break;
+     }
+
+   current = e_desk_current_get(zone);
+   if (current)
+     ecore_event_add(E_EVENT_POINTER_WARP, wev, NULL, NULL);
+   else
+     free(wev);
 }
 
 /***************************************************************************/
@@ -2500,6 +2619,11 @@ e_actions_init(void)
    e_action_predef_name_set(_("Desktop"), _("Flip Desktop Linearly... (All Screens)"), 
 			    "desk_linear_flip_by_all",
 			    NULL, "syntax: N-offset, example: -2", 1);
+
+   /* desk_flip_in_direction */
+   ACT_GO_EDGE(desk_flip_in_direction);
+   e_action_predef_name_set(_("Desktop"), _("Flip Desktop In Direction..."), 
+			    "desk_flip_in_direction", NULL, "syntax: N-pixel-offset, example: 25", 1);
 
    /* desk_linear_flip_to_all */
    ACT_GO(desk_linear_flip_to_all);

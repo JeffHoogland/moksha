@@ -10,6 +10,7 @@ group "E_Config" struct {
   value "border_shade_transition" int: 3;
   value "border_shade_speed" double: 3000.0000000000000000000000000;
   value "framerate" double: 30.0000000000000000000000000;
+  value "priority" int: 1;
   value "image_cache" int: 4096;
   value "font_cache" int: 512;
   value "edje_cache" int: 10;
@@ -19,8 +20,6 @@ group "E_Config" struct {
   value "use_virtual_roots" int: 0;
   value "show_desktop_icons" int: 1;
   value "edge_flip_dragging" int: 0;
-  value "edge_flip_moving" int: 0;
-  value "edge_flip_timeout" double: 0.2500000000000000000000000;
   value "evas_engine_default" int: 1;
   value "evas_engine_container" int: 0;
   value "evas_engine_init" int: 0;

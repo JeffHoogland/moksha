@@ -399,7 +399,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      e_shelf_toggle(cfdata->es, 0);
    else if (!cfdata->escfg->autohide && cfdata->es->hidden)
      e_shelf_toggle(cfdata->es, 1);
-   e_zone_update_flip_all();
    
    cfdata->escfg->desk_show_mode = cfdata->desk_show_mode;
    cfdata->escfg->desk_list = NULL;

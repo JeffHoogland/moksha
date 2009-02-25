@@ -29,6 +29,7 @@ static E_Config_DD *_e_config_font_default_edd = NULL;
 static E_Config_DD *_e_config_theme_edd = NULL;
 static E_Config_DD *_e_config_bindings_mouse_edd = NULL;
 static E_Config_DD *_e_config_bindings_key_edd = NULL;
+static E_Config_DD *_e_config_bindings_edge_edd = NULL;
 static E_Config_DD *_e_config_bindings_signal_edd = NULL;
 static E_Config_DD *_e_config_bindings_wheel_edd = NULL;
 static E_Config_DD *_e_config_path_append_edd = NULL;
@@ -266,6 +267,20 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, params, STR);
    E_CONFIG_VAL(D, T, any_mod, UCHAR);
 
+   _e_config_bindings_edge_edd = E_CONFIG_DD_NEW("E_Config_Binding_Edge", 
+						  E_Config_Binding_Edge);
+#undef T
+#undef D
+#define T E_Config_Binding_Edge
+#define D _e_config_bindings_edge_edd
+   E_CONFIG_VAL(D, T, context, INT);
+   E_CONFIG_VAL(D, T, modifiers, INT);
+   E_CONFIG_VAL(D, T, action, STR);
+   E_CONFIG_VAL(D, T, params, STR);
+   E_CONFIG_VAL(D, T, edge, UCHAR);
+   E_CONFIG_VAL(D, T, any_mod, UCHAR);
+   E_CONFIG_VAL(D, T, delay, FLOAT);
+
    _e_config_bindings_signal_edd = E_CONFIG_DD_NEW("E_Config_Binding_Signal", 
 						   E_Config_Binding_Signal);
 #undef T
@@ -424,8 +439,6 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, use_virtual_roots, INT); /* should not make this a config option (for now) */
    E_CONFIG_VAL(D, T, show_desktop_icons, INT); /**/
    E_CONFIG_VAL(D, T, edge_flip_dragging, INT); /**/
-   E_CONFIG_VAL(D, T, edge_flip_moving, INT); /**/
-   E_CONFIG_VAL(D, T, edge_flip_timeout, DOUBLE); /**/
    E_CONFIG_VAL(D, T, evas_engine_default, INT); /**/
    E_CONFIG_VAL(D, T, evas_engine_container, INT); /**/
    E_CONFIG_VAL(D, T, evas_engine_init, INT); /**/
@@ -444,6 +457,7 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, themes, _e_config_theme_edd); /**/
    E_CONFIG_LIST(D, T, mouse_bindings, _e_config_bindings_mouse_edd); /**/
    E_CONFIG_LIST(D, T, key_bindings, _e_config_bindings_key_edd); /**/
+   E_CONFIG_LIST(D, T, edge_bindings, _e_config_bindings_edge_edd); /**/
    E_CONFIG_LIST(D, T, signal_bindings, _e_config_bindings_signal_edd); /**/
    E_CONFIG_LIST(D, T, wheel_bindings, _e_config_bindings_wheel_edd); /**/
    E_CONFIG_LIST(D, T, path_append_data, _e_config_path_append_edd); /**/
@@ -680,6 +694,7 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_theme_edd);
    E_CONFIG_DD_FREE(_e_config_bindings_mouse_edd);
    E_CONFIG_DD_FREE(_e_config_bindings_key_edd);
+   E_CONFIG_DD_FREE(_e_config_bindings_edge_edd);
    E_CONFIG_DD_FREE(_e_config_bindings_signal_edd);
    E_CONFIG_DD_FREE(_e_config_bindings_wheel_edd);
    E_CONFIG_DD_FREE(_e_config_path_append_edd);
@@ -884,8 +899,6 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64);
    E_CONFIG_LIMIT(e_config->show_desktop_icons, 0, 1);
    E_CONFIG_LIMIT(e_config->edge_flip_dragging, 0, 1);
-   E_CONFIG_LIMIT(e_config->edge_flip_moving, 0, 1);
-   E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
    E_CONFIG_LIMIT(e_config->window_placement_policy, E_WINDOW_PLACEMENT_SMART, E_WINDOW_PLACEMENT_MANUAL);
    E_CONFIG_LIMIT(e_config->focus_policy, 0, 2);
    E_CONFIG_LIMIT(e_config->focus_setting, 0, 3);
@@ -1351,6 +1364,30 @@ e_config_binding_key_match(E_Config_Binding_Key *eb_in)
    return NULL;
 }
 
+EAPI E_Config_Binding_Edge *
+e_config_binding_edge_match(E_Config_Binding_Edge *eb_in)
+{
+   Eina_List *l;
+   
+   for (l = e_config->edge_bindings; l; l = l->next)
+     {
+	E_Config_Binding_Edge *eb;
+	
+	eb = l->data;
+	if ((eb->context == eb_in->context) &&
+	    (eb->modifiers == eb_in->modifiers) &&
+	    (eb->any_mod == eb_in->any_mod) &&
+	    (eb->edge == eb_in->edge) &&
+	    (eb->delay == eb_in->delay) &&
+	    (((eb->action) && (eb_in->action) && (!strcmp(eb->action, eb_in->action))) ||
+	     ((!eb->action) && (!eb_in->action))) &&
+	    (((eb->params) && (eb_in->params) && (!strcmp(eb->params, eb_in->params))) ||
+	     ((!eb->params) && (!eb_in->params))))
+	  return eb;
+     }
+   return NULL;
+}
+
 EAPI E_Config_Binding_Signal *
 e_config_binding_signal_match(E_Config_Binding_Signal *eb_in)
 {
@@ -1419,6 +1456,7 @@ _e_config_free(E_Config *ecf)
    E_Config_Binding_Wheel *ebw;
    E_Config_Syscon_Action *sca;
    E_Config_Binding_Key *ebk;
+   E_Config_Binding_Edge *ebe;
    E_Font_Fallback *eff;
         E_Config_Module *em;
    E_Font_Default *efd;
@@ -1463,6 +1501,12 @@ _e_config_free(E_Config *ecf)
         if (ebk->action) eina_stringshare_del(ebk->action);
         if (ebk->params) eina_stringshare_del(ebk->params);
         E_FREE(ebk);
+     }
+   EINA_LIST_FREE(ecf->edge_bindings, ebe)
+     {
+        if (ebe->action) eina_stringshare_del(ebe->action);
+        if (ebe->params) eina_stringshare_del(ebe->params);
+        E_FREE(ebe);
      }
    EINA_LIST_FREE(ecf->signal_bindings, ebs)
      {

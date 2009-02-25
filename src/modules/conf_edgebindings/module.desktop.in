@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Settings - Edge Bindings
+Icon=e-module-conf_edgebindings
+Comment=<title>E17 Settings Applet</title><br>Configure your edgebindings here.
+X-Enlightenment-ModuleType=config

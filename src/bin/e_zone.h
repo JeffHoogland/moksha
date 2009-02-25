@@ -5,10 +5,15 @@
 
 typedef enum _E_Zone_Edge
 {
+   E_ZONE_EDGE_NONE,
    E_ZONE_EDGE_LEFT,
    E_ZONE_EDGE_RIGHT,
    E_ZONE_EDGE_TOP,
-   E_ZONE_EDGE_BOTTOM
+   E_ZONE_EDGE_BOTTOM,
+   E_ZONE_EDGE_TOP_LEFT,
+   E_ZONE_EDGE_TOP_RIGHT,
+   E_ZONE_EDGE_BOTTOM_RIGHT,
+   E_ZONE_EDGE_BOTTOM_LEFT
 } E_Zone_Edge;
 
 typedef struct _E_Zone     E_Zone;
@@ -52,20 +57,19 @@ struct _E_Zone
    Eina_List           *handlers;
 
    struct {
-	unsigned char top : 1;
-	unsigned char right : 1;
-	unsigned char bottom : 1;
-	unsigned char left : 1;
-	Ecore_Timer *timer;
-	E_Direction direction;
+	unsigned char		 switching : 1;
+	E_Shelf			*es;
+	E_Event_Zone_Edge	*ev;
+	E_Binding_Edge		*bind;
    } flip;
 
    struct {
 	Ecore_X_Window top, right, bottom, left;
    } edge;
    struct {
-	int top, right, bottom, left;
-   } show;
+	Ecore_X_Window left_top, top_left, top_right, right_top,
+		       right_bottom, bottom_right, bottom_left, left_bottom;
+   } corner;
    
    E_Action *cur_mouse_action;
    Eina_List *popups;
@@ -111,6 +115,7 @@ struct _E_Event_Zone_Edge
    E_Zone      *zone;
    E_Zone_Edge  edge;
    int x, y;
+   int modifiers;
 };
 
 EAPI int        e_zone_init(void);
@@ -126,15 +131,12 @@ EAPI void       e_zone_bg_reconfigure(E_Zone *zone);
 EAPI void       e_zone_flip_coords_handle(E_Zone *zone, int x, int y);
 EAPI void       e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count);
 EAPI void       e_zone_desk_count_get(E_Zone *zone, int *x_count, int *y_count);
-EAPI void       e_zone_update_flip(E_Zone *zone);
-EAPI void       e_zone_update_flip_all(void);
 EAPI void       e_zone_desk_flip_by(E_Zone *zone, int dx, int dy);
 EAPI void       e_zone_desk_flip_to(E_Zone *zone, int x, int y);
 EAPI void       e_zone_desk_linear_flip_by(E_Zone *zone, int dx);
 EAPI void       e_zone_desk_linear_flip_to(E_Zone *zone, int x);
 EAPI void       e_zone_flip_win_disable(void);
 EAPI void       e_zone_flip_win_restore(void);
-EAPI void       e_zone_edge_event_register(E_Zone *zone, E_Zone_Edge edge, int reg);
 
 extern EAPI int E_EVENT_ZONE_DESK_COUNT_SET;
 extern EAPI int E_EVENT_ZONE_MOVE_RESIZE;

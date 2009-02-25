@@ -154,6 +154,10 @@ if USE_MODULE_CONF_MOUSEBINDINGS
 SUBDIRS += conf_mousebindings
 endif
 
+if USE_MODULE_CONF_EDGEBINDINGS
+SUBDIRS += conf_edgebindings
+endif
+
 if USE_MODULE_CONF_MOUSE
 SUBDIRS += conf_mouse
 endif
@@ -276,6 +280,7 @@ conf_dpms \
 conf_shelves \
 conf_keybindings \
 conf_mousebindings \
+conf_edgebindings \
 conf_mouse \
 conf_window_display \
 conf_window_focus \

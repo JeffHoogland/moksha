@@ -18,13 +18,10 @@ struct _E_Config_Dialog_Data
    /*- BASIC -*/
    int x;
    int y;
-   int edge_flip_basic;
    int flip_animate;
    
    /*- ADVANCED -*/
-   int edge_flip_moving;
    int edge_flip_dragging;
-   double edge_flip_timeout;
    int flip_wrap;
    int flip_mode;
    int flip_interp;
@@ -65,11 +62,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 {
    cfdata->x = e_config->zone_desks_x_count;
    cfdata->y = e_config->zone_desks_y_count;
-   cfdata->edge_flip_basic = e_config->edge_flip_moving || e_config->edge_flip_dragging;
    cfdata->flip_animate = e_config->desk_flip_animate_mode > 0;
-   cfdata->edge_flip_moving = e_config->edge_flip_moving;
    cfdata->edge_flip_dragging = e_config->edge_flip_dragging;
-   cfdata->edge_flip_timeout = e_config->edge_flip_timeout;   
    cfdata->flip_wrap = e_config->desk_flip_wrap;
    cfdata->flip_mode = e_config->desk_flip_animate_mode;
    cfdata->flip_interp = e_config->desk_flip_animate_interpolation;
@@ -132,9 +126,6 @@ _basic_apply_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
 	cfdata->flip_mode = 0;
 	e_config->desk_flip_animate_mode = 0;
      }
-   e_config->edge_flip_dragging = cfdata->edge_flip_basic;
-   e_config->edge_flip_moving = cfdata->edge_flip_basic;
-   e_zone_update_flip_all();
 
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -167,12 +158,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->desk_flip_animate_interpolation = cfdata->flip_interp;
    e_config->desk_flip_animate_time = cfdata->flip_speed;
    
-   e_config->edge_flip_moving = cfdata->edge_flip_moving;
    e_config->edge_flip_dragging = cfdata->edge_flip_dragging;
-   e_config->edge_flip_timeout = cfdata->edge_flip_timeout;
    e_config->desk_flip_wrap = cfdata->flip_wrap;
 
-   e_zone_update_flip_all();
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -206,8 +194,6 @@ _basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
     
    of = e_widget_framelist_add(evas, _("Desktop Mouse Flip"), 0);
-   ob = e_widget_check_add(evas, _("Flip desktops when mouse at screen edge"), &(cfdata->edge_flip_basic));
-   e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Animated flip"), &(cfdata->flip_animate));
    e_widget_framelist_object_append(of, ob);
 
@@ -245,13 +231,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ott, of, 0, 0, 1, 2, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Desktop Mouse Flip"), 0);
-   ob = e_widget_check_add(evas, _("Flip when moving mouse to the screen edge"), &(cfdata->edge_flip_moving));
-   e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Flip when dragging objects to the screen edge"), &(cfdata->edge_flip_dragging));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_label_add(evas, _("Time the mouse is at the edge before flipping:"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 2.0, 0.05, 0, &(cfdata->edge_flip_timeout), NULL, 200);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Wrap desktops around when flipping"), &(cfdata->flip_wrap));
    e_widget_framelist_object_append(of, ob);

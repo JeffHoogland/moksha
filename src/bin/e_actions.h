@@ -22,6 +22,7 @@ struct _E_Action
       void (*go)        (E_Object *obj, const char *params);
       void (*go_mouse)  (E_Object *obj, const char *params, Ecore_X_Event_Mouse_Button_Down *ev);
       void (*go_wheel)  (E_Object *obj, const char *params, Ecore_X_Event_Mouse_Wheel *ev);
+      void (*go_edge)   (E_Object *obj, const char *params, E_Event_Zone_Edge *ev);
       void (*go_key)    (E_Object *obj, const char *params, Ecore_X_Event_Key_Down *ev);
       void (*go_signal) (E_Object *obj, const char *params, const char *sig, const char *src);
       void (*end)       (E_Object *obj, const char *params);

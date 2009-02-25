@@ -26,8 +26,6 @@ static int  _e_shelf_cb_hide_animator_timer(void *data);
 static int  _e_shelf_cb_instant_hide_timer(void *data);
 static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 
-static void _e_shelf_edge_event_register(E_Shelf *es, int reg);
-
 static Eina_List *shelves = NULL;
 static Eina_Hash *winid_shelves = NULL;
 
@@ -628,8 +626,6 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 	evas_object_show(es->o_base);
 	e_popup_edje_bg_object_set(es->popup, es->o_base);
 
-	_e_shelf_edge_event_register(es, 1);
-
 	e_drop_xdnd_register_set(es->popup->evas_win, 1);
 	e_gadcon_xdnd_window_set(es->gadcon, es->popup->evas_win);
 	e_gadcon_dnd_window_set(es->gadcon, es->popup->evas_win);
@@ -648,7 +644,6 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 	evas_object_layer_set(es->o_event, es->cfg->layer);
 	evas_object_layer_set(es->o_base, es->cfg->layer);
 
-	_e_shelf_edge_event_register(es, 0);
 	e_drop_xdnd_register_set(es->zone->container->bg_win, 1);
 	e_gadcon_xdnd_window_set(es->gadcon, es->zone->container->bg_win);
 	e_gadcon_dnd_window_set(es->gadcon, es->zone->container->event_win);
@@ -695,8 +690,6 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
    else
      e_shelf_show(es);
 
-   if (es->popup)
-     _e_shelf_edge_event_register(es, 1);
    e_shelf_toggle(es, 0);
    return es;
 }
@@ -738,7 +731,6 @@ _e_shelf_free(E_Shelf *es)
    evas_object_del(es->o_base);
    if (es->popup)
      {
-	_e_shelf_edge_event_register(es, 0);
 	e_drop_xdnd_register_set(es->popup->evas_win, 0);
 	eina_hash_del(winid_shelves, e_util_winid_str_get(es->popup->evas_win), es);
 	if (!eina_hash_population(winid_shelves))
@@ -1693,52 +1685,4 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Delete this Shelf"));
    e_util_menu_item_edje_icon_set(mi, "widget/del");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);   
-}
-
-static void
-_e_shelf_edge_event_register(E_Shelf *es, int reg)
-{
-   if (!es) return;
-   if ((!reg) && (!es->edge)) return;
-   if ((reg) && (es->edge)) return;
-   if ((reg) && ((!es->cfg->autohide) || (es->cfg->autohide_show_action) || (!es->popup))) return;
-   es->edge = reg;
-
-   switch (es->gadcon->orient)
-     {
-      case E_GADCON_ORIENT_LEFT:
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_LEFT, es->edge);
-	 break;
-      case E_GADCON_ORIENT_RIGHT:
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_RIGHT, es->edge);
-	 break;
-      case E_GADCON_ORIENT_TOP:
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_TOP, es->edge);
-	 break;
-      case E_GADCON_ORIENT_BOTTOM:
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_BOTTOM, es->edge);
-	 break;
-      case E_GADCON_ORIENT_CORNER_TL:
-      case E_GADCON_ORIENT_CORNER_LT:
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_TOP, es->edge);
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_LEFT, es->edge);
-	 break;
-      case E_GADCON_ORIENT_CORNER_TR:
-      case E_GADCON_ORIENT_CORNER_RT:
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_TOP, es->edge);
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_RIGHT, es->edge);
-	 break;
-      case E_GADCON_ORIENT_CORNER_BL:
-      case E_GADCON_ORIENT_CORNER_LB:
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_BOTTOM, es->edge);
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_LEFT, es->edge);
-	 break;
-      case E_GADCON_ORIENT_CORNER_BR:
-      case E_GADCON_ORIENT_CORNER_RB:
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_BOTTOM, es->edge);
-	 e_zone_edge_event_register(es->zone, E_ZONE_EDGE_RIGHT, es->edge);
-	 break;
-      default:
-	 break;
-     }
 }
