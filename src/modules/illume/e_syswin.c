@@ -157,7 +157,7 @@ e_syswin_show(E_Syswin *esw)
 	ent->syswin = esw;
 	ent->border = bd;
 	ent->icon = ic;
-	esw->borders = evas_list_append(esw->borders, ent);
+	esw->borders = eina_list_append(esw->borders, ent);
 	e_widget_ilist_append(esw->ilist_obj, ic, title, _e_syswin_cb_item_sel, ent, NULL);
 	if (bd == e_border_focused_get()) selnum = i;
 	i++;

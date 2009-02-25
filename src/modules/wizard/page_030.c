@@ -71,7 +71,9 @@ wizard_page_show(E_Wizard_Page *pg)
 {
    Evas_Object *o, *of, *ob;
    Eina_List *l;
-   int i, sel = -1;
+   char *file;
+   int sel = -1;
+   int i = 0;
    
    o = e_widget_list_add(pg->evas, 1, 0);
    e_wizard_title_set(_("Menus"));
@@ -108,12 +110,12 @@ wizard_page_show(E_Wizard_Page *pg)
 	e_widget_min_size_set(ob, 140 * e_scale, 140 * e_scale);
 	
 	e_widget_ilist_freeze(ob);
-	for (i = 0, l = menus; l; l = l->next, i++)
+
+	EINA_LIST_FREE(menus, file)
 	  {
-	     char buf[PATH_MAX], *file, *p, *p2, *tlabel, *tdesc;
+	     char buf[PATH_MAX], *p, *p2, *tlabel, *tdesc;
 	     const char *label;
-	     
-	     file = l->data;
+
 	     label = file;
 	     tlabel = NULL;
 	     tdesc = NULL;
@@ -169,9 +171,8 @@ wizard_page_show(E_Wizard_Page *pg)
 	     if (tlabel) free(tlabel);
 	     if (tdesc) free(tdesc);
 	     free(file);
+	     i++;
 	  }
-	evas_list_free(menus);
-	menus = NULL;
 	e_widget_ilist_go(ob);
 	e_widget_ilist_thaw(ob);
    

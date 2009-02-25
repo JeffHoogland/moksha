@@ -206,7 +206,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
         free(prof);
         if (desk) efreet_desktop_free(desk);
      }
-   if (profiles) evas_list_free(profiles);
+   if (profiles) eina_list_free(profiles);
    if (selected >= 0)
      e_widget_ilist_selected_set(cfdata->o_list, selected);   
    e_widget_min_size_set(cfdata->o_list, 155, 250);

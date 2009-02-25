@@ -1277,18 +1277,18 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 		  if (ici->link)
 		    {
 		      f = e_fm_mime_filename_get(ici->link);
-		      eina_hash_del(mimes, f, (void *)1);
 		      if (!mimes)
 			mimes = eina_hash_string_superfast_new(NULL);
+		      eina_hash_del(mimes, f, (void *)1);
 		      eina_hash_direct_add(mimes, f, (void *)1);
 		    }
 		  else
 		    {
 		      snprintf(buf, sizeof(buf), "%s/%s",
 			       e_fm2_real_path_get(fwin->fm_obj), ici->file);
-		      eina_hash_del(mimes, ici->mime, (void *)1);
 		      if (!mimes)
 			mimes = eina_hash_string_superfast_new(NULL);
+		      eina_hash_del(mimes, ici->mime, (void *)1);
 		      eina_hash_direct_add(mimes, ici->mime, (void *)1);
 		    }
 	       }

@@ -108,7 +108,7 @@ wizard_page_show(E_Wizard_Page *pg)
 	free(prof);
         if (desk) efreet_desktop_free(desk);
      }
-   if (profiles) evas_list_free(profiles);
+   if (profiles) eina_list_free(profiles);
 
    e_widget_ilist_go(ob);
    e_widget_ilist_thaw(ob);

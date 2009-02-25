@@ -282,21 +282,20 @@ static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    Eina_List *l, *ll;
+   Resolution *r;
 
    if (cfdata->surebox)
      _surebox_dialog_cb_delete(cfdata->surebox->dia->win);
 
-   for (l = cfdata->resolutions; l; l = l->next)
+   EINA_LIST_FREE(cfdata->resolutions, r)
      {
-	Resolution *r = l->data;
+	Ecore_X_Screen_Refresh_Rate *rt;
 
-	for (ll = r->rates; ll; ll = ll->next)
-	  E_FREE(ll->data);
+	EINA_LIST_FREE(r->rates, rt)
+	  E_FREE(rt);
 
-	r->rates = eina_list_free(r->rates);
 	E_FREE(r);
      }
-   cfdata->resolutions = eina_list_free(cfdata->resolutions);
    E_FREE(cfdata);
 }
 
@@ -309,11 +308,11 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 
    r = e_widget_ilist_selected_get(cfdata->res_list);
    if (r < 0) return 0;
-   res = evas_list_nth(cfdata->resolutions, r);
+   res = eina_list_nth(cfdata->resolutions, r);
    if (!res) return 0;
    r = e_widget_ilist_selected_get(cfdata->rate_list);
    if (r < 0) return 0;
-   rt = evas_list_nth(res->rates, r);
+   rt = eina_list_nth(res->rates, r);
    if (!rt) return 0;
 
    return (e_config->display_res_restore != cfdata->restore) ||
@@ -338,9 +337,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    E_Manager *man;
 
    r = e_widget_ilist_selected_get(cfdata->res_list);
-   res = evas_list_nth(cfdata->resolutions, r);
+   res = eina_list_nth(cfdata->resolutions, r);
    r = e_widget_ilist_selected_get(cfdata->rate_list);
-   rate = evas_list_nth(res->rates, r);
+   rate = eina_list_nth(res->rates, r);
 
    man = e_manager_current_get();
 
@@ -370,7 +369,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	int rot;
 
-	cfdata->flip = cfdata->rotation;	
+	cfdata->flip = cfdata->rotation;
 	if (cfdata->flip_x)
 	  cfdata->flip = (cfdata->flip | ECORE_X_RANDR_FLIP_X);
 	if (cfdata->flip_y)
@@ -588,6 +587,7 @@ _load_rates(E_Config_Dialog_Data *cfdata)
    int r, k = 0, sel = 0;
    char buf[16];
    Evas *evas;
+   Resolution *res;
    Eina_List *l;
 
    evas = evas_object_evas_get(cfdata->rate_list);
@@ -598,34 +598,29 @@ _load_rates(E_Config_Dialog_Data *cfdata)
 
    r = e_widget_ilist_selected_get(cfdata->res_list);
 
-   for (l = cfdata->resolutions; l; l = l->next) 
-     {
-	Resolution *res = l->data;
+   EINA_LIST_FOREACH(cfdata->resolutions, l, res)
+     if (res->id == r)
+       {
+	  Ecore_X_Screen_Refresh_Rate *rt;
+	  Eina_List *ll;
 
-	if (res->id == r)
-	  {
-	     Eina_List *ll;
+	  EINA_LIST_FOREACH(res->rates, ll, rt)
+	    {
+	       Evas_Object *ob = NULL;
 
-	     for (ll = res->rates; ll; ll = ll->next)
-	       {
-		  Ecore_X_Screen_Refresh_Rate *rt;
-		  Evas_Object *ob = NULL;
+	       snprintf(buf, sizeof(buf), "%i Hz", rt->rate);
 
-		  rt = ll->data;
-		  snprintf(buf, sizeof(buf), "%i Hz", rt->rate);
-
-		  if (rt->rate == cfdata->orig_rate.rate)
-		    {
-		       ob = edje_object_add(evas);
-		       e_util_edje_icon_set(ob, "enlightenment/check");
-		       sel = k;
-		    }
-		  e_widget_ilist_append(cfdata->rate_list, ob, buf, NULL, NULL, NULL);
-		  k++;
-	       }
-	     break;
-	  }
-     }   
+	       if (rt->rate == cfdata->orig_rate.rate)
+		 {
+		    ob = edje_object_add(evas);
+		    e_util_edje_icon_set(ob, "enlightenment/check");
+		    sel = k;
+		 }
+	       e_widget_ilist_append(cfdata->rate_list, ob, buf, NULL, NULL, NULL);
+	       k++;
+	    }
+	  break;
+       }
 
    e_widget_ilist_go(cfdata->rate_list);
    e_widget_ilist_selected_set(cfdata->rate_list, sel);
