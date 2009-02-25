@@ -695,6 +695,8 @@ e_fm2_custom_theme_set(Evas_Object *obj, const char *path)
 				"list/drop_in");
    _e_fm2_theme_edje_object_set(sd, sd->overlay, "base/theme/fileman",
 				"overlay");
+   _e_fm2_theme_edje_object_set(sd, sd->sel_rect, "base/theme/fileman",
+				"rubberband");
 }
 
 EAPI void
