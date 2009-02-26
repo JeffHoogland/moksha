@@ -869,7 +869,7 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 		    {
 		       desktop->exec = malloc(strlen(fad->exec_cmd) + 4);
 		       if (desktop->exec)
-			 snprintf(desktop->exec, strlen(fad->exec_cmd) + 4, "%s \%U", fad->exec_cmd);
+			 snprintf(desktop->exec, strlen(fad->exec_cmd) + 4, "%s %%U", fad->exec_cmd);
 		    }
 	       }
 
