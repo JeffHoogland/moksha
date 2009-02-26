@@ -1,5 +1,5 @@
 group "E_Config" struct {
-  value "config_version" int: 65836;
+  value "config_version" int: 65837;
   value "show_splash" int: 1;
   value "init_default_theme" string: "default.edj";
   value "desktop_default_background" string: "Dark_Gradient.edj";
