@@ -762,15 +762,15 @@ main(int argc, char **argv)
    e_init_status_set(_("Setting up Paths"));
    TS("efreet paths");
      {
-	Eina_List *list;
+	Eina_List **list;
 	
 	list = efreet_icon_extra_list_get();
 	if (list)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/.e/e/icons", e_user_homedir_get());
-	     list = eina_list_prepend(list, (void *)eina_stringshare_add(buf));
+	     *list = eina_list_prepend(*list, (void *)eina_stringshare_add(buf));
 	     snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
-	     list = eina_list_prepend(list, (void *)eina_stringshare_add(buf));
+	     *list = eina_list_prepend(*list, (void *)eina_stringshare_add(buf));
 	  }
      }
    efreet_icon_extension_add(".edj");
