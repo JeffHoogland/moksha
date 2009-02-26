@@ -861,7 +861,16 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	     if (!desktop)
 	       {
 		  desktop = efreet_desktop_empty_new("");
-		  desktop->exec = strdup(fad->exec_cmd);
+		  if (strchr(fad->exec_cmd, '%'))
+		    {
+		       desktop->exec = strdup(fad->exec_cmd);
+		    }
+		  else
+		    {
+		       desktop->exec = malloc(strlen(fad->exec_cmd) + 4);
+		       if (desktop->exec)
+			 snprintf(desktop->exec, strlen(fad->exec_cmd) + 4, "%s \%U", fad->exec_cmd);
+		    }
 	       }
 
 	     if (fad->fwin->win)
