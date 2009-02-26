@@ -378,17 +378,13 @@ _ibar_empty_handle(IBar *b)
 static void
 _ibar_fill(IBar *b)
 {
-   IBar_Icon *ic;
-
    if (b->apps)
      {
 	Efreet_Desktop *desktop;
-	Eina_List *l;
-
-	for (l = b->apps->desktops; l; l = l->next)
+	const Eina_List *l;
+	EINA_LIST_FOREACH(b->apps->desktops, l, desktop)
 	  {
-	     desktop = l->data;
-	     ic = _ibar_icon_new(b, desktop);
+	     IBar_Icon *ic = _ibar_icon_new(b, desktop);
 	     b->icons = eina_list_append(b->icons, ic);
 	     e_box_pack_end(b->o_box, ic->o_holder);
 	  }
@@ -400,11 +396,10 @@ _ibar_fill(IBar *b)
 static void
 _ibar_empty(IBar *b)
 {
-   while (b->icons)
-     {
-	_ibar_icon_free(b->icons->data);
-	b->icons = eina_list_remove_list(b->icons, b->icons);
-     }
+   IBar_Icon *ic;
+   EINA_LIST_FREE(b->icons, ic)
+     _ibar_icon_free(ic);
+
    _ibar_empty_handle(b);
 }
 
@@ -418,7 +413,7 @@ _ibar_orient_set(IBar *b, int horizontal)
 static void
 _ibar_resize_handle(IBar *b)
 {
-   Eina_List *l;
+   const Eina_List *l;
    IBar_Icon *ic;
    Evas_Coord w, h;
    
@@ -428,9 +423,8 @@ _ibar_resize_handle(IBar *b)
    else
      h = w;
    e_box_freeze(b->o_box);
-   for (l = b->icons; l; l = l->next)
+   EINA_LIST_FOREACH(b->icons, l, ic)
      {
-	ic = l->data;
 	e_box_pack_options_set(ic->o_holder,
 			       1, 1, /* fill */
 			       0, 0, /* expand */
@@ -454,7 +448,6 @@ _ibar_instance_drop_zone_recalc(Instance *inst)
 static Config_Item *
 _ibar_config_item_get(const char *id)
 {
-   Eina_List *l;
    Config_Item *ci;
    char buf[128];
 
@@ -465,10 +458,10 @@ _ibar_config_item_get(const char *id)
      }
    else
      {
+	const Eina_List *l;
 	/* Find old config, or reuse supplied id */
-	for (l = ibar_config->items; l; l = l->next)
+	EINA_LIST_FOREACH(ibar_config->items, l, ci)
 	  {
-	     ci = l->data;
 	     if ((ci->id) && (!strcmp(ci->id, id)))
 	       {
 		  if (!ci->dir)
@@ -489,17 +482,15 @@ _ibar_config_item_get(const char *id)
 void
 _ibar_config_update(Config_Item *ci)
 {
-   Eina_List *l;
-   Eina_List *i;
+   const Eina_List *l;
+   Instance *inst;
 
-   for (l = ibar_config->instances; l; l = l->next)
+   EINA_LIST_FOREACH(ibar_config->instances, l, inst)
      {
-	Instance *inst;
 	char buf[4096];
 
-	inst = l->data;
 	if (inst->ci != ci) continue;
-	     
+
 	_ibar_empty(inst->ibar);
 	if (inst->ibar->apps)
 	  e_object_del(E_OBJECT(inst->ibar->apps));
@@ -517,12 +508,11 @@ _ibar_config_update(Config_Item *ci)
 	_ibar_resize_handle(inst->ibar);
 	_gc_orient(inst->gcc, -1);
 
-	for (i = inst->ibar->icons; i; i = i->next) 
+	const Eina_List *i;
+	IBar_Icon *ic;
+	EINA_LIST_FOREACH(inst->ibar->icons, i, ic)
 	  {
-	     IBar_Icon *ic;
-	     
-	     ic = i->data;
-	     switch (ci->eap_label) 
+	     switch (ci->eap_label)
 	       {
 		case 0:
 		  edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->name);
@@ -544,14 +534,12 @@ _ibar_config_update(Config_Item *ci)
 static IBar_Icon *
 _ibar_icon_at_coord(IBar *b, Evas_Coord x, Evas_Coord y)
 {
-   Eina_List *l;
+   const Eina_List *l;
    IBar_Icon *ic;
 
-   for (l = b->icons; l; l = l->next)
+   EINA_LIST_FOREACH(b->icons, l, ic)
      {
         Evas_Coord dx, dy, dw, dh;
-	ic = l->data;
-	
         evas_object_geometry_get(ic->o_holder, &dx, &dy, &dw, &dh);
 	if (E_INSIDE(x, y, dx, dy, dw, dh)) return ic;
      }
@@ -1135,7 +1123,7 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
    E_Event_Dnd_Drop *ev;
    Instance *inst;
    Efreet_Desktop *app = NULL;
-   Eina_List *l, *fl = NULL;
+   Eina_List *fl = NULL;
    IBar_Icon *ic;
    
    ev = event_info;
@@ -1170,9 +1158,11 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 	/* Add new eapp before this icon */
 	if (!inst->ibar->drop_before)
 	  {
-	     for (l = inst->ibar->icons; l; l = l->next)
+	     const Eina_List *l;
+	     IBar_Icon *ic2;
+	     EINA_LIST_FOREACH(inst->ibar->icons, l, ic2)
 	       {
-		  if (l->data == ic)
+		  if (ic2 == ic)
 		    {
 		       if (l->next)
 			 ic = l->next->data;
@@ -1257,22 +1247,20 @@ e_modapi_init(E_Module *m)
    else
      {
 	Eina_List *removes = NULL;
-	Eina_List *l;
-
-	for (l = ibar_config->items; l; l = l->next)
+	const Eina_List *l;
+	Config_Item *ci;
+	EINA_LIST_FOREACH(ibar_config->items, l, ci)
 	  {
-	     Config_Item *ci = l->data;
 	     if (!ci->id)
 	       removes = eina_list_append(removes, ci);
 	     else if (!ci->dir)
 	       removes = eina_list_append(removes, ci);
 	     else
 	       {
-		  Eina_List *ll;
-		  
-		  for (ll = l->next; ll; ll = ll->next)
+		  const Eina_List *ll;
+		  Config_Item *ci2;
+		  EINA_LIST_FOREACH(l->next, ll, ci2)
 		    {
-		       Config_Item *ci2 = ll->data;
 		       if ((ci2->id) && (!strcmp(ci->id, ci2->id)))
 			 {
 			    removes = eina_list_append(removes, ci);
@@ -1281,18 +1269,15 @@ e_modapi_init(E_Module *m)
 		    }
 	       }
 	  }
-	while (removes)
+	EINA_LIST_FREE(removes, ci)
 	  {
-	     Config_Item *ci = removes->data;
-	     removes = eina_list_remove_list(removes, removes);
 	     ibar_config->items = eina_list_remove(ibar_config->items, ci);
 	     if (ci->id) eina_stringshare_del(ci->id);
 	     if (ci->dir) eina_stringshare_del(ci->dir);
 	     free(ci);
 	  }
-        for (l = ibar_config->items; l; l = l->next)
+	EINA_LIST_FOREACH(ibar_config->items, l, ci)
           {
-             Config_Item *ci = l->data;
 	     if (ci->id)
 	       {
 		  const char *p;
@@ -1321,26 +1306,24 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    e_gadcon_provider_unregister(&_gadcon_class);
-   
+
    if (ibar_config->config_dialog)
      e_object_del(E_OBJECT(ibar_config->config_dialog));
-   while (ibar_config->handlers)
-     {
-	ecore_event_handler_del(ibar_config->handlers->data);
-	ibar_config->handlers = eina_list_remove_list(ibar_config->handlers, ibar_config->handlers);
-     }
+
+   Ecore_Event_Handler *eh;
+   EINA_LIST_FREE(ibar_config->handlers, eh)
+     ecore_event_handler_del(eh);
+
    if (ibar_config->menu)
      {
 	e_menu_post_deactivate_callback_set(ibar_config->menu, NULL, NULL);
 	e_object_del(E_OBJECT(ibar_config->menu));
 	ibar_config->menu = NULL;
      }
-   while (ibar_config->items)
+
+   Config_Item *ci;
+   EINA_LIST_FREE(ibar_config->items, ci)
      {
-	Config_Item *ci;
-	
-	ci = ibar_config->items->data;
-	ibar_config->items = eina_list_remove_list(ibar_config->items, ibar_config->items);
 	if (ci->id) eina_stringshare_del(ci->id);
 	if (ci->dir) eina_stringshare_del(ci->dir);
 	free(ci);
@@ -1362,20 +1345,15 @@ e_modapi_save(E_Module *m)
 static int
 _ibar_cb_config_icon_theme(void *data, int ev_type, void *ev)
 {
-   Eina_List *l, *l2;
+   const Eina_List *l;
+   Instance *inst;
 
-   for (l = ibar_config->instances; l; l = l->next)
+   EINA_LIST_FOREACH(ibar_config->instances, l, inst)
      {
-	Instance *inst;
-
-	inst = l->data;
-	for (l2 = inst->ibar->icons; l2; l2 = l2->next)
-	  {
-	     IBar_Icon *icon;
-
-	     icon = l2->data;
-	     _ibar_icon_fill(icon);
-	  }
+	const Eina_List *l2;
+	IBar_Icon *icon;
+	EINA_LIST_FOREACH(inst->ibar->icons, l2, icon)
+	  _ibar_icon_fill(icon);
      }
    return 1;
 }
