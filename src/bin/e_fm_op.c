@@ -221,10 +221,10 @@ main(int argc, char **argv)
              if ((type == E_FM_OP_MOVE) && (rename(argv[2], argv[3]) == 0))
                goto quit;
              else if ((type == E_FM_OP_SYMLINK) &&
-		      (symlink(task->src.name, task->dst.name) == 0))
+		      (symlink(argv[2], argv[3]) == 0))
 	       goto quit;
 
-             /* If that does work, setup a copy and delete operation. 
+             /* If that doesn't work, setup a copy and delete operation. 
               It's not atomic, but it's the best we can do. */
              task = _e_fm_op_task_new();
              task->type = type;

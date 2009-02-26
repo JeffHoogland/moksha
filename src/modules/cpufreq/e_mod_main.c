@@ -125,9 +125,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 static void
 _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 {
-   Instance *inst;
-   
-   inst = gcc->data;
    e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
@@ -811,7 +808,8 @@ _cpufreq_event_cb_powersave(void *data __UNUSED__, int type, void *event)
 {
    E_Event_Powersave_Update *ev;
    Eina_List *l;
-   Eina_Bool has_powersave, has_conservative;
+   Eina_Bool has_powersave = EINA_FALSE;
+   Eina_Bool has_conservative = EINA_FALSE;
 
    if (type != E_EVENT_POWERSAVE_UPDATE) return 1;
    if (!cpufreq_config->auto_powersave) return 1;
