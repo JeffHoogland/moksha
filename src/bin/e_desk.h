@@ -25,6 +25,7 @@ struct _E_Desk
    int                  x, y;
    char                 visible : 1;
    unsigned int         deskshow_toggle : 1;
+   int                  fullscreen_borders;
 
    Evas_Object         *bg_object;
    

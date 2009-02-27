@@ -2149,6 +2149,8 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 	bd->client_inset.t = 0;
 	bd->client_inset.b = 0;
 
+	bd->desk->fullscreen_borders++;
+
 	/* e_zone_fullscreen_set(bd->zone, 1); */
         if (!e_config->allow_above_fullscreen)
 	  e_border_layer_set(bd, 200);
@@ -2223,6 +2225,7 @@ e_border_unfullscreen(E_Border *bd)
 	bd->pre_res_change.valid = 0;
 	bd->fullscreen = 0;
 	bd->need_fullscreen = 0;
+	bd->desk->fullscreen_borders--;
 
 	if ((screen_size.width != -1) && (screen_size.height != -1))
 	  {

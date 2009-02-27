@@ -610,6 +610,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, border_raise_on_mouse_action, INT);
    E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
    E_CONFIG_VAL(D, T, desk_flip_wrap, INT);
+   E_CONFIG_VAL(D, T, fullscreen_flip, INT);
 
    E_CONFIG_VAL(D, T, icon_theme, STR);
    
@@ -876,6 +877,10 @@ e_config_load(void)
         COPYVAL(priority);
         IFCFGEND;
         
+        IFCFG(0x012e);
+        COPYVAL(fullscreen_flip);
+        IFCFGEND;
+        
         e_config->config_version = E_CONFIG_FILE_VERSION;   
         _e_config_free(tcfg);
      }
@@ -973,6 +978,7 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->border_raise_on_mouse_action, 0, 1);
    E_CONFIG_LIMIT(e_config->border_raise_on_focus, 0, 1);
    E_CONFIG_LIMIT(e_config->desk_flip_wrap, 0, 1);
+   E_CONFIG_LIMIT(e_config->fullscreen_flip, 0, 1);
    E_CONFIG_LIMIT(e_config->remember_internal_windows, 0, 1);
    E_CONFIG_LIMIT(e_config->desk_auto_switch, 0, 1);
 
