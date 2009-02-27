@@ -1451,8 +1451,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 	  l = eina_list_append(l, desk);
    l = eina_list_sort(l, -1, _e_fwin_dlg_cb_desk_list_sort);
 
-   /* reuse mlist var here */
-   EINA_LIST_FREE(mlist, desk)
+   EINA_LIST_FREE(l, desk)
      {
 	Evas_Object *icon = NULL;
 
