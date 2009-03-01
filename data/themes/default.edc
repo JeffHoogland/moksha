@@ -22861,6 +22861,11 @@ group { name: "e/icons/fileman/"NAME;                   \
 }
 
 EFMICON("folder","icon_efm_folder.png", 128)
+EFMICON("chrdev","icon_efm_file.png", 128)
+EFMICON("blkdev","icon_efm_file.png", 128)
+EFMICON("fifo","icon_efm_file.png", 128)
+EFMICON("socket","icon_efm_file.png", 128)
+EFMICON("executable","icon_efm_file.png", 128)
 EFMICON("file","icon_efm_file.png", 128)
 EFMICON("home","icon_efm_home.png", 128)
 EFMICON("root","icon_efm_root.png", 128)
