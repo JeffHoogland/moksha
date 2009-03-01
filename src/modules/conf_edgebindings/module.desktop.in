@@ -1,6 +1,10 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Edge Bindings
+Name[fr]=Configuration - Raccourcis des bords de l'écran
+Name[it]=Configurazione - Associazioni a confini schermo
 Icon=e-module-conf_edgebindings
 Comment=<title>E17 Settings Applet</title><br>Configure your edgebindings here.
+Comment[fr]=<title>Appliquette de configuration pour E17</title><br>Configure les raccourcis des bords de l'écran.
+Comment[it]=<title>Applet configurazione di E17</title><br>Configurate qui le azioni da associare ai confini dello schermo.
 X-Enlightenment-ModuleType=config
