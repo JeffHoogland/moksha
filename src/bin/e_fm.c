@@ -229,11 +229,11 @@ static int _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf);
 static void _e_fm2_icon_free(E_Fm2_Icon *ic);
 static void _e_fm2_icon_realize(E_Fm2_Icon *ic);
 static void _e_fm2_icon_unrealize(E_Fm2_Icon *ic);
-static int _e_fm2_icon_visible(E_Fm2_Icon *ic);
+static Eina_Bool _e_fm2_icon_visible(const E_Fm2_Icon *ic);
 static void _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj);
 static Evas_Object *_e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen);
 static void _e_fm2_icon_icon_set(E_Fm2_Icon *ic);
-static void _e_fm2_icon_thumb(E_Fm2_Icon *ic, Evas_Object *oic, int force);
+static void _e_fm2_icon_thumb(const E_Fm2_Icon *ic, Evas_Object *oic, int force);
 static void _e_fm2_icon_select(E_Fm2_Icon *ic);
 static void _e_fm2_icon_deselect(E_Fm2_Icon *ic);
 static int _e_fm2_icon_desktop_load(E_Fm2_Icon *ic);
@@ -398,6 +398,8 @@ static int _e_fm_file_buffer_cutting = 0;
 static int _e_fm_file_buffer_copying = 0;
 static const char *_e_fm2_icon_desktop_str = NULL;
 static const char *_e_fm2_icon_thumb_str = NULL;
+static const char *_e_fm2_mime_inode_directory = NULL;
+static const char *_e_fm2_mime_app_desktop = NULL;
 
 /* contains:
  * _e_volume_edd
@@ -499,6 +501,30 @@ _e_fm2_file_is_desktop(const char *file)
    return ((p) && (_e_fm2_ext_is_desktop(p + 1)));
 }
 
+static inline char
+_e_fm2_view_mode_get(const E_Fm2_Smart_Data *sd)
+{
+   if (sd->view_mode > -1)
+     return sd->view_mode;
+   return sd->config->view.mode;
+}
+
+static inline Evas_Coord
+_e_fm2_icon_w_get(const E_Fm2_Smart_Data *sd)
+{
+   if (sd->icon_size > -1)
+     return sd->icon_size * e_scale;
+   return sd->config->icon.icon.w;
+}
+
+static inline Evas_Coord
+_e_fm2_icon_h_get(const E_Fm2_Smart_Data *sd)
+{
+   if (sd->icon_size > -1)
+     return sd->icon_size * e_scale;
+   return sd->config->icon.icon.h;
+}
+
 /***/
 
 EAPI int
@@ -542,6 +568,8 @@ e_fm2_init(void)
 
    _e_fm2_icon_desktop_str = eina_stringshare_add("DESKTOP");
    _e_fm2_icon_thumb_str = eina_stringshare_add("THUMB");
+   _e_fm2_mime_inode_directory = eina_stringshare_add("inode/directory");
+   _e_fm2_mime_app_desktop = eina_stringshare_add("application/x-desktop");
 
    return 1;
 }
@@ -549,10 +577,10 @@ e_fm2_init(void)
 EAPI int
 e_fm2_shutdown(void)
 {
-   eina_stringshare_del(_e_fm2_icon_desktop_str);
-   _e_fm2_icon_desktop_str = NULL;
-   eina_stringshare_del(_e_fm2_icon_thumb_str);
-   _e_fm2_icon_thumb_str = NULL;
+   _eina_stringshare_replace(&_e_fm2_icon_desktop_str, NULL);
+   _eina_stringshare_replace(&_e_fm2_icon_thumb_str, NULL);
+   _eina_stringshare_replace(&_e_fm2_mime_inode_directory, NULL);
+   _eina_stringshare_replace(&_e_fm2_mime_app_desktop, NULL);
 
    evas_smart_free(_e_fm2_smart);
    _e_fm2_smart = NULL;
@@ -1434,7 +1462,7 @@ _e_fm2_path_join(char *buf, int buflen, const char *base, const char *component)
  * @see _e_fm2_icon_explicit_get()
  */
 static Evas_Object *
-_e_fm2_icon_explicit_edje_get(Evas *evas, E_Fm2_Icon *ic, const char *iconpath, const char **type_ret)
+_e_fm2_icon_explicit_edje_get(Evas *evas, const E_Fm2_Icon *ic, const char *iconpath, const char **type_ret)
 {
    Evas_Object *o = edje_object_add(evas);
    if (!o)
@@ -1459,7 +1487,7 @@ _e_fm2_icon_explicit_edje_get(Evas *evas, E_Fm2_Icon *ic, const char *iconpath, 
  * @see _e_fm2_icon_explicit_get()
  */
 static Evas_Object *
-_e_fm2_icon_explicit_theme_icon_get(Evas *evas, E_Fm2_Icon *ic, const char *name, const char **type_ret)
+_e_fm2_icon_explicit_theme_icon_get(Evas *evas, const E_Fm2_Icon *ic, const char *name, const char **type_ret)
 {
    Evas_Object *o = edje_object_add(evas);
    if (!o)
@@ -1485,7 +1513,7 @@ _e_fm2_icon_explicit_theme_icon_get(Evas *evas, E_Fm2_Icon *ic, const char *name
  * @see _e_fm2_icon_explicit_get()
  */
 static Evas_Object *
-_e_fm2_icon_explicit_theme_get(Evas *evas, E_Fm2_Icon *ic, const char *name, const char **type_ret)
+_e_fm2_icon_explicit_theme_get(Evas *evas, const E_Fm2_Icon *ic, const char *name, const char **type_ret)
 {
    Evas_Object *o = edje_object_add(evas);
    if (!o)
@@ -1510,7 +1538,7 @@ _e_fm2_icon_explicit_theme_get(Evas *evas, E_Fm2_Icon *ic, const char *name, con
  * @param icon might be an absolute or relative path, or icon name or edje path.
  */
 static Evas_Object *
-_e_fm2_icon_explicit_get(Evas *evas, E_Fm2_Icon *ic, const char *icon, const char **type_ret)
+_e_fm2_icon_explicit_get(Evas *evas, const E_Fm2_Icon *ic, const char *icon, const char **type_ret)
 {
    char buf[PATH_MAX];
    const char *iconpath;
@@ -1545,7 +1573,7 @@ _e_fm2_icon_explicit_get(Evas *evas, E_Fm2_Icon *ic, const char *icon, const cha
  * It will find out if it is a folder, file or like and set it accordingly.
  */
 static Evas_Object *
-_e_fm2_icon_fallback_get(Evas *evas, E_Fm2_Icon *ic, const char **type_ret)
+_e_fm2_icon_fallback_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
 {
    const char *name;
 
@@ -1585,7 +1613,7 @@ _e_fm2_icon_fallback_get(Evas *evas, E_Fm2_Icon *ic, const char **type_ret)
  * @param force_gen whenever to force generation of thumbnails, even it exists.
  */
 static Evas_Object *
-_e_fm2_icon_thumb_get(Evas *evas, E_Fm2_Icon *ic, const char *group, void (*cb) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
+_e_fm2_icon_thumb_get(Evas *evas, const E_Fm2_Icon *ic, const char *group, void (*cb) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
 {
    Evas_Object *o;
    char buf[PATH_MAX];
@@ -1614,7 +1642,7 @@ _e_fm2_icon_thumb_get(Evas *evas, E_Fm2_Icon *ic, const char *group, void (*cb) 
  * known groups like 'icon', 'e/desktop/background' and 'e/init/splash'.
  */
 static Evas_Object *
-_e_fm2_icon_thumb_edje_get(Evas *evas, E_Fm2_Icon *ic, void (*cb) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
+_e_fm2_icon_thumb_edje_get(Evas *evas, const E_Fm2_Icon *ic, void (*cb) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
 {
    char buf[PATH_MAX];
    const char **itr, *group;
@@ -1658,7 +1686,7 @@ _e_fm2_icon_thumb_edje_get(Evas *evas, E_Fm2_Icon *ic, void (*cb) (void *data, E
  * Machinery for _e_fm2_icon_desktop_get() and others with instances of desktop.
  */
 static Evas_Object *
-_e_fm2_icon_desktop_get_internal(Evas *evas, E_Fm2_Icon *ic, Efreet_Desktop *desktop, const char **type_ret)
+_e_fm2_icon_desktop_get_internal(Evas *evas, const E_Fm2_Icon *ic, Efreet_Desktop *desktop, const char **type_ret)
 {
    Evas_Object *o;
 
@@ -1681,7 +1709,7 @@ _e_fm2_icon_desktop_get_internal(Evas *evas, E_Fm2_Icon *ic, Efreet_Desktop *des
  * Use freedesktop.org '.desktop' files to set icon.
  */
 static Evas_Object *
-_e_fm2_icon_desktop_get(Evas *evas, E_Fm2_Icon *ic, const char **type_ret)
+_e_fm2_icon_desktop_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
 {
    Efreet_Desktop *ef;
    Evas_Object *o;
@@ -1702,13 +1730,63 @@ _e_fm2_icon_desktop_get(Evas *evas, E_Fm2_Icon *ic, const char **type_ret)
    return o;
 }
 
+static inline const char *
+_e_fm2_icon_mime_type_special_match(const E_Fm2_Icon *ic)
+{
+   const Eina_List *l;
+   const E_Config_Mime_Icon *mi;
+   const char *mime = ic->info.mime;
+
+   EINA_LIST_FOREACH(e_config->mime_icons, l, mi)
+     if (mi->mime == mime) /* both in the same stringshare pool */
+       return mi->icon;
+
+   return NULL;
+}
+
+static inline unsigned int
+_e_fm2_icon_mime_size_normalize(const E_Fm2_Icon *ic)
+{
+   const unsigned int *itr, known_sizes[] = {
+     16, 22, 24, 32, 36, 48, 64, 72, 96, 128, 192, -1
+   };
+   unsigned int desired = _e_fm2_icon_w_get(ic->sd);
+   for (itr = known_sizes; *itr > 0; itr++)
+     if (*itr >= desired)
+       return *itr;
+
+   return 256; /* largest know size? */
+}
+
 /**
  * Use mime type information to set icon.
  */
 static Evas_Object *
-_e_fm2_icon_mime_get(Evas *evas, E_Fm2_Icon *ic, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
+_e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
 {
-   const char *icon = e_fm_mime_icon_get(ic->info.mime);
+   const char *icon;
+   unsigned int size;
+
+   icon = _e_fm2_icon_mime_type_special_match(ic);
+   if (icon)
+     {
+	if (icon == _e_fm2_icon_desktop_str)
+	  return _e_fm2_icon_desktop_get(evas, ic, type_ret);
+	else if (icon == _e_fm2_icon_thumb_str)
+	  return _e_fm2_icon_thumb_get(evas, ic, NULL,
+				       gen_func, data, force_gen, type_ret);
+	else if (strncmp(icon, "e/icons/fileman/mime/", 21) == 0)
+	  return _e_fm2_icon_explicit_theme_get(evas, ic, icon + 21 - 5, type_ret);
+	else
+	  return _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
+     }
+
+   size = _e_fm2_icon_mime_size_normalize(ic);
+   icon = efreet_mime_type_icon_get(ic->info.mime, e_config->icon_theme, size);
+   if (icon) return _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
+
+   /* XXX REMOVE/DEPRECATED below here */
+   icon = e_fm_mime_icon_get(ic->info.mime);
    if (!icon) return NULL;
 
    if (icon == _e_fm2_icon_desktop_str)
@@ -1726,7 +1804,7 @@ _e_fm2_icon_mime_get(Evas *evas, E_Fm2_Icon *ic, void (*gen_func) (void *data, E
  * Discovers the executable of Input Method Config file and set icon.
  */
 static Evas_Object *
-_e_fm2_icon_imc_get(Evas *evas, E_Fm2_Icon *ic, const char **type_ret)
+_e_fm2_icon_imc_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
 {
    E_Input_Method_Config *imc;
    Efreet_Desktop *desktop;
@@ -1769,7 +1847,7 @@ _e_fm2_icon_imc_get(Evas *evas, E_Fm2_Icon *ic, const char **type_ret)
  * Use heuristics to discover and set icon.
  */
 static Evas_Object *
-_e_fm2_icon_discover_get(Evas *evas, E_Fm2_Icon *ic, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
+_e_fm2_icon_discover_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
 {
    const char *p;
 
@@ -3505,30 +3583,6 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
      }
 }
 
-static inline char
-_e_fm2_view_mode_get(const E_Fm2_Smart_Data *sd)
-{
-   if (sd->view_mode > -1)
-     return sd->view_mode;
-   return sd->config->view.mode;
-}
-
-static inline Evas_Coord
-_e_fm2_icon_w_get(const E_Fm2_Smart_Data *sd)
-{
-   if (sd->icon_size > -1)
-     return sd->icon_size * e_scale;
-   return sd->config->icon.icon.w;
-}
-
-static inline Evas_Coord
-_e_fm2_icon_h_get(const E_Fm2_Smart_Data *sd)
-{
-   if (sd->icon_size > -1)
-     return sd->icon_size * e_scale;
-   return sd->config->icon.icon.h;
-}
-
 static void
 _e_fm2_icons_place(Evas_Object *obj)
 {
@@ -3930,11 +3984,14 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
    
    if (S_ISDIR(ic->info.statinfo.st_mode))
      {
-       ic->info.mime = eina_stringshare_add("inode/directory");
+	ic->info.mime = eina_stringshare_ref(_e_fm2_mime_inode_directory);
      }
-   if (!ic->info.mime)
+   else if (!ic->info.mime)
      {
-	mime = e_fm_mime_filename_get(ic->info.file);
+	mime = efreet_mime_type_get(buf);
+	if (!mime)
+	  /* XXX REMOVE/DEPRECATE ME LATER */
+	  mime = e_fm_mime_filename_get(ic->info.file);
 	if (mime) ic->info.mime = eina_stringshare_add(mime);
      }
 
@@ -4207,8 +4264,8 @@ _e_fm2_icon_unrealize(E_Fm2_Icon *ic)
    ic->obj_icon = NULL;
 }
 
-static int
-_e_fm2_icon_visible(E_Fm2_Icon *ic)
+static Eina_Bool
+_e_fm2_icon_visible(const E_Fm2_Icon *ic)
 {
    /* return if the icon is visible */
    if (
@@ -4282,7 +4339,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 }
 
 static void
-_e_fm2_icon_thumb(E_Fm2_Icon *ic, Evas_Object *oic, int force)
+_e_fm2_icon_thumb(const E_Fm2_Icon *ic, Evas_Object *oic, int force)
 {
    if ((force) ||
        ((_e_fm2_icon_visible(ic)) && 
