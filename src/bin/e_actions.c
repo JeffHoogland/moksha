@@ -830,6 +830,35 @@ ACT_FN_GO(window_move_to)
 }
 
 /***************************************************************************/
+ACT_FN_GO(window_move_to_center)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+       obj = E_OBJECT(e_border_focused_get());
+       if (!obj) return;
+     }
+
+   E_Border *bd;
+   bd = (E_Border *)obj;
+
+   int x, y;
+   x = (bd->zone->w - bd->w) / 2;
+   y = (bd->zone->h - bd->h) / 2;
+
+   if ((x != bd->x) || (y != bd->y))
+     {
+       e_border_move(bd, x, y);
+
+       if (e_config->focus_policy != E_FOCUS_CLICK)
+         ecore_x_pointer_warp(bd->zone->container->win,
+			    bd->x + (bd->w / 2),
+			    bd->y + (bd->h / 2));
+     }
+}
+
+/***************************************************************************/
 ACT_FN_GO(window_resize_by)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
@@ -2676,6 +2705,10 @@ e_actions_init(void)
 			    "screen_send_by", NULL, 
 			    "syntax: N-offset, example: -2", 1);
    
+   /* window_move_to_center */
+   ACT_GO(window_move_to_center);
+   e_action_predef_name_set(_("Window : Actions"), "Move To Center", 
+			    "window_move_to_center", NULL, NULL, 0);
    /* window_move_to */
    ACT_GO(window_move_to);
    e_action_predef_name_set(_("Window : Actions"), "Move To...", 
