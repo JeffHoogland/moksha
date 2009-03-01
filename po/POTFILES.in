@@ -153,6 +153,8 @@ src/modules/conf_display/e_int_config_display.c
 src/modules/conf_display/e_mod_main.c
 src/modules/conf_dpms/e_int_config_dpms.c
 src/modules/conf_dpms/e_mod_main.c
+src/modules/conf_edgebindings/e_int_config_edgebindings.c
+src/modules/conf_edgebindings/e_mod_main.c
 src/modules/conf_engine/e_int_config_engine.c
 src/modules/conf_engine/e_mod_main.c
 src/modules/conf_exebuf/e_int_config_exebuf.c
