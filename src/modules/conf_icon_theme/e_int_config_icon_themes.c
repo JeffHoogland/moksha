@@ -77,7 +77,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 					     _sort_icon_themes);
 	icon_themes = eina_list_free(icon_themes);
      }
-   cfdata->themename = strdup(e_config->icon_theme);
+   cfdata->themename = strdup(e_config->icon_theme ? e_config->icon_theme : "");
 
    return;
 }
