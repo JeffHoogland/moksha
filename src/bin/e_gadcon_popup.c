@@ -155,6 +155,10 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
 	e_popup_move_resize(pop->win, 50, 50, pop->w, pop->h);
 	return;
      }
+   if (px - zx < 0)
+     px = zx;
+   if (py - zy < 0)
+     py = zy;
    e_popup_move_resize(pop->win, px - zx, py - zy, pop->w, pop->h);
 
    if (pop->gadcon_lock && (!pop->gadcon_was_locked))
