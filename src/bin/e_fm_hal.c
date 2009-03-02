@@ -554,3 +554,9 @@ e_fm2_hal_hide_desktop_icons(void)
 	  }
      }
 }
+
+EAPI Eina_List*
+e_fm2_hal_volume_list_get(void)
+{
+   return _e_vols;
+}

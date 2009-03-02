@@ -28,4 +28,6 @@ EAPI void         e_fm2_hal_unmount(E_Fm2_Mount *m);
 EAPI void         e_fm2_hal_show_desktop_icons(void);
 EAPI void         e_fm2_hal_hide_desktop_icons(void);
 
+EAPI Eina_List   *e_fm2_hal_volume_list_get(void);
+
 #endif

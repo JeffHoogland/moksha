@@ -2801,6 +2801,8 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	       }
 	     ecore_file_mkpath(buf);
 	  }
+	else if (strcmp(dev, "temp") == 0)
+	  PRT("/tmp");
 	/* FIXME: replace all this removable, dvd and like with hal */
 	else if (strncmp(dev, "removable:", sizeof("removable:") - 1) == 0)
 	  {

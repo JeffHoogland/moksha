@@ -2,13 +2,16 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
+#include "e_fm_hal.h"
 #include "e_mod_main.h"
 #include "e_mod_config.h"
 #include "e_mod_dbus.h"
 
 /* actual module specifics */
 static void  _e_mod_action_fileman_cb(E_Object *obj, const char *params);
-static void  _e_mod_fileman_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void  _e_mod_menu_gtk_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void  _e_mod_menu_virtual_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void  _e_mod_menu_volume_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void  _e_mod_menu_add(void *data, E_Menu *m);
 static void  _e_mod_fileman_config_load(void);
 static void  _e_mod_fileman_config_free(void);
@@ -197,33 +200,193 @@ _e_mod_action_fileman_cb(E_Object *obj, const char *params)
 }
 
 /* menu item callback(s) */
-static int
-_e_mod_fileman_defer_cb(void *data) 
-{
-   E_Zone *zone;
+//~ static int
+//~ _e_mod_fileman_defer_cb(void *data) 
+//~ {
+   //~ E_Zone *zone;
    
-   zone = data;
-   if (zone) e_fwin_new(zone->container, "favorites", "/");
-   return 0;
+   //~ zone = data;
+   //~ if (zone) e_fwin_new(zone->container, "favorites", "/");
+   //~ return 0;
+//~ }
+
+//~ static void 
+//~ _e_mod_fileman_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+//~ {
+   //~ ecore_idle_enterer_add(_e_mod_fileman_defer_cb, m->zone);
+//~ }
+
+static void
+_mount_ok(void *data)
+{
+   E_Volume *vol = data;
+   e_fwin_new(e_container_current_get(e_manager_current_get()),
+	      NULL, vol->mount_point);
 }
 
-static void 
-_e_mod_fileman_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+static void
+_mount_fail(void *data)
 {
-   ecore_idle_enterer_add(_e_mod_fileman_defer_cb, m->zone);
+   //TODO alert the user
+}
+
+static void
+_e_mod_menu_gtk_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   char *path = data;
+   if (m->zone) e_fwin_new(m->zone->container, NULL, path);
+   free(path);
+}
+
+static void
+_e_mod_menu_virtual_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   if (m->zone) e_fwin_new(m->zone->container, data, "/");
+}
+
+static void
+_e_mod_menu_volume_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Volume *vol = data;
+   if (vol->mounted)
+     {
+	if (m->zone)
+	  e_fwin_new(m->zone->container, NULL, vol->mount_point);
+     }
+   else //TODO need to remove the mount?
+      e_fm2_hal_mount(vol, _mount_ok, _mount_fail, NULL, NULL, vol);
+}
+
+static void
+_e_mod_fileman_parse_gtk_bookmarks(E_Menu *m)
+{
+   char line[PATH_MAX];
+   char buf[PATH_MAX];
+   E_Menu_Item *mi;
+   Efreet_Uri *uri;
+   char *alias;
+   FILE* fp;
+
+   snprintf(buf, sizeof(buf), "%s/.gtk-bookmarks", e_user_homedir_get());
+   fp = fopen(buf, "r");
+   if (fp)
+     {
+	while(fgets(line, sizeof(line), fp))
+	  {
+	    alias = NULL;
+	    line[strlen(line) - 1] = '\0';
+	    alias = strchr(line, ' ');
+	    if (alias)
+	      {
+		 line[alias-line] =  '\0';
+		 alias++;
+	      }
+	    uri = efreet_uri_decode(line);
+	    if (uri && uri->path)
+	      {
+		 if (ecore_file_exists(uri->path))
+		   {
+		      mi = e_menu_item_new(m);
+		      e_menu_item_label_set(mi, alias ? alias :
+					    ecore_file_file_get(uri->path));
+		      e_util_menu_item_edje_icon_set(mi, "fileman/folder");
+		      e_menu_item_callback_set(mi, _e_mod_menu_gtk_cb,
+					       strdup(uri->path));
+		   }
+	      }
+	    if (uri) efreet_uri_free(uri);
+	  }
+	fclose(fp);
+     }
 }
 
 /* menu item add hook */
-static void
+void
+_e_mod_menu_generate(void *data, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   char buf[PATH_MAX];
+
+   /* Home */
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Home"));
+   e_util_menu_item_edje_icon_set(mi, "fileman/home");
+   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "~/");
+
+   /* Desktop */
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Desktop"));
+   e_util_menu_item_edje_icon_set(mi, "fileman/desktop");
+   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "desktop");
+
+   /* Favorites */
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Favorites"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
+   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "favorites");
+
+   /* Trash */
+   //~ mi = e_menu_item_new(em);
+   //~ e_menu_item_label_set(mi, D_("Trash"));
+   //~ e_util_menu_item_edje_icon_set(mi, "fileman/folder");
+   //~ e_menu_item_callback_set(mi, _places_run_fm, "trash:///");
+
+   /* Root */
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Root"));
+   e_util_menu_item_edje_icon_set(mi, "fileman/root");
+   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "/");
+
+   /* Temp */
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Temporary"));
+   e_util_menu_item_edje_icon_set(mi, "fileman/tmp");
+   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "temp");
+
+   //separator
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   /* Volumes */
+   Eina_Bool volumes_visible = 0;
+   const Eina_List *l;
+   E_Volume *vol;
+   EINA_LIST_FOREACH(e_fm2_hal_volume_list_get(), l, vol)
+     {
+	if (vol->mount_point && !strcmp(vol->mount_point, "/")) continue;
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, vol->label);
+	e_menu_item_callback_set(mi, _e_mod_menu_volume_cb, vol);
+	volumes_visible = 1;
+     }
+
+   /* Favorites */
+   //~ if (places_conf->show_bookm)
+   //~ {
+	if (volumes_visible)
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_separator_set(mi, 1);
+	  }
+	_e_mod_fileman_parse_gtk_bookmarks(m);
+   //~ }
+
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
+}
+
+void
 _e_mod_menu_add(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
-   
+   E_Menu *sub;
+
 #ifdef ENABLE_FILES
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Files"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
-   e_menu_item_callback_set(mi, _e_mod_fileman_cb, NULL);
+   sub = e_menu_new();
+   e_menu_item_submenu_set(mi, sub);
+   e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, NULL);
 #endif
 }
 
