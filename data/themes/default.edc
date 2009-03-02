@@ -22011,7 +22011,7 @@ group { name: "e/toolbar/default/base";
 	    tag:  "br" "\n";
 	 }
       }
-      min: 240 240;
+      min: 300 240;
       max: 640 640;
       parts {
 	 part { name:  "sizer";
@@ -22019,7 +22019,7 @@ group { name: "e/toolbar/default/base";
 	    mouse_events:  0;
 	    scale: 1;
 	    description { state: "default" 0.0;
-	       min: 240 240;
+	       min: 300 240;
 	       visible: 0;
 	    }
 	 }
@@ -22443,7 +22443,7 @@ group { name: "e/toolbar/default/base";
       }
 //      data.item: "borderless" "1";
 //      data.item: "shaped" "1";
-      min: 240 240;
+      min: 300 240;
       max: 640 640;
       parts {
 	 part { name: "background_image";
