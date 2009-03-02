@@ -427,12 +427,18 @@ _eina_stringshare_replace(const char **p, const char *str)
 }
 
 static inline Eina_Bool
-_e_fm2_icon_path(const E_Fm2_Icon *ic, char *buf, int buflen)
+_e_fm2_icon_realpath(const E_Fm2_Icon *ic, char *buf, int buflen)
 {
    int r = snprintf(buf, buflen, "%s/%s", ic->sd->realpath, ic->info.file);
    return r < buflen;
 }
 
+static inline Eina_Bool
+_e_fm2_icon_path(const E_Fm2_Icon *ic, char *buf, int buflen)
+{
+   int r = snprintf(buf, buflen, "%s/%s", ic->sd->path, ic->info.file);
+   return r < buflen;
+}
 
 static inline Eina_Bool
 _e_fm2_ext_is_edje(const char *ext)
@@ -1625,7 +1631,7 @@ _e_fm2_icon_fallback_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret
    else
      {
 	char buf[PATH_MAX];
-	if (!_e_fm2_icon_path(ic, buf, sizeof(buf)))
+	if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf)))
 	  name = "file";
 	else
 	  {
@@ -1653,7 +1659,7 @@ _e_fm2_icon_thumb_get(Evas *evas, const E_Fm2_Icon *ic, const char *group, void 
    Evas_Object *o;
    char buf[PATH_MAX];
 
-   if (!_e_fm2_icon_path(ic, buf, sizeof(buf)))
+   if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf)))
      return NULL;
 
    o = e_thumb_icon_add(evas);
@@ -1690,7 +1696,7 @@ _e_fm2_icon_thumb_edje_get(Evas *evas, const E_Fm2_Icon *ic, void (*cb) (void *d
      NULL
    };
 
-   if (!_e_fm2_icon_path(ic, buf, sizeof(buf)))
+   if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf)))
      return NULL;
 
    known_groups[0] = ic->sd->config->icon.key_hint;
@@ -1753,7 +1759,7 @@ _e_fm2_icon_desktop_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
    if (!ic->info.file)
      return NULL;
 
-   if (!_e_fm2_icon_path(ic, buf,sizeof(buf)))
+   if (!_e_fm2_icon_realpath(ic, buf,sizeof(buf)))
      return NULL;
 
    ef = efreet_desktop_new(buf);
@@ -1850,7 +1856,7 @@ _e_fm2_icon_imc_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
    if (!ic->info.file)
      return NULL;
 
-   if (!_e_fm2_icon_path(ic, buf, sizeof(buf)))
+   if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf)))
      return NULL;
 
    imc_ef = eet_open(buf, EET_FILE_MODE_READ);
@@ -3962,7 +3968,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
    const char *mime;
    E_Fm2_Custom_File *cf;
 
-   if (!_e_fm2_icon_path(ic, buf, sizeof(buf)))
+   if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf)))
      return 0;
    cf = e_fm2_custom_file_get(buf);
    if (finf)
@@ -4450,7 +4456,7 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    char buf[PATH_MAX];
    Efreet_Desktop *desktop;
 
-   if (!_e_fm2_icon_path(ic, buf, sizeof(buf)))
+   if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf)))
      return 0;
 
    desktop = efreet_desktop_new(buf);
@@ -4820,29 +4826,14 @@ _e_fm2_inplace_open(const E_Fm2_Icon *ic)
 static void
 _e_fm2_typebuf_run(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
    E_Fm2_Icon *ic;
-   
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
+
    _e_fm2_typebuf_hide(obj);
    ic = _e_fm2_icon_first_selected_find(obj);
    if (ic)
      {
-	if ((S_ISDIR(ic->info.statinfo.st_mode)) && 
-	    (ic->sd->config->view.open_dirs_in_place) &&
-	    (!ic->sd->config->view.no_subdir_jump) &&
-	    (!ic->sd->config->view.single_click)
-	    )
-	  {
-	     char buf[PATH_MAX];
-	     if (_e_fm2_icon_path(ic, buf, sizeof(buf)))
-	       e_fm2_path_set(ic->sd->obj, ic->sd->dev, buf);
-	  }
-	else
-	  {
-	     evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
-	  }
+	if (_e_fm2_inplace_open(ic) == 0)
+	  evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
      }
 }
 
@@ -7301,7 +7292,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     can_w = 1;
 /*	     struct stat st;
 
-	     if (_e_fm2_icon_path(ic, buf, sizeof(buf)) &&
+	     if (_e_fm2_icon_realpath(ic, buf, sizeof(buf)) &&
 	         (lstat(buf, &st) == 0))
 	       {
 		  if (st.st_uid == getuid())
@@ -7324,7 +7315,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	sel = e_fm2_selected_list_get(ic->sd->obj);
 	if ((!sel) || eina_list_count(sel) == 1)
 	  {
-	     _e_fm2_icon_path(ic, buf, sizeof(buf));
+	     _e_fm2_icon_realpath(ic, buf, sizeof(buf));
 	     protect = e_filereg_file_protected(buf);
 	  }
 	else
@@ -7373,7 +7364,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     l = e_fm2_mime_handler_mime_handlers_get(ic->info.mime);
 	     if (l) 
 	       {
-		  _e_fm2_icon_path(ic, buf, sizeof(buf));
+		  _e_fm2_icon_realpath(ic, buf, sizeof(buf));
 		  _e_fm2_context_menu_append(obj, buf, l, mn, ic);
 	       }
 	  }
@@ -7383,7 +7374,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	l = e_fm2_mime_handler_glob_handlers_get(buf);
 	if (l) 
 	  {
-	     _e_fm2_icon_path(ic, buf, sizeof(buf));
+	     _e_fm2_icon_realpath(ic, buf, sizeof(buf));
 	     _e_fm2_context_menu_append(obj, buf, l, mn, ic);
 	     eina_list_free(l);
 	  }
@@ -7913,7 +7904,7 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
    ic->entry_dialog = NULL;
    if ((text) && (strcmp(text, ic->info.file)))
      {
-	_e_fm2_icon_path(ic, oldpath, sizeof(oldpath));
+	_e_fm2_icon_realpath(ic, oldpath, sizeof(oldpath));
 	snprintf(newpath, sizeof(newpath), "%s/%s", ic->sd->realpath, text);
 	if (e_filereg_file_protected(oldpath)) return;
 
@@ -8313,7 +8304,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
      }
    else
      {
-	_e_fm2_icon_path(ic, buf, sizeof(buf));
+	_e_fm2_icon_realpath(ic, buf, sizeof(buf));
 	if (e_filereg_file_protected(buf)) return;
 	files = _e_fm_string_append_quoted(files, &size, &len, buf);
      }
