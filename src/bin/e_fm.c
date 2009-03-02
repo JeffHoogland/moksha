@@ -86,7 +86,8 @@ struct _E_Fm2_Smart_Data
    unsigned char     inherited_dir_props : 1;
    signed char       view_mode; /* -1 = unset */
    signed short      icon_size; /* -1 = unset */
-   
+   E_Fm2_View_Flags  view_flags;
+
    E_Fm2_Config     *config;
    const char       *custom_theme;
    const char       *custom_theme_content;
@@ -881,6 +882,8 @@ _e_fm2_dir_load_props(E_Fm2_Smart_Data *sd)
 {
    E_Fm2_Custom_File *cf;
 
+   if (sd->view_flags & E_FM2_VIEW_NO_LOAD_DIR_CUSTOM) return;
+
    cf = e_fm2_custom_file_get(sd->realpath);
    if ((cf) && (cf->dir))
      {
@@ -914,6 +917,16 @@ _e_fm2_dir_load_props(E_Fm2_Smart_Data *sd)
 	sd->pos.y = 0;
      }
 
+   if (sd->view_flags & E_FM2_VIEW_NO_INHERIT_DIR_CUSTOM)
+     {
+	sd->view_mode = -1;
+	sd->icon_size = -1;
+	sd->order_file = 0;
+	sd->show_hidden_files = 0;
+	sd->inherited_dir_props = 0;
+	return;
+     }
+
    sd->inherited_dir_props = 1;
 
    cf = _e_fm2_dir_load_props_from_parent(sd->realpath);
@@ -938,6 +951,8 @@ _e_fm2_dir_save_props(E_Fm2_Smart_Data *sd)
 {
    E_Fm2_Custom_File *cf, cf0;
    E_Fm2_Custom_Dir dir0;
+
+   if (sd->view_flags & E_FM2_VIEW_NO_SAVE_DIR_CUSTOM) return;
 
    cf = e_fm2_custom_file_get(sd->realpath);
    if (!cf)
@@ -1230,6 +1245,26 @@ e_fm2_icon_menu_flags_get(Evas_Object *obj)
    if (!evas_object_type_get(obj)) return 0; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return 0; // safety
    return sd->icon_menu.flags;
+}
+
+EAPI void
+e_fm2_view_flags_set(Evas_Object *obj, E_Fm2_View_Flags flags)
+{
+   E_Fm2_Smart_Data *sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   sd->view_flags = flags;
+}
+
+EAPI E_Fm2_View_Flags
+e_fm2_view_flags_get(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd = evas_object_smart_data_get(obj);
+   if (!sd) return 0; // safety
+   if (!evas_object_type_get(obj)) return 0; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return 0; // safety
+   return sd->view_flags;
 }
 
 EAPI void
@@ -6922,7 +6957,8 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_separator_set(mi, 1);
 	  }
-	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT))
+	if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT)) &&
+	    (!(sd->view_flags & E_FM2_VIEW_NO_INHERIT_DIR_CUSTOM)))
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Inherit parent settings"));
@@ -7104,7 +7140,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_separator_set(mi, 1);
 	  }
 
-	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT))
+	if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT)) &&
+	    (!(sd->view_flags & E_FM2_VIEW_NO_INHERIT_DIR_CUSTOM)))
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Inherit parent settings"));

@@ -59,6 +59,7 @@ e_widget_flist_add(Evas *evas)
    wd->fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(wd->o_fm, &wd->fmc);
    e_fm2_icon_menu_flags_set(wd->o_fm, E_FM2_MENU_NO_SHOW_HIDDEN);
+   e_fm2_view_flags_set(wd->o_fm, E_FM2_VIEW_NO_DIR_CUSTOM);
 
    evas_object_smart_callback_add(wd->o_fm, "dir_changed", 
                                   _e_wid_cb_dir_changed, obj);

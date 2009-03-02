@@ -176,6 +176,8 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    _e_fwin_config_set(fwin);
 
    e_fm2_custom_theme_content_set(o, "desktop");
+   e_fm2_view_flags_set(o, E_FM2_VIEW_NO_DIR_CUSTOM);
+
    evas_object_smart_callback_add(o, "dir_changed",
 				  _e_fwin_changed, fwin);
    evas_object_smart_callback_add(o, "dir_deleted",

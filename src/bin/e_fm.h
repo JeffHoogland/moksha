@@ -35,6 +35,16 @@ typedef enum _E_Fm2_Menu_Flags
    E_FM2_MENU_NO_INHERIT_PARENT    = (1 << 11)
 } E_Fm2_Menu_Flags;
 
+typedef enum _E_Fm2_View_Flags
+{
+  E_FM2_VIEW_NO_LOAD_DIR_CUSTOM    = (1 << 0),
+  E_FM2_VIEW_NO_SAVE_DIR_CUSTOM    = (1 << 1),
+  E_FM2_VIEW_NO_INHERIT_DIR_CUSTOM = (1 << 2),
+  E_FM2_VIEW_NO_DIR_CUSTOM         = (E_FM2_VIEW_NO_LOAD_DIR_CUSTOM |
+				      E_FM2_VIEW_NO_SAVE_DIR_CUSTOM |
+				      E_FM2_VIEW_NO_INHERIT_DIR_CUSTOM)
+} E_Fm2_View_Flags;
+
 typedef struct _E_Fm2_Config      E_Fm2_Config;
 typedef struct _E_Fm2_Icon        E_Fm2_Icon;
 typedef struct _E_Fm2_Icon_Info   E_Fm2_Icon_Info;
@@ -143,6 +153,8 @@ EAPI void                  e_fm2_icon_menu_start_extend_callback_set(Evas_Object
 EAPI void                  e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data);
 EAPI void                  e_fm2_icon_menu_flags_set(Evas_Object *obj, E_Fm2_Menu_Flags flags);
 EAPI E_Fm2_Menu_Flags      e_fm2_icon_menu_flags_get(Evas_Object *obj);
+EAPI void                  e_fm2_view_flags_set(Evas_Object *obj, E_Fm2_View_Flags flags);
+EAPI E_Fm2_View_Flags      e_fm2_view_flags_get(Evas_Object *obj);
 EAPI void                  e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj);
 EAPI void                  e_fm2_icons_update(Evas_Object *obj);
 
