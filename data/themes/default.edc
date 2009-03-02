@@ -10817,6 +10817,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  normal: "bt_glow.png";
 		  border: 12 12 12 12;
 	       }
+               fill.smooth : 0;
 	    }
 	    description { state: "clicked" 0.0;
 	       inherit:  "default" 0.0;
@@ -10976,6 +10977,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  normal: "bt_glow.png";
 		  border: 12 12 12 12;
 	       }
+               fill.smooth : 0;
 	    }
 	    description { state: "clicked" 0.0;
 	       inherit:  "default" 0.0;
@@ -17830,6 +17832,7 @@ group { name: "e/toolbar/default/base";
 		  normal: "bt_glow.png";
 		  border: 12 12 12 12;
 	       }
+               fill.smooth : 0;
 	    }
 	    description { state: "clicked" 0.0;
 	       inherit:  "default" 0.0;
@@ -21919,6 +21922,7 @@ group { name: "e/toolbar/default/base";
 		  normal: "bt_glow.png";
 		  border: 12 12 12 12;
 	       }
+               fill.smooth : 0;
 	    }
 	    description { state: "clicked" 0.0;
 	       inherit:  "default" 0.0;
@@ -22360,6 +22364,7 @@ group { name: "e/toolbar/default/base";
 		  normal: "bt_glow.png";
 		  border: 12 12 12 12;
 	       }
+               fill.smooth : 0;
 	    }
 	    description { state: "clicked" 0.0;
 	       inherit:  "default" 0.0;
@@ -22584,6 +22589,7 @@ group { name: "e/toolbar/default/base";
 		  normal: "bt_glow.png";
 		  border: 12 12 12 12;
 	       }
+               fill.smooth : 0;
 	    }
 	    description { state: "clicked" 0.0;
 	       inherit:  "default" 0.0;
