@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-03-02 05:48+0400\n"
-"PO-Revision-Date: 2009-03-02 10:04+0400\n"
+"POT-Creation-Date: 2009-03-03 12:52+0400\n"
+"PO-Revision-Date: 2009-03-03 14:42+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "À propos de Enlightenment"
 #: src/bin/e_about.c:20
 #: src/bin/e_actions.c:2486
 #: src/bin/e_config_dialog.c:258
-#: src/bin/e_fm.c:697
+#: src/bin/e_fm.c:730
 #: src/bin/e_int_border_menu.c:208
 #: src/bin/e_int_border_prop.c:81
 #: src/bin/e_theme_about.c:20
@@ -32,7 +32,7 @@ msgstr "À propos de Enlightenment"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:815
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:125
-#: src/modules/fileman/e_fwin.c:1401
+#: src/modules/fileman/e_fwin.c:1403
 #: src/modules/illume/e_mod_win.c:177
 #: src/modules/mixer/app_mixer.c:537
 msgid "Close"
@@ -74,8 +74,8 @@ msgstr "Êtes-vous sûr de vouloir tuer cette fenêtre ?"
 #: src/bin/e_actions.c:2053
 #: src/bin/e_actions.c:2117
 #: src/bin/e_confirm_dialog.c:47
-#: src/bin/e_fm.c:7977
-#: src/bin/e_fm.c:8165
+#: src/bin/e_fm.c:8033
+#: src/bin/e_fm.c:8221
 #: src/bin/e_module.c:508
 msgid "Yes"
 msgstr "Oui"
@@ -88,8 +88,8 @@ msgstr "Oui"
 #: src/bin/e_actions.c:2055
 #: src/bin/e_actions.c:2119
 #: src/bin/e_confirm_dialog.c:48
-#: src/bin/e_fm.c:7975
-#: src/bin/e_fm.c:8166
+#: src/bin/e_fm.c:8031
+#: src/bin/e_fm.c:8222
 #: src/bin/e_module.c:509
 msgid "No"
 msgstr "Non"
@@ -155,7 +155,7 @@ msgid "Window : Actions"
 msgstr "Fenêtre: Actions"
 
 #: src/bin/e_actions.c:2446
-#: src/bin/e_fm.c:5334
+#: src/bin/e_fm.c:5388
 msgid "Move"
 msgstr "Déplacer"
 
@@ -330,6 +330,7 @@ msgstr "Activer/Désactiver l'épinglage"
 #: src/bin/e_int_menus.c:126
 #: src/bin/e_int_shelf_config.c:661
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:103
+#: src/modules/fileman/e_mod_main.c:324
 #: src/modules/ibox/e_mod_config.c:141
 msgid "Desktop"
 msgstr "Bureau"
@@ -452,7 +453,7 @@ msgstr "Basculer linéairement le bureau... (tous les écrans)"
 
 #: src/bin/e_actions.c:2655
 msgid "Flip Desktop In Direction..."
-msgstr "Basculer le bureau en direction de..."
+msgstr "Basculer le bureau avec..."
 
 #: src/bin/e_actions.c:2660
 msgid "Switch To Desktop 0 (All Screens)"
@@ -594,8 +595,8 @@ msgstr "Afficher le menu..."
 #: src/modules/conf/e_mod_main.c:162
 #: src/modules/exebuf/e_mod_main.c:48
 #: src/modules/exebuf/e_mod_main.c:68
-#: src/modules/fileman/e_mod_main.c:60
-#: src/modules/fileman/e_mod_main.c:144
+#: src/modules/fileman/e_mod_main.c:63
+#: src/modules/fileman/e_mod_main.c:147
 msgid "Launch"
 msgstr "Lancer"
 
@@ -952,7 +953,7 @@ msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
 #: src/bin/e_entry.c:493
-#: src/bin/e_fm.c:7305
+#: src/bin/e_fm.c:7361
 #: src/modules/conf_applications/e_int_config_apps.c:273
 #: src/modules/conf_profiles/e_int_config_profiles.c:124
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -961,19 +962,19 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: src/bin/e_entry.c:506
-#: src/bin/e_fm.c:7201
+#: src/bin/e_fm.c:7257
 msgid "Cut"
 msgstr "Couper"
 
 #: src/bin/e_entry.c:517
-#: src/bin/e_fm.c:5326
-#: src/bin/e_fm.c:7218
+#: src/bin/e_fm.c:5380
+#: src/bin/e_fm.c:7274
 msgid "Copy"
 msgstr "Copier"
 
 #: src/bin/e_entry.c:528
-#: src/bin/e_fm.c:7019
-#: src/bin/e_fm.c:7234
+#: src/bin/e_fm.c:7074
+#: src/bin/e_fm.c:7290
 msgid "Paste"
 msgstr "Coller"
 
@@ -1112,168 +1113,168 @@ msgstr "Données de sortie"
 msgid "There was no output."
 msgstr "Il n'y a eu aucune sortie."
 
-#: src/bin/e_fm.c:699
+#: src/bin/e_fm.c:732
 msgid "Nonexistent path"
 msgstr "Chemin inexistant"
 
-#: src/bin/e_fm.c:702
+#: src/bin/e_fm.c:735
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s n'existe pas."
 
-#: src/bin/e_fm.c:3228
+#: src/bin/e_fm.c:3297
 #, c-format
 msgid "%i Files"
 msgstr "%i Fichiers"
 
-#: src/bin/e_fm.c:5342
-#: src/bin/e_fm.c:7030
-#: src/bin/e_fm.c:7245
+#: src/bin/e_fm.c:5396
+#: src/bin/e_fm.c:7085
+#: src/bin/e_fm.c:7301
 msgid "Link"
 msgstr " Lien "
 
-#: src/bin/e_fm.c:5353
-#: src/bin/e_fm.c:7921
-#: src/bin/e_fm.c:8051
+#: src/bin/e_fm.c:5407
+#: src/bin/e_fm.c:7977
+#: src/bin/e_fm.c:8107
 msgid "Abort"
 msgstr "Annuler"
 
-#: src/bin/e_fm.c:6928
-#: src/bin/e_fm.c:7110
+#: src/bin/e_fm.c:6983
+#: src/bin/e_fm.c:7166
 msgid "Inherit parent settings"
 msgstr "Hériter des propriétés du parent"
 
-#: src/bin/e_fm.c:6940
-#: src/bin/e_fm.c:7122
+#: src/bin/e_fm.c:6995
+#: src/bin/e_fm.c:7178
 #: src/modules/fileman/e_mod_config.c:171
 msgid "View Mode"
 msgstr "Mode d'affichage"
 
-#: src/bin/e_fm.c:6947
-#: src/bin/e_fm.c:7129
+#: src/bin/e_fm.c:7002
+#: src/bin/e_fm.c:7185
 msgid "Refresh View"
 msgstr "Rafraîchir"
 
-#: src/bin/e_fm.c:6958
-#: src/bin/e_fm.c:7140
+#: src/bin/e_fm.c:7013
+#: src/bin/e_fm.c:7196
 msgid "Show Hidden Files"
 msgstr "Afficher les fichiers cachés"
 
-#: src/bin/e_fm.c:6973
-#: src/bin/e_fm.c:7155
+#: src/bin/e_fm.c:7028
+#: src/bin/e_fm.c:7211
 msgid "Remember Ordering"
 msgstr "Mémoriser l'ordre"
 
-#: src/bin/e_fm.c:6985
-#: src/bin/e_fm.c:7167
+#: src/bin/e_fm.c:7040
+#: src/bin/e_fm.c:7223
 msgid "Sort Now"
 msgstr "Classer maintenant"
 
-#: src/bin/e_fm.c:7000
-#: src/bin/e_fm.c:7185
+#: src/bin/e_fm.c:7055
+#: src/bin/e_fm.c:7241
 #: src/modules/conf_paths/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Nouveau dossier"
 
-#: src/bin/e_fm.c:7316
+#: src/bin/e_fm.c:7372
 msgid "Rename"
 msgstr "Renommer"
 
-#: src/bin/e_fm.c:7326
+#: src/bin/e_fm.c:7382
 msgid "Properties"
 msgstr "Propriétés"
 
-#: src/bin/e_fm.c:7560
-#: src/bin/e_fm.c:7622
+#: src/bin/e_fm.c:7616
+#: src/bin/e_fm.c:7678
 msgid "Use default"
 msgstr "Valeur par défaut"
 
-#: src/bin/e_fm.c:7595
+#: src/bin/e_fm.c:7651
 #: src/modules/fileman/e_mod_config.c:176
 msgid "Grid Icons"
 msgstr "Icones alignés"
 
-#: src/bin/e_fm.c:7603
+#: src/bin/e_fm.c:7659
 #: src/modules/fileman/e_mod_config.c:178
 msgid "Custom Icons"
 msgstr "Icones personnalisés"
 
-#: src/bin/e_fm.c:7611
+#: src/bin/e_fm.c:7667
 #: src/modules/fileman/e_mod_config.c:186
 msgid "List"
 msgstr "Liste"
 
-#: src/bin/e_fm.c:7636
+#: src/bin/e_fm.c:7692
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Taille de l'icone (%d)"
 
-#: src/bin/e_fm.c:7786
+#: src/bin/e_fm.c:7842
 msgid "Create a new Directory"
 msgstr "Créer un nouveau dossier"
 
-#: src/bin/e_fm.c:7787
+#: src/bin/e_fm.c:7843
 msgid "New Directory Name:"
 msgstr "Nom du nouveau dossier:"
 
-#: src/bin/e_fm.c:7846
+#: src/bin/e_fm.c:7902
 #, c-format
 msgid "Rename %s to:"
 msgstr "Renommer %s en:"
 
-#: src/bin/e_fm.c:7848
+#: src/bin/e_fm.c:7904
 msgid "Rename File"
 msgstr "Renommer le fichier"
 
-#: src/bin/e_fm.c:7920
-#: src/bin/e_fm.c:8050
+#: src/bin/e_fm.c:7976
+#: src/bin/e_fm.c:8106
 msgid "Retry"
 msgstr "Réessayer"
 
-#: src/bin/e_fm.c:7924
-#: src/bin/e_fm.c:7981
-#: src/bin/e_fm.c:8056
+#: src/bin/e_fm.c:7980
+#: src/bin/e_fm.c:8037
+#: src/bin/e_fm.c:8112
 #: src/modules/wizard/page_030.c:83
 msgid "Error"
 msgstr "Erreur"
 
-#: src/bin/e_fm.c:7926
-#: src/bin/e_fm.c:7983
+#: src/bin/e_fm.c:7982
+#: src/bin/e_fm.c:8039
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: src/bin/e_fm.c:7976
+#: src/bin/e_fm.c:8032
 msgid "No to all"
 msgstr "Non pour tout"
 
-#: src/bin/e_fm.c:7978
+#: src/bin/e_fm.c:8034
 msgid "Yes to all"
 msgstr "Oui pour tout"
 
-#: src/bin/e_fm.c:8052
+#: src/bin/e_fm.c:8108
 msgid "Ignore this"
 msgstr "Ignorer"
 
-#: src/bin/e_fm.c:8053
+#: src/bin/e_fm.c:8109
 msgid "Ignore all"
 msgstr "Ignorer tout"
 
-#: src/bin/e_fm.c:8058
+#: src/bin/e_fm.c:8114
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr "Une erreur s'est produite lors d'une opération.<br>%s"
 
-#: src/bin/e_fm.c:8168
+#: src/bin/e_fm.c:8224
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: src/bin/e_fm.c:8172
+#: src/bin/e_fm.c:8228
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:8178
+#: src/bin/e_fm.c:8234
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br>les %d fichiers sélectionnés dans:<br><hilight>%s</hilight> ?"
@@ -1343,7 +1344,7 @@ msgid "Thumbnail"
 msgstr "Vignette"
 
 #: src/bin/e_fm_prop.c:438
-#: src/modules/conf_desklock/e_int_config_desklock.c:319
+#: src/modules/conf_desklock/e_int_config_desklock.c:320
 msgid "Custom"
 msgstr "Personnalisé"
 
@@ -1360,37 +1361,37 @@ msgstr "Information sur le lien"
 msgid "Select an Image"
 msgstr "Sélectionner une image"
 
-#: src/bin/e_fm_hal.c:214
+#: src/bin/e_fm_hal.c:186
 #, c-format
 msgid "%llu TiB"
 msgstr "%llu Tio"
 
-#: src/bin/e_fm_hal.c:216
+#: src/bin/e_fm_hal.c:188
 #, c-format
 msgid "%llu GiB"
 msgstr "%llu Gio"
 
-#: src/bin/e_fm_hal.c:218
+#: src/bin/e_fm_hal.c:190
 #, c-format
 msgid "%llu MiB"
 msgstr "%llu Mio"
 
-#: src/bin/e_fm_hal.c:220
+#: src/bin/e_fm_hal.c:192
 #, c-format
 msgid "%llu KiB"
 msgstr "%llu Kio"
 
-#: src/bin/e_fm_hal.c:222
+#: src/bin/e_fm_hal.c:194
 #, c-format
 msgid "%llu B"
 msgstr "%llu o"
 
-#: src/bin/e_fm_hal.c:253
+#: src/bin/e_fm_hal.c:225
 #, c-format
 msgid "Unknown Volume"
 msgstr "Volume inconnu"
 
-#: src/bin/e_fm_hal.c:293
+#: src/bin/e_fm_hal.c:310
 msgid "Removable Device"
 msgstr "Périphérique amovible"
 
@@ -1940,9 +1941,9 @@ msgid "Settings"
 msgstr "Configuration"
 
 #: src/bin/e_int_config_modules.c:43
-#: src/modules/fileman/e_mod_main.c:48
-#: src/modules/fileman/e_mod_main.c:60
-#: src/modules/fileman/e_mod_main.c:144
+#: src/modules/fileman/e_mod_main.c:51
+#: src/modules/fileman/e_mod_main.c:63
+#: src/modules/fileman/e_mod_main.c:147
 #: src/modules/wizard/page_050.c:26
 msgid "File Manager"
 msgstr "Gestionnaire de fichiers"
@@ -3209,7 +3210,7 @@ msgid "Restart Applications"
 msgstr "Applications à redémarrer"
 
 #: src/modules/conf_applications/e_int_config_apps.c:240
-#: src/modules/fileman/e_fwin.c:1440
+#: src/modules/fileman/e_fwin.c:1442
 msgid "All Applications"
 msgstr "Toutes les applications"
 
@@ -3612,23 +3613,23 @@ msgstr "%1.0f minutes"
 msgid "Personal"
 msgstr "Personnel"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:288
+#: src/modules/conf_desklock/e_int_config_desklock.c:289
 msgid "Login Box Settings"
 msgstr "Paramétrage de la boîte de login"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:291
+#: src/modules/conf_desklock/e_int_config_desklock.c:292
 msgid "Show on all screen zones"
 msgstr "Afficher sur toutes les zones d'écran"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:295
+#: src/modules/conf_desklock/e_int_config_desklock.c:296
 msgid "Show on current screen zone"
 msgstr "Afficher sur la zone d'écran actuelle"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:299
+#: src/modules/conf_desklock/e_int_config_desklock.c:300
 msgid "Show on screen zone #:"
 msgstr "Afficher sur la zone d'écran #:"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:303
+#: src/modules/conf_desklock/e_int_config_desklock.c:304
 #: src/modules/conf_desks/e_int_config_desks.c:188
 #: src/modules/conf_desks/e_int_config_desks.c:192
 #: src/modules/conf_desks/e_int_config_desks.c:225
@@ -3646,24 +3647,24 @@ msgstr "Afficher sur la zone d'écran #:"
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:311
+#: src/modules/conf_desklock/e_int_config_desklock.c:312
 msgid "Wallpaper Mode"
 msgstr "Type de fond d'écran"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:313
+#: src/modules/conf_desklock/e_int_config_desklock.c:314
 #: src/modules/gadman/e_mod_config.c:149
 msgid "Theme Defined"
 msgstr "Défini par le thème"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:316
+#: src/modules/conf_desklock/e_int_config_desklock.c:317
 msgid "Theme Wallpaper"
 msgstr "Fond d'écran du thème"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:329
+#: src/modules/conf_desklock/e_int_config_desklock.c:330
 msgid "Custom Screenlock"
 msgstr "Verrouillage personnalisé"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:330
+#: src/modules/conf_desklock/e_int_config_desklock.c:331
 msgid "Use custom screenlock"
 msgstr "Utiliser un verrouillage d'écran personnalisé"
 
@@ -3940,7 +3941,7 @@ msgstr "Tout supprimer"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:251
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:247
 msgid "Restore Default Bindings"
-msgstr "Restaurer les raccourcis clavier par défaut"
+msgstr "Restaurer les raccourcis par défaut"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:256
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:252
@@ -3970,7 +3971,7 @@ msgstr "Erreur de raccourci des bords"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1097
 #, c-format
 msgid "The binding key sequence, that you choose, is already used by <br><hilight>%s</hilight> action.<br>Please choose another binding edge sequence."
-msgstr "La séquence de raccourci clavier que vous avez choisie est déjà utilisée<br>par l'action <hilight>%s</hilight>.<br>Veuillez choisir une autre séquence pour le raccourci des bords."
+msgstr "La séquence de raccourci que vous avez choisie est déjà utilisée<br>par l'action <hilight>%s</hilight>.<br>Veuillez choisir une autre séquence pour le raccourci des bords."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1234
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1287
@@ -4653,8 +4654,8 @@ msgid "Select an Edj File"
 msgstr "Sélectionner un fichier edj"
 
 #: src/modules/conf_mime/e_mod_main.c:34
-#: src/modules/fileman/e_mod_main.c:46
-#: src/modules/fileman/e_mod_main.c:224
+#: src/modules/fileman/e_mod_main.c:49
+#: src/modules/fileman/e_mod_main.c:393
 msgid "Files"
 msgstr "Fichiers"
 
@@ -5919,15 +5920,40 @@ msgstr "Ombre portée"
 msgid "Run Command Dialog"
 msgstr "Fenêtre de commande"
 
-#: src/modules/fileman/e_mod_main.c:276
+#: src/modules/fileman/e_mod_main.c:231
+msgid "Mount error"
+msgstr "Erreur de montage"
+
+#: src/modules/fileman/e_mod_main.c:231
+msgid "Mount of device failed"
+msgstr "Impossible de monter le périphérique"
+
+#: src/modules/fileman/e_mod_main.c:318
+#: src/modules/illume/e_mod_win.c:180
+msgid "Home"
+msgstr "Dossier personnel"
+
+#: src/modules/fileman/e_mod_main.c:330
+msgid "Favorites"
+msgstr "Favoris"
+
+#: src/modules/fileman/e_mod_main.c:342
+msgid "Root"
+msgstr "Root"
+
+#: src/modules/fileman/e_mod_main.c:348
+msgid "Temporary"
+msgstr "Temporaire"
+
+#: src/modules/fileman/e_mod_main.c:447
 msgid "Fileman Module Settings data needed upgrading. Your old configuration<br>has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Fileman module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr "La configuration du module Fileman (EFM) a dû être mise à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Ceci risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que le module Fileman a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/modules/fileman/e_mod_main.c:289
+#: src/modules/fileman/e_mod_main.c:460
 msgid "Your Fileman Module configuration is NEWER than Fileman Module version. This is very<br>strange. This should not happen unless you downgraded<br>the Fileman Module or copied the configuration from a place where<br>a newer version of the Fileman Module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Votre configuration du module Fileman (EFM) est PLUS RÉCENTE que la version du<br>module actuelle. C'est vraiment étonnant. Cela ne devrait pas se produite<br>à moins que vous n'ayez installé une version antérieure ou copié<br>la configuration du module depuis une machine sur laquelle une<br>version plus récente était installée. Ce n'est pas bon et, par<br> mesure de précaution, votre configuration a été remise à zéro.<br> Désolé pour les désagréments.<br>"
 
-#: src/modules/fileman/e_mod_main.c:358
+#: src/modules/fileman/e_mod_main.c:529
 msgid "Fileman Settings Updated"
 msgstr "Configuration de EFM à jour"
 
@@ -5979,25 +6005,25 @@ msgstr "Montrer la barre d'outils"
 msgid "Show HAL icons on desktop"
 msgstr "Afficher les icones HAL sur le bureau"
 
-#: src/modules/fileman/e_fwin.c:676
+#: src/modules/fileman/e_fwin.c:678
 msgid "Go to Parent Directory"
 msgstr "Aller au dossier parent"
 
-#: src/modules/fileman/e_fwin.c:702
-#: src/modules/fileman/e_fwin.c:1399
+#: src/modules/fileman/e_fwin.c:704
+#: src/modules/fileman/e_fwin.c:1401
 msgid "Open"
 msgstr "Ouvrir"
 
-#: src/modules/fileman/e_fwin.c:709
-#: src/modules/fileman/e_fwin.c:1397
+#: src/modules/fileman/e_fwin.c:711
+#: src/modules/fileman/e_fwin.c:1399
 msgid "Open with..."
 msgstr "Ouvrir avec..."
 
-#: src/modules/fileman/e_fwin.c:1415
+#: src/modules/fileman/e_fwin.c:1417
 msgid "Specific Applications"
 msgstr "Applications spécifiques"
 
-#: src/modules/fileman/e_fwin.c:1478
+#: src/modules/fileman/e_fwin.c:1480
 msgid "Custom Command"
 msgstr "Commande personnalisée"
 
@@ -6198,10 +6224,6 @@ msgstr "Afficher les fenêtres du bureau actif"
 #: src/modules/ibox/e_mod_main.c:226
 msgid "IBox"
 msgstr "IBox"
-
-#: src/modules/illume/e_mod_win.c:180
-msgid "Home"
-msgstr "Dossier personnel"
 
 #: src/modules/pager/e_mod_config.c:69
 msgid "Pager Settings"
