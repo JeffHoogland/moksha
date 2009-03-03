@@ -402,6 +402,9 @@ static const char *_e_fm2_icon_thumb_str = NULL;
 static const char *_e_fm2_mime_inode_directory = NULL;
 static const char *_e_fm2_mime_app_desktop = NULL;
 
+static Ecore_Timer *_e_fm2_mime_flush = NULL;
+static Ecore_Timer *_e_fm2_mime_clear = NULL;
+
 /* contains:
  * _e_volume_edd
  * _e_storage_edd
@@ -532,6 +535,20 @@ _e_fm2_icon_h_get(const E_Fm2_Smart_Data *sd)
    return sd->config->icon.icon.h;
 }
 
+static int
+_e_fm2_mime_flush_cb(void *data __UNUSED__)
+{
+   efreet_mime_type_cache_flush();
+   return 1;
+}
+
+static int
+_e_fm2_mime_clear_cb(void *data __UNUSED__)
+{
+   efreet_mime_type_cache_clear();
+   return 1;
+}
+
 /***/
 
 EAPI int
@@ -573,6 +590,10 @@ e_fm2_init(void)
    e_fm2_custom_file_init();
    efreet_mime_init();
 
+   /* XXX: move this to a central/global place? */
+   _e_fm2_mime_flush = ecore_timer_add(60.0, _e_fm2_mime_flush_cb, NULL);
+   _e_fm2_mime_clear = ecore_timer_add(600.0, _e_fm2_mime_clear_cb, NULL);
+
    _e_fm2_icon_desktop_str = eina_stringshare_add("DESKTOP");
    _e_fm2_icon_thumb_str = eina_stringshare_add("THUMB");
    _e_fm2_mime_inode_directory = eina_stringshare_add("inode/directory");
@@ -588,6 +609,11 @@ e_fm2_shutdown(void)
    _eina_stringshare_replace(&_e_fm2_icon_thumb_str, NULL);
    _eina_stringshare_replace(&_e_fm2_mime_inode_directory, NULL);
    _eina_stringshare_replace(&_e_fm2_mime_app_desktop, NULL);
+
+   ecore_timer_del(_e_fm2_mime_flush);
+   _e_fm2_mime_flush = NULL;
+   ecore_timer_del(_e_fm2_mime_clear);
+   _e_fm2_mime_clear = NULL;
 
    evas_smart_free(_e_fm2_smart);
    _e_fm2_smart = NULL;
