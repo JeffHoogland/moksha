@@ -777,6 +777,7 @@ e_volume_add(const char *udi)
    if (!v) return NULL;
 //   printf("VOL+ %s\n", udi);
    v->udi = strdup(udi);
+   v->icon = NULL;
    _e_vols = eina_list_append(_e_vols, v);
    e_hal_device_get_all_properties(_e_dbus_conn, v->udi,
 				   _e_dbus_cb_vol_prop, v);

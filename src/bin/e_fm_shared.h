@@ -42,6 +42,7 @@ struct _E_Volume
    char *udi;
    char *uuid;
    char *label;
+   char *icon;
    char *fstype;
    unsigned long long size;
    
@@ -93,6 +94,7 @@ _e_volume_free(E_Volume *v)
    if (v->udi) free(v->udi);
    if (v->uuid) free(v->uuid);
    if (v->label) free(v->label);
+   if (v->icon) free(v->icon);
    if (v->fstype) free(v->fstype);
    if (v->partition_label) free(v->partition_label);
    if (v->mount_point) free(v->mount_point);

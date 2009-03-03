@@ -94,6 +94,11 @@ e_fm2_hal_storage_find(const char *udi)
    return NULL;
 }
 
+#define TEBIBYTE_SIZE 1099511627776LL
+#define GIBIBYTE_SIZE 1073741824
+#define MEBIBYTE_SIZE 1048576
+#define KIBIBYTE_SIZE 1024
+
 EAPI void
 e_fm2_hal_volume_add(E_Volume *v)
 {
@@ -129,6 +134,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 	  v->mount_point, 
 	  v->parent);
  */
+   /* Check mount point */
    if ((!v->mount_point) || (v->mount_point[0] == 0))
      {
 	if (v->mount_point) free(v->mount_point);
@@ -155,6 +161,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 	  }
      }
 
+   /* Search parent storage */
    if ((s = e_fm2_hal_storage_find(v->parent)))
      {
 	v->storage = s;
@@ -167,64 +174,29 @@ e_fm2_hal_volume_add(E_Volume *v)
 	 strcmp(v->mount_point, "/home") &&
 	 strcmp(v->mount_point, "/tmp"))))
      {
-	_e_fm2_volume_write(v);
-     }
-}
-
-EAPI void
-e_fm2_hal_volume_del(E_Volume *v)
-{
-//   printf("VOL- %s\n", v->udi);
-   if (v->storage) 
-     v->storage->volumes = eina_list_remove(v->storage->volumes, v);
-   _e_vols = eina_list_remove(_e_vols, v);
-   _e_fm2_volume_erase(v);
-   _e_volume_free(v);
-}
-
-
-#define TEBIBYTE_SIZE 1099511627776LL
-#define GIBIBYTE_SIZE 1073741824
-#define MEBIBYTE_SIZE 1048576
-#define KIBIBYTE_SIZE 1024
-
-static void
-_e_fm2_volume_write(E_Volume *v)
-{
-   char buf[PATH_MAX], buf2[PATH_MAX];
-   FILE *f;
-   const char *id;
-  
-   if (!v->storage) return;
-   id = ecore_file_file_get(v->storage->udi);
-//   printf("vol write %s\n", id);
-   snprintf(buf, sizeof(buf) - 1, "%s/.e/e/fileman/favorites/|%s_%d.desktop",
-	    e_user_homedir_get(), id, v->partition_number);
-
-   f = fopen(buf, "w");
-   if (f)
-     {
-	char *icon, label[1024] = {0}, size[256] = {0};
-	unsigned long long s;
+	char label[1024] = {0};
+	char size[256] = {0};
+	char *icon = NULL;
+	unsigned long long sz;
 
 	/* Compute the size in a readable form */
 	if (v->size)
 	  {
-	     if ((s = (v->size / TEBIBYTE_SIZE)) > 0)
-	       snprintf(size, sizeof(size) - 1, _("%llu TiB"), s);
-	     else if ((s = (v->size / GIBIBYTE_SIZE)) > 0)
-	       snprintf(size, sizeof(size) - 1, _("%llu GiB"), s);
-	     else if ((s = (v->size / MEBIBYTE_SIZE)) > 0)
-	       snprintf(size, sizeof(size) - 1, _("%llu MiB"), s);
-	     else if ((s = (v->size / KIBIBYTE_SIZE)) > 0)
-	       snprintf(size, sizeof(size) - 1, _("%llu KiB"), s);
+	     if ((sz = (v->size / TEBIBYTE_SIZE)) > 0)
+	       snprintf(size, sizeof(size) - 1, _("%llu TiB"), sz);
+	     else if ((sz = (v->size / GIBIBYTE_SIZE)) > 0)
+	       snprintf(size, sizeof(size) - 1, _("%llu GiB"), sz);
+	     else if ((sz = (v->size / MEBIBYTE_SIZE)) > 0)
+	       snprintf(size, sizeof(size) - 1, _("%llu MiB"), sz);
+	     else if ((sz = (v->size / KIBIBYTE_SIZE)) > 0)
+	       snprintf(size, sizeof(size) - 1, _("%llu KiB"), sz);
 	     else
 	       snprintf(size, sizeof(size) - 1, _("%llu B"), v->size);
 	  }
 
 	/* Choose the label */
 	if ((v->label) && (v->label[0]))
-	  snprintf(label, sizeof(label), "%s", v->label);
+	  {}
 	else if ((v->partition_label) && (v->partition_label[0]))
 	  snprintf(label, sizeof(label) - 1, "%s", v->partition_label);
 	else if (((v->storage->vendor) && (v->storage->vendor[0])) && 
@@ -252,10 +224,17 @@ _e_fm2_volume_write(E_Volume *v)
 	else
 	  snprintf(label, sizeof(label), _("Unknown Volume"));
 
+	if ((label) && (label[0]))
+	  {
+	     if (v->label) free(v->label);
+	     v->label = strdup(label);
+	  }
+
 	/* Choose the icon */
-	if (v->storage && v->storage->icon.volume)
+        /* http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html */
+	if (v->storage->icon.volume)
 	  icon = v->storage->icon.volume;
-	else if (v->storage)
+	else
 	  {
 	     if (!strcmp(v->storage->drive_type, "disk"))
 	       {
@@ -276,6 +255,44 @@ _e_fm2_volume_write(E_Volume *v)
 		      || !strcmp(v->storage->drive_type, "sd_mmc"))
 	       icon = "media-flash";
 	  }
+	if (icon)
+	  {
+	     if (v->icon) free(v->icon);
+	     v->icon = strdup(icon);
+	  }
+
+	_e_fm2_volume_write(v);
+     }
+}
+
+EAPI void
+e_fm2_hal_volume_del(E_Volume *v)
+{
+//   printf("VOL- %s\n", v->udi);
+   if (v->storage) 
+     v->storage->volumes = eina_list_remove(v->storage->volumes, v);
+   _e_vols = eina_list_remove(_e_vols, v);
+   _e_fm2_volume_erase(v);
+   _e_volume_free(v);
+}
+
+static void
+_e_fm2_volume_write(E_Volume *v)
+{
+   char buf[PATH_MAX], buf2[PATH_MAX];
+   FILE *f;
+   const char *id;
+  
+   if (!v->storage) return;
+   id = ecore_file_file_get(v->storage->udi);
+//   printf("vol write %s\n", id);
+   snprintf(buf, sizeof(buf) - 1, "%s/.e/e/fileman/favorites/|%s_%d.desktop",
+	    e_user_homedir_get(), id, v->partition_number);
+
+   f = fopen(buf, "w");
+   if (f)
+     {
+
 	
 	fprintf(f,
 		"[Desktop Entry]\n"
@@ -288,8 +305,8 @@ _e_fm2_volume_write(E_Volume *v)
 		"Comment=%s\n"
 		"URL=file:/%s\n"
 		,
-		label,
-		icon,
+		v->label,
+		v->icon,
 		_("Removable Device"),
 		v->udi);
 	fclose(f);

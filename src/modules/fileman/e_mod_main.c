@@ -227,7 +227,8 @@ _mount_ok(void *data)
 static void
 _mount_fail(void *data)
 {
-   //TODO alert the user
+   //TODO make a better dialog
+   e_util_dialog_internal(_("Mount error"), _("Mount of device failed"));
 }
 
 static void
@@ -265,12 +266,14 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu *m)
    E_Menu_Item *mi;
    Efreet_Uri *uri;
    char *alias;
+   char *icon;
    FILE* fp;
 
    snprintf(buf, sizeof(buf), "%s/.gtk-bookmarks", e_user_homedir_get());
    fp = fopen(buf, "r");
    if (fp)
      {
+	icon = efreet_icon_path_find(e_config->icon_theme, "folder", 16);
 	while(fgets(line, sizeof(line), fp))
 	  {
 	    alias = NULL;
@@ -289,13 +292,14 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu *m)
 		      mi = e_menu_item_new(m);
 		      e_menu_item_label_set(mi, alias ? alias :
 					    ecore_file_file_get(uri->path));
-		      e_util_menu_item_edje_icon_set(mi, "fileman/folder");
+		      e_menu_item_icon_file_set(mi, icon);
 		      e_menu_item_callback_set(mi, _e_mod_menu_gtk_cb,
 					       strdup(uri->path));
 		   }
 	      }
 	    if (uri) efreet_uri_free(uri);
 	  }
+	if (icon) free(icon);
 	fclose(fp);
      }
 }
@@ -305,6 +309,8 @@ void
 _e_mod_menu_generate(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
+   E_Volume *vol;
+   const Eina_List *l;
    char buf[PATH_MAX];
 
    /* Home */
@@ -349,15 +355,17 @@ _e_mod_menu_generate(void *data, E_Menu *m)
 
    /* Volumes */
    Eina_Bool volumes_visible = 0;
-   const Eina_List *l;
-   E_Volume *vol;
    EINA_LIST_FOREACH(e_fm2_hal_volume_list_get(), l, vol)
      {
+	char *icon;
 	if (vol->mount_point && !strcmp(vol->mount_point, "/")) continue;
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, vol->label);
+	icon = efreet_icon_path_find(e_config->icon_theme, vol->icon, 16);
+	e_menu_item_icon_file_set(mi, icon);
 	e_menu_item_callback_set(mi, _e_mod_menu_volume_cb, vol);
 	volumes_visible = 1;
+	if (icon) free(icon);
      }
 
    /* Favorites */
