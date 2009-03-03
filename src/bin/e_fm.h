@@ -37,12 +37,13 @@ typedef enum _E_Fm2_Menu_Flags
 
 typedef enum _E_Fm2_View_Flags
 {
-  E_FM2_VIEW_NO_LOAD_DIR_CUSTOM    = (1 << 0),
-  E_FM2_VIEW_NO_SAVE_DIR_CUSTOM    = (1 << 1),
-  E_FM2_VIEW_NO_INHERIT_DIR_CUSTOM = (1 << 2),
-  E_FM2_VIEW_NO_DIR_CUSTOM         = (E_FM2_VIEW_NO_LOAD_DIR_CUSTOM |
-				      E_FM2_VIEW_NO_SAVE_DIR_CUSTOM |
-				      E_FM2_VIEW_NO_INHERIT_DIR_CUSTOM)
+  E_FM2_VIEW_NO_FLAGS           = 0,
+  E_FM2_VIEW_LOAD_DIR_CUSTOM    = (1 << 0),
+  E_FM2_VIEW_SAVE_DIR_CUSTOM    = (1 << 1),
+  E_FM2_VIEW_INHERIT_DIR_CUSTOM = (1 << 2),
+  E_FM2_VIEW_DIR_CUSTOM         = (E_FM2_VIEW_LOAD_DIR_CUSTOM |
+				   E_FM2_VIEW_SAVE_DIR_CUSTOM |
+				   E_FM2_VIEW_INHERIT_DIR_CUSTOM)
 } E_Fm2_View_Flags;
 
 typedef struct _E_Fm2_Config      E_Fm2_Config;

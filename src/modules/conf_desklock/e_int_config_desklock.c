@@ -234,7 +234,6 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(ow, &fmc);
    e_fm2_icon_menu_flags_set(ow, E_FM2_MENU_NO_SHOW_HIDDEN);
-   e_fm2_view_flags_set(ow, E_FM2_VIEW_NO_DIR_CUSTOM);
 
    e_fm2_path_set(ow, path, "/");
    evas_object_smart_callback_add(ow, "dir_changed", 

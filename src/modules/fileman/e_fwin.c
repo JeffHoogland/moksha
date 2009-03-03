@@ -176,7 +176,6 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    _e_fwin_config_set(fwin);
 
    e_fm2_custom_theme_content_set(o, "desktop");
-   e_fm2_view_flags_set(o, E_FM2_VIEW_NO_DIR_CUSTOM);
 
    evas_object_smart_callback_add(o, "dir_changed",
 				  _e_fwin_changed, fwin);
@@ -343,6 +342,7 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    o = e_fm2_add(e_win_evas_get(fwin->win));
    fwin->fm_obj = o;
    _e_fwin_config_set(fwin);
+   e_fm2_view_flags_set(o, E_FM2_VIEW_DIR_CUSTOM);
    
    evas_object_smart_callback_add(o, "dir_changed",
 				  _e_fwin_changed, fwin);
