@@ -33,6 +33,7 @@ EAPI int          e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, const cha
 EAPI int          e_util_edje_icon_check(const char *name);
 EAPI int          e_util_edje_icon_set(Evas_Object *obj, const char *name);
 EAPI int          e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name);
+EAPI int          e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon);
 EAPI E_Container *e_util_container_window_find(Ecore_X_Window win);
 EAPI E_Border    *e_util_desk_border_above(E_Border *bd);
 EAPI E_Border    *e_util_desk_border_below(E_Border *bd);

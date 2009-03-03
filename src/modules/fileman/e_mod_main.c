@@ -316,38 +316,32 @@ _e_mod_menu_generate(void *data, E_Menu *m)
    /* Home */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Home"));
-   e_util_menu_item_edje_icon_set(mi, "fileman/home");
+   e_util_menu_item_fdo_icon_set(mi, "user-home");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "~/");
 
    /* Desktop */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Desktop"));
-   e_util_menu_item_edje_icon_set(mi, "fileman/desktop");
+   e_util_menu_item_fdo_icon_set(mi, "user-desktop");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "desktop");
 
    /* Favorites */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Favorites"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
+   e_util_menu_item_fdo_icon_set(mi, "folder-bookmarks");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "favorites");
 
    /* Trash */
    //~ mi = e_menu_item_new(em);
    //~ e_menu_item_label_set(mi, D_("Trash"));
-   //~ e_util_menu_item_edje_icon_set(mi, "fileman/folder");
+   //~ e_util_menu_item_fdo_icon_set(mi, "user-trash");
    //~ e_menu_item_callback_set(mi, _places_run_fm, "trash:///");
 
    /* Root */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Root"));
-   e_util_menu_item_edje_icon_set(mi, "fileman/root");
+   e_util_menu_item_fdo_icon_set(mi, "computer");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "/");
-
-   /* Temp */
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Temporary"));
-   e_util_menu_item_edje_icon_set(mi, "fileman/tmp");
-   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "temp");
 
    //separator
    mi = e_menu_item_new(m);
@@ -357,15 +351,12 @@ _e_mod_menu_generate(void *data, E_Menu *m)
    Eina_Bool volumes_visible = 0;
    EINA_LIST_FOREACH(e_fm2_hal_volume_list_get(), l, vol)
      {
-	char *icon;
 	if (vol->mount_point && !strcmp(vol->mount_point, "/")) continue;
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, vol->label);
-	icon = efreet_icon_path_find(e_config->icon_theme, vol->icon, 16);
-	e_menu_item_icon_file_set(mi, icon);
+	e_util_menu_item_fdo_icon_set(mi, vol->icon);
 	e_menu_item_callback_set(mi, _e_mod_menu_volume_cb, vol);
 	volumes_visible = 1;
-	if (icon) free(icon);
      }
 
    /* Favorites */

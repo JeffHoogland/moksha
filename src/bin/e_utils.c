@@ -397,6 +397,19 @@ e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name)
    return 0;
 }
 
+EAPI int
+e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
+{
+   char *path = NULL;
+
+   if ((!icon) || (!icon[0])) return 0;
+   path = efreet_icon_path_find(e_config->icon_theme, icon, 16);
+   if (!path) return 0;
+   e_menu_item_icon_file_set(mi, path);
+   E_FREE(path);
+   return 1;
+}
+
 EAPI E_Container *
 e_util_container_window_find(Ecore_X_Window win)
 {
