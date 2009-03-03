@@ -1953,6 +1953,12 @@ group "E_Config" struct {
   }
   group "mime_icons" list {
     group "E_Config_Mime_Icon" struct {
+      value "mime" string: "application/x-edje";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
       value "mime" string: "application/x-desktop";
       value "icon" string: "DESKTOP";
     }
