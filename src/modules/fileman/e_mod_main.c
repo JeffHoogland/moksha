@@ -259,7 +259,7 @@ _e_mod_menu_volume_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_mod_fileman_parse_gtk_bookmarks(E_Menu *m)
+_e_mod_fileman_parse_gtk_bookmarks(E_Menu *m, Eina_Bool need_separator)
 {
    char line[PATH_MAX];
    char buf[PATH_MAX];
@@ -289,6 +289,13 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu *m)
 	      {
 		 if (ecore_file_exists(uri->path))
 		   {
+		      if (need_separator)
+			{
+			   mi = e_menu_item_new(m);
+			   e_menu_item_separator_set(mi, 1);
+			   need_separator = 0;
+			}
+
 		      mi = e_menu_item_new(m);
 		      e_menu_item_label_set(mi, alias ? alias :
 					    ecore_file_file_get(uri->path));
@@ -343,15 +350,21 @@ _e_mod_menu_generate(void *data, E_Menu *m)
    e_util_menu_item_fdo_icon_set(mi, "computer");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "/");
 
-   //separator
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
+   Eina_Bool need_separator = 1;
 
    /* Volumes */
    Eina_Bool volumes_visible = 0;
    EINA_LIST_FOREACH(e_fm2_hal_volume_list_get(), l, vol)
      {
 	if (vol->mount_point && !strcmp(vol->mount_point, "/")) continue;
+
+	if (need_separator)
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_separator_set(mi, 1);
+	     need_separator = 0;
+	  }
+
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, vol->label);
 	e_util_menu_item_fdo_icon_set(mi, vol->icon);
@@ -362,12 +375,7 @@ _e_mod_menu_generate(void *data, E_Menu *m)
    /* Favorites */
    //~ if (places_conf->show_bookm)
    //~ {
-	if (volumes_visible)
-	  {
-	     mi = e_menu_item_new(m);
-	     e_menu_item_separator_set(mi, 1);
-	  }
-	_e_mod_fileman_parse_gtk_bookmarks(m);
+   _e_mod_fileman_parse_gtk_bookmarks(m, need_separator || volumes_visible > 0);
    //~ }
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
