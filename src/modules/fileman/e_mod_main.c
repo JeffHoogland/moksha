@@ -266,14 +266,12 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu *m, Eina_Bool need_separator)
    E_Menu_Item *mi;
    Efreet_Uri *uri;
    char *alias;
-   char *icon;
    FILE* fp;
 
    snprintf(buf, sizeof(buf), "%s/.gtk-bookmarks", e_user_homedir_get());
    fp = fopen(buf, "r");
    if (fp)
      {
-	icon = efreet_icon_path_find(e_config->icon_theme, "folder", 16);
 	while(fgets(line, sizeof(line), fp))
 	  {
 	    alias = NULL;
@@ -299,14 +297,13 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu *m, Eina_Bool need_separator)
 		      mi = e_menu_item_new(m);
 		      e_menu_item_label_set(mi, alias ? alias :
 					    ecore_file_file_get(uri->path));
-		      e_menu_item_icon_file_set(mi, icon);
+		      e_util_menu_item_fdo_icon_set(mi, "folder");
 		      e_menu_item_callback_set(mi, _e_mod_menu_gtk_cb,
 					       strdup(uri->path));
 		   }
 	      }
 	    if (uri) efreet_uri_free(uri);
 	  }
-	if (icon) free(icon);
 	fclose(fp);
      }
 }

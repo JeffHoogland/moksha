@@ -22664,6 +22664,7 @@ ICON("user-home","icon_efm_home.png",64)
 ICON("user-desktop","icon_efm_desktop.png",64)
 ICON("user-bookmarks","icon_favorites.png",64)
 ICON("computer","icon_efm_root.png", 64)
+ICON("folder","icon_efm_folder.png",64)
 
 
 ICONMIME("inode/chardevice","icon_efm_file.png",128)
