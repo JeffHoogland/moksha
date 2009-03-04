@@ -175,9 +175,22 @@ e_drag_new(E_Container *container, int x, int y,
    drag->ecore_evas = e_canvas_new(e_config->evas_engine_drag, drag->container->win,
 				   drag->x, drag->y, drag->w, drag->h, 1, 1,
 				   &(drag->evas_win), NULL);
-   /* avoid excess exposes when shaped - set damage avoid to 1 */
-   ecore_evas_avoid_damage_set(drag->ecore_evas, 1);
-
+   if (e_config->use_composite)
+     {
+	ecore_evas_alpha_set(drag->ecore_evas, 1);
+	if (e_config->evas_engine_drag == ECORE_EVAS_ENGINE_SOFTWARE_16_X11)
+	  drag->evas_win = ecore_evas_software_x11_window_get(drag->ecore_evas);
+	else if (e_config->evas_engine_drag == ECORE_EVAS_ENGINE_XRENDER_X11)
+	  drag->evas_win = ecore_evas_xrender_x11_window_get(drag->ecore_evas);
+     }
+   else
+     {
+	/* avoid excess exposes when shaped - set damage avoid to 1 */
+	ecore_evas_avoid_damage_set(drag->ecore_evas, 1);
+	ecore_evas_shaped_set(drag->ecore_evas, 1);
+	ecore_x_window_shape_events_select(drag->evas_win, 1);
+     }
+   
    e_canvas_add(drag->ecore_evas);
    drag->shape = e_container_shape_add(drag->container);
    e_container_shape_move(drag->shape, drag->x, drag->y);
@@ -185,12 +198,10 @@ e_drag_new(E_Container *container, int x, int y,
 
    drag->evas = ecore_evas_get(drag->ecore_evas);
    e_container_window_raise(drag->container, drag->evas_win, drag->layer);
-   ecore_x_window_shape_events_select(drag->evas_win, 1);
+
    ecore_evas_name_class_set(drag->ecore_evas, "E", "_e_drag_window");
    ecore_evas_title_set(drag->ecore_evas, "E Drag");
    ecore_evas_ignore_events_set(drag->ecore_evas, 1);
-
-   ecore_evas_shaped_set(drag->ecore_evas, 1);
 
    drag->object = evas_object_rectangle_add(drag->evas);
    evas_object_color_set(drag->object, 255, 0, 0, 255);
