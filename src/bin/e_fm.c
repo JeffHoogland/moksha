@@ -4103,7 +4103,16 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
      {
 	ic->info.mime = eina_stringshare_ref(_e_fm2_mime_inode_directory);
      }
-   else if (!ic->info.mime)
+   else if (ic->info.real_link)
+     {
+	mime = efreet_mime_type_get(ic->info.real_link);
+	if (!mime)
+	  /* XXX REMOVE/DEPRECATE ME LATER */
+	  mime = e_fm_mime_filename_get(ic->info.file);
+	if (mime) ic->info.mime = eina_stringshare_add(mime);
+     }
+
+   if (!ic->info.mime)
      {
 	mime = efreet_mime_type_get(buf);
 	if (!mime)
