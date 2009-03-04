@@ -1817,15 +1817,7 @@ _e_fm2_icon_mime_type_special_match(const E_Fm2_Icon *ic)
 static inline unsigned int
 _e_fm2_icon_mime_size_normalize(const E_Fm2_Icon *ic)
 {
-   const unsigned int *itr, known_sizes[] = {
-     16, 22, 24, 32, 36, 48, 64, 72, 96, 128, 192, -1
-   };
-   unsigned int desired = _e_fm2_icon_w_get(ic->sd);
-   for (itr = known_sizes; *itr > 0; itr++)
-     if (*itr >= desired)
-       return *itr;
-
-   return 256; /* largest know size? */
+   return e_util_icon_size_normalize(_e_fm2_icon_w_get(ic->sd));
 }
 
 /**

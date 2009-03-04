@@ -397,13 +397,28 @@ e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name)
    return 0;
 }
 
+EAPI unsigned int
+e_util_icon_size_normalize(unsigned int desired)
+{
+   const unsigned int *itr, known_sizes[] = {
+     16, 22, 24, 32, 36, 48, 64, 72, 96, 128, 192, 256, -1
+   };
+   for (itr = known_sizes; *itr > 0; itr++)
+     if (*itr >= desired)
+       return *itr;
+
+   return 256; /* largest know size? */
+}
+
 EAPI int
 e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
 {
    char *path = NULL;
+   unsigned int size;
 
    if ((!icon) || (!icon[0])) return 0;
-   path = efreet_icon_path_find(e_config->icon_theme, icon, 16);
+   size = e_util_icon_size_normalize(16 * e_scale);
+   path = efreet_icon_path_find(e_config->icon_theme, icon, size);
    if (!path) return 0;
    e_menu_item_icon_file_set(mi, path);
    E_FREE(path);
