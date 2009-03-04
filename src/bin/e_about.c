@@ -98,5 +98,5 @@ EAPI void
 e_about_show(E_About *about)
 {
    e_obj_dialog_show((E_Obj_Dialog *)about);
-   e_obj_dialog_icon_set((E_Obj_Dialog *)about, "enlightenment/about");
+   e_obj_dialog_icon_set((E_Obj_Dialog *)about, "help-about");
 }

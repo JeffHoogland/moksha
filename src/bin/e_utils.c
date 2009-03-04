@@ -363,6 +363,10 @@ e_util_edje_icon_check(const char *name)
    return 0;
 }
 
+
+/* WARNING This function is deprecated,. must be made static. 
+ * You should use e_util_theme_icon_set instead 
+ */
 EAPI int
 e_util_edje_icon_set(Evas_Object *obj, const char *name)
 {
@@ -378,6 +382,55 @@ e_util_edje_icon_set(Evas_Object *obj, const char *name)
 	return 1;
      }
    return 0;
+}
+
+static int
+_e_util_icon_theme_set(Evas_Object *obj, const char *icon)
+{
+   const char *file;
+   char buf[4096];
+
+   if ((!icon) || (!icon[0])) return 0;
+   snprintf(buf, sizeof(buf), "e/icons/%s", icon);
+   file = e_theme_edje_file_get("base/theme/icons", buf);
+   if (file[0])
+     {
+	e_icon_file_edje_set(obj, file, buf);
+	return 1;
+     }
+   return 0;
+}
+
+static int
+_e_util_icon_fdo_set(Evas_Object *obj, const char *icon)
+{
+   char *path = NULL;
+   unsigned int size;
+
+   if ((!icon) || (!icon[0])) return 0;
+   size = e_util_icon_size_normalize(16 * e_scale);
+   path = efreet_icon_path_find(e_config->icon_theme, icon, 48);
+   if (!path) return 0;
+   e_icon_file_set(obj, path);
+   E_FREE(path);
+   return 1;
+}
+
+EAPI int
+e_util_icon_theme_set(Evas_Object *obj, const char *icon)
+{
+   if (e_config->icon_theme_overrides)
+     {
+	if (_e_util_icon_fdo_set(obj, icon))
+	  return 1;
+	return _e_util_icon_theme_set(obj, icon);
+     }
+   else
+     {
+	if (_e_util_icon_theme_set(obj, icon))
+	  return 1;
+	return _e_util_icon_fdo_set(obj, icon);
+     }
 }
 
 /* WARNING This function is deprecated, You should

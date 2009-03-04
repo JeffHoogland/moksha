@@ -32,6 +32,7 @@ EAPI int          e_util_edje_icon_list_set(Evas_Object *obj, const char *list);
 EAPI int          e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, const char *list);
 EAPI int          e_util_edje_icon_check(const char *name);
 EAPI int          e_util_edje_icon_set(Evas_Object *obj, const char *name);
+EAPI int          e_util_icon_theme_set(Evas_Object *obj, const char *icon);
 EAPI int          e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name);
 EAPI unsigned int e_util_icon_size_normalize(unsigned int desired);
 EAPI int          e_util_menu_item_theme_icon_set(E_Menu_Item *mi, const char *icon);

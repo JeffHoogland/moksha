@@ -3120,10 +3120,12 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 		       o = e_icon_add(evas);
 		       e_icon_file_set(o, bd->internal_icon);
 		    }
-		  else 
+		  else
 		    {
-		       if (!e_util_edje_icon_set(o, bd->internal_icon))
-			 e_util_edje_icon_set(o, "enlightenment/e"); 
+		       evas_object_del(o);
+		       o = e_icon_add(evas);
+		       if (!e_util_icon_theme_set(o, bd->internal_icon))
+			 e_util_icon_theme_set(o, "enlightenment/e"); 
 		    }
 	       }
 	     else
