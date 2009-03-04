@@ -186,30 +186,34 @@ e_scrollframe_extern_pan_set(Evas_Object *obj, Evas_Object *pan,
    evas_object_show(sd->pan_obj);
 }
 
-EAPI void
+EAPI int
 e_scrollframe_custom_theme_set(Evas_Object *obj, char *custom_category, char *custom_group)
 {
    API_ENTRY return;
 
-   e_theme_edje_object_set(sd->edje_obj, custom_category, custom_group);
+   if (!e_theme_edje_object_set(sd->edje_obj, custom_category, custom_group))
+     return 0;
    if (sd->pan_obj)
      edje_object_part_swallow(sd->edje_obj, "e.swallow.content", sd->pan_obj);
    sd->vbar_visible = !sd->vbar_visible;
    sd->hbar_visible = !sd->hbar_visible;
    _e_smart_scrollbar_bar_visibility_adjust(sd);
+   return 1;
 }
 
-EAPI void
+EAPI int
 e_scrollframe_custom_edje_file_set(Evas_Object *obj, char *file, char *group)
 {
    API_ENTRY return;
 
-   edje_object_file_set(sd->edje_obj, file, group);
+   if (!edje_object_file_set(sd->edje_obj, file, group))
+     return 0;
    if (sd->pan_obj)
      edje_object_part_swallow(sd->edje_obj, "e.swallow.content", sd->pan_obj);
    sd->vbar_visible = !sd->vbar_visible;
    sd->hbar_visible = !sd->hbar_visible;
    _e_smart_scrollbar_bar_visibility_adjust(sd);
+   return 1;
 }
 
 EAPI void
