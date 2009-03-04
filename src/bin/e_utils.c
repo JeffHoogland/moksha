@@ -410,8 +410,8 @@ e_util_icon_size_normalize(unsigned int desired)
    return 256; /* largest know size? */
 }
 
-EAPI int
-e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
+static int
+_e_util_menu_item_fdo_icon_set_internal(E_Menu_Item *mi, const char *icon)
 {
    char *path = NULL;
    unsigned int size;
@@ -423,6 +423,23 @@ e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
    e_menu_item_icon_file_set(mi, path);
    E_FREE(path);
    return 1;
+}
+
+EAPI int
+e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
+{
+   if (e_config->icon_theme_overrides)
+     {
+	if (_e_util_menu_item_fdo_icon_set_internal(mi, icon))
+	  return 1;
+	return e_util_menu_item_edje_icon_set(mi, icon);
+     }
+   else
+     {
+	if (e_util_menu_item_edje_icon_set(mi, icon))
+	  return 1;
+	return _e_util_menu_item_fdo_icon_set_internal(mi, icon);
+     }
 }
 
 EAPI E_Container *

@@ -209,6 +209,6 @@ _e_mod_menu_add(void *data, E_Menu *m)
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Settings Panel"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
+   e_util_menu_item_fdo_icon_set(mi, "preferences-system");
    e_menu_item_callback_set(mi, _e_mod_conf_cb, NULL);
 }

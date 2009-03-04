@@ -82,6 +82,6 @@ _e_mod_menu_add(void *data, E_Menu *m)
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Theme"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
+   e_util_menu_item_fdo_icon_set(mi, "preferences-desktop-theme");
    e_menu_item_callback_set(mi, _e_mod_run_cb, NULL);
 }

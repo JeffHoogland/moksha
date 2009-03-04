@@ -1820,14 +1820,51 @@ _e_fm2_icon_mime_size_normalize(const E_Fm2_Icon *ic)
    return e_util_icon_size_normalize(_e_fm2_icon_w_get(ic->sd));
 }
 
+static Evas_Object *
+_e_fm2_icon_mime_fdo_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
+{
+   const char *icon;
+   unsigned int size;
+
+   size = _e_fm2_icon_mime_size_normalize(ic);
+   icon = efreet_mime_type_icon_get(ic->info.mime, e_config->icon_theme, size);
+   if (icon) return _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
+   return NULL;
+}
+
+static Evas_Object *
+_e_fm2_icon_mime_theme_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
+{
+   char buf[1024];
+   const char *file;
+
+   if (snprintf(buf, sizeof(buf), "e/icons/mimetypes/%s", ic->info.mime) >= sizeof(buf))
+     return NULL;
+
+   file = e_theme_edje_file_get("base/theme/icons", buf);
+   if (file && file[0])
+     {
+	Evas_Object *obj = edje_object_add(evas);
+	if (!obj) return NULL;
+	if (!edje_object_file_set(obj, file, buf))
+	  {
+	     evas_object_del(obj);
+	     return NULL;
+	  }
+	return obj;
+     }
+
+   return NULL;
+}
+
 /**
  * Use mime type information to set icon.
  */
 static Evas_Object *
 _e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
 {
+   Evas_Object *o;
    const char *icon;
-   unsigned int size;
 
    icon = _e_fm2_icon_mime_type_special_match(ic);
    if (icon)
@@ -1849,9 +1886,19 @@ _e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *d
 	  return _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
      }
 
-   size = _e_fm2_icon_mime_size_normalize(ic);
-   icon = efreet_mime_type_icon_get(ic->info.mime, e_config->icon_theme, size);
-   if (icon) return _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
+   if (e_config->icon_theme_overrides)
+     o = _e_fm2_icon_mime_fdo_get(evas, ic, type_ret);
+   else
+     o = _e_fm2_icon_mime_theme_get(evas, ic, type_ret);
+
+   if (o) return o;
+
+   if (!e_config->icon_theme_overrides)
+     o = _e_fm2_icon_mime_fdo_get(evas, ic, type_ret);
+   else
+     o = _e_fm2_icon_mime_theme_get(evas, ic, type_ret);
+
+   if (o) return o;
 
    /* XXX REMOVE/DEPRECATED below here */
    icon = e_fm_mime_icon_get(ic->info.mime);

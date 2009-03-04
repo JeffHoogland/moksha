@@ -1,5 +1,5 @@
 group "E_Config" struct {
-  value "config_version" int: 65838;
+  value "config_version" int: 65839;
   value "show_splash" int: 1;
   value "init_default_theme" string: "default.edj";
   value "desktop_default_name" string: "Desktop %i, %i";
@@ -1994,6 +1994,7 @@ group "E_Config" struct {
   value "desk_flip_wrap" int: 0;
   value "fullscreen_flip" int: 1;
   value "icon_theme" string: "Tango";
+  value "icon_theme_overrides" uchar: 0;
   value "desk_flip_animate_mode" int: 1;
   value "desk_flip_animate_interpolation" int: 0;
   value "desk_flip_animate_time" double: 0.2000000000000000111022302;

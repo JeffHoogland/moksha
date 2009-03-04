@@ -124,7 +124,7 @@ e_int_menus_main_new(void)
    dat->desktops = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Desktop"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
+   e_util_menu_item_fdo_icon_set(mi, "preferences-desktop");
    e_menu_item_submenu_set(mi, subm);
 
    subm = e_int_menus_clients_new();
@@ -132,7 +132,7 @@ e_int_menus_main_new(void)
    dat->clients = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Windows"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/windows");
+   e_util_menu_item_fdo_icon_set(mi, "preferences-system-windows");
    e_menu_item_submenu_set(mi, subm);
 /*  
    subm = e_int_menus_lost_clients_new();
@@ -162,12 +162,12 @@ e_int_menus_main_new(void)
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("About"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/about");
+   e_util_menu_item_fdo_icon_set(mi, "help-about");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Theme"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
+   e_util_menu_item_fdo_icon_set(mi, "preferences-desktop-theme");
    e_menu_item_callback_set(mi, _e_int_menus_themes_about, NULL);
 
    l = eina_hash_find(_e_int_menus_augmentation, "main/5");
@@ -202,7 +202,7 @@ e_int_menus_main_new(void)
    dat->config = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Settings"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
+   e_util_menu_item_fdo_icon_set(mi, "preferences-system");
    e_menu_item_submenu_set(mi, subm);
 
    l = eina_hash_find(_e_int_menus_augmentation, "main/9");
@@ -490,14 +490,7 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 		  if (entry->icon[0] == '/')
 		    e_menu_item_icon_file_set(mi, entry->icon);
 		  else
-		    {
-		       char *file;
-
-		       file = efreet_icon_path_find(e_config->icon_theme, 
-                                                    entry->icon, 24);
-		       e_menu_item_icon_file_set(mi, file);
-		       E_FREE(file);
-		    }
+		    e_util_menu_item_fdo_icon_set(mi, entry->icon);
 	       }
 	     if (entry->type == EFREET_MENU_ENTRY_SEPARATOR)
 	       e_menu_item_separator_set(mi, 1);
@@ -652,7 +645,7 @@ _e_int_menus_virtuals_pre_cb(void *data, E_Menu *m)
 
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Configure Virtual Desktops"));
-	e_util_menu_item_edje_icon_set(mi, "widget/config");
+	e_util_menu_item_fdo_icon_set(mi, "preferences-desktop");
 	e_menu_item_callback_set(mi, _e_int_menus_desk_item_cb, NULL);
      }
 }
@@ -719,7 +712,7 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Modules"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/modules");
+	e_util_menu_item_fdo_icon_set(mi, "preferences-plugin");
 	e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
      }
 
@@ -1388,14 +1381,14 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Add A Shelf"));
-   e_util_menu_item_edje_icon_set(mi, "widget/add");
+   e_util_menu_item_fdo_icon_set(mi, "list-add");
    e_menu_item_callback_set(mi, _e_int_menus_shelves_add_cb, NULL);
 
    if (shelves)
      { 
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Delete A Shelf"));
-        e_util_menu_item_edje_icon_set(mi, "widget/del");
+        e_util_menu_item_fdo_icon_set(mi, "list-remove");
 	e_menu_item_callback_set(mi, _e_int_menus_shelves_del_cb, NULL);
      }	
 }

@@ -35,7 +35,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x012e
+#define E_CONFIG_FILE_GENERATION 0x012f
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT         0
@@ -262,6 +262,7 @@ struct _E_Config
    int         fullscreen_flip; // GUI
 
    const char *icon_theme; // GUI
+   Eina_Bool   icon_theme_overrides; // GUI
    
    int         desk_flip_animate_mode; // GUI
    int         desk_flip_animate_interpolation; // GUI

@@ -335,7 +335,7 @@ _e_mod_menu_generate(void *data, E_Menu *m)
    /* Favorites */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Favorites"));
-   e_util_menu_item_fdo_icon_set(mi, "folder-bookmarks");
+   e_util_menu_item_fdo_icon_set(mi, "user-bookmarks");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "favorites");
 
    /* Trash */
@@ -390,7 +390,7 @@ _e_mod_menu_add(void *data, E_Menu *m)
 #ifdef ENABLE_FILES
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Files"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
+   e_util_menu_item_fdo_icon_set(mi, "system-file-manager");
    sub = e_menu_new();
    e_menu_item_submenu_set(mi, sub);
    e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, NULL);

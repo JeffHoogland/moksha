@@ -22643,6 +22643,37 @@ group { name: "e/icons/"NAME ;                          \
    }                                                    \
 }
 
+#define ICONMIME(NAME, FILE, SIZE) ICON("mimetypes/"NAME, FILE, SIZE)
+
+// FreeDesktop.Org Icons //
+
+ICON("help-about","logo_black_128.png",64)
+ICON("list-add","icon_add.png",64)
+ICON("list-remove","icon_del.png",64)
+ICON("preferences-desktop","icon_config.png",64)
+ICON("preferences-desktop","icon_desktops.png",64)
+ICON("preferences-desktop-theme","icon_theme.png",64)
+ICON("preferences-desktop-wallpaper","icon_wallpaper.png",64)
+ICON("preferences-plugin","icon_modules.png",64)
+ICON("preferences-system","icon_configuration.png",64)
+ICON("preferences-system-windows","icon_windows.png",64)
+ICON("system-file-manager","icon_efm_folder.png",64)
+ICON("system-run","icon_run.png",64)
+
+ICON("user-home","icon_efm_home.png",64)
+ICON("user-desktop","icon_efm_desktop.png",64)
+ICON("user-bookmarks","icon_favorites.png",64)
+ICON("computer","icon_efm_root.png", 64)
+
+
+ICONMIME("inode/chardevice","icon_efm_file.png",128)
+ICONMIME("inode/blockdevice","icon_efm_file.png",128)
+ICONMIME("inode/directory-locked","icon_efm_file.png",128)
+ICONMIME("inode/directory","icon_efm_folder.png",128)
+ICONMIME("inode/fifo","icon_efm_file.png",128)
+ICONMIME("inode/socket","icon_efm_file.png",128)
+
+
 // Widget Icons //
 
 ICON("enlightenment/check","icon_check.png",64)
