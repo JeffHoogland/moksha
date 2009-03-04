@@ -22710,7 +22710,7 @@ ICON("enlightenment/reboot","icon_reboot.png",128)
 ICON("enlightenment/suspend","icon_suspend.png",128)
 ICON("enlightenment/hibernate","icon_hibernate.png",128)
 ICON("enlightenment/colors","icon_colors.png",64)
-ICON("enlightenment/themes","icon_theme.png",64)
+//ICON("enlightenment/themes","icon_theme.png",64)      TODO some still around.....
 ICON("enlightenment/screen_setup","icon_screen_setup.png",64)
 ICON("enlightenment/windows","icon_windows.png",64)
 ICON("enlightenment/showhide","icon_windows.png",64)

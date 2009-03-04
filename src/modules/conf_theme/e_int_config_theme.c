@@ -60,7 +60,7 @@ e_int_config_theme(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Theme Selector"),
 			     "E", "_config_theme_dialog",
-			     "enlightenment/themes", 0, v, NULL);
+			     "preferences-desktop-theme", 0, v, NULL);
    return cfd;
 }
 
@@ -393,7 +393,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_list_add(evas, 0, 0);
 
    il = e_widget_list_add(evas, 0, 1);
-   o = e_widget_button_add(evas, _(" Import..."), "enlightenment/themes",
+   o = e_widget_button_add(evas, _(" Import..."), "preferences-desktop-theme",
 			   _cb_import, cfdata, NULL);
    e_widget_list_object_append(il, o, 1, 0, 0.5);
 #ifdef HAVE_EXCHANGE
@@ -755,8 +755,8 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata, const char *header, const char *d
 
 	     if (_theme_file_used(cfdata->theme_list, themefiles->data))
 	       {
-		  ic = edje_object_add(evas);
-		  e_util_edje_icon_set(ic, "enlightenment/themes");
+		  ic = e_icon_add(evas);
+		  e_util_icon_theme_set(ic, "preferences-desktop-theme");
 	       }
 	     tmp = strdup(strrchr(themefiles->data, '/') + 1);
 	     strncpy(themename, tmp, strlen(tmp) - 3);
@@ -871,8 +871,8 @@ _cb_adv_btn_assign(void *data1, void *data2)
    newtheme->category = strdup(buf);
 
    n = e_widget_ilist_selected_get(of);
-   ic = edje_object_add(evas);
-   e_util_edje_icon_set(ic, "enlightenment/themes");
+   ic = e_icon_add(evas);
+   e_util_icon_theme_set(ic, "preferences-desktop-theme");
    e_widget_ilist_nth_icon_set(of, n, ic);
    newtheme->file = _files_ilist_nth_label_to_file(cfdata, n);
 

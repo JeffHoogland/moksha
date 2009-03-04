@@ -345,13 +345,12 @@ _e_configure_category_cb(void *data, void *data2)
 	if (!ci) continue;
 	if (ci->icon) 
 	  {
-	     if (e_util_edje_icon_check(ci->icon)) 
+	     o = e_icon_add(eco->evas);
+	     if (!e_util_icon_theme_set(o, ci->icon))
 	       {
-		  o = edje_object_add(eco->evas);
-		  e_util_edje_icon_set(o, ci->icon);
+		  evas_object_del(o);
+		  o = e_util_icon_add(ci->icon, eco->evas);
 	       }
-	     else
-	       o = e_util_icon_add(ci->icon, eco->evas);
 	  }
 	e_widget_ilist_append(eco->item_list, o, ci->label, _e_configure_item_cb, ci, NULL);
      }

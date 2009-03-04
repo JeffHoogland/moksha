@@ -70,9 +70,9 @@ e_widget_button_add(Evas *evas, const char *label, const char *icon, void (*func
 
    if (icon)
      {
-	o = edje_object_add(evas);
+	o = e_icon_add(evas);
 	wd->o_icon = o;
-	e_util_edje_icon_set(o, icon);
+	e_util_icon_theme_set(o, icon);
 	edje_object_part_swallow(wd->o_button, "e.swallow.icon", o);
 	e_widget_sub_object_add(obj, o);
 	evas_object_show(o);
