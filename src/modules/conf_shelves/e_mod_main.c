@@ -82,6 +82,6 @@ _e_mod_menu_add(void *data, E_Menu *m)
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Shelves"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
+   e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf");
    e_menu_item_callback_set(mi, _e_mod_run_cb, NULL);
 }

@@ -316,7 +316,7 @@ _e_toolbar_menu_cb_pre(void *data, E_Menu *mn)
      e_menu_item_label_set(mi, _("Stop Moving/Resizing Items"));
    else
      e_menu_item_label_set(mi, _("Begin Moving/Resizing Items"));
-   e_util_menu_item_edje_icon_set(mi, "widget/resize");
+   e_util_menu_item_theme_icon_set(mi, "widget/resize");
    e_menu_item_callback_set(mi, _e_toolbar_menu_cb_edit, tbar);
 
    mi = e_menu_item_new(mn);
@@ -324,12 +324,12 @@ _e_toolbar_menu_cb_pre(void *data, E_Menu *mn)
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Toolbar Settings"));
-   e_util_menu_item_edje_icon_set(mi, "widget/config");
+   e_util_menu_item_theme_icon_set(mi, "widget/config");
    e_menu_item_callback_set(mi, _e_toolbar_menu_cb_config, tbar);
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Configure Toolbar Contents"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/toolbar");
+   e_util_menu_item_theme_icon_set(mi, "enlightenment/toolbar");
    e_menu_item_callback_set(mi, _e_toolbar_menu_cb_contents, tbar);
 }
 
@@ -351,7 +351,7 @@ _e_toolbar_menu_append(E_Toolbar *tbar, E_Menu *mn)
    subm = e_menu_new();
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, tbar->name);
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/toolbar");
+   e_util_menu_item_theme_icon_set(mi, "enlightenment/toolbar");
    e_menu_pre_activate_callback_set(subm, _e_toolbar_menu_cb_pre, tbar);
    e_menu_item_submenu_set(mi, subm);
 }

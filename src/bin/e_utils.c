@@ -335,14 +335,14 @@ e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, const char *list)
 	  {
 	     strncpy(buf, p, c - p);
 	     buf[c - p] = 0;
-	     if (e_util_menu_item_edje_icon_set(mi, buf)) return 1;
+	     if (e_util_menu_item_theme_icon_set(mi, buf)) return 1;
 	     p = c + 1;
 	     if (!*p) return 0;
 	  }
 	else
 	  {
 	     strcpy(buf, p);
-	     if (e_util_menu_item_edje_icon_set(mi, buf)) return 1;
+	     if (e_util_menu_item_theme_icon_set(mi, buf)) return 1;
 	     return 0;
 	  }
      }
@@ -380,6 +380,9 @@ e_util_edje_icon_set(Evas_Object *obj, const char *name)
    return 0;
 }
 
+/* WARNING This function is deprecated, You should
+ * use e_util_menu_item_theme_icon_set() instead.
+ * It provide fallback (e theme <-> fdo theme) in both direction */
 EAPI int
 e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name)
 {
@@ -411,7 +414,7 @@ e_util_icon_size_normalize(unsigned int desired)
 }
 
 static int
-_e_util_menu_item_fdo_icon_set_internal(E_Menu_Item *mi, const char *icon)
+_e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
 {
    char *path = NULL;
    unsigned int size;
@@ -426,11 +429,11 @@ _e_util_menu_item_fdo_icon_set_internal(E_Menu_Item *mi, const char *icon)
 }
 
 EAPI int
-e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
+e_util_menu_item_theme_icon_set(E_Menu_Item *mi, const char *icon)
 {
    if (e_config->icon_theme_overrides)
      {
-	if (_e_util_menu_item_fdo_icon_set_internal(mi, icon))
+	if (_e_util_menu_item_fdo_icon_set(mi, icon))
 	  return 1;
 	return e_util_menu_item_edje_icon_set(mi, icon);
      }
@@ -438,7 +441,7 @@ e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
      {
 	if (e_util_menu_item_edje_icon_set(mi, icon))
 	  return 1;
-	return _e_util_menu_item_fdo_icon_set_internal(mi, icon);
+	return _e_util_menu_item_fdo_icon_set(mi, icon);
      }
 }
 

@@ -126,6 +126,6 @@ _e_mod_menu_add(void *data, E_Menu *m)
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Run Command"));
-   e_util_menu_item_fdo_icon_set(mi, "system-run");
+   e_util_menu_item_theme_icon_set(mi, "system-run");
    e_menu_item_callback_set(mi, _e_mod_run_cb, NULL);
 }

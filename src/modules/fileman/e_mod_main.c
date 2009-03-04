@@ -297,7 +297,7 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu *m, Eina_Bool need_separator)
 		      mi = e_menu_item_new(m);
 		      e_menu_item_label_set(mi, alias ? alias :
 					    ecore_file_file_get(uri->path));
-		      e_util_menu_item_fdo_icon_set(mi, "folder");
+		      e_util_menu_item_theme_icon_set(mi, "folder");
 		      e_menu_item_callback_set(mi, _e_mod_menu_gtk_cb,
 					       strdup(uri->path));
 		   }
@@ -320,31 +320,31 @@ _e_mod_menu_generate(void *data, E_Menu *m)
    /* Home */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Home"));
-   e_util_menu_item_fdo_icon_set(mi, "user-home");
+   e_util_menu_item_theme_icon_set(mi, "user-home");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "~/");
 
    /* Desktop */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Desktop"));
-   e_util_menu_item_fdo_icon_set(mi, "user-desktop");
+   e_util_menu_item_theme_icon_set(mi, "user-desktop");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "desktop");
 
    /* Favorites */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Favorites"));
-   e_util_menu_item_fdo_icon_set(mi, "user-bookmarks");
+   e_util_menu_item_theme_icon_set(mi, "user-bookmarks");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "favorites");
 
    /* Trash */
    //~ mi = e_menu_item_new(em);
    //~ e_menu_item_label_set(mi, D_("Trash"));
-   //~ e_util_menu_item_fdo_icon_set(mi, "user-trash");
+   //~ e_util_menu_item_theme_icon_set(mi, "user-trash");
    //~ e_menu_item_callback_set(mi, _places_run_fm, "trash:///");
 
    /* Root */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Root"));
-   e_util_menu_item_fdo_icon_set(mi, "computer");
+   e_util_menu_item_theme_icon_set(mi, "computer");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "/");
 
    Eina_Bool need_separator = 1;
@@ -364,7 +364,7 @@ _e_mod_menu_generate(void *data, E_Menu *m)
 
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, vol->label);
-	e_util_menu_item_fdo_icon_set(mi, vol->icon);
+	e_util_menu_item_theme_icon_set(mi, vol->icon);
 	e_menu_item_callback_set(mi, _e_mod_menu_volume_cb, vol);
 	volumes_visible = 1;
      }
@@ -387,7 +387,7 @@ _e_mod_menu_add(void *data, E_Menu *m)
 #ifdef ENABLE_FILES
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Files"));
-   e_util_menu_item_fdo_icon_set(mi, "system-file-manager");
+   e_util_menu_item_theme_icon_set(mi, "system-file-manager");
    sub = e_menu_new();
    e_menu_item_submenu_set(mi, sub);
    e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, NULL);

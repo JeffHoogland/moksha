@@ -699,7 +699,7 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
 
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Appearance"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/appearance");
+   e_util_menu_item_theme_icon_set(mi, "enlightenment/appearance");
    e_menu_item_submenu_set(mi, mn);
    e_object_del(E_OBJECT(mn));
 
@@ -727,26 +727,26 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
 
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Behavior"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/appearance");
+   e_util_menu_item_theme_icon_set(mi, "enlightenment/appearance");
    e_menu_item_submenu_set(mi, mn);
    e_object_del(E_OBJECT(mn));
 
    /* Move / resize*/
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
-   e_util_menu_item_edje_icon_set(mi, "widget/resize");
+   e_util_menu_item_theme_icon_set(mi, "widget/resize");
    e_menu_item_callback_set(mi, on_menu_edit, gcc);
 
    /* Remove this gadgets */
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Remove this gadget"));
-   e_util_menu_item_edje_icon_set(mi, "widget/del");
+   e_util_menu_item_theme_icon_set(mi, "widget/del");
    e_menu_item_callback_set(mi, on_menu_delete, gcc);
 
    /* Add other gadgets */
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Add other gadgets"));
-   e_util_menu_item_edje_icon_set(mi, "widget/add");
+   e_util_menu_item_theme_icon_set(mi, "widget/add");
    e_menu_item_callback_set(mi, on_menu_add, gcc);
 }
 

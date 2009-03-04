@@ -323,7 +323,7 @@ _ibar_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Settings"));
-	e_util_menu_item_edje_icon_set(mi, "widget/config");
+	e_util_menu_item_theme_icon_set(mi, "widget/config");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_configuration, b);
 
 	mi = e_menu_item_new(mn);
@@ -800,12 +800,12 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	/* FIXME: other icon options go here too */
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Change Icon Properties"));
-	e_util_menu_item_edje_icon_set(mi, "widget/config");
+	e_util_menu_item_theme_icon_set(mi, "widget/config");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_icon_properties, ic);
 	
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Remove Icon"));
-	e_util_menu_item_edje_icon_set(mi, "widget/del");
+	e_util_menu_item_theme_icon_set(mi, "widget/del");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_icon_remove, ic);
 
 	mi = e_menu_item_new(mn);
@@ -815,14 +815,14 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Add An Icon"));
-	     e_util_menu_item_edje_icon_set(mi, "widget/add");
+	     e_util_menu_item_theme_icon_set(mi, "widget/add");
 	     e_menu_item_callback_set(mi, _ibar_cb_menu_icon_add, NULL);
 	  }
 	if (e_configure_registry_exists("applications/new_application")) 
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Create New Icon"));
-	     e_util_menu_item_edje_icon_set(mi, "widget/new");
+	     e_util_menu_item_theme_icon_set(mi, "widget/new");
 	     e_menu_item_callback_set(mi, _ibar_cb_menu_icon_new, NULL);
 
 	     mi = e_menu_item_new(mn);
@@ -831,14 +831,14 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Settings"));
-	e_util_menu_item_edje_icon_set(mi, "widget/config");
+	e_util_menu_item_theme_icon_set(mi, "widget/config");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_configuration, ic->ibar);
 
 	if (e_configure_registry_exists("applications/ibar_applications")) 
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Add Application"));
-	     e_util_menu_item_edje_icon_set(mi, "widget/add");
+	     e_util_menu_item_theme_icon_set(mi, "widget/add");
 	     e_menu_item_callback_set(mi, _ibar_cb_menu_add, ic->ibar);
 	  }
 	

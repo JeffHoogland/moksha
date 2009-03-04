@@ -7050,7 +7050,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("View Mode"));
-	     e_util_menu_item_edje_icon_set(mi, "enlightenment/appearance");
+	     e_util_menu_item_theme_icon_set(mi, "enlightenment/appearance");
 	     e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_pre, sd);
 	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
@@ -7233,7 +7233,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("View Mode"));
-	     e_util_menu_item_edje_icon_set(mi, "enlightenment/appearance");
+	     e_util_menu_item_theme_icon_set(mi, "enlightenment/appearance");
 	     e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_pre, sd);
 	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
@@ -7529,7 +7529,7 @@ _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_M
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, handler->label);
 	if (handler->icon_group)
-	  e_util_menu_item_edje_icon_set(mi, handler->icon_group);
+	  e_util_menu_item_theme_icon_set(mi, handler->icon_group);
 	e_menu_item_callback_set(mi, _e_fm2_icon_menu_item_cb, md);
      }
 }
