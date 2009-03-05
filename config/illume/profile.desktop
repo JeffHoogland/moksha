@@ -2,8 +2,10 @@
 Type=Link
 Name=Illume
 Name[fr]=Illume
+Name[el]=Illume
 Icon=icon.png
 Comment=Illume profile for<br>embedded systems like<br>phones and web<br>tablets with tiny<br>touchscreen displays.<br>Only use this if<br>you really have<br>such a device.
 Comment[it]=Profilo Illume per<br>sistemi embedded come<br>cellulari e webpad<br>con piccoli display<br>touchscreen.<br>Usatelo solo se<br>avete realmente un<br>dispositivo simile.
 Comment[hu]=Illume profil <br>telefonokhoz, érintőképernyőkhöz.<br>Csak akkor használd ezt,<br>ha valóban ilyen eszközöd van.
 Comment[fr]=Profil Illume pour les systèmes<br>embarqués comme les téléphones<br>et tablettes internet pourvus<br>d'un petit écran tactile.<br>À n'utiliser que si<br>vous disposez réellement<br>d'un tel matériel.
+Comment[el]=Το προφίλ Illume είναι<br>για μικροσυσκευές όπως <br>κινητά τηλέφωνα ή internet<br>tablets με μικρές οθόνες αφής.<br>Επιλέξτε μόνο αν έχετε τέτοια<br>συσκευή.
