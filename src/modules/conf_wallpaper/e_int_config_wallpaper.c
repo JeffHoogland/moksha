@@ -109,7 +109,7 @@ _e_int_config_wallpaper_desk(E_Container *con, int con_num, int zone_num, int de
 
    cfd = e_config_dialog_new(con, _("Wallpaper Settings"), "E", 
 			     "_config_wallpaper_dialog",
-			     "enlightenment/background", 0, v, cw);
+			     "preferences-desktop-wallpaper", 0, v, cw);
    return cfd;
 }
 

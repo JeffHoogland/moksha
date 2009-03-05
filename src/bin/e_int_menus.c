@@ -873,7 +873,7 @@ _e_int_menus_clients_add_by_class(Eina_List *borders, E_Menu *m)
 		  if ((subm) && (mi)) e_menu_item_submenu_set(mi, subm); 
 		  mi = e_menu_item_new(m); 
 		  e_menu_item_label_set(mi, bd->client.icccm.class); 
-		  e_util_menu_item_theme_icon_set(mi, "enlightenment/windows"); 
+		  e_util_menu_item_theme_icon_set(mi, "preferences-system-windows"); 
 		  subm = e_menu_new(); 
 	       } 
 	     else 
@@ -1072,7 +1072,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Cleanup Windows"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/windows");
+   e_util_menu_item_theme_icon_set(mi, "preferences-system-windows");
    e_menu_item_callback_set(mi, _e_int_menus_clients_cleanup_cb, zone);
 
    if (dat)

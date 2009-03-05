@@ -39,7 +39,7 @@ struct _E_Config_Dialog_Data
 const CFTypes _types[] = 
 {
      {"appearance", N_("Appearance"),    "enlightenment/appearance"},
-     {"config",     N_("Settings"),      "enlightenment/configuration"},
+     {"config",     N_("Settings"),      "preferences-system"},
      {"fileman",    N_("File Manager"),  "enlightenment/fileman"},
      {"shelf",      N_("Shelf"),         "enlightenment/shelf"},
      {"system",     N_("System"),        "enlightenment/system"},
@@ -119,7 +119,7 @@ e_int_config_modules(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Module Settings"), 
 			     "E", "_config_modules_dialog", 
-			     "enlightenment/modules", 0, v, NULL);
+			     "preferences-plugin", 0, v, NULL);
    e_dialog_resizable_set(cfd->dia, 1);
    return cfd;
 }
@@ -396,8 +396,8 @@ _fill_list_types(Evas_Object *obj, CFType *cft, int enabled)
    /* We have at least one, append header */
    if (cft->icon)
      {
-	ic = edje_object_add(evas);
-	e_util_edje_icon_set(ic, cft->icon);
+	ic = e_icon_add(evas);
+	e_util_icon_theme_set(ic, cft->icon);
      }
    e_widget_ilist_header_append(obj, ic, cft->name);
 

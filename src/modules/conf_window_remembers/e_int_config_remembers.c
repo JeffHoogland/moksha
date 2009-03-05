@@ -192,8 +192,8 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
         e_widget_ilist_append(cfdata->list, NULL, rem->class, NULL, rem, NULL);
      }
 
-   ic = edje_object_add(evas);
-   e_util_edje_icon_set(ic, "enlightenment/modules");
+   ic = e_icon_add(evas);
+   e_util_icon_theme_set(ic, "preferences-plugin");
    e_widget_ilist_header_append(cfdata->list, ic, _("Modules"));
    for (l = ll; l; l = l->next) 
      {

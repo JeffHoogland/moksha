@@ -53,7 +53,7 @@ e_int_config_window_display(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Window Display"),
 			     "E", "_config_window_display_dialog",
-			     "enlightenment/windows", 0, v, NULL);
+			     "preferences-system-windows", 0, v, NULL);
    return cfd;
 }
 

@@ -45,7 +45,7 @@ e_int_config_exebuf(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Run Command Settings"),
 			    "E", "_config_exebuf_dialog",
-			     "enlightenment/run", 0, v, NULL);
+			     "system-run", 0, v, NULL);
    return cfd;
 }
 

@@ -49,8 +49,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    
-   o = edje_object_add(gc->evas);
-   e_util_edje_icon_set(o, "enlightenment/configuration");
+   o = e_icon_add(gc->evas);
+   e_util_icon_theme_set(o, "preferences-system");
    evas_object_show(o);
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = o;

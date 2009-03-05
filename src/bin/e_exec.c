@@ -595,7 +595,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	e_widget_list_object_append(o, ob, 1, 1, 0.5);
      }
 
-   ob = e_widget_button_add(evas, _("Save This Message"), "enlightenment/run", 
+   ob = e_widget_button_add(evas, _("Save This Message"), "system-run", 
 			    _dialog_save_cb, NULL, cfdata);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
    
@@ -674,7 +674,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
-   ob = e_widget_button_add(evas, _("Save This Message"), "enlightenment/run", _dialog_save_cb, NULL, cfdata);
+   ob = e_widget_button_add(evas, _("Save This Message"), "system-run", _dialog_save_cb, NULL, cfdata);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
 
    snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"), 

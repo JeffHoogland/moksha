@@ -182,7 +182,7 @@ e_configure_show(E_Container *con)
 
    evas_object_show(eco->edje);
    e_win_show(eco->win);
-   e_win_border_icon_set(eco->win, "enlightenment/configuration");
+   e_win_border_icon_set(eco->win, "preferences-system");
 
    /* Preselect "Appearance" */
    e_widget_focus_set(eco->cat_list, 1);
@@ -305,13 +305,12 @@ _e_configure_category_add(E_Configure *eco, const char *label, const char *icon)
    cat->label = eina_stringshare_add(label);
    if (icon) 
      {
-	if (e_util_edje_icon_check(icon)) 
+        o = e_icon_add(eco->evas);
+        if (!e_util_icon_theme_set(o, icon))
 	  {
-	     o = edje_object_add(eco->evas);
-	     e_util_edje_icon_set(o, icon);
+	    evas_object_del(o);
+	    o = e_util_icon_add(icon, eco->evas);
 	  }
-	else
-	  o = e_util_icon_add(icon, eco->evas);
      }
    eco->cats = eina_list_append(eco->cats, cat);
 

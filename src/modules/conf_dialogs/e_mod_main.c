@@ -32,7 +32,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("settings", 80, _("Settings"), NULL, "enlightenment/settings");
-   e_configure_registry_item_add("settings/dialogs", 10, _("Dialogs"), NULL, "enlightenment/configuration", e_int_config_dialogs);
+   e_configure_registry_item_add("settings/dialogs", 10, _("Dialogs"), NULL, "preferences-system", e_int_config_dialogs);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;

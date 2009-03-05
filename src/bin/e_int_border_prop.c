@@ -81,7 +81,7 @@ e_int_border_prop(E_Border *bd)
    e_dialog_button_add(dia, _("Close"), NULL, _bd_cb_dialog_close, dia);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
-   e_dialog_border_icon_set(dia, "enlightenment/windows");
+   e_dialog_border_icon_set(dia, "preferences-system-windows");
    e_dialog_resizable_set(dia, 1);
 }
 

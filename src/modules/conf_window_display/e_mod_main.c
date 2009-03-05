@@ -31,8 +31,8 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "enlightenment/windows");
-   e_configure_registry_item_add("windows/window_display", 10, _("Window Display"), NULL, "enlightenment/windows", e_int_config_window_display);
+   e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "preferences-system-windows");
+   e_configure_registry_item_add("windows/window_display", 10, _("Window Display"), NULL, "preferences-system-windows", e_int_config_window_display);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;

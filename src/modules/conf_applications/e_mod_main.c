@@ -37,7 +37,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("applications/restart_applications", 30, _("Restart Applications"), NULL, "enlightenment/restart_applications", e_int_config_apps_restart);
    e_configure_registry_item_add("applications/startup_applications", 40, _("Startup Applications"), NULL, "enlightenment/startup_applications", e_int_config_apps_startup);
    e_configure_registry_category_add("internal", -1, _("Internal"), NULL, "enlightenment/internal");
-   e_configure_registry_item_add("internal/ibar_other", -1, _("IBar Other"), NULL, "enlightenment/windows", e_int_config_apps_ibar_other);
+   e_configure_registry_item_add("internal/ibar_other", -1, _("IBar Other"), NULL, "preferences-system-windows", e_int_config_apps_ibar_other);
    e_configure_registry_category_add("menus", 60, _("Menus"), NULL, "enlightenment/menus");
    e_configure_registry_item_add("menus/favorites_menu", 10, _("Favorites Menu"), NULL, "enlightenment/favorites", e_int_config_apps_favs);
    conf_module = m;

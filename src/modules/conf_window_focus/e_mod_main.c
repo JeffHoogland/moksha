@@ -31,7 +31,7 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "enlightenment/windows");
+   e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "preferences-system-windows");
    e_configure_registry_item_add("windows/window_focus", 20, _("Window Focus"), NULL, "enlightenment/focus", e_int_config_focus);
    conf_module = m;
    e_module_delayed_set(m, 1);

@@ -22645,20 +22645,21 @@ group { name: "e/icons/"NAME ;                          \
 
 #define ICONMIME(NAME, FILE, SIZE) ICON("mimetypes/"NAME, FILE, SIZE)
 
-// FreeDesktop.Org Icons //
+// FreeDesktop.Org Icons   (Note: in the comment the old e icon name)
 
-ICON("help-about","logo_black_128.png",64)
+
+ICON("help-about","logo_black_128.png",64)                      // "enlightenment/about"
 ICON("list-add","icon_add.png",64)
 ICON("list-remove","icon_del.png",64)
 ICON("preferences-desktop","icon_config.png",64)
 ICON("preferences-desktop","icon_desktops.png",64)
-ICON("preferences-desktop-theme","icon_theme.png",64)
-ICON("preferences-desktop-wallpaper","icon_wallpaper.png",64)
-ICON("preferences-plugin","icon_modules.png",64)
-ICON("preferences-system","icon_configuration.png",64)
-ICON("preferences-system-windows","icon_windows.png",64)
+ICON("preferences-desktop-theme","icon_theme.png",64)           // "enlightenment/themes"
+ICON("preferences-desktop-wallpaper","icon_wallpaper.png",64)   // "enlightenment/background"
+ICON("preferences-plugin","icon_modules.png",64)                // "enlightenment/modules"
+ICON("preferences-system","icon_configuration.png",64)          // "enlightenment/configuration"
+ICON("preferences-system-windows","icon_windows.png",64)        // "enlightenment/windows"
 ICON("system-file-manager","icon_efm_folder.png",64)
-ICON("system-run","icon_run.png",64)
+ICON("system-run","icon_run.png",64)                            // "enlightenment/run"
 
 ICON("user-home","icon_efm_home.png",64)
 ICON("user-desktop","icon_efm_desktop.png",64)
@@ -22697,7 +22698,7 @@ ICON("widget/reset","icon_reset.png",64)
 
 ICON("enlightenment/warning", "icon_warning.png",128)
 ICON("enlightenment/website","icon_globe.png",64)
-ICON("enlightenment/background","icon_wallpaper.png",64)
+ICON("enlightenment/background","icon_wallpaper.png",64)   //Done but some ref still around.....
 ICON("enlightenment/picture","icon_wallpaper.png",64)
 ICON("enlightenment/gradient","icon_gradient.png",64)
 ICON("enlightenment/e","logo_white_128.png",64)
@@ -22710,17 +22711,17 @@ ICON("enlightenment/reboot","icon_reboot.png",128)
 ICON("enlightenment/suspend","icon_suspend.png",128)
 ICON("enlightenment/hibernate","icon_hibernate.png",128)
 ICON("enlightenment/colors","icon_colors.png",64)
-//ICON("enlightenment/themes","icon_theme.png",64)      TODO some still around.....
+ICON("enlightenment/themes","icon_theme.png",64)   //Done but some ref still around.....
 ICON("enlightenment/screen_setup","icon_screen_setup.png",64)
-ICON("enlightenment/windows","icon_windows.png",64)
+//ICON("enlightenment/windows","icon_windows.png",64)
 ICON("enlightenment/showhide","icon_windows.png",64)
 ICON("enlightenment/lost_windows","icon_lost_windows.png",64)
 ICON("enlightenment/window_remembers","icon_window_remembers.png",64)
 ICON("enlightenment/focus","icon_window_focus.png",64)
-ICON("enlightenment/modules","icon_modules.png",64)
+//ICON("enlightenment/modules","icon_modules.png",64)
 ICON("enlightenment/favorites","icon_favorites.png",64)
 ICON("enlightenment/desktops","icon_desktops.png",64)
-ICON("enlightenment/configuration","icon_configuration.png",64)
+//ICON("enlightenment/configuration","icon_configuration.png",64)
 ICON("enlightenment/settings","icon_configuration.png",64)
 ICON("enlightenment/engine","icon_engine.png",64)
 ICON("enlightenment/dialogs","icon_dummy.png",64)
@@ -22728,7 +22729,7 @@ ICON("enlightenment/intl","icon_intl.png",64)
 ICON("enlightenment/interaction","icon_interaction.png",64)
 ICON("enlightenment/imc","icon_imc.png",64)
 ICON("enlightenment/system","icon_system.png",64)
-ICON("enlightenment/run","icon_run.png",64)
+//ICON("enlightenment/run","icon_run.png",64)
 ICON("enlightenment/directories","icon_directories.png",64)
 ICON("enlightenment/fileman","icon_efm_folder.png",64)
 ICON("enlightenment/unknown","icon_dummy.png",64)

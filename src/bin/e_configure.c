@@ -13,7 +13,7 @@ EAPI void
 e_configure_init(void)
 {
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, "enlightenment/extensions");
-   e_configure_registry_item_add("extensions/modules", 10, _("Modules"), NULL, "enlightenment/modules", e_int_config_modules);
+   e_configure_registry_item_add("extensions/modules", 10, _("Modules"), NULL, "preferences-plugin", e_int_config_modules);
 
    handlers = eina_list_append
      (handlers, ecore_event_handler_add

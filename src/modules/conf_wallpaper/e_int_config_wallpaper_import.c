@@ -222,7 +222,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    e_win_size_min_set(win, w, h);
    e_win_size_max_set(win, 99999, 99999);
    e_win_show(win);
-   e_win_border_icon_set(win, "enlightenment/background");
+   e_win_border_icon_set(win, "preferences-desktop-wallpaper");
 
    if (!e_widget_focus_get(import->bg_obj))
      e_widget_focus_set(import->box_obj, 1);

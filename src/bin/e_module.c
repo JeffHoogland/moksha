@@ -395,7 +395,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
 	if (desktop) efreet_desktop_free(desktop);
      }
    else
-     e_dialog_icon_set(dia, "enlightenment/modules", 64);
+     e_dialog_icon_set(dia, "preferences-plugin", 64);
    
    e_dialog_text_set(dia, body);
    e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);

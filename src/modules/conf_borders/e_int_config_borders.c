@@ -29,7 +29,7 @@ e_int_config_borders(E_Container *con, const char *params __UNUSED__)
    if (!v) return NULL;
    cfd = e_config_dialog_new(con, _("Default Border Style"), 
 			     "E", "_config_border_style_dialog", 
-			     "enlightenment/windows", 0, v, con);
+			     "preferences-system-windows", 0, v, con);
    return cfd;
 }
 
@@ -49,7 +49,7 @@ e_int_config_borders_border(E_Container *con __UNUSED__, const char *params)
    cfd = e_config_dialog_new(bd->zone->container, 
 			     _("Window Border Selection"), 
 			     "E", "_config_border_border_style_dialog", 
-			     "enlightenment/windows", 0, v, bd);
+			     "preferences-system-windows", 0, v, bd);
    bd->border_border_dialog = cfd;
    return cfd;
 }

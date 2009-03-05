@@ -19,7 +19,7 @@ e_bg_init(void)
 
    /* Register mime handler */
    bg_hdl = e_fm2_mime_handler_new(_("Set As Background"), 
-				   "enlightenment/background", 
+				   "preferences-desktop-wallpaper", 
 				   e_bg_handler_set, NULL, 
 				   e_bg_handler_test, NULL);
    if (bg_hdl) e_fm2_mime_handler_glob_add(bg_hdl, "*.edj");
