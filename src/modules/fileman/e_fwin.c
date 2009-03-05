@@ -317,7 +317,6 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
 {
    E_Fwin *fwin;
    Evas_Object *o;
-   char buf[4096];
    
    fwin = E_OBJECT_ALLOC(E_Fwin, E_FWIN_TYPE, _e_fwin_free);
    if (!fwin) return NULL;
@@ -408,8 +407,7 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
 
    e_fm2_path_set(fwin->fm_obj, dev, path);
    
-   snprintf(buf, sizeof(buf), "_fwin::/%s", e_fm2_real_path_get(fwin->fm_obj));
-   e_win_name_class_set(fwin->win, "E", buf);
+   e_win_name_class_set(fwin->win, "E", "e_fwin");
    
    _e_fwin_window_title_set(fwin);
    
