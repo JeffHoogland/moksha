@@ -199,12 +199,12 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    es->hide_step = 0;
    es->locked = 0;
 
-   option =  edje_object_data_get(es->o_base, "hidden_state_size");
+   option = edje_object_data_get(es->o_base, "hidden_state_size");
    if (option)
      es->hidden_state_size = atoi(option);
    else
      es->hidden_state_size = 4;
-   option =  edje_object_data_get(es->o_base, "instant_delay");
+   option = edje_object_data_get(es->o_base, "instant_delay");
    if (option)
      es->instant_delay = atof(option);
    else
@@ -1396,192 +1396,95 @@ static int
 _e_shelf_cb_hide_animator(void *data)
 {
    E_Shelf *es;
-   int step = 2, move = 0;
-
+   int step, height;
+   
    es = data;
+   switch (es->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_TOP:
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_TR:
+      case E_GADCON_ORIENT_BOTTOM:
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_BR:
+	 height = es->h;
+	 if (es->hide_origin == -1)
+	   es->hide_origin = es->y;	 
+	 break;
+      case E_GADCON_ORIENT_LEFT:
+      case E_GADCON_ORIENT_CORNER_LB:
+      case E_GADCON_ORIENT_CORNER_LT:
+      case E_GADCON_ORIENT_RIGHT:
+      case E_GADCON_ORIENT_CORNER_RB:
+      case E_GADCON_ORIENT_CORNER_RT:
+	 height = es->w;
+	 if (es->hide_origin == -1)
+	   es->hide_origin = es->x;
+	 break;
+     }
+
+   step = ((height - es->hidden_state_size) / e_config->framerate) / es->cfg->hide_duration;
+
+   if (!step) step = 1;
+
+   if (es->hidden)
+     {
+	if (es->hide_step < height - es->hidden_state_size)
+	  {
+	     if (es->hide_step + step > height - es->hidden_state_size)
+	       {
+		  es->hide_step = height - es->hidden_state_size;
+	       }
+	     else
+	       {
+		  es->hide_step += step;
+	       }
+	  }
+	else goto end;
+     }
+   else
+     {
+	if (es->hide_step > 0)
+	  {
+	     if (es->hide_step < step)
+	       {
+		  es->hide_step = 0;
+	       }
+	     else
+	       {
+		  es->hide_step -= step;	       
+	       }
+	  }
+	else goto end;
+     }
 
    switch (es->gadcon->orient)
      {
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_CORNER_TL:
       case E_GADCON_ORIENT_CORNER_TR:
-	 step = ((es->h - es->hidden_state_size) / e_config->framerate) / es->cfg->hide_duration;
-	 if (!step) step = 1;
-	 if (es->hidden)
-	   {
-	      if (es->hide_origin == -1) es->hide_origin = es->y;
-	      if (es->hide_step < es->h - es->hidden_state_size)
-		{
-		   if (es->hide_step + step > es->h - es->hidden_state_size)
-		     {
-			move = es->hide_origin - es->h + es->hidden_state_size;
-			es->hide_step = es->h - es->hidden_state_size;
-		     }
-		   else
-		     {
-			move = es->y - step;
-			es->hide_step += step;
-		     }
-		   e_shelf_move(es, es->x, move);
-		}
-	      else goto end;
-	   }
-	 else
-	   {
-	      if (es->hide_step > 0)
-		{
-		   if (es->hide_step < step)
-		     {
-			move = es->hide_origin;
-			es->hide_step = 0;
-		     }
-		   else
-		     {
-			move = es->y + step;
-			es->hide_step -= step;	       
-		     }
-		   e_shelf_move(es, es->x, move);
-		}
-	      else goto end;
-	   }
+	 e_shelf_move(es, es->x, es->hide_origin - es->hide_step);
 	 break;
       case E_GADCON_ORIENT_BOTTOM:
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_BR:
-	 step = ((es->h - es->hidden_state_size) / e_config->framerate) / es->cfg->hide_duration;
-	 if (!step) step = 1;
-	 if (es->hidden)
-	   {
-	      if (es->hide_origin == -1) es->hide_origin = es->y;
-	      if (es->hide_step < es->h - es->hidden_state_size)
-		{
-		   if (es->hide_step + step > es->h - es->hidden_state_size)
-		     {
-			move = es->hide_origin + es->h - es->hidden_state_size;
-			es->hide_step = es->h - es->hidden_state_size;
-		     }
-		   else
-		     {
-			move = es->y + step;
-			es->hide_step += step;
-		     }
-		   e_shelf_move(es, es->x, move);
-		}
-	      else goto end;
-	   }
-	 else
-	   {
-	      if (es->hide_step > 0)
-		{
-		   if (es->hide_step < step)
-		     {
-			move = es->hide_origin;
-			es->hide_step = 0;
-		     }
-		   else
-		     {
-			move = es->y - step;
-			es->hide_step -= step;	       
-		     }
-		   e_shelf_move(es, es->x, move);
-		}
-	      else goto end;
-	   }
-
+	 e_shelf_move(es, es->x, es->hide_origin + es->hide_step);
 	 break;
       case E_GADCON_ORIENT_LEFT:
       case E_GADCON_ORIENT_CORNER_LB:
       case E_GADCON_ORIENT_CORNER_LT:
-	 step = ((es->w - es->hidden_state_size) / e_config->framerate) / es->cfg->hide_duration;
-	 if (!step) step = 1;
-	 if (es->hidden)
-	   {
-	      if (es->hide_origin == -1) es->hide_origin = es->x;
-	      if (es->hide_step < es->w - es->hidden_state_size)
-		{
-		   if (es->hide_step + step > es->w - es->hidden_state_size)
-		     {
-			move = es->hide_origin - es->w + es->hidden_state_size;
-			es->hide_step = es->w - es->hidden_state_size;
-		     }
-		   else
-		     {
-			move = es->x - step;
-			es->hide_step += step;
-		     }
-		   e_shelf_move(es, move, es->y);
-		}
-	      else goto end;
-	   }
-	 else
-	   {
-	      if (es->hide_step > 0)
-		{
-		   if (es->hide_step < step)
-		     {
-			move = es->hide_origin;
-			es->hide_step = 0;
-		     }
-		   else
-		     {
-			move = es->x + step;
-			es->hide_step -= step;	       
-		     }
-		   e_shelf_move(es, move, es->y);
-		}
-	      else goto end;
-	   }
-
-	 break; 
+	 e_shelf_move(es, es->hide_origin - es->hide_step, es->y);
+	 break;
       case E_GADCON_ORIENT_RIGHT:
       case E_GADCON_ORIENT_CORNER_RB:
       case E_GADCON_ORIENT_CORNER_RT:
-	 step = ((es->w - es->hidden_state_size) / e_config->framerate) / es->cfg->hide_duration;
-	 if (!step) step = 1;
-	 if (es->hidden)
-	   {
-	      if (es->hide_origin == -1) es->hide_origin = es->x;
-	      if (es->hide_step < es->w - es->hidden_state_size)
-		{
-		   if (es->hide_step + step > es->w - es->hidden_state_size)
-		     {
-			move = es->hide_origin + es->w - es->hidden_state_size;
-			es->hide_step = es->w - es->hidden_state_size;
-		     }
-		   else
-		     {
-			move = es->x + step;
-			es->hide_step += step;
-		     }
-		   e_shelf_move(es, move, es->y);
-		}
-	      else goto end;
-	   }
-	 else
-	   {
-	      if (es->hide_step > 0)
-		{
-		   if (es->hide_step < step)
-		     {
-			move = es->hide_origin;
-			es->hide_step = 0;
-		     }
-		   else
-		     {
-			move = es->x - step;
-			es->hide_step -= step;	       
-		     }
-		   e_shelf_move(es, move, es->y);
-		}
-	      else goto end;
-	   }
-	 break; 
-      default:
+	 e_shelf_move(es, es->hide_origin + es->hide_step, es->y);
 	 break;
      }
+   
    return 1;
 
-end:
+ end:
    es->hide_animator = NULL;
    if (es->interrupted > -1)
      e_shelf_toggle(es, es->interrupted);
