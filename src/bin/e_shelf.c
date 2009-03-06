@@ -1396,9 +1396,10 @@ static int
 _e_shelf_cb_hide_animator(void *data)
 {
    E_Shelf *es;
-   int step, hidden_size;
+   int step, hide_max;
    
    es = data;
+
    switch (es->gadcon->orient)
      {
       case E_GADCON_ORIENT_TOP:
@@ -1407,7 +1408,7 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_BOTTOM:
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_BR:
-	 hidden_size = es->h - es->hidden_state_size;
+	 hide_max = es->h - es->hidden_state_size;
 	 if (es->hide_origin == -1)
 	   es->hide_origin = es->y;	 
 	 break;
@@ -1417,23 +1418,22 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_RIGHT:
       case E_GADCON_ORIENT_CORNER_RB:
       case E_GADCON_ORIENT_CORNER_RT:
-	 hidden_size = es->w - es->hidden_state_size;
+	 hide_max = es->w - es->hidden_state_size;
 	 if (es->hide_origin == -1)
 	   es->hide_origin = es->x;
 	 break;
      }
 
-   step = (hidden_size / e_config->framerate) / es->cfg->hide_duration;
-
+   step = (hide_max / e_config->framerate) / es->cfg->hide_duration;
    if (!step) step = 1;
 
    if (es->hidden)
      {
-	if (es->hide_step < hidden_size)
+	if (es->hide_step < hide_max)
 	  {
-	     if (es->hide_step + step > hidden_size)
+	     if (es->hide_step + step > hide_max)
 	       {
-		  es->hide_step = hidden_size;
+		  es->hide_step = hide_max;
 	       }
 	     else
 	       {
