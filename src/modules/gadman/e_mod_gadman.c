@@ -740,13 +740,13 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
    /* Remove this gadgets */
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Remove this gadget"));
-   e_util_menu_item_theme_icon_set(mi, "widget/del");
+   e_util_menu_item_theme_icon_set(mi, "list-remove");
    e_menu_item_callback_set(mi, on_menu_delete, gcc);
 
    /* Add other gadgets */
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Add other gadgets"));
-   e_util_menu_item_theme_icon_set(mi, "widget/add");
+   e_util_menu_item_theme_icon_set(mi, "list-add");
    e_menu_item_callback_set(mi, on_menu_add, gcc);
 }
 

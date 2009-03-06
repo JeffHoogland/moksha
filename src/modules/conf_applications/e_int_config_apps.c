@@ -244,7 +244,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_all = ow;
    _fill_apps(cfdata);
    e_widget_frametable_object_append(ot, ow, 0, 0, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_button_add(evas, _("Add"), "widget/add", _cb_add, 
+   ow = e_widget_button_add(evas, _("Add"), "list-add", _cb_add, 
 			    cfdata, NULL);
    cfdata->o_add = ow;
    e_widget_disabled_set(ow, 1);
@@ -270,7 +270,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_disabled_set(ow, 1);
    e_widget_table_object_append(bt, ow, 1, 0, 1, 1, 1, 0, 1, 0);
    e_widget_frametable_object_append(ot, bt, 0, 1, 1, 1, 1, 0, 1, 0);
-   ow = e_widget_button_add(evas, _("Delete"), "widget/del", _cb_del, 
+   ow = e_widget_button_add(evas, _("Delete"), "list-remove", _cb_del, 
 			    cfdata, NULL);
    cfdata->o_del = ow;
    e_widget_disabled_set(ow, 1);

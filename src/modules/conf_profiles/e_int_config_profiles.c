@@ -119,9 +119,9 @@ _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_text = ob;
    
    ot = e_widget_table_add(evas, 0);
-   ob = e_widget_button_add(evas, _("Add"), "widget/add", _cb_add, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Add"), "list-add", _cb_add, cfdata, NULL);
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 0, 0);
-   cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "widget/del", _cb_delete, cfdata, NULL);
+   cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "list-remove", _cb_delete, cfdata, NULL);
    e_widget_table_object_append(ot, cfdata->o_delete, 1, 0, 1, 1, 1, 1, 0, 0);
    cfdata->o_reset = e_widget_button_add(evas, _("Reset"), "widget/reset", _cb_reset, cfdata, NULL);
    e_widget_table_object_align_append(ot, cfdata->o_reset, 2, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
@@ -287,7 +287,7 @@ _cb_delete(void *data, void *data2)
             d->cfdata->sel_profile);
    e_confirm_dialog_show
      (_("Delete OK?"),
-      "enlightenment/warning", buf, NULL, NULL, _cb_dialog_yes, NULL, d, NULL,
+      "dialog-warning", buf, NULL, NULL, _cb_dialog_yes, NULL, d, NULL,
       _cb_dialog_destroy, d);
 }
 

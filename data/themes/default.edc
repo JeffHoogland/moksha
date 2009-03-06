@@ -16509,7 +16509,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 part { name: "e.swallow.icon";
 	    type: SWALLOW;
 	    description {
-	       state: "default" 0.0;
+	       state: "default" 0.0;color: 255 0 0 200;
 	       align: 0.0 0.5;
 	       fixed: 1 0;
 	       rel1 {
@@ -22645,27 +22645,36 @@ group { name: "e/icons/"NAME ;                          \
 
 #define ICONMIME(NAME, FILE, SIZE) ICON("mimetypes/"NAME, FILE, SIZE)
 
-// FreeDesktop.Org Icons   (Note: in the comment the old e icon name)
+/* FreeDesktop.Org Icons   (Note: in the comment the old e icon name) */
 
-
+//Standard Action Icons
 ICON("help-about","logo_black_128.png",64)                      // "enlightenment/about"
-ICON("list-add","icon_add.png",64)
-ICON("list-remove","icon_del.png",64)
-ICON("preferences-desktop","icon_config.png",64)
-ICON("preferences-desktop","icon_desktops.png",64)
+ICON("list-add","icon_add.png",64)                              // "widget/add"
+ICON("list-remove","icon_del.png",64)                           // "widget/del"
+ICON("system-run","icon_run.png",64)                            // "enlightenment/run"
+
+//Standard Status Icons
+ICON("dialog-warning","icon_warning.png",128)                   // "enlightenment/warning"
+
+//Standard Application Icons
+ICON("preferences-desktop","icon_desktops.png",64)              // "enlightenment/desktops"
 ICON("preferences-desktop-theme","icon_theme.png",64)           // "enlightenment/themes"
 ICON("preferences-desktop-wallpaper","icon_wallpaper.png",64)   // "enlightenment/background"
 ICON("preferences-plugin","icon_modules.png",64)                // "enlightenment/modules"
 ICON("preferences-system","icon_configuration.png",64)          // "enlightenment/configuration"
 ICON("preferences-system-windows","icon_windows.png",64)        // "enlightenment/windows"
-ICON("system-file-manager","icon_efm_folder.png",64)
-ICON("system-run","icon_run.png",64)                            // "enlightenment/run"
+ICON("system-file-manager","icon_efm_folder.png",64)            // "enlightenment/fileman"
 
+//Standard Place Icons
 ICON("user-home","icon_efm_home.png",64)
 ICON("user-desktop","icon_efm_desktop.png",64)
 ICON("user-bookmarks","icon_favorites.png",64)
-ICON("computer","icon_efm_root.png", 64)
 ICON("folder","icon_efm_folder.png",64)
+
+//Standard Device Icons
+ICON("computer","icon_efm_root.png", 64)
+
+
 
 
 ICONMIME("inode/chardevice","icon_efm_file.png",128)
@@ -22680,9 +22689,9 @@ ICONMIME("inode/socket","icon_efm_file.png",128)
 
 ICON("enlightenment/check","icon_check.png",64)
 ICON("widget/swap","icon_swap.png",64)
-ICON("widget/del","icon_del.png",64)
+//ICON("widget/del","icon_del.png",64)
 ICON("widget/new","icon_new.png",64)
-ICON("widget/add","icon_add.png",64)
+//ICON("widget/add","icon_add.png",64)
 ICON("widget/add_fav","icon_add_fav.png",64)
 ICON("widget/up_arrow","icon_up_arrow.png",64)
 ICON("widget/down_arrow","icon_down_arrow.png",64)
@@ -22696,7 +22705,7 @@ ICON("widget/reset","icon_reset.png",64)
 
 /// Normal Icons ///
 
-ICON("enlightenment/warning", "icon_warning.png",128)
+//ICON("enlightenment/warning", "icon_warning.png",128)
 ICON("enlightenment/website","icon_globe.png",64)
 ICON("enlightenment/background","icon_wallpaper.png",64)   //Done but some ref still around.....
 ICON("enlightenment/picture","icon_wallpaper.png",64)
@@ -22720,7 +22729,7 @@ ICON("enlightenment/window_remembers","icon_window_remembers.png",64)
 ICON("enlightenment/focus","icon_window_focus.png",64)
 //ICON("enlightenment/modules","icon_modules.png",64)
 ICON("enlightenment/favorites","icon_favorites.png",64)
-ICON("enlightenment/desktops","icon_desktops.png",64)
+//ICON("enlightenment/desktops","icon_desktops.png",64)
 //ICON("enlightenment/configuration","icon_configuration.png",64)
 ICON("enlightenment/settings","icon_configuration.png",64)
 ICON("enlightenment/engine","icon_engine.png",64)
@@ -22731,7 +22740,7 @@ ICON("enlightenment/imc","icon_imc.png",64)
 ICON("enlightenment/system","icon_system.png",64)
 //ICON("enlightenment/run","icon_run.png",64)
 ICON("enlightenment/directories","icon_directories.png",64)
-ICON("enlightenment/fileman","icon_efm_folder.png",64)
+//ICON("enlightenment/fileman","icon_efm_folder.png",64)
 ICON("enlightenment/unknown","icon_dummy.png",64)
 ICON("enlightenment/mouse","icon_mouse.png",64)
 ICON("enlightenment/mouse_left","icon_mouse_left.png",64)

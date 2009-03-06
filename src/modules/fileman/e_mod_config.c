@@ -87,7 +87,7 @@ e_int_config_fileman(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
    cfd = e_config_dialog_new(con, _("Fileman Settings"), "E", 
 			     "_config_fileman_dialog",
-			     "enlightenment/fileman", 0, v, NULL);
+			     "system-file-manager", 0, v, NULL);
    return cfd;
 }
 

@@ -76,9 +76,9 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    ot = e_widget_table_add(evas, 0);
-   ob = e_widget_button_add(evas, _("Add"), "widget/add", _cb_add, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Add"), "list-add", _cb_add, cfdata, NULL);
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 0, 0);
-   cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "widget/del", 
+   cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "list-remove", 
 					  _cb_delete, cfdata, NULL);
    e_widget_table_object_append(ot, cfdata->o_delete, 0, 1, 1, 1, 1, 1, 0, 0);
    cfdata->o_config = e_widget_button_add(evas, _("Configure"), "widget/config", 

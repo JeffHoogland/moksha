@@ -60,13 +60,13 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    e_widget_min_size_set(o, 100, 25);
    e_widget_table_object_append(wd->gui.table, o, 0, 2, 2, 1, 1, 0, 1, 0);
 
-   o = e_widget_button_add(evas, _("Add"), "widget/add", _button_cb_add,
+   o = e_widget_button_add(evas, _("Add"), "list-add", _button_cb_add,
 			   wd, obj);
    wd->gui.add = o;
    e_widget_disabled_set(o, 1);
    e_widget_table_object_append(wd->gui.table, o, 0, 3, 1, 1, 1, 0, 1, 0);
 
-   o = e_widget_button_add(evas, _("Remove"), "widget/del",
+   o = e_widget_button_add(evas, _("Remove"), "list-remove",
 			   _button_cb_remove, wd, obj);
    wd->gui.remove = o;
    e_widget_disabled_set(o, 1);

@@ -92,7 +92,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_frametable_add(evas, _("Window Remembers"), 0);
 
-   ow = e_widget_button_add(evas, _("Delete Remember(s)"), "widget/del",
+   ow = e_widget_button_add(evas, _("Delete Remember(s)"), "list-remove",
 			    _cb_delete, cfdata, NULL);
    cfdata->btn = ow;
 

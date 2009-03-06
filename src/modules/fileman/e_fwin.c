@@ -421,7 +421,7 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
 	if (fwin->win->border->internal_icon)
 	  eina_stringshare_del(fwin->win->border->internal_icon);
 	fwin->win->border->internal_icon = 
-	  eina_stringshare_add("enlightenment/fileman");
+	  eina_stringshare_add("system-file-manager");
      }
    
    return fwin;

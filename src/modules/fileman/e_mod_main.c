@@ -47,9 +47,9 @@ e_modapi_init(E_Module *m)
 
    /* Setup Entry in Config Panel */
    e_configure_registry_category_add("fileman", 100, _("Files"), 
-				     NULL, "enlightenment/fileman");
+				     NULL, "system-file-manager");
    e_configure_registry_item_add("fileman/fileman", 10, _("File Manager"), 
-				 NULL, "enlightenment/fileman", 
+				 NULL, "system-file-manager", 
 				 e_int_config_fileman);
    
    /* Setup Config edd */

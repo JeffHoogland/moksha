@@ -53,7 +53,7 @@ e_int_config_desks(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Virtual Desktops Settings"),
 			    "E", "_config_desks_dialog",
-			     "enlightenment/desktops", 0, v, NULL);
+			     "preferences-desktop", 0, v, NULL);
    return cfd;
 }
 

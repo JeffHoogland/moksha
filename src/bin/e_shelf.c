@@ -1635,6 +1635,6 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Delete this Shelf"));
-   e_util_menu_item_theme_icon_set(mi, "widget/del");
+   e_util_menu_item_theme_icon_set(mi, "list-remove");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);   
 }

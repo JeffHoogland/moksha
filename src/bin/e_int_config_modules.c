@@ -40,7 +40,7 @@ const CFTypes _types[] =
 {
      {"appearance", N_("Appearance"),    "enlightenment/appearance"},
      {"config",     N_("Settings"),      "preferences-system"},
-     {"fileman",    N_("File Manager"),  "enlightenment/fileman"},
+     {"fileman",    N_("File Manager"),  "system-file-manager"},
      {"shelf",      N_("Shelf"),         "enlightenment/shelf"},
      {"system",     N_("System"),        "enlightenment/system"},
      {NULL, NULL, NULL}
@@ -185,7 +185,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_on_change_hook_set(ol, _avail_list_cb_change, cfdata);
    _fill_list(ol, 0);
    e_widget_frametable_object_append(of, ol, 0, 0, 1, 1, 1, 1, 1, 1);
-   ol = e_widget_button_add(evas, _("Load Module"), "widget/add", 
+   ol = e_widget_button_add(evas, _("Load Module"), "list-add", 
 			    _btn_cb_load, cfdata, NULL);
    cfdata->b_load = ol;
    e_widget_disabled_set(ol, 1);
@@ -199,7 +199,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_on_change_hook_set(ol, _load_list_cb_change, cfdata);
    _fill_list(ol, 1);
    e_widget_frametable_object_append(of, ol, 0, 0, 1, 1, 1, 1, 1, 1);
-   ol = e_widget_button_add(evas, _("Unload Module"), "widget/del", 
+   ol = e_widget_button_add(evas, _("Unload Module"), "list-remove", 
 			    _btn_cb_unload, cfdata, NULL);
    cfdata->b_unload = ol;
    e_widget_disabled_set(ol, 1);

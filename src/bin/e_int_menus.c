@@ -254,7 +254,7 @@ e_int_menus_desktops_new(void)
    subm = e_menu_new();
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Virtual"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/desktops");
+   e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
    e_menu_pre_activate_callback_set(subm, _e_int_menus_virtuals_pre_cb, NULL);
    e_menu_item_submenu_set(mi, subm);
 
@@ -953,7 +953,7 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Eina_List *borders, E_Menu *
 		       if (subm && mi) e_menu_item_submenu_set(mi, subm); 
 		       mi = e_menu_item_new(m); 
 		       e_menu_item_label_set(mi, bd->desk->name); 
-		       e_util_menu_item_theme_icon_set(mi, "enlightenment/desktops");
+		       e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
 		       subm = e_menu_new(); 
 		    }
 		  else

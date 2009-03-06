@@ -50,7 +50,7 @@ e_int_config_desk(E_Container *con, const char *params)
    v->override_auto_apply = 1;
    
    cfd = e_config_dialog_new(con, _("Desk Settings"), "E", "_config_desk_dialog",
-			     "enlightenment/desktops", 0, v, cfdata);
+			     "preferences-desktop", 0, v, cfdata);
    return cfd;
 }
 

@@ -157,9 +157,9 @@ e_dialog_icon_set(E_Dialog *dia, const char *icon, Evas_Coord size)
    if (!icon) return;
    
    dia->icon_object = edje_object_add(e_win_evas_get(dia->win));
-   dia->icon_object = e_icon_add(e_win_evas_get(dia->win));
-   e_util_icon_theme_set(dia->icon_object, icon);
-   //edje_extern_object_min_size_set(dia->icon_object, size, size);
+   //dia->icon_object = e_icon_add(e_win_evas_get(dia->win));
+   e_util_edje_icon_set(dia->icon_object, icon);
+   edje_extern_object_min_size_set(dia->icon_object, size, size);
    edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
    evas_object_show(dia->icon_object);
 }
