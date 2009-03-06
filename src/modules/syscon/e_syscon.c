@@ -168,8 +168,8 @@ e_syscon_show(E_Zone *zone, const char *defact)
                                   e_action_predef_label_get(sca->action, sca->params));
         if (sca->icon)
           {
-             o2 = edje_object_add(popup->evas);
-             e_util_edje_icon_set(o2, sca->icon);
+             o2 = e_icon_add(popup->evas);
+             e_util_icon_theme_set(o2, sca->icon);
              edje_object_part_swallow(o, "e.swallow.icon", o2);
              evas_object_show(o2);
              if (disabled)
