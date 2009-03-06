@@ -128,6 +128,8 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    es->handlers = eina_list_append(es->handlers,
 	 ecore_event_handler_add(E_EVENT_ZONE_EDGE_IN, _e_shelf_cb_mouse_in, es));
    es->handlers = eina_list_append(es->handlers,
+	 ecore_event_handler_add(E_EVENT_ZONE_EDGE_OUT, _e_shelf_cb_mouse_out, es));
+   es->handlers = eina_list_append(es->handlers,
 	 ecore_event_handler_add(E_EVENT_ZONE_EDGE_MOVE, _e_shelf_cb_mouse_in, es));
    es->handlers = eina_list_append(es->handlers,
 	 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_shelf_cb_mouse_in, es));
@@ -1367,16 +1369,63 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 static int
 _e_shelf_cb_mouse_out(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Out *ev;
    E_Shelf                 *es;
    Ecore_X_Window           win;
 
-   ev = event;
    es = data;
-   if (es->popup) win = es->popup->evas_win;
-   else win = es->zone->container->event_win;
-   if (ev->win != win) return 1;
-   e_shelf_toggle(es, 0);
+   
+   if (type == E_EVENT_ZONE_EDGE_OUT)
+     {
+	E_Event_Zone_Edge *ev;
+	int                show = 1;
+
+	ev = event;
+	if (es->zone != ev->zone) return 1;
+	switch (es->gadcon->orient)
+	  {
+	   case E_GADCON_ORIENT_LEFT:
+	   case E_GADCON_ORIENT_CORNER_LT:
+	   case E_GADCON_ORIENT_CORNER_LB:
+	      if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->x >= es->x + es->w))
+		show = 0;
+	      break;
+	   case E_GADCON_ORIENT_RIGHT:
+	   case E_GADCON_ORIENT_CORNER_RT:
+	   case E_GADCON_ORIENT_CORNER_RB:
+	      if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->x < es->x))
+		show = 0;
+	      break;
+	   case E_GADCON_ORIENT_TOP:
+	   case E_GADCON_ORIENT_CORNER_TL:
+	   case E_GADCON_ORIENT_CORNER_TR:
+	      if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->y > es->y + es->h))
+		show = 0;
+	      break;
+	   case E_GADCON_ORIENT_BOTTOM:
+	   case E_GADCON_ORIENT_CORNER_BL:
+	   case E_GADCON_ORIENT_CORNER_BR:
+	      if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->y < es->y))
+		show = 0;
+	      break;
+	   default:
+	      break;
+	      
+	  }
+	
+	if (!show) e_shelf_toggle(es, 0);
+     }
+   else if (type == ECORE_X_EVENT_MOUSE_OUT)
+     {
+	Ecore_X_Event_Mouse_Out *ev;
+
+	ev = event;
+
+	if (es->popup) win = es->popup->evas_win;
+	else win = es->zone->container->event_win;
+	if (ev->win != win) return 1;
+   
+	e_shelf_toggle(es, 0);
+     }
    return 1;
 }
 
