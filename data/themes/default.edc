@@ -16509,7 +16509,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 part { name: "e.swallow.icon";
 	    type: SWALLOW;
 	    description {
-	       state: "default" 0.0;color: 255 0 0 200;
+	       state: "default" 0.0;
 	       align: 0.0 0.5;
 	       fixed: 1 0;
 	       rel1 {
