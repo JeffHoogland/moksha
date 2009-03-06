@@ -1386,26 +1386,30 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
 	   case E_GADCON_ORIENT_LEFT:
 	   case E_GADCON_ORIENT_CORNER_LT:
 	   case E_GADCON_ORIENT_CORNER_LB:
-	      if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->x >= es->x + es->w))
+	      if ((ev->edge == E_ZONE_EDGE_LEFT) &&
+		  (ev->x >= es->x + es->w))
 		show = 0;
 	      break;
 	   case E_GADCON_ORIENT_RIGHT:
 	   case E_GADCON_ORIENT_CORNER_RT:
 	   case E_GADCON_ORIENT_CORNER_RB:
-	      if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->x < es->x))
-		show = 0;
+	      if ((ev->edge == E_ZONE_EDGE_RIGHT) &&
+		  (ev->x > es->w) || (-ev->x > es->w))
+	      	show = 0;
 	      break;
 	   case E_GADCON_ORIENT_TOP:
 	   case E_GADCON_ORIENT_CORNER_TL:
 	   case E_GADCON_ORIENT_CORNER_TR:
-	      if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->y > es->y + es->h))
-		show = 0;
+	      if ((ev->edge == E_ZONE_EDGE_TOP) &&
+		  (ev->y > es->y + es->h))
+	      	show = 0;
 	      break;
 	   case E_GADCON_ORIENT_BOTTOM:
 	   case E_GADCON_ORIENT_CORNER_BL:
 	   case E_GADCON_ORIENT_CORNER_BR:
-	      if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->y < es->y))
-		show = 0;
+	      if ((ev->edge == E_ZONE_EDGE_BOTTOM) &&
+		  (ev->y > es->h) || (-ev->y > es->h))
+	      	show = 0;
 	      break;
 	   default:
 	      break;
