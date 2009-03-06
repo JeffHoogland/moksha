@@ -548,8 +548,8 @@ _load_resolutions(E_Config_Dialog_Data *cfdata)
 	     if ((res->size.width == cfdata->orig_size.width) &&
 		 (res->size.height == cfdata->orig_size.height))
 	       {
-		  ob = edje_object_add(evas);
-		  e_util_edje_icon_set(ob, "enlightenment/check");
+		  ob = e_icon_add(evas);
+		  e_util_icon_theme_set(ob, "dialog-ok-apply");
 		  sel = res->id;
 	       }
 	     e_widget_ilist_append(cfdata->res_list, ob, buf, 
@@ -572,8 +572,8 @@ _load_resolutions(E_Config_Dialog_Data *cfdata)
 	     if ((res->size.width == cfdata->orig_size.width) &&
 		 (res->size.height == cfdata->orig_size.height))
 	       {
-		  ob = edje_object_add(evas);
-		  e_util_edje_icon_set(ob, "enlightenment/check");
+		  ob = e_icon_add(evas);
+		  e_util_icon_theme_set(ob, "dialog-ok-apply");
 		  sel = res->id;
 	       }
 	     e_widget_ilist_nth_icon_set(cfdata->res_list, res->id, ob);
@@ -612,8 +612,8 @@ _load_rates(E_Config_Dialog_Data *cfdata)
 
 	       if (rt->rate == cfdata->orig_rate.rate)
 		 {
-		    ob = edje_object_add(evas);
-		    e_util_edje_icon_set(ob, "enlightenment/check");
+		    ob = e_icon_add(evas);
+		    e_util_icon_theme_set(ob, "dialog-ok-apply");
 		    sel = k;
 		 }
 	       e_widget_ilist_append(cfdata->rate_list, ob, buf, NULL, NULL, NULL);

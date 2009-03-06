@@ -734,7 +734,7 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
    /* Move / resize*/
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
-   e_util_menu_item_theme_icon_set(mi, "widget/resize");
+   e_util_menu_item_theme_icon_set(mi, "transform-scale");
    e_menu_item_callback_set(mi, on_menu_edit, gcc);
 
    /* Remove this gadgets */

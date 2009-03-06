@@ -279,7 +279,7 @@ _cb_delete(void *data, void *data2)
 	    d->cfdata->cur_shelf);
 
    e_confirm_dialog_show(_("Are you sure you want to delete this shelf?"), 
-			 "enlightenment/exit", buf, NULL, NULL, 
+			 "application-exit", buf, NULL, NULL, 
 			 _cb_dialog_yes, NULL, d, NULL, _cb_dialog_destroy, d);
 }
 

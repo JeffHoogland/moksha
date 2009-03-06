@@ -796,7 +796,7 @@ group "E_Config" struct {
       value "action" string: "suspend";
       value "params" string: "now";
       value "button" string: "button";
-      value "icon" string: "enlightenment/suspend";
+      value "icon" string: "system-suspend";
       value "is_main" int: 1;
     }
   }
@@ -804,7 +804,7 @@ group "E_Config" struct {
     group "E_Config_Syscon_Action" struct {
       value "action" string: "desk_lock";
       value "button" string: "button";
-      value "icon" string: "enlightenment/desklock_menu";
+      value "icon" string: "system-lock-screen";
       value "is_main" int: 1;
     }
   }
@@ -813,7 +813,7 @@ group "E_Config" struct {
       value "action" string: "halt";
       value "params" string: "now";
       value "button" string: "button";
-      value "icon" string: "enlightenment/halt";
+      value "icon" string: "system-shutdown";
       value "is_main" int: 0;
     }
   }

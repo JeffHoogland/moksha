@@ -80,13 +80,13 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    e_widget_ilist_go(o);
    e_widget_table_object_append(wd->gui.table, o, 0, 4, 2, 1, 1, 1, 1, 1);
 
-   o = e_widget_button_add(evas, _("Up"), "widget/up_arrow", 
+   o = e_widget_button_add(evas, _("Up"), "go-up", 
 			   _button_cb_up, wd, NULL);
    wd->gui.up = o;
    e_widget_disabled_set(o, 1);
    e_widget_table_object_append(wd->gui.table, o, 0, 5, 1, 1, 1, 0, 1, 0);
 
-   o = e_widget_button_add(evas, _("Down"), "widget/down_arrow", 
+   o = e_widget_button_add(evas, _("Down"), "go-down", 
 			   _button_cb_down, wd, NULL); 
    wd->gui.down = o;
    e_widget_disabled_set(o, 1);

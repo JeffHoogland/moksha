@@ -735,8 +735,8 @@ _class_list_load(E_Config_Dialog_Data *cfdata)
 	       {
 		  if (tc->enabled)
 		    {
-		       ic = edje_object_add(evas);
-		       e_util_edje_icon_set(ic, "enlightenment/check");
+		       ic = e_icon_add(evas);
+		       e_util_icon_theme_set(ic, "dialog-ok-apply");
 		    }
 		  else
 		    ic = NULL;

@@ -22651,15 +22651,34 @@ group { name: "e/icons/"NAME ;                          \
 ICON("help-about","logo_black_128.png",64)                      // "enlightenment/about"
 ICON("list-add","icon_add.png",64)                              // "widget/add"
 ICON("list-remove","icon_del.png",64)                           // "widget/del"
+ICON("go-up","icon_up_arrow.png",64)                            // "widget/up_arrow" "widget/up_dir"
+ICON("go-down","icon_down_arrow.png",64)                        // "widget/down_arrow"
+ICON("go-next","icon_right_arrow.png",64)                       // "widget/new_dialog"
+ICON("go-previous","icon_left_arrow.png",64)                    // none
 ICON("system-run","icon_run.png",64)                            // "enlightenment/run"
+ICON("system-shutdown","icon_halt.png",128)                     // "enlightenment/halt"
+ICON("system-restart","icon_reboot.png",128)                    // "enlightenment/reboot"
+ICON("system-suspend","icon_suspend.png",128)                   // "enlightenment/suspend"
+ICON("system-suspend-hibernate","icon_hibernate.png",128)       // "enlightenment/hibernate"
+ICON("system-log-out","icon_logout.png",128)                    // "enlightenment/logout"
+ICON("system-restart","icon_reset.png",128)                     // "enlightenment/reset" "widget/reset"
+ICON("system-lock-screen","icon_desklock_menu.png",128)         // "enlightenment/desklock_menu"
+ICON("window-close","icon_close.png",64)                        // "widget/close"
+ICON("document-open","icon_check.png",64)                       // "widget/open"
+ICON("document-new","icon_new.png",64)                          // "widget/new"
+ICON("dialog-ok-apply","icon_check.png",64)                     // "enlightenment/check"
+ICON("transform-scale","icon_resize.png",64)                    // "widget/resize"
+ICON("transform-move","icon_autoscroll.png",64)                 // "enlightenment/autoscroll"
 
 //Standard Status Icons
 ICON("dialog-warning","icon_warning.png",128)                   // "enlightenment/warning"
 
 //Standard Application Icons
+ICON("application-exit","icon_logout.png",64)                   // "enlightenment/exit"
 ICON("preferences-desktop","icon_desktops.png",64)              // "enlightenment/desktops"
 ICON("preferences-desktop-theme","icon_theme.png",64)           // "enlightenment/themes"
 ICON("preferences-desktop-wallpaper","icon_wallpaper.png",64)   // "enlightenment/background"
+ICON("preferences-desktop-screensaver","icon_screensaver.png",64)// "enlightenment/screensaver"
 ICON("preferences-plugin","icon_modules.png",64)                // "enlightenment/modules"
 ICON("preferences-system","icon_configuration.png",64)          // "enlightenment/configuration"
 ICON("preferences-system-windows","icon_windows.png",64)        // "enlightenment/windows"
@@ -22668,13 +22687,16 @@ ICON("system-file-manager","icon_efm_folder.png",64)            // "enlightenmen
 //Standard Place Icons
 ICON("user-home","icon_efm_home.png",64)
 ICON("user-desktop","icon_efm_desktop.png",64)
-ICON("user-bookmarks","icon_favorites.png",64)
+ICON("user-bookmarks","icon_favorites.png",64)                  // "enlightenment/favorites"
 ICON("folder","icon_efm_folder.png",64)
 
 //Standard Device Icons
-ICON("computer","icon_efm_root.png", 64)
+ICON("computer","icon_efm_root.png", 64)                        // "fileman/root"
+ICON("drive-harddisk","icon_efm_hdd.png", 128)                  // "fileman/hd"
+ICON("drive-optical","icon_efm_cd.png", 128)                    // "fileman/??"
+ICON("media-flash","icon_efm_flash.png", 128)                   // "fileman/??"
 
-
+/* End of FreeDesktop.Org icons */
 
 
 ICONMIME("inode/chardevice","icon_efm_file.png",128)
@@ -22687,21 +22709,21 @@ ICONMIME("inode/socket","icon_efm_file.png",128)
 
 // Widget Icons //
 
-ICON("enlightenment/check","icon_check.png",64)
+//ICON("enlightenment/check","icon_check.png",64)
 ICON("widget/swap","icon_swap.png",64)
 //ICON("widget/del","icon_del.png",64)
-ICON("widget/new","icon_new.png",64)
+//ICON("widget/new","icon_new.png",64)
 //ICON("widget/add","icon_add.png",64)
 ICON("widget/add_fav","icon_add_fav.png",64)
-ICON("widget/up_arrow","icon_up_arrow.png",64)
-ICON("widget/down_arrow","icon_down_arrow.png",64)
-ICON("widget/up_dir","icon_up_arrow.png",64)
-ICON("widget/new_dialog","icon_right_arrow.png",64)
+//ICON("widget/up_arrow","icon_up_arrow.png",64)
+//ICON("widget/down_arrow","icon_down_arrow.png",64)
+//ICON("widget/up_dir","icon_up_arrow.png",64)
+//ICON("widget/new_dialog","icon_right_arrow.png",64)
 ICON("widget/config","icon_config.png",64)
-ICON("widget/resize","icon_resize.png",64)
-ICON("widget/open","icon_check.png",64)
-ICON("widget/close","icon_close.png",64)
-ICON("widget/reset","icon_reset.png",64)
+//ICON("widget/resize","icon_resize.png",64)
+//ICON("widget/open","icon_check.png",64)
+//ICON("widget/close","icon_close.png",64)
+//ICON("widget/reset","icon_reset.png",64)
 
 /// Normal Icons ///
 
@@ -22712,13 +22734,13 @@ ICON("enlightenment/picture","icon_wallpaper.png",64)
 ICON("enlightenment/gradient","icon_gradient.png",64)
 ICON("enlightenment/e","logo_white_128.png",64)
 //ICON("enlightenment/about","logo_black_128.png",64)
-ICON("enlightenment/reset","icon_reset.png",128)
-ICON("enlightenment/exit","icon_logout.png",64)
-ICON("enlightenment/logout","icon_logout.png",128)
-ICON("enlightenment/halt","icon_halt.png",128)
-ICON("enlightenment/reboot","icon_reboot.png",128)
-ICON("enlightenment/suspend","icon_suspend.png",128)
-ICON("enlightenment/hibernate","icon_hibernate.png",128)
+//ICON("enlightenment/reset","icon_reset.png",128)
+//ICON("enlightenment/exit","icon_logout.png",64)
+//ICON("enlightenment/logout","icon_logout.png",128)
+//ICON("enlightenment/halt","icon_halt.png",128)
+//ICON("enlightenment/reboot","icon_reboot.png",128)
+//ICON("enlightenment/suspend","icon_suspend.png",128)
+//ICON("enlightenment/hibernate","icon_hibernate.png",128)
 ICON("enlightenment/colors","icon_colors.png",64)
 ICON("enlightenment/themes","icon_theme.png",64)   //Done but some ref still around.....
 ICON("enlightenment/screen_setup","icon_screen_setup.png",64)
@@ -22728,7 +22750,7 @@ ICON("enlightenment/lost_windows","icon_lost_windows.png",64)
 ICON("enlightenment/window_remembers","icon_window_remembers.png",64)
 ICON("enlightenment/focus","icon_window_focus.png",64)
 //ICON("enlightenment/modules","icon_modules.png",64)
-ICON("enlightenment/favorites","icon_favorites.png",64)
+//ICON("enlightenment/favorites","icon_favorites.png",64)
 //ICON("enlightenment/desktops","icon_desktops.png",64)
 //ICON("enlightenment/configuration","icon_configuration.png",64)
 ICON("enlightenment/settings","icon_configuration.png",64)
@@ -22751,7 +22773,7 @@ ICON("enlightenment/mouse_wheel","icon_mouse_wheel.png",64)
 ICON("enlightenment/mouse_clean","icon_mouse_clean.png",64)
 ICON("enlightenment/keys","icon_keys.png",64)
 ICON("enlightenment/desklock","icon_desklock.png",64)
-ICON("enlightenment/desklock_menu","icon_desklock_menu.png",128)
+//ICON("enlightenment/desklock_menu","icon_desklock_menu.png",128)
 ICON("enlightenment/screen_resolution","icon_screen_resolution.png",64)
 ICON("enlightenment/shelf","icon_shelf.png",64)
 ICON("enlightenment/fonts","icon_fonts.png",64)
@@ -22776,11 +22798,11 @@ ICON("enlightenment/file_icons","icon_file_icons.png",64)
 ICON("enlightenment/applications","icon_applications.png",64)
 ICON("enlightenment/add_application","icon_applications_new.png",64)
 ICON("enlightenment/ibar_applications","icon_applications_ibar.png",64)
-ICON("enlightenment/autoscroll","icon_autoscroll.png",64)
+//ICON("enlightenment/autoscroll","icon_autoscroll.png",64)
 ICON("enlightenment/restart_applications","icon_applications_restart.png",64)
 ICON("enlightenment/startup_applications","icon_applications_startup.png",64)
 ICON("enlightenment/power_management","icon_power_management.png",64)
-ICON("enlightenment/screensaver","icon_screensaver.png",64)
+//ICON("enlightenment/screensaver","icon_screensaver.png",64)
 ICON("enlightenment/pager","icon_pager.png",64)
 ICON("enlightenment/mixer","icon_mixer.png",64)
 ICON("enlightenment/scale","icon_scale.png",64)
@@ -22921,10 +22943,6 @@ EFMICON("tmp","icon_efm_tmp.png", 128)
 EFMICON("desktop","icon_efm_desktop.png", 128)
 EFMICON("hdd","icon_efm_hdd.png", 128)
 EFMICON("hd","icon_efm_hdd.png", 128)
-
-ICON("drive-harddisk","icon_efm_hdd.png", 128)
-ICON("drive-optical","icon_efm_cd.png", 128)
-ICON("media-flash","icon_efm_flash.png", 128)
 
 
 // EFM Mime type icons //

@@ -158,8 +158,8 @@ _e_test_internal(E_Container *con)
    e_dialog_text_set(dia, "A Test Dialog<br>And another line<br><hilight>Hilighted Text</hilight>");
    e_dialog_icon_set(dia, "preference-plugin", 64);
    e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
-   e_dialog_button_add(dia, "Apply", "enlightenment/reset", NULL, NULL);
-   e_dialog_button_add(dia, "Cancel", "enlightenment/exit", NULL, NULL);
+   e_dialog_button_add(dia, "Apply", "system-restart", NULL, NULL);
+   e_dialog_button_add(dia, "Cancel", "application-exit", NULL, NULL);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
 }

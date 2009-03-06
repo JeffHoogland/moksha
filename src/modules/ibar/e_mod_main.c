@@ -822,7 +822,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Create New Icon"));
-	     e_util_menu_item_theme_icon_set(mi, "widget/new");
+	     e_util_menu_item_theme_icon_set(mi, "document-new");
 	     e_menu_item_callback_set(mi, _ibar_cb_menu_icon_new, NULL);
 
 	     mi = e_menu_item_new(mn);

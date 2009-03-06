@@ -514,7 +514,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(rt, ow, 1, 0, 1, 1, 1, 1, 0, 0);
    e_widget_table_object_append(ot, rt, 0, 0, 1, 1, 0, 0, 0, 0);
 
-   ow = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
+   ow = e_widget_button_add(evas, _("Go up a Directory"), "go-up",
 			    _cb_button_up, cfdata, NULL);
    cfdata->o_up_button = ow;
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 0, 0, 0, 0);
@@ -644,7 +644,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(rt, ow, 1, 0, 1, 1, 1, 1, 0, 0);
    e_widget_table_object_append(ot, rt, 0, 0, 1, 1, 0, 0, 0, 0);
 
-   ow = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
+   ow = e_widget_button_add(evas, _("Go up a Directory"), "go-up",
 			    _cb_button_up, cfdata, NULL);
    cfdata->o_up_button = ow;
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 0, 0, 0, 0);

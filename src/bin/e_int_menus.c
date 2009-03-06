@@ -96,7 +96,7 @@ e_int_menus_main_new(void)
 	     dat->apps = subm;
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Favorite Applications"));
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/favorites");
+	     e_util_menu_item_theme_icon_set(mi, "user-bookmarks");
 	     e_menu_item_submenu_set(mi, subm);
 	  }
      }
@@ -181,12 +181,12 @@ e_int_menus_main_new(void)
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Restart"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/reset");
+   e_util_menu_item_theme_icon_set(mi, "system-restart");
    e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Exit"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/exit");
+   e_util_menu_item_theme_icon_set(mi, "application-exit");
    e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
 
    l = eina_hash_find(_e_int_menus_augmentation, "main/7");

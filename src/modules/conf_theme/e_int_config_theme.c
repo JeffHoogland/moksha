@@ -364,7 +364,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    e_widget_table_object_append(ol, il, 0, 0, 1, 1, 0, 0, 0, 0);
 
-   o = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
+   o = e_widget_button_add(evas, _("Go up a Directory"), "go-up",
 			   _cb_button_up, cfdata, NULL);
    cfdata->o_up_button = o;
    e_widget_table_object_append(ol, o, 0, 1, 1, 1, 0, 0, 0, 0);
@@ -827,8 +827,8 @@ _fill_categories_ilist(E_Config_Dialog_Data *cfdata)
 	theme = themes->data;
 	if (theme->file)
 	  {
-	     ic = edje_object_add(evas);
-	     e_util_edje_icon_set(ic, "enlightenment/check");
+	     ic = e_icon_add(evas);
+	     e_util_icon_theme_set(ic, "dialog-ok-apply");
 	  }
 	e_widget_ilist_append(o, ic, theme->category + 11, NULL, NULL, NULL);
 	themes = themes->next;

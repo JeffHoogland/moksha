@@ -831,7 +831,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_table_object_append(ol, il, 0, 0, 1, 1, 0, 0, 0, 0);
 
-   o = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir", _cb_button_up, cfdata, NULL);
+   o = e_widget_button_add(evas, _("Go up a Directory"), "go-up", _cb_button_up, cfdata, NULL);
    cfdata->o_up_button = o;
    e_widget_table_object_append(ol, o, 0, 1, 1, 1, 0, 0, 0, 0);
 
@@ -898,7 +898,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    ol = e_widget_list_add(evas, 1, 1);
 
-   o = e_widget_button_add(evas, _("New"), "widget/new", _cb_new, cfdata, NULL);
+   o = e_widget_button_add(evas, _("New"), "document-new", _cb_new, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Import..."), "enlightenment/imc", _cb_import, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);

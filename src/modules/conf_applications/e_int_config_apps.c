@@ -50,7 +50,7 @@ e_int_config_apps_favs(E_Container *con, const char *params __UNUSED__)
    data = E_NEW(E_Config_Data, 1);
    data->title = eina_stringshare_add(_("Favorites Menu"));
    data->dialog = eina_stringshare_add("_config_apps_favs_dialog");
-   data->icon = eina_stringshare_add("enlightenment/favorites");
+   data->icon = eina_stringshare_add("user-bookmarks");
    data->filename = eina_stringshare_add(buf);
 
    return _create_dialog(con, data);
@@ -259,12 +259,12 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    _fill_list(cfdata);
    e_widget_frametable_object_append(ot, ow, 0, 0, 1, 1, 1, 1, 1, 1);
    bt = e_widget_table_add(evas, 0);
-   ow = e_widget_button_add(evas, _("Up"), "widget/up_arrow", _cb_up, 
+   ow = e_widget_button_add(evas, _("Up"), "go-up", _cb_up, 
 			    cfdata, NULL);
    cfdata->o_up = ow;
    e_widget_disabled_set(ow, 1);
    e_widget_table_object_append(bt, ow, 0, 0, 1, 1, 1, 0, 1, 0);
-   ow = e_widget_button_add(evas, _("Down"), "widget/down_arrow", _cb_down, 
+   ow = e_widget_button_add(evas, _("Down"), "go-down", _cb_down, 
 			    cfdata, NULL);
    cfdata->o_down = ow;
    e_widget_disabled_set(ow, 1);

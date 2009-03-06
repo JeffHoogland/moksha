@@ -48,7 +48,7 @@ e_int_config_screensaver(E_Container *con, const char *params __UNUSED__)
    
    cfd = e_config_dialog_new(con,_("Screen Saver Settings"),
 			     "E", "_config_screensaver_dialog",
-			     "enlightenment/screensaver", 0, v, NULL);
+			     "preferences-desktop-screensaver", 0, v, NULL);
    return cfd;
 }
 

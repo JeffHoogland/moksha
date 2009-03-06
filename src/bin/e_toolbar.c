@@ -316,7 +316,7 @@ _e_toolbar_menu_cb_pre(void *data, E_Menu *mn)
      e_menu_item_label_set(mi, _("Stop Moving/Resizing Items"));
    else
      e_menu_item_label_set(mi, _("Begin Moving/Resizing Items"));
-   e_util_menu_item_theme_icon_set(mi, "widget/resize");
+   e_util_menu_item_theme_icon_set(mi, "transform-scale");
    e_menu_item_callback_set(mi, _e_toolbar_menu_cb_edit, tbar);
 
    mi = e_menu_item_new(mn);

@@ -197,7 +197,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     else
 	       e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win),
-				      _("Advanced"), "widget/new_dialog",
+				      _("Advanced"), "go-next",
 				      _e_config_dialog_cb_advanced, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
@@ -226,7 +226,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     else
 	       e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win), 
-				      _("Basic"), "widget/new_dialog",
+				      _("Basic"), "go-next",
 				      _e_config_dialog_cb_basic, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
