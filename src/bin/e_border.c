@@ -6205,6 +6205,11 @@ _e_border_eval(E_Border *bd)
 		       bd->client.border.changed = 1;
 		    }
 	       }
+	     if (rem->apply & E_REMEMBER_APPLY_FULLSCREEN)
+	       {
+		  if (rem->prop.fullscreen)
+		    e_border_fullscreen(bd, e_config->fullscreen_policy);
+	       }
 	     if (rem->apply & E_REMEMBER_APPLY_STICKY)
 	       {
 		  if (rem->prop.sticky) e_border_stick(bd);

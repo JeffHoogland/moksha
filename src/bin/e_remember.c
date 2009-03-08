@@ -244,17 +244,34 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    else
      rem->transient = 0;
 
-   rem->prop.pos_x = bd->x - bd->zone->x;
-   rem->prop.pos_y = bd->y - bd->zone->y;
-   rem->prop.res_x = bd->zone->w;
-   rem->prop.res_y = bd->zone->h;
-   rem->prop.pos_w = bd->client.w;
-   rem->prop.pos_h = bd->client.h;
+   if (bd->fullscreen)
+     {
+	rem->prop.fullscreen = bd->fullscreen;
+	rem->prop.pos_x = bd->saved.x;
+	rem->prop.pos_y = bd->saved.y;
+	rem->prop.pos_w = bd->saved.w;
+	rem->prop.pos_h = bd->saved.h;
+	rem->prop.layer = bd->saved.layer;
+     }
+   else
+     {
+	rem->prop.pos_x = bd->x - bd->zone->x;
+	rem->prop.pos_y = bd->y - bd->zone->y;
+	rem->prop.res_x = bd->zone->w;
+	rem->prop.res_y = bd->zone->h;
+	rem->prop.pos_w = bd->client.w;
+	rem->prop.pos_h = bd->client.h;
 
-   rem->prop.w = bd->client.w;
-   rem->prop.h = bd->client.h;
+	rem->prop.w = bd->client.w;
+	rem->prop.h = bd->client.h;
 
-   rem->prop.layer = bd->layer;
+	rem->prop.layer = bd->layer;
+
+	if (bd->bordername)
+	  rem->prop.border = eina_stringshare_add(bd->bordername);
+
+	rem->prop.fullscreen = bd->fullscreen;
+     }
 
    rem->prop.lock_user_location = bd->lock_user_location;
    rem->prop.lock_client_location = bd->lock_client_location;
@@ -279,9 +296,6 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    rem->prop.lock_focus_in = bd->lock_focus_in;
    rem->prop.lock_focus_out = bd->lock_focus_out;
    rem->prop.lock_life = bd->lock_life;
-
-   if (bd->bordername)
-     rem->prop.border = eina_stringshare_add(bd->bordername);
 
    rem->prop.sticky = bd->sticky;
 

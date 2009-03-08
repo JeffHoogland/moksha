@@ -140,9 +140,7 @@ e_int_border_menu_create(E_Border *bd)
 	  (bd->client.icccm.min_h == bd->client.icccm.max_h)) ||
 	 (bd->lock_user_maximize)))
      {
-	/* Only allow to change layer for windows in "normal" layers */
-	if ((!bd->lock_user_maximize) && (!bd->shaded) &&
-	    ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
+	if ((!bd->lock_user_maximize) && (!bd->shaded) && (!bd->fullscreen))
 	  {
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Maximize"));
@@ -523,8 +521,7 @@ _e_border_menu_cb_more_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 						   "e/widgets/border/default/skip"),
 			     "e/widgets/border/default/skip");
 
-   if ((!bd->lock_user_stacking) &&
-       ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
+   if ((!bd->lock_user_stacking) && (!bd->fullscreen))
      {
 	submi = e_menu_item_new(subm);
 	e_menu_item_label_set(submi, _("Stacking"));

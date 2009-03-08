@@ -40,6 +40,7 @@ struct _E_Config_Dialog_Data
       int apply_sticky;
       int apply_desktop;
       int apply_shade;
+      int apply_fullscreen;
       int apply_zone;
       int apply_skip_winlist;
       int apply_skip_pager;
@@ -99,6 +100,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_STICKY) cfdata->remember.apply_sticky = 1;
 	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_DESKTOP) cfdata->remember.apply_desktop = 1;
 	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_SHADE) cfdata->remember.apply_shade = 1;
+	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_FULLSCREEN) cfdata->remember.apply_fullscreen = 1;
 	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_ZONE) cfdata->remember.apply_zone = 1;
 	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_SKIP_WINLIST) cfdata->remember.apply_skip_winlist = 1;
 	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_SKIP_PAGER) cfdata->remember.apply_skip_pager = 1;
@@ -114,7 +116,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	    (cfdata->remember.apply_border) && (cfdata->remember.apply_sticky) &&
 	    (cfdata->remember.apply_desktop) && (cfdata->remember.apply_shade) &&
 	    (cfdata->remember.apply_zone) && (cfdata->remember.apply_skip_winlist) &&
-	    (cfdata->remember.apply_skip_pager) && (cfdata->remember.apply_skip_taskbar))
+	    (cfdata->remember.apply_skip_pager) && (cfdata->remember.apply_fullscreen) &&
+	    (cfdata->remember.apply_skip_taskbar))
      cfdata->mode = MODE_ALL;
    else if ((cfdata->remember.apply_pos) && (cfdata->remember.apply_size) && 
 	    (cfdata->remember.apply_locks))
@@ -284,7 +287,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 					    E_REMEMBER_APPLY_LOCKS | E_REMEMBER_APPLY_BORDER | E_REMEMBER_APPLY_STICKY | 
 					    E_REMEMBER_APPLY_DESKTOP | E_REMEMBER_APPLY_SHADE | E_REMEMBER_APPLY_ZONE | 
 					    E_REMEMBER_APPLY_SKIP_WINLIST | E_REMEMBER_APPLY_SKIP_PAGER | E_REMEMBER_APPLY_SKIP_TASKBAR |
-	                                    E_REMEMBER_APPLY_ICON_PREF;
+	                                    E_REMEMBER_APPLY_FULLSCREEN | E_REMEMBER_APPLY_ICON_PREF;
 	cfdata->border->remember->apply_first_only = 0;
        e_remember_update(cfdata->border->remember, cfdata->border);
      }
@@ -305,7 +308,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	 (cfdata->remember.apply_zone) || (cfdata->remember.apply_skip_winlist) ||
 	 (cfdata->remember.apply_skip_pager) || (cfdata->remember.apply_skip_taskbar) ||
 	 (cfdata->remember.apply_run) || (cfdata->remember.apply_icon_pref) ||
-	 (cfdata->remember.set_focus_on_start)))
+	 (cfdata->remember.set_focus_on_start) || (cfdata->remember.apply_fullscreen)))
      {
 	if (cfdata->border->remember)
 	  {
@@ -410,6 +413,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (cfdata->remember.apply_sticky) cfdata->border->remember->apply |= E_REMEMBER_APPLY_STICKY;
 	if (cfdata->remember.apply_desktop) cfdata->border->remember->apply |= E_REMEMBER_APPLY_DESKTOP;
 	if (cfdata->remember.apply_shade) cfdata->border->remember->apply |= E_REMEMBER_APPLY_SHADE;
+	if (cfdata->remember.apply_fullscreen) cfdata->border->remember->apply |= E_REMEMBER_APPLY_FULLSCREEN;
 	if (cfdata->remember.apply_zone) cfdata->border->remember->apply |= E_REMEMBER_APPLY_ZONE;
 	if (cfdata->remember.apply_skip_winlist) cfdata->border->remember->apply |= E_REMEMBER_APPLY_SKIP_WINLIST;
 	if (cfdata->remember.apply_skip_pager) cfdata->border->remember->apply |= E_REMEMBER_APPLY_SKIP_PAGER;
@@ -522,14 +526,16 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Shaded state"), &(cfdata->remember.apply_shade));
    e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_check_add(evas, _("Current Screen"), &(cfdata->remember.apply_zone));
+   ob = e_widget_check_add(evas, _("Fullscreen state"), &(cfdata->remember.apply_fullscreen));
    e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_check_add(evas, _("Skip Window List"), &(cfdata->remember.apply_skip_winlist));
+   ob = e_widget_check_add(evas, _("Current Screen"), &(cfdata->remember.apply_zone));
    e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_check_add(evas, _("Skip Pager"), &(cfdata->remember.apply_skip_pager));
+   ob = e_widget_check_add(evas, _("Skip Window List"), &(cfdata->remember.apply_skip_winlist));
    e_widget_frametable_object_append(of, ob, 1, 4, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_check_add(evas, _("Skip Taskbar"), &(cfdata->remember.apply_skip_taskbar));
+   ob = e_widget_check_add(evas, _("Skip Pager"), &(cfdata->remember.apply_skip_pager));
    e_widget_frametable_object_append(of, ob, 1, 5, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("Skip Taskbar"), &(cfdata->remember.apply_skip_taskbar));
+   e_widget_frametable_object_append(of, ob, 1, 6, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    ob = e_widget_check_add(evas, _("Match only one window"), &(cfdata->remember.apply_first_only));

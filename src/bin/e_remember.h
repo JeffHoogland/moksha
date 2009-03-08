@@ -27,6 +27,7 @@ typedef struct _E_Remember E_Remember;
 #define E_REMEMBER_APPLY_SKIP_TASKBAR (1 << 12)
 #define E_REMEMBER_APPLY_ICON_PREF (1 << 13)
 #define E_REMEMBER_SET_FOCUS_ON_START (1 << 14)
+#define E_REMEMBER_APPLY_FULLSCREEN (1 << 15)
 
 #else
 #ifndef E_REMEMBER_H
@@ -82,6 +83,7 @@ struct _E_Remember
       
 	unsigned char sticky;
 	unsigned char shaded;
+	unsigned char fullscreen;
 	unsigned char skip_winlist;
 	unsigned char skip_pager;
 	unsigned char skip_taskbar;
