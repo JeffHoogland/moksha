@@ -11260,6 +11260,154 @@ collections { /* begin the collection of edje groups that are in this file */
 	 }
       }
    }
+   group { name: "e/fileman/default/progress";
+      min: 200 70;
+      parts {
+	 part { name: "bg";
+	    type: RECT;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.offset: 3 3;
+	       rel2.offset: -4 -4;
+	       color: 255 0 0 200;
+	    }
+	 }
+	 part { name: "gauge_bg";
+	    type: RECT;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "bg";
+	       rel1.offset: 5 5;
+	       rel2.to: "bg";
+	       rel2.relative: 0.0 1.0;
+	       rel2.offset: 15 -7;
+	       color: 155 155 155 200;
+	    }
+	 }
+	 part { name: "e.gauge.bar";
+	    mouse_events: 0;
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       min: 10 0;
+	       max: 10 110;
+	       color: 255 255 255 255;
+	       rel1 {
+		  to: "gauge_bg";
+		  offset: 2 2;
+	       }
+	       rel2 {
+		  to: "gauge_bg";
+		  offset: -3 -3;
+	       }
+	    }
+	    dragable {
+	       x: 0 0 0;
+	       y: -1 1 0;
+	       confine:"gauge_bg";
+	    }
+	 }
+	 part { name: "e.text.label1";
+	    type: TEXT;
+	    mouse_events:  0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 0.5 0.0;
+	       rel1.to: "gauge_bg";
+	       rel1.relative: 1.0 0.0;
+	       rel1.offset: 5 0;
+	       rel2.to: "bg";
+	       color: 0 0 0 255;
+	       text {
+		  font: "Sans";
+		  size: 10;
+		  min: 1 0;
+		  align: 0.0 0.0;
+		  text_class: "fileman_icon";
+	       }
+	    }
+	 }
+	 part { name: "e.text.label2";
+	    type: TEXT;
+	    mouse_events:  0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 0.5 0.0;
+	       rel1.to: "gauge_bg";
+	       rel1.relative: 1.0 0.2;
+	       rel1.offset: 5 0;
+	       rel2.to: "bg";
+	       color: 0 0 0 255;
+	       text {
+		  font: "Sans";
+		  size: 10;
+		  min: 1 0;
+		  align: 0.0 0.0;
+		  text_class: "fileman_icon";
+	       }
+	    }
+	 }
+	 part { name: "e.text.label3";
+	    type: TEXT;
+	    mouse_events:  0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 0.5 0.0;
+	       rel1.to: "gauge_bg";
+	       rel1.relative: 1.0 0.4;
+	       rel1.offset: 5 0;
+	       rel2.to: "bg";
+	       color: 0 0 0 255;
+	       text {
+		  font: "Sans";
+		  size: 10;
+		  min: 1 0;
+		  align: 0.0 0.0;
+		  text_class: "fileman_icon";
+	       }
+	    }
+	 }
+	 part { name: "e.text.label4";
+	    type: TEXT;
+	    mouse_events:  0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 0.5 0.0;
+	       rel1.to: "gauge_bg";
+	       rel1.relative: 1.0 0.6;
+	       rel1.offset: 5 0;
+	       rel2.to: "bg";
+	       color: 0 0 0 255;
+	       text {
+		  font: "Sans";
+		  size: 10;
+		  min: 1 0;
+		  align: 0.0 0.0;
+		  text_class: "fileman_icon";
+	       }
+	    }
+	 }
+	 part { name: "e.text.label5";
+	    type: TEXT;
+	    mouse_events:  0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       align: 0.5 0.0;
+	       rel1.to: "gauge_bg";
+	       rel1.relative: 1.0 0.8;
+	       rel1.offset: 5 0;
+	       rel2.to: "bg";
+	       color: 0 0 0 255;
+	       text {
+		  font: "Sans";
+		  size: 10;
+		  min: 1 0;
+		  align: 0.0 0.0;
+		  text_class: "fileman_icon";
+	       }
+	    }
+	 }
+      }
+   }
    group { name: "e/fileman/default/scrollframe";
       images {
 	 image: "inset_sunk.png" COMP;

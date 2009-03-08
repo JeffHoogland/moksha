@@ -28,6 +28,7 @@ struct _E_Fwin
    Evas_Object         *scrollframe_obj;
    Evas_Object         *fm_obj;
    Evas_Object         *bg_obj;
+   Evas_Object         *box_obj;
    E_Fwin_Apps_Dialog  *fad;
 
    Evas_Object         *under_obj;
@@ -75,6 +76,8 @@ static void _e_fwin_cb_delete(E_Win *win);
 static void _e_fwin_cb_move(E_Win *win);
 static void _e_fwin_cb_resize(E_Win *win);
 static void _e_fwin_deleted(void *data, Evas_Object *obj, void *event_info);
+static int _e_fwin_ipc_progress_data(void *data __UNUSED__, int type __UNUSED__, void *event);
+static void _e_fwin_progress_update(E_Fwin *fwin, int slave_id, int percent, int seconds, size_t done, size_t total, char *src, char *dst);
 static const char *_e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev_path, const char *key);
 static void _e_fwin_changed(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
@@ -112,6 +115,7 @@ static int _e_fwin_dlg_cb_desk_list_sort(const void *data1, const void *data2);
 
 /* local subsystem globals */
 static Eina_List *fwins = NULL;
+static Ecore_Event_Handler *ipc = NULL;
 
 /* externally accessible functions */
 EAPI int
@@ -127,6 +131,7 @@ e_fwin_shutdown(void)
 {
    E_Fwin *fwin;
 
+   if (ipc) ecore_event_handler_del(ipc); //FIXME this is never called
    EINA_LIST_FREE(fwins, fwin)
      e_object_del(E_OBJECT(fwin));
 
@@ -311,6 +316,18 @@ e_fwin_zone_find(E_Zone *zone)
    return 0;
 }
 
+EAPI void
+e_fwin_progress_update_all(int slave_id, int percent, int seconds, size_t done, size_t total, char *src, char *dst)
+{
+   Eina_List *l;
+   E_Fwin *fwin;
+
+   EINA_LIST_FOREACH(fwins, l, fwin)
+     _e_fwin_progress_update(fwin, slave_id, percent, seconds, done, total, src, dst);
+}
+
+#define CONF_ALIGN_X 1.0
+#define CONF_ALIGN_Y 1.0
 /* local subsystem functions */
 static E_Fwin *
 _e_fwin_new(E_Container *con, const char *dev, const char *path) 
@@ -337,6 +354,12 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
 			   "e/fileman/default/window/main");
    evas_object_show(o);
    fwin->bg_obj = o;
+
+   o = evas_object_box_add(e_win_evas_get(fwin->win));
+   evas_object_box_layout_set(o, evas_object_box_layout_vertical, NULL, NULL);
+   evas_object_box_align_set(o, CONF_ALIGN_X, CONF_ALIGN_Y);
+   evas_object_show(o);
+   fwin->box_obj = o;
 
    o = e_fm2_add(e_win_evas_get(fwin->win));
    fwin->fm_obj = o;
@@ -423,7 +446,10 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
 	fwin->win->border->internal_icon = 
 	  eina_stringshare_add("system-file-manager");
      }
-   
+
+   if (!ipc)
+      ipc = ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_DATA,
+                                    _e_fwin_ipc_progress_data, NULL);
    return fwin;
 }
 
@@ -523,6 +549,8 @@ _e_fwin_cb_resize(E_Win *win)
 	  _e_fwin_toolbar_resize(fwin);
 	else 
 	  evas_object_resize(fwin->scrollframe_obj, fwin->win->w, fwin->win->h);
+	if (fwin->box_obj)
+	  evas_object_resize(fwin->box_obj, fwin->win->w, fwin->win->h);
      }
    else if (fwin->zone)
      evas_object_resize(fwin->scrollframe_obj, fwin->zone->w, fwin->zone->h);
@@ -536,6 +564,101 @@ _e_fwin_deleted(void *data, Evas_Object *obj, void *event_info)
    
    fwin = data;
    e_object_del(E_OBJECT(fwin));
+}
+
+static int
+_e_fwin_ipc_progress_data(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+   Ecore_Ipc_Event_Client_Data *e = event;
+   int percent, seconds;
+   size_t done, total;
+   char *src = NULL;
+   char *dst = NULL;
+   void *p;
+
+   if (!(e->major == E_IPC_DOMAIN_FM && e->minor == E_FM_OP_PROGRESS))
+      return 0;
+   if (!e->data) return 0;
+
+   p = e->data;
+#define UP(value, type) (value) = *(type *)p; p += sizeof(type)
+   UP(percent, int);
+   UP(seconds, int);
+   UP(done, size_t);
+   UP(total, size_t);
+#undef UP
+   src = p;
+   dst = p + strlen(src) + 1;
+   //printf("%s:%s(%d) Progress from slave #%d:\n\t%d%% done,\n\t%d seconds left,\n\t%d done,\n\t%d total,\n\tsrc = %s,\n\tdst = %s.\n", __FILE__, __FUNCTION__, __LINE__, e->ref, percent, seconds, done, total, src, dst);
+   e_fwin_progress_update_all(e->ref, percent, seconds, done, total, src, dst);
+
+   return 1;
+}
+
+static void
+_e_fwin_progress_update(E_Fwin *fwin, int slave_id, int percent, int seconds, size_t done, size_t total, char *src, char *dst)
+{
+   Evas_Object *o = NULL;
+   Eina_List *l;
+   char buf[PATH_MAX];
+   char *dir;
+   int mw, mh, id;
+
+   if (!fwin || !fwin->box_obj) return;
+
+   // Search for existing progress object
+   EINA_LIST_FOREACH(evas_object_box_children_get(fwin->box_obj), l, o)
+     {
+	id = (int)evas_object_data_get(o, "e_fm_prog_id");
+	if (id == slave_id)
+	   break;
+	else
+	   o = NULL;
+     }
+
+   // Not found. Create a new one
+   if (!o)
+     {
+	o = edje_object_add(e_win_evas_get(fwin->win));
+	e_theme_edje_object_set(o, "base/theme/fileman",
+	                        "e/fileman/default/progress");
+	evas_object_data_set(o, "e_fm_prog_id", (void*)slave_id);
+	edje_object_size_min_get(o, &mw, &mh);
+	evas_object_resize(o, mw * e_scale, mh * e_scale);
+	//evas_object_event_callback_add(o, EVAS_CALLBACK_CHANGED_SIZE_HINTS,
+	//                        _size_hint_changed_cb, NULL);
+	evas_object_show(o);
+
+	// Append the element to the box
+	evas_object_box_append(fwin->box_obj, o);
+	evas_object_size_hint_align_set(o, CONF_ALIGN_X, CONF_ALIGN_Y);
+     }
+
+   // Update element
+   edje_object_part_drag_size_set(o, "e.gauge.bar", 0.0, ((double)(percent)) / 100);
+
+   snprintf(buf, PATH_MAX, "Progress from slave #%d", slave_id);
+   edje_object_part_text_set(o, "e.text.label1", buf);
+   snprintf(buf, PATH_MAX, _("Done %ld / %ld byte"), done, total);
+   edje_object_part_text_set(o, "e.text.label2", buf);
+   if (percent < 100)
+     snprintf(buf, PATH_MAX, _("Done %d%% - left %d sec"), percent, seconds);
+   else
+     snprintf(buf, PATH_MAX, _("Complete"));
+   edje_object_part_text_set(o, "e.text.label3", buf);
+   edje_object_part_text_set(o, "e.text.label4", ecore_file_file_get(src));
+   dir = ecore_file_dir_get(dst);
+   edje_object_part_text_set(o, "e.text.label5", dir);
+   E_FREE(dir);
+
+   evas_object_raise(fwin->box_obj); //TODO use layer??
+
+   if (percent == 100) //TODO delay hide by some seconds
+     {
+	// Delete the element
+	evas_object_box_remove(fwin->box_obj, o);
+	evas_object_del(o);
+     }
 }
 
 static const char *

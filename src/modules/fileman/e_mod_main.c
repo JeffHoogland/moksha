@@ -99,7 +99,6 @@ e_modapi_init(E_Module *m)
 					      _e_mod_zone_add, NULL);
    
    /* FIXME: add system event for new zone creation, and on creation, add an fwin to the zone */
-   
 
    e_fileman_dbus_init();
 
@@ -315,7 +314,6 @@ _e_mod_menu_generate(void *data, E_Menu *m)
    E_Menu_Item *mi;
    E_Volume *vol;
    const Eina_List *l;
-   char buf[PATH_MAX];
 
    /* Home */
    mi = e_menu_item_new(m);
