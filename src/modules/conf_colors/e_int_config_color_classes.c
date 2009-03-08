@@ -128,7 +128,7 @@ e_int_config_color_classes(E_Container *con, const char *params __UNUSED__)
    v->advanced.create_widgets = _adv_create_widgets;
    
    cfd = e_config_dialog_new(con, _("Colors"), "E", "_config_color_classes_dialog",
-			     "enlightenment/colors", 0, v, NULL);
+			     "preferences-desktop-color", 0, v, NULL);
    return cfd;
 }
 

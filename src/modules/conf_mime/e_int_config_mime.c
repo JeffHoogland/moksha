@@ -200,7 +200,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_min_size_set(cfdata->gui.list, 250, 200);
    e_widget_frametable_object_append(of, ol, 0, 0, 3, 1, 1, 1, 1, 1);
 
-   ob = e_widget_button_add(evas, _("Configure"), "widget/config", _cb_config, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Configure"), "configure", _cb_config, cfdata, NULL);
    e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 

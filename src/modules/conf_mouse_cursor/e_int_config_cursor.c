@@ -44,7 +44,7 @@ e_int_config_cursor(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Cursor Settings"),
 			     "E", "_config_cursor_dialog",
-			     "enlightenment/mouse", 0, v, NULL);
+			     "preferences-desktop-pointer", 0, v, NULL);
    return cfd;
 }
 

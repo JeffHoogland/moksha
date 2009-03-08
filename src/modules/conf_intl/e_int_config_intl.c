@@ -582,7 +582,7 @@ e_int_config_intl(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Language Settings"),
 			    "E", "_config_intl_dialog",
-			     "enlightenment/intl", 0, v, NULL);
+			     "preferences-desktop-locale", 0, v, NULL);
    return cfd;
 }
 

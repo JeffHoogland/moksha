@@ -31,8 +31,8 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("language", 70, _("Language"), NULL, "enlightenment/intl");
-   e_configure_registry_item_add("language/language_settings", 10, _("Language Settings"), NULL, "enlightenment/intl", e_int_config_intl);
+   e_configure_registry_category_add("language", 70, _("Language"), NULL, "preferences-desktop-locale");
+   e_configure_registry_item_add("language/language_settings", 10, _("Language Settings"), NULL, "preferences-desktop-locale", e_int_config_intl);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;

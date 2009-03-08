@@ -269,7 +269,7 @@ _grab_wnd_show(void *data1, void *data2)
 				   "_pager_button_grab_dialog");
    if (!cfdata->grab.dia) return;
    e_dialog_title_set(cfdata->grab.dia, _("Pager Button Grab"));
-   e_dialog_icon_set(cfdata->grab.dia, "enlightenment/mouse_clean", 48);
+   e_dialog_icon_set(cfdata->grab.dia, "preferences-desktop-mouse", 48);
    e_dialog_text_set(cfdata->grab.dia, _("Please press a mouse button<br>"
 					 "Press <hilight>Escape</hilight> to abort.<br>"
 					 "Or <hilight>Del</hilight> to reset the button."));

@@ -1107,7 +1107,7 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
    subm = e_menu_new();
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, buf);
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf");
+   e_util_menu_item_theme_icon_set(mi, "preferences-desktop-shelf");
    e_menu_pre_activate_callback_set(subm, _e_shelf_menu_pre_cb, es);
    e_object_free_attach_func_set(E_OBJECT(mi), _e_shelf_menu_item_free);
    e_object_data_set(E_OBJECT(mi), es);
@@ -1625,12 +1625,12 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Shelf Settings"));
-   e_util_menu_item_theme_icon_set(mi, "widget/config");
+   e_util_menu_item_theme_icon_set(mi, "configure");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Configure Shelf Contents"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf");
+   e_util_menu_item_theme_icon_set(mi, "preferences-desktop-shelf");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_contents, es);
    
    mi = e_menu_item_new(m);

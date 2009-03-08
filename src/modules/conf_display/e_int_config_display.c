@@ -188,7 +188,7 @@ _surebox_new(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->surebox = sb;
    sb->dia->data = sb;
    e_dialog_title_set(sb->dia, _("Resolution change"));
-   e_dialog_icon_set(sb->dia, "enlightenment/screen_resolution", 48);
+   e_dialog_icon_set(sb->dia, "preferences-system-screen-resolution", 48);
    _surebox_text_fill(sb);
    e_win_delete_callback_set(sb->dia->win, _surebox_dialog_cb_delete);
    e_dialog_button_add(sb->dia, _("Save"), NULL, _surebox_dialog_cb_yes, sb);
@@ -226,8 +226,8 @@ e_int_config_display(E_Container *con, const char *params __UNUSED__)
    v->override_auto_apply = 1;
 
    cfd = e_config_dialog_new(con, _("Screen Resolution Settings"),
-			    "E", "_config_display_dialog",
-			     "enlightenment/screen_resolution", 0, v, NULL);
+			     "E", "_config_display_dialog",
+			     "preferences-system-screen-resolution", 0, v, NULL);
    return cfd;
 }
 

@@ -474,7 +474,7 @@ _e_border_menu_cb_application_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 	submi = e_menu_item_new(subm);
 	e_menu_item_label_set(submi, _("Keyboard Shortcut"));
 	e_menu_item_callback_set(submi, _e_border_menu_cb_kbdshrtct_add, bd);
-	e_util_menu_item_theme_icon_set(submi, "enlightenment/keys");
+	e_util_menu_item_theme_icon_set(submi, "preferences-desktop-keyboard");
      }
 
    submi = e_menu_item_new(subm);

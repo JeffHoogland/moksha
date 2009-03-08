@@ -823,17 +823,11 @@ _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon
    fwin = data;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Open"));
-   e_menu_item_icon_edje_set(mi,
-			     e_theme_edje_file_get("base/theme/fileman",
-						   "e/fileman/default/button/open"),
-			     "e/fileman/default/button/open");
+   e_util_menu_item_theme_icon_set(mi, "document-open");
    e_menu_item_callback_set(mi, _e_fwin_cb_menu_open, fwin);
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Open with..."));
-   e_menu_item_icon_edje_set(mi,
-			     e_theme_edje_file_get("base/theme/fileman",
-						   "e/fileman/default/button/open"),
-			     "e/fileman/default/button/open");
+   e_util_menu_item_theme_icon_set(mi, "document-open");
    e_menu_item_callback_set(mi, _e_fwin_cb_menu_open_with, fwin);
 }
 

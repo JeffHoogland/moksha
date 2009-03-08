@@ -167,7 +167,7 @@ e_int_config_fonts(E_Container *con, const char *params __UNUSED__)
    
    cfd = e_config_dialog_new(con, _("Font Settings"),
 			     "E", "_config_fonts_dialog",
-			     "enlightenment/fonts", 0, v, NULL);
+			     "preferences-desktop-font", 0, v, NULL);
    return cfd;
 }
 

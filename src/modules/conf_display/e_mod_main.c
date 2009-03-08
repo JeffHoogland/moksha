@@ -31,8 +31,8 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("screen", 30, _("Screen"), NULL, "enlightenment/screen_setup");
-   e_configure_registry_item_add("screen/screen_resolution", 20, _("Screen Resolution"), NULL, "enlightenment/screen_resolution", e_int_config_display);
+   e_configure_registry_category_add("screen", 30, _("Screen"), NULL, "preferences-desktop-display");
+   e_configure_registry_item_add("screen/screen_resolution", 20, _("Screen Resolution"), NULL, "preferences-system-screen-resolution", e_int_config_display);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;

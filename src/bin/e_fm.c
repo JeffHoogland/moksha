@@ -1559,11 +1559,11 @@ _e_fm2_icon_explicit_edje_get(Evas *evas, const E_Fm2_Icon *ic __UNUSED__, const
 static Evas_Object *
 _e_fm2_icon_explicit_theme_icon_get(Evas *evas, const E_Fm2_Icon *ic __UNUSED__, const char *name, const char **type_ret)
 {
-   Evas_Object *o = edje_object_add(evas);
+   Evas_Object *o = e_icon_add(evas);
    if (!o)
      return NULL;
 
-   if (!e_util_edje_icon_set(o, name))
+   if (!e_util_icon_theme_set(o, name))
      {
 	evas_object_del(o);
 	return NULL;
@@ -5436,10 +5436,7 @@ _e_fm_drop_menu(char *args)
    item = e_menu_item_new(menu);
    e_menu_item_label_set(item, _("Copy"));
    e_menu_item_callback_set(item, _e_fm_drop_menu_copy_cb, args);
-   e_menu_item_icon_edje_set(item,
-	 e_theme_edje_file_get("base/theme/fileman",
-	    "e/fileman/default/button/copy"),
-	 "e/fileman/default/button/copy");
+   e_util_menu_item_theme_icon_set(item, "edit-copy");
 
    item = e_menu_item_new(menu);
    e_menu_item_label_set(item, _("Move"));
@@ -5452,10 +5449,7 @@ _e_fm_drop_menu(char *args)
    item = e_menu_item_new(menu);
    e_menu_item_label_set(item, _("Link"));
    e_menu_item_callback_set(item, _e_fm_drop_menu_symlink_cb, args);
-   e_menu_item_icon_edje_set(item,
-	 e_theme_edje_file_get("base/theme/fileman",
-	    "e/fileman/default/button/symlink"),
-	 "e/fileman/default/button/symlink");
+   e_util_menu_item_theme_icon_set(item, "emblem-symbolic-link");
 
    item = e_menu_item_new(menu);
    e_menu_item_separator_set(item, 1);
@@ -7038,10 +7032,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Inherit parent settings"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/inherit"),
-				       "e/fileman/default/button/inherit");
+	     e_util_menu_item_theme_icon_set(mi, "view-inherit");
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, sd->inherited_dir_props);
 	     e_menu_item_callback_set(mi, _e_fm2_toggle_inherit_dir_props, sd);
@@ -7057,10 +7048,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Refresh View"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/refresh"),
-				       "e/fileman/default/button/refresh");
+	     e_util_menu_item_theme_icon_set(mi, "view-refresh");
 	     e_menu_item_callback_set(mi, _e_fm2_refresh, sd);
 	  }
 	
@@ -7068,10 +7056,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Show Hidden Files"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/hidden_files"),
-				       "e/fileman/default/button/hidden_files");
+	     e_util_menu_item_theme_icon_set(mi,"view-refresh");
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, sd->show_hidden_files);
 	     e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
@@ -7083,10 +7068,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Remember Ordering"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/ordering"),
-					    "e/fileman/default/button/ordering");
+		  e_util_menu_item_theme_icon_set(mi, "view-order");
 		  e_menu_item_check_set(mi, 1);
 		  e_menu_item_toggle_set(mi, sd->order_file);
 		  e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
@@ -7095,10 +7077,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Sort Now"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/ordering"),
-					    "e/fileman/default/button/sort");
+		  e_util_menu_item_theme_icon_set(mi, "view-sort");
 		  e_menu_item_callback_set(mi, _e_fm2_sort, sd);
 	       }
 	  }
@@ -7110,10 +7089,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	     
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("New Directory"));
-	     e_menu_item_icon_edje_set(mi,
-		   e_theme_edje_file_get("base/theme/fileman",
-		      "e/fileman/default/button/new_dir"),
-		   "e/fileman/default/button/new_dir");
+	     e_util_menu_item_theme_icon_set(mi, "folder-new");
 	     e_menu_item_callback_set(mi, _e_fm2_new_directory, sd);
 	  }
 
@@ -7129,10 +7105,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Paste"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/paste"),
-					    "e/fileman/default/button/paste");
+		  e_util_menu_item_theme_icon_set(mi, "edit-paste");
 		  e_menu_item_callback_set(mi, _e_fm2_file_paste_menu, sd);
 	       }
 
@@ -7140,10 +7113,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Link"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/symlink"),
-					    "e/fileman/default/button/symlink");
+		   e_util_menu_item_theme_icon_set(mi, "emblem-symbolic-link");
 		  e_menu_item_callback_set(mi, _e_fm2_file_symlink_menu, sd);
 	       }
 	  }
@@ -7221,10 +7191,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Inherit parent settings"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/inherit"),
-				       "e/fileman/default/button/inherit");
+	     e_util_menu_item_theme_icon_set(mi, "view-inherit");
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, sd->inherited_dir_props);
 	     e_menu_item_callback_set(mi, _e_fm2_toggle_inherit_dir_props, sd);
@@ -7240,10 +7207,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Refresh View"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/refresh"),
-				       "e/fileman/default/button/refresh");
+	     e_util_menu_item_theme_icon_set(mi, "view-refresh");
 	     e_menu_item_callback_set(mi, _e_fm2_refresh, sd);
 	  }
 	
@@ -7251,10 +7215,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Show Hidden Files"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/hidden_files"),
-				       "e/fileman/default/button/hidden_files");
+	     e_util_menu_item_theme_icon_set(mi, "view-hidden-files");
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, sd->show_hidden_files);
 	     e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
@@ -7266,10 +7227,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Remember Ordering"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/ordering"),
-					    "e/fileman/default/button/ordering");
+		  e_util_menu_item_theme_icon_set(mi, "view-order");
 		  e_menu_item_check_set(mi, 1);
 		  e_menu_item_toggle_set(mi, sd->order_file);
 		  e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
@@ -7278,10 +7236,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Sort Now"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/ordering"),
-					    "e/fileman/default/button/sort");
+		  e_util_menu_item_theme_icon_set(mi, "view-sort");
 		  e_menu_item_callback_set(mi, _e_fm2_sort, sd);
 	       }
 	  }
@@ -7296,10 +7251,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 		  
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("New Directory"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/new_dir"),
-					    "e/fileman/default/button/new_dir");
+		  e_util_menu_item_theme_icon_set(mi, "folder-new");
 		  e_menu_item_callback_set(mi, _e_fm2_new_directory, sd);
 	       }
 	  }
@@ -7312,10 +7264,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 		  
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Cut"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/cut"),
-					    "e/fileman/default/button/cut");
+		  e_util_menu_item_theme_icon_set(mi, "edit-cut");
 		  e_menu_item_callback_set(mi, _e_fm2_file_cut_menu, sd);
 	       }
 	  }
@@ -7329,10 +7278,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Copy"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/copy"),
-				       "e/fileman/default/button/copy");
+	     e_util_menu_item_theme_icon_set(mi, "edit-copy");
 	     e_menu_item_callback_set(mi, _e_fm2_file_copy_menu, sd);
 	  }
 	
@@ -7345,10 +7291,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Paste"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/paste"),
-					    "e/fileman/default/button/paste");
+		  e_util_menu_item_theme_icon_set(mi, "edit-paste");
 		  e_menu_item_callback_set(mi, _e_fm2_file_paste_menu, sd);
 	       }
 
@@ -7356,10 +7299,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Link"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/symlink"),
-					    "e/fileman/default/button/symlink");
+		  e_util_menu_item_theme_icon_set(mi, "emblem-symbolic-link");
 		  e_menu_item_callback_set(mi, _e_fm2_file_symlink_menu, sd);
 	       }
 	  }
@@ -7416,10 +7356,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Delete"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/delete"),
-					    "e/fileman/default/button/delete");
+		  e_util_menu_item_theme_icon_set(mi, "edit-delete");
 		  e_menu_item_callback_set(mi, _e_fm2_file_delete_menu, ic);
 	       }
 	     
@@ -7427,20 +7364,14 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Rename"));
-		  e_menu_item_icon_edje_set(mi,
-					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/default/button/rename"),
-					    "e/fileman/default/button/rename");
+		  e_util_menu_item_theme_icon_set(mi, "edit-rename");
 		  e_menu_item_callback_set(mi, _e_fm2_file_rename, ic);
 	       }
 	  }
 	
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Properties"));
-	e_menu_item_icon_edje_set(mi,
-				  e_theme_edje_file_get("base/theme/fileman",
-							"e/fileman/default/button/properties"),
-				  "e/fileman/default/button/properties");
+	e_util_menu_item_theme_icon_set(mi, "document-properties");
 	e_menu_item_callback_set(mi, _e_fm2_file_properties, ic);
 
 	if (ic->info.mime) 

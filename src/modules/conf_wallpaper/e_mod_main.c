@@ -31,7 +31,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("internal/wallpaper_desk", -1, _("Wallpaper"), NULL, "preferences-system-windows", e_int_config_wallpaper_desk);
    maug = e_int_menus_menu_augmentation_add("config/1", _e_mod_menu_add, NULL, NULL, NULL);
 
-   import_hdl = e_fm2_mime_handler_new(_("Set As Background"), "enlightenment/background", 
+   import_hdl = e_fm2_mime_handler_new(_("Set As Background"), "preferences-desktop-wallpaper", 
 				       e_int_config_wallpaper_handler_set, NULL,
 				       e_int_config_wallpaper_handler_test, NULL);
    if (import_hdl) 

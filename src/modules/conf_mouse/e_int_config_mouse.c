@@ -35,7 +35,7 @@ e_int_config_mouse(E_Container *con, const char *params __UNUSED__)
    
    cfd = e_config_dialog_new(con, _("Mouse Settings"), "E", 
 			     "_config_mouse_dialog", 
-			     "enlightenment/mouse_clean", 0, v, NULL);
+			     "preferences-desktop-mouse", 0, v, NULL);
    return cfd;
 }
 
@@ -96,9 +96,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    of = e_widget_frametable_add(evas, _("Mouse Hand"), 0);
    rg = e_widget_radio_group_new(&(cfdata->mouse_hand));
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/mouse_right", 48, 48, E_MOUSE_HAND_LEFT, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-desktop-mouse-right", 48, 48, E_MOUSE_HAND_LEFT, rg);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/mouse_left", 48, 48, E_MOUSE_HAND_RIGHT, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-desktop-mouse-left", 48, 48, E_MOUSE_HAND_RIGHT, rg);
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 

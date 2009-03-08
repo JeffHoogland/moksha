@@ -261,7 +261,7 @@ e_int_menus_desktops_new(void)
    subm = e_menu_new();
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Shelves"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf");
+   e_util_menu_item_theme_icon_set(mi, "preferences-desktop-shelf");
    e_menu_pre_activate_callback_set(subm, _e_int_menus_shelves_pre_cb, NULL);
    e_menu_item_submenu_set(mi, subm);
 
@@ -270,7 +270,7 @@ e_int_menus_desktops_new(void)
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Show/Hide All Windows"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/showhide");
+   e_util_menu_item_theme_icon_set(mi, "preferences-system-windows");
    e_menu_item_callback_set(mi, _e_int_menus_main_showhide, NULL);
 
    return m;
@@ -1336,43 +1336,43 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
 	switch (s->cfg->orient) 
 	  {
 	   case E_GADCON_ORIENT_LEFT:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_left");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-left");
 	     break;
 	   case E_GADCON_ORIENT_RIGHT:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_right");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-right");
 	     break;
 	   case E_GADCON_ORIENT_TOP:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_top");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-top");
 	     break;
 	   case E_GADCON_ORIENT_BOTTOM:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_bottom");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-bottom");
 	     break;
 	   case E_GADCON_ORIENT_CORNER_TL:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_top_left");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-top-left");
 	     break;
 	   case E_GADCON_ORIENT_CORNER_TR:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_top_right");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-top-right");
 	     break;
 	   case E_GADCON_ORIENT_CORNER_BL:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_bottom_left");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-bottom-left");
 	     break;
 	   case E_GADCON_ORIENT_CORNER_BR:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_bottom_right");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-bottom-right");
 	     break;
 	   case E_GADCON_ORIENT_CORNER_LT:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_left_top");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-left-top");
 	     break;
 	   case E_GADCON_ORIENT_CORNER_RT:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_right_top");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-right-top");
 	     break;
 	   case E_GADCON_ORIENT_CORNER_LB:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_left_bottom");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-left-bottom");
 	     break;
 	   case E_GADCON_ORIENT_CORNER_RB:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf_position_right_bottom");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-position-right-bottom");
 	     break;
 	   default:
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/shelf");	     
+	     e_util_menu_item_theme_icon_set(mi, "preferences-desktop-shelf");
 	     break;
 	  }
      }

@@ -31,7 +31,7 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("screen", 30, _("Screen"), NULL, "enlightenment/screen_setup");
+   e_configure_registry_category_add("screen", 30, _("Screen"), NULL, "preferences-desktop-display");
    e_configure_registry_item_add("screen/screen_saver", 40, _("Screen Saver"), NULL, "preferences-desktop-screensaver", e_int_config_screensaver);
    conf_module = m;
    e_module_delayed_set(m, 1);

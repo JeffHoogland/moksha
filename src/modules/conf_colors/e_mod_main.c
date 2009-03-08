@@ -32,7 +32,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "enlightenment/appearance");
-   e_configure_registry_item_add("appearance/colors", 30, _("Colors"), NULL, "enlightenment/colors", e_int_config_color_classes);
+   e_configure_registry_item_add("appearance/colors", 30, _("Colors"), NULL, "preferences-desktop-color", e_int_config_color_classes);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;

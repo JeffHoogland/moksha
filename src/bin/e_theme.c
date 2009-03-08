@@ -38,7 +38,7 @@ e_theme_init(void)
    Eina_List *l = NULL;
 
    /* Register mime handler */
-   theme_hdl = e_fm2_mime_handler_new(_("Set As Theme"), "enlightenment/themes",
+   theme_hdl = e_fm2_mime_handler_new(_("Set As Theme"), "preferences-desktop-theme",
 				      e_theme_handler_set, NULL,
 				      e_theme_handler_test, NULL);
    if (theme_hdl) e_fm2_mime_handler_glob_add(theme_hdl, "*.edj");

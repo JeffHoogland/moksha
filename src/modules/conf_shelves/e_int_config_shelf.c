@@ -42,7 +42,7 @@ e_int_config_shelf(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Shelf Settings"), "E", 
 			     "_config_shelf_dialog",
-			     "enlightenment/shelf", 0, v, NULL);
+			     "preferences-desktop-shelf", 0, v, NULL);
    return cfd;
 }
 
@@ -81,7 +81,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "list-remove", 
 					  _cb_delete, cfdata, NULL);
    e_widget_table_object_append(ot, cfdata->o_delete, 0, 1, 1, 1, 1, 1, 0, 0);
-   cfdata->o_config = e_widget_button_add(evas, _("Configure"), "widget/config", 
+   cfdata->o_config = e_widget_button_add(evas, _("Configure"), "configure", 
 					  _cb_config, cfdata, NULL);
    e_widget_table_object_append(ot, cfdata->o_config, 0, 2, 1, 1, 1, 1, 0, 0);
 
@@ -136,40 +136,40 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
         switch (es->cfg->orient)
           {
           case E_GADCON_ORIENT_LEFT:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_left");
+             e_util_edje_icon_set(ob, "preferences-position-left");
              break;
           case E_GADCON_ORIENT_RIGHT:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_right");
+             e_util_edje_icon_set(ob, "preferences-position-right");
              break;
           case E_GADCON_ORIENT_TOP:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_top");
+             e_util_edje_icon_set(ob, "preferences-position-top");
              break;
           case E_GADCON_ORIENT_BOTTOM:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_bottom");
+             e_util_edje_icon_set(ob, "preferences-position-bottom");
              break;
           case E_GADCON_ORIENT_CORNER_TL:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_top_left");
+             e_util_edje_icon_set(ob, "preferences-position-top-left");
              break;
           case E_GADCON_ORIENT_CORNER_TR:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_top_right");
+             e_util_edje_icon_set(ob, "preferences-position-top-right");
              break;
           case E_GADCON_ORIENT_CORNER_BL:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_bottom_left");
+             e_util_edje_icon_set(ob, "preferences-position-bottom-left");
              break;
           case E_GADCON_ORIENT_CORNER_BR:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_bottom_right");
+             e_util_edje_icon_set(ob, "preferences-position-bottom-right");
              break;
           case E_GADCON_ORIENT_CORNER_LT:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_left_top");
+             e_util_edje_icon_set(ob, "preferences-position-left-top");
              break;
           case E_GADCON_ORIENT_CORNER_RT:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_right_top");
+             e_util_edje_icon_set(ob, "preferences-position-right-top");
              break;
           case E_GADCON_ORIENT_CORNER_LB:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_left_bottom");
+             e_util_edje_icon_set(ob, "preferences-position-left-bottom");
              break;
           case E_GADCON_ORIENT_CORNER_RB:
-             e_util_edje_icon_set(ob, "enlightenment/shelf_position_right_bottom");
+             e_util_edje_icon_set(ob, "preferences-position-right-bottom");
              break;
           default:
              e_util_edje_icon_set(ob, "enlightenment/e");

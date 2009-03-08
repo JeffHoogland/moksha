@@ -28,7 +28,7 @@ e_int_config_remembers(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Window Remembers"), "E", 
                              "_config_remembers_dialog", 
-                             "enlightenment/window_remembers", 0, v, NULL);
+                             "preferences-desktop-window-remember", 0, v, NULL);
    e_dialog_resizable_set(cfd->dia, 1);
    return cfd;
 }

@@ -145,7 +145,7 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    e_widget_table_object_append(ott, o, 1, 2, 1, 1, 1, 1, 1, 1);
    import->well2 = o;
 
-   o = e_widget_button_add(evas, "Swap Colors", "widget/swap", _import_cb_color_swap, import, NULL);
+   o = e_widget_button_add(evas, "Swap Colors", "edit-swap", _import_cb_color_swap, import, NULL);
    evas_object_show(o);
    e_widget_table_object_append(ott, o, 1, 3, 1, 1, 1, 1, 1, 1);
 

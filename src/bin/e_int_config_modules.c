@@ -41,7 +41,7 @@ const CFTypes _types[] =
      {"appearance", N_("Appearance"),    "enlightenment/appearance"},
      {"config",     N_("Settings"),      "preferences-system"},
      {"fileman",    N_("File Manager"),  "system-file-manager"},
-     {"shelf",      N_("Shelf"),         "enlightenment/shelf"},
+     {"shelf",      N_("Shelf"),         "preferences-desktop-shelf"}, //FIXME use gadget icon
      {"system",     N_("System"),        "enlightenment/system"},
      {NULL, NULL, NULL}
 };

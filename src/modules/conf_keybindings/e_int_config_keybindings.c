@@ -90,7 +90,7 @@ e_int_config_keybindings(E_Container *con, const char *params)
 
    cfd = e_config_dialog_new(con, _("Key Binding Settings"), "E", 
 			     "_config_keybindings_dialog",
-			     "enlightenment/keys", 0, v, NULL);
+			     "preferences-desktop-keyboard", 0, v, NULL);
    if ((params) && (params[0]))
      {
 	cfd->cfdata->params = strdup(params);
@@ -833,8 +833,8 @@ _update_key_binding_list(E_Config_Dialog_Data *cfdata)
 	b = _key_binding_text_get(bi);
 	if (!b) continue;
 
-	ic = edje_object_add(cfdata->evas);
-	e_util_edje_icon_set(ic, "enlightenment/keys");
+	ic = e_icon_add(cfdata->evas);
+	e_util_icon_theme_set(ic, "preferences-desktop-keyboard");
 
 	snprintf(b2, sizeof(b2), "k%d", i);
 	e_widget_ilist_append(cfdata->gui.o_binding_list, ic, b,
@@ -925,7 +925,7 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
 				     "E", "_keybind_getkey_dialog");
    if (!cfdata->locals.dia) return;
    e_dialog_title_set(cfdata->locals.dia, _("Key Binding Sequence"));
-   e_dialog_icon_set(cfdata->locals.dia, "enlightenment/keys", 48);
+   e_dialog_icon_set(cfdata->locals.dia, "preferences-desktop-keyboard", 48);
    e_dialog_text_set(cfdata->locals.dia, TEXT_PRESS_KEY_SEQUENCE);
    e_win_centered_set(cfdata->locals.dia->win, 1);
    e_win_borderless_set(cfdata->locals.dia->win, 1);

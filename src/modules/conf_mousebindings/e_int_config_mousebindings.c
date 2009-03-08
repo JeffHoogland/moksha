@@ -111,7 +111,7 @@ e_int_config_mousebindings(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Mouse Binding Settings"),
 			     "E", "_config_mousebindings_dialog",
-			     "enlightenment/mouse_clean", 0, v, NULL);
+			     "preferences-desktop-mouse", 0, v, NULL);
    return cfd;
 }
 
@@ -775,22 +775,22 @@ _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
 	switch (eb->button)
 	  {
 	   case 1:
-	      icon = "enlightenment/mouse_left";
+	      icon = "preferences-desktop-mouse-left";
 	      break;
 	   case 2:
-	      icon = "enlightenment/mouse_middle";
+	      icon = "preferences-desktop-mouse-middle";
 	      break;
 	   case 3:
-	      icon = "enlightenment/mouse_right";
+	      icon = "preferences-desktop-mouse-right";
 	      break;
 	   default:
-	      icon = "enlightenment/mouse_extra";
+	      icon = "preferences-desktop-mouse-extra";
 	  }
 
 	snprintf(val, sizeof(val), "m%d", i);
 
-	ic = edje_object_add(cfdata->evas);
-	e_util_edje_icon_set(ic, icon);
+	ic = e_icon_add(cfdata->evas);
+	e_util_icon_theme_set(ic, icon);
 	e_widget_ilist_append(cfdata->gui.o_binding_list, ic, label, _binding_change_cb,
 			      cfdata, val);
      }
@@ -820,8 +820,8 @@ _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
 
 	snprintf(val, sizeof(val), "w%d", i);
 
-	ic = edje_object_add(cfdata->evas);
-	e_util_edje_icon_set(ic, "enlightenment/mouse_wheel");
+	ic = e_icon_add(cfdata->evas);
+	e_util_icon_theme_set(ic, "preferences-desktop-mouse-wheel");
 	e_widget_ilist_append(cfdata->gui.o_binding_list, ic, label, _binding_change_cb,
 			      cfdata, val);
      }
@@ -1298,7 +1298,7 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
 				     "E", "_mousebind_getmouse_dialog");
    if (!cfdata->locals.dia) return;
    e_dialog_title_set(cfdata->locals.dia, _("Mouse Binding Sequence"));
-   e_dialog_icon_set(cfdata->locals.dia, "enlightenment/mouse_clean", 48);
+   e_dialog_icon_set(cfdata->locals.dia, "preferences-desktop-mouse", 48);
    e_dialog_text_set(cfdata->locals.dia, TEXT_PRESS_MOUSE_BINIDING_SEQUENCE);
    e_win_centered_set(cfdata->locals.dia->win, 1);
    e_win_borderless_set(cfdata->locals.dia->win, 1);

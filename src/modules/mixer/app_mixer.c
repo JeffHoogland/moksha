@@ -538,7 +538,7 @@ e_mixer_app_dialog_new(E_Container *con, void (*func)(E_Dialog *dialog, void *da
    e_dialog_button_focus_num(dialog, 1);
    e_win_centered_set(dialog->win, 1);
    e_dialog_show(dialog);
-   e_dialog_border_icon_set(dialog, "enlightenment/mixer");
+   e_dialog_border_icon_set(dialog, "preferences-desktop-mixer");
 
    // FIXME: what if module unloaded while mixer_app dialog up? bad!
    

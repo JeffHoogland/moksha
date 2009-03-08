@@ -15,7 +15,7 @@ e_modapi_init(E_Module *m)
                                      "preferences-system-windows");
    e_configure_registry_item_add("windows/window_remembers", 40, 
                                  _("Window Remembers"), NULL, 
-                                 "enlightenment/window_remembers", 
+                                 "preferences-desktop-window-remember", 
                                  e_int_config_remembers);
    conf_module = m;
    e_module_delayed_set(m, 1);

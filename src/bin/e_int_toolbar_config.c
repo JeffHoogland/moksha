@@ -28,7 +28,7 @@ e_int_toolbar_config(E_Toolbar *tbar)
    v->basic.apply_cfdata = _basic_apply;
    v->basic.create_widgets = _basic_create;
    cfd = e_config_dialog_new(con, _("Toolbar Settings"), "E", 
-			     "_toolbar_config_dialog", "enlightenment/shelf", 
+			     "_toolbar_config_dialog", "preferences-desktop-shelf", 
 			     0, v, tbar);
    tbar->cfg_dlg = cfd;
 }
@@ -82,19 +82,19 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ot = e_widget_frametable_add(evas, _("Layout"), 1);
    rg = e_widget_radio_group_new(&(cfdata->orient));
    /*
-   ow = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_left", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left", 
 				24, 24, E_GADCON_ORIENT_LEFT, rg);
    e_widget_frametable_object_append(ot, ow, 0, 1, 1, 1, 1, 1, 1, 1);
    */
-   ow = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_top", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top", 
 				24, 24, E_GADCON_ORIENT_TOP, rg);
    e_widget_frametable_object_append(ot, ow, 0, 0, 1, 1, 1, 1, 1, 1);
    /*
-   ow = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_right", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right", 
 				24, 24, E_GADCON_ORIENT_RIGHT, rg);
    e_widget_frametable_object_append(ot, ow, 2, 1, 1, 1, 1, 1, 1, 1);
    */
-   ow = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_bottom", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom", 
 				24, 24, E_GADCON_ORIENT_BOTTOM, rg);
    e_widget_frametable_object_append(ot, ow, 0, 1, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);

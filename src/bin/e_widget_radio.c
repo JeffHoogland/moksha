@@ -115,10 +115,10 @@ e_widget_radio_icon_add(Evas *evas, const char *label, const char *icon, int ico
    
    if (icon)
      {
-	o2 = edje_object_add(evas);
+	o2 = e_icon_add(evas);
 	wd->o_icon = o2;
-	e_util_edje_icon_set(o2, icon);
-	edje_extern_object_min_size_set(o2, icon_w, icon_h);
+	e_util_icon_theme_set(o2, icon);
+	evas_object_size_hint_min_set(o2, icon_w, icon_h);
 	edje_object_part_swallow(wd->o_radio, "e.swallow.icon", o2);
 	evas_object_show(o2);
 	e_widget_sub_object_add(obj, o2);

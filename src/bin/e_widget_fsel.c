@@ -285,7 +285,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    wd->o_table2 = o;
    e_widget_sub_object_add(obj, o);
    
-   o = e_widget_button_add(evas, _("Add to Favorites"), "widget/add_fav",
+   o = e_widget_button_add(evas, _("Add to Favorites"), "bookmark-new",
 			   _e_wid_fsel_favorites_add, wd, NULL);
    wd->o_favorites_add = o;
    e_widget_sub_object_add(obj, o);

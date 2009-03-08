@@ -323,7 +323,7 @@ _ibar_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Settings"));
-	e_util_menu_item_theme_icon_set(mi, "widget/config");
+	e_util_menu_item_theme_icon_set(mi, "configure");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_configuration, b);
 
 	mi = e_menu_item_new(mn);
@@ -800,7 +800,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	/* FIXME: other icon options go here too */
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Change Icon Properties"));
-	e_util_menu_item_theme_icon_set(mi, "widget/config");
+	e_util_menu_item_theme_icon_set(mi, "configure");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_icon_properties, ic);
 	
 	mi = e_menu_item_new(mn);
@@ -831,7 +831,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Settings"));
-	e_util_menu_item_theme_icon_set(mi, "widget/config");
+	e_util_menu_item_theme_icon_set(mi, "configure");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_configuration, ic->ibar);
 
 	if (e_configure_registry_exists("applications/ibar_applications")) 

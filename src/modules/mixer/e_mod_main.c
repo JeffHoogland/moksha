@@ -669,7 +669,7 @@ _mixer_menu_new(E_Mixer_Instance *inst, Evas_Event_Mouse_Down *ev)
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Settings"));
-   e_util_menu_item_theme_icon_set(mi, "widget/config");
+   e_util_menu_item_theme_icon_set(mi, "configure");
    e_menu_item_callback_set(mi, _mixer_menu_cb_cfg, inst);
 
    e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
@@ -1087,7 +1087,7 @@ _mixer_configure_registry_register(void)
    e_configure_registry_category_add(_reg_cat, 90, _("Extensions"), NULL,
                                      "enlightenment/extensions");
    e_configure_registry_item_add(_reg_item, 30, _(_Name), NULL,
-				  "enlightenment/mixer",
+				  "preferences-desktop-mixer",
 				 _mixer_module_config);
 }
 

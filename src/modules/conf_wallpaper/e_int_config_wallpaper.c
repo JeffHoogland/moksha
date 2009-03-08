@@ -546,7 +546,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_theme_bg = ow;
    evas_object_smart_callback_add(ow, "changed", _cb_theme_wallpaper, cfdata);
    e_widget_table_object_append(ot, ow, 0, 0, 2 + online, 1, 1, 0, 0, 0);
-   ow = e_widget_button_add(evas, _("Picture..."), "enlightenment/picture",
+   ow = e_widget_button_add(evas, _("Picture..."), "folder-image",
 			    _cb_import, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
    ow = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
@@ -674,7 +674,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_theme_bg = ow;
    evas_object_smart_callback_add(ow, "changed", _cb_theme_wallpaper, cfdata);
    e_widget_table_object_append(ot, ow, 0, 0, 2 + online, 1, 1, 0, 0, 0);
-   ow = e_widget_button_add(evas, _("Picture..."), "enlightenment/picture",
+   ow = e_widget_button_add(evas, _("Picture..."), "folder-image",
 			    _cb_import, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
    ow = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",

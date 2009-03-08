@@ -70,7 +70,7 @@ e_int_shelf_config(E_Shelf *es)
 	cfd = e_config_dialog_new(es->zone->container, 
 				  _("Shelf Settings"),
 				  "E", "_shelf_config_dialog",
-				  "enlightenment/shelf", 0, v, es);
+				  "preferences-desktop-shelf", 0, v, es);
 	es->config_dialog = cfd;
      }
 }
@@ -498,17 +498,17 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    of = e_widget_framelist_add(evas, _("Layout"), 0);
    rg = e_widget_radio_group_new(&(cfdata->mode));
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_dock", 64, 24, MODE_BOTTOM_MIDDLE, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-desktop-shelf-dock", 64, 24, MODE_BOTTOM_MIDDLE, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_panel", 64, 24, MODE_BOTTOM_ALL, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-desktop-shelf-panel", 64, 24, MODE_BOTTOM_ALL, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_bottom_desk", 64, 24, MODE_BOTTOM_DESKTOP, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-desktop-shelf-bottom-desk", 64, 24, MODE_BOTTOM_DESKTOP, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_menu_bar", 64, 24, MODE_TOP_ALL, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-desktop-shelf-menu-bar", 64, 24, MODE_TOP_ALL, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_top_desk", 64, 24, MODE_TOP_DESKTOP, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-desktop-shelf-top-desk", 64, 24, MODE_TOP_DESKTOP, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_custom", 64, 24, MODE_CUSTOM, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-desktop-shelf-custom", 64, 24, MODE_CUSTOM, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
@@ -528,7 +528,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_list_object_append(o, ol, 0, 0, 0.5);
    
-   ob = e_widget_button_add(evas, _("Configure Contents..."), "widget/config", _cb_configure, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Configure Contents..."), "configure", _cb_configure, cfdata, NULL);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
 
    return o;
@@ -563,29 +563,29 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    of = e_widget_frametable_add(evas, _("Layout"), 1);
    rg = e_widget_radio_group_new(&(cfdata->orient));
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_left", 24, 24, E_GADCON_ORIENT_LEFT, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-left", 24, 24, E_GADCON_ORIENT_LEFT, rg);
    e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_right", 24, 24, E_GADCON_ORIENT_RIGHT, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-right", 24, 24, E_GADCON_ORIENT_RIGHT, rg);
    e_widget_frametable_object_append(of, ob, 2, 2, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_top", 24, 24, E_GADCON_ORIENT_TOP, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-top", 24, 24, E_GADCON_ORIENT_TOP, rg);
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_bottom", 24, 24, E_GADCON_ORIENT_BOTTOM, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom", 24, 24, E_GADCON_ORIENT_BOTTOM, rg);
    e_widget_frametable_object_append(of, ob, 1, 4, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_top_left", 24, 24, E_GADCON_ORIENT_CORNER_TL, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-left", 24, 24, E_GADCON_ORIENT_CORNER_TL, rg);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_top_right", 24, 24, E_GADCON_ORIENT_CORNER_TR, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-right", 24, 24, E_GADCON_ORIENT_CORNER_TR, rg);
    e_widget_frametable_object_append(of, ob, 2, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_bottom_left", 24, 24, E_GADCON_ORIENT_CORNER_BL, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-left", 24, 24, E_GADCON_ORIENT_CORNER_BL, rg);
    e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_bottom_right", 24, 24, E_GADCON_ORIENT_CORNER_BR, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-right", 24, 24, E_GADCON_ORIENT_CORNER_BR, rg);
    e_widget_frametable_object_append(of, ob, 2, 4, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_left_top", 24, 24, E_GADCON_ORIENT_CORNER_LT, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-left-top", 24, 24, E_GADCON_ORIENT_CORNER_LT, rg);
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_right_top", 24, 24, E_GADCON_ORIENT_CORNER_RT, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-right-top", 24, 24, E_GADCON_ORIENT_CORNER_RT, rg);
    e_widget_frametable_object_append(of, ob, 2, 1, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_left_bottom", 24, 24, E_GADCON_ORIENT_CORNER_LB, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-left-bottom", 24, 24, E_GADCON_ORIENT_CORNER_LB, rg);
    e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_position_right_bottom", 24, 24, E_GADCON_ORIENT_CORNER_RB, rg);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-right-bottom", 24, 24, E_GADCON_ORIENT_CORNER_RB, rg);
    e_widget_frametable_object_append(of, ob, 2, 3, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
    
@@ -633,7 +633,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
    
-   ob = e_widget_button_add(evas, _("Configure Contents..."), "widget/config", _cb_configure, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Configure Contents..."), "configure", _cb_configure, cfdata, NULL);
    e_widget_list_object_append(o2, ob, 0, 0, 0.5);
    
    e_widget_list_object_append(o, o2, 0, 0, 0.0);

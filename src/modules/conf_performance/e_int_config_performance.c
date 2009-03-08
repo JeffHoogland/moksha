@@ -39,7 +39,7 @@ e_int_config_performance(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Performance Settings"),
 			    "E", "_config_performance_dialog",
-			     "enlightenment/performance", 0, v, NULL);
+			     "preferences-system-performance", 0, v, NULL);
    return cfd;
 }
 

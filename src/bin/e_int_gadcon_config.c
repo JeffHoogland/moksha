@@ -56,7 +56,7 @@ _e_int_gadcon_config(E_Gadcon *gc, const char *title)
    v->basic.create_widgets = _basic_create;
 
    cfd = e_config_dialog_new(con, title, "E", "_gadcon_config_dialog", 
-                             "enlightenment/shelf", 0, v, gc);
+                             "preferences-desktop-shelf", 0, v, gc);
    gc->config_dialog = cfd;
    e_dialog_resizable_set(cfd->dia, 1);
 }
