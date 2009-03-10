@@ -38,18 +38,18 @@ _e_configure_efreet_desktop_update(void)
 
    /* remove anything with a desktop entry */
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
-	  {
-	     E_Configure_It *eci;
+     {
+	E_Configure_It *eci;
 	Eina_List *ll;
-	     
+
 	EINA_LIST_FOREACH(ecat->items, ll, eci)
-	     if (eci->desktop)
-	       {
-		  snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
-		  remove_items = eina_list_append(remove_items, strdup(buf));
-		  remove_cats = eina_list_append(remove_cats, strdup(ecat->cat));
-	       }
-	  }
+	  if (eci->desktop)
+	    {
+	       snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
+	       remove_items = eina_list_append(remove_items, strdup(buf));
+	       remove_cats = eina_list_append(remove_cats, strdup(ecat->cat));
+	    }
+     }
    EINA_LIST_FREE(remove_items, data)
      {
 	e_configure_registry_item_del(data);
@@ -60,12 +60,12 @@ _e_configure_efreet_desktop_update(void)
 	e_configure_registry_category_del(data);
 	free(data);
      }
-   
+
    /* get desktops */
    settings_desktops = efreet_util_desktop_category_list("Settings");
    system_desktops = efreet_util_desktop_category_list("System");
    if ((!settings_desktops) || (!system_desktops)) return;
-   
+
    /* get ones in BOTH lists */
    EINA_LIST_FOREACH(settings_desktops, l, desktop)
      {
@@ -77,7 +77,7 @@ _e_configure_efreet_desktop_update(void)
 	char *cfg_icon;
 	char *label;
 	int cfg_pri;
-	
+
 	if (!eina_list_data_find(system_desktops, desktop)) continue;
 	cfg_cat = NULL;
 	cfg_icon = NULL;
@@ -116,14 +116,14 @@ _e_configure_efreet_desktop_update(void)
 	if (!cfg_cat_cfg)
 	  {
 	     char *ic;
-	     
+
 	     snprintf(buf, sizeof(buf), "system/%s", label);
 	     cfg_cat_cfg = buf;
 	     ic = cfg_cat_icon;
 	     if (!ic) ic = "enlightenment/system";
 	     e_configure_registry_category_add("system",
 					       1000, _("System"),
-					       NULL, 
+					       NULL,
 					       ic);
 	  }
 	else
@@ -136,7 +136,7 @@ _e_configure_efreet_desktop_update(void)
 		    cfg_cat_name = cfg_cat;
 		  e_configure_registry_category_add(cfg_cat,
 						    1000, cfg_cat_name,
-						    NULL, 
+						    NULL,
 						    cfg_cat_icon);
 		  free(cfg_cat);
 		  cfg_cat = NULL;
@@ -172,14 +172,14 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
    char *cat;
    const char *item;
    E_Configure_It *eci;
-   
+
    /* path is "category/item" */
    cat = ecore_file_dir_get(path);
    if (!cat) return;
    item = ecore_file_file_get(path);
    eci = E_NEW(E_Configure_It, 1);
    if (!eci) goto done;
-   
+
    eci->item = eina_stringshare_add(item);
    eci->pri = pri;
    eci->label = eina_stringshare_add(label);
@@ -189,20 +189,20 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
    eci->generic_func = generic_func;
    eci->desktop = desktop;
    if (eci->desktop) efreet_desktop_ref(eci->desktop);
-   
+
    for (l = e_configure_registry; l; l = l->next)
      {
 	E_Configure_Cat *ecat;
-	
+
 	ecat = l->data;
 	if (!strcmp(cat, ecat->cat))
 	  {
 	     Eina_List *ll;
-	     
+
 	     for (ll = ecat->items; ll; ll = ll->next)
 	       {
 		  E_Configure_It *eci2;
-		  
+
 		  eci2 = ll->data;
 		  if (eci2->pri > eci->pri)
 		    {
@@ -214,7 +214,7 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
 	     goto done;
 	  }
      }
-   done:
+ done:
    free(cat);
 }
 
