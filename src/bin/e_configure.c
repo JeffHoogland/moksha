@@ -237,33 +237,33 @@ e_configure_registry_item_del(const char *path)
    Eina_List *l;
    const char *item;
    char *cat;
-   
+
    /* path is "category/item" */
    cat = ecore_file_dir_get(path);
    if (!cat) return;
    item = ecore_file_file_get(path);
-	
-   EINA_LIST_FOREACH(e_configure_registry, l, ecat)
-	if (!strcmp(cat, ecat->cat))
-	  {
-		  E_Configure_It *eci;
-	  Eina_List *ll;
-		  
-	  EINA_LIST_FOREACH(ecat->items, ll, eci)
-		  if (!strcmp(item, eci->item))
-		    {
-		       ecat->items = eina_list_remove_list(ecat->items, ll);
 
-		       eina_stringshare_del(eci->item);
-		       eina_stringshare_del(eci->label);
-		       eina_stringshare_del(eci->icon);
-		       if (eci->icon_file) eina_stringshare_del(eci->icon_file);
-		       if (eci->desktop) efreet_desktop_free(eci->desktop);
-		       free(eci);
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat)
+     if (!strcmp(cat, ecat->cat))
+       {
+	  E_Configure_It *eci;
+	  Eina_List *ll;
+
+	  EINA_LIST_FOREACH(ecat->items, ll, eci)
+	    if (!strcmp(item, eci->item))
+	      {
+		 ecat->items = eina_list_remove_list(ecat->items, ll);
+
+		 eina_stringshare_del(eci->item);
+		 eina_stringshare_del(eci->label);
+		 eina_stringshare_del(eci->icon);
+		 if (eci->icon_file) eina_stringshare_del(eci->icon_file);
+		 if (eci->desktop) efreet_desktop_free(eci->desktop);
+		 free(eci);
 		 break;
-	  }
+	      }
 	  break;
-     }
+       }
 
    free(cat);
 }
@@ -277,22 +277,22 @@ e_configure_registry_category_add(const char *path, int pri, const char *label, 
 
    /* if it exists - ignore this */
    EINA_LIST_FOREACH(e_configure_registry, l, ecat2)
-	if (!strcmp(ecat2->cat, path)) return;
-   
+     if (!strcmp(ecat2->cat, path)) return;
+
    ecat = E_NEW(E_Configure_Cat, 1);
    if (!ecat) return;
-   
+
    ecat->cat = eina_stringshare_add(path);
    ecat->pri = pri;
    ecat->label = eina_stringshare_add(label);
    if (icon_file) ecat->icon_file = eina_stringshare_add(icon_file);
    if (icon) ecat->icon = eina_stringshare_add(icon);
    EINA_LIST_FOREACH(e_configure_registry, l, ecat2)
-	if (ecat2->pri > ecat->pri)
-	  {
-	     e_configure_registry = eina_list_prepend_relative_list(e_configure_registry, ecat, l);
-	     return;
-	  }
+     if (ecat2->pri > ecat->pri)
+       {
+	  e_configure_registry = eina_list_prepend_relative_list(e_configure_registry, ecat, l);
+	  return;
+       }
    e_configure_registry = eina_list_append(e_configure_registry, ecat);
 }
 
@@ -302,21 +302,21 @@ e_configure_registry_category_del(const char *path)
    E_Configure_Cat *ecat;
    Eina_List *l;
    char *cat;
-   
+
    cat = ecore_file_dir_get(path);
    if (!cat) return;
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
-        if (!strcmp(cat, ecat->cat))
-	  {
+     if (!strcmp(cat, ecat->cat))
+       {
 	  if (ecat->items) break;
-	     e_configure_registry = eina_list_remove_list(e_configure_registry, l);
-	     eina_stringshare_del(ecat->cat);
-	     eina_stringshare_del(ecat->label);
-	     if (ecat->icon) eina_stringshare_del(ecat->icon);
-	     if (ecat->icon_file) eina_stringshare_del(ecat->icon_file);
-	     free(ecat);
+	  e_configure_registry = eina_list_remove_list(e_configure_registry, l);
+	  eina_stringshare_del(ecat->cat);
+	  eina_stringshare_del(ecat->label);
+	  if (ecat->icon) eina_stringshare_del(ecat->icon);
+	  if (ecat->icon_file) eina_stringshare_del(ecat->icon_file);
+	  free(ecat);
 	  break;
-     }
+       }
 
    free(cat);
 }
@@ -333,37 +333,37 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
    Eina_List *l;
    char *cat;
    const char *item;
-   
+
    /* path is "category/item" */
    cat = ecore_file_dir_get(path);
    if (!cat) return;
    item = ecore_file_file_get(path);
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
-	if (!strcmp(cat, ecat->cat))
-	  {
-		  E_Configure_It *eci;
+     if (!strcmp(cat, ecat->cat))
+       {
+	  E_Configure_It *eci;
 	  Eina_List *ll;
-		  
+
 	  EINA_LIST_FOREACH(ecat->items, ll, eci)
-		  if (!strcmp(item, eci->item))
-		    {
-		       if (eci->func) eci->func(con, params);
-		       else if (eci->generic_func) eci->generic_func(con, params);
-		       else if (eci->desktop)
-			 {
-			    if (custom_desktop_exec.func)
-			      custom_desktop_exec.func(custom_desktop_exec.data,
-						       con,
-						       params,
-						       eci->desktop);
-			    else
-			      e_exec(e_util_zone_current_get(con->manager),
-				     eci->desktop, NULL, NULL, "config");
-			 }
+	    if (!strcmp(item, eci->item))
+	      {
+		 if (eci->func) eci->func(con, params);
+		 else if (eci->generic_func) eci->generic_func(con, params);
+		 else if (eci->desktop)
+		   {
+		      if (custom_desktop_exec.func)
+			custom_desktop_exec.func(custom_desktop_exec.data,
+						 con,
+						 params,
+						 eci->desktop);
+		      else
+			e_exec(e_util_zone_current_get(con->manager),
+			       eci->desktop, NULL, NULL, "config");
+		   }
 		 break;
-	  }
+	      }
 	  break;
-     }
+       }
 
    free(cat);
 }
@@ -384,30 +384,30 @@ e_configure_registry_exists(const char *path)
    char *cat;
    const char *item;
    int ret = 0;
-   
+
    /* path is "category/item" */
    cat = ecore_file_dir_get(path);
    if (!cat) return 0;
    item = ecore_file_file_get(path);
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
-	if (!strcmp(cat, ecat->cat))
-	  {
+     if (!strcmp(cat, ecat->cat))
+       {
 	  E_Configure_It *eci;
-	     Eina_List *ll;
+	  Eina_List *ll;
 
-	     if (!item)
-	       {
-		  ret = 1;
+	  if (!item)
+	    {
+	       ret = 1;
 	       break;
-	       }
+	    }
 	  EINA_LIST_FOREACH(ecat->items, ll, eci)
-		  if (!strcmp(item, eci->item))
-		    {
-		       ret = 1;
+	    if (!strcmp(item, eci->item))
+	      {
+		 ret = 1;
 		 break;
-		    }
+	      }
 	  break;
-	       }
+       }
 
    free(cat);
    return ret;
