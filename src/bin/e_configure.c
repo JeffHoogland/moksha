@@ -172,6 +172,7 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
    char *cat;
    const char *item;
    E_Configure_It *eci;
+   E_Configure_Cat *ecat;
 
    /* path is "category/item" */
    cat = ecore_file_dir_get(path);
@@ -190,30 +191,22 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
    eci->desktop = desktop;
    if (eci->desktop) efreet_desktop_ref(eci->desktop);
 
-   for (l = e_configure_registry; l; l = l->next)
-     {
-	E_Configure_Cat *ecat;
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat)
+     if (!strcmp(cat, ecat->cat))
+       {
+	  E_Configure_It *eci2;
+	  Eina_List *ll;
 
-	ecat = l->data;
-	if (!strcmp(cat, ecat->cat))
-	  {
-	     Eina_List *ll;
+	  EINA_LIST_FOREACH(ecat->items, ll, eci2)
+	    if (eci2->pri > eci->pri)
+	      {
+		 ecat->items = eina_list_prepend_relative_list(ecat->items, eci, ll);
+		 goto done;
+	      }
+	  ecat->items = eina_list_append(ecat->items, eci);
+	  goto done;
+       }
 
-	     for (ll = ecat->items; ll; ll = ll->next)
-	       {
-		  E_Configure_It *eci2;
-
-		  eci2 = ll->data;
-		  if (eci2->pri > eci->pri)
-		    {
-		       ecat->items = eina_list_prepend_relative_list(ecat->items, eci, ll);
-		       goto done;
-		    }
-	       }
-	     ecat->items = eina_list_append(ecat->items, eci);
-	     goto done;
-	  }
-     }
  done:
    free(cat);
 }
