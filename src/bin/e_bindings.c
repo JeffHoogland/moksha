@@ -610,9 +610,13 @@ EAPI E_Action *
 e_bindings_edge_in_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Zone_Edge *ev)
 {
    E_Binding_Modifier mod = 0;
+   E_Desk *current = NULL;
    E_Action *act = NULL;
    Eina_List *l;
    
+   current = e_desk_at_xy_get(ev->zone, ev->zone->desk_x_current, ev->zone->desk_y_current);
+   if (current->fullscreen_borders && (!e_config->fullscreen_flip)) return NULL;
+
    if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
    if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
    if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;

@@ -1153,7 +1153,6 @@ ACT_FN_GO_EDGE(desk_flip_in_direction)
    wev = E_NEW(E_Event_Pointer_Warp, 1);
    if ((!wev) || (!zone)) return;
    prev = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current);
-   if (prev->fullscreen_borders && (!e_config->fullscreen_flip)) return;
    ecore_x_pointer_xy_get(zone->container->win, &x, &y);
    wev->prev.x = x;
    wev->prev.y = y;

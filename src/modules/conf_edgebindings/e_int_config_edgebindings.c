@@ -77,6 +77,9 @@ struct _E_Config_Dialog_Data
      } gui;
 
    const char *params;
+
+   int fullscreen_flip;
+
    E_Config_Dialog *cfd;
 };
 
@@ -137,6 +140,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
 	cfdata->binding.edge = eina_list_append(cfdata->binding.edge, bi2);
      }
+
+   cfdata->fullscreen_flip = e_config->fullscreen_flip;
 }
 
 static void *
@@ -215,6 +220,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_bindings_edge_add(bi->context, bi->edge, bi->modifiers, bi->any_mod,
 			   bi->action, bi->params, bi->delay);
      }
+   e_config->fullscreen_flip = cfdata->fullscreen_flip;
+
    e_config_save_queue();
 
    return 1;
@@ -223,15 +230,16 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *ot, *of, *ob;
+   Evas_Object *o, *ol, *ot, *of, *ob;
 
    cfdata->evas = evas;
-   o = e_widget_list_add(evas, 0, 1);
+   o = e_widget_list_add(evas, 0, 0);
+   ol = e_widget_list_add(evas, 0, 1);
    
    of = e_widget_frametable_add(evas, _("Edge Bindings"), 0);
    ob = e_widget_ilist_add(evas, 32, 32, &(cfdata->locals.binding));
    cfdata->gui.o_binding_list = ob;   
-   e_widget_min_size_set(ob, 200, 200);
+   e_widget_min_size_set(ob, 200, 160);
    e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
    ob = e_widget_button_add(evas, _("Add Edge"), NULL, _add_edge_binding_cb, cfdata, NULL);
    cfdata->gui.o_add = ob;
@@ -250,13 +258,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Restore Default Bindings"), "enlightenment/e", _restore_edge_binding_defaults_cb, cfdata, NULL);
    e_widget_frametable_object_append(of, ob, 0, 3, 2, 1, 1, 0, 1, 0);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
    
    ot = e_widget_table_add(evas, 0);
    of = e_widget_framelist_add(evas, _("Action"), 0);
    ob = e_widget_ilist_add(evas, 24, 24, &(cfdata->locals.action));
    cfdata->gui.o_action_list = ob;
-   e_widget_min_size_set(ob, 200, 280);
+   e_widget_min_size_set(ob, 200, 240);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
    
@@ -266,7 +274,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_disabled_set(ob, 1);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 0);
-   e_widget_list_object_append(o, ot, 1, 1, 0.5);
+   e_widget_list_object_append(ol, ot, 1, 1, 0.5);
+
+   e_widget_list_object_append(o, ol, 1, 1, 0.5);
+
+   of = e_widget_framelist_add(evas, _("General Options"), 0);
+   ob = e_widget_check_add(evas, _("Allow binding activation with fullscreen windows"), &(cfdata->fullscreen_flip));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    _update_edge_binding_list(cfdata);
    _fill_actions_list(cfdata);

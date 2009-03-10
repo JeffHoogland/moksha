@@ -23,7 +23,6 @@ struct _E_Config_Dialog_Data
    /*- ADVANCED -*/
    int edge_flip_dragging;
    int flip_wrap;
-   int fullscreen_flip;
    int flip_mode;
    int flip_interp;
    double flip_speed;
@@ -66,7 +65,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->flip_animate = e_config->desk_flip_animate_mode > 0;
    cfdata->edge_flip_dragging = e_config->edge_flip_dragging;
    cfdata->flip_wrap = e_config->desk_flip_wrap;
-   cfdata->fullscreen_flip = e_config->fullscreen_flip;
    cfdata->flip_mode = e_config->desk_flip_animate_mode;
    cfdata->flip_interp = e_config->desk_flip_animate_interpolation;
    cfdata->flip_speed = e_config->desk_flip_animate_time;
@@ -162,7 +160,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    e_config->edge_flip_dragging = cfdata->edge_flip_dragging;
    e_config->desk_flip_wrap = cfdata->flip_wrap;
-   e_config->fullscreen_flip = cfdata->fullscreen_flip;
 
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -237,8 +234,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_check_add(evas, _("Flip when dragging objects to the screen edge"), &(cfdata->edge_flip_dragging));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Wrap desktops around when flipping"), &(cfdata->flip_wrap));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Allow flipping with fullscreen windows"), &(cfdata->fullscreen_flip));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ott, of, 1, 0, 1, 1, 1, 0, 1, 0);
    
