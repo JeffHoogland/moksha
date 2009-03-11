@@ -72,9 +72,9 @@ struct _Instance
    struct {
       int             ifmode;
       int             ifmode_tmp;
-      char           *ifpath;
-      char           *ifpath_tmp;
-      char           *bssid;
+      const char     *ifpath;
+      const char     *ifpath_tmp;
+      const char     *bssid;
       char           *sec;
       Conf_Network   *cfnet, *cfnet_new;
       Conf_Interface *cfif;
@@ -269,11 +269,8 @@ if_get(Instance *inst)
      iface = iface_find(inst->config.ifpath);
    else
      {
-	for (l = ifaces; l; l = l->next)
-	  {
-	     iface = l->data;
-	     if (inst_if_matches(inst, iface)) return iface;
-	  }
+	EINA_LIST_FOREACH(ifaces, l, iface)
+	  if (inst_if_matches(inst, iface)) return iface;
      }
    return iface;
 }
@@ -329,7 +326,7 @@ net_join(Instance *inst, Interface *iface, Conf_Network *cfnet)
 
 #define STR_SHARE(x) \
 do { char *___s; ___s = (x); \
-   if (___s) { (x) = eina_stringshare_add(___s); free(___s); } \
+   if (___s) { (x) = (char *)eina_stringshare_add(___s); free(___s); }	\
 } while (0);
 
 #define STR_UNSHARE(x) \
@@ -561,7 +558,8 @@ netlist_dialog_show(Instance *inst)
    net_dialog_hide(inst);
    manual_dialog_hide(inst);
    if_dialog_hide(inst);
-   E_FREE(inst->config.ifpath);
+   eina_stringshare_del(inst->config.ifpath);
+   inst->config.ifpath = NULL;
 }
 
 static void
@@ -586,7 +584,7 @@ if_dialog_cb_ok(void *data, E_Dialog *dialog)
 
    inst = data;
    if_dialog_hide(inst);
-   E_FREE(inst->config.ifpath);
+   eina_stringshare_del(inst->config.ifpath);
    inst->config.ifmode = inst->config.ifmode_tmp;
    inst->config.ifpath = inst->config.ifpath_tmp;
    inst->config.ifpath_tmp = NULL;
@@ -598,8 +596,7 @@ if_dialog_cb_ok(void *data, E_Dialog *dialog)
 	     eina_stringshare_del(inst->config.cfif->ifpath);
 	     inst->config.cfif->ifpath = NULL;
 	  }
-	if (inst->config.ifpath)
-	  inst->config.cfif->ifpath = eina_stringshare_add(inst->config.ifpath);
+	inst->config.cfif->ifpath = eina_stringshare_ref(inst->config.ifpath);
 	inst->config.cfif->ifmode = inst->config.ifmode;
      }
    popup_ifnet_nets_refresh(inst);
@@ -613,7 +610,8 @@ if_dialog_cb_cancel(void *data, E_Dialog *dialog)
 
    inst = data;
    if_dialog_hide(inst);
-   E_FREE(inst->config.ifpath_tmp);
+   eina_stringshare_del(inst->config.ifpath_tmp);
+   inst->config.ifpath_tmp = NULL;
 }
 
 static void
@@ -625,7 +623,8 @@ if_dialog_cb_del(E_Win *win)
    dialog = win->data;
    inst = dialog->data;
    if_dialog_hide(inst);
-   E_FREE(inst->config.ifpath_tmp);
+   eina_stringshare_del(inst->config.ifpath_tmp);
+   inst->config.ifpath_tmp = NULL;
 }
 
 static void
@@ -637,7 +636,8 @@ if_radio_cb_generic(void *data, Evas_Object *obj, void *event_info)
    if (inst->config.ifmode != 2)
      {
 	e_widget_ilist_unselect(inst->if_ilist_obj);
-	E_FREE(inst->config.ifpath);
+	eina_stringshare_del(inst->config.ifpath);
+	inst->config.ifpath = NULL;
      }
 }
 
@@ -748,10 +748,7 @@ if_dialog_show(Instance *inst)
    inst->if_radio_device = o;
    e_widget_framelist_object_append(flist, o);
 
-   if (inst->config.ifpath)
-     inst->config.ifpath_tmp = strdup(inst->config.ifpath);
-   else
-     inst->config.ifpath_tmp = NULL;
+   inst->config.ifpath_tmp = eina_stringshare_ref(inst->config.ifpath);
    ilist = e_widget_ilist_add(evas, 48, 48, &(inst->config.ifpath_tmp));
    inst->if_ilist_obj = ilist;
 

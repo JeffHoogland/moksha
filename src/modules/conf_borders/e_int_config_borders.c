@@ -14,7 +14,7 @@ struct _E_Config_Dialog_Data
 {
    E_Border *border;
    E_Container *container;
-   char *bordername;
+   const char *bordername;
    int remember_border;
 };
 
@@ -97,10 +97,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	  {
 	     cfdata->remember_border = 1;
 	  }
-	cfdata->bordername = strdup(cfdata->border->client.border.name);
+	cfdata->bordername = eina_stringshare_add(cfdata->border->client.border.name);
      }
    else
-     cfdata->bordername = strdup(e_config->theme_default_border_style);
+     cfdata->bordername = eina_stringshare_add(e_config->theme_default_border_style);
 }
 
 static void 
@@ -109,7 +109,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (cfdata->border) 
      cfdata->border->border_border_dialog = NULL;
 
-   E_FREE(cfdata->bordername);
+   eina_stringshare_del(cfdata->bordername);
    E_FREE(cfdata);
 }
 
@@ -131,9 +131,8 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__,
      _basic_apply_border(cfdata);
    else if (cfdata->container)
      {
-	if (e_config->theme_default_border_style)
-	  eina_stringshare_del(e_config->theme_default_border_style);
-	e_config->theme_default_border_style = eina_stringshare_add(cfdata->bordername);
+	eina_stringshare_del(e_config->theme_default_border_style);
+	e_config->theme_default_border_style = eina_stringshare_ref(cfdata->bordername);
 	/* FIXME: Should this trigger an E Restart to reset all borders ? */
      }
    e_config_save_queue();
@@ -145,8 +144,8 @@ _basic_apply_border(E_Config_Dialog_Data *cfdata)
 {
    if ((!cfdata->border->lock_border) && (!cfdata->border->shaded)) 
      {
-	if (cfdata->border->bordername) eina_stringshare_del(cfdata->border->bordername);
-	cfdata->border->bordername = eina_stringshare_add(cfdata->bordername);
+	eina_stringshare_del(cfdata->border->bordername);
+	cfdata->border->bordername = eina_stringshare_ref(cfdata->bordername);
 	cfdata->border->client.border.changed = 1;
 	cfdata->border->changed = 1;
      }

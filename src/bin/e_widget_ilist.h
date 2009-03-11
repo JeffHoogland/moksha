@@ -6,7 +6,7 @@
 #ifndef E_WIDGET_ILIST_H
 #define E_WIDGET_ILIST_H
 
-EAPI Evas_Object *e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value);
+EAPI Evas_Object *e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, const char **value);
 EAPI void         e_widget_ilist_freeze(Evas_Object *obj);
 EAPI void         e_widget_ilist_thaw(Evas_Object *obj);
 EAPI void         e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, void (*func) (void *data), void *data, const char *val);

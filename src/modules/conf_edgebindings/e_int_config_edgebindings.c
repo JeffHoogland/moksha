@@ -60,7 +60,8 @@ struct _E_Config_Dialog_Data
      } binding;
    struct
      {
-	char *binding, *action, *params;
+	const char *binding, *action;
+	char *params;
 	const char *cur;
 	double delay;
 	int cur_act, add;
@@ -113,20 +114,19 @@ e_int_config_edgebindings(E_Container *con, const char *params)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *l = NULL;
    E_Config_Binding_Edge *bi, *bi2;
+   Eina_List *l;
 
-   cfdata->locals.action = strdup("");
    cfdata->locals.params = strdup("");
-   cfdata->locals.binding = strdup("");
+   cfdata->locals.action = eina_stringshare_add("");
+   cfdata->locals.binding = eina_stringshare_add("");
    cfdata->locals.cur = NULL;
    cfdata->locals.dia = NULL;
    cfdata->locals.delay = 0.3;
    cfdata->binding.edge = NULL;
 
-   for (l = e_config->edge_bindings; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->edge_bindings, l, bi)
      {
-	bi = l->data;
 	if (!bi) continue;
 
 	bi2 = E_NEW(E_Config_Binding_Edge, 1);
@@ -135,8 +135,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	bi2->modifiers = bi->modifiers;
 	bi2->any_mod = bi->any_mod;
 	bi2->delay = bi->delay;
-	bi2->action = bi->action == NULL ? NULL : eina_stringshare_add(bi->action);
-	bi2->params = bi->params == NULL ? NULL : eina_stringshare_add(bi->params);
+	bi2->action = eina_stringshare_ref(bi->action);
+	bi2->params = eina_stringshare_ref(bi->params);
 
 	cfdata->binding.edge = eina_list_append(cfdata->binding.edge, bi2);
      }
@@ -161,20 +161,19 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Binding_Edge *bi;
 
-   while (cfdata->binding.edge)
+   EINA_LIST_FREE(cfdata->binding.edge, bi)
      {
-	bi = cfdata->binding.edge->data;
-	if (bi->action) eina_stringshare_del(bi->action);
-	if (bi->params) eina_stringshare_del(bi->params);
+	eina_stringshare_del(bi->action);
+	eina_stringshare_del(bi->params);
 	E_FREE(bi);
-	cfdata->binding.edge = eina_list_remove_list(cfdata->binding.edge, cfdata->binding.edge);
      }
 
-   if (cfdata->locals.cur) eina_stringshare_del(cfdata->locals.cur);
-   if (cfdata->locals.binding) free(cfdata->locals.binding);
-   if (cfdata->locals.action) free(cfdata->locals.action);
+   eina_stringshare_del(cfdata->locals.cur);
+   eina_stringshare_del(cfdata->params);
+   eina_stringshare_del(cfdata->locals.binding);
+   eina_stringshare_del(cfdata->locals.action);
+
    if (cfdata->locals.params) free(cfdata->locals.params);
-   if (cfdata->params) eina_stringshare_del(cfdata->params);
    E_FREE(cfdata);
 }
 
@@ -186,23 +185,17 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    _auto_apply_changes(cfdata);
 
-   while (e_config->edge_bindings)
+   EINA_LIST_FREE(e_config->edge_bindings, bi)
      {
-	bi = e_config->edge_bindings->data;
 	e_bindings_edge_del(bi->context, bi->edge, bi->modifiers, bi->any_mod, 
 			   bi->action, bi->params, bi->delay);
-	e_config->edge_bindings =
-	   eina_list_remove_list(e_config->edge_bindings, e_config->edge_bindings);
-
-	if (bi->action) eina_stringshare_del(bi->action);
-	if (bi->params) eina_stringshare_del(bi->params);
+	eina_stringshare_del(bi->action);
+	eina_stringshare_del(bi->params);
 	E_FREE(bi);
      }
 
-   for (l = cfdata->binding.edge; l; l = l->next)
+   EINA_LIST_FOREACH(cfdata->binding.edge, l, bi2)
      {
-	bi2 = l->data;
-
 	if (bi2->edge < 0) continue;
 
 	bi = E_NEW(E_Config_Binding_Edge, 1);
@@ -382,7 +375,7 @@ _binding_change_cb(void *data)
 
    if ((!cfdata->locals.binding) || (!cfdata->locals.binding[0])) return; 
 
-   cfdata->locals.cur = eina_stringshare_add(cfdata->locals.binding);
+   cfdata->locals.cur = eina_stringshare_ref(cfdata->locals.binding);
 
    _update_buttons(cfdata);
    _update_action_list(cfdata);
@@ -405,17 +398,14 @@ _delete_all_edge_binding_cb(void *data, void *data2)
 
    cfdata = data;
 
-   while (cfdata->binding.edge)
+   EINA_LIST_FREE(cfdata->binding.edge, bi)
      {
-	bi = cfdata->binding.edge->data;
-	if (bi->action) eina_stringshare_del(bi->action);
-	if (bi->params) eina_stringshare_del(bi->params);
+	eina_stringshare_del(bi->action);
+	eina_stringshare_del(bi->params);
 	E_FREE(bi);
-
-	cfdata->binding.edge = eina_list_remove_list(cfdata->binding.edge, cfdata->binding.edge);
      }
 
-   if (cfdata->locals.cur) eina_stringshare_del(cfdata->locals.cur);
+   eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
 
    e_widget_ilist_clear(cfdata->gui.o_binding_list);
@@ -447,10 +437,11 @@ _delete_edge_binding_cb(void *data, void *data2)
 
 	if (l)
 	  {
-	     bi = l->data;
-	     if (bi->action) eina_stringshare_del(bi->action);
-	     if (bi->params) eina_stringshare_del(bi->params);
+	     bi = eina_list_data_get(l);
+	     eina_stringshare_del(bi->action);
+	     eina_stringshare_del(bi->params);
 	     E_FREE(bi);
+
 	     cfdata->binding.edge = eina_list_remove_list(cfdata->binding.edge, l);
 	  }
      }
@@ -460,12 +451,12 @@ _delete_edge_binding_cb(void *data, void *data2)
    if (sel >= e_widget_ilist_count(cfdata->gui.o_binding_list))
      sel = e_widget_ilist_count(cfdata->gui.o_binding_list) - 1;
 
-   if (cfdata->locals.cur) eina_stringshare_del(cfdata->locals.cur);
-   cfdata->locals.cur = NULL; 
+   eina_stringshare_del(cfdata->locals.cur);
+   cfdata->locals.cur = NULL;
    
    e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel);
    if (sel < 0)
-     { 
+     {
 	e_widget_ilist_unselect(cfdata->gui.o_action_list);
 	e_widget_entry_clear(cfdata->gui.o_params);
 	e_widget_disabled_set(cfdata->gui.o_params, 1);
@@ -480,13 +471,11 @@ _restore_edge_binding_defaults_cb(void *data, void *data2)
 
    cfdata = data;
 
-   while (cfdata->binding.edge)
+   EINA_LIST_FREE(cfdata->binding.edge, bi)
      {
-	bi = cfdata->binding.edge->data;
-	if (bi->action) eina_stringshare_del(bi->action);
-	if (bi->params) eina_stringshare_del(bi->params);
+	eina_stringshare_del(bi->action);
+	eina_stringshare_del(bi->params);
 	E_FREE(bi);
-	cfdata->binding.edge = eina_list_remove_list(cfdata->binding.edge, cfdata->binding.edge);
      }
 
 #define CFG_EDGEBIND_DFLT(_context, _edge, _modifiers, _anymod, _action, _params, _delay) \
@@ -496,8 +485,8 @@ _restore_edge_binding_defaults_cb(void *data, void *data2)
    bi->modifiers = _modifiers; \
    bi->any_mod = _anymod; \
    bi->delay = _delay; \
-   bi->action = _action == NULL ? NULL : eina_stringshare_add(_action); \
-   bi->params = _params == NULL ? NULL : eina_stringshare_add(_params); \
+   bi->action = eina_stringshare_add(_action); \
+   bi->params = eina_stringshare_add(_params); \
    cfdata->binding.edge = eina_list_append(cfdata->binding.edge, bi)
 
    CFG_EDGEBIND_DFLT(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_LEFT,
@@ -508,8 +497,8 @@ _restore_edge_binding_defaults_cb(void *data, void *data2)
       	 0, 0, "desk_flip_in_direction", NULL, 0.3);
    CFG_EDGEBIND_DFLT(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_BOTTOM,
       	 0, 0, "desk_flip_in_direction", NULL, 0.3);
-   
-   if (cfdata->locals.cur) eina_stringshare_del(cfdata->locals.cur);
+
+   eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
 
    _update_edge_binding_list(cfdata);
@@ -570,8 +559,8 @@ _update_action_list(E_Config_Dialog_Data *cfdata)
    else
      { 
 	e_widget_ilist_unselect(cfdata->gui.o_action_list);
-	if (cfdata->locals.action) free(cfdata->locals.action);
-	cfdata->locals.action = strdup("");
+	eina_stringshare_del(cfdata->locals.action);
+	cfdata->locals.action = eina_stringshare_add("");
 	e_widget_entry_clear(cfdata->gui.o_params);
      }
 
@@ -994,35 +983,34 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
    Eina_List *l;
    char *label;
    int found = 0, n = -1;
-   
+
    if (cfdata->locals.add)
      {
-	found = 0;
-	for (l = cfdata->binding.edge; l && !found; l = l->next)
-	  {
-	     bi = l->data;
-	     if ((bi->modifiers == cfdata->locals.modifiers) &&
-	         (bi->edge == cfdata->locals.edge) &&
-		 ((bi->delay * 1000) == (cfdata->locals.delay * 1000)))
+	EINA_LIST_FOREACH(cfdata->binding.edge, l, bi)
+	  if ((bi->modifiers == cfdata->locals.modifiers) &&
+	      (bi->edge == cfdata->locals.edge) &&
+	      ((bi->delay * 1000) == (cfdata->locals.delay * 1000)))
+	    {
 	       found = 1;
-	  }
+	       break;
+	    }
      }
    else
      {
 	if (cfdata->locals.cur && cfdata->locals.cur[0] &&
 	      (sscanf(cfdata->locals.cur, "e%d", &n) == 1))
-	  { 
-	     found = 0; 
+	  {
 	     bi = eina_list_nth(cfdata->binding.edge, n);
-
-	     for (l = cfdata->binding.edge; l && !found; l = l->next)
+	     EINA_LIST_FOREACH(cfdata->binding.edge, l, bi2)
 	       {
-		  bi2 = l->data;
 		  if (bi == bi2) continue;
 		  if ((bi->modifiers == cfdata->locals.modifiers) &&
 		      (bi->edge == cfdata->locals.edge) &&
 		      ((bi->delay * 1000) == (cfdata->locals.delay * 1000)))
-		    found = 1;
+		    {
+		       found = 1;
+		       break;
+		    }
 	       }
 	  }
      }
@@ -1054,18 +1042,21 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
 	       }
 	  }
 
-	if (cfdata->locals.add) 
+	if (cfdata->locals.add)
 	  {
-	     _update_edge_binding_list(cfdata);
+	     E_Config_Binding_Edge *tmp;
 
-	     for (l = cfdata->binding.edge, n = 0; l; l = l->next, n++)
+	     n = 0;
+	     _update_edge_binding_list(cfdata);
+	     EINA_LIST_FOREACH(cfdata->binding.edge, l, tmp)
 	       {
-		  if (l->data == bi) break;
+		  if (tmp == bi) break;
+		  n++;
 	       }
 	     e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n);
 	     e_widget_ilist_unselect(cfdata->gui.o_action_list);
-	     if (cfdata->locals.action) free(cfdata->locals.action);
-	     cfdata->locals.action = strdup("");
+	     eina_stringshare_del(cfdata->locals.action);
+	     cfdata->locals.action = eina_stringshare_add("");
 	     if ((cfdata->params) && (cfdata->params[0]))
 	       {
 		  int j, g = -1;
@@ -1143,12 +1134,12 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
    actd = eina_list_nth(actg->acts, a);
    if (!actd) return;
 
-   if (bi->action) eina_stringshare_del(bi->action);
+   eina_stringshare_del(bi->action);
    bi->action = NULL;
 
    if (actd->act_cmd) bi->action = eina_stringshare_add(actd->act_cmd);
 
-   if (bi->params) eina_stringshare_del(bi->params);
+   eina_stringshare_del(bi->params);
    bi->params = NULL;
 
    if (actd->act_params) 
@@ -1160,7 +1151,7 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 	  {
 	     if (!strcmp(cfdata->locals.params, TEXT_NO_PARAMS))
 	       ok = 0;
-	     
+
 	     if ((actd->param_example) && (!strcmp(cfdata->locals.params, actd->param_example)))
 	       ok = 0;
 	  }
@@ -1265,31 +1256,38 @@ _edge_binding_text_get(E_Zone_Edge edge, float delay, int mod)
 	if (b[0]) strcat(b, " + ");
 	strcat(b, _("WIN"));
      }
-   
+
    if (edge)
      {
-	char *l;
 	if (b[0]) strcat(b, " + ");
 
-	if (edge == E_ZONE_EDGE_LEFT)
-	  l = strdup("Left Edge");
-	else if (edge == E_ZONE_EDGE_TOP)
-	  l = strdup("Top Edge");
-	else if (edge == E_ZONE_EDGE_RIGHT)
-	  l = strdup("Right Edge");
-	else if (edge == E_ZONE_EDGE_BOTTOM)
-	  l = strdup("Bottom Edge");
-	else if (edge == E_ZONE_EDGE_TOP_LEFT)
-	  l = strdup("Top Left Edge");
-	else if (edge == E_ZONE_EDGE_TOP_RIGHT)
-	  l = strdup("Top Right Edge");
-	else if (edge == E_ZONE_EDGE_BOTTOM_RIGHT)
-	  l = strdup("Bottom Right Edge");
-	else if (edge == E_ZONE_EDGE_BOTTOM_LEFT)
-	  l = strdup("Bottom Left Edge");
-
-	strcat(b, l);
-	free(l);
+	switch (edge)
+	  {
+	   case E_ZONE_EDGE_LEFT:
+	      strcat(b, "Left Edge");
+	      break;
+	   case E_ZONE_EDGE_TOP:
+	      strcat(b, "Top Edge");
+	      break;
+	   case E_ZONE_EDGE_RIGHT:
+	      strcat(b, "Right Edge");
+	      break;
+	   case E_ZONE_EDGE_BOTTOM:
+	      strcat(b, "Bottom Edge");
+	      break;
+	   case E_ZONE_EDGE_TOP_LEFT:
+	      strcat(b, "Top Left Edge");
+	      break;
+	   case E_ZONE_EDGE_TOP_RIGHT:
+	      strcat(b, "Top Right Edge");
+	      break;
+	   case E_ZONE_EDGE_BOTTOM_RIGHT:
+	      strcat(b, "Bottom Right Edge");
+	      break;
+	   case E_ZONE_EDGE_BOTTOM_LEFT:
+	      strcat(b, "Bottom Left Edge");
+	      break;
+	  }
      }
 
    if (delay)

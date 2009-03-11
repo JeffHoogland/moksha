@@ -7,7 +7,7 @@
 
 struct _E_Config_Dialog_Data
 {
-   char *dir;
+   const char *dir;
    int   show_label;
    int   eap_label;
    
@@ -62,9 +62,9 @@ static void
 _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
 {
    if (ci->dir)
-     cfdata->dir = strdup(ci->dir);
+     cfdata->dir = eina_stringshare_ref(ci->dir);
    else
-     cfdata->dir = strdup("");
+     cfdata->dir = eina_stringshare_add("");
    cfdata->show_label = ci->show_label;
    cfdata->eap_label = ci->eap_label;
 }
@@ -84,7 +84,7 @@ _create_data(E_Config_Dialog *cfd)
 static void 
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   if (cfdata->dir) free(cfdata->dir);
+   if (cfdata->dir) eina_stringshare_del(cfdata->dir);
    if (cfdata->dialog_delete) e_object_del(E_OBJECT(cfdata->dialog_delete));
    ibar_config->config_dialog = NULL;
    E_FREE(cfdata);
@@ -150,7 +150,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    ci = cfd->data;
    if (ci->dir) eina_stringshare_del(ci->dir);
    ci->dir = NULL;
-   if (cfdata->dir) ci->dir = eina_stringshare_add(cfdata->dir);
+   if (cfdata->dir) ci->dir = eina_stringshare_ref(cfdata->dir);
    ci->show_label = cfdata->show_label;
    ci->eap_label = cfdata->eap_label;
    _ibar_config_update(ci);

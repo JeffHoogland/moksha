@@ -152,7 +152,7 @@ _queue_timer(void *data)
           {
              if ((wd->value) && *(wd->value))
                {
-                  free(*(wd->value));
+                  eina_stringshare_del(*(wd->value));
                   *(wd->value) = NULL;
                }
              e_ilist_unselect(wd->o_ilist);
@@ -160,13 +160,16 @@ _queue_timer(void *data)
         else if (qi->command == 6)
           {
              E_Widget_Callback *wcb;
+	     Eina_List *item;
 
              e_ilist_remove_num(wd->o_ilist, qi->item);
-             if ((wcb = eina_list_nth(wd->callbacks, qi->item)))
-               {
-                  if (wcb->value) free(wcb->value);
+	     item = eina_list_nth_list(wd->callbacks, qi->item);
+	     if (item)
+	       {
+		  wcb = eina_list_data_get(item);
+		  if (wcb && wcb->value) free(wcb->value);
                   free(wcb);
-                  wd->callbacks = eina_list_remove(wd->callbacks, wcb);
+                  wd->callbacks = eina_list_remove_list(wd->callbacks, item);
                }
           }
         else if (qi->command == 7)
@@ -260,7 +263,7 @@ _queue_clear(Evas_Object *obj)
 
 /* externally accessible functions */
 EAPI Evas_Object *
-e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value)
+e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, const char **value)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -808,9 +811,9 @@ _e_wid_cb_item_sel(void *data, void *data2)
      {
 	if (wd->value)
 	  {
-	     if (*(wd->value)) free(*(wd->value));
+	     if (*(wd->value)) eina_stringshare_del(*(wd->value));
 	     if (wcb->value)
-	       *(wd->value) = strdup(wcb->value);
+	       *(wd->value) = (char*) eina_stringshare_add(wcb->value);
 	     else
 	       *(wd->value) = NULL;
 	  }

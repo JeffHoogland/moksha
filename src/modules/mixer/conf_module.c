@@ -105,14 +105,14 @@ _basic_create_general(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data 
 	E_Mixer_Gadget_Config *conf;
 	Evas_Object *o;
 	char name[128];
-	char *card_name;
+	const char *card_name;
 
 	inst = l->data;
 	conf = inst->conf;
 
 	card_name = e_mixer_system_get_card_name(conf->card);
 	snprintf(name, sizeof(name), "%s: %s", card_name, conf->channel_name);
-	free(card_name);
+	eina_stringshare_del(card_name);
 
 	o = e_widget_radio_add(evas, name, i, ui->radio);
 	e_widget_framelist_object_append(ui->frame, o);

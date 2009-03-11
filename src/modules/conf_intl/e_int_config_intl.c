@@ -72,12 +72,12 @@ struct _E_Config_Dialog_Data
    /* Current data */
    char	*cur_language;
 
-   char *cur_blang;
+   const char *cur_blang;
 
-   char *cur_lang;
-   char *cur_reg;
-   char *cur_cs;
-   char *cur_mod;
+   const char *cur_lang;
+   const char *cur_reg;
+   const char *cur_cs;
+   const char *cur_mod;
 
    int  lang_dirty;
 
@@ -797,11 +797,12 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_FREE(cfdata->cur_language);
-   E_FREE(cfdata->cur_blang);
-   E_FREE(cfdata->cur_lang);
-   E_FREE(cfdata->cur_reg);
-   E_FREE(cfdata->cur_cs);
-   E_FREE(cfdata->cur_mod);
+
+   eina_stringshare_del(cfdata->cur_blang);
+   eina_stringshare_del(cfdata->cur_lang);
+   eina_stringshare_del(cfdata->cur_reg);
+   eina_stringshare_del(cfdata->cur_cs);
+   eina_stringshare_del(cfdata->cur_mod);
 
    eina_hash_foreach(cfdata->locale_hash, _language_hash_free_cb, NULL);
    eina_hash_free(cfdata->locale_hash);
@@ -1038,22 +1039,17 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    /* all these cur_* values are not guaranteed to be const so we need to
     * copy them. 
     */
-   lang = NULL;
-   reg = NULL;
-   cs = NULL;
-   mod = NULL;
-   
-   if (cfdata->cur_lang) lang = eina_stringshare_add(cfdata->cur_lang);
-   if (cfdata->cur_reg) reg = eina_stringshare_add(cfdata->cur_reg);
-   if (cfdata->cur_cs) cs = eina_stringshare_add(cfdata->cur_cs);
-   if (cfdata->cur_mod) mod = eina_stringshare_add(cfdata->cur_mod);
+   lang = eina_stringshare_ref(cfdata->cur_lang);
+   reg = eina_stringshare_ref(cfdata->cur_reg);
+   cs = eina_stringshare_ref(cfdata->cur_cs);
+   mod = eina_stringshare_ref(cfdata->cur_mod);
    
    _cfdata_language_go(lang, reg, cs, mod, cfdata);
    
-   if (lang) eina_stringshare_del(lang); 
-   if (reg) eina_stringshare_del(reg); 
-   if (cs) eina_stringshare_del(cs); 
-   if (mod) eina_stringshare_del(mod); 
+   eina_stringshare_del(lang);
+   eina_stringshare_del(reg);
+   eina_stringshare_del(cs);
+   eina_stringshare_del(mod);
    
    e_widget_on_change_hook_set(cfdata->gui.lang_list, _ilist_language_cb_change, cfdata);
    e_widget_on_change_hook_set(cfdata->gui.reg_list, _ilist_region_cb_change, cfdata); 
@@ -1084,8 +1080,8 @@ _ilist_language_cb_change(void *data, Evas_Object *obj)
    _cfdata_language_go(cfdata->cur_lang, NULL, NULL, NULL, cfdata);
    
    e_widget_entry_text_set(cfdata->gui.locale_entry, cfdata->cur_lang);
-   E_FREE(cfdata->cur_cs);
-   E_FREE(cfdata->cur_mod);
+   eina_stringshare_del(cfdata->cur_cs);
+   eina_stringshare_del(cfdata->cur_mod);
 }
 
 static void
@@ -1100,8 +1096,8 @@ _ilist_region_cb_change(void *data, Evas_Object *obj)
     
    sprintf(locale, "%s_%s", cfdata->cur_lang, cfdata->cur_reg);
    e_widget_entry_text_set(cfdata->gui.locale_entry, locale);
-   E_FREE(cfdata->cur_cs);
-   E_FREE(cfdata->cur_mod);
+   eina_stringshare_del(cfdata->cur_cs);
+   eina_stringshare_del(cfdata->cur_mod);
 }
 
 static void 
@@ -1270,10 +1266,10 @@ _region_hash_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, vo
 void 
 _intl_current_locale_setup(E_Config_Dialog_Data *cfdata)
 {
-   E_FREE(cfdata->cur_lang);
-   E_FREE(cfdata->cur_reg);
-   E_FREE(cfdata->cur_cs);
-   E_FREE(cfdata->cur_mod);
+   eina_stringshare_del(cfdata->cur_lang);
+   eina_stringshare_del(cfdata->cur_reg);
+   eina_stringshare_del(cfdata->cur_cs);
+   eina_stringshare_del(cfdata->cur_mod);
 
    cfdata->cur_lang = NULL;
    cfdata->cur_reg = NULL;
@@ -1286,23 +1282,20 @@ _intl_current_locale_setup(E_Config_Dialog_Data *cfdata)
  
 	locale_parts = e_intl_locale_parts_get(cfdata->cur_language);
 	if (locale_parts)
-	  {	  
-	     if (locale_parts->lang) 
-	       cfdata->cur_lang = strdup(locale_parts->lang);
-	     if (locale_parts->region) 
-	       cfdata->cur_reg = strdup(locale_parts->region);
+	  {
+	     cfdata->cur_lang = eina_stringshare_add(locale_parts->lang);
+	     cfdata->cur_reg = eina_stringshare_add(locale_parts->region);
 	     if (locale_parts->codeset) 
 	       {
 		  const char *cs_trans;
 	
 		  cs_trans = _intl_charset_upper_get(locale_parts->codeset);
 		  if (cs_trans == NULL)
-		    cfdata->cur_cs = strdup(locale_parts->codeset);
-		  else 
-		    cfdata->cur_cs = strdup(cs_trans);
+		    cfdata->cur_cs = eina_stringshare_add(locale_parts->codeset);
+		  else
+		    cfdata->cur_cs = eina_stringshare_add(cs_trans);
 	       }
-	     if (locale_parts->modifier) 
-	       cfdata->cur_mod = strdup(locale_parts->modifier);
+	     cfdata->cur_mod = eina_stringshare_add(locale_parts->modifier);
 	  }
 	e_intl_locale_parts_free(locale_parts);
      }

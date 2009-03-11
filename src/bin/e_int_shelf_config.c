@@ -28,7 +28,7 @@ struct _E_Config_Dialog_Data
    int basic_size;
    
    /* ADVANCED */
-   char *style;
+   const char *style;
    int orient;
    int fit_along;
    int fit_size;
@@ -116,9 +116,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
        cfdata->mode = MODE_TOP_DESKTOP;
    
    if (cfdata->escfg->style)
-     cfdata->style = strdup(cfdata->escfg->style);
+     cfdata->style = eina_stringshare_ref(cfdata->escfg->style);
    else
-     cfdata->style = strdup("");
+     cfdata->style = eina_stringshare_add("");
    cfdata->orient = cfdata->escfg->orient;
    cfdata->fit_along = cfdata->escfg->fit_along;
    cfdata->fit_size = cfdata->escfg->fit_size;
@@ -215,7 +215,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
    cfdata->es->config_dialog = NULL;
-   if (cfdata->style) free(cfdata->style);
+   eina_stringshare_del(cfdata->style);
    free(cfdata);
 }
 
@@ -305,14 +305,14 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Only change style is we need to */
    if (!cfdata->escfg->style) 
      {
-	cfdata->escfg->style = eina_stringshare_add(cfdata->style);
+	cfdata->escfg->style = eina_stringshare_ref(cfdata->style);
 	e_shelf_style_set(cfdata->es, cfdata->style);
      }
    else if ((cfdata->escfg->style) && 
 	    (strcmp(cfdata->escfg->style, cfdata->style))) 
      {
 	if (cfdata->escfg->style) eina_stringshare_del(cfdata->escfg->style);
-	cfdata->escfg->style = eina_stringshare_add(cfdata->style);
+	cfdata->escfg->style = eina_stringshare_ref(cfdata->style);
 	e_shelf_style_set(cfdata->es, cfdata->style);
      }
 

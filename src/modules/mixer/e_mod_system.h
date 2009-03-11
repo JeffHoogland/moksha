@@ -16,8 +16,8 @@ typedef struct E_Mixer_Channel_State E_Mixer_Channel_State;
 
 Eina_List *e_mixer_system_get_cards(void);
 void e_mixer_system_free_cards(Eina_List *cards);
-char *e_mixer_system_get_default_card(void);
-char *e_mixer_system_get_card_name(const char *card);
+const char *e_mixer_system_get_default_card(void);
+const char *e_mixer_system_get_card_name(const char *card);
 
 
 E_Mixer_System *e_mixer_system_new(const char *card);
@@ -29,9 +29,9 @@ Eina_List *e_mixer_system_get_channels(E_Mixer_System *self);
 void e_mixer_system_free_channels(Eina_List *channels);
 Eina_List *e_mixer_system_get_channels_names(E_Mixer_System *self);
 void e_mixer_system_free_channels_names(Eina_List *channels_names);
-char *e_mixer_system_get_default_channel_name(E_Mixer_System *self);
+const char *e_mixer_system_get_default_channel_name(E_Mixer_System *self);
 E_Mixer_Channel *e_mixer_system_get_channel_by_name(E_Mixer_System *self, const char *name);
-char *e_mixer_system_get_channel_name(E_Mixer_System *self, E_Mixer_Channel *channel);
+const char *e_mixer_system_get_channel_name(E_Mixer_System *self, E_Mixer_Channel *channel);
 void e_mixer_system_channel_del(E_Mixer_Channel *channel);
 
 

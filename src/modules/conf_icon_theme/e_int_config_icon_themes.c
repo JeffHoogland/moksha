@@ -15,7 +15,7 @@ struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
    Eina_List *icon_themes;
-   char *themename;
+   const char *themename;
    int overrides;
    struct {
       Evas_Object *list;
@@ -64,10 +64,7 @@ _create_data(E_Config_Dialog *cfd)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->cfd = cfd;
-   if (e_config->icon_theme)
-     cfdata->themename = strdup(e_config->icon_theme);
-   else
-     cfdata->themename = NULL;
+   cfdata->themename = eina_stringshare_add(e_config->icon_theme);
 
    cfdata->overrides = e_config->icon_theme_overrides;
 
@@ -81,7 +78,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      free(ecore_idler_del(cfdata->fill_icon_themes_delayed));
 
    eina_list_free(cfdata->icon_themes);
-   E_FREE(cfdata->themename);
+   eina_stringshare_del(cfdata->themename);
    E_FREE(cfdata);
 }
 
@@ -104,14 +101,12 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Event_Config_Icon_Theme *ev;
-   const char *s;
 
    if (!_basic_check_changed(cfd, cfdata))
      return 1;
 
-   s = eina_stringshare_add(cfdata->themename);
    eina_stringshare_del(e_config->icon_theme);
-   e_config->icon_theme = s;
+   e_config->icon_theme = eina_stringshare_ref(cfdata->themename);
 
    e_config->icon_theme_overrides = !!cfdata->overrides;
 

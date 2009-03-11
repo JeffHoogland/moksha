@@ -4,7 +4,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static char *profile = NULL;
+static const char *profile = NULL;
 static Evas_Object *textblock = NULL;
 
 static void

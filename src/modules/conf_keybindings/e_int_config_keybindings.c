@@ -55,7 +55,8 @@ struct _E_Config_Dialog_Data
      } binding;
    struct
      {
-	char *binding, *action, *params, *cur;
+	const char *binding, *action, *cur;
+	char *params;
 	int cur_act, add;
 
 	E_Dialog *dia;
@@ -106,8 +107,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    Eina_List *l = NULL;
    E_Config_Binding_Key *bi, *bi2;
 
-   cfdata->locals.binding = strdup("");
-   cfdata->locals.action = strdup("");
+   cfdata->locals.binding = eina_stringshare_add("");
+   cfdata->locals.action = eina_stringshare_add("");
    cfdata->locals.params = strdup("");
    cfdata->locals.cur = NULL;
    cfdata->binding.key = NULL;
@@ -115,18 +116,17 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->locals.handlers = NULL;
    cfdata->locals.dia = NULL;
 
-   for (l = e_config->key_bindings; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->key_bindings, l, bi)
      {
-	bi = l->data;
 	if (!bi) continue;
 
 	bi2 = E_NEW(E_Config_Binding_Key, 1);
 	bi2->context = bi->context;
-	bi2->key = bi->key == NULL ? NULL : eina_stringshare_add(bi->key);
+	bi2->key = eina_stringshare_add(bi->key);
 	bi2->modifiers = bi->modifiers;
 	bi2->any_mod = bi->any_mod;
-	bi2->action = bi->action == NULL ? NULL : eina_stringshare_add(bi->action);
-	bi2->params = bi->params == NULL ? NULL : eina_stringshare_add(bi->params);
+	bi2->action = eina_stringshare_ref(bi->action);
+	bi2->params = eina_stringshare_ref(bi->params);
 
 	cfdata->binding.key = eina_list_append(cfdata->binding.key, bi2);
      }
@@ -149,19 +149,18 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Binding_Key *bi;
 
-   while (cfdata->binding.key)
+   EINA_LIST_FREE(cfdata->binding.key, bi)
      {
-	bi = cfdata->binding.key->data;
-	if (bi->key) eina_stringshare_del(bi->key);
-	if (bi->action) eina_stringshare_del(bi->action);
-	if (bi->params) eina_stringshare_del(bi->params);
+	eina_stringshare_del(bi->key);
+	eina_stringshare_del(bi->action);
+	eina_stringshare_del(bi->params);
 	E_FREE(bi);
-	cfdata->binding.key = eina_list_remove_list(cfdata->binding.key, cfdata->binding.key);
      }
 
-   if (cfdata->locals.cur) free(cfdata->locals.cur);
-   if (cfdata->locals.binding) free(cfdata->locals.binding);
-   if (cfdata->locals.action) free(cfdata->locals.action);
+   eina_stringshare_del(cfdata->locals.cur);
+   eina_stringshare_del(cfdata->locals.binding);
+   eina_stringshare_del(cfdata->locals.action);
+
    if (cfdata->locals.params) free(cfdata->locals.params);
    if (cfdata->params) free(cfdata->params);
    E_FREE(cfdata);
@@ -184,13 +183,13 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_config->key_bindings =
 	   eina_list_remove_list(e_config->key_bindings, e_config->key_bindings);
 
-	if (bi->key) eina_stringshare_del(bi->key);
-	if (bi->action) eina_stringshare_del(bi->action);
-	if (bi->params) eina_stringshare_del(bi->params);
+	eina_stringshare_del(bi->key);
+	eina_stringshare_del(bi->action);
+	eina_stringshare_del(bi->params);
 	E_FREE(bi);
      }
 
-   for (l = cfdata->binding.key; l; l = l->next)
+   EINA_LIST_FOREACH(cfdata->binding.key, l, bi2)
      {
 	bi2 = l->data;
 
@@ -202,9 +201,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	bi->modifiers = bi2->modifiers;
 	bi->any_mod = bi2->any_mod;
 	bi->action =
-	   ((!bi2->action) || (!bi2->action[0])) ? NULL : eina_stringshare_add(bi2->action);
+	   ((!bi2->action) || (!bi2->action[0])) ? NULL : eina_stringshare_ref(bi2->action);
 	bi->params =
-	   ((!bi2->params) || (!bi2->params[0])) ? NULL : eina_stringshare_add(bi2->params);
+	   ((!bi2->params) || (!bi2->params[0])) ? NULL : eina_stringshare_ref(bi2->params);
 
 	e_config->key_bindings = eina_list_append(e_config->key_bindings, bi);
 	e_bindings_key_add(bi->context, bi->key, bi->modifiers, bi->any_mod,
@@ -344,12 +343,12 @@ _binding_change_cb(void *data)
    cfdata = data;
 
    _auto_apply_changes(cfdata);
-   if (cfdata->locals.cur) free(cfdata->locals.cur);
+   eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
 
    if ((!cfdata->locals.binding) || (!cfdata->locals.binding[0])) return; 
 
-   cfdata->locals.cur = strdup(cfdata->locals.binding);
+   cfdata->locals.cur = eina_stringshare_add(cfdata->locals.binding);
 
    _update_buttons(cfdata);
    _update_action_list(cfdata);
@@ -373,19 +372,15 @@ _delete_all_key_binding_cb(void *data, void *data2)
    cfdata = data;
 
    /* FIXME: need confirmation dialog */
-
-   while (cfdata->binding.key)
+   EINA_LIST_FREE(cfdata->binding.key, bi)
      {
-	bi = cfdata->binding.key->data;
-	if (bi->key) eina_stringshare_del(bi->key);
-	if (bi->action) eina_stringshare_del(bi->action);
-	if (bi->params) eina_stringshare_del(bi->params);
+	eina_stringshare_del(bi->key);
+	eina_stringshare_del(bi->action);
+	eina_stringshare_del(bi->params);
 	E_FREE(bi);
-
-	cfdata->binding.key = eina_list_remove_list(cfdata->binding.key, cfdata->binding.key);
      }
 
-   if (cfdata->locals.cur) free(cfdata->locals.cur);
+   eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
 
    e_widget_ilist_clear(cfdata->gui.o_binding_list);
@@ -401,7 +396,7 @@ static void
 _delete_key_binding_cb(void *data, void *data2)
 {
    Eina_List *l = NULL;
-   char *n;
+   const char *n;
    int sel;
    E_Config_Dialog_Data *cfdata;
    E_Config_Binding_Key *bi;
@@ -417,11 +412,12 @@ _delete_key_binding_cb(void *data, void *data2)
 	/* FIXME: need confirmation dialog */
 	if (l)
 	  {
-	     bi = l->data;
-	     if (bi->key) eina_stringshare_del(bi->key);
-	     if (bi->action) eina_stringshare_del(bi->action);
-	     if (bi->params) eina_stringshare_del(bi->params);
+	     bi = eina_list_data_get(data);
+	     eina_stringshare_del(bi->key);
+	     eina_stringshare_del(bi->action);
+	     eina_stringshare_del(bi->params);
 	     E_FREE(bi);
+
 	     cfdata->binding.key = eina_list_remove_list(cfdata->binding.key, l);
 	  }
      }
@@ -431,7 +427,7 @@ _delete_key_binding_cb(void *data, void *data2)
    if (sel >= e_widget_ilist_count(cfdata->gui.o_binding_list))
      sel = e_widget_ilist_count(cfdata->gui.o_binding_list) - 1;
 
-   if (cfdata->locals.cur) free(cfdata->locals.cur);
+   eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL; 
    
    e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel);
@@ -451,14 +447,12 @@ _restore_key_binding_defaults_cb(void *data, void *data2)
 
    cfdata = data;
 
-   while (cfdata->binding.key)
+   EINA_LIST_FREE(cfdata->binding.key, bi)
      {
-	bi = cfdata->binding.key->data;
-	if (bi->key) eina_stringshare_del(bi->key);
-	if (bi->action) eina_stringshare_del(bi->action);
-	if (bi->params) eina_stringshare_del(bi->params);
+	eina_stringshare_del(bi->key);
+	eina_stringshare_del(bi->action);
+	eina_stringshare_del(bi->params);
 	E_FREE(bi);
-	cfdata->binding.key = eina_list_remove_list(cfdata->binding.key, cfdata->binding.key);
      }
 
 #define CFG_KEYBIND_DFLT(_context, _key, _modifiers, _anymod, _action, _params) \
@@ -467,8 +461,8 @@ _restore_key_binding_defaults_cb(void *data, void *data2)
    bi->key = eina_stringshare_add(_key); \
    bi->modifiers = _modifiers; \
    bi->any_mod = _anymod; \
-   bi->action = _action == NULL ? NULL : eina_stringshare_add(_action); \
-   bi->params = _params == NULL ? NULL : eina_stringshare_add(_params); \
+   bi->action = eina_stringshare_add(_action); \
+   bi->params = eina_stringshare_add(_params); \
    cfdata->binding.key = eina_list_append(cfdata->binding.key, bi)
 
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Left",
@@ -616,7 +610,7 @@ _restore_key_binding_defaults_cb(void *data, void *data2)
 	       E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
 	       "screen_send_to", "3");
    
-   if (cfdata->locals.cur) free(cfdata->locals.cur);
+   eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
 
    _update_key_binding_list(cfdata);
@@ -675,8 +669,8 @@ _update_action_list(E_Config_Dialog_Data *cfdata)
    else
      { 
 	e_widget_ilist_unselect(cfdata->gui.o_action_list);
-	if (cfdata->locals.action) free(cfdata->locals.action);
-	cfdata->locals.action = strdup("");
+	eina_stringshare_del(cfdata->locals.action);
+	cfdata->locals.action = eina_stringshare_add("");
 	e_widget_entry_clear(cfdata->gui.o_params);
      }
 
@@ -1091,8 +1085,8 @@ _grab_key_down_cb(void *data, int type, void *event)
 			 }
 		       e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n);
 		       e_widget_ilist_unselect(cfdata->gui.o_action_list);
-		       if (cfdata->locals.action) free(cfdata->locals.action);
-		       cfdata->locals.action = strdup("");
+		       eina_stringshare_del(cfdata->locals.action);
+		       cfdata->locals.action = eina_stringshare_add("");
 		       if ((cfdata->params) && (cfdata->params[0]))
 			 {
 			    int j, g = -1;
@@ -1179,12 +1173,12 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
    actd = eina_list_nth(actg->acts, a);
    if (!actd) return;
 
-   if (bi->action) eina_stringshare_del(bi->action);
+   eina_stringshare_del(bi->action);
    bi->action = NULL;
 
    if (actd->act_cmd) bi->action = eina_stringshare_add(actd->act_cmd);
 
-   if (bi->params) eina_stringshare_del(bi->params);
+   eina_stringshare_del(bi->params);
    bi->params = NULL;
 
    if (actd->act_params) 

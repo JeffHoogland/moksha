@@ -4,7 +4,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static char *xdg_sel = NULL;
+static const char *xdg_sel = NULL;
 static Eina_List *menus = NULL;
 
 static void
@@ -198,11 +198,11 @@ EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {
    if ((xdg_sel) && (!strcmp("/etc/xdg/menus/applications.menu", xdg_sel)))
-     xdg_sel = NULL;
-   if (xdg_sel)
-     e_config->default_system_menu = eina_stringshare_add(xdg_sel);
-   else
-     e_config->default_system_menu = NULL;
+     {
+	eina_stringshare_del(xdg_sel);
+	xdg_sel = NULL;
+     }
+   e_config->default_system_menu = eina_stringshare_ref(xdg_sel);
    efreet_menu_file_set(e_config->default_system_menu);
    // FIXME: no normal config dialog to change this!
    return 1;

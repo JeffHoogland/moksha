@@ -24,8 +24,8 @@ struct _Config_Type
 struct _E_Config_Dialog_Data 
 {
    Eina_List *mimes;
-   char *cur_type;
-   struct 
+   const char *cur_type;
+   struct
      {
 	Evas_Object *tlist, *list;
      } gui;
@@ -111,10 +111,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (ecore_file_exists(buf))
      _load_globs(cfdata, buf);
 
-   if (cfdata->mimes)
-     cfdata->mimes = eina_list_sort(cfdata->mimes, 
-				    eina_list_count(cfdata->mimes), _sort_mimes);
-   
+   cfdata->mimes = eina_list_sort(cfdata->mimes, 0, _sort_mimes);
+
    _fill_types(cfdata);
 }
 
@@ -132,50 +130,42 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   Config_Type *t;
+   Config_Mime *m;
+
    if (cfdata->edit_dlg) 
      {
 	e_object_del(E_OBJECT(cfdata->edit_dlg));
 	cfdata->edit_dlg = NULL;
      }
-   
-   while (types) 
+
+   EINA_LIST_FREE(types, t)
      {
-	Config_Type *t;
-	
-	t = types->data;
 	if (!t) continue;
-	if (t->name)
-	  eina_stringshare_del(t->name);
-	if (t->type)
-	  eina_stringshare_del(t->type);
-	types = eina_list_remove_list(types, types);
+
+	eina_stringshare_del(t->name);
+	eina_stringshare_del(t->type);
 	E_FREE(t);
      }
 
-   while (cfdata->mimes) 
+   EINA_LIST_FREE(cfdata->mimes, m)
      {
-	Config_Mime *m;
-	
-	m = cfdata->mimes->data;
+	Config_Glob *g;
+
 	if (!m) continue;
-	while (m->globs) 
+
+	EINA_LIST_FREE(m->globs, g)
 	  {
-	     Config_Glob *g;
-	     
-	     g = m->globs->data;
 	     if (!g) continue;
-	     if (g->name)
-	       eina_stringshare_del(g->name);
-	     m->globs = eina_list_remove_list(m->globs, m->globs);
+
+	     eina_stringshare_del(g->name);
 	     E_FREE(g);
 	  }
-	if (m->mime)
-	  eina_stringshare_del(m->mime);
-	
-	cfdata->mimes = eina_list_remove_list(cfdata->mimes, cfdata->mimes);
+
+	eina_stringshare_del(m->mime);
 	E_FREE(m);
      }
-   
+
    E_FREE(cfdata);
 }
 
@@ -211,6 +201,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 static void 
 _fill_list(E_Config_Dialog_Data *cfdata, const char *mtype) 
 {
+   Config_Mime *m;
    Eina_List *l;
    Evas_Coord w, h;
    Evas *evas;
@@ -221,15 +212,13 @@ _fill_list(E_Config_Dialog_Data *cfdata, const char *mtype)
    e_widget_ilist_freeze(cfdata->gui.list);
 
    e_widget_ilist_clear(cfdata->gui.list);
-   for (l = cfdata->mimes; l; l = l->next) 
+   EINA_LIST_FOREACH(cfdata->mimes, l, m)
      {
-	Config_Mime *m;
 	Evas_Object *icon = NULL;
 	const char *tmp;
 	char buf[4096];
 	int edj = 0, img = 0;
-	
-	m = l->data;
+
 	if (!m) return;
 	if (!strstr(m->mime, mtype)) continue;
 	tmp = e_fm_mime_icon_get(m->mime);
@@ -276,6 +265,7 @@ _fill_list(E_Config_Dialog_Data *cfdata, const char *mtype)
 static void 
 _fill_tlist(E_Config_Dialog_Data *cfdata) 
 {
+   Config_Type *tmp;
    Eina_List *l;
    Evas_Coord w, h;
 
@@ -283,14 +273,12 @@ _fill_tlist(E_Config_Dialog_Data *cfdata)
    edje_freeze();
    e_widget_ilist_freeze(cfdata->gui.tlist);
    e_widget_ilist_clear(cfdata->gui.tlist);
-   for (l = types; l; l = l->next) 
+   EINA_LIST_FOREACH(types, l, tmp)
      {
-	Config_Type *tmp;
 	Evas_Object *icon;
 	char buf[4096];
 	char *t;
-	
-	tmp = l->data;
+
 	if (!tmp) continue;
 	t = strdup(tmp->name);
 	t[0] = tolower(t[0]);
@@ -433,37 +421,38 @@ _load_globs(E_Config_Dialog_Data *cfdata, char *file)
 static void
 _fill_types(E_Config_Dialog_Data *cfdata) 
 {
-   Eina_List *l, *ll;
+   Config_Mime *m;
+   Eina_List *l;
 
-   for (l = cfdata->mimes; l; l = l->next) 
+   EINA_LIST_FOREACH(cfdata->mimes, l, m)
      {
-	Config_Type *tmp;	
-	Config_Mime *m;
+	Config_Type *tmp;
+	Eina_List *ll;
 	char *tok;
 	int found = 0;
-	
-	m = l->data;
+
 	if (!m) continue;
 	tok = strtok(strdup(m->mime), "/");
 	if (!tok) continue;
-	for (ll = types; ll; ll = ll->next) 
+
+	EINA_LIST_FOREACH(types, ll, tmp)
 	  {
-	     tmp = ll->data;
 	     if (!tmp) continue;
-	     
-	     if (strcmp(tmp->type, tok) >= 0) 
+
+	     if (strcmp(tmp->type, tok) >= 0)
 	       {
 		  found = 1;
 		  break;
 	       }
 	  }
-	if (!found) 
+
+	if (!found)
 	  {
 	     tmp = E_NEW(Config_Type, 1);
 	     tmp->type = eina_stringshare_add(tok);
 	     tok[0] = toupper(tok[0]);
 	     tmp->name = eina_stringshare_add(tok);
-	     
+
 	     types = eina_list_append(types, tmp);
 	  }
      }
@@ -473,17 +462,17 @@ static void
 _tlist_cb_change(void *data) 
 {
    E_Config_Dialog_Data *cfdata;
+   Config_Type *t;
    Eina_List *l;
 
    cfdata = data;
    if (!cfdata) return;
-   for (l = types; l; l = l->next) 
+
+   EINA_LIST_FOREACH(types, l, t)
      {
-	Config_Type *t;
-	
-	t = l->data;
 	if (!t) continue;
-	if (strcasecmp(t->name, cfdata->cur_type)) continue;
+	if (t->name != cfdata->cur_type /* Both string are stringshare. */
+	    && strcasecmp(t->name, cfdata->cur_type)) continue;
 	_fill_list(cfdata, t->type);
 	break;
      }
@@ -506,32 +495,49 @@ _sort_mimes(const void *data1, const void *data2)
 static Config_Mime *
 _find_mime(E_Config_Dialog_Data *cfdata, char *mime) 
 {
+   Config_Mime *cm;
+   const char *tmp;
    Eina_List *l;
-   
+
    if (!cfdata) return NULL;
-   for (l = cfdata->mimes; l; l = l->next) 
+
+   if (eina_list_count(cfdata->mimes) > 10)
      {
-	Config_Mime *cm;
-	
-	cm = l->data;
-	if (!cm) continue;
-	if (strcmp(cm->mime, mime)) continue;
-	return cm;
+	tmp = eina_stringshare_add(mime);
+
+	EINA_LIST_FOREACH(cfdata->mimes, l, cm)
+	  {
+	     if (!cm) continue;
+	     if (cm->mime != mime) continue;
+
+	     eina_stringshare_del(tmp);
+	     return cm;
+	  }
+
+	eina_stringshare_del(tmp);
      }
+   else
+     {
+	EINA_LIST_FOREACH(cfdata->mimes, l, cm)
+	  {
+	     if (!cm) continue;
+	     if (strcmp(cm->mime, mime)) continue;
+	     return cm;
+	  }
+     }
+
    return NULL;
 }
 
 static Config_Glob *
 _find_glob(Config_Mime *mime, char *glob) 
 {
+   Config_Glob *g;
    Eina_List *l;
-   
+
    if (!mime) return NULL;
-   for (l = mime->globs; l; l = l->next) 
+   EINA_LIST_FOREACH(mime->globs, l, g)
      {
-	Config_Glob *g;
-	
-	g = l->data;
 	if (!g) continue;
 	if (strcmp(g->name, glob)) continue;
 	return g;
@@ -547,26 +553,25 @@ _cb_config(void *data, void *data2)
    E_Config_Mime_Icon *mi = NULL;
    const char *m;
    int found = 0;
-   
+
    cfdata = data;
    if (!cfdata) return;
    m = e_widget_ilist_selected_label_get(cfdata->gui.list);
    if (!m) return;
-   
-   for (l = e_config->mime_icons; l; l = l->next) 
+
+   EINA_LIST_FOREACH(e_config->mime_icons, l, mi)
      {
-	mi = l->data;
 	if (!mi) continue;
 	if (!mi->mime) continue;
 	if (strcmp(mi->mime, m)) continue;
 	found = 1;
 	break;
      }
-   if (!found) 
+   if (!found)
      {
 	mi = E_NEW(E_Config_Mime_Icon, 1);
 	mi->mime = eina_stringshare_add(m);
      }
-   
+
    cfdata->edit_dlg = e_int_config_mime_edit(mi, cfdata);
 }

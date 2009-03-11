@@ -29,7 +29,7 @@ static int
 _mixer_gadget_configuration_defaults(E_Mixer_Gadget_Config *conf)
 {
    E_Mixer_System *sys;
-   char *card, *channel;
+   const char *card, *channel;
 
    card = e_mixer_system_get_default_card();
    if (!card)
@@ -38,7 +38,7 @@ _mixer_gadget_configuration_defaults(E_Mixer_Gadget_Config *conf)
    sys = e_mixer_system_new(card);
    if (!sys)
      {
-	free(card);
+	eina_stringshare_del(card);
 	return 0;
      }
 
@@ -47,17 +47,14 @@ _mixer_gadget_configuration_defaults(E_Mixer_Gadget_Config *conf)
 
    if (!channel)
      {
-	free(card);
+	eina_stringshare_del(card);
 	return 0;
      }
 
-   conf->card = eina_stringshare_add(card);
-   conf->channel_name = eina_stringshare_add(channel);
+   conf->card = card;
+   conf->channel_name = channel;
    conf->lock_sliders = 1;
    conf->show_locked = 0;
-
-   free(card);
-   free(channel);
 
    return 1;
 }
@@ -785,7 +782,7 @@ static int
 _mixer_sys_setup_default_card(E_Mixer_Instance *inst)
 {
    E_Mixer_Gadget_Config *conf;
-   char *card;
+   const char *card;
 
    conf = inst->conf;
    if (conf->card)
@@ -799,13 +796,12 @@ _mixer_sys_setup_default_card(E_Mixer_Instance *inst)
    if (!inst->sys)
      goto system_error;
 
-   conf->card = eina_stringshare_add(card);
-   free(card);
+   conf->card = card;
    return 1;
 
 
  system_error:
-   free(card);
+   eina_stringshare_del(card);
  error:
    conf->card = NULL;
    return 0;
@@ -815,7 +811,7 @@ static int
 _mixer_sys_setup_default_channel(E_Mixer_Instance *inst)
 {
    E_Mixer_Gadget_Config *conf;
-   char *channel_name;
+   const char *channel_name;
 
    conf = inst->conf;
    if (conf->channel_name)
@@ -829,12 +825,11 @@ _mixer_sys_setup_default_channel(E_Mixer_Instance *inst)
    if (!inst->channel)
      goto system_error;
 
-   conf->channel_name = eina_stringshare_add(channel_name);
-   free(channel_name);
+   conf->channel_name = channel_name;
    return 1;
 
  system_error:
-   free(channel_name);
+   eina_stringshare_del(channel_name);
  error:
    conf->channel_name = NULL;
    return 0;

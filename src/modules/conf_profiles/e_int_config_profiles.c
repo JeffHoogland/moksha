@@ -26,7 +26,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_delete;
    Evas_Object *o_reset;
    Evas_Object *o_text;
-   char *sel_profile;
+   const char *sel_profile;
 
    E_Dialog *dia_new_profile;
    char *new_profile;

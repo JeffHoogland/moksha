@@ -114,14 +114,13 @@ _mixer_callback_add(E_Mixer_System *self, int (*func)(void *data, E_Mixer_System
 static int
 _mixer_callback_del(E_Mixer_System *self, struct e_mixer_callback_desc *desc)
 {
-   Eina_List *l;
+   Ecore_Fd_Handler *handler;
 
    snd_mixer_set_callback_private(self, NULL);
 
-   for (l = desc->handlers; l != NULL; l = l->next)
-     ecore_main_fd_handler_del(l->data);
+   EINA_LIST_FREE(desc->handlers, handler)
+     ecore_main_fd_handler_del(handler);
 
-   eina_list_free(desc->handlers);
    free(desc);
 
    return 1;
@@ -227,7 +226,7 @@ e_mixer_system_get_cards(void)
 	if (snd_ctl_open(&control, buf, 0) < 0)
 	  break;
 	snd_ctl_close(control);
-        cards = eina_list_append(cards, strdup(buf));
+        cards = eina_list_append(cards, eina_stringshare_add(buf));
      }
 
    if (err < 0)
@@ -240,15 +239,13 @@ e_mixer_system_get_cards(void)
 void
 e_mixer_system_free_cards(Eina_List *cards)
 {
-   Eina_List *e;
+   const char *card;
 
-   for (e = cards; e != NULL; e = e->next)
-     free(e->data);
-
-   eina_list_free(cards);
+   EINA_LIST_FREE(cards, card)
+     eina_stringshare_del(card);
 }
 
-char *
+const char *
 e_mixer_system_get_default_card(void)
 {
    static const char buf[] = "hw:0";
@@ -257,10 +254,10 @@ e_mixer_system_get_default_card(void)
    if (snd_ctl_open(&control, buf, 0) < 0)
      return NULL;
    snd_ctl_close(control);
-   return strdup(buf);
+   return eina_stringshare_add(buf);
 }
 
-char *
+const char *
 e_mixer_system_get_card_name(const char *card)
 {
    snd_ctl_card_info_t *hw_info;
@@ -294,7 +291,7 @@ e_mixer_system_get_card_name(const char *card)
 	return NULL;
      }
 
-   return strdup(name);
+   return eina_stringshare_add(name);
 }
 
 Eina_List *
@@ -351,7 +348,7 @@ e_mixer_system_get_channels_names(E_Mixer_System *self)
         snd_mixer_selem_get_id(elem, sid);
 	name = snd_mixer_selem_id_get_name(sid);
 	if (name)
-	  channels = eina_list_append(channels, strdup(name));
+	  channels = eina_list_append(channels, eina_stringshare_add(name));
      }
 
    return channels;
@@ -360,15 +357,13 @@ e_mixer_system_get_channels_names(E_Mixer_System *self)
 void
 e_mixer_system_free_channels_names(Eina_List *channels_names)
 {
-   Eina_List *e;
+   const char *channel;
 
-   for (e = channels_names; e != NULL; e = e->next)
-     free(e->data);
-
-   eina_list_free(channels_names);
+   EINA_LIST_FREE(channels_names, channel)
+     eina_stringshare_del(channel);
 }
 
-char *
+const char *
 e_mixer_system_get_default_channel_name(E_Mixer_System *self)
 {
    snd_mixer_elem_t *elem;
@@ -390,7 +385,7 @@ e_mixer_system_get_default_channel_name(E_Mixer_System *self)
         snd_mixer_selem_get_id(elem, sid);
 	name = snd_mixer_selem_id_get_name(sid);
 	if (name)
-	  return strdup(name);
+	  return eina_stringshare_add(name);
      }
 
    return NULL;
@@ -429,23 +424,18 @@ e_mixer_system_channel_del(E_Mixer_Channel *channel)
 {
 }
 
-char *
+const char *
 e_mixer_system_get_channel_name(E_Mixer_System *self, E_Mixer_Channel *channel)
 {
    snd_mixer_selem_id_t *sid;
-   const char *n;
-   char *name;
+   const char *name;
 
    if ((!self) || (!channel))
      return NULL;
 
    snd_mixer_selem_id_alloca(&sid);
    snd_mixer_selem_get_id(channel, sid);
-   n = snd_mixer_selem_id_get_name(sid);
-   if (n)
-     name = strdup(n);
-   else
-     name = NULL;
+   name = eina_stringshare_add(snd_mixer_selem_id_get_name(sid));
 
    return name;
 }

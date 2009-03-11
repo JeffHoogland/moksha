@@ -42,23 +42,24 @@ struct _E_Config_Dialog_Data
 static void
 _mixer_fill_cards_info(E_Config_Dialog_Data *cfdata)
 {
+   const char *card;
+   const char *name;
    Eina_List *l;
-   int i;
+   int i = 0;
 
    cfdata->card_num = -1;
    cfdata->cards = e_mixer_system_get_cards();
    cfdata->cards_names = NULL;
-   for (l = cfdata->cards, i = 0; l != NULL; l = l->next, i++)
+   EINA_LIST_FOREACH(cfdata->cards, l, card)
      {
-	char *card, *name;
-
-	card = l->data;
 	name = e_mixer_system_get_card_name(card);
 	if ((cfdata->card_num < 0) && card && cfdata->card &&
 	    (strcmp(card, cfdata->card) == 0))
 	  cfdata->card_num = i;
 
 	cfdata->cards_names = eina_list_append(cfdata->cards_names, name);
+
+	i++;
      }
 
    if (cfdata->card_num < 0)
@@ -69,8 +70,9 @@ static void
 _mixer_fill_channels_info(E_Config_Dialog_Data *cfdata)
 {
    E_Mixer_System *sys;
+   const char *channel;
    Eina_List *l;
-   int i;
+   int i = 0;
 
    sys = e_mixer_system_new(cfdata->card);
    if (!sys)
@@ -79,17 +81,17 @@ _mixer_fill_channels_info(E_Config_Dialog_Data *cfdata)
    cfdata->channel = 0;
    cfdata->channel_name = eina_stringshare_add(cfdata->conf->channel_name);
    cfdata->channels_names = e_mixer_system_get_channels_names(sys);
-   for (l = cfdata->channels_names, i = 0; l != NULL; l = l->next, i++)
+   EINA_LIST_FOREACH(cfdata->channels_names, l, channel)
      {
-	char *channel;
-
-	channel = l->data;
 	if (channel && cfdata->channel_name &&
-	    (strcmp(channel, cfdata->channel_name) == 0))
+	    (channel == cfdata->channel_name ||
+	     strcmp(channel, cfdata->channel_name) == 0))
 	  {
 	     cfdata->channel = i;
 	     break;
 	  }
+
+	i++;
      }
    e_mixer_system_del(sys);
 }
@@ -119,7 +121,7 @@ static void
 _free_data(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
 {
    E_Mixer_Gadget_Config *conf;
-   Eina_List *l;
+   const char *card;
 
    conf = dialog->data;
    if (conf)
@@ -128,20 +130,16 @@ _free_data(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
    if (!cfdata)
      return;
 
-   for (l = cfdata->cards_names; l != NULL; l = l->next)
-     if (l->data)
-       free(l->data);
-   eina_list_free(cfdata->cards_names);
+   EINA_LIST_FREE(cfdata->cards_names, card)
+     eina_stringshare_del(card);
 
    if (cfdata->channels_names)
      e_mixer_system_free_channels_names(cfdata->channels_names);
    if (cfdata->cards)
      e_mixer_system_free_cards(cfdata->cards);
 
-   if (cfdata->card)
-     eina_stringshare_del(cfdata->card);
-   if (cfdata->channel_name)
-     eina_stringshare_del(cfdata->channel_name);
+   eina_stringshare_del(cfdata->card);
+   eina_stringshare_del(cfdata->channel_name);
 
    eina_list_free(cfdata->ui.channels.radios);
 
@@ -161,17 +159,15 @@ _basic_apply(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
    card = eina_list_nth(cfdata->cards, cfdata->card_num);
    if (card)
      {
-	if (conf->card && (strcmp(card, conf->card) != 0))
-	  eina_stringshare_del(conf->card);
-	conf->card = eina_stringshare_add(card);
+	eina_stringshare_del(conf->card);
+	conf->card = eina_stringshare_ref(card);
      }
 
    channel = eina_list_nth(cfdata->channels_names, cfdata->channel);
    if (channel)
      {
-	if (conf->channel_name && (strcmp(channel, conf->channel_name) != 0))
-	  eina_stringshare_del(conf->channel_name);
-	conf->channel_name = eina_stringshare_add(channel);
+	eina_stringshare_del(conf->channel_name);
+	conf->channel_name = eina_stringshare_ref(channel);
      }
 
    e_mixer_update(conf->instance);
@@ -211,11 +207,10 @@ _basic_create_general(Evas *evas, E_Config_Dialog_Data *cfdata)
 static void
 _clear_channels(E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *l;
+   Evas_Object *o;
 
-   for (l = cfdata->ui.channels.radios; l != NULL; l = l->next)
-     evas_object_del(l->data);
-   cfdata->ui.channels.radios = eina_list_free(cfdata->ui.channels.radios);
+   EINA_LIST_FREE(cfdata->ui.channels.radios, o)
+     evas_object_del(o);
 }
 
 static void
@@ -224,23 +219,23 @@ _fill_channels(Evas *evas, E_Config_Dialog_Data *cfdata)
    struct mixer_config_ui_channels *ui;
    Evas_Object *selected;
    Evas_Coord mw, mh;
+   const char *name;
    Eina_List *l;
-   int i;
+   int i = 0;
 
    ui = &cfdata->ui.channels;
    ui->radio = e_widget_radio_group_new(&cfdata->channel);
-   for (i = 0, l = cfdata->channels_names; l != NULL; l = l->next, i++)
+   EINA_LIST_FOREACH(cfdata->channels_names, l, name)
      {
 	Evas_Object *ow;
-        const char *name;
 
-	name = l->data;
-	if (!name)
-	  continue;
+	if (!name) continue;
 
         ow = e_widget_radio_add(evas, name, i, ui->radio);
 	ui->radios = eina_list_append(ui->radios, ow);
 	e_widget_list_object_append(ui->list, ow, 1, 1, 0.0);
+
+	++i;
      }
 
    e_widget_min_size_get(ui->list, &mw, &mh);
@@ -299,12 +294,11 @@ _card_change(void *data, Evas_Object *obj, void *event)
 
    cfdata = data;
 
-   if (cfdata->card)
-     eina_stringshare_del(cfdata->card);
+   eina_stringshare_del(cfdata->card);
 
    e_mixer_system_free_channels_names(cfdata->channels_names);
-   if (cfdata->channel_name)
-     eina_stringshare_del(cfdata->channel_name);
+
+   eina_stringshare_del(cfdata->channel_name);
 
    card = eina_list_nth(cfdata->cards, cfdata->card_num);
    cfdata->card = eina_stringshare_add(card);
@@ -319,25 +313,25 @@ static void
 _basic_create_cards(Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    struct mixer_config_ui_cards *ui;
+   const char *card;
    Eina_List *l;
-   int i;
+   int i = 0;
 
    ui = &cfdata->ui.cards;
 
    ui->frame = e_widget_framelist_add(evas, _("Sound Cards"), 0);
    ui->radio = e_widget_radio_group_new(&cfdata->card_num);
-   for (i = 0, l = cfdata->cards_names; l != NULL; l = l->next, i++)
+   EINA_LIST_FOREACH(cfdata->cards_names, l, card)
      {
 	Evas_Object *ow;
-	const char *card;
 
-	card = l->data;
-	if (!card)
-	  continue;
+	if (!card) continue;
 
         ow = e_widget_radio_add(evas, card, i, ui->radio);
         e_widget_framelist_object_append(ui->frame, ow);
 	evas_object_smart_callback_add(ow, "changed", _card_change, cfdata);
+
+	++i;
      }
 }
 

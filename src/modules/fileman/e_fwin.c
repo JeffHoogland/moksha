@@ -53,7 +53,7 @@ struct _E_Fwin_Apps_Dialog
 {
    E_Dialog    *dia;
    E_Fwin      *fwin;
-   char        *app1, *app2;
+   const char  *app1, *app2;
    Evas_Object *o_specific, *o_all;
    Evas_Object *o_entry;
    char        *exec_cmd;
@@ -864,7 +864,7 @@ _e_fwin_cb_all_change(void *data, Evas_Object *obj)
    Efreet_Desktop *desktop = NULL;
 
    fad = data;
-   E_FREE(fad->app1);
+   eina_stringshare_del(fad->app1);
    if (fad->o_specific) e_widget_ilist_unselect(fad->o_specific);
    desktop = efreet_util_desktop_file_id_find(fad->app2);
    if ((desktop) && (desktop->exec)) 
@@ -878,7 +878,7 @@ _e_fwin_cb_specific_change(void *data, Evas_Object *obj)
    Efreet_Desktop *desktop = NULL;
 
    fad = data;
-   E_FREE(fad->app2);
+   eina_stringshare_del(fad->app2);
    if (fad->o_all) e_widget_ilist_unselect(fad->o_all);
    desktop = efreet_util_desktop_file_id_find(fad->app1);
    if ((desktop) && (desktop->exec)) 
@@ -902,8 +902,8 @@ _e_fwin_cb_exec_cmd_changed(void *data, void *data2)
    if (!desktop) return;
    if (!strcmp(desktop->exec, fad->exec_cmd)) return;
 
-   E_FREE(fad->app1);
-   E_FREE(fad->app2);
+   eina_stringshare_del(fad->app1);
+   eina_stringshare_del(fad->app2);
    if (fad->o_specific) e_widget_ilist_unselect(fad->o_specific);
    if (fad->o_all) e_widget_ilist_unselect(fad->o_all);
 }
@@ -1031,8 +1031,8 @@ _e_fwin_cb_dialog_free(void *obj)
 
    dia = (E_Dialog *)obj;
    fad = dia->data;
-   E_FREE(fad->app1);
-   E_FREE(fad->app2);
+   eina_stringshare_del(fad->app1);
+   eina_stringshare_del(fad->app2);
    E_FREE(fad->exec_cmd);
    fad->fwin->fad = NULL;
    E_FREE(fad);

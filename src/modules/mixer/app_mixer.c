@@ -5,8 +5,8 @@ extern const char _Name[];
 typedef struct E_Mixer_App_Dialog_Data
 {
    E_Mixer_System *sys;
-   char *card;
-   char *channel_name;
+   const char *card;
+   const char *channel_name;
    int lock_sliders;
    Eina_List *cards;
    Eina_List *channels_infos;
@@ -54,7 +54,7 @@ typedef struct E_Mixer_App_Dialog_Data
 struct channel_info
 {
    int has_capture;
-   char *name;
+   const char *name;
    E_Mixer_Channel *id;
    E_Mixer_App_Dialog_Data *app;
 };
@@ -151,14 +151,13 @@ _populate_channel_editor(E_Mixer_App_Dialog_Data *app)
 {
    struct e_mixer_app_ui_channel_editor *ui;
    E_Mixer_Channel_State state;
-   char *card_name;
+   const char *card_name;
 
    ui = &app->ui.channel_editor;
 
    card_name = e_mixer_system_get_card_name(app->card);
    e_widget_entry_text_set(ui->card, card_name);
-   if (card_name)
-     free(card_name);
+   eina_stringshare_del(card_name);
 
    e_widget_entry_text_set(ui->channel, app->channel_name);
 
@@ -224,16 +223,13 @@ _channels_info_new(E_Mixer_System *sys)
 static void
 _channels_info_free(Eina_List *list)
 {
-   Eina_List *l;
+   struct channel_info *info;
 
-   for (l = list; l != NULL; l = l->next)
+   EINA_LIST_FREE(list, info)
      {
-	struct channel_info *info = l->data;
-	free(info->name);
+	eina_stringshare_del(info->name);
 	free(info);
      }
-
-   eina_list_free(list);
 }
 
 static int
@@ -272,8 +268,7 @@ _populate_channels(E_Mixer_App_Dialog_Data *app)
    app->sys = e_mixer_system_new(app->card);
    e_mixer_system_callback_set(app->sys, _cb_system_update, app);
 
-   if (app->channel_name)
-     free(app->channel_name);
+   eina_stringshare_del(app->channel_name);
    app->channel_name = e_mixer_system_get_default_channel_name(app->sys);
 
    if (app->channels_infos)
@@ -341,6 +336,7 @@ static void
 _create_cards(E_Dialog *dialog, Evas *evas, E_Mixer_App_Dialog_Data *app)
 {
    struct e_mixer_app_ui_cards *ui;
+   const char *card;
    Eina_List *l;
 
    app->card = e_mixer_system_get_default_card();
@@ -351,17 +347,16 @@ _create_cards(E_Dialog *dialog, Evas *evas, E_Mixer_App_Dialog_Data *app)
    ui = &app->ui.cards;
    ui->list = e_widget_ilist_add(evas, 32, 32, &app->card);
    e_widget_ilist_go(ui->list);
-   for (l = app->cards; l != NULL; l = l->next)
+   EINA_LIST_FOREACH(app->cards, l, card)
      {
-         char *card, *card_name;
+	const char *card_name;
 
-	card = l->data;
 	card_name = e_mixer_system_get_card_name(card);
 
 	e_widget_ilist_append(ui->list, NULL, card_name, _cb_card_selected,
 			      app, card);
 
-	free(card_name);
+	eina_stringshare_del(card_name);
      }
 
    ui->frame = e_widget_framelist_add(evas, _("Cards"), 0);
@@ -473,10 +468,8 @@ _mixer_app_dialog_del(E_Dialog *dialog, E_Mixer_App_Dialog_Data *app)
    if (app->del.func)
      app->del.func(dialog, app->del.data);
 
-   if (app->card)
-     free(app->card);
-   if (app->channel_name)
-     free(app->channel_name);
+   eina_stringshare_del(app->card);
+   eina_stringshare_del(app->channel_name);
    if (app->cards)
      e_mixer_system_free_cards(app->cards);
    if (app->channels_infos)
@@ -561,8 +554,10 @@ _find_card_by_name(E_Mixer_App_Dialog_Data *app, const char *card_name)
 static inline int
 _find_channel_by_name(E_Mixer_App_Dialog_Data *app, const char *channel_name)
 {
+   struct channel_info *info;
    Eina_List *l;
-   int i, header_input;
+   int i = 0;
+   int header_input;
 
    if (app->channels_infos)
      {
@@ -572,10 +567,8 @@ _find_channel_by_name(E_Mixer_App_Dialog_Data *app, const char *channel_name)
 	i = 1;
      }
 
-   for (l = app->channels_infos; l != NULL; l = l->next, i++)
+   EINA_LIST_FOREACH(app->channels_infos, l, info)
      {
-	struct channel_info *info = l->data;
-
 	if ((!header_input) && info->has_capture)
 	  {
 	     header_input = 1;
@@ -584,6 +577,8 @@ _find_channel_by_name(E_Mixer_App_Dialog_Data *app, const char *channel_name)
 
 	if (strcmp(channel_name, info->name) == 0)
 	  return i;
+
+	++i;
      }
 
    return -1;
