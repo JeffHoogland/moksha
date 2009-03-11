@@ -667,18 +667,21 @@ e_widget_ilist_unselect(Evas_Object *obj)
 EAPI void
 e_widget_ilist_remove_num(Evas_Object *obj, int n)
 {
-   _queue_append(obj, 6, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, n);
-/*
-   E_Widget_Data *wd;
+/*    _queue_append(obj, 6, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, n); */
    E_Widget_Callback *wcb;
+   E_Widget_Data *wd;
+   Eina_List *item;
 
    wd = e_widget_data_get(obj);
    e_ilist_remove_num(wd->o_ilist, n);
-   if (!(wcb = eina_list_nth(wd->callbacks, n))) return;
-   if (wcb->value) free(wcb->value);
-   free(wcb);
-   wd->callbacks = eina_list_remove(wd->callbacks, wcb);
- */
+   item = eina_list_nth_list(wd->callbacks, n);
+   if (item)
+     {
+	wcb = eina_list_data_get(item);
+	if (wcb && wcb->value) free(wcb->value);
+	free(wcb);
+	wd->callbacks = eina_list_remove_list(wd->callbacks, item);
+     }
 }
 
 EAPI void
