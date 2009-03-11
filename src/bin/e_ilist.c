@@ -596,11 +596,16 @@ EAPI void
 e_ilist_remove_num(Evas_Object *obj, int n) 
 {
    E_Ilist_Item *si = NULL;
+   Eina_List *item;
 
    API_ENTRY return;
    if (!sd->items) return;
-   if (!(si = eina_list_nth(sd->items, n))) return;
-   sd->items = eina_list_remove(sd->items, si);
+   item = eina_list_nth_list(sd->items, n);
+   if (!item) return;
+   si = eina_list_data_get(item);
+   if (!si) return;
+   sd->items = eina_list_remove_list(sd->items, item);
+
    if (sd->selected == n) sd->selected = -1;
    if (si->o_icon) evas_object_del(si->o_icon);
    evas_object_del(si->o_base);
