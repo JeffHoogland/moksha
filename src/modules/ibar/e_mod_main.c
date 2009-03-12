@@ -515,15 +515,12 @@ _ibar_config_update(Config_Item *ci)
 	     switch (ci->eap_label)
 	       {
 		case 0:
-		  edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->name);
 		  edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->name);
 		  break;
 		case 1:
-		  edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->comment);
 		  edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->comment);
 		  break;
 		case 2:
-		  edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->generic_name);
 		  edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->generic_name);
 		  break;
 	       }
@@ -612,15 +609,12 @@ _ibar_icon_fill(IBar_Icon *ic)
    switch (ic->ibar->inst->ci->eap_label) 
      {
       case 0: /* Eap Name */
-	edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->name);
 	edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->name);
 	break;
       case 1: /* Eap Comment */
-	edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->comment);
 	edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->comment);
 	break;	
       case 2: /* Eap Generic */
-	edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->generic_name);
 	edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->generic_name);
 	break;	
      }
