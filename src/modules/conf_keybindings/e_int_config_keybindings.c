@@ -412,7 +412,7 @@ _delete_key_binding_cb(void *data, void *data2)
 	/* FIXME: need confirmation dialog */
 	if (l)
 	  {
-	     bi = eina_list_data_get(data);
+	     bi = eina_list_data_get(l);
 	     eina_stringshare_del(bi->key);
 	     eina_stringshare_del(bi->action);
 	     eina_stringshare_del(bi->params);
