@@ -594,7 +594,6 @@ _ibox_icon_fill_label(IBox_Icon *ic)
      }
 
    if (!label) label = "?";
-   edje_object_part_text_set(ic->o_holder, "e.text.label", label);
    edje_object_part_text_set(ic->o_holder2, "e.text.label", label);
 }
 
