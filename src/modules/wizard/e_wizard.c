@@ -166,7 +166,6 @@ e_wizard_page_show(Evas_Object *obj)
      }
 }
 
-/* FIXME: decide how pages are defined - how about an array of page structs? */
 EAPI E_Wizard_Page *
 e_wizard_page_add(void *handle,
 		  int (*init)     (E_Wizard_Page *pg),
@@ -244,7 +243,7 @@ _e_wizard_main_new(E_Zone *zone)
    Evas_Object *o, *o_ev;
    Evas_Modifier_Mask mask;
    
-   pop = e_popup_new(zone, zone->x, zone->y, zone->w, zone->h);
+   pop = e_popup_new(zone, 0, 0, zone->w, zone->h);
    e_popup_layer_set(pop, 255);
    o = edje_object_add(pop->evas);
 
@@ -291,7 +290,7 @@ _e_wizard_extra_new(E_Zone *zone)
    E_Popup *pop;
    Evas_Object *o;
    
-   pop = e_popup_new(zone, zone->x, zone->y, zone->w, zone->h);
+   pop = e_popup_new(zone, 0, 0, zone->w, zone->h);
    e_popup_layer_set(pop, 255);
    o = edje_object_add(pop->evas);
    e_theme_edje_object_set(o, "base/theme/wizard", "e/wizard/extra");
