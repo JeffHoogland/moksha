@@ -128,7 +128,6 @@ e_int_menus_main_new(void)
    e_menu_item_submenu_set(mi, subm);
 
    subm = e_int_menus_clients_new();
-   e_object_data_set(E_OBJECT(subm), dat);   
    dat->clients = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Windows"));
@@ -398,9 +397,16 @@ _e_int_menus_main_del_hook(void *obj)
 {
    Main_Data *dat;
    E_Menu *m;
-
+   
    m = obj;
    dat = e_object_data_get(E_OBJECT(obj));
+   e_object_del(E_OBJECT(dat->apps));
+   e_object_del(E_OBJECT(dat->all_apps));
+   e_object_del(E_OBJECT(dat->desktops));
+   e_object_del(E_OBJECT(dat->clients));
+   e_object_del(E_OBJECT(dat->enlightenment));
+   e_object_del(E_OBJECT(dat->config));
+   
    free(dat);
    _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/0"));
    _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/1"));
@@ -414,6 +420,7 @@ _e_int_menus_main_del_hook(void *obj)
    _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/9"));
    _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/10"));
    _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/11"));
+
 }
 
 static void
@@ -1088,7 +1095,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	e_util_menu_item_theme_icon_set(mi, "enlightenment/lost_windows");
 	e_menu_item_submenu_set(mi, subm);
      }
-
+   
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_clients_free_hook);
    e_object_data_set(E_OBJECT(m), borders);
 }
@@ -1149,7 +1156,7 @@ _e_int_menus_clients_free_hook(void *obj)
    m = obj;
    borders = e_object_data_get(E_OBJECT(m));
    EINA_LIST_FREE(borders, bd)
-	e_object_unref(E_OBJECT(bd));
+     e_object_unref(E_OBJECT(bd));
 }
 
 static void 
@@ -1188,7 +1195,6 @@ _e_int_menus_clients_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 
    bd = data;
    E_OBJECT_CHECK(bd);
-
    o = e_icon_add(m->evas);
    e_icon_object_set(o, e_border_icon_add(bd, m->evas));
    mi->icon_object = o;
@@ -1257,7 +1263,7 @@ _e_int_menus_lost_clients_free_hook(void *obj)
    m = obj;
    borders = e_object_data_get(E_OBJECT(m));
    EINA_LIST_FREE(borders, bd)
-	e_object_unref(E_OBJECT(bd));
+     e_object_unref(E_OBJECT(bd));
 }
 
 static void 
@@ -1278,21 +1284,21 @@ _e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_augmentation_add(E_Menu *m, Eina_List *augmentation)
 {
-	E_Int_Menu_Augmentation *aug;
+   E_Int_Menu_Augmentation *aug;
    Eina_List *l;
 
    EINA_LIST_FOREACH(augmentation, l, aug)
-	if (aug->add.func) aug->add.func(aug->add.data, m);
+     if (aug->add.func) aug->add.func(aug->add.data, m);
 }
 
 static void
 _e_int_menus_augmentation_del(E_Menu *m, Eina_List *augmentation)
 {
-	E_Int_Menu_Augmentation *aug;
+   E_Int_Menu_Augmentation *aug;
    Eina_List *l;
 
    EINA_LIST_FOREACH(augmentation, l, aug)
-	if (aug->del.func) aug->del.func(aug->del.data, m);
+     if (aug->del.func) aug->del.func(aug->del.data, m);
 }
 
 static void 
