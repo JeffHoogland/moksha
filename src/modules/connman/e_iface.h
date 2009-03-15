@@ -112,6 +112,7 @@ void       iface_callback_add(Interface *iface, Interface_Event event, void (*fu
 void       iface_callback_del(Interface *iface, Interface_Event event, void (*func) (void *data, Interface *iface, Interface_Network *ifnet), void *data);
 
 void       iface_system_init         (E_DBus_Connection *edbus_conn);
+void iface_system_shutdown(void);
 void       iface_system_callback_add (Interface_Event event, void (*func) (void *data, Interface *iface, Interface_Network *ifnet), void *data);
 void       iface_system_callback_del (Interface_Event event, void (*func) (void *data, Interface *iface, Interface_Network *ifnet), void *data);
 #endif
