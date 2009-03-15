@@ -4,9 +4,9 @@
 #include "e.h"
 
 typedef struct _E_Widget_Queue_Item E_Widget_Queue_Item;
-
 typedef struct _E_Widget_Data E_Widget_Data;
 typedef struct _E_Widget_Callback E_Widget_Callback;
+
 struct _E_Widget_Data
 {
    Evas_Object *o_widget, *o_scrollframe, *o_ilist;
@@ -16,7 +16,6 @@ struct _E_Widget_Data
       Eina_List *queue;
       Ecore_Timer *timer;
       int count;
-
       int show_nth;
       int select_nth;
    } queue;
@@ -24,8 +23,8 @@ struct _E_Widget_Data
 struct _E_Widget_Callback
 {
    void (*func) (void *data);
-   void  *data;
-   char  *value;
+   void *data;
+   char *value;
 };
 
 struct _E_Widget_Queue_Item
@@ -37,8 +36,7 @@ struct _E_Widget_Queue_Item
    void (*func) (void *data);
    void *data;
    const char *val;
-   int relative;
-   int use_relative;
+   int relative, use_relative;
    int item;
 };
 
@@ -75,23 +73,24 @@ _queue_timer(void *data)
         if (qi->command == 0)
           {
              E_Widget_Callback *wcb, *rcb;
+
              wcb = E_NEW(E_Widget_Callback, 1);
              if (!wcb) break;
              wcb->func = qi->func;
              wcb->data = qi->data;
              if (qi->val) wcb->value = strdup(qi->val);
              if (qi->use_relative == 0) // append
-	     {
-               wd->callbacks = eina_list_append(wd->callbacks, wcb);
-               e_ilist_append(wd->o_ilist, qi->icon, qi->label, qi->header,
-                              _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
-	     }
+               {
+                  wd->callbacks = eina_list_append(wd->callbacks, wcb);
+                  e_ilist_append(wd->o_ilist, qi->icon, qi->label, qi->header,
+                                 _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
+               }
              else if (qi->use_relative == 2) // prepend
-	     {
-               wd->callbacks = eina_list_append(wd->callbacks, wcb);
-               e_ilist_prepend(wd->o_ilist, qi->icon, qi->label, qi->header,
-                               _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
-	     }
+               {
+                  wd->callbacks = eina_list_append(wd->callbacks, wcb);
+                  e_ilist_prepend(wd->o_ilist, qi->icon, qi->label, qi->header,
+                                  _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
+               }
              else if (qi->use_relative == 1) // append relative
                {
                   rcb = eina_list_nth(wd->callbacks, qi->relative);
@@ -127,13 +126,9 @@ _queue_timer(void *data)
              if (qi->icon) evas_object_show(qi->icon);
           }
         else if (qi->command == 1)
-          {
-             e_ilist_nth_label_set(wd->o_ilist, qi->item, qi->label);
-          }
+          e_ilist_nth_label_set(wd->o_ilist, qi->item, qi->label);
         else if (qi->command == 2)
-          {
-             e_ilist_nth_icon_set(wd->o_ilist, qi->item, qi->icon);
-          }
+          e_ilist_nth_icon_set(wd->o_ilist, qi->item, qi->icon);
         else if (qi->command == 3)
           {
              Evas_Coord x, y, w, h;
@@ -145,9 +140,7 @@ _queue_timer(void *data)
                e_scrollframe_child_region_show(wd->o_scrollframe, x, y, w, h);
           }
         else if (qi->command == 4)
-          {
-             e_ilist_selected_set(wd->o_ilist, qi->item);
-          }
+          e_ilist_selected_set(wd->o_ilist, qi->item);
         else if (qi->command == 5)
           {
              if ((wd->value) && *(wd->value))
@@ -173,13 +166,9 @@ _queue_timer(void *data)
                }
           }
         else if (qi->command == 7)
-          {
-             e_ilist_multi_select(wd->o_ilist, qi->item);
-          }
+          e_ilist_multi_select(wd->o_ilist, qi->item);
         else if (qi->command == 8)
-          {
-             e_ilist_range_select(wd->o_ilist, qi->item);
-          }
+          e_ilist_range_select(wd->o_ilist, qi->item);
         _queue_remove(obj, qi, 0);
         num++;
         if (num >= 10) break;
@@ -194,6 +183,7 @@ static void
 _queue_queue(Evas_Object *obj)
 {
    E_Widget_Data *wd;
+
    wd = e_widget_data_get(obj);
    if (!wd->queue.queue) return;
    if (wd->queue.timer) return;
