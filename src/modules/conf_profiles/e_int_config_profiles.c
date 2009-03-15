@@ -55,7 +55,7 @@ e_int_config_profiles(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Profile Selector"),
 			    "E", "_config_profiles_dialog",
-			     "enlightenment/profiles", 0, v, NULL);
+			     "preferences-profiles", 0, v, NULL);
    e_config_dialog_changed_auto_set(cfd, 0);
    return cfd;
 }

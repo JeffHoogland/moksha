@@ -38,7 +38,7 @@ e_int_config_startup(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Startup Settings"),
 			     "E", "_config_startup_dialog",
-			     "enlightenment/startup", 0, v, NULL);
+			     "preferences-startup", 0, v, NULL);
    return cfd;
 }
 

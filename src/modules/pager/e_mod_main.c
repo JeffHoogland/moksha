@@ -2795,7 +2795,7 @@ e_modapi_init(E_Module *m)
    e_gadcon_provider_register(&_gadcon_class);
 
    e_configure_registry_item_add("extensions/pager", 40, N_("Pager"), NULL,
-				 "enlightenment/pager", _pager_config_dialog);
+				 "preferences-pager", _pager_config_dialog);
 
    act_popup_show = e_action_add("pager_show");
    if (act_popup_show)

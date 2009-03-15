@@ -40,7 +40,7 @@ e_int_config_scale(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Scaling Settings"),
 			     "E", "_config_scale_dialog",
-			     "enlightenment/scale", 0, v, NULL);
+			     "preferences-scale", 0, v, NULL);
    return cfd;
 }
 

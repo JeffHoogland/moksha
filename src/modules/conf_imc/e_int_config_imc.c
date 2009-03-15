@@ -108,7 +108,7 @@ e_int_config_imc(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Input Method Settings"),
 			    "E", "_config_imc_dialog",
-			     "enlightenment/imc", 0, v, NULL);
+			     "preferences-imc", 0, v, NULL);
    return cfd;
 }
 
@@ -900,7 +900,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    o = e_widget_button_add(evas, _("New"), "document-new", _cb_new, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);
-   o = e_widget_button_add(evas, _("Import..."), "enlightenment/imc", _cb_import, cfdata, NULL);
+   o = e_widget_button_add(evas, _("Import..."), "preferences-imc", _cb_import, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);
    e_widget_list_object_append(il, ol, 1, 0, 0.5);
    e_widget_list_object_append(of, il, 1, 0, 0.0);

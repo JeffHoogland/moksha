@@ -49,7 +49,7 @@ e_int_config_focus(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Focus Settings"),
 			     "E", "_config_focus_dialog",
-			     "enlightenment/focus", 0, v, NULL);
+			     "preferences-focus", 0, v, NULL);
    return cfd;
 }
 

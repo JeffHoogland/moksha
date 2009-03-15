@@ -1090,7 +1090,7 @@ e_modapi_init(E_Module *m)
 
    snprintf(buf, sizeof(buf), "%s/e-module-battery.edj", e_module_dir_get(m));
    e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, 
-                                     "enlightenment/advanced");
+                                     "preferences-advanced");
    e_configure_registry_item_add("advanced/battery", 100, _("Battery Meter"), 
                                  NULL, buf, e_int_config_battery_module);
 

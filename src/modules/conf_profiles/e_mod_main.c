@@ -18,9 +18,9 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("settings", 80, _("Settings"),
-				     NULL, "enlightenment/settings");
+				     NULL, "preferences-system");
    e_configure_registry_item_add("settings/profiles", 50, _("Profiles"),
-				 NULL, "enlightenment/profiles",
+				 NULL, "preferences-profiles",
 				 e_int_config_profiles);
    conf_module = m;
    e_module_delayed_set(m, 1);

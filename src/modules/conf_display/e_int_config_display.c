@@ -474,16 +474,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      {
 	of = e_widget_framelist_add(evas, _("Rotation"), 0);
 	rg = e_widget_radio_group_new(&(cfdata->rotation));
-	ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/screen_normal", 24, 24, ECORE_X_RANDR_ROT_0, rg);
+	ob = e_widget_radio_icon_add(evas, NULL, "preferences-screen-normal", 24, 24, ECORE_X_RANDR_ROT_0, rg);
         e_widget_framelist_object_append(of, ob);
 	if (!(cfdata->can_rotate & ECORE_X_RANDR_ROT_0)) e_widget_disabled_set(ob, 1);
-	ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/screen_left", 24, 24, ECORE_X_RANDR_ROT_90, rg);
+	ob = e_widget_radio_icon_add(evas, NULL, "preferences-screen-left", 24, 24, ECORE_X_RANDR_ROT_90, rg);
         e_widget_framelist_object_append(of, ob);
 	if (!(cfdata->can_rotate & ECORE_X_RANDR_ROT_90)) e_widget_disabled_set(ob, 1);
-	ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/screen_around", 24, 24, ECORE_X_RANDR_ROT_180, rg);
+	ob = e_widget_radio_icon_add(evas, NULL, "preferences-screen-around", 24, 24, ECORE_X_RANDR_ROT_180, rg);
         e_widget_framelist_object_append(of, ob);
 	if (!(cfdata->can_rotate & ECORE_X_RANDR_ROT_180)) e_widget_disabled_set(ob, 1);
-	ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/screen_right", 24, 24, ECORE_X_RANDR_ROT_270, rg);
+	ob = e_widget_radio_icon_add(evas, NULL, "preferences-screen-right", 24, 24, ECORE_X_RANDR_ROT_270, rg);
         e_widget_framelist_object_append(of, ob);
 	if (!(cfdata->can_rotate & ECORE_X_RANDR_ROT_270)) e_widget_disabled_set(ob, 1);
 	e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 0, 1, 0);
@@ -492,10 +492,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (cfdata->can_flip)
      {
 	of = e_widget_framelist_add(evas, _("Mirroring"), 0);
-	ob = e_widget_check_icon_add(evas, NULL, "enlightenment/screen_hflip", 24, 24, &(cfdata->flip_x));
+	ob = e_widget_check_icon_add(evas, NULL, "preferences-screen-hflip", 24, 24, &(cfdata->flip_x));
         e_widget_framelist_object_append(of, ob);
 	if (!(cfdata->can_flip & ECORE_X_RANDR_FLIP_X)) e_widget_disabled_set(ob, 1);
-	ob = e_widget_check_icon_add(evas, NULL, "enlightenment/screen_vflip", 24, 24, &(cfdata->flip_y));
+	ob = e_widget_check_icon_add(evas, NULL, "preferences-screen-vflip", 24, 24, &(cfdata->flip_y));
         e_widget_framelist_object_append(of, ob);
 	if (!(cfdata->can_flip & ECORE_X_RANDR_FLIP_Y)) 
 	  e_widget_disabled_set(ob, 1);

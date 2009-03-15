@@ -107,7 +107,7 @@ e_int_menus_main_new(void)
 	dat->all_apps = subm;
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Applications"));
-	e_util_menu_item_theme_icon_set(mi, "enlightenment/applications");
+	e_util_menu_item_theme_icon_set(mi, "preferences-applications");
 	e_menu_item_submenu_set(mi, subm);
      }
 
@@ -139,7 +139,7 @@ e_int_menus_main_new(void)
    dat->lost_clients = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Lost Windows"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/lost_windows");
+   e_util_menu_item_theme_icon_set(mi, "preferences-windows-lost");
    e_menu_item_submenu_set(mi, subm);
  */
 
@@ -156,7 +156,7 @@ e_int_menus_main_new(void)
    dat->enlightenment = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Enlightenment"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/e");
+   e_util_menu_item_theme_icon_set(mi, "enlightenment");
    e_menu_item_submenu_set(mi, subm);
 
    mi = e_menu_item_new(subm);
@@ -1092,7 +1092,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	dat->lost_clients = subm;
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Lost Windows"));
-	e_util_menu_item_theme_icon_set(mi, "enlightenment/lost_windows");
+	e_util_menu_item_theme_icon_set(mi, "preferences-windows-lost");
 	e_menu_item_submenu_set(mi, subm);
      }
    

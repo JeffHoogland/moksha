@@ -31,7 +31,7 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "enlightenment/appearance");
+   e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "preferences-appearance");
    e_configure_registry_item_add("appearance/fonts", 40, _("Fonts"), NULL, "preferences-desktop-font", e_int_config_fonts);
    conf_module = m;
    e_module_delayed_set(m, 1);

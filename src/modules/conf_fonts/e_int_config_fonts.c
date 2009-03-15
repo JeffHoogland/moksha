@@ -829,8 +829,8 @@ _adv_enabled_font_cb_change(void *data, Evas_Object *obj)
 	  tc->font = eina_stringshare_ref(cfdata->cur_font);
 	if (cfdata->cur_enabled)
 	  {
-	     icon = edje_object_add(cfdata->evas);
-	     e_util_edje_icon_set(icon, "enlightenment/e");
+	     icon = e_icon_add(cfdata->evas);
+	     e_util_icon_theme_set(icon, "enlightenment");
 	  }
 	e_widget_ilist_nth_icon_set(cfdata->gui.class_list, n, icon);
      }

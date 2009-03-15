@@ -50,7 +50,7 @@ e_int_config_window_geometry(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Window Geometry"),
 			     "E", "_config_window_geometry_dialog",
-			     "enlightenment/window_manipulation", 0, v, NULL);
+			     "preferences-window-manipulation", 0, v, NULL);
    return cfd;
 }
 

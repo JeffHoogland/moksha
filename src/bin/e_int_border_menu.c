@@ -486,7 +486,7 @@ _e_border_menu_cb_application_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    e_menu_item_label_set(submi, _("To Launcher"));
    e_menu_item_submenu_pre_callback_set(submi, 
                                         _e_border_menu_cb_ibar_add_pre, bd);
-   e_util_menu_item_theme_icon_set(submi, "enlightenment/ibar_applications");
+   e_util_menu_item_theme_icon_set(submi, "preferences-applications-ibar");
 }
 
 static void

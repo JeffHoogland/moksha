@@ -35,7 +35,7 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "enlightenment/appearance");
+   e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "preferences-appearance");
    e_configure_registry_item_add("appearance/theme", 20, _("Theme"), NULL, "preferences-desktop-theme", e_int_config_theme);
    maug = e_int_menus_menu_augmentation_add("config/1", _e_mod_menu_add, NULL, NULL, NULL);
 

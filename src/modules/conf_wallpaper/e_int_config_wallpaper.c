@@ -549,13 +549,13 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Picture..."), "folder-image",
 			    _cb_import, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
-   ow = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
+   ow = e_widget_button_add(evas, _("Gradient..."), "preferences-gradient",
 			    _cb_gradient, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
 #ifdef HAVE_EXCHANGE
    if (online)
      {
-        ow = e_widget_button_add(evas, _("Online..."), "enlightenment/website",
+        ow = e_widget_button_add(evas, _("Online..."), "network-website",
                                  _cb_web, cfdata, NULL);
         e_widget_table_object_append(ot, ow, 2, 1, 1, 1, 1, 0, 0, 0);
      }
@@ -677,13 +677,13 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Picture..."), "folder-image",
 			    _cb_import, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
-   ow = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
+   ow = e_widget_button_add(evas, _("Gradient..."), "preferences-gradient",
 			    _cb_gradient, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
 #ifdef HAVE_EXCHANGE
    if (online)
      {
-        ow = e_widget_button_add(evas, _("Online..."), "enlightenment/website",
+        ow = e_widget_button_add(evas, _("Online..."), "network-website",
                                  _cb_web, cfdata, NULL);
         e_widget_table_object_append(ot, ow, 2, 1, 1, 1, 1, 0, 0, 0);
      }

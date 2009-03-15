@@ -699,7 +699,7 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
 
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Appearance"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/appearance");
+   e_util_menu_item_theme_icon_set(mi, "preferences-appearance");
    e_menu_item_submenu_set(mi, mn);
    e_object_del(E_OBJECT(mn));
 
@@ -727,7 +727,7 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
 
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Behavior"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/appearance");
+   e_util_menu_item_theme_icon_set(mi, "preferences-appearance");
    e_menu_item_submenu_set(mi, mn);
    e_object_del(E_OBJECT(mn));
 

@@ -22793,8 +22793,19 @@ group { name: "e/icons/"NAME ;                          \
 
 #define ICONMIME(NAME, FILE, SIZE) ICON("mimetypes/"NAME, FILE, SIZE)
 
-/* FreeDesktop.Org Icons   (Note: in the comment the old e icon name) */
-/* http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html */
+/* FreeDesktop.Org Icons
+ * http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html
+ *
+ * In the comment you can find the old e icon name.
+ *
+ * Icons marked with *** are not mentioned in the spec, but we still try to
+ * follow the naming convention.
+ *
+ * TO ADD A NEW ICON:
+ * 1. Search for a name in the spec OR
+ * 2. Search for a name in kde (oxigen) and gnome (tango - human) icon set OR
+ * 3. Try to follow the naming convention
+ */
 
 //Standard Action Icons
 ICON("help-about","logo_black_128.png",64)                      // "enlightenment/about"
@@ -22838,6 +22849,7 @@ ICON("view-inherit","icon_dummy.png",64)                 // *** // EFMBUTTON("in
 
 //Standard Status Icons
 ICON("dialog-warning","icon_warning.png",128)                   // "enlightenment/warning"
+ICON("unknown","icon_dummy.png",64)                      // *** // "enlightenment/unknown"
 
 //Standard Application Icons
 ICON("preferences-desktop","icon_desktops.png",64)                         // "enlightenment/desktops"
@@ -22880,14 +22892,58 @@ ICON("preferences-position-right","icon_shelf_right.png",64)                 // 
 ICON("preferences-position-right-top","icon_shelf_right_top.png",64)         // *** // "enlightenment/shelf_position_right_top"
 ICON("preferences-position-right-bottom","icon_shelf_right_bottom.png",64)   // *** // "enlightenment/shelf_position_right_bottom"
 
+ICON("preferences-window-manipulation","icon_window_manipulation.png",64)    // *** // "enlightenment/window_manipulation"
+ICON("preferences-window-maximize","icon_window_manipulation.png",64)        // *** // "enlightenment/window_maximize"
+ICON("preferences-window-stacking","icon_winlist.png",64)                    // *** // "enlightenment/window_stacking"
+ICON("preferences-window-geometry","icon_window_manipulation.png",64)        // *** // "enlightenment/window_geometry"
+ICON("preferences-windows-lost","icon_lost_windows.png",64)                  // *** // "enlightenment/lost_windows"
+
+ICON("preferences-gradient","icon_gradient.png",64)           // *** // "enlightenment/gradient"
+ICON("preferences-focus","icon_window_focus.png",64)          // *** // "enlightenment/focus"
+ICON("preferences-engine","icon_engine.png",64)               // *** // "enlightenment/engine"
+ICON("preferences-dialogs","icon_dummy.png",64)               // *** // "enlightenment/dialogs"
+ICON("preferences-interaction","icon_interaction.png",64)     // *** // "enlightenment/interaction"
+ICON("preferences-imc","icon_imc.png",64)                     // *** // "enlightenment/imc"
+ICON("preferences-desklock","icon_desklock.png",64)           // *** // "enlightenment/desklock"
+ICON("preferences-icon-theme","icon_icon_theme.png",64)       // *** // "enlightenment/icon_theme"
+ICON("preferences-transitions","icon_transitions.png",64)     // *** // "enlightenment/transitions"
+ICON("preferences-toolbar","icon_toolbar.png",64)             // *** // "enlightenment/toolbar"
+ICON("preferences-profiles","icon_profiles.png",64)           // *** // "enlightenment/profiles"
+ICON("preferences-startup","icon_startup.png",64)             // *** // "enlightenment/startup"
+ICON("preferences-winlist","icon_winlist.png",64)             // *** // "enlightenment/winlist"
+ICON("preferences-menus","icon_menus.png",64)                 // *** // "enlightenment/menus"
+ICON("preferences-menu-settings","icon_menu_settings.png",64) // *** // "enlightenment/menu_settings"
+ICON("preferences-advanced","icon_advanced.png",64)           // *** // "enlightenment/advanced"
+ICON("preferences-behavior","icon_behavior.png",64)           // *** // "enlightenment/behavior"
+ICON("preferences-appearance","icon_appearance.png",64)       // *** // "enlightenment/appearance"
+ICON("preferences-extensions","icon_extensions.png",64)       // *** // "enlightenment/extensions"
+ICON("preferences-file-icons","icon_file_icons.png",64)       // *** // "enlightenment/file_icons"
+ICON("preferences-pager","icon_pager.png",64)                 // *** // "enlightenment/pager"
+ICON("preferences-scale","icon_scale.png",64)                 // *** // "enlightenment/scale"
+ICON("preferences-directories","icon_directories.png",64)     // *** // "enlightenment/directories"
+
+ICON("preferences-screen-normal","icon_screen_normal.png",64) // *** // "enlightenment/screen_normal"
+ICON("preferences-screen-around","icon_screen_around.png",64) // *** // "enlightenment/screen_around"
+ICON("preferences-screen-left","icon_screen_left.png",64)     // *** // "enlightenment/screen_left"
+ICON("preferences-screen-right","icon_screen_right.png",64)   // *** // "enlightenment/screen_right"
+ICON("preferences-screen-vflip","icon_screen_vflip.png",64)   // *** // "enlightenment/screen_vflip"
+ICON("preferences-screen-hflip","icon_screen_hflip.png",64)   // *** // "enlightenment/screen_hflip"
+
+ICON("preferences-applications","icon_applications.png",64)                 // *** // "enlightenment/applications"
+ICON("preferences-applications-add","icon_applications_new.png",64)         // *** // "enlightenment/add_application"
+ICON("preferences-applications-ibar","icon_applications_ibar.png",64)       // *** // "enlightenment/ibar_applications"
+ICON("preferences-applications-restart","icon_applications_restart.png",64) // *** // "enlightenment/restart_applications"
+ICON("preferences-applications-startup","icon_applications_startup.png",64) // *** // "enlightenment/startup_applications"
+
 ICON("preferences-plugin","icon_modules.png",64)                                   // "enlightenment/modules"
-ICON("preferences-system","icon_configuration.png",64)                             // "enlightenment/configuration"
+ICON("preferences-system","icon_configuration.png",64)                             // "enlightenment/configuration" "enlightenment/settings"
 ICON("preferences-system-windows","icon_windows.png",64)                           // "enlightenment/windows" "enlightenment/showhide"
 ICON("preferences-system-performance","icon_performance.png",64)                   // "enlightenment/performance"
 ICON("preferences-system-power-management","icon_power_management.png",64)         // "enlightenment/power_management"
 ICON("preferences-system-screen-resolution","icon_screen_resolution.png",64)// *** // "enlightenment/screen_resolution"
 ICON("system-file-manager","icon_efm_folder.png",64)                               // "enlightenment/fileman"
 ICON("application-exit","icon_logout.png",64)                                      // "enlightenment/exit"
+ICON("enlightenment","logo_white_128.png",64)                               // *** // "enlightenment/e"
 
 //Standard Emblem Icons
 ICON("emblem-symbolic-link","icon_dummy.png",64)                // EFMBUTTON("symlink"
@@ -22899,6 +22955,8 @@ ICON("user-temp","icon_efm_tmp.png",64)                  // *** // "fileman/tmp"
 ICON("user-desktop","icon_efm_desktop.png",64)                  // "fileman/desktop"
 ICON("user-bookmarks","icon_favorites.png",64)                  // "enlightenment/favorites"
 ICON("folder-image","icon_wallpaper.png",64)                    // "enlightenment/picture"
+ICON("network-website","icon_globe.png",64)                     // "enlightenment/website"
+ICON("system","icon_system.png",64)                      // *** // "enlightenment/system"
 
 //Standard Device Icons
 ICON("computer","icon_efm_root.png", 64)                        // "fileman/root"
@@ -22915,131 +22973,6 @@ ICONMIME("inode/directory-locked","icon_efm_file.png",128)
 ICONMIME("inode/directory","icon_efm_folder.png",128)
 ICONMIME("inode/fifo","icon_efm_file.png",128)
 ICONMIME("inode/socket","icon_efm_file.png",128)
-
-
-// Widget Icons //
-
-//ICON("enlightenment/check","icon_check.png",64)
-//ICON("widget/swap","icon_swap.png",64)
-//ICON("widget/del","icon_del.png",64)
-//ICON("widget/new","icon_new.png",64)
-//ICON("widget/add","icon_add.png",64)
-//ICON("widget/add_fav","icon_add_fav.png",64)
-//ICON("widget/up_arrow","icon_up_arrow.png",64)
-//ICON("widget/down_arrow","icon_down_arrow.png",64)
-//ICON("widget/up_dir","icon_up_arrow.png",64)
-//ICON("widget/new_dialog","icon_right_arrow.png",64)
-//ICON("widget/config","icon_config.png",64)
-//ICON("widget/resize","icon_resize.png",64)
-//ICON("widget/open","icon_check.png",64)
-//ICON("widget/close","icon_close.png",64)
-//ICON("widget/reset","icon_reset.png",64)
-
-/// Normal Icons ///
-
-//ICON("enlightenment/warning", "icon_warning.png",128)
-ICON("enlightenment/website","icon_globe.png",64)
-//ICON("enlightenment/background","icon_wallpaper.png",64)
-//ICON("enlightenment/picture","icon_wallpaper.png",64)
-ICON("enlightenment/gradient","icon_gradient.png",64)
-ICON("enlightenment/e","logo_white_128.png",64)
-//ICON("enlightenment/about","logo_black_128.png",64)
-//ICON("enlightenment/reset","icon_reset.png",128)
-//ICON("enlightenment/exit","icon_logout.png",64)
-//ICON("enlightenment/logout","icon_logout.png",128)
-//ICON("enlightenment/halt","icon_halt.png",128)
-//ICON("enlightenment/reboot","icon_reboot.png",128)
-//ICON("enlightenment/suspend","icon_suspend.png",128)
-//ICON("enlightenment/hibernate","icon_hibernate.png",128)
-//ICON("enlightenment/colors","icon_colors.png",64)
-//ICON("enlightenment/themes","icon_theme.png",64)
-//ICON("enlightenment/screen_setup","icon_screen_setup.png",64)
-//ICON("enlightenment/windows","icon_windows.png",64)
-//ICON("enlightenment/showhide","icon_windows.png",64)
-ICON("enlightenment/lost_windows","icon_lost_windows.png",64)
-//ICON("enlightenment/window_remembers","icon_window_remembers.png",64)
-ICON("enlightenment/focus","icon_window_focus.png",64)
-//ICON("enlightenment/modules","icon_modules.png",64)
-//ICON("enlightenment/favorites","icon_favorites.png",64)
-//ICON("enlightenment/desktops","icon_desktops.png",64)
-//ICON("enlightenment/configuration","icon_configuration.png",64)
-ICON("enlightenment/settings","icon_configuration.png",64)
-ICON("enlightenment/engine","icon_engine.png",64)
-ICON("enlightenment/dialogs","icon_dummy.png",64)
-//ICON("enlightenment/intl","icon_intl.png",64)
-ICON("enlightenment/interaction","icon_interaction.png",64)
-ICON("enlightenment/imc","icon_imc.png",64)
-ICON("enlightenment/system","icon_system.png",64)
-//ICON("enlightenment/run","icon_run.png",64)
-ICON("enlightenment/directories","icon_directories.png",64)
-//ICON("enlightenment/fileman","icon_efm_folder.png",64)
-ICON("enlightenment/unknown","icon_dummy.png",64)
-//ICON("enlightenment/mouse","icon_mouse.png",64)
-//ICON("enlightenment/mouse_left","icon_mouse_left.png",64)
-//ICON("enlightenment/mouse_right","icon_mouse_right.png",64)
-//ICON("enlightenment/mouse_middle","icon_mouse_middle.png",64)
-//ICON("enlightenment/mouse_extra","icon_mouse_extra.png",64)
-//ICON("enlightenment/mouse_wheel","icon_mouse_wheel.png",64)
-//ICON("enlightenment/mouse_clean","icon_mouse_clean.png",64)
-//ICON("enlightenment/keys","icon_keys.png",64)
-ICON("enlightenment/desklock","icon_desklock.png",64)
-//ICON("enlightenment/desklock_menu","icon_desklock_menu.png",128)
-//ICON("enlightenment/screen_resolution","icon_screen_resolution.png",64)
-//ICON("enlightenment/shelf","icon_shelf.png",64)
-//ICON("enlightenment/fonts","icon_fonts.png",64)
-ICON("enlightenment/icon_theme","icon_icon_theme.png",64)
-ICON("enlightenment/transitions","icon_transitions.png",64)
-ICON("enlightenment/toolbar","icon_toolbar.png",64)
-//ICON("enlightenment/performance","icon_performance.png",64)
-ICON("enlightenment/profiles","icon_profiles.png",64)
-ICON("enlightenment/startup","icon_startup.png",64)
-ICON("enlightenment/winlist","icon_winlist.png",64)
-ICON("enlightenment/window_manipulation","icon_window_manipulation.png",64)
-ICON("enlightenment/window_maximize","icon_window_manipulation.png",64)
-ICON("enlightenment/window_stacking","icon_winlist.png",64)
-ICON("enlightenment/window_geometry","icon_window_manipulation.png",64)
-ICON("enlightenment/menus","icon_menus.png",64)
-ICON("enlightenment/menu_settings","icon_menu_settings.png",64)
-ICON("enlightenment/advanced","icon_advanced.png",64)
-ICON("enlightenment/behavior","icon_behavior.png",64)
-ICON("enlightenment/appearance","icon_appearance.png",64)
-ICON("enlightenment/extensions","icon_extensions.png",64)
-ICON("enlightenment/file_icons","icon_file_icons.png",64)
-ICON("enlightenment/applications","icon_applications.png",64)
-ICON("enlightenment/add_application","icon_applications_new.png",64)
-ICON("enlightenment/ibar_applications","icon_applications_ibar.png",64)
-//ICON("enlightenment/autoscroll","icon_autoscroll.png",64)
-ICON("enlightenment/restart_applications","icon_applications_restart.png",64)
-ICON("enlightenment/startup_applications","icon_applications_startup.png",64)
-//ICON("enlightenment/power_management","icon_power_management.png",64)
-//ICON("enlightenment/screensaver","icon_screensaver.png",64)
-ICON("enlightenment/pager","icon_pager.png",64)
-//ICON("enlightenment/mixer","icon_mixer.png",64)
-ICON("enlightenment/scale","icon_scale.png",64)
-ICON("enlightenment/screen_normal","icon_screen_normal.png",64)
-ICON("enlightenment/screen_around","icon_screen_around.png",64)
-ICON("enlightenment/screen_left","icon_screen_left.png",64)
-ICON("enlightenment/screen_right","icon_screen_right.png",64)
-ICON("enlightenment/screen_vflip","icon_screen_vflip.png",64)
-ICON("enlightenment/screen_hflip","icon_screen_hflip.png",64)
-//ICON("enlightenment/shelf_position_bottom","icon_shelf_bottom.png",64)
-//ICON("enlightenment/shelf_position_bottom_left","icon_shelf_bottom_left.png",64)
-//ICON("enlightenment/shelf_position_bottom_right","icon_shelf_bottom_right.png",64)
-//ICON("enlightenment/shelf_position_top","icon_shelf_top.png",64)
-//ICON("enlightenment/shelf_position_top_left","icon_shelf_top_left.png",64)
-//ICON("enlightenment/shelf_position_top_right","icon_shelf_top_right.png",64)
-//ICON("enlightenment/shelf_position_left","icon_shelf_left.png",64)
-//ICON("enlightenment/shelf_position_left_top","icon_shelf_left_top.png",64)
-//ICON("enlightenment/shelf_position_left_bottom","icon_shelf_left_bottom.png",64)
-//ICON("enlightenment/shelf_position_right","icon_shelf_right.png",64)
-//ICON("enlightenment/shelf_position_right_top","icon_shelf_right_top.png",64)
-//ICON("enlightenment/shelf_position_right_bottom","icon_shelf_right_bottom.png",64)
-//ICON("enlightenment/shelf_bottom_desk","icon_shelf_bottom_desk.png",64)
-//ICON("enlightenment/shelf_custom","icon_shelf_custom.png",64)
-//ICON("enlightenment/shelf_dock","icon_shelf_dock.png",64)
-//ICON("enlightenment/shelf_menu_bar","icon_shelf_menu_bar.png",64)
-//ICON("enlightenment/shelf_panel","icon_shelf_panel.png",64)
-//ICON("enlightenment/shelf_top_desk","icon_shelf_top_desk.png",64)
 
 // Window Border menu icons //
 
@@ -23081,46 +23014,6 @@ BORDERICON("locks","icon_border_lock.png")
 BORDERICON("locks_user","icon_border_lock.png")
 BORDERICON("locks_application","icon_border_lock.png")
 BORDERICON("properties","icon_border_properties.png")
-
-// EFM menu button icons //
-
-#define EFMBUTTON(NAME, FILE)                           \
-group { name: "e/fileman/default/button/"NAME;          \
-   parts {                                              \
-      part { name: "icon";                              \
-	 mouse_events:  0;                              \
-	 description { state: "default" 0.0;            \
-	    aspect: 1.0 1.0;                            \
-	    aspect_preference: BOTH;                    \
-	    image.image: FILE COMP;                     \
-	    image.normal: FILE ;                        \
-	 }                                              \
-      }                                                 \
-   }                                                    \
-}
-
-//EFMBUTTON("open","icon_efm_open.png")
-//EFMBUTTON("copy","icon_efm_copy.png")
-//EFMBUTTON("cut","icon_efm_cut.png")
-//EFMBUTTON("paste","icon_efm_paste.png")
-//EFMBUTTON("delete","icon_efm_delete.png")
-//EFMBUTTON("properties","icon_efm_properties.png")
-//EFMBUTTON("rename","icon_efm_rename.png")
-//EFMBUTTON("arrange_name","icon_efm_arrange_name.png")//  NOT USED
-//EFMBUTTON("arrange","icon_efm_arrange.png")//  NOT USED
-//EFMBUTTON("arrange_time","icon_efm_arrange_time.png")//  NOT USED
-//EFMBUTTON("new","icon_efm_new.png")
-//EFMBUTTON("new_dir","icon_efm_new_dir.png")
-//EFMBUTTON("refresh","icon_efm_refresh.png")
-//EFMBUTTON("view_details","icon_efm_view_details.png")  NOT USED
-//EFMBUTTON("view_name","icon_efm_view_name.png")  NOT USED
-//EFMBUTTON("view","icon_efm_view.png")  NOT USED
-//EFMBUTTON("select","icon_efm_select.png")
-//EFMBUTTON("sort","icon_efm_sort.png")
-//EFMBUTTON("ordering","icon_efm_sort.png")
-//EFMBUTTON("hidden_files","icon_efm_view.png")
-//EFMBUTTON("inherit","icon_dummy.png")
-//EFMBUTTON("symlink","icon_dummy.png")
 
 // EFM icons //
 

@@ -23,7 +23,7 @@ e_modapi_init(E_Module *m)
    /* Set up a new configuration panel */
    snprintf(buf, sizeof(buf), "%s/e-module-gadman.edj", m->dir);
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, 
-                                     "enlightenment/extensions");
+                                     "preferences-extensions");
    e_configure_registry_item_add("extensions/gadman", 150, _("Gadgets"), NULL, 
                                  buf, _config_gadman_module);
 

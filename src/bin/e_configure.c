@@ -12,7 +12,7 @@ static Eina_List *handlers = NULL;
 EAPI void
 e_configure_init(void)
 {
-   e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, "enlightenment/extensions");
+   e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, "preferences-extensions");
    e_configure_registry_item_add("extensions/modules", 10, _("Modules"), NULL, "preferences-plugin", e_int_config_modules);
 
    handlers = eina_list_append
@@ -120,7 +120,7 @@ _e_configure_efreet_desktop_update(void)
 	     snprintf(buf, sizeof(buf), "system/%s", label);
 	     cfg_cat_cfg = buf;
 	     ic = cfg_cat_icon;
-	     if (!ic) ic = "enlightenment/system";
+	     if (!ic) ic = "system";
 	     e_configure_registry_category_add("system",
 					       1000, _("System"),
 					       NULL,

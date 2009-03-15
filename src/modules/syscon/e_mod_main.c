@@ -120,6 +120,6 @@ _e_mod_menu_add(void *data, E_Menu *m)
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("System"));
-   e_util_menu_item_theme_icon_set(mi, "enlightenment/system");
+   e_util_menu_item_theme_icon_set(mi, "system");
    e_menu_item_callback_set(mi, _e_mod_syscon_cb, NULL);
 }

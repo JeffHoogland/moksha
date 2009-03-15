@@ -32,7 +32,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("screen", 30, _("Screen"), NULL, "preferences-desktop-display");
-   e_configure_registry_item_add("screen/screen_lock", 30, _("Screen Lock"), NULL, "enlightenment/desklock", e_int_config_desklock);
+   e_configure_registry_item_add("screen/screen_lock", 30, _("Screen Lock"), NULL, "preferences-desklock", e_int_config_desklock);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;

@@ -38,11 +38,11 @@ struct _E_Config_Dialog_Data
 */
 const CFTypes _types[] = 
 {
-     {"appearance", N_("Appearance"),    "enlightenment/appearance"},
+     {"appearance", N_("Appearance"),    "preferences-appearance"},
      {"config",     N_("Settings"),      "preferences-system"},
      {"fileman",    N_("File Manager"),  "system-file-manager"},
      {"shelf",      N_("Shelf"),         "preferences-desktop-shelf"}, //FIXME use gadget icon
-     {"system",     N_("System"),        "enlightenment/system"},
+     {"system",     N_("System"),        "system"},
      {NULL, NULL, NULL}
 };
 

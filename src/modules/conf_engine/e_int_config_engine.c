@@ -37,7 +37,7 @@ e_int_config_engine(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Engine Settings"),
 			    "E", "_config_engine_dialog",
-			     "enlightenment/engine", 0, v, NULL);
+			     "preferences-engine", 0, v, NULL);
    return cfd;
 }
 
@@ -129,7 +129,7 @@ _cb_composite_change(void *data, Evas_Object *obj)
 	  {
 	     /* pop dialog */
 	     e_confirm_dialog_show(_("Enable Composite Support ?"),
-				   "enlightenment/engine",
+				   "preferences-engine",
 				   _("You have chosen to enable composite "
 				     "support,<br>but your current screen does "
 				     "not support composite.<br><br>"

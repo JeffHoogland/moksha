@@ -43,7 +43,7 @@ e_int_config_window_maxpolicy(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Window Maximize Policy"),
 			     "E", "_config_window_maxpolicy_dialog",
-			     "enlightenment/window_manipulation", 0, v, NULL);
+			     "preferences-window-manipulation", 0, v, NULL);
    return cfd;
 }
 

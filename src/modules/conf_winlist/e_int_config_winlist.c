@@ -54,7 +54,7 @@ e_int_config_winlist(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Window List Settings"),
 			     "E", "_config_winlist_dialog",
-			     "enlightenment/winlist", 0, v, NULL);
+			     "preferences-winlist", 0, v, NULL);
    return cfd;
 }
 

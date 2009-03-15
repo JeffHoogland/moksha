@@ -292,7 +292,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.o_del_all = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_button_add(evas, _("Restore Mouse and Wheel Binding Defaults"), "enlightenment/e",
+   ob = e_widget_button_add(evas, _("Restore Mouse and Wheel Binding Defaults"), "enlightenment",
 			    _restore_mouse_binding_defaults_cb, cfdata, NULL);
    e_widget_frametable_object_append(ot, ob, 0, 3, 2, 1, 1, 0, 1, 0);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);

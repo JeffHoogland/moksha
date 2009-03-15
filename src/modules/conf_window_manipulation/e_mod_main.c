@@ -32,9 +32,9 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "preferences-system-windows");
-   e_configure_registry_item_add("windows/window_geometry", 30, _("Window Geometry"), NULL, "enlightenment/window_geometry", e_int_config_window_geometry);
-   e_configure_registry_item_add("windows/window_stacking", 30, _("Window Stacking"), NULL, "enlightenment/window_stacking", e_int_config_window_stacking);
-   e_configure_registry_item_add("windows/window_maxpolicy", 30, _("Window Maximize Policy"), NULL, "enlightenment/window_maximize", e_int_config_window_maxpolicy);
+   e_configure_registry_item_add("windows/window_geometry", 30, _("Window Geometry"), NULL, "preferences-window-geometry", e_int_config_window_geometry);
+   e_configure_registry_item_add("windows/window_stacking", 30, _("Window Stacking"), NULL, "preferences-window-stacking", e_int_config_window_stacking);
+   e_configure_registry_item_add("windows/window_maxpolicy", 30, _("Window Maximize Policy"), NULL, "preferences-window-maximize", e_int_config_window_maxpolicy);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;

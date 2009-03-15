@@ -62,7 +62,7 @@ e_int_config_mime(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
    
    cfd = e_config_dialog_new(con, _("File Icons"), "E", "_config_mime_dialog",
-			     "enlightenment/file_icons", 0, v, NULL);
+			     "preferences-file-icons", 0, v, NULL);
    return cfd;
 }
 

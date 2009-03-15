@@ -43,7 +43,7 @@ e_int_config_menus(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Menu Settings"),
 			     "E", "_config_menus_dialog",
-			     "enlightenment/menus", 0, v, NULL);
+			     "preferences-menus", 0, v, NULL);
    return cfd;
 }
 

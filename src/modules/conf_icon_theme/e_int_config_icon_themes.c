@@ -42,7 +42,7 @@ e_int_config_icon_themes(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
 			     _("Icon Theme Settings"),
 			     "E", "_config_icon_theme_dialog",
-			     "enlightenment/icon_theme", 0, v, NULL);
+			     "preferences-icon-theme", 0, v, NULL);
    return cfd;
 }
 

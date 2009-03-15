@@ -133,7 +133,7 @@ e_int_config_imc_import(E_Config_Dialog *parent)
    e_win_size_min_set(win, w, h);
    e_win_size_max_set(win, 99999, 99999);
    e_win_show(win);
-   e_win_border_icon_set(win, "enlightenment/imc");
+   e_win_border_icon_set(win, "preferences-imc");
    
    win->data = import;
    

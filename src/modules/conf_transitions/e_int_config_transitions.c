@@ -43,7 +43,7 @@ e_int_config_transitions(E_Container *con, const char *params __UNUSED__)
    
    cfd = e_config_dialog_new(con, _("Transition Settings"),
 			     "E", "_config_transitions_dialog",
-			     "enlightenment/transitions", 0, v, NULL);
+			     "preferences-transitions", 0, v, NULL);
    return cfd;
 }
 

@@ -31,8 +31,8 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("keyboard_and_mouse", 80, _("Input"), NULL, "enlightenment/behavior");
-   e_configure_registry_item_add("keyboard_and_mouse/interaction", 11, _("Interaction"), NULL, "enlightenment/interaction", e_int_config_interaction);
+   e_configure_registry_category_add("keyboard_and_mouse", 80, _("Input"), NULL, "preferences-behavior");
+   e_configure_registry_item_add("keyboard_and_mouse/interaction", 11, _("Interaction"), NULL, "preferences-interaction", e_int_config_interaction);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;

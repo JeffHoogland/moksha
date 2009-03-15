@@ -1080,7 +1080,7 @@ static void
 _mixer_configure_registry_register(void)
 {
    e_configure_registry_category_add(_reg_cat, 90, _("Extensions"), NULL,
-                                     "enlightenment/extensions");
+                                     "preferences-extensions");
    e_configure_registry_item_add(_reg_item, 30, _(_Name), NULL,
 				  "preferences-desktop-mixer",
 				 _mixer_module_config);

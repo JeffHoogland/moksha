@@ -7041,7 +7041,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("View Mode"));
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/appearance");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-appearance");
 	     e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_pre, sd);
 	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
@@ -7200,7 +7200,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("View Mode"));
-	     e_util_menu_item_theme_icon_set(mi, "enlightenment/appearance");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-appearance");
 	     e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_pre, sd);
 	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
@@ -7827,7 +7827,7 @@ _e_fm2_new_directory(void *data, E_Menu *m, E_Menu_Item *mi)
    con = e_container_current_get(man);
    if (!con) return;
    
-   sd->entry_dialog = e_entry_dialog_show(_("Create a new Directory"), "enlightenment/e",
+   sd->entry_dialog = e_entry_dialog_show(_("Create a new Directory"), "enlightenment",
 					  _("New Directory Name:"),
 					  "", NULL, NULL, 
 					  _e_fm2_new_directory_yes_cb, 
@@ -7889,7 +7889,7 @@ _e_fm2_file_rename(void *data, E_Menu *m, E_Menu_Item *mi)
    snprintf(text, PATH_MAX + 256,
 	    _("Rename %s to:"),
 	    ic->info.file);
-   ic->entry_dialog = e_entry_dialog_show(_("Rename File"), "enlightenment/e",
+   ic->entry_dialog = e_entry_dialog_show(_("Rename File"), "enlightenment",
 					  text, ic->info.file, NULL, NULL, 
 					  _e_fm2_file_rename_yes_cb, 
 					  _e_fm2_file_rename_no_cb, ic);

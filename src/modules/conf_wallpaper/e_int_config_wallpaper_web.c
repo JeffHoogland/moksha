@@ -120,7 +120,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    web->parent = parent;
 
    e_dialog_title_set(dia, _("Exchange wallpapers"));
-   e_dialog_border_icon_set(dia, "enlightenment/website");
+   e_dialog_border_icon_set(dia, "network-website");
    e_dialog_resizable_set(dia, 1);
    e_dialog_button_add(dia, _("Close"), NULL, _web_close_cb, web);
 

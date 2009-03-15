@@ -1601,7 +1601,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
    e_widget_min_size_get(ot, &mw, &mh);
    e_dialog_content_set(dia, ot, mw, mh);
    e_dialog_show(dia);
-   e_dialog_border_icon_set(dia, "enlightenment/applications");
+   e_dialog_border_icon_set(dia, "preferences-applications");
 }
 
 static void

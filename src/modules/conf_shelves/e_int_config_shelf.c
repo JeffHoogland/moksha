@@ -132,47 +132,47 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 	if (!label) label = _("Shelf #");
 	snprintf(buf, sizeof(buf), "%s %i", label, es->id);
 
-	ob = edje_object_add(evas);
+	ob = e_icon_add(evas);
         switch (es->cfg->orient)
           {
           case E_GADCON_ORIENT_LEFT:
-             e_util_edje_icon_set(ob, "preferences-position-left");
+             e_util_icon_theme_set(ob, "preferences-position-left");
              break;
           case E_GADCON_ORIENT_RIGHT:
-             e_util_edje_icon_set(ob, "preferences-position-right");
+             e_util_icon_theme_set(ob, "preferences-position-right");
              break;
           case E_GADCON_ORIENT_TOP:
-             e_util_edje_icon_set(ob, "preferences-position-top");
+             e_util_icon_theme_set(ob, "preferences-position-top");
              break;
           case E_GADCON_ORIENT_BOTTOM:
-             e_util_edje_icon_set(ob, "preferences-position-bottom");
+             e_util_icon_theme_set(ob, "preferences-position-bottom");
              break;
           case E_GADCON_ORIENT_CORNER_TL:
-             e_util_edje_icon_set(ob, "preferences-position-top-left");
+             e_util_icon_theme_set(ob, "preferences-position-top-left");
              break;
           case E_GADCON_ORIENT_CORNER_TR:
-             e_util_edje_icon_set(ob, "preferences-position-top-right");
+             e_util_icon_theme_set(ob, "preferences-position-top-right");
              break;
           case E_GADCON_ORIENT_CORNER_BL:
-             e_util_edje_icon_set(ob, "preferences-position-bottom-left");
+             e_util_icon_theme_set(ob, "preferences-position-bottom-left");
              break;
           case E_GADCON_ORIENT_CORNER_BR:
-             e_util_edje_icon_set(ob, "preferences-position-bottom-right");
+             e_util_icon_theme_set(ob, "preferences-position-bottom-right");
              break;
           case E_GADCON_ORIENT_CORNER_LT:
-             e_util_edje_icon_set(ob, "preferences-position-left-top");
+             e_util_icon_theme_set(ob, "preferences-position-left-top");
              break;
           case E_GADCON_ORIENT_CORNER_RT:
-             e_util_edje_icon_set(ob, "preferences-position-right-top");
+             e_util_icon_theme_set(ob, "preferences-position-right-top");
              break;
           case E_GADCON_ORIENT_CORNER_LB:
-             e_util_edje_icon_set(ob, "preferences-position-left-bottom");
+             e_util_icon_theme_set(ob, "preferences-position-left-bottom");
              break;
           case E_GADCON_ORIENT_CORNER_RB:
-             e_util_edje_icon_set(ob, "preferences-position-right-bottom");
+             e_util_icon_theme_set(ob, "preferences-position-right-bottom");
              break;
           default:
-             e_util_edje_icon_set(ob, "enlightenment/e");
+             e_util_icon_theme_set(ob, "enlightenment");
              break;
           }
 	e_widget_ilist_append(cfdata->o_list, ob, buf, 
