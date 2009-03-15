@@ -189,7 +189,7 @@ e_scrollframe_extern_pan_set(Evas_Object *obj, Evas_Object *pan,
 EAPI int
 e_scrollframe_custom_theme_set(Evas_Object *obj, char *custom_category, char *custom_group)
 {
-   API_ENTRY return;
+   API_ENTRY return 0;
 
    if (!e_theme_edje_object_set(sd->edje_obj, custom_category, custom_group))
      return 0;
@@ -204,7 +204,7 @@ e_scrollframe_custom_theme_set(Evas_Object *obj, char *custom_category, char *cu
 EAPI int
 e_scrollframe_custom_edje_file_set(Evas_Object *obj, char *file, char *group)
 {
-   API_ENTRY return;
+   API_ENTRY return 0;
 
    if (!edje_object_file_set(sd->edje_obj, file, group))
      return 0;
