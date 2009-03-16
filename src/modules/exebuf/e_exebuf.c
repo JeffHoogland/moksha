@@ -1308,7 +1308,7 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
    ev_last_is_mouse = 0;
    
    ev = event;
-   if (ev->window != input_window) return 1;
+   if (ev->event_window != input_window) return 1;
    if      (!strcmp(ev->key, "Up"))
      _e_exebuf_prev();
    else if (!strcmp(ev->key, "Down"))
@@ -1363,7 +1363,7 @@ _e_exebuf_cb_mouse_down(void *data, int type, void *event)
    Ecore_Event_Mouse_Button *ev;
    
    ev = event;
-   if (ev->window != input_window) return 1;
+   if (ev->event_window != input_window) return 1;
 
    if (ev_last_mouse_exe && (exe_sel != ev_last_mouse_exe))
      {
@@ -1381,7 +1381,7 @@ _e_exebuf_cb_mouse_up(void *data, int type, void *event)
    Ecore_Event_Mouse_Button *ev;
    
    ev = event;
-   if (ev->window != input_window) return 1;
+   if (ev->event_window != input_window) return 1;
    if (ev->buttons == 1) 
      _e_exebuf_exec();
    else if (ev->buttons == 2)
@@ -1396,7 +1396,7 @@ _e_exebuf_cb_mouse_move(void *data, int type, void *event)
    Ecore_Event_Mouse_Move *ev;
 
    ev = event;
-   if (ev->window != input_window) return 1;
+   if (ev->event_window != input_window) return 1;
 
    if (!ev_last_is_mouse)
      {
@@ -1426,7 +1426,7 @@ _e_exebuf_cb_mouse_wheel(void *data, int type, void *event)
    Ecore_Event_Mouse_Wheel *ev;
    
    ev = event;
-   if (ev->window != input_window) return 1;
+   if (ev->event_window != input_window) return 1;
 
    ev_last_is_mouse = 0;
 
