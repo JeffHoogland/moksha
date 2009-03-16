@@ -10920,6 +10920,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 part {
 	    name: "e.swallow.icon";
 	    type: SWALLOW;
+	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
 	       aspect: 1.0 1.0;
