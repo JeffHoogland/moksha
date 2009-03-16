@@ -21,14 +21,14 @@
       if (act) act->func.go_mouse = _e_actions_act_##name##_go_mouse; \
    }
 #define ACT_FN_GO_MOUSE(act) \
-   static void _e_actions_act_##act##_go_mouse(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Button_Down *ev)
+   static void _e_actions_act_##act##_go_mouse(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev)
 #define ACT_GO_WHEEL(name) \
    { \
       act = e_action_add(#name); \
       if (act) act->func.go_wheel = _e_actions_act_##name##_go_wheel; \
    }
 #define ACT_FN_GO_WHEEL(act) \
-   static void _e_actions_act_##act##_go_wheel(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Wheel *ev)
+   static void _e_actions_act_##act##_go_wheel(E_Object *obj, const char *params, Ecore_Event_Mouse_Wheel *ev)
 #define ACT_GO_EDGE(name) \
    { \
       act = e_action_add(#name); \
@@ -49,7 +49,7 @@
       if (act) act->func.go_key = _e_actions_act_##name##_go_key; \
    }
 #define ACT_FN_GO_KEY(act) \
-   static void _e_actions_act_##act##_go_key(E_Object *obj, const char *params, Ecore_X_Event_Key_Down *ev)
+   static void _e_actions_act_##act##_go_key(E_Object *obj, const char *params, Ecore_Event_Key *ev)
 #define ACT_END(name) \
    { \
       act = e_action_add(#name); \
@@ -63,14 +63,14 @@
       if (act) act->func.end_mouse = _e_actions_act_##name##_end_mouse; \
    }
 #define ACT_FN_END_MOUSE(act) \
-   static void _e_actions_act_##act##_end_mouse(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Button_Up *ev)
+   static void _e_actions_act_##act##_end_mouse(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev)
 #define ACT_END_KEY(name) \
    { \
       act = e_action_add(#name); \
       if (act) act->func.end_key = _e_actions_act_##name##_end_key; \
    }
 #define ACT_FN_END_KEY(act) \
-   static void _e_actions_act_##act##_end_key(E_Object *obj, const char *params, Ecore_X_Event_Key_Up *ev)
+   static void _e_actions_act_##act##_end_key(E_Object *obj, const char *params, Ecore_Event_Key *ev)
 
 /* local subsystem functions */
 static void _e_action_free(E_Action *act);
@@ -1614,7 +1614,7 @@ ACT_FN_GO_MOUSE(menu_show)
 		  y -= zone->container->y;
 		  e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
 		  e_menu_activate_mouse(m, zone, x, y, 1, 1,
-					E_MENU_POP_DIRECTION_DOWN, ev->time);
+					E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	       }
 	  }
      }
@@ -2332,7 +2332,7 @@ _delayed_action_list_parse(Delayed_Action *da, const char *params)
 }
 
 static void
-_delayed_action_key_add(E_Object *obj, const char *params, Ecore_X_Event_Key_Down *ev)
+_delayed_action_key_add(E_Object *obj, const char *params, Ecore_Event_Key *ev)
 {
    Delayed_Action *da;
    
@@ -2350,7 +2350,7 @@ _delayed_action_key_add(E_Object *obj, const char *params, Ecore_X_Event_Key_Dow
 }
 
 static void
-_delayed_action_key_del(E_Object *obj, const char *params, Ecore_X_Event_Key_Up *ev)
+_delayed_action_key_del(E_Object *obj, const char *params, Ecore_Event_Key *ev)
 {
    Eina_List *l;
    
@@ -2371,7 +2371,7 @@ _delayed_action_key_del(E_Object *obj, const char *params, Ecore_X_Event_Key_Up 
 }
 
 static void
-_delayed_action_mouse_add(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Button_Down *ev)
+_delayed_action_mouse_add(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev)
 {
    Delayed_Action *da;
    
@@ -2383,13 +2383,13 @@ _delayed_action_mouse_add(E_Object *obj, const char *params, Ecore_X_Event_Mouse
 	e_object_ref(da->obj);
      }
    da->mouse = 1;
-   da->button = ev->button;
+   da->button = ev->buttons;
    if (params) _delayed_action_list_parse(da, params);
    _delayed_actions = eina_list_append(_delayed_actions, da);
 }
 
 static void
-_delayed_action_mouse_del(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Button_Up *ev)
+_delayed_action_mouse_del(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev)
 {
    Eina_List *l;
    
@@ -2399,7 +2399,7 @@ _delayed_action_mouse_del(E_Object *obj, const char *params, Ecore_X_Event_Mouse
 	
 	da = l->data;
 	if ((da->obj == obj) && (da->mouse) && 
-	    (ev->button == da->button))
+	    (ev->buttons == da->button))
 	  {
 	     _delayed_action_do(da);
 	     _delayed_action_free(da);

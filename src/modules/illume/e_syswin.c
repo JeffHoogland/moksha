@@ -100,7 +100,7 @@ e_syswin_new(E_Zone *zone, const char *themedir)
 
    esw->handlers = eina_list_append
      (esw->handlers,
-      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
 			      _e_syswin_cb_mouse_up, esw));
    
    e_object_del_attach_func_set(E_OBJECT(esw), _e_syswin_object_del_attach);
@@ -303,12 +303,12 @@ _e_syswin_slide(E_Syswin *esw, int out, double len)
 static int
 _e_syswin_cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
+   Ecore_Event_Mouse_Button *ev;
    E_Syswin *esw;
    
    ev = event;
    esw = data;
-   if (ev->win == esw->clickwin)
+   if (ev->window == esw->clickwin)
      {
 	if (esw->out) _e_syswin_slide(esw, 0, 1.0);
 	else _e_syswin_slide(esw, 1, 1.0);

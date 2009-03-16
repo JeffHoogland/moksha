@@ -9,8 +9,8 @@
 /* actual module specifics */
 
 static void _e_mod_action_winlist_cb(E_Object *obj, const char *params);
-static void _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Button_Down *ev);
-static void _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_X_Event_Key_Down *ev);
+static void _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev);
+static void _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key *ev);
 
 static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
@@ -118,7 +118,7 @@ _e_mod_action_winlist_cb(E_Object *obj, const char *params)
 }
 
 static void
-_e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Button_Down *ev)
+_e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev)
 {
    E_Zone *zone = NULL;
    
@@ -164,7 +164,7 @@ _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_X_Event_
 }
 
 static void
-_e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_X_Event_Key_Down *ev)
+_e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key *ev)
 {
    E_Zone *zone = NULL;
    

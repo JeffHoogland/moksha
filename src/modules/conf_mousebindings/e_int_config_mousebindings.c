@@ -1281,15 +1281,15 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
    e_grabinput_get(cfdata->locals.bind_win, 0, cfdata->locals.bind_win);
 
    cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
+			      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
 				 _grab_key_down_cb, cfdata));
 
    cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
+			      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
 				 _grab_mouse_down_cb, cfdata));
 
    cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
+			      ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
 				 _grab_mouse_wheel_cb, cfdata));
 
    e_dialog_show(cfdata->locals.dia);
@@ -1323,27 +1323,27 @@ _grab_mouse_down_cb(void *data, int type, void *event)
    E_Config_Binding_Wheel *bw;
    int mod = E_BINDING_MODIFIER_NONE, n;
 
-   Ecore_X_Event_Mouse_Button_Down *ev;
+   Ecore_Event_Mouse_Button *ev;
    
    ev = event;
    cfdata = data;
 
-   if (ev->win != cfdata->locals.bind_win) return 1; 
+   if (ev->window != cfdata->locals.bind_win) return 1; 
 
-   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT)
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
      mod |= E_BINDING_MODIFIER_SHIFT;
-   if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      mod |= E_BINDING_MODIFIER_CTRL;
-   if (ev->modifiers & ECORE_X_MODIFIER_ALT)
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
      mod |= E_BINDING_MODIFIER_ALT;
-   if (ev->modifiers & ECORE_X_MODIFIER_WIN)
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
      mod |= E_BINDING_MODIFIER_WIN; 
       
    if (cfdata->locals.add) 
      { 
 	eb = E_NEW(E_Config_Binding_Mouse, 1); 
 	eb->context = E_BINDING_CONTEXT_ANY; 
-	eb->button = ev->button; 
+	eb->button = ev->buttons; 
 	eb->modifiers = mod; 
 	eb->any_mod = 0; 
 	eb->action = NULL; 
@@ -1359,7 +1359,7 @@ _grab_mouse_down_cb(void *data, int type, void *event)
 	     eb = eina_list_nth(cfdata->binding.mouse, n); 
 	     if (eb) 
 	       { 
-		  eb->button = ev->button; 
+		  eb->button = ev->buttons; 
 		  eb->modifiers = mod; 
 	       }
 	  }
@@ -1371,7 +1371,7 @@ _grab_mouse_down_cb(void *data, int type, void *event)
 
 	     eb = E_NEW(E_Config_Binding_Mouse, 1); 
 	     eb->context = bw->context;
-	     eb->button = ev->button; 
+	     eb->button = ev->buttons; 
 	     eb->modifiers = mod; 
 	     eb->any_mod = 0; 
 	     eb->action = bw->action; 
@@ -1423,21 +1423,21 @@ _grab_mouse_wheel_cb(void *data, int type, void *event)
    E_Config_Binding_Wheel *bw = NULL;
    E_Config_Binding_Mouse *eb = NULL;
    E_Config_Dialog_Data *cfdata;
-   Ecore_X_Event_Mouse_Wheel *ev; 
+   Ecore_Event_Mouse_Wheel *ev; 
    int mod = E_BINDING_MODIFIER_NONE, n;
 
    ev = event;
    cfdata = data;
 
-   if (ev->win != cfdata->locals.bind_win) return 1;
+   if (ev->window != cfdata->locals.bind_win) return 1;
 
-   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT)
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
      mod |= E_BINDING_MODIFIER_SHIFT;
-   if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      mod |= E_BINDING_MODIFIER_CTRL;
-   if (ev->modifiers & ECORE_X_MODIFIER_ALT)
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
      mod |= E_BINDING_MODIFIER_ALT;
-   if (ev->modifiers & ECORE_X_MODIFIER_WIN)
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
      mod |= E_BINDING_MODIFIER_WIN; 
    
    
@@ -1535,17 +1535,17 @@ static int
 _grab_key_down_cb(void *data, int type, void *event)
 {
    E_Config_Dialog_Data *cfdata;
-   Ecore_X_Event_Key_Down *ev = event;
+   Ecore_Event_Key *ev = event;
 
    cfdata = data;
 
-   if (ev->win != cfdata->locals.bind_win) return 1;
+   if (ev->window != cfdata->locals.bind_win) return 1;
 
    if (!strcmp(ev->keyname, "Escape") &&
-       !(ev->modifiers & ECORE_X_MODIFIER_SHIFT) &&
-       !(ev->modifiers & ECORE_X_MODIFIER_CTRL) &&
-       !(ev->modifiers & ECORE_X_MODIFIER_ALT) &&
-       !(ev->modifiers & ECORE_X_MODIFIER_WIN))
+       !(ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
+       !(ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+       !(ev->modifiers & ECORE_EVENT_MODIFIER_ALT) &&
+       !(ev->modifiers & ECORE_EVENT_MODIFIER_WIN))
      { 
 	_grab_wnd_hide(cfdata);
      }

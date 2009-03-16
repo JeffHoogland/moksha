@@ -69,6 +69,7 @@
 #include <Ecore_X_Atoms.h>
 #include <Ecore_X_Cursor.h>
 #include <Ecore_Evas.h>
+#include <Ecore_Input.h>
 #include <Ecore_Con.h>
 #include <Ecore_Ipc.h>
 #include <Ecore_Job.h>

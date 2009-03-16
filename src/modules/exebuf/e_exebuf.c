@@ -230,19 +230,19 @@ e_exebuf_show(E_Zone *zone)
 
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_KEY_DOWN, _e_exebuf_cb_key_down, NULL));
+      (ECORE_EVENT_KEY_DOWN, _e_exebuf_cb_key_down, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_exebuf_cb_mouse_down, NULL));
+      (ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_exebuf_cb_mouse_down, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_BUTTON_UP, _e_exebuf_cb_mouse_up, NULL));
+      (ECORE_EVENT_MOUSE_BUTTON_UP, _e_exebuf_cb_mouse_up, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_MOVE, _e_exebuf_cb_mouse_move, NULL));
+      (ECORE_EVENT_MOUSE_MOVE, _e_exebuf_cb_mouse_move, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_WHEEL, _e_exebuf_cb_mouse_wheel, NULL));
+      (ECORE_EVENT_MOUSE_WHEEL, _e_exebuf_cb_mouse_wheel, NULL));
 
    el = e_config_domain_load("exebuf_exelist_cache", exelist_edd);
    if (el)
@@ -1303,51 +1303,51 @@ _e_exebuf_cb_exe_item_mouse_out(void *data, Evas *evas, Evas_Object *obj,
 static int
 _e_exebuf_cb_key_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Down *ev;
+   Ecore_Event_Key *ev;
 
    ev_last_is_mouse = 0;
    
    ev = event;
-   if (ev->event_win != input_window) return 1;
-   if      (!strcmp(ev->keysymbol, "Up"))
+   if (ev->window != input_window) return 1;
+   if      (!strcmp(ev->key, "Up"))
      _e_exebuf_prev();
-   else if (!strcmp(ev->keysymbol, "Down"))
+   else if (!strcmp(ev->key, "Down"))
      _e_exebuf_next();
-   else if (!strcmp(ev->keysymbol, "Prior"))
+   else if (!strcmp(ev->key, "Prior"))
      _e_exebuf_prev();
-   else if (!strcmp(ev->keysymbol, "Next"))
+   else if (!strcmp(ev->key, "Next"))
      _e_exebuf_next();
-   else if (!strcmp(ev->keysymbol, "Left"))
+   else if (!strcmp(ev->key, "Left"))
      _e_exebuf_prev();
-   else if (!strcmp(ev->keysymbol, "Right"))
+   else if (!strcmp(ev->key, "Right"))
      _e_exebuf_complete();
-   else if (!strcmp(ev->keysymbol, "Tab"))
+   else if (!strcmp(ev->key, "Tab"))
      _e_exebuf_complete();
-   else if (!strcmp(ev->keysymbol, "Return") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
+   else if (!strcmp(ev->key, "Return") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
      _e_exebuf_exec_term();
-   else if (!strcmp(ev->keysymbol, "Return"))
+   else if (!strcmp(ev->key, "Return"))
      _e_exebuf_exec();
-   else if (!strcmp(ev->keysymbol, "KP_Enter") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
+   else if (!strcmp(ev->key, "KP_Enter") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
      _e_exebuf_exec_term();
-   else if (!strcmp(ev->keysymbol, "KP_Enter"))
+   else if (!strcmp(ev->key, "KP_Enter"))
      _e_exebuf_exec();
-   else if (!strcmp(ev->keysymbol, "u") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
+   else if (!strcmp(ev->key, "u") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
      _e_exebuf_clear();
-   else if (!strcmp(ev->keysymbol, "Escape"))
+   else if (!strcmp(ev->key, "Escape"))
      e_exebuf_hide();
-   else if (!strcmp(ev->keysymbol, "BackSpace"))
+   else if (!strcmp(ev->key, "BackSpace"))
      _e_exebuf_backspace();
-   else if (!strcmp(ev->keysymbol, "Delete"))
+   else if (!strcmp(ev->key, "Delete"))
      _e_exebuf_backspace();
    else
      {
-	if (ev->key_compose)
+	if (ev->compose)
 	  {
-	     if ((strlen(cmd_buf) < (EXEBUFLEN - strlen(ev->key_compose))))
+	     if ((strlen(cmd_buf) < (EXEBUFLEN - strlen(ev->compose))))
 	       {
 		  if (!(strlen(cmd_buf)) && exe_sel)
 		    _e_exebuf_hist_clear();
-		  strcat(cmd_buf, ev->key_compose);
+		  strcat(cmd_buf, ev->compose);
 		  _e_exebuf_update();
 		  if (!update_timer)
 		    update_timer = ecore_timer_add(MATCH_LAG, _e_exebuf_update_timer, NULL);
@@ -1360,10 +1360,10 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
 static int
 _e_exebuf_cb_mouse_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Down *ev;
+   Ecore_Event_Mouse_Button *ev;
    
    ev = event;
-   if (ev->event_win != input_window) return 1;
+   if (ev->window != input_window) return 1;
 
    if (ev_last_mouse_exe && (exe_sel != ev_last_mouse_exe))
      {
@@ -1378,13 +1378,13 @@ _e_exebuf_cb_mouse_down(void *data, int type, void *event)
 static int
 _e_exebuf_cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
+   Ecore_Event_Mouse_Button *ev;
    
    ev = event;
-   if (ev->event_win != input_window) return 1;
-   if (ev->button == 1) 
+   if (ev->window != input_window) return 1;
+   if (ev->buttons == 1) 
      _e_exebuf_exec();
-   else if (ev->button == 2)
+   else if (ev->buttons == 2)
      _e_exebuf_complete();
 
    return 1;
@@ -1393,10 +1393,10 @@ _e_exebuf_cb_mouse_up(void *data, int type, void *event)
 static int 
 _e_exebuf_cb_mouse_move(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Move *ev;
+   Ecore_Event_Mouse_Move *ev;
 
    ev = event;
-   if (ev->event_win != input_window) return 1;
+   if (ev->window != input_window) return 1;
 
    if (!ev_last_is_mouse)
      {
@@ -1415,7 +1415,7 @@ _e_exebuf_cb_mouse_move(void *data, int type, void *event)
      }
 
    evas_event_feed_mouse_move(exebuf->evas, ev->x - exebuf->x,
-			      ev->y - exebuf->y, ev->time, NULL);
+			      ev->y - exebuf->y, ev->timestamp, NULL);
 
    return 1;
 }
@@ -1423,10 +1423,10 @@ _e_exebuf_cb_mouse_move(void *data, int type, void *event)
 static int
 _e_exebuf_cb_mouse_wheel(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Wheel *ev;
+   Ecore_Event_Mouse_Wheel *ev;
    
    ev = event;
-   if (ev->event_win != input_window) return 1;
+   if (ev->window != input_window) return 1;
 
    ev_last_is_mouse = 0;
 

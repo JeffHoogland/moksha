@@ -77,10 +77,10 @@ e_dnd_init(void)
    _drop_handlers_responsives = eina_hash_string_superfast_new(NULL);
 
    _event_handlers = eina_list_append(_event_handlers,
-				      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+				      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
 							      _e_dnd_cb_mouse_up, NULL));
    _event_handlers = eina_list_append(_event_handlers,
-				      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
+				      ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE,
 							      _e_dnd_cb_mouse_move, NULL));
    _event_handlers = eina_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
@@ -108,10 +108,10 @@ e_dnd_init(void)
 				      ecore_event_handler_add(ECORE_X_EVENT_SELECTION_NOTIFY,
 							      _e_dnd_cb_event_dnd_selection, NULL));
    _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
+                                      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
                                                               _e_dnd_cb_key_down, NULL));
    _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_X_EVENT_KEY_UP,
+                                      ecore_event_handler_add(ECORE_EVENT_KEY_UP,
                                                               _e_dnd_cb_key_up, NULL));
 
    _action = ECORE_X_ATOM_XDND_ACTION_PRIVATE;
@@ -553,13 +553,13 @@ e_drop_handler_action_get()
 }
 
 EAPI void
-e_drag_key_down_cb_set(E_Drag *drag, void (*func)(E_Drag *drag, Ecore_X_Event_Key_Down *e))
+e_drag_key_down_cb_set(E_Drag *drag, void (*func)(E_Drag *drag, Ecore_Event_Key *e))
 {
    drag->cb.key_down = func;
 }
 
 EAPI void
-e_drag_key_up_cb_set(E_Drag *drag, void (*func)(E_Drag *drag, Ecore_X_Event_Key_Up *e))
+e_drag_key_up_cb_set(E_Drag *drag, void (*func)(E_Drag *drag, Ecore_Event_Key *e))
 {
    drag->cb.key_up = func;
 }
@@ -1135,10 +1135,10 @@ _e_dnd_cb_window_shape(void *data, int ev_type, void *ev)
 static int
 _e_dnd_cb_key_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Down *ev;
+   Ecore_Event_Key *ev;
 
    ev = event;
-   if (ev->win != _drag_win) return 1;
+   if (ev->window != _drag_win) return 1;
 
    if (!_drag_current) return 1;
 
@@ -1151,10 +1151,10 @@ _e_dnd_cb_key_down(void *data, int type, void *event)
 static int
 _e_dnd_cb_key_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Up *ev;
+   Ecore_Event_Key *ev;
 
    ev = event;
-   if (ev->win != _drag_win) return 1;
+   if (ev->window != _drag_win) return 1;
 
    if (!_drag_current) return 1;
 
@@ -1167,10 +1167,10 @@ _e_dnd_cb_key_up(void *data, int type, void *event)
 static int
 _e_dnd_cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
+   Ecore_Event_Mouse_Button *ev;
 
    ev = event;
-   if (ev->win != _drag_win) return 1;
+   if (ev->window != _drag_win) return 1;
 
    _e_drag_end(_drag_win_root, ev->x, ev->y);
 
@@ -1180,10 +1180,10 @@ _e_dnd_cb_mouse_up(void *data, int type, void *event)
 static int
 _e_dnd_cb_mouse_move(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Move *ev;
+   Ecore_Event_Mouse_Move *ev;
 
    ev = event;
-   if (ev->win != _drag_win) return 1;
+   if (ev->window != _drag_win) return 1;
 
    if (!_xdnd) _e_drag_update(_drag_win_root, ev->x, ev->y, ECORE_X_ATOM_XDND_ACTION_PRIVATE);
    

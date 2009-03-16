@@ -424,10 +424,10 @@ static void _mixer_popup_del(E_Mixer_Instance *inst);
 static int
 _mixer_popup_input_window_mouse_up_cb(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev = event;
+   Ecore_Event_Mouse_Button *ev = event;
    E_Mixer_Instance *inst = data;
 
-   if (ev->win != inst->ui.input.win)
+   if (ev->window != inst->ui.input.win)
      return 1;
 
    _mixer_popup_del(inst);
@@ -438,14 +438,14 @@ _mixer_popup_input_window_mouse_up_cb(void *data, int type, void *event)
 static int
 _mixer_popup_input_window_key_down_cb(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Down *ev = event;
+   Ecore_Event_Key *ev = event;
    E_Mixer_Instance *inst = data;
    const char *keysym;
 
-   if (ev->win != inst->ui.input.win)
+   if (ev->window != inst->ui.input.win)
      return 1;
 
-   keysym = ev->keysymbol;
+   keysym = ev->key;
    if (strcmp(keysym, "Escape") == 0)
      _mixer_popup_del(inst);
    else if (strcmp(keysym, "Up") == 0)
@@ -492,11 +492,11 @@ _mixer_popup_input_window_create(E_Mixer_Instance *inst)
    ecore_x_window_show(w);
 
    inst->ui.input.mouse_up =
-     ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+     ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
 			     _mixer_popup_input_window_mouse_up_cb, inst);
 
    inst->ui.input.key_down =
-     ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
+     ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
 			     _mixer_popup_input_window_key_down_cb, inst);
 
    inst->ui.input.win = w;

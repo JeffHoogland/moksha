@@ -11,6 +11,8 @@ static void _e_bindings_edge_free(E_Binding_Edge *bind);
 static void _e_bindings_signal_free(E_Binding_Signal *bind);
 static void _e_bindings_wheel_free(E_Binding_Wheel *bind);
 static int _e_bindings_context_match(E_Binding_Context bctxt, E_Binding_Context ctxt);
+static E_Binding_Modifier _e_bindings_modifiers(unsigned int modifiers);
+static int _e_ecore_modifiers(E_Binding_Modifier modifiers);
 static int  _e_bindings_edge_cb_timer(void *data);
 
 /* local subsystem globals */
@@ -199,18 +201,12 @@ e_bindings_mouse_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 	bind = l->data;
 	if (_e_bindings_context_match(bind->ctxt, ctxt))
 	  {
-	     int mod;
-	     
-	     mod = 0;
-	     if (bind->mod & E_BINDING_MODIFIER_SHIFT) mod |= ECORE_X_MODIFIER_SHIFT;
-	     if (bind->mod & E_BINDING_MODIFIER_CTRL) mod |= ECORE_X_MODIFIER_CTRL;
-	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
-	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
-	     ecore_x_window_button_grab(win, bind->button, 
-					ECORE_X_EVENT_MASK_MOUSE_DOWN | 
-					ECORE_X_EVENT_MASK_MOUSE_UP | 
-					ECORE_X_EVENT_MASK_MOUSE_MOVE, 
-					mod, bind->any_mod);
+	     ecore_x_window_button_grab(win, bind->button,
+					ECORE_X_EVENT_MASK_MOUSE_DOWN |
+					ECORE_X_EVENT_MASK_MOUSE_UP |
+					ECORE_X_EVENT_MASK_MOUSE_MOVE,
+					_e_ecore_modifiers(bind->mod),
+					bind->any_mod);
 	  }
      }
 }
@@ -227,35 +223,25 @@ e_bindings_mouse_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 	bind = l->data;
 	if (_e_bindings_context_match(bind->ctxt, ctxt))
 	  {
-	     int mod;
-	     
-	     mod = 0;
-	     if (bind->mod & E_BINDING_MODIFIER_SHIFT) mod |= ECORE_X_MODIFIER_SHIFT;
-	     if (bind->mod & E_BINDING_MODIFIER_CTRL) mod |= ECORE_X_MODIFIER_CTRL;
-	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
-	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
 	     ecore_x_window_button_ungrab(win, bind->button,
-					  mod, bind->any_mod);
+					  _e_ecore_modifiers(bind->mod), bind->any_mod);
 	  }
      }
 }
 
 EAPI E_Action *
-e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev, E_Binding_Mouse **bind_ret)
+e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Button *ev, E_Binding_Mouse **bind_ret)
 {
    E_Binding_Modifier mod = 0;
    Eina_List *l;
-   
-   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
-   if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
-   if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
-   if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+
+   mod = _e_bindings_modifiers(ev->modifiers);
    for (l = mouse_bindings; l; l = l->next)
      {
 	E_Binding_Mouse *bind;
 	
 	bind = l->data;
-	if ((bind->button == ev->button) &&
+	if ((bind->button == ev->buttons) &&
 	    ((bind->any_mod) || (bind->mod == mod)))
 	  {
 	     if (_e_bindings_context_match(bind->ctxt, ctxt))
@@ -272,7 +258,7 @@ e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_
 }
 
 EAPI E_Action *
-e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev)
+e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Button *ev)
 {
    E_Action *act;
    E_Binding_Mouse *bind;
@@ -290,21 +276,18 @@ e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_
 }
 
 EAPI E_Action *
-e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev, E_Binding_Mouse **bind_ret)
+e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Button *ev, E_Binding_Mouse **bind_ret)
 {
    E_Binding_Modifier mod = 0;
    Eina_List *l;
-   
-   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
-   if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
-   if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
-   if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+
+   mod = _e_bindings_modifiers(ev->modifiers);
    for (l = mouse_bindings; l; l = l->next)
      {
 	E_Binding_Mouse *bind;
 	
 	bind = l->data;
-	if ((bind->button == ev->button) &&
+	if ((bind->button == ev->buttons) &&
 	    ((bind->any_mod) || (bind->mod == mod)))
 	  {
 	     if (_e_bindings_context_match(bind->ctxt, ctxt))
@@ -321,7 +304,7 @@ e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mo
 }
 
 EAPI E_Action *
-e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev)
+e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Button *ev)
 {
    E_Action *act;
    E_Binding_Mouse *bind;
@@ -407,18 +390,8 @@ e_bindings_key_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 	bind = l->data;
 	if (_e_bindings_context_match(bind->ctxt, ctxt))
 	  {
-	     int mod;
-	     
-	     mod = 0;
-	     if (bind->mod & E_BINDING_MODIFIER_SHIFT) mod |= ECORE_X_MODIFIER_SHIFT;
-	     if (bind->mod & E_BINDING_MODIFIER_CTRL) mod |= ECORE_X_MODIFIER_CTRL;
-	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
-	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
-	     /* see comment in e_bindings on numlock
-	     if (bind->mod & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
-	      */
 	     ecore_x_window_key_grab(win, bind->key,
-				     mod, bind->any_mod);
+				     _e_ecore_modifiers(bind->mod), bind->any_mod);
 	  }
      }
 }
@@ -435,48 +408,19 @@ e_bindings_key_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 	bind = l->data;
 	if (_e_bindings_context_match(bind->ctxt, ctxt))
 	  {
-	     int mod;
-	     
-	     mod = 0;
-	     if (bind->mod & E_BINDING_MODIFIER_SHIFT) mod |= ECORE_X_MODIFIER_SHIFT;
-	     if (bind->mod & E_BINDING_MODIFIER_CTRL) mod |= ECORE_X_MODIFIER_CTRL;
-	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
-	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
-	     /* see comment in e_bindings on numlock
-	     if (bind->mod & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
-	      */
 	     ecore_x_window_key_ungrab(win, bind->key,
-				       mod, bind->any_mod);
+				       _e_ecore_modifiers(bind->mod), bind->any_mod);
 	  }
      }
 }
 
 EAPI E_Action *
-e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Down *ev)
+e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Key *ev)
 {
    E_Binding_Modifier mod = 0;
    Eina_List *l;
-   
-   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
-   if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
-   if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
-   if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
-   /* FIXME: there is a good reason numlock was ignored. sometimes people
-    * have it on, sometimes they don't, and often they have no idea. waaaay
-    * back in E 0.1->0.13 or so days this caused issues thus numlock,
-    * scrollock and capslock are not usable modifiers.
-    * 
-    * if we REALLY want to be able to use numlock we need to add more binding
-    * flags and config that says "REALLY pay attention to numlock for this
-    * binding" field in the binding (like there is a "any_mod" flag - we need a
-    * "num_lock_respect" field)
-    * 
-    * also it should be an E_BINDING_MODIFIER_LOCK_NUM as the ecore lock flag
-    * may vary from system to system as different xservers may have differing
-    * modifier masks for numlock (it is queried at startup).
-    * 
-   if (ev->modifiers & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
-    */
+
+   mod = _e_bindings_modifiers(ev->modifiers);
    for (l = key_bindings; l; l = l->next)
      {
 	E_Binding_Key *bind;
@@ -506,18 +450,12 @@ e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_
 }
 
 EAPI E_Action *
-e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Up *ev)
+e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Key *ev)
 {
    E_Binding_Modifier mod = 0;
    Eina_List *l;
-   
-   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
-   if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
-   if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
-   if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
-   /* see comment in e_bindings on numlock
-   if (ev->modifiers & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
-    */
+
+   mod = _e_bindings_modifiers(ev->modifiers);
    for (l = key_bindings; l; l = l->next)
      {
 	E_Binding_Key *bind;
@@ -842,15 +780,8 @@ e_bindings_wheel_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 	bind = l->data;
 	if (_e_bindings_context_match(bind->ctxt, ctxt))
 	  {
-	     int mod;
 	     int button = 0;
-	     
-	     mod = 0;
-	     if (bind->mod & E_BINDING_MODIFIER_SHIFT) mod |= ECORE_X_MODIFIER_SHIFT;
-	     if (bind->mod & E_BINDING_MODIFIER_CTRL) mod |= ECORE_X_MODIFIER_CTRL;
-	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
-	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
-	     
+
 	     if (bind->direction == 0)
 	       {
 		  if (bind->z < 0) button = 4;
@@ -864,7 +795,7 @@ e_bindings_wheel_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 	     if (button != 0)
 	       ecore_x_window_button_grab(win, button,
 					  ECORE_X_EVENT_MASK_MOUSE_DOWN,
-					  mod, bind->any_mod);
+					  _e_ecore_modifiers(bind->mod), bind->any_mod);
 	  }
      }
 }
@@ -881,14 +812,8 @@ e_bindings_wheel_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 	bind = l->data;
 	if (_e_bindings_context_match(bind->ctxt, ctxt))
 	  {
-	     int mod;
 	     int button = 0;
 	     
-	     mod = 0;
-	     if (bind->mod & E_BINDING_MODIFIER_SHIFT) mod |= ECORE_X_MODIFIER_SHIFT;
-	     if (bind->mod & E_BINDING_MODIFIER_CTRL) mod |= ECORE_X_MODIFIER_CTRL;
-	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
-	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
 	     if (bind->direction == 0)
 	       {
 		  if (bind->z < 0) button = 4;
@@ -901,21 +826,18 @@ e_bindings_wheel_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 	       }
 	     if (button != 0)
 	       ecore_x_window_button_ungrab(win, button,
-					    mod, bind->any_mod);
+					    _e_ecore_modifiers(bind->mod), bind->any_mod);
 	  }
      }
 }
 
 EAPI E_Action *
-e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Wheel *ev, E_Binding_Wheel **bind_ret)
+e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Wheel *ev, E_Binding_Wheel **bind_ret)
 {
    E_Binding_Modifier mod = 0;
    Eina_List *l;
-   
-   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
-   if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
-   if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
-   if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+
+   mod = _e_bindings_modifiers(ev->modifiers);
    for (l = wheel_bindings; l; l = l->next)
      {
 	E_Binding_Wheel *bind;
@@ -939,7 +861,7 @@ e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse
 }
 
 EAPI E_Action *
-e_bindings_wheel_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Wheel *ev)
+e_bindings_wheel_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Wheel *ev)
 {
    E_Action *act;
    E_Binding_Wheel *bind;
@@ -1015,6 +937,51 @@ _e_bindings_context_match(E_Binding_Context bctxt, E_Binding_Context ctxt)
    if (ctxt == E_BINDING_CONTEXT_UNKNOWN) return 0;
    if (bctxt == ctxt) return 1;
    return 0;
+}
+
+static E_Binding_Modifier
+_e_bindings_modifiers(unsigned int modifiers)
+{
+   E_Binding_Modifier mod = 0;
+
+   if (modifiers & ECORE_EVENT_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
+   if (modifiers & ECORE_EVENT_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
+   if (modifiers & ECORE_EVENT_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
+   if (modifiers & ECORE_EVENT_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+   /* FIXME: there is a good reason numlock was ignored. sometimes people
+    * have it on, sometimes they don't, and often they have no idea. waaaay
+    * back in E 0.1->0.13 or so days this caused issues thus numlock,
+    * scrollock and capslock are not usable modifiers.
+    * 
+    * if we REALLY want to be able to use numlock we need to add more binding
+    * flags and config that says "REALLY pay attention to numlock for this
+    * binding" field in the binding (like there is a "any_mod" flag - we need a
+    * "num_lock_respect" field)
+    * 
+    * also it should be an E_BINDING_MODIFIER_LOCK_NUM as the ecore lock flag
+    * may vary from system to system as different xservers may have differing
+    * modifier masks for numlock (it is queried at startup).
+    * 
+   if (ev->modifiers & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
+    */
+
+   return mod;
+}
+
+static int
+_e_ecore_modifiers(E_Binding_Modifier modifiers)
+{
+   int mod = 0;
+
+   if (modifiers & E_BINDING_MODIFIER_SHIFT) mod |= ECORE_EVENT_MODIFIER_SHIFT;
+   if (modifiers & E_BINDING_MODIFIER_CTRL) mod |= ECORE_EVENT_MODIFIER_CTRL;
+   if (modifiers & E_BINDING_MODIFIER_ALT) mod |= ECORE_EVENT_MODIFIER_ALT;
+   if (modifiers & E_BINDING_MODIFIER_WIN) mod |= ECORE_EVENT_MODIFIER_WIN;
+   /* see comment in e_bindings on numlock
+      if (modifiers & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
+   */
+
+   return mod;
 }
 
 static int

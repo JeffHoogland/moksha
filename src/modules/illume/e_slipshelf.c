@@ -212,7 +212,7 @@ e_slipshelf_new(E_Zone *zone, const char *themedir)
 
    ess->handlers = eina_list_append
      (ess->handlers,
-      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
 			      _e_slipshelf_cb_mouse_up, ess));
    ess->handlers = eina_list_append
      (ess->handlers,
@@ -754,12 +754,12 @@ _e_slipshelf_slide(E_Slipshelf *ess, int out, double len)
 static int
 _e_slipshelf_cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
+   Ecore_Event_Mouse_Button *ev;
    E_Slipshelf *ess;
    
    ev = event;
    ess = data;
-   if (ev->win == ess->clickwin)
+   if (ev->window == ess->clickwin)
      {
 	if (ess->slide_down_timer) ecore_timer_del(ess->slide_down_timer);
 	ess->slide_down_timer = NULL;

@@ -185,22 +185,22 @@ e_winlist_show(E_Zone *zone)
       (E_EVENT_BORDER_REMOVE, _e_winlist_cb_event_border_remove, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_KEY_DOWN, _e_winlist_cb_key_down, NULL));
+      (ECORE_EVENT_KEY_DOWN, _e_winlist_cb_key_down, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_KEY_UP, _e_winlist_cb_key_up, NULL));
+      (ECORE_EVENT_KEY_UP, _e_winlist_cb_key_up, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_winlist_cb_mouse_down, NULL));
+      (ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_winlist_cb_mouse_down, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_BUTTON_UP, _e_winlist_cb_mouse_up, NULL));
+      (ECORE_EVENT_MOUSE_BUTTON_UP, _e_winlist_cb_mouse_up, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_WHEEL, _e_winlist_cb_mouse_wheel, NULL));
+      (ECORE_EVENT_MOUSE_WHEEL, _e_winlist_cb_mouse_wheel, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_MOVE, _e_winlist_cb_mouse_move, NULL));
+      (ECORE_EVENT_MOUSE_MOVE, _e_winlist_cb_mouse_move, NULL));
    
    e_popup_show(winlist);
    return 1;
@@ -359,10 +359,10 @@ e_winlist_modifiers_set(int mod)
    if (!winlist) return;
    hold_mod = mod;
    hold_count = 0;
-   if (hold_mod & ECORE_X_MODIFIER_SHIFT) hold_count++;
-   if (hold_mod & ECORE_X_MODIFIER_CTRL) hold_count++;
-   if (hold_mod & ECORE_X_MODIFIER_ALT) hold_count++;
-   if (hold_mod & ECORE_X_MODIFIER_WIN) hold_count++;
+   if (hold_mod & ECORE_EVENT_MODIFIER_SHIFT) hold_count++;
+   if (hold_mod & ECORE_EVENT_MODIFIER_CTRL) hold_count++;
+   if (hold_mod & ECORE_EVENT_MODIFIER_ALT) hold_count++;
+   if (hold_mod & ECORE_EVENT_MODIFIER_WIN) hold_count++;
 }
 
 /* local subsystem functions */
@@ -745,43 +745,43 @@ _e_winlist_cb_event_border_remove(void *data, int type,  void *event)
 static int
 _e_winlist_cb_key_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Down *ev;
+   Ecore_Event_Key *ev;
    
    ev = event;
-   if (ev->event_win != input_window) return 1;
-   if      (!strcmp(ev->keysymbol, "Up"))
+   if (ev->window != input_window) return 1;
+   if      (!strcmp(ev->key, "Up"))
      e_winlist_prev();
-   else if (!strcmp(ev->keysymbol, "Down"))
+   else if (!strcmp(ev->key, "Down"))
      e_winlist_next();
-   else if (!strcmp(ev->keysymbol, "Left"))
+   else if (!strcmp(ev->key, "Left"))
      e_winlist_prev();
-   else if (!strcmp(ev->keysymbol, "Right"))
+   else if (!strcmp(ev->key, "Right"))
      e_winlist_next();
-   else if (!strcmp(ev->keysymbol, "Return"))
+   else if (!strcmp(ev->key, "Return"))
      e_winlist_hide();
-   else if (!strcmp(ev->keysymbol, "space"))
+   else if (!strcmp(ev->key, "space"))
      e_winlist_hide();
-   else if (!strcmp(ev->keysymbol, "Escape"))
+   else if (!strcmp(ev->key, "Escape"))
      _e_winlist_restore_desktop();
-   else if (!strcmp(ev->keysymbol, "1"))
+   else if (!strcmp(ev->key, "1"))
      _e_winlist_activate_nth(0);
-   else if (!strcmp(ev->keysymbol, "2"))
+   else if (!strcmp(ev->key, "2"))
      _e_winlist_activate_nth(1);
-   else if (!strcmp(ev->keysymbol, "3"))
+   else if (!strcmp(ev->key, "3"))
      _e_winlist_activate_nth(2);
-   else if (!strcmp(ev->keysymbol, "4"))
+   else if (!strcmp(ev->key, "4"))
      _e_winlist_activate_nth(3);
-   else if (!strcmp(ev->keysymbol, "5"))
+   else if (!strcmp(ev->key, "5"))
      _e_winlist_activate_nth(4);
-   else if (!strcmp(ev->keysymbol, "6"))
+   else if (!strcmp(ev->key, "6"))
      _e_winlist_activate_nth(5);
-   else if (!strcmp(ev->keysymbol, "7"))
+   else if (!strcmp(ev->key, "7"))
      _e_winlist_activate_nth(6);
-   else if (!strcmp(ev->keysymbol, "8"))
+   else if (!strcmp(ev->key, "8"))
      _e_winlist_activate_nth(7);
-   else if (!strcmp(ev->keysymbol, "9"))
+   else if (!strcmp(ev->key, "9"))
      _e_winlist_activate_nth(8);
-   else if (!strcmp(ev->keysymbol, "0"))
+   else if (!strcmp(ev->key, "0"))
      _e_winlist_activate_nth(9);
    else
      {
@@ -798,12 +798,12 @@ _e_winlist_cb_key_down(void *data, int type, void *event)
 
 	     mod = 0;
 
-	     if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
-	     if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
-	     if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
-	     if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
 
-	     if (bind->key && (!strcmp(bind->key, ev->keyname)) && 
+	     if (bind->key && (!strcmp(bind->key, ev->keyname)) &&
 		 ((bind->modifiers == mod) || (bind->any_mod))) 
 	       {	
 		  act = e_action_find(bind->action);
@@ -824,7 +824,7 @@ _e_winlist_cb_key_down(void *data, int type, void *event)
 static int
 _e_winlist_cb_key_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Up *ev;
+   Ecore_Event_Key *ev;
    E_Action *act;
    Eina_List *l;
    E_Config_Binding_Key *bind;
@@ -834,21 +834,21 @@ _e_winlist_cb_key_up(void *data, int type, void *event)
    if (!winlist) return 1;
    if (hold_mod)
      {
-	if      ((hold_mod & ECORE_X_MODIFIER_SHIFT) && (!strcmp(ev->keysymbol, "Shift_L"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_SHIFT) && (!strcmp(ev->keysymbol, "Shift_R"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_CTRL) && (!strcmp(ev->keysymbol, "Control_L"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_CTRL) && (!strcmp(ev->keysymbol, "Control_R"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_ALT) && (!strcmp(ev->keysymbol, "Alt_L"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_ALT) && (!strcmp(ev->keysymbol, "Alt_R"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_ALT) && (!strcmp(ev->keysymbol, "Meta_L"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_ALT) && (!strcmp(ev->keysymbol, "Meta_R"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_ALT) && (!strcmp(ev->keysymbol, "Super_L"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_ALT) && (!strcmp(ev->keysymbol, "Super_R"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_WIN) && (!strcmp(ev->keysymbol, "Super_L"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_WIN) && (!strcmp(ev->keysymbol, "Super_R"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_WIN) && (!strcmp(ev->keysymbol, "Mode_switch"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_WIN) && (!strcmp(ev->keysymbol, "Meta_L"))) hold_count--;
-	else if ((hold_mod & ECORE_X_MODIFIER_WIN) && (!strcmp(ev->keysymbol, "Meta_R"))) hold_count--;
+	if      ((hold_mod & ECORE_EVENT_MODIFIER_SHIFT) && (!strcmp(ev->key, "Shift_L"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_SHIFT) && (!strcmp(ev->key, "Shift_R"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_CTRL) && (!strcmp(ev->key, "Control_L"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_CTRL) && (!strcmp(ev->key, "Control_R"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Alt_L"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Alt_R"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Meta_L"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Meta_R"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Super_L"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Super_R"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Super_L"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Super_R"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Mode_switch"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Meta_L"))) hold_count--;
+	else if ((hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Meta_R"))) hold_count--;
 	if (hold_count <= 0)
 	  {
 	     e_winlist_hide();
@@ -864,12 +864,12 @@ _e_winlist_cb_key_up(void *data, int type, void *event)
 
 	mod = 0;
 
-	if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
-	if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
-	if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
-	if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
+	if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
+	if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
+	if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
 
-	if (bind->key && (!strcmp(bind->key, ev->keyname)) && 
+	if (bind->key && (!strcmp(bind->key, ev->keyname)) &&
 	    ((bind->modifiers == mod) || (bind->any_mod))) 
 	  {	
 	     act = e_action_find(bind->action);
@@ -889,10 +889,10 @@ _e_winlist_cb_key_up(void *data, int type, void *event)
 static int
 _e_winlist_cb_mouse_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Down *ev;
+   Ecore_Event_Mouse_Button *ev;
    
    ev = event;
-   if (ev->event_win != input_window) return 1;
+   if (ev->window != input_window) return 1;
    e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_WINLIST,
 				      E_OBJECT(winlist->zone), ev);
    return 1;
@@ -901,10 +901,10 @@ _e_winlist_cb_mouse_down(void *data, int type, void *event)
 static int
 _e_winlist_cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
+   Ecore_Event_Mouse_Button *ev;
    
    ev = event;
-   if (ev->event_win != input_window) return 1;
+   if (ev->window != input_window) return 1;
    e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_WINLIST,
 				    E_OBJECT(winlist->zone), ev);
    return 1;
@@ -913,10 +913,10 @@ _e_winlist_cb_mouse_up(void *data, int type, void *event)
 static int
 _e_winlist_cb_mouse_wheel(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Wheel *ev;
+   Ecore_Event_Mouse_Wheel *ev;
    
    ev = event;
-   if (ev->event_win != input_window) return 1;
+   if (ev->window != input_window) return 1;
    e_bindings_wheel_event_handle(E_BINDING_CONTEXT_WINLIST,
 				 E_OBJECT(winlist->zone), ev);
    if (ev->z < 0) /* up */
@@ -937,13 +937,13 @@ _e_winlist_cb_mouse_wheel(void *data, int type, void *event)
 static int 
 _e_winlist_cb_mouse_move(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Move *ev;
+   Ecore_Event_Mouse_Move *ev;
 
    ev = event;
-   if (ev->event_win != input_window) return 1;
+   if (ev->window != input_window) return 1;
 
    evas_event_feed_mouse_move(winlist->evas, ev->x - winlist->x +
-	 winlist->zone->x, ev->y - winlist->y + winlist->zone->y, ev->time, NULL);
+	 winlist->zone->x, ev->y - winlist->y + winlist->zone->y, ev->timestamp, NULL);
 
    return 1;
 }

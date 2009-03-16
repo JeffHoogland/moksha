@@ -40,14 +40,14 @@ _e_action_simplelock_cb(E_Object *obj, const char *params)
 static int
 _e_simplelock_cb_key_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Down *ev;
+   Ecore_Event_Key *ev;
    E_Action *act;
    Eina_List *l;
    E_Config_Binding_Key *bind;
    E_Binding_Modifier mod;
       
    ev = event;
-   if (ev->event_win != grab_win) return 1;
+   if (ev->event_window != grab_win) return 1;
    for (l = e_config->key_bindings; l; l = l->next)
      {
 	bind = l->data;
@@ -56,10 +56,10 @@ _e_simplelock_cb_key_down(void *data, int type, void *event)
 	
 	mod = 0;
 	
-	if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
-	if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
-	if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
-	if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
+	if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
+	if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
+	if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
 	
 	if (bind->key && (!strcmp(bind->key, ev->keyname)) && 
 	    ((bind->modifiers == mod) || (bind->any_mod)))
@@ -76,10 +76,10 @@ _e_simplelock_cb_key_down(void *data, int type, void *event)
 static int
 _e_simplelock_cb_key_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Up *ev;
+   Ecore_Event_Key *ev;
       
    ev = event;
-   if (ev->event_win != grab_win) return 1;
+   if (ev->event_window != grab_win) return 1;
    return 0;
 }
 
@@ -211,10 +211,10 @@ e_simplelock_show(void)
      }
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_KEY_DOWN, _e_simplelock_cb_key_down, NULL));
+      (ECORE_EVENT_KEY_DOWN, _e_simplelock_cb_key_down, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_KEY_UP, _e_simplelock_cb_key_up, NULL));
+      (ECORE_EVENT_KEY_UP, _e_simplelock_cb_key_up, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (E_EVENT_ZONE_MOVE_RESIZE, _e_simplelock_cb_zone_move_resize, NULL));

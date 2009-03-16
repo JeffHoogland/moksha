@@ -929,19 +929,19 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
    e_grabinput_get(cfdata->locals.bind_win, 0, cfdata->locals.bind_win);
    
    cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
+			      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
 				 _grab_key_down_cb, cfdata));
 
    cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
+			      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
 				 _grab_mouse_dumb_cb, NULL));
 
    cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+			      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
 				 _grab_mouse_dumb_cb, NULL));
 
    cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
+			      ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
 				 _grab_mouse_dumb_cb, NULL));
 
    e_dialog_show(cfdata->locals.dia);
@@ -970,27 +970,27 @@ static int
 _grab_key_down_cb(void *data, int type, void *event)
 {
    E_Config_Dialog_Data *cfdata;
-   Ecore_X_Event_Key_Down *ev;
+   Ecore_Event_Key *ev;
 
    ev = event;
    cfdata = data;
 
-   if (ev->win != cfdata->locals.bind_win) return 1;
+   if (ev->window != cfdata->locals.bind_win) return 1;
 
    if (!strcmp(ev->keyname, "Escape") &&
-       !(ev->modifiers & ECORE_X_MODIFIER_SHIFT) &&
-       !(ev->modifiers & ECORE_X_MODIFIER_CTRL) &&
-       !(ev->modifiers & ECORE_X_MODIFIER_ALT) &&
-       !(ev->modifiers & ECORE_X_MODIFIER_WIN))
+       !(ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
+       !(ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+       !(ev->modifiers & ECORE_EVENT_MODIFIER_ALT) &&
+       !(ev->modifiers & ECORE_EVENT_MODIFIER_WIN))
      {
 	_grab_wnd_hide(cfdata);
      }
    else
      {
-	if ((ev->keyname) && (ev->keysymbol) && (ev->key_compose))
-	  printf("'%s' '%s' '%s'\n", ev->keyname, ev->keysymbol, ev->key_compose);
-	else if ((ev->keyname) && (ev->keysymbol))
-	  printf("'%s' '%s'\n", ev->keyname, ev->keysymbol);
+	if ((ev->keyname) && (ev->key) && (ev->compose))
+	  printf("'%s' '%s' '%s'\n", ev->keyname, ev->key, ev->compose);
+	else if ((ev->keyname) && (ev->key))
+	  printf("'%s' '%s'\n", ev->keyname, ev->key);
 	else
 	  printf("unknown key!!!!\n");
 	if (!strcmp(ev->keyname, "Control_L") || !strcmp(ev->keyname, "Control_R") ||
@@ -1007,13 +1007,13 @@ _grab_key_down_cb(void *data, int type, void *event)
 	     int mod = E_BINDING_MODIFIER_NONE; 
 	     int found = 0, n;
 
-	     if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) 
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) 
 	       mod |= E_BINDING_MODIFIER_SHIFT;
-	     if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
 	       mod |= E_BINDING_MODIFIER_CTRL;
-	     if (ev->modifiers & ECORE_X_MODIFIER_ALT)
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
 	       mod |= E_BINDING_MODIFIER_ALT;
-	     if (ev->modifiers & ECORE_X_MODIFIER_WIN)
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
 	       mod |= E_BINDING_MODIFIER_WIN;
 	     /* see comment in e_bindings on numlock
 	     if (ev->modifiers & ECORE_X_LOCK_NUM) 

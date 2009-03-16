@@ -53,7 +53,7 @@ static void _e_menu_item_activate_previous        (void);
 static void _e_menu_item_activate_first           (void);
 static void _e_menu_item_activate_last            (void);
 static void _e_menu_item_activate_nth             (int n);
-static void _e_menu_item_activate_char            (char * key_compose);
+static void _e_menu_item_activate_char            (const char * key_compose);
 static void _e_menu_activate_next                 (void);
 static void _e_menu_activate_previous             (void);
 static void _e_menu_activate_first                (void);
@@ -117,12 +117,12 @@ static Ecore_Event_Handler *_e_menu_window_shape_handler = NULL;
 EAPI int
 e_menu_init(void)
 {
-   _e_menu_key_down_handler     = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,          _e_menu_cb_key_down,    NULL);
-   _e_menu_key_up_handler       = ecore_event_handler_add(ECORE_X_EVENT_KEY_UP,            _e_menu_cb_key_up,      NULL);
-   _e_menu_mouse_down_handler   = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_menu_cb_mouse_down,  NULL);
-   _e_menu_mouse_up_handler     = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,   _e_menu_cb_mouse_up,    NULL);
-   _e_menu_mouse_move_handler   = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,        _e_menu_cb_mouse_move,  NULL);
-   _e_menu_mouse_wheel_handler  = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,       _e_menu_cb_mouse_wheel, NULL);
+   _e_menu_key_down_handler     = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,           _e_menu_cb_key_down,    NULL);
+   _e_menu_key_up_handler       = ecore_event_handler_add(ECORE_EVENT_KEY_UP,             _e_menu_cb_key_up,      NULL);
+   _e_menu_mouse_down_handler   = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,  _e_menu_cb_mouse_down,  NULL);
+   _e_menu_mouse_up_handler     = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,    _e_menu_cb_mouse_up,    NULL);
+   _e_menu_mouse_move_handler   = ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE,         _e_menu_cb_mouse_move,  NULL);
+   _e_menu_mouse_wheel_handler  = ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,        _e_menu_cb_mouse_wheel, NULL);
    _e_menu_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,     _e_menu_cb_window_shape, NULL);
    _e_menu_categories = eina_hash_string_superfast_new(NULL);
    return 1;
@@ -2095,7 +2095,7 @@ _e_menu_item_activate_nth(int n)
 }
 
 static void
-_e_menu_item_activate_char(char * key_compose)
+_e_menu_item_activate_char(const char * key_compose)
 {
    E_Menu *m;
    E_Menu_Item *mi;
@@ -2573,72 +2573,72 @@ _e_menu_cb_item_out(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 static int
 _e_menu_cb_key_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Down *ev;
+   Ecore_Event_Key *ev;
    
    ev = event;
-   if (ev->win != _e_menu_win) return 1;
-   if      ((!strcmp(ev->keysymbol, "Up")) ||
-	    (!strcmp(ev->keysymbol, "KP_Up")))
+   if (ev->window != _e_menu_win) return 1;
+   if      ((!strcmp(ev->key, "Up")) ||
+	    (!strcmp(ev->key, "KP_Up")))
      _e_menu_item_activate_previous();
-   else if ((!strcmp(ev->keysymbol, "Down")) ||
-	    (!strcmp(ev->keysymbol, "KP_Down")))
+   else if ((!strcmp(ev->key, "Down")) ||
+	    (!strcmp(ev->key, "KP_Down")))
      _e_menu_item_activate_next();
-   else if ((!strcmp(ev->keysymbol, "Left")) ||
-	    (!strcmp(ev->keysymbol, "KP_Left")))
+   else if ((!strcmp(ev->key, "Left")) ||
+	    (!strcmp(ev->key, "KP_Left")))
      _e_menu_activate_previous();
-   else if ((!strcmp(ev->keysymbol, "Right")) ||
-	    (!strcmp(ev->keysymbol, "KP_Right")))
+   else if ((!strcmp(ev->key, "Right")) ||
+	    (!strcmp(ev->key, "KP_Right")))
      _e_menu_activate_next();
-   else if ((!strcmp(ev->keysymbol, "Home")) ||
-	    (!strcmp(ev->keysymbol, "KP_Home")))
+   else if ((!strcmp(ev->key, "Home")) ||
+	    (!strcmp(ev->key, "KP_Home")))
      _e_menu_item_activate_first();
-   else if ((!strcmp(ev->keysymbol, "End")) ||
-	    (!strcmp(ev->keysymbol, "KP_End")))
+   else if ((!strcmp(ev->key, "End")) ||
+	    (!strcmp(ev->key, "KP_End")))
      _e_menu_item_activate_last();
-   else if (!strcmp(ev->keysymbol, "space"))
+   else if (!strcmp(ev->key, "space"))
      {
 	_e_menu_active_call();
      }
-   else if ((!strcmp(ev->keysymbol, "Return")) ||
-	    (!strcmp(ev->keysymbol, "KP_Enter")))
+   else if ((!strcmp(ev->key, "Return")) ||
+	    (!strcmp(ev->key, "KP_Enter")))
      {
 	_e_menu_active_call();
 	_e_menu_deactivate_all();
      }
-   else if (!strcmp(ev->keysymbol, "Escape"))
+   else if (!strcmp(ev->key, "Escape"))
      _e_menu_deactivate_all();
-   else if ((!strcmp(ev->keysymbol, "1")) || (!strcmp(ev->keysymbol, "KP_1")))
+   else if ((!strcmp(ev->key, "1")) || (!strcmp(ev->key, "KP_1")))
      _e_menu_item_activate_first();
-   else if ((!strcmp(ev->keysymbol, "2")) || (!strcmp(ev->keysymbol, "KP_2")))
+   else if ((!strcmp(ev->key, "2")) || (!strcmp(ev->key, "KP_2")))
      _e_menu_item_activate_nth(1);
-   else if ((!strcmp(ev->keysymbol, "3")) || (!strcmp(ev->keysymbol, "KP_3")))
+   else if ((!strcmp(ev->key, "3")) || (!strcmp(ev->key, "KP_3")))
      _e_menu_item_activate_nth(2);
-   else if ((!strcmp(ev->keysymbol, "4")) || (!strcmp(ev->keysymbol, "KP_4")))
+   else if ((!strcmp(ev->key, "4")) || (!strcmp(ev->key, "KP_4")))
      _e_menu_item_activate_nth(3);
-   else if ((!strcmp(ev->keysymbol, "5")) || (!strcmp(ev->keysymbol, "KP_5")))
+   else if ((!strcmp(ev->key, "5")) || (!strcmp(ev->key, "KP_5")))
      _e_menu_item_activate_nth(4);
-   else if ((!strcmp(ev->keysymbol, "6")) || (!strcmp(ev->keysymbol, "KP_6")))
+   else if ((!strcmp(ev->key, "6")) || (!strcmp(ev->key, "KP_6")))
      _e_menu_item_activate_nth(5);
-   else if ((!strcmp(ev->keysymbol, "7")) || (!strcmp(ev->keysymbol, "KP_7")))
+   else if ((!strcmp(ev->key, "7")) || (!strcmp(ev->key, "KP_7")))
      _e_menu_item_activate_nth(6);
-   else if ((!strcmp(ev->keysymbol, "8")) || (!strcmp(ev->keysymbol, "KP_8")))
+   else if ((!strcmp(ev->key, "8")) || (!strcmp(ev->key, "KP_8")))
      _e_menu_item_activate_nth(7);
-   else if ((!strcmp(ev->keysymbol, "9")) || (!strcmp(ev->keysymbol, "KP_9")))
+   else if ((!strcmp(ev->key, "9")) || (!strcmp(ev->key, "KP_9")))
      _e_menu_item_activate_nth(8);
-   else if ((!strcmp(ev->keysymbol, "0")) || (!strcmp(ev->keysymbol, "KP_0")))
+   else if ((!strcmp(ev->key, "0")) || (!strcmp(ev->key, "KP_0")))
      _e_menu_item_activate_last();
-   else if (ev->key_compose)
-     _e_menu_item_activate_char(ev->key_compose);
+   else if (ev->compose)
+     _e_menu_item_activate_char(ev->compose);
    return 1;
 }
 
 static int
 _e_menu_cb_key_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Up *ev;
+   Ecore_Event_Key *ev;
    
    ev = event;
-   if (ev->win != _e_menu_win) return 1;
+   if (ev->window != _e_menu_win) return 1;
    return 1;
 }
 
@@ -2650,10 +2650,10 @@ _e_menu_cb_key_up(void *data, int type, void *event)
 static int
 _e_menu_cb_mouse_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Down *ev;
+   Ecore_Event_Mouse_Button *ev;
    
    ev = event;
-   if (ev->win != _e_menu_win) return 1;
+   if (ev->window != _e_menu_win) return 1;
 
    /* Only allow dragging from floating menus for now.
     * The reason for this is that for non floating menus, 
@@ -2669,14 +2669,14 @@ _e_menu_cb_mouse_down(void *data, int type, void *event)
 static int
 _e_menu_cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
+   Ecore_Event_Mouse_Button *ev;
    Ecore_X_Time t;
    int ret = 0;
    
    ev = event;
-   if (ev->win != _e_menu_win) return 1;
+   if (ev->window != _e_menu_win) return 1;
 
-   t = ev->time - _e_menu_activate_time;
+   t = ev->timestamp - _e_menu_activate_time;
    if ((_e_menu_activate_time != 0) &&
        (t < (e_config->menus_click_drag_timeout * 1000)))
      {
@@ -2710,7 +2710,7 @@ _e_menu_cb_mouse_up(void *data, int type, void *event)
 static int
 _e_menu_cb_mouse_move(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Move *ev;
+   Ecore_Event_Mouse_Move *ev;
    Eina_List *l, *tmp = NULL;
    int dx, dy, d;
    double dt;
@@ -2718,12 +2718,12 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
    int is_fast = 0;
    
    ev = event;
-   if (ev->win != _e_menu_win) return 1;
+   if (ev->window != _e_menu_win) return 1;
    fast_move_threshold = e_config->menus_fast_mouse_move_threshhold;
    dx = ev->x - _e_menu_x;
    dy = ev->y - _e_menu_y;
    d = (dx * dx) + (dy * dy);
-   dt = (double)(ev->time - _e_menu_time) / 1000.0;
+   dt = (double)(ev->timestamp - _e_menu_time) / 1000.0;
    dt = dt * dt;
    if ((dt > 0.0) && ((d / dt) >= (fast_move_threshold * fast_move_threshold)))
      is_fast = 1;
@@ -2757,7 +2757,7 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
 	     evas_event_feed_mouse_move(m->evas,
 					ev->x - m->cur.x + m->zone->x,
 					ev->y - m->cur.y + m->zone->y,
-					ev->time,
+					ev->timestamp,
 					NULL);
 	  }
      }
@@ -2769,7 +2769,7 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
      
    _e_menu_x = ev->x;
    _e_menu_y = ev->y;
-   _e_menu_time = ev->time;
+   _e_menu_time = ev->timestamp;
    _e_menu_mouse_autoscroll_check();
    return 1;
 }
@@ -2777,10 +2777,10 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
 static int
 _e_menu_cb_mouse_wheel(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Wheel *ev;
+   Ecore_Event_Mouse_Wheel *ev;
    
    ev = event;
-   if (ev->win != _e_menu_win) return 1;
+   if (ev->window != _e_menu_win) return 1;
    if (ev->z < 0) /* up */
      {
 	int i;

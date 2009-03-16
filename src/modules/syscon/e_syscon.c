@@ -76,19 +76,19 @@ e_syscon_show(E_Zone *zone, const char *defact)
 
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_KEY_DOWN, _cb_key_down, NULL));
+      (ECORE_EVENT_KEY_DOWN, _cb_key_down, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _cb_mouse_down, NULL));
+      (ECORE_EVENT_MOUSE_BUTTON_DOWN, _cb_mouse_down, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_BUTTON_UP, _cb_mouse_up, NULL));
+      (ECORE_EVENT_MOUSE_BUTTON_UP, _cb_mouse_up, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_MOVE, _cb_mouse_move, NULL));
+      (ECORE_EVENT_MOUSE_MOVE, _cb_mouse_move, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_X_EVENT_MOUSE_WHEEL, _cb_mouse_wheel, NULL));
+      (ECORE_EVENT_MOUSE_WHEEL, _cb_mouse_wheel, NULL));
 
    o = edje_object_add(popup->evas);
    o_bg = o;
@@ -308,13 +308,13 @@ e_syscon_hide(void)
 static int
 _cb_key_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Down *ev;
+   Ecore_Event_Key *ev;
 
    ev = event;
-   if (ev->event_win != input_window) return 1;
-   if (!strcmp(ev->keysymbol, "Escape"))
+   if (ev->event_window != input_window) return 1;
+   if (!strcmp(ev->key, "Escape"))
      e_syscon_hide();
-   else if (!strcmp(ev->keysymbol, "Up"))
+   else if (!strcmp(ev->key, "Up"))
      {
         // FIXME: implement focus and key control... eventually
      }
@@ -325,11 +325,11 @@ _cb_key_down(void *data, int type, void *event)
 static int
 _cb_mouse_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Down *ev;
+   Ecore_Event_Mouse_Button *ev;
    Evas_Button_Flags flags = EVAS_BUTTON_NONE;
 
    ev = event;
-   if (ev->event_win != input_window) return 1;
+   if (ev->event_window != input_window) return 1;
    if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
    if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
    if ((ev->x < popup->x) || (ev->x >= (popup->x + popup->w)) ||
@@ -338,48 +338,48 @@ _cb_mouse_down(void *data, int type, void *event)
         e_syscon_hide();
         return 1;
      }
-   evas_event_feed_mouse_down(popup->evas, ev->button, flags, ev->time, NULL);
+   evas_event_feed_mouse_down(popup->evas, ev->buttons, flags, ev->timestamp, NULL);
    return 1;
 }
 
 static int
 _cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
+   Ecore_Event_Mouse_Button *ev;
 
    ev = event;
-   if (ev->event_win != input_window) return 1;
-   evas_event_feed_mouse_up(popup->evas, ev->button, EVAS_BUTTON_NONE,
-                            ev->time, NULL);
+   if (ev->event_window != input_window) return 1;
+   evas_event_feed_mouse_up(popup->evas, ev->buttons, EVAS_BUTTON_NONE,
+                            ev->timestamp, NULL);
    return 1;
 }
 
 static int
 _cb_mouse_move(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Move *ev;
+   Ecore_Event_Mouse_Move *ev;
 
    ev = event;
-   if (ev->event_win != input_window) return 1;
+   if (ev->event_window != input_window) return 1;
    if (!inevas)
      {
-        evas_event_feed_mouse_in(popup->evas, ev->time, NULL);
+        evas_event_feed_mouse_in(popup->evas, ev->timestamp, NULL);
         inevas = 1;
      }
    evas_event_feed_mouse_move(popup->evas, ev->x - popup->x, ev->y - popup->y,
-                              ev->time, NULL);
+                              ev->timestamp, NULL);
    return 1;
 }
 
 static int
 _cb_mouse_wheel(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Wheel *ev;
+   Ecore_Event_Mouse_Wheel *ev;
 
    ev = event;
-   if (ev->event_win != input_window) return 1;
+   if (ev->event_window != input_window) return 1;
    evas_event_feed_mouse_wheel(popup->evas, ev->direction, ev->z, 
-                               ev->time, NULL);
+                               ev->timestamp, NULL);
    return 1;
 }
 

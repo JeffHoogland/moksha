@@ -287,10 +287,10 @@ _grab_wnd_show(void *data1, void *data2)
 	cfdata->grab.dia = NULL;
 	return;
      }
-   hdl = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, 
+   hdl = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, 
 				 _grab_cb_key_down, cfdata);
    cfdata->grab.hdls = eina_list_append(cfdata->grab.hdls, hdl);
-   hdl = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, 
+   hdl = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, 
 				 _grab_cb_mouse_down, cfdata);
    cfdata->grab.hdls = eina_list_append(cfdata->grab.hdls, hdl);
 
@@ -303,27 +303,27 @@ static int
 _grab_cb_mouse_down(void *data, int type, void *event) 
 {
    E_Config_Dialog_Data *cfdata = NULL;
-   Ecore_X_Event_Mouse_Button_Down *ev;
+   Ecore_Event_Mouse_Button *ev;
 
    ev = event;
    if (!(cfdata = data)) return 1;
-   if (ev->win != cfdata->grab.bind_win) return 1;
+   if (ev->window != cfdata->grab.bind_win) return 1;
 
-   if(ev->button == cfdata->btn.drag)
+   if(ev->buttons == cfdata->btn.drag)
      cfdata->btn.drag = 0;
-   else if (ev->button == cfdata->btn.noplace)
+   else if (ev->buttons == cfdata->btn.noplace)
      cfdata->btn.noplace = 0;
-   else if (ev->button == cfdata->btn.desk)
+   else if (ev->buttons == cfdata->btn.desk)
      cfdata->btn.desk = 0;
         
    if (cfdata->grab.btn == 1)
-     cfdata->btn.drag = ev->button;
+     cfdata->btn.drag = ev->buttons;
    else if (cfdata->grab.btn == 2)
-     cfdata->btn.noplace = ev->button;
+     cfdata->btn.noplace = ev->buttons;
    else
-     cfdata->btn.desk = ev->button;
+     cfdata->btn.desk = ev->buttons;
 
-   if(ev->button == 3) 
+   if(ev->buttons == 3) 
      {
 	e_util_dialog_show(_("Attetion"), 
 			   _("You cannot use the right mouse button in the<br>"
@@ -339,11 +339,11 @@ static int
 _grab_cb_key_down(void *data, int type, void *event) 
 {
    E_Config_Dialog_Data *cfdata = NULL;
-   Ecore_X_Event_Key_Down *ev;
+   Ecore_Event_Key *ev;
 
    ev = event;
    if (!(cfdata = data)) return 1;
-   if (ev->win != cfdata->grab.bind_win) return 1;
+   if (ev->window != cfdata->grab.bind_win) return 1;
    if (!strcmp(ev->keyname, "Escape")) _grab_wnd_hide(cfdata);
    if (!strcmp(ev->keyname, "Delete")) 
      {

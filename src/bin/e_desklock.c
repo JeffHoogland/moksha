@@ -337,21 +337,21 @@ e_desklock_show(void)
    
    /* handlers */
    edd->handlers = eina_list_append(edd->handlers,
-				    ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
+				    ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
 							    _e_desklock_cb_key_down, NULL));
    edd->handlers = eina_list_append(edd->handlers, 
-				    ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
+				    ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
 							    _e_desklock_cb_mouse_down, NULL));
    edd->handlers = eina_list_append(edd->handlers,
-				    ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+				    ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
 							    _e_desklock_cb_mouse_up, NULL));
    edd->handlers = eina_list_append(edd->handlers,
-				    ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
+				    ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
 							    _e_desklock_cb_mouse_wheel,
 							    NULL));
    if ((total_zone_num > 1) && (e_config->desklock_login_box_zone == -2))
      edd->handlers = eina_list_append(edd->handlers,
-				      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
+				      ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE,
 							      _e_desklock_cb_mouse_move,
 							      NULL));
    _e_desklock_passwd_update();
@@ -417,31 +417,31 @@ e_desklock_hide(void)
 static int
 _e_desklock_cb_key_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Down *ev;
+   Ecore_Event_Key *ev;
    
    ev = event;
-   if (ev->win != edd->elock_wnd || edd->state == E_DESKLOCK_STATE_CHECKING) return 1;
+   if (ev->window != edd->elock_wnd || edd->state == E_DESKLOCK_STATE_CHECKING) return 1;
 
-   if (!strcmp(ev->keysymbol, "Escape"))
+   if (!strcmp(ev->key, "Escape"))
      ;
-   else if (!strcmp(ev->keysymbol, "KP_Enter"))
+   else if (!strcmp(ev->key, "KP_Enter"))
      _e_desklock_check_auth();
-   else if (!strcmp(ev->keysymbol, "Return"))
+   else if (!strcmp(ev->key, "Return"))
      _e_desklock_check_auth();
-   else if (!strcmp(ev->keysymbol, "BackSpace"))
+   else if (!strcmp(ev->key, "BackSpace"))
      _e_desklock_backspace();
-   else if (!strcmp(ev->keysymbol, "Delete"))
+   else if (!strcmp(ev->key, "Delete"))
      _e_desklock_delete();
-   else if (!strcmp(ev->keysymbol, "u") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
+   else if (!strcmp(ev->key, "u") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
      _e_desklock_null();
    else
      {
 	/* here we have to grab a password */
-	if (ev->key_compose)
+	if (ev->compose)
 	  {
-	     if ((strlen(edd->passwd) < (PASSWD_LEN - strlen(ev->key_compose))))
+	     if ((strlen(edd->passwd) < (PASSWD_LEN - strlen(ev->compose))))
 	       {
-		  strcat(edd->passwd, ev->key_compose);
+		  strcat(edd->passwd, ev->compose);
 		  _e_desklock_passwd_update();
 	       }
 	  }

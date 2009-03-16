@@ -134,9 +134,9 @@ e_manager_new(Ecore_X_Window root, int num)
    if (h) man->handlers = eina_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_manager_cb_window_configure, man);
    if (h) man->handlers = eina_list_append(man->handlers, h);
-   h = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_manager_cb_key_down, man);
+   h = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _e_manager_cb_key_down, man);
    if (h) man->handlers = eina_list_append(man->handlers, h);
-   h = ecore_event_handler_add(ECORE_X_EVENT_KEY_UP, _e_manager_cb_key_up, man);
+   h = ecore_event_handler_add(ECORE_EVENT_KEY_UP, _e_manager_cb_key_up, man);
    if (h) man->handlers = eina_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_FRAME_EXTENTS_REQUEST, _e_manager_cb_frame_extents_request, man);
    if (h) man->handlers = eina_list_append(man->handlers, h);
@@ -596,13 +596,13 @@ static int
 _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
-   Ecore_X_Event_Key_Down *e;
+   Ecore_Event_Key *e;
    
    man = data;
    e = ev;
 
-   if (e->event_win != man->root) return 1;
-   if (e->root_win != man->root) man = _e_manager_get_for_root(e->root_win);
+   if (e->event_window != man->root) return 1;
+   if (e->root_window != man->root) man = _e_manager_get_for_root(e->root_window);
    if (e_bindings_key_down_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
      return 0;
    return 1;
@@ -612,13 +612,13 @@ static int
 _e_manager_cb_key_up(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
-   Ecore_X_Event_Key_Up *e;
+   Ecore_Event_Key *e;
    
    man = data;
    e = ev;
 
-   if (e->event_win != man->root) return 1;
-   if (e->root_win != man->root) man = _e_manager_get_for_root(e->root_win);
+   if (e->event_window != man->root) return 1;
+   if (e->root_window != man->root) man = _e_manager_get_for_root(e->root_window);
    if (e_bindings_key_up_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
      return 0;
    return 1;

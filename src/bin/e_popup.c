@@ -30,11 +30,11 @@ e_popup_init(void)
    _e_popup_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
 							   _e_popup_cb_window_shape, NULL);
 /*   
-   _e_popup_mouse_down_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
+   _e_popup_mouse_down_handler = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
 							 _e_popup_cb_mouse_down, NULL);
-   _e_popup_mouse_up_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+   _e_popup_mouse_up_handler = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
 						       _e_popup_cb_mouse_up, NULL);
-   _e_popup_mouse_wheel_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
+   _e_popup_mouse_wheel_handler = ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
 							  _e_popup_cb_mouse_wheel, NULL);
  */
    return 1;
@@ -327,11 +327,11 @@ _e_popup_find_by_window(Ecore_X_Window win)
 static int
 _e_popup_cb_mouse_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Down *ev;
+   Ecore_Event_Mouse_Button *ev;
    E_Popup *pop;
    
    ev = event;
-   pop = _e_popup_find_by_window(ev->event_win);
+   pop = _e_popup_find_by_window(ev->event_window);
    if (pop)
      {
 	Evas_Button_Flags flags = EVAS_BUTTON_NONE;
@@ -340,7 +340,7 @@ _e_popup_cb_mouse_down(void *data, int type, void *event)
 					   E_OBJECT(pop), ev);
 	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
 	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
-	evas_event_feed_mouse_down(pop->evas, ev->button, flags, ev->time, NULL);
+	evas_event_feed_mouse_down(pop->evas, ev->buttons, flags, ev->timestamp, NULL);
 	return 0;
      }
    return 1;
@@ -349,14 +349,14 @@ _e_popup_cb_mouse_down(void *data, int type, void *event)
 static int
 _e_popup_cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
+   Ecore_Event_Mouse_Button *ev;
    E_Popup *pop;
    
    ev = event;
-   pop = _e_popup_find_by_window(ev->event_win);
+   pop = _e_popup_find_by_window(ev->event_window);
    if (pop)
      {
-	evas_event_feed_mouse_up(pop->evas, ev->button, EVAS_BUTTON_NONE, ev->time, NULL);
+	evas_event_feed_mouse_up(pop->evas, ev->buttons, EVAS_BUTTON_NONE, ev->timestamp, NULL);
 	e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_POPUP,
 					 E_OBJECT(pop), ev);
 	return 0;
@@ -367,16 +367,16 @@ _e_popup_cb_mouse_up(void *data, int type, void *event)
 static int
 _e_popup_cb_mouse_wheel(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Wheel *ev;
+   Ecore_Event_Mouse_Wheel *ev;
    E_Popup *pop;
    
    ev = event;
-   pop = _e_popup_find_by_window(ev->event_win);
+   pop = _e_popup_find_by_window(ev->event_window);
    if (pop)
      {
 	e_bindings_wheel_event_handle(E_BINDING_CONTEXT_POPUP,
 				      E_OBJECT(pop), ev);
-	evas_event_feed_mouse_wheel(pop->evas, ev->direction, ev->z, ev->time, NULL);
+	evas_event_feed_mouse_wheel(pop->evas, ev->direction, ev->z, ev->timestamp, NULL);
 	return 0;
      }
    return 1;

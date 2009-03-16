@@ -40,10 +40,10 @@ static int _e_pointer_cb_idle_poller(void *data);
 EAPI int
 e_pointer_init(void)
 {
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_pointer_cb_mouse_down, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP, _e_pointer_cb_mouse_up, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE, _e_pointer_cb_mouse_move, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL, _e_pointer_cb_mouse_wheel, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_pointer_cb_mouse_down, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, _e_pointer_cb_mouse_up, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _e_pointer_cb_mouse_move, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL, _e_pointer_cb_mouse_wheel, NULL));
    return 1;
 }
 
@@ -534,7 +534,7 @@ _e_pointer_active_handle(E_Pointer *p)
 static int
 _e_pointer_cb_mouse_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Down *ev;
+   Ecore_Event_Mouse_Button *ev;
    Eina_List *l;
    E_Pointer *p;
                                      
@@ -555,7 +555,7 @@ _e_pointer_cb_mouse_down(void *data, int type, void *event)
 static int
 _e_pointer_cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
+   Ecore_Event_Mouse_Button *ev;
    Eina_List *l;
    E_Pointer *p;
                                      
@@ -576,7 +576,7 @@ _e_pointer_cb_mouse_up(void *data, int type, void *event)
 static int
 _e_pointer_cb_mouse_move(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Move *ev;
+   Ecore_Event_Mouse_Move *ev;
    Eina_List *l;
    E_Pointer *p;
                                      
@@ -597,7 +597,7 @@ _e_pointer_cb_mouse_move(void *data, int type, void *event)
 static int
 _e_pointer_cb_mouse_wheel(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Wheel *ev;
+   Ecore_Event_Mouse_Wheel *ev;
    Eina_List *l;
    E_Pointer *p;
                                      

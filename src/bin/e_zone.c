@@ -146,7 +146,7 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
                                               _e_zone_cb_mouse_out, zone));
    zone->handlers = 
      eina_list_append(zone->handlers,
-                      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
+                      ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE,
                                               _e_zone_cb_mouse_move, zone));
    zone->handlers = 
      eina_list_append(zone->handlers,
@@ -909,9 +909,9 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
 
    if (!zone->cur_mouse_action)
      {
-	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_DOWN)
+	if (ecore_event_current_type_get() == ECORE_EVENT_MOUSE_BUTTON_DOWN)
 	  {
-	     Ecore_X_Event_Mouse_Button_Down *ev2;
+	     Ecore_Event_Mouse_Button *ev2;
 
 	     ev2 = ecore_event_current_event_get();
 	     zone->cur_mouse_action =
@@ -939,9 +939,9 @@ _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_inf
    zone = data;
    if (zone->cur_mouse_action)
      {
-	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_UP)
+	if (ecore_event_current_type_get() == ECORE_EVENT_MOUSE_BUTTON_UP)
 	  {
-	     Ecore_X_Event_Mouse_Button_Up *ev2;
+	     Ecore_Event_Mouse_Button *ev2;
 
 	     ev2 = ecore_event_current_event_get();
 	     if (zone->cur_mouse_action->func.end_mouse)
@@ -954,9 +954,9 @@ _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_inf
      }
    else
      {
-	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_UP)
+	if (ecore_event_current_type_get() == ECORE_EVENT_MOUSE_BUTTON_UP)
 	  {
-	     Ecore_X_Event_Mouse_Button_Up *ev2;
+	     Ecore_Event_Mouse_Button *ev2;
 
 	     ev2 = ecore_event_current_event_get();
 	     e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_ZONE,
@@ -1067,7 +1067,7 @@ _e_zone_cb_mouse_out(void *data, int type, void *event)
 static int
 _e_zone_cb_mouse_move(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Move *ev;
+   Ecore_Event_Mouse_Move *ev;
    E_Event_Zone_Edge *zev;
    E_Zone_Edge edge;
    E_Zone *zone;
@@ -1075,25 +1075,25 @@ _e_zone_cb_mouse_move(void *data, int type, void *event)
    ev = event;
    zone = data;
 
-   if (ev->win == zone->edge.left)
+   if (ev->window == zone->edge.left)
      edge = E_ZONE_EDGE_LEFT;
-   else if (ev->win == zone->edge.top)
+   else if (ev->window == zone->edge.top)
      edge = E_ZONE_EDGE_TOP;
-   else if (ev->win == zone->edge.right)
+   else if (ev->window == zone->edge.right)
      edge = E_ZONE_EDGE_RIGHT;
-   else if (ev->win == zone->edge.bottom)
+   else if (ev->window == zone->edge.bottom)
      edge = E_ZONE_EDGE_BOTTOM;
-   else if ((ev->win == zone->corner.left_top) ||
-	    (ev->win == zone->corner.top_left))
+   else if ((ev->window == zone->corner.left_top) ||
+	    (ev->window == zone->corner.top_left))
      edge = E_ZONE_EDGE_TOP_LEFT;
-   else if ((ev->win == zone->corner.right_top) ||
-	    (ev->win == zone->corner.top_right))
+   else if ((ev->window == zone->corner.right_top) ||
+	    (ev->window == zone->corner.top_right))
      edge = E_ZONE_EDGE_TOP_RIGHT;
-   else if ((ev->win == zone->corner.right_bottom) ||
-	    (ev->win == zone->corner.bottom_right))
+   else if ((ev->window == zone->corner.right_bottom) ||
+	    (ev->window == zone->corner.bottom_right))
      edge = E_ZONE_EDGE_BOTTOM_RIGHT;
-   else if ((ev->win == zone->corner.left_bottom) ||
-	    (ev->win == zone->corner.bottom_left))
+   else if ((ev->window == zone->corner.left_bottom) ||
+	    (ev->window == zone->corner.bottom_left))
      edge = E_ZONE_EDGE_BOTTOM_LEFT;
    else return 1;
 

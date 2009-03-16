@@ -102,18 +102,18 @@ EAPI void        e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Bind
 EAPI void        e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);
 EAPI void        e_bindings_mouse_grab(E_Binding_Context ctxt, Ecore_X_Window win);
 EAPI void        e_bindings_mouse_ungrab(E_Binding_Context ctxt, Ecore_X_Window win);
-EAPI E_Action   *e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev, E_Binding_Mouse **bind_ret);
-EAPI E_Action   *e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev);
-EAPI E_Action   *e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev, E_Binding_Mouse **bind_ret);
-EAPI E_Action   *e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev);
+EAPI E_Action   *e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Button *ev, E_Binding_Mouse **bind_ret);
+EAPI E_Action   *e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Button *ev);
+EAPI E_Action   *e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Button *ev, E_Binding_Mouse **bind_ret);
+EAPI E_Action   *e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Button *ev);
 
 EAPI void        e_bindings_key_add(E_Binding_Context ctxt, const char *key, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);
 EAPI void        e_bindings_key_del(E_Binding_Context ctxt, const char *key, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);
 EAPI E_Binding_Key *e_bindings_key_get(const char *action);
 EAPI void        e_bindings_key_grab(E_Binding_Context ctxt, Ecore_X_Window win);
 EAPI void        e_bindings_key_ungrab(E_Binding_Context ctxt, Ecore_X_Window win);
-EAPI E_Action   *e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Down *ev);
-EAPI E_Action   *e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Up *ev);
+EAPI E_Action   *e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Key *ev);
+EAPI E_Action   *e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Key *ev);
 
 EAPI void        e_bindings_edge_add(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier mod, int any_mod, const char *action, const char *params, float delay);
 EAPI E_Binding_Edge *e_bindings_edge_get(const char *action, E_Zone_Edge edge);
@@ -130,8 +130,8 @@ EAPI void        e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int
 EAPI void        e_bindings_wheel_del(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);
 EAPI void        e_bindings_wheel_grab(E_Binding_Context ctxt, Ecore_X_Window win);
 EAPI void        e_bindings_wheel_ungrab(E_Binding_Context ctxt, Ecore_X_Window win);
-EAPI E_Action   *e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Wheel *ev, E_Binding_Wheel **bind_ret);
-EAPI E_Action   *e_bindings_wheel_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Wheel *ev);
+EAPI E_Action   *e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Wheel *ev, E_Binding_Wheel **bind_ret);
+EAPI E_Action   *e_bindings_wheel_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Wheel *ev);
 
 #endif
 #endif

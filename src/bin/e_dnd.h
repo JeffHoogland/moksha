@@ -38,8 +38,8 @@ struct _E_Drag
    struct {
 	void *(*convert)(E_Drag *drag, const char *type);
 	void  (*finished)(E_Drag *drag, int dropped);
-	void  (*key_down)(E_Drag *drag, Ecore_X_Event_Key_Down *e);
-	void  (*key_up)(E_Drag *drag, Ecore_X_Event_Key_Up *e);
+	void  (*key_down)(E_Drag *drag, Ecore_Event_Key *e);
+	void  (*key_up)(E_Drag *drag, Ecore_Event_Key *e);
    } cb;
 
    E_Container       *container;
@@ -122,8 +122,8 @@ EAPI void    e_drag_object_set(E_Drag *drag, Evas_Object *object);
 EAPI void    e_drag_move(E_Drag *drag, int x, int y);
 EAPI void    e_drag_resize(E_Drag *drag, int w, int h);
 EAPI void    e_drag_idler_before(void);
-EAPI void    e_drag_key_down_cb_set(E_Drag *drag, void (*func)(E_Drag *drag, Ecore_X_Event_Key_Down *e));
-EAPI void    e_drag_key_up_cb_set(E_Drag *drag, void (*func)(E_Drag *drag, Ecore_X_Event_Key_Up *e));
+EAPI void    e_drag_key_down_cb_set(E_Drag *drag, void (*func)(E_Drag *drag, Ecore_Event_Key *e));
+EAPI void    e_drag_key_up_cb_set(E_Drag *drag, void (*func)(E_Drag *drag, Ecore_Event_Key *e));
 
 /* x and y are the coords where the mouse is when dragging starts */
 EAPI int  e_drag_start(E_Drag *drag, int x, int y);

@@ -279,12 +279,13 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 	free(bd);
 	return NULL;
      }
+
    bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_border_cb_mouse_in, bd));
    bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_border_cb_mouse_out, bd));
-   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_border_cb_mouse_down, bd));
-   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP, _e_border_cb_mouse_up, bd));
-   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE, _e_border_cb_mouse_move, bd));
-   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL, _e_border_cb_mouse_wheel, bd));
+   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_border_cb_mouse_down, bd));
+   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, _e_border_cb_mouse_up, bd));
+   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _e_border_cb_mouse_move, bd));
+   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL, _e_border_cb_mouse_wheel, bd));
 
    bd->client.win = win;
 
@@ -2729,10 +2730,10 @@ _e_border_action_move_timeout_add(void)
 static int
 _e_border_move_key_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Down *ev = event;
+   Ecore_Event_Key *ev = event;
    int x, y;
 
-   if (ev->event_win != action_input_win)
+   if (ev->event_window != action_input_win)
      return 1;
    if (!action_border)
      {
@@ -2743,23 +2744,23 @@ _e_border_move_key_down(void *data, int type, void *event)
    x = action_border->x;
    y = action_border->y;
 
-   if (strcmp(ev->keysymbol, "Up") == 0)
+   if (strcmp(ev->key, "Up") == 0)
      y -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dy);
-   else if (strcmp(ev->keysymbol, "Down") == 0)
+   else if (strcmp(ev->key, "Down") == 0)
      y += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dy);
-   else if (strcmp(ev->keysymbol, "Left") == 0)
+   else if (strcmp(ev->key, "Left") == 0)
      x -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dx);
-   else if (strcmp(ev->keysymbol, "Right") == 0)
+   else if (strcmp(ev->key, "Right") == 0)
      x += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dx);
-   else if (strcmp(ev->keysymbol, "Return") == 0)
+   else if (strcmp(ev->key, "Return") == 0)
      goto stop;
-   else if (strcmp(ev->keysymbol, "Escape") == 0)
+   else if (strcmp(ev->key, "Escape") == 0)
      {
 	_e_border_action_restore_orig(action_border);
 	goto stop;
      }
-   else if ((strncmp(ev->keysymbol, "Control", sizeof("Control") - 1) != 0) &&
-	    (strncmp(ev->keysymbol, "Alt", sizeof("Alt") - 1) != 0))
+   else if ((strncmp(ev->key, "Control", sizeof("Control") - 1) != 0) &&
+	    (strncmp(ev->key, "Alt", sizeof("Alt") - 1) != 0))
      goto stop;
 
    e_border_move(action_border, x, y);
@@ -2776,9 +2777,9 @@ _e_border_move_key_down(void *data, int type, void *event)
 static int
 _e_border_move_mouse_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Down *ev = event;
+   Ecore_Event_Mouse_Button *ev = event;
 
-   if (ev->event_win != action_input_win)
+   if (ev->event_window != action_input_win)
      return 1;
 
    if (!action_border)
@@ -2810,11 +2811,11 @@ e_border_act_move_keyboard(E_Border *bd)
 
    if (action_handler_key)
      ecore_event_handler_del(action_handler_key);
-   action_handler_key = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_border_move_key_down, NULL);
+   action_handler_key = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _e_border_move_key_down, NULL);
 
    if (action_handler_mouse)
      ecore_event_handler_del(action_handler_mouse);
-   action_handler_mouse = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_border_move_mouse_down, NULL);
+   action_handler_mouse = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_border_move_mouse_down, NULL);
 }
 
 static int
@@ -2836,10 +2837,10 @@ _e_border_action_resize_timeout_add(void)
 static int
 _e_border_resize_key_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Key_Down *ev = event;
+   Ecore_Event_Key *ev = event;
    int w, h, dx, dy;
 
-   if (ev->event_win != action_input_win)
+   if (ev->event_window != action_input_win)
      return 1;
    if (!action_border)
      {
@@ -2857,23 +2858,23 @@ _e_border_resize_key_down(void *data, int type, void *event)
    if (dy < action_border->client.icccm.step_h)
      dy = action_border->client.icccm.step_h;
 
-   if (strcmp(ev->keysymbol, "Up") == 0)
+   if (strcmp(ev->key, "Up") == 0)
      h -= _e_border_key_down_modifier_apply(ev->modifiers, dy);
-   else if (strcmp(ev->keysymbol, "Down") == 0)
+   else if (strcmp(ev->key, "Down") == 0)
      h += _e_border_key_down_modifier_apply(ev->modifiers, dy);
-   else if (strcmp(ev->keysymbol, "Left") == 0)
+   else if (strcmp(ev->key, "Left") == 0)
      w -= _e_border_key_down_modifier_apply(ev->modifiers, dx);
-   else if (strcmp(ev->keysymbol, "Right") == 0)
+   else if (strcmp(ev->key, "Right") == 0)
      w += _e_border_key_down_modifier_apply(ev->modifiers, dx);
-   else if (strcmp(ev->keysymbol, "Return") == 0)
+   else if (strcmp(ev->key, "Return") == 0)
      goto stop;
-   else if (strcmp(ev->keysymbol, "Escape") == 0)
+   else if (strcmp(ev->key, "Escape") == 0)
      {
 	_e_border_action_restore_orig(action_border);
 	goto stop;
      }
-   else if ((strncmp(ev->keysymbol, "Control", sizeof("Control") - 1) != 0) &&
-	    (strncmp(ev->keysymbol, "Alt", sizeof("Alt") - 1) != 0))
+   else if ((strncmp(ev->key, "Control", sizeof("Control") - 1) != 0) &&
+	    (strncmp(ev->key, "Alt", sizeof("Alt") - 1) != 0))
      goto stop;
 
    e_border_resize_limit(action_border, &w, &h);
@@ -2891,9 +2892,9 @@ _e_border_resize_key_down(void *data, int type, void *event)
 static int
 _e_border_resize_mouse_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Down *ev = event;
+   Ecore_Event_Mouse_Button *ev = event;
 
-   if (ev->event_win != action_input_win)
+   if (ev->event_window != action_input_win)
      return 1;
 
    if (!action_border)
@@ -2925,15 +2926,15 @@ e_border_act_resize_keyboard(E_Border *bd)
 
    if (action_handler_key)
      ecore_event_handler_del(action_handler_key);
-   action_handler_key = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_border_resize_key_down, NULL);
+   action_handler_key = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _e_border_resize_key_down, NULL);
 
    if (action_handler_mouse)
      ecore_event_handler_del(action_handler_mouse);
-   action_handler_mouse = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_border_resize_mouse_down, NULL);
+   action_handler_mouse = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_border_resize_mouse_down, NULL);
 }
 
 EAPI void
-e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
+e_border_act_move_begin(E_Border *bd, Ecore_Event_Mouse_Button *ev)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -2949,13 +2950,13 @@ e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
      {
 	char source[256];
 	
-	snprintf(source, sizeof(source) - 1, "mouse,down,%i", ev->button);
+	snprintf(source, sizeof(source) - 1, "mouse,down,%i", ev->buttons);
 	_e_border_moveinfo_gather(bd, source);
      }
 }
 
 EAPI void
-e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
+e_border_act_move_end(E_Border *bd, Ecore_Event_Mouse_Button *ev)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -2968,7 +2969,7 @@ e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 }
 
 EAPI void
-e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
+e_border_act_resize_begin(E_Border *bd, Ecore_Event_Mouse_Button *ev)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -3007,13 +3008,13 @@ e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
      {
 	char source[256];
 	
-	snprintf(source, sizeof(source) - 1, "mouse,down,%i", ev->button);
+	snprintf(source, sizeof(source) - 1, "mouse,down,%i", ev->buttons);
 	_e_border_moveinfo_gather(bd, source);
      }
 }
 
 EAPI void
-e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
+e_border_act_resize_end(E_Border *bd, Ecore_Event_Mouse_Button *ev)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -3028,7 +3029,7 @@ e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 }
 
 EAPI void
-e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev, int key)
+e_border_act_menu_begin(E_Border *bd, Ecore_Event_Mouse_Button *ev, int key)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -3037,7 +3038,7 @@ e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev, int k
 	e_int_border_menu_show(bd,
 			       bd->x + bd->fx.x + ev->x - bd->zone->container->x,
 			       bd->y + bd->fx.y + ev->y - bd->zone->container->y, key,
-			       ev->time);
+			       ev->timestamp);
      }
    else
      {
@@ -5120,12 +5121,12 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 static int
 _e_border_cb_mouse_wheel(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Wheel *ev;
+   Ecore_Event_Mouse_Wheel *ev;
    E_Border *bd;
 
    ev = event;
    bd = data;
-   if (ev->event_win == bd->win)
+   if (ev->event_window == bd->win)
      {
 	bd->mouse.current.mx = ev->root.x;
 	bd->mouse.current.my = ev->root.y;
@@ -5133,28 +5134,28 @@ _e_border_cb_mouse_wheel(void *data, int type, void *event)
 	  e_bindings_wheel_event_handle(E_BINDING_CONTEXT_BORDER,
 					E_OBJECT(bd), ev);
      }
-   evas_event_feed_mouse_wheel(bd->bg_evas, ev->direction, ev->z, ev->time, NULL);
+   evas_event_feed_mouse_wheel(bd->bg_evas, ev->direction, ev->z, ev->timestamp, NULL);
    return 1;
 }
 
 static int
 _e_border_cb_mouse_down(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Down *ev;
+   Ecore_Event_Mouse_Button *ev;
    E_Border *bd;
 
    ev = event;
    bd = data;
-   if (ev->event_win == bd->win)
+   if (ev->event_window == bd->win)
      {
-	if ((ev->button >= 1) && (ev->button <= 3))
+	if ((ev->buttons >= 1) && (ev->buttons <= 3))
 	  {
-	     bd->mouse.last_down[ev->button - 1].mx = ev->root.x;
-	     bd->mouse.last_down[ev->button - 1].my = ev->root.y;
-	     bd->mouse.last_down[ev->button - 1].x = bd->x + bd->fx.x;
-	     bd->mouse.last_down[ev->button - 1].y = bd->y + bd->fx.y;
-	     bd->mouse.last_down[ev->button - 1].w = bd->w;
-	     bd->mouse.last_down[ev->button - 1].h = bd->h;
+	     bd->mouse.last_down[ev->buttons - 1].mx = ev->root.x;
+	     bd->mouse.last_down[ev->buttons - 1].my = ev->root.y;
+	     bd->mouse.last_down[ev->buttons - 1].x = bd->x + bd->fx.x;
+	     bd->mouse.last_down[ev->buttons - 1].y = bd->y + bd->fx.y;
+	     bd->mouse.last_down[ev->buttons - 1].w = bd->w;
+	     bd->mouse.last_down[ev->buttons - 1].h = bd->h;
 	  }
 	else
 	  {
@@ -5181,22 +5182,22 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 	  }
 	e_focus_event_mouse_down(bd);
      }
-   if (ev->win != ev->event_win)
+   if (ev->window != ev->event_window)
      {
 	return 1;
      }
-   if ((ev->win != bd->event_win) && (ev->event_win != bd->win))
+   if ((ev->window != bd->event_win) && (ev->event_window != bd->win))
      {
 	return 1;
      }
-   if ((ev->button >= 1) && (ev->button <= 3))
+   if ((ev->buttons >= 1) && (ev->buttons <= 3))
      {
-	bd->mouse.last_down[ev->button - 1].mx = ev->root.x;
-	bd->mouse.last_down[ev->button - 1].my = ev->root.y;
-	bd->mouse.last_down[ev->button - 1].x = bd->x + bd->fx.x;
-	bd->mouse.last_down[ev->button - 1].y = bd->y + bd->fx.y;
-	bd->mouse.last_down[ev->button - 1].w = bd->w;
-	bd->mouse.last_down[ev->button - 1].h = bd->h;
+	bd->mouse.last_down[ev->buttons - 1].mx = ev->root.x;
+	bd->mouse.last_down[ev->buttons - 1].my = ev->root.y;
+	bd->mouse.last_down[ev->buttons - 1].x = bd->x + bd->fx.x;
+	bd->mouse.last_down[ev->buttons - 1].y = bd->y + bd->fx.y;
+	bd->mouse.last_down[ev->buttons - 1].w = bd->w;
+	bd->mouse.last_down[ev->buttons - 1].h = bd->h;
      }
    else
      {
@@ -5221,7 +5222,7 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 
 	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
 	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
-	evas_event_feed_mouse_down(bd->bg_evas, ev->button, flags, ev->time, NULL);
+	evas_event_feed_mouse_down(bd->bg_evas, ev->buttons, flags, ev->timestamp, NULL);
      }
    return 1;
 }
@@ -5229,19 +5230,19 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 static int
 _e_border_cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
+   Ecore_Event_Mouse_Button *ev;
    E_Border *bd;
 
    ev = event;
    bd = data;
-   if (ev->event_win == bd->win)
+   if (ev->event_window == bd->win)
      {
-	if ((ev->button >= 1) && (ev->button <= 3))
+	if ((ev->buttons >= 1) && (ev->buttons <= 3))
 	  {
-	     bd->mouse.last_up[ev->button - 1].mx = ev->root.x;
-	     bd->mouse.last_up[ev->button - 1].my = ev->root.y;
-	     bd->mouse.last_up[ev->button - 1].x = bd->x + bd->fx.x;
-	     bd->mouse.last_up[ev->button - 1].y = bd->y + bd->fx.y;
+	     bd->mouse.last_up[ev->buttons - 1].mx = ev->root.x;
+	     bd->mouse.last_up[ev->buttons - 1].my = ev->root.y;
+	     bd->mouse.last_up[ev->buttons - 1].x = bd->x + bd->fx.x;
+	     bd->mouse.last_up[ev->buttons - 1].y = bd->y + bd->fx.y;
 	  }
 	bd->mouse.current.mx = ev->root.x;
 	bd->mouse.current.my = ev->root.y;
@@ -5262,33 +5263,33 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
 	       e_focus_event_mouse_up(bd);
 	  }
      }
-   if (ev->win != bd->event_win) return 1;
-   if ((ev->button >= 1) && (ev->button <= 3))
+   if (ev->window != bd->event_win) return 1;
+   if ((ev->buttons >= 1) && (ev->buttons <= 3))
      {
-	bd->mouse.last_up[ev->button - 1].mx = ev->root.x;
-	bd->mouse.last_up[ev->button - 1].my = ev->root.y;
-	bd->mouse.last_up[ev->button - 1].x = bd->x + bd->fx.x;
-	bd->mouse.last_up[ev->button - 1].y = bd->y + bd->fx.y;
+	bd->mouse.last_up[ev->buttons - 1].mx = ev->root.x;
+	bd->mouse.last_up[ev->buttons - 1].my = ev->root.y;
+	bd->mouse.last_up[ev->buttons - 1].x = bd->x + bd->fx.x;
+	bd->mouse.last_up[ev->buttons - 1].y = bd->y + bd->fx.y;
      }
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
 
    bd->drag.start = 0;
 
-   evas_event_feed_mouse_up(bd->bg_evas, ev->button, EVAS_BUTTON_NONE, ev->time, NULL);
+   evas_event_feed_mouse_up(bd->bg_evas, ev->buttons, EVAS_BUTTON_NONE, ev->timestamp, NULL);
    return 1;
 }
 
 static int
 _e_border_cb_mouse_move(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Move *ev;
+   Ecore_Event_Mouse_Move *ev;
    E_Border *bd;
 
    ev = event;
    bd = data;
-   if ((ev->win != bd->event_win) &&
-       (ev->event_win != bd->win)) return 1;
+   if ((ev->window != bd->event_win) &&
+       (ev->event_window != bd->win)) return 1;
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
    if (bd->moving)
@@ -5399,7 +5400,7 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 		    }
 	       }
 	  }
-	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, ev->time, NULL);
+	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, ev->timestamp, NULL);
      }
    return 1;
 }
@@ -5407,8 +5408,8 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 static int
 _e_border_cb_grab_replay(void *data, int type, void *event)
 { 
-   Ecore_X_Event_Mouse_Button_Down *ev;
-   if (type != ECORE_X_EVENT_MOUSE_BUTTON_DOWN) return 0;
+   Ecore_Event_Mouse_Button *ev;
+   if (type != ECORE_EVENT_MOUSE_BUTTON_DOWN) return 0;
    
    ev = event;
    if ((e_config->pass_click_on) || (e_config->always_click_to_raise) ||
@@ -5416,12 +5417,12 @@ _e_border_cb_grab_replay(void *data, int type, void *event)
      {
 	E_Border *bd;
 	
-	bd = e_border_find_by_window(ev->event_win);
+	bd = e_border_find_by_window(ev->event_window);
 	if (bd)
 	  {
 	     if (bd->cur_mouse_action)
 	       return 0;
-	     if (ev->event_win == bd->win)
+	     if (ev->event_window == bd->win)
 	       {
 		  if (!e_bindings_mouse_down_find(E_BINDING_CONTEXT_BORDER,
 						  E_OBJECT(bd), ev, NULL))

@@ -5926,7 +5926,7 @@ _e_fm2_cb_drag_finished(E_Drag *drag, int dropped)
 }
 
 void
-_e_fm_drag_key_down_cb(E_Drag *drag, Ecore_X_Event_Key_Down *e)
+_e_fm_drag_key_down_cb(E_Drag *drag, Ecore_Event_Key *e)
 {
    if (!strncmp(e->keyname, "Alt", 3))
      {
@@ -5946,7 +5946,7 @@ _e_fm_drag_key_down_cb(E_Drag *drag, Ecore_X_Event_Key_Down *e)
 }
 
 void
-_e_fm_drag_key_up_cb(E_Drag *drag, Ecore_X_Event_Key_Up *e)
+_e_fm_drag_key_up_cb(E_Drag *drag, Ecore_Event_Key *e)
 {
    /* Default action would be move. ;) */
 

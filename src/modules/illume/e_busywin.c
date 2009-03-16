@@ -76,7 +76,7 @@ e_busywin_new(E_Zone *zone, const char *themedir)
 
    esw->handlers = eina_list_append
      (esw->handlers,
-      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
 			      _e_busywin_cb_mouse_up, esw));
    esw->handlers = eina_list_append
      (esw->handlers,
@@ -219,12 +219,12 @@ _e_busywin_slide(E_Busywin *esw, int out, double len)
 static int
 _e_busywin_cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
+   Ecore_Event_Mouse_Button *ev;
    E_Busywin *esw;
    
    ev = event;
    esw = data;
-   if (ev->win == esw->clickwin)
+   if (ev->window == esw->clickwin)
      {
 	if (esw->out) _e_busywin_slide(esw, 0, (double)illume_cfg->sliding.busywin.duration / 1000.0);
 	else _e_busywin_slide(esw, 1, (double)illume_cfg->sliding.busywin.duration / 1000.0);
