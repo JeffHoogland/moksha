@@ -2697,9 +2697,9 @@ _e_border_action_restore_orig(E_Border *bd)
 static int
 _e_border_key_down_modifier_apply(int modifier, int value)
 {
-   if (modifier & ECORE_X_MODIFIER_CTRL)
+   if (modifier & ECORE_EVENT_MODIFIER_CTRL)
      return value * 2;
-   else if (modifier & ECORE_X_MODIFIER_ALT)
+   else if (modifier & ECORE_EVENT_MODIFIER_ALT)
      {
 	value /= 2;
 	if (value)

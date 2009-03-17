@@ -1323,15 +1323,15 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
      _e_exebuf_complete();
    else if (!strcmp(ev->key, "Tab"))
      _e_exebuf_complete();
-   else if (!strcmp(ev->key, "Return") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
+   else if (!strcmp(ev->key, "Return") && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
      _e_exebuf_exec_term();
    else if (!strcmp(ev->key, "Return"))
      _e_exebuf_exec();
-   else if (!strcmp(ev->key, "KP_Enter") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
+   else if (!strcmp(ev->key, "KP_Enter") && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
      _e_exebuf_exec_term();
    else if (!strcmp(ev->key, "KP_Enter"))
      _e_exebuf_exec();
-   else if (!strcmp(ev->key, "u") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
+   else if (!strcmp(ev->key, "u") && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
      _e_exebuf_clear();
    else if (!strcmp(ev->key, "Escape"))
      e_exebuf_hide();
