@@ -3,6 +3,8 @@
  */
 #include "e.h"
 
+EAPI int E_EVENT_EXEHIST_UPDATE = 0;
+
 /* local subsystem functions */
 typedef struct _E_Exehist E_Exehist;
 typedef struct _E_Exehist_Item E_Exehist_Item;
@@ -18,6 +20,7 @@ struct _E_Exehist_Item
    const char   *exe;
    const char   *launch_method;
    double        exetime;
+   unsigned int  count;
 };
 
 static void _e_exehist_unload_queue(void);
@@ -26,6 +29,8 @@ static void _e_exehist_clear(void);
 static void _e_exehist_unload(void);
 static void _e_exehist_limit(void);
 static void _e_exehist_cb_unload(void *data);
+static int  _e_exehist_sort_exe_cb(const void *d1, const void *d2);
+static int  _e_exehist_sort_pop_cb(const void *d1, const void *d2);
 
 /* local subsystem globals */
 static E_Config_DD *_e_exehist_config_edd = NULL;
@@ -54,6 +59,9 @@ e_exehist_init(void)
 #define D _e_exehist_config_edd
    E_CONFIG_LIST(D, T, history, _e_exehist_config_item_edd);
    E_CONFIG_LIST(D, T, mimes, _e_exehist_config_item_edd);
+
+   E_EVENT_EXEHIST_UPDATE = ecore_event_type_new();
+
    return 1;
 }
 
@@ -90,6 +98,7 @@ e_exehist_add(const char *launch_method, const char *exe)
    _e_exehist->history = eina_list_append(_e_exehist->history, ei);
    _e_exehist_limit();
    _e_exehist_changes++;
+   ecore_event_add(E_EVENT_EXEHIST_UPDATE, NULL, NULL, NULL);
    _e_exehist_unload_queue();
 }
 
@@ -98,6 +107,7 @@ e_exehist_del(const char *exe)
 {
    E_Exehist_Item *ei;
    Eina_List *l;
+   Eina_Bool ok = EINA_FALSE;
 
    _e_exehist_load();
    if (!_e_exehist) return;
@@ -113,8 +123,11 @@ e_exehist_del(const char *exe)
 							 l);
 	     _e_exehist_changes++;
 	     _e_exehist_unload_queue();
+	     ok = EINA_TRUE;
 	  }
      }
+   if (ok)
+     ecore_event_add(E_EVENT_EXEHIST_UPDATE, NULL, NULL, NULL);
 }
 
 EAPI void
@@ -124,6 +137,7 @@ e_exehist_clear(void)
    if (!_e_exehist) return;
    _e_exehist_clear();
    _e_exehist_changes++;
+   ecore_event_add(E_EVENT_EXEHIST_UPDATE, NULL, NULL, NULL);
    _e_exehist_unload_queue();
 }
 
@@ -171,38 +185,82 @@ e_exehist_newest_run_get(const char *exe)
 EAPI Eina_List *
 e_exehist_list_get(void)
 {
-   Eina_List *list = NULL, *l, *m;
-   int count = 1;
-   int max;
+   return e_exehist_sorted_list_get(E_EXEHIST_SORT_BY_DATE, 0);
+}
 
-   max = e_config->exebuf_max_hist_list;
+EAPI Eina_List *
+e_exehist_sorted_list_get(E_Exehist_Sort sort_type, int max)
+{
+   Eina_List *list = NULL, *pop = NULL, *l = NULL, *m;
+   Eina_Iterator *iter;
+   E_Exehist_Item *ei;
+   int count = 1;
+   E_Exehist_Item *prev = NULL;
+
+   if (!max) max = e_config->exebuf_max_hist_list;
    if (!max) max = 20;
    _e_exehist_load();
-   for (l = eina_list_last(_e_exehist->history); l; l = l->prev)
+   switch(sort_type)
+     {
+      case E_EXEHIST_SORT_BY_EXE:
+      case E_EXEHIST_SORT_BY_POPULARITY:
+	 l = eina_list_clone(_e_exehist->history);
+	 l = eina_list_sort(l, 0, _e_exehist_sort_exe_cb);
+	 iter = eina_list_iterator_new(l);
+	 break;
+      default:
+	 iter = eina_list_iterator_reversed_new(_e_exehist->history);
+	 break;
+     }
+   EINA_ITERATOR_FOREACH(iter, ei)
      {
 	int bad = 0;
-	E_Exehist_Item *ei;
 	
-	ei = l->data;
 	if (!(ei->exe)) continue;
-	for (m = list; m; m = m->next) 
+	if (sort_type == E_EXEHIST_SORT_BY_POPULARITY)
 	  {
-	     const char *exe;
-
-	     if (!(exe = m->data)) continue;
-	     if (!strcmp(exe, ei->exe))
+	     if (!prev || (strcmp(prev->exe, ei->exe)))
 	       {
-		  bad = 1;
-		  break;
+		  prev = ei;
+		  pop = eina_list_append(pop, ei);
 	       }
+	     prev->count++;
 	  }
-	if (!(bad))
+	else
 	  {
-	     list = eina_list_append(list, ei->exe);
-	     count++;
+	     for (m = list; m; m = m->next) 
+	       {
+		  const char *exe;
+
+		  if (!(exe = m->data)) continue;
+		  if (!strcmp(exe, ei->exe))
+		    {
+		       bad = 1;
+		       break;
+		    }
+	       }
+	     if (!(bad))
+	       {
+		  list = eina_list_append(list, ei->exe);
+		  count++;
+	       }
 	  }
 	if (count > max) break;
      }
+   if (sort_type == E_EXEHIST_SORT_BY_POPULARITY)
+     {
+	count = 1;
+	pop = eina_list_sort(pop, 0, _e_exehist_sort_pop_cb);
+	EINA_LIST_FOREACH(pop, l, prev)
+	  {
+	     list = eina_list_append(list, prev->exe);
+	     count++;
+	     if (count > max) break;
+	  }
+	eina_list_free(pop);
+     }
+   eina_list_free(l);
+   eina_iterator_free(iter);
    _e_exehist_unload_queue();
    return list;
 }
@@ -379,4 +437,32 @@ _e_exehist_cb_unload(void *data)
      }
    _e_exehist_unload();
    _e_exehist_unload_defer = NULL;
+}
+
+static int
+_e_exehist_sort_exe_cb(const void *d1, const void *d2)
+{
+   const E_Exehist_Item *ei1, *ei2;
+
+   ei1 = d1;
+   ei2 = d2;
+
+   if (!ei1) return 1;
+   if (!ei2) return -1;
+
+   return strcasecmp(ei1->exe, ei2->exe);
+}
+
+static int
+_e_exehist_sort_pop_cb(const void *d1, const void *d2)
+{
+   const E_Exehist_Item *ei1, *ei2;
+
+   ei1 = d1;
+   ei2 = d2;
+
+   if (!ei1) return 1;
+   if (!ei2) return -1;
+
+   return ei2->count - ei1->count;
 }
