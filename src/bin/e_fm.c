@@ -248,6 +248,8 @@ static int _e_fm2_region_visible(E_Fm2_Region *rg);
 static void _e_fm2_icon_make_visible(E_Fm2_Icon *ic);
 static void _e_fm2_icon_desel_any(Evas_Object *obj);
 static E_Fm2_Icon *_e_fm2_icon_first_selected_find(Evas_Object *obj);
+static E_Fm2_Icon *_e_fm2_icon_next_find(Evas_Object *obj, int next, int match_func(E_Fm2_Icon *ic, void *data), void *data);
+
 static void _e_fm2_icon_sel_first(Evas_Object *obj);
 static void _e_fm2_icon_sel_last(Evas_Object *obj);
 static void _e_fm2_icon_sel_prev(Evas_Object *obj);
@@ -260,7 +262,7 @@ static void _e_fm2_typebuf_hide(Evas_Object *obj);
 static void _e_fm2_typebuf_history_prev(Evas_Object *obj);
 static void _e_fm2_typebuf_history_next(Evas_Object *obj);
 static void _e_fm2_typebuf_run(Evas_Object *obj);
-static void _e_fm2_typebuf_match(Evas_Object *obj);
+static void _e_fm2_typebuf_match(Evas_Object *obj, int next);
 static void _e_fm2_typebuf_complete(Evas_Object *obj);
 static void _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch);
 static void _e_fm2_typebuf_char_backspace(Evas_Object *obj);
@@ -4782,103 +4784,19 @@ _e_fm2_icon_sel_last(Evas_Object *obj)
    _e_fm2_icon_make_visible(ic);
 }
 
-static void
-_e_fm2_icon_sel_prev(Evas_Object *obj)
-{
-   E_Fm2_Smart_Data *sd;
-   Eina_List *l;
-   E_Fm2_Icon *ic, *ic_prev;
-   char view_mode;
-   int x, y, custom = 0, found = 0;
-   int dist, min = 65535; /* FIXME big enough? */
-   
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-   if (!sd->icons) return;
-
-   view_mode = _e_fm2_view_mode_get(sd);
-   if ((view_mode == E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS) ||
-       (view_mode == E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS) ||
-       (view_mode == E_FM2_VIEW_MODE_CUSTOM_ICONS))
-     custom = 1;
-
-   ic_prev = NULL;
-   EINA_LIST_FOREACH(sd->icons, l, ic)
-     {
-	if (ic->selected)
-	  {
-	     if (!custom)
-	       {
-		  if (!l->prev) return;
-		  ic_prev = l->prev->data;
-	       }
-	     else
-	       {
-		  found = 1;
-		  x = ic->x;
-		  y = ic->y;
-	       }
-	     break;
-	  }
-     }
-
-   if (custom && found)
-     {
-	EINA_LIST_FOREACH(sd->icons, l, ic)
-	  {
-	     if (ic->x < x)
-	       {
-		  dist = 2 * (abs(ic->y - y)) + (x - ic->x);
-		  if (dist < min)
-		    {
-		       min = dist;
-		       ic_prev = ic;
-		    }
-	       }
-	  }
-	/* no prev item was found in row go to end and up */
-	if (!ic_prev)
-	  {
-	     EINA_LIST_FOREACH(sd->icons, l, ic)
-	       {
-		  if (ic->y < y)
-		    {
-		       dist = 2 * (abs(ic->y - y)) - ic->x;
-		       if (dist < min)
-			 {
-			    min = dist;
-			    ic_prev = ic;
-			 }
-		    }
-	       }
-	  }
-     }
-
-   if (!ic_prev)
-     {
-	/* FIXME this is not the bottomright item for custom grid */
-	_e_fm2_icon_sel_last(obj);
-	return;
-     }
-   _e_fm2_icon_desel_any(obj);
-   _e_fm2_icon_select(ic_prev);
-   evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
-   _e_fm2_icon_make_visible(ic_prev);
-}
-
-static void
-_e_fm2_icon_sel_next(Evas_Object *obj)
+static E_Fm2_Icon *
+_e_fm2_icon_next_find(Evas_Object *obj, int next, int match_func(E_Fm2_Icon *ic, void *data), void *data)
 {
    E_Fm2_Smart_Data *sd;
    Eina_List *l;
    E_Fm2_Icon *ic, *ic_next;
    char view_mode;
-   int x, y, custom = 0, found = 0;
+   int x = 0, y = 0, custom = 0;
    int dist, min = 65535;
    
    sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-   if (!sd->icons) return;
+   if (!sd) return NULL;
+   if (!sd->icons) return NULL;
 
    view_mode = _e_fm2_view_mode_get(sd);
    if ((view_mode == E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS) ||
@@ -4887,47 +4805,36 @@ _e_fm2_icon_sel_next(Evas_Object *obj)
      custom = 1;
 
    ic_next = NULL;
+   /* find selected item / current position */
    EINA_LIST_FOREACH(sd->icons, l, ic)
      {
 	if (ic->selected)
 	  {
-	     if (!custom)
+	     if (!custom && !match_func)
 	       {
-		  if (!l->next) return; 
-		  ic_next = l->next->data;
+		  ic_next = ic;
 	       }
 	     else
 	       {
-		  found = 1;
 		  x = ic->x;
 		  y = ic->y;
 	       }
 	     break;
 	  }
      }
-
-   if (custom && found)
+   if (next && (custom || match_func))
      {
-	EINA_LIST_FOREACH(sd->icons, l, ic)
-	  {
-	     if (ic->x > x)
-	       {
-		  dist = 2 * (abs(ic->y - y))  + (ic->x - x);
-		  if (dist < min)
-		    {
-		       min = dist;
-		       ic_next = ic;
-		    }
-	       }
-	  }
-	/* no next item was found in row go down and begin */
-	if (!ic_next)
+	/* find next item in custom grid, or list/grid when match
+	   func is given */
+	if (next == 1)
 	  {
 	     EINA_LIST_FOREACH(sd->icons, l, ic)
 	       {
-		  if (ic->y > y)
+		  if ((ic->x > x) &&
+		      (custom ? (ic->y >= y) : (ic->y == y)) &&
+		      (!match_func || match_func(ic, data)))
 		    {
-		       dist = 2 * (abs(ic->y - y)) + ic->x;
+		       dist = 2 * (ic->y - y)  + (ic->x - x);
 		       if (dist < min)
 			 {
 			    min = dist;
@@ -4935,8 +4842,101 @@ _e_fm2_icon_sel_next(Evas_Object *obj)
 			 }
 		    }
 	       }
+	     /* no next item was found in row go down and begin */
+	     if (!ic_next)
+	       {
+		  EINA_LIST_FOREACH(sd->icons, l, ic)
+		    {
+		       if ((ic->y > y) && (!match_func || match_func(ic, data)))
+			 {
+			    dist = 2 * (abs(ic->y - y)) + ic->x;
+			    if (dist < min)
+			      {
+				 min = dist;
+				 ic_next = ic;
+			      }
+			 }
+		    }
+	       }
+	  }
+	/* find previous item */
+	else if (next == -1)
+	  {
+	     EINA_LIST_FOREACH(sd->icons, l, ic)
+	       {
+		  if ((ic->x < x) &&
+		      (custom ? (ic->y <= y) : (ic->y == y)) &&
+		      (!match_func || match_func(ic, data)))
+		    {
+		       dist = 2 * (y - ic->y) + (x - ic->x);
+		       if (dist < min)
+			 {
+			    min = dist;
+			    ic_next = ic;
+			 }
+		    }
+	       }
+	     /* no prev item was found in row go to end and up */
+	     if (!ic_next)
+	       {
+		  EINA_LIST_FOREACH(sd->icons, l, ic)
+		    {
+		       if ((ic->y < y) && (!match_func || match_func(ic, data)))
+			 {
+			    dist = 2 * (abs(ic->y - y)) - ic->x;
+			    if (dist < min)
+			      {
+				 min = dist;
+				 ic_next = ic;
+			      }
+			 }
+		    }
+	       }
 	  }
      }
+   /* not custom, items are arranged in list order */
+   else if (ic_next) 
+     {
+	if (next == 1)
+	  {
+	     if (!l->next) return NULL; 
+	     ic_next = l->next->data;
+	  }
+	if (next == -1)
+	  {
+	     if (!l->prev) return NULL; 
+	     ic_next = l->prev->data;
+	  }
+     }
+      
+   return ic_next;
+}
+
+static void
+_e_fm2_icon_sel_prev(Evas_Object *obj)
+{
+   E_Fm2_Icon *ic_prev;
+   
+   ic_prev = _e_fm2_icon_next_find(obj, -1, NULL, NULL);
+   
+   if (!ic_prev)
+     {
+	/* FIXME this is not the bottomright item for custom grid */
+	_e_fm2_icon_sel_last(obj);
+	return;
+     }
+   _e_fm2_icon_desel_any(obj);
+   _e_fm2_icon_select(ic_prev);
+   evas_object_smart_callback_call(obj, "selection_change", NULL); /*XXX sd->obj*/
+   _e_fm2_icon_make_visible(ic_prev);
+}
+
+static void
+_e_fm2_icon_sel_next(Evas_Object *obj)
+{
+   E_Fm2_Icon *ic_next;
+
+   ic_next = _e_fm2_icon_next_find(obj, 1, NULL, NULL); 
    if (!ic_next)
      {
 	/* FIXME this is not the topleft item for custom grid */
@@ -4945,7 +4945,7 @@ _e_fm2_icon_sel_next(Evas_Object *obj)
      }
    _e_fm2_icon_desel_any(obj);
    _e_fm2_icon_select(ic_next);
-   evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
+   evas_object_smart_callback_call(obj, "selection_change", NULL);
    _e_fm2_icon_make_visible(ic_next);
 }
 
@@ -4955,7 +4955,7 @@ _e_fm2_icon_sel_down(Evas_Object *obj)
    E_Fm2_Smart_Data *sd;
    Eina_List *l;
    E_Fm2_Icon *ic, *ic_down;
-   int found, x, y, custom = 0;
+   int found, x = -1, y = -1, custom = 0;
    int dist, min = 65535;
    char view_mode;
    
@@ -4998,7 +4998,7 @@ _e_fm2_icon_sel_down(Evas_Object *obj)
 	  }
      }
    
-   if (custom && found)
+   if (custom)
      {
 	EINA_LIST_FOREACH(sd->icons, l, ic)
 	  {
@@ -5032,7 +5032,7 @@ _e_fm2_icon_sel_up(Evas_Object *obj)
    E_Fm2_Smart_Data *sd;
    Eina_List *l;
    E_Fm2_Icon *ic, *ic_up;
-   int found, x, y, custom = 0;
+   int found = 0, x = 0, y = 0, custom = 0;
    int dist, min = 65535;
    char view_mode;
    
@@ -5048,7 +5048,6 @@ _e_fm2_icon_sel_up(Evas_Object *obj)
      custom = 1;
 
    ic_up = NULL;
-   found = 0;
    
    EINA_LIST_REVERSE_FOREACH(sd->icons, l, ic)
      {
@@ -5072,7 +5071,6 @@ _e_fm2_icon_sel_up(Evas_Object *obj)
 	       }
 	     else break;
 	  }
-
      }
    
    if (custom && found)
@@ -5182,54 +5180,14 @@ _e_fm2_typebuf_run(Evas_Object *obj)
      }
 }
 
-static void
-_e_fm2_typebuf_match(Evas_Object *obj)
+static int
+_e_fm2_typebuf_match_func(E_Fm2_Icon *ic, void* data)
 {
-   E_Fm2_Smart_Data *sd;
-   Eina_List *l;
-   E_Fm2_Icon *ic;
-   char *tb;
-   int tblen;
-
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-   if (!sd->typebuf.buf) return;
-   if (!sd->icons) return;
-   _e_fm2_icon_desel_any(obj);
-   tblen = strlen(sd->typebuf.buf);
-   tb = malloc(tblen + 2);
-   if (!tb) return;
-   memcpy(tb, sd->typebuf.buf, tblen);
-   tb[tblen] = '*';
-   tb[tblen + 1] = '\0';
-
-   EINA_LIST_FOREACH(sd->icons, l, ic)
-     {
-	if (
-	    ((ic->info.label) &&
-	     (e_util_glob_case_match(ic->info.label, tb))) ||
-	    ((ic->info.file) &&
-	     (e_util_glob_case_match(ic->info.file, tb)))
-	    )
-	  {
-	     _e_fm2_icon_select(ic);
-	     evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
-	     _e_fm2_icon_make_visible(ic);
-	     break;
-	  }
-     }
-   free(tb);
-}
-
-static void
-_e_fm2_typebuf_complete(Evas_Object *obj)
-{
-   E_Fm2_Smart_Data *sd;
-   
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-   /* FIXME: do */
-   _e_fm2_typebuf_match(obj);
+   char *tb = data;
+   return (((ic->info.label) &&
+	    (e_util_glob_case_match(ic->info.label, tb))) ||
+	   ((ic->info.file) &&
+	    (e_util_glob_case_match(ic->info.file, tb))));
 }
 
 static int
@@ -5251,6 +5209,72 @@ _e_fm_typebuf_timer_cb(void *data)
 }
 
 static void
+_e_fm2_typebuf_match(Evas_Object *obj, int next)
+{
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Icon *ic, *ic_match = NULL;
+   Eina_List *l;
+   char *tb;
+   int tblen;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (!sd->typebuf.buf) return;
+   if (!sd->icons) return;
+
+   tblen = strlen(sd->typebuf.buf);
+   tb = malloc(tblen + 2);
+   if (!tb) return;
+   memcpy(tb, sd->typebuf.buf, tblen);
+   tb[tblen] = '*';
+   tb[tblen + 1] = '\0';
+
+   if (!next)
+     {
+       EINA_LIST_FOREACH(sd->icons, l, ic)
+	 {
+	   if (_e_fm2_typebuf_match_func(ic, tb))
+	     {
+	       ic_match = ic;
+	       break;
+	     }
+	 }
+     }
+   else
+     {
+       ic_match = _e_fm2_icon_next_find(obj, next, &_e_fm2_typebuf_match_func, tb);
+     }
+   
+   if (ic_match)
+     {
+	_e_fm2_icon_desel_any(obj);
+	_e_fm2_icon_select(ic_match);
+	evas_object_smart_callback_call(obj, "selection_change", NULL);
+	_e_fm2_icon_make_visible(ic_match);
+     }
+   
+   free(tb);   
+
+   if (sd->typebuf.timer) 
+     {
+	ecore_timer_del(sd->typebuf.timer);
+     }
+
+   sd->typebuf.timer = ecore_timer_add(5.0, _e_fm_typebuf_timer_cb, obj);
+}
+
+static void
+_e_fm2_typebuf_complete(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   /* FIXME: do */
+   _e_fm2_typebuf_match(obj, 0);
+}
+
+static void
 _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
 {
    E_Fm2_Smart_Data *sd;
@@ -5265,15 +5289,8 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
    strcat(ts, ch);
    free(sd->typebuf.buf);
    sd->typebuf.buf = ts;
-   _e_fm2_typebuf_match(obj);
+   _e_fm2_typebuf_match(obj, 0);
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
-
-   if (sd->typebuf.timer) 
-     {
-	ecore_timer_del(sd->typebuf.timer);
-     }
-
-   sd->typebuf.timer = ecore_timer_add(5.0, _e_fm_typebuf_timer_cb, obj);
 }
 
 static void
@@ -5298,7 +5315,7 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
    if (!ts) return;
    free(sd->typebuf.buf);
    sd->typebuf.buf = ts;
-   _e_fm2_typebuf_match(obj);
+   _e_fm2_typebuf_match(obj, 0);
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
 }
 
@@ -6472,7 +6489,10 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    else if (!strcmp(ev->key, "Up"))
      {
 	if (sd->typebuf_visible)
-	  _e_fm2_typebuf_history_prev(obj);
+	  /* FIXME: icon mode, typebuf extras */
+	  /* is there a way to use this atm? */
+	  // _e_fm2_typebuf_history_prev(obj);
+	  _e_fm2_typebuf_match(obj, -1);
 	else if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
 	  _e_fm2_icon_sel_prev(obj);
 	else
@@ -6481,7 +6501,10 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    else if (!strcmp(ev->key, "Down"))
      {
 	if (sd->typebuf_visible)
-	  _e_fm2_typebuf_history_next(obj);
+	  /* FIXME: icon mode, typebuf extras */
+	  /* is there a way to use this? */
+	  //_e_fm2_typebuf_history_next(obj);
+	  _e_fm2_typebuf_match(obj, 1);
 	else if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
 	  _e_fm2_icon_sel_next(obj);
 	else
