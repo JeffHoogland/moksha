@@ -58,15 +58,11 @@ e_manager_init(void)
 EAPI int
 e_manager_shutdown(void)
 {
-   Eina_List *l;
+   E_Manager *man;
 
-   l = managers;
-   managers = NULL;
-   while (l)
-     {
-	e_object_del(E_OBJECT(l->data));
-	l = eina_list_remove_list(l, l);
-     }
+   EINA_LIST_FREE(managers, man)
+     e_object_del(E_OBJECT(man));
+
    if (frame_extents)
      {
 	eina_hash_foreach(frame_extents, _e_manager_frame_extents_free_cb, NULL);

@@ -175,13 +175,10 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    _auto_apply_changes(cfdata);
 
    e_managers_keys_ungrab();
-   while (e_config->key_bindings)
+   EINA_LIST_FREE(e_config->key_bindings, bi)
      {
-	bi = e_config->key_bindings->data;
 	e_bindings_key_del(bi->context, bi->key, bi->modifiers, bi->any_mod, 
 			   bi->action, bi->params);
-	e_config->key_bindings =
-	   eina_list_remove_list(e_config->key_bindings, e_config->key_bindings);
 
 	eina_stringshare_del(bi->key);
 	eina_stringshare_del(bi->action);
@@ -951,13 +948,11 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
 static void
 _grab_wnd_hide(E_Config_Dialog_Data *cfdata)
 {
-   while (cfdata->locals.handlers)
-     {
-	ecore_event_handler_del(cfdata->locals.handlers->data);
-	cfdata->locals.handlers =
-	   eina_list_remove_list(cfdata->locals.handlers, cfdata->locals.handlers);
-     }
-   cfdata->locals.handlers = NULL;
+   Ecore_Event_Handler *eh;
+
+   EINA_LIST_FREE(cfdata->locals.handlers, eh)
+     ecore_event_handler_del(eh);
+
    e_grabinput_release(cfdata->locals.bind_win, cfdata->locals.bind_win);
    ecore_x_window_del(cfdata->locals.bind_win);
    cfdata->locals.bind_win = 0;
