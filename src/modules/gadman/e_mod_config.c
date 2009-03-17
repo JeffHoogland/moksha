@@ -282,10 +282,13 @@ static void
 _fill_gadgets_list(Evas_Object *ilist)
 {
    Eina_List *l = NULL;
+   Evas *evas;
    int w;
 
    e_widget_ilist_freeze(ilist);
    e_widget_ilist_clear(ilist);
+
+   evas = evas_object_evas_get(ilist);
 
    for (l = e_gadcon_provider_list(); l; l = l->next) 
      {
@@ -296,7 +299,7 @@ _fill_gadgets_list(Evas_Object *ilist)
         if (!(cc = l->data)) continue;
         if (cc->func.label) lbl = cc->func.label(cc);
         if (!lbl) lbl = cc->name;
-        if (cc->func.icon) icon = cc->func.icon(cc, Man->gc->evas);
+        if (cc->func.icon) icon = cc->func.icon(cc, evas);
         e_widget_ilist_append(ilist, icon, lbl, NULL, (void *)cc, NULL);
      }
 
