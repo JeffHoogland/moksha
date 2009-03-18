@@ -103,6 +103,7 @@
 #include "e_int_border_prop.h"
 #include "e_entry_dialog.h"
 #include "e_fm.h"
+#include "e_fm_op_registry.h"
 #include "e_widget_scrollframe.h"
 #include "e_sha1.h"
 #include "e_widget_framelist.h"

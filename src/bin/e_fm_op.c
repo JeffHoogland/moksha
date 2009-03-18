@@ -53,6 +53,7 @@ static int _e_fm_op_scan_idler(void *data);
 
 static void _e_fm_op_send_error(E_Fm_Op_Task * task, E_Fm_Op_Type type, const char *fmt, ...);
 static void _e_fm_op_rollback(E_Fm_Op_Task * task);
+static void _e_fm_op_update_progress_report_simple_done(const char *src, const char *dst);
 static void  _e_fm_op_update_progress(E_Fm_Op_Task *task, long long _plus_e_fm_op_done, long long _plus_e_fm_op_total);
 static void _e_fm_op_copy_stat_info(E_Fm_Op_Task *task);
 static int _e_fm_op_handle_overwrite(E_Fm_Op_Task *task);
@@ -191,10 +192,18 @@ main(int argc, char **argv)
 
                   if ((type == E_FM_OP_MOVE) && 
                       (rename(task->src.name, task->dst.name) == 0))
-                    _e_fm_op_task_free(task);
+		    {
+		       _e_fm_op_update_progress_report_simple_done
+			 (task->src.name, task->dst.name);
+		       _e_fm_op_task_free(task);
+		    }
 		  else if ((type == E_FM_OP_SYMLINK) &&
 			   (symlink(task->src.name, task->dst.name) == 0))
-		    _e_fm_op_task_free(task);
+		    {
+		       _e_fm_op_update_progress_report_simple_done
+			 (task->src.name, task->dst.name);
+		       _e_fm_op_task_free(task);
+		    }
                   else
                     _e_fm_op_scan_queue = 
                     eina_list_append(_e_fm_op_scan_queue, task);
@@ -219,10 +228,16 @@ main(int argc, char **argv)
 
              /* Try a rename */
              if ((type == E_FM_OP_MOVE) && (rename(argv[2], argv[3]) == 0))
-               goto quit;
+	       {
+		  _e_fm_op_update_progress_report_simple_done(argv[2], argv[3]);
+		  goto quit;
+	       }
              else if ((type == E_FM_OP_SYMLINK) &&
 		      (symlink(argv[2], argv[3]) == 0))
-	       goto quit;
+	       {
+		  _e_fm_op_update_progress_report_simple_done(argv[2], argv[3]);
+		  goto quit;
+	       }
 
              /* If that doesn't work, setup a copy and delete operation. 
               It's not atomic, but it's the best we can do. */
@@ -847,6 +862,53 @@ _e_fm_op_rollback(E_Fm_Op_Task *task)
      _e_fm_op_update_progress(task, -REMOVECHUNKSIZE, -REMOVECHUNKSIZE);
 }
 
+static void
+_e_fm_op_update_progress_report(int percent, int eta, double elapsed, size_t done, size_t total, const char *src, const char *dst)
+{
+   const int magic = E_FM_OP_MAGIC;
+   const int id = E_FM_OP_PROGRESS;
+   void *p, *data;
+   int size, src_len, dst_len;
+
+   src_len = strlen(src);
+   dst_len = strlen(dst);
+
+   size = 2 * sizeof(int) + 2 * sizeof(size_t) + src_len + 1 + dst_len + 1;
+   data = alloca(3 * sizeof(int) + size);
+   if (!data) return;
+   p = data;
+
+#define P(value) memcpy(p, &(value), sizeof(int)); p += sizeof(int)
+   P(magic);
+   P(id);
+   P(size);
+   P(percent);
+   P(eta);
+#undef P
+
+#define P(value) memcpy(p, &(value), sizeof(size_t)); p += sizeof(size_t)
+   P(done);
+   P(total);
+#undef P
+
+#define P(value) memcpy(p, value, value ## _len + 1); p += value ## _len + 1
+   P(src);
+   P(dst);
+#undef P
+
+   write(STDOUT_FILENO, data, 3 * sizeof(int) + size);
+
+   E_FM_OP_DEBUG("Time left: %d at %e\n", eta, elapsed);
+   E_FM_OP_DEBUG("Progress %d. \n", percent);
+}
+
+static void
+_e_fm_op_update_progress_report_simple_done(const char *src, const char *dst)
+{
+   _e_fm_op_update_progress_report
+     (100, 0, 0, REMOVECHUNKSIZE, REMOVECHUNKSIZE, src, dst);
+}
+
 /* Updates progress.
  * _plus_data is how much more works is done and _plus_e_fm_op_total 
  * is how much more work we found out needs to be done 
@@ -866,11 +928,6 @@ _e_fm_op_update_progress(E_Fm_Op_Task *task, long long _plus_e_fm_op_done, long 
    double eta = 0;
    static int peta = -1;
    static E_Fm_Op_Task *ptask = NULL;
-   void *data;
-   void *p;
-   int magic = E_FM_OP_MAGIC;
-   int id = E_FM_OP_PROGRESS;
-   int size = 0;
 
    _e_fm_op_done += _plus_e_fm_op_done;
    _e_fm_op_total += _plus_e_fm_op_total;
@@ -902,37 +959,9 @@ _e_fm_op_update_progress(E_Fm_Op_Task *task, long long _plus_e_fm_op_done, long 
 	     ppercent = percent;
              peta = eta;
              ptask = task;
-
-             size = 2 * sizeof(int) + 2 * sizeof(size_t) + strlen(ptask->src.name) + 1 + strlen(ptask->dst.name) + 1;
-             data = malloc(3 * sizeof(int) + size);
-
-             if (!data) return;
-             p = data;
-
-#define P(value) memcpy(p, &(value), sizeof(int)); p += sizeof(int)
-             P(magic);
-             P(id);
-             P(size);
-             P(ppercent);
-             P(peta);
-#undef P
-
-#define P(value) memcpy(p, &(value), sizeof(size_t)); p += sizeof(size_t)
-             P(ptask->dst.done);
-             P(ptask->src.st.st_size);
-#undef P
-
-#define P(value) memcpy(p, value, strlen(value) + 1); p += strlen(value) + 1
-             P(ptask->src.name);
-             P(ptask->dst.name);
-#undef P
-
-             write(STDOUT_FILENO, data, 3 * sizeof(int) + size);
-
-             E_FM_OP_DEBUG("Time left: %d at %e\n", peta, ctime - stime);
-	     E_FM_OP_DEBUG("Progress %d. \n", percent);
-
-             free(data);
+	     _e_fm_op_update_progress_report(percent, eta, ctime - stime,
+					     task->dst.done, task->src.st.st_size,
+					     task->src.name, task->dst.name);
 	  }
      }
 }

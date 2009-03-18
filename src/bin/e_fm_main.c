@@ -1605,6 +1605,7 @@ static int _e_fm_slave_del_cb(void *data, int type, void *event)
    if (!e) return 1;
 
    slave = ecore_exe_data_get(e->exe);
+   _e_client_send(slave->id, E_FM_OP_QUIT, NULL, 0);
 
    if (!slave) return 1;
 
