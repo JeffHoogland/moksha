@@ -126,13 +126,8 @@ struct _E_Fm_Op_Copy_Data
 int
 main(int argc, char **argv)
 {
-   E_Fm_Op_Task *task = NULL;
    int i, last;
-   char *byte = "/";
-   char buf[PATH_MAX];
-   const char *name = NULL;
    E_Fm_Op_Type type;
-   char *p = NULL, *p2 = NULL;
 
    ecore_init();
    eina_stringshare_init();
@@ -162,93 +157,122 @@ main(int argc, char **argv)
      {
 	if (argc < 4) goto quit;
 
-        if (type == E_FM_OP_MOVE)
-          {
-             _e_fm_op_work_queue = eina_list_append(_e_fm_op_work_queue, NULL);
-             _e_fm_op_separator = _e_fm_op_work_queue;
-          }
+	if (type == E_FM_OP_MOVE)
+	  {
+	     _e_fm_op_work_queue = eina_list_append(_e_fm_op_work_queue, NULL);
+	     _e_fm_op_separator = _e_fm_op_work_queue;
+	  }
 
-        if ((argc >= 4) && (ecore_file_is_dir(argv[last])))
-          {
-             if (argv[last][strlen(argv[last]) - 1] == '/') byte = "";
-             p2 = ecore_file_realpath(argv[last]);
+	if ((argc >= 4) && (ecore_file_is_dir(argv[last])))
+	  {
+ 	     char buf[PATH_MAX];
+	     char *p2, *p3;
+	     int p2_len, last_len;
 
-             for(; i < last; i++)
-               {
-                  p = ecore_file_realpath(argv[i]);
+	     p2 = ecore_file_realpath(argv[last]);
+	     if (!p2) goto quit;
+	     p2_len = strlen(p2);
 
-                  /* Don't move a dir into itself */
-                  if ((p) && (p2) && (ecore_file_is_dir(argv[i])) && 
-                                 (strstr(p2, p) == p2))
-                    continue;
+	     last_len = strlen(argv[last]);
+	     if ((last_len < 1) || (last_len + 2 >= PATH_MAX))
+	       {
+		  free(p2);
+		  goto quit;
+	       }
+	     memcpy(buf, argv[last], last_len);
+	     if (buf[last_len - 1] != '/')
+	       {
+		  buf[last_len] = '/';
+		  last_len++;
+	       }
 
-                  name = ecore_file_file_get(argv[i]);
-                  task = _e_fm_op_task_new();
-                  task->type = type;
-                  task->src.name = eina_stringshare_add(argv[i]);
+	     p3 = buf + last_len;
 
-                  snprintf(buf, PATH_MAX, "%s%s%s", argv[last], byte, name);
-                  task->dst.name = eina_stringshare_add(buf);
+	     for (; i < last; i++)
+	       {
+		  char *p = ecore_file_realpath(argv[i]);
+		  const char *name;
+		  int name_len;
 
-                  if ((type == E_FM_OP_MOVE) && 
-                      (rename(task->src.name, task->dst.name) == 0))
-		    {
-		       _e_fm_op_update_progress_report_simple_done
-			 (task->src.name, task->dst.name);
-		       _e_fm_op_task_free(task);
-		    }
+		  if (!p) continue;
+
+		  /* Don't move a dir into itself */
+		  if (ecore_file_is_dir(p) &&
+		      (strncmp(p, p2, p2_len) == 0) &&
+		      ((p[p2_len] == '/') || (p[p2_len] == '\0')))
+		    goto skip_arg;
+
+		  name = ecore_file_file_get(p);
+		  if (!name) goto skip_arg;
+		  name_len = strlen(name);
+		  if (p2_len + name_len >= PATH_MAX) goto skip_arg;
+		  memcpy(p3, name, name_len + 1);
+
+		  if ((type == E_FM_OP_MOVE) &&
+		      (rename(argv[i], buf) == 0))
+		    _e_fm_op_update_progress_report_simple_done(argv[i], buf);
 		  else if ((type == E_FM_OP_SYMLINK) &&
-			   (symlink(task->src.name, task->dst.name) == 0))
+			   (symlink(argv[i], buf) == 0))
+		    _e_fm_op_update_progress_report_simple_done(argv[i], buf);
+		  else
 		    {
-		       _e_fm_op_update_progress_report_simple_done
-			 (task->src.name, task->dst.name);
-		       _e_fm_op_task_free(task);
+		       E_Fm_Op_Task *task;
+
+		       task = _e_fm_op_task_new();
+		       task->type = type;
+		       task->src.name = eina_stringshare_add(argv[i]);
+		       task->dst.name = eina_stringshare_add(buf);
+
+		       _e_fm_op_scan_queue =
+			 eina_list_append(_e_fm_op_scan_queue, task);
 		    }
-                  else
-                    _e_fm_op_scan_queue = 
-                    eina_list_append(_e_fm_op_scan_queue, task);
-               }
-          }
-        else if (argc == 4)
-          {
-             snprintf(buf, sizeof(buf), "%s/%s", ecore_file_realpath(argv[i]),
-                      ecore_file_file_get(argv[i]));
-             p = strdup(buf);
 
-             snprintf(buf, sizeof(buf), "%s/%s", 
-                      ecore_file_realpath(argv[last]),
-                      ecore_file_file_get(argv[last]));
-             p2 = strdup(buf);
+	       skip_arg:
+		  free(p);
+	       }
 
-             /* Don't move a file on top of itself. */
-             i = (strlen(p) == strlen(p2)) && !strncmp(p,p2,strlen(p));
-             free(p);
-             free(p2);
-             if (i) goto quit;
+	     free(p2);
+	  }
+	else if (argc == 4)
+	  {
+	     char *p, *p2;
 
-             /* Try a rename */
-             if ((type == E_FM_OP_MOVE) && (rename(argv[2], argv[3]) == 0))
+	     p = ecore_file_realpath(argv[2]);
+	     p2 = ecore_file_realpath(argv[3]);
+
+	     /* Don't move a file on top of itself. */
+	     i = (strcmp(p, p2) == 0);
+	     free(p);
+	     free(p2);
+	     if (i) goto quit;
+
+	     /* Try a rename */
+	     if ((type == E_FM_OP_MOVE) && (rename(argv[2], argv[3]) == 0))
 	       {
 		  _e_fm_op_update_progress_report_simple_done(argv[2], argv[3]);
 		  goto quit;
 	       }
-             else if ((type == E_FM_OP_SYMLINK) &&
+	     else if ((type == E_FM_OP_SYMLINK) &&
 		      (symlink(argv[2], argv[3]) == 0))
 	       {
 		  _e_fm_op_update_progress_report_simple_done(argv[2], argv[3]);
 		  goto quit;
 	       }
+	     else
+	       {
+		  E_Fm_Op_Task *task;
 
-             /* If that doesn't work, setup a copy and delete operation. 
-              It's not atomic, but it's the best we can do. */
-             task = _e_fm_op_task_new();
-             task->type = type;
-             task->src.name = eina_stringshare_add(argv[2]);
-             task->dst.name = eina_stringshare_add(argv[3]);
-             _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, task);
-          }
-        else
-          goto quit;
+		  /* If that doesn't work, setup a copy and delete operation.
+		     It's not atomic, but it's the best we can do. */
+		  task = _e_fm_op_task_new();
+		  task->type = type;
+		  task->src.name = eina_stringshare_add(argv[2]);
+		  task->dst.name = eina_stringshare_add(argv[3]);
+		  _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, task);
+	       }
+	  }
+	else
+	  goto quit;
      }
    else if (type == E_FM_OP_REMOVE)
      {
@@ -256,6 +280,8 @@ main(int argc, char **argv)
 
         while (i <= last)
           {
+	     E_Fm_Op_Task *task;
+
              task = _e_fm_op_task_new();
              task->type = type;
              task->src.name = eina_stringshare_add(argv[i]);
