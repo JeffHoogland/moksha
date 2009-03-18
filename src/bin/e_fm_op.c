@@ -53,7 +53,7 @@ static int _e_fm_op_scan_idler(void *data);
 
 static void _e_fm_op_send_error(E_Fm_Op_Task * task, E_Fm_Op_Type type, const char *fmt, ...);
 static void _e_fm_op_rollback(E_Fm_Op_Task * task);
-static void _e_fm_op_update_progress_report_simple_done(const char *src, const char *dst);
+static void _e_fm_op_update_progress_report_simple(int percent, const char *src, const char *dst);
 static void  _e_fm_op_update_progress(E_Fm_Op_Task *task, long long _plus_e_fm_op_done, long long _plus_e_fm_op_total);
 static void _e_fm_op_copy_stat_info(E_Fm_Op_Task *task);
 static int _e_fm_op_handle_overwrite(E_Fm_Op_Task *task);
@@ -167,7 +167,7 @@ main(int argc, char **argv)
 	  {
  	     char buf[PATH_MAX];
 	     char *p2, *p3;
-	     int p2_len, last_len;
+	     int p2_len, last_len, done, total;
 
 	     p2 = ecore_file_realpath(argv[last]);
 	     if (!p2) goto quit;
@@ -187,6 +187,9 @@ main(int argc, char **argv)
 	       }
 
 	     p3 = buf + last_len;
+
+	     done = 0;
+	     total = last - 2;
 
 	     for (; i < last; i++)
 	       {
@@ -210,10 +213,18 @@ main(int argc, char **argv)
 
 		  if ((type == E_FM_OP_MOVE) &&
 		      (rename(argv[i], buf) == 0))
-		    _e_fm_op_update_progress_report_simple_done(argv[i], buf);
+		    {
+		       done++;
+		       _e_fm_op_update_progress_report_simple
+			 (done * 100 / total, argv[i], buf);
+		    }
 		  else if ((type == E_FM_OP_SYMLINK) &&
 			   (symlink(argv[i], buf) == 0))
-		    _e_fm_op_update_progress_report_simple_done(argv[i], buf);
+		    {
+		       done++;
+		       _e_fm_op_update_progress_report_simple
+			 (done * 100 / total, argv[i], buf);
+		    }
 		  else
 		    {
 		       E_Fm_Op_Task *task;
@@ -249,13 +260,13 @@ main(int argc, char **argv)
 	     /* Try a rename */
 	     if ((type == E_FM_OP_MOVE) && (rename(argv[2], argv[3]) == 0))
 	       {
-		  _e_fm_op_update_progress_report_simple_done(argv[2], argv[3]);
+		  _e_fm_op_update_progress_report_simple(100, argv[2], argv[3]);
 		  goto quit;
 	       }
 	     else if ((type == E_FM_OP_SYMLINK) &&
 		      (symlink(argv[2], argv[3]) == 0))
 	       {
-		  _e_fm_op_update_progress_report_simple_done(argv[2], argv[3]);
+		  _e_fm_op_update_progress_report_simple(100, argv[2], argv[3]);
 		  goto quit;
 	       }
 	     else
@@ -929,10 +940,11 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, size_t don
 }
 
 static void
-_e_fm_op_update_progress_report_simple_done(const char *src, const char *dst)
+_e_fm_op_update_progress_report_simple(int percent, const char *src, const char *dst)
 {
+   size_t done = (percent * REMOVECHUNKSIZE) / 100;
    _e_fm_op_update_progress_report
-     (100, 0, 0, REMOVECHUNKSIZE, REMOVECHUNKSIZE, src, dst);
+     (percent, 0, 0, done, REMOVECHUNKSIZE, src, dst);
 }
 
 /* Updates progress.
