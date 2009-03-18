@@ -2421,7 +2421,6 @@ static int
 _e_fm_client_file_move(const char *args, Evas_Object *e_fm)
 {
    int id = _e_fm_client_send_new(E_FM_OP_MOVE, (void *)args, strlen(args) + 1);
-   printf("REQUEST CLIENT TO MOVE: %s, id=%d, op=%d\n", args, id, E_FM_OP_MOVE);
    e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_MOVE);
    return id;
 }
@@ -2486,7 +2485,6 @@ static int
 _e_fm_client_file_copy(const char *args, Evas_Object *e_fm)
 {
    int id = _e_fm_client_send_new(E_FM_OP_COPY, (void *)args, strlen(args) + 1);
-   printf("REQUEST CLIENT TO COPY: %s, id=%d, op=%d\n", args, id, E_FM_OP_COPY);
    e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_COPY);
    return id;
 }
