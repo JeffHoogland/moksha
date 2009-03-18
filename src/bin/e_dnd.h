@@ -117,7 +117,7 @@ EAPI E_Drag *e_drag_new(E_Container *container, int x, int y,
 			void *data, int size,
 			void *(*convert_cb)(E_Drag *drag, const char *type),
 			void (*finished_cb)(E_Drag *drag, int dropped));
-EAPI Evas   *e_drag_evas_get(E_Drag *drag);
+EAPI Evas   *e_drag_evas_get(const E_Drag *drag);
 EAPI void    e_drag_object_set(E_Drag *drag, Evas_Object *object);
 EAPI void    e_drag_move(E_Drag *drag, int x, int y);
 EAPI void    e_drag_resize(E_Drag *drag, int w, int h);
@@ -138,11 +138,11 @@ EAPI E_Drop_Handler *e_drop_handler_add(E_Object *obj,
 				       	const char **types, unsigned int num_types,
 					int x, int y, int w, int h);
 EAPI void e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h);
-EAPI int  e_drop_inside(E_Drop_Handler *handler, int x, int y);
+EAPI int  e_drop_inside(const E_Drop_Handler *handler, int x, int y);
 EAPI void e_drop_handler_del(E_Drop_Handler *handler);
 EAPI int  e_drop_xdnd_register_set(Ecore_X_Window win, int reg);
 EAPI void e_drop_handler_responsive_set(E_Drop_Handler *handler);
-EAPI int  e_drop_handler_responsive_get(E_Drop_Handler *handler);
+EAPI int  e_drop_handler_responsive_get(const E_Drop_Handler *handler);
 EAPI void e_drop_handler_action_set(Ecore_X_Atom action);
 EAPI Ecore_X_Atom e_drop_handler_action_get();
 

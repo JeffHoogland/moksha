@@ -18,8 +18,8 @@
 static void _e_drag_show(E_Drag *drag);
 static void _e_drag_hide(E_Drag *drag);
 static void _e_drag_move(E_Drag *drag, int x, int y);
-static void _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh);
-static Ecore_X_Window _e_drag_win_get(E_Drop_Handler *h, int xdnd);
+static void _e_drag_coords_update(const E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh);
+static Ecore_X_Window _e_drag_win_get(const E_Drop_Handler *h, int xdnd);
 static int  _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win, int xdnd);
 static void _e_drag_win_show(E_Drop_Handler *h);
 static void _e_drag_win_hide(E_Drop_Handler *h);
@@ -228,7 +228,7 @@ e_drag_new(E_Container *container, int x, int y,
 }
 
 EAPI Evas *
-e_drag_evas_get(E_Drag *drag)
+e_drag_evas_get(const E_Drag *drag)
 {
    return drag->evas;
 }
@@ -399,7 +399,7 @@ e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h)
 }
 
 EAPI int
-e_drop_inside(E_Drop_Handler *handler, int x, int y)
+e_drop_inside(const E_Drop_Handler *handler, int x, int y)
 {
    int dx, dy, dw, dh;
 
@@ -521,7 +521,7 @@ e_drop_handler_responsive_set(E_Drop_Handler *handler)
 }
 
 EAPI int
-e_drop_handler_responsive_get(E_Drop_Handler *handler)
+e_drop_handler_responsive_get(const E_Drop_Handler *handler)
 {
    Ecore_X_Window hwin = _e_drag_win_get(handler, 1);
    const char *wid = e_util_winid_str_get(hwin);
@@ -591,7 +591,7 @@ _e_drag_move(E_Drag *drag, int x, int y)
 }
 
 static void
-_e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
+_e_drag_coords_update(const E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
 {
    int px = 0, py = 0;
    
@@ -638,7 +638,7 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
 }
 
 static Ecore_X_Window
-_e_drag_win_get(E_Drop_Handler *h, int xdnd)
+_e_drag_win_get(const E_Drop_Handler *h, int xdnd)
 {
    Ecore_X_Window hwin = 0;
    
