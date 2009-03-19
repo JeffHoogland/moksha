@@ -2899,11 +2899,10 @@ e_action_predef_label_get(const char *action, const char *params)
    E_Action_Group *actg = NULL;
    E_Action_Description *actd = NULL;
    Eina_List *l, *l2;
-   
-   for (l = action_groups; l; l = l->next)
+
+   EINA_LIST_FOREACH(action_groups, l, actg)
      {
-	actg = l->data;
-        for (l2 = actg->acts; l2; l2 = l2->next)
+	EINA_LIST_FOREACH(actg->acts, l2, actd)
           {
              actd = l2->data;
              if (!strcmp(actd->act_cmd, action))
@@ -2930,10 +2929,8 @@ e_action_predef_name_set(const char *act_grp, const char *act_name, const char *
 
    if (!act_grp || !act_name) return;
 
-   for (l = action_groups; l; l = l->next)
+   EINA_LIST_FOREACH(action_groups, l, actg)
      {
-	actg = l->data;
-
 	if (!strcmp(actg->act_grp, act_grp))
 	  break;
 	actg = NULL;
@@ -2953,9 +2950,8 @@ e_action_predef_name_set(const char *act_grp, const char *act_name, const char *
 			  _action_groups_sort_cb);
      }
 
-   for (l = actg->acts; l; l = l->next)
+   EINA_LIST_FOREACH(actg->acts, l, actd)
      {
-	actd = l->data;
 	if (!strcmp(actd->act_name, act_name))
 	  break;
 	actd = NULL;
