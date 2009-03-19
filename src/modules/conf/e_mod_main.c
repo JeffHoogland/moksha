@@ -191,7 +191,10 @@ _e_mod_action_conf_cb(E_Object *obj, const char *params)
 	  zone = e_util_zone_current_get(e_manager_current_get());
      }
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
-   if (zone) e_configure_show(zone->container);
+   if (zone && params)
+      e_configure_registry_call(params, zone->container, params);
+   else if (zone)
+      e_configure_show(zone->container);
 }
 
 /* menu item callback(s) */
