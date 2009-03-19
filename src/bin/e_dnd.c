@@ -133,18 +133,20 @@ e_dnd_shutdown(void)
 
    while (_drag_list)
      {
-	E_Drag *drag;
-
-	drag = _drag_list->data;
+	E_Drag *drag = _drag_list->data;
 	e_object_del(E_OBJECT(drag));
+     }
+
+   while (_drop_handlers)
+     {
+	E_Drop_Handler *h = _drop_handlers->data;
+	e_drop_handler_del(h);
      }
 
    EINA_LIST_FREE(_event_handlers, h)
      ecore_event_handler_del(h);
 
    eina_hash_free(_drop_win_hash);
-   eina_list_free(_drop_handlers);
-   _drop_handlers = NULL;
 
    eina_hash_free(_drop_handlers_responsives);
 
