@@ -1474,16 +1474,14 @@ static int
 _e_main_cb_signal_exit(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    /* called on ctrl-c, kill (pid) (also SIGINT, SIGTERM and SIGQIT) */
-   if (!e_util_immortal_check()) ecore_main_loop_quit();
+   e_sys_action_do(E_SYS_EXIT, NULL);
    return 1;
 }
 
 static int
 _e_main_cb_signal_hup(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
-   /* called on SIGHUP to restart Enlightenment */
-   restart = 1;
-   ecore_main_loop_quit();
+   e_sys_action_do(E_SYS_RESTART, NULL);
    return 1;
 }
 

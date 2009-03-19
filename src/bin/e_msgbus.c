@@ -127,17 +127,14 @@ _e_msgbus_request_name_cb(void *data, DBusMessage *msg, DBusError *err)
 static DBusMessage* 
 _e_msgbus_core_restart_cb(E_DBus_Object *obj, DBusMessage *msg)
 {
-   restart = 1;
-   ecore_main_loop_quit();
-
+   e_sys_action_do(E_SYS_RESTART, NULL);
    return dbus_message_new_method_return(msg);
 }
 
 static DBusMessage* 
 _e_msgbus_core_shutdown_cb(E_DBus_Object *obj, DBusMessage *msg)
 {
-   if (!e_util_immortal_check()) ecore_main_loop_quit();
- 
+   e_sys_action_do(E_SYS_EXIT, NULL);
    return dbus_message_new_method_return(msg);
 }
 
@@ -265,8 +262,7 @@ _e_msgbus_profile_set_cb(E_DBus_Object *obj, DBusMessage *msg)
    e_config_profile_set(profile);
    e_config_profile_save();
    e_config_save_block_set(1);
-   restart = 1;
-   ecore_main_loop_quit();
+   e_sys_action_do(E_SYS_RESTART, NULL);
 
    return dbus_message_new_method_return(msg);
 }

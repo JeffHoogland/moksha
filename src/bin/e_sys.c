@@ -499,16 +499,22 @@ _e_sys_action_do(E_Sys_Action a, char *param)
    switch (a)
      {
       case E_SYS_EXIT:
+	// XXX TODO: check for e_fm_op_registry entries and confirm
 	if (!e_util_immortal_check()) ecore_main_loop_quit();
 	break;
       case E_SYS_RESTART:
-	restart = 1;
-	ecore_main_loop_quit();
+	// XXX TODO: check for e_fm_op_registry entries and confirm
+	if (!e_util_immortal_check())
+	  {
+	     restart = 1;
+	     ecore_main_loop_quit();
+	  }
 	break;
       case E_SYS_EXIT_NOW:
 	exit(0);
 	break;
       case E_SYS_LOGOUT:
+	// XXX TODO: check for e_fm_op_registry entries and confirm
 	_e_sys_logout_begin(E_SYS_EXIT);
 	break;
       case E_SYS_HALT:

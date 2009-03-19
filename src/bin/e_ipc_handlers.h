@@ -1378,8 +1378,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   restart = 1;
-   ecore_main_loop_quit();
+   e_sys_action_do(E_SYS_RESTART, NULL);
    END_GENERIC();
 #elif (TYPE == E_REMOTE_IN)
 #endif
@@ -1393,7 +1392,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   if (!e_util_immortal_check()) ecore_main_loop_quit();
+   e_sys_action_do(E_SYS_EXIT, NULL);
    END_GENERIC();
 #elif (TYPE == E_REMOTE_IN)
 #endif
@@ -5048,8 +5047,7 @@ break;
    e_config_profile_set(s);
    e_config_profile_save();
    e_config_save_block_set(1);
-   restart = 1;
-   ecore_main_loop_quit();
+   e_sys_action_do(E_SYS_RESTART, NULL);
    END_STRING(s);
 #elif (TYPE == E_REMOTE_IN)
 #endif
