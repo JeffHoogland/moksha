@@ -407,6 +407,7 @@ static const char *_e_fm2_icon_thumb_str = NULL;
 static const char *_e_fm2_mime_inode_directory = NULL;
 static const char *_e_fm2_mime_app_desktop = NULL;
 static const char *_e_fm2_mime_app_edje = NULL;
+static const char *_e_fm2_mime_text_uri_list = NULL;
 
 static Ecore_Timer *_e_fm2_mime_flush = NULL;
 static Ecore_Timer *_e_fm2_mime_clear = NULL;
@@ -705,6 +706,7 @@ e_fm2_init(void)
    _e_fm2_mime_inode_directory = eina_stringshare_add("inode/directory");
    _e_fm2_mime_app_desktop = eina_stringshare_add("application/x-desktop");
    _e_fm2_mime_app_edje = eina_stringshare_add("application/x-edje");
+   _e_fm2_mime_text_uri_list = eina_stringshare_add("text/uri-list");
 
    /// DBG
    if (!_e_fm2_op_registry_entry_add_handler)
@@ -732,6 +734,7 @@ e_fm2_shutdown(void)
    _eina_stringshare_replace(&_e_fm2_mime_inode_directory, NULL);
    _eina_stringshare_replace(&_e_fm2_mime_app_desktop, NULL);
    _eina_stringshare_replace(&_e_fm2_mime_app_edje, NULL);
+   _eina_stringshare_replace(&_e_fm2_mime_text_uri_list, NULL);
 
    /// DBG
    if (_e_fm2_op_registry_entry_add_handler)
@@ -5651,8 +5654,7 @@ _e_fm2_cb_dnd_enter(void *data, const char *type, void *event)
 {
    E_Event_Dnd_Enter *ev;
 
-   if (!type) return;
-   if (strcmp(type, "text/uri-list")) return;
+   if (type != _e_fm2_mime_text_uri_list) return;
    ev = (E_Event_Dnd_Enter *)event;
    e_drop_handler_action_set(ev->action);
 }
@@ -5666,8 +5668,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
    Eina_List *l;
    
    sd = data;
-   if (!type) return;
-   if (strcmp(type, "text/uri-list")) return;
+   if (type != _e_fm2_mime_text_uri_list) return;
    ev = (E_Event_Dnd_Move *)event;
    e_drop_handler_action_set(ev->action);
    EINA_LIST_FOREACH(sd->icons, l, ic)
@@ -5770,8 +5771,7 @@ _e_fm2_cb_dnd_leave(void *data, const char *type, void *event)
    E_Event_Dnd_Leave *ev;
    
    sd = data;
-   if (!type) return;
-   if (strcmp(type, "text/uri-list")) return;
+   if (type != _e_fm2_mime_text_uri_list) return;
    ev = (E_Event_Dnd_Leave *)event;
    _e_fm2_dnd_drop_hide(sd->obj);
    _e_fm2_dnd_drop_all_hide(sd->obj);
@@ -5953,8 +5953,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    size_t length = 0;
    
    sd = data;
-   if (!type) return;
-   if (strcmp(type, "text/uri-list")) return;
+   if (type != _e_fm2_mime_text_uri_list) return;
    ev = (E_Event_Dnd_Drop *)event;
 
    fsel = _e_fm2_uri_path_list_get(ev->data);
