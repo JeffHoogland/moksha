@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-01-16 13:56+0100\n"
-"PO-Revision-Date: 2009-03-06 15:34+0200\n"
+"PO-Revision-Date: 2009-03-19 23:19+0200\n"
 "Last-Translator: H. İbrahim Güngör <h.ibrahim.gungor@gmail.com>\n"
 "Language-Team: Turkish <>\n"
 "MIME-Version: 1.0\n"
@@ -513,7 +513,7 @@ msgstr "Favorilere Ekle"
 #: src/modules/conf_startup/e_int_config_startup.c:281
 #: src/modules/conf_theme/e_int_config_theme.c:367
 msgid "Go up a Directory"
-msgstr "Bir Klasör Yukarı"
+msgstr "Bir Dizin Yukarı"
 
 #: src/bin/e_widget_fsel.c:302 src/bin/e_fm_prop.c:385
 #: src/modules/conf_transitions/e_int_config_transitions.c:167
@@ -2659,7 +2659,7 @@ msgstr ""
 
 #: src/bin/e_main.c:779
 msgid "Setup System Controls"
-msgstr ""
+msgstr "Sistem Kontrollerini Ayarla"
 
 #: src/bin/e_main.c:784
 msgid "Enlightenment cannot initialize the System Command system.\n"
@@ -2667,11 +2667,11 @@ msgstr ""
 
 #: src/bin/e_main.c:789
 msgid "Setup Actions"
-msgstr ""
+msgstr "Eylemleri Ayarla"
 
 #: src/bin/e_main.c:794
 msgid "Enlightenment cannot set up its actions system."
-msgstr ""
+msgstr "Enlightenment eylem sistemini ayarlayamadı."
 
 #: src/bin/e_main.c:798
 msgid "Setup Execution System"
@@ -2683,7 +2683,7 @@ msgstr ""
 
 #: src/bin/e_main.c:807
 msgid "Setup Remembers"
-msgstr ""
+msgstr "Hatırlamaları Ayarla"
 
 #: src/bin/e_main.c:812
 msgid "Enlightenment cannot setup remember settings."
@@ -2691,7 +2691,7 @@ msgstr ""
 
 #: src/bin/e_main.c:820
 msgid "Setup FM"
-msgstr ""
+msgstr "Dosya Yöneticisini Ayarla"
 
 #: src/bin/e_main.c:825
 msgid "Enlightenment cannot initialize the File manager.\n"
@@ -2699,7 +2699,7 @@ msgstr ""
 
 #: src/bin/e_main.c:838
 msgid "Setup Message System"
-msgstr ""
+msgstr "Mesaj Sistemini Ayarla"
 
 #: src/bin/e_main.c:843
 msgid "Enlightenment cannot set up its msg system."
@@ -2707,7 +2707,7 @@ msgstr ""
 
 #: src/bin/e_main.c:847
 msgid "Setup DND"
-msgstr ""
+msgstr "DND Ayarla"
 
 #: src/bin/e_main.c:852
 msgid "Enlightenment cannot set up its dnd system."
@@ -2723,7 +2723,7 @@ msgstr ""
 
 #: src/bin/e_main.c:865
 msgid "Setup Modules"
-msgstr ""
+msgstr "Modülleri Ayarla"
 
 #: src/bin/e_main.c:870
 msgid "Enlightenment cannot set up its module system."
@@ -2731,7 +2731,7 @@ msgstr ""
 
 #: src/bin/e_main.c:874
 msgid "Setup Color Classes"
-msgstr ""
+msgstr "Renk Sınıflarını Ayarla"
 
 #: src/bin/e_main.c:879
 msgid "Enlightenment cannot set up its color class system."
@@ -2747,7 +2747,7 @@ msgstr ""
 
 #: src/bin/e_main.c:893
 msgid "Setup DPMS"
-msgstr ""
+msgstr "DPMS Ayarla "
 
 #: src/bin/e_main.c:898
 msgid "Enlightenment cannot configure the DPMS settings."
@@ -2755,7 +2755,7 @@ msgstr ""
 
 #: src/bin/e_main.c:902
 msgid "Set Up Powersave modes"
-msgstr ""
+msgstr "Güç Koruma Kiplerini Ayarla"
 
 #: src/bin/e_main.c:906
 msgid "Enlightenment cannot set up its powersave modes."
@@ -2763,7 +2763,7 @@ msgstr ""
 
 #: src/bin/e_main.c:911
 msgid "Setup Wallpaper"
-msgstr ""
+msgstr "Arkaplanı Ayarla"
 
 #: src/bin/e_main.c:916
 msgid "Enlightenment cannot set up its desktop background system."
@@ -2771,7 +2771,7 @@ msgstr ""
 
 #: src/bin/e_main.c:921
 msgid "Setup Mouse"
-msgstr ""
+msgstr "Fareyi Ayarla"
 
 #: src/bin/e_main.c:926
 msgid "Enlightenment cannot configure the mouse settings."
@@ -2779,7 +2779,7 @@ msgstr ""
 
 #: src/bin/e_main.c:931
 msgid "Setup Bindings"
-msgstr ""
+msgstr "Kısayolları Ayarla"
 
 #: src/bin/e_main.c:936
 msgid "Enlightenment cannot set up its bindings system."
@@ -2787,7 +2787,7 @@ msgstr ""
 
 #: src/bin/e_main.c:940
 msgid "Setup Popups"
-msgstr ""
+msgstr "Açılır Pencereleri Ayarla"
 
 #: src/bin/e_main.c:945
 msgid "Enlightenment cannot set up its popup system."
@@ -2795,7 +2795,7 @@ msgstr ""
 
 #: src/bin/e_main.c:950
 msgid "Setup Shelves"
-msgstr ""
+msgstr "Rafları Ayarla"
 
 #: src/bin/e_main.c:955
 msgid "Enlightenment cannot set up its shelf system."
@@ -2811,7 +2811,7 @@ msgstr ""
 
 #: src/bin/e_main.c:970
 msgid "Set Up File Ordering"
-msgstr ""
+msgstr "Dosya Sıralamasını Ayarla"
 
 #: src/bin/e_main.c:974
 msgid "Enlightenment cannot set up its order file system."
@@ -2819,7 +2819,7 @@ msgstr ""
 
 #: src/bin/e_main.c:1009
 msgid "Load Modules"
-msgstr ""
+msgstr "Modülleri Yükle "
 
 #: src/bin/e_main.c:1017
 msgid ""
@@ -2944,11 +2944,11 @@ msgstr "Yok"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:107
 msgid "Include windows from other screens"
-msgstr ""
+msgstr "Diğer ekranlardaki pencereleri içer"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:111
 msgid "Separate Groups By"
-msgstr ""
+msgstr "Grupları Ayrıştır"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:116
 msgid "Using separator bars"
@@ -2976,7 +2976,7 @@ msgstr "En son kullanılan"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:134
 msgid "Iconified Windows"
-msgstr ""
+msgstr "Simge Durumundaki Pencereler"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:136
 msgid "Group with owning desktop"
@@ -2988,7 +2988,7 @@ msgstr ""
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:140
 msgid "Separate group"
-msgstr ""
+msgstr "Grubu ayır"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:142
 msgid "Warp to owning desktop"
@@ -3018,15 +3018,15 @@ msgstr ""
 #: src/modules/conf_transitions/e_int_config_transitions.c:134
 #: src/modules/conf_startup/e_mod_main.c:35
 msgid "Startup"
-msgstr ""
+msgstr "Açılış"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:135
 msgid "Desk Change"
-msgstr ""
+msgstr "Masaüstü Değişimi"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:136
 msgid "Background Change"
-msgstr ""
+msgstr "Arkaplan Değişimi"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:144
 #: src/modules/conf_transitions/e_mod_main.c:35
@@ -3035,7 +3035,7 @@ msgstr "Geçişler"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:46
 msgid "Run Command Settings"
-msgstr ""
+msgstr "Komut Çalıştır Ayarları"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:109
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:161
@@ -3232,7 +3232,7 @@ msgstr "Arama Dizinleri"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:37
 msgid "Interaction Settings"
-msgstr ""
+msgstr "Etkileşim Ayarları"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:94
 msgid "Thumbscroll"
@@ -3280,7 +3280,7 @@ msgstr "Giriş"
 
 #: src/modules/conf_interaction/e_mod_main.c:35
 msgid "Interaction"
-msgstr ""
+msgstr "Etkileşim"
 
 #: src/modules/conf/e_mod_main.c:142 src/modules/conf/e_mod_main.c:165
 #: src/modules/conf/e_mod_main.c:214
@@ -3385,7 +3385,7 @@ msgstr ""
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:123
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:146
 msgid "Fill available space"
-msgstr ""
+msgstr "Mevcut boşluğu doldur"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:138
 msgid "Maximize Policy"
@@ -3511,31 +3511,31 @@ msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:147
 msgid "Temperature"
-msgstr ""
+msgstr "Sıcaklık"
 
 #: src/modules/temperature/e_mod_config.c:63
 msgid "Temperature Settings"
-msgstr ""
+msgstr "Sıcaklık Ayarları"
 
 #: src/modules/temperature/e_mod_config.c:249
 #: src/modules/temperature/e_mod_config.c:352
 msgid "Display Units"
-msgstr ""
+msgstr "Birimleri Göster"
 
 #: src/modules/temperature/e_mod_config.c:251
 #: src/modules/temperature/e_mod_config.c:354
 msgid "Celsius"
-msgstr ""
+msgstr "Celsius"
 
 #: src/modules/temperature/e_mod_config.c:253
 #: src/modules/temperature/e_mod_config.c:356
 msgid "Fahrenheit"
-msgstr ""
+msgstr "Fahrenheit"
 
 #: src/modules/temperature/e_mod_config.c:257
 #: src/modules/temperature/e_mod_config.c:379
 msgid "Check Interval"
-msgstr ""
+msgstr "Kontrol Sıklığı"
 
 #: src/modules/temperature/e_mod_config.c:259
 msgid "Fast"
@@ -3810,7 +3810,7 @@ msgstr "Özel Yazı Tipi Sınıflarını Etkinleştir"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:471
 msgid "Basic preview text: 123: 我的天空！"
-msgstr ""
+msgstr "Basit önizleme metni: 123: 我的天空！"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:624
 msgid "Font Classes"
@@ -3822,7 +3822,7 @@ msgstr "Yazı Tipi Sınıflarını Etkinleştir"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:665
 msgid "Hinting"
-msgstr ""
+msgstr "Hinting"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:668
 msgid "Bytecode"
@@ -3847,7 +3847,7 @@ msgstr ""
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:703
 msgid "Advanced Preview Text.. 我真的会写中文"
-msgstr ""
+msgstr "Gelişmiş Önizleme Metni.. 我真的会写中文"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:55
 msgid "Window List Settings"
@@ -3993,7 +3993,7 @@ msgstr ""
 #: src/modules/pager/e_mod_config.c:204
 #, c-format
 msgid "%.0f px"
-msgstr ""
+msgstr "%.0f px"
 
 #: src/modules/pager/e_mod_config.c:191
 msgid "Resistance to dragging"
@@ -4101,7 +4101,7 @@ msgstr "Çok Yavaş (256 tik)"
 
 #: src/modules/cpufreq/e_mod_main.c:228
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: src/modules/cpufreq/e_mod_main.c:232 src/modules/cpufreq/e_mod_main.c:266
 msgid "Lower Power Automatic"
@@ -4342,7 +4342,7 @@ msgstr "HATA"
 
 #: src/modules/battery/e_mod_main.c:1078
 msgid "Battery Meter"
-msgstr ""
+msgstr "Pil Göstergesi"
 
 #: src/modules/battery/e_mod_config.c:40
 msgid "Battery Monitor Settings"
@@ -4363,11 +4363,11 @@ msgstr "Gelişmiş Ayarlar"
 
 #: src/modules/battery/e_mod_config.c:133
 msgid "Check battery every:"
-msgstr ""
+msgstr "Pil kontrol etme aralığı:"
 
 #: src/modules/battery/e_mod_config.c:142
 msgid "Alert when battery is down to:"
-msgstr ""
+msgstr "Pil şu değerin altındaysa uyar:"
 
 #: src/modules/battery/e_mod_config.c:145
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:119
@@ -4383,7 +4383,7 @@ msgstr "%1.0f dakika"
 #: src/modules/battery/e_mod_config.c:148
 #, c-format
 msgid "%1.0f percent"
-msgstr ""
+msgstr "%1.0f oran"
 
 #: src/modules/battery/e_mod_config.c:151
 msgid "Dismiss alert automatically"
@@ -4409,7 +4409,7 @@ msgstr "Motor Ayarları"
 
 #: src/modules/conf_engine/e_int_config_engine.c:95
 msgid "Enable Composite"
-msgstr ""
+msgstr "Composite Etkinleştir"
 
 #: src/modules/conf_engine/e_int_config_engine.c:102
 msgid "Default Engine"
@@ -4432,11 +4432,11 @@ msgstr "Odaklama Ayarları"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:165
 msgid "Click Window to Focus"
-msgstr ""
+msgstr "Odaklamak için Pencereye Tıkla"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:167
 msgid "Window under the Mouse"
-msgstr ""
+msgstr "Farenin altındaki Pencere"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:169
 msgid "Most recent Window under the Mouse"
@@ -4460,11 +4460,11 @@ msgstr ""
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:193
 msgid "New Window Focus"
-msgstr ""
+msgstr "Yeni Pencere Odaklanır"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:195
 msgid "No new windows get focus"
-msgstr ""
+msgstr "Yeni pencereler odaklanmaz"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:197
 msgid "All new windows get focus"
@@ -4509,7 +4509,7 @@ msgstr ""
 #: src/modules/conf_window_focus/e_mod_main.c:35
 #: src/modules/wizard/page_060.c:26
 msgid "Window Focus"
-msgstr ""
+msgstr "Pencere Odaklanması"
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:66
 msgid "Select an Input Method Settings..."
@@ -5076,7 +5076,7 @@ msgstr "IBar Uygulamaları"
 #: src/modules/conf_applications/e_int_config_apps.c:138
 #: src/modules/conf_applications/e_mod_main.c:38
 msgid "Startup Applications"
-msgstr ""
+msgstr "Açılış Uygulamaları"
 
 #: src/modules/conf_applications/e_int_config_apps.c:155
 #: src/modules/conf_applications/e_mod_main.c:37
@@ -5384,11 +5384,11 @@ msgstr ""
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:549
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:675
 msgid "Online..."
-msgstr ""
+msgstr "Çevrimiçi..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:694
 msgid "Where to place the Wallpaper"
-msgstr ""
+msgstr "Arkaplanın yerleştirileceği yer"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:695
 msgid "All Desktops"
@@ -5409,7 +5409,7 @@ msgstr "Fare Ayarları"
 
 #: src/modules/conf_mouse/e_int_config_mouse.c:97
 msgid "Mouse Hand"
-msgstr ""
+msgstr "Fareyi Tutan El"
 
 #: src/modules/conf_mouse/e_int_config_mouse.c:105
 msgid "Mouse Acceleration"
@@ -5509,7 +5509,7 @@ msgstr "Uygulama Seç"
 #: src/modules/conf_window_display/e_int_config_window_display.c:54
 #: src/modules/conf_window_display/e_mod_main.c:35
 msgid "Window Display"
-msgstr ""
+msgstr "Pencere Gösterimi"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:161
 msgid "Display"
@@ -5518,6 +5518,7 @@ msgstr "Görüntüle"
 #: src/modules/conf_window_display/e_int_config_window_display.c:162
 msgid "Show window geometry information when moving or resizing"
 msgstr ""
+"Pencereyi yeniden boyutlandırırken veya taşırken geometri bilgilerini göster"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:164
 #: src/modules/conf_window_display/e_int_config_window_display.c:212
@@ -5673,7 +5674,7 @@ msgstr "Enlightenment başlayınca kilitle"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:151
 msgid "Lock when X screensaver activates"
-msgstr ""
+msgstr "X ekran koruyucu etkinleşince kilitle"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:155
 msgid "Lock when idle time exceeded"
@@ -5784,11 +5785,11 @@ msgstr "Performans"
 
 #: src/modules/conf_startup/e_int_config_startup.c:39
 msgid "Startup Settings"
-msgstr ""
+msgstr "Açılış Ayarları"
 
 #: src/modules/conf_startup/e_int_config_startup.c:334
 msgid "Show Splash Screen on Login"
-msgstr ""
+msgstr "Açılışta Splash Ekranını Göster"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:67
 msgid "Select a Theme..."
@@ -5797,7 +5798,7 @@ msgstr "Bir Tema Seç..."
 #: src/modules/conf_theme/e_int_config_theme_import.c:277
 #: src/modules/conf_theme/e_int_config_theme_import.c:286
 msgid "Theme Import Error"
-msgstr ""
+msgstr "Tema İçe Aktarma Hatası"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:278
 msgid ""
@@ -5823,7 +5824,7 @@ msgstr "İçe Aktar..."
 
 #: src/modules/conf_theme/e_int_config_theme.c:400
 msgid " Online..."
-msgstr ""
+msgstr " Çevrimiçi..."
 
 #: src/modules/conf_theme/e_int_config_theme.c:1002
 msgid "Theme Categories"
@@ -5856,15 +5857,15 @@ msgstr ""
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:109
 msgid "Display Power Management Settings"
-msgstr ""
+msgstr "Ekran Güç Yönetimi Ayarları"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:199
 msgid "Enable Display Power Management"
-msgstr ""
+msgstr "Ekran Güç Yönetimini Etkinleştir"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:203
 msgid "Timers"
-msgstr ""
+msgstr "Zamanlayıcılar"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:205
 msgid "Standby time"
@@ -5956,7 +5957,7 @@ msgstr ""
 
 #: src/modules/conf_display/e_int_config_display.c:642
 msgid "Missing Features"
-msgstr ""
+msgstr "Eksik Özellikler"
 
 #: src/modules/conf_display/e_int_config_display.c:643
 msgid ""
@@ -6096,15 +6097,15 @@ msgstr ""
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:301
 msgid "Add Binding"
-msgstr ""
+msgstr "Kısayol Ekle"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:303
 msgid "Delete Binding"
-msgstr ""
+msgstr "Kısayolu Sil"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:307
 msgid "Modify Binding"
-msgstr ""
+msgstr "Kısayolu Düzenle"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:311
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:243
