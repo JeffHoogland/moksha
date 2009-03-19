@@ -6150,9 +6150,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 static void
 _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
 {
-   Eina_List *l;
-   E_Fm2_Icon *ic2;
-   int multi_sel = 0, range_sel = 0, seen = 0, sel_change = 0;
+   int multi_sel = 0, range_sel = 0, sel_change = 0;
 
    if (ic->sd->config->selection.windows_modifiers)
      {
@@ -6175,6 +6173,9 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
      }
    if (range_sel)
      {
+	const Eina_List *l;
+	E_Fm2_Icon *ic2;
+	Eina_Bool seen = 0;
 	/* find last selected - if any, and select all icons between */
 	EINA_LIST_FOREACH(ic->sd->icons, l, ic2)
 	  {
@@ -6206,8 +6207,10 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
 	       }
 	  }
      }
-   else if (!multi_sel)
+   else if ((!multi_sel) && ((up) || ((!up) && (!ic->selected))))
      {
+	const Eina_List *l;
+	E_Fm2_Icon *ic2;
 	/* desel others */
 	EINA_LIST_FOREACH(ic->sd->icons, l, ic2)
 	  {
@@ -6225,6 +6228,8 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
      {
 	if (!up)
 	  {
+	     const Eina_List *l;
+	     E_Fm2_Icon *ic2;
 	     EINA_LIST_FOREACH(ic->sd->icons, l, ic2)
 	       {
 		  ic2->last_selected = 0;
