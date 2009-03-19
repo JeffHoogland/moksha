@@ -1006,7 +1006,7 @@ _e_container_cb_mouse_in(void *data, int type, void *event)
      {
 	bd = e_border_focused_get();
 	if (bd) e_focus_event_mouse_out(bd);
-	ecore_evas_event_modifier_lock_update(con->bg_evas, ev->modifiers);
+	ecore_event_evas_modifier_lock_update(con->bg_evas, ev->modifiers);
 	evas_event_feed_mouse_in(con->bg_evas, ev->time, NULL);
      }
    return 1;
@@ -1022,7 +1022,7 @@ _e_container_cb_mouse_out(void *data, int type, void *event)
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
      {
-	ecore_evas_event_modifier_lock_update(con->bg_evas, ev->modifiers);
+	ecore_event_evas_modifier_lock_update(con->bg_evas, ev->modifiers);
 	if (ev->mode == ECORE_X_EVENT_MODE_GRAB)
 	  evas_event_feed_mouse_cancel(con->bg_evas, ev->time, NULL);
         evas_event_feed_mouse_out(con->bg_evas, ev->time, NULL);
@@ -1046,7 +1046,7 @@ _e_container_cb_mouse_down(void *data, int type, void *event)
 					   E_OBJECT(con), ev);
 	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
 	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
-	ecore_evas_event_modifier_lock_update(con->bg_evas, ev->modifiers);
+	ecore_event_evas_modifier_lock_update(con->bg_evas, ev->modifiers);
 	evas_event_feed_mouse_down(con->bg_evas, ev->buttons, flags, ev->timestamp, NULL);
      }
    return 1;
@@ -1063,7 +1063,7 @@ _e_container_cb_mouse_up(void *data, int type, void *event)
    if (con)
      {
         evas_event_feed_mouse_up(con->bg_evas, ev->buttons, EVAS_BUTTON_NONE, ev->timestamp, NULL);
-	ecore_evas_event_modifier_lock_update(con->bg_evas, ev->modifiers);
+	ecore_event_evas_modifier_lock_update(con->bg_evas, ev->modifiers);
 	e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_CONTAINER,
 					 E_OBJECT(con), ev);
      }
@@ -1080,7 +1080,7 @@ _e_container_cb_mouse_move(void *data, int type, void *event)
    con = _e_container_find_by_event_window(ev->event_window);
    if (con)
      {
-	ecore_evas_event_modifier_lock_update(con->bg_evas, ev->modifiers);
+	ecore_event_evas_modifier_lock_update(con->bg_evas, ev->modifiers);
         evas_event_feed_mouse_move(con->bg_evas, ev->x, ev->y, ev->timestamp, NULL);
      }
    return 1;
@@ -1099,7 +1099,7 @@ _e_container_cb_mouse_wheel(void *data, int type, void *event)
 	if (!e_bindings_wheel_event_handle(E_BINDING_CONTEXT_CONTAINER,
 					   E_OBJECT(con), ev))
 	  {
-	     ecore_evas_event_modifier_lock_update(con->bg_evas, ev->modifiers);
+	     ecore_event_evas_modifier_lock_update(con->bg_evas, ev->modifiers);
 	     evas_event_feed_mouse_wheel(con->bg_evas, ev->direction, ev->z, ev->timestamp, NULL);
 	  }
      }
