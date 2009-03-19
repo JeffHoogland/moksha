@@ -28,8 +28,6 @@ struct _E_Drag
 {
    E_Object             e_obj_inherit;
 
-   char         **types;
-   unsigned int   num_types;
    void          *data;
    int            data_size;
 
@@ -59,6 +57,9 @@ struct _E_Drag
    unsigned char  visible : 1;
    unsigned char  need_shape_export : 1;
    unsigned char  xy_update : 1;
+
+   unsigned int   num_types;
+   const char    *types[];
 };
 
 struct _E_Drop_Handler
@@ -72,14 +73,13 @@ struct _E_Drop_Handler
    } cb;
 
    E_Object      *obj;
-   char         **types;
-   unsigned int   num_types;
-
    int x, y, w, h;
 
    unsigned char  active : 1;
    unsigned char  entered : 1;
    const char    *active_type;
+   unsigned int   num_types;
+   const char    *types[];
 };
 
 struct _E_Event_Dnd_Enter

@@ -49,7 +49,7 @@ typedef struct _XDnd XDnd;
 struct _XDnd
 {
    int x, y;
-   char *type;
+   const char *type;
    void *data;
 };
 
@@ -65,6 +65,10 @@ static E_Drag    *_drag_current = NULL;
 
 static XDnd *_xdnd = NULL;
 
+static const char *_type_text_uri_list = NULL;
+static const char *_type_text_x_moz_url = NULL;
+static const char *_type_enlightenment_x_file = NULL;
+
 static Eina_Hash *_drop_handlers_responsives;
 static Ecore_X_Atom _action;
 
@@ -73,6 +77,10 @@ static Ecore_X_Atom _action;
 EAPI int
 e_dnd_init(void)
 {
+   _type_text_uri_list = eina_stringshare_add("text/uri-list");
+   _type_text_x_moz_url = eina_stringshare_add("text/x-moz-url");
+   _type_enlightenment_x_file = eina_stringshare_add("enlightenment/x-file");
+
    _drop_win_hash = eina_hash_string_superfast_new(NULL);
    _drop_handlers_responsives = eina_hash_string_superfast_new(NULL);
 
@@ -140,6 +148,13 @@ e_dnd_shutdown(void)
 
    eina_hash_free(_drop_handlers_responsives);
 
+   eina_stringshare_del(_type_text_uri_list);
+   eina_stringshare_del(_type_text_x_moz_url);
+   eina_stringshare_del(_type_enlightenment_x_file);
+   _type_text_uri_list = NULL;
+   _type_text_x_moz_url = NULL;
+   _type_enlightenment_x_file = NULL;
+
    return 1;
 }
 
@@ -155,7 +170,8 @@ e_drag_new(E_Container *container, int x, int y,
 
    /* No need to create a drag object without type */
    if ((!types) || (!num_types)) return NULL;
-   drag = E_OBJECT_ALLOC(E_Drag, E_DRAG_TYPE, _e_drag_free);
+   drag = e_object_alloc(sizeof(E_Drag) + num_types * sizeof(char *),
+			 E_DRAG_TYPE, E_OBJECT_CLEANUP_FUNC(_e_drag_free));
    if (!drag) return NULL;
 
    drag->x = x;
@@ -206,9 +222,8 @@ e_drag_new(E_Container *container, int x, int y,
 
    drag->type = E_DRAG_NONE;
 
-   drag->types = malloc(num_types * sizeof(char *));
    for (i = 0; i < num_types; i++)
-     drag->types[i] = strdup(types[i]);
+     drag->types[i] = eina_stringshare_add(types[i]);
    drag->num_types = num_types;
    drag->data = data;
    drag->data_size = size;
@@ -295,15 +310,16 @@ e_drag_start(E_Drag *drag, int x, int y)
 	int i, j;
 
 	h->active = 0;
+	eina_stringshare_del(h->active_type);
 	h->active_type = NULL;
 	for (i = 0; i < h->num_types; i++)
 	  {
 	     for (j = 0; j < drag->num_types; j++)
 	       {
-		  if (!strcmp(h->types[i], drag->types[j]))
+		  if (h->types[i] == drag->types[j])
 		    {
 		       h->active = 1;
-		       h->active_type = h->types[i];
+		       h->active_type = eina_stringshare_ref(h->types[i]);
 		       break;
 		    }
 	       }
@@ -361,7 +377,7 @@ e_drop_handler_add(E_Object *obj,
    E_Drop_Handler *handler;
    int i;
 
-   handler = E_NEW(E_Drop_Handler, 1);
+   handler = calloc(1, sizeof(E_Drop_Handler) + num_types * sizeof(char *));
    if (!handler) return NULL;
 
    handler->cb.data = data;
@@ -370,12 +386,8 @@ e_drop_handler_add(E_Object *obj,
    handler->cb.leave = leave_cb;
    handler->cb.drop = drop_cb;
    handler->num_types = num_types;
-   if (num_types)
-     {
-	handler->types = malloc(num_types * sizeof(char *));
-	for (i = 0; i < num_types; i++)
-	  handler->types[i] = strdup(types[i]);
-     }
+   for (i = 0; i < num_types; i++)
+     handler->types[i] = eina_stringshare_add(types[i]);
    handler->x = x;
    handler->y = y;
    handler->w = w;
@@ -413,12 +425,9 @@ e_drop_handler_del(E_Drop_Handler *handler)
    int i;
 
    _drop_handlers = eina_list_remove(_drop_handlers, handler);
-   if (handler->types)
-     {
-	for (i = 0; i < handler->num_types; i++)
-	  free(handler->types[i]);
-	free(handler->types);
-     }
+   for (i = 0; i < handler->num_types; i++)
+     eina_stringshare_del(handler->types[i]);
+   eina_stringshare_del(handler->active_type);
    free(handler);
 }
 
@@ -1077,8 +1086,8 @@ _e_drag_free(E_Drag *drag)
    evas_object_del(drag->object);
    e_canvas_del(drag->ecore_evas);
    ecore_evas_free(drag->ecore_evas);
-   for (i = 0; i < drag->num_types; i++) free(drag->types[i]);
-   free(drag->types);
+   for (i = 0; i < drag->num_types; i++)
+     eina_stringshare_del(drag->types[i]);
    free(drag);
    ecore_x_window_shadow_tree_flush();
 }
@@ -1173,26 +1182,29 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
    EINA_LIST_FOREACH(_drop_handlers, l, h)
      {
 	h->active = 0;
+	eina_stringshare_del(h->active_type);
 	h->active_type = NULL;
 	h->entered = 0;
      }
    for (i = 0; i < ev->num_types; i++)
      {
 	/* FIXME: Maybe we want to get something else then files dropped? */
-	if (!strcmp("text/uri-list", ev->types[i]))
+	if ((_type_text_uri_list == ev->types[i]) ||
+	    (!strcmp(_type_text_uri_list, ev->types[i]))) /* not sure it is stringshared */
 	  {
 	     _xdnd = E_NEW(XDnd, 1);
-	     _xdnd->type = strdup("text/uri-list");
+	     _xdnd->type = eina_stringshare_ref(_type_text_uri_list);
 	     EINA_LIST_FOREACH(_drop_handlers, l, h)
 	       {
 		  h->active = 0;
+		  eina_stringshare_del(h->active_type);
 		  h->active_type = NULL;
 		  for (j = 0; j < h->num_types; j++)
 		    {
-		       if (!strcmp(h->types[j], _xdnd->type))
+		       if (h->types[j] == _xdnd->type)
 			 {
 			    h->active = 1;
-			    h->active_type = _xdnd->type;
+			    h->active_type = eina_stringshare_ref(_xdnd->type);
 			    break;
 			 }
 		    }
@@ -1202,13 +1214,14 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
 	     break;
 	  }
 #if 0
-	else if (!strcmp("text/x-moz-url", ev->types[i]))
+	else if ((_type_text_x_moz_url == ev->types[i]) ||
+		 (!strcmp(_type_text_x_moz_url, ev->types[i])))  /* not sure it is stringshared */
 	  {
 	     _xdnd = E_NEW(XDnd, 1);
-	     _xdnd->type = strdup("text/x-moz-url");
+	     _xdnd->type = eina_stringshare_ref(_type_text_x_moz_url);
 	     EINA_LIST_FOREACH(_drop_handlers, l, h)
 	       {
-		  h->active = !strcmp(h->type, "enlightenment/x-file");
+		  h->active = (h->type == _type_enlightenment_x_file);
 		  h->entered = 0;
 	       }
 	     break;
@@ -1250,7 +1263,7 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
 	       }
 	  }
 
-	free(_xdnd->type);
+	eina_stringshare_del(_xdnd->type);
 	free(_xdnd);
 	_xdnd = NULL;
      }
@@ -1384,7 +1397,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
    if (!eina_hash_find(_drop_win_hash, id)) return 1;
    if (ev->selection != ECORE_X_SELECTION_XDND) return 1;
 
-   if (!strcmp("text/uri-list", _xdnd->type))
+   if (_type_text_uri_list == _xdnd->type)
      {
 	Ecore_X_Selection_Data_Files   *files;
 	Eina_List *l = NULL;
@@ -1396,7 +1409,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	_e_drag_xdnd_end(ev->win, _xdnd->x, _xdnd->y);
 	eina_list_free(l);
      }
-   else if (!strcmp("text/x-moz-url", _xdnd->type))
+   else if (_type_text_x_moz_url == _xdnd->type)
      {
 	/* FIXME: Create a ecore x parser for this type */
 	Ecore_X_Selection_Data *data;
@@ -1442,7 +1455,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
    /* FIXME: When to execute this? It could be executed in ecore_x after getting
     * the drop property... */
    ecore_x_dnd_send_finished();
-   free(_xdnd->type);
+   eina_stringshare_del(_xdnd->type);
    free(_xdnd);
    _xdnd = NULL;
    return 1;
