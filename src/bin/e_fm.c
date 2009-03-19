@@ -6436,10 +6436,10 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     Evas_Object *o, *o2;
 	     Evas_Coord x, y, w, h;
 	     const char *drag_types[] = { "text/uri-list" }, *realpath;
-	     char buf[PATH_MAX + 8], *sel = NULL;
+	     char buf[PATH_MAX + 8], *p, *sel = NULL;
 	     E_Container *con = NULL;
 	     Eina_List *sl;
-	     int sel_length = 0;
+	     int sel_length = 0, p_offset, p_length;
 
 	     switch (ic->sd->eobj->type)
 	       {
@@ -6470,6 +6470,16 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     ic->drag.start = 0;
 	     evas_object_geometry_get(ic->obj, &x, &y, &w, &h);
 	     realpath = e_fm2_real_path_get(ic->sd->obj);
+	     p_offset = ecore_strlcpy(buf, realpath, sizeof(buf));
+	     if ((p_offset < 1) || (p_offset >= sizeof(buf) - 2)) return;
+	     if (buf[p_offset - 1] != '/')
+	       {
+		  buf[p_offset] = '/';
+		  p_offset++;
+	       }
+	     p = buf + p_offset;
+	     p_length = sizeof(buf) - p_offset - 1;
+
 	     sl = e_fm2_selected_list_get(ic->sd->obj);
 	     EINA_LIST_FREE(sl, ici)
 	       {
@@ -6477,7 +6487,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		  const char *s;
 		  int s_len;
 
-		  snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+		  if (ecore_strlcpy(p, ici->file, p_length) >= p_length) continue;
 		  s = _e_fm2_uri_escape(buf);
 		  if (!s) continue;
 		  s_len = strlen(s);
