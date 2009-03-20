@@ -461,6 +461,13 @@ e_fm2_op_registry_get_all_free(Eina_List *list)
      e_fm2_op_registry_entry_unref(entry);
 }
 
+EAPI Eina_Bool
+e_fm2_op_registry_is_empty(void)
+{
+   return eina_hash_population(_e_fm2_op_registry) == 0;
+}
+
+
 EAPI unsigned int
 e_fm2_op_registry_init(void)
 {
