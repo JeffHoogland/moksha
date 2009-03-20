@@ -2,6 +2,7 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
+#include <libgen.h>
 
 EAPI int E_EVENT_EXEHIST_UPDATE = 0;
 
@@ -18,6 +19,7 @@ struct _E_Exehist
 struct _E_Exehist_Item
 {
    const char   *exe;
+   const char   *normalized_exe;
    const char   *launch_method;
    double        exetime;
    unsigned int  count;
@@ -28,6 +30,7 @@ static void _e_exehist_load(void);
 static void _e_exehist_clear(void);
 static void _e_exehist_unload(void);
 static void _e_exehist_limit(void);
+static const char *_e_exehist_normalize_exe(const char *exe);
 static void _e_exehist_cb_unload(void *data);
 static int  _e_exehist_sort_exe_cb(const void *d1, const void *d2);
 static int  _e_exehist_sort_pop_cb(const void *d1, const void *d2);
@@ -49,6 +52,7 @@ e_exehist_init(void)
 #define T E_Exehist_Item
 #define D _e_exehist_config_item_edd
    E_CONFIG_VAL(D, T, exe, STR);
+   E_CONFIG_VAL(D, T, normalized_exe, STR);
    E_CONFIG_VAL(D, T, launch_method, STR);
    E_CONFIG_VAL(D, T, exetime, DOUBLE);
    
@@ -94,6 +98,7 @@ e_exehist_add(const char *launch_method, const char *exe)
      }
    ei->launch_method = eina_stringshare_add(launch_method);
    ei->exe = eina_stringshare_add(exe);
+   ei->normalized_exe = _e_exehist_normalize_exe(exe);
    ei->exetime = ecore_time_get();
    _e_exehist->history = eina_list_append(_e_exehist->history, ei);
    _e_exehist_limit();
@@ -116,8 +121,9 @@ e_exehist_del(const char *exe)
 	ei = l->data;
 	if ((ei->exe) && (!strcmp(exe, ei->exe)))
 	  {
-	     if (ei->exe) eina_stringshare_del(ei->exe);
-	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
+	     eina_stringshare_del(ei->exe);
+	     eina_stringshare_del(ei->normalized_exe);
+	     eina_stringshare_del(ei->launch_method);
 	     free(ei);
 	     _e_exehist->history = eina_list_remove_list(_e_exehist->history,
 							 l);
@@ -145,17 +151,22 @@ EAPI int
 e_exehist_popularity_get(const char *exe)
 {
    Eina_List *l;
+   const char *normal;
    int count = 0;
    
    _e_exehist_load();
    if (!_e_exehist) return 0;
+   normal = _e_exehist_normalize_exe(exe);
+   if (!normal) return 0;
    for (l = _e_exehist->history; l; l = l->next)
      {
 	E_Exehist_Item *ei;
 	
 	ei = l->data;
-	if ((ei->exe) && (!strcmp(exe, ei->exe))) count++;
+	if ((ei->normalized_exe) && (!strcmp(normal, ei->normalized_exe)))
+	  count++;
      }
+   eina_stringshare_del(normal);
    _e_exehist_unload_queue();
    return count;
 }
@@ -164,20 +175,25 @@ EAPI double
 e_exehist_newest_run_get(const char *exe)
 {
    Eina_List *l;
+   const char *normal;
    
    _e_exehist_load();
    if (!_e_exehist) return 0.0;
+   normal = _e_exehist_normalize_exe(exe);
+   if (!normal) return 0.0;
    for (l = eina_list_last(_e_exehist->history); l; l = l->prev)
      {
 	E_Exehist_Item *ei;
 	
 	ei = l->data;
-	if ((ei->exe) && (!strcmp(exe, ei->exe)))
+	if ((ei->normalized_exe) && (!strcmp(normal, ei->normalized_exe)))
 	  {
+	     eina_stringshare_del(normal);
 	     _e_exehist_unload_queue();
 	     return ei->exetime;
 	  }
      }
+   eina_stringshare_del(normal);
    _e_exehist_unload_queue();
    return 0.0;
 }
@@ -216,10 +232,10 @@ e_exehist_sorted_list_get(E_Exehist_Sort sort_type, int max)
      {
 	int bad = 0;
 	
-	if (!(ei->exe)) continue;
+	if (!(ei->normalized_exe)) continue;
 	if (sort_type == E_EXEHIST_SORT_BY_POPULARITY)
 	  {
-	     if (!prev || (strcmp(prev->exe, ei->exe)))
+	     if (!prev || (strcmp(prev->normalized_exe, ei->normalized_exe)))
 	       {
 		  prev = ei;
 		  pop = eina_list_append(pop, ei);
@@ -369,8 +385,9 @@ _e_exehist_clear(void)
 	     E_Exehist_Item *ei;
 	     
 	     ei = _e_exehist->history->data;
-	     if (ei->exe) eina_stringshare_del(ei->exe);
-	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
+	     eina_stringshare_del(ei->exe);
+	     eina_stringshare_del(ei->normalized_exe);
+	     eina_stringshare_del(ei->launch_method);
 	     free(ei);
 	     _e_exehist->history = eina_list_remove_list(_e_exehist->history, _e_exehist->history);
 	  }
@@ -379,8 +396,8 @@ _e_exehist_clear(void)
 	     E_Exehist_Item *ei;
 	     
 	     ei = _e_exehist->mimes->data;
-	     if (ei->exe) eina_stringshare_del(ei->exe);
-	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
+	     eina_stringshare_del(ei->exe);
+	     eina_stringshare_del(ei->launch_method);
 	     free(ei);
 	     _e_exehist->mimes = eina_list_remove_list(_e_exehist->mimes, _e_exehist->mimes);
 	  }
@@ -409,8 +426,9 @@ _e_exehist_limit(void)
 	     E_Exehist_Item *ei;
 	     
 	     ei = _e_exehist->history->data;
-	     if (ei->exe) eina_stringshare_del(ei->exe);
-	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
+	     eina_stringshare_del(ei->exe);
+	     eina_stringshare_del(ei->normalized_exe);
+	     eina_stringshare_del(ei->launch_method);
 	     free(ei);
 	     _e_exehist->history = eina_list_remove_list(_e_exehist->history, _e_exehist->history);
 	  }
@@ -419,12 +437,49 @@ _e_exehist_limit(void)
 	     E_Exehist_Item *ei;
 	     
 	     ei = _e_exehist->mimes->data;
-	     if (ei->exe) eina_stringshare_del(ei->exe);
-	     if (ei->launch_method) eina_stringshare_del(ei->launch_method);
+	     eina_stringshare_del(ei->exe);
+	     eina_stringshare_del(ei->launch_method);
 	     free(ei);
 	     _e_exehist->mimes = eina_list_remove_list(_e_exehist->mimes, _e_exehist->mimes);
 	  }
      }
+}
+
+static const char *
+_e_exehist_normalize_exe(const char *exe)
+{
+   char *base, *cp, *space = NULL;
+   const char *ret;
+
+   base = basename(exe);
+   if (base[0] == '.' && base[1] == '\0')
+     return NULL;
+
+   base = strdup(base);
+   cp = base;
+   while (*cp)
+     {
+	if (isspace(*cp))
+	  {
+	     if (!space)
+	       space = cp;
+	  }
+	else
+	  {
+	     char lower = tolower(*cp);
+	     if (lower != *cp)
+	       *cp = lower;
+	     space = NULL;
+	  }
+	cp++;
+     }
+
+   if (space)
+     *space = '\0';
+
+   ret = eina_stringshare_add(base);
+   free(base);
+   return ret;
 }
 
 static void
@@ -447,10 +502,10 @@ _e_exehist_sort_exe_cb(const void *d1, const void *d2)
    ei1 = d1;
    ei2 = d2;
 
-   if (!ei1) return 1;
-   if (!ei2) return -1;
+   if (!ei1 || !ei1->normalized_exe) return 1;
+   if (!ei2 || !ei2->normalized_exe) return -1;
 
-   return strcasecmp(ei1->exe, ei2->exe);
+   return strcmp(ei1->normalized_exe, ei2->normalized_exe);
 }
 
 static int
