@@ -16884,6 +16884,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       align: 0.0 0.5;
 	       min: 21 21;
 	       max: 21 21;
+               fixed: 1 1;
 	       rel1.offset: 2 2;
 	       rel2.relative: 0.0 1.0;
 	       rel2.offset: 2 -3;
@@ -16935,6 +16936,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       align: 0.0 0.5;
 	       min: 21 21;
 	       max: 21 21;
+               fixed: 1 1;
 	       rel1.offset: 2 2;
 	       rel2.relative: 0.0 1.0;
 	       rel2.offset: 2 -3;
