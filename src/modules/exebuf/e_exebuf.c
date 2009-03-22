@@ -47,7 +47,7 @@ static void _e_exebuf_complete(void);
 static void _e_exebuf_backspace(void);
 static void _e_exebuf_clear(void);
 static void _e_exebuf_matches_update(void);
-static void _e_exebuf_hist_update(void);
+static void _e_exebuf_hist_update(Eina_List *hist_matches);
 static void _e_exebuf_hist_clear(void);
 static void _e_exebuf_cb_eap_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_exebuf_cb_eap_item_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
@@ -75,6 +75,7 @@ static Evas_Object *eap_list_object = NULL;
 static Eina_List *handlers = NULL;
 static Ecore_X_Window input_window = 0;
 static char *cmd_buf = NULL;
+static Eina_List *history = NULL;
 static Eina_List *eap_matches = NULL;
 static Eina_List *exe_matches = NULL;
 static Eina_List *exe_path = NULL;
@@ -343,6 +344,7 @@ e_exebuf_hide(void)
      free(str);
    EINA_LIST_FREE(exe_list2, str)
      free(str);
+   history = eina_list_free(history);
    which_list = NO_LIST;
    exe_sel = NULL;
 }
@@ -647,7 +649,7 @@ _e_exebuf_prev(void)
 	  }
 	else
 	  {
-	     _e_exebuf_hist_update();
+	     _e_exebuf_hist_update(NULL);
 	     if (eaps)
 	       {     
 		  which_list = HIST_LIST;
@@ -971,11 +973,50 @@ _e_exebuf_matches_update(void)
    Eina_Hash *added = NULL;
    Eina_List *list;
    Eina_List *l;
+   Eina_Bool hist = EINA_FALSE;
    char *exe;
    int i, max;
 
+   hist = (which_list == HIST_LIST);
    _e_exebuf_matches_clear();
    if (!cmd_buf[0]) return;
+
+   if (hist && eina_list_count(history))
+     {
+	Eina_List *hist_matches = NULL;
+
+	snprintf(buf, sizeof(buf), "%s*", cmd_buf);
+	EINA_LIST_FOREACH(history, l, file)
+	  {
+	     if (e_util_glob_match(file, buf))
+	       {
+		  if (!eina_hash_find(added, file))
+		    {
+		       hist_matches = eina_list_append(hist_matches, file);
+		       if (!added)
+			 added = eina_hash_string_superfast_new(NULL);
+		       eina_hash_direct_add(added, file, file);
+		    }
+	       }
+	  }
+	if (added) eina_hash_free(added);
+	added = NULL;
+
+	if (hist_matches)
+	  {
+	     _e_exebuf_hist_update(hist_matches);
+	     hist_matches = eina_list_free(hist_matches);
+	     exe_sel = eaps->data;
+	     if (exe_sel)
+	       {
+		  _e_exebuf_exe_sel(exe_sel);
+		  _e_exebuf_eap_scroll_to(0);
+	       }
+	  }
+
+	which_list = HIST_LIST;
+	return;
+     }
 
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = efreet_util_desktop_name_glob_list(buf);
@@ -1180,14 +1221,20 @@ _e_exebuf_matches_update(void)
 }
 
 static void
-_e_exebuf_hist_update(void)
+_e_exebuf_hist_update(Eina_List *hist_matches)
 {
-   Eina_List *list;
+   Eina_List *list, *l;
    char *file;
 
    edje_object_signal_emit(bg_object, "e,action,show,history", "e");
-   list = eina_list_reverse(e_exehist_list_get());
-   EINA_LIST_FREE(list, file)
+   if (hist_matches)
+     list = hist_matches;
+   else
+     {
+	history = eina_list_free(history);
+	history = list = eina_list_reverse(e_exehist_list_get());
+     }
+   EINA_LIST_FOREACH(list, l, file)
      {
 	E_Exebuf_Exe *exe;
 	Evas_Coord mw, mh;
@@ -1251,6 +1298,7 @@ _e_exebuf_hist_clear(void)
    e_box_align_set(exe_list_object, 0.5, 1.0);
    exe_sel = NULL;
    which_list = NO_LIST;
+   _e_exebuf_clear();
 }
 
 static void 
@@ -1345,8 +1393,6 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
 	  {
 	     if ((strlen(cmd_buf) < (EXEBUFLEN - strlen(ev->compose))))
 	       {
-		  if (!(strlen(cmd_buf)) && exe_sel)
-		    _e_exebuf_hist_clear();
 		  strcat(cmd_buf, ev->compose);
 		  _e_exebuf_update();
 		  if (!update_timer)
