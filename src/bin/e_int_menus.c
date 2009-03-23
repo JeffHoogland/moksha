@@ -571,11 +571,13 @@ _e_int_menus_apps_free_hook2(void *obj)
 {
    E_Menu *m;
    Efreet_Menu *menu;
-   Eina_List *l;
+   Eina_List *l, *l_next;
    E_Menu_Item *mi;
 
    m = obj;
-   EINA_LIST_FOREACH(m->items, l, mi)
+   // XXX TODO: this should be automatic in e_menu, just get references right!
+   // XXX TODO: fix references and remove me!!!
+   EINA_LIST_FOREACH_SAFE(m->items, l, l_next, mi)
      {
         if (mi->submenu)
           e_object_del(E_OBJECT(mi->submenu));
@@ -668,11 +670,13 @@ static void
 _e_int_menus_desktops_free_hook(void *obj)
 {
    E_Menu *m;
-   Eina_List *l;
+   Eina_List *l, *l_next;
    E_Menu_Item *mi;
 
    m = obj;
-   EINA_LIST_FOREACH(m->items, l, mi)
+   // XXX TODO: this should be automatic in e_menu, just get references right!
+   // XXX TODO: fix references and remove me!!!
+   EINA_LIST_FOREACH_SAFE(m->items, l, l_next, mi)
      {
         if (mi->submenu)
           e_object_del(E_OBJECT(mi->submenu));
