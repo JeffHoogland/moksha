@@ -513,6 +513,8 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
                                                    _e_int_menus_apps_start, 
                                                    entry);
 		  e_menu_item_submenu_set(mi, subm);
+                  e_object_free_attach_func_set(E_OBJECT(subm), 
+                                                _e_int_menus_apps_free_hook2);
 	       }
 	     /* TODO: Highlight header
 	     else if (entry->type == EFREET_MENU_ENTRY_HEADER)
@@ -567,8 +569,15 @@ _e_int_menus_apps_free_hook2(void *obj)
 {
    E_Menu *m;
    Efreet_Menu *menu;
+   Eina_List *l;
+   E_Menu_Item *mi;
 
    m = obj;
+   EINA_LIST_FOREACH(m->items, l, mi)
+     {
+        if (mi->submenu)
+          e_object_del(E_OBJECT(mi->submenu));
+     }
    menu = e_object_data_get(E_OBJECT(m));
    if (menu) efreet_menu_free(menu);
 }

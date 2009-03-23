@@ -1970,7 +1970,13 @@ _e_fm2_icon_mime_fdo_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret
 
    size = _e_fm2_icon_mime_size_normalize(ic);
    icon = efreet_mime_type_icon_get(ic->info.mime, e_config->icon_theme, size);
-   if (icon) return _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
+   if (icon)
+     {
+        Evas_Object *o;
+        o =  _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
+        free(icon);
+        return o;
+     }
    return NULL;
 }
 
@@ -6325,13 +6331,13 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
         ic->drag.start = 0;
 	ic->drag.dnd = 0;
 	ic->drag.src = 0;
+        ic->down_sel = 0;
 
 	if ((_e_fm2_inplace_open(ic) == 0) &&
 	    (S_ISDIR(ic->info.statinfo.st_mode)) &&
 	    (ic->sd->config->view.single_click))
           evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
      }
-   ic->down_sel = 0;
 }
 
 static void
