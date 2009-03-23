@@ -39,11 +39,12 @@ struct _E_Shelf
    float                instant_delay;
    Ecore_Timer         *instant_timer;
    Eina_List           *handlers;
-   unsigned char        fit_along : 1;
-   unsigned char        fit_size  : 1;
-   unsigned char        hidden    : 1;
-   unsigned char        toggle    : 1;
-   unsigned char        edge      : 1;
+   unsigned char        fit_along   : 1;
+   unsigned char        fit_size    : 1;
+   unsigned char        hidden      : 1;
+   unsigned char        toggle      : 1;
+   unsigned char        edge        : 1;
+   unsigned char        urgent_show : 1;
    unsigned int         locked; 
 };
 
@@ -58,6 +59,7 @@ EAPI void             e_shelf_show(E_Shelf *es);
 EAPI void             e_shelf_hide(E_Shelf *es);
 EAPI void             e_shelf_locked_set(E_Shelf *es, int lock);
 EAPI void             e_shelf_toggle(E_Shelf *es, int show);
+EAPI void             e_shelf_urgent_show(E_Shelf *es);
 EAPI void             e_shelf_move(E_Shelf *es, int x, int y);
 EAPI void             e_shelf_resize(E_Shelf *es, int w, int h);
 EAPI void             e_shelf_move_resize(E_Shelf *es, int x, int y, int w, int h);

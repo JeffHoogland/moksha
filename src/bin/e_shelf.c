@@ -23,6 +23,7 @@ static int  _e_shelf_cb_mouse_out(void *data, int type, void *event);
 static int  _e_shelf_cb_id_sort(const void *data1, const void *data2);
 static int  _e_shelf_cb_hide_animator(void *data);
 static int  _e_shelf_cb_hide_animator_timer(void *data);
+static int  _e_shelf_cb_hide_urgent_timer(void *data);
 static int  _e_shelf_cb_instant_hide_timer(void *data);
 static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 
@@ -292,12 +293,16 @@ e_shelf_toggle(E_Shelf *es, int show)
    es->toggle = show;
    if (es->locked) return;
    es->interrupted = -1;
+   es->urgent_show = 0;
    if ((show) && (es->hidden))
      {  
 	es->hidden = 0;
 	edje_object_signal_emit(es->o_base, "e,state,visible", "e");
 	if (es->instant_delay >= 0.0)
-	  _e_shelf_cb_instant_hide_timer(es);
+	  {
+	     _e_shelf_cb_instant_hide_timer(es);
+	     es->hide_timer = ecore_timer_add(es->cfg->hide_timeout, _e_shelf_cb_hide_urgent_timer, es);
+	  }
 	else
 	  {
 	     if (es->hide_timer)
@@ -314,6 +319,11 @@ e_shelf_toggle(E_Shelf *es, int show)
 	edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
 	if (es->instant_delay >= 0.0)
 	  {
+             if (es->hide_timer)
+               {
+                  ecore_timer_del(es->hide_timer);
+                  es->hide_timer = NULL;
+               }
 	     es->hidden = 1; 
 	     if (!es->instant_timer)
 	       es->instant_timer = ecore_timer_add(es->instant_delay, _e_shelf_cb_instant_hide_timer, es);
@@ -330,6 +340,13 @@ e_shelf_toggle(E_Shelf *es, int show)
 	     es->hide_timer = ecore_timer_add(es->cfg->hide_timeout, _e_shelf_cb_hide_animator_timer, es);
 	  }
      }
+}
+
+EAPI void
+e_shelf_urgent_show(E_Shelf *es)
+{
+   e_shelf_toggle(es, 1);
+   es->urgent_show = 1;
 }
 
 EAPI void
@@ -1537,6 +1554,8 @@ _e_shelf_cb_hide_animator(void *data)
    es->hide_animator = NULL;
    if (es->interrupted > -1)
      e_shelf_toggle(es, es->interrupted);
+   else if (es->urgent_show)
+     e_shelf_toggle(es, 0);
    else
      _e_shelf_toggle_border_fix(es);
    return 0;
@@ -1551,6 +1570,18 @@ _e_shelf_cb_hide_animator_timer(void *data)
    if (!es->hide_animator)
      es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
    es->hide_timer = NULL;
+   return 0;
+}
+
+static int
+_e_shelf_cb_hide_urgent_timer(void *data)
+{
+   E_Shelf *es;
+
+   es = data;
+   es->hide_timer = NULL;
+   if (es->urgent_show)
+     e_shelf_toggle(es, 0);
    return 0;
 }
 
