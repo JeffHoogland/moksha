@@ -107,6 +107,29 @@ e_object_ref_get(E_Object *obj)
    return obj->references;
 }
 
+#if 0   
+EAPI void
+e_bt(void)
+{
+   int i, trace_num;
+   void *trace[128];
+   char **messages = NULL;
+   trace_num = backtrace(trace, 128);
+   messages = backtrace_symbols(trace, trace_num);
+   if (messages)
+     {
+        for (i = 1; i < trace_num; i++)
+          {
+             int j;
+             
+             for (j = 1; j < i; j++) putchar(' ');
+             printf("%s\n", messages[i]);
+          }
+        free(messages);
+     }
+}
+#endif   
+
 EAPI int
 e_object_error(E_Object *obj)
 {

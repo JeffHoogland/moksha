@@ -528,7 +528,7 @@ _e_pointer_active_handle(E_Pointer *p)
    if (e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM) return;
    /* and scedule a pre-idle check in 1 second if no more events happen */
    if (!e_config->idle_cursor) return;
-   p->idle_timer = ecore_timer_add(1.0, _e_pointer_cb_idle_timer_pre, p);
+   p->idle_timer = ecore_timer_loop_add(1.0, _e_pointer_cb_idle_timer_pre, p);
 }
 
 static int
@@ -625,7 +625,7 @@ _e_pointer_cb_idle_timer_pre(void *data)
    ecore_x_pointer_xy_get(p->win, &x, &y);
    p->x = x;
    p->y = y;
-   p->idle_timer = ecore_timer_add(4.0, _e_pointer_cb_idle_timer_wait, p);
+   p->idle_timer = ecore_timer_loop_add(4.0, _e_pointer_cb_idle_timer_wait, p);
    return 0;
 }
 
