@@ -90,6 +90,7 @@ e_win_show(E_Win *win)
 	_e_win_prop_update(win);
 	ecore_evas_lower(win->ecore_evas);
 	win->border = e_border_new(win->container, win->evas_win, 1, 1);
+        win->border->ignore_first_unmap = 1;
 	if (!win->placed)
 	  win->border->re_manage = 0;
 	win->border->internal = 1;

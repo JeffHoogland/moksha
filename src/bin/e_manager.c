@@ -280,6 +280,7 @@ e_manager_manage_windows(E_Manager *man)
 		       bd = e_border_new(con, windows[i], 1, 0);
 		       if (bd)
 			 {
+                            bd->ignore_first_unmap = 1;
 			    /* FIXME:
 			     * It's enough to set the desk, the zone will
 			     * be set according to the desk */

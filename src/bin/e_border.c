@@ -467,7 +467,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 	bd->y = att->y;
 	bd->changes.pos = 1;
 	bd->re_manage = 1;
-	bd->ignore_first_unmap = 2;
+// needed to be 1 for internal windw and on restart.        
+//	bd->ignore_first_unmap = 2;
      }
 
    /* just to friggin make java happy - we're DELAYING the reparent until
@@ -3902,10 +3903,13 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 
    bd = data;
    e = ev;
+//   printf("HIDE: %x, event %x\n", e->win, e->event_win);
 // not interested in hide events from windows other than the window in question
    if (e->win != e->event_win) return 1;
    bd = e_border_find_by_client_window(e->win);
+//   printf("  bd = %p\n", bd);
    if (!bd) return 1;
+//   printf("  bd->ignore_first_unmap = %i\n", bd->ignore_first_unmap);
    if (bd->ignore_first_unmap > 0)
      {
 	bd->ignore_first_unmap--;
@@ -3915,18 +3919,23 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
    if ((bd->iconic) || ((!bd->visible) && (!bd->new_client)) || 
        (bd->await_hide_event > 0))
      {
+//        printf("  Don't delete hidden or iconified windows\n");
+//        printf("  bd->iconic = %i, bd->visible = %i, bd->new_client = %i, bd->await_hide_event = %i\n",
+//               bd->iconic, bd->visible, bd->new_client, bd->await_hide_event);
 	if (bd->await_hide_event > 0)
 	  {
 	     bd->await_hide_event--;
 	  }
 	else
 	  {
+//             printf("  hide really\n");
 	     /* Only hide the border if it is visible */
 	     if (bd->visible) e_border_hide(bd, 1);
 	  }
      }
    else
      {
+//             printf("  hide2\n");
 	e_border_hide(bd, 0);
 	if (e_config->focus_revert_on_hide_or_close)
 	  {
