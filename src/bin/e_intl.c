@@ -906,6 +906,7 @@ _e_intl_locale_validate(const char *locale)
 
    /* Match locale with one from the list */
    EINA_LIST_FREE(all_locales, locale_next)
+     {
 	if (found == 0)
 	  {
 	     E_Locale_Parts *locale_parts_next;
@@ -973,7 +974,9 @@ _e_intl_locale_validate(const char *locale)
 	     e_intl_locale_parts_free(locale_parts_next);
 	     E_FREE(locale_lr_next);
 	  }
-
+        free (locale_next);
+     }
+   
    e_intl_locale_parts_free(locale_parts);
    free(locale_lr);
    E_FREE(locale_cs_canonic);

@@ -60,6 +60,7 @@ static void _e_int_menus_shelves_del_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_showhide(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_desktops_free_hook(void *obj);
 static void _e_int_menus_desk_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi);
 
@@ -272,6 +273,7 @@ e_int_menus_desktops_new(void)
    e_util_menu_item_theme_icon_set(mi, "preferences-system-windows");
    e_menu_item_callback_set(mi, _e_int_menus_main_showhide, NULL);
 
+   e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_desktops_free_hook);
    return m;
 }
 
@@ -659,6 +661,21 @@ _e_int_menus_virtuals_pre_cb(void *data, E_Menu *m)
 	e_menu_item_label_set(mi, _("Configure Virtual Desktops"));
 	e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
 	e_menu_item_callback_set(mi, _e_int_menus_desk_item_cb, NULL);
+     }
+}
+
+static void
+_e_int_menus_desktops_free_hook(void *obj)
+{
+   E_Menu *m;
+   Eina_List *l;
+   E_Menu_Item *mi;
+
+   m = obj;
+   EINA_LIST_FOREACH(m->items, l, mi)
+     {
+        if (mi->submenu)
+          e_object_del(E_OBJECT(mi->submenu));
      }
 }
 
