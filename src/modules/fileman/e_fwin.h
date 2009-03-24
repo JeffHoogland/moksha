@@ -15,7 +15,6 @@ EAPI void e_fwin_zone_shutdown (E_Zone *zone);
 EAPI void e_fwin_all_unsel     (void *data);
 EAPI void e_fwin_reload_all    (void);
 EAPI int  e_fwin_zone_find     (E_Zone *zone);
-EAPI void e_fwin_progress_update_all(int slave_id, int percent, int seconds, size_t done, size_t total, char *src, char *dst);
 
 #endif
 #endif
