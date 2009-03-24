@@ -350,6 +350,11 @@ _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere)
    //~ edje_object_part_text_set(o, "e.text.label5", dir);
    //~ E_FREE(dir);
 
+   if (ere->needs_attention)
+      edje_object_signal_emit(o, "e,action,set,need_attention", "e");
+   else
+      edje_object_signal_emit(o, "e,action,set,normal", "e");
+
    //evas_object_raise(fwin->box_obj); //TODO use layer??
 }
 

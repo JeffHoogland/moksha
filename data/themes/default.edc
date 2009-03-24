@@ -11270,7 +11270,12 @@ collections { /* begin the collection of edje groups that are in this file */
 	    description { state: "default" 0.0;
 	       rel1.offset: 3 3;
 	       rel2.offset: -4 -4;
-	       color: 255 0 0 200;
+	       color: 100 100 100 200;
+	    }
+	    description { state: "need_attention" 0.0;
+	       rel1.offset: 3 3;
+	       rel2.offset: -4 -4;
+	       color: 150 0 0 200;
 	    }
 	 }
 	 part { name: "gauge_bg";
@@ -11406,6 +11411,20 @@ collections { /* begin the collection of edje groups that are in this file */
 		  text_class: "fileman_icon";
 	       }
 	    }
+	 }
+      }
+      programs {
+	 program { name: "set_need_attention";
+	    signal: "e,action,set,need_attention";
+	    source: "e";
+	    action:  STATE_SET "need_attention" 0.0;
+	    target: "bg";
+	 }
+	 program { name: "set_normal";
+	    signal: "e,action,set,normal";
+	    source: "e";
+	    action:  STATE_SET "default" 0.0;
+	    target: "bg";
 	 }
       }
    }
