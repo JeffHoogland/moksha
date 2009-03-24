@@ -2479,13 +2479,11 @@ _e_menu_cb_ecore_evas_resize(Ecore_Evas *ee)
 {
    Evas *evas;
    Evas_Object *o;
-   E_Menu *m;
    Evas_Coord w, h;
    
    evas = ecore_evas_get(ee);
    evas_output_viewport_get(evas, NULL, NULL, &w, &h);
    o = evas_object_name_find(evas, "menu/background");
-   m = evas_object_data_get(o, "e_menu");
    evas_object_resize(o, w, h);
 }
 
