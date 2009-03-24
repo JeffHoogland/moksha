@@ -3,8 +3,9 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
+DEB_CONFIGURE_SCRIPT := ./autogen.sh
 DEB_FIXPERMS_EXCLUDE := enlightenment_sys freqset tempget batget
-DEB_MAKE_CLEAN_TARGET := clean
+DEB_MAKE_CLEAN_TARGET := distclean
 DEB_INSTALL_MANPAGES_e17 := $(DEB_SRCDIR)/debian/enlightenment.1 $(DEB_SRCDIR)/debian/enlightenment_*.1
 DEB_DH_STRIP_ARGS := --dbg-package=e17-dbg
 DEB_CONFIGURE_EXTRA_FLAGS := --disable-rpath --sysconfdir=/etc
@@ -18,4 +19,4 @@ binary-predeb/e17::
 	chmod 4755 debian/e17/usr/lib/enlightenment/modules/temperature/*/tempget
 
 clean::
-	./autogen.sh --prefix=/usr $(DEB_CONFIGURE_EXTRA_FLAGS)
+	[ ! -f Makefile ] || make distclean
