@@ -11932,6 +11932,18 @@ collections { /* begin the collection of edje groups that are in this file */
 	       rel2.offset: 0 -1;
 	    }
 	 }
+	 part { name: "e.box.operations";
+	    type: BOX;
+	    description { state: "default" 0.0;
+              // rel2.to: "sb_vbar";
+              // rel2.relative: 0.0 1.0;
+	       box {
+		  layout: "vertical";
+		  padding: 0 2;
+		  align: 0.0 1.0;
+	       }
+	    }
+	 }
       }
       programs {
 	 program { name: "sb_vbar_show";

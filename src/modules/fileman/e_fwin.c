@@ -28,7 +28,6 @@ struct _E_Fwin
    Evas_Object         *scrollframe_obj;
    Evas_Object         *fm_obj;
    Evas_Object         *bg_obj;
-   Evas_Object         *box_obj;
    E_Fwin_Apps_Dialog  *fad;
 
    Evas_Object         *under_obj;
@@ -45,9 +44,7 @@ struct _E_Fwin
    E_Toolbar          *tbar;
    Ecore_Event_Handler *zone_handler;
    Ecore_Event_Handler *zone_del_handler;
-
    Ecore_Event_Handler *fm_op_entry_add_handler;
-   Ecore_Event_Handler *fm_op_entry_del_handler;
 
    unsigned char        geom_save_ready : 1;
 };
@@ -323,9 +320,6 @@ e_fwin_zone_find(E_Zone *zone)
 
 /* e_fm_op_registry */
 
-#define CONF_ALIGN_X 1.0 //TODO need to make this a config option
-#define CONF_ALIGN_Y 1.0
-
 static void
 _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere)
 {
@@ -336,14 +330,14 @@ _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere)
    // Update element
    edje_object_part_drag_size_set(o, "e.gauge.bar", 0.0, ((double)(ere->percent)) / 100);
 
-   snprintf(buf, PATH_MAX, "Progress from slave #%d", ere->id);
+   snprintf(buf, sizeof(buf), "Progress from slave #%d", ere->id);
    edje_object_part_text_set(o, "e.text.label1", buf);
-   snprintf(buf, PATH_MAX, _("Done %ld / %ld byte"), ere->done, ere->total);
+   snprintf(buf, sizeof(buf), _("Done %ld / %ld byte"), ere->done, ere->total);
    edje_object_part_text_set(o, "e.text.label2", buf);
    if (!ere->finished)
-     snprintf(buf, PATH_MAX, _("Done %d%% - left ?? sec"), ere->percent);
+     snprintf(buf, sizeof(buf), _("Done %d%% - left ?? sec"), ere->percent);
    else
-     snprintf(buf, PATH_MAX, _("Complete"));
+     snprintf(buf, sizeof(buf), _("Complete"));
    edje_object_part_text_set(o, "e.text.label3", buf);
    edje_object_part_text_set(o, "e.text.label4", ecore_file_file_get(ere->src));
    //~ dir = ecore_file_dir_get(ere->dst);
@@ -356,6 +350,11 @@ _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere)
       edje_object_signal_emit(o, "e,action,set,normal", "e");
 
    //evas_object_raise(fwin->box_obj); //TODO use layer??
+}
+
+void _e_fwin_op_registry_free_data(void *data)
+{
+   evas_object_del((Evas_Object*)data);
 }
 
 static int
@@ -377,39 +376,14 @@ _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event)
    evas_object_show(o);
 
    // Append the element to the box
-   evas_object_box_append(fwin->box_obj, o);
-   evas_object_size_hint_align_set(o, CONF_ALIGN_X, CONF_ALIGN_Y);
+   edje_object_part_box_append(e_scrollframe_edje_object_get(fwin->scrollframe_obj),
+                               "e.box.operations", o);
+   evas_object_size_hint_align_set(o, 0.0, 0.0); //FIXME this should be theme-configurable
 
    //Listen to progress changes
    e_fm2_op_registry_entry_listener_add(ere, _e_fwin_op_registry_listener_cb,
-                                        o, NULL);
+                                        o, _e_fwin_op_registry_free_data);
 
-   return ECORE_CALLBACK_RENEW;
-}
-
-static int
-_e_fwin_op_registry_entry_del_cb(void *data, int type, void *event)
-{
-   const E_Fm2_Op_Registry_Entry *ere = event;
-   E_Fwin *fwin = data;
-   Evas_Object *o;
-   Eina_List *l;
-
-   // Search the element
-   EINA_LIST_FOREACH(evas_object_box_children_get(fwin->box_obj), l, o)
-     {
-	if (evas_object_data_get(o, "e_fwin_ere") == ere)
-	   break;
-	else
-	   o = NULL;
-     }
-
-   // Delete the element //TODO delay hide by some seconds
-   if (o)
-     {
-	evas_object_box_remove(fwin->box_obj, o);
-	evas_object_del(o);
-     }
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -451,12 +425,6 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
 			   "e/fileman/default/window/main");
    evas_object_show(o);
    fwin->bg_obj = o;
-
-   o = evas_object_box_add(e_win_evas_get(fwin->win));
-   evas_object_box_layout_set(o, evas_object_box_layout_vertical, NULL, NULL);
-   evas_object_box_align_set(o, CONF_ALIGN_X, CONF_ALIGN_Y);
-   evas_object_show(o);
-   fwin->box_obj = o;
 
    o = e_fm2_add(e_win_evas_get(fwin->win));
    fwin->fm_obj = o;
@@ -547,9 +515,6 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    fwin->fm_op_entry_add_handler =
       ecore_event_handler_add(E_EVENT_FM_OP_REGISTRY_ADD,
 			       _e_fwin_op_registry_entry_add_cb, fwin);
-   fwin->fm_op_entry_del_handler =
-      ecore_event_handler_add(E_EVENT_FM_OP_REGISTRY_DEL,
-			       _e_fwin_op_registry_entry_del_cb, fwin);
    _e_fwin_op_registry_entry_iter(fwin);
 
    return fwin;
@@ -577,8 +542,6 @@ _e_fwin_free(E_Fwin *fwin)
 
    if (fwin->fm_op_entry_add_handler) 
      ecore_event_handler_del(fwin->fm_op_entry_add_handler);
-   if (fwin->fm_op_entry_del_handler) 
-     ecore_event_handler_del(fwin->fm_op_entry_del_handler);
 
    fwins = eina_list_remove(fwins, fwin);
    if (fwin->wallpaper_file) eina_stringshare_del(fwin->wallpaper_file);
@@ -656,8 +619,6 @@ _e_fwin_cb_resize(E_Win *win)
 	  _e_fwin_toolbar_resize(fwin);
 	else 
 	  evas_object_resize(fwin->scrollframe_obj, fwin->win->w, fwin->win->h);
-	if (fwin->box_obj)
-	  evas_object_resize(fwin->box_obj, fwin->win->w, fwin->win->h);
      }
    else if (fwin->zone)
      evas_object_resize(fwin->scrollframe_obj, fwin->zone->w, fwin->zone->h);
