@@ -11935,12 +11935,13 @@ collections { /* begin the collection of edje groups that are in this file */
 	 part { name: "e.box.operations";
 	    type: BOX;
 	    description { state: "default" 0.0;
-              // rel2.to: "sb_vbar";
-              // rel2.relative: 0.0 1.0;
+	       rel2.to_x: "sb_vbar";
+	       rel2.to_y: "sb_hbar";
+	       rel2.relative: 0.0 0.0;
 	       box {
 		  layout: "vertical";
 		  padding: 0 2;
-		  align: 0.0 1.0;
+		  align: 1.0 1.0;
 	       }
 	    }
 	 }

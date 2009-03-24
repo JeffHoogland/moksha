@@ -378,7 +378,7 @@ _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event)
    // Append the element to the box
    edje_object_part_box_append(e_scrollframe_edje_object_get(fwin->scrollframe_obj),
                                "e.box.operations", o);
-   evas_object_size_hint_align_set(o, 0.0, 0.0); //FIXME this should be theme-configurable
+   evas_object_size_hint_align_set(o, 1.0, 0.0); //FIXME this should be theme-configurable
 
    //Listen to progress changes
    e_fm2_op_registry_entry_listener_add(ere, _e_fwin_op_registry_listener_cb,
