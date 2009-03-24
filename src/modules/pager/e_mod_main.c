@@ -1383,8 +1383,13 @@ _pager_cb_event_border_urgent_change(void *data, int type, void *event)
 		  if (urgent)
 		    {
 		       if (!(ev->border->iconic))
-			 edje_object_signal_emit(pd->o_desk,
-						 "e,state,urgent", "e");
+			 {
+			    if (pd->pager && pd->pager->inst &&
+			       	pd->pager->inst->gcc->gadcon->shelf && !pager_config->popup_urgent)
+			      e_shelf_urgent_show(pd->pager->inst->gcc->gadcon->shelf);
+			    edje_object_signal_emit(pd->o_desk,
+						    "e,state,urgent", "e");
+			 }
 		       edje_object_signal_emit(pw->o_window,
 					       "e,state,urgent", "e");
 		    }
