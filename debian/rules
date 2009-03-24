@@ -3,7 +3,7 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
-DEB_CONFIGURE_SCRIPT := ./autogen.sh --prefix=/usr
+DEB_CONFIGURE_SCRIPT := ./autogen.sh
 DEB_FIXPERMS_EXCLUDE := enlightenment_sys freqset tempget batget
 DEB_MAKE_CLEAN_TARGET := distclean
 DEB_INSTALL_MANPAGES_e17 := $(DEB_SRCDIR)/debian/enlightenment.1 $(DEB_SRCDIR)/debian/enlightenment_*.1
