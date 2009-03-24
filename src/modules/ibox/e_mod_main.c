@@ -1199,8 +1199,7 @@ _ibox_cb_event_border_urgent_change(void *data, int type, void *event)
 	if (!ic) continue;
 	if (ev->border->client.icccm.urgent)
 	  {
-	     if (b->inst->gcc->gadcon->shelf)
-	       e_shelf_urgent_show(b->inst->gcc->gadcon->shelf);
+	     e_gadcon_urgent_show(b->inst->gcc->gadcon);
 	     edje_object_signal_emit(ic->o_holder, "e,state,urgent", "e");
 	     edje_object_signal_emit(ic->o_holder2, "e,state,urgent", "e");
 	  }

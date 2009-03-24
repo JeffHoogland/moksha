@@ -93,6 +93,11 @@ struct _E_Gadcon
 	void (*func) (void *data, int lock);
 	void *data;
      } locked_set;
+   struct 
+     {
+	void (*func) (void *data);
+	void *data;
+     } urgent_show;
    
    E_Config_Dialog    *config_dialog;
    unsigned char       editing : 1;
@@ -222,6 +227,7 @@ EAPI void             e_gadcon_ecore_evas_set(E_Gadcon *gc, Ecore_Evas *ee);
 EAPI int              e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h);
 EAPI void             e_gadcon_util_menu_attach_func_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon_Client *gcc, E_Menu *menu), void *data);
 EAPI void             e_gadcon_util_lock_func_set(E_Gadcon *gc, void (*func) (void *data, int lock), void *data);
+EAPI void             e_gadcon_util_urgent_show_func_set(E_Gadcon *gc, void (*func) (void *data), void *data);
 EAPI void             e_gadcon_dnd_window_set(E_Gadcon *gc, Ecore_X_Window win);
 EAPI Ecore_X_Window   e_gadcon_dnd_window_get(E_Gadcon *gc);
 EAPI void             e_gadcon_xdnd_window_set(E_Gadcon *gc, Ecore_X_Window win);
@@ -248,6 +254,7 @@ EAPI int	      e_gadcon_client_geometry_get(E_Gadcon_Client *gcc, int *x, int *y
 EAPI void             e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int flags);
 EAPI void             e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc);
 EAPI void             e_gadcon_locked_set(E_Gadcon *gc, int lock);
+EAPI void             e_gadcon_urgent_show(E_Gadcon *gc);
 
 #endif
 #endif

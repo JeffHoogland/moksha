@@ -17,6 +17,7 @@ static void _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_menu_append(E_Shelf *es, E_Menu *mn);
 static void _e_shelf_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn);
 static void _e_shelf_cb_locked_set(void *data, int lock);
+static void _e_shelf_cb_urgent_show(void *data);
 static void _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static int  _e_shelf_cb_mouse_in(void *data, int type, void *event);
 static int  _e_shelf_cb_mouse_out(void *data, int type, void *event);
@@ -195,6 +196,8 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 
    e_gadcon_util_lock_func_set(es->gadcon,
 			       _e_shelf_cb_locked_set, es);
+   e_gadcon_util_urgent_show_func_set(es->gadcon,
+				      _e_shelf_cb_urgent_show, es);
    
    shelves = eina_list_append(shelves, es);
    
@@ -1147,6 +1150,15 @@ _e_shelf_cb_locked_set(void *data, int lock)
    
    es = data;
    e_shelf_locked_set(es, lock);
+}
+
+static void
+_e_shelf_cb_urgent_show(void *data)
+{
+   E_Shelf *es;
+   
+   es = data;
+   e_shelf_urgent_show(es);
 }
 
 static void

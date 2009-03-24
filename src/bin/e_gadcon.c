@@ -708,6 +708,17 @@ e_gadcon_util_lock_func_set(E_Gadcon *gc,
 }
 
 EAPI void
+e_gadcon_util_urgent_show_func_set(E_Gadcon *gc, 
+				   void (*func) (void *data),
+				   void *data)
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   gc->urgent_show.func = func;
+   gc->urgent_show.data = data;
+}
+
+EAPI void
 e_gadcon_dnd_window_set(E_Gadcon *gc, Ecore_X_Window win)
 {
    E_OBJECT_CHECK(gc);
@@ -1341,6 +1352,13 @@ e_gadcon_locked_set(E_Gadcon *gc, int lock)
      {
 	gc->locked_set.func(gc->locked_set.data, lock);
      }
+}
+
+EAPI void
+e_gadcon_urgent_show(E_Gadcon *gc)
+{
+   if (gc->urgent_show.func)
+     gc->urgent_show.func(gc->urgent_show.data);
 }
 
 /*
