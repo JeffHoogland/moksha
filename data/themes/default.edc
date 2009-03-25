@@ -11262,54 +11262,84 @@ collections { /* begin the collection of edje groups that are in this file */
       }
    }
    group { name: "e/fileman/default/progress";
-      min: 200 70;
+      min: 250 40;
       parts {
 	 part { name: "bg";
-	    type: RECT;
+	    type: IMAGE;
 	    mouse_events: 0;
 	    description { state: "default" 0.0;
-	       rel1.offset: 3 3;
-	       rel2.offset: -4 -4;
-	       color: 100 100 100 200;
+	       image.normal: "bt_dis_base.png";
+	       image.border: 5 5 5 5;
 	    }
 	    description { state: "need_attention" 0.0;
-	       rel1.offset: 3 3;
-	       rel2.offset: -4 -4;
-	       color: 150 0 0 200;
+	       inherit: "default" 0.0;
+	       color: 200 0 0 150;
+	    }
+	 }
+	 part { name: "shadow";
+	    type: IMAGE;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "bt_dis_shine.png";
+	       image.border: 5 5 5 5;
+	    }
+	 }
+	 part { name: "icon";
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       min: 32 32;
+	       max: 32 32;
+	       align: 0.02 0.5;
+	       image.normal: "icon_efm_dnd_ask.png";
+	    }
+	    description { state: "copy" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "icon_efm_dnd_copy.png";
+	    }
+	    description { state: "move" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "icon_efm_dnd_move.png";
 	    }
 	 }
 	 part { name: "gauge_bg";
-	    type: RECT;
+	    type: IMAGE;
+	    scale: 1;
 	    mouse_events: 0;
 	    description { state: "default" 0.0;
-	       rel1.to: "bg";
-	       rel1.offset: 5 5;
+	       rel1.to: "icon";
+	       rel1.relative: 1.0 0.60;
 	       rel2.to: "bg";
-	       rel2.relative: 0.0 1.0;
-	       rel2.offset: 15 -7;
-	       color: 155 155 155 200;
+	       rel2.relative: 1.0 1.0;
+	       rel2.offset: -4 -5;
+	       image.normal: "inset_sunk.png";
+	       image.border: 6 6 6 6;
+	    }
+	 }
+	 part { name: "gauge_confine";
+	    type: RECT;
+	    scale: 1;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "gauge_bg";
+	       rel1.offset: 1 1;
+	       rel2.to: "gauge_bg";
+	       rel2.offset: -2 -2;
+	       color: 0 255 0 0;
 	    }
 	 }
 	 part { name: "e.gauge.bar";
 	    mouse_events: 0;
+	    scale: 1;
 	    type: RECT;
 	    description { state: "default" 0.0;
-	       min: 10 0;
-	       max: 10 110;
-	       color: 255 255 255 255;
-	       rel1 {
-		  to: "gauge_bg";
-		  offset: 2 2;
-	       }
-	       rel2 {
-		  to: "gauge_bg";
-		  offset: -3 -3;
-	       }
+	       min: 0 0;
+	       color: 55 55 55 100;
 	    }
 	    dragable {
-	       x: 0 0 0;
-	       y: -1 1 0;
-	       confine:"gauge_bg";
+	       x: 1 1 0;
+	       y: 0 0 0;
+	       confine:"gauge_confine";
 	    }
 	 }
 	 part { name: "e.text.label1";
@@ -11317,114 +11347,79 @@ collections { /* begin the collection of edje groups that are in this file */
 	    mouse_events:  0;
 	    scale: 1;
 	    description { state: "default" 0.0;
-	       align: 0.5 0.0;
-	       rel1.to: "gauge_bg";
+	       rel1.to: "icon";
 	       rel1.relative: 1.0 0.0;
-	       rel1.offset: 5 0;
 	       rel2.to: "bg";
+	       rel2.relative: 1.0 0.6;
 	       color: 0 0 0 255;
 	       text {
 		  font: "Sans";
 		  size: 10;
-		  min: 1 0;
-		  align: 0.0 0.0;
+		  align: 0.0 0.5;
 		  text_class: "fileman_icon";
 	       }
 	    }
 	 }
-	 part { name: "e.text.label2";
-	    type: TEXT;
-	    mouse_events:  0;
-	    scale: 1;
-	    description { state: "default" 0.0;
-	       align: 0.5 0.0;
-	       rel1.to: "gauge_bg";
-	       rel1.relative: 1.0 0.2;
-	       rel1.offset: 5 0;
-	       rel2.to: "bg";
-	       color: 0 0 0 255;
-	       text {
-		  font: "Sans";
-		  size: 10;
-		  min: 1 0;
-		  align: 0.0 0.0;
-		  text_class: "fileman_icon";
-	       }
-	    }
-	 }
-	 part { name: "e.text.label3";
-	    type: TEXT;
-	    mouse_events:  0;
-	    scale: 1;
-	    description { state: "default" 0.0;
-	       align: 0.5 0.0;
-	       rel1.to: "gauge_bg";
-	       rel1.relative: 1.0 0.4;
-	       rel1.offset: 5 0;
-	       rel2.to: "bg";
-	       color: 0 0 0 255;
-	       text {
-		  font: "Sans";
-		  size: 10;
-		  min: 1 0;
-		  align: 0.0 0.0;
-		  text_class: "fileman_icon";
-	       }
-	    }
-	 }
-	 part { name: "e.text.label4";
-	    type: TEXT;
-	    mouse_events:  0;
-	    scale: 1;
-	    description { state: "default" 0.0;
-	       align: 0.5 0.0;
-	       rel1.to: "gauge_bg";
-	       rel1.relative: 1.0 0.6;
-	       rel1.offset: 5 0;
-	       rel2.to: "bg";
-	       color: 0 0 0 255;
-	       text {
-		  font: "Sans";
-		  size: 10;
-		  min: 1 0;
-		  align: 0.0 0.0;
-		  text_class: "fileman_icon";
-	       }
-	    }
-	 }
-	 part { name: "e.text.label5";
-	    type: TEXT;
-	    mouse_events:  0;
-	    scale: 1;
-	    description { state: "default" 0.0;
-	       align: 0.5 0.0;
-	       rel1.to: "gauge_bg";
-	       rel1.relative: 1.0 0.8;
-	       rel1.offset: 5 0;
-	       rel2.to: "bg";
-	       color: 0 0 0 255;
-	       text {
-		  font: "Sans";
-		  size: 10;
-		  min: 1 0;
-		  align: 0.0 0.0;
-		  text_class: "fileman_icon";
-	       }
-	    }
-	 }
+	 //~ part { name: "e.text.label2";
+	    //~ type: TEXT;
+	    //~ mouse_events:  0;
+	    //~ scale: 1;
+	    //~ description { state: "default" 0.0;
+	       //~ align: 0.5 0.0;
+	       //~ rel1.to: "e.text.label1";
+	       //~ rel1.relative: 0.0 1.3;
+	       //~ //rel1.offset: 5 0;
+	       //~ rel2.to: "e.text.label1";
+	       //~ rel2.relative: 1.0 3.0;
+	       //~ color: 0 0 0 255;
+	       //~ text {
+		  //~ font: "Sans";
+		  //~ size: 9;
+		  //~ min: 1 0;
+		  //~ align: 0.0 1.0;
+	       //~ }
+	    //~ }
+	 //~ }
       }
       programs {
 	 program { name: "set_need_attention";
 	    signal: "e,action,set,need_attention";
 	    source: "e";
 	    action:  STATE_SET "need_attention" 0.0;
+	    transition: SINUSOIDAL 1.0;
 	    target: "bg";
+            after: "need_loop";
+	 }
+         program { name: "need_loop";
+	    action:  STATE_SET "default" 0.0;
+	    transition: SINUSOIDAL 1.0;
+	    target: "bg";
+            after: "set_need_attention";
 	 }
 	 program { name: "set_normal";
 	    signal: "e,action,set,normal";
 	    source: "e";
 	    action:  STATE_SET "default" 0.0;
+	    transition: SINUSOIDAL 1.0;
 	    target: "bg";
+	 }
+	 program { name: "set_icon_unknow";
+	    signal: "e,action,icon,unknow";
+	    source: "e";
+	    action:  STATE_SET "default" 0.0;
+	    target: "icon";
+	 }
+	 program { name: "set_icon_copy";
+	    signal: "e,action,icon,copy";
+	    source: "e";
+	    action:  STATE_SET "copy" 0.0;
+	    target: "icon";
+	 }
+	 program { name: "set_icon_move";
+	    signal: "e,action,icon,move";
+	    source: "e";
+	    action:  STATE_SET "move" 0.0;
+	    target: "icon";
 	 }
       }
    }
@@ -11940,7 +11935,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       rel2.relative: 0.0 0.0;
 	       box {
 		  layout: "vertical";
-		  padding: 0 2;
+		  padding: 0 0;
 		  align: 1.0 1.0;
 	       }
 	    }
