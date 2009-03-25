@@ -274,7 +274,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("General Options"), 0);
    ob = e_widget_check_add(evas, _("Allow binding activation with fullscreen windows"), &(cfdata->fullscreen_flip));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    _update_edge_binding_list(cfdata);
    _fill_actions_list(cfdata);
