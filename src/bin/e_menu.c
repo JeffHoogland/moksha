@@ -1436,9 +1436,8 @@ _e_menu_realize(E_Menu *m)
 	_e_menu_item_realize(mi);
      }
 
-   o = m->container_object;
    _e_menu_items_layout_update(m);
-   e_box_thaw(o);
+   e_box_thaw(m->container_object);
    evas_object_resize(m->bg_object, m->cur.w, m->cur.h);
    evas_event_thaw(m->evas);
 }
