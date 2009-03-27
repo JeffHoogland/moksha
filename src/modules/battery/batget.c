@@ -653,7 +653,7 @@ linux_sys_class_power_supply_init(void)
 		  if (!(linux_sys_class_power_supply_is_battery(name)))
 		    {
 		       free(name);
-		    continue;
+                       continue;
 		    }
 
 		  sysev = E_NEW(Sys_Class_Power_Supply_Uevent, 1);
