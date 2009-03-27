@@ -5,6 +5,25 @@
  * to add backtrace support.
  */
 #include "e.h"
+#include <X11/Xlib.h>
+
+static volatile Eina_Bool _e_x_composite_shutdown_try = 0;
+static void
+_e_x_composite_shutdown(void)
+{
+   Ecore_X_Display *dpy;
+   Ecore_X_Window root;
+
+   if (_e_x_composite_shutdown_try) return; /* we failed :-( */
+   _e_x_composite_shutdown_try = 1;
+
+   dpy = ecore_x_display_get();
+   root = DefaultRootWindow(dpy);
+
+   /* ignore errors, we really don't care at this point */
+   ecore_x_composite_unredirect_subwindows(root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+   _e_x_composite_shutdown_try = 0;
+}
 
 #ifdef OBJECT_PARANOIA_CHECK   
 
@@ -21,6 +40,7 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
    write(2, "**** Printing Backtrace... *****\n\n", 34);
    size = backtrace(array, 255);
    backtrace_symbols_fd(array, size, 2);
+   _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
@@ -41,6 +61,7 @@ EAPI void
 e_sigseg_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** SEGMENTATION FAULT ****\n", 29);
+   _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
@@ -62,6 +83,7 @@ EAPI void
 e_sigill_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** ILLEGAL INSTRUCTION ****\n", 30);
+   _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
@@ -82,6 +104,7 @@ EAPI void
 e_sigfpe_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** FLOATING POINT EXCEPTION ****\n", 35);
+   _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
@@ -102,6 +125,7 @@ EAPI void
 e_sigbus_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** BUS ERROR ****\n", 21);
+   _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
@@ -122,6 +146,7 @@ EAPI void
 e_sigabrt_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** ABORT ****\n", 21);
+   _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
