@@ -11282,6 +11282,8 @@ collections { /* begin the collection of edje groups that are in this file */
 	    description { state: "default" 0.0;
 	       image.normal: "bt_dis_shine.png";
 	       image.border: 5 5 5 5;
+	       rel1.to: "bg";
+	       rel2.to: "bg";
 	    }
 	 }
 	 part { name: "icon";
@@ -11291,6 +11293,8 @@ collections { /* begin the collection of edje groups that are in this file */
 	       min: 32 32;
 	       max: 32 32;
 	       align: 0.02 0.5;
+	       rel1.to: "bg";
+	       rel2.to: "bg";
 	       image.normal: "icon_efm_dnd_ask.png";
 	    }
 	    description { state: "copy" 0.0;
@@ -22879,6 +22883,7 @@ ICON("view-inherit","icon_dummy.png",64)                 // *** // EFMBUTTON("in
 
 //Standard Status Icons
 ICON("dialog-warning","icon_warning.png",128)                   // "enlightenment/warning"
+ICON("dialog-error","icon_warning.png",128)                     // "enlightenment/error"
 ICON("unknown","icon_dummy.png",64)                      // *** // "enlightenment/unknown"
 
 //Standard Application Icons

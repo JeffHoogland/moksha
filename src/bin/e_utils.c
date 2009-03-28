@@ -638,7 +638,7 @@ e_util_dialog_internal(const char *title, const char *txt)
    if (!dia) return;
    e_dialog_title_set(dia, title);
    e_dialog_text_set(dia, txt);
-   e_dialog_icon_set(dia, "enlightenment/error", 64);
+   e_dialog_icon_set(dia, "dialog-error", 64);
    e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
    e_dialog_button_focus_num(dia, 0);
    e_win_centered_set(dia->win, 1);
