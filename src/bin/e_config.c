@@ -1722,7 +1722,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 		  char buf[8192];
 		  
 		  e_dialog_title_set(dia, _("Enlightenment Settings Write Problems"));
-		  e_dialog_icon_set(dia, "enlightenment/error", 64);
+		  e_dialog_icon_set(dia, "dialog-error", 64);
 		  snprintf(buf, sizeof(buf), erstr, file);
 		  e_dialog_text_set(dia, buf);
 		  e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
