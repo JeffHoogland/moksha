@@ -17849,8 +17849,7 @@ group { name: "e/toolbar/default/base";
       }
    }
 
-   group {
-      name: "e/widgets/button";
+   group { name: "e/widgets/button";
       images {
 	 image: "bt_base1.png" COMP;
 	 image: "bt_base2.png" COMP;
@@ -17885,6 +17884,7 @@ group { name: "e/toolbar/default/base";
 	 part {
 	    name: "e.swallow.icon";
 	    type: SWALLOW;
+	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
 	       align: 0.0 0.5;
