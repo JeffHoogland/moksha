@@ -400,6 +400,7 @@ e_fm2_op_registry_entry_listener_del(E_Fm2_Op_Registry_Entry *entry, void (*cb)(
        {
 	  e->listeners = eina_inlist_remove(e->listeners, EINA_INLIST_GET(l));
 	  if (l->free_data) l->free_data(l->data);
+	  free(l);
 	  return;
        }
 }
