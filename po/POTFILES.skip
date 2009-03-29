@@ -42,6 +42,7 @@ src/modules/cpufreq/module.desktop.in
 src/modules/dropshadow/module.desktop.in
 src/modules/exebuf/module.desktop.in
 src/modules/fileman/module.desktop.in
+src/modules/fileman_opinfo/module.desktop.in
 src/modules/ibar/module.desktop.in
 src/modules/ibox/module.desktop.in
 src/modules/layout/module.desktop.in
