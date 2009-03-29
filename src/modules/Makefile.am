@@ -50,6 +50,10 @@ if USE_MODULE_FILEMAN
 SUBDIRS += fileman
 endif
 
+if USE_MODULE_FILEMAN_OPINFO
+SUBDIRS += fileman_opinfo
+endif
+
 if USE_MODULE_WIZARD
 SUBDIRS += wizard
 endif

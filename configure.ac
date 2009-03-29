@@ -367,6 +367,7 @@ AC_E_OPTIONAL_MODULE([start], true)
 AC_E_OPTIONAL_MODULE([exebuf], true)
 AC_E_OPTIONAL_MODULE([winlist], true)
 AC_E_OPTIONAL_MODULE([fileman], true)
+AC_E_OPTIONAL_MODULE([fileman_opinfo], true)
 AC_E_OPTIONAL_MODULE([wizard], true)
 AC_E_OPTIONAL_MODULE([conf], true)
 AC_E_OPTIONAL_MODULE([conf_wallpaper], true)
@@ -446,6 +447,8 @@ src/modules/winlist/Makefile
 src/modules/winlist/module.desktop
 src/modules/fileman/Makefile
 src/modules/fileman/module.desktop
+src/modules/fileman_opinfo/Makefile
+src/modules/fileman_opinfo/module.desktop
 src/modules/wizard/Makefile
 src/modules/wizard/module.desktop
 src/modules/conf/Makefile
