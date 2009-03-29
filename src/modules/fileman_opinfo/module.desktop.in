@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Link
+Name=EFM Operation Info
+Name[it]=Informazioni operazioni filemanager
+Icon=e-module-fileman_opinfo
+Comment=<title>Gadget to show current EFM operations</title><br>Can be placed on the desktop or in a shelf.
+Comment[it]=<title>Gadget che mostra le operazioni in corso del file manager</title><br>Può essere messo sul desktop o su una mensola.
+X-Enlightenment-ModuleType=fileman

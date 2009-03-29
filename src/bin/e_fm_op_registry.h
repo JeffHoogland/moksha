@@ -53,6 +53,8 @@ EAPI Eina_Iterator *e_fm2_op_registry_iterator_new(void);
 EAPI Eina_List     *e_fm2_op_registry_get_all(void);
 EAPI void           e_fm2_op_registry_get_all_free(Eina_List *list);
 EAPI Eina_Bool      e_fm2_op_registry_is_empty(void);
+EAPI int            e_fm2_op_registry_count(void);
+
 
 EAPI unsigned int e_fm2_op_registry_init(void);
 EAPI unsigned int e_fm2_op_registry_shutdown(void);

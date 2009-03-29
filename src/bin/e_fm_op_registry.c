@@ -468,6 +468,12 @@ e_fm2_op_registry_is_empty(void)
    return eina_hash_population(_e_fm2_op_registry) == 0;
 }
 
+EAPI int
+e_fm2_op_registry_count(void)
+{
+   return eina_hash_population(_e_fm2_op_registry);
+}
+
 
 EAPI unsigned int
 e_fm2_op_registry_init(void)
