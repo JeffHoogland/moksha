@@ -319,42 +319,46 @@ e_fwin_zone_find(E_Zone *zone)
 
 
 /* e_fm_op_registry */
-
 static void
 _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere)
 {
    Evas_Object *o = data;
    char buf[PATH_MAX];
-   char *done, *total;
+   char *total;
 
    // Update element
    edje_object_part_drag_size_set(o, "e.gauge.bar", ((double)(ere->percent)) / 100, 1.0);
 
-   done = e_util_size_string_get(ere->done);
    total = e_util_size_string_get(ere->total);
    switch (ere->op)
    {
       case E_FM_OP_COPY:
          edje_object_signal_emit(o, "e,action,icon,copy", "e");
          if (ere->finished)
-            snprintf(buf, sizeof(buf), "Copy of %s complete", total, done);
+            snprintf(buf, sizeof(buf), "Copy of %s done", total);
          else
-            snprintf(buf, sizeof(buf), "Copying %s (done %s)", total, done);
+            snprintf(buf, sizeof(buf), "Copying %s (eta: %d sec)", total, ere->eta);
          break;
       case E_FM_OP_MOVE:
          edje_object_signal_emit(o, "e,action,icon,move", "e");
-         snprintf(buf, sizeof(buf), "Moving %s (done %s)", total, done);
+         if (ere->finished)
+            snprintf(buf, sizeof(buf), "Move of %s done", total);
+         else
+            snprintf(buf, sizeof(buf), "Moving %s (eta: %d sec)", total, ere->eta);
          break;
       case E_FM_OP_REMOVE:
          edje_object_signal_emit(o, "e,action,icon,delete", "e");
-         snprintf(buf, sizeof(buf), "Deleting %s (done %s)", total, done);
+         if (ere->finished)
+            snprintf(buf, sizeof(buf), "Delete done");
+         else
+            snprintf(buf, sizeof(buf), "Deleting %s (eta: %d sec", total, ere->eta);
          break;
       default:
          edje_object_signal_emit(o, "e,action,icon,unknow", "e");
-         snprintf(buf, sizeof(buf), "Unknow operation :/ (slave #%d)", ere->id);
+         snprintf(buf, sizeof(buf), "Unknow operation from slave %d)", ere->id);
          break;
    }
-   
+
    edje_object_part_text_set(o, "e.text.label1", buf);
 
    if (ere->needs_attention)
@@ -362,13 +366,20 @@ _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere)
    else
       edje_object_signal_emit(o, "e,action,set,normal", "e");
 
-   E_FREE(done);
    E_FREE(total);
 }
 
-void _e_fwin_op_registry_free_data(void *data)
+static int
+_e_fwin_op_registry_free_data_delayed(void *data)
 {
    evas_object_del((Evas_Object*)data);
+   return ECORE_CALLBACK_CANCEL;
+}
+
+static void
+_e_fwin_op_registry_free_data(void *data)
+{
+   ecore_timer_add(5.0, _e_fwin_op_registry_free_data_delayed, data);
 }
 
 static int
@@ -379,7 +390,8 @@ _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event)
    Evas_Object *o;
    int mw, mh;
 
-   if (!(ere->op == E_FM_OP_COPY || ere->op == E_FM_OP_MOVE))
+   if (!(ere->op == E_FM_OP_COPY || ere->op == E_FM_OP_MOVE ||
+         ere->op == E_FM_OP_REMOVE))
       return ECORE_CALLBACK_RENEW;
    
    o = edje_object_add(e_win_evas_get(fwin->win));
@@ -389,12 +401,15 @@ _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event)
    evas_object_resize(o, mw * e_scale, mh * e_scale);
    //evas_object_event_callback_add(o, EVAS_CALLBACK_CHANGED_SIZE_HINTS,
    //                        _size_hint_changed_cb, NULL);
-   evas_object_show(o);
+
+   //Update the element
+   _e_fwin_op_registry_listener_cb(o, ere);
 
    // Append the element to the box
    edje_object_part_box_append(e_scrollframe_edje_object_get(fwin->scrollframe_obj),
                                "e.box.operations", o);
    evas_object_size_hint_align_set(o, 1.0, 1.0); //FIXME this should be theme-configurable
+   evas_object_show(o);
 
    //Listen to progress changes
    e_fm2_op_registry_entry_listener_add(ere, _e_fwin_op_registry_listener_cb,

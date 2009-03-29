@@ -28,7 +28,7 @@ struct _E_Fm2_Op_Registry_Entry
    const char *src; /* stringshared */
    const char *dst; /* stringshared */
    double start_time;
-   int duration; /* XXX use double? */
+   int eta; /* XXX use double? */
    E_Fm_Op_Type op;
    E_Fm2_Op_Status status;
    Eina_Bool needs_attention:1;

@@ -613,11 +613,11 @@ _e_fm2_op_registry_entry_print(const E_Fm2_Op_Registry_Entry *ere)
      status = status_strings[0];
 
    printf("id: %8d, op: %2d [%s] finished: %hhu, needs_attention: %hhu\n"
-	  "    %3d%% (%8zd/%8zd), time: %10.0f + %5ds, xwin: %#x\n"
+	  "    %3d%% (%8zd/%8zd), start_time: %10.0f, eta: %5ds, xwin: %#x\n"
 	  "    src=[%s]\n"
 	  "    dst=[%s]\n",
 	  ere->id, ere->op, status, ere->finished, ere->needs_attention,
-	  ere->percent, ere->done, ere->total, ere->start_time, ere->duration,
+	  ere->percent, ere->done, ere->total, ere->start_time, ere->eta,
 	  e_fm2_op_registry_entry_xwin_get(ere),
 	  ere->src, ere->dst);
 }
@@ -2952,7 +2952,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     ere->percent = percent;
 	     ere->done = done;
 	     ere->total = total;
-	     ere->duration = seconds;
+	     ere->eta = seconds;
 	     e_fm2_op_registry_entry_files_set(ere, src, dst);
 	     if (ere->percent == 100)
 	       {

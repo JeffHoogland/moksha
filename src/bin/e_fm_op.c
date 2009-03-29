@@ -998,7 +998,7 @@ _e_fm_op_update_progress(E_Fm_Op_Task *task, long long _plus_e_fm_op_done, long 
              peta = eta;
              ptask = task;
 	     _e_fm_op_update_progress_report(percent, eta, ctime - stime,
-					     task->dst.done, task->src.st.st_size,
+					     _e_fm_op_done, _e_fm_op_total,
 					     task->src.name, task->dst.name);
 	  }
      }
