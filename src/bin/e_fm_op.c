@@ -1069,7 +1069,7 @@ _e_fm_op_handle_overwrite(E_Fm_Op_Task *task)
         else
           {
              _e_fm_op_overwrite = 1;
-             _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_OVERWRITE, "File '%s' already exists. Overwrite?", task->dst.name);
+             _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_OVERWRITE, "%s", task->dst.name);
           }
      }
 

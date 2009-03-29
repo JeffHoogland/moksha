@@ -8300,7 +8300,7 @@ _e_fm2_new_directory(void *data, E_Menu *m, E_Menu_Item *mi)
    con = e_container_current_get(man);
    if (!con) return;
    
-   sd->entry_dialog = e_entry_dialog_show(_("Create a new Directory"), "enlightenment",
+   sd->entry_dialog = e_entry_dialog_show(_("Create a new Directory"), "folder",
 					  _("New Directory Name:"),
 					  "", NULL, NULL, 
 					  _e_fm2_new_directory_yes_cb, 
@@ -8362,7 +8362,7 @@ _e_fm2_file_rename(void *data, E_Menu *m, E_Menu_Item *mi)
    snprintf(text, PATH_MAX + 256,
 	    _("Rename %s to:"),
 	    ic->info.file);
-   ic->entry_dialog = e_entry_dialog_show(_("Rename File"), "enlightenment",
+   ic->entry_dialog = e_entry_dialog_show(_("Rename File"), "edit-rename",
 					  text, ic->info.file, NULL, NULL, 
 					  _e_fm2_file_rename_yes_cb, 
 					  _e_fm2_file_rename_no_cb, ic);
@@ -8439,6 +8439,7 @@ static void _e_fm_retry_abort_dialog(int pid, const char *str)
 
    e_dialog_button_focus_num(dialog, 0);
    e_dialog_title_set(dialog, _("Error"));
+   e_dialog_icon_set(dialog, "dialog-error", 64);
    snprintf(text, sizeof(text), 
 	 _("%s"),
 	 str);
@@ -8497,11 +8498,11 @@ _e_fm_overwrite_dialog(int pid, const char *str)
    e_dialog_button_add(dialog, _("Yes to all"), NULL, _e_fm_overwrite_yes_all_cb, NULL);
 
    e_dialog_button_focus_num(dialog, 0);
-   e_dialog_title_set(dialog, _("Error"));
+   e_dialog_title_set(dialog, _("Warning"));
+   e_dialog_icon_set(dialog, "dialog-warning", 64);
    snprintf(text, sizeof(text), 
-	 _("%s"),
-	 str);
-   
+	    _("File already exists, overwrite?<br><hilight>%s</hilight>"), str);
+
    e_dialog_text_set(dialog, text);
    e_win_centered_set(dialog->win, 1);
    e_dialog_show(dialog);
@@ -8693,6 +8694,7 @@ _e_fm2_file_delete(Evas_Object *obj)
    e_dialog_button_add(dialog, _("No"), NULL, _e_fm2_file_delete_no_cb, ic);
    e_dialog_button_focus_num(dialog, 1);
    e_dialog_title_set(dialog, _("Confirm Delete"));
+   e_dialog_icon_set(dialog, "dialog-warning", 64);
    sel = e_fm2_selected_list_get(obj);
    if ((!sel) || (eina_list_count(sel) == 1))
      snprintf(text, sizeof(text), 
