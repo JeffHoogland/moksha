@@ -7488,6 +7488,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
    if (!sd) return;
 
    mn = e_menu_new();
+   e_object_data_set(E_OBJECT(mn), obj);
    e_menu_category_set(mn, "e/fileman/action");
 
    if (sd->icon_menu.replace.func)
@@ -7646,6 +7647,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    sd = ic->sd;
 
    mn = e_menu_new();
+   e_object_data_set(E_OBJECT(mn), obj);
    e_menu_category_set(mn, "e/fileman/action");
 
    if (sd->icon_menu.replace.func)
