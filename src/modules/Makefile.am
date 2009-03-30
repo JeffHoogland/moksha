@@ -66,6 +66,10 @@ if USE_MODULE_CONF_WALLPAPER
 SUBDIRS += conf_wallpaper
 endif
 
+if USE_MODULE_CONF_WALLPAPER2
+SUBDIRS += conf_wallpaper2
+endif
+
 if USE_MODULE_CONF_THEME
 SUBDIRS += conf_theme
 endif
@@ -261,6 +265,7 @@ fileman \
 wizard \
 conf \
 conf_wallpaper \
+conf_wallpaper2 \
 conf_theme \
 conf_colors \
 conf_fonts \

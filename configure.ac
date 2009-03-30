@@ -371,6 +371,7 @@ AC_E_OPTIONAL_MODULE([fileman_opinfo], true)
 AC_E_OPTIONAL_MODULE([wizard], true)
 AC_E_OPTIONAL_MODULE([conf], true)
 AC_E_OPTIONAL_MODULE([conf_wallpaper], true)
+AC_E_OPTIONAL_MODULE([conf_wallpaper2], true)
 AC_E_OPTIONAL_MODULE([conf_theme], true, [CHECK_MODULE_CONF_THEME])
 AC_E_OPTIONAL_MODULE([conf_colors], true)
 AC_E_OPTIONAL_MODULE([conf_fonts], true)
@@ -455,6 +456,8 @@ src/modules/conf/Makefile
 src/modules/conf/module.desktop
 src/modules/conf_wallpaper/Makefile
 src/modules/conf_wallpaper/module.desktop
+src/modules/conf_wallpaper2/Makefile
+src/modules/conf_wallpaper2/module.desktop
 src/modules/conf_theme/Makefile
 src/modules/conf_theme/module.desktop
 src/modules/conf_colors/Makefile

@@ -23948,4 +23948,619 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 //	 }
       }
    }
+
+/////////////////////////////////////////////////////////////////////////////
+   /*** WALLPAPER MAIN DIALOG ***/
+   group { name: "e/conf/wallpaper/main/window";
+      images {
+	 image: "dia_grad.png" COMP;
+	 image: "dia_topshad.png" COMP;
+	 image: "dia_botshad.png" COMP;
+	 image: "menu_sep.png" COMP;
+      }
+      parts {
+	 part { name: "base";
+	    mouse_events:  0;
+	    description { state: "default" 0.0;
+               color_class: "dialog_base";
+	       image.normal: "dia_grad.png";
+	       fill {
+		  smooth: 0;
+		  size {
+		     relative: 0.0 1.0;
+		     offset: 64 0;
+		  }
+	       }
+	    }
+	 }
+	 part { name: "shadow";
+	    mouse_events:  0;
+	    description { state: "default" 0.0;
+	       rel2.relative: 1.0 0.0;
+	       rel2.offset: -1 31;
+	       image.normal: "dia_topshad.png";
+	       fill {
+		  smooth: 0;
+		  size {
+		     relative: 0.0 1.0;
+		     offset: 64 0;
+		  }
+	       }
+	    }
+	 }
+	 part { name: "shadow2";
+	    mouse_events:  0;
+	    description { state: "default" 0.0;
+	       rel1.relative: 0.0 1.0;
+	       rel1.offset: 0 -4;
+	       image.normal: "dia_botshad.png";
+	       fill {
+		  smooth: 0;
+		  size {
+		     relative: 0.0 1.0;
+		     offset: 64 0;
+		  }
+	       }
+	    }
+	 }
+	 part { name: "e.swallow.preview";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	    }
+	 }
+	 part { name: "e.swallow.list";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   2   2;
+	       }
+	       rel2 {
+		  relative: 1.0 0.0;
+		  offset:   -3  -5;
+		  to_y: "e.swallow.buttons";
+	       }
+	    }
+	 }
+	 part { name: "separator";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       min: 16 2;
+	       rel1 {
+		  relative: 0.0  1.0;
+		  offset:   4    -1;
+		  to_y:     "e.swallow.list";
+	       }
+	       rel2 {
+		  relative: 1.0  1.0;
+		  offset:   -5   0;
+		  to_y:     "e.swallow.list";
+	       }
+	       image {
+		  normal: "menu_sep.png";
+		  border: 2 2 0 0;
+	       }
+	       fill.smooth: 0;
+	    }
+	 }
+	 part {
+	    name: "e.swallow.buttons";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       align: 0.5 1.0;
+	       fixed: 0 1;
+	       rel1 {
+		  relative: 0.0 1.0;
+		  offset:   4   -5;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -5  -5;
+	       }
+	    }
+	 }
+      }
+   }
+   group { name: "e/conf/wallpaper/main/mini";
+      images {
+	 image: "dia_grad.png" COMP;
+	 image: "e17_mini_button_shadow2.png" COMP;
+      }
+      parts {
+	 part {	name: "icon_box_shadow";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       rel1 {
+		  to: "base";
+		  relative: 0.0 0.0;
+		  offset: -3 -3;
+	       }
+	       rel2 {
+		  to: "base";
+		  relative: 1.0 1.0;
+		  offset: 4 4;
+	       }
+	       fill {
+		  smooth: 0;
+	       }
+	       image {
+		  normal: "e17_mini_button_shadow2.png";
+		  border: 6 6 6 6;
+	       }
+	    }
+	    description { state: "visible" 0.0;
+	       inherit: "default" 0.0;
+	       visible: 1;
+	    }
+	 }
+	 part { name: "icon_box";
+	    type: RECT;
+	    mouse_events:  0;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       align: 0.5 0.5;
+	       rel1 {
+		  to: "base";
+		  relative: 0.0 0.0;
+		  offset: -1 -1;
+	       }
+	       rel2 {
+		  to: "base";
+		  relative: 1.0 1.0;
+		  offset: 0 0;
+	       }
+	       color: 0 0 0 64;
+	    }
+	    description { state: "visible" 0.0;
+	       inherit: "default" 0.0;
+	       visible: 1;
+	    }
+	 }
+	 part { name: "base";
+	    mouse_events:  0;
+	    type: RECT;
+	    description { state: "default" 0.0;
+               visible: 0;
+	       rel1 {
+                  to: "icon_zoom";
+		  relative: 0.0 0.0;
+		  offset:   4   4;
+	       }
+	       rel2 {
+                  to: "icon_zoom";
+		  relative: 1.0 1.0;
+		  offset:   -5  -5;
+	       }
+	       color: 255 255 255 255;
+	    }
+	    description { state: "visible" 0.0;
+	       inherit: "default" 0.0;
+	       visible: 1;
+	    }
+	 }
+	 part { name: "icon_zoom";
+	    type: RECT;
+	    mouse_events:  0;
+            description { state: "default" 0.0;
+               visible: 0;
+	       rel1.relative: 0.0 0.0;
+	       rel2.relative: 1.0 1.0;
+            }
+            description { state: "min" 0.0;
+               inherit: "default" 0.0;
+	       rel1.relative: 0.5 0.5;
+	       rel2.relative: 0.5 0.5;
+            }
+            description { state: "max" 0.0;
+               inherit: "default" 0.0;
+	       rel1.relative: -0.2 -0.2;
+	       rel2.relative: 1.2 1.2;
+            }
+            description { state: "max2" 0.0;
+               inherit: "default" 0.0;
+	       rel1.relative: -0.05 -0.05;
+	       rel2.relative: 1.05 1.05;
+            }
+         }
+	 part { name: "e.swallow.content";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1 {
+                  to: "base";
+		  relative: 0.0 0.0;
+		  offset:   2   2;
+	       }
+	       rel2 {
+                  to: "base";
+		  relative: 1.0 1.0;
+		  offset:   -3  -3;
+	       }
+	    }
+	 }
+      }
+      programs {
+	 program { name: "thumb_gen";
+	    signal:  "e,action,thumb,gen";
+	    source:  "e";
+	    action:  STATE_SET "visible" 0.0;
+	    target:  "icon_box_shadow";
+	    target:  "icon_box";
+	    target:  "base";
+	    target:  "icon_zoom";
+	    target:  "e.swallow.content";
+	    after:   "thumb_gen2";
+	 }
+	 program { name: "thumb_gen2";
+	    action:  STATE_SET "min" 0.0;
+	    target:  "icon_zoom";
+	    after:   "thumb_gen3";
+	 }
+	 program { name: "thumb_gen3";
+	    action:  STATE_SET "max" 0.0;
+	    target:  "icon_zoom";
+	    transition: DECELERATE 0.2;
+	    after:   "thumb_gen4";
+	 }
+	 program { name: "thumb_gen4";
+	    action:  STATE_SET "default" 0.0;
+	    target:  "icon_zoom";
+	    transition: SINUSOIDAL 0.1;
+	    after:   "thumb_gen5";
+	 }
+	 program { name: "thumb_gen5";
+	    action:  STATE_SET "max2" 0.0;
+	    target:  "icon_zoom";
+	    transition: SINUSOIDAL 0.2;
+	    after:   "thumb_gen6";
+	 }
+	 program { name: "thumb_gen6";
+	    action:  STATE_SET "default" 0.0;
+	    target:  "icon_zoom";
+	    transition: SINUSOIDAL 0.3;
+	 }
+	 program { name: "thumb_ungen";
+	    signal:  "e,action,thumb,ungen";
+	    source:  "e";
+	    action:  STATE_SET "default" 0.0;
+	    target:  "icon_box_shadow";
+	    target:  "icon_box";
+	    target:  "base";
+	    target:  "icon_zoom";
+	    target:  "e.swallow.content";
+	    after:   "thumb_gen2";
+	 }
+      }
+   }
+   group { name: "e/conf/wallpaper/main/scrollframe";
+      images {
+	 image: "arrow_up.png" COMP;
+	 image: "arrow_down.png" COMP;
+	 image: "bt_sm_base1.png" COMP;
+	 image: "bt_sm_base2.png" COMP;
+	 image: "bt_sm_shine.png" COMP;
+	 image: "bt_sm_hilight.png" COMP;
+	 image: "sb_runnerv.png" COMP;
+      }
+      parts {
+//	 part { name: "clipper";
+//	    type: RECT;
+//	    mouse_events: 0;
+//	    description { state: "default" 0.0;
+//	    }
+//	 }
+	 part { name: "e.swallow.content";
+//	    clip_to: "clipper";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1.offset: 0 0;
+	       rel2 {
+		  relative: 0.0  1.0;
+		  offset:   -1   -1;
+		  to_x: "sb_vbar";
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar";
+	    type: RECT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       min: 17 17;
+	       align: 1.0 0.0;
+	       rel1 {
+		  relative: 1.0 0.0;
+		  offset:   -1 0;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -1 -1;
+	       }
+	    }
+	    description { state: "hidden" 0.0;
+	       visible: 0;
+	       max: 0 99999;
+	       rel1 {
+		  relative: 1.0 0.0;
+		  offset:   -1 0;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -1 -1;
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar_base";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1 {
+		  relative: 0.0  1.0;
+		  offset:   0	 -1;
+		  to:       "sb_vbar_a1";
+	       }
+	       rel2 {
+		  relative: 1.0  0.0;
+		  offset:   -1	 0;
+		  to:       "sb_vbar_a2";
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar_runner";
+	    clip_to: "sb_vbar";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       max: 3 99999;
+	       rel1.to:       "sb_vbar_base";
+	       rel1.offset:   1 0;
+	       rel2.to:       "sb_vbar_base";
+	       image {
+		  normal: "sb_runnerv.png";
+		  border: 0 0 4 4;
+	       }
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "sb_vbar_p1";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1 {
+		  relative: 0.0 1.0;
+		  to:       "sb_vbar_a1";
+	       }
+	       rel2 {
+		  relative: 1.0 0.0;
+		  to:       "e.dragable.vbar";
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar_p2";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1 {
+		  relative: 0.0 1.0;
+		  to:       "e.dragable.vbar";
+	       }
+	       rel2 {
+		  relative: 1.0 0.0;
+		  to:       "sb_vbar_a2";
+	       }
+	    }
+	 }
+	 part { name: "e.dragable.vbar";
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    scale: 1;
+	    dragable {
+	       x: 0 0 0;
+	       y: 1 1 0;
+	       confine: "sb_vbar_base";
+	    }
+	    description { state: "default" 0.0;
+	       min: 17 17;
+	       rel1 {
+		  relative: 0.5  0.5;
+		  offset:   0    0;
+		  to: "sb_vbar_base";
+	       }
+	       rel2 {
+		  relative: 0.5  0.5;
+		  offset:   0    0;
+		  to: "sb_vbar_base";
+	       }
+	       image {
+		  normal: "bt_sm_base2.png";
+		  border: 6 6 6 6;
+	       }
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "bt_sm_base1.png";
+	    }
+	 }
+	 part { name: "sb_vbar_over1";
+	    clip_to: "sb_vbar";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.dragable.vbar";
+	       rel2.relative: 1.0 0.5;
+	       rel2.to: "e.dragable.vbar";
+	       image {
+		  normal: "bt_sm_hilight.png";
+		  border: 6 6 6 0;
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar_over2";
+	    clip_to: "sb_vbar";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.dragable.vbar";
+	       rel2.to: "e.dragable.vbar";
+	       image {
+		  normal: "bt_sm_shine.png";
+		  border: 6 6 6 0;
+	       }
+	    }
+	 }
+
+	 part { name: "sb_vbar_a1";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       min: 17 17;
+	       align: 0.5 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: HORIZONTAL;
+	       color: 0 0 0 0;
+	       rel1 { to: "sb_vbar";
+		  relative: 0.0  0.0;
+		  offset:   0    0;
+	       }
+	       rel2 { to: "sb_vbar";
+		  relative: 1.0  0.0;
+		  offset:   -1   0;
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar_a1_arrow";
+	    mouse_events: 0;
+	    clip_to: "sb_vbar";
+	    description { state: "default" 0.0;
+	       max: 9 9;
+	       rel1.to: "sb_vbar_a1";
+	       rel2.to: "sb_vbar_a1";
+	       image.normal: "arrow_up.png";
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit: "default" 0.0;
+	       rel1.offset: 0 -1;
+	       rel2.offset: -1 -2;
+	    }
+	 }
+
+	 part { name: "sb_vbar_a2";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       min: 17 17;
+	       align: 0.5 1.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: HORIZONTAL;
+	       color: 0 0 0 0;
+	       rel1 {
+		  to: "sb_vbar";
+		  relative: 0.0  1.0;
+		  offset:   0    0;
+	       }
+	       rel2 {
+		  to: "sb_vbar";
+		  relative: 1.0  1.0;
+		  offset:   -1   0;
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar_a2_arrow";
+	    type: IMAGE;
+	    mouse_events: 0;
+	    clip_to: "sb_vbar";
+	    description { state: "default" 0.0;
+	       max: 9 9;
+	       rel1.to: "sb_vbar_a2";
+	       rel2.to: "sb_vbar_a2";
+	       image.normal: "arrow_down.png";
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit: "default" 0.0;
+	       rel1.offset: 0 1;
+	       rel2.offset: -1 0;
+	    }
+	 }
+      }
+      programs {
+	 program { name: "sb_vbar_show";
+	    signal: "e,action,show,vbar";
+	    source: "e";
+	    action:  STATE_SET "default" 0.0;
+	    target: "sb_vbar";
+	 }
+	 program { name: "sb_vbar_hide";
+	    signal: "e,action,hide,vbar";
+	    source: "e";
+	    action:  STATE_SET "hidden" 0.0;
+	    target: "sb_vbar";
+	 }
+
+	 program { name: "sb_vbar_a1_down";
+	    signal: "mouse,down,1";
+	    source: "sb_vbar_a1";
+	    action:  STATE_SET "clicked" 0.0;
+	    target: "sb_vbar_a1_arrow";
+	 }
+	 program { name: "sb_vbar_a1_down2";
+	    signal: "mouse,down,1";
+	    source: "sb_vbar_a1";
+	    action:  DRAG_VAL_STEP 0.0 -1.0;
+	    target: "e.dragable.vbar";
+	 }
+	 program { name: "sb_vbar_a1_up";
+	    signal: "mouse,up,1";
+	    source: "sb_vbar_a1";
+	    action:  STATE_SET "default" 0.0;
+	    target: "sb_vbar_a1_arrow";
+	 }
+	 program { name: "sb_vbar_a2_down";
+	    signal: "mouse,down,1";
+	    source: "sb_vbar_a2";
+	    action:  STATE_SET "clicked" 0.0;
+	    target: "sb_vbar_a2_arrow";
+	 }
+	 program { name: "sb_vbar_a2_down2";
+	    signal: "mouse,down,1";
+	    source: "sb_vbar_a2";
+	    action:  DRAG_VAL_STEP 0.0 1.0;
+	    target: "e.dragable.vbar";
+	 }
+	 program { name: "sb_vbar_a2_up";
+	    signal: "mouse,up,1";
+	    source: "sb_vbar_a2";
+	    action:  STATE_SET "default" 0.0;
+	    target: "sb_vbar_a2_arrow";
+	 }
+	 program { name: "sb_vbar_p1_down";
+	    signal: "mouse,down,1";
+	    source: "sb_vbar_p1";
+	    action:  DRAG_VAL_PAGE 0.0 -1.0;
+	    target: "e.dragable.vbar";
+	 }
+	 program { name: "sb_vbar_p2_down";
+	    signal: "mouse,down,1";
+	    source: "sb_vbar_p2";
+	    action:  DRAG_VAL_PAGE  0.0 1.0;
+	    target: "e.dragable.vbar";
+	 }
+	 program { name: "sb_vbar_down";
+	    signal: "mouse,down,1";
+	    source: "e.dragable.vbar";
+	    action:  STATE_SET "clicked" 0.0;
+	    target: "e.dragable.vbar";
+	 }
+	 program { name: "sb_vbar_up";
+	    signal: "mouse,up,1";
+	    source: "e.dragable.vbar";
+	    action:  STATE_SET "default" 0.0;
+	    target: "e.dragable.vbar";
+	 }
+      }
+   }
 }
