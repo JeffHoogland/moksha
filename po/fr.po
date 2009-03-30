@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-03-29 14:23+0400\n"
-"PO-Revision-Date: 2009-03-29 16:30+0400\n"
+"POT-Creation-Date: 2009-03-30 10:18+0400\n"
+"PO-Revision-Date: 2009-03-30 12:54+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -6039,6 +6039,20 @@ msgstr "Applications spécifiques"
 #: src/modules/fileman/e_fwin.c:1599
 msgid "Custom Command"
 msgstr "Commande personnalisée"
+
+#: src/modules/fileman_opinfo/e_mod_main.c:53
+#, c-format
+msgid "%d operations"
+msgstr "%d opérations"
+
+#: src/modules/fileman_opinfo/e_mod_main.c:55
+#, c-format
+msgid "idle"
+msgstr "Inactif"
+
+#: src/modules/fileman_opinfo/e_mod_main.c:139
+msgid "EFM Operation Info"
+msgstr "Informations EFM"
 
 #: src/modules/gadman/e_mod_config.c:58
 msgid "Gadgets Manager"
