@@ -818,6 +818,7 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
      {
 	E_Menu_Item *pmi;
 
+	if (mi->disable) return;
 	pmi = _e_menu_item_active_get();
 	if (mi == pmi) return;
 	if (pmi) e_menu_item_active_set(pmi, 0);
@@ -858,6 +859,36 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	_e_menu_submenu_deactivate(mi);
      }
 }
+
+EAPI void
+e_menu_item_disabled_set(E_Menu_Item *mi, int disable)
+{
+   E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
+   if (mi->separator) return;
+   if ((disable))
+     {
+	if (mi->active) e_menu_item_active_set(mi, 0);
+	mi->disable = 1;
+	if (mi->icon_bg_object)
+	  edje_object_signal_emit(mi->icon_bg_object, "e,state,disable", "e");
+	if (mi->label_object)
+	  edje_object_signal_emit(mi->label_object, "e,state,disable", "e");
+	if (mi->toggle_object)
+	  edje_object_signal_emit(mi->toggle_object, "e,state,disable", "e");
+     }
+   else
+     {
+	mi->disable = 0;
+	if (mi->icon_bg_object)
+	  edje_object_signal_emit(mi->icon_bg_object, "e,state,enable", "e");
+	if (mi->label_object)
+	  edje_object_signal_emit(mi->label_object, "e,state,enable", "e");
+	if (mi->toggle_object)
+	  edje_object_signal_emit(mi->toggle_object, "e,state,enable", "e");
+     }
+}
+
 
 EAPI void
 e_menu_idler_before(void)
@@ -1354,6 +1385,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
      }
    if (mi->active) e_menu_item_active_set(mi, 1);
    if (mi->toggle) e_menu_item_toggle_set(mi, 1);
+   if (mi->disable) e_menu_item_disabled_set(mi, 1);
 }
 
 static void
@@ -1922,7 +1954,7 @@ _e_menu_item_activate_next(void)
 	else
 	   ll = ll->next;
 	mi = ll->data;
-	while (mi->separator)
+	while (mi->separator || mi->disable)
 	  { 
 	     if (!(ll->next)) 
 	       ll = mi->menu->items;
@@ -1956,7 +1988,7 @@ _e_menu_item_activate_previous(void)
 	else
 	   ll = ll->prev;
 	mi = ll->data;
-	while (mi->separator)
+	while (mi->separator || mi->disable)
 	  { 
 	     if (!(ll->prev)) 
 	       ll = eina_list_last(ll);

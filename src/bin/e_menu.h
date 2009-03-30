@@ -146,6 +146,7 @@ struct _E_Menu_Item
    unsigned char  toggle : 1;
    unsigned char  changed : 1;
    unsigned char  active : 1;
+   unsigned char  disable : 1;
 };
 
 struct _E_Menu_Category_Callback
@@ -201,6 +202,7 @@ EAPI void         e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi,  void (*
 EAPI void         e_menu_item_submenu_post_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
 EAPI void         e_menu_item_drag_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
 EAPI void         e_menu_item_active_set(E_Menu_Item *mi, int active);
+EAPI void         e_menu_item_disabled_set(E_Menu_Item *mi, int disable);
 
 EAPI void         e_menu_idler_before(void);
 

@@ -5944,11 +5944,21 @@ collections { /* begin the collection of edje groups that are in this file */
    }
 
    /* this group holds a menu icon. here we just use it to add padding around
-    * the icon */
+    * the icon. And to gray-out when disabled */
    group { name: "e/widgets/menu/default/icon";
       parts {
+         part { name: "clip";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 255 255 255 255;
+	    }
+	    description { state: "disabled" 0.0;
+	       color: 255 255 255 128;
+	    }
+         }
          part { name: "e.swallow.content"; /* icon is swallowed here */
 	    type: SWALLOW;
+	    clip_to: "clip";
 	    description {
 	       state: "default" 0.0;
 	       rel1 {
@@ -5962,6 +5972,20 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	 }
       }
+      programs {
+	 program { name: "enable"; /* enable */
+	    signal: "e,state,enable";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "clip";
+	 }
+	 program { name: "disable"; /* disable */
+	    signal: "e,state,disable";
+	    source: "e";
+	    action: STATE_SET "disabled" 0.0;
+	    target: "clip";
+	 }
+      }
    }
 
    /* this is the actual text label for the menu item */
@@ -5972,8 +5996,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    effect: SOFT_SHADOW;
             mouse_events: 0;
 	    scale: 1;
-	    description {
-	       state: "default" 0.0;
+	    description { state: "default" 0.0;
 	       rel1 {
 		  relative: 0.0 0.0;
 		  offset: 1 -1;
@@ -5999,6 +6022,11 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color3: 0 0 0 64;
 	       color_class: "menu_item";
 	    }
+	    description { state: "disabled" 0.0;
+	       inherit: "default" 0.0;
+	       color: 110 110 110 255;
+	       color3: 0 0 0 0;
+	    }
 	 }
       }
       programs {
@@ -6014,6 +6042,20 @@ collections { /* begin the collection of edje groups that are in this file */
 	    source: "e";
 	    action: STATE_SET "default" 0.0;
 	    transition: LINEAR 0.3;
+	    target: "e.text.label";
+	 }
+	 program { name: "enable"; /* enable */
+	    signal: "e,state,enable";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    transition: LINEAR 0.3;
+	    target: "e.text.label";
+	 }
+	 program { name: "disable"; /* disable */
+	    signal: "e,state,disable";
+	    source: "e";
+	    action: STATE_SET "disabled" 0.0;
+	    //transition: LINEAR 0.3;
 	    target: "e.text.label";
 	 }
       }
