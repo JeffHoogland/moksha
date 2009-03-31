@@ -36,6 +36,7 @@ struct _Smart_Data
    Eina_List   *items;
    Ecore_Idle_Enterer *idle_enter;
    Ecore_Animator *animator;
+   Ecore_Timer *seltimer;
    Info        *info;
    Evas_Coord   x, y, w, h;
    Evas_Coord   cx, cy, cw, ch;
@@ -343,6 +344,8 @@ static void
 _e_smart_del(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
+   if (sd->seltimer)
+     ecore_timer_del(sd->seltimer);
    if (sd->idle_enter)
      ecore_idle_enterer_del(sd->idle_enter);
    if (sd->animator)
@@ -502,6 +505,21 @@ _sel_anim(void *data)
    return 1;
 }
 
+static int
+_sel_timer(void *data)
+{
+   Evas_Object *obj = data;
+   Smart_Data *sd = evas_object_smart_data_get(obj);
+   if (!sd->animator)
+     {
+        sd->seltime = ecore_time_get();
+        sd->animator = ecore_animator_add(_sel_anim, obj);
+        sd->selin = 0;
+     }
+   sd->seltimer = NULL;
+   return 0;
+}
+
 static void
 _pan_sel(Evas_Object *obj, Item *it)
 {
@@ -524,12 +542,8 @@ _pan_sel(Evas_Object *obj, Item *it)
         edje_object_file_set(sd->info->mini, sd->info->bg_file,
                              "e/desktop/background");
         evas_object_show(sd->info->mini);
-     }
-   if (!sd->animator)
-     {
-        sd->seltime = ecore_loop_time_get();
-        sd->animator = ecore_animator_add(_sel_anim, obj);
-        sd->selin = 0;
+        if (sd->seltimer) ecore_timer_del(sd->seltimer);
+        sd->seltimer = ecore_timer_add(0.2, _sel_timer, obj);
      }
 }
 
@@ -863,8 +877,14 @@ wp_browser_new(E_Container *con)
 void
 wp_broser_free(Info *info)
 {
+   char *s;
    if (!info) return;
    e_object_del(E_OBJECT(info->win));
+   if (info->dir) closedir(info->dir);
+   free(info->bg_file);
+   free(info->curdir);
+   EINA_LIST_FREE(info->dirs, s) free(s);
+   if (info->idler) ecore_idler_del(info->idler);
    // del other stuff
    free(info);
    info = NULL;
