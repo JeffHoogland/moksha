@@ -15,6 +15,7 @@ typedef struct _Item Item;
 
 struct _Info
 {
+   E_Win       *win;
    Evas_Object *bg, *preview, *mini, *button, *box, *sframe, *span;
    char        *bg_file;
    int          iw, ih;
@@ -30,12 +31,13 @@ struct _Info
 struct _Smart_Data
 {
    Evas_Object *child_obj;
-   Evas_Coord   x, y, w, h;
-   Evas_Coord   cx, cy, cw, ch;
-   Evas_Coord   sx, sy;
    Eina_List   *items;
    Ecore_Idle_Enterer *idle_enter;
    Ecore_Animator *animator;
+   Info        *info;
+   Evas_Coord   x, y, w, h;
+   Evas_Coord   cx, cy, cw, ch;
+   Evas_Coord   sx, sy;
    double       seltime;
    double       selmove;
    Evas_Bool    selin : 1;
@@ -53,8 +55,7 @@ struct _Item
    Evas_Bool do_thumb : 1;
 };
 
-static E_Win *win = NULL;
-static Info *info = NULL;
+static Info *global_info = NULL;
 
 static void _e_smart_reconfigure(Evas_Object *obj);
 
@@ -133,7 +134,7 @@ _e_smart_reconfigure_do(void *data)
    x = 0;
    y = 0;
    ww = iw;
-   hh = (info->ih * iw) / (info->iw);
+   hh = (sd->info->ih * iw) / (sd->info->iw);
    
    mw = mh = 0;
    EINA_LIST_FOREACH(sd->items, l, it)
@@ -297,7 +298,7 @@ _e_smart_reconfigure_do(void *data)
                   edje_object_part_swallow(it->frame, "e.swallow.content", it->image);
                   evas_object_smart_callback_add(it->image, "e_thumb_gen", _thumb_gen, it);
                   e_thumb_icon_file_set(it->image, it->file, "e/desktop/background");
-                  e_thumb_icon_size_set(it->image, info->iw, info->ih);
+                  e_thumb_icon_size_set(it->image, sd->info->iw, sd->info->ih);
                   evas_object_show(it->image);
                   edje_object_signal_emit(it->frame, "e,action,thumb,ungen", "e");
                }
@@ -427,6 +428,14 @@ _pan_add(Evas *evas)
    return evas_object_smart_add(evas, smart);
 }
 
+static void
+_pan_info_set(Evas_Object *obj, Info *info)
+{
+   Smart_Data *sd = evas_object_smart_data_get(obj);
+   sd->info = info;
+}
+
+
 static int
 _sel_anim(void *data)
 {
@@ -507,12 +516,12 @@ _pan_sel(Evas_Object *obj, Item *it)
              if (it2->selected) it2->selected = 0;
           }
         it->selected = 1;
-        if (info->bg_file) free(info->bg_file);
-        info->bg_file = strdup(it->file);
-        evas_object_hide(info->mini);
-        edje_object_file_set(info->mini, info->bg_file,
+        if (sd->info->bg_file) free(sd->info->bg_file);
+        sd->info->bg_file = strdup(it->file);
+        evas_object_hide(sd->info->mini);
+        edje_object_file_set(sd->info->mini, sd->info->bg_file,
                              "e/desktop/background");
-        evas_object_show(info->mini);
+        evas_object_show(sd->info->mini);
      }
    if (!sd->animator)
      {
@@ -596,7 +605,7 @@ _pan_file_add(Evas_Object *obj, const char *file)
    edje_object_part_swallow(it->frame, "e.swallow.content", it->image);
    evas_object_smart_callback_add(it->image, "e_thumb_gen", _thumb_gen, it);
    e_thumb_icon_file_set(it->image, it->file, "e/desktop/background");
-   e_thumb_icon_size_set(it->image, info->iw, info->ih);
+   e_thumb_icon_size_set(it->image, sd->info->iw, sd->info->ih);
    evas_object_show(it->image);
 //   e_thumb_icon_begin(it->image);
    _e_smart_reconfigure(obj);
@@ -607,7 +616,8 @@ _pan_file_add(Evas_Object *obj, const char *file)
 static void
 _resize(E_Win *wn)
 {
-   evas_object_resize(info->bg, win->w, win->h);
+   Info *info = wn->data;
+   evas_object_resize(info->bg, wn->w, wn->h);
 }
 
 static void
@@ -619,13 +629,14 @@ _delete(E_Win *wn)
 static void
 _bg_clicked(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
+   Info *info = data;
    _pan_sel_up(info->span);
 }
 
 static void
 _ok(void *data, void *data2)
 {
-   if (!info) return;
+   Info *info = data;
    if (info->specific)
      {
         /* update a specific config */
@@ -654,15 +665,15 @@ _ok(void *data, void *data2)
    wp_conf_hide();
 }
 
-static void _scan(void);
+static void _scan(Info *info);
 
 static int
 _idler(void *data)
 {
    struct dirent *dp;
    char buf[PATH_MAX], *p;
+   Info *info = data;
    
-   if (!info) return 0;
    if (!info->dir)
      {
         info->idler = NULL;
@@ -676,7 +687,7 @@ _idler(void *data)
         closedir(info->dir);
         info->dir = NULL;
         info->idler = NULL;
-        _scan();
+        _scan(info);
         return 0;
      }
    if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, "..")))
@@ -696,40 +707,34 @@ _idler(void *data)
 }
 
 static void
-_scan(void)
+_scan(Info *info)
 {
-   if (!info) return;
    if (info->dirs)
      {
         if (info->curdir) free(info->curdir);
         info->curdir = info->dirs->data;
         info->dirs = eina_list_remove_list(info->dirs, info->dirs);
         if (!info->dir) info->dir = opendir(info->curdir);
-        info->idler = ecore_idler_add(_idler, NULL);
+        info->idler = ecore_idler_add(_idler, info);
      }
 }
 
-void
-wp_conf_show(E_Container *con, const char *params __UNUSED__)
+Info *
+wp_browser_new(E_Container *con)
 {
+   Info *info;
+   E_Win *win;
    E_Zone *zone;
    E_Desk *desk;
    const E_Config_Desktop_Background *cfbg;
    Evas_Coord mw, mh;
-   
    char buf[PATH_MAX];   
-   if (win)
-     {
-        e_win_show(win);
-        e_win_raise(win);
-        return;
-     }
-   zone = e_util_zone_current_get(con->manager);
-   desk = e_desk_current_get(zone);
    
    info = calloc(1, sizeof(Info));
-   if (!info) return;
+   if (!info) return NULL;
    
+   zone = e_util_zone_current_get(con->manager);
+   desk = e_desk_current_get(zone);
    info->con_num = con->num;
    info->zone_num = zone->id;
    info->desk_x = desk->x;
@@ -767,9 +772,11 @@ wp_conf_show(E_Container *con, const char *params __UNUSED__)
      {
         free(info);
         info = NULL;
-        return;
+        return NULL;
      }
-
+   info->win = win;
+   win->data = info;
+   
    snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds", e_user_homedir_get());
    info->dirs = eina_list_append(info->dirs, strdup(buf));
    snprintf(buf, sizeof(buf), "%s/data/backgrounds", e_prefix_data_get());
@@ -782,17 +789,17 @@ wp_conf_show(E_Container *con, const char *params __UNUSED__)
    e_win_delete_callback_set(win, _delete);
 
    // bg + container
-   info->bg = edje_object_add(win->evas);
+   info->bg = edje_object_add(info->win->evas);
    e_theme_edje_object_set(info->bg, "base/theme/widgets",
                            "e/conf/wallpaper/main/window");
    edje_object_signal_callback_add(info->bg, "e,action,click", "e",
-                                   _bg_clicked, NULL);
+                                   _bg_clicked, info);
 
    // ok button
-   info->box = e_widget_list_add(win->evas, 1, 1);
+   info->box = e_widget_list_add(info->win->evas, 1, 1);
    
-   info->button = e_widget_button_add(win->evas, _("OK"), NULL, 
-                                      _ok, NULL, NULL);
+   info->button = e_widget_button_add(info->win->evas, _("OK"), NULL, 
+                                      _ok, info, NULL);
    evas_object_show(info->button);
    e_widget_list_object_append(info->box, info->button, 1, 0, 0.5);
    
@@ -802,7 +809,7 @@ wp_conf_show(E_Container *con, const char *params __UNUSED__)
    evas_object_show(info->box);
 
    // preview
-   info->preview = e_livethumb_add(win->evas);
+   info->preview = e_livethumb_add(info->win->evas);
    e_livethumb_vsize_set(info->preview, zone->w, zone->h);
    edje_extern_object_aspect_set(info->preview, EDJE_ASPECT_CONTROL_NEITHER, zone->w, zone->h);
    edje_object_part_swallow(info->bg, "e.swallow.preview", info->preview);
@@ -821,11 +828,11 @@ wp_conf_show(E_Container *con, const char *params __UNUSED__)
      }
    
    // scrolled thumbs
-   info->span = _pan_add(win->evas);
-   // FIXME: init span
+   info->span = _pan_add(info->win->evas);
+   _pan_info_set(info->span, info);
    
    // the scrollframe holding the scrolled thumbs
-   info->sframe = e_scrollframe_add(win->evas);
+   info->sframe = e_scrollframe_add(info->win->evas);
    e_scrollframe_custom_theme_set(info->sframe, "base/theme/widgets",
                                   "e/conf/wallpaper/main/scrollframe");
    e_scrollframe_extern_pan_set(info->sframe, info->span,
@@ -844,19 +851,40 @@ wp_conf_show(E_Container *con, const char *params __UNUSED__)
    e_win_centered_set(win, 1);
    e_win_show(win);
 
-   evas_object_resize(info->bg, win->w, win->h);
+   evas_object_resize(info->bg, info->win->w, info->win->h);
    evas_object_show(info->bg);
    
-   _scan();
+   _scan(info);
+   return info;
+}
+
+void
+wp_broser_free(Info *info)
+{
+   if (!info) return;
+   e_object_del(E_OBJECT(info->win));
+   // del other stuff
+   free(info);
+   info = NULL;
+}
+
+void
+wp_conf_show(E_Container *con, const char *params __UNUSED__)
+{
+   if (global_info)
+     {
+        e_win_show(global_info->win);
+        e_win_raise(global_info->win);
+     }
+   global_info = wp_browser_new(con);
 }
 
 void
 wp_conf_hide(void)
 {
-   if (!win) return;
-   // del other stuff
-   free(info);
-   info = NULL;
-   e_object_del(E_OBJECT(win));
-   win = NULL;
+   if (global_info)
+     {
+        wp_broser_free(global_info);
+        global_info = NULL;
+     }
 }
