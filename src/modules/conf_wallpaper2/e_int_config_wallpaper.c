@@ -542,9 +542,9 @@ _pan_sel(Evas_Object *obj, Item *it)
         edje_object_file_set(sd->info->mini, sd->info->bg_file,
                              "e/desktop/background");
         evas_object_show(sd->info->mini);
-        if (sd->seltimer) ecore_timer_del(sd->seltimer);
-        sd->seltimer = ecore_timer_add(0.2, _sel_timer, obj);
      }
+   if (sd->seltimer) ecore_timer_del(sd->seltimer);
+   sd->seltimer = ecore_timer_add(0.2, _sel_timer, obj);
 }
 
 static void
