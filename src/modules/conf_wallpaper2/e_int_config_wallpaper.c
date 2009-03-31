@@ -4,6 +4,11 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+// FIXME:
+//   need a proper theme done "ok/accept" button
+//   need a "add" button (to add exchange, image file or gradient)
+//   need a "where" opopup to select "all desktops, this screen, this desktop"
+
 typedef struct _Info Info;
 typedef struct _Smart_Data Smart_Data;
 typedef struct _Item Item;
@@ -471,10 +476,10 @@ _sel_anim(void *data)
    _e_smart_reconfigure(obj);
    if (p == 1.0)
      {
-        if (!sd->selout)
+        if (sd->selout)
           {
              sd->selin = 1;
-             sd->selout = 1;
+             sd->selout = 0;
              sd->seltime = ecore_loop_time_get();
              return 1;
           }
@@ -490,31 +495,35 @@ static void
 _pan_sel(Evas_Object *obj, Item *it)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
+   if (sd->selmove > 0.0) return;
    edje_object_signal_emit(it->frame, "e,state,selected", "e");
    if (!it->selected)
      {
         Eina_List *l;
         Item *it2;
-        
+
         EINA_LIST_FOREACH(sd->items, l, it2)
           {
              if (it2->selected) it2->selected = 0;
           }
-        // FIXME: unsel other
         it->selected = 1;
         if (info->bg_file) free(info->bg_file);
         info->bg_file = strdup(it->file);
-     }
-   if (!sd->animator)
-     {
-        sd->seltime = ecore_loop_time_get();
-        sd->animator = ecore_animator_add(_sel_anim, obj);
-        sd->selin = 0;
+        evas_object_hide(info->mini);
+        edje_object_file_set(info->mini, info->bg_file,
+                             "e/desktop/background");
+        evas_object_show(info->mini);
+        if (!sd->animator)
+          {
+             sd->seltime = ecore_loop_time_get();
+             sd->animator = ecore_animator_add(_sel_anim, obj);
+             sd->selin = 0;
+          }
      }
 }
 
 static void
-_pan_sel_up(Evas_Object *obj, Item *it)
+_pan_sel_up(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
    if (!sd->animator)
@@ -555,8 +564,6 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
         if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD))
           {
-             edje_object_file_set(info->mini, it->file, 
-                                  "e/desktop/background");
              _pan_sel(it->obj, it);
              // FIXME: select image!!!
           }
@@ -606,6 +613,12 @@ static void
 _delete(E_Win *wn)
 {
    wp_conf_hide();
+}
+
+static void
+_bg_clicked(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   _pan_sel_up(info->span);
 }
 
 static void
@@ -771,6 +784,8 @@ wp_conf_show(E_Container *con, const char *params __UNUSED__)
    info->bg = edje_object_add(win->evas);
    e_theme_edje_object_set(info->bg, "base/theme/widgets",
                            "e/conf/wallpaper/main/window");
+   edje_object_signal_callback_add(info->bg, "e,action,click", "e",
+                                   _bg_clicked, NULL);
 
    // ok button
    info->box = e_widget_list_add(win->evas, 1, 1);
