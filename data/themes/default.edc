@@ -24050,6 +24050,12 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	    description { state: "default" 0.0;
 	    }
 	 }
+	 part { name: "events";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	    }
+	 }
 	 part { name: "e.swallow.list";
 	    type: SWALLOW;
 	    description { state: "default" 0.0;
@@ -24100,6 +24106,13 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		  offset:   -5  -5;
 	       }
 	    }
+	 }
+      }
+      programs {
+	 program { name: "send_click";
+	    signal: "mouse,clicked,1";
+	    source: "events";
+	    action: SIGNAL_EMIT "e,action,click" "e";
 	 }
       }
    }
@@ -24220,6 +24233,17 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	    }
 	 }
+	 part { name: "events";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+               visible: 0;
+	    }
+	    description { state: "visible" 0.0;
+	       inherit: "default" 0.0;
+	       visible: 1;
+	    }
+	 }
       }
       programs {
 	 program { name: "thumb_gen";
@@ -24231,6 +24255,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	    target:  "base";
 	    target:  "icon_zoom";
 	    target:  "e.swallow.content";
+	    target:  "events";
 	    after:   "thumb_gen2";
 	 }
 	 program { name: "thumb_gen2";
@@ -24270,6 +24295,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	    target:  "base";
 	    target:  "icon_zoom";
 	    target:  "e.swallow.content";
+	    target:  "events";
 	    after:   "thumb_gen2";
 	 }
       }

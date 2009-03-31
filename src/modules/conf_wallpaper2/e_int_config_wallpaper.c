@@ -8,6 +8,8 @@
 //   need a proper theme done "ok/accept" button
 //   need a "add" button (to add exchange, image file or gradient)
 //   need a "where" opopup to select "all desktops, this screen, this desktop"
+//   need filename display
+//   need "theme wallpaper" image
 
 typedef struct _Info Info;
 typedef struct _Smart_Data Smart_Data;
