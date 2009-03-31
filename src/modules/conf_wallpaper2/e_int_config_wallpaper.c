@@ -513,12 +513,12 @@ _pan_sel(Evas_Object *obj, Item *it)
         edje_object_file_set(info->mini, info->bg_file,
                              "e/desktop/background");
         evas_object_show(info->mini);
-        if (!sd->animator)
-          {
-             sd->seltime = ecore_loop_time_get();
-             sd->animator = ecore_animator_add(_sel_anim, obj);
-             sd->selin = 0;
-          }
+     }
+   if (!sd->animator)
+     {
+        sd->seltime = ecore_loop_time_get();
+        sd->animator = ecore_animator_add(_sel_anim, obj);
+        sd->selin = 0;
      }
 }
 
@@ -526,6 +526,7 @@ static void
 _pan_sel_up(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
+   if (sd->selmove == 0.0) return;
    if (!sd->animator)
      {
         sd->seltime = ecore_loop_time_get();
