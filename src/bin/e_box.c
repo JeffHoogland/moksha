@@ -704,6 +704,8 @@ _e_box_smart_del(Evas_Object *obj)
    e_box_thaw(obj);
    evas_object_del(sd->clip);
    free(sd);
+
+   evas_object_smart_data_set(obj, NULL);
 }
 
 static void
