@@ -1974,7 +1974,7 @@ _e_fm2_icon_mime_fdo_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret
      {
         Evas_Object *o;
         o =  _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
-        free(icon);
+        free((char *) icon);
         return o;
      }
    return NULL;
@@ -6792,7 +6792,8 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	else
 	  _e_fm2_file_delete(obj);
      }
-   else
+   else if (!evas_key_modifier_is_set(ev->modifiers, "Control") &&
+	    !evas_key_modifier_is_set(ev->modifiers, "Alt"))
      {
 	if (ev->string)
 	  {

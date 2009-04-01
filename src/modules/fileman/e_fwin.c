@@ -82,6 +82,7 @@ static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selection_change(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
 static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fwin_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
 static void _e_fwin_cb_menu_open(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fwin_cb_menu_open_with(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -461,6 +462,7 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    fwin->fm_obj = o;
    _e_fwin_config_set(fwin);
    e_fm2_view_flags_set(o, E_FM2_VIEW_DIR_CUSTOM);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_fwin_cb_key_down, fwin);
    
    evas_object_smart_callback_add(o, "dir_changed",
 				  _e_fwin_changed, fwin);
@@ -818,6 +820,29 @@ _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi)
    e_fm2_parent_go(data);
 }
 
+static void
+_e_fwin_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Key_Down *ev;
+   E_Fwin *fwin;
+   
+   fwin = data;
+   ev = event_info;
+
+   if (evas_key_modifier_is_set(ev->modifiers, "Control"))
+     {
+	if (!strcmp(ev->key, "n"))
+	  {
+	     E_Container *con;
+	     const char *dev, *path;
+
+	     con = e_container_current_get(e_manager_current_get());
+	     e_fm2_path_get(fwin->fm_obj, &dev, &path);
+	     e_fwin_new(con, dev, path);
+	     return;
+	  }
+     }
+}
 static void
 _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info)
 {
