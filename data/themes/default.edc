@@ -23999,6 +23999,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	 image: "dia_topshad.png" COMP;
 	 image: "dia_botshad.png" COMP;
 	 image: "menu_sep.png" COMP;
+         image: "dia_botshad.png" COMP;
+         image: "topsh.png" COMP;
       }
       parts {
 	 part { name: "base";
@@ -24006,36 +24008,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	    description { state: "default" 0.0;
                color_class: "dialog_base";
 	       image.normal: "dia_grad.png";
-	       fill {
-		  smooth: 0;
-		  size {
-		     relative: 0.0 1.0;
-		     offset: 64 0;
-		  }
-	       }
-	    }
-	 }
-	 part { name: "shadow";
-	    mouse_events:  0;
-	    description { state: "default" 0.0;
-	       rel2.relative: 1.0 0.0;
-	       rel2.offset: -1 31;
-	       image.normal: "dia_topshad.png";
-	       fill {
-		  smooth: 0;
-		  size {
-		     relative: 0.0 1.0;
-		     offset: 64 0;
-		  }
-	       }
-	    }
-	 }
-	 part { name: "shadow2";
-	    mouse_events:  0;
-	    description { state: "default" 0.0;
-	       rel1.relative: 0.0 1.0;
-	       rel1.offset: 0 -4;
-	       image.normal: "dia_botshad.png";
 	       fill {
 		  smooth: 0;
 		  size {
@@ -24104,6 +24076,32 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       rel2 {
 		  relative: 1.0 1.0;
 		  offset:   -5  -5;
+	       }
+	    }
+	 }
+	 part { name: "shadow1";
+	    mouse_events:  0;
+	    scale: 1;
+            description { state: "default" 0.0;
+	       image.normal: "topsh.png";
+	       align: 0.0 0.0;
+	       min: 1 16;
+	       max: 99999 16;
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "shadow2";
+	    mouse_events:  0;
+	    description { state: "default" 0.0;
+	       rel1.relative: 0.0 1.0;
+	       rel1.offset: 0 -4;
+	       image.normal: "dia_botshad.png";
+	       fill {
+		  smooth: 0;
+		  size {
+		     relative: 0.0 1.0;
+		     offset: 64 0;
+		  }
 	       }
 	    }
 	 }
