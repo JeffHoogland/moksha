@@ -5716,25 +5716,24 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 			      _e_fm2_dnd_drop_show(ic, 1);
 			 }
 		    }
-		  /* we can only drop into subdirs */
+		  /* if we are over subdirs or files */
 		  else
 		    {
-		       /* if it's over a dir - hilight as it will be dropped in */
-                       if ((S_ISDIR(ic->info.statinfo.st_mode)) &&
+		       /*
+			* if it's over a dir - hilight as it will be dropped info
+			* FIXME: should there be a separate highlighting function for files?
+			* */
+                       if (!(S_ISDIR(ic->info.statinfo.st_mode)) || 
 			   (!ic->sd->config->view.no_subdir_drop))
 			 _e_fm2_dnd_drop_show(ic, -1);
-		       else
-			 _e_fm2_dnd_drop_hide(sd->obj);
 		    }
 	       }
 	     else
 	       {
 		  /* if it's over a dir - hilight as it will be dropped in */
-		  if ((S_ISDIR(ic->info.statinfo.st_mode)) &&
+		  if (!(S_ISDIR(ic->info.statinfo.st_mode)) ||
 		      (!ic->sd->config->view.no_subdir_drop))
 		    _e_fm2_dnd_drop_show(ic, -1);
-		  else
-		    _e_fm2_dnd_drop_all_show(sd->obj);
 	       }
 	     return;
 	  }
@@ -6046,9 +6045,9 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	
 	args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
      }
-   else if (sd->drop_icon) /* inot or before/after an icon */
+   else if (sd->drop_icon) /* into or before/after an icon */
      {
-	if (sd->drop_after == -1) /* put into subdir in icon */
+	if (sd->drop_after == -1) /* put into subdir/file in icon */
 	  {
 	     /* move file into dir that this icon is for */
 	     for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
@@ -6056,9 +6055,6 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  ic = il->data;
 		  fp = ll->data;
 		  if (!fp) continue;
-		  /* move the file into the subdir */
-		  snprintf(buf, sizeof(buf), "%s/%s/%s",
-			   sd->realpath, sd->drop_icon->info.file, ecore_file_file_get(fp));
 
 		  args = _e_fm_string_append_quoted(args, &size, &length, fp);
 		  args = _e_fm_string_append_char(args, &size, &length, ' ');
@@ -6066,7 +6062,11 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  eina_stringshare_del(fp);
 	       }
 
-	     snprintf(dirpath, sizeof(dirpath), "%s/%s", sd->realpath, sd->drop_icon->info.file);
+	     if (S_ISDIR(sd->drop_icon->info.statinfo.st_mode))
+	       snprintf(dirpath, sizeof(dirpath), "%s/%s", sd->realpath, sd->drop_icon->info.file);
+	     else
+	       snprintf(dirpath, sizeof(dirpath), "%s", sd->realpath);
+
 	     args = _e_fm_string_append_quoted(args, &size, &length, dirpath);
 	  }
 	else
@@ -6115,19 +6115,22 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	  }
      }
 
-   if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_COPY)
+   if (args)
      {
-	_e_fm_client_file_copy(args, sd->obj);
-	free(args);
-     }
-   else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_MOVE)
-     {
-	_e_fm_client_file_move(args, sd->obj);
-	free(args);
-     }
-   else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_ASK)
-     {
-	_e_fm_drop_menu(args, sd->obj);
+	if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_COPY)
+	  {
+	     _e_fm_client_file_copy(args, sd->obj);
+	     free(args);
+	  }
+	else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_MOVE)
+	  {
+	     _e_fm_client_file_move(args, sd->obj);
+	     free(args);
+	  }
+	else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_ASK)
+	  {
+	     _e_fm_drop_menu(args, sd->obj);
+	  }
      }
 
    _e_fm2_dnd_drop_hide(sd->obj);
