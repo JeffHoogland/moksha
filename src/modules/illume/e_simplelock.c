@@ -224,6 +224,8 @@ e_simplelock_show(void)
 EAPI void
 e_simplelock_hide(void)
 {
+   Ecore_Event_Handler *handle;
+
    if (!locks) return;
    e_grabinput_release(grab_win, grab_win);
    while (locks)
@@ -237,6 +239,9 @@ e_simplelock_hide(void)
 	locks = eina_list_remove_list(locks, locks);
      }
    grab_win = 0;
+
+   EINA_LIST_FREE(handlers, handle)
+     ecore_event_handler_del(handle);
 }
 
 static Evas_Object *

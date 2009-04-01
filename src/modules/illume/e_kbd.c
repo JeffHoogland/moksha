@@ -955,14 +955,14 @@ EAPI int
 e_kbd_shutdown(void)
 {
    E_Border_Hook *bh;
-   Ecore_Event *ev;
+   Ecore_Event_Handler *handle;
 
    _e_kbd_apply_all_job_queue_end();
    _e_kbd_dbus_real_kbd_shutdown();
    EINA_LIST_FREE(border_hooks, bh)
      e_border_hook_del(bh);
-   EINA_LIST_FREE(handlers, ev)
-     ecore_event_handler_del(ev);
+   EINA_LIST_FREE(handlers, handle)
+     ecore_event_handler_del(handle);
    focused_border = NULL;
    focused_vkbd_state = 0;
    mod = NULL;

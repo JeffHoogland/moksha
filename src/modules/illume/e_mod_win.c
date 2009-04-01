@@ -185,6 +185,8 @@ _e_mod_win_init(E_Module *m)
 void
 _e_mod_win_shutdown(void)
 {
+   Ecore_Event_Handler *handle;
+
    _app_clear();
    if (sys_con_act_close)
      {
@@ -225,6 +227,9 @@ _e_mod_win_shutdown(void)
    appwin = NULL;
    e_object_del(E_OBJECT(syswin));
    syswin = NULL;
+
+   EINA_LIST_FREE(handlers, handle)
+     ecore_event_handler_del(handle);
 }
 
 static Ecore_Exe           *_kbd_exe = NULL;
@@ -302,6 +307,9 @@ e_mod_win_cfg_kbd_stop(void)
 	ecore_exe_interrupt(_kbd_exe);
 	_kbd_exe = NULL;
      }
+   if (_kbd_exe_exit_handler)
+     ecore_event_handler_del(_kbd_exe_exit_handler);
+   _kbd_exe_exit_handler = NULL;
 }
 
 void

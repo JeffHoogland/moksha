@@ -144,6 +144,8 @@ _e_mod_layout_init(E_Module *m)
 void
 _e_mod_layout_shutdown(void)
 {
+   Ecore_Event_Handler *handle;
+
    if (hook1)
      {
 	e_border_hook_del(hook1);
@@ -159,6 +161,9 @@ _e_mod_layout_shutdown(void)
 	e_border_hook_del(hook3);
 	hook3 = NULL;
      }
+
+   EINA_LIST_FREE(handlers, handle)
+     ecore_event_handler_del(handle);
 }
 
 void

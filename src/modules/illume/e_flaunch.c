@@ -148,7 +148,7 @@ _e_fluanch_cb_home_button(void *data)
 static void
 _e_flaunch_free(E_Flaunch *fl)
 {
-   Ecore_Event *ev;
+   Ecore_Event_Handler *handle;
 
    if (fl->repopulate_timer) ecore_timer_del(fl->repopulate_timer);
    _e_flaunch_apps_clear(fl);
@@ -156,8 +156,8 @@ _e_flaunch_free(E_Flaunch *fl)
    evas_stringshare_del(fl->themedir);
    evas_object_del(fl->app_box_obj);
    evas_object_del(fl->box_obj);
-   EINA_LIST_FREE(fl->handlers, ev)
-     ecore_event_handler_del(ev);
+   EINA_LIST_FREE(fl->handlers, handle)
+     ecore_event_handler_del(handle);
    free(fl);
 }
 

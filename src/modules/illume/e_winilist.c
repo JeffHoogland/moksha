@@ -69,11 +69,10 @@ e_winilist_init(void)
 EAPI int
 e_winilist_shutdown(void)
 {
-   while (handlers)
-     {
-	ecore_event_handler_del(handlers->data);
-	handlers = eina_list_remove_list(handlers, handlers);
-     }
+   Ecore_Event_Handler *handle;
+
+   EINA_LIST_FREE(handlers, handle)
+     ecore_event_handler_del(handle);
    return 1;
 }
 

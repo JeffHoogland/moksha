@@ -459,16 +459,14 @@ e_slipshelf_border_home_callback_set(E_Slipshelf *ess, void (*func) (void *data,
 static void
 _e_slipshelf_free(E_Slipshelf *ess)
 {
+   Ecore_Event_Handler *handle;
+
    if (ess->slide_down_timer) ecore_timer_del(ess->slide_down_timer);
    slipshelves = eina_list_remove(slipshelves, ess);
    e_object_del(E_OBJECT(ess->gadcon));
    e_object_del(E_OBJECT(ess->gadcon_extra));
-   while (ess->handlers)
-     {
-	if (ess->handlers->data)
-	  ecore_event_handler_del(ess->handlers->data);
-	ess->handlers = eina_list_remove_list(ess->handlers, ess->handlers);
-     }
+   EINA_LIST_FREE(ess->handlers, handle)
+     ecore_event_handler_del(handle);
    if (ess->animator) ecore_animator_del(ess->animator);
    if (ess->themedir) evas_stringshare_del(ess->themedir);
    if (ess->default_title) evas_stringshare_del(ess->default_title);

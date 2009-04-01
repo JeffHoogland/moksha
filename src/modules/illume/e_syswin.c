@@ -211,13 +211,11 @@ e_syswin_border_select_callback_set(E_Syswin *esw, void (*func) (void *data, E_S
 static void
 _e_syswin_free(E_Syswin *esw)
 {
+   Ecore_Event_Handler *handle;
+
    syswins = eina_list_remove(syswins, esw);
-   while (esw->handlers)
-     {
-	if (esw->handlers->data)
-	  ecore_event_handler_del(esw->handlers->data);
-	esw->handlers = eina_list_remove_list(esw->handlers, esw->handlers);
-     }
+   EINA_LIST_FREE(esw->handlers, handle)
+     ecore_event_handler_del(handle);
    if (esw->animator) ecore_animator_del(esw->animator);
    if (esw->themedir) evas_stringshare_del(esw->themedir);
    ecore_x_window_del(esw->clickwin);

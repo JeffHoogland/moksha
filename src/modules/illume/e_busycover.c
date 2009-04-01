@@ -115,14 +115,12 @@ e_busycover_pop(E_Busycover *esw, E_Busycover_Handle *handle)
 static void
 _e_busycover_free(E_Busycover *esw)
 {
+   Ecore_Event_Handler *handle;
+
    if (esw->base_obj) evas_object_del(esw->base_obj);
    busycovers = eina_list_remove(busycovers, esw);
-   while (esw->handlers)
-     {
-	if (esw->handlers->data)
-	  ecore_event_handler_del(esw->handlers->data);
-	esw->handlers = eina_list_remove_list(esw->handlers, esw->handlers);
-     }
+   EINA_LIST_FREE(esw->handlers, handle)
+     ecore_event_handler_del(handle);
    if (esw->themedir) evas_stringshare_del(esw->themedir);
    free(esw);
 }
