@@ -171,21 +171,22 @@ e_int_config_wallpaper_handler_set(Evas_Object *obj, const char *path, void *dat
 
    if (!path) return;
    e_fm2_path_get(obj, &dev, &fpath);
+   if (e_config->wallpaper_import_last_dev)
+     {
+	eina_stringshare_del(e_config->wallpaper_import_last_dev);
+	e_config->wallpaper_import_last_dev = NULL;
+     }
    if (dev)
-     {
-	if (e_config->wallpaper_import_last_dev)
-	  eina_stringshare_del(e_config->wallpaper_import_last_dev);
-	e_config->wallpaper_import_last_dev = eina_stringshare_add(dev);
-     }
-   if (fpath) 
-     {
-	if (e_config->wallpaper_import_last_path)
-	  eina_stringshare_del(e_config->wallpaper_import_last_path);
-	e_config->wallpaper_import_last_path = eina_stringshare_add(fpath);
-     }
+     e_config->wallpaper_import_last_dev = eina_stringshare_add(dev);
+   if (e_config->wallpaper_import_last_path) {
+     eina_stringshare_del(e_config->wallpaper_import_last_path);
+     e_config->wallpaper_import_last_path = NULL;
+   }
+   if (fpath)
+     e_config->wallpaper_import_last_path = eina_stringshare_add(fpath);
    e_config_save_queue();
 
-   e_int_config_wallpaper_import(NULL);
+   e_int_config_wallpaper_import(NULL, path);
 }
 
 EAPI int 
@@ -365,7 +366,7 @@ _cb_import(void *data1, void *data2)
    if (cfdata->win_import)
      e_win_raise(cfdata->win_import);
    else 
-     cfdata->win_import = e_int_config_wallpaper_import(cfdata->cfd);
+     cfdata->win_import = e_int_config_wallpaper_fsel(cfdata->cfd);
 }
 
 static void
@@ -471,7 +472,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->win_import) 
-     e_int_config_wallpaper_del(cfdata->win_import);
+     e_int_config_wallpaper_import_del(cfdata->win_import);
    if (cfdata->dia_gradient) 
      e_int_config_wallpaper_gradient_del(cfdata->dia_gradient);
 #ifdef HAVE_EXCHANGE
