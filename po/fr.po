@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-03-30 10:18+0400\n"
-"PO-Revision-Date: 2009-03-30 12:54+0400\n"
+"POT-Creation-Date: 2009-04-02 12:25+0400\n"
+"PO-Revision-Date: 2009-04-02 13:33+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr "À propos de Enlightenment"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:819
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:125
-#: src/modules/fileman/e_fwin.c:1522
+#: src/modules/fileman/e_fwin.c:1547
 #: src/modules/illume/e_mod_win.c:177
 #: src/modules/mixer/app_mixer.c:530
 msgid "Close"
@@ -74,8 +74,8 @@ msgstr "Êtes-vous sûr de vouloir tuer cette fenêtre ?"
 #: src/bin/e_actions.c:2052
 #: src/bin/e_actions.c:2116
 #: src/bin/e_confirm_dialog.c:47
-#: src/bin/e_fm.c:8497
-#: src/bin/e_fm.c:8693
+#: src/bin/e_fm.c:8503
+#: src/bin/e_fm.c:8699
 #: src/bin/e_module.c:508
 msgid "Yes"
 msgstr "Oui"
@@ -88,8 +88,8 @@ msgstr "Oui"
 #: src/bin/e_actions.c:2054
 #: src/bin/e_actions.c:2118
 #: src/bin/e_confirm_dialog.c:48
-#: src/bin/e_fm.c:8495
-#: src/bin/e_fm.c:8694
+#: src/bin/e_fm.c:8501
+#: src/bin/e_fm.c:8700
 #: src/bin/e_module.c:509
 msgid "No"
 msgstr "Non"
@@ -155,7 +155,7 @@ msgid "Window : Actions"
 msgstr "Fenêtre: Actions"
 
 #: src/bin/e_actions.c:2445
-#: src/bin/e_fm.c:5908
+#: src/bin/e_fm.c:5907
 msgid "Move"
 msgstr "Déplacer"
 
@@ -636,8 +636,8 @@ msgstr "Quitter à l'instant"
 #: src/modules/conf_startup/e_int_config_startup.c:273
 #: src/modules/conf_theme/e_int_config_theme.c:395
 #: src/modules/conf_theme/e_int_config_theme.c:798
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:511
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:641
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:512
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:642
 #: src/modules/gadman/e_mod_config.c:189
 #: src/modules/syscon/e_mod_main.c:34
 #: src/modules/syscon/e_mod_main.c:55
@@ -725,7 +725,8 @@ msgstr "Sélecteur de couleurs"
 #: src/modules/conf_profiles/e_int_config_profiles.c:369
 #: src/modules/conf_theme/e_int_config_theme_import.c:113
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:204
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:212
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:327
 #: src/modules/cpufreq/e_mod_main.c:389
 #: src/modules/cpufreq/e_mod_main.c:416
 #: src/modules/cpufreq/e_mod_main.c:435
@@ -743,7 +744,8 @@ msgstr "OK"
 #: src/modules/conf_profiles/e_int_config_profiles.c:370
 #: src/modules/conf_theme/e_int_config_theme_import.c:117
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:208
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:216
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:331
 #: src/modules/syscon/e_syscon.c:97
 #: src/modules/connman/e_mod_main.c:778
 msgid "Cancel"
@@ -953,7 +955,7 @@ msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
 #: src/bin/e_entry.c:493
-#: src/bin/e_fm.c:7831
+#: src/bin/e_fm.c:7837
 #: src/modules/conf_applications/e_int_config_apps.c:273
 #: src/modules/conf_profiles/e_int_config_profiles.c:124
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -962,19 +964,19 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: src/bin/e_entry.c:503
-#: src/bin/e_fm.c:7739
+#: src/bin/e_fm.c:7745
 msgid "Cut"
 msgstr "Couper"
 
 #: src/bin/e_entry.c:511
-#: src/bin/e_fm.c:5903
-#: src/bin/e_fm.c:7753
+#: src/bin/e_fm.c:5902
+#: src/bin/e_fm.c:7759
 msgid "Copy"
 msgstr "Copier"
 
 #: src/bin/e_entry.c:519
-#: src/bin/e_fm.c:7580
-#: src/bin/e_fm.c:7766
+#: src/bin/e_fm.c:7585
+#: src/bin/e_fm.c:7772
 msgid "Paste"
 msgstr "Coller"
 
@@ -1004,7 +1006,7 @@ msgstr "Erreur d'exécution de l'application"
 #: src/bin/e_exec.c:316
 #, c-format
 msgid "Enlightenment was unable to run the application:<br><br>%s<br><br>The application failed to start."
-msgstr "Enlightenment n'a pu démarrer l'application :<br><br>%s<br><br>L'application n'a pas réussi à se lancer."
+msgstr "Enlightenment n'a pu démarrer l'application:<br><br>%s<br><br>L'application n'a pas réussi à se lancer."
 
 #: src/bin/e_exec.c:417
 msgid "Application Execution Error"
@@ -1127,161 +1129,161 @@ msgstr "%s n'existe pas."
 msgid "%i Files"
 msgstr "%i Fichiers"
 
-#: src/bin/e_fm.c:5916
-#: src/bin/e_fm.c:7588
-#: src/bin/e_fm.c:7774
+#: src/bin/e_fm.c:5915
+#: src/bin/e_fm.c:7593
+#: src/bin/e_fm.c:7780
 msgid "Link"
 msgstr " Lien "
 
-#: src/bin/e_fm.c:5924
-#: src/bin/e_fm.c:8438
-#: src/bin/e_fm.c:8575
+#: src/bin/e_fm.c:5923
+#: src/bin/e_fm.c:8444
+#: src/bin/e_fm.c:8581
 msgid "Abort"
 msgstr "Annuler"
 
-#: src/bin/e_fm.c:7507
-#: src/bin/e_fm.c:7666
+#: src/bin/e_fm.c:7512
+#: src/bin/e_fm.c:7672
 msgid "Inherit parent settings"
 msgstr "Hériter des propriétés du parent"
 
-#: src/bin/e_fm.c:7516
-#: src/bin/e_fm.c:7675
+#: src/bin/e_fm.c:7521
+#: src/bin/e_fm.c:7681
 #: src/modules/fileman/e_mod_config.c:171
 msgid "View Mode"
 msgstr "Mode d'affichage"
 
-#: src/bin/e_fm.c:7523
-#: src/bin/e_fm.c:7682
+#: src/bin/e_fm.c:7528
+#: src/bin/e_fm.c:7688
 msgid "Refresh View"
 msgstr "Rafraîchir"
 
-#: src/bin/e_fm.c:7531
-#: src/bin/e_fm.c:7690
+#: src/bin/e_fm.c:7536
+#: src/bin/e_fm.c:7696
 msgid "Show Hidden Files"
 msgstr "Afficher les fichiers cachés"
 
-#: src/bin/e_fm.c:7543
-#: src/bin/e_fm.c:7702
+#: src/bin/e_fm.c:7548
+#: src/bin/e_fm.c:7708
 msgid "Remember Ordering"
 msgstr "Mémoriser l'ordre"
 
-#: src/bin/e_fm.c:7552
-#: src/bin/e_fm.c:7711
+#: src/bin/e_fm.c:7557
+#: src/bin/e_fm.c:7717
 msgid "Sort Now"
 msgstr "Classer maintenant"
 
-#: src/bin/e_fm.c:7564
-#: src/bin/e_fm.c:7726
+#: src/bin/e_fm.c:7569
+#: src/bin/e_fm.c:7732
 #: src/modules/conf_paths/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Nouveau dossier"
 
-#: src/bin/e_fm.c:7839
+#: src/bin/e_fm.c:7845
 msgid "Rename"
 msgstr "Renommer"
 
-#: src/bin/e_fm.c:7846
+#: src/bin/e_fm.c:7852
 msgid "Properties"
 msgstr "Propriétés"
 
-#: src/bin/e_fm.c:8077
-#: src/bin/e_fm.c:8139
+#: src/bin/e_fm.c:8083
+#: src/bin/e_fm.c:8145
 msgid "Use default"
 msgstr "Valeur par défaut"
 
-#: src/bin/e_fm.c:8112
+#: src/bin/e_fm.c:8118
 #: src/modules/fileman/e_mod_config.c:176
 msgid "Grid Icons"
 msgstr "Icones alignés"
 
-#: src/bin/e_fm.c:8120
+#: src/bin/e_fm.c:8126
 #: src/modules/fileman/e_mod_config.c:178
 msgid "Custom Icons"
 msgstr "Icones personnalisés"
 
-#: src/bin/e_fm.c:8128
+#: src/bin/e_fm.c:8134
 #: src/modules/fileman/e_mod_config.c:186
 msgid "List"
 msgstr "Liste"
 
-#: src/bin/e_fm.c:8153
+#: src/bin/e_fm.c:8159
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Taille de l'icone (%d)"
 
-#: src/bin/e_fm.c:8303
+#: src/bin/e_fm.c:8309
 msgid "Create a new Directory"
 msgstr "Créer un nouveau dossier"
 
-#: src/bin/e_fm.c:8304
+#: src/bin/e_fm.c:8310
 msgid "New Directory Name:"
 msgstr "Nom du nouveau dossier:"
 
-#: src/bin/e_fm.c:8363
+#: src/bin/e_fm.c:8369
 #, c-format
 msgid "Rename %s to:"
 msgstr "Renommer %s en:"
 
-#: src/bin/e_fm.c:8365
+#: src/bin/e_fm.c:8371
 msgid "Rename File"
 msgstr "Renommer le fichier"
 
-#: src/bin/e_fm.c:8437
-#: src/bin/e_fm.c:8574
+#: src/bin/e_fm.c:8443
+#: src/bin/e_fm.c:8580
 msgid "Retry"
 msgstr "Réessayer"
 
-#: src/bin/e_fm.c:8441
-#: src/bin/e_fm.c:8580
+#: src/bin/e_fm.c:8447
+#: src/bin/e_fm.c:8586
 #: src/modules/wizard/page_030.c:83
 msgid "Error"
 msgstr "Erreur"
 
-#: src/bin/e_fm.c:8444
+#: src/bin/e_fm.c:8450
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: src/bin/e_fm.c:8496
+#: src/bin/e_fm.c:8502
 msgid "No to all"
 msgstr "Non pour tout"
 
-#: src/bin/e_fm.c:8498
+#: src/bin/e_fm.c:8504
 msgid "Yes to all"
 msgstr "Oui pour tout"
 
-#: src/bin/e_fm.c:8501
+#: src/bin/e_fm.c:8507
 msgid "Warning"
 msgstr "Avertissement"
 
-#: src/bin/e_fm.c:8504
+#: src/bin/e_fm.c:8510
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Le fichier existe déjà, écraser ?<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:8576
+#: src/bin/e_fm.c:8582
 msgid "Ignore this"
 msgstr "Ignorer"
 
-#: src/bin/e_fm.c:8577
+#: src/bin/e_fm.c:8583
 msgid "Ignore all"
 msgstr "Ignorer tout"
 
-#: src/bin/e_fm.c:8582
+#: src/bin/e_fm.c:8588
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr "Une erreur s'est produite lors d'une opération.<br>%s"
 
-#: src/bin/e_fm.c:8696
+#: src/bin/e_fm.c:8702
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: src/bin/e_fm.c:8701
+#: src/bin/e_fm.c:8707
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:8707
+#: src/bin/e_fm.c:8713
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br>les %d fichiers sélectionnés dans:<br><hilight>%s</hilight> ?"
@@ -3041,8 +3043,8 @@ msgstr "Ajouter aux favoris"
 #: src/modules/conf_imc/e_int_config_imc.c:834
 #: src/modules/conf_startup/e_int_config_startup.c:281
 #: src/modules/conf_theme/e_int_config_theme.c:402
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:517
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:647
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:518
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:648
 #: src/modules/gadman/e_mod_config.c:193
 msgid "Go up a Directory"
 msgstr "Remonter d'un niveau"
@@ -3219,7 +3221,7 @@ msgid "Restart Applications"
 msgstr "Applications à redémarrer"
 
 #: src/modules/conf_applications/e_int_config_apps.c:240
-#: src/modules/fileman/e_fwin.c:1561
+#: src/modules/fileman/e_fwin.c:1586
 msgid "All Applications"
 msgstr "Toutes les applications"
 
@@ -3616,8 +3618,8 @@ msgstr "%1.0f minutes"
 #: src/modules/conf_startup/e_int_config_startup.c:268
 #: src/modules/conf_theme/e_int_config_theme.c:391
 #: src/modules/conf_theme/e_int_config_theme.c:793
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:507
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:637
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:508
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:638
 #: src/modules/gadman/e_mod_config.c:186
 msgid "Personal"
 msgstr "Personnel"
@@ -5167,39 +5169,39 @@ msgstr "Transitions"
 msgid "Wallpaper Settings"
 msgstr "Paramétrage du fond d'écran"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:544
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:672
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:545
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:673
 msgid "Use Theme Wallpaper"
 msgstr "Utiliser le fond d'écran du thème"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:549
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:677
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:550
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:678
 msgid "Picture..."
 msgstr "Image..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:552
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:680
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:553
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:681
 msgid "Gradient..."
 msgstr "Dégradé..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:558
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:686
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:559
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:687
 msgid "Online..."
 msgstr "En ligne..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:706
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:707
 msgid "Where to place the Wallpaper"
 msgstr "Où placer ce fond d'écran"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:707
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:708
 msgid "All Desktops"
 msgstr "Tous les bureaux"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:709
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:710
 msgid "This Desktop"
 msgstr "Ce bureau"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:711
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:712
 msgid "This Screen"
 msgstr "Cet écran"
 
@@ -5251,65 +5253,73 @@ msgstr "Erreur de création du dégradé"
 msgid "For some reason, Enlightenment was unable to create a gradient."
 msgstr "Sans raison bien déterminée, Enlightenment n'a pu créer un dégradé."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:106
-msgid "Select a Picture..."
-msgstr "Choisir une image..."
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:128
+msgid "Wallpaper settings..."
+msgstr "Paramétrage du fond d'écran..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:156
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:164
 msgid "Fill and Stretch Options"
 msgstr "Options de remplissage et d'étirage"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:159
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:167
 msgid "Stretch"
 msgstr "Étirer"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:164
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:172
 msgid "Center"
 msgstr "Centrer"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:169
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:177
 msgid "Tile"
 msgstr "Répéter"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:174
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:182
 msgid "Within"
 msgstr "Contenir"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:179
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:187
 msgid "Fill"
 msgstr "Remplir"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:186
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:194
 msgid "File Quality"
 msgstr "Qualité du fichier"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:188
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:196
 msgid "Use original file"
 msgstr "Utiliser le fichier original"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:191
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:199
 #, c-format
 msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:504
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:274
+msgid "Select a Picture..."
+msgstr "Choisir une image..."
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:600
 msgid "Picture Import Error"
 msgstr "Erreur lors de l'importation du fichier"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:505
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:601
 msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr "Enlightenment n'a pu importer l'image<br>à cause d'erreurs de conversion."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:578
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:595
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:694
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:704
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:791
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:801
 msgid "Wallpaper Import Error"
 msgstr "Erreur d'importation du fond d'écran"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:579
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:695
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:792
 msgid "Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr "Enlightenment n'a pu importer le fond d'écran<br>à cause d'une erreur de copie."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:596
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:705
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:802
 msgid "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this is a valid wallpaper?"
 msgstr "Enlightenment n'a pu importer le fond d'écran.<br><br>Êtes-vous sûr que ce soit un fond d'écran valide ?"
 
@@ -6018,25 +6028,25 @@ msgstr "Montrer la barre d'outils"
 msgid "Show HAL icons on desktop"
 msgstr "Afficher les icones HAL sur le bureau"
 
-#: src/modules/fileman/e_fwin.c:803
+#: src/modules/fileman/e_fwin.c:805
 msgid "Go to Parent Directory"
 msgstr "Aller au dossier parent"
 
-#: src/modules/fileman/e_fwin.c:829
-#: src/modules/fileman/e_fwin.c:1520
+#: src/modules/fileman/e_fwin.c:854
+#: src/modules/fileman/e_fwin.c:1545
 msgid "Open"
 msgstr "Ouvrir"
 
-#: src/modules/fileman/e_fwin.c:833
-#: src/modules/fileman/e_fwin.c:1518
+#: src/modules/fileman/e_fwin.c:858
+#: src/modules/fileman/e_fwin.c:1543
 msgid "Open with..."
 msgstr "Ouvrir avec..."
 
-#: src/modules/fileman/e_fwin.c:1536
+#: src/modules/fileman/e_fwin.c:1561
 msgid "Specific Applications"
 msgstr "Applications spécifiques"
 
-#: src/modules/fileman/e_fwin.c:1599
+#: src/modules/fileman/e_fwin.c:1624
 msgid "Custom Command"
 msgstr "Commande personnalisée"
 
