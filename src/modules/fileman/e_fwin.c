@@ -149,8 +149,52 @@ EAPI void
 e_fwin_new(E_Container *con, const char *dev, const char *path)
 {
    E_Fwin *fwin;
+   E_Fm2_Custom_File *cf;
+   char buf[PATH_MAX];
+   int x, y, w, h;
 
    fwin = _e_fwin_new(con, dev, path);
+
+   if (!fwin) return;
+
+   snprintf(buf, sizeof(buf), "dir::%s", e_fm2_real_path_get(fwin->fm_obj));
+   cf = e_fm2_custom_file_get(buf);
+   if ((cf) && (cf->geom.valid))
+     {
+	x = cf->geom.x;
+	y = cf->geom.y;
+	w = cf->geom.w;
+	h = cf->geom.h;
+
+	/* checking width and height */
+	if (w < 24)
+	  w = 280 * e_scale;
+	else if (w > fwin->win->border->zone->w)
+	  w = fwin->win->border->zone->w;
+	if (h < 24)
+	  h = 200 * e_scale;
+	else if (h > fwin->win->border->zone->h)
+	  h = fwin->win->border->zone->h;
+
+	/* checking left-top corner */
+	if (x < fwin->win->border->zone->x)
+	  x = fwin->win->border->zone->x + fwin->win->border->client_inset.l;
+	if (y < fwin->win->border->zone->y)
+	  y = fwin->win->border->zone->y + fwin->win->border->client_inset.t;
+
+	/* checking right-bottom corner */
+	if ((fwin->win->border->zone->x + fwin->win->border->zone->w) < (x + w))
+	  x = fwin->win->border->zone->x + fwin->win->border->zone->w - w - fwin->win->border->client_inset.l;
+	if ((fwin->win->border->zone->y + fwin->win->border->zone->h) < (y + h))
+	  y = fwin->win->border->zone->y + fwin->win->border->zone->h - h - fwin->win->border->client_inset.t;
+
+	e_win_move_resize(fwin->win,
+			  x - fwin->win->border->client_inset.l,
+			  y - fwin->win->border->client_inset.t,
+			  w, h);
+     }
+
+   fwin->geom_save_ready = 1;
 }
 
 EAPI void
@@ -352,14 +396,13 @@ _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere)
          if (ere->finished)
             snprintf(buf, sizeof(buf), "Delete done");
          else
-            snprintf(buf, sizeof(buf), "Deleting %s (eta: %d sec", total, ere->eta);
+            snprintf(buf, sizeof(buf), "Deleting files...");
          break;
       default:
          edje_object_signal_emit(o, "e,action,icon,unknow", "e");
-         snprintf(buf, sizeof(buf), "Unknow operation from slave %d)", ere->id);
+         snprintf(buf, sizeof(buf), "Unknow operation from slave %d", ere->id);
          break;
    }
-
    edje_object_part_text_set(o, "e.text.label1", buf);
 
    if (ere->needs_attention)
@@ -394,7 +437,7 @@ _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event)
    if (!(ere->op == E_FM_OP_COPY || ere->op == E_FM_OP_MOVE ||
          ere->op == E_FM_OP_REMOVE))
       return ECORE_CALLBACK_RENEW;
-   
+
    o = edje_object_add(e_win_evas_get(fwin->win));
    e_theme_edje_object_set(o, "base/theme/fileman",
                            "e/fileman/default/progress");
