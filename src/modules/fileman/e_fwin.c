@@ -78,7 +78,7 @@ static void _e_fwin_cb_resize(E_Win *win);
 static void _e_fwin_deleted(void *data, Evas_Object *obj, void *event_info);
 static const char *_e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev_path, const char *key);
 static void _e_fwin_desktop_run(Efreet_Desktop *desktop, E_Fwin *fwin);
-static Eina_List *_e_fwin_suggested_apps_list_get(Eina_List *files);
+static Eina_List *_e_fwin_suggested_apps_list_get(Eina_List *files, Eina_List **mime_list);
 static void _e_fwin_changed(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selection_change(void *data, Evas_Object *obj, void *event_info);
@@ -738,7 +738,7 @@ _e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev
 }
 
 static Eina_List*
-_e_fwin_suggested_apps_list_get(Eina_List *files)
+_e_fwin_suggested_apps_list_get(Eina_List *files, Eina_List **mime_list)
 {
    E_Fm2_Icon_Info *ici;
    const char *f = NULL;
@@ -777,7 +777,11 @@ _e_fwin_suggested_apps_list_get(Eina_List *files)
        ret = eina_list_append(ret, desk);
 
    if (apps) apps = eina_list_free(apps);
-   if (mlist) mlist = eina_list_free(mlist);
+
+   if (mime_list)
+     *mime_list = mlist;
+   else
+     if (mlist) mlist = eina_list_free(mlist);
 
    return ret;
 }
@@ -960,7 +964,7 @@ _e_fwin_cb_menu_extend_open_with(void *data, E_Menu *m)
    selected = e_fm2_selected_list_get(fwin->fm_obj);
    if (!selected) return;
 
-   apps = _e_fwin_suggested_apps_list_get(selected);
+   apps = _e_fwin_suggested_apps_list_get(selected, NULL);
    EINA_LIST_FOREACH(apps, l, desk)
      {
 	if (!desk) continue;
@@ -1015,7 +1019,7 @@ _e_fwin_cb_menu_open(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fwin *fwin;
    Eina_List *selected;
-   
+
    fwin = data;
    selected = e_fm2_selected_list_get(fwin->fm_obj);
    if (!selected) return;
@@ -1542,7 +1546,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 	need_dia = 0;
      }
 
-   apps = _e_fwin_suggested_apps_list_get(files);
+   apps = _e_fwin_suggested_apps_list_get(files, &mlist);
 
    if (!always)
      {
@@ -1612,7 +1616,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 	  }
      }
    mlist = eina_list_free(mlist);
-   
+
    fad = E_NEW(E_Fwin_Apps_Dialog, 1);
    if (fwin->win)
      dia = e_dialog_new(fwin->win->border->zone->container, 
@@ -1634,11 +1638,11 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
    fwin->fad = fad;
    dia->data = fad;
    e_object_free_attach_func_set(E_OBJECT(dia), _e_fwin_cb_dialog_free);
-   
+
    evas = e_win_evas_get(dia->win);
-   
+
    ot = e_widget_table_add(evas, 0);
-   
+
    l = eina_list_free(l);
 
    // Make frame with list of applications
@@ -1649,7 +1653,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
    evas_event_freeze(evas);
    edje_freeze();
    e_widget_ilist_freeze(o);
-   
+
    // Adding Specific Applications list into widget
    if(apps)
      e_widget_ilist_header_append(o, NULL, _("Specific Applications"));
@@ -1662,7 +1666,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
         e_widget_ilist_append(o, icon, desk->name, NULL, NULL, 
                               efreet_util_path_to_file_id(desk->orig_path));       
      }
-   
+
    // Building All Applications list
    cats = efreet_util_desktop_name_glob_list("*");
    cats = eina_list_sort(cats, 0, _e_fwin_dlg_cb_desk_sort);
