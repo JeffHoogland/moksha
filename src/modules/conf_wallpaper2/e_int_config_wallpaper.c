@@ -28,6 +28,8 @@ struct _Info
    int          specific;
    int          use_theme_bg;
    int          con_num, zone_num, desk_x, desk_y;
+   
+   int          mode;
 };
 
 struct _Smart_Data
@@ -744,6 +746,8 @@ wp_browser_new(E_Container *con)
    E_Desk *desk;
    const E_Config_Desktop_Background *cfbg;
    Evas_Coord mw, mh;
+   Evas_Object *o, *o2;
+   E_Radio_Group *rg;
    char buf[PATH_MAX];   
    
    info = calloc(1, sizeof(Info));
@@ -857,6 +861,34 @@ wp_browser_new(E_Container *con)
    edje_object_part_swallow(info->bg, "e.swallow.list", info->sframe);
    evas_object_show(info->sframe);
    evas_object_show(info->span);
+   
+   o = e_widget_table_add(info->win->evas, 0);
+
+   rg = e_widget_radio_group_new(&(info->mode));
+   o2 = e_widget_radio_add(info->win->evas, _("All Desktops"), 0, rg);
+   e_widget_table_object_align_append(o, o2, 
+                                      0, 1, 1, 1,
+                                      1, 1, 0, 0,
+                                      0.0, 0.5);
+   evas_object_show(o2);
+   o2 = e_widget_radio_add(info->win->evas, _("This Desktop"), 1, rg);
+   e_widget_table_object_align_append(o, o2, 
+                                      0, 2, 1, 1,
+                                      1, 1, 0, 0,
+                                      0.0, 0.5);
+   evas_object_show(o2);
+   o2 = e_widget_radio_add(info->win->evas, _("This Screen"), 2, rg);
+   e_widget_table_object_align_append(o, o2, 
+                                      0, 3, 1, 1,
+                                      1, 1, 0, 0,
+                                      0.0, 0.5);
+   evas_object_show(o2);
+   
+   e_widget_min_size_get(o, &mw, &mh);
+   edje_extern_object_min_size_set(o, mw, mh);
+   edje_object_part_swallow(info->bg, "e.swallow.extras", o);
+   evas_object_show(o);
+   
 
    // min size calc
    edje_object_size_min_calc(info->bg, &mw, &mh);

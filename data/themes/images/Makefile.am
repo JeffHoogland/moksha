@@ -549,4 +549,10 @@ wifi_0.png \
 wifi_1.png \
 wifi_2.png \
 wifi_3.png \
-wifi_4.png
+wifi_4.png \
+wp-tb1.png \
+wp-bot1.png \
+wp-tb2.png \
+wp-bot2.png \
+wp-tb3.png
+
