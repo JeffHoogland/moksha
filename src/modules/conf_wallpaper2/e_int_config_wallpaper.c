@@ -5,11 +5,13 @@
 #include "e_mod_main.h"
 
 // FIXME:
-//   need a proper theme done "ok/accept" button
 //   need a "add" button (to add exchange, image file or gradient)
-//   need a "where" opopup to select "all desktops, this screen, this desktop"
 //   need filename display
 //   need "theme wallpaper" image
+//   need to make thumb white rect better (shaded etc.)
+//   need to make "theme wallpaper" have different look
+//   need to make "exchange" wallpapers have a different look
+//   need to sort files (alphabetically/ by color? etc.)
 
 typedef struct _Info Info;
 typedef struct _Smart_Data Smart_Data;
