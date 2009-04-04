@@ -77,10 +77,14 @@ static void _e_fwin_cb_move(E_Win *win);
 static void _e_fwin_cb_resize(E_Win *win);
 static void _e_fwin_deleted(void *data, Evas_Object *obj, void *event_info);
 static const char *_e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev_path, const char *key);
+static void _e_fwin_desktop_run(Efreet_Desktop *desktop, E_Fwin *fwin);
+static Eina_List *_e_fwin_suggested_apps_list_get(Eina_List *files);
 static void _e_fwin_changed(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selection_change(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
+static void _e_fwin_cb_menu_extend_open_with(void *data, E_Menu *m);
+static void _e_fwin_cb_menu_open_fast(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fwin_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
@@ -108,12 +112,11 @@ static int  _e_fwin_zone_del(void *data, int type, void *event);
 static void _e_fwin_config_set(E_Fwin *fwin);
 static void _e_fwin_window_title_set(E_Fwin *fwin);
 static void _e_fwin_toolbar_resize(E_Fwin *fwin);
-static int _e_fwin_dlg_cb_desk_sort(Efreet_Desktop *d1, Efreet_Desktop *d2);
+static int _e_fwin_dlg_cb_desk_sort(const void *p1, const void *p2);
 static int _e_fwin_dlg_cb_desk_list_sort(const void *data1, const void *data2);
 
 static void _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere);
 static int _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event);
-static int _e_fwin_op_registry_entry_del_cb(void *data, int type, void *event);
 static void _e_fwin_op_registry_entry_iter(E_Fwin *fwin);
 
 /* local subsystem globals */
@@ -734,6 +737,51 @@ _e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev
    return ret;
 }
 
+static Eina_List*
+_e_fwin_suggested_apps_list_get(Eina_List *files)
+{
+   E_Fm2_Icon_Info *ici;
+   const char *f = NULL;
+   char *mime;
+   Eina_Hash *mimes = NULL;
+   Eina_List *mlist = NULL, *apps = NULL, *ret = NULL, *l;
+   Efreet_Desktop *desk = NULL;
+
+   /* 1. build hash of mimetypes */
+   EINA_LIST_FOREACH(files, l, ici)
+     if (!((ici->link) && (ici->mount)))
+       {
+	  if (_e_fwin_file_is_exec(ici) == E_FWIN_EXEC_NONE)
+	    {
+		if (ici->link)
+		  f = efreet_mime_globs_type_get(ici->link);
+		if (!mimes)
+		  mimes = eina_hash_string_superfast_new(NULL);
+		eina_hash_del(mimes, ici->link ? f : ici->mime, (void *)1);
+		eina_hash_direct_add(mimes, ici->link ? f : ici->mime, (void *)1);
+	    }
+       }
+   if (!mimes) return NULL;
+
+   /* 2. add apps to a list so its a unique app list */
+   eina_hash_foreach(mimes, _e_fwin_cb_hash_foreach, &mlist);
+   eina_hash_free(mimes);
+
+   /* 3. for each mimetype list apps that handle it */
+   EINA_LIST_FOREACH(mlist, l, mime)
+     apps = eina_list_merge(apps, efreet_util_desktop_mime_list(mime));
+
+   /* 4. create a new list without duplicates */
+   EINA_LIST_FOREACH(apps, l, desk)
+     if (!eina_list_data_find(ret, desk))
+       ret = eina_list_append(ret, desk);
+
+   if (apps) apps = eina_list_free(apps);
+   if (mlist) mlist = eina_list_free(mlist);
+
+   return ret;
+}
+
 static void
 _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 {
@@ -885,21 +933,81 @@ _e_fwin_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
      }
 }
+
+static void
+_e_fwin_cb_menu_open_fast(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fwin *fwin;
+   Efreet_Desktop *desk;
+
+   fwin = data;
+   desk = e_object_data_get(E_OBJECT(mi));
+
+   if (fwin && desk)
+      _e_fwin_desktop_run(desk, fwin);
+}
+
+static void
+_e_fwin_cb_menu_extend_open_with(void *data, E_Menu *m)
+{
+   Eina_List *selected = NULL, *apps = NULL, *l;
+   E_Menu_Item *mi;
+   E_Fwin *fwin;
+   Efreet_Desktop *desk = NULL;
+
+   fwin = data;
+
+   selected = e_fm2_selected_list_get(fwin->fm_obj);
+   if (!selected) return;
+
+   apps = _e_fwin_suggested_apps_list_get(selected);
+   EINA_LIST_FOREACH(apps, l, desk)
+     {
+	if (!desk) continue;
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, desk->name);
+	e_util_desktop_menu_item_icon_add(desk, 24, mi);
+	e_menu_item_callback_set(mi, _e_fwin_cb_menu_open_fast, fwin);
+	e_object_data_set(E_OBJECT(mi), desk);
+     }
+
+   if (apps)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+     }
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Other application..."));
+   e_util_menu_item_theme_icon_set(mi, "document-open");
+   e_menu_item_callback_set(mi, _e_fwin_cb_menu_open_with, fwin);
+
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
+
+   eina_list_free(apps);
+   eina_list_free(selected);
+}
+
 static void
 _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info)
 {
    E_Menu_Item *mi;
    E_Fwin *fwin;
-   
+   E_Menu *subm;
+
    fwin = data;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Open"));
    e_util_menu_item_theme_icon_set(mi, "document-open");
    e_menu_item_callback_set(mi, _e_fwin_cb_menu_open, fwin);
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Open with..."));
    e_util_menu_item_theme_icon_set(mi, "document-open");
-   e_menu_item_callback_set(mi, _e_fwin_cb_menu_open_with, fwin);
+
+   subm = e_menu_new();
+   e_menu_item_submenu_set(mi, subm);
+   e_menu_pre_activate_callback_set(subm, _e_fwin_cb_menu_extend_open_with, fwin);
 }
 
 static void
@@ -958,110 +1066,107 @@ _e_fwin_cb_exec_cmd_changed(void *data, void *data2)
    if (fad->o_all) e_widget_ilist_unselect(fad->o_all);
 }
 
+
+static void
+_e_fwin_desktop_run(Efreet_Desktop *desktop, E_Fwin *fwin)
+{
+   char pcwd[4096], buf[4096];
+   Eina_List *selected, *l, *files = NULL;
+   E_Fm2_Icon_Info *ici;
+   char *file;
+
+   selected = e_fm2_selected_list_get(fwin->fm_obj);
+   if (!selected) return;
+
+   getcwd(pcwd, sizeof(pcwd));
+   chdir(e_fm2_real_path_get(fwin->fm_obj));
+
+   EINA_LIST_FOREACH(selected, l, ici)
+     {
+	E_Fwin_Exec_Type ext;
+
+	/* this snprintf is silly - but it's here in case i really do
+	 * need to provide full paths (seems silly since we chdir
+	 * into the dir)
+	 */
+	buf[0] = 0;
+	ext = _e_fwin_file_is_exec(ici);
+	if (ext == E_FWIN_EXEC_NONE)
+	  {
+	     if (!((ici->link) && (ici->mount)))
+	       {
+		  if (ici->link)
+		    {
+		       if (!S_ISDIR(ici->statinfo.st_mode))
+			  snprintf(buf, sizeof(buf), "%s", ici->file);
+		    }
+		  else
+		    {
+		       if (!S_ISDIR(ici->statinfo.st_mode))
+			  snprintf(buf, sizeof(buf), "%s", ici->file);
+		    }
+	       }
+	  }
+	else
+	  _e_fwin_file_exec(fwin, ici, ext);
+	if (buf[0] != 0)
+	  {
+	     if (ici->mime && desktop)
+		e_exehist_mime_desktop_add(ici->mime, desktop);
+	     files = eina_list_append(files, strdup(ici->file));
+	  }
+     }
+   eina_list_free(selected);
+
+   if (fwin->win && desktop)
+     e_exec(fwin->win->border->zone, desktop, NULL, files, "fwin");
+   else if (fwin->zone && desktop)
+     e_exec(fwin->zone, desktop, NULL, files, "fwin");
+
+   EINA_LIST_FREE(files, file)
+     free(file);
+
+   chdir(pcwd);
+}
+
 static void
 _e_fwin_cb_open(void *data, E_Dialog *dia)
 {
    E_Fwin_Apps_Dialog *fad;
    Efreet_Desktop *desktop = NULL;
-   char pcwd[4096], buf[4096];
-   Eina_List *selected, *l;
-   E_Fm2_Icon_Info *ici;
-   Eina_List *files = NULL;
-   char *file;
-   
+
    fad = data;
-   if (fad->app2) 
+   if (fad->app2)
      desktop = efreet_util_desktop_file_id_find(fad->app2);
 
    if ((!desktop) && (!fad->exec_cmd)) return;
 
+   // Create a fake .desktop for custom command.
+    if (!desktop)
+      {
+	 desktop = efreet_desktop_empty_new("");
+	 if (strchr(fad->exec_cmd, '%'))
+	   {
+	      desktop->exec = strdup(fad->exec_cmd);
+	   }
+	 else
+	   {
+	      desktop->exec = malloc(strlen(fad->exec_cmd) + 4);
+	      if (desktop->exec)
+		snprintf(desktop->exec, strlen(fad->exec_cmd) + 4, "%s %%U", fad->exec_cmd);
+	   }
+      }
+
    if ((desktop) || (strcmp(fad->exec_cmd, "")))
-     {
-	getcwd(pcwd, sizeof(pcwd));
-	chdir(e_fm2_real_path_get(fad->fwin->fm_obj));
+     _e_fwin_desktop_run(desktop,fad->fwin);
 
-	selected = e_fm2_selected_list_get(fad->fwin->fm_obj);
-	if (selected)
-	  {
-	     files = NULL;
-	     for (l = selected; l; l = l->next)
-	       {
-		  E_Fwin_Exec_Type ext;
-		  
-		  ici = l->data;
-		  /* this snprintf is silly - but it's here in case i really do
-		   * need to provide full paths (seems silly since we chdir
-		   * into the dir)
-		   */
-		  buf[0] = 0;
-		  ext = _e_fwin_file_is_exec(ici);
-		  if (ext == E_FWIN_EXEC_NONE)
-		    {
-		       if (!((ici->link) && (ici->mount)))
-			 {
-			    if (ici->link)
-			      {
-				 if (!S_ISDIR(ici->statinfo.st_mode))
-				   snprintf(buf, sizeof(buf), "%s", ici->file);
-			      }
-			    else
-			      {
-				 if (!S_ISDIR(ici->statinfo.st_mode))
-				   snprintf(buf, sizeof(buf), "%s", ici->file);
-			      }
-			 }
-		    }
-		  else
-		    _e_fwin_file_exec(fad->fwin, ici, ext);
-		  if (buf[0] != 0)
-		    {
-		       if (ici->mime && desktop)
-			 e_exehist_mime_desktop_add(ici->mime, desktop);
-		       files = eina_list_append(files, strdup(ici->file));
-		    }
-	       }
-	     eina_list_free(selected);
-	     
-	     // Create a fake .desktop for custom command.
-	     if (!desktop)
-	       {
-		  desktop = efreet_desktop_empty_new("");
-		  if (strchr(fad->exec_cmd, '%'))
-		    {
-		       desktop->exec = strdup(fad->exec_cmd);
-		    }
-		  else
-		    {
-		       desktop->exec = malloc(strlen(fad->exec_cmd) + 4);
-		       if (desktop->exec)
-			 snprintf(desktop->exec, strlen(fad->exec_cmd) + 4, "%s %%U", fad->exec_cmd);
-		    }
-	       }
+   // Free fake .desktop
+   if (!strcmp(fad->exec_cmd, ""))
+      efreet_desktop_free(desktop);
 
-	     if (fad->fwin->win)
-	       {
-		  if (desktop)
-                    e_exec(fad->fwin->win->border->zone, desktop, NULL, files,
-                           "fwin");
-	       }
-	     else if (fad->fwin->zone)
-	       {
-		  if (desktop)
-                    e_exec(fad->fwin->zone, desktop, NULL, files, "fwin");
-	       }
-
-	     // Free fake .desktop
-	     if (!strcmp(fad->exec_cmd, ""))
-               efreet_desktop_free(desktop);
-
-	     EINA_LIST_FREE(files, file)
-	       free(file);
-	  }
-	chdir(pcwd);
-     }
    e_object_del(E_OBJECT(fad->dia));
 }
-    
+
 static void
 _e_fwin_cb_close(void *data, E_Dialog *dia)
 {
@@ -1226,16 +1331,12 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
    Evas_Coord mw, mh;
    Evas_Object *o, *of, *ot;
    Evas *evas;
-   Eina_List *l = NULL, *ll, *apps = NULL, *mlist = NULL;
-   Eina_List *ml;
+   Eina_List *l = NULL, *apps = NULL, *mlist = NULL;
    Eina_List *cats = NULL;
-   Eina_Hash *mimes = NULL;
    Efreet_Desktop *desk = NULL;
    E_Fwin_Apps_Dialog *fad;
    E_Fm2_Icon_Info *ici;
    char buf[PATH_MAX];
-   const char *f;
-   char *mime;
    int need_dia = 0;
 
    if (fwin->fad)
@@ -1440,45 +1541,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 	if (!need_dia) return;
 	need_dia = 0;
      }
-   
-   /* 1. build hash of mimetypes */
-   EINA_LIST_FOREACH(files, l, ici)
-        if (!((ici->link) && (ici->mount)))
-	  {
-	     if (_e_fwin_file_is_exec(ici) == E_FWIN_EXEC_NONE)
-	       {
-		  if (ici->link)
-		    {
-		      f = e_fm_mime_filename_get(ici->link);
-		      if (!mimes)
-			mimes = eina_hash_string_superfast_new(NULL);
-		      eina_hash_del(mimes, f, (void *)1);
-		      eina_hash_direct_add(mimes, f, (void *)1);
-		    }
-		  else
-		    {
-		      snprintf(buf, sizeof(buf), "%s/%s",
-			       e_fm2_real_path_get(fwin->fm_obj), ici->file);
-		      if (!mimes)
-			mimes = eina_hash_string_superfast_new(NULL);
-		      eina_hash_del(mimes, ici->mime, (void *)1);
-		      eina_hash_direct_add(mimes, ici->mime, (void *)1);
-		    }
-	       }
-	  }
-   /* 2. for each mimetype list apps that handle it */
-   if (mimes)
-     {
-	eina_hash_foreach(mimes, _e_fwin_cb_hash_foreach, &mlist);
-	eina_hash_free(mimes);
-     }
-   /* 3. add apps to a list so its a unique app list */
-   apps = NULL;
-   EINA_LIST_FOREACH(mlist, l, mime)
-	  {
-	ml = efreet_util_desktop_mime_list(mime);
-	apps = eina_list_merge(apps, ml);
-     }
+
+   apps = _e_fwin_suggested_apps_list_get(files);
 
    if (!always)
      {
@@ -1894,8 +1958,13 @@ _e_fwin_toolbar_resize(E_Fwin *fwin)
 }
 
 static int 
-_e_fwin_dlg_cb_desk_sort(Efreet_Desktop *d1, Efreet_Desktop *d2) 
+_e_fwin_dlg_cb_desk_sort(const void *p1, const void *p2)
 {
+   Efreet_Desktop *d1, *d2;
+
+   d1 = (Efreet_Desktop *)p1;
+   d2 = (Efreet_Desktop *)p2;
+
    if (!d1->name) return 1;
    if (!d2->name) return -1;
    return strcmp(d1->name, d2->name);
