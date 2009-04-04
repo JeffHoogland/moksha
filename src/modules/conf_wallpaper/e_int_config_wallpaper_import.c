@@ -416,7 +416,7 @@ _import_edj_gen(Import *import)
    Evas_Object *img;
    int fd, num = 1;
    int w = 0, h = 0;
-   const char *file, *homedir;
+   const char *file, *homedir, *locale;
    char buf[4096], cmd[4096], tmpn[4096], ipart[4096], enc[128];
    char *imgdir = NULL, *fstrip;
    int cr = 255, cg = 255, cb = 255, ca = 255;
@@ -462,7 +462,7 @@ _import_edj_gen(Import *import)
    img = evas_object_image_add(evas);
    evas_object_image_file_set(img, import->cfdata->file, NULL);
    evas_object_image_size_get(img, &w, &h);
-   evas_object_del(img);   
+   evas_object_del(img);
 
    if (import->cfdata->external)
      {
@@ -530,6 +530,8 @@ _import_edj_gen(Import *import)
 		, fstrip, enc, w, h, cr, cg, cb, ca, w, h, w, h, fstrip);
 	break;
       case IMPORT_SCALE_ASPECT_IN:
+	locale = e_intl_language_get();
+	setlocale(LC_NUMERIC, "C");
 	fprintf(f, 
 		"images { image: \"%s\" %s; }\n"
 		"collections {\n"
@@ -547,8 +549,11 @@ _import_edj_gen(Import *import)
 		"image { normal: \"%s\"; }\n"
 		"} } } } }\n"
 		, fstrip, enc, w, h, cr, cg, cb, ca, (double)w / (double)h, (double)w / (double)h, fstrip);
+	 setlocale(LC_NUMERIC, locale);
 	break;
       case IMPORT_SCALE_ASPECT_OUT:
+	locale = e_intl_language_get();
+	setlocale(LC_NUMERIC, "C");
 	fprintf(f, 
 		"images { image: \"%s\" %s; }\n"
 		"collections {\n"
@@ -562,6 +567,7 @@ _import_edj_gen(Import *import)
 		"image { normal: \"%s\"; }\n"
 		"} } } } }\n"
 		, fstrip, enc, w, h, (double)w / (double)h, (double)w / (double)h, fstrip);
+	setlocale(LC_NUMERIC, locale);
 	break;
       default:
 	/* won't happen */
