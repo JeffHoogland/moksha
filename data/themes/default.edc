@@ -24005,6 +24005,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
          image: "wp-tb1.png" COMP;
          image: "wp-tb2.png" COMP;
          image: "wp-tb3.png" COMP;
+         image: "wp-tbs.png" COMP;
          image: "big_arrow_up.png" COMP;
       }
       parts {
@@ -24090,6 +24091,33 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		  offset:   -5  1;
 	       }
 	    }
+	 }
+	 part { name: "tbs";
+	    description { state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 1.0;
+                  offset: 0 -1;
+               }
+               rel2 {
+                  relative: 0.0 1.0;
+                  offset: 0 -1;
+               }
+	       image.normal: "wp-tbs.png";
+	       fill.smooth: 0;
+	    }
+	    description { state: "out" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  to_y: "tb1";
+                  relative: 0.0 0.0;
+                  offset: 0 -100;
+               }
+               rel2 {
+                  to_x: "tb3";
+                  relative: 1.0 1.0;
+                  offset: 200 -1;
+               }
+            }
 	 }
 	 part { name: "tb1";
 	    description { state: "default" 0.0;
@@ -24294,6 +24322,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	 program { name: "out2";
             action:  STATE_SET "out" 0.0;
             target:  "e.swallow.extras";
+            target:  "tbs";
             transition: DECELERATE 0.5;
          }
 	 program { name: "in";
@@ -24306,6 +24335,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	 program { name: "in2";
             action:  STATE_SET "default" 0.0;
             target:  "e.swallow.extras";
+            target:  "tbs";
             transition: DECELERATE 1.0;
          }
       }

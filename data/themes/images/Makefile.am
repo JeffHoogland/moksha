@@ -554,5 +554,6 @@ wp-tb1.png \
 wp-bot1.png \
 wp-tb2.png \
 wp-bot2.png \
-wp-tb3.png
+wp-tb3.png \
+wp-tbs.png
 
