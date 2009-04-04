@@ -5691,7 +5691,10 @@ _e_border_eval(E_Border *bd)
 	     /* If this is a new window, set the state as requested. */
 	     if ((bd->new_client) &&
 		 (bd->client.icccm.initial_state == ECORE_X_WINDOW_STATE_HINT_ICONIC))
-	       e_border_iconify(bd);
+               {
+                  e_border_iconify(bd);
+                  e_border_hide(bd, 1);
+               }
 	  }
 	bd->client.icccm.fetch.hints = 0;
 	rem_change = 1;
