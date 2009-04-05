@@ -28,7 +28,7 @@ struct _E_Smart_Data
    unsigned char  child_can_focus : 1;
    unsigned char  focused : 1;
    unsigned char  disabled : 1;
-}; 
+};
 
 /* local subsystem functions */
 static void _e_smart_reconfigure(E_Smart_Data *sd);
@@ -116,10 +116,8 @@ EAPI void
 e_widget_min_size_set(Evas_Object *obj, Evas_Coord minw, Evas_Coord minh)
 {
    API_ENTRY return;
-   if (minw >= 0)
-     sd->minw = minw;
-   if (minh >= 0)
-     sd->minh = minh;
+   if (minw >= 0) sd->minw = minw;
+   if (minh >= 0) sd->minh = minh;
 }
 
 EAPI void
@@ -197,13 +195,14 @@ e_widget_focus_get(Evas_Object *obj)
 EAPI Evas_Object *
 e_widget_focused_object_get(Evas_Object *obj)
 {
-   Eina_List *l;
+   Eina_List *l = NULL;
+
    API_ENTRY return NULL;
    if (!sd->focused) return NULL;
    for (l = sd->subobjs; l; l = l->next)
-     {  
-	Evas_Object *fobj;
-	
+     {
+	Evas_Object *fobj = NULL;
+
 	fobj = e_widget_focused_object_get(l->data);
 	if (fobj) return fobj;
      }
@@ -215,7 +214,7 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 {
    API_ENTRY return 0;
    if (!e_widget_can_focus_get(obj)) return 0;
-       
+
    /* if it has a focus func its an end-point widget like a button */
    if (sd->focus_func)
      {
@@ -228,10 +227,9 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
    /* its some container */
    else
      {
-	Eina_List *l;
-	int focus_next;
-	
-	focus_next = 0;
+	Eina_List *l = NULL;
+	int focus_next = 0;
+
 	if (!sd->focused)
 	  {
 	     e_widget_focus_set(obj, forward);
@@ -252,7 +250,8 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 			      {
 				 /* the previous focused item was unfocused - so focus
 				  * the next one (that can be focused) */
-				 if (e_widget_focus_jump(l->data, forward)) return 1;
+				 if (e_widget_focus_jump(l->data, forward)) 
+                                   return 1;
 				 else break;
 			      }
 			    else
@@ -260,7 +259,8 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 				 if (e_widget_focus_get(l->data))
 				   {
 				      /* jump to the next focused item or focus this item */
-				      if (e_widget_focus_jump(l->data, forward)) return 1;
+				      if (e_widget_focus_jump(l->data, forward)) 
+                                        return 1;
 				      /* it returned 0 - it got to the last item and is past it */
 				      focus_next = 1;
 				   }
@@ -279,7 +279,8 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 			      {
 				 /* the previous focused item was unfocused - so focus
 				  * the next one (that can be focused) */
-				 if (e_widget_focus_jump(l->data, forward)) return 1;
+				 if (e_widget_focus_jump(l->data, forward)) 
+                                   return 1;
 				 else break;
 			      }
 			    else
@@ -287,7 +288,8 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 				 if (e_widget_focus_get(l->data))
 				   {
 				      /* jump to the next focused item or focus this item */
-				      if (e_widget_focus_jump(l->data, forward)) return 1;
+				      if (e_widget_focus_jump(l->data, forward)) 
+                                        return 1;
 				      /* it returned 0 - it got to the last item and is past it */
 				      focus_next = 1;
 				   }
@@ -318,8 +320,8 @@ e_widget_focus_set(Evas_Object *obj, int first)
      }
    else
      {
-	Eina_List *l;
-	     
+	Eina_List *l = NULL;
+
 	if (first)
 	  {
 	     for (l = sd->subobjs; l; l = l->next)
@@ -357,12 +359,13 @@ e_widget_parent_get(Evas_Object *obj)
 EAPI void
 e_widget_focused_object_clear(Evas_Object *obj)
 {
-   Eina_List *l;
+   Eina_List *l = NULL;
+
    API_ENTRY return;
    if (!sd->focused) return;
    sd->focused = 0;
    for (l = sd->subobjs; l; l = l->next)
-     {  
+     {
 	if (e_widget_focus_get(l->data))
 	  {
 	     e_widget_focused_object_clear(l->data);
@@ -375,11 +378,10 @@ e_widget_focused_object_clear(Evas_Object *obj)
 EAPI void
 e_widget_focus_steal(Evas_Object *obj)
 {
-   Evas_Object *parent, *o;
+   Evas_Object *parent = NULL, *o = NULL;
 
    API_ENTRY return;
-   if (sd->focused) return;
-   if (sd->disabled) return;
+   if ((sd->focused) || (sd->disabled)) return;
    parent = obj;
    for (;;)
      {
@@ -400,7 +402,6 @@ e_widget_focus_steal(Evas_Object *obj)
      }
    sd = evas_object_smart_data_get(obj);
    if (sd->focus_func) sd->focus_func(obj);
-   return;
 }
 
 EAPI void
@@ -428,7 +429,7 @@ e_widget_disabled_set(Evas_Object *obj, int disabled)
    sd->disabled = disabled;
    if (sd->focused)
      {
-	Evas_Object *o, *parent;
+	Evas_Object *o = NULL, *parent = NULL;
 
 	parent = obj;
         for (;;)
@@ -452,9 +453,9 @@ e_widget_disabled_get(Evas_Object *obj)
 EAPI E_Pointer *
 e_widget_pointer_get(Evas_Object *obj)
 {
-   E_Win *win;
+   E_Win *win = NULL;
+
    API_ENTRY return NULL;
-   
    win = e_win_evas_object_win_get(obj);
    if (win) return win->pointer;
    return NULL;
@@ -481,8 +482,8 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 static void
 _e_smart_add(Evas_Object *obj)
 {
-   E_Smart_Data *sd;
-   
+   E_Smart_Data *sd = NULL;
+
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
    sd->x = 0;
@@ -496,8 +497,8 @@ _e_smart_add(Evas_Object *obj)
 static void
 _e_smart_del(Evas_Object *obj)
 {
-   Evas_Object *sobj;
-   
+   Evas_Object *sobj = NULL;
+
    INTERNAL_ENTRY;
    if (sd->del_func) sd->del_func(obj);
    while (sd->subobjs)
