@@ -27,9 +27,9 @@ struct _Info
    char        *curdir;
    DIR         *dir;
    Ecore_Idler *idler;
-   int          specific;
-   int          use_theme_bg;
    int          con_num, zone_num, desk_x, desk_y;
+   
+   int          use_theme_bg;
    
    int          mode;
 };
@@ -60,6 +60,8 @@ struct _Item
    Evas_Bool selected : 1;
    Evas_Bool have_thumb : 1;
    Evas_Bool do_thumb : 1;
+   Evas_Bool remote : 1;
+   Evas_Bool theme : 1;
 };
 
 static Info *global_info = NULL;
@@ -256,8 +258,12 @@ _e_smart_reconfigure_do(void *data)
                }
              d = sqrt((double)(dx * dx) + (double)(dy * dy));
              dx = dy = 0;
-             
-             for (p = (char *)it->file; *p; p++) sum += (int)(*p);
+
+             sum = 0;
+             if (it->file)
+               {
+                  for (p = (char *)it->file; *p; p++) sum += (int)(*p);
+               }
              sum = (sum & 0xff) - 128;
              a = a + ((double)sum / 1024.0);
              xx = sd->sx - sd->cx + ox;
@@ -304,7 +310,14 @@ _e_smart_reconfigure_do(void *data)
                   it->image = e_thumb_icon_add(evas_object_evas_get(obj));
                   edje_object_part_swallow(it->frame, "e.swallow.content", it->image);
                   evas_object_smart_callback_add(it->image, "e_thumb_gen", _thumb_gen, it);
-                  e_thumb_icon_file_set(it->image, it->file, "e/desktop/background");
+                  if (it->theme)
+                    {
+                       const char *f = e_theme_edje_file_get("base/theme/backgrounds",
+                                                             "e/desktop/background");
+                       e_thumb_icon_file_set(it->image, f, "e/desktop/background");
+                    }
+                  else
+                    e_thumb_icon_file_set(it->image, it->file, "e/desktop/background");
                   e_thumb_icon_size_set(it->image, sd->info->iw, sd->info->ih);
                   evas_object_show(it->image);
                   edje_object_signal_emit(it->frame, "e,action,thumb,ungen", "e");
@@ -541,10 +554,23 @@ _pan_sel(Evas_Object *obj, Item *it)
           }
         it->selected = 1;
         if (sd->info->bg_file) free(sd->info->bg_file);
-        sd->info->bg_file = strdup(it->file);
         evas_object_hide(sd->info->mini);
-        edje_object_file_set(sd->info->mini, sd->info->bg_file,
-                             "e/desktop/background");
+        if (it->file)
+          {
+             sd->info->use_theme_bg = 0;
+             sd->info->bg_file = strdup(it->file);
+             edje_object_file_set(sd->info->mini, sd->info->bg_file,
+                                  "e/desktop/background");
+          }
+        else
+          {
+             const char *f = e_theme_edje_file_get("base/theme/backgrounds",
+                                                   "e/desktop/background");
+             edje_object_file_set(sd->info->mini, f,
+                                  "e/desktop/background");
+             sd->info->use_theme_bg = 1;
+             sd->info->bg_file = NULL;
+          }
         evas_object_show(sd->info->mini);
      }
    if (sd->seltimer) ecore_timer_del(sd->seltimer);
@@ -601,18 +627,26 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
     
 static void
-_pan_file_add(Evas_Object *obj, const char *file)
+_pan_file_add(Evas_Object *obj, const char *file, Evas_Bool remote, Evas_Bool theme)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
    Item *it = calloc(1, sizeof(Item));
    if(!it) return;
-   printf("+%s\n", file);
    sd->items = eina_list_append(sd->items, it);
    it->obj = obj;
+   it->remote = remote;
+   it->theme = theme;
    it->file = eina_stringshare_add(file);
    it->frame = edje_object_add(evas_object_evas_get(obj));
-   e_theme_edje_object_set(it->frame, "base/theme/widgets",
-                           "e/conf/wallpaper/main/mini");
+   if (it->theme)
+     e_theme_edje_object_set(it->frame, "base/theme/widgets",
+                             "e/conf/wallpaper/main/mini-theme");
+   else if (it->remote)
+     e_theme_edje_object_set(it->frame, "base/theme/widgets",
+                             "e/conf/wallpaper/main/mini-remote");
+   else
+     e_theme_edje_object_set(it->frame, "base/theme/widgets",
+                             "e/conf/wallpaper/main/mini");
    evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_DOWN,
                                   _item_down, it);
    evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_UP,
@@ -624,7 +658,14 @@ _pan_file_add(Evas_Object *obj, const char *file)
    it->image = e_thumb_icon_add(evas_object_evas_get(obj));
    edje_object_part_swallow(it->frame, "e.swallow.content", it->image);
    evas_object_smart_callback_add(it->image, "e_thumb_gen", _thumb_gen, it);
-   e_thumb_icon_file_set(it->image, it->file, "e/desktop/background");
+   if (it->theme)
+     {
+        const char *f = e_theme_edje_file_get("base/theme/backgrounds",
+                                              "e/desktop/background");
+        e_thumb_icon_file_set(it->image, f, "e/desktop/background");
+     }
+   else
+     e_thumb_icon_file_set(it->image, it->file, "e/desktop/background");
    e_thumb_icon_size_set(it->image, sd->info->iw, sd->info->ih);
    evas_object_show(it->image);
 //   e_thumb_icon_begin(it->image);
@@ -657,15 +698,9 @@ static void
 _ok(void *data, void *data2)
 {
    Info *info = data;
-   if (info->specific)
+   if (info->mode == 0)
      {
-        /* update a specific config */
-        e_bg_del(info->con_num, info->zone_num, info->desk_x, info->desk_y);
-        e_bg_add(info->con_num, info->zone_num, info->desk_x, info->desk_y, info->bg_file);
-     }
-   else
-     {
-        /* set the default and nuke individual configs */
+        /* all desktops */
         while (e_config->desktop_backgrounds)
           {
              E_Config_Desktop_Background *cfbg;
@@ -677,8 +712,27 @@ _ok(void *data, void *data2)
           e_bg_default_set(NULL);
         else
           e_bg_default_set(info->bg_file);
+     }
+   else if (info->mode == 1)
+     {
+        /* specific desk */
+        e_bg_del(info->con_num, info->zone_num, info->desk_x, info->desk_y);
+        e_bg_add(info->con_num, info->zone_num, info->desk_x, info->desk_y, info->bg_file);
+     }
+   else
+     {
+        Eina_List *dlist = NULL, *l;
+        E_Config_Desktop_Background *cfbg;
         
-//        info->all_this_desk_screen = 0;
+        /* this screen */
+        EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cfbg)
+          {
+             if (cfbg->zone == info->zone_num)
+               dlist = eina_list_append(dlist, cfbg);
+          }
+        EINA_LIST_FREE(dlist, cfbg)
+          e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
+        e_bg_add(info->con_num, info->zone_num, -1, -1, info->bg_file);
      }
    e_bg_update();
    e_config_save_queue();
@@ -720,7 +774,7 @@ _idler(void *data)
         info->dirs = eina_list_append(info->dirs, strdup(buf));
         return 1;
      }
-   _pan_file_add(info->span, buf);
+   _pan_file_add(info->span, buf, 0, 0);
    
    e_util_wakeup();
    return 1;
@@ -762,28 +816,26 @@ wp_browser_new(E_Container *con)
    info->desk_x = desk->x;
    info->desk_y = desk->y;
    
+   info->mode = 0;
    cfbg = e_bg_config_get(con->num, zone->id, desk->x, desk->y);
    if (cfbg)
      {
         if ((cfbg->container >= 0) && (cfbg->zone >= 0))
           {
-             // info->specific = 1;
-//             if (cfbg->desk_x >= 0 && cfbg->desk_y >= 0)
-//               cfdata->all_this_desk_screen = E_CONFIG_WALLPAPER_DESK;
-//             else
-//               cfdata->all_this_desk_screen = E_CONFIG_WALLPAPER_SCREEN;
+             if (cfbg->desk_x >= 0 && cfbg->desk_y >= 0)
+               info->mode = 1;
+             else
+               info->mode = 2;
           }
         info->bg_file = strdup(cfbg->file);
      }
    if ((!info->bg_file) && (e_config->desktop_default_background))
      {
-        // default bg
         info->bg_file = strdup(e_config->desktop_default_background);
      }
    else
      {
-        // use theme bg
-//        info->use_theme_bg = 1;
+        info->use_theme_bg = 1;
      }
    
    info->iw = 256;
@@ -903,6 +955,9 @@ wp_browser_new(E_Container *con)
 
    evas_object_resize(info->bg, info->win->w, info->win->h);
    evas_object_show(info->bg);
+
+   // add theme bg
+   _pan_file_add(info->span, NULL, 0, 1);
    
    _scan(info);
    return info;
