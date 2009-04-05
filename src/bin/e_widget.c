@@ -376,6 +376,7 @@ EAPI void
 e_widget_focus_steal(Evas_Object *obj)
 {
    Evas_Object *parent, *o;
+
    API_ENTRY return;
    if (sd->focused) return;
    if (sd->disabled) return;
