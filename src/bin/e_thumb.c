@@ -71,6 +71,12 @@ e_thumb_shutdown(void)
    return 1;
 }
 
+static void
+_thumb_preloaded(void *data, Evas_Object *obj, void *event)
+{
+   evas_object_smart_callback_call(data, "e_thumb_gen", NULL);
+}
+
 EAPI Evas_Object *
 e_thumb_icon_add(Evas *evas)
 {
@@ -78,6 +84,7 @@ e_thumb_icon_add(Evas *evas)
    E_Thumb *eth;
 
    obj = e_icon_add(evas);
+   evas_object_smart_callback_add(obj, "preloaded", _thumb_preloaded, obj);
    _objid++;
    eth = E_NEW(E_Thumb, 1);
    eth->objid = _objid;
@@ -221,8 +228,9 @@ e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
 		       _pending--;
 		       eth->done = 1;
 		       if (_pending == 0) _e_thumb_thumbnailers_kill();
+                       e_icon_preload_set(obj, 1);
 		       e_icon_file_key_set(obj, icon, "/thumbnail/data");
-		       evas_object_smart_callback_call(obj, "e_thumb_gen", NULL);
+//x//		       evas_object_smart_callback_call(obj, "e_thumb_gen", NULL);
 		    }
 	       }
 	  }

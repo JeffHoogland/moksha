@@ -12,6 +12,7 @@ struct _E_Smart_Data
    int          size;
    unsigned char fill_inside : 1;
    unsigned char scale_up : 1;
+   unsigned char preload : 1;
 }; 
 
 /* local subsystem functions */
@@ -50,6 +51,7 @@ e_icon_file_set(Evas_Object *obj, const char *file)
    if (sd->size != 0)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
    evas_object_image_file_set(sd->obj, file, NULL);
+   if (sd->preload) evas_object_image_preload(sd->obj, 0);
    _e_icon_smart_reconfigure(sd);
 }
 
@@ -64,6 +66,7 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
    if (sd->size != 0)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
    evas_object_image_file_set(sd->obj, file, key);
+   if (sd->preload) evas_object_image_preload(sd->obj, 0);
    _e_icon_smart_reconfigure(sd);
 }
 
@@ -159,6 +162,26 @@ e_icon_alpha_get(Evas_Object *obj)
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      return 0;   
    return evas_object_image_alpha_get(sd->obj);
+}
+
+EAPI void
+e_icon_preload_set(Evas_Object *obj, int preload)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   sd->preload = preload;
+}
+
+EAPI int
+e_icon_preload_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return 0;
+   return sd->preload;
 }
 
 EAPI void
@@ -355,6 +378,12 @@ _e_icon_smart_init(void)
 }
 
 static void
+_e_icon_preloaded(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   evas_object_smart_callback_call(data, "preloaded", NULL);
+}
+
+static void
 _e_icon_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -362,6 +391,8 @@ _e_icon_smart_add(Evas_Object *obj)
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
    sd->obj = evas_object_image_add(evas_object_evas_get(obj));
+   evas_object_event_callback_add(sd->obj, EVAS_CALLBACK_IMAGE_PRELOADED,
+                                  _e_icon_preloaded, obj);
    sd->x = 0;
    sd->y = 0;
    sd->w = 0;
