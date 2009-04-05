@@ -20070,7 +20070,7 @@ group { name: "e/toolbar/default/base";
       images {
 	 image: "slider.png" COMP;
 	 image: "slider_clicked.png" COMP;
-	 image: "sb_runnerh.png" COMP;
+	 image: "sb_runnerv.png" COMP;
 	 image: "inset_sunk.png" COMP;
       }
       parts {
@@ -20326,7 +20326,7 @@ group { name: "e/toolbar/default/base";
       images {
 	 image: "slider.png" COMP;
 	 image: "slider_clicked.png" COMP;
-	 image: "sb_runnerv.png" COMP;
+	 image: "sb_runnerh.png" COMP;
 	 image: "inset_sunk.png" COMP;
       }
       parts {
