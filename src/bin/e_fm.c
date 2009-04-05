@@ -252,6 +252,7 @@ static E_Fm2_Icon *_e_fm2_icon_next_find(Evas_Object *obj, int next, int match_f
 
 static void _e_fm2_icon_sel_first(Evas_Object *obj);
 static void _e_fm2_icon_sel_last(Evas_Object *obj);
+static void _e_fm2_icon_sel_any(Evas_Object *obj);
 static void _e_fm2_icon_sel_prev(Evas_Object *obj);
 static void _e_fm2_icon_sel_next(Evas_Object *obj);
 static void _e_fm2_icon_sel_down(Evas_Object *obj);
@@ -977,6 +978,18 @@ e_fm2_all_unsel(Evas_Object *obj)
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
    _e_fm2_icon_desel_any(obj);
+}
+
+EAPI void
+e_fm2_all_sel(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   _e_fm2_icon_sel_any(obj);
 }
 
 EAPI void
@@ -4962,6 +4975,20 @@ _e_fm2_icon_sel_last(Evas_Object *obj)
    _e_fm2_icon_select(ic);
    evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
    _e_fm2_icon_make_visible(ic);
+}
+
+static void
+_e_fm2_icon_sel_any(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Icon *ic;
+   Eina_List *l;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (!sd->icons) return;
+   EINA_LIST_FOREACH(sd->icons, l, ic)
+     if (!ic->selected) _e_fm2_icon_select(ic);
 }
 
 static E_Fm2_Icon *

@@ -935,6 +935,16 @@ _e_fwin_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     e_fwin_new(con, dev, path);
 	     return;
 	  }
+	if (!strcmp(ev->key, "w"))
+	  {
+	     e_object_del(E_OBJECT(fwin));
+	     return;
+	  }
+	if (!strcmp(ev->key, "a"))
+	  {
+	     e_fm2_all_sel(fwin->fm_obj);
+	     return;
+	  }
      }
 }
 
