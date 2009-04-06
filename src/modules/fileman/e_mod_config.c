@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 #include "e_mod_main.h"
 #include "e_mod_config.h"
@@ -38,7 +41,7 @@ struct _E_Config_Dialog_Data
      {
 	struct 
 	  {
-	     int no_case;
+	     int case_sen;
 	     struct {
 		int first, last;
 	     } dirs;
@@ -115,7 +118,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->icon.icon.w = fileman_config->icon.icon.w;
    cfdata->icon.icon.h = fileman_config->icon.icon.h;
    cfdata->icon.extension.show = fileman_config->icon.extension.show;
+   cfdata->selection.windows_modifiers = fileman_config->selection.windows_modifiers;
    cfdata->list.sort.dirs.first = fileman_config->list.sort.dirs.first;
+   cfdata->list.sort.case_sen = !(fileman_config->list.sort.no_case);
    cfdata->hal.desktop = e_config->hal_desktop;
 }
 
@@ -137,22 +142,21 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    fileman_config->view.show_toolbar = cfdata->view.show_toolbar;
    fileman_config->icon.extension.show = cfdata->icon.extension.show;
 
+   fileman_config->selection.windows_modifiers = cfdata->selection.windows_modifiers;
+
    /* Make these two equal so that icons are proportioned correctly */
    fileman_config->icon.icon.w = cfdata->icon.icon.w;
    fileman_config->icon.icon.h = cfdata->icon.icon.w;
    
    fileman_config->list.sort.dirs.first = cfdata->list.sort.dirs.first;
    fileman_config->list.sort.dirs.last = !(cfdata->list.sort.dirs.first);
+   fileman_config->list.sort.no_case = !(cfdata->list.sort.case_sen);
 
    e_config->hal_desktop = cfdata->hal.desktop;
    if(e_config->hal_desktop) 
-     {
-        e_fm2_hal_show_desktop_icons();
-     }
+     e_fm2_hal_show_desktop_icons();
    else
-     {
-        e_fm2_hal_hide_desktop_icons();
-     }
+     e_fm2_hal_hide_desktop_icons();
      
    e_config_save_queue();
    
@@ -164,9 +168,11 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *ob, *of;
+   Evas_Object *o, *ob, *of, *otb;
    E_Radio_Group *rg;
    
+   otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
+
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("View Mode"), 0);
    rg = e_widget_radio_group_new(&(cfdata->view.mode));
@@ -192,16 +198,28 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 16.0, 256.0, 1.0, 0, 
 			    NULL, &(cfdata->icon.icon.w), 150);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   
+
+   e_widget_toolbook_page_append(otb, NULL, _("View"), o, 0, 0, 0, 0, 0.5, 0.0);
+
+   o = e_widget_list_add(evas, 1, 0);
    ob = e_widget_check_add(evas, _("Open Dirs In Place"), 
 			   &(cfdata->view.open_dirs_in_place));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
+
    ob = e_widget_check_add(evas, _("Sort Dirs First"), 
 			   &(cfdata->list.sort.dirs.first));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Case Sensitive"), 
+			   &(cfdata->list.sort.case_sen));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+
    ob = e_widget_check_add(evas, _("Use Single Click"), 
 			   &(cfdata->view.single_click));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Use Alternate Selection Modifiers"), 
+			   &(cfdata->selection.windows_modifiers));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+
    ob = e_widget_check_add(evas, _("Show Icon Extension"), 
 			   &(cfdata->icon.extension.show));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
@@ -217,5 +235,9 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ob = e_widget_check_add(evas, _("Show HAL icons on desktop"), 
 			   &(cfdata->hal.desktop));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   return o;
+
+   e_widget_toolbook_page_append(otb, NULL, _("Behavior"), o, 0, 0, 0, 0, 0.5, 0.0);
+
+   e_widget_toolbook_page_show(otb, 0);
+   return otb;
 }

@@ -1905,11 +1905,11 @@ _e_fwin_config_set(E_Fwin *fwin)
    fmc.view.single_click = fileman_config->view.single_click;
    fmc.view.no_subdir_jump = 0;
    fmc.icon.extension.show = fileman_config->icon.extension.show;
-   fmc.list.sort.no_case = 1;
+   fmc.list.sort.no_case = fileman_config->list.sort.no_case;
    fmc.list.sort.dirs.first = fileman_config->list.sort.dirs.first;
    fmc.list.sort.dirs.last = fileman_config->list.sort.dirs.last;
-   fmc.selection.single = 0;
-   fmc.selection.windows_modifiers = 0;
+   fmc.selection.single = fileman_config->selection.single;
+   fmc.selection.windows_modifiers = fileman_config->selection.windows_modifiers;
    e_fm2_config_set(fwin->fm_obj, &fmc);
 }
 
