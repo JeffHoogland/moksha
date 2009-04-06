@@ -328,7 +328,7 @@ _e_toolbar_menu_cb_pre(void *data, E_Menu *mn)
    e_menu_item_callback_set(mi, _e_toolbar_menu_cb_config, tbar);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Configure Toolbar Contents"));
+   e_menu_item_label_set(mi, _("Set Toolbar Contents"));
    e_util_menu_item_theme_icon_set(mi, "preferences-toolbar");
    e_menu_item_callback_set(mi, _e_toolbar_menu_cb_contents, tbar);
 }

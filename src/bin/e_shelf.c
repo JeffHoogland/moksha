@@ -1672,7 +1672,7 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Configure Shelf Contents"));
+   e_menu_item_label_set(mi, _("Set Shelf Contents"));
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop-shelf");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_contents, es);
    

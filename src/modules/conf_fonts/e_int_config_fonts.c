@@ -67,7 +67,7 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
      { "move_text",       N_("Move Text")},
      { "resize_text",     N_("Resize Text")},
      { "winlist_title",   N_("Winlist Title")},
-     { "configure",       N_("Configure Heading")},
+     { "configure",       N_("Settings Heading")},
      { "about_title",     N_("About Title")},
      { "about_version",   N_("About Version")},
      { "button_text",     N_("About Text")},

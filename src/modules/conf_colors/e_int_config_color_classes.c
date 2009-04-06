@@ -48,7 +48,7 @@ const CFColor_Hash _wm_hash[] =
      {"about_title",        N_("About Dialog Title")},
      {"about_version",      N_("About Dialog Version")},
      {"border_title",       N_("Border Title")},
-     {"configure_title",    N_("Configure Dialog Title")},
+     {"configure_title",    N_("Settings Dialog Title")},
      {"error_text",         N_("Error Text")},
      {"menu_title",         N_("Menu Title")},
      {"menu_title_active",  N_("Menu Title Active")},

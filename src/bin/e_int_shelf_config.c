@@ -528,7 +528,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_list_object_append(o, ol, 0, 0, 0.5);
    
-   ob = e_widget_button_add(evas, _("Configure Contents..."), "configure", _cb_configure, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Set Contents..."), "configure", _cb_configure, cfdata, NULL);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
 
    return o;
@@ -633,7 +633,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
    
-   ob = e_widget_button_add(evas, _("Configure Contents..."), "configure", _cb_configure, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Set Contents..."), "configure", _cb_configure, cfdata, NULL);
    e_widget_list_object_append(o2, ob, 0, 0, 0.5);
    
    e_widget_list_object_append(o, o2, 0, 0, 0.0);
