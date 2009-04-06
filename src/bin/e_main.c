@@ -1,11 +1,16 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
+#define _GNU_SOURCE
 #include "e.h"
 
 #ifdef HAVE_ECORE_IMF
 #include <Ecore_IMF.h>
 #endif
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 /*
  * i need to make more use of these when i'm baffled as to when something is
@@ -1151,53 +1156,108 @@ _e_main_x_shutdown(void)
    return 1;
 }
 
+static mode_t default_mode = S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
+
 static int
 _e_main_dirs_init(void)
 {
    const char *homedir;
    char buf[PATH_MAX];
-   const char *dirs[] =
-     {
-	"%s/.e",
-	"%s/.e/e/",
-	"%s/.e/e/images",
-	"%s/.e/e/fonts",
-	"%s/.e/e/themes",
-	"%s/.e/e/icons",
-	"%s/.e/e/backgrounds",
-	"%s/.e/e/applications",
-	"%s/.e/e/applications/menu",
-	"%s/.e/e/applications/menu/favorite",
-	"%s/.e/e/applications/menu/all",
-	"%s/.e/e/applications/bar",
-	"%s/.e/e/applications/bar/default",
-	"%s/.e/e/applications/startup",
-	"%s/.e/e/applications/restart",
-	"%s/.e/e/applications/trash",
-	"%s/.e/e/modules",
-	"%s/.e/e/config",
-	"%s/.e/e/locale",
-	"%s/.e/e/input_methods"
-     };
-   int i;
-   
+   const char *dirs[] = {
+     "images",
+     "fonts",
+     "themes",
+     "icons",
+     "backgrounds",
+     "applications",
+     "applications/menu",
+     "applications/menu/favorite",
+     "applications/menu/all",
+     "applications/bar",
+     "applications/bar/default",
+     "applications/startup",
+     "applications/restart",
+     "applications/trash",
+     "modules",
+     "config",
+     "locale",
+     "input_methods"
+   };
+   int i, fd, baselen, retval;
+   DIR *dir;
+
    homedir = e_user_homedir_get();
+   baselen = snprintf(buf, sizeof(buf), "%s/.e/e", homedir);
+   if (baselen >= (int)sizeof(buf))
+     {
+	e_error_message_show("Error could not join:\n'%s'\nand\n'/.e/e",
+			     homedir);
+	return 0;
+     }
+   if ((!ecore_file_is_dir(buf)) && (!ecore_file_mkpath(buf)))
+     {
+	e_error_message_show("Error creating directory:\n%s", buf);
+	return 0;
+     }
+
+   dir = opendir(buf);
+   if (!dir)
+     {
+	e_error_message_show("Could not open:\n%s\nError: %s",
+			     buf, strerror(errno));
+	return 0;
+     }
+   fd = dirfd(dir);
+
+   buf[baselen] = '/';
+   baselen++;
+   buf[baselen] = '\0';
+   retval = 1;
    for (i = 0; i < (int)(sizeof(dirs) / sizeof(char *)); i++)
      {
-	snprintf(buf, sizeof(buf), dirs[i], homedir);
-	if (!ecore_file_mkdir(buf))
+	/* TODO: probably need to handle cases without ATSOURCE files?
+	 * let's wait people to report and if any I'll fix it.
+	 */
+	struct stat st;
+	if (fstatat(fd, dirs[i], &st, 0) == 0)
 	  {
-	     if (!ecore_file_is_dir(buf))
+	     if (S_ISDIR(st.st_mode))
+	       continue;
+	     else
 	       {
-		  e_error_message_show("Error creating directory:\n"
-				       "%s",
-				       buf);
-		  return 0;
+		  e_error_message_show("Not a directory:\n%s%s", buf, dirs[i]);
+		  retval = 0;
+		  goto end;
+	       }
+	  }
+	else
+	  {
+	     if (errno == ENOENT)
+	       {
+		  if (mkdirat(fd, dirs[i], default_mode) == 0)
+		    continue;
+		  else
+		    {
+		       e_error_message_show
+			 ("could not create dir:\n%s%s\nError: %s",
+			  buf, dirs[i], strerror(errno));
+		       retval = 0;
+		       goto end;
+		    }
+	       }
+	     else
+	       {
+		  e_error_message_show("could not fstat:\n%s%s\nError: %s",
+				       buf, dirs[i], strerror(errno));
+		  retval = 0;
+		  goto end;
 	       }
 	  }
      }
 
-   return 1;
+ end:
+   closedir(dir);
+   return retval;
 }
 
 static int

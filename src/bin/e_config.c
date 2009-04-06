@@ -1100,22 +1100,32 @@ EAPI Eina_List *
 e_config_profile_list(void)
 {
    Eina_List *files;
-   char buf[PATH_MAX];
+   char buf[PATH_MAX], *p;
    const char *homedir;
    const char *dir;
    Eina_List *flist = NULL;
-   
+   int len;
+
    homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/", homedir);
+   len = snprintf(buf, sizeof(buf), "%s/.e/e/config/", homedir);
+   if (len >= (int)sizeof(buf))
+     return NULL;
+
+   p = buf + len;
+   len = sizeof(buf) - len;
    files = ecore_file_ls(buf);
    if (files)
      {
 	char *file;
-	
+
 	files = eina_list_sort(files, 0, (Eina_Compare_Cb)_cb_sort_files);
 	EINA_LIST_FREE(files, file)
 	  {
-	     snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, file);
+	     if (ecore_strlcpy(p, file, len) >= len)
+	       {
+		  free(file);
+		  continue;
+	       }
 	     if (ecore_file_is_dir(buf))
 	       flist = eina_list_append(flist, file);
 	     else
@@ -1123,24 +1133,31 @@ e_config_profile_list(void)
 	  }
      }
    dir = e_prefix_data_get();
-   snprintf(buf, sizeof(buf), "%s/data/config", dir);
+   len = snprintf(buf, sizeof(buf), "%s/data/config", dir);
+   if (len >= (int)sizeof(buf))
+     return NULL;
+
+   p = buf + len;
+   len = sizeof(buf) - len;
    files = ecore_file_ls(buf);
    if (files)
      {
 	char *file;
-	
 	files = eina_list_sort(files, 0, (Eina_Compare_Cb)_cb_sort_files);
 	EINA_LIST_FREE(files, file)
 	  {
-	     const char *tmp;
-	     Eina_List *l;
-
-	     snprintf(buf, sizeof(buf), "%s/data/config/%s", dir, file);
+	     if (ecore_strlcpy(p, file, len) >= len)
+	       {
+		  free(file);
+		  continue;
+	       }
 	     if (ecore_file_is_dir(buf))
 	       {
+		  const Eina_List *l;
+		  const char *tmp;
 		  EINA_LIST_FOREACH(flist, l, tmp)
 		    if (!strcmp(file, tmp)) break;
-		  
+
 		  if (!l) flist = eina_list_append(flist, file);
 		  else free(file);
 	       }
