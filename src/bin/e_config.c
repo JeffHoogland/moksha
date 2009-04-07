@@ -1133,7 +1133,7 @@ e_config_profile_list(void)
 	  }
      }
    dir = e_prefix_data_get();
-   len = snprintf(buf, sizeof(buf), "%s/data/config", dir);
+   len = snprintf(buf, sizeof(buf), "%s/data/config/", dir);
    if (len >= (int)sizeof(buf))
      return NULL;
 
