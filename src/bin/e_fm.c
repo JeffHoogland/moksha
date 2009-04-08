@@ -427,16 +427,6 @@ static Ecore_Timer *_e_fm2_mime_clear = NULL;
 #include "e_fm_shared.h"
 #undef E_FM_SHARED_CODEC
 
-static inline void
-_eina_stringshare_replace(const char **p, const char *str)
-{
-   str = eina_stringshare_add(str);
-   eina_stringshare_del(*p);
-   if (*p == str)
-     return;
-   *p = str;
-}
-
 static inline Eina_Bool
 _e_fm2_icon_realpath(const E_Fm2_Icon *ic, char *buf, int buflen)
 {
@@ -730,12 +720,12 @@ e_fm2_init(void)
 EAPI int
 e_fm2_shutdown(void)
 {
-   _eina_stringshare_replace(&_e_fm2_icon_desktop_str, NULL);
-   _eina_stringshare_replace(&_e_fm2_icon_thumb_str, NULL);
-   _eina_stringshare_replace(&_e_fm2_mime_inode_directory, NULL);
-   _eina_stringshare_replace(&_e_fm2_mime_app_desktop, NULL);
-   _eina_stringshare_replace(&_e_fm2_mime_app_edje, NULL);
-   _eina_stringshare_replace(&_e_fm2_mime_text_uri_list, NULL);
+   eina_stringshare_replace(&_e_fm2_icon_desktop_str, NULL);
+   eina_stringshare_replace(&_e_fm2_icon_thumb_str, NULL);
+   eina_stringshare_replace(&_e_fm2_mime_inode_directory, NULL);
+   eina_stringshare_replace(&_e_fm2_mime_app_desktop, NULL);
+   eina_stringshare_replace(&_e_fm2_mime_app_edje, NULL);
+   eina_stringshare_replace(&_e_fm2_mime_text_uri_list, NULL);
 
    /// DBG
    if (_e_fm2_op_registry_entry_add_handler)
@@ -890,8 +880,8 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    if (sd->realpath) _e_fm2_client_monitor_del(sd->id, sd->realpath);
    sd->listing = 0;
 
-   _eina_stringshare_replace(&sd->dev, dev);
-   _eina_stringshare_replace(&sd->path, path);
+   eina_stringshare_replace(&sd->dev, dev);
+   eina_stringshare_replace(&sd->path, path);
    eina_stringshare_del(sd->realpath);
    sd->realpath = realpath;
    _e_fm2_queue_free(obj);
@@ -1001,7 +991,7 @@ e_fm2_custom_theme_set(Evas_Object *obj, const char *path)
    if (!sd) return; // safety
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
-   _eina_stringshare_replace(&sd->custom_theme, path);
+   eina_stringshare_replace(&sd->custom_theme, path);
    _e_fm2_theme_edje_object_set(sd, sd->drop, "base/theme/fileman",
 				"list/drop_between");
    _e_fm2_theme_edje_object_set(sd, sd->drop_in, "base/theme/fileman",
@@ -1021,7 +1011,7 @@ e_fm2_custom_theme_content_set(Evas_Object *obj, const char *content)
    if (!sd) return; // safety
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
-   _eina_stringshare_replace(&sd->custom_theme_content, content);
+   eina_stringshare_replace(&sd->custom_theme_content, content);
    _e_fm2_theme_edje_object_set(sd, sd->drop, "base/theme/fileman",
 				"list/drop_between");
    _e_fm2_theme_edje_object_set(sd, sd->drop_in, "base/theme/fileman",
@@ -1526,7 +1516,7 @@ e_fm2_icons_update(Evas_Object *obj)
 	  {
 	     if (cf->icon.valid)
 	       {
-		  _eina_stringshare_replace(&ic->info.icon, cf->icon.icon);
+		  eina_stringshare_replace(&ic->info.icon, cf->icon.icon);
 		  ic->info.icon_type = cf->icon.type;
 	       }
 	  }
@@ -4328,7 +4318,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	  {
 	     if (cf->icon.icon)
 	       {
-		  _eina_stringshare_replace(&ic->info.icon, cf->icon.icon);
+		  eina_stringshare_replace(&ic->info.icon, cf->icon.icon);
 	       }
 	     ic->info.icon_type = cf->icon.type;
 	  }

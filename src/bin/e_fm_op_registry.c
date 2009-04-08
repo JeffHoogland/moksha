@@ -244,14 +244,8 @@ e_fm2_op_registry_entry_files_set(E_Fm2_Op_Registry_Entry *entry, const char *sr
 {
    if (!entry) return;
 
-   src = eina_stringshare_add(src);
-   dst = eina_stringshare_add(dst);
-
-   eina_stringshare_del(entry->src);
-   eina_stringshare_del(entry->dst);
-
-   entry->src = src;
-   entry->dst = dst;
+   eina_stringshare_replace(&entry->src, src);
+   eina_stringshare_replace(&entry->dst, dst);
 }
 
 /**
