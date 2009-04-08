@@ -16,4 +16,7 @@ export DISPLAY=:1
 unset E_RESTART E_START E_IPC_SOCKET E_START_TIME
 #E_CONF_PROFILE=default ltrace enlightenment_start
 #E_CONF_PROFILE=default enlightenment_start
-enlightenment_start -profile illume
+enlightenment_start \
+-no-precache \
+-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it \
+-profile illume
