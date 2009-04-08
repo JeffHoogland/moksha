@@ -856,7 +856,7 @@ wp_browser_new(E_Container *con)
    snprintf(buf, sizeof(buf), "%s/data/backgrounds", e_prefix_data_get());
    info->dirs = eina_list_append(info->dirs, strdup(buf));
    
-   e_win_title_set(win, _("Wallpaer Settings"));
+   e_win_title_set(win, _("Wallpaper Settings"));
    e_win_name_class_set(win, "E", "_config_wallpaper_dialog");
    e_win_border_icon_set(win, "preferences-desktop-wallpaper");
    e_win_resize_callback_set(win, _resize);

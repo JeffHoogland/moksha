@@ -61,6 +61,8 @@ static void my_free_hook(void *p, const void *caller)
 
 EAPI int e_precache_end = 0;
 
+static int really_know = 0;
+
 /* local subsystem functions */
 static void _e_main_shutdown_push(int (*func)(void));
 static void _e_main_shutdown(int errorcode);
@@ -307,6 +309,15 @@ main(int argc, char **argv)
 	     i++;
 	     e_util_env_set("E_CONF_PROFILE", argv[i]);
 	  }
+	else if (!strcmp(argv[i], "-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it"))
+	  {
+             really_know = 1;
+	  }
+	else if (!strcmp(argv[i], "-locked"))
+	  {
+	     locked = 1;
+	     puts("enlightenment will start with desklock on.");
+	  }
 	else if ((!strcmp(argv[i], "-h")) ||
 		 (!strcmp(argv[i], "-help")) ||
 		 (!strcmp(argv[i], "--help")))
@@ -332,15 +343,12 @@ main(int argc, char **argv)
 		  "\t-psychotic\n"
 		  "\t\tBe psychotic.\n"
 		  "\t-locked\n"
-		  "\t\tstart with desklock on, so password will be asked.\n"
+		  "\t\tStart with desklock on, so password will be asked.\n"
+		  "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
+		  "\t\tIf you need this help, you don't need this option.\n"
 		  )
 		);
 	     exit(0);
-	  }
-	else if (!strcmp(argv[i], "-locked"))
-	  {
-	     locked = 1;
-	     puts("enlightenment will start with desklock on.");
 	  }
      }
 
@@ -665,65 +673,67 @@ main(int argc, char **argv)
 	_e_main_shutdown_push(e_init_shutdown);
 	pause();
      }
-   
-   e_init_status_set(_("Testing Format Support"));
-   TS("test file format support");   
+   if (!really_know)
      {
-	Ecore_Evas *ee;
-	Evas_Object *im, *txt;
-	char buf[4096];
-        Evas_Coord tw, th;
-	
-	ee = ecore_evas_buffer_new(1, 1);
-	if (!ee)
-	  {
-	     e_error_message_show(_("Enlightenment found Evas can't create a buffer canvas. Please check\n"
-				    "Evas has Software Buffer engine support.\n"));
-	     _e_main_shutdown(-1);
-	  }
-        e_canvas_add(ee);
-	im = evas_object_image_add(ecore_evas_get(ee));
-
-	snprintf(buf, sizeof(buf), "%s/data/images/test.png", e_prefix_data_get());
-	evas_object_image_file_set(im, buf, NULL);
-	if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
-	  {
-	     e_error_message_show(_("Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
-				    "loader support.\n"));
-	     _e_main_shutdown(-1);
-	  }
-	
-	snprintf(buf, sizeof(buf), "%s/data/images/test.jpg", e_prefix_data_get());
-	evas_object_image_file_set(im, buf, NULL);
-	if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
-	  {
-	     e_error_message_show(_("Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
-				    "loader support.\n"));
-	     _e_main_shutdown(-1);
-	  }
-
-	snprintf(buf, sizeof(buf), "%s/data/images/test.edj", e_prefix_data_get());
-	evas_object_image_file_set(im, buf, "images/0");
-	if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
-	  {
-	     e_error_message_show(_("Enlightenment found Evas can't load EET files. Check Evas has EET\n"
-				    "loader support.\n"));
-	     _e_main_shutdown(-1);
-	  }
-	evas_object_del(im);
-        txt = evas_object_text_add(ecore_evas_get(ee));
-        evas_object_text_font_set(txt, "Sans", 10);
-        evas_object_text_text_set(txt, "Hello");
-        evas_object_geometry_get(txt, NULL, NULL, &tw, &th);
-        if ((tw <= 0) && (th <= 0))
+        e_init_status_set(_("Testing Format Support"));
+        TS("test file format support");   
           {
-	     e_error_message_show(_("Enlightenment found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
-				    "support and system fontconfig defines a 'Sans' font.\n"));
-	     _e_main_shutdown(-1);
+             Ecore_Evas *ee;
+             Evas_Object *im, *txt;
+             char buf[4096];
+             Evas_Coord tw, th;
+             
+             ee = ecore_evas_buffer_new(1, 1);
+             if (!ee)
+               {
+                  e_error_message_show(_("Enlightenment found Evas can't create a buffer canvas. Please check\n"
+                                         "Evas has Software Buffer engine support.\n"));
+                  _e_main_shutdown(-1);
+               }
+             e_canvas_add(ee);
+             im = evas_object_image_add(ecore_evas_get(ee));
+             
+             snprintf(buf, sizeof(buf), "%s/data/images/test.png", e_prefix_data_get());
+             evas_object_image_file_set(im, buf, NULL);
+             if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
+               {
+                  e_error_message_show(_("Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
+                                         "loader support.\n"));
+                  _e_main_shutdown(-1);
+               }
+             
+             snprintf(buf, sizeof(buf), "%s/data/images/test.jpg", e_prefix_data_get());
+             evas_object_image_file_set(im, buf, NULL);
+             if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
+               {
+                  e_error_message_show(_("Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
+                                         "loader support.\n"));
+                  _e_main_shutdown(-1);
+               }
+             
+             snprintf(buf, sizeof(buf), "%s/data/images/test.edj", e_prefix_data_get());
+             evas_object_image_file_set(im, buf, "images/0");
+             if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
+               {
+                  e_error_message_show(_("Enlightenment found Evas can't load EET files. Check Evas has EET\n"
+                                         "loader support.\n"));
+                  _e_main_shutdown(-1);
+               }
+             evas_object_del(im);
+             txt = evas_object_text_add(ecore_evas_get(ee));
+             evas_object_text_font_set(txt, "Sans", 10);
+             evas_object_text_text_set(txt, "Hello");
+             evas_object_geometry_get(txt, NULL, NULL, &tw, &th);
+             if ((tw <= 0) && (th <= 0))
+               {
+                  e_error_message_show(_("Enlightenment found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
+                                         "support and system fontconfig defines a 'Sans' font.\n"));
+                  _e_main_shutdown(-1);
+               }
+             evas_object_del(txt);
+             e_canvas_del(ee);
+             ecore_evas_free(ee);
           }
-        evas_object_del(txt);
-        e_canvas_del(ee);
-	ecore_evas_free(ee);
      }
    
    e_init_status_set(_("Setup Screens"));
