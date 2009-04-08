@@ -221,7 +221,6 @@ _e_wid_do(Evas_Object *obj)
 	
 	for (l = wd->group->radios; l; l = l->next)
 	  {
-	     wd = e_widget_data_get(l->data);
 	     if (l->data != obj)
 	       {
 		  wd = e_widget_data_get(l->data);
