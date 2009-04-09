@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-07 07:53+0400\n"
-"PO-Revision-Date: 2009-04-07 11:30+0400\n"
+"POT-Creation-Date: 2009-04-09 11:48+0400\n"
+"PO-Revision-Date: 2009-04-09 14:06+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "À propos de Enlightenment"
 #: src/bin/e_about.c:20
 #: src/bin/e_actions.c:2485
 #: src/bin/e_config_dialog.c:258
-#: src/bin/e_fm.c:876
+#: src/bin/e_fm.c:866
 #: src/bin/e_int_border_menu.c:206
 #: src/bin/e_int_border_prop.c:81
 #: src/bin/e_theme_about.c:20
@@ -43,7 +43,7 @@ msgstr "Fermer"
 #: src/bin/e_actions.c:2785
 #: src/bin/e_actions.c:2789
 #: src/bin/e_int_menus.c:158
-#: src/bin/e_main.c:662
+#: src/bin/e_main.c:670
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:182
 #: src/modules/wizard/page_000.c:27
 msgid "Enlightenment"
@@ -74,8 +74,8 @@ msgstr "Êtes-vous sûr de vouloir tuer cette fenêtre ?"
 #: src/bin/e_actions.c:2052
 #: src/bin/e_actions.c:2116
 #: src/bin/e_confirm_dialog.c:47
-#: src/bin/e_fm.c:8530
-#: src/bin/e_fm.c:8726
+#: src/bin/e_fm.c:8520
+#: src/bin/e_fm.c:8716
 #: src/bin/e_module.c:508
 msgid "Yes"
 msgstr "Oui"
@@ -88,8 +88,8 @@ msgstr "Oui"
 #: src/bin/e_actions.c:2054
 #: src/bin/e_actions.c:2118
 #: src/bin/e_confirm_dialog.c:48
-#: src/bin/e_fm.c:8528
-#: src/bin/e_fm.c:8727
+#: src/bin/e_fm.c:8518
+#: src/bin/e_fm.c:8717
 #: src/bin/e_module.c:509
 msgid "No"
 msgstr "Non"
@@ -155,7 +155,7 @@ msgid "Window : Actions"
 msgstr "Fenêtre: Actions"
 
 #: src/bin/e_actions.c:2445
-#: src/bin/e_fm.c:5934
+#: src/bin/e_fm.c:5924
 msgid "Move"
 msgstr "Déplacer"
 
@@ -955,7 +955,7 @@ msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
 #: src/bin/e_entry.c:493
-#: src/bin/e_fm.c:7864
+#: src/bin/e_fm.c:7854
 #: src/modules/conf_applications/e_int_config_apps.c:273
 #: src/modules/conf_profiles/e_int_config_profiles.c:124
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -964,19 +964,19 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: src/bin/e_entry.c:503
-#: src/bin/e_fm.c:7772
+#: src/bin/e_fm.c:7762
 msgid "Cut"
 msgstr "Couper"
 
 #: src/bin/e_entry.c:511
-#: src/bin/e_fm.c:5929
-#: src/bin/e_fm.c:7786
+#: src/bin/e_fm.c:5919
+#: src/bin/e_fm.c:7776
 msgid "Copy"
 msgstr "Copier"
 
 #: src/bin/e_entry.c:519
-#: src/bin/e_fm.c:7612
-#: src/bin/e_fm.c:7799
+#: src/bin/e_fm.c:7602
+#: src/bin/e_fm.c:7789
 msgid "Paste"
 msgstr "Coller"
 
@@ -1115,175 +1115,175 @@ msgstr "Données de sortie"
 msgid "There was no output."
 msgstr "Il n'y a eu aucune sortie."
 
-#: src/bin/e_fm.c:878
+#: src/bin/e_fm.c:868
 msgid "Nonexistent path"
 msgstr "Chemin inexistant"
 
-#: src/bin/e_fm.c:881
+#: src/bin/e_fm.c:871
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s n'existe pas."
 
-#: src/bin/e_fm.c:3543
+#: src/bin/e_fm.c:3533
 #, c-format
 msgid "%i Files"
 msgstr "%i Fichiers"
 
-#: src/bin/e_fm.c:5942
-#: src/bin/e_fm.c:7620
-#: src/bin/e_fm.c:7807
+#: src/bin/e_fm.c:5932
+#: src/bin/e_fm.c:7610
+#: src/bin/e_fm.c:7797
 msgid "Link"
 msgstr " Lien "
 
-#: src/bin/e_fm.c:5950
-#: src/bin/e_fm.c:8471
-#: src/bin/e_fm.c:8608
+#: src/bin/e_fm.c:5940
+#: src/bin/e_fm.c:8461
+#: src/bin/e_fm.c:8598
 msgid "Abort"
 msgstr "Annuler"
 
-#: src/bin/e_fm.c:7539
-#: src/bin/e_fm.c:7699
+#: src/bin/e_fm.c:7529
+#: src/bin/e_fm.c:7689
 msgid "Inherit parent settings"
 msgstr "Hériter des propriétés du parent"
 
-#: src/bin/e_fm.c:7548
-#: src/bin/e_fm.c:7708
+#: src/bin/e_fm.c:7538
+#: src/bin/e_fm.c:7698
 #: src/modules/fileman/e_mod_config.c:177
 msgid "View Mode"
 msgstr "Mode d'affichage"
 
-#: src/bin/e_fm.c:7555
-#: src/bin/e_fm.c:7715
+#: src/bin/e_fm.c:7545
+#: src/bin/e_fm.c:7705
 msgid "Refresh View"
 msgstr "Rafraîchir"
 
-#: src/bin/e_fm.c:7563
-#: src/bin/e_fm.c:7723
+#: src/bin/e_fm.c:7553
+#: src/bin/e_fm.c:7713
 msgid "Show Hidden Files"
 msgstr "Afficher les fichiers cachés"
 
-#: src/bin/e_fm.c:7575
-#: src/bin/e_fm.c:7735
+#: src/bin/e_fm.c:7565
+#: src/bin/e_fm.c:7725
 msgid "Remember Ordering"
 msgstr "Mémoriser l'ordre"
 
-#: src/bin/e_fm.c:7584
-#: src/bin/e_fm.c:7744
+#: src/bin/e_fm.c:7574
+#: src/bin/e_fm.c:7734
 msgid "Sort Now"
 msgstr "Classer maintenant"
 
-#: src/bin/e_fm.c:7596
-#: src/bin/e_fm.c:7759
+#: src/bin/e_fm.c:7586
+#: src/bin/e_fm.c:7749
 #: src/modules/conf_paths/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Nouveau dossier"
 
-#: src/bin/e_fm.c:7872
+#: src/bin/e_fm.c:7862
 msgid "Rename"
 msgstr "Renommer"
 
-#: src/bin/e_fm.c:7879
+#: src/bin/e_fm.c:7869
 msgid "Properties"
 msgstr "Propriétés"
 
-#: src/bin/e_fm.c:8110
-#: src/bin/e_fm.c:8172
+#: src/bin/e_fm.c:8100
+#: src/bin/e_fm.c:8162
 msgid "Use default"
 msgstr "Valeur par défaut"
 
-#: src/bin/e_fm.c:8145
+#: src/bin/e_fm.c:8135
 #: src/modules/fileman/e_mod_config.c:182
 msgid "Grid Icons"
 msgstr "Icones alignés"
 
-#: src/bin/e_fm.c:8153
+#: src/bin/e_fm.c:8143
 #: src/modules/fileman/e_mod_config.c:184
 msgid "Custom Icons"
 msgstr "Icones personnalisés"
 
-#: src/bin/e_fm.c:8161
+#: src/bin/e_fm.c:8151
 #: src/modules/fileman/e_mod_config.c:192
 msgid "List"
 msgstr "Liste"
 
-#: src/bin/e_fm.c:8186
+#: src/bin/e_fm.c:8176
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Taille de l'icone (%d)"
 
-#: src/bin/e_fm.c:8336
+#: src/bin/e_fm.c:8326
 msgid "Create a new Directory"
 msgstr "Créer un nouveau dossier"
 
-#: src/bin/e_fm.c:8337
+#: src/bin/e_fm.c:8327
 msgid "New Directory Name:"
 msgstr "Nom du nouveau dossier:"
 
-#: src/bin/e_fm.c:8396
+#: src/bin/e_fm.c:8386
 #, c-format
 msgid "Rename %s to:"
 msgstr "Renommer %s en:"
 
-#: src/bin/e_fm.c:8398
+#: src/bin/e_fm.c:8388
 msgid "Rename File"
 msgstr "Renommer le fichier"
 
-#: src/bin/e_fm.c:8470
-#: src/bin/e_fm.c:8607
+#: src/bin/e_fm.c:8460
+#: src/bin/e_fm.c:8597
 msgid "Retry"
 msgstr "Réessayer"
 
-#: src/bin/e_fm.c:8474
-#: src/bin/e_fm.c:8613
+#: src/bin/e_fm.c:8464
+#: src/bin/e_fm.c:8603
 #: src/modules/wizard/page_030.c:83
 msgid "Error"
 msgstr "Erreur"
 
-#: src/bin/e_fm.c:8477
+#: src/bin/e_fm.c:8467
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: src/bin/e_fm.c:8529
+#: src/bin/e_fm.c:8519
 msgid "No to all"
 msgstr "Non pour tout"
 
-#: src/bin/e_fm.c:8531
+#: src/bin/e_fm.c:8521
 msgid "Yes to all"
 msgstr "Oui pour tout"
 
-#: src/bin/e_fm.c:8534
+#: src/bin/e_fm.c:8524
 msgid "Warning"
 msgstr "Avertissement"
 
-#: src/bin/e_fm.c:8537
+#: src/bin/e_fm.c:8527
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Le fichier existe déjà, écraser ?<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:8609
+#: src/bin/e_fm.c:8599
 msgid "Ignore this"
 msgstr "Ignorer"
 
-#: src/bin/e_fm.c:8610
+#: src/bin/e_fm.c:8600
 msgid "Ignore all"
 msgstr "Ignorer tout"
 
-#: src/bin/e_fm.c:8615
+#: src/bin/e_fm.c:8605
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr "Une erreur s'est produite lors d'une opération.<br>%s"
 
-#: src/bin/e_fm.c:8729
+#: src/bin/e_fm.c:8719
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: src/bin/e_fm.c:8734
+#: src/bin/e_fm.c:8724
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:8740
+#: src/bin/e_fm.c:8730
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br>les %d fichiers sélectionnés dans:<br><hilight>%s</hilight> ?"
@@ -2265,7 +2265,7 @@ msgstr ""
 "Veuillez vérifier:\n"
 "%s/enlightenment-%s\n"
 
-#: src/bin/e_main.c:316
+#: src/bin/e_main.c:327
 #, c-format
 msgid ""
 "Options:\n"
@@ -2287,11 +2287,13 @@ msgid ""
 "\t-psychotic\n"
 "\t\tBe psychotic.\n"
 "\t-locked\n"
-"\t\tstart with desklock on, so password will be asked.\n"
+"\t\tStart with desklock on, so password will be asked.\n"
+"\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
+"\t\tIf you need this help, you don't need this option.\n"
 msgstr ""
 "Options :\n"
-"\t-display AFFICHAGE\n"
-"\t\tSe connecter à l'affichage nommé AFFICHAGE\n"
+"\t-display DISPLAY\n"
+"\t\tSe connecter à l'affichage nommé DISPLAY\n"
 "\t\tExemple: -display :1.0\n"
 "\t-fake-xinerama-screen WxH+X+Y\n"
 "\t\tAjouter un écran xinerama VIRTUEL (au lieu d'un réel)\n"
@@ -2310,8 +2312,10 @@ msgstr ""
 "\t\tPsychopathe.\n"
 "\t-locked\n"
 "\t\tDémarrer avec le verrouillage du bureau activé, afin que le mot de passe soit demandé.\n"
+"\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
+"\t\tSi vous avez besoin de cette aide, c'est que vous n'avez pas besoin de cette option.\n"
 
-#: src/bin/e_main.c:385
+#: src/bin/e_main.c:393
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2319,7 +2323,7 @@ msgstr ""
 "Enlightenment ne peut pas initialiser Ecore !\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
-#: src/bin/e_main.c:411
+#: src/bin/e_main.c:419
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2327,7 +2331,7 @@ msgstr ""
 "Enlightenment ne peut pas initialiser le système de fichiers.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
-#: src/bin/e_main.c:423
+#: src/bin/e_main.c:431
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2335,7 +2339,7 @@ msgstr ""
 "Enlightenment ne peut pas initialiser le gestionnaire de signal de sortie.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
-#: src/bin/e_main.c:429
+#: src/bin/e_main.c:437
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2343,7 +2347,7 @@ msgstr ""
 "Enlightenment ne peut pas initialiser le gestionnaire de signal HUP.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
-#: src/bin/e_main.c:441
+#: src/bin/e_main.c:449
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2351,7 +2355,7 @@ msgstr ""
 "Enlightenment ne peut pas initialiser sa connexion à X.\n"
 "Avez-vous défini la variable d'environnement DISPLAY ?"
 
-#: src/bin/e_main.c:449
+#: src/bin/e_main.c:457
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2359,7 +2363,7 @@ msgstr ""
 "Enlightenment ne peut pas initialiser son système d'alerte d'urgence.\n"
 "Avez-vous défini la variable d'environnement DISPLAY ?"
 
-#: src/bin/e_main.c:472
+#: src/bin/e_main.c:480
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -2367,7 +2371,7 @@ msgstr ""
 "Enlightenment ne peut pas initialiser le gestionnaire de connexions.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
-#: src/bin/e_main.c:480
+#: src/bin/e_main.c:488
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2375,7 +2379,7 @@ msgstr ""
 "Enlightenment ne peut pas initialiser le système IPC.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
-#: src/bin/e_main.c:489
+#: src/bin/e_main.c:497
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -2383,7 +2387,7 @@ msgstr ""
 "Enlightenment ne peut pas initialiser l'affichage xinerama.\n"
 "Ceci ne devrait pas se produire."
 
-#: src/bin/e_main.c:508
+#: src/bin/e_main.c:516
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -2391,7 +2395,7 @@ msgstr ""
 "Enlightenment ne peut pas initialiser le système Evas.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
-#: src/bin/e_main.c:514
+#: src/bin/e_main.c:522
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2402,7 +2406,7 @@ msgstr ""
 "installations de Evas et Ecore, et que ces bibliothèques supportent\n"
 "le moteur de rendu logiciel X11."
 
-#: src/bin/e_main.c:521
+#: src/bin/e_main.c:529
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2413,8 +2417,8 @@ msgstr ""
 "installations de Evas et Ecore et vérifier qu'ils supportent le\n"
 "le moteur de rendu logiciel en mémoire."
 
-#: src/bin/e_main.c:537
-#: src/bin/e_main.c:544
+#: src/bin/e_main.c:545
+#: src/bin/e_main.c:552
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
@@ -2422,7 +2426,7 @@ msgstr ""
 "Enlightenment ne peut pas initialiser le système de menus FDO.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
-#: src/bin/e_main.c:558
+#: src/bin/e_main.c:566
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2431,23 +2435,23 @@ msgstr ""
 "Peut-être n'avez vous pas de dossier personnel,\n"
 "ou que votre disque dur est plein ?"
 
-#: src/bin/e_main.c:568
+#: src/bin/e_main.c:576
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Enlightenment ne peut pas initialiser son registre de fichiers."
 
-#: src/bin/e_main.c:577
+#: src/bin/e_main.c:585
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment ne peut pas initialiser son système de configuration."
 
-#: src/bin/e_main.c:591
+#: src/bin/e_main.c:599
 msgid "Enlightenment cannot set up its scale system."
 msgstr "Enlightenment ne peut pas initialiser son système de redimensionnement."
 
-#: src/bin/e_main.c:599
+#: src/bin/e_main.c:607
 msgid "Enlightenment cannot set up the pointer system."
 msgstr "Enlightenment ne peut pas initialiser son système de curseur."
 
-#: src/bin/e_main.c:608
+#: src/bin/e_main.c:616
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2455,23 +2459,23 @@ msgstr ""
 "Enlightenment ne peut pas configurer les chemins de recherche des fichiers.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
-#: src/bin/e_main.c:626
+#: src/bin/e_main.c:634
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment ne peut pas initialiser son gestionnaire de polices."
 
-#: src/bin/e_main.c:637
+#: src/bin/e_main.c:645
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment ne peut pas initialiser son gestionnaire de thèmes."
 
-#: src/bin/e_main.c:642
+#: src/bin/e_main.c:650
 msgid "Starting International Support"
 msgstr "Démarrage du support multi-langues"
 
-#: src/bin/e_main.c:647
+#: src/bin/e_main.c:655
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment ne peut pas initialiser son système d'internationalisation."
 
-#: src/bin/e_main.c:658
+#: src/bin/e_main.c:666
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2479,11 +2483,11 @@ msgstr ""
 "Enlightenment ne peut pas configurer l'écran de démarrage.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
-#: src/bin/e_main.c:669
+#: src/bin/e_main.c:678
 msgid "Testing Format Support"
 msgstr "Test du support des formats"
 
-#: src/bin/e_main.c:680
+#: src/bin/e_main.c:689
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2491,7 +2495,7 @@ msgstr ""
 "Enlightenment a remarqué que Evas ne pouvais pas créer un canevas en mémoire.\n"
 "Veuillez vérifier que Evas support le moteur de rendu logiciel en mémoire.\n"
 
-#: src/bin/e_main.c:691
+#: src/bin/e_main.c:700
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2499,7 +2503,7 @@ msgstr ""
 "Enlightenment a remarqué que Evas ne pouvait pas charger les fichiers PNG.\n"
 "Veuillez vérifier que Evas contient le support des images PNG.\n"
 
-#: src/bin/e_main.c:700
+#: src/bin/e_main.c:709
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2507,7 +2511,7 @@ msgstr ""
 "Enlightenment a remarqué que Evas ne pouvait pas charger les fichiers JPEG.\n"
 "Veuillez vérifier que Evas contient le support des images JPEG.\n"
 
-#: src/bin/e_main.c:709
+#: src/bin/e_main.c:718
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -2515,7 +2519,7 @@ msgstr ""
 "Enlightenment a remarqué que Evas ne pouvait pas charger les fichiers EET.\n"
 "Veuillez vérifier que Evas contient le support des images EET.\n"
 
-#: src/bin/e_main.c:720
+#: src/bin/e_main.c:729
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
@@ -2523,11 +2527,11 @@ msgstr ""
 "Enlightenment a remarqué que Evas ne pouvait pas charger la police 'Sans'. Vérifiez que Evas \n"
 "contient le support fontconfig et que le système prend en charge la police 'Sans'.\n"
 
-#: src/bin/e_main.c:729
+#: src/bin/e_main.c:739
 msgid "Setup Screens"
 msgstr "Configuration des écrans"
 
-#: src/bin/e_main.c:734
+#: src/bin/e_main.c:744
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -2536,207 +2540,207 @@ msgstr ""
 "pour tous les écrans de votre système.\n"
 "Un autre gestionnaire de fenêtres est-il déjà lancé ?\n"
 
-#: src/bin/e_main.c:740
+#: src/bin/e_main.c:750
 msgid "Setup Screensaver"
 msgstr "Configuration de l'écran de veille"
 
-#: src/bin/e_main.c:745
+#: src/bin/e_main.c:755
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "Enlightenment ne peut pas configurer l'écran de veille de X."
 
-#: src/bin/e_main.c:749
+#: src/bin/e_main.c:759
 msgid "Setup Desklock"
 msgstr "Configuration du verrouillage de bureau"
 
-#: src/bin/e_main.c:754
+#: src/bin/e_main.c:764
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "Enlightenment ne peut pas configurer son système de verrouillage d'écran."
 
-#: src/bin/e_main.c:767
+#: src/bin/e_main.c:777
 msgid "Setting up Paths"
 msgstr "Configuration des chemins"
 
-#: src/bin/e_main.c:784
+#: src/bin/e_main.c:794
 msgid "Setup System Controls"
 msgstr "Configuration des contrôles du système"
 
-#: src/bin/e_main.c:789
+#: src/bin/e_main.c:799
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Enlightenment ne peut pas initialiser son gestionnaire de commandes systèmes.\n"
 
-#: src/bin/e_main.c:794
+#: src/bin/e_main.c:804
 msgid "Setup Actions"
 msgstr "Configuration des actions"
 
-#: src/bin/e_main.c:799
+#: src/bin/e_main.c:809
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment ne peut pas configurer son système d'actions."
 
-#: src/bin/e_main.c:803
+#: src/bin/e_main.c:813
 msgid "Setup Execution System"
 msgstr "Configuration du système d'exécution"
 
-#: src/bin/e_main.c:808
+#: src/bin/e_main.c:818
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Enlightenment ne peut pas initialiser son système d'exécution."
 
-#: src/bin/e_main.c:812
+#: src/bin/e_main.c:822
 msgid "Setup Remembers"
 msgstr "Configuration de la mémorisation"
 
-#: src/bin/e_main.c:817
+#: src/bin/e_main.c:827
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment ne peut pas initialiser son système de mémorisation."
 
-#: src/bin/e_main.c:825
+#: src/bin/e_main.c:835
 msgid "Setup FM"
 msgstr "Configuration du gestionnaire de fichiers"
 
-#: src/bin/e_main.c:830
+#: src/bin/e_main.c:840
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment ne peut pas initialiser son gestionnaire de fichiers.\n"
 
-#: src/bin/e_main.c:843
+#: src/bin/e_main.c:853
 msgid "Setup Message System"
 msgstr "Configuration du système de messages"
 
-#: src/bin/e_main.c:848
+#: src/bin/e_main.c:858
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment ne peut pas configurer son système de messages."
 
-#: src/bin/e_main.c:852
+#: src/bin/e_main.c:862
 msgid "Setup DND"
 msgstr "Configuration du glissé-déposé"
 
-#: src/bin/e_main.c:857
+#: src/bin/e_main.c:867
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment ne peut pas configurer son système de glissé-déposé."
 
-#: src/bin/e_main.c:861
+#: src/bin/e_main.c:871
 msgid "Setup Grab Input Handing"
 msgstr "Configuration des périphériques d'entrée"
 
-#: src/bin/e_main.c:866
+#: src/bin/e_main.c:876
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment ne peut pas configurer son gestionnaire de réservation de périphériques d'entrée."
 
-#: src/bin/e_main.c:870
+#: src/bin/e_main.c:880
 msgid "Setup Modules"
 msgstr "Configuration des modules"
 
-#: src/bin/e_main.c:875
+#: src/bin/e_main.c:885
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment ne peut pas configurer son système de modules."
 
-#: src/bin/e_main.c:879
+#: src/bin/e_main.c:889
 msgid "Setup Color Classes"
 msgstr "Configuration des classes de couleurs"
 
-#: src/bin/e_main.c:884
+#: src/bin/e_main.c:894
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment ne peut pas configurer son système de classes de couleur."
 
-#: src/bin/e_main.c:888
+#: src/bin/e_main.c:898
 msgid "Setup Gadcon"
 msgstr "Configuration de Gadcon"
 
-#: src/bin/e_main.c:893
+#: src/bin/e_main.c:903
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment ne peut pas configurer son système de contrôle des gadgets."
 
-#: src/bin/e_main.c:898
+#: src/bin/e_main.c:908
 msgid "Setup DPMS"
 msgstr "Configuration du DPMS"
 
-#: src/bin/e_main.c:903
+#: src/bin/e_main.c:913
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment ne peut pas configurer le DPMS."
 
-#: src/bin/e_main.c:907
+#: src/bin/e_main.c:917
 msgid "Set Up Powersave modes"
 msgstr "Configuration de la gestion de l'énergie"
 
-#: src/bin/e_main.c:911
+#: src/bin/e_main.c:921
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr "Enlightenment ne peut pas configurer la gestion de l'énergie."
 
-#: src/bin/e_main.c:916
+#: src/bin/e_main.c:926
 msgid "Setup Wallpaper"
 msgstr "Configuration du fond d'écran"
 
-#: src/bin/e_main.c:921
+#: src/bin/e_main.c:931
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Enlightenment ne peut pas configurer son gestionnaire de fonds d'écran."
 
-#: src/bin/e_main.c:926
+#: src/bin/e_main.c:936
 msgid "Setup Mouse"
 msgstr "Configuration de la souris"
 
-#: src/bin/e_main.c:931
+#: src/bin/e_main.c:941
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr "Enlightenment est incapable de configurer la souris."
 
-#: src/bin/e_main.c:936
+#: src/bin/e_main.c:946
 msgid "Setup Bindings"
 msgstr "Configuration des raccourcis"
 
-#: src/bin/e_main.c:941
+#: src/bin/e_main.c:951
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment ne peut pas configurer son système de raccourcis."
 
-#: src/bin/e_main.c:945
+#: src/bin/e_main.c:955
 msgid "Setup Popups"
 msgstr "Configuration des pop-up"
 
-#: src/bin/e_main.c:950
+#: src/bin/e_main.c:960
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment ne peut pas configurer son système de  pop-up"
 
-#: src/bin/e_main.c:955
+#: src/bin/e_main.c:965
 msgid "Setup Shelves"
 msgstr "Configuration des racks"
 
-#: src/bin/e_main.c:960
+#: src/bin/e_main.c:970
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Enlightenment ne peut pas configurer son gestionnaire de racks."
 
-#: src/bin/e_main.c:965
+#: src/bin/e_main.c:975
 msgid "Setup Thumbnailer"
 msgstr "Configuration des vignettes"
 
-#: src/bin/e_main.c:970
+#: src/bin/e_main.c:980
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment ne peut pas initialiser son système de vignettes.\n"
 
-#: src/bin/e_main.c:975
+#: src/bin/e_main.c:985
 msgid "Set Up File Ordering"
 msgstr "Configuration du classement des fichiers"
 
-#: src/bin/e_main.c:979
+#: src/bin/e_main.c:989
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment ne peut pas configurer sa gestion des fichiers."
 
-#: src/bin/e_main.c:1014
+#: src/bin/e_main.c:1024
 msgid "Load Modules"
 msgstr "Activer les modules"
 
-#: src/bin/e_main.c:1022
+#: src/bin/e_main.c:1032
 msgid "Enlightenment crashed early on start and has<br>been restarted. All modules have been disabled<br>and will not be loaded to help remove any problem<br>modules from your configuration. The module<br>configuration dialog should let you select your<br>modules again."
 msgstr "Enlightenment a planté lors de son démarrage et a<br> été redémarré. Tous les modules ont été désactivés<br>et ne seront pas chargés pour vous aider à supprimer<br>les modules problématiques de votre configuration.<br>Le dialogue de configuration des modules vous permettra<br>de recharger vos modules."
 
-#: src/bin/e_main.c:1029
+#: src/bin/e_main.c:1039
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Enlightenment a planté au démarrage et a été redémarré "
 
-#: src/bin/e_main.c:1030
+#: src/bin/e_main.c:1040
 msgid "Enlightenment crashed early on start and has been restarted.<br>All modules have been disabled and will not be loaded to help<br>remove any problem modules from your configuration.<br><br>The module configuration dialog should let you select your<br>modules again."
 msgstr "Enlightenment a planté lors de son démarrage et a<br>été redémarré. Tous les modules ont été désactivés<br>et ne seront pas chargés pour vous aider à supprimer<br>les modules problématiques de votre configuration.<br>La fenêtre de configuration des modules vous permettra<br>de recharger vos modules."
 
-#: src/bin/e_main.c:1038
+#: src/bin/e_main.c:1048
 msgid "Configure Shelves"
 msgstr "Configurer les racks"
 
-#: src/bin/e_main.c:1048
+#: src/bin/e_main.c:1058
 msgid "Almost Done"
 msgstr "Presque fini"
 
