@@ -230,7 +230,7 @@ _e_appwin_free(E_Appwin *esw)
      ecore_event_handler_del(handle);
    if (esw->animator) ecore_animator_del(esw->animator);
    if (esw->themedir) evas_stringshare_del(esw->themedir);
-   ecore_x_window_del(esw->clickwin);
+   ecore_x_window_free(esw->clickwin);
    e_object_del(E_OBJECT(esw->popup));
    free(esw);
 }

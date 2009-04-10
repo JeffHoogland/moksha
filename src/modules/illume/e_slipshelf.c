@@ -470,7 +470,7 @@ _e_slipshelf_free(E_Slipshelf *ess)
    if (ess->animator) ecore_animator_del(ess->animator);
    if (ess->themedir) evas_stringshare_del(ess->themedir);
    if (ess->default_title) evas_stringshare_del(ess->default_title);
-   if (ess->clickwin) ecore_x_window_del(ess->clickwin);
+   if (ess->clickwin) ecore_x_window_free(ess->clickwin);
    e_object_del(E_OBJECT(ess->popup));
    free(ess);
 }

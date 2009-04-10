@@ -542,7 +542,7 @@ _e_manager_free(E_Manager *man)
      }
    if (man->root != man->win)
      {
-	ecore_x_window_del(man->win);
+	ecore_x_window_free(man->win);
      }
    if (man->pointer) e_object_del(E_OBJECT(man->pointer));
    managers = eina_list_remove(managers, man);   

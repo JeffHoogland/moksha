@@ -97,7 +97,7 @@ e_winlist_show(E_Zone *zone)
    ecore_x_window_show(input_window);
    if (!e_grabinput_get(input_window, 0, input_window))
      {
-	ecore_x_window_del(input_window);
+	ecore_x_window_free(input_window);
 	input_window = 0;
 	return 0;
      }
@@ -254,7 +254,7 @@ e_winlist_hide(void)
 	ecore_event_handler_del(handlers->data);
 	handlers = eina_list_remove_list(handlers, handlers);
      }
-   ecore_x_window_del(input_window);
+   ecore_x_window_free(input_window);
    e_grabinput_release(input_window, input_window);
    input_window = 0;
    if (warp_timer)

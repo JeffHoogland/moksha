@@ -234,7 +234,7 @@ e_simplelock_hide(void)
 	
 	esl = locks->data;
 	e_object_del(E_OBJECT(esl->popup));
-	ecore_x_window_del(esl->win);
+	ecore_x_window_free(esl->win);
 	free(esl);
 	locks = eina_list_remove_list(locks, locks);
      }

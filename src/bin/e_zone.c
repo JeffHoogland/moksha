@@ -835,18 +835,18 @@ _e_zone_free(E_Zone *zone)
    int x, y;
 
    /* Delete the edge windows if they exist */
-   if (zone->edge.top) ecore_x_window_del(zone->edge.top);
-   if (zone->edge.bottom) ecore_x_window_del(zone->edge.bottom);
-   if (zone->edge.left) ecore_x_window_del(zone->edge.left);
-   if (zone->edge.right) ecore_x_window_del(zone->edge.right);
-   if (zone->corner.left_bottom) ecore_x_window_del(zone->corner.left_bottom);
-   if (zone->corner.left_top) ecore_x_window_del(zone->corner.left_top);
-   if (zone->corner.top_left) ecore_x_window_del(zone->corner.top_left);
-   if (zone->corner.top_right) ecore_x_window_del(zone->corner.top_right);
-   if (zone->corner.right_top) ecore_x_window_del(zone->corner.right_top);
-   if (zone->corner.right_bottom) ecore_x_window_del(zone->corner.right_bottom);
-   if (zone->corner.bottom_right) ecore_x_window_del(zone->corner.bottom_right);
-   if (zone->corner.bottom_left) ecore_x_window_del(zone->corner.bottom_left);
+   if (zone->edge.top) ecore_x_window_free(zone->edge.top);
+   if (zone->edge.bottom) ecore_x_window_free(zone->edge.bottom);
+   if (zone->edge.left) ecore_x_window_free(zone->edge.left);
+   if (zone->edge.right) ecore_x_window_free(zone->edge.right);
+   if (zone->corner.left_bottom) ecore_x_window_free(zone->corner.left_bottom);
+   if (zone->corner.left_top) ecore_x_window_free(zone->corner.left_top);
+   if (zone->corner.top_left) ecore_x_window_free(zone->corner.top_left);
+   if (zone->corner.top_right) ecore_x_window_free(zone->corner.top_right);
+   if (zone->corner.right_top) ecore_x_window_free(zone->corner.right_top);
+   if (zone->corner.right_bottom) ecore_x_window_free(zone->corner.right_bottom);
+   if (zone->corner.bottom_right) ecore_x_window_free(zone->corner.bottom_right);
+   if (zone->corner.bottom_left) ecore_x_window_free(zone->corner.bottom_left);
 
    /* Delete the object event callbacks */
    evas_object_event_callback_del(zone->bg_event_object, 

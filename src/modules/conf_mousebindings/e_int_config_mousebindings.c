@@ -1307,7 +1307,7 @@ _grab_wnd_hide(E_Config_Dialog_Data *cfdata)
      }
    cfdata->locals.handlers = NULL;
    e_grabinput_release(cfdata->locals.bind_win, cfdata->locals.bind_win);
-   ecore_x_window_del(cfdata->locals.bind_win);
+   ecore_x_window_free(cfdata->locals.bind_win);
    cfdata->locals.bind_win = 0;
 
    e_object_del(E_OBJECT(cfdata->locals.dia));

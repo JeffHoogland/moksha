@@ -140,7 +140,7 @@ _e_busywin_free(E_Busywin *esw)
      }
    if (esw->animator) ecore_animator_del(esw->animator);
    if (esw->themedir) evas_stringshare_del(esw->themedir);
-   ecore_x_window_del(esw->clickwin);
+   ecore_x_window_free(esw->clickwin);
    e_object_del(E_OBJECT(esw->popup));
    free(esw);
 }

@@ -58,7 +58,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
    ecore_x_window_show(input_window);
    if (!e_grabinput_get(input_window, 1, input_window))
      {
-        ecore_x_window_del(input_window);
+        ecore_x_window_free(input_window);
         input_window = 0;
         return 0;
      }
@@ -67,7 +67,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
    if (!popup)
      {
         e_grabinput_release(input_window, input_window);
-        ecore_x_window_del(input_window);
+        ecore_x_window_free(input_window);
         input_window = 0;
         return 0;
      }
@@ -300,7 +300,7 @@ e_syscon_hide(void)
    e_object_del(E_OBJECT(popup));
    popup = NULL;
    e_grabinput_release(input_window, input_window);
-   ecore_x_window_del(input_window);
+   ecore_x_window_free(input_window);
    input_window = 0;
 }
 

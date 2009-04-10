@@ -272,10 +272,10 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 //	printf("##- ATTR FETCH FAILED/INPUT ONLY FOR 0x%x - ABORT MANAGE\n", win);
 	e_canvas_del(bd->bg_ecore_evas);
 	ecore_evas_free(bd->bg_ecore_evas);
-	ecore_x_window_del(bd->client.shell_win);
+	ecore_x_window_free(bd->client.shell_win);
 	e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
 	e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
-	ecore_x_window_del(bd->win);
+	ecore_x_window_free(bd->win);
 	free(bd);
 	return NULL;
      }
@@ -2625,7 +2625,7 @@ _e_border_action_input_win_del(void)
      return 0;
 
    e_grabinput_release(action_input_win, action_input_win);
-   ecore_x_window_del(action_input_win);
+   ecore_x_window_free(action_input_win);
    action_input_win = 0;
    return 1;
 }
@@ -3715,11 +3715,11 @@ _e_border_free(E_Border *bd)
    evas_object_del(bd->bg_object);
    e_canvas_del(bd->bg_ecore_evas);
    ecore_evas_free(bd->bg_ecore_evas);
-   ecore_x_window_del(bd->client.shell_win);
+   ecore_x_window_free(bd->client.shell_win);
    e_focus_setdown(bd);
    e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
    e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
-   ecore_x_window_del(bd->win);
+   ecore_x_window_free(bd->win);
 
    eina_hash_del(borders_hash, e_util_winid_str_get(bd->client.win), bd);
    eina_hash_del(borders_hash, e_util_winid_str_get(bd->bg_win), bd);
@@ -7047,9 +7047,9 @@ _e_border_eval(E_Border *bd)
 	     ecore_x_window_shape_window_add_xy(twin, twin2,
 						bd->client_inset.l, 
 						bd->client_inset.t);
-	     ecore_x_window_del(twin2);
+	     ecore_x_window_free(twin2);
 	     ecore_x_window_shape_window_set(bd->win, twin);
-	     ecore_x_window_del(twin);
+	     ecore_x_window_free(twin);
 	  }
 	else
 	  ecore_x_window_shape_mask_set(bd->win, 0);

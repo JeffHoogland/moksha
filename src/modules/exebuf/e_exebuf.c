@@ -157,7 +157,7 @@ e_exebuf_show(E_Zone *zone)
    ecore_x_window_show(input_window);
    if (!e_grabinput_get(input_window, 1, input_window))
      {
-        ecore_x_window_del(input_window);
+        ecore_x_window_free(input_window);
 	input_window = 0;
 	return 0;
      }
@@ -322,7 +322,7 @@ e_exebuf_hide(void)
    EINA_LIST_FREE(handlers, ev)
      ecore_event_handler_del(ev);
 
-   ecore_x_window_del(input_window);
+   ecore_x_window_free(input_window);
    e_grabinput_release(input_window, input_window);
    input_window = 0;
    free(cmd_buf);

@@ -298,7 +298,7 @@ e_drag_start(E_Drag *drag, int x, int y)
    ecore_x_window_show(_drag_win);
    if (!e_grabinput_get(_drag_win, 1, _drag_win))
      {
-	ecore_x_window_del(_drag_win);
+	ecore_x_window_free(_drag_win);
 	return 0;
      }
 
@@ -349,7 +349,7 @@ e_drag_xdnd_start(E_Drag *drag, int x, int y)
    ecore_x_window_show(_drag_win);
    if (!e_grabinput_get(_drag_win, 1, _drag_win))
      {
-	ecore_x_window_del(_drag_win);
+	ecore_x_window_free(_drag_win);
 	return 0;
      }
 
@@ -914,7 +914,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 
 	if (!(dropped = ecore_x_dnd_drop()))
 	  {
-	     ecore_x_window_del(_drag_win);
+	     ecore_x_window_free(_drag_win);
 	     _drag_win = 0;
 	  }
 	if (_drag_current->cb.finished)
@@ -929,7 +929,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 	return;
      }
 
-   ecore_x_window_del(_drag_win);
+   ecore_x_window_free(_drag_win);
    _drag_win = 0;
 
    if (_drag_current->data)
@@ -1057,7 +1057,7 @@ _e_drag_free(E_Drag *drag)
 	E_Drop_Handler *h;
 
 	e_grabinput_release(_drag_win, _drag_win);
-	ecore_x_window_del(_drag_win);
+	ecore_x_window_free(_drag_win);
 	_drag_win = 0;
 	_drag_win_root = 0;
 
@@ -1363,7 +1363,7 @@ _e_dnd_cb_event_dnd_finished(void *data, int type, void *event)
      }
 
    e_grabinput_release(_drag_win, _drag_win);
-   ecore_x_window_del(_drag_win);
+   ecore_x_window_free(_drag_win);
    _drag_win = 0;
 
    return 1;

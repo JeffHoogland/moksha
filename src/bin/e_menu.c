@@ -1023,7 +1023,7 @@ e_menu_idler_before(void)
      {
 	if (_e_menu_win)
 	  {
-	     ecore_x_window_del(_e_menu_win);
+	     ecore_x_window_free(_e_menu_win);
 	     e_grabinput_release(_e_menu_win, _e_menu_win);
 	     _e_menu_win = 0;
 	  }
@@ -1744,7 +1744,7 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 	ecore_x_window_show(_e_menu_win);
 	if (!e_grabinput_get(_e_menu_win, 1, _e_menu_win))
 	  {
-	     ecore_x_window_del(_e_menu_win);
+	     ecore_x_window_free(_e_menu_win);
 	     _e_menu_win = 0;
 	     return;
 	  }

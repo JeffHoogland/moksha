@@ -212,7 +212,7 @@ e_desklock_show(void)
 			   _("Locking the desktop failed because some application<br>"
 			     "has grabbed either the keyboard or the mouse or both<br>"
 			     "and their grab is unable to be broken."));
-	ecore_x_window_del(edd->elock_wnd);
+	ecore_x_window_free(edd->elock_wnd);
 	free(edd);
 	edd = NULL;
 	return 0;
@@ -404,7 +404,7 @@ e_desklock_hide(void)
      }
    
    e_grabinput_release(edd->elock_wnd, edd->elock_wnd);
-   ecore_x_window_del(edd->elock_wnd);
+   ecore_x_window_free(edd->elock_wnd);
    
    E_FREE(edd);
    edd = NULL;

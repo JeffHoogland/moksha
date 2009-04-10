@@ -179,7 +179,7 @@ _cb_saver(void *data, int ev_type, void *ev)
 	_system_unreq_state();
 	if (coverwin)
 	  {
-	     ecore_x_window_del(coverwin);
+	     ecore_x_window_free(coverwin);
 	     coverwin = 0;
 	  }
 	if (suspend_timer)

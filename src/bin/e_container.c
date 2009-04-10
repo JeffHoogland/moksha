@@ -933,7 +933,7 @@ _e_container_free(E_Container *con)
 {
    Eina_List *l;
 
-   ecore_x_window_del(con->event_win);
+   ecore_x_window_free(con->event_win);
    /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
 /* FIXME: had to disable this as it was freeing already freed items during
@@ -964,7 +964,7 @@ _e_container_free(E_Container *con)
    ecore_evas_free(con->bg_ecore_evas);
    if (con->manager->win != con->win)
      {
-	ecore_x_window_del(con->win);
+	ecore_x_window_free(con->win);
      }
    if (con->name) eina_stringshare_del(con->name);
    free(con);

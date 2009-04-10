@@ -464,7 +464,7 @@ _mixer_popup_input_window_key_down_cb(void *data, int type, void *event)
 static void
 _mixer_popup_input_window_destroy(E_Mixer_Instance *inst)
 {
-   ecore_x_window_del(inst->ui.input.win);
+   ecore_x_window_free(inst->ui.input.win);
    inst->ui.input.win = 0;
 
    ecore_event_handler_del(inst->ui.input.mouse_up);
