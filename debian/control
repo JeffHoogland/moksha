@@ -13,6 +13,7 @@ Depends: ${shlibs:Depends}, e17-data (= ${source:Version}), libevas-engines
 Suggests: entrance, emodules-all
 Provides: x-window-manager, enlightenment
 Replaces: emodule-mixer
+Conflicts: ecomorph-e17
 Description: The Enlightenment DR17 Window Manager
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
@@ -24,6 +25,7 @@ Description: The Enlightenment DR17 Window Manager
 Package: e17-data
 Architecture: all
 Enhances: e17
+Conflicts: ecomorph-e17-data
 Description: Enlightenment Window Manager Run Time Data Files
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
@@ -37,6 +39,7 @@ Package: e17-dev
 Architecture: any
 Section: devel
 Depends: e17 (= ${binary:Version}), efl-dev
+Conflicts: ecomorph-e17-dev
 Description: Enlightenment headers, static libraries and documentation
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
@@ -64,6 +67,7 @@ Architecture: any
 Section: devel
 Depends: e17 (= ${binary:Version})
 Priority: extra
+Conflicts: ecomorph-e17-dbg
 Description: The Enlightenment DR17 Window Manager
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
