@@ -17317,6 +17317,10 @@ group { name: "e/toolbar/default/base";
 	       inherit: "default" 0.0;
 	       image.normal: "check_sel.png";
 	    }
+	    description { state: "disabled" 0.0;
+	       inherit: "default" 0.0;
+	       color: 255 255 255 128;
+	    }
 	 }
 	 part { name: "mark_hold";
 	    type: RECT;
@@ -17404,6 +17408,22 @@ group { name: "e/toolbar/default/base";
 	    source: "event";
 	    action: SIGNAL_EMIT "e,action,toggle" "";
 	 }
+	 program { name: "disable";
+	    signal: "e,state,disabled";
+	    source: "e";
+	    action: STATE_SET "disabled" 0.0;
+	    target: "mark";
+	    target: "event";
+      target: "e.text.label";
+	 }
+	 program { name: "enable";
+	    signal: "e,state,enabled";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "mark";
+	    target: "event";
+      target: "e.text.label";
+	 }
       }
    }
    group { name: "e/widgets/check_icon";
@@ -17443,6 +17463,10 @@ group { name: "e/toolbar/default/base";
 	    description { state: "selected" 0.0;
 	       inherit: "default" 0.0;
 	       image.normal: "check_sel.png";
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit: "default" 0.0;
+	       color: 255 255 255 128;
 	    }
 	 }
 	 part { name: "mark_hold";
@@ -17580,6 +17604,22 @@ group { name: "e/toolbar/default/base";
 	    action: STATE_SET "label_visible" 0.0;
 	    target: "e.swallow.icon";
 	    target: "label_clip";
+	 }
+	 program { name: "disable";
+	    signal: "e,state,disabled";
+	    source: "e";
+	    action: STATE_SET "disabled" 0.0;
+	    target: "mark";
+	    target: "event";
+      target: "e.text.label";
+	 }
+	 program { name: "enable";
+	    signal: "e,state,enabled";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "mark";
+	    target: "event";
+      target: "e.text.label";
 	 }
       }
    }
