@@ -346,6 +346,7 @@ _create_cards(E_Dialog *dialog, Evas *evas, E_Mixer_App_Dialog_Data *app)
 
    ui = &app->ui.cards;
    ui->list = e_widget_ilist_add(evas, 32, 32, &app->card);
+   e_widget_min_size_set(ui->list, 180, 100);
    e_widget_ilist_go(ui->list);
    EINA_LIST_FOREACH(app->cards, l, card)
      {
