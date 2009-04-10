@@ -281,7 +281,7 @@ _grab_wnd_show(void *data1, void *data2)
    ecore_x_window_show(cfdata->grab.bind_win);
    if (!e_grabinput_get(cfdata->grab.bind_win, 0, cfdata->grab.bind_win)) 
      {
-	ecore_x_window_del(cfdata->grab.bind_win);
+	ecore_x_window_free(cfdata->grab.bind_win);
 	cfdata->grab.bind_win = 0;
 	e_object_del(E_OBJECT(cfdata->grab.dia));
 	cfdata->grab.dia = NULL;
@@ -368,7 +368,7 @@ _grab_wnd_hide(E_Config_Dialog_Data *cfdata)
      }
    cfdata->grab.hdls = NULL;
    e_grabinput_release(cfdata->grab.bind_win, cfdata->grab.bind_win);
-   if (cfdata->grab.bind_win) ecore_x_window_del(cfdata->grab.bind_win);
+   if (cfdata->grab.bind_win) ecore_x_window_free(cfdata->grab.bind_win);
    cfdata->grab.bind_win = 0;
 
    if (cfdata->grab.dia) 
