@@ -626,18 +626,7 @@ _e_fwin_desktop_run(Efreet_Desktop *desktop, E_Fwin *fwin)
 	if (ext == E_FWIN_EXEC_NONE)
 	  {
 	     if (!((ici->link) && (ici->mount)))
-	       {
-		  if (ici->link)
-		    {
-		       if (!S_ISDIR(ici->statinfo.st_mode))
-			  snprintf(buf, sizeof(buf), "%s", ici->file);
-		    }
-		  else
-		    {
-		       if (!S_ISDIR(ici->statinfo.st_mode))
-			  snprintf(buf, sizeof(buf), "%s", ici->file);
-		    }
-	       }
+	       snprintf(buf, sizeof(buf), "%s", ici->file);
 	  }
 	else
 	  _e_fwin_file_exec(fwin, ici, ext);
