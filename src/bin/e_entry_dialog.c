@@ -18,6 +18,7 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
    E_Entry_Dialog *ed;
    E_Dialog *dia;
    Evas_Object *o, *ob;
+   Evas_Modifier_Mask mask;
    int w, h;
 
    ed = E_OBJECT_ALLOC(E_Entry_Dialog, E_ENTRY_DIALOG_TYPE, _e_entry_dialog_free);
@@ -36,6 +37,9 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
      }
    dia->data = ed;
    ed->dia = dia;
+   
+   mask = 0;
+   evas_object_key_ungrab(dia->event_object, "space", mask, ~mask);
    
    e_win_delete_callback_set(dia->win, _e_entry_dialog_delete);
    
@@ -116,10 +120,10 @@ _e_entry_cb_key_down(void *data, Evas_Object *obj, void *event_info)
    E_Entry_Dialog *ed;
    
    ev = event_info;
-   if (strcmp(ev->keyname, "Return")) return;
    if (!(ed = data)) return;
-   e_object_ref(E_OBJECT(ed));
-   if (ed->ok.func) ed->ok.func(ed->text, ed->ok.data);
-   e_object_del(E_OBJECT(ed));
-   e_object_unref(E_OBJECT(ed));
+   if (!strcmp(ev->keyname, "Return")) 
+      _e_entry_dialog_ok(data, ed->dia);
+   else
+      if (!strcmp(ev->keyname, "Escape"))
+         _e_entry_dialog_cancel(data, ed->dia);
 }
