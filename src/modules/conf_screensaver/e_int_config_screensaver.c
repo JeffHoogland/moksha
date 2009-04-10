@@ -30,8 +30,7 @@ struct _E_Config_Dialog_Data
    int exposures;
 };
 
-Eina_List *xscreensaver_list;
-
+Eina_List *xscreensaver_list = NULL;
 
 EAPI E_Config_Dialog *
 e_int_config_screensaver(E_Container *con, const char *params __UNUSED__)
