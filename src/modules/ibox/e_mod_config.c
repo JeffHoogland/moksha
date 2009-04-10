@@ -17,11 +17,21 @@ struct _E_Config_Dialog_Data
      } gui;
 };
 
+struct _Disable_Array
+{
+   int size;
+   Evas_Object **obj_array;
+};
+
+struct _Disable_Array show_label_array;
+
 /* Protos */
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void _cb_disable_check(void *data, Evas_Object *obj);
+static void _cb_disable_check_array(void *data, Evas_Object *obj);
 
 static void _cb_zone_policy_change(void *data, Evas_Object *obj);
 
@@ -66,6 +76,10 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
    Config_Item *ci;
    
+   // define the number of items in the "Show Icon Label" radio group
+   show_label_array.size = 5;
+   show_label_array.obj_array = malloc (sizeof(Evas_Object*) * show_label_array.size);
+
    ci = cfd->data;
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _fill_data(ci, cfdata);
@@ -77,6 +91,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    ibox_config->config_dialog = eina_list_remove(ibox_config->config_dialog, cfd);
    free(cfdata);
+   free(show_label_array.obj_array);
 }
 
 static Evas_Object *
@@ -84,27 +99,46 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    E_Radio_Group *rg;
    Evas_Object *o, *of, *ob;
-
+   Evas_Object *show_check = NULL;
+   
    Eina_List *l, *l2;
    int zone_count;
 
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
-   ob = e_widget_check_add(evas, _("Show Icon Label"), &(cfdata->show_label));
-   e_widget_framelist_object_append(of, ob);
+   show_check = e_widget_check_add(evas, _("Show Icon Label"), &(cfdata->show_label));
+   e_widget_framelist_object_append(of, show_check);
    rg = e_widget_radio_group_new(&(cfdata->icon_label));
+
    ob = e_widget_radio_add(evas, _("Display Name"), 0, rg);
+   e_widget_disabled_set(ob, !cfdata->show_label); // set state from saved config
+   show_label_array.obj_array[0] = ob;
    e_widget_framelist_object_append(of, ob);
+
    ob = e_widget_radio_add(evas, _("Display Title"), 1, rg);
+   e_widget_disabled_set(ob, !cfdata->show_label); // set state from saved config
+   show_label_array.obj_array[1] = ob;
    e_widget_framelist_object_append(of, ob);
+
    ob = e_widget_radio_add(evas, _("Display Class"), 2, rg);
+   e_widget_disabled_set(ob, !cfdata->show_label); // set state from saved config
+   show_label_array.obj_array[2] = ob;
    e_widget_framelist_object_append(of, ob);
+
    ob = e_widget_radio_add(evas, _("Display Icon Name"), 3, rg);
+   e_widget_disabled_set(ob, !cfdata->show_label); // set state from saved config
+   show_label_array.obj_array[3] = ob;
    e_widget_framelist_object_append(of, ob);
+
    ob = e_widget_radio_add(evas, _("Display Border Caption"), 4, rg);
+   e_widget_disabled_set(ob, !cfdata->show_label); // set state from saved config
+   show_label_array.obj_array[4] = ob;
    e_widget_framelist_object_append(of, ob);
-   
+
+   // handler for enable/disable widget array
+   e_widget_on_change_hook_set(show_check, _cb_disable_check_array, &show_label_array);
+
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Screen"), 0);
@@ -192,4 +226,34 @@ _cb_zone_policy_change(void *data, Evas_Object *obj)
 	e_widget_disabled_set(cfdata->gui.o_desk_show_all, 0);
 	e_widget_disabled_set(cfdata->gui.o_desk_show_active, 0);
      }
+}
+
+/*!
+ * @param data A Evas_Object to chain together with the checkbox
+ * @param obj A Evas_Object checkbox created with e_widget_check_add()
+ */
+static void
+_cb_disable_check(void *data, Evas_Object *obj)
+{
+   e_widget_disabled_set((Evas_Object *) data, 
+                         !e_widget_check_checked_get(obj));
+}
+
+/*!
+ * @param data A struct _Disable_Array to chain together with the checkbox
+ * @param obj A Evas_Object checkbox created with e_widget_check_add()
+ */
+static void
+_cb_disable_check_array(void *data, Evas_Object *obj)
+{
+   unsigned int i = 0;
+   struct _Disable_Array *disable_array = (struct _Disable_Array*) data;
+
+   if (data <= 0) return;
+
+   for (i = 0; i < disable_array->size; ++i)
+   {
+      e_widget_disabled_set(disable_array->obj_array[i], 
+	                    !e_widget_check_checked_get(obj));
+   }
 }
