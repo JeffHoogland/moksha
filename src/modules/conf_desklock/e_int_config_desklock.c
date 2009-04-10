@@ -22,6 +22,8 @@ static void _cb_fm_change     (void *data, Evas_Object *obj, void *event_info);
 
 static int _zone_count_get(void);
 
+static void _cb_disable_check(void *data, Evas_Object *obj);
+
 struct _E_Config_Dialog_Data 
 {
    E_Config_Dialog *cfd;
@@ -49,6 +51,7 @@ struct _E_Config_Dialog_Data
    int login_zone;
    int zone;
 };
+
 
 EAPI E_Config_Dialog *
 e_int_config_desklock(E_Container *con, const char *params __UNUSED__) 
@@ -181,6 +184,7 @@ static Evas_Object *
 _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *mt, *rt, *ft, *ow, *of;
+   Evas_Object *custom_screenlock_check;
    E_Radio_Group *rg;
    E_Fm2_Config fmc;
    E_Zone *zone;
@@ -328,12 +332,16 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(mt, ow, 2, 1, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Custom Screenlock"), 0);
-   ow = e_widget_check_add(evas, _("Use custom screenlock"), 
+   custom_screenlock_check = e_widget_check_add(evas, _("Use custom screenlock"), 
 			   &(cfdata->custom_lock));
-   e_widget_framelist_object_append(of, ow);
+   e_widget_framelist_object_append(of, custom_screenlock_check);
    ow = e_widget_entry_add(evas, &(cfdata->custom_lock_cmd), NULL, NULL, NULL);
+   e_widget_disabled_set(ow, !cfdata->custom_lock); // set state from saved config
    e_widget_framelist_object_append(of, ow);
    e_widget_table_object_append(mt, of, 1, 2, 2, 1, 1, 1, 1, 1);
+
+   // handler for enable/disable widget array
+   e_widget_on_change_hook_set(custom_screenlock_check, _cb_disable_check, ow);
    
    return mt;
 }
@@ -567,4 +575,15 @@ _zone_count_get(void)
 	  }
      }
    return num;
+}
+
+/*!
+ * @param data A Evas_Object to chain together with the checkbox
+ * @param obj A Evas_Object checkbox created with e_widget_check_add()
+ */
+static void
+_cb_disable_check(void *data, Evas_Object *obj)
+{
+   e_widget_disabled_set((Evas_Object *) data, 
+                         !e_widget_check_checked_get(obj));
 }
