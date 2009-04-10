@@ -50,8 +50,6 @@ AC_DEFUN([AC_E_CHECK_PKG],
                                 [pkg_name]=$(echo "[$2]" | cut -d\   -f1)
                                 [$1]_VERSION=$($PKG_CONFIG --modversion $pkg_name)
                                 AC_SUBST([$1]_VERSION)
-                                AC_SUBST([$1]_CFLAGS)
-                                AC_SUBST([$1]_LIBS)
                                 ifelse([$3], , :, [$3])
                           ],
                           [
