@@ -313,6 +313,15 @@ define([CHECK_MODULE_BATTERY],
                        [], [BATTERY=false])
 ])
 
+BATTERY_LDFLAGS=
+case "$host_os" in
+   darwin*)
+      BATTERY_LDFLAGS="-framework Foundation -framework IOKit"
+   ;;
+esac
+
+AC_SUBST(BATTERY_LDFLAGS)
+
 AM_CONDITIONAL(HAVE_TEMPERATURE, false)
 define([CHECK_MODULE_TEMPERATURE],
 [
