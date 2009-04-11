@@ -81,7 +81,6 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    Eina_List *l = NULL;
-   Evas_Object *o = NULL;
 
    // delete the list
    for (l = xscreensaver_list; l; l = eina_list_next(l))
