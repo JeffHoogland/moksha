@@ -372,11 +372,12 @@ _e_slipwin_object_del_attach(void *o)
 	esw->borders = eina_list_remove_list(esw->borders, esw->borders);
 	free(ent);
      }
-   ev = calloc(1, sizeof(E_Event_Slipwin_Del));
-   ev->slipwin = esw;
-   e_object_ref(E_OBJECT(esw));
-   ecore_event_add(E_EVENT_SLIPWIN_DEL, ev, 
-		   _e_slipwin_event_simple_free, NULL);
+/*    ev = calloc(1, sizeof(E_Event_Slipwin_Del)); */
+/*    ev->slipwin = esw; */
+/*    e_object_ref(E_OBJECT(esw)); */
+/*    fprintf(stderr, "event add E_EVENT_SLIPWIN_DEL\n"); */
+/*    ecore_event_add(E_EVENT_SLIPWIN_DEL, ev,  */
+/* 		   _e_slipwin_event_simple_free, NULL); */
 }
 
 static void

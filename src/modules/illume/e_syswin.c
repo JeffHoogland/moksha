@@ -372,11 +372,12 @@ _e_syswin_object_del_attach(void *o)
 	esw->borders = eina_list_remove_list(esw->borders, esw->borders);
 	free(ent);
      }
-   ev = calloc(1, sizeof(E_Event_Syswin_Del));
-   ev->syswin = esw;
-   e_object_ref(E_OBJECT(esw));
-   ecore_event_add(E_EVENT_SYSWIN_DEL, ev, 
-		   _e_syswin_event_simple_free, NULL);
+/*    ev = calloc(1, sizeof(E_Event_Syswin_Del)); */
+/*    ev->syswin = esw; */
+/*    e_object_ref(E_OBJECT(esw)); */
+/*    fprintf(stderr, "event add E_EVENT_SYSWIN_DEL\n"); */
+/*    ecore_event_add(E_EVENT_SYSWIN_DEL, ev,  */
+/* 		   _e_syswin_event_simple_free, NULL); */
 }
 
 static void

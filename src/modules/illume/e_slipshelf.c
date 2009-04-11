@@ -807,11 +807,12 @@ _e_slipshelf_object_del_attach(void *o)
 
    if (e_object_is_del(E_OBJECT(o))) return;
    ess = o;
-   ev = calloc(1, sizeof(E_Event_Slipshelf_Del));
-   ev->slipshelf = ess;
-   e_object_ref(E_OBJECT(ess));
-   ecore_event_add(E_EVENT_SLIPSHELF_DEL, ev, 
-		   _e_slipshelf_event_simple_free, NULL);
+/*    ev = calloc(1, sizeof(E_Event_Slipshelf_Del)); */
+/*    ev->slipshelf = ess; */
+/*    e_object_ref(E_OBJECT(ess)); */
+/*    fprintf(stderr, "event add E_EVENT_SLIPSHELF_DEL\n"); */
+/*    ecore_event_add(E_EVENT_SLIPSHELF_DEL, ev,  */
+/* 		   _e_slipshelf_event_simple_free, NULL); */
 }
     
 static int
