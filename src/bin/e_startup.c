@@ -20,14 +20,23 @@ static int             start_app_pos = -1;
 EAPI void
 e_startup(E_Startup_Mode mode)
 {
-   const char *homedir;
+   const char *homedir, *prefixdir;
    char buf[PATH_MAX];
    
    homedir = e_user_homedir_get();
+   prefixdir = e_prefix_data_get();
    if (mode == E_STARTUP_START)
-     snprintf(buf, sizeof(buf), "%s/.e/e/applications/startup/.order", homedir);
+     {
+        snprintf(buf, sizeof(buf), "%s/.e/e/applications/startup/.order", homedir);
+        if (!ecore_file_exists(buf))
+          snprintf(buf, sizeof(buf), "%s/data/applications/startup/.order", prefixdir);
+     }
    else if (mode == E_STARTUP_RESTART)
-     snprintf(buf, sizeof(buf), "%s/.e/e/applications/restart/.order", homedir);
+     {
+        snprintf(buf, sizeof(buf), "%s/.e/e/applications/restart/.order", homedir);
+        if (!ecore_file_exists(buf))
+          snprintf(buf, sizeof(buf), "%s/data/applications/restart/.order", prefixdir);
+     }
    startup_apps = e_order_new(buf);
    if (!startup_apps) return;
    start_app_pos = 0;
