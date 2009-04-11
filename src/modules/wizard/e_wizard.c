@@ -275,8 +275,8 @@ _e_wizard_main_new(E_Zone *zone)
    
    e_popup_edje_bg_object_set(pop, o_bg);
    e_popup_show(pop);
-   if (!e_grabinput_get(ecore_evas_software_x11_subwindow_get(pop->ecore_evas),
-			1, ecore_evas_software_x11_subwindow_get(pop->ecore_evas)))
+   if (!e_grabinput_get(ecore_evas_software_x11_window_get(pop->ecore_evas),
+			1, ecore_evas_software_x11_window_get(pop->ecore_evas)))
      {
 	e_object_del(E_OBJECT(pop));
 	pop = NULL;
