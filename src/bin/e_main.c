@@ -1166,8 +1166,6 @@ _e_main_x_shutdown(void)
    return 1;
 }
 
-static mode_t default_mode = S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
-
 static int
 _e_main_dirs_init(void)
 {
@@ -1191,10 +1189,10 @@ _e_main_dirs_init(void)
      "modules",
      "config",
      "locale",
-     "input_methods"
+     "input_methods",
+     NULL
    };
-   int i, fd, baselen, retval;
-   DIR *dir;
+   int baselen;
 
    homedir = e_user_homedir_get();
    baselen = snprintf(buf, sizeof(buf), "%s/.e/e", homedir);
@@ -1204,76 +1202,14 @@ _e_main_dirs_init(void)
 			     homedir);
 	return 0;
      }
-   if ((!ecore_file_is_dir(buf)) && (!ecore_file_mkpath(buf)))
+   if (ecore_file_mksubdirs(buf, dirs) != sizeof(dirs)/sizeof(dirs[0]) - 1)
      {
-	e_error_message_show("Error creating directory:\n%s", buf);
+	e_error_message_show
+	  ("Could not create one of the required subdirectories of '%s'", buf);
 	return 0;
      }
 
-   dir = opendir(buf);
-   if (!dir)
-     {
-	e_error_message_show("Could not open:\n%s\nError: %s",
-			     buf, strerror(errno));
-	return 0;
-     }
-   fd = dirfd(dir);
-
-   buf[baselen] = '/';
-   baselen++;
-   buf[baselen] = '\0';
-   retval = 1;
-   for (i = 0; i < (int)(sizeof(dirs) / sizeof(char *)); i++)
-     {
-	struct stat st;
-#ifndef HAVE_ATFILE_SOURCE
-	ecore_strlcpy(buf + baselen, dirs[i], sizeof(buf) - baselen);
-	if (stat(buf, &st) == 0)
-#else
-	if (fstatat(fd, dirs[i], &st, 0) == 0)
-#endif
-	  {
-	     if (S_ISDIR(st.st_mode))
-	       continue;
-	     else
-	       {
-		  e_error_message_show("Not a directory:\n%s%s", buf, dirs[i]);
-		  retval = 0;
-		  goto end;
-	       }
-	  }
-	else
-	  {
-	     if (errno == ENOENT)
-	       {
-#ifndef HAVE_ATFILE_SOURCE
-		  if (mkdir(buf, default_mode) == 0)
-#else
-		  if (mkdirat(fd, dirs[i], default_mode) == 0)
-#endif
-		    continue;
-		  else
-		    {
-		       e_error_message_show
-			 ("could not create dir:\n%s%s\nError: %s",
-			  buf, dirs[i], strerror(errno));
-		       retval = 0;
-		       goto end;
-		    }
-	       }
-	     else
-	       {
-		  e_error_message_show("could not fstat:\n%s%s\nError: %s",
-				       buf, dirs[i], strerror(errno));
-		  retval = 0;
-		  goto end;
-	       }
-	  }
-     }
-
- end:
-   closedir(dir);
-   return retval;
+   return 1;
 }
 
 static int
