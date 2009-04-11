@@ -185,7 +185,7 @@ e_drag_new(E_Container *container, int x, int y,
    e_object_ref(E_OBJECT(drag->container));
    drag->ecore_evas = e_canvas_new(e_config->evas_engine_drag, drag->container->win,
 				   drag->x, drag->y, drag->w, drag->h, 1, 1,
-				   &(drag->evas_win), NULL);
+				   &(drag->evas_win));
    if (e_config->use_composite)
      {
 	ecore_evas_alpha_set(drag->ecore_evas, 1);

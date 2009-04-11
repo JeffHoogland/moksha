@@ -89,7 +89,7 @@ e_container_new(E_Manager *man)
 
    con->bg_ecore_evas = e_canvas_new(e_config->evas_engine_container, con->win,
 				     0, 0, con->w, con->h, 1, 1,
-				     &(con->bg_win), NULL);
+				     &(con->bg_win));
    e_canvas_add(con->bg_ecore_evas);
    con->event_win = ecore_x_window_input_new(con->bg_win, 0, 0, con->w, con->h);
    ecore_x_window_show(con->event_win);

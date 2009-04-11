@@ -153,9 +153,7 @@ EAPI int E_EVENT_BORDER_PROPERTY = 0;
 #define GRAV_SET(bd, grav) \
 ecore_x_window_gravity_set(bd->bg_win, grav); \
 ecore_x_window_gravity_set(bd->client.shell_win, grav); \
-ecore_x_window_gravity_set(bd->client.win, grav); \
-ecore_x_window_gravity_set(bd->bg_subwin, grav); \
-ecore_x_window_pixel_gravity_set(bd->bg_subwin, grav);
+ecore_x_window_gravity_set(bd->client.win, grav);
 
 /* externally accessible functions */
 EAPI int
@@ -251,7 +249,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    e_focus_setup(bd);
    bd->bg_ecore_evas = e_canvas_new(e_config->evas_engine_borders, bd->win,
 				    0, 0, bd->w, bd->h, 1, 0,
-				    &(bd->bg_win), &(bd->bg_subwin));
+				    &(bd->bg_win));
    e_canvas_add(bd->bg_ecore_evas);
    bd->event_win = ecore_x_window_input_new(bd->win, 0, 0, bd->w, bd->h);
    bd->bg_evas = ecore_evas_get(bd->bg_ecore_evas);

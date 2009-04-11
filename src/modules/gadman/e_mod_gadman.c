@@ -446,7 +446,7 @@ _gadman_gadcon_new(const char* name, int ontop)
      {
         Man->top_ee = e_canvas_new(e_config->evas_engine_popups,
                                    Man->container->win, 0, 0, 0, 0, 1, 1,
-                                   &(Man->top_win), NULL);
+                                   &(Man->top_win));
 
         if (Man->use_composite)
           {

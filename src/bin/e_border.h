@@ -159,7 +159,6 @@ struct _E_Border
    Ecore_Evas     *bg_ecore_evas;
    Evas           *bg_evas;
    Ecore_X_Window  bg_win;
-   Ecore_X_Window  bg_subwin;
    Evas_Object    *bg_object;
    Evas_Object    *icon_object;
    Ecore_X_Window  event_win;

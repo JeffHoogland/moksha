@@ -179,7 +179,7 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
    /* TODO: config the ecore_evas type. */
    zone->black_ecore_evas = 
      e_canvas_new(e_config->evas_engine_zone, zone->container->win,
-                  0, 0, zone->w, zone->h, 1, 1, &(zone->black_win), NULL);
+                  0, 0, zone->w, zone->h, 1, 1, &(zone->black_win));
    e_canvas_add(zone->black_ecore_evas);
    ecore_evas_layer_set(zone->black_ecore_evas, 6);
    zone->black_evas = ecore_evas_get(zone->black_ecore_evas);
