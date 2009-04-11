@@ -626,7 +626,7 @@ _e_fwin_desktop_run(Efreet_Desktop *desktop, E_Fwin *fwin)
 	if (ext == E_FWIN_EXEC_NONE)
 	  {
 	     if (!((ici->link) && (ici->mount)))
-	       snprintf(buf, sizeof(buf), "%s", ici->file);
+	       ecore_strlcpy(buf, ici->file, sizeof(buf));
 	  }
 	else
 	  _e_fwin_file_exec(fwin, ici, ext);
@@ -854,7 +854,7 @@ _e_fwin_window_title_set(E_Fwin *fwin)
 
    if (file) 
      {
-	snprintf(buf, sizeof(buf), "%s", file);
+	ecore_strlcpy(buf, file, sizeof(buf));
 	e_win_title_set(fwin->win, buf);
      }
 }
