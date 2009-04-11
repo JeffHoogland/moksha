@@ -1225,11 +1225,13 @@ _e_main_dirs_init(void)
    retval = 1;
    for (i = 0; i < (int)(sizeof(dirs) / sizeof(char *)); i++)
      {
-	/* TODO: probably need to handle cases without ATSOURCE files?
-	 * let's wait people to report and if any I'll fix it.
-	 */
 	struct stat st;
+#ifndef HAVE_ATFILE_SOURCE
+	ecore_strlcpy(buf + baselen, dirs[i], sizeof(buf) - baselen);
+	if (stat(buf, &st) == 0)
+#else
 	if (fstatat(fd, dirs[i], &st, 0) == 0)
+#endif
 	  {
 	     if (S_ISDIR(st.st_mode))
 	       continue;
@@ -1244,7 +1246,11 @@ _e_main_dirs_init(void)
 	  {
 	     if (errno == ENOENT)
 	       {
+#ifndef HAVE_ATFILE_SOURCE
+		  if (mkdir(buf, default_mode) == 0)
+#else
 		  if (mkdirat(fd, dirs[i], default_mode) == 0)
+#endif
 		    continue;
 		  else
 		    {
