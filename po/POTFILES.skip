@@ -49,3 +49,6 @@ src/modules/layout/module.desktop.in
 src/modules/msgbus_lang/module.desktop.in
 src/modules/pager/module.desktop.in
 src/modules/start/module.desktop.in
+src/modules/conf_wallpaper2/e_int_config_wallpaper.c
+src/modules/conf_wallpaper2/e_mod_main.c
+src/modules/conf_wallpaper2/module.desktop.in
