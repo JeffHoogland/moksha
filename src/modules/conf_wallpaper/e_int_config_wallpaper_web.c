@@ -132,7 +132,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    ol = e_widget_list_add(e_win_evas_get(dia->win), 0, 1);
 
    /* The Exchange Smart Object*/
-   snprintf(usr_dir, sizeof(usr_dir), "%s/.e/e/backgrounds", e_user_homedir_get());
+   e_user_dir_concat_static(usr_dir, "backgrounds");
    exsm = exchange_smart_object_add(e_win_evas_get(dia->win));
    exchange_smart_object_remote_group_set(exsm, "Wallpaper");
    exchange_smart_object_local_path_set(exsm, usr_dir);

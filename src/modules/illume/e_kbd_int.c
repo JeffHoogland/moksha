@@ -1067,48 +1067,61 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
    Eina_List *files;
    Eina_List *l;
    char buf[PATH_MAX], *p, *file;
-   const char *homedir, *fl;
+   const char *fl;
    char *path;
    Eina_List *kbs = NULL, *layouts = NULL;
    int ok;
-   
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/keyboards", homedir);
+   size_t len;
+
+   len = e_user_dir_concat_static(buf, "keyboards");
+   if (len + 2 >= sizeof(buf)) return;
+
    files = ecore_file_ls(buf);
+
+   buf[len] = '/';
+   len++;
+
    EINA_LIST_FREE(files, file)
+     {
+	p = strrchr(file, '.');
+	if ((p) && (!strcmp(p, ".kbd")))
 	  {
-	     p = strrchr(file, '.');
-	     if ((p) && (!strcmp(p, ".kbd")))
-	       {
-		  snprintf(buf, sizeof(buf), "%s/.e/e/keyboards/%s", homedir, file);
-		  kbs = eina_list_append(kbs, evas_stringshare_add(buf));
-	       }
+	     if (ecore_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
+	       continue;
+	     kbs = eina_list_append(kbs, evas_stringshare_add(buf));
+	  }
 	free(file);
      }
 
-   snprintf(buf, sizeof(buf), "%s/keyboards", ki->syskbds);
+   len = snprintf(buf, sizeof(buf), "%s/keyboards", ki->syskbds);
+   if (len + 2 >= sizeof(buf)) return;
+
    files = ecore_file_ls(buf);
+
+   buf[len] = '/';
+   len++;
+
    EINA_LIST_FREE(files, file)
+     {
+	p = strrchr(file, '.');
+	if ((p) && (!strcmp(p, ".kbd")))
 	  {
-             p = strrchr(file, '.');
-	     if ((p) && (!strcmp(p, ".kbd")))
+	     ok = 1;
+	     EINA_LIST_FOREACH(kbs, l, fl)
 	       {
-		  ok = 1;
-		  for (l = kbs; l; l = l->next)
+		  if (!strcmp(file, fl))
 		    {
-		       fl = ecore_file_file_get(l->data);
-		       if (!strcmp(file, fl))
-			 {
-			    ok = 0;
-			    break;
-			 }
-		    }
-		  if (ok)
-		    {
-		       snprintf(buf, sizeof(buf), "%s/keyboards/%s", ki->syskbds, file);
-		       kbs = eina_list_append(kbs, evas_stringshare_add(buf));
+		       ok = 0;
+		       break;
 		    }
 	       }
+	     if (ok)
+	       {
+		  if (ecore_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
+		    continue;
+		  kbs = eina_list_append(kbs, evas_stringshare_add(buf));
+	       }
+	  }
 	free(file);
      }
    /* Previous loop could break before destroying all items. */
@@ -1356,7 +1369,7 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    Eina_List *files;
    Eina_List *l;
    char buf[PATH_MAX], *p, *file, *pp;
-   const char *homedir, *str;
+   const char *str;
    int used;
    
    if (ki->dictlist.popup) return;
@@ -1372,8 +1385,7 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    e_widget_ilist_freeze(o);
    ki->dictlist.ilist_obj = o;
 
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/dicts", homedir);
+   e_user_dir_concat_static(buf, "dicts");
    files = ecore_file_ls(buf);
 
    EINA_LIST_FREE(files, file)

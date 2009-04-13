@@ -197,9 +197,9 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
 
 
    if (cfdata->fmdir == 1)
-     snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
+     e_prefix_data_concat_static(path, "data/backgrounds");
    else
-     snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
+     e_user_dir_concat_static(path, "backgrounds");
 
    ow = e_fm2_add(evas);
    cfdata->o_fm = ow;
@@ -362,13 +362,13 @@ _cb_fm_radio_change(void *data, Evas_Object *obj)
 {
    E_Config_Dialog_Data *cfdata;
    char path[PATH_MAX];
-   
+
    cfdata = data;
    if (!cfdata->o_fm) return;
-   if (cfdata->fmdir == 0) 
-     snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
-   else 
-     snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
+   if (cfdata->fmdir == 0)
+     e_user_dir_concat_static(path, "backgrounds");
+   else
+     e_prefix_data_concat_static(path, "data/backgrounds");
    e_fm2_path_set(cfdata->o_fm, path, "/");
 }
 
@@ -378,6 +378,7 @@ _cb_fm_change(void *data, Evas_Object *obj, void *event_info)
    E_Config_Dialog_Data *cfdata;
    const char *p;
    char path[PATH_MAX];
+   size_t len;
 
    cfdata = data;
    if (!Man->conf->custom_bg) return;
@@ -388,14 +389,14 @@ _cb_fm_change(void *data, Evas_Object *obj, void *event_info)
 
    if (strncmp(p, Man->conf->custom_bg, strlen(p))) return;
 
-   snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
-   if (!strncmp(Man->conf->custom_bg, path, strlen(path))) 
-     p = Man->conf->custom_bg + strlen(path) + 1;
+   len = e_user_dir_concat_static(path, "backgrounds");
+   if (!strncmp(Man->conf->custom_bg, path, len)) 
+     p = Man->conf->custom_bg + len + 1;
    else 
      {
-	snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
-	if (!strncmp(Man->conf->custom_bg, path, strlen(path)))
-	  p = Man->conf->custom_bg + strlen(path) + 1;
+	len = e_prefix_data_concat_static(path, "data/backgrounds");
+	if (!strncmp(Man->conf->custom_bg, path, len))
+	  p = Man->conf->custom_bg + len + 1;
 	else
 	  p = Man->conf->custom_bg;
      }

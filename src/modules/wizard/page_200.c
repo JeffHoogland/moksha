@@ -18,13 +18,11 @@ EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
    char buf[PATH_MAX];
-   const char *homedir;
-   
+
    if ((e_config_profile_get()) && (strlen(e_config_profile_get()) > 0))
      {
-	// delete profile
-	homedir = e_user_homedir_get();
-	snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, e_config_profile_get());
+	if (e_user_dir_snprintf(buf, sizeof(buf), "config/%s", e_config_profile_get()) >= sizeof(buf))
+	  return 0;
 	if (ecore_file_is_dir(buf)) ecore_file_recursive_rm(buf);
      }
    // load profile as e_config
@@ -41,30 +39,26 @@ EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {
    char buf[PATH_MAX];
-   const char *homedir;
-   
    // setup ~/Desktop and ~/.e/e/fileman/favorites and 
    // ~/.e/e/applications/bar/default, maybe ~/.e/e/applications/startup/.order
-
-   homedir = e_user_homedir_get();
 
    // FIXME: should become a wizard page on its own
    // setup fileman favorites
    snprintf(buf, sizeof(buf),
 	    "gzip -d -c < %s/data/other/efm_favorites.tar.gz | "
 	    "(cd %s/.e/e/ ; tar -xkf -)",
-	    e_prefix_data_get(), homedir);
+	    e_prefix_data_get(), e_user_homedir_get());
    system(buf);
    // FIXME: efm favorites linked to desktop should be an option in another
    // wizard page
    // ~/Desktop
-   snprintf(buf, sizeof(buf), "%s/Desktop", homedir);
+   e_user_homedir_concat_static(buf, "Desktop");
    ecore_file_mkpath(buf);
-   snprintf(buf, sizeof(buf), "%s/Desktop/home.desktop", homedir);
+   e_user_homedir_concat_static(buf, "Desktop/home.desktop");
    ecore_file_symlink("../.e/e/fileman/favorites/home.desktop", buf);
-   snprintf(buf, sizeof(buf), "%s/Desktop/root.desktop", homedir);
+   e_user_homedir_concat_static(buf, "Desktop/root.desktop");
    ecore_file_symlink("../.e/e/fileman/favorites/root.desktop", buf);
-   snprintf(buf, sizeof(buf), "%s/Desktop/tmp.desktop", homedir);
+   e_user_homedir_concat_static(buf, "Desktop/tmp.desktop");
    ecore_file_symlink("../.e/e/fileman/favorites/tmp.desktop", buf);
    
    // save the config now everyone has modified it

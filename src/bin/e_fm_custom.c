@@ -359,8 +359,7 @@ _e_fm2_custom_file_info_load(void)
    
    if (_e_fm2_custom_file) return;
    _e_fm2_custom_writes = 0;
-   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/custom.cfg",
-	    e_user_homedir_get());
+   e_user_dir_concat_static(buf, "fileman/custom.cfg");
    _e_fm2_custom_file = eet_open(buf, EET_FILE_MODE_READ);
    if (!_e_fm2_custom_file)
      _e_fm2_custom_file = eet_open(buf, EET_FILE_MODE_WRITE);
@@ -390,19 +389,22 @@ _e_fm2_custom_file_info_save(void)
 {
    Eet_File *ef;
    char buf[PATH_MAX], buf2[PATH_MAX];
+   size_t len;
    int ret;
 
    if (!_e_fm2_custom_file) return;
    if (!_e_fm2_custom_writes) return;
-   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/custom.cfg.tmp",
-	    e_user_homedir_get());
+
+   len = e_user_dir_concat_static(buf, "fileman/custom.cfg.tmp");
+   if (len >= sizeof(buf)) return;
    ef = eet_open(buf, EET_FILE_MODE_WRITE);
    if (!ef) return;
    eina_hash_foreach(_e_fm2_custom_hash,
 		     _e_fm2_custom_file_hash_foreach_save, ef);
    eet_close(ef);
-   snprintf(buf2, sizeof(buf2), "%s/.e/e/fileman/custom.cfg",
-	    e_user_homedir_get());
+
+   memcpy(buf2, buf, len - sizeof(".tmp") - 1);
+   buf2[len - sizeof(".tmp") - 1] = '\0';
    eet_close(_e_fm2_custom_file);
    _e_fm2_custom_file = NULL;
    ret = rename(buf, buf2);

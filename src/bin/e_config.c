@@ -60,18 +60,14 @@ e_config_init(void)
      {
 	Eet_File *ef;
 	char buf[4096];
-	const char *homedir;
 
 	/* try user profile config */
-	homedir = e_user_homedir_get();
-	snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg",
-		 homedir);
+	e_user_dir_concat_static(buf, "config/profile.cfg");
 	ef = eet_open(buf, EET_FILE_MODE_READ);
 	if (!ef)
 	  {
 	     /* use system if no user profile config */
-	     snprintf(buf, sizeof(buf), "%s/data/config/profile.cfg",
-		      e_prefix_data_get());
+	     e_prefix_data_concat_static(buf, "data/config/profile.cfg");
 	     ef = eet_open(buf, EET_FILE_MODE_READ);
 	  }
 	if (ef)
@@ -99,8 +95,7 @@ e_config_init(void)
 	     char *link = NULL;
 	     
 	     /* check symlink - if default is a symlink to another dir */
-             snprintf(buf, sizeof(buf), "%s/data/config/default",
-		      e_prefix_data_get());
+	     e_prefix_data_concat_static(buf, "data/config/default");
 	     link = ecore_file_readlink(buf);
 	     /* if so use just the filename as the priofle - must be a local link */
 	     if (link)
@@ -1079,14 +1074,10 @@ EAPI char *
 e_config_profile_dir_get(const char *prof)
 {
    char buf[PATH_MAX];
-   const char *homedir;
-   const char *dir;
 
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, prof);
+   e_user_dir_snprintf(buf, sizeof(buf), "config/%s", prof);
    if (ecore_file_is_dir(buf)) return strdup(buf);
-   dir = e_prefix_data_get();
-   snprintf(buf, sizeof(buf), "%s/data/config/%s", dir, prof);
+   e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s", prof);
    if (ecore_file_is_dir(buf)) return strdup(buf);
    return NULL;
 }
@@ -1101,19 +1092,20 @@ e_config_profile_list(void)
 {
    Eina_List *files;
    char buf[PATH_MAX], *p;
-   const char *homedir;
-   const char *dir;
    Eina_List *flist = NULL;
-   int len;
+   size_t len;
 
-   homedir = e_user_homedir_get();
-   len = snprintf(buf, sizeof(buf), "%s/.e/e/config/", homedir);
-   if (len >= (int)sizeof(buf))
+   len = e_user_dir_concat_static(buf, "config");
+   if (len + 1 >= (int)sizeof(buf))
      return NULL;
+
+   files = ecore_file_ls(buf);
+
+   buf[len] = '/';
+   len++;
 
    p = buf + len;
    len = sizeof(buf) - len;
-   files = ecore_file_ls(buf);
    if (files)
      {
 	char *file;
@@ -1132,14 +1124,17 @@ e_config_profile_list(void)
 	       free(file);
 	  }
      }
-   dir = e_prefix_data_get();
-   len = snprintf(buf, sizeof(buf), "%s/data/config/", dir);
-   if (len >= (int)sizeof(buf))
+   len = e_prefix_data_concat_static(buf, "data/config");
+   if (len >= sizeof(buf))
      return NULL;
+
+   files = ecore_file_ls(buf);
+
+   buf[len] = '/';
+   len++;
 
    p = buf + len;
    len = sizeof(buf) - len;
-   files = ecore_file_ls(buf);
    if (files)
      {
 	char *file;
@@ -1172,37 +1167,18 @@ EAPI void
 e_config_profile_add(const char *prof)
 {
    char buf[4096];
-   const char *homedir;
-   
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, prof);
+   if (e_user_dir_snprintf(buf, sizeof(buf), "config/%s", prof) >= sizeof(buf))
+     return;
    ecore_file_mkdir(buf);
 }
 
 EAPI void
 e_config_profile_del(const char *prof)
 {
-   Eina_List *files;
    char buf[4096];
-   const char *homedir;
-   
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, prof);
-   files = ecore_file_ls(buf);
-   if (files)
-     {
-	char *file;
-	
-	EINA_LIST_FREE(files, file)
-	  {
-	     snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s",
-		      homedir, prof, file);
-	     ecore_file_unlink(buf);
-	     free(file);
-	  }
-     }
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, prof);
-   ecore_file_rmdir(buf);
+   if (e_user_dir_snprintf(buf, sizeof(buf), "config/%s", prof) >= sizeof(buf))
+     return;
+   ecore_file_recursive_rm(buf);
 }
 
 EAPI Eina_List *
@@ -1243,12 +1219,10 @@ e_config_domain_load(const char *domain, E_Config_DD *edd)
 {
    Eet_File *ef;
    char buf[4096];
-   const char *homedir;
    void *data = NULL;
 
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s.cfg",
-	    homedir, _e_config_profile, domain);
+   e_user_dir_snprintf(buf, sizeof(buf), "config/%s/%s.cfg",
+		       _e_config_profile, domain);
    ef = eet_open(buf, EET_FILE_MODE_READ);
    if (ef)
      {
@@ -1266,8 +1240,8 @@ e_config_domain_system_load(const char *domain, E_Config_DD *edd)
    char buf[4096];
    void *data = NULL;
 
-   snprintf(buf, sizeof(buf), "%s/data/config/%s/%s.cfg",
-	    e_prefix_data_get(), _e_config_profile, domain);
+   e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/%s.cfg",
+			  _e_config_profile, domain);
    ef = eet_open(buf, EET_FILE_MODE_READ);
    if (ef)
      {
@@ -1284,13 +1258,11 @@ e_config_profile_save(void)
 {
    Eet_File *ef;
    char buf[4096], buf2[4096];
-   const char *homedir;
    int ok = 0;
 
    /* FIXME: check for other sessions fo E running */
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg", homedir);
-   snprintf(buf2, sizeof(buf2), "%s.tmp", buf);
+   e_user_dir_concat_static(buf, "config/profile.cfg");
+   e_user_dir_concat_static(buf2, "config/profile.cfg.tmp");
 
    ef = eet_open(buf2, EET_FILE_MODE_WRITE);
    if (ef)
@@ -1317,18 +1289,31 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
 {
    Eet_File *ef;
    char buf[4096], buf2[4096];
-   const char *homedir;
    int ok = 0, ret;
+   size_t len, len2;
 
    if (_e_config_save_block) return 0;
    /* FIXME: check for other sessions fo E running */
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", 
-	    homedir, _e_config_profile);
+   len = e_user_dir_snprintf(buf, sizeof(buf), "config/%s", _e_config_profile);
+   if (len + 1 >= sizeof(buf)) return 0;
+
    ecore_file_mkdir(buf);
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s.cfg", 
-	    homedir, _e_config_profile, domain);
-   snprintf(buf2, sizeof(buf2), "%s.tmp", buf);
+
+   buf[len] = '/';
+   len++;
+
+   len2 = ecore_strlcpy(buf + len, domain, sizeof(buf) - len);
+   if (len2 + sizeof(".cfg") >= sizeof(buf) - len) return 0;
+
+   len += len2;
+
+   memcpy(buf + len, ".cfg", sizeof(".cfg"));
+   len += sizeof(".cfg") - 1;
+
+   if (len + sizeof(".tmp") >= sizeof(buf)) return 0;
+   memcpy(buf2, buf, len);
+   memcpy(buf2 + len, ".tmp", sizeof(".tmp"));
+
    ef = eet_open(buf2, EET_FILE_MODE_WRITE);
    if (ef)
      {

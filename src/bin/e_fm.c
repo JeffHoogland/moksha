@@ -651,14 +651,12 @@ static Ecore_Event_Handler *_e_fm2_op_registry_entry_changed_handler = NULL;
 EAPI int
 e_fm2_init(void)
 {
-   const char *homedir;
    char  path[PATH_MAX];
 
    eina_stringshare_init();
    ecore_job_init();
    _e_storage_volume_edd_init();
-   homedir = e_user_homedir_get();
-   snprintf(path, sizeof(path), "%s/.e/e/fileman/metadata", homedir);
+   e_user_dir_concat_static(path, "fileman/metadata");
    ecore_file_mkpath(path);
    _e_fm2_meta_path = strdup(path);
 
@@ -3037,8 +3035,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	      .desktop files or symlinks (in fact anything
 	      * you like
 	      */
-	     s = (char *)e_user_homedir_get();
-	     if (PRT("%s/.e/e/fileman/favorites", s) >= sizeof(buf))
+	     if (e_user_dir_concat_static(buf, "fileman/favorites") >= sizeof(buf))
 	       return NULL;
 	  }
 	else if (strcmp(dev, "desktop") == 0)
@@ -3048,15 +3045,14 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	      .desktop files or symlinks (in fact anything
 	      * you like
 	      */
-	     s = (char *)e_user_homedir_get();
 	     if (strcmp(path, "/") == 0)
 	       {
-		  if (PRT("%s/Desktop", s) >= sizeof(buf))
+		  if (e_user_homedir_concat_static(buf, "Desktop") >= sizeof(buf))
 		    return NULL;
 	       }
 	     else
 	       {
-		  if (PRT("%s/Desktop-%s", s, path) >= sizeof(buf))
+		  if (e_user_homedir_snprintf(buf, sizeof(buf), "Desktop-%s", path) >= sizeof(buf))
 		    return NULL;
 	       }
 	     ecore_file_mkpath(buf);

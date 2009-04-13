@@ -1065,8 +1065,7 @@ _e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi)
    char buf[4096];
 
    if (!(bd = data)) return;
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite.menu",
-	    e_user_homedir_get());
+   e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
    menu = efreet_menu_parse(buf);
    if (!menu) return;
    efreet_menu_desktop_insert(menu, bd->desktop, -1);
@@ -1095,13 +1094,16 @@ _e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    Eina_List *dirs;
    Eina_List *l;
    char buf[4096], *file;
-   const char *homedir;
+   size_t len;
 
    if (!(bd = data)) return;
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar", homedir);
+   len = e_user_dir_concat_static(buf, "applications/bar");
+   if (len + 1 >= sizeof(buf)) return;
    dirs = ecore_file_ls(buf);
    if (!dirs) return;
+
+   buf[len] = '/';
+   len++;
 
    sm = e_menu_new();
    EINA_LIST_FOREACH(dirs, l, file)
@@ -1109,7 +1111,8 @@ _e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 	E_Menu_Item *smi;
 
 	if (file[0] == '.') continue;
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", homedir, file);
+
+	ecore_strlcpy(buf + len, file, sizeof(buf) - len);
 	if (ecore_file_is_dir(buf))
 	  {
 	     smi = e_menu_item_new(sm);
@@ -1131,8 +1134,8 @@ _e_border_menu_cb_ibar_add(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = e_object_data_get(E_OBJECT(m));
    if ((!bd) || (!bd->desktop)) return;
 
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order",
-	    e_user_homedir_get(), (char *)data);
+   e_user_dir_snprintf(buf, sizeof(buf), "applications/bar/%s/.order",
+		       (const char *)data);
    od = e_order_new(buf);
    if (!od) return;
    e_order_append(od, bd->desktop);

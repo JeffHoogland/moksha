@@ -217,9 +217,8 @@ main(int argc, char **argv)
      {
 	/* do some extra tests to see if the prefix really is right */
 	char buf[4096];
-	
-	snprintf(buf, sizeof(buf), "%s/data/themes/default.edj",
-		 e_prefix_data_get());
+
+	e_prefix_data_concat_static(buf, "data/themes/default.edj");
 	if (!ecore_file_exists(buf))
 	  {
 	     printf("WARNING: Prefix guess was wrong. Guessed:\n"
@@ -378,10 +377,7 @@ main(int argc, char **argv)
    TS("arg parse done");
    /* fixes for FOOLS that keep cp'ing default.edj into ~/.e/e/themes */
      {
-	const char *homedir;
-	
-	homedir = e_user_homedir_get();
-	snprintf(buf, sizeof(buf), "%s/.e/e/themes/default.edj", homedir);
+	e_user_dir_concat_static(buf, "themes/default.edj");
 	if (ecore_file_exists(buf))
 	  ecore_file_unlink(buf);
      }
@@ -693,7 +689,7 @@ main(int argc, char **argv)
              e_canvas_add(ee);
              im = evas_object_image_add(ecore_evas_get(ee));
              
-             snprintf(buf, sizeof(buf), "%s/data/images/test.png", e_prefix_data_get());
+             e_prefix_data_concat_static(buf, "data/images/test.png");
              evas_object_image_file_set(im, buf, NULL);
              if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
                {
@@ -702,7 +698,7 @@ main(int argc, char **argv)
                   _e_main_shutdown(-1);
                }
              
-             snprintf(buf, sizeof(buf), "%s/data/images/test.jpg", e_prefix_data_get());
+	     e_prefix_data_concat_static(buf, "data/images/test.jpg");
              evas_object_image_file_set(im, buf, NULL);
              if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
                {
@@ -711,7 +707,7 @@ main(int argc, char **argv)
                   _e_main_shutdown(-1);
                }
              
-             snprintf(buf, sizeof(buf), "%s/data/images/test.edj", e_prefix_data_get());
+             e_prefix_data_concat_static(buf, "data/images/test.edj");
              evas_object_image_file_set(im, buf, "images/0");
              if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
                {
@@ -782,9 +778,9 @@ main(int argc, char **argv)
 	list = efreet_icon_extra_list_get();
 	if (list)
 	  {
-	     snprintf(buf, sizeof(buf), "%s/.e/e/icons", e_user_homedir_get());
+	     e_user_dir_concat_static(buf, "icons");
 	     *list = eina_list_prepend(*list, (void *)eina_stringshare_add(buf));
-	     snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
+	     e_prefix_data_concat_static(buf, "data/icons");
 	     *list = eina_list_prepend(*list, (void *)eina_stringshare_add(buf));
 	  }
      }
@@ -1169,8 +1165,7 @@ _e_main_x_shutdown(void)
 static int
 _e_main_dirs_init(void)
 {
-   const char *homedir;
-   char buf[PATH_MAX];
+   const char *base;
    const char *dirs[] = {
      "images",
      "fonts",
@@ -1192,20 +1187,12 @@ _e_main_dirs_init(void)
      "input_methods",
      NULL
    };
-   int baselen;
 
-   homedir = e_user_homedir_get();
-   baselen = snprintf(buf, sizeof(buf), "%s/.e/e", homedir);
-   if (baselen >= (int)sizeof(buf))
-     {
-	e_error_message_show("Error could not join:\n'%s'\nand\n'/.e/e",
-			     homedir);
-	return 0;
-     }
-   if (ecore_file_mksubdirs(buf, dirs) != sizeof(dirs)/sizeof(dirs[0]) - 1)
+   base = e_user_dir_get();
+   if (ecore_file_mksubdirs(base, dirs) != sizeof(dirs)/sizeof(dirs[0]) - 1)
      {
 	e_error_message_show
-	  ("Could not create one of the required subdirectories of '%s'", buf);
+	  ("Could not create one of the required subdirectories of '%s'", base);
 	return 0;
      }
 
@@ -1334,7 +1321,7 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_data\n");
 	return 0;
      }
-   snprintf(buf, sizeof(buf), "%s/data", e_prefix_data_get());
+   e_prefix_data_concat_static(buf, "data");
    e_path_default_path_append(path_data, buf);
    e_path_user_path_set(path_data, &(e_config->path_append_data));
 
@@ -1346,7 +1333,7 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_images, "~/.e/e/images");
-   snprintf(buf, sizeof(buf), "%s/data/images", e_prefix_data_get());
+   e_prefix_data_concat_static(buf, "data/images");
    e_path_default_path_append(path_images, buf);
    e_path_user_path_set(path_images, &(e_config->path_append_images));
    
@@ -1358,7 +1345,7 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_fonts, "~/.e/e/fonts");
-   snprintf(buf, sizeof(buf), "%s/data/fonts", e_prefix_data_get());
+   e_prefix_data_concat_static(buf, "data/fonts");
    e_path_default_path_append(path_fonts, buf);
    e_path_user_path_set(path_fonts, &(e_config->path_append_fonts));
 
@@ -1370,7 +1357,7 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_themes, "~/.e/e/themes");
-   snprintf(buf, sizeof(buf), "%s/data/themes", e_prefix_data_get());
+   e_prefix_data_concat_static(buf, "data/themes");
    e_path_default_path_append(path_themes, buf);
    e_path_user_path_set(path_themes, &(e_config->path_append_themes));
 
@@ -1382,7 +1369,7 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_icons, "~/.e/e/icons");
-   snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
+   e_prefix_data_concat_static(buf, "data/icons");
    e_path_default_path_append(path_icons, buf);
    e_path_user_path_set(path_icons, &(e_config->path_append_icons));
 
@@ -1412,7 +1399,7 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_backgrounds, "~/.e/e/backgrounds");
-   snprintf(buf, sizeof(buf), "%s/data/backgrounds", e_prefix_data_get());
+   e_prefix_data_concat_static(buf, "data/backgrounds");
    e_path_default_path_append(path_backgrounds, buf);
    e_path_user_path_set(path_backgrounds, &(e_config->path_append_backgrounds));
 

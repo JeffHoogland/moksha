@@ -77,10 +77,9 @@ main(int argc, char **argv)
    ecore_file_init();
    ecore_ipc_init();
 
-   snprintf(_thumbdir, sizeof(_thumbdir), "%s/.e/e/fileman/thumbnails", 
-	    e_user_homedir_get());
+   e_user_dir_concat_static(_thumbdir, "fileman/thumbnails");
    ecore_file_mkpath(_thumbdir);
-   
+
    if (_e_ipc_init()) ecore_main_loop_begin();
    
    if (_e_ipc_server)

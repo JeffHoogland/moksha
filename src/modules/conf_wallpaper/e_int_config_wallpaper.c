@@ -122,7 +122,7 @@ e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file)
    cfdata = dia->cfdata;
    cfdata->fmdir = 1;
    e_widget_radio_toggle_set(cfdata->o_personal, 1);
-   snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
+   e_user_dir_concat_static(path, "backgrounds");
    E_FREE(cfdata->bg);
    cfdata->bg = strdup(file);
    cfdata->use_theme_bg = 0;
@@ -255,6 +255,7 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
    E_Config_Dialog_Data *cfdata;
    const char *p = NULL;
    char buf[PATH_MAX];
+   size_t len;
 
    cfdata = data;
    if ((!cfdata->bg) || (!cfdata->o_fm)) return;
@@ -265,14 +266,14 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
      }
    else return;
 
-   snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds", e_user_homedir_get());
-   if (!strncmp(cfdata->bg, buf, strlen(buf)))
-     p = cfdata->bg + strlen(buf) + 1;
+   len = e_user_dir_concat_static(buf, "backgrounds");
+   if (!strncmp(cfdata->bg, buf, len))
+     p = cfdata->bg + len + 1;
    else
      {
-	snprintf(buf, sizeof(buf), "%s/data/backgrounds", e_prefix_data_get());
-	if (!strncmp(cfdata->bg, buf, strlen(buf)))
-	  p = cfdata->bg + strlen(buf) + 1;
+	len = e_prefix_data_concat_static(buf, "data/backgrounds");
+	if (!strncmp(cfdata->bg, buf, len))
+	  p = cfdata->bg + len + 1;
 	else
 	  p = cfdata->bg;
      }
@@ -351,9 +352,9 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
 
    cfdata = data;
    if (cfdata->fmdir == 1)
-     snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
+     e_prefix_data_concat_static(path, "data/backgrounds");
    else
-     snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
+     e_user_dir_concat_static(path, "backgrounds");
    e_widget_flist_path_set(cfdata->o_fm, path, "/");
 }
 
@@ -444,13 +445,13 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (cfdata->bg)
      {
 	const char *f;
+	size_t len;
 
 	f = e_theme_edje_file_get("base/theme/backgrounds", 
                                   "e/desktop/background");
 	if (!strcmp(cfdata->bg, f)) cfdata->use_theme_bg = 1;
-	snprintf(path, sizeof(path), "%s/data/backgrounds", 
-                 e_prefix_data_get());
-	if (!strncmp(cfdata->bg, path, strlen(path))) cfdata->fmdir = 1;
+	len = e_prefix_data_concat_static(path, "data/backgrounds");
+	if (!strncmp(cfdata->bg, path, len)) cfdata->fmdir = 1;
      }
    else
      cfdata->use_theme_bg = 1;
@@ -521,9 +522,9 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 0, 0, 0, 0);
 
    if (cfdata->fmdir == 1)
-     snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
+     e_prefix_data_concat_static(path, "data/backgrounds");
    else
-     snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
+     e_user_dir_concat_static(path, "backgrounds");
 
    ow = e_widget_flist_add(evas);
    cfdata->o_fm = ow;
@@ -651,9 +652,9 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 0, 0, 0, 0);
 
    if (cfdata->fmdir == 1)
-     snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
+     e_prefix_data_concat_static(path, "data/backgrounds");
    else
-     snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
+     e_user_dir_concat_static(path, "backgrounds");
 
    ow = e_widget_flist_add(evas);
    cfdata->o_fm = ow;

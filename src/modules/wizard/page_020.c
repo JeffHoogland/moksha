@@ -13,9 +13,8 @@ _profile_change(void *data, Evas_Object *obj)
    char buf[PATH_MAX];
    const char *dir;
    Efreet_Desktop *desk = NULL;
-   
-   dir = e_prefix_data_get();
-   snprintf(buf, sizeof(buf), "%s/data/config/%s", dir, profile);
+
+   e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s", profile);
    dir = strdup(buf);
    if (!dir)
      {
@@ -80,8 +79,7 @@ wizard_page_show(E_Wizard_Page *pg)
 		  continue;
 	       }
 	  }
-	dir = e_prefix_data_get();
-	snprintf(buf, sizeof(buf), "%s/data/config/%s", dir, prof);
+	e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s", prof);
 	// if it's not a system profile - don't offer it
 	if (!ecore_file_is_dir(buf))
 	  {
@@ -102,7 +100,7 @@ wizard_page_show(E_Wizard_Page *pg)
 	if ((desk) && (desk->icon))
 	  snprintf(buf, sizeof(buf), "%s/%s", dir, desk->icon);
 	else
-	  snprintf(buf, sizeof(buf), "%s/data/images/enlightenment.png", e_prefix_data_get());
+	  e_prefix_data_concat_static(buf, "data/images/enlightenment.png");
 	ic = e_util_icon_add(buf, pg->evas);
 	e_widget_ilist_append(ob, ic, label, NULL, NULL, prof);
 	free(prof);
@@ -141,10 +139,8 @@ wizard_page_hide(E_Wizard_Page *pg)
    if (e_config_profile_get())
      {
 	char buf[PATH_MAX];
-	const char *homedir;
-	homedir = e_user_homedir_get();
-	
-        snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, e_config_profile_get());
+	if (e_user_dir_snprintf(buf, sizeof(buf), "config/%s", e_config_profile_get()) >= sizeof(buf))
+	  return 1;
 	ecore_file_recursive_rm(buf);
      }
    if (!profile) profile = "standard";

@@ -242,15 +242,12 @@ _theme_import_cb_ok(void *data, void *data2)
    E_Win *win;
    const char *path;
    const char *file;
-   const char *homedir;
    char buf[4096];
 
    win = data;
    import = win->data;
    if (!import) return;
 
-   homedir = e_user_homedir_get();
- 
    path = e_widget_fsel_selection_path_get(import->fsel_obj);
    E_FREE(import->cfdata->file);
    if (path)
@@ -261,7 +258,7 @@ _theme_import_cb_ok(void *data, void *data2)
 	char *strip;
 	
 	file = ecore_file_file_get(import->cfdata->file);
-	snprintf(buf, sizeof(buf), "%s/.e/e/themes/%s", homedir, file);
+	e_user_dir_snprintf(buf, sizeof(buf), "themes/%s", file);
 
 	strip = ecore_file_strip_ext(file);
 	if (!strip) 

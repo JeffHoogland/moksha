@@ -197,8 +197,7 @@ _cb_config(void *data, void *data2)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   snprintf(path, sizeof(path), "%s/.e/e/applications/bar/%s/.order", 
-	    e_user_homedir_get(), cfdata->dir);
+   e_user_dir_snprintf(path, sizeof(path), "applications/bar/%s/.order", cfdata->dir);
    e_configure_registry_call("internal/ibar_other",
 			     e_container_current_get(e_manager_current_get()),
 			     path);
@@ -210,17 +209,16 @@ _cb_entry_ok(char *text, void *data)
    char buf[4096];
    char tmp[4096];
    FILE *f;
-   
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", 
-	    e_user_homedir_get(), text);
+   size_t len;
 
-   if (!ecore_file_exists(buf)) 
+   len = e_user_dir_snprintf(buf, sizeof(buf), "applications/bar/%s", text);
+   if (len + sizeof("/.order") >= sizeof(buf)) return;
+   if (!ecore_file_exists(buf))
      {
 	ecore_file_mkdir(buf);
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", 
-		 e_user_homedir_get(), text);
+	memcpy(buf + len, "/.order", sizeof("/.order"));
 	f = fopen(buf, "w");
-	if (f) 
+	if (f)
 	  {
 	     /* Populate this .order file with some defaults */
 	     snprintf(tmp, sizeof(tmp), "xterm.desktop\n" "sylpheed.desktop\n" 
@@ -239,12 +237,13 @@ _cb_confirm_dialog_yes(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    char buf[4096];
-   
+
    cfdata = data;
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", e_user_homedir_get(), cfdata->dir);
+   if (e_user_dir_snprintf(buf, sizeof(buf), "applications/bar/%s", cfdata->dir) >= sizeof(buf))
+     return;
    if (ecore_file_is_dir(buf))
      ecore_file_recursive_rm(buf);
-   
+
    _load_tlist(cfdata);
 }
 
@@ -261,30 +260,35 @@ static void
 _load_tlist(E_Config_Dialog_Data *cfdata) 
 {
    Eina_List *dirs;
-   const char *home;
    char buf[4096], *file;
    int selnum = -1;
    int i = 0;
+   size_t len;
 
    e_widget_ilist_clear(cfdata->tlist);
-   
-   home = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar", home);
+
+   len = e_user_dir_concat_static(buf, "applications/bar");
+   if (len + 2 >= sizeof(buf)) return;
    dirs = ecore_file_ls(buf);
+
+   buf[len] = '/';
+   len++;
+
    EINA_LIST_FREE(dirs, file)
+     {
+	if (file[0] == '.') continue;
+	if (ecore_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
+	  continue;
+	if (ecore_file_is_dir(buf))
 	  {
-	     if (file[0] == '.') continue;
-	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", home, file);
-	     if (ecore_file_is_dir(buf))
-	       {
-		  e_widget_ilist_append(cfdata->tlist, NULL, file, NULL, NULL, file);
-		  if ((cfdata->dir) && (!strcmp(cfdata->dir, file)))
-		    selnum = i;
-		  i++;
-	       }
+	     e_widget_ilist_append(cfdata->tlist, NULL, file, NULL, NULL, file);
+	     if ((cfdata->dir) && (!strcmp(cfdata->dir, file)))
+	       selnum = i;
+	     i++;
+	  }
 
 	free(file);
-	  }
+     }
 
    e_widget_ilist_go(cfdata->tlist);
    if (selnum >= 0)

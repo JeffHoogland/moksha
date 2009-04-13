@@ -416,22 +416,23 @@ _import_edj_gen(Import *import)
    Evas_Object *img;
    int fd, num = 1;
    int w = 0, h = 0;
-   const char *file, *homedir, *locale;
+   const char *file, *locale;
    char buf[4096], cmd[4096], tmpn[4096], ipart[4096], enc[128];
    char *imgdir = NULL, *fstrip;
    int cr = 255, cg = 255, cb = 255, ca = 255;
    FILE *f;
+   size_t len, off;
 
    evas = e_win_evas_get(import->win);
    file = ecore_file_file_get(import->cfdata->file);
-   homedir = e_user_homedir_get();
    fstrip = ecore_file_strip_ext(file);
    if (!fstrip) return;
-   snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s.edj", homedir, fstrip);
+   len = e_user_dir_snprintf(buf, sizeof(buf), "backgrounds/%s.edj", fstrip);
+   if (len >= sizeof(buf)) return;
+   off = len - sizeof(".edj") - 1;
    while (ecore_file_exists(buf))
      {
-	snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s-%i.edj", 
-		 homedir, fstrip, num);
+	snprintf(buf + off, sizeof(buf) - off, "-%d.edj", num);
 	num++;
      }
    free(fstrip);
@@ -664,7 +665,6 @@ _import_cb_ok(void *data, void *data2)
    FSel *fsel;
    E_Win *win;
    const char *file;
-   const char *homedir;
    char buf[4096];
    int is_bg, is_theme;
    int r;
@@ -683,9 +683,7 @@ _import_cb_ok(void *data, void *data2)
 	  }
 	else 
 	  {
-	     homedir = e_user_homedir_get();
-	     snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s", 
-		      homedir, file);
+	     e_user_dir_snprintf(buf, sizeof(buf), "backgrounds/%s", file);
 
 	     is_bg = edje_file_group_exists(import->cfdata->file, 
 					    "e/desktop/background");
@@ -775,14 +773,12 @@ _fsel_cb_ok(void *data, void *data2)
      {
 	int r;
 	int is_bg, is_theme;
-	const char *homedir, *file;
+	const char *file;
 	char buf[4096];
 
 	r = 0;
 	file = ecore_file_file_get(path);
-	homedir = e_user_homedir_get();
-	snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s",
-		 homedir, file);
+	e_user_dir_snprintf(buf, sizeof(buf), "backgrounds/%s", file);
 
 	is_bg = edje_file_group_exists(path,
 	      "e/desktop/background");

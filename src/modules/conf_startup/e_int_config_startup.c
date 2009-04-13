@@ -116,9 +116,10 @@ static void
 _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   const char *p, *homedir;
    char buf[4096];
-   
+   const char *p;
+   size_t len;
+
    cfdata = data;
    if (!cfdata->splash) return;
    if (!cfdata->o_fm) return;
@@ -127,16 +128,15 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
      {
 	if (strncmp(p, cfdata->splash, strlen(p))) return;
      }
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/themes", homedir);
+   len = e_user_dir_concat_static(buf, "themes");
    if (!p) return;
-   if (!strncmp(cfdata->splash, buf, strlen(buf)))
-     p = cfdata->splash + strlen(buf) + 1;
+   if (!strncmp(cfdata->splash, buf, len))
+     p = cfdata->splash + len + 1;
    else
      {
-	snprintf(buf, sizeof(buf), "%s/data/themes", e_prefix_data_get());
-	if (!strncmp(cfdata->splash, buf, strlen(buf)))
-	  p = cfdata->splash + strlen(buf) + 1;
+	len = e_prefix_data_concat_static(buf, "data/themes");
+	if (!strncmp(cfdata->splash, buf, len))
+	  p = cfdata->splash + len + 1;
 	else
 	  p = cfdata->splash;
      }
@@ -149,17 +149,15 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
    char path[4096];
-   const char *homedir;
-   
+
    cfdata = data;
    if (cfdata->fmdir == 1)
      {
-	snprintf(path, sizeof(path), "%s/data/themes", e_prefix_data_get());
+	e_prefix_data_concat_static(path, "data/themes");
      }
    else
      {
-	homedir = e_user_homedir_get();
-	snprintf(path, sizeof(path), "%s/.e/e/themes", homedir);
+	e_user_dir_concat_static(path, "themes");
      }
    e_fm2_path_set(cfdata->o_fm, path, "/");
 }
@@ -168,7 +166,7 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    char path[4096];
-   const char *homedir;
+   size_t len;
 
    cfdata->show_splash = e_config->show_splash;
    cfdata->splash = NULL;
@@ -176,13 +174,12 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->splash = strdup(e_config->init_default_theme);
    else
      {
-        snprintf(path, sizeof(path), "%s/data/themes/default.edj", e_prefix_data_get());
+        e_prefix_data_concat_static(path, "data/themes/default.edj");
 	cfdata->splash = strdup(path);
      }
    if (cfdata->splash[0] != '/')
      {
-	homedir = e_user_homedir_get();
-	snprintf(path, sizeof(path), "%s/.e/e/themes/%s", homedir, cfdata->splash);
+	e_user_dir_snprintf(path, sizeof(path), "themes/%s", cfdata->splash);
 	if (ecore_file_exists(path))
 	  {
 	     E_FREE(cfdata->splash);
@@ -190,7 +187,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	  }
 	else
 	  {
-	     snprintf(path, sizeof(path), "%s/data/themes/%s", e_prefix_data_get(), cfdata->splash);
+	     e_prefix_data_snprintf(path, sizeof(path), "data/themes/%s", cfdata->splash);
 	     if (ecore_file_exists(path))
 	       {
 		  E_FREE(cfdata->splash);
@@ -198,9 +195,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	       }
 	  }
      }
-   
-   snprintf(path, sizeof(path), "%s/data/themes", e_prefix_data_get());
-   if (!strncmp(cfdata->splash, path, strlen(path)))
+
+   len = e_prefix_data_concat_static(path, "data/themes");
+   if (!strncmp(cfdata->splash, path, len))
      cfdata->fmdir = 1;
 }
 
@@ -251,12 +248,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *ot, *of, *il, *ol;
    char path[4096];
-   const char *homedir;
    E_Fm2_Config fmc;
    E_Zone *z;
    E_Radio_Group *rg;
-
-   homedir = e_user_homedir_get();
 
    z = e_zone_current_get(cfd->con);
    
@@ -284,9 +278,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ol, o, 0, 1, 1, 1, 0, 0, 0, 0);
    
    if (cfdata->fmdir == 1)
-     snprintf(path, sizeof(path), "%s/data/themes", e_prefix_data_get());
+     e_prefix_data_concat_static(path, "data/themes");
    else
-     snprintf(path, sizeof(path), "%s/.e/e/themes", homedir);
+     e_user_dir_concat_static(path, "themes");
    
    o = e_fm2_add(evas);
    cfdata->o_fm = o;

@@ -835,11 +835,8 @@ _e_kbd_dbus_ignore_keyboards_file_load(const char *file)
 static void
 _e_kbd_dbus_ignore_keyboards_load(void)
 {
-   const char *homedir;
    char buf[PATH_MAX];
-   
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/keyboards/ignore_built_in_keyboards", homedir);
+   e_user_dir_concat_static(buf, "keyboards/ignore_built_in_keyboards");
    _e_kbd_dbus_ignore_keyboards_file_load(buf);
    snprintf(buf, sizeof(buf), "%s/keyboards/ignore_built_in_keyboards", e_module_dir_get(mod));
    _e_kbd_dbus_ignore_keyboards_file_load(buf);

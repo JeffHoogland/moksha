@@ -112,12 +112,10 @@ wizard_page_apply(E_Wizard_Page *pg)
    int i;
    FILE *f;
    char buf[PATH_MAX];
-   const char *homedir;
-   
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/default", homedir);
+
+   e_user_dir_concat_static(buf, "applications/bar/default");
    ecore_file_mkpath(buf);
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/default/.order", homedir);
+   e_user_dir_concat_static(buf, "applications/bar/default/.order");
    f = fopen(buf, "w");
    if (f)
      {

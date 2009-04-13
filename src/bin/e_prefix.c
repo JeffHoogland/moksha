@@ -17,6 +17,8 @@ static char *_prefix_path_bin = NULL;
 static char *_prefix_path_data = NULL;
 static char *_prefix_path_lib = NULL;
 
+static size_t _prefix_path_data_len = 0;
+
 #define PREFIX_CACHE_FILE 1
 #define SHARE_D "share/enlightenment"
 #define MAGIC_FILE "AUTHORS"
@@ -56,10 +58,13 @@ e_prefix_determine(char *argv0)
           }
 	
 	if (getenv("E_DATA_DIR"))
-          _prefix_path_data = strdup(getenv("E_DATA_DIR"));
+	  {
+	     _prefix_path_data = strdup(getenv("E_DATA_DIR"));
+	     _prefix_path_data_len = strlen(_prefix_path_data);
+	  }
 	else
           {
-             snprintf(buf, sizeof(buf), "%s/"SHARE_D, _prefix_path);
+             _prefix_path_data_len = snprintf(buf, sizeof(buf), "%s/"SHARE_D, _prefix_path);
              _prefix_path_data = strdup(buf);
              e_util_env_set("E_DATA_DIR", _prefix_path_data);
           }
@@ -122,7 +127,7 @@ e_prefix_determine(char *argv0)
 		       snprintf(buf, sizeof(buf), "%s/"MAGIC_DAT, _prefix_path);
 		       if (ecore_file_exists(buf))
 			 {
-			    snprintf(buf, sizeof(buf), "%s/"SHARE_D, _prefix_path);
+			    _prefix_path_data_len = snprintf(buf, sizeof(buf), "%s/"SHARE_D, _prefix_path);
 			    _prefix_path_data = strdup(buf);
 			    snprintf(buf, sizeof(buf), "%s/"LOCALE_D, _prefix_path);
 			    _prefix_path_locale = strdup(buf);
@@ -226,9 +231,6 @@ _e_prefix_share_hunt(void)
 {
    char buf[4096], buf2[4096], *p;
    FILE *f;
-#ifdef PREFIX_CACHE_FILE
-   const char *home;
-#endif   
 
    /* sometimes this isnt the case - so we need to do a more exhaustive search
     * through more parent and subdirs. hre is an example i have seen:
@@ -245,9 +247,7 @@ _e_prefix_share_hunt(void)
 #ifdef PREFIX_CACHE_FILE
    /* 1. check cache file - as a first attempt. this will speed up subsequent
     * hunts - if needed */
-   home = e_user_homedir_get();
- 
-   snprintf(buf, sizeof(buf), "%s/.e/e/prefix_share_cache.txt", home);
+   e_user_dir_concat_static(buf, "prefix_share_cache.txt");
    f = fopen(buf, "r");
    if (f)
      {
@@ -262,7 +262,7 @@ _e_prefix_share_hunt(void)
 	       {
 		  /* path is ok - magic file found */
 		  _prefix_path_data = strdup(buf2);
-		  snprintf(buf, sizeof(buf), "%s", buf2);
+		  _prefix_path_data_len = ecore_strlcpy(buf, buf2, sizeof(buf));
 		  p = strrchr(buf, '/');
 		  if (p) *p = 0;
 		  snprintf(buf2, sizeof(buf2), "%s/locale", buf);
@@ -285,8 +285,8 @@ _e_prefix_share_hunt(void)
      {
 	Eina_List *files;
 	Eina_List *l;
-	
-	snprintf(buf, sizeof(buf), "%s", _prefix_path);
+
+	ecore_strlcpy(buf, _prefix_path, sizeof(buf));
 	p = strrchr(buf, '/');
 	if (p) *p = 0;
 	files = ecore_file_ls(buf);
@@ -299,17 +299,16 @@ _e_prefix_share_hunt(void)
 		  snprintf(buf2, sizeof(buf2), "%s/%s/"MAGIC_DAT, buf, file);
 		  if (ecore_file_exists(buf2))
 		    {
-		       snprintf(buf2, sizeof(buf2), "%s/%s/"SHARE_D, buf, file);
+		       _prefix_path_data_len = snprintf(buf2, sizeof(buf2), "%s/%s/"SHARE_D, buf, file);
 		       _prefix_path_data = strdup(buf2);
 		       snprintf(buf2, sizeof(buf2), "%s/%s/"LOCALE_D, buf, file);
 		       _prefix_path_locale = strdup(buf2);
 		       break;
 		    }
 	       }
-	     while (files)
+	     EINA_LIST_FREE(files, p)
 	       {
-		  free(eina_list_data_get(files));
-		  files = eina_list_remove_list(files, files);
+		  free(p);
 	       }
 	  }
      }
@@ -320,13 +319,13 @@ _e_prefix_share_hunt(void)
     */
    if (!_prefix_path_data)
      {
-	snprintf(buf, sizeof(buf), "%s", _prefix_path);
+	ecore_strlcpy(buf, _prefix_path, sizeof(buf));
 	p = strrchr(buf, '/');
 	if (p) *p = 0;
 	snprintf(buf2, sizeof(buf2), "%s/"MAGIC_DAT, buf);
 	if (ecore_file_exists(buf2))
 	  {
-	     snprintf(buf2, sizeof(buf2), "%s/"SHARE_D, buf);
+	     _prefix_path_data_len = snprintf(buf2, sizeof(buf2), "%s/"SHARE_D, buf);
 	     _prefix_path_data = strdup(buf2);
 	     snprintf(buf2, sizeof(buf2), "%s/"LOCALE_D, buf);
 	     _prefix_path_locale = strdup(buf2);
@@ -343,9 +342,8 @@ _e_prefix_share_hunt(void)
    if (_prefix_path_data)
      {
 #ifdef PREFIX_CACHE_FILE
-	snprintf(buf, sizeof(buf), "%s/.e/e", home);
-	ecore_file_mkpath(buf);
-	snprintf(buf, sizeof(buf), "%s/.e/e/prefix_share_cache.txt", home);
+	ecore_file_mkpath(e_user_dir_get());
+	e_user_dir_concat_static(buf, "prefix_share_cache.txt");
 	f = fopen(buf, "w");
 	if (f)
 	  {
@@ -370,6 +368,7 @@ _e_prefix_fallbacks(void)
    _prefix_path_locale = strdup(LOCALE_DIR);
    _prefix_path_bin    = strdup(PACKAGE_BIN_DIR);
    _prefix_path_data   = strdup(PACKAGE_DATA_DIR);
+   _prefix_path_data_len = strlen(_prefix_path_data);
    _prefix_path_lib    = strdup(PACKAGE_LIB_DIR);
    printf("WARNING: Enlightenment could not determine its installed prefix\n"
 	  "         and is falling back on the compiled in default:\n"
@@ -518,4 +517,39 @@ _e_prefix_try_argv(char *argv0)
      }
    /* 4. big problems. arg[0] != executable - weird execution */
    return 0;
+}
+
+size_t
+e_prefix_data_concat_len(char *dst, size_t size, const char *path, size_t path_len)
+{
+   return ecore_str_join_len(dst, size, '/', _prefix_path_data, _prefix_path_data_len, path, path_len);
+}
+
+size_t
+e_prefix_data_snprintf(char *dst, size_t size, const char *fmt, ...)
+{
+   size_t off, ret;
+   va_list ap;
+
+   va_start(ap, fmt);
+
+   off = _prefix_path_data_len + 1;
+   if (size < _prefix_path_data_len + 2)
+     {
+	if (size > 1)
+	  {
+	     memcpy(dst, _prefix_path_data, size - 1);
+	     dst[size - 1] = '\0';
+	  }
+	ret = off + vsnprintf(dst + off, size - off, fmt, ap);
+	va_end(ap);
+	return ret;
+     }
+
+   memcpy(dst, _prefix_path_data, _prefix_path_data_len);
+   dst[_prefix_path_data_len] = '/';
+
+   ret = off + vsnprintf(dst + off, size - off, fmt, ap);
+   va_end(ap);
+   return ret;
 }

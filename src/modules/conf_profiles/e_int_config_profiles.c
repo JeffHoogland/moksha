@@ -100,7 +100,6 @@ static Evas_Object *
 _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ot, *ob;
-   const char *dir;
    char buf[PATH_MAX];
 
    o = e_widget_list_add(evas, 0, 0);
@@ -127,8 +126,7 @@ _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_align_append(ot, cfdata->o_reset, 2, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
 
    // if there is a system version of the profile - allow reset
-   dir = e_prefix_data_get();
-   snprintf(buf, sizeof(buf), "%s/data/config/%s/", dir, e_config_profile_get());
+   e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/", e_config_profile_get());
    if (ecore_file_is_dir(buf))
      e_widget_disabled_set(cfdata->o_reset, 0);
    else
@@ -170,7 +168,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
         Efreet_Desktop *desk = NULL;
 	Evas_Object *ic;
         char buf[PATH_MAX], *prof, *pdir;
-        const char *label, *dir;
+        const char *label;
         
         prof = l->data;
         if (e_config_profile_get())
@@ -182,8 +180,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
         desk = efreet_desktop_get(buf);
         if (!desk)
           {
-             dir = e_prefix_data_get();
-             snprintf(buf, sizeof(buf), "%s/data/config/%s/", dir, prof);
+             e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/", prof);
              pdir = strdup(buf);
              if (pdir)
                {
@@ -199,7 +196,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
         if ((desk) && (desk->icon) && (pdir))
           snprintf(buf, sizeof(buf), "%s/%s", pdir, desk->icon);
         else
-          snprintf(buf, sizeof(buf), "%s/data/images/enlightenment.png", e_prefix_data_get());
+          e_prefix_data_concat_static(buf, "data/images/enlightenment.png");
         ic = e_util_icon_add(buf, evas);
         e_widget_ilist_append(cfdata->o_list, ic, label, _ilist_cb_selected, cfdata, prof);
         if (pdir) free(pdir);
@@ -221,7 +218,7 @@ static void
 _ilist_cb_selected(void *data)
 {
    E_Config_Dialog_Data *cfdata;
-   const char *cur_profile, *dir;
+   const char *cur_profile;
    unsigned char v;
    Efreet_Desktop *desk = NULL;
    char *pdir, buf[PATH_MAX];
@@ -240,8 +237,7 @@ _ilist_cb_selected(void *data)
    desk = efreet_desktop_get(buf);
    if (!desk)
      {
-        dir = e_prefix_data_get();
-        snprintf(buf, sizeof(buf), "%s/data/config/%s/", dir, cfdata->sel_profile);
+        e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/", cfdata->sel_profile);
         pdir = strdup(buf);
         if (pdir)
           {

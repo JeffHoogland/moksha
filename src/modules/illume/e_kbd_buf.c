@@ -225,14 +225,12 @@ _e_kbd_buf_cb_data_dict_reload(void *data)
 {
    E_Kbd_Buf *kb;
    char buf[PATH_MAX];
-   const char *homedir;
-   
+
    kb = data;
    kb->dict.data_reload_delay = NULL;
    e_kbd_buf_clear(kb);
    if (kb->dict.data) e_kbd_dict_free(kb->dict.data);
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/dicts-dynamic/data.dic", homedir);
+   e_user_dir_concat_static(buf, "dicts-dynamic/data.dic");
    kb->dict.data = e_kbd_dict_new(buf);
    return 0;
 }
@@ -252,28 +250,26 @@ e_kbd_buf_new(const char *sysdicts, const char *dict)
 {
    E_Kbd_Buf *kb;
    char buf[PATH_MAX];
-   const char *homedir;
-   
+
    kb = E_NEW(E_Kbd_Buf, 1);
    if (!kb) return NULL;
    kb->sysdicts = evas_stringshare_add(sysdicts);
-   
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/dicts", homedir);
+
+   e_user_dir_concat_static(buf, "dicts");
    if (!ecore_file_exists(buf)) ecore_file_mkpath(buf);
-   
-   snprintf(buf, sizeof(buf), "%s/.e/e/dicts/%s", homedir, dict);
+
+   e_user_dir_snprintf(buf, sizeof(buf), "dicts/%s", dict);
    kb->dict.sys = e_kbd_dict_new(buf);
    if (!kb->dict.sys)
      {
 	snprintf(buf, sizeof(buf), "%s/dicts/%s", kb->sysdicts, dict);
 	kb->dict.sys = e_kbd_dict_new(buf);
      }
-   
-   snprintf(buf, sizeof(buf), "%s/.e/e/dicts-dynamic", homedir);
+
+   e_user_dir_concat_static(buf, "dicts-dynamic");
    if (!ecore_file_exists(buf)) ecore_file_mkpath(buf);
-   
-   snprintf(buf, sizeof(buf), "%s/.e/e/dicts-dynamic/personal.dic", homedir);
+
+   e_user_dir_concat_static(buf, "dicts-dynamic/personal.dic");
    kb->dict.personal = e_kbd_dict_new(buf);
    if (!kb->dict.personal)
      {
@@ -287,7 +283,7 @@ e_kbd_buf_new(const char *sysdicts, const char *dict)
 	  }
 	kb->dict.personal = e_kbd_dict_new(buf);
      }
-   snprintf(buf, sizeof(buf), "%s/.e/e/dicts-dynamic/data.dic", homedir);
+   e_user_dir_concat_static(buf, "dicts-dynamic/data.dic");
    kb->dict.data = e_kbd_dict_new(buf);
    kb->dict.data_monitor = 
      ecore_file_monitor_add(buf, _e_kbd_buf_cb_data_dict_change, kb);
@@ -313,17 +309,15 @@ EAPI void
 e_kbd_buf_dict_set(E_Kbd_Buf *kb, const char *dict)
 {
    char buf[PATH_MAX];
-   const char *homedir;
-   
+
    e_kbd_buf_clear(kb);
-   
+
    if (kb->dict.sys) e_kbd_dict_free(kb->dict.sys);
-   
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/dicts", homedir);
+
+   e_user_dir_concat_static(buf, "dicts");
    if (!ecore_file_exists(buf)) ecore_file_mkpath(buf);
-   
-   snprintf(buf, sizeof(buf), "%s/.e/e/dicts/%s", homedir, dict);
+
+   e_user_dir_snprintf(buf, sizeof(buf), "dicts/%s", dict);
    kb->dict.sys = e_kbd_dict_new(buf);
    if (!kb->dict.sys)
      {

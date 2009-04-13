@@ -37,9 +37,9 @@ EAPI const char *
 e_fm_mime_icon_get(const char *mime)
 {
    char buf[4096], buf2[4096], *val;
-   const char *homedir = NULL;
    Eina_List *l = NULL;
    E_Config_Mime_Icon *mi;
+   size_t len;
 
    /* 0.0 clean out hash cache once it has mroe than 512 entries in it */
    if (eina_hash_population(icon_map) > 512) e_fm_mime_icon_cache_flush();
@@ -64,41 +64,60 @@ e_fm_mime_icon_get(const char *mime)
      }
    
    /* 2. look up in ~/.e/e/icons */
-   homedir = e_user_homedir_get();
+   len = e_user_dir_snprintf(buf, sizeof(buf), "icons/%s.edj", mime);
+   if (len >= sizeof(buf))
+     goto try_e_icon_generic;
 
-   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.edj", homedir, mime);
    if (ecore_file_exists(buf)) goto ok;
-   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.svg", homedir, mime);
+   memcpy(buf + len - sizeof("edj") - 1, "svg", sizeof("svg"));
    if (ecore_file_exists(buf)) goto ok;
-   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.png", homedir, mime);
+   memcpy(buf + len - sizeof("edj") - 1, "png", sizeof("png"));
    if (ecore_file_exists(buf)) goto ok;
-   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.edj", homedir, buf2);
+
+ try_e_icon_generic:
+   len = e_user_dir_snprintf(buf, sizeof(buf), "icons/%s.edj", buf2);
+   if (len >= sizeof(buf))
+     goto try_theme;
+
    if (ecore_file_exists(buf)) goto ok;
-   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.svg", homedir, buf2);
+   memcpy(buf + len - sizeof("edj") - 1, "svg", sizeof("svg"));
    if (ecore_file_exists(buf)) goto ok;
-   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.png", homedir, buf2);
+   memcpy(buf + len - sizeof("edj") - 1, "png", sizeof("png"));
    if (ecore_file_exists(buf)) goto ok;
-   
+
    /* 3. look up icon in theme */
-   snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", mime);
+ try_theme:
+   memcpy(buf, "e/icons/fileman/mime/", sizeof("e/icons/fileman/mime/") - 1);
+   ecore_strlcpy(buf + sizeof("e/icons/fileman/mime/") - 1, mime,
+		 sizeof(buf) - sizeof("e/icons/fileman/mime/") - 1);
    val = (char *)e_theme_edje_file_get("base/theme/fileman", buf);
    if ((val) && (e_util_edje_collection_exists(val, buf))) goto ok;
-   snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", buf2);
+
+   ecore_strlcpy(buf + sizeof("e/icons/fileman/mime/") - 1, buf2,
+		 sizeof(buf) - sizeof("e/icons/fileman/mime/") - 1);
    val = (char *)e_theme_edje_file_get("base/theme/fileman", buf);
    if ((val) && (e_util_edje_collection_exists(val, buf))) goto ok;
-   
+
    /* 4. look up icon in PREFIX/share/enlightent/data/icons */
-   snprintf(buf, sizeof(buf), "%s/data/icons/%s.edj", e_prefix_data_get(), mime);
+   len = e_prefix_data_snprintf(buf, sizeof(buf), "data/icons/%s.edj", mime);
+   if (len >= sizeof(buf))
+     goto try_efreet_icon_generic;
+
    if (ecore_file_exists(buf)) goto ok;
-   snprintf(buf, sizeof(buf), "%s/data/icons/%s.svg", e_prefix_data_get(), mime);
+   memcpy(buf + len - sizeof("edj") - 1, "svg", sizeof("svg"));
    if (ecore_file_exists(buf)) goto ok;
-   snprintf(buf, sizeof(buf), "%s/data/icons/%s.png", e_prefix_data_get(), mime);
+   memcpy(buf + len - sizeof("edj") - 1, "png", sizeof("png"));
    if (ecore_file_exists(buf)) goto ok;
-   snprintf(buf, sizeof(buf), "%s/data/icons/%s.edj", e_prefix_data_get(), buf2);
+
+ try_efreet_icon_generic:
+   len = e_prefix_data_snprintf(buf, sizeof(buf), "data/icons/%s.edj", buf2);
+   if (len >= sizeof(buf))
+     goto try_efreet_icon_generic;
+
    if (ecore_file_exists(buf)) goto ok;
-   snprintf(buf, sizeof(buf), "%s/data/icons/%s.svg", e_prefix_data_get(), buf2);
+   memcpy(buf + len - sizeof("edj") - 1, "svg", sizeof("svg"));
    if (ecore_file_exists(buf)) goto ok;
-   snprintf(buf, sizeof(buf), "%s/data/icons/%s.png", e_prefix_data_get(), buf2);
+   memcpy(buf + len - sizeof("edj") - 1, "png", sizeof("png"));
    if (ecore_file_exists(buf)) goto ok;
 
    return NULL;

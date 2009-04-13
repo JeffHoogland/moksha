@@ -277,10 +277,7 @@ _ibar_new(Evas *evas, Instance *inst)
    e_box_align_set(b->o_box, 0.5, 0.5);
    if (inst->ci->dir[0] != '/')
      {
-	const char *homedir;
-
-	homedir = e_user_homedir_get();
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", homedir, inst->ci->dir);
+	e_user_dir_snprintf(buf, sizeof(buf), "applications/bar/%s/.order", inst->ci->dir);
      }
    else
      ecore_strlcpy(buf, inst->ci->dir, sizeof(buf));
@@ -496,10 +493,7 @@ _ibar_config_update(Config_Item *ci)
 	  e_object_del(E_OBJECT(inst->ibar->apps));
 	if (inst->ci->dir[0] != '/')
 	  {
-	     const char *homedir;
-
-	     homedir = e_user_homedir_get();
-	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", homedir, inst->ci->dir);
+	     e_user_dir_snprintf(buf, sizeof(buf), "applications/bar/%s/.order", inst->ci->dir);
 	  }
 	else
 	  ecore_strlcpy(buf, inst->ci->dir, sizeof(buf));

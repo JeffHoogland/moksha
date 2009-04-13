@@ -943,12 +943,13 @@ _cb_slipshelf_home2(const void *data, E_Slipshelf *ess, E_Border *pbd)
 static void
 _apps_unpopulate(void)
 {
-   char buf[PATH_MAX], *homedir;
+   char buf[PATH_MAX];
 	Efreet_Desktop *desktop;
    Evas_Object *obj;
    Eina_List *files;
    char *file;
-	
+   size_t len;
+
    EINA_LIST_FREE(sels, obj)
      evas_object_del(obj);
 
@@ -964,13 +965,19 @@ _apps_unpopulate(void)
    if (sf) evas_object_del(sf);
    sf = NULL;
 
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/appshadow", homedir);
+   len = e_user_dir_concat_static(buf, "appshadow");
+   if (len + 2 >= sizeof(buf)) return;
+
    files = ecore_file_ls(buf);
+
+   buf[len] = '/';
+   len++;
+
    EINA_LIST_FREE(files, file)
-	  {
-	     snprintf(buf, sizeof(buf), "%s/.e/e/appshadow/%s", homedir, file);
-	     ecore_file_unlink(buf);
+     {
+	if (ecore_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
+	  continue;
+	ecore_file_unlink(buf);
 	free(file);
      }
 }
@@ -1006,7 +1013,6 @@ _apps_populate(void)
    Evas_Coord mw, mh, sfw, sfh;
    Evas_Object *o = NULL;
    char buf[PATH_MAX];
-   char *homedir = NULL;
    int num = 0;
    
    sf = e_scrollframe_add(evas);
@@ -1027,8 +1033,7 @@ _apps_populate(void)
      }
    else
      {
-	homedir = e_user_homedir_get();
-	snprintf(buf, sizeof(buf), "%s/.e/e/appshadow", homedir);
+	e_user_dir_concat_static(buf, "appshadow");
 	ecore_file_mkpath(buf);
 	fm = e_fm2_add(evas);
 	_apps_fm_config(fm);
@@ -1126,7 +1131,7 @@ _apps_populate(void)
 			 {
 			    if (desktop)
 			      {
-				 snprintf(buf, sizeof(buf), "%s/.e/e/appshadow/%04x.desktop", homedir, num);
+				 e_user_dir_snprintf(buf, sizeof(buf), "appshadow/%04x.desktop", num);
 				 ecore_file_symlink(desktop->orig_path, buf);
 			      }
 			    num++;
@@ -1173,8 +1178,7 @@ _apps_populate(void)
 //				     _e_illume_pan_get,
 //				     _e_illume_pan_max_get,
 //				     _e_illume_pan_child_size_get);
-	homedir = e_user_homedir_get();
-	snprintf(buf, sizeof(buf), "%s/.e/e/appshadow", homedir);
+	e_user_dir_concat_static(buf, "appshadow");
 	e_fm2_path_set(fm, NULL, buf);
 	evas_object_show(fm);
 	evas_object_smart_callback_add(fm, "selected",

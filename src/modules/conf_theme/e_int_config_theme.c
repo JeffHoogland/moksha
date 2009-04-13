@@ -122,7 +122,7 @@ e_int_config_theme_update(E_Config_Dialog *dia, char *file)
    cfdata->fmdir = 1;
    e_widget_radio_toggle_set(cfdata->o_personal, 1);
 
-   snprintf(path, sizeof(path), "%s/.e/e/themes", e_user_homedir_get());
+   e_user_dir_concat_static(path, "themes");
    eina_stringshare_del(cfdata->theme);
    cfdata->theme = eina_stringshare_add(file);
 
@@ -201,6 +201,7 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
    E_Config_Dialog_Data *cfdata;
    const char *p;
    char buf[4096];
+   size_t len;
 
    cfdata = data;
    if ((!cfdata->theme) || (!cfdata->o_fm)) return;
@@ -212,14 +213,14 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
      }
    if (!p) return;
 
-   snprintf(buf, sizeof(buf), "%s/.e/e/themes", e_user_homedir_get());
-   if (!strncmp(cfdata->theme, buf, strlen(buf)))
-     p = cfdata->theme + strlen(buf) + 1;
+   len = e_user_dir_concat_static(buf, "themes");
+   if (!strncmp(cfdata->theme, buf, len))
+     p = cfdata->theme + len + 1;
    else
      {
-	snprintf(buf, sizeof(buf), "%s/data/themes", e_prefix_data_get());
-	if (!strncmp(cfdata->theme, buf, strlen(buf)))
-	  p = cfdata->theme + strlen(buf) + 1;
+	len = e_prefix_data_concat_static(buf, "data/themes");
+	if (!strncmp(cfdata->theme, buf, len))
+	  p = cfdata->theme + len + 1;
 	else
 	  p = cfdata->theme;
      }
@@ -235,9 +236,9 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
 
    cfdata = data;
    if (cfdata->fmdir == 1)
-     snprintf(path, sizeof(path), "%s/data/themes", e_prefix_data_get());
+     e_prefix_data_concat_static(path, "data/themes");
    else
-     snprintf(path, sizeof(path), "%s/.e/e/themes", e_user_homedir_get());
+     e_user_dir_concat_static(path, "themes");
    e_widget_flist_path_set(cfdata->o_fm, path, "/");
 }
 
@@ -305,20 +306,19 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Theme * c;
    char path[4096];
+   size_t len;
 
    c = e_theme_config_get("theme");
    if (c)
      cfdata->theme = eina_stringshare_add(c->file);
    else
      {
-	snprintf(path, sizeof(path), "%s/data/themes/default.edj", 
-                 e_prefix_data_get());
+	e_prefix_data_concat_static(path, "data/themes/default.edj");
 	cfdata->theme = eina_stringshare_add(path);
      }
    if (cfdata->theme[0] != '/')
      {
-        snprintf(path, sizeof(path), "%s/.e/e/themes/%s", 
-                 e_user_homedir_get(), cfdata->theme);
+	e_user_dir_snprintf(path, sizeof(path), "themes/%s", cfdata->theme);
 	if (ecore_file_exists(path))
 	  {
 	     eina_stringshare_del(cfdata->theme);
@@ -326,8 +326,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	  }
 	else
 	  {
-	     snprintf(path, sizeof(path), "%s/data/themes/%s", 
-                      e_prefix_data_get(), cfdata->theme);
+	     e_prefix_data_snprintf(path, sizeof(path), "data/themes/%s",
+				    cfdata->theme);
 	     if (ecore_file_exists(path))
 	       {
 		  eina_stringshare_del(cfdata->theme);
@@ -338,8 +338,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    cfdata->theme_list = _get_theme_categories_list();
 
-   snprintf(path, sizeof(path), "%s/data/themes", e_prefix_data_get());
-   if (!strncmp(cfdata->theme, path, strlen(path)))
+   len = e_prefix_data_concat_static(path, "data/themes");
+   if (!strncmp(cfdata->theme, path, len))
      cfdata->fmdir = 1;
 }
 
@@ -405,9 +405,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ol, o, 0, 1, 1, 1, 0, 0, 0, 0);
 
    if (cfdata->fmdir == 1)
-     snprintf(path, sizeof(path), "%s/data/themes", e_prefix_data_get());
+     e_prefix_data_concat_static(path, "data/themes");
    else
-     snprintf(path, sizeof(path), "%s/.e/e/themes", e_user_homedir_get());
+     e_user_dir_concat_static(path, "themes");
 
    o = e_widget_flist_add(evas);
    cfdata->o_fm = o;
@@ -599,12 +599,10 @@ _files_ilist_nth_label_to_file(void *data, int n)
    if (!cfdata->o_files_ilist) return NULL;
 
    if (n > cfdata->personal_file_count)
-     snprintf(file, sizeof(file), "%s/data/themes/%s.edj",
-              e_prefix_data_get(), 
+     e_prefix_data_snprintf(file, sizeof(file), "data/themes/%s.edj",
               e_widget_ilist_nth_label_get(cfdata->o_files_ilist, n));
    else
-     snprintf(file, sizeof(file), "%s/.e/e/themes/%s.edj",
-              e_user_homedir_get(), 
+     e_user_dir_snprintf(file, sizeof(file), "themes/%s.edj",
               e_widget_ilist_nth_label_get(cfdata->o_files_ilist, n));
 
    return eina_stringshare_add(file);
@@ -787,14 +785,12 @@ _fill_files_ilist(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_clear(o);
 
    /* Grab the "Personal" themes. */
-   snprintf(theme_dir, sizeof(theme_dir), "%s/.e/e/themes",
-            e_user_homedir_get());
+   e_user_dir_concat_static(theme_dir, "themes");
    cfdata->personal_file_count = 
      _ilist_files_add(cfdata, _("Personal"), theme_dir);
 
    /* Grab the "System" themes. */
-   snprintf(theme_dir, sizeof(theme_dir),
-            "%s/data/themes", e_prefix_data_get());
+   e_prefix_data_concat_static(theme_dir, "data/themes");
    _ilist_files_add(cfdata, _("System"), theme_dir);
 
    e_widget_ilist_go(o);

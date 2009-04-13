@@ -851,9 +851,9 @@ wp_browser_new(E_Container *con)
    info->win = win;
    win->data = info;
    
-   snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds", e_user_homedir_get());
+   e_user_dir_concat_static(buf, "backgrounds");
    info->dirs = eina_list_append(info->dirs, strdup(buf));
-   snprintf(buf, sizeof(buf), "%s/data/backgrounds", e_prefix_data_get());
+   e_prefix_data_concat_static(buf, "data/backgrounds");
    info->dirs = eina_list_append(info->dirs, strdup(buf));
    
    e_win_title_set(win, _("Wallpaper Settings"));

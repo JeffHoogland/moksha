@@ -397,7 +397,7 @@ e_intl_imc_personal_path_get(void)
      {
 	char buf[4096];
 
-	snprintf(buf, sizeof(buf), "%s/.e/e/input_methods", e_user_homedir_get());
+	e_user_dir_concat_static(buf, "input_methods");
 	_e_intl_imc_personal_path = eina_stringshare_add(buf);
      }
    return _e_intl_imc_personal_path;
@@ -410,7 +410,7 @@ e_intl_imc_system_path_get(void)
      {
 	char buf[4096];
 
-	snprintf(buf, sizeof(buf), "%s/data/input_methods", e_prefix_data_get());
+	e_prefix_data_concat_static(buf, "data/input_methods");
 	_e_intl_imc_system_path = eina_stringshare_add(buf);
      }
    return _e_intl_imc_system_path;

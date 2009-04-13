@@ -281,12 +281,8 @@ e_int_menus_favorite_apps_new(void)
 {
    E_Menu *m = NULL;
    char buf[PATH_MAX];
-   const char *homedir;
 
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf),
-            "%s/.e/e/applications/menu/favorite.menu", homedir);
-
+   e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
    if (ecore_file_exists(buf)) m = e_int_menus_apps_new(buf);
    return m;
 }

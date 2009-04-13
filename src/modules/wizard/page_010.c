@@ -149,11 +149,9 @@ wizard_page_show(E_Wizard_Page *pg)
 	E_Intl_Pair *pair;
         Evas_Object *ic;
 	char buf[PATH_MAX];
-	const char *dir;
-	
+
 	pair = l->data;
-	dir = e_prefix_data_get();
-	snprintf(buf, sizeof(buf), "%s/data/images/%s", dir, pair->locale_icon);
+	e_prefix_data_snprintf(buf, sizeof(buf), "data/images/%s", pair->locale_icon);
 	ic = e_util_icon_add(buf, pg->evas);
 	e_widget_ilist_append(ob, ic, _(pair->locale_translation), 
 			      NULL, NULL, pair->locale_key);
