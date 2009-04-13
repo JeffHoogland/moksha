@@ -423,7 +423,7 @@ AC_E_OPTIONAL_MODULE([conf_interaction], true)
 AC_E_OPTIONAL_MODULE([conf_scale], true)
 AC_E_OPTIONAL_MODULE([gadman], true)
 AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
-AC_E_OPTIONAL_MODULE([connman], true)
+AC_E_OPTIONAL_MODULE([connman], false)
 AC_E_OPTIONAL_MODULE([illume], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
 
