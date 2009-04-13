@@ -4,12 +4,12 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static void        *_create_data(E_Config_Dialog *cfd);
-static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static void         _fill_data(E_Config_Dialog_Data *cfdata);
-static int          _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void *_create_data(E_Config_Dialog *cfd);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void _fill_data(E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int          _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 static E_Config_Dialog *_e_int_config_wallpaper_desk(E_Container *con, int con_num, int zone_num, int desk_x, int desk_y);
@@ -364,7 +364,7 @@ _cb_import(void *data1, void *data2)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data1;
-   if (cfdata->win_import)
+   if (cfdata->win_import) 
      e_win_raise(cfdata->win_import);
    else 
      cfdata->win_import = e_int_config_wallpaper_fsel(cfdata->cfd);
