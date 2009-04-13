@@ -26,6 +26,12 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+/* define MAX for all OS, instead of plenty #include */
+#ifndef MAX
+# define MAX(a, b) ((a) < (b) ? (b) : (a))
+#endif
+
+
 /* supported batery system schemes - irrespective of OS */
 #define CHECK_NONE                    0
 #define CHECK_ACPI                    1
