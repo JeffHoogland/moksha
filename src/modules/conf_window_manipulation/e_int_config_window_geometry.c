@@ -8,6 +8,7 @@ static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _cb_disable_check_list(void *data, Evas_Object *obj);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
@@ -30,6 +31,8 @@ struct _E_Config_Dialog_Data
 	} resize;
    } border_keyboard;
 };
+
+Eina_List *resistance_list = NULL;
 
 /* a nice easy setup function that does the dirty work */
 EAPI E_Config_Dialog *
@@ -86,6 +89,8 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   resistance_list = eina_list_free(resistance_list);
+
    /* Free the cfdata */
    E_FREE(cfdata);
 }
@@ -117,25 +122,40 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
+   Evas_Object *resistance_check;
 
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Resistance"), 0);
-   ob = e_widget_check_add(evas, _("Resist moving or resizing a window over an obstacle"), &(cfdata->use_resist));
-   e_widget_framelist_object_append(of, ob);
+   resistance_check = e_widget_check_add(evas, _("Resist moving or resizing a window over an obstacle"), &(cfdata->use_resist));
+   e_widget_framelist_object_append(of, resistance_check);
    ob = e_widget_label_add(evas, _("Resistance between windows:"));
+   resistance_list = eina_list_append (resistance_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, NULL, &(cfdata->window_resist), 200);
+   resistance_list = eina_list_append (resistance_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Resistance at the edge of the screen:"));
+   resistance_list = eina_list_append (resistance_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, NULL, &(cfdata->desk_resist), 200);
+   resistance_list = eina_list_append (resistance_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Resistance to desktop gadgets:"));
+   resistance_list = eina_list_append (resistance_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, NULL, &(cfdata->gadget_resist), 200);
+   resistance_list = eina_list_append (resistance_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+   // handler for enable/disable widget array
+   e_widget_on_change_hook_set(resistance_check, _cb_disable_check_list, resistance_list);
 
    of = e_widget_framelist_add(evas, _("Keyboard move and resize"), 0);
    ob = e_widget_label_add(evas, _("Automatically accept changes after:"));
@@ -153,4 +173,21 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    return o;
+}
+
+/*!
+ *  * If the check is disabled then disable the chained objects in the list.
+ *
+ * @param data A Eina_List of Evas_Object to chain widgets together with the checkbox
+ * @param obj A Evas_Object checkbox created with e_widget_check_add()
+ */
+static void
+_cb_disable_check_list(void *data, Evas_Object *obj)
+{
+   Eina_List *list = (Eina_List*) data;
+   Eina_List *l;
+   Evas_Object *o;
+
+   EINA_LIST_FOREACH(list, l, o)
+      e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
 }
