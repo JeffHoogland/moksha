@@ -146,20 +146,16 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *l = NULL;
+  dpms_list = eina_list_free(dpms_list);
 
-   // delete the list
-   for (l = dpms_list; l; l = eina_list_next(l))
+   if (cfdata)
    {
-      dpms_list = eina_list_remove_list(dpms_list, l);
+      cfdata->standby_slider=NULL;
+      cfdata->suspend_slider=NULL;
+      cfdata->off_slider=NULL;
+      
+      E_FREE(cfdata);
    }
-
-   if (!cfdata) return;
-   cfdata->standby_slider=NULL;
-   cfdata->suspend_slider=NULL;
-   cfdata->off_slider=NULL;
-
-   E_FREE(cfdata);
 }
 
 static int
