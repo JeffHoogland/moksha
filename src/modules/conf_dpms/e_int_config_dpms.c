@@ -329,13 +329,9 @@ static void
 _cb_disable_check_list(void *data, Evas_Object *obj)
 {
    Eina_List *list = (Eina_List*) data;
-   Eina_List *l = NULL;
-   Evas_Object *o = NULL;
+   Eina_List *l;
+   Evas_Object *o;
 
-   for (l = list, o = eina_list_data_get(l); l; l = eina_list_next(l),
-                                                o = eina_list_data_get(l))
-
-   {
+   EINA_LIST_FOREACH(list, l, o)
       e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
-   }
 }
