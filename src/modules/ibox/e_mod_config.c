@@ -79,13 +79,7 @@ _create_data(E_Config_Dialog *cfd)
 static void 
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *l = NULL;
-
-   // delete the list
-   for (l = show_label_list; l; l = eina_list_next(l))
-   {
-      show_label_list = eina_list_remove_list(show_label_list, l);
-   }
+   show_label_list = eina_list_free(show_label_list);
 
    ibox_config->config_dialog = eina_list_remove(ibox_config->config_dialog, cfd);
    free(cfdata);
