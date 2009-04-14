@@ -82,7 +82,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    xscreensaver_list = eina_list_free(xscreensaver_list);
 
-   if (!cfdata) return;
    E_FREE(cfdata);
 }
 
