@@ -3,7 +3,7 @@ Section: x11
 Priority: optional
 Maintainer: Falko Schmidt <falko@alphagemini.org>
 Build-Depends: cdbs, debhelper (>= 6), libevas-dev, libecore-dev, libeet-dev, libedje-dev, libedje-bin, libembryo-dev, libefreet-dev, libx11-dev, libedbus-dev, libpam0g-dev, libxext-dev
-Standards-Version: 3.7.3
+Standards-Version: 3.8.0
 Homepage: http://www.enlightenment.org
 
 Package: e17
