@@ -10,6 +10,8 @@ static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _cb_disable_check(void *data, Evas_Object *obj);
+static void _cb_disable_check_list(void *data, Evas_Object *obj);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
@@ -31,6 +33,8 @@ struct _E_Config_Dialog_Data
    int use_app_icon;
    int remember_internal_windows;
 };
+
+Eina_List *shading_list = NULL;
 
 /* a nice easy setup function that does the dirty work */
 EAPI E_Config_Dialog *
@@ -94,6 +98,8 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   shading_list = eina_list_free(shading_list);
+
    /* Free the cfdata */
    E_FREE(cfdata);
 }
@@ -187,42 +193,63 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *ob, *of, *ot;
+   Evas_Object *window_move_check;
+   Evas_Object *window_resize_check;
+   Evas_Object *window_shading_check;
    E_Radio_Group *rg;
 
    ot = e_widget_table_add(evas, 0);
 
    of = e_widget_framelist_add(evas, _("Window Move Geometry"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   ob = e_widget_check_add(evas, _("Display information"), &(cfdata->move_info_visible));
-   e_widget_framelist_object_append(of, ob);
+   window_move_check = e_widget_check_add(evas, _("Display information"), &(cfdata->move_info_visible));
+   e_widget_framelist_object_append(of, window_move_check);
    ob = e_widget_check_add(evas, _("Follow the window as it moves"), &(cfdata->move_info_follows));
+   e_widget_disabled_set(ob, !cfdata->move_info_visible); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
+   // handler for enable/disable widget
+   e_widget_on_change_hook_set(window_move_check, _cb_disable_check, ob);
 
    of = e_widget_framelist_add(evas, _("Window Resize Geometry"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   ob = e_widget_check_add(evas, _("Display information"), &(cfdata->resize_info_visible));
-   e_widget_framelist_object_append(of, ob);
+   window_resize_check = e_widget_check_add(evas, _("Display information"), &(cfdata->resize_info_visible));
+   e_widget_framelist_object_append(of, window_resize_check);
    ob = e_widget_check_add(evas, _("Follow the window as it resizes"), &(cfdata->resize_info_follows));
+   e_widget_disabled_set(ob, !cfdata->resize_info_visible); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
+   // handler for enable/disable widget
+   e_widget_on_change_hook_set(window_resize_check, _cb_disable_check, ob);
 
    of = e_widget_framelist_add(evas, _("Window Shading"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   ob = e_widget_check_add(evas, _("Animate the shading and unshading of windows"), &(cfdata->border_shade_animate));
-   e_widget_framelist_object_append(of, ob);
+   window_shading_check = e_widget_check_add(evas, _("Animate the shading and unshading of windows"), &(cfdata->border_shade_animate));
+   e_widget_framelist_object_append(of, window_shading_check);
    ob = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/sec"), 100, 9900, 100, 0, &(cfdata->border_shade_speed), NULL, 150);
+   e_widget_disabled_set(ob, !cfdata->border_shade_animate); // set state from saved config
+   shading_list = eina_list_append (shading_list, ob);
    e_widget_framelist_object_append(of, ob);
    rg = e_widget_radio_group_new(&(cfdata->border_shade_transition));
    ob = e_widget_radio_add(evas, _("Linear"), E_TRANSITION_LINEAR, rg);
+   e_widget_disabled_set(ob, !cfdata->border_shade_animate); // set state from saved config
+   shading_list = eina_list_append (shading_list, ob);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Smooth accelerate and decelerate"), E_TRANSITION_SINUSOIDAL, rg);
+   e_widget_disabled_set(ob, !cfdata->border_shade_animate); // set state from saved config
+   shading_list = eina_list_append (shading_list, ob);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Accelerate"), E_TRANSITION_ACCELERATE, rg);
+   e_widget_disabled_set(ob, !cfdata->border_shade_animate); // set state from saved config
+   shading_list = eina_list_append (shading_list, ob);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Decelerate"), E_TRANSITION_DECELERATE, rg);
+   e_widget_disabled_set(ob, !cfdata->border_shade_animate); // set state from saved config
+   shading_list = eina_list_append (shading_list, ob);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
+   // handler for enable/disable widget array
+   e_widget_on_change_hook_set(window_shading_check, _cb_disable_check_list, shading_list);
 
    of = e_widget_framelist_add(evas, _("Automatic New Window Placement"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
@@ -255,4 +282,30 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
 
    return ot;
+}
+
+/*!
+ * @param data A Evas_Object to chain together with the checkbox
+ * @param obj A Evas_Object checkbox created with e_widget_check_add()
+ */
+static void
+_cb_disable_check(void *data, Evas_Object *obj)
+{
+   e_widget_disabled_set((Evas_Object *) data, 
+                         !e_widget_check_checked_get(obj));
+}
+
+/*!
+ * @param data A Eina_List of Evas_Object to chain widgets together with the checkbox
+ * @param obj A Evas_Object checkbox created with e_widget_check_add()
+ */
+static void
+_cb_disable_check_list(void *data, Evas_Object *obj)
+{
+   Eina_List *list = (Eina_List*) data;
+   Eina_List *l;
+   Evas_Object *o;
+
+   EINA_LIST_FOREACH(list, l, o)
+      e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
 }
