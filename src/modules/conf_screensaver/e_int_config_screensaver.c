@@ -80,13 +80,7 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *l = NULL;
-
-   // delete the list
-   for (l = xscreensaver_list; l; l = eina_list_next(l))
-   {
-      xscreensaver_list = eina_list_remove_list(xscreensaver_list, l);
-   }
+   xscreensaver_list = eina_list_free(xscreensaver_list);
 
    if (!cfdata) return;
    E_FREE(cfdata);
