@@ -148,14 +148,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
   dpms_list = eina_list_free(dpms_list);
 
-   if (cfdata)
-   {
-      cfdata->standby_slider=NULL;
-      cfdata->suspend_slider=NULL;
-      cfdata->off_slider=NULL;
-      
-      E_FREE(cfdata);
-   }
+  E_FREE(cfdata);
 }
 
 static int
