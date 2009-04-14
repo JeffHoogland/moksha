@@ -10,6 +10,7 @@ static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _cb_disable_check_list(void *data, Evas_Object *obj);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
@@ -22,6 +23,8 @@ struct _E_Config_Dialog_Data
    int border_raise_on_mouse_action;
    int border_raise_on_focus;
 };
+
+Eina_List *autoraise_list = NULL;
 
 /* a nice easy setup function that does the dirty work */
 EAPI E_Config_Dialog *
@@ -76,6 +79,8 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   autoraise_list = eina_list_free(autoraise_list);
+
    /* Free the cfdata */
    E_FREE(cfdata);
 }
@@ -127,17 +132,25 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
+   Evas_Object *autoraise_check;
 
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Autoraise"), 0);
-   ob = e_widget_check_add(evas, _("Automatically raise windows on mouse over"), &(cfdata->use_auto_raise));
-   e_widget_framelist_object_append(of, ob);
+   autoraise_check = e_widget_check_add(evas, _("Automatically raise windows on mouse over"), &(cfdata->use_auto_raise));
+   e_widget_framelist_object_append(of, autoraise_check);
    ob = e_widget_label_add(evas, _("Delay before raising:"));
+   autoraise_list = eina_list_append (autoraise_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_auto_raise); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 9.9, 0.1, 0, &(cfdata->auto_raise_delay), NULL, 200);
+   autoraise_list = eina_list_append (autoraise_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_auto_raise); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+   // handler for enable/disable widget array
+   e_widget_on_change_hook_set(autoraise_check, _cb_disable_check_list, autoraise_list);
+//
 
    of = e_widget_framelist_add(evas, _("Raise Window"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
@@ -150,4 +163,21 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    return o;
+}
+
+/*!
+ *  * If the check is disabled then disable the chained objects in the list.
+ *
+ * @param data A Eina_List of Evas_Object to chain widgets together with the checkbox
+ * @param obj A Evas_Object checkbox created with e_widget_check_add()
+ */
+static void
+_cb_disable_check_list(void *data, Evas_Object *obj)
+{
+   Eina_List *list = (Eina_List*) data;
+   Eina_List *l;
+   Evas_Object *o;
+
+   EINA_LIST_FOREACH(list, l, o)
+      e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
 }
