@@ -4,6 +4,10 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+#ifndef MAX
+# define MAX(x, y) (((x) > (y)) ? (x) : (y))
+#endif
+
 /* TODO:
  * - Track execution status
  */
