@@ -6531,8 +6531,15 @@ collections { /* begin the collection of edje groups that are in this file */
     * with any plain style inset boxes */
    group { name: "e/shelf/default/plain";
       parts {
+	 part { name: "clip";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 255 255 255 255;
+	    }
+	 }
 	 part { name: "e.swallow.content";
 	    type: SWALLOW;
+	    clip_to: "clip";
 	    description { state: "default" 0.0;
 	       rel1.offset: 1 1;
 	       rel2.offset: -2 -2;
@@ -6619,8 +6626,15 @@ collections { /* begin the collection of edje groups that are in this file */
    }
    group { name: "e/shelf/invisible/plain";
       parts {
+	 part { name: "clip";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 255 255 255 255;
+	    }
+	 }
 	 part { name: "e.swallow.content";
 	    type: SWALLOW;
+	    clip_to: "clip";
 	    description { state: "default" 0.0;
 	       rel1.offset: 1 1;
 	       rel2.offset: -2 -2;
@@ -6811,8 +6825,15 @@ collections { /* begin the collection of edje groups that are in this file */
    }
    group { name: "e/shelf/alternate/plain";
       parts {
+	 part { name: "clip";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 255 255 255 255;
+	    }
+	 }
 	 part { name: "e.swallow.content";
 	    type: SWALLOW;
+	    clip_to: "clip";
 	    description { state: "default" 0.0;
 	       rel1.offset: 1 1;
 	       rel2.offset: -2 -2;
