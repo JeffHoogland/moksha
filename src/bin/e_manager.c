@@ -156,6 +156,7 @@ e_manager_manage_windows(E_Manager *man)
 
    /* a manager is designated for each root. lets get all the windows in 
       the managers root */
+   printf("--------BD DO!!!\n");
    windows = ecore_x_window_children_get(man->root, &wnum);
    if (windows)
      {
@@ -183,7 +184,8 @@ e_manager_manage_windows(E_Manager *man)
 	     unsigned int ret_val, deskxy[2];
 	     int ret;
 
-             if (e_border_find_by_client_window(windows[i])) continue;
+             if (e_border_find_by_client_window(windows[i]))
+               continue;
 	     ecore_x_window_attributes_get(windows[i], &att);
 	     if ((att.override) || (att.input_only))
 	       {
@@ -209,7 +211,7 @@ e_manager_manage_windows(E_Manager *man)
 			 }
 		    }
 		  else
-		    continue;
+                    continue;
 	       }
 	     if (!ecore_x_window_prop_property_get(windows[i],
 						   atom_xmbed,
@@ -299,7 +301,11 @@ e_manager_manage_windows(E_Manager *man)
 		  
 		  con = e_container_current_get(man);
 		  bd = e_border_new(con, windows[i], 1, 0);
-		  if (bd) e_border_show(bd);
+		  if (bd)
+                    {
+                       bd->ignore_first_unmap = 1;
+                       e_border_show(bd);
+                    }
 	       }
 	  }
 	free(windows);
