@@ -10,6 +10,7 @@ static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _cb_disable_check_list(void *data, Evas_Object *obj);
 
 #define MODE_CUSTOM            0
 #define MODE_BOTTOM_MIDDLE     1
@@ -45,6 +46,9 @@ struct _E_Config_Dialog_Data
 
    Evas_Object *desk_sel_list;
 };
+
+Eina_List *shrink_list = NULL;
+Eina_List *autohide_list = NULL;
 
 /* a nice easy setup function that does the dirty work */
 EAPI void
@@ -213,6 +217,9 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   shrink_list = eina_list_free(shrink_list);
+   autohide_list = eina_list_free(autohide_list);
+
    /* Free the cfdata */
    cfdata->es->config_dialog = NULL;
    eina_stringshare_del(cfdata->style);
@@ -539,6 +546,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 {
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *o2, *of, *ob, *oi, *oj;
+   Evas_Object *shrink_check;
+   Evas_Object *autohide_check;
    E_Radio_Group *rg;
    Evas_Coord wmw, wmh;
    Eina_List *styles, *l;
@@ -594,13 +603,19 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    o2 = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Size"), 0);
-   ob = e_widget_check_add(evas, _("Shrink to Content Size"), &(cfdata->fit_along));
-   e_widget_framelist_object_append(of, ob);
+   shrink_check = e_widget_check_add(evas, _("Shrink to Content Size"), &(cfdata->fit_along));
+   e_widget_framelist_object_append(of, shrink_check);
    ob = e_widget_label_add(evas, _("Shelf Size"));
+   shrink_list = eina_list_append (shrink_list, ob);
+   e_widget_disabled_set(ob, !cfdata->fit_along); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%3.0f pixels"), 4, 120, 4, 0, NULL, &(cfdata->size), 100);
+   shrink_list = eina_list_append (shrink_list, ob);
+   e_widget_disabled_set(ob, !cfdata->fit_along); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
+   // handler for enable/disable widget array
+   e_widget_on_change_hook_set(shrink_check, _cb_disable_check_list, shrink_list);
 
    of = e_widget_framelist_add(evas, _("Styles"), 0);
    
@@ -641,22 +656,36 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    o2 = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Auto Hide"), 0);
-   ob = e_widget_check_add(evas, _("Auto-hide the shelf"), &(cfdata->autohiding));
-   e_widget_framelist_object_append(of, ob);
+   autohide_check = e_widget_check_add(evas, _("Auto-hide the shelf"), &(cfdata->autohiding));
+   e_widget_framelist_object_append(of, autohide_check);
    rg = e_widget_radio_group_new(&(cfdata->autohiding_show_action));
    ob = e_widget_radio_add(evas, _("Show on mouse in"), 0, rg);
+   autohide_list = eina_list_append (autohide_list, ob);
+   e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Show on mouse click"), 1, rg);
+   autohide_list = eina_list_append (autohide_list, ob);
+   e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Hide timeout"));
+   autohide_list = eina_list_append (autohide_list, ob);
+   e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.2, 6.0, 0.2, 0, &(cfdata->hide_timeout), NULL, 60);
+   autohide_list = eina_list_append (autohide_list, ob);
+   e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Hide duration"));
+   autohide_list = eina_list_append (autohide_list, ob);
+   e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.1, 2.0, 0.1, 0, &(cfdata->hide_duration), NULL, 60);
+   autohide_list = eina_list_append (autohide_list, ob);
+   e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
+   // handler for enable/disable widget array
+   e_widget_on_change_hook_set(autohide_check, _cb_disable_check_list, autohide_list);
 
    of = e_widget_framelist_add(evas, _("Desktop"), 0);
    rg = e_widget_radio_group_new(&(cfdata->desk_show_mode));
@@ -666,6 +695,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
+   e_widget_disabled_set(ob, 1); // set state from saved config
    cfdata->desk_sel_list = ob;
    e_widget_ilist_multi_select_set(ob, 1);
    _desk_sel_list_load(cfdata);
@@ -678,4 +708,19 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(o, o2, 0, 0, 0.0);
    
    return o;   
+}
+
+/*!
+ * @param data A Eina_List of Evas_Object to chain widgets together with the checkbox
+ * @param obj A Evas_Object checkbox created with e_widget_check_add()
+ */
+static void
+_cb_disable_check_list(void *data, Evas_Object *obj)
+{
+   Eina_List *list = (Eina_List*) data;
+   Eina_List *l;
+   Evas_Object *o;
+
+   EINA_LIST_FOREACH(list, l, o)
+      e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
 }
