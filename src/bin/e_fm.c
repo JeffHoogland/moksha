@@ -7659,8 +7659,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    E_Zone *zone;
    Eina_List *sel, *l = NULL;
    int x, y, can_w, can_w2, protect;
-   char buf[PATH_MAX];
-   
+   char buf[PATH_MAX], *ext;
+
    sd = ic->sd;
 
    mn = e_menu_new();
@@ -7878,15 +7878,19 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  }
 
 	/* see if we have any glob handlers registered for this file */
-	snprintf(buf, sizeof(buf), "*%s", strrchr(ic->info.file, '.'));
-	l = e_fm2_mime_handler_glob_handlers_get(buf);
-	if (l) 
+	ext = strrchr(ic->info.file, '.');
+	if (ext)
 	  {
-	     _e_fm2_icon_realpath(ic, buf, sizeof(buf));
-	     _e_fm2_context_menu_append(obj, buf, l, mn, ic);
-	     eina_list_free(l);
+	     snprintf(buf, sizeof(buf), "*%s", ext);
+	     l = e_fm2_mime_handler_glob_handlers_get(buf);
+	     if (l)
+	       {
+		  _e_fm2_icon_realpath(ic, buf, sizeof(buf));
+		  _e_fm2_context_menu_append(obj, buf, l, mn, ic);
+		  eina_list_free(l);
+	       }
 	  }
-	
+
 	if (sd->icon_menu.end.func)
 	  sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, &(ic->info));
      }
