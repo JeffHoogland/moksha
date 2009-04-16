@@ -398,6 +398,7 @@ _e_int_menus_main_del_hook(void *obj)
    if (dat->all_apps) e_object_del(E_OBJECT(dat->all_apps));
    if (dat->desktops) e_object_del(E_OBJECT(dat->desktops));
    if (dat->clients) e_object_del(E_OBJECT(dat->clients));
+   if (dat->lost_clients) e_object_del(E_OBJECT(dat->lost_clients));
    if (dat->enlightenment) e_object_del(E_OBJECT(dat->enlightenment));
    if (dat->config) e_object_del(E_OBJECT(dat->config));
    free(dat);

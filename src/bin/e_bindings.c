@@ -549,7 +549,16 @@ e_bindings_edge_out_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_
 	     if (_e_bindings_context_match(bind->ctxt, ctxt))
 	       {
 		  if (bind->timer)
-		    ecore_timer_del(bind->timer);
+		    {
+		       E_Binding_Edge_Data *ed;
+
+		       ed = ecore_timer_del(bind->timer);
+		       if (ed)
+			 {
+			    E_FREE(ed->ev);
+			    E_FREE(ed);
+			 }
+		    }
 		  bind->timer = NULL;
 
 		  act = e_action_find(bind->action);
