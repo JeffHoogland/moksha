@@ -6,6 +6,7 @@ static int          _basic_apply_data        (E_Config_Dialog *cfd, E_Config_Dia
 static Evas_Object *_basic_create_widgets    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int          _advanced_apply_data     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void         _cb_disable_check_list(void *data, Evas_Object *obj);
 
 struct _E_Config_Dialog_Data 
 {
@@ -26,6 +27,8 @@ struct _E_Config_Dialog_Data
    int pos_max_h;
    char *term_cmd;
 };
+
+Eina_List *scroll_list = NULL;
 
 EAPI E_Config_Dialog *
 e_int_config_exebuf(E_Container *con, const char *params __UNUSED__) 
@@ -84,6 +87,8 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   scroll_list = eina_list_free(scroll_list);
+
    E_FREE(cfdata->term_cmd);
    E_FREE(cfdata);
 }
@@ -155,6 +160,7 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *of, *ob, *ot;
+   Evas_Object *scroll_check;
 
    ot = e_widget_table_add(evas, 0);
 
@@ -174,13 +180,19 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Scroll Settings"), 0);   
-   ob = e_widget_check_add(evas, _("Scroll Animate"), &(cfdata->scroll_animate));
-   e_widget_framelist_object_append(of, ob);
+   scroll_check = e_widget_check_add(evas, _("Scroll Animate"), &(cfdata->scroll_animate));
+   e_widget_framelist_object_append(of, scroll_check);
    ob = e_widget_label_add(evas, _("Scroll Speed"));
+   scroll_list = eina_list_append (scroll_list, ob);
+   e_widget_disabled_set(ob, !cfdata->scroll_animate); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0, &(cfdata->scroll_speed), NULL, 200);
+   scroll_list = eina_list_append (scroll_list, ob);
+   e_widget_disabled_set(ob, !cfdata->scroll_animate); // set state from saved config
    e_widget_framelist_object_append(of, ob);   
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
+   // handler for enable/disable widget array
+   e_widget_on_change_hook_set(scroll_check, _cb_disable_check_list, scroll_list);
 
    of = e_widget_frametable_add(evas, _("Terminal Settings"), 0);      
    ob = e_widget_label_add(evas, _("Terminal Command (CTRL+RETURN to utilize)"));
@@ -222,4 +234,19 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
 
    return ot;
+}
+
+/*!
+ * @param data A Eina_List of Evas_Object to chain widgets together with the checkbox
+ * @param obj A Evas_Object checkbox created with e_widget_check_add()
+ */
+static void
+_cb_disable_check_list(void *data, Evas_Object *obj)
+{
+   Eina_List *list = (Eina_List*) data;
+   Eina_List *l;
+   Evas_Object *o;
+
+   EINA_LIST_FOREACH(list, l, o)
+      e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
 }
