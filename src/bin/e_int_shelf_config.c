@@ -402,10 +402,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->escfg->autohide_show_action = cfdata->autohiding_show_action;
    cfdata->escfg->hide_timeout = cfdata->hide_timeout;
    cfdata->escfg->hide_duration = cfdata->hide_duration;
-   if (cfdata->escfg->autohide && !cfdata->es->hidden)
-     e_shelf_toggle(cfdata->es, 0);
-   else if (!cfdata->escfg->autohide && cfdata->es->hidden)
-     e_shelf_toggle(cfdata->es, 1);
    
    cfdata->escfg->desk_show_mode = cfdata->desk_show_mode;
    cfdata->escfg->desk_list = NULL;
@@ -475,6 +471,11 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    else
      e_shelf_show(cfdata->es);
+
+   if (cfdata->escfg->autohide && !cfdata->es->hidden)
+     e_shelf_toggle(cfdata->es, 0);
+   else if (!cfdata->escfg->autohide && cfdata->es->hidden)
+     e_shelf_toggle(cfdata->es, 1);
 
    e_config_save_queue();   
    cfdata->es->config_dialog = cfd;
