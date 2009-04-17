@@ -584,8 +584,14 @@ e_shelf_position_calc(E_Shelf *es)
 	break;
      }
    es->hide_step = 0;
-   
+   es->hide_origin = -1;
+
    e_shelf_move_resize(es, es->x, es->y, es->w, es->h);
+   if (es->hidden)
+     {
+	es->hidden = 0;
+	e_shelf_toggle(es, 0);
+     }
 }
 
 EAPI void 
