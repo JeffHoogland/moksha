@@ -44,6 +44,9 @@ static int _grab_cb_mouse_down(void *data, int type, void *event);
 static int _grab_cb_key_down(void *data, int type, void *event);
 static void _grab_wnd_hide(E_Config_Dialog_Data *cfdata);
 static void _adv_update_btn_lbl(E_Config_Dialog_Data *cfdata);
+static void _cb_disable_check_list(void *data, Evas_Object *obj);
+
+Eina_List *popup_list = NULL;
 
 void
 _config_pager_module(Config_Item *ci)
@@ -102,6 +105,8 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   popup_list = eina_list_free(popup_list);
+
    pager_config->config_dialog = NULL;
    E_FREE(cfdata);
 }
@@ -149,6 +154,7 @@ static Evas_Object *
 _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o = NULL, *of = NULL, *ow = NULL;
+   Evas_Object *popup_check = NULL;
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_frametable_add(evas, _("General Settings"), 0);
@@ -196,20 +202,30 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_frametable_add(evas, _("Popup Settings"), 0);
-   ow = e_widget_check_add(evas, _("Show popup on desktop change"),
-                           &(cfdata->popup.show));
-   e_widget_frametable_object_append(of, ow, 0, 0, 2, 1, 1, 0, 1, 0);
+   popup_check = e_widget_check_add(evas, _("Show popup on desktop change"),
+                                    &(cfdata->popup.show));
+   e_widget_frametable_object_append(of, popup_check, 0, 0, 2, 1, 1, 0, 1, 0);
    ow = e_widget_label_add(evas, _("Popup pager height"));
+   popup_list = eina_list_append (popup_list, ow);
+   e_widget_disabled_set(ow, !cfdata->popup.show); // set state from saved config
    e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
    ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 20.0, 200.0, 1.0, 0, NULL,
                             &(cfdata->popup.height), 100);
+   popup_list = eina_list_append (popup_list, ow);
+   e_widget_disabled_set(ow, !cfdata->popup.show); // set state from saved config
    e_widget_frametable_object_append(of, ow, 1, 1, 1, 1, 1, 0, 1, 0);
    ow = e_widget_label_add(evas, _("Popup speed"));
+   popup_list = eina_list_append (popup_list, ow);
+   e_widget_disabled_set(ow, !cfdata->popup.show); // set state from saved config
    e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 0, 1, 0);
    ow = e_widget_slider_add(evas, 1, 0, _("%1.1f seconds"), 0.1, 10.0, 0.1, 0,
                             &(cfdata->popup.speed), NULL, 100);
+   popup_list = eina_list_append (popup_list, ow);
+   e_widget_disabled_set(ow, !cfdata->popup.show); // set state from saved config
    e_widget_frametable_object_append(of, ow, 1, 2, 1, 1, 1, 0, 1, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+   // handler for enable/disable widget array
+   e_widget_on_change_hook_set(popup_check, _cb_disable_check_list, popup_list);
 
    of = e_widget_frametable_add(evas, _("Urgent Window Settings"), 0);
    ow = e_widget_check_add(evas, _("Show popup on urgent window"),
@@ -397,4 +413,19 @@ _adv_update_btn_lbl(E_Config_Dialog_Data *cfdata)
    if (cfdata->btn.desk)
       snprintf(lbl, sizeof(lbl), _("Button %i"), cfdata->btn.desk);
    e_widget_button_label_set(cfdata->gui.o_btn3, lbl);
+}
+
+/*!
+ * @param data A Eina_List of Evas_Object to chain widgets together with the checkbox
+ * @param obj A Evas_Object checkbox created with e_widget_check_add()
+ */
+static void
+_cb_disable_check_list(void *data, Evas_Object *obj)
+{
+   Eina_List *list = (Eina_List*) data;
+   Eina_List *l;
+   Evas_Object *o;
+
+   EINA_LIST_FOREACH(list, l, o)
+      e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
 }
