@@ -22,9 +22,9 @@ typedef struct E_Mixer_Gadget_Config
 
 typedef struct E_Mixer_Module_Config
 {
-    int version;
-    const char *default_gc_id;
-    Eina_Hash *gadgets;
+   int version;
+   const char *default_gc_id;
+   Eina_Hash *gadgets;
 } E_Mixer_Module_Config;
 
 typedef struct E_Mixer_Instance
@@ -34,21 +34,21 @@ typedef struct E_Mixer_Instance
    E_Menu *menu;
 
    struct
-     {
-        Evas_Object *gadget;
-        Evas_Object *label;
-        Evas_Object *left;
-        Evas_Object *right;
-        Evas_Object *mute;
-        Evas_Object *table;
-        Evas_Object *button;
-	struct
- 	  {
-	     Ecore_X_Window win;
-	     Ecore_Event_Handler *mouse_up;
-	     Ecore_Event_Handler *key_down;
-	  } input;
-     } ui;
+   {
+      Evas_Object *gadget;
+      Evas_Object *label;
+      Evas_Object *left;
+      Evas_Object *right;
+      Evas_Object *mute;
+      Evas_Object *table;
+      Evas_Object *button;
+      struct
+      {
+         Ecore_X_Window win;
+         Ecore_Event_Handler *mouse_up;
+         Ecore_Event_Handler *key_down;
+      } input;
+   } ui;
 
    E_Mixer_System *sys;
    E_Mixer_Channel *channel;
@@ -66,11 +66,11 @@ typedef struct E_Mixer_Module_Context
    Eina_List *instances;
    E_Dialog *mixer_dialog;
    struct st_mixer_actions
-     {
-        E_Action *incr;
-        E_Action *decr;
-        E_Action *mute;
-     } actions;
+   {
+      E_Action *incr;
+      E_Action *decr;
+      E_Action *mute;
+   } actions;
 } E_Mixer_Module_Context;
 
 EAPI extern E_Module_Api e_modapi;

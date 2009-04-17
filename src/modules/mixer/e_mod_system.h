@@ -8,9 +8,9 @@ typedef void E_Mixer_Channel;
 
 struct E_Mixer_Channel_State
 {
-    int mute;
-    int left;
-    int right;
+   int mute;
+   int left;
+   int right;
 };
 typedef struct E_Mixer_Channel_State E_Mixer_Channel_State;
 
