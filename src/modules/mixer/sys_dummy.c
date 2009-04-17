@@ -7,7 +7,7 @@ static const char *_name = NULL;
 static void
 _e_mixer_dummy_set(void)
 {
-   if (!_name) _name = eina_stringshare_add("dummy");
+   if (!_name) _name = eina_stringshare_add("No ALSA mixer found!");
 }
 
 E_Mixer_System *
