@@ -100,19 +100,10 @@ _basic_apply_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
    E_Container *con;
    E_Zone *zone;
 
-   for (l = e_manager_list(); l; l = l->next)
-     {
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
-	  {
-	     con = ll->data;
-	     for (lll = con ->zones; lll; lll = lll->next)
-	       {
-		  zone = lll->data;
-		  e_zone_desk_count_set(zone, cfdata->x, cfdata->y);
-	       }
-	  }
-     }
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
+     EINA_LIST_FOREACH(man->containers, ll, con)
+       EINA_LIST_FOREACH(con->zones, lll, zone)
+         e_zone_desk_count_set(zone, cfdata->x, cfdata->y);
 
    if (cfdata->flip_animate)
      {
