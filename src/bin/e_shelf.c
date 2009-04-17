@@ -1458,7 +1458,18 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
 	if (es->popup) win = es->popup->evas_win;
 	else win = es->zone->container->event_win;
 	if (ev->win != win) return 1;
-   
+
+	/*
+	 * ECORE_X_EVENT_DETAIL_INFERIOR means focus went to children windows
+	 * so do not hide shelf on this case (ie: systray base window, or
+	 * embedded icons).
+	 *
+	 * Problem: when child window get mouse out, shelf window will
+	 * not get mouse out itself, so it will stay visible and
+	 * autohide will fail.
+	 */
+	if (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
+
 	e_shelf_toggle(es, 0);
      }
    return 1;
