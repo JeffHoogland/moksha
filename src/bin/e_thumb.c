@@ -11,6 +11,7 @@ struct _E_Thumb
    int   w, h;
    const char *file;
    const char *key;
+   char *sort_id;
    unsigned char queued : 1;
    unsigned char busy : 1;
    unsigned char done : 1;
@@ -108,6 +109,8 @@ e_thumb_icon_file_set(Evas_Object *obj, const char *file, const char *key)
    eth->file = NULL;
    if (eth->key) eina_stringshare_del(eth->key);
    eth->key = NULL;
+   if (eth->sort_id) free(eth->sort_id);
+   eth->sort_id = NULL;
    if (file) eth->file = eina_stringshare_add(file);
    if (key) eth->key = eina_stringshare_add(key);
 }
@@ -201,6 +204,43 @@ e_thumb_icon_rethumb(Evas_Object *obj)
    e_thumb_icon_begin(obj);
 }
 
+#define A(v) (((v) >> 24) & 0xff)
+#define R(v) (((v) >> 16) & 0xff)
+#define G(v) (((v) >> 8 ) & 0xff)
+#define B(v) (((v)      ) & 0xff)
+#define PIX(p, x, y) p[((y) << 2) + (x)]
+#define PIX2(p, x, y) p[((y) << 1) + (x)]
+
+static void
+_e_thumb_key_load(E_Thumb *eth, const char *icon)
+{
+   Eet_File *ef;
+   int size = 0;
+   
+   ef = eet_open(icon, EET_FILE_MODE_READ);
+   if (!ef) return;
+   eth->sort_id = eet_read(ef, "/thumbnail/sort_id", &size);
+   if (eth->sort_id)
+     {
+        if (size > 0) eth->sort_id[size - 1] = 0;
+        else
+          {
+             free(eth->sort_id);
+             eth->sort_id = NULL;
+          }
+     }
+   eet_close(ef);
+}
+
+EAPI const char *
+e_thumb_sort_id_get(Evas_Object *obj)
+{
+   E_Thumb *eth;
+   eth = evas_object_data_get(obj, "e_thumbdata");
+   if (!eth) return "";
+   if (!eth->sort_id) return "";
+   return eth->sort_id;
+}
 
 EAPI void
 e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
@@ -228,9 +268,10 @@ e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
 		       _pending--;
 		       eth->done = 1;
 		       if (_pending == 0) _e_thumb_thumbnailers_kill();
-                       e_icon_preload_set(obj, 1);
+//y//                  e_icon_preload_set(obj, 1);
 		       e_icon_file_key_set(obj, icon, "/thumbnail/data");
-//x//		       evas_object_smart_callback_call(obj, "e_thumb_gen", NULL);
+                       _e_thumb_key_load(eth, icon);
+		       evas_object_smart_callback_call(obj, "e_thumb_gen", NULL);
 		    }
 	       }
 	  }
@@ -316,6 +357,7 @@ _e_thumb_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
      _thumb_queue = eina_list_remove(_thumb_queue, eth);
    if (eth->file) eina_stringshare_del(eth->file);
    if (eth->key) eina_stringshare_del(eth->key);
+   if (eth->sort_id) free(eth->sort_id);
    free(eth);
 }
 
