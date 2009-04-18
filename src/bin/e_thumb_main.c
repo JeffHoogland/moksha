@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <math.h>
 #include <Ecore.h>
 #include <Ecore_Evas.h>
 #include <Ecore_Ipc.h>
