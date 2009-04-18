@@ -429,7 +429,7 @@ _import_edj_gen(Import *import)
    if (!fstrip) return;
    len = e_user_dir_snprintf(buf, sizeof(buf), "backgrounds/%s.edj", fstrip);
    if (len >= sizeof(buf)) return;
-   off = len - sizeof(".edj") - 1;
+   off = len - (sizeof(".edj") - 1);
    while (ecore_file_exists(buf))
      {
 	snprintf(buf + off, sizeof(buf) - off, "-%d.edj", num);

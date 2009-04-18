@@ -403,8 +403,8 @@ _e_fm2_custom_file_info_save(void)
 		     _e_fm2_custom_file_hash_foreach_save, ef);
    eet_close(ef);
 
-   memcpy(buf2, buf, len - sizeof(".tmp") - 1);
-   buf2[len - sizeof(".tmp") - 1] = '\0';
+   memcpy(buf2, buf, len - (sizeof(".tmp") - 1));
+   buf2[len - (sizeof(".tmp") - 1)] = '\0';
    eet_close(_e_fm2_custom_file);
    _e_fm2_custom_file = NULL;
    ret = rename(buf, buf2);

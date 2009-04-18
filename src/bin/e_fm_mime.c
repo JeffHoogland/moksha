@@ -69,9 +69,9 @@ e_fm_mime_icon_get(const char *mime)
      goto try_e_icon_generic;
 
    if (ecore_file_exists(buf)) goto ok;
-   memcpy(buf + len - sizeof("edj") - 1, "svg", sizeof("svg"));
+   memcpy(buf + len - (sizeof("edj") - 1), "svg", sizeof("svg"));
    if (ecore_file_exists(buf)) goto ok;
-   memcpy(buf + len - sizeof("edj") - 1, "png", sizeof("png"));
+   memcpy(buf + len - (sizeof("edj") - 1), "png", sizeof("png"));
    if (ecore_file_exists(buf)) goto ok;
 
  try_e_icon_generic:
@@ -80,21 +80,21 @@ e_fm_mime_icon_get(const char *mime)
      goto try_theme;
 
    if (ecore_file_exists(buf)) goto ok;
-   memcpy(buf + len - sizeof("edj") - 1, "svg", sizeof("svg"));
+   memcpy(buf + len - (sizeof("edj") - 1), "svg", sizeof("svg"));
    if (ecore_file_exists(buf)) goto ok;
-   memcpy(buf + len - sizeof("edj") - 1, "png", sizeof("png"));
+   memcpy(buf + len - (sizeof("edj") - 1), "png", sizeof("png"));
    if (ecore_file_exists(buf)) goto ok;
 
    /* 3. look up icon in theme */
  try_theme:
    memcpy(buf, "e/icons/fileman/mime/", sizeof("e/icons/fileman/mime/") - 1);
    ecore_strlcpy(buf + sizeof("e/icons/fileman/mime/") - 1, mime,
-		 sizeof(buf) - sizeof("e/icons/fileman/mime/") - 1);
+		 sizeof(buf) - (sizeof("e/icons/fileman/mime/") - 1));
    val = (char *)e_theme_edje_file_get("base/theme/fileman", buf);
    if ((val) && (e_util_edje_collection_exists(val, buf))) goto ok;
 
    ecore_strlcpy(buf + sizeof("e/icons/fileman/mime/") - 1, buf2,
-		 sizeof(buf) - sizeof("e/icons/fileman/mime/") - 1);
+		 sizeof(buf) - (sizeof("e/icons/fileman/mime/") - 1));
    val = (char *)e_theme_edje_file_get("base/theme/fileman", buf);
    if ((val) && (e_util_edje_collection_exists(val, buf))) goto ok;
 
@@ -104,9 +104,9 @@ e_fm_mime_icon_get(const char *mime)
      goto try_efreet_icon_generic;
 
    if (ecore_file_exists(buf)) goto ok;
-   memcpy(buf + len - sizeof("edj") - 1, "svg", sizeof("svg"));
+   memcpy(buf + len - (sizeof("edj") - 1), "svg", sizeof("svg"));
    if (ecore_file_exists(buf)) goto ok;
-   memcpy(buf + len - sizeof("edj") - 1, "png", sizeof("png"));
+   memcpy(buf + len - (sizeof("edj") - 1), "png", sizeof("png"));
    if (ecore_file_exists(buf)) goto ok;
 
  try_efreet_icon_generic:
@@ -115,9 +115,9 @@ e_fm_mime_icon_get(const char *mime)
      goto try_efreet_icon_generic;
 
    if (ecore_file_exists(buf)) goto ok;
-   memcpy(buf + len - sizeof("edj") - 1, "svg", sizeof("svg"));
+   memcpy(buf + len - (sizeof("edj") - 1), "svg", sizeof("svg"));
    if (ecore_file_exists(buf)) goto ok;
-   memcpy(buf + len - sizeof("edj") - 1, "png", sizeof("png"));
+   memcpy(buf + len - (sizeof("edj") - 1), "png", sizeof("png"));
    if (ecore_file_exists(buf)) goto ok;
 
    return NULL;
