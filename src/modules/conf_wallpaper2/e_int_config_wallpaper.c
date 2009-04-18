@@ -36,7 +36,7 @@ struct _Info
 
 struct _Smart_Data
 {
-   Evas_Object *child_obj;
+//   Evas_Object *child_obj;
    Eina_List   *items;
    Ecore_Idle_Enterer *idle_enter;
    Ecore_Animator *animator;
@@ -45,6 +45,7 @@ struct _Smart_Data
    Evas_Coord   x, y, w, h;
    Evas_Coord   cx, cy, cw, ch;
    Evas_Coord   sx, sy;
+   int          id_num;
    double       seltime;
    double       selmove;
    Evas_Bool    selin : 1;
@@ -56,6 +57,7 @@ struct _Item
    Evas_Object *obj;
    Evas_Coord x, y, w, h;
    const char *file;
+   char *sort_id;
    Evas_Object *frame, *image;
    Evas_Bool selected : 1;
    Evas_Bool have_thumb : 1;
@@ -324,10 +326,13 @@ _e_smart_reconfigure_do(void *data)
                }
              else
                {
-                  if (it->do_thumb)
+                  if (it->sort_id)
                     {
-                       e_thumb_icon_end(it->image);
-                       it->do_thumb = 0;
+                       if (it->do_thumb)
+                         {
+                            e_thumb_icon_end(it->image);
+                            it->do_thumb = 0;
+                         }
                     }
                }
           }
@@ -361,12 +366,23 @@ static void
 _e_smart_del(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
+   Item *it;
    if (sd->seltimer)
      ecore_timer_del(sd->seltimer);
    if (sd->idle_enter)
      ecore_idle_enterer_del(sd->idle_enter);
    if (sd->animator)
      ecore_animator_del(sd->animator);
+   // sd->info is just referenced
+   // sd->child_obj is unused
+   EINA_LIST_FREE(sd->items, it)
+     {
+        if (it->frame) evas_object_del(it->frame);
+        if (it->image) evas_object_del(it->image);
+        if (it->file) eina_stringshare_del(it->file);
+        free(it->sort_id);
+        free(it);
+     }
    free(sd);
 }
 
@@ -393,35 +409,35 @@ static void
 _e_smart_show(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   evas_object_show(sd->child_obj);
+//   evas_object_show(sd->child_obj);
 }
 
 static void
 _e_smart_hide(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   evas_object_hide(sd->child_obj);
+//   evas_object_hide(sd->child_obj);
 }
 
 static void
 _e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   evas_object_color_set(sd->child_obj, r, g, b, a);
+//   evas_object_color_set(sd->child_obj, r, g, b, a);
 }
 
 static void
 _e_smart_clip_set(Evas_Object *obj, Evas_Object * clip)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   evas_object_clip_set(sd->child_obj, clip);
+//   evas_object_clip_set(sd->child_obj, clip);
 }
 
 static void
 _e_smart_clip_unset(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   evas_object_clip_unset(sd->child_obj);
+//   evas_object_clip_unset(sd->child_obj);
 }
 
 static Evas_Object *
@@ -595,11 +611,44 @@ _pan_sel_up(Evas_Object *obj)
      }
 }
 
+static int
+_sort_cb(const void *d1, const void *d2)
+{
+   Item *it1 = d1, *it2 = d2;
+   return strcmp(it1->sort_id, it2->sort_id);
+}
+
+static void
+_item_sort(Item *it)
+{
+   Evas_Object *obj = it->obj;
+   Smart_Data *sd = evas_object_smart_data_get(obj);
+   int num;
+   Eina_List *l;
+   
+   sd->id_num++;
+   num = eina_list_count(sd->items);
+   if (sd->id_num == num)
+     {
+        sd->items = eina_list_sort(sd->items, num, _sort_cb);
+        _e_smart_reconfigure(obj);
+     }
+}
+
 static void
 _thumb_gen(void *data, Evas_Object *obj, void *event_info)
 {
    Item *it = data;
    edje_object_signal_emit(it->frame, "e,action,thumb,gen", "e");
+   if (!it->sort_id)
+     {
+        const char *id = e_thumb_sort_id_get(it->image);
+        if (id)
+          {
+             it->sort_id = strdup(id);
+             _item_sort(it);
+          }
+     }
    it->have_thumb = 1;
 }
 
@@ -668,7 +717,11 @@ _pan_file_add(Evas_Object *obj, const char *file, Evas_Bool remote, Evas_Bool th
      e_thumb_icon_file_set(it->image, it->file, "e/desktop/background");
    e_thumb_icon_size_set(it->image, sd->info->iw, sd->info->ih);
    evas_object_show(it->image);
+   
+   e_thumb_icon_begin(it->image);
+   it->do_thumb = 1;
 //   e_thumb_icon_begin(it->image);
+
    _e_smart_reconfigure(obj);
 }
 
@@ -737,6 +790,24 @@ _ok(void *data, void *data2)
    e_bg_update();
    e_config_save_queue();
    wp_conf_hide();
+}
+
+static void
+_add_file(void *data, void *data2)
+{
+   Info *info = data;
+}
+
+static void
+_add_grad(void *data, void *data2)
+{
+   Info *info = data;
+}
+
+static void
+_add_online(void *data, void *data2)
+{
+   Info *info = data;
 }
 
 static void _scan(Info *info);
@@ -934,6 +1005,28 @@ wp_browser_new(E_Container *con)
    o2 = e_widget_radio_add(info->win->evas, _("This Screen"), 2, rg);
    e_widget_table_object_align_append(o, o2, 
                                       0, 3, 1, 1,
+                                      1, 1, 0, 0,
+                                      0.0, 0.5);
+   evas_object_show(o2);
+   
+   o2 =  e_widget_button_add(info->win->evas, _("Add File"), NULL, 
+                             _add_file, info, NULL);
+   e_widget_table_object_align_append(o, o2, 
+                                      1, 1, 1, 1,
+                                      1, 1, 0, 0,
+                                      0.0, 0.5);
+   evas_object_show(o2);
+   o2 =  e_widget_button_add(info->win->evas, _("Add Gradient"), NULL, 
+                             _add_grad, info, NULL);
+   e_widget_table_object_align_append(o, o2, 
+                                      1, 2, 1, 1,
+                                      1, 1, 0, 0,
+                                      0.0, 0.5);
+   evas_object_show(o2);
+   o2 =  e_widget_button_add(info->win->evas, _("Add Online"), NULL, 
+                             _add_online, info, NULL);
+   e_widget_table_object_align_append(o, o2, 
+                                      1, 3, 1, 1,
                                       1, 1, 0, 0,
                                       0.0, 0.5);
    evas_object_show(o2);
