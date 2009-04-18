@@ -42,12 +42,12 @@ struct _E_Config_Dialog_Data
    double hide_duration;
 
    int desk_show_mode;
-   Eina_List *desk_list; 
+   Eina_List *desk_list;
+   Eina_List *autohide_list;
 
    Evas_Object *desk_sel_list;
 };
 
-Eina_List *autohide_list = NULL;
 
 /* a nice easy setup function that does the dirty work */
 EAPI void
@@ -216,7 +216,7 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   autohide_list = eina_list_free(autohide_list);
+   eina_list_free(cfdata->autohide_list);
 
    /* Free the cfdata */
    cfdata->es->config_dialog = NULL;
@@ -656,32 +656,32 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, autohide_check);
    rg = e_widget_radio_group_new(&(cfdata->autohiding_show_action));
    ob = e_widget_radio_add(evas, _("Show on mouse in"), 0, rg);
-   autohide_list = eina_list_append (autohide_list, ob);
+   cfdata->autohide_list = eina_list_append(cfdata->autohide_list, ob);
    e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Show on mouse click"), 1, rg);
-   autohide_list = eina_list_append (autohide_list, ob);
+   cfdata->autohide_list = eina_list_append (cfdata->autohide_list, ob);
    e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Hide timeout"));
-   autohide_list = eina_list_append (autohide_list, ob);
+   cfdata->autohide_list = eina_list_append (cfdata->autohide_list, ob);
    e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.2, 6.0, 0.2, 0, &(cfdata->hide_timeout), NULL, 60);
-   autohide_list = eina_list_append (autohide_list, ob);
+   cfdata->autohide_list = eina_list_append (cfdata->autohide_list, ob);
    e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Hide duration"));
-   autohide_list = eina_list_append (autohide_list, ob);
+   cfdata->autohide_list = eina_list_append (cfdata->autohide_list, ob);
    e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.1, 2.0, 0.1, 0, &(cfdata->hide_duration), NULL, 60);
-   autohide_list = eina_list_append (autohide_list, ob);
+   cfdata->autohide_list = eina_list_append (cfdata->autohide_list, ob);
    e_widget_disabled_set(ob, !cfdata->autohiding); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
    // handler for enable/disable widget array
-   e_widget_on_change_hook_set(autohide_check, _cb_disable_check_list, autohide_list);
+   e_widget_on_change_hook_set(autohide_check, _cb_disable_check_list, cfdata->autohide_list);
 
    of = e_widget_framelist_add(evas, _("Desktop"), 0);
    rg = e_widget_radio_group_new(&(cfdata->desk_show_mode));
