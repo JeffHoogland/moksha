@@ -340,7 +340,7 @@ _fill_list(Evas_Object *obj, int enabled)
 
    e_widget_ilist_go(obj);
    e_widget_min_size_get(obj, &w, NULL);
-   e_widget_min_size_set(obj, w, 250);
+   e_widget_min_size_set(obj, w > 180 ? w : 180, 200);
    e_widget_ilist_thaw(obj);
    edje_thaw();
    evas_event_thaw(evas);
