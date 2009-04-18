@@ -826,6 +826,77 @@ e_zone_flip_win_restore(void)
      }
 }
 
+/**
+ * Calculate the useful (or free, without any shelves) area.
+ */
+EAPI void
+e_zone_useful_geometry_calc(const E_Zone *zone, int *x, int *y, int *w, int *h)
+{
+   const Eina_List *l;
+   const E_Shelf *shelf;
+   int x0, x1, y0, y1;
+
+   x0 = 0;
+   y0 = 0;
+   x1 = zone->w;
+   y1 = zone->h;
+   EINA_LIST_FOREACH(e_shelf_list(), l, shelf)
+     {
+	E_Gadcon_Orient orient;
+
+	if (shelf->zone != zone)
+	  continue;
+
+	if (shelf->cfg)
+	  {
+	     if (shelf->cfg->autohide)
+	       continue;
+	     orient = shelf->cfg->orient;
+	  }
+	else
+	  orient = shelf->gadcon->orient;
+
+	switch (orient)
+	  {
+	     /* these are non-edje orientations */
+	   case E_GADCON_ORIENT_FLOAT:
+	   case E_GADCON_ORIENT_HORIZ:
+	   case E_GADCON_ORIENT_VERT:
+	      break;
+	   case E_GADCON_ORIENT_TOP:
+	   case E_GADCON_ORIENT_CORNER_TL:
+	   case E_GADCON_ORIENT_CORNER_TR:
+	      if (y0 < shelf->h)
+		y0 = shelf->h;
+	      break;
+	   case E_GADCON_ORIENT_BOTTOM:
+	   case E_GADCON_ORIENT_CORNER_BL:
+	   case E_GADCON_ORIENT_CORNER_BR:
+	      if (y1 > zone->h - shelf->h)
+		y1 = zone->h - shelf->h;
+	      break;
+	      break;
+	   case E_GADCON_ORIENT_LEFT:
+	   case E_GADCON_ORIENT_CORNER_LT:
+	   case E_GADCON_ORIENT_CORNER_LB:
+	      if (x0 < shelf->w)
+		x0 = shelf->w;
+	      break;
+	   case E_GADCON_ORIENT_RIGHT:
+	   case E_GADCON_ORIENT_CORNER_RT:
+	   case E_GADCON_ORIENT_CORNER_RB:
+	      if (y1 > zone->w - shelf->w)
+		y1 = zone->w - shelf->w;
+	      break;
+	  }
+     }
+
+   if (x) *x = x0;
+   if (y) *y = y0;
+   if (w) *w = x1 - x0;
+   if (h) *h = y1 - y0;
+}
+
 /* local subsystem functions */
 static void
 _e_zone_free(E_Zone *zone)

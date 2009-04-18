@@ -328,10 +328,14 @@ e_win_centered_set(E_Win *win, int centered)
      }
    if ((win->border) && (centered))
      {
+	int x, y, w, h;
+
+	e_zone_useful_geometry_calc(win->border->zone, &x, &y, &w, &h);
+
 	/* The window is visible, move it to the right spot */
 	e_border_move(win->border,
-		      win->border->zone->x + (win->border->zone->w - win->border->w) / 2,
-		      win->border->zone->y + (win->border->zone->h - win->border->h) / 2);
+		      win->border->zone->x + x + (w - win->border->w) / 2,
+		      win->border->zone->y + y + (h - win->border->h) / 2);
      }
 }
 

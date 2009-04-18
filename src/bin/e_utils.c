@@ -1059,48 +1059,9 @@ e_util_win_auto_resize_fill(E_Win *win)
    
    if (zone)
      {
-	const Eina_List *l;
-	const E_Shelf *shelf;
-        int w, h;
+	int w, h;
 
-	w = zone->w;
-	h = zone->h;
-	EINA_LIST_FOREACH(e_shelf_list(), l, shelf)
-	  {
-	     E_Gadcon_Orient orient;
-
-	     if (shelf->zone != zone)
-	       continue;
-
-	     if (shelf->cfg)
-	       orient = shelf->cfg->orient;
-	     else
-	       orient = shelf->gadcon->orient;
-
-	     switch (orient)
-	       {
-		case E_GADCON_ORIENT_FLOAT:
-		   break;
-		case E_GADCON_ORIENT_TOP:
-		case E_GADCON_ORIENT_BOTTOM:
-		case E_GADCON_ORIENT_HORIZ:
-		case E_GADCON_ORIENT_CORNER_LT:
-		case E_GADCON_ORIENT_CORNER_RT:
-		case E_GADCON_ORIENT_CORNER_LB:
-		case E_GADCON_ORIENT_CORNER_RB:
-		   h -= shelf->h;
-		   break;
-		case E_GADCON_ORIENT_VERT:
-		case E_GADCON_ORIENT_LEFT:
-		case E_GADCON_ORIENT_RIGHT:
-		case E_GADCON_ORIENT_CORNER_TL:
-		case E_GADCON_ORIENT_CORNER_TR:
-		case E_GADCON_ORIENT_CORNER_BL:
-		case E_GADCON_ORIENT_CORNER_BR:
-		   w -= shelf->w;
-		   break;
-	       }
-	  }
+	e_zone_useful_geometry_calc(zone, NULL, NULL, &w, &h);
 
         w = _win_auto_size_calc(w, win->min_w);
         h = _win_auto_size_calc(h, win->min_h);

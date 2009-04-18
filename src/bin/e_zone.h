@@ -138,6 +138,8 @@ EAPI void       e_zone_desk_linear_flip_to(E_Zone *zone, int x);
 EAPI void       e_zone_flip_win_disable(void);
 EAPI void       e_zone_flip_win_restore(void);
 
+EAPI void       e_zone_useful_geometry_calc(const E_Zone *zone, int *x, int *y, int *w, int *h);
+
 extern EAPI int E_EVENT_ZONE_DESK_COUNT_SET;
 extern EAPI int E_EVENT_ZONE_MOVE_RESIZE;
 extern EAPI int E_EVENT_ZONE_ADD;
