@@ -196,7 +196,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Default Border Style"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   ol = e_widget_ilist_add(evas, 80, 48, &(cfdata->bordername));
+   ol = e_widget_ilist_add(evas, 96, 96, &(cfdata->bordername));
    borders = e_theme_border_list();
    orect = evas_object_rectangle_add(evas);
    evas_object_color_set(orect, 0, 0, 0, 128);
@@ -211,7 +211,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	char buf[4096];
 	
 	ob = e_livethumb_add(evas);
-	e_livethumb_vsize_set(ob, 160, 96);
+	e_livethumb_vsize_set(ob, 96, 96);
 	oj = edje_object_add(e_livethumb_evas_get(ob));
 	snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", (char *)l->data);
 	e_theme_edje_object_set(oj, "base/theme/borders", buf);
