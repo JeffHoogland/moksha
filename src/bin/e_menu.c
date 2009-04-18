@@ -1237,7 +1237,10 @@ _e_menu_item_realize(E_Menu_Item *mi)
 		  evas_object_show(o);
 	       }
 	     else
-	       evas_object_del(o);
+	       {
+		  evas_object_del(o);
+		  o = NULL;
+	       }
 	     
              /* FIXME: Not sure why there are two different tries to get the icon size, surely only the last one si needed. */
              /* FIXME: Do it this way later, when e_app_icon_add() just registers a request for an icon to be filled in when it's ready.
@@ -1263,6 +1266,11 @@ _e_menu_item_realize(E_Menu_Item *mi)
 			    edje_object_size_max_get(o, &iww, &ihh);
 			    icon_w = iww;
 			    icon_h = ihh;
+			 }
+		       else
+			 {
+			    evas_object_del(o);
+			    o = NULL;
 			 }
 		    }
 		  if (!mi->icon_object)
