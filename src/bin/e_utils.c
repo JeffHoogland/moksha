@@ -1033,6 +1033,20 @@ e_util_winid_str_get(Ecore_X_Window win)
    return id;
 }
 
+static int
+_win_auto_size_calc(int max, int min)
+{
+   const float *itr, scales[] = {0.25, 0.3, 0.5, 0.75, 0.8, 0.9, 0.95, -1};
+   for (itr = scales; *itr > 0; itr++)
+     {
+	int value = *itr * max;
+	if (value > min) /* not >=, try a bit larger */
+	  return value;
+     }
+
+   return min;
+}
+
 EAPI void
 e_util_win_auto_resize_fill(E_Win *win)
 {
@@ -1045,12 +1059,51 @@ e_util_win_auto_resize_fill(E_Win *win)
    
    if (zone)
      {
+	const Eina_List *l;
+	const E_Shelf *shelf;
         int w, h;
-        
-        w = zone->w / 3;
-        h = zone->h / 3;
-        if (w < win->min_w) w = win->min_w;
-        if (h < win->min_h) h = win->min_h;
+
+	w = zone->w;
+	h = zone->h;
+	EINA_LIST_FOREACH(e_shelf_list(), l, shelf)
+	  {
+	     E_Gadcon_Orient orient;
+
+	     if (shelf->zone != zone)
+	       continue;
+
+	     if (shelf->cfg)
+	       orient = shelf->cfg->orient;
+	     else
+	       orient = shelf->gadcon->orient;
+
+	     switch (orient)
+	       {
+		case E_GADCON_ORIENT_FLOAT:
+		   break;
+		case E_GADCON_ORIENT_TOP:
+		case E_GADCON_ORIENT_BOTTOM:
+		case E_GADCON_ORIENT_HORIZ:
+		case E_GADCON_ORIENT_CORNER_LT:
+		case E_GADCON_ORIENT_CORNER_RT:
+		case E_GADCON_ORIENT_CORNER_LB:
+		case E_GADCON_ORIENT_CORNER_RB:
+		   h -= shelf->h;
+		   break;
+		case E_GADCON_ORIENT_VERT:
+		case E_GADCON_ORIENT_LEFT:
+		case E_GADCON_ORIENT_RIGHT:
+		case E_GADCON_ORIENT_CORNER_TL:
+		case E_GADCON_ORIENT_CORNER_TR:
+		case E_GADCON_ORIENT_CORNER_BL:
+		case E_GADCON_ORIENT_CORNER_BR:
+		   w -= shelf->w;
+		   break;
+	       }
+	  }
+
+        w = _win_auto_size_calc(w, win->min_w);
+        h = _win_auto_size_calc(h, win->min_h);
         e_win_resize(win, w, h);
      }
 }
