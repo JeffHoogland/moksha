@@ -23177,6 +23177,7 @@ ICONMIME("inode/socket","icon_efm_file.png",128)
 
 #define BORDERICON(NAME, FILE)                          \
 group { name: "e/widgets/border/default/"NAME ;         \
+   max: 64 64;						\
    parts {                                              \
       part { name: "icon";                              \
 	 mouse_events:  0;                              \
