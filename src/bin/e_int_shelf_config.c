@@ -615,7 +615,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    of = e_widget_framelist_add(evas, _("Styles"), 0);
    
-   oi = e_widget_ilist_add(evas, 128, 20, &(cfdata->style));
+   oi = e_widget_ilist_add(evas, 60, 20, &(cfdata->style));
    
    sel = 0;
    styles = e_theme_shelf_list();
@@ -625,7 +625,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	char buf[4096];
 	
 	ob = e_livethumb_add(evas);
-	e_livethumb_vsize_set(ob, 256, 40);
+	e_livethumb_vsize_set(ob, 120, 40);
 	oj = edje_object_add(e_livethumb_evas_get(ob));
 	snprintf(buf, sizeof(buf), "e/shelf/%s/base", (char *)l->data);
 	e_theme_edje_object_set(oj, "base/theme/shelf", buf);
