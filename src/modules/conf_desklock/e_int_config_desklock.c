@@ -7,7 +7,9 @@ static void *_create_data (E_Config_Dialog *cfd);
 static void  _free_data   (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void  _fill_data   (E_Config_Dialog_Data *cfdata);
 static int   _basic_apply (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int   _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int   _adv_apply   (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int   _adv_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 static Evas_Object *_basic_create (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_adv_create   (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
@@ -50,6 +52,13 @@ struct _E_Config_Dialog_Data
    char *custom_lock_cmd;
    int login_zone;
    int zone;
+
+   struct {
+      struct {
+	 Evas_Object *auto_lock_label;
+	 Evas_Object *auto_lock_slider;
+      } basic;
+   } gui;
 };
 
 
@@ -66,10 +75,11 @@ e_int_config_desklock(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata =   _free_data;
 
    v->basic.create_widgets = _basic_create;
-   v->basic.apply_cfdata =   _basic_apply;
-   
-   v->advanced.create_widgets =  _adv_create;
-   v->advanced.apply_cfdata =    _adv_apply;
+   v->basic.apply_cfdata = _basic_apply;
+   v->basic.check_changed = _basic_check_changed;
+   v->advanced.create_widgets = _adv_create;
+   v->advanced.apply_cfdata = _adv_apply;
+   v->advanced.check_changed = _adv_check_changed;
    v->override_auto_apply = 1;
    
    cfd = e_config_dialog_new(con, _("Screen Lock Settings"), "E", 
@@ -139,6 +149,18 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    E_FREE(cfdata);
 }
 
+static void
+_basic_auto_lock_cb_changed(void *data, Evas_Object *o)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   int disable;
+
+   disable = ((!cfdata->use_xscreensaver) ||
+	      (!cfdata->auto_lock));
+   e_widget_disabled_set(cfdata->gui.basic.auto_lock_label, disable);
+   e_widget_disabled_set(cfdata->gui.basic.auto_lock_slider, disable);
+}
+
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
@@ -157,16 +179,20 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Lock when idle time exceeded"), 
 			   &cfdata->auto_lock);
-   e_widget_disabled_set(ow, !cfdata->use_xscreensaver);
+   e_widget_on_change_hook_set(ow, _basic_auto_lock_cb_changed, cfdata);
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_label_add(evas, _("Idle time to exceed"));
-   e_widget_disabled_set(ow, !cfdata->use_xscreensaver);
+   cfdata->gui.basic.auto_lock_label = ow;
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0,
 			    &(cfdata->idle_time), NULL, 100);
+   cfdata->gui.basic.auto_lock_slider = ow;
    e_widget_disabled_set(ow, !cfdata->use_xscreensaver);
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   _basic_auto_lock_cb_changed(cfdata, NULL);
+
    return o;
 }
 
@@ -179,6 +205,16 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->desklock_autolock_idle_timeout = cfdata->idle_time * 60;
    e_config_save_queue();
    return 1;
+}
+
+static int
+_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   return
+     ((e_config->desklock_start_locked != cfdata->start_locked) ||
+      (e_config->desklock_autolock_idle != cfdata->auto_lock) ||
+      (e_config->desklock_autolock_screensaver != cfdata->screensaver_lock) ||
+      (e_config->desklock_autolock_idle_timeout != cfdata->idle_time * 60));
 }
 
 static Evas_Object *
@@ -386,6 +422,45 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    return 1;
 }
 
+static int
+_adv_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   if (_basic_check_changed(cfd, cfdata))
+     return 1;
+
+   if (e_config->desklock_background && cfdata->bg)
+     {
+	if (strcmp(e_config->desklock_background, cfdata->bg) != 0)
+	  return 1;
+     }
+   else if (e_config->desklock_background != cfdata->bg)
+     return 1;
+
+   if (cfdata->login_zone < 0)
+     {
+	if (e_config->desklock_login_box_zone != cfdata->login_zone)
+	  return 1;
+     }
+   else
+     {
+	if (e_config->desklock_login_box_zone != cfdata->zone)
+	  return 1;
+     }
+
+   if (e_config->desklock_use_custom_desklock != cfdata->custom_lock)
+     return 1;
+
+   if (e_config->desklock_custom_desklock_cmd && cfdata->custom_lock_cmd)
+     {
+	if (strcmp(e_config->desklock_custom_desklock_cmd, cfdata->custom_lock_cmd) != 0)
+	  return 1;
+     }
+   else if (e_config->desklock_custom_desklock_cmd != cfdata->custom_lock_cmd)
+     return 1;
+
+   return 0;
+}
+
 static void 
 _cb_method_change(void *data, Evas_Object *obj, void *event_info) 
 {
@@ -446,7 +521,7 @@ _cb_radio_change(void *data, Evas_Object *obj)
    if (cfdata->fmdir == 0)
      e_user_dir_concat_static(path, "backgrounds");
    else
-     e_prefix_data_concat_static(path, "%s/data/backgrounds");
+     e_prefix_data_concat_static(path, "data/backgrounds");
    e_fm2_path_set(cfdata->o_fm, path, "/");
 }
 
