@@ -7,7 +7,9 @@
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _cb_slider_change(void *data, Evas_Object *obj);
@@ -46,8 +48,10 @@ e_int_config_desks(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata             = _free_data;
    v->basic.apply_cfdata      = _basic_apply_data;
    v->basic.create_widgets    = _basic_create_widgets;
+   v->basic.check_changed     = _basic_check_changed;
    v->advanced.apply_cfdata   = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
+   v->advanced.check_changed  = _advanced_check_changed;
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con,
 			     _("Virtual Desktops Settings"),
@@ -95,7 +99,7 @@ static int
 _basic_apply_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
-   Eina_List *l, *ll, *lll;
+   const Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
@@ -123,27 +127,54 @@ _basic_apply_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   /* Actually take our cfdata settings and apply them in real life */
-   Eina_List *l, *ll, *lll;
+   const Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
 
-   for (l = e_manager_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
+     EINA_LIST_FOREACH(man->containers, ll, con)
+       EINA_LIST_FOREACH(con->zones, lll, zone)
+         {
+	    int x, y;
+	    e_zone_desk_count_get(zone, &x, &y);
+	    if ((x != cfdata->x) || (y != cfdata->y))
+	      return 1;
+	 }
+
+   if (cfdata->flip_animate)
      {
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
-	  {
-	     con = ll->data;
-	     for (lll = con->zones; lll; lll = lll->next)
-	       {
-		  zone = lll->data;
-		  e_zone_desk_count_set(zone, cfdata->x, cfdata->y);
-	       }
-	  }
+	if ((cfdata->flip_mode != 1) ||
+	    (e_config->desk_flip_animate_mode != 1) ||
+	    (e_config->desk_flip_animate_interpolation != 0) ||
+	    (e_config->desk_flip_animate_time != 0.5))
+	  return 1;
      }
+   else
+     {
+	if ((cfdata->flip_mode != 0) ||
+	    (e_config->desk_flip_animate_mode != 0))
+	  return 1;
+     }
+
+   return 0;
+}
+
+static int
+_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   /* Actually take our cfdata settings and apply them in real life */
+   const Eina_List *l, *ll, *lll;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
+     EINA_LIST_FOREACH(man->containers, ll, con)
+       EINA_LIST_FOREACH(con->zones, lll, zone)
+         e_zone_desk_count_set(zone, cfdata->x, cfdata->y);
 
    e_config->desk_flip_animate_mode = cfdata->flip_mode;
    e_config->desk_flip_animate_interpolation = cfdata->flip_interp;
@@ -154,6 +185,31 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    e_config_save_queue();
    return 1; /* Apply was OK */
+}
+
+static int
+_advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   const Eina_List *l, *ll, *lll;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
+     EINA_LIST_FOREACH(man->containers, ll, con)
+       EINA_LIST_FOREACH(con->zones, lll, zone)
+         {
+	    int x, y;
+	    e_zone_desk_count_get(zone, &x, &y);
+	    if ((x != cfdata->x) || (y != cfdata->y))
+	      return 1;
+	 }
+
+   return ((e_config->desk_flip_animate_mode != cfdata->flip_mode) ||
+	   (e_config->desk_flip_animate_interpolation != cfdata->flip_interp) ||
+	   (e_config->desk_flip_animate_time != cfdata->flip_speed) ||
+	   (e_config->edge_flip_dragging != cfdata->edge_flip_dragging) ||
+	   (e_config->desk_flip_wrap != cfdata->flip_wrap));
 }
 
 /**--GUI--**/
