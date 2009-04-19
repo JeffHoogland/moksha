@@ -126,7 +126,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Events"), 0);
    il = e_widget_ilist_add(evas, 48, 48, NULL);
    cfdata->event_list = il;
-   e_widget_min_size_set(il, 160, 245);
+   e_widget_min_size_set(il, 140, 200);
    
    evas_event_freeze(evas_object_evas_get(il));
    edje_freeze();
@@ -144,7 +144,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Transitions"), 0);
    il = e_widget_ilist_add(evas, 48, 48, NULL);
    cfdata->trans_list = il;
-   e_widget_min_size_set(il, 160, 245);
+   e_widget_min_size_set(il, 100, 200);
    
    evas_event_freeze(evas_object_evas_get(il));
    edje_freeze();
@@ -165,9 +165,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Preview"), 0);
-   il = _trans_preview_add(cfdata, evas, 300, ((300 * zone->h) / zone->w));
+   il = _trans_preview_add(cfdata, evas, 200, ((200 * zone->h) / zone->w));
    e_widget_framelist_object_append(of, il);
-   e_widget_list_object_append(o, of, 1, 0, 0.5);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    e_dialog_resizable_set(cfd->dia, 1);
    return o;
