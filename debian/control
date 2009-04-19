@@ -9,7 +9,7 @@ Build-Depends: debhelper (>= 6.0.7), cdbs (>= 0.4.52), libeet-dev (>= 1.0.1),
  libecore-dev (>= 0.9.9.050+svn20090202), libedbus-dev (>= 0.5.0.050+svn20090130),
  libevas-dev (>= 0.9.9.050+svn20090201), libeina-dev (>= 0.0.1~svn20090128),
  libasound2-dev, libxext-dev, libeet-bin, libedje-bin, libpam0g-dev
-Standards-Version: 3.8.0
+Standards-Version: 3.8.1
 Vcs-Git: git://git.debian.org/pkg-e/apps/e.git
 Vcs-Browser: http://git.debian.org/?p=pkg-e/apps/e.git
 Homepage: http://www.enlightenment.org
