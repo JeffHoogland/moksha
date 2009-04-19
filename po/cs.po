@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-13 17:22+0200\n"
-"PO-Revision-Date: 2009-04-13 17:26+0100\n"
+"POT-Creation-Date: 2009-04-19 18:57+0200\n"
+"PO-Revision-Date: 2009-04-19 18:59+0100\n"
 "Last-Translator: quaker66 <quaker66@gmail.com>\n"
 "Language-Team: easylinux <easylinux@sachiel.eu>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr "O Enlightenmentu"
 #: ../src/bin/e_actions.c:2485
 #: ../src/bin/e_config_dialog.c:258
 #: ../src/bin/e_fm.c:864
-#: ../src/bin/e_int_border_menu.c:206
+#: ../src/bin/e_int_border_menu.c:215
 #: ../src/bin/e_int_border_prop.c:81
 #: ../src/bin/e_theme_about.c:20
 #: ../src/modules/conf/e_conf.c:172
@@ -40,7 +40,7 @@ msgstr "Zavřít"
 #: ../src/bin/e_actions.c:2781
 #: ../src/bin/e_actions.c:2785
 #: ../src/bin/e_actions.c:2789
-#: ../src/bin/e_int_menus.c:158
+#: ../src/bin/e_int_menus.c:165
 #: ../src/bin/e_main.c:666
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:182
 #: ../src/modules/wizard/page_000.c:27
@@ -72,8 +72,8 @@ msgstr "Opravdu chcete zabít toto okno?"
 #: ../src/bin/e_actions.c:2052
 #: ../src/bin/e_actions.c:2116
 #: ../src/bin/e_confirm_dialog.c:47
-#: ../src/bin/e_fm.c:8516
-#: ../src/bin/e_fm.c:8712
+#: ../src/bin/e_fm.c:8520
+#: ../src/bin/e_fm.c:8716
 #: ../src/bin/e_module.c:508
 msgid "Yes"
 msgstr "Ano"
@@ -86,8 +86,8 @@ msgstr "Ano"
 #: ../src/bin/e_actions.c:2054
 #: ../src/bin/e_actions.c:2118
 #: ../src/bin/e_confirm_dialog.c:48
-#: ../src/bin/e_fm.c:8514
-#: ../src/bin/e_fm.c:8713
+#: ../src/bin/e_fm.c:8518
+#: ../src/bin/e_fm.c:8717
 #: ../src/bin/e_module.c:509
 msgid "No"
 msgstr "Ne"
@@ -176,17 +176,17 @@ msgid "Window Menu"
 msgstr "Menu okna"
 
 #: ../src/bin/e_actions.c:2475
-#: ../src/bin/e_int_border_menu.c:180
+#: ../src/bin/e_int_border_menu.c:185
 msgid "Raise"
 msgstr "Do popředí"
 
 #: ../src/bin/e_actions.c:2480
-#: ../src/bin/e_int_border_menu.c:172
+#: ../src/bin/e_int_border_menu.c:177
 msgid "Lower"
 msgstr "Nižší"
 
 #: ../src/bin/e_actions.c:2490
-#: ../src/bin/e_int_border_menu.c:195
+#: ../src/bin/e_int_border_menu.c:204
 msgid "Kill"
 msgstr "Zabít"
 
@@ -223,8 +223,8 @@ msgid "Fullscreen Mode Toggle"
 msgstr "Přepnout fullscreen mód"
 
 #: ../src/bin/e_actions.c:2516
-#: ../src/bin/e_int_border_menu.c:146
-#: ../src/bin/e_int_border_menu.c:341
+#: ../src/bin/e_int_border_menu.c:149
+#: ../src/bin/e_int_border_menu.c:350
 msgid "Maximize"
 msgstr "Maximalizovat"
 
@@ -325,11 +325,11 @@ msgstr "Přepnout přitlačený stav"
 #: ../src/bin/e_actions.c:2683
 #: ../src/bin/e_actions.c:2821
 #: ../src/bin/e_actions.c:2826
-#: ../src/bin/e_int_menus.c:127
-#: ../src/bin/e_int_shelf_config.c:661
+#: ../src/bin/e_int_menus.c:134
+#: ../src/bin/e_int_shelf_config.c:686
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:103
 #: ../src/modules/fileman/e_mod_main.c:326
-#: ../src/modules/ibox/e_mod_config.c:172
+#: ../src/modules/ibox/e_mod_config.c:166
 msgid "Desktop"
 msgstr "Plocha"
 
@@ -516,7 +516,7 @@ msgstr "Přejít na plochu... (Všechny obrazovky)"
 #: ../src/modules/conf_display/e_mod_main.c:34
 #: ../src/modules/conf_dpms/e_mod_main.c:34
 #: ../src/modules/conf_screensaver/e_mod_main.c:34
-#: ../src/modules/ibox/e_mod_config.c:141
+#: ../src/modules/ibox/e_mod_config.c:135
 msgid "Screen"
 msgstr "Obrazovka"
 
@@ -590,9 +590,9 @@ msgstr "Zobrazit menu..."
 #: ../src/bin/e_actions.c:2772
 #: ../src/bin/e_actions.c:2777
 #: ../src/modules/conf/e_mod_main.c:139
-#: ../src/modules/conf/e_mod_main.c:162
+#: ../src/modules/conf/e_mod_main.c:163
 #: ../src/modules/exebuf/e_mod_main.c:48
-#: ../src/modules/exebuf/e_mod_main.c:68
+#: ../src/modules/exebuf/e_mod_main.c:69
 #: ../src/modules/fileman/e_mod_main.c:63
 #: ../src/modules/fileman/e_mod_main.c:146
 msgid "Launch"
@@ -608,12 +608,12 @@ msgid "Application"
 msgstr "Aplikace"
 
 #: ../src/bin/e_actions.c:2781
-#: ../src/bin/e_int_menus.c:182
+#: ../src/bin/e_int_menus.c:189
 msgid "Restart"
 msgstr "Restartovat"
 
 #: ../src/bin/e_actions.c:2785
-#: ../src/bin/e_int_menus.c:187
+#: ../src/bin/e_int_menus.c:194
 msgid "Exit"
 msgstr "Pryč"
 
@@ -628,9 +628,9 @@ msgstr "Pryč teď"
 #: ../src/bin/e_actions.c:2805
 #: ../src/bin/e_actions.c:2809
 #: ../src/bin/e_actions.c:2813
-#: ../src/bin/e_configure.c:125
+#: ../src/bin/e_configure.c:147
 #: ../src/bin/e_int_config_modules.c:45
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:206
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:243
 #: ../src/modules/conf_imc/e_int_config_imc.c:827
 #: ../src/modules/conf_startup/e_int_config_startup.c:267
 #: ../src/modules/conf_theme/e_int_config_theme.c:395
@@ -639,6 +639,7 @@ msgstr "Pryč teď"
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper.c:643
 #: ../src/modules/gadman/e_mod_config.c:189
 #: ../src/modules/syscon/e_mod_main.c:34
+#: ../src/modules/syscon/e_mod_main.c:38
 #: ../src/modules/syscon/e_mod_main.c:55
 #: ../src/modules/syscon/e_mod_main.c:122
 msgid "System"
@@ -673,7 +674,7 @@ msgid "Lock"
 msgstr "Zamknout"
 
 #: ../src/bin/e_actions.c:2826
-#: ../src/bin/e_int_menus.c:1098
+#: ../src/bin/e_int_menus.c:1135
 msgid "Cleanup Windows"
 msgstr "Vyčistit okna"
 
@@ -812,21 +813,22 @@ msgstr "Základní"
 msgid "Apply"
 msgstr "Použít"
 
-#: ../src/bin/e_configure.c:15
-#: ../src/modules/conf_shelves/e_mod_main.c:38
-#: ../src/modules/gadman/e_mod_main.c:25
-#: ../src/modules/mixer/e_mod_main.c:1082
-msgid "Extensions"
-msgstr "Rozšíření"
-
-#: ../src/bin/e_configure.c:16
-#: ../src/bin/e_int_menus.c:743
+#: ../src/bin/e_configure.c:26
+#: ../src/bin/e_configure.c:35
+#: ../src/bin/e_configure.c:38
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:86
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:99
 #: ../src/modules/conf_paths/e_int_config_paths.c:83
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:197
 msgid "Modules"
 msgstr "Moduly"
+
+#: ../src/bin/e_configure.c:34
+#: ../src/modules/conf_shelves/e_mod_main.c:38
+#: ../src/modules/gadman/e_mod_main.c:25
+#: ../src/modules/mixer/e_mod_main.c:1082
+msgid "Extensions"
+msgstr "Rozšíření"
 
 #: ../src/bin/e_container.c:117
 #, c-format
@@ -1143,8 +1145,8 @@ msgid "Link"
 msgstr "Odkaz"
 
 #: ../src/bin/e_fm.c:5936
-#: ../src/bin/e_fm.c:8457
-#: ../src/bin/e_fm.c:8594
+#: ../src/bin/e_fm.c:8461
+#: ../src/bin/e_fm.c:8598
 msgid "Abort"
 msgstr "Zrušit"
 
@@ -1155,7 +1157,7 @@ msgstr "Nastavení odvození rodiče"
 
 #: ../src/bin/e_fm.c:7534
 #: ../src/bin/e_fm.c:7694
-#: ../src/modules/fileman/e_mod_config.c:177
+#: ../src/modules/fileman/e_mod_config.c:199
 msgid "View Mode"
 msgstr "Režim zobrazení"
 
@@ -1193,104 +1195,113 @@ msgstr "Přejmenovat"
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: ../src/bin/e_fm.c:8096
-#: ../src/bin/e_fm.c:8158
+#: ../src/bin/e_fm.c:8100
+#: ../src/bin/e_fm.c:8162
 msgid "Use default"
 msgstr "Použít výchozí"
 
-#: ../src/bin/e_fm.c:8131
-#: ../src/modules/fileman/e_mod_config.c:182
+#. ob = e_widget_radio_add(evas, _("Icons"), 0, rg);
+#. e_widget_disabled_set(ob, 1);
+#. e_widget_framelist_object_append(of, ob);
+#: ../src/bin/e_fm.c:8135
+#: ../src/modules/fileman/e_mod_config.c:204
 msgid "Grid Icons"
 msgstr "Ikony v mřížce"
 
-#: ../src/bin/e_fm.c:8139
-#: ../src/modules/fileman/e_mod_config.c:184
+#: ../src/bin/e_fm.c:8143
+#: ../src/modules/fileman/e_mod_config.c:206
 msgid "Custom Icons"
 msgstr "Vlastní ikony"
 
-#: ../src/bin/e_fm.c:8147
-#: ../src/modules/fileman/e_mod_config.c:192
+#. ob = e_widget_radio_add(evas, _("Custom Grid Icons"), 3, rg);
+#. e_widget_disabled_set(ob, 1);
+#. e_widget_framelist_object_append(of, ob);
+#. ob = e_widget_radio_add(evas, _("Custom Smart Grid Icons"), 4, rg);
+#. e_widget_disabled_set(ob, 1);
+#. e_widget_framelist_object_append(of, ob);
+#: ../src/bin/e_fm.c:8151
+#: ../src/modules/fileman/e_mod_config.c:214
 msgid "List"
 msgstr "Seznam"
 
-#: ../src/bin/e_fm.c:8172
+#: ../src/bin/e_fm.c:8176
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Velikost ikon (%d)"
 
-#: ../src/bin/e_fm.c:8322
+#: ../src/bin/e_fm.c:8326
 msgid "Create a new Directory"
 msgstr "Vytvořit složku"
 
-#: ../src/bin/e_fm.c:8323
+#: ../src/bin/e_fm.c:8327
 msgid "New Directory Name:"
 msgstr "Název nové složky:"
 
-#: ../src/bin/e_fm.c:8382
+#: ../src/bin/e_fm.c:8386
 #, c-format
 msgid "Rename %s to:"
 msgstr "Přejmenovat %s na:"
 
-#: ../src/bin/e_fm.c:8384
+#: ../src/bin/e_fm.c:8388
 msgid "Rename File"
 msgstr "Přejmenovat soubor"
 
-#: ../src/bin/e_fm.c:8456
-#: ../src/bin/e_fm.c:8593
+#: ../src/bin/e_fm.c:8460
+#: ../src/bin/e_fm.c:8597
 msgid "Retry"
 msgstr "Zkusit znovu"
 
-#: ../src/bin/e_fm.c:8460
-#: ../src/bin/e_fm.c:8599
+#: ../src/bin/e_fm.c:8464
+#: ../src/bin/e_fm.c:8603
 #: ../src/modules/wizard/page_030.c:83
 msgid "Error"
 msgstr "Chyba"
 
-#: ../src/bin/e_fm.c:8463
+#: ../src/bin/e_fm.c:8467
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/bin/e_fm.c:8515
+#: ../src/bin/e_fm.c:8519
 msgid "No to all"
 msgstr "Ne všem"
 
-#: ../src/bin/e_fm.c:8517
+#: ../src/bin/e_fm.c:8521
 msgid "Yes to all"
 msgstr "Ano všem"
 
-#: ../src/bin/e_fm.c:8520
+#: ../src/bin/e_fm.c:8524
 msgid "Warning"
 msgstr "Varování"
 
-#: ../src/bin/e_fm.c:8523
+#: ../src/bin/e_fm.c:8527
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Soubor už existuje, přepsat?<br><hilight>%s</hilight>"
 
-#: ../src/bin/e_fm.c:8595
+#: ../src/bin/e_fm.c:8599
 msgid "Ignore this"
 msgstr "Ignorovat"
 
-#: ../src/bin/e_fm.c:8596
+#: ../src/bin/e_fm.c:8600
 msgid "Ignore all"
 msgstr "Ignorovat vše"
 
-#: ../src/bin/e_fm.c:8601
+#: ../src/bin/e_fm.c:8605
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr "Vyskytla se chyba při provádění operace.<br>%s"
 
-#: ../src/bin/e_fm.c:8715
+#: ../src/bin/e_fm.c:8719
 msgid "Confirm Delete"
 msgstr "Odsouhlasit smazání"
 
-#: ../src/bin/e_fm.c:8720
+#: ../src/bin/e_fm.c:8724
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Opravdu chcete smazat<br><hilight>%s</hilight> ?"
 
-#: ../src/bin/e_fm.c:8726
+#: ../src/bin/e_fm.c:8730
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
 msgstr "Opravdu chcete smazat<br>%d vybrané soubory v:<br><hilight>%s</hilight> ?"
@@ -1350,8 +1361,8 @@ msgid "Preview"
 msgstr "Náhled"
 
 #: ../src/bin/e_fm_prop.c:432
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:186
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:202
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:179
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:195
 msgid "Default"
 msgstr "Výchozí"
 
@@ -1360,7 +1371,7 @@ msgid "Thumbnail"
 msgstr "Náhled"
 
 #: ../src/bin/e_fm_prop.c:438
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:324
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:361
 msgid "Custom"
 msgstr "Vlastní"
 
@@ -1461,7 +1472,7 @@ msgstr ""
 "na této obrazovce. Ruším start.\n"
 
 #: ../src/bin/e_int_border_locks.c:67
-#: ../src/bin/e_int_border_menu.c:555
+#: ../src/bin/e_int_border_menu.c:564
 msgid "Window Locks"
 msgstr "Zámky okna"
 
@@ -1502,8 +1513,8 @@ msgstr "Pozice"
 #: ../src/bin/e_int_border_locks.c:311
 #: ../src/bin/e_int_border_locks.c:330
 #: ../src/bin/e_int_border_remember.c:513
-#: ../src/bin/e_int_shelf_config.c:515
-#: ../src/bin/e_int_shelf_config.c:596
+#: ../src/bin/e_int_shelf_config.c:521
+#: ../src/bin/e_int_shelf_config.c:611
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:443
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:637
 msgid "Size"
@@ -1511,10 +1522,10 @@ msgstr "Velikost"
 
 #: ../src/bin/e_int_border_locks.c:313
 #: ../src/bin/e_int_border_locks.c:332
-#: ../src/bin/e_int_border_menu.c:527
+#: ../src/bin/e_int_border_menu.c:536
 #: ../src/bin/e_int_border_prop.c:469
 #: ../src/bin/e_int_border_remember.c:515
-#: ../src/bin/e_int_shelf_config.c:552
+#: ../src/bin/e_int_shelf_config.c:559
 msgid "Stacking"
 msgstr "Skládání"
 
@@ -1571,141 +1582,141 @@ msgstr "Odhlašuji s tímto oknem otevřeným"
 msgid "Remember these Locks"
 msgstr "Zapamatovat tyto zámky"
 
-#: ../src/bin/e_int_border_menu.c:71
+#: ../src/bin/e_int_border_menu.c:72
 msgid "Edit Icon"
 msgstr "Upravit ikonu"
 
-#: ../src/bin/e_int_border_menu.c:76
+#: ../src/bin/e_int_border_menu.c:77
 msgid "Add Application..."
 msgstr "Přidat aplikaci..."
 
-#: ../src/bin/e_int_border_menu.c:87
+#: ../src/bin/e_int_border_menu.c:88
 msgid "Create Icon"
 msgstr "Vytvořit ikonu"
 
-#: ../src/bin/e_int_border_menu.c:97
+#: ../src/bin/e_int_border_menu.c:98
 msgid "Send to Desktop"
 msgstr "Poslat na plochu"
 
-#: ../src/bin/e_int_border_menu.c:109
+#: ../src/bin/e_int_border_menu.c:110
 msgid "Pin to Desktop"
 msgstr "Připíchnout na plochu"
 
-#: ../src/bin/e_int_border_menu.c:120
+#: ../src/bin/e_int_border_menu.c:121
 msgid "Unpin from Desktop"
 msgstr "Zrušit připíchnutí na plochu"
 
-#: ../src/bin/e_int_border_menu.c:129
+#: ../src/bin/e_int_border_menu.c:130
 msgid "More..."
 msgstr "Další..."
 
-#: ../src/bin/e_int_border_menu.c:160
+#: ../src/bin/e_int_border_menu.c:164
 msgid "Iconify"
 msgstr "Ikonifikovat"
 
-#: ../src/bin/e_int_border_menu.c:352
+#: ../src/bin/e_int_border_menu.c:361
 msgid "Maximize vertically"
 msgstr "Maximalizovat vertikálně"
 
-#: ../src/bin/e_int_border_menu.c:363
+#: ../src/bin/e_int_border_menu.c:372
 msgid "Maximize horizontally"
 msgstr "Maximalizovat horizontálně"
 
-#: ../src/bin/e_int_border_menu.c:374
+#: ../src/bin/e_int_border_menu.c:383
 msgid "Unmaximize"
 msgstr "Demaximalizovat"
 
-#: ../src/bin/e_int_border_menu.c:475
+#: ../src/bin/e_int_border_menu.c:484
 msgid "Keyboard Shortcut"
 msgstr "Klávesová zkratka"
 
-#: ../src/bin/e_int_border_menu.c:481
+#: ../src/bin/e_int_border_menu.c:490
 msgid "To Favorites Menu"
 msgstr "Do menu oblíbených"
 
-#: ../src/bin/e_int_border_menu.c:486
+#: ../src/bin/e_int_border_menu.c:495
 msgid "To Launcher"
 msgstr "Do spouštěče"
 
-#: ../src/bin/e_int_border_menu.c:508
+#: ../src/bin/e_int_border_menu.c:517
 #: ../src/modules/conf_borders/e_mod_main.c:37
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
 msgid "Border"
 msgstr "Rám"
 
-#: ../src/bin/e_int_border_menu.c:517
+#: ../src/bin/e_int_border_menu.c:526
 msgid "Skip"
 msgstr "Přeskočit"
 
-#: ../src/bin/e_int_border_menu.c:536
+#: ../src/bin/e_int_border_menu.c:545
 #: ../src/bin/e_int_border_prop.c:433
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:514
 msgid "State"
 msgstr "Stav"
 
-#: ../src/bin/e_int_border_menu.c:547
+#: ../src/bin/e_int_border_menu.c:556
 msgid "Remember"
 msgstr "Zapamatovat"
 
-#: ../src/bin/e_int_border_menu.c:563
+#: ../src/bin/e_int_border_menu.c:572
 #: ../src/bin/e_int_border_prop.c:75
 msgid "Window Properties"
 msgstr "Vlastnosti okna"
 
-#: ../src/bin/e_int_border_menu.c:775
+#: ../src/bin/e_int_border_menu.c:784
 msgid "Always On Top"
 msgstr "Vždy navrchu"
 
-#: ../src/bin/e_int_border_menu.c:786
+#: ../src/bin/e_int_border_menu.c:795
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:101
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:265
 #: ../src/modules/temperature/e_mod_config.c:260
 msgid "Normal"
 msgstr "Normální"
 
-#: ../src/bin/e_int_border_menu.c:797
+#: ../src/bin/e_int_border_menu.c:806
 msgid "Always Below"
 msgstr "Vždy pod"
 
-#: ../src/bin/e_int_border_menu.c:889
+#: ../src/bin/e_int_border_menu.c:898
 msgid "Select Border Style"
 msgstr "Vybrat styl okrajů"
 
-#: ../src/bin/e_int_border_menu.c:901
+#: ../src/bin/e_int_border_menu.c:910
 msgid "Use E17 Default Icon Preference"
 msgstr "Použít E17 výchozí vlastnosti ikony"
 
-#: ../src/bin/e_int_border_menu.c:910
+#: ../src/bin/e_int_border_menu.c:919
 msgid "Use Application Provided Icon "
 msgstr "Použít ikonu poskytovanou aplikací"
 
-#: ../src/bin/e_int_border_menu.c:918
+#: ../src/bin/e_int_border_menu.c:927
 msgid "Use User Defined Icon"
 msgstr "Použít ikonu definovanou uživatelem"
 
-#: ../src/bin/e_int_border_menu.c:979
+#: ../src/bin/e_int_border_menu.c:988
 #: ../src/bin/e_int_border_prop.c:473
 msgid "Shaded"
 msgstr "Skrytý obsah"
 
-#: ../src/bin/e_int_border_menu.c:992
+#: ../src/bin/e_int_border_menu.c:1001
 #: ../src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr "Připíchnuto"
 
-#: ../src/bin/e_int_border_menu.c:1005
+#: ../src/bin/e_int_border_menu.c:1014
 #: ../src/bin/e_int_border_prop.c:477
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:117
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:140
 msgid "Fullscreen"
 msgstr "Fullscreen"
 
-#: ../src/bin/e_int_border_menu.c:1030
+#: ../src/bin/e_int_border_menu.c:1039
 #: ../src/modules/conf_winlist/e_mod_main.c:35
 msgid "Window List"
 msgstr "Seznam oken"
 
-#: ../src/bin/e_int_border_menu.c:1040
+#: ../src/bin/e_int_border_menu.c:1049
 #: ../src/modules/pager/e_mod_main.c:263
 #: ../src/modules/pager/e_mod_main.c:2801
 #: ../src/modules/pager/e_mod_main.c:2808
@@ -1720,7 +1731,7 @@ msgstr "Seznam oken"
 msgid "Pager"
 msgstr "Pager"
 
-#: ../src/bin/e_int_border_menu.c:1050
+#: ../src/bin/e_int_border_menu.c:1059
 msgid "Taskbar"
 msgstr "Seznam úloh"
 
@@ -1943,14 +1954,14 @@ msgid "Always focus on start"
 msgstr "Automaticky aktivovat při startu"
 
 #: ../src/bin/e_int_config_modules.c:42
-#: ../src/bin/e_int_menus.c:203
+#: ../src/bin/e_int_menus.c:210
 #: ../src/modules/battery/e_mod_main.c:176
 #: ../src/modules/conf/e_conf.c:122
 #: ../src/modules/conf/e_conf.c:133
 #: ../src/modules/conf_dialogs/e_mod_main.c:34
 #: ../src/modules/conf_profiles/e_mod_main.c:20
-#: ../src/modules/ibar/e_mod_main.c:322
-#: ../src/modules/ibar/e_mod_main.c:821
+#: ../src/modules/ibar/e_mod_main.c:326
+#: ../src/modules/ibar/e_mod_main.c:825
 #: ../src/modules/ibox/e_mod_main.c:318
 #: ../src/modules/ibox/e_mod_main.c:715
 #: ../src/modules/pager/e_mod_main.c:804
@@ -2035,8 +2046,8 @@ msgid "Toolbar Settings"
 msgstr "Nastavení panelu nástrojů"
 
 #: ../src/bin/e_int_toolbar_config.c:82
-#: ../src/bin/e_int_shelf_config.c:499
-#: ../src/bin/e_int_shelf_config.c:564
+#: ../src/bin/e_int_shelf_config.c:505
+#: ../src/bin/e_int_shelf_config.c:571
 msgid "Layout"
 msgstr "Rozložení"
 
@@ -2048,22 +2059,22 @@ msgstr "Chyba vstupní metody"
 msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
 msgstr "Chyba při spouštění vstupní metody.<br><br>Prosím ujistětě se, že vaše<br>konfigurace vstupní metody je správná a<br>soubor pro spuštění metody je v PATH<br>"
 
-#: ../src/bin/e_int_menus.c:82
+#: ../src/bin/e_int_menus.c:89
 msgid "Main"
 msgstr "Hlavní"
 
-#: ../src/bin/e_int_menus.c:99
+#: ../src/bin/e_int_menus.c:106
 msgid "Favorite Applications"
 msgstr "Oblíbené aplikace"
 
-#: ../src/bin/e_int_menus.c:110
+#: ../src/bin/e_int_menus.c:117
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:157
 #: ../src/modules/wizard/page_070.c:198
 msgid "Applications"
 msgstr "Aplikace"
 
-#: ../src/bin/e_int_menus.c:134
-#: ../src/bin/e_int_menus.c:1057
+#: ../src/bin/e_int_menus.c:141
+#: ../src/bin/e_int_menus.c:1094
 #: ../src/modules/conf_window_display/e_mod_main.c:34
 #: ../src/modules/conf_window_focus/e_mod_main.c:34
 #: ../src/modules/conf_window_manipulation/e_mod_main.c:34
@@ -2072,177 +2083,175 @@ msgstr "Aplikace"
 msgid "Windows"
 msgstr "Okna"
 
-#: ../src/bin/e_int_menus.c:142
-#: ../src/bin/e_int_menus.c:1111
+#: ../src/bin/e_int_menus.c:149
+#: ../src/bin/e_int_menus.c:1148
 msgid "Lost Windows"
 msgstr "Ztracená okna"
 
-#: ../src/bin/e_int_menus.c:163
+#: ../src/bin/e_int_menus.c:170
 msgid "About"
 msgstr "O Enlightenmentu"
 
-#: ../src/bin/e_int_menus.c:168
+#: ../src/bin/e_int_menus.c:175
 #: ../src/modules/conf_theme/e_mod_main.c:39
+#: ../src/modules/conf_theme/e_mod_main.c:40
 #: ../src/modules/conf_theme/e_mod_main.c:84
 msgid "Theme"
 msgstr "Téma"
 
-#: ../src/bin/e_int_menus.c:255
+#: ../src/bin/e_int_menus.c:262
 msgid "Virtual"
 msgstr "Virtuální"
 
-#: ../src/bin/e_int_menus.c:262
+#: ../src/bin/e_int_menus.c:269
 #: ../src/modules/conf_shelves/e_mod_main.c:39
-#: ../src/modules/conf_shelves/e_mod_main.c:84
+#: ../src/modules/conf_shelves/e_mod_main.c:41
+#: ../src/modules/conf_shelves/e_mod_main.c:85
 msgid "Shelves"
 msgstr "Panely"
 
-#: ../src/bin/e_int_menus.c:271
+#: ../src/bin/e_int_menus.c:278
 msgid "Show/Hide All Windows"
 msgstr "Zobrazit/skrýt všechna okna"
 
-#: ../src/bin/e_int_menus.c:524
+#: ../src/bin/e_int_menus.c:575
 msgid "(No Applications)"
 msgstr "(Žádné aplikace)"
 
-#: ../src/bin/e_int_menus.c:658
+#: ../src/bin/e_int_menus.c:709
 msgid "Set Virtual Desktops"
 msgstr "Nastavit virtuální plochy"
 
-#: ../src/bin/e_int_menus.c:1063
-#: ../src/bin/e_int_menus.c:1246
+#: ../src/bin/e_int_menus.c:1100
+#: ../src/bin/e_int_menus.c:1283
 msgid "(No Windows)"
 msgstr "(Žádná okna)"
 
-#: ../src/bin/e_int_menus.c:1157
-#: ../src/bin/e_int_menus.c:1260
+#: ../src/bin/e_int_menus.c:1194
+#: ../src/bin/e_int_menus.c:1297
 msgid "No name!!"
 msgstr "Beze jména!!"
 
-#: ../src/bin/e_int_menus.c:1339
+#: ../src/bin/e_int_menus.c:1376
 msgid "(No Shelves)"
 msgstr "(Žádné panely)"
 
-#: ../src/bin/e_int_menus.c:1352
-#: ../src/bin/e_shelf.c:1122
+#: ../src/bin/e_int_menus.c:1389
+#: ../src/bin/e_shelf.c:1128
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "Panel #"
 
-#: ../src/bin/e_int_menus.c:1405
+#: ../src/bin/e_int_menus.c:1442
 msgid "Add A Shelf"
 msgstr "Přidat panel"
 
-#: ../src/bin/e_int_menus.c:1412
+#: ../src/bin/e_int_menus.c:1449
 msgid "Delete A Shelf"
 msgstr "Smazat panel"
 
-#: ../src/bin/e_int_shelf_config.c:71
-#: ../src/bin/e_shelf.c:1670
+#: ../src/bin/e_int_shelf_config.c:74
+#: ../src/bin/e_shelf.c:1687
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "Nastavení panelu"
 
-#: ../src/bin/e_int_shelf_config.c:517
+#: ../src/bin/e_int_shelf_config.c:523
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:253
 msgid "Tiny"
 msgstr "Drobný"
 
-#: ../src/bin/e_int_shelf_config.c:519
+#: ../src/bin/e_int_shelf_config.c:525
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:100
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:259
 msgid "Small"
 msgstr "Malý"
 
-#: ../src/bin/e_int_shelf_config.c:521
+#: ../src/bin/e_int_shelf_config.c:527
 #: ../src/modules/dropshadow/e_mod_config.c:126
 msgid "Medium"
 msgstr "Střední"
 
-#: ../src/bin/e_int_shelf_config.c:523
+#: ../src/bin/e_int_shelf_config.c:529
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:102
 msgid "Large"
 msgstr "Větší"
 
-#: ../src/bin/e_int_shelf_config.c:525
+#: ../src/bin/e_int_shelf_config.c:531
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:283
 msgid "Huge"
 msgstr "Mohutný"
 
-#: ../src/bin/e_int_shelf_config.c:531
-#: ../src/bin/e_int_shelf_config.c:636
+#: ../src/bin/e_int_shelf_config.c:537
+#: ../src/bin/e_int_shelf_config.c:647
 msgid "Set Contents..."
 msgstr "Nstavit obsah..."
 
-#: ../src/bin/e_int_shelf_config.c:554
+#: ../src/bin/e_int_shelf_config.c:561
 msgid "Above Everything"
 msgstr "Nad vším"
 
-#: ../src/bin/e_int_shelf_config.c:556
+#: ../src/bin/e_int_shelf_config.c:563
 msgid "Below Windows"
 msgstr "Pod okny"
 
-#: ../src/bin/e_int_shelf_config.c:558
+#: ../src/bin/e_int_shelf_config.c:565
 msgid "Below Everything"
 msgstr "Pod vším"
 
-#: ../src/bin/e_int_shelf_config.c:560
+#: ../src/bin/e_int_shelf_config.c:567
 msgid "Allow windows to overlap the shelf"
 msgstr "Povolit oknům překrýt panel"
 
-#: ../src/bin/e_int_shelf_config.c:597
+#: ../src/bin/e_int_shelf_config.c:601
 msgid "Shrink to Content Size"
 msgstr "Zúžit na velikost obsahu"
 
-#: ../src/bin/e_int_shelf_config.c:599
-msgid "Shelf Size"
-msgstr "Velikost panelu"
-
-#: ../src/bin/e_int_shelf_config.c:601
+#: ../src/bin/e_int_shelf_config.c:612
 #, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f pixelů"
 
-#: ../src/bin/e_int_shelf_config.c:605
+#: ../src/bin/e_int_shelf_config.c:616
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:628
 msgid "Styles"
 msgstr "Styly"
 
-#: ../src/bin/e_int_shelf_config.c:643
+#: ../src/bin/e_int_shelf_config.c:654
 msgid "Auto Hide"
 msgstr "Automatické skrývání"
 
-#: ../src/bin/e_int_shelf_config.c:644
+#: ../src/bin/e_int_shelf_config.c:655
 msgid "Auto-hide the shelf"
 msgstr "Automaticky skrývat panel"
 
-#: ../src/bin/e_int_shelf_config.c:647
+#: ../src/bin/e_int_shelf_config.c:658
 msgid "Show on mouse in"
 msgstr "Zobrazit, když je myš na"
 
-#: ../src/bin/e_int_shelf_config.c:649
+#: ../src/bin/e_int_shelf_config.c:662
 msgid "Show on mouse click"
 msgstr "Zobrazit při kliknutí myší"
 
-#: ../src/bin/e_int_shelf_config.c:651
+#: ../src/bin/e_int_shelf_config.c:666
 msgid "Hide timeout"
 msgstr "Čas před skrytím"
 
-#: ../src/bin/e_int_shelf_config.c:653
-#: ../src/bin/e_int_shelf_config.c:657
+#: ../src/bin/e_int_shelf_config.c:670
+#: ../src/bin/e_int_shelf_config.c:678
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f sekund"
 
-#: ../src/bin/e_int_shelf_config.c:655
+#: ../src/bin/e_int_shelf_config.c:674
 msgid "Hide duration"
 msgstr "Doba skrývání"
 
-#: ../src/bin/e_int_shelf_config.c:663
+#: ../src/bin/e_int_shelf_config.c:688
 msgid "Show on all Desktops"
 msgstr "Zobrazit na všech plochách"
 
-#: ../src/bin/e_int_shelf_config.c:665
+#: ../src/bin/e_int_shelf_config.c:690
 msgid "Show on specified Desktops"
 msgstr "Zobrazit na vybraných plochách"
 
@@ -2795,30 +2804,30 @@ msgstr "Enlightenment %s Modul"
 msgid "Would you like to unload this module?<br>"
 msgstr "Chcete tento modul uvolnit?<br>"
 
-#: ../src/bin/e_shelf.c:1252
+#: ../src/bin/e_shelf.c:1258
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Opravdu chcete smazat tento panel?"
 
-#: ../src/bin/e_shelf.c:1253
+#: ../src/bin/e_shelf.c:1259
 msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
 msgstr "Opravdu chcete smazat tento panel?"
 
-#: ../src/bin/e_shelf.c:1660
+#: ../src/bin/e_shelf.c:1677
 #: ../src/bin/e_toolbar.c:316
 msgid "Stop Moving/Resizing Items"
 msgstr "Zastavit přesouvání/zvětšování/zmenšování prvků"
 
-#: ../src/bin/e_shelf.c:1662
+#: ../src/bin/e_shelf.c:1679
 #: ../src/bin/e_toolbar.c:318
 msgid "Begin Moving/Resizing Items"
 msgstr "Začít přesouvání/zvětšování/zmenšování prvků"
 
-#: ../src/bin/e_shelf.c:1675
+#: ../src/bin/e_shelf.c:1692
 msgid "Set Shelf Contents"
 msgstr "Nastavit obsah panelu"
 
-#: ../src/bin/e_shelf.c:1680
+#: ../src/bin/e_shelf.c:1697
 msgid "Delete this Shelf"
 msgstr "Smazat tento panel"
 
@@ -3060,7 +3069,7 @@ msgid "Add to Favorites"
 msgstr "Přidat do oblíbených"
 
 #: ../src/bin/e_widget_fsel.c:299
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:210
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:247
 #: ../src/modules/conf_imc/e_int_config_imc.c:834
 #: ../src/modules/conf_startup/e_int_config_startup.c:275
 #: ../src/modules/conf_theme/e_int_config_theme.c:402
@@ -3215,8 +3224,9 @@ msgid "Clock"
 msgstr "Hodiny"
 
 #: ../src/modules/conf/e_mod_main.c:139
-#: ../src/modules/conf/e_mod_main.c:162
-#: ../src/modules/conf/e_mod_main.c:214
+#: ../src/modules/conf/e_mod_main.c:143
+#: ../src/modules/conf/e_mod_main.c:163
+#: ../src/modules/conf/e_mod_main.c:215
 msgid "Settings Panel"
 msgstr "Ovládací centrum"
 
@@ -3598,43 +3608,43 @@ msgstr "Nastavit"
 msgid "Desk"
 msgstr "Plocha"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:75
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:85
 msgid "Screen Lock Settings"
 msgstr "Nastavení uzamčení obrazovky"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:148
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:170
 msgid "Automatic Locking"
 msgstr "Automatické zamykání"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:150
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:172
 msgid "Lock when Enlightenment starts"
 msgstr "Zamknout při startu Enlightenmentu"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:154
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:176
 msgid "Lock when X screensaver activates"
 msgstr "Uzamknout při aktivaci spořiče"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:158
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:180
 msgid "Lock when idle time exceeded"
 msgstr "Uzamknout při překročení času klidu"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:162
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:184
 msgid "Idle time to exceed"
 msgstr "Čas klidu"
 
 #. set state from saved config
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:165
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:220
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:232
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:244
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:132
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:169
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:187
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:209
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:221
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:233
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:125
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:162
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f minut"
 
 #. create dir radios
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:203
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:240
 #: ../src/modules/conf_imc/e_int_config_imc.c:822
 #: ../src/modules/conf_startup/e_int_config_startup.c:262
 #: ../src/modules/conf_theme/e_int_config_theme.c:391
@@ -3645,58 +3655,58 @@ msgstr "%1.0f minut"
 msgid "Personal"
 msgstr "Osobní"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:293
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:330
 msgid "Login Box Settings"
 msgstr "Nastavení přihlašovací obrazovky"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:296
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:333
 msgid "Show on all screen zones"
 msgstr "Zobrazit na všech zónách obrazovky"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:300
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:337
 msgid "Show on current screen zone"
 msgstr "Zobrazit na nynější zóně obrazovky"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:304
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:341
 msgid "Show on screen zone #:"
 msgstr "Zobrazit na zóně obrazovky #:"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:308
-#: ../src/modules/conf_desks/e_int_config_desks.c:185
-#: ../src/modules/conf_desks/e_int_config_desks.c:189
-#: ../src/modules/conf_desks/e_int_config_desks.c:222
-#: ../src/modules/conf_desks/e_int_config_desks.c:226
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:112
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:116
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:120
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:164
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:168
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:172
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:345
+#: ../src/modules/conf_desks/e_int_config_desks.c:232
+#: ../src/modules/conf_desks/e_int_config_desks.c:236
+#: ../src/modules/conf_desks/e_int_config_desks.c:269
+#: ../src/modules/conf_desks/e_int_config_desks.c:273
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:117
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:121
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:125
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:170
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:174
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:178
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:109
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:115
-#: ../src/modules/fileman/e_mod_config.c:198
+#: ../src/modules/fileman/e_mod_config.c:220
 #, c-format
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:316
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:353
 msgid "Wallpaper Mode"
 msgstr "Mód pozadí"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:318
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:355
 #: ../src/modules/gadman/e_mod_config.c:149
 msgid "Theme Defined"
 msgstr "Definováno tématem"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:321
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:358
 msgid "Theme Wallpaper"
 msgstr "Pozadí tématu"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:334
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:371
 msgid "Custom Screenlock"
 msgstr "Vlastní screenlock"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:335
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:372
 msgid "Use custom screenlock"
 msgstr "Použít vlastní screenlock"
 
@@ -3704,55 +3714,55 @@ msgstr "Použít vlastní screenlock"
 msgid "Screen Lock"
 msgstr "Zamčení obrazovky"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:53
+#: ../src/modules/conf_desks/e_int_config_desks.c:57
 #: ../src/modules/pager/e_mod_main.c:811
 msgid "Virtual Desktops Settings"
 msgstr "Nastavení virtuálních ploch"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:177
+#: ../src/modules/conf_desks/e_int_config_desks.c:224
 msgid "Number of Desktops"
 msgstr "Počet ploch"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:196
-#: ../src/modules/conf_desks/e_int_config_desks.c:233
+#: ../src/modules/conf_desks/e_int_config_desks.c:243
+#: ../src/modules/conf_desks/e_int_config_desks.c:280
 msgid "Desktop Mouse Flip"
 msgstr "Překlopení plochy myší"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:197
+#: ../src/modules/conf_desks/e_int_config_desks.c:244
 msgid "Animated flip"
 msgstr "Animované překlopení"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:215
+#: ../src/modules/conf_desks/e_int_config_desks.c:262
 msgid "Desktops"
 msgstr "Plochy"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:234
+#: ../src/modules/conf_desks/e_int_config_desks.c:281
 msgid "Flip when dragging objects to the screen edge"
 msgstr "Překlopit, když posunete objekty na kraj obrazovky"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:236
+#: ../src/modules/conf_desks/e_int_config_desks.c:283
 msgid "Wrap desktops around when flipping"
 msgstr "Překlopit zpět na první plochu z poslední"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:240
+#: ../src/modules/conf_desks/e_int_config_desks.c:287
 msgid "Flip Animation"
 msgstr "Animace překlopení"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:242
+#: ../src/modules/conf_desks/e_int_config_desks.c:289
 msgid "Off"
 msgstr "Vypnuto"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:244
+#: ../src/modules/conf_desks/e_int_config_desks.c:291
 msgid "Pane"
 msgstr "Pole"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:246
+#: ../src/modules/conf_desks/e_int_config_desks.c:293
 msgid "Zoom"
 msgstr "Přiblížení"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:248
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:143
-#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:138
+#: ../src/modules/conf_desks/e_int_config_desks.c:295
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:163
+#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:146
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f sek"
@@ -3767,14 +3777,14 @@ msgstr "Nastavení dialogů"
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:87
 #: ../src/modules/conf_engine/e_int_config_engine.c:94
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:109
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:161
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:114
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:167
 #: ../src/modules/conf_performance/e_int_config_performance.c:94
 #: ../src/modules/conf_performance/e_int_config_performance.c:134
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:131
-#: ../src/modules/ibox/e_mod_config.c:106
-#: ../src/modules/pager/e_mod_config.c:115
-#: ../src/modules/pager/e_mod_config.c:154
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:144
+#: ../src/modules/ibox/e_mod_config.c:100
+#: ../src/modules/pager/e_mod_config.c:120
+#: ../src/modules/pager/e_mod_config.c:160
 #: ../src/modules/mixer/conf_gadget.c:193
 #: ../src/modules/mixer/conf_module.c:96
 msgid "General Settings"
@@ -3907,23 +3917,23 @@ msgstr "Aktivní zobrazovací server nemá <br>DPMS rozšíření."
 msgid "Display Power Management Settings"
 msgstr "Zobrazit nastavení správy napájení"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:210
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:199
 msgid "Enable Display Power Management"
 msgstr "Povolit správu napájení obrazu"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:214
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:203
 msgid "Timers"
 msgstr "Časovače"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:216
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:205
 msgid "Standby time"
 msgstr "Rezervní čas"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:228
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:217
 msgid "Suspend time"
 msgstr "Suspend čas"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:240
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:229
 msgid "Off time"
 msgstr "Čas vypnutí"
 
@@ -4072,117 +4082,118 @@ msgstr "Chtěli byste povolit composite(skládání obrazu),<br>ale vaše aktuá
 msgid "Engine"
 msgstr "Engine"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:46
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:49
 msgid "Run Command Settings"
 msgstr "Nastavení dialogu Spustit"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:110
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:162
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:115
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:168
 msgid "Maximum Number of Matched Apps to List"
 msgstr "Maximální počet programů v seznamu"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:114
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:166
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:119
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:172
 msgid "Maximum Number of Matched Exes to List"
 msgstr "Maximální počet Exe souborů v seznamu"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:118
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:170
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:123
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:176
 msgid "Maximum History to List"
 msgstr "Maximum historie v seznamu"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:124
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:176
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:162
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:240
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:129
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:182
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:183
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:269
 msgid "Scroll Settings"
 msgstr "Nastavení skorolování"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:125
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:177
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:163
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:241
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:130
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:183
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:184
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:270
 msgid "Scroll Animate"
 msgstr "Animovat skrolování"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:179
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:243
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:185
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:272
 msgid "Scroll Speed"
 msgstr "Rychlost skrolování"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:181
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:216
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:220
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:236
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:245
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:252
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:256
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:189
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:228
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:232
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:261
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:276
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:287
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:291
 #, c-format
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:185
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:197
 msgid "Terminal Settings"
 msgstr "Nastavení terminálu"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:186
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:198
 msgid "Terminal Command (CTRL+RETURN to utilize)"
 msgstr "Příkaz do terminálu (CTRL+RETURN k využití)"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:194
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:260
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:206
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:295
 msgid "Size Settings"
 msgstr "Nastavení velikosti"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:195
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:261
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:207
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:296
 msgid "Minimum Width"
 msgstr "Minimální šířka"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:197
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:201
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:205
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:209
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:263
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:267
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:271
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:275
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:213
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:217
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:221
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:298
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:302
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:306
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:310
 #, c-format
 msgid "%4.0f"
 msgstr "%4.0f"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:199
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:265
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:211
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:300
 msgid "Minimum Height"
 msgstr "Minimální výška"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:203
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:269
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:215
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:304
 msgid "Maximum Width"
 msgstr "Maximální šířka"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:207
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:273
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:219
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:308
 msgid "Maximum Height"
 msgstr "Maximální výška"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:213
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:249
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:225
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:284
 msgid "Position Settings"
 msgstr "Nastavení pozice"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:214
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:250
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:226
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:285
 msgid "X-Axis Alignment"
 msgstr "Zarovnání na ose X"
 
-#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:218
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:254
+#: ../src/modules/conf_exebuf/e_int_config_exebuf.c:230
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:289
 msgid "Y-Axis Alignment"
 msgstr "Zarovnání na ose Y"
 
 #: ../src/modules/conf_exebuf/e_mod_main.c:35
-#: ../src/modules/exebuf/e_mod_main.c:128
+#: ../src/modules/exebuf/e_mod_main.c:52
+#: ../src/modules/exebuf/e_mod_main.c:129
 msgid "Run Command"
 msgstr "Spustit"
 
@@ -4614,11 +4625,11 @@ msgstr "Okraj autoscrollu"
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:184
 #: ../src/modules/conf_menus/e_int_config_menus.c:189
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:128
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:132
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:136
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:147
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:151
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:144
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:152
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:167
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:171
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f pixelů"
@@ -4646,7 +4657,7 @@ msgid "Fast Mouse Move Threshhold"
 msgstr "Práh při rychlém posunu myší"
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:202
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:214
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:229
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f pixelů/sek"
@@ -4704,6 +4715,7 @@ msgstr "Vybrat Edj soubor"
 #. Setup Entry in Config Panel
 #: ../src/modules/conf_mime/e_mod_main.c:34
 #: ../src/modules/fileman/e_mod_main.c:49
+#: ../src/modules/fileman/e_mod_main.c:67
 #: ../src/modules/fileman/e_mod_main.c:387
 msgid "Files"
 msgstr "Soubory"
@@ -4842,7 +4854,6 @@ msgid "Themes"
 msgstr "Témata"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:81
-#: ../src/modules/fileman/e_mod_config.c:179
 msgid "Icons"
 msgstr "Ikony"
 
@@ -4972,76 +4983,72 @@ msgstr "Přidat profil"
 msgid "Profiles"
 msgstr "Profily"
 
-#: ../src/modules/conf_scale/e_int_config_scale.c:41
+#: ../src/modules/conf_scale/e_int_config_scale.c:61
 msgid "Scaling Settings"
 msgstr "Nastavení škálování"
 
-#: ../src/modules/conf_scale/e_int_config_scale.c:105
+#: ../src/modules/conf_scale/e_int_config_scale.c:140
 msgid "Scale with DPI"
 msgstr "Škálovat s DPI"
 
-#: ../src/modules/conf_scale/e_int_config_scale.c:108
+#: ../src/modules/conf_scale/e_int_config_scale.c:144
 msgid "Relative"
 msgstr "Relativní"
 
-#: ../src/modules/conf_scale/e_int_config_scale.c:109
+#: ../src/modules/conf_scale/e_int_config_scale.c:145
 msgid "Base DPI to scale relative to"
 msgstr "Základní DPI ke škálování relativní k"
 
-#: ../src/modules/conf_scale/e_int_config_scale.c:111
-#: ../src/modules/conf_scale/e_int_config_scale.c:184
+#: ../src/modules/conf_scale/e_int_config_scale.c:148
+#: ../src/modules/conf_scale/e_int_config_scale.c:259
 #, c-format
 msgid "%1.0f DPI"
 msgstr "%1.0f DPI"
 
-#: ../src/modules/conf_scale/e_int_config_scale.c:113
+#: ../src/modules/conf_scale/e_int_config_scale.c:151
 #, c-format
 msgid "Currently %i DPI"
 msgstr "Nyní %i DPI"
 
-#: ../src/modules/conf_scale/e_int_config_scale.c:162
+#: ../src/modules/conf_scale/e_int_config_scale.c:245
 msgid "Policy"
 msgstr "Metoda"
 
-#: ../src/modules/conf_scale/e_int_config_scale.c:164
+#: ../src/modules/conf_scale/e_int_config_scale.c:248
 msgid "Don't Scale"
 msgstr "Neškálovat"
 
-#: ../src/modules/conf_scale/e_int_config_scale.c:166
+#: ../src/modules/conf_scale/e_int_config_scale.c:252
 msgid "Scale relative to screen DPI"
 msgstr "Zvětšení relativní k DPI obrazovky"
 
-#: ../src/modules/conf_scale/e_int_config_scale.c:168
-msgid "Custom scaling factor"
-msgstr "Vlastní faktor škálování"
-
-#: ../src/modules/conf_scale/e_int_config_scale.c:170
-msgid "Minimum"
-msgstr "Minimum"
-
-#: ../src/modules/conf_scale/e_int_config_scale.c:172
-#: ../src/modules/conf_scale/e_int_config_scale.c:176
-#: ../src/modules/conf_scale/e_int_config_scale.c:188
-#, c-format
-msgid "%1.2f times"
-msgstr "%1.2f"
-
-#: ../src/modules/conf_scale/e_int_config_scale.c:174
-msgid "Maximum"
-msgstr "Maximum"
-
-#: ../src/modules/conf_scale/e_int_config_scale.c:180
-msgid "Scaling Factors"
-msgstr "Faktory škálování"
-
-#: ../src/modules/conf_scale/e_int_config_scale.c:181
+#: ../src/modules/conf_scale/e_int_config_scale.c:255
 #, c-format
 msgid "Base DPI (Currently %i DPI)"
 msgstr "Základní DPI (Nyní %i DPI)"
 
-#: ../src/modules/conf_scale/e_int_config_scale.c:186
-msgid "Personal scaling factor"
-msgstr "Osobní faktor škálování"
+#: ../src/modules/conf_scale/e_int_config_scale.c:263
+msgid "Custom scaling factor"
+msgstr "Vlastní faktor škálování"
+
+#: ../src/modules/conf_scale/e_int_config_scale.c:266
+#: ../src/modules/conf_scale/e_int_config_scale.c:276
+#: ../src/modules/conf_scale/e_int_config_scale.c:282
+#, c-format
+msgid "%1.2f times"
+msgstr "%1.2f"
+
+#: ../src/modules/conf_scale/e_int_config_scale.c:272
+msgid "Constraints"
+msgstr "Zábrany"
+
+#: ../src/modules/conf_scale/e_int_config_scale.c:273
+msgid "Minimum"
+msgstr "Minimum"
+
+#: ../src/modules/conf_scale/e_int_config_scale.c:279
+msgid "Maximum"
+msgstr "Maximum"
 
 #: ../src/modules/conf_scale/e_mod_main.c:35
 msgid "Scaling"
@@ -5051,51 +5058,51 @@ msgstr "Škálování"
 msgid "Screen Saver Settings"
 msgstr "Nastavení spořiče"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:125
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:162
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:118
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:155
 msgid "Enable X screensaver"
 msgstr "Povolit X spořič"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:128
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:165
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:121
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:158
 msgid "Screensaver Timer(s)"
 msgstr "Časovač(e) spořiče"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:130
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:167
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:123
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:160
 msgid "Time until X screensaver starts"
 msgstr "Čas, než se X spořič spustí"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:175
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:168
 msgid "Time until X screensaver alternates"
 msgstr "Čas, než se X spořič změní"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:177
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:170
 #, c-format
 msgid "%1.0f seconds"
 msgstr "%1.0f sekund"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:184
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:177
 msgid "Blanking"
 msgstr "Mazání"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:190
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:183
 msgid "Preferred"
 msgstr "Preferováno"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:194
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:187
 msgid "Not Preferred"
 msgstr "Nepreferováno"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:200
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:193
 msgid "Exposure Events"
 msgstr "Události vystavení"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:206
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:199
 msgid "Allow"
 msgstr "Povolit"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:210
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:203
 msgid "Don't Allow"
 msgstr "Nepovolovat"
 
@@ -5364,116 +5371,117 @@ msgstr "Exchange pozadí"
 
 #: ../src/modules/conf_wallpaper/e_mod_main.c:29
 #: ../src/modules/conf_wallpaper/e_mod_main.c:31
+#: ../src/modules/conf_wallpaper/e_mod_main.c:32
 #: ../src/modules/conf_wallpaper/e_mod_main.c:96
 msgid "Wallpaper"
 msgstr "Pozadí plochy"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:54
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:58
 #: ../src/modules/conf_window_display/e_mod_main.c:35
 msgid "Window Display"
 msgstr "Zobrazení okna"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:161
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:167
 msgid "Display"
 msgstr "Zobrazit"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:162
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:168
 msgid "Show window geometry information when moving or resizing"
 msgstr "Zobrazit informace o poloze okna při přesouvání nebo změně velikosti"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:164
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:212
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:170
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:227
 msgid "Animate the shading and unshading of windows"
 msgstr "Animovat aktivaci/deaktivaci oken"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:168
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:227
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:174
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:254
 msgid "Automatic New Window Placement"
 msgstr "Automatické umisťování nových oken"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:170
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:230
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:176
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:257
 msgid "Smart Placement"
 msgstr "Chytré umisťování"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:172
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:232
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:178
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:259
 msgid "Don't hide Gadgets"
 msgstr "Neskrývat gadgety"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:174
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:234
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:180
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:261
 msgid "Place at mouse pointer"
 msgstr "Umístit pod kurzor myši"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:176
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:236
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:182
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:263
 msgid "Place manually with the mouse"
 msgstr "Umístit manuálně myší"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:178
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:238
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:184
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:265
 msgid "Automatically switch to desktop of new window"
 msgstr "Automaticky přepnout na plochu nového okna"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:194
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:203
 msgid "Window Move Geometry"
 msgstr "Poloha okna"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:196
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:204
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:205
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:216
 msgid "Display information"
 msgstr "Zobrazit informace"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:198
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:207
 msgid "Follow the window as it moves"
 msgstr "Sledovat okno při pohybu"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:202
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:214
 msgid "Window Resize Geometry"
 msgstr "Velikost okna"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:206
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:218
 msgid "Follow the window as it resizes"
 msgstr "Sledovat okno při změně velikosti"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:210
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:225
 msgid "Window Shading"
 msgstr "Stínování okna"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:217
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:234
 msgid "Linear"
 msgstr "Lineární"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:219
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:238
 msgid "Smooth accelerate and decelerate"
 msgstr "Hladce zrychlit a zpomalit"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:221
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:242
 msgid "Accelerate"
 msgstr "Akcelerovat"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:223
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:246
 msgid "Decelerate"
 msgstr "Zpomalit"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:242
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:269
 msgid "Window Border"
 msgstr "Okraj okna"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:245
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:272
 msgid "Prefer user defined icon"
 msgstr "Preferovat ikonu definovanou uživatelem"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:247
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:274
 msgid "Prefer application provided icon"
 msgstr "Preferovat ikonu poskytovanou aplikací"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:251
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:278
 msgid "Internal Windows"
 msgstr "Interní okna"
 
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:253
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:280
 msgid "Always remember internal windows"
 msgstr "Vždy zapamatovat vnitřní okna"
 
@@ -5562,44 +5570,44 @@ msgstr "Posunout kurzor do nového aktivovaného okna"
 msgid "Window Focus"
 msgstr "Aktivace okna"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:51
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:54
 #: ../src/modules/conf_window_manipulation/e_mod_main.c:35
 msgid "Window Geometry"
 msgstr "Geometrie okna"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:123
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:129
 msgid "Resistance"
 msgstr "Odolnost"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:124
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:130
 msgid "Resist moving or resizing a window over an obstacle"
 msgstr "Zabránit pohybu nebo změně velikosti okna přes překážku"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:126
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:132
 msgid "Resistance between windows:"
 msgstr "Odolnost mezi okny"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:130
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:140
 msgid "Resistance at the edge of the screen:"
 msgstr "Odolnost na kraji obrazovky"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:134
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:148
 msgid "Resistance to desktop gadgets:"
 msgstr "Odolnost vůči gadgetům"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:140
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:160
 msgid "Keyboard move and resize"
 msgstr "Přesouvání a změna velikosti klávesnicí"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:141
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:161
 msgid "Automatically accept changes after:"
 msgstr "Automaticky přijmout změny po:"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:165
 msgid "Move by:"
 msgstr "Přesunout z:"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:149
+#: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:169
 msgid "Resize by:"
 msgstr "Změnit velikost z:"
 
@@ -5643,38 +5651,39 @@ msgstr "Povolit manipulaci s okny"
 msgid "Automatically move/resize windows on shelf autohide"
 msgstr "Automaticky posunout/zmenšit/zvětšit okno při automatickém skrývání panelu"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:45
+#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:48
 #: ../src/modules/conf_window_manipulation/e_mod_main.c:36
 msgid "Window Stacking"
 msgstr "Skládání oken"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:116
-#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:134
+#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:121
+#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:140
 msgid "Automatically raise windows on mouse over"
 msgstr "Automaticky přenést okno pod kurzorem do popředí"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:119
-#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:148
+#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:124
+#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:161
 msgid "Allow windows to be above fullscreen window"
 msgstr "Povolit oknům být nad fullscreen oknem"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:133
+#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:139
 msgid "Autoraise"
 msgstr "Automaticky přenést do popředí"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:136
+#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:142
 msgid "Delay before raising:"
 msgstr "Pauza před přenesením do popředí:"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:142
+#.
+#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:155
 msgid "Raise Window"
 msgstr "Přenést okno do popředí"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:144
+#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:157
 msgid "Raise when starting to move or resize"
 msgstr "Přenést do popředí při změně polohy nebo velikosti"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:146
+#: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:159
 msgid "Raise when clicking to focus"
 msgstr "Přenést do popředí při aktivaci kliknutím"
 
@@ -5724,27 +5733,27 @@ msgstr "Úloha:"
 msgid "<No Role>"
 msgstr "<Žádná úloha>"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:55
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:62
 msgid "Window List Settings"
 msgstr "Nastavení seznamu oken"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:132
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:145
 msgid "Show iconified windows"
 msgstr "Zobrazit minimalizovaná okna"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:134
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:147
 msgid "Show iconified windows from other desks"
 msgstr "Zobrazit ikonifikovaná okna z ostatních ploch"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:136
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:151
 msgid "Show iconified windows from other screens"
 msgstr "Zobrazit ikonifikovaná okna z ostatních obrazovek"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:138
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:157
 msgid "Show windows from other desks"
 msgstr "Zobrazit okna z ostatních ploch"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:140
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:159
 msgid "Show windows from other screens"
 msgstr "Zobrazit okna z ostatních obrazovek"
 
@@ -5759,47 +5768,47 @@ msgstr "Zobrazit okna z ostatních obrazovek"
 #. e_widget_framelist_object_append(of, ob);
 #. e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
 #.
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:144
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:218
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:163
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:241
 msgid "Selection Settings"
 msgstr "Nastavení výběru"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:145
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:219
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:164
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:242
 msgid "Focus window while selecting"
 msgstr "Aktivovat okno při výběru"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:147
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:221
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:166
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:244
 msgid "Raise window while selecting"
 msgstr "Přenést okno do popředí při výběru"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:149
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:223
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:168
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:246
 msgid "Warp mouse to window while selecting"
 msgstr "Zavést kurzor do okna při výběru"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:151
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:225
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:170
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:248
 msgid "Uncover windows while selecting"
 msgstr "Odkrýt okna při výběru"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:153
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:227
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:172
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:250
 msgid "Jump to desk while selecting"
 msgstr "Přecházet přes plochy při výběru"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:157
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:231
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:176
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:254
 msgid "Warp Settings"
 msgstr "Nastavení přesunu"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:158
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:232
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:177
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:255
 msgid "Warp At End"
 msgstr "Přesunout na konci"
 
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:234
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:257
 msgid "Warp Speed"
 msgstr "Rychlost přesouvání"
 
@@ -5989,7 +5998,7 @@ msgid "Dropshadow"
 msgstr "Stíny"
 
 #: ../src/modules/exebuf/e_mod_main.c:48
-#: ../src/modules/exebuf/e_mod_main.c:68
+#: ../src/modules/exebuf/e_mod_main.c:69
 msgid "Run Command Dialog"
 msgstr "Dialog Spustit"
 
@@ -6027,67 +6036,59 @@ msgstr "Vaše nastavení je NOVĚJŠÍ než Fileman modul. To je dost<br>zvláš
 msgid "Fileman Settings Updated"
 msgstr "Nastavení fileman modulu aktualizováno"
 
-#: ../src/modules/fileman/e_mod_config.c:91
+#: ../src/modules/fileman/e_mod_config.c:93
 msgid "Fileman Settings"
 msgstr "Nastavení fileman modulu"
 
-#: ../src/modules/fileman/e_mod_config.c:186
-msgid "Custom Grid Icons"
-msgstr "Vlastní ikony v mřížce"
-
-#: ../src/modules/fileman/e_mod_config.c:189
-msgid "Custom Smart Grid Icons"
-msgstr "Vlastní chytré ikony v mřížce"
-
-#: ../src/modules/fileman/e_mod_config.c:196
+#: ../src/modules/fileman/e_mod_config.c:218
 msgid "Icon Size"
 msgstr "Velikost ikon"
 
-#: ../src/modules/fileman/e_mod_config.c:202
+#: ../src/modules/fileman/e_mod_config.c:224
 msgid "View"
 msgstr "Pohled"
 
-#: ../src/modules/fileman/e_mod_config.c:205
+#: ../src/modules/fileman/e_mod_config.c:227
 msgid "Open Dirs In Place"
 msgstr "Otevřít adresáře ve stejném okně"
 
-#: ../src/modules/fileman/e_mod_config.c:209
+#: ../src/modules/fileman/e_mod_config.c:231
 msgid "Sort Dirs First"
 msgstr "První řadit adresáře"
 
-#: ../src/modules/fileman/e_mod_config.c:212
+#: ../src/modules/fileman/e_mod_config.c:234
 msgid "Case Sensitive"
 msgstr "Rozlišovat velikost písmen"
 
-#: ../src/modules/fileman/e_mod_config.c:216
+#: ../src/modules/fileman/e_mod_config.c:238
 msgid "Use Single Click"
 msgstr "Pouze jedno kliknutí"
 
-#: ../src/modules/fileman/e_mod_config.c:219
+#: ../src/modules/fileman/e_mod_config.c:241
 msgid "Use Alternate Selection Modifiers"
 msgstr "Použít alternativní výběrové modifikátory"
 
-#: ../src/modules/fileman/e_mod_config.c:223
+#: ../src/modules/fileman/e_mod_config.c:245
 msgid "Show Icon Extension"
 msgstr "Zobrazit příponu ikony"
 
-#: ../src/modules/fileman/e_mod_config.c:226
+#: ../src/modules/fileman/e_mod_config.c:248
 msgid "Show Full Path"
 msgstr "Zobrazit plnou cestu"
 
-#: ../src/modules/fileman/e_mod_config.c:229
+#: ../src/modules/fileman/e_mod_config.c:251
 msgid "Show Desktop Icons"
 msgstr "Zobrazit ikony na ploše"
 
-#: ../src/modules/fileman/e_mod_config.c:232
+#: ../src/modules/fileman/e_mod_config.c:254
 msgid "Show Toolbar"
 msgstr "Zobrazit toolbar"
 
-#: ../src/modules/fileman/e_mod_config.c:235
+#: ../src/modules/fileman/e_mod_config.c:257
 msgid "Show HAL icons on desktop"
 msgstr "Zobrazit HAL ikony na ploše"
 
-#: ../src/modules/fileman/e_mod_config.c:239
+#: ../src/modules/fileman/e_mod_config.c:261
 #: ../src/modules/gadman/e_mod_gadman.c:729
 msgid "Behavior"
 msgstr "Chování"
@@ -6174,9 +6175,10 @@ msgstr "Pozadí"
 
 #: ../src/modules/gadman/e_mod_config.c:171
 #: ../src/modules/gadman/e_mod_main.c:27
-#: ../src/modules/gadman/e_mod_main.c:83
-#: ../src/modules/gadman/e_mod_main.c:119
-#: ../src/modules/gadman/e_mod_main.c:148
+#: ../src/modules/gadman/e_mod_main.c:77
+#: ../src/modules/gadman/e_mod_main.c:84
+#: ../src/modules/gadman/e_mod_main.c:120
+#: ../src/modules/gadman/e_mod_main.c:149
 msgid "Gadgets"
 msgstr "Gadgety"
 
@@ -6196,8 +6198,8 @@ msgstr "On top stisknutí"
 msgid "Add other gadgets"
 msgstr "Přidat jiné gadgety"
 
-#: ../src/modules/gadman/e_mod_main.c:83
-#: ../src/modules/gadman/e_mod_main.c:119
+#: ../src/modules/gadman/e_mod_main.c:84
+#: ../src/modules/gadman/e_mod_main.c:120
 msgid "Show/hide gadgets"
 msgstr "Zobrazit/skrýt gadgety"
 
@@ -6235,7 +6237,7 @@ msgid "Icon Labels"
 msgstr "Názvy ikon"
 
 #: ../src/modules/ibar/e_mod_config.c:123
-#: ../src/modules/ibox/e_mod_config.c:107
+#: ../src/modules/ibox/e_mod_config.c:101
 msgid "Show Icon Label"
 msgstr "Zobrazit název ikony"
 
@@ -6268,27 +6270,27 @@ msgstr "Klikli jste na smazání \"%s\".<br><br>Opravdu chcete smazat tento iBar
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Jste si jistí, že chcete vymazat tento iBar zdroj?"
 
-#: ../src/modules/ibar/e_mod_main.c:216
+#: ../src/modules/ibar/e_mod_main.c:220
 msgid "IBar"
 msgstr "IBar"
 
-#: ../src/modules/ibar/e_mod_main.c:790
+#: ../src/modules/ibar/e_mod_main.c:794
 msgid "Change Icon Properties"
 msgstr "Změnit vlastnosti ikony"
 
-#: ../src/modules/ibar/e_mod_main.c:795
+#: ../src/modules/ibar/e_mod_main.c:799
 msgid "Remove Icon"
 msgstr "Odstranit ikonu"
 
-#: ../src/modules/ibar/e_mod_main.c:805
+#: ../src/modules/ibar/e_mod_main.c:809
 msgid "Add An Icon"
 msgstr "Přidat ikonu"
 
-#: ../src/modules/ibar/e_mod_main.c:812
+#: ../src/modules/ibar/e_mod_main.c:816
 msgid "Create New Icon"
 msgstr "Vytvořit novou ikonu"
 
-#: ../src/modules/ibar/e_mod_main.c:828
+#: ../src/modules/ibar/e_mod_main.c:832
 msgid "Add Application"
 msgstr "Přidat aplikaci"
 
@@ -6296,39 +6298,39 @@ msgstr "Přidat aplikaci"
 msgid "IBox Settings"
 msgstr "iBox nastavení"
 
-#: ../src/modules/ibox/e_mod_config.c:111
+#: ../src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
 msgstr "Zobrazit jméno"
 
-#: ../src/modules/ibox/e_mod_config.c:116
+#: ../src/modules/ibox/e_mod_config.c:110
 msgid "Display Title"
 msgstr "Zobrazit titulek"
 
-#: ../src/modules/ibox/e_mod_config.c:121
+#: ../src/modules/ibox/e_mod_config.c:115
 msgid "Display Class"
 msgstr "Zobrazit třídu"
 
-#: ../src/modules/ibox/e_mod_config.c:126
+#: ../src/modules/ibox/e_mod_config.c:120
 msgid "Display Icon Name"
 msgstr "Zobrazit jméno ikny"
 
-#: ../src/modules/ibox/e_mod_config.c:131
+#: ../src/modules/ibox/e_mod_config.c:125
 msgid "Display Border Caption"
 msgstr "Zobrazit titulek okraje"
 
-#: ../src/modules/ibox/e_mod_config.c:161
+#: ../src/modules/ibox/e_mod_config.c:155
 msgid "Show windows from all screens"
 msgstr "Zobrazit okna ze všech obrazovek"
 
-#: ../src/modules/ibox/e_mod_config.c:166
+#: ../src/modules/ibox/e_mod_config.c:160
 msgid "Show windows from current screen"
 msgstr "Zobrazit okna z aktuální obrazovky"
 
-#: ../src/modules/ibox/e_mod_config.c:175
+#: ../src/modules/ibox/e_mod_config.c:169
 msgid "Show windows from all desktops"
 msgstr "Zobrazit okna ze všech ploch"
 
-#: ../src/modules/ibox/e_mod_config.c:180
+#: ../src/modules/ibox/e_mod_config.c:174
 msgid "Show windows from active desktop"
 msgstr "Zobrazit okna z aktivní plochy"
 
@@ -6336,118 +6338,118 @@ msgstr "Zobrazit okna z aktivní plochy"
 msgid "IBox"
 msgstr "IBox"
 
-#: ../src/modules/pager/e_mod_config.c:69
+#: ../src/modules/pager/e_mod_config.c:72
 msgid "Pager Settings"
 msgstr "Nastavení přepínače ploch"
 
-#: ../src/modules/pager/e_mod_config.c:116
-#: ../src/modules/pager/e_mod_config.c:155
+#: ../src/modules/pager/e_mod_config.c:121
+#: ../src/modules/pager/e_mod_config.c:161
 msgid "Flip desktop on mouse wheel"
 msgstr "Překlopit plochy kolečkem myši"
 
-#: ../src/modules/pager/e_mod_config.c:119
-#: ../src/modules/pager/e_mod_config.c:158
+#: ../src/modules/pager/e_mod_config.c:124
+#: ../src/modules/pager/e_mod_config.c:164
 msgid "Show desktop names"
 msgstr "Zobrazit jména ploch"
 
-#: ../src/modules/pager/e_mod_config.c:124
-#: ../src/modules/pager/e_mod_config.c:198
+#: ../src/modules/pager/e_mod_config.c:129
+#: ../src/modules/pager/e_mod_config.c:204
 msgid "Popup Settings"
 msgstr "Nastavení pop-up"
 
-#: ../src/modules/pager/e_mod_config.c:125
-#: ../src/modules/pager/e_mod_config.c:199
+#: ../src/modules/pager/e_mod_config.c:130
+#: ../src/modules/pager/e_mod_config.c:205
 msgid "Show popup on desktop change"
 msgstr "Zobrazit popup při změně plochy"
 
-#: ../src/modules/pager/e_mod_config.c:128
+#: ../src/modules/pager/e_mod_config.c:133
 msgid "Show popup for urgent windows"
 msgstr "Zobrazit popup pro důležitá okna"
 
-#: ../src/modules/pager/e_mod_config.c:162
+#: ../src/modules/pager/e_mod_config.c:168
 msgid "Select and Slide button"
 msgstr "Vybrat a přemístit tlačítko"
 
-#: ../src/modules/pager/e_mod_config.c:164
-#: ../src/modules/pager/e_mod_config.c:171
-#: ../src/modules/pager/e_mod_config.c:178
-#: ../src/modules/pager/e_mod_config.c:386
-#: ../src/modules/pager/e_mod_config.c:391
-#: ../src/modules/pager/e_mod_config.c:396
+#: ../src/modules/pager/e_mod_config.c:170
+#: ../src/modules/pager/e_mod_config.c:177
+#: ../src/modules/pager/e_mod_config.c:184
+#: ../src/modules/pager/e_mod_config.c:402
+#: ../src/modules/pager/e_mod_config.c:407
+#: ../src/modules/pager/e_mod_config.c:412
 #, c-format
 msgid "Click to set"
 msgstr "Klikněte k nastavení"
 
-#: ../src/modules/pager/e_mod_config.c:169
+#: ../src/modules/pager/e_mod_config.c:175
 msgid "Drag and Drop button"
 msgstr "Tlačítko Táhnout a pustit"
 
-#: ../src/modules/pager/e_mod_config.c:176
+#: ../src/modules/pager/e_mod_config.c:182
 msgid "Drag whole desktop"
 msgstr "Táhnout celou plochu"
 
 #. TODO find better name
-#: ../src/modules/pager/e_mod_config.c:185
+#: ../src/modules/pager/e_mod_config.c:191
 msgid "Keyaction popup height"
 msgstr "Výška keyaction popup"
 
-#: ../src/modules/pager/e_mod_config.c:187
 #: ../src/modules/pager/e_mod_config.c:193
-#: ../src/modules/pager/e_mod_config.c:204
+#: ../src/modules/pager/e_mod_config.c:199
+#: ../src/modules/pager/e_mod_config.c:212
 #, c-format
 msgid "%.0f px"
 msgstr "%.0f px"
 
-#: ../src/modules/pager/e_mod_config.c:191
+#: ../src/modules/pager/e_mod_config.c:197
 msgid "Resistance to dragging"
 msgstr "Odpor k táhnutí"
 
-#: ../src/modules/pager/e_mod_config.c:202
+#: ../src/modules/pager/e_mod_config.c:208
 msgid "Popup pager height"
 msgstr "Výška popup pageru"
 
-#: ../src/modules/pager/e_mod_config.c:207
-#: ../src/modules/pager/e_mod_config.c:221
+#: ../src/modules/pager/e_mod_config.c:217
+#: ../src/modules/pager/e_mod_config.c:237
 msgid "Popup speed"
 msgstr "Rychlost popup"
 
-#: ../src/modules/pager/e_mod_config.c:209
-#: ../src/modules/pager/e_mod_config.c:223
+#: ../src/modules/pager/e_mod_config.c:221
+#: ../src/modules/pager/e_mod_config.c:239
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f sekund"
 
-#: ../src/modules/pager/e_mod_config.c:214
+#: ../src/modules/pager/e_mod_config.c:230
 msgid "Urgent Window Settings"
 msgstr "Nastavení důležitého okna"
 
-#: ../src/modules/pager/e_mod_config.c:215
+#: ../src/modules/pager/e_mod_config.c:231
 msgid "Show popup on urgent window"
 msgstr "Zobrazit popup na důležitém oknu"
 
-#: ../src/modules/pager/e_mod_config.c:218
+#: ../src/modules/pager/e_mod_config.c:234
 msgid "Popup on urgent window sticks on the screen"
 msgstr "Popup na důležitých připíchnutích oken na této obrazovce"
 
-#: ../src/modules/pager/e_mod_config.c:271
+#: ../src/modules/pager/e_mod_config.c:287
 msgid "Pager Button Grab"
 msgstr "Uchopení pager tlačítka"
 
-#: ../src/modules/pager/e_mod_config.c:273
+#: ../src/modules/pager/e_mod_config.c:289
 msgid "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort.<br>Or <hilight>Del</hilight> to reset the button."
 msgstr "Prosím stiskněte tlačítko myši.<br>Stiskněte <hilight>Escape</hilight> ke zrušení.<br>Nebo <hilight>Del</hilight> k resetu tlačítka."
 
-#: ../src/modules/pager/e_mod_config.c:328
+#: ../src/modules/pager/e_mod_config.c:344
 msgid "Attetion"
 msgstr "Pozor"
 
-#: ../src/modules/pager/e_mod_config.c:329
+#: ../src/modules/pager/e_mod_config.c:345
 msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus. <br>This button only works in the Popup"
 msgstr "Nemůžete použít pravé tlačítko myši v<br>panelu, když už je zabráno interním<br>kódem kontextového menu. <br>Toto tlačítko bude fungovat pouze v popup."
 
-#: ../src/modules/pager/e_mod_config.c:388
-#: ../src/modules/pager/e_mod_config.c:393
-#: ../src/modules/pager/e_mod_config.c:398
+#: ../src/modules/pager/e_mod_config.c:404
+#: ../src/modules/pager/e_mod_config.c:409
+#: ../src/modules/pager/e_mod_config.c:414
 #, c-format
 msgid "Button %i"
 msgstr "Tlačítko %i"
@@ -6794,6 +6796,16 @@ msgstr "Specifické zařízení"
 msgid "Networks"
 msgstr "Sítě"
 
+#~ msgid "Shelf Size"
+#~ msgstr "Velikost panelu"
+#~ msgid "Scaling Factors"
+#~ msgstr "Faktory škálování"
+#~ msgid "Personal scaling factor"
+#~ msgstr "Osobní faktor škálování"
+#~ msgid "Custom Grid Icons"
+#~ msgstr "Vlastní ikony v mřížce"
+#~ msgid "Custom Smart Grid Icons"
+#~ msgstr "Vlastní chytré ikony v mřížce"
 #~ msgid "Configure Virtual Desktops"
 #~ msgstr "Konfigurovat virtuální plochy"
 #~ msgid "Configure Contents..."
