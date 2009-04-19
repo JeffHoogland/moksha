@@ -1,0 +1,87 @@
+Source: e17
+Section: x11
+Priority: optional
+Maintainer:  Debian Pkg-e Team <pkg-e-devel@lists.alioth.debian.org>
+Uploaders: Albin Tonnerre <albin.tonnerre@gmail.com>,
+ Xavier Oswald <x.oswald@free.fr>, Jan Lübbe <jluebbe@debian.org>
+Build-Depends: debhelper (>= 6.0.7), cdbs (>= 0.4.52), libeet-dev (>= 1.0.1),
+ libedje-dev (>= 0.9.9.050+svn20081206), libefreet-dev (>= 0.5.0.050+svn20090203),
+ libecore-dev (>= 0.9.9.050+svn20090202), libedbus-dev (>= 0.5.0.050+svn20090130),
+ libevas-dev (>= 0.9.9.050+svn20090201), libeina-dev (>= 0.0.1~svn20090128),
+ libasound2-dev, libxext-dev, libeet-bin, libedje-bin, libpam0g-dev
+Standards-Version: 3.8.0
+Vcs-Git: git://git.debian.org/pkg-e/apps/e.git
+Vcs-Browser: http://git.debian.org/?p=pkg-e/apps/e.git
+Homepage: http://www.enlightenment.org
+
+Package: e17
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, e17-data (= ${source:Version}), libevas-engines, libedje-bin
+Conflicts: enlightenment
+Provides: x-window-manager
+Description: The Enlightenment DR17 Window Manager
+ Enlightenment is an advanced window manager for X11. Unique
+ features include: a fully animated background, nice drop shadows
+ around windows, backed by an extremely clean and optimized
+ foundation of APIs.
+ .
+ This package contains the core files for Enlightenment DR17.
+
+Package: e17-data
+Architecture: all
+Depends: ${misc:Depends}
+Enhances: e17
+Conflicts: enlightenment-data
+Description: Enlightenment Window Manager Run Time Data Files
+ Enlightenment is an advanced window manager for X11. Unique
+ features include: a fully animated background, nice drop shadows
+ around windows, backed by an extremely clean and optimized
+ foundation of APIs.
+ .
+ These are the architecture independent runtime support files for the
+ Enlightenment DR17 Window Manager.
+
+Package: e17-dev
+Architecture: any
+Section: devel
+Depends: ${misc:Depends}, e17 (= ${binary:Version}), efl-dev
+Description: Enlightenment headers, static libraries and documentation
+ Enlightenment is an advanced window manager for X11. Unique
+ features include: a fully animated background, nice drop shadows
+ around windows, backed by an extremely clean and optimized
+ foundation of APIs.
+ .
+ This package contains headers, static libraries and documentation for
+ enlightenment.
+
+Package: efl-dev
+Architecture: any
+Section: devel
+Depends: ${misc:Depends}, libeet-dev (>= 1.0.1),
+ libedje-dev (>= 0.9.9.050+svn20081206), libefreet-dev (>= 0.5.0.050+svn20090203),
+ libecore-dev (>= 0.9.9.050+svn20090202), libedbus-dev (>= 0.5.0.050+svn20090130),
+ libevas-dev (>= 0.9.9.050+svn20090201), libeina-dev (>= 0.0.1~svn20090128)
+Description: EFL headers, static libraries and documentation
+ Enlightenment is an advanced window manager for X11. Unique
+ features include: a fully animated background, nice drop shadows
+ around windows, backed by an extremely clean and optimized
+ foundation of APIs.
+ .
+ This package contains headers, static libraries and documentation for
+ the enlightenment foundation librairies.
+
+Package: e17-dbg
+Architecture: any
+Section: devel
+Depends: ${misc:Depends}, e17 (= ${binary:Version})
+Priority: extra
+Description: The Enlightenment DR17 Window Manager
+ Enlightenment is an advanced window manager for X11. Unique
+ features include: a fully animated background, nice drop shadows
+ around windows, backed by an extremely clean and optimized
+ foundation of APIs
+ .
+ This package contains unstripped shared libraries. It is provided primarily
+ to provide a backtrace with names in a debugger, this makes it somewhat
+ easier to interpret core dumps. The libraries are installed in
+ /usr/lib/debug and are automatically used by gdb.

@@ -1,0 +1,102 @@
+e17 (0.16.999.050+svn20090203-1) experimental; urgency=low
+
+  [Albin Tonnerre]
+  * New SVN snapshot
+    - Remove some patches, applied upstream:
+      + 01_install_internal-use_binaries_in_usr_lib_enlightenment.diff
+      + 03_fix_src-bin-makefile.diff
+      + 04_fix_e_fm_main_svn38418.diff
+    - control: tighten builddeps and depends of efl-dev
+    - Update dependency on libevas-engines
+    - e17.install: install binaries located in usr/lib/enlightenment/utils
+  * e17.install: Add missing illume dicts and keyboards (Closes: #513854)
+
+  [Luca Capello]
+  * debian/e17-data.install:
+    - do not install documentation duplicates (Closes: #513850)
+  * debian/e17.lintian-overrides.in:
+    - Add override for 'image-file-in-usr-lib' for illume keyboard images
+
+ -- Albin Tonnerre <albin.tonnerre@gmail.com>  Sat, 07 Feb 2009 10:29:53 +0100
+
+e17 (0.16.999.050+svn20081207-2) experimental; urgency=low
+
+  * Update dependencies for new packages names
+
+ -- Albin Tonnerre <albin.tonnerre@gmail.com>  Tue, 06 Jan 2009 21:08:29 +0100
+
+e17 (0.16.999.050+svn20081207-1) experimental; urgency=low
+
+  * Upstream SVN snapshot
+    - build-depend and make efl-dev depend on libeina-0.0.1a-dev
+  * Update {build,}dependencies to match the new EFL packages name
+  * Ship enlightenment.pc instead of enlightenment-config, as the latter is
+    now deprecated (Closes: #504293)
+  * Build-Depend on libasound2-dev to get the mixer module working
+    - Closes: #506847
+  * Make e17 depend on libedje-bin as this is necessary for e.g. changing the
+    background.
+  * No longer remove the wizard module from the package, as it is now usable
+  * Add debian/patches/02_fix_default_config_for_upgrades.diff:
+    - Add buttons for halt/shutdown/etc to the syscon module for the default
+      profile. Without that, users upgrading from older versions would have an
+      empty 'system' menu
+  * debian/patches/{03_fix_src-bin-makefile,04_fix_e_fm_main_svn38418}.diff:
+    - Cherry-pick patches from SVN to fix the file manager operations when it
+     is installed in /usr/lib/enlightenment
+  * debian/patches/01_install_internal-use_binaries_in_usr_lib_enlightenment.diff:
+    - update, as a new binary going in /usr/lib/enlightenment was introduced
+  * lintian fixes:
+    - add ${misc:Depends} to dependencies
+    - remove e17-data.lintian-overrides, no longer needed
+    - Add overrides about setuid root programs to e17.lintian-overrides.in
+  * As there is an arch-dependant lintian override, use an overrides.in and
+    handle that in debian/rules.
+
+ -- Albin Tonnerre <albin.tonnerre@gmail.com>  Fri, 02 Jan 2009 18:46:31 +0100
+
+e17 (0.16.999.050-1) experimental; urgency=low
+
+  * New upstream version (Closes: #504057)
+    - Version B-D on libecore, libevas, libedje and libeet as e17 is using
+      symbols from the new versions.
+    - Build-Depend on libeet-bin, now necessary
+  * Bump Standards-Version to 3.8.0
+  * patch 01_install_internal-use_binaries_in_usr_lib_enlightenment.diff :
+    - actually introduced in the initial revision, installs some binaries which
+     are only for internal use in usr/lib/enligthenment instead of /usr/bin
+  * Bump B-D on debhelper to 6.0.7 to be sure to get dh_lintian
+  * Fix typo in README.Debian. (Closes: #495185)
+
+ -- Albin Tonnerre <albin.tonnerre@gmail.com>  Mon, 10 Nov 2008 01:00:41 +0100
+
+e17 (0.16.999.043-1) experimental; urgency=low
+
+  [ Jan Lübbe ]
+  * New upstream release
+  * Add watch file
+
+  [ Albin Tonnerre ]
+  * Install the batget binary, as it actually exists in this version
+  * debian/control: Add Vcs-* and Homepage fields
+  * debian/rules:
+    - No longer remove the layout module, as it's not installed anymore
+    - No need for the tempget binary to be chmod 4755 - 755 is enough
+
+ -- Jan Lübbe <jluebbe@debian.org>  Sat, 07 Jun 2008 18:35:29 +0200
+
+e17 (0.16.999.042-2) experimental; urgency=low
+
+  [ Albin Tonnerre ]
+  * Install setuid binaries correctly
+
+ -- Jan Lübbe <jluebbe@debian.org>  Mon, 05 May 2008 01:01:19 +0200
+
+e17 (0.16.999.042-1) experimental; urgency=low
+
+  [ Albin Tonnerre ]
+  * Initial Release (Closes: #405860)
+  * Override linian tag possible-gpl-code-linked-with-openssl
+    - Only the Debian packaging is GPL
+
+ -- Jan Lübbe <jluebbe@debian.org>  Sun, 04 May 2008 22:55:33 +0200
