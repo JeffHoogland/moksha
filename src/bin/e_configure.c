@@ -8,12 +8,34 @@ static void _e_configure_registry_item_full_add(const char *path, int pri, const
 EAPI Eina_List *e_configure_registry = NULL;
 
 static Eina_List *handlers = NULL;
+static E_Int_Menu_Augmentation *maug = NULL;
+
+
+static void
+_e_configure_menu_module_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   e_int_config_modules(m->zone->container, NULL);
+}
+
+static void
+_e_configure_menu_add(void *data, E_Menu *m)
+{
+   E_Menu_Item *mi;
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Modules"));
+   e_util_menu_item_theme_icon_set(mi, "preferences-plugin");
+   e_menu_item_callback_set(mi, _e_configure_menu_module_item_cb, NULL);
+}
 
 EAPI void
 e_configure_init(void)
 {
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, "preferences-extensions");
    e_configure_registry_item_add("extensions/modules", 10, _("Modules"), NULL, "preferences-plugin", e_int_config_modules);
+
+   maug = e_int_menus_menu_augmentation_add_sorted
+     ("config/1", _("Modules"), _e_configure_menu_add, NULL, NULL, NULL);
 
    handlers = eina_list_append
      (handlers, ecore_event_handler_add

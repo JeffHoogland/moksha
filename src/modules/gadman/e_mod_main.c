@@ -73,8 +73,9 @@ e_modapi_init(E_Module *m)
    Man->icon_name = eina_stringshare_add(buf);
    Man->maug = NULL;
    Man->maug = 
-     e_int_menus_menu_augmentation_add("config/1", _gadman_maug_add,
-                                       (void *)Man->icon_name, NULL, NULL);
+     e_int_menus_menu_augmentation_add_sorted
+     ("config/1", _("Gadgets"), _gadman_maug_add, (void *)Man->icon_name,
+      NULL, NULL);
    /* Create toggle action */
    Man->action = e_action_add("gadman_toggle");
    if (Man->action)

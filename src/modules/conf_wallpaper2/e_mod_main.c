@@ -29,7 +29,8 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("appearance/wallpaper2", 10, _("Wallpaper 2"), NULL, "preferences-desktop-wallpaper",wp_conf_show);
    e_configure_registry_category_add("internal", -1, _("Internal"), NULL, "enlightenment/internal");
 //   e_configure_registry_item_add("internal/wallpaper_desk", -1, _("Wallpaper 2"), NULL, "preferences-system-windows", e_int_config_wallpaper_desk);
-   maug = e_int_menus_menu_augmentation_add("config/1", _e_mod_menu_add, NULL, NULL, NULL);
+   maug = e_int_menus_menu_augmentation_add_sorted
+     ("config/1", _("Wallpaper 2"), _e_mod_menu_add, NULL, NULL, NULL);
 
 //   import_hdl = e_fm2_mime_handler_new(_("Set As Background 2"), "preferences-desktop-wallpaper", 
 //				       e_int_config_wallpaper_handler_set, NULL,

@@ -139,7 +139,8 @@ e_modapi_init(E_Module *m)
 	e_action_predef_name_set(_("Launch"), _("Settings Panel"), "configuration",
 				 NULL, NULL, 0);
      }
-   maug = e_int_menus_menu_augmentation_add("config/0", _e_mod_menu_add, NULL, NULL, NULL);
+   maug = e_int_menus_menu_augmentation_add_sorted
+     ("config/0", _("Settings Panel"), _e_mod_menu_add, NULL, NULL, NULL);
    e_module_delayed_set(m, 1);
    e_gadcon_provider_register(&_gadcon_class);
    return m;

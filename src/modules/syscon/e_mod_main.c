@@ -34,8 +34,8 @@ e_modapi_init(E_Module *m)
 	e_action_predef_name_set(_("System"), _("System Control"), "syscon",
 				 NULL, NULL, 0);
      }
-   maug = e_int_menus_menu_augmentation_add("main/10", _e_mod_menu_add, 
-                                            NULL, NULL, NULL);
+   maug = e_int_menus_menu_augmentation_add_sorted
+     ("main/10", _("System"), _e_mod_menu_add, NULL, NULL, NULL);
    e_module_delayed_set(m, 1);
    return m;
 }

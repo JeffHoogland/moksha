@@ -30,6 +30,7 @@ typedef struct _E_Int_Menu_Augmentation E_Int_Menu_Augmentation;
 
 struct _E_Int_Menu_Augmentation
 {
+   const char *sort_key;
    struct {
       void (*func)(void *data, E_Menu *m);
       void *data;
@@ -51,6 +52,12 @@ EAPI E_Int_Menu_Augmentation *e_int_menus_menu_augmentation_add(const char *menu
 								void *data_add,
 								void (*func_del) (void *data, E_Menu *m),
 								void *data_del);
+EAPI E_Int_Menu_Augmentation *e_int_menus_menu_augmentation_add_sorted(const char *menu,
+								       const char *sort_key,
+								       void (*func_add) (void *data, E_Menu *m),
+								       void *data_add,
+								       void (*func_del) (void *data, E_Menu *m),
+								       void *data_del);
 EAPI void                     e_int_menus_menu_augmentation_del(const char *menu,
 								E_Int_Menu_Augmentation *maug);
     

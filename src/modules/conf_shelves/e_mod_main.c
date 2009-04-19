@@ -37,7 +37,8 @@ e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, "preferences-extensions");
    e_configure_registry_item_add("extensions/shelves", 20, _("Shelves"), NULL, "preferences-desktop-shelf", e_int_config_shelf);
-   maug = e_int_menus_menu_augmentation_add("config/1", _e_mod_menu_add, NULL, NULL, NULL);
+   maug = e_int_menus_menu_augmentation_add_sorted
+     ("config/1", _("Shelves"), _e_mod_menu_add, NULL, NULL, NULL);
 
    conf_module = m;
    e_module_delayed_set(m, 1);

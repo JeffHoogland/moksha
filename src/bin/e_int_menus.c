@@ -334,11 +334,12 @@ e_int_menus_lost_clients_new(void)
 }
 
 EAPI E_Int_Menu_Augmentation *
-e_int_menus_menu_augmentation_add(const char *menu,
-				  void (*func_add) (void *data, E_Menu *m),
-				  void *data_add,
-				  void (*func_del) (void *data, E_Menu *m),
-				  void *data_del)
+e_int_menus_menu_augmentation_add_sorted(const char *menu,
+					 const char *sort_key,
+					 void (*func_add) (void *data, E_Menu *m),
+					 void *data_add,
+					 void (*func_del) (void *data, E_Menu *m),
+					 void *data_del)
 {
    E_Int_Menu_Augmentation *maug;
    Eina_List *l;
@@ -346,6 +347,8 @@ e_int_menus_menu_augmentation_add(const char *menu,
 
    maug = E_NEW(E_Int_Menu_Augmentation, 1);
    if (!maug) return NULL;
+
+   maug->sort_key = eina_stringshare_add(sort_key);
 
    maug->add.func = func_add;
    maug->add.data = data_add;
@@ -365,7 +368,27 @@ e_int_menus_menu_augmentation_add(const char *menu,
 	old = 0;
      }
 
-   l = eina_list_append(l, maug);
+   if ((!l) || (!maug->sort_key))
+     l = eina_list_append(l, maug);
+   else
+     {
+	E_Int_Menu_Augmentation *m2;
+	Eina_List *l2;
+
+	/* keep list sorted, those missing sort_key at the end. */
+	EINA_LIST_FOREACH(l, l2, m2)
+	  {
+	     if (!m2->sort_key)
+	       break;
+	     if (strcasecmp(maug->sort_key, m2->sort_key) < 0)
+	       break;
+	  }
+
+	if (l2)
+	  l = eina_list_prepend_relative_list(l, maug, l2);
+	else
+	  l = eina_list_append(l, maug);
+     }
 
    if (old)
      eina_hash_modify(_e_int_menus_augmentation, menu, l);
@@ -375,6 +398,17 @@ e_int_menus_menu_augmentation_add(const char *menu,
    return maug;
 }
 
+EAPI E_Int_Menu_Augmentation *
+e_int_menus_menu_augmentation_add(const char *menu,
+				  void (*func_add) (void *data, E_Menu *m),
+				  void *data_add,
+				  void (*func_del) (void *data, E_Menu *m),
+				  void *data_del)
+{
+   return e_int_menus_menu_augmentation_add_sorted
+     (menu, NULL, func_add, data_add, func_del, data_del);
+}
+
 EAPI void
 e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *maug)
 {
@@ -382,6 +416,7 @@ e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *mau
 
    if (!_e_int_menus_augmentation)
      {
+	eina_stringshare_del(maug->sort_key);
 	free(maug);
 	return;
      }
@@ -396,6 +431,7 @@ e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *mau
 	else
 	  eina_hash_del_by_key(_e_int_menus_augmentation, menu);
      }
+   eina_stringshare_del(maug->sort_key);
    free(maug);
 }
 
@@ -731,12 +767,6 @@ _e_int_menus_virtuals_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_int_menus_module_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   e_configure_registry_call("extensions/modules", m->zone->container, NULL);
-}
-
-static void
 _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
@@ -750,14 +780,6 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 	_e_int_menus_augmentation_add(m, l);
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
-     }
-
-   if (e_configure_registry_exists("extensions/modules"))
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Modules"));
-	e_util_menu_item_theme_icon_set(mi, "preferences-plugin");
-	e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
      }
 
    l = _e_int_menus_augmentation_find("config/1");
