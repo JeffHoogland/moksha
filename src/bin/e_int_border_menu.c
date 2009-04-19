@@ -53,6 +53,7 @@ e_int_border_menu_create(E_Border *bd)
 {
    E_Menu *m;
    E_Menu_Item *mi;
+   Eina_Bool separator;
 
    if (bd->border_menu) return;
 
@@ -135,6 +136,7 @@ e_int_border_menu_create(E_Border *bd)
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
+   separator = 1;
 
    if (!(((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
 	  (bd->client.icccm.min_h == bd->client.icccm.max_h)) ||
@@ -142,6 +144,7 @@ e_int_border_menu_create(E_Border *bd)
      {
 	if ((!bd->lock_user_maximize) && (!bd->shaded) && (!bd->fullscreen))
 	  {
+	     separator = 0;
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Maximize"));
 	     e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_maximize_pre, bd);
@@ -156,6 +159,7 @@ e_int_border_menu_create(E_Border *bd)
      {
 	if ((!bd->lock_user_iconify) && (!bd->fullscreen))
 	  {
+	     separator = 0;
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Iconify"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
@@ -168,6 +172,7 @@ e_int_border_menu_create(E_Border *bd)
 	if ((!bd->lock_user_stacking) &&
 	    ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
 	  {
+	     separator = 0;
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Lower"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_lower, bd);
@@ -186,8 +191,12 @@ e_int_border_menu_create(E_Border *bd)
 	  }
      }
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
+   if (!separator)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+	separator = 1;
+     }
 
    if ((!bd->lock_close) && (!bd->internal))
      {
