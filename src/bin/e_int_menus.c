@@ -67,6 +67,13 @@ static void _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi);
 /* local subsystem globals */
 static Eina_Hash *_e_int_menus_augmentation = NULL;
 
+static Eina_List *
+_e_int_menus_augmentation_find(const char *key)
+{
+   if (!_e_int_menus_augmentation) return NULL;
+   return eina_hash_find(_e_int_menus_augmentation, key);
+}
+
 /* externally accessible functions */
 EAPI E_Menu *
 e_int_menus_main_new(void)
@@ -86,7 +93,7 @@ e_int_menus_main_new(void)
 
    e_menu_category_set(m, "main");
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/0");
+   l = _e_int_menus_augmentation_find("main/0");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    if (e_config->menu_favorites_show)
@@ -112,13 +119,13 @@ e_int_menus_main_new(void)
 	e_menu_item_submenu_set(mi, subm);
      }
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/1");
+   l = _e_int_menus_augmentation_find("main/1");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/2");
+   l = _e_int_menus_augmentation_find("main/2");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_int_menus_desktops_new();
@@ -143,13 +150,13 @@ e_int_menus_main_new(void)
    e_util_menu_item_theme_icon_set(mi, "preferences-windows-lost");
    e_menu_item_submenu_set(mi, subm);
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/3");
+   l = _e_int_menus_augmentation_find("main/3");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/4");
+   l = _e_int_menus_augmentation_find("main/4");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_menu_new();
@@ -169,13 +176,13 @@ e_int_menus_main_new(void)
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop-theme");
    e_menu_item_callback_set(mi, _e_int_menus_themes_about, NULL);
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/5");
+   l = _e_int_menus_augmentation_find("main/5");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(subm);
    e_menu_item_separator_set(mi, 1);
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/6");
+   l = _e_int_menus_augmentation_find("main/6");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(subm);
@@ -188,13 +195,13 @@ e_int_menus_main_new(void)
    e_util_menu_item_theme_icon_set(mi, "application-exit");
    e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/7");
+   l = _e_int_menus_augmentation_find("main/7");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/8");
+   l = _e_int_menus_augmentation_find("main/8");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_int_menus_config_new();
@@ -204,7 +211,7 @@ e_int_menus_main_new(void)
    e_util_menu_item_theme_icon_set(mi, "preferences-system");
    e_menu_item_submenu_set(mi, subm);
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/9");
+   l = _e_int_menus_augmentation_find("main/9");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/10");
@@ -334,7 +341,8 @@ e_int_menus_menu_augmentation_add(const char *menu,
 				  void *data_del)
 {
    E_Int_Menu_Augmentation *maug;
-   Eina_List *l = NULL;
+   Eina_List *l;
+   Eina_Bool old;
 
    maug = E_NEW(E_Int_Menu_Augmentation, 1);
    if (!maug) return NULL;
@@ -345,13 +353,24 @@ e_int_menus_menu_augmentation_add(const char *menu,
    maug->del.func = func_del;
    maug->del.data = data_del;
 
-   l = eina_hash_find(_e_int_menus_augmentation, menu);
-   if (l) eina_hash_del(_e_int_menus_augmentation, menu, l);
+   if (_e_int_menus_augmentation)
+     {
+	l = eina_hash_find(_e_int_menus_augmentation, menu);
+	old = (l != NULL);
+     }
+   else
+     {
+	_e_int_menus_augmentation = eina_hash_string_superfast_new(NULL);
+	l = NULL;
+	old = 0;
+     }
 
    l = eina_list_append(l, maug);
-   if (!_e_int_menus_augmentation)
-     _e_int_menus_augmentation = eina_hash_string_superfast_new(NULL);
-   eina_hash_add(_e_int_menus_augmentation, menu, l);
+
+   if (old)
+     eina_hash_modify(_e_int_menus_augmentation, menu, l);
+   else
+     eina_hash_add(_e_int_menus_augmentation, menu, l);
 
    return maug;
 }
@@ -359,28 +378,23 @@ e_int_menus_menu_augmentation_add(const char *menu,
 EAPI void
 e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *maug)
 {
-   Eina_List *l = NULL;
+   Eina_List *l;
+
+   if (!_e_int_menus_augmentation)
+     {
+	free(maug);
+	return;
+     }
 
    l = eina_hash_find(_e_int_menus_augmentation, menu);
    if (l)
      {
-	/*
-	 * We should always add the list to the hash, in case the list
-	 * becomes empty, or the first element is removed.
-	 */
-        eina_hash_del(_e_int_menus_augmentation, menu, l);
-
 	l = eina_list_remove(l, maug);
+
 	if (l)
-          eina_hash_add(_e_int_menus_augmentation, menu, l);
+	  eina_hash_modify(_e_int_menus_augmentation, menu, l);
 	else
-	  {
-	    if (!eina_hash_population(_e_int_menus_augmentation))
-	      {
-		eina_hash_free(_e_int_menus_augmentation);
-		_e_int_menus_augmentation = NULL;
-	      }
-	  }
+	  eina_hash_del_by_key(_e_int_menus_augmentation, menu);
      }
    free(maug);
 }
@@ -403,18 +417,18 @@ _e_int_menus_main_del_hook(void *obj)
    if (dat->config) e_object_del(E_OBJECT(dat->config));
    free(dat);
 
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/0"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/1"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/2"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/3"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/4"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/5"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/6"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/7"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/8"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/9"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/10"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "main/11"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/0"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/1"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/2"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/3"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/4"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/5"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/6"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/7"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/8"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/9"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/10"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/11"));
 }
 
 static void
@@ -730,7 +744,7 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
 
-   l = eina_hash_find(_e_int_menus_augmentation, "config/0");
+   l = _e_int_menus_augmentation_find("config/0");
    if (l)
      {
 	_e_int_menus_augmentation_add(m, l);
@@ -746,10 +760,10 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 	e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
      }
 
-   l = eina_hash_find(_e_int_menus_augmentation, "config/1");
+   l = _e_int_menus_augmentation_find("config/1");
    if (l) _e_int_menus_augmentation_add(m, l);
 
-   l = eina_hash_find(_e_int_menus_augmentation, "config/2");
+   l = _e_int_menus_augmentation_find("config/2");
    if (l)
      {
 	mi = e_menu_item_new(m);
@@ -766,9 +780,9 @@ _e_int_menus_config_free_hook(void *obj)
    E_Menu *m;
 
    m = obj;
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "config/0"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "config/1"));
-   _e_int_menus_augmentation_del(m, eina_hash_find(_e_int_menus_augmentation, "config/2"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("config/0"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("config/1"));
+   _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("config/2"));
 }
 
 static int
