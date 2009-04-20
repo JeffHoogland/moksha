@@ -9,9 +9,9 @@ struct _E_Widget_Data
    Evas_Object *text;
 };
    
+/* local subsystem functions */
 static void _e_wid_del_hook(Evas_Object *obj); 
 static void _e_wid_disable_hook(Evas_Object *obj);
-/* local subsystem functions */
 
 /* externally accessible functions */
 EAPI Evas_Object *
