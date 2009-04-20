@@ -165,7 +165,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
           e_theme_edje_object_set(o, "base/theme/widgets",
                                   "e/widgets/syscon/item/button");
         edje_object_part_text_set(o, "e.text.label", 
-                                  e_action_predef_label_get(sca->action, sca->params));
+                                  _(e_action_predef_label_get(sca->action, sca->params)));
         if (sca->icon)
           {
              o2 = e_icon_add(popup->evas);

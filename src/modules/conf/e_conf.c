@@ -70,6 +70,7 @@ e_configure_show(E_Container *con)
    Evas_Coord ew, eh, mw, mh;
    Evas_Object *o, *of;
    Evas_Modifier_Mask mask;
+   Eina_Bool kg;
    
    if (_e_configure) 
      {
@@ -138,13 +139,13 @@ e_configure_show(E_Container *con)
    /* Event Obj for keydown */
    o = evas_object_rectangle_add(eco->evas);
    mask = 0;
-   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
    mask = evas_key_modifier_mask_get(e_win_evas_get(eco->win), "Shift");
-   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
    mask = 0;
-   evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
    mask = 0;
-   evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_configure_keydown_cb, eco->win);
 
    /* Category List */
@@ -493,7 +494,7 @@ _e_configure_fill_cat_list(void *data)
 	ecat = l->data;
 	if ((ecat->pri >= 0) && (ecat->items))
 	  {
-	     cat = _e_configure_category_add(eco, ecat->label, ecat->icon);
+	     cat = _e_configure_category_add(eco, _(ecat->label), ecat->icon);
 	     for (ll = ecat->items; ll; ll = ll->next)
 	       {
 		  E_Configure_It *eci;
@@ -503,7 +504,7 @@ _e_configure_fill_cat_list(void *data)
 		  if (eci->pri >= 0)
 		    {
 		       snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
-		       _e_configure_item_add(cat, eci->label, eci->icon, buf);
+		       _e_configure_item_add(cat, _(eci->label), eci->icon, buf);
 		    }
 	       }
 	  }
