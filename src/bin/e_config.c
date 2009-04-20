@@ -1472,7 +1472,7 @@ _e_config_free(E_Config *ecf)
    E_Config_Binding_Key *ebk;
    E_Config_Binding_Edge *ebe;
    E_Font_Fallback *eff;
-        E_Config_Module *em;
+   E_Config_Module *em;
    E_Font_Default *efd;
    E_Config_Theme *et;
    E_Color_Class *cc;
@@ -1636,9 +1636,7 @@ static void
 _e_config_error_dialog_cb_delete(void *dia)
 {
    if (dia == _e_config_error_dialog)
-     {
-	_e_config_error_dialog = NULL;
-     }
+     _e_config_error_dialog = NULL;
 }
 
 static int
@@ -1717,12 +1715,12 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 	if (!_e_config_error_dialog)
 	  {
              E_Dialog *dia;
-	     
+
 	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_sys_error_logout_slow");
 	     if (dia)
 	       {
 		  char buf[8192];
-		  
+
 		  e_dialog_title_set(dia, _("Enlightenment Settings Write Problems"));
 		  e_dialog_icon_set(dia, "dialog-error", 64);
 		  snprintf(buf, sizeof(buf), erstr, file);
