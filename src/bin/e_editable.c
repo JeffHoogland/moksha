@@ -928,9 +928,12 @@ _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
 		  sd->text = old;
 		  return 0;
 	       }
-	     memcpy(sd->text, old, prev_char_length + 1);
-	     memset(old, 0, prev_char_length);
-	     free(old);
+	     if (old)
+	       {
+		  memcpy(sd->text, old, prev_char_length + 1);
+		  memset(old, 0, prev_char_length);
+		  free(old);
+	       }
 	  }
 	else
 	  {
