@@ -262,6 +262,7 @@ start \
 exebuf \
 winlist \
 fileman \
+fileman_opinfo \
 wizard \
 conf \
 conf_wallpaper \

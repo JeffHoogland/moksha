@@ -6,7 +6,7 @@ filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
 e-module-$(MODULE).edj module.desktop
 
-EXTRA_DIST = $(files_DATA)
+EXTRA_DIST = $(files_DATA) page_040.c page_050.c page_060.c
 
 # the module .so file
 INCLUDES               = -I. \

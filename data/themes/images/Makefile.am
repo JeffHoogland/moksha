@@ -391,7 +391,6 @@ icon_performance.png \
 icon_power_management.png \
 icon_profiles.png \
 icon_reboot.png \
-icon_regenerate_menus.png \
 icon_reset.png \
 icon_resize.png \
 icon_right_arrow.png \
