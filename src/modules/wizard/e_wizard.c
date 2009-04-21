@@ -242,6 +242,7 @@ _e_wizard_main_new(E_Zone *zone)
    E_Popup *pop;
    Evas_Object *o, *o_ev;
    Evas_Modifier_Mask mask;
+   Eina_Bool kg;
    
    pop = e_popup_new(zone, 0, 0, zone->w, zone->h);
    e_popup_layer_set(pop, 255);
@@ -257,13 +258,13 @@ _e_wizard_main_new(E_Zone *zone)
    
    o = evas_object_rectangle_add(pop->evas);
    mask = 0;
-   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
    mask = evas_key_modifier_mask_get(pop->evas, "Shift");
-   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
    mask = 0;
-   evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
    mask = 0;
-   evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
 				  _e_wizard_cb_key_down, pop);
    o_ev = o;
