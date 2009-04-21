@@ -86,7 +86,7 @@ e_config_dialog_find(const char *name, const char *class)
    for (l = _e_config_dialog_list; l; l = l->next)
      {
 	cfd = l->data;
-	
+
 	if ((!e_util_strcmp(name, cfd->name)) &&
 	    (!e_util_strcmp(class, cfd->class)))
 	  {
@@ -117,13 +117,12 @@ EAPI E_Config_Dialog *
 e_config_dialog_get(const char *name, const char *class) 
 {
    Eina_List *l;
-   
+
    for (l = _e_config_dialog_list; l; l = l->next)
      {
 	E_Config_Dialog *cfd;
-	
-	cfd = l->data;
-	if (!cfd) continue;
+
+	if (!(cfd = l->data)) continue;
 	if ((!e_util_strcmp(name, cfd->name)) &&
 	    (!e_util_strcmp(class, cfd->class)))
 	  {
@@ -166,7 +165,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    Evas_Object *o, *ob, *sf;
    Evas_Coord mw = 0, mh = 0;
    char buf[256];
-   
+
    pdia = cfd->dia;
    /* FIXME: get name/class form new call and use here */
    if (type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
@@ -247,15 +246,18 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    
    if (!cfd->hide_buttons)
      {
-	e_dialog_button_add(cfd->dia, _("OK"), NULL, _e_config_dialog_cb_ok, cfd);
-	e_dialog_button_add(cfd->dia, _("Apply"), NULL, _e_config_dialog_cb_apply, cfd);
+	e_dialog_button_add(cfd->dia, _("OK"), NULL, 
+                            _e_config_dialog_cb_ok, cfd);
+	e_dialog_button_add(cfd->dia, _("Apply"), NULL, 
+                            _e_config_dialog_cb_apply, cfd);
 	if (!cfd->cfg_changed) 
 	  {
 	     e_dialog_button_disable_num_set(cfd->dia, 0, 1);
 	     e_dialog_button_disable_num_set(cfd->dia, 1, 1);
 	  }
      }
-   e_dialog_button_add(cfd->dia, _("Close"), NULL, _e_config_dialog_cb_close, cfd);
+   e_dialog_button_add(cfd->dia, _("Close"), NULL, 
+                       _e_config_dialog_cb_close, cfd);
    if (!pdia)
      {
 	if (!cfd->view->normal_win)
@@ -281,7 +283,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	e_win_placed_set(cfd->dia->win, 1);
      }
    cfd->view_type = type;
-   
+
    if (pdia)
      {
 	e_object_del_attach_func_set(E_OBJECT(pdia), NULL);
@@ -295,10 +297,10 @@ _e_config_dialog_cb_auto_apply_timer(void *data)
    E_Config_Dialog *cfd;
 
    cfd = data;
-   
+
    if (cfd->auto_apply_timer) ecore_timer_del(cfd->auto_apply_timer);
    cfd->auto_apply_timer = NULL;
-   
+
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
      {
 	if (cfd->view->basic.apply_cfdata)
@@ -330,7 +332,7 @@ _e_config_dialog_cb_ok(void *data, E_Dialog *dia)
 {
    E_Config_Dialog *cfd;
    int ok = 0;
-   
+
    cfd = dia->data;
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
       {
@@ -375,7 +377,7 @@ static void
 _e_config_dialog_cb_advanced(void *data, void *data2)
 {
    E_Config_Dialog *cfd;
-   
+
    cfd = data;
    if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED);
@@ -385,7 +387,7 @@ static void
 _e_config_dialog_cb_basic(void *data, void *data2)
 {
    E_Config_Dialog *cfd;
-   
+
    cfd = data;
    if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);
@@ -430,19 +432,15 @@ static void
 _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
 {
    E_Config_Dialog *cfd = data;
-   int changed;
+   int changed = 1;
 
-   if (!cfd->cfg_changed_auto)
-     return;
-
+   if (!cfd->cfg_changed_auto) return;
    if ((cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC) &&
        (cfd->view->basic.check_changed))
      changed = cfd->view->basic.check_changed(cfd, cfd->cfdata);
    else if ((cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED) &&
 	    (cfd->view->advanced.check_changed))
      changed = cfd->view->advanced.check_changed(cfd, cfd->cfdata);
-   else
-     changed = 1;
 
    e_config_dialog_changed_set(cfd, changed);
 }
@@ -457,28 +455,21 @@ _e_config_dialog_cb_close(void *data, E_Dialog *dia)
    if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    if (cfd->view->close_cfdata)
      ok = cfd->view->close_cfdata(cfd, cfd->cfdata);
-
-   if (ok)
-     e_util_defer_object_del(E_OBJECT(cfd));
+   if (ok) e_util_defer_object_del(E_OBJECT(cfd));
 }
 
 EAPI void
 e_config_dialog_changed_auto_set(E_Config_Dialog *cfd, unsigned char value)
 {
-   if (!cfd)
-     return;
-
+   if (!cfd) return;
    cfd->cfg_changed_auto = !!value;
 }
 
 EAPI void
 e_config_dialog_changed_set(E_Config_Dialog *cfd, unsigned char value)
 {
-   if (!cfd)
-     return;
-
+   if (!cfd) return;
    cfd->cfg_changed = !!value;
-
    if (cfd->cfg_changed)
      _e_config_dialog_changed(cfd);
    else
