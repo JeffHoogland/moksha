@@ -11,7 +11,9 @@
 //   need to make thumb white rect better (shaded etc.)
 //   need to make "theme wallpaper" have different look
 //   need to make "exchange" wallpapers have a different look
-//   need to sort files (alphabetically/ by color? etc.)
+//   need indicator that sort is pending
+//   need signal to emit for popping down slide-up panel
+//   bug: animated wp doesnt workon first show
 
 typedef struct _Info Info;
 typedef struct _Smart_Data Smart_Data;

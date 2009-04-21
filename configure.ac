@@ -26,6 +26,9 @@ define([AC_LIBTOOL_LANG_F77_CONFIG], [:])
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 
+release="ver-pre-svn-00"
+AC_SUBST(release)
+
 AC_CHECK_FUNCS(setenv)
 AC_CHECK_FUNCS(unsetenv)
 
@@ -63,7 +66,7 @@ dnl AC_E_CHECK_PKG(VALGRIND, [valgrind >= 2.4.0], [], [:])
 AC_SUBST(VALGRIND_CFLAGS)
 AC_SUBST(VALGRIND_LIBS)
 
-MODULE_ARCH="$host_os-$host_cpu"
+MODULE_ARCH="$host_os-$host_cpu-$release"
 AC_SUBST(MODULE_ARCH)
 AC_DEFINE_UNQUOTED(MODULE_ARCH, "$MODULE_ARCH", "Module architecture")
 
