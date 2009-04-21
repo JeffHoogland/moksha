@@ -259,12 +259,20 @@ _e_wizard_main_new(E_Zone *zone)
    o = evas_object_rectangle_add(pop->evas);
    mask = 0;
    kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   if (!kg)
+      fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = evas_key_modifier_mask_get(pop->evas, "Shift");
    kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   if (!kg)
+      fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = 0;
    kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   if (!kg)
+      fprintf(stderr,"ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
    mask = 0;
    kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   if (!kg)
+      fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
 				  _e_wizard_cb_key_down, pop);
    o_ev = o;

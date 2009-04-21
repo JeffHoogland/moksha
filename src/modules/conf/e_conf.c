@@ -137,12 +137,20 @@ e_configure_show(E_Container *con)
    o = evas_object_rectangle_add(eco->evas);
    mask = 0;
    kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   if (!kg)
+      fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = evas_key_modifier_mask_get(e_win_evas_get(eco->win), "Shift");
    kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   if (!kg)
+      fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = 0;
    kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   if (!kg)
+      fprintf(stderr,"ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
    mask = 0;
    kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   if (!kg)
+      fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_configure_keydown_cb, eco->win);
 
    /* Category List */
