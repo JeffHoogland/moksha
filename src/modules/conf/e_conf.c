@@ -10,17 +10,17 @@ typedef struct _E_Configure_Item E_Configure_Item;
 struct _E_Configure
 {
    E_Object e_obj_inherit;
-   
+
    E_Container *con;
    E_Win *win;
    Evas *evas;
    Evas_Object *edje;
-   
+
    Evas_Object *o_list;
    Evas_Object *cat_list;
    Evas_Object *item_list;
    Evas_Object *close;
-   
+
    Eina_List *cats;
    Ecore_Event_Handler *mod_hdl;
 };
@@ -35,14 +35,12 @@ struct _E_Configure_Category
 {
    E_Configure *eco;
    const char *label;
-   
    Eina_List *items;
 };
 
 struct _E_Configure_Item
 {
    E_Configure_CB *cb;
-   
    const char *label;
    const char *icon;
 };
@@ -71,11 +69,11 @@ e_configure_show(E_Container *con)
    Evas_Object *o, *of;
    Evas_Modifier_Mask mask;
    Eina_Bool kg;
-   
+
    if (_e_configure) 
      {
 	E_Zone *z, *z2;
-	
+
 	eco = _e_configure;
 	z = e_util_zone_current_get(e_manager_current_get());
 	z2 = eco->win->border->zone;
@@ -93,14 +91,13 @@ e_configure_show(E_Container *con)
 	e_border_unshade(eco->win->border, E_DIRECTION_DOWN);
 	return;
      }
-   
+
    if (!con) 
      {
 	man = e_manager_current_get();
 	if (!man) return;
 	con = e_container_current_get(man);
-	if (!con)
-	  con = e_container_number_get(man, 0);
+	if (!con) con = e_container_number_get(man, 0);
 	if (!con) return;
      }
 
@@ -176,7 +173,6 @@ e_configure_show(E_Container *con)
    e_widget_min_size_get(eco->close, &mw, &mh);
    edje_extern_object_min_size_set(eco->close, mw, mh);
    edje_object_part_swallow(eco->edje, "e.swallow.button", eco->close);
-   
    edje_object_size_min_calc(eco->edje, &ew, &eh);
    e_win_size_min_set(eco->win, ew, eh);
    e_util_win_auto_resize_fill(eco->win);
@@ -192,11 +188,11 @@ e_configure_show(E_Container *con)
    if (eco->cats)
      {
 	E_Configure_Category *cat;
-	
+
 	cat = eco->cats->data;
 	_e_configure_category_cb(cat, NULL);
      }
-   
+
    _e_configure = eco;
 }
 
@@ -205,9 +201,6 @@ e_configure_del(void)
 {
    if (_e_configure) 
      {
-	if (_e_configure->mod_hdl) 
-	  ecore_event_handler_del(_e_configure->mod_hdl);
-	_e_configure->mod_hdl = NULL;
 	e_object_del(E_OBJECT(_e_configure));
 	_e_configure = NULL;
      }
@@ -223,26 +216,20 @@ _e_configure_free(E_Configure *eco)
    while (eco->cats) 
      {
 	E_Configure_Category *cat;
-	
-	cat = eco->cats->data;
-	if (!cat) continue;
-	if (cat->label)
-	  eina_stringshare_del(cat->label);
-	
+
+	if (!(cat = eco->cats->data)) return;
+	if (cat->label) eina_stringshare_del(cat->label);
+
 	while (cat->items) 
 	  {
 	     E_Configure_Item *ci;
-	     
-	     ci = cat->items->data;
-	     if (!ci) continue;
-	     if (ci->label)
-	       eina_stringshare_del(ci->label);
-	     if (ci->icon)
-	       eina_stringshare_del(ci->icon);
+
+	     if (!(ci = cat->items->data)) continue;
+	     if (ci->label) eina_stringshare_del(ci->label);
+	     if (ci->icon) eina_stringshare_del(ci->icon);
 	     if (ci->cb)
 	       {
-		  if (ci->cb->path)
-		    eina_stringshare_del(ci->cb->path);
+		  if (ci->cb->path) eina_stringshare_del(ci->cb->path);
 		  free(ci->cb);
 	       }
 	     cat->items = eina_list_remove_list(cat->items, cat->items);
@@ -264,9 +251,8 @@ static void
 _e_configure_cb_del_req(E_Win *win) 
 {
    E_Configure *eco;
-   
-   eco = win->data;
-   if (!eco) return;
+
+   if (!(eco = win->data)) return;
    e_object_del(E_OBJECT(eco));
 }
 
@@ -276,8 +262,7 @@ _e_configure_cb_resize(E_Win *win)
    E_Configure *eco;
    Evas_Coord w, h;
 
-   eco = win->data;
-   if (!eco) return;
+   if (!(eco = win->data)) return;
    ecore_evas_geometry_get(win->ecore_evas, NULL, NULL, &w, &h);
    evas_object_resize(eco->edje, w, h);
 }
@@ -286,9 +271,8 @@ static void
 _e_configure_cb_close(void *data, void *data2) 
 {
    E_Configure *eco;
-   
-   eco = data;
-   if (!eco) return;
+
+   if (!(eco = data)) return;
    e_util_defer_object_del(E_OBJECT(eco));
 }
 
@@ -297,7 +281,7 @@ _e_configure_category_add(E_Configure *eco, const char *label, const char *icon)
 {
    Evas_Object *o = NULL;
    E_Configure_Category *cat;
-   
+
    if (!eco) return NULL;
    if (!label) return NULL;
 
@@ -315,7 +299,8 @@ _e_configure_category_add(E_Configure *eco, const char *label, const char *icon)
      }
    eco->cats = eina_list_append(eco->cats, cat);
 
-   e_widget_toolbar_item_append(eco->cat_list, o, label, _e_configure_category_cb, cat, NULL);
+   e_widget_toolbar_item_append(eco->cat_list, o, label, 
+                                _e_configure_category_cb, cat, NULL);
    return cat;
 }
 
@@ -326,9 +311,8 @@ _e_configure_category_cb(void *data, void *data2)
    E_Configure *eco;
    Eina_List *l;
    Evas_Coord w, h;
-   
-   cat = data;
-   if (!cat) return;
+
+   if (!(cat = data)) return;
    eco = cat->eco;
 
    evas_event_freeze(evas_object_evas_get(eco->item_list));
@@ -340,9 +324,8 @@ _e_configure_category_cb(void *data, void *data2)
      {
 	E_Configure_Item *ci;
 	Evas_Object *o = NULL;
-	
-	ci = l->data;
-	if (!ci) continue;
+
+	if (!(ci = l->data)) continue;
 	if (ci->icon) 
 	  {
 	     o = e_icon_add(eco->evas);
@@ -352,7 +335,8 @@ _e_configure_category_cb(void *data, void *data2)
 		  o = e_util_icon_add(ci->icon, eco->evas);
 	       }
 	  }
-	e_widget_ilist_append(eco->item_list, o, ci->label, _e_configure_item_cb, ci, NULL);
+	e_widget_ilist_append(eco->item_list, o, ci->label, 
+                              _e_configure_item_cb, ci, NULL);
      }
    e_widget_ilist_go(eco->item_list);
    e_widget_min_size_get(eco->item_list, &w, &h);
@@ -367,9 +351,9 @@ _e_configure_item_add(E_Configure_Category *cat, const char *label, const char *
 {
    E_Configure_Item *ci;
    E_Configure_CB *cb;
-   
+
    if ((!cat) || (!label)) return;
-   
+
    ci = E_NEW(E_Configure_Item, 1);
    cb = E_NEW(E_Configure_CB, 1);
    cb->eco = cat->eco;
@@ -385,9 +369,8 @@ _e_configure_item_cb(void *data)
 {
    E_Configure_Item *ci;
    E_Configure_CB *cb;
-   
-   ci = data;
-   if (!ci) return;
+
+   if (!(ci = data)) return;
    cb = ci->cb;
    if (cb->path) e_configure_registry_call(cb->path, cb->eco->con, NULL);
 }
@@ -397,10 +380,9 @@ _e_configure_focus_cb(void *data, Evas_Object *obj)
 {
    E_Win *win;
    E_Configure *eco;
-   
+
    win = data;
-   eco = win->data;
-   if (!eco) return;
+   if (!(eco = win->data)) return;
    if (obj == eco->close) 
      {
 	e_widget_focused_object_clear(eco->item_list);
@@ -424,7 +406,7 @@ _e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event)
    Evas_Event_Key_Down *ev;
    E_Win *win;
    E_Configure *eco;
-   
+
    ev = event;
    win = data;
    eco = win->data;
@@ -462,11 +444,10 @@ _e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event)
 	  o = eco->item_list;
 	else if (e_widget_focus_get(eco->close))
 	  o = eco->close;
-	
+
 	if (o) 
 	  {
-	     o = e_widget_focused_object_get(o);
-	     if (!o) return;
+	     if (!(o = e_widget_focused_object_get(o))) return;
 	     e_widget_activate(o);
 	  }
      }
@@ -480,8 +461,7 @@ _e_configure_fill_cat_list(void *data)
    E_Configure_Category *cat;
    Eina_List *l;
 
-   eco = data;
-   if (!eco) return;
+   if (!(eco = data)) return;
 
    evas_event_freeze(evas_object_evas_get(eco->cat_list));
    edje_freeze();
@@ -490,7 +470,7 @@ _e_configure_fill_cat_list(void *data)
      {
 	Eina_List *ll;
 	E_Configure_Cat *ecat;
-	
+
 	ecat = l->data;
 	if ((ecat->pri >= 0) && (ecat->items))
 	  {
@@ -499,17 +479,19 @@ _e_configure_fill_cat_list(void *data)
 	       {
 		  E_Configure_It *eci;
 		  char buf[1024];
-		  
+
 		  eci = ll->data;
 		  if (eci->pri >= 0)
 		    {
-		       snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
-		       _e_configure_item_add(cat, _(eci->label), eci->icon, buf);
+		       snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, 
+                                eci->item);
+		       _e_configure_item_add(cat, _(eci->label), 
+                                             eci->icon, buf);
 		    }
 	       }
 	  }
      }
-   
+
    e_widget_min_size_get(eco->cat_list, &mw, &mh);
    e_widget_min_size_set(eco->cat_list, mw, mh);
    edje_thaw();
