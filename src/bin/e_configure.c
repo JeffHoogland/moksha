@@ -10,7 +10,6 @@ EAPI Eina_List *e_configure_registry = NULL;
 static Eina_List *handlers = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 
-
 static void
 _e_configure_menu_module_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
@@ -143,10 +142,8 @@ _e_configure_efreet_desktop_update(void)
 	     cfg_cat_cfg = buf;
 	     ic = cfg_cat_icon;
 	     if (!ic) ic = "system";
-	     e_configure_registry_category_add("system",
-					       1000, _("System"),
-					       NULL,
-					       ic);
+	     e_configure_registry_category_add("system", 1000, _("System"),
+					       NULL, ic);
 	  }
 	else
 	  {
@@ -154,20 +151,17 @@ _e_configure_efreet_desktop_update(void)
 	     if (!cfg_cat) cfg_cat = strdup(cfg_cat_cfg);
 	     if (cfg_cat)
 	       {
-		  if (!cfg_cat_name)
-		    cfg_cat_name = cfg_cat;
+		  if (!cfg_cat_name) cfg_cat_name = cfg_cat;
 		  e_configure_registry_category_add(cfg_cat,
 						    1000, cfg_cat_name,
-						    NULL,
-						    cfg_cat_icon);
+						    NULL, cfg_cat_icon);
 		  free(cfg_cat);
 		  cfg_cat = NULL;
 	       }
 	  }
 	_e_configure_registry_item_full_add(cfg_cat_cfg, cfg_pri, label,
 					    NULL, cfg_icon,
-					    NULL, NULL,
-					    desktop);
+					    NULL, NULL, desktop);
 	if (cfg_icon) free(cfg_icon);
 	if (cfg_cat_icon) free(cfg_cat_icon);
      }
@@ -279,7 +273,6 @@ e_configure_registry_item_del(const char *path)
 	      }
 	  break;
        }
-
    free(cat);
 }
 
@@ -305,7 +298,8 @@ e_configure_registry_category_add(const char *path, int pri, const char *label, 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat2)
      if (ecat2->pri > ecat->pri)
        {
-	  e_configure_registry = eina_list_prepend_relative_list(e_configure_registry, ecat, l);
+	  e_configure_registry = 
+            eina_list_prepend_relative_list(e_configure_registry, ecat, l);
 	  return;
        }
    e_configure_registry = eina_list_append(e_configure_registry, ecat);
@@ -332,7 +326,6 @@ e_configure_registry_category_del(const char *path)
 	  free(ecat);
 	  break;
        }
-
    free(cat);
 }
 
@@ -368,9 +361,7 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
 		   {
 		      if (custom_desktop_exec.func)
 			custom_desktop_exec.func(custom_desktop_exec.data,
-						 con,
-						 params,
-						 eci->desktop);
+						 con, params, eci->desktop);
 		      else
 			e_exec(e_util_zone_current_get(con->manager),
 			       eci->desktop, NULL, NULL, "config");
@@ -379,7 +370,6 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
 	      }
 	  break;
        }
-
    free(cat);
 }
 
