@@ -46,7 +46,7 @@ e_module_shutdown(void)
 #endif
 
    _e_modules = eina_list_reverse(_e_modules);
-	
+
    EINA_LIST_FREE(_e_modules, m)
      {
 	if (m && m->enabled && !m->error)
@@ -140,11 +140,7 @@ e_module_new(const char *name)
    m->func.shutdown = dlsym(m->handle, "e_modapi_shutdown");
    m->func.save = dlsym(m->handle, "e_modapi_save");
 
-   if ((!m->func.init) ||
-       (!m->func.shutdown) ||
-       (!m->func.save) ||
-       (!m->api)
-       )
+   if ((!m->func.init) || (!m->func.shutdown) || (!m->func.save) || (!m->api))
      {
 	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"
 				       "The full path to this module is:<br>"
@@ -193,7 +189,7 @@ init_done:
 	if (s)
 	  {
 	     char *s2;
-	     
+
 	     s2 = ecore_file_dir_get(s);
 	     free(s);
 	     if (s2)
@@ -206,9 +202,8 @@ init_done:
    for (l = e_config->modules; l; l = l->next)
      {
 	E_Config_Module *em;
-	
-	em = l->data;
-	if (!em) continue;
+
+	if (!(em = l->data)) continue;
 	if (!e_util_strcmp(em->name, m->name))
 	  {
 	     in_list = 1;
@@ -218,7 +213,7 @@ init_done:
    if (!in_list)
      {
 	E_Config_Module *em;
-	
+
 	em = E_NEW(E_Config_Module, 1);
 	em->name = eina_stringshare_add(m->name);
 	em->enabled = 0;
@@ -330,14 +325,14 @@ e_module_save_all(void)
    int ret = 1;
 
    EINA_LIST_FOREACH(_e_modules, l, m)
-      e_object_ref(E_OBJECT(m));
+     e_object_ref(E_OBJECT(m));
    EINA_LIST_FOREACH(_e_modules, l, m)
-	if ((m->enabled) && (!m->error))
-	  {
-	     if (!m->func.save(m)) ret = 0;
-	  }
+     if ((m->enabled) && (!m->error))
+       {
+          if (!m->func.save(m)) ret = 0;
+       }
    EINA_LIST_FOREACH(_e_modules, l, m)
-      e_object_unref(E_OBJECT(m));
+     e_object_unref(E_OBJECT(m));
    return ret;
 }
 
@@ -349,7 +344,7 @@ e_module_find(const char *name)
 
    if (!name) return NULL;
    EINA_LIST_FOREACH(_e_modules, l, m)
-      if (!e_util_strcmp(name, m->name)) return m;
+     if (!e_util_strcmp(name, m->name)) return m;
    return NULL;
 }
 
@@ -438,13 +433,12 @@ e_module_priority_set(E_Module *m, int priority)
    /* Set the loading order for a module.
       More priority means load earlier */
    Eina_List *l;
-   
+
    for (l = e_config->modules; l; l = l->next)
      {
 	E_Config_Module *em;
-	
-	em = l->data;
-	if (!em) continue;
+
+	if (!(em = l->data)) continue;
 	if (!e_util_strcmp(m->name, em->name))
 	  {
 	     if (em->priority != priority)
@@ -476,7 +470,7 @@ _e_module_free(E_Module *m)
 	     break;
 	  }
      }
-   
+
    if ((m->enabled) && (!m->error))
      {
 	m->func.save(m);
@@ -528,8 +522,7 @@ _e_module_event_update_free(void *data, void *event)
 {
    E_Event_Module_Update *ev;
    
-   ev = event;
-   if (!ev) return;
+   if (!(ev = event)) return;
    E_FREE(ev->name);
    E_FREE(ev);
 }
@@ -541,7 +534,7 @@ _e_module_cb_idler(void *data)
      {
 	const char *name;
 	E_Module *m;
-	
+
 	name = _e_modules_delayed->data;
 	_e_modules_delayed = eina_list_remove_list(_e_modules_delayed, _e_modules_delayed);
 	m = NULL;
