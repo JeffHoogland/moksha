@@ -1110,8 +1110,6 @@ _e_editable_char_geometry_get_from_pos(Evas_Object *editable, int utf_pos, Evas_
    text = evas_object_text_text_get(text_obj);
    if ((!text) || (sd->unicode_length <= 0) || (utf_pos <= 0))
      {
-        if (cx) *cx = 0;
-        if (cy) *cy = 0;
         e_editable_char_size_get(editable, cw, ch);
         return 1;
      }
