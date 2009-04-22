@@ -5,13 +5,11 @@ Maintainer:  Debian Pkg-e Team <pkg-e-devel@lists.alioth.debian.org>
 Uploaders: Albin Tonnerre <albin.tonnerre@gmail.com>,
  Xavier Oswald <x.oswald@free.fr>, Jan Lübbe <jluebbe@debian.org>
 Build-Depends: debhelper (>= 6.0.7), cdbs (>= 0.4.52), libeet-dev (>= 1.0.1),
- libedje-dev (>= 0.9.9.050+svn20081206), libefreet-dev (>= 0.5.0.050+svn20090203),
- libecore-dev (>= 0.9.9.050+svn20090202), libedbus-dev (>= 0.5.0.050+svn20090130),
- libevas-dev (>= 0.9.9.050+svn20090201), libeina-dev (>= 0.0.1~svn20090128),
+ libedje-dev (>= 0.9.9.060+svnYYYYMMDD), libefreet-dev (>= 0.5.0.060+svnYYYYMMDD),
+ libecore-dev (>= 0.9.9.060+svnYYYYMMDD), libedbus-dev (>= 0.5.0.060+svnYYYYMMDD),
+ libevas-dev (>= 0.9.9.060+svnYYYYMMDD), libeina-dev (>= 0.0.2.060+svnYYYYMMDD),
  libasound2-dev, libxext-dev, libeet-bin, libedje-bin, libpam0g-dev
 Standards-Version: 3.8.1
-Vcs-Git: git://git.debian.org/pkg-e/apps/e.git
-Vcs-Browser: http://git.debian.org/?p=pkg-e/apps/e.git
 Homepage: http://www.enlightenment.org
 
 Package: e17
@@ -58,9 +56,9 @@ Package: efl-dev
 Architecture: any
 Section: devel
 Depends: ${misc:Depends}, libeet-dev (>= 1.0.1),
- libedje-dev (>= 0.9.9.050+svn20081206), libefreet-dev (>= 0.5.0.050+svn20090203),
- libecore-dev (>= 0.9.9.050+svn20090202), libedbus-dev (>= 0.5.0.050+svn20090130),
- libevas-dev (>= 0.9.9.050+svn20090201), libeina-dev (>= 0.0.1~svn20090128)
+ libedje-dev (>= 0.9.9.060), libefreet-dev (>= 0.5.0.060),
+ libecore-dev (>= 0.9.9.060), libedbus-dev (>= 0.5.0.060),
+ libevas-dev (>= 0.9.9.060), libeina-dev (>= 0.0.2.060)
 Description: EFL headers, static libraries and documentation
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
