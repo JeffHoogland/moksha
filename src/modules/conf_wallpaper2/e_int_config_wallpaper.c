@@ -14,6 +14,8 @@
 //   need indicator that sort is pending
 //   need signal to emit for popping down slide-up panel
 //   bug: animated wp doesnt workon first show
+//   need to disable "this screen" if multiple containers/zones dont exist
+//   need to disable "this desktop vs all desktops" if only 1 desk exists
 
 typedef struct _Info Info;
 typedef struct _Smart_Data Smart_Data;
