@@ -572,35 +572,37 @@ e_border_res_change_geometry_restore(E_Border *bd)
      }
    else
      {
-	int x, y, w, h;
+	int x, y, w, h, zx, zy, zw, zh;
 	
 	bd->saved.x = bd->pre_res_change.saved.x;
 	bd->saved.y = bd->pre_res_change.saved.y;
 	bd->saved.w = bd->pre_res_change.saved.w;
 	bd->saved.h = bd->pre_res_change.saved.h;
+
+	e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+
+	if (bd->saved.w > zw)
+	  bd->saved.w = zw;
+	if ((bd->saved.x + bd->saved.w) > (zx + zw))
+	  bd->saved.x = zx + zw - bd->saved.w;
 	
-	if (bd->saved.w > bd->zone->w)
-	  bd->saved.w = bd->zone->w;
-	if ((bd->saved.x + bd->saved.w) > (bd->zone->x + bd->zone->w))
-	  bd->saved.x = bd->zone->x + bd->zone->w - bd->saved.w;
-	
-	if (bd->saved.h > bd->zone->h)
-	  bd->saved.h = bd->zone->h;
-	if ((bd->saved.y + bd->saved.h) > (bd->zone->y + bd->zone->h))
-	  bd->saved.y = bd->zone->y + bd->zone->h - bd->saved.h;
+	if (bd->saved.h > zh)
+	  bd->saved.h = zh;
+	if ((bd->saved.y + bd->saved.h) > (zy + zh))
+	  bd->saved.y = zy + zh - bd->saved.h;
 	
 	x = bd->pre_res_change.x;
 	y = bd->pre_res_change.y;
 	w = bd->pre_res_change.w;
 	h = bd->pre_res_change.h;
-	if (w > bd->zone->w)
-	  w = bd->zone->w;
-	if (h > bd->zone->h)
-	  h = bd->zone->h;
-	if ((x + w) > (bd->zone->x + bd->zone->w))
-	  x = bd->zone->x + bd->zone->w - w;
-	if ((y + h) > (bd->zone->y + bd->zone->h))
-	  y = bd->zone->y + bd->zone->h - h;
+	if (w > zw)
+	  w = zw;
+	if (h > zh)
+	  h = zh;
+	if ((x + w) > (zx + zw))
+	  x = zx + zw - w;
+	if ((y + h) > (zy + zh))
+	  y = zy + zh - h;
 	e_border_move_resize(bd, x, y, w, h);
      }
    memcpy(&bd->pre_res_change, &pre_res_change, sizeof(pre_res_change));
@@ -799,10 +801,11 @@ e_border_hide(E_Border *bd, int manage)
    bd->post_show = 0;
 }
 
-EAPI void
-e_border_move(E_Border *bd, int x, int y)
+static void
+_e_border_move_internal(E_Border *bd, int x, int y, Eina_Bool without_border)
 {
    E_Event_Border_Move *ev;
+   int bx, by;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -820,6 +823,7 @@ e_border_move(E_Border *bd, int x, int y)
 	pnd->move = 1;
 	pnd->x = x;
 	pnd->y = y;
+	pnd->without_border = without_border;
 	bd->pending_move_resize = eina_list_append(bd->pending_move_resize, pnd);
 	return;
      }
@@ -836,13 +840,24 @@ e_border_move(E_Border *bd, int x, int y)
 	ecore_x_netwm_sync_request_send(bd->client.win, bd->client.netwm.sync.serial++);
      }
 #endif
+   if (!without_border)
+     {
+	bx = bd->client_inset.l;
+	by = bd->client_inset.t;
+     }
+   else
+     {
+	bx = 0;
+	by = 0;
+     }
+
    if (bd->internal_ecore_evas)
      ecore_evas_managed_move(bd->internal_ecore_evas,
-			     bd->x + bd->fx.x + bd->client_inset.l,
-			     bd->y + bd->fx.y + bd->client_inset.t);
+			     bd->x + bd->fx.x + bx,
+			     bd->y + bd->fx.y + by);
    ecore_x_icccm_move_resize_send(bd->client.win,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t,
+				  bd->x + bd->fx.x + bx,
+				  bd->y + bd->fx.y + by,
 				  bd->client.w,
 				  bd->client.h);
    _e_border_move_update(bd);
@@ -852,6 +867,58 @@ e_border_move(E_Border *bd, int x, int y)
 //  e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
    ecore_event_add(E_EVENT_BORDER_MOVE, ev, _e_border_event_border_move_free, NULL);
    _e_border_zone_update(bd);
+}
+
+/**
+ * Move window to coordinates that already account border decorations.
+ *
+ * This call will consider given position already accounts border
+ * decorations, so it will not be considered later. This will just
+ * work properly with borders that have being evaluated and border
+ * decorations are known (border->client_inset).
+ *
+ * @parm x horizontal position to place window.
+ * @parm y vertical position to place window.
+ *
+ * @see e_border_move_without_border()
+ */
+EAPI void
+e_border_move(E_Border *bd, int x, int y)
+{
+   _e_border_move_internal(bd, x, y, 0);
+}
+
+/**
+ * Move window to coordinates that do not account border decorations yet.
+ *
+ * This call will consider given position does not account border
+ * decoration, so these values (border->client_inset) will be
+ * accounted automatically. This is specially useful when it is a new
+ * client and has not be evaluated yet, in this case
+ * border->client_inset will be zeroed and no information is known. It
+ * will mark pending requests so border will be accounted on
+ * evalutation phase.
+ *
+ * @parm x horizontal position to place window.
+ * @parm y vertical position to place window.
+ *
+ * @see e_border_move()
+ */
+EAPI void
+e_border_move_without_border(E_Border *bd, int x, int y)
+{
+   _e_border_move_internal(bd, x, y, 1);
+}
+
+EAPI void
+e_border_center(E_Border *bd)
+{
+   int x, y, w, h;
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
+   e_border_move(bd, x + (w - bd->w) / 2, y + (h - bd->h) / 2);
 }
 
 EAPI void
@@ -877,11 +944,12 @@ e_border_fx_offset(E_Border *bd, int x, int y)
    if (bd->moving) _e_border_move_update(bd);
 }
 
-EAPI void
-e_border_resize(E_Border *bd, int w, int h)
+static void
+_e_border_resize_internal(E_Border *bd, int w, int h, Eina_Bool without_border)
 {
    E_Event_Border_Resize *ev;
-   
+   int bx, by, bw, bh;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
@@ -889,6 +957,22 @@ e_border_resize(E_Border *bd, int w, int h)
        (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)))
      return;
    ecore_x_window_shadow_tree_flush();
+
+   if (!without_border)
+     {
+	bx = bd->client_inset.l;
+	by = bd->client_inset.t;
+	bw = (bd->client_inset.l + bd->client_inset.r);
+	bh = (bd->client_inset.t + bd->client_inset.b);
+     }
+   else
+     {
+	bx = 0;
+	by = 0;
+	bw = 0;
+	bh = 0;
+     }
+
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -896,8 +980,9 @@ e_border_resize(E_Border *bd, int w, int h)
 	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
 	if (!pnd) return;
 	pnd->resize = 1;
-	pnd->w = w - (bd->client_inset.l + bd->client_inset.r);
-	pnd->h = h - (bd->client_inset.t + bd->client_inset.b);
+	pnd->without_border = without_border;
+	pnd->w = w - bw;
+	pnd->h = h - bh;
 	bd->pending_move_resize = eina_list_append(bd->pending_move_resize, pnd);
 	return;
      }
@@ -905,8 +990,8 @@ e_border_resize(E_Border *bd, int w, int h)
    bd->pre_res_change.valid = 0;
    bd->w = w;
    bd->h = h;
-   bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
-   bd->client.h = bd->h - (bd->client_inset.t + bd->client_inset.b);
+   bd->client.w = bd->w - bw;
+   bd->client.h = bd->h - bh;
    bd->changed = 1;
    bd->changes.size = 1;
    if ((bd->shaped) || (bd->client.shaped))
@@ -921,11 +1006,11 @@ e_border_resize(E_Border *bd, int w, int h)
      }
    if (bd->internal_ecore_evas)
      ecore_evas_managed_move(bd->internal_ecore_evas,
-			     bd->x + bd->fx.x + bd->client_inset.l,
-			     bd->y + bd->fx.y + bd->client_inset.t);
+			     bd->x + bd->fx.x + bx,
+			     bd->y + bd->fx.y + by);
    ecore_x_icccm_move_resize_send(bd->client.win,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t,
+				  bd->x + bd->fx.x + bx,
+				  bd->y + bd->fx.y + by,
 				  bd->client.w,
 				  bd->client.h);
    _e_border_resize_update(bd);
@@ -937,19 +1022,77 @@ e_border_resize(E_Border *bd, int w, int h)
    _e_border_zone_update(bd);
 }
 
+/**
+ * Resize window to values that already account border decorations.
+ *
+ * This call will consider given size already accounts border
+ * decorations, so it will not be considered later. This will just
+ * work properly with borders that have being evaluated and border
+ * decorations are known (border->client_inset).
+ *
+ * @parm w horizontal window size.
+ * @parm h vertical window size.
+ *
+ * @see e_border_resize_without_border()
+ */
 EAPI void
-e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
+e_border_resize(E_Border *bd, int w, int h)
+{
+   _e_border_resize_internal(bd, w, h, 0);
+}
+
+/**
+ * Resize window to values that do not account border decorations yet.
+ *
+ * This call will consider given size does not account border
+ * decoration, so these values (border->client_inset) will be
+ * accounted automatically. This is specially useful when it is a new
+ * client and has not be evaluated yet, in this case
+ * border->client_inset will be zeroed and no information is known. It
+ * will mark pending requests so border will be accounted on
+ * evalutation phase.
+ *
+ * @parm w horizontal window size.
+ * @parm h vertical window size.
+ *
+ * @see e_border_resize()
+ */
+EAPI void
+e_border_resize_without_border(E_Border *bd, int w, int h)
+{
+   _e_border_resize_internal(bd, w, h, 1);
+}
+
+static void
+_e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bool without_border)
 {
    E_Event_Border_Move		*mev;
    E_Event_Border_Resize	*rev;
+   int bx, by, bw, bh;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
    if ((bd->fullscreen) || 
        (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip))) 
-	   return;
+     return;
    ecore_x_window_shadow_tree_flush();
+
+   if (!without_border)
+     {
+	bx = bd->client_inset.l;
+	by = bd->client_inset.t;
+	bw = (bd->client_inset.l + bd->client_inset.r);
+	bh = (bd->client_inset.t + bd->client_inset.b);
+     }
+   else
+     {
+	bx = 0;
+	by = 0;
+	bw = 0;
+	bh = 0;
+     }
+
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -958,10 +1101,11 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 	if (!pnd) return;
 	pnd->move = 1;
 	pnd->resize = 1;
+	pnd->without_border = without_border;
 	pnd->x = x;
 	pnd->y = y;
-	pnd->w = w - (bd->client_inset.l + bd->client_inset.r);
-	pnd->h = h - (bd->client_inset.t + bd->client_inset.b);
+	pnd->w = w - bw;
+	pnd->h = h - bh;
 	bd->pending_move_resize = eina_list_append(bd->pending_move_resize, pnd);
 	return;
      }
@@ -971,8 +1115,8 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    bd->y = y;
    bd->w = w;
    bd->h = h;
-   bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
-   bd->client.h = bd->h - (bd->client_inset.t + bd->client_inset.b);
+   bd->client.w = bd->w - bw;
+   bd->client.h = bd->h - bh;
    bd->changed = 1;
    bd->changes.pos = 1;
    bd->changes.size = 1;
@@ -988,11 +1132,11 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
      }
    if (bd->internal_ecore_evas)
      ecore_evas_managed_move(bd->internal_ecore_evas,
-			     bd->x + bd->fx.x + bd->client_inset.l,
-			     bd->y + bd->fx.y + bd->client_inset.t);
+			     bd->x + bd->fx.x + bx,
+			     bd->y + bd->fx.y + by);
    ecore_x_icccm_move_resize_send(bd->client.win,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t,
+				  bd->x + bd->fx.x + bx,
+				  bd->y + bd->fx.y + by,
 				  bd->client.w,
 				  bd->client.h);
    _e_border_resize_update(bd);
@@ -1008,6 +1152,48 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
    ecore_event_add(E_EVENT_BORDER_RESIZE, rev, _e_border_event_border_resize_free, NULL);
    _e_border_zone_update(bd);
+}
+
+/**
+ * Move and resize window to values that already account border decorations.
+ *
+ * This call will consider given values already accounts border
+ * decorations, so it will not be considered later. This will just
+ * work properly with borders that have being evaluated and border
+ * decorations are known (border->client_inset).
+ *
+ * @parm x horizontal position to place window.
+ * @parm y vertical position to place window.
+ * @parm w horizontal window size.
+ * @parm h vertical window size.
+ *
+ * @see e_border_move_resize_without_border()
+ */
+EAPI void
+e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
+{
+   _e_border_move_resize_internal(bd, x, y, w, h, 0);
+}
+
+/**
+ * Move and resize window to values that do not account border decorations yet.
+ *
+ * This call will consider given values already accounts border
+ * decorations, so it will not be considered later. This will just
+ * work properly with borders that have being evaluated and border
+ * decorations are known (border->client_inset).
+ *
+ * @parm x horizontal position to place window.
+ * @parm y vertical position to place window.
+ * @parm w horizontal window size.
+ * @parm h vertical window size.
+ *
+ * @see e_border_move_resize()
+ */
+EAPI void
+e_border_move_resize_without_border(E_Border *bd, int x, int y, int w, int h)
+{
+   _e_border_move_resize_internal(bd, x, y, w, h, 1);
 }
 
 EAPI void
@@ -5489,8 +5675,11 @@ _e_border_eval(E_Border *bd)
    int change_urgent = 0;
    int rem_change = 0;
    int send_event = 1;
+   int zx, zy, zw, zh;
    
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_FETCH, bd);
+   if (bd->zone)
+     e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.client_leader)
      {
@@ -6054,6 +6243,7 @@ _e_border_eval(E_Border *bd)
 		  zone = e_container_zone_number_get(bd->zone->container, rem->prop.zone);
 		  if (zone)
 		    e_border_zone_set(bd, zone);
+		  e_zone_useful_geometry_get(zone, &zx, &zy, &zw, &zh);
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_DESKTOP)
 	       {
@@ -6535,8 +6725,8 @@ _e_border_eval(E_Border *bd)
 #endif
 		  else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
 		    {
-		       bd->x = bd->zone->x + ((bd->zone->w - bd->w) / 2);
-		       bd->y = bd->zone->y + ((bd->zone->h - bd->h) / 2);
+		       bd->x = zx + ((zw - bd->w) / 2);
+		       bd->y = zy + ((zh - bd->h) / 2);
 		       bd->changes.pos = 1;
 		       bd->placed = 1;
 		    }
@@ -6545,14 +6735,14 @@ _e_border_eval(E_Border *bd)
 		       Eina_List *skiplist = NULL;
 		       int new_x, new_y;
 
-		       if (bd->zone->w > bd->w)
-			 new_x = bd->zone->x + (rand() % (bd->zone->w - bd->w));
+		       if (zw > bd->w)
+			 new_x = zx + (rand() % (zw - bd->w));
 		       else
-			 new_x = bd->zone->x;
-		       if (bd->zone->h > bd->h)
-			 new_y = bd->zone->y + (rand() % (bd->zone->h - bd->h));
+			 new_x = zx;
+		       if (zh > bd->h)
+			 new_y = zy + (rand() % (zh - bd->h));
 		       else
-			 new_y = bd->zone->y;
+			 new_y = zy;
 
 		       if ((e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART)||(e_config->window_placement_policy == E_WINDOW_PLACEMENT_ANTIGADGET))
 			 {
@@ -6589,6 +6779,11 @@ _e_border_eval(E_Border *bd)
 		  bd->y = pnd->y;
 		  bd->changes.pos = 1;
 		  bd->placed = 1;
+		  if (pnd->without_border)
+		    {
+		       bd->x -= bd->client_inset.l;
+		       bd->y -= bd->client_inset.t;
+		    }
 	       }
 	     if ((!bd->lock_client_size) && (pnd->resize))
 	       {
@@ -6611,8 +6806,8 @@ _e_border_eval(E_Border *bd)
 	     ((bd->remember) && 
 	      (!(bd->remember->apply & E_REMEMBER_APPLY_POS)))))
 	  {
-	     bd->x = bd->zone->x + (bd->zone->w - bd->w) / 2;
-	     bd->y = bd->zone->y + (bd->zone->h - bd->h) / 2;
+	     bd->x = zx + (zw - bd->w) / 2;
+	     bd->y = zy + (zh - bd->h) / 2;
 	     bd->changes.pos = 1;
 	     bd->placed = 1;
 	  }
@@ -6668,7 +6863,10 @@ _e_border_eval(E_Border *bd)
 						    bd->x,
 						    bd->y + bd->h - 1);
 	     if ((zone) && (zone != bd->zone))
-	       e_border_zone_set(bd, zone);
+	       {
+		  e_border_zone_set(bd, zone);
+		  e_zone_useful_geometry_get(zone, &zx, &zy, &zw, &zh);
+	       }
 	  }
      }
    

@@ -47,7 +47,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
 {
    Evas_Object *o, *o2;
    Evas_Coord mw, mh;
-   int x, y, w, h;
+   int x, y, w, h, zx, zy, zw, zh;
    int iw, ih;
    Eina_List *l;
 
@@ -239,7 +239,8 @@ e_syscon_show(E_Zone *zone, const char *defact)
    e_flowlayout_fill_set(o_flow_extra, 1);
    edje_object_part_swallow(o_bg, "e.swallow.extra", o_flow_extra);
 
-   evas_object_resize(o_bg, zone->w, zone->h);
+   e_zone_useful_geometry_get(zone, &zx, &zy, &zw, &zh);
+   evas_object_resize(o_bg, zw, zh);
    edje_object_calc_force(o_bg);
 
    e_flowlayout_min_size_get(o_flow_main, &mw, &mh);
@@ -253,12 +254,13 @@ e_syscon_show(E_Zone *zone, const char *defact)
    edje_object_part_swallow(o_bg, "e.swallow.extra", o_flow_extra);
 
    edje_object_size_min_calc(o_bg, &mw, &mh);
+
    w = mw;
-   if (w > zone->w) w = zone->w;
-   x = (zone->w - w) / 2;
+   if (w > zw) w = zw;
+   x = zx - zone->x + (zw - w) / 2;
    h = mh;
-   if (h > zone->h) h = zone->h;
-   y = (zone->h - h) / 2;
+   if (h > zh) h = zh;
+   y = zy - zone->y + (zh - h) / 2;
 
    e_popup_move_resize(popup, x, y, w, h);
    evas_object_move(o_bg, 0, 0);

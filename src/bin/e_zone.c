@@ -77,6 +77,7 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
    zone->h = h;
    zone->num = num;
    zone->id = id;
+   e_zone_useful_geometry_dirty(zone);
 
    cw = w * E_ZONE_CORNER_RATIO;
    ch = h * E_ZONE_CORNER_RATIO;
@@ -826,11 +827,8 @@ e_zone_flip_win_restore(void)
      }
 }
 
-/**
- * Calculate the useful (or free, without any shelves) area.
- */
-EAPI void
-e_zone_useful_geometry_calc(const E_Zone *zone, int *x, int *y, int *w, int *h)
+static void
+_e_zone_useful_geometry_calc(E_Zone *zone)
 {
    const Eina_List *l;
    const E_Shelf *shelf;
@@ -891,10 +889,48 @@ e_zone_useful_geometry_calc(const E_Zone *zone, int *x, int *y, int *w, int *h)
 	  }
      }
 
-   if (x) *x = x0;
-   if (y) *y = y0;
-   if (w) *w = x1 - x0;
-   if (h) *h = y1 - y0;
+   zone->useful_geometry.x = zone->x + x0;
+   zone->useful_geometry.y = zone->y + y0;
+   zone->useful_geometry.w = x1 - x0;
+   zone->useful_geometry.h = y1 - y0;
+   zone->useful_geometry.dirty = 0;
+}
+
+
+/**
+ * Get (or calculate) the useful (or free, without any shelves) area.
+ */
+EAPI void
+e_zone_useful_geometry_get(E_Zone *zone, int *x, int *y, int *w, int *h)
+{
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+
+   if (zone->useful_geometry.dirty)
+     _e_zone_useful_geometry_calc(zone);
+
+   if (x) *x = zone->useful_geometry.x;
+   if (y) *y = zone->useful_geometry.y;
+   if (w) *w = zone->useful_geometry.w;
+   if (h) *h = zone->useful_geometry.h;
+}
+
+/**
+ * Mark as dirty so e_zone_useful_geometry_get() will need to recalculate.
+ *
+ * Call this function when shelves are added or important properties changed.
+ */
+EAPI void
+e_zone_useful_geometry_dirty(E_Zone *zone)
+{
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+
+   zone->useful_geometry.dirty = 1;
+   zone->useful_geometry.x = -1;
+   zone->useful_geometry.y = -1;
+   zone->useful_geometry.w = -1;
+   zone->useful_geometry.h = -1;
 }
 
 /* local subsystem functions */

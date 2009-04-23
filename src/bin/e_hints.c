@@ -592,10 +592,7 @@ if (!bd->lock_client_shade)
 /*   
    if (bd->client.e.state.centered)
      {
-	e_border_move(bd,
-		      bd->zone->x + (bd->zone->w - bd->w) / 2,
-		      bd->zone->y + (bd->zone->h - bd->h) / 2);
-		      
+        e_border_center(bd);
      }
  */
    /* Update stacking */

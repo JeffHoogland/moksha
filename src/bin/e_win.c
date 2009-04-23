@@ -110,43 +110,68 @@ e_win_hide(E_Win *win)
    if (win->border) e_border_hide(win->border, 1);
 }
 
+/**
+ * This will move window to position, automatically accounts border decorations.
+ *
+ * Don't need to account win->border->client_inset, it's done
+ * automatically, so it will work fine with new windows that still
+ * don't have the border.
+ *
+ * @parm x horizontal position to place window.
+ * @parm y vertical position to place window.
+ */
 EAPI void
 e_win_move(E_Win *win, int x, int y)
 {
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    if (win->border)
-     e_border_move(win->border,
-		   x - win->border->client_inset.l,
-		   y - win->border->client_inset.t);
+     e_border_move_without_border(win->border, x, y);
    else
      ecore_evas_move(win->ecore_evas, x, y);
 }
 
+/**
+ * This will resize window, automatically accounts border decorations.
+ *
+ * Don't need to account win->border->client_inset, it's done
+ * automatically, so it will work fine with new windows that still
+ * don't have the border.
+ *
+ * @parm w horizontal window size.
+ * @parm h vertical window size.
+ */
 EAPI void
 e_win_resize(E_Win *win, int w, int h)
 {
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    if (win->border)
-     e_border_resize(win->border,
-		     w + win->border->client_inset.l + win->border->client_inset.r, 
-		     h + win->border->client_inset.t + win->border->client_inset.b);
+     e_border_resize_without_border(win->border, w, h);
    else
      ecore_evas_resize(win->ecore_evas, w, h);
 }
 
+/**
+ * This will move and resize window to position, automatically
+ * accounts border decorations.
+ *
+ * Don't need to account win->border->client_inset, it's done
+ * automatically, so it will work fine with new windows that still
+ * don't have the border.
+ *
+ * @parm x horizontal position to place window.
+ * @parm y vertical position to place window.
+ * @parm w horizontal window size.
+ * @parm h vertical window size.
+ */
 EAPI void
 e_win_move_resize(E_Win *win, int x, int y, int w, int h)
 {
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    if (win->border)
-     e_border_move_resize(win->border,
-			  x - win->border->client_inset.l,
-			  y - win->border->client_inset.t,
-			  w + win->border->client_inset.l + win->border->client_inset.r,
-			  h + win->border->client_inset.t + win->border->client_inset.b);
+     e_border_move_resize_without_border(win->border, x, y, w, h);
    else
      ecore_evas_move_resize(win->ecore_evas, x, y, w, h);
 }
@@ -327,16 +352,7 @@ e_win_centered_set(E_Win *win, int centered)
 	_e_win_state_update(win);
      }
    if ((win->border) && (centered))
-     {
-	int x, y, w, h;
-
-	e_zone_useful_geometry_calc(win->border->zone, &x, &y, &w, &h);
-
-	/* The window is visible, move it to the right spot */
-	e_border_move(win->border,
-		      win->border->zone->x + x + (w - win->border->w) / 2,
-		      win->border->zone->y + y + (h - win->border->h) / 2);
-     }
+     e_border_center(win->border);
 }
 
 EAPI void

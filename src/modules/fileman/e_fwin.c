@@ -183,37 +183,39 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    cf = e_fm2_custom_file_get(buf);
    if ((cf) && (cf->geom.valid))
      {
+	int zx, zy, zw, zh;
+
 	x = cf->geom.x;
 	y = cf->geom.y;
 	w = cf->geom.w;
 	h = cf->geom.h;
 
+	e_zone_useful_geometry_get(fwin->win->border->zone,
+				   &zx, &zy, &zw, &zh);
+
 	/* checking width and height */
 	if (w < 24)
 	  w = 280 * e_scale;
-	else if (w > fwin->win->border->zone->w)
-	  w = fwin->win->border->zone->w;
+	else if (w > zw)
+	  w = zw;
 	if (h < 24)
 	  h = 200 * e_scale;
-	else if (h > fwin->win->border->zone->h)
-	  h = fwin->win->border->zone->h;
+	else if (h > zh)
+	  h = zh;
 
 	/* checking left-top corner */
-	if (x < fwin->win->border->zone->x)
-	  x = fwin->win->border->zone->x + fwin->win->border->client_inset.l;
-	if (y < fwin->win->border->zone->y)
-	  y = fwin->win->border->zone->y + fwin->win->border->client_inset.t;
+	if (x < zx)
+	  x = zx;
+	if (y < zy)
+	  y = zy;
 
 	/* checking right-bottom corner */
-	if ((fwin->win->border->zone->x + fwin->win->border->zone->w) < (x + w))
-	  x = fwin->win->border->zone->x + fwin->win->border->zone->w - w - fwin->win->border->client_inset.l;
-	if ((fwin->win->border->zone->y + fwin->win->border->zone->h) < (y + h))
-	  y = fwin->win->border->zone->y + fwin->win->border->zone->h - h - fwin->win->border->client_inset.t;
+	if ((zx + zw) < (x + w))
+	  x = zx + zw - w;
+	if ((zy + zh) < (y + h))
+	  y = zy + zh - h;
 
-	e_win_move_resize(fwin->win,
-			  x - fwin->win->border->client_inset.l,
-			  y - fwin->win->border->client_inset.t,
-			  w, h);
+	e_win_move_resize(fwin->win, x, y, w, h);
      }
 
    fwin->geom_save_ready = 1;
@@ -1041,8 +1043,8 @@ _e_fwin_geom_save(E_Fwin *fwin)
 	cf = alloca(sizeof(E_Fm2_Custom_File));
 	memset(cf, 0, sizeof(E_Fm2_Custom_File));
      }
-   cf->geom.x = fwin->win->x - fwin->win->border->client_inset.l;
-   cf->geom.y = fwin->win->y - fwin->win->border->client_inset.t;
+   cf->geom.x = fwin->win->x;
+   cf->geom.y = fwin->win->y;
    cf->geom.w = fwin->win->w;
    cf->geom.h = fwin->win->h;
    cf->geom.valid = 1;
@@ -1611,36 +1613,25 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Eina_List *files, int always)
 				 /* if it ended up too small - fix to a decent size  */
 				 if (nw < 24) nw = 200 * e_scale;
 				 if (nh < 24) nh = 280 * e_scale;
-				 printf("load @ %i %i, %ix%i inset %i %i\n",
-					nx, ny, nw, nh,
-					fwin2->win->border->client_inset.l,
-					fwin2->win->border->client_inset.t);
+
 				 /* if it ended up out of the zone */
 				 if (nx < fwin2->win->border->zone->x)
-				   nx = fwin2->win->border->zone->x +
-				   fwin2->win->border->client_inset.l;
+				   nx = fwin2->win->border->zone->x;
 				 if (ny < fwin2->win->border->zone->y)
-				   ny = fwin2->win->border->zone->y + 
-				   fwin2->win->border->client_inset.t;
+				   ny = fwin2->win->border->zone->y;
 				 if ((fwin2->win->border->zone->x + 
 				      fwin2->win->border->zone->w) <
 				     (fwin2->win->border->w + nx))
 				   nx = fwin2->win->border->zone->x + 
 				   fwin2->win->border->zone->w - 
-				   fwin2->win->border->w - 
-				   fwin2->win->border->client_inset.l;
+				     fwin2->win->border->w;
 				 if ((fwin2->win->border->zone->y + 
 				      fwin2->win->border->zone->h) <
 				     (fwin2->win->border->h + ny))
 				   ny = fwin2->win->border->zone->y + 
 				   fwin2->win->border->zone->h - 
-				   fwin2->win->border->h - 
-				   fwin2->win->border->client_inset.t;
-				 e_win_move_resize
-				   (fwin2->win, 
-				    nx - fwin2->win->border->client_inset.l, 
-				    ny - fwin2->win->border->client_inset.t,
-				    nw, nh);
+				   fwin2->win->border->h;
+				 e_win_move_resize(fwin2->win, nx, ny, nw, nh);
 			      }
 			    else
 			      {

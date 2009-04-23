@@ -33,10 +33,8 @@ _e_module_layout_cb_hook(void *data, E_Border *bd)
    else
      {
 	e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
-	e_border_move(bd,
-		      bd->zone->x + (bd->zone->w / 2),
-		      bd->zone->y + (bd->zone->h / 2));
 	e_border_resize(bd, 1, 1);
+	e_border_center(bd);
 	if (bd->bordername) eina_stringshare_del(bd->bordername);
 	bd->bordername = eina_stringshare_add("borderless");
 	bd->client.icccm.base_w = 1;

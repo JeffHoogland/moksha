@@ -1327,8 +1327,7 @@ _e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    E_OBJECT_CHECK(bd);
    if (bd->iconic) e_border_uniconify(bd);
    if (bd->desk) e_desk_show(bd->desk);
-   e_border_move(bd, bd->zone->x + ((bd->zone->w - bd->w) / 2), 
-		 bd->zone->y + ((bd->zone->h - bd->h) / 2));
+   e_border_center(bd);
    e_border_raise(bd);
    if (!bd->lock_focus_out)
      e_border_focus_set(bd, 1, 1);

@@ -475,6 +475,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    else if (!cfdata->escfg->autohide && cfdata->es->hidden)
      e_shelf_toggle(cfdata->es, 1);
 
+   e_zone_useful_geometry_dirty(cfdata->es->zone);
    e_config_save_queue();   
    cfdata->es->config_dialog = cfd;
    return 1; /* Apply was OK */

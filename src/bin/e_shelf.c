@@ -105,6 +105,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    es->w = 32;
    es->h = 32;
    es->zone = zone;
+   e_zone_useful_geometry_dirty(zone);
    if (popup)
      {
 	es->popup = e_popup_new(zone, es->x, es->y, es->w, es->h);
@@ -477,6 +478,7 @@ e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
    snprintf(buf, sizeof(buf), "e,state,orientation,%s", _e_shelf_orient_string_get(es));
    edje_object_signal_emit(es->o_base, buf, "e");
    edje_object_message_signal_process(es->o_base);
+   e_zone_useful_geometry_dirty(es->zone);
 }
 
 EAPI void
@@ -592,6 +594,7 @@ e_shelf_position_calc(E_Shelf *es)
 	es->hidden = 0;
 	e_shelf_toggle(es, 0);
      }
+   e_zone_useful_geometry_dirty(es->zone);
 }
 
 EAPI void 
@@ -726,6 +729,7 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
 static void
 _e_shelf_free(E_Shelf *es)
 {
+   e_zone_useful_geometry_dirty(es->zone);
    E_FREE_LIST(es->handlers, ecore_event_handler_del);
 
    e_object_del(E_OBJECT(es->gadcon));
@@ -999,6 +1003,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	break;
      }
    e_shelf_move_resize(es, nx, ny, nw, nh);
+   e_zone_useful_geometry_dirty(es->zone);
 }
 
 static Evas_Object *

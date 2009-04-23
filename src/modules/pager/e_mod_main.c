@@ -642,9 +642,9 @@ _pager_window_free(Pager_Win *pw)
 static void
 _pager_window_move(Pager_Win *pw)
 {
-   e_layout_child_move(pw->o_window,
-		       pw->border->x - pw->desk->desk->zone->x,
-		       pw->border->y - pw->desk->desk->zone->y);
+   int zx, zy;
+   e_zone_useful_geometry_get(pw->desk->desk->zone, &zx, &zy, NULL, NULL);
+   e_layout_child_move(pw->o_window, pw->border->x - zx, pw->border->y - zy);
    e_layout_child_resize(pw->o_window, pw->border->w, pw->border->h);
 }
 
@@ -684,7 +684,7 @@ static Pager_Popup *
 _pager_popup_new(E_Zone *zone, int keyaction)
 {
    Pager_Popup *pp;
-   Evas_Coord w, h;
+   Evas_Coord w, h, zx, zy, zw, zh;
    int x, y, height, width;
    E_Desk *desk;
 
@@ -734,8 +734,12 @@ _pager_popup_new(E_Zone *zone, int keyaction)
    evas_object_resize(pp->o_bg, w, h);
    e_popup_edje_bg_object_set(pp->popup, pp->o_bg);
    //e_popup_ignore_events_set(pp->popup, 1);
-   e_popup_move_resize(pp->popup, ((zone->w - w) / 2),
-		       ((zone->h - h) / 2), w, h);
+   e_zone_useful_geometry_get(zone, &zx, &zy, &zw, &zh);
+   zx -= zone->x;
+   zy -= zone->y;
+   e_popup_move_resize(pp->popup,
+		       zx + ((zw - w) / 2), zy + ((zh - h) / 2),
+		       w, h);
    e_bindings_mouse_grab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);
    e_bindings_wheel_grab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);
 
@@ -1847,14 +1851,14 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 	pd = _pager_desk_at_coord(pw->desk->pager, mx, my);
 	if ((pd) && (!pw->drag.no_place))
 	  {
+	     int zx, zy;
+	     e_zone_useful_geometry_get(pd->desk->zone, &zx, &zy, NULL, NULL);
 	     e_layout_coord_canvas_to_virtual(pd->o_layout,
 					      mx + pw->drag.dx,
 					      my + pw->drag.dy, &vx, &vy);
 	     if (pd != pw->desk)
 	       e_border_desk_set(pw->border, pd->desk);
-	     e_border_move(pw->border,
-			   vx + pd->desk->zone->x,
-			   vy + pd->desk->zone->y);
+	     e_border_move(pw->border, vx + zx, vy + zy);
 	  }
 	else
 	  {
@@ -1915,6 +1919,8 @@ _pager_window_cb_drag_finished(E_Drag *drag, int dropped)
    evas_object_show(pw->o_window);
    if (!dropped)
      {
+	int zx, zy, zw, zh;
+
 	/* wasn't dropped (on pager). move it to position of mouse on screen */
 	cont = e_container_current_get(e_manager_current_get());
 	zone = e_zone_current_get(cont);
@@ -1928,22 +1934,24 @@ _pager_window_cb_drag_finished(E_Drag *drag, int dropped)
 	dx = (pw->border->w / 2);
 	dy = (pw->border->h / 2);
 
+	e_zone_useful_geometry_get(zone, &zx, &zy, &zw, &zh);
+
 	/* offset so that center of window is on mouse, but keep within desk bounds */
 	if (dx < x)
 	  {
 	     x -= dx;
-	     if ((pw->border->w < zone->w) &&
-		 (x + pw->border->w > zone->x + zone->w))
-	       x -= x + pw->border->w - (zone->x + zone->w);
+	     if ((pw->border->w < zw) &&
+		 (x + pw->border->w > zx + zw))
+	       x -= x + pw->border->w - (zx + zw);
 	  }
 	else x = 0;
 
 	if (dy < y)
 	  {
 	     y -= dy;
-	     if ((pw->border->h < zone->h) &&
-		 (y + pw->border->h > zone->y + zone->h))
-	       y -= y + pw->border->h - (zone->y + zone->h);
+	     if ((pw->border->h < zh) &&
+		 (y + pw->border->h > zy + zh))
+	       y -= y + pw->border->h - (zy + zh);
 	  }
 	else y = 0;
 	e_border_move(pw->border, x, y);
@@ -2128,11 +2136,16 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
 	     e_border_desk_set(bd, pd->desk);
 	     if ((!pw) || ((pw) && (!pw->drag.no_place)))
 	       {
+		  int zx, zy;
+
 		  e_layout_coord_canvas_to_virtual(pd->o_layout,
 						   ev->x + xx + x + dx,
 						   ev->y + yy + y + dy,
 						   &nx, &ny);
-		  e_border_move(bd, nx + pd->desk->zone->x, ny + pd->desk->zone->y);
+		  e_zone_useful_geometry_get(pd->desk->zone,
+					     &zx, &zy, NULL, NULL);
+
+		  e_border_move(bd, nx + zx, ny + zy);
 	       }
 	  }
      }
@@ -2263,6 +2276,7 @@ _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 
 	for (l = pd->wins; l; l = l->next)
 	  {
+	     int zx, zy;
 	     pw = l->data;
 	     if (!pw || pw->border->iconic
 		 || pw->border->client.netwm.state.skip_pager)
@@ -2273,9 +2287,9 @@ _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 				     "e/modules/pager/window");
 	     e_layout_pack(oo, o);
 	     e_layout_child_raise(o);
-	     e_layout_child_move(o,
-				 pw->border->x - pw->desk->desk->zone->x,
-				 pw->border->y - pw->desk->desk->zone->y);
+	     e_zone_useful_geometry_get(pw->desk->desk->zone,
+					&zx, &zy, NULL, NULL);
+	     e_layout_child_move(o, pw->border->x - zx, pw->border->y - zy);
 	     e_layout_child_resize(o, pw->border->w, pw->border->h);
 	     evas_object_show(o);
 

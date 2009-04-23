@@ -1061,7 +1061,7 @@ e_util_win_auto_resize_fill(E_Win *win)
      {
 	int w, h;
 
-	e_zone_useful_geometry_calc(zone, NULL, NULL, &w, &h);
+	e_zone_useful_geometry_get(zone, NULL, NULL, &w, &h);
 
         w = _win_auto_size_calc(w, win->min_w);
         h = _win_auto_size_calc(h, win->min_h);
