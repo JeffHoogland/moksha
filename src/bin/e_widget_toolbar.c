@@ -11,6 +11,7 @@ struct _E_Widget_Data
    int icon_w, icon_h;
    Eina_List *items;
    Evas_Bool scrollable : 1;
+   Evas_Bool focus_steal : 1;
 };
 
 struct _Item
@@ -49,6 +50,7 @@ e_widget_toolbar_add(Evas *evas, int icon_w, int icon_h)
    e_widget_data_set(obj, wd);
    wd->icon_w = icon_w;
    wd->icon_h = icon_h;
+   wd->focus_steal = 1;
    
    o = e_scrollframe_add(evas);
    wd->o_base = o;
@@ -168,6 +170,30 @@ e_widget_toolbar_item_select(Evas_Object *obj, int num)
 }
 
 EAPI void
+e_widget_toolbar_item_label_set(Evas_Object *obj, int num, const char *label)
+{
+   E_Widget_Data *wd;
+   Item *it;
+
+   wd = e_widget_data_get(obj);
+   it = eina_list_nth(wd->items, num);
+   if (it)
+     {
+	int mw, mh;
+
+	edje_object_part_text_set(it->o_base, "e.text.label", label);
+	edje_object_size_min_calc(it->o_base, &mw, &mh);
+	e_box_pack_options_set(it->o_base,
+			       1, 1, /* fill */
+			       0, 0, /* expand */
+			       0.5, 0.5, /* align */
+			       mw, mh, /* min */
+			       9999, 9999 /* max */
+			       );
+     }
+}
+
+EAPI void
 e_widget_toolbar_scrollable_set(Evas_Object *obj, Evas_Bool scrollable)
 {
    E_Widget_Data *wd;
@@ -183,6 +209,29 @@ e_widget_toolbar_scrollable_set(Evas_Object *obj, Evas_Bool scrollable)
      e_widget_min_size_set(obj, 500 - vw, mh + (500 - vh));
    else
      e_widget_min_size_set(obj, mw + (500 - vw), mh + (500 - vh));
+}
+
+EAPI void
+e_widget_toolbar_focus_steal_set(Evas_Object *obj, Evas_Bool steal)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   if (wd->focus_steal == steal) return;
+   if (steal)
+     {
+	evas_object_event_callback_add(e_scrollframe_edje_object_get(wd->o_base), 
+				       EVAS_CALLBACK_MOUSE_DOWN,
+				       _e_wid_focus_steal, obj);
+	wd->focus_steal = 1;
+     }
+   else
+     {
+	evas_object_event_callback_del(e_scrollframe_edje_object_get(wd->o_base), 
+				       EVAS_CALLBACK_MOUSE_DOWN,
+				       _e_wid_focus_steal);
+	wd->focus_steal = 0;
+     }
 }
 
 static void

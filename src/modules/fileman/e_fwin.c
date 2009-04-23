@@ -15,6 +15,7 @@
  */
 
 typedef struct _E_Fwin E_Fwin;
+typedef struct _E_Fwin_Page_Info E_Fwin_Page_Info;
 typedef struct _E_Fwin_Apps_Dialog E_Fwin_Apps_Dialog;
 
 #define E_FWIN_TYPE 0xE0b0101f
@@ -26,9 +27,13 @@ struct _E_Fwin
    E_Win               *win;
    E_Zone              *zone;
    Evas_Object         *scrollframe_obj;
+   Evas_Object	       *tb_obj;
    Evas_Object         *fm_obj;
    Evas_Object         *bg_obj;
    E_Fwin_Apps_Dialog  *fad;
+
+   Eina_List	       *page_info;
+   int			page_index;
 
    Evas_Object         *under_obj;
    Evas_Object         *over_obj;
@@ -47,6 +52,18 @@ struct _E_Fwin
    Ecore_Event_Handler *fm_op_entry_add_handler;
 
    unsigned char        geom_save_ready : 1;
+};
+
+struct _E_Fwin_Page_Info
+{
+   const char *dev;
+   const char *path;
+
+   struct {
+	Evas_Coord x, y;
+   } scroll;
+
+   int index;
 };
 
 struct _E_Fwin_Apps_Dialog
@@ -72,6 +89,9 @@ typedef enum
 /* local subsystem prototypes */
 static E_Fwin *_e_fwin_new(E_Container *con, const char *dev, const char *path);
 static void _e_fwin_free(E_Fwin *fwin);
+static void _e_fwin_page_new(E_Fwin *fwin);
+static E_Fwin_Page_Info *_e_fwin_page_info_new(E_Fwin *fwin);
+static void _e_fwin_cb_page_change(void *data1, void *data2);
 static void _e_fwin_cb_delete(E_Win *win);
 static void _e_fwin_cb_move(E_Win *win);
 static void _e_fwin_cb_resize(E_Win *win);
@@ -490,6 +510,8 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
 static void
 _e_fwin_free(E_Fwin *fwin)
 {
+   E_Fwin_Page_Info *info;
+
    if (!fwin) return; //safety
 
    if (fwin->fm_obj) evas_object_del(fwin->fm_obj);
@@ -502,6 +524,13 @@ _e_fwin_free(E_Fwin *fwin)
 				       _e_fwin_zone_cb_mouse_down);
      }
 
+
+   EINA_LIST_FREE(fwin->page_info, info)
+     {
+	eina_stringshare_del(info->dev);
+	eina_stringshare_del(info->path);
+	E_FREE(info);
+     }
    if (fwin->zone_handler) 
      ecore_event_handler_del(fwin->zone_handler);
    if (fwin->zone_del_handler) 
@@ -862,42 +891,132 @@ _e_fwin_window_title_set(E_Fwin *fwin)
 static void 
 _e_fwin_toolbar_resize(E_Fwin *fwin) 
 {
+   int tx, ty, tw, th, offset = 0;
    int x, y, w, h;
 
-   e_toolbar_position_calc(fwin->tbar);
+   if (fwin->tb_obj)
+     evas_object_geometry_get(fwin->tb_obj, NULL, NULL, NULL, &offset);
    w = fwin->win->w;
    h = fwin->win->h;
    switch (fwin->tbar->gadcon->orient) 
      {
+      case E_GADCON_ORIENT_HORIZ:
       case E_GADCON_ORIENT_TOP:
-	x = 0;
-	y = fwin->tbar->h;
-	h = (h - fwin->tbar->h);
-	break;
+	 tx = 0;
+	 ty = offset;
+	 th = 32;
+	 tw = w;
+
+	 x = 0;
+	 y = offset + th;
+	 h = (h - offset - th);
+	 break;
       case E_GADCON_ORIENT_BOTTOM:
-	x = 0;
-	y = 0;
-	h = (h - fwin->tbar->h);
-	break;
+	 tx = 0;
+	 th = 32;
+	 tw = w;
+	 ty = h - th;
+
+	 x = 0;
+	 y = offset;
+	 h = (h - offset - th);
+	 break;
+      case E_GADCON_ORIENT_VERT:
       case E_GADCON_ORIENT_LEFT:
-	x = (fwin->tbar->x + fwin->tbar->w);
-	y = 0;
-	w = (w - fwin->tbar->w);
-	break;
+	 tx = 0;
+	 tw = 32;
+	 th = h - offset;
+	 ty = offset;
+
+	 x = (tx + tw);
+	 y = offset;
+	 w = (w - tw);
+	 break;
       case E_GADCON_ORIENT_RIGHT:
-	x = 0;
-	y = 0;
-	w = (fwin->win->w - fwin->tbar->w);
-	break;
+	 ty = offset;
+	 tw = 32;
+	 tx = w - tw;
+	 th = h - offset;
+
+	 x = 0;
+	 y = offset;
+	 w = (w - tw);
+	 break;
       default:
-	return;
+	 return;
      }
+   e_toolbar_move_resize(fwin->tbar, tx, ty, tw, th);
    evas_object_move(fwin->scrollframe_obj, x, y);
    evas_object_resize(fwin->scrollframe_obj, w, h);
 }
 
 
 /* fwin callbacks */
+static void
+_e_fwin_page_new(E_Fwin *fwin)
+{
+   E_Fwin_Page_Info *info;
+   const char *real;
+
+   if (!fwin->tb_obj)
+     {
+	/* There is no toolbar yet */
+	fwin->tb_obj = e_widget_toolbar_add(evas_object_evas_get(fwin->fm_obj),
+	      48 * e_scale, 48 * e_scale);
+
+	e_widget_toolbar_focus_steal_set(fwin->tb_obj, 0);
+	info = _e_fwin_page_info_new(fwin);
+	real = ecore_file_file_get(e_fm2_real_path_get(fwin->fm_obj));
+	e_widget_toolbar_item_append(fwin->tb_obj, NULL, real,
+	      _e_fwin_cb_page_change, fwin, info);
+
+	evas_object_move(fwin->tb_obj, 0, 0);
+	evas_object_show(fwin->tb_obj);
+     }
+
+   info = _e_fwin_page_info_new(fwin);
+   real = ecore_file_file_get(e_fm2_real_path_get(fwin->fm_obj));
+   e_widget_toolbar_item_append(fwin->tb_obj, NULL, real,
+	 _e_fwin_cb_page_change, fwin, info);
+   e_widget_toolbar_item_select(fwin->tb_obj, info->index);
+
+   _e_fwin_cb_resize(fwin->win);
+}
+
+static E_Fwin_Page_Info *
+_e_fwin_page_info_new(E_Fwin *fwin)
+{
+   E_Fwin_Page_Info *info;
+   const char *dev, *path;
+
+   e_fm2_path_get(fwin->fm_obj, &dev, &path);
+   info = E_NEW(E_Fwin_Page_Info, 1);
+   info->dev = eina_stringshare_add(dev);
+   info->path = eina_stringshare_add(path);
+   info->index = eina_list_count(fwin->page_info);
+
+   fwin->page_info = eina_list_append(fwin->page_info, info);
+
+   return info;
+}
+
+static void
+_e_fwin_cb_page_change(void *data1, void *data2)
+{
+   E_Fwin *fwin = data1;
+   E_Fwin_Page_Info *info = data2, *prev;
+   Evas_Coord x, y;
+
+   if (!fwin || !info) return;
+   prev = eina_list_nth(fwin->page_info, fwin->page_index);
+   e_scrollframe_child_pos_get(fwin->scrollframe_obj, &x, &y);
+   prev->scroll.x = x;
+   prev->scroll.y = y;
+   fwin->page_index = info->index;
+   e_fm2_path_set(fwin->fm_obj, info->dev, info->path);
+   e_scrollframe_child_pos_set(fwin->scrollframe_obj, x, y);
+}
+
 static void
 _e_fwin_cb_delete(E_Win *win)
 {
@@ -956,10 +1075,24 @@ _e_fwin_cb_resize(E_Win *win)
      }
    if (fwin->win) 
      {
+	if (fwin->tb_obj)
+	  {
+	     int height;
+
+	     e_widget_min_size_get(fwin->tb_obj, NULL, &height);
+	     evas_object_resize(fwin->tb_obj, fwin->win->w, height);
+	  }
 	if (fwin->tbar)
 	  _e_fwin_toolbar_resize(fwin);
 	else 
-	  evas_object_resize(fwin->scrollframe_obj, fwin->win->w, fwin->win->h);
+	  {
+	     int offset = 0;
+
+	     if (fwin->tb_obj)
+	       evas_object_geometry_get(fwin->tb_obj, NULL, NULL, NULL, &offset);
+	     evas_object_move(fwin->scrollframe_obj, 0, offset);
+	     evas_object_resize(fwin->scrollframe_obj, fwin->win->w, fwin->win->h - offset);
+	  }
      }
    else if (fwin->zone)
      evas_object_resize(fwin->scrollframe_obj, fwin->zone->w, fwin->zone->h);
@@ -1035,6 +1168,21 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 					      "e/fileman/default/scrollframe");
 	  }
 	e_scrollframe_child_pos_set(fwin->scrollframe_obj, 0, 0);
+     }
+   if (fwin->tb_obj)
+     {
+	E_Fwin_Page_Info *info;
+	const char *file, *dev, *path;
+
+	e_fm2_path_get(fwin->fm_obj, &dev, &path);
+	info = eina_list_nth(fwin->page_info, fwin->page_index);
+	eina_stringshare_del(info->dev);
+	eina_stringshare_del(info->path);
+	info->dev = eina_stringshare_add(dev);
+	info->path = eina_stringshare_add(path);
+
+	file = ecore_file_file_get(e_fm2_real_path_get(fwin->fm_obj));
+	e_widget_toolbar_item_label_set(fwin->tb_obj, fwin->page_index, file);
      }
    if ((fwin->theme_file) && (ecore_file_exists(fwin->theme_file)))
      e_fm2_custom_theme_set(obj, fwin->theme_file);
@@ -1113,6 +1261,11 @@ _e_fwin_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	if (!strcmp(ev->key, "a"))
 	  {
 	     e_fm2_all_sel(fwin->fm_obj);
+	     return;
+	  }
+	if (!strcmp(ev->key, "t"))
+	  {
+	     _e_fwin_page_new(fwin);
 	     return;
 	  }
      }
