@@ -303,7 +303,7 @@ e_kbd_dict_new(const char *file)
    _e_kbd_normalise_init();
    kd = E_NEW(E_Kbd_Dict, 1);
    if (!kd) return NULL;
-   kd->file.file = evas_stringshare_add(file);
+   kd->file.file = eina_stringshare_add(file);
    if (!kd->file.file)
      {
 	free(kd);
@@ -312,7 +312,7 @@ e_kbd_dict_new(const char *file)
    kd->file.fd = -1;
    if (!_e_kbd_dict_open(kd))
      {
-	evas_stringshare_del(kd->file.file);
+	eina_stringshare_del(kd->file.file);
 	free(kd);
 	return NULL;
      }
@@ -394,7 +394,7 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
 			      {
 				 fprintf(f, "%s %i\n", kw->word, kw->usage);
 				 writeline = 1;
-				 evas_stringshare_del(kw->word);
+				 eina_stringshare_del(kw->word);
 				 free(kw);
 				 kd->changed.writes  = eina_list_remove_list(kd->changed.writes, kd->changed.writes);
 				 writeline = 1;
@@ -406,7 +406,7 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
 				   writeline = 0;
 				 else
 				   writeline = 1;
-				 evas_stringshare_del(kw->word);
+				 eina_stringshare_del(kw->word);
 				 free(kw);
 				 kd->changed.writes  = eina_list_remove_list(kd->changed.writes, kd->changed.writes);
 				 break;
@@ -433,7 +433,7 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
 			    
 	     kw = kd->changed.writes->data;
 	     fprintf(f, "%s %i\n", kw->word, kw->usage);
-	     evas_stringshare_del(kw->word);
+	     eina_stringshare_del(kw->word);
 	     free(kw);
 	     kd->changed.writes  = eina_list_remove_list(kd->changed.writes, kd->changed.writes);
 	  }
@@ -466,7 +466,7 @@ _e_kbd_dict_changed_write_add(E_Kbd_Dict *kd, const char *word, int usage)
    E_Kbd_Dict_Word *kw;
    
    kw = E_NEW(E_Kbd_Dict_Word, 1);
-   kw->word = evas_stringshare_add(word);
+   kw->word = eina_stringshare_add(word);
    kw->usage = usage;
    kd->changed.writes = eina_list_prepend(kd->changed.writes, kw);
    if (eina_list_count(kd->changed.writes) > 64)
@@ -641,7 +641,7 @@ e_kbd_dict_word_letter_clear(E_Kbd_Dict *kd)
 	E_Kbd_Dict_Word *kw;
 
 	kw = kd->matches.list->data;
-	evas_stringshare_del(kw->word);
+	eina_stringshare_del(kw->word);
 	free(kw);
 	kd->matches.list = eina_list_remove_list(kd->matches.list, kd->matches.list);
     }
@@ -660,7 +660,7 @@ e_kbd_dict_word_letter_add(E_Kbd_Dict *kd, const char *letter, int dist)
    list = l->data;
    kl = E_NEW(E_Kbd_Dict_Letter, 1);
    if (!kl) return;
-   kl->letter = evas_stringshare_add(letter);
+   kl->letter = eina_stringshare_add(letter);
    kl->dist = dist;
    list = eina_list_append(list, kl);
    l->data = list;
@@ -687,7 +687,7 @@ e_kbd_dict_word_letter_delete(E_Kbd_Dict *kd)
 	E_Kbd_Dict_Letter *kl;
 	
 	kl = list->data;
-	evas_stringshare_del(kl->letter);
+	eina_stringshare_del(kl->letter);
 	free(kl);
 	list = eina_list_remove_list(list, list);
      }
@@ -786,7 +786,7 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
 			    w = w2;
 			    b = b2;
 			 }
-		       kw->word = evas_stringshare_add(wd);
+		       kw->word = eina_stringshare_add(wd);
 		       // FIXME: magic combination of distance metric and
 		       // frequency of useage. this is simple now, but could
 		       // be tweaked
@@ -834,7 +834,7 @@ e_kbd_dict_matches_lookup(E_Kbd_Dict *kd)
 	E_Kbd_Dict_Word *kw;
 	
 	kw = kd->matches.list->data;
-	evas_stringshare_del(kw->word);
+	eina_stringshare_del(kw->word);
 	free(kw);
 	kd->matches.list = eina_list_remove_list(kd->matches.list, kd->matches.list);
     }

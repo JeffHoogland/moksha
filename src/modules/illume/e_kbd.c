@@ -465,15 +465,14 @@ _e_kbd_cb_border_hook_pre_post_fetch(void *data, E_Border *bd)
 		    {
 		       if (bd->bordername)
 			 {
-			    evas_stringshare_del(bd->bordername);
+			    eina_stringshare_del(bd->bordername);
 			    bd->bordername = NULL;
 			    bd->client.border.changed = 1;
 			 }
 		       e_remember_unuse(bd->remember);
 		       bd->remember = NULL;
 		    }
-		  if (bd->bordername) evas_stringshare_del(bd->bordername);
-		  bd->bordername = evas_stringshare_add("borderless");
+		  eina_stringshare_replace(&bd->bordername, "borderless");
 		  bd->client.border.changed = 1;
 		  return;
 	       }
@@ -485,15 +484,14 @@ _e_kbd_cb_border_hook_pre_post_fetch(void *data, E_Border *bd)
 		    {
 		       if (bd->bordername)
 			 {
-			    evas_stringshare_del(bd->bordername);
+			    eina_stringshare_del(bd->bordername);
 			    bd->bordername = NULL;
 			    bd->client.border.changed = 1;
 			 }
 		       e_remember_unuse(bd->remember);
 		       bd->remember = NULL;
 		    }
-		  if (bd->bordername) evas_stringshare_del(bd->bordername);
-		  bd->bordername = evas_stringshare_add("borderless");
+		  eina_stringshare_replace(&bd->bordername, "borderless");
 		  bd->client.border.changed = 1;
 		  return;
 	       }
@@ -673,7 +671,7 @@ _e_kbd_dbus_keyboard_add(const char *udi)
      if (!strcmp(str, udi)) return;
 
    _e_kbd_dbus_keyboards = eina_list_append
-     (_e_kbd_dbus_keyboards, evas_stringshare_add(udi));
+     (_e_kbd_dbus_keyboards, eina_stringshare_add(udi));
 }
 
 static void
@@ -685,7 +683,7 @@ _e_kbd_dbus_keyboard_del(const char *udi)
    EINA_LIST_FOREACH(_e_kbd_dbus_keyboards, l, str)
      if (!strcmp(str, udi))
      {
-	  evas_stringshare_del(str);
+	  eina_stringshare_del(str);
 	     _e_kbd_dbus_keyboards = eina_list_remove_list(_e_kbd_dbus_keyboards, l);
 	     return;
 	  }
@@ -827,7 +825,7 @@ _e_kbd_dbus_ignore_keyboards_file_load(const char *file)
 	while (isspace(*p)) p++;
 	if (*p)
 	  _e_kbd_dbus_real_ignore = eina_list_append
-	  (_e_kbd_dbus_real_ignore, evas_stringshare_add(p));
+	  (_e_kbd_dbus_real_ignore, eina_stringshare_add(p));
      }
    fclose(f);
 }
@@ -886,9 +884,9 @@ _e_kbd_dbus_real_kbd_shutdown(void)
 	e_dbus_signal_handler_del(_e_kbd_dbus_conn, _e_kbd_dbus_handler_dev_chg);
      }
    EINA_LIST_FREE(_e_kbd_dbus_real_ignore, str)
-     evas_stringshare_del(str);
+     eina_stringshare_del(str);
    EINA_LIST_FREE(_e_kbd_dbus_keyboards, str)
-     evas_stringshare_del(str);
+     eina_stringshare_del(str);
    _e_kbd_dbus_have_real_keyboard = 0;
 }
 

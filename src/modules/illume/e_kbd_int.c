@@ -258,7 +258,7 @@ _e_kbd_int_matches_add(E_Kbd_Int *ki, const char *str, int num)
    o = _theme_obj_new(ki->win->evas, ki->themedir,
 		      "e/modules/kbd/match/word");
    km->ki = ki;
-   km->str = evas_stringshare_add(str);
+   km->str = eina_stringshare_add(str);
    km->obj = o;
    ki->matches = eina_list_append(ki->matches, km);
    edje_object_part_text_set(o, "e.text.label", str);
@@ -281,7 +281,7 @@ _e_kbd_int_matches_free(E_Kbd_Int *ki)
 	
    EINA_LIST_FREE(ki->matches, km)
      {
-	if (km->str) evas_stringshare_del(km->str);
+	if (km->str) eina_stringshare_del(km->str);
 	evas_object_del(km->obj);
 	free(km);
      }
@@ -862,7 +862,7 @@ _e_kbd_int_layout_free(E_Kbd_Int *ki)
    E_Kbd_Int_Key *ky;
 
    if (ki->layout.directory) free(ki->layout.directory);
-   if (ki->layout.file) evas_stringshare_del(ki->layout.file);
+   if (ki->layout.file) eina_stringshare_del(ki->layout.file);
    ki->layout.directory = NULL;
    ki->layout.file = NULL;
    EINA_LIST_FREE(ki->layout.keys, ky)
@@ -871,9 +871,9 @@ _e_kbd_int_layout_free(E_Kbd_Int *ki)
 	     
 	EINA_LIST_FREE(ky->states, st)
 	  {
-	     if (st->label) evas_stringshare_del(st->label);
-	     if (st->icon) evas_stringshare_del(st->icon);
-	     if (st->out) evas_stringshare_del(st->out);
+	     if (st->label) eina_stringshare_del(st->label);
+	     if (st->icon) eina_stringshare_del(st->icon);
+	     if (st->out) eina_stringshare_del(st->out);
 	     free(st);
 	  }
 	if (ky->obj) evas_object_del(ky->obj);
@@ -896,7 +896,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
    f = fopen(layout, "r");
    if (!f) return;
    ki->layout.directory = ecore_file_dir_get(layout);
-   ki->layout.file = evas_stringshare_add(layout);
+   ki->layout.file = eina_stringshare_add(layout);
    while (fgets(buf, sizeof(buf), f))
      {
 	int len;
@@ -954,13 +954,13 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	     if (!strcmp(str, "capslock")) st->state = CAPSLOCK;
 	     p = strrchr(label, '.');
 	     if ((p) && (!strcmp(p, ".png")))
-	       st->icon = evas_stringshare_add(label);
+	       st->icon = eina_stringshare_add(label);
 	     else if ((p) && (!strcmp(p, ".edj")))
-	       st->icon = evas_stringshare_add(label);
+	       st->icon = eina_stringshare_add(label);
 	     else
-	       st->label = evas_stringshare_add(label);
+	       st->label = eina_stringshare_add(label);
 	     if (sscanf(buf, "%*s %*s %4000s", str) != 1) continue;
-	     st->out = evas_stringshare_add(str);
+	     st->out = eina_stringshare_add(str);
 	  }
 	if (!strcmp(str, "is_shift")) ky->is_shift = 1;
 	if (!strcmp(str, "is_ctrl")) ky->is_ctrl = 1;
@@ -1053,10 +1053,10 @@ _e_kbd_int_layouts_free(E_Kbd_Int *ki)
 	
    EINA_LIST_FREE(ki->layouts, kil)
      {
-	evas_stringshare_del(kil->path);
-	evas_stringshare_del(kil->dir);
-	evas_stringshare_del(kil->icon);
-	evas_stringshare_del(kil->name);
+	eina_stringshare_del(kil->path);
+	eina_stringshare_del(kil->dir);
+	eina_stringshare_del(kil->icon);
+	eina_stringshare_del(kil->name);
 	free(kil);
      }
 }
@@ -1088,7 +1088,7 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 	  {
 	     if (ecore_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
 	       continue;
-	     kbs = eina_list_append(kbs, evas_stringshare_add(buf));
+	     kbs = eina_list_append(kbs, eina_stringshare_add(buf));
 	  }
 	free(file);
      }
@@ -1119,7 +1119,7 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 	       {
 		  if (ecore_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
 		    continue;
-		  kbs = eina_list_append(kbs, evas_stringshare_add(buf));
+		  kbs = eina_list_append(kbs, eina_stringshare_add(buf));
 	       }
 	  }
 	free(file);
@@ -1144,13 +1144,13 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 	       {
 		  p = strrchr(s, '.');
 		  if (p) *p = 0;
-		  kil->name = evas_stringshare_add(s);
+		  kil->name = eina_stringshare_add(s);
 		  free(s);
 	       }
 	     s = ecore_file_dir_get(kil->path);
 	     if (s)
 	       {
-		  kil->dir = evas_stringshare_add(s);
+		  kil->dir = eina_stringshare_add(s);
 		  free(s);
 	       }
 	     f = fopen(kil->path, "r");
@@ -1198,7 +1198,7 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 			 {
 			    sscanf(buf, "%*s %4000s\n", str);
 			    snprintf(buf, sizeof(buf), "%s/%s", kil->dir, str);
-			    kil->icon = evas_stringshare_add(buf);
+			    kil->icon = eina_stringshare_add(buf);
 			    continue;
 			 }
 		    }
@@ -1330,7 +1330,7 @@ _e_kbd_int_dictlist_down(E_Kbd_Int *ki)
    e_object_del(E_OBJECT(ki->dictlist.popup));
    ki->dictlist.popup = NULL;
    EINA_LIST_FREE(ki->dictlist.matches, str)
-     evas_stringshare_del(str);
+     eina_stringshare_del(str);
 }
 
 static void
@@ -1350,8 +1350,7 @@ _e_kbd_int_cb_dictlist_item_sel(void *data)
 	_e_kbd_int_layout_state_update(ki);
      }
    
-   if (illume_cfg->kbd.dict) evas_stringshare_del(illume_cfg->kbd.dict);
-   illume_cfg->kbd.dict = evas_stringshare_add(str);
+   eina_stringshare_replace(&illume_cfg->kbd.dict, str);
    
    e_kbd_buf_dict_set(ki->kbuf, illume_cfg->kbd.dict);
    
@@ -1410,7 +1409,7 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 			      }
 			    pp = strrchr(p, '.');
 			    *pp = 0;
-			    str = evas_stringshare_add(file);
+			    str = eina_stringshare_add(file);
 			    ki->dictlist.matches = eina_list_append(ki->dictlist.matches, str);
 			    e_widget_ilist_append(o, NULL, p, _e_kbd_int_cb_dictlist_item_sel,
 						  ki, NULL);
@@ -1445,7 +1444,7 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 			      }
 			    pp = strrchr(p, '.');
 			    *pp = 0;
-			    str = evas_stringshare_add(file);
+			    str = eina_stringshare_add(file);
 			    ki->dictlist.matches = eina_list_append(ki->dictlist.matches, str);
 			    e_widget_ilist_append(o, NULL, p, _e_kbd_int_cb_dictlist_item_sel,
 						  ki, NULL);
@@ -1493,7 +1492,7 @@ _e_kbd_int_matchlist_down(E_Kbd_Int *ki)
    e_object_del(E_OBJECT(ki->matchlist.popup));
    ki->matchlist.popup = NULL;
    EINA_LIST_FREE(ki->matchlist.matches, str)
-     evas_stringshare_del(str);
+     eina_stringshare_del(str);
 }
 
 static void
@@ -1548,14 +1547,14 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
 	     str = e_kbd_buf_actual_string_get(ki->kbuf);
 	     if (str)
 	       {
-		  str = evas_stringshare_add(str);
+		  str = eina_stringshare_add(str);
 		  ki->matchlist.matches = eina_list_append(ki->matchlist.matches, str);
 		  e_widget_ilist_append(o, NULL, str, _e_kbd_int_cb_matchlist_item_sel,
 					ki, NULL);
 	       }
 	  }
 	str = l->data;
-	str = evas_stringshare_add(str);
+	str = eina_stringshare_add(str);
 	ki->matchlist.matches = eina_list_append(ki->matchlist.matches, str);
 	e_widget_ilist_append(o, NULL, str, _e_kbd_int_cb_matchlist_item_sel,
 			      ki, NULL);
@@ -1740,9 +1739,9 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    
    ki = E_NEW(E_Kbd_Int, 1);
    if (!ki) return NULL;
-   if (themedir) ki->themedir = evas_stringshare_add(themedir);
-   if (syskbds) ki->syskbds = evas_stringshare_add(syskbds);
-   if (sysdicts) ki->sysdicts = evas_stringshare_add(sysdicts);
+   if (themedir) ki->themedir = eina_stringshare_add(themedir);
+   if (syskbds) ki->syskbds = eina_stringshare_add(syskbds);
+   if (sysdicts) ki->sysdicts = eina_stringshare_add(sysdicts);
    ki->win = e_win_new(e_util_container_number_get(0));
    states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
@@ -1818,9 +1817,9 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
 EAPI void
 e_kbd_int_free(E_Kbd_Int *ki)
 {
-   if (ki->themedir) evas_stringshare_del(ki->themedir);
-   if (ki->syskbds) evas_stringshare_del(ki->syskbds);
-   if (ki->sysdicts) evas_stringshare_del(ki->sysdicts);
+   if (ki->themedir) eina_stringshare_del(ki->themedir);
+   if (ki->syskbds) eina_stringshare_del(ki->syskbds);
+   if (ki->sysdicts) eina_stringshare_del(ki->sysdicts);
    _e_kbd_int_layouts_free(ki);
    _e_kbd_int_matches_free(ki);
    _e_kbd_int_layout_free(ki);

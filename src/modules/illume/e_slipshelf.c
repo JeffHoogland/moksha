@@ -71,7 +71,7 @@ e_slipshelf_new(E_Zone *zone, const char *themedir)
    if (!ess) return NULL;
    
    ess->zone = zone;
-   if (themedir) ess->themedir = evas_stringshare_add(themedir);
+   if (themedir) ess->themedir = eina_stringshare_add(themedir);
    
    ess->clickwin = ecore_x_window_input_new(zone->container->win,
 					    zone->x, zone->y, zone->w, zone->h);
@@ -427,11 +427,7 @@ e_slipshelf_default_title_set(E_Slipshelf *ess, const char *title)
 {
    E_OBJECT_CHECK(ess);
    E_OBJECT_TYPE_CHECK(ess, E_SLIPSHELF_TYPE);
-   if (ess->default_title) evas_stringshare_del(ess->default_title);
-   if (title)
-     ess->default_title = evas_stringshare_add(title);
-   else
-     ess->default_title = NULL;
+   eina_stringshare_replace(&ess->default_title, title);
    if (!ess->focused_border)
      edje_object_part_text_set(ess->base_obj, "e.text.label",
 			       ess->default_title);
@@ -468,8 +464,8 @@ _e_slipshelf_free(E_Slipshelf *ess)
    EINA_LIST_FREE(ess->handlers, handle)
      ecore_event_handler_del(handle);
    if (ess->animator) ecore_animator_del(ess->animator);
-   if (ess->themedir) evas_stringshare_del(ess->themedir);
-   if (ess->default_title) evas_stringshare_del(ess->default_title);
+   if (ess->themedir) eina_stringshare_del(ess->themedir);
+   if (ess->default_title) eina_stringshare_del(ess->default_title);
    if (ess->clickwin) ecore_x_window_free(ess->clickwin);
    e_object_del(E_OBJECT(ess->popup));
    free(ess);

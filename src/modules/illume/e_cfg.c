@@ -104,7 +104,7 @@ e_cfg_init(E_Module *m)
 	  }
 	if ((illume_cfg->config_version & 0xffff) < 2) // new in minor ver 2
 	  {
-	     illume_cfg->kbd.dict = evas_stringshare_add("English_(US).dic");
+	     illume_cfg->kbd.dict = eina_stringshare_add("English_(US).dic");
 	  }
 	if ((illume_cfg->config_version & 0xffff) < 3) // new in minor ver 3
 	  {
@@ -141,8 +141,8 @@ e_cfg_shutdown(void)
    e_configure_registry_item_del("display/power");
    e_configure_registry_item_del("display/launcher");
    e_configure_registry_category_del("display");
-   if (illume_cfg->kbd.run_keyboard) evas_stringshare_del(illume_cfg->kbd.run_keyboard);
-   if (illume_cfg->kbd.dict) evas_stringshare_del(illume_cfg->kbd.dict);
+   if (illume_cfg->kbd.run_keyboard) eina_stringshare_del(illume_cfg->kbd.run_keyboard);
+   if (illume_cfg->kbd.dict) eina_stringshare_del(illume_cfg->kbd.dict);
    free(illume_cfg);
    E_CONFIG_DD_FREE(conf_edd);
    illume_cfg = NULL;
@@ -858,7 +858,7 @@ _e_cfg_gadgets_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	
    EINA_LIST_FREE(gadits, gi)
      {
-	evas_stringshare_del(gi->name);
+	eina_stringshare_del(gi->name);
 	free(gi);
      }
    e_object_unref(E_OBJECT(local_slipshelf));
@@ -897,7 +897,7 @@ _e_cfg_gadgets_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 	
 	gi = E_NEW(Gadit, 1);
 	gi->gc = local_slipshelf->gadcon;
-	gi->name = evas_stringshare_add(cc->name);
+	gi->name = eina_stringshare_add(cc->name);
 	gi->was_enabled = on;
 	gi->enabled = on;
 	gadits = eina_list_append(gadits, gi);
@@ -928,7 +928,7 @@ _e_cfg_gadgets_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 	
 	gi = E_NEW(Gadit, 1);
 	gi->gc = local_slipshelf->gadcon_extra;
-	gi->name = evas_stringshare_add(cc->name);
+	gi->name = eina_stringshare_add(cc->name);
 	gi->was_enabled = on;
 	gi->enabled = on;
 	gadits = eina_list_append(gadits, gi);
@@ -972,7 +972,7 @@ static int _e_cfg_keyboard_change_timeout(void *data)
    illume_cfg->kbd.use_internal = 0;
    if (illume_cfg->kbd.run_keyboard)
      {
-	evas_stringshare_del(illume_cfg->kbd.run_keyboard);
+	eina_stringshare_del(illume_cfg->kbd.run_keyboard);
 	illume_cfg->kbd.run_keyboard = NULL;
      }
    if (external_keyboard == 0)
@@ -1001,7 +1001,7 @@ static int _e_cfg_keyboard_change_timeout(void *data)
 		  if (nn == external_keyboard)
 		    {
 		       if (dname)
-			 illume_cfg->kbd.run_keyboard = evas_stringshare_add(dname);
+			 illume_cfg->kbd.run_keyboard = eina_stringshare_add(dname);
 		       break;
 		    }
 		  nn++;
@@ -1940,7 +1940,7 @@ _dbcb_keyboard_set(E_DBus_Object *obj, DBusMessage *msg)
 	illume_cfg->kbd.use_internal = 0;
 	if (illume_cfg->kbd.run_keyboard)
 	  {
-	     evas_stringshare_del(illume_cfg->kbd.run_keyboard);
+	     eina_stringshare_del(illume_cfg->kbd.run_keyboard);
 	     illume_cfg->kbd.run_keyboard = NULL;
 	  }
 	if (!strcmp(s, "none"))
@@ -1948,7 +1948,7 @@ _dbcb_keyboard_set(E_DBus_Object *obj, DBusMessage *msg)
 	else if (!strcmp(s, "internal"))
 	  illume_cfg->kbd.use_internal = 1;
 	else
-	  illume_cfg->kbd.run_keyboard = evas_stringshare_add(s);
+	  illume_cfg->kbd.run_keyboard = eina_stringshare_add(s);
 	e_mod_win_cfg_kbd_update();
 	e_config_save_queue();
 	return dbus_message_new_method_return(msg);

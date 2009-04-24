@@ -56,7 +56,7 @@ e_busycover_new(E_Zone *zone, const char *themedir)
    if (!esw) return NULL;
    
    esw->zone = zone;
-   if (themedir) esw->themedir = evas_stringshare_add(themedir);
+   if (themedir) esw->themedir = eina_stringshare_add(themedir);
 
    busycovers = eina_list_append(busycovers, esw);
 
@@ -78,8 +78,8 @@ e_busycover_push(E_Busycover *esw, const char *message, const char *icon)
    if (!esw->base_obj) _e_busycover_add_object(esw);
    h = calloc(1, sizeof(E_Busycover_Handle));
    h->busycover = esw;
-   if (message) h->message = evas_stringshare_add(message);
-   if (icon) h->icon = evas_stringshare_add(icon);
+   if (message) h->message = eina_stringshare_add(message);
+   if (icon) h->icon = eina_stringshare_add(icon);
    esw->handles = eina_list_prepend(esw->handles, h);
    edje_object_part_text_set(esw->base_obj, "e.text.label", h->message);
    /* FIXME: handle icon... */
@@ -94,8 +94,8 @@ e_busycover_pop(E_Busycover *esw, E_Busycover_Handle *handle)
    E_OBJECT_TYPE_CHECK(esw, E_BUSYCOVER_TYPE);
    if (!eina_list_data_find(esw->handles, handle)) return;
    esw->handles = eina_list_remove(esw->handles, handle);
-   if (handle->message) evas_stringshare_del(handle->message);
-   if (handle->icon) evas_stringshare_del(handle->icon);
+   if (handle->message) eina_stringshare_del(handle->message);
+   if (handle->icon) eina_stringshare_del(handle->icon);
    free(handle);
    if (esw->handles)
      {
@@ -121,7 +121,7 @@ _e_busycover_free(E_Busycover *esw)
    busycovers = eina_list_remove(busycovers, esw);
    EINA_LIST_FREE(esw->handlers, handle)
      ecore_event_handler_del(handle);
-   if (esw->themedir) evas_stringshare_del(esw->themedir);
+   if (esw->themedir) eina_stringshare_del(esw->themedir);
    free(esw);
 }
 

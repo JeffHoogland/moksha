@@ -31,9 +31,9 @@ _e_kbd_buf_layout_unref(E_Kbd_Buf_Layout *kbl)
 	E_Kbd_Buf_Key *ky;
 	
 	ky = kbl->keys->data;
-	if (ky->key) evas_stringshare_del(ky->key);
-	if (ky->key_shift) evas_stringshare_del(ky->key_shift);
-	if (ky->key_capslock) evas_stringshare_del(ky->key_capslock);
+	if (ky->key) eina_stringshare_del(ky->key);
+	if (ky->key_shift) eina_stringshare_del(ky->key_shift);
+	if (ky->key_capslock) eina_stringshare_del(ky->key_capslock);
 	free(ky);
 	kbl->keys = eina_list_remove_list(kbl->keys, kbl->keys);
      }
@@ -46,7 +46,7 @@ _e_kbd_buf_string_matches_clear(E_Kbd_Buf *kb)
    while (kb->string_matches)
      {
 	if (kb->string_matches->data)
-	  evas_stringshare_del(kb->string_matches->data);
+	  eina_stringshare_del(kb->string_matches->data);
 	kb->string_matches = eina_list_remove_list(kb->string_matches, kb->string_matches);
      }
 }
@@ -54,7 +54,7 @@ _e_kbd_buf_string_matches_clear(E_Kbd_Buf *kb)
 static void
 _e_kbd_buf_actual_string_clear(E_Kbd_Buf *kb)
 {
-   if (kb->actual_string) evas_stringshare_del(kb->actual_string);
+   if (kb->actual_string) eina_stringshare_del(kb->actual_string);
    kb->actual_string = NULL;
 }
 
@@ -174,7 +174,7 @@ _e_kbd_buf_actual_string_update(E_Kbd_Buf *kb)
      }
    if (actual)
      {
-	kb->actual_string = evas_stringshare_add(actual);
+	kb->actual_string = eina_stringshare_add(actual);
 	if (actual) free(actual);
      }
 }
@@ -214,7 +214,7 @@ _e_kbd_buf_matches_update(E_Kbd_Buf *kb)
 	     if (!word) break;
 	     if (!_e_kbd_buf_matches_find(kb->string_matches, word))
 	       kb->string_matches = eina_list_append(kb->string_matches,
-						     evas_stringshare_add(word));
+						     eina_stringshare_add(word));
 	     e_kbd_dict_matches_next(dicts[i]);
 	  }
      }
@@ -253,7 +253,7 @@ e_kbd_buf_new(const char *sysdicts, const char *dict)
 
    kb = E_NEW(E_Kbd_Buf, 1);
    if (!kb) return NULL;
-   kb->sysdicts = evas_stringshare_add(sysdicts);
+   kb->sysdicts = eina_stringshare_add(sysdicts);
 
    e_user_dir_concat_static(buf, "dicts");
    if (!ecore_file_exists(buf)) ecore_file_mkpath(buf);
@@ -296,7 +296,7 @@ e_kbd_buf_free(E_Kbd_Buf *kb)
    e_kbd_buf_clear(kb);
    e_kbd_buf_layout_clear(kb);
    e_kbd_buf_lookup_cancel(kb);
-   evas_stringshare_del(kb->sysdicts);
+   eina_stringshare_del(kb->sysdicts);
    if (kb->dict.sys) e_kbd_dict_free(kb->dict.sys);
    if (kb->dict.personal) e_kbd_dict_free(kb->dict.personal);
    if (kb->dict.data) e_kbd_dict_free(kb->dict.data);
@@ -335,7 +335,7 @@ e_kbd_buf_clear(E_Kbd_Buf *kb)
 	E_Kbd_Buf_Keystroke *ks;
 	
 	ks = kb->keystrokes->data;
-	if (ks->key) evas_stringshare_del(ks->key);
+	if (ks->key) eina_stringshare_del(ks->key);
 	_e_kbd_buf_layout_unref(ks->layout);
 	free(ks);
 	kb->keystrokes = eina_list_remove_list(kb->keystrokes, kb->keystrokes);
@@ -384,9 +384,9 @@ e_kbd_buf_layout_key_add(E_Kbd_Buf *kb, const char *key,  const char *key_shift,
    if (!kb->layout) return;
    ky = E_NEW(E_Kbd_Buf_Key, 1);
    if (!ky) return;
-   if (key) ky->key = evas_stringshare_add(key);
-   if (key_shift) ky->key_shift = evas_stringshare_add(key_shift);
-   if (key_capslock) ky->key_capslock = evas_stringshare_add(key_capslock);
+   if (key) ky->key = eina_stringshare_add(key);
+   if (key_shift) ky->key_shift = eina_stringshare_add(key_shift);
+   if (key_capslock) ky->key_capslock = eina_stringshare_add(key_capslock);
    ky->x = x;
    ky->y = y;
    ky->w = w;
@@ -419,7 +419,7 @@ e_kbd_buf_pressed_key_add(E_Kbd_Buf *kb, const char *key, int shift, int capsloc
    if (!kb->layout) return;
    ks = E_NEW(E_Kbd_Buf_Keystroke, 1);
    if (!ks) return;
-   ks->key = evas_stringshare_add(key);
+   ks->key = eina_stringshare_add(key);
    if (shift) ks->shift = 1;
    if (capslock) ks->capslock = 1;
    ks->layout = kb->layout;
@@ -516,7 +516,7 @@ e_kbd_buf_backspace(E_Kbd_Buf *kb)
 	E_Kbd_Buf_Keystroke *ks;
 	
 	ks = l->data;
-	if (ks->key) evas_stringshare_del(ks->key);
+	if (ks->key) eina_stringshare_del(ks->key);
 	_e_kbd_buf_layout_unref(ks->layout);
 	free(ks);
 	kb->keystrokes = eina_list_remove_list(kb->keystrokes, l);

@@ -42,7 +42,7 @@ e_busywin_new(E_Zone *zone, const char *themedir)
    if (!esw) return NULL;
    
    esw->zone = zone;
-   if (themedir) esw->themedir = evas_stringshare_add(themedir);
+   if (themedir) esw->themedir = eina_stringshare_add(themedir);
    
    esw->clickwin = ecore_x_window_input_new(zone->container->win,
 					    zone->x, zone->y, zone->w, zone->h);
@@ -95,8 +95,8 @@ e_busywin_push(E_Busywin *esw, const char *message, const char *icon)
    E_OBJECT_TYPE_CHECK_RETURN(esw, E_BUSYWIN_TYPE, NULL);
    h = calloc(1, sizeof(E_Busywin_Handle));
    h->busywin = esw;
-   if (message) h->message = evas_stringshare_add(message);
-   if (icon) h->icon = evas_stringshare_add(icon);
+   if (message) h->message = eina_stringshare_add(message);
+   if (icon) h->icon = eina_stringshare_add(icon);
    esw->handles = eina_list_prepend(esw->handles, h);
    edje_object_part_text_set(esw->base_obj, "e.text.label", h->message);
    /* FIXME: handle icon... */
@@ -111,8 +111,8 @@ e_busywin_pop(E_Busywin *esw, E_Busywin_Handle *handle)
    E_OBJECT_TYPE_CHECK(esw, E_BUSYWIN_TYPE);
    if (!eina_list_data_find(esw->handles, handle)) return;
    esw->handles = eina_list_remove(esw->handles, handle);
-   if (handle->message) evas_stringshare_del(handle->message);
-   if (handle->icon) evas_stringshare_del(handle->icon);
+   if (handle->message) eina_stringshare_del(handle->message);
+   if (handle->icon) eina_stringshare_del(handle->icon);
    free(handle);
    if (esw->handles)
      {
@@ -139,7 +139,7 @@ _e_busywin_free(E_Busywin *esw)
 	esw->handlers = eina_list_remove_list(esw->handlers, esw->handlers);
      }
    if (esw->animator) ecore_animator_del(esw->animator);
-   if (esw->themedir) evas_stringshare_del(esw->themedir);
+   if (esw->themedir) eina_stringshare_del(esw->themedir);
    ecore_x_window_free(esw->clickwin);
    e_object_del(E_OBJECT(esw->popup));
    free(esw);

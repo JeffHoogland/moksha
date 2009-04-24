@@ -123,7 +123,7 @@ e_winilist_special_append(Evas_Object *obj, Evas_Object *icon, const char *label
 	s = E_NEW(Special, 1);
 	d->special.prepend = eina_list_prepend(d->special.prepend, s);
 	s->icon = icon;
-	if (label) s->label = evas_stringshare_add(label);
+	if (label) s->label = eina_stringshare_add(label);
 	s->func = func;
 	s->data1 = data1;
 	s->data2 = data2;
@@ -145,7 +145,7 @@ e_winilist_special_prepend(Evas_Object *obj, Evas_Object *icon, const char *labe
 	s = E_NEW(Special, 1);
 	d->special.append = eina_list_append(d->special.append, s);
 	s->icon = icon;
-	if (label) s->label = evas_stringshare_add(label);
+	if (label) s->label = eina_stringshare_add(label);
 	s->func = func;
 	s->data1 = data1;
 	s->data2 = data2;
@@ -211,7 +211,7 @@ _cb_object_del(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
    while (d->labels)
      {
-	evas_stringshare_del(d->labels->data);
+	eina_stringshare_del(d->labels->data);
 	d->labels = eina_list_remove_list(d->labels, d->labels);
      }
    
@@ -227,7 +227,7 @@ _cb_object_del(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
 	if (s->label)
 	  {
-	     evas_stringshare_del(s->label);
+	     eina_stringshare_del(s->label);
 	     s->label = NULL;
 	  }
 	free(s);
@@ -245,7 +245,7 @@ _cb_object_del(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
 	if (s->label)
 	  {
-	     evas_stringshare_del(s->label);
+	     eina_stringshare_del(s->label);
 	     s->label = NULL;
 	  }
 	free(s);
@@ -353,7 +353,7 @@ _refill(Data *d)
      }
    while (d->labels)
      {
-	evas_stringshare_del(d->labels->data);
+	eina_stringshare_del(d->labels->data);
 	d->labels = eina_list_remove_list(d->labels, d->labels);
      }
    
@@ -386,7 +386,7 @@ _refill(Data *d)
 	else if (bd->client.icccm.title) title = bd->client.icccm.title;
 	e_object_ref(E_OBJECT(bd));
 	d->borders = eina_list_append(d->borders, bd);
-	d->labels = eina_list_append(d->labels, evas_stringshare_add(title));
+	d->labels = eina_list_append(d->labels, eina_stringshare_add(title));
 	e_ilist_append(d->o_ilist, NULL/*icon*/, title, 0,
 		       _cb_item_sel,
 		       NULL, d, bd);

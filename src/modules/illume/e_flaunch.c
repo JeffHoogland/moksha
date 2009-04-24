@@ -44,7 +44,7 @@ static void
 _e_flaunch_button_del(E_Flaunch_App *fla)
 {
    evas_object_del(fla->obj);
-   if (fla->desktop) evas_stringshare_del(fla->desktop);
+   if (fla->desktop) eina_stringshare_del(fla->desktop);
    free(fla);
 }
 
@@ -71,7 +71,7 @@ _e_flaunch_app_add(E_Flaunch *fl, const char *deskfile)
    desktop = efreet_util_desktop_file_id_find(deskfile);
    if (desktop) label = desktop->name;
    fla = _e_fluanch_button_add(fl, label, 1, _e_fluanch_cb_app_button, NULL);
-   if (deskfile) fla->desktop = evas_stringshare_add(deskfile);
+   if (deskfile) fla->desktop = eina_stringshare_add(deskfile);
    fl->apps = eina_list_append(fl->apps, fla);
    e_box_pack_end(fl->app_box_obj, fla->obj);
    e_box_pack_options_set(fla->obj, 1, 1, 1, 1, 0.5, 0.5, 0, 0, 9999, 9999);
@@ -153,7 +153,7 @@ _e_flaunch_free(E_Flaunch *fl)
    if (fl->repopulate_timer) ecore_timer_del(fl->repopulate_timer);
    _e_flaunch_apps_clear(fl);
    _e_flaunch_button_del(fl->start_button);
-   evas_stringshare_del(fl->themedir);
+   eina_stringshare_del(fl->themedir);
    evas_object_del(fl->app_box_obj);
    evas_object_del(fl->box_obj);
    EINA_LIST_FREE(fl->handlers, handle)
@@ -233,7 +233,7 @@ e_flaunch_new(E_Zone *zone, const char *themedir)
    if (!fl) return NULL;
    fl->zone = zone;
    
-   fl->themedir = evas_stringshare_add(themedir);
+   fl->themedir = eina_stringshare_add(themedir);
 
    // FIXME: height should become config
    fl->height = 30 * e_scale;

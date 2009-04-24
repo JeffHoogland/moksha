@@ -388,7 +388,7 @@ _e_mod_layout_cb_hook_post_fetch(void *data, E_Border *bd)
 	  {
 	     if (bd->bordername)
 	       {
-		  evas_stringshare_del(bd->bordername);
+		  eina_stringshare_del(bd->bordername);
 		  bd->bordername = NULL;
 		  bd->client.border.changed = 1;
 	       }
@@ -397,8 +397,7 @@ _e_mod_layout_cb_hook_post_fetch(void *data, E_Border *bd)
 	  }
 	if (!_is_dialog(bd))
 	  {
-	     if (bd->bordername) evas_stringshare_del(bd->bordername);
-	     bd->bordername = evas_stringshare_add("borderless");
+	     eina_stringshare_replace(&bd->bordername, "borderless");
 	     bd->client.border.changed = 1;
 	  }
         bd->client.e.state.centered = 0;

@@ -56,7 +56,7 @@ e_syswin_new(E_Zone *zone, const char *themedir)
    if (!esw) return NULL;
    
    esw->zone = zone;
-   if (themedir) esw->themedir = evas_stringshare_add(themedir);
+   if (themedir) esw->themedir = eina_stringshare_add(themedir);
    
    esw->clickwin = ecore_x_window_input_new(zone->container->win,
 					    zone->x, zone->y, zone->w, zone->h);
@@ -217,7 +217,7 @@ _e_syswin_free(E_Syswin *esw)
    EINA_LIST_FREE(esw->handlers, handle)
      ecore_event_handler_del(handle);
    if (esw->animator) ecore_animator_del(esw->animator);
-   if (esw->themedir) evas_stringshare_del(esw->themedir);
+   if (esw->themedir) eina_stringshare_del(esw->themedir);
    ecore_x_window_free(esw->clickwin);
    e_object_del(E_OBJECT(esw->popup));
    free(esw);
