@@ -45,12 +45,14 @@ static E_Config_DD *_e_config_mime_icon_edd = NULL;
 static E_Config_DD *_e_config_syscon_action_edd = NULL;
 
 EAPI int E_EVENT_CONFIG_ICON_THEME = 0;
+EAPI int E_EVENT_CONFIG_MODE_CHANGED = 0;
 
 /* externally accessible functions */
 EAPI int
 e_config_init(void)
 {
    E_EVENT_CONFIG_ICON_THEME = ecore_event_type_new();
+   E_EVENT_CONFIG_MODE_CHANGED = ecore_event_type_new();
 
    _e_config_profile = getenv("E_CONF_PROFILE");
    if (_e_config_profile)
@@ -674,7 +676,10 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, syscon.timeout, DOUBLE);
    E_CONFIG_VAL(D, T, syscon.do_input, UCHAR);
    E_CONFIG_LIST(D, T, syscon.actions, _e_config_syscon_action_edd);
-   
+
+   E_CONFIG_VAL(D, T, mode.presentation, UCHAR);
+   E_CONFIG_VAL(D, T, mode.offline, UCHAR);
+
    e_config_load();
    
    e_config_save_queue();
@@ -881,6 +886,12 @@ e_config_load(void)
         IFCFG(0x012f);
         COPYVAL(icon_theme_overrides);
         IFCFGEND;
+
+	IFCFG(0x0130);
+	COPYVAL(mode.presentation);
+	COPYVAL(mode.offline);
+	IFCFGEND;
+
         e_config->config_version = E_CONFIG_FILE_VERSION;   
         _e_config_free(tcfg);
      }
@@ -1014,7 +1025,10 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->menu_apps_show, 0, 1);
 
    E_CONFIG_LIMIT(e_config->ping_clients_interval, 16, 1024);
-   
+
+   E_CONFIG_LIMIT(e_config->mode.presentation, 0, 1);
+   E_CONFIG_LIMIT(e_config->mode.offline, 0, 1);
+
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
    /* FIXME: desklock personalized password id disabled for security reasons */
@@ -1450,6 +1464,12 @@ e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in)
 	  return eb;
      }
    return NULL;
+}
+
+EAPI void
+e_config_mode_changed(void)
+{
+   ecore_event_add(E_EVENT_CONFIG_MODE_CHANGED, NULL, NULL, NULL);
 }
 
 /* local subsystem functions */

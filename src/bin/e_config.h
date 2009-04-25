@@ -35,7 +35,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x012f
+#define E_CONFIG_FILE_GENERATION 0x0130
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT         0
@@ -331,6 +331,11 @@ struct _E_Config
       unsigned char do_input;
       Eina_List *actions;
    } syscon;
+
+   struct {
+      Eina_Bool presentation;
+      Eina_Bool offline;
+   } mode;
 };
 
 struct _E_Config_Syscon_Action
@@ -519,10 +524,12 @@ EAPI E_Config_Binding_Key    *e_config_binding_key_match(E_Config_Binding_Key *e
 EAPI E_Config_Binding_Edge   *e_config_binding_edge_match(E_Config_Binding_Edge *eb_in);
 EAPI E_Config_Binding_Signal *e_config_binding_signal_match(E_Config_Binding_Signal *eb_in);
 EAPI E_Config_Binding_Wheel  *e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in);
-    
+EAPI void                     e_config_mode_changed(void);
+
 extern EAPI E_Config *e_config;
 
 extern EAPI int E_EVENT_CONFIG_ICON_THEME;
+extern EAPI int E_EVENT_CONFIG_MODE_CHANGED;
 
 #endif
 #endif

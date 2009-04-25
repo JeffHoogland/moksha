@@ -1,5 +1,5 @@
 group "E_Config" struct {
-  value "config_version" int: 65839;
+  value "config_version" int: 65840;
   value "show_splash" int: 1;
   value "init_default_theme" string: "default.edj";
   value "desktop_default_name" string: "Desktop %i, %i";
@@ -2136,4 +2136,6 @@ group "E_Config" struct {
       value "is_main" int: 0;
     }
   }
+  value "mode.presentation" uchar: 0;
+  value "mode.offline" uchar: 0;
 }
