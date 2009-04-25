@@ -566,6 +566,7 @@ EAPI void      e_border_hide(E_Border *bd, int manage);
 EAPI void      e_border_move(E_Border *bd, int x, int y);
 EAPI void      e_border_move_without_border(E_Border *bd, int x, int y);
 EAPI void      e_border_center(E_Border *bd);
+EAPI void      e_border_center_pos_get(E_Border *bd, int *x, int *y);
 EAPI void      e_border_fx_offset(E_Border *bd, int x, int y);
 EAPI void      e_border_resize(E_Border *bd, int w, int h);
 EAPI void      e_border_resize_without_border(E_Border *bd, int w, int h);

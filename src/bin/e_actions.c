@@ -841,11 +841,9 @@ ACT_FN_GO(window_move_to_center)
      }
 
    E_Border *bd;
-   bd = (E_Border *)obj;
-
    int x, y;
-   x = (bd->zone->w - bd->w) / 2;
-   y = (bd->zone->h - bd->h) / 2;
+   bd = (E_Border *)obj;
+   e_border_center_pos_get(bd, &x, &y);
 
    if ((x != bd->x) || (y != bd->y))
      {
@@ -853,8 +851,8 @@ ACT_FN_GO(window_move_to_center)
 
        if (e_config->focus_policy != E_FOCUS_CLICK)
          ecore_x_pointer_warp(bd->zone->container->win,
-			    bd->x + (bd->w / 2),
-			    bd->y + (bd->h / 2));
+			    x + (bd->w / 2),
+			    y + (bd->h / 2));
      }
 }
 

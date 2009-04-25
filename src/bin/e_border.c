@@ -922,6 +922,18 @@ e_border_center(E_Border *bd)
 }
 
 EAPI void
+e_border_center_pos_get(E_Border *bd, int *x, int *y)
+{
+   int zx, zy, zw, zh;
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+   if (x) *x = zx + (zw - bd->w) / 2;
+   if (y) *y = zy + (zh - bd->h) / 2;
+}
+
+EAPI void
 e_border_fx_offset(E_Border *bd, int x, int y)
 {
    E_OBJECT_CHECK(bd);
