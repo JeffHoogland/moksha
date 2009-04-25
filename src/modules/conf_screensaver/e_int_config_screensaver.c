@@ -28,9 +28,9 @@ struct _E_Config_Dialog_Data
    double interval;
    int blanking;
    int exposures;
-};
 
-Eina_List *xscreensaver_list = NULL;
+   Eina_List *disable_list;
+};
 
 EAPI E_Config_Dialog *
 e_int_config_screensaver(E_Container *con, const char *params __UNUSED__)
@@ -80,8 +80,7 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   xscreensaver_list = eina_list_free(xscreensaver_list);
-
+   eina_list_free(cfdata->disable_list);
    E_FREE(cfdata);
 }
 
@@ -161,7 +160,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"),
 			    1.0, 90.0, 1.0, 0, &(cfdata->timeout), NULL, 200);
-   xscreensaver_list = eina_list_append (xscreensaver_list, ob);
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_disabled_set(ob, !cfdata->enable_screensaver); // set state from saved config
    e_widget_framelist_object_append(of, ob);
 
@@ -169,7 +168,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
 			    1.0, 300.0, 1.0, 0, &(cfdata->interval), NULL, 200);
-   xscreensaver_list = eina_list_append (xscreensaver_list, ob);
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_disabled_set(ob, !cfdata->enable_screensaver); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -178,15 +177,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    rg = e_widget_radio_group_new(&(cfdata->blanking));
    ob = e_widget_radio_add(evas, _("Default"), E_CONFIG_BLANKING_DEFAULT, rg);
    e_widget_disabled_set(ob, !cfdata->enable_screensaver); // set state from saved config
-   xscreensaver_list = eina_list_append (xscreensaver_list, ob);
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Preferred"), E_CONFIG_BLANKING_PREFERRED, rg);
    e_widget_disabled_set(ob, !cfdata->enable_screensaver); // set state from saved config
-   xscreensaver_list = eina_list_append (xscreensaver_list, ob);
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Not Preferred"), E_CONFIG_BLANKING_NOT_PREFERRED, rg);
    e_widget_disabled_set(ob, !cfdata->enable_screensaver); // set state from saved config
-   xscreensaver_list = eina_list_append (xscreensaver_list, ob);
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -194,20 +193,20 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    rg = e_widget_radio_group_new(&(cfdata->exposures));
    ob = e_widget_radio_add(evas, _("Default"), E_CONFIG_EXPOSURES_DEFAULT, rg);
    e_widget_disabled_set(ob, !cfdata->enable_screensaver); // set state from saved config
-   xscreensaver_list = eina_list_append (xscreensaver_list, ob);
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Allow"), E_CONFIG_EXPOSURES_ALLOWED, rg);
    e_widget_disabled_set(ob, !cfdata->enable_screensaver); // set state from saved config
-   xscreensaver_list = eina_list_append (xscreensaver_list, ob);
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Don't Allow"), E_CONFIG_EXPOSURES_NOT_ALLOWED, rg);
    e_widget_disabled_set(ob, !cfdata->enable_screensaver); // set state from saved config
-   xscreensaver_list = eina_list_append (xscreensaver_list, ob);
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    // handler for enable/disable widget array
-   e_widget_on_change_hook_set(xscreensaver_check, _cb_disable_check_list, xscreensaver_list);
+   e_widget_on_change_hook_set(xscreensaver_check, _cb_disable_check_list, cfdata->disable_list);
 
    return o;
 }
