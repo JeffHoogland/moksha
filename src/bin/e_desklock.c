@@ -116,6 +116,23 @@ e_desklock_shutdown(void)
    return 1;
 }
 
+static const char *
+_user_wallpaper_get(void)
+{
+   const E_Config_Desktop_Background *cdbg;
+   const Eina_List *l;
+
+   if (e_config->desktop_default_background)
+     return e_config->desktop_default_background;
+
+   EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cdbg)
+     if (cdbg->file)
+       return cdbg->file;
+
+   return e_theme_edje_file_get("base/theme/desklock",
+				"e/desklock/background");
+}
+
 EAPI int
 e_desklock_show(void)
 {
@@ -267,17 +284,22 @@ e_desklock_show(void)
 			 }
 		       else
 			 {
-			   if (e_util_edje_collection_exists(e_config->desklock_background,
-							     "e/desklock/background"))
+			   const char *f;
+
+			   if (!strcmp(e_config->desklock_background, "user_background"))
+			     f = _user_wallpaper_get();
+			   else
+			     f = e_config->desklock_background;
+
+			   if (e_util_edje_collection_exists(f, "e/desklock/background"))
 			     {
-			       edje_object_file_set(edp->bg_object, e_config->desklock_background,
+			       edje_object_file_set(edp->bg_object, f,
 						    "e/desklock/background");
 			     }
 			   else
 			     {
 			       if (!edje_object_file_set(edp->bg_object,
-							 e_config->desklock_background,
-							 "e/desktop/background"))
+							 f, "e/desktop/background"))
 				 {
 				   edje_object_file_set(edp->bg_object,
 							e_theme_edje_file_get("base/theme/desklock",

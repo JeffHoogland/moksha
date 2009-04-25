@@ -105,8 +105,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->bg_method = 0;
    else if (!strcmp(cfdata->bg, "theme_background"))
      cfdata->bg_method = 1;
-   else
+   else if (!strcmp(cfdata->bg, "user_background"))
      cfdata->bg_method = 2;
+   else
+     cfdata->bg_method = 3;
 
    cfdata->use_xscreensaver = ecore_x_screensaver_event_available_get();
    cfdata->zone_count = _zone_count_get();
@@ -217,6 +219,23 @@ _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
       (e_config->desklock_autolock_idle_timeout != cfdata->idle_time * 60));
 }
 
+static const char *
+_user_wallpaper_get(void)
+{
+   const E_Config_Desktop_Background *cdbg;
+   const Eina_List *l;
+
+   if (e_config->desktop_default_background)
+     return e_config->desktop_default_background;
+
+   EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cdbg)
+     if (cdbg->file)
+       return cdbg->file;
+
+   return e_theme_edje_file_get("base/theme/desklock",
+				"e/desklock/background");
+}
+
 static Evas_Object *
 _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
@@ -309,6 +328,13 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 	E_FREE(cfdata->bg);
 	cfdata->bg = strdup("theme_background");
      }
+   else if (cfdata->bg_method == 2)
+     {
+	f = _user_wallpaper_get();
+	e_widget_preview_edje_set(cfdata->o_prev, f, "e/desktop/background");
+	E_FREE(cfdata->bg);
+	cfdata->bg = strdup("user_background");
+     }
    else 
      {
 	if (cfdata->bg) 
@@ -358,10 +384,13 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_radio_add(evas, _("Theme Wallpaper"), 1, rg);
    evas_object_smart_callback_add(ow, "changed", _cb_method_change, cfdata);
    e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
-   cfdata->o_custom = e_widget_radio_add(evas, _("Custom"), 2, rg);
+   ow = e_widget_radio_add(evas, _("User Wallpaper"), 2, rg);
+   evas_object_smart_callback_add(ow, "changed", _cb_method_change, cfdata);
+   e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 0, 1, 0);
+   cfdata->o_custom = e_widget_radio_add(evas, _("Custom"), 3, rg);
    evas_object_smart_callback_add(cfdata->o_custom, "changed", 
 				  _cb_method_change, cfdata);
-   e_widget_frametable_object_append(of, cfdata->o_custom, 0, 2, 1, 1, 
+   e_widget_frametable_object_append(of, cfdata->o_custom, 0, 3, 1, 1,
 				     1, 0, 1, 0);
    e_widget_table_object_append(mt, of, 1, 1, 1, 1, 1, 1, 1, 1);
 
@@ -486,6 +515,13 @@ _cb_method_change(void *data, Evas_Object *obj, void *event_info)
 	e_widget_preview_edje_set(cfdata->o_prev, f, "e/desktop/background");
 	E_FREE(cfdata->bg);
 	cfdata->bg = strdup("theme_background");
+     }
+   else if (cfdata->bg_method == 2)
+     {
+	f = _user_wallpaper_get();
+	e_widget_preview_edje_set(cfdata->o_prev, f, "e/desktop/background");
+	E_FREE(cfdata->bg);
+	cfdata->bg = strdup("user_background");
      }
    else 
      {
