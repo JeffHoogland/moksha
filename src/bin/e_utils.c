@@ -364,8 +364,8 @@ e_util_edje_icon_check(const char *name)
 }
 
 
-/* WARNING This function is deprecated,. must be made static. 
- * You should use e_util_theme_icon_set instead 
+/* WARNING This function is deprecated,. must be made static.
+ * You should use e_util_icon_theme_set instead
  */
 EAPI int
 e_util_edje_icon_set(Evas_Object *obj, const char *name)
