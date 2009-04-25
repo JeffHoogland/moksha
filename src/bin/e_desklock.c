@@ -865,7 +865,7 @@ _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event)
 static int 
 _e_desklock_cb_idle_poller(void *data)
 {
-   if (e_config->desklock_autolock_idle)
+   if ((e_config->desklock_autolock_idle) && (!e_config->mode.presentation))
      {
 	/* If a desklock is already up, bail */
         if ((_e_custom_desklock_exe) || (edd)) return 1;
