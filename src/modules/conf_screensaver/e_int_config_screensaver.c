@@ -22,7 +22,7 @@ static void _cb_disable_check_list(void *data, Evas_Object *obj);
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
-   
+
    int enable_screensaver;
    double timeout;
    double interval;
@@ -37,19 +37,19 @@ e_int_config_screensaver(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
    if (e_config_dialog_find("E", "_config_screensaver_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
-   
+
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
-   
+
    v->override_auto_apply = 1;
-   
+
    cfd = e_config_dialog_new(con,_("Screen Saver Settings"),
 			     "E", "_config_screensaver_dialog",
 			     "preferences-desktop-screensaver", 0, v, NULL);
@@ -87,7 +87,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 static int
 _apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
-{   
+{
    e_config->screensaver_enable = cfdata->enable_screensaver;
    e_config->screensaver_timeout = cfdata->timeout * 60;
    e_config->screensaver_interval = cfdata->interval;
@@ -103,7 +103,7 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
   _apply_data(cfd, cfdata);
-   
+
   e_config_save_queue();
   return 1;
 }
@@ -116,20 +116,20 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
 
    xscreensaver_check = e_widget_check_add(evas, _("Enable X screensaver"), &(cfdata->enable_screensaver));
-   e_widget_list_object_append(o, xscreensaver_check, 1, 1, 0);   
-   
+   e_widget_list_object_append(o, xscreensaver_check, 1, 1, 0);
+
    of = e_widget_framelist_add(evas, _("Screensaver Timer(s)"), 0);
 
    ob = e_widget_label_add(evas, _("Time until X screensaver starts"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0,
 			    &(cfdata->timeout), NULL, 100);
    e_widget_disabled_set(ob, !cfdata->enable_screensaver); // set state from saved config
    e_widget_framelist_object_append(of, ob);
 
    // handler for enable/disable widget
    e_widget_on_change_hook_set(xscreensaver_check, _cb_disable_check, ob);
-   
+
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
 }
@@ -153,8 +153,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    o = e_widget_list_add(evas, 0, 0);
 
    xscreensaver_check = e_widget_check_add(evas, _("Enable X screensaver"), &(cfdata->enable_screensaver));
-   e_widget_list_object_append(o, xscreensaver_check, 1, 1, 0);   
-   
+   e_widget_list_object_append(o, xscreensaver_check, 1, 1, 0);
+
    of = e_widget_framelist_add(evas, _("Screensaver Timer(s)"), 0);
 
    ob = e_widget_label_add(evas, _("Time until X screensaver starts"));
@@ -164,7 +164,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    xscreensaver_list = eina_list_append (xscreensaver_list, ob);
    e_widget_disabled_set(ob, !cfdata->enable_screensaver); // set state from saved config
    e_widget_framelist_object_append(of, ob);
-   
+
    ob = e_widget_label_add(evas, _("Time until X screensaver alternates"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
@@ -173,7 +173,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_disabled_set(ob, !cfdata->enable_screensaver); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+
    of = e_widget_framelist_add(evas, _("Blanking"), 0);
    rg = e_widget_radio_group_new(&(cfdata->blanking));
    ob = e_widget_radio_add(evas, _("Default"), E_CONFIG_BLANKING_DEFAULT, rg);
@@ -189,7 +189,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    xscreensaver_list = eina_list_append (xscreensaver_list, ob);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+
    of = e_widget_framelist_add(evas, _("Exposure Events"), 0);
    rg = e_widget_radio_group_new(&(cfdata->exposures));
    ob = e_widget_radio_add(evas, _("Default"), E_CONFIG_EXPOSURES_DEFAULT, rg);
@@ -208,8 +208,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    // handler for enable/disable widget array
    e_widget_on_change_hook_set(xscreensaver_check, _cb_disable_check_list, xscreensaver_list);
-   
-   return o;   
+
+   return o;
 }
 
 /*!
@@ -219,8 +219,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 static void
 _cb_disable_check(void *data, Evas_Object *obj)
 {
-   e_widget_disabled_set((Evas_Object *) data, 
-                         !e_widget_check_checked_get(obj));
+   e_widget_disabled_set((Evas_Object *) data,
+			 !e_widget_check_checked_get(obj));
 }
 
 /*!
