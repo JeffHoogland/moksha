@@ -507,12 +507,19 @@ _list_widget_load(Evas_Object *obj, Eina_List *list)
 	char buf[4096];
 
 	if (!mod) continue;
-	if (mod->orig_path)
+	if (mod->icon)
 	  {
-	     path = ecore_file_dir_get(mod->orig_path);
-	     snprintf(buf, sizeof(buf), "%s/%s.edj", path, mod->icon);
-	     ic = e_util_icon_add(buf, evas);
-	     free(path);
+	     ic = e_icon_add(evas);
+	     if (!e_util_icon_theme_set(ic, mod->icon))
+	       {
+		  if (mod->orig_path)
+		    {
+		       path = ecore_file_dir_get(mod->orig_path);
+		       snprintf(buf, sizeof(buf), "%s/%s.edj", path, mod->icon);
+		       e_icon_file_edje_set(ic, buf, "icon");
+		       free(path);
+		    }
+	       }
 	  }
 	if (mod->name)
 	  e_widget_ilist_append(obj, ic, mod->name, NULL, mod, NULL);
