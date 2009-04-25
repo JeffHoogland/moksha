@@ -1801,6 +1801,22 @@ ACT_FN_GO(halt_now)
 }
 
 /***************************************************************************/
+ACT_FN_GO(mode_presentation_toggle)
+{
+   e_config->mode.presentation = !e_config->mode.presentation;
+   e_config_mode_changed();
+   e_config_save_queue();
+}
+
+/***************************************************************************/
+ACT_FN_GO(mode_offline_toggle)
+{
+   e_config->mode.offline = !e_config->mode.offline;
+   e_config_mode_changed();
+   e_config_save_queue();
+}
+
+/***************************************************************************/
 static E_Dialog *logout_dialog = NULL;
 
 static void
@@ -2786,6 +2802,16 @@ e_actions_init(void)
    ACT_GO(exit_now);
    e_action_predef_name_set(_("Enlightenment"), _("Exit Now"), 
 			    "exit_now", NULL, NULL, 0);
+
+   ACT_GO(mode_presentation_toggle);
+   e_action_predef_name_set(_("Enlightenment : Mode"),
+			    _("Presentation Mode Toggle"),
+			    "mode_presentation_toggle", NULL, NULL, 0);
+
+   ACT_GO(mode_offline_toggle);
+   e_action_predef_name_set(_("Enlightenment : Mode"),
+			    _("Offline Mode Toggle"),
+			    "mode_offline_toggle", NULL, NULL, 0);
 
    ACT_GO(logout);
    e_action_predef_name_set(_("System"), _("Log Out"), "logout", 
