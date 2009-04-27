@@ -2,9 +2,9 @@
 // Add group{} locations to all sections. eg. "widget/preview" is found in Wallpaper selector"
 //	Icons:
 //		EFM - All popup icons ... eg, paste copy delete properties
-//		EFM - folders (perhaps?), dynamic mime icons
-//		Add Warning Icon to delete confirm dialog in EFM
-//		Icons for Menus modules (Why do I keep finding myself more work?)
+//		Icons for Menus modules
+//		Icon for Edge Bindings
+//		Icon for Modes?
 //
 
 /*
@@ -7500,6 +7500,14 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 255 255 255 255;
 	    }
 	 }
+	 part { name: "over3";
+	    type: RECT;
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       visible: 1;
+	       color: 255 255 255 0;
+	    }
+	 }
       }
       programs {
 	 program { name: "on";
@@ -7555,14 +7563,14 @@ collections { /* begin the collection of edje groups that are in this file */
 
 	 program { name: "name_show";
 	    signal: "mouse,in";
-	    source: "mouse_over";
+	    source: "over3";
 	    action: STATE_SET "active" 0.0;
 	    transition: SINUSOIDAL 0.1;
             target: "e.text.label";
 	 }
 	 program { name: "name_hide";
 	    signal: "mouse,out";
-	    source: "mouse_over";
+	    source: "over3";
 	    action: STATE_SET "default" 0.0;
 	    transition: SINUSOIDAL 0.2;
             target: "e.text.label";
@@ -23048,6 +23056,7 @@ ICON("view-inherit","icon_dummy.png",64)                 // *** // EFMBUTTON("in
 //Standard Status Icons
 ICON("dialog-warning","icon_warning.png",128)                   // "enlightenment/warning"
 ICON("dialog-error","icon_warning.png",128)                     // "enlightenment/error"
+ICON("dialog-ask","icon_dummy.png",64)				// "enlightenment/unknown"
 ICON("unknown","icon_dummy.png",64)                      // *** // "enlightenment/unknown"
 
 //Standard Application Icons
