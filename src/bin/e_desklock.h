@@ -15,6 +15,7 @@ EAPI int e_desklock_init(void);
 EAPI int e_desklock_shutdown(void);
 
 EAPI int e_desklock_show(void);
+EAPI int e_desklock_show_autolocked(void);
 EAPI void e_desklock_hide(void);
 
 extern EAPI int E_EVENT_DESKLOCK;

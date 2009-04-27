@@ -35,7 +35,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0131
+#define E_CONFIG_FILE_GENERATION 0x0132
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT         0
@@ -223,12 +223,16 @@ struct _E_Config
    double      desklock_autolock_idle_timeout; // GUI
    int         desklock_use_custom_desklock; // GUI
    const char *desklock_custom_desklock_cmd; // GUI
-   
+   Eina_Bool   desklock_ask_presentation; // GUI
+   double      desklock_ask_presentation_timeout; // GUI
+
    int         screensaver_enable; // GUI
    int         screensaver_timeout; // GUI
    int         screensaver_interval; // GUI
    int         screensaver_blanking; // GUI
    int         screensaver_expose; // GUI
+   Eina_Bool   screensaver_ask_presentation; // GUI
+   double      screensaver_ask_presentation_timeout; // GUI
   
    int         dpms_enable; // GUI
    int         dpms_standby_enable; // GUI

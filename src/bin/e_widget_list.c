@@ -70,6 +70,13 @@ e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int e
    evas_object_show(sobj);
 }
 
+EAPI void
+e_widget_list_homogeneous_set(Evas_Object *obj, int homogenous)
+{
+   E_Widget_Data *wd = e_widget_data_get(obj);
+   e_box_homogenous_set(wd->o_box, homogenous);
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

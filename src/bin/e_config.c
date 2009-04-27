@@ -572,6 +572,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desklock_autolock_idle_timeout, DOUBLE);
    E_CONFIG_VAL(D, T, desklock_use_custom_desklock, INT);
    E_CONFIG_VAL(D, T, desklock_custom_desklock_cmd, STR);
+   E_CONFIG_VAL(D, T, desklock_ask_presentation, UCHAR);
+   E_CONFIG_VAL(D, T, desklock_ask_presentation_timeout, DOUBLE);
+
    E_CONFIG_VAL(D, T, display_res_restore, INT);
    E_CONFIG_VAL(D, T, display_res_width, INT);
    E_CONFIG_VAL(D, T, display_res_height, INT);
@@ -583,7 +586,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, screensaver_interval, INT);
    E_CONFIG_VAL(D, T, screensaver_blanking, INT);
    E_CONFIG_VAL(D, T, screensaver_expose, INT);
-   
+   E_CONFIG_VAL(D, T, screensaver_ask_presentation, UCHAR);
+   E_CONFIG_VAL(D, T, screensaver_ask_presentation_timeout, DOUBLE);
+
    E_CONFIG_VAL(D, T, dpms_enable, INT);
    E_CONFIG_VAL(D, T, dpms_standby_enable, INT);
    E_CONFIG_VAL(D, T, dpms_suspend_enable, INT);
@@ -815,6 +820,7 @@ e_config_load(void)
           }
      }
 #define IFCFG(v) if ((e_config->config_version & 0xffff) < (v)) {
+#define IFCFGELSE } else {
 #define IFCFGEND }
 #define COPYVAL(x) do {e_config->x = tcfg->x;} while (0)
 #define COPYPTR(x) do {e_config->x = tcfg->x; tcfg->x = NULL;} while (0)
@@ -895,6 +901,18 @@ e_config_load(void)
 
 	IFCFG(0x0131);
 	COPYVAL(desklock_post_screensaver_time);
+	IFCFGEND;
+
+	IFCFG(0x0132);
+	COPYVAL(desklock_ask_presentation);
+	COPYVAL(desklock_ask_presentation_timeout);
+	COPYVAL(screensaver_ask_presentation);
+	COPYVAL(screensaver_ask_presentation_timeout);
+	IFCFGELSE;
+	e_config->desklock_ask_presentation = 1;
+	e_config->desklock_ask_presentation_timeout = 30.0;
+	e_config->screensaver_ask_presentation = 1;
+	e_config->screensaver_ask_presentation_timeout = 30.0;
 	IFCFGEND;
 
         e_config->config_version = E_CONFIG_FILE_VERSION;   
@@ -987,6 +1005,8 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->desklock_autolock_idle, 0, 1);
    E_CONFIG_LIMIT(e_config->desklock_autolock_idle_timeout, 1.0, 5400.0);
    E_CONFIG_LIMIT(e_config->desklock_use_custom_desklock, 0, 1);
+   E_CONFIG_LIMIT(e_config->desklock_ask_presentation, 0, 1);
+   E_CONFIG_LIMIT(e_config->desklock_ask_presentation_timeout, 1.0, 300.0);
    E_CONFIG_LIMIT(e_config->display_res_restore, 0, 1);
    E_CONFIG_LIMIT(e_config->display_res_width, 1, 8192);
    E_CONFIG_LIMIT(e_config->display_res_height, 1, 8192);
@@ -1012,7 +1032,9 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->screensaver_interval, 0, 5400);
    E_CONFIG_LIMIT(e_config->screensaver_blanking, 0, 2);
    E_CONFIG_LIMIT(e_config->screensaver_expose, 0, 2);
-   
+   E_CONFIG_LIMIT(e_config->screensaver_ask_presentation, 0, 1);
+   E_CONFIG_LIMIT(e_config->screensaver_ask_presentation_timeout, 1.0, 300.0);
+
    E_CONFIG_LIMIT(e_config->clientlist_group_by, 0, 2);
    E_CONFIG_LIMIT(e_config->clientlist_include_all_zones, 0, 1);
    E_CONFIG_LIMIT(e_config->clientlist_separate_with, 0, 2);

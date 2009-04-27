@@ -1,5 +1,5 @@
 group "E_Config" struct {
-  value "config_version" int: 65841;
+  value "config_version" int: 65842;
   value "show_splash" int: 1;
   value "init_default_theme" string: "default.edj";
   value "desktop_default_background" string: "Light_Gradient.edj";
@@ -1864,6 +1864,8 @@ group "E_Config" struct {
   value "desklock_autolock_idle" int: 0;
   value "desklock_autolock_idle_timeout" double: 300.0000000000000000000000000;
   value "desklock_use_custom_desklock" int: 0;
+  value "desklock_ask_presentation" uchar 1;
+  value "desklock_ask_presentation_timeout" double: 30;
   value "display_res_restore" int: 0;
   value "display_res_width" int: 1;
   value "display_res_height" int: 1;
@@ -1874,6 +1876,8 @@ group "E_Config" struct {
   value "screensaver_interval" int: 5;
   value "screensaver_blanking" int: 2;
   value "screensaver_expose" int: 2;
+  value "screensaver_ask_presentation" uchar 1;
+  value "screensaver_ask_presentation_timeout" double: 30;
   value "dpms_enable" int: 0;
   value "dpms_standby_enable" int: 0;
   value "dpms_suspend_enable" int: 0;

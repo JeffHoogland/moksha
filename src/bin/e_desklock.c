@@ -61,6 +61,9 @@ static Ecore_Exe *_e_custom_desklock_exe = NULL;
 static Ecore_Event_Handler *_e_custom_desklock_exe_handler = NULL;
 static Ecore_Poller *_e_desklock_idle_poller = NULL;
 static int _e_desklock_user_idle = 0;
+static double _e_desklock_autolock_time = 0.0;
+static E_Dialog *_e_desklock_ask_presentation_dia = NULL;
+static int _e_desklock_ask_presentation_count = 0;
 
 /***********************************************************************/
 
@@ -88,6 +91,8 @@ static int _desklock_auth_pam_conv(int num_msg, const struct pam_message **msg, 
 static char *_desklock_auth_get_current_user(void);
 static char *_desklock_auth_get_current_host(void);
 #endif
+
+static void _e_desklock_ask_presentation_mode(void);
 
 EAPI int E_EVENT_DESKLOCK = 0;
 
@@ -131,6 +136,13 @@ _user_wallpaper_get(void)
 
    return e_theme_edje_file_get("base/theme/desklock",
 				"e/desklock/background");
+}
+
+EAPI int
+e_desklock_show_autolocked(void)
+{
+   _e_desklock_autolock_time = ecore_loop_time_get();
+   return e_desklock_show();
 }
 
 EAPI int
@@ -434,6 +446,24 @@ e_desklock_hide(void)
    ev = E_NEW(E_Event_Desklock, 1);
    ev->on = 0;
    ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
+
+   if (_e_desklock_autolock_time > 0.0)
+     {
+	if ((e_config->desklock_ask_presentation) &&
+	    (e_config->desklock_ask_presentation_timeout > 0.0))
+	  {
+	     double max, now;
+
+	     now = ecore_loop_time_get();
+	     max = _e_desklock_autolock_time + e_config->desklock_ask_presentation_timeout;
+	     if (now <= max)
+	       _e_desklock_ask_presentation_mode();
+	  }
+	else
+	  _e_desklock_ask_presentation_count = 0;
+
+	_e_desklock_autolock_time = 0.0;
+     }
 }
 
 static int
@@ -889,11 +919,18 @@ _e_desklock_cb_idle_poller(void *data)
 {
    if ((e_config->desklock_autolock_idle) && (!e_config->mode.presentation))
      {
+	double idle, max;
+
 	/* If a desklock is already up, bail */
         if ((_e_custom_desklock_exe) || (edd)) return 1;
 
+	idle = ecore_x_screensaver_idle_time_get();
+	max = e_config->desklock_autolock_idle_timeout;
+	if (_e_desklock_ask_presentation_count > 0)
+	  max *= _e_desklock_ask_presentation_count;
+
 	/* If we have exceeded our idle time... */
-        if (ecore_x_screensaver_idle_time_get() >= e_config->desklock_autolock_idle_timeout)
+        if (idle >= max)
 	  {
 	     /*
 	      * Unfortunately, not all "desklocks" stay up for as long as
@@ -907,7 +944,7 @@ _e_desklock_cb_idle_poller(void *data)
 	     if (!_e_desklock_user_idle)
 	       {
 	          _e_desklock_user_idle = 1;
-                  e_desklock_show();
+                  e_desklock_show_autolocked();
 	       }
 	  }
 	else
@@ -916,4 +953,100 @@ _e_desklock_cb_idle_poller(void *data)
 
    /* Make sure our poller persists. */
    return 1;
+}
+
+static void
+_e_desklock_ask_presentation_del(void *data)
+{
+   if (_e_desklock_ask_presentation_dia == data)
+     _e_desklock_ask_presentation_dia = NULL;
+}
+
+static void
+_e_desklock_ask_presentation_yes(void *data __UNUSED__, E_Dialog *dia)
+{
+   e_config->mode.presentation = 1;
+   e_config_mode_changed();
+   e_config_save_queue();
+   e_object_del(E_OBJECT(dia));
+   _e_desklock_ask_presentation_count = 0;
+}
+
+static void
+_e_desklock_ask_presentation_no(void *data __UNUSED__, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(dia));
+   _e_desklock_ask_presentation_count = 0;
+}
+
+static void
+_e_desklock_ask_presentation_no_increase(void *data __UNUSED__, E_Dialog *dia)
+{
+   int timeout, interval, blanking, expose;
+
+   _e_desklock_ask_presentation_count++;
+   timeout = e_config->screensaver_timeout * _e_desklock_ask_presentation_count;
+   interval = e_config->screensaver_interval;
+   blanking = e_config->screensaver_blanking;
+   expose = e_config->screensaver_expose;
+
+   ecore_x_screensaver_set(timeout, interval, blanking, expose);
+   e_object_del(E_OBJECT(dia));
+}
+
+static void
+_e_desklock_ask_presentation_no_forever(void *data __UNUSED__, E_Dialog *dia)
+{
+   e_config->desklock_ask_presentation = 0;
+   e_config_save_queue();
+   e_object_del(E_OBJECT(dia));
+   _e_desklock_ask_presentation_count = 0;
+}
+
+static void
+_e_desklock_ask_presentation_mode(void)
+{
+   E_Manager *man;
+   E_Container *con;
+   E_Dialog *dia;
+
+   if (_e_desklock_ask_presentation_dia)
+     return;
+
+   man = e_manager_current_get();
+   if (!man) return;
+   con = e_container_current_get(man);
+   if (!con) return;
+   dia = e_dialog_new(con, "E", "_desklock_ask_presentation");
+   if (!dia) return;
+
+   e_dialog_title_set(dia, _("Activate Presentation Mode?"));
+   e_dialog_icon_set(dia, "dialog-ask", 64);
+   e_dialog_text_set
+     (dia,
+      _("You unlocked desktop too fast.<br><br>"
+	"Would you like to enabe <b>presentation</b> mode and "
+	"temporarily disable screen saver, lock and power saving?"));
+
+   e_object_del_attach_func_set
+     (E_OBJECT(dia), _e_desklock_ask_presentation_del);
+   e_dialog_button_add
+     (dia, _("Yes"), NULL, _e_desklock_ask_presentation_yes, NULL);
+   e_dialog_button_add
+     (dia, _("No"), NULL, _e_desklock_ask_presentation_no, NULL);
+   e_dialog_button_add
+     (dia, _("No, but increase timeout"), NULL,
+      _e_desklock_ask_presentation_no_increase, NULL);
+   e_dialog_button_add
+     (dia, _("No, and stop asking"), NULL,
+      _e_desklock_ask_presentation_no_forever, NULL);
+
+   e_dialog_button_focus_num(dia, 0);
+   e_dialog_resizable_set(dia, 1);
+   e_widget_list_homogeneous_set(dia->box_object, 0);
+   e_util_win_auto_resize_fill(dia->win);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+
+   _e_desklock_ask_presentation_dia = dia;
 }

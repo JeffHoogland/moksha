@@ -795,7 +795,7 @@ _e_manager_cb_ping(void *data, int ev_type __UNUSED__, void *ev)
 static int
 _e_manager_cb_timer_post_screensaver_lock(void *data __UNUSED__)
 {
-   e_desklock_show();
+   e_desklock_show_autolocked();
    timer_post_screensaver_lock = NULL;
    return 0;
 }
@@ -817,7 +817,7 @@ _e_manager_cb_screensaver_notify(void *data __UNUSED__, int ev_type __UNUSED__, 
 	  {
 	     if (e_config->desklock_post_screensaver_time <= 1.0)
 	       {
-		  e_desklock_show();
+		  e_desklock_show_autolocked();
 	       }
 	     else
 	       {

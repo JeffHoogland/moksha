@@ -26,6 +26,8 @@ static int _zone_count_get(void);
 
 static void _cb_disable_check(void *data, Evas_Object *obj);
 
+static void _cb_ask_presentation_changed(void *data, Evas_Object *obj);
+
 struct _E_Config_Dialog_Data 
 {
    E_Config_Dialog *cfd;
@@ -53,6 +55,8 @@ struct _E_Config_Dialog_Data
    char *custom_lock_cmd;
    int login_zone;
    int zone;
+   int ask_presentation;
+   double ask_presentation_timeout;
 
    struct {
       struct {
@@ -61,6 +65,10 @@ struct _E_Config_Dialog_Data
 	 Evas_Object *post_screensaver_label;
 	 Evas_Object *post_screensaver_slider;
       } basic;
+      struct {
+	 Evas_Object *ask_presentation_label;
+	 Evas_Object *ask_presentation_slider;
+      } adv;
    } gui;
 };
 
@@ -135,6 +143,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	cfdata->login_zone = e_config->desklock_login_box_zone;
 	cfdata->zone = 0;
      }
+
+   cfdata->ask_presentation = e_config->desklock_ask_presentation;
+   cfdata->ask_presentation_timeout = e_config->desklock_ask_presentation_timeout;
 }
 
 static void *
@@ -422,8 +433,30 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 				     1, 0, 1, 0);
    e_widget_table_object_append(mt, of, 1, 1, 1, 1, 1, 1, 1, 1);
 
+
+   of = e_widget_framelist_add(evas, _("Enter Presentation Mode"), 0);
+
+   ow = e_widget_check_add(evas, _("Suggest entering presentation mode"), &(cfdata->ask_presentation));
+   e_widget_on_change_hook_set(ow, _cb_ask_presentation_changed, cfdata);
+   e_widget_framelist_object_append(of, ow);
+
+   ow = e_widget_label_add(evas, _("If deactivated before"));
+   cfdata->gui.adv.ask_presentation_label = ow;
+   e_widget_framelist_object_append(of, ow);
+
+   ow = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
+			    1.0, 300.0, 10.0, 0,
+			    &(cfdata->ask_presentation_timeout), NULL, 100);
+   cfdata->gui.adv.ask_presentation_slider = ow;
+   e_widget_framelist_object_append(of, ow);
+
+   _cb_ask_presentation_changed(cfdata, NULL);
+
+   e_widget_table_object_append(mt, of, 1, 2, 1, 1, 1, 1, 1, 1);
+
+
    ow = _basic_create(cfd, evas, cfdata);
-   e_widget_table_object_append(mt, ow, 2, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(mt, ow, 2, 1, 1, 2, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Custom Screenlock"), 0);
    custom_screenlock_check = e_widget_check_add(evas, _("Use custom screenlock"), 
@@ -432,7 +465,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_entry_add(evas, &(cfdata->custom_lock_cmd), NULL, NULL, NULL);
    e_widget_disabled_set(ow, !cfdata->custom_lock); // set state from saved config
    e_widget_framelist_object_append(of, ow);
-   e_widget_table_object_append(mt, of, 1, 2, 2, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(mt, of, 1, 3, 2, 1, 1, 1, 1, 1);
 
    // handler for enable/disable widget array
    e_widget_on_change_hook_set(custom_screenlock_check, _cb_disable_check, ow);
@@ -447,6 +480,8 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->desklock_autolock_idle = cfdata->auto_lock;
    e_config->desklock_autolock_screensaver = cfdata->screensaver_lock;
    e_config->desklock_autolock_idle_timeout = cfdata->idle_time * 60;
+   e_config->desklock_ask_presentation = cfdata->ask_presentation;
+   e_config->desklock_ask_presentation_timeout = cfdata->ask_presentation_timeout;
 
    if (cfdata->bg) 
      {
@@ -515,7 +550,8 @@ _adv_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    else if (e_config->desklock_custom_desklock_cmd != cfdata->custom_lock_cmd)
      return 1;
 
-   return 0;
+   return ((e_config->desklock_ask_presentation != cfdata->ask_presentation) ||
+	   (e_config->desklock_ask_presentation_timeout != cfdata->ask_presentation_timeout));
 }
 
 static void 
@@ -726,4 +762,16 @@ _cb_disable_check(void *data, Evas_Object *obj)
 {
    e_widget_disabled_set((Evas_Object *) data, 
                          !e_widget_check_checked_get(obj));
+}
+
+static void
+_cb_ask_presentation_changed(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   Eina_Bool disable;
+
+   disable = (!cfdata->ask_presentation);
+
+   e_widget_disabled_set(cfdata->gui.adv.ask_presentation_label, disable);
+   e_widget_disabled_set(cfdata->gui.adv.ask_presentation_slider, disable);
 }
