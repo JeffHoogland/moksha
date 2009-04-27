@@ -44,6 +44,7 @@ struct _E_Config_Dialog_Data
    int auto_lock;
    int screensaver_lock;
    double idle_time;
+   double post_screensaver_time;
    
    /* Adv props */
    int bg_method;
@@ -57,6 +58,8 @@ struct _E_Config_Dialog_Data
       struct {
 	 Evas_Object *auto_lock_label;
 	 Evas_Object *auto_lock_slider;
+	 Evas_Object *post_screensaver_label;
+	 Evas_Object *post_screensaver_slider;
       } basic;
    } gui;
 };
@@ -121,6 +124,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->auto_lock = e_config->desklock_autolock_idle;
    cfdata->screensaver_lock = e_config->desklock_autolock_screensaver;
    cfdata->idle_time = e_config->desklock_autolock_idle_timeout / 60;
+   cfdata->post_screensaver_time = e_config->desklock_post_screensaver_time;
    if (e_config->desklock_login_box_zone >= 0) 
      {
 	cfdata->login_zone = 0;
@@ -163,6 +167,18 @@ _basic_auto_lock_cb_changed(void *data, Evas_Object *o)
    e_widget_disabled_set(cfdata->gui.basic.auto_lock_slider, disable);
 }
 
+static void
+_basic_screensaver_lock_cb_changed(void *data, Evas_Object *o)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   int disable;
+
+   disable = ((!cfdata->use_xscreensaver) ||
+	      (!cfdata->screensaver_lock));
+   e_widget_disabled_set(cfdata->gui.basic.post_screensaver_label, disable);
+   e_widget_disabled_set(cfdata->gui.basic.post_screensaver_slider, disable);
+}
+
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
@@ -177,6 +193,15 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Lock when X screensaver activates"), 
 			   &cfdata->screensaver_lock);
+   e_widget_on_change_hook_set(ow, _basic_screensaver_lock_cb_changed, cfdata);
+   e_widget_disabled_set(ow, !cfdata->use_xscreensaver);
+   e_widget_framelist_object_append(of, ow);
+   ow = e_widget_label_add(evas, _("Time after screensaver activated"));
+   cfdata->gui.basic.post_screensaver_label = ow;
+   e_widget_framelist_object_append(of, ow);
+   ow = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"), 0.0, 300.0, 10.0, 0,
+			    &(cfdata->post_screensaver_time), NULL, 100);
+   cfdata->gui.basic.post_screensaver_slider = ow;
    e_widget_disabled_set(ow, !cfdata->use_xscreensaver);
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Lock when idle time exceeded"), 
@@ -194,6 +219,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    _basic_auto_lock_cb_changed(cfdata, NULL);
+   _basic_screensaver_lock_cb_changed(cfdata, NULL);
 
    return o;
 }
@@ -204,6 +230,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->desklock_start_locked = cfdata->start_locked;
    e_config->desklock_autolock_idle = cfdata->auto_lock;
    e_config->desklock_autolock_screensaver = cfdata->screensaver_lock;
+   e_config->desklock_post_screensaver_time = cfdata->post_screensaver_time;
    e_config->desklock_autolock_idle_timeout = cfdata->idle_time * 60;
    e_config_save_queue();
    return 1;
@@ -216,6 +243,7 @@ _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      ((e_config->desklock_start_locked != cfdata->start_locked) ||
       (e_config->desklock_autolock_idle != cfdata->auto_lock) ||
       (e_config->desklock_autolock_screensaver != cfdata->screensaver_lock) ||
+      (e_config->desklock_post_screensaver_time != cfdata->post_screensaver_time) ||
       (e_config->desklock_autolock_idle_timeout != cfdata->idle_time * 60));
 }
 

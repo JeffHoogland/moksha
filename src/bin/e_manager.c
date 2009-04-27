@@ -45,6 +45,7 @@ struct _Frame_Extents
 
 static Eina_List *managers = NULL;
 static Eina_Hash *frame_extents = NULL;
+static Ecore_Timer *timer_post_screensaver_lock = NULL;
 
 /* externally accessible functions */
 EAPI int
@@ -69,6 +70,13 @@ e_manager_shutdown(void)
 	eina_hash_free(frame_extents);
 	frame_extents = NULL;
      }
+
+   if (timer_post_screensaver_lock)
+     {
+	ecore_timer_del(timer_post_screensaver_lock);
+	timer_post_screensaver_lock = NULL;
+     }
+
    return 1;
 }
 
@@ -785,18 +793,39 @@ _e_manager_cb_ping(void *data, int ev_type __UNUSED__, void *ev)
 }
 
 static int
-_e_manager_cb_screensaver_notify(void *data, int ev_type __UNUSED__, void *ev)
+_e_manager_cb_timer_post_screensaver_lock(void *data __UNUSED__)
 {
-   E_Manager *man;
-   Ecore_X_Event_Screensaver_Notify *e;
-   
-   man = data;
-   e = ev;
-   
+   e_desklock_show();
+   timer_post_screensaver_lock = NULL;
+   return 0;
+}
+
+static int
+_e_manager_cb_screensaver_notify(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
+{
+   Ecore_X_Event_Screensaver_Notify *e = ev;
+
+   if (timer_post_screensaver_lock)
+     {
+	ecore_timer_del(timer_post_screensaver_lock);
+	timer_post_screensaver_lock = NULL;
+     }
+
    if (e->on)
      {
 	if (e_config->desklock_autolock_screensaver)
-	  e_desklock_show();
+	  {
+	     if (e_config->desklock_post_screensaver_time <= 1.0)
+	       {
+		  e_desklock_show();
+	       }
+	     else
+	       {
+		  timer_post_screensaver_lock = ecore_timer_add
+		    (e_config->desklock_post_screensaver_time,
+		     _e_manager_cb_timer_post_screensaver_lock, NULL);
+	       }
+	  }
      }
    return 1;
 }

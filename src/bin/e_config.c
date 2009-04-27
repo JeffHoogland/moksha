@@ -567,6 +567,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desklock_login_box_zone, INT);
    E_CONFIG_VAL(D, T, desklock_start_locked, INT);
    E_CONFIG_VAL(D, T, desklock_autolock_screensaver, INT);
+   E_CONFIG_VAL(D, T, desklock_post_screensaver_time, DOUBLE);
    E_CONFIG_VAL(D, T, desklock_autolock_idle, INT);
    E_CONFIG_VAL(D, T, desklock_autolock_idle_timeout, DOUBLE);
    E_CONFIG_VAL(D, T, desklock_use_custom_desklock, INT);
@@ -892,6 +893,10 @@ e_config_load(void)
 	COPYVAL(mode.offline);
 	IFCFGEND;
 
+	IFCFG(0x0131);
+	COPYVAL(desklock_post_screensaver_time);
+	IFCFGEND;
+
         e_config->config_version = E_CONFIG_FILE_VERSION;   
         _e_config_free(tcfg);
      }
@@ -978,6 +983,7 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->font_hinting, 0, 2);
    E_CONFIG_LIMIT(e_config->desklock_login_box_zone, -2, 1000);
    E_CONFIG_LIMIT(e_config->desklock_autolock_screensaver, 0, 1);
+   E_CONFIG_LIMIT(e_config->desklock_post_screensaver_time, 0.0, 300.0);
    E_CONFIG_LIMIT(e_config->desklock_autolock_idle, 0, 1);
    E_CONFIG_LIMIT(e_config->desklock_autolock_idle_timeout, 1.0, 5400.0);
    E_CONFIG_LIMIT(e_config->desklock_use_custom_desklock, 0, 1);

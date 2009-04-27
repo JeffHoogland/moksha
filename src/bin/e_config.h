@@ -35,7 +35,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0130
+#define E_CONFIG_FILE_GENERATION 0x0131
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT         0
@@ -218,6 +218,7 @@ struct _E_Config
    int         desklock_login_box_zone; // GUI
    int         desklock_start_locked; // GUI
    int         desklock_autolock_screensaver; // GUI
+   double      desklock_post_screensaver_time; // GUI
    int         desklock_autolock_idle; // GUI
    double      desklock_autolock_idle_timeout; // GUI
    int         desklock_use_custom_desklock; // GUI
