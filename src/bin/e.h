@@ -45,6 +45,10 @@
 #include <errno.h>
 #include <signal.h>
 
+#ifndef _POSIX_HOST_NAME_MAX
+#define _POSIX_HOST_NAME_MAX 255
+#endif
+
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
 #endif
