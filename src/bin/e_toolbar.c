@@ -148,6 +148,15 @@ e_toolbar_show(E_Toolbar *tbar)
 }
 
 EAPI void 
+e_toolbar_hide(E_Toolbar *tbar) 
+{
+   E_OBJECT_CHECK(tbar);
+   E_OBJECT_TYPE_CHECK(tbar, E_TOOLBAR_TYPE);
+   evas_object_hide(tbar->o_event);
+   evas_object_hide(tbar->o_base);
+}
+
+EAPI void 
 e_toolbar_move(E_Toolbar *tbar, int x, int y) 
 {
    E_OBJECT_CHECK(tbar);

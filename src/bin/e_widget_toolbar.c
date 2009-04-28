@@ -135,6 +135,23 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
 }
 
 EAPI void
+e_widget_toolbar_item_remove(Evas_Object *obj, int num)
+{
+   E_Widget_Data *wd;
+   Item *it;
+
+   wd = e_widget_data_get(obj);
+   it = eina_list_nth(wd->items, num);
+   if (it)
+     {
+	evas_object_del(it->o_base);
+	evas_object_del(it->o_icon);
+	wd->items = eina_list_remove(wd->items, it);
+	free(it);
+     }
+}
+
+EAPI void
 e_widget_toolbar_item_select(Evas_Object *obj, int num)
 {
    E_Widget_Data *wd;

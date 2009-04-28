@@ -34,6 +34,7 @@ EAPI E_Win       *e_toolbar_fwin_get      (E_Toolbar *tbar);
 EAPI void         e_toolbar_fm2_set       (E_Toolbar *tbar, Evas_Object *fm2);
 EAPI Evas_Object *e_toolbar_fm2_get       (E_Toolbar *tbar);
 EAPI void         e_toolbar_show          (E_Toolbar *tbar);
+EAPI void         e_toolbar_hide          (E_Toolbar *tbar);
 EAPI void         e_toolbar_move          (E_Toolbar *tbar, int x, int y);
 EAPI void         e_toolbar_resize        (E_Toolbar *tbar, int w, int h);
 EAPI void         e_toolbar_move_resize   (E_Toolbar *tbar, int x, int y, int w, int h);
