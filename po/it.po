@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-26 11:39+0200\n"
-"PO-Revision-Date: 2009-04-26 11:52+0200\n"
+"POT-Creation-Date: 2009-04-28 11:17+0200\n"
+"PO-Revision-Date: 2009-04-28 11:26+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -163,7 +163,8 @@ msgstr "%s"
 #: src/bin/e_fm.c:8518 src/bin/e_fm.c:8717 src/bin/e_actions.c:362
 #: src/bin/e_actions.c:1778 src/bin/e_actions.c:1876 src/bin/e_actions.c:1940
 #: src/bin/e_actions.c:2004 src/bin/e_actions.c:2068 src/bin/e_actions.c:2132
-#: src/bin/e_module.c:503 src/bin/e_confirm_dialog.c:48
+#: src/bin/e_screensaver.c:96 src/bin/e_desklock.c:1036 src/bin/e_module.c:503
+#: src/bin/e_confirm_dialog.c:48
 msgid "No"
 msgstr "No"
 
@@ -174,7 +175,8 @@ msgstr "No a tutti"
 #: src/bin/e_fm.c:8520 src/bin/e_fm.c:8716 src/bin/e_actions.c:360
 #: src/bin/e_actions.c:1776 src/bin/e_actions.c:1874 src/bin/e_actions.c:1938
 #: src/bin/e_actions.c:2002 src/bin/e_actions.c:2066 src/bin/e_actions.c:2130
-#: src/bin/e_module.c:502 src/bin/e_confirm_dialog.c:47
+#: src/bin/e_screensaver.c:94 src/bin/e_desklock.c:1034 src/bin/e_module.c:502
+#: src/bin/e_confirm_dialog.c:47
 msgid "Yes"
 msgstr "Sì"
 
@@ -319,7 +321,7 @@ msgid "Select an Icon"
 msgstr "Seleziona un'icona"
 
 #: src/bin/e_eap_editor.c:613 src/bin/e_eap_editor.c:677 src/bin/e_exec.c:323
-#: src/bin/e_entry_dialog.c:62 src/bin/e_fm_prop.c:513 src/bin/e_config.c:1748
+#: src/bin/e_entry_dialog.c:62 src/bin/e_fm_prop.c:513 src/bin/e_config.c:1776
 #: src/bin/e_sys.c:441 src/bin/e_sys.c:487 src/bin/e_utils.c:642
 #: src/bin/e_module.c:396 src/bin/e_int_border_remember.c:261
 #: src/bin/e_int_border_remember.c:342 src/bin/e_int_border_remember.c:384
@@ -537,7 +539,7 @@ msgstr "Aggiungi ai preferiti"
 #: src/modules/gadman/e_mod_config.c:193
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:519
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:649
-#: src/modules/conf_desklock/e_int_config_desklock.c:266
+#: src/modules/conf_desklock/e_int_config_desklock.c:305
 #: src/modules/conf_startup/e_int_config_startup.c:275
 #: src/modules/conf_theme/e_int_config_theme.c:402
 msgid "Go up a Directory"
@@ -628,8 +630,8 @@ msgid "Owner can write"
 msgstr "Proprietario può scrivere"
 
 #: src/bin/e_fm_prop.c:432
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:178
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:194
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:218
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:231
 msgid "Default"
 msgstr "Predefinito"
 
@@ -638,7 +640,7 @@ msgid "Thumbnail"
 msgstr "Miniatura"
 
 #: src/bin/e_fm_prop.c:438
-#: src/modules/conf_desklock/e_int_config_desklock.c:390
+#: src/modules/conf_desklock/e_int_config_desklock.c:425
 msgid "Custom"
 msgstr "Personalizzata"
 
@@ -674,7 +676,7 @@ msgstr "Estensioni"
 #: src/modules/gadman/e_mod_config.c:189
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:513
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:643
-#: src/modules/conf_desklock/e_int_config_desklock.c:262
+#: src/modules/conf_desklock/e_int_config_desklock.c:301
 #: src/modules/conf_startup/e_int_config_startup.c:267
 #: src/modules/conf_theme/e_int_config_theme.c:395
 #: src/modules/conf_theme/e_int_config_theme.c:794
@@ -1313,11 +1315,11 @@ msgstr "Azione ritardata"
 msgid "Select All"
 msgstr "Seleziona tutto"
 
-#: src/bin/e_toolbar.c:316 src/bin/e_shelf.c:1682
+#: src/bin/e_toolbar.c:316 src/bin/e_shelf.c:1688
 msgid "Stop Moving/Resizing Items"
 msgstr "Fine spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_toolbar.c:318 src/bin/e_shelf.c:1684
+#: src/bin/e_toolbar.c:318 src/bin/e_shelf.c:1690
 msgid "Begin Moving/Resizing Items"
 msgstr "Inizio spostamento/ridimensionamento oggetti"
 
@@ -1325,7 +1327,7 @@ msgstr "Inizio spostamento/ridimensionamento oggetti"
 msgid "Set Toolbar Contents"
 msgstr "Imposta contenuti della barra strumenti"
 
-#: src/bin/e_config.c:734 src/bin/e_config.c:767
+#: src/bin/e_config.c:740 src/bin/e_config.c:773
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -1345,7 +1347,7 @@ msgstr ""
 "funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_config.c:751
+#: src/bin/e_config.c:757
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -1360,11 +1362,11 @@ msgstr ""
 "male, quindi la vostra configurazione è<br>stata ripristinata a scopo "
 "precauzionale ai valori predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/bin/e_config.c:1649
+#: src/bin/e_config.c:1677
 msgid "Settings Upgraded"
 msgstr "Impostazioni aggiornate"
 
-#: src/bin/e_config.c:1672
+#: src/bin/e_config.c:1700
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
@@ -1376,7 +1378,7 @@ msgstr ""
 "dove è avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1683
+#: src/bin/e_config.c:1711
 #, c-format
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
@@ -1392,7 +1394,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1696
+#: src/bin/e_config.c:1724
 #, c-format
 msgid ""
 "An output error occured when writing the settings<br>files for "
@@ -1406,7 +1408,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1707
+#: src/bin/e_config.c:1735
 #, c-format
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
@@ -1420,7 +1422,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1719
+#: src/bin/e_config.c:1747
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
@@ -1432,7 +1434,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1744
+#: src/bin/e_config.c:1772
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemi scrittura configurazione di Enlightenment"
 
@@ -1440,16 +1442,16 @@ msgstr "Problemi scrittura configurazione di Enlightenment"
 msgid "Set As Background"
 msgstr "Imposta come sfondo"
 
-#: src/bin/e_shelf.c:1133 src/bin/e_int_menus.c:1388
+#: src/bin/e_shelf.c:1144 src/bin/e_int_menus.c:1388
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "Mensola #"
 
-#: src/bin/e_shelf.c:1263 src/modules/conf_shelves/e_int_config_shelf.c:281
+#: src/bin/e_shelf.c:1272 src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Siete sicuri di voler eliminare questa mensola?"
 
-#: src/bin/e_shelf.c:1264
+#: src/bin/e_shelf.c:1273
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
@@ -1457,16 +1459,16 @@ msgstr ""
 "Avete chiesto di eliminare questa mensola.<br><br>Siete sicuri di volerla "
 "eliminare?"
 
-#: src/bin/e_shelf.c:1692 src/bin/e_int_shelf_config.c:74
+#: src/bin/e_shelf.c:1698 src/bin/e_int_shelf_config.c:74
 #: src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "Impostazioni mensole porta-gadget"
 
-#: src/bin/e_shelf.c:1697
+#: src/bin/e_shelf.c:1703
 msgid "Set Shelf Contents"
 msgstr "Imposta contenuti della mensola"
 
-#: src/bin/e_shelf.c:1702
+#: src/bin/e_shelf.c:1708
 msgid "Delete this Shelf"
 msgstr "Elimina questa mensola"
 
@@ -1510,6 +1512,28 @@ msgstr "Moduli caricati"
 #: src/bin/e_int_config_modules.c:202
 msgid "Unload Module"
 msgstr "Scarica modulo"
+
+#: src/bin/e_screensaver.c:83 src/bin/e_desklock.c:1023
+msgid "Activate Presentation Mode?"
+msgstr "Attivare modalità presentazione?"
+
+#: src/bin/e_screensaver.c:87
+msgid ""
+"You disabled screensaver too fast.<br><br>Would you like to enabe "
+"<b>presentation</b> mode and temporarily disable screen saver, lock and "
+"power saving?"
+msgstr ""
+"Avete disabilitato lo screensaver troppo presto.<br><br>Volete abilitare "
+"la modalità <b>presentazione</b> e disabilitare temporaneamente lo "
+"screensaver, il bloccaschermo e la gestione energetica?"
+
+#: src/bin/e_screensaver.c:98 src/bin/e_desklock.c:1038
+msgid "No, but increase timeout"
+msgstr "No, ma aumenta la temporizzazione"
+
+#: src/bin/e_screensaver.c:101 src/bin/e_desklock.c:1041
+msgid "No, and stop asking"
+msgstr "No, e non chiedere più"
 
 #: src/bin/e_theme_about.c:17
 msgid "About Theme"
@@ -1774,22 +1798,22 @@ msgstr "Uscire dalla sessione con questa finestra aperta"
 msgid "Remember these Locks"
 msgstr "Ricorda questi blocchi"
 
-#: src/bin/e_desklock.c:161
+#: src/bin/e_desklock.c:173
 msgid "Error - no PAM support"
 msgstr "Errore - supporto PAM mancante"
 
-#: src/bin/e_desklock.c:162
+#: src/bin/e_desklock.c:174
 msgid ""
 "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr ""
 "Il supporto per PAM non è stato compilato in Enlightenment,<br>quindi il "
 "blocco dello schermo viene disabilitato."
 
-#: src/bin/e_desklock.c:228
+#: src/bin/e_desklock.c:240
 msgid "Lock Failed"
 msgstr "Blocco non riuscito"
 
-#: src/bin/e_desklock.c:229
+#: src/bin/e_desklock.c:241
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
@@ -1798,15 +1822,15 @@ msgstr ""
 "impossessata della tastiera e/o del<br>mouse e Enlightenment non può "
 "riappropiarsene."
 
-#: src/bin/e_desklock.c:320
+#: src/bin/e_desklock.c:332
 msgid "Please enter your unlock password"
 msgstr "Inserire la password di sblocco"
 
-#: src/bin/e_desklock.c:678
+#: src/bin/e_desklock.c:708
 msgid "Authentication System Error"
 msgstr "Errore del sistema di autenticazione"
 
-#: src/bin/e_desklock.c:679
+#: src/bin/e_desklock.c:709
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -1816,6 +1840,16 @@ msgstr ""
 "L'autenticazione attraverso PAM ha fallito l'impostazione<br>della sessione "
 "di autenticazione. Il codice d'errore è <hilight>%i</hilight>.<br>Questo è "
 "male e non dovrebbe succedere.<br>Si prega di riportare questo bug."
+
+#: src/bin/e_desklock.c:1027
+msgid ""
+"You unlocked desktop too fast.<br><br>Would you like to enabe "
+"<b>presentation</b> mode and temporarily disable screen saver, lock and "
+"power saving?"
+msgstr ""
+"Avete sbloccato lo schermo troppo presto.<br><br>Volete abilitare la modalità "
+"<b>presentazione</b> e disabilitare temporaneamente lo screensaver, il "
+"bloccaschermo e la gestione energetica?"
 
 #: src/bin/e_int_border_prop.c:75 src/bin/e_int_border_menu.c:572
 msgid "Window Properties"
@@ -3371,7 +3405,7 @@ msgstr "Limite applicazioni corrispondenti visualizzate"
 #: src/modules/conf_desks/e_int_config_desks.c:273
 #: src/modules/conf_mouse/e_int_config_mouse.c:109
 #: src/modules/conf_mouse/e_int_config_mouse.c:115
-#: src/modules/conf_desklock/e_int_config_desklock.c:371
+#: src/modules/conf_desklock/e_int_config_desklock.c:406
 #: src/modules/fileman/e_mod_config.c:220
 #, c-format
 msgid "%1.0f"
@@ -3764,7 +3798,7 @@ msgstr "%2.0f pixel"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:140
 msgid "Resistance at the edge of the screen:"
-msgstr "Resistenza al confine dello schermo:"
+msgstr "Resistenza al bordo dello schermo:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:148
 msgid "Resistance to desktop gadgets:"
@@ -4902,7 +4936,7 @@ msgstr "Configura metodo di input selezionato"
 #: src/modules/gadman/e_mod_config.c:186
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:509
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:639
-#: src/modules/conf_desklock/e_int_config_desklock.c:259
+#: src/modules/conf_desklock/e_int_config_desklock.c:298
 #: src/modules/conf_startup/e_int_config_startup.c:262
 #: src/modules/conf_theme/e_int_config_theme.c:391
 #: src/modules/conf_theme/e_int_config_theme.c:790
@@ -5166,28 +5200,28 @@ msgstr "Lancia mixer..."
 msgid "Mixer Module Settings"
 msgstr "Impostazioni del modulo Mixer"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:53
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:67
 msgid "Screen Saver Settings"
 msgstr "Impostazioni screensaver"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:117
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:154
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:135
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:173
 msgid "Enable X screensaver"
 msgstr "Abilita screensaver di X"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:120
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:138
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:176
 msgid "Screensaver Timer(s)"
 msgstr "Timer dello screensaver"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:122
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:159
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:140
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:178
 msgid "Time until X screensaver starts"
 msgstr "Tempo per l'avvio dello screensaver"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:124
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:161
-#: src/modules/conf_desklock/e_int_config_desklock.c:189
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:143
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:181
+#: src/modules/conf_desklock/e_int_config_desklock.c:225
 #: src/modules/conf_dpms/e_int_config_dpms.c:208
 #: src/modules/conf_dpms/e_int_config_dpms.c:220
 #: src/modules/conf_dpms/e_int_config_dpms.c:232
@@ -5195,36 +5229,54 @@ msgstr "Tempo per l'avvio dello screensaver"
 msgid "%1.0f minutes"
 msgstr "%1.0f minuti"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:167
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:186
 msgid "Time until X screensaver alternates"
 msgstr "Tempo per il cambio dello screensaver"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:169
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:189
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:207
+#: src/modules/conf_desklock/e_int_config_desklock.c:213
+#: src/modules/conf_desklock/e_int_config_desklock.c:443
 #, c-format
 msgid "%1.0f seconds"
 msgstr "%1.0f secondi"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:176
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:195
+#: src/modules/conf_desklock/e_int_config_desklock.c:433
+msgid "Enter Presentation Mode"
+msgstr "Attivazione modalità presentazione"
+
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:197
+#: src/modules/conf_desklock/e_int_config_desklock.c:435
+msgid "Suggest entering presentation mode"
+msgstr "Suggerisci modalita' presentazione"
+
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:202
+#: src/modules/conf_desklock/e_int_config_desklock.c:439
+msgid "If deactivated before"
+msgstr "Se disattivato prima di"
+
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:216
 msgid "Blanking"
 msgstr "Oscuramento"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:182
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:221
 msgid "Preferred"
 msgstr "Preferito"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:186
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:224
 msgid "Not Preferred"
 msgstr "Non preferito"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:192
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:229
 msgid "Exposure Events"
 msgstr "Eventi di esposizione"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:198
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:234
 msgid "Allow"
 msgstr "Consenti"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:202
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:237
 msgid "Don't Allow"
 msgstr "Non consentire"
 
@@ -5285,7 +5337,7 @@ msgid "Background Mode"
 msgstr "Modalità sfondo"
 
 #: src/modules/gadman/e_mod_config.c:149
-#: src/modules/conf_desklock/e_int_config_desklock.c:381
+#: src/modules/conf_desklock/e_int_config_desklock.c:416
 msgid "Theme Defined"
 msgstr "Definita dal tema"
 
@@ -5997,63 +6049,67 @@ msgstr "Mostra finestre di tutti i desktop"
 msgid "Show windows from active desktop"
 msgstr "Mostra finestre del desktop attivo"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:85
+#: src/modules/conf_desklock/e_int_config_desklock.c:96
 msgid "Screen Lock Settings"
 msgstr "Impostazioni bloccaschermo"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:172
+#: src/modules/conf_desklock/e_int_config_desklock.c:199
 msgid "Automatic Locking"
 msgstr "Blocco automatico"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:174
+#: src/modules/conf_desklock/e_int_config_desklock.c:201
 msgid "Lock when Enlightenment starts"
 msgstr "Blocca all'avvio di Enlightenment"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:178
+#: src/modules/conf_desklock/e_int_config_desklock.c:205
 msgid "Lock when X screensaver activates"
 msgstr "Blocca all'attivazione dello screensaver di X"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:182
+#: src/modules/conf_desklock/e_int_config_desklock.c:210
+msgid "Time after screensaver activated"
+msgstr "Tempo dopo attivazione screensaver"
+
+#: src/modules/conf_desklock/e_int_config_desklock.c:218
 msgid "Lock when idle time exceeded"
 msgstr "Blocca al superamento del tempo massimo"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:186
+#: src/modules/conf_desklock/e_int_config_desklock.c:222
 msgid "Idle time to exceed"
 msgstr "Tempo massimo per bloccaschermo"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:356
+#: src/modules/conf_desklock/e_int_config_desklock.c:391
 msgid "Login Box Settings"
 msgstr "Finestra di login"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:359
+#: src/modules/conf_desklock/e_int_config_desklock.c:394
 msgid "Show on all screen zones"
 msgstr "Mostra su tutte le zone"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:363
+#: src/modules/conf_desklock/e_int_config_desklock.c:398
 msgid "Show on current screen zone"
 msgstr "Mostra sulla zona corrente"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:367
+#: src/modules/conf_desklock/e_int_config_desklock.c:402
 msgid "Show on screen zone #:"
 msgstr "Mostra sulla zona #:"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:379
+#: src/modules/conf_desklock/e_int_config_desklock.c:414
 msgid "Wallpaper Mode"
 msgstr "Modalità sfondo"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:384
+#: src/modules/conf_desklock/e_int_config_desklock.c:419
 msgid "Theme Wallpaper"
 msgstr "Sfondo del tema"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:387
+#: src/modules/conf_desklock/e_int_config_desklock.c:422
 msgid "User Wallpaper"
 msgstr "Sfondo dell'utente"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:400
+#: src/modules/conf_desklock/e_int_config_desklock.c:457
 msgid "Custom Screenlock"
 msgstr "Bloccaschermo personalizzato"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:401
+#: src/modules/conf_desklock/e_int_config_desklock.c:458
 msgid "Use custom screenlock"
 msgstr "Usa bloccaschermo personalizzato"
 
@@ -6908,30 +6964,30 @@ msgid ""
 "Please select an edge,<br>or click <hilight>Close</hilight> to abort."
 "<br><br>To change the delay of this action,<br>use the slider:"
 msgstr ""
-"Selezionare un confine dello schermo<br> o cliccare <hilight>Chiudi</"
-"hilight> per abortire.<br><br>Per cambiare il ritardo di questa<br>azione "
-"usare il cursore:"
+"Selezionare un bordo dello schermo<br> o cliccare <hilight>Chiudi</hilight> "
+"per abortire.<br><br>Per cambiare il ritardo di questa<br>azione usare il "
+"cursore:"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:102
 msgid "Edge Binding Settings"
-msgstr "Configurazione associazioni ai confini dello schermo"
+msgstr "Configurazione azioni sui bordi dello schermo"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:232
 #: src/modules/conf_edgebindings/e_mod_main.c:35
 msgid "Edge Bindings"
-msgstr "Associazioni ai confini dello schermo"
+msgstr "Bordi dello schermo"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:237
 msgid "Add Edge"
-msgstr "Aggiungi confine"
+msgstr "Aggiungi bordo"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:240
 msgid "Delete Edge"
-msgstr "Elimina confine"
+msgstr "Elimina bordo"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:244
 msgid "Modify Edge"
-msgstr "Modifica confine"
+msgstr "Modifica bordo"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:274
 msgid "General Options"
@@ -6939,11 +6995,11 @@ msgstr "Opzioni generali"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:275
 msgid "Allow binding activation with fullscreen windows"
-msgstr "Consenti associazioni al confine con finestre a tutto schermo"
+msgstr "Consenti azioni con finestre a tutto schermo"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:816
 msgid "Edge Binding Sequence"
-msgstr "Associazione al confine dello schermo"
+msgstr "Sequenza bordo dello schermo"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:828
 #, c-format
@@ -6952,7 +7008,7 @@ msgstr "%.2f secondi"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1102
 msgid "Binding Edge Error"
-msgstr "Errore associazione al confine"
+msgstr "Errore azione sul bordo"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1103
 #, c-format
@@ -6960,8 +7016,8 @@ msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>%"
 "s</hilight> action.<br>Please choose another binding edge sequence."
 msgstr ""
-"L'associazione al confine dello schermo che avete scelto è già<br>usata "
-"dall'azione <hilight>%s</hilight>.<br>Si prega di scegliere un'associazione "
+"La sequenza sul bordo dello schermo che avete scelto è già<br>usata "
+"dall'azione <hilight>%s</hilight>.<br>Si prega di scegliere una sequenza "
 "diversa."
 
 #: src/modules/fileman_opinfo/e_mod_main.c:53
