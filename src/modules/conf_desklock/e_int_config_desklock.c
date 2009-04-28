@@ -50,7 +50,7 @@ struct _E_Config_Dialog_Data
 
    /* Adv props */
    int bg_method;
-   char *bg;
+   const char *bg;
    int custom_lock;
    char *custom_lock_cmd;
    int login_zone;
@@ -105,12 +105,12 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->fmdir = 0;
    if (e_config->desklock_background)
      {
-	cfdata->bg = strdup(e_config->desklock_background);
+	cfdata->bg = eina_stringshare_ref(e_config->desklock_background);
 	if (!strstr(cfdata->bg, e_user_homedir_get()))
 	  cfdata->fmdir = 1;
      }
    else
-     cfdata->bg = strdup("theme_desklock_background");
+     cfdata->bg = eina_stringshare_add("theme_desklock_background");
 
    if (!strcmp(cfdata->bg, "theme_desklock_background"))
      cfdata->bg_method = 0;
@@ -162,7 +162,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_FREE(cfdata->custom_lock_cmd);
-   E_FREE(cfdata->bg);
+   eina_stringshare_del(cfdata->bg);
    E_FREE(cfdata);
 }
 
@@ -356,23 +356,20 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 	f = e_theme_edje_file_get("base/theme/desklock",
 				  "e/desklock/background");
 	e_widget_preview_edje_set(cfdata->o_prev, f, "e/desklock/background");
-	E_FREE(cfdata->bg);
-	cfdata->bg = strdup("theme_desklock_background");
+	eina_stringshare_replace(&cfdata->bg, "theme_desklock_background");
      }
    else if (cfdata->bg_method == 1)
      {
 	f = e_theme_edje_file_get("base/theme/backgrounds",
 				  "e/desktop/background");
 	e_widget_preview_edje_set(cfdata->o_prev, f, "e/desktop/background");
-	E_FREE(cfdata->bg);
-	cfdata->bg = strdup("theme_background");
+	eina_stringshare_replace(&cfdata->bg, "theme_background");
      }
    else if (cfdata->bg_method == 2)
      {
 	f = _user_wallpaper_get();
 	e_widget_preview_edje_set(cfdata->o_prev, f, "e/desktop/background");
-	E_FREE(cfdata->bg);
-	cfdata->bg = strdup("user_background");
+	eina_stringshare_replace(&cfdata->bg, "user_background");
      }
    else
      {
@@ -386,8 +383,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 	     f = e_theme_edje_file_get("base/theme/backgrounds",
 				       "e/desktop/background");
 	     e_widget_preview_edje_set(cfdata->o_prev, f, "e/desktop/background");
-	     E_FREE(cfdata->bg);
-	     cfdata->bg = strdup("theme_background");
+	     cfdata->bg = eina_stringshare_add("theme_background");
 	  }
      }
    e_widget_table_object_append(mt, ow, 1, 0, 1, 1, 1, 1, 1, 1);
@@ -486,11 +482,8 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->bg)
      {
 	if (e_config->desklock_background)
-	  {
-	     e_filereg_deregister(e_config->desklock_background);
-	     eina_stringshare_del(e_config->desklock_background);
-	  }
-	e_config->desklock_background = eina_stringshare_add(cfdata->bg);
+	  e_filereg_deregister(e_config->desklock_background);
+	eina_stringshare_replace(&e_config->desklock_background, cfdata->bg);
 	e_filereg_register(e_config->desklock_background);
      }
 
@@ -520,12 +513,7 @@ _adv_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (_basic_check_changed(cfd, cfdata))
      return 1;
 
-   if (e_config->desklock_background && cfdata->bg)
-     {
-	if (strcmp(e_config->desklock_background, cfdata->bg) != 0)
-	  return 1;
-     }
-   else if (e_config->desklock_background != cfdata->bg)
+   if (e_config->desklock_background != cfdata->bg)
      return 1;
 
    if (cfdata->login_zone < 0)
@@ -569,23 +557,20 @@ _cb_method_change(void *data, Evas_Object *obj, void *event_info)
 	f = e_theme_edje_file_get("base/theme/desklock",
 				  "e/desklock/background");
 	e_widget_preview_edje_set(cfdata->o_prev, f, "e/desklock/background");
-	E_FREE(cfdata->bg);
-	cfdata->bg = strdup("theme_desklock_background");
+	eina_stringshare_replace(&cfdata->bg, "theme_desklock_background");
      }
    else if (cfdata->bg_method == 1)
      {
 	f = e_theme_edje_file_get("base/theme/backgrounds",
 				  "e/desktop/background");
 	e_widget_preview_edje_set(cfdata->o_prev, f, "e/desktop/background");
-	E_FREE(cfdata->bg);
-	cfdata->bg = strdup("theme_background");
+	eina_stringshare_replace(&cfdata->bg, "theme_background");
      }
    else if (cfdata->bg_method == 2)
      {
 	f = _user_wallpaper_get();
 	e_widget_preview_edje_set(cfdata->o_prev, f, "e/desktop/background");
-	E_FREE(cfdata->bg);
-	cfdata->bg = strdup("user_background");
+	eina_stringshare_replace(&cfdata->bg, "user_background");
      }
    else
      {
@@ -603,8 +588,7 @@ _cb_method_change(void *data, Evas_Object *obj, void *event_info)
 	  e_prefix_data_snprintf(path, sizeof(path), "data/backgrounds/%s",
 				 ic->file);
 	if (ecore_file_is_dir(path)) return;
-	E_FREE(cfdata->bg);
-	cfdata->bg = strdup(path);
+	eina_stringshare_replace(&cfdata->bg, path);
 	e_widget_preview_edje_set(cfdata->o_prev, path,
 				  "e/desktop/background");
      }
@@ -688,8 +672,7 @@ _cb_fm_sel_change(void *data, Evas_Object *obj, void *event_info)
 			       ic->file);
      }
    if (ecore_file_is_dir(path)) return;
-   E_FREE(cfdata->bg);
-   cfdata->bg = strdup(path);
+   eina_stringshare_replace(&cfdata->bg, path);
    e_widget_preview_edje_set(cfdata->o_prev, path, "e/desktop/background");
    e_widget_change(cfdata->o_sf);
    e_widget_radio_toggle_set(cfdata->o_custom, 1);
