@@ -271,16 +271,10 @@ AC_SUBST(requirements_e)
 
 profile="SLOW_PC"
 AC_ARG_WITH(profile,
-[  --with-profile=TARGET_PROFILE    specify a target format profile of:
-                                    LOWRES_PDA, MEDIUMRES_PDA, HIRES_PDA, 
-				    SLOW_PC, MEDIUM_PC, FAST_PC ],
-[
-  v=$withval;
-  profile=$v
-  echo "  Enlightenment build profile set to "$profile;
-],[
-  profile="SLOW_PC"
-])
+  AS_HELP_STRING([--with-profile=TARGET_PROFILE], [specify a target format profile of:
+                                    LOWRES_PDA, MEDIUMRES_PDA, HIRES_PDA, SLOW_PC, MEDIUM_PC, FAST_PC]),
+  [profile=$withval])
+AC_MSG_NOTICE([Enlightenment build profile set to $profile])
 EDJE_DEF="-DLOWRES_PDA=1 -DMEDIUMRES_PDA=2 -DHIRES_PDA=3 -DSLOW_PC=4 -DMEDIUM_PC=5 -DFAST_PC=6"
 EDJE_DEF=$EDJE_DEF" -DE17_PROFILE"=$profile
 AC_SUBST(EDJE_DEF)
