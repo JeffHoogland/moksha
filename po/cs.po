@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-25 14:23+0200\n"
-"PO-Revision-Date: 2009-04-25 14:23+0100\n"
+"POT-Creation-Date: 2009-04-28 16:37+0200\n"
+"PO-Revision-Date: 2009-04-28 16:40+0100\n"
 "Last-Translator: quaker66 <quaker66@gmail.com>\n"
 "Language-Team: easylinux <easylinux@sachiel.eu>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr "O Enlightenmentu"
 
 #. Close Button
 #: ../src/bin/e_about.c:20
-#: ../src/bin/e_actions.c:2485
+#: ../src/bin/e_actions.c:2499
 #: ../src/bin/e_config_dialog.c:259
 #: ../src/bin/e_fm.c:864
 #: ../src/bin/e_int_border_menu.c:215
@@ -37,9 +37,9 @@ msgid "Close"
 msgstr "Zavřít"
 
 #: ../src/bin/e_about.c:21
-#: ../src/bin/e_actions.c:2781
-#: ../src/bin/e_actions.c:2785
-#: ../src/bin/e_actions.c:2789
+#: ../src/bin/e_actions.c:2795
+#: ../src/bin/e_actions.c:2799
+#: ../src/bin/e_actions.c:2803
 #: ../src/bin/e_int_menus.c:165
 #: ../src/bin/e_main.c:666
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:182
@@ -65,266 +65,270 @@ msgid "Are you sure you want to kill this window?"
 msgstr "Opravdu chcete zabít toto okno?"
 
 #: ../src/bin/e_actions.c:360
-#: ../src/bin/e_actions.c:1778
-#: ../src/bin/e_actions.c:1860
-#: ../src/bin/e_actions.c:1924
-#: ../src/bin/e_actions.c:1988
-#: ../src/bin/e_actions.c:2052
-#: ../src/bin/e_actions.c:2116
+#: ../src/bin/e_actions.c:1776
+#: ../src/bin/e_actions.c:1874
+#: ../src/bin/e_actions.c:1938
+#: ../src/bin/e_actions.c:2002
+#: ../src/bin/e_actions.c:2066
+#: ../src/bin/e_actions.c:2130
 #: ../src/bin/e_confirm_dialog.c:47
+#: ../src/bin/e_desklock.c:1034
 #: ../src/bin/e_fm.c:8520
 #: ../src/bin/e_fm.c:8716
 #: ../src/bin/e_module.c:502
+#: ../src/bin/e_screensaver.c:94
 msgid "Yes"
 msgstr "Ano"
 
 #: ../src/bin/e_actions.c:362
-#: ../src/bin/e_actions.c:1780
-#: ../src/bin/e_actions.c:1862
-#: ../src/bin/e_actions.c:1926
-#: ../src/bin/e_actions.c:1990
-#: ../src/bin/e_actions.c:2054
-#: ../src/bin/e_actions.c:2118
+#: ../src/bin/e_actions.c:1778
+#: ../src/bin/e_actions.c:1876
+#: ../src/bin/e_actions.c:1940
+#: ../src/bin/e_actions.c:2004
+#: ../src/bin/e_actions.c:2068
+#: ../src/bin/e_actions.c:2132
 #: ../src/bin/e_confirm_dialog.c:48
+#: ../src/bin/e_desklock.c:1036
 #: ../src/bin/e_fm.c:8518
 #: ../src/bin/e_fm.c:8717
 #: ../src/bin/e_module.c:503
+#: ../src/bin/e_screensaver.c:96
 msgid "No"
 msgstr "Ne"
 
-#: ../src/bin/e_actions.c:1771
+#: ../src/bin/e_actions.c:1769
 msgid "Are you sure you want to exit?"
 msgstr "Opravdu chcete jít pryč?"
 
-#: ../src/bin/e_actions.c:1773
+#: ../src/bin/e_actions.c:1771
 msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr "Opravdu chcete vypnout Enlightenment?"
 
-#: ../src/bin/e_actions.c:1853
+#: ../src/bin/e_actions.c:1867
 msgid "Are you sure you want to log out?"
 msgstr "Opravdu se chcete odhlásit?"
 
-#: ../src/bin/e_actions.c:1855
+#: ../src/bin/e_actions.c:1869
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 msgstr "Opravdu se chcete odhlásit?"
 
-#: ../src/bin/e_actions.c:1917
-#: ../src/bin/e_actions.c:2045
+#: ../src/bin/e_actions.c:1931
+#: ../src/bin/e_actions.c:2059
 msgid "Are you sure you want to turn off?"
 msgstr "Opravdu chcete vypnout PC?"
 
-#: ../src/bin/e_actions.c:1919
+#: ../src/bin/e_actions.c:1933
 msgid "You requested to turn off your Computer.<br><br>Are you sure you want to shut down?"
 msgstr "Opravdu chcete vypnout počítač?"
 
-#: ../src/bin/e_actions.c:1981
+#: ../src/bin/e_actions.c:1995
 msgid "Are you sure you want to reboot?"
 msgstr "Opravdu chcete restartovat PC?"
 
-#: ../src/bin/e_actions.c:1983
+#: ../src/bin/e_actions.c:1997
 msgid "You requested to reboot your Computer.<br><br>Are you sure you want to restart it?"
 msgstr "Opravdu chcete restartovat počítač?"
 
-#: ../src/bin/e_actions.c:2047
+#: ../src/bin/e_actions.c:2061
 msgid "You requested to suspend your Computer.<br><br>Are you sure you want to suspend?"
 msgstr "Opravdu chcete uspat počítač?"
 
-#: ../src/bin/e_actions.c:2109
+#: ../src/bin/e_actions.c:2123
 msgid "Are you sure you want to hibernate?"
 msgstr "Opravdu chcete hibernovat PC?"
 
-#: ../src/bin/e_actions.c:2111
+#: ../src/bin/e_actions.c:2125
 msgid "You requested to hibernate your Computer.<br><br>Are you sure you want to suspend to disk?"
 msgstr "Opravdu chcete hibernovat počítač?"
 
-#: ../src/bin/e_actions.c:2445
-#: ../src/bin/e_actions.c:2456
-#: ../src/bin/e_actions.c:2475
-#: ../src/bin/e_actions.c:2480
-#: ../src/bin/e_actions.c:2485
-#: ../src/bin/e_actions.c:2490
-#: ../src/bin/e_actions.c:2709
-#: ../src/bin/e_actions.c:2713
-#: ../src/bin/e_actions.c:2718
-#: ../src/bin/e_actions.c:2724
-#: ../src/bin/e_actions.c:2730
-#: ../src/bin/e_actions.c:2736
+#: ../src/bin/e_actions.c:2459
+#: ../src/bin/e_actions.c:2470
+#: ../src/bin/e_actions.c:2489
+#: ../src/bin/e_actions.c:2494
+#: ../src/bin/e_actions.c:2499
+#: ../src/bin/e_actions.c:2504
+#: ../src/bin/e_actions.c:2723
+#: ../src/bin/e_actions.c:2727
+#: ../src/bin/e_actions.c:2732
+#: ../src/bin/e_actions.c:2738
+#: ../src/bin/e_actions.c:2744
+#: ../src/bin/e_actions.c:2750
 msgid "Window : Actions"
 msgstr "Okno : Akce"
 
-#: ../src/bin/e_actions.c:2445
+#: ../src/bin/e_actions.c:2459
 #: ../src/bin/e_fm.c:5920
 msgid "Move"
 msgstr "Přesunout"
 
-#: ../src/bin/e_actions.c:2456
+#: ../src/bin/e_actions.c:2470
 msgid "Resize"
 msgstr "Změnit velikost"
 
-#: ../src/bin/e_actions.c:2467
-#: ../src/bin/e_actions.c:2757
-#: ../src/bin/e_actions.c:2759
-#: ../src/bin/e_actions.c:2761
-#: ../src/bin/e_actions.c:2763
-#: ../src/bin/e_actions.c:2765
+#: ../src/bin/e_actions.c:2481
+#: ../src/bin/e_actions.c:2771
+#: ../src/bin/e_actions.c:2773
+#: ../src/bin/e_actions.c:2775
+#: ../src/bin/e_actions.c:2777
+#: ../src/bin/e_actions.c:2779
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:325
 msgid "Menu"
 msgstr "Menu"
 
-#: ../src/bin/e_actions.c:2467
+#: ../src/bin/e_actions.c:2481
 msgid "Window Menu"
 msgstr "Menu okna"
 
-#: ../src/bin/e_actions.c:2475
+#: ../src/bin/e_actions.c:2489
 #: ../src/bin/e_int_border_menu.c:185
 msgid "Raise"
 msgstr "Do popředí"
 
-#: ../src/bin/e_actions.c:2480
+#: ../src/bin/e_actions.c:2494
 #: ../src/bin/e_int_border_menu.c:177
 msgid "Lower"
 msgstr "Nižší"
 
-#: ../src/bin/e_actions.c:2490
+#: ../src/bin/e_actions.c:2504
 #: ../src/bin/e_int_border_menu.c:204
 msgid "Kill"
 msgstr "Zabít"
 
-#: ../src/bin/e_actions.c:2495
-#: ../src/bin/e_actions.c:2502
 #: ../src/bin/e_actions.c:2509
 #: ../src/bin/e_actions.c:2516
-#: ../src/bin/e_actions.c:2518
-#: ../src/bin/e_actions.c:2521
-#: ../src/bin/e_actions.c:2524
-#: ../src/bin/e_actions.c:2526
-#: ../src/bin/e_actions.c:2528
+#: ../src/bin/e_actions.c:2523
 #: ../src/bin/e_actions.c:2530
-#: ../src/bin/e_actions.c:2537
-#: ../src/bin/e_actions.c:2539
-#: ../src/bin/e_actions.c:2541
-#: ../src/bin/e_actions.c:2543
-#: ../src/bin/e_actions.c:2545
-#: ../src/bin/e_actions.c:2552
+#: ../src/bin/e_actions.c:2532
+#: ../src/bin/e_actions.c:2535
+#: ../src/bin/e_actions.c:2538
+#: ../src/bin/e_actions.c:2540
+#: ../src/bin/e_actions.c:2542
+#: ../src/bin/e_actions.c:2544
+#: ../src/bin/e_actions.c:2551
+#: ../src/bin/e_actions.c:2553
+#: ../src/bin/e_actions.c:2555
 #: ../src/bin/e_actions.c:2557
+#: ../src/bin/e_actions.c:2559
+#: ../src/bin/e_actions.c:2566
+#: ../src/bin/e_actions.c:2571
 msgid "Window : State"
 msgstr "Okno : Stav"
 
-#: ../src/bin/e_actions.c:2495
+#: ../src/bin/e_actions.c:2509
 msgid "Sticky Mode Toggle"
 msgstr "Přepnout lepkavý mód"
 
-#: ../src/bin/e_actions.c:2502
+#: ../src/bin/e_actions.c:2516
 msgid "Iconic Mode Toggle"
 msgstr "Přepnout ikonický mód"
 
-#: ../src/bin/e_actions.c:2509
+#: ../src/bin/e_actions.c:2523
 msgid "Fullscreen Mode Toggle"
 msgstr "Přepnout fullscreen mód"
 
-#: ../src/bin/e_actions.c:2516
+#: ../src/bin/e_actions.c:2530
 #: ../src/bin/e_int_border_menu.c:149
 #: ../src/bin/e_int_border_menu.c:350
 msgid "Maximize"
 msgstr "Maximalizovat"
 
-#: ../src/bin/e_actions.c:2518
+#: ../src/bin/e_actions.c:2532
 msgid "Maximize Vertically"
 msgstr "Maximalizovat vertikálně"
 
-#: ../src/bin/e_actions.c:2521
+#: ../src/bin/e_actions.c:2535
 msgid "Maximize Horizontally"
 msgstr "Maximalizovat horizontálně"
 
-#: ../src/bin/e_actions.c:2524
+#: ../src/bin/e_actions.c:2538
 msgid "Maximize Fullscreen"
 msgstr "Maximalizovat fullscreen"
 
-#: ../src/bin/e_actions.c:2526
+#: ../src/bin/e_actions.c:2540
 msgid "Maximize Mode \"Smart\""
 msgstr "Mód maximalizace \"Chytrý\""
 
-#: ../src/bin/e_actions.c:2528
+#: ../src/bin/e_actions.c:2542
 msgid "Maximize Mode \"Expand\""
 msgstr "Mód maximalizace \"Roztáhnout\""
 
-#: ../src/bin/e_actions.c:2530
+#: ../src/bin/e_actions.c:2544
 msgid "Maximize Mode \"Fill\""
 msgstr "Mód maxilaizace \"Vyplnit\""
 
-#: ../src/bin/e_actions.c:2537
+#: ../src/bin/e_actions.c:2551
 msgid "Shade Up Mode Toggle"
 msgstr "Zarolovat okno nahoru"
 
-#: ../src/bin/e_actions.c:2539
+#: ../src/bin/e_actions.c:2553
 msgid "Shade Down Mode Toggle"
 msgstr "Zarolovat okno dolů"
 
-#: ../src/bin/e_actions.c:2541
+#: ../src/bin/e_actions.c:2555
 msgid "Shade Left Mode Toggle"
 msgstr "Zarolovat okno doleva"
 
-#: ../src/bin/e_actions.c:2543
+#: ../src/bin/e_actions.c:2557
 msgid "Shade Right Mode Toggle"
 msgstr "Zarolovat okno doprava"
 
-#: ../src/bin/e_actions.c:2545
+#: ../src/bin/e_actions.c:2559
 msgid "Shade Mode Toggle"
 msgstr "Změnit mód stínu"
 
-#: ../src/bin/e_actions.c:2552
+#: ../src/bin/e_actions.c:2566
 msgid "Toggle Borderless State"
 msgstr "Přepnout stav bez rámů"
 
-#: ../src/bin/e_actions.c:2557
+#: ../src/bin/e_actions.c:2571
 msgid "Toggle Pinned State"
 msgstr "Přepnout přitlačený stav"
 
-#: ../src/bin/e_actions.c:2562
-#: ../src/bin/e_actions.c:2564
-#: ../src/bin/e_actions.c:2566
-#: ../src/bin/e_actions.c:2568
-#: ../src/bin/e_actions.c:2570
 #: ../src/bin/e_actions.c:2576
-#: ../src/bin/e_actions.c:2581
-#: ../src/bin/e_actions.c:2586
-#: ../src/bin/e_actions.c:2592
-#: ../src/bin/e_actions.c:2598
+#: ../src/bin/e_actions.c:2578
+#: ../src/bin/e_actions.c:2580
+#: ../src/bin/e_actions.c:2582
+#: ../src/bin/e_actions.c:2584
+#: ../src/bin/e_actions.c:2590
+#: ../src/bin/e_actions.c:2595
 #: ../src/bin/e_actions.c:2600
-#: ../src/bin/e_actions.c:2602
-#: ../src/bin/e_actions.c:2604
 #: ../src/bin/e_actions.c:2606
-#: ../src/bin/e_actions.c:2608
-#: ../src/bin/e_actions.c:2610
 #: ../src/bin/e_actions.c:2612
 #: ../src/bin/e_actions.c:2614
 #: ../src/bin/e_actions.c:2616
 #: ../src/bin/e_actions.c:2618
 #: ../src/bin/e_actions.c:2620
 #: ../src/bin/e_actions.c:2622
+#: ../src/bin/e_actions.c:2624
+#: ../src/bin/e_actions.c:2626
 #: ../src/bin/e_actions.c:2628
 #: ../src/bin/e_actions.c:2630
 #: ../src/bin/e_actions.c:2632
 #: ../src/bin/e_actions.c:2634
 #: ../src/bin/e_actions.c:2636
 #: ../src/bin/e_actions.c:2642
+#: ../src/bin/e_actions.c:2644
+#: ../src/bin/e_actions.c:2646
 #: ../src/bin/e_actions.c:2648
-#: ../src/bin/e_actions.c:2654
-#: ../src/bin/e_actions.c:2659
-#: ../src/bin/e_actions.c:2661
-#: ../src/bin/e_actions.c:2663
-#: ../src/bin/e_actions.c:2665
-#: ../src/bin/e_actions.c:2667
-#: ../src/bin/e_actions.c:2669
-#: ../src/bin/e_actions.c:2671
+#: ../src/bin/e_actions.c:2650
+#: ../src/bin/e_actions.c:2656
+#: ../src/bin/e_actions.c:2662
+#: ../src/bin/e_actions.c:2668
 #: ../src/bin/e_actions.c:2673
 #: ../src/bin/e_actions.c:2675
 #: ../src/bin/e_actions.c:2677
 #: ../src/bin/e_actions.c:2679
 #: ../src/bin/e_actions.c:2681
 #: ../src/bin/e_actions.c:2683
-#: ../src/bin/e_actions.c:2821
-#: ../src/bin/e_actions.c:2826
+#: ../src/bin/e_actions.c:2685
+#: ../src/bin/e_actions.c:2687
+#: ../src/bin/e_actions.c:2689
+#: ../src/bin/e_actions.c:2691
+#: ../src/bin/e_actions.c:2693
+#: ../src/bin/e_actions.c:2695
+#: ../src/bin/e_actions.c:2697
+#: ../src/bin/e_actions.c:2845
+#: ../src/bin/e_actions.c:2850
 #: ../src/bin/e_int_menus.c:134
 #: ../src/bin/e_int_shelf_config.c:687
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:103
@@ -333,184 +337,184 @@ msgstr "Přepnout přitlačený stav"
 msgid "Desktop"
 msgstr "Plocha"
 
-#: ../src/bin/e_actions.c:2562
+#: ../src/bin/e_actions.c:2576
 msgid "Flip Desktop Left"
 msgstr "Překlopit desktop doleva"
 
-#: ../src/bin/e_actions.c:2564
+#: ../src/bin/e_actions.c:2578
 msgid "Flip Desktop Right"
 msgstr "Překlopit desktop doprava"
 
-#: ../src/bin/e_actions.c:2566
+#: ../src/bin/e_actions.c:2580
 msgid "Flip Desktop Up"
 msgstr "Překlopit plochu nahoru"
 
-#: ../src/bin/e_actions.c:2568
+#: ../src/bin/e_actions.c:2582
 msgid "Flip Desktop Down"
 msgstr "Překlopit desktop dolů"
 
-#: ../src/bin/e_actions.c:2570
+#: ../src/bin/e_actions.c:2584
 msgid "Flip Desktop By..."
 msgstr "Překlopit plochu z..."
 
-#: ../src/bin/e_actions.c:2576
+#: ../src/bin/e_actions.c:2590
 msgid "Show The Desktop"
 msgstr "Zobrazit plochu"
 
-#: ../src/bin/e_actions.c:2581
+#: ../src/bin/e_actions.c:2595
 msgid "Show The Shelf"
 msgstr "Zobrazit panel"
 
-#: ../src/bin/e_actions.c:2586
+#: ../src/bin/e_actions.c:2600
 msgid "Flip Desktop To..."
 msgstr "Překlopit plochu na..."
 
-#: ../src/bin/e_actions.c:2592
+#: ../src/bin/e_actions.c:2606
 msgid "Flip Desktop Linearly..."
 msgstr "Překlopit plochu lineárně"
 
-#: ../src/bin/e_actions.c:2598
+#: ../src/bin/e_actions.c:2612
 msgid "Switch To Desktop 0"
 msgstr "Přejít na plochu 0"
 
-#: ../src/bin/e_actions.c:2600
+#: ../src/bin/e_actions.c:2614
 msgid "Switch To Desktop 1"
 msgstr "Přejít na plochu 1"
 
-#: ../src/bin/e_actions.c:2602
+#: ../src/bin/e_actions.c:2616
 msgid "Switch To Desktop 2"
 msgstr "Přejít na plochu 2"
 
-#: ../src/bin/e_actions.c:2604
+#: ../src/bin/e_actions.c:2618
 msgid "Switch To Desktop 3"
 msgstr "Přejít na plochu 3"
 
-#: ../src/bin/e_actions.c:2606
+#: ../src/bin/e_actions.c:2620
 msgid "Switch To Desktop 4"
 msgstr "Přejít na plochu 4"
 
-#: ../src/bin/e_actions.c:2608
+#: ../src/bin/e_actions.c:2622
 msgid "Switch To Desktop 5"
 msgstr "Přejít na plochu 5"
 
-#: ../src/bin/e_actions.c:2610
+#: ../src/bin/e_actions.c:2624
 msgid "Switch To Desktop 6"
 msgstr "Přejít na plochu 6"
 
-#: ../src/bin/e_actions.c:2612
+#: ../src/bin/e_actions.c:2626
 msgid "Switch To Desktop 7"
 msgstr "Přejít na plochu 7"
 
-#: ../src/bin/e_actions.c:2614
+#: ../src/bin/e_actions.c:2628
 msgid "Switch To Desktop 8"
 msgstr "Přejít na plochu 8"
 
-#: ../src/bin/e_actions.c:2616
+#: ../src/bin/e_actions.c:2630
 msgid "Switch To Desktop 9"
 msgstr "Přejít na plochu 9"
 
-#: ../src/bin/e_actions.c:2618
+#: ../src/bin/e_actions.c:2632
 msgid "Switch To Desktop 10"
 msgstr "Přejít na plochu 10"
 
-#: ../src/bin/e_actions.c:2620
+#: ../src/bin/e_actions.c:2634
 msgid "Switch To Desktop 11"
 msgstr "Přejít na plochu 11"
 
-#: ../src/bin/e_actions.c:2622
+#: ../src/bin/e_actions.c:2636
 msgid "Switch To Desktop..."
 msgstr "Přejít na plochu..."
 
-#: ../src/bin/e_actions.c:2628
+#: ../src/bin/e_actions.c:2642
 msgid "Flip Desktop Left (All Screens)"
 msgstr "Překlopit desktop doleva (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2630
+#: ../src/bin/e_actions.c:2644
 msgid "Flip Desktop Right (All Screens)"
 msgstr "Překlopit plochu doprava (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2632
+#: ../src/bin/e_actions.c:2646
 msgid "Flip Desktop Up (All Screens)"
 msgstr "Překlopit plochu nahoru (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2634
+#: ../src/bin/e_actions.c:2648
 msgid "Flip Desktop Down (All Screens)"
 msgstr "Překlopit desktop dolů (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2636
+#: ../src/bin/e_actions.c:2650
 msgid "Flip Desktop By... (All Screens)"
 msgstr "Překlopit plochu z... (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2642
+#: ../src/bin/e_actions.c:2656
 msgid "Flip Desktop To... (All Screens)"
 msgstr "Překlopit plochu na... (Všechny obrazovkyú"
 
-#: ../src/bin/e_actions.c:2648
+#: ../src/bin/e_actions.c:2662
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "Překlopit plochu lineárně... (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2654
+#: ../src/bin/e_actions.c:2668
 msgid "Flip Desktop In Direction..."
 msgstr "Překlopit plochu ve směru..."
 
-#: ../src/bin/e_actions.c:2659
+#: ../src/bin/e_actions.c:2673
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "Přejít na plochu 0 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2661
+#: ../src/bin/e_actions.c:2675
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "Přejít na plochu 1 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2663
+#: ../src/bin/e_actions.c:2677
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "Přejít na plochu 2 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2665
+#: ../src/bin/e_actions.c:2679
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "Přejít na plochu 3 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2667
+#: ../src/bin/e_actions.c:2681
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "Přejít na plochu 4 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2669
+#: ../src/bin/e_actions.c:2683
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "Přejít na plochu 5 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2671
+#: ../src/bin/e_actions.c:2685
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "Přejít na plochu 6 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2673
+#: ../src/bin/e_actions.c:2687
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "Přejít na plochu 7 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2675
+#: ../src/bin/e_actions.c:2689
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "Přejít na plochu 8 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2677
+#: ../src/bin/e_actions.c:2691
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "Přejít na plochu 9 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2679
+#: ../src/bin/e_actions.c:2693
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "Přejít na plochu 10 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2681
+#: ../src/bin/e_actions.c:2695
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "Přejít na plochu 11 (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2683
+#: ../src/bin/e_actions.c:2697
 msgid "Switch To Desktop... (All Screens)"
 msgstr "Přejít na plochu... (Všechny obrazovky)"
 
-#: ../src/bin/e_actions.c:2690
-#: ../src/bin/e_actions.c:2692
-#: ../src/bin/e_actions.c:2694
-#: ../src/bin/e_actions.c:2699
-#: ../src/bin/e_actions.c:2701
-#: ../src/bin/e_actions.c:2703
+#: ../src/bin/e_actions.c:2704
+#: ../src/bin/e_actions.c:2706
+#: ../src/bin/e_actions.c:2708
+#: ../src/bin/e_actions.c:2713
+#: ../src/bin/e_actions.c:2715
+#: ../src/bin/e_actions.c:2717
 #: ../src/modules/conf_desklock/e_mod_main.c:34
 #: ../src/modules/conf_desks/e_mod_main.c:34
 #: ../src/modules/conf_display/e_mod_main.c:34
@@ -520,75 +524,75 @@ msgstr "Přejít na plochu... (Všechny obrazovky)"
 msgid "Screen"
 msgstr "Obrazovka"
 
-#: ../src/bin/e_actions.c:2690
+#: ../src/bin/e_actions.c:2704
 msgid "Send Mouse To Screen 0"
 msgstr "Poslat myš na obrazovku 0"
 
-#: ../src/bin/e_actions.c:2692
+#: ../src/bin/e_actions.c:2706
 msgid "Send Mouse To Screen 1"
 msgstr "Poslat myš na obrazovku 1"
 
-#: ../src/bin/e_actions.c:2694
+#: ../src/bin/e_actions.c:2708
 msgid "Send Mouse To Screen..."
 msgstr "Poslat myš na obrazovku..."
 
-#: ../src/bin/e_actions.c:2699
+#: ../src/bin/e_actions.c:2713
 msgid "Send Mouse Forward 1 Screen"
 msgstr "Poslat myš dopředu o jednu obrazovku"
 
-#: ../src/bin/e_actions.c:2701
+#: ../src/bin/e_actions.c:2715
 msgid "Send Mouse Back 1 Screen"
 msgstr "Poslat myš zpět o jednu obrazovku"
 
-#: ../src/bin/e_actions.c:2703
+#: ../src/bin/e_actions.c:2717
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "Poslat myš dopředu/zpět..."
 
-#: ../src/bin/e_actions.c:2741
-#: ../src/bin/e_actions.c:2743
-#: ../src/bin/e_actions.c:2745
-#: ../src/bin/e_actions.c:2751
+#: ../src/bin/e_actions.c:2755
+#: ../src/bin/e_actions.c:2757
+#: ../src/bin/e_actions.c:2759
+#: ../src/bin/e_actions.c:2765
 msgid "Window : Moving"
 msgstr "Okno : Pohyb"
 
-#: ../src/bin/e_actions.c:2741
+#: ../src/bin/e_actions.c:2755
 msgid "To Next Desktop"
 msgstr "Na další plochu"
 
-#: ../src/bin/e_actions.c:2743
+#: ../src/bin/e_actions.c:2757
 msgid "To Previous Desktop"
 msgstr "Na předchozí plochu"
 
-#: ../src/bin/e_actions.c:2745
+#: ../src/bin/e_actions.c:2759
 msgid "By Desktop #..."
 msgstr "Z plochy #..."
 
-#: ../src/bin/e_actions.c:2751
+#: ../src/bin/e_actions.c:2765
 msgid "To Desktop..."
 msgstr "Na plochu..."
 
-#: ../src/bin/e_actions.c:2757
+#: ../src/bin/e_actions.c:2771
 msgid "Show Main Menu"
 msgstr "Zobrazit hlavní menu"
 
-#: ../src/bin/e_actions.c:2759
+#: ../src/bin/e_actions.c:2773
 msgid "Show Favorites Menu"
 msgstr "Zobrazit menu oblíbených"
 
-#: ../src/bin/e_actions.c:2761
+#: ../src/bin/e_actions.c:2775
 msgid "Show All Applications Menu"
 msgstr "Zobrazit všechny menu aplikací"
 
-#: ../src/bin/e_actions.c:2763
+#: ../src/bin/e_actions.c:2777
 msgid "Show Clients Menu"
 msgstr "Zobrazit menu oken"
 
-#: ../src/bin/e_actions.c:2765
+#: ../src/bin/e_actions.c:2779
 msgid "Show Menu..."
 msgstr "Zobrazit menu..."
 
-#: ../src/bin/e_actions.c:2772
-#: ../src/bin/e_actions.c:2777
+#: ../src/bin/e_actions.c:2786
+#: ../src/bin/e_actions.c:2791
 #: ../src/modules/conf/e_mod_main.c:139
 #: ../src/modules/conf/e_mod_main.c:163
 #: ../src/modules/exebuf/e_mod_main.c:48
@@ -598,39 +602,52 @@ msgstr "Zobrazit menu..."
 msgid "Launch"
 msgstr "Spustit"
 
-#: ../src/bin/e_actions.c:2772
+#: ../src/bin/e_actions.c:2786
 #: ../src/bin/e_int_border_prop.c:439
 msgid "Command"
 msgstr "Příkaz"
 
-#: ../src/bin/e_actions.c:2777
+#: ../src/bin/e_actions.c:2791
 msgid "Application"
 msgstr "Aplikace"
 
-#: ../src/bin/e_actions.c:2781
+#: ../src/bin/e_actions.c:2795
 #: ../src/bin/e_int_menus.c:189
 msgid "Restart"
 msgstr "Restartovat"
 
-#: ../src/bin/e_actions.c:2785
+#: ../src/bin/e_actions.c:2799
 #: ../src/bin/e_int_menus.c:194
 msgid "Exit"
 msgstr "Pryč"
 
-#: ../src/bin/e_actions.c:2789
+#: ../src/bin/e_actions.c:2803
 msgid "Exit Now"
 msgstr "Pryč teď"
 
-#. FIXME use gadget icon
-#: ../src/bin/e_actions.c:2793
-#: ../src/bin/e_actions.c:2797
-#: ../src/bin/e_actions.c:2801
-#: ../src/bin/e_actions.c:2805
-#: ../src/bin/e_actions.c:2809
+#: ../src/bin/e_actions.c:2807
+#: ../src/bin/e_actions.c:2812
+msgid "Enlightenment : Mode"
+msgstr "Enlightenment : Mód"
+
+#: ../src/bin/e_actions.c:2808
+msgid "Presentation Mode Toggle"
+msgstr "Přepnout mód prezentace"
+
 #: ../src/bin/e_actions.c:2813
+msgid "Offline Mode Toggle"
+msgstr "Přepnout mód offline"
+
+#. FIXME use gadget icon
+#: ../src/bin/e_actions.c:2817
+#: ../src/bin/e_actions.c:2821
+#: ../src/bin/e_actions.c:2825
+#: ../src/bin/e_actions.c:2829
+#: ../src/bin/e_actions.c:2833
+#: ../src/bin/e_actions.c:2837
 #: ../src/bin/e_configure.c:145
 #: ../src/bin/e_int_config_modules.c:45
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:243
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:301
 #: ../src/modules/conf_imc/e_int_config_imc.c:827
 #: ../src/modules/conf_startup/e_int_config_startup.c:267
 #: ../src/modules/conf_theme/e_int_config_theme.c:395
@@ -645,44 +662,44 @@ msgstr "Pryč teď"
 msgid "System"
 msgstr "Systém"
 
-#: ../src/bin/e_actions.c:2793
+#: ../src/bin/e_actions.c:2817
 msgid "Log Out"
 msgstr "Odhlásit se"
 
-#: ../src/bin/e_actions.c:2797
+#: ../src/bin/e_actions.c:2821
 msgid "Power Off Now"
 msgstr "Vypnout nyní"
 
-#: ../src/bin/e_actions.c:2801
+#: ../src/bin/e_actions.c:2825
 msgid "Power Off"
 msgstr "Vypnout"
 
-#: ../src/bin/e_actions.c:2805
+#: ../src/bin/e_actions.c:2829
 msgid "Reboot"
 msgstr "Restartovat"
 
-#: ../src/bin/e_actions.c:2809
+#: ../src/bin/e_actions.c:2833
 msgid "Suspend"
 msgstr "Uspat"
 
-#: ../src/bin/e_actions.c:2813
+#: ../src/bin/e_actions.c:2837
 msgid "Hibernate"
 msgstr "Hibernovat"
 
-#: ../src/bin/e_actions.c:2821
+#: ../src/bin/e_actions.c:2845
 msgid "Lock"
 msgstr "Zamknout"
 
-#: ../src/bin/e_actions.c:2826
+#: ../src/bin/e_actions.c:2850
 #: ../src/bin/e_int_menus.c:1135
 msgid "Cleanup Windows"
 msgstr "Vyčistit okna"
 
-#: ../src/bin/e_actions.c:2831
+#: ../src/bin/e_actions.c:2855
 msgid "Generic : Actions"
 msgstr "Různé : Akce"
 
-#: ../src/bin/e_actions.c:2831
+#: ../src/bin/e_actions.c:2855
 msgid "Delayed Action"
 msgstr "Zpožděná akce"
 
@@ -692,11 +709,11 @@ msgstr "Zpožděná akce"
 msgid "Set As Background"
 msgstr "Použít jako pozadí"
 
-#: ../src/bin/e_border.c:5067
+#: ../src/bin/e_border.c:5079
 msgid "Desktop files scan done"
 msgstr "Scan desktop souborů dokončen."
 
-#: ../src/bin/e_border.c:5079
+#: ../src/bin/e_border.c:5091
 msgid "Desktop file scan"
 msgstr "Scan desktop souboru"
 
@@ -706,7 +723,7 @@ msgstr "Výběr barvy"
 
 #. buttons at the bottom
 #: ../src/bin/e_color_dialog.c:48
-#: ../src/bin/e_config.c:1728
+#: ../src/bin/e_config.c:1776
 #: ../src/bin/e_config_dialog.c:249
 #: ../src/bin/e_eap_editor.c:613
 #: ../src/bin/e_eap_editor.c:677
@@ -753,45 +770,45 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: ../src/bin/e_config.c:729
-#: ../src/bin/e_config.c:762
+#: ../src/bin/e_config.c:740
+#: ../src/bin/e_config.c:773
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "Data nastavení je třeba aktualizovat. Vaše staré nastavení<br>bylo odstraněno a nová sada standardních nastavení byla načtena.<br>Bude se to dít pravidelně při vývoji, takže neposílejte hlášení chyb.<br>Znamená to, že Enlightenment potřebuje zavést konfiguraci nových<br>vlastností, které ve vašem starém nastavení prostě není. Nová sada nastavení<br>je doplní. Nyní můžete si můžete nastavit Enlightenment zpět k obrazu svému.<br>Omlouváme se za způsobené potíže.<br>"
 
-#: ../src/bin/e_config.c:746
+#: ../src/bin/e_config.c:757
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Vaše nastavení je NOVĚJŠÍ než Enlightenment. To je velice<br>zvláštní. Nemělo by se to stát, pokud jste ovšem nedowngradovali<br>Enlightenment nebo nekopírovali soubory s nastavením z místa, kde<br>běžela novější verze Enlightenmentu. Je to zlé a jako protiopatření<br>bylo vaše nastavení vráceno do původních hodnot.<br>Omlouvám se za způsobené potíže.<br>"
 
-#: ../src/bin/e_config.c:1629
+#: ../src/bin/e_config.c:1677
 msgid "Settings Upgraded"
 msgstr "Nastavení aktualizováno"
 
-#: ../src/bin/e_config.c:1652
+#: ../src/bin/e_config.c:1700
 #, c-format
 msgid "An error occured while saving Enlightenment's<br>settings to disk. The error could not be<br>deterimined.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Nastala chyba při ukládání konfigurace<br>Enlightenmentu na disk. Chyba nemohla být<br>určena.<br><br>Soubor, kde chyba nastala, byl:<br>%s<br><br>Soubor byl smazán, aby nedošlo ke ztrátě dat.<br>"
 
-#: ../src/bin/e_config.c:1663
+#: ../src/bin/e_config.c:1711
 #, c-format
 msgid "Enlightenment's settings files are too big<br>for the file system they are being saved to.<br>This error is very strange as the files should<br>be extremely small. Please check the settings<br>for your home directory.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Konfigurační soubory Enlightenmentu jsou příliš velké<br>pro filesystém, na který mají být zapsány.<br>Tato chyba je velice zvláštní, protože soubory mají<br>být malé. Prosím zkontrolujte nastavení<br>ve vaší domovské složce.<br><br>Soubor, kde chyba nastala byl:<br>%s<br><br>Soubor byl smazán, aby nedošlo ke ztrátě dat.<br>"
 
-#: ../src/bin/e_config.c:1676
+#: ../src/bin/e_config.c:1724
 #, c-format
 msgid "An output error occured when writing the settings<br>files for Enlightenment. Your disk is having troubles<br>and possibly needs replacement.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Vyskytla se výstupní chyba při zápisu konfiguračních<br>souborů Enlightenmentu. Váš disk je zřejmě poškozen<br>a potřebuje vyměnit.<br><br>Poškozený soubor byl:<br>%s<br><br>Tento soubor byl smazán, aby nedošlo ke ztrátě dat.<br>"
 
-#: ../src/bin/e_config.c:1687
+#: ../src/bin/e_config.c:1735
 #, c-format
 msgid "Enlightenment cannot write its settings file<br>because it ran out of space to write the file.<br>You have either run out of disk space or have<br>gone over your quota limit.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Enlightenment nemůže zapsat svůj konfigurační soubor,<br>protože je málo místa k zápisu.<br>Měl(a) byste uvolnit místo na disku, nebo<br>zvýšit limit vaší kvóty.<br><br>Poškozený soubor byl:<br>%s<br><br>Tento soubor byl smazán, aby nedošlo ke ztrátě dat.<br>"
 
-#: ../src/bin/e_config.c:1699
+#: ../src/bin/e_config.c:1747
 #, c-format
 msgid "Enlightenment unexpectedly had the settings file<br>it was writing closed on it. This is very unusual.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Enlightenmentu se neočekávaně uzavřel<br>jeho konfigurační soubor. To je velmi neobvyklé.<br><br>Poškozený soubor byl:<br>%s<br><br>Tento soubor byl smazán, aby nedošlo ke ztrátě dat.<br>"
 
-#: ../src/bin/e_config.c:1724
+#: ../src/bin/e_config.c:1772
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problémy při zápisu konfigurace E17"
 
@@ -835,35 +852,54 @@ msgstr "Rozšíření"
 msgid "Container %d"
 msgstr "Kontejner %i"
 
-#: ../src/bin/e_desklock.c:144
+#: ../src/bin/e_desklock.c:173
 msgid "Error - no PAM support"
 msgstr "Chyba - žádná podpora PAM"
 
-#: ../src/bin/e_desklock.c:145
+#: ../src/bin/e_desklock.c:174
 msgid "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr "PAM podpora nebyla do Enlightenmentu zkompilována, takže<br>zamykání plochy bylo zakázáno."
 
 #. everything failed - cant lock
-#: ../src/bin/e_desklock.c:211
+#: ../src/bin/e_desklock.c:240
 msgid "Lock Failed"
 msgstr "Uzamčení selhalo"
 
-#: ../src/bin/e_desklock.c:212
+#: ../src/bin/e_desklock.c:241
 msgid "Locking the desktop failed because some application<br>has grabbed either the keyboard or the mouse or both<br>and their grab is unable to be broken."
 msgstr "Uzamčení plochy selhalo, protože si nějaká aplikace<br>vyhradila přístup ke klávesnici nebo myši, popř. obojím,<br>a tento vyhrazený přístup se nepodařilo zrušit."
 
-#: ../src/bin/e_desklock.c:298
+#: ../src/bin/e_desklock.c:332
 msgid "Please enter your unlock password"
 msgstr "Prosím zadejte heslo pro odemčení"
 
-#: ../src/bin/e_desklock.c:656
+#: ../src/bin/e_desklock.c:708
 msgid "Authentication System Error"
 msgstr "Chyba systému autentizace"
 
-#: ../src/bin/e_desklock.c:657
+#: ../src/bin/e_desklock.c:709
 #, c-format
 msgid "Authentication via PAM had errors setting up the<br>authentication session. The error code was <hilight>%i</hilight>.<br>This is bad and should not be happening. Please report this bug."
 msgstr "Při autentizaci přes PAM se nepodařilo vytvořit<br>autentizovanou relaci. Kód chyby je <hilight>%i</hilight>.<br> To není dobré a nemělo by se to stát. Prosím ohlaště chybu."
+
+#: ../src/bin/e_desklock.c:1023
+#: ../src/bin/e_screensaver.c:83
+msgid "Activate Presentation Mode?"
+msgstr "Povolit prezentační mód?"
+
+#: ../src/bin/e_desklock.c:1027
+msgid "You unlocked desktop too fast.<br><br>Would you like to enabe <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
+msgstr "Odemkli jste obrazovku příliš rychle.<br><br>Chtěli byste povolit <b>prezentační mód</b> a dočasně vypnout spořič, zámek obrazovky a správu napájení?"
+
+#: ../src/bin/e_desklock.c:1038
+#: ../src/bin/e_screensaver.c:98
+msgid "No, but increase timeout"
+msgstr "Ne, ale zvýšit časový limit"
+
+#: ../src/bin/e_desklock.c:1041
+#: ../src/bin/e_screensaver.c:101
+msgid "No, and stop asking"
+msgstr "Ne, a přestat se ptát"
 
 #: ../src/bin/e_eap_editor.c:158
 msgid "Incomplete Window Properties"
@@ -1361,8 +1397,8 @@ msgid "Preview"
 msgstr "Náhled"
 
 #: ../src/bin/e_fm_prop.c:432
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:179
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:195
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:218
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:231
 msgid "Default"
 msgstr "Výchozí"
 
@@ -1371,7 +1407,7 @@ msgid "Thumbnail"
 msgstr "Náhled"
 
 #: ../src/bin/e_fm_prop.c:438
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:361
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:425
 msgid "Custom"
 msgstr "Vlastní"
 
@@ -2137,7 +2173,7 @@ msgid "(No Shelves)"
 msgstr "(Žádné panely)"
 
 #: ../src/bin/e_int_menus.c:1388
-#: ../src/bin/e_shelf.c:1133
+#: ../src/bin/e_shelf.c:1144
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "Panel #"
@@ -2151,7 +2187,7 @@ msgid "Delete A Shelf"
 msgstr "Smazat panel"
 
 #: ../src/bin/e_int_shelf_config.c:74
-#: ../src/bin/e_shelf.c:1692
+#: ../src/bin/e_shelf.c:1698
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "Nastavení panelu"
@@ -2804,30 +2840,34 @@ msgstr "Enlightenment %s Modul"
 msgid "Would you like to unload this module?<br>"
 msgstr "Chcete tento modul uvolnit?<br>"
 
-#: ../src/bin/e_shelf.c:1263
+#: ../src/bin/e_screensaver.c:87
+msgid "You disabled screensaver too fast.<br><br>Would you like to enabe <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
+msgstr "Vypnuli jste spořič příliš rychle.<br><br>Chtěli byste povolit <b>prezentační mód</b> a dočasně vypnout spořič, zámek obrazovky a správu napájení?"
+
+#: ../src/bin/e_shelf.c:1272
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Opravdu chcete smazat tento panel?"
 
-#: ../src/bin/e_shelf.c:1264
+#: ../src/bin/e_shelf.c:1273
 msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
 msgstr "Opravdu chcete smazat tento panel?"
 
-#: ../src/bin/e_shelf.c:1682
+#: ../src/bin/e_shelf.c:1688
 #: ../src/bin/e_toolbar.c:316
 msgid "Stop Moving/Resizing Items"
 msgstr "Zastavit přesouvání/zvětšování/zmenšování prvků"
 
-#: ../src/bin/e_shelf.c:1684
+#: ../src/bin/e_shelf.c:1690
 #: ../src/bin/e_toolbar.c:318
 msgid "Begin Moving/Resizing Items"
 msgstr "Začít přesouvání/zvětšování/zmenšování prvků"
 
-#: ../src/bin/e_shelf.c:1697
+#: ../src/bin/e_shelf.c:1703
 msgid "Set Shelf Contents"
 msgstr "Nastavit obsah panelu"
 
-#: ../src/bin/e_shelf.c:1702
+#: ../src/bin/e_shelf.c:1708
 msgid "Delete this Shelf"
 msgstr "Smazat tento panel"
 
@@ -3069,7 +3109,7 @@ msgid "Add to Favorites"
 msgstr "Přidat do oblíbených"
 
 #: ../src/bin/e_widget_fsel.c:299
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:247
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:305
 #: ../src/modules/conf_imc/e_int_config_imc.c:834
 #: ../src/modules/conf_startup/e_int_config_startup.c:275
 #: ../src/modules/conf_theme/e_int_config_theme.c:402
@@ -3226,9 +3266,21 @@ msgstr "Hodiny"
 #: ../src/modules/conf/e_mod_main.c:139
 #: ../src/modules/conf/e_mod_main.c:143
 #: ../src/modules/conf/e_mod_main.c:163
-#: ../src/modules/conf/e_mod_main.c:215
+#: ../src/modules/conf/e_mod_main.c:264
 msgid "Settings Panel"
 msgstr "Ovládací centrum"
+
+#: ../src/modules/conf/e_mod_main.c:234
+msgid "Presentation"
+msgstr "Prezentace"
+
+#: ../src/modules/conf/e_mod_main.c:241
+msgid "Offline"
+msgstr "Offline"
+
+#: ../src/modules/conf/e_mod_main.c:269
+msgid "Modes"
+msgstr "Módy"
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:50
 #: ../src/modules/conf_applications/e_mod_main.c:42
@@ -3608,43 +3660,55 @@ msgstr "Nastavit"
 msgid "Desk"
 msgstr "Plocha"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:85
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:96
 msgid "Screen Lock Settings"
 msgstr "Nastavení uzamčení obrazovky"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:170
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:199
 msgid "Automatic Locking"
 msgstr "Automatické zamykání"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:172
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:201
 msgid "Lock when Enlightenment starts"
 msgstr "Zamknout při startu Enlightenmentu"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:176
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:205
 msgid "Lock when X screensaver activates"
 msgstr "Uzamknout při aktivaci spořiče"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:180
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:210
+msgid "Time after screensaver activated"
+msgstr "Čas, po kterém se aktivuje spořič"
+
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:213
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:443
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:189
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:207
+#, c-format
+msgid "%1.0f seconds"
+msgstr "%1.0f sekund"
+
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:218
 msgid "Lock when idle time exceeded"
 msgstr "Uzamknout při překročení času klidu"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:184
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:222
 msgid "Idle time to exceed"
 msgstr "Čas klidu"
 
 #. set state from saved config
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:187
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:209
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:221
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:233
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:125
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:162
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:225
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:208
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:220
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:232
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:143
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:181
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f minut"
 
 #. create dir radios
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:240
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:298
 #: ../src/modules/conf_imc/e_int_config_imc.c:822
 #: ../src/modules/conf_startup/e_int_config_startup.c:262
 #: ../src/modules/conf_theme/e_int_config_theme.c:391
@@ -3655,23 +3719,23 @@ msgstr "%1.0f minut"
 msgid "Personal"
 msgstr "Osobní"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:330
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:391
 msgid "Login Box Settings"
 msgstr "Nastavení přihlašovací obrazovky"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:333
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:394
 msgid "Show on all screen zones"
 msgstr "Zobrazit na všech zónách obrazovky"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:337
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:398
 msgid "Show on current screen zone"
 msgstr "Zobrazit na nynější zóně obrazovky"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:341
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:402
 msgid "Show on screen zone #:"
 msgstr "Zobrazit na zóně obrazovky #:"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:345
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:406
 #: ../src/modules/conf_desks/e_int_config_desks.c:232
 #: ../src/modules/conf_desks/e_int_config_desks.c:236
 #: ../src/modules/conf_desks/e_int_config_desks.c:269
@@ -3689,24 +3753,43 @@ msgstr "Zobrazit na zóně obrazovky #:"
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:353
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:414
 msgid "Wallpaper Mode"
 msgstr "Mód pozadí"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:355
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:416
 #: ../src/modules/gadman/e_mod_config.c:149
 msgid "Theme Defined"
 msgstr "Definováno tématem"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:358
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:419
 msgid "Theme Wallpaper"
 msgstr "Pozadí tématu"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:371
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:422
+msgid "User Wallpaper"
+msgstr "Uživatelské pozadí"
+
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:433
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:195
+msgid "Enter Presentation Mode"
+msgstr "Vstup do prezentačního módu"
+
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:435
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:197
+msgid "Suggest entering presentation mode"
+msgstr "Nabídnout vstup do prezentačního módu"
+
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:439
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:202
+msgid "If deactivated before"
+msgstr "Pokud byl deaktivován před"
+
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:457
 msgid "Custom Screenlock"
 msgstr "Vlastní screenlock"
 
-#: ../src/modules/conf_desklock/e_int_config_desklock.c:372
+#: ../src/modules/conf_desklock/e_int_config_desklock.c:458
 msgid "Use custom screenlock"
 msgstr "Použít vlastní screenlock"
 
@@ -3917,23 +4000,23 @@ msgstr "Aktivní zobrazovací server nemá <br>DPMS rozšíření."
 msgid "Display Power Management Settings"
 msgstr "Zobrazit nastavení správy napájení"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:199
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:198
 msgid "Enable Display Power Management"
 msgstr "Povolit správu napájení obrazu"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:203
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:202
 msgid "Timers"
 msgstr "Časovače"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:205
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:204
 msgid "Standby time"
 msgstr "Rezervní čas"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:217
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:216
 msgid "Suspend time"
 msgstr "Suspend čas"
 
-#: ../src/modules/conf_dpms/e_int_config_dpms.c:229
+#: ../src/modules/conf_dpms/e_int_config_dpms.c:228
 msgid "Off time"
 msgstr "Čas vypnutí"
 
@@ -5054,55 +5137,50 @@ msgstr "Maximum"
 msgid "Scaling"
 msgstr "Škálování"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:53
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:67
 msgid "Screen Saver Settings"
 msgstr "Nastavení spořiče"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:118
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:155
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:135
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:173
 msgid "Enable X screensaver"
 msgstr "Povolit X spořič"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:121
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:158
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:138
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:176
 msgid "Screensaver Timer(s)"
 msgstr "Časovač(e) spořiče"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:123
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:160
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:140
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:178
 msgid "Time until X screensaver starts"
 msgstr "Čas, než se X spořič spustí"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:168
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:186
 msgid "Time until X screensaver alternates"
 msgstr "Čas, než se X spořič změní"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:170
-#, c-format
-msgid "%1.0f seconds"
-msgstr "%1.0f sekund"
-
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:177
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:216
 msgid "Blanking"
 msgstr "Mazání"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:183
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:221
 msgid "Preferred"
 msgstr "Preferováno"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:187
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:224
 msgid "Not Preferred"
 msgstr "Nepreferováno"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:193
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:229
 msgid "Exposure Events"
 msgstr "Události vystavení"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:199
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:234
 msgid "Allow"
 msgstr "Povolit"
 
-#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:203
+#: ../src/modules/conf_screensaver/e_int_config_screensaver.c:237
 msgid "Don't Allow"
 msgstr "Nepovolovat"
 
