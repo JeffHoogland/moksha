@@ -101,11 +101,9 @@ AC_DEFUN([AC_E_OPTIONAL_MODULE],
         m4_pushdef([modname_opt], [m4_bpatsubst(m4_tolower([$1]), _, -)])
         m4_pushdef([INITVAL], [m4_default([$2], [false])])dnl
         m4_pushdef([ENABLE_HELP], AS_HELP_STRING([--enable-modname_opt],
-                               [enable optional module modname_opt. Default is disabled.])
-                )dnl
+                               [optional module modname_opt @<:@default=disabled@:>@]))dnl
         m4_pushdef([DISABLE_HELP], AS_HELP_STRING([--disable-modname_opt],
-                               [disable optional module modname_opt. Default is enabled.])
-                )dnl
+                               [optional module modname_opt @<:@default=enabled@:>@]))dnl
         m4_pushdef([HELP_STR], m4_if(INITVAL, [true], [DISABLE_HELP], [ENABLE_HELP]))dnl
         m4_pushdef([NOT_INITVAL], m4_if(INITVAL, [true], [false], [true]))dnl
 
