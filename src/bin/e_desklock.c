@@ -1025,7 +1025,7 @@ _e_desklock_ask_presentation_mode(void)
    e_dialog_text_set
      (dia,
       _("You unlocked desktop too fast.<br><br>"
-	"Would you like to enabe <b>presentation</b> mode and "
+	"Would you like to enable <b>presentation</b> mode and "
 	"temporarily disable screen saver, lock and power saving?"));
 
    e_object_del_attach_func_set
