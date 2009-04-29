@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-28 08:32+0400\n"
-"PO-Revision-Date: 2009-04-28 10:59+0400\n"
+"POT-Creation-Date: 2009-04-29 07:45+0400\n"
+"PO-Revision-Date: 2009-04-29 16:39+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <Enlightenment i18n French>\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "À propos de Enlightenment"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:819
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:125
-#: src/modules/fileman/e_fwin.c:1756
+#: src/modules/fileman/e_fwin.c:1825
 #: src/modules/illume/e_mod_win.c:177
 #: src/modules/mixer/app_mixer.c:531
 msgid "Close"
@@ -886,7 +886,7 @@ msgstr "Activer le mode présentation ?"
 
 #: src/bin/e_desklock.c:1027
 msgid "You unlocked desktop too fast.<br><br>Would you like to enabe <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
-msgstr "Vous avez déverrouillé le bureau trop vite.<br><br>Voulez-vous activer le mode<b>présentation</b> et désactiver temporairement l'écran de veille, le verrouillage et la gestion de l'énergie ?"
+msgstr "Vous avez déverrouillé le bureau trop vite.<br><br>Voulez-vous activer le mode <b>présentation</b> et désactiver temporairement l'écran de veille, le verrouillage et la gestion de l'énergie ?"
 
 #: src/bin/e_desklock.c:1038
 #: src/bin/e_screensaver.c:98
@@ -1733,17 +1733,17 @@ msgid "Window List"
 msgstr "Liste des fenêtres"
 
 #: src/bin/e_int_border_menu.c:1049
-#: src/modules/pager/e_mod_main.c:263
-#: src/modules/pager/e_mod_main.c:2815
-#: src/modules/pager/e_mod_main.c:2822
-#: src/modules/pager/e_mod_main.c:2828
-#: src/modules/pager/e_mod_main.c:2829
-#: src/modules/pager/e_mod_main.c:2830
+#: src/modules/pager/e_mod_main.c:260
 #: src/modules/pager/e_mod_main.c:2831
-#: src/modules/pager/e_mod_main.c:2862
-#: src/modules/pager/e_mod_main.c:2863
-#: src/modules/pager/e_mod_main.c:2864
-#: src/modules/pager/e_mod_main.c:2865
+#: src/modules/pager/e_mod_main.c:2838
+#: src/modules/pager/e_mod_main.c:2845
+#: src/modules/pager/e_mod_main.c:2847
+#: src/modules/pager/e_mod_main.c:2849
+#: src/modules/pager/e_mod_main.c:2851
+#: src/modules/pager/e_mod_main.c:2884
+#: src/modules/pager/e_mod_main.c:2885
+#: src/modules/pager/e_mod_main.c:2886
+#: src/modules/pager/e_mod_main.c:2887
 msgid "Pager"
 msgstr "Pager"
 
@@ -1980,7 +1980,7 @@ msgstr "Toujours focaliser au démarrage"
 #: src/modules/ibar/e_mod_main.c:825
 #: src/modules/ibox/e_mod_main.c:318
 #: src/modules/ibox/e_mod_main.c:715
-#: src/modules/pager/e_mod_main.c:808
+#: src/modules/pager/e_mod_main.c:809
 #: src/modules/temperature/e_mod_main.c:281
 #: src/modules/mixer/e_mod_main.c:668
 #: src/modules/connman/e_mod_main.c:1090
@@ -2056,7 +2056,7 @@ msgid "Remove Gadget"
 msgstr "Supprimer ce gadget"
 
 #: src/bin/e_int_toolbar_config.c:30
-#: src/bin/e_toolbar.c:326
+#: src/bin/e_toolbar.c:335
 msgid "Toolbar Settings"
 msgstr "Paramétrage de la barre d'outils"
 
@@ -2816,7 +2816,7 @@ msgstr "Voulez-vous désactiver ce module ?<br>"
 
 #: src/bin/e_screensaver.c:87
 msgid "You disabled screensaver too fast.<br><br>Would you like to enabe <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
-msgstr "Vous avez désactivé l'écran de veille trop vite.<br><br>Voulez-vous activer le mode<b>présentation</b> et désactiver temporairement l'écran de veille, le verrouillage et la gestion de l'énergie ?"
+msgstr "Vous avez désactivé l'écran de veille trop vite.<br><br>Voulez-vous activer le mode <b>présentation</b> et désactiver temporairement l'écran de veille, le verrouillage et la gestion de l'énergie ?"
 
 #: src/bin/e_shelf.c:1272
 #: src/modules/conf_shelves/e_int_config_shelf.c:281
@@ -2828,12 +2828,12 @@ msgid "You requested to delete this shelf.<br><br>Are you sure you want to delet
 msgstr "Vous avez demandé à supprimer ce rack.<br><br>Êtes-vous sûr de vouloir le supprimer ?"
 
 #: src/bin/e_shelf.c:1688
-#: src/bin/e_toolbar.c:316
+#: src/bin/e_toolbar.c:325
 msgid "Stop Moving/Resizing Items"
 msgstr "Arrêter de déplacer/redimensionner des éléments"
 
 #: src/bin/e_shelf.c:1690
-#: src/bin/e_toolbar.c:318
+#: src/bin/e_toolbar.c:327
 msgid "Begin Moving/Resizing Items"
 msgstr "Déplacer/Redimensionner des éléments"
 
@@ -2974,7 +2974,7 @@ msgstr "À propos de ce thème"
 msgid "Set As Theme"
 msgstr "Utiliser ce thème"
 
-#: src/bin/e_toolbar.c:331
+#: src/bin/e_toolbar.c:340
 msgid "Set Toolbar Contents"
 msgstr "Définir le contenu de la barre d'outils"
 
@@ -3277,7 +3277,7 @@ msgid "Restart Applications"
 msgstr "Applications à redémarrer"
 
 #: src/modules/conf_applications/e_int_config_apps.c:236
-#: src/modules/fileman/e_fwin.c:1803
+#: src/modules/fileman/e_fwin.c:1872
 msgid "All Applications"
 msgstr "Toutes les applications"
 
@@ -3707,10 +3707,10 @@ msgid "Show on screen zone #:"
 msgstr "Afficher sur la zone d'écran #:"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:406
-#: src/modules/conf_desks/e_int_config_desks.c:232
-#: src/modules/conf_desks/e_int_config_desks.c:236
-#: src/modules/conf_desks/e_int_config_desks.c:269
-#: src/modules/conf_desks/e_int_config_desks.c:273
+#: src/modules/conf_desks/e_int_config_desks.c:235
+#: src/modules/conf_desks/e_int_config_desks.c:239
+#: src/modules/conf_desks/e_int_config_desks.c:272
+#: src/modules/conf_desks/e_int_config_desks.c:276
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:117
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:121
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:125
@@ -3768,53 +3768,53 @@ msgstr "Utiliser un verrouillage d'écran personnalisé"
 msgid "Screen Lock"
 msgstr "Verrouillage de l'écran"
 
-#: src/modules/conf_desks/e_int_config_desks.c:57
-#: src/modules/pager/e_mod_main.c:815
+#: src/modules/conf_desks/e_int_config_desks.c:59
+#: src/modules/pager/e_mod_main.c:816
 msgid "Virtual Desktops Settings"
 msgstr "Paramétrage des bureaux virtuels"
 
-#: src/modules/conf_desks/e_int_config_desks.c:224
+#: src/modules/conf_desks/e_int_config_desks.c:227
 msgid "Number of Desktops"
 msgstr "Nombre de bureaux"
 
-#: src/modules/conf_desks/e_int_config_desks.c:243
-#: src/modules/conf_desks/e_int_config_desks.c:280
+#: src/modules/conf_desks/e_int_config_desks.c:246
+#: src/modules/conf_desks/e_int_config_desks.c:283
 msgid "Desktop Mouse Flip"
 msgstr "Basculement des bureaux à la souris"
 
-#: src/modules/conf_desks/e_int_config_desks.c:244
+#: src/modules/conf_desks/e_int_config_desks.c:247
 msgid "Animated flip"
 msgstr "Basculement animé"
 
-#: src/modules/conf_desks/e_int_config_desks.c:262
+#: src/modules/conf_desks/e_int_config_desks.c:265
 msgid "Desktops"
 msgstr "Bureaux"
 
-#: src/modules/conf_desks/e_int_config_desks.c:281
+#: src/modules/conf_desks/e_int_config_desks.c:284
 msgid "Flip when dragging objects to the screen edge"
 msgstr "Basculer lors du déplacement d'objets au bord de l'écran"
 
-#: src/modules/conf_desks/e_int_config_desks.c:283
+#: src/modules/conf_desks/e_int_config_desks.c:286
 msgid "Wrap desktops around when flipping"
 msgstr "Tourner en boucle lors du basculement"
 
-#: src/modules/conf_desks/e_int_config_desks.c:287
+#: src/modules/conf_desks/e_int_config_desks.c:290
 msgid "Flip Animation"
 msgstr "Animation du basculement"
 
-#: src/modules/conf_desks/e_int_config_desks.c:289
+#: src/modules/conf_desks/e_int_config_desks.c:292
 msgid "Off"
 msgstr "Aucune"
 
-#: src/modules/conf_desks/e_int_config_desks.c:291
+#: src/modules/conf_desks/e_int_config_desks.c:295
 msgid "Pane"
 msgstr "Vitre"
 
-#: src/modules/conf_desks/e_int_config_desks.c:293
+#: src/modules/conf_desks/e_int_config_desks.c:298
 msgid "Zoom"
 msgstr "Zoom"
 
-#: src/modules/conf_desks/e_int_config_desks.c:295
+#: src/modules/conf_desks/e_int_config_desks.c:301
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:163
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:146
 #, c-format
@@ -3837,8 +3837,8 @@ msgstr "Paramétrage des boîtes de dialogues"
 #: src/modules/conf_performance/e_int_config_performance.c:134
 #: src/modules/conf_winlist/e_int_config_winlist.c:144
 #: src/modules/ibox/e_mod_config.c:100
-#: src/modules/pager/e_mod_config.c:120
-#: src/modules/pager/e_mod_config.c:160
+#: src/modules/pager/e_mod_config.c:119
+#: src/modules/pager/e_mod_config.c:159
 #: src/modules/mixer/conf_gadget.c:193
 #: src/modules/mixer/conf_module.c:96
 msgid "General Settings"
@@ -6120,33 +6120,33 @@ msgstr "Afficher les icones HAL sur le bureau"
 msgid "Behavior"
 msgstr "Comportement"
 
-#: src/modules/fileman/e_fwin.c:1342
+#: src/modules/fileman/e_fwin.c:1411
 msgid "Go to Parent Directory"
 msgstr "Aller au dossier parent"
 
-#: src/modules/fileman/e_fwin.c:1404
+#: src/modules/fileman/e_fwin.c:1473
 msgid "Other application..."
 msgstr "Autre application..."
 
-#: src/modules/fileman/e_fwin.c:1423
-#: src/modules/fileman/e_fwin.c:1754
+#: src/modules/fileman/e_fwin.c:1492
+#: src/modules/fileman/e_fwin.c:1823
 msgid "Open"
 msgstr "Ouvrir"
 
-#: src/modules/fileman/e_fwin.c:1428
-#: src/modules/fileman/e_fwin.c:1752
+#: src/modules/fileman/e_fwin.c:1497
+#: src/modules/fileman/e_fwin.c:1821
 msgid "Open with..."
 msgstr "Ouvrir avec..."
 
-#: src/modules/fileman/e_fwin.c:1772
+#: src/modules/fileman/e_fwin.c:1841
 msgid "Known Applications"
 msgstr "Applications disponibles"
 
-#: src/modules/fileman/e_fwin.c:1782
+#: src/modules/fileman/e_fwin.c:1851
 msgid "Specific Applications"
 msgstr "Applications spécifiques"
 
-#: src/modules/fileman/e_fwin.c:1824
+#: src/modules/fileman/e_fwin.c:1893
 msgid "Custom Command"
 msgstr "Commande personnalisée"
 
@@ -6363,138 +6363,138 @@ msgstr "IBox"
 msgid "Pager Settings"
 msgstr "Paramétrage du Pager"
 
-#: src/modules/pager/e_mod_config.c:121
-#: src/modules/pager/e_mod_config.c:161
+#: src/modules/pager/e_mod_config.c:120
+#: src/modules/pager/e_mod_config.c:160
 msgid "Flip desktop on mouse wheel"
 msgstr "Changer de bureau avec la molette de la souris"
 
-#: src/modules/pager/e_mod_config.c:124
-#: src/modules/pager/e_mod_config.c:164
+#: src/modules/pager/e_mod_config.c:123
+#: src/modules/pager/e_mod_config.c:163
 msgid "Show desktop names"
 msgstr "Afficher le nom des bureaux"
 
-#: src/modules/pager/e_mod_config.c:129
-#: src/modules/pager/e_mod_config.c:204
+#: src/modules/pager/e_mod_config.c:128
+#: src/modules/pager/e_mod_config.c:203
 msgid "Popup Settings"
 msgstr "Paramétrage du pop-up"
 
-#: src/modules/pager/e_mod_config.c:130
-#: src/modules/pager/e_mod_config.c:205
+#: src/modules/pager/e_mod_config.c:129
+#: src/modules/pager/e_mod_config.c:204
 msgid "Show popup on desktop change"
 msgstr "Afficher un pop-up lors du changement de bureau"
 
-#: src/modules/pager/e_mod_config.c:133
+#: src/modules/pager/e_mod_config.c:132
 msgid "Show popup for urgent windows"
 msgstr "Afficher le pop-up pour les fenêtres urgentes"
 
-#: src/modules/pager/e_mod_config.c:168
+#: src/modules/pager/e_mod_config.c:167
 msgid "Select and Slide button"
 msgstr "Bouton de sélectionné-glissé"
 
-#: src/modules/pager/e_mod_config.c:170
-#: src/modules/pager/e_mod_config.c:177
-#: src/modules/pager/e_mod_config.c:184
-#: src/modules/pager/e_mod_config.c:402
-#: src/modules/pager/e_mod_config.c:407
-#: src/modules/pager/e_mod_config.c:412
+#: src/modules/pager/e_mod_config.c:169
+#: src/modules/pager/e_mod_config.c:176
+#: src/modules/pager/e_mod_config.c:183
+#: src/modules/pager/e_mod_config.c:401
+#: src/modules/pager/e_mod_config.c:406
+#: src/modules/pager/e_mod_config.c:411
 #, c-format
 msgid "Click to set"
 msgstr "Cliquer pour configurer"
 
-#: src/modules/pager/e_mod_config.c:175
+#: src/modules/pager/e_mod_config.c:174
 msgid "Drag and Drop button"
 msgstr "Bouton de glissé-déposé"
 
-#: src/modules/pager/e_mod_config.c:182
+#: src/modules/pager/e_mod_config.c:181
 msgid "Drag whole desktop"
 msgstr "Faire glisser le bureau"
 
-#: src/modules/pager/e_mod_config.c:191
+#: src/modules/pager/e_mod_config.c:190
 msgid "Keyaction popup height"
 msgstr "Hauteur du pop-up de l'élément"
 
-#: src/modules/pager/e_mod_config.c:193
-#: src/modules/pager/e_mod_config.c:199
-#: src/modules/pager/e_mod_config.c:212
+#: src/modules/pager/e_mod_config.c:192
+#: src/modules/pager/e_mod_config.c:198
+#: src/modules/pager/e_mod_config.c:211
 #, c-format
 msgid "%.0f px"
 msgstr "%.0f pixels"
 
-#: src/modules/pager/e_mod_config.c:197
+#: src/modules/pager/e_mod_config.c:196
 msgid "Resistance to dragging"
 msgstr "Résistance du glissé"
 
-#: src/modules/pager/e_mod_config.c:208
+#: src/modules/pager/e_mod_config.c:207
 msgid "Popup pager height"
 msgstr "Hauteur du pop-up du pager"
 
-#: src/modules/pager/e_mod_config.c:217
-#: src/modules/pager/e_mod_config.c:237
+#: src/modules/pager/e_mod_config.c:216
+#: src/modules/pager/e_mod_config.c:236
 msgid "Popup speed"
 msgstr "Vitesse du pop-up"
 
-#: src/modules/pager/e_mod_config.c:221
-#: src/modules/pager/e_mod_config.c:239
+#: src/modules/pager/e_mod_config.c:220
+#: src/modules/pager/e_mod_config.c:238
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f secondes"
 
-#: src/modules/pager/e_mod_config.c:230
+#: src/modules/pager/e_mod_config.c:229
 msgid "Urgent Window Settings"
 msgstr "Paramétrage de la fenêtre urgente"
 
-#: src/modules/pager/e_mod_config.c:231
+#: src/modules/pager/e_mod_config.c:230
 msgid "Show popup on urgent window"
 msgstr "Afficher les pop-up sur les fenêtres urgentes"
 
-#: src/modules/pager/e_mod_config.c:234
+#: src/modules/pager/e_mod_config.c:233
 msgid "Popup on urgent window sticks on the screen"
 msgstr "Pop-up de la fenêtre urgente ancrée à l'écran"
 
-#: src/modules/pager/e_mod_config.c:287
+#: src/modules/pager/e_mod_config.c:286
 msgid "Pager Button Grab"
 msgstr "Bouton de capture du Pager"
 
-#: src/modules/pager/e_mod_config.c:289
+#: src/modules/pager/e_mod_config.c:288
 msgid "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort.<br>Or <hilight>Del</hilight> to reset the button."
 msgstr "Veuillez cliquer sur un bouton de la souris<br>Presser<hilight>Échap</hilight> pour annuler.<br>Ou<br><hilight>Suppr</hilight>pour réinitialiser le bouton."
 
-#: src/modules/pager/e_mod_config.c:344
+#: src/modules/pager/e_mod_config.c:343
 msgid "Attetion"
 msgstr "Attention"
 
-#: src/modules/pager/e_mod_config.c:345
+#: src/modules/pager/e_mod_config.c:344
 msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus. <br>This button only works in the Popup"
 msgstr "Vous ne pouvez pas utiliser le bouton droit de la souris dans le rack<br>pour cette action car il est déjà utilisé par le code interne<br>pour les menus contextuels. <br>Ce bouton fonctionne uniquement dans le pop-up."
 
-#: src/modules/pager/e_mod_config.c:404
-#: src/modules/pager/e_mod_config.c:409
-#: src/modules/pager/e_mod_config.c:414
+#: src/modules/pager/e_mod_config.c:403
+#: src/modules/pager/e_mod_config.c:408
+#: src/modules/pager/e_mod_config.c:413
 #, c-format
 msgid "Button %i"
 msgstr "Bouton %i"
 
-#: src/modules/pager/e_mod_main.c:2822
+#: src/modules/pager/e_mod_main.c:2838
 msgid "Show Pager Popup"
 msgstr "Afficher le pop-up du Pager"
 
-#: src/modules/pager/e_mod_main.c:2828
-#: src/modules/pager/e_mod_main.c:2862
+#: src/modules/pager/e_mod_main.c:2845
+#: src/modules/pager/e_mod_main.c:2884
 msgid "Popup Desk Right"
 msgstr "Pop-up du bureau droit"
 
-#: src/modules/pager/e_mod_main.c:2829
-#: src/modules/pager/e_mod_main.c:2863
+#: src/modules/pager/e_mod_main.c:2847
+#: src/modules/pager/e_mod_main.c:2885
 msgid "Popup Desk Left"
 msgstr "Pop-up du bureau gauche"
 
-#: src/modules/pager/e_mod_main.c:2830
-#: src/modules/pager/e_mod_main.c:2864
+#: src/modules/pager/e_mod_main.c:2849
+#: src/modules/pager/e_mod_main.c:2886
 msgid "Popup Desk Up"
 msgstr "Pop-up du bureau au-dessus"
 
-#: src/modules/pager/e_mod_main.c:2831
-#: src/modules/pager/e_mod_main.c:2865
+#: src/modules/pager/e_mod_main.c:2851
+#: src/modules/pager/e_mod_main.c:2887
 msgid "Popup Desk Down"
 msgstr "Pop-up du bureau en dessous"
 
