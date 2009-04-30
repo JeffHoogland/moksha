@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-28 16:37+0200\n"
-"PO-Revision-Date: 2009-04-28 16:40+0100\n"
+"POT-Creation-Date: 2009-04-30 18:34+0200\n"
+"PO-Revision-Date: 2009-04-30 18:36+0100\n"
 "Last-Translator: quaker66 <quaker66@gmail.com>\n"
 "Language-Team: easylinux <easylinux@sachiel.eu>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "O Enlightenmentu"
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:819
 #: ../src/modules/conf_theme/e_int_config_theme_web.c:130
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:125
-#: ../src/modules/fileman/e_fwin.c:1756
+#: ../src/modules/fileman/e_fwin.c:1825
 #: ../src/modules/illume/e_mod_win.c:177
 #: ../src/modules/mixer/app_mixer.c:531
 msgid "Close"
@@ -888,7 +888,7 @@ msgid "Activate Presentation Mode?"
 msgstr "Povolit prezentační mód?"
 
 #: ../src/bin/e_desklock.c:1027
-msgid "You unlocked desktop too fast.<br><br>Would you like to enabe <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
+msgid "You unlocked desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
 msgstr "Odemkli jste obrazovku příliš rychle.<br><br>Chtěli byste povolit <b>prezentační mód</b> a dočasně vypnout spořič, zámek obrazovky a správu napájení?"
 
 #: ../src/bin/e_desklock.c:1038
@@ -1753,17 +1753,17 @@ msgid "Window List"
 msgstr "Seznam oken"
 
 #: ../src/bin/e_int_border_menu.c:1049
-#: ../src/modules/pager/e_mod_main.c:263
-#: ../src/modules/pager/e_mod_main.c:2815
-#: ../src/modules/pager/e_mod_main.c:2822
-#: ../src/modules/pager/e_mod_main.c:2828
-#: ../src/modules/pager/e_mod_main.c:2829
-#: ../src/modules/pager/e_mod_main.c:2830
+#: ../src/modules/pager/e_mod_main.c:260
 #: ../src/modules/pager/e_mod_main.c:2831
-#: ../src/modules/pager/e_mod_main.c:2862
-#: ../src/modules/pager/e_mod_main.c:2863
-#: ../src/modules/pager/e_mod_main.c:2864
-#: ../src/modules/pager/e_mod_main.c:2865
+#: ../src/modules/pager/e_mod_main.c:2838
+#: ../src/modules/pager/e_mod_main.c:2845
+#: ../src/modules/pager/e_mod_main.c:2847
+#: ../src/modules/pager/e_mod_main.c:2849
+#: ../src/modules/pager/e_mod_main.c:2851
+#: ../src/modules/pager/e_mod_main.c:2884
+#: ../src/modules/pager/e_mod_main.c:2885
+#: ../src/modules/pager/e_mod_main.c:2886
+#: ../src/modules/pager/e_mod_main.c:2887
 msgid "Pager"
 msgstr "Pager"
 
@@ -2000,7 +2000,7 @@ msgstr "Automaticky aktivovat při startu"
 #: ../src/modules/ibar/e_mod_main.c:825
 #: ../src/modules/ibox/e_mod_main.c:318
 #: ../src/modules/ibox/e_mod_main.c:715
-#: ../src/modules/pager/e_mod_main.c:808
+#: ../src/modules/pager/e_mod_main.c:809
 #: ../src/modules/temperature/e_mod_main.c:281
 #: ../src/modules/mixer/e_mod_main.c:668
 #: ../src/modules/connman/e_mod_main.c:1090
@@ -2077,7 +2077,7 @@ msgid "Remove Gadget"
 msgstr "Odstranit gadget"
 
 #: ../src/bin/e_int_toolbar_config.c:30
-#: ../src/bin/e_toolbar.c:326
+#: ../src/bin/e_toolbar.c:335
 msgid "Toolbar Settings"
 msgstr "Nastavení panelu nástrojů"
 
@@ -2841,7 +2841,7 @@ msgid "Would you like to unload this module?<br>"
 msgstr "Chcete tento modul uvolnit?<br>"
 
 #: ../src/bin/e_screensaver.c:87
-msgid "You disabled screensaver too fast.<br><br>Would you like to enabe <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
+msgid "You disabled screensaver too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
 msgstr "Vypnuli jste spořič příliš rychle.<br><br>Chtěli byste povolit <b>prezentační mód</b> a dočasně vypnout spořič, zámek obrazovky a správu napájení?"
 
 #: ../src/bin/e_shelf.c:1272
@@ -2854,12 +2854,12 @@ msgid "You requested to delete this shelf.<br><br>Are you sure you want to delet
 msgstr "Opravdu chcete smazat tento panel?"
 
 #: ../src/bin/e_shelf.c:1688
-#: ../src/bin/e_toolbar.c:316
+#: ../src/bin/e_toolbar.c:325
 msgid "Stop Moving/Resizing Items"
 msgstr "Zastavit přesouvání/zvětšování/zmenšování prvků"
 
 #: ../src/bin/e_shelf.c:1690
-#: ../src/bin/e_toolbar.c:318
+#: ../src/bin/e_toolbar.c:327
 msgid "Begin Moving/Resizing Items"
 msgstr "Začít přesouvání/zvětšování/zmenšování prvků"
 
@@ -3001,7 +3001,7 @@ msgstr "O tématu"
 msgid "Set As Theme"
 msgstr "Použít jako téma"
 
-#: ../src/bin/e_toolbar.c:331
+#: ../src/bin/e_toolbar.c:340
 msgid "Set Toolbar Contents"
 msgstr "Nastavit obsah toolbaru"
 
@@ -3304,7 +3304,7 @@ msgid "Restart Applications"
 msgstr "Aplikace při restartu"
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:236
-#: ../src/modules/fileman/e_fwin.c:1803
+#: ../src/modules/fileman/e_fwin.c:1872
 msgid "All Applications"
 msgstr "Všechny aplikace"
 
@@ -3736,10 +3736,10 @@ msgid "Show on screen zone #:"
 msgstr "Zobrazit na zóně obrazovky #:"
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:406
-#: ../src/modules/conf_desks/e_int_config_desks.c:232
-#: ../src/modules/conf_desks/e_int_config_desks.c:236
-#: ../src/modules/conf_desks/e_int_config_desks.c:269
-#: ../src/modules/conf_desks/e_int_config_desks.c:273
+#: ../src/modules/conf_desks/e_int_config_desks.c:235
+#: ../src/modules/conf_desks/e_int_config_desks.c:239
+#: ../src/modules/conf_desks/e_int_config_desks.c:272
+#: ../src/modules/conf_desks/e_int_config_desks.c:276
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:117
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:121
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:125
@@ -3797,53 +3797,53 @@ msgstr "Použít vlastní screenlock"
 msgid "Screen Lock"
 msgstr "Zamčení obrazovky"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:57
-#: ../src/modules/pager/e_mod_main.c:815
+#: ../src/modules/conf_desks/e_int_config_desks.c:59
+#: ../src/modules/pager/e_mod_main.c:816
 msgid "Virtual Desktops Settings"
 msgstr "Nastavení virtuálních ploch"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:224
+#: ../src/modules/conf_desks/e_int_config_desks.c:227
 msgid "Number of Desktops"
 msgstr "Počet ploch"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:243
-#: ../src/modules/conf_desks/e_int_config_desks.c:280
+#: ../src/modules/conf_desks/e_int_config_desks.c:246
+#: ../src/modules/conf_desks/e_int_config_desks.c:283
 msgid "Desktop Mouse Flip"
 msgstr "Překlopení plochy myší"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:244
+#: ../src/modules/conf_desks/e_int_config_desks.c:247
 msgid "Animated flip"
 msgstr "Animované překlopení"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:262
+#: ../src/modules/conf_desks/e_int_config_desks.c:265
 msgid "Desktops"
 msgstr "Plochy"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:281
+#: ../src/modules/conf_desks/e_int_config_desks.c:284
 msgid "Flip when dragging objects to the screen edge"
 msgstr "Překlopit, když posunete objekty na kraj obrazovky"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:283
+#: ../src/modules/conf_desks/e_int_config_desks.c:286
 msgid "Wrap desktops around when flipping"
 msgstr "Překlopit zpět na první plochu z poslední"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:287
+#: ../src/modules/conf_desks/e_int_config_desks.c:290
 msgid "Flip Animation"
 msgstr "Animace překlopení"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:289
+#: ../src/modules/conf_desks/e_int_config_desks.c:292
 msgid "Off"
 msgstr "Vypnuto"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:291
+#: ../src/modules/conf_desks/e_int_config_desks.c:295
 msgid "Pane"
 msgstr "Pole"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:293
+#: ../src/modules/conf_desks/e_int_config_desks.c:298
 msgid "Zoom"
 msgstr "Přiblížení"
 
-#: ../src/modules/conf_desks/e_int_config_desks.c:295
+#: ../src/modules/conf_desks/e_int_config_desks.c:301
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:163
 #: ../src/modules/conf_window_manipulation/e_int_config_window_stacking.c:146
 #, c-format
@@ -3866,8 +3866,8 @@ msgstr "Nastavení dialogů"
 #: ../src/modules/conf_performance/e_int_config_performance.c:134
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:144
 #: ../src/modules/ibox/e_mod_config.c:100
-#: ../src/modules/pager/e_mod_config.c:120
-#: ../src/modules/pager/e_mod_config.c:160
+#: ../src/modules/pager/e_mod_config.c:119
+#: ../src/modules/pager/e_mod_config.c:159
 #: ../src/modules/mixer/conf_gadget.c:193
 #: ../src/modules/mixer/conf_module.c:96
 msgid "General Settings"
@@ -6171,35 +6171,35 @@ msgstr "Zobrazit HAL ikony na ploše"
 msgid "Behavior"
 msgstr "Chování"
 
-#: ../src/modules/fileman/e_fwin.c:1342
+#: ../src/modules/fileman/e_fwin.c:1411
 msgid "Go to Parent Directory"
 msgstr "Jít do předchozího adresáře"
 
-#: ../src/modules/fileman/e_fwin.c:1404
+#: ../src/modules/fileman/e_fwin.c:1473
 msgid "Other application..."
 msgstr "Jiná aplikace..."
 
-#: ../src/modules/fileman/e_fwin.c:1423
-#: ../src/modules/fileman/e_fwin.c:1754
+#: ../src/modules/fileman/e_fwin.c:1492
+#: ../src/modules/fileman/e_fwin.c:1823
 msgid "Open"
 msgstr "Otevřít"
 
 #. make clang happy
-#: ../src/modules/fileman/e_fwin.c:1428
-#: ../src/modules/fileman/e_fwin.c:1752
+#: ../src/modules/fileman/e_fwin.c:1497
+#: ../src/modules/fileman/e_fwin.c:1821
 msgid "Open with..."
 msgstr "Otevřít s.."
 
 #. Make frame with list of applications
-#: ../src/modules/fileman/e_fwin.c:1772
+#: ../src/modules/fileman/e_fwin.c:1841
 msgid "Known Applications"
 msgstr "Známé aplikace"
 
-#: ../src/modules/fileman/e_fwin.c:1782
+#: ../src/modules/fileman/e_fwin.c:1851
 msgid "Specific Applications"
 msgstr "Specifické aplikace"
 
-#: ../src/modules/fileman/e_fwin.c:1824
+#: ../src/modules/fileman/e_fwin.c:1893
 msgid "Custom Command"
 msgstr "Vlastní příkaz"
 
@@ -6420,139 +6420,139 @@ msgstr "IBox"
 msgid "Pager Settings"
 msgstr "Nastavení přepínače ploch"
 
-#: ../src/modules/pager/e_mod_config.c:121
-#: ../src/modules/pager/e_mod_config.c:161
+#: ../src/modules/pager/e_mod_config.c:120
+#: ../src/modules/pager/e_mod_config.c:160
 msgid "Flip desktop on mouse wheel"
 msgstr "Překlopit plochy kolečkem myši"
 
-#: ../src/modules/pager/e_mod_config.c:124
-#: ../src/modules/pager/e_mod_config.c:164
+#: ../src/modules/pager/e_mod_config.c:123
+#: ../src/modules/pager/e_mod_config.c:163
 msgid "Show desktop names"
 msgstr "Zobrazit jména ploch"
 
-#: ../src/modules/pager/e_mod_config.c:129
-#: ../src/modules/pager/e_mod_config.c:204
+#: ../src/modules/pager/e_mod_config.c:128
+#: ../src/modules/pager/e_mod_config.c:203
 msgid "Popup Settings"
 msgstr "Nastavení pop-up"
 
-#: ../src/modules/pager/e_mod_config.c:130
-#: ../src/modules/pager/e_mod_config.c:205
+#: ../src/modules/pager/e_mod_config.c:129
+#: ../src/modules/pager/e_mod_config.c:204
 msgid "Show popup on desktop change"
 msgstr "Zobrazit popup při změně plochy"
 
-#: ../src/modules/pager/e_mod_config.c:133
+#: ../src/modules/pager/e_mod_config.c:132
 msgid "Show popup for urgent windows"
 msgstr "Zobrazit popup pro důležitá okna"
 
-#: ../src/modules/pager/e_mod_config.c:168
+#: ../src/modules/pager/e_mod_config.c:167
 msgid "Select and Slide button"
 msgstr "Vybrat a přemístit tlačítko"
 
-#: ../src/modules/pager/e_mod_config.c:170
-#: ../src/modules/pager/e_mod_config.c:177
-#: ../src/modules/pager/e_mod_config.c:184
-#: ../src/modules/pager/e_mod_config.c:402
-#: ../src/modules/pager/e_mod_config.c:407
-#: ../src/modules/pager/e_mod_config.c:412
+#: ../src/modules/pager/e_mod_config.c:169
+#: ../src/modules/pager/e_mod_config.c:176
+#: ../src/modules/pager/e_mod_config.c:183
+#: ../src/modules/pager/e_mod_config.c:401
+#: ../src/modules/pager/e_mod_config.c:406
+#: ../src/modules/pager/e_mod_config.c:411
 #, c-format
 msgid "Click to set"
 msgstr "Klikněte k nastavení"
 
-#: ../src/modules/pager/e_mod_config.c:175
+#: ../src/modules/pager/e_mod_config.c:174
 msgid "Drag and Drop button"
 msgstr "Tlačítko Táhnout a pustit"
 
-#: ../src/modules/pager/e_mod_config.c:182
+#: ../src/modules/pager/e_mod_config.c:181
 msgid "Drag whole desktop"
 msgstr "Táhnout celou plochu"
 
 #. TODO find better name
-#: ../src/modules/pager/e_mod_config.c:191
+#: ../src/modules/pager/e_mod_config.c:190
 msgid "Keyaction popup height"
 msgstr "Výška keyaction popup"
 
-#: ../src/modules/pager/e_mod_config.c:193
-#: ../src/modules/pager/e_mod_config.c:199
-#: ../src/modules/pager/e_mod_config.c:212
+#: ../src/modules/pager/e_mod_config.c:192
+#: ../src/modules/pager/e_mod_config.c:198
+#: ../src/modules/pager/e_mod_config.c:211
 #, c-format
 msgid "%.0f px"
 msgstr "%.0f px"
 
-#: ../src/modules/pager/e_mod_config.c:197
+#: ../src/modules/pager/e_mod_config.c:196
 msgid "Resistance to dragging"
 msgstr "Odpor k táhnutí"
 
-#: ../src/modules/pager/e_mod_config.c:208
+#: ../src/modules/pager/e_mod_config.c:207
 msgid "Popup pager height"
 msgstr "Výška popup pageru"
 
-#: ../src/modules/pager/e_mod_config.c:217
-#: ../src/modules/pager/e_mod_config.c:237
+#: ../src/modules/pager/e_mod_config.c:216
+#: ../src/modules/pager/e_mod_config.c:236
 msgid "Popup speed"
 msgstr "Rychlost popup"
 
-#: ../src/modules/pager/e_mod_config.c:221
-#: ../src/modules/pager/e_mod_config.c:239
+#: ../src/modules/pager/e_mod_config.c:220
+#: ../src/modules/pager/e_mod_config.c:238
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f sekund"
 
-#: ../src/modules/pager/e_mod_config.c:230
+#: ../src/modules/pager/e_mod_config.c:229
 msgid "Urgent Window Settings"
 msgstr "Nastavení důležitého okna"
 
-#: ../src/modules/pager/e_mod_config.c:231
+#: ../src/modules/pager/e_mod_config.c:230
 msgid "Show popup on urgent window"
 msgstr "Zobrazit popup na důležitém oknu"
 
-#: ../src/modules/pager/e_mod_config.c:234
+#: ../src/modules/pager/e_mod_config.c:233
 msgid "Popup on urgent window sticks on the screen"
 msgstr "Popup na důležitých připíchnutích oken na této obrazovce"
 
-#: ../src/modules/pager/e_mod_config.c:287
+#: ../src/modules/pager/e_mod_config.c:286
 msgid "Pager Button Grab"
 msgstr "Uchopení pager tlačítka"
 
-#: ../src/modules/pager/e_mod_config.c:289
+#: ../src/modules/pager/e_mod_config.c:288
 msgid "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort.<br>Or <hilight>Del</hilight> to reset the button."
 msgstr "Prosím stiskněte tlačítko myši.<br>Stiskněte <hilight>Escape</hilight> ke zrušení.<br>Nebo <hilight>Del</hilight> k resetu tlačítka."
 
-#: ../src/modules/pager/e_mod_config.c:344
+#: ../src/modules/pager/e_mod_config.c:343
 msgid "Attetion"
 msgstr "Pozor"
 
-#: ../src/modules/pager/e_mod_config.c:345
+#: ../src/modules/pager/e_mod_config.c:344
 msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus. <br>This button only works in the Popup"
 msgstr "Nemůžete použít pravé tlačítko myši v<br>panelu, když už je zabráno interním<br>kódem kontextového menu. <br>Toto tlačítko bude fungovat pouze v popup."
 
-#: ../src/modules/pager/e_mod_config.c:404
-#: ../src/modules/pager/e_mod_config.c:409
-#: ../src/modules/pager/e_mod_config.c:414
+#: ../src/modules/pager/e_mod_config.c:403
+#: ../src/modules/pager/e_mod_config.c:408
+#: ../src/modules/pager/e_mod_config.c:413
 #, c-format
 msgid "Button %i"
 msgstr "Tlačítko %i"
 
-#: ../src/modules/pager/e_mod_main.c:2822
+#: ../src/modules/pager/e_mod_main.c:2838
 msgid "Show Pager Popup"
 msgstr "Zobrazit pager popup"
 
-#: ../src/modules/pager/e_mod_main.c:2828
-#: ../src/modules/pager/e_mod_main.c:2862
+#: ../src/modules/pager/e_mod_main.c:2845
+#: ../src/modules/pager/e_mod_main.c:2884
 msgid "Popup Desk Right"
 msgstr "Popup plochy doprava"
 
-#: ../src/modules/pager/e_mod_main.c:2829
-#: ../src/modules/pager/e_mod_main.c:2863
+#: ../src/modules/pager/e_mod_main.c:2847
+#: ../src/modules/pager/e_mod_main.c:2885
 msgid "Popup Desk Left"
 msgstr "Popup plochy doleva"
 
-#: ../src/modules/pager/e_mod_main.c:2830
-#: ../src/modules/pager/e_mod_main.c:2864
+#: ../src/modules/pager/e_mod_main.c:2849
+#: ../src/modules/pager/e_mod_main.c:2886
 msgid "Popup Desk Up"
 msgstr "Popup plochy nahoru"
 
-#: ../src/modules/pager/e_mod_main.c:2831
-#: ../src/modules/pager/e_mod_main.c:2865
+#: ../src/modules/pager/e_mod_main.c:2851
+#: ../src/modules/pager/e_mod_main.c:2887
 msgid "Popup Desk Down"
 msgstr "Popup plochy dolů"
 
