@@ -1519,7 +1519,7 @@ msgstr "Attivare modalità presentazione?"
 
 #: src/bin/e_screensaver.c:87
 msgid ""
-"You disabled screensaver too fast.<br><br>Would you like to enabe "
+"You disabled screensaver too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
@@ -1843,7 +1843,7 @@ msgstr ""
 
 #: src/bin/e_desklock.c:1027
 msgid ""
-"You unlocked desktop too fast.<br><br>Would you like to enabe "
+"You unlocked desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
