@@ -127,6 +127,8 @@ struct _E_Fm2_Smart_Data
       int ox, oy;
       int x, y, w, h;
    } selrect;
+
+   E_Fm2_Icon         *iop_icon;
 };
 
 struct _E_Fm2_Region
@@ -147,6 +149,7 @@ struct _E_Fm2_Icon
    int               saved_rel;
    E_Menu           *menu;
    E_Entry_Dialog   *entry_dialog;
+   Evas_Object      *entry_widget;
    E_Config_Dialog  *prop_dialog;
    E_Dialog         *dialog;
 
@@ -324,6 +327,12 @@ static void _e_fm2_file_rename_yes_cb(char *text, void *data);
 static void _e_fm2_file_rename_no_cb(void *data);
 static void _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_properties_delete_cb(void *obj);
+static void _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic);
+
+static Evas_Object* _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic);
+static void         _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic);
+static void         _e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _e_fm2_icon_entry_widget_accept(E_Fm2_Icon *ic);
 
 static void _e_fm_retry_abort_dialog(int pid, const char *str);
 static void _e_fm_retry_abort_delete_cb(void *obj);
@@ -4453,6 +4462,8 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
 	e_object_del(E_OBJECT(ic->entry_dialog));
 	ic->entry_dialog = NULL;
      }
+   if (ic->entry_widget)
+     _e_fm2_icon_entry_widget_del(ic);
    if (ic->prop_dialog)
      {
 	e_object_del(E_OBJECT(ic->prop_dialog));
@@ -4669,6 +4680,9 @@ _e_fm2_icon_select(E_Fm2_Icon *ic)
      {
 	const char *selectraise;
 
+        if(ic->sd->iop_icon)
+           _e_fm2_icon_entry_widget_accept(ic->sd->iop_icon);
+
 	edje_object_signal_emit(ic->obj, "e,state,selected", "e");
 	edje_object_signal_emit(ic->obj_icon, "e,state,selected", "e");
 	evas_object_stack_below(ic->obj, ic->sd->drop);
@@ -4687,6 +4701,9 @@ _e_fm2_icon_deselect(E_Fm2_Icon *ic)
    if (ic->realized)
      {
 	const char *stacking, *selectraise;
+
+	if(ic->entry_widget)
+	   _e_fm2_icon_entry_widget_accept(ic);
 
 	edje_object_signal_emit(ic->obj, "e,state,unselected", "e");
 	edje_object_signal_emit(ic->obj_icon, "e,state,unselected", "e");
@@ -6297,6 +6314,10 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 
    ic = data;
    ev = event_info;
+
+   if (ic->entry_widget)
+      return;
+
    if ((ev->button == 1) && (ev->flags & EVAS_BUTTON_DOUBLE_CLICK))
      {
 	/* if its a directory && open dirs in-place is set then change the dir
@@ -6339,6 +6360,9 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    ic = data;
    ev = event_info;
+
+   if (ic->entry_widget)
+      return;
 
    if ((ev->button == 1) && (!ic->drag.dnd))
      {
@@ -6449,6 +6473,10 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 
    ic = data;
    ev = event_info;
+
+   if (ic->entry_widget)
+      return;
+
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    if ((ic->drag.start) && (ic->sd->eobj))
      {
@@ -6655,6 +6683,9 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    sd = data;
    ev = event_info;
+
+   if(sd->iop_icon)
+      return;
 
    if (evas_key_modifier_is_set(ev->modifiers, "Control"))
      {
@@ -8370,27 +8401,81 @@ static void
 _e_fm2_file_rename(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fm2_Icon *ic;
-   E_Manager *man;
-   E_Container *con;
    char text[PATH_MAX + 256];
 
    ic = data;
-   if (ic->entry_dialog) return;
+   if (ic->entry_dialog || ic->entry_widget) return;
 
-   man = e_manager_current_get();
-   if (!man) return;
-   con = e_container_current_get(man);
-   if (!con) return;
+   if (!_e_fm2_icon_entry_widget_add(ic))
+     {
+        snprintf(text, PATH_MAX + 256,
+	             _("Rename %s to:"),
+	             ic->info.file);
+        ic->entry_dialog = e_entry_dialog_show(_("Rename File"), "edit-rename",
+		                   text, ic->info.file, NULL, NULL,
+					       _e_fm2_file_rename_yes_cb,
+					       _e_fm2_file_rename_no_cb, ic);
+        E_OBJECT(ic->entry_dialog)->data = ic;
+        e_object_del_attach_func_set(E_OBJECT(ic->entry_dialog), _e_fm2_file_rename_delete_cb);
+     }
+}
 
-   snprintf(text, PATH_MAX + 256,
-	    _("Rename %s to:"),
-	    ic->info.file);
-   ic->entry_dialog = e_entry_dialog_show(_("Rename File"), "edit-rename",
-					  text, ic->info.file, NULL, NULL,
-					  _e_fm2_file_rename_yes_cb,
-					  _e_fm2_file_rename_no_cb, ic);
-   E_OBJECT(ic->entry_dialog)->data = ic;
-   e_object_del_attach_func_set(E_OBJECT(ic->entry_dialog), _e_fm2_file_rename_delete_cb);
+static Evas_Object*
+_e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
+{
+   Evas_Object *eo;
+
+   if (ic->sd->iop_icon)
+      _e_fm2_icon_entry_widget_accept(ic->sd->iop_icon);
+
+   if (!edje_object_part_exists(ic->obj, "e.swallow.entry"))
+      return NULL;
+
+   ic->entry_widget = e_widget_entry_add(evas_object_evas_get(ic->obj),
+                                         NULL, NULL, NULL, NULL);
+   evas_object_event_callback_add(ic->entry_widget, EVAS_CALLBACK_KEY_DOWN,
+                                  _e_fm2_icon_entry_widget_cb_key_down, ic);
+   edje_object_part_swallow(ic->obj, "e.swallow.entry", ic->entry_widget);
+   evas_object_show(ic->entry_widget);
+   e_widget_entry_text_set(ic->entry_widget, ic->info.file);
+   e_widget_focus_set(ic->entry_widget, 0);
+   eo = e_widget_entry_editable_object_get(ic->entry_widget);
+   e_editable_cursor_move_to_start(eo);
+   e_editable_selection_move_to_end(eo);
+   ic->sd->iop_icon = ic;
+
+   return ic->entry_widget;
+}
+
+static void
+_e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic)
+{
+   ic->sd->iop_icon = NULL;
+   evas_object_focus_set(ic->sd->obj, 1);
+   evas_object_del(ic->entry_widget);
+   ic->entry_widget = NULL;
+}
+
+static void
+_e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Key_Down *ev;
+   E_Fm2_Icon *ic;
+
+   ev = event_info;
+   ic = data;
+
+   if (!strcmp(ev->key, "Escape"))
+      _e_fm2_icon_entry_widget_del(ic);
+   else if (!strcmp(ev->key, "Return"))
+      _e_fm2_icon_entry_widget_accept(ic);
+}
+
+static void
+_e_fm2_icon_entry_widget_accept(E_Fm2_Icon *ic)
+{
+   _e_fm2_file_do_rename(e_widget_entry_text_get(ic->entry_widget), ic);
+   _e_fm2_icon_entry_widget_del(ic);
 }
 
 static void
@@ -8406,27 +8491,11 @@ static void
 _e_fm2_file_rename_yes_cb(char *text, void *data)
 {
    E_Fm2_Icon *ic;
-   char oldpath[PATH_MAX];
-   char newpath[PATH_MAX];
-   char *args = NULL;
-   size_t size = 0;
-   size_t length = 0;
 
    ic = data;
    ic->entry_dialog = NULL;
-   if ((text) && (strcmp(text, ic->info.file)))
-     {
-	_e_fm2_icon_realpath(ic, oldpath, sizeof(oldpath));
-	snprintf(newpath, sizeof(newpath), "%s/%s", ic->sd->realpath, text);
-	if (e_filereg_file_protected(oldpath)) return;
 
-	args = _e_fm_string_append_quoted(args, &size, &length, oldpath);
-	args = _e_fm_string_append_char(args, &size, &length, ' ');
-	args = _e_fm_string_append_quoted(args, &size, &length, newpath);
-
-	_e_fm_client_file_move(args, ic->sd->obj);
-	free(args);
-     }
+   _e_fm2_file_do_rename(text, ic);
 }
 
 static void
@@ -8436,6 +8505,30 @@ _e_fm2_file_rename_no_cb(void *data)
 
    ic = data;
    ic->entry_dialog = NULL;
+}
+
+static void
+_e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic)
+{
+   char oldpath[PATH_MAX];
+   char newpath[PATH_MAX];
+   char *args = NULL;
+   size_t size = 0;
+   size_t length = 0;
+
+   if ((text) && (strcmp(text, ic->info.file)))
+     {
+        _e_fm2_icon_realpath(ic, oldpath, sizeof(oldpath));
+        snprintf(newpath, sizeof(newpath), "%s/%s", ic->sd->realpath, text);
+        if (e_filereg_file_protected(oldpath)) return;
+
+        args = _e_fm_string_append_quoted(args, &size, &length, oldpath);
+        args = _e_fm_string_append_char(args, &size, &length, ' ');
+        args = _e_fm_string_append_quoted(args, &size, &length, newpath);
+
+        _e_fm_client_file_move(args, ic->sd->obj);
+        free(args);
+     }
 }
 
 static void _e_fm_retry_abort_dialog(int pid, const char *str)
@@ -8662,7 +8755,7 @@ _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Container *con;
 
    ic = data;
-   if (ic->entry_dialog) return;
+   if (ic->entry_dialog || ic->entry_widget) return;
 
    man = e_manager_current_get();
    if (!man) return;

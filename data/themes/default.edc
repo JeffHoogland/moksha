@@ -13435,6 +13435,13 @@ collections { /* begin the collection of edje groups that are in this file */
 	       image.normal:  "icon_efm_dnd_move.png";
 	    }
 	 }
+	 part { name: "e.swallow.entry";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.text.label";
+	       rel2.to: "e.text.label";
+	    }
+	 }
       }
       programs {
 	 program { name: "go_active";
@@ -13846,6 +13853,13 @@ collections { /* begin the collection of edje groups that are in this file */
 	    description { state: "move" 0.0;
 	       inherit: "visible" 0.0;
 	       image.normal:  "icon_efm_dnd_move.png";
+	    }
+	 }
+	 part { name: "e.swallow.entry";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.text.label";
+	       rel2.to: "e.text.label";
 	    }
 	 }
       }
@@ -15090,6 +15104,13 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 0 0 0 0;
 	    }
 	 }
+	 part { name: "e.swallow.entry";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.text.label";
+	       rel2.to: "e.text.label";
+	    }
+	 }
       }
       programs {
 	 program { name: "go_active";
@@ -15553,6 +15574,13 @@ collections { /* begin the collection of edje groups that are in this file */
 	    description {
 	       state: "default" 0.0;
 	       color: 0 0 0 0;
+	    }
+	 }
+	 part { name: "e.swallow.entry";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.text.label";
+	       rel2.to: "e.text.label";
 	    }
 	 }
       }
@@ -16022,6 +16050,13 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 0 0 0 0;
 	    }
 	 }
+	 part { name: "e.swallow.entry";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.text.label";
+	       rel2.to: "e.text.label";
+	    }
+	 }
       }
       programs {
 	 program { name: "go_active";
@@ -16486,6 +16521,13 @@ collections { /* begin the collection of edje groups that are in this file */
 	    description {
 	       state: "default" 0.0;
 	       color: 0 0 0 0;
+	    }
+	 }
+	 part { name: "e.swallow.entry";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.text.label";
+	       rel2.to: "e.text.label";
 	    }
 	 }
       }
