@@ -423,6 +423,7 @@ AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
 AC_E_OPTIONAL_MODULE([connman], false)
 AC_E_OPTIONAL_MODULE([illume], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
+AC_E_OPTIONAL_MODULE([everything], true)
 
 AC_OUTPUT([
 Makefile
@@ -555,6 +556,8 @@ src/modules/illume/keyboards/Makefile
 src/modules/illume/dicts/Makefile
 src/modules/syscon/Makefile
 src/modules/syscon/module.desktop
+src/modules/everything/Makefile
+src/modules/everything/module.desktop
 src/preload/Makefile
 data/Makefile
 data/images/Makefile

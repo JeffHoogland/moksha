@@ -246,6 +246,9 @@ if USE_MODULE_SYSCON
 SUBDIRS += syscon
 endif
 
+# if USE_MODULE_SYSCON
+SUBDIRS += everything
+# endif
 
 
 
@@ -310,5 +313,5 @@ gadman \
 mixer \
 connman \
 illume \
-syscon
-
+syscon \
+everything
