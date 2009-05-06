@@ -25546,10 +25546,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		  to_x:     "e.swallow.icons";
 	       }
 	       rel2 {
-		  relative: 1.0 1.0;
-		  offset:   -48  -48;
-	          /* to_x:  */
-		  /* to_x:     "e.swallow.icons"; */
+		  relative: 1.0 0.0;
+		  offset:   -10  48;
+		  to_x:     "e.swallow.icons";
 	       }
 	       color: 255 255 255 255;
 	       color3: 0 0 0 64;
