@@ -45,7 +45,7 @@ _e_screensaver_ask_presentation_no_increase(void *data __UNUSED__, E_Dialog *dia
    int timeout, interval, blanking, expose;
 
    _e_screensaver_ask_presentation_count++;
-   timeout = e_config->screensaver_timeout * _e_screensaver_ask_presentation_count;
+   timeout = e_config->screensaver_timeout * (1 + _e_screensaver_ask_presentation_count);
    interval = e_config->screensaver_interval;
    blanking = e_config->screensaver_blanking;
    expose = e_config->screensaver_expose;
@@ -61,6 +61,18 @@ _e_screensaver_ask_presentation_no_forever(void *data __UNUSED__, E_Dialog *dia)
    e_config_save_queue();
    e_object_del(E_OBJECT(dia));
    _e_screensaver_ask_presentation_count = 0;
+}
+
+static void
+_e_screensaver_ask_presentation_key_down(void *data, Evas *e __UNUSED__, Evas_Object *o __UNUSED__, void *event)
+{
+   Evas_Event_Key_Down *ev = event;
+   E_Dialog *dia = data;
+
+   if (strcmp(ev->keyname, "Return") == 0)
+     _e_screensaver_ask_presentation_yes(NULL, dia);
+   else if (strcmp(ev->keyname, "Escape") == 0)
+     _e_screensaver_ask_presentation_no(NULL, dia);
 }
 
 static void
@@ -107,6 +119,10 @@ _e_screensaver_ask_presentation_mode(void)
    e_util_win_auto_resize_fill(dia->win);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
+
+   evas_object_event_callback_add
+     (dia->bg_object, EVAS_CALLBACK_KEY_DOWN,
+      _e_screensaver_ask_presentation_key_down, dia);
 
    _e_screensaver_ask_presentation_dia = dia;
 }

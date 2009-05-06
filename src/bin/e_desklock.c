@@ -141,7 +141,8 @@ _user_wallpaper_get(void)
 EAPI int
 e_desklock_show_autolocked(void)
 {
-   _e_desklock_autolock_time = ecore_loop_time_get();
+   if (_e_desklock_autolock_time < 1.0)
+     _e_desklock_autolock_time = ecore_loop_time_get();
    return e_desklock_show();
 }
 
@@ -927,7 +928,7 @@ _e_desklock_cb_idle_poller(void *data)
 	idle = ecore_x_screensaver_idle_time_get();
 	max = e_config->desklock_autolock_idle_timeout;
 	if (_e_desklock_ask_presentation_count > 0)
-	  max *= _e_desklock_ask_presentation_count;
+	  max *= (1 + _e_desklock_ask_presentation_count);
 
 	/* If we have exceeded our idle time... */
         if (idle >= max)
@@ -1004,6 +1005,18 @@ _e_desklock_ask_presentation_no_forever(void *data __UNUSED__, E_Dialog *dia)
 }
 
 static void
+_e_desklock_ask_presentation_key_down(void *data, Evas *e __UNUSED__, Evas_Object *o __UNUSED__, void *event)
+{
+   Evas_Event_Key_Down *ev = event;
+   E_Dialog *dia = data;
+
+   if (strcmp(ev->keyname, "Return") == 0)
+     _e_desklock_ask_presentation_yes(NULL, dia);
+   else if (strcmp(ev->keyname, "Escape") == 0)
+     _e_desklock_ask_presentation_no(NULL, dia);
+}
+
+static void
 _e_desklock_ask_presentation_mode(void)
 {
    E_Manager *man;
@@ -1047,6 +1060,10 @@ _e_desklock_ask_presentation_mode(void)
    e_util_win_auto_resize_fill(dia->win);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
+
+   evas_object_event_callback_add
+     (dia->bg_object, EVAS_CALLBACK_KEY_DOWN,
+      _e_desklock_ask_presentation_key_down, dia);
 
    _e_desklock_ask_presentation_dia = dia;
 }
