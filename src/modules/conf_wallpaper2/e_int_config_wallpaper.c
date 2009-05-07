@@ -16,6 +16,9 @@
 //   bug: animated wp doesnt workon first show
 //   need to disable "this screen" if multiple containers/zones dont exist
 //   need to disable "this desktop vs all desktops" if only 1 desk exists
+//   need to show busy info while loading files / generating thumbs
+//   need to delete/create objects as neede (not just hide/show)
+//   need to be able to "type name to search/filter
 
 typedef struct _Info Info;
 typedef struct _Smart_Data Smart_Data;
@@ -68,6 +71,7 @@ struct _Item
    Evas_Bool do_thumb : 1;
    Evas_Bool remote : 1;
    Evas_Bool theme : 1;
+   Evas_Bool visible : 1;
 };
 
 static Info *global_info = NULL;
@@ -122,6 +126,9 @@ _pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 
 static void _e_smart_reconfigure(Evas_Object *obj);
 static void _thumb_gen(void *data, Evas_Object *obj, void *event_info);
+static void _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static int _sort_cb(const void *d1, const void *d2);
 
 static int
 _e_smart_reconfigure_do(void *data)
@@ -286,10 +293,6 @@ _e_smart_reconfigure_do(void *data)
           }
         xx = sd->x - sd->cx + it->x + ox;
         yy = sd->y - sd->cy + it->y + oy;
-        evas_object_move(it->frame, 
-                         xx + dx,
-                         yy + dy);
-        evas_object_resize(it->frame, it->w, it->h);
         evas_output_viewport_get(evas_object_evas_get(obj), NULL, NULL, &vw, &vh);
         if (E_INTERSECTS(xx, yy, it->w, it->h, 0, 0, vw, vh))
           {
@@ -301,9 +304,67 @@ _e_smart_reconfigure_do(void *data)
                        it->do_thumb = 1;
                     }
                }
+             else
+               {
+                  if (!it->frame)
+                    {
+                       it->frame = edje_object_add(evas_object_evas_get(obj));
+                       if (it->theme)
+                         e_theme_edje_object_set(it->frame, "base/theme/widgets",
+                                                 "e/conf/wallpaper/main/mini-theme");
+                       else if (it->remote)
+                         e_theme_edje_object_set(it->frame, "base/theme/widgets",
+                                                 "e/conf/wallpaper/main/mini-remote");
+                       else
+                         e_theme_edje_object_set(it->frame, "base/theme/widgets",
+                                                 "e/conf/wallpaper/main/mini");
+                       evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_DOWN,
+                                                      _item_down, it);
+                       evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_UP,
+                                                      _item_up, it);
+                       
+                       evas_object_smart_member_add(it->frame, obj);
+                       evas_object_clip_set(it->frame, evas_object_clip_get(obj));
+                       it->image = e_thumb_icon_add(evas_object_evas_get(obj));
+                       edje_object_part_swallow(it->frame, "e.swallow.content", it->image);
+                       evas_object_smart_callback_add(it->image, "e_thumb_gen", _thumb_gen, it);
+                       if (it->theme)
+                         {
+                            const char *f = e_theme_edje_file_get("base/theme/backgrounds",
+                                                                  "e/desktop/background");
+                            e_thumb_icon_file_set(it->image, f, "e/desktop/background");
+                         }
+                       else
+                         e_thumb_icon_file_set(it->image, it->file, "e/desktop/background");
+                       e_thumb_icon_size_set(it->image, sd->info->iw, sd->info->ih);
+                       evas_object_show(it->image);
+                       
+                       e_thumb_icon_begin(it->image);
+                    }
+               }
+             evas_object_move(it->frame, 
+                              xx + dx,
+                              yy + dy);
+             evas_object_resize(it->frame, it->w, it->h);
+             evas_object_show(it->frame);
+             it->visible = 1;
           }
         else
           {
+             if (it->have_thumb)
+               {
+                  if (it->do_thumb)
+                    {
+                       e_thumb_icon_end(it->image);
+                       it->do_thumb = 0;
+                    }
+                  evas_object_del(it->image);
+                  it->image = NULL;
+                  evas_object_del(it->frame);
+                  it->frame = NULL;
+               }
+             it->visible = 0;
+/*             
              if (it->have_thumb)
                {
                   if (it->do_thumb)
@@ -339,6 +400,7 @@ _e_smart_reconfigure_do(void *data)
                          }
                     }
                }
+ */
           }
      }
    
@@ -654,6 +716,19 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
           }
      }
    it->have_thumb = 1;
+   if (!it->visible)
+     {
+        if (it->do_thumb)
+          {
+             e_thumb_icon_end(it->image);
+             it->do_thumb = 0;
+          }
+        evas_object_del(it->image);
+        it->image = NULL;
+        evas_object_del(it->frame);
+        it->frame = NULL;
+        evas_norender(evas_object_evas_get(it->obj)); // norender to force del of objs
+     }
 }
 
 static void         
@@ -913,8 +988,8 @@ wp_browser_new(E_Container *con)
         info->use_theme_bg = 1;
      }
    
-   info->iw = 256;
-   info->ih = (zone->h * 256) / (zone->w);
+   info->iw = 120 * e_scale;
+   info->ih = (zone->h * info->iw) / (zone->w);
    
    win = e_win_new(con);
    if (!win)

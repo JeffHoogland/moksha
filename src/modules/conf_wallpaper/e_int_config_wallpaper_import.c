@@ -490,7 +490,7 @@ _import_edj_gen(Import *import)
 		"parts {\n"
 		"part { name: \"bg\"; mouse_events: 0;\n"
 		"description { state: \"default\" 0.0;\n"
-		"image { normal: \"%s\"; }\n"
+		"image { normal: \"%s\"; scale_hint: STATIC; }\n"
 		"} } } } }\n"
 		, fstrip, enc, w, h, fstrip);
 	break;
@@ -547,7 +547,7 @@ _import_edj_gen(Import *import)
 		"part { name: \"bg\"; mouse_events: 0;\n"
 		"description { state: \"default\" 0.0;\n"
 		"aspect: %1.9f %1.9f; aspect_preference: BOTH;\n"
-		"image { normal: \"%s\"; }\n"
+		"image { normal: \"%s\";  scale_hint: STATIC; }\n"
 		"} } } } }\n"
 		, fstrip, enc, w, h, cr, cg, cb, ca, (double)w / (double)h, (double)w / (double)h, fstrip);
 	 setlocale(LC_NUMERIC, locale);
@@ -565,7 +565,7 @@ _import_edj_gen(Import *import)
 		"part { name: \"bg\"; mouse_events: 0;\n"
 		"description { state: \"default\" 0.0;\n"
 		"aspect: %1.9f %1.9f; aspect_preference: NONE;\n"
-		"image { normal: \"%s\"; }\n"
+		"image { normal: \"%s\";  scale_hint: STATIC; }\n"
 		"} } } } }\n"
 		, fstrip, enc, w, h, (double)w / (double)h, (double)w / (double)h, fstrip);
 	setlocale(LC_NUMERIC, locale);
