@@ -35,7 +35,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0132
+#define E_CONFIG_FILE_GENERATION 0x0133
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT         0
@@ -272,6 +272,9 @@ struct _E_Config
    int         desk_flip_animate_mode; // GUI
    int         desk_flip_animate_interpolation; // GUI
    double      desk_flip_animate_time; // GUI
+   Eina_Bool   desk_flip_pan_bg;
+   double      desk_flip_pan_x_axis_factor;
+   double      desk_flip_pan_y_axis_factor;
    
    const char *wallpaper_import_last_dev; // INTERNAL
    const char *wallpaper_import_last_path; // INTERNAL

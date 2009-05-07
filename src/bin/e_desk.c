@@ -209,7 +209,7 @@ e_desk_show(E_Desk *desk)
    E_Event_Desk_Before_Show *eev;
    E_Event_Desk_After_Show *eeev;
    Eina_List *l;
-   int was_zone = 0, x, y, dx = 0, dy = 0;
+   int was_zone = 0, x, y, dx = 0, dy = 0, prev_x = 0, prev_y = 0;
 
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
@@ -232,6 +232,8 @@ e_desk_show(E_Desk *desk)
 	     if (desk2->visible)
 	       {
 		  desk2->visible = 0;
+		  prev_x = desk2->x;
+		  prev_y = desk2->y;
 		  dx = desk->x - desk2->x;
 		  dy = desk->y - desk2->y;
 		  if (e_config->desk_flip_animate_mode > 0)
@@ -272,7 +274,12 @@ e_desk_show(E_Desk *desk)
      e_desk_last_focused_focus(desk);
 
    if (was_zone)
-     e_bg_zone_update(desk->zone, E_BG_TRANSITION_DESK);
+     {
+	if (e_config->desk_flip_pan_bg)
+	  e_bg_zone_slide(desk->zone, prev_x, prev_y);
+	else
+	  e_bg_zone_update(desk->zone, E_BG_TRANSITION_DESK);
+     }
    else
      e_bg_zone_update(desk->zone, E_BG_TRANSITION_START);
 

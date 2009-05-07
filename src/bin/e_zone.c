@@ -235,6 +235,8 @@ e_zone_move(E_Zone *zone, int x, int y)
    zone->x = x;
    zone->y = y;
    evas_object_move(zone->bg_object, x, y);
+   if (zone->bg_scrollframe)
+     evas_object_move(zone->bg_scrollframe, x, y);
    evas_object_move(zone->bg_event_object, x, y);
    evas_object_move(zone->bg_clip_object, x, y);
 
@@ -287,6 +289,8 @@ e_zone_resize(E_Zone *zone, int w, int h)
    zone->w = w;
    zone->h = h;
    evas_object_resize(zone->bg_object, w, h);
+   if (zone->bg_scrollframe)
+     evas_object_resize(zone->bg_scrollframe, w, h);
    evas_object_resize(zone->bg_event_object, w, h);
    evas_object_resize(zone->bg_clip_object, w, h);
 
@@ -345,9 +349,13 @@ e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h)
    zone->h = h;
 
    evas_object_move(zone->bg_object, x, y);
+   if (zone->bg_scrollframe)
+     evas_object_move(zone->bg_scrollframe, x, y);
    evas_object_move(zone->bg_event_object, x, y);
    evas_object_move(zone->bg_clip_object, x, y);
    evas_object_resize(zone->bg_object, w, h);
+   if (zone->bg_scrollframe)
+     evas_object_resize(zone->bg_scrollframe, w, h);
    evas_object_resize(zone->bg_event_object, w, h);
    evas_object_resize(zone->bg_clip_object, w, h);
 
@@ -939,6 +947,8 @@ _e_zone_free(E_Zone *zone)
 {
    E_Container *con;
    Eina_List *l;
+   Ecore_Animator *anim;
+   void *data;
    int x, y;
 
    /* Delete the edge windows if they exist */
@@ -988,9 +998,14 @@ _e_zone_free(E_Zone *zone)
    con = zone->container;
    if (zone->name) eina_stringshare_del(zone->name);
    con->zones = eina_list_remove(con->zones, zone);
+   anim = evas_object_data_get(zone->bg_object, "switch_animator");
+   if (anim) ecore_animator_del(anim);
+   data = evas_object_data_get(zone->bg_object, "switch_animator_params");
+   if (data) E_FREE(data);
    evas_object_del(zone->bg_event_object);
    evas_object_del(zone->bg_clip_object);
    evas_object_del(zone->bg_object);
+   evas_object_del(zone->bg_scrollframe);
    if (zone->prev_bg_object) evas_object_del(zone->prev_bg_object);
    if (zone->transition_object) evas_object_del(zone->transition_object);
 

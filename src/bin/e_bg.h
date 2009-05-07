@@ -32,6 +32,7 @@ EAPI int e_bg_shutdown(void);
 EAPI const E_Config_Desktop_Background *e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y);
 EAPI const char *e_bg_file_get(int container_num, int zone_num,  int desk_x, int desk_y);
 EAPI void e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition);
+EAPI void e_bg_zone_slide(E_Zone *zone, int prev_x, int prev_y);
 EAPI void e_bg_add(int container, int zone, int desk_x, int desk_y, char *file);
 EAPI void e_bg_del(int container, int zone, int desk_x, int desk_y);
 EAPI void e_bg_default_set(char *file);
