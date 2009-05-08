@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-30 07:59+0400\n"
-"PO-Revision-Date: 2009-04-30 09:42+0400\n"
+"POT-Creation-Date: 2009-05-08 09:13+0400\n"
+"PO-Revision-Date: 2009-05-08 10:32+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <Enlightenment i18n French>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr "À propos de Enlightenment"
 #: src/bin/e_about.c:20
 #: src/bin/e_actions.c:2499
 #: src/bin/e_config_dialog.c:259
-#: src/bin/e_fm.c:864
+#: src/bin/e_fm.c:873
 #: src/bin/e_int_border_menu.c:215
 #: src/bin/e_int_border_prop.c:81
 #: src/bin/e_theme_about.c:20
@@ -73,11 +73,11 @@ msgstr "Êtes-vous sûr de vouloir tuer cette fenêtre ?"
 #: src/bin/e_actions.c:2066
 #: src/bin/e_actions.c:2130
 #: src/bin/e_confirm_dialog.c:47
-#: src/bin/e_desklock.c:1034
-#: src/bin/e_fm.c:8520
-#: src/bin/e_fm.c:8716
+#: src/bin/e_desklock.c:1047
+#: src/bin/e_fm.c:8613
+#: src/bin/e_fm.c:8809
 #: src/bin/e_module.c:502
-#: src/bin/e_screensaver.c:94
+#: src/bin/e_screensaver.c:106
 msgid "Yes"
 msgstr "Oui"
 
@@ -89,11 +89,11 @@ msgstr "Oui"
 #: src/bin/e_actions.c:2068
 #: src/bin/e_actions.c:2132
 #: src/bin/e_confirm_dialog.c:48
-#: src/bin/e_desklock.c:1036
-#: src/bin/e_fm.c:8518
-#: src/bin/e_fm.c:8717
+#: src/bin/e_desklock.c:1049
+#: src/bin/e_fm.c:8611
+#: src/bin/e_fm.c:8810
 #: src/bin/e_module.c:503
-#: src/bin/e_screensaver.c:96
+#: src/bin/e_screensaver.c:108
 msgid "No"
 msgstr "Non"
 
@@ -158,7 +158,7 @@ msgid "Window : Actions"
 msgstr "Fenêtre: Actions"
 
 #: src/bin/e_actions.c:2459
-#: src/bin/e_fm.c:5920
+#: src/bin/e_fm.c:5937
 msgid "Move"
 msgstr "Déplacer"
 
@@ -703,7 +703,7 @@ msgstr "Générique: Actions"
 msgid "Delayed Action"
 msgstr "Action reportée"
 
-#: src/bin/e_bg.c:21
+#: src/bin/e_bg.c:37
 #: src/modules/conf_wallpaper/e_mod_main.c:34
 msgid "Set As Background"
 msgstr "Utiliser comme fond d'écran"
@@ -721,7 +721,7 @@ msgid "Color Selector"
 msgstr "Sélecteur de couleurs"
 
 #: src/bin/e_color_dialog.c:48
-#: src/bin/e_config.c:1776
+#: src/bin/e_config.c:1788
 #: src/bin/e_config_dialog.c:249
 #: src/bin/e_eap_editor.c:613
 #: src/bin/e_eap_editor.c:677
@@ -768,45 +768,45 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:740
-#: src/bin/e_config.c:773
+#: src/bin/e_config.c:743
+#: src/bin/e_config.c:776
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "Les données de configuration ont dû être mises à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Ceci risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que Enlightenment a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:757
+#: src/bin/e_config.c:760
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Votre configuration est PLUS RÉCENTE que Enlightenment.<br>C'est vraiment étonnant. Cela ne devrait pas se produire à<br>moins que vous n'ayez installé une version antérieure ou copié<br>la configuration depuis une machine sur laquelle une version<br>plus récente était en cours. Ce n'est pas bon et, par<br>mesure de précaution, votre configuration a été<br>remise à zéro. Désolé pour le désagrément.<br>"
 
-#: src/bin/e_config.c:1677
+#: src/bin/e_config.c:1689
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:1700
+#: src/bin/e_config.c:1712
 #, c-format
 msgid "An error occured while saving Enlightenment's<br>settings to disk. The error could not be<br>deterimined.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur est survenue lors de l'enregistrement de<br>la configuration de Enlightenment sur le disque.<br>L'origine de cette erreur n'a pu être déterminée.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:1711
+#: src/bin/e_config.c:1723
 #, c-format
 msgid "Enlightenment's settings files are too big<br>for the file system they are being saved to.<br>This error is very strange as the files should<br>be extremely small. Please check the settings<br>for your home directory.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Les fichiers de configuration de Enlightenment sont trop<br>gros pour le système de fichiers où ils doivent être<br>enregistrés. Une erreur tout à fait étonnante car<br>ils devraient être vraiment très petits.<br> Veuillez vérifier la configuration de<br>votre répertoire personnel.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:1724
+#: src/bin/e_config.c:1736
 #, c-format
 msgid "An output error occured when writing the settings<br>files for Enlightenment. Your disk is having troubles<br>and possibly needs replacement.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur d'entrée/sortie est survenue lors de l'écriture<br>des fichiers de configuration de Enlightenment. Votre disque dur<br> est en cause et devra vraisemblablement être remplacé.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:1735
+#: src/bin/e_config.c:1747
 #, c-format
 msgid "Enlightenment cannot write its settings file<br>because it ran out of space to write the file.<br>You have either run out of disk space or have<br>gone over your quota limit.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Enlightenment n'a pu écrire son fichier de configuration<br>car il n'y a pas suffisamment d'espace pour cela.<br>Soit vous n'avez plus d'espace disque,<br>soit vous avez dépassé votre quota.<br><br>Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
-#: src/bin/e_config.c:1747
+#: src/bin/e_config.c:1759
 #, c-format
 msgid "Enlightenment unexpectedly had the settings file<br>it was writing closed on it. This is very unusual.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Le fichier de configuration dans lequel Enlightenment était en train<br>d'écrire s'est fermé de façon inattendue. C'est exceptionnel.<br><br> Le fichier incriminé était:<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
 
-#: src/bin/e_config.c:1772
+#: src/bin/e_config.c:1784
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
@@ -850,51 +850,51 @@ msgstr "Extensions"
 msgid "Container %d"
 msgstr "Conteneur %d"
 
-#: src/bin/e_desklock.c:173
+#: src/bin/e_desklock.c:174
 msgid "Error - no PAM support"
 msgstr "Erreur: Pas de support PAM"
 
-#: src/bin/e_desklock.c:174
+#: src/bin/e_desklock.c:175
 msgid "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr "Enlightenment n'a pas été compilé avec le support<br>PAM, le verrouillage d'écran a été désactivé."
 
-#: src/bin/e_desklock.c:240
+#: src/bin/e_desklock.c:241
 msgid "Lock Failed"
 msgstr "Échec du verrouillage"
 
-#: src/bin/e_desklock.c:241
+#: src/bin/e_desklock.c:242
 msgid "Locking the desktop failed because some application<br>has grabbed either the keyboard or the mouse or both<br>and their grab is unable to be broken."
 msgstr "Le verrouillage du bureau a échoué car une application<br>s'est accaparée soit le clavier, soit la souris, soit les deux<br>et il n'est pas possible d'outrepasser cette action."
 
-#: src/bin/e_desklock.c:332
+#: src/bin/e_desklock.c:333
 msgid "Please enter your unlock password"
 msgstr "Veuillez entrer votre mot de passe de déverrouillage"
 
-#: src/bin/e_desklock.c:708
+#: src/bin/e_desklock.c:709
 msgid "Authentication System Error"
 msgstr "Erreur du système d'authentification"
 
-#: src/bin/e_desklock.c:709
+#: src/bin/e_desklock.c:710
 #, c-format
 msgid "Authentication via PAM had errors setting up the<br>authentication session. The error code was <hilight>%i</hilight>.<br>This is bad and should not be happening. Please report this bug."
 msgstr "L'authentification via PAM a rencontré une erreur lors de<br>la session d'authentification. Le code de l'erreur est <hilight>%i</hilight>.<br>Cette erreur ne devrait pas se produire.<br> Merci de faire un rapport de bogue,"
 
-#: src/bin/e_desklock.c:1023
-#: src/bin/e_screensaver.c:83
+#: src/bin/e_desklock.c:1036
+#: src/bin/e_screensaver.c:95
 msgid "Activate Presentation Mode?"
 msgstr "Activer le mode présentation ?"
 
-#: src/bin/e_desklock.c:1027
+#: src/bin/e_desklock.c:1040
 msgid "You unlocked desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
 msgstr "Vous avez déverrouillé le bureau trop vite.<br><br>Voulez-vous activer le mode <b>présentation</b> et désactiver temporairement l'écran de veille, le verrouillage et la gestion de l'énergie ?"
 
-#: src/bin/e_desklock.c:1038
-#: src/bin/e_screensaver.c:98
+#: src/bin/e_desklock.c:1051
+#: src/bin/e_screensaver.c:110
 msgid "No, but increase timeout"
 msgstr "Non, mais augmenter le délai"
 
-#: src/bin/e_desklock.c:1041
-#: src/bin/e_screensaver.c:101
+#: src/bin/e_desklock.c:1054
+#: src/bin/e_screensaver.c:113
 msgid "No, and stop asking"
 msgstr "Non, et ne plus demander"
 
@@ -992,7 +992,7 @@ msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
 #: src/bin/e_entry.c:493
-#: src/bin/e_fm.c:7850
+#: src/bin/e_fm.c:7881
 #: src/modules/conf_applications/e_int_config_apps.c:269
 #: src/modules/conf_profiles/e_int_config_profiles.c:123
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -1001,19 +1001,19 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: src/bin/e_entry.c:503
-#: src/bin/e_fm.c:7758
+#: src/bin/e_fm.c:7789
 msgid "Cut"
 msgstr "Couper"
 
 #: src/bin/e_entry.c:511
-#: src/bin/e_fm.c:5915
-#: src/bin/e_fm.c:7772
+#: src/bin/e_fm.c:5932
+#: src/bin/e_fm.c:7803
 msgid "Copy"
 msgstr "Copier"
 
 #: src/bin/e_entry.c:519
-#: src/bin/e_fm.c:7598
-#: src/bin/e_fm.c:7785
+#: src/bin/e_fm.c:7629
+#: src/bin/e_fm.c:7816
 msgid "Paste"
 msgstr "Coller"
 
@@ -1152,175 +1152,175 @@ msgstr "Données de sortie"
 msgid "There was no output."
 msgstr "Il n'y a eu aucune sortie."
 
-#: src/bin/e_fm.c:866
+#: src/bin/e_fm.c:875
 msgid "Nonexistent path"
 msgstr "Chemin inexistant"
 
-#: src/bin/e_fm.c:869
+#: src/bin/e_fm.c:878
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s n'existe pas."
 
-#: src/bin/e_fm.c:3529
+#: src/bin/e_fm.c:3538
 #, c-format
 msgid "%i Files"
 msgstr "%i Fichiers"
 
-#: src/bin/e_fm.c:5928
-#: src/bin/e_fm.c:7606
-#: src/bin/e_fm.c:7793
+#: src/bin/e_fm.c:5945
+#: src/bin/e_fm.c:7637
+#: src/bin/e_fm.c:7824
 msgid "Link"
 msgstr " Lien "
 
-#: src/bin/e_fm.c:5936
-#: src/bin/e_fm.c:8461
-#: src/bin/e_fm.c:8598
+#: src/bin/e_fm.c:5953
+#: src/bin/e_fm.c:8554
+#: src/bin/e_fm.c:8691
 msgid "Abort"
 msgstr "Annuler"
 
-#: src/bin/e_fm.c:7525
-#: src/bin/e_fm.c:7685
+#: src/bin/e_fm.c:7556
+#: src/bin/e_fm.c:7716
 msgid "Inherit parent settings"
 msgstr "Hériter des propriétés du parent"
 
-#: src/bin/e_fm.c:7534
-#: src/bin/e_fm.c:7694
+#: src/bin/e_fm.c:7565
+#: src/bin/e_fm.c:7725
 #: src/modules/fileman/e_mod_config.c:199
 msgid "View Mode"
 msgstr "Mode d'affichage"
 
-#: src/bin/e_fm.c:7541
-#: src/bin/e_fm.c:7701
+#: src/bin/e_fm.c:7572
+#: src/bin/e_fm.c:7732
 msgid "Refresh View"
 msgstr "Rafraîchir"
 
-#: src/bin/e_fm.c:7549
-#: src/bin/e_fm.c:7709
+#: src/bin/e_fm.c:7580
+#: src/bin/e_fm.c:7740
 msgid "Show Hidden Files"
 msgstr "Afficher les fichiers cachés"
 
-#: src/bin/e_fm.c:7561
-#: src/bin/e_fm.c:7721
+#: src/bin/e_fm.c:7592
+#: src/bin/e_fm.c:7752
 msgid "Remember Ordering"
 msgstr "Mémoriser l'ordre"
 
-#: src/bin/e_fm.c:7570
-#: src/bin/e_fm.c:7730
+#: src/bin/e_fm.c:7601
+#: src/bin/e_fm.c:7761
 msgid "Sort Now"
 msgstr "Classer maintenant"
 
-#: src/bin/e_fm.c:7582
-#: src/bin/e_fm.c:7745
+#: src/bin/e_fm.c:7613
+#: src/bin/e_fm.c:7776
 #: src/modules/conf_paths/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Nouveau dossier"
 
-#: src/bin/e_fm.c:7858
+#: src/bin/e_fm.c:7889
 msgid "Rename"
 msgstr "Renommer"
 
-#: src/bin/e_fm.c:7865
+#: src/bin/e_fm.c:7896
 msgid "Properties"
 msgstr "Propriétés"
 
-#: src/bin/e_fm.c:8100
-#: src/bin/e_fm.c:8162
+#: src/bin/e_fm.c:8131
+#: src/bin/e_fm.c:8193
 msgid "Use default"
 msgstr "Valeur par défaut"
 
-#: src/bin/e_fm.c:8135
+#: src/bin/e_fm.c:8166
 #: src/modules/fileman/e_mod_config.c:204
 msgid "Grid Icons"
 msgstr "Icones alignés"
 
-#: src/bin/e_fm.c:8143
+#: src/bin/e_fm.c:8174
 #: src/modules/fileman/e_mod_config.c:206
 msgid "Custom Icons"
 msgstr "Icones personnalisés"
 
-#: src/bin/e_fm.c:8151
+#: src/bin/e_fm.c:8182
 #: src/modules/fileman/e_mod_config.c:214
 msgid "List"
 msgstr "Liste"
 
-#: src/bin/e_fm.c:8176
+#: src/bin/e_fm.c:8207
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Taille de l'icone (%d)"
 
-#: src/bin/e_fm.c:8326
+#: src/bin/e_fm.c:8357
 msgid "Create a new Directory"
 msgstr "Créer un nouveau dossier"
 
-#: src/bin/e_fm.c:8327
+#: src/bin/e_fm.c:8358
 msgid "New Directory Name:"
 msgstr "Nom du nouveau dossier:"
 
-#: src/bin/e_fm.c:8386
+#: src/bin/e_fm.c:8412
 #, c-format
 msgid "Rename %s to:"
 msgstr "Renommer %s en:"
 
-#: src/bin/e_fm.c:8388
+#: src/bin/e_fm.c:8414
 msgid "Rename File"
 msgstr "Renommer le fichier"
 
-#: src/bin/e_fm.c:8460
-#: src/bin/e_fm.c:8597
+#: src/bin/e_fm.c:8553
+#: src/bin/e_fm.c:8690
 msgid "Retry"
 msgstr "Réessayer"
 
-#: src/bin/e_fm.c:8464
-#: src/bin/e_fm.c:8603
+#: src/bin/e_fm.c:8557
+#: src/bin/e_fm.c:8696
 #: src/modules/wizard/page_030.c:83
 msgid "Error"
 msgstr "Erreur"
 
-#: src/bin/e_fm.c:8467
+#: src/bin/e_fm.c:8560
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: src/bin/e_fm.c:8519
+#: src/bin/e_fm.c:8612
 msgid "No to all"
 msgstr "Non pour tout"
 
-#: src/bin/e_fm.c:8521
+#: src/bin/e_fm.c:8614
 msgid "Yes to all"
 msgstr "Oui pour tout"
 
-#: src/bin/e_fm.c:8524
+#: src/bin/e_fm.c:8617
 msgid "Warning"
 msgstr "Avertissement"
 
-#: src/bin/e_fm.c:8527
+#: src/bin/e_fm.c:8620
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Le fichier existe déjà, écraser ?<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:8599
+#: src/bin/e_fm.c:8692
 msgid "Ignore this"
 msgstr "Ignorer"
 
-#: src/bin/e_fm.c:8600
+#: src/bin/e_fm.c:8693
 msgid "Ignore all"
 msgstr "Ignorer tout"
 
-#: src/bin/e_fm.c:8605
+#: src/bin/e_fm.c:8698
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr "Une erreur s'est produite lors d'une opération.<br>%s"
 
-#: src/bin/e_fm.c:8719
+#: src/bin/e_fm.c:8812
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: src/bin/e_fm.c:8724
+#: src/bin/e_fm.c:8817
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:8730
+#: src/bin/e_fm.c:8823
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
 msgstr "Êtes-vous sûr de vouloir supprimer<br>les %d fichiers sélectionnés dans:<br><hilight>%s</hilight> ?"
@@ -2814,7 +2814,7 @@ msgstr "Module %s de Enlightenment"
 msgid "Would you like to unload this module?<br>"
 msgstr "Voulez-vous désactiver ce module ?<br>"
 
-#: src/bin/e_screensaver.c:87
+#: src/bin/e_screensaver.c:99
 msgid "You disabled screensaver too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
 msgstr "Vous avez désactivé l'écran de veille trop vite.<br><br>Voulez-vous activer le mode <b>présentation</b> et désactiver temporairement l'écran de veille, le verrouillage et la gestion de l'énergie ?"
 
@@ -3707,10 +3707,10 @@ msgid "Show on screen zone #:"
 msgstr "Afficher sur la zone d'écran #:"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:406
-#: src/modules/conf_desks/e_int_config_desks.c:235
-#: src/modules/conf_desks/e_int_config_desks.c:239
-#: src/modules/conf_desks/e_int_config_desks.c:272
-#: src/modules/conf_desks/e_int_config_desks.c:276
+#: src/modules/conf_desks/e_int_config_desks.c:247
+#: src/modules/conf_desks/e_int_config_desks.c:251
+#: src/modules/conf_desks/e_int_config_desks.c:284
+#: src/modules/conf_desks/e_int_config_desks.c:288
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:117
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:121
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:125
@@ -3768,58 +3768,72 @@ msgstr "Utiliser un verrouillage d'écran personnalisé"
 msgid "Screen Lock"
 msgstr "Verrouillage de l'écran"
 
-#: src/modules/conf_desks/e_int_config_desks.c:59
+#: src/modules/conf_desks/e_int_config_desks.c:62
 #: src/modules/pager/e_mod_main.c:816
 msgid "Virtual Desktops Settings"
 msgstr "Paramétrage des bureaux virtuels"
 
-#: src/modules/conf_desks/e_int_config_desks.c:227
+#: src/modules/conf_desks/e_int_config_desks.c:239
 msgid "Number of Desktops"
 msgstr "Nombre de bureaux"
 
-#: src/modules/conf_desks/e_int_config_desks.c:246
-#: src/modules/conf_desks/e_int_config_desks.c:283
+#: src/modules/conf_desks/e_int_config_desks.c:258
+#: src/modules/conf_desks/e_int_config_desks.c:295
 msgid "Desktop Mouse Flip"
 msgstr "Basculement des bureaux à la souris"
 
-#: src/modules/conf_desks/e_int_config_desks.c:247
+#: src/modules/conf_desks/e_int_config_desks.c:259
 msgid "Animated flip"
 msgstr "Basculement animé"
 
-#: src/modules/conf_desks/e_int_config_desks.c:265
+#: src/modules/conf_desks/e_int_config_desks.c:277
 msgid "Desktops"
 msgstr "Bureaux"
 
-#: src/modules/conf_desks/e_int_config_desks.c:284
+#: src/modules/conf_desks/e_int_config_desks.c:296
 msgid "Flip when dragging objects to the screen edge"
 msgstr "Basculer lors du déplacement d'objets au bord de l'écran"
 
-#: src/modules/conf_desks/e_int_config_desks.c:286
+#: src/modules/conf_desks/e_int_config_desks.c:298
 msgid "Wrap desktops around when flipping"
 msgstr "Tourner en boucle lors du basculement"
 
-#: src/modules/conf_desks/e_int_config_desks.c:290
+#: src/modules/conf_desks/e_int_config_desks.c:302
 msgid "Flip Animation"
 msgstr "Animation du basculement"
 
-#: src/modules/conf_desks/e_int_config_desks.c:292
+#: src/modules/conf_desks/e_int_config_desks.c:304
 msgid "Off"
 msgstr "Aucune"
 
-#: src/modules/conf_desks/e_int_config_desks.c:295
+#: src/modules/conf_desks/e_int_config_desks.c:307
 msgid "Pane"
 msgstr "Vitre"
 
-#: src/modules/conf_desks/e_int_config_desks.c:298
+#: src/modules/conf_desks/e_int_config_desks.c:310
 msgid "Zoom"
 msgstr "Zoom"
 
-#: src/modules/conf_desks/e_int_config_desks.c:301
+#: src/modules/conf_desks/e_int_config_desks.c:313
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:163
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:146
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f s"
+
+#: src/modules/conf_desks/e_int_config_desks.c:317
+msgid "Background panning"
+msgstr "Fond d'écran panoramique"
+
+#: src/modules/conf_desks/e_int_config_desks.c:321
+#, c-format
+msgid "%.2f X-axis pan factor"
+msgstr "Facteur horizontal %.2f"
+
+#: src/modules/conf_desks/e_int_config_desks.c:325
+#, c-format
+msgid "%.2f Y-axis pan factor"
+msgstr "Facteur vertical %.2f"
 
 #: src/modules/conf_desks/e_mod_main.c:35
 msgid "Virtual Desktops"
@@ -4233,12 +4247,12 @@ msgstr "Paramétrage de la position"
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:226
 #: src/modules/conf_winlist/e_int_config_winlist.c:285
 msgid "X-Axis Alignment"
-msgstr "Alignement sur l'axe X"
+msgstr "Alignement horizontal"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:230
 #: src/modules/conf_winlist/e_int_config_winlist.c:289
 msgid "Y-Axis Alignment"
-msgstr "Alignement sur l'axe Y"
+msgstr "Alignement vertical"
 
 #: src/modules/conf_exebuf/e_mod_main.c:35
 #: src/modules/exebuf/e_mod_main.c:52
