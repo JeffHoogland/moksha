@@ -382,10 +382,10 @@ e_fm2_hal_volume_mountpoint_get(E_Volume *v)
 	return strdup(v->mount_point);
      }
    
-   if (v->uuid && v->uuid[0] != '\0')
-     snprintf(buf, sizeof(buf) - 1, "/media/%s", v->uuid);
-   else if (v->label && v->label[0] != '\0')
+   if (v->label && v->label[0] != '\0')
      snprintf(buf, sizeof(buf) - 1, "/media/%s", v->label);
+   else if (v->uuid && v->uuid[0] != '\0')
+     snprintf(buf, sizeof(buf) - 1, "/media/%s", v->uuid);
    else if ((v->storage) && (v->storage->serial) && v->storage->serial[0] != '\0')
      snprintf(buf, sizeof(buf) - 1, "/media/%s", v->storage->serial);
    else
