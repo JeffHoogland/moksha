@@ -727,7 +727,6 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
         it->image = NULL;
         evas_object_del(it->frame);
         it->frame = NULL;
-        evas_norender(evas_object_evas_get(it->obj)); // norender to force del of objs
      }
 }
 
