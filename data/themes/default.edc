@@ -7525,6 +7525,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 part { name: "over3";
 	    type: RECT;
 	    mouse_events: 1;
+	    repeat_events: 1;
 	    description { state: "default" 0.0;
 	       visible: 1;
 	       color: 255 255 255 0;
