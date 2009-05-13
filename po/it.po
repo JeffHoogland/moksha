@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-08 12:46+0200\n"
-"PO-Revision-Date: 2009-05-08 12:57+0200\n"
+"POT-Creation-Date: 2009-05-13 12:46+0200\n"
+"PO-Revision-Date: 2009-05-13 12:51+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -115,11 +115,11 @@ msgstr "Usa predefinito"
 
 #: src/bin/e_fm.c:8166 src/modules/fileman/e_mod_config.c:204
 msgid "Grid Icons"
-msgstr "Icone in griglia"
+msgstr "Icone"
 
 #: src/bin/e_fm.c:8174 src/modules/fileman/e_mod_config.c:206
 msgid "Custom Icons"
-msgstr "Icone personalizzata"
+msgstr "Icone personalizzabile"
 
 #: src/bin/e_fm.c:8182 src/modules/fileman/e_mod_config.c:214
 msgid "List"
@@ -338,7 +338,7 @@ msgstr "Seleziona un'icona"
 #: src/modules/conf_dpms/e_int_config_dpms.c:64
 #: src/modules/conf_dpms/e_int_config_dpms.c:85
 #: src/modules/connman/e_mod_main.c:777
-#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1025
+#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1024
 msgid "OK"
 msgstr "OK"
 
@@ -1275,7 +1275,7 @@ msgstr "Commuta modalità non in linea"
 
 #: src/bin/e_actions.c:2817
 msgid "Log Out"
-msgstr "Chiudi sessione"
+msgstr "Esci"
 
 #: src/bin/e_actions.c:2821
 msgid "Power Off Now"
@@ -1587,7 +1587,7 @@ msgstr ""
 
 #: src/bin/e_sys.c:323
 msgid "Logout now"
-msgstr "Chiudi sessione adesso"
+msgstr "Esci adesso"
 
 #: src/bin/e_sys.c:324
 msgid "Wait longer"
@@ -3692,7 +3692,7 @@ msgstr "Seleziona file edj"
 #: src/modules/conf_mime/e_mod_main.c:34 src/modules/fileman/e_mod_main.c:49
 #: src/modules/fileman/e_mod_main.c:67 src/modules/fileman/e_mod_main.c:387
 msgid "Files"
-msgstr "File e directory"
+msgstr "File"
 
 #: src/modules/conf_mime/e_mod_main.c:35
 #: src/modules/conf_mime/e_int_config_mime.c:64
@@ -5766,7 +5766,7 @@ msgid "Wallpaper"
 msgstr "Sfondo"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:110
-#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1009
+#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1008
 msgid "Wallpaper Settings"
 msgstr "Impostazioni sfondo"
 
@@ -5795,17 +5795,17 @@ msgid "Where to place the Wallpaper"
 msgstr "Posizionamento dello sfondo"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:709
-#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1072
+#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1071
 msgid "All Desktops"
 msgstr "Tutti i desktop"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:711
-#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1078
+#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1077
 msgid "This Desktop"
 msgstr "Questo desktop"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:713
-#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1084
+#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1083
 msgid "This Screen"
 msgstr "Questo schermo"
 
@@ -6719,7 +6719,7 @@ msgstr "Il montaggio del dispositivo è fallito"
 
 #: src/modules/fileman/e_mod_main.c:320 src/modules/illume/e_mod_win.c:180
 msgid "Home"
-msgstr "Inizio"
+msgstr "Home"
 
 #: src/modules/fileman/e_mod_main.c:332
 msgid "Favorites"
@@ -6727,7 +6727,7 @@ msgstr "Preferiti"
 
 #: src/modules/fileman/e_mod_main.c:344
 msgid "Root"
-msgstr "Radice"
+msgstr "Directory principale"
 
 #: src/modules/fileman/e_mod_main.c:441
 msgid ""
@@ -7056,15 +7056,15 @@ msgstr "Info operazioni EFM"
 msgid "Wallpaper 2"
 msgstr "Sfondo 2"
 
-#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1091
+#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1090
 msgid "Add File"
 msgstr "Aggiungi file"
 
-#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1098
+#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1097
 msgid "Add Gradient"
 msgstr "Aggiungi gradiente"
 
-#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1105
+#: src/modules/conf_wallpaper2/e_int_config_wallpaper.c:1104
 msgid "Add Online"
 msgstr "Aggiungi online..."
 
@@ -7072,3 +7072,15 @@ msgstr "Aggiungi online..."
 #: src/modules/everything/e_mod_main.c:59
 msgid "Run Everything Dialog"
 msgstr "Finestra \"Esegui tutto\""
+
+#: src/modules/systray/e_mod_main.c:871
+msgid "Another systray exists"
+msgstr "Esiste un'altro vassoio di sistema"
+
+#: src/modules/systray/e_mod_main.c:872
+msgid "There can be only one systray gadget and another one already exists."
+msgstr "Può esserci un solo vassoio di sistema, e attualmente ne esiste già un'altro."
+
+#: src/modules/systray/e_mod_main.c:1070
+msgid "Systray"
+msgstr "Vassoio di sistema"
