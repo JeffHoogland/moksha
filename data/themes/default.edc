@@ -7522,7 +7522,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 255 255 255 255;
 	    }
 	 }
-	 part { name: "over3";
+	 part { name: "e.eventarea";
 	    type: RECT;
 	    mouse_events: 1;
 	    repeat_events: 1;
@@ -7586,14 +7586,14 @@ collections { /* begin the collection of edje groups that are in this file */
 
 	 program { name: "name_show";
 	    signal: "mouse,in";
-	    source: "over3";
+	    source: "e.eventarea";
 	    action: STATE_SET "active" 0.0;
 	    transition: SINUSOIDAL 0.1;
             target: "e.text.label";
 	 }
 	 program { name: "name_hide";
 	    signal: "mouse,out";
-	    source: "over3";
+	    source: "e.eventarea";
 	    action: STATE_SET "default" 0.0;
 	    transition: SINUSOIDAL 0.2;
             target: "e.text.label";

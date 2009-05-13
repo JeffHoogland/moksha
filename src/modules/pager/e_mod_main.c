@@ -343,7 +343,7 @@ static Pager_Desk *
 _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
 {
    Pager_Desk *pd;
-   Evas_Object *o;
+   Evas_Object *o, *evo;
    E_Border_List *bl;
    E_Border *bd;
 
@@ -368,13 +368,18 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
 
    e_table_pack(p->o_table, o, xpos, ypos, 1, 1);
    e_table_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, 0, 0, -1, -1);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
+
+   evo = (Evas_Object *)edje_object_part_object_get(o, "e.eventarea");
+   if (!evo)
+     evo = o;
+
+   evas_object_event_callback_add(evo, EVAS_CALLBACK_MOUSE_DOWN,
                                   _pager_desk_cb_mouse_down, pd);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, 
+   evas_object_event_callback_add(evo, EVAS_CALLBACK_MOUSE_UP,
                                   _pager_desk_cb_mouse_up, pd);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, 
+   evas_object_event_callback_add(evo, EVAS_CALLBACK_MOUSE_MOVE,
                                   _pager_desk_cb_mouse_move, pd);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_WHEEL, 
+   evas_object_event_callback_add(evo, EVAS_CALLBACK_MOUSE_WHEEL,
                                   _pager_desk_cb_mouse_wheel, pd);
    evas_object_show(o);
 
