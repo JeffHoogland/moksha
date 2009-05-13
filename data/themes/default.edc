@@ -10005,6 +10005,506 @@ collections { /* begin the collection of edje groups that are in this file */
    }
 
 /////////////////////////////////////////////////////////////////////////////
+   /*** MOD: SYSTRAY ***/
+   group { name: "e/modules/systray/main";
+      alias: "e/modules/systray/main/default";
+      alias: "e/modules/systray/main/invisible";
+      data {
+         item: "inset" "255 255 255";
+         item: "plain" "230 230 230";
+         item: "default" "255 255 255";
+      }
+      parts {
+         part { name: "base";
+            type: RECT;
+            description { state: "default" 0.0;
+               color: 0 0 0 0;
+            }
+            description { state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               color: 255 0 0 128;
+            }
+         }
+         part { name: "e.size";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               color: 0 0 0 0;
+               rel1.offset: 4 4;
+               rel2.offset: -5 -5;
+            }
+         }
+         part { name: "e.box";
+            type: BOX;
+            description { state: "default" 0.0;
+               rel1.to: "e.size";
+               rel2.to: "e.size";
+               box {
+                  layout: "horizontal";
+                  padding: 2 0;
+                  align: 0.5 0.5;
+                  min: 1 1;
+               }
+            }
+            description { state: "vertical" 0.0;
+               rel1.to: "e.size";
+               rel2.to: "e.size";
+               box {
+                  layout: "vertical";
+                  padding: 0 2;
+                  align: 0.5 0.5;
+                  min: 1 1;
+               }
+            }
+         }
+         programs {
+            program { name: "e,action,disable";
+               signal: "e,action,disable";
+               source: "e";
+               action: STATE_SET "disabled" 0.0;
+               target: "base";
+            }
+            program { name: "e,action,enable";
+               signal: "e,action,enable";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "base";
+            }
+            program { name: "e,action,orient,float";
+               signal: "e,action,orient,float";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,horiz";
+               signal: "e,action,orient,horiz";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,vert";
+               signal: "e,action,orient,vert";
+               source: "e";
+               action: STATE_SET "vertical" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,left";
+               signal: "e,action,orient,left";
+               source: "e";
+               action: STATE_SET "vertical" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,right";
+               signal: "e,action,orient,right";
+               source: "e";
+               action: STATE_SET "vertical" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,top";
+               signal: "e,action,orient,top";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,bottom";
+               signal: "e,action,orient,bottom";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_tl";
+               signal: "e,action,orient,corner_tl";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_tr";
+               signal: "e,action,orient,corner_tr";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_bl";
+               signal: "e,action,orient,corner_bl";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_br";
+               signal: "e,action,orient,corner_br";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_lt";
+               signal: "e,action,orient,corner_lt";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_rt";
+               signal: "e,action,orient,corner_rt";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_lb";
+               signal: "e,action,orient,corner_lb";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_rb";
+               signal: "e,action,orient,corner_rb";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+         }
+      }
+   }
+
+   group { name: "e/modules/systray/main/alternate";
+      data {
+         item: "inset" "255 255 255";
+         item: "plain" "255 255 255";
+         item: "default" "255 255 255";
+      }
+      images.image: "systray_rounded_corners.png" COMP;
+      parts {
+         part { name: "base";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+            }
+         }
+         part { name: "rounded_corners";
+            type: IMAGE;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: -3 -3;
+                  to: "e.size";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: 2 2;
+                  to: "e.size";
+               }
+               image {
+                  normal: "systray_rounded_corners.png";
+                  border: 3 3 3 3;
+                  middle: SOLID;
+               }
+            }
+            description { state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               color: 255 0 0 128;
+            }
+         }
+         part { name: "e.size";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               color: 0 0 0 0;
+               rel1.offset: 4 4;
+               rel2.offset: -5 -5;
+            }
+         }
+         part { name: "e.box";
+            type: BOX;
+            description {
+               state: "default" 0.0;
+               rel1.to: "e.size";
+               rel2.to: "e.size";
+               box {
+                  layout: "horizontal";
+                  padding: 2 0;
+                  align: 0.5 0.5;
+                  min: 1 1;
+               }
+            }
+            description { state: "vertical" 0.0;
+               rel1.to: "e.size";
+               rel2.to: "e.size";
+               box {
+                  layout: "vertical";
+                  padding: 0 2;
+                  align: 0.5 0.5;
+                  min: 1 1;
+               }
+            }
+         }
+         programs {
+            program { name: "e,action,disable";
+               signal: "e,action,disable";
+               source: "e";
+               action: STATE_SET "disabled" 0.0;
+               target: "rounded_corners";
+            }
+            program { name: "e,action,enable";
+               signal: "e,action,enable";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "rounded_corners";
+            }
+            program { name: "e,action,orient,float";
+               signal: "e,action,orient,float";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,horiz";
+               signal: "e,action,orient,horiz";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,vert";
+               signal: "e,action,orient,vert";
+               source: "e";
+               action: STATE_SET "vertical" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,left";
+               signal: "e,action,orient,left";
+               source: "e";
+               action: STATE_SET "vertical" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,right";
+               signal: "e,action,orient,right";
+               source: "e";
+               action: STATE_SET "vertical" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,top";
+               signal: "e,action,orient,top";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,bottom";
+               signal: "e,action,orient,bottom";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_tl";
+               signal: "e,action,orient,corner_tl";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_tr";
+               signal: "e,action,orient,corner_tr";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_bl";
+               signal: "e,action,orient,corner_bl";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_br";
+               signal: "e,action,orient,corner_br";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_lt";
+               signal: "e,action,orient,corner_lt";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_rt";
+               signal: "e,action,orient,corner_rt";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_lb";
+               signal: "e,action,orient,corner_lb";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_rb";
+               signal: "e,action,orient,corner_rb";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+         }
+      }
+   }
+
+   group { name: "e/modules/systray/main/alternate/inset";
+      data {
+         item: "inset" "255 255 255";
+         item: "plain" "255 255 255";
+         item: "default" "255 255 255";
+      }
+      parts {
+         part { name: "base";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               color: 255 0 0 128;
+            }
+         }
+         part { name: "e.size";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+               rel1.offset: 4 4;
+               rel2.offset: -5 -5;
+            }
+         }
+         part { name: "e.box";
+            type: BOX;
+            description {
+               state: "default" 0.0;
+               rel1.to: "e.size";
+               rel2.to: "e.size";
+               box {
+                  layout: "horizontal";
+                  padding: 2 0;
+                  align: 0.5 0.5;
+                  min: 1 1;
+               }
+            }
+            description { state: "vertical" 0.0;
+               rel1.to: "e.size";
+               rel2.to: "e.size";
+               box {
+                  layout: "vertical";
+                  padding: 0 2;
+                  align: 0.5 0.5;
+                  min: 1 1;
+               }
+            }
+         }
+         programs {
+            program { name: "e,action,disable";
+               signal: "e,action,disable";
+               source: "e";
+               action: STATE_SET "disabled" 0.0;
+               target: "base";
+            }
+            program { name: "e,action,enable";
+               signal: "e,action,enable";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "base";
+            }
+            program { name: "e,action,orient,float";
+               signal: "e,action,orient,float";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,horiz";
+               signal: "e,action,orient,horiz";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,vert";
+               signal: "e,action,orient,vert";
+               source: "e";
+               action: STATE_SET "vertical" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,left";
+               signal: "e,action,orient,left";
+               source: "e";
+               action: STATE_SET "vertical" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,right";
+               signal: "e,action,orient,right";
+               source: "e";
+               action: STATE_SET "vertical" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,top";
+               signal: "e,action,orient,top";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,bottom";
+               signal: "e,action,orient,bottom";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_tl";
+               signal: "e,action,orient,corner_tl";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_tr";
+               signal: "e,action,orient,corner_tr";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_bl";
+               signal: "e,action,orient,corner_bl";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_br";
+               signal: "e,action,orient,corner_br";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_lt";
+               signal: "e,action,orient,corner_lt";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_rt";
+               signal: "e,action,orient,corner_rt";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_lb";
+               signal: "e,action,orient,corner_lb";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+            program { name: "e,action,orient,corner_rb";
+               signal: "e,action,orient,corner_rb";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.box";
+            }
+         }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
    /*** MOD: WINLIST ***/
 
    group { name: "e/widgets/winlist/main";

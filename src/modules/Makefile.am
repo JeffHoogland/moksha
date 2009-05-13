@@ -250,6 +250,9 @@ endif
 SUBDIRS += everything
 # endif
 
+if USE_MODULE_SYSTRAY
+SUBDIRS += systray
+endif
 
 
 DIST_SUBDIRS = \
@@ -314,4 +317,5 @@ mixer \
 connman \
 illume \
 syscon \
-everything
+everything \
+systray

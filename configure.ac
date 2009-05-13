@@ -424,6 +424,7 @@ AC_E_OPTIONAL_MODULE([connman], false)
 AC_E_OPTIONAL_MODULE([illume], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
 AC_E_OPTIONAL_MODULE([everything], true)
+AC_E_OPTIONAL_MODULE([systray], true)
 
 AC_OUTPUT([
 Makefile
@@ -558,6 +559,8 @@ src/modules/syscon/Makefile
 src/modules/syscon/module.desktop
 src/modules/everything/Makefile
 src/modules/everything/module.desktop
+src/modules/systray/Makefile
+src/modules/systray/module.desktop
 src/preload/Makefile
 data/Makefile
 data/images/Makefile
