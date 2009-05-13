@@ -246,9 +246,9 @@ if USE_MODULE_SYSCON
 SUBDIRS += syscon
 endif
 
-# if USE_MODULE_SYSCON
+if USE_MODULE_EVERYTHING
 SUBDIRS += everything
-# endif
+endif
 
 if USE_MODULE_SYSTRAY
 SUBDIRS += systray
