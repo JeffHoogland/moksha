@@ -18730,7 +18730,7 @@ group { name: "e/toolbar/default/base";
                color: 255 255 255 0;
 	       image {
 		  normal: "bt_glow.png";
-		  border: 12 12 12 12;
+		  border: 7 7 9 9;
 	       }
                fill.smooth : 0;
 	    }
