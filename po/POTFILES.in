@@ -264,3 +264,4 @@ src/modules/mixer/conf_module.c
 src/modules/mixer/e_mod_main.c
 src/modules/connman/e_iface.c
 src/modules/connman/e_mod_main.c
+src/modules/systray/e_mod_main.c

@@ -868,9 +868,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    if ((!id) || (instance))
      {
 	e_util_dialog_internal
-	  (D_("Another systray exists"),
-	   D_("There can be only one systray gadget and "
-	      "another one already exists."));
+	  (_("Another systray exists"),
+	   _("There can be only one systray gadget and "
+	     "another one already exists."));
 	return NULL;
      }
 
@@ -1067,7 +1067,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 static char *
 _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   return D_(_Name);
+   return _("Systray");
 }
 
 static Evas_Object *
@@ -1102,11 +1102,6 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    systray_mod = m;
-
-   if (snprintf(tmpbuf, sizeof(tmpbuf), "%s/locale", e_module_dir_get(m)) >= (int)sizeof(tmpbuf))
-     return NULL;
-   bindtextdomain(PACKAGE, tmpbuf);
-   bind_textdomain_codeset(PACKAGE, "UTF-8");
 
    e_gadcon_provider_register(&_gc_class);
 
