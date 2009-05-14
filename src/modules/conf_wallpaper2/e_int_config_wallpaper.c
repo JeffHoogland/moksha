@@ -138,6 +138,7 @@ _e_smart_reconfigure_do(void *data)
    Eina_List *l;
    Item *it;
    int iw, redo = 0, changed = 0;
+   static int recursion = 0;
    Evas_Coord x, y, xx, yy, ww, hh, cw, ch, mw, mh, ox, oy, dd;
 
    if (!sd) return 0;
@@ -207,7 +208,12 @@ _e_smart_reconfigure_do(void *data)
              sd->cy = 0;
              redo = 1;
           }
-        if (redo) _e_smart_reconfigure_do(obj);
+        if (redo)
+	  {
+	     recursion = 1;
+	     _e_smart_reconfigure_do(obj);
+	     recursion = 0;
+	  }
         changed = 1;
      }
    
@@ -407,11 +413,7 @@ _e_smart_reconfigure_do(void *data)
    
    if (changed)
      evas_object_smart_callback_call(obj, "changed", NULL);
-   if (sd->idle_enter)
-     {
-        ecore_idle_enterer_del(sd->idle_enter);
-        sd->idle_enter = NULL;
-     }
+   if (recursion == 0) sd->idle_enter = NULL;
    return 0;
 }
 
