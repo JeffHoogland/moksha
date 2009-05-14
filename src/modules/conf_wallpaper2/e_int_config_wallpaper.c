@@ -139,7 +139,8 @@ _e_smart_reconfigure_do(void *data)
    Item *it;
    int iw, redo = 0, changed = 0;
    Evas_Coord x, y, xx, yy, ww, hh, cw, ch, mw, mh, ox, oy, dd;
-   
+
+   if (!sd) return 0;
    if (sd->cx > (sd->cw - sd->w)) sd->cx = sd->cw - sd->w;
    if (sd->cy > (sd->ch - sd->h)) sd->cy = sd->ch - sd->h;
    if (sd->cx < 0) sd->cx = 0;
@@ -406,7 +407,11 @@ _e_smart_reconfigure_do(void *data)
    
    if (changed)
      evas_object_smart_callback_call(obj, "changed", NULL);
-   sd->idle_enter = NULL;
+   if (sd->idle_enter)
+     {
+        ecore_idle_enterer_del(sd->idle_enter);
+        sd->idle_enter = NULL;
+     }
    return 0;
 }
 
@@ -450,6 +455,7 @@ _e_smart_del(Evas_Object *obj)
         free(it);
      }
    free(sd);
+   evas_object_smart_data_set(obj, NULL);
 }
 
 static void
