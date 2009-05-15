@@ -171,7 +171,7 @@ _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
 
-   sd = E_NEW(fSmart_Data, 1);
+   sd = E_NEW(E_Smart_Data, 1);
    if (!sd) return;
    sd->smart_obj = obj;
    sd->x = 0;
