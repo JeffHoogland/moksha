@@ -78,6 +78,7 @@ struct _E_Fm2_Smart_Data
    Ecore_Job        *refresh_job;
    E_Menu           *menu;
    E_Entry_Dialog   *entry_dialog;
+   E_Dialog         *image_dialog;
    unsigned char     iconlist_changed : 1;
    unsigned char     order_file : 1;
    unsigned char     typebuf_visible : 1;
@@ -307,12 +308,17 @@ static void _e_fm2_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp);
 static void _e_fm2_icon_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_icon_menu_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_icon_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_inherit_dir_props(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_view_menu_grid_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_view_menu_custom_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_view_menu_list_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_view_menu_use_default_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_view_menu_set_background_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_view_menu_set_overlay_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title, void (*ok_cb) (void *data, E_Dialog *dia), void (*clear_cb) (void *data, E_Dialog *dia));
+static void _e_fm2_view_image_sel_close(void *data, E_Dialog *dia);
 static void _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -7368,6 +7374,11 @@ _e_fm2_smart_del(Evas_Object *obj)
 	e_object_del(E_OBJECT(sd->entry_dialog));
 	sd->entry_dialog = NULL;
      }
+   if (sd->image_dialog)
+     {
+        e_object_del(E_OBJECT(sd->image_dialog));
+        sd->image_dialog = NULL;
+     }
    if (sd->scroll_job) ecore_job_del(sd->scroll_job);
    if (sd->resize_job) ecore_job_del(sd->resize_job);
    if (sd->refresh_job) ecore_job_del(sd->refresh_job);
@@ -7724,7 +7735,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("View Mode"));
 	     e_util_menu_item_theme_icon_set(mi, "preferences-appearance");
-	     e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_pre, sd);
+	     e_menu_item_submenu_pre_callback_set(mi, _e_fm2_icon_view_menu_pre, sd);
 	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
 	  {
@@ -8146,19 +8157,10 @@ _e_fm2_toggle_inherit_dir_props(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_fm2_view_menu_common(E_Menu *subm, E_Fm2_Smart_Data *sd)
 {
-   E_Menu *subm;
-   E_Fm2_Smart_Data *sd;
-   E_Fm2_Config *cfg;
+   E_Menu_Item *mi;
    char view_mode;
-
-   sd = data;
-   cfg = e_fm2_config_get(sd->obj);
-
-   subm = e_menu_new();
-   e_object_data_set(E_OBJECT(subm), sd);
-   e_menu_item_submenu_set(mi, subm);
 
    view_mode = _e_fm2_view_mode_get(sd);
 
@@ -8209,6 +8211,55 @@ _e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, buf);
    e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_icon_size_pre, sd);
+}
+                            
+static void
+_e_fm2_icon_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Menu *subm;
+   E_Fm2_Smart_Data *sd;
+
+   sd = data;
+
+   subm = e_menu_new();
+   e_object_data_set(E_OBJECT(subm), sd);
+   e_menu_item_submenu_set(mi, subm);
+
+   _e_fm2_view_menu_common(subm, sd);
+}
+
+static void
+_e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Menu *subm;
+   E_Fm2_Smart_Data *sd;
+   char buf[PATH_MAX];
+   int access_ok;
+   sd = data;
+
+   subm = e_menu_new();
+   e_object_data_set(E_OBJECT(subm), sd);
+   e_menu_item_submenu_set(mi, subm);
+
+   _e_fm2_view_menu_common(subm, sd);
+
+   snprintf(buf, sizeof(buf), "%s/.directory.desktop", sd->realpath);
+   access_ok = ecore_file_exists(buf) ? ecore_file_can_write(buf) 
+                                      : ecore_file_can_write(sd->realpath); 
+   if (access_ok)
+     {
+        mi = e_menu_item_new(subm);
+        e_menu_item_separator_set(mi, 1);
+   
+        mi = e_menu_item_new(subm);
+        e_menu_item_label_set(mi, _("Set background..."));
+        e_util_menu_item_theme_icon_set(mi, "preferences-desktop-wallpaper");
+        e_menu_item_callback_set(mi, _e_fm2_view_menu_set_background_cb, sd);
+   
+        mi = e_menu_item_new(subm);
+        e_menu_item_label_set(mi, _("Set overlay..."));
+        e_menu_item_callback_set(mi, _e_fm2_view_menu_set_overlay_cb, sd);
+     }
 }
 
 static void
@@ -8276,6 +8327,181 @@ _e_fm2_view_menu_use_default_cb(void *data, E_Menu *m, E_Menu_Item *mi)
      return;
 
    _e_fm2_refresh(sd, m, mi);
+}
+
+static void
+_e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title, 
+                      void (*ok_cb) (void *data, E_Dialog *dia),
+                      void (*clear_cb) (void *data, E_Dialog *dia))
+{
+   E_Manager *man;
+   E_Container *con;
+   E_Dialog *dia;
+   Evas_Object *o;
+   Evas_Coord w, h;
+   
+   man = e_manager_current_get();
+   if (!man) return;
+   con = e_container_current_get(man);
+   if (!con) return;
+
+   dia = e_dialog_new(con, "E", "_fm2_view_image_select_dialog");
+   if (!dia) return;
+   e_dialog_title_set(dia, title);
+   
+   o = e_widget_fsel_add(dia->win->evas, "/", sd->realpath, NULL, NULL, NULL, sd, NULL, sd, 1);
+   evas_object_show(o);
+   e_widget_min_size_get(o, &w, &h);
+   e_dialog_content_set(dia, o, w, h);
+   dia->data = o;
+
+   e_dialog_button_add(dia, _("OK"), NULL, ok_cb, sd);
+   e_dialog_button_add(dia, _("Clear"), NULL, clear_cb, sd);
+   e_dialog_button_add(dia, _("Cancel"), NULL, _e_fm2_view_image_sel_close, sd);
+   e_dialog_resizable_set(dia, 1);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+
+   sd->image_dialog = dia;
+}
+
+static void
+_e_fm2_view_image_sel_close(void *data, E_Dialog *dia)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   e_object_del(E_OBJECT(dia));
+   sd->image_dialog = NULL;
+}
+
+static void
+_custom_file_key_set(E_Fm2_Smart_Data *sd, const char *key, const char *value)
+{
+   Efreet_Desktop *ef;
+   char buf[PATH_MAX];
+   int len;
+   
+   snprintf(buf, sizeof(buf), "%s/.directory.desktop", sd->realpath);
+   ef = efreet_desktop_new(buf);
+   if (!ef)
+     {
+        ef = efreet_desktop_empty_new(buf);
+        if (!ef) return;
+        ef->type = EFREET_DESKTOP_TYPE_DIRECTORY;
+        ef->name = strdup("Directory look and feel");
+     }
+   
+   len = strlen(sd->realpath);
+   if (!strncmp(value, sd->realpath, len))
+      efreet_desktop_x_field_set(ef, key, value + len + 1);
+   else
+      efreet_desktop_x_field_set(ef, key, value);
+   
+   efreet_desktop_save(ef);
+   efreet_desktop_free(ef);
+}
+
+static void
+_custom_file_key_del(E_Fm2_Smart_Data *sd, const char *key)
+{
+   Efreet_Desktop *ef;
+   char buf[PATH_MAX];
+
+   snprintf(buf, sizeof(buf), "%s/.directory.desktop", sd->realpath);
+   ef = efreet_desktop_new(buf);
+   if (!ef) return;
+   
+   if (efreet_desktop_x_field_del(ef, key))
+      efreet_desktop_save(ef);
+   
+   efreet_desktop_free(ef);
+}
+
+static void
+_set_background_cb(void *data, E_Dialog *dia)
+{
+  E_Fm2_Smart_Data *sd;
+  const char *file;
+  
+  sd = data;
+  if (!sd) return;
+  
+  file = e_widget_fsel_selection_path_get(dia->data);
+
+  if (file)
+     _custom_file_key_set(sd, "X-Enlightenment-Directory-Wallpaper", file);
+  
+  _e_fm2_view_image_sel_close(data, dia);
+  evas_object_smart_callback_call(sd->obj, "dir_changed", NULL);
+}
+
+static void
+_clear_background_cb(void *data, E_Dialog *dia)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   if (!sd) return;
+   
+   _e_fm2_view_image_sel_close(data, dia);
+   
+   _custom_file_key_del(sd, "X-Enlightenment-Directory-Wallpaper");
+   evas_object_smart_callback_call(sd->obj, "dir_changed", NULL);
+}
+
+static void
+_e_fm2_view_menu_set_background_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   if (sd->image_dialog) return;
+   
+   _e_fm2_view_image_sel(sd, _("Set background..."), _set_background_cb, _clear_background_cb);
+}
+
+static void
+_set_overlay_cb(void *data, E_Dialog *dia)
+{
+  E_Fm2_Smart_Data *sd;
+  const char *file;
+  
+  sd = data;
+  if (!sd) return;
+  
+  file = e_widget_fsel_selection_path_get(dia->data);
+
+  if (file)
+     _custom_file_key_set(sd, "X-Enlightenment-Directory-Overlay", file);
+
+  _e_fm2_view_image_sel_close(data, dia);
+  evas_object_smart_callback_call(sd->obj, "dir_changed", NULL);
+}
+
+static void
+_clear_overlay_cb(void *data, E_Dialog *dia)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   if (!sd) return;
+   
+   _e_fm2_view_image_sel_close(data, dia);
+
+   _custom_file_key_del(sd, "X-Enlightenment-Directory-Overlay");
+   evas_object_smart_callback_call(sd->obj, "dir_changed", NULL);
+}
+
+static void
+_e_fm2_view_menu_set_overlay_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = data;
+   if (sd->image_dialog) return;
+   
+   _e_fm2_view_image_sel(sd, _("Set overlay..."), _set_overlay_cb, _clear_overlay_cb);
 }
 
 static void

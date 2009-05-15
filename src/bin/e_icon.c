@@ -27,6 +27,8 @@ static void _e_icon_smart_hide(Evas_Object *obj);
 static void _e_icon_smart_color_set(Evas_Object *obj, int r, int g, int b, int a);
 static void _e_icon_smart_clip_set(Evas_Object *obj, Evas_Object * clip);
 static void _e_icon_smart_clip_unset(Evas_Object *obj);
+static void _e_icon_obj_prepare(Evas_Object *obj, E_Smart_Data *sd);
+static void _e_icon_preloaded(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 /* local subsystem globals */
 static Evas_Smart *_e_smart = NULL;
@@ -39,6 +41,21 @@ e_icon_add(Evas *evas)
    return evas_object_smart_add(evas, _e_smart);
 }
 
+static void
+_e_icon_obj_prepare(Evas_Object *obj, E_Smart_Data *sd)
+{
+   if (!sd->obj) return;
+   
+   if (!strcmp(evas_object_type_get(sd->obj), "edje"))
+     {
+        evas_object_del(sd->obj);
+        sd->obj = evas_object_image_add(evas_object_evas_get(obj));
+        evas_object_event_callback_add(sd->obj, EVAS_CALLBACK_IMAGE_PRELOADED,
+                                       _e_icon_preloaded, obj);
+        evas_object_smart_member_add(sd->obj, obj);
+     }
+}
+
 EAPI void
 e_icon_file_set(Evas_Object *obj, const char *file)
 {
@@ -47,6 +64,7 @@ e_icon_file_set(Evas_Object *obj, const char *file)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    /* smart code here */
+   _e_icon_obj_prepare(obj, sd);
    /* FIXME: 64x64 - unhappy about this. use icon size */
    if (sd->size != 0)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
@@ -63,6 +81,7 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    /* smart code here */
+   _e_icon_obj_prepare(obj, sd);
    if (sd->size != 0)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
    evas_object_image_file_set(sd->obj, file, key);
