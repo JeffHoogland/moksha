@@ -1,9 +1,9 @@
 # get rid of that stupid cache mechanism
 rm -f config.cache
 
-AC_INIT(enlightenment, 0.16.999.060, enlightenment-devel@lists.sourceforge.net)
-AC_PREREQ(2.52)
-AC_CONFIG_SRCDIR(configure.ac)
+AC_INIT([enlightenment], [0.16.999.060], [enlightenment-devel@lists.sourceforge.net])
+AC_PREREQ([2.52])
+AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
