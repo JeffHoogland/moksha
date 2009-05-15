@@ -10,10 +10,9 @@ typedef struct _E_Smart_Data E_Smart_Data;
 
 struct _E_Smart_Data
 { 
-   Evas_Object *smart_obj;
-   Evas_Object *child_obj;
-   Evas_Coord   x, y, w, h;
-   Evas_Coord   child_w, child_h, px, py;
+   Evas_Object *smart_obj, *child_obj;
+   Evas_Coord x, y, w, h;
+   Evas_Coord child_w, child_h, px, py;
 }; 
 
 /* local subsystem functions */
@@ -58,20 +57,21 @@ e_pan_child_set(Evas_Object *obj, Evas_Object *child)
      }
    if (child)
      {
-	Evas_Coord w, h;
 	int r, g, b, a;
-	
+
 	sd->child_obj = child;
 	evas_object_smart_member_add(sd->child_obj, sd->smart_obj);
-	evas_object_geometry_get(sd->child_obj, NULL, NULL, &w, &h);
-	sd->child_w = w;
-	sd->child_h = h;
-	evas_object_event_callback_add(child, EVAS_CALLBACK_FREE, _e_smart_child_del_hook, sd);
-	evas_object_event_callback_add(child, EVAS_CALLBACK_RESIZE, _e_smart_child_resize_hook, sd);
+	evas_object_geometry_get(sd->child_obj, NULL, NULL, 
+                                 &sd->child_w, &sd->child_h);
+	evas_object_event_callback_add(child, EVAS_CALLBACK_FREE, 
+                                       _e_smart_child_del_hook, sd);
+	evas_object_event_callback_add(child, EVAS_CALLBACK_RESIZE, 
+                                       _e_smart_child_resize_hook, sd);
 	evas_object_color_get(sd->smart_obj, &r, &g, &b, &a);
 	evas_object_color_set(sd->child_obj, r, g, b, a);
 	evas_object_clip_set(sd->child_obj, evas_object_clip_get(sd->smart_obj));
-	if (evas_object_visible_get(sd->smart_obj)) evas_object_show(sd->child_obj);
+	if (evas_object_visible_get(sd->smart_obj)) 
+          evas_object_show(sd->child_obj);
 	else evas_object_hide(sd->child_obj);
 	_e_smart_reconfigure(sd);
      }
@@ -137,7 +137,7 @@ static void
 _e_smart_child_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    E_Smart_Data *sd;
-   
+
    sd = data;
    sd->child_obj = NULL;
    evas_object_smart_callback_call(sd->smart_obj, "changed", NULL);
@@ -148,7 +148,7 @@ _e_smart_child_resize_hook(void *data, Evas *e, Evas_Object *obj, void *event_in
 {
    E_Smart_Data *sd;
    Evas_Coord w, h;
-   
+
    sd = data;
    evas_object_geometry_get(sd->child_obj, NULL, NULL, &w, &h);
    if ((w != sd->child_w) || (h != sd->child_h))
@@ -170,7 +170,7 @@ static void
 _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
-   
+
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
    sd->smart_obj = obj;
@@ -241,7 +241,7 @@ _e_smart_clip_unset(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
    evas_object_clip_unset(sd->child_obj);
-}  
+}
 
 /* never need to touch this */
 
@@ -271,4 +271,3 @@ _e_smart_init(void)
 	_e_smart = evas_smart_class_new(&sc);
      }
 }
-
