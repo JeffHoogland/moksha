@@ -171,7 +171,7 @@ _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
 
-   sd = calloc(1, sizeof(E_Smart_Data));
+   sd = E_NEW(fSmart_Data, 1);
    if (!sd) return;
    sd->smart_obj = obj;
    sd->x = 0;
@@ -186,7 +186,7 @@ _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
    e_pan_child_set(obj, NULL);
-   free(sd);
+   E_FREE(sd);
 }
 
 static void
