@@ -96,7 +96,7 @@ static void _e_fwin_cb_move(E_Win *win);
 static void _e_fwin_cb_resize(E_Win *win);
 static void _e_fwin_deleted(void *data, Evas_Object *obj, void *event_info);
 static const char *_e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev_path, const char *key);
-static void _e_fwin_desktop_run(Efreet_Desktop *desktop, E_Fwin_Page *page);
+static void _e_fwin_desktop_run(Efreet_Desktop *desktop, E_Fwin_Page *page, Eina_Bool skip_history);
 static Eina_List *_e_fwin_suggested_apps_list_get(Eina_List *files, Eina_List **mime_list);
 static void _e_fwin_changed(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
@@ -730,7 +730,7 @@ _e_fwin_suggested_apps_list_get(Eina_List *files, Eina_List **mime_list)
 
 
 static void
-_e_fwin_desktop_run(Efreet_Desktop *desktop, E_Fwin_Page *page)
+_e_fwin_desktop_run(Efreet_Desktop *desktop, E_Fwin_Page *page, Eina_Bool skip_history)
 {
    char pcwd[4096], buf[4096];
    Eina_List *selected, *l, *files = NULL;
@@ -763,7 +763,7 @@ _e_fwin_desktop_run(Efreet_Desktop *desktop, E_Fwin_Page *page)
 	  _e_fwin_file_exec(page, ici, ext);
 	if (buf[0] != 0)
 	  {
-	     if (ici->mime && desktop)
+	     if (ici->mime && desktop && !skip_history)
 		e_exehist_mime_desktop_add(ici->mime, desktop);
 	     files = eina_list_append(files, strdup(ici->file));
 	  }
@@ -1464,7 +1464,7 @@ _e_fwin_cb_menu_open_fast(void *data, E_Menu *m, E_Menu_Item *mi)
    desk = e_object_data_get(E_OBJECT(mi));
 
    if (page && desk)
-      _e_fwin_desktop_run(desk, page);
+      _e_fwin_desktop_run(desk, page, EINA_TRUE);
 }
 
 static void
@@ -2016,7 +2016,7 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
       }
 
    if ((desktop) || (strcmp(fad->exec_cmd, "")))
-     _e_fwin_desktop_run(desktop, fad->fwin->cur_page);
+     _e_fwin_desktop_run(desktop, fad->fwin->cur_page, EINA_FALSE);
 
    // Free fake .desktop
    if (!strcmp(fad->exec_cmd, ""))
