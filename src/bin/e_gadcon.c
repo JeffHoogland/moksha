@@ -77,6 +77,8 @@ static void e_gadcon_layout_pack_min_size_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_pack_aspect_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_pack_aspect_pad_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_unpack(Evas_Object *obj);
+static void _e_gadcon_provider_populate_request(const E_Gadcon_Client_Class *cc);
+static void _e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc);
 
 /********************/
 #define E_LAYOUT_ITEM_DRAG_RESIST_LEVEL 10
@@ -185,6 +187,8 @@ struct _E_Layout_Item_Container
 static Eina_Hash *providers = NULL;
 static Eina_List *providers_list = NULL;
 static Eina_List *gadcons = NULL;
+static Eina_List *populate_requests = NULL;
+static Ecore_Idler *populate_idler = NULL;
 
 /* This is the gadcon client which is currently dragged */
 static E_Gadcon_Client *drag_gcc = NULL;
@@ -201,26 +205,23 @@ e_gadcon_init(void)
 EAPI int
 e_gadcon_shutdown(void)
 {
+   eina_list_free(populate_requests);
+   if (populate_idler)
+     {
+	ecore_idler_del(populate_idler);
+	populate_idler = NULL;
+     }
+
    return 1;
 }
 
 EAPI void
 e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
 {
-   Eina_List *l;
-   E_Gadcon *gc;
-
    if (!providers) providers = eina_hash_string_superfast_new(NULL);
    eina_hash_direct_add(providers, cc->name, cc);
    providers_list = eina_list_append(providers_list, cc);
-   for (l = gadcons; l; l = l->next)
-     {
-	gc = l->data;
-	if (gc->populate_class.func)
-	  gc->populate_class.func(gc->populate_class.data, gc, cc);
-	else
-	  e_gadcon_populate_class(gc, cc);
-     }
+   _e_gadcon_provider_populate_request(cc);
 }
 
 EAPI void
@@ -229,7 +230,9 @@ e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc)
    Eina_List *l, *ll, *dlist = NULL;
    E_Gadcon *gc;
    E_Gadcon_Client *gcc;
-   
+
+   _e_gadcon_provider_populate_unrequest(cc);
+
    for (l = gadcons; l; l = l->next)
      {
 	gc = l->data;
@@ -413,6 +416,9 @@ e_gadcon_populate(E_Gadcon *gc)
 	if (cc)
 	  {
 	     E_Gadcon_Client *gcc;
+
+	     if (eina_list_data_find(populate_requests, cc))
+	       continue;
 
 	     if ((!cf_gcc->id) &&
 		 (_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)))
@@ -5082,3 +5088,50 @@ _e_gadcon_layout_smart_restore_gadcons_position_before_move(E_Smart_Data *sd, E_
      }
 }
 
+static int
+_e_gadcon_provider_populate_idler(void *data __UNUSED__)
+{
+   const E_Gadcon_Client_Class *cc;
+   const Eina_List *l;
+   E_Gadcon *gc;
+
+   EINA_LIST_FOREACH(gadcons, l, gc)
+     e_gadcon_layout_freeze(gc->o_container);
+
+   EINA_LIST_FREE(populate_requests, cc)
+     {
+	EINA_LIST_FOREACH(gadcons, l, gc)
+	  {
+	     if (gc->populate_class.func)
+	       gc->populate_class.func(gc->populate_class.data, gc, cc);
+	     else
+	       e_gadcon_populate_class(gc, cc);
+	  }
+     }
+
+   EINA_LIST_FOREACH(gadcons, l, gc)
+     e_gadcon_layout_thaw(gc->o_container);
+
+   populate_idler = NULL;
+   return 0;
+}
+
+static void
+_e_gadcon_provider_populate_request(const E_Gadcon_Client_Class *cc)
+{
+   if (!populate_idler)
+     populate_idler = ecore_idler_add(_e_gadcon_provider_populate_idler, NULL);
+   if (!eina_list_data_find(populate_requests, cc))
+     populate_requests = eina_list_append(populate_requests, cc);
+}
+
+static void
+_e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc)
+{
+   populate_requests = eina_list_remove(populate_requests, cc);
+   if ((!populate_requests) && (populate_idler))
+     {
+	ecore_idler_del(populate_idler);
+	populate_idler = NULL;
+     }
+}
