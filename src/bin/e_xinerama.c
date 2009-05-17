@@ -211,7 +211,14 @@ _e_xinerama_cb_screen_sort(const void *data1, const void *data2)
 
    scr = data1;
    scr2 = data2;
-   dif = (scr2->w * scr2->h) - (scr->w * scr->h);
-   if (dif == 0) return scr->screen - scr2->screen;
+   if (scr2->x != scr->x)
+     return scr2->x - scr->x;
+   else if (scr2->y != scr->y)
+     return scr2->y - scr->y;
+   else
+     {
+       dif = (scr2->w * scr2->h) - (scr->w * scr->h);
+       if (dif == 0) return scr->screen - scr2->screen;
+     }
    return dif;
 }
