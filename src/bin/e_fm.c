@@ -818,6 +818,29 @@ _e_fm2_cb_mount_fail(void *data)
      }
 }
 
+void
+_e_fm2_path_parent_set(Evas_Object *obj, const char *path)
+{
+   char buf[PATH_MAX], *p;
+   int idx;
+
+   p = strrchr(path, '/');
+   if (!p || (p == path))
+      e_fm2_path_set(obj, "/", "/");
+   else
+     {
+        idx = p - path;
+        if (idx < PATH_MAX)
+          {
+             strncpy(buf, path, idx);
+             buf[idx] = '\0';
+             e_fm2_path_set(obj, "/", buf);
+          }
+        else
+          e_fm2_path_set(obj, "/", "/");
+     }
+}
+
 EAPI void
 e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 {
@@ -2827,12 +2850,17 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
    while (dels)
      {
 	Evas_Object *obj;
+	E_Fm2_Smart_Data *sd;
 
 	obj = dels->data;
+        sd = evas_object_smart_data_get(obj);
 	dels = eina_list_remove_list(dels, dels);
 	if ((_e_fm2_list_walking > 0) &&
 	    (eina_list_data_find(_e_fm2_list_remove, obj))) continue;
-	evas_object_smart_callback_call(obj, "dir_deleted", NULL);
+	if (sd->config->view.open_dirs_in_place)
+          _e_fm2_path_parent_set(obj, sd->realpath);
+	else
+	  evas_object_smart_callback_call(obj, "dir_deleted", NULL);
      }
    _e_fm2_list_walking--;
    if (_e_fm2_list_walking == 0)
