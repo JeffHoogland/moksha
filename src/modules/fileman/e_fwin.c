@@ -118,6 +118,7 @@ static Eina_Bool _e_fwin_cb_hash_foreach(const Eina_Hash *hash __UNUSED__, const
 static E_Fwin_Exec_Type _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici);
 static void _e_fwin_file_exec(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext);
 static void _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always);
+static void _e_fwin_file_open_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 static void _e_fwin_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _e_fwin_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
@@ -1925,8 +1926,23 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
 
    e_widget_min_size_get(ot, &mw, &mh);
    e_dialog_content_set(dia, ot, mw, mh);
+   evas_object_event_callback_add(ot, EVAS_CALLBACK_KEY_DOWN, _e_fwin_file_open_dialog_cb_key_down, page);
    e_dialog_show(dia);
    e_dialog_border_icon_set(dia, "preferences-applications");
+   e_widget_focus_set(fad->o_entry, 0);
+}
+
+static void
+_e_fwin_file_open_dialog_cb_key_down(void *data, Evas *e, Evas_Object *o, void *event_info)
+{
+   Evas_Event_Key_Down *ev = event_info;
+   E_Fwin_Page *page = data;
+   E_Fwin *fwin = page->fwin;
+
+   if (!strcmp(ev->keyname, "Escape"))
+     _e_fwin_cb_close(fwin->fad, fwin->fad->dia);
+   else if (!strcmp(ev->keyname, "Return"))
+     _e_fwin_cb_open(fwin->fad, fwin->fad->dia);
 }
 
 static int 
