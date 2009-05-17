@@ -2,12 +2,14 @@
 Type=Link
 Name=Settings - Window Remembers
 Name[cs]=Nastavení - paměť
+Name[eo]=Agordo - Fesnestraj memoroj
 Name[it]=Configurazione - Ricordi finestre
 Name[hu]=Beállítások - Ablak emlékek
 Name[fr]=Configuration - Mémorisations propres à la fenêtre
 Icon=e-module-conf_window_remembers
 Comment=<title>E17 Settings Applet</title><br>Delete existing window remembers.
 Comment[cs]=<title>E17 applet nastavení</title><br>K vymazání existujících zapamatovaných vlastností oken.
+Comment[eo]=<title>Aplikaĵeto de agordo de E17</title><br>Forviŝas fenestrajn memorojn.
 Comment[it]=<title>Applet configurazione di E17</title><br>Rimuove le impostazioni da ricordare esistenti delle finestre.
 Comment[hu]=<title>E17 beállító kisalkalmazás</title><br>Meglévő ablak emlékek törlése.
 Comment[fr]=<title>Appliquette de configuration pour E17</title><br>Permet d'effacer les mémorisations.
