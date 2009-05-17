@@ -720,11 +720,12 @@ static int
 _e_smart_scrollbar_bar_v_visibility_adjust(E_Smart_Data *sd)
 {
    int scroll_v_vis_change = 0;
-   Evas_Coord w, h, vw, vh;
+   Evas_Coord w, h, vh;
 
    w = sd->child.w;
    h = sd->child.h;
-   edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", NULL, NULL, &vw, &vh);
+   edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", 
+                                 NULL, NULL, NULL, &vh);
    if (sd->vbar_visible)
      {
 	if (sd->vbar_flags == E_SCROLLFRAME_POLICY_AUTO)
@@ -784,11 +785,12 @@ static int
 _e_smart_scrollbar_bar_h_visibility_adjust(E_Smart_Data *sd)
 {
    int scroll_h_vis_change = 0;
-   Evas_Coord w, h, vw, vh;
+   Evas_Coord w, h, vw;
 
    w = sd->child.w;
    h = sd->child.h;
-   edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", NULL, NULL, &vw, &vh);
+   edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", 
+                                 NULL, NULL, &vw, NULL);
    if (sd->hbar_visible)
      {
 	if (sd->hbar_flags == E_SCROLLFRAME_POLICY_AUTO)
