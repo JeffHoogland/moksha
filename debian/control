@@ -18,6 +18,7 @@ Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, e17-data (= ${source:Version}), libevas-engines, libedje-bin
 Conflicts: enlightenment
 Provides: x-window-manager
+Replaces: emodule-systray, emodule-mixer
 Description: The Enlightenment DR17 Window Manager
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
