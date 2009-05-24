@@ -54,7 +54,13 @@ e_gadcon_popup_content_set(E_Gadcon_Popup *pop, Evas_Object *o)
 	evas_object_del(old_o);
      }
    e_widget_min_size_get(o, &w, &h);
-   if ((!w) || (!h)) edje_object_size_min_calc(o, &w, &h);
+   if ((!w) || (!h)) evas_object_size_hint_min_get(o, &w, &h);
+   if ((!w) || (!h))
+     {
+	edje_object_size_min_get(o, &w, &h);
+	edje_object_size_min_restricted_calc(o, &w, &h, w, h);
+     }
+   if (pop->resize_func) pop->resize_func(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
    edje_object_part_swallow(pop->o_bg, "e.swallow.content", o);
    edje_object_size_min_calc(pop->o_bg, &pop->w, &pop->h);
@@ -64,9 +70,8 @@ e_gadcon_popup_content_set(E_Gadcon_Popup *pop, Evas_Object *o)
 EAPI void
 e_gadcon_popup_show(E_Gadcon_Popup *pop)
 {
-   Evas_Object *o;
    Evas_Coord gx, gy, gw, gh, zw, zh, zx, zy;
-   Evas_Coord px, py, ww, wh;
+   Evas_Coord px, py;
 
    if (!pop) return;
    E_OBJECT_CHECK(pop);
@@ -74,27 +79,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
 
    if (pop->win->visible) return;
 
-   if ((o = edje_object_part_swallow_get(pop->o_bg, "e.swallow.content")))
-     {
-	Evas_Coord w = 0, h = 0;
-
-	e_widget_min_size_get(o, &w, &h);
-	if ((!w) || (!h))
-	  {
-	     edje_object_size_min_get(o, &w, &h);
-	     edje_object_size_min_restricted_calc(o, &w, &h, w, h);
-	  }
-	if (pop->resize_func) pop->resize_func(o, &w, &h);
-	edje_extern_object_min_size_set(o, w, h);
-     }
-
-   evas_object_show(pop->o_bg);
-   edje_object_size_min_calc(pop->o_bg, &ww, &wh);
    e_popup_show(pop->win);
-
-   evas_object_resize(pop->o_bg, ww, wh);
-   pop->w = ww;
-   pop->h = wh;
 
    /* Popup positioning */
    e_gadcon_client_geometry_get(pop->gcc, &gx, &gy, &gw, &gh);
