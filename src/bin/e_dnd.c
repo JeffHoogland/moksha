@@ -1267,8 +1267,7 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
 	  }
 
 	eina_stringshare_del(_xdnd->type);
-	free(_xdnd);
-	_xdnd = NULL;
+        E_FREE(_xdnd);
      }
    return 1;
 }
@@ -1394,7 +1393,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 
    if (_type_text_uri_list == _xdnd->type)
      {
-	Ecore_X_Selection_Data_Files   *files;
+	Ecore_X_Selection_Data_Files *files;
 	Eina_List *l = NULL;
 
 	files = ev->data;
@@ -1411,7 +1410,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	Eina_List *l = NULL;
 	char file[PATH_MAX];
 	char *text;
-	int i, size;
+	int size;
 
 	data = ev->data;
 	text = (char *)data->data;
@@ -1449,7 +1448,6 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
     * the drop property... */
    ecore_x_dnd_send_finished();
    eina_stringshare_del(_xdnd->type);
-   free(_xdnd);
-   _xdnd = NULL;
+   E_FREE(_xdnd);
    return 1;
 }
