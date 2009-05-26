@@ -547,7 +547,7 @@ e_drop_handler_action_set(Ecore_X_Atom action)
 }
 
 EAPI Ecore_X_Atom
-e_drop_handler_action_get()
+e_drop_handler_action_get(void)
 {
    return _action;
 }
@@ -790,6 +790,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
    if (_drag_current)
      {
 	E_Drop_Handler *h;
+
 	EINA_LIST_FOREACH(_drop_handlers, l, h)
 	  {
 	     if (!h->active) continue;
@@ -843,6 +844,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
    else if (_xdnd)
      {
 	E_Drop_Handler *h;
+
 	EINA_LIST_FOREACH(_drop_handlers, l, h)
 	  {
 	     if (!h->active) continue;
@@ -944,8 +946,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 	     ev.x = x - dx;
 	     ev.y = y - dy;
 	     if ((_e_drag_win_matches(h, win, 0)) &&
-		 ((h->cb.drop) &&
-		  (E_INSIDE(x, y, dx, dy, dw, dh))))
+		 ((h->cb.drop) && (E_INSIDE(x, y, dx, dy, dw, dh))))
 	       {
 		  if (_drag_current->cb.convert)
 		    {
@@ -977,8 +978,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 
 	EINA_LIST_FOREACH(_drop_handlers, l, h)
 	  {
-	     if (!h->active)
-	       continue;
+	     if (!h->active) continue;
 
 	     if (h->entered)
 	       {
@@ -1032,8 +1032,7 @@ _e_drag_xdnd_end(Ecore_X_Window win, int x, int y)
 
 	EINA_LIST_FOREACH(_drop_handlers, l, h)
 	  {
-	     if (!h->active)
-	       continue;
+	     if (!h->active) continue;
 
 	     if (h->entered)
 	       {
@@ -1163,7 +1162,9 @@ _e_dnd_cb_mouse_move(void *data, int type, void *event)
    ev = event;
    if (ev->window != _drag_win) return 1;
 
-   if (!_xdnd) _e_drag_update(_drag_win_root, ev->x, ev->y, ECORE_X_ATOM_XDND_ACTION_PRIVATE);
+   if (!_xdnd) 
+     _e_drag_update(_drag_win_root, ev->x, ev->y, 
+                    ECORE_X_ATOM_XDND_ACTION_PRIVATE);
    
    return 1;
 }
@@ -1252,10 +1253,10 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
    if (_xdnd)
      {
 	E_Drop_Handler *h;
+
 	EINA_LIST_FOREACH(_drop_handlers, l, h)
 	  {
-	     if (!h->active)
-	       continue;
+	     if (!h->active) continue;
 
 	     if (h->entered)
 	       {
@@ -1312,20 +1313,14 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
 	  }
      }
    if (!active)
-     {
-	ecore_x_dnd_send_status(0, 0, rect, ECORE_X_DND_ACTION_PRIVATE);
-     }
+     ecore_x_dnd_send_status(0, 0, rect, ECORE_X_DND_ACTION_PRIVATE);
    else
      {
 	responsive = _e_drag_update(ev->win, ev->position.x, ev->position.y, ev->action);
 	if (responsive)
-	  {
-	     ecore_x_dnd_send_status(1, 0, rect, _action);
-	  }
+          ecore_x_dnd_send_status(1, 0, rect, _action);
 	else
-	  {
-	     ecore_x_dnd_send_status(1, 0, rect, ECORE_X_ATOM_XDND_ACTION_PRIVATE);
-	  }
+          ecore_x_dnd_send_status(1, 0, rect, ECORE_X_ATOM_XDND_ACTION_PRIVATE);
      }
 //   double t2 = ecore_time_get() - t1; ////
 //   printf("DND POS EV 2 %3.7f\n", t2); ////
@@ -1339,7 +1334,6 @@ _e_dnd_cb_event_dnd_status(void *data, int type, void *event)
 
    ev = event;
    if (ev->win != _drag_win) return 1;
-
    return 1;
 }
 
@@ -1350,8 +1344,7 @@ _e_dnd_cb_event_dnd_finished(void *data, int type, void *event)
 
    ev = event;
 
-   if (!ev->completed)
-     return 1;
+   if (!ev->completed) return 1;
 
    if (_drag_current)
      {
@@ -1451,9 +1444,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	eina_list_free(l);
      }
    else
-     {
-	_e_drag_xdnd_end(ev->win, _xdnd->x, _xdnd->y);
-     }
+     _e_drag_xdnd_end(ev->win, _xdnd->x, _xdnd->y);
    /* FIXME: When to execute this? It could be executed in ecore_x after getting
     * the drop property... */
    ecore_x_dnd_send_finished();

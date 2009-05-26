@@ -26,26 +26,27 @@ typedef struct _E_Event_Dnd_Drop   E_Event_Dnd_Drop;
 
 struct _E_Drag
 {
-   E_Object             e_obj_inherit;
+   E_Object e_obj_inherit;
 
-   void          *data;
-   int            data_size;
+   void *data;
+   int data_size;
 
-   E_Drag_Type    type;
+   E_Drag_Type type;
 
-   struct {
+   struct 
+     {
 	void *(*convert)(E_Drag *drag, const char *type);
 	void  (*finished)(E_Drag *drag, int dropped);
 	void  (*key_down)(E_Drag *drag, Ecore_Event_Key *e);
 	void  (*key_up)(E_Drag *drag, Ecore_Event_Key *e);
-   } cb;
+     } cb;
 
-   E_Container       *container;
-   Ecore_Evas        *ecore_evas;
-   Evas              *evas;
-   Ecore_X_Window     evas_win;
+   E_Container *container;
+   Ecore_Evas *ecore_evas;
+   Evas *evas;
+   Ecore_X_Window evas_win;
    E_Container_Shape *shape;
-   Evas_Object       *object;
+   Evas_Object *object;
 
    int x, y, w, h;
    int dx, dy;
@@ -53,33 +54,34 @@ struct _E_Drag
    int shape_rects_num;
    Ecore_X_Rectangle *shape_rects;
    
-   unsigned int   layer;
-   unsigned char  visible : 1;
-   unsigned char  need_shape_export : 1;
-   unsigned char  xy_update : 1;
+   unsigned int layer;
+   unsigned char visible : 1;
+   unsigned char need_shape_export : 1;
+   unsigned char xy_update : 1;
 
-   unsigned int   num_types;
-   const char    *types[];
+   unsigned int num_types;
+   const char *types[];
 };
 
 struct _E_Drop_Handler
 {
-   struct {
+   struct 
+     {
 	void (*enter)(void *data, const char *type, void *event);
 	void (*move)(void *data, const char *type, void *event);
 	void (*leave)(void *data, const char *type, void *event);
 	void (*drop)(void *data, const char *type, void *event);
 	void *data;
-   } cb;
+     } cb;
 
-   E_Object      *obj;
+   E_Object *obj;
    int x, y, w, h;
 
-   unsigned char  active : 1;
-   unsigned char  entered : 1;
-   const char    *active_type;
-   unsigned int   num_types;
-   const char    *types[];
+   unsigned char active : 1;
+   unsigned char entered : 1;
+   const char *active_type;
+   unsigned int num_types;
+   const char *types[];
 };
 
 struct _E_Event_Dnd_Enter
@@ -144,12 +146,12 @@ EAPI int  e_drop_xdnd_register_set(Ecore_X_Window win, int reg);
 EAPI void e_drop_handler_responsive_set(E_Drop_Handler *handler);
 EAPI int  e_drop_handler_responsive_get(const E_Drop_Handler *handler);
 EAPI void e_drop_handler_action_set(Ecore_X_Atom action);
-EAPI Ecore_X_Atom e_drop_handler_action_get();
+EAPI Ecore_X_Atom e_drop_handler_action_get(void);
 
 #endif
 #endif
 
 #ifndef MIN
-#define MIN(x, y) (((x) > (y)) ? (y) : (x))
+# define MIN(x, y) (((x) > (y)) ? (y) : (x))
 #endif
 
