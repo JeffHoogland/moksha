@@ -6,6 +6,9 @@
 /* local subsystem functions */
 static void _e_gadcon_popup_free(E_Gadcon_Popup *pop);
 static void _e_gadcon_popup_locked_set(E_Gadcon_Popup *pop, Eina_Bool locked);
+static void _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj, Eina_Bool skip_resize);
+static void _e_gadcon_popup_position(E_Gadcon_Popup *pop);
+static void _e_gadcon_popup_changed_size_hints_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 /* externally accessible functions */
 
@@ -40,7 +43,6 @@ e_gadcon_popup_new(E_Gadcon_Client *gcc, void (*resize_func) (Evas_Object *obj, 
 EAPI void
 e_gadcon_popup_content_set(E_Gadcon_Popup *pop, Evas_Object *o)
 {
-   Evas_Coord w = 0, h = 0;
    Evas_Object *old_o;
 
    if (!pop) return;
@@ -53,26 +55,16 @@ e_gadcon_popup_content_set(E_Gadcon_Popup *pop, Evas_Object *o)
 	edje_object_part_unswallow(pop->o_bg, old_o);
 	evas_object_del(old_o);
      }
-   e_widget_min_size_get(o, &w, &h);
-   if ((!w) || (!h)) evas_object_size_hint_min_get(o, &w, &h);
-   if ((!w) || (!h))
-     {
-	edje_object_size_min_get(o, &w, &h);
-	edje_object_size_min_restricted_calc(o, &w, &h, w, h);
-     }
-   if (pop->resize_func) pop->resize_func(o, &w, &h);
-   edje_extern_object_min_size_set(o, w, h);
    edje_object_part_swallow(pop->o_bg, "e.swallow.content", o);
-   edje_object_size_min_calc(pop->o_bg, &pop->w, &pop->h);
-   evas_object_resize(pop->o_bg, pop->w, pop->h);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_CHANGED_SIZE_HINTS,
+	 _e_gadcon_popup_changed_size_hints_cb, pop);
+
+   _e_gadcon_popup_size_recalc(pop, o, EINA_FALSE);
 }
 
 EAPI void
 e_gadcon_popup_show(E_Gadcon_Popup *pop)
 {
-   Evas_Coord gx, gy, gw, gh, zw, zh, zx, zy;
-   Evas_Coord px, py;
-
    if (!pop) return;
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
@@ -80,6 +72,103 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
    if (pop->win->visible) return;
 
    e_popup_show(pop->win);
+
+   _e_gadcon_popup_position(pop);
+}
+
+EAPI void
+e_gadcon_popup_hide(E_Gadcon_Popup *pop)
+{
+   if (!pop) return;
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
+   if (pop->pinned) return;
+   e_popup_hide(pop->win);
+   if (pop->gadcon_was_locked)
+     _e_gadcon_popup_locked_set(pop, 0);
+}
+
+EAPI void
+e_gadcon_popup_toggle_pinned(E_Gadcon_Popup *pop)
+{
+   if (!pop) return;
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
+
+   if (pop->pinned)
+     {
+	pop->pinned = 0;
+	edje_object_signal_emit(pop->o_bg, "e,state,unpinned", "e");
+     }
+   else
+     {
+	pop->pinned = 1;
+	edje_object_signal_emit(pop->o_bg, "e,state,pinned", "e");
+     }
+}
+
+EAPI void
+e_gadcon_popup_lock_set(E_Gadcon_Popup *pop, Eina_Bool setting)
+{
+   if (!pop) return;
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
+
+   setting = !!setting;
+   if (pop->gadcon_lock == setting) return;
+   pop->gadcon_lock = setting;
+
+   if (setting != pop->gadcon_was_locked)
+     _e_gadcon_popup_locked_set(pop, setting);
+}
+
+/* local subsystem functions */
+
+static void
+_e_gadcon_popup_free(E_Gadcon_Popup *pop)
+{
+   if (pop->gadcon_was_locked)
+     _e_gadcon_popup_locked_set(pop, 0);
+   pop->gcc = NULL;
+   e_object_del(E_OBJECT(pop->win));
+   free(pop);
+}
+
+static void
+_e_gadcon_popup_locked_set(E_Gadcon_Popup *pop, Eina_Bool locked)
+{
+   if (!pop->gcc)
+     return;
+
+   e_gadcon_locked_set(pop->gcc->gadcon, locked);
+   pop->gadcon_was_locked = locked;
+}
+
+static void
+_e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj, Eina_Bool skip_resize)
+{
+   Evas_Coord w = 0, h = 0;
+
+   e_widget_min_size_get(obj, &w, &h);
+   if ((!w) || (!h)) evas_object_size_hint_min_get(obj, &w, &h);
+   if ((!w) || (!h))
+     {
+	edje_object_size_min_get(obj, &w, &h);
+	edje_object_size_min_restricted_calc(obj, &w, &h, w, h);
+     }
+   if (pop->resize_func && !skip_resize) pop->resize_func(obj, &w, &h);
+   edje_extern_object_min_size_set(obj, w, h);
+   edje_object_size_min_calc(pop->o_bg, &pop->w, &pop->h);
+   evas_object_resize(pop->o_bg, pop->w, pop->h);
+
+   if (pop->win->visible)
+     _e_gadcon_popup_position(pop);
+}
+
+static void
+_e_gadcon_popup_position(E_Gadcon_Popup *pop)
+{
+   Evas_Coord gx, gy, gw, gh, zw, zh, zx, zy, px, py;
 
    /* Popup positioning */
    e_gadcon_client_geometry_get(pop->gcc, &gx, &gy, &gw, &gh);
@@ -150,70 +239,10 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
      _e_gadcon_popup_locked_set(pop, 1);
 }
 
-EAPI void
-e_gadcon_popup_hide(E_Gadcon_Popup *pop)
-{
-   if (!pop) return;
-   E_OBJECT_CHECK(pop);
-   E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
-   if (pop->pinned) return;
-   e_popup_hide(pop->win);
-   if (pop->gadcon_was_locked)
-     _e_gadcon_popup_locked_set(pop, 0);
-}
-
-EAPI void
-e_gadcon_popup_toggle_pinned(E_Gadcon_Popup *pop)
-{
-   if (!pop) return;
-   E_OBJECT_CHECK(pop);
-   E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
-
-   if (pop->pinned)
-     {
-	pop->pinned = 0;
-	edje_object_signal_emit(pop->o_bg, "e,state,unpinned", "e");
-     }
-   else
-     {
-	pop->pinned = 1;
-	edje_object_signal_emit(pop->o_bg, "e,state,pinned", "e");
-     }
-}
-
-EAPI void
-e_gadcon_popup_lock_set(E_Gadcon_Popup *pop, Eina_Bool setting)
-{
-   if (!pop) return;
-   E_OBJECT_CHECK(pop);
-   E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
-
-   setting = !!setting;
-   if (pop->gadcon_lock == setting) return;
-   pop->gadcon_lock = setting;
-
-   if (setting != pop->gadcon_was_locked)
-     _e_gadcon_popup_locked_set(pop, setting);
-}
-
-/* local subsystem functions */
-
 static void
-_e_gadcon_popup_free(E_Gadcon_Popup *pop)
+_e_gadcon_popup_changed_size_hints_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   if (pop->gadcon_was_locked)
-     _e_gadcon_popup_locked_set(pop, 0);
-   pop->gcc = NULL;
-   e_object_del(E_OBJECT(pop->win));
-   free(pop);
-}
+   E_Gadcon_Popup *pop = data;
 
-static void
-_e_gadcon_popup_locked_set(E_Gadcon_Popup *pop, Eina_Bool locked)
-{
-   if (!pop->gcc)
-     return;
-
-   e_gadcon_locked_set(pop->gcc->gadcon, locked);
-   pop->gadcon_was_locked = locked;
+   _e_gadcon_popup_size_recalc(pop, obj, EINA_TRUE);
 }
