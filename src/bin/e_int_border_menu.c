@@ -178,7 +178,7 @@ e_int_border_menu_create(E_Border *bd)
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_lower, bd);
 	     e_menu_item_icon_edje_set(mi,
 				       e_theme_edje_file_get("base/theme/borders",
-							     "e/widgets/border/default/stack_on_top"),
+							     "e/widgets/border/default/stack_below"),
 				       "e/widgets/border/default/stack_below");
 
 	     mi = e_menu_item_new(m);
