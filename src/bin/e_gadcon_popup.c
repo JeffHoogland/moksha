@@ -18,10 +18,12 @@ e_gadcon_popup_new(E_Gadcon_Client *gcc, void (*resize_func) (Evas_Object *obj, 
    E_Gadcon_Popup *pop;
    Evas_Object *o;
    E_Zone *zone;
+   Evas_Coord gx, gy;
 
    pop = E_OBJECT_ALLOC(E_Gadcon_Popup, E_GADCON_POPUP_TYPE, _e_gadcon_popup_free);
    if (!pop) return NULL;
-   zone = e_util_zone_current_get(e_manager_current_get());
+   e_gadcon_client_geometry_get(gcc, &gx, &gy, NULL, NULL);
+   zone = e_container_zone_at_point_get(e_container_current_get(e_manager_current_get()), gx, gy);
    pop->win = e_popup_new(zone, 0, 0, 0, 0);
    e_popup_layer_set(pop->win, 255);
 
@@ -172,10 +174,10 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
 
    /* Popup positioning */
    e_gadcon_client_geometry_get(pop->gcc, &gx, &gy, &gw, &gh);
-   zx = pop->gcc->gadcon->zone->x;
-   zy = pop->gcc->gadcon->zone->y;
-   zw = pop->gcc->gadcon->zone->w;
-   zh = pop->gcc->gadcon->zone->h;
+   zx = pop->win->zone->x;
+   zy = pop->win->zone->y;
+   zw = pop->win->zone->w;
+   zh = pop->win->zone->h;
    switch (pop->gcc->gadcon->orient)
      {
       case E_GADCON_ORIENT_CORNER_RT:
