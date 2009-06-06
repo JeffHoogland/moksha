@@ -4,7 +4,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/* currently default bind is alt+esc buf alt+space has been suggested */
+/* currently default bind is alt+esc but alt+space has been suggested */
 
 /* local subsystem functions */
 typedef struct _E_Exebuf_Exe E_Exebuf_Exe;
@@ -426,7 +426,7 @@ _e_exebuf_exec(void)
 {
    if (exe_sel)
      {
-	if (exe_sel->desktop)
+	if (exe_sel->desktop && which_list != EXE_LIST)
 	  e_exec(exebuf->zone, exe_sel->desktop, NULL, NULL, "exebuf");
 	else
 	  e_exec(exebuf->zone, NULL, exe_sel->file, NULL, "exebuf");
