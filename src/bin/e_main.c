@@ -864,7 +864,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_dnd_shutdown);
-   e_init_status_set(_("Setup Grab Input Handing"));
+   e_init_status_set(_("Setup Grab Input Handling"));
    TS("grabinput");
    /* setup input grabbing co-operation system */
    if (!e_grabinput_init())
