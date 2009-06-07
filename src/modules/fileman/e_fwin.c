@@ -1367,6 +1367,27 @@ _e_fwin_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     _e_fwin_page_new(fwin);
 	     return;
 	  }
+	if (!strcmp(ev->key, "Tab"))
+	  {
+	     Eina_List *l;
+	     if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
+	       {
+		  l = eina_list_nth_list(fwin->pages, fwin->page_index);
+		  if (l->prev)
+		    e_widget_toolbar_item_select(fwin->tb_obj, fwin->page_index - 1);
+		  else
+		    e_widget_toolbar_item_select(fwin->tb_obj, eina_list_count(fwin->pages) - 1);
+	       }
+	     else
+	       {
+		  l = eina_list_nth_list(fwin->pages, fwin->page_index);
+		  if (l->next)
+		    e_widget_toolbar_item_select(fwin->tb_obj, fwin->page_index + 1);
+		  else
+		    e_widget_toolbar_item_select(fwin->tb_obj, 0);
+	       }
+	     return;
+	  }
      }
 }
 
