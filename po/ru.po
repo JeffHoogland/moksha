@@ -7469,3 +7469,23 @@ msgstr "Система"
 
 #~ msgid "Add To Favorites Menu"
 #~ msgstr "Добавить в Избранное"
+
+#: ../src/bin/e_fm.c:8045
+msgid "Mount"
+msgstr "Подключить"
+
+#: ../src/bin/e_fm.c:8040
+msgid "Unmount"
+msgstr "Отключить"
+
+#: ../src/bin/e_fm.c:8050
+msgid "Eject"
+msgstr "Извлечь"
+
+#: ../src/modules/fileman/e_mod_config.c:273
+msgid "Mount volumes on insert"
+msgstr "Монтировать тома при подключении"
+
+#: ../src/modules/fileman/e_mod_config.c:276
+msgid "Open filemanager on mount"
+msgstr "Открыть менеджер файлов при монтировании"

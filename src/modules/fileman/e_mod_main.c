@@ -216,21 +216,6 @@ _e_mod_action_fileman_cb(E_Object *obj, const char *params)
 //~ }
 
 static void
-_mount_ok(void *data)
-{
-   E_Volume *vol = data;
-   e_fwin_new(e_container_current_get(e_manager_current_get()),
-	      NULL, vol->mount_point);
-}
-
-static void
-_mount_fail(void *data)
-{
-   //TODO make a better dialog
-   e_util_dialog_internal(_("Mount error"), _("Mount of device failed"));
-}
-
-static void
 _e_mod_menu_gtk_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    char *path = data;
@@ -253,8 +238,13 @@ _e_mod_menu_volume_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	if (m->zone)
 	  e_fwin_new(m->zone->container, NULL, vol->mount_point);
      }
-   else //TODO need to remove the mount?
-      e_fm2_hal_mount(vol, _mount_ok, _mount_fail, NULL, NULL, vol);
+   else
+     {
+        char buf[PATH_MAX];
+        snprintf(buf, sizeof(buf), "removable:%s", vol->udi);
+        e_fwin_new(e_container_current_get(e_manager_current_get()),
+                   buf, "/");
+     }
 }
 
 static void

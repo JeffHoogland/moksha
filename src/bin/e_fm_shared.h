@@ -58,6 +58,11 @@ struct _E_Volume
    Eina_List *mounts;
    
    unsigned char validated;
+   
+   char auto_unmount;                  // unmount, when last associated fm window closed
+   char first_time;                    // volume discovery in init sequence
+   Ecore_Timer *guard;                 // operation guard timer
+   DBusPendingCall *op;                // d-bus call handle
 };
 
 struct _E_Fm2_Mount
@@ -65,7 +70,6 @@ struct _E_Fm2_Mount
    const char   *udi;
    const char   *mount_point;
    
-   Ecore_Timer  *timeout;
    void        (*mount_ok) (void *data);
    void        (*mount_fail) (void *data);
    void        (*unmount_ok) (void *data);
@@ -161,6 +165,7 @@ _e_volume_edd_new(void)
    DAT("mounted", mounted, EET_T_CHAR);
    DAT("mount_point", mount_point, EET_T_STRING);
    DAT("parent", parent, EET_T_STRING);
+   DAT("first_time", first_time, EET_T_CHAR);
 #undef DAT
    return edd;
 }

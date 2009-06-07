@@ -58,6 +58,10 @@
 #define DEF_ROUND_TRIP_TOLERANCE 0.01
 #define DEF_MOD_BACKOFF 0.2
 
+#define E_FM_MOUNT_TIMEOUT 30.0
+#define E_FM_UNMOUNT_TIMEOUT 60.0
+#define E_FM_EJECT_TIMEOUT 15.0
+
 typedef struct _E_Dir E_Dir;
 typedef struct _E_Fop E_Fop;
 typedef struct _E_Mod E_Mod;
@@ -189,17 +193,26 @@ static void _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error);
 static void _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *error);
 static void _e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error);
 static void _e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error);
+static void _e_dbus_cb_vol_unmounted_before_eject(void *user_data, void *method_return, DBusError *error);
+static int  _e_dbus_vb_vol_ejecting_after_unmount(void *data);
+static void _e_dbus_cb_vol_ejected(void *user_data, void *method_return, DBusError *error);
+static int  _e_dbus_format_error_msg(char **buf, E_Volume *v, DBusError *error);
+
+static int  _e_dbus_vol_mount_timeout(void *data);
+static int  _e_dbus_vol_unmount_timeout(void *data);
+static int  _e_dbus_vol_eject_timeout(void *data);
 
 EAPI E_Storage *e_storage_add(const char *udi);
 EAPI void       e_storage_del(const char *udi);
 EAPI E_Storage *e_storage_find(const char *udi);
 
-EAPI E_Volume *e_volume_add(const char *udi);
+EAPI E_Volume *e_volume_add(const char *udi, char first_time);
 EAPI void      e_volume_del(const char *udi);
 EAPI E_Volume *e_volume_find(const char *udi);
 
 EAPI void      e_volume_mount(E_Volume *v);
 EAPI void      e_volume_unmount(E_Volume *v);
+EAPI void      e_volume_eject(E_Volume *v);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
@@ -366,7 +379,7 @@ _e_dbus_cb_dev_vol(void *user_data, void *reply_data, DBusError *error)
    EINA_LIST_FOREACH(ret->strings, l, device)
      {
 //	printf("DB VOL+: %s\n", device);
-	e_volume_add(device);
+	e_volume_add(device, 1);
      }
 }
 
@@ -407,7 +420,7 @@ _e_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error)
    if (ret && ret->boolean)
      {
 //	printf("DB VOL IS+: %s\n", udi);
-	e_volume_add(udi);
+	e_volume_add(udi, 0);
      }
    
    error:
@@ -720,6 +733,26 @@ _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
    return;
 }
 
+static int
+_e_dbus_format_error_msg(char **buf, E_Volume *v, DBusError *error)
+{
+   int size, vu, vm, en;
+   char *tmp;
+   
+   vu = strlen(v->udi) + 1;
+   vm = strlen(v->mount_point) + 1;
+   en = strlen(error->name) + 1;
+   size = vu + vm + en + strlen(error->message) + 1;
+   tmp = *buf = malloc(size);
+   
+   strcpy(tmp, v->udi);
+   strcpy(tmp += vu, v->mount_point);
+   strcpy(tmp += vm, error->name);
+   strcpy(tmp += en, error->message);
+   
+   return size;
+}
+
 static void
 _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *error)
 {
@@ -730,7 +763,18 @@ _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *erro
    if (!ret) return;
    if (dbus_error_is_set(error))
      {
+        char *buf;
+        int size;
+   
+        size = _e_dbus_format_error_msg(&buf, v, error);
+        if (v->mounted)
+           ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
+                                 0, 0, 0, buf, size);
+        else
+           ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
+                                 0, 0, 0, buf, size);
 	dbus_error_free(error);
+	free(buf);
 	return;
      }
    
@@ -767,7 +811,7 @@ _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *erro
 static Eina_List *_e_vols = NULL;
 
 EAPI E_Volume *
-e_volume_add(const char *udi)
+e_volume_add(const char *udi, char first_time)
 {
    E_Volume *v;
    
@@ -778,6 +822,7 @@ e_volume_add(const char *udi)
 //   printf("VOL+ %s\n", udi);
    v->udi = strdup(udi);
    v->icon = NULL;
+   v->first_time = first_time;
    _e_vols = eina_list_append(_e_vols, v);
    e_hal_device_get_all_properties(_e_dbus_conn, v->udi,
 				   _e_dbus_cb_vol_prop, v);
@@ -785,7 +830,8 @@ e_volume_add(const char *udi)
 					       udi,
 					       "org.freedesktop.Hal.Device",
 					       "PropertyModified", _e_dbus_cb_prop_modified, v);
-
+   v->guard = NULL;
+   
    return v;
 }
 
@@ -796,6 +842,11 @@ e_volume_del(const char *udi)
    
    v = e_volume_find(udi);
    if (!v) return;
+   if (v->guard)
+     {
+        ecore_timer_del(v->guard);
+        v->guard = NULL;      
+     }
    if (v->prop_handler) e_dbus_signal_handler_del(_e_dbus_conn, v->prop_handler);
    if (v->validated)
      {
@@ -825,6 +876,26 @@ e_volume_find(const char *udi)
    return NULL;
 }
 
+static int
+_e_dbus_vol_mount_timeout(void *data)
+{
+   E_Volume *v = data;
+   DBusError error;
+   char *buf;
+   int size;
+
+   v->guard = NULL;
+   dbus_pending_call_cancel(v->op);
+   error.name = "org.enlightenment.fm2.MountTimeout";
+   error.message = "Unable to mount the volume with specified time-out.";
+   size = _e_dbus_format_error_msg(&buf, v, &error);
+   ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
+                         0, 0, 0, buf, size);
+   free(buf);
+   
+   return 0;
+}
+
 static void
 _e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error)
 {
@@ -832,11 +903,23 @@ _e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error)
    char *buf;
    int size;
    
+   if (v->guard)
+     {
+        ecore_timer_del(v->guard);
+        v->guard = NULL;
+     }
+   
    if (dbus_error_is_set(error))
      {
-	dbus_error_free(error);
-	return;
+        size = _e_dbus_format_error_msg(&buf, v, error);
+        ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
+                              0, 0, 0, buf, size);
+        dbus_error_free(error);
+        free(buf);
+        return;
      }
+
+/*
    v->mounted = 1;
 //   printf("MOUNT: %s from %s\n", v->udi, v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
@@ -844,9 +927,10 @@ _e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error)
    strcpy(buf, v->udi);
    strcpy(buf + strlen(buf) + 1, v->mount_point);
    ecore_ipc_server_send(_e_ipc_server,
-			 6/*E_IPC_DOMAIN_FM*/,
+			 6/*E_IPC_DOMAIN_FM*//*,
 			 E_FM_OP_MOUNT_DONE,
 			 0, 0, 0, buf, size);
+*/
 }
 
 EAPI void
@@ -856,7 +940,7 @@ e_volume_mount(E_Volume *v)
    char *mount_point;
    Eina_List *opt = NULL;
 
-   if (!v || !v->mount_point || strncmp(v->mount_point, "/media/", 7))
+   if (!v || v->guard || !v->mount_point || strncmp(v->mount_point, "/media/", 7))
      return;
 
    mount_point = v->mount_point + 7;
@@ -869,9 +953,30 @@ e_volume_mount(E_Volume *v)
 	snprintf(buf, sizeof(buf), "uid=%i", (int)getuid());
 	opt = eina_list_append(opt, buf);
      }
-   e_hal_device_volume_mount(_e_dbus_conn, v->udi, mount_point,
-			     v->fstype, opt, NULL, v);
+   v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, _e_dbus_vol_mount_timeout, v);
+   v->op = e_hal_device_volume_mount(_e_dbus_conn, v->udi, mount_point,
+                                     v->fstype, opt, _e_dbus_cb_vol_mounted, v);
    opt = eina_list_free(opt);
+}
+
+static int
+_e_dbus_vol_unmount_timeout(void *data)
+{
+   E_Volume *v = data;
+   DBusError error;
+   char *buf;
+   int size;
+
+   v->guard = NULL;
+   dbus_pending_call_cancel(v->op);
+   error.name = "org.enlightenment.fm2.UnmountTimeout";
+   error.message = "Unable to unmount the volume with specified time-out.";
+   size = _e_dbus_format_error_msg(&buf, v, &error);
+   ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
+                         0, 0, 0, buf, size);
+   free(buf);
+   
+   return 0;
 }
 
 static void
@@ -881,11 +986,23 @@ _e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error)
    char *buf;
    int size;
 
+   if (v->guard)
+     {
+        ecore_timer_del(v->guard);
+        v->guard = NULL;
+     }
+   
    if (dbus_error_is_set(error))
      {
-	dbus_error_free(error);
-	return;
+        size = _e_dbus_format_error_msg(&buf, v, error);
+        ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
+                              0, 0, 0, buf, size);
+        dbus_error_free(error);
+        free(buf);
+        return;
      }
+
+/*
    v->mounted = 0;
 //   printf("UNMOUNT: %s from %s\n", v->udi, v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
@@ -893,17 +1010,118 @@ _e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error)
    strcpy(buf, v->udi);
    strcpy(buf + strlen(buf) + 1, v->mount_point);
    ecore_ipc_server_send(_e_ipc_server,
-			 6/*E_IPC_DOMAIN_FM*/,
+			 6/*E_IPC_DOMAIN_FM*//*,
 			 E_FM_OP_UNMOUNT_DONE,
 			 0, 0, 0, buf, size);
+*/
 }
 
 EAPI void
 e_volume_unmount(E_Volume *v)
 {
 //   printf("unmount %s %s\n", v->udi, v->mount_point);
-   e_hal_device_volume_unmount(_e_dbus_conn, v->udi, NULL,
-			       _e_dbus_cb_vol_unmounted, v);
+   if (!v || v->guard) return;
+   
+   v->guard = ecore_timer_add(E_FM_UNMOUNT_TIMEOUT, _e_dbus_vol_unmount_timeout, v);
+   v->op = e_hal_device_volume_unmount(_e_dbus_conn, v->udi, NULL,
+                                       _e_dbus_cb_vol_unmounted, v);
+}
+
+static int
+_e_dbus_vol_eject_timeout(void *data)
+{
+   E_Volume *v = data;
+   DBusError error;
+   char *buf;
+   int size;
+
+   v->guard = NULL;
+   dbus_pending_call_cancel(v->op);
+   error.name = "org.enlightenment.fm2.EjectTimeout";
+   error.message = "Unable to eject the media with specified time-out.";
+   size = _e_dbus_format_error_msg(&buf, v, &error);
+   ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_EJECT_ERROR,
+                         0, 0, 0, buf, size);
+   free(buf);
+   
+   return 0;
+}
+
+static int
+_e_dbus_vb_vol_ejecting_after_unmount(void *data)
+{
+   E_Volume *v = data;
+   
+   v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, _e_dbus_vol_eject_timeout, v);
+   v->op = e_hal_device_volume_eject(_e_dbus_conn, v->udi, NULL,
+                                     _e_dbus_cb_vol_ejected, v);
+   
+   return 0;
+}
+
+static void
+_e_dbus_cb_vol_unmounted_before_eject(void *user_data, void *method_return, DBusError *error)
+{
+   E_Volume *v = user_data;
+   char err;
+
+   err = dbus_error_is_set(error) ? 1 : 0;
+   _e_dbus_cb_vol_unmounted(user_data, method_return, error);
+   
+   // delay is required for all message handlers were executed after unmount
+   if (!err)
+      ecore_timer_add(1.0, _e_dbus_vb_vol_ejecting_after_unmount, v);
+}
+
+static void
+_e_dbus_cb_vol_ejected(void *user_data, void *method_return, DBusError *error)
+{
+   E_Volume *v = user_data;
+   char *buf;
+   int size;
+
+   if (v->guard)
+     {
+        ecore_timer_del(v->guard);
+        v->guard = NULL;
+     }
+   
+   if (dbus_error_is_set(error))
+     {
+        size = _e_dbus_format_error_msg(&buf, v, error);
+        ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_EJECT_ERROR,
+                              0, 0, 0, buf, size);
+        dbus_error_free(error);
+        free(buf);
+        return;
+     }
+   
+   size = strlen(v->udi) + 1;
+   buf = alloca(size);
+   strcpy(buf, v->udi);
+   ecore_ipc_server_send(_e_ipc_server,
+                         6/*E_IPC_DOMAIN_FM*/,
+                         E_FM_OP_EJECT_DONE,
+                         0, 0, 0, buf, size);
+}
+
+EAPI void
+e_volume_eject(E_Volume *v)
+{
+   if (!v || v->guard) return;
+
+   if (v->mounted)
+     {
+        v->guard = ecore_timer_add(E_FM_UNMOUNT_TIMEOUT, _e_dbus_vol_unmount_timeout, v);
+        v->op = e_hal_device_volume_unmount(_e_dbus_conn, v->udi, NULL,
+                                            _e_dbus_cb_vol_unmounted_before_eject, v);
+     }
+   else
+     {
+        v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, _e_dbus_vol_eject_timeout, v);
+        v->op = e_hal_device_volume_eject(_e_dbus_conn, v->udi, NULL,
+                                          _e_dbus_cb_vol_ejected, v);
+     }
 }
 
 /* local subsystem functions */
@@ -1376,6 +1594,17 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	       }
 	  }
 	break;
+      case E_FM_OP_EJECT:/* eject udi */
+          {
+             E_Volume *v;
+             const char *udi;
+             
+             udi = e->data;
+             v = e_volume_find(udi);
+             if (v)
+               e_volume_eject(v);
+          }
+        break;
       case E_FM_OP_QUIT: /* quit */
 	ecore_main_loop_quit();
 	break;

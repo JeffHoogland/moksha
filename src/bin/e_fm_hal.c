@@ -9,8 +9,11 @@
 
 static void _e_fm2_volume_write(E_Volume *v) EINA_ARG_NONNULL(1);
 static void _e_fm2_volume_erase(E_Volume *v) EINA_ARG_NONNULL(1);
+static void _e_fm2_hal_mount_free(E_Fm2_Mount *m); EINA_ARG_NONNULL(1);
 static void _e_fm2_hal_mount_ok(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
-static int  _e_fm2_hal_mount_timeout(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
+static void _e_fm2_hal_mount_fail(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
+static void _e_fm2_hal_unmount_ok(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
+static void _e_fm2_hal_unmount_fail(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 
 static Eina_List *_e_stores = NULL;
 static Eina_List *_e_vols   = NULL;
@@ -268,11 +271,20 @@ e_fm2_hal_volume_add(E_Volume *v)
 EAPI void
 e_fm2_hal_volume_del(E_Volume *v)
 {
+   Eina_List *l, *l_nxt;
+   E_Fm2_Mount *m;
+   
 //   printf("VOL- %s\n", v->udi);
    if (v->storage) 
      v->storage->volumes = eina_list_remove(v->storage->volumes, v);
    _e_vols = eina_list_remove(_e_vols, v);
    _e_fm2_volume_erase(v);
+   EINA_LIST_FOREACH_SAFE(v->mounts, l, l_nxt, m)
+     {
+        _e_fm2_hal_unmount_ok(m);
+        v->mounts = eina_list_remove_list(v->mounts, l);
+        _e_fm2_hal_mount_free(m);
+     }
    _e_volume_free(v);
 }
 
@@ -403,7 +415,12 @@ e_fm2_hal_mount_add(E_Volume *v, const char *mountpoint)
    Eina_List *l;
 
    v->mounted = 1;
-   v->mount_point = strdup(mountpoint);
+   if (mountpoint && (*mountpoint != 0))
+     {
+        if (v->mount_point) 
+           free(v->mount_point);
+        v->mount_point = strdup(mountpoint);
+     }
 
    for (l = v->mounts; l; l = l->next)
      _e_fm2_hal_mount_ok(l->data);
@@ -412,18 +429,34 @@ e_fm2_hal_mount_add(E_Volume *v, const char *mountpoint)
 }
 
 EAPI void
-e_fm2_hal_mount_del(E_Fm2_Mount *m)
+e_fm2_hal_mount_del(E_Volume *v)
+{
+   Eina_List *l, *l_nxt;
+   E_Fm2_Mount *m;
+   
+   v->mounted = 0;
+   if (v->mount_point) 
+     {
+        free(v->mount_point);
+        v->mount_point = NULL;
+     }
+
+   EINA_LIST_FOREACH_SAFE(v->mounts, l, l_nxt, m)
+     {
+        _e_fm2_hal_unmount_ok(m);
+        v->mounts = eina_list_remove_list(v->mounts, l);
+        _e_fm2_hal_mount_free(m);
+     }
+}
+
+EAPI void
+_e_fm2_hal_mount_free(E_Fm2_Mount *m)
 {
    if (!m) return;
 
    if (m->udi) eina_stringshare_del(m->udi);
    if (m->mount_point) eina_stringshare_del(m->mount_point);
 
-   if (m->timeout) 
-     {
-	ecore_timer_del(m->timeout);
-	m->timeout = NULL;
-     }
    free(m);
 }
 
@@ -469,14 +502,40 @@ e_fm2_hal_mount(E_Volume *v,
    v->mounts = eina_list_prepend(v->mounts, m);
 
 //   printf("BEGIN MOUNT %p '%s'\n", m, v->mount_point);
-   
+
    if (!v->mounted)
      {
-	if (m->timeout) ecore_timer_del(m->timeout);
-	m->timeout = ecore_timer_add(10.0, (int (*)(void*))_e_fm2_hal_mount_timeout, m);
+        v->auto_unmount = 1;
 	_e_fm2_client_mount(v->udi, v->mount_point);
      }
+   else
+     {
+        v->auto_unmount = 0;
+        m->mount_point = eina_stringshare_add(v->mount_point);
+     }
+
    return m;
+}
+
+EAPI void
+e_fm2_hal_mount_fail(E_Volume *v)
+{
+   Eina_List *l, *l_nxt;
+   E_Fm2_Mount *m;
+
+   v->mounted = 0;
+   if (v->mount_point) 
+     {
+        free(v->mount_point);
+        v->mount_point = NULL;
+     }
+
+   EINA_LIST_FOREACH_SAFE(v->mounts, l, l_nxt, m)
+     {
+        _e_fm2_hal_mount_fail(m);
+        v->mounts = eina_list_remove_list(v->mounts, l);
+        _e_fm2_hal_mount_free(m);
+     }
 }
 
 EAPI void
@@ -486,32 +545,66 @@ e_fm2_hal_unmount(E_Fm2_Mount *m)
 
    if (!(v = m->volume)) return;
    v->mounts = eina_list_remove(v->mounts, m);
-   e_fm2_hal_mount_del(m);
+   _e_fm2_hal_mount_free(m);
 
-   if (!eina_list_count(v->mounts))
+   if (v->auto_unmount && v->mounted && !eina_list_count(v->mounts))
      _e_fm2_client_unmount(v->udi);
+}
+
+EAPI void
+e_fm2_hal_unmount_fail(E_Volume *v)
+{
+   Eina_List *l;
+
+   v->mounted = 1;
+
+   for (l = v->mounts; l; l = l->next)
+     _e_fm2_hal_unmount_fail(l->data);
 }
 
 static void
 _e_fm2_hal_mount_ok(E_Fm2_Mount *m)
 {
    m->mounted = 1;
-   if (m->volume) m->mount_point = eina_stringshare_add(m->volume->mount_point);
-   if (m->timeout)
-     {
-	ecore_timer_del(m->timeout);
-	m->timeout = NULL;
-     }
-   if (m->mount_ok) m->mount_ok(m->data);
+   if (m->volume) 
+      m->mount_point = eina_stringshare_add(m->volume->mount_point);
+   if (m->mount_ok) 
+      m->mount_ok(m->data);
 //   printf("MOUNT OK '%s'\n", m->mount_point);
 }
 
-static int
-_e_fm2_hal_mount_timeout(E_Fm2_Mount *m)
+static void
+_e_fm2_hal_mount_fail(E_Fm2_Mount *m)
 {
-   m->mount_fail(m->data);
-   m->timeout = NULL;
-   return 0;
+   m->mounted = 0;
+   if (m->mount_point)
+     {
+        eina_stringshare_del(m->mount_point);
+        m->mount_point = NULL;
+     }
+   if (m->mount_fail) 
+     m->mount_fail(m->data);
+}
+
+static void
+_e_fm2_hal_unmount_ok(E_Fm2_Mount *m)
+{
+   m->mounted = 0;
+   if (m->mount_point)
+     {
+        eina_stringshare_del(m->mount_point);
+        m->mount_point = NULL;
+     }
+   if (m->unmount_ok) 
+      m->unmount_ok(m->data);
+}
+
+static void
+_e_fm2_hal_unmount_fail(E_Fm2_Mount *m)
+{
+   m->mounted = 1;
+   if (m->unmount_fail) 
+     m->unmount_fail(m->data);
 }
 
 EAPI void

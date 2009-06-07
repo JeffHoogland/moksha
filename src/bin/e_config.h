@@ -302,6 +302,8 @@ struct _E_Config
    double thumbscroll_friction; // GUI
 
    int hal_desktop;
+   int hal_auto_mount;
+   int hal_auto_open;
 
    struct {
       double timeout;

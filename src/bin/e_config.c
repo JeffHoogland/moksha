@@ -656,14 +656,14 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, thumbscroll_friction, DOUBLE);
    
    E_CONFIG_VAL(D, T, hal_desktop, INT);
+   E_CONFIG_VAL(D, T, hal_auto_mount, INT);
+   E_CONFIG_VAL(D, T, hal_auto_open, INT);
 
    E_CONFIG_VAL(D, T, border_keyboard.timeout, DOUBLE);
    E_CONFIG_VAL(D, T, border_keyboard.move.dx, UCHAR);
    E_CONFIG_VAL(D, T, border_keyboard.move.dy, UCHAR);
    E_CONFIG_VAL(D, T, border_keyboard.resize.dx, UCHAR);
    E_CONFIG_VAL(D, T, border_keyboard.resize.dy, UCHAR);
-
-   E_CONFIG_VAL(D, T, hal_desktop, INT);
 
    E_CONFIG_VAL(D, T, scale.min, DOUBLE);
    E_CONFIG_VAL(D, T, scale.max, DOUBLE);

@@ -13669,6 +13669,9 @@ collections { /* begin the collection of edje groups that are in this file */
 	 image: "icon_efm_dnd_copy.png" COMP;
 	 image: "icon_efm_dnd_ask.png" COMP;
 	 image: "icon_efm_dnd_move.png" COMP;
+
+	 image: "icon_efm_vol_unmounted.png" COMP;
+	 image: "icon_efm_vol_mounted.png" COMP;
       }
       parts {
 	 part { name: "label2";
@@ -13952,6 +13955,36 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 0 0 0 0;
 	    }
 	 }
+	 part { name: "vol_state";
+	    type: IMAGE;
+	    mouse_events: 0;
+	    repeat_events: 0;
+	    description { state: "default" 0.0;
+	       color:      0 0 0 0;
+	    }
+	    description { state: "visible" 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       align: 1.0 1.0;
+	       min: 16 16;
+	       rel1 {
+	          relative: 0.75 0.0;
+	          to: "icon";
+	       }
+	       rel2 {
+	          relative: 1.0 1.0;
+	          to: "icon";
+	       }
+	    }
+	    description { state: "unmounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_unmounted.png";
+	    }
+	    description { state: "mounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_mounted.png";
+	    }
+	 }
 	 part { name: "dnd_action";
 	    type: IMAGE;
 	    mouse_events:  0;
@@ -14028,6 +14061,24 @@ collections { /* begin the collection of edje groups that are in this file */
 	    source: "e";
 	    action: STATE_SET "copy" 0.0;
 	    target: "dnd_action";
+	 }
+	 program { name: "vol_off";
+	    signal: "e,state,volume,off";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_unmounted";
+	    signal: "e,state,volume,unmounted";
+	    source: "e";
+	    action: STATE_SET "unmounted" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_mounted";
+	    signal: "e,state,volume,mounted";
+	    source: "e";
+	    action: STATE_SET "mounted" 0.0;
+	    target: "vol_state";
 	 }
 	 program { name: "thumb_gen";
 	    signal:  "e,action,thumb,gen";
@@ -14089,6 +14140,9 @@ collections { /* begin the collection of edje groups that are in this file */
 	 image: "icon_efm_dnd_copy.png" COMP;
 	 image: "icon_efm_dnd_ask.png" COMP;
 	 image: "icon_efm_dnd_move.png" COMP;
+
+	 image: "icon_efm_vol_unmounted.png" COMP;
+	 image: "icon_efm_vol_mounted.png" COMP;
       }
       parts {
 	 part { name: "label2";
@@ -14372,6 +14426,36 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 0 0 0 0;
 	    }
 	 }
+	 part { name: "vol_state";
+	    type: IMAGE;
+	    mouse_events: 0;
+	    repeat_events: 0;
+	    description { state: "default" 0.0;
+	       color:      0 0 0 0;
+	    }
+	    description { state: "visible" 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       align: 1.0 1.0;
+	       min: 16 16;
+	       rel1 {
+	          relative: 0.75 0.0;
+	          to: "icon";
+	       }
+	       rel2 {
+	          relative: 1.0 1.0;
+	          to: "icon";
+	       }
+	    }
+	    description { state: "unmounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_unmounted.png";
+	    }
+	    description { state: "mounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_mounted.png";
+	    }
+	 }
 	 part { name: "dnd_action";
 	    type: IMAGE;
 	    mouse_events:  0;
@@ -14449,6 +14533,24 @@ collections { /* begin the collection of edje groups that are in this file */
 	    action: STATE_SET "copy" 0.0;
 	    target: "dnd_action";
 	 }
+	 program { name: "vol_off";
+	    signal: "e,state,volume,off";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_unmounted";
+	    signal: "e,state,volume,unmounted";
+	    source: "e";
+	    action: STATE_SET "unmounted" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_mounted";
+	    signal: "e,state,volume,mounted";
+	    source: "e";
+	    action: STATE_SET "mounted" 0.0;
+	    target: "vol_state";
+	 }
 	 program { name: "thumb_gen";
 	    signal:  "e,action,thumb,gen";
 	    source:  "e";
@@ -14509,6 +14611,9 @@ collections { /* begin the collection of edje groups that are in this file */
 	 image: "icon_efm_dnd_copy.png" COMP;
 	 image: "icon_efm_dnd_ask.png" COMP;
 	 image: "icon_efm_dnd_move.png" COMP;
+
+	 image: "icon_efm_vol_unmounted.png" COMP;
+	 image: "icon_efm_vol_mounted.png" COMP;
       }
       parts {
 	 part { name: "bg";
@@ -14768,6 +14873,36 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 0 0 0 0;
 	    }
 	 }
+	 part { name: "vol_state";
+	    type: IMAGE;
+	    mouse_events: 0;
+	    repeat_events: 0;
+	    description { state: "default" 0.0;
+	       color:      0 0 0 0;
+	    }
+	    description { state: "visible" 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       align: 1.0 1.0;
+	       min: 16 16;
+	       rel1 {
+	          relative: 0.75 0.0;
+	          to: "icon";
+	       }
+	       rel2 {
+	          relative: 1.0 1.0;
+	          to: "icon";
+	       }
+	    }
+	    description { state: "unmounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_unmounted.png";
+	    }
+	    description { state: "mounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_mounted.png";
+	    }
+	 }
 	 part { name: "dnd_action";
 	    type: IMAGE;
 	    mouse_events:  0;
@@ -14836,6 +14971,24 @@ collections { /* begin the collection of edje groups that are in this file */
 	    action: STATE_SET "copy" 0.0;
 	    target: "dnd_action";
 	 }
+	 program { name: "vol_off";
+	    signal: "e,state,volume,off";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_unmounted";
+	    signal: "e,state,volume,unmounted";
+	    source: "e";
+	    action: STATE_SET "unmounted" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_mounted";
+	    signal: "e,state,volume,mounted";
+	    source: "e";
+	    action: STATE_SET "mounted" 0.0;
+	    target: "vol_state";
+	 }
 	 program { name: "thumb_gen";
 	    signal:  "e,action,thumb,gen";
 	    source:  "e";
@@ -14896,6 +15049,9 @@ collections { /* begin the collection of edje groups that are in this file */
 	 image: "icon_efm_dnd_copy.png" COMP;
 	 image: "icon_efm_dnd_ask.png" COMP;
 	 image: "icon_efm_dnd_move.png" COMP;
+
+	 image: "icon_efm_vol_unmounted.png" COMP;
+	 image: "icon_efm_vol_mounted.png" COMP;
       }
       parts {
 	 part { name: "bg";
@@ -15155,6 +15311,36 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 0 0 0 0;
 	    }
 	 }
+	 part { name: "vol_state";
+	    type: IMAGE;
+	    mouse_events: 0;
+	    repeat_events: 0;
+	    description { state: "default" 0.0;
+	       color:      0 0 0 0;
+	    }
+	    description { state: "visible" 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       align: 1.0 1.0;
+	       min: 16 16;
+	       rel1 {
+	          relative: 0.75 0.0;
+	          to: "icon";
+	       }
+	       rel2 {
+	          relative: 1.0 1.0;
+	          to: "icon";
+	       }
+	    }
+	    description { state: "unmounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_unmounted.png";
+	    }
+	    description { state: "mounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_mounted.png";
+	    }
+	 }
 	 part { name: "dnd_action";
 	    type: IMAGE;
 	    mouse_events:  0;
@@ -15222,6 +15408,24 @@ collections { /* begin the collection of edje groups that are in this file */
 	    source: "e";
 	    action: STATE_SET "copy" 0.0;
 	    target: "dnd_action";
+	 }
+	 program { name: "vol_off";
+	    signal: "e,state,volume,off";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_unmounted";
+	    signal: "e,state,volume,unmounted";
+	    source: "e";
+	    action: STATE_SET "unmounted" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_mounted";
+	    signal: "e,state,volume,mounted";
+	    source: "e";
+	    action: STATE_SET "mounted" 0.0;
+	    target: "vol_state";
 	 }
 	 program { name: "thumb_gen";
 	    signal:  "e,action,thumb,gen";
@@ -15287,6 +15491,9 @@ collections { /* begin the collection of edje groups that are in this file */
 	 image: "icon_efm_dnd_copy.png" COMP;
 	 image: "icon_efm_dnd_ask.png" COMP;
 	 image: "icon_efm_dnd_move.png" COMP;
+
+	 image: "icon_efm_vol_unmounted.png" COMP;
+	 image: "icon_efm_vol_mounted.png" COMP;
       }
       parts {
 	 part {
@@ -15599,6 +15806,35 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 255 255 255 255;
 	    }
 	 }
+	 part { name: "vol_state";
+	    type: IMAGE;
+	    mouse_events: 0;
+	    repeat_events: 0;
+	    description { state: "default" 0.0;
+	       color:      0 0 0 0;
+	    }
+	    description { state: "visible" 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       align: 1.0 1.0;
+	       rel1 {
+	          relative: 0.5 0.0;
+	          to: "icon";
+	       }
+	       rel2 {
+	          relative: 1.0 1.0;
+	          to: "icon";
+	       }
+	    }
+	    description { state: "unmounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_unmounted.png";
+	    }
+	    description { state: "mounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_mounted.png";
+	    }
+	 }
 	 part { name: "dnd_action";
 	    type:          IMAGE;
 	    mouse_events:  0;
@@ -15695,6 +15931,24 @@ collections { /* begin the collection of edje groups that are in this file */
 	    action: STATE_SET "copy" 0.0;
 	    target: "dnd_action";
 	 }
+	 program { name: "vol_off";
+	    signal: "e,state,volume,off";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_unmounted";
+	    signal: "e,state,volume,unmounted";
+	    source: "e";
+	    action: STATE_SET "unmounted" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_mounted";
+	    signal: "e,state,volume,mounted";
+	    source: "e";
+	    action: STATE_SET "mounted" 0.0;
+	    target: "vol_state";
+	 }
 	 program { name: "thumb_gen";
 	    signal:  "e,action,thumb,gen";
 	    source:  "e";
@@ -15759,6 +16013,9 @@ collections { /* begin the collection of edje groups that are in this file */
 	 image: "icon_efm_dnd_copy.png" COMP;
 	 image: "icon_efm_dnd_ask.png" COMP;
 	 image: "icon_efm_dnd_move.png" COMP;
+
+	 image: "icon_efm_vol_unmounted.png" COMP;
+	 image: "icon_efm_vol_mounted.png" COMP;
       }
       parts {
 	 part {
@@ -16071,6 +16328,35 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 255 255 255 255;
 	    }
 	 }
+	 part { name: "vol_state";
+	    type: IMAGE;
+	    mouse_events: 0;
+	    repeat_events: 0;
+	    description { state: "default" 0.0;
+	       color:      0 0 0 0;
+	    }
+	    description { state: "visible" 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       align: 1.0 1.0;
+	       rel1 {
+	          relative: 0.5 0.0;
+	          to: "icon";
+	       }
+	       rel2 {
+	          relative: 1.0 1.0;
+	          to: "icon";
+	       }
+	    }
+	    description { state: "unmounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_unmounted.png";
+	    }
+	    description { state: "mounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_mounted.png";
+	    }
+	 }
 	 part { name: "dnd_action";
 	    type:          IMAGE;
 	    mouse_events:  0;
@@ -16167,6 +16453,24 @@ collections { /* begin the collection of edje groups that are in this file */
 	    action: STATE_SET "copy" 0.0;
 	    target: "dnd_action";
 	 }
+	 program { name: "vol_off";
+	    signal: "e,state,volume,off";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_unmounted";
+	    signal: "e,state,volume,unmounted";
+	    source: "e";
+	    action: STATE_SET "unmounted" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_mounted";
+	    signal: "e,state,volume,mounted";
+	    source: "e";
+	    action: STATE_SET "mounted" 0.0;
+	    target: "vol_state";
+	 }
 	 program { name: "thumb_gen";
 	    signal:  "e,action,thumb,gen";
 	    source:  "e";
@@ -16232,6 +16536,9 @@ collections { /* begin the collection of edje groups that are in this file */
 	 image: "icon_efm_dnd_copy.png" COMP;
 	 image: "icon_efm_dnd_ask.png" COMP;
 	 image: "icon_efm_dnd_move.png" COMP;
+
+	 image: "icon_efm_vol_unmounted.png" COMP;
+	 image: "icon_efm_vol_mounted.png" COMP;
       }
       parts {
 	 part {
@@ -16545,6 +16852,35 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 255 255 255 255;
 	    }
 	 }
+	 part { name: "vol_state";
+	    type: IMAGE;
+	    mouse_events: 0;
+	    repeat_events: 0;
+	    description { state: "default" 0.0;
+	       color:      0 0 0 0;
+	    }
+	    description { state: "visible" 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       align: 1.0 1.0;
+	       rel1 {
+	          relative: 0.5 0.0;
+	          to: "icon";
+	       }
+	       rel2 {
+	          relative: 1.0 1.0;
+	          to: "icon";
+	       }
+	    }
+	    description { state: "unmounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_unmounted.png";
+	    }
+	    description { state: "mounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_mounted.png";
+	    }
+	 }
 	 part { name: "dnd_action";
 	    type:          IMAGE;
 	    mouse_events:  0;
@@ -16641,6 +16977,24 @@ collections { /* begin the collection of edje groups that are in this file */
 	    action: STATE_SET "copy" 0.0;
 	    target: "dnd_action";
 	 }
+	 program { name: "vol_off";
+	    signal: "e,state,volume,off";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_unmounted";
+	    signal: "e,state,volume,unmounted";
+	    source: "e";
+	    action: STATE_SET "unmounted" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_mounted";
+	    signal: "e,state,volume,mounted";
+	    source: "e";
+	    action: STATE_SET "mounted" 0.0;
+	    target: "vol_state";
+	 }
 	 program { name: "thumb_gen";
 	    signal:  "e,action,thumb,gen";
 	    source:  "e";
@@ -16706,6 +17060,9 @@ collections { /* begin the collection of edje groups that are in this file */
 	 image: "icon_efm_dnd_copy.png" COMP;
 	 image: "icon_efm_dnd_ask.png" COMP;
 	 image: "icon_efm_dnd_move.png" COMP;
+
+	 image: "icon_efm_vol_unmounted.png" COMP;
+	 image: "icon_efm_vol_mounted.png" COMP;
       }
       parts {
 	 part {
@@ -17018,6 +17375,35 @@ collections { /* begin the collection of edje groups that are in this file */
 	       color: 255 255 255 255;
 	    }
 	 }
+	 part { name: "vol_state";
+	    type: IMAGE;
+	    mouse_events: 0;
+	    repeat_events: 0;
+	    description { state: "default" 0.0;
+	       color:      0 0 0 0;
+	    }
+	    description { state: "visible" 0.0;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       align: 1.0 1.0;
+	       rel1 {
+	          relative: 0.5 0.0;
+	          to: "icon";
+	       }
+	       rel2 {
+	          relative: 1.0 1.0;
+	          to: "icon";
+	       }
+	    }
+	    description { state: "unmounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_unmounted.png";
+	    }
+	    description { state: "mounted" 0.0;
+	       inherit: "visible" 0.0;
+	       image.normal:  "icon_efm_vol_mounted.png";
+	    }
+	 }
 	 part { name: "dnd_action";
 	    type:          IMAGE;
 	    mouse_events:  0;
@@ -17113,6 +17499,24 @@ collections { /* begin the collection of edje groups that are in this file */
 	    source: "e";
 	    action: STATE_SET "copy" 0.0;
 	    target: "dnd_action";
+	 }
+	 program { name: "vol_off";
+	    signal: "e,state,volume,off";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_unmounted";
+	    signal: "e,state,volume,unmounted";
+	    source: "e";
+	    action: STATE_SET "unmounted" 0.0;
+	    target: "vol_state";
+	 }
+	 program { name: "vol_mounted";
+	    signal: "e,state,volume,mounted";
+	    source: "e";
+	    action: STATE_SET "mounted" 0.0;
+	    target: "vol_state";
 	 }
 	 program { name: "thumb_gen";
 	    signal:  "e,action,thumb,gen";
@@ -23758,6 +24162,9 @@ ICON("computer","icon_efm_root.png", 64)                        // "fileman/root
 ICON("drive-harddisk","icon_efm_hdd.png", 128)                  // "fileman/hd" "fileman/hdd"
 ICON("drive-optical","icon_efm_cd.png", 128)                    // "fileman/??"
 ICON("media-flash","icon_efm_flash.png", 128)                   // "fileman/??"
+ICON("drive-removable-media","icon_efm_usbmedia.png", 128);
+
+ICON("media-eject","icon_efm_eject.png", 64)
 
 /* End of FreeDesktop.Org icons */
 
