@@ -811,20 +811,6 @@ popup_cb_setup(void *data, void *data2)
 }
 
 static void
-popup_cb_resize(Evas_Object *obj, int *w, int *h)
-{
-   int mw, mh;
-
-   e_widget_min_size_get(obj, &mw, &mh);
-
-   if (mh < 180) mh = 180;
-   if (mw < 160) mw = 160;
-
-   if (*w) *w = (mw + 8);
-   if (*h) *h = (mh + 8);
-}
-
-static void
 popup_ifnet_icon_adjust(Evas_Object *icon, Interface_Network *ifnet)
 {
    Edje_Message_Int_Set *msg;
@@ -1058,7 +1044,7 @@ popup_show(Instance *inst)
    Evas *evas;
    Evas_Coord mw, mh;
 
-   inst->popup = e_gadcon_popup_new(inst->gcc, popup_cb_resize);
+   inst->popup = e_gadcon_popup_new(inst->gcc);
    evas = inst->popup->win->evas;
 
    edje_freeze();
@@ -1091,6 +1077,11 @@ popup_show(Instance *inst)
 				inst, NULL);
    e_widget_table_object_append(base, button,
 			       0, 1, 1, 1, 0, 0, 0, 0);
+
+   e_widget_min_size_get(base, &mw, &mh);
+   if (mh < 188) mh = 188;
+   if (mw < 168) mw = 168;
+   e_widget_min_size_set(base, mw, mh);
 
    edje_thaw();
 

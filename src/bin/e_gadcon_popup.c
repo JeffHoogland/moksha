@@ -6,14 +6,14 @@
 /* local subsystem functions */
 static void _e_gadcon_popup_free(E_Gadcon_Popup *pop);
 static void _e_gadcon_popup_locked_set(E_Gadcon_Popup *pop, Eina_Bool locked);
-static void _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj, Eina_Bool skip_resize);
+static void _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj);
 static void _e_gadcon_popup_position(E_Gadcon_Popup *pop);
 static void _e_gadcon_popup_changed_size_hints_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 /* externally accessible functions */
 
 EAPI E_Gadcon_Popup *
-e_gadcon_popup_new(E_Gadcon_Client *gcc, void (*resize_func) (Evas_Object *obj, int *w, int *h))
+e_gadcon_popup_new(E_Gadcon_Client *gcc)
 {
    E_Gadcon_Popup *pop;
    Evas_Object *o;
@@ -37,7 +37,6 @@ e_gadcon_popup_new(E_Gadcon_Client *gcc, void (*resize_func) (Evas_Object *obj, 
    pop->gcc = gcc;
    pop->gadcon_lock = 1;
    pop->gadcon_was_locked = 0;
-   pop->resize_func = resize_func;
 
    return pop;
 }
@@ -61,7 +60,7 @@ e_gadcon_popup_content_set(E_Gadcon_Popup *pop, Evas_Object *o)
    evas_object_event_callback_add(o, EVAS_CALLBACK_CHANGED_SIZE_HINTS,
 	 _e_gadcon_popup_changed_size_hints_cb, pop);
 
-   _e_gadcon_popup_size_recalc(pop, o, EINA_FALSE);
+   _e_gadcon_popup_size_recalc(pop, o);
 }
 
 EAPI void
@@ -147,7 +146,7 @@ _e_gadcon_popup_locked_set(E_Gadcon_Popup *pop, Eina_Bool locked)
 }
 
 static void
-_e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj, Eina_Bool skip_resize)
+_e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj)
 {
    Evas_Coord w = 0, h = 0;
 
@@ -158,7 +157,6 @@ _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj, Eina_Bool ski
 	edje_object_size_min_get(obj, &w, &h);
 	edje_object_size_min_restricted_calc(obj, &w, &h, w, h);
      }
-   if (pop->resize_func && !skip_resize) pop->resize_func(obj, &w, &h);
    edje_extern_object_min_size_set(obj, w, h);
    edje_object_size_min_calc(pop->o_bg, &pop->w, &pop->h);
    evas_object_resize(pop->o_bg, pop->w, pop->h);
@@ -246,5 +244,5 @@ _e_gadcon_popup_changed_size_hints_cb(void *data, Evas *e, Evas_Object *obj, voi
 {
    E_Gadcon_Popup *pop = data;
 
-   _e_gadcon_popup_size_recalc(pop, obj, EINA_TRUE);
+   _e_gadcon_popup_size_recalc(pop, obj);
 }

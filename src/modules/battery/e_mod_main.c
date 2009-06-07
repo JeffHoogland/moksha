@@ -819,8 +819,7 @@ _battery_warning_popup(Instance *inst, int time, double percent)
 
    if ((!inst) || (inst->warning)) return;
 
-   inst->warning = 
-     e_gadcon_popup_new(inst->gcc, NULL);
+   inst->warning = e_gadcon_popup_new(inst->gcc);
    if (!inst->warning) return;
 
    e = inst->warning->win->evas;

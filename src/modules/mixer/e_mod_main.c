@@ -384,18 +384,6 @@ _mixer_popup_cb_mute_change(void *data, Evas_Object *obj, void *event)
    _mixer_gadget_update(inst);
 }
 
-static void
-_mixer_popup_cb_resize(Evas_Object *obj, int *w, int *h)
-{
-   int mw, mh;
-
-   e_widget_min_size_get(obj, &mw, &mh);
-   if (mh < 200) mh = 200;
-   if (mw < 60) mw = 60;
-   if (w) *w = (mw + 8);
-   if (h) *h = (mh + 8);
-}
-
 static Evas_Object *
 _mixer_popup_add_slider(E_Mixer_Instance *inst, int value, void (*cb) (void *data, Evas_Object *obj, void *event_info))
 {
@@ -554,6 +542,7 @@ _mixer_popup_new(E_Mixer_Instance *inst)
 {
    E_Mixer_Channel_State *state;
    Evas *evas;
+   Evas_Coord mw, mh;
    int colspan;
 
    if (inst->conf->dialog)
@@ -568,7 +557,7 @@ _mixer_popup_new(E_Mixer_Instance *inst)
    else
       colspan = 1;
 
-   inst->popup = e_gadcon_popup_new(inst->gcc, _mixer_popup_cb_resize);
+   inst->popup = e_gadcon_popup_new(inst->gcc);
    evas = inst->popup->win->evas;
 
    inst->ui.table = e_widget_table_add(evas, 0);
@@ -614,6 +603,11 @@ _mixer_popup_new(E_Mixer_Instance *inst)
                                          _mixer_popup_cb_mixer, inst, NULL);
    e_widget_table_object_append(inst->ui.table, inst->ui.button,
                                 0, 7, colspan, 1, 1, 1, 1, 0);
+
+   e_widget_min_size_get(inst->ui.table, &mw, &mh);
+   if (mh < 208) mh = 208;
+   if (mw < 68) mw = 68;
+   e_widget_min_size_set(inst->ui.table, mw, mh);
 
    e_gadcon_popup_content_set(inst->popup, inst->ui.table);
    e_gadcon_popup_show(inst->popup);
