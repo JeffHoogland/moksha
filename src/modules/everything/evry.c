@@ -191,6 +191,12 @@ evry_hide(void)
 
    if (!popup) return;
 
+   if (update_timer)
+     {
+	ecore_timer_del(update_timer);
+	update_timer = NULL;
+     }
+
    evas_event_freeze(popup->evas);
    _evry_matches_clear();
    e_popup_hide(popup);
