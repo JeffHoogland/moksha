@@ -644,11 +644,13 @@ _e_fwin_cb_page_change(void *data1, void *data2)
    if (prev)
      {
         evas_object_hide(prev->scrollframe_obj);
-        e_toolbar_hide(prev->tbar);
+	if (prev->tbar)
+	  e_toolbar_hide(prev->tbar);
      }
 
    evas_object_show(page->scrollframe_obj);
-   e_toolbar_show(page->tbar);
+   if (page->tbar)
+     e_toolbar_show(page->tbar);
 
    fwin->cur_page = page;
    evas_object_focus_set(page->fm_obj, 1);
