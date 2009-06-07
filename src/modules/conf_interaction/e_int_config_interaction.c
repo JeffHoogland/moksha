@@ -104,7 +104,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    cfdata->sl1 = ob;
    
-   ob = e_widget_label_add(evas, _("Threshold for for applying drag momentum"));
+   ob = e_widget_label_add(evas, _("Threshold for applying drag momentum"));
    e_widget_framelist_object_append(of, ob);
    cfdata->l2 = ob;
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f pixels/sec"), 0, 2000, 20, 0, &(cfdata->thumbscroll_momentum_threshhold), NULL, 200);
