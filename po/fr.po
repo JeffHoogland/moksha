@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-07 09:11+0400\n"
-"PO-Revision-Date: 2009-06-07 12:22+0400\n"
+"POT-Creation-Date: 2009-06-08 07:41+0400\n"
+"PO-Revision-Date: 2009-06-08 08:55+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <Enlightenment i18n French>\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "À propos de Enlightenment"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:819
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:125
-#: src/modules/fileman/e_fwin.c:1853
+#: src/modules/fileman/e_fwin.c:1876
 #: src/modules/illume/e_mod_win.c:177
 #: src/modules/mixer/app_mixer.c:531
 msgid "Close"
@@ -814,7 +814,7 @@ msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
 #: src/bin/e_config_dialog.c:199
-#: src/modules/battery/e_mod_main.c:1092
+#: src/modules/battery/e_mod_main.c:1091
 #: src/modules/conf_engine/e_mod_main.c:34
 #: src/modules/conf_exebuf/e_mod_main.c:34
 #: src/modules/conf_paths/e_mod_main.c:34
@@ -844,7 +844,7 @@ msgstr "Modules"
 #: src/bin/e_configure.c:33
 #: src/modules/conf_shelves/e_mod_main.c:38
 #: src/modules/gadman/e_mod_main.c:25
-#: src/modules/mixer/e_mod_main.c:1082
+#: src/modules/mixer/e_mod_main.c:1076
 msgid "Extensions"
 msgstr "Extensions"
 
@@ -2036,8 +2036,8 @@ msgstr "Toujours focaliser au démarrage"
 #: src/modules/ibox/e_mod_main.c:715
 #: src/modules/pager/e_mod_main.c:814
 #: src/modules/temperature/e_mod_main.c:281
-#: src/modules/mixer/e_mod_main.c:668
-#: src/modules/connman/e_mod_main.c:1090
+#: src/modules/mixer/e_mod_main.c:662
+#: src/modules/connman/e_mod_main.c:1076
 msgid "Settings"
 msgstr "Configuration"
 
@@ -2706,7 +2706,7 @@ msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment ne peut pas configurer son système de glissé-déposé."
 
 #: src/bin/e_main.c:867
-msgid "Setup Grab Input Handing"
+msgid "Setup Grab Input Handling"
 msgstr "Configuration des périphériques d'entrée"
 
 #: src/bin/e_main.c:872
@@ -3264,26 +3264,26 @@ msgstr "Interface"
 msgid "Battery"
 msgstr "Batterie"
 
-#: src/modules/battery/e_mod_main.c:845
+#: src/modules/battery/e_mod_main.c:844
 msgid "Your battery is low!"
 msgstr "La batterie est faible !"
 
-#: src/modules/battery/e_mod_main.c:847
+#: src/modules/battery/e_mod_main.c:846
 msgid "AC power is recommended."
 msgstr "Branchement sur le secteur recommandé."
 
-#: src/modules/battery/e_mod_main.c:922
+#: src/modules/battery/e_mod_main.c:921
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:993
-#: src/modules/battery/e_mod_main.c:995
-#: src/modules/battery/e_mod_main.c:1002
-#: src/modules/battery/e_mod_main.c:1004
+#: src/modules/battery/e_mod_main.c:992
+#: src/modules/battery/e_mod_main.c:994
+#: src/modules/battery/e_mod_main.c:1001
+#: src/modules/battery/e_mod_main.c:1003
 msgid "ERROR"
 msgstr "ERREUR"
 
-#: src/modules/battery/e_mod_main.c:1094
+#: src/modules/battery/e_mod_main.c:1093
 msgid "Battery Meter"
 msgstr "Surveillance de la batterie"
 
@@ -3332,7 +3332,7 @@ msgid "Restart Applications"
 msgstr "Applications à redémarrer"
 
 #: src/modules/conf_applications/e_int_config_apps.c:236
-#: src/modules/fileman/e_fwin.c:1900
+#: src/modules/fileman/e_fwin.c:1923
 msgid "All Applications"
 msgstr "Toutes les applications"
 
@@ -4614,7 +4614,7 @@ msgid "%1.0f pixels"
 msgstr "%1.0f pixels"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:107
-msgid "Threshold for for applying drag momentum"
+msgid "Threshold for applying drag momentum"
 msgstr "Seuil d'application de l'impulsion"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:110
@@ -6185,33 +6185,33 @@ msgstr "Monter les volumes à l'insertion"
 msgid "Open filemanager on mount"
 msgstr "Ouvrir le gestionnaire de fichiers au montage"
 
-#: src/modules/fileman/e_fwin.c:1439
+#: src/modules/fileman/e_fwin.c:1462
 msgid "Go to Parent Directory"
 msgstr "Aller au dossier parent"
 
-#: src/modules/fileman/e_fwin.c:1501
+#: src/modules/fileman/e_fwin.c:1524
 msgid "Other application..."
 msgstr "Autre application..."
 
-#: src/modules/fileman/e_fwin.c:1520
-#: src/modules/fileman/e_fwin.c:1851
+#: src/modules/fileman/e_fwin.c:1543
+#: src/modules/fileman/e_fwin.c:1874
 msgid "Open"
 msgstr "Ouvrir"
 
-#: src/modules/fileman/e_fwin.c:1525
-#: src/modules/fileman/e_fwin.c:1849
+#: src/modules/fileman/e_fwin.c:1548
+#: src/modules/fileman/e_fwin.c:1872
 msgid "Open with..."
 msgstr "Ouvrir avec..."
 
-#: src/modules/fileman/e_fwin.c:1869
+#: src/modules/fileman/e_fwin.c:1892
 msgid "Known Applications"
 msgstr "Applications disponibles"
 
-#: src/modules/fileman/e_fwin.c:1879
+#: src/modules/fileman/e_fwin.c:1902
 msgid "Specific Applications"
 msgstr "Applications spécifiques"
 
-#: src/modules/fileman/e_fwin.c:1921
+#: src/modules/fileman/e_fwin.c:1944
 msgid "Custom Command"
 msgstr "Commande personnalisée"
 
@@ -6802,7 +6802,7 @@ msgid "Right:"
 msgstr "Droit:"
 
 #: src/modules/mixer/app_mixer.c:412
-#: src/modules/mixer/e_mod_main.c:603
+#: src/modules/mixer/e_mod_main.c:592
 msgid "Mute"
 msgstr "Sourdine"
 
@@ -6843,11 +6843,11 @@ msgstr "Paramétrage du module de mixage"
 msgid "Mixer Settings Updated"
 msgstr "Configuration du mélangeur à jour"
 
-#: src/modules/mixer/e_mod_main.c:613
+#: src/modules/mixer/e_mod_main.c:602
 msgid "Controls"
 msgstr "Contrôleurs"
 
-#: src/modules/mixer/e_mod_main.c:1160
+#: src/modules/mixer/e_mod_main.c:1154
 msgid "Mixer Module Settings data changed.<br>Your old configuration has been replaced with new default.<br>Sorry for the inconvenience."
 msgstr "Les données de configuration du mélangeur ont été modifiées.<br>De nouveaux paramètres par défaut remplacent votre ancienne configuration.<br>Désolé pour le désagrément."
 

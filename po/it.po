@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-07 12:39+0200\n"
-"PO-Revision-Date: 2009-06-07 19:25+0200\n"
+"POT-Creation-Date: 2009-06-08 12:24+0200\n"
+"PO-Revision-Date: 2009-06-08 12:28+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: src/modules/conf/e_conf.c:178 src/modules/mixer/app_mixer.c:531
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:125
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
-#: src/modules/fileman/e_fwin.c:1874 src/modules/illume/e_mod_win.c:177
+#: src/modules/fileman/e_fwin.c:1876 src/modules/illume/e_mod_win.c:177
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:819
 msgid "Close"
 msgstr "Chiudi"
@@ -3062,8 +3062,8 @@ msgstr ""
 "sistema di 'drag & drop'."
 
 #: src/bin/e_main.c:867
-msgid "Setup Grab Input Handing"
-msgstr "Gestione cattura input"
+msgid "Setup Grab Input Handling"
+msgstr "Impostazioni gestione cattura dell'input"
 
 #: src/bin/e_main.c:872
 msgid "Enlightenment cannot set up its input grab handling system."
@@ -3642,7 +3642,7 @@ msgid "%1.0f pixels"
 msgstr "%1.0f pixel"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:107
-msgid "Threshold for for applying drag momentum"
+msgid "Threshold for applying drag momentum"
 msgstr "Soglia per applicazione moto residuo"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:110
@@ -5575,7 +5575,7 @@ msgid "Restart Applications"
 msgstr "Applicazioni per il riavvio"
 
 #: src/modules/conf_applications/e_int_config_apps.c:236
-#: src/modules/fileman/e_fwin.c:1921
+#: src/modules/fileman/e_fwin.c:1923
 msgid "All Applications"
 msgstr "Tutte le applicazioni"
 
@@ -6727,31 +6727,31 @@ msgstr "Localizzazione selezionata"
 msgid "Locale"
 msgstr "Localizzazione"
 
-#: src/modules/fileman/e_fwin.c:1460
+#: src/modules/fileman/e_fwin.c:1462
 msgid "Go to Parent Directory"
 msgstr "Directory superiore"
 
-#: src/modules/fileman/e_fwin.c:1522
+#: src/modules/fileman/e_fwin.c:1524
 msgid "Other application..."
 msgstr "Altre applicazioni..."
 
-#: src/modules/fileman/e_fwin.c:1541 src/modules/fileman/e_fwin.c:1872
+#: src/modules/fileman/e_fwin.c:1543 src/modules/fileman/e_fwin.c:1874
 msgid "Open"
 msgstr "Apri"
 
-#: src/modules/fileman/e_fwin.c:1546 src/modules/fileman/e_fwin.c:1870
+#: src/modules/fileman/e_fwin.c:1548 src/modules/fileman/e_fwin.c:1872
 msgid "Open with..."
 msgstr "Apri con..."
 
-#: src/modules/fileman/e_fwin.c:1890
+#: src/modules/fileman/e_fwin.c:1892
 msgid "Known Applications"
 msgstr "Applicazioni conosciute"
 
-#: src/modules/fileman/e_fwin.c:1900
+#: src/modules/fileman/e_fwin.c:1902
 msgid "Specific Applications"
 msgstr "Applicazioni specifiche"
 
-#: src/modules/fileman/e_fwin.c:1942
+#: src/modules/fileman/e_fwin.c:1944
 msgid "Custom Command"
 msgstr "Comando personalizzato"
 
@@ -7131,6 +7131,3 @@ msgstr ""
 #: src/modules/systray/e_mod_main.c:1070
 msgid "Systray"
 msgstr "Vassoio di sistema"
-
-#~ msgid "Mount of device failed"
-#~ msgstr "Il montaggio del dispositivo è fallito"
