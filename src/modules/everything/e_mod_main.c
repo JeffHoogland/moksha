@@ -14,6 +14,10 @@ static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 
+static E_Config_DD *conf_edd = NULL;
+static E_Config_DD *conf_item_edd = NULL;
+Config *evry_conf;
+
 /* module setup */
 EAPI E_Module_Api e_modapi =
   {
@@ -24,6 +28,41 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
+   char buf[4096];
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/module.everything", 
+	    e_user_homedir_get(), e_config_profile_get());
+   ecore_file_mkdir(buf);
+
+   conf_item_edd = E_CONFIG_DD_NEW("Source_Config", Source_Config);
+#undef T
+#undef D
+#define T Source_Config
+#define D conf_item_edd
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, min_query, INT);
+   conf_edd = E_CONFIG_DD_NEW("Config", Config);
+#undef T
+#undef D
+#define T Config
+#define D conf_edd
+   E_CONFIG_VAL(D, T, width, INT);
+   E_CONFIG_VAL(D, T, height, INT);
+   E_CONFIG_VAL(D, T, rel_x, DOUBLE);
+   E_CONFIG_VAL(D, T, rel_y, DOUBLE);
+   E_CONFIG_LIST(D, T, sources, conf_item_edd);
+#undef T
+#undef D
+   evry_conf = e_config_domain_load("module.everything", conf_edd);
+
+   if (!evry_conf)
+     {
+	evry_conf = E_NEW(Config, 1);
+	evry_conf->rel_x = 50.0;
+	evry_conf->rel_y = 50.0;
+	evry_conf->width = 400;
+	evry_conf->height = 350;
+     }
+   
    conf_module = m;
    evry_init();
 
@@ -67,12 +106,17 @@ e_modapi_shutdown(E_Module *m)
 
    evry_shutdown();
    conf_module = NULL;
+
+   /* Clean EET */
+   E_CONFIG_DD_FREE(conf_item_edd);
+   E_CONFIG_DD_FREE(conf_edd);
    return 1;
 }
 
 EAPI int
 e_modapi_save(E_Module *m)
 {
+   e_config_domain_save("module.everything", conf_edd, evry_conf);
    return 1;
 }
 

@@ -2,8 +2,6 @@
 #include "e_mod_main.h"
 #include "evry.h"
 
-#define WIDTH 400
-#define HEIGHT 350
 #define INPUTLEN 40
 #define MATCH_LAG 0.33
 
@@ -91,7 +89,7 @@ EAPI int
 evry_show(E_Zone *zone)
 {
    Evas_Object *o;
-   int x, y, w, h;
+   int x, y;
 
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
@@ -108,12 +106,10 @@ evry_show(E_Zone *zone)
 	return 0;
      }
 
-   w = WIDTH;
-   h = HEIGHT;
-   x = zone->x + (zone->w / 2) - (w / 2);
-   y = zone->y + (zone->h / 2) - (h / 2);
+   x = zone->x + (zone->w / 2) - (evry_conf->width / 2);
+   y = zone->y + (zone->h / 2) - (evry_conf->height / 2);
 
-   popup = e_popup_new(zone, x, y, w, h);
+   popup = e_popup_new(zone, x, y, evry_conf->width, evry_conf->height);
    if (!popup) return 0;
 
    cmd_buf = malloc(INPUTLEN);
@@ -146,7 +142,7 @@ evry_show(E_Zone *zone)
 
    o = o_main;
    evas_object_move(o, 0, 0);
-   evas_object_resize(o, w, h);
+   evas_object_resize(o, evry_conf->width, evry_conf->height);
    evas_object_show(o);
    e_popup_edje_bg_object_set(popup, o);
 
@@ -567,17 +563,16 @@ _evry_matches_update()
 	     snprintf(buf, 64, "%s (%d)", plugin->name,
 		      eina_list_count(plugin->candidates));
 
-	     e_widget_toolbar_item_append(o_toolbar,
-					  NULL, buf,
-					  _evry_cb_plugin_sel,
-					  plugin, NULL);
+	     e_widget_toolbar_item_append(o_toolbar, NULL, buf,
+					  _evry_cb_plugin_sel, plugin, NULL);
 
 	     cur_sources = eina_list_append(cur_sources, plugin);
 	     plugin_count++;
 	  }
      }
 
-   if (!cur_source && (plugin_count > 0))
+   if ((!cur_source || !eina_list_data_find(cur_sources, cur_source)) &&
+       (plugin_count > 0))
      {
 	_evry_show_candidates(cur_sources->data);
      }

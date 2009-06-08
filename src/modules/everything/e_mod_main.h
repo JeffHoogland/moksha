@@ -10,6 +10,30 @@
 #undef E_TYPEDEFS
 #include "evry.h"
 
+typedef struct _Config Config;
+typedef struct _Source_Config Source_Config;
+
+struct _Config
+{
+  /* position */
+  double rel_x, rel_y;
+  /* size */
+  int width, height;
+
+  /* generic plugin config */
+  Eina_List *sources;
+};
+
+struct _Source_Config
+{
+  const char *name;
+
+  /* minimum input chars to query this source */
+  int min_query;
+};
+
+  
+
 EAPI extern E_Module_Api e_modapi;
 
 EAPI void *e_modapi_init     (E_Module *m);
@@ -24,5 +48,7 @@ EAPI int  evry_plug_border_shutdown(void);
 
 EAPI int  evry_plug_config_init(void);
 EAPI int  evry_plug_config_shutdown(void);
+
+extern Config *evry_conf;
 
 #endif
