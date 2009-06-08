@@ -36,25 +36,28 @@ static void _evry_cb_plugin_sel(void *data1, void *data2);
 
 /* local subsystem globals */
 static E_Popup     *popup = NULL;
+static Ecore_X_Window input_window = 0;
 static Evas_Object *o_list = NULL;
 static Evas_Object *o_main = NULL;
 static Evas_Object *icon_object = NULL;
 static Evas_Object *o_toolbar = NULL;
 static char        *cmd_buf = NULL;
 static Eina_List   *handlers = NULL;
-static Ecore_X_Window input_window = 0;
-static Eina_List   *plugins = NULL;
 static Ecore_Timer *update_timer = NULL;
-/* static Ecore_Animator *animator = NULL; */
-static Evry_Item   *item_selected = NULL;
-static Evry_Item   *item_mouseover = NULL;
-static double       scroll_align_to;
-static double       scroll_align;
+static Eina_List   *plugins = NULL;
 static int          plugin_count;
 static Evry_Plugin *cur_source;
 static Eina_List   *cur_sources = NULL;
 
+static Evry_Item   *item_selected = NULL;
+static Evry_Item   *item_mouseover = NULL;
+
 static int ev_last_is_mouse;
+/* static Ecore_Animator *animator = NULL; */
+static double       scroll_align_to;
+static double       scroll_align;
+
+
 
 /* externally accessible functions */
 EAPI int
@@ -192,7 +195,10 @@ evry_hide(void)
    if (!popup) return;
 
    if (update_timer)
-     ecore_timer_del(update_timer);
+     {
+	ecore_timer_del(update_timer);
+	update_timer = NULL;
+     }
    
    evas_event_freeze(popup->evas);
    _evry_matches_clear();
@@ -789,9 +795,14 @@ _evry_plugin_prev(void)
      {
 	_evry_show_candidates(l->prev->data);
      }
-   else if (cur_source != eina_list_last(cur_sources)->data)
-     {
-	_evry_show_candidates(eina_list_last(cur_sources)->data);
+   else
+     {	
+	l = eina_list_last(cur_sources);
+	
+	if (cur_source != l->data)
+	  {
+	     _evry_show_candidates(l->data);
+	  }
      }
 }
 
