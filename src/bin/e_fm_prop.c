@@ -513,7 +513,7 @@ _cb_icon_sel(void *data, void *data2)
    e_dialog_button_add(dia, _("OK"), NULL, _cb_fsel_ok, cfdata);
    e_dialog_button_add(dia, _("Cancel"), NULL, _cb_fsel_cancel, cfdata);
    e_dialog_resizable_set(dia, 1);
-   e_win_resize(dia->win, 475, 341);
+   e_util_win_auto_resize_fill(dia->win);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
 
