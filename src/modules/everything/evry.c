@@ -51,8 +51,8 @@ static Evry_Item   *item_mouseover = NULL;
 static double       scroll_align_to;
 static double       scroll_align;
 static int          plugin_count;
-static Evry_Plugin *plugin_selected;
-static int          toolbar_nr;
+static Evry_Plugin *cur_source;
+static Eina_List   *cur_sources = NULL;
 
 static int ev_last_is_mouse;
 
@@ -192,11 +192,8 @@ evry_hide(void)
    if (!popup) return;
 
    if (update_timer)
-     {
-	ecore_timer_del(update_timer);
-	update_timer = NULL;
-     }
-
+     ecore_timer_del(update_timer);
+   
    evas_event_freeze(popup->evas);
    _evry_matches_clear();
    e_popup_hide(popup);
@@ -230,7 +227,7 @@ evry_hide(void)
    free(cmd_buf);
    cmd_buf = NULL;
 
-   plugin_selected = NULL;
+   cur_source = NULL;
    item_selected = NULL;
    item_mouseover = NULL;
 }
@@ -254,16 +251,13 @@ _evry_cb_key_down(void *data, int type, void *event)
      _evry_plugin_next();
    else if (!strcmp(ev->key, "Left"))
      _evry_plugin_prev();
-   else if (!strcmp(ev->key, "Return"))
-     _evry_action(1);
    else if (!strcmp(ev->key, "Return") &&
 	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
      _evry_action(0);
+   else if (!strcmp(ev->key, "Return"))
+     _evry_action(1);
    /* else if (!strcmp(ev->key, "Tab"))
-    *   _evry_complete();
-    * else if (!strcmp(ev->key, "Return"))
-    *   _evry_exec();
-    */
+    *   _evry_complete(); */
    else if (!strcmp(ev->key, "u") &&
 	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
      _evry_clear();
@@ -281,9 +275,6 @@ _evry_cb_key_down(void *data, int type, void *event)
    	       {
    		  strcat(cmd_buf, ev->compose);
    		  _evry_update();
-   		  if (!update_timer)
-   		    update_timer =
-		      ecore_timer_add(MATCH_LAG, _evry_update_timer, NULL);
    	       }
    	  }
      }
@@ -415,29 +406,9 @@ _evry_cb_item_mouse_out(void *data, Evas *evas, Evas_Object *obj,
 static void
 _evry_cb_plugin_sel(void *data1, void *data2)
 {
-   Evry_Plugin *plugin;
-   Eina_List *l;
-   int i = 0;
+   if (cur_source == data1) return;
    
-   if (plugin_selected == data1) return;
-   
-   _evry_list_clear();
-   plugin_selected = data1;
-   
-   for (l = plugins; l; l = l->next)
-     {
-	plugin = l->data;
-
-	if (!plugin->candidates) continue;
-	
-	if (plugin == plugin_selected)
-	  {
-	     _evry_show_candidates(plugin);
-	     toolbar_nr = i;
-	     e_widget_toolbar_item_select(o_toolbar, toolbar_nr);
-	  }
-	else i++;
-     }
+   _evry_show_candidates(data1);
 }
 
 static void
@@ -453,8 +424,6 @@ _evry_backspace(void)
 	  {
 	     cmd_buf[pos] = 0;
 	     _evry_update();
-	     if (!update_timer)
-	       update_timer = ecore_timer_add(MATCH_LAG, _evry_update_timer, NULL);
 	  }
      }
 }
@@ -466,18 +435,20 @@ _evry_update(void)
    Evas_Object *o;
 
    edje_object_part_text_set(o_main, "e.text.label", cmd_buf);
+
    if (icon_object) evas_object_del(icon_object);
    icon_object = NULL;
 
-   if (!cmd_buf[0]) return;
+   if (update_timer) ecore_timer_del(update_timer);
+   update_timer = ecore_timer_add(MATCH_LAG, _evry_update_timer, NULL);
 }
 
 static void
 _evry_action(int finished)
 {
-   if (plugin_selected && item_selected)
+   if (cur_source && item_selected)
      {
-	plugin_selected->action(item_selected);
+	cur_source->action(item_selected);
      }
    else
      e_exec(popup->zone, NULL, cmd_buf, NULL, "everything");
@@ -505,10 +476,14 @@ _evry_show_candidates(Evry_Plugin *plugin)
    Eina_List *l;
    int mw, mh, h;
    Evas_Object *o;
+   int i = 0;
 
+   _evry_list_clear();
+   cur_source = plugin;
+   
    e_box_freeze(o_list);
 
-   EINA_LIST_FOREACH(plugin->candidates, l, it)
+   EINA_LIST_FOREACH(cur_source->candidates, l, it)
      {
 	o = edje_object_add(popup->evas);
 	it->o_bg = o;
@@ -523,8 +498,7 @@ _evry_show_candidates(Evry_Plugin *plugin)
 					 _evry_cb_item_mouse_out, it);
 	evas_object_show(o);
 
-	/* XXX eek*/
-	plugin->icon_get(it, popup->evas);
+	cur_source->icon_get(it, popup->evas);
 	if (edje_object_part_exists(o, "e.swallow.icons") && it->o_icon)
 	  {
 	     edje_object_part_swallow(o, "e.swallow.icons", it->o_icon);
@@ -549,21 +523,29 @@ _evry_show_candidates(Evry_Plugin *plugin)
    else
      e_box_align_set(o_list, 0.5, 1.0);
 
+   EINA_LIST_FOREACH(cur_sources, l, plugin)
+     if (plugin == cur_source)
+       break;
+     else i++;
+
+   e_widget_toolbar_item_select(o_toolbar, i);
+   
    evas_event_thaw(popup->evas);
 }
 
 static void
 _evry_matches_update()
 {
-   Evry_Plugin *plugin, *first = NULL;
+   Evry_Plugin *plugin;
    Eina_List *l;
    char buf[64];
    int candidates;
 
    _evry_matches_clear();
    plugin_count = 0;
-   toolbar_nr = 0;
-
+   eina_list_free(cur_sources);
+   cur_sources = NULL;
+   
    EINA_LIST_FOREACH(plugins, l, plugin)
      {
 	if (strlen(cmd_buf) == 0)
@@ -583,39 +565,26 @@ _evry_matches_update()
 					  NULL, buf,
 					  _evry_cb_plugin_sel,
 					  plugin, NULL);
-	     if (!first)
-	       first = plugin;
 
-	     /* if (!plugin_selected)
-	      *   {
-	      * 	  plugin_selected = plugin;
-	      *   }
-	      * else */
-	     if (plugin == plugin_selected)
-	       toolbar_nr = plugin_count;
-
+	     cur_sources = eina_list_append(cur_sources, plugin);
 	     plugin_count++;
 	  }
      }
 
-   if ((toolbar_nr == 0) && (plugin_count > 0))
+   if (!cur_source && (plugin_count > 0))
      {
-	plugin_selected = first;
+	_evry_show_candidates(cur_sources->data);
      }
 
-   if (plugin_selected)
+   else if (cur_source)
      {
-	_evry_show_candidates(plugin_selected);
-	e_widget_toolbar_item_select(o_toolbar, toolbar_nr);
+	_evry_show_candidates(cur_source);
      }
 }
 
 static void
 _evry_item_remove(Evry_Item *it)
 {
-   /* if (ev_last_mouse == it)
-    *   ev_last_mouse = NULL; */
-
    evas_object_del(it->o_bg);
    if (it->o_icon) evas_object_del(it->o_icon);
    it->o_icon = NULL;
@@ -649,11 +618,11 @@ _evry_list_clear(void)
    Evry_Item *it;
    Eina_List *l;
 
-   if (plugin_selected)
+   if (cur_source)
      {
 	evas_event_freeze(popup->evas);
 	e_box_freeze(o_list);
-	EINA_LIST_FOREACH(plugin_selected->candidates, l, it)
+	EINA_LIST_FOREACH(cur_source->candidates, l, it)
 	  _evry_item_remove(it);
 	e_box_thaw(o_list);
 	evas_event_thaw(popup->evas);
@@ -667,7 +636,7 @@ _evry_scroll_to(int i)
 {
    int n, h, mh;
 
-   n = eina_list_count(plugin_selected->candidates);
+   n = eina_list_count(cur_source->candidates);
 
    e_box_min_size_get(o_list, NULL, &mh);
    evas_object_geometry_get(o_list, NULL, NULL, NULL, &h);
@@ -727,7 +696,7 @@ _evry_item_next(void)
    
    if (item_selected)
      {
-	for (i = 0, l = plugin_selected->candidates; l; l = l->next, i++)
+	for (i = 0, l = cur_source->candidates; l; l = l->next, i++)
 	  {
 	     if (l->data == item_selected)
 	       {
@@ -742,9 +711,9 @@ _evry_item_next(void)
 	       }
 	  }
      }
-   else if (plugin_selected->candidates)
+   else if (cur_source->candidates)
      {
-	item_selected = plugin_selected->candidates->data;
+	item_selected = cur_source->candidates->data;
 	_evry_item_sel(item_selected);
 	_evry_scroll_to(0);
      }
@@ -763,7 +732,7 @@ _evry_item_prev(void)
      {
 	_evry_item_desel(item_selected);
 
-	for (i = 0, l = plugin_selected->candidates; l; l = l->next, i++)
+	for (i = 0, l = cur_source->candidates; l; l = l->next, i++)
 	  {
 	     if (l->data == item_selected)
 	       {
@@ -790,47 +759,18 @@ _evry_plugin_next(void)
 {
    Eina_List *l;
    Evry_Plugin *plugin;
-   Evry_Item *it;
-   int changed = 0;
-   int i;
 
-   if (!plugin_selected) return;
+   if (!cur_source) return;
 
-   l = eina_list_data_find_list(plugins, plugin_selected);
+   l = eina_list_data_find_list(cur_sources, cur_source);
 
    if (l && l->next)
      {
-	for (l = l->next; l; l = l->next)
-	  {
-	     plugin = l->data;
-	     if (plugin->candidates)
-	       {
-		  toolbar_nr++;
-		  changed = 1;
-		  break;
-	       }
-	  }
+	_evry_show_candidates(l->next->data);
      }
-   if (!changed)
+   else if (cur_source != cur_sources->data)
      {
-	for (l = plugins; l; l = l->next)
-	  {
-	     plugin = l->data;
-	     if ((plugin != plugin_selected) &&  plugin->candidates)
-	       {
-		  changed = 1;
-		  toolbar_nr = 0;
-		  break;
-	       }
-	  }
-     }
-   if (changed)
-     {
-	_evry_list_clear();
-
-	plugin_selected = plugin;
-	_evry_show_candidates(plugin);
-	e_widget_toolbar_item_select(o_toolbar, toolbar_nr);
+	_evry_show_candidates(cur_sources->data);
      }
 }
 
@@ -840,46 +780,18 @@ _evry_plugin_prev(void)
 {
    Eina_List *l;
    Evry_Plugin *plugin;
-   Evry_Item *it;
-   int changed = 0;
-   int i;
 
-   if (!plugin_selected) return;
+   if (!cur_source) return;
 
-   l = eina_list_data_find_list(plugins, plugin_selected);
+   l = eina_list_data_find_list(plugins, cur_source);
 
    if (l && l->prev)
      {
-	for (l = l->prev; l; l = l->prev)
-	  {
-	     plugin = l->data;
-	     if (plugin->candidates)
-	       {
-		  toolbar_nr--;
-		  changed = 1;
-		  break;
-	       }
-	  }
+	_evry_show_candidates(l->prev->data);
      }
-   if (!changed)
+   else if (cur_source != eina_list_last(cur_sources)->data)
      {
-	for (l = eina_list_last(plugins); l; l = l->prev)
-	  {
-	     plugin = l->data;
-	     if ((plugin != plugin_selected) && plugin->candidates)
-	       {
-		  changed = 1;
-		  toolbar_nr = plugin_count - 1;
-		  break;
-	       }
-	  }
-     }
-   if (changed)
-     {
-	_evry_list_clear();
-
-	plugin_selected = plugin;
-	_evry_show_candidates(plugin);
-	e_widget_toolbar_item_select(o_toolbar, toolbar_nr);
+	_evry_show_candidates(eina_list_last(cur_sources)->data);
      }
 }
+
