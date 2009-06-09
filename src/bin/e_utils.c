@@ -652,6 +652,7 @@ e_util_filename_escape(const char *filename)
    char *q;
    static char buf[4096];
 
+   if (!filename) return NULL;
    p = filename;
    q = buf;
    while (*p)
