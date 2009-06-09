@@ -402,6 +402,7 @@ _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_
 	return;
      }
    cfdata->desktop = desktop;
+   if (cfdata->desktop) efreet_desktop_ref(cfdata->desktop);
    if (exec) cfdata->exec = strdup(exec);
    cfdata->error = error;
    cfdata->read = read;
@@ -507,6 +508,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->error) ecore_exe_event_data_free(cfdata->error);
    if (cfdata->read) ecore_exe_event_data_free(cfdata->read);
+
+   if (cfdata->desktop) efreet_desktop_free(cfdata->desktop);
 
    E_FREE(cfdata->exec);
    E_FREE(cfdata->signal);
