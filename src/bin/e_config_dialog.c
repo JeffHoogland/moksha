@@ -271,14 +271,14 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 
 	e_dialog_show(cfd->dia);
 	if (cfd->icon) e_dialog_border_icon_set(cfd->dia, cfd->icon);
-	x = pdia->win->border->x + ((pdia->win->w - cfd->dia->win->w) / 2);
-	y = pdia->win->border->y + ((pdia->win->h - cfd->dia->win->h) / 2);
+	x = pdia->win->x;
+	y = pdia->win->y;
 	if (x < 0) x = 0;
 	if (y < 0) y = 0;
 	if ((x + cfd->dia->win->w) > (pdia->win->container->w))
 	  x = pdia->win->container->w - cfd->dia->win->w;
 	if ((y + cfd->dia->win->h) > (pdia->win->container->h))
-	  x = pdia->win->container->h - cfd->dia->win->h;
+	  y = pdia->win->container->h - cfd->dia->win->h;
 	e_win_move(cfd->dia->win, x, y);
 	e_win_placed_set(cfd->dia->win, 1);
      }
