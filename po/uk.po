@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: e.HEAD\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
 "POT-Creation-Date: 2009-05-30 15:00-0700\n"
-"PO-Revision-Date: 2009-05-31 21:13+0300\n"
+"PO-Revision-Date: 2009-06-07 22:51+0300\n"
 "Last-Translator: Daniel Korostil <ted.korostiled@gmail.com>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
@@ -17,13 +17,11 @@ msgstr ""
 ": 2);\n"
 
 #: ../src/bin/e_about.c:17
-#, fuzzy
 msgid "About Enlightenment"
 msgstr "Про Enlightenment"
 
 #. Close Button
 #: ../src/bin/e_about.c:20 ../src/bin/e_actions.c:2499
-#, fuzzy
 #: ../src/bin/e_config_dialog.c:259 ../src/bin/e_fm.c:902
 #: ../src/bin/e_int_border_menu.c:215 ../src/bin/e_int_border_prop.c:81
 #: ../src/bin/e_theme_about.c:20 ../src/modules/conf/e_conf.c:178
@@ -36,7 +34,6 @@ msgid "Close"
 msgstr "Закрити"
 
 #: ../src/bin/e_about.c:21 ../src/bin/e_actions.c:2795
-#, fuzzy
 #: ../src/bin/e_actions.c:2799 ../src/bin/e_actions.c:2803
 #: ../src/bin/e_int_menus.c:165 ../src/bin/e_main.c:666
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:182
@@ -77,12 +74,10 @@ msgid ""
 msgstr ""
 
 #: ../src/bin/e_actions.c:357
-#, fuzzy
 msgid "Are you sure you want to kill this window?"
 msgstr "Ви впевнені, що бажаєте вбити це вікно?"
 
 #: ../src/bin/e_actions.c:360 ../src/bin/e_actions.c:1776
-#, fuzzy
 #: ../src/bin/e_actions.c:1874 ../src/bin/e_actions.c:1938
 #: ../src/bin/e_actions.c:2002 ../src/bin/e_actions.c:2066
 #: ../src/bin/e_actions.c:2130 ../src/bin/e_confirm_dialog.c:47
@@ -92,7 +87,6 @@ msgid "Yes"
 msgstr "Так"
 
 #: ../src/bin/e_actions.c:362 ../src/bin/e_actions.c:1778
-#, fuzzy
 #: ../src/bin/e_actions.c:1876 ../src/bin/e_actions.c:1940
 #: ../src/bin/e_actions.c:2004 ../src/bin/e_actions.c:2068
 #: ../src/bin/e_actions.c:2132 ../src/bin/e_confirm_dialog.c:48
@@ -154,7 +148,6 @@ msgid ""
 msgstr ""
 
 #: ../src/bin/e_actions.c:2459 ../src/bin/e_actions.c:2470
-#, fuzzy
 #: ../src/bin/e_actions.c:2489 ../src/bin/e_actions.c:2494
 #: ../src/bin/e_actions.c:2499 ../src/bin/e_actions.c:2504
 #: ../src/bin/e_actions.c:2723 ../src/bin/e_actions.c:2727
@@ -164,7 +157,6 @@ msgid "Window : Actions"
 msgstr "Вікно : дії"
 
 #: ../src/bin/e_actions.c:2459 ../src/bin/e_fm.c:5971
-#, fuzzy
 msgid "Move"
 msgstr "Пересунути"
 
@@ -173,7 +165,6 @@ msgid "Resize"
 msgstr ""
 
 #: ../src/bin/e_actions.c:2481 ../src/bin/e_actions.c:2771
-#, fuzzy
 #: ../src/bin/e_actions.c:2773 ../src/bin/e_actions.c:2775
 #: ../src/bin/e_actions.c:2777 ../src/bin/e_actions.c:2779
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:325
@@ -181,7 +172,6 @@ msgid "Menu"
 msgstr "Меню"
 
 #: ../src/bin/e_actions.c:2481
-#, fuzzy
 msgid "Window Menu"
 msgstr "Меню вікна"
 
@@ -194,12 +184,10 @@ msgid "Lower"
 msgstr ""
 
 #: ../src/bin/e_actions.c:2504 ../src/bin/e_int_border_menu.c:204
-#, fuzzy
 msgid "Kill"
 msgstr "Вбити"
 
 #: ../src/bin/e_actions.c:2509 ../src/bin/e_actions.c:2516
-#, fuzzy
 #: ../src/bin/e_actions.c:2523 ../src/bin/e_actions.c:2530
 #: ../src/bin/e_actions.c:2532 ../src/bin/e_actions.c:2535
 #: ../src/bin/e_actions.c:2538 ../src/bin/e_actions.c:2540
@@ -281,7 +269,6 @@ msgid "Toggle Pinned State"
 msgstr ""
 
 #: ../src/bin/e_actions.c:2576 ../src/bin/e_actions.c:2578
-#, fuzzy
 #: ../src/bin/e_actions.c:2580 ../src/bin/e_actions.c:2582
 #: ../src/bin/e_actions.c:2584 ../src/bin/e_actions.c:2590
 #: ../src/bin/e_actions.c:2595 ../src/bin/e_actions.c:2600
@@ -484,7 +471,6 @@ msgid "Switch To Desktop... (All Screens)"
 msgstr ""
 
 #: ../src/bin/e_actions.c:2704 ../src/bin/e_actions.c:2706
-#, fuzzy
 #: ../src/bin/e_actions.c:2708 ../src/bin/e_actions.c:2713
 #: ../src/bin/e_actions.c:2715 ../src/bin/e_actions.c:2717
 #: ../src/modules/conf_desklock/e_mod_main.c:34
@@ -562,7 +548,6 @@ msgid "Show Menu..."
 msgstr ""
 
 #: ../src/bin/e_actions.c:2786 ../src/bin/e_actions.c:2791
-#, fuzzy
 #: ../src/modules/conf/e_mod_main.c:139 ../src/modules/conf/e_mod_main.c:163
 #: ../src/modules/exebuf/e_mod_main.c:48 ../src/modules/exebuf/e_mod_main.c:69
 #: ../src/modules/fileman/e_mod_main.c:63
@@ -571,27 +556,22 @@ msgid "Launch"
 msgstr "Запустити"
 
 #: ../src/bin/e_actions.c:2786 ../src/bin/e_int_border_prop.c:439
-#, fuzzy
 msgid "Command"
 msgstr "Команду"
 
 #: ../src/bin/e_actions.c:2791
-#, fuzzy
 msgid "Application"
 msgstr "Програму"
 
 #: ../src/bin/e_actions.c:2795 ../src/bin/e_int_menus.c:189
-#, fuzzy
 msgid "Restart"
 msgstr "Перезапустити"
 
 #: ../src/bin/e_actions.c:2799 ../src/bin/e_int_menus.c:194
-#, fuzzy
 msgid "Exit"
 msgstr "Вийти"
 
 #: ../src/bin/e_actions.c:2803
-#, fuzzy
 msgid "Exit Now"
 msgstr "Вийти зараз"
 
@@ -609,7 +589,6 @@ msgstr ""
 
 #. FIXME use gadget icon
 #: ../src/bin/e_actions.c:2817 ../src/bin/e_actions.c:2821
-#, fuzzy
 #: ../src/bin/e_actions.c:2825 ../src/bin/e_actions.c:2829
 #: ../src/bin/e_actions.c:2833 ../src/bin/e_actions.c:2837
 #: ../src/bin/e_configure.c:145 ../src/bin/e_int_config_modules.c:45
@@ -628,22 +607,18 @@ msgid "System"
 msgstr "Система"
 
 #: ../src/bin/e_actions.c:2817
-#, fuzzy
 msgid "Log Out"
 msgstr "Вийти"
 
 #: ../src/bin/e_actions.c:2821
-#, fuzzy
 msgid "Power Off Now"
 msgstr "Вимкнути зараз"
 
 #: ../src/bin/e_actions.c:2825
-#, fuzzy
 msgid "Power Off"
 msgstr "Вимкнути"
 
 #: ../src/bin/e_actions.c:2829
-#, fuzzy
 msgid "Reboot"
 msgstr "Перезавантажити"
 
@@ -690,7 +665,6 @@ msgstr ""
 
 #. buttons at the bottom
 #: ../src/bin/e_color_dialog.c:48 ../src/bin/e_config.c:1788
-#, fuzzy
 #: ../src/bin/e_config_dialog.c:249 ../src/bin/e_eap_editor.c:613
 #: ../src/bin/e_eap_editor.c:677 ../src/bin/e_entry_dialog.c:62
 #: ../src/bin/e_exec.c:323 ../src/bin/e_fm.c:8386 ../src/bin/e_fm_prop.c:513
@@ -715,7 +689,6 @@ msgid "OK"
 msgstr "Гаразд"
 
 #: ../src/bin/e_color_dialog.c:49 ../src/bin/e_eap_editor.c:615
-#, fuzzy
 #: ../src/bin/e_eap_editor.c:679 ../src/bin/e_entry_dialog.c:63
 #: ../src/bin/e_fm.c:8388 ../src/bin/e_fm_prop.c:514
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:116
@@ -910,20 +883,17 @@ msgid "Desktop Entry Editor"
 msgstr ""
 
 #: ../src/bin/e_eap_editor.c:461 ../src/bin/e_fm_prop.c:400
-#, fuzzy
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:96
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:145
 msgid "Icon"
 msgstr "Піктограма"
 
 #: ../src/bin/e_eap_editor.c:472
-#, fuzzy
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:136
 msgid "Basic Info"
 msgstr "Базова інформація"
 
 #: ../src/bin/e_eap_editor.c:473 ../src/bin/e_int_border_prop.c:420
-#, fuzzy
 #: ../src/bin/e_int_border_prop.c:467
 #: ../src/modules/conf_imc/e_int_config_imc.c:911
 msgid "Name"
@@ -993,7 +963,6 @@ msgid "Select an Executable"
 msgstr ""
 
 #: ../src/bin/e_entry.c:493 ../src/bin/e_fm.c:7920
-#, fuzzy
 #: ../src/modules/conf_applications/e_int_config_apps.c:269
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:123
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -1002,27 +971,22 @@ msgid "Delete"
 msgstr "Вилучити"
 
 #: ../src/bin/e_entry.c:503 ../src/bin/e_fm.c:7828
-#, fuzzy
 msgid "Cut"
 msgstr "Вирізати"
 
 #: ../src/bin/e_entry.c:511 ../src/bin/e_fm.c:5966 ../src/bin/e_fm.c:7842
-#, fuzzy
 msgid "Copy"
 msgstr "Копіювати"
 
 #: ../src/bin/e_entry.c:519 ../src/bin/e_fm.c:7668 ../src/bin/e_fm.c:7855
-#, fuzzy
 msgid "Paste"
 msgstr "Вставити"
 
 #: ../src/bin/e_entry.c:529
-#, fuzzy
 msgid "Select All"
 msgstr "Вибрати всі"
 
 #: ../src/bin/e_exec.c:220 ../src/bin/e_utils.c:201
-#, fuzzy
 #: ../src/modules/conf_imc/e_int_config_imc.c:278
 #: ../src/modules/conf_imc/e_int_config_imc.c:518
 msgid "Run Error"
@@ -1166,12 +1130,10 @@ msgid "%i Files"
 msgstr ""
 
 #: ../src/bin/e_fm.c:5979 ../src/bin/e_fm.c:7676 ../src/bin/e_fm.c:7863
-#, fuzzy
 msgid "Link"
 msgstr "Посилання"
 
 #: ../src/bin/e_fm.c:5987 ../src/bin/e_fm.c:8808 ../src/bin/e_fm.c:8945
-#, fuzzy
 msgid "Abort"
 msgstr "Про"
 
@@ -1235,7 +1197,6 @@ msgstr ""
 #. e_widget_disabled_set(ob, 1);
 #. e_widget_framelist_object_append(of, ob);
 #: ../src/bin/e_fm.c:8212 ../src/modules/fileman/e_mod_config.c:214
-#, fuzzy
 msgid "List"
 msgstr "Список"
 
@@ -1253,12 +1214,10 @@ msgid "Set overlay..."
 msgstr ""
 
 #: ../src/bin/e_fm.c:8387 ../src/modules/conf_theme/e_int_config_theme.c:1025
-#, fuzzy
 msgid "Clear"
 msgstr "Очистити"
 
 #: ../src/bin/e_fm.c:8611
-#, fuzzy
 msgid "Create a new Directory"
 msgstr "Створити нову теку"
 
@@ -1272,7 +1231,6 @@ msgid "Rename %s to:"
 msgstr ""
 
 #: ../src/bin/e_fm.c:8668
-#, fuzzy
 msgid "Rename File"
 msgstr "Змінити назву файла"
 
@@ -1286,22 +1244,19 @@ msgid "Error"
 msgstr ""
 
 #: ../src/bin/e_fm.c:8814
-#, fuzzy, c-format
+#, c-format
 msgid "%s"
 msgstr "%s"
 
 #: ../src/bin/e_fm.c:8866
-#, fuzzy
 msgid "No to all"
 msgstr "Ні для всіх"
 
 #: ../src/bin/e_fm.c:8868
-#, fuzzy
 msgid "Yes to all"
 msgstr "Так для всіх"
 
 #: ../src/bin/e_fm.c:8871
-#, fuzzy
 msgid "Warning"
 msgstr "Попередження"
 
@@ -1311,12 +1266,10 @@ msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr ""
 
 #: ../src/bin/e_fm.c:8946
-#, fuzzy
 msgid "Ignore this"
 msgstr "Проігнорувати це"
 
 #: ../src/bin/e_fm.c:8947
-#, fuzzy
 msgid "Ignore all"
 msgstr "Ігнорувати все"
 
@@ -1346,12 +1299,10 @@ msgid "File Properties"
 msgstr ""
 
 #: ../src/bin/e_fm_prop.c:338
-#, fuzzy
 msgid "File:"
 msgstr "Файл:"
 
 #: ../src/bin/e_fm_prop.c:345 ../src/bin/e_widget_fsel.c:328
-#, fuzzy
 msgid "Size:"
 msgstr "Розмір:"
 
@@ -1368,7 +1319,6 @@ msgid "Permissions"
 msgstr ""
 
 #: ../src/bin/e_fm_prop.c:367 ../src/bin/e_widget_fsel.c:344
-#, fuzzy
 msgid "Owner:"
 msgstr "Власник:"
 
@@ -1757,7 +1707,6 @@ msgid "ICCCM Properties"
 msgstr ""
 
 #: ../src/bin/e_int_border_prop.c:419 ../src/bin/e_int_border_remember.c:480
-#, fuzzy
 msgid "Title"
 msgstr "Заголовок"
 
@@ -1987,7 +1936,6 @@ msgid "Always focus on start"
 msgstr ""
 
 #: ../src/bin/e_int_config_modules.c:42 ../src/bin/e_int_menus.c:210
-#, fuzzy
 #: ../src/modules/battery/e_mod_main.c:176 ../src/modules/conf/e_conf.c:120
 #: ../src/modules/conf/e_conf.c:131
 #: ../src/modules/conf_dialogs/e_mod_main.c:34
@@ -2090,19 +2038,16 @@ msgid "Main"
 msgstr ""
 
 #: ../src/bin/e_int_menus.c:106
-#, fuzzy
 msgid "Favorite Applications"
 msgstr "Улюблені програми"
 
 #: ../src/bin/e_int_menus.c:117
-#, fuzzy
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:157
 #: ../src/modules/wizard/page_070.c:198
 msgid "Applications"
 msgstr "Програми"
 
 #: ../src/bin/e_int_menus.c:141 ../src/bin/e_int_menus.c:1094
-#, fuzzy
 #: ../src/modules/conf_window_display/e_mod_main.c:34
 #: ../src/modules/conf_window_focus/e_mod_main.c:34
 #: ../src/modules/conf_window_manipulation/e_mod_main.c:34
@@ -2116,12 +2061,10 @@ msgid "Lost Windows"
 msgstr ""
 
 #: ../src/bin/e_int_menus.c:170
-#, fuzzy
 msgid "About"
 msgstr "Про"
 
 #: ../src/bin/e_int_menus.c:175 ../src/modules/conf_theme/e_mod_main.c:39
-#, fuzzy
 #: ../src/modules/conf_theme/e_mod_main.c:40
 #: ../src/modules/conf_theme/e_mod_main.c:84
 msgid "Theme"
@@ -2154,7 +2097,6 @@ msgid "(No Windows)"
 msgstr ""
 
 #: ../src/bin/e_int_menus.c:1194 ../src/bin/e_int_menus.c:1297
-#, fuzzy
 msgid "No name!!"
 msgstr "Нема назви!!"
 
@@ -2181,32 +2123,27 @@ msgid "Shelf Settings"
 msgstr ""
 
 #: ../src/bin/e_int_shelf_config.c:524
-#, fuzzy
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:253
 msgid "Tiny"
 msgstr "Крихітний"
 
 #: ../src/bin/e_int_shelf_config.c:526
-#, fuzzy
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:100
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:259
 msgid "Small"
 msgstr "Малий"
 
 #: ../src/bin/e_int_shelf_config.c:528
-#, fuzzy
 #: ../src/modules/dropshadow/e_mod_config.c:126
 msgid "Medium"
 msgstr "Середній"
 
 #: ../src/bin/e_int_shelf_config.c:530
-#, fuzzy
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:102
 msgid "Large"
 msgstr "Великий"
 
 #: ../src/bin/e_int_shelf_config.c:532
-#, fuzzy
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:283
 msgid "Huge"
 msgstr "Громадний"
@@ -2236,12 +2173,11 @@ msgid "Shrink to Content Size"
 msgstr ""
 
 #: ../src/bin/e_int_shelf_config.c:613
-#, fuzzy, c-format
+#, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f пікселів"
 
 #: ../src/bin/e_int_shelf_config.c:617
-#, fuzzy
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:628
 msgid "Styles"
 msgstr "Стилі"
@@ -2934,7 +2870,6 @@ msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
 #: ../src/bin/e_theme_about.c:17
-#, fuzzy
 msgid "About Theme"
 msgstr "Про тему"
 
@@ -3019,7 +2954,6 @@ msgid "%li Minutes ago"
 msgstr ""
 
 #: ../src/bin/e_utils.c:860
-#, fuzzy
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:1107
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1134
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:251
@@ -3028,7 +2962,6 @@ msgid "Unknown"
 msgstr "Невідомо"
 
 #: ../src/bin/e_widget_config_list.c:63
-#, fuzzy
 #: ../src/modules/conf_applications/e_int_config_apps.c:243
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:121
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:79
@@ -3037,24 +2970,20 @@ msgid "Add"
 msgstr "Долучити"
 
 #: ../src/bin/e_widget_config_list.c:69
-#, fuzzy
 msgid "Remove"
 msgstr "Вилучити"
 
 #: ../src/bin/e_widget_config_list.c:83
-#, fuzzy
 #: ../src/modules/conf_applications/e_int_config_apps.c:258
 msgid "Up"
 msgstr "Уверх"
 
 #: ../src/bin/e_widget_config_list.c:89
-#, fuzzy
 #: ../src/modules/conf_applications/e_int_config_apps.c:263
 msgid "Down"
 msgstr "Униз"
 
 #: ../src/bin/e_widget_fsel.c:293
-#, fuzzy
 msgid "Add to Favorites"
 msgstr "Долучити до улюблених"
 
@@ -3078,7 +3007,7 @@ msgid "Modified:"
 msgstr ""
 
 #: ../src/bin/e_widget_fsel.c:615
-#, fuzzy, c-format
+#, c-format
 msgid "You"
 msgstr "Ви"
 
@@ -3181,7 +3110,6 @@ msgid "Hardware"
 msgstr ""
 
 #: ../src/modules/battery/e_mod_main.c:135
-#, fuzzy
 msgid "Battery"
 msgstr "Батарея"
 
@@ -3538,7 +3466,6 @@ msgid "Window Manager Colors"
 msgstr ""
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:437
-#, fuzzy
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:445
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:453
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:517
@@ -3546,7 +3473,6 @@ msgid "Enabled"
 msgstr "Увімкнутий"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:439
-#, fuzzy
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:447
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:455
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:522
@@ -3907,7 +3833,6 @@ msgid "Resolution change"
 msgstr ""
 
 #: ../src/modules/conf_display/e_int_config_display.c:194
-#, fuzzy
 msgid "Save"
 msgstr "Зберегти"
 
@@ -6097,7 +6022,6 @@ msgid "Mount of device failed"
 msgstr ""
 
 #: ../src/modules/fileman/e_mod_main.c:320
-#, fuzzy
 #: ../src/modules/illume/e_mod_win.c:180
 msgid "Home"
 msgstr "Домівка"
@@ -6691,18 +6615,17 @@ msgstr ""
 
 #: ../src/modules/temperature/e_mod_config.c:397
 #: ../src/modules/temperature/e_mod_config.c:402
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f F"
 msgstr "%1.0f ℉"
 
 #: ../src/modules/temperature/e_mod_config.c:409
 #: ../src/modules/temperature/e_mod_config.c:414
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f C"
 msgstr "%1.0f ℃"
 
 #: ../src/modules/temperature/e_mod_main.c:147
-#, fuzzy
 msgid "Temperature"
 msgstr "Температура"
 
@@ -6712,7 +6635,6 @@ msgstr ""
 
 #. set up next/prev buttons
 #: ../src/modules/wizard/e_wizard.c:281
-#, fuzzy
 msgid "Welcome to Enlightenment"
 msgstr "Ласкаво просимо до Enlightenment"
 
