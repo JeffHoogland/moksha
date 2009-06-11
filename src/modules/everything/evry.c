@@ -31,6 +31,9 @@ static void _evry_item_sel(Evry_Item *it);
 static void _evry_item_remove(Evry_Item *it);
 static void _evry_action(int finished);
 static void _evry_cb_plugin_sel(void *data1, void *data2);
+static int  _evry_animator(void *data);
+static int  _evry_scroll_timer(void *data);
+
 
 /* local subsystem globals */
 static E_Popup     *popup = NULL;
@@ -42,19 +45,20 @@ static Evas_Object *o_toolbar = NULL;
 static char        *cmd_buf = NULL;
 static Eina_List   *handlers = NULL;
 static Ecore_Timer *update_timer = NULL;
-static Eina_List   *plugins = NULL;
-static int          plugin_count;
-static Evry_Plugin *cur_source;
+
+static Eina_List   *sources = NULL;
 static Eina_List   *cur_sources = NULL;
+static Evry_Plugin *cur_source;
 
 static Evry_Item   *item_selected = NULL;
 static Evry_Item   *item_mouseover = NULL;
 
-static int ev_last_is_mouse;
-/* static Ecore_Animator *animator = NULL; */
+static Ecore_Animator *scroll_animator = NULL;
+static Ecore_Timer *scroll_timer = NULL;
 static double       scroll_align_to;
 static double       scroll_align;
 
+static int ev_last_is_mouse;
 
 
 /* externally accessible functions */
@@ -74,14 +78,14 @@ evry_shutdown(void)
 EAPI void
 evry_plugin_add(Evry_Plugin *plugin)
 {
-   plugins = eina_list_append(plugins, plugin);
+   sources = eina_list_append(sources, plugin);
    /* TODO sorting, initialization, etc */
 }
 
 EAPI void
 evry_plugin_remove(Evry_Plugin *plugin)
 {
-   plugins = eina_list_remove(plugins, plugin);
+   sources = eina_list_remove(sources, plugin);
    /* cleanup */
 }
 
@@ -195,13 +199,23 @@ evry_hide(void)
 	ecore_timer_del(update_timer);
 	update_timer = NULL;
      }
+   if (scroll_timer)
+     {
+	ecore_timer_del(scroll_timer);
+	scroll_timer = NULL;
+     }
+   if (scroll_animator)
+     {
+	ecore_animator_del(scroll_animator);
+	scroll_animator = NULL;
+     }
    
    evas_event_freeze(popup->evas);
    _evry_matches_clear();
    e_popup_hide(popup);
 
    e_box_freeze(o_list);
-   EINA_LIST_FOREACH(plugins, l, plugin)
+   EINA_LIST_FOREACH(sources, l, plugin)
      {
 	plugin->cleanup();
      }
@@ -542,13 +556,14 @@ _evry_matches_update()
    Eina_List *l;
    char buf[64];
    int candidates;
-
+   int plugin_count = 0;
+   
    _evry_matches_clear();
-   plugin_count = 0;
+
    eina_list_free(cur_sources);
    cur_sources = NULL;
    
-   EINA_LIST_FOREACH(plugins, l, plugin)
+   EINA_LIST_FOREACH(sources, l, plugin)
      {
 	if (strlen(cmd_buf) == 0)
 	  {
@@ -609,7 +624,7 @@ _evry_matches_clear(void)
 
    _evry_list_clear();
 
-   EINA_LIST_FOREACH(plugins, l, plugin)
+   EINA_LIST_FOREACH(sources, l, plugin)
      plugin->cleanup();
 }
 
@@ -647,19 +662,18 @@ _evry_scroll_to(int i)
    if (n > 1)
      {
 	scroll_align_to = (double)i / (double)(n - 1);
-	/* if (e_config->everything_scroll_animate)
-	 *   {
-	 *      eap_scroll_to = 1;
-	 *      if (!eap_scroll_timer)
-	 *        eap_scroll_timer = ecore_timer_add(0.01, _evry_eap_scroll_timer, NULL);
-	 *      if (!animator)
-	 *        animator = ecore_animator_add(_evry_animator, NULL);
-	 *   }
-	 * else */
-	{
-	   scroll_align = scroll_align_to;
-	   e_box_align_set(o_list, 0.5, 1.0 - scroll_align);
-	}
+	if (evry_conf->scroll_animate)
+	  {
+	     if (!scroll_timer)
+	       scroll_timer = ecore_timer_add(0.01, _evry_scroll_timer, NULL);
+	     if (!scroll_animator)
+	       scroll_animator = ecore_animator_add(_evry_animator, NULL);
+	  }
+	else
+	  {
+	     scroll_align = scroll_align_to;
+	     e_box_align_set(o_list, 0.5, 1.0 - scroll_align);
+	  }
      }
    else
      e_box_align_set(o_list, 0.5, 1.0);
@@ -784,7 +798,7 @@ _evry_plugin_prev(void)
 
    if (!cur_source) return;
 
-   l = eina_list_data_find_list(plugins, cur_source);
+   l = eina_list_data_find_list(cur_sources, cur_source);
 
    if (l && l->prev)
      {
@@ -799,5 +813,39 @@ _evry_plugin_prev(void)
 	     _evry_show_candidates(l->data);
 	  }
      }
+}
+
+static int
+_evry_scroll_timer(void *data)
+{
+   if (scroll_animator)
+     {
+	double spd;
+
+	spd = evry_conf->scroll_speed;
+	scroll_align = (scroll_align * (1.0 - spd)) + (scroll_align_to * spd);
+	return 1;
+     }
+   scroll_timer = NULL;
+   return 0;
+}
+
+static int
+_evry_animator(void *data)
+{
+   double da;
+   int scroll_to = 1;
+   
+   da = scroll_align - scroll_align_to;
+   if (da < 0.0) da = -da;
+   if (da < 0.01)
+     {
+	scroll_align = scroll_align_to;
+	scroll_to = 0;
+     }
+   e_box_align_set(o_list, 0.5, 1.0 - scroll_align);
+   if (scroll_to) return 1;
+   scroll_animator = NULL;
+   return 0;
 }
 

@@ -22,6 +22,9 @@ struct _Config
 
   /* generic plugin config */
   Eina_List *sources;
+
+  int scroll_animate;
+  double scroll_speed;
 };
 
 struct _Source_Config

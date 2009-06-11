@@ -49,6 +49,8 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, height, INT);
    E_CONFIG_VAL(D, T, rel_x, DOUBLE);
    E_CONFIG_VAL(D, T, rel_y, DOUBLE);
+   E_CONFIG_VAL(D, T, scroll_animate, INT);
+   E_CONFIG_VAL(D, T, scroll_speed, DOUBLE);
    E_CONFIG_LIST(D, T, sources, conf_item_edd);
 #undef T
 #undef D
@@ -61,6 +63,8 @@ e_modapi_init(E_Module *m)
 	evry_conf->rel_y = 50.0;
 	evry_conf->width = 400;
 	evry_conf->height = 350;
+	evry_conf->scroll_animate = 1;
+	evry_conf->scroll_speed = 0.5;
      }
    
    conf_module = m;
@@ -78,8 +82,11 @@ e_modapi_init(E_Module *m)
 	e_action_predef_name_set(_("Launch"), _("Run Everything Dialog"), "everything",
 				 NULL, NULL, 0);
      }
-   /* maug = e_int_menus_menu_augmentation_add("main/1", _e_mod_menu_add, NULL, NULL, NULL); */
+
+   maug = e_int_menus_menu_augmentation_add("main/1", _e_mod_menu_add, NULL, NULL, NULL);
+
    e_module_delayed_set(m, 1);
+
    return m;
 }
 
@@ -87,11 +94,11 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    /* remove module-supplied menu additions */
-   /* if (maug)
-    *   {
-    * 	e_int_menus_menu_augmentation_del("main/1", maug);
-    * 	maug = NULL;
-    *   } */
+   if (maug)
+     {
+   	e_int_menus_menu_augmentation_del("main/1", maug);
+   	maug = NULL;
+     }
    /* remove module-supplied action */
    if (act)
      {
@@ -159,13 +166,13 @@ _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 /* menu item add hook */
-/* static void
- * _e_mod_menu_add(void *data, E_Menu *m)
- * {
- *    E_Menu_Item *mi;
- *
- *    mi = e_menu_item_new(m);
- *    e_menu_item_label_set(mi, _("Run Command"));
- *    e_util_menu_item_theme_icon_set(mi, "system-run");
- *    e_menu_item_callback_set(mi, _e_mod_run_cb, NULL);
- * } */
+static void
+_e_mod_menu_add(void *data, E_Menu *m)
+{
+   E_Menu_Item *mi;
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Run Everything"));
+   e_util_menu_item_theme_icon_set(mi, "system-run");
+   e_menu_item_callback_set(mi, _e_mod_run_cb, NULL);
+}

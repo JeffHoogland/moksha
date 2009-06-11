@@ -61,9 +61,6 @@ _evry_plug_config_action(Evry_Item *item)
 	  }
      }
 
-   printf("path: %s\n", buf);
-   
-   
    if (found)
      e_configure_registry_call(buf, con, NULL);   
    
@@ -140,7 +137,7 @@ static void
 _evry_plug_config_item_icon_get(Evry_Item *it, Evas *e)
 {
    E_Configure_It *eci = it->data;
-   Evas_Object *o;
+   Evas_Object *o = NULL;
    
    if (eci->icon) 
      {
