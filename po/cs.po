@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-24 13:55+0200\n"
-"PO-Revision-Date: 2009-05-24 13:58+0100\n"
+"POT-Creation-Date: 2009-06-11 15:24+0200\n"
+"PO-Revision-Date: 2009-06-11 15:29+0100\n"
 "Last-Translator: quaker66 <quaker66@gmail.com>\n"
 "Language-Team: easylinux <easylinux@sachiel.eu>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr "O Enlightenmentu"
 #: ../src/bin/e_about.c:20
 #: ../src/bin/e_actions.c:2499
 #: ../src/bin/e_config_dialog.c:259
-#: ../src/bin/e_fm.c:902
+#: ../src/bin/e_fm.c:932
 #: ../src/bin/e_int_border_menu.c:215
 #: ../src/bin/e_int_border_prop.c:81
 #: ../src/bin/e_theme_about.c:20
@@ -30,7 +30,7 @@ msgstr "O Enlightenmentu"
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:819
 #: ../src/modules/conf_theme/e_int_config_theme_web.c:130
 #: ../src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:125
-#: ../src/modules/fileman/e_fwin.c:1853
+#: ../src/modules/fileman/e_fwin.c:1876
 #: ../src/modules/illume/e_mod_win.c:177
 #: ../src/modules/mixer/app_mixer.c:531
 msgid "Close"
@@ -49,7 +49,7 @@ msgstr "Enlightenment"
 
 #: ../src/bin/e_about.c:26
 msgid "Copyright &copy; 1999-2008, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existant yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
-msgstr "Copyright &copy; 1999-2006, Tým vývojářů Enlightenmentu.<br><br>Doufáme, že si náš software užijete stejně, jak jsme si užívali jeho tvorbu.<br><br>Tento software je poskytován jak je a BEZ ZÁRUKY. Tento software je chráněn licencí, více informací najdete v souborech COPYING a COPYING-PLAIN ve vašem systému.<br><br>Enlightenment je stále <hilight>VE VÝVOJI</hilight> a není stabilní. Mnoho funkcí je nehotových, neexistují nebo mohou být zabugované. Byl jste <hilight>VAROVÁN!</hilight>"
+msgstr "Copyright &copy; 1999-2008, Tým vývojářů Enlightenmentu.<br><br>Doufáme, že si náš software užijete stejně, jak jsme si užívali jeho tvorbu.<br><br>Tento software je poskytován jak je a BEZ ZÁRUKY. Tento software je chráněn licencí, více informací najdete v souborech COPYING a COPYING-PLAIN ve vašem systému.<br><br>Enlightenment je stále <hilight>VE VÝVOJI</hilight> a není stabilní. Mnoho funkcí je nehotových, neexistují nebo mohou být zabugované. Byl jste <hilight>VAROVÁN!</hilight>"
 
 #: ../src/bin/e_about.c:50
 msgid "<title>The Team</title>"
@@ -73,8 +73,8 @@ msgstr "Opravdu chcete zabít toto okno?"
 #: ../src/bin/e_actions.c:2130
 #: ../src/bin/e_confirm_dialog.c:47
 #: ../src/bin/e_desklock.c:1047
-#: ../src/bin/e_fm.c:8867
-#: ../src/bin/e_fm.c:9063
+#: ../src/bin/e_fm.c:9010
+#: ../src/bin/e_fm.c:9237
 #: ../src/bin/e_module.c:502
 #: ../src/bin/e_screensaver.c:106
 msgid "Yes"
@@ -89,8 +89,8 @@ msgstr "Ano"
 #: ../src/bin/e_actions.c:2132
 #: ../src/bin/e_confirm_dialog.c:48
 #: ../src/bin/e_desklock.c:1049
-#: ../src/bin/e_fm.c:8865
-#: ../src/bin/e_fm.c:9064
+#: ../src/bin/e_fm.c:9008
+#: ../src/bin/e_fm.c:9238
 #: ../src/bin/e_module.c:503
 #: ../src/bin/e_screensaver.c:108
 msgid "No"
@@ -157,7 +157,7 @@ msgid "Window : Actions"
 msgstr "Okno : Akce"
 
 #: ../src/bin/e_actions.c:2459
-#: ../src/bin/e_fm.c:5971
+#: ../src/bin/e_fm.c:6080
 msgid "Move"
 msgstr "Přesunout"
 
@@ -332,7 +332,7 @@ msgstr "Přepnout přitlačený stav"
 #: ../src/bin/e_int_menus.c:134
 #: ../src/bin/e_int_shelf_config.c:687
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:103
-#: ../src/modules/fileman/e_mod_main.c:326
+#: ../src/modules/fileman/e_mod_main.c:316
 #: ../src/modules/ibox/e_mod_config.c:166
 msgid "Desktop"
 msgstr "Plocha"
@@ -729,7 +729,8 @@ msgstr "Výběr barvy"
 #: ../src/bin/e_eap_editor.c:677
 #: ../src/bin/e_entry_dialog.c:62
 #: ../src/bin/e_exec.c:323
-#: ../src/bin/e_fm.c:8386
+#: ../src/bin/e_fm.c:8529
+#: ../src/bin/e_fm.c:9164
 #: ../src/bin/e_fm_prop.c:513
 #: ../src/bin/e_int_border_remember.c:261
 #: ../src/bin/e_int_border_remember.c:342
@@ -758,7 +759,7 @@ msgstr "OK"
 #: ../src/bin/e_eap_editor.c:615
 #: ../src/bin/e_eap_editor.c:679
 #: ../src/bin/e_entry_dialog.c:63
-#: ../src/bin/e_fm.c:8388
+#: ../src/bin/e_fm.c:8531
 #: ../src/bin/e_fm_prop.c:514
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:116
 #: ../src/modules/conf_mime/e_int_config_mime_edit.c:284
@@ -815,7 +816,7 @@ msgid "Enlightenment Settings Write Problems"
 msgstr "Problémy při zápisu konfigurace E17"
 
 #: ../src/bin/e_config_dialog.c:199
-#: ../src/modules/battery/e_mod_main.c:1092
+#: ../src/modules/battery/e_mod_main.c:1091
 #: ../src/modules/conf_engine/e_mod_main.c:34
 #: ../src/modules/conf_exebuf/e_mod_main.c:34
 #: ../src/modules/conf_paths/e_mod_main.c:34
@@ -845,7 +846,7 @@ msgstr "Moduly"
 #: ../src/bin/e_configure.c:33
 #: ../src/modules/conf_shelves/e_mod_main.c:38
 #: ../src/modules/gadman/e_mod_main.c:25
-#: ../src/modules/mixer/e_mod_main.c:1082
+#: ../src/modules/mixer/e_mod_main.c:1076
 msgid "Extensions"
 msgstr "Rozšíření"
 
@@ -998,7 +999,7 @@ msgid "Select an Executable"
 msgstr "Vyberte spustitelný soubor"
 
 #: ../src/bin/e_entry.c:493
-#: ../src/bin/e_fm.c:7920
+#: ../src/bin/e_fm.c:8031
 #: ../src/modules/conf_applications/e_int_config_apps.c:269
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:123
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:81
@@ -1007,19 +1008,19 @@ msgid "Delete"
 msgstr "Smazat"
 
 #: ../src/bin/e_entry.c:503
-#: ../src/bin/e_fm.c:7828
+#: ../src/bin/e_fm.c:7938
 msgid "Cut"
 msgstr "Vystřihnout"
 
 #: ../src/bin/e_entry.c:511
-#: ../src/bin/e_fm.c:5966
-#: ../src/bin/e_fm.c:7842
+#: ../src/bin/e_fm.c:6075
+#: ../src/bin/e_fm.c:7952
 msgid "Copy"
 msgstr "Kopírovat"
 
 #: ../src/bin/e_entry.c:519
-#: ../src/bin/e_fm.c:7668
-#: ../src/bin/e_fm.c:7855
+#: ../src/bin/e_fm.c:7777
+#: ../src/bin/e_fm.c:7965
 msgid "Paste"
 msgstr "Vložit"
 
@@ -1052,202 +1053,238 @@ msgid "Enlightenment was unable to run the application:<br><br>%s<br><br>The app
 msgstr "Enlightenment nedokázal spustit aplikaci:<br><br>%s<br><br>Aplikace selhala při startu."
 
 #. Create The Dialog
-#: ../src/bin/e_exec.c:417
+#: ../src/bin/e_exec.c:418
 msgid "Application Execution Error"
 msgstr "Chyba při spouštění aplikace"
 
-#: ../src/bin/e_exec.c:429
+#: ../src/bin/e_exec.c:430
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "Proces %s se neočekávaně ukončil."
 
-#: ../src/bin/e_exec.c:435
+#: ../src/bin/e_exec.c:436
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Chybový status %i byl navrácen z %s"
 
-#: ../src/bin/e_exec.c:442
+#: ../src/bin/e_exec.c:443
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s byl přerušen signálem interrupt."
 
-#: ../src/bin/e_exec.c:444
+#: ../src/bin/e_exec.c:445
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s byl přerušen signálem quit."
 
-#: ../src/bin/e_exec.c:448
+#: ../src/bin/e_exec.c:449
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s byl přerušen signálem abort."
 
-#: ../src/bin/e_exec.c:451
+#: ../src/bin/e_exec.c:452
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s byl přerušen Floating point chybou."
 
-#: ../src/bin/e_exec.c:454
+#: ../src/bin/e_exec.c:455
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s byl přerušen nepřerušitelným kill signálem."
 
-#: ../src/bin/e_exec.c:457
+#: ../src/bin/e_exec.c:458
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s byl přerušen chybou při segmentaci."
 
-#: ../src/bin/e_exec.c:460
+#: ../src/bin/e_exec.c:461
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s byl přerušen chybou roury."
 
-#: ../src/bin/e_exec.c:463
+#: ../src/bin/e_exec.c:464
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s byl přerušen ukončovacím signálem."
 
-#: ../src/bin/e_exec.c:466
+#: ../src/bin/e_exec.c:467
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s byl přerušen chybou sběrnice."
 
-#: ../src/bin/e_exec.c:469
+#: ../src/bin/e_exec.c:470
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s byl přerušen signálem číslo %i."
 
-#: ../src/bin/e_exec.c:525
+#: ../src/bin/e_exec.c:528
 msgid "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "***Zbývající výstup byl zkrácen. Uložte výstup.***\n"
 
-#: ../src/bin/e_exec.c:589
-#: ../src/bin/e_exec.c:663
-#: ../src/bin/e_exec.c:669
+#: ../src/bin/e_exec.c:592
+#: ../src/bin/e_exec.c:666
+#: ../src/bin/e_exec.c:672
 msgid "Error Logs"
 msgstr "Chybové záznamy"
 
-#: ../src/bin/e_exec.c:594
-#: ../src/bin/e_exec.c:670
+#: ../src/bin/e_exec.c:597
+#: ../src/bin/e_exec.c:673
 msgid "There was no error message."
 msgstr "Nebyla zaznamenána žádná chybová zpráva."
 
-#: ../src/bin/e_exec.c:598
-#: ../src/bin/e_exec.c:677
+#: ../src/bin/e_exec.c:601
+#: ../src/bin/e_exec.c:680
 msgid "Save This Message"
 msgstr "Uložit tuto zprávu"
 
-#: ../src/bin/e_exec.c:602
-#: ../src/bin/e_exec.c:680
+#: ../src/bin/e_exec.c:605
+#: ../src/bin/e_exec.c:683
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Chybový záznam byl uložen jako %s/%s.log"
 
-#: ../src/bin/e_exec.c:628
+#: ../src/bin/e_exec.c:631
 msgid "Error Information"
 msgstr "Chybová informace"
 
-#: ../src/bin/e_exec.c:636
+#: ../src/bin/e_exec.c:639
 msgid "Error Signal Information"
 msgstr "Informace o chybovém signálu"
 
-#: ../src/bin/e_exec.c:647
-#: ../src/bin/e_exec.c:653
+#: ../src/bin/e_exec.c:650
+#: ../src/bin/e_exec.c:656
 msgid "Output Data"
 msgstr "Výstupní data"
 
-#: ../src/bin/e_exec.c:654
+#: ../src/bin/e_exec.c:657
 msgid "There was no output."
 msgstr "Nebyl zaznamenán žádný výstup."
 
-#: ../src/bin/e_fm.c:904
+#: ../src/bin/e_fm.c:934
 msgid "Nonexistent path"
 msgstr "Neexistující cesta"
 
-#: ../src/bin/e_fm.c:907
+#: ../src/bin/e_fm.c:937
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s neexistuje."
 
+#: ../src/bin/e_fm.c:3031
+msgid "Mount Error"
+msgstr "Chyba při připojování"
+
+#: ../src/bin/e_fm.c:3031
+msgid "Can't mount device"
+msgstr "Nemůžu připojit zařízení"
+
+#: ../src/bin/e_fm.c:3047
+msgid "Unmount Error"
+msgstr "Chyba při odpojování"
+
+#: ../src/bin/e_fm.c:3047
+msgid "Can't unmount device"
+msgstr "Nemůžu odpojit zařízení"
+
+#: ../src/bin/e_fm.c:3062
+msgid "Eject Error"
+msgstr "Chyba při vysouvání"
+
+#: ../src/bin/e_fm.c:3062
+msgid "Can't eject device"
+msgstr "Nemůžu vysunout zařízení"
+
 #. printf("FM: SORT %1.3f (%i files) (%i queued, %i added) [%i iter]\n",
 #. ecore_time_get() - tt, eina_list_count(sd->icons), queued,
 #. added, sd->tmp.iter);
-#: ../src/bin/e_fm.c:3572
+#: ../src/bin/e_fm.c:3682
 #, c-format
 msgid "%i Files"
 msgstr "%i souborů"
 
-#: ../src/bin/e_fm.c:5979
-#: ../src/bin/e_fm.c:7676
-#: ../src/bin/e_fm.c:7863
+#: ../src/bin/e_fm.c:6088
+#: ../src/bin/e_fm.c:7785
+#: ../src/bin/e_fm.c:7973
 msgid "Link"
 msgstr "Odkaz"
 
-#: ../src/bin/e_fm.c:5987
-#: ../src/bin/e_fm.c:8808
-#: ../src/bin/e_fm.c:8945
+#: ../src/bin/e_fm.c:6096
+#: ../src/bin/e_fm.c:8951
+#: ../src/bin/e_fm.c:9088
 msgid "Abort"
 msgstr "Zrušit"
 
-#: ../src/bin/e_fm.c:7595
-#: ../src/bin/e_fm.c:7755
+#: ../src/bin/e_fm.c:7704
+#: ../src/bin/e_fm.c:7864
 msgid "Inherit parent settings"
 msgstr "Nastavení odvození rodiče"
 
-#: ../src/bin/e_fm.c:7604
-#: ../src/bin/e_fm.c:7764
-#: ../src/modules/fileman/e_mod_config.c:199
+#: ../src/bin/e_fm.c:7713
+#: ../src/bin/e_fm.c:7873
+#: ../src/modules/fileman/e_mod_config.c:208
 msgid "View Mode"
 msgstr "Režim zobrazení"
 
-#: ../src/bin/e_fm.c:7611
-#: ../src/bin/e_fm.c:7771
+#: ../src/bin/e_fm.c:7720
+#: ../src/bin/e_fm.c:7880
 msgid "Refresh View"
 msgstr "Obnovit"
 
-#: ../src/bin/e_fm.c:7619
-#: ../src/bin/e_fm.c:7779
+#: ../src/bin/e_fm.c:7728
+#: ../src/bin/e_fm.c:7888
 msgid "Show Hidden Files"
 msgstr "Zobrazit skryté soubory"
 
-#: ../src/bin/e_fm.c:7631
-#: ../src/bin/e_fm.c:7791
+#: ../src/bin/e_fm.c:7740
+#: ../src/bin/e_fm.c:7900
 msgid "Remember Ordering"
 msgstr "Zapamatovat řazení"
 
-#: ../src/bin/e_fm.c:7640
-#: ../src/bin/e_fm.c:7800
+#: ../src/bin/e_fm.c:7749
+#: ../src/bin/e_fm.c:7909
 msgid "Sort Now"
 msgstr "Setřídit teď"
 
-#: ../src/bin/e_fm.c:7652
-#: ../src/bin/e_fm.c:7815
+#: ../src/bin/e_fm.c:7761
+#: ../src/bin/e_fm.c:7924
 #: ../src/modules/conf_paths/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Nový adresář"
 
-#: ../src/bin/e_fm.c:7928
+#: ../src/bin/e_fm.c:8039
 msgid "Rename"
 msgstr "Přejmenovat"
 
-#: ../src/bin/e_fm.c:7935
+#: ../src/bin/e_fm.c:8058
+msgid "Unmount"
+msgstr "Odpojit"
+
+#: ../src/bin/e_fm.c:8063
+msgid "Mount"
+msgstr "Připojit"
+
+#: ../src/bin/e_fm.c:8068
+msgid "Eject"
+msgstr "Vysunout"
+
+#: ../src/bin/e_fm.c:8078
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: ../src/bin/e_fm.c:8170
-#: ../src/bin/e_fm.c:8223
+#: ../src/bin/e_fm.c:8313
+#: ../src/bin/e_fm.c:8366
 msgid "Use default"
 msgstr "Použít výchozí"
 
 #. ob = e_widget_radio_add(evas, _("Icons"), 0, rg);
 #. e_widget_disabled_set(ob, 1);
 #. e_widget_framelist_object_append(of, ob);
-#: ../src/bin/e_fm.c:8196
-#: ../src/modules/fileman/e_mod_config.c:204
+#: ../src/bin/e_fm.c:8339
+#: ../src/modules/fileman/e_mod_config.c:213
 msgid "Grid Icons"
 msgstr "Ikony v mřížce"
 
-#: ../src/bin/e_fm.c:8204
-#: ../src/modules/fileman/e_mod_config.c:206
+#: ../src/bin/e_fm.c:8347
+#: ../src/modules/fileman/e_mod_config.c:215
 msgid "Custom Icons"
 msgstr "Vlastní ikony"
 
@@ -1257,104 +1294,104 @@ msgstr "Vlastní ikony"
 #. ob = e_widget_radio_add(evas, _("Custom Smart Grid Icons"), 4, rg);
 #. e_widget_disabled_set(ob, 1);
 #. e_widget_framelist_object_append(of, ob);
-#: ../src/bin/e_fm.c:8212
-#: ../src/modules/fileman/e_mod_config.c:214
+#: ../src/bin/e_fm.c:8355
+#: ../src/modules/fileman/e_mod_config.c:223
 msgid "List"
 msgstr "Seznam"
 
-#: ../src/bin/e_fm.c:8237
+#: ../src/bin/e_fm.c:8380
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Velikost ikon (%d)"
 
-#: ../src/bin/e_fm.c:8283
-#: ../src/bin/e_fm.c:8489
+#: ../src/bin/e_fm.c:8426
+#: ../src/bin/e_fm.c:8632
 msgid "Set background..."
 msgstr "Nastavit pozadí..."
 
-#: ../src/bin/e_fm.c:8288
-#: ../src/bin/e_fm.c:8532
+#: ../src/bin/e_fm.c:8431
+#: ../src/bin/e_fm.c:8675
 msgid "Set overlay..."
 msgstr "Nastavit překrytí..."
 
-#: ../src/bin/e_fm.c:8387
+#: ../src/bin/e_fm.c:8530
 #: ../src/modules/conf_theme/e_int_config_theme.c:1025
 msgid "Clear"
 msgstr "Vymazat"
 
-#: ../src/bin/e_fm.c:8611
+#: ../src/bin/e_fm.c:8754
 msgid "Create a new Directory"
 msgstr "Vytvořit složku"
 
-#: ../src/bin/e_fm.c:8612
+#: ../src/bin/e_fm.c:8755
 msgid "New Directory Name:"
 msgstr "Název nové složky:"
 
-#: ../src/bin/e_fm.c:8666
+#: ../src/bin/e_fm.c:8809
 #, c-format
 msgid "Rename %s to:"
 msgstr "Přejmenovat %s na:"
 
-#: ../src/bin/e_fm.c:8668
+#: ../src/bin/e_fm.c:8811
 msgid "Rename File"
 msgstr "Přejmenovat soubor"
 
-#: ../src/bin/e_fm.c:8807
-#: ../src/bin/e_fm.c:8944
+#: ../src/bin/e_fm.c:8950
+#: ../src/bin/e_fm.c:9087
 msgid "Retry"
 msgstr "Zkusit znovu"
 
-#: ../src/bin/e_fm.c:8811
-#: ../src/bin/e_fm.c:8950
+#: ../src/bin/e_fm.c:8954
+#: ../src/bin/e_fm.c:9093
 #: ../src/modules/wizard/page_030.c:83
 msgid "Error"
 msgstr "Chyba"
 
-#: ../src/bin/e_fm.c:8814
+#: ../src/bin/e_fm.c:8957
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/bin/e_fm.c:8866
+#: ../src/bin/e_fm.c:9009
 msgid "No to all"
 msgstr "Ne všem"
 
-#: ../src/bin/e_fm.c:8868
+#: ../src/bin/e_fm.c:9011
 msgid "Yes to all"
 msgstr "Ano všem"
 
-#: ../src/bin/e_fm.c:8871
+#: ../src/bin/e_fm.c:9014
 msgid "Warning"
 msgstr "Varování"
 
-#: ../src/bin/e_fm.c:8874
+#: ../src/bin/e_fm.c:9017
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Soubor už existuje, přepsat?<br><hilight>%s</hilight>"
 
-#: ../src/bin/e_fm.c:8946
+#: ../src/bin/e_fm.c:9089
 msgid "Ignore this"
 msgstr "Ignorovat"
 
-#: ../src/bin/e_fm.c:8947
+#: ../src/bin/e_fm.c:9090
 msgid "Ignore all"
 msgstr "Ignorovat vše"
 
-#: ../src/bin/e_fm.c:8952
+#: ../src/bin/e_fm.c:9095
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr "Vyskytla se chyba při provádění operace.<br>%s"
 
-#: ../src/bin/e_fm.c:9066
+#: ../src/bin/e_fm.c:9240
 msgid "Confirm Delete"
 msgstr "Odsouhlasit smazání"
 
-#: ../src/bin/e_fm.c:9071
+#: ../src/bin/e_fm.c:9245
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Opravdu chcete smazat<br><hilight>%s</hilight> ?"
 
-#: ../src/bin/e_fm.c:9077
+#: ../src/bin/e_fm.c:9251
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
 msgstr "Opravdu chcete smazat<br>%d vybrané soubory v:<br><hilight>%s</hilight> ?"
@@ -1444,37 +1481,37 @@ msgstr "Info o odkazu"
 msgid "Select an Image"
 msgstr "Vybrat obrázek"
 
-#: ../src/bin/e_fm_hal.c:186
+#: ../src/bin/e_fm_hal.c:189
 #, c-format
 msgid "%llu TiB"
 msgstr "%llu TiB"
 
-#: ../src/bin/e_fm_hal.c:188
+#: ../src/bin/e_fm_hal.c:191
 #, c-format
 msgid "%llu GiB"
 msgstr "%llu GiB"
 
-#: ../src/bin/e_fm_hal.c:190
+#: ../src/bin/e_fm_hal.c:193
 #, c-format
 msgid "%llu MiB"
 msgstr "%llu MiB"
 
-#: ../src/bin/e_fm_hal.c:192
+#: ../src/bin/e_fm_hal.c:195
 #, c-format
 msgid "%llu KiB"
 msgstr "%llu KiB"
 
-#: ../src/bin/e_fm_hal.c:194
+#: ../src/bin/e_fm_hal.c:197
 #, c-format
 msgid "%llu B"
 msgstr "%llu B"
 
-#: ../src/bin/e_fm_hal.c:225
+#: ../src/bin/e_fm_hal.c:228
 #, c-format
 msgid "Unknown Volume"
 msgstr "Neznámý svazek"
 
-#: ../src/bin/e_fm_hal.c:310
+#: ../src/bin/e_fm_hal.c:322
 msgid "Removable Device"
 msgstr "Výměnné zařízení"
 
@@ -2019,8 +2056,8 @@ msgstr "Automaticky aktivovat při startu"
 #: ../src/modules/ibox/e_mod_main.c:715
 #: ../src/modules/pager/e_mod_main.c:814
 #: ../src/modules/temperature/e_mod_main.c:281
-#: ../src/modules/mixer/e_mod_main.c:668
-#: ../src/modules/connman/e_mod_main.c:1090
+#: ../src/modules/mixer/e_mod_main.c:662
+#: ../src/modules/connman/e_mod_main.c:1076
 msgid "Settings"
 msgstr "Volby"
 
@@ -2694,8 +2731,8 @@ msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenmentu se nepodařilo spustit systém dnd."
 
 #: ../src/bin/e_main.c:867
-msgid "Setup Grab Input Handing"
-msgstr "Nastavuji Grab Input Handing"
+msgid "Setup Grab Input Handling"
+msgstr "Nastavit správu zachycení vstupu"
 
 #: ../src/bin/e_main.c:872
 msgid "Enlightenment cannot set up its input grab handling system."
@@ -3030,67 +3067,67 @@ msgstr "Nemůžu vypnout - některá okna neodpovídají."
 msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr "Stále jsou otevřená některá okna s Lifespan zámkem. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
 
-#: ../src/bin/e_utils.c:805
+#: ../src/bin/e_utils.c:806
 #, c-format
 msgid "%'.0f Bytes"
 msgstr "%'.0f bajtů"
 
-#: ../src/bin/e_utils.c:809
+#: ../src/bin/e_utils.c:810
 #, c-format
 msgid "%'.0f KB"
 msgstr "%'.0f kB"
 
-#: ../src/bin/e_utils.c:813
+#: ../src/bin/e_utils.c:814
 #, c-format
 msgid "%'.0f MB"
 msgstr "%'.0f MB"
 
-#: ../src/bin/e_utils.c:817
+#: ../src/bin/e_utils.c:818
 #, c-format
 msgid "%'.1f GB"
 msgstr "%'.1f GB"
 
-#: ../src/bin/e_utils.c:837
+#: ../src/bin/e_utils.c:838
 #, c-format
 msgid "In the Future"
 msgstr "V budoucnu"
 
-#: ../src/bin/e_utils.c:842
+#: ../src/bin/e_utils.c:843
 #, c-format
 msgid "In the last Minute"
 msgstr "V poslední minutě"
 
-#: ../src/bin/e_utils.c:844
+#: ../src/bin/e_utils.c:845
 #, c-format
 msgid "%li Years ago"
 msgstr "Před %li lety"
 
-#: ../src/bin/e_utils.c:846
+#: ../src/bin/e_utils.c:847
 #, c-format
 msgid "%li Months ago"
 msgstr "Před %li měsíci"
 
-#: ../src/bin/e_utils.c:848
+#: ../src/bin/e_utils.c:849
 #, c-format
 msgid "%li Weeks ago"
 msgstr "Před %li týdny"
 
-#: ../src/bin/e_utils.c:850
+#: ../src/bin/e_utils.c:851
 #, c-format
 msgid "%li Days ago"
 msgstr "Před %li dny"
 
-#: ../src/bin/e_utils.c:852
+#: ../src/bin/e_utils.c:853
 #, c-format
 msgid "%li Hours ago"
 msgstr "Před %li hodinami"
 
-#: ../src/bin/e_utils.c:854
+#: ../src/bin/e_utils.c:855
 #, c-format
 msgid "%li Minutes ago"
 msgstr "Před %li minutami"
 
-#: ../src/bin/e_utils.c:860
+#: ../src/bin/e_utils.c:861
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:1107
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:1134
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:251
@@ -3242,6 +3279,7 @@ msgid "Internal"
 msgstr "Interní"
 
 #: ../src/modules/battery/e_mod_config.c:164
+#: ../src/modules/fileman/e_mod_config.c:280
 msgid "HAL"
 msgstr "HAL"
 
@@ -3253,26 +3291,26 @@ msgstr "Hardware"
 msgid "Battery"
 msgstr "Baterie"
 
-#: ../src/modules/battery/e_mod_main.c:845
+#: ../src/modules/battery/e_mod_main.c:844
 msgid "Your battery is low!"
 msgstr "Hladina vaší baterie je nízká!"
 
-#: ../src/modules/battery/e_mod_main.c:847
+#: ../src/modules/battery/e_mod_main.c:846
 msgid "AC power is recommended."
 msgstr "Doporučena je AC energie."
 
-#: ../src/modules/battery/e_mod_main.c:922
+#: ../src/modules/battery/e_mod_main.c:921
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/modules/battery/e_mod_main.c:993
-#: ../src/modules/battery/e_mod_main.c:995
-#: ../src/modules/battery/e_mod_main.c:1002
-#: ../src/modules/battery/e_mod_main.c:1004
+#: ../src/modules/battery/e_mod_main.c:992
+#: ../src/modules/battery/e_mod_main.c:994
+#: ../src/modules/battery/e_mod_main.c:1001
+#: ../src/modules/battery/e_mod_main.c:1003
 msgid "ERROR"
 msgstr "CHYBA"
 
-#: ../src/modules/battery/e_mod_main.c:1094
+#: ../src/modules/battery/e_mod_main.c:1093
 msgid "Battery Meter"
 msgstr "Měřič baterie"
 
@@ -3321,7 +3359,7 @@ msgid "Restart Applications"
 msgstr "Aplikace při restartu"
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:236
-#: ../src/modules/fileman/e_fwin.c:1900
+#: ../src/modules/fileman/e_fwin.c:1923
 msgid "All Applications"
 msgstr "Všechny aplikace"
 
@@ -3765,7 +3803,7 @@ msgstr "Zobrazit na zóně obrazovky #:"
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:178
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:109
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:115
-#: ../src/modules/fileman/e_mod_config.c:220
+#: ../src/modules/fileman/e_mod_config.c:229
 #, c-format
 msgid "%1.0f"
 msgstr "%1.0f"
@@ -4612,7 +4650,7 @@ msgid "%1.0f pixels"
 msgstr "%1.0f pixelů"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:107
-msgid "Threshold for for applying drag momentum"
+msgid "Threshold for applying drag momentum"
 msgstr "Práh pro aplikaci síly táhnutí"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:110
@@ -4830,7 +4868,7 @@ msgstr "Vybrat Edj soubor"
 #: ../src/modules/conf_mime/e_mod_main.c:34
 #: ../src/modules/fileman/e_mod_main.c:49
 #: ../src/modules/fileman/e_mod_main.c:67
-#: ../src/modules/fileman/e_mod_main.c:387
+#: ../src/modules/fileman/e_mod_main.c:377
 msgid "Files"
 msgstr "Soubory"
 
@@ -6107,126 +6145,125 @@ msgstr "Stíny"
 msgid "Run Command Dialog"
 msgstr "Dialog Spustit"
 
-#. TODO make a better dialog
-#: ../src/modules/fileman/e_mod_main.c:230
-msgid "Mount error"
-msgstr "Chyba připojení"
-
-#: ../src/modules/fileman/e_mod_main.c:230
-msgid "Mount of device failed"
-msgstr "Připojení zařízení selhalo"
-
-#: ../src/modules/fileman/e_mod_main.c:320
+#: ../src/modules/fileman/e_mod_main.c:310
 #: ../src/modules/illume/e_mod_win.c:180
 msgid "Home"
 msgstr "Domov"
 
-#: ../src/modules/fileman/e_mod_main.c:332
+#: ../src/modules/fileman/e_mod_main.c:322
 msgid "Favorites"
 msgstr "Oblíbené"
 
-#: ../src/modules/fileman/e_mod_main.c:344
+#: ../src/modules/fileman/e_mod_main.c:334
 msgid "Root"
 msgstr "Kořenový adresář"
 
-#: ../src/modules/fileman/e_mod_main.c:441
+#: ../src/modules/fileman/e_mod_main.c:431
 msgid "Fileman Module Settings data needed upgrading. Your old configuration<br>has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Fileman module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr "Nastavení fileman modulu je třeba aktualizovat. Vaše staré nastavení<br>bylo odstraněno a nová sada standardních nastavení byla načtena.<br>Bude se to dít pravidelně při vývoji, takže neposílejte hlášení chyb.<br>Znamená to, že Fileman potřebuje zavést konfiguraci nových<br>vlastností, která ve vašem starém nastavení prostě není. Nová sada nastavení<br>je doplní. Nyní můžete si můžete nastavit modul zpět k obrazu svému.<br>Omlouváme se za způsobené potíže.<br>"
 
-#: ../src/modules/fileman/e_mod_main.c:454
+#: ../src/modules/fileman/e_mod_main.c:444
 msgid "Your Fileman Module configuration is NEWER than Fileman Module version. This is very<br>strange. This should not happen unless you downgraded<br>the Fileman Module or copied the configuration from a place where<br>a newer version of the Fileman Module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Vaše nastavení je NOVĚJŠÍ než Fileman modul. To je dost<br>zvláštní. Nemělo by se to stát, pokud jste ovšem nedowngradovali<br>Fileman modul nebo nekopírovali soubory s nastavením z místa, kde<br>běžela novější verze modulu. Je to zlé a jako protiopatření<br>bylo vaše nastavení vráceno do původních hodnot.<br>Omlouvám se za vzniklé potíže.<br>"
 
-#: ../src/modules/fileman/e_mod_main.c:523
+#: ../src/modules/fileman/e_mod_main.c:513
 msgid "Fileman Settings Updated"
 msgstr "Nastavení fileman modulu aktualizováno"
 
-#: ../src/modules/fileman/e_mod_config.c:93
+#: ../src/modules/fileman/e_mod_config.c:95
 msgid "Fileman Settings"
 msgstr "Nastavení fileman modulu"
 
-#: ../src/modules/fileman/e_mod_config.c:218
+#: ../src/modules/fileman/e_mod_config.c:227
 msgid "Icon Size"
 msgstr "Velikost ikon"
 
-#: ../src/modules/fileman/e_mod_config.c:224
+#: ../src/modules/fileman/e_mod_config.c:233
 msgid "View"
 msgstr "Pohled"
 
-#: ../src/modules/fileman/e_mod_config.c:227
+#: ../src/modules/fileman/e_mod_config.c:236
 msgid "Open Dirs In Place"
 msgstr "Otevřít adresáře ve stejném okně"
 
-#: ../src/modules/fileman/e_mod_config.c:231
+#: ../src/modules/fileman/e_mod_config.c:240
 msgid "Sort Dirs First"
 msgstr "První řadit adresáře"
 
-#: ../src/modules/fileman/e_mod_config.c:234
+#: ../src/modules/fileman/e_mod_config.c:243
 msgid "Case Sensitive"
 msgstr "Rozlišovat velikost písmen"
 
-#: ../src/modules/fileman/e_mod_config.c:238
+#: ../src/modules/fileman/e_mod_config.c:247
 msgid "Use Single Click"
 msgstr "Pouze jedno kliknutí"
 
-#: ../src/modules/fileman/e_mod_config.c:241
+#: ../src/modules/fileman/e_mod_config.c:250
 msgid "Use Alternate Selection Modifiers"
 msgstr "Použít alternativní výběrové modifikátory"
 
-#: ../src/modules/fileman/e_mod_config.c:245
+#: ../src/modules/fileman/e_mod_config.c:254
 msgid "Show Icon Extension"
 msgstr "Zobrazit příponu ikony"
 
-#: ../src/modules/fileman/e_mod_config.c:248
+#: ../src/modules/fileman/e_mod_config.c:257
 msgid "Show Full Path"
 msgstr "Zobrazit plnou cestu"
 
-#: ../src/modules/fileman/e_mod_config.c:251
+#: ../src/modules/fileman/e_mod_config.c:260
 msgid "Show Desktop Icons"
 msgstr "Zobrazit ikony na ploše"
 
-#: ../src/modules/fileman/e_mod_config.c:254
+#: ../src/modules/fileman/e_mod_config.c:263
 msgid "Show Toolbar"
 msgstr "Zobrazit toolbar"
 
-#: ../src/modules/fileman/e_mod_config.c:257
-msgid "Show HAL icons on desktop"
-msgstr "Zobrazit HAL ikony na ploše"
-
-#: ../src/modules/fileman/e_mod_config.c:261
+#: ../src/modules/fileman/e_mod_config.c:267
 #: ../src/modules/gadman/e_mod_gadman.c:729
 msgid "Behavior"
 msgstr "Chování"
 
-#: ../src/modules/fileman/e_fwin.c:1439
+#: ../src/modules/fileman/e_mod_config.c:270
+msgid "Show HAL icons on desktop"
+msgstr "Zobrazit HAL ikony na ploše"
+
+#: ../src/modules/fileman/e_mod_config.c:273
+msgid "Mount volumes on insert"
+msgstr "Připojit zařízení při vložení"
+
+#: ../src/modules/fileman/e_mod_config.c:276
+msgid "Open filemanager on mount"
+msgstr "Otevřít správce souborů při připojení"
+
+#: ../src/modules/fileman/e_fwin.c:1462
 msgid "Go to Parent Directory"
 msgstr "Jít do předchozího adresáře"
 
-#: ../src/modules/fileman/e_fwin.c:1501
+#: ../src/modules/fileman/e_fwin.c:1524
 msgid "Other application..."
 msgstr "Jiná aplikace..."
 
-#: ../src/modules/fileman/e_fwin.c:1520
-#: ../src/modules/fileman/e_fwin.c:1851
+#: ../src/modules/fileman/e_fwin.c:1543
+#: ../src/modules/fileman/e_fwin.c:1874
 msgid "Open"
 msgstr "Otevřít"
 
 #. make clang happy
-#: ../src/modules/fileman/e_fwin.c:1525
-#: ../src/modules/fileman/e_fwin.c:1849
+#: ../src/modules/fileman/e_fwin.c:1548
+#: ../src/modules/fileman/e_fwin.c:1872
 msgid "Open with..."
 msgstr "Otevřít s.."
 
 #. Make frame with list of applications
-#: ../src/modules/fileman/e_fwin.c:1869
+#: ../src/modules/fileman/e_fwin.c:1892
 msgid "Known Applications"
 msgstr "Známé aplikace"
 
-#: ../src/modules/fileman/e_fwin.c:1879
+#: ../src/modules/fileman/e_fwin.c:1902
 msgid "Specific Applications"
 msgstr "Specifické aplikace"
 
-#: ../src/modules/fileman/e_fwin.c:1921
+#: ../src/modules/fileman/e_fwin.c:1944
 msgid "Custom Command"
 msgstr "Vlastní příkaz"
 
@@ -6823,7 +6860,7 @@ msgid "Right:"
 msgstr "Pravý:"
 
 #: ../src/modules/mixer/app_mixer.c:412
-#: ../src/modules/mixer/e_mod_main.c:603
+#: ../src/modules/mixer/e_mod_main.c:592
 msgid "Mute"
 msgstr "Ztlumit"
 
@@ -6864,11 +6901,11 @@ msgstr "Nastavení modulu Mixer"
 msgid "Mixer Settings Updated"
 msgstr "Nastavení Mixer modulu aktualizováno"
 
-#: ../src/modules/mixer/e_mod_main.c:613
+#: ../src/modules/mixer/e_mod_main.c:602
 msgid "Controls"
 msgstr "Ovládací prvky"
 
-#: ../src/modules/mixer/e_mod_main.c:1160
+#: ../src/modules/mixer/e_mod_main.c:1154
 msgid "Mixer Module Settings data changed.<br>Your old configuration has been replaced with new default.<br>Sorry for the inconvenience."
 msgstr "Konfigurační data modulu Mixer byla změněna.<br>Vaše staré nastavení bylo nahrazeno novým výchozím.<br>Omlouváme se za vzniklé potíže."
 
@@ -6913,6 +6950,8 @@ msgstr "Jen jeden gadget upozorňovací oblasti může běžet a jiný už exist
 msgid "Systray"
 msgstr "Upozorňovací oblast"
 
+#~ msgid "Mount of device failed"
+#~ msgstr "Připojení zařízení selhalo"
 #~ msgid "Shelf Size"
 #~ msgstr "Velikost panelu"
 #~ msgid "Scaling Factors"
