@@ -2770,6 +2770,7 @@ e_border_idler_before(void)
 	     bl = e_container_border_list_first(con);
 	     while ((bd = e_container_border_list_next(bl)))
 	       {
+		  if (e_object_is_del(E_OBJECT(bd))) continue;
 		  if ((bd->changes.visible) && (!bd->visible))
 		    {
 		       ecore_x_window_hide(bd->win);
@@ -5688,6 +5689,12 @@ _e_border_eval(E_Border *bd)
    int rem_change = 0;
    int send_event = 1;
    int zx, zy, zw, zh;
+
+   if (e_object_is_del(E_OBJECT(bd)))
+     {
+	fprintf(stderr, "ERROR: _e_border_eval(%p) with deleted border!\n", bd);
+	return;
+     }
    
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_FETCH, bd);
    if (bd->zone)
