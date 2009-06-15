@@ -26,7 +26,7 @@ define([AC_LIBTOOL_LANG_F77_CONFIG], [:])
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 
-release="ver-svn-02"
+release="ver-pre-svn-02"
 AC_SUBST(release)
 
 AC_CHECK_FUNCS(setenv)
