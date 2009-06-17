@@ -27,7 +27,7 @@ struct _E_Sys_Con_Action
    const char *button_name;
    void (*func) (void *data);
    const void *data;
-   Evas_Bool disabled : 1;
+   Eina_Bool disabled : 1;
 };
 
 #else

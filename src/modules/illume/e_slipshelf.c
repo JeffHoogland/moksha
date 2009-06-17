@@ -261,7 +261,7 @@ e_slipshelf_new(E_Zone *zone, const char *themedir)
 }
 
 EAPI void
-e_slipshelf_action_enabled_set(E_Slipshelf *ess, E_Slipshelf_Action action, Evas_Bool enabled)
+e_slipshelf_action_enabled_set(E_Slipshelf *ess, E_Slipshelf_Action action, Eina_Bool enabled)
 {
    E_OBJECT_CHECK(ess);
    E_OBJECT_TYPE_CHECK(ess, E_SLIPSHELF_TYPE);
@@ -326,7 +326,7 @@ e_slipshelf_action_enabled_set(E_Slipshelf *ess, E_Slipshelf_Action action, Evas
      }
 }
 
-EAPI Evas_Bool
+EAPI Eina_Bool
 e_slipshelf_action_enabled_get(E_Slipshelf *ess, E_Slipshelf_Action action)
 {
    E_OBJECT_CHECK(ess);
@@ -354,7 +354,7 @@ e_slipshelf_action_enabled_get(E_Slipshelf *ess, E_Slipshelf_Action action)
       default:
 	break;
      }
-   return 0;
+   return EINA_FALSE;
 }
 
 EAPI void

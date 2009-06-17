@@ -76,26 +76,26 @@ e_filereg_deregister(const char *path)
      }
 }
 
-EAPI Evas_Bool
+EAPI Eina_Bool
 e_filereg_file_protected(const char *path)
 {
    Filereg_Item *fi = NULL;
 
    fi = eina_hash_find(_e_filereg, path);
-   if (!fi) return 0;
-   else return 1;
+   if (!fi) return EINA_FALSE;
+   return EINA_TRUE;
 }
 
 /* Private Functions */
-static Evas_Bool
+static Eina_Bool
 _filereg_hash_cb_free(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
 		      void *data, void *fdata __UNUSED__)
 {
    Filereg_Item *fi;
 
    fi = data;
-   if (!fi) return 1;
+   if (!fi) return EINA_TRUE;
    if (fi->path) eina_stringshare_del(fi->path);
    E_FREE(fi);
-   return 1;
+   return EINA_TRUE;
 }

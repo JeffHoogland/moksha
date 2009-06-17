@@ -214,7 +214,7 @@ e_int_menus_main_new(void)
    l = _e_int_menus_augmentation_find("main/9");
    if (l) _e_int_menus_augmentation_add(m, l);
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/10");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/10");
    if (l) 
      {
         separator = 1;
@@ -223,7 +223,7 @@ e_int_menus_main_new(void)
         _e_int_menus_augmentation_add(m, l);
      }
 
-   l = evas_hash_find(_e_int_menus_augmentation, "main/11");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/11");
    if (l) 
      {
         if (!separator) 

@@ -47,7 +47,7 @@ static E_Exec_Instance *_e_exec_cb_exec(void *data, Efreet_Desktop *desktop, cha
 static int  _e_exec_cb_expire_timer(void *data);
 static int  _e_exec_cb_exit(void *data, int type, void *event);
 
-static Evas_Bool _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *value, void *data);
+static Eina_Bool _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *value, void *data);
 
 static void         _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_Del *event, Ecore_Exe_Event_Data *error, Ecore_Exe_Event_Data *read);
 static void         _fill_data(E_Config_Dialog_Data *cfdata);
@@ -363,7 +363,7 @@ _e_exec_cb_exit(void *data, int type, void *event)
    return 1;
 }
 
-static Evas_Bool
+static Eina_Bool
 _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *value, void *data)
 {
    E_Exec_Search *search;
@@ -378,10 +378,10 @@ _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __
              (search->pid == ecore_exe_pid_get(inst->exe))))
 	  {
 	     search->desktop = inst->desktop;
-	     return 0;
+	     return EINA_FALSE;
 	  }
 
-   return 1;
+   return EINA_TRUE;
 }
 
 static void    

@@ -73,8 +73,8 @@ struct _E_Event_Slipshelf_Simple
 EAPI int e_slipshelf_init(void);
 EAPI int e_slipshelf_shutdown(void);
 EAPI E_Slipshelf *e_slipshelf_new(E_Zone *zone, const char *themedir);
-EAPI void e_slipshelf_action_enabled_set(E_Slipshelf *ess, E_Slipshelf_Action action, Evas_Bool enabled);
-EAPI Evas_Bool e_slipshelf_action_enabled_get(E_Slipshelf *ess, E_Slipshelf_Action action);
+EAPI void e_slipshelf_action_enabled_set(E_Slipshelf *ess, E_Slipshelf_Action action, Eina_Bool enabled);
+EAPI Eina_Bool e_slipshelf_action_enabled_get(E_Slipshelf *ess, E_Slipshelf_Action action);
 EAPI void e_slipshelf_action_callback_set(E_Slipshelf *ess, E_Slipshelf_Action action, void (*func) (const void *data, E_Slipshelf *ess, E_Slipshelf_Action action), const void *data);
 EAPI void e_slipshelf_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
 EAPI void e_slipshelf_default_title_set(E_Slipshelf *ess, const char *title);

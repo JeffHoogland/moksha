@@ -11,8 +11,8 @@ EAPI void e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, cons
 EAPI void e_widget_toolbar_item_remove(Evas_Object *obj, int num);
 EAPI void e_widget_toolbar_item_select(Evas_Object *obj, int num);
 EAPI void e_widget_toolbar_item_label_set(Evas_Object *obj, int num, const char *label);
-EAPI void e_widget_toolbar_scrollable_set(Evas_Object *obj, Evas_Bool scrollable);
-EAPI void e_widget_toolbar_focus_steal_set(Evas_Object *obj, Evas_Bool steal);
+EAPI void e_widget_toolbar_scrollable_set(Evas_Object *obj, Eina_Bool scrollable);
+EAPI void e_widget_toolbar_focus_steal_set(Evas_Object *obj, Eina_Bool steal);
 
 #endif
 #endif

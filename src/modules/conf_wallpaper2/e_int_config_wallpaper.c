@@ -55,8 +55,8 @@ struct _Smart_Data
    int          id_num;
    double       seltime;
    double       selmove;
-   Evas_Bool    selin : 1;
-   Evas_Bool    selout : 1;
+   Eina_Bool    selin : 1;
+   Eina_Bool    selout : 1;
 };
 
 struct _Item
@@ -66,12 +66,12 @@ struct _Item
    const char *file;
    char *sort_id;
    Evas_Object *frame, *image;
-   Evas_Bool selected : 1;
-   Evas_Bool have_thumb : 1;
-   Evas_Bool do_thumb : 1;
-   Evas_Bool remote : 1;
-   Evas_Bool theme : 1;
-   Evas_Bool visible : 1;
+   Eina_Bool selected : 1;
+   Eina_Bool have_thumb : 1;
+   Eina_Bool do_thumb : 1;
+   Eina_Bool remote : 1;
+   Eina_Bool theme : 1;
+   Eina_Bool visible : 1;
 };
 
 static Info *global_info = NULL;
@@ -308,7 +308,7 @@ _e_smart_reconfigure_do(void *data)
                   if (!it->do_thumb)
                     {
                        e_thumb_icon_begin(it->image);
-                       it->do_thumb = 1;
+                       it->do_thumb = EINA_TRUE;
                     }
                }
              else
@@ -354,7 +354,7 @@ _e_smart_reconfigure_do(void *data)
                               yy + dy);
              evas_object_resize(it->frame, it->w, it->h);
              evas_object_show(it->frame);
-             it->visible = 1;
+             it->visible = EINA_TRUE;
           }
         else
           {
@@ -363,24 +363,24 @@ _e_smart_reconfigure_do(void *data)
                   if (it->do_thumb)
                     {
                        e_thumb_icon_end(it->image);
-                       it->do_thumb = 0;
+                       it->do_thumb = EINA_FALSE;
                     }
                   evas_object_del(it->image);
                   it->image = NULL;
                   evas_object_del(it->frame);
                   it->frame = NULL;
                }
-             it->visible = 0;
+             it->visible = EINA_FALSE;
 /*             
              if (it->have_thumb)
                {
                   if (it->do_thumb)
                     {
                        e_thumb_icon_end(it->image);
-                       it->do_thumb = 0;
+                       it->do_thumb = EINA_FALSE;
                     }
                   evas_object_del(it->image);
-                  it->have_thumb = 0;
+                  it->have_thumb = EINA_FALSE;
                   it->image = e_thumb_icon_add(evas_object_evas_get(obj));
                   edje_object_part_swallow(it->frame, "e.swallow.content", it->image);
                   evas_object_smart_callback_add(it->image, "e_thumb_gen", _thumb_gen, it);
@@ -599,13 +599,13 @@ _sel_anim(void *data)
      {
         if (sd->selout)
           {
-             sd->selin = 1;
-             sd->selout = 0;
+             sd->selin = EINA_TRUE;
+             sd->selout = EINA_FALSE;
              sd->seltime = ecore_loop_time_get();
              return 1;
           }
-        sd->selout = 0;
-        sd->selin = 0;
+        sd->selout = EINA_FALSE;
+        sd->selin = EINA_FALSE;
         sd->animator = NULL;
         return 0;
      }
@@ -621,7 +621,7 @@ _sel_timer(void *data)
      {
         sd->seltime = ecore_time_get();
         sd->animator = ecore_animator_add(_sel_anim, obj);
-        sd->selin = 0;
+        sd->selin = EINA_FALSE;
      }
    sd->seltimer = NULL;
    return 0;
@@ -642,7 +642,7 @@ _pan_sel(Evas_Object *obj, Item *it)
           {
              if (it2->selected) it2->selected = 0;
           }
-        it->selected = 1;
+        it->selected = EINA_TRUE;
         if (sd->info->bg_file) free(sd->info->bg_file);
         evas_object_hide(sd->info->mini);
         if (it->file)
@@ -676,12 +676,12 @@ _pan_sel_up(Evas_Object *obj)
      {
         sd->seltime = ecore_loop_time_get();
         sd->animator = ecore_animator_add(_sel_anim, obj);
-        sd->selin = 1;
+        sd->selin = EINA_TRUE;
      }
    else
      {
         if (sd->selin) return;
-        sd->selout = 1;
+        sd->selout = EINA_TRUE;
      }
 }
 
@@ -723,13 +723,13 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
              _item_sort(it);
           }
      }
-   it->have_thumb = 1;
+   it->have_thumb = EINA_TRUE;
    if (!it->visible)
      {
         if (it->do_thumb)
           {
              e_thumb_icon_end(it->image);
-             it->do_thumb = 0;
+             it->do_thumb = EINA_FALSE;
           }
         evas_object_del(it->image);
         it->image = NULL;
@@ -762,7 +762,7 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
     
 static void
-_pan_file_add(Evas_Object *obj, const char *file, Evas_Bool remote, Evas_Bool theme)
+_pan_file_add(Evas_Object *obj, const char *file, Eina_Bool remote, Eina_Bool theme)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
    Item *it = calloc(1, sizeof(Item));

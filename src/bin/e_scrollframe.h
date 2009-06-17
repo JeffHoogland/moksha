@@ -30,9 +30,9 @@ EAPI void e_scrollframe_page_size_get           (Evas_Object *obj, Evas_Coord *x
 EAPI void e_scrollframe_policy_set              (Evas_Object *obj, E_Scrollframe_Policy hbar, E_Scrollframe_Policy vbar);
 EAPI void e_scrollframe_policy_get              (Evas_Object *obj, E_Scrollframe_Policy *hbar, E_Scrollframe_Policy *vbar);
 EAPI Evas_Object *e_scrollframe_edje_object_get (Evas_Object *obj);
-EAPI void e_scrollframe_single_dir_set          (Evas_Object *obj, Evas_Bool single_dir);
-EAPI Evas_Bool e_scrollframe_single_dir_get     (Evas_Object *obj);
-EAPI void e_scrollframe_thumbscroll_force       (Evas_Object *obj, Evas_Bool forced);
+EAPI void e_scrollframe_single_dir_set          (Evas_Object *obj, Eina_Bool single_dir);
+EAPI Eina_Bool e_scrollframe_single_dir_get     (Evas_Object *obj);
+EAPI void e_scrollframe_thumbscroll_force       (Evas_Object *obj, Eina_Bool forced);
     
 #endif
 #endif

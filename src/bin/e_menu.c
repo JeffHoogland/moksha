@@ -86,7 +86,7 @@ static int  _e_menu_cb_scroll_animator            (void *data);
 static int  _e_menu_cb_window_shape               (void *data, int ev_type, void *ev);
 
 static void      _e_menu_cb_item_submenu_post_default  (void *data, E_Menu *m, E_Menu_Item *mi);
-static Evas_Bool _e_menu_categories_free_cb            (const Eina_Hash *hash, const void *key, void *data, void *fdata);
+static Eina_Bool _e_menu_categories_free_cb            (const Eina_Hash *hash, const void *key, void *data, void *fdata);
 
 /* local subsystem globals */
 static Ecore_X_Window       _e_menu_win                 = 0;
@@ -1781,7 +1781,7 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
    /* the foreign menu items */
    if (m->category)
      {
-	cat = evas_hash_find(_e_menu_categories, m->category);
+	cat = eina_hash_find(_e_menu_categories, m->category);
 	if (cat)
 	  {
 	     E_Menu_Category_Callback *cb;
@@ -2852,19 +2852,15 @@ _e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 
-static Evas_Bool
+static Eina_Bool
 _e_menu_categories_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
-   Eina_List *l;
+   E_Menu_Category_Callback *cb;
    E_Menu_Category *cat;
 
    cat = (E_Menu_Category *) data;
-   l = (Eina_List *) cat->callbacks;
-   while (l)
-     {
-	free(l->data); /* free the callback struct */
-	l = eina_list_remove_list(l, l);
-     }
+   EINA_LIST_FREE(cat->callbacks, cb)
+     free(cb); /* free the callback struct */
    free(cat);
-   return 1;
+   return EINA_TRUE;
 }

@@ -400,7 +400,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    return 1;
 }
 
-static Evas_Bool
+static Eina_Bool
 _font_hash_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
 {
    E_Config_Dialog_Data *cfdata;
@@ -410,7 +410,7 @@ _font_hash_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void
    efp = data;
    cfdata->font_list = eina_list_append(cfdata->font_list, efp->name);
 
-   return 1;
+   return EINA_TRUE;
 }
 
 static Evas_Object *

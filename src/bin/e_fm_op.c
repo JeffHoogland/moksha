@@ -18,8 +18,6 @@
 #include <errno.h>
 #include <limits.h>
 
-#include <Evas_Data.h>
-
 #include <Ecore.h>
 #include <Ecore_File.h>
 

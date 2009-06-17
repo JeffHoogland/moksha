@@ -94,7 +94,7 @@ static void _e_main_desk_restore(E_Manager *man, E_Container *con);
 static int (*_e_main_shutdown_func[MAX_LEVEL]) (void);
 static int _e_main_level = 0;
 static int _e_cacheburst = 0;
-static Evas_Bool locked = 0;
+static Eina_Bool locked = EINA_FALSE;
 
 static Eina_List *_e_main_idler_before_list = NULL;
 
@@ -314,7 +314,7 @@ main(int argc, char **argv)
 	  }
 	else if (!strcmp(argv[i], "-locked"))
 	  {
-	     locked = 1;
+	     locked = EINA_TRUE;
 	     puts("enlightenment will start with desklock on.");
 	  }
 	else if ((!strcmp(argv[i], "-h")) ||

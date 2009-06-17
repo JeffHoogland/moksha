@@ -56,7 +56,7 @@ struct _E_Smart_Data
      } pan_func;
    struct 
      {
-        Evas_Bool forced : 1;
+        Eina_Bool forced : 1;
      } thumbscroll;
 
    unsigned char hbar_visible : 1;
@@ -349,21 +349,21 @@ e_scrollframe_edje_object_get(Evas_Object *obj)
 }
 
 EAPI void
-e_scrollframe_single_dir_set(Evas_Object *obj, Evas_Bool single_dir)
+e_scrollframe_single_dir_set(Evas_Object *obj, Eina_Bool single_dir)
 {
    API_ENTRY return;
    sd->one_dir_at_a_time = single_dir;
 }
 
-EAPI Evas_Bool
+EAPI Eina_Bool
 e_scrollframe_single_dir_get(Evas_Object *obj)
 {
-   API_ENTRY return 0;
+   API_ENTRY return EINA_FALSE;
    return sd->one_dir_at_a_time;
 }
 
 EAPI void
-e_scrollframe_thumbscroll_force(Evas_Object *obj, Evas_Bool forced)
+e_scrollframe_thumbscroll_force(Evas_Object *obj, Eina_Bool forced)
 {
    API_ENTRY return;
    sd->thumbscroll.forced = forced;

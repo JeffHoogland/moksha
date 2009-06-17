@@ -466,7 +466,7 @@ e_theme_handler_test(Evas_Object *obj, const char *path, void *data)
 }
 
 /* local subsystem functions */
-static Evas_Bool
+static Eina_Bool
 _e_theme_mappings_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
    E_Theme_Result *res;
@@ -480,14 +480,14 @@ _e_theme_mappings_free_cb(const Eina_Hash *hash, const void *key, void *data, vo
 	eina_hash_free(res->quickfind);
      }
    free(res);
-   return 1;
+   return EINA_TRUE;
 }
 
-static Evas_Bool
+static Eina_Bool
 _e_theme_mappings_quickfind_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
    eina_stringshare_del(key);
-   return 1;
+   return EINA_TRUE;
 }
 
 static void
