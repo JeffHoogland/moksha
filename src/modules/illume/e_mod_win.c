@@ -992,6 +992,7 @@ _apps_fm_config(Evas_Object *o)
    fmc.view.open_dirs_in_place = 1;
    fmc.view.selector = 0;
    fmc.view.single_click = illume_cfg->launcher.single_click;
+   fmc.view.single_click_delay = illume_cfg->launcher.single_click_delay;
    fmc.view.no_subdir_jump = 1;
    fmc.icon.extension.show = 0;
    fmc.icon.icon.w = illume_cfg->launcher.icon_size * e_scale / 2.0;

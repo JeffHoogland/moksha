@@ -42,6 +42,7 @@ e_cfg_init(E_Module *m)
    E_CONFIG_VAL(conf_edd, Illume_Cfg, launcher.mode, INT);
    E_CONFIG_VAL(conf_edd, Illume_Cfg, launcher.icon_size, INT);
    E_CONFIG_VAL(conf_edd, Illume_Cfg, launcher.single_click, INT);
+   E_CONFIG_VAL(conf_edd, Illume_Cfg, launcher.single_click_delay, INT);
    
    E_CONFIG_VAL(conf_edd, Illume_Cfg, power.auto_suspend, INT);
    E_CONFIG_VAL(conf_edd, Illume_Cfg, power.auto_suspend_delay, INT);
@@ -80,6 +81,7 @@ e_cfg_init(E_Module *m)
 	illume_cfg->launcher.mode = 0;
 	illume_cfg->launcher.icon_size = 120;
 	illume_cfg->launcher.single_click = 1;
+	illume_cfg->launcher.single_click_delay = 150;
 	
 	illume_cfg->power.auto_suspend = 1;
 	illume_cfg->power.auto_suspend_delay = 1;
@@ -170,6 +172,14 @@ _e_cfg_launcher_change(void *data, Evas_Object *obj, void *event_info) {
    _e_cfg_launcher_change_timer = ecore_timer_add(0.5, _e_cfg_launcher_change_timeout, data);
 }
 
+Evas_Object *delay_label, *delay_slider;
+static void
+_e_cfg_launcher_click_change(void *data, Evas_Object *obj, void *event_info) {
+	e_widget_disabled_set(delay_label, !illume_cfg->launcher.single_click);
+	e_widget_disabled_set(delay_slider, !illume_cfg->launcher.single_click);
+	_e_cfg_launcher_change(data, obj, event_info);
+}
+
 static void *
 _e_cfg_launcher_create(E_Config_Dialog *cfd)
 { // alloc cfd->cfdata
@@ -179,6 +189,7 @@ _e_cfg_launcher_create(E_Config_Dialog *cfd)
 static void 
 _e_cfg_launcher_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 { // free cfd->cfdata
+   _e_mod_win_cfg_update(); // Reload on exit (to apply the slider value)
 }
 
 static Evas_Object *
@@ -221,7 +232,16 @@ _e_cfg_launcher_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
    frame = e_widget_framelist_add(e, "Launch Action", 0);
    o = e_widget_check_add(e, "Single press", &(illume_cfg->launcher.single_click));
    e_widget_framelist_object_append(frame, o);
-   evas_object_smart_callback_add(o, "changed", _e_cfg_launcher_change, NULL);
+   evas_object_smart_callback_add(o, "changed", _e_cfg_launcher_click_change, NULL);
+   o = e_widget_label_add(e, "Press delay:");
+   delay_label = o;
+   e_widget_disabled_set(o, !illume_cfg->launcher.single_click);
+   e_widget_framelist_object_append(frame, o);
+   o = e_widget_slider_add(e, 1, 0, "%1.0f ms", 0, 350, 1, 0, NULL, &(illume_cfg->launcher.single_click_delay), 150);
+   delay_slider = o;
+   //evas_object_smart_callback_add(o, "changed", _e_cfg_launcher_change, NULL); //works ??
+   e_widget_disabled_set(o, !illume_cfg->launcher.single_click);
+   e_widget_framelist_object_append(frame, o);
    e_widget_list_object_append(list, frame, 1, 0, 0.0); // fill, expand, align
 
    return list;
@@ -1374,6 +1394,40 @@ _dbcb_launcher_single_click_set(E_DBus_Object *obj, DBusMessage *msg)
    return reply;
 }
 
+// illume_cfg->launcher.single_click_delay
+static DBusMessage *
+_dbcb_launcher_single_click_delay_get(E_DBus_Object *obj, DBusMessage *msg)
+{
+   DBusMessage *reply;
+   DBusMessageIter iter;
+
+   reply = dbus_message_new_method_return(msg);
+   dbus_message_iter_init_append(reply, &iter);
+   dbus_message_iter_append_basic(&iter, DBUS_TYPE_INT32, &(illume_cfg->launcher.single_click_delay));
+   return reply;
+}
+
+static DBusMessage *
+_dbcb_launcher_single_click_delay_set(E_DBus_Object *obj, DBusMessage *msg)
+{
+   DBusMessageIter iter;
+   DBusMessage *reply;
+   int val;
+   
+   dbus_message_iter_init(msg, &iter);
+   dbus_message_iter_get_basic(&iter, &(val));
+   if (val >= 0)
+     {
+	illume_cfg->launcher.single_click_delay = val;
+	_e_cfg_launcher_change(NULL, NULL, NULL);
+	return dbus_message_new_method_return(msg);
+     }
+   reply = dbus_message_new_error(msg,
+				  "org.enlightenment.DBus.InvalidArgument",
+				  "Parameter must be greater than 0");
+   return reply;
+}
+
 // e_config->screensaver_timeout 0(off)-3600
 static DBusMessage *
 _dbcb_screensaver_timeout_get(E_DBus_Object *obj, DBusMessage *msg)
@@ -1967,6 +2021,8 @@ static const DB_Method methods[] =
    {"LauncherIconSizeSet", "i", "", _dbcb_launcher_icon_size_set},
    {"LauncherSingleClickGet", "", "i", _dbcb_launcher_single_click_get},
    {"LauncherSingleClickSet", "i", "", _dbcb_launcher_single_click_set},
+   {"LauncherSingleClickDelayGet", "", "i", _dbcb_launcher_single_click_delay_get},
+   {"LauncherSingleClickDelaySet", "i", "", _dbcb_launcher_single_click_delay_set},
    {"ScreensaverTimeoutGet", "", "i", _dbcb_screensaver_timeout_get},
    {"ScreensaverTimeoutSet", "i", "", _dbcb_screensaver_timeout_set},
    {"AutosuspendTimeoutGet", "", "i", _dbcb_autosuspend_timeout_get},

@@ -14,6 +14,7 @@ struct _Illume_Cfg
       int mode;
       int icon_size;
       int single_click;
+	  int single_click_delay;
    } launcher;
    
    struct {
