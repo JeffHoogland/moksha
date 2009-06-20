@@ -71,6 +71,7 @@ struct _E_Fm2_Config
       unsigned char   always_order;
       unsigned char   link_drop;
       unsigned char   fit_custom_pos;
+	  unsigned int    single_click_delay;
    } view;
    /* display of icons */
    struct {

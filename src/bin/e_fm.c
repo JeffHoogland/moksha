@@ -389,7 +389,7 @@ static int _e_fm2_cb_live_timer(void *data);
 static int _e_fm2_theme_edje_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group);
 static int _e_fm2_theme_edje_icon_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group);
 
-static void _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers);
+static void _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers, unsigned int timestamp);
 
 static void _e_fm2_client_spawn(void);
 static E_Fm2_Client *_e_fm2_client_get(void);
@@ -894,6 +894,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 	sd->config->view.open_dirs_in_place = 1;
 	sd->config->view.selector = 1;
 	sd->config->view.single_click = 0;
+	sd->config->view.single_click_delay = 0;
 	sd->config->view.no_subdir_jump = 0;
 	sd->config->icon.icon.w = 128;
 	sd->config->icon.icon.h = 128;
@@ -6330,9 +6331,10 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 
 /* FIXME: prototype */
 static void
-_e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
+_e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers, unsigned int timestamp)
 {
    int multi_sel = 0, range_sel = 0, sel_change = 0;
+   static unsigned int down_timestamp = 0;
 
    if (ic->sd->config->selection.windows_modifiers)
      {
@@ -6444,8 +6446,12 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
        (ic->sd->config->view.single_click)
        )
      {
-	if (up)
-	  evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+	if (!up && ic->sd->config->view.single_click_delay)
+	  down_timestamp = timestamp;
+	if (up) {
+	  if ((timestamp - down_timestamp) > ic->sd->config->view.single_click_delay)
+	    evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+	  }
      }
 }
 
@@ -6486,11 +6492,11 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     ic->drag.dnd = 0;
 	     ic->drag.src = 1;
 	  }
-	  _e_fm2_mouse_1_handler(ic, 0, ev->modifiers);
+	  _e_fm2_mouse_1_handler(ic, 0, ev->modifiers, ev->timestamp);
      }
    else if (ev->button == 3)
      {
-	if (!ic->selected) _e_fm2_mouse_1_handler(ic, 0, ev->modifiers);
+	if (!ic->selected) _e_fm2_mouse_1_handler(ic, 0, ev->modifiers, ev->timestamp);
 	_e_fm2_icon_menu(ic, ic->sd->obj, ev->timestamp);
      }
 }
@@ -6510,7 +6516,7 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if ((ev->button == 1) && (!ic->drag.dnd))
      {
 	if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD))
-	  _e_fm2_mouse_1_handler(ic, 1, ev->modifiers);
+	  _e_fm2_mouse_1_handler(ic, 1, ev->modifiers, ev->timestamp);
         ic->drag.start = 0;
 	ic->drag.dnd = 0;
 	ic->drag.src = 0;
