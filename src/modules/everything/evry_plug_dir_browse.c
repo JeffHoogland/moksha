@@ -155,8 +155,15 @@ _fetch(Evry_Plugin *p, const char *input)
 	free(file);
 
      }
-    
-   return 1;
+
+   if (eina_list_count(p->items) > 0)
+     {
+	p->items = eina_list_sort(p->items, eina_list_count(p->items),
+				  _cb_sort);
+	return 1;
+     }
+
+   return 0;
 }
 
 /* based on directory-watcher from drawer module  */
@@ -170,11 +177,9 @@ _item_fill(const char *directory, const char *file)
    it = E_NEW(Evry_Item, 1);
 
    snprintf(buf, sizeof(buf), "%s/%s", directory, file);
-
-   it->uri = eina_stringshare_add(buf);
    
-   if ((e_util_glob_case_match(buf, "*.desktop")) ||
-       (e_util_glob_case_match(buf, "*.directory")))
+   if ((e_util_glob_case_match(file, "*.desktop")) ||
+       (e_util_glob_case_match(file, "*.directory")))
      {
 	Efreet_Desktop *desktop;
 
@@ -188,21 +193,28 @@ _item_fill(const char *directory, const char *file)
 
    file_path = eina_stringshare_add(buf);
 
-   mime = e_fm_mime_filename_get(file_path);
+   it->uri = file_path;
+   
+   mime = efreet_mime_globs_type_get(file_path);
    if (mime)
      {
 	it->mime = eina_stringshare_add(mime);
-	it->priority = 2;
+	it->priority = 0;
      }
    else if (ecore_file_is_dir(file_path))
      {
 	it->mime = eina_stringshare_add("Folder");
 	it->priority = 1;
      }
-   else
+   else if ((mime = efreet_mime_type_get(file_path)))
+     {
+	it->mime = eina_stringshare_add(mime);
+	it->priority = 0;
+     }
+   else	
      {
 	it->mime = eina_stringshare_add("None");
-	it->priority = 2;
+	it->priority = 0;
      }
    
    return it;
@@ -226,6 +238,11 @@ _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 
 	if (item_path)
 	  it->o_icon = e_util_icon_add(item_path, e);
+	else
+	  {
+	     it->o_icon = edje_object_add(e);
+	     e_theme_edje_object_set(it->o_icon, "base/theme/fileman", "e/icons/fileman/file");
+	  }
      }
 }
 
@@ -237,5 +254,5 @@ _cb_sort(const void *data1, const void *data2)
    it1 = data1;
    it2 = data2;
 
-   return (it1->priority - it2->priority);
+   return (it2->priority - it1->priority);
 }

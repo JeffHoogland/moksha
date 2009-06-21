@@ -370,6 +370,13 @@ _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
    
    if (app->desktop)
      it->o_icon = e_util_desktop_icon_add(app->desktop, 24, e);
+
+   if (!it->o_icon)
+     {
+	it->o_icon = edje_object_add(e);
+	/* e_util_icon_theme_set(it->o_icon, "system-run") */
+	e_theme_edje_object_set(it->o_icon, "base/theme/fileman", "e/icons/system-run");
+     }
 }
 
 static int
