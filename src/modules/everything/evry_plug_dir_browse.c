@@ -218,7 +218,7 @@ _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
    if (!strcmp(it->mime, "Folder"))
      {
 	it->o_icon = edje_object_add(e);
-	e_theme_edje_object_set(it->o_icon, "base/theme/fileman", "e/icons/fileman/folder");
+	e_theme_edje_object_set(it->o_icon, "base/theme/fileman", "e/icons/folder");
      }
    else
      {
