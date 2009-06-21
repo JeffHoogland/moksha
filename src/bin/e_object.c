@@ -237,6 +237,12 @@ e_object_error(E_Object *obj)
    e_error_message_show("%s", buf);
    return 1;
 #else
+   if (!obj)
+     {
+	fprintf(stderr, "ERROR: Object is NULL. Add break point at %s:%d\n",
+		__FILE__, __LINE__);
+	return 1;
+     }
    return 0;
 #endif   
 }
