@@ -1,32 +1,53 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static Evry_Plugin plugin;
-static Evry_Action act_close;
+typedef struct _Inst Inst;
 
-static int  _evry_plug_border_fetch(char *string);
-static int  _evry_plug_border_action(Evry_Item *item);
-static void _evry_plug_border_cleanup(void);
-static void _evry_plug_border_item_add(E_Border *bd, int prio);
-static int  _evry_plug_border_cb_sort(const void *data1, const void *data2);
-static void _evry_plug_border_item_icon_get(Evry_Item *it, Evas *e);
+struct _Inst
+{
+  E_Border *border;
+};
+
+static Evry_Plugin * _src_border_new(void);
+static void _src_border_free(Evry_Plugin *p);
+static int  _src_border_fetch(Evry_Plugin *p, char *string);
+static int  _src_border_action(Evry_Plugin *p, Evry_Item *item);
+static void _src_border_cleanup(Evry_Plugin *p);
+static void _src_border_item_add(Evry_Plugin *p, E_Border *bd, int prio);
+static int  _src_border_cb_sort(const void *data1, const void *data2);
+static void _src_border_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
+
+static Evry_Plugin * _act_border_new(void);
+static void _act_border_free(Evry_Plugin *p);
+static int  _act_border_begin(Evry_Plugin *p, Evry_Item *item);
+static int  _act_border_fetch(Evry_Plugin *p, char *string);
+static int  _act_border_action(Evry_Plugin *p, Evry_Item *item);
+static void _act_border_cleanup(Evry_Plugin *p);
+static void _act_border_item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), const char *icon);
+static void _act_border_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
+
+static Evry_Plugin_Class source;
+static Evry_Plugin_Class action;
+
 
 EAPI int
 evry_plug_border_init(void)
 {
-   plugin.name = "Windows";
-   plugin.type = "BORDER";
-   plugin.need_query = 0;
-   plugin.fetch  = &_evry_plug_border_fetch;
-   plugin.action = &_evry_plug_border_action;
-   plugin.cleanup = &_evry_plug_border_cleanup;
-   plugin.icon_get = &_evry_plug_border_item_icon_get;
-   plugin.candidates = NULL;   
-   evry_plugin_add(&plugin);
+   source.name = "Windows";
+   source.type_in  = "NONE";
+   source.type_out = "BORDER";
+   source.need_query = 0;
+   source.new = &_src_border_new;
+   source.free = &_src_border_free;
+   evry_plugin_register(&source);
 
-   /* act_close.name = "Close";
-    * act_close.type = "BORDER";
-    * evry_action_add(&act_close); */
+   action.name = "Window Action";
+   action.type_in  = "BORDER";
+   action.type_out = "NONE";
+   action.need_query = 0;
+   action.new = &_act_border_new;
+   action.free = &_act_border_free;
+   evry_plugin_register(&action);
    
    return 1;
 }
@@ -34,19 +55,43 @@ evry_plug_border_init(void)
 EAPI int
 evry_plug_border_shutdown(void)
 {
-   evry_plugin_remove(&plugin);
-   /* evry_action_remove(&act_close); */
+   evry_plugin_unregister(&source);
+   evry_plugin_unregister(&action);
    
    return 1;
 }
 
+static Evry_Plugin *
+_src_border_new()
+{
+   Evry_Plugin *p;
+   
+   p = E_NEW(Evry_Plugin, 1);
+   p->class = &source;
+   p->fetch = &_src_border_fetch;
+   p->action = &_src_border_action;
+   p->cleanup = &_src_border_cleanup;
+   p->icon_get = &_src_border_item_icon_get;
+   p->items = NULL;   
+
+   return p;
+}
+
+static void
+_src_border_free(Evry_Plugin *p)
+{
+   _src_border_cleanup(p);
+   E_FREE(p);
+}
+
+
 static int
-_evry_plug_border_action(Evry_Item *item)
+_src_border_action(Evry_Plugin *p, Evry_Item *item)
 {
    E_Border *bd;
    E_Zone *zone;
    
-   bd = (E_Border *)item->data;
+   bd = (E_Border *)item->data[0];
    zone = e_util_zone_current_get(e_manager_current_get());
    
    if (bd->desk != (e_desk_current_get(zone)))
@@ -67,13 +112,13 @@ _evry_plug_border_action(Evry_Item *item)
 }
 
 static void
-_evry_plug_border_cleanup(void)
+_src_border_cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
 
-   EINA_LIST_FREE(plugin.candidates, it)
+   EINA_LIST_FREE(p->items, it)
      {
-	if (it->data) e_object_unref(E_OBJECT(it->data));
+	/* if (it->data[0]) e_object_unref(E_OBJECT(it->data[0])); */
 	if (it->label) eina_stringshare_del(it->label);
 	if (it->o_icon) evas_object_del(it->o_icon);
 	free(it);
@@ -81,7 +126,7 @@ _evry_plug_border_cleanup(void)
 }
 
 static int
-_evry_plug_border_fetch(char *string)
+_src_border_fetch(Evry_Plugin *p, char *string)
 {
    E_Manager *man;
    E_Zone *zone;
@@ -92,7 +137,7 @@ _evry_plug_border_fetch(char *string)
    E_Border *bd;
    E_Border_List *bl;
 
-   _evry_plug_border_cleanup(); 
+   _src_border_cleanup(p); 
 
    man = e_manager_current_get();
    zone = e_util_zone_current_get(man);
@@ -109,24 +154,25 @@ _evry_plug_border_fetch(char *string)
 	if (zone == bd->zone)
 	  {
 	     if (!string)
-	       _evry_plug_border_item_add(bd, 1);
-	     else if (bd->client.icccm.name && e_util_glob_case_match(bd->client.icccm.name, match1))
-	       _evry_plug_border_item_add(bd, 1);
+	       _src_border_item_add(p, bd, 1);
+	     else if (bd->client.icccm.name &&
+		      e_util_glob_case_match(bd->client.icccm.name, match1))
+	       _src_border_item_add(p, bd, 1);
 	     else  if (e_util_glob_case_match(e_border_name_get(bd), match1))
-	       _evry_plug_border_item_add(bd, 1);
-	     else if (bd->client.icccm.name && e_util_glob_case_match(bd->client.icccm.name, match2))
-	       _evry_plug_border_item_add(bd, 2);
+	       _src_border_item_add(p, bd, 1);
+	     else if (bd->client.icccm.name &&
+		      e_util_glob_case_match(bd->client.icccm.name, match2))
+	       _src_border_item_add(p, bd, 2);
 	     else if (e_util_glob_case_match(e_border_name_get(bd), match2))
-	       _evry_plug_border_item_add(bd, 2);
+	       _src_border_item_add(p, bd, 2);
 	  }
      }
    e_container_border_list_free(bl);
 
-   if (eina_list_count(plugin.candidates) > 0)
+   if (eina_list_count(p->items) > 0)
      {
-	plugin.candidates = eina_list_sort(plugin.candidates,
-					   eina_list_count(plugin.candidates),
-					   _evry_plug_border_cb_sort);
+	p->items = eina_list_sort(p->items, eina_list_count(p->items),
+				  _src_border_cb_sort);
 	return 1;
      }
 
@@ -134,30 +180,28 @@ _evry_plug_border_fetch(char *string)
 }
 
 static void
-_evry_plug_border_item_icon_get( Evry_Item *it, Evas *e)
+_src_border_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 { 
-   it->o_icon = e_border_icon_add(((E_Border *)it->data), e); 
+   it->o_icon = e_border_icon_add(((E_Border *)it->data[0]), e); 
 }
 
 static void
-_evry_plug_border_item_add(E_Border *bd, int prio)
+_src_border_item_add(Evry_Plugin *p, E_Border *bd, int prio)
 {
    Evry_Item *it;   
 
    it = calloc(1, sizeof(Evry_Item));
-   e_object_ref(E_OBJECT(bd));
-   it->data = bd;
+   /* e_object_ref(E_OBJECT(bd)); */
+   it->data[0] = bd;
    it->priority = prio;
    it->label = eina_stringshare_add(e_border_name_get(bd));
-   it->o_icon = NULL; //e_border_icon_add(bd, evry_evas_get()); 
 	     
-   plugin.candidates = eina_list_append(plugin.candidates, it);
+   p->items = eina_list_append(p->items, it);
 }
 
-
-// TODO sort by focus history and name?
+/* TODO sort by focus history and name? */
 static int
-_evry_plug_border_cb_sort(const void *data1, const void *data2)
+_src_border_cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1, *it2;
    
@@ -166,3 +210,122 @@ _evry_plug_border_cb_sort(const void *data1, const void *data2)
 
    return (it1->priority - it2->priority);
 }
+
+
+
+static Evry_Plugin *
+_act_border_new()
+{
+   Evry_Plugin *p;
+   Inst *inst;
+   
+   p = E_NEW(Evry_Plugin, 1);
+   p->class = &source;
+   p->begin = &_act_border_begin;
+   p->fetch = &_act_border_fetch;
+   p->action = &_act_border_action;
+   p->cleanup = &_act_border_cleanup;
+   p->icon_get = &_act_border_item_icon_get;
+   p->items = NULL;   
+
+   inst = E_NEW(Inst, 1);
+   p->priv = inst;
+   
+   return p;
+}
+
+static void
+_act_border_free(Evry_Plugin *p)
+{
+   Inst *inst = p->priv;
+
+   /* if (inst->border) e_object_unref(E_OBJECT(inst->border)); */
+
+   _act_border_cleanup(p);
+
+   E_FREE(p);
+   E_FREE(inst);
+}
+
+static void
+_act_cb_border_close(E_Border *bd)
+{
+   if (!bd->lock_close) e_border_act_close_begin(bd);
+}
+
+static void
+_act_cb_border_minimize(E_Border *bd)
+{
+   if (!bd->lock_user_iconify) e_border_iconify(bd);
+}
+
+static int
+_act_border_begin(Evry_Plugin *p, Evry_Item *item)
+{
+   Inst *inst = p->priv;
+   E_Border *bd;
+
+   bd = item->data[0];
+   /* e_object_ref(E_OBJECT(bd)); */
+   inst->border = bd;
+
+   return 1;
+}
+
+static int
+_act_border_fetch(Evry_Plugin *p, char *string)
+{
+   _act_border_cleanup(p);
+
+   _act_border_item_add(p, _("Iconify"), _act_cb_border_minimize,
+			     "e/widgets/border/default/minimize");
+
+   _act_border_item_add(p, _("Close"), _act_cb_border_close,
+			     "e/widgets/border/default/close");
+   return 1;
+}
+
+static int
+_act_border_action(Evry_Plugin *p, Evry_Item *item)
+{
+   Inst *inst = p->priv;
+   
+   void (*border_action) (E_Border *bd);
+   border_action = item->data[0];
+   border_action(inst->border);
+   return 1;
+}
+
+static void
+_act_border_cleanup(Evry_Plugin *p)
+{
+   Evry_Item *it;
+
+   EINA_LIST_FREE(p->items, it)
+     {
+	if (it->data[1]) eina_stringshare_del(it->data[1]);
+	if (it->label) eina_stringshare_del(it->label);
+	if (it->o_icon) evas_object_del(it->o_icon);
+	free(it);
+     }
+}
+
+static void
+_act_border_item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), const char *icon)
+{
+   Evry_Item *it;   
+
+   it = calloc(1, sizeof(Evry_Item));
+   it->data[0] = action_cb;
+   it->data[1] = (void *) eina_stringshare_add(icon);
+   it->label = eina_stringshare_add(label);
+   p->items = eina_list_append(p->items, it);   
+}
+
+static void
+_act_border_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+{
+   it->o_icon = edje_object_add(e);
+   e_theme_edje_object_set(it->o_icon, "base/theme/borders", (const char *)it->data[1]);
+}
+

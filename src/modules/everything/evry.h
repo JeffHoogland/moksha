@@ -4,6 +4,8 @@
 #ifdef E_TYPEDEFS
 
 typedef struct _Evry_Plugin Evry_Plugin;
+/* TODO find a better name - Registry ? */
+typedef struct _Evry_Plugin_Class Evry_Plugin_Class;
 typedef struct _Evry_Item   Evry_Item;
 typedef struct _Evry_Action Evry_Action;
 typedef struct _Evry_Config Evry_Config;
@@ -29,8 +31,12 @@ typedef struct _Evry_App Evry_App;
 struct _Evry_Item
 {
   const char *label;
+
+  const char *uri;
+  const char *mime;
+
+  /* set by icon_get plugin method */
   Evas_Object *o_icon;
-  unsigned int type;  /* TODO */
 
   /* used by 'everything' for display */
   Evas_Object *o_bg;  
@@ -38,55 +44,61 @@ struct _Evry_Item
   /* these are only for internally use by plugins */
   /* used e.g. as pointer for item data (Efreet_Desktop) or */
   /* for internal stuff, like priority hints for sorting, etc */
-  void *data;
+  void *data[4];
   int priority;
 };
 
-struct _Evry_Plugin
+struct _Evry_Plugin_Class
 {
   const char *name;
-  const char *type;
-  Evas_Object *o_icon;
-  
+
+  const char *type_in;
+  const char *type_out;
+
   /* sync/async ?*/
-  unsigned int async_query;
+  unsigned char async_query : 1;
 
   /* whether candidates can be shown without input: e.g. borders, history */
   /* if 0 fetch MUST provide all candidates when string is NULL */
-  // TODO better use 'need_query_length' ?
-  unsigned int need_query; 
+  unsigned char need_query : 1; 
 
-  /* run when 'everything' is shown */
-  void (*begin) (void);
+  Evry_Plugin *(*new) (void);
+  void (*free) (Evry_Plugin *p);
+  
+  Evas_Object *(*config_page) (void);
+  void (*config_apply) (void);
+
+  Eina_List *instances;
+};
+
+  
+struct _Evry_Plugin
+{
+  Evry_Plugin_Class *class;
+  
+  /* run when plugin is activated. */
+  int (*begin) (Evry_Plugin *p, Evry_Item *item);
 
   /* get candidates matching string, fills 'candidates' list */
-  int  (*fetch)  (char *string);
+  int  (*fetch) (Evry_Plugin *p, char *string);
 
   /* run action with a given candidate - TODO register actions per
      candidate type */
-  int  (*action) (Evry_Item *item);
+  int  (*action) (Evry_Plugin *p, Evry_Item *item);
 
   /* run before new query and when hiding 'everything' */
-  void (*cleanup) (void);
+  void (*cleanup) (Evry_Plugin *p);
 
-  void (*icon_get) (Evry_Item *it, Evas *e);  
+  void (*icon_get) (Evry_Plugin *p, Evry_Item *it, Evas *e);  
   /* provide more information for a candidate */
   /* int (*candidate_info) (Evas *evas, Evry_Item *item); */
 
-  Evas_Object *(*config_page) (void);
-  void (*config_apply) (void);
-  
-  /* Evry_Plugin_State state; */
-  Eina_List *candidates;
-};
+  Eina_List *items;
 
-struct _Evry_Action
-{
-  const char *name;
-  const char *type;
-  int  (*func) (Evry_Item *item);
-};
+  Evas_Object *tab;
   
+  void *priv;
+};  
 
 struct _Evry_Config
 {
@@ -108,12 +120,10 @@ EAPI int evry_shutdown(void);
 EAPI int  evry_show(E_Zone *zone);
 EAPI void evry_hide(void);
 
-EAPI void evry_plugin_add(Evry_Plugin *plugin);
-EAPI void evry_plugin_remove(Evry_Plugin *plugin);
-EAPI void evry_action_add(Evry_Action *action);
-EAPI void evry_action_remove(Evry_Action *action);
+EAPI void evry_plugin_register(Evry_Plugin_Class *pc);
+EAPI void evry_plugin_unregister(Evry_Plugin_Class *pc);
 
-/* EAPI void evry_plugin_async_update(Evry_Plugin *plugin, int state); */
+EAPI void evry_plugin_async_update(Evry_Plugin *plugin, int state);
 
 EAPI Evas* evry_evas_get(void);
 #endif

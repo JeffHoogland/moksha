@@ -1,39 +1,59 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static Evry_Plugin plugin;
-
-static int  _evry_plug_config_fetch(char *string);
-static int  _evry_plug_config_action(Evry_Item *item);
-static void _evry_plug_config_cleanup(void);
-static void _evry_plug_config_item_add(E_Configure_It *eci, int prio);
-static int  _evry_plug_config_cb_sort(const void *data1, const void *data2);
-static void _evry_plug_config_item_icon_get(Evry_Item *it, Evas *e);
+static Evry_Plugin_Class class;
+static Evry_Plugin *_plug_config_new();
+static void  _plug_config_free(Evry_Plugin *p);
+static int  _plug_config_fetch(Evry_Plugin *p, char *string);
+static int  _plug_config_action(Evry_Plugin *p, Evry_Item *item);
+static void _plug_config_cleanup(Evry_Plugin *p);
+static void _plug_config_item_add(Evry_Plugin *p, E_Configure_It *eci, int prio);
+static void _plug_config_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
+static int  _plug_config_cb_sort(const void *data1, const void *data2);
 
 EAPI int
 evry_plug_config_init(void)
 {
-   plugin.name = "Settings";
-   plugin.fetch  = &_evry_plug_config_fetch;
-   plugin.action = &_evry_plug_config_action;
-   plugin.cleanup = &_evry_plug_config_cleanup;
-   plugin.icon_get = &_evry_plug_config_item_icon_get;
-   plugin.candidates = NULL;   
-   evry_plugin_add(&plugin);
-   
+   class.name = "Settings";
+   class.type_in  = "NONE";
+   class.type_out = "NONE";
+   class.instances = NULL;
+   class.new = &_plug_config_new;
+   class.free = &_plug_config_free;
+   evry_plugin_register(&class);
    return 1;
 }
 
 EAPI int
 evry_plug_config_shutdown(void)
 {
-   evry_plugin_remove(&plugin);
+   evry_plugin_unregister(&class);
    
    return 1;
 }
 
+static Evry_Plugin *
+_plug_config_new()
+{
+   Evry_Plugin *p = E_NEW(Evry_Plugin, 1);
+   p->class = &class;
+   p->fetch = &_plug_config_fetch;
+   p->action = &_plug_config_action;
+   p->cleanup = &_plug_config_cleanup;
+   p->icon_get = &_plug_config_item_icon_get;
+   p->items = NULL;   
+}
+
+
+static void
+_plug_config_free(Evry_Plugin *p)
+{
+   _plug_config_cleanup(p);
+   E_FREE(p);
+}
+
 static int
-_evry_plug_config_action(Evry_Item *item)
+_plug_config_action(Evry_Plugin *p, Evry_Item *item)
 {
    E_Configure_It *eci, *eci2;
    E_Container *con;
@@ -42,13 +62,13 @@ _evry_plug_config_action(Evry_Item *item)
    char buf[1024];
    int found = 0;
    
-   eci = item->data;
+   eci = item->data[0];
    con = e_container_current_get(e_manager_current_get());
 
-   for (l = e_configure_registry; l; l = l->next)
+   for (l = e_configure_registry; l && !found; l = l->next)
      {
 	ecat = l->data;
-	for (ll = ecat->items; ll; ll = ll->next)
+	for (ll = ecat->items; ll && !found; ll = ll->next)
 	  {
 	     eci2 = ll->data;
 	     if (eci == eci2)
@@ -68,13 +88,12 @@ _evry_plug_config_action(Evry_Item *item)
 }
 
 static void
-_evry_plug_config_cleanup(void)
+_plug_config_cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
 
-   EINA_LIST_FREE(plugin.candidates, it)
+   EINA_LIST_FREE(p->items, it)
      {
-	/* if (it->data)  */
 	if (it->label) eina_stringshare_del(it->label);
 	if (it->o_icon) evas_object_del(it->o_icon);
 	free(it);
@@ -82,7 +101,7 @@ _evry_plug_config_cleanup(void)
 }
 
 static int
-_evry_plug_config_fetch(char *string)
+_plug_config_fetch(Evry_Plugin *p, char *string)
 {
    E_Manager *man;
    E_Zone *zone;
@@ -93,7 +112,7 @@ _evry_plug_config_fetch(char *string)
    E_Configure_Cat *ecat;
    E_Configure_It *eci;
    
-   _evry_plug_config_cleanup(); 
+   _plug_config_cleanup(p); 
 
    snprintf(match1, sizeof(match1), "%s*", string);
    snprintf(match2, sizeof(match2), "*%s*", string);
@@ -109,24 +128,23 @@ _evry_plug_config_fetch(char *string)
 		  if (eci->pri >= 0)
 		    {
 		       if (e_util_glob_case_match(eci->label, match1))
-			 _evry_plug_config_item_add(eci, 1);
+			 _plug_config_item_add(p, eci, 1);
 		       else if (e_util_glob_case_match(eci->label, match2))
-			 _evry_plug_config_item_add(eci, 2);
+			 _plug_config_item_add(p, eci, 2);
 		       else if (e_util_glob_case_match(ecat->label, match1))
-			 _evry_plug_config_item_add(eci, 3);
+			 _plug_config_item_add(p, eci, 3);
 		       else if (e_util_glob_case_match(ecat->label, match2))
-			 _evry_plug_config_item_add(eci, 4);
+			 _plug_config_item_add(p, eci, 4);
 		    }
 	       }
 	  }
      }
    
-   if (eina_list_count(plugin.candidates) > 0)
+   if (eina_list_count(p->items) > 0)
      {
-	plugin.candidates =
-	  eina_list_sort(plugin.candidates,
-			 eina_list_count(plugin.candidates),
-			 _evry_plug_config_cb_sort);
+	p->items = eina_list_sort(p->items, 
+				       eina_list_count(p->items),
+				       _plug_config_cb_sort);
 	return 1;
      }
 
@@ -134,9 +152,9 @@ _evry_plug_config_fetch(char *string)
 }
 
 static void
-_evry_plug_config_item_icon_get(Evry_Item *it, Evas *e)
+_plug_config_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
-   E_Configure_It *eci = it->data;
+   E_Configure_It *eci = it->data[0];
    Evas_Object *o = NULL;
    
    if (eci->icon) 
@@ -153,23 +171,23 @@ _evry_plug_config_item_icon_get(Evry_Item *it, Evas *e)
 }
 
 static void
-_evry_plug_config_item_add(E_Configure_It *eci, int prio)
+_plug_config_item_add(Evry_Plugin *p, E_Configure_It *eci, int prio)
 {
    Evry_Item *it;   
 
    it = calloc(1, sizeof(Evry_Item));
-   it->data = eci;
+   it->data[0] = eci;
    it->priority = prio;
    it->label = eina_stringshare_add(eci->label);
    it->o_icon = NULL; 
 	     
-   plugin.candidates = eina_list_append(plugin.candidates, it);
+   p->items = eina_list_append(p->items, it);
 }
 
 
 // TODO sort name?
 static int
-_evry_plug_config_cb_sort(const void *data1, const void *data2)
+_plug_config_cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1, *it2;
    

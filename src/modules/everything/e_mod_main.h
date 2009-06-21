@@ -25,6 +25,8 @@ struct _Config
 
   int scroll_animate;
   double scroll_speed;
+
+  int auto_select_first;
 };
 
 struct _Source_Config
@@ -51,6 +53,15 @@ EAPI int  evry_plug_border_shutdown(void);
 
 EAPI int  evry_plug_config_init(void);
 EAPI int  evry_plug_config_shutdown(void);
+
+EAPI int  evry_plug_tracker_init(void);
+EAPI int  evry_plug_tracker_shutdown(void);
+
+EAPI int  evry_plug_dir_browse_init(void);
+EAPI int  evry_plug_dir_browse_shutdown(void);
+
+EAPI int  evry_plug_file_open_init(void);
+EAPI int  evry_plug_file_open_shutdown(void);
 
 extern Config *evry_conf;
 
