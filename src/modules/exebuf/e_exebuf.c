@@ -969,7 +969,7 @@ static void
 _e_exebuf_matches_update(void)
 {
    char *path, *file, buf[4096];
-   Efreet_Desktop *desktop;
+   Efreet_Desktop *desktop, *desktop2;
    Eina_Hash *added = NULL;
    Eina_List *list;
    Eina_List *l;
@@ -1025,7 +1025,8 @@ _e_exebuf_matches_update(void)
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
-		  if (!eina_hash_find(added, exe))
+		  desktop2 = eina_hash_find(added, exe);
+		  if (!desktop2 || (desktop2 != desktop))
 		    {
 		       eap_matches = eina_list_append(eap_matches, desktop);
 		       if (!added)
@@ -1043,7 +1044,8 @@ _e_exebuf_matches_update(void)
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
-		  if (!eina_hash_find(added, exe))
+		  desktop2 = eina_hash_find(added, exe);
+		  if (!desktop2 || (desktop2 != desktop))
 		    {
 		       eap_matches = eina_list_append(eap_matches, desktop);
 		       if (!added)
@@ -1061,7 +1063,8 @@ _e_exebuf_matches_update(void)
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
-		  if (!eina_hash_find(added, exe))
+		  desktop2 = eina_hash_find(added, exe);
+		  if (!desktop2 || (desktop2 != desktop))
 		    {
 		       eap_matches = eina_list_append(eap_matches, desktop);
 		       if (!added)
@@ -1079,7 +1082,8 @@ _e_exebuf_matches_update(void)
 	     exe = ecore_file_app_exe_get(desktop->exec);
 	     if (exe)
 	       {
-		  if (!eina_hash_find(added, exe))
+		  desktop2 = eina_hash_find(added, exe);
+		  if (!desktop2 || (desktop2 != desktop))
 		    {
 		       eap_matches = eina_list_append(eap_matches, desktop);
 		       if (!added)
