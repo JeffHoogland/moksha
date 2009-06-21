@@ -10,8 +10,8 @@ struct _Inst
 
 static Evry_Plugin * _src_border_new(void);
 static void _src_border_free(Evry_Plugin *p);
-static int  _src_border_fetch(Evry_Plugin *p, char *string);
-static int  _src_border_action(Evry_Plugin *p, Evry_Item *item);
+static int  _src_border_fetch(Evry_Plugin *p, const char *input);
+static int  _src_border_action(Evry_Plugin *p, Evry_Item *item, const char *input);
 static void _src_border_cleanup(Evry_Plugin *p);
 static void _src_border_item_add(Evry_Plugin *p, E_Border *bd, int prio);
 static int  _src_border_cb_sort(const void *data1, const void *data2);
@@ -20,8 +20,8 @@ static void _src_border_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 static Evry_Plugin * _act_border_new(void);
 static void _act_border_free(Evry_Plugin *p);
 static int  _act_border_begin(Evry_Plugin *p, Evry_Item *item);
-static int  _act_border_fetch(Evry_Plugin *p, char *string);
-static int  _act_border_action(Evry_Plugin *p, Evry_Item *item);
+static int  _act_border_fetch(Evry_Plugin *p, const char *input);
+static int  _act_border_action(Evry_Plugin *p, Evry_Item *item, const char *input);
 static void _act_border_cleanup(Evry_Plugin *p);
 static void _act_border_item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), const char *icon);
 static void _act_border_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
@@ -37,6 +37,7 @@ evry_plug_border_init(void)
    source.type_in  = "NONE";
    source.type_out = "BORDER";
    source.need_query = 0;
+   source.prio = 0;
    source.new = &_src_border_new;
    source.free = &_src_border_free;
    evry_plugin_register(&source);
@@ -45,6 +46,7 @@ evry_plug_border_init(void)
    action.type_in  = "BORDER";
    action.type_out = "NONE";
    action.need_query = 0;
+   action.prio = 0;
    action.new = &_act_border_new;
    action.free = &_act_border_free;
    evry_plugin_register(&action);
@@ -86,12 +88,14 @@ _src_border_free(Evry_Plugin *p)
 
 
 static int
-_src_border_action(Evry_Plugin *p, Evry_Item *item)
+_src_border_action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
    E_Border *bd;
    E_Zone *zone;
+
+   if (!it) return 0;
    
-   bd = (E_Border *)item->data[0];
+   bd = (E_Border *)it->data[0];
    zone = e_util_zone_current_get(e_manager_current_get());
    
    if (bd->desk != (e_desk_current_get(zone)))
@@ -126,7 +130,7 @@ _src_border_cleanup(Evry_Plugin *p)
 }
 
 static int
-_src_border_fetch(Evry_Plugin *p, char *string)
+_src_border_fetch(Evry_Plugin *p, const char *input)
 {
    E_Manager *man;
    E_Zone *zone;
@@ -142,10 +146,10 @@ _src_border_fetch(Evry_Plugin *p, char *string)
    man = e_manager_current_get();
    zone = e_util_zone_current_get(man);
    
-   if (string)
+   if (input)
      {
-	snprintf(match1, sizeof(match1), "%s*", string);
-	snprintf(match2, sizeof(match2), "*%s*", string);
+	snprintf(match1, sizeof(match1), "%s*", input);
+	snprintf(match2, sizeof(match2), "*%s*", input);
      }
    
    bl = e_container_border_list_first(e_container_current_get(man));
@@ -153,7 +157,7 @@ _src_border_fetch(Evry_Plugin *p, char *string)
      {
 	if (zone == bd->zone)
 	  {
-	     if (!string)
+	     if (!input)
 	       _src_border_item_add(p, bd, 1);
 	     else if (bd->client.icccm.name &&
 		      e_util_glob_case_match(bd->client.icccm.name, match1))
@@ -273,7 +277,7 @@ _act_border_begin(Evry_Plugin *p, Evry_Item *item)
 }
 
 static int
-_act_border_fetch(Evry_Plugin *p, char *string)
+_act_border_fetch(Evry_Plugin *p, const char *input)
 {
    _act_border_cleanup(p);
 
@@ -286,7 +290,7 @@ _act_border_fetch(Evry_Plugin *p, char *string)
 }
 
 static int
-_act_border_action(Evry_Plugin *p, Evry_Item *item)
+_act_border_action(Evry_Plugin *p, Evry_Item *item, const char *input)
 {
    Inst *inst = p->priv;
    

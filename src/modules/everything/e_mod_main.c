@@ -74,7 +74,6 @@ e_modapi_init(E_Module *m)
    evry_plug_apps_init();
    evry_plug_config_init();
    evry_plug_dir_browse_init();
-   evry_plug_file_open_init();
    evry_plug_tracker_init();
 
    /* add module supplied action */
@@ -114,7 +113,6 @@ e_modapi_shutdown(E_Module *m)
    evry_plug_apps_shutdown();
    evry_plug_config_shutdown();
    evry_plug_dir_browse_shutdown();
-   evry_plug_file_open_shutdown();
    evry_plug_tracker_shutdown();
 
    evry_shutdown();

@@ -10,14 +10,14 @@ struct _Inst
   E_DBus_Connection *conn;
 };
 
-static Evry_Plugin *_plug_tracker_new();
-static void _plug_tracker_free(Evry_Plugin *p);
-static int  _plug_tracker_fetch(Evry_Plugin *p, char *string);
-static int  _plug_tracker_action(Evry_Plugin *p, Evry_Item *item);
-static void _plug_tracker_cleanup(Evry_Plugin *p);
-static void _plug_tracker_item_add(Evry_Plugin *p, char *file, char *service, char *mime, int prio);
-static void _plug_tracker_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
-static void _plug_tracker_dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error);
+static Evry_Plugin *_plug_new();
+static void _plug_free(Evry_Plugin *p);
+static int  _fetch(Evry_Plugin *p, const char *input);
+static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
+static void _cleanup(Evry_Plugin *p);
+static void _item_add(Evry_Plugin *p, char *file, char *service, char *mime, int prio);
+static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
+static void _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error);
 
 static Evry_Plugin_Class class;
 
@@ -28,8 +28,8 @@ evry_plug_tracker_init(void)
    class.type_in = "NONE";
    class.type_out = "FILE";
    class.need_query = 1;
-   class.new = &_plug_tracker_new;
-   class.free = &_plug_tracker_free;
+   class.new = &_plug_new;
+   class.free = &_plug_free;
    evry_plugin_register(&class);
    
    return 1;
@@ -44,7 +44,7 @@ evry_plug_tracker_shutdown(void)
 }
 
 static Evry_Plugin *
-_plug_tracker_new()
+_plug_new()
 {
    Evry_Plugin *p;
    Inst *inst;
@@ -54,10 +54,10 @@ _plug_tracker_new()
    
    p = E_NEW(Evry_Plugin, 1);
    p->class = &class;
-   p->fetch = &_plug_tracker_fetch;
-   p->action = &_plug_tracker_action;
-   p->cleanup = &_plug_tracker_cleanup;
-   p->icon_get = &_plug_tracker_item_icon_get;
+   p->fetch = &_fetch;
+   p->action = &_action;
+   p->cleanup = &_cleanup;
+   p->icon_get = &_item_icon_get;
    p->items = NULL;   
 
    inst = E_NEW(Inst, 1);
@@ -68,11 +68,11 @@ _plug_tracker_new()
 }
 
 static void
-_plug_tracker_free(Evry_Plugin *p)
+_plug_free(Evry_Plugin *p)
 {
    Inst *inst = p->priv;
    
-   _plug_tracker_cleanup(p);
+   _cleanup(p);
    e_dbus_connection_close(inst->conn);
 
    E_FREE(inst);
@@ -80,13 +80,13 @@ _plug_tracker_free(Evry_Plugin *p)
 }
 
 static int
-_plug_tracker_action(Evry_Plugin *p, Evry_Item *it)
+_action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
    return 0;
 }
 
 static void
-_plug_tracker_cleanup(Evry_Plugin *p)
+_cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
    
@@ -101,7 +101,7 @@ _plug_tracker_cleanup(Evry_Plugin *p)
 }
 
 static int
-_plug_tracker_fetch(Evry_Plugin *p, char *string)
+_fetch(Evry_Plugin *p, const char *input)
 {
    Eina_List *list;
    DBusMessage *msg;
@@ -113,10 +113,10 @@ _plug_tracker_fetch(Evry_Plugin *p, char *string)
    char *match;
    Inst *inst = p->priv;
    
-   _plug_tracker_cleanup(p); 
+   _cleanup(p); 
 
-   match = malloc(sizeof(char) * strlen(string) + 2);
-   sprintf(match, "%s*", string);
+   match = malloc(sizeof(char) * strlen(input) + 2);
+   sprintf(match, "%s*", input);
 
    msg = dbus_message_new_method_call("org.freedesktop.Tracker",
 				      "/org/freedesktop/Tracker/Search",
@@ -129,7 +129,7 @@ _plug_tracker_fetch(Evry_Plugin *p, char *string)
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_STRING, &match);
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_INT32,  &offset);
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_INT32,  &max_hits);
-   e_dbus_message_send(inst->conn, msg, _plug_tracker_dbus_cb_reply, -1, p);
+   e_dbus_message_send(inst->conn, msg, _dbus_cb_reply, -1, p);
    dbus_message_unref(msg);
 
    free(match);
@@ -138,7 +138,7 @@ _plug_tracker_fetch(Evry_Plugin *p, char *string)
 }
 
 static void
-_plug_tracker_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    char *item_path;
 
@@ -158,7 +158,7 @@ _plug_tracker_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 }
 
 static void
-_plug_tracker_item_add(Evry_Plugin *p, char *file, char *service, char *mime, int prio)
+_item_add(Evry_Plugin *p, char *file, char *service, char *mime, int prio)
 {
    Evry_Item *it;   
    
@@ -173,7 +173,7 @@ _plug_tracker_item_add(Evry_Plugin *p, char *file, char *service, char *mime, in
 }
 
 static void
-_plug_tracker_dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
+_dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 {
    DBusMessageIter array, iter, item;
    char *val;
@@ -207,7 +207,7 @@ _plug_tracker_dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 
 		  if (uri && service && mime)
 		    {
-		       _plug_tracker_item_add(p, uri, service, mime, 1); 
+		       _item_add(p, uri, service, mime, 1); 
 		    }
 	       }
 	     

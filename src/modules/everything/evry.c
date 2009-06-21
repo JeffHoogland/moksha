@@ -16,6 +16,9 @@ struct _Evry_State
   Evry_Item *sel_item;
   /* Eina_List *sel_items; */
   char *input;
+
+  Eina_Bool initial;
+  Eina_Bool get_parameter; /* TODO better name !*/
 };
 
 static int  _evry_cb_key_down(void *data, int type, void *event);
@@ -48,6 +51,8 @@ static int  _evry_scroll_timer(void *data);
 static int  _evry_push_state(void);
 static int  _evry_pop_state(void);
 static void _evry_plugin_selector_append(Evry_Plugin *p);
+static int _evry_cb_plugin_sort(const void *data1, const void *data2);
+
 
 /* local subsystem globals */
 static E_Popup     *popup = NULL;
@@ -274,6 +279,15 @@ evry_plugin_async_update(Evry_Plugin *plugin, int state)
 
 /* local subsystem functions */
 static int
+_evry_cb_plugin_sort(const void *data1, const void *data2)
+{
+   const Evry_Plugin *p1 = data1;
+   const Evry_Plugin *p2 = data2;
+   return p1->class->prio - p2->class->prio;
+}
+
+
+static int
 _evry_push_state(void)
 {
    Evry_State *s;
@@ -281,7 +295,7 @@ _evry_push_state(void)
    Evry_Plugin_Class *pc;
    const char *expect_type = "NONE";
    Evry_Plugin *p;
-
+   
    s = cur_state;
 
    if (s)
@@ -310,9 +324,11 @@ _evry_push_state(void)
 	       list = eina_list_append(list, p);
 	  }
      }
-
+   
    if (!list) return 0;
 
+   list = eina_list_sort(list, eina_list_count(list), _evry_cb_plugin_sort);
+   
    _evry_list_clear();
 
    if (s)
@@ -330,6 +346,7 @@ _evry_push_state(void)
    s->plugins = list;
    s->cur_plugins = NULL;
    s->sel_item = NULL;
+   s->initial = (cur_state ? 0 : 1);
    cur_state = s;
    stack = eina_list_prepend(stack, s);
 
@@ -627,19 +644,18 @@ static void
 _evry_action(int finished)
 {
    Evry_State *s = cur_state;
-   
-   if (s->cur_plugin && s->sel_item)
+
+   if (s->cur_plugin && (s->sel_item || s->input))
      {
 	if (!s->cur_plugin->action ||
-	    !s->cur_plugin->action(s->cur_plugin, s->sel_item))
+	    !s->cur_plugin->action(s->cur_plugin, s->sel_item, s->input))
 	  {
-	     /* _evry_action_select(); */
 	     _evry_push_state();
 	     finished = 0;
 	  }
      }
-   else
-     e_exec(popup->zone, NULL, s->input, NULL, "everything");
+   else if (s->initial)
+     e_exec(popup->zone, NULL, s->input, NULL, NULL /* "everything" */);
 
    if (finished)
      evry_hide();
@@ -756,7 +772,7 @@ _evry_matches_update(void)
 	else
 	  items = p->fetch(p, s->input);
 	
-	if (items && eina_list_count(p->items) > 0)
+	if (!s->initial || (items && eina_list_count(p->items) > 0))
 	  {
 	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
 	     _evry_plugin_selector_append(p); 
@@ -1000,12 +1016,16 @@ _evry_plugin_selector_append(Evry_Plugin *p)
 {
    Evas_Object *o;
    Evas_Coord mw = 0, mh = 0;
-   
+   char buf[64];
+
    o = edje_object_add(popup->evas);
+   /* TODO move this to everything theme group !*/
    e_theme_edje_object_set(o, "base/theme/widgets",
                            "e/widgets/toolbar/item");
 
-   edje_object_part_text_set(o, "e.text.label", p->class->name);
+   snprintf(buf, 64, "%s (%d)", p->class->name, eina_list_count(p->items));
+   
+   edje_object_part_text_set(o, "e.text.label", buf);
 
    edje_object_size_min_calc(o, &mw, &mh);
    e_box_pack_end(o_selector, o);
@@ -1021,3 +1041,5 @@ _evry_plugin_selector_append(Evry_Plugin *p)
 
    p->tab = o;
 }
+
+

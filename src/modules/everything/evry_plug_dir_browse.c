@@ -8,16 +8,16 @@ struct _Inst
   const char *directory;
 };
 
-static Evry_Plugin *_plug_dir_browse_new();
-static void  _plug_dir_browse_free(Evry_Plugin *p);
-static int  _plug_dir_browse_begin(Evry_Plugin *p, Evry_Item *item);
-static int  _plug_dir_browse_fetch(Evry_Plugin *p, char *string);
-static int  _plug_dir_browse_action(Evry_Plugin *p, Evry_Item *item);
-static void _plug_dir_browse_cleanup(Evry_Plugin *p);
-static int  _plug_dir_browse_cb_sort(const void *data1, const void *data2);
-static void _plug_dir_browse_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
-static void _plug_dir_browse_list_free(Evry_Plugin *p);
-static Evry_Item *_plug_dir_browse_item_fill(const char *directory, const char *file);
+static Evry_Plugin *_plug_new();
+static void _plug_free(Evry_Plugin *p);
+static int  _begin(Evry_Plugin *p, Evry_Item *item);
+static int  _fetch(Evry_Plugin *p, const char *input);
+static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
+static void _cleanup(Evry_Plugin *p);
+static int  _cb_sort(const void *data1, const void *data2);
+static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
+static void _list_free(Evry_Plugin *p);
+static Evry_Item *_item_fill(const char *directory, const char *file);
 
 static Evry_Plugin_Class class;
 
@@ -27,8 +27,9 @@ evry_plug_dir_browse_init(void)
    class.name = "Browse Files";
    class.type_in  = "NONE|FILE";
    class.type_out = "FILE";
-   class.new = &_plug_dir_browse_new;
-   class.free = &_plug_dir_browse_free;
+   class.prio = 2;
+   class.new = &_plug_new;
+   class.free = &_plug_free;
    evry_plugin_register(&class);
 
    return 1;
@@ -43,15 +44,15 @@ evry_plug_dir_browse_shutdown(void)
 }
 
 static Evry_Plugin *
-_plug_dir_browse_new()
+_plug_new()
 {
    Evry_Plugin *p = E_NEW(Evry_Plugin, 1);
    p->class = &class;
-   p->begin = &_plug_dir_browse_begin;
-   p->fetch = &_plug_dir_browse_fetch;
-   p->action = &_plug_dir_browse_action;
-   p->cleanup = &_plug_dir_browse_cleanup;
-   p->icon_get = &_plug_dir_browse_item_icon_get;
+   p->begin = &_begin;
+   p->fetch = &_fetch;
+   p->action = &_action;
+   p->cleanup = &_cleanup;
+   p->icon_get = &_item_icon_get;
    p->items = NULL;   
 
    Inst *inst = E_NEW(Inst, 1);
@@ -62,9 +63,9 @@ _plug_dir_browse_new()
 }
 
 static void
-_plug_dir_browse_free(Evry_Plugin *p)
+_plug_free(Evry_Plugin *p)
 {
-   _plug_dir_browse_cleanup(p);
+   _cleanup(p);
 
    Inst *inst = p->priv;
    eina_stringshare_del(inst->directory);
@@ -74,13 +75,13 @@ _plug_dir_browse_free(Evry_Plugin *p)
 
 
 static int
-_plug_dir_browse_action(Evry_Plugin *p, Evry_Item *item)
+_action(Evry_Plugin *p, Evry_Item *item, const char *input)
 {   
    return 0;
 }
 
 static void
-_plug_dir_browse_list_free(Evry_Plugin *p)
+_list_free(Evry_Plugin *p)
 {
    Evry_Item *it;
 
@@ -97,13 +98,13 @@ _plug_dir_browse_list_free(Evry_Plugin *p)
 
 
 static void
-_plug_dir_browse_cleanup(Evry_Plugin *p)
+_cleanup(Evry_Plugin *p)
 {
-   _plug_dir_browse_list_free(p);
+   _list_free(p);
 }
 
 static int
-_plug_dir_browse_begin(Evry_Plugin *p, Evry_Item *item)
+_begin(Evry_Plugin *p, Evry_Item *item)
 {
    Inst *inst = p->priv;
    
@@ -111,7 +112,6 @@ _plug_dir_browse_begin(Evry_Plugin *p, Evry_Item *item)
      {
 	eina_stringshare_del(inst->directory);
 	inst->directory = eina_stringshare_add(item->uri);
-	printf("dir: %s\n", inst->directory);
 	
 	return 1;
      }
@@ -121,7 +121,7 @@ _plug_dir_browse_begin(Evry_Plugin *p, Evry_Item *item)
 
 /* based on directory-watcher from drawer module  */
 static int
-_plug_dir_browse_fetch(Evry_Plugin *p, char *string)
+_fetch(Evry_Plugin *p, const char *input)
 {
    Eina_List *files;
    char *file;
@@ -130,24 +130,24 @@ _plug_dir_browse_fetch(Evry_Plugin *p, char *string)
    char match2[4096];
    Inst *inst = p->priv;
    
-   _plug_dir_browse_list_free(p);
+   _list_free(p);
    
    files = ecore_file_ls(inst->directory);
 
-   if (string)
+   if (input)
      {
-	snprintf(match1, sizeof(match1), "%s*", string);
-	snprintf(match2, sizeof(match2), "*%s*", string);
+	snprintf(match1, sizeof(match1), "%s*", input);
+	snprintf(match2, sizeof(match2), "*%s*", input);
      }
 
    EINA_LIST_FREE(files, file)
      {
 	if ((file[0] == '.') ||
-	    (string &&
+	    (input &&
 	     (!e_util_glob_case_match(file, match1)) &&
 	     (!e_util_glob_case_match(file, match2))))
 	  goto end;
-	it  = _plug_dir_browse_item_fill(inst->directory, file);
+	it  = _item_fill(inst->directory, file);
 	if (it)
 	  p->items = eina_list_append(p->items, it);
 
@@ -161,7 +161,7 @@ _plug_dir_browse_fetch(Evry_Plugin *p, char *string)
 
 /* based on directory-watcher from drawer module  */
 static Evry_Item *
-_plug_dir_browse_item_fill(const char *directory, const char *file)
+_item_fill(const char *directory, const char *file)
 {
    Evry_Item *it = NULL;
    char buf[4096];
@@ -209,7 +209,7 @@ _plug_dir_browse_item_fill(const char *directory, const char *file)
 }
 
 static void
-_plug_dir_browse_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    char *item_path;
 
@@ -230,7 +230,7 @@ _plug_dir_browse_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 }
 
 static int
-_plug_dir_browse_cb_sort(const void *data1, const void *data2)
+_cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1, *it2;
    

@@ -6,18 +6,24 @@ typedef struct _Inst Inst;
 struct _Inst
 {
   Eina_Hash *added;
+
+  Eina_List *apps;
+  Evry_Item *candidate;
 };
 
-static Evry_Plugin *_plug_apps_new();
-static void _plug_apps_free(Evry_Plugin *p);
-static int  _plug_apps_fetch(Evry_Plugin *p, char *string);
-static int  _plug_apps_action(Evry_Plugin *p, Evry_Item *item);
-static void _plug_apps_cleanup(Evry_Plugin *p);
-static void _plug_apps_item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio);
-static int  _plug_apps_cb_sort(const void *data1, const void *data2);
-static void _plug_apps_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
+static Evry_Plugin *_plug_new();
+static Evry_Plugin *_plug_new2();
+static void _plug_free(Evry_Plugin *p);
+static int  _begin(Evry_Plugin *p, Evry_Item *item);
+static int  _fetch(Evry_Plugin *p, const char *input);
+static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
+static void _cleanup(Evry_Plugin *p);
+static void _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio);
+static int  _cb_sort(const void *data1, const void *data2);
+static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 
 static Evry_Plugin_Class class;
+static Evry_Plugin_Class class2;
 
 EAPI int
 evry_plug_apps_init(void)
@@ -26,10 +32,20 @@ evry_plug_apps_init(void)
    class.type_in  = "NONE";
    class.type_out = "APPLICATION";
    class.need_query = 0;
-   class.new = &_plug_apps_new;
-   class.free = &_plug_apps_free;
+   class.new = &_plug_new;
+   class.free = &_plug_free;
+   class.prio = 1;
    evry_plugin_register(&class);
-   
+
+   class2.name = "Open With..";
+   class2.type_in  = "FILE";
+   class2.type_out = "APPLICATION";
+   class2.need_query = 0;
+   class2.new = &_plug_new2;
+   class2.free = &_plug_free;
+   class2.prio = 3;
+   evry_plugin_register(&class2);
+
    return 1;
 }
 
@@ -37,19 +53,39 @@ EAPI int
 evry_plug_apps_shutdown(void)
 {
    evry_plugin_unregister(&class);
+   evry_plugin_unregister(&class2);
    
    return 1;
 }
 
 static Evry_Plugin *
-_plug_apps_new()
+_plug_new()
 {
    Evry_Plugin *p = E_NEW(Evry_Plugin, 1);
    p->class = &class;
-   p->fetch = &_plug_apps_fetch;
-   p->action = &_plug_apps_action;
-   p->cleanup = &_plug_apps_cleanup;
-   p->icon_get = &_plug_apps_item_icon_get;
+   p->fetch = &_fetch;
+   p->action = &_action;
+   p->cleanup = &_cleanup;
+   p->icon_get = &_item_icon_get;
+   p->items = NULL;   
+
+   Inst *inst = E_NEW(Inst, 1);
+   inst->added = NULL;
+   p->priv = inst;
+
+   return p;
+}
+
+static Evry_Plugin *
+_plug_new2()
+{
+   Evry_Plugin *p = E_NEW(Evry_Plugin, 1);
+   p->class = &class2;
+   p->begin = &_begin;
+   p->fetch = &_fetch;
+   p->action = &_action;
+   p->cleanup = &_cleanup;
+   p->icon_get = &_item_icon_get;
    p->items = NULL;   
 
    Inst *inst = E_NEW(Inst, 1);
@@ -60,35 +96,110 @@ _plug_apps_new()
 }
 
 static void
-_plug_apps_free(Evry_Plugin *p)
+_plug_free(Evry_Plugin *p)
 {
    Inst *inst = p->priv;
    
-   _plug_apps_cleanup(p);
-
+   _cleanup(p);
+   if (inst->apps) eina_list_free(inst->apps);
+   
    E_FREE(inst);
    E_FREE(p);
 }
 
 static int
-_plug_apps_action(Evry_Plugin *p, Evry_Item *item)
+_begin(Evry_Plugin *p, Evry_Item *it)
 {
-   E_Zone *zone;
-   Evry_App *app;
+   Inst *inst;
+   const char *mime;
+   
+   _cleanup(p);
 
-   app = item->data[0];
-   zone = e_util_zone_current_get(e_manager_current_get());
-
-   if (app->desktop)
-     e_exec(zone, app->desktop, NULL, NULL, "everything");
+   if (!it || !it->uri) return 0;
+   inst = p->priv;
+   inst->candidate = it;
+   
+   if (!it->mime)
+     mime = efreet_mime_type_get(it->uri);
    else
-     e_exec(zone, NULL, app->file, NULL, "everything");
+     mime = it->mime;
+   
+   if (!mime) return 0;
 
+   /* if (!strcmp(mime, "Folder"))
+    *   {
+    * 	apps = 
+    *   }
+    * else */
+
+   inst->apps = efreet_util_desktop_mime_list(mime);
+   
    return 1;
 }
 
+
+static int
+_action(Evry_Plugin *p, Evry_Item *it, const char *input)
+{
+   E_Zone *zone;
+   Evry_App *app;
+   Efreet_Desktop *desktop = NULL; 
+   Eina_List *files = NULL;
+   Inst *inst = p->priv;
+   int ret = 0;
+
+   app = it->data[0];
+   zone = e_util_zone_current_get(e_manager_current_get());
+
+   if (inst->candidate)
+     files = eina_list_append(files, inst->candidate->uri);
+   
+   if (app->desktop)
+     {
+	desktop = app->desktop;
+     }
+   else if (input || app->file)
+     {
+	if (app->file)
+	  input = app->file;
+	
+	desktop = efreet_desktop_empty_new("");
+	if (strchr(input, '%'))
+	  {
+	     desktop->exec = strdup(input);
+	  }
+	else
+	  {
+	     int len = strlen(input) + 4;
+	     desktop->exec = malloc(len);
+	     if (desktop->exec)
+	       snprintf(desktop->exec, len, "%s %%U", input);
+	  }
+     }
+
+   if (desktop)
+     {
+	e_exec(zone, desktop, NULL, files, NULL /*"everything"*/);
+
+	if (!it)
+	  efreet_desktop_free(desktop);
+	
+	ret = 1;
+     }
+   
+   eina_list_free(files);
+
+   
+   /* if (app->desktop)
+    *   e_exec(zone, app->desktop, NULL, NULL, "everything");
+    * else
+    *   e_exec(zone, NULL, app->file, NULL, "everything"); */
+
+   return ret;
+}
+
 static void
-_plug_apps_cleanup(Evry_Plugin *p)
+_cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
    Evry_App *app;
@@ -104,56 +215,92 @@ _plug_apps_cleanup(Evry_Plugin *p)
 }
 
 static int
-_plug_apps_fetch(Evry_Plugin *p, char *string)
+_fetch(Evry_Plugin *p, const char *input)
 {
-   char buf[4096];
-   Eina_List *list;
+   Eina_List *l;
    Efreet_Desktop *desktop;
    char *file;
+   char match1[4096];
+   char match2[4096];
+   
    Inst *inst = p->priv;
    
-   _plug_apps_cleanup(p); 
+   _cleanup(p); 
 
-   if (string)
+   if (inst->apps)
      {
-	snprintf(buf, sizeof(buf), "%s*", string);
-	list = efreet_util_desktop_exec_glob_list(buf);
-	EINA_LIST_FREE(list, desktop)
-	  _plug_apps_item_add(p, desktop, NULL, 1);
+	if (!input)
+	  {
+	     EINA_LIST_FOREACH(inst->apps, l, desktop)
+	       _item_add(p, desktop, NULL, 1);
+	  }
+	else
+	  {
+	     snprintf(match1, sizeof(match1), "%s*", input);
+	     snprintf(match2, sizeof(match2), "*%s*", input);
+
+	     EINA_LIST_FOREACH(inst->apps, l, desktop)
+	       {
+		  if (desktop->name)
+		    {		  
+		       if (e_util_glob_case_match(desktop->name, match1))
+			 _item_add(p, desktop, NULL, 1);
+		       else if (e_util_glob_case_match(desktop->name, match2))
+			 _item_add(p, desktop, NULL, 2);
+		       else if (desktop->comment)
+			 {
+			    if (e_util_glob_case_match(desktop->comment, match1))
+			      _item_add(p, desktop, NULL, 3);
+			    else if (e_util_glob_case_match(desktop->comment, match2))
+			      _item_add(p, desktop, NULL, 4);
+			 }
+		    }
+	       }
+	  }
+     }
    
-	snprintf(buf, sizeof(buf), "*%s*", string);
-	list = efreet_util_desktop_name_glob_list(buf);
-	EINA_LIST_FREE(list, desktop)
-	  _plug_apps_item_add(p, desktop, NULL, 2); 
+   
+   if (!p->items && input)
+     {
+	snprintf(match1, sizeof(match1), "%s*", input);
+	l = efreet_util_desktop_exec_glob_list(match1);
+	EINA_LIST_FREE(l, desktop)
+	  _item_add(p, desktop, NULL, 1);
+   
+	snprintf(match1, sizeof(match1), "*%s*", input);
+	l = efreet_util_desktop_name_glob_list(match1);
+	EINA_LIST_FREE(l, desktop)
+	  _item_add(p, desktop, NULL, 2); 
 
 	// TODO make these optional/configurable
-	snprintf(buf, sizeof(buf), "*%s*", string);
-	list = efreet_util_desktop_generic_name_glob_list(buf);
-	EINA_LIST_FREE(list, desktop)
-	  _plug_apps_item_add(p, desktop, NULL, 3); 
+	l = efreet_util_desktop_generic_name_glob_list(match1);
+	EINA_LIST_FREE(l, desktop)
+	  _item_add(p, desktop, NULL, 3); 
 
-	snprintf(buf, sizeof(buf), "*%s*", string);
-	list = efreet_util_desktop_comment_glob_list(buf);
-	EINA_LIST_FREE(list, desktop)
-	  _plug_apps_item_add(p, desktop, NULL, 3);
+	l = efreet_util_desktop_comment_glob_list(match1);
+	EINA_LIST_FREE(l, desktop)
+	  _item_add(p, desktop, NULL, 3);
      }
-   else
+   else if (!p->items)
      {
 	// TODO option for popular/recent
-	list = e_exehist_list_get();
-	EINA_LIST_FREE(list, file)
-	  _plug_apps_item_add(p, NULL, file, 1);
+	l = e_exehist_list_get();
+	EINA_LIST_FREE(l, file)
+	  _item_add(p, NULL, file, 1);
      }
    
    if (inst->added)
      {
 	eina_hash_free(inst->added);
 	inst->added = NULL;
-
-	if (string)
+     }
+   
+   if (p->items)
+     {
+	if (input)
 	  p->items = eina_list_sort(p->items,
 			   eina_list_count(p->items),
-			   _plug_apps_cb_sort);
+			   _cb_sort);
 	return 1;
      }
     
@@ -161,27 +308,34 @@ _plug_apps_fetch(Evry_Plugin *p, char *string)
 }
 
 static void
-_plug_apps_item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
+_item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 {
    Evry_Item *it;
    Evry_App *app;
    Inst *inst = p->priv;
+   Efreet_Desktop *desktop2;
    
    if (desktop)
      file = ecore_file_app_exe_get(desktop->exec);
 
    if (!file) return;
-   
-   if (eina_hash_find(inst->added, file))
+
+   if (desktop)
      {
-	if (desktop) free(file);
-	return;
+	if ((desktop2 = eina_hash_find(inst->added, file)))
+	  {
+	     if (desktop == desktop2)
+	       {
+		  free(file);
+		  return;
+	       }
+	  }
      }
    
    if (!inst->added)
      inst->added = eina_hash_string_superfast_new(NULL);
 
-   eina_hash_add(inst->added, file, file);
+   eina_hash_add(inst->added, file, desktop);
 
    if (desktop)
      {
@@ -210,7 +364,7 @@ _plug_apps_item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int pri
 }
 
 static void
-_plug_apps_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    Evry_App *app = it->data[0];
    
@@ -219,7 +373,7 @@ _plug_apps_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 }
 
 static int
-_plug_apps_cb_sort(const void *data1, const void *data2)
+_cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1, *it2;
    Evry_App *app1, *app2;

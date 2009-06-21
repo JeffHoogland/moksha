@@ -2,14 +2,14 @@
 #include "e_mod_main.h"
 
 static Evry_Plugin_Class class;
-static Evry_Plugin *_plug_config_new();
-static void  _plug_config_free(Evry_Plugin *p);
-static int  _plug_config_fetch(Evry_Plugin *p, char *string);
-static int  _plug_config_action(Evry_Plugin *p, Evry_Item *item);
-static void _plug_config_cleanup(Evry_Plugin *p);
-static void _plug_config_item_add(Evry_Plugin *p, E_Configure_It *eci, int prio);
-static void _plug_config_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
-static int  _plug_config_cb_sort(const void *data1, const void *data2);
+static Evry_Plugin *_plug_new();
+static void  _plug_free(Evry_Plugin *p);
+static int  _fetch(Evry_Plugin *p, const char *input);
+static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
+static void _cleanup(Evry_Plugin *p);
+static void _item_add(Evry_Plugin *p, E_Configure_It *eci, int prio);
+static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
+static int  _cb_sort(const void *data1, const void *data2);
 
 EAPI int
 evry_plug_config_init(void)
@@ -18,8 +18,8 @@ evry_plug_config_init(void)
    class.type_in  = "NONE";
    class.type_out = "NONE";
    class.instances = NULL;
-   class.new = &_plug_config_new;
-   class.free = &_plug_config_free;
+   class.new = &_plug_new;
+   class.free = &_plug_free;
    evry_plugin_register(&class);
    return 1;
 }
@@ -33,27 +33,27 @@ evry_plug_config_shutdown(void)
 }
 
 static Evry_Plugin *
-_plug_config_new()
+_plug_new()
 {
    Evry_Plugin *p = E_NEW(Evry_Plugin, 1);
    p->class = &class;
-   p->fetch = &_plug_config_fetch;
-   p->action = &_plug_config_action;
-   p->cleanup = &_plug_config_cleanup;
-   p->icon_get = &_plug_config_item_icon_get;
+   p->fetch = &_fetch;
+   p->action = &_action;
+   p->cleanup = &_cleanup;
+   p->icon_get = &_item_icon_get;
    p->items = NULL;   
 }
 
 
 static void
-_plug_config_free(Evry_Plugin *p)
+_plug_free(Evry_Plugin *p)
 {
-   _plug_config_cleanup(p);
+   _cleanup(p);
    E_FREE(p);
 }
 
 static int
-_plug_config_action(Evry_Plugin *p, Evry_Item *item)
+_action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
    E_Configure_It *eci, *eci2;
    E_Container *con;
@@ -61,8 +61,10 @@ _plug_config_action(Evry_Plugin *p, Evry_Item *item)
    Eina_List *l, *ll;
    char buf[1024];
    int found = 0;
+
+   if (!it) return 0;
    
-   eci = item->data[0];
+   eci = it->data[0];
    con = e_container_current_get(e_manager_current_get());
 
    for (l = e_configure_registry; l && !found; l = l->next)
@@ -88,7 +90,7 @@ _plug_config_action(Evry_Plugin *p, Evry_Item *item)
 }
 
 static void
-_plug_config_cleanup(Evry_Plugin *p)
+_cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
 
@@ -101,7 +103,7 @@ _plug_config_cleanup(Evry_Plugin *p)
 }
 
 static int
-_plug_config_fetch(Evry_Plugin *p, char *string)
+_fetch(Evry_Plugin *p, const char *input)
 {
    E_Manager *man;
    E_Zone *zone;
@@ -112,10 +114,10 @@ _plug_config_fetch(Evry_Plugin *p, char *string)
    E_Configure_Cat *ecat;
    E_Configure_It *eci;
    
-   _plug_config_cleanup(p); 
+   _cleanup(p); 
 
-   snprintf(match1, sizeof(match1), "%s*", string);
-   snprintf(match2, sizeof(match2), "*%s*", string);
+   snprintf(match1, sizeof(match1), "%s*", input);
+   snprintf(match2, sizeof(match2), "*%s*", input);
 
    for (l = e_configure_registry; l; l = l->next)
      {
@@ -128,13 +130,13 @@ _plug_config_fetch(Evry_Plugin *p, char *string)
 		  if (eci->pri >= 0)
 		    {
 		       if (e_util_glob_case_match(eci->label, match1))
-			 _plug_config_item_add(p, eci, 1);
+			 _item_add(p, eci, 1);
 		       else if (e_util_glob_case_match(eci->label, match2))
-			 _plug_config_item_add(p, eci, 2);
+			 _item_add(p, eci, 2);
 		       else if (e_util_glob_case_match(ecat->label, match1))
-			 _plug_config_item_add(p, eci, 3);
+			 _item_add(p, eci, 3);
 		       else if (e_util_glob_case_match(ecat->label, match2))
-			 _plug_config_item_add(p, eci, 4);
+			 _item_add(p, eci, 4);
 		    }
 	       }
 	  }
@@ -144,7 +146,7 @@ _plug_config_fetch(Evry_Plugin *p, char *string)
      {
 	p->items = eina_list_sort(p->items, 
 				       eina_list_count(p->items),
-				       _plug_config_cb_sort);
+				       _cb_sort);
 	return 1;
      }
 
@@ -152,7 +154,7 @@ _plug_config_fetch(Evry_Plugin *p, char *string)
 }
 
 static void
-_plug_config_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    E_Configure_It *eci = it->data[0];
    Evas_Object *o = NULL;
@@ -171,7 +173,7 @@ _plug_config_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 }
 
 static void
-_plug_config_item_add(Evry_Plugin *p, E_Configure_It *eci, int prio)
+_item_add(Evry_Plugin *p, E_Configure_It *eci, int prio)
 {
    Evry_Item *it;   
 
@@ -187,7 +189,7 @@ _plug_config_item_add(Evry_Plugin *p, E_Configure_It *eci, int prio)
 
 // TODO sort name?
 static int
-_plug_config_cb_sort(const void *data1, const void *data2)
+_cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1, *it2;
    

@@ -60,9 +60,6 @@ EAPI int  evry_plug_tracker_shutdown(void);
 EAPI int  evry_plug_dir_browse_init(void);
 EAPI int  evry_plug_dir_browse_shutdown(void);
 
-EAPI int  evry_plug_file_open_init(void);
-EAPI int  evry_plug_file_open_shutdown(void);
-
 extern Config *evry_conf;
 
 #endif
