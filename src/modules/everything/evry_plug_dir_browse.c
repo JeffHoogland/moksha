@@ -142,12 +142,27 @@ _fetch(Evry_Plugin *p, const char *input)
 
    EINA_LIST_FREE(files, file)
      {
-	if ((file[0] == '.') ||
-	    (input &&
-	     (!e_util_glob_case_match(file, match1)) &&
-	     (!e_util_glob_case_match(file, match2))))
-	  goto end;
-	it  = _item_fill(inst->directory, file);
+	it = NULL;
+	
+	if (file[0] == '.') goto end;
+	
+	if (input)
+	  {
+	     if (e_util_glob_case_match(file, match1))
+	       {
+		  it  = _item_fill(inst->directory, file);
+		  it->priority += 1;
+	       }
+	     else if (e_util_glob_case_match(file, match2))
+	       {
+		  it = _item_fill(inst->directory, file);
+	       }
+	  }
+	else
+	  {
+	     it  = _item_fill(inst->directory, file);
+	  }
+	
 	if (it)
 	  p->items = eina_list_append(p->items, it);
 
@@ -254,5 +269,8 @@ _cb_sort(const void *data1, const void *data2)
    it1 = data1;
    it2 = data2;
 
-   return (it2->priority - it1->priority);
+   if (it2->priority - it1->priority) 
+     return (it2->priority - it1->priority);
+   else
+     return strcasecmp(it1->label, it2->label);
 }
