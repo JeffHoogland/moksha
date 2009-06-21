@@ -26392,12 +26392,36 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       color: 245 245 245 255;
 	    }
 	 }
+
+	 part { name: "bg";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       min: 0 42;
+	       max: 99999 42;
+
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   4   8;
+	       }
+	       rel2 {
+		  relative: 1.0 0.0;
+		  offset:   -6  50;
+	       }
+
+	       image {
+		  normal: "menu_sel_bg.png";
+		  border: 8 8 5 9;
+	       }
+	    }
+	 }
+	 
 	 part { name: "list_bg";
 	    type: RECT;
 	    description { state: "default" 0.0;
 	       rel1 {
-		  to: "e.swallow.list";
-		  offset: -1 -1;
+		  relative: 0.0 1.0;
+		  to: "selector_base";
+		  offset: 3 6;
 	       }
 	       rel2 {
 		  to: "e.swallow.list";
@@ -26407,32 +26431,88 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	    }
 	 }
 
-	 part { name: "e.swallow.bar";
-	    type: SWALLOW;
-	    /* clip_to: "list_clip"; */
+	 part { name: "selector_base";
+	    mouse_events: 1;
 	    description { state: "default" 0.0;
 	       min: 32 32;
 	       max: 9999 32;
-	       align: 0.5 0.0;
-	       rel1 {
+
+	        rel1 {
 		  relative: 0.0 1.0;
-		  offset:   8 10;
+		  offset: 8 6;
 		  to_y: "bg";
 	       }
-	       rel2.offset:   -9  -13;
+		rel2 {
+		  relative: 1.0 1.0;
+		  offset: -9 38;
+		  to_y: "bg";
+		}
+		
+	       image {
+		  normal: "bt_dis_base.png";
+		  border: 4 4 4 4;
+	       }
 	    }
 	 }
-	 
+	 part { name: "clipper";
+	    type: RECT;
+	    mouse_events: 0;
+	    description {
+	       state: "default" 0.0;
+	       rel1 {
+		  to: "selector_base";
+		  offset: 2 2;
+	       }
+	       rel2 {
+		  to: "selector_base";
+		  offset: -3 -3;
+	       }
+	    }
+	 }
+	 part { name: "e.swallow.bar";
+	    clip_to: "clipper";
+	    type: SWALLOW;
+	    description {
+	       state: "default" 0.0;
+	       rel1.to: "clipper";
+	       rel2.to: "clipper";
+	    }
+	 }
+	 part { name: "over2";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "selector_base";
+	       rel2.to: "selector_base";
+	       image {
+		  normal: "bt_dis_shine.png";
+		  border: 4 4 4 4;
+	       }
+	    }
+	 }
+	 part { name: "over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "selector_base";
+	       rel2.to: "selector_base";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_dis_hilight.png";
+		  border: 4 4 4 0;
+	       }
+	       color: 255 255 255 128;
+	    }
+	 }
+
 	 part { name: "e.swallow.list";
 	    type: SWALLOW;
 	    clip_to: "list_clip";
 	    description { state: "default" 0.0;
 	       min: 32 64;
-	       align: 0.5 1.0;
+	       align: 0.5 0.0;
 	       rel1 {
 		  relative: 0.0 1.0;
-		  offset:   12 10;
-		  to_y: "e.swallow.bar";
+		  offset:   12 7;
+		  to_y: "selector_base";
 	       }
 	       rel2.offset:   -13  -13;
 	    }
@@ -26464,27 +26544,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       fill.smooth : 0;
 	    }
 	 }
-	 part { name: "bg";
-	    mouse_events: 0;
-	    description { state: "default" 0.0;
-	       min: 0 42;
-	       max: 99999 42;
 
-	       rel1 {
-		  relative: 0.0 0.0;
-		  offset:   4   6;
-	       }
-	       rel2 {
-		  relative: 1.0 0.0;
-		  offset:   -6  48;
-	       }
-
-	       image {
-		  normal: "menu_sel_bg.png";
-		  border: 8 8 5 9;
-	       }
-	    }
-	 }
 	 part { name: "e.text.label";
 	    type: TEXT;
 	    effect: SHADOW;
@@ -26494,12 +26554,12 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       align: 0.0 0.5;
 	       rel1 {
 		  relative: 1.0 0.0;
-		  offset:   4   6;
+		  offset:   4   8;
 		  to_x:     "e.swallow.icons";
 	       }
 	       rel2 {
 		  relative: 1.0 0.0;
-		  offset:   -10  48;
+		  offset:   -10  50;
 		  to_x:     "e.swallow.icons";
 	       }
 	       color: 255 255 255 255;
