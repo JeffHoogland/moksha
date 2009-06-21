@@ -779,15 +779,18 @@ _evry_matches_update(void)
 	  }
      }
    
-   if ((s->cur_plugins) &&
-       (!s->cur_plugin || !eina_list_data_find(s->cur_plugins, s->cur_plugin)))
+   if (s->cur_plugins)
      {
-	_evry_show_items(s->cur_plugins->data);
+	if (s->cur_plugin && eina_list_data_find(s->cur_plugins, s->cur_plugin))
+	  {
+	     _evry_show_items(s->cur_plugin);
+	  }
+	else
+	  {
+	     _evry_show_items(s->cur_plugins->data);
+	  }
      }
-   else if (s->cur_plugin)
-     {
-	_evry_show_items(s->cur_plugin);
-     }
+   else s->cur_plugin = NULL;
 }
 
 static void
