@@ -717,7 +717,7 @@ _evry_show_items(Evry_Plugin *p)
 
    /* TODO add option */
 
-   if (p->items)
+   if (!s->sel_item && p->items)
      {
 	s->sel_item = p->items->data; 
 	_evry_item_sel(s->sel_item); 
