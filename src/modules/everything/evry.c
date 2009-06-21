@@ -866,7 +866,7 @@ _evry_item_next(void)
 	       }
 	  }
      }
-   else if (s->cur_plugin->items)
+   else if (s->cur_plugin && s->cur_plugin->items)
      {
 	s->sel_item = s->cur_plugin->items->data;
 	_evry_item_sel(s->sel_item);
