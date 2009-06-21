@@ -430,7 +430,10 @@ _evry_cb_key_down(void *data, int type, void *event)
    else if (!strcmp(ev->key, "Return"))
      _evry_action(1);
    else if (!strcmp(ev->key, "Tab"))
-     _evry_push_state();
+     {
+	if (s->sel_item)
+	  _evry_push_state();
+     }
    else if (!strcmp(ev->key, "u") &&
 	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
      _evry_clear();
