@@ -18,12 +18,10 @@ e_gadcon_popup_new(E_Gadcon_Client *gcc)
    E_Gadcon_Popup *pop;
    Evas_Object *o;
    E_Zone *zone;
-   Evas_Coord gx, gy;
 
    pop = E_OBJECT_ALLOC(E_Gadcon_Popup, E_GADCON_POPUP_TYPE, _e_gadcon_popup_free);
    if (!pop) return NULL;
-   e_gadcon_client_geometry_get(gcc, &gx, &gy, NULL, NULL);
-   zone = e_container_zone_at_point_get(e_container_current_get(e_manager_current_get()), gx, gy);
+   zone = e_gadcon_client_zone_get(gcc);
    pop->win = e_popup_new(zone, 0, 0, 0, 0);
    e_popup_layer_set(pop->win, 255);
 

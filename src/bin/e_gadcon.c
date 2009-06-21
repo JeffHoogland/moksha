@@ -1249,6 +1249,14 @@ e_gadcon_client_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *
    return 1;
 }
 
+EAPI E_Zone *
+e_gadcon_client_zone_get(E_Gadcon_Client *gcc)
+{
+   E_OBJECT_CHECK_RETURN(gcc, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(gcc, E_GADCON_CLIENT_TYPE, NULL);
+   return e_gadcon_zone_get(gcc->gadcon);
+}
+
 EAPI void
 e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int flags)
 {
