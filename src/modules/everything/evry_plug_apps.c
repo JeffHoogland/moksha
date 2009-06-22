@@ -142,25 +142,24 @@ static int
 _action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
    E_Zone *zone;
-   Evry_App *app;
+   Evry_App *app = NULL;
    Efreet_Desktop *desktop = NULL; 
    Eina_List *files = NULL;
    Inst *inst = p->priv;
    int ret = 0;
 
-   app = it->data[0];
-   zone = e_util_zone_current_get(e_manager_current_get());
-
+   if (it) app = it->data[0];
+   
    if (inst->candidate)
      files = eina_list_append(files, inst->candidate->uri);
    
-   if (app->desktop)
+   if (app && app->desktop)
      {
 	desktop = app->desktop;
      }
-   else if (input || app->file)
+   else
      {
-	if (app->file)
+	if (app && app->file)
 	  input = app->file;
 	
 	desktop = efreet_desktop_empty_new("");
@@ -179,6 +178,7 @@ _action(Evry_Plugin *p, Evry_Item *it, const char *input)
 
    if (desktop)
      {
+	zone = e_util_zone_current_get(e_manager_current_get());
 	e_exec(zone, desktop, NULL, files, NULL /*"everything"*/);
 
 	if (!it)
@@ -188,13 +188,7 @@ _action(Evry_Plugin *p, Evry_Item *it, const char *input)
      }
    
    eina_list_free(files);
-
    
-   /* if (app->desktop)
-    *   e_exec(zone, app->desktop, NULL, NULL, "everything");
-    * else
-    *   e_exec(zone, NULL, app->file, NULL, "everything"); */
-
    return ret;
 }
 
@@ -314,38 +308,56 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
    Evry_App *app;
    Inst *inst = p->priv;
    Efreet_Desktop *desktop2;
-   
+
    if (desktop)
-     file = ecore_file_app_exe_get(desktop->exec);
+     file = desktop->exec;
 
    if (!file) return;
+
+   if (!inst->added)
+     inst->added = eina_hash_string_superfast_new(NULL);
+
+
+   if (!desktop)
+   {
+      char match[4096];
+      Eina_List *l;
+      int len;
+      char *tmp;
+      int found = 0;
+	
+      if (eina_hash_find(inst->added, file))
+	return;
+
+      len = strlen(file);
+      tmp = ecore_file_app_exe_get(file);
+      snprintf(match, sizeof(match), "%s*", tmp);	
+      l = efreet_util_desktop_exec_glob_list(match);
+
+      EINA_LIST_FREE(l, desktop)
+	{
+	   if (desktop->exec && !strncmp(file, desktop->exec, len))
+	     {
+		found = 1;
+		break;
+	     }
+	}
+
+      eina_list_free(l);
+      free(tmp);
+
+      if (!found)
+	eina_hash_add(inst->added, file, file);
+   }
 
    if (desktop)
      {
 	if ((desktop2 = eina_hash_find(inst->added, file)))
-	  {
-	     if (desktop == desktop2)
-	       {
-		  free(file);
-		  return;
-	       }
-	  }
-     }
-   
-   if (!inst->added)
-     inst->added = eina_hash_string_superfast_new(NULL);
+	  if (desktop == desktop2)
+	    return;
 
-   eina_hash_add(inst->added, file, desktop);
-
-   if (desktop)
-     {
-	free(file);
+	eina_hash_add(inst->added, file, desktop);
 	file = NULL;
-     }
-   else 
-     {
-	desktop = efreet_util_desktop_exec_find(file);
-	if (desktop) file = NULL;
      }
    
    it = calloc(1, sizeof(Evry_Item));
