@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-15 14:52+1000\n"
-"PO-Revision-Date: 2009-06-20 18:32+0300\n"
+"PO-Revision-Date: 2009-06-22 14:33+0300\n"
 "Last-Translator: H. İbrahim Güngör <h.ibrahim.gungor@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -1303,6 +1303,8 @@ msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
 "hilight> ?"
 msgstr ""
+"<hilight>%2$s</hilight> içerisindeki<br>%1$d dosyayı<br>silmek istediğinize emin "
+"misiniz?"
 
 #: src/bin/e_fm_prop.c:108
 msgid "File Properties"
@@ -1485,7 +1487,7 @@ msgstr "Bu pencerede sınırın değişmesine izin verme"
 
 #: src/bin/e_int_border_locks.c:295
 msgid "Remember these Locks for this window next time it appears"
-msgstr ""
+msgstr "Bu pencere bir daha göründüğünüde bu kilitleri hatırla"
 
 #: src/bin/e_int_border_locks.c:308
 msgid "Lock program changing:"
@@ -1535,7 +1537,7 @@ msgstr "Tamekran durumu"
 
 #: src/bin/e_int_border_locks.c:327
 msgid "Lock me from changing:"
-msgstr ""
+msgstr "Beni şunları değiştirirken engelle:"
 
 #: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:519
 msgid "Border style"
@@ -1543,7 +1545,7 @@ msgstr "Kenarlık biçemi"
 
 #: src/bin/e_int_border_locks.c:348
 msgid "Stop me from:"
-msgstr ""
+msgstr "Beni şunları yaparken durdur:"
 
 #: src/bin/e_int_border_locks.c:349
 msgid "Closing the window"
@@ -1815,7 +1817,7 @@ msgstr "Gizli"
 
 #: src/bin/e_int_border_remember.c:75
 msgid "Window Remember"
-msgstr ""
+msgstr "Pencere Hatırlamaları"
 
 #: src/bin/e_int_border_remember.c:244
 msgid "Window properties are not a unique match"
@@ -2027,6 +2029,11 @@ msgid ""
 "input<br>method configuration is correct and<br>that your "
 "configuration's<br>executable is in your PATH<br>"
 msgstr ""
+"Girdi metodu çalıştırılabilir dosyası başlatılırken hata oluştu<br><br>"
+"Lütfen girdi metodu "
+"yapılandırmanızın<br>doğru olduğuna ve<br>yapılandırmadaki çalıştırılabilir "
+"dosyasının<br> "
+"yolunun PATH içerisinde tanımlı olduğundan emin olun<br>"
 
 #: src/bin/e_int_menus.c:89
 msgid "Main"
@@ -3601,7 +3608,7 @@ msgstr "X ekran koruyucu etkinleşince kilitle"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:210
 msgid "Time after screensaver activated"
-msgstr ""
+msgstr "Ekran koruyucu etkinleştirildikten sonraki süre"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:213
 #: src/modules/conf_desklock/e_int_config_desklock.c:443
@@ -3646,15 +3653,15 @@ msgstr "Giriş Kutusu Ayarları"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:394
 msgid "Show on all screen zones"
-msgstr ""
+msgstr "Tüm ekranların bölgelerinde göster"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:398
 msgid "Show on current screen zone"
-msgstr ""
+msgstr "Mevcut ekranın bölgesinde göster"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:402
 msgid "Show on screen zone #:"
-msgstr ""
+msgstr "# Numaralı ekran bölgesinde göster:"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:406
 #: src/modules/conf_desks/e_int_config_desks.c:247
@@ -3843,6 +3850,11 @@ msgid ""
 "<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
 "will be restored in %d seconds."
 msgstr ""
+"Tamam gibi görünüyor mu? Evetse <hilight>Kaydet</hilight>, değilse Geri "
+"Yükle "
+"düğmesine basın.<br>Bir düğmeye basmazsanız, eski çözünürlük olan %dx%d %d "
+"Hz<br> %d saniye  "
+"sonran geri yüklenecek."
 
 #: src/modules/conf_display/e_int_config_display.c:136
 #, c-format
@@ -3851,6 +3863,11 @@ msgid ""
 "<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored in %d seconds."
 msgstr ""
+"Tamam gibi görünüyor mu? Evetse <hilight>Kaydet</hilight>, değilse Geri "
+"Yükle "
+"düğmesine basın.<br>Bir düğmeye basmazsanız, eski çözünürlük olan %dx%d<br> "
+"%d saniye  "
+"sonran geri yüklenecek."
 
 #: src/modules/conf_display/e_int_config_display.c:146
 #, c-format
@@ -3859,6 +3876,11 @@ msgid ""
 "<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
 "will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
+"Tamam gibi görünüyor mu? Evetse <hilight>Kaydet</hilight>, değilse Geri "
+"Yükle "
+"düğmesine basın.<br>Bir düğmeye basmazsanız, eski çözünürlük olan %dx%d %d "
+"Hz "
+"<hilight>ANINDA</hilight> geri yüklenecek."
 
 #: src/modules/conf_display/e_int_config_display.c:153
 #, c-format
@@ -3867,6 +3889,10 @@ msgid ""
 "<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
+"Tamam gibi görünüyor mu? Evetse <hilight>Kaydet</hilight>, değilse Geri "
+"Yükle "
+"düğmesine basın.<br>Bir düğmeye basmazsanız, eski çözünürlük olan %dx%d "
+"<hilight>ANINDA</hilight> geri yüklenecek."
 
 #: src/modules/conf_display/e_int_config_display.c:190
 msgid "Resolution change"
@@ -4481,7 +4507,7 @@ msgstr "İçe aktar..."
 
 #: src/modules/conf_imc/e_int_config_imc.c:908
 msgid "Input Method Parameters"
-msgstr ""
+msgstr "Gİrdi Metodu Parametreleri"
 
 #: src/modules/conf_imc/e_int_config_imc.c:918
 msgid "Execute Command"
@@ -4497,7 +4523,7 @@ msgstr "Dışa Aktarılan Ortam Değişkenleri"
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:66
 msgid "Select an Input Method Settings..."
-msgstr ""
+msgstr "Bir Girdi Metodu Ayarı Seç..."
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:281
 #: src/modules/conf_imc/e_int_config_imc_import.c:296
@@ -4509,11 +4535,15 @@ msgid ""
 "Enlightenment was unable to import the configuration.<br><br>Are you sure "
 "this is really a valid configuration?"
 msgstr ""
+"Enlightenment yapılandırmayı içe aktaramadı.<br><br>Bunun geçerli bir "
+"yapılandırma olduğundan emin misiniz?"
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:297
 msgid ""
 "Enlightenment was unable to import the configuration<br>due to a copy error."
 msgstr ""
+"Enlightenment kopyalama hatası nedeniyle yapılandırma<br>dosyasını içe "
+"aktaramadı."
 
 #: src/modules/conf_imc/e_mod_main.c:34 src/modules/conf_intl/e_mod_main.c:34
 #: src/modules/wizard/page_010.c:140
@@ -4588,6 +4618,8 @@ msgstr "Yerel"
 msgid ""
 "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
 msgstr ""
+"Lütfen tuş dizisi girin,<br><br>ya da çıkmak için<hilight>Escape</hilight> "
+"tuşuna basın."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:92
 msgid "Key Binding Settings"
@@ -4624,6 +4656,9 @@ msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>%"
 "s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
+"Girdiğiniz kısayol tuşu dizisi, <hilight>%s</hilight> eylemi için<br>"
+"kullanılıyor. "
+"Lütfen farklı bir kısayol tuşu dizisi girin."
 
 #: src/modules/conf_menus/e_int_config_menus.c:44
 #: src/modules/conf_menus/e_int_config_menus.c:110
@@ -4664,7 +4699,7 @@ msgstr "Menüde Yorumları Göster"
 
 #: src/modules/conf_menus/e_int_config_menus.c:181
 msgid "Autoscroll Settings"
-msgstr ""
+msgstr "Otomatik Kaydırma Ayarları"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
 msgid "Autoscroll Margin"
@@ -4794,7 +4829,7 @@ msgstr "Kısayolu Düzenle"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:295
 msgid "Restore Mouse and Wheel Binding Defaults"
-msgstr ""
+msgstr "Fare ve Teker Kısayolları Öntanımlılarını Geri Yükle"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:315
 msgid "Action Context"
@@ -5166,6 +5201,8 @@ msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "shelf?"
 msgstr ""
+"\"%s\" rafını silmek istediniz.<br><br>Bu rafı silmek istediğinizden emin "
+"misiniz?"
 
 #: src/modules/conf_startup/e_int_config_startup.c:39
 msgid "Startup Settings"
@@ -5218,10 +5255,12 @@ msgid ""
 "Enlightenment was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
 msgstr ""
+"Enlightenment temayı içe aktaramadı.<br><br>Bunun geçerli bir tema olduğuna "
+"emin misiniz?"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
-msgstr ""
+msgstr "Enlightenment bir kopyalama hatası nedeniyle temayı<br>içe aktaramadı."
 
 #: src/modules/conf_theme/e_int_config_theme_web.c:127
 msgid "Exchange themes"
@@ -5388,7 +5427,7 @@ msgstr "Resim İçe Aktarma Hatası"
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:608
 msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
-msgstr ""
+msgstr "Enlightenment çevrim hataları nedeniyle<br>resmi içe aktaramadı."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:698
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:708
@@ -5402,6 +5441,8 @@ msgstr "Duvarkağıdı İçe Aktarma Hatası"
 msgid ""
 "Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr ""
+"Enlightenment bir kopyalama hatası nedeniyle<br>duvar kağıdını içe "
+"aktaramadı."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:709
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:804
