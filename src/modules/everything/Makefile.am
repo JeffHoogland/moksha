@@ -23,10 +23,12 @@ module_la_SOURCES      = e_mod_main.c \
 			 evry.c \
                          evry.h \
 			 evry_plug_config.c \
+			 evry_plug_dir_browse.c \
 			 evry_plug_apps.c \
 			 evry_plug_tracker.c \
 			 evry_plug_border.c \
-			 evry_plug_dir_browse.c 
+			 evry_plug_border_act.c 
+
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version

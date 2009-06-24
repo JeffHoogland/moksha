@@ -51,6 +51,9 @@ EAPI int  evry_plug_apps_shutdown(void);
 EAPI int  evry_plug_border_init(void);
 EAPI int  evry_plug_border_shutdown(void);
 
+EAPI int  evry_plug_border_act_init(void);
+EAPI int  evry_plug_border_act_shutdown(void);
+
 EAPI int  evry_plug_config_init(void);
 EAPI int  evry_plug_config_shutdown(void);
 

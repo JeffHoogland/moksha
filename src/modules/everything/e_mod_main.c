@@ -70,11 +70,12 @@ e_modapi_init(E_Module *m)
    conf_module = m;
    evry_init();
 
-   evry_plug_border_init();
-   evry_plug_apps_init();
    evry_plug_config_init();
    evry_plug_dir_browse_init();
+   evry_plug_apps_init();
    evry_plug_tracker_init();
+   evry_plug_border_init();
+   evry_plug_border_act_init();
 
    /* add module supplied action */
    act = e_action_add("everything");
@@ -109,11 +110,12 @@ e_modapi_shutdown(E_Module *m)
 	act = NULL;
      }
 
-   evry_plug_border_shutdown();
-   evry_plug_apps_shutdown();
    evry_plug_config_shutdown();
    evry_plug_dir_browse_shutdown();
+   evry_plug_apps_shutdown();
    evry_plug_tracker_shutdown();
+   evry_plug_border_shutdown();
+   evry_plug_border_act_shutdown();
 
    evry_shutdown();
    conf_module = NULL;

@@ -10,83 +10,67 @@ struct _Inst
   E_DBus_Connection *conn;
 };
 
-static Evry_Plugin *_plug_new();
-static void _plug_free(Evry_Plugin *p);
-static int  _fetch(Evry_Plugin *p, const char *input);
-static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
-static void _cleanup(Evry_Plugin *p);
-static void _item_add(Evry_Plugin *p, char *file, char *service, char *mime, int prio);
-static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
+static int  _fetch(const char *input);
+static int  _action(Evry_Item *it, const char *input);
+static void _cleanup(void);
+static void _item_add(char *file, char *service, char *mime, int prio);
+static void _item_icon_get(Evry_Item *it, Evas *e);
 static void _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error);
 
-static Evry_Plugin_Class class;
+static Evry_Plugin *p;
+static Inst *inst;
 
 EAPI int
 evry_plug_tracker_init(void)
 {
-   class.name = "Search Files";
-   class.type_in = "NONE";
-   class.type_out = "FILE";
-   class.need_query = 1;
-   class.new = &_plug_new;
-   class.free = &_plug_free;
-   evry_plugin_register(&class);
+   E_DBus_Connection *conn = e_dbus_bus_get(DBUS_BUS_SESSION);
+
+   if (!conn) return 0;
+
+   p = E_NEW(Evry_Plugin, 1);
+   p->name = "Search Files";
+   p->type_in = "NONE";
+   p->type_out = "FILE";
+   p->need_query = 1;
+   p->prio = 3;
+   p->fetch = &_fetch;
+   p->action = &_action;
+   p->cleanup = &_cleanup;
+   p->icon_get = &_item_icon_get;
    
+   inst = E_NEW(Inst, 1);
+   inst->conn = conn;   
+   
+   evry_plugin_register(p);
+
    return 1;
 }
 
 EAPI int
 evry_plug_tracker_shutdown(void)
 {
-   evry_plugin_unregister(&class);
+   evry_plugin_unregister(p);
+
+   if (inst)
+     {
+	if (inst->conn)
+	  e_dbus_connection_close(inst->conn);
+	E_FREE(inst);
+     }
+   
+   if (p) E_FREE(p);
    
    return 1;
 }
 
-static Evry_Plugin *
-_plug_new()
-{
-   Evry_Plugin *p;
-   Inst *inst;
-   E_DBus_Connection *conn = e_dbus_bus_get(DBUS_BUS_SESSION);
-
-   if (!conn) return NULL;
-   
-   p = E_NEW(Evry_Plugin, 1);
-   p->class = &class;
-   p->fetch = &_fetch;
-   p->action = &_action;
-   p->cleanup = &_cleanup;
-   p->icon_get = &_item_icon_get;
-   p->items = NULL;   
-
-   inst = E_NEW(Inst, 1);
-   inst->conn = conn;
-   p->priv = inst;
-
-   return p;
-}
-
-static void
-_plug_free(Evry_Plugin *p)
-{
-   Inst *inst = p->priv;
-   
-   _cleanup(p);
-   e_dbus_connection_close(inst->conn);
-
-   E_FREE(inst);
-   E_FREE(p);
-}
-
 static int
-_action(Evry_Plugin *p, Evry_Item *it, const char *input)
+_action(Evry_Item *it, const char *input)
 {
    return 0;
 }
 
 static void
-_cleanup(Evry_Plugin *p)
+_cleanup(void)
 {
    Evry_Item *it;
    
@@ -95,13 +79,12 @@ _cleanup(Evry_Plugin *p)
 	if (it->mime) eina_stringshare_del(it->mime);
 	if (it->uri) eina_stringshare_del(it->uri);
 	if (it->label) eina_stringshare_del(it->label);
-	if (it->o_icon) evas_object_del(it->o_icon);
 	free(it);
      }
 }
 
 static int
-_fetch(Evry_Plugin *p, const char *input)
+_fetch(const char *input)
 {
    Eina_List *list;
    DBusMessage *msg;
@@ -111,9 +94,8 @@ _fetch(Evry_Plugin *p, const char *input)
    int max_hits = 50;
    char *service = "Files";
    char *match;
-   Inst *inst = p->priv;
    
-   _cleanup(p); 
+   _cleanup(); 
 
    match = malloc(sizeof(char) * strlen(input) + 2);
    sprintf(match, "%s*", input);
@@ -129,7 +111,7 @@ _fetch(Evry_Plugin *p, const char *input)
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_STRING, &match);
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_INT32,  &offset);
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_INT32,  &max_hits);
-   e_dbus_message_send(inst->conn, msg, _dbus_cb_reply, -1, p);
+   e_dbus_message_send(inst->conn, msg, _dbus_cb_reply, -1, NULL);
    dbus_message_unref(msg);
 
    free(match);
@@ -138,7 +120,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static void
-_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Item *it, Evas *e)
 {
    char *item_path;
 
@@ -164,7 +146,7 @@ _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 }
 
 static void
-_item_add(Evry_Plugin *p, char *file, char *service, char *mime, int prio)
+_item_add(char *file, char *service, char *mime, int prio)
 {
    Evry_Item *it;   
    
@@ -183,7 +165,6 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 {
    DBusMessageIter array, iter, item;
    char *val;
-   Evry_Plugin *p = data;
    
    if (dbus_error_is_set(error))
      {
@@ -213,7 +194,7 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 
 		  if (uri && service && mime)
 		    {
-		       _item_add(p, uri, service, mime, 1); 
+		       _item_add(uri, service, mime, 1); 
 		    }
 	       }
 	     
