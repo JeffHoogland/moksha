@@ -153,8 +153,8 @@ evry_show(E_Zone *zone)
 	return 0;
      }
 
-   x = zone->x + (zone->w / 2) - (evry_conf->width / 2);
-   y = zone->y + (zone->h / 2) - (evry_conf->height / 2);
+   x = (zone->w / 2) - (evry_conf->width / 2);
+   y = (zone->h / 2) - (evry_conf->height / 2);
 
    popup = e_popup_new(zone, x, y, evry_conf->width, evry_conf->height);
    if (!popup) return 0;
