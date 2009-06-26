@@ -5,20 +5,23 @@
 #include "e_mod_main.h"
 
 // FIXME:
-//   need a "add" button (to add exchange, image file or gradient)
+//   need single 'add' button
+//   need single 'delete' button
+//   need single "options' button
+//   need choice after add (file, gradient, online source)
+//   need delete select mode
+//   need after select on delete an ok/cancel if file or "ok to remove whole online source" if online
 //   need filename display
-//   need "theme wallpaper" image
 //   need to make thumb white rect better (shaded etc.)
-//   need to make "theme wallpaper" have different look
 //   need to make "exchange" wallpapers have a different look
 //   need indicator that sort is pending
+//   need to show busy info while loading files / generating thumbs
 //   need signal to emit for popping down slide-up panel
 //   bug: animated wp doesnt workon first show
+//   need options panel (this screen, this desktop, all desktops) if screens > 1 or desktops > 1
 //   need to disable "this screen" if multiple containers/zones dont exist
 //   need to disable "this desktop vs all desktops" if only 1 desk exists
-//   need to show busy info while loading files / generating thumbs
-//   need to delete/create objects as neede (not just hide/show)
-//   need to be able to "type name to search/filter
+//   need to be able to "type name to search/filter"
 
 typedef struct _Info Info;
 typedef struct _Smart_Data Smart_Data;

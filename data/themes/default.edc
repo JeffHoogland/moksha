@@ -25673,6 +25673,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
    group { name: "e/conf/wallpaper/main/mini-theme";
       images {
 	 image: "e17_mini_button_shadow2.png" COMP;
+         image: "theme-label.png" COMP;
       }
       parts {
 	 part {	name: "icon_box_shadow";
@@ -25740,7 +25741,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		  relative: 1.0 1.0;
 		  offset:   -5  -5;
 	       }
-	       color: 100 100 100 255;
 	    }
 	    description { state: "visible" 0.0;
 	       inherit: "default" 0.0;
@@ -25784,6 +25784,23 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		  relative: 1.0 1.0;
 		  offset:   -3  -3;
 	       }
+	    }
+	 }
+	 part { name: "theme";
+	    mouse_events:  0;
+	    description { state: "default" 0.0;
+               aspect: 1.709677419 1.709677419;
+	       rel1 {
+                  to: "e.swallow.content";
+		  relative: 0.6 0.6;
+		  offset:   -1   -1;
+	       }
+	       rel2 {
+                  to: "e.swallow.content";
+		  relative: 1.0 1.0;
+		  offset:   -1  -1;
+	       }
+               image.normal: "theme-label.png";
 	    }
 	 }
 	 part { name: "events";
