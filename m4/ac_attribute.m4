@@ -31,8 +31,7 @@ int foo(int x __attribute__ ((unused)))
        [],
        [ac_cv___attribute__="yes"],
        [ac_cv___attribute__="no"]
-    )]
-)
+    )])
 
 AC_MSG_RESULT($ac_cv___attribute__)
 
@@ -44,3 +43,5 @@ if test "x${ac_cv___attribute__}" = "xyes" ; then
 fi
 
 ])
+
+dnl End of ac_attribute.m4
