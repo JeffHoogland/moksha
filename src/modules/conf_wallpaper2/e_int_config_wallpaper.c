@@ -5,20 +5,14 @@
 #include "e_mod_main.h"
 
 // FIXME:
-//   need single 'add' button
-//   need single 'delete' button
-//   need single "options' button
 //   need choice after add (file, gradient, online source)
 //   need delete select mode
 //   need after select on delete an ok/cancel if file or "ok to remove whole online source" if online
 //   need filename display
 //   need to make thumb white rect better (shaded etc.)
 //   need to make "exchange" wallpapers have a different look
-//   need indicator that sort is pending
-//   need to show busy info while loading files / generating thumbs
 //   need signal to emit for popping down slide-up panel
 //   bug: animated wp doesnt workon first show
-//   need options panel (this screen, this desktop, all desktops) if screens > 1 or desktops > 1
 //   need to disable "this screen" if multiple containers/zones dont exist
 //   need to disable "this desktop vs all desktops" if only 1 desk exists
 //   need to be able to "type name to search/filter"
@@ -37,6 +31,7 @@ struct _Info
    char        *curdir;
    DIR         *dir;
    Ecore_Idler *idler;
+   int          scans;
    int          con_num, zone_num, desk_x, desk_y;
    
    int          use_theme_bg;
@@ -704,11 +699,17 @@ _item_sort(Item *it)
    Eina_List *l;
    
    sd->id_num++;
+   sd->info->scans--;
    num = eina_list_count(sd->items);
    if (sd->id_num == num)
      {
         sd->items = eina_list_sort(sd->items, num, _sort_cb);
         _e_smart_reconfigure(obj);
+     }
+   if (sd->info->scans == 0)
+     {
+        printf("END3!\n");
+        edje_object_signal_emit(sd->info->bg, "e,state,busy,off", "e");
      }
 }
 
@@ -769,7 +770,7 @@ _pan_file_add(Evas_Object *obj, const char *file, Eina_Bool remote, Eina_Bool th
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
    Item *it = calloc(1, sizeof(Item));
-   if(!it) return;
+   if (!it) return;
    sd->items = eina_list_append(sd->items, it);
    it->obj = obj;
    it->remote = remote;
@@ -882,19 +883,13 @@ _ok(void *data, void *data2)
 }
 
 static void
-_add_file(void *data, void *data2)
+_wp_add(void *data, void *data2)
 {
    Info *info = data;
 }
 
 static void
-_add_grad(void *data, void *data2)
-{
-   Info *info = data;
-}
-
-static void
-_add_online(void *data, void *data2)
+_wp_delete(void *data, void *data2)
 {
    Info *info = data;
 }
@@ -934,6 +929,7 @@ _idler(void *data)
         info->dirs = eina_list_append(info->dirs, strdup(buf));
         return 1;
      }
+   info->scans++;
    _pan_file_add(info->span, buf, 0, 0);
    
    e_util_wakeup();
@@ -945,6 +941,13 @@ _scan(Info *info)
 {
    if (info->dirs)
      {
+        if (info->scans <= 0)
+          {
+             info->scans = 0;
+             printf("START\n");
+             edje_object_signal_emit(info->bg, "e,state,busy,on", "e");
+             edje_object_part_text_set(info->bg, "e.text.busy_label", _("Loading files..."));
+          }
         if (info->curdir) free(info->curdir);
         info->curdir = info->dirs->data;
         info->dirs = eina_list_remove_list(info->dirs, info->dirs);
@@ -962,7 +965,7 @@ wp_browser_new(E_Container *con)
    E_Desk *desk;
    const E_Config_Desktop_Background *cfbg;
    Evas_Coord mw, mh;
-   Evas_Object *o, *o2;
+   Evas_Object *o, *o2, *ob;
    E_Radio_Group *rg;
    char buf[PATH_MAX];   
    
@@ -1076,54 +1079,45 @@ wp_browser_new(E_Container *con)
    evas_object_show(info->sframe);
    evas_object_show(info->span);
    
-   o = e_widget_table_add(info->win->evas, 0);
+   ob = e_widget_list_add(info->win->evas, 0, 1);
 
+   o = e_widget_list_add(info->win->evas, 1, 0);
+   
    rg = e_widget_radio_group_new(&(info->mode));
    o2 = e_widget_radio_add(info->win->evas, _("All Desktops"), 0, rg);
-   e_widget_table_object_align_append(o, o2, 
-                                      0, 1, 1, 1,
-                                      1, 1, 0, 0,
-                                      0.0, 0.5);
+   e_widget_list_object_append(o, o2, 1, 0, 0.5);
    evas_object_show(o2);
+   
    o2 = e_widget_radio_add(info->win->evas, _("This Desktop"), 1, rg);
-   e_widget_table_object_align_append(o, o2, 
-                                      0, 2, 1, 1,
-                                      1, 1, 0, 0,
-                                      0.0, 0.5);
+   e_widget_list_object_append(o, o2, 1, 0, 0.5);
    evas_object_show(o2);
+   
    o2 = e_widget_radio_add(info->win->evas, _("This Screen"), 2, rg);
-   e_widget_table_object_align_append(o, o2, 
-                                      0, 3, 1, 1,
-                                      1, 1, 0, 0,
-                                      0.0, 0.5);
+   e_widget_list_object_append(o, o2, 1, 0, 0.5);
    evas_object_show(o2);
    
-   o2 =  e_widget_button_add(info->win->evas, _("Add File"), NULL, 
-                             _add_file, info, NULL);
-   e_widget_table_object_align_append(o, o2, 
-                                      1, 1, 1, 1,
-                                      1, 1, 0, 0,
-                                      0.0, 0.5);
-   evas_object_show(o2);
-   o2 =  e_widget_button_add(info->win->evas, _("Add Gradient"), NULL, 
-                             _add_grad, info, NULL);
-   e_widget_table_object_align_append(o, o2, 
-                                      1, 2, 1, 1,
-                                      1, 1, 0, 0,
-                                      0.0, 0.5);
-   evas_object_show(o2);
-   o2 =  e_widget_button_add(info->win->evas, _("Add Online"), NULL, 
-                             _add_online, info, NULL);
-   e_widget_table_object_align_append(o, o2, 
-                                      1, 3, 1, 1,
-                                      1, 1, 0, 0,
-                                      0.0, 0.5);
-   evas_object_show(o2);
-   
-   e_widget_min_size_get(o, &mw, &mh);
-   edje_extern_object_min_size_set(o, mw, mh);
-   edje_object_part_swallow(info->bg, "e.swallow.extras", o);
+   e_widget_list_object_append(ob, o, 1, 0, 0.5);
    evas_object_show(o);
+   
+   o = e_widget_list_add(info->win->evas, 1, 0);
+   
+   o2 =  e_widget_button_add(info->win->evas, _("Add"), NULL, 
+                             _wp_add, info, NULL);
+   e_widget_list_object_append(o, o2, 1, 0, 0.5);
+   evas_object_show(o2);
+   
+   o2 =  e_widget_button_add(info->win->evas, _("Delete"), NULL, 
+                             _wp_delete, info, NULL);
+   e_widget_list_object_append(o, o2, 1, 0, 0.5);
+   evas_object_show(o2);
+   
+   e_widget_list_object_append(ob, o, 1, 0, 0.5);
+   evas_object_show(o);
+   
+   e_widget_min_size_get(ob, &mw, &mh);
+   edje_extern_object_min_size_set(ob, mw, mh);
+   edje_object_part_swallow(info->bg, "e.swallow.extras", ob);
+   evas_object_show(ob);
    
 
    // min size calc
