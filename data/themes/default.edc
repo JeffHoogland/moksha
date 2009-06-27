@@ -25426,6 +25426,34 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	    }
 	 }
+	 part { name: "e.text.filename";
+	    type: TEXT;
+	    effect: SOFT_SHADOW;
+	    mouse_events: 0;
+	    scale: 1;
+	    description {
+	       state: "default" 0.0;
+	       align: 0.5 1.0;
+	       rel1 {
+		  to: "bot2";
+		  relative: 0.0 1.0;
+		  offset: 2 -11;
+	       }
+	       rel2 {
+		  to: "bot2";
+		  relative: 1.0 1.0;
+		  offset: -3 -11;
+	       }
+	       color: 255 255 255 255;
+	       color3: 0 0 0 32;
+	       text {
+		  font: "Sans:style=Bold";
+		  size: 10;
+		  min: 1 1;
+		  align: 0.5 1.0;
+	       }
+	    }
+	 }
 	 part { name: "shadow1";
 	    mouse_events:  0;
 	    scale: 1;

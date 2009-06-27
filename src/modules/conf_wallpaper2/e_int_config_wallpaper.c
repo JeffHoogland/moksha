@@ -8,7 +8,7 @@
 //   need choice after add (file, gradient, online source)
 //   need delete select mode
 //   need after select on delete an ok/cancel if file or "ok to remove whole online source" if online
-//   need filename display
+//   need to go to the current selected wallpaper (if it exists) or theme if theme selected (and set filename)
 //   need to make thumb white rect better (shaded etc.)
 //   need to make "exchange" wallpapers have a different look
 //   need signal to emit for popping down slide-up panel
@@ -41,7 +41,6 @@ struct _Info
 
 struct _Smart_Data
 {
-//   Evas_Object *child_obj;
    Eina_List   *items;
    Ecore_Idle_Enterer *idle_enter;
    Ecore_Animator *animator;
@@ -645,10 +644,21 @@ _pan_sel(Evas_Object *obj, Item *it)
         evas_object_hide(sd->info->mini);
         if (it->file)
           {
+             char *name = NULL, *p;
              sd->info->use_theme_bg = 0;
              sd->info->bg_file = strdup(it->file);
              edje_object_file_set(sd->info->mini, sd->info->bg_file,
                                   "e/desktop/background");
+             p = strrchr(sd->info->bg_file, '/');
+             if (p)
+               {
+                  p++;
+                  name = strdup(p);
+                  p = strrchr(name, '.');
+                  if (p) *p = 0;
+               }
+             edje_object_part_text_set(sd->info->bg, "e.text.filename", name);
+             if (name) free(name);
           }
         else
           {
@@ -658,6 +668,7 @@ _pan_sel(Evas_Object *obj, Item *it)
                                   "e/desktop/background");
              sd->info->use_theme_bg = 1;
              sd->info->bg_file = NULL;
+             edje_object_part_text_set(sd->info->bg, "e.text.filename", _("Theme Wallpaper"));
           }
         evas_object_show(sd->info->mini);
      }
