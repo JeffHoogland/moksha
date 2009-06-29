@@ -18,12 +18,14 @@ typedef struct _E_Fm2_Op_Registry_Entry E_Fm2_Op_Registry_Entry;
 #ifndef E_FM_OP_REGISTRY_H
 #define E_FM_OP_REGISTRY_H
 
+typedef void (*E_Fm2_Op_Registry_Abort_Func)(E_Fm2_Op_Registry_Entry *entry);
+
 struct _E_Fm2_Op_Registry_Entry
 {
    int id;
    int percent; /* XXX use char? */
-   size_t done;
-   size_t total;
+   off_t done;
+   off_t total;
    Evas_Object *e_fm;
    const char *src; /* stringshared */
    const char *dst; /* stringshared */
@@ -33,6 +35,12 @@ struct _E_Fm2_Op_Registry_Entry
    E_Fm2_Op_Status status;
    Eina_Bool needs_attention:1;
    Eina_Bool finished:1;
+   
+   // service callbacks
+   struct 
+     {
+        E_Fm2_Op_Registry_Abort_Func abort;
+     } func;
 };
 
 extern EAPI int E_EVENT_FM_OP_REGISTRY_ADD;
@@ -55,12 +63,13 @@ EAPI void           e_fm2_op_registry_get_all_free(Eina_List *list);
 EAPI Eina_Bool      e_fm2_op_registry_is_empty(void);
 EAPI int            e_fm2_op_registry_count(void);
 
+EAPI void           e_fm2_op_registry_entry_abort(E_Fm2_Op_Registry_Entry *entry);
 
 EAPI unsigned int e_fm2_op_registry_init(void);
 EAPI unsigned int e_fm2_op_registry_shutdown(void);
 
 /* E internal/private functions, symbols not exported outside e binary (e_fm.c mainly) */
-Eina_Bool e_fm2_op_registry_entry_add(int id, Evas_Object *e_fm, E_Fm_Op_Type op);
+Eina_Bool e_fm2_op_registry_entry_add(int id, Evas_Object *e_fm, E_Fm_Op_Type op, E_Fm2_Op_Registry_Abort_Func abort);
 Eina_Bool e_fm2_op_registry_entry_del(int id);
 void      e_fm2_op_registry_entry_changed(const E_Fm2_Op_Registry_Entry *entry);
 void      e_fm2_op_registry_entry_e_fm_set(E_Fm2_Op_Registry_Entry *entry, Evas_Object *e_fm);

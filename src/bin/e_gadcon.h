@@ -31,6 +31,16 @@ typedef enum _E_Gadcon_Orient
      E_GADCON_ORIENT_CORNER_RB
 } E_Gadcon_Orient;
 
+typedef enum _E_Gadcon_Site
+{
+   E_GADCON_SITE_UNKNOWN = 0,        // when target site is unknown
+   /* generic sities */
+   E_GADCON_SITE_SHELF,
+   E_GADCON_SITE_DESKTOP,
+   E_GADCON_SITE_TOOLBAR,            // generic toolbar
+   E_GADCON_SITE_EFM_TOOLBAR         // filemanager window toolbar
+} E_Gadcon_Site;
+
 #define E_GADCON_CLIENT_STYLE_PLAIN "plain"
 #define E_GADCON_CLIENT_STYLE_INSET "inset"
 
@@ -134,6 +144,7 @@ struct _E_Gadcon_Client_Class
 	/* Del an id when a gadcon client is removed from the system */
 	void             (*id_del)   (E_Gadcon_Client_Class *client_class, const char *id);
 	/* All members below are part of version 3 */
+	Eina_Bool        (*is_site)  (E_Gadcon_Site site);
      } func;
    char *default_style;
 };
@@ -256,6 +267,15 @@ EAPI void             e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gc
 EAPI void             e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc);
 EAPI void             e_gadcon_locked_set(E_Gadcon *gc, int lock);
 EAPI void             e_gadcon_urgent_show(E_Gadcon *gc);
+
+/* site helpers */
+
+EAPI Eina_Bool        e_gadcon_site_is_shelf      (E_Gadcon_Site site);
+EAPI Eina_Bool        e_gadcon_site_is_desktop    (E_Gadcon_Site site);
+EAPI Eina_Bool        e_gadcon_site_is_efm_toolbar(E_Gadcon_Site site);
+
+EAPI Eina_Bool        e_gadcon_site_is_any_toolbar(E_Gadcon_Site site); // all toolbar sities
+EAPI Eina_Bool        e_gadcon_site_is_not_toolbar(E_Gadcon_Site site); // all non-toolbar sities
 
 #endif
 #endif

@@ -419,6 +419,8 @@ static void _e_fm2_volume_eject(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_icon_removable_update(E_Fm2_Icon *ic);
 static void _e_fm2_volume_icon_update(E_Volume *v);
 
+static void _e_fm2_operation_abort_internal(E_Fm2_Op_Registry_Entry *ere);
+
 static char *_e_fm2_meta_path = NULL;
 static Evas_Smart *_e_fm2_smart = NULL;
 static Eina_List *_e_fm2_list = NULL;
@@ -630,7 +632,7 @@ _e_fm2_op_registry_entry_print(const E_Fm2_Op_Registry_Entry *ere)
      status = status_strings[0];
 
    printf("id: %8d, op: %2d [%s] finished: %hhu, needs_attention: %hhu\n"
-	  "    %3d%% (%8zd/%8zd), start_time: %10.0f, eta: %5ds, xwin: %#x\n"
+	  "    %3d%% (%lld/%lld), start_time: %10.0f, eta: %5ds, xwin: %#x\n"
 	  "    src=[%s]\n"
 	  "    dst=[%s]\n",
 	  ere->id, ere->op, status, ere->finished, ere->needs_attention,
@@ -933,6 +935,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 	e_dialog_button_add(dialog, _("Close"), NULL, NULL, dialog);
 	e_dialog_button_focus_num(dialog, 0);
 	e_dialog_title_set(dialog, _("Nonexistent path"));
+        e_dialog_icon_set(dialog, "dialog-error", 64);
 
 	snprintf(text, sizeof(text),
 		 _("%s doesn't exist."),
@@ -2463,7 +2466,7 @@ static int
 _e_fm_client_file_del(const char *files, Evas_Object *e_fm)
 {
    int id = _e_fm_client_send_new(E_FM_OP_REMOVE, (void *)files, strlen(files) + 1);
-   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_REMOVE);
+   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_REMOVE, _e_fm2_operation_abort_internal);
    return id;
 }
 
@@ -2471,7 +2474,7 @@ static int
 _e_fm2_client_file_trash(const char *path, Evas_Object *e_fm)
 {
    int id = _e_fm_client_send_new(E_FM_OP_TRASH, (void *)path, strlen(path) + 1);
-   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_TRASH);
+   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_TRASH, _e_fm2_operation_abort_internal);
    return id;
 }
 
@@ -2492,7 +2495,7 @@ _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, i
    memcpy(d + l1 + 1 + l2 + 1 + (2 * sizeof(int)), &y, sizeof(int));
 
    id = _e_fm_client_send_new(E_FM_OP_MKDIR, (void *)d, l);
-   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_MKDIR);
+   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_MKDIR, _e_fm2_operation_abort_internal);
    return id;
 }
 
@@ -2500,7 +2503,7 @@ static int
 _e_fm_client_file_move(const char *args, Evas_Object *e_fm)
 {
    int id = _e_fm_client_send_new(E_FM_OP_MOVE, (void *)args, strlen(args) + 1);
-   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_MOVE);
+   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_MOVE, _e_fm2_operation_abort_internal);
    return id;
 }
 
@@ -2543,7 +2546,7 @@ _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, 
      }
 
    id = _e_fm_client_send_new(E_FM_OP_SYMLINK, (void *)d, l);
-   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_SYMLINK);
+   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_SYMLINK, _e_fm2_operation_abort_internal);
    return id;
 #else
    char *args = NULL;
@@ -2564,7 +2567,7 @@ static int
 _e_fm_client_file_copy(const char *args, Evas_Object *e_fm)
 {
    int id = _e_fm_client_send_new(E_FM_OP_COPY, (void *)args, strlen(args) + 1);
-   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_COPY);
+   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_COPY, _e_fm2_operation_abort_internal);
    return id;
 }
 
@@ -2572,7 +2575,7 @@ static int
 _e_fm_client_file_symlink(const char *args, Evas_Object *e_fm)
 {
    int id = _e_fm_client_send_new(E_FM_OP_SYMLINK, (void *)args, strlen(args) + 1);
-   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_SYMLINK);
+   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_SYMLINK, _e_fm2_operation_abort_internal);
    return id;
 }
 
@@ -3085,7 +3088,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
       case E_FM_OP_PROGRESS:/*progress*/
 	  {
 	     int percent, seconds;
-	     size_t done, total;
+	     off_t done, total;
 	     char *src = NULL;
 	     char *dst = NULL;
 	     void *p = e->data;
@@ -3095,8 +3098,8 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 #define UP(value, type) (value) = *(type *)p; p += sizeof(type)
 	     UP(percent, int);
 	     UP(seconds, int);
-	     UP(done, size_t);
-	     UP(total, size_t);
+	     UP(done, off_t);
+	     UP(total, off_t);
 #undef UP
 	     src = p;
 	     dst = p + strlen(src) + 1;
@@ -3119,8 +3122,17 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	break;
 
       case E_FM_OP_QUIT:/*finished*/
-	 e_fm2_op_registry_entry_del(e->ref);
-	 break;
+        {
+           E_Fm2_Op_Registry_Entry *ere = e_fm2_op_registry_entry_get(e->ref);
+           if (ere)
+             {
+                ere->finished = 1;
+                ere->eta = 0;
+                e_fm2_op_registry_entry_changed(ere);
+             }
+	   e_fm2_op_registry_entry_del(e->ref);
+        }
+	break;
 
      default:
 	break;
@@ -9802,4 +9814,27 @@ _e_fm2_icon_removable_update(E_Fm2_Icon *ic)
    if (!ic) return;
    v = e_fm2_hal_volume_find(ic->info.link);
    _update_volume_icon(v, ic);
+}
+
+static void
+_e_fm2_operation_abort_internal(E_Fm2_Op_Registry_Entry *ere)
+{
+   ere->status = E_FM2_OP_STATUS_ABORTED;
+   ere->finished = 1;
+   ere->needs_attention = 0;
+   e_fm2_op_registry_entry_changed(ere);
+   _e_fm_client_send(E_FM_OP_ABORT, ere->id, NULL, 0);   
+}
+
+EAPI void
+e_fm2_operation_abort(int id)
+{
+   E_Fm2_Op_Registry_Entry *ere;
+   
+   ere = e_fm2_op_registry_entry_get(id);
+   if (!ere) return;
+   
+   e_fm2_op_registry_entry_ref(ere);
+      e_fm2_op_registry_entry_abort(ere);
+   e_fm2_op_registry_entry_unref(ere);
 }

@@ -168,6 +168,8 @@ EAPI void                  e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord
 
 EAPI void                  e_fm2_all_icons_update(void);
 
+EAPI void                  e_fm2_operation_abort(int id);
+
 EAPI Evas_Object *
   e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		 void (*gen_func) (void *data, Evas_Object *obj, void *event_info),

@@ -139,6 +139,7 @@ static int _e_fwin_dlg_cb_desk_list_sort(const void *data1, const void *data2);
 static void _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere);
 static int _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event);
 static void _e_fwin_op_registry_entry_iter(E_Fwin_Page *page);
+static void _e_fwin_op_registry_abort_cb(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 /* local subsystem globals */
 static Eina_List *fwins = NULL;
@@ -2174,43 +2175,75 @@ _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere)
    // Update element
    edje_object_part_drag_size_set(o, "e.gauge.bar", ((double)(ere->percent)) / 100, 1.0);
 
-   total = e_util_size_string_get(ere->total);
+   // Update icon
    switch (ere->op)
    {
       case E_FM_OP_COPY:
          edje_object_signal_emit(o, "e,action,icon,copy", "e");
-         if (ere->finished)
-            snprintf(buf, sizeof(buf), "Copy of %s done", total);
-         else
-            snprintf(buf, sizeof(buf), "Copying %s (eta: %d sec)", total, ere->eta);
          break;
       case E_FM_OP_MOVE:
          edje_object_signal_emit(o, "e,action,icon,move", "e");
-         if (ere->finished)
-            snprintf(buf, sizeof(buf), "Move of %s done", total);
-         else
-            snprintf(buf, sizeof(buf), "Moving %s (eta: %d sec)", total, ere->eta);
          break;
       case E_FM_OP_REMOVE:
          edje_object_signal_emit(o, "e,action,icon,delete", "e");
-         if (ere->finished)
-            snprintf(buf, sizeof(buf), "Delete done");
-         else
-            snprintf(buf, sizeof(buf), "Deleting files...");
          break;
       default:
          edje_object_signal_emit(o, "e,action,icon,unknow", "e");
-         snprintf(buf, sizeof(buf), "Unknow operation from slave %d", ere->id);
-         break;
    }
-   edje_object_part_text_set(o, "e.text.label1", buf);
+   
+   // Update information text
+   switch (ere->status)
+   {
+      case E_FM2_OP_STATUS_ABORTED:
+         switch (ere->op)
+         {
+            case E_FM_OP_COPY:
+               snprintf(buf, sizeof(buf), _("Copying is aborted"));
+               break;
+            case E_FM_OP_MOVE:
+               snprintf(buf, sizeof(buf), _("Moving is aborted"));
+               break;
+            case E_FM_OP_REMOVE:
+               snprintf(buf, sizeof(buf), _("Deleting is aborted"));
+               break;
+            default:
+               snprintf(buf, sizeof(buf), _("Unknown operation from slave is aborted"));
+         }
+         break;
+
+      default:
+         total = e_util_size_string_get(ere->total);
+         switch (ere->op)
+         {
+            case E_FM_OP_COPY:
+               if (ere->finished)
+                  snprintf(buf, sizeof(buf), _("Copy of %s done"), total);
+               else
+                  snprintf(buf, sizeof(buf), _("Copying %s (eta: %d sec)"), total, ere->eta);
+               break;
+            case E_FM_OP_MOVE:
+               if (ere->finished)
+                  snprintf(buf, sizeof(buf), _("Move of %s done"), total);
+               else
+                  snprintf(buf, sizeof(buf), _("Moving %s (eta: %d sec)"), total, ere->eta);
+               break;
+            case E_FM_OP_REMOVE:
+               if (ere->finished)
+                  snprintf(buf, sizeof(buf), _("Delete done"));
+               else
+                  snprintf(buf, sizeof(buf), _("Deleting files..."));
+               break;
+            default:
+               snprintf(buf, sizeof(buf), _("Unknow operation from slave %d"), ere->id);
+         }
+         E_FREE(total);
+   }
+   edje_object_part_text_set(o, "e.text.info", buf);
 
    if (ere->needs_attention)
       edje_object_signal_emit(o, "e,action,set,need_attention", "e");
    else
       edje_object_signal_emit(o, "e,action,set,normal", "e");
-
-   E_FREE(total);
 }
 
 static int
@@ -2255,6 +2288,10 @@ _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event)
    evas_object_size_hint_align_set(o, 1.0, 1.0); //FIXME this should be theme-configurable
    evas_object_show(o);
 
+   // add abort button callback with id of operation in registry
+   edje_object_signal_callback_add(o, "e,fm,operation,abort", "", 
+                                   _e_fwin_op_registry_abort_cb, (void*)ere->id);
+   
    //Listen to progress changes
    e_fm2_op_registry_entry_listener_add(ere, _e_fwin_op_registry_listener_cb,
                                         o, _e_fwin_op_registry_free_data);
@@ -2272,4 +2309,15 @@ _e_fwin_op_registry_entry_iter(E_Fwin_Page *page)
    EINA_ITERATOR_FOREACH(itr, ere)
      _e_fwin_op_registry_entry_add_cb(page, 0, ere);
    eina_iterator_free(itr);
+}
+
+static void 
+_e_fwin_op_registry_abort_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   int id;
+   
+   id = (int)data;
+   if (!id) return;
+   
+   e_fm2_operation_abort(id);
 }

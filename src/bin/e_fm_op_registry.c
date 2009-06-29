@@ -145,7 +145,7 @@ _e_fm2_op_registry_entry_internal_event(E_Fm2_Op_Registry_Entry_Internal *e, int
 }
 
 Eina_Bool
-e_fm2_op_registry_entry_add(int id, Evas_Object *e_fm, E_Fm_Op_Type op)
+e_fm2_op_registry_entry_add(int id, Evas_Object *e_fm, E_Fm_Op_Type op, E_Fm2_Op_Registry_Abort_Func abort)
 {
    E_Fm2_Op_Registry_Entry_Internal *e;
 
@@ -157,6 +157,7 @@ e_fm2_op_registry_entry_add(int id, Evas_Object *e_fm, E_Fm_Op_Type op)
    e->entry.start_time = ecore_loop_time_get();
    e->entry.op = op;
    e->entry.status = E_FM2_OP_STATUS_IN_PROGRESS;
+   e->entry.func.abort = abort;
    e->references = 1;
 
    if (!eina_hash_add(_e_fm2_op_registry, &id, e))
@@ -503,4 +504,13 @@ e_fm2_op_registry_shutdown(void)
    _e_fm2_op_registry = NULL;
 
    return 0;
+}
+
+EAPI void
+e_fm2_op_registry_entry_abort(E_Fm2_Op_Registry_Entry *entry)
+{
+   if (!entry) return;
+
+   if (entry->func.abort) 
+      entry->func.abort(entry);
 }

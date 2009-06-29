@@ -297,6 +297,8 @@ _fill_gadgets_list(Evas_Object *ilist)
         const char *lbl = NULL;
 
         if (!(cc = l->data)) continue;
+        if (cc->func.is_site && !cc->func.is_site(E_GADCON_SITE_DESKTOP))
+           continue;
         if (cc->func.label) lbl = cc->func.label(cc);
         if (!lbl) lbl = cc->name;
         if (cc->func.icon) icon = cc->func.icon(cc, evas);

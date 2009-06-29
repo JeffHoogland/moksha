@@ -1,8 +1,10 @@
 #include "e.h"
 
 /* local function protos */
-static void _e_int_gadcon_config(E_Gadcon *gc, const char *title);
+static void _e_int_gadcon_config(E_Gadcon *gc, const char *title, void *(*data_func)(E_Config_Dialog*));
 static void *_create_data(E_Config_Dialog *cfd);
+static void *_create_data_shelf(E_Config_Dialog *cfd);
+static void *_create_data_toolbar(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _cb_mod_update(void *data, int type, void *event);
@@ -17,6 +19,8 @@ static int _gad_list_sort(void *data1, void *data2);
 
 struct _E_Config_Dialog_Data 
 {
+   E_Gadcon_Site site;
+   
    Evas_Object *o_avail, *o_sel;
    Evas_Object *o_add, *o_del;
    Evas_Object *o_desc;
@@ -29,18 +33,18 @@ struct _E_Config_Dialog_Data
 EAPI void 
 e_int_gadcon_config_shelf(E_Gadcon *gc) 
 {
-   _e_int_gadcon_config(gc, _("Shelf Contents"));
+   _e_int_gadcon_config(gc, _("Shelf Contents"), _create_data_shelf);
 }
 
 EAPI void 
 e_int_gadcon_config_toolbar(E_Gadcon *gc) 
 {
-   _e_int_gadcon_config(gc, _("Toolbar Contents"));
+   _e_int_gadcon_config(gc, _("Toolbar Contents"), _create_data_toolbar);
 }
 
 /* local functions */
 static void 
-_e_int_gadcon_config(E_Gadcon *gc, const char *title) 
+_e_int_gadcon_config(E_Gadcon *gc, const char *title, void *(*data_func)(E_Config_Dialog*)) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -51,7 +55,7 @@ _e_int_gadcon_config(E_Gadcon *gc, const char *title)
 
    con = e_container_current_get(e_manager_current_get());
 
-   v->create_cfdata = _create_data;
+   v->create_cfdata = data_func ? data_func : _create_data;
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
 
@@ -67,6 +71,29 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->site = E_GADCON_SITE_UNKNOWN;
+   cfdata->gc = cfd->data;
+   return cfdata;
+}
+
+static void *
+_create_data_shelf(E_Config_Dialog *cfd) 
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->site = E_GADCON_SITE_SHELF;
+   cfdata->gc = cfd->data;
+   return cfdata;
+}
+
+static void *
+_create_data_toolbar(E_Config_Dialog *cfd) 
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->site = E_GADCON_SITE_EFM_TOOLBAR;
    cfdata->gc = cfd->data;
    return cfdata;
 }
@@ -207,6 +234,9 @@ _load_avail_gadgets(void *data)
         const char *lbl = NULL;
 
         if (!(cc = l->data)) continue;
+        // check the current site is allowed for this gadcon client
+        if (cc->func.is_site && !cc->func.is_site(cfdata->site))
+           continue;
         if (cc->func.label) lbl = cc->func.label(cc);
         if (!lbl) lbl = cc->name;
         if (cc->func.icon) icon = cc->func.icon(cc, evas);

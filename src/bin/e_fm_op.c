@@ -52,7 +52,7 @@ static int _e_fm_op_scan_idler(void *data);
 static void _e_fm_op_send_error(E_Fm_Op_Task * task, E_Fm_Op_Type type, const char *fmt, ...);
 static void _e_fm_op_rollback(E_Fm_Op_Task * task);
 static void _e_fm_op_update_progress_report_simple(int percent, const char *src, const char *dst);
-static void  _e_fm_op_update_progress(E_Fm_Op_Task *task, long long _plus_e_fm_op_done, long long _plus_e_fm_op_total);
+static void  _e_fm_op_update_progress(E_Fm_Op_Task *task, off_t _plus_e_fm_op_done, off_t _plus_e_fm_op_total);
 static void _e_fm_op_copy_stat_info(E_Fm_Op_Task *task);
 static int _e_fm_op_handle_overwrite(E_Fm_Op_Task *task);
 
@@ -73,7 +73,7 @@ Ecore_Fd_Handler *_e_fm_op_stdin_handler = NULL;
 Eina_List *_e_fm_op_work_queue = NULL, *_e_fm_op_scan_queue = NULL;
 Ecore_Idler *_e_fm_op_work_idler_p = NULL, *_e_fm_op_scan_idler_p = NULL;
 
-long long _e_fm_op_done, _e_fm_op_total; /* Type long long should be 64 bits wide everywhere,
+off_t _e_fm_op_done, _e_fm_op_total; /* Type long long should be 64 bits wide everywhere,
                                             this means that it's max value is 2^63 - 1, which 
                                             is 8 388 608 terabytes, and this should be enough.
                                             Well, we'll be multipling _e_fm_op_done by 100, but 
@@ -370,11 +370,14 @@ _e_fm_op_task_free(void *t)
 static void 
 _e_fm_op_remove_link_task(E_Fm_Op_Task *task)
 {
+   E_Fm_Op_Task *ltask;
+   
    if (task->link)
      {
+        ltask = eina_list_data_get(task->link);
         _e_fm_op_work_queue = 
           eina_list_remove_list(_e_fm_op_work_queue, task->link);
-        _e_fm_op_task_free(task->link);
+        _e_fm_op_task_free(ltask);
         task->link = NULL;
      }
 }
@@ -892,13 +895,14 @@ _e_fm_op_rollback(E_Fm_Op_Task *task)
      }
 
    if (task->type == E_FM_OP_COPY)
-     _e_fm_op_update_progress(task, -task->dst.done, -task->src.st.st_size);
+     _e_fm_op_update_progress(task, -task->dst.done, 
+                              -task->src.st.st_size - (task->link ? REMOVECHUNKSIZE : 0));
    else
      _e_fm_op_update_progress(task, -REMOVECHUNKSIZE, -REMOVECHUNKSIZE);
 }
 
 static void
-_e_fm_op_update_progress_report(int percent, int eta, double elapsed, size_t done, size_t total, const char *src, const char *dst)
+_e_fm_op_update_progress_report(int percent, int eta, double elapsed, off_t done, off_t total, const char *src, const char *dst)
 {
    const int magic = E_FM_OP_MAGIC;
    const int id = E_FM_OP_PROGRESS;
@@ -908,7 +912,7 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, size_t don
    src_len = strlen(src);
    dst_len = strlen(dst);
 
-   size = 2 * sizeof(int) + 2 * sizeof(size_t) + src_len + 1 + dst_len + 1;
+   size = 2 * sizeof(int) + 2 * sizeof(off_t) + src_len + 1 + dst_len + 1;
    data = alloca(3 * sizeof(int) + size);
    if (!data) return;
    p = data;
@@ -921,7 +925,7 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, size_t don
    P(eta);
 #undef P
 
-#define P(value) memcpy(p, &(value), sizeof(size_t)); p += sizeof(size_t)
+#define P(value) memcpy(p, &(value), sizeof(off_t)); p += sizeof(off_t)
    P(done);
    P(total);
 #undef P
@@ -955,7 +959,7 @@ _e_fm_op_update_progress_report_simple(int percent, const char *src, const char 
  * packed and written to STDOUT. 
  */
 static void
-_e_fm_op_update_progress(E_Fm_Op_Task *task, long long _plus_e_fm_op_done, long long _plus_e_fm_op_total)
+_e_fm_op_update_progress(E_Fm_Op_Task *task, off_t _plus_e_fm_op_done, off_t _plus_e_fm_op_total)
 {
    static int ppercent = -1;
    int percent;

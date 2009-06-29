@@ -1639,6 +1639,13 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	       }
 	  }
 	break;
+      case E_FM_OP_ABORT: // abort copy/move/delete operation by user
+          {
+             E_Fm_Slave *slave = _e_fm_slave_get(e->ref);
+             if (slave)
+                _e_fm_slave_send(slave, e->minor, NULL, 0);
+          }
+        break; 
       case E_FM_OP_ERROR_RESPONSE_IGNORE_THIS:
       case E_FM_OP_ERROR_RESPONSE_IGNORE_ALL:
       case E_FM_OP_ERROR_RESPONSE_ABORT:
@@ -1777,8 +1784,8 @@ static int _e_fm_slave_data_cb(void *data, int type, void *event)
    sdata = e->data;
    ssize = e->size;
 
-   while (ssize)
-     {	
+   while (ssize >= 3 * sizeof(int))
+     {
 	memcpy(&magic, sdata,                             sizeof(int));
 	memcpy(&id,    sdata + sizeof(int),               sizeof(int));
 	memcpy(&size,  sdata + sizeof(int) + sizeof(int), sizeof(int));
@@ -1786,6 +1793,7 @@ static int _e_fm_slave_data_cb(void *data, int type, void *event)
 	if (magic != E_FM_OP_MAGIC)
 	  {
 	     printf("%s:%s(%d) Wrong magic number from slave #%d. ", __FILE__, __FUNCTION__, __LINE__, slave->id);
+	     break;
 	  }
 
 	sdata += 3 * sizeof(int);

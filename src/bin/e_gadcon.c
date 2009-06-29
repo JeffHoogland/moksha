@@ -5143,3 +5143,49 @@ _e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc)
 	populate_idler = NULL;
      }
 }
+
+EAPI Eina_Bool
+e_gadcon_site_is_shelf      (E_Gadcon_Site site)
+{
+   return site == E_GADCON_SITE_SHELF;
+}
+
+EAPI Eina_Bool
+e_gadcon_site_is_desktop    (E_Gadcon_Site site)
+{
+   return site == E_GADCON_SITE_DESKTOP;   
+}
+
+EAPI Eina_Bool
+e_gadcon_site_is_efm_toolbar(E_Gadcon_Site site)
+{
+   return site == E_GADCON_SITE_EFM_TOOLBAR;  
+}
+
+EAPI Eina_Bool
+e_gadcon_site_is_any_toolbar(E_Gadcon_Site site)
+{
+   switch (site)
+     {
+        // there should be all toolbar sities identifiers
+        case E_GADCON_SITE_TOOLBAR:
+        case E_GADCON_SITE_EFM_TOOLBAR:
+           return EINA_TRUE;
+     }
+   
+   return EINA_FALSE;
+}
+
+EAPI Eina_Bool
+e_gadcon_site_is_not_toolbar(E_Gadcon_Site site)
+{
+   switch (site)
+     {
+        // there should be all toolbar sities identifiers
+        case E_GADCON_SITE_TOOLBAR:
+        case E_GADCON_SITE_EFM_TOOLBAR:
+           return EINA_FALSE;
+     }
+   
+   return EINA_TRUE;
+}
