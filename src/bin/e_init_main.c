@@ -441,7 +441,7 @@ _e_init_cb_timeout(void *data)
 static Ecore_Evas *
 _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
 {
-   Ecore_Evas *ee;
+   Ecore_Evas *ee = NULL;
    Evas *e;
    Eina_List *l;
    const char *path;
@@ -474,7 +474,12 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
 	ecore_evas_software_x11_16_direct_resize_set(ee, 1);
 	*winret = ecore_evas_software_x11_16_window_get(ee);
      }
-   
+   else
+     {
+	printf("The select engine is unknown or incorrectly set. Please specify a correct one.\n");
+	exit(0);
+     }
+
    e = ecore_evas_get(ee);
    
    evas_image_cache_set(e, 4096 * 1024);
