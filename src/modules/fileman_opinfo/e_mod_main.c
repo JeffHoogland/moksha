@@ -45,6 +45,7 @@ static int  _opinfo_op_registry_free_data_delayed(void *data);
 static void _opinfo_op_registry_abort_cb         (void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _opinfo_op_registry_summary_cb       (void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _opinfo_op_registry_detailed_cb      (void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _opinfo_op_registry_window_jump_cb   (void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _opinfo_op_registry_update_status    (Instance *inst);
 
 /********************   GLOBALS   ******************************************/
@@ -76,6 +77,12 @@ _opinfo_op_registry_listener(void *data, const E_Fm2_Op_Registry_Entry *ere)
       default:
          edje_object_signal_emit(o, "e,action,icon,unknow", "e");
    }
+   
+   // Update has/none linked efm window
+   if (e_win_evas_object_win_get(ere->e_fm))
+      edje_object_signal_emit(o, "state,set,window,exist", "fileman_opinfo");
+   else
+      edje_object_signal_emit(o, "state,set,window,absent", "fileman_opinfo");
    
    // Update information text
    switch (ere->status)
@@ -211,6 +218,39 @@ _opinfo_op_registry_detailed_cb(void *data, Evas_Object *obj, const char *emissi
    e_box_pack_options_set(obj, 1, 0, 1, 0, 0.0, 0.0, mw, xh, 9999, xh);
 }
 
+static void 
+_opinfo_op_registry_window_jump_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   int id = (int)data;
+   E_Fm2_Op_Registry_Entry *ere;
+   E_Win *win;
+   
+   if (!id) return;
+   ere = e_fm2_op_registry_entry_get(id);
+   if (!ere) return;
+
+   // if attention dialog is present then raise it, otherwise raise the efm window
+   win = (ere->needs_attention && ere->dialog) ? ere->dialog->win
+                                               : e_win_evas_object_win_get(ere->e_fm);
+   if (!win) return;
+   
+   if (win->border)
+     {
+        if (win->border->iconic)
+           e_border_uniconify(win->border);
+        if (win->border->shaded)
+           e_border_unshade(win->border, win->border->shade.dir);
+     }
+   else
+     e_win_show(win);
+   e_win_raise(win);
+   e_desk_show(win->border->desk);
+   e_border_focus_set_with_pointer(win->border);
+   
+   if (ere->needs_attention && e_config->pointer_slide)
+      e_border_pointer_warp_to_center(win->border);
+}
+
 static int
 _opinfo_op_registry_entry_add_cb(void *data, int type, void *event)
 {
@@ -242,6 +282,8 @@ _opinfo_op_registry_entry_add_cb(void *data, int type, void *event)
                                    _opinfo_op_registry_summary_cb, inst);
    edje_object_signal_callback_add(o, "state,request,detailed", "fileman_opinfo",
                                    _opinfo_op_registry_detailed_cb, inst);
+   edje_object_signal_callback_add(o, "e,fm,window,jump", "",
+                                   _opinfo_op_registry_window_jump_cb, (void*)ere->id);
    
    e_fm2_op_registry_entry_listener_add(ere, _opinfo_op_registry_listener,
                                         o, _opinfo_op_registry_free_data);

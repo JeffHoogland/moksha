@@ -34,6 +34,7 @@ struct _E_Fm2_Op_Registry_Entry
    E_Fm_Op_Type op;
    E_Fm2_Op_Status status;
    Eina_Bool needs_attention:1;
+   E_Dialog *dialog;
    Eina_Bool finished:1;
    
    // service callbacks

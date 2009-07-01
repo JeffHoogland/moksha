@@ -340,19 +340,19 @@ static void         _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic);
 static void         _e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void         _e_fm2_icon_entry_widget_accept(E_Fm2_Icon *ic);
 
-static void _e_fm_retry_abort_dialog(int pid, const char *str);
+static E_Dialog* _e_fm_retry_abort_dialog(int pid, const char *str);
 static void _e_fm_retry_abort_delete_cb(void *obj);
 static void _e_fm_retry_abort_retry_cb(void *data, E_Dialog *dialog);
 static void _e_fm_retry_abort_abort_cb(void *data, E_Dialog *dialog);
 
-static void _e_fm_overwrite_dialog(int pid, const char *str);
+static E_Dialog* _e_fm_overwrite_dialog(int pid, const char *str);
 static void _e_fm_overwrite_delete_cb(void *obj);
 static void _e_fm_overwrite_no_cb(void *data, E_Dialog *dialog);
 static void _e_fm_overwrite_no_all_cb(void *data, E_Dialog *dialog);
 static void _e_fm_overwrite_yes_cb(void *data, E_Dialog *dialog);
 static void _e_fm_overwrite_yes_all_cb(void *data, E_Dialog *dialog);
 
-static void _e_fm_error_dialog(int pid, const char *str);
+static E_Dialog* _e_fm_error_dialog(int pid, const char *str);
 static void _e_fm_error_delete_cb(void *obj);
 static void _e_fm_error_retry_cb(void *data, E_Dialog *dialog);
 static void _e_fm_error_abort_cb(void *data, E_Dialog *dialog);
@@ -582,6 +582,7 @@ _e_fm2_op_registry_go_on(int id)
    if (!ere) return;
    ere->status = E_FM2_OP_STATUS_IN_PROGRESS;
    ere->needs_attention = 0;
+   ere->dialog = NULL;
    e_fm2_op_registry_entry_changed(ere);
 }
 
@@ -592,27 +593,30 @@ _e_fm2_op_registry_aborted(int id)
    if (!ere) return;
    ere->status = E_FM2_OP_STATUS_ABORTED;
    ere->needs_attention = 0;
+   ere->dialog = NULL;
    ere->finished = 1;
    e_fm2_op_registry_entry_changed(ere);
    // XXX e_fm2_op_registry_entry_del(id);
 }
 
 static void
-_e_fm2_op_registry_error(int id)
+_e_fm2_op_registry_error(int id, E_Dialog *dlg)
 {
    E_Fm2_Op_Registry_Entry *ere = e_fm2_op_registry_entry_get(id);
    if (!ere) return;
    ere->status = E_FM2_OP_STATUS_ERROR;
    ere->needs_attention = 1;
+   ere->dialog = dlg;
    e_fm2_op_registry_entry_changed(ere);
 }
 
 static void
-_e_fm2_op_registry_needs_attention(int id)
+_e_fm2_op_registry_needs_attention(int id, E_Dialog *dlg)
 {
    E_Fm2_Op_Registry_Entry *ere = e_fm2_op_registry_entry_get(id);
    if (!ere) return;
    ere->needs_attention = 1;
+   ere->dialog = dlg;
    e_fm2_op_registry_entry_changed(ere);
 }
 
@@ -3068,21 +3072,30 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
         break;
         
       case E_FM_OP_ERROR:/*error*/
-	 printf("%s:%s(%d) Error from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
-	 _e_fm_error_dialog(e->ref, e->data);
-	 _e_fm2_op_registry_error(e->ref);
+          {
+             E_Dialog *dlg;
+             printf("%s:%s(%d) Error from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
+             dlg = _e_fm_error_dialog(e->ref, e->data);
+             _e_fm2_op_registry_error(e->ref, dlg);
+          }
 	break;
 
       case E_FM_OP_ERROR_RETRY_ABORT:/*error*/
-	 printf("%s:%s(%d) Error from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
-	 _e_fm_retry_abort_dialog(e->ref, (char *)e->data);
-	 _e_fm2_op_registry_error(e->ref);
+          {
+             E_Dialog *dlg;
+             printf("%s:%s(%d) Error from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
+             dlg = _e_fm_retry_abort_dialog(e->ref, (char *)e->data);
+             _e_fm2_op_registry_error(e->ref, dlg);
+          }
 	break;
 
       case E_FM_OP_OVERWRITE:/*overwrite*/
-	 printf("%s:%s(%d) Overwrite from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
-	 _e_fm_overwrite_dialog(e->ref, (char *)e->data);
-	 _e_fm2_op_registry_needs_attention(e->ref);
+          {
+             E_Dialog *dlg;
+             printf("%s:%s(%d) Overwrite from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
+             dlg = _e_fm_overwrite_dialog(e->ref, (char *)e->data);
+             _e_fm2_op_registry_needs_attention(e->ref, dlg);
+          }
 	break;
 
       case E_FM_OP_PROGRESS:/*progress*/
@@ -8964,7 +8977,8 @@ _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic)
      }
 }
 
-static void _e_fm_retry_abort_dialog(int pid, const char *str)
+static E_Dialog* 
+_e_fm_retry_abort_dialog(int pid, const char *str)
 {
    E_Manager *man;
    E_Container *con;
@@ -8973,9 +8987,9 @@ static void _e_fm_retry_abort_dialog(int pid, const char *str)
    char text[4096 + PATH_MAX];
 
    man = e_manager_current_get();
-   if (!man) return;
+   if (!man) return NULL;
    con = e_container_current_get(man);
-   if (!con) return;
+   if (!con) return NULL;
 
    id = malloc(sizeof(int));
    *id = pid;
@@ -8996,7 +9010,7 @@ static void _e_fm_retry_abort_dialog(int pid, const char *str)
    e_dialog_text_set(dialog, text);
    e_win_centered_set(dialog->win, 1);
    e_dialog_show(dialog);
-
+   return dialog;
 }
 
 static void _e_fm_retry_abort_delete_cb(void *obj)
@@ -9021,7 +9035,7 @@ static void _e_fm_retry_abort_abort_cb(void *data, E_Dialog *dialog)
    e_object_del(E_OBJECT(dialog));
 }
 
-static void
+static E_Dialog*
 _e_fm_overwrite_dialog(int pid, const char *str)
 {
    E_Manager *man;
@@ -9031,9 +9045,9 @@ _e_fm_overwrite_dialog(int pid, const char *str)
    char text[4096 + PATH_MAX];
 
    man = e_manager_current_get();
-   if (!man) return;
+   if (!man) return NULL;
    con = e_container_current_get(man);
-   if (!con) return;
+   if (!con) return NULL;
 
    id = malloc(sizeof(int));
    *id = pid;
@@ -9055,6 +9069,7 @@ _e_fm_overwrite_dialog(int pid, const char *str)
    e_dialog_text_set(dialog, text);
    e_win_centered_set(dialog->win, 1);
    e_dialog_show(dialog);
+   return dialog;
 }
 
 static void
@@ -9100,7 +9115,7 @@ _e_fm_overwrite_yes_all_cb(void *data, E_Dialog *dialog)
    e_object_del(E_OBJECT(dialog));
 }
 
-static void
+static E_Dialog*
 _e_fm_error_dialog(int pid, const char *str)
 {
    E_Manager *man;
@@ -9110,9 +9125,9 @@ _e_fm_error_dialog(int pid, const char *str)
    char text[4096 + PATH_MAX];
 
    man = e_manager_current_get();
-   if (!man) return;
+   if (!man) return NULL;
    con = e_container_current_get(man);
-   if (!con) return;
+   if (!con) return NULL;
 
    id = malloc(sizeof(int));
    *id = pid;
@@ -9135,6 +9150,7 @@ _e_fm_error_dialog(int pid, const char *str)
    e_dialog_text_set(dialog, text);
    e_win_centered_set(dialog->win, 1);
    e_dialog_show(dialog);
+   return dialog;
 }
 
 static void
@@ -9822,6 +9838,7 @@ _e_fm2_operation_abort_internal(E_Fm2_Op_Registry_Entry *ere)
    ere->status = E_FM2_OP_STATUS_ABORTED;
    ere->finished = 1;
    ere->needs_attention = 0;
+   ere->dialog = NULL;
    e_fm2_op_registry_entry_changed(ere);
    _e_fm_client_send(E_FM_OP_ABORT, ere->id, NULL, 0);   
 }
