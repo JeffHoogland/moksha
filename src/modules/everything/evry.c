@@ -55,7 +55,7 @@ static void _evry_scroll_to(int i);
 static void _evry_tab_scroll_to(Evry_Plugin *p);
 static void _evry_item_desel(Evry_Item *it);
 static void _evry_item_sel(Evry_Item *it);
-static void _evry_action(int finished);
+static void _evry_plugin_action(int finished);
 static void _evry_action_select(void);
 static void _evry_cb_plugin_sel(void *data1, void *data2);
 static int  _evry_animator(void *data);
@@ -243,7 +243,15 @@ evry_hide(void)
 	free(s->input);
 
 	EINA_LIST_FREE(s->plugins, p)
-	  p->cleanup();
+	  {
+	     p->cleanup();
+
+	     if (p->tab)
+	       {
+		  evas_object_del(p->tab);
+		  p->tab = NULL;
+	       }
+	  }
      }
    stack = NULL;
    cur_state = NULL;
@@ -361,8 +369,16 @@ _evry_push_state(void)
 	  return 0;
 
 	EINA_LIST_FOREACH(s->plugins, l, p)
-	  if (p != s->cur_plugin)
-	    p->cleanup();
+	  {
+	     if (p != s->cur_plugin)
+	       p->cleanup();
+
+	     if (p->tab)
+	       {
+		  evas_object_del(p->tab);
+		  p->tab = NULL;
+	       }
+	  }
      }
    
    EINA_LIST_FOREACH(plugins, l, p)
@@ -408,15 +424,6 @@ _evry_push_state(void)
 
    _evry_list_clear();
 
-   if (s)
-     {
-	EINA_LIST_FOREACH(s->cur_plugins, l, p)
-	  {
-	     evas_object_del(p->tab);
-	     p->tab = NULL;
-	  }
-     }
-   
    s = E_NEW(Evry_State, 1);
    s->input = malloc(INPUTLEN);
    s->input[0] = 0;
@@ -460,12 +467,6 @@ _evry_pop_state(void)
 
    _evry_list_clear();
 
-   EINA_LIST_FREE(s->cur_plugins, p)
-     {
-	evas_object_del(p->tab);
-	p->tab = NULL;
-     }
-   
    free(s->input);
 
    EINA_LIST_FOREACH(s->plugins, l, p)
@@ -558,7 +559,7 @@ _evry_cb_key_down(void *data, int type, void *event)
 	if (s->sel_item)
 	  {
 	     if (!_evry_push_state())
-	       _evry_action(0);	     
+	       _evry_plugin_action(0);	     
 	  }
      }
    /* _evry_plugin_next(); */
@@ -573,7 +574,7 @@ _evry_cb_key_down(void *data, int type, void *event)
       * 	if (s->sel_item)
       * 	  {
       * 	     if (!_evry_push_state())
-      * 	       _evry_action(0);	     
+      * 	       _evry_plugin_action(0);	     
       * 	  }
       * } */
    else if (!strcmp(ev->key, "Left"))
@@ -581,9 +582,9 @@ _evry_cb_key_down(void *data, int type, void *event)
    /* _evry_pop_state();      */
    else if (!strcmp(ev->key, "Return") &&
 	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
-     _evry_action(0);
+     _evry_plugin_action(0);
    else if (!strcmp(ev->key, "Return"))
-     _evry_action(1);
+     _evry_plugin_action(1);
    else if (!strcmp(ev->key, "Tab") &&
 	    ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
 	     (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)))
@@ -593,7 +594,7 @@ _evry_cb_key_down(void *data, int type, void *event)
      	if (s->sel_item)
      	  {
      	     if (!_evry_push_state())
-     	       _evry_action(0);	     
+     	       _evry_plugin_action(0);	     
      	  }
      }
      /* _evry_plugin_next(); */
@@ -663,9 +664,9 @@ _evry_cb_mouse_up(void *data, int type, void *event)
    if (item_mouseover)
      {
 	if (ev->buttons == 1) 
-	  _evry_action(1);
+	  _evry_plugin_action(1);
 	else if (ev->buttons == 3) 
-	  _evry_action(0);
+	  _evry_plugin_action(0);
      }
    else
      {
@@ -801,7 +802,7 @@ _evry_clear(void)
 }
 
 static void
-_evry_action(int finished)
+_evry_plugin_action(int finished)
 {
    Evry_State *s = cur_state;
 
@@ -855,15 +856,21 @@ _evry_show_items(Evry_Plugin *p)
    Evry_State *s = cur_state;
    
    if (s->cur_plugin) 
-     edje_object_signal_emit(s->cur_plugin->tab, "e,state,unselected", "e");
-
+     {
+	if (s->cur_plugin != p)
+	  {
+	     edje_object_signal_emit(s->cur_plugin->tab, "e,state,unselected", "e");
+	     edje_object_signal_emit(p->tab, "e,state,selected", "e");
+	  }
+     }
+   else
+     edje_object_signal_emit(p->tab, "e,state,selected", "e");
+   
    if (s->cur_plugin != p)
      s->sel_item = NULL;
    
    s->cur_plugin = p;
    s->cur_items = p->items;
-   
-   edje_object_signal_emit(p->tab, "e,state,selected", "e");
    
    evas_event_freeze(popup->evas);   
    e_box_freeze(o_list);
@@ -925,13 +932,8 @@ _evry_matches_update(void)
    Evry_State *s = cur_state;
    
    _evry_list_clear();
-   
-   EINA_LIST_FREE(s->cur_plugins, p)
-     {
-	evas_object_del(p->tab);
-	p->tab = NULL;
-     }
-   
+   eina_list_free(s->cur_plugins);
+
    s->cur_plugins = NULL;
    s->sel_item = NULL;
    
@@ -945,9 +947,16 @@ _evry_matches_update(void)
 	if (!s->initial || (items && eina_list_count(p->items) > 0))
 	  {
 	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
-	     _evry_plugin_selector_show(p); 
+	  }
+	else if (p->tab)
+	  {
+	     evas_object_del(p->tab);
+	     p->tab = NULL;
 	  }
      }
+   
+   EINA_LIST_FOREACH(s->cur_plugins, l, p)
+     _evry_plugin_selector_show(p);
    
    if (s->cur_plugins)
      {
@@ -1033,8 +1042,12 @@ _evry_tab_scroll_to(Evry_Plugin *p)
    e_box_min_size_get(o_selector, &mw, NULL);
    evas_object_geometry_get(o_selector, NULL, NULL, &w, NULL);
 
-   if (mw <= w) return;
-
+   if (mw <= w)
+     {
+	e_box_align_set(o_selector, 0.0, 0.5);
+	return;
+     }
+   
    if (n > 1)
      {
 	align = (double)i / (double)(n - 1);
@@ -1239,24 +1252,33 @@ _evry_plugin_selector_show(Evry_Plugin *p)
    char buf[64];
    Eina_List *l;
    Evry_State *s = cur_state;
-   
-   o = edje_object_add(popup->evas);
-   /* TODO move this to everything theme group !*/
-   e_theme_edje_object_set(o, "base/theme/widgets",
-                           "e/widgets/toolbar/item");
 
+   e_box_freeze(o_selector);
+
+   if (p->tab)
+     {
+	o = p->tab;
+	e_box_unpack(p->tab);
+     }
+   else
+     {
+	o = edje_object_add(popup->evas);
+	/* TODO move this to everything theme group !*/
+	e_theme_edje_object_set(o, "base/theme/widgets",
+                           "e/widgets/toolbar/item");
+     }
+   
    snprintf(buf, 64, "%s (%d)", p->name, eina_list_count(p->items));
    
    edje_object_part_text_set(o, "e.text.label", buf);
 
    edje_object_size_min_calc(o, &mw, &mh);
-   e_box_freeze(o_selector);
 
    l = eina_list_data_find_list(s->cur_plugins, p);
-   if (l && l->next)
+   if (l && l->prev)
      {
-	Evry_Plugin *p2 = l->next->data;
-	e_box_pack_before(o_selector, o, p2->tab);
+	Evry_Plugin *p2 = l->prev->data;
+	e_box_pack_after(o_selector, o, p2->tab);
      }
    else
      e_box_pack_end(o_selector, o);
