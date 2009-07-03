@@ -119,7 +119,7 @@ _action(Evry_Item *it, const char *input)
 	     Evry_Item *it2 = p->items->data;
 	     
 	     _item_add((char *) it2->label, 1);
-	     evry_plugin_async_update(p, 1);
+	     evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
 	  }
 	
 	return EVRY_ACTION_CONTINUE;
@@ -129,6 +129,9 @@ _action(Evry_Item *it, const char *input)
 	/* XXX on which windows must the selection be set? */
 	ecore_x_selection_primary_set(e_manager_current_get()->win,
 					it->label, strlen(it->label));
+	ecore_x_selection_clipboard_set(e_manager_current_get()->win,
+				      it->label, strlen(it->label));
+
 	if (p->items->data == it)
 	  {
 	     Evry_Item *it2 = p->items->data;
@@ -180,7 +183,7 @@ _cb_data(void *data, int type, void *event)
    
    if (data != p) return 1;
 
-   evry_plugin_async_update(p, 0);
+   evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR);
 
    for (l = ev->lines; l && l->line; l++)
      {
@@ -195,7 +198,7 @@ _cb_data(void *data, int type, void *event)
 	  _item_add(l->line, 1);
      }
 
-   evry_plugin_async_update(p, 1);
+   evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
    
    return 1;
 }

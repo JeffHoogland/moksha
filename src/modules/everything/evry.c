@@ -305,7 +305,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 
    s = cur_state;
 
-   if (action == 1)
+   if (action == EVRY_ASYNC_UPDATE_ADD)
      {
 	if (!eina_list_data_find(s->cur_plugins, p))
 	  {
@@ -332,7 +332,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	     _evry_show_items(s->cur_plugins->data);
 	  }
      }
-   else if ((action == 0) && (s->cur_plugin == p))
+   else if ((action == EVRY_ASYNC_UPDATE_CLEAR) && (s->cur_plugin == p))
      {
 	_evry_list_clear();
      }

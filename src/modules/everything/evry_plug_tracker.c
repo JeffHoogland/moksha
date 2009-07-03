@@ -202,6 +202,6 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	  }
      }
    
-   if (p->items) evry_plugin_async_update(p, 1); 
+   if (p->items) evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD); 
 }
 

@@ -28,6 +28,8 @@ typedef struct _Evry_App Evry_App;
 #define EVRY_ACTION_FINISHED 1
 #define EVRY_ACTION_CONTINUE 2
 
+#define EVRY_ASYNC_UPDATE_ADD 0
+#define EVRY_ASYNC_UPDATE_CLEAR 1
 
 #else
 #ifndef EVRY_H
