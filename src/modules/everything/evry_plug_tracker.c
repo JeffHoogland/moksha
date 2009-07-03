@@ -66,7 +66,7 @@ evry_plug_tracker_shutdown(void)
 static int
 _action(Evry_Item *it, const char *input)
 {
-   return 0;
+   return EVRY_ACTION_OTHER;
 }
 
 static void

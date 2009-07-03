@@ -146,10 +146,10 @@ _action(Evry_Item *it, const char *input)
 
 	eina_list_free(files);
 
-	return 1;
+	return EVRY_ACTION_FINISHED;
      }
    
-   return 0;
+   return EVRY_ACTION_CONTINUE;
 }
 
 
@@ -163,8 +163,8 @@ _list_free(void)
      {
 	if (it->label) eina_stringshare_del(it->label);
 	app = it->data[0];
-	free(app);
-	free(it);
+	E_FREE(app);
+	E_FREE(it);
      }
 }
 
@@ -343,8 +343,8 @@ _item_add(Efreet_Desktop *desktop, char *file, int prio)
 	file = NULL;
      }
    
-   it = calloc(1, sizeof(Evry_Item));
-   app = calloc(1, sizeof(Evry_App));
+   it = E_NEW(Evry_Item, 1);
+   app = E_NEW(Evry_App, 1);
    app->desktop = desktop;
    app->file = file;
    it->data[0] = app;

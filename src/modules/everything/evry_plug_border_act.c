@@ -94,7 +94,8 @@ _action(Evry_Item *item, const char *input)
    void (*border_action) (E_Border *bd);
    border_action = item->data[0];
    border_action(inst->border);
-   return 1;
+
+   return EVRY_ACTION_FINISHED;
 }
 
 static void
@@ -106,7 +107,7 @@ _cleanup(void)
      {
 	if (it->data[1]) eina_stringshare_del(it->data[1]);
 	if (it->label) eina_stringshare_del(it->label);
-	free(it);
+	E_FREE(it);
      }
 }
 
@@ -115,7 +116,7 @@ _item_add(const char *label, void (*action_cb) (E_Border *bd), const char *icon)
 {
    Evry_Item *it;   
 
-   it = calloc(1, sizeof(Evry_Item));
+   it = E_NEW(Evry_Item, 1);
    it->data[0] = action_cb;
    it->data[1] = (void *) eina_stringshare_add(icon);
    it->label = eina_stringshare_add(label);

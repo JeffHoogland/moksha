@@ -50,7 +50,7 @@ _action(Evry_Item *it, const char *input)
    E_Border *bd;
    E_Zone *zone;
 
-   if (!it) return 0;
+   if (!it) return EVRY_ACTION_CONTINUE;
    
    bd = (E_Border *)it->data[0];
    zone = e_util_zone_current_get(e_manager_current_get());
@@ -69,7 +69,7 @@ _action(Evry_Item *it, const char *input)
    /* e_border_focus_set(bd, 1, 1); */
    e_border_focus_set_with_pointer(bd);
    
-   return 1;
+   return EVRY_ACTION_FINISHED;
 }
 
 static void
@@ -81,7 +81,7 @@ _cleanup()
      {
 	/* if (it->data[0]) e_object_unref(E_OBJECT(it->data[0])); */
 	if (it->label) eina_stringshare_del(it->label);
-	free(it);
+	E_FREE(it);
      }
 }
 
@@ -149,7 +149,7 @@ _item_add(E_Border *bd, int prio)
 {
    Evry_Item *it;   
 
-   it = calloc(1, sizeof(Evry_Item));
+   it = E_NEW(Evry_Item, 1);
    /* e_object_ref(E_OBJECT(bd)); */
    it->data[0] = bd;
    it->priority = prio;

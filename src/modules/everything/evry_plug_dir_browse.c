@@ -19,6 +19,7 @@ static void _list_free(void);
 static Evry_Item *_item_fill(const char *directory, const char *file);
 
 static Evry_Plugin *p;
+static Eina_List *stack = NULL;
 
 EAPI int
 evry_plug_dir_browse_init(void)
@@ -67,7 +68,7 @@ _begin(Evry_Item *it)
 	s->directory = eina_stringshare_add(e_user_homedir_get());	
      }
 
-   p->states = eina_list_prepend(p->states, s);
+   stack = eina_list_prepend(stack, s);
    p->items = NULL;
    
    return 1;
@@ -76,7 +77,7 @@ _begin(Evry_Item *it)
 static int
 _action(Evry_Item *it, const char *input)
 {   
-   return 0;
+   return EVRY_ACTION_OTHER;
 }
 
 static void
@@ -100,9 +101,9 @@ _cleanup()
 {
    State *s;
    
-   if (!p->states) return;
+   if (!stack) return;
 
-   s = p->states->data;
+   s = stack->data;
    
    _list_free();
    
@@ -110,11 +111,11 @@ _cleanup()
    
    E_FREE(s);
 
-   p->states = eina_list_remove_list(p->states, p->states);
+   stack = eina_list_remove_list(stack, stack);
 
-   if (p->states)
+   if (stack)
      {
-	s = p->states->data;
+	s = stack->data;
 	p->items = s->items;
      }
 }
@@ -128,7 +129,7 @@ _fetch(const char *input)
    Evry_Item *it;
    char match1[4096];
    char match2[4096];
-   State *s = p->states->data;
+   State *s = stack->data;
    
    _list_free();
    

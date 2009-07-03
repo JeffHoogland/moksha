@@ -76,6 +76,7 @@ e_modapi_init(E_Module *m)
    evry_plug_tracker_init();
    evry_plug_border_init();
    evry_plug_border_act_init();
+   evry_plug_calc_init();
 
    /* add module supplied action */
    act = e_action_add("everything");
@@ -116,6 +117,7 @@ e_modapi_shutdown(E_Module *m)
    evry_plug_tracker_shutdown();
    evry_plug_border_shutdown();
    evry_plug_border_act_shutdown();
+   evry_plug_calc_shutdown();
 
    evry_shutdown();
    conf_module = NULL;
@@ -151,6 +153,9 @@ _e_mod_action_exebuf_cb(E_Object *obj, const char *params)
 	  zone = e_util_zone_current_get(e_manager_current_get());
      }
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
+
+   printf("zone %d %d\n", zone->x, zone->y);
+   
    if (zone) evry_show(zone);
 }
 

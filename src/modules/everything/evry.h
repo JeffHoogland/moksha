@@ -9,6 +9,7 @@ typedef struct _Evry_Action Evry_Action;
 typedef struct _Evry_Config Evry_Config;
 typedef struct _Evry_App Evry_App;
 
+
 /* typedef enum _Evry_Plugin_Type
  *   {
  *     EVRY_SYNC,
@@ -21,6 +22,12 @@ typedef struct _Evry_App Evry_App;
  *   EVRY_STATE_PENDING,
  *   EVRY_STATE_FINISHED,
  * } Evry_Plugin_State; */
+
+
+#define EVRY_ACTION_OTHER 0
+#define EVRY_ACTION_FINISHED 1
+#define EVRY_ACTION_CONTINUE 2
+
 
 #else
 #ifndef EVRY_H
@@ -55,12 +62,12 @@ struct _Evry_Plugin
   int prio;
   
   /* sync/async ?*/
-  unsigned char async_query : 1;
+  Eina_Bool async_query;
 
   /* whether candidates can be shown without input
    * e.g.  borders, app history */
-  unsigned char need_query : 1; 
-    
+  Eina_Bool need_query; 
+
   /* run when plugin is activated. */
   int (*begin) (Evry_Item *item);
 
@@ -84,7 +91,6 @@ struct _Evry_Plugin
   void (*config_apply) (void);
 
   /* for internal use by plugin */
-  Eina_List *states;
   void *priv;
 
   /* not to be set by plugin! */

@@ -46,7 +46,7 @@ _action(Evry_Item *it, const char *input)
    char buf[1024];
    int found = 0;
 
-   if (!it) return 0;
+   if (!it) return EVRY_ACTION_CONTINUE;
    
    eci = it->data[0];
    con = e_container_current_get(e_manager_current_get());
@@ -70,7 +70,7 @@ _action(Evry_Item *it, const char *input)
    if (found)
      e_configure_registry_call(buf, con, NULL);   
    
-   return 1;
+   return EVRY_ACTION_FINISHED;
 }
 
 static void
@@ -81,7 +81,7 @@ _cleanup(void)
    EINA_LIST_FREE(p->items, it)
      {
 	if (it->label) eina_stringshare_del(it->label);
-	free(it);
+	E_FREE(it);
      }
 }
 
@@ -158,7 +158,7 @@ _item_add(E_Configure_It *eci, int prio)
 {
    Evry_Item *it;   
 
-   it = calloc(1, sizeof(Evry_Item));
+   it = E_NEW(Evry_Item, 1);
    it->data[0] = eci;
    it->priority = prio;
    it->label = eina_stringshare_add(eci->label);
