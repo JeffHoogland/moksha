@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-02 13:59+0200\n"
-"PO-Revision-Date: 2009-07-02 14:04+0100\n"
+"PO-Revision-Date: 2009-07-03 18:04+0100\n"
 "Last-Translator: quaker66 <quaker66@gmail.com>\n"
 "Language-Team: easylinux <easylinux@sachiel.eu>\n"
 "MIME-Version: 1.0\n"
@@ -1205,7 +1205,7 @@ msgstr "%i souborů"
 #: ../src/bin/e_fm.c:7834
 #: ../src/bin/e_fm.c:8022
 msgid "Link"
-msgstr "Odkaz"
+msgstr "Vytvořit symlink"
 
 #: ../src/bin/e_fm.c:6122
 #: ../src/bin/e_fm.c:9001
