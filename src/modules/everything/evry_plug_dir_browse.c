@@ -21,6 +21,7 @@ static Evry_Item *_item_fill(const char *directory, const char *file);
 static Evry_Plugin *p;
 static Eina_List *stack = NULL;
 
+
 EAPI int
 evry_plug_dir_browse_init(void)
 {
@@ -45,7 +46,7 @@ evry_plug_dir_browse_shutdown(void)
 {
    evry_plugin_unregister(p);
    E_FREE(p);
-   
+
    return 1;
 }
 
@@ -53,30 +54,30 @@ static int
 _begin(Evry_Item *it)
 {
    State *s;
-   
+
    if (it)
      {
 	if (!it->uri || !ecore_file_is_dir(it->uri))
 	  return 0;
 
-	s = E_NEW(State, 1);     
+	s = E_NEW(State, 1);
 	s->directory = eina_stringshare_add(it->uri);
      }
    else
      {
-	s = E_NEW(State, 1);     
-	s->directory = eina_stringshare_add(e_user_homedir_get());	
+	s = E_NEW(State, 1);
+	s->directory = eina_stringshare_add(e_user_homedir_get());
      }
 
    stack = eina_list_prepend(stack, s);
    p->items = NULL;
-   
+
    return 1;
 }
 
 static int
 _action(Evry_Item *it, const char *input)
-{   
+{
    return EVRY_ACTION_OTHER;
 }
 
@@ -95,20 +96,19 @@ _list_free()
      }
 }
 
-
 static void
 _cleanup()
 {
    State *s;
-   
+
    if (!stack) return;
 
    s = stack->data;
-   
+
    _list_free();
-   
+
    eina_stringshare_del(s->directory);
-   
+
    E_FREE(s);
 
    stack = eina_list_remove_list(stack, stack);
@@ -130,9 +130,9 @@ _fetch(const char *input)
    char match1[4096];
    char match2[4096];
    State *s = stack->data;
-   
+
    _list_free();
-   
+
    files = ecore_file_ls(s->directory);
 
    if (input)
@@ -144,13 +144,13 @@ _fetch(const char *input)
    EINA_LIST_FREE(files, file)
      {
 	it = NULL;
-	
+
 	if (file[0] == '.')
 	  {
 	     free(file);
 	     continue;
 	  }
-	
+
 	if (input)
 	  {
 	     if (e_util_glob_case_match(file, match1))
@@ -167,7 +167,7 @@ _fetch(const char *input)
 	  {
 	     it  = _item_fill(s->directory, file);
 	  }
-	
+
 	if (it)
 	  p->items = eina_list_append(p->items, it);
 
@@ -179,7 +179,7 @@ _fetch(const char *input)
 	p->items = eina_list_sort(p->items, eina_list_count(p->items),
 				  _cb_sort);
 	s->items = p->items;
-	
+
 	return 1;
      }
 
@@ -197,7 +197,7 @@ _item_fill(const char *directory, const char *file)
    it = E_NEW(Evry_Item, 1);
 
    snprintf(buf, sizeof(buf), "%s/%s", directory, file);
-   
+
    if ((e_util_glob_case_match(file, "*.desktop")) ||
        (e_util_glob_case_match(file, "*.directory")))
      {
@@ -214,7 +214,7 @@ _item_fill(const char *directory, const char *file)
    file_path = eina_stringshare_add(buf);
 
    it->uri = file_path;
-   
+
    mime = efreet_mime_globs_type_get(file_path);
    if (mime)
      {
@@ -231,12 +231,12 @@ _item_fill(const char *directory, const char *file)
 	it->mime = eina_stringshare_add(mime);
 	it->priority = 0;
      }
-   else	
+   else
      {
 	it->mime = eina_stringshare_add("None");
 	it->priority = 0;
      }
-   
+
    return it;
 }
 
@@ -246,7 +246,7 @@ _item_icon_get(Evry_Item *it, Evas *e)
    char *item_path;
 
    if (!it->mime) return;
-   
+
    if (!strcmp(it->mime, "Folder"))
      {
 	it->o_icon = edje_object_add(e);
@@ -270,11 +270,11 @@ static int
 _cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1, *it2;
-   
+
    it1 = data1;
    it2 = data2;
 
-   if (it2->priority - it1->priority) 
+   if (it2->priority - it1->priority)
      return (it2->priority - it1->priority);
    else
      return strcasecmp(it1->label, it2->label);

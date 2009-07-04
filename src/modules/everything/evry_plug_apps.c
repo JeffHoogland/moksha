@@ -24,7 +24,6 @@ static Evry_Action *act;
 static Inst *inst;
 
 
-
 EAPI int
 evry_plug_apps_init(void)
 {
@@ -48,7 +47,7 @@ evry_plug_apps_init(void)
    evry_action_register(act);
 
    inst = NULL;
-   
+
    return 1;
 }
 
@@ -65,7 +64,7 @@ static int
 _begin(Evry_Item *it)
 {
    const char *mime;
-   
+
    if (inst) return 0;
 
    if (it)
@@ -75,14 +74,14 @@ _begin(Evry_Item *it)
 	p->prio = 3;
 
 	if (!it->uri) return 0;
-   
+
 	if (!it->mime)
 	  mime = efreet_mime_type_get(it->uri);
 	else
 	  mime = it->mime;
-   
+
 	if (!mime) return 0;
-	
+
 	inst = E_NEW(Inst, 1);
 	inst->candidate = it;
 	inst->apps = efreet_util_desktop_mime_list(mime);
@@ -92,24 +91,23 @@ _begin(Evry_Item *it)
 	p->name = "Applications";
 	p->type_out = "APPLICATION";
 	p->prio = 1;
-	
+
 	inst = E_NEW(Inst, 1);
      }
-   
+
    return 1;
 }
-
 
 static int
 _action(Evry_Item *it, const char *input)
 {
    E_Zone *zone;
    Evry_App *app = NULL;
-   Efreet_Desktop *desktop = NULL; 
+   Efreet_Desktop *desktop = NULL;
    Eina_List *files = NULL;
 
    if (it) app = it->data[0];
-      
+
    if (app && app->desktop)
      {
 	desktop = app->desktop;
@@ -118,7 +116,7 @@ _action(Evry_Item *it, const char *input)
      {
 	if (app && app->file)
 	  input = app->file;
-	
+
 	desktop = efreet_desktop_empty_new("");
 	if (strchr(input, '%'))
 	  {
@@ -148,17 +146,16 @@ _action(Evry_Item *it, const char *input)
 
 	return EVRY_ACTION_FINISHED;
      }
-   
+
    return EVRY_ACTION_CONTINUE;
 }
-
 
 static void
 _list_free(void)
 {
    Evry_Item *it;
    Evry_App *app;
-   
+
    EINA_LIST_FREE(p->items, it)
      {
 	if (it->label) eina_stringshare_del(it->label);
@@ -178,10 +175,9 @@ _cleanup(void)
 	eina_list_free(inst->apps);
 	E_FREE(inst);
      }
-   
+
    inst = NULL;
 }
-
 
 static int
 _fetch(const char *input)
@@ -191,8 +187,8 @@ _fetch(const char *input)
    char *file;
    char match1[4096];
    char match2[4096];
-   
-   _list_free(); 
+
+   _list_free();
 
    if (inst->apps)
      {
@@ -226,24 +222,24 @@ _fetch(const char *input)
 	       }
 	  }
      }
-   
-   
+
+
    if (!p->items && input)
      {
 	snprintf(match1, sizeof(match1), "%s*", input);
 	l = efreet_util_desktop_exec_glob_list(match1);
 	EINA_LIST_FREE(l, desktop)
 	  _item_add(desktop, NULL, 1);
-   
+
 	snprintf(match1, sizeof(match1), "*%s*", input);
 	l = efreet_util_desktop_name_glob_list(match1);
 	EINA_LIST_FREE(l, desktop)
-	  _item_add(desktop, NULL, 2); 
+	  _item_add(desktop, NULL, 2);
 
 	// TODO make these optional/configurable
 	l = efreet_util_desktop_generic_name_glob_list(match1);
 	EINA_LIST_FREE(l, desktop)
-	  _item_add(desktop, NULL, 3); 
+	  _item_add(desktop, NULL, 3);
 
 	l = efreet_util_desktop_comment_glob_list(match1);
 	EINA_LIST_FREE(l, desktop)
@@ -256,20 +252,20 @@ _fetch(const char *input)
 	EINA_LIST_FREE(l, file)
 	  _item_add(NULL, file, 1);
      }
-   
+
    if (inst->added)
      {
 	eina_hash_free(inst->added);
 	inst->added = NULL;
      }
-   
+
    if (p->items)
      {
 	if (input)
 	  p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
 	return 1;
      }
-    
+
    return 0;
 }
 
@@ -291,10 +287,10 @@ _item_add(Efreet_Desktop *desktop, char *file, int prio)
 	     if (cat && !strcmp(cat, "Screensaver"))
 	       return;
 	  }
-	
+
 	file = desktop->exec;
      }
-   
+
    if (!file) return;
 
    if (!inst->added)
@@ -308,13 +304,13 @@ _item_add(Efreet_Desktop *desktop, char *file, int prio)
       int len;
       char *tmp;
       int found = 0;
-	
+
       if (eina_hash_find(inst->added, file))
 	return;
 
       len = strlen(file);
       tmp = ecore_file_app_exe_get(file);
-      snprintf(match, sizeof(match), "%s*", tmp);	
+      snprintf(match, sizeof(match), "%s*", tmp);
       l = efreet_util_desktop_exec_glob_list(match);
 
       EINA_LIST_FREE(l, desktop)
@@ -342,7 +338,7 @@ _item_add(Efreet_Desktop *desktop, char *file, int prio)
 	eina_hash_add(inst->added, file, desktop);
 	file = NULL;
      }
-   
+
    it = E_NEW(Evry_Item, 1);
    app = E_NEW(Evry_App, 1);
    app->desktop = desktop;
@@ -362,7 +358,7 @@ static void
 _item_icon_get(Evry_Item *it, Evas *e)
 {
    Evry_App *app = it->data[0];
-   
+
    if (app->desktop)
      it->o_icon = e_util_desktop_icon_add(app->desktop, 24, e);
 
@@ -381,7 +377,7 @@ _cb_sort(const void *data1, const void *data2)
    Evry_App *app1, *app2;
    const char *e1, *e2;
    double t1, t2;
-   
+
    it1 = data1;
    it2 = data2;
    app1 = it1->data[0];
@@ -397,7 +393,6 @@ _cb_sort(const void *data1, const void *data2)
      return (it1->priority - it2->priority);
    // TODO compare exe strings?
    else return 0;
-   
 }
 
 static int
@@ -409,12 +404,12 @@ _exec_action(void)
 	inst->candidate = act->thing2;
 
 	_action(act->thing1, NULL);
-	
+
 	E_FREE(inst);
 	inst = NULL;
-	
+
 	return 1;
      }
-   
+
    return 0;
 }

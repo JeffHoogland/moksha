@@ -22,14 +22,14 @@ struct _Evry_State
   /* Eina_List *sel_items; */
   char *input;
   const char *request_type;
-  
+
   Eina_Bool initial;
 
   /* this is for the case when the current plugin was not selected
      manually and a higher priority (async) plugin retrieves
      candidates, the higher priority plugin is made current */
   Eina_Bool plugin_auto_selected;
-  
+
 };
 
 static int  _evry_cb_key_down(void *data, int type, void *event);
@@ -72,8 +72,6 @@ static int  _evry_plug_act_select_action(Evry_Item *item, const char *input);
 static void _evry_plug_act_select_cleanup(void);
 static void _evry_plug_act_select_item_icon_get(Evry_Item *it, Evas *e);
 
-
-
 /* local subsystem globals */
 static E_Popup     *popup = NULL;
 static Ecore_X_Window input_window = 0;
@@ -100,7 +98,7 @@ EAPI int
 evry_init(void)
 {
    _evry_plug_act_select_init();
-   
+
    return 1;
 }
 
@@ -167,7 +165,7 @@ evry_show(E_Zone *zone)
    if (!popup) return 0;
 
    ecore_x_netwm_window_type_set(popup->evas_win, ECORE_X_WINDOW_TYPE_UTILITY);
-   
+
    e_popup_layer_set(popup, 255);
    evas_event_freeze(popup->evas);
    evas_event_feed_mouse_in(popup->evas, ecore_x_current_time_get(), NULL);
@@ -196,7 +194,7 @@ evry_show(E_Zone *zone)
    edje_object_part_swallow(o_main, "e.swallow.bar", o);
    evas_object_show(o);
    o_selector = o;
-   
+
    evas_event_thaw(popup->evas);
 
    handlers = eina_list_append
@@ -216,7 +214,7 @@ evry_show(E_Zone *zone)
       (ECORE_EVENT_MOUSE_WHEEL, _evry_cb_mouse_wheel, NULL));
 
    _evry_push_state();
-   
+
    e_popup_show(popup);
    return 1;
 }
@@ -229,17 +227,17 @@ evry_hide(void)
    Evry_Plugin *plugin;
    Eina_List *l;
    Evry_State *s;
-   
+
    if (!popup) return;
 
    evas_event_freeze(popup->evas);
 
    _evry_list_clear();
-     
+
    EINA_LIST_FREE(stack, s)
      {
 	Evry_Plugin *p;
-	
+
 	free(s->input);
 
 	EINA_LIST_FREE(s->plugins, p)
@@ -255,7 +253,7 @@ evry_hide(void)
      }
    stack = NULL;
    cur_state = NULL;
-   
+
    if (update_timer)
      {
 	ecore_timer_del(update_timer);
@@ -271,9 +269,9 @@ evry_hide(void)
 	ecore_animator_del(scroll_animator);
 	scroll_animator = NULL;
      }
-   
+
    e_popup_hide(popup);
-   
+
    evas_object_del(o_list);
    o_list = NULL;
 
@@ -294,7 +292,6 @@ evry_hide(void)
    e_grabinput_release(input_window, input_window);
    input_window = 0;
 }
-
 
 EAPI void
 evry_plugin_async_update(Evry_Plugin *p, int action)
@@ -317,17 +314,17 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	  }
 	else
 	  {
-	     char buf[64];	
+	     char buf[64];
 	     snprintf(buf, 64, "%s (%d)", p->name, eina_list_count(p->items));
 	     edje_object_part_text_set(p->tab, "e.text.label", buf);
 	  }
-     
+
 	if ((!s->cur_plugin && s->cur_plugins) || (s->cur_plugin == p) ||
 	    (s->plugin_auto_selected && (s->cur_plugin->prio > p->prio)))
 	  {
 	     if (!s->cur_plugin)
 	       s->plugin_auto_selected = 1;
-	     
+
 	     _evry_list_clear();
 	     _evry_show_items(s->cur_plugins->data);
 	  }
@@ -335,6 +332,8 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
    else if ((action == EVRY_ASYNC_UPDATE_CLEAR) && (s->cur_plugin == p))
      {
 	_evry_list_clear();
+	/*XXX  move this into list clear?*/
+	s->cur_items = NULL;
      }
 }
 
@@ -347,22 +346,21 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
    return p1->prio - p2->prio;
 }
 
-
 static int
 _evry_push_state(void)
 {
    Evry_State *s;
-   Eina_List *l, *list = NULL; 
+   Eina_List *l, *list = NULL;
    const char *cur_type = "NONE";
    Evry_Plugin *p;
-   
+
    s = cur_state;
 
    if (s)
      {
 	if (!s->cur_plugin || !s->sel_item)
 	  return 0;
-	
+
 	cur_type = s->cur_plugin->type_out;
 	/* current plugin provides no candidates to act on by others */
 	if (!s->cur_action && !strcmp(cur_type, "NONE"))
@@ -380,13 +378,13 @@ _evry_push_state(void)
 	       }
 	  }
      }
-   
+
    EINA_LIST_FOREACH(plugins, l, p)
-     {	
+     {
 	if (strstr(p->type_in, cur_type))
 	  {
 	     /* printf("%s- in:%s out:%s\n", p->name, p->type_in, p->type_out); */
-	     
+
 	     if (s && s->cur_action)
 	       {
 		  /* filter out plugins that dont provide the type
@@ -397,19 +395,19 @@ _evry_push_state(void)
 
 	     if (p->begin)
 	       {
-		  Evry_Item *sel_item = NULL;
-		  
+		  Evry_Item *it = NULL;
+
 		  if (s && (s->cur_plugin != action_selector))
-		    sel_item = s->sel_item;
-		  
-		  if (p->begin(sel_item))
+		    it = s->sel_item;
+
+		  if (p->begin(it))
 		    list = eina_list_append(list, p);
 	       }
 	     else
 	       list = eina_list_append(list, p);
 	  }
      }
-   
+
    if (s && !s->cur_action)
      {
 	if (_evry_plug_act_select_actions_set())
@@ -417,7 +415,7 @@ _evry_push_state(void)
 	     list = eina_list_append(list, action_selector);
 	  }
      }
-   
+
    if (!list) return 0;
 
    list = eina_list_sort(list, eina_list_count(list), _evry_cb_plugin_sort);
@@ -480,7 +478,7 @@ _evry_pop_state(void)
      {
 	Evry_Item *it = NULL;
 	int i = 0;
-	
+
 	s = stack->data;
 	cur_state = s;
 
@@ -489,7 +487,7 @@ _evry_pop_state(void)
 	     _evry_pop_state();
 	     return 0;
 	  }
-	
+
 	edje_object_part_text_set(o_main, "e.text.label", s->input);
 
 	if (s->sel_item)
@@ -500,21 +498,21 @@ _evry_pop_state(void)
 		 break;
 	       else i++;
 	  }
-	
+
 	if (stack->next)
 	  {
 	     Evry_State *prev = stack->next->data;
 	     it = prev->sel_item;
 	  }
-	
+
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  if (p != s->cur_plugin && p->begin)
 	    p->begin(it);
 
 	_evry_matches_update();
-	
+
 	it = eina_list_nth(s->cur_plugin->items, i);
-	  
+
 	if (it)
 	  {
 	     if (s->sel_item) _evry_item_desel(s->sel_item);
@@ -559,24 +557,24 @@ _evry_cb_key_down(void *data, int type, void *event)
 	if (s->sel_item)
 	  {
 	     if (!_evry_push_state())
-	       _evry_plugin_action(0);	     
+	       _evry_plugin_action(0);
 	  }
      }
    /* _evry_plugin_next(); */
    else if (!strcmp(ev->key, "Left") &&
 	    ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
 	     (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)))
-     _evry_pop_state();     
-     /* _evry_plugin_prev(); */
+     _evry_pop_state();
+   /* _evry_plugin_prev(); */
    else if (!strcmp(ev->key, "Right"))
      _evry_plugin_next();
-     /* {
-      * 	if (s->sel_item)
-      * 	  {
-      * 	     if (!_evry_push_state())
-      * 	       _evry_plugin_action(0);	     
-      * 	  }
-      * } */
+   /* {
+    * 	if (s->sel_item)
+    * 	  {
+    * 	     if (!_evry_push_state())
+    * 	       _evry_plugin_action(0);
+    * 	  }
+    * } */
    else if (!strcmp(ev->key, "Left"))
      _evry_plugin_prev();
    /* _evry_pop_state();      */
@@ -594,10 +592,10 @@ _evry_cb_key_down(void *data, int type, void *event)
      	if (s->sel_item)
      	  {
      	     if (!_evry_push_state())
-     	       _evry_plugin_action(0);	     
+     	       _evry_plugin_action(0);
      	  }
      }
-     /* _evry_plugin_next(); */
+   /* _evry_plugin_next(); */
    else if (!strcmp(ev->key, "u") &&
 	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
      _evry_clear();
@@ -608,7 +606,7 @@ _evry_cb_key_down(void *data, int type, void *event)
 	if (!_evry_pop_state())
 	  evry_hide();
      }
-   
+
    else if (!strcmp(ev->key, "BackSpace"))
      _evry_backspace();
    else if (!strcmp(ev->key, "Delete"))
@@ -632,7 +630,7 @@ _evry_cb_mouse_down(void *data, int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    Evry_State *s =cur_state;
-   
+
    ev = event;
    if (ev->event_window != input_window) return 1;
 
@@ -642,8 +640,8 @@ _evry_cb_mouse_down(void *data, int type, void *event)
 	  {
 	     if (s->sel_item) _evry_item_desel(s->sel_item);
 	     s->sel_item = item_mouseover;
-	     _evry_item_sel(s->sel_item); 
-	  }   
+	     _evry_item_sel(s->sel_item);
+	  }
      }
    else
      {
@@ -657,31 +655,31 @@ static int
 _evry_cb_mouse_up(void *data, int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
-   
+
    ev = event;
    if (ev->event_window != input_window) return 1;
 
    if (item_mouseover)
      {
-	if (ev->buttons == 1) 
+	if (ev->buttons == 1)
 	  _evry_plugin_action(1);
-	else if (ev->buttons == 3) 
+	else if (ev->buttons == 3)
 	  _evry_plugin_action(0);
      }
    else
      {
 	evas_event_feed_mouse_up(popup->evas, ev->buttons, 0, ev->timestamp, NULL);
      }
-   
+
    return 1;
 }
 
-static int 
+static int
 _evry_cb_mouse_move(void *data, int type, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
    Evry_State *s =cur_state;
-   
+
    ev = event;
    if (ev->event_window != input_window) return 1;
 
@@ -695,7 +693,7 @@ _evry_cb_mouse_move(void *data, int type, void *event)
              if (!s->sel_item || (s->sel_item != item_mouseover))
                {
                   s->sel_item = item_mouseover;
-                  _evry_item_sel(s->sel_item); 
+                  _evry_item_sel(s->sel_item);
                }
           }
      }
@@ -710,7 +708,7 @@ static int
 _evry_cb_mouse_wheel(void *data, int type, void *event)
 {
    Ecore_Event_Mouse_Wheel *ev;
-   
+
    ev = event;
    if (ev->event_window != input_window) return 1;
 
@@ -719,35 +717,35 @@ _evry_cb_mouse_wheel(void *data, int type, void *event)
    if (ev->z < 0) /* up */
      {
 	int i;
-	
+
 	for (i = ev->z; i < 0; i++) _evry_item_prev();
      }
    else if (ev->z > 0) /* down */
      {
 	int i;
-	
+
 	for (i = ev->z; i > 0; i--) _evry_item_next();
      }
    return 1;
 }
 
-static void 
-_evry_cb_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, 
-			   void *event_info)
+static void
+_evry_cb_item_mouse_in(void *data, Evas *evas, Evas_Object *obj,
+		       void *event_info)
 {
    Evry_State *s =cur_state;
-   
+
    if (!ev_last_is_mouse) return;
 
    item_mouseover = data;
-   
+
    if (s->sel_item) _evry_item_desel(s->sel_item);
    if (!(s->sel_item = data)) return;
    _evry_item_sel(s->sel_item);
 }
 
-static void 
-_evry_cb_item_mouse_out(void *data, Evas *evas, Evas_Object *obj, 
+static void
+_evry_cb_item_mouse_out(void *data, Evas *evas, Evas_Object *obj,
 			void *event_info)
 {
    item_mouseover = NULL;
@@ -758,7 +756,7 @@ _evry_backspace(void)
 {
    int len, val, pos;
    Evry_State *s = cur_state;
-   
+
    len = strlen(s->input);
    if (len > 0)
      {
@@ -776,7 +774,7 @@ _evry_update(void)
 {
    Efreet_Desktop *desktop;
    Evas_Object *o;
-   
+
    edje_object_part_text_set(o_main, "e.text.label", cur_state->input);
 
    if (update_timer) ecore_timer_del(update_timer);
@@ -810,7 +808,7 @@ _evry_plugin_action(int finished)
      {
 	/* set cur_action and start plugins for second parameter (if required)*/
 	if (s->sel_item) _evry_plug_act_select_action(s->sel_item, s->input);
-	
+
 	finished = 0;
      }
    else if (s->cur_action)
@@ -826,7 +824,7 @@ _evry_plugin_action(int finished)
      {
 	/* XXX use flags for return values */
 	int ret = 0;
-	
+
 	if (s->cur_plugin->action)
 	  {
 	     ret = s->cur_plugin->action(s->sel_item, s->input);
@@ -854,8 +852,8 @@ _evry_show_items(Evry_Plugin *p)
    int mw, mh, h;
    Evas_Object *o;
    Evry_State *s = cur_state;
-   
-   if (s->cur_plugin) 
+
+   if (s->cur_plugin)
      {
 	if (s->cur_plugin != p)
 	  {
@@ -865,14 +863,14 @@ _evry_show_items(Evry_Plugin *p)
      }
    else
      edje_object_signal_emit(p->tab, "e,state,selected", "e");
-   
+
    if (s->cur_plugin != p)
      s->sel_item = NULL;
-   
+
    s->cur_plugin = p;
    s->cur_items = p->items;
-   
-   evas_event_freeze(popup->evas);   
+
+   evas_event_freeze(popup->evas);
    e_box_freeze(o_list);
 
    EINA_LIST_FOREACH(p->items, l, it)
@@ -885,9 +883,9 @@ _evry_show_items(Evry_Plugin *p)
 	edje_object_part_text_set(o, "e.text.title", it->label);
 
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
-					 _evry_cb_item_mouse_in, it);
+				       _evry_cb_item_mouse_in, it);
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT,
-					 _evry_cb_item_mouse_out, it);
+				       _evry_cb_item_mouse_out, it);
 	evas_object_show(o);
 
 	p->icon_get(it, popup->evas);
@@ -913,11 +911,11 @@ _evry_show_items(Evry_Plugin *p)
 
    /* if (!s->sel_item && p->items)
     *   {
-    * 	s->sel_item = p->items->data; 
-    * 	_evry_item_sel(s->sel_item); 
-    * 	_evry_scroll_to(0); 
+    * 	s->sel_item = p->items->data;
+    * 	_evry_item_sel(s->sel_item);
+    * 	_evry_scroll_to(0);
     *   } */
-   
+
    evas_event_thaw(popup->evas);
 
    _evry_tab_scroll_to(p);
@@ -930,20 +928,20 @@ _evry_matches_update(void)
    Eina_List *l;
    int items;
    Evry_State *s = cur_state;
-   
+
    _evry_list_clear();
    eina_list_free(s->cur_plugins);
 
    s->cur_plugins = NULL;
    s->sel_item = NULL;
-   
+
    EINA_LIST_FOREACH(s->plugins, l, p)
      {
 	if (strlen(s->input) == 0)
 	  items = !p->need_query ? p->fetch(NULL) : 0;
 	else
 	  items = p->fetch(s->input);
-	
+
 	if (!s->initial || (items && eina_list_count(p->items) > 0))
 	  {
 	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
@@ -954,10 +952,10 @@ _evry_matches_update(void)
 	     p->tab = NULL;
 	  }
      }
-   
+
    EINA_LIST_FOREACH(s->cur_plugins, l, p)
      _evry_plugin_selector_show(p);
-   
+
    if (s->cur_plugins)
      {
 	if (s->cur_plugin && eina_list_data_find(s->cur_plugins, s->cur_plugin))
@@ -978,7 +976,7 @@ _evry_list_clear(void)
    Evry_State *s = cur_state;
    Evry_Item *it;
    Eina_List *l;
-   
+
    if (s && s->cur_items)
      {
 	evas_event_freeze(popup->evas);
@@ -1036,7 +1034,7 @@ _evry_tab_scroll_to(Evry_Plugin *p)
 
    for(i = 0, l = cur_state->cur_plugins; l; l = l->next, i++)
      if (l->data == p) break;
-   
+
    n = eina_list_count(cur_state->cur_plugins);
 
    e_box_min_size_get(o_selector, &mw, NULL);
@@ -1047,7 +1045,7 @@ _evry_tab_scroll_to(Evry_Plugin *p)
 	e_box_align_set(o_selector, 0.0, 0.5);
 	return;
      }
-   
+
    if (n > 1)
      {
 	align = (double)i / (double)(n - 1);
@@ -1059,9 +1057,9 @@ _evry_tab_scroll_to(Evry_Plugin *p)
 	 *        scroll_animator = ecore_animator_add(_evry_animator, NULL);
 	 *   }
 	 * else */
-	  {
-	     e_box_align_set(o_selector, 1.0 - align, 0.5);
-	  }
+	{
+	   e_box_align_set(o_selector, 1.0 - align, 0.5);
+	}
      }
    else
      e_box_align_set(o_selector, 1.0, 0.5);
@@ -1091,7 +1089,7 @@ _evry_item_next(void)
    Evry_State *s = cur_state;
 
    s->plugin_auto_selected = 0;
-   
+
    if (s->sel_item)
      {
 	for (i = 0, l = s->cur_plugin->items; l; l = l->next, i++)
@@ -1128,9 +1126,9 @@ _evry_item_prev(void)
    Evry_State *s = cur_state;
 
    s->plugin_auto_selected = 0;
-   
+
    if (s->sel_item)
-     {	
+     {
 	_evry_item_desel(s->sel_item);
 
 	for (i = 0, l = s->cur_plugin->items; l; l = l->next, i++)
@@ -1160,9 +1158,9 @@ _evry_plugin_next(void)
 {
    Eina_List *l;
    Evry_State *s = cur_state;
-   
+
    if (!s->cur_plugin) return;
-   
+
    l = eina_list_data_find_list(s->cur_plugins, s->cur_plugin);
 
    if (l && l->next)
@@ -1179,14 +1177,13 @@ _evry_plugin_next(void)
      }
 }
 
-
 static void
 _evry_plugin_prev(void)
 {
    Eina_List *l;
    Evry_Plugin *plugin;
    Evry_State *s = cur_state;
-   
+
    if (!s->cur_plugin) return;
 
    l = eina_list_data_find_list(s->cur_plugins, s->cur_plugin);
@@ -1198,9 +1195,9 @@ _evry_plugin_prev(void)
 	_evry_show_items(l->prev->data);
      }
    else
-     {       
+     {
 	l = eina_list_last(s->cur_plugins);
-	
+
 	if (s->cur_plugin != l->data)
 	  {
 	     s->plugin_auto_selected = 0;
@@ -1230,7 +1227,7 @@ _evry_animator(void *data)
 {
    double da;
    int scroll_to = 1;
-   
+
    da = scroll_align - scroll_align_to;
    if (da < 0.0) da = -da;
    if (da < 0.01)
@@ -1265,11 +1262,11 @@ _evry_plugin_selector_show(Evry_Plugin *p)
 	o = edje_object_add(popup->evas);
 	/* TODO move this to everything theme group !*/
 	e_theme_edje_object_set(o, "base/theme/widgets",
-                           "e/widgets/toolbar/item");
+				"e/widgets/toolbar/item");
      }
-   
+
    snprintf(buf, 64, "%s (%d)", p->name, eina_list_count(p->items));
-   
+
    edje_object_part_text_set(o, "e.text.label", buf);
 
    edje_object_size_min_calc(o, &mw, &mh);
@@ -1282,14 +1279,12 @@ _evry_plugin_selector_show(Evry_Plugin *p)
      }
    else
      e_box_pack_end(o_selector, o);
-   
+
    evas_object_show(o);
    e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mw, mh, 9999, 9999);
    e_box_thaw(o_selector);
    p->tab = o;
 }
-
-
 
 static int
 _evry_plug_act_select_init(void)
@@ -1312,11 +1307,11 @@ _evry_plug_act_select_actions_set(void)
    Eina_List *l;
    Evry_State *s = cur_state;
    Evry_Plugin *p = action_selector;
-   
+
    _evry_plug_act_select_cleanup();
-     
+
    const char *type = s->cur_plugin->type_out;
-   
+
    EINA_LIST_FOREACH(actions, l, act)
      {
 	if (strstr(act->type_in1, type))
@@ -1345,7 +1340,7 @@ _evry_plug_act_select_fetch(const char *input)
 	it = E_NEW(Evry_Item, 1);
 	it->label = eina_stringshare_add(act->name);
 	it->data[0] = act;
-   
+
 	p->items = eina_list_append(p->items, it);
      }
 
@@ -1368,7 +1363,7 @@ _evry_plug_act_select_action(Evry_Item *it, const char *input)
 static void
 _evry_plug_act_select_cleanup(void)
 {
-   
+
    Evry_Item *it;
    Evry_Plugin *p = action_selector;
 
@@ -1377,10 +1372,10 @@ _evry_plug_act_select_cleanup(void)
 	eina_stringshare_del(it->label);
 	E_FREE(it);
      }
-   
+
    eina_list_free(cur_state->cur_actions);
    cur_state->cur_actions = NULL;
-   
+
    p->items = NULL;
 }
 
@@ -1388,10 +1383,8 @@ static void
 _evry_plug_act_select_item_icon_get(Evry_Item *it, Evas *e)
 {
    Evry_Action *act = it->data[0];
-   
+
    /* if (act->icon_get)
     *   it->o_icon = act->icon_get(act, e); */
-   
-   
 }
 

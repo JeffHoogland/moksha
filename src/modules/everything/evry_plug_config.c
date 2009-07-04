@@ -10,6 +10,7 @@ static int  _cb_sort(const void *data1, const void *data2);
 
 static Evry_Plugin *p;
 
+
 EAPI int
 evry_plug_config_init(void)
 {
@@ -32,7 +33,7 @@ evry_plug_config_shutdown(void)
 {
    evry_plugin_unregister(p);
    E_FREE(p);
-   
+
    return 1;
 }
 
@@ -47,7 +48,7 @@ _action(Evry_Item *it, const char *input)
    int found = 0;
 
    if (!it) return EVRY_ACTION_CONTINUE;
-   
+
    eci = it->data[0];
    con = e_container_current_get(e_manager_current_get());
 
@@ -61,15 +62,15 @@ _action(Evry_Item *it, const char *input)
 	       {
 		  found = 1;
 		  snprintf(buf, sizeof(buf), "%s/%s",
-			   ecat->cat, 
+			   ecat->cat,
 			   eci->item);
 	       }
 	  }
      }
 
    if (found)
-     e_configure_registry_call(buf, con, NULL);   
-   
+     e_configure_registry_call(buf, con, NULL);
+
    return EVRY_ACTION_FINISHED;
 }
 
@@ -90,14 +91,14 @@ _fetch(const char *input)
 {
    E_Manager *man;
    E_Zone *zone;
-   
+
    char match1[4096];
    char match2[4096];
    Eina_List *l, *ll;
    E_Configure_Cat *ecat;
    E_Configure_It *eci;
-   
-   _cleanup(); 
+
+   _cleanup();
 
    snprintf(match1, sizeof(match1), "%s*", input);
    snprintf(match2, sizeof(match2), "*%s*", input);
@@ -124,7 +125,7 @@ _fetch(const char *input)
 	       }
 	  }
      }
-   
+
    if (eina_list_count(p->items) > 0)
      {
 	p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
@@ -139,8 +140,8 @@ _item_icon_get(Evry_Item *it, Evas *e)
 {
    E_Configure_It *eci = it->data[0];
    Evas_Object *o = NULL;
-   
-   if (eci->icon) 
+
+   if (eci->icon)
      {
 	o = e_icon_add(e);
 	if (!e_util_icon_theme_set(o, eci->icon))
@@ -156,14 +157,14 @@ _item_icon_get(Evry_Item *it, Evas *e)
 static void
 _item_add(E_Configure_It *eci, int prio)
 {
-   Evry_Item *it;   
+   Evry_Item *it;
 
    it = E_NEW(Evry_Item, 1);
    it->data[0] = eci;
    it->priority = prio;
    it->label = eina_stringshare_add(eci->label);
-   it->o_icon = NULL; 
-	     
+   it->o_icon = NULL;
+
    p->items = eina_list_append(p->items, it);
 }
 
@@ -171,11 +172,11 @@ static int
 _cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1, *it2;
-   
+
    it1 = data1;
    it2 = data2;
 
    /* TODO sort by name? */
-   
+
    return (it1->priority - it2->priority);
 }

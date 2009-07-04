@@ -1,9 +1,9 @@
+#include "e.h"
+#include "e_mod_main.h"
+
 /* TODO
  * - dc support?
  */
-
-#include "e.h"
-#include "e_mod_main.h"
 
 static int  _begin(Evry_Item *it);
 static int  _fetch(const char *input);
@@ -12,12 +12,9 @@ static void _cleanup(void);
 static void _item_add(char *output, int prio);
 static int  _cb_sort(const void *data1, const void *data2);
 static void _item_icon_get(Evry_Item *it, Evas *e);
-
 static int  _cb_data(void *data, int type, void *event);
 
-
 static Evry_Plugin *p;
-
 static Ecore_Exe *exe = NULL;
 static Eina_List *history = NULL;
 static Ecore_Event_Handler *data_handler = NULL;
@@ -40,7 +37,7 @@ evry_plug_calc_init(void)
    p->cleanup = &_cleanup;
    p->icon_get = &_item_icon_get;
    evry_plugin_register(p);
-   
+
    return 1;
 }
 
@@ -48,15 +45,15 @@ EAPI int
 evry_plug_calc_shutdown(void)
 {
    Evry_Item *it;
-   
+
    EINA_LIST_FREE(p->items, it)
      {
 	if (it->label) eina_stringshare_del(it->label);
 	free(it);
      }
-   
+
    evry_plugin_unregister(p);
-   E_FREE(p);   
+   E_FREE(p);
 
    return 1;
 }
@@ -66,7 +63,7 @@ _begin(Evry_Item *it)
 {
 
    data_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _cb_data, p);
-   
+
    exe = ecore_exe_pipe_run("bc",
 			    ECORE_EXE_PIPE_READ |
 			    ECORE_EXE_PIPE_READ_LINE_BUFFERED |
@@ -77,9 +74,10 @@ _begin(Evry_Item *it)
 static void
 _cleanup()
 {
-   Evry_Item *it;
+   Evry_Item *it, *it2;
    int i = 0;
-   
+   Eina_List *l, *ll;
+
    EINA_LIST_FREE(p->items, it)
      {
 	if (i < 10)
@@ -95,7 +93,7 @@ _cleanup()
 
    ecore_event_handler_del(data_handler);
    data_handler = NULL;
-   
+
    ecore_exe_quit(exe);
    exe = NULL;
 }
@@ -116,12 +114,36 @@ _action(Evry_Item *it, const char *input)
      {
 	if (p->items)
 	  {
-	     Evry_Item *it2 = p->items->data;
-	     
-	     _item_add((char *) it2->label, 1);
-	     evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
+	     Eina_List *l;
+	     Evry_Item *it2;
+
+	     evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR);
+
+	     /* remove duplicates */
+	     if (p->items->next)
+	       {
+		  EINA_LIST_FOREACH(p->items->next, l, it2)
+		    {
+		       if (!strcmp(it->label, it2->label))
+			 break;
+		       it2 = NULL;
+		    }
+
+		  if (it2)
+		    {
+		       p->items = eina_list_remove(p->items, it2);
+		       eina_stringshare_del(it2->label);
+		       E_FREE(it2);
+		    }
+	       }
+
+	     it = p->items->data;
+
+	     _item_add((char *) it->label, 1);
 	  }
-	
+
+	evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
+
 	return EVRY_ACTION_CONTINUE;
      }
    else
@@ -150,28 +172,28 @@ _fetch(const char *input)
 	p->items = history;
 	history = NULL;
      }
-   
+
    _send_input(input);
-   
+
    return 1;
 }
 
 static void
 _item_icon_get(Evry_Item *it, Evas *e)
-{ 
+{
    it->o_icon = NULL;
 }
 
 static void
 _item_add(char *output, int prio)
 {
-   Evry_Item *it;   
+   Evry_Item *it;
 
    it = E_NEW(Evry_Item, 1);
 
    it->priority = prio;
    it->label = eina_stringshare_add(output);
-	     
+
    p->items = eina_list_prepend(p->items, it);
 }
 
@@ -180,7 +202,7 @@ _cb_data(void *data, int type, void *event)
 {
    Ecore_Exe_Event_Data *ev = event;
    Ecore_Exe_Event_Data_Line *l;
-   
+
    if (data != p) return 1;
 
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR);
@@ -199,6 +221,6 @@ _cb_data(void *data, int type, void *event)
      }
 
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
-   
+
    return 1;
 }

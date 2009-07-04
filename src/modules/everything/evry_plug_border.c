@@ -1,13 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-typedef struct _Inst Inst;
-
-struct _Inst
-{
-  E_Border *border;
-};
-
 static int  _fetch(const char *input);
 static int  _action(Evry_Item *item, const char *input);
 static void _cleanup(void);
@@ -16,6 +9,7 @@ static int  _cb_sort(const void *data1, const void *data2);
 static void _item_icon_get(Evry_Item *it, Evas *e);
 
 static Evry_Plugin *p;
+
 
 EAPI int
 evry_plug_border_init(void)
@@ -31,7 +25,7 @@ evry_plug_border_init(void)
    p->cleanup = &_cleanup;
    p->icon_get = &_item_icon_get;
    evry_plugin_register(p);
-   
+
    return 1;
 }
 
@@ -39,7 +33,7 @@ EAPI int
 evry_plug_border_shutdown(void)
 {
    evry_plugin_unregister(p);
-   E_FREE(p);   
+   E_FREE(p);
 
    return 1;
 }
@@ -51,13 +45,13 @@ _action(Evry_Item *it, const char *input)
    E_Zone *zone;
 
    if (!it) return EVRY_ACTION_CONTINUE;
-   
+
    bd = (E_Border *)it->data[0];
    zone = e_util_zone_current_get(e_manager_current_get());
-   
+
    if (bd->desk != (e_desk_current_get(zone)))
      e_desk_show(bd->desk);
-   
+
    if (bd->shaded)
      e_border_unshade(bd, E_DIRECTION_UP);
 
@@ -68,7 +62,7 @@ _action(Evry_Item *it, const char *input)
 
    /* e_border_focus_set(bd, 1, 1); */
    e_border_focus_set_with_pointer(bd);
-   
+
    return EVRY_ACTION_FINISHED;
 }
 
@@ -90,24 +84,24 @@ _fetch(const char *input)
 {
    E_Manager *man;
    E_Zone *zone;
-   
+
    char match1[4096];
    char match2[4096];
    Eina_List *list;
    E_Border *bd;
    E_Border_List *bl;
 
-   _cleanup(); 
+   _cleanup();
 
    man = e_manager_current_get();
    zone = e_util_zone_current_get(man);
-   
+
    if (input)
      {
 	snprintf(match1, sizeof(match1), "%s*", input);
 	snprintf(match2, sizeof(match2), "*%s*", input);
      }
-   
+
    bl = e_container_border_list_first(e_container_current_get(man));
    while ((bd = e_container_border_list_next(bl)))
      {
@@ -140,21 +134,21 @@ _fetch(const char *input)
 
 static void
 _item_icon_get(Evry_Item *it, Evas *e)
-{ 
-   it->o_icon = e_border_icon_add(((E_Border *)it->data[0]), e); 
+{
+   it->o_icon = e_border_icon_add(((E_Border *)it->data[0]), e);
 }
 
 static void
 _item_add(E_Border *bd, int prio)
 {
-   Evry_Item *it;   
+   Evry_Item *it;
 
    it = E_NEW(Evry_Item, 1);
    /* e_object_ref(E_OBJECT(bd)); */
    it->data[0] = bd;
    it->priority = prio;
    it->label = eina_stringshare_add(e_border_name_get(bd));
-	     
+
    p->items = eina_list_append(p->items, it);
 }
 
@@ -163,7 +157,7 @@ static int
 _cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1, *it2;
-   
+
    it1 = data1;
    it2 = data2;
 

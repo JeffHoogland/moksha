@@ -15,9 +15,9 @@ static void _cleanup(void);
 static void _item_icon_get(Evry_Item *it, Evas *e);
 static void _item_add(const char *label, void (*action_cb) (E_Border *bd), const char *icon);
 
-  
 static Evry_Plugin *p;
 static Inst *inst;
+
 
 EAPI int
 evry_plug_border_act_init(void)
@@ -45,9 +45,9 @@ EAPI int
 evry_plug_border_act_shutdown(void)
 {
    evry_plugin_unregister(p);
-   E_FREE(p);   
+   E_FREE(p);
    E_FREE(inst);
-   
+
    return 1;
 }
 
@@ -81,10 +81,10 @@ _fetch(const char *input)
    _cleanup();
 
    _item_add(_("Iconify"), _act_cb_border_minimize,
-			     "e/widgets/border/default/minimize");
+	     "e/widgets/border/default/minimize");
 
    _item_add(_("Close"), _act_cb_border_close,
-			     "e/widgets/border/default/close");
+	     "e/widgets/border/default/close");
    return 1;
 }
 
@@ -114,13 +114,13 @@ _cleanup(void)
 static void
 _item_add(const char *label, void (*action_cb) (E_Border *bd), const char *icon)
 {
-   Evry_Item *it;   
+   Evry_Item *it;
 
    it = E_NEW(Evry_Item, 1);
    it->data[0] = action_cb;
    it->data[1] = (void *) eina_stringshare_add(icon);
    it->label = eina_stringshare_add(label);
-   p->items = eina_list_append(p->items, it);   
+   p->items = eina_list_append(p->items, it);
 }
 
 static void

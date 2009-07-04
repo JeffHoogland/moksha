@@ -29,7 +29,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    char buf[4096];
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/module.everything", 
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/module.everything",
 	    e_user_homedir_get(), e_config_profile_get());
    ecore_file_mkdir(buf);
 
@@ -66,7 +66,7 @@ e_modapi_init(E_Module *m)
 	evry_conf->scroll_animate = 1;
 	evry_conf->scroll_speed = 0.5;
      }
-   
+
    conf_module = m;
    evry_init();
 
@@ -155,7 +155,7 @@ _e_mod_action_exebuf_cb(E_Object *obj, const char *params)
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
 
    printf("zone %d %d\n", zone->x, zone->y);
-   
+
    if (zone) evry_show(zone);
 }
 
