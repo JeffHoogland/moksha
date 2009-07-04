@@ -57,7 +57,7 @@ e_hints_init(void)
 	/*ecore_x_netwm_supported(roots[supported_num], ECORE_X_ATOM_NET_DESKTOP_LAYOUT, 1);*/
 	/*ecore_x_netwm_supported(roots[supported_num], ECORE_X_ATOM_NET_SHOWING_DESKTOP, 1);*/
 
-	/* Other Root Wsupported_numndow Messages */
+	/* Other Root Window Messages */
 	/*ecore_x_netwm_supported(roots[supported_num], ECORE_X_ATOM_NET_CLOSE_WINDOW, 1);*/
 	/*ecore_x_netwm_supported(roots[supported_num], ECORE_X_ATOM_NET_MOVERESIZE_WINDOW, 1);*/
 	supported[supported_num++] = ECORE_X_ATOM_NET_WM_MOVERESIZE;
