@@ -132,9 +132,10 @@ struct _E_Layout_Item_Container
 {
    int pos, size, prev_pos, prev_size;
 
-   struct {
-      int min_seq, max_seq;
-   } state_info;
+   struct 
+     {
+        int min_seq, max_seq;
+     } state_info;
 
    E_Smart_Data *sd;
    Eina_List *items;
@@ -276,18 +277,18 @@ e_gadcon_custom_del(E_Gadcon *gc)
 EAPI E_Gadcon *
 e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, char *swallow_name)
 {
-   E_Gadcon    *gc;
-   Eina_List   *l;
-   Evas_Coord   x, y, w, h;
-   const char  *drop_types[] = { "enlightenment/gadcon_client" };
-   
+   E_Gadcon *gc;
+   Eina_List *l;
+   Evas_Coord x, y, w, h;
+   const char *drop_types[] = { "enlightenment/gadcon_client" };
+
    gc = E_OBJECT_ALLOC(E_Gadcon, E_GADCON_TYPE, _e_gadcon_free);
    if (!gc) return NULL;
- 
+
    gc->name = eina_stringshare_add(name);
    gc->id = id;
    gc->layout_policy = E_GADCON_LAYOUT_POLICY_PANEL;
-   
+
    gc->edje.o_parent = obj;
    gc->edje.swallow_name = eina_stringshare_add(swallow_name);
 
@@ -295,11 +296,11 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, char *swallow
    gc->evas = evas_object_evas_get(obj);
    gc->o_container = e_gadcon_layout_add(gc->evas);
    evas_object_geometry_get(gc->o_container, &x, &y, &w, &h);
-   gc->drop_handler = e_drop_handler_add(E_OBJECT(gc), gc,
-					 _e_gadcon_cb_dnd_enter, _e_gadcon_cb_dnd_move,
-					 _e_gadcon_cb_dnd_leave, _e_gadcon_cb_drop,
-					 drop_types, 1,
-					 x, y, w, h);
+   gc->drop_handler = 
+     e_drop_handler_add(E_OBJECT(gc), gc,
+                        _e_gadcon_cb_dnd_enter, _e_gadcon_cb_dnd_move,
+                        _e_gadcon_cb_dnd_leave, _e_gadcon_cb_drop,
+                        drop_types, 1, x, y, w, h);
    evas_object_event_callback_add(gc->o_container, EVAS_CALLBACK_MOVE,
 				  _e_gadcon_cb_moveresize, gc);
    evas_object_event_callback_add(gc->o_container, EVAS_CALLBACK_RESIZE,
@@ -318,8 +319,7 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, char *swallow
 	E_Config_Gadcon *cf_gc;
 
 	cf_gc = l->data;
-	if ((!strcmp(cf_gc->name, gc->name)) &&
-	    (cf_gc->id == gc->id))
+	if ((!strcmp(cf_gc->name, gc->name)) && (cf_gc->id == gc->id))
 	  {
 	     gc->cf = cf_gc;
 	     break;
@@ -352,7 +352,6 @@ e_gadcon_min_size_request_callback_set(E_Gadcon *gc, void (*func) (void *data, E
 {
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
-   
    gc->min_size_request.func = func;
    gc->min_size_request.data = data;
 }
@@ -362,7 +361,6 @@ e_gadcon_size_request_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gad
 {
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
-   
    gc->resize_request.func = func;
    gc->resize_request.data = data;
 }
@@ -372,7 +370,6 @@ e_gadcon_frame_request_callback_set(E_Gadcon *gc, Evas_Object *(*func) (void *da
 {
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
-   
    gc->frame_request.func = func;
    gc->frame_request.data = data;
 }
@@ -382,7 +379,6 @@ e_gadcon_populate_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon 
 {
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
-   
    gc->populate_class.func = func;
    gc->populate_class.data = data;
 }
@@ -401,7 +397,7 @@ EAPI void
 e_gadcon_populate(E_Gadcon *gc)
 {
    Eina_List *l;
-   
+
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    e_gadcon_layout_freeze(gc->o_container);
@@ -446,7 +442,7 @@ e_gadcon_populate(E_Gadcon *gc)
 		    e_gadcon_layout_pack_options_set(gcc->o_frame, gcc);
 		  else if (gcc->o_base)
 		    e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
-		  
+
 		  e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
 		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
 		  if (gcc->client_class->func.orient)
@@ -466,7 +462,7 @@ EAPI void
 e_gadcon_unpopulate(E_Gadcon *gc)
 {
    E_Gadcon_Client *gcc;
-   
+
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    while (gc->clients) 
@@ -487,7 +483,7 @@ EAPI void
 e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 {
    Eina_List *l;
-   
+
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    e_gadcon_layout_freeze(gc->o_container);
@@ -522,6 +518,8 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 		  else if (gcc->o_base)
 		    e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
 
+		  e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
+		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
 		  if (gcc->client_class->func.orient)
 		    gcc->client_class->func.orient(gcc, gc->orient); 
 
@@ -540,7 +538,7 @@ e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient)
 {
    Eina_List *l;
    int horiz = 0;
-   
+
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    if (gc->orient == orient) return;
@@ -574,7 +572,7 @@ e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient)
    for (l = gc->clients; l; l = l->next)
      {
 	E_Gadcon_Client *gcc;
-	
+
 	gcc = l->data;
 	e_box_orientation_set(gcc->o_box, horiz);
 	if (gcc->client_class->func.orient)
@@ -587,7 +585,7 @@ EAPI void
 e_gadcon_edit_begin(E_Gadcon *gc)
 {
    Eina_List *l;
-   
+
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    e_gadcon_layout_freeze(gc->o_container);
@@ -596,7 +594,7 @@ e_gadcon_edit_begin(E_Gadcon *gc)
    for (l = gc->clients; l; l = l->next)
      {
 	E_Gadcon_Client *gcc;
-	
+
 	gcc = l->data;
 	e_gadcon_client_edit_begin(gcc);
      }
@@ -607,7 +605,7 @@ EAPI void
 e_gadcon_edit_end(E_Gadcon *gc)
 {
    Eina_List *l;
-   
+
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    e_gadcon_layout_freeze(gc->o_container);
@@ -615,7 +613,7 @@ e_gadcon_edit_end(E_Gadcon *gc)
    for (l = gc->clients; l; l = l->next)
      {
 	E_Gadcon_Client *gcc;
-	
+
 	gcc = l->data;
 	e_gadcon_client_edit_end(gcc);
      }
@@ -627,11 +625,11 @@ EAPI void
 e_gadcon_all_edit_begin(void)
 {
    Eina_List *l;
-   
+
    for (l = gadcons; l; l = l->next)
      {
 	E_Gadcon *gc;
-	
+
 	gc = l->data;
 	e_gadcon_edit_begin(gc);
      }
@@ -641,11 +639,11 @@ EAPI void
 e_gadcon_all_edit_end(void)
 {
    Eina_List *l;
-   
+
    for (l = gadcons; l; l = l->next)
      {
 	E_Gadcon *gc;
-	
+
 	gc = l->data;
 	e_gadcon_edit_end(gc);
      }
@@ -703,9 +701,8 @@ e_gadcon_util_menu_attach_func_set(E_Gadcon *gc,
 }
 
 EAPI void
-e_gadcon_util_lock_func_set(E_Gadcon *gc, 
-				   void (*func) (void *data, int lock),
-				   void *data)
+e_gadcon_util_lock_func_set(E_Gadcon *gc, void (*func) (void *data, int lock),
+                            void *data)
 {
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
@@ -714,8 +711,7 @@ e_gadcon_util_lock_func_set(E_Gadcon *gc,
 }
 
 EAPI void
-e_gadcon_util_urgent_show_func_set(E_Gadcon *gc, 
-				   void (*func) (void *data),
+e_gadcon_util_urgent_show_func_set(E_Gadcon *gc, void (*func) (void *data),
 				   void *data)
 {
    E_OBJECT_CHECK(gc);
@@ -791,16 +787,16 @@ e_gadcon_toolbar_get(E_Gadcon *gc)
 EAPI E_Config_Gadcon_Client *
 e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
 {
-   E_Gadcon_Client_Class  *cc;
+   E_Gadcon_Client_Class *cc;
    E_Config_Gadcon_Client *cf_gcc;
 
    E_OBJECT_CHECK_RETURN(gc, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
    if (!name) return NULL;
-
    cc = eina_hash_find(providers, name);
    if (!cc) return NULL;
-   if (!_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)) return NULL;
+   if (!_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)) 
+     return NULL;
 
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
    if (!cf_gcc) return NULL;
@@ -821,7 +817,6 @@ EAPI void
 e_gadcon_client_config_del(E_Config_Gadcon *cf_gc, E_Config_Gadcon_Client *cf_gcc)
 {
    if (!cf_gcc) return;
-
    if (cf_gcc->name) eina_stringshare_del(cf_gcc->name);
    if (cf_gcc->id) eina_stringshare_del(cf_gcc->id);
    if (cf_gcc->style) eina_stringshare_del(cf_gcc->style);
@@ -833,10 +828,11 @@ EAPI E_Gadcon_Client *
 e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *style, Evas_Object *base_obj)
 {
    E_Gadcon_Client *gcc;
-   
+
    E_OBJECT_CHECK_RETURN(gc, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
-   gcc = E_OBJECT_ALLOC(E_Gadcon_Client, E_GADCON_CLIENT_TYPE, _e_gadcon_client_free);
+   gcc = E_OBJECT_ALLOC(E_Gadcon_Client, E_GADCON_CLIENT_TYPE, 
+                        _e_gadcon_client_free);
    if (!gcc) return NULL;
    gcc->name = eina_stringshare_add(name);
    gcc->gadcon = gc;
@@ -914,12 +910,10 @@ EAPI void
 e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
 {
    Evas_Coord x, y, w, h;
-   
+
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
-
    if (gcc->o_control) return;
-
    e_gadcon_locked_set(gcc->gadcon, 1);
    gcc->gadcon->editing = 1;
    gcc->o_control = edje_object_add(gcc->gadcon->evas);
@@ -931,7 +925,8 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
    else return; /* make clang happy */
    evas_object_move(gcc->o_control, x, y);
    evas_object_resize(gcc->o_control, w, h);
-   e_theme_edje_object_set(gcc->o_control, "base/theme/gadman", "e/gadman/control");
+   e_theme_edje_object_set(gcc->o_control, "base/theme/gadman", 
+                           "e/gadman/control");
 
    if ((gcc->autoscroll) || (gcc->resizable))
      {
@@ -946,7 +941,7 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
 	edje_object_signal_emit(gcc->o_control, "e,state,vsize,off", "e");
      }
    edje_object_signal_emit(gcc->o_control, "e,state,move,on", "e");
-   
+
    gcc->o_event = evas_object_rectangle_add(gcc->gadcon->evas);
    evas_object_color_set(gcc->o_event, 0, 0, 0, 0);
    evas_object_repeat_events_set(gcc->o_event, 1);
@@ -984,23 +979,31 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
 				   _e_gadcon_cb_signal_resize_right_stop, gcc);
    edje_object_signal_callback_add(gcc->o_control, "e,action,resize,down,go", "",
 				   _e_gadcon_cb_signal_resize_right_go, gcc);
-   
-   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_DOWN, _e_gadcon_cb_client_mouse_down, gcc);
-   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_UP, _e_gadcon_cb_client_mouse_up, gcc);
-   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_IN, _e_gadcon_cb_client_mouse_in, gcc);
-   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_OUT, _e_gadcon_cb_client_mouse_out, gcc);
+
+   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_DOWN, 
+                                  _e_gadcon_cb_client_mouse_down, gcc);
+   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_UP, 
+                                  _e_gadcon_cb_client_mouse_up, gcc);
+   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_IN, 
+                                  _e_gadcon_cb_client_mouse_in, gcc);
+   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_OUT, 
+                                  _e_gadcon_cb_client_mouse_out, gcc);
 
    if (gcc->o_frame)
      {
-	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOVE, _e_gadcon_cb_client_move, gcc);
-	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_client_resize, gcc);
+	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOVE, 
+                                       _e_gadcon_cb_client_move, gcc);
+	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_RESIZE, 
+                                       _e_gadcon_cb_client_resize, gcc);
      }
    else if (gcc->o_base)
      {
-	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOVE, _e_gadcon_cb_client_move, gcc);
-	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_client_resize, gcc);
+	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOVE, 
+                                       _e_gadcon_cb_client_move, gcc);
+	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_RESIZE, 
+                                       _e_gadcon_cb_client_resize, gcc);
      }
-   
+
    evas_object_show(gcc->o_event);
    evas_object_show(gcc->o_control);
 }
@@ -1012,18 +1015,22 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
 
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
-   
+
    if (gcc->o_frame)
      {
-	evas_object_event_callback_del(gcc->o_frame, EVAS_CALLBACK_MOVE, _e_gadcon_cb_client_move);
-	evas_object_event_callback_del(gcc->o_frame, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_client_resize);
+	evas_object_event_callback_del(gcc->o_frame, EVAS_CALLBACK_MOVE, 
+                                       _e_gadcon_cb_client_move);
+	evas_object_event_callback_del(gcc->o_frame, EVAS_CALLBACK_RESIZE, 
+                                       _e_gadcon_cb_client_resize);
      }
    else if (gcc->o_base)
      {
-	evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_MOVE, _e_gadcon_cb_client_move);
-	evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_client_resize);
+	evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_MOVE, 
+                                       _e_gadcon_cb_client_move);
+	evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_RESIZE, 
+                                       _e_gadcon_cb_client_resize);
      }
-   
+
    if (gcc->moving)
      {
 	gcc->moving = 0;
@@ -1033,13 +1040,12 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
    gcc->o_event = NULL;
    if (gcc->o_control) evas_object_del(gcc->o_control);
    gcc->o_control = NULL;
-   
+
    for (l = gcc->gadcon->clients; l; l = l->next) 
      {
 	E_Gadcon_Client *client = NULL;
-	
-	client = l->data;
-	if (!client) continue;
+
+	if (!(client = l->data)) continue;
 	if (client->o_control) return;
      }
    gcc->gadcon->editing = 0;
@@ -1131,7 +1137,8 @@ e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
    if ((!gcc->autoscroll) && (!gcc->resizable))
      {
 	if (gcc->o_frame)
-	  e_gadcon_layout_pack_min_size_set(gcc->o_frame, w + gcc->pad.w, h + gcc->pad.h);
+	  e_gadcon_layout_pack_min_size_set(gcc->o_frame, w + gcc->pad.w, 
+                                            h + gcc->pad.h);
 	else if (gcc->o_base)
 	  e_gadcon_layout_pack_min_size_set(gcc->o_base, w, h);
      }
@@ -1149,7 +1156,8 @@ e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h)
      {
 	if (gcc->o_frame)
 	  {
-	     e_gadcon_layout_pack_aspect_pad_set(gcc->o_frame, gcc->pad.w, gcc->pad.h);
+	     e_gadcon_layout_pack_aspect_pad_set(gcc->o_frame, gcc->pad.w, 
+                                                 gcc->pad.h);
 	     e_gadcon_layout_pack_aspect_set(gcc->o_frame, w, h);
 	  }
 	else if (gcc->o_base)
@@ -1163,13 +1171,14 @@ e_gadcon_client_autoscroll_set(E_Gadcon_Client *gcc, int autoscroll)
 {
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
-   
+
    gcc->autoscroll = autoscroll;
    if (gcc->autoscroll)
      {
 	if (gcc->o_frame)
 	  {
-	     e_gadcon_layout_pack_aspect_pad_set(gcc->o_frame, gcc->pad.w, gcc->pad.h);
+	     e_gadcon_layout_pack_aspect_pad_set(gcc->o_frame, gcc->pad.w, 
+                                                 gcc->pad.h);
 	     e_gadcon_layout_pack_aspect_set(gcc->o_frame, 0, 0);
 	     e_gadcon_layout_pack_min_size_set(gcc->o_frame, 0, 0);
 	  }
@@ -1183,14 +1192,19 @@ e_gadcon_client_autoscroll_set(E_Gadcon_Client *gcc, int autoscroll)
      {
 	if (gcc->o_frame)
 	  {
-	     e_gadcon_layout_pack_aspect_pad_set(gcc->o_frame, gcc->pad.w, gcc->pad.h);
-	     e_gadcon_layout_pack_aspect_set(gcc->o_frame, gcc->aspect.w, gcc->aspect.h);
-	     e_gadcon_layout_pack_min_size_set(gcc->o_frame, gcc->min.w, gcc->min.h);
+	     e_gadcon_layout_pack_aspect_pad_set(gcc->o_frame, gcc->pad.w, 
+                                                 gcc->pad.h);
+	     e_gadcon_layout_pack_aspect_set(gcc->o_frame, gcc->aspect.w, 
+                                             gcc->aspect.h);
+	     e_gadcon_layout_pack_min_size_set(gcc->o_frame, gcc->min.w, 
+                                               gcc->min.h);
 	  }
 	else if (gcc->o_base)
 	  {
-	     e_gadcon_layout_pack_min_size_set(gcc->o_base, gcc->min.w, gcc->min.h);
-	     e_gadcon_layout_pack_aspect_set(gcc->o_base, gcc->aspect.w, gcc->aspect.h);
+	     e_gadcon_layout_pack_min_size_set(gcc->o_base, gcc->min.w, 
+                                               gcc->min.h);
+	     e_gadcon_layout_pack_aspect_set(gcc->o_base, gcc->aspect.w, 
+                                             gcc->aspect.h);
 	  }
      }
 }
@@ -1200,13 +1214,14 @@ e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int resizable)
 {
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
-   
+
    gcc->resizable = resizable;
    if (gcc->resizable)
      {
 	if (gcc->o_frame)
 	  {
-	     e_gadcon_layout_pack_aspect_pad_set(gcc->o_frame, gcc->pad.w, gcc->pad.h);
+	     e_gadcon_layout_pack_aspect_pad_set(gcc->o_frame, gcc->pad.w, 
+                                                 gcc->pad.h);
 	     e_gadcon_layout_pack_aspect_set(gcc->o_frame, 0, 0);
 	     e_gadcon_layout_pack_min_size_set(gcc->o_frame, 0, 0);
 	  }
@@ -1220,14 +1235,19 @@ e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int resizable)
      {
 	if (gcc->o_frame)
 	  {
-	     e_gadcon_layout_pack_aspect_pad_set(gcc->o_frame, gcc->pad.w, gcc->pad.h);
-	     e_gadcon_layout_pack_aspect_set(gcc->o_frame, gcc->aspect.w, gcc->aspect.h);
-	     e_gadcon_layout_pack_min_size_set(gcc->o_frame, gcc->min.w, gcc->min.h);
+	     e_gadcon_layout_pack_aspect_pad_set(gcc->o_frame, gcc->pad.w, 
+                                                 gcc->pad.h);
+	     e_gadcon_layout_pack_aspect_set(gcc->o_frame, gcc->aspect.w, 
+                                             gcc->aspect.h);
+	     e_gadcon_layout_pack_min_size_set(gcc->o_frame, gcc->min.w, 
+                                               gcc->min.h);
 	  }
 	else if (gcc->o_base)
 	  {
-	     e_gadcon_layout_pack_min_size_set(gcc->o_base, gcc->min.w, gcc->min.h);
-	     e_gadcon_layout_pack_aspect_set(gcc->o_base, gcc->aspect.w, gcc->aspect.h);
+	     e_gadcon_layout_pack_min_size_set(gcc->o_base, gcc->min.w, 
+                                               gcc->min.h);
+	     e_gadcon_layout_pack_aspect_set(gcc->o_base, gcc->aspect.w, 
+                                             gcc->aspect.h);
 	  }
      }
 }
@@ -1240,12 +1260,9 @@ e_gadcon_client_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    if (!e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &gx, &gy, NULL, NULL)) return 0;
-   
-   if (gcc->o_base)
-     evas_object_geometry_get(gcc->o_base, x, y, w, h);
+   if (gcc->o_base) evas_object_geometry_get(gcc->o_base, x, y, w, h);
    if (x) *x += gx;
    if (y) *y += gy;
-
    return 1;
 }
 
@@ -1262,7 +1279,7 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
 {
    E_Menu *mn;
    E_Menu_Item *mi;
-   
+
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
 
@@ -1277,7 +1294,7 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
 	if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_PLAIN)))
 	  e_menu_item_toggle_set(mi, 1);
 	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_plain, gcc);
-   
+
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Inset"));
 	e_util_menu_item_theme_icon_set(mi, "enlightenment/inset");
@@ -1311,7 +1328,7 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
 
 	mi = e_menu_item_new(menu);
 	e_menu_item_separator_set(mi, 1);
-   
+
 	if (!gcc->o_control) 
 	  {
 		mi = e_menu_item_new(menu);
@@ -1329,7 +1346,6 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
      {
 	mi = e_menu_item_new(menu);
 	e_menu_item_separator_set(mi, 1);
-	
 	gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, menu);
      }
 }
@@ -1363,9 +1379,7 @@ EAPI void
 e_gadcon_locked_set(E_Gadcon *gc, int lock)
 {
    if (gc->locked_set.func)
-     {
-	gc->locked_set.func(gc->locked_set.data, lock);
-     }
+     gc->locked_set.func(gc->locked_set.data, lock);
 }
 
 EAPI void
@@ -1385,7 +1399,7 @@ e_gadcon_client_autoscroll_update(E_Gadcon_Client *gcc, Evas_Coord x, Evas_Coord
      {
 	Evas_Coord w, h;
 	double d;
-	
+
 	evas_object_geometry_get(gcc->o_box, NULL, NULL, &w, &h);
         if (e_box_orientation_get(gcc->o_box))
 	  {
@@ -1414,6 +1428,50 @@ e_gadcon_client_autoscroll_cb_set(E_Gadcon_Client *gcc, void (*func)(void *data)
 {
    gcc->scroll_cb.func = func;
    gcc->scroll_cb.data = data;
+}
+
+EAPI Eina_Bool
+e_gadcon_site_is_shelf(E_Gadcon_Site site)
+{
+   return (site == E_GADCON_SITE_SHELF);
+}
+
+EAPI Eina_Bool
+e_gadcon_site_is_desktop(E_Gadcon_Site site)
+{
+   return (site == E_GADCON_SITE_DESKTOP);
+}
+
+EAPI Eina_Bool
+e_gadcon_site_is_efm_toolbar(E_Gadcon_Site site)
+{
+   return (site == E_GADCON_SITE_EFM_TOOLBAR);
+}
+
+EAPI Eina_Bool
+e_gadcon_site_is_any_toolbar(E_Gadcon_Site site)
+{
+   switch (site)
+     {
+        // there should be all toolbar sities identifiers
+      case E_GADCON_SITE_TOOLBAR:
+      case E_GADCON_SITE_EFM_TOOLBAR:
+        return EINA_TRUE;
+     }
+   return EINA_FALSE;
+}
+
+EAPI Eina_Bool
+e_gadcon_site_is_not_toolbar(E_Gadcon_Site site)
+{
+   switch (site)
+     {
+        // there should be all toolbar sities identifiers
+      case E_GADCON_SITE_TOOLBAR:
+      case E_GADCON_SITE_EFM_TOOLBAR:
+        return EINA_FALSE;
+     }
+   return EINA_TRUE;
 }
 
 /* local subsystem functions */
@@ -1465,9 +1523,9 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
 static void
 _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
 {
-   Evas_Coord x, y, w, h;
-   
-   evas_object_geometry_get(gcc->o_box, &x, &y, &w, &h);
+   Evas_Coord w, h;
+
+   evas_object_geometry_get(gcc->o_box, NULL, NULL, &w, &h);
    if ((gcc->autoscroll) || (gcc->resizable))
      {
 	if (e_box_orientation_get(gcc->o_box))
@@ -1496,7 +1554,7 @@ _e_gadcon_cb_client_scroll_timer(void *data)
 {
    E_Gadcon_Client *gcc;
    double d, v;
-   
+
    gcc = data;
    d = gcc->scroll_wanted - gcc->scroll_pos;
    if (d < 0) d = -d;
@@ -1515,7 +1573,7 @@ static int
 _e_gadcon_cb_client_scroll_animator(void *data)
 {
    E_Gadcon_Client *gcc;
-   
+
    gcc = data;
    if (e_box_orientation_get(gcc->o_box))
      e_box_align_set(gcc->o_box, 1.0 - gcc->scroll_pos, 0.5);
@@ -1539,7 +1597,7 @@ _e_gadcon_cb_client_frame_mouse_move(void *data, Evas *e, Evas_Object *obj, void
    Evas_Event_Mouse_Move *ev;
    E_Gadcon_Client *gcc;
    Evas_Coord x, y;
-   
+
    ev = event_info;
    gcc = data;
    evas_object_geometry_get(gcc->o_box, &x, &y, NULL, NULL);
@@ -1551,7 +1609,7 @@ static void
 _e_gadcon_cb_client_frame_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    E_Gadcon_Client *gcc;
-   
+
    gcc = data;
    _e_gadcon_moveresize_handle(gcc);
 }
@@ -1623,9 +1681,9 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
 static void
 _e_gadcon_client_inject(E_Gadcon *gc, E_Gadcon_Client *gcc, int x, int y)
 {
-   Eina_List  *l;
-   Evas_Coord  cx, cy, cw, ch;
-   int         seq = 1;
+   Eina_List *l;
+   Evas_Coord cx, cy, cw, ch;
+   int seq = 1;
 
    /* Check if the gadcon client is in place */
    if (!gcc->hidden)
@@ -1691,12 +1749,12 @@ static void
 _e_gadcon_cb_min_size_request(void *data, Evas_Object *obj, void *event_info)
 {
    E_Gadcon *gc;
-   
+
    gc = data;
    if (gc->min_size_request.func)
      {
 	Evas_Coord w, h;
-	
+
 	e_gadcon_layout_min_size_get(gc->o_container, &w, &h);
 	gc->min_size_request.func(gc->min_size_request.data, gc, w, h);
      }
@@ -1705,8 +1763,8 @@ _e_gadcon_cb_min_size_request(void *data, Evas_Object *obj, void *event_info)
 static void
 _e_gadcon_cb_size_request(void *data, Evas_Object *obj, void *event_info)
 {
-   E_Gadcon   *gc;
- 
+   E_Gadcon *gc;
+
    gc = data;
    if (gc->resize_request.func)
      {
@@ -1724,7 +1782,6 @@ _e_gadcon_cb_moveresize(void *data, Evas *evas, Evas_Object *obj, void *event_in
    Evas_Coord x, y, w, h;
 
    gc = data;
-   
    evas_object_geometry_get(gc->o_container, &x, &y, &w, &h);
    if (gc->drop_handler) 
      e_drop_handler_geometry_set(gc->drop_handler, x, y, w, h);
@@ -1735,7 +1792,7 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *e
 {
    Evas_Event_Mouse_Down *ev;
    E_Gadcon_Client *gcc;
-      
+
    gcc = data;
    ev = event_info;
    if (ev->button == 3)
@@ -1763,9 +1820,10 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *e
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_separator_set(mi, 1);
 
-	     gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, mn);
+	     gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, 
+                                           gcc, mn);
 	  }
-	
+
 	if (gcc->gadcon->toolbar)
 	  ecore_x_pointer_xy_get(zone->container->win, &cx, &cy);
 	else 
@@ -1787,14 +1845,18 @@ _e_gadcon_cb_client_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *eve
 static void
 _e_gadcon_cb_client_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
-   E_Gadcon_Client *gcc = data;
+   E_Gadcon_Client *gcc;
+
+   gcc = data;
    edje_object_signal_emit(gcc->o_control, "e,state,focused", "e");
 }
 
 static void
 _e_gadcon_cb_client_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
-   E_Gadcon_Client *gcc = data;
+   E_Gadcon_Client *gcc;
+
+   gcc = data;
    edje_object_signal_emit(gcc->o_control, "e,state,unfocused", "e");
 }
 
@@ -1803,7 +1865,7 @@ _e_gadcon_cb_client_move(void *data, Evas *evas, Evas_Object *obj, void *event_i
 {
    E_Gadcon_Client *gcc;
    Evas_Coord x, y;
-   
+
    gcc = data;
    evas_object_geometry_get(obj, &x, &y, NULL, NULL);
    if (gcc->o_control) evas_object_move(gcc->o_control, x, y);
@@ -1815,7 +1877,7 @@ _e_gadcon_cb_client_resize(void *data, Evas *evas, Evas_Object *obj, void *event
 {
    E_Gadcon_Client *gcc;
    Evas_Coord w, h;
-   
+
    gcc = data;
    evas_object_geometry_get(obj, NULL, NULL, &w, &h);
    if (gcc->o_control) evas_object_resize(gcc->o_control, w, h);
@@ -1837,8 +1899,7 @@ _e_gadcon_client_move_start(E_Gadcon_Client *gcc)
 static void
 _e_gadcon_client_move_stop(E_Gadcon_Client *gcc)
 {
-   gcc->moving = 0; 
-   
+   gcc->moving = 0;
    gcc->state_info.state = E_LAYOUT_ITEM_STATE_NONE;
    gcc->state_info.resist = 0;
    _e_gadcon_layout_smart_sync_clients(gcc->gadcon);
@@ -1848,13 +1909,13 @@ static void
 _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
 {
    Evas_Coord x, y, w, h;
-   int        cx, cy;
-   
+   int cx, cy;
+
    if (!gcc->moving) return;
    evas_pointer_canvas_xy_get(gcc->gadcon->evas, &cx, &cy);
    x = cx - gcc->dx;
    y = cy - gcc->dy; 
-   
+
    gcc->state_info.flags = E_GADCON_LAYOUT_ITEM_LOCK_POSITION | E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
    _e_gadcon_client_current_position_sync(gcc);
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
@@ -1897,7 +1958,6 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
 	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_DEC;
 	  }
      }
-
 
    if (gcc->o_frame)
      evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
@@ -1962,7 +2022,6 @@ static void
 _e_gadconclient_resize_stop(E_Gadcon_Client *gcc)
 {
    gcc->resizing = 0;
-
    gcc->state_info.state = E_LAYOUT_ITEM_STATE_NONE;
    _e_gadcon_layout_smart_sync_clients(gcc->gadcon);
    _e_gadcon_client_save(gcc);
@@ -1985,14 +2044,15 @@ _e_gadcon_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
 {
    E_Gadcon_Client *gcc;
    Evas_Coord x, y, w, h;
-   
+
    gcc = data;
    if (!gcc->resizing) return;
    evas_pointer_canvas_xy_get(gcc->gadcon->evas, &x, &y);
    x = x - gcc->dx;
    y = y - gcc->dy;
 
-   gcc->state_info.flags = E_GADCON_LAYOUT_ITEM_LOCK_POSITION | E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+   gcc->state_info.flags = E_GADCON_LAYOUT_ITEM_LOCK_POSITION | 
+     E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
 
    if (gcc->o_frame)
      evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
@@ -2033,8 +2093,7 @@ _e_gadcon_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
 	else if (gcc->o_base)
 	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos + y, h - y);
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
-	gcc->config.res = h; 
-	
+	gcc->config.res = h;
      }
    gcc->dx += x;
    gcc->dy += y;
@@ -2057,14 +2116,15 @@ _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
 {
    E_Gadcon_Client *gcc;
    Evas_Coord x, y, w, h;
-   
+
    gcc = data;
    if (!gcc->resizing) return;
    evas_pointer_canvas_xy_get(gcc->gadcon->evas, &x, &y);
    x = x - gcc->dx;
    y = y - gcc->dy;
 
-   gcc->state_info.flags = E_GADCON_LAYOUT_ITEM_LOCK_POSITION | E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+   gcc->state_info.flags = E_GADCON_LAYOUT_ITEM_LOCK_POSITION | 
+     E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
 
    if (gcc->o_frame)
      evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
@@ -2139,8 +2199,8 @@ static void
 _e_gadcon_cb_dnd_enter(void *data, const char *type, void *event)
 {
    E_Event_Dnd_Enter *ev;
-   E_Gadcon          *gc;
-   E_Gadcon_Client   *gcc;
+   E_Gadcon *gc;
+   E_Gadcon_Client *gcc;
 
    ev = event;
    gc = data;
@@ -2150,7 +2210,7 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type, void *event)
    if (gcc->gadcon == gc)
      {
 	/* We have re-entered the gadcon we left, revive gadcon client */
-	Evas_Coord   dx, dy;
+	Evas_Coord dx, dy;
 	Evas_Object *o;
 
 	if (e_gadcon_layout_orientation_get(gc->o_container))
@@ -2185,11 +2245,11 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type, void *event)
 	     if (!gcc->style)
 	       {
 		  new_gcc = cc->func.init(gc, gcc->name, gcc->cf->id,
-				       cc->default_style);
+                                          cc->default_style);
 	       }
 	     else
 	       new_gcc = cc->func.init(gc, gcc->name, gcc->cf->id,
-				    gcc->style);
+                                       gcc->style);
 
 	     if (new_gcc)
 	       {
@@ -2226,8 +2286,8 @@ static void
 _e_gadcon_cb_dnd_move(void *data, const char *type, void *event)
 {
    E_Event_Dnd_Move *ev;
-   E_Gadcon         *gc;
-   E_Gadcon_Client  *gcc = NULL;
+   E_Gadcon *gc;
+   E_Gadcon_Client *gcc = NULL;
 
    ev = event;
    gc = data;
@@ -2238,7 +2298,7 @@ _e_gadcon_cb_dnd_move(void *data, const char *type, void *event)
    else if (new_gcc->gadcon == gc) gcc = new_gcc;
    if (gcc)
      {
-	Evas_Coord   dx, dy;
+	Evas_Coord dx, dy;
 	Evas_Object *o;
 
 	if (gcc->state_info.resist > 0)
@@ -2261,9 +2321,11 @@ _e_gadcon_cb_dnd_move(void *data, const char *type, void *event)
 	if (o)
 	  {
 	     if (e_gadcon_layout_orientation_get(gc->o_container))
-	       e_gadcon_layout_pack_request_set(o, gcc->config.pos, gcc->config.size);
+	       e_gadcon_layout_pack_request_set(o, gcc->config.pos, 
+                                                gcc->config.size);
 	     else
-	       e_gadcon_layout_pack_request_set(o, gcc->config.pos, gcc->config.size);
+	       e_gadcon_layout_pack_request_set(o, gcc->config.pos, 
+                                                gcc->config.size);
 	  }
 	e_gadcon_layout_thaw(gc->o_container);
      }
@@ -2272,8 +2334,9 @@ _e_gadcon_cb_dnd_move(void *data, const char *type, void *event)
 static void
 _e_gadcon_cb_dnd_leave(void *data, const char *type, void *event)
 {
-   E_Gadcon *gc = data;
+   E_Gadcon *gc;
 
+   gc = data;
    /* If we exit the starting container hide the gadcon visual */
    if (drag_gcc->gadcon == gc) e_gadcon_client_hide(drag_gcc);
 
@@ -2288,9 +2351,10 @@ _e_gadcon_cb_dnd_leave(void *data, const char *type, void *event)
 static void
 _e_gadcon_cb_drop(void *data, const char *type, void *event)
 {
-   E_Gadcon         *gc = data;
-   E_Gadcon_Client  *gcc = NULL;
+   E_Gadcon *gc;
+   E_Gadcon_Client *gcc = NULL;
 
+   gc = data;
    if (drag_gcc->gadcon == gc) gcc = drag_gcc;
    else if ((new_gcc) && (new_gcc->gadcon == gc)) gcc = new_gcc;
    else return;  /* make clang happy */
@@ -2319,10 +2383,8 @@ _e_gadcon_client_cb_menu_post(void *data, E_Menu *m)
 {
    E_Gadcon_Client *gcc;
 
-   gcc = data;
-   if (!gcc) return;
-   if (gcc->gadcon)
-     e_gadcon_locked_set(gcc->gadcon, 0);
+   if (!(gcc = data)) return;
+   if (gcc->gadcon) e_gadcon_locked_set(gcc->gadcon, 0);
    if (!gcc->menu) return;
    e_object_del(E_OBJECT(gcc->menu));
    gcc->menu = NULL;
@@ -2332,7 +2394,7 @@ static int
 _e_gadcon_client_cb_instant_edit_timer(void *data)
 {
    E_Gadcon_Client *gcc;
-   
+
    gcc = data;
    e_gadcon_client_edit_begin(gcc);
    _e_gadcon_client_move_start(gcc);
@@ -2345,10 +2407,9 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
 {
    Evas_Event_Mouse_Down *ev;
    E_Gadcon_Client *gcc;
-   
+
    ev = event_info;
    gcc = data;
-   
    if (gcc->menu) return;
    if (ev->button == 3)
      {
@@ -2363,7 +2424,6 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
 	gcc->menu = mn;
 
 	e_gadcon_client_util_menu_items_append(gcc, mn, 0);
-
 	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
         zone = gcc->gadcon->zone;
         if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
@@ -2376,7 +2436,8 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
      {
 	if ((!gcc->o_control) && (gcc->gadcon->instant_edit))
 	  {
-	     if (gcc->instant_edit_timer) ecore_timer_del(gcc->instant_edit_timer);
+	     if (gcc->instant_edit_timer) 
+               ecore_timer_del(gcc->instant_edit_timer);
 	     gcc->instant_edit_timer = 
 	       ecore_timer_add(1.0, _e_gadcon_client_cb_instant_edit_timer, 
 			       gcc);
@@ -2389,10 +2450,9 @@ _e_gadcon_client_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_
 {
    Evas_Event_Mouse_Up *ev;
    E_Gadcon_Client *gcc;
-   
+
    ev = event_info;
    gcc = data;
-   
    if ((ev->button == 1) && (gcc->gadcon->instant_edit))
      {
 	if (gcc->instant_edit_timer)
@@ -2402,7 +2462,6 @@ _e_gadcon_client_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_
 	  }
 	if (gcc->o_control)
 	  {
-	     printf("EDIT END\n");
 	     _e_gadcon_client_move_stop(gcc);
 	     e_gadcon_client_edit_end(gcc);
 	  }
@@ -2412,12 +2471,12 @@ _e_gadcon_client_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_
 static void
 _e_gadcon_client_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   E_Gadcon_Client *gcc = data;
+   E_Gadcon_Client *gcc;
 
+   gcc = data;
    if ((gcc->gadcon->instant_edit))
      {
-	if (gcc->o_control)
-	  _e_gadcon_client_move_go(gcc);
+	if (gcc->o_control) _e_gadcon_client_move_go(gcc);
      }
 }
 
@@ -2426,7 +2485,7 @@ _e_gadcon_client_cb_menu_style_plain(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Gadcon_Client *gcc;
    E_Gadcon *gc;
-   
+
    gcc = data;
    gc = gcc->gadcon;
    if (gcc->style) eina_stringshare_del(gcc->style);
@@ -2441,7 +2500,7 @@ _e_gadcon_client_cb_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Gadcon_Client *gcc;
    E_Gadcon *gc;
-   
+
    gcc = data;
    gc = gcc->gadcon;
    if (gcc->style) eina_stringshare_del(gcc->style);
@@ -2469,7 +2528,7 @@ static void
 _e_gadcon_client_cb_menu_resizable(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Gadcon_Client *gcc;
-   
+
    gcc = data;
    e_gadcon_layout_freeze(gcc->gadcon->o_container);
    if (gcc->resizable) gcc->resizable = 0;
@@ -2483,7 +2542,7 @@ static void
 _e_gadcon_client_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Gadcon_Client *gcc;
-   
+
    gcc = data;
    if (gcc->o_control)
      e_gadcon_client_edit_end(gcc);
@@ -2527,41 +2586,41 @@ typedef struct _E_Gadcon_Layout_Item  E_Gadcon_Layout_Item;
 
 struct _E_Smart_Data
 { 
-   Evas_Coord       x, y, w, h;
-   Evas_Object     *obj;
-   Evas_Object     *clip;
-   unsigned char    horizontal : 1;
-   unsigned char    doing_config : 1;
-   unsigned char    redo_config : 1;
-   Eina_List       *items;
-   int              frozen;
-   Evas_Coord       minw, minh, req;
+   Evas_Coord x, y, w, h;
+   Evas_Object *obj, *clip;
+   unsigned char horizontal : 1;
+   unsigned char doing_config : 1;
+   unsigned char redo_config : 1;
+   Eina_List *items;
+   int frozen;
+   Evas_Coord minw, minh, req;
 }; 
 
 struct _E_Gadcon_Layout_Item
 {
-   E_Smart_Data    *sd;
-   struct {
-      int           pos, size, size2, res, prev_pos, prev_size;
-   } ask;
-   int              hookp;
-   struct {
-      int           w, h;
-   } min, aspect, aspect_pad;
+   E_Smart_Data *sd;
+   struct 
+     {
+        int pos, size, size2, res, prev_pos, prev_size;
+     } ask;
+   int hookp;
+   struct 
+     {
+        int w, h;
+     } min, aspect, aspect_pad;
 
    E_Gadcon_Client *gcc;
 
-   Evas_Coord       x, y, w, h;
-   Evas_Object     *obj;
-   unsigned char    can_move : 1;
+   Evas_Coord x, y, w, h;
+   Evas_Object *obj;
+   unsigned char can_move : 1;
 };
 
 /* local subsystem functions */
 static E_Gadcon_Layout_Item *_e_gadcon_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj);
-static void        _e_gadcon_layout_smart_disown(Evas_Object *obj);
-static void        _e_gadcon_layout_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void        _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd);
-
+static void _e_gadcon_layout_smart_disown(Evas_Object *obj);
+static void _e_gadcon_layout_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd);
 static void _e_gadcon_layout_smart_init(void);
 static void _e_gadcon_layout_smart_add(Evas_Object *obj);
 static void _e_gadcon_layout_smart_del(Evas_Object *obj);
@@ -2572,10 +2631,8 @@ static void _e_gadcon_layout_smart_hide(Evas_Object *obj);
 static void _e_gadcon_layout_smart_color_set(Evas_Object *obj, int r, int g, int b, int a);
 static void _e_gadcon_layout_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_gadcon_layout_smart_clip_unset(Evas_Object *obj);
-
 static void _e_gadcon_layout_smart_min_cur_size_calc(E_Smart_Data *sd, int *min, int *mino, int *cur);
-void _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur);
-
+static void _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur);
 static int _e_gadcon_layout_smart_sort_by_sequence_number_cb(const void *d1, const void *d2);
 static int _e_gadcon_layout_smart_sort_by_position_cb(const void *d1, const void *d2);
 
@@ -2596,7 +2653,6 @@ e_gadcon_layout_orientation_set(Evas_Object *obj, int horizontal)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (((sd->horizontal) && (horizontal)) || 
@@ -2611,7 +2667,6 @@ e_gadcon_layout_orientation_get(Evas_Object *obj)
    E_Smart_Data *sd;
 
    if (!obj) return 0;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    return sd->horizontal;
@@ -2623,7 +2678,6 @@ e_gadcon_layout_freeze(Evas_Object *obj)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    sd->frozen++;
@@ -2635,7 +2689,6 @@ e_gadcon_layout_thaw(Evas_Object *obj)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    sd->frozen--;
@@ -2651,10 +2704,8 @@ e_gadcon_layout_min_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    Evas_Coord tw = 0, th = 0;
  */
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-
    if (w) *w = sd->minw;
    if (h) *h = sd->minh;
 
@@ -2689,10 +2740,8 @@ e_gadcon_layout_asked_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    Evas_Coord tw = 0, th = 0;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-
    if (sd->horizontal)
      tw = sd->req;
    else
@@ -2725,7 +2774,6 @@ e_gadcon_layout_pack(Evas_Object *obj, Evas_Object *child)
    E_Smart_Data *sd;
 
    if (!obj) return 0;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_gadcon_layout_smart_adopt(sd, child);
@@ -2746,24 +2794,27 @@ e_gadcon_layout_pack_size_set(Evas_Object *obj, int size)
    int xx;
 
    if (!obj) return;
-   
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
    xx = bi->ask.pos + (bi->ask.size / 2);
    if (xx < (bi->ask.res / 3))
-     { /* hooked to start */
+     { 
+        /* hooked to start */
 	bi->ask.size = size;
      }
    else if (xx > ((2 * bi->ask.res) / 3))
-     { /* hooked to end */
+     { 
+        /* hooked to end */
 	bi->ask.pos = (bi->ask.pos + bi->ask.size) - size;
 	bi->ask.size = size;
      }
    else
-     { /* hooked to middle */
+     { 
+        /* hooked to middle */
 	if ((bi->ask.pos <= (bi->ask.res / 2)) &&
 	    ((bi->ask.pos + bi->ask.size) > (bi->ask.res / 2)))
-	  { /* straddles middle */
+	  { 
+             /* straddles middle */
 	     if (bi->ask.res > 2)
 	       bi->ask.pos = (bi->ask.res / 2) +
 	       (((bi->ask.pos + (bi->ask.size / 2) -
@@ -2796,7 +2847,6 @@ e_gadcon_layout_pack_request_set(Evas_Object *obj, int pos, int size)
    E_Gadcon_Layout_Item *bi;
 
    if (!obj) return;
-   
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
    if (bi->sd->horizontal)
@@ -2819,7 +2869,6 @@ e_gadcon_layout_pack_options_set(Evas_Object *obj, E_Gadcon_Client *gcc)
    E_Gadcon_Layout_Item *bi, *bi2;
 
    if (!obj) return;
-   
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
    bi->ask.res = gcc->config.res;
@@ -2828,15 +2877,13 @@ e_gadcon_layout_pack_options_set(Evas_Object *obj, E_Gadcon_Client *gcc)
    bi->gcc = gcc;
 
    ok = 0;
-   if (!gcc->state_info.seq) 
-     ok = 1;
+   if (!gcc->state_info.seq) ok = 1;
 
    seq = 1;
    for (l = bi->sd->items; l; l = l->next)
      {
 	bi2 = evas_object_data_get(l->data, "e_gadcon_layout_data");
 	if (bi == bi2) continue;
-
 	if (bi->gcc->state_info.seq == bi2->gcc->state_info.seq)
 	  ok = 1;
 
@@ -2859,7 +2906,6 @@ e_gadcon_layout_pack_min_size_set(Evas_Object *obj, int w, int h)
    E_Gadcon_Layout_Item *bi;
 
    if (!obj) return;
-   
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
    bi->min.w = w;
@@ -2873,7 +2919,6 @@ e_gadcon_layout_pack_aspect_set(Evas_Object *obj, int w, int h)
    E_Gadcon_Layout_Item *bi;
 
    if (!obj) return;
-   
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
    bi->aspect.w = w;
@@ -2887,7 +2932,6 @@ e_gadcon_layout_pack_aspect_pad_set(Evas_Object *obj, int w, int h)
    E_Gadcon_Layout_Item *bi;
 
    if (!obj) return;
-   
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
    bi->aspect_pad.w = w;
@@ -2901,7 +2945,6 @@ e_gadcon_layout_unpack(Evas_Object *obj)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
    sd = bi->sd;
@@ -2918,7 +2961,6 @@ _e_gadcon_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    E_Gadcon_Layout_Item *bi;
 
    if (!obj) return NULL;
-   
    bi = calloc(1, sizeof(E_Gadcon_Layout_Item));
    if (!bi) return NULL;
    bi->sd = sd;
@@ -2941,7 +2983,6 @@ _e_gadcon_layout_smart_disown(Evas_Object *obj)
    E_Gadcon_Layout_Item *bi;
 
    if (!obj) return;
-   
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
    if (!bi->sd->items)
@@ -2949,8 +2990,7 @@ _e_gadcon_layout_smart_disown(Evas_Object *obj)
 	if (evas_object_visible_get(bi->sd->clip))
 	  evas_object_hide(bi->sd->clip);
      }
-   evas_object_event_callback_del(obj,
-				  EVAS_CALLBACK_DEL,
+   evas_object_event_callback_del(obj, EVAS_CALLBACK_DEL,
 				  _e_gadcon_layout_smart_item_del_hook);
    evas_object_smart_member_del(obj);
    evas_object_clip_unset(obj);
@@ -2962,7 +3002,6 @@ static void
 _e_gadcon_layout_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    if (!obj) return;
-
    e_gadcon_layout_unpack(obj);
 }
 
@@ -2975,8 +3014,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
    Eina_List *list = NULL;
    E_Gadcon_Layout_Item *bi;
    E_Layout_Item_Container *lc;
-   int i;
-   int set_prev_pos = 0;
+   int i, set_prev_pos = 0;
 
    if (sd->frozen) return;
    if (sd->doing_config)
@@ -3026,7 +3064,8 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
      }
    _e_gadcon_layout_smart_gadcons_width_adjust(sd, min, cur);
 
-   if (((sd->horizontal) && (sd->w <= sd->req)) || ((!sd->horizontal) && (sd->h <= sd->req)))
+   if (((sd->horizontal) && (sd->w <= sd->req)) || 
+       ((!sd->horizontal) && (sd->h <= sd->req)))
      { 
 	_e_gadcon_layout_smart_gadcon_position_shrinked_mode(sd);
 	set_prev_pos = 0;
@@ -3048,14 +3087,12 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	set_prev_pos = 1;
      }
 
-
    sd->items = eina_list_sort(sd->items, eina_list_count(sd->items),
 			      _e_gadcon_layout_smart_sort_by_position_cb);
    for (l = sd->items, i = 1; l; l = l->next, i++)
      {
 	bi = evas_object_data_get(l->data, "e_gadcon_layout_data"); 
-	if (bi->gcc->gadcon->editing)
-	  bi->gcc->state_info.seq = i; 
+	if (bi->gcc->gadcon->editing) bi->gcc->state_info.seq = i; 
 
 	if (set_prev_pos)
 	  {
@@ -3091,12 +3128,12 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	       bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
 	  }
      } 
-   
+
    for (l = sd->items; l; l = l->next)
      {
 	E_Gadcon_Layout_Item *bi;
 	Evas_Object *obj;
-	
+
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
 	if (!bi) continue;
@@ -3168,10 +3205,7 @@ _e_gadcon_layout_smart_init(void)
 	       _e_gadcon_layout_smart_color_set,
 	       _e_gadcon_layout_smart_clip_set,
 	       _e_gadcon_layout_smart_clip_unset,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL
+	       NULL, NULL, NULL, NULL
 	  };
 	_e_smart = evas_smart_class_new(&sc);
      }
@@ -3183,7 +3217,6 @@ _e_gadcon_layout_smart_add(Evas_Object *obj)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
    sd->obj = obj;
@@ -3206,13 +3239,12 @@ _e_gadcon_layout_smart_del(Evas_Object *obj)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    while (sd->items)
      {
 	Evas_Object *child;
-	
+
 	child = sd->items->data;
 	e_gadcon_layout_unpack(child);
      }
@@ -3226,20 +3258,19 @@ _e_gadcon_layout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if ((x == sd->x) && (y == sd->y)) return;
      {
 	Eina_List *l;
 	Evas_Coord dx, dy;
-	
+
 	dx = x - sd->x;
 	dy = y - sd->y;
 	for (l = sd->items; l; l = l->next)
 	  {
 	     Evas_Coord ox, oy;
-	     
+
 	     evas_object_geometry_get(l->data, &ox, &oy, NULL, NULL);
 	     evas_object_move(l->data, ox + dx, oy + dy);
 	  }
@@ -3254,7 +3285,6 @@ _e_gadcon_layout_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if ((w == sd->w) && (h == sd->h)) return;
@@ -3269,7 +3299,6 @@ _e_gadcon_layout_smart_show(Evas_Object *obj)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (sd->items) evas_object_show(sd->clip);
@@ -3281,7 +3310,6 @@ _e_gadcon_layout_smart_hide(Evas_Object *obj)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    evas_object_hide(sd->clip);
@@ -3293,7 +3321,6 @@ _e_gadcon_layout_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;   
    evas_object_color_set(sd->clip, r, g, b, a);
@@ -3305,7 +3332,6 @@ _e_gadcon_layout_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    evas_object_clip_set(sd->clip, clip);
@@ -3317,12 +3343,10 @@ _e_gadcon_layout_smart_clip_unset(Evas_Object *obj)
    E_Smart_Data *sd;
 
    if (!obj) return;
-   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    evas_object_clip_unset(sd->clip);
 }  
-
 
 /*
  * @min - the minimum width required by all the gadcons
@@ -3404,7 +3428,6 @@ _e_gadcon_layout_smart_width_smart_sort_reverse_cb(const void *d1, const void *d
 
    bi = evas_object_data_get(d1, "e_gadcon_layout_data");
    bi2 = evas_object_data_get(d2, "e_gadcon_layout_data"); 
-   
    if (bi->sd->horizontal)
      { 
 	if (bi->ask.size2 > bi->min.w)
@@ -3502,15 +3525,14 @@ _e_gadcon_layout_smart_width_smart_sort_reverse_cb(const void *d1, const void *d
    return 0;
 }
 
-void 
+static void 
 _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 { 
    E_Gadcon_Layout_Item *bi2 = NULL;
    E_Gadcon_Layout_Item *bi = NULL;
    Eina_List *l, *l2;
    int need, limit, reduce_total, reduce;
-   int max_size;
-   int c;
+   int max_size, c;
 
    if (sd->horizontal)
      {
@@ -3541,7 +3563,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
      } 
 
    sd->items = eina_list_sort(sd->items, eina_list_count(sd->items), 
-			      _e_gadcon_layout_smart_width_smart_sort_reverse_cb); 
+			      _e_gadcon_layout_smart_width_smart_sort_reverse_cb);
 
    __adjust_size_again: 
    for (l = sd->items, c = 0; l; l = l->next) 
@@ -3550,7 +3572,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 	  { 
 	     bi = evas_object_data_get(l->data, "e_gadcon_layout_data");
 	     bi2 = evas_object_data_get(l->next->data, "e_gadcon_layout_data"); 
-	     
+
 	     if (bi->ask.size2 > bi2->ask.size2)
 	       { 
 		  limit = bi2->ask.size2;
@@ -3561,14 +3583,13 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 	  }
      } 
 
-   if (eina_list_count(sd->items) == 1)
-     c = 1;
-   
+   if (eina_list_count(sd->items) == 1) c = 1;
+
    if (l)
      { 
 	reduce = bi->ask.size2 - limit; 
 	reduce_total = reduce * c; 
-	
+
 	if (reduce_total <= need) 
 	  { 
 	     for (l2 = l; l2; l2 = l2->prev) 
@@ -3583,7 +3604,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 	else
 	  { 
 	     int reduce_by, c2; 
-	     
+
 	     while (need)
 	       { 
 		  reduce_by = 1;
@@ -3607,7 +3628,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
    else
      { 
 	int reduce_by, c2; 
-	
+
 	while (need)
 	  { 
 	     reduce_by = 1;
@@ -3640,7 +3661,6 @@ _e_gadcon_layout_smart_sort_by_sequence_number_cb(const void *d1, const void *d2
    if ((!bi->gcc->state_info.seq) && (!bi2->gcc->state_info.seq)) return 0;
    else if (!bi->gcc->state_info.seq) return 1;
    else if (!bi2->gcc->state_info.seq) return -1;
-
    return bi->gcc->state_info.seq - bi2->gcc->state_info.seq;
 } 
 
@@ -3651,9 +3671,7 @@ _e_gadcon_layout_smart_sort_by_position_cb(const void *d1, const void *d2)
 
    bi = evas_object_data_get(d1, "e_gadcon_layout_data");
    bi2 = evas_object_data_get(d2, "e_gadcon_layout_data");
-
-   if (bi->sd->horizontal) 
-     return (bi->x - bi2->x);
+   if (bi->sd->horizontal) return (bi->x - bi2->x);
    return (bi->y - bi2->y);
 }
 
@@ -3664,10 +3682,8 @@ _e_gadcon_layout_smart_containers_sort_cb(const void *d1, const void *d2)
 
    lc = d1;
    lc2 = d2;
-
    if (lc->pos < lc2->pos) return -1;
    else if (lc->pos > lc2->pos) return 1;
-
    return 0;
 }
 
@@ -3678,7 +3694,6 @@ _e_gadcon_layout_smart_seq_sort_cb(const void *d1, const void *d2)
 
    bi = d1;
    bi2 = d2;
-
    return (bi->gcc->state_info.seq - bi2->gcc->state_info.seq);
 }
 
@@ -3745,7 +3760,7 @@ _e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd)
 		       tp = l->next->data; 
 		       l->next->data = l->data; 
 		       l->data = tp; 
-		       
+
 		       bi2 = evas_object_data_get(tp, "e_gadcon_layout_data");
 		       bi->gcc->config.pos = bi->ask.pos = bi2->ask.pos;
 		       bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
@@ -3771,10 +3786,10 @@ _e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd)
 		    { 
 		       E_Gadcon_Layout_Item *bi2;
 		       void *tp;
+
 		       tp = l->prev->data;
 		       l->prev->data = l->data;
 		       l->data = tp; 
-		       
 		       bi2 = evas_object_data_get(tp, "e_gadcon_layout_data");
 		       bi->gcc->config.pos = bi->ask.pos = bi2->ask.pos;
 		       bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
@@ -3808,7 +3823,7 @@ _e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd)
 	     bi->gcc->config.pos = bi->gcc->state_info.prev_pos;
 	  } 
      } 
-   
+
    for (l = sd->items; l; l = l->next)
      { 
 	bi = evas_object_data_get(l->data, "e_gadcon_layout_data");
@@ -3862,22 +3877,26 @@ _e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd)
 	  {
 	     xx = bi->ask.pos + (bi->ask.size / 2);
 	     if (xx < (bi->ask.res / 3))
-	       { /* hooked to start */
+	       { 
+                  /* hooked to start */
 		  bi->x = bi->ask.pos;
 		  bi->w = bi->ask.size2;
 		  bi->hookp = 0;
 	       }
 	     else if (xx > ((2 * bi->ask.res) / 3))
-	       { /* hooked to end */
+	       { 
+                  /* hooked to end */
 		  bi->x = (bi->ask.pos - bi->ask.res) + sd->w;
 		  bi->w = bi->ask.size2;
 		  bi->hookp = bi->ask.res;
 	       }
 	     else
-	       { /* hooked to middle */
+	       { 
+                  /* hooked to middle */
 		  if ((bi->ask.pos <= (bi->ask.res / 2)) &&
 		      ((bi->ask.pos + bi->ask.size2) > (bi->ask.res / 2)))
-		    { /* straddles middle */
+		    { 
+                       /* straddles middle */
 		       if (bi->ask.res > 2)
 			 bi->x = (sd->w / 2) + 
 			 (((bi->ask.pos + (bi->ask.size2 / 2) - 
@@ -3889,7 +3908,8 @@ _e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd)
 		       bi->w = bi->ask.size2;
 		    }
 		  else
-		    { /* either side of middle */
+		    { 
+                       /* either side of middle */
 		       bi->x = (bi->ask.pos - (bi->ask.res / 2)) + (sd->w / 2);
 		       bi->w = bi->ask.size2;
 		    }
@@ -3900,22 +3920,26 @@ _e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd)
 	  {
 	     yy = bi->ask.pos + (bi->ask.size2 / 2);
 	     if (yy < (bi->ask.res / 3))
-	       { /* hooked to start */
+	       { 
+                  /* hooked to start */
 		  bi->y = bi->ask.pos;
 		  bi->h = bi->ask.size2;
 		  bi->hookp = 0;
 	       }
 	     else if (yy > ((2 * bi->ask.res) / 3))
-	       { /* hooked to end */
+	       { 
+                  /* hooked to end */
 		  bi->y = (bi->ask.pos - bi->ask.res) + sd->h;
 		  bi->h = bi->ask.size2;
 		  bi->hookp = bi->ask.res;
 	       }
 	     else
-	       { /* hooked to middle */
+	       { 
+                  /* hooked to middle */
 		  if ((bi->ask.pos <= (bi->ask.res / 2)) &&
 		      ((bi->ask.pos + bi->ask.size2) > (bi->ask.res / 2)))
-		    { /* straddles middle */
+		    { 
+                       /* straddles middle */
 		       if (bi->ask.res > 2)
 			 bi->y = (sd->h / 2) + 
 			 (((bi->ask.pos + (bi->ask.size2 / 2) - 
@@ -3927,7 +3951,8 @@ _e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd)
 		       bi->h = bi->ask.size2;
 		    }
 		  else
-		    { /* either side of middle */
+		    { 
+                       /* either side of middle */
 		       bi->y = (bi->ask.pos - (bi->ask.res / 2)) + (sd->h / 2);
 		       bi->h = bi->ask.size2;
 		    }
@@ -3984,7 +4009,7 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
    E_Layout_Item_Container *lc_moving = NULL, *lc_back, *lc, *lc3;
    E_Gadcon_Layout_Item *bi, *bi_moving;
 
-   if (!list || !*list) return;
+   if ((!list) || (!*list)) return;
 
    for (l = *list; l; l = l->next)
      {
@@ -4068,11 +4093,10 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
 	if (!ok) 
 	  { 
 	     int pos, prev_pos, stop;
-	     for (l = *list; (l) && (l->data != lc_moving); l = l->next); 
 
+	     for (l = *list; (l) && (l->data != lc_moving); l = l->next);
 	     pos = lc_moving->pos + lc_moving->size;
 	     prev_pos = lc_moving_prev_pos;
-
 	     if ((l) && (l->next)) 
 	       { 
 		  stop = 0;
@@ -4269,7 +4293,7 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
 	       { 
 		  if (!l2) l2 = *list; 
 		  else l2 = l2->next;
-		  
+
 		  for (; l2 != l; l2 = l2->next) 
 		    { 
 		       lc = l2->data; 
@@ -4558,6 +4582,7 @@ _e_gadcon_layout_smart_containers_position_adjust(E_Smart_Data *sd, E_Layout_Ite
 		      (lc2->state_info.min_seq < lc->state_info.max_seq)))
 	       {
 		  int shift = 0;
+
 		  _e_gadcon_layout_smart_containers_merge(sd, lc, lc2);
 
 		  for (l = lc->items; l; l = l->next)
@@ -4686,6 +4711,7 @@ _e_gadcon_layout_smart_containers_position_adjust(E_Smart_Data *sd, E_Layout_Ite
 	       {
 		  int move_lc1 = 1;
 		  int move_lc2 = 1;
+
 		  for (l = lc->items; l; l = l->next)
 		    {
 		       bi = l->data;
@@ -4757,6 +4783,7 @@ _e_gadcon_layout_smart_containers_position_adjust(E_Smart_Data *sd, E_Layout_Ite
 		      (lc2->state_info.min_seq < lc->state_info.max_seq)))
 	       {
 		  int shift = 0;
+
 		  _e_gadcon_layout_smart_containers_merge(sd, lc, lc2);
 
 		  for (l = lc->items; l; l = l->next)
@@ -4951,7 +4978,6 @@ _e_gadcon_layout_smart_restore_gadcons_position_before_move(E_Smart_Data *sd, E_
 	  bi->w = (*lc_moving)->prev_size;
 	else
 	  bi->h = (*lc_moving)->prev_size;
-
      }
    _e_gadcon_layout_smart_position_items_inside_container(sd, (*lc_moving));
    (*lc_moving)->state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
@@ -5048,7 +5074,7 @@ _e_gadcon_layout_smart_restore_gadcons_position_before_move(E_Smart_Data *sd, E_
 			 }
 		       *lc_moving = lc_back;
 		       _e_gadcon_layout_smart_position_items_inside_container(sd, *lc_moving); 
-		       
+
 		       if (((*lc_moving)->state != E_LAYOUT_ITEM_CONTAINER_STATE_POS_INC) && 
 			   ((*lc_moving)->state != E_LAYOUT_ITEM_CONTAINER_STATE_POS_DEC)) 
 			 { 
@@ -5142,50 +5168,4 @@ _e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc)
 	ecore_idler_del(populate_idler);
 	populate_idler = NULL;
      }
-}
-
-EAPI Eina_Bool
-e_gadcon_site_is_shelf      (E_Gadcon_Site site)
-{
-   return site == E_GADCON_SITE_SHELF;
-}
-
-EAPI Eina_Bool
-e_gadcon_site_is_desktop    (E_Gadcon_Site site)
-{
-   return site == E_GADCON_SITE_DESKTOP;   
-}
-
-EAPI Eina_Bool
-e_gadcon_site_is_efm_toolbar(E_Gadcon_Site site)
-{
-   return site == E_GADCON_SITE_EFM_TOOLBAR;  
-}
-
-EAPI Eina_Bool
-e_gadcon_site_is_any_toolbar(E_Gadcon_Site site)
-{
-   switch (site)
-     {
-        // there should be all toolbar sities identifiers
-        case E_GADCON_SITE_TOOLBAR:
-        case E_GADCON_SITE_EFM_TOOLBAR:
-           return EINA_TRUE;
-     }
-   
-   return EINA_FALSE;
-}
-
-EAPI Eina_Bool
-e_gadcon_site_is_not_toolbar(E_Gadcon_Site site)
-{
-   switch (site)
-     {
-        // there should be all toolbar sities identifiers
-        case E_GADCON_SITE_TOOLBAR:
-        case E_GADCON_SITE_EFM_TOOLBAR:
-           return EINA_FALSE;
-     }
-   
-   return EINA_TRUE;
 }
