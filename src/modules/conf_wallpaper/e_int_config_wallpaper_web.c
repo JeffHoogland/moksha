@@ -27,15 +27,13 @@ _web_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 
    if (y < 0) y = 0;
    if (y > th - vh) y = th - vh;
-
    exchange_smart_object_offset_set(obj, 0, y);
 }
 
 static void
 _web_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 {
-   if (!x || !y) return;
-
+   if ((!x) || (!y)) return;
    exchange_smart_object_offset_get(obj, x, y);
 }
 
@@ -46,7 +44,6 @@ _web_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 
    evas_object_size_hint_min_get(obj, &tw, &th);
    evas_object_geometry_get(obj, NULL, NULL, &vw, &vh);
-
    if (x) *x = tw - vw;
    if (y) *y = th - vh;
 }
@@ -58,7 +55,6 @@ _web_pan_child_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 
    evas_object_size_hint_min_get(obj, &tw, &th);
    evas_object_geometry_get(obj, NULL, NULL, &vw, &vh);
-
    if (x) *x = tw;
    if (y) *y = th;
 }
@@ -77,8 +73,9 @@ e_int_config_wallpaper_web_del(E_Dialog *dia)
 static void
 _web_del_cb(void *obj)
 {
-   E_Dialog *dia = obj;
+   E_Dialog *dia;
 
+   dia = obj;
    e_int_config_wallpaper_web_del(dia);
 }
 
@@ -108,8 +105,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    Evas_Coord mw, mh;
    E_Fm2_Config fmc;
    char usr_dir[PATH_MAX];
-   
-   
+
    dia = e_dialog_new(parent->con, "E", "_wallpaper_web_dialog");
    if (!dia) return NULL;
 
@@ -128,7 +124,6 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    e_object_del_attach_func_set(E_OBJECT(dia), _web_del_cb);
    e_win_centered_set(dia->win, 1);
 
-
    ol = e_widget_list_add(e_win_evas_get(dia->win), 0, 1);
 
    /* The Exchange Smart Object*/
@@ -143,7 +138,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    e_scrollframe_extern_pan_set(sf, exsm, _web_pan_set, _web_pan_get,
                                 _web_pan_max_get, _web_pan_child_size_get);
    e_scrollframe_policy_set(sf, E_SCROLLFRAME_POLICY_OFF,
-                                  E_SCROLLFRAME_POLICY_ON);
+                            E_SCROLLFRAME_POLICY_ON);
    e_scrollframe_thumbscroll_force(sf, 1);
 
    e_widget_list_object_append(ol, sf, 1, 1, 0.5);
@@ -154,5 +149,4 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
 
    return dia;
 }
-
 #endif
