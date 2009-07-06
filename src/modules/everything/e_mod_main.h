@@ -35,6 +35,8 @@ struct _Source_Config
 
   /* minimum input chars to query this source */
   int min_query;
+
+  int priority;
 };
 
   
@@ -44,6 +46,9 @@ EAPI extern E_Module_Api e_modapi;
 EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
+
+EAPI E_Config_Dialog *evry_config_dialog(E_Container *con, const char *params);
+
 
 EAPI int  evry_plug_apps_init(void);
 EAPI int  evry_plug_apps_shutdown(void);

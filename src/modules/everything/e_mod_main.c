@@ -10,7 +10,7 @@ static int   _e_mod_run_defer_cb(void *data);
 static void  _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void  _e_mod_menu_add(void *data, E_Menu *m);
 
-static E_Module *conf_module = NULL;
+/* static E_Module *conf_module = NULL; */
 static E_Action *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 
@@ -67,7 +67,9 @@ e_modapi_init(E_Module *m)
 	evry_conf->scroll_speed = 0.5;
      }
 
-   conf_module = m;
+   evry_conf->scroll_speed = 0.08;
+   
+   /* conf_module = m; */
    evry_init();
 
    evry_plug_config_init();
@@ -89,6 +91,9 @@ e_modapi_init(E_Module *m)
 
    maug = e_int_menus_menu_augmentation_add("main/1", _e_mod_menu_add, NULL, NULL, NULL);
 
+   e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "preferences-advanced");
+   e_configure_registry_item_add("advanced/run_everything", 40, _("Run Everything"), NULL, "system-run", evry_config_dialog);
+   
    e_module_delayed_set(m, 1);
 
    return m;
@@ -97,6 +102,8 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
+   E_Config_Dialog *cfd;
+   
    /* remove module-supplied menu additions */
    if (maug)
      {
@@ -120,7 +127,11 @@ e_modapi_shutdown(E_Module *m)
    evry_plug_calc_shutdown();
 
    evry_shutdown();
-   conf_module = NULL;
+   /* conf_module = NULL; */
+
+   while ((cfd = e_config_dialog_get("E", "_config_everything_dialog"))) e_object_del(E_OBJECT(cfd));
+   e_configure_registry_item_del("advanced/run_everything");
+   e_configure_registry_category_del("advanced");
 
    /* Clean EET */
    E_CONFIG_DD_FREE(conf_item_edd);
