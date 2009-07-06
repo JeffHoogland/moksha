@@ -8,8 +8,6 @@
 //   need choice after add (file, gradient, online source)
 //   need delete select mode
 //   need after select on delete an ok/cancel if file or "ok to remove whole online source" if online
-//   need to go to the current selected wallpaper (if it exists) or theme if theme selected (and set filename)
-//   need to make thumb white rect better (shaded etc.)
 //   need to make "exchange" wallpapers have a different look
 //   need signal to emit for popping down slide-up panel
 //   bug: animated wp doesnt workon first show
@@ -50,10 +48,12 @@ struct _Smart_Data
    Evas_Coord   cx, cy, cw, ch;
    Evas_Coord   sx, sy;
    int          id_num;
+   int          sort_num;
    double       seltime;
    double       selmove;
    Eina_Bool    selin : 1;
    Eina_Bool    selout : 1;
+   Eina_Bool    jump2hi : 1;
 };
 
 struct _Item
@@ -69,6 +69,7 @@ struct _Item
    Eina_Bool remote : 1;
    Eina_Bool theme : 1;
    Eina_Bool visible : 1;
+   Eina_Bool hilighted : 1;
 };
 
 static Info *global_info = NULL;
@@ -322,6 +323,8 @@ _e_smart_reconfigure_do(void *data)
                        else
                          e_theme_edje_object_set(it->frame, "base/theme/widgets",
                                                  "e/conf/wallpaper/main/mini");
+                       if (it->hilighted)
+                         edje_object_signal_emit(it->frame, "e,state,selected", "e");
                        evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_DOWN,
                                                       _item_down, it);
                        evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_UP,
@@ -625,6 +628,37 @@ _sel_timer(void *data)
 }
 
 static void
+_pan_unhilight(Evas_Object *obj, Item *it)
+{
+   Smart_Data *sd = evas_object_smart_data_get(obj);
+   if (!it->hilighted) return;
+   it->hilighted = 0;
+   if (it->frame)
+     edje_object_signal_emit(it->frame, "e,state,unselected", "e");
+}
+
+static void
+_pan_hilight(Evas_Object *obj, Item *it)
+{
+   Eina_List *l;
+   Item *it2;
+   Smart_Data *sd = evas_object_smart_data_get(obj);
+   if (it->hilighted) return;
+   EINA_LIST_FOREACH(sd->items, l, it2)
+     {
+        if (it2->hilighted)
+          {
+             _pan_unhilight(obj, it2);
+             break;
+          }
+     }
+   it->hilighted = 1;
+   if (it->frame)
+     edje_object_signal_emit(it->frame, "e,state,selected", "e");
+}
+
+
+static void
 _pan_sel(Evas_Object *obj, Item *it)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
@@ -698,6 +732,7 @@ static int
 _sort_cb(const void *d1, const void *d2)
 {
    Item *it1 = d1, *it2 = d2;
+   if ((!it1->sort_id) || (!it2->sort_id)) return 0;
    return strcmp(it1->sort_id, it2->sort_id);
 }
 
@@ -706,20 +741,40 @@ _item_sort(Item *it)
 {
    Evas_Object *obj = it->obj;
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   int num;
+   int num, dosort = 0;
    Eina_List *l;
    
    sd->id_num++;
    sd->info->scans--;
    num = eina_list_count(sd->items);
-   if (sd->id_num == num)
+//   if (sd->sort_num < sd->id_num)
+//     {
+//        sd->sort_num = sd->id_num + 10;
+//        dosort = 1;
+//     }
+   if ((sd->id_num == num) || (dosort))
      {
         sd->items = eina_list_sort(sd->items, num, _sort_cb);
-        _e_smart_reconfigure(obj);
+        _e_smart_reconfigure_do(obj);
+         if (sd->jump2hi)
+          {
+             Eina_List *l;
+             Item *it2 = NULL;
+             
+             EINA_LIST_FOREACH(sd->items, l, it2)
+               {
+                  if (it2->hilighted) break;
+                  it2 = NULL;
+               }
+             if (it2)
+               _pan_set(obj, 
+                        it2->x + (it2->w / 2) - (sd->w / 2), 
+                        it2->y + (it2->h / 2) - (sd->h / 2));
+             sd->jump2hi = 1;
+          }
      }
    if (sd->info->scans == 0)
      {
-        printf("END3!\n");
         edje_object_signal_emit(sd->info->bg, "e,state,busy,off", "e");
      }
 }
@@ -770,6 +825,7 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
         if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD))
           {
+             _pan_hilight(it->obj, it);
              _pan_sel(it->obj, it);
              // FIXME: select image!!!
           }
@@ -797,6 +853,8 @@ _pan_file_add(Evas_Object *obj, const char *file, Eina_Bool remote, Eina_Bool th
    else
      e_theme_edje_object_set(it->frame, "base/theme/widgets",
                              "e/conf/wallpaper/main/mini");
+   if (it->hilighted)
+     edje_object_signal_emit(it->frame, "e,state,selected", "e");
    evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_DOWN,
                                   _item_down, it);
    evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_UP,
@@ -823,6 +881,48 @@ _pan_file_add(Evas_Object *obj, const char *file, Eina_Bool remote, Eina_Bool th
    it->do_thumb = 1;
 //   e_thumb_icon_begin(it->image);
 
+   if (it->theme)
+     {
+        if (sd->info->use_theme_bg)
+          {
+             _pan_hilight(it->obj, it);
+             edje_object_part_text_set(sd->info->bg, "e.text.filename", _("Theme Wallpaper"));
+          }
+     }
+   else
+     {
+        if (sd->info->bg_file)
+          {
+             int match = 0;
+             
+             if (!strcmp(sd->info->bg_file, it->file)) match = 1;
+             if (!match)
+               {
+                  const char *p1, *p2;
+                  
+                  p1 = ecore_file_file_get(sd->info->bg_file);
+                  p2 = ecore_file_file_get(it->file);
+                  if (!strcmp(p1, p2)) match = 1;
+               }
+             if (match)
+               {
+                  char *name = NULL, *p;
+
+                  sd->jump2hi = 1;
+                  _pan_hilight(it->obj, it);
+                  p = strrchr(sd->info->bg_file, '/');
+                  if (p)
+                    {
+                       p++;
+                       name = strdup(p);
+                       p = strrchr(name, '.');
+                       if (p) *p = 0;
+                    }
+                  edje_object_part_text_set(sd->info->bg, "e.text.filename", name);
+                  if (name) free(name);
+               }
+          }
+     }
    _e_smart_reconfigure(obj);
 }
 

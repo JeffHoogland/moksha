@@ -559,5 +559,6 @@ wp-bot2.png \
 wp-tb3.png \
 wp-tbs.png \
 systray_rounded_corners.png \
-theme-label.png
+theme-label.png \
+glow.png
 

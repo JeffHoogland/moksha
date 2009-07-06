@@ -11,6 +11,8 @@
 
 EAPI E_Config *e_config = NULL;
 
+static int _e_config_revisions = 9;
+
 /* local subsystem functions */
 static void _e_config_save_cb(void *data);
 static void _e_config_free(E_Config *cfg);
@@ -68,9 +70,20 @@ e_config_init(void)
 	ef = eet_open(buf, EET_FILE_MODE_READ);
 	if (!ef)
 	  {
-	     /* use system if no user profile config */
-	     e_prefix_data_concat_static(buf, "data/config/profile.cfg");
-	     ef = eet_open(buf, EET_FILE_MODE_READ);
+             int i;
+             
+             for (i =1; i <= _e_config_revisions; i++)
+               {
+                  e_user_dir_snprintf(buf, sizeof(buf), "config/profile.%i.cfg", i);
+                  ef = eet_open(buf, EET_FILE_MODE_READ);
+                  if (ef) break;
+               }
+             if (!ef)
+               {
+                  /* use system if no user profile config */
+                  e_prefix_data_concat_static(buf, "data/config/profile.cfg");
+                  ef = eet_open(buf, EET_FILE_MODE_READ);
+               }
 	  }
 	if (ef)
 	  {
@@ -1274,6 +1287,7 @@ e_config_domain_load(const char *domain, E_Config_DD *edd)
    Eet_File *ef;
    char buf[4096];
    void *data = NULL;
+   int i;
 
    e_user_dir_snprintf(buf, sizeof(buf), "config/%s/%s.cfg",
 		       _e_config_profile, domain);
@@ -1282,7 +1296,22 @@ e_config_domain_load(const char *domain, E_Config_DD *edd)
      {
 	data = eet_data_read(ef, edd, "config");
 	eet_close(ef);
-        return data;
+        if (data) return data;
+     }
+   
+   for (i =1; i <= _e_config_revisions; i++)
+     {
+        char buf2[4096];
+        
+        e_user_dir_snprintf(buf, sizeof(buf), "config/%s/%s.%i.cfg",
+                            _e_config_profile, domain, i);
+        ef = eet_open(buf, EET_FILE_MODE_READ);
+        if (ef)
+          {
+             data = eet_data_read(ef, edd, "config");
+             eet_close(ef);
+             if (data) return data;
+          }
      }
    return e_config_domain_system_load(domain, edd);
 }
@@ -1326,8 +1355,23 @@ e_config_profile_save(void)
 	if (_e_config_eet_close_handle(ef, buf2))
 	  {
 	     int ret;
-
-	     ret = ecore_file_mv(buf2, buf);
+             
+             if (_e_config_revisions > 0)
+               {
+                  int i;
+                  char bsrc[4096], bdst[4096];
+                  
+                  for (i = _e_config_revisions; i > 1; i--)
+                    {
+                       e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/profile.%i.cfg", i - 1);
+                       e_user_dir_snprintf(bdst, sizeof(bdst), "config/profile.%i.cfg", i);
+                       ecore_file_mv(bsrc, bdst);
+                    }
+                  e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/profile.cfg");
+                  e_user_dir_snprintf(bdst, sizeof(bdst), "config/profile.1.cfg");
+                  ecore_file_mv(bsrc, bdst);
+               }
+             ret = ecore_file_mv(buf2, buf);
 	     if (!ret)
 	       {
 		  printf("*** Error saving profile. ***");
@@ -1374,6 +1418,21 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
 	ok = eet_data_write(ef, edd, "config", data, 1);
 	if (_e_config_eet_close_handle(ef, buf2))
 	  {
+             if (_e_config_revisions > 0)
+               {
+                  int i;
+                  char bsrc[4096], bdst[4096];
+                  
+                  for (i = _e_config_revisions; i > 1; i--)
+                    {
+                       e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/%s/%s.%i.cfg", _e_config_profile, domain, i - 1);
+                       e_user_dir_snprintf(bdst, sizeof(bdst), "config/%s/%s.%i.cfg", _e_config_profile, domain, i);
+                       ecore_file_mv(bsrc, bdst);
+                    }
+                  e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/%s/%s.cfg", _e_config_profile, domain);
+                  e_user_dir_snprintf(bdst, sizeof(bdst), "config/%s/%s.1.cfg", _e_config_profile, domain);
+                  ecore_file_mv(bsrc, bdst);
+               }
 	     ret = ecore_file_mv(buf2, buf);
 	     if (!ret)
 	       {
