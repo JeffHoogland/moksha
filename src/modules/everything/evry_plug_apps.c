@@ -144,8 +144,9 @@ _action(Evry_Plugin *p, Evry_Item *it, const char *input)
 	  files = eina_list_append(files, inst->candidate->uri);
 
 	zone = e_util_zone_current_get(e_manager_current_get());
-	e_exec(zone, desktop, NULL, files, NULL /*"everything"*/);
 
+	e_exec(zone, desktop, NULL, files, "everything");
+	
 	if (!it)
 	  efreet_desktop_free(desktop);
 
