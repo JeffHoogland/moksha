@@ -1,11 +1,11 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static int  _fetch(const char *input);
-static int  _action(Evry_Item *item, const char *input);
-static void _cleanup(void);
-static void _item_add(E_Configure_It *eci, int prio);
-static void _item_icon_get(Evry_Item *it, Evas *e);
+static int  _fetch(Evry_Plugin *p, const char *input);
+static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
+static void _cleanup(Evry_Plugin *p);
+static void _item_add(Evry_Plugin *p, E_Configure_It *eci, int prio);
+static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 static int  _cb_sort(const void *data1, const void *data2);
 
 static Evry_Plugin *p;
@@ -18,7 +18,6 @@ evry_plug_config_init(void)
    p->name = "Settings";
    p->type_in  = "NONE";
    p->type_out = "NONE";
-   p->prio = 4;
    p->fetch = &_fetch;
    p->action = &_action;
    p->cleanup = &_cleanup;
@@ -38,7 +37,7 @@ evry_plug_config_shutdown(void)
 }
 
 static int
-_action(Evry_Item *it, const char *input)
+_action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
    E_Configure_It *eci, *eci2;
    E_Container *con;
@@ -75,7 +74,7 @@ _action(Evry_Item *it, const char *input)
 }
 
 static void
-_cleanup(void)
+_cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
 
@@ -87,7 +86,7 @@ _cleanup(void)
 }
 
 static int
-_fetch(const char *input)
+_fetch(Evry_Plugin *p, const char *input)
 {
    E_Manager *man;
    E_Zone *zone;
@@ -98,7 +97,7 @@ _fetch(const char *input)
    E_Configure_Cat *ecat;
    E_Configure_It *eci;
 
-   _cleanup();
+   _cleanup(p);
 
    snprintf(match1, sizeof(match1), "%s*", input);
    snprintf(match2, sizeof(match2), "*%s*", input);
@@ -114,13 +113,13 @@ _fetch(const char *input)
 		  if (eci->pri >= 0)
 		    {
 		       if (e_util_glob_case_match(eci->label, match1))
-			 _item_add(eci, 1);
+			 _item_add(p, eci, 1);
 		       else if (e_util_glob_case_match(eci->label, match2))
-			 _item_add(eci, 2);
+			 _item_add(p, eci, 2);
 		       else if (e_util_glob_case_match(ecat->label, match1))
-			 _item_add(eci, 3);
+			 _item_add(p, eci, 3);
 		       else if (e_util_glob_case_match(ecat->label, match2))
-			 _item_add(eci, 4);
+			 _item_add(p, eci, 4);
 		    }
 	       }
 	  }
@@ -136,7 +135,7 @@ _fetch(const char *input)
 }
 
 static void
-_item_icon_get(Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    E_Configure_It *eci = it->data[0];
    Evas_Object *o = NULL;
@@ -155,7 +154,7 @@ _item_icon_get(Evry_Item *it, Evas *e)
 }
 
 static void
-_item_add(E_Configure_It *eci, int prio)
+_item_add(Evry_Plugin *p, E_Configure_It *eci, int prio)
 {
    Evry_Item *it;
 

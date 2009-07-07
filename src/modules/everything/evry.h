@@ -1,13 +1,11 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
+
+#include "e_mod_main.h"
+
 #ifdef E_TYPEDEFS
 
-typedef struct _Evry_Plugin Evry_Plugin;
-typedef struct _Evry_Item   Evry_Item;
-typedef struct _Evry_Action Evry_Action;
-typedef struct _Evry_Config Evry_Config;
-typedef struct _Evry_App Evry_App;
 
 
 /* typedef enum _Evry_Plugin_Type
@@ -97,6 +95,7 @@ struct _Evry_Plugin
 
   /* not to be set by plugin! */
   Evas_Object *tab;
+  Plugin_Config *config;
 };  
 
 struct _Evry_Action

@@ -10,11 +10,11 @@ struct _Inst
   E_DBus_Connection *conn;
 };
 
-static int  _fetch(const char *input);
-static int  _action(Evry_Item *it, const char *input);
-static void _cleanup(void);
-static void _item_add(char *file, char *service, char *mime, int prio);
-static void _item_icon_get(Evry_Item *it, Evas *e);
+static int  _fetch(Evry_Plugin *p, const char *input);
+static int  _action(Evry_Plugin *p, Evry_Item *it, const char *input);
+static void _cleanup(Evry_Plugin *p);
+static void _item_add(Evry_Plugin *p, char *file, char *service, char *mime, int prio);
+static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 static void _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error);
 
 static Evry_Plugin *p;
@@ -32,7 +32,6 @@ evry_plug_tracker_init(void)
    p->type_in = "NONE";
    p->type_out = "FILE";
    p->need_query = 1;
-   p->prio = 3;
    p->fetch = &_fetch;
    p->action = &_action;
    p->cleanup = &_cleanup;
@@ -64,13 +63,13 @@ evry_plug_tracker_shutdown(void)
 }
 
 static int
-_action(Evry_Item *it, const char *input)
+_action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
    return EVRY_ACTION_OTHER;
 }
 
 static void
-_cleanup(void)
+_cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
    
@@ -84,7 +83,7 @@ _cleanup(void)
 }
 
 static int
-_fetch(const char *input)
+_fetch(Evry_Plugin *p, const char *input)
 {
    Eina_List *list;
    DBusMessage *msg;
@@ -95,7 +94,7 @@ _fetch(const char *input)
    char *service = "Files";
    char *match;
    
-   _cleanup(); 
+   _cleanup(p); 
 
    match = malloc(sizeof(char) * strlen(input) + 2);
    sprintf(match, "%s*", input);
@@ -120,7 +119,7 @@ _fetch(const char *input)
 }
 
 static void
-_item_icon_get(Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    char *item_path;
 
@@ -146,7 +145,7 @@ _item_icon_get(Evry_Item *it, Evas *e)
 }
 
 static void
-_item_add(char *file, char *service, char *mime, int prio)
+_item_add(Evry_Plugin *p, char *file, char *service, char *mime, int prio)
 {
    Evry_Item *it;   
    
@@ -194,7 +193,7 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 
 		  if (uri && service && mime)
 		    {
-		       _item_add(uri, service, mime, 1); 
+		       _item_add(p, uri, service, mime, 1); 
 		    }
 	       }
 	     

@@ -9,14 +9,14 @@ struct _State
   Eina_List  *items;
 };
 
-static int  _begin(Evry_Item *it);
-static int  _fetch(const char *input);
-static int  _action(Evry_Item *it, const char *input);
-static void _cleanup(void);
+static int  _begin(Evry_Plugin *p, Evry_Item *it);
+static int  _fetch(Evry_Plugin *p, const char *input);
+static int  _action(Evry_Plugin *p, Evry_Item *it, const char *input);
+static void _cleanup(Evry_Plugin *p);
 static int  _cb_sort(const void *data1, const void *data2);
-static void _item_icon_get(Evry_Item *it, Evas *e);
-static void _list_free(void);
-static Evry_Item *_item_fill(const char *directory, const char *file);
+static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
+static void _list_free(Evry_Plugin *p);
+static Evry_Item *_item_fill(Evry_Plugin *p, const char *directory, const char *file);
 
 static Evry_Plugin *p;
 static Eina_List *stack = NULL;
@@ -29,7 +29,6 @@ evry_plug_dir_browse_init(void)
    p->name = "Browse Files";
    p->type_in  = "NONE|FILE";
    p->type_out = "FILE";
-   p->prio = 2;
    p->begin = &_begin;
    p->fetch = &_fetch;
    p->action = &_action;
@@ -51,7 +50,7 @@ evry_plug_dir_browse_shutdown(void)
 }
 
 static int
-_begin(Evry_Item *it)
+_begin(Evry_Plugin *p, Evry_Item *it)
 {
    State *s;
 
@@ -76,13 +75,13 @@ _begin(Evry_Item *it)
 }
 
 static int
-_action(Evry_Item *it, const char *input)
+_action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
    return EVRY_ACTION_OTHER;
 }
 
 static void
-_list_free()
+_list_free(Evry_Plugin *p)
 {
    Evry_Item *it;
 
@@ -97,7 +96,7 @@ _list_free()
 }
 
 static void
-_cleanup()
+_cleanup(Evry_Plugin *p)
 {
    State *s;
 
@@ -105,7 +104,7 @@ _cleanup()
 
    s = stack->data;
 
-   _list_free();
+   _list_free(p);
 
    eina_stringshare_del(s->directory);
 
@@ -122,7 +121,7 @@ _cleanup()
 
 /* based on directory-watcher from drawer module  */
 static int
-_fetch(const char *input)
+_fetch(Evry_Plugin *p, const char *input)
 {
    Eina_List *files;
    char *file;
@@ -131,7 +130,7 @@ _fetch(const char *input)
    char match2[4096];
    State *s = stack->data;
 
-   _list_free();
+   _list_free(p);
 
    files = ecore_file_ls(s->directory);
 
@@ -155,17 +154,17 @@ _fetch(const char *input)
 	  {
 	     if (e_util_glob_case_match(file, match1))
 	       {
-		  it  = _item_fill(s->directory, file);
+		  it  = _item_fill(p, s->directory, file);
 		  it->priority += 1;
 	       }
 	     else if (e_util_glob_case_match(file, match2))
 	       {
-		  it = _item_fill(s->directory, file);
+		  it = _item_fill(p, s->directory, file);
 	       }
 	  }
 	else
 	  {
-	     it  = _item_fill(s->directory, file);
+	     it  = _item_fill(p, s->directory, file);
 	  }
 
 	if (it)
@@ -188,7 +187,7 @@ _fetch(const char *input)
 
 /* based on directory-watcher from drawer module  */
 static Evry_Item *
-_item_fill(const char *directory, const char *file)
+_item_fill(Evry_Plugin *p, const char *directory, const char *file)
 {
    Evry_Item *it = NULL;
    char buf[4096];
@@ -241,7 +240,7 @@ _item_fill(const char *directory, const char *file)
 }
 
 static void
-_item_icon_get(Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    char *item_path;
 

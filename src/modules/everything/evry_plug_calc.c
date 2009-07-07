@@ -5,13 +5,13 @@
  * - dc support?
  */
 
-static int  _begin(Evry_Item *it);
-static int  _fetch(const char *input);
-static int  _action(Evry_Item *item, const char *input);
-static void _cleanup(void);
-static void _item_add(char *output, int prio);
+static int  _begin(Evry_Plugin *p, Evry_Item *it);
+static int  _fetch(Evry_Plugin *p, const char *input);
+static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
+static void _cleanup(Evry_Plugin *p);
+static void _item_add(Evry_Plugin *p, char *output, int prio);
 static int  _cb_sort(const void *data1, const void *data2);
-static void _item_icon_get(Evry_Item *it, Evas *e);
+static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 static int  _cb_data(void *data, int type, void *event);
 
 static Evry_Plugin *p;
@@ -29,7 +29,6 @@ evry_plug_calc_init(void)
    p->type_in  = "NONE";
    p->type_out = "NONE";
    p->need_query = 0;
-   p->prio = 6;
    p->async_query = 1;
    p->begin = &_begin;
    p->fetch = &_fetch;
@@ -59,7 +58,7 @@ evry_plug_calc_shutdown(void)
 }
 
 static int
-_begin(Evry_Item *it)
+_begin(Evry_Plugin *p, Evry_Item *it)
 {
 
    data_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _cb_data, p);
@@ -72,7 +71,7 @@ _begin(Evry_Item *it)
 }
 
 static void
-_cleanup()
+_cleanup(Evry_Plugin *p)
 {
    Evry_Item *it, *it2;
    int i = 0;
@@ -108,7 +107,7 @@ _send_input(const char *input)
 }
 
 static int
-_action(Evry_Item *it, const char *input)
+_action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
    if (!it)
      {
@@ -139,7 +138,7 @@ _action(Evry_Item *it, const char *input)
 
 	     it = p->items->data;
 
-	     _item_add((char *) it->label, 1);
+	     _item_add(p, (char *) it->label, 1);
 	  }
 
 	evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
@@ -157,7 +156,7 @@ _action(Evry_Item *it, const char *input)
 	if (p->items->data == it)
 	  {
 	     Evry_Item *it2 = p->items->data;
-	     _item_add((char *) it2->label, 1);
+	     _item_add(p, (char *) it2->label, 1);
 	  }
      }
 
@@ -165,7 +164,7 @@ _action(Evry_Item *it, const char *input)
 }
 
 static int
-_fetch(const char *input)
+_fetch(Evry_Plugin *p, const char *input)
 {
    if (history)
      {
@@ -179,13 +178,13 @@ _fetch(const char *input)
 }
 
 static void
-_item_icon_get(Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    it->o_icon = NULL;
 }
 
 static void
-_item_add(char *output, int prio)
+_item_add(Evry_Plugin *p, char *output, int prio)
 {
    Evry_Item *it;
 
@@ -217,7 +216,7 @@ _cb_data(void *data, int type, void *event)
 	     it->label = eina_stringshare_add(l->line);
 	  }
 	else
-	  _item_add(l->line, 1);
+	  _item_add(p, l->line, 1);
      }
 
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);

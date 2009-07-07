@@ -10,16 +10,17 @@ struct _Inst
   Evry_Item *candidate;
 };
 
-static int  _begin(Evry_Item *item);
-static int  _fetch(const char *input);
-static int  _action(Evry_Item *item, const char *input);
-static void _cleanup(void);
-static void _item_add(Efreet_Desktop *desktop, char *file, int prio);
+static int  _begin(Evry_Plugin *p, Evry_Item *item);
+static int  _fetch(Evry_Plugin *p, const char *input);
+static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
+static void _cleanup(Evry_Plugin *p);
+static void _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio);
 static int  _cb_sort(const void *data1, const void *data2);
-static void _item_icon_get(Evry_Item *it, Evas *e);
+static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 static int _exec_action(void);
 
-static Evry_Plugin *p;
+static Evry_Plugin *p1;
+static Evry_Plugin *p2;
 static Evry_Action *act;
 static Inst *inst;
 
@@ -27,23 +28,36 @@ static Inst *inst;
 EAPI int
 evry_plug_apps_init(void)
 {
-   p = E_NEW(Evry_Plugin, 1);
-   p->type_in  = "NONE|FILE";
-   p->type_out = "NONE";
-   p->need_query = 0;
-   p->begin = &_begin;
-   p->fetch = &_fetch;
-   p->action = &_action;
-   p->cleanup = &_cleanup;
-   p->icon_get = &_item_icon_get;
-   evry_plugin_register(p);
+   p1 = E_NEW(Evry_Plugin, 1);
+   p1->name = "Applications";
+   p1->type_in  = "NONE";
+   p1->type_out = "APPLICATION";
+   p1->need_query = 0;
+   p1->begin = &_begin;
+   p1->fetch = &_fetch;
+   p1->action = &_action;
+   p1->cleanup = &_cleanup;
+   p1->icon_get = &_item_icon_get;
+   evry_plugin_register(p1);
+
+   p2 = E_NEW(Evry_Plugin, 1);
+   p2->name = "Open With...";
+   p2->type_in  = "FILE";
+   p2->type_out = "NONE";
+   p2->need_query = 0;
+   p2->begin = &_begin;
+   p2->fetch = &_fetch;
+   p2->action = &_action;
+   p2->cleanup = &_cleanup;
+   p2->icon_get = &_item_icon_get;
+   evry_plugin_register(p2);
 
    act = E_NEW(Evry_Action, 1);
    act->name = "Open File...";
    act->type_in1 = "APPLICATION";
    act->type_in2 = "FILE";
    act->type_out = "NONE";
-   act->action =_exec_action;
+   act->action = &_exec_action;
    evry_action_register(act);
 
    inst = NULL;
@@ -54,14 +68,15 @@ evry_plug_apps_init(void)
 EAPI int
 evry_plug_apps_shutdown(void)
 {
-   evry_plugin_unregister(p);
+   evry_plugin_unregister(p1);
+   evry_plugin_unregister(p2);
    evry_action_unregister(act);
 
    return 1;
 }
 
 static int
-_begin(Evry_Item *it)
+_begin(Evry_Plugin *p, Evry_Item *it)
 {
    const char *mime;
 
@@ -69,10 +84,6 @@ _begin(Evry_Item *it)
 
    if (it)
      {
-	p->name = "Open With...";
-	p->type_out = "NONE";
-	p->prio = 3;
-
 	if (!it->uri) return 0;
 
 	if (!it->mime)
@@ -88,10 +99,6 @@ _begin(Evry_Item *it)
      }
    else
      {
-	p->name = "Applications";
-	p->type_out = "APPLICATION";
-	p->prio = 1;
-
 	inst = E_NEW(Inst, 1);
      }
 
@@ -99,7 +106,7 @@ _begin(Evry_Item *it)
 }
 
 static int
-_action(Evry_Item *it, const char *input)
+_action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
    E_Zone *zone;
    Evry_App *app = NULL;
@@ -151,7 +158,7 @@ _action(Evry_Item *it, const char *input)
 }
 
 static void
-_list_free(void)
+_list_free(Evry_Plugin *p)
 {
    Evry_Item *it;
    Evry_App *app;
@@ -166,9 +173,9 @@ _list_free(void)
 }
 
 static void
-_cleanup(void)
+_cleanup(Evry_Plugin *p)
 {
-   _list_free();
+   _list_free(p);
 
    if (inst)
      {
@@ -180,7 +187,7 @@ _cleanup(void)
 }
 
 static int
-_fetch(const char *input)
+_fetch(Evry_Plugin *p, const char *input)
 {
    Eina_List *l;
    Efreet_Desktop *desktop;
@@ -188,14 +195,14 @@ _fetch(const char *input)
    char match1[4096];
    char match2[4096];
 
-   _list_free();
+   _list_free(p);
 
    if (inst->apps)
      {
 	if (!input)
 	  {
 	     EINA_LIST_FOREACH(inst->apps, l, desktop)
-	       _item_add(desktop, NULL, 1);
+	       _item_add(p, desktop, NULL, 1);
 	  }
 	else
 	  {
@@ -205,19 +212,19 @@ _fetch(const char *input)
 	     EINA_LIST_FOREACH(inst->apps, l, desktop)
 	       {
 		  if (e_util_glob_case_match(desktop->exec, match1))
-		    _item_add(desktop, NULL, 1);
+		    _item_add(p, desktop, NULL, 1);
 		  else if (e_util_glob_case_match(desktop->exec, match2))
-		    _item_add(desktop, NULL, 2);
+		    _item_add(p, desktop, NULL, 2);
 		  else if (e_util_glob_case_match(desktop->name, match1))
-		    _item_add(desktop, NULL, 1);
-		  else if (e_util_glob_case_match(desktop->name, match2))
-		    _item_add(desktop, NULL, 2);
+		    _item_add(p, desktop, NULL, 1);
+		  else if (p, e_util_glob_case_match(desktop->name, match2))
+		    _item_add(p, desktop, NULL, 2);
 		  else if (desktop->comment)
 		    {
 		       if (e_util_glob_case_match(desktop->comment, match1))
-			 _item_add(desktop, NULL, 3);
+			 _item_add(p, desktop, NULL, 3);
 		       else if (e_util_glob_case_match(desktop->comment, match2))
-			 _item_add(desktop, NULL, 4);
+			 _item_add(p, desktop, NULL, 4);
 		    }
 	       }
 	  }
@@ -229,28 +236,28 @@ _fetch(const char *input)
 	snprintf(match1, sizeof(match1), "%s*", input);
 	l = efreet_util_desktop_exec_glob_list(match1);
 	EINA_LIST_FREE(l, desktop)
-	  _item_add(desktop, NULL, 1);
+	  _item_add(p, desktop, NULL, 1);
 
 	snprintf(match1, sizeof(match1), "*%s*", input);
 	l = efreet_util_desktop_name_glob_list(match1);
 	EINA_LIST_FREE(l, desktop)
-	  _item_add(desktop, NULL, 2);
+	  _item_add(p, desktop, NULL, 2);
 
 	// TODO make these optional/configurable
 	l = efreet_util_desktop_generic_name_glob_list(match1);
 	EINA_LIST_FREE(l, desktop)
-	  _item_add(desktop, NULL, 3);
+	  _item_add(p, desktop, NULL, 3);
 
 	l = efreet_util_desktop_comment_glob_list(match1);
 	EINA_LIST_FREE(l, desktop)
-	  _item_add(desktop, NULL, 3);
+	  _item_add(p, desktop, NULL, 3);
      }
    else if (!p->items)
      {
 	// TODO option for popular/recent
 	l = e_exehist_list_get();
 	EINA_LIST_FREE(l, file)
-	  _item_add(NULL, file, 1);
+	  _item_add(p, NULL, file, 1);
      }
 
    if (inst->added)
@@ -270,7 +277,7 @@ _fetch(const char *input)
 }
 
 static void
-_item_add(Efreet_Desktop *desktop, char *file, int prio)
+_item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 {
    Evry_Item *it;
    Evry_App *app;
@@ -355,7 +362,7 @@ _item_add(Efreet_Desktop *desktop, char *file, int prio)
 }
 
 static void
-_item_icon_get(Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    Evry_App *app = it->data[0];
 
@@ -396,14 +403,14 @@ _cb_sort(const void *data1, const void *data2)
 }
 
 static int
-_exec_action(void)
+_exec_action()
 {
    if (act->thing1 && act->thing2)
      {
 	inst = E_NEW(Inst, 1);
 	inst->candidate = act->thing2;
 
-	_action(act->thing1, NULL);
+	_action(NULL, act->thing1, NULL);
 
 	E_FREE(inst);
 	inst = NULL;

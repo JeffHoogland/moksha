@@ -1,7 +1,7 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
-#include "e.h"
+
 #include "e_mod_main.h"
 
 /* actual module specifics */
@@ -16,7 +16,7 @@ static E_Int_Menu_Augmentation *maug = NULL;
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
-Config *evry_conf;
+Config *evry_conf = NULL;
 
 /* module setup */
 EAPI E_Module_Api e_modapi =
@@ -33,13 +33,16 @@ e_modapi_init(E_Module *m)
 	    e_user_homedir_get(), e_config_profile_get());
    ecore_file_mkdir(buf);
 
-   conf_item_edd = E_CONFIG_DD_NEW("Source_Config", Source_Config);
+   conf_item_edd = E_CONFIG_DD_NEW("Plugin_Config", Plugin_Config);
 #undef T
 #undef D
-#define T Source_Config
+#define T Plugin_Config
 #define D conf_item_edd
    E_CONFIG_VAL(D, T, name, STR);
    E_CONFIG_VAL(D, T, min_query, INT);
+   E_CONFIG_VAL(D, T, loaded, INT);
+   E_CONFIG_VAL(D, T, enabled, INT);
+   E_CONFIG_VAL(D, T, priority, INT);
    conf_edd = E_CONFIG_DD_NEW("Config", Config);
 #undef T
 #undef D
@@ -51,7 +54,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, rel_y, DOUBLE);
    E_CONFIG_VAL(D, T, scroll_animate, INT);
    E_CONFIG_VAL(D, T, scroll_speed, DOUBLE);
-   E_CONFIG_LIST(D, T, sources, conf_item_edd);
+   E_CONFIG_LIST(D, T, plugins_conf, conf_item_edd);
 #undef T
 #undef D
    evry_conf = e_config_domain_load("module.everything", conf_edd);
@@ -64,10 +67,8 @@ e_modapi_init(E_Module *m)
 	evry_conf->width = 400;
 	evry_conf->height = 350;
 	evry_conf->scroll_animate = 1;
-	evry_conf->scroll_speed = 0.5;
+	evry_conf->scroll_speed = 0.08;
      }
-
-   evry_conf->scroll_speed = 0.08;
    
    /* conf_module = m; */
    evry_init();

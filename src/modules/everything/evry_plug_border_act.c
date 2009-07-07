@@ -8,12 +8,12 @@ struct _Inst
   E_Border *border;
 };
 
-static int  _begin(Evry_Item *item);
-static int  _fetch(const char *input);
-static int  _action(Evry_Item *item, const char *input);
-static void _cleanup(void);
-static void _item_icon_get(Evry_Item *it, Evas *e);
-static void _item_add(const char *label, void (*action_cb) (E_Border *bd), const char *icon);
+static int  _begin(Evry_Plugin *p, Evry_Item *item);
+static int  _fetch(Evry_Plugin *p, const char *input);
+static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
+static void _cleanup(Evry_Plugin *p);
+static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
+static void _item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), const char *icon);
 
 static Evry_Plugin *p;
 static Inst *inst;
@@ -27,7 +27,6 @@ evry_plug_border_act_init(void)
    p->type_in  = "BORDER";
    p->type_out = "NONE";
    p->need_query = 0;
-   p->prio = 0;
    p->begin = &_begin;
    p->fetch = &_fetch;
    p->action = &_action;
@@ -64,7 +63,7 @@ _act_cb_border_minimize(E_Border *bd)
 }
 
 static int
-_begin(Evry_Item *item)
+_begin(Evry_Plugin *p, Evry_Item *item)
 {
    E_Border *bd;
 
@@ -76,20 +75,20 @@ _begin(Evry_Item *item)
 }
 
 static int
-_fetch(const char *input)
+_fetch(Evry_Plugin *p, const char *input)
 {
-   _cleanup();
+   _cleanup(p);
 
-   _item_add(_("Iconify"), _act_cb_border_minimize,
+   _item_add(p, _("Iconify"), _act_cb_border_minimize,
 	     "e/widgets/border/default/minimize");
 
-   _item_add(_("Close"), _act_cb_border_close,
+   _item_add(p, _("Close"), _act_cb_border_close,
 	     "e/widgets/border/default/close");
    return 1;
 }
 
 static int
-_action(Evry_Item *item, const char *input)
+_action(Evry_Plugin *p, Evry_Item *item, const char *input)
 {
    void (*border_action) (E_Border *bd);
    border_action = item->data[0];
@@ -99,7 +98,7 @@ _action(Evry_Item *item, const char *input)
 }
 
 static void
-_cleanup(void)
+_cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
 
@@ -112,7 +111,7 @@ _cleanup(void)
 }
 
 static void
-_item_add(const char *label, void (*action_cb) (E_Border *bd), const char *icon)
+_item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), const char *icon)
 {
    Evry_Item *it;
 
@@ -124,7 +123,7 @@ _item_add(const char *label, void (*action_cb) (E_Border *bd), const char *icon)
 }
 
 static void
-_item_icon_get(Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    it->o_icon = edje_object_add(e);
    e_theme_edje_object_set(it->o_icon, "base/theme/borders", (const char *)it->data[1]);

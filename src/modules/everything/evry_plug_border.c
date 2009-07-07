@@ -1,12 +1,12 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static int  _fetch(const char *input);
-static int  _action(Evry_Item *item, const char *input);
-static void _cleanup(void);
-static void _item_add(E_Border *bd, int prio);
+static int  _fetch(Evry_Plugin *p, const char *input);
+static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
+static void _cleanup(Evry_Plugin *p);
+static void _item_add(Evry_Plugin *p, E_Border *bd, int prio);
 static int  _cb_sort(const void *data1, const void *data2);
-static void _item_icon_get(Evry_Item *it, Evas *e);
+static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 
 static Evry_Plugin *p;
 
@@ -19,7 +19,6 @@ evry_plug_border_init(void)
    p->type_in  = "NONE";
    p->type_out = "BORDER";
    p->need_query = 0;
-   p->prio = 0;
    p->fetch = &_fetch;
    p->action = &_action;
    p->cleanup = &_cleanup;
@@ -39,7 +38,7 @@ evry_plug_border_shutdown(void)
 }
 
 static int
-_action(Evry_Item *it, const char *input)
+_action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
    E_Border *bd;
    E_Zone *zone;
@@ -67,7 +66,7 @@ _action(Evry_Item *it, const char *input)
 }
 
 static void
-_cleanup()
+_cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
 
@@ -80,7 +79,7 @@ _cleanup()
 }
 
 static int
-_fetch(const char *input)
+_fetch(Evry_Plugin *p, const char *input)
 {
    E_Manager *man;
    E_Zone *zone;
@@ -91,7 +90,7 @@ _fetch(const char *input)
    E_Border *bd;
    E_Border_List *bl;
 
-   _cleanup();
+   _cleanup(p);
 
    man = e_manager_current_get();
    zone = e_util_zone_current_get(man);
@@ -108,17 +107,17 @@ _fetch(const char *input)
 	if (zone == bd->zone)
 	  {
 	     if (!input)
-	       _item_add(bd, 1);
+	       _item_add(p, bd, 1);
 	     else if (bd->client.icccm.name &&
 		      e_util_glob_case_match(bd->client.icccm.name, match1))
-	       _item_add(bd, 1);
+	       _item_add(p, bd, 1);
 	     else  if (e_util_glob_case_match(e_border_name_get(bd), match1))
-	       _item_add(bd, 1);
+	       _item_add(p, bd, 1);
 	     else if (bd->client.icccm.name &&
 		      e_util_glob_case_match(bd->client.icccm.name, match2))
-	       _item_add(bd, 2);
+	       _item_add(p, bd, 2);
 	     else if (e_util_glob_case_match(e_border_name_get(bd), match2))
-	       _item_add(bd, 2);
+	       _item_add(p, bd, 2);
 	  }
      }
    e_container_border_list_free(bl);
@@ -133,13 +132,13 @@ _fetch(const char *input)
 }
 
 static void
-_item_icon_get(Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    it->o_icon = e_border_icon_add(((E_Border *)it->data[0]), e);
 }
 
 static void
-_item_add(E_Border *bd, int prio)
+_item_add(Evry_Plugin *p, E_Border *bd, int prio)
 {
    Evry_Item *it;
 

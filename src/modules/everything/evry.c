@@ -1,6 +1,5 @@
 #include "e.h"
 #include "e_mod_main.h"
-#include "evry.h"
 
 #define INPUTLEN 40
 #define MATCH_LAG 0.33
@@ -63,14 +62,14 @@ static int  _evry_scroll_timer(void *data);
 static int  _evry_push_state(void);
 static int  _evry_pop_state(void);
 static void _evry_plugin_selector_show(Evry_Plugin *p);
-static int _evry_cb_plugin_sort(const void *data1, const void *data2);
+static int  _evry_cb_plugin_sort(const void *data1, const void *data2);
 
 static int  _evry_plug_act_select_init(void);
 static int  _evry_plug_act_select_actions_set(void);
-static int  _evry_plug_act_select_fetch(const char *input);
-static int  _evry_plug_act_select_action(Evry_Item *item, const char *input);
-static void _evry_plug_act_select_cleanup(void);
-static void _evry_plug_act_select_item_icon_get(Evry_Item *it, Evas *e);
+static int  _evry_plug_act_select_fetch(Evry_Plugin *p, const char *input);
+static int  _evry_plug_act_select_action(Evry_Plugin *p, Evry_Item *item, const char *input);
+static void _evry_plug_act_select_cleanup(Evry_Plugin *p);
+static void _evry_plug_act_select_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 
 /* local subsystem globals */
 static E_Popup     *popup = NULL;
@@ -87,7 +86,7 @@ static Ecore_Animator *scroll_animator = NULL;
 static Ecore_Timer *scroll_timer = NULL;
 static double       scroll_align_to;
 static double       scroll_align;
-static Eina_List   *plugins = NULL;
+/* static Eina_List   *plugins = NULL; */
 static Eina_List   *actions = NULL;
 static Evry_State  *cur_state = NULL;
 static Eina_List   *stack = NULL;
@@ -112,14 +111,44 @@ evry_shutdown(void)
 EAPI void
 evry_plugin_register(Evry_Plugin *plugin)
 {
-   plugins = eina_list_append(plugins, plugin);
+   Eina_List *l;
+   Plugin_Config *pc;
+   Eina_Bool found = 0;
+   
+   evry_conf->plugins = eina_list_append(evry_conf->plugins, plugin);
+
+   EINA_LIST_FOREACH(evry_conf->plugins_conf, l, pc)
+     {
+	if (pc->name && plugin->name && !strcmp(pc->name, plugin->name))
+	  {
+	     found = 1;
+	     break;
+	  }
+     }
+
+   if (!found)
+     {
+	pc = E_NEW(Plugin_Config, 1);
+	pc->name = eina_stringshare_add(plugin->name);
+	pc->enabled = 1;
+	pc->priority = eina_list_count(evry_conf->plugins);
+
+	evry_conf->plugins_conf = eina_list_append(evry_conf->plugins_conf, pc);	
+     }
+
+   plugin->config = pc;
+
+   evry_conf->plugins = eina_list_sort(evry_conf->plugins,
+				       eina_list_count(evry_conf->plugins),
+				       _evry_cb_plugin_sort);
+   
    /* TODO sorting, initialization, etc */
 }
 
 EAPI void
 evry_plugin_unregister(Evry_Plugin *plugin)
 {
-   plugins = eina_list_remove(plugins, plugin);
+   evry_conf->plugins = eina_list_remove(evry_conf->plugins, plugin);
    /* cleanup */
 }
 
@@ -242,7 +271,7 @@ evry_hide(void)
 
 	EINA_LIST_FREE(s->plugins, p)
 	  {
-	     p->cleanup();
+	     p->cleanup(p);
 
 	     if (p->tab)
 	       {
@@ -307,9 +336,6 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	if (!eina_list_data_find(s->cur_plugins, p))
 	  {
 	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
-	     s->cur_plugins = eina_list_sort(s->cur_plugins,
-					     eina_list_count(s->cur_plugins),
-					     _evry_cb_plugin_sort);
 	     _evry_plugin_selector_show(p);
 	  }
 	else
@@ -320,7 +346,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	  }
 
 	if ((!s->cur_plugin && s->cur_plugins) || (s->cur_plugin == p) ||
-	    (s->plugin_auto_selected && (s->cur_plugin->prio > p->prio)))
+	    (s->plugin_auto_selected && (s->cur_plugin->config->priority > p->config->priority)))
 	  {
 	     if (!s->cur_plugin)
 	       s->plugin_auto_selected = 1;
@@ -343,7 +369,7 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
 {
    const Evry_Plugin *p1 = data1;
    const Evry_Plugin *p2 = data2;
-   return p1->prio - p2->prio;
+   return p1->config->priority - p2->config->priority;
 }
 
 static int
@@ -369,7 +395,7 @@ _evry_push_state(void)
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
 	     if (p != s->cur_plugin)
-	       p->cleanup();
+	       p->cleanup(p);
 
 	     if (p->tab)
 	       {
@@ -379,8 +405,10 @@ _evry_push_state(void)
 	  }
      }
 
-   EINA_LIST_FOREACH(plugins, l, p)
+   EINA_LIST_FOREACH(evry_conf->plugins, l, p)
      {
+	if (!p->config->enabled) continue;
+	
 	if (strstr(p->type_in, cur_type))
 	  {
 	     /* printf("%s- in:%s out:%s\n", p->name, p->type_in, p->type_out); */
@@ -400,7 +428,7 @@ _evry_push_state(void)
 		  if (s && (s->cur_plugin != action_selector))
 		    it = s->sel_item;
 
-		  if (p->begin(it))
+		  if (p->begin(p, it))
 		    list = eina_list_append(list, p);
 	       }
 	     else
@@ -418,7 +446,7 @@ _evry_push_state(void)
 
    if (!list) return 0;
 
-   list = eina_list_sort(list, eina_list_count(list), _evry_cb_plugin_sort);
+   /* list = eina_list_sort(list, eina_list_count(list), _evry_cb_plugin_sort); */
 
    _evry_list_clear();
 
@@ -473,7 +501,7 @@ _evry_pop_state(void)
    free(s->input);
 
    EINA_LIST_FOREACH(s->plugins, l, p)
-     p->cleanup();
+     p->cleanup(p);
 
    E_FREE(s);
 
@@ -504,7 +532,7 @@ _evry_pop_state(void)
 
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  if (p != s->cur_plugin && p->begin)
-	    p->begin(it);
+	    p->begin(p, it);
 
 	p = s->cur_plugin;
 	s->cur_plugin = NULL;
@@ -806,7 +834,7 @@ _evry_plugin_action(int finished)
    if (s->cur_plugin == action_selector)
      {
 	/* set cur_action and start plugins for second parameter (if required)*/
-	if (s->sel_item) _evry_plug_act_select_action(s->sel_item, s->input);
+	if (s->sel_item) _evry_plug_act_select_action(s->cur_plugin, s->sel_item, s->input);
 
 	finished = 0;
      }
@@ -826,7 +854,7 @@ _evry_plugin_action(int finished)
 
 	if (s->cur_plugin->action)
 	  {
-	     ret = s->cur_plugin->action(s->sel_item, s->input);
+	     ret = s->cur_plugin->action(s->cur_plugin, s->sel_item, s->input);
 	  }
 	if (ret == EVRY_ACTION_OTHER)
 	  {
@@ -900,7 +928,7 @@ _evry_show_items(Evry_Plugin *p)
 				       _evry_cb_item_mouse_out, it);
 	evas_object_show(o);
 
-	p->icon_get(it, popup->evas);
+	p->icon_get(p, it, popup->evas);
 	if (edje_object_part_exists(o, "e.swallow.icons") && it->o_icon)
 	  {
 	     edje_object_part_swallow(o, "e.swallow.icons", it->o_icon);
@@ -950,9 +978,9 @@ _evry_matches_update(Evry_Plugin *cur_plugin)
    EINA_LIST_FOREACH(s->plugins, l, p)
      {
 	if (strlen(s->input) == 0)
-	  items = !p->need_query ? p->fetch(NULL) : 0;
+	  items = !p->need_query ? p->fetch(p, NULL) : 0;
 	else
-	  items = p->fetch(s->input);
+	  items = p->fetch(p, s->input);
 
 	if (!s->initial || (items && eina_list_count(p->items) > 0))
 	  {
@@ -960,8 +988,10 @@ _evry_matches_update(Evry_Plugin *cur_plugin)
 	  }
      }
 
-   EINA_LIST_FOREACH(plugins, l, p)
+   EINA_LIST_FOREACH(evry_conf->plugins, l, p)
      {
+	if (!p->config->enabled) continue;
+	
 	if (p->tab && !eina_list_data_find(s->cur_plugins, p))
 	  {
 	     evas_object_del(p->tab);
@@ -1323,7 +1353,7 @@ _evry_plug_act_select_actions_set(void)
    Evry_State *s = cur_state;
    Evry_Plugin *p = action_selector;
 
-   _evry_plug_act_select_cleanup();
+   _evry_plug_act_select_cleanup(p);
 
    const char *type = s->cur_plugin->type_out;
 
@@ -1342,9 +1372,8 @@ _evry_plug_act_select_actions_set(void)
 }
 
 static int
-_evry_plug_act_select_fetch(const char *input)
+_evry_plug_act_select_fetch(Evry_Plugin *p, const char *input)
 {
-   Evry_Plugin *p = action_selector;
    Evry_Action *act;
    Eina_List *l;
 
@@ -1367,7 +1396,7 @@ _evry_plug_act_select_fetch(const char *input)
 }
 
 static int
-_evry_plug_act_select_action(Evry_Item *it, const char *input)
+_evry_plug_act_select_action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
    Evry_Action *act = it->data[0];
    cur_state->cur_action = act;
@@ -1378,11 +1407,9 @@ _evry_plug_act_select_action(Evry_Item *it, const char *input)
 }
 
 static void
-_evry_plug_act_select_cleanup(void)
+_evry_plug_act_select_cleanup(Evry_Plugin *p)
 {
-
    Evry_Item *it;
-   Evry_Plugin *p = action_selector;
 
    EINA_LIST_FREE(p->items, it)
      {
@@ -1403,7 +1430,7 @@ _evry_plug_act_select_cleanup(void)
 }
 
 static void
-_evry_plug_act_select_item_icon_get(Evry_Item *it, Evas *e)
+_evry_plug_act_select_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 {
    Evry_Action *act = it->data[0];
 
