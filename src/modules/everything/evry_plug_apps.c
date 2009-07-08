@@ -95,7 +95,16 @@ _begin(Evry_Plugin *p, Evry_Item *it)
 
 	inst = E_NEW(Inst, 1);
 	inst->candidate = it;
+
 	inst->apps = efreet_util_desktop_mime_list(mime);
+
+	if (!inst->apps)
+	  {
+	     Efreet_Desktop *desktop;
+	     desktop = e_exehist_mime_desktop_get(mime);
+	     if (desktop)
+	       inst->apps = eina_list_append(inst->apps, desktop);
+	  }
      }
    else
      {
@@ -146,6 +155,9 @@ _action(Evry_Plugin *p, Evry_Item *it, const char *input)
 	zone = e_util_zone_current_get(e_manager_current_get());
 
 	e_exec(zone, desktop, NULL, files, "everything");
+
+	if (inst->candidate && inst->candidate->mime)
+	  e_exehist_mime_desktop_add(inst->candidate->mime, desktop);
 	
 	if (!it)
 	  efreet_desktop_free(desktop);
@@ -269,8 +281,8 @@ _fetch(Evry_Plugin *p, const char *input)
 
    if (p->items)
      {
-	if (input)
-	  p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
+	/* if (input) */
+	p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
 	return 1;
      }
 
@@ -322,17 +334,19 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
       l = efreet_util_desktop_exec_glob_list(match);
 
       EINA_LIST_FREE(l, desktop)
-	{
-	   if (desktop->exec && !strncmp(file, desktop->exec, len))
-	     {
-		found = 1;
-		break;
-	     }
-	}
-
+      	{
+      	   if (desktop->exec && !strncmp(file, desktop->exec, len))
+      	     {
+      		found = 1;
+      		break;
+      	     }
+      	}
+      
       eina_list_free(l);
       free(tmp);
 
+      /* desktop = efreet_desktop_get(file); */
+      /* if (!desktop || !desktop->exec) */
       if (!found)
 	eina_hash_add(inst->added, file, file);
    }
@@ -390,13 +404,26 @@ _cb_sort(const void *data1, const void *data2)
    it2 = data2;
    app1 = it1->data[0];
    app2 = it2->data[0];
-   e1 = efreet_util_path_to_file_id(app1->desktop->orig_path);
-   e2 = efreet_util_path_to_file_id(app2->desktop->orig_path);
+
+   if (app1->desktop)
+     e1 = app1->desktop->exec;
+     /* //e1 = efreet_util_path_to_file_id(app1->desktop->orig_path);
+      * e1 = app1->desktop->orig_path; */
+   else
+     e1 = app1->file;
+
+   if (app2->desktop)
+     e2 = app2->desktop->exec;
+     /* //e2 = efreet_util_path_to_file_id(app2->desktop->orig_path);
+      * e2 = app2->desktop->orig_path; */
+   else
+     e2 = app2->file;
+
    t1 = e_exehist_newest_run_get(e1);
    t2 = e_exehist_newest_run_get(e2);
 
-   if ((int)(t1 - t2))
-     return (int)(t1 - t2);
+   if ((int)(t2 - t1))
+     return (int)(t2 - t1);
    else if (it1->priority - it2->priority)
      return (it1->priority - it2->priority);
    // TODO compare exe strings?

@@ -627,7 +627,7 @@ _evry_cb_key_down(void *data, int type, void *event)
 	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
      _evry_clear();
    else  if ((!strcmp(ev->key, "Escape")) ||
-	     (!strcmp(ev->key, "g") &&
+	     (!strcmp(ev->key, "e") &&
 	      (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
      {
 	if (!_evry_pop_state())
@@ -949,12 +949,12 @@ _evry_show_items(Evry_Plugin *p)
 
    /* TODO add option */
 
-   /* if (!s->sel_item && p->items)
-    *   {
-    * 	s->sel_item = p->items->data;
-    * 	_evry_item_sel(s->sel_item);
-    * 	_evry_scroll_to(0);
-    *   } */
+   if (!s->initial && !s->sel_item && p->items)
+     {
+   	s->sel_item = p->items->data;
+   	_evry_item_sel(s->sel_item);
+   	_evry_scroll_to(0);
+     }
 
    evas_event_thaw(popup->evas);
 
