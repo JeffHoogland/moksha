@@ -945,8 +945,8 @@ _e_exebuf_cb_sort_eap(const void *data1, const void *data2)
    
    a1 = data1;
    a2 = data2;
-   e1 = efreet_util_path_to_file_id(a1->orig_path);
-   e2 = efreet_util_path_to_file_id(a2->orig_path);
+   e1 = a1->exec;
+   e2 = a2->exec;
    t1 = e_exehist_newest_run_get(e1);
    t2 = e_exehist_newest_run_get(e2);
    return (int)(t2 - t1);
@@ -1243,6 +1243,12 @@ _e_exebuf_hist_update(Eina_List *hist_matches)
 	E_Exebuf_Exe *exe;
 	Evas_Coord mw, mh;
 	Evas_Object *o;
+	Efreet_Desktop *desktop;
+	int found = 0;
+	int len;
+	char *tmp;
+	char match[4096];
+	Eina_List *ll;
 	
 	exe = calloc(1, sizeof(E_Exebuf_Exe));
 	exe->file = file;
@@ -1257,20 +1263,36 @@ _e_exebuf_hist_update(Eina_List *hist_matches)
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT,
 				       _e_exebuf_cb_exe_item_mouse_out, exe);
 	evas_object_show(o);
-	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
-	  {
-	     Efreet_Desktop *desktop;
+	     
+	len = strlen(file);
+	tmp = ecore_file_app_exe_get(exe->file);
+	snprintf(match, sizeof(match), "%s*", tmp);
+	ll = efreet_util_desktop_exec_glob_list(match);
 
-	     desktop = efreet_util_desktop_exec_find(exe->file);
-	     if (desktop)
+	EINA_LIST_FREE(ll, desktop)
+	  {
+	     if (desktop->exec && !strncmp(file, desktop->exec, len))
 	       {
+		  found = 1;
+		  break;
+	       }
+	  }
+	     
+	if (found)
+	  {
+	     exe->desktop = desktop;
+	     edje_object_part_text_set(o, "e.text.title", desktop->name);
+	     
+	     if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
+	       {
+		       
 		  o = e_util_desktop_icon_add(desktop, 24, exebuf->evas);
 		  exe->icon_object = o;
 		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 		  evas_object_show(o);
-		  exe->desktop = desktop;
 	       }
 	  }
+
 	edje_object_size_min_calc(exe->bg_object, &mw, &mh);
 	e_box_pack_end(eap_list_object, exe->bg_object);
 	e_box_pack_options_set(exe->bg_object,
