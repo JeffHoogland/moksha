@@ -50,7 +50,7 @@ struct _Config
 struct _Plugin_Config
 {
   const char *name;
-
+  
   int loaded;
   int enabled;
   
@@ -58,6 +58,8 @@ struct _Plugin_Config
   int min_query;
 
   int priority;
+
+  const char *trigger;
 };
 
 
@@ -86,6 +88,8 @@ struct _Evry_Plugin
   const char *type_in;
   const char *type_out;
 
+  const char *trigger;
+  
   /* sync/async ?*/
   Eina_Bool async_query;
 
@@ -110,6 +114,9 @@ struct _Evry_Plugin
   /* provide more information for a candidate */
   /* int (*candidate_info) (Evas *evas, Evry_Item *item); */
 
+  /* optional */
+  void (*realize_items) (Evry_Plugin *p, Evas *e);
+  
   Eina_List *items;
   
   Evas_Object *(*config_page) (void);

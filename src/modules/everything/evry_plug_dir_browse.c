@@ -16,7 +16,9 @@ static void _cleanup(Evry_Plugin *p);
 static int  _cb_sort(const void *data1, const void *data2);
 static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 static void _list_free(Evry_Plugin *p);
-static Evry_Item *_item_fill(Evry_Plugin *p, const char *directory, const char *file);
+static void _item_fill(Evry_Item *it, Evas *evas);
+static Evry_Item *_item_add(const char *directory, const char *file);
+static void _realize(Evry_Plugin *p, Evas *e);
 
 static Evry_Plugin *p;
 static Eina_List *stack = NULL;
@@ -33,6 +35,7 @@ evry_plug_dir_browse_init(void)
    p->fetch = &_fetch;
    p->action = &_action;
    p->cleanup = &_cleanup;
+   p->realize_items = &_realize;
    p->icon_get = &_item_icon_get;
 
    evry_plugin_register(p);
@@ -154,78 +157,98 @@ _fetch(Evry_Plugin *p, const char *input)
 	  {
 	     if (e_util_glob_case_match(file, match1))
 	       {
-		  it  = _item_fill(p, s->directory, file);
+		  it  = _item_add(s->directory, file);
 		  it->priority += 1;
 	       }
 	     else if (e_util_glob_case_match(file, match2))
 	       {
-		  it = _item_fill(p, s->directory, file);
+		  it = _item_add(s->directory, file);
 	       }
 	  }
 	else
 	  {
-	     it  = _item_fill(p, s->directory, file);
+	     it  = _item_add(s->directory, file);
 	  }
-
+	
 	if (it)
 	  p->items = eina_list_append(p->items, it);
 
 	free(file);
      }
 
+   if (p->items) return 1;
+   
+   return 0;
+}
+
+static Evry_Item *
+_item_add(const char *directory, const char *file)
+{
+   Evry_Item *it = NULL;
+   char buf[4096];
+   
+   it = E_NEW(Evry_Item, 1);
+
+   snprintf(buf, sizeof(buf), "%s/%s", directory, file);
+   it->uri = eina_stringshare_add(buf);
+   it->label = eina_stringshare_add(file);
+
+   return it;
+}
+
+static void
+_realize(Evry_Plugin *p, Evas *e)
+{
+   Eina_List *l;
+   Evry_Item *it;
+   State *s = stack->data;
+   
+   EINA_LIST_FOREACH(p->items, l, it)
+     _item_fill(it, e);
+   
+
    if (eina_list_count(p->items) > 0)
      {
 	p->items = eina_list_sort(p->items, eina_list_count(p->items),
 				  _cb_sort);
 	s->items = p->items;
-
-	return 1;
      }
-
-   return 0;
 }
 
+
 /* based on directory-watcher from drawer module  */
-static Evry_Item *
-_item_fill(Evry_Plugin *p, const char *directory, const char *file)
+static void
+_item_fill(Evry_Item *it, Evas *e)
 {
-   Evry_Item *it = NULL;
-   char buf[4096];
-   const char *mime, *file_path;
+   const char *mime;
 
-   it = E_NEW(Evry_Item, 1);
-
-   snprintf(buf, sizeof(buf), "%s/%s", directory, file);
-
-   if ((e_util_glob_case_match(file, "*.desktop")) ||
-       (e_util_glob_case_match(file, "*.directory")))
+   if  (it->mime) return;
+   
+   if ((e_util_glob_case_match(it->label, "*.desktop")) ||
+       (e_util_glob_case_match(it->label, "*.directory")))
      {
 	Efreet_Desktop *desktop;
 
-	desktop = efreet_desktop_new(buf);
-	if (!desktop) return NULL;
+	desktop = efreet_desktop_new(it->uri);
+	if (!desktop) return;
 	it->label = eina_stringshare_add(desktop->name);
 	efreet_desktop_free(desktop);
      }
-   else
-     it->label = eina_stringshare_add(file);
 
-   file_path = eina_stringshare_add(buf);
-
-   it->uri = file_path;
-
-   mime = efreet_mime_globs_type_get(file_path);
+   mime = efreet_mime_globs_type_get(it->uri);
    if (mime)
      {
 	it->mime = eina_stringshare_add(mime);
 	it->priority = 0;
      }
-   else if (ecore_file_is_dir(file_path))
+   else if (ecore_file_is_dir(it->uri))
      {
 	it->mime = eina_stringshare_add("Folder");
 	it->priority = 1;
+	it->o_icon = edje_object_add(e);
+	e_theme_edje_object_set(it->o_icon, "base/theme/fileman", "e/icons/folder");
      }
-   else if ((mime = efreet_mime_type_get(file_path)))
+   else if ((mime = efreet_mime_type_get(it->uri)))
      {
 	it->mime = eina_stringshare_add(mime);
 	it->priority = 0;
@@ -236,7 +259,18 @@ _item_fill(Evry_Plugin *p, const char *directory, const char *file)
 	it->priority = 0;
      }
 
-   return it;
+   if (strcmp(it->mime, "Folder"))
+     {
+	char *item_path = efreet_mime_type_icon_get(it->mime, e_config->icon_theme, 32);
+
+	if (item_path)
+	  it->o_icon = e_util_icon_add(item_path, e);
+	else
+	  {
+	     it->o_icon = edje_object_add(e);
+	     e_theme_edje_object_set(it->o_icon, "base/theme/fileman", "e/icons/fileman/file");
+	  }
+     }
 }
 
 static void

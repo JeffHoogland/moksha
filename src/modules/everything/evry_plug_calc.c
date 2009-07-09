@@ -28,6 +28,7 @@ evry_plug_calc_init(void)
    p->name = "Calculator";
    p->type_in  = "NONE";
    p->type_out = "NONE";
+   p->trigger = "=";
    p->need_query = 0;
    p->async_query = 1;
    p->begin = &_begin;
@@ -101,7 +102,7 @@ static int
 _send_input(const char *input)
 {
    char buf[1024];
-   snprintf(buf, 1024, "%s\n", input);
+   snprintf(buf, 1024, "%s\n", input + (strlen(p->trigger)));
 
    return ecore_exe_send(exe, buf, strlen(buf));
 }
@@ -121,6 +122,8 @@ _action(Evry_Plugin *p, Evry_Item *it, const char *input)
 	     /* remove duplicates */
 	     if (p->items->next)
 	       {
+		  it = p->items->data;
+		  
 		  EINA_LIST_FOREACH(p->items->next, l, it2)
 		    {
 		       if (!strcmp(it->label, it2->label))
@@ -143,9 +146,9 @@ _action(Evry_Plugin *p, Evry_Item *it, const char *input)
 
 	evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
 
-	return EVRY_ACTION_CONTINUE;
+	/* return EVRY_ACTION_CONTINUE; */
      }
-   else
+   /* else */
      {
 	/* XXX on which windows must the selection be set? */
 	ecore_x_selection_primary_set(e_manager_current_get()->win,
@@ -153,11 +156,11 @@ _action(Evry_Plugin *p, Evry_Item *it, const char *input)
 	ecore_x_selection_clipboard_set(e_manager_current_get()->win,
 				      it->label, strlen(it->label));
 
-	if (p->items->data == it)
-	  {
-	     Evry_Item *it2 = p->items->data;
-	     _item_add(p, (char *) it2->label, 1);
-	  }
+	/* if (p->items->data == it)
+	 *   {
+	 *      Evry_Item *it2 = p->items->data;
+	 *      _item_add(p, (char *) it2->label, 1);
+	 *   } */
      }
 
    return EVRY_ACTION_FINISHED;

@@ -39,6 +39,7 @@ e_modapi_init(E_Module *m)
 #define T Plugin_Config
 #define D conf_item_edd
    E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, trigger, STR);
    E_CONFIG_VAL(D, T, min_query, INT);
    E_CONFIG_VAL(D, T, loaded, INT);
    E_CONFIG_VAL(D, T, enabled, INT);

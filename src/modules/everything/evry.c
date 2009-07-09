@@ -136,6 +136,9 @@ evry_plugin_register(Evry_Plugin *plugin)
 	evry_conf->plugins_conf = eina_list_append(evry_conf->plugins_conf, pc);	
      }
 
+   if (plugin->trigger && !pc->trigger)
+     pc->trigger = eina_stringshare_add(plugin->trigger);
+   
    plugin->config = pc;
 
    evry_conf->plugins = eina_list_sort(evry_conf->plugins,
@@ -354,6 +357,8 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	     _evry_list_clear();
 	     _evry_show_items(s->cur_plugins->data);
 	  }
+	else if (s->cur_plugin)
+	  _evry_tab_scroll_to(s->cur_plugin); 
      }
    else if ((action == EVRY_ASYNC_UPDATE_CLEAR) && (s->cur_plugin == p))
      {
@@ -891,9 +896,13 @@ _evry_show_items(Evry_Plugin *p)
    else
      edje_object_signal_emit(p->tab, "e,state,selected", "e");
 
+   /* XXX move this to push/pop as plugin could be the same for
+      different states!*/
    if (s->cur_plugin != p)
      s->sel_item = NULL;
 
+   if (p->realize_items) p->realize_items(p, popup->evas);
+   
    s->cur_plugin = p;
    s->cur_items = p->items;
 
@@ -928,7 +937,8 @@ _evry_show_items(Evry_Plugin *p)
 				       _evry_cb_item_mouse_out, it);
 	evas_object_show(o);
 
-	p->icon_get(p, it, popup->evas);
+	if (!it->o_icon) p->icon_get(p, it, popup->evas);
+
 	if (edje_object_part_exists(o, "e.swallow.icons") && it->o_icon)
 	  {
 	     edje_object_part_swallow(o, "e.swallow.icons", it->o_icon);
@@ -971,23 +981,31 @@ _evry_matches_update(Evry_Plugin *cur_plugin)
 
    _evry_list_clear();
    eina_list_free(s->cur_plugins);
-
    s->cur_plugins = NULL;
    s->sel_item = NULL;
 
    EINA_LIST_FOREACH(s->plugins, l, p)
      {
+	/* input matches trigger? */
+	if (p->trigger)
+	  {
+	     const char *trigger = p->trigger;
+	     
+	     if ((strlen(s->input) < strlen(trigger)) ||
+		 (strncmp(s->input, trigger, strlen(trigger))))
+	       continue;
+	  }
+   
 	if (strlen(s->input) == 0)
 	  items = !p->need_query ? p->fetch(p, NULL) : 0;
 	else
 	  items = p->fetch(p, s->input);
 
 	if (!s->initial || (items && eina_list_count(p->items) > 0))
-	  {
-	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
-	  }
+	  s->cur_plugins = eina_list_append(s->cur_plugins, p);
      }
 
+   /* remove tabs for not active plugins */
    EINA_LIST_FOREACH(evry_conf->plugins, l, p)
      {
 	if (!p->config->enabled) continue;
@@ -998,7 +1016,7 @@ _evry_matches_update(Evry_Plugin *cur_plugin)
 	     p->tab = NULL;
 	  }
      }
-   
+   /* show/update tabs of active plugins */
    EINA_LIST_FOREACH(s->cur_plugins, l, p)
      _evry_plugin_selector_show(p);
 
