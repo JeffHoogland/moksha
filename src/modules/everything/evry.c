@@ -856,8 +856,7 @@ _evry_plugin_action(int finished)
      }
    else if (s->cur_plugin && (s->sel_item || s->input))
      {
-	/* XXX use flags for return values */
-	int ret = 0;
+	int ret = EVRY_ACTION_OTHER;
 
 	if (s->cur_plugin->action)
 	  {

@@ -51,6 +51,15 @@ evry_plug_border_act_shutdown(void)
 }
 
 static void
+_act_cb_border_fullscreen(E_Border *bd)
+{
+   if (!bd->fullscreen)
+     e_border_fullscreen(bd, E_FULLSCREEN_RESIZE);
+   else
+     e_border_unfullscreen(bd);
+}
+
+static void
 _act_cb_border_close(E_Border *bd)
 {
    if (!bd->lock_close) e_border_act_close_begin(bd);
@@ -81,6 +90,13 @@ _fetch(Evry_Plugin *p, const char *input)
 
    _item_add(p, _("Iconify"), _act_cb_border_minimize,
 	     "e/widgets/border/default/minimize");
+
+   if (!inst->border->fullscreen)
+     _item_add(p, _("Fullscreen"), _act_cb_border_fullscreen,
+	       "e/widgets/border/default/fullscreen");
+   else
+     _item_add(p, _("Unfullscreen"), _act_cb_border_fullscreen,
+	       "e/widgets/border/default/fullscreen");
 
    _item_add(p, _("Close"), _act_cb_border_close,
 	     "e/widgets/border/default/close");

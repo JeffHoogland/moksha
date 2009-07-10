@@ -31,6 +31,7 @@ evry_plug_dir_browse_init(void)
    p->name = "Browse Files";
    p->type_in  = "NONE|FILE";
    p->type_out = "FILE";
+   /* p->trigger = "/"; */
    p->begin = &_begin;
    p->fetch = &_fetch;
    p->action = &_action;
@@ -93,7 +94,6 @@ _list_free(Evry_Plugin *p)
 	if (it->label) eina_stringshare_del(it->label);
 	if (it->uri) eina_stringshare_del(it->uri);
 	if (it->mime) eina_stringshare_del(it->mime);
-
 	free(it);
      }
 }
@@ -128,6 +128,7 @@ _fetch(Evry_Plugin *p, const char *input)
 {
    Eina_List *files;
    char *file;
+   const char *directory = NULL;
    Evry_Item *it;
    char match1[4096];
    char match2[4096];
@@ -135,7 +136,52 @@ _fetch(Evry_Plugin *p, const char *input)
 
    _list_free(p);
 
-   files = ecore_file_ls(s->directory);
+   /* input is command ? */
+   if (input)
+     {
+	if (!strncmp(input, "/", 1))
+	  {
+	     directory = "/";
+	     input = input + 1;
+	  }
+	else if (!strncmp(input, "..", 2))
+	  {
+	     char *end;
+	     char dir[4096];
+	     char *tmp;
+	     int prio = 0;
+	     
+	     snprintf(dir, 4096, "%s", s->directory);
+	     end = strrchr(dir, '/');	     
+
+	     while (end != dir)
+	       {
+		  tmp = strdup(dir);
+		  snprintf(dir, (end - dir) + 1, "%s", tmp);
+	          it = E_NEW(Evry_Item, 1);
+		  it->uri = eina_stringshare_add(dir);
+		  it->label = eina_stringshare_add(dir);
+		  it->priority = prio;
+		  p->items = eina_list_append(p->items, it);
+		  end = strrchr(dir, '/');
+		  free(tmp);
+		  prio--;
+	       }
+
+	     it = E_NEW(Evry_Item, 1);
+	     it->uri = eina_stringshare_add("/");
+	     it->label = eina_stringshare_add("/");
+	     it->priority = prio;
+	     p->items = eina_list_append(p->items, it);
+
+	     return 1;
+	  }
+     }
+   
+   if (!directory)
+     directory = s->directory;
+
+   files = ecore_file_ls(directory);
 
    if (input)
      {
@@ -157,17 +203,18 @@ _fetch(Evry_Plugin *p, const char *input)
 	  {
 	     if (e_util_glob_case_match(file, match1))
 	       {
-		  it  = _item_add(s->directory, file);
-		  it->priority += 1;
+		  it  = _item_add(directory, file);
+		  it->priority = 1;
 	       }
 	     else if (e_util_glob_case_match(file, match2))
 	       {
-		  it = _item_add(s->directory, file);
+		  it = _item_add(directory, file);
+		  it->priority = 0;
 	       }
 	  }
 	else
 	  {
-	     it  = _item_add(s->directory, file);
+	     it = _item_add(directory, file);
 	  }
 	
 	if (it)
@@ -176,6 +223,8 @@ _fetch(Evry_Plugin *p, const char *input)
 	free(file);
      }
 
+   s->items = p->items;
+   
    if (p->items) return 1;
    
    return 0;
@@ -205,12 +254,10 @@ _realize(Evry_Plugin *p, Evas *e)
    
    EINA_LIST_FOREACH(p->items, l, it)
      _item_fill(it, e);
-   
 
    if (eina_list_count(p->items) > 0)
      {
-	p->items = eina_list_sort(p->items, eina_list_count(p->items),
-				  _cb_sort);
+	p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
 	s->items = p->items;
      }
 }
@@ -239,24 +286,21 @@ _item_fill(Evry_Item *it, Evas *e)
    if (mime)
      {
 	it->mime = eina_stringshare_add(mime);
-	it->priority = 0;
      }
    else if (ecore_file_is_dir(it->uri))
      {
 	it->mime = eina_stringshare_add("Folder");
-	it->priority = 1;
+	it->priority += 1;
 	it->o_icon = edje_object_add(e);
 	e_theme_edje_object_set(it->o_icon, "base/theme/fileman", "e/icons/folder");
      }
    else if ((mime = efreet_mime_type_get(it->uri)))
      {
 	it->mime = eina_stringshare_add(mime);
-	it->priority = 0;
      }
    else
      {
 	it->mime = eina_stringshare_add("None");
-	it->priority = 0;
      }
 
    if (strcmp(it->mime, "Folder"))
