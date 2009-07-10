@@ -562,6 +562,9 @@ _evry_pop_state(void)
 	s->cur_plugin = NULL;
 	_evry_matches_update(p);
 
+	/* FIXME better solution: handle the case that previous plugin fetches async */
+	s->cur_plugin = p;
+	
 	it = eina_list_nth(s->cur_plugin->items, i);
 
 	if (it)
