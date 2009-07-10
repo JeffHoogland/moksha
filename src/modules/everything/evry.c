@@ -248,6 +248,8 @@ evry_show(E_Zone *zone)
    _evry_push_state();
 
    e_popup_show(popup);
+
+   e_box_align_set(o_selector, 0.0, 0.5);
    return 1;
 }
 
