@@ -7,6 +7,7 @@ struct _State
 {
   const char *directory;
   Eina_List  *items;
+  int command;
 };
 
 static int  _begin(Evry_Plugin *p, Evry_Item *it);
@@ -58,6 +59,12 @@ _begin(Evry_Plugin *p, Evry_Item *it)
 {
    State *s;
 
+   if (stack)
+     {
+	s = stack->data;
+	if (s->command) evry_clear_input();
+     }
+   
    if (it)
      {
 	if (!it->uri || !ecore_file_is_dir(it->uri))
@@ -141,8 +148,13 @@ _fetch(Evry_Plugin *p, const char *input)
      {
 	if (!strncmp(input, "/", 1))
 	  {
-	     directory = "/";
-	     input = input + 1;
+	     it = E_NEW(Evry_Item, 1);
+	     it->uri = eina_stringshare_add("/");
+	     it->label = eina_stringshare_add("/");
+	     p->items = eina_list_append(p->items, it);
+	     s->command = 1;
+	     return 1;
+	     
 	  }
 	else if (!strncmp(input, "..", 2))
 	  {
@@ -150,6 +162,8 @@ _fetch(Evry_Plugin *p, const char *input)
 	     char dir[4096];
 	     char *tmp;
 	     int prio = 0;
+
+	     if (!strcmp(s->directory, "/")) return 0;
 	     
 	     snprintf(dir, 4096, "%s", s->directory);
 	     end = strrchr(dir, '/');	     
@@ -173,6 +187,8 @@ _fetch(Evry_Plugin *p, const char *input)
 	     it->label = eina_stringshare_add("/");
 	     it->priority = prio;
 	     p->items = eina_list_append(p->items, it);
+
+	     s->command = 1;
 
 	     return 1;
 	  }

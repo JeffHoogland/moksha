@@ -303,10 +303,8 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 
 	/* ignore screensaver.. */
 	EINA_LIST_FOREACH(desktop->categories, l, cat)
-	  {
-	     if (cat && !strcmp(cat, "Screensaver"))
-	       return;
-	  }
+	  if (cat && !strcmp(cat, "Screensaver"))
+	    return;
 
 	file = desktop->exec;
      }

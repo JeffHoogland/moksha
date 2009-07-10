@@ -370,6 +370,16 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
      }
 }
 
+EAPI void
+evry_clear_input(void)
+{
+   if (cur_state->input[0] != 0)
+     {
+	cur_state->input[0] = 0;
+     }
+}
+
+
 /* local subsystem functions */
 static int
 _evry_cb_plugin_sort(const void *data1, const void *data2)
@@ -389,6 +399,13 @@ _evry_push_state(void)
 
    s = cur_state;
 
+   if (update_timer)
+     {
+	_evry_matches_update(s->cur_plugin);
+	ecore_timer_del(update_timer);
+	update_timer = NULL;
+     }
+   
    if (s)
      {
 	if (!s->cur_plugin || !s->sel_item)
@@ -838,6 +855,13 @@ _evry_plugin_action(int finished)
 {
    Evry_State *s = cur_state;
 
+   if (update_timer)
+     {
+	_evry_matches_update(s->cur_plugin);
+	ecore_timer_del(update_timer);
+	update_timer = NULL;
+     }
+   
    if (s->cur_plugin == action_selector)
      {
 	/* set cur_action and start plugins for second parameter (if required)*/
@@ -960,7 +984,7 @@ _evry_show_items(Evry_Plugin *p)
 
    /* TODO add option */
 
-   if (!s->initial && !s->sel_item && p->items)
+   if (/*!s->initial &&*/!s->sel_item && p->items)
      {
    	s->sel_item = p->items->data;
    	_evry_item_sel(s->sel_item);

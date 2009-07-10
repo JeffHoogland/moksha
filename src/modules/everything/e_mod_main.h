@@ -180,6 +180,7 @@ EAPI void evry_plugin_unregister(Evry_Plugin *p);
 EAPI void evry_action_register(Evry_Action *act);
 EAPI void evry_action_unregister(Evry_Action *act);
 EAPI void evry_plugin_async_update(Evry_Plugin *plugin, int state);
+EAPI void evry_clear_input(void);
 
 EAPI int  evry_plug_apps_init(void);
 EAPI int  evry_plug_apps_shutdown(void);
