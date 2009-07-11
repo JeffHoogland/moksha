@@ -79,6 +79,7 @@ struct _Instance
       Ecore_Event_Handler *show;
       Ecore_Event_Handler *reparent;
       Ecore_Event_Handler *sel_clear;
+      Ecore_Event_Handler *configure;
    } handler;
    struct
    {
@@ -744,6 +745,24 @@ _systray_cb_window_show(void *data, int type __UNUSED__, void *event)
 }
 
 static int
+_systray_cb_window_configure(void *data, int type __UNUSED__, void *event)
+{
+   Ecore_X_Event_Window_Configure *ev = event;
+   Instance *inst = data;
+   Icon *icon;
+   const Eina_List *l;
+
+   EINA_LIST_FOREACH(inst->icons, l, icon)
+     if (icon->win == ev->win)
+       {
+	  _systray_icon_geometry_apply(icon);
+	  break;
+       }
+
+   return 1;
+}
+
+static int
 _systray_cb_reparent_notify(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Reparent *ev = event;
@@ -932,6 +951,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
      (ECORE_X_EVENT_WINDOW_REPARENT, _systray_cb_reparent_notify, inst);
    inst->handler.sel_clear = ecore_event_handler_add
      (ECORE_X_EVENT_SELECTION_CLEAR, _systray_cb_selection_clear, inst);
+   inst->handler.configure = ecore_event_handler_add
+     (ECORE_X_EVENT_WINDOW_CONFIGURE, _systray_cb_window_configure, inst);
 
    instance = inst;
    return inst->gcc;
@@ -967,6 +988,8 @@ _gc_shutdown(E_Gadcon_Client *gcc)
      ecore_event_handler_del(inst->handler.reparent);
    if (inst->handler.sel_clear)
      ecore_event_handler_del(inst->handler.sel_clear);
+   if (inst->handler.configure)
+     ecore_event_handler_del(inst->handler.configure);
    if (inst->timer.retry)
      ecore_timer_del(inst->timer.retry);
    if (inst->idler.size_apply)
