@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <sys/utsname.h>
+#include <limits.h>
 #include <fcntl.h>
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
@@ -316,13 +317,96 @@ precache(void)
 	children--;
      }
    exit(0);
-} 
+}
+
+static int
+find_valgrind(char *path, size_t path_len)
+{
+   char *env = getenv("PATH");
+
+   while (env)
+     {
+	const char *p = strchr(env, ':');
+	ssize_t p_len;
+
+	if (p)
+	  p_len = p - env;
+	else
+	  p_len = strlen(env);
+
+	if (p_len <= 0)
+	  goto next;
+	else if (p_len + sizeof("/valgrind") >= path_len)
+	  goto next;
+
+	memcpy(path, env, p_len);
+	memcpy(path + p_len, "/valgrind", sizeof("/valgrind"));
+	if (access(path, X_OK | R_OK) == 0)
+	  return 1;
+
+     next:
+	if (p)
+	  env = p + 1;
+	else
+	  break;
+     }
+   path[0] = '\0';
+   return 0;
+}
+
+
+/* maximum number of arguments added above */
+#define VALGRIND_MAX_ARGS 9
+/* bitmask with all supported bits set */
+#define VALGRIND_MODE_ALL 15
+
+static int
+valgrind_append(char **dst, int valgrind_mode, const char *valgrind_path, const char *valgrind_log)
+{
+   int i = 0;
+
+   if (!valgrind_mode)
+     return 0;
+   dst[i++] = valgrind_path;
+   dst[i++] = "--track-origins=yes";
+   dst[i++] = "--malloc-fill=0xabc79"; /* invalid pointer, make it crash */
+
+   if (valgrind_log)
+     {
+	static char logparam[PATH_MAX + sizeof("--log-file=")];
+	snprintf(logparam, sizeof(logparam), "--log-file=%s", valgrind_log);
+	dst[i++] = logparam;
+     }
+
+   if (valgrind_mode & 2)
+     dst[i++] = "--trace-children=yes";
+
+   if (valgrind_mode & 4)
+     {
+	dst[i++] = "--leak-check=full";
+	dst[i++] = "--leak-resolution=high";
+	dst[i++] = "--track-fds=yes";
+     }
+
+   if (valgrind_mode & 8)
+     dst[i++] = "--show-reachable=yes";
+
+   return i;
+}
+
+static void
+copy_args(char **dst, const char **src, size_t count)
+{
+   for (; count > 0; count--, dst++, src++)
+     *dst = *src;
+}
 
 int
 main(int argc, char **argv)
 {
-   int i, do_precache = 0;
+   int i, do_precache = 0, valgrind_mode = 0;
    char buf[16384], **args, *p;
+   char valgrind_path[PATH_MAX] = "", *valgrind_log = NULL;
 
    prefix_determine(argv[0]);
 
@@ -341,6 +425,32 @@ main(int argc, char **argv)
    for (i = 1; i < argc; i++)
      {
 	if (!strcmp(argv[i], "-no-precache")) do_precache = 0;
+	else if (!strncmp(argv[i], "-valgrind", sizeof("-valgrind") - 1))
+	  {
+	     const char *val = argv[i] + sizeof("-valgrind") - 1;
+	     if (*val == '\0')
+	       valgrind_mode = 1;
+	     else if (*val == '-')
+	       {
+		  val++;
+		  if (!strncmp(val, "log-file=", sizeof("log-file=") - 1))
+		    {
+		       valgrind_log = val + sizeof("log-file=") - 1;
+		       if (*valgrind_log == '\0')
+			 valgrind_log = NULL;
+		    }
+	       }
+	     else if (*val == '=')
+	       {
+		  val++;
+		  if (!strcmp(val, "all"))
+		    valgrind_mode = VALGRIND_MODE_ALL;
+		  else
+		    valgrind_mode = atoi(val);
+	       }
+	     else
+	       printf("Unknown valgrind option: %s\n", argv[i]);
+	  }
         else if ((!strcmp(argv[i], "-h")) ||
 		 (!strcmp(argv[i], "-help")) ||
 		 (!strcmp(argv[i], "--help")))
@@ -349,6 +459,15 @@ main(int argc, char **argv)
 	       ("Options:\n"
 		"\t-no-precache\n"
 		"\t\tDisable pre-caching of files\n"
+		"\t-valgrind[=MODE]\n"
+		"\t\tRun enlightenment from inside valgrind, mode is OR of:\n"
+		"\t\t   1 = plain valgrind to catch crashes (default)\n"
+		"\t\t   2 = trace children (thumbnailer, efm slaves, ...)\n"
+		"\t\t   4 = check leak\n"
+		"\t\t   8 = show reachable after processes finish.\n"
+		"\t\t all = all of above\n"
+		"\t-valgrind-log-file=<FILENAME>\n"
+		"\t\tSave valgrind log to file, see valgrind's --log-file for details.\n"
 		"\n"
 		"Please run:\n"
 		"\tenlightenment %s\n"
@@ -358,7 +477,25 @@ main(int argc, char **argv)
 	     exit(0);
 	  }
      }
-   printf("E - PID=%i, do_precache=%i\n", getpid(), do_precache);
+
+   if (valgrind_mode)
+     {
+	if (!find_valgrind(valgrind_path, sizeof(valgrind_path)))
+	  {
+	     printf("E - valgrind required but no binary found! Ignoring request.\n");
+	     valgrind_mode = 0;
+	  }
+     }
+
+   printf("E - PID=%i, do_precache=%i, valgrind=%d", getpid(), do_precache, valgrind_mode);
+   if (valgrind_mode)
+     {
+	printf(" valgrind-command='%s'", valgrind_path);
+	if (valgrind_log)
+	  printf(" valgrind-log-file='%s'", valgrind_log);
+     }
+   putchar('\n');
+
    if (do_precache)
      {
 	void *lib, *func;
@@ -392,22 +529,25 @@ main(int argc, char **argv)
    /* try dbus-launch */
    snprintf(buf, sizeof(buf), "%s/bin/enlightenment", _prefix_path);
    
-   args = alloca((argc + 3) * sizeof(char *));
+   args = alloca((argc + 2 + VALGRIND_MAX_ARGS) * sizeof(char *));
    if (!getenv("DBUS_SESSION_BUS_ADDRESS"))
      {
 	args[0] = "dbus-launch";
 	args[1] = "--exit-with-session";
-	args[2] = buf;
-	for (i = 1; i < argc; i++) args[2 + i] = argv[i];
-	args[2 + i] = NULL;
+
+	i = 2 + valgrind_append(args + 2, valgrind_mode, valgrind_path, valgrind_log);
+	args[i++] = buf;
+	copy_args(args + i, argv + 1, argc - 1);
+	args[i + argc - 1] = NULL;
 	execvp("dbus-launch", args);
      }
    
    /* dbus-launch failed - run e direct */
-   args[0] = "enlightenment";
-   for (i = 1; i < argc; i++) args[i] = argv[i];
-   args[i] = NULL;
-   execv(buf, args);
+   i = valgrind_append(args, valgrind_mode, valgrind_path, valgrind_log);
+   args[i++] = buf;
+   copy_args(args + i, argv + 1, argc - 1);
+   args[i + argc - 1] = NULL;
+   execv(args[0], args);
 
    printf("FAILED TO RUN:\n");
    printf("  %s\n", buf);
