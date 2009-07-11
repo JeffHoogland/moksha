@@ -10,5 +10,5 @@ Comment=<title>Gadget to show current EFM operations</title><br>Can be placed on
 Comment[it]=<title>Gadget che mostra le operazioni in corso di EFM</title><br>Può essere messo sul desktop o su una mensola.
 Comment[eo]=<title>Tiu akcesoraĵo vidigas la aktualaj operacioj en EFM</title><br>Enmetebla sur la labortablon aŭ en breton.
 Comment[fr]=<title>Gadget montrant les opérations en cours dans EFM</title><br>Peut être placé sur le bureau ou dans un rack.
-Comment[fr]=<title>Mevcut EFM işlem bilgisini gösteren alet</title><br>Masaüstüne ya da rafa yerleşebilir.
+Comment[tr]=<title>Mevcut EFM işlem bilgisini gösteren alet</title><br>Masaüstüne ya da rafa yerleşebilir.
 X-Enlightenment-ModuleType=fileman
