@@ -333,7 +333,7 @@ _cb_add(void *data, void *data2)
         cc = e_widget_ilist_nth_data_get(cfdata->o_avail, i);
         if (!cc) continue;
 
-        gcc = gadman_gadget_add(cc, 0);
+        gcc = gadman_gadget_add(cc, GADMAN_LAYER_BG);
         gadman_gadget_edit_start(gcc);
      }
 

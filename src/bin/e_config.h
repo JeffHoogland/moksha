@@ -446,6 +446,7 @@ struct _E_Config_Gadcon
 {
    const char *name;
    int         id;
+   int         zone;
    Eina_List  *clients;
 };
 

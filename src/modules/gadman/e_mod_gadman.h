@@ -15,6 +15,8 @@
 #define BG_CUSTOM 2
 #define BG_TRANS  3
 
+#define MIN_VISIBLE_MARIGIN 20
+
 typedef struct _Manager Manager;
 typedef struct _Config Config;
 
@@ -30,13 +32,23 @@ struct _Config
    int anim_gad;
 };
 
+typedef enum
+{
+  GADMAN_LAYER_BG = 0, /* layer is considered unsigned int */
+  GADMAN_LAYER_TOP,
+  GADMAN_LAYER_COUNT
+} Gadman_Layer_Type;
+
+#define ID_GADMAN_LAYER_BASE 114
+#define ID_GADMAN_LAYER_BG (ID_GADMAN_LAYER_BASE + GADMAN_LAYER_BG)
+#define ID_GADMAN_LAYER_TOP (ID_GADMAN_LAYER_BASE + GADMAN_LAYER_TOP)
+
 struct _Manager
 {
-   E_Gadcon    *gc;
+   Eina_List   *gadcons[GADMAN_LAYER_COUNT];
    E_Gadcon    *gc_top;
-   Eina_List   *gadgets;
-   Evas_Object *mover;
-   Evas_Object *mover_top;
+   Eina_List   *gadgets[GADMAN_LAYER_COUNT];
+   Evas_Object *movers[GADMAN_LAYER_COUNT];
    Evas_Object *full_bg;
    const char  *icon_name;
    
@@ -61,12 +73,13 @@ extern Manager *Man;
 
 void             gadman_init(E_Module *m);
 void             gadman_shutdown(void);
-E_Gadcon_Client *gadman_gadget_add(E_Gadcon_Client_Class *cc, int ontop);
+E_Gadcon_Client *gadman_gadget_add(E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer);
 void             gadman_gadget_del(E_Gadcon_Client *gcc);
-E_Gadcon_Client *gadman_gadget_place(E_Config_Gadcon_Client *cf, int ontop);
+E_Gadcon_Client *gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone);
 void             gadman_gadget_edit_start(E_Gadcon_Client *gcc);
 void             gadman_gadget_edit_end(void);
 void             gadman_gadgets_toggle(void);
 void             gadman_update_bg(void);
+E_Gadcon        *gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer);
 
 #endif

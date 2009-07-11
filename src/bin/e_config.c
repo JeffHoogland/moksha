@@ -152,6 +152,7 @@ e_config_init(void)
 #define D _e_config_gadcon_edd
    E_CONFIG_VAL(D, T, name, STR);
    E_CONFIG_VAL(D, T, id, INT);
+   E_CONFIG_VAL(D, T, zone, INT);
    E_CONFIG_LIST(D, T, clients, _e_config_gadcon_client_edd);
 
    _e_config_shelf_desk_edd = E_CONFIG_DD_NEW("E_Config_Shelf_Desk", E_Config_Shelf_Desk);
