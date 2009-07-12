@@ -94,7 +94,6 @@ e_config_dialog_find(const char *name, const char *class)
 
 	     z = e_util_zone_current_get(e_manager_current_get());
 	     e_border_uniconify(cfd->dia->win->border);
-	     e_dialog_show(cfd->dia);
 	     e_win_raise(cfd->dia->win);
 	     if (z->container == cfd->dia->win->border->zone->container)
 	       e_border_desk_set(cfd->dia->win->border, e_desk_current_get(z));
@@ -172,12 +171,19 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
      snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "BASIC");
    else
      snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "ADVANCED");
-   if ((cfd->view->normal_win) || (e_config->cfgdlg_normal_wins))
-     cfd->dia = e_dialog_normal_win_new(cfd->con, cfd->name, buf);
-   else
-     cfd->dia = e_dialog_new(cfd->con, cfd->name, buf);
+
+   if (!pdia)  /* creating window for the first time */
+     {
+       if ((cfd->view->normal_win) || (e_config->cfgdlg_normal_wins))
+         cfd->dia = e_dialog_normal_win_new(cfd->con, cfd->name, buf);
+       else
+         cfd->dia = e_dialog_new(cfd->con, cfd->name, buf);
+       e_object_del_attach_func_set(E_OBJECT(cfd->dia), _e_config_dialog_cb_dialog_del);
+     }         /* window was created before - deleting content only */
+   else if (cfd->dia->content_object)
+     evas_object_del(cfd->dia->content_object);
+
    cfd->dia->data = cfd;
-   e_object_del_attach_func_set(E_OBJECT(cfd->dia), _e_config_dialog_cb_dialog_del);
    e_dialog_title_set(cfd->dia, cfd->title);
    if (!cfd->cfdata) cfd->cfdata = cfd->view->create_cfdata(cfd);
 
@@ -243,52 +249,29 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    e_widget_min_size_get(o, &mw, &mh);
    e_widget_on_change_hook_set(o, _e_config_dialog_cb_changed, cfd);
    e_dialog_content_set(cfd->dia, o, mw, mh);
-   
-   if (!cfd->hide_buttons)
-     {
-	e_dialog_button_add(cfd->dia, _("OK"), NULL, 
-                            _e_config_dialog_cb_ok, cfd);
-	e_dialog_button_add(cfd->dia, _("Apply"), NULL, 
-                            _e_config_dialog_cb_apply, cfd);
-	if (!cfd->cfg_changed) 
-	  {
-	     e_dialog_button_disable_num_set(cfd->dia, 0, 1);
-	     e_dialog_button_disable_num_set(cfd->dia, 1, 1);
-	  }
-     }
-   e_dialog_button_add(cfd->dia, _("Close"), NULL, 
-                       _e_config_dialog_cb_close, cfd);
-   if (!pdia)
-     {
-	if (!cfd->view->normal_win)
-	  e_win_centered_set(cfd->dia->win, 1);
-	e_dialog_show(cfd->dia);
-	if (cfd->icon) e_dialog_border_icon_set(cfd->dia, cfd->icon);
-     }
-   else
-     {
-	int x, y;
 
-	e_dialog_show(cfd->dia);
-	if (cfd->icon) e_dialog_border_icon_set(cfd->dia, cfd->icon);
-	x = pdia->win->x;
-	y = pdia->win->y;
-	if (x < 0) x = 0;
-	if (y < 0) y = 0;
-	if ((x + cfd->dia->win->w) > (pdia->win->container->w))
-	  x = pdia->win->container->w - cfd->dia->win->w;
-	if ((y + cfd->dia->win->h) > (pdia->win->container->h))
-	  y = pdia->win->container->h - cfd->dia->win->h;
-	e_win_move(cfd->dia->win, x, y);
-	e_win_placed_set(cfd->dia->win, 1);
-     }
+   if (!pdia) /* dialog window was created in this function call - need to create buttons once */
+     {
+       if (!cfd->hide_buttons)
+         {
+	    e_dialog_button_add(cfd->dia, _("OK"), NULL,
+                                _e_config_dialog_cb_ok, cfd);
+	    e_dialog_button_add(cfd->dia, _("Apply"), NULL,
+                                _e_config_dialog_cb_apply, cfd);
+	    if (!cfd->cfg_changed)
+	      {
+	         e_dialog_button_disable_num_set(cfd->dia, 0, 1);
+	         e_dialog_button_disable_num_set(cfd->dia, 1, 1);
+	      }
+         }
+       e_dialog_button_add(cfd->dia, _("Close"), NULL,
+                           _e_config_dialog_cb_close, cfd);
+    }
+
+   e_dialog_show(cfd->dia);
+   if (cfd->icon) e_dialog_border_icon_set(cfd->dia, cfd->icon);
+
    cfd->view_type = type;
-
-   if (pdia)
-     {
-	e_object_del_attach_func_set(E_OBJECT(pdia), NULL);
-	e_util_defer_object_del(E_OBJECT(pdia));
-     }
 }
 
 static int
