@@ -3263,7 +3263,6 @@ e_border_act_kill_begin(E_Border *bd)
      {
 	if (!bd->internal) ecore_x_kill(bd->client.win);
      }
-   e_border_hide(bd, 0);
 }
 
 EAPI Evas_Object *
