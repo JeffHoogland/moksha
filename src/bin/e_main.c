@@ -513,7 +513,7 @@ main(int argc, char **argv)
 			       "Perhaps you are out of memory?"));
 	_e_main_shutdown(-1);
     }
-   if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_X11))
+   if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_XLIB))
      {
 	e_error_message_show(_("Enlightenment found ecore_evas doesn't support the Software X11\n"
 			       "rendering in Evas. Please check your installation of Evas and\n"
