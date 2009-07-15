@@ -162,7 +162,11 @@ _fetch(Evry_Plugin *p, const char *input)
 	history = NULL;
      }
 
-   snprintf(buf, 1024, "scale=3;%s\n", input + (strlen(p->trigger)));
+
+   if (!strncmp(input, "=scale=", 7))
+     snprintf(buf, 1024, "%s\n", input + (strlen(p->trigger)));
+   else
+     snprintf(buf, 1024, "scale=3;%s\n", input + (strlen(p->trigger)));
 
    /* printf("send %s\n",buf); */
 
