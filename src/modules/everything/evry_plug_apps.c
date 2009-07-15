@@ -161,6 +161,8 @@ _action(Evry_Plugin *p, Evry_Item *it, const char *input)
 	if (app && app->file)
 	  input = app->file;
 
+	if (!input || strlen(input) < 1) return EVRY_ACTION_CONTINUE;
+	
 	desktop = efreet_desktop_empty_new("");
 	if (strchr(input, '%'))
 	  {
@@ -303,13 +305,13 @@ _fetch(Evry_Plugin *p, const char *input)
 	EINA_LIST_FREE(l, desktop)
 	  _item_add(p, desktop, NULL, 5);
      }
-   /* else if (!p->items)
-    *   {
-    * 	// TODO option for popular/recent
-    * 	l = e_exehist_list_get();
-    * 	EINA_LIST_FREE(l, file)
-    * 	  _item_add(p, NULL, file, 1);
-    *   } */
+   else if (!p->items)
+     {
+   	// TODO option for popular/recent
+   	l = e_exehist_list_get();
+   	EINA_LIST_FREE(l, file)
+   	  _item_add(p, NULL, file, 1);
+     }
 
    if (inst->added)
      {
