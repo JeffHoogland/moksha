@@ -42,6 +42,8 @@ struct _Config
 
   int auto_select_first;
 
+  Eina_Hash *key_bindings;
+  
   /**/
   Eina_List *plugins;
   
@@ -141,9 +143,11 @@ struct _Evry_Action
   Evry_Item *thing1;
   Evry_Item *thing2;
   
-  int  (*action) (void);
+  int  (*action) (Evry_Action *act);
 
-  void (*icon_get) (Evry_Plugin *p, Evry_Item *it, Evas *e);  
+  int (*check_item) (Evry_Action *act, Evry_Item *it);  
+
+  void (*icon_get) (Evry_Action *act, Evry_Item *it, Evas *e);  
   
   void *priv;
 
