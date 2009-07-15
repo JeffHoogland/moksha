@@ -19,7 +19,7 @@ static Ecore_Exe *exe = NULL;
 static Eina_List *history = NULL;
 static Ecore_Event_Handler *data_handler = NULL;
 static Ecore_Event_Handler *error_handler = NULL;
-
+static Ecore_X_Window clipboard_win = 0;
 
 EAPI int
 evry_plug_calc_init(void)
@@ -38,6 +38,7 @@ evry_plug_calc_init(void)
    p->icon_get = &_item_icon_get;
    evry_plugin_register(p);
 
+   clipboard_win = ecore_x_window_new(0, 0, 0, 1, 1);
    return 1;
 }
 
@@ -55,6 +56,8 @@ evry_plug_calc_shutdown(void)
    evry_plugin_unregister(p);
    E_FREE(p);
 
+   ecore_x_window_free(clipboard_win);
+   
    return 1;
 }
 
@@ -110,58 +113,44 @@ _send_input(const char *input)
 static int
 _action(Evry_Plugin *p, Evry_Item *it, const char *input)
 {
-   if (!it)
+   if (!it) return EVRY_ACTION_CONTINUE;
+
+   if (p->items)
      {
-	if (p->items)
+	Eina_List *l;
+	Evry_Item *it2;
+
+	evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR);
+
+	/* remove duplicates */
+	if (p->items->next)
 	  {
-	     Eina_List *l;
-	     Evry_Item *it2;
-
-	     evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR);
-
-	     /* remove duplicates */
-	     if (p->items->next)
-	       {
-		  it = p->items->data;
+	     it = p->items->data;
 		  
-		  EINA_LIST_FOREACH(p->items->next, l, it2)
-		    {
-		       if (!strcmp(it->label, it2->label))
-			 break;
-		       it2 = NULL;
-		    }
-
-		  if (it2)
-		    {
-		       p->items = eina_list_remove(p->items, it2);
-		       eina_stringshare_del(it2->label);
-		       E_FREE(it2);
-		    }
+	     EINA_LIST_FOREACH(p->items->next, l, it2)
+	       {
+		  if (!strcmp(it->label, it2->label))
+		    break;
+		  it2 = NULL;
 	       }
 
-	     it = p->items->data;
-
-	     _item_add(p, (char *) it->label, 1);
+	     if (it2)
+	       {
+		  p->items = eina_list_remove(p->items, it2);
+		  eina_stringshare_del(it2->label);
+		  E_FREE(it2);
+	       }
 	  }
 
-	evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
+	it = p->items->data;
 
-	/* return EVRY_ACTION_CONTINUE; */
+	_item_add(p, (char *) it->label, 1);
      }
-   /* else */
-     {
-	/* XXX on which windows must the selection be set? */
-	ecore_x_selection_primary_set(e_manager_current_get()->win,
-					it->label, strlen(it->label));
-	ecore_x_selection_clipboard_set(e_manager_current_get()->win,
-				      it->label, strlen(it->label));
 
-	/* if (p->items->data == it)
-	 *   {
-	 *      Evry_Item *it2 = p->items->data;
-	 *      _item_add(p, (char *) it2->label, 1);
-	 *   } */
-     }
+   /* evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD); */
+
+   ecore_x_selection_primary_set(clipboard_win, it->label, strlen(it->label));
+   ecore_x_selection_clipboard_set(clipboard_win, it->label, strlen(it->label));
 
    return EVRY_ACTION_FINISHED;
 }

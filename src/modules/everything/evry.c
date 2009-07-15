@@ -63,6 +63,7 @@ static int  _evry_push_state(void);
 static int  _evry_pop_state(void);
 static void _evry_plugin_selector_show(Evry_Plugin *p);
 static int  _evry_cb_plugin_sort(const void *data1, const void *data2);
+static int  _evry_cb_plugin_sort_by_trigger(const void *data1, const void *data2);
 
 static int  _evry_plug_act_select_init(void);
 static int  _evry_plug_act_select_begin(Evry_Plugin *p, Evry_Item *it);
@@ -340,7 +341,12 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
      {
 	if (!eina_list_data_find(s->cur_plugins, p))
 	  {
-	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
+	     s->cur_plugins = eina_list_prepend(s->cur_plugins, p);
+
+	     s->cur_plugins = eina_list_sort(s->cur_plugins,
+					     eina_list_count(s->cur_plugins),
+					     _evry_cb_plugin_sort_by_trigger);
+
 	     _evry_plugin_selector_show(p);
 	  }
 	else
@@ -350,14 +356,21 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	     edje_object_part_text_set(p->tab, "e.text.label", buf);
 	  }
 
-	if ((!s->cur_plugin && s->cur_plugins) || (s->cur_plugin == p) ||
-	    (s->plugin_auto_selected && (s->cur_plugin->config->priority > p->config->priority)))
+	if ((!s->cur_plugin && s->cur_plugins) || (s->cur_plugin == p))
+	  /* || (s->plugin_auto_selected && (s->cur_plugin->config->priority > p->config->priority))) */
 	  {
 	     if (!s->cur_plugin)
 	       s->plugin_auto_selected = 1;
 
 	     _evry_list_clear();
 	     _evry_show_items(s->cur_plugins->data);
+	  }
+	else if (/*s->plugin_auto_selected &&*/ p->trigger &&
+		 (!strncmp(s->input, p->trigger, strlen(p->trigger))))
+	  {
+	     _evry_list_clear();
+	     _evry_show_items(p);
+	     /* s->plugin_auto_selected = 0; */
 	  }
 	else if (s->cur_plugin)
 	  _evry_tab_scroll_to(s->cur_plugin); 
@@ -375,7 +388,7 @@ evry_clear_input(void)
 {
    if (cur_state->input[0] != 0)
      {
-	cur_state->input[0] = 0;
+       	cur_state->input[0] = 0;
      }
 }
 
@@ -386,6 +399,20 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
 {
    const Evry_Plugin *p1 = data1;
    const Evry_Plugin *p2 = data2;
+   return p1->config->priority - p2->config->priority;
+}
+
+static int
+_evry_cb_plugin_sort_by_trigger(const void *data1, const void *data2)
+{
+   const Evry_Plugin *p1 = data1;
+   const Evry_Plugin *p2 = data2;
+   if (p1->trigger)
+     {
+	if (!strncmp(cur_state->input, p1->trigger, strlen(p1->trigger)))
+	  return 1;
+     }
+   
    return p1->config->priority - p2->config->priority;
 }
 
@@ -1002,24 +1029,33 @@ _evry_matches_update(Evry_Plugin *cur_plugin)
    s->cur_plugins = NULL;
    s->sel_item = NULL;
 
+   if (s->input)
    EINA_LIST_FOREACH(s->plugins, l, p)
      {
 	/* input matches trigger? */
 	if (p->trigger)
 	  {
-	     const char *trigger = p->trigger;
-	     
-	     if ((strlen(s->input) < strlen(trigger)) ||
-		 (strncmp(s->input, trigger, strlen(trigger))))
-	       continue;
+	     if ((strlen(s->input) >= strlen(p->trigger)) &&
+		 (!strncmp(s->input, p->trigger, strlen(p->trigger))))
+	       {
+		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
+		  items = p->fetch(p, s->input);
+		  break;
+	       }
 	  }
-   
+     }
+
+   if (!s->cur_plugins)
+   EINA_LIST_FOREACH(s->plugins, l, p)
+     {
+	if (p->trigger) continue;
+	
 	if (strlen(s->input) == 0)
 	  items = !p->need_query ? p->fetch(p, NULL) : 0;
 	else
 	  items = p->fetch(p, s->input);
 
-	if (!s->initial || (items && eina_list_count(p->items) > 0))
+	if (!s->initial || (items && eina_list_count(p->items) > 0) || p->async_query)
 	  s->cur_plugins = eina_list_append(s->cur_plugins, p);
      }
 
@@ -1039,6 +1075,10 @@ _evry_matches_update(Evry_Plugin *cur_plugin)
 
    if (s->cur_plugins)
      {
+	/* s->cur_plugins = eina_list_sort(s->cur_plugins,
+	 * 				eina_list_count(s->cur_plugins),
+	 * 				_evry_cb_plugin_sort_by_trigger); */
+
 	if (cur_plugin && eina_list_data_find(s->cur_plugins, cur_plugin))
 	  _evry_show_items(cur_plugin);
 	else
