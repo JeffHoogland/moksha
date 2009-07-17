@@ -121,6 +121,7 @@ _e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method)
 	break;
       case E_FOCUS_METHOD_LOCALLY_ACTIVE:
 	ecore_x_window_focus(win);
+        ecore_x_sync(); // let x actually get the x focus request
 	ecore_x_icccm_take_focus_send(win, ecore_x_current_time_get());
 	break;
       case E_FOCUS_METHOD_GLOBALLY_ACTIVE:

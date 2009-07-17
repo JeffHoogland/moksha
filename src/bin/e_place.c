@@ -121,7 +121,23 @@ _e_place_coverage_shelf_add(E_Zone *zone, int ar, int x, int y, int w, int h)
 	if (es->zone != zone) continue;
 	x2 = es->x; y2 = es->y; w2 = es->w; h2 = es->h;
 	if (E_INTERSECTS(x, y, w, h, x2, y2, w2, h2))
-	  return 0x7fffffff;
+          {
+             int x0, x00, y0, y00;
+             int iw, ih;
+             
+             if (!es->cfg->overlap) return 0x7fffffff;
+	     x0 = x;
+	     if (x < x2) x0 = x2;
+	     x00 = (x + w);
+	     if ((x2 + w2) < (x + w)) x00 = (x2 + w2);
+	     y0 = y;
+	     if (y < y2) y0 = y2;
+	     y00 = (y + h);
+	     if ((y2 + h2) < (y + h)) y00 = (y2 + h2);
+	     iw = x00 - x0;
+	     ih = y00 - y0;
+	     ar += (iw * ih);
+          }
      }
    return ar;
 }
