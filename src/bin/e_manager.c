@@ -164,7 +164,6 @@ e_manager_manage_windows(E_Manager *man)
 
    /* a manager is designated for each root. lets get all the windows in 
       the managers root */
-   printf("--------BD DO!!!\n");
    windows = ecore_x_window_children_get(man->root, &wnum);
    if (windows)
      {
