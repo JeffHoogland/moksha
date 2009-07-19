@@ -267,7 +267,7 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, const char **value)
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
    e_widget_data_set(obj, wd);
 
-   wd->value = value;
+   wd->value = (char **)value;
 
    o = e_scrollframe_add(evas);
    wd->o_scrollframe = o;
