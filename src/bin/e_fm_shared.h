@@ -9,29 +9,24 @@ typedef struct _E_Fm2_Mount  E_Fm2_Mount;
 struct _E_Storage
 {
    int type;
-   char *udi;
-   char *bus;
+   char *udi, *bus;
    char *drive_type;
-   
-   char *model;
-   char *vendor;
-   char *serial;
-   
-   char removable;
-   char media_available;
+
+   char *model, *vendor, *serial;
+
+   char removable, media_available;
    unsigned long long media_size;
-   
-   char requires_eject;
-   char hotpluggable;
+
+   char requires_eject, hotpluggable;
    char media_check_enabled;
-   
-   struct {
-      char *drive;
-      char *volume;
-   } icon;
-   
+
+   struct 
+     {
+        char *drive, *volume;
+     } icon;
+
    Eina_List *volumes;
-   
+
    unsigned char validated;
    unsigned char trackable;
 };
@@ -39,26 +34,23 @@ struct _E_Storage
 struct _E_Volume
 {
    int type;
-   char *udi;
-   char *uuid;
-   char *label;
-   char *icon;
-   char *fstype;
+   char *udi, *uuid;
+   char *label, *icon, *fstype;
    unsigned long long size;
-   
-   char  partition;
-   int   partition_number;
+
+   char partition;
+   int partition_number;
    char *partition_label;
-   char  mounted;
+   char mounted;
    char *mount_point;
-   
+
    char *parent;
    E_Storage *storage;
    void *prop_handler;
    Eina_List *mounts;
-   
+
    unsigned char validated;
-   
+
    char auto_unmount;                  // unmount, when last associated fm window closed
    char first_time;                    // volume discovery in init sequence
    Ecore_Timer *guard;                 // operation guard timer
@@ -67,14 +59,14 @@ struct _E_Volume
 
 struct _E_Fm2_Mount
 {
-   const char   *udi;
-   const char   *mount_point;
-   
-   void        (*mount_ok) (void *data);
-   void        (*mount_fail) (void *data);
-   void        (*unmount_ok) (void *data);
-   void        (*unmount_fail) (void *data);
-   void         *data;
+   const char *udi;
+   const char *mount_point;
+
+   void (*mount_ok) (void *data);
+   void (*mount_fail) (void *data);
+   void (*unmount_ok) (void *data);
+   void (*unmount_fail) (void *data);
+   void *data;
 
    E_Volume *volume;
 
@@ -112,7 +104,7 @@ _e_storage_free(E_Storage *s)
    while (s->volumes)
      {
 	E_Volume *v;
-	
+
 	v = s->volumes->data;
 	_e_volume_free(v);
 	s->volumes = eina_list_remove_list(s->volumes, s->volumes);
@@ -120,7 +112,6 @@ _e_storage_free(E_Storage *s)
    if (s->udi) free(s->udi);
    if (s->bus) free(s->bus);
    if (s->drive_type) free(s->drive_type);
-   
    if (s->model) free(s->model);
    if (s->vendor) free(s->vendor);
    if (s->serial) free(s->serial);
