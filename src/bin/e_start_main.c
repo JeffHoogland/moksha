@@ -11,7 +11,7 @@
 #include <limits.h>
 #include <fcntl.h>
 #ifdef HAVE_ALLOCA_H
-#include <alloca.h>
+# include <alloca.h>
 #endif
 
 static void env_set(const char *var, const char *val);
@@ -26,7 +26,7 @@ env_set(const char *var, const char *val)
 	setenv(var, val, 1);
 #else
 	char *buf;
-	
+
 	buf = alloca(strlen(var) + 1 + strlen(val) + 1);
 	snprintf(buf, sizeof(buf), "%s=%s", var, val);
 	if (getenv(var))
@@ -135,7 +135,7 @@ _prefix_try_proc(void)
 	int len;
 	char *p, mode[5] = "";
 	unsigned long ptr1 = 0, ptr2 = 0;
-	
+
 	len = strlen(buf);
 	if (buf[len - 1] == '\n')
 	  {
@@ -180,7 +180,7 @@ _prefix_try_argv(char *argv0)
 #else
    char buf[4096], buf2[4096], buf3[4096];
 #endif	
-   
+
    /* 1. is argv0 abs path? */
    if (argv0[0] == '/')
      {
@@ -263,7 +263,7 @@ precache(void)
    char buf[4096], tbuf[256 * 1024];
    struct stat st;
    int l, fd, children = 0, cret;
-   
+
    home = getenv("HOME");
    if (home) snprintf(buf, sizeof(buf), "%s/.e-precache", home);
    else snprintf(buf, sizeof(buf), "/tmp/.e-precache");
@@ -280,9 +280,7 @@ precache(void)
 	if (!fork())
 	  {
 	     if (buf[0] == 's')
-	       {
-		  stat(buf + 2, &st);
-	       }
+               stat(buf + 2, &st);
 	     else if (buf[0] == 'o')
 	       {
 		  fd = open(buf + 2, O_RDONLY);
@@ -374,6 +372,7 @@ valgrind_append(char **dst, int valgrind_mode, const char *valgrind_path, const 
    if (valgrind_log)
      {
 	static char logparam[PATH_MAX + sizeof("--log-file=")];
+
 	snprintf(logparam, sizeof(logparam), "--log-file=%s", valgrind_log);
 	dst[i++] = logparam;
      }
@@ -411,7 +410,7 @@ main(int argc, char **argv)
    prefix_determine(argv[0]);
 
    env_set("E_START", argv[0]);
-   
+
    p = getenv("PATH");
    if (p) snprintf(buf, sizeof(buf), "%s/bin:%s", _prefix_path, p);
    else snprintf(buf, sizeof(buf), "%s/bin", _prefix_path);
@@ -428,6 +427,7 @@ main(int argc, char **argv)
 	else if (!strncmp(argv[i], "-valgrind", sizeof("-valgrind") - 1))
 	  {
 	     const char *val = argv[i] + sizeof("-valgrind") - 1;
+
 	     if (*val == '\0')
 	       valgrind_mode = 1;
 	     else if (*val == '-')
@@ -472,8 +472,7 @@ main(int argc, char **argv)
 		"Please run:\n"
 		"\tenlightenment %s\n"
 		"for more options.\n",
-		argv[i]
-		);
+		argv[i]);
 	     exit(0);
 	  }
      }
@@ -499,7 +498,7 @@ main(int argc, char **argv)
    if (do_precache)
      {
 	void *lib, *func;
-	
+
 	do_precache = 0;
 	/* sanity checks - if precache might fail - check here first */
 	lib = dlopen("libevas.so", RTLD_GLOBAL | RTLD_LAZY);
@@ -528,7 +527,7 @@ main(int argc, char **argv)
 
    /* try dbus-launch */
    snprintf(buf, sizeof(buf), "%s/bin/enlightenment", _prefix_path);
-   
+
    args = alloca((argc + 2 + VALGRIND_MAX_ARGS) * sizeof(char *));
    if (!getenv("DBUS_SESSION_BUS_ADDRESS"))
      {
@@ -541,7 +540,7 @@ main(int argc, char **argv)
 	args[i + argc - 1] = NULL;
 	execvp("dbus-launch", args);
      }
-   
+
    /* dbus-launch failed - run e direct */
    i = valgrind_append(args, valgrind_mode, valgrind_path, valgrind_log);
    args[i++] = buf;
