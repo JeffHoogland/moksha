@@ -74,6 +74,7 @@ _e_gdb_print_backtrace(int fd)
 static void
 _e_backtrace_int(int fd, const char *msg, size_t msg_len)
 {
+#ifdef OBJECT_PARANOIA_CHECK
    char attachmsg[1024];
    void *array[255];
    size_t size;
@@ -90,6 +91,7 @@ _e_backtrace_int(int fd, const char *msg, size_t msg_len)
      _e_write_safe_int(fd, attachmsg, size);
 
    _e_gdb_print_backtrace(fd);
+#endif
 }
 
 #ifdef OBJECT_PARANOIA_CHECK   
