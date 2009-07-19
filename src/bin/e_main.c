@@ -1092,8 +1092,6 @@ main(int argc, char **argv)
 
    e_prefix_shutdown();
 
-   eina_shutdown();
-
    /* just return 0 to keep the compiler quiet */
    return 0;
 }
