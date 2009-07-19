@@ -464,8 +464,7 @@ main(int argc, char **argv)
 		     "will handle setting up environment variables, paths,\n"
 		     "and launching any other required services etc.\n"
 		     "before enlightenment itself begins running.\n");
-	_e_main_shutdown(-1);
-//	exit(-1);
+	exit(-1);
      }
 
    TS("ecore_con");
