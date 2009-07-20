@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-12 11:57+0400\n"
-"PO-Revision-Date: 2009-07-14 09:23+0400\n"
+"POT-Creation-Date: 2009-07-18 12:45+0400\n"
+"PO-Revision-Date: 2009-07-20 14:28+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <Enlightenment i18n French>\n"
 "MIME-Version: 1.0\n"
@@ -340,23 +340,23 @@ msgstr "Bureau"
 
 #: src/bin/e_actions.c:2576
 msgid "Flip Desktop Left"
-msgstr "Bascule vers le bureau gauche"
+msgstr "Basculer vers le bureau gauche"
 
 #: src/bin/e_actions.c:2578
 msgid "Flip Desktop Right"
-msgstr "Bascule vers le bureau droit"
+msgstr "Basculer vers le bureau droit"
 
 #: src/bin/e_actions.c:2580
 msgid "Flip Desktop Up"
-msgstr "Bascule vers le bureau du dessus"
+msgstr "Basculer vers le bureau du dessus"
 
 #: src/bin/e_actions.c:2582
 msgid "Flip Desktop Down"
-msgstr "Bascule vers le bureau du dessous"
+msgstr "Basculer vers le bureau du dessous"
 
 #: src/bin/e_actions.c:2584
 msgid "Flip Desktop By..."
-msgstr "Basculer le bureau de..."
+msgstr "Se déplacer de ... bureaux"
 
 #: src/bin/e_actions.c:2590
 msgid "Show The Desktop"
@@ -368,11 +368,11 @@ msgstr "Afficher le rack"
 
 #: src/bin/e_actions.c:2600
 msgid "Flip Desktop To..."
-msgstr "Basculer le bureau vers..."
+msgstr "Aller au bureau ..."
 
 #: src/bin/e_actions.c:2606
 msgid "Flip Desktop Linearly..."
-msgstr "Basculer le bureau linéairement..."
+msgstr "Se déplacer linéairement de ... bureaux"
 
 #: src/bin/e_actions.c:2612
 msgid "Switch To Desktop 0"
@@ -424,7 +424,7 @@ msgstr "Passer au bureau 11"
 
 #: src/bin/e_actions.c:2636
 msgid "Switch To Desktop..."
-msgstr "Passer au bureau..."
+msgstr "Passer au bureau ..."
 
 #: src/bin/e_actions.c:2642
 msgid "Flip Desktop Left (All Screens)"
@@ -444,19 +444,19 @@ msgstr "Basculer vers le bureau du dessous (tous les écrans)"
 
 #: src/bin/e_actions.c:2650
 msgid "Flip Desktop By... (All Screens)"
-msgstr "Basculer le bureau de... (tous les écrans)"
+msgstr "Se déplacer de ... bureaux (tous les écrans)"
 
 #: src/bin/e_actions.c:2656
 msgid "Flip Desktop To... (All Screens)"
-msgstr "Basculer le bureau vers... (tous les écrans)"
+msgstr "Aller au bureau ... (tous les écrans)"
 
 #: src/bin/e_actions.c:2662
 msgid "Flip Desktop Linearly... (All Screens)"
-msgstr "Basculer linéairement le bureau... (tous les écrans)"
+msgstr "Se déplacer linéairement de ... bureaux (tous les écrans)"
 
 #: src/bin/e_actions.c:2668
 msgid "Flip Desktop In Direction..."
-msgstr "Basculer le bureau avec..."
+msgstr "Basculer le bureau en direction..."
 
 #: src/bin/e_actions.c:2673
 msgid "Switch To Desktop 0 (All Screens)"
@@ -508,7 +508,7 @@ msgstr "Passer au bureau 11 (tous les écrans)"
 
 #: src/bin/e_actions.c:2697
 msgid "Switch To Desktop... (All Screens)"
-msgstr "Passer au bureau... (tous les écrans)"
+msgstr "Passer au bureau ... (tous les écrans)"
 
 #: src/bin/e_actions.c:2704
 #: src/bin/e_actions.c:2706
@@ -535,7 +535,7 @@ msgstr "Envoyer la souris à l'écran 1"
 
 #: src/bin/e_actions.c:2708
 msgid "Send Mouse To Screen..."
-msgstr "Envoyer la souris à l'écran..."
+msgstr "Envoyer la souris à l'écran ..."
 
 #: src/bin/e_actions.c:2713
 msgid "Send Mouse Forward 1 Screen"
@@ -547,7 +547,7 @@ msgstr "Envoyer la souris à l'écran précédent"
 
 #: src/bin/e_actions.c:2717
 msgid "Send Mouse Forward/Back Screens..."
-msgstr "Déplacer la souris de ... écrans"
+msgstr "Envoyer la souris ... écrans plus loin"
 
 #: src/bin/e_actions.c:2755
 #: src/bin/e_actions.c:2757
@@ -566,11 +566,11 @@ msgstr "Vers le bureau précédent"
 
 #: src/bin/e_actions.c:2759
 msgid "By Desktop #..."
-msgstr "Par le bureau #..."
+msgstr "Déplacer de ... bureaux"
 
 #: src/bin/e_actions.c:2765
 msgid "To Desktop..."
-msgstr "Vers le bureau..."
+msgstr "Vers le bureau ..."
 
 #: src/bin/e_actions.c:2771
 msgid "Show Main Menu"
@@ -708,11 +708,11 @@ msgstr "Action reportée"
 msgid "Set As Background"
 msgstr "Utiliser comme fond d'écran"
 
-#: src/bin/e_border.c:5059
+#: src/bin/e_border.c:5058
 msgid "Desktop files scan done"
 msgstr "Analyse des fichiers desktop terminée"
 
-#: src/bin/e_border.c:5071
+#: src/bin/e_border.c:5070
 msgid "Desktop file scan"
 msgstr "Analyse des fichiers desktop"
 
