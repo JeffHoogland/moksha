@@ -302,9 +302,9 @@ e_theme_file_set(const char *category, const char *file)
 	     eina_stringshare_del(res->file);
 	  }
 	if (res->cache) eina_stringshare_del(res->cache);
-	free(res);
+	E_FREE(res);
      }
-   res = calloc(1, sizeof(E_Theme_Result));
+   res = E_NEW(E_Theme_Result, 1);
    res->file = eina_stringshare_add(file);
    e_filereg_register(res->file);
    if (!mappings)
