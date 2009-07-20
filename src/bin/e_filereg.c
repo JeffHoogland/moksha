@@ -79,11 +79,8 @@ e_filereg_deregister(const char *path)
 EAPI Eina_Bool
 e_filereg_file_protected(const char *path)
 {
-   Filereg_Item *fi = NULL;
-
-   fi = eina_hash_find(_e_filereg, path);
-   if (!fi) return EINA_FALSE;
-   return EINA_TRUE;
+   if (eina_hash_find(_e_filereg, path)) return EINA_TRUE;
+   return EINA_FALSE;
 }
 
 /* Private Functions */
