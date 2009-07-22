@@ -74,7 +74,6 @@ _e_gdb_print_backtrace(int fd)
 static void
 _e_backtrace_int(int fd, const char *msg, size_t msg_len)
 {
-#ifdef OBJECT_PARANOIA_CHECK
    char attachmsg[1024];
    void *array[255];
    size_t size;
@@ -91,10 +90,7 @@ _e_backtrace_int(int fd, const char *msg, size_t msg_len)
      _e_write_safe_int(fd, attachmsg, size);
 
    _e_gdb_print_backtrace(fd);
-#endif
 }
-
-#ifdef OBJECT_PARANOIA_CHECK   
 
 /* a tricky little devil, requires e and it's libs to be built
  * with the -rdynamic flag to GCC for any sort of decent output. 
@@ -119,28 +115,6 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
 		"Please compile everything with -g in your CFLAGS\n");
    exit(-11); 
 }
-#else
-EAPI void
-e_sigseg_act(int x, siginfo_t *info, void *data)
-{
-   _e_backtrace("**** SEGMENTATION FAULT ****");
-   _e_x_composite_shutdown();
-   ecore_x_pointer_ungrab();
-   ecore_x_keyboard_ungrab();
-   ecore_x_ungrab();
-   ecore_x_sync();
-   e_alert_show("This is very bad. Enlightenment SEGV'd.\n"
-		"\n"
-		"This is not meant to happen and is likely a sign of\n"
-		"a bug in Enlightenment or the libraries it relies\n"
-		"on. You can gdb attach to this process now to try\n"
-		"debug it or you could exit, or just hit restart to\n"
-		"try and get your desktop back the way it was.\n"
-		"\n"
-		"Please compile everything with -g in your CFLAGS\n");
-   exit(-11);
-}
-#endif
 
 EAPI void
 e_sigill_act(int x, siginfo_t *info, void *data)
