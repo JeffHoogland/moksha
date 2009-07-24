@@ -31,7 +31,6 @@ e_prefix_determine(char *argv0)
 {
    char *p, buf[4096];
 
-   printf("e_prefix_determine()\n");
    e_prefix_shutdown();
 
    /* if user provides E_PREFIX - then use that or also more specific sub
