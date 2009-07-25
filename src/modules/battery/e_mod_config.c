@@ -53,6 +53,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->alert_percent = battery_config->alert_p;
    cfdata->poll_interval = battery_config->poll_interval;
    cfdata->alert_timeout = battery_config->alert_timeout;
+   cfdata->force_mode = battery_config->force_mode;
 
    if (cfdata->alert_time > 0 || cfdata->alert_percent > 0) 
      cfdata->show_alert = 1;
