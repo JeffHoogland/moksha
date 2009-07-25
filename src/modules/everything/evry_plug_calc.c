@@ -10,7 +10,6 @@ static int  _fetch(Evry_Plugin *p, const char *input);
 static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
 static void _cleanup(Evry_Plugin *p);
 static void _item_add(Evry_Plugin *p, char *output, int prio);
-static int  _cb_sort(const void *data1, const void *data2);
 static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 static int  _cb_data(void *data, int type, void *event);
 static int  _cb_error(void *data, int type, void *event);
@@ -59,12 +58,13 @@ evry_plug_calc_shutdown(void)
    E_FREE(p);
 
    ecore_x_window_free(clipboard_win);
-   
+   clipboard_win = 0;
+
    return 1;
 }
 
 static int
-_begin(Evry_Plugin *p, Evry_Item *it)
+_begin(Evry_Plugin *p, Evry_Item *it __UNUSED__)
 {
 
    data_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _cb_data, p);
@@ -76,14 +76,14 @@ _begin(Evry_Plugin *p, Evry_Item *it)
 			    ECORE_EXE_PIPE_ERROR |
 			    ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
 			    NULL);
+   return !!exe;
 }
 
 static void
 _cleanup(Evry_Plugin *p)
 {
-   Evry_Item *it, *it2;
+   Evry_Item *it;
    int i = 0;
-   Eina_List *l, *ll;
 
    EINA_LIST_FREE(p->items, it)
      {
@@ -107,7 +107,7 @@ _cleanup(Evry_Plugin *p)
 }
 
 static int
-_action(Evry_Plugin *p, Evry_Item *it, const char *input)
+_action(Evry_Plugin *p, Evry_Item *it, const char *input __UNUSED__)
 {
    if (!it) return EVRY_ACTION_CONTINUE;
 
@@ -184,7 +184,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static void
-_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e __UNUSED__)
 {
    it->o_icon = NULL;
 }
@@ -203,7 +203,7 @@ _item_add(Evry_Plugin *p, char *output, int prio)
 }
 
 static int
-_cb_data(void *data, int type, void *event)
+_cb_data(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev = event;
    Ecore_Exe_Event_Data_Line *l;
@@ -233,7 +233,7 @@ _cb_data(void *data, int type, void *event)
 }
 
 static int
-_cb_error(void *data, int type, void *event)
+_cb_error(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    error = 1;
    

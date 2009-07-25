@@ -55,8 +55,6 @@ static void _evry_tab_scroll_to(Evry_Plugin *p);
 static void _evry_item_desel(Evry_Item *it);
 static void _evry_item_sel(Evry_Item *it);
 static void _evry_plugin_action(int finished);
-static void _evry_action_select(void);
-static void _evry_cb_plugin_sel(void *data1, void *data2);
 static int  _evry_animator(void *data);
 static int  _evry_scroll_timer(void *data);
 static int  _evry_push_state(void);
@@ -80,7 +78,6 @@ static Ecore_Timer *update_timer = NULL;
 static Evas_Object *o_list = NULL;
 static Evas_Object *o_main = NULL;
 static Evas_Object *o_selector = NULL;
-static Evas_Object *o_selector_frame = NULL;
 static int          ev_last_is_mouse;
 static Evry_Item   *item_mouseover = NULL;
 static Ecore_Animator *scroll_animator = NULL;
@@ -258,9 +255,6 @@ EAPI void
 evry_hide(void)
 {
    Ecore_Event *ev;
-   char *str;
-   Evry_Plugin *plugin;
-   Eina_List *l;
    Evry_State *s;
 
    if (!popup) return;
@@ -608,7 +602,7 @@ _evry_pop_state(void)
 
 /* TODO config options for users preferred keys */
 static int
-_evry_cb_key_down(void *data, int type, void *event)
+_evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev;
    Evry_State *s = cur_state;
@@ -698,7 +692,7 @@ _evry_cb_key_down(void *data, int type, void *event)
 }
 
 static int
-_evry_cb_mouse_down(void *data, int type, void *event)
+_evry_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    Evry_State *s =cur_state;
@@ -724,7 +718,7 @@ _evry_cb_mouse_down(void *data, int type, void *event)
 }
 
 static int
-_evry_cb_mouse_up(void *data, int type, void *event)
+_evry_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
 
@@ -747,7 +741,7 @@ _evry_cb_mouse_up(void *data, int type, void *event)
 }
 
 static int
-_evry_cb_mouse_move(void *data, int type, void *event)
+_evry_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
    Evry_State *s =cur_state;
@@ -777,7 +771,7 @@ _evry_cb_mouse_move(void *data, int type, void *event)
 }
 
 static int
-_evry_cb_mouse_wheel(void *data, int type, void *event)
+_evry_cb_mouse_wheel(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Wheel *ev;
 
@@ -802,8 +796,7 @@ _evry_cb_mouse_wheel(void *data, int type, void *event)
 }
 
 static void
-_evry_cb_item_mouse_in(void *data, Evas *evas, Evas_Object *obj,
-		       void *event_info)
+_evry_cb_item_mouse_in(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Evry_State *s =cur_state;
 
@@ -817,8 +810,7 @@ _evry_cb_item_mouse_in(void *data, Evas *evas, Evas_Object *obj,
 }
 
 static void
-_evry_cb_item_mouse_out(void *data, Evas *evas, Evas_Object *obj,
-			void *event_info)
+_evry_cb_item_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    item_mouseover = NULL;
 }
@@ -844,9 +836,6 @@ _evry_backspace(void)
 static void
 _evry_update(void)
 {
-   Efreet_Desktop *desktop;
-   Evas_Object *o;
-
    edje_object_part_text_set(o_main, "e.text.label", cur_state->input);
 
    if (update_timer) ecore_timer_del(update_timer);
@@ -854,7 +843,7 @@ _evry_update(void)
 }
 
 static int
-_evry_update_timer(void *data)
+_evry_update_timer(void *data __UNUSED__)
 {
    _evry_matches_update(cur_state->cur_plugin);
    update_timer = NULL;
@@ -1302,7 +1291,6 @@ static void
 _evry_plugin_prev(void)
 {
    Eina_List *l;
-   Evry_Plugin *plugin;
    Evry_State *s = cur_state;
 
    if (!s->cur_plugin) return;
@@ -1329,7 +1317,7 @@ _evry_plugin_prev(void)
 }
 
 static int
-_evry_scroll_timer(void *data)
+_evry_scroll_timer(void *data __UNUSED__)
 {
    if (scroll_animator)
      {
@@ -1343,7 +1331,7 @@ _evry_scroll_timer(void *data)
 }
 
 static int
-_evry_animator(void *data)
+_evry_animator(void *data __UNUSED__)
 {
    double da;
    Eina_Bool scroll_to = 1;
@@ -1431,10 +1419,12 @@ _evry_plug_act_select_init(void)
 
    evry_conf->plugins = eina_list_append(evry_conf->plugins, p);
    action_selector = p;
+
+   return 1;
 }
 
 static int
-_evry_plug_act_select_begin(Evry_Plugin *p, Evry_Item *it)
+_evry_plug_act_select_begin(Evry_Plugin *p, Evry_Item *it __UNUSED__)
 {
    Evry_Action *act;
    Eina_List *l;
@@ -1462,7 +1452,7 @@ _evry_plug_act_select_begin(Evry_Plugin *p, Evry_Item *it)
 }
 
 static int
-_evry_plug_act_select_fetch(Evry_Plugin *p, const char *input)
+_evry_plug_act_select_fetch(Evry_Plugin *p, const char *input __UNUSED__)
 {
    Evry_Action *act;
    Eina_List *l;
@@ -1487,7 +1477,7 @@ _evry_plug_act_select_fetch(Evry_Plugin *p, const char *input)
 }
 
 static int
-_evry_plug_act_select_action(Evry_Plugin *p, Evry_Item *it, const char *input)
+_evry_plug_act_select_action(Evry_Plugin *p __UNUSED__, Evry_Item *it, const char *input __UNUSED__)
 {
    Evry_Action *act = it->data[0];
    cur_state->cur_action = act;
@@ -1526,9 +1516,9 @@ _evry_plug_act_select_cleanup(Evry_Plugin *p)
 }
 
 static void
-_evry_plug_act_select_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_evry_plug_act_select_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it __UNUSED__, Evas *e __UNUSED__)
 {
-   Evry_Action *act = it->data[0];
+   /*    Evry_Action *act = it->data[0]; */
 
    /* if (act->icon_get)
     *   it->o_icon = act->icon_get(act, e); */

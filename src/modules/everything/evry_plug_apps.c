@@ -104,7 +104,7 @@ evry_plug_apps_shutdown(void)
 }
 
 static int
-_begin(Evry_Plugin *p, Evry_Item *it)
+_begin(Evry_Plugin *p __UNUSED__, Evry_Item *it)
 {
    const char *mime;
 
@@ -143,7 +143,7 @@ _begin(Evry_Plugin *p, Evry_Item *it)
 }
 
 static int
-_action(Evry_Plugin *p, Evry_Item *it, const char *input)
+_action(Evry_Plugin *p __UNUSED__, Evry_Item *it, const char *input)
 {
    E_Zone *zone;
    Evry_App *app = NULL;
@@ -262,7 +262,7 @@ _fetch(Evry_Plugin *p, const char *input)
 		    _item_add(p, desktop, NULL, 2);
 		  else if (e_util_glob_case_match(desktop->name, match1))
 		    _item_add(p, desktop, NULL, 1);
-		  else if (p, e_util_glob_case_match(desktop->name, match2))
+		  else if (e_util_glob_case_match(desktop->name, match2))
 		    _item_add(p, desktop, NULL, 2);
 		  else if (desktop->comment)
 		    {
@@ -423,7 +423,7 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 }
 
 static void
-_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
 {
    Evry_App *app = it->data[0];
 
@@ -477,7 +477,7 @@ _cb_sort(const void *data1, const void *data2)
 }
 
 static int
-_exec_app_check_item(Evry_Action *act, Evry_Item *it)
+_exec_app_check_item(Evry_Action *act __UNUSED__, Evry_Item *it)
 {
    Evry_App *app = it->data[0];
    if (app->desktop)
@@ -544,7 +544,7 @@ _exec_app_action(Evry_Action *act)
 }
 
 static int
-_edit_app_check_item(Evry_Action *act, Evry_Item *it)
+_edit_app_check_item(Evry_Action *act __UNUSED__, Evry_Item *it)
 {
    Evry_App *app = it->data[0];
    if (app->desktop)
@@ -586,7 +586,7 @@ _edit_app_action(Evry_Action *act)
 
 
 static int
-_new_app_check_item(Evry_Action *act, Evry_Item *it)
+_new_app_check_item(Evry_Action *act __UNUSED__, Evry_Item *it)
 {
    Evry_App *app = it->data[0];
    if (app->desktop)

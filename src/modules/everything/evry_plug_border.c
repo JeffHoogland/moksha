@@ -38,7 +38,7 @@ evry_plug_border_shutdown(void)
 }
 
 static int
-_action(Evry_Plugin *p, Evry_Item *it, const char *input)
+_action(Evry_Plugin *p __UNUSED__, Evry_Item *it, const char *input __UNUSED__)
 {
    E_Border *bd;
    E_Zone *zone;
@@ -86,7 +86,6 @@ _fetch(Evry_Plugin *p, const char *input)
 
    char match1[4096];
    char match2[4096];
-   Eina_List *list;
    E_Border *bd;
    E_Border_List *bl;
 
@@ -132,7 +131,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static void
-_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
 {
    it->o_icon = e_border_icon_add(((E_Border *)it->data[0]), e);
 }

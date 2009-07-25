@@ -86,7 +86,7 @@ _begin(Evry_Plugin *p, Evry_Item *it)
 }
 
 static int
-_action(Evry_Plugin *p, Evry_Item *it, const char *input)
+_action(Evry_Plugin *p __UNUSED__, Evry_Item *it __UNUSED__, const char *input __UNUSED__)
 {
    return EVRY_ACTION_OTHER;
 }
@@ -334,7 +334,7 @@ _item_fill(Evry_Item *it, Evas *e)
 }
 
 static void
-_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
 {
    char *item_path;
 

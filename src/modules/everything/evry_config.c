@@ -51,7 +51,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    
@@ -61,13 +61,13 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_FREE(cfdata);
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    evry_conf->width = cfdata->width;
    evry_conf->height = cfdata->height;
@@ -78,7 +78,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_fill_list(Evas_Object *obj, int enabled)
+_fill_list(Evas_Object *obj, int enabled __UNUSED__)
 {
    Evas *evas;
    Evas_Coord w;
@@ -114,7 +114,6 @@ _plugin_move(Evas_Object *list, int dir)
    if (sel >= 0)
      {
 	Evry_Plugin *p;
-	Evas *evas;
 	int prio = 0;
 	
 	l1 = eina_list_nth_list(evry_conf->plugins, sel);
@@ -134,7 +133,7 @@ _plugin_move(Evas_Object *list, int dir)
 }
 
 static void
-_plugin_move_up_cb(void *data, void *data2)
+_plugin_move_up_cb(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    
@@ -144,7 +143,7 @@ _plugin_move_up_cb(void *data, void *data2)
 }
 
 static void
-_plugin_move_down_cb(void *data, void *data2)
+_plugin_move_down_cb(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -154,7 +153,7 @@ _plugin_move_down_cb(void *data, void *data2)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *otb;
 

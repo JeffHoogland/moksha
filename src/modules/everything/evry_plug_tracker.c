@@ -63,7 +63,7 @@ evry_plug_tracker_shutdown(void)
 }
 
 static int
-_action(Evry_Plugin *p, Evry_Item *it, const char *input)
+_action(Evry_Plugin *p __UNUSED__, Evry_Item *it __UNUSED__, const char *input __UNUSED__)
 {
    return EVRY_ACTION_OTHER;
 }
@@ -85,7 +85,6 @@ _cleanup(Evry_Plugin *p)
 static int
 _fetch(Evry_Plugin *p, const char *input)
 {
-   Eina_List *list;
    DBusMessage *msg;
    DBusMessageIter iter;
    int live_query_id = 0;
@@ -119,7 +118,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static void
-_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
 {
    char *item_path;
 
@@ -145,7 +144,7 @@ _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
 }
 
 static void
-_item_add(Evry_Plugin *p, char *file, char *service, char *mime, int prio)
+_item_add(Evry_Plugin *p, char *file, char *service __UNUSED__, char *mime, int prio)
 {
    Evry_Item *it;   
    
@@ -160,11 +159,10 @@ _item_add(Evry_Plugin *p, char *file, char *service, char *mime, int prio)
 }
 
 static void
-_dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
+_dbus_cb_reply(void *data __UNUSED__, DBusMessage *msg, DBusError *error)
 {
    DBusMessageIter array, iter, item;
-   char *val;
-   
+
    if (dbus_error_is_set(error))
      {
 	printf("Error: %s - %s\n", error->name, error->message);

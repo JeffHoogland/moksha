@@ -37,7 +37,7 @@ evry_plug_config_shutdown(void)
 }
 
 static int
-_action(Evry_Plugin *p, Evry_Item *it, const char *input)
+_action(Evry_Plugin *p __UNUSED__, Evry_Item *it, const char *input __UNUSED__)
 {
    E_Configure_It *eci, *eci2;
    E_Container *con;
@@ -88,9 +88,6 @@ _cleanup(Evry_Plugin *p)
 static int
 _fetch(Evry_Plugin *p, const char *input)
 {
-   E_Manager *man;
-   E_Zone *zone;
-
    char match1[4096];
    char match2[4096];
    Eina_List *l, *ll;
@@ -135,7 +132,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static void
-_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
 {
    E_Configure_It *eci = it->data[0];
    Evas_Object *o = NULL;

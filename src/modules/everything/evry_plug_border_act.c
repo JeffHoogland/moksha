@@ -72,7 +72,7 @@ _act_cb_border_minimize(E_Border *bd)
 }
 
 static int
-_begin(Evry_Plugin *p, Evry_Item *item)
+_begin(Evry_Plugin *p __UNUSED__, Evry_Item *item)
 {
    E_Border *bd;
 
@@ -84,7 +84,7 @@ _begin(Evry_Plugin *p, Evry_Item *item)
 }
 
 static int
-_fetch(Evry_Plugin *p, const char *input)
+_fetch(Evry_Plugin *p, const char *input __UNUSED__)
 {
    _cleanup(p);
 
@@ -104,7 +104,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static int
-_action(Evry_Plugin *p, Evry_Item *item, const char *input)
+_action(Evry_Plugin *p __UNUSED__, Evry_Item *item, const char *input __UNUSED__)
 {
    void (*border_action) (E_Border *bd);
    border_action = item->data[0];
@@ -139,7 +139,7 @@ _item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), c
 }
 
 static void
-_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
 {
    it->o_icon = edje_object_add(e);
    e_theme_edje_object_set(it->o_icon, "base/theme/borders", (const char *)it->data[1]);
