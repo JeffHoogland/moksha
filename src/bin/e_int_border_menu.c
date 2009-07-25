@@ -29,6 +29,7 @@ static void _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi)
 static void _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_skip_pager(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_skip_taskbar(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_sendto_icon_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_pin(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -704,6 +705,28 @@ _e_border_menu_cb_skip_taskbar(void *data, E_Menu *m, E_Menu_Item *mi)
    if (bd->remember) e_remember_update(bd->remember, bd);
 }
 
+static void 
+_e_border_menu_cb_sendto_icon_pre(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Desk *desk = NULL;
+   Evas_Object *o = NULL;
+   const char *bgfile = NULL;
+   int tw = 0, th = 0;
+
+   desk = data;
+   E_OBJECT_CHECK(desk);
+
+   tw = 50;
+   th = (tw * desk->zone->h) / desk->zone->w;
+   bgfile = e_bg_file_get(desk->zone->container->num, desk->zone->num, 
+                          desk->x, desk->y);
+   o = e_thumb_icon_add(m->evas);
+   e_thumb_icon_file_set(o, bgfile, "e/desktop/background");
+   e_thumb_icon_size_set(o, tw, th);
+   e_thumb_icon_begin(o);
+   mi->icon_object = o;
+}
+
 static void
 _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 {
@@ -731,6 +754,7 @@ _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
         e_menu_item_radio_group_set(submi, 2);
         e_menu_item_toggle_set(submi, (desk_cur == desk ? 1 : 0));
 	e_menu_item_callback_set(submi, _e_border_menu_cb_sendto, desk);
+        e_menu_item_realize_callback_set(submi, _e_border_menu_cb_sendto_icon_pre, desk);
      }
 }
 
