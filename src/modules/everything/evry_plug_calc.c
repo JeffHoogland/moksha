@@ -13,12 +13,14 @@ static void _item_add(Evry_Plugin *p, char *output, int prio);
 static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 static int  _cb_data(void *data, int type, void *event);
 static int  _cb_error(void *data, int type, void *event);
+static int  _cb_del(void *data, int type, void *event);
 
 static Evry_Plugin *p;
 static Ecore_Exe *exe = NULL;
 static Eina_List *history = NULL;
 static Ecore_Event_Handler *data_handler = NULL;
 static Ecore_Event_Handler *error_handler = NULL;
+static Ecore_Event_Handler *del_handler = NULL;
 static Ecore_X_Window clipboard_win = 0;
 static int error = 0;
 
@@ -69,6 +71,7 @@ _begin(Evry_Plugin *p, Evry_Item *it __UNUSED__)
 
    data_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _cb_data, p);
    error_handler = ecore_event_handler_add(ECORE_EXE_EVENT_ERROR, _cb_error, p);
+   del_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _cb_del, p);
    exe = ecore_exe_pipe_run("bc -l",
 			    ECORE_EXE_PIPE_READ |
 			    ECORE_EXE_PIPE_READ_LINE_BUFFERED |
@@ -203,12 +206,12 @@ _item_add(Evry_Plugin *p, char *output, int prio)
 }
 
 static int
-_cb_data(void *data, int type __UNUSED__, void *event)
+_cb_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev = event;
    Ecore_Exe_Event_Data_Line *l;
 
-   if (data != p) return 1;
+   if (ev->exe != exe) return 1;
    
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR);
 
@@ -233,11 +236,27 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 }
 
 static int
-_cb_error(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+_cb_error(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
+   Ecore_Exe_Event_Data *ev = event;
+
+   if (ev->exe != exe)
+     return 1;
+
    error = 1;
-   
    /* printf("got error\n"); */
 
+   return 1;
+}
+
+static int
+_cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+   Ecore_Exe_Event_Del *e = event;
+
+   if (e->exe != exe)
+     return 1;
+
+   exe = NULL;
    return 1;
 }
