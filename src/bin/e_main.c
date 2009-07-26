@@ -302,7 +302,8 @@ main(int argc, char **argv)
 	else if ((!strcmp(argv[i], "-profile")) && (i < (argc - 1)))
 	  {
 	     i++;
-	     e_util_env_set("E_CONF_PROFILE", argv[i]);
+	     if (!getenv("E_CONF_PROFILE"))
+	       e_util_env_set("E_CONF_PROFILE", argv[i]);
 	  }
 	else if (!strcmp(argv[i], "-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it"))
 	  {

@@ -121,7 +121,8 @@ e_config_init(void)
 	     else
 	       _e_config_profile = strdup("default");
 	  }
-	e_util_env_set("E_CONF_PROFILE", _e_config_profile);
+	if (!getenv("E_CONF_PROFILE"))
+	  e_util_env_set("E_CONF_PROFILE", _e_config_profile);
      }
 
    _e_config_gadcon_client_edd = E_CONFIG_DD_NEW("E_Config_Gadcon_Client", E_Config_Gadcon_Client);
