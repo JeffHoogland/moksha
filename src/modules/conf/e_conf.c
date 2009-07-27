@@ -151,7 +151,8 @@ e_configure_show(E_Container *con)
    kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    if (!kg)
       fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_configure_keydown_cb, eco->win);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, 
+                                  _e_configure_keydown_cb, eco->win);
 
    /* Category List */
    eco->cat_list = e_widget_toolbar_add(eco->evas, 32 * e_scale, 32 * e_scale);
@@ -160,6 +161,7 @@ e_configure_show(E_Container *con)
    _e_configure_fill_cat_list(eco);
    e_widget_on_focus_hook_set(eco->cat_list, _e_configure_focus_cb, eco->win);
    e_widget_list_object_append(eco->o_list, eco->cat_list, 1, 0, 0.5);
+
    /* Item List */
    eco->item_list = e_widget_ilist_add(eco->evas, 32 * e_scale, 32 * e_scale, NULL);
    e_widget_ilist_selector_set(eco->item_list, 1);
@@ -441,8 +443,8 @@ _e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event)
 	  }
      }
    else if (((!strcmp(ev->keyname, "Return")) || 
-	    (!strcmp(ev->keyname, "KP_Enter")) || 
-	    (!strcmp(ev->keyname, "space"))))
+             (!strcmp(ev->keyname, "KP_Enter")) || 
+             (!strcmp(ev->keyname, "space"))))
      {
 	Evas_Object *o = NULL;
 
@@ -471,6 +473,7 @@ _e_configure_fill_cat_list(void *data)
 
    if (!(eco = data)) return;
 
+   e_widget_toolbar_clear(eco->cat_list);
    evas_event_freeze(evas_object_evas_get(eco->cat_list));
    edje_freeze();
 
@@ -514,8 +517,8 @@ _e_configure_module_update_cb(void *data, int type, void *event)
 
    if (!(eco = data)) return 1;
    if (!eco->cat_list) return 1;
-//   sel = e_widget_ilist_selected_get(eco->cat_list);
+   sel = e_widget_toolbar_item_selected_get(eco->cat_list);
    _e_configure_fill_cat_list(eco);
-//   e_widget_ilist_selected_set(eco->cat_list, sel);
+   e_widget_toolbar_item_select(eco->cat_list, sel);
    return 1;
 }
