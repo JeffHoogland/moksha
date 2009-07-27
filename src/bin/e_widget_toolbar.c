@@ -59,7 +59,8 @@ e_widget_toolbar_add(Evas *evas, int icon_w, int icon_h)
    o = wd->o_base;
    e_scrollframe_custom_theme_set(o, "base/theme/widgets", "e/widgets/toolbar");
    e_scrollframe_single_dir_set(o, 1);
-   e_scrollframe_policy_set(o, E_SCROLLFRAME_POLICY_AUTO, E_SCROLLFRAME_POLICY_OFF);
+   e_scrollframe_policy_set(o, E_SCROLLFRAME_POLICY_AUTO, 
+                            E_SCROLLFRAME_POLICY_OFF);
    e_scrollframe_thumbscroll_force(o, 1);
    evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE, 
                                   _e_wid_cb_scrollframe_resize, obj);
@@ -106,7 +107,7 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
    it->data1 = data1;
    it->data2 = data2;
    wd->items = eina_list_append(wd->items, it);
-   
+
    edje_object_signal_callback_add(o, "e,action,click", "e",
                                    _e_wid_signal_cb1, it);
    edje_extern_object_min_size_set(icon, wd->icon_w, wd->icon_h);
@@ -147,7 +148,7 @@ e_widget_toolbar_item_remove(Evas_Object *obj, int num)
 	evas_object_del(it->o_base);
 	evas_object_del(it->o_icon);
 	wd->items = eina_list_remove(wd->items, it);
-	free(it);
+	E_FREE(it);
      }
 }
 
@@ -158,7 +159,7 @@ e_widget_toolbar_item_select(Evas_Object *obj, int num)
    Eina_List *l;
    Item *it;
    int i;
-   
+
    wd = e_widget_data_get(obj);
    for (i = 0, l = wd->items; l; l = l->next, i++)
      {
@@ -251,6 +252,43 @@ e_widget_toolbar_focus_steal_set(Evas_Object *obj, Eina_Bool steal)
      }
 }
 
+EAPI void 
+e_widget_toolbar_clear(Evas_Object *obj) 
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   while (wd->items) 
+     {
+        Item *it = NULL;
+
+        if (!(it = wd->items->data)) continue;
+	evas_object_del(it->o_base);
+	evas_object_del(it->o_icon);
+	wd->items = eina_list_remove(wd->items, it);
+	E_FREE(it);
+     }
+}
+
+EAPI int 
+e_widget_toolbar_item_selected_get(Evas_Object *obj) 
+{
+   E_Widget_Data *wd = NULL;
+   Eina_List *l = NULL;
+   int i = 0;
+
+   wd = e_widget_data_get(obj);
+   for (i = 0, l = wd->items; l; l = l->next, i++)
+     {
+        Item *it = NULL;
+
+        if (!(it = l->data)) continue;;
+        if (it->selected) return i;
+     }
+   return 0;
+}
+
+/* local functions */
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {
@@ -264,10 +302,10 @@ _e_wid_del_hook(Evas_Object *obj)
         it = wd->items->data;
         evas_object_del(it->o_base);
         evas_object_del(it->o_icon);
-        free(it);
         wd->items = eina_list_remove_list(wd->items, wd->items);
+        E_FREE(it);
      }
-   free(wd);
+   E_FREE(wd);
 }
 
 static void
