@@ -741,10 +741,10 @@ _fsel_cb_delete(E_Win *win)
 static void
 _fsel_cb_resize(E_Win *win)
 {
-   Import *import;
+   FSel *fsel;
 
-   if (!(import = win->data)) return;
-   evas_object_resize(import->bg_obj, win->w, win->h);
+   if (!(fsel = win->data)) return;
+   evas_object_resize(fsel->bg_obj, win->w, win->h);
 }
 
 static void
