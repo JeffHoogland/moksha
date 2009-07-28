@@ -25035,7 +25035,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
          }
          
 	 program { name: "ready";
-            in: 10.0 0.0;
 	    script {
 	       new val;
 
