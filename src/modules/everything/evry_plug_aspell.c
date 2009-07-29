@@ -2,6 +2,12 @@
 #include "e_mod_main.h"
 #include <ctype.h>
 
+
+static Eina_Bool _init(void);
+static void _shutdown(void);
+EINA_MODULE_INIT(_init);
+EINA_MODULE_SHUTDOWN(_shutdown);
+
 static const char TRIGGER[] = "aspell ";
 static const char LANG_MODIFIER[] = "lang=";
 static Ecore_X_Window clipboard_win = 0;
@@ -377,13 +383,13 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e __UNUSED__)
    it->o_icon = NULL;
 }
 
-EAPI int
-evry_plug_aspell_init(void)
+static Eina_Bool
+_init(void)
 {
    Plugin *p;
 
    if (_singleton)
-     return 1;
+     return EINA_TRUE;
 
    p = E_NEW(Plugin, 1);
    p->base.name = "Spell Checker";
@@ -407,17 +413,17 @@ evry_plug_aspell_init(void)
    evry_plugin_register(&p->base);
 
    _singleton = p;
-   return 1;
+   return EINA_TRUE;
 }
 
-EAPI int
-evry_plug_aspell_shutdown(void)
+static void
+_shutdown(void)
 {
    Evry_Item *it;
    Plugin *p;
 
    if (!_singleton)
-     return 0;
+     return;
 
    p = _singleton;
    _singleton = NULL;
@@ -427,6 +433,4 @@ evry_plug_aspell_shutdown(void)
 
    evry_plugin_unregister(&p->base);
    E_FREE(p);
-
-   return 1;
 }

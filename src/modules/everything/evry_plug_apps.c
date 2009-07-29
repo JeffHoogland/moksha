@@ -24,6 +24,11 @@ static int _edit_app_check_item(Evry_Action *act, Evry_Item *it);
 static int _new_app_action(Evry_Action *act);
 static int _new_app_check_item(Evry_Action *act, Evry_Item *it);
 
+static Eina_Bool _init(void);
+static void _shutdown(void);
+EINA_MODULE_INIT(_init);
+EINA_MODULE_SHUTDOWN(_shutdown);
+
 static Evry_Plugin *p1;
 static Evry_Plugin *p2;
 static Evry_Action *act;
@@ -32,8 +37,8 @@ static Evry_Action *act3;
 static Inst *inst;
 
 
-EAPI int
-evry_plug_apps_init(void)
+static Eina_Bool
+_init(void)
 {
    p1 = E_NEW(Evry_Plugin, 1);
    p1->name = "Applications";
@@ -91,16 +96,14 @@ evry_plug_apps_init(void)
    return 1;
 }
 
-EAPI int
-evry_plug_apps_shutdown(void)
+static void
+_shutdown(void)
 {
    evry_plugin_unregister(p1);
    evry_plugin_unregister(p2);
    evry_action_unregister(act);
    evry_action_unregister(act2);
    evry_action_unregister(act3);
-
-   return 1;
 }
 
 static int
@@ -658,5 +661,4 @@ _new_app_action(Evry_Action *act)
    
    return 0;
 }
-
 

@@ -15,6 +15,12 @@ static int  _cb_data(void *data, int type, void *event);
 static int  _cb_error(void *data, int type, void *event);
 static int  _cb_del(void *data, int type, void *event);
 
+static Eina_Bool _init(void);
+static void _shutdown(void);
+EINA_MODULE_INIT(_init);
+EINA_MODULE_SHUTDOWN(_shutdown);
+
+
 static Evry_Plugin *p;
 static Ecore_Exe *exe = NULL;
 static Eina_List *history = NULL;
@@ -24,8 +30,8 @@ static Ecore_Event_Handler *del_handler = NULL;
 static Ecore_X_Window clipboard_win = 0;
 static int error = 0;
 
-EAPI int
-evry_plug_calc_init(void)
+static Eina_Bool
+_init(void)
 {
    p = E_NEW(Evry_Plugin, 1);
    p->name = "Calculator";
@@ -42,11 +48,11 @@ evry_plug_calc_init(void)
    evry_plugin_register(p);
 
    clipboard_win = ecore_x_window_new(0, 0, 0, 1, 1);
-   return 1;
+   return EINA_TRUE;
 }
 
-EAPI int
-evry_plug_calc_shutdown(void)
+static void
+_shutdown(void)
 {
    Evry_Item *it;
 
@@ -60,9 +66,6 @@ evry_plug_calc_shutdown(void)
    E_FREE(p);
 
    ecore_x_window_free(clipboard_win);
-   clipboard_win = 0;
-
-   return 1;
 }
 
 static int
@@ -103,6 +106,7 @@ _cleanup(Evry_Plugin *p)
 
    ecore_event_handler_del(data_handler);
    ecore_event_handler_del(error_handler);
+   ecore_event_handler_del(del_handler);
    data_handler = NULL;
 
    ecore_exe_quit(exe);
@@ -171,8 +175,6 @@ _fetch(Evry_Plugin *p, const char *input)
    else
      snprintf(buf, 1024, "scale=3;%s\n", input + (strlen(p->trigger)));
 
-   /* printf("send %s\n",buf); */
-
    ecore_exe_send(exe, buf, strlen(buf));
 
    /* XXX after error we get no response for first input ?! - send a
@@ -217,8 +219,6 @@ _cb_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    for (l = ev->lines; l && l->line; l++)
      {
-	/* printf("line %s\n", l->line); */
-	
 	if (p->items)
 	  {
 	     Evry_Item *it = p->items->data;
@@ -244,7 +244,6 @@ _cb_error(void *data __UNUSED__, int type __UNUSED__, void *event)
      return 1;
 
    error = 1;
-   /* printf("got error\n"); */
 
    return 1;
 }
@@ -260,3 +259,4 @@ _cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
    exe = NULL;
    return 1;
 }
+

@@ -8,11 +8,16 @@ static void _item_add(Evry_Plugin *p, E_Configure_It *eci, int prio);
 static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 static int  _cb_sort(const void *data1, const void *data2);
 
+static Eina_Bool _init(void);
+static void _shutdown(void);
+EINA_MODULE_INIT(_init);
+EINA_MODULE_SHUTDOWN(_shutdown);
+
 static Evry_Plugin *p;
 
 
-EAPI int
-evry_plug_config_init(void)
+static Eina_Bool
+_init(void)
 {
    p = E_NEW(Evry_Plugin, 1);
    p->name = "Settings";
@@ -24,16 +29,14 @@ evry_plug_config_init(void)
    p->icon_get = &_item_icon_get;
 
    evry_plugin_register(p);
-   return 1;
+   return EINA_TRUE;
 }
 
-EAPI int
-evry_plug_config_shutdown(void)
+static void
+_shutdown(void)
 {
    evry_plugin_unregister(p);
    E_FREE(p);
-
-   return 1;
 }
 
 static int

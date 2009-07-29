@@ -21,12 +21,17 @@ static void _item_fill(Evry_Item *it, Evas *evas);
 static Evry_Item *_item_add(const char *directory, const char *file);
 static void _realize(Evry_Plugin *p, Evas *e);
 
+static Eina_Bool _init(void);
+static void _shutdown(void);
+EINA_MODULE_INIT(_init);
+EINA_MODULE_SHUTDOWN(_shutdown);
+
 static Evry_Plugin *p;
 static Eina_List *stack = NULL;
 
 
-EAPI int
-evry_plug_dir_browse_init(void)
+static Eina_Bool
+_init(void)
 {
    p = E_NEW(Evry_Plugin, 1);
    p->name = "Browse Files";
@@ -42,16 +47,14 @@ evry_plug_dir_browse_init(void)
 
    evry_plugin_register(p);
 
-   return 1;
+   return EINA_TRUE;
 }
 
-EAPI int
-evry_plug_dir_browse_shutdown(void)
+static void
+_shutdown(void)
 {
    evry_plugin_unregister(p);
    E_FREE(p);
-
-   return 1;
 }
 
 static int

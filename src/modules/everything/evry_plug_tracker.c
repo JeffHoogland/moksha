@@ -11,17 +11,21 @@ struct _Inst
 };
 
 static int  _fetch(Evry_Plugin *p, const char *input);
-static int  _action(Evry_Plugin *p, Evry_Item *it, const char *input);
 static void _cleanup(Evry_Plugin *p);
-static void _item_add(Evry_Plugin *p, char *file, char *service, char *mime, int prio);
+static void _item_add(Evry_Plugin *p, char *file, char *mime, int prio);
 static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 static void _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error);
+
+static Eina_Bool _init(void);
+static void _shutdown(void);
+EINA_MODULE_INIT(_init);
+EINA_MODULE_SHUTDOWN(_shutdown);
 
 static Evry_Plugin *p;
 static Inst *inst;
 
-EAPI int
-evry_plug_tracker_init(void)
+static Eina_Bool
+_init(void)
 {
    E_DBus_Connection *conn = e_dbus_bus_get(DBUS_BUS_SESSION);
 
@@ -33,7 +37,6 @@ evry_plug_tracker_init(void)
    p->type_out = "FILE";
    p->need_query = 1;
    p->fetch = &_fetch;
-   p->action = &_action;
    p->cleanup = &_cleanup;
    p->icon_get = &_item_icon_get;
    
@@ -42,11 +45,11 @@ evry_plug_tracker_init(void)
    
    evry_plugin_register(p);
 
-   return 1;
+   return EINA_TRUE;
 }
 
-EAPI int
-evry_plug_tracker_shutdown(void)
+static void
+_shutdown(void)
 {
    evry_plugin_unregister(p);
 
@@ -58,14 +61,6 @@ evry_plug_tracker_shutdown(void)
      }
    
    if (p) E_FREE(p);
-   
-   return 1;
-}
-
-static int
-_action(Evry_Plugin *p __UNUSED__, Evry_Item *it __UNUSED__, const char *input __UNUSED__)
-{
-   return EVRY_ACTION_OTHER;
 }
 
 static void
@@ -144,7 +139,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
 }
 
 static void
-_item_add(Evry_Plugin *p, char *file, char *service __UNUSED__, char *mime, int prio)
+_item_add(Evry_Plugin *p, char *file, char *mime, int prio)
 {
    Evry_Item *it;   
    
@@ -176,7 +171,6 @@ _dbus_cb_reply(void *data __UNUSED__, DBusMessage *msg, DBusError *error)
 	while(dbus_message_iter_get_arg_type(&item) == DBUS_TYPE_ARRAY)
 	  {
 	     char *uri;
-	     char *service;
 	     char *mime;
 	     
 	     dbus_message_iter_recurse(&item, &iter);
@@ -185,13 +179,13 @@ _dbus_cb_reply(void *data __UNUSED__, DBusMessage *msg, DBusError *error)
 	       {
 		  dbus_message_iter_get_basic(&iter, &uri);
 		  dbus_message_iter_next(&iter);
-		  dbus_message_iter_get_basic(&iter, &service);
+		  /* dbus_message_iter_get_basic(&iter, &service); */
 		  dbus_message_iter_next(&iter);
 		  dbus_message_iter_get_basic(&iter, &mime);
 
-		  if (uri && service && mime)
+		  if (uri && mime)
 		    {
-		       _item_add(p, uri, service, mime, 1); 
+		       _item_add(p, uri, mime, 1); 
 		    }
 	       }
 	     

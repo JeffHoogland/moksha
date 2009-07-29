@@ -15,12 +15,16 @@ static void _cleanup(Evry_Plugin *p);
 static void _item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
 static void _item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), const char *icon);
 
+static Eina_Bool _init(void);
+static void _shutdown(void);
+EINA_MODULE_INIT(_init);
+EINA_MODULE_SHUTDOWN(_shutdown);
+
 static Evry_Plugin *p;
 static Inst *inst;
 
-
-EAPI int
-evry_plug_border_act_init(void)
+static Eina_Bool
+_init(void)
 {
    p = E_NEW(Evry_Plugin, 1);
    p->name = "Window Action";
@@ -37,17 +41,15 @@ evry_plug_border_act_init(void)
 
    inst = E_NEW(Inst, 1);
 
-   return 1;
+   return EINA_TRUE;
 }
 
-EAPI int
-evry_plug_border_act_shutdown(void)
+static void
+_shutdown(void)
 {
    evry_plugin_unregister(p);
    E_FREE(p);
    E_FREE(inst);
-
-   return 1;
 }
 
 static void
@@ -144,4 +146,3 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
    it->o_icon = edje_object_add(e);
    e_theme_edje_object_set(it->o_icon, "base/theme/borders", (const char *)it->data[1]);
 }
-

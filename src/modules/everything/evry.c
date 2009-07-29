@@ -61,7 +61,7 @@ static int  _evry_push_state(void);
 static int  _evry_pop_state(void);
 static void _evry_plugin_selector_show(Evry_Plugin *p);
 static int  _evry_cb_plugin_sort(const void *data1, const void *data2);
-static int  _evry_cb_plugin_sort_by_trigger(const void *data1, const void *data2);
+/* static int  _evry_cb_plugin_sort_by_trigger(const void *data1, const void *data2); */
 
 static int  _evry_plug_act_select_init(void);
 static int  _evry_plug_act_select_begin(Evry_Plugin *p, Evry_Item *it);
@@ -134,8 +134,8 @@ evry_plugin_register(Evry_Plugin *plugin)
 	evry_conf->plugins_conf = eina_list_append(evry_conf->plugins_conf, pc);	
      }
 
-   if (plugin->trigger && !pc->trigger)
-     pc->trigger = eina_stringshare_add(plugin->trigger);
+   /* if (plugin->trigger && !pc->trigger)
+    *   pc->trigger = eina_stringshare_add(plugin->trigger); */
    
    plugin->config = pc;
 
@@ -284,20 +284,16 @@ evry_hide(void)
    cur_state = NULL;
 
    if (update_timer)
-     {
-	ecore_timer_del(update_timer);
-	update_timer = NULL;
-     }
+     ecore_timer_del(update_timer);
+   update_timer = NULL;
+
    if (scroll_timer)
-     {
-	ecore_timer_del(scroll_timer);
-	scroll_timer = NULL;
-     }
+     ecore_timer_del(scroll_timer);
+   scroll_timer = NULL;
+
    if (scroll_animator)
-     {
-	ecore_animator_del(scroll_animator);
-	scroll_animator = NULL;
-     }
+     ecore_animator_del(scroll_animator);
+   scroll_animator = NULL;
 
    e_popup_hide(popup);
 
@@ -333,13 +329,15 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 
    if (action == EVRY_ASYNC_UPDATE_ADD)
      {
+	if (!p->items) return;
+	
 	if (!eina_list_data_find(s->cur_plugins, p))
 	  {
 	     s->cur_plugins = eina_list_prepend(s->cur_plugins, p);
 
-	     s->cur_plugins = eina_list_sort(s->cur_plugins,
-					     eina_list_count(s->cur_plugins),
-					     _evry_cb_plugin_sort_by_trigger);
+	     /* s->cur_plugins = eina_list_sort(s->cur_plugins,
+	      * eina_list_count(s->cur_plugins),
+	      * _evry_cb_plugin_sort_by_trigger); */
 
 	     _evry_plugin_selector_show(p);
 	  }
@@ -396,19 +394,19 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
    return p1->config->priority - p2->config->priority;
 }
 
-static int
-_evry_cb_plugin_sort_by_trigger(const void *data1, const void *data2)
-{
-   const Evry_Plugin *p1 = data1;
-   const Evry_Plugin *p2 = data2;
-   if (p1->trigger)
-     {
-	if (!strncmp(cur_state->input, p1->trigger, strlen(p1->trigger)))
-	  return 1;
-     }
-   
-   return p1->config->priority - p2->config->priority;
-}
+/* static int
+ * _evry_cb_plugin_sort_by_trigger(const void *data1, const void *data2)
+ * {
+ *    const Evry_Plugin *p1 = data1;
+ *    const Evry_Plugin *p2 = data2;
+ *    if (p1->trigger)
+ *      {
+ * 	if (!strncmp(cur_state->input, p1->trigger, strlen(p1->trigger)))
+ * 	  return 1;
+ *      }
+ *    
+ *    return p1->config->priority - p2->config->priority;
+ * } */
 
 static int
 _evry_push_state(void)
@@ -500,10 +498,7 @@ _evry_push_state(void)
 	s->cur_actions = cur_state->cur_actions;
 	s->initial = 0;
      }
-   else
-     {
-	s->initial = 1;
-     }
+   else s->initial = 1;
 
    cur_state = s;
    stack = eina_list_prepend(stack, s);
@@ -874,7 +869,7 @@ _evry_plugin_action(int finished)
    
    if (s->cur_plugin == action_selector)
      {
-	/* set cur_action and start plugins for second parameter (if required)*/
+	/* set cur_action and start plugins for second parameter if required */
 	if (s->sel_item)
 	  finished = _evry_plug_act_select_action(s->cur_plugin, s->sel_item, s->input);
      }
@@ -892,9 +887,8 @@ _evry_plugin_action(int finished)
 	int ret = EVRY_ACTION_OTHER;
 
 	if (s->cur_plugin->action)
-	  {
-	     ret = s->cur_plugin->action(s->cur_plugin, s->sel_item, s->input);
-	  }
+	  ret = s->cur_plugin->action(s->cur_plugin, s->sel_item, s->input);
+	
 	if (ret == EVRY_ACTION_OTHER)
 	  {
 	     _evry_push_state();
@@ -904,7 +898,7 @@ _evry_plugin_action(int finished)
 	  finished = 0;
      }
    else if (s->initial)
-     e_exec(popup->zone, NULL, s->input, NULL, NULL /* "everything" */);
+     e_exec(popup->zone, NULL, s->input, NULL, NULL);
 
    if (finished)
      evry_hide();
@@ -999,7 +993,11 @@ _evry_show_items(Evry_Plugin *p)
    	_evry_item_sel(s->sel_item);
    	_evry_scroll_to(0);
      }
-
+   else if (!p->items)
+     {
+	s->sel_item = NULL;
+     }
+   
    evas_event_thaw(popup->evas);
 
    _evry_tab_scroll_to(p);
@@ -1010,7 +1008,7 @@ _evry_matches_update(Evry_Plugin *cur_plugin)
 {
    Evry_Plugin *p;
    Eina_List *l;
-   int items;
+   Eina_Bool has_items = EINA_FALSE;
    Evry_State *s = cur_state;
 
    _evry_list_clear();
@@ -1019,35 +1017,47 @@ _evry_matches_update(Evry_Plugin *cur_plugin)
    s->sel_item = NULL;
 
    if (s->input)
-   EINA_LIST_FOREACH(s->plugins, l, p)
      {
-	/* input matches trigger? */
-	if (p->trigger)
+	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
-	     if ((strlen(s->input) >= strlen(p->trigger)) &&
-		 (!strncmp(s->input, p->trigger, strlen(p->trigger))))
+	     /* input matches plugin trigger? */
+	     if (p->trigger)
 	       {
-		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
-		  items = p->fetch(p, s->input);
-		  break;
+		  if ((strlen(s->input) >= strlen(p->trigger)) &&
+		      (!strncmp(s->input, p->trigger, strlen(p->trigger))))
+		    {
+		       s->cur_plugins = eina_list_append(s->cur_plugins, p);
+		       has_items = p->fetch(p, s->input);
+		       break;
+		    }
 	       }
 	  }
      }
+   
 
    if (!s->cur_plugins)
-   EINA_LIST_FOREACH(s->plugins, l, p)
      {
-	if (p->trigger) continue;
+	EINA_LIST_FOREACH(s->plugins, l, p)
+	  {
+	     if (p->trigger) continue;
 	
-	if (strlen(s->input) == 0)
-	  items = !p->need_query ? p->fetch(p, NULL) : 0;
-	else
-	  items = p->fetch(p, s->input);
-
-	if (!s->initial || (items && eina_list_count(p->items) > 0) || p->async_query)
-	  s->cur_plugins = eina_list_append(s->cur_plugins, p);
+	     if (strlen(s->input) == 0)
+	       {
+		  if (!p->need_query)
+		    has_items = p->fetch(p, NULL);
+	       }
+	     else
+	       {
+		  has_items = p->fetch(p, s->input);
+	       }
+	
+	     if ((!s->initial) ||
+		 (has_items && eina_list_count(p->items) > 0) ||
+		 (p->async_query))
+	       s->cur_plugins = eina_list_append(s->cur_plugins, p);
+	  }
      }
-
+   
    /* remove tabs for not active plugins */
    EINA_LIST_FOREACH(evry_conf->plugins, l, p)
      {

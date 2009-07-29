@@ -14,8 +14,10 @@ static void  _e_mod_menu_add(void *data, E_Menu *m);
 static E_Action *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 
+static Eina_Array  *plugins = NULL;
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
+
 Config *evry_conf = NULL;
 
 /* module setup */
@@ -24,6 +26,17 @@ EAPI E_Module_Api e_modapi =
     E_MODULE_API_VERSION,
     "Everything"
   };
+
+
+static Eina_Bool list_cb(Eina_Module *m, void *data)
+{
+   if (eina_module_load(m))
+     return EINA_TRUE;
+
+   return EINA_FALSE;
+}
+
+
 
 EAPI void *
 e_modapi_init(E_Module *m)
@@ -70,19 +83,19 @@ e_modapi_init(E_Module *m)
 	evry_conf->scroll_animate = 1;
 	evry_conf->scroll_speed = 0.08;
      }
+
+   /* evry_conf->history = eina_hash_string_superfast_new(NULL); */
    
    /* conf_module = m; */
    evry_init();
 
-   evry_plug_config_init();
-   evry_plug_dir_browse_init();
-   evry_plug_apps_init();
-   evry_plug_tracker_init();
-   evry_plug_border_init();
-   evry_plug_border_act_init();
-   evry_plug_calc_init();
-   evry_plug_aspell_init();
-
+   eina_module_init();
+   plugins = eina_module_list_get(NULL, m->dir, 1, &list_cb, NULL);
+   if (plugins)
+     printf("plugins loaded\n");
+   else 
+     printf("could not find plugins in %s\n", m->dir);
+     
    /* add module supplied action */
    act = e_action_add("everything");
    if (act)
@@ -121,18 +134,15 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 	act = NULL;
      }
 
-   evry_plug_config_shutdown();
-   evry_plug_dir_browse_shutdown();
-   evry_plug_apps_shutdown();
-   evry_plug_tracker_shutdown();
-   evry_plug_border_shutdown();
-   evry_plug_border_act_shutdown();
-   evry_plug_calc_shutdown();
-   evry_plug_aspell_shutdown();
-
    evry_shutdown();
    /* conf_module = NULL; */
 
+   eina_module_list_unload(plugins);
+   eina_module_list_delete(plugins);
+   eina_array_free(plugins);
+   
+   eina_module_shutdown();
+   
    while ((cfd = e_config_dialog_get("E", "_config_everything_dialog"))) e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("advanced/run_everything");
    e_configure_registry_category_del("advanced");

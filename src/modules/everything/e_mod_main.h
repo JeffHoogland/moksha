@@ -11,7 +11,6 @@
 typedef struct _Evry_Plugin Evry_Plugin;
 typedef struct _Evry_Item   Evry_Item;
 typedef struct _Evry_Action Evry_Action;
-typedef struct _Evry_Config Evry_Config;
 typedef struct _Evry_App Evry_App;
 #undef E_TYPEDEFS
 
@@ -46,7 +45,8 @@ struct _Config
   
   /**/
   Eina_List *plugins;
-  
+
+  Eina_Hash *history;
 };
 
 struct _Plugin_Config
@@ -105,9 +105,6 @@ struct _Evry_Plugin
   /* get candidates matching string, fills 'candidates' list */
   int  (*fetch) (Evry_Plugin *p, const char *input);
 
-  /* default action for this plugins items */
-  int  (*action) (Evry_Plugin *p, Evry_Item *item, const char *input);
-
   /* run before new query and when hiding 'everything' */
   void (*cleanup) (Evry_Plugin *p);
 
@@ -116,16 +113,16 @@ struct _Evry_Plugin
   /* provide more information for a candidate */
   /* int (*candidate_info) (Evas *evas, Evry_Item *item); */
 
-  /* optional */
+  /* optional: default action for this plugins items */
+  int  (*action) (Evry_Plugin *p, Evry_Item *item, const char *input);
+
+  /* optional: create list of items when shown (e.g. for sorting) */
   void (*realize_items) (Evry_Plugin *p, Evas *e);
-  
+
   Eina_List *items;
   
   Evas_Object *(*config_page) (void);
   void (*config_apply) (void);
-
-  /* for internal use by plugin */
-  void *priv;
 
   /* not to be set by plugin! */
   Evas_Object *tab;
@@ -155,13 +152,6 @@ struct _Evry_Action
   Evas_Object *o_icon;
 };  
 
-struct _Evry_Config
-{
-  Eina_List *plugin_order;
-  
-};
-
-
 struct _Evry_App
 {
   const char *file;
@@ -175,8 +165,8 @@ EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 EAPI E_Config_Dialog *evry_config_dialog(E_Container *con, const char *params);
 
-EAPI int evry_init(void);
-EAPI int evry_shutdown(void);
+EAPI int  evry_init(void);
+EAPI int  evry_shutdown(void);
 EAPI int  evry_show(E_Zone *zone);
 EAPI void evry_hide(void);
 EAPI void evry_plugin_register(Evry_Plugin *p);
@@ -185,30 +175,6 @@ EAPI void evry_action_register(Evry_Action *act);
 EAPI void evry_action_unregister(Evry_Action *act);
 EAPI void evry_plugin_async_update(Evry_Plugin *plugin, int state);
 EAPI void evry_clear_input(void);
-
-EAPI int  evry_plug_apps_init(void);
-EAPI int  evry_plug_apps_shutdown(void);
-
-EAPI int  evry_plug_border_init(void);
-EAPI int  evry_plug_border_shutdown(void);
-
-EAPI int  evry_plug_border_act_init(void);
-EAPI int  evry_plug_border_act_shutdown(void);
-
-EAPI int  evry_plug_config_init(void);
-EAPI int  evry_plug_config_shutdown(void);
-
-EAPI int  evry_plug_tracker_init(void);
-EAPI int  evry_plug_tracker_shutdown(void);
-
-EAPI int  evry_plug_dir_browse_init(void);
-EAPI int  evry_plug_dir_browse_shutdown(void);
-
-EAPI int  evry_plug_calc_init(void);
-EAPI int  evry_plug_calc_shutdown(void);
-
-EAPI int  evry_plug_aspell_init(void);
-EAPI int  evry_plug_aspell_shutdown(void);
 
 extern Config *evry_conf;
 
