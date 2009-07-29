@@ -561,6 +561,7 @@ wp-tbs.png \
 systray_rounded_corners.png \
 theme-label.png \
 glow.png \
+icon_efm_file_del.png \
 exq-barglow.png \
 exq-bar.png \
 exq-bglight.png \
