@@ -51,7 +51,7 @@ e_xinerama_fake_screen_add(int x, int y, int w, int h)
 {
    E_Screen *scr;
 
-   scr = calloc(1, sizeof(E_Screen));
+   scr = E_NEW(E_Screen, 1);
    scr->screen = eina_list_count(fake_screens);
    scr->escreen = scr->screen;
    scr->x = x;
@@ -65,20 +65,13 @@ e_xinerama_fake_screen_add(int x, int y, int w, int h)
 static void
 _e_xinerama_clean(void)
 {
-   while (all_screens)
-     {
-	free(all_screens->data);
-	all_screens = eina_list_remove_list(all_screens, all_screens);
-     }
-   while (chosen_screens)
-     {
-	chosen_screens = eina_list_remove_list(chosen_screens, chosen_screens);
-     }
-   while (fake_screens)
-     {
-	free(fake_screens->data);
-	fake_screens = eina_list_remove_list(fake_screens, fake_screens);
-     }
+   E_Screen *s = NULL;
+
+   EINA_LIST_FREE(all_screens, s)
+     E_FREE(s);
+   EINA_LIST_FREE(chosen_screens, s);
+   EINA_LIST_FREE(fake_screens, s)
+     E_FREE(s);
 }
 
 static void
@@ -112,7 +105,7 @@ _e_xinerama_update(void)
 	  {
 	     E_Screen *scr;
 
-	     scr = calloc(1, sizeof(E_Screen));
+	     scr = E_NEW(E_Screen, 1);
 	     scr->screen = 0;
 	     scr->x = 0;
 	     scr->y = 0;
@@ -134,7 +127,7 @@ _e_xinerama_update(void)
 		       printf("E17 INIT: XINERAMA SCREEN: [%i], %ix%i+%i+%i\n",
 			      i, w, h, x, y);
 		       /* add it to our list */
-		       scr = calloc(1, sizeof(E_Screen));
+		       scr = E_NEW(E_Screen, 1);
 		       scr->screen = i;
 		       scr->x = x;
 		       scr->y = y;
