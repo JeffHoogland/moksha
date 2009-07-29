@@ -207,6 +207,9 @@ EAPI int  evry_plug_dir_browse_shutdown(void);
 EAPI int  evry_plug_calc_init(void);
 EAPI int  evry_plug_calc_shutdown(void);
 
+EAPI int  evry_plug_aspell_init(void);
+EAPI int  evry_plug_aspell_shutdown(void);
+
 extern Config *evry_conf;
 
 #endif

@@ -27,8 +27,9 @@ module_la_SOURCES      = e_mod_main.c \
 			 evry_plug_apps.c \
 			 evry_plug_tracker.c \
 			 evry_plug_calc.c \
+			 evry_plug_aspell.c \
 			 evry_plug_border.c \
-			 evry_plug_border_act.c 
+			 evry_plug_border_act.c
 
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@

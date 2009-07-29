@@ -81,6 +81,7 @@ e_modapi_init(E_Module *m)
    evry_plug_border_init();
    evry_plug_border_act_init();
    evry_plug_calc_init();
+   evry_plug_aspell_init();
 
    /* add module supplied action */
    act = e_action_add("everything");
@@ -127,6 +128,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    evry_plug_border_shutdown();
    evry_plug_border_act_shutdown();
    evry_plug_calc_shutdown();
+   evry_plug_aspell_shutdown();
 
    evry_shutdown();
    /* conf_module = NULL; */
