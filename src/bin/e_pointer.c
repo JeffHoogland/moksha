@@ -25,7 +25,7 @@ static void _e_pointer_canvas_del(E_Pointer *p);
 static void _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void _e_pointer_free(E_Pointer *p);
 static void _e_pointer_stack_free(E_Pointer_Stack *elem);
-static int  _e_pointer_type_set(E_Pointer *p, const char *type);
+static void  _e_pointer_type_set(E_Pointer *p, const char *type);
 static void _e_pointer_active_handle(E_Pointer *p);
 
 static int _e_pointer_cb_mouse_down(void *data, int type, void *event);
@@ -356,11 +356,11 @@ _e_pointer_stack_free(E_Pointer_Stack *elem)
    free(elem);
 }
 
-static int
+static void 
 _e_pointer_type_set(E_Pointer *p, const char *type)
 {
    /* Check if this pointer is already set */
-   if ((p->type) && (!strcmp(p->type, type))) return 1;
+   if ((p->type) && (!strcmp(p->type, type))) return;
 
    if (p->type) eina_stringshare_del(p->type);
    p->type = eina_stringshare_add(type);
@@ -369,24 +369,23 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
    if (!e_config->show_cursor)
      {
 	ecore_x_window_cursor_set(p->win, 0);
-	return 1;
+	return;
      }
 
    if (p->e_cursor)
      {
-	Evas_Object *o;
 	char cursor[1024];
 	Evas_Coord x, y;
 
 	if (!p->evas) _e_pointer_canvas_add(p);
-	o = p->pointer_object;
 	if (p->color)
           snprintf(cursor, sizeof(cursor), 
                    "e/pointer/enlightenment/%s/color", type);
 	else
           snprintf(cursor, sizeof(cursor), 
                    "e/pointer/enlightenment/%s/mono", type);
-        if (!e_theme_edje_object_set(o, "base/theme/pointer", cursor))
+        if (!e_theme_edje_object_set(p->pointer_object, 
+                                     "base/theme/pointer", cursor))
           goto fallback;
 	edje_object_part_swallow(p->pointer_object, "e.swallow.hotspot", 
                                  p->hot_object);
@@ -398,7 +397,7 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	     p->hot.y = y;
 	  }
 	p->hot.update = 1;
-	return 1;
+	return;
      }
    fallback:
      {
@@ -442,7 +441,6 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
         ecore_x_window_cursor_set(p->win, cursor);
 	if (cursor) ecore_x_cursor_free(cursor);
      }
-   return 1;
 }
 
 static void
