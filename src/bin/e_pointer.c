@@ -81,19 +81,12 @@ e_pointer_window_new(Ecore_X_Window win, int filled)
    p = E_OBJECT_ALLOC(E_Pointer, E_POINTER_TYPE, _e_pointer_free);
    if (!p) return NULL;
 
+   p->e_cursor = e_config->use_e_cursor;
+   p->win = win;
+   p->color = 0;
    if (e_config->use_e_cursor)
-     {
-	p->e_cursor = 1;
-	p->win = win;
-	/* Init the cursor object */
-	if (ecore_x_cursor_color_supported_get()) p->color = 1;
-	else p->color = 0;
-     }
-   else
-     {
-	p->e_cursor = 0;
-	p->win = win;
-     }
+     if (ecore_x_cursor_color_supported_get()) p->color = 1;
+
    ecore_x_cursor_size_set(e_config->cursor_size * 3 / 4);
    if (filled) e_pointer_type_push(p, p, "default");
    _e_pointers = eina_list_append(_e_pointers, p); 
@@ -183,8 +176,7 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
    for (l = p->stack; l; l = l->next)
      {
 	stack = l->data;
-	if ((stack->obj == obj) &&
-	    ((!type) || (!strcmp(stack->type, type))))
+	if ((stack->obj == obj) && ((!type) || (!strcmp(stack->type, type))))
 	  {
 	     _e_pointer_stack_free(stack);
 	     p->stack = eina_list_remove_list(p->stack, l);
@@ -232,7 +224,8 @@ e_pointer_idler_before(void)
 	  {
 	     Ecore_X_Cursor cur;
 
-	     cur = ecore_x_cursor_new(p->win, p->pixels, p->w, p->h, p->hot.x, p->hot.y);
+	     cur = ecore_x_cursor_new(p->win, p->pixels, p->w, p->h, 
+                                      p->hot.x, p->hot.y);
 	     ecore_x_window_cursor_set(p->win, cur);
 	     ecore_x_cursor_free(cur);
 	     evas_render_updates_free(updates);
@@ -267,17 +260,13 @@ _e_pointer_canvas_add(E_Pointer *p)
    p->pixels = malloc(p->w * p->h * sizeof(int));
    if (!p->pixels)
      {
-	evas_free(p->evas);
-	p->evas = NULL;
+        _e_pointer_canvas_del(p);
 	return;
      }
    einfo = (Evas_Engine_Info_Buffer *)evas_engine_info_get(p->evas);
    if (!einfo)
      {
-	free(p->pixels);
-	p->pixels = NULL;
-	evas_free(p->evas);
-	p->evas = NULL;
+        _e_pointer_canvas_del(p);
 	return;
      }
    einfo->info.depth_type = EVAS_ENGINE_BUFFER_DEPTH_ARGB32;
@@ -357,7 +346,7 @@ _e_pointer_free(E_Pointer *p)
    p->type = NULL;
    p->idle_timer = NULL;
    p->idle_poller = NULL;
-   free(p);
+   E_FREE(p);
 }
 
 static void
@@ -392,17 +381,13 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	if (!p->evas) _e_pointer_canvas_add(p);
 	o = p->pointer_object;
 	if (p->color)
-	  {
-	     snprintf(cursor, sizeof(cursor), "e/pointer/enlightenment/%s/color", type);
-	     if (!e_theme_edje_object_set(o, "base/theme/pointer", cursor))
-	       goto fallback;
-	  }
+          snprintf(cursor, sizeof(cursor), 
+                   "e/pointer/enlightenment/%s/color", type);
 	else
-	  {
-	     snprintf(cursor, sizeof(cursor), "e/pointer/enlightenment/%s/mono", type);
-	     if (!e_theme_edje_object_set(o, "base/theme/pointer", cursor))
-	       goto fallback;
-	  }
+          snprintf(cursor, sizeof(cursor), 
+                   "e/pointer/enlightenment/%s/mono", type);
+        if (!e_theme_edje_object_set(o, "base/theme/pointer", cursor))
+          goto fallback;
 	edje_object_part_swallow(p->pointer_object, "e.swallow.hotspot", 
                                  p->hot_object);
 	edje_object_part_geometry_get(p->pointer_object, "e.swallow.hotspot", 
@@ -421,92 +406,40 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 
 	if (p->evas) _e_pointer_canvas_del(p);
 	if (!strcmp(type, "move"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_FLEUR);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_FLEUR);
 #if 0
 	else if (!strcmp(type, "resize"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_SIZING);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_SIZING);
 #endif
 	else if (!strcmp(type, "resize_tl"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_LEFT_CORNER);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_LEFT_CORNER);
 	else if (!strcmp(type, "resize_t"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_SIDE);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_SIDE);
 	else if (!strcmp(type, "resize_tr"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_RIGHT_CORNER);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_RIGHT_CORNER);
 	else if (!strcmp(type, "resize_r"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_RIGHT_SIDE);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_RIGHT_SIDE);
 	else if (!strcmp(type, "resize_br"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_RIGHT_CORNER);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_RIGHT_CORNER);
 	else if (!strcmp(type, "resize_b"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_SIDE);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_SIDE);
 	else if (!strcmp(type, "resize_bl"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_LEFT_CORNER);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_LEFT_CORNER);
 	else if (!strcmp(type, "resize_l"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_SIDE);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_SIDE);
 	else if (!strcmp(type, "entry"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_XTERM);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_XTERM);
 	else if (!strcmp(type, "default"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR);
 	else if (!strcmp(type, "plus"))
-	  {
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_PLUS);
-	     if (!cursor) printf("X Cursor for %s is missing\n", type);
-	     ecore_x_window_cursor_set(p->win, cursor);
-	  }
+          cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_PLUS);
 	else
 	  {
 	     printf("Unknown pointer type: %s\n", type);
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_ARROW);
-	     if (!cursor) printf("X Cursor for default is missing\n");
-	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
+        if (!cursor) printf("X Cursor for %s is missing\n", type);
+        ecore_x_window_cursor_set(p->win, cursor);
 	if (cursor) ecore_x_cursor_free(cursor);
      }
    return 1;
@@ -534,7 +467,7 @@ _e_pointer_active_handle(E_Pointer *p)
 	p->idle = 0;
      }
    if (e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM) return;
-   /* and scedule a pre-idle check in 1 second if no more events happen */
+   /* and schedule a pre-idle check in 1 second if no more events happen */
    if (!e_config->idle_cursor) return;
    p->idle_timer = ecore_timer_loop_add(1.0, _e_pointer_cb_idle_timer_pre, p);
 }
@@ -554,7 +487,8 @@ _e_pointer_cb_mouse_down(void *data, int type, void *event)
 	if (e_powersave_mode_get() < E_POWERSAVE_MODE_EXTREME)
 	  {
 	     if (p->pointer_object)
-	       edje_object_signal_emit(p->pointer_object, "e,action,mouse,down", "e");
+	       edje_object_signal_emit(p->pointer_object, 
+                                       "e,action,mouse,down", "e");
 	  }
      }
    return 1;
@@ -575,7 +509,8 @@ _e_pointer_cb_mouse_up(void *data, int type, void *event)
 	if (e_powersave_mode_get() < E_POWERSAVE_MODE_EXTREME)
 	  {
 	     if (p->pointer_object)
-	       edje_object_signal_emit(p->pointer_object, "e,action,mouse,up", "e");
+	       edje_object_signal_emit(p->pointer_object, 
+                                       "e,action,mouse,up", "e");
 	  }
      }
    return 1;
@@ -596,7 +531,8 @@ _e_pointer_cb_mouse_move(void *data, int type, void *event)
 	if (e_powersave_mode_get() < E_POWERSAVE_MODE_HIGH)
 	  {
 	     if (p->pointer_object)
-	       edje_object_signal_emit(p->pointer_object, "e,action,mouse,move", "e");
+	       edje_object_signal_emit(p->pointer_object, 
+                                       "e,action,mouse,move", "e");
 	  }
      }
    return 1;
@@ -617,7 +553,8 @@ _e_pointer_cb_mouse_wheel(void *data, int type, void *event)
 	if (e_powersave_mode_get() < E_POWERSAVE_MODE_EXTREME)
 	  {
 	     if (p->pointer_object)
-	       edje_object_signal_emit(p->pointer_object, "e,action,mouse,wheel", "e");
+	       edje_object_signal_emit(p->pointer_object, 
+                                       "e,action,mouse,wheel", "e");
 	  }
      }
    return 1;
@@ -683,7 +620,8 @@ _e_pointer_cb_idle_poller(void *data)
 	if (p->idle)
 	  {
 	     if (p->pointer_object)
-	       edje_object_signal_emit(p->pointer_object, "e,state,mouse,active", "e");
+	       edje_object_signal_emit(p->pointer_object, 
+                                       "e,state,mouse,active", "e");
 	     p->idle = 0;
 	  }
 	/* use poller to check from now on */
