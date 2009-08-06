@@ -493,17 +493,15 @@ _e_theme_mappings_quickfind_free_cb(const Eina_Hash *hash, const void *key, void
 static void
 _e_theme_category_register(const char *category)
 {
-   const char *c;
    Eina_List *l;
    int ret;
 
    if (!categories)
      categories = eina_list_append(categories, eina_stringshare_add(category));
 
-   l = eina_list_search_sorted_near_list(categories, EINA_COMPARE_CB(strcmp), category);
-   c = eina_list_data_get(l);
+   l = eina_list_search_sorted_near_list(categories, EINA_COMPARE_CB(strcmp),
+         category, &ret);
 
-   ret = strcmp(c, category);
    if (!ret) return;
 
    if (ret < 0)

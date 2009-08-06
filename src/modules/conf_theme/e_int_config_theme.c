@@ -541,22 +541,16 @@ _get_theme_categories_list(void)
    EINA_LIST_FOREACH(e_theme_category_list(), g, c)
      {
 	const char *result;
+	int res;
 
 	if (!c) continue;
 
-	cats2 = eina_list_search_sorted_near_list(cats, _cb_sort, c);
-	result = eina_list_data_get(cats2);
-	if (result)
-	  {
-	     int res;
-
-	     res = strcmp(c, result);
-	     if (!res) continue;
-	     if (res < 0)
-	       cats = eina_list_prepend_relative_list(cats, eina_stringshare_ref(c), cats2);
-	     else
-	       cats = eina_list_append_relative_list(cats, eina_stringshare_ref(c), cats2);
-	  }
+	cats2 = eina_list_search_sorted_near_list(cats, _cb_sort, c, &res);
+	if (!res) continue;
+	if (res < 0)
+	  cats = eina_list_prepend_relative_list(cats, eina_stringshare_ref(c), cats2);
+	else
+	  cats = eina_list_append_relative_list(cats, eina_stringshare_ref(c), cats2);
      }
 
    EINA_LIST_FREE(cats, category)
