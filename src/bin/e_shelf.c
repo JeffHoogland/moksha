@@ -399,6 +399,7 @@ e_shelf_move_resize(E_Shelf *es, int x, int y, int w, int h)
    es->y = y;
    es->w = w;
    es->h = h;
+   e_gadcon_swallowed_min_size_set(es->gadcon, w, h);
    if (es->popup) 
      e_popup_move_resize(es->popup, es->x, es->y, es->w, es->h); 
    else
