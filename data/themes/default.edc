@@ -26699,7 +26699,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       signal: "e,state,object_selector_hide";
 	       source: "e";
 	       action: STATE_SET "default" 0.00;
-	       transition: SINUSOIDAL 0.20000;
+	       transition: SINUSOIDAL 0.15;
 	       target: "bg";
 	       target: "e.swallow.object_selector";
 	   }
@@ -26707,7 +26707,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       signal: "e,state,object_selector_show";
 	       source: "e";
 	       action: STATE_SET "wide" 0.00;
-	       transition: SINUSOIDAL 0.40000;
+	       transition: SINUSOIDAL 0.2;
 	       target: "bg";
 	       target: "e.swallow.object_selector";
 	   }
@@ -27141,7 +27141,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       type: SWALLOW;
 	       clip_to: "list_clip";
 	       description { state: "default" 0.0;
-		   min: 32 150;
+		   min: 32 170;
 		   rel1 {
 		       relative: 0.0 0.0;
 		       offset:   4 5;
@@ -27149,10 +27149,15 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 		   rel2 {
 		       relative: 1.0 1.0;
-		       offset:   -4  -4;
+		       offset:   -5  -4;
 		       to: "list_clip";
 		   }
 	       }
+	       description { state: "visible" 0.0;
+		   inherit: "default" 0.0;
+		   min: 32 150;
+	       }
+		
 	   }
 	   part { name: "list_clip";
 	       type: RECT;
@@ -27198,7 +27203,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       signal: "e,state,list_show";
 	       source: "e";
 	       action: STATE_SET "visible" 0.0;
-	       transition: ACCELERATE 0.2;
+	       transition: ACCELERATE 0.1;
 	       target: "base";
 	       /* after: "show_list_end"; */
 	   }
@@ -27218,7 +27223,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       target: "input_over2";
 	       target: "input_base";
 	       target: "input_bg";
-	   }
+	       target: "e.swallow.list";
+	     }
 	   program { name: "hide_entry";
 	       signal: "e,state,entry_hide";
 	       source: "e";
@@ -27228,6 +27234,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       target: "input_over2";
 	       target: "input_base";
 	       target: "input_bg";
+	       target: "e.swallow.list";
 	   }
 	   /* program { name: "blink_off";
 	    * 	   signal:  "show";
@@ -27251,7 +27258,10 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
    }
 
    group { name: "e/widgets/everything/item";
-       parts {
+       images {
+	  image: "icon_right_arrow.png" COMP;
+       }
+       parts {	   
 	   part { name: "bg";
 	       mouse_events: 0;
 	       description { state: "default" 0.0;
@@ -27284,7 +27294,10 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       relative: 1.0 0.0;
 		       to_x: "e.swallow.icons";
 		   }
-		   rel2.offset: -3 -2;
+		   rel2 {
+		       offset: -3 -2;
+		       to_x: "arrow";
+		   }
 		   color: 60 60 60 255;
 		   color3: 255 255 255 64;
 		   color_class: "menu_item";
@@ -27320,6 +27333,32 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       relative: 0.0 1.0;
 		       offset:   -3   -2;
 		   }
+	       }
+	   }
+	   part {
+	       name: "arrow";
+	       description {
+		   state: "default" 0.0;
+		   max: 20 20;
+		   align: 0.0 0.5;
+		   aspect_preference: VERTICAL;
+		   rel1 {
+		       relative: 1.0 0.0;
+		       offset:   -21 1;
+		   }
+		   rel2 {
+		       relative: 1.0 1.0;
+		       offset:   -3   -2;
+		   }
+		   image {
+		       normal: "icon_right_arrow.png";
+		   }
+		   color: 255 255 255 0;
+	       }
+	       description {
+		   state: "visible" 0.0;
+		   inherit: "default" 0.0;
+		   color: 255 255 255 255;
 	       }
 	   }
 	   part { name: "fg";
@@ -27379,6 +27418,13 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       target: "bg";
 	       target: "fg";
 	       target: "e.text.title";
+	       target: "arrow";
+	   }
+	   program { name: "arrow";
+	       signal: "e,state,arrow_show";
+	       source: "e";
+	       action: STATE_SET "visible" 0.0;
+	       target: "arrow";
 	   }
        }
    }

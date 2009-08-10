@@ -1290,12 +1290,13 @@ _evry_list_show_items(Evry_State *s, Evry_Plugin *p)
 	     edje_object_signal_emit(it->o_bg, "e,state,selected", "e");
 	     if (it->o_icon)
 	       edje_object_signal_emit(it->o_icon, "e,state,selected", "e");
+	     if (it->browseable)
+	       edje_object_signal_emit(it->o_bg, "e,state,arrow_show", "e");
 	  }
      }
    e_box_thaw(list->o_list);
 
-   if (edje_object_part_exists(o, "e.swallow.icons"))
-     list->item_idler = ecore_idler_add(_evry_list_item_idler, p);
+   list->item_idler = ecore_idler_add(_evry_list_item_idler, p);
    
    e_box_min_size_get(list->o_list, NULL, &mh);
    evas_object_geometry_get(list->o_list, NULL, NULL, NULL, &h);
@@ -1554,6 +1555,9 @@ _evry_list_item_sel(Evry_State *s, Evry_Item *it)
 	edje_object_signal_emit(it->o_bg, "e,state,selected", "e");
 	if (it->o_icon)
 	  edje_object_signal_emit(it->o_icon, "e,state,selected", "e");
+
+	if (it->browseable)
+	  edje_object_signal_emit(it->o_bg, "e,state,arrow_show", "e");
 
 	_evry_list_scroll_to(s, it);
      }
