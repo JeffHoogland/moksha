@@ -109,11 +109,30 @@ _fetch(Evry_Plugin *p, const char *input)
 static Evas_Object *
 _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
 {
-   Evas_Object *icon;
-   
-   icon = e_border_icon_add(((E_Border *)it->data[0]), e);
+   Evas_Object *o = NULL;
+   E_Border *bd = it->data[0];
 
-   return icon;
+   if (bd->desktop)
+     o = e_util_desktop_icon_add(bd->desktop, 72, e);
+
+   if (!o && bd->client.netwm.icons)
+     {
+	int num = bd->client.netwm.num_icons - 1;
+
+	if (num >= 0)
+	  {	     
+	     o = e_icon_add(e);
+	     e_icon_data_set(o, bd->client.netwm.icons[num].data,
+			     bd->client.netwm.icons[num].width,
+			     bd->client.netwm.icons[num].height);
+	     e_icon_alpha_set(o, 1);
+	  }
+     }
+   
+   if (!o)
+     o = e_border_icon_add(bd, e);
+
+   return o;
 }
 
 static void
