@@ -98,9 +98,6 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
      file = desktop->exec;
 
    if (!file) return;
-
-   if (eina_hash_find(inst->added, file))
-     return;
    
    if (!desktop)
      {
@@ -110,6 +107,8 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 	char *tmp;
 	int found = 0;
 
+	if (eina_hash_find(inst->added, file))
+	  return;
 
 	len = strlen(file);
 	tmp = ecore_file_app_exe_get(file);
@@ -132,6 +131,10 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 
    if (desktop)
      {
+	if ((desktop2 = eina_hash_find(inst->added, file)) &&
+	    desktop == desktop2)
+	  return;
+
 	eina_hash_add(inst->added, file, desktop);
 	file = NULL;
      }
@@ -286,30 +289,49 @@ _fetch(Evry_Plugin *p, const char *input)
      {
 	int found = 0;
 	char *path;
-	EINA_LIST_FOREACH(exe_path, l, path)
+	char *end;
+
+	if (input)
 	  {
-	     snprintf(match1, 4096, "%s/%s", path, input);
-	     if (ecore_file_exists(match1))
+	     snprintf(match2, 4096, "%s", input);
+	
+	     if (end = strchr(input, ' '))
 	       {
-		  found = 1;
-		  break;
+		  int len = (end - input) - 1;
+		  if (len >= 0)
+		    snprintf(match2, len, "%s", input);
+	       }
+	
+	     EINA_LIST_FOREACH(exe_path, l, path)
+	       {
+		  snprintf(match1, 4096, "%s/%s", path, match2);
+		  if (ecore_file_exists(match1))
+		    {
+		       found = 1;
+		       break;
+		    } 
 	       }
 	  }
+	
 	if (found || p == p2)
 	  {
 	     it = evry_item_new(p, _("Run Command"));
 	     app = E_NEW(Evry_App, 1);
-	     app->file = eina_stringshare_add(input);
-	     app->desktop = NULL;
+	     if (input)
+	       app->file = eina_stringshare_add(input);
+	     else
+	       app->file = eina_stringshare_add("");
 	     it->data[0] = app;
-	     it->priority = 100;
+	     it->priority = 99;
 	     p->items = eina_list_append(p->items, it);
 
 	     snprintf(match1, 4096, "xterm -hold -e %s", input);
 	     it = evry_item_new(p, _("Run in Terminal"));
 	     app = E_NEW(Evry_App, 1);
-	     app->file = eina_stringshare_add(match1);
-	     app->desktop = NULL;
+	     if (input)
+	       app->file = eina_stringshare_add(input);
+	     else
+	       app->file = eina_stringshare_add("");
 	     it->data[0] = app;
 	     it->priority = 100;
 	     p->items = eina_list_append(p->items, it);
