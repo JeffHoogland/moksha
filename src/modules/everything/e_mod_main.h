@@ -45,6 +45,7 @@ struct _Config
   
   /**/
   Eina_List *plugins;
+  Eina_List *actions;
 
   Eina_Hash *history;
 };
@@ -67,10 +68,14 @@ struct _Plugin_Config
 
 struct _Evry_Item
 {
+  Evry_Plugin *plugin;
+  
   const char *label;
 
   const char *uri;
   const char *mime;
+
+  Eina_Bool browseable;
   
   /* these are only for internally use by plugins */
   /* used e.g. as pointer for item data (Efreet_Desktop) or */
@@ -80,13 +85,16 @@ struct _Evry_Item
 
   /* not to be set by plugin! */
   Evas_Object *o_icon;
-  Evas_Object *o_bg;  
+  Evas_Object *o_bg;
 };
   
 struct _Evry_Plugin
 {
   const char *name;
+  const char *icon;
 
+  enum {type_subject, type_action, type_object } type;
+  
   const char *type_in;
   const char *type_out;
 
@@ -99,6 +107,8 @@ struct _Evry_Plugin
    * e.g.  borders, app history */
   Eina_Bool need_query; 
 
+  Eina_Bool browseable;
+  
   /* run when plugin is activated. */
   int (*begin) (Evry_Plugin *p, Evry_Item *item);
 
@@ -108,14 +118,14 @@ struct _Evry_Plugin
   /* run before new query and when hiding 'everything' */
   void (*cleanup) (Evry_Plugin *p);
 
-  /* TODO return icon */
-  void (*icon_get) (Evry_Plugin *p, Evry_Item *it, Evas *e);  
+  Evas_Object *(*icon_get) (Evry_Plugin *p, Evry_Item *it, Evas *e);  
   /* provide more information for a candidate */
   /* int (*candidate_info) (Evas *evas, Evry_Item *item); */
 
   /* optional: default action for this plugins items */
   int  (*action) (Evry_Plugin *p, Evry_Item *item, const char *input);
-
+  Evry_Action *act;
+  
   /* optional: create list of items when shown (e.g. for sorting) */
   void (*realize_items) (Evry_Plugin *p, Evas *e);
 
@@ -124,6 +134,9 @@ struct _Evry_Plugin
   Evas_Object *(*config_page) (void);
   void (*config_apply) (void);
 
+  /* only for internal use by plugin */
+  void *private;
+  
   /* not to be set by plugin! */
   Evas_Object *tab;
   Plugin_Config *config;
@@ -136,17 +149,20 @@ struct _Evry_Action
   const char *type_in1;
   const char *type_in2;
   const char *type_out;
-
-  Evry_Item *thing1;
-  Evry_Item *thing2;
   
-  int  (*action) (Evry_Action *act);
+  int  (*action) (Evry_Action *act, Evry_Item *it1, Evry_Item *it2, const char *input);
 
   int (*check_item) (Evry_Action *act, Evry_Item *it);  
 
-  void (*icon_get) (Evry_Action *act, Evry_Item *it, Evas *e);  
+  Evas_Object *(*icon_get) (Evry_Action *act, Evas *e);  
+
+  /* use icon name from theme */
+  const char *icon;
   
-  void *priv;
+  Eina_Bool is_default;
+  
+  /* only for internal use by plugin */
+  void *private;
 
   /* not to be set by plugin! */
   Evas_Object *o_icon;
@@ -175,6 +191,10 @@ EAPI void evry_action_register(Evry_Action *act);
 EAPI void evry_action_unregister(Evry_Action *act);
 EAPI void evry_plugin_async_update(Evry_Plugin *plugin, int state);
 EAPI void evry_clear_input(void);
+EAPI Evry_Item *evry_item_new(Evry_Plugin *p, const char *label);
+EAPI void evry_item_free(Evry_Item *it);
+
+EAPI int evry_icon_theme_set(Evas_Object *obj, const char *icon);
 
 extern Config *evry_conf;
 

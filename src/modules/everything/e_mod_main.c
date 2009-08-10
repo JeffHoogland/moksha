@@ -85,7 +85,10 @@ e_modapi_init(E_Module *m)
      }
 
    /* evry_conf->history = eina_hash_string_superfast_new(NULL); */
-   
+
+   evry_conf->width = 380;
+   evry_conf->height = 235;
+   evry_conf->scroll_animate = 0;
    /* conf_module = m; */
    evry_init();
 
@@ -107,8 +110,8 @@ e_modapi_init(E_Module *m)
 
    maug = e_int_menus_menu_augmentation_add("main/1", _e_mod_menu_add, NULL, NULL, NULL);
 
-   e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "preferences-advanced");
-   e_configure_registry_item_add("advanced/run_everything", 40, _("Run Everything"), NULL, "system-run", evry_config_dialog);
+   e_configure_registry_category_add("extensions", 80, _("Extensions"), NULL, "preferences-extensions");
+   e_configure_registry_item_add("extensions/run_everything", 40, _("Run Everything"), NULL, "system-run", evry_config_dialog);
    
    e_module_delayed_set(m, 1);
 
@@ -136,6 +139,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    evry_shutdown();
    /* conf_module = NULL; */
+   eina_list_free(evry_conf->plugins);
+   eina_list_free(evry_conf->actions);
 
    eina_module_list_unload(plugins);
    eina_module_list_flush(plugins);
@@ -144,8 +149,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    eina_module_shutdown();
    
    while ((cfd = e_config_dialog_get("E", "_config_everything_dialog"))) e_object_del(E_OBJECT(cfd));
-   e_configure_registry_item_del("advanced/run_everything");
-   e_configure_registry_category_del("advanced");
+   e_configure_registry_item_del("extensions/run_everything");
+   e_configure_registry_category_del("extensions");
 
    /* Clean EET */
    E_CONFIG_DD_FREE(conf_item_edd);
@@ -211,4 +216,74 @@ _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
    e_menu_item_label_set(mi, _("Run Everything"));
    e_util_menu_item_theme_icon_set(mi, "system-run");
    e_menu_item_callback_set(mi, _e_mod_run_cb, NULL);
+}
+
+
+static int
+_evry_cb_plugin_sort(const void *data1, const void *data2)
+{
+   const Evry_Plugin *p1 = data1;
+   const Evry_Plugin *p2 = data2;
+   return p1->config->priority - p2->config->priority;
+}
+
+EAPI void
+evry_plugin_register(Evry_Plugin *plugin)
+{
+   Eina_List *l;
+   Plugin_Config *pc;
+   Eina_Bool found = 0;
+   
+   evry_conf->plugins = eina_list_append(evry_conf->plugins, plugin);
+
+   EINA_LIST_FOREACH(evry_conf->plugins_conf, l, pc)
+     {
+	if (pc->name && plugin->name && !strcmp(pc->name, plugin->name))
+	  {
+	     found = 1;
+	     break;
+	  }
+     }
+
+   if (!found)
+     {
+	pc = E_NEW(Plugin_Config, 1);
+	pc->name = eina_stringshare_add(plugin->name);
+	pc->enabled = 1;
+	pc->priority = eina_list_count(evry_conf->plugins);
+
+	evry_conf->plugins_conf = eina_list_append(evry_conf->plugins_conf, pc);	
+     }
+
+   /* if (plugin->trigger && !pc->trigger)
+    *   pc->trigger = eina_stringshare_add(plugin->trigger); */
+   
+   plugin->config = pc;
+
+   evry_conf->plugins = eina_list_sort(evry_conf->plugins,
+				       eina_list_count(evry_conf->plugins),
+				       _evry_cb_plugin_sort);
+   
+   /* TODO sorting, initialization, etc */
+}
+
+EAPI void
+evry_plugin_unregister(Evry_Plugin *plugin)
+{
+   evry_conf->plugins = eina_list_remove(evry_conf->plugins, plugin);
+   /* cleanup */
+}
+
+EAPI void
+evry_action_register(Evry_Action *action)
+{
+   evry_conf->actions = eina_list_append(evry_conf->actions, action);
+   /* TODO sorting, initialization, etc */
+}
+
+EAPI void
+evry_action_unregister(Evry_Action *action)
+{
+   evry_conf->actions = eina_list_remove(evry_conf->actions, action);
+   /* cleanup */
 }

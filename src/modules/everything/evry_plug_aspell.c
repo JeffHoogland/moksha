@@ -2,15 +2,8 @@
 #include "e_mod_main.h"
 #include <ctype.h>
 
-
-static Eina_Bool _init(void);
-static void _shutdown(void);
-EINA_MODULE_INIT(_init);
-EINA_MODULE_SHUTDOWN(_shutdown);
-
 static const char TRIGGER[] = "aspell ";
 static const char LANG_MODIFIER[] = "lang=";
-static Ecore_X_Window clipboard_win = 0;
 
 typedef struct _Plugin Plugin;
 
@@ -89,18 +82,11 @@ _item_add(Evry_Plugin *p, const char *word, int word_size, int prio)
 {
    Evry_Item *it;
 
-   it = E_NEW(Evry_Item, 1);
+   it = evry_item_new(p, NULL);
    if (!it) return;
    it->priority = prio;
    it->label = eina_stringshare_add_length(word, word_size);
    p->items = eina_list_append(p->items, it);
-}
-
-static void
-_item_del(Evry_Item *it)
-{
-   eina_stringshare_del(it->label);
-   E_FREE(it);
 }
 
 static void
@@ -143,7 +129,7 @@ _clear_list(Evry_Plugin *plugin)
    Evry_Item *it;
    evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_CLEAR);
    EINA_LIST_FREE(plugin->items, it)
-     _item_del(it);
+     evry_item_free(it);
 }
 
 static int
@@ -263,7 +249,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	else
 	  lang = NULL;
 
-	eina_stringshare_del(p->lang);
+	if (p->lang) eina_stringshare_del(p->lang);
 	if (p->lang != lang)
 	  {
 	     p->lang = lang;
@@ -288,7 +274,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (len < 1)
      return 1;
    input = eina_stringshare_add_length(input, len);
-   eina_stringshare_del(p->input);
+   if (p->input) eina_stringshare_del(p->input);
    if (p->input == input)
      return 1;
 
@@ -302,44 +288,44 @@ _fetch(Evry_Plugin *plugin, const char *input)
    return 1;
 }
 
-static int
-_action(Evry_Plugin *plugin, Evry_Item *it, const char *input __UNUSED__)
-{
-   const char *label;
-   int len;
-
-   if (!it) return EVRY_ACTION_CONTINUE;
-
-   label = it->label;
-   len = eina_stringshare_strlen(label);
-
-   if (!ecore_x_selection_primary_set(clipboard_win, label, len))
-     fprintf(stderr, "ASPELL cannot set primary selection to %#x '%s'\n",
-	     clipboard_win, label);
-   if (!ecore_x_selection_clipboard_set(clipboard_win, label, len))
-     fprintf(stderr, "ASPELL cannot set clipboard selection to %#x '%s'\n",
-	     clipboard_win, label);
-
-   if (plugin->items)
-     {
-	Eina_List *l, *l_next;
-	Evry_Item *it2;
-
-	evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_CLEAR);
-
-	EINA_LIST_FOREACH_SAFE(plugin->items, l, l_next, it2)
-	  {
-	     if (it == it2) continue;
-	     plugin->items = eina_list_remove_list(plugin->items, l);
-	     eina_stringshare_del(it2->label);
-	     E_FREE(it2);
-	  }
-     }
-
-   evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_ADD);
-
-   return EVRY_ACTION_FINISHED;
-}
+/* static int
+ * _action(Evry_Plugin *plugin, Evry_Item *it, const char *input __UNUSED__)
+ * {
+ *    const char *label;
+ *    int len;
+ * 
+ *    if (!it) return EVRY_ACTION_CONTINUE;
+ * 
+ *    label = it->label;
+ *    len = eina_stringshare_strlen(label);
+ * 
+ *    if (!ecore_x_selection_primary_set(clipboard_win, label, len))
+ *      fprintf(stderr, "ASPELL cannot set primary selection to %#x '%s'\n",
+ * 	     clipboard_win, label);
+ *    if (!ecore_x_selection_clipboard_set(clipboard_win, label, len))
+ *      fprintf(stderr, "ASPELL cannot set clipboard selection to %#x '%s'\n",
+ * 	     clipboard_win, label);
+ * 
+ *    if (plugin->items)
+ *      {
+ * 	Eina_List *l, *l_next;
+ * 	Evry_Item *it2;
+ * 
+ * 	evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_CLEAR);
+ * 
+ * 	EINA_LIST_FOREACH_SAFE(plugin->items, l, l_next, it2)
+ * 	  {
+ * 	     if (it == it2) continue;
+ * 	     plugin->items = eina_list_remove_list(plugin->items, l);
+ * 	     eina_stringshare_del(it2->label);
+ * 	     E_FREE(it2);
+ * 	  }
+ *      }
+ * 
+ *    evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_ADD);
+ * 
+ *    return EVRY_ACTION_FINISHED;
+ * } */
 
 static void
 _cleanup(Evry_Plugin *plugin)
@@ -348,7 +334,7 @@ _cleanup(Evry_Plugin *plugin)
    Evry_Item *it;
 
    EINA_LIST_FREE(p->base.items, it)
-     _item_del(it);
+     evry_item_free(it);
 
    if (p->handler.data)
      {
@@ -377,12 +363,6 @@ _cleanup(Evry_Plugin *plugin)
      }
 }
 
-static void
-_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e __UNUSED__)
-{
-   it->o_icon = NULL;
-}
-
 static Eina_Bool
 _init(void)
 {
@@ -393,22 +373,17 @@ _init(void)
 
    p = E_NEW(Plugin, 1);
    p->base.name = "Spell Checker";
+   p->base.type = type_subject;
    p->base.type_in  = "NONE";
-   p->base.type_out = "NONE";
+   p->base.type_out = "TEXT";
+   p->base.icon = "accessories-dictionary";
    p->base.trigger = TRIGGER;
    p->base.need_query = 0;
    p->base.async_query = 1;
    p->base.begin = _begin;
    p->base.fetch = _fetch;
-   p->base.action = _action;
+   /* p->base.action = _action; */
    p->base.cleanup = _cleanup;
-   p->base.icon_get = _item_icon_get;
-
-   if (clipboard_win == 0)
-     {
-	clipboard_win = ecore_x_window_new(0, 0, 0, 1, 1);
-	fprintf(stderr, "ASPELL clipboard_win=%#x\n", clipboard_win);
-     }
 
    evry_plugin_register(&p->base);
 
@@ -429,8 +404,11 @@ _shutdown(void)
    _singleton = NULL;
 
    EINA_LIST_FREE(p->base.items, it)
-     _item_del(it);
+     evry_item_free(it);
 
    evry_plugin_unregister(&p->base);
    E_FREE(p);
 }
+
+EINA_MODULE_INIT(_init);
+EINA_MODULE_SHUTDOWN(_shutdown);
