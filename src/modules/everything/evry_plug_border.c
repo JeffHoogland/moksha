@@ -113,20 +113,29 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
    E_Border *bd = it->data[0];
 
    if (bd->desktop)
-     o = e_util_desktop_icon_add(bd->desktop, 72, e);
+     o = e_util_desktop_icon_add(bd->desktop, 128, e);
 
    if (!o && bd->client.netwm.icons)
      {
-	int num = bd->client.netwm.num_icons - 1;
+	int i, size, tmp, found = 0;
+	o = e_icon_add(e);
 
-	if (num >= 0)
-	  {	     
-	     o = e_icon_add(e);
-	     e_icon_data_set(o, bd->client.netwm.icons[num].data,
-			     bd->client.netwm.icons[num].width,
-			     bd->client.netwm.icons[num].height);
-	     e_icon_alpha_set(o, 1);
+	size = bd->client.netwm.icons[0].width;
+
+	for (i = 1; i < bd->client.netwm.num_icons; i++)
+	  {
+	     if ((tmp = bd->client.netwm.icons[i].width) > size)
+	       {
+		  size = tmp;
+		  found = i;
+	       }
 	  }
+	     
+	e_icon_data_set(o, bd->client.netwm.icons[found].data,
+			bd->client.netwm.icons[found].width,
+			bd->client.netwm.icons[found].height);
+	e_icon_alpha_set(o, 1);
+	return o;
      }
    
    if (!o)

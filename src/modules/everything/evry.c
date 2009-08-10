@@ -1054,9 +1054,45 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if ((!strcmp(ev->key, "BackSpace")) ||
 	    (!strcmp(ev->key, "Delete")))
      _evry_backspace(s);
+   else if ((ev->key) &&
+	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
+     {
+	Eina_List *l;
+	Evry_Plugin *p, *first = NULL, *next = NULL;
+	int found = 0;
+	
+	if (!s->plugin) return 1;
+
+	EINA_LIST_FOREACH(s->cur_plugins, l, p)
+	  {
+	     if (p->name && (!strncasecmp(p->name, ev->key, 1)))
+	       {
+		  if (!first) first = p;
+
+		  if (found && !next)
+		    next = p;
+	       }
+	     if (p == s->plugin) found = 1;
+	  }
+
+	if (next)
+	  p = next;
+	else if (first != s->plugin)
+	  p = first;
+	else
+	  p = NULL;
+	
+	if (p)
+	  {
+	     s->plugin_auto_selected = 0;
+	     _evry_list_clear_list(s);
+	     _evry_select_plugin(s, p);
+	     _evry_list_show_items(s, p);
+	     _evry_selector_update(selector); 
+	  }
+     }
    else if ((ev->compose) &&
-	    (!(ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
-	      (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)  ||
+	    (!(ev->modifiers & ECORE_EVENT_MODIFIER_ALT)  ||
 	      (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)) &&
 	    ((strlen(s->input) < (INPUTLEN - strlen(ev->compose)))))
      {
