@@ -93,6 +93,17 @@ _fetch(Evry_Plugin *p, const char *input)
 	       _item_add(p, bd, 2);
 	     else if (e_util_glob_case_match(e_border_name_get(bd), match2))
 	       _item_add(p, bd, 2);
+	     else if (bd->desktop)
+	       {
+		  if (e_util_glob_case_match(bd->desktop->exec, match1))
+		    _item_add(p, bd, 1);
+		  else if (e_util_glob_case_match(bd->desktop->exec, match2))
+		    _item_add(p, bd, 2);
+		  else if (e_util_glob_case_match(bd->desktop->name, match1))
+		    _item_add(p, bd, 1);
+		  else if (e_util_glob_case_match(bd->desktop->name, match2))
+		    _item_add(p, bd, 2);
+	       }
 	  }
      }
    e_container_border_list_free(bl);

@@ -272,6 +272,8 @@ _fetch(Evry_Plugin *p, const char *input)
 	     _add_desktop_list(p, apps, match1, match2);
 	  }
      }
+
+   /* add exe history items */
    else if (!p->items)
      {
    	l = e_exehist_list_get();
@@ -279,7 +281,8 @@ _fetch(Evry_Plugin *p, const char *input)
    	  _item_add(p, NULL, file, 1);
      }
 
-   if (input || p == p2) /* FIXME plugins is 'Open with'.. hackish */
+   /* show 'Run Command' item */
+   if (input || p == p2)
      {
 	int found = 0;
 	char *path;
@@ -294,8 +297,16 @@ _fetch(Evry_Plugin *p, const char *input)
 	  }
 	if (found || p == p2)
 	  {
+	     it = evry_item_new(p, _("Run Command"));
+	     app = E_NEW(Evry_App, 1);
+	     app->file = eina_stringshare_add(input);
+	     app->desktop = NULL;
+	     it->data[0] = app;
+	     it->priority = 100;
+	     p->items = eina_list_append(p->items, it);
+
 	     snprintf(match1, 4096, "xterm -hold -e %s", input);
-	     it = evry_item_new(p, "Run Command");
+	     it = evry_item_new(p, _("Run in Terminal"));
 	     app = E_NEW(Evry_App, 1);
 	     app->file = eina_stringshare_add(match1);
 	     app->desktop = NULL;
@@ -358,64 +369,44 @@ _app_action(Evry_Item *it_app, Evry_Item *it_file)
    Evry_App *app = NULL;
    Efreet_Desktop *desktop = NULL;
    Eina_List *files = NULL;
-
+   char *exe = NULL;
+   
    if (!it_app) return 0;
    
    app = it_app->data[0];
-
-   if (app && app->desktop)
-     {
-	desktop = app->desktop;
-     }
-   else 
-     {
-	const char *exe;
-	
-	if (!app->file) return 0;
-	exe = app->file;
-
-	desktop = efreet_desktop_empty_new("");
-	if (!desktop) return 0;
-	
-	if (strchr(app->file, '%'))
-	  {
-	     desktop->exec = strdup(app->file);
-	  }
-	else
-	  {
-	     int len = strlen(app->file) + 4;
-	     desktop->exec = malloc(len);
-	     if (desktop->exec)
-	       snprintf(desktop->exec, len, "%s %%U", app->file);
-	     else
-	       {
-		  efreet_desktop_free(desktop);
-		  return 0;
-	       }
-	  }
-     }
-
-   if (it_file && it_file->uri)
-     files = eina_list_append(files, it_file->uri);
-
+   if (!app) return 0;
+   
    zone = e_util_zone_current_get(e_manager_current_get());
-
+   
    if (app->desktop)
      {
-	e_exec(zone, desktop, NULL, files, "everything");
+	if (it_file && it_file->uri)
+	  files = eina_list_append(files, it_file->uri);
+
+	e_exec(zone, app->desktop, NULL, files, "everything");
 	     
 	if (it_file && it_file->mime)
-	  e_exehist_mime_desktop_add(it_file->mime, desktop);
+	  e_exehist_mime_desktop_add(it_file->mime, app->desktop);
+
+	if (files) eina_list_free(files);
      }
-   else
-     /* dont put custom commands in exec history.. */
-     e_exec(zone, desktop, NULL, files, NULL);
+   else if (app->file)
+     {
+	if (it_file && it_file->uri)
+	  {
+	     int len;
 
-   /* remove temporary desktop */
-   if (!app->desktop)
-     efreet_desktop_free(desktop);
+	     len = strlen(app->file) + strlen(it_file->uri) + 2;
+	     exe = malloc(len);
+	     snprintf(exe, len, "%s %s", app->file, it_file->uri);
+	  }
+	else exe = (char *) app->file;
+	  
+	e_exec(zone, NULL, exe, NULL, NULL);
 
-   if (files) eina_list_free(files);
+	if (it_file && it_file->uri)
+	  free(exe);
+     }
 
    return 1;
 }
