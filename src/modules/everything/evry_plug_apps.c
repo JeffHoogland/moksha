@@ -65,6 +65,7 @@ _list_free(Evry_Plugin *p)
      {
 	app = it->data[0];
 	if (app->file) eina_stringshare_del(app->file);
+	if (app->desktop) efreet_desktop_free(app->desktop);
 	E_FREE(app);
 	evry_item_free(it);
      }
@@ -91,7 +92,7 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 {
    Evry_Item *it;
    Evry_App *app;
-   Efreet_Desktop *desktop2;
+   Efreet_Desktop *d2;
    Inst *inst = p->private;
    
    if (desktop)
@@ -105,7 +106,6 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 	Eina_List *l;
 	int len;
 	char *tmp;
-	int found = 0;
 
 	if (eina_hash_find(inst->added, file))
 	  return;
@@ -115,26 +115,30 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 	snprintf(match, sizeof(match), "%s*", tmp);
 	l = efreet_util_desktop_exec_glob_list(match);
 
-	EINA_LIST_FREE(l, desktop)
-	  if (desktop->exec && !strncmp(file, desktop->exec, len))
-	    {
-	       found = 1;
-	       break;
-	    }
-      
-	eina_list_free(l);
+	EINA_LIST_FREE(l, d2)
+	  {
+	     if (!desktop && d2->exec && !strncmp(file, d2->exec, len))
+	       {
+		  desktop = d2;
+		  efreet_desktop_ref(desktop);
+	       }
+	     efreet_desktop_free(d2);
+	  }
+
 	free(tmp);
 
-	if (!found)
+	if (!desktop)
 	  eina_hash_add(inst->added, file, file);
      }
 
    if (desktop)
      {
-	if ((desktop2 = eina_hash_find(inst->added, file)) &&
-	    desktop == desktop2)
+	if ((d2 = eina_hash_find(inst->added, file)) &&
+	    ((desktop == d2) ||
+	     (!strcmp(desktop->exec, d2->exec))))
 	  return;
 
+	efreet_desktop_ref(desktop);
 	eina_hash_add(inst->added, file, desktop);
 	file = NULL;
      }
@@ -179,6 +183,7 @@ _add_desktop_list(Evry_Plugin *p, Eina_List *apps, char *m1, char *m2)
 	 *      else if (e_util_glob_case_match(desktop->comment, m2))
 	 *        _item_add(p, desktop, NULL, 4);
 	 *   } */
+	efreet_desktop_free(desktop);
      }
 }
 
@@ -262,17 +267,11 @@ _fetch(Evry_Plugin *p, const char *input)
    /* add apps matching input */
    if (!p->items && input)
      {
-	Eina_List *cats = efreet_util_desktop_categories_list();
-	Eina_List *apps;
-	const char *cat;
-	
-	EINA_LIST_FREE(cats, cat)
+	l = efreet_util_desktop_name_glob_list("*");
+	if (l)
 	  {
-	     if (eina_list_count(p->items) > 99) break;	     
-	     if (!strcmp(cat, "Screensaver")) continue;
-
-	     apps = efreet_util_desktop_category_list(cat);
-	     _add_desktop_list(p, apps, match1, match2);
+	     _add_desktop_list(p, l, match1, match2);
+	     eina_list_free(l);
 	  }
      }
 
@@ -329,7 +328,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	     it = evry_item_new(p, _("Run in Terminal"));
 	     app = E_NEW(Evry_App, 1);
 	     if (input)
-	       app->file = eina_stringshare_add(input);
+	       app->file = eina_stringshare_add(match1);
 	     else
 	       app->file = eina_stringshare_add("");
 	     it->data[0] = app;

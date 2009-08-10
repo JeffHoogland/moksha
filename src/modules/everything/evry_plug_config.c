@@ -41,8 +41,8 @@ _cb_sort(const void *data1, const void *data2)
 static int
 _fetch(Evry_Plugin *p, const char *input)
 {
-   char match1[4096];
-   char match2[4096];
+   char match1[128];
+   char match2[128];
    Eina_List *l, *ll;
    E_Configure_Cat *ecat;
    E_Configure_It *eci;
@@ -52,25 +52,23 @@ _fetch(Evry_Plugin *p, const char *input)
    snprintf(match1, sizeof(match1), "%s*", input);
    snprintf(match2, sizeof(match2), "*%s*", input);
 
-   for (l = e_configure_registry; l; l = l->next)
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      {
-	ecat = l->data;
-	if ((ecat->pri >= 0) && (ecat->items))
+	if ((ecat->pri < 0) || (!ecat->items)) continue;
+	if (!strcmp(ecat->cat, "system")) continue;
+	
+	EINA_LIST_FOREACH(ecat->items, ll, eci)
 	  {
-	     for (ll = ecat->items; ll; ll = ll->next)
+	     if (eci->pri >= 0)
 	       {
-		  eci = ll->data;
-		  if (eci->pri >= 0)
-		    {
-		       if (e_util_glob_case_match(eci->label, match1))
-			 _item_add(p, eci, 1);
-		       else if (e_util_glob_case_match(eci->label, match2))
-			 _item_add(p, eci, 2);
-		       else if (e_util_glob_case_match(ecat->label, match1))
-			 _item_add(p, eci, 3);
-		       else if (e_util_glob_case_match(ecat->label, match2))
-			 _item_add(p, eci, 4);
-		    }
+		  if (e_util_glob_case_match(eci->label, match1))
+		    _item_add(p, eci, 1);
+		  else if (e_util_glob_case_match(eci->label, match2))
+		    _item_add(p, eci, 2);
+		  else if (e_util_glob_case_match(ecat->label, match1))
+		    _item_add(p, eci, 3);
+		  else if (e_util_glob_case_match(ecat->label, match2))
+		    _item_add(p, eci, 4);
 	       }
 	  }
      }
@@ -116,18 +114,19 @@ _action(Evry_Action *act, Evry_Item *it, Evry_Item *it2 __UNUSED__, const char *
    eci = it->data[0];
    con = e_container_current_get(e_manager_current_get());
 
-   for (l = e_configure_registry; l && !found; l = l->next)
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      {
-	ecat = l->data;
-	for (ll = ecat->items; ll && !found; ll = ll->next)
+	if (found) break;
+	
+	EINA_LIST_FOREACH(ecat->items, ll, eci2)
 	  {
-	     eci2 = ll->data;
 	     if (eci == eci2)
 	       {
-		  found = 1;
 		  snprintf(buf, sizeof(buf), "%s/%s",
 			   ecat->cat,
 			   eci->item);
+		  found = 1;
+		  break;
 	       }
 	  }
      }
