@@ -27,6 +27,9 @@ _begin(Evry_Plugin *p, Evry_Item *it)
    
    if (it)
      {
+	Eina_List *l;
+	Efreet_Desktop *desktop;
+
 	if (!it->uri) return 0;
 
 	if (!it->mime)
@@ -39,14 +42,12 @@ _begin(Evry_Plugin *p, Evry_Item *it)
 	inst = E_NEW(Inst, 1);
 	inst->candidate = it;
 
-	if (strcmp(mime, "Folder"))
-	  inst->apps = efreet_util_desktop_mime_list(mime);
-	if (!inst->apps)
+	inst->apps = efreet_util_desktop_mime_list(mime);
+	desktop = e_exehist_mime_desktop_get(mime);
+	if (desktop)
 	  {
-	     Efreet_Desktop *desktop;
-	     desktop = e_exehist_mime_desktop_get(mime);
-	     if (desktop)
-	       inst->apps = eina_list_append(inst->apps, desktop);
+	     efreet_desktop_ref(desktop);
+	     inst->apps = eina_list_prepend(inst->apps, desktop);
 	  }
      }
 
@@ -189,9 +190,9 @@ _add_desktop_list(Evry_Plugin *p, Eina_List *apps, char *m1, char *m2)
 	 *      else if (e_util_glob_case_match(desktop->comment, m2))
 	 *        _item_add(p, desktop, NULL, 4);
 	 *   } */
-	efreet_desktop_free(desktop);
      }
-
+   EINA_LIST_FOREACH(apps, l, desktop)
+     efreet_desktop_free(desktop);
 }
 
 static int
@@ -265,7 +266,10 @@ _fetch(Evry_Plugin *p, const char *input)
 	if (!input)
 	  {
 	     EINA_LIST_FOREACH(inst->apps, l, desktop)
-	       _item_add(p, desktop, NULL, 1);
+	       {		  
+		  _item_add(p, desktop, NULL, 1);
+		  efreet_desktop_free(desktop);
+	       }
 	  }
 	else
 	  {
