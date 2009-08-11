@@ -55,9 +55,6 @@ _begin(Evry_Plugin *p, Evry_Item *it)
      {
 	inst = E_NEW(Inst, 1);
      }
-
-   if (inst)
-     inst->apps_all = efreet_util_desktop_name_glob_list("*");
    
    p->private = inst;
    
@@ -290,9 +287,12 @@ _fetch(Evry_Plugin *p, const char *input)
 
    /* add apps matching input */
    if (input)
-     _add_desktop_list(p, inst->apps_all, match1, match2);	
+     {
+	if (!inst->apps_all)
+	  inst->apps_all = efreet_util_desktop_name_glob_list("*");	
 
-
+	_add_desktop_list(p, inst->apps_all, match1, match2);	
+     }
    /* add exe history items */
    else if (!p->items)
      {
