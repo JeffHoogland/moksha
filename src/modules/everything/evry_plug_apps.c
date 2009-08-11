@@ -170,10 +170,16 @@ _add_desktop_list(Evry_Plugin *p, Eina_List *apps, char *m1, char *m2)
 		  
 	if (e_util_glob_case_match(desktop->exec, m1))
 	  _item_add(p, desktop, NULL, 1);
-	else if (e_util_glob_case_match(desktop->exec, m2))
-	  _item_add(p, desktop, NULL, 2);
 	else if (e_util_glob_case_match(desktop->name, m1))
 	  _item_add(p, desktop, NULL, 1);
+     }
+   EINA_LIST_FOREACH(apps, l, desktop)
+     {
+	if (eina_list_count(p->items) > 99) continue;
+	if (!desktop || !desktop->name || !desktop->exec) continue;
+		  
+	if (e_util_glob_case_match(desktop->exec, m2))
+	  _item_add(p, desktop, NULL, 2);
 	else if (e_util_glob_case_match(desktop->name, m2))
 	  _item_add(p, desktop, NULL, 2);
 	/* else if (desktop->comment)
@@ -185,6 +191,7 @@ _add_desktop_list(Evry_Plugin *p, Eina_List *apps, char *m1, char *m2)
 	 *   } */
 	efreet_desktop_free(desktop);
      }
+
 }
 
 static int
@@ -197,6 +204,10 @@ _cb_sort(const void *data1, const void *data2)
 
    it1 = data1;
    it2 = data2;
+
+   if (it1->priority - it2->priority)
+     return (it1->priority - it2->priority);
+
    app1 = it1->data[0];
    app2 = it2->data[0];
 
@@ -215,9 +226,8 @@ _cb_sort(const void *data1, const void *data2)
 
    if ((int)(t2 - t1))
      return (int)(t2 - t1);
-   else if (it1->priority - it2->priority)
-     return (it1->priority - it2->priority);
 
+   
    // TODO compare exe strings?
    else return 0;
 }

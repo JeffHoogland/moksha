@@ -10,7 +10,7 @@ struct _Inst
   E_DBus_Connection *conn;
 };
 
-static Evry_Plugin *p;
+static Evry_Plugin *p1;
 static Evry_Plugin *p2;
 static Inst *inst;
 static Eina_Bool active = EINA_FALSE;
@@ -28,20 +28,27 @@ _item_add(Evry_Plugin *p, char *file, char *mime, int prio)
    it = evry_item_new(p, filename);
    it->priority = prio;
    it->uri = eina_stringshare_add(file);
-   it->mime = eina_stringshare_add(mime);
 
-   if (!strcmp(it->mime, "Folder"))
-     it->browseable = EINA_TRUE;
-       
+   if (!strcmp(mime, "Folder"))
+     {
+	it->browseable = EINA_TRUE;
+	it->mime = eina_stringshare_add("x-directory/normal");
+     }
+   else
+     it->mime = eina_stringshare_add(mime);
+   
    p->items = eina_list_append(p->items, it);
 }
 
 static void
-_dbus_cb_reply(void *data __UNUSED__, DBusMessage *msg, DBusError *error)
+_dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 {
    DBusMessageIter array, iter, item;
-
+   Evry_Plugin *p;
+   
    if (!active) return;
+
+   p = data;
    
    if (dbus_error_is_set(error))
      {
@@ -76,7 +83,7 @@ _dbus_cb_reply(void *data __UNUSED__, DBusMessage *msg, DBusError *error)
 	  }
      }
    
-   if (p->items) evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD); 
+   evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
 }
 
 static void
@@ -90,6 +97,7 @@ _cleanup(Evry_Plugin *p)
 	if (it->uri) eina_stringshare_del(it->uri);
 	evry_item_free(it);
      }
+   p->items = NULL;
    active = EINA_FALSE;
 }
 
@@ -106,6 +114,8 @@ _fetch(Evry_Plugin *p, const char *input)
    
    _cleanup(p); 
 
+   if (!input || (strlen(input) < 3)) return 0;
+   
    active = EINA_TRUE;
    
    match = malloc(sizeof(char) * strlen(input) + 2);
@@ -122,7 +132,7 @@ _fetch(Evry_Plugin *p, const char *input)
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_STRING, &match);
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_INT32,  &offset);
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_INT32,  &max_hits);
-   e_dbus_message_send(inst->conn, msg, _dbus_cb_reply, -1, NULL);
+   e_dbus_message_send(inst->conn, msg, _dbus_cb_reply, -1, p);
    dbus_message_unref(msg);
 
    free(match);
@@ -136,7 +146,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
    char *item_path;
    Evas_Object *o = NULL;
    
-   if (!strcmp(it->mime, "Folder"))
+   if (it->browseable)
      {
 	o = e_icon_add(e); 
 	evry_icon_theme_set(o, "folder");
@@ -163,23 +173,23 @@ _init(void)
 
    if (!conn) return 0;
 
-   p = E_NEW(Evry_Plugin, 1);
-   p->name = "Find Files";
-   p->type = type_subject;
-   p->type_in = "NONE";
-   p->type_out = "FILE";
-   p->need_query = 1;
-   p->fetch = &_fetch;
-   p->cleanup = &_cleanup;
-   p->icon_get = &_item_icon_get;
-   evry_plugin_register(p);
+   p1 = E_NEW(Evry_Plugin, 1);
+   p1->name = "Find Files";
+   p1->type = type_subject;
+   p1->type_in = "NONE";
+   p1->type_out = "FILE";
+   p1->async_query = 1;
+   p1->fetch = &_fetch;
+   p1->cleanup = &_cleanup;
+   p1->icon_get = &_item_icon_get;
+   evry_plugin_register(p1);
    
    p2 = E_NEW(Evry_Plugin, 1);
    p2->name = "Find Files";
    p2->type = type_object;
    p2->type_in = "NONE";
    p2->type_out = "FILE";
-   p2->need_query = 1;
+   p2->async_query = 1;
    p2->fetch = &_fetch;
    p2->cleanup = &_cleanup;
    p2->icon_get = &_item_icon_get;
@@ -194,10 +204,10 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_unregister(p);
+   evry_plugin_unregister(p1);
    evry_plugin_unregister(p2);
 
-   if (p) E_FREE(p);
+   if (p1) E_FREE(p1);
    if (p2) E_FREE(p2);
 
    if (inst)

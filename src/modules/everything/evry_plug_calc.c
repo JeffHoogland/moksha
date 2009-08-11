@@ -1,14 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/* TODO
- * - dc support?
- */
-
-static int  _begin(Evry_Plugin *p, Evry_Item *it);
-static int  _fetch(Evry_Plugin *p, const char *input);
-static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input);
-static void _cleanup(Evry_Plugin *p);
 static void _item_add(Evry_Plugin *p, char *output, int prio);
 static int  _cb_data(void *data, int type, void *event);
 static int  _cb_error(void *data, int type, void *event);
@@ -64,7 +56,6 @@ _cleanup(Evry_Plugin *p)
 static int
 _action(Evry_Plugin *p, Evry_Item *it, const char *input __UNUSED__)
 {
-   /* if (!it) return EVRY_ACTION_CONTINUE; */
    if (p->items)
      {
 	Eina_List *l;
