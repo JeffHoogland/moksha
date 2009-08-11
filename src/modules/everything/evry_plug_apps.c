@@ -6,7 +6,8 @@ typedef struct _Inst Inst;
 struct _Inst
 {
   Eina_Hash *added;
-  Eina_List *apps;
+  Eina_List *apps_mime;
+  Eina_List *apps_all;
   Evry_Item *candidate;
 };
 
@@ -37,20 +38,27 @@ _begin(Evry_Plugin *p, Evry_Item *it)
 	else
 	  mime = it->mime;
 
+	/* TODO  show plugin for items without mimetype ? */
 	if (!mime) return 0;
 
 	inst = E_NEW(Inst, 1);
 	inst->candidate = it;
-
-	inst->apps = efreet_util_desktop_mime_list(mime);
+	inst->apps_mime = efreet_util_desktop_mime_list(mime);
 	desktop = e_exehist_mime_desktop_get(mime);
 	if (desktop)
 	  {
 	     efreet_desktop_ref(desktop);
-	     inst->apps = eina_list_prepend(inst->apps, desktop);
+	     inst->apps_mime = eina_list_prepend(inst->apps_mime, desktop);
 	  }
      }
+   else
+     {
+	inst = E_NEW(Inst, 1);
+     }
 
+   if (inst)
+     inst->apps_all = efreet_util_desktop_name_glob_list("*");
+   
    p->private = inst;
    
    return 1;
@@ -81,25 +89,31 @@ _cleanup(Evry_Plugin *p)
 
    if (inst)
      {
-	if (inst->apps) eina_list_free(inst->apps);
+	Efreet_Desktop *desktop;
+	EINA_LIST_FREE(inst->apps_mime, desktop)
+	  efreet_desktop_free(desktop);
+	EINA_LIST_FREE(inst->apps_all, desktop)
+	  efreet_desktop_free(desktop);
+	
 	E_FREE(inst);
      }
 
    p->private = NULL;
 }
 
-static void
+static int
 _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 {
    Evry_Item *it;
    Evry_App *app;
    Efreet_Desktop *d2;
    Inst *inst = p->private;
+   int already_refd = 0;
    
    if (desktop)
      file = desktop->exec;
 
-   if (!file) return;
+   if (!file) return 0;
    
    if (!desktop)
      {
@@ -109,7 +123,7 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 	char *tmp;
 
 	if (eina_hash_find(inst->added, file))
-	  return;
+	  return 0;
 
 	len = strlen(file);
 	tmp = ecore_file_app_exe_get(file);
@@ -121,6 +135,7 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 	     if (!desktop && d2->exec && !strncmp(file, d2->exec, len))
 	       {
 		  desktop = d2;
+		  already_refd = 1;
 		  efreet_desktop_ref(desktop);
 	       }
 	     efreet_desktop_free(d2);
@@ -137,9 +152,10 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 	if ((d2 = eina_hash_find(inst->added, file)) &&
 	    ((desktop == d2) ||
 	     (!strcmp(desktop->exec, d2->exec))))
-	  return;
+	  return 0;
 
-	efreet_desktop_ref(desktop);
+	if (!already_refd)
+	  efreet_desktop_ref(desktop);
 	eina_hash_add(inst->added, file, desktop);
 	file = NULL;
      }
@@ -156,6 +172,8 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
    it->priority = prio;
 
    p->items = eina_list_append(p->items, it);
+
+   return 1;
 }
 
 static void
@@ -191,8 +209,6 @@ _add_desktop_list(Evry_Plugin *p, Eina_List *apps, char *m1, char *m2)
 	 *        _item_add(p, desktop, NULL, 4);
 	 *   } */
      }
-   EINA_LIST_FOREACH(apps, l, desktop)
-     efreet_desktop_free(desktop);
 }
 
 static int
@@ -227,7 +243,6 @@ _cb_sort(const void *data1, const void *data2)
 
    if ((int)(t2 - t1))
      return (int)(t2 - t1);
-
    
    // TODO compare exe strings?
    else return 0;
@@ -244,13 +259,8 @@ _fetch(Evry_Plugin *p, const char *input)
    Evry_Item *it;
    Evry_App *app;
    Inst *inst = p->private;
-   
-   if (!inst)
-     {
-	inst = E_NEW(Inst, 1);
-	p->private = inst;
-     }
-   inst->added = eina_hash_string_superfast_new(NULL);
+
+   inst->added = eina_hash_string_small_new(NULL);
    
    _list_free(p);
 
@@ -261,40 +271,34 @@ _fetch(Evry_Plugin *p, const char *input)
      }
 
    /* add apps for a given mimetype */
-   if (inst && inst->apps)
+   if (p->type == type_action)
      {
-	if (!input)
+	if (input)
 	  {
-	     EINA_LIST_FOREACH(inst->apps, l, desktop)
-	       {		  
-		  _item_add(p, desktop, NULL, 1);
-		  efreet_desktop_free(desktop);
-	       }
+	     _add_desktop_list(p, inst->apps_mime, match1, match2);
 	  }
 	else
 	  {
-	     _add_desktop_list(p, inst->apps, match1, match2);
-	     inst->apps = NULL;
+	     EINA_LIST_FOREACH(inst->apps_mime, l, desktop)
+	       _item_add(p, desktop, NULL, 1);
 	  }
+
+	if (input)
+	  EINA_LIST_FOREACH(p->items, l, it)
+	    it->priority += 2;
      }
 
    /* add apps matching input */
-   if (!p->items && input)
-     {
-	l = efreet_util_desktop_name_glob_list("*");
-	if (l)
-	  {
-	     _add_desktop_list(p, l, match1, match2);
-	     eina_list_free(l);
-	  }
-     }
+   if (input)
+     _add_desktop_list(p, inst->apps_all, match1, match2);	
+
 
    /* add exe history items */
    else if (!p->items)
      {
    	l = e_exehist_list_get();
    	EINA_LIST_FREE(l, file)
-   	  _item_add(p, NULL, file, 1);
+   	  _item_add(p, NULL, file, 1);      
      }
 
    /* show 'Run Command' item */
@@ -351,11 +355,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	  }
      }
 
-   if (inst->added)
-     {
-	eina_hash_free(inst->added);
-	inst->added = NULL;
-     }
+   eina_hash_free(inst->added);
 
    if (p->items)
      {

@@ -143,7 +143,7 @@ _fetch(Evry_Plugin *p, const char *input)
 static Evas_Object *
 _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
 {
-   char *item_path;
+   char *icon_path;
    Evas_Object *o = NULL;
    
    if (it->browseable)
@@ -153,10 +153,13 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
      }
    else
      {
-	item_path = efreet_mime_type_icon_get(it->mime, e_config->icon_theme, 64);
+	icon_path = efreet_mime_type_icon_get(it->mime, e_config->icon_theme, 64);
 
-	if (item_path)
-	  o = e_util_icon_add(item_path, e);
+	if (icon_path)
+	  {
+	     o = e_util_icon_add(icon_path, e);
+	     free(icon_path);
+	  }
 	else
 	  {
 	     o = e_icon_add(e); 

@@ -357,7 +357,7 @@ static Evas_Object *
 _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;   
-   char *item_path;
+   char *icon_path;
 
    if (!it->mime)
      _item_fill(it);
@@ -371,11 +371,14 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
      }
    else
      {
-	item_path = efreet_mime_type_icon_get(it->mime, e_config->icon_theme, 64);
+	icon_path = efreet_mime_type_icon_get(it->mime, e_config->icon_theme, 64);
 
-	if (item_path)
-	  o = e_util_icon_add(item_path, e);
-	if (!o)
+	if (icon_path)
+	  {
+	     o = e_util_icon_add(icon_path, e);
+	     free(icon_path);
+	  }
+	  if (!o)
 	  {
 	     o = e_icon_add(e); 
 	     evry_icon_theme_set(o, "none");

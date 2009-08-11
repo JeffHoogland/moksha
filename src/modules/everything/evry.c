@@ -587,6 +587,7 @@ _evry_selector_free(Evry_Selector *sel)
    	     if (p->tab) evas_object_del(p->tab);
    	     p->tab = NULL;
    	  }
+	E_FREE(s);
      }
    
    _evry_plug_aggregator_free(sel->aggregator);
@@ -1020,8 +1021,10 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (ev->event_window != input_window) return 1;
 
    if (!strcmp(ev->key, "Up"))
+   /* if (!strcmp(ev->key, "K")) */
      _evry_list_item_prev(s);
    else if (!strcmp(ev->key, "Down"))
+   /* else if (!strcmp(ev->key, "J")) */
      _evry_list_item_next(s);
    else if (!strcmp(ev->key, "Right") &&
 	    (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT))
@@ -1030,8 +1033,10 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	      (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT))
      _evry_list_plugin_prev(s);
    else if (!strcmp(ev->key, "Right"))
+   /* else if (!strcmp(ev->key, "L")) */
      _evry_browse_item(selector); 
    else if (!strcmp(ev->key, "Left"))
+   /* else if (!strcmp(ev->key, "H")) */
      _evry_browse_back(selector); 
    else if ((!strcmp(ev->key, "Return")) &&
 	   ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
@@ -1363,8 +1368,9 @@ _evry_matches_update(Evry_Selector *sel, Evry_Plugin *plugin)
 	       }
 
 	     if ((has_items && eina_list_count(p->items) > 0) ||
-		 (sel->states->next) ||
-		 (p->async_query)) /* XXX append in async_update instead?*/
+		 (sel->states->next)
+		 /* (p->async_query) */
+		 ) /* XXX append in async_update instead?*/
 	       {
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
 	       }
