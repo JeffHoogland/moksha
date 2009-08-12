@@ -34,7 +34,7 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 	char rdf_query[32768];
 	int len = 0;
 
-	inst->service = "Files";
+	/* inst->service = "Files"; */
 	if (inst->condition[0]) free (inst->condition);
 	inst->condition = "";
 
@@ -281,6 +281,7 @@ _plugin_new(const char *name, int type, char *service, int max_hits, int begin)
    inst->condition = "";
    inst->service = service;
    inst->max_hits = max_hits;
+   inst->active = 0;
    p->private = inst;
    evry_plugin_register(p);
    plugins = eina_list_append(plugins, p);
@@ -299,7 +300,7 @@ _init(void)
    _plugin_new("Music",      type_subject, "Music", 20, 0);
    _plugin_new("Videos",     type_subject, "Videos", 20, 0);
    _plugin_new("Documents",  type_subject, "Documents", 20, 0);
-   _plugin_new("Text",       type_subject, "TextFiles", 20, 0);
+   /* _plugin_new("Text",       type_subject, "TextFiles", 20, 0); */
 
    _plugin_new("Find Files", type_object,  "Files", 20, 1);
    _plugin_new("Folders",    type_object,  "Folders", 20, 0);

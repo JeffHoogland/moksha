@@ -102,6 +102,8 @@ struct _Evry_List_Window
 
 
 static int  _evry_cb_key_down(void *data, int type, void *event);
+static int  _evry_cb_selection_notify(void *data, int type, void *event);
+
 /* static int  _evry_cb_mouse_down(void *data, int type, void *event);
  * static int  _evry_cb_mouse_up(void *data, int type, void *event);
  * static int  _evry_cb_mouse_move(void *data, int type, void *event);
@@ -243,6 +245,11 @@ evry_show(E_Zone *zone)
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_EVENT_KEY_DOWN, _evry_cb_key_down, NULL));
+   handlers = eina_list_append
+     (handlers, ecore_event_handler_add
+      (ECORE_X_EVENT_SELECTION_NOTIFY,
+       _evry_cb_selection_notify, win));
+
    /* handlers = eina_list_append
     *   (handlers, ecore_event_handler_add
     *    (ECORE_EVENT_MOUSE_BUTTON_DOWN, _evry_cb_mouse_down, NULL));
@@ -1039,16 +1046,22 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if ((!strcmp(ev->key, "BackSpace")) ||
 	    (!strcmp(ev->key, "Delete")))
      _evry_backspace(s);
+   else if (!strcmp(ev->key, "v") &&
+	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
+     ecore_x_selection_clipboard_request(win->popup->evas_win,
+					 ECORE_X_SELECTION_TARGET_UTF8_STRING);
    else if ((ev->key) &&
 	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
      _evry_list_plugin_next_by_name(s, ev->key);
    else if ((ev->compose) &&
-	    (!(ev->modifiers & ECORE_EVENT_MODIFIER_ALT)  ||
-	      (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)) &&
-	    ((strlen(s->input) < (INPUTLEN - strlen(ev->compose)))))
+	    (!(ev->modifiers & ECORE_EVENT_MODIFIER_ALT) ||
+	      (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)))
      {
-	strcat(s->input, ev->compose);
-	_evry_update(s);
+	if (strlen(s->input) < (INPUTLEN - strlen(ev->compose)))
+	  {
+	     strcat(s->input, ev->compose);
+	     _evry_update(s);
+	  }
      }
    return 1;
 }
@@ -1110,7 +1123,13 @@ _evry_update_timer(void *data)
 static void
 _evry_clear(Evry_State *s)
 {
-   if (s->input[0] != 0)
+   if ((s->plugin->trigger && s->input) &&
+       (!strncmp(s->plugin->trigger, s->input, strlen(s->plugin->trigger))))
+     {
+	s->input[strlen(s->plugin->trigger)] = 0;
+	_evry_update(s);
+     }
+   else if (s->input[0] != 0)
      {
 	s->input[0] = 0;
 	_evry_update(s);
@@ -1975,18 +1994,32 @@ _evry_plug_aggregator_fetch(Evry_Plugin *p, const char *input __UNUSED__)
    Eina_List *l, *ll;
    Evry_Plugin *plugin;
    Evry_Item *it;
-   int cnt;
+   int cnt = 0;
 
    if (p->items)
      eina_list_free(p->items);
    p->items = NULL;
 
    EINA_LIST_FOREACH(s->cur_plugins, l, plugin)
+     cnt += eina_list_count(plugin->items);
+
+   if (cnt <= 100)
      {
-	for (cnt = 0, ll = plugin->items; ll && cnt < 15; ll = ll->next, cnt++)
+	EINA_LIST_FOREACH(s->cur_plugins, l, plugin)
 	  {
-	     it = ll->data;
-	     p->items = eina_list_append(p->items, it);
+	     EINA_LIST_FOREACH(plugin->items, ll, it)
+	       p->items = eina_list_append(p->items, it);
+	  }
+     }
+   else
+     {
+	EINA_LIST_FOREACH(s->cur_plugins, l, plugin)
+	  {
+	     for (cnt = 0, ll = plugin->items; ll && cnt < 15; ll = ll->next, cnt++)
+	       {
+		  it = ll->data;
+		  p->items = eina_list_append(p->items, it);
+	       }
 	  }
      }
 
@@ -2324,4 +2357,34 @@ evry_icon_theme_set(Evas_Object *obj, const char *icon)
 	  return 1;
 	return _evry_icon_fdo_set(obj, icon);
      }
+}
+
+
+static int
+_evry_cb_selection_notify(void *data, int type, void *event)
+{
+   Ecore_X_Event_Selection_Notify *ev;
+   Evry_State *s = selector->state;
+
+   if (!s || (data != win)) return 1;
+
+   ev = event;
+   if ((ev->selection == ECORE_X_SELECTION_CLIPBOARD) ||
+       (ev->selection == ECORE_X_SELECTION_PRIMARY))
+     {
+        if (strcmp(ev->target, ECORE_X_SELECTION_TARGET_UTF8_STRING) == 0)
+          {
+             Ecore_X_Selection_Data_Text *text_data;
+
+             text_data = ev->data;
+
+	     if (strlen(s->input) < (INPUTLEN - strlen(text_data->text)))
+	       {
+		  strcat(s->input, text_data->text);
+		  _evry_update(s);
+	       }
+          }
+     }
+
+   return 1;
 }
