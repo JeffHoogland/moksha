@@ -131,63 +131,14 @@ _dirbrowse_idler(void *data)
    return 1;
 }
 
-static int
-_begin(Evry_Plugin *p, const Evry_Item *it)
+static void
+_push_directory(Evry_Plugin *p, State *s)
 {
-   State *s;
-   char *file;
-   Eina_List *files;
-   Eina_List *stack = p->private;
-
-   s = E_NEW(State, 1);
-   s->directory = eina_stringshare_add(e_user_homedir_get());
-   p->items = NULL;
-
-   files = ecore_file_ls(s->directory);
-
-   EINA_LIST_FREE(files, file)
-     {
-	it = NULL;
-
-	if (file[0] == '.')
-	  {
-	     free(file);
-	     continue;
-	  }
-
-	it = _item_add(p, s->directory, file);
-
-	if (it)
-	  s->items = eina_list_append(s->items, it);
-
-	free(file);
-     }
-
-   if (idler)
-     ecore_idler_del(idler);
-
-   idler = ecore_idler_add(_dirbrowse_idler, p);
-
-   stack = eina_list_prepend(stack, s);
-   p->private = stack;
-
-   return 1;
-}
-
-static int
-_browse(Evry_Plugin *p, const Evry_Item *it_file)
-{
-   State *s;
    char *file;
    Eina_List *files;
    Evry_Item *it;
    Eina_List *stack = p->private;
 
-   if (!it_file || !it_file->uri || !ecore_file_is_dir(it_file->uri))
-     return 0;
-
-   s = E_NEW(State, 1);
-   s->directory = eina_stringshare_add(it_file->uri);
    /* previous states items are saved in s->items !*/
    p->items = NULL;
 
@@ -218,6 +169,31 @@ _browse(Evry_Plugin *p, const Evry_Item *it_file)
 
    stack = eina_list_prepend(stack, s);
    p->private = stack;
+}
+
+static int
+_begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
+{
+   State *s;
+
+   s = E_NEW(State, 1);
+   s->directory = eina_stringshare_add(e_user_homedir_get());
+   _push_directory(p, s);
+
+   return 1;
+}
+
+static int
+_browse(Evry_Plugin *p, const Evry_Item *it_file)
+{
+   State *s;
+
+   if (!it_file || !it_file->uri || !ecore_file_is_dir(it_file->uri))
+     return 0;
+
+   s = E_NEW(State, 1);
+   s->directory = eina_stringshare_add(it_file->uri);
+   _push_directory(p, s);
 }
 
 static void
