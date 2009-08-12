@@ -68,6 +68,7 @@ struct _Evry_Window
   E_Popup *popup;
   Evas_Object *o_main;
 
+  Eina_Bool request_selection;
   /* E_Popup *input_win; */
 };
 
@@ -1007,6 +1008,8 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    /* ev_last_is_mouse = 0;
     * item_mouseover = NULL; */
 
+   win->request_selection = EINA_FALSE;
+
    ev = event;
    if (ev->event_window != input_window) return 1;
 
@@ -1048,8 +1051,11 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      _evry_backspace(s);
    else if (!strcmp(ev->key, "v") &&
 	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
-     ecore_x_selection_clipboard_request(win->popup->evas_win,
-					 ECORE_X_SELECTION_TARGET_UTF8_STRING);
+     {
+	win->request_selection = EINA_TRUE;
+	ecore_x_selection_primary_request(win->popup->evas_win,
+					  ECORE_X_SELECTION_TARGET_UTF8_STRING);
+     }
    else if ((ev->key) &&
 	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
      _evry_list_plugin_next_by_name(s, ev->key);
@@ -2367,6 +2373,9 @@ _evry_cb_selection_notify(void *data, int type, void *event)
    Evry_State *s = selector->state;
 
    if (!s || (data != win)) return 1;
+   if (!win->request_selection) return 1;
+
+   win->request_selection = EINA_FALSE;
 
    ev = event;
    if ((ev->selection == ECORE_X_SELECTION_CLIPBOARD) ||
@@ -2378,11 +2387,8 @@ _evry_cb_selection_notify(void *data, int type, void *event)
 
              text_data = ev->data;
 
-	     if (strlen(s->input) < (INPUTLEN - strlen(text_data->text)))
-	       {
-		  strcat(s->input, text_data->text);
-		  _evry_update(s);
-	       }
+	     strncat(s->input, text_data->text, (INPUTLEN - strlen(s->input)) - 1);
+	     _evry_update(s);
           }
      }
 
