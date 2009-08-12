@@ -194,6 +194,8 @@ _browse(Evry_Plugin *p, const Evry_Item *it_file)
    s = E_NEW(State, 1);
    s->directory = eina_stringshare_add(it_file->uri);
    _push_directory(p, s);
+
+   return 1;
 }
 
 static void

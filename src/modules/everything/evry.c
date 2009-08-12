@@ -590,27 +590,16 @@ _evry_selector_free(Evry_Selector *sel)
 static void
 _evry_selector_activate(Evry_Selector *sel)
 {
-   if (selector && selector->state)
+   if (selector)
      {
 	Evry_State *s = selector->state;
 	Evry_Plugin *p;
 	Eina_List *l;
 
-	_evry_list_clear_list(s);
-
 	edje_object_signal_emit(selector->o_main, "e,state,unselected", "e");
 	edje_object_part_text_set(selector->o_main, "e.text.plugin", "");
 
-	if (update_timer)
-	  {
-	     if (s->plugin && !s->plugin->async_query)
-	       {
-		  _evry_matches_update(selector);
-		  _evry_selector_update(selector);
-	       }
-	     ecore_timer_del(update_timer);
-	     update_timer = NULL;
-	  }
+	_evry_list_clear_list(s);
 
 	EINA_LIST_FOREACH(selector->plugins, l, p)
 	  {
@@ -940,7 +929,7 @@ _evry_browse_back(Evry_Selector *sel)
    _evry_list_clear_list(s);
    _evry_state_pop(sel);
    _evry_selector_update(sel);
-   sel->aggregator->fetch(sel->aggregator, NULL);
+   /* sel->aggregator->fetch(sel->aggregator, NULL); */
    _evry_list_update(sel->state);
    _evry_update_text_label(sel->state);
 }
@@ -949,6 +938,21 @@ static void
 _evry_selectors_switch(void)
 {
    Evry_State *s = selector->state;
+
+   if (update_timer)
+     {
+	if ((s && !s->plugin->async_query) &&
+	    ((selector == selectors[0]) ||
+	     (selector == selectors[1])))
+	  {
+	     _evry_list_clear_list(s);
+	     _evry_matches_update(selector);
+	     _evry_selector_update(selector);
+	  }
+
+	ecore_timer_del(update_timer);
+	update_timer = NULL;
+     }
 
    if (selector == selectors[0])
      {
@@ -961,36 +965,14 @@ _evry_selectors_switch(void)
 
 	if (s->plugin == action_selector)
 	  {
-	     Evry_Action *act;
-	     Evry_Selector *sel;
-	     int w;
-
-	     if (update_timer)
-	       {
-		  /* duplicate code: selector_activate,
-		     plugin_action, update_timer !!! */
-		  if (!s->plugin->async_query)
-		    {
-		       _evry_list_clear_list(s);
-		       _evry_matches_update(selector);
-		       _evry_selector_update(selector);
-		    }
-		  ecore_timer_del(update_timer);
-		  update_timer = NULL;
-	       }
-
-	     act = s->sel_item->data[0];
+	     Evry_Action *act = s->sel_item->data[0];
 
 	     if (act && act->type_in2)
 	       {
-
-		  sel = selectors[2];
 		  _evry_selector_objects_get(act->type_in2);
-		  _evry_selector_update(sel);
-
+		  _evry_selector_update(selectors[2]);
 		  edje_object_signal_emit(win->o_main,
 					  "e,state,object_selector_show", "e");
-
 		  next_selector = 2;
 	       }
 	  }
@@ -998,11 +980,13 @@ _evry_selectors_switch(void)
      }
    else if (selector == selectors[2])
      {
-	edje_object_signal_emit(win->o_main,
-				"e,state,object_selector_hide", "e");
+	_evry_list_clear_list(s);
 
 	while (selector->states)
 	  _evry_state_pop(selector);
+
+	edje_object_signal_emit(win->o_main,
+				"e,state,object_selector_hide", "e");
 
 	_evry_selector_activate(selectors[0]);
      }
@@ -1117,6 +1101,7 @@ _evry_update_timer(void *data)
    _evry_matches_update(selector);
    _evry_selector_update(selector);
    _evry_list_update(selector->state);
+   _evry_list_tabs_update(selector->state);
    update_timer = NULL;
 
    return 0;
@@ -1146,7 +1131,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
    if (update_timer)
      {
-	if (!selector->state->plugin->async_query)
+	if ((selector->state->plugin) &&
+	    (!selector->state->plugin->async_query))
 	  {
 	     _evry_matches_update(selector);
 	     _evry_selector_update(selector);
@@ -2142,8 +2128,8 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	_evry_list_clear_list(s);
 	s->plugin = tmp;
 
-	s->cur_plugins = eina_list_remove(s->cur_plugins, p);
-	agg->fetch(agg, NULL);
+	/* s->cur_plugins = eina_list_remove(s->cur_plugins, p);
+	 * agg->fetch(agg, NULL); */
      }
 }
 
