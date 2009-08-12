@@ -5,14 +5,14 @@ static Evry_Action *act;
 static Ecore_X_Window clipboard_win = 0;
 
 static int
-_action(Evry_Action *act __UNUSED__, Evry_Item *it, Evry_Item *it2 __UNUSED__, const char *input __UNUSED__)
+_action(Evry_Action *act __UNUSED__, const Evry_Item *it, const Evry_Item *it2 __UNUSED__, const char *input __UNUSED__)
 {
    ecore_x_selection_primary_set(clipboard_win, it->label, strlen(it->label));
    ecore_x_selection_clipboard_set(clipboard_win, it->label, strlen(it->label));
 }
 
 static int
-_check_item(Evry_Action *act __UNUSED__, Evry_Item *it)
+_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
    return (it && it->label && (strlen(it->label) > 0));
 }

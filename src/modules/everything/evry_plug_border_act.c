@@ -62,7 +62,7 @@ _act_cb_border_unminimize(E_Border *bd)
 }
 
 static int
-_begin(Evry_Plugin *p __UNUSED__, Evry_Item *item)
+_begin(Evry_Plugin *p __UNUSED__, const Evry_Item *item)
 {
    E_Border *bd;
 
@@ -165,7 +165,7 @@ _fetch(Evry_Plugin *p, const char *input __UNUSED__)
 }
 
 static int
-_action(Evry_Plugin *p __UNUSED__, Evry_Item *item, const char *input __UNUSED__)
+_action(Evry_Plugin *p __UNUSED__, const Evry_Item *item, const char *input __UNUSED__)
 {
    void (*border_action) (E_Border *bd);
    border_action = item->data[0];
@@ -175,7 +175,7 @@ _action(Evry_Plugin *p __UNUSED__, Evry_Item *item, const char *input __UNUSED__
 }
 
 static Evas_Object *
-_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o;
 

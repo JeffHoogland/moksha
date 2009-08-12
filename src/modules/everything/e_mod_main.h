@@ -110,20 +110,23 @@ struct _Evry_Plugin
   Eina_Bool browseable;
   
   /* run when plugin is activated. */
-  int (*begin) (Evry_Plugin *p, Evry_Item *item);
+  int (*begin) (Evry_Plugin *p, const Evry_Item *item);
 
+
+  int (*browse) (Evry_Plugin *p, const Evry_Item *item);
+  
   /* get candidates matching string, fills 'candidates' list */
   int  (*fetch) (Evry_Plugin *p, const char *input);
 
   /* run before new query and when hiding 'everything' */
   void (*cleanup) (Evry_Plugin *p);
 
-  Evas_Object *(*icon_get) (Evry_Plugin *p, Evry_Item *it, Evas *e);  
+  Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e);  
   /* provide more information for a candidate */
   /* int (*candidate_info) (Evas *evas, Evry_Item *item); */
 
   /* optional: default action for this plugins items */
-  int  (*action) (Evry_Plugin *p, Evry_Item *item, const char *input);
+  int  (*action) (Evry_Plugin *p, const Evry_Item *item, const char *input);
   Evry_Action *act;
   
   /* optional: create list of items when shown (e.g. for sorting) */
@@ -150,9 +153,9 @@ struct _Evry_Action
   const char *type_in2;
   const char *type_out;
   
-  int  (*action) (Evry_Action *act, Evry_Item *it1, Evry_Item *it2, const char *input);
+  int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input);
 
-  int (*check_item) (Evry_Action *act, Evry_Item *it);  
+  int (*check_item) (Evry_Action *act, const Evry_Item *it);  
 
   Evas_Object *(*icon_get) (Evry_Action *act, Evas *e);  
 

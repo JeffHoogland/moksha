@@ -17,7 +17,7 @@ static int error = 0;
 
 
 static int
-_begin(Evry_Plugin *p, Evry_Item *it __UNUSED__)
+_begin(Evry_Plugin *p, const Evry_Item *it __UNUSED__)
 {
 
    data_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _cb_data, p);
@@ -54,7 +54,7 @@ _cleanup(Evry_Plugin *p)
 }
 
 static int
-_action(Evry_Plugin *p, Evry_Item *it, const char *input __UNUSED__)
+_action(Evry_Plugin *p, const Evry_Item *it, const char *input __UNUSED__)
 {
    if (p->items)
      {

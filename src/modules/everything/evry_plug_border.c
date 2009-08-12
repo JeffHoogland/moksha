@@ -1,46 +1,34 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static int  _fetch(Evry_Plugin *p, const char *input);
-/* static int  _action(Evry_Plugin *p, Evry_Item *item, const char *input); */
-static void _cleanup(Evry_Plugin *p);
-static void _item_add(Evry_Plugin *p, E_Border *bd, int prio);
-static int  _cb_sort(const void *data1, const void *data2);
-static Evas_Object *_item_icon_get(Evry_Plugin *p, Evry_Item *it, Evas *e);
-
-static Eina_Bool _init(void);
-static void _shutdown(void);
-EINA_MODULE_INIT(_init);
-EINA_MODULE_SHUTDOWN(_shutdown);
-
 static Evry_Plugin *p;
 
 
-static Eina_Bool
-_init(void)
-{
-   p = E_NEW(Evry_Plugin, 1);
-   p->name = "Windows";
-   p->type = type_subject;
-   p->type_in  = "NONE";
-   p->type_out = "BORDER";
-   p->need_query = 0;
-   p->fetch = &_fetch;
-   /* p->action = &_action; */
-   p->cleanup = &_cleanup;
-   p->icon_get = &_item_icon_get;
-   evry_plugin_register(p);
-
-   return EINA_TRUE;
-}
-
 static void
-_shutdown(void)
+_item_add(Evry_Plugin *p, E_Border *bd, int prio)
 {
-   evry_plugin_unregister(p);
-   E_FREE(p);
+   Evry_Item *it;
+
+   it = evry_item_new(p, e_border_name_get(bd));
+   
+   /* e_object_ref(E_OBJECT(bd)); */
+   it->data[0] = bd;
+   it->priority = prio;
+
+   p->items = eina_list_append(p->items, it);
 }
 
+/* TODO sort by focus history and name? */
+static int
+_cb_sort(const void *data1, const void *data2)
+{
+   const Evry_Item *it1, *it2;
+
+   it1 = data1;
+   it2 = data2;
+
+   return (it1->priority - it2->priority);
+}
 
 static void
 _cleanup(Evry_Plugin *p)
@@ -118,7 +106,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static Evas_Object *
-_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
    E_Border *bd = it->data[0];
@@ -155,29 +143,30 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
    return o;
 }
 
+static Eina_Bool
+_init(void)
+{
+   p = E_NEW(Evry_Plugin, 1);
+   p->name = "Windows";
+   p->type = type_subject;
+   p->type_in  = "NONE";
+   p->type_out = "BORDER";
+   p->need_query = 0;
+   p->fetch = &_fetch;
+   /* p->action = &_action; */
+   p->cleanup = &_cleanup;
+   p->icon_get = &_item_icon_get;
+   evry_plugin_register(p);
+
+   return EINA_TRUE;
+}
+
 static void
-_item_add(Evry_Plugin *p, E_Border *bd, int prio)
+_shutdown(void)
 {
-   Evry_Item *it;
-
-   it = evry_item_new(p, e_border_name_get(bd));
-   
-   /* e_object_ref(E_OBJECT(bd)); */
-   it->data[0] = bd;
-   it->priority = prio;
-
-   p->items = eina_list_append(p->items, it);
+   evry_plugin_unregister(p);
+   E_FREE(p);
 }
 
-/* TODO sort by focus history and name? */
-static int
-_cb_sort(const void *data1, const void *data2)
-{
-   const Evry_Item *it1, *it2;
-
-   it1 = data1;
-   it2 = data2;
-
-   return (it1->priority - it2->priority);
-}
-
+EINA_MODULE_INIT(_init);
+EINA_MODULE_SHUTDOWN(_shutdown);

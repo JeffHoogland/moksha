@@ -83,7 +83,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static Evas_Object *
-_item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
+_item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
    E_Configure_It *eci = it->data[0];
@@ -102,7 +102,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, Evry_Item *it, Evas *e)
 }
 
 static int
-_action(Evry_Action *act, Evry_Item *it, Evry_Item *it2 __UNUSED__, const char *input __UNUSED__)
+_action(Evry_Action *act, const Evry_Item *it, const Evry_Item *it2 __UNUSED__, const char *input __UNUSED__)
 {
    E_Configure_It *eci, *eci2;
    E_Container *con;

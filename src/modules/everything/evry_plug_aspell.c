@@ -202,7 +202,7 @@ _cb_del(void *data, int type __UNUSED__, void *event)
 }
 
 static int
-_begin(Evry_Plugin *plugin, Evry_Item *it __UNUSED__)
+_begin(Evry_Plugin *plugin, const Evry_Item *it __UNUSED__)
 {
    Plugin *p = (Plugin *)plugin;
 
