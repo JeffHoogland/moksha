@@ -22,7 +22,7 @@ _init(void)
 {
    Ecore_X_Window win = ecore_x_window_new(0, 0, 0, 1, 1);
    if (!win) return EINA_FALSE;
-   
+
    act = E_NEW(Evry_Action, 1);
    act->name = "Copy to Clipboard";
    act->is_default = EINA_TRUE;
@@ -33,7 +33,7 @@ _init(void)
    evry_action_register(act);
 
    clipboard_win = win;
-   
+
    return EINA_TRUE;
 }
 

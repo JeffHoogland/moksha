@@ -99,14 +99,14 @@ _item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), c
 	else
 	  prio = 0;
      }
-   
+
    if (!prio) return;
-   
+
    it = evry_item_new(p, label);
    it->data[0] = action_cb;
    it->data[1] = (void *) eina_stringshare_add(icon);
    it->priority = prio;
-   
+
    p->items = eina_list_prepend(p->items, it);
 }
 
@@ -140,12 +140,12 @@ _fetch(Evry_Plugin *p, const char *input __UNUSED__)
 	m1[0] = 0;
 	m2[0] = 0;
      }
-   
+
    _item_add(p, _("Switch To"), _act_cb_border_switch_to, "go-next", m1, m2);
 
    if (inst->border->iconic)
      _item_add(p, _("Uniconify"), _act_cb_border_unminimize, "window-minimize", m1, m2);
-   else	
+   else
      _item_add(p, _("Iconify"), _act_cb_border_minimize, "window-minimize", m1, m2);
 
    if (!inst->border->fullscreen)
@@ -179,7 +179,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o;
 
-   o = e_icon_add(e); 
+   o = e_icon_add(e);
    evry_icon_theme_set(o, (const char *)it->data[1]);
 
    /* icon = edje_object_add(e);

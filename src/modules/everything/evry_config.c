@@ -1,4 +1,3 @@
-
 #include "e_mod_main.h"
 
 /* typedef struct _E_Config_Dialog_Data E_Config_Dialog_Data; */
@@ -12,7 +11,7 @@ static Evas_Object *_basic_create_widgets    (E_Config_Dialog *cfd, Evas *evas, 
  * static int _object  = type_object; */
 
 
-struct _E_Config_Dialog_Data 
+struct _E_Config_Dialog_Data
 {
   int width, height;
 
@@ -29,14 +28,14 @@ struct _E_Config_Dialog_Data
 
 
 EAPI E_Config_Dialog *
-evry_config_dialog(E_Container *con, const char *params __UNUSED__) 
+evry_config_dialog(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
    if (e_config_dialog_find("E", "_config_everything_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
-   
+
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
@@ -51,11 +50,11 @@ evry_config_dialog(E_Container *con, const char *params __UNUSED__)
 }
 
 static void
-_fill_data(E_Config_Dialog_Data *cfdata) 
+_fill_data(E_Config_Dialog_Data *cfdata)
 {
    Eina_List *l;
    Evry_Plugin *p;
-   
+
    cfdata->scroll_animate = evry_conf->scroll_animate;
    cfdata->height = evry_conf->height;
    cfdata->width = evry_conf->width;
@@ -66,14 +65,14 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      else if (p->type == type_action)
        cfdata->p_action = eina_list_append(cfdata->p_action, p);
      else if (p->type == type_object)
-       cfdata->p_object = eina_list_append(cfdata->p_object, p);   
+       cfdata->p_object = eina_list_append(cfdata->p_object, p);
 }
 
 static void *
 _create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _fill_data(cfdata);
    return cfdata;
@@ -85,7 +84,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    eina_list_free(cfdata->p_subject);
    eina_list_free(cfdata->p_action);
    eina_list_free(cfdata->p_object);
-   
+
    E_FREE(cfdata);
 }
 
@@ -119,7 +118,7 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
    Evas_Coord w;
    Eina_List *l;
    Evry_Plugin *p;
-   
+
    /* freeze evas, edje, and list widget */
    evas = evas_object_evas_get(obj);
    evas_event_freeze(evas);
@@ -150,7 +149,7 @@ _plugin_move(Eina_List *plugins, Evas_Object *list, int dir)
      {
 	Evry_Plugin *p;
 	int prio = 0;
-	
+
 	l1 = eina_list_nth_list(plugins, sel);
 	l2 = eina_list_nth_list(plugins, sel + dir);
 
@@ -159,7 +158,7 @@ _plugin_move(Eina_List *plugins, Evas_Object *list, int dir)
 	l1->data = l2->data;
 	l2->data = p;
 
-	_fill_list(plugins, list, 0); 
+	_fill_list(plugins, list, 0);
 	e_widget_ilist_selected_set(list, sel + dir);
 
 	EINA_LIST_FOREACH(plugins, l1, p)
@@ -185,7 +184,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    Evas_Object *o, *of, *ob, *otb;
 
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
-   
+
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
@@ -194,16 +193,16 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),
 			    300, 800, 5, 0, NULL,
 			    &(cfdata->width), 200);
-   e_widget_framelist_object_append(of, ob);   
+   e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Popup Height"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),
 			    200, 800, 5, 0, NULL,
 			    &(cfdata->height), 200);
-   e_widget_framelist_object_append(of, ob);   
+   e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+
    of = e_widget_framelist_add(evas, _("Scroll Settings"), 0);
    ob = e_widget_check_add(evas, _("Scroll Animate"),
 			   &(cfdata->scroll_animate));
@@ -265,10 +264,10 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 			   cfdata->p_object);
    e_widget_framelist_object_append(of, o);
    e_widget_list_object_append(ob, of, 1, 1, 0.5);
-   
+
    e_widget_toolbook_page_append(otb, NULL, _("Plugins"),
 				 ob, 0, 0, 0, 0, 0.5, 0.0);
    e_widget_toolbook_page_show(otb, 1);
-   
+
    return otb;
 }

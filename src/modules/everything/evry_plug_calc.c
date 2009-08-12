@@ -67,7 +67,7 @@ _action(Evry_Plugin *p, const Evry_Item *it, const char *input __UNUSED__)
 	if (p->items->next)
 	  {
 	     it = p->items->data;
-		  
+
 	     EINA_LIST_FOREACH(p->items->next, l, it2)
 	       {
 		  if (!strcmp(it->label, it2->label))
@@ -97,7 +97,7 @@ static int
 _fetch(Evry_Plugin *p, const char *input)
 {
    char buf[1024];
-   
+
    if (history)
      {
 	p->items = history;
@@ -119,7 +119,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	ecore_exe_send(exe, buf, strlen(buf));
 	error = 0;
      }
-	
+
    return 1;
 }
 
@@ -130,7 +130,7 @@ _item_add(Evry_Plugin *p, char *result, int prio)
 
    it = evry_item_new(p, result);
    if (!it) return;
-   
+
    p->items = eina_list_prepend(p->items, it);
 }
 
@@ -141,7 +141,7 @@ _cb_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    Ecore_Exe_Event_Data_Line *l;
 
    if (ev->exe != exe) return 1;
-   
+
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR);
 
    for (l = ev->lines; l && l->line; l++)

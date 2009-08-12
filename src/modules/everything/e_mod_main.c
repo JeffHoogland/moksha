@@ -96,9 +96,9 @@ e_modapi_init(E_Module *m)
    plugins = eina_module_list_get(NULL, m->dir, 1, &list_cb, NULL);
    if (plugins)
      printf("plugins loaded\n");
-   else 
+   else
      printf("could not find plugins in %s\n", m->dir);
-     
+
    /* add module supplied action */
    act = e_action_add("everything");
    if (act)
@@ -112,7 +112,7 @@ e_modapi_init(E_Module *m)
 
    e_configure_registry_category_add("extensions", 80, _("Extensions"), NULL, "preferences-extensions");
    e_configure_registry_item_add("extensions/run_everything", 40, _("Run Everything"), NULL, "system-run", evry_config_dialog);
-   
+
    e_module_delayed_set(m, 1);
 
    return m;
@@ -122,7 +122,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
-   
+
    /* remove module-supplied menu additions */
    if (maug)
      {
@@ -145,9 +145,9 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    eina_module_list_unload(plugins);
    eina_module_list_flush(plugins);
    eina_array_free(plugins);
-   
+
    eina_module_shutdown();
-   
+
    while ((cfd = e_config_dialog_get("E", "_config_everything_dialog"))) e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("extensions/run_everything");
    e_configure_registry_category_del("extensions");
@@ -233,7 +233,7 @@ evry_plugin_register(Evry_Plugin *plugin)
    Eina_List *l;
    Plugin_Config *pc;
    Eina_Bool found = 0;
-   
+
    evry_conf->plugins = eina_list_append(evry_conf->plugins, plugin);
 
    EINA_LIST_FOREACH(evry_conf->plugins_conf, l, pc)
@@ -252,18 +252,18 @@ evry_plugin_register(Evry_Plugin *plugin)
 	pc->enabled = 1;
 	pc->priority = eina_list_count(evry_conf->plugins);
 
-	evry_conf->plugins_conf = eina_list_append(evry_conf->plugins_conf, pc);	
+	evry_conf->plugins_conf = eina_list_append(evry_conf->plugins_conf, pc);
      }
 
    /* if (plugin->trigger && !pc->trigger)
     *   pc->trigger = eina_stringshare_add(plugin->trigger); */
-   
+
    plugin->config = pc;
 
    evry_conf->plugins = eina_list_sort(evry_conf->plugins,
 				       eina_list_count(evry_conf->plugins),
 				       _evry_cb_plugin_sort);
-   
+
    /* TODO sorting, initialization, etc */
 }
 

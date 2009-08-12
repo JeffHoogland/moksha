@@ -25,10 +25,10 @@ _item_add(Evry_Plugin *p, const char *directory, const char *file)
 {
    Evry_Item *it = NULL;
    char buf[4096];
-   
+
    it = evry_item_new(p, file);
    if (!it) return NULL;
-   
+
    snprintf(buf, sizeof(buf), "%s/%s", directory, file);
    it->uri = eina_stringshare_add(buf);
 
@@ -41,7 +41,7 @@ _item_fill(Evry_Item *it)
    const char *mime;
 
    if  (it->mime) return;
-   
+
    if ((e_util_glob_case_match(it->label, "*.desktop")) ||
        (e_util_glob_case_match(it->label, "*.directory")))
      {
@@ -98,7 +98,7 @@ _dirbrowse_idler(void *data)
    Evry_Item *it;
 
    if (!idler) return 0;
-   
+
    EINA_LIST_FOREACH(s->items, l, it)
      {
 	if (!it->mime)
@@ -112,7 +112,7 @@ _dirbrowse_idler(void *data)
    if (!s->command)
      {
 	evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR);
-   
+
 	if (eina_list_count(p->items) > 0)
 	  {
 	     p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
@@ -120,14 +120,14 @@ _dirbrowse_idler(void *data)
 	  }
 
 	evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
-   
+
 	if (cnt > 0)
 	  {
 	     idler = NULL;
 	     return 0;
 	  }
      }
-   
+
    return 1;
 }
 
@@ -142,7 +142,7 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
    s = E_NEW(State, 1);
    s->directory = eina_stringshare_add(e_user_homedir_get());
    p->items = NULL;
-    
+
    files = ecore_file_ls(s->directory);
 
    EINA_LIST_FREE(files, file)
@@ -156,7 +156,7 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 	  }
 
 	it = _item_add(p, s->directory, file);
-	
+
 	if (it)
 	  s->items = eina_list_append(s->items, it);
 
@@ -170,7 +170,7 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 
    stack = eina_list_prepend(stack, s);
    p->private = stack;
-   
+
    return 1;
 }
 
@@ -182,7 +182,7 @@ _browse(Evry_Plugin *p, const Evry_Item *it_file)
    Eina_List *files;
    Evry_Item *it;
    Eina_List *stack = p->private;
-   
+
    if (!it_file || !it_file->uri || !ecore_file_is_dir(it_file->uri))
      return 0;
 
@@ -204,7 +204,7 @@ _browse(Evry_Plugin *p, const Evry_Item *it_file)
 	  }
 
 	it = _item_add(p, s->directory, file);
-	
+
 	if (it)
 	  s->items = eina_list_append(s->items, it);
 
@@ -226,9 +226,9 @@ _cleanup(Evry_Plugin *p)
    State *s;
    Evry_Item *it;
    Eina_List *stack = p->private;
-   
+
    if (!stack) return;
-   
+
    s = stack->data;
 
    if (s->directory) eina_stringshare_del(s->directory);
@@ -239,21 +239,21 @@ _cleanup(Evry_Plugin *p)
 	if (it->mime) eina_stringshare_del(it->mime);
 	evry_item_free(it);
      }
-   
+
    if (idler)
      {
 	ecore_idler_del(idler);
 	idler = NULL;
      }
-   
+
    E_FREE(s);
 
    if (p->items) eina_list_free(p->items);
    p->items = NULL;
-   
+
    stack = eina_list_remove_list(stack, stack);
    p->private = stack;
-   
+
    if (stack)
      {
 	s = stack->data;
@@ -271,7 +271,7 @@ _fetch(Evry_Plugin *p, const char *input)
    char match2[4096];
    int cnt = 0;
    State *s = ((Eina_List *)p->private)->data;
-   
+
    if (!s->command)
      {
 	if (p->items) eina_list_free(p->items);
@@ -291,7 +291,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	     s->cur = p->items;
 	     s->command = EINA_TRUE;
 	     return 1;
-	     
+
 	  }
 	else if (!strncmp(input, "..", 2))
 	  {
@@ -301,9 +301,9 @@ _fetch(Evry_Plugin *p, const char *input)
 	     int prio = 0;
 
 	     if (!strcmp(s->directory, "/")) return 0;
-	     
+
 	     snprintf(dir, 4096, "%s", s->directory);
-	     end = strrchr(dir, '/');	     
+	     end = strrchr(dir, '/');
 
 	     while (end != dir)
 	       {
@@ -342,7 +342,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	p->items = NULL;
 	s->command = EINA_FALSE;
      }
-   
+
    if (!directory)
      directory = s->directory;
 
@@ -378,14 +378,14 @@ _fetch(Evry_Plugin *p, const char *input)
 	s->cur = p->items;
 	return 1;
      }
-   
+
    return 0;
 }
 
 static Evas_Object *
 _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
-   Evas_Object *o = NULL;   
+   Evas_Object *o = NULL;
    char *icon_path;
 
    if (!it->mime)
@@ -395,7 +395,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 
    if (it->browseable)
      {
-	o = e_icon_add(e); 
+	o = e_icon_add(e);
 	evry_icon_theme_set(o, "folder");
      }
    else
@@ -409,11 +409,11 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 	  }
 	  if (!o)
 	  {
-	     o = e_icon_add(e); 
+	     o = e_icon_add(e);
 	     evry_icon_theme_set(o, "none");
 	  }
      }
-   return o;   
+   return o;
 }
 
 static Eina_Bool

@@ -23,7 +23,7 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
    Inst *inst = p->private;
 
    inst->active = 0;
-   
+
    if (!strcmp(it->plugin->type_out, "APPLICATION"))
      {
 	Efreet_Desktop *desktop;
@@ -40,10 +40,10 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 
 	if (!app->desktop || !app->desktop->mime_types)
 	  return 1;
-	
+
 	rdf_query[0] = '\0';
 	strcat(rdf_query, "<rdfq:Condition><rdfq:or>");
-	
+
 	EINA_LIST_FOREACH(app->desktop->mime_types, l, mime)
 	  {
 	     if (!strcmp(mime, "x-directory/normal"))
@@ -71,7 +71,7 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 static void
 _item_add(Evry_Plugin *p, char *file, char *mime, int prio)
 {
-   Evry_Item *it;   
+   Evry_Item *it;
    const char *filename;
    int folder = (!strcmp(mime, "Folder"));
 
@@ -81,7 +81,7 @@ _item_add(Evry_Plugin *p, char *file, char *mime, int prio)
    filename = ecore_file_file_get(file);
 
    if (!filename) return;
-   
+
    it = evry_item_new(p, filename);
    it->priority = prio;
    it->uri = eina_stringshare_add(file);
@@ -93,7 +93,7 @@ _item_add(Evry_Plugin *p, char *file, char *mime, int prio)
      }
    else
      it->mime = eina_stringshare_add(mime);
-   
+
    p->items = eina_list_append(p->items, it);
 }
 
@@ -120,10 +120,10 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
    char *uri, *mime, *date;
    Evry_Plugin *p = data;
    Inst *inst = p->private;
-   
+
    if (inst->active) inst->active--;
    if (inst->active) return;
-   
+
    if (dbus_error_is_set(error))
      {
 	printf("Error: %s - %s\n", error->name, error->message);
@@ -135,9 +135,9 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
      {
 	dbus_message_iter_recurse(&array, &item);
 	while(dbus_message_iter_get_arg_type(&item) == DBUS_TYPE_ARRAY)
-	  {	     
+	  {
 	     dbus_message_iter_recurse(&item, &iter);
-	     
+
 	     if (dbus_message_iter_get_arg_type(&iter) == DBUS_TYPE_STRING)
 	       {
 		  dbus_message_iter_get_basic(&iter, &uri);
@@ -149,13 +149,13 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 		  /* dbus_message_iter_next(&iter);
 		   * dbus_message_iter_get_basic(&iter, &date);
 		   * printf("%s : %s\n",  date, uri); */
-		  
-		  if (uri && mime) _item_add(p, uri, mime, 1); 
+
+		  if (uri && mime) _item_add(p, uri, mime, 1);
 	       }
 	     dbus_message_iter_next(&item);
 	  }
      }
-   
+
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
 }
 
@@ -173,7 +173,7 @@ _fetch(Evry_Plugin *p, const char *input)
    char *search_text;
    char *fields[2];
    char *keywords[1];
-   char *sort_fields[1];   
+   char *sort_fields[1];
    fields[0] = "File:Mime";
    /* fields[1] = "File:Modified"; */
    fields[1] = "File:Accessed";
@@ -188,22 +188,22 @@ _fetch(Evry_Plugin *p, const char *input)
 
    if (!conn) return 0;
 
-   if (input && (strlen(input) > 2)) 
-     {	
+   if (input && (strlen(input) > 2))
+     {
 	search_text = malloc(sizeof(char) * strlen(input) + 3);
 	sprintf(search_text, "*%s*", input);
 	max_hits = 50;
      }
    else if (!p->begin && p->type == type_object)
      {
-	
+
 	sort_by_access = 1;
 	search_text = "";
      }
    else return 0;
 
    inst->active++;
-   
+
    msg = dbus_message_new_method_call("org.freedesktop.Tracker",
 				      "/org/freedesktop/Tracker/Search",
 				      "org.freedesktop.Tracker.Search",
@@ -236,10 +236,10 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    char *icon_path;
    Evas_Object *o = NULL;
-   
+
    if (it->browseable)
      {
-	o = e_icon_add(e); 
+	o = e_icon_add(e);
 	evry_icon_theme_set(o, "folder");
      }
    else
@@ -253,7 +253,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 	  }
 	else
 	  {
-	     o = e_icon_add(e); 
+	     o = e_icon_add(e);
 	     evry_icon_theme_set(o, "none");
 	  }
      }
@@ -265,7 +265,7 @@ _plugin_new(const char *name, int type, char *service, int max_hits, int begin)
 {
    Evry_Plugin *p;
    Inst *inst;
-   
+
    p = E_NEW(Evry_Plugin, 1);
    p->name = name;
    p->type = type;
@@ -289,9 +289,9 @@ _plugin_new(const char *name, int type, char *service, int max_hits, int begin)
 
 static Eina_Bool
 _init(void)
-{   
+{
    conn = e_dbus_bus_get(DBUS_BUS_SESSION);
-   
+
    if (!conn) return EINA_FALSE;
 
    _plugin_new("Folders",    type_subject, "Folders", 20, 0);
@@ -303,7 +303,7 @@ _init(void)
 
    _plugin_new("Find Files", type_object,  "Files", 20, 1);
    _plugin_new("Folders",    type_object,  "Folders", 20, 0);
-   
+
    return EINA_TRUE;
 }
 
@@ -312,11 +312,11 @@ _shutdown(void)
 {
    Inst *inst;
    Evry_Plugin *p;
-   
+
    if (conn) e_dbus_connection_close(conn);
 
    EINA_LIST_FREE(plugins, p)
-     {	
+     {
 	evry_plugin_unregister(p);
 	inst = p->private;
 	if (inst->condition[0]) free(inst->condition);
