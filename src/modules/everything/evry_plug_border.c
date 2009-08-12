@@ -85,12 +85,8 @@ _fetch(Evry_Plugin *p, const char *input)
 	       {
 		  if (e_util_glob_case_match(bd->desktop->exec, match1))
 		    _item_add(p, bd, 1);
-		  else if (e_util_glob_case_match(bd->desktop->exec, match2))
-		    _item_add(p, bd, 2);
 		  else if (e_util_glob_case_match(bd->desktop->name, match1))
 		    _item_add(p, bd, 1);
-		  else if (e_util_glob_case_match(bd->desktop->name, match2))
-		    _item_add(p, bd, 2);
 	       }
 	  }
      }

@@ -10,16 +10,10 @@ struct _Inst
   int active;
   char *condition;
   char *service;
-  /* Eina_List *items; */
   int max_hits;
 };
 
 static E_DBus_Connection *conn = NULL;
-
-/* static Evry_Plugin *p1 = NULL;
- * static Evry_Plugin *p2 = NULL;
- * static Evry_Plugin *p3 = NULL;
- * static Evry_Plugin *p4 = NULL; */
 static Eina_List *plugins = NULL;
 
 
@@ -136,10 +130,6 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	return;
      }
 
-   /* evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR);
-    * _cleanup(p);
-    *  */
-   
    dbus_message_iter_init(msg, &array);
    if(dbus_message_iter_get_arg_type(&array) == DBUS_TYPE_ARRAY)
      {
@@ -155,9 +145,10 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 		  /* dbus_message_iter_get_basic(&iter, &service); */
 		  dbus_message_iter_next(&iter);
 		  dbus_message_iter_get_basic(&iter, &mime);
+
 		  /* dbus_message_iter_next(&iter);
-		   * dbus_message_iter_get_basic(&iter, &date); */
-		  /* printf("date: %s\n",date); */
+		   * dbus_message_iter_get_basic(&iter, &date);
+		   * printf("%s : %s\n",  date, uri); */
 		  
 		  if (uri && mime) _item_add(p, uri, mime, 1); 
 	       }
@@ -173,20 +164,22 @@ _fetch(Evry_Plugin *p, const char *input)
 {
    Inst *inst = p->private;
    DBusMessage *msg;
-   DBusMessageIter iter;
    int live_query_id = 0;
+   int max_hits = inst->max_hits;
    int offset = 0;
    int sort_descending = 1;
    int sort_by_service = 0;
+   int sort_by_access = 0;
    char *search_text;
    char *fields[2];
    char *keywords[1];
    char *sort_fields[1];   
    fields[0] = "File:Mime";
+   /* fields[1] = "File:Modified"; */
    fields[1] = "File:Accessed";
    keywords[0] = "";
-   sort_fields[0] = "";
-   
+   /* sort_fields[0] = "File:Modified"; */
+   sort_fields[0] = "File:Accessed";
    char **_fields = fields;
    char **_keywords = keywords;
    char **_sort_fields = sort_fields;
@@ -194,15 +187,17 @@ _fetch(Evry_Plugin *p, const char *input)
    _cleanup(p);
 
    if (!conn) return 0;
-   /* if (!input || (strlen(input) < 3)) return 0; */
 
    if (input && (strlen(input) > 2)) 
      {	
 	search_text = malloc(sizeof(char) * strlen(input) + 3);
 	sprintf(search_text, "*%s*", input);
+	max_hits = 50;
      }
-   else if (!p->begin)
+   else if (!p->begin && p->type == type_object)
      {
+	
+	sort_by_access = 1;
 	search_text = "";
      }
    else return 0;
@@ -216,15 +211,15 @@ _fetch(Evry_Plugin *p, const char *input)
    dbus_message_append_args(msg,
 			    DBUS_TYPE_INT32,   &live_query_id,
 			    DBUS_TYPE_STRING,  &inst->service,
-			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING, &_fields, 1,
+			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING, &_fields, 1 + sort_by_access,
 			    DBUS_TYPE_STRING,  &search_text,
 			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING, &_keywords, 0,
 			    DBUS_TYPE_STRING,  &inst->condition,
 			    DBUS_TYPE_BOOLEAN, &sort_by_service,
-			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING, &_sort_fields, 0,
+			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING, &_sort_fields, sort_by_access,
 			    DBUS_TYPE_BOOLEAN, &sort_descending,
 			    DBUS_TYPE_INT32,   &offset,
-			    DBUS_TYPE_INT32,   &inst->max_hits,
+			    DBUS_TYPE_INT32,   &max_hits,
 			    DBUS_TYPE_INVALID);
 
    e_dbus_message_send(conn, msg, _dbus_cb_reply, -1, p);
@@ -304,61 +299,11 @@ _init(void)
    _plugin_new("Music",      type_subject, "Music", 20, 0);
    _plugin_new("Videos",     type_subject, "Videos", 20, 0);
    _plugin_new("Documents",  type_subject, "Documents", 20, 0);
-   _plugin_new("Text",       type_subject, "Text Files", 20, 0);
+   _plugin_new("Text",       type_subject, "TextFiles", 20, 0);
 
    _plugin_new("Find Files", type_object,  "Files", 20, 1);
    _plugin_new("Folders",    type_object,  "Folders", 20, 0);
    
-   
-   /* p = E_NEW(Evry_Plugin, 1);
-    * p->name = "Images";
-    * p->type = type_subject;
-    * p->type_in = "NONE";
-    * p->type_out = "FILE";
-    * p->async_query = 1;
-    * p->fetch = &_fetch;
-    * p->cleanup = &_cleanup;
-    * p->icon_get = &_item_icon_get;
-    * inst = E_NEW(Inst, 1);
-    * inst->condition = "";
-    * inst->service = "Images";
-    * inst->results = 10;
-    * p->private = inst;
-    * evry_plugin_register(p);
-    * plugins = eina_list_append(plugins, p);
-    * 
-    * p = E_NEW(Evry_Plugin, 1);
-    * p->name = "Find Files";
-    * p->type = type_object;
-    * p->type_in = "NONE";
-    * p->type_out = "FILE";
-    * p->async_query = 1;
-    * p->begin = &_begin;
-    * p->fetch = &_fetch;
-    * p->cleanup = &_cleanup;
-    * p->icon_get = &_item_icon_get;
-    * inst = E_NEW(Inst, 1);
-    * inst->condition = "";
-    * inst->service = "Files";
-    * p->private = inst;
-    * evry_plugin_register(p);
-    * plugins = eina_list_append(plugins, p);
-    * 
-    * p4 = E_NEW(Evry_Plugin, 1);
-    * p4->name = "Folders";
-    * p4->type = type_object;
-    * p4->type_in = "NONE";
-    * p4->type_out = "FILE";
-    * p4->async_query = 1;
-    * p4->fetch = &_fetch;
-    * p4->cleanup = &_cleanup;
-    * p4->icon_get = &_item_icon_get;
-    * inst = E_NEW(Inst, 1);
-    * inst->condition = "";
-    * inst->service = "Folders";
-    * p4->private = inst;
-    * evry_plugin_register(p4); */
-
    return EINA_TRUE;
 }
 
