@@ -10,15 +10,17 @@ struct _Inst
   int active;
   char *condition;
   char *service;
-  Eina_List *items;
+  /* Eina_List *items; */
+  int max_hits;
 };
 
 static E_DBus_Connection *conn = NULL;
 
-static Evry_Plugin *p1 = NULL;
-static Evry_Plugin *p2 = NULL;
-static Evry_Plugin *p3 = NULL;
-static Evry_Plugin *p4 = NULL;
+/* static Evry_Plugin *p1 = NULL;
+ * static Evry_Plugin *p2 = NULL;
+ * static Evry_Plugin *p3 = NULL;
+ * static Evry_Plugin *p4 = NULL; */
+static Eina_List *plugins = NULL;
 
 
 static int
@@ -79,8 +81,8 @@ _item_add(Evry_Plugin *p, char *file, char *mime, int prio)
    const char *filename;
    int folder = (!strcmp(mime, "Folder"));
 
-   /* folders are specifically searched by p2 and p4 ;) */
-   if (folder && ((p == p1) || (p == p3))) return;
+   /* folders are specifically searched */
+   if (folder && p->begin) return;
 
    filename = ecore_file_file_get(file);
 
@@ -174,7 +176,6 @@ _fetch(Evry_Plugin *p, const char *input)
    DBusMessageIter iter;
    int live_query_id = 0;
    int offset = 0;
-   int max_hits = 100;
    int sort_descending = 1;
    int sort_by_service = 0;
    char *search_text;
@@ -200,7 +201,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	search_text = malloc(sizeof(char) * strlen(input) + 3);
 	sprintf(search_text, "*%s*", input);
      }
-   else if (p == p2 || p == p4)
+   else if (!p->begin)
      {
 	search_text = "";
      }
@@ -223,7 +224,7 @@ _fetch(Evry_Plugin *p, const char *input)
 			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING, &_sort_fields, 0,
 			    DBUS_TYPE_BOOLEAN, &sort_descending,
 			    DBUS_TYPE_INT32,   &offset,
-			    DBUS_TYPE_INT32,   &max_hits,
+			    DBUS_TYPE_INT32,   &inst->max_hits,
 			    DBUS_TYPE_INVALID);
 
    e_dbus_message_send(conn, msg, _dbus_cb_reply, -1, p);
@@ -264,74 +265,99 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
    return o;
 }
 
+static void
+_plugin_new(const char *name, int type, char *service, int max_hits, int begin)
+{
+   Evry_Plugin *p;
+   Inst *inst;
+   
+   p = E_NEW(Evry_Plugin, 1);
+   p->name = name;
+   p->type = type;
+   p->type_in = "NONE";
+   p->type_out = "FILE";
+   p->async_query = 1;
+   if (begin)
+     p->begin = &_begin;
+   p->fetch = &_fetch;
+   p->cleanup = &_cleanup;
+   p->icon_get = &_item_icon_get;
+   inst = E_NEW(Inst, 1);
+   inst->condition = "";
+   inst->service = service;
+   inst->max_hits = max_hits;
+   p->private = inst;
+   evry_plugin_register(p);
+   plugins = eina_list_append(plugins, p);
+}
+
+
 static Eina_Bool
 _init(void)
-{
-   Inst *inst;
+{   
    conn = e_dbus_bus_get(DBUS_BUS_SESSION);
    
    if (!conn) return EINA_FALSE;
 
-   p1 = E_NEW(Evry_Plugin, 1);
-   p1->name = "Find Files";
-   p1->type = type_subject;
-   p1->type_in = "NONE";
-   p1->type_out = "FILE";
-   p1->async_query = 1;
-   p1->fetch = &_fetch;
-   p1->cleanup = &_cleanup;
-   p1->icon_get = &_item_icon_get;
-   inst = E_NEW(Inst, 1);
-   inst->condition = "";
-   inst->service = "Files";
-   p1->private = inst;
-   evry_plugin_register(p1);
+   _plugin_new("Folders",    type_subject, "Folders", 20, 0);
+   _plugin_new("Images",     type_subject, "Images", 20, 0);
+   _plugin_new("Music",      type_subject, "Music", 20, 0);
+   _plugin_new("Videos",     type_subject, "Videos", 20, 0);
+   _plugin_new("Documents",  type_subject, "Documents", 20, 0);
+   _plugin_new("Text",       type_subject, "Text Files", 20, 0);
 
-   p2 = E_NEW(Evry_Plugin, 1);
-   p2->name = "Folders";
-   p2->type = type_subject;
-   p2->type_in = "NONE";
-   p2->type_out = "FILE";
-   p2->async_query = 1;
-   p2->fetch = &_fetch;
-   p2->cleanup = &_cleanup;
-   p2->icon_get = &_item_icon_get;
-   inst = E_NEW(Inst, 1);
-   inst->condition = "";
-   inst->service = "Folders";
-   p2->private = inst;
-   evry_plugin_register(p2);
-
-   p3 = E_NEW(Evry_Plugin, 1);
-   p3->name = "Find Files";
-   p3->type = type_object;
-   p3->type_in = "NONE";
-   p3->type_out = "FILE";
-   p3->async_query = 1;
-   p3->begin = &_begin;
-   p3->fetch = &_fetch;
-   p3->cleanup = &_cleanup;
-   p3->icon_get = &_item_icon_get;
-   inst = E_NEW(Inst, 1);
-   inst->condition = "";
-   inst->service = "Files";
-   p3->private = inst;
-   evry_plugin_register(p3);
-
-   p4 = E_NEW(Evry_Plugin, 1);
-   p4->name = "Folders";
-   p4->type = type_object;
-   p4->type_in = "NONE";
-   p4->type_out = "FILE";
-   p4->async_query = 1;
-   p4->fetch = &_fetch;
-   p4->cleanup = &_cleanup;
-   p4->icon_get = &_item_icon_get;
-   inst = E_NEW(Inst, 1);
-   inst->condition = "";
-   inst->service = "Folders";
-   p4->private = inst;
-   evry_plugin_register(p4);
+   _plugin_new("Find Files", type_object,  "Files", 20, 1);
+   _plugin_new("Folders",    type_object,  "Folders", 20, 0);
+   
+   
+   /* p = E_NEW(Evry_Plugin, 1);
+    * p->name = "Images";
+    * p->type = type_subject;
+    * p->type_in = "NONE";
+    * p->type_out = "FILE";
+    * p->async_query = 1;
+    * p->fetch = &_fetch;
+    * p->cleanup = &_cleanup;
+    * p->icon_get = &_item_icon_get;
+    * inst = E_NEW(Inst, 1);
+    * inst->condition = "";
+    * inst->service = "Images";
+    * inst->results = 10;
+    * p->private = inst;
+    * evry_plugin_register(p);
+    * plugins = eina_list_append(plugins, p);
+    * 
+    * p = E_NEW(Evry_Plugin, 1);
+    * p->name = "Find Files";
+    * p->type = type_object;
+    * p->type_in = "NONE";
+    * p->type_out = "FILE";
+    * p->async_query = 1;
+    * p->begin = &_begin;
+    * p->fetch = &_fetch;
+    * p->cleanup = &_cleanup;
+    * p->icon_get = &_item_icon_get;
+    * inst = E_NEW(Inst, 1);
+    * inst->condition = "";
+    * inst->service = "Files";
+    * p->private = inst;
+    * evry_plugin_register(p);
+    * plugins = eina_list_append(plugins, p);
+    * 
+    * p4 = E_NEW(Evry_Plugin, 1);
+    * p4->name = "Folders";
+    * p4->type = type_object;
+    * p4->type_in = "NONE";
+    * p4->type_out = "FILE";
+    * p4->async_query = 1;
+    * p4->fetch = &_fetch;
+    * p4->cleanup = &_cleanup;
+    * p4->icon_get = &_item_icon_get;
+    * inst = E_NEW(Inst, 1);
+    * inst->condition = "";
+    * inst->service = "Folders";
+    * p4->private = inst;
+    * evry_plugin_register(p4); */
 
    return EINA_TRUE;
 }
@@ -340,40 +366,17 @@ static void
 _shutdown(void)
 {
    Inst *inst;
+   Evry_Plugin *p;
    
    if (conn) e_dbus_connection_close(conn);
 
-   if (p1)
+   EINA_LIST_FREE(plugins, p)
      {	
-	evry_plugin_unregister(p1);
-	inst = p1->private;
-	E_FREE(inst);
-	E_FREE(p1);
-     }
-
-   if (p2)
-     {	
-	evry_plugin_unregister(p2);
-	inst = p2->private;
-	E_FREE(inst);
-	E_FREE(p2);
-     }
-
-   if (p3)
-     {
-	evry_plugin_unregister(p3);
-	inst = p3->private;
+	evry_plugin_unregister(p);
+	inst = p->private;
 	if (inst->condition[0]) free(inst->condition);
 	E_FREE(inst);
-	E_FREE(p3);
-     }
-
-   if (p4)
-     {	
-	evry_plugin_unregister(p4);
-	inst = p4->private;
-	E_FREE(inst);
-	E_FREE(p4);
+	E_FREE(p);
      }
 }
 
