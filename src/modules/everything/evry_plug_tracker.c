@@ -13,6 +13,7 @@ struct _Inst
   int max_hits;
   const char *input;
   const char *matched;
+  Eina_List *items;
 };
 
 static E_DBus_Connection *conn = NULL;
@@ -126,6 +127,7 @@ _cleanup(Evry_Plugin *p)
 	evry_item_free(it);
      }
    p->items = NULL;
+   inst->items = NULL;
 }
 
 static int
@@ -151,6 +153,8 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 
    if (inst->active) inst->active--;
 
+   p->items = inst->items;
+   
    if (dbus_error_is_set(error))
      {
 	_cleanup(p);
@@ -249,6 +253,7 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
    if (p->items)
      p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
 
+   inst->items = p->items;
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
 }
 
@@ -279,7 +284,13 @@ _fetch(Evry_Plugin *p, const char *input)
      eina_stringshare_del(inst->input);
    inst->input = NULL;
 
-   if (!conn) return 0;
+   if (!conn)
+     {
+	_cleanup(p);
+	return 0;
+     }
+
+   p->items = NULL;
 
    if (input && (strlen(input) > 2))
      {

@@ -352,6 +352,9 @@ EAPI void
 evry_item_free(Evry_Item *it)
 {
    if (it->label) eina_stringshare_del(it->label);
+   if (it->o_bg) evas_object_del(it->o_bg);
+   if (it->o_icon) evas_object_del(it->o_icon);
+   
    E_FREE(it);
 }
 
