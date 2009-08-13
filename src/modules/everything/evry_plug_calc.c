@@ -128,7 +128,7 @@ _item_add(Evry_Plugin *p, char *result, int prio)
 {
    Evry_Item *it;
 
-   it = evry_item_new(p, result);
+   it = evry_item_new(p, result, NULL);
    if (!it) return;
 
    p->items = eina_list_prepend(p->items, it);
@@ -213,7 +213,10 @@ _shutdown(void)
 {
    Evry_Item *it;
 
-   EINA_LIST_FREE(p->items, it)
+   /* EINA_LIST_FREE(p->items, it)
+    *   evry_item_free(it); */
+
+   EINA_LIST_FREE(history, it)
      evry_item_free(it);
 
    evry_plugin_unregister(p);

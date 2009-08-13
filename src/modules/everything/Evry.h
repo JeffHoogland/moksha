@@ -50,6 +50,8 @@ struct _Evry_Item
   /* not to be set by plugin! */
   Evas_Object *o_icon;
   Evas_Object *o_bg;
+  int ref;
+  void (*cb_free) (Evry_Item *item);
 };
 
 struct _Evry_Plugin
@@ -146,7 +148,7 @@ void evry_plugin_unregister(Evry_Plugin *p);
 void evry_action_register(Evry_Action *act);
 void evry_action_unregister(Evry_Action *act);
 
-Evry_Item *evry_item_new(Evry_Plugin *p, const char *label);
+Evry_Item *evry_item_new(Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item));
 void evry_item_free(Evry_Item *it);
 void evry_plugin_async_update(Evry_Plugin *plugin, int state);
 void evry_clear_input(void);

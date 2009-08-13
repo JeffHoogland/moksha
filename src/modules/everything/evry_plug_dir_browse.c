@@ -26,7 +26,7 @@ _item_add(Evry_Plugin *p, const char *directory, const char *file)
    Evry_Item *it = NULL;
    char buf[4096];
 
-   it = evry_item_new(p, file);
+   it = evry_item_new(p, file, NULL);
    if (!it) return NULL;
 
    snprintf(buf, sizeof(buf), "%s/%s", directory, file);
@@ -111,7 +111,7 @@ _dirbrowse_idler(void *data)
 
    if (!s->command)
      {
-	evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR);
+	/* evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR); */
 
 	if (eina_list_count(p->items) > 0)
 	  {
@@ -212,11 +212,7 @@ _cleanup(Evry_Plugin *p)
    if (s->directory) eina_stringshare_del(s->directory);
 
    EINA_LIST_FREE(s->items, it)
-     {
-	if (it->uri) eina_stringshare_del(it->uri);
-	if (it->mime) eina_stringshare_del(it->mime);
-	evry_item_free(it);
-     }
+     evry_item_free(it);
 
    if (idler)
      {
@@ -261,7 +257,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	/* XXX free s->items?  */
 	if (!strncmp(input, "/", 1))
 	  {
-	     it = evry_item_new(p, "/");
+	     it = evry_item_new(p, "/", NULL);
 	     if (!it) return 0;
 	     it->uri = eina_stringshare_add("/");
 	     p->items = eina_list_append(p->items, it);
@@ -286,7 +282,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	       {
 		  tmp = strdup(dir);
 		  snprintf(dir, (end - dir) + 1, "%s", tmp);
-	          it = evry_item_new(p, dir);
+	          it = evry_item_new(p, dir, NULL);
 		  if (!it) return 0; /* free stuff !!!*/
 		  it->uri = eina_stringshare_add(dir);
 		  it->priority = prio;
@@ -296,7 +292,7 @@ _fetch(Evry_Plugin *p, const char *input)
 		  prio--;
 	       }
 
-	     it = evry_item_new(p, "/");
+	     it = evry_item_new(p, "/", NULL);
 	     if (!it) return 0;
 	     it->uri = eina_stringshare_add("/");
 	     it->priority = prio;
@@ -311,11 +307,8 @@ _fetch(Evry_Plugin *p, const char *input)
    if (s->command)
      {
 	EINA_LIST_FREE(p->items, it)
-	  {
-	     if (it->uri) eina_stringshare_del(it->uri);
-	     if (it->mime) eina_stringshare_del(it->mime);
-	     evry_item_free(it);
-	  }
+	  evry_item_free(it);
+
 	p->items = NULL;
 	s->command = EINA_FALSE;
      }

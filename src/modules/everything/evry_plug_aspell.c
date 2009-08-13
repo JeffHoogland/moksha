@@ -81,7 +81,7 @@ _item_add(Evry_Plugin *p, const char *word, int word_size, int prio)
 {
    Evry_Item *it;
 
-   it = evry_item_new(p, NULL);
+   it = evry_item_new(p, NULL, NULL);
    if (!it) return;
    it->priority = prio;
    it->label = eina_stringshare_add_length(word, word_size);

@@ -9,7 +9,7 @@ _item_add(Evry_Plugin *p, E_Border *bd, int prio)
 {
    Evry_Item *it;
 
-   it = evry_item_new(p, e_border_name_get(bd));
+   it = evry_item_new(p, e_border_name_get(bd), NULL);
    
    /* e_object_ref(E_OBJECT(bd)); */
    it->data[0] = bd;

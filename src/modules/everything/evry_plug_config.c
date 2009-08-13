@@ -18,7 +18,7 @@ _item_add(Evry_Plugin *p, E_Configure_It *eci, int prio)
 {
    Evry_Item *it;
 
-   it = evry_item_new(p, eci->label);
+   it = evry_item_new(p, eci->label, NULL);
    it->data[0] = eci;
    it->priority = prio;
 

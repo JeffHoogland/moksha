@@ -64,16 +64,20 @@ static void
 _list_free(Evry_Plugin *p)
 {
    Evry_Item *it;
-   Evry_App *app;
 
    EINA_LIST_FREE(p->items, it)
-     {
-	app = it->data[0];
-	if (app->file) eina_stringshare_del(app->file);
-	if (app->desktop) efreet_desktop_free(app->desktop);
-	E_FREE(app);
-	evry_item_free(it);
-     }
+     evry_item_free(it);
+}
+
+static void
+_item_free(Evry_Item *it)
+{
+   Evry_App *app;
+
+   app = it->data[0];
+   if (app->file) eina_stringshare_del(app->file);
+   if (app->desktop) efreet_desktop_free(app->desktop);
+   E_FREE(app);
 }
 
 static void
@@ -157,9 +161,9 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
      }
 
    if (desktop)
-     it = evry_item_new(p, desktop->name);
+     it = evry_item_new(p, desktop->name, &_item_free);
    else
-     it = evry_item_new(p, file);
+     it = evry_item_new(p, file, &_item_free);
 
    app = E_NEW(Evry_App, 1);
    app->desktop = desktop;
@@ -331,7 +335,7 @@ _fetch(Evry_Plugin *p, const char *input)
 
 	if (found || p == p2)
 	  {
-	     it = evry_item_new(p, _("Run Command"));
+	     it = evry_item_new(p, _("Run Command"), &_item_free);
 	     app = E_NEW(Evry_App, 1);
 	     if (input)
 	       app->file = eina_stringshare_add(input);
@@ -342,7 +346,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	     p->items = eina_list_append(p->items, it);
 
 	     snprintf(match1, 4096, "xterm -hold -e %s", input);
-	     it = evry_item_new(p, _("Run in Terminal"));
+	     it = evry_item_new(p, _("Run in Terminal"), &_item_free);
 	     app = E_NEW(Evry_App, 1);
 	     if (input)
 	       app->file = eina_stringshare_add(match1);

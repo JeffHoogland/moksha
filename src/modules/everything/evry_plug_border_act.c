@@ -85,6 +85,12 @@ _cb_sort(const void *data1, const void *data2)
 }
 
 static void
+_item_free(Evry_Item *it)
+{
+   if (it->data[1]) eina_stringshare_del((const char *)it->data[1]);
+}
+
+static void
 _item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), const char *icon, char *m1, char *m2)
 {
    Evry_Item *it;
@@ -102,7 +108,7 @@ _item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), c
 
    if (!prio) return;
 
-   it = evry_item_new(p, label);
+   it = evry_item_new(p, label, &_item_free);
    it->data[0] = action_cb;
    it->data[1] = (void *) eina_stringshare_add(icon);
    it->priority = prio;
@@ -116,10 +122,7 @@ _cleanup(Evry_Plugin *p)
    Evry_Item *it;
 
    EINA_LIST_FREE(p->items, it)
-     {
-	if (it->data[1]) eina_stringshare_del((const char *)it->data[1]);
-	evry_item_free(it);
-     }
+     evry_item_free(it);
 }
 
 static int

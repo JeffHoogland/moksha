@@ -86,7 +86,7 @@ _item_add(Evry_Plugin *p, char *file, char *mime, int prio)
    if (!filename)
      return NULL;
 
-   it = evry_item_new(p, filename);
+   it = evry_item_new(p, filename, NULL);
    if (!it)
      return NULL;
    it->priority = prio;
@@ -102,7 +102,6 @@ _item_add(Evry_Plugin *p, char *file, char *mime, int prio)
 
    return it;
 }
-
 
 static void
 _cleanup(Evry_Plugin *p)
@@ -120,14 +119,11 @@ _cleanup(Evry_Plugin *p)
      eina_stringshare_del(inst->matched);
    inst->matched = NULL;
 
-   EINA_LIST_FREE(p->items, it)
-     {
-	if (it->mime) eina_stringshare_del(it->mime);
-	if (it->uri) eina_stringshare_del(it->uri);
-	evry_item_free(it);
-     }
-   p->items = NULL;
+   EINA_LIST_FREE(inst->items, it)
+     evry_item_free(it);
+
    inst->items = NULL;
+   p->items = NULL;
 }
 
 static int
@@ -153,8 +149,6 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 
    if (inst->active) inst->active--;
 
-   p->items = inst->items;
-   
    if (dbus_error_is_set(error))
      {
 	_cleanup(p);
@@ -196,49 +190,56 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 
    if (items)
      {
-	EINA_LIST_FREE(p->items, it)
-	  {
-	     if (it->mime) eina_stringshare_del(it->mime);
-	     if (it->uri) eina_stringshare_del(it->uri);
-	     evry_item_free(it);
-	  }
+	EINA_LIST_FREE(inst->items, it)
+	  evry_item_free(it);
+
+	items = eina_list_sort(items, eina_list_count(items), _cb_sort);
+	inst->items = items;
 	p->items = items;
 
 	if (inst->matched)
 	  eina_stringshare_del(inst->matched);
-	inst->matched = eina_stringshare_add(inst->input);
+	if (inst->input)
+	  inst->matched = eina_stringshare_add(inst->input);
+	else
+	  inst->matched = NULL;
      }
-   else if (p->items && inst->input)
+   else if (inst->items && inst->input)
      {
 	char input[128];
 	char *pos = input;
+	int len_matched = strlen(inst->matched);
+	int len_input = strlen(inst->input);
+	Eina_List *l;
 
-	snprintf(input, 128, "%s", inst->input + (strlen(inst->matched) - 1));
-	for (; *pos != '\0'; pos++)
-	  if (isspace(*pos)) *pos = '*';
-
-	EINA_LIST_FREE(p->items, it)
+	if (len_input > len_matched)
 	  {
-	     if (e_util_glob_case_match(it->label, input))
-	       items = eina_list_append(items, it);
-	     else
-	       {
-		  if (it->mime) eina_stringshare_del(it->mime);
-		  if (it->uri) eina_stringshare_del(it->uri);
-		  evry_item_free(it);
-	       }
-	  }
+	     p->items = NULL;
 
-	p->items = items;
+	     snprintf(input, 128, "*%s*", inst->input + len_matched);
+	     for (; *pos != '\0'; pos++)
+	       if (isspace(*pos)) *pos = '*';
+
+	     EINA_LIST_FOREACH(inst->items, l, it)
+	       if (e_util_glob_case_match(it->label, input))
+		 p->items = eina_list_append(p->items, it);
+
+	     if (inst->matched)
+	       eina_stringshare_del(inst->matched);
+	     if (inst->input)
+	       inst->matched = eina_stringshare_add(inst->input);
+	     else
+	       inst->matched = NULL;
+	  }
+	else
+	  p->items = inst->items;
      }
    else
      {
-	EINA_LIST_FREE(p->items, it)
-	  {
-	     if (it->mime) eina_stringshare_del(it->mime);
-	     if (it->uri) eina_stringshare_del(it->uri);
-	     evry_item_free(it);
-	  }
+	EINA_LIST_FREE(inst->items, it)
+	  evry_item_free(it);
+
+	inst->items = NULL;
 	p->items = NULL;
 
 	if (inst->input)
@@ -250,10 +251,6 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	inst->matched = NULL;
      }
 
-   if (p->items)
-     p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
-
-   inst->items = p->items;
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
 }
 
@@ -290,14 +287,12 @@ _fetch(Evry_Plugin *p, const char *input)
 	return 0;
      }
 
-   p->items = NULL;
-
    if (input && (strlen(input) > 2))
      {
+	inst->input = eina_stringshare_add(input);
 	search_text = malloc(sizeof(char) * strlen(input) + 3);
 	sprintf(search_text, "*%s*", input);
 	max_hits = 50;
-	inst->input = eina_stringshare_add(search_text);
      }
    else if (!input && !p->begin && p->type == type_object)
      {
@@ -334,6 +329,8 @@ _fetch(Evry_Plugin *p, const char *input)
 
    if (input && (strlen(input) > 2))
      free(search_text);
+
+   if (p->items) return 1;
 
    return 0;
 }
@@ -407,8 +404,7 @@ _init(void)
    _plugin_new("Music",      type_subject, "Music", 20, 0);
    _plugin_new("Videos",     type_subject, "Videos", 20, 0);
    _plugin_new("Documents",  type_subject, "Documents", 20, 0);
-   /* _plugin_new("Text",       type_subject, "TextFiles", 20, 0); */
-
+   
    _plugin_new("Find Files", type_object,  "Files", 20, 1);
    _plugin_new("Folders",    type_object,  "Folders", 20, 0);
 
