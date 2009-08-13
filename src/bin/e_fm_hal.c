@@ -171,11 +171,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 	s->volumes = eina_list_append(s->volumes, v);
      }
 
-   if ((v->storage) &&
-       ((!v->mount_point) ||
-       	(strcmp(v->mount_point, "/") &&
-	 strcmp(v->mount_point, "/home") &&
-	 strcmp(v->mount_point, "/tmp"))))
+   if (v->storage)
      {
 	char label[1024] = {0};
 	char size[256] = {0};
@@ -264,7 +260,11 @@ e_fm2_hal_volume_add(E_Volume *v)
 	     v->icon = strdup(icon);
 	  }
 
-	_e_fm2_volume_write(v);
+	if ((!v->mount_point) ||
+	    (strcmp(v->mount_point, "/") &&
+	     strcmp(v->mount_point, "/home") &&
+	     strcmp(v->mount_point, "/tmp")))
+	   _e_fm2_volume_write(v);
      }
 }
 
