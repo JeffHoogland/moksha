@@ -1,7 +1,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/* TODO check if trackerd is running */
+/* TODO check if trackerd is running and version */
 
 typedef struct _Inst Inst;
 
@@ -11,6 +11,8 @@ struct _Inst
   char *condition;
   char *service;
   int max_hits;
+  const char *input;
+  const char *matched;
 };
 
 static E_DBus_Connection *conn = NULL;
@@ -34,7 +36,6 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 	char rdf_query[32768];
 	int len = 0;
 
-	/* inst->service = "Files"; */
 	if (inst->condition[0]) free (inst->condition);
 	inst->condition = "";
 
@@ -68,7 +69,7 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
    return 1;
 }
 
-static void
+static Evry_Item *
 _item_add(Evry_Plugin *p, char *file, char *mime, int prio)
 {
    Evry_Item *it;
@@ -76,13 +77,17 @@ _item_add(Evry_Plugin *p, char *file, char *mime, int prio)
    int folder = (!strcmp(mime, "Folder"));
 
    /* folders are specifically searched */
-   if (folder && p->begin) return;
+   if (folder && p->begin)
+     return NULL;
 
    filename = ecore_file_file_get(file);
 
-   if (!filename) return;
+   if (!filename)
+     return NULL;
 
    it = evry_item_new(p, filename);
+   if (!it)
+     return NULL;
    it->priority = prio;
    it->uri = eina_stringshare_add(file);
 
@@ -94,7 +99,7 @@ _item_add(Evry_Plugin *p, char *file, char *mime, int prio)
    else
      it->mime = eina_stringshare_add(mime);
 
-   p->items = eina_list_append(p->items, it);
+   return it;
 }
 
 
@@ -103,6 +108,16 @@ _cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
    Inst *inst = p->private;
+
+   inst->active = 0;
+
+   if (inst->input)
+     eina_stringshare_del(inst->input);
+   inst->input = NULL;
+
+   if (inst->matched)
+     eina_stringshare_del(inst->matched);
+   inst->matched = NULL;
 
    EINA_LIST_FREE(p->items, it)
      {
@@ -113,22 +128,37 @@ _cleanup(Evry_Plugin *p)
    p->items = NULL;
 }
 
+static int
+_cb_sort(const void *data1, const void *data2)
+{
+   const Evry_Item *it1, *it2;
+
+   it1 = data1;
+   it2 = data2;
+
+   return (it2->priority - it1->priority);
+}
+
 static void
 _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 {
    DBusMessageIter array, iter, item;
    char *uri, *mime, *date;
+   Evry_Item *it;
+   Eina_List *items = NULL;
    Evry_Plugin *p = data;
    Inst *inst = p->private;
 
    if (inst->active) inst->active--;
-   if (inst->active) return;
 
    if (dbus_error_is_set(error))
      {
+	_cleanup(p);
 	printf("Error: %s - %s\n", error->name, error->message);
 	return;
      }
+
+   if (inst->active) return;
 
    dbus_message_iter_init(msg, &array);
    if(dbus_message_iter_get_arg_type(&array) == DBUS_TYPE_ARRAY)
@@ -146,15 +176,78 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 		  dbus_message_iter_next(&iter);
 		  dbus_message_iter_get_basic(&iter, &mime);
 
-		  /* dbus_message_iter_next(&iter);
-		   * dbus_message_iter_get_basic(&iter, &date);
-		   * printf("%s : %s\n",  date, uri); */
+		  dbus_message_iter_next(&iter);
+		  dbus_message_iter_get_basic(&iter, &date);
 
-		  if (uri && mime) _item_add(p, uri, mime, 1);
+		  if (uri && mime && date)
+		    {
+		       it = _item_add(p, uri, mime, atoi(date));
+		       if (it)
+			 items = eina_list_append(items, it);
+		    }
 	       }
 	     dbus_message_iter_next(&item);
 	  }
      }
+
+   if (items)
+     {
+	EINA_LIST_FREE(p->items, it)
+	  {
+	     if (it->mime) eina_stringshare_del(it->mime);
+	     if (it->uri) eina_stringshare_del(it->uri);
+	     evry_item_free(it);
+	  }
+	p->items = items;
+
+	if (inst->matched)
+	  eina_stringshare_del(inst->matched);
+	inst->matched = eina_stringshare_add(inst->input);
+     }
+   else if (p->items && inst->input)
+     {
+	char input[128];
+	char *pos = input;
+
+	snprintf(input, 128, "%s", inst->input + (strlen(inst->matched) - 1));
+	for (; *pos != '\0'; pos++)
+	  if (isspace(*pos)) *pos = '*';
+
+	EINA_LIST_FREE(p->items, it)
+	  {
+	     if (e_util_glob_case_match(it->label, input))
+	       items = eina_list_append(items, it);
+	     else
+	       {
+		  if (it->mime) eina_stringshare_del(it->mime);
+		  if (it->uri) eina_stringshare_del(it->uri);
+		  evry_item_free(it);
+	       }
+	  }
+
+	p->items = items;
+     }
+   else
+     {
+	EINA_LIST_FREE(p->items, it)
+	  {
+	     if (it->mime) eina_stringshare_del(it->mime);
+	     if (it->uri) eina_stringshare_del(it->uri);
+	     evry_item_free(it);
+	  }
+	p->items = NULL;
+
+	if (inst->input)
+	  eina_stringshare_del(inst->input);
+	inst->input = NULL;
+
+	if (inst->matched)
+	  eina_stringshare_del(inst->matched);
+	inst->matched = NULL;
+     }
+
+   if (p->items)
+     p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
 
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
 }
@@ -175,16 +268,16 @@ _fetch(Evry_Plugin *p, const char *input)
    char *keywords[1];
    char *sort_fields[1];
    fields[0] = "File:Mime";
-   /* fields[1] = "File:Modified"; */
    fields[1] = "File:Accessed";
    keywords[0] = "";
-   /* sort_fields[0] = "File:Modified"; */
    sort_fields[0] = "File:Accessed";
    char **_fields = fields;
    char **_keywords = keywords;
    char **_sort_fields = sort_fields;
 
-   _cleanup(p);
+   if (inst->input)
+     eina_stringshare_del(inst->input);
+   inst->input = NULL;
 
    if (!conn) return 0;
 
@@ -193,10 +286,10 @@ _fetch(Evry_Plugin *p, const char *input)
 	search_text = malloc(sizeof(char) * strlen(input) + 3);
 	sprintf(search_text, "*%s*", input);
 	max_hits = 50;
+	inst->input = eina_stringshare_add(search_text);
      }
-   else if (!p->begin && p->type == type_object)
+   else if (!input && !p->begin && p->type == type_object)
      {
-
 	sort_by_access = 1;
 	search_text = "";
      }
@@ -211,12 +304,15 @@ _fetch(Evry_Plugin *p, const char *input)
    dbus_message_append_args(msg,
 			    DBUS_TYPE_INT32,   &live_query_id,
 			    DBUS_TYPE_STRING,  &inst->service,
-			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING, &_fields, 1 + sort_by_access,
+			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING,
+			    &_fields, 2,
 			    DBUS_TYPE_STRING,  &search_text,
-			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING, &_keywords, 0,
+			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING,
+			    &_keywords, 0,
 			    DBUS_TYPE_STRING,  &inst->condition,
 			    DBUS_TYPE_BOOLEAN, &sort_by_service,
-			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING, &_sort_fields, sort_by_access,
+			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING,
+			    &_sort_fields, sort_by_access,
 			    DBUS_TYPE_BOOLEAN, &sort_descending,
 			    DBUS_TYPE_INT32,   &offset,
 			    DBUS_TYPE_INT32,   &max_hits,

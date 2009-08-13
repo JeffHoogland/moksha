@@ -2130,10 +2130,10 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	       }
 
 	     /* plugin is active */
-	     if ((s->plugin == p) || (s->plugin == agg))
+	     if ((!s->plugin) || (s->plugin == p) || (s->plugin == agg))
 	       {
-		  p = s->plugin;
 		  _evry_selector_update(selector);
+		  p = s->plugin;
 
 		  if (list->visible)
 		    {
