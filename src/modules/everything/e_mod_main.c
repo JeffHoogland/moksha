@@ -2,6 +2,11 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
+/* TODO
+   - watch plugin directories
+   - get plugins from ~/.e/e/everything_plugins
+ */
+
 #include "e_mod_main.h"
 
 /* actual module specifics */
@@ -41,7 +46,10 @@ static Eina_Bool list_cb(Eina_Module *m, void *data)
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   char buf[4096];
+   Eina_List *files;
+   char buf[4096], dir[4096];
+   char *file;
+
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/module.everything",
 	    e_user_homedir_get(), e_config_profile_get());
    ecore_file_mkdir(buf);
@@ -93,11 +101,19 @@ e_modapi_init(E_Module *m)
    evry_init();
 
    eina_module_init();
-   plugins = eina_module_list_get(NULL, m->dir, 1, &list_cb, NULL);
-   if (plugins)
-     printf("plugins loaded\n");
-   else
-     printf("could not find plugins in %s\n", m->dir);
+
+   snprintf(dir, sizeof(dir), "%s/enlightenment/everything_plugins", e_prefix_lib_get());
+   files = ecore_file_ls(dir);
+
+   EINA_LIST_FREE(files, file)
+     {
+	snprintf(buf, sizeof(buf), "%s/%s/%s", dir, file, MODULE_ARCH);
+
+	if (ecore_file_is_dir(buf))
+	  plugins = eina_module_list_get(plugins, buf, 1, &list_cb, NULL);
+
+	free(file);
+     }
 
    /* add module supplied action */
    act = e_action_add("everything");
@@ -142,9 +158,12 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    eina_list_free(evry_conf->plugins);
    eina_list_free(evry_conf->actions);
 
-   eina_module_list_unload(plugins);
-   eina_module_list_flush(plugins);
-   eina_array_free(plugins);
+   if (plugins)
+     {
+	eina_module_list_unload(plugins);
+	eina_module_list_flush(plugins);
+	eina_array_free(plugins);
+     }
 
    eina_module_shutdown();
 

@@ -559,6 +559,7 @@ src/modules/syscon/Makefile
 src/modules/syscon/module.desktop
 src/modules/everything/Makefile
 src/modules/everything/module.desktop
+src/modules/everything/everything.pc
 src/modules/systray/Makefile
 src/modules/systray/module.desktop
 src/preload/Makefile

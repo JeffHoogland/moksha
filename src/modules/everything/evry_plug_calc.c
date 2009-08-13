@@ -1,5 +1,5 @@
-#include "e.h"
-#include "e_mod_main.h"
+#include "Evry.h"
+
 
 static void _item_add(Evry_Plugin *p, char *output, int prio);
 static int  _cb_data(void *data, int type, void *event);

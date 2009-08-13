@@ -1,5 +1,4 @@
-#include "e.h"
-#include "e_mod_main.h"
+#include "Evry.h"
 
 static Evry_Plugin *p;
 static Evry_Action *act;

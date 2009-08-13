@@ -1,5 +1,5 @@
-#include "e.h"
-#include "e_mod_main.h"
+#include "Evry.h"
+
 
 typedef struct _Inst Inst;
 

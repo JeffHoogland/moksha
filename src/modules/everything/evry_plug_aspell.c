@@ -1,5 +1,4 @@
-#include "e.h"
-#include "e_mod_main.h"
+#include "Evry.h"
 #include <ctype.h>
 
 static const char TRIGGER[] = "aspell ";

@@ -1,5 +1,5 @@
-#include "e.h"
-#include "e_mod_main.h"
+#include "Evry.h"
+
 
 #define MAX_ITEMS 100
 
@@ -242,7 +242,6 @@ _cleanup(Evry_Plugin *p)
 static int
 _fetch(Evry_Plugin *p, const char *input)
 {
-   const char *directory = NULL;
    Evry_Item *it;
    Eina_List *l;
    char match1[4096];
@@ -320,9 +319,6 @@ _fetch(Evry_Plugin *p, const char *input)
 	p->items = NULL;
 	s->command = EINA_FALSE;
      }
-
-   if (!directory)
-     directory = s->directory;
 
    if (input)
      {

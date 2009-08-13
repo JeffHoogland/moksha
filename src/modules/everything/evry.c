@@ -184,7 +184,7 @@ static Evry_Selector *selector = NULL;
 static Evry_Plugin *action_selector = NULL;
 
 /* externally accessible functions */
-EAPI int
+int
 evry_init(void)
 {
    _evry_plug_actions_init();
@@ -192,7 +192,7 @@ evry_init(void)
    return 1;
 }
 
-EAPI int
+int
 evry_shutdown(void)
 {
    // TODO free action_selector
@@ -200,7 +200,7 @@ evry_shutdown(void)
    return 1;
 }
 
-EAPI int
+int
 evry_show(E_Zone *zone)
 {
    if (win) return 0;
@@ -286,7 +286,7 @@ evry_show(E_Zone *zone)
    return 0;
 }
 
-EAPI void
+void
 evry_hide(void)
 {
    Ecore_Event *ev;
@@ -323,7 +323,7 @@ evry_hide(void)
 }
 
 
-EAPI void
+void
 evry_clear_input(void)
 {
    Evry_State *s = selector->state;
@@ -334,7 +334,7 @@ evry_clear_input(void)
      }
 }
 
-EAPI Evry_Item *
+Evry_Item *
 evry_item_new(Evry_Plugin *p, const char *label)
 {
    Evry_Item *it;
@@ -348,7 +348,7 @@ evry_item_new(Evry_Plugin *p, const char *label)
    return it;
 }
 
-EAPI void
+void
 evry_item_free(Evry_Item *it)
 {
    if (it->label) eina_stringshare_del(it->label);
@@ -1021,10 +1021,12 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if (!strcmp(ev->key, "Down"))
      _evry_list_item_next(s);
    else if (!strcmp(ev->key, "Right") &&
-	    (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT))
+	    ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
+	     (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)))
      _evry_list_plugin_next(s);
    else if (!strcmp(ev->key, "Left") &&
-	      (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT))
+	    ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
+	     (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)))
      _evry_list_plugin_prev(s);
    else if (!strcmp(ev->key, "Right"))
      _evry_browse_item(selector);
@@ -2080,7 +2082,7 @@ _evry_plugin_list_insert(Evry_State *s, Evry_Plugin *p)
 
 }
 
-EAPI void
+void
 evry_plugin_async_update(Evry_Plugin *p, int action)
 {
    Evry_State *s;

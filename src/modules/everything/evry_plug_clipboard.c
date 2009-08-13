@@ -1,5 +1,5 @@
-#include "e.h"
-#include "e_mod_main.h"
+#include "Evry.h"
+
 
 static Evry_Action *act;
 static Ecore_X_Window clipboard_win = 0;
