@@ -1129,7 +1129,7 @@ _evry_update_timer(void *data)
 static void
 _evry_clear(Evry_State *s)
 {
-   if ((s->plugin->trigger && s->input) &&
+   if ((s->plugin && s->plugin->trigger && s->input) &&
        (!strncmp(s->plugin->trigger, s->input, strlen(s->plugin->trigger))))
      {
 	s->input[strlen(s->plugin->trigger)] = 0;
