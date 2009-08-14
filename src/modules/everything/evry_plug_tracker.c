@@ -204,7 +204,7 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	else
 	  inst->matched = NULL;
      }
-   else if (inst->items && inst->input)
+   else if (inst->items && inst->input && strlen(inst->input) > 0)
      {
 	int len_matched = (inst->matched ? strlen(inst->matched) : 0);
 	int len_input = strlen(inst->input);
