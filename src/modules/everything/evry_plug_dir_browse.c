@@ -320,9 +320,9 @@ _fetch(Evry_Plugin *p, const char *input)
      {
 	if (input)
 	  {
-	     int fuzz;
-	     if ((fuzz = evry_fuzzy_match(it->label, input)))
-	       it->priority = fuzz;
+	     int match;
+	     if ((match = evry_fuzzy_match(it->label, input)))
+	       it->priority = match;
 	     else
 	       it = NULL;
 	  }

@@ -14,14 +14,14 @@ _cleanup(Evry_Plugin *p)
 }
 
 static void
-_item_add(Evry_Plugin *p, E_Configure_It *eci, int fuzz, int prio)
+_item_add(Evry_Plugin *p, E_Configure_It *eci, int match, int prio)
 {
    Evry_Item *it;
 
    it = evry_item_new(p, eci->label, NULL);
    it->data[0] = eci;
    it->priority = prio;
-   it->fuzzy_match = fuzz;
+   it->fuzzy_match = match;
 
    p->items = eina_list_append(p->items, it);
 }
@@ -44,7 +44,7 @@ _fetch(Evry_Plugin *p, const char *input)
    Eina_List *l, *ll;
    E_Configure_Cat *ecat;
    E_Configure_It *eci;
-   int fuzz;
+   int match;
 
    _cleanup(p);
 
@@ -57,10 +57,10 @@ _fetch(Evry_Plugin *p, const char *input)
 	  {
 	     if (eci->pri >= 0)
 	       {
-		  if (fuzz = evry_fuzzy_match(eci->label, input))
-		    _item_add(p, eci, fuzz, 0);
-		  else if (fuzz = evry_fuzzy_match(ecat->label, input))
-		    _item_add(p, eci, fuzz, 1);
+		  if (match = evry_fuzzy_match(eci->label, input))
+		    _item_add(p, eci, match, 0);
+		  else if (match = evry_fuzzy_match(ecat->label, input))
+		    _item_add(p, eci, match, 1);
 	       }
 	  }
      }

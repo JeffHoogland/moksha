@@ -16,6 +16,7 @@ static Evry_Action *act;
 static Evry_Action *act1;
 static Evry_Action *act2;
 static Evry_Action *act3;
+static Evry_Action *act4;
 static Eina_List *exe_path = NULL;
 
 
@@ -102,7 +103,7 @@ _cleanup(Evry_Plugin *p)
 }
 
 static int
-_item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
+_item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int match)
 {
    Evry_Item *it;
    Evry_App *app;
@@ -169,7 +170,7 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
    app->desktop = desktop;
    app->file = file;
    it->data[0] = app;
-   it->priority = prio;
+   it->fuzzy_match = match;
 
    p->items = eina_list_append(p->items, it);
 
@@ -181,34 +182,32 @@ _add_desktop_list(Evry_Plugin *p, Eina_List *apps, const char *input)
 {
    Efreet_Desktop *desktop;
    Eina_List *l;
-   int fuzz;
+   int m1, m2, min;
 
    EINA_LIST_FOREACH(apps, l, desktop)
      {
 	if (eina_list_count(p->items) > 199) continue;
-	if (!desktop || !desktop->name || !desktop->exec) continue;
+	if (!desktop->name || !desktop->exec) continue;
 
-	if (fuzz = evry_fuzzy_match(desktop->exec, input))
-	  _item_add(p, desktop, NULL, fuzz);
-	else if (fuzz = evry_fuzzy_match(desktop->name, input))
-	  _item_add(p, desktop, NULL, fuzz);
+	m1 = evry_fuzzy_match(desktop->exec, input);
+	m2 = evry_fuzzy_match(desktop->name, input);
+
+	if (!m1 || (m2 && m2 < m1))
+	  m1 = m2;
+
+	if (m1) _item_add(p, desktop, NULL, m1);
      }
 }
 
 static int
 _cb_sort(const void *data1, const void *data2)
 {
-   const Evry_Item *it1, *it2;
+   const Evry_Item *it1 = data1;
+   const Evry_Item *it2 = data2;
    Evry_App *app1, *app2;
    const char *e1, *e2;
    double t1, t2;
-
-   it1 = data1;
-   it2 = data2;
-
-   if (it1->priority - it2->priority)
-     return (it1->priority - it2->priority);
-
+   
    app1 = it1->data[0];
    app2 = it2->data[0];
 
@@ -227,6 +226,15 @@ _cb_sort(const void *data1, const void *data2)
 
    if ((int)(t2 - t1))
      return (int)(t2 - t1);
+
+   if (it1->fuzzy_match && !it2->fuzzy_match)
+     return -1;
+
+   if (!it1->fuzzy_match && it2->fuzzy_match)
+     return 1;
+
+   if (it1->fuzzy_match - it2->fuzzy_match)
+     return (it1->fuzzy_match - it2->fuzzy_match);
 
    // TODO compare exe strings?
    else return 0;
@@ -394,6 +402,23 @@ _exec_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 
    if (app->file && strlen(app->file) > 0)
      return 1;
+   
+   return 0;
+}
+
+static int
+_exec_border_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
+{
+   E_Border *bd = it->data[0];
+   E_OBJECT_CHECK_RETURN(bd, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, 0);
+
+   if ((bd->desktop && bd->desktop->exec) &&
+       ((strstr(bd->desktop->exec, "%u")) ||
+	(strstr(bd->desktop->exec, "%U")) ||
+	(strstr(bd->desktop->exec, "%f")) ||
+	(strstr(bd->desktop->exec, "%F"))))
+     return 1;
 
    return 0;
 }
@@ -451,6 +476,19 @@ static int
 _exec_app_action(Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input)
 {
    return _app_action(it1, it2);
+}
+
+static int
+_exec_border_action(Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input)
+{
+   Evry_Item *it = E_NEW(Evry_Item, 1);
+   Evry_App *app = E_NEW(Evry_App, 1);
+   E_Border *bd = it1->data[0];
+
+   app->desktop = bd->desktop;
+   it->data[0] = app;
+   
+   return _app_action(it, it2);
 }
 
 static int
@@ -636,6 +674,15 @@ _init(void)
    act3->icon = "everything-launch";
    evry_action_register(act3);
 
+   act4 = E_NEW(Evry_Action, 1);
+   act4->name = "Open File...";
+   act4->type_in1 = "BORDER";
+   act4->type_in2 = "FILE";
+   act4->action = &_exec_border_action;
+   act4->check_item = &_exec_border_check_item;
+   act4->icon = "everything-launch";
+   evry_action_register(act4);
+
    /* taken from e_exebuf.c */
    path = getenv("PATH");
    if (path)
@@ -676,6 +723,7 @@ _shutdown(void)
    E_FREE(act1);
    E_FREE(act2);
    E_FREE(act3);
+   E_FREE(act4);
 
    EINA_LIST_FREE(exe_path, str)
      free(str);

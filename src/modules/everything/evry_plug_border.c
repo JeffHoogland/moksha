@@ -21,7 +21,7 @@ _item_free(Evry_Item *it)
 }
 
 static void
-_item_add(Evry_Plugin *p, E_Border *bd, int fuzz, int *prio)
+_item_add(Evry_Plugin *p, E_Border *bd, int match, int *prio)
 {
    Evry_Item *it;
 
@@ -29,7 +29,7 @@ _item_add(Evry_Plugin *p, E_Border *bd, int fuzz, int *prio)
 
    /* e_object_ref(E_OBJECT(bd)); */
    it->data[0] = bd;
-   it->fuzzy_match = fuzz;
+   it->fuzzy_match = match;
    it->priority = *prio;
 
    *prio += 1;
@@ -56,7 +56,8 @@ _fetch(Evry_Plugin *p, const char *input)
    E_Border *bd;
    Eina_List *l;
    int prio = 0;
-
+   int m1, m2;
+   
    _cleanup(p);
 
    zone = e_util_zone_current_get(e_manager_current_get());
@@ -69,26 +70,24 @@ _fetch(Evry_Plugin *p, const char *input)
 	       _item_add(p, bd, 0, &prio);
 	     else
 	       {
-		  int fuzz, min;
-
-		  min = evry_fuzzy_match(e_border_name_get(bd), input);
+		  m1 = evry_fuzzy_match(e_border_name_get(bd), input);
 
 		  if (bd->client.icccm.name)
 		    {
-		       fuzz = evry_fuzzy_match(bd->client.icccm.name, input);
-		       if (!min || fuzz < min)
-			 min = fuzz;
+		       m2 = evry_fuzzy_match(bd->client.icccm.name, input);
+		       if (!m1 || (m2 && m2 < m1))
+			 m1 = m2;
 		    }
 
 		  if (bd->desktop)
 		    {
-		       fuzz = evry_fuzzy_match(bd->desktop->name, input);
-		       if (!min || fuzz < min)
-			 min = fuzz;
+		       m2 = evry_fuzzy_match(bd->desktop->name, input);
+		       if (!m1 || (m2 && m2 < m1))
+			 m1 = m2;
 		    }
 
-		  if (min)
-		    _item_add(p, bd, min, &prio);
+		  if (m1)
+		    _item_add(p, bd, m1, &prio);
 	       }
 	  }
      }

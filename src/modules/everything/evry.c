@@ -461,13 +461,13 @@ evry_fuzzy_match(const char *str, const char *match)
    unsigned int pos = 0;
    unsigned int last = 0;
    unsigned char first;
-
+   unsigned int spaces = 0;
+   
    if (!match || !str) return 0;
 
    for (m = match; *m != 0; m++)
      {
 	mc = tolower(*m);
-
 	first = 0;
 
 	for (p = str; *p != 0 && *m != 0; p++)
@@ -497,6 +497,7 @@ evry_fuzzy_match(const char *str, const char *match)
 	     pos = last = 0;
 	     /* add some weight */
 	     cnt += pos;
+
 	  }
 	else break;
      }
@@ -1107,7 +1108,7 @@ _evry_selectors_switch(void)
      {
 	int next_selector = 0;
 
-	if (s->plugin == action_selector)
+	if (s->sel_item && s->sel_item->plugin == action_selector)
 	  {
 	     Evry_Action *act = s->sel_item->data[0];
 
@@ -1306,7 +1307,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
    if (!s_subject->sel_item || !s_action->sel_item) return;
 
-   if (s_action->plugin == action_selector)
+   if (s_action->sel_item->plugin == action_selector)
      {
 	Evry_Action *act = s_action->sel_item->data[0];
 	Evry_Item *it_object = NULL;
@@ -2081,7 +2082,7 @@ _evry_plug_actions_fetch(Evry_Plugin *p, const char *input)
    Eina_List *l;
    Evry_Item *it;
    Evry_Selector *sel = selectors[1];
-   int fuzz = 0;
+   int match = 0;
 
    EINA_LIST_FREE(p->items, it)
      evry_item_free(it);
@@ -2089,12 +2090,12 @@ _evry_plug_actions_fetch(Evry_Plugin *p, const char *input)
    EINA_LIST_FOREACH(sel->actions, l, act)
      {
 	if (input)
-	  fuzz = evry_fuzzy_match(act->name, input);
+	  match = evry_fuzzy_match(act->name, input);
 
-	if (!input || fuzz)
+	if (!input || match)
 	  {
 	     it = evry_item_new(p, act->name, NULL);
-	     it->fuzzy_match = fuzz;
+	     it->fuzzy_match = match;
 	     it->data[0] = act;
 	     p->items = eina_list_append(p->items, it);
 	  }
@@ -2180,7 +2181,6 @@ _evry_plug_aggregator_fetch(Evry_Plugin *p, const char *input)
    Evry_Plugin *plugin;
    Evry_Item *it;
    int cnt = 0;
-   int fuzzy;
    Eina_List *items = NULL;
 
    EINA_LIST_FREE(p->items, it)

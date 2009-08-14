@@ -92,17 +92,17 @@ static void
 _item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), const char *icon, const char *input)
 {
    Evry_Item *it;
-   int fuzz = 1;
+   int match = 1;
 
    if (input)
-     fuzz = evry_fuzzy_match(label, input);
+     match = evry_fuzzy_match(label, input);
 
-   if (!fuzz) return;
+   if (!match) return;
 
    it = evry_item_new(p, label, &_item_free);
    it->data[0] = action_cb;
    it->data[1] = (void *) eina_stringshare_add(icon);
-   it->fuzzy_match = fuzz;
+   it->fuzzy_match = match;
 
    p->items = eina_list_prepend(p->items, it);
 }
