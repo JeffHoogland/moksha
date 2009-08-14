@@ -460,6 +460,7 @@ evry_fuzzy_match(const char *str, const char *match)
    unsigned int cnt = 1;
    unsigned int pos = 0;
    unsigned int last = 0;
+   unsigned char first;
 
    if (!match || !match[0] || !str || !str[0]) return 0;
 
@@ -467,16 +468,22 @@ evry_fuzzy_match(const char *str, const char *match)
      {
 	mc = tolower(*m);
 
+	first = 0;
+
 	for (p = str; *p != 0 && *m != 0; p++)
 	  {
 	     if (tolower(*p) == mc)
 	       {
-		  cnt += cnt * (pos - last) * 10;
+		  cnt += pos + (pos - last) * 10;
 		  last = pos;
 		  m++;
 		  mc = tolower(*m);
+		  first = 1;
 	       }
 	     else pos++;
+
+	     if (!first)
+	       last = pos;
 
 	     if (cnt > MAX_FUZZ) return 0;
 

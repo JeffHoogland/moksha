@@ -55,7 +55,6 @@ _fetch(Evry_Plugin *p, const char *input)
    E_Zone *zone;
    E_Border *bd;
    Eina_List *l;
-   int fuzz;
    int prio = 0;
 
    _cleanup(p);
@@ -68,15 +67,28 @@ _fetch(Evry_Plugin *p, const char *input)
 	  {
 	     if (!input)
 	       _item_add(p, bd, 0, &prio);
-	     else if ((bd->client.icccm.name) &&
-		      (fuzz = evry_fuzzy_match(bd->client.icccm.name, input)))
-	       _item_add(p, bd, fuzz, &prio);
-	     else if ((fuzz = evry_fuzzy_match(e_border_name_get(bd), input)))
-	       _item_add(p, bd, fuzz, &prio);
-	     else if (bd->desktop)
+	     else
 	       {
-		  if ((fuzz = evry_fuzzy_match(bd->desktop->name, input)))
-		    _item_add(p, bd, fuzz, &prio);
+		  int fuzz, min;
+
+		  min = evry_fuzzy_match(e_border_name_get(bd), input);
+
+		  if (bd->client.icccm.name)
+		    {
+		       fuzz = evry_fuzzy_match(bd->client.icccm.name, input);
+		       if (!min || fuzz < min)
+			 min = fuzz;
+		    }
+
+		  if (bd->desktop)
+		    {
+		       fuzz = evry_fuzzy_match(bd->desktop->name, input);
+		       if (!min || fuzz < min)
+			 min = fuzz;
+		    }
+
+		  if (min)
+		    _item_add(p, bd, min, &prio);
 	       }
 	  }
      }
