@@ -96,6 +96,7 @@ _item_add(Evry_Plugin *p, char *file, char *mime, int prio)
      {
 	it->browseable = EINA_TRUE;
 	it->mime = eina_stringshare_add("x-directory/normal");
+	it->priority = 1;
      }
    else
      it->mime = eina_stringshare_add(mime);
@@ -205,8 +206,6 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
      }
    else if (inst->items && inst->input)
      {
-	char input[128];
-	char *pos = input;
 	int len_matched = strlen(inst->matched);
 	int len_input = strlen(inst->input);
 	Eina_List *l;
@@ -215,12 +214,8 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	  {
 	     p->items = NULL;
 
-	     snprintf(input, 128, "*%s*", inst->input + len_matched);
-	     for (; *pos != '\0'; pos++)
-	       if (isspace(*pos)) *pos = '*';
-
 	     EINA_LIST_FOREACH(inst->items, l, it)
-	       if (e_util_glob_case_match(it->label, input))
+	       if (evry_fuzzy_match(it->label, (inst->input + len_matched)))
 		 p->items = eina_list_append(p->items, it);
 
 	     if (inst->matched)

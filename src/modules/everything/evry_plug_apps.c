@@ -177,37 +177,21 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int prio)
 }
 
 static void
-_add_desktop_list(Evry_Plugin *p, Eina_List *apps, char *m1, char *m2)
+_add_desktop_list(Evry_Plugin *p, Eina_List *apps, const char *input)
 {
    Efreet_Desktop *desktop;
    Eina_List *l;
+   int fuzz;
 
    EINA_LIST_FOREACH(apps, l, desktop)
      {
-	if (eina_list_count(p->items) > 99) continue;
+	if (eina_list_count(p->items) > 199) continue;
 	if (!desktop || !desktop->name || !desktop->exec) continue;
 
-	if (e_util_glob_case_match(desktop->exec, m1))
-	  _item_add(p, desktop, NULL, 1);
-	else if (e_util_glob_case_match(desktop->name, m1))
-	  _item_add(p, desktop, NULL, 1);
-     }
-   EINA_LIST_FOREACH(apps, l, desktop)
-     {
-	if (eina_list_count(p->items) > 99) continue;
-	if (!desktop || !desktop->name || !desktop->exec) continue;
-
-	if (e_util_glob_case_match(desktop->exec, m2))
-	  _item_add(p, desktop, NULL, 2);
-	else if (e_util_glob_case_match(desktop->name, m2))
-	  _item_add(p, desktop, NULL, 2);
-	/* else if (desktop->comment)
-	 *   {
-	 *      if (e_util_glob_case_match(desktop->comment, m1))
-	 *        _item_add(p, desktop, NULL, 3);
-	 *      else if (e_util_glob_case_match(desktop->comment, m2))
-	 *        _item_add(p, desktop, NULL, 4);
-	 *   } */
+	if (fuzz = evry_fuzzy_match(desktop->exec, input))
+	  _item_add(p, desktop, NULL, fuzz);
+	else if (fuzz = evry_fuzzy_match(desktop->name, input))
+	  _item_add(p, desktop, NULL, fuzz);
      }
 }
 
@@ -264,37 +248,47 @@ _fetch(Evry_Plugin *p, const char *input)
 
    _list_free(p);
 
-   if (input)
-     {
-	snprintf(match1, sizeof(match1), "%s*", input);
-	snprintf(match2, sizeof(match2), "*%s*", input);
-     }
-
    /* add apps for a given mimetype */
    if (p->type == type_action)
      {
 	if (input)
 	  {
-	     _add_desktop_list(p, inst->apps_mime, match1, match2);
+	     _add_desktop_list(p, inst->apps_mime, input);
 	  }
 	else
 	  {
 	     EINA_LIST_FOREACH(inst->apps_mime, l, desktop)
 	       _item_add(p, desktop, NULL, 1);
 	  }
-
-	if (input)
-	  EINA_LIST_FOREACH(p->items, l, it)
-	    it->priority += 2;
      }
 
    /* add apps matching input */
    if (input)
      {
 	if (!inst->apps_all)
-	  inst->apps_all = efreet_util_desktop_name_glob_list("*");
+	  {
+	     Eina_List *apps = NULL;
+	     Eina_List *stuff;
+	     Eina_List *l, *ll;
 
-	_add_desktop_list(p, inst->apps_all, match1, match2);
+	     apps = efreet_util_desktop_name_glob_list("*");
+	     stuff = efreet_util_desktop_category_list("Screensaver");
+
+	     EINA_LIST_FOREACH(stuff, l, desktop)
+	       {
+		  ll = eina_list_data_find_list(apps, desktop);
+		  if (ll)
+		    {
+		       efreet_desktop_free(desktop);
+		       apps = eina_list_remove_list(apps, ll);
+		    }
+		  /* efreet_desktop_free(desktop); */
+	       }
+
+	     inst->apps_all = apps;
+	  }
+
+	_add_desktop_list(p, inst->apps_all, input);
      }
    /* add exe history items */
    else if (!p->items)
@@ -362,7 +356,11 @@ _fetch(Evry_Plugin *p, const char *input)
 
    if (p->items)
      {
+	int prio;
 	p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
+	EINA_LIST_FOREACH(p->items, l, it)
+	  it->priority = prio++;
+
 	return 1;
      }
 

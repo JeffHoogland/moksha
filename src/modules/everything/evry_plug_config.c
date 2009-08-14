@@ -14,13 +14,14 @@ _cleanup(Evry_Plugin *p)
 }
 
 static void
-_item_add(Evry_Plugin *p, E_Configure_It *eci, int prio)
+_item_add(Evry_Plugin *p, E_Configure_It *eci, int fuzz, int prio)
 {
    Evry_Item *it;
 
    it = evry_item_new(p, eci->label, NULL);
    it->data[0] = eci;
    it->priority = prio;
+   it->fuzzy_match = fuzz;
 
    p->items = eina_list_append(p->items, it);
 }
@@ -28,46 +29,38 @@ _item_add(Evry_Plugin *p, E_Configure_It *eci, int prio)
 static int
 _cb_sort(const void *data1, const void *data2)
 {
-   const Evry_Item *it1, *it2;
+   const Evry_Item *it1 = data1;
+   const Evry_Item *it2 = data2;
 
-   it1 = data1;
-   it2 = data2;
+   if (it1->fuzzy_match - it2->fuzzy_match)
+     return (it1->fuzzy_match - it2->fuzzy_match);
 
-   /* TODO sort by name? */
    return (it1->priority - it2->priority);
 }
 
 static int
 _fetch(Evry_Plugin *p, const char *input)
 {
-   char match1[128];
-   char match2[128];
    Eina_List *l, *ll;
    E_Configure_Cat *ecat;
    E_Configure_It *eci;
+   int fuzz;
 
    _cleanup(p);
-
-   snprintf(match1, sizeof(match1), "%s*", input);
-   snprintf(match2, sizeof(match2), "*%s*", input);
 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      {
 	if ((ecat->pri < 0) || (!ecat->items)) continue;
 	if (!strcmp(ecat->cat, "system")) continue;
-	
+
 	EINA_LIST_FOREACH(ecat->items, ll, eci)
 	  {
 	     if (eci->pri >= 0)
 	       {
-		  if (e_util_glob_case_match(eci->label, match1))
-		    _item_add(p, eci, 1);
-		  else if (e_util_glob_case_match(eci->label, match2))
-		    _item_add(p, eci, 2);
-		  else if (e_util_glob_case_match(ecat->label, match1))
-		    _item_add(p, eci, 3);
-		  else if (e_util_glob_case_match(ecat->label, match2))
-		    _item_add(p, eci, 4);
+		  if (fuzz = evry_fuzzy_match(eci->label, input))
+		    _item_add(p, eci, fuzz, 0);
+		  else if (fuzz = evry_fuzzy_match(ecat->label, input))
+		    _item_add(p, eci, fuzz, 1);
 	       }
 	  }
      }
@@ -116,7 +109,7 @@ _action(Evry_Action *act, const Evry_Item *it, const Evry_Item *it2 __UNUSED__, 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      {
 	if (found) break;
-	
+
 	EINA_LIST_FOREACH(ecat->items, ll, eci2)
 	  {
 	     if (eci == eci2)

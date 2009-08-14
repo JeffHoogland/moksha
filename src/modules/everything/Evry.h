@@ -32,22 +32,27 @@ struct _Plugin_Config
 
 struct _Evry_Item
 {
-  Evry_Plugin *plugin;
-
+  /* label to show for this item */
   const char *label;
 
   const char *uri;
   const char *mime;
 
+  /* item can be browsed, e.g. folders */
   Eina_Bool browseable;
 
   /* these are only for internally use by plugins */
-  /* used e.g. as pointer for item data (Efreet_Desktop) or */
-  /* for internal stuff, like priority hints for sorting, etc */
+  /* used e.g. as pointer for item data (Efreet_Desktop) */
   void *data[4];
+
+  /* priority hints for sorting */
   int priority;
 
-  /* not to be set by plugin! */
+  /* store value of fuzzy match with input */
+  int fuzzy_match;
+  
+  /* do not set by plugin! */
+  Evry_Plugin *plugin;
   Evas_Object *o_icon;
   Evas_Object *o_bg;
   int ref;
@@ -153,3 +158,6 @@ void evry_item_free(Evry_Item *it);
 void evry_plugin_async_update(Evry_Plugin *plugin, int state);
 void evry_clear_input(void);
 int  evry_icon_theme_set(Evas_Object *obj, const char *icon);
+
+int  evry_fuzzy_match(const char *str, const char *match);
+

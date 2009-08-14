@@ -56,6 +56,12 @@ _cleanup(Evry_Plugin *p)
    Evry_Item *it;
    int items = 10;
 
+   if (p->items)
+     {
+	evry_item_free(p->items->data);
+	p->items = eina_list_remove_list(p->items, p->items);
+     }
+
    EINA_LIST_FREE(p->items, it)
      {
 	if (items-- > 0)

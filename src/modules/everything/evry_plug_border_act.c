@@ -76,12 +76,10 @@ _begin(Evry_Plugin *p __UNUSED__, const Evry_Item *item)
 static int
 _cb_sort(const void *data1, const void *data2)
 {
-   const Evry_Item *it1, *it2;
+   const Evry_Item *it1 = data1;
+   const Evry_Item *it2 = data2;
 
-   it1 = data1;
-   it2 = data2;
-
-   return (it1->priority - it2->priority);
+   return (it1->fuzzy_match - it2->fuzzy_match);
 }
 
 static void
@@ -91,27 +89,20 @@ _item_free(Evry_Item *it)
 }
 
 static void
-_item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), const char *icon, char *m1, char *m2)
+_item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), const char *icon, const char *input)
 {
    Evry_Item *it;
-   int prio = 1;
+   int fuzz = 1;
 
-   if (m1[0] && m2[0])
-     {
-	if (e_util_glob_case_match(label, m1))
-	  prio = 1;
-	else if (e_util_glob_case_match(label, m2))
-	  prio = 2;
-	else
-	  prio = 0;
-     }
+   if (input)
+     fuzz = evry_fuzzy_match(label, input);
 
-   if (!prio) return;
+   if (!fuzz) return;
 
    it = evry_item_new(p, label, &_item_free);
    it->data[0] = action_cb;
    it->data[1] = (void *) eina_stringshare_add(icon);
-   it->priority = prio;
+   it->fuzzy_match = fuzz;
 
    p->items = eina_list_prepend(p->items, it);
 }
@@ -126,37 +117,23 @@ _cleanup(Evry_Plugin *p)
 }
 
 static int
-_fetch(Evry_Plugin *p, const char *input __UNUSED__)
+_fetch(Evry_Plugin *p, const char *input)
 {
-   char m1[128];
-   char m2[128];
-
    _cleanup(p);
 
-   if (input)
-     {
-	snprintf(m1, sizeof(m1), "%s*", input);
-	snprintf(m2, sizeof(m2), "*%s*", input);
-     }
-   else
-     {
-	m1[0] = 0;
-	m2[0] = 0;
-     }
-
-   _item_add(p, _("Switch To"), _act_cb_border_switch_to, "go-next", m1, m2);
+   _item_add(p, _("Switch To"), _act_cb_border_switch_to, "go-next", input);
 
    if (inst->border->iconic)
-     _item_add(p, _("Uniconify"), _act_cb_border_unminimize, "window-minimize", m1, m2);
+     _item_add(p, _("Uniconify"), _act_cb_border_unminimize, "window-minimize", input);
    else
-     _item_add(p, _("Iconify"), _act_cb_border_minimize, "window-minimize", m1, m2);
+     _item_add(p, _("Iconify"), _act_cb_border_minimize, "window-minimize", input);
 
    if (!inst->border->fullscreen)
-     _item_add(p, _("Fullscreen"), _act_cb_border_fullscreen, "view-fullscreen", m1, m2);
+     _item_add(p, _("Fullscreen"), _act_cb_border_fullscreen, "view-fullscreen", input);
    else
-     _item_add(p, _("Unfullscreen"), _act_cb_border_fullscreen, "view-restore", m1, m2);
+     _item_add(p, _("Unfullscreen"), _act_cb_border_fullscreen, "view-restore", input);
 
-   _item_add(p, _("Close"), _act_cb_border_close, "window-close", m1, m2);
+   _item_add(p, _("Close"), _act_cb_border_close, "window-close", input);
 
    if (eina_list_count(p->items) > 0)
      {

@@ -77,15 +77,19 @@ _item_fill(Evry_Item *it)
 static int
 _cb_sort(const void *data1, const void *data2)
 {
-   const Evry_Item *it1, *it2;
+   const Evry_Item *it1 = data1;
+   const Evry_Item *it2 = data2;
 
-   it1 = data1;
-   it2 = data2;
+   if (it1->browseable && !it2->browseable)
+     return -1;
 
-   if (it2->priority - it1->priority)
-     return (it2->priority - it1->priority);
-   else
-     return strcasecmp(it1->label, it2->label);
+   if (!it1->browseable && it2->browseable)
+     return 1;
+
+   if (it1->fuzzy_match - it2->fuzzy_match)
+     return (it1->fuzzy_match - it2->fuzzy_match);
+
+   return strcasecmp(it1->label, it2->label);
 }
 
 static int
@@ -111,8 +115,6 @@ _dirbrowse_idler(void *data)
 
    if (!s->command)
      {
-	/* evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_CLEAR); */
-
 	if (eina_list_count(p->items) > 0)
 	  {
 	     p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
@@ -240,8 +242,6 @@ _fetch(Evry_Plugin *p, const char *input)
 {
    Evry_Item *it;
    Eina_List *l;
-   char match1[4096];
-   char match2[4096];
    int cnt = 0;
    State *s = ((Eina_List *)p->private)->data;
 
@@ -316,21 +316,15 @@ _fetch(Evry_Plugin *p, const char *input)
 	s->command = EINA_FALSE;
      }
 
-   if (input)
-     {
-	snprintf(match1, sizeof(match1), "%s*", input);
-	snprintf(match2, sizeof(match2), "*%s*", input);
-     }
-
    EINA_LIST_FOREACH(s->items, l, it)
      {
 	if (input)
 	  {
-	     if (e_util_glob_case_match(it->label, match1))
-	       it->priority = 1 + (it->browseable ? 1 : 0);
-	     else if (e_util_glob_case_match(it->label, match2))
-	       it->priority = (it->browseable ? 1 : 0);
-	     else it = NULL;
+	     int fuzz;
+	     if ((fuzz = evry_fuzzy_match(it->label, input)))
+	       it->priority = fuzz;
+	     else
+	       it = NULL;
 	  }
 
 	if (it)

@@ -20,7 +20,7 @@ _item_free(Evry_Item *it)
 }
 
 static void
-_item_add(Evry_Plugin *p, E_Border *bd, int prio)
+_item_add(Evry_Plugin *p, E_Border *bd, int fuzz, int *prio)
 {
    Evry_Item *it;
 
@@ -28,7 +28,10 @@ _item_add(Evry_Plugin *p, E_Border *bd, int prio)
 
    e_object_ref(E_OBJECT(bd));
    it->data[0] = bd;
-   it->priority = prio;
+   it->fuzzy_match = fuzz;
+   it->priority = *prio;
+
+   *prio = *prio - 1;
 
    p->items = eina_list_append(p->items, it);
 }
@@ -37,10 +40,11 @@ _item_add(Evry_Plugin *p, E_Border *bd, int prio)
 static int
 _cb_sort(const void *data1, const void *data2)
 {
-   const Evry_Item *it1, *it2;
+   const Evry_Item *it1 = data1;
+   const Evry_Item *it2 = data2;
 
-   it1 = data1;
-   it2 = data2;
+   if (it1->fuzzy_match - it2->fuzzy_match)
+     return (it1->fuzzy_match - it2->fuzzy_match);
 
    return (it1->priority - it2->priority);
 }
@@ -50,22 +54,15 @@ _fetch(Evry_Plugin *p, const char *input)
 {
    E_Manager *man;
    E_Zone *zone;
-
-   char m1[128];
-   char m2[128];
    E_Border *bd;
    E_Border_List *bl;
+   int fuzz;
+   int prio = 0;
 
    _cleanup(p);
 
    man = e_manager_current_get();
    zone = e_util_zone_current_get(man);
-
-   if (input)
-     {
-	snprintf(m1, sizeof(m1), "%s*", input);
-	snprintf(m2, sizeof(m2), "*%s*", input);
-     }
 
    bl = e_container_border_list_first(e_container_current_get(man));
    while ((bd = e_container_border_list_next(bl)))
@@ -73,31 +70,25 @@ _fetch(Evry_Plugin *p, const char *input)
 	if (zone == bd->zone)
 	  {
 	     if (!input)
-	       _item_add(p, bd, 1);
-	     else if (bd->client.icccm.name &&
-		      e_util_glob_case_match(bd->client.icccm.name, m1))
-	       _item_add(p, bd, 1);
-	     else  if (e_util_glob_case_match(e_border_name_get(bd), m1))
-	       _item_add(p, bd, 1);
-	     else if (bd->client.icccm.name &&
-		      e_util_glob_case_match(bd->client.icccm.name, m2))
-	       _item_add(p, bd, 2);
-	     else if (e_util_glob_case_match(e_border_name_get(bd), m2))
-	       _item_add(p, bd, 2);
+	       _item_add(p, bd, 0, &prio);
+	     else if ((bd->client.icccm.name) &&
+		      (fuzz = evry_fuzzy_match(bd->client.icccm.name, input)))
+	       _item_add(p, bd, fuzz, &prio);
+	     else if ((fuzz = evry_fuzzy_match(e_border_name_get(bd), input)))
+	       _item_add(p, bd, fuzz, &prio);
 	     else if (bd->desktop)
 	       {
-		  if (e_util_glob_case_match(bd->desktop->name, m1))
-		    _item_add(p, bd, 1);
-		  else if (e_util_glob_case_match(bd->desktop->name, m2))
-		    _item_add(p, bd, 2);
+		  if ((fuzz = evry_fuzzy_match(bd->desktop->name, input)))
+		    _item_add(p, bd, fuzz, &prio);
 	       }
 	  }
      }
    e_container_border_list_free(bl);
 
-   if (eina_list_count(p->items) > 0)
+   if (p->items)
      {
 	p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
+
 	return 1;
      }
 
