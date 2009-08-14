@@ -122,7 +122,6 @@ _cleanup(Evry_Plugin *p)
    EINA_LIST_FREE(inst->items, it)
      evry_item_free(it);
 
-   inst->items = NULL;
    p->items = NULL;
 }
 
@@ -239,9 +238,6 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	EINA_LIST_FREE(inst->items, it)
 	  evry_item_free(it);
 
-	inst->items = NULL;
-	p->items = NULL;
-
 	if (inst->input)
 	  eina_stringshare_del(inst->input);
 	inst->input = NULL;
@@ -249,6 +245,8 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	if (inst->matched)
 	  eina_stringshare_del(inst->matched);
 	inst->matched = NULL;
+
+	p->items = NULL;
      }
 
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
@@ -404,7 +402,7 @@ _init(void)
    _plugin_new("Music",      type_subject, "Music", 20, 0);
    _plugin_new("Videos",     type_subject, "Videos", 20, 0);
    _plugin_new("Documents",  type_subject, "Documents", 20, 0);
-   
+
    _plugin_new("Find Files", type_object,  "Files", 20, 1);
    _plugin_new("Folders",    type_object,  "Folders", 20, 0);
 

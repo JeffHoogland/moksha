@@ -257,6 +257,8 @@ _fetch(Evry_Plugin *p, const char *input)
 	/* XXX free s->items?  */
 	if (!strncmp(input, "/", 1))
 	  {
+	     if (s->command) return 1;
+
 	     it = evry_item_new(p, "/", NULL);
 	     if (!it) return 0;
 	     it->uri = eina_stringshare_add("/");
@@ -272,6 +274,8 @@ _fetch(Evry_Plugin *p, const char *input)
 	     char dir[4096];
 	     char *tmp;
 	     int prio = 0;
+
+	     if (s->command) return 1;
 
 	     if (!strcmp(s->directory, "/")) return 0;
 
@@ -309,7 +313,6 @@ _fetch(Evry_Plugin *p, const char *input)
 	EINA_LIST_FREE(p->items, it)
 	  evry_item_free(it);
 
-	p->items = NULL;
 	s->command = EINA_FALSE;
      }
 

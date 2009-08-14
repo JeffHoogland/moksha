@@ -126,7 +126,6 @@ static void
 _clear_list(Evry_Plugin *plugin)
 {
    Evry_Item *it;
-   evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_CLEAR);
    EINA_LIST_FREE(plugin->items, it)
      evry_item_free(it);
 }
@@ -287,45 +286,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
    return 1;
 }
 
-/* static int
- * _action(Evry_Plugin *plugin, Evry_Item *it, const char *input __UNUSED__)
- * {
- *    const char *label;
- *    int len;
- *
- *    if (!it) return EVRY_ACTION_CONTINUE;
- *
- *    label = it->label;
- *    len = eina_stringshare_strlen(label);
- *
- *    if (!ecore_x_selection_primary_set(clipboard_win, label, len))
- *      fprintf(stderr, "ASPELL cannot set primary selection to %#x '%s'\n",
- * 	     clipboard_win, label);
- *    if (!ecore_x_selection_clipboard_set(clipboard_win, label, len))
- *      fprintf(stderr, "ASPELL cannot set clipboard selection to %#x '%s'\n",
- * 	     clipboard_win, label);
- *
- *    if (plugin->items)
- *      {
- * 	Eina_List *l, *l_next;
- * 	Evry_Item *it2;
- *
- * 	evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_CLEAR);
- *
- * 	EINA_LIST_FOREACH_SAFE(plugin->items, l, l_next, it2)
- * 	  {
- * 	     if (it == it2) continue;
- * 	     plugin->items = eina_list_remove_list(plugin->items, l);
- * 	     eina_stringshare_del(it2->label);
- * 	     E_FREE(it2);
- * 	  }
- *      }
- *
- *    evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_ADD);
- *
- *    return EVRY_ACTION_FINISHED;
- * } */
-
 static void
 _cleanup(Evry_Plugin *plugin)
 {
@@ -381,7 +341,6 @@ _init(void)
    p->base.async_query = 1;
    p->base.begin = _begin;
    p->base.fetch = _fetch;
-   /* p->base.action = _action; */
    p->base.cleanup = _cleanup;
 
    evry_plugin_register(&p->base);
