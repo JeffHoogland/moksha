@@ -10,7 +10,7 @@
  */
 #define INPUTLEN 40
 #define MATCH_LAG 0.33
-#define MAX_FUZZ 200
+#define MAX_FUZZ 150
 
 
 typedef struct _Evry_State Evry_State;
@@ -456,13 +456,13 @@ int
 evry_fuzzy_match(const char *str, const char *match)
 {
    const char *p, *m;
-   char mc;
+   char mc, pc;
    unsigned int cnt = 1;
    unsigned int pos = 0;
    unsigned int last = 0;
    unsigned char first;
-   unsigned int spaces = 0;
-   
+   unsigned int min = 0;
+
    if (!match || !str) return 0;
 
    for (m = match; *m != 0; m++)
@@ -472,9 +472,35 @@ evry_fuzzy_match(const char *str, const char *match)
 
 	for (p = str; *p != 0 && *m != 0; p++)
 	  {
-	     if (tolower(*p) == mc)
+	     pc = tolower(*p);
+
+	     /* new word of string begins */
+	     if ((cnt > 1) && (isspace(pc)) && (!isspace(mc)))
 	       {
-		  cnt += pos + (pos - last) * 10;
+		  /* remember count */
+		  if (!min)
+		    min = cnt;
+		  else if (cnt < min)
+		    min = cnt;
+
+		  p++;
+
+		  /* search match in next word */
+		  if (*p != 0)
+		    {
+		       cnt = pos;
+		       last = pos;
+		       first = 0;
+		       m = match;
+		       mc = tolower(*m);
+		       pc = tolower(*p);
+		    }
+		  else break;
+	       }
+
+	     if (pc == mc)
+	       {
+		  cnt += pos + (pos - last) * 20;
 		  last = pos;
 		  m++;
 		  mc = tolower(*m);
@@ -491,7 +517,7 @@ evry_fuzzy_match(const char *str, const char *match)
 	       break;
 	  }
 
-	/* search next word */
+	/* search next word of match */
 	if (isspace(mc))
 	  {
 	     pos = last = 0;
@@ -501,6 +527,9 @@ evry_fuzzy_match(const char *str, const char *match)
 	  }
 	else break;
      }
+
+   if (min && min < cnt)
+     cnt = min;
 
    if (*m == 0)
      return cnt;
@@ -826,23 +855,28 @@ static void
 _evry_selector_update(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
-   Evry_Item *it = s->sel_item;
+   Evry_Item *it = NULL;
 
-   if (!s->plugin && it)
-     _evry_list_item_desel(s, NULL);
-   else if (it && !eina_list_data_find_list(s->plugin->items, it))
-     _evry_list_item_desel(s, NULL);
-
-   it = s->sel_item;
-
-   if (s->plugin && (!it || s->item_auto_selected))
+   if (s)
      {
-	/* get first item */
-	if (s->plugin->items)
+	it = s->sel_item;
+
+	if (!s->plugin && it)
+	  _evry_list_item_desel(s, NULL);
+	else if (it && !eina_list_data_find_list(s->plugin->items, it))
+	  _evry_list_item_desel(s, NULL);
+
+	it = s->sel_item;
+
+	if (s->plugin && (!it || s->item_auto_selected))
 	  {
-	     it = s->plugin->items->data;
-	     s->item_auto_selected = EINA_TRUE;
-	     _evry_list_item_sel(s, it);
+	     /* get first item */
+	     if (s->plugin->items)
+	       {
+		  it = s->plugin->items->data;
+		  s->item_auto_selected = EINA_TRUE;
+		  _evry_list_item_sel(s, it);
+	       }
 	  }
      }
 
@@ -869,8 +903,8 @@ _evry_selector_update(Evry_Selector *sel)
 
    if (sel == selectors[0])
      {
-	if (_evry_selector_actions_get(it))
-	  _evry_selector_update(selectors[1]);
+	_evry_selector_actions_get(it);
+	_evry_selector_update(selectors[1]);
      }
 }
 
@@ -1996,6 +2030,10 @@ _evry_fuzzy_sort_cb(const void *data1, const void *data2)
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
 
+   if ((it1->plugin == it2->plugin) &&
+       (it1->priority - it2->priority))
+     return (it1->priority - it2->priority);
+
    if (it1->fuzzy_match && !it2->fuzzy_match)
      return -1;
 
@@ -2218,6 +2256,7 @@ _evry_plug_aggregator_fetch(Evry_Plugin *p, const char *input)
 		  if (!items || !eina_list_data_find_list(items, ll->data))
 		    {
 		       it = ll->data;
+
 		       _evry_item_ref(it);
 		       it->fuzzy_match = 0;
 		       p->items = eina_list_append(p->items, it);

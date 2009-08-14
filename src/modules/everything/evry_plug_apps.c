@@ -207,7 +207,7 @@ _cb_sort(const void *data1, const void *data2)
    Evry_App *app1, *app2;
    const char *e1, *e2;
    double t1, t2;
-   
+
    app1 = it1->data[0];
    app2 = it2->data[0];
 
@@ -224,19 +224,21 @@ _cb_sort(const void *data1, const void *data2)
    t1 = e_exehist_newest_run_get(e1);
    t2 = e_exehist_newest_run_get(e2);
 
-   if ((int)(t2 - t1))
-     return (int)(t2 - t1);
-
    if (it1->fuzzy_match && !it2->fuzzy_match)
      return -1;
 
    if (!it1->fuzzy_match && it2->fuzzy_match)
      return 1;
 
+   t1 = t1 / (double)it1->fuzzy_match;
+   t2 = t2 / (double)it2->fuzzy_match;
+
+   if ((int)(t2 - t1))
+     return (int)(t2 - t1);
+
    if (it1->fuzzy_match - it2->fuzzy_match)
      return (it1->fuzzy_match - it2->fuzzy_match);
 
-   // TODO compare exe strings?
    else return 0;
 }
 
@@ -364,7 +366,7 @@ _fetch(Evry_Plugin *p, const char *input)
 
    if (p->items)
      {
-	int prio;
+	int prio = 0;
 	p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
 	EINA_LIST_FOREACH(p->items, l, it)
 	  it->priority = prio++;
@@ -402,7 +404,7 @@ _exec_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 
    if (app->file && strlen(app->file) > 0)
      return 1;
-   
+
    return 0;
 }
 
@@ -487,7 +489,7 @@ _exec_border_action(Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2
 
    app->desktop = bd->desktop;
    it->data[0] = app;
-   
+
    return _app_action(it, it2);
 }
 
