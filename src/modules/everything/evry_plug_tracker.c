@@ -206,7 +206,7 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
      }
    else if (inst->items && inst->input)
      {
-	int len_matched = strlen(inst->matched);
+	int len_matched = (inst->matched ? strlen(inst->matched) : 0);
 	int len_input = strlen(inst->input);
 	Eina_List *l;
 

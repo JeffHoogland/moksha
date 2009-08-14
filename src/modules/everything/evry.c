@@ -462,7 +462,7 @@ evry_fuzzy_match(const char *str, const char *match)
    unsigned int last = 0;
    unsigned char first;
 
-   if (!match || !match[0] || !str || !str[0]) return 0;
+   if (!match || !str) return 0;
 
    for (m = match; *m != 0; m++)
      {
