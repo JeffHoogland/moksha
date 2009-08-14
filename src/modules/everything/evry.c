@@ -462,10 +462,14 @@ evry_fuzzy_match(const char *str, const char *match)
    unsigned int last = 0;
    unsigned char first;
    unsigned int min = 0;
+   unsigned int spaces = 1;
 
    if (!match || !str) return 0;
 
    for (m = match; *m != 0; m++)
+     if (isspace(*m)) spaces++;
+   
+   for (m = match; *m != 0, spaces > 0; m++, spaces--)
      {
 	mc = tolower(*m);
 	first = 0;
@@ -475,7 +479,7 @@ evry_fuzzy_match(const char *str, const char *match)
 	     pc = tolower(*p);
 
 	     /* new word of string begins */
-	     if ((cnt > 1) && (isspace(pc)) && (!isspace(mc)))
+	     if ((cnt > 1) && (isspace(pc)) && (!pc != mc))
 	       {
 		  /* remember count */
 		  if (!min)
