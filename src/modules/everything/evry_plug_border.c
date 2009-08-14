@@ -3,6 +3,7 @@
 
 static Evry_Plugin *p;
 
+/* TODO handle border remove events */
 
 static void
 _cleanup(Evry_Plugin *p)
@@ -16,7 +17,7 @@ _cleanup(Evry_Plugin *p)
 static void
 _item_free(Evry_Item *it)
 {
-   if (it->data[0]) e_object_unref(E_OBJECT(it->data[0]));
+   /* if (it->data[0]) e_object_unref(E_OBJECT(it->data[0])); */
 }
 
 static void
@@ -26,17 +27,16 @@ _item_add(Evry_Plugin *p, E_Border *bd, int fuzz, int *prio)
 
    it = evry_item_new(p, e_border_name_get(bd), &_item_free);
 
-   e_object_ref(E_OBJECT(bd));
+   /* e_object_ref(E_OBJECT(bd)); */
    it->data[0] = bd;
    it->fuzzy_match = fuzz;
    it->priority = *prio;
 
-   *prio = *prio - 1;
+   *prio += 1;
 
    p->items = eina_list_append(p->items, it);
 }
 
-/* TODO sort by focus history and name? */
 static int
 _cb_sort(const void *data1, const void *data2)
 {
@@ -52,20 +52,17 @@ _cb_sort(const void *data1, const void *data2)
 static int
 _fetch(Evry_Plugin *p, const char *input)
 {
-   E_Manager *man;
    E_Zone *zone;
    E_Border *bd;
-   E_Border_List *bl;
+   Eina_List *l;
    int fuzz;
    int prio = 0;
 
    _cleanup(p);
 
-   man = e_manager_current_get();
-   zone = e_util_zone_current_get(man);
+   zone = e_util_zone_current_get(e_manager_current_get());
 
-   bl = e_container_border_list_first(e_container_current_get(man));
-   while ((bd = e_container_border_list_next(bl)))
+   EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
 	if (zone == bd->zone)
 	  {
@@ -83,7 +80,6 @@ _fetch(Evry_Plugin *p, const char *input)
 	       }
 	  }
      }
-   e_container_border_list_free(bl);
 
    if (p->items)
      {

@@ -471,7 +471,7 @@ evry_fuzzy_match(const char *str, const char *match)
 	  {
 	     if (tolower(*p) == mc)
 	       {
-		  cnt += cnt * (pos - last);
+		  cnt += cnt * (pos - last) * 10;
 		  last = pos;
 		  m++;
 		  mc = tolower(*m);
@@ -480,7 +480,7 @@ evry_fuzzy_match(const char *str, const char *match)
 
 	     if (cnt > MAX_FUZZ) return 0;
 
-	     if (isspace(mc) && strchr(p, ' '))
+	     if (isspace(mc) && !strchr(p, ' '))
 	       break;
 	  }
 
@@ -513,7 +513,8 @@ _evry_list_win_new(E_Zone *zone)
    x = (zone->w / 2) - (win->popup->w / 3);
    y = (zone->h / 2);
 
-   popup = e_popup_new(zone, x + 50, y - 4, /*XXX get from theme ?*/
+   /* TODO get offsets from theme */
+   popup = e_popup_new(zone, x + 50, y - 4,
 		       win->popup->w * 2/3 - 100,
 		       evry_conf->height);
    if (!popup) return NULL;
