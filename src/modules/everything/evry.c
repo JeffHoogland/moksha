@@ -457,91 +457,142 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 int
 evry_fuzzy_match(const char *str, const char *match)
 {
-   const char *p, *m;
+   const char *p, *m, *next;
    char mc, pc;
-   unsigned int cnt = 1;
-   unsigned int pos = 0;
+   int sum = 0;
+
    unsigned int last = 0;
-   unsigned char first;
+   unsigned int offset = 0;
    unsigned int min = 0;
-   unsigned int spaces = 1;
+   unsigned char first = 0;
+
+   /* words in match */
+   unsigned int words = 1;
+   unsigned int word = 0;
+   unsigned int word_min[64];
 
    if (!match || !str) return 0;
 
-   for (m = match; *m != 0; m++)
-     if (isspace(*m)) spaces++;
-   
-   for (m = match; *m != 0, spaces > 0; m++, spaces--)
+   if ((match[0] == 0) ||
+       (match[1] == 0)) return 0;
+
+   word_min[0] = MAX_FUZZ;
+
+   for (m = match; *m != 0 && *(m+1) != 0; m++)
      {
-	mc = tolower(*m);
-	first = 0;
-
-	for (p = str; *p != 0 && *m != 0; p++)
+	if (isspace(*m) && !isspace(*(m+1)))
 	  {
-	     pc = tolower(*p);
-
-	     /* new word of string begins */
-	     if ((cnt > 1) && (isspace(pc)) && (!pc != mc))
-	       {
-		  /* remember count */
-		  if (!min)
-		    min = cnt;
-		  else if (cnt < min)
-		    min = cnt;
-
-		  p++;
-
-		  /* search match in next word */
-		  if (*p != 0)
-		    {
-		       cnt = pos;
-		       last = pos;
-		       first = 0;
-		       m = match;
-		       mc = tolower(*m);
-		       pc = tolower(*p);
-		    }
-		  else break;
-	       }
-
-	     if (pc == mc)
-	       {
-		  cnt += pos + (pos - last) * 20;
-		  last = pos;
-		  m++;
-		  mc = tolower(*m);
-		  first = 1;
-	       }
-	     else pos++;
-
-	     if (!first)
-	       last = pos;
-
-	     if (cnt > MAX_FUZZ) return 0;
-
-	     if (isspace(mc) && !strchr(p, ' '))
-	       break;
+	     word_min[words] = MAX_FUZZ;
+	     words++;
 	  }
-
-	/* search next word of match */
-	if (isspace(mc))
-	  {
-	     pos = last = 0;
-	     /* add some weight */
-	     cnt += pos;
-
-	  }
-	else break;
      }
 
-   if (min && min < cnt)
-     cnt = min;
+   p = next = str;
+   m = match;
 
-   if (*m == 0)
-     return cnt;
-   else
-     return 0;
+   for (word = 0; word < words && p && *p != 0;)
+     {
+	/* reset match */
+	if (word == 0) m = match;
+
+	/* end of matching */
+	if (*m == 0) break;
+
+	mc = tolower(*m);
+
+	offset = 0;
+	last = 0;
+	min = 1;
+	first = 0;
+
+	/* match current word of string against current match */
+	for (p = next; *p != 0; p++)
+	  {
+	     pc = tolower(*p);
+	     /* new word of string begins */
+	     if (isspace(pc))
+	       {
+		  if (word < words - 1)
+		    {
+		       /* test next match */
+		       for (; (*m != 0) && !isspace(*m); m++);
+		       for (; (*m != 0) &&  isspace(*m); m++);
+		       word++;
+		       break;
+		    }
+		  else
+		    {
+		       /* go to next word */
+		       for (; (*p != 0) && isspace(*p); p++);
+		       next = p;
+		       word = 0;
+		       break;
+		    }
+	       }
+
+	     /* current char matches? */
+	     if (pc != mc)
+	       {
+		  offset++;
+		  continue;
+	       }
+
+	     /* first offset of match in word */
+	     if (!first)
+	       {
+		  last = offset;
+		  first = 1;
+	       }
+
+	     min += offset + (offset - last) * 10;
+	     last = offset;
+
+	     /* try next char of match */
+	     m++;
+	     if (*m != 0 && !isspace(*m))
+	       {
+		  mc = tolower(*m);
+		  continue;
+	       }
+
+	     /* end of match store min weight of match */
+	     if (min < word_min[word])
+	       word_min[word] = min;
+
+	     if (word < words - 1)
+	       {
+		  /* test next match */
+		  for (; (*m != 0) && isspace(*m); m++);
+		  word++;
+		  break;
+	       }
+	     else
+	       {
+		  /* go to next word */
+		  for (; (*p != 0) && !isspace(*p); p++);
+		  for (; (*p != 0) &&  isspace(*p); p++);
+		  next = p;
+		  word = 0;
+		  break;
+	       }
+	  }
+     }
+
+   for (word = 0; word < words; word++)
+     {
+	if (word_min[word] >= MAX_FUZZ)
+	  {
+	     sum = 0;
+	     break;
+	  }
+	sum += word_min[word];
+     }
+   /* if (sum)
+    *   printf("min %d >> %s - %s\n", sum, match, str); */
+
+   return sum;
 }
+
 
 /* local subsystem functions */
 
