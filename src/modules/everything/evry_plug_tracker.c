@@ -148,7 +148,7 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
    Eina_List *items = NULL;
    Evry_Plugin *p = data;
    Inst *inst = p->private;
-   
+
    if (inst->active) inst->active--;
 
    if (dbus_error_is_set(error))
@@ -193,14 +193,14 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
    if (p->items)
      eina_list_free(p->items);
    p->items = NULL;
-   
+
    if (items)
      {
 	Eina_List *l;
 
 	EINA_LIST_FREE(inst->items, it)
 	  evry_item_free(it);
-	
+
 	items = eina_list_sort(items, eina_list_count(items), _cb_sort);
 	inst->items = items;
 
@@ -218,7 +218,7 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	    (strlen(inst->input) > strlen(inst->matched)))
      {
 	Eina_List *l;
-	
+
 	EINA_LIST_FOREACH(inst->items, l, it)
 	  if (evry_fuzzy_match(it->label, (inst->input + strlen(inst->matched))))
 	    p->items = eina_list_append(p->items, it);
@@ -290,7 +290,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	_cleanup(p);
 	return 0;
      }
-   
+
    inst->active++;
 
    msg = dbus_message_new_method_call("org.freedesktop.Tracker",
