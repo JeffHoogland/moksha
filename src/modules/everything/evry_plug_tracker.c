@@ -123,6 +123,8 @@ _cleanup(Evry_Plugin *p)
    EINA_LIST_FREE(inst->items, it)
      evry_item_free(it);
 
+   if (p->items)
+     eina_list_free(p->items);
    p->items = NULL;
 }
 
@@ -146,7 +148,7 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
    Eina_List *items = NULL;
    Evry_Plugin *p = data;
    Inst *inst = p->private;
-
+   
    if (inst->active) inst->active--;
 
    if (dbus_error_is_set(error))
@@ -188,14 +190,22 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	  }
      }
 
+   if (p->items)
+     eina_list_free(p->items);
+   p->items = NULL;
+   
    if (items)
      {
+	Eina_List *l;
+
 	EINA_LIST_FREE(inst->items, it)
 	  evry_item_free(it);
-
+	
 	items = eina_list_sort(items, eina_list_count(items), _cb_sort);
 	inst->items = items;
-	p->items = items;
+
+	EINA_LIST_FOREACH(inst->items, l, it)
+	  p->items = eina_list_append(p->items, it);
 
 	if (inst->matched)
 	  eina_stringshare_del(inst->matched);
@@ -204,29 +214,14 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	else
 	  inst->matched = NULL;
      }
-   else if (inst->items && inst->input && strlen(inst->input) > 0)
+   else if (inst->items && inst->input && inst->matched &&
+	    (strlen(inst->input) > strlen(inst->matched)))
      {
-	int len_matched = (inst->matched ? strlen(inst->matched) : 0);
-	int len_input = strlen(inst->input);
 	Eina_List *l;
-
-	if (len_input > len_matched)
-	  {
-	     p->items = NULL;
-
-	     EINA_LIST_FOREACH(inst->items, l, it)
-	       if (evry_fuzzy_match(it->label, (inst->input + len_matched)))
-		 p->items = eina_list_append(p->items, it);
-
-	     if (inst->matched)
-	       eina_stringshare_del(inst->matched);
-	     if (inst->input)
-	       inst->matched = eina_stringshare_add(inst->input);
-	     else
-	       inst->matched = NULL;
-	  }
-	else
-	  p->items = inst->items;
+	
+	EINA_LIST_FOREACH(inst->items, l, it)
+	  if (evry_fuzzy_match(it->label, (inst->input + strlen(inst->matched))))
+	    p->items = eina_list_append(p->items, it);
      }
    else
      {
@@ -240,8 +235,6 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	if (inst->matched)
 	  eina_stringshare_del(inst->matched);
 	inst->matched = NULL;
-
-	p->items = NULL;
      }
 
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
@@ -283,8 +276,8 @@ _fetch(Evry_Plugin *p, const char *input)
    if (input && (strlen(input) > 2))
      {
 	inst->input = eina_stringshare_add(input);
-	search_text = malloc(sizeof(char) * strlen(input) + 3);
-	sprintf(search_text, "*%s*", input);
+	search_text = malloc(sizeof(char) * strlen(input) + 1);
+	sprintf(search_text, "%s", input);
 	max_hits = 50;
      }
    else if (!input && !p->begin && p->type == type_object)
@@ -292,8 +285,12 @@ _fetch(Evry_Plugin *p, const char *input)
 	sort_by_access = 1;
 	search_text = "";
      }
-   else return 0;
-
+   else
+     {
+	_cleanup(p);
+	return 0;
+     }
+   
    inst->active++;
 
    msg = dbus_message_new_method_call("org.freedesktop.Tracker",
