@@ -473,11 +473,12 @@ evry_fuzzy_match(const char *str, const char *match)
 
    if (!match || !str) return 0;
 
-   if ((match[0] == 0) ||
-       (match[1] == 0)) return 0;
-
    word_min[0] = MAX_FUZZ;
 
+   /* remove white spaces at the beginning */
+   for (; (*match != 0) && isspace(*match); match++);
+   for (; (*str != 0)   && isspace(*str);   str++);
+   
    for (m = match; *m != 0 && *(m+1) != 0; m++)
      {
 	if (isspace(*m) && !isspace(*(m+1)))
@@ -490,7 +491,7 @@ evry_fuzzy_match(const char *str, const char *match)
    p = next = str;
    m = match;
 
-   for (word = 0; word < words && p && *p != 0;)
+   for (word = 0; word < words && *p != 0;)
      {
 	/* reset match */
 	if (word == 0) m = match;
@@ -555,7 +556,7 @@ evry_fuzzy_match(const char *str, const char *match)
 		  continue;
 	       }
 
-	     /* end of match store min weight of match */
+	     /* end of match: store min weight of match */
 	     if (min < word_min[word])
 	       word_min[word] = min;
 
