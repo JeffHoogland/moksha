@@ -97,7 +97,7 @@ struct _Evry_List_Window
 static void _evry_matches_update(Evry_Selector *sel);
 static void _evry_plugin_action(Evry_Selector *sel, int finished);
 static void _evry_backspace(Evry_State *s);
-static void _evry_update(Evry_State *s);
+static void _evry_update(Evry_State *s, int fetch);
 static void _evry_clear(Evry_State *s);
 static int  _evry_update_timer(void *data);
 static Evry_State *_evry_state_new(Evry_Selector *sel, Eina_List *plugins);
@@ -473,25 +473,25 @@ evry_fuzzy_match(const char *str, const char *match)
 
    if (!match || !str) return 0;
 
-   word_min[0] = MAX_FUZZ;
-
    /* remove white spaces at the beginning */
    for (; (*match != 0) && isspace(*match); match++);
    for (; (*str != 0)   && isspace(*str);   str++);
-   
+
+   /* count words in match */
+   word_min[0] = MAX_FUZZ;
    for (m = match; *m != 0 && *(m+1) != 0; m++)
      {
-	if (isspace(*m) && !isspace(*(m+1)))
-	  {
-	     word_min[words] = MAX_FUZZ;
-	     words++;
-	  }
+   	if (isspace(*m) && !isspace(*(m+1)))
+   	  {
+   	     word_min[words] = MAX_FUZZ;
+   	     words++;
+   	  }
      }
 
-   p = next = str;
+   next = str;
    m = match;
 
-   for (word = 0; word < words && *p != 0;)
+   for (word = 0; word < words && *next != 0; )
      {
 	/* reset match */
 	if (word == 0) m = match;
@@ -500,18 +500,16 @@ evry_fuzzy_match(const char *str, const char *match)
 	if (*m == 0) break;
 
 	mc = tolower(*m);
-
 	offset = 0;
 	last = 0;
 	min = 1;
 	first = 0;
 
 	/* match current word of string against current match */
-	for (p = next; *p != 0; p++)
+	for (p = next; *next != 0; p++)
 	  {
-	     pc = tolower(*p);
 	     /* new word of string begins */
-	     if (isspace(pc))
+	     if (*p == 0 || isspace(*p))
 	       {
 		  if (word < words - 1)
 		    {
@@ -530,6 +528,8 @@ evry_fuzzy_match(const char *str, const char *match)
 		       break;
 		    }
 	       }
+
+	     pc = tolower(*p);
 
 	     /* current char matches? */
 	     if (pc != mc)
@@ -567,13 +567,18 @@ evry_fuzzy_match(const char *str, const char *match)
 		  word++;
 		  break;
 	       }
-	     else
+	     else if(*p != 0)
 	       {
 		  /* go to next word */
 		  for (; (*p != 0) && !isspace(*p); p++);
 		  for (; (*p != 0) &&  isspace(*p); p++);
 		  next = p;
 		  word = 0;
+		  break;
+	       }
+	     else
+	       {
+		  next = p;
 		  break;
 	       }
 	  }
@@ -1301,7 +1306,10 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	if (strlen(s->input) < (INPUTLEN - strlen(ev->compose)))
 	  {
 	     strcat(s->input, ev->compose);
-	     _evry_update(s);
+	     if (isspace(*ev->compose))
+	       _evry_update(s, 0);
+	     else
+	       _evry_update(s, 1);
 	  }
      }
    return 1;
@@ -1319,7 +1327,7 @@ _evry_backspace(Evry_State *s)
 	if ((pos < len) && (pos >= 0))
 	  {
 	     s->input[pos] = 0;
-	     _evry_update(s);
+	     _evry_update(s, 1);
 	  }
      }
 }
@@ -1338,12 +1346,15 @@ _evry_update_text_label(Evry_State *s)
 }
 
 static void
-_evry_update(Evry_State *s)
+_evry_update(Evry_State *s, int fetch)
 {
    _evry_update_text_label(s);
 
-   if (update_timer) ecore_timer_del(update_timer);
-   update_timer = ecore_timer_add(MATCH_LAG, _evry_update_timer, s);
+   if (fetch)
+     {
+	if (update_timer) ecore_timer_del(update_timer);
+	update_timer = ecore_timer_add(MATCH_LAG, _evry_update_timer, s);
+     }
 }
 
 static int
@@ -1367,12 +1378,12 @@ _evry_clear(Evry_State *s)
        (!strncmp(s->plugin->trigger, s->input, strlen(s->plugin->trigger))))
      {
 	s->input[strlen(s->plugin->trigger)] = 0;
-	_evry_update(s);
+	_evry_update(s, 1);
      }
    else if (s->input[0] != 0)
      {
 	s->input[0] = 0;
-	_evry_update(s);
+	_evry_update(s, 1);
 	edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
      }
 }
@@ -2486,7 +2497,7 @@ _evry_cb_selection_notify(void *data, int type, void *event)
              text_data = ev->data;
 
 	     strncat(s->input, text_data->text, (INPUTLEN - strlen(s->input)) - 1);
-	     _evry_update(s);
+	     _evry_update(s, 1);
           }
      }
 

@@ -248,8 +248,6 @@ _fetch(Evry_Plugin *p, const char *input)
    Eina_List *l;
    Efreet_Desktop *desktop;
    char *file;
-   char match1[4096];
-   char match2[4096];
    Evry_Item *it;
    Evry_App *app;
    Inst *inst = p->private;
@@ -312,24 +310,26 @@ _fetch(Evry_Plugin *p, const char *input)
    if (input || p == p2)
      {
 	int found = 0;
-	char *path;
 	char *end;
-
+	char *dir;
+	char cmd[1024];
+	char path[1024];
+	
 	if (input)
 	  {
-	     snprintf(match2, 4096, "%s", input);
+	     snprintf(cmd, sizeof(cmd), "%s", input);
 
 	     if (end = strchr(input, ' '))
 	       {
-		  int len = (end - input) - 1;
+		  int len = (end - input) + 1;
 		  if (len >= 0)
-		    snprintf(match2, len, "%s", input);
+		    snprintf(cmd, len, "%s", input);
 	       }
 
-	     EINA_LIST_FOREACH(exe_path, l, path)
+	     EINA_LIST_FOREACH(exe_path, l, dir)
 	       {
-		  snprintf(match1, 4096, "%s/%s", path, match2);
-		  if (ecore_file_exists(match1))
+		  snprintf(path, sizeof(path), "%s/%s", dir, cmd);
+		  if (ecore_file_exists(path))
 		    {
 		       found = 1;
 		       break;
@@ -346,18 +346,18 @@ _fetch(Evry_Plugin *p, const char *input)
 	     else
 	       app->file = eina_stringshare_add("");
 	     it->data[0] = app;
-	     it->priority = 99;
+	     it->priority = 9999;
 	     p->items = eina_list_append(p->items, it);
 
-	     snprintf(match1, 4096, "xterm -hold -e %s", input);
+	     snprintf(cmd, sizeof(cmd), "xterm -hold -e %s", input);
 	     it = evry_item_new(p, _("Run in Terminal"), &_item_free);
 	     app = E_NEW(Evry_App, 1);
 	     if (input)
-	       app->file = eina_stringshare_add(match1);
+	       app->file = eina_stringshare_add(cmd);
 	     else
 	       app->file = eina_stringshare_add("");
 	     it->data[0] = app;
-	     it->priority = 100;
+	     it->priority = 1000;
 	     p->items = eina_list_append(p->items, it);
 	  }
      }
