@@ -228,11 +228,30 @@ e_shelf_zone_move_resize_handle(E_Zone *zone)
 {
    Eina_List *l;
    E_Shelf *es;
+   Evas_Coord w, h;
 
    for (l = shelves; l; l = l->next)
      {
 	es = l->data;
-	if (es->zone == zone) e_shelf_position_calc(es);
+	if (es->zone == zone) 
+	  {
+	     E_Gadcon * gc;
+
+	     gc = es->gadcon;
+	     if (gc->min_size_request.func)
+	       {
+	          /* let gadcon container decrease to any size */
+	          edje_extern_object_min_size_set(gc->o_container, 0, 0);
+	       }
+	     evas_object_smart_callback_call (gc->o_container, "min_size_request", NULL);
+	     e_shelf_position_calc(es);
+	     if (gc->min_size_request.func)
+	       {
+	          evas_object_geometry_get(gc->o_container, NULL, NULL, &w, &h);
+	          /* fix gadcon container min size to current geometry */
+	          edje_extern_object_min_size_set(gc->o_container, w, h);
+	       }
+	  }
      }
 }
 
