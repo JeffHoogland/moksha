@@ -9,7 +9,7 @@ static Evas_Object  *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
-   
+
    int mouse_hand;
    double numerator;
    double denominator;
@@ -21,20 +21,20 @@ e_int_config_mouse(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
-   if (e_config_dialog_find("E", "_config_mouse_dialog")) 
+
+   if (e_config_dialog_find("E", "_config_mouse_dialog"))
      return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
-   
+
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
    v->override_auto_apply = 1;
-   
-   cfd = e_config_dialog_new(con, _("Mouse Settings"), "E", 
-			     "_config_mouse_dialog", 
+
+   cfd = e_config_dialog_new(con, _("Mouse Settings"), "E",
+			     "_config_mouse_dialog",
 			     "preferences-desktop-mouse", 0, v, NULL);
    return cfd;
 }
@@ -61,7 +61,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (!cfdata) return;
 
@@ -70,7 +70,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 /* advanced window */
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->mouse_hand = cfdata->mouse_hand;
 
@@ -106,18 +106,18 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    ob = e_widget_label_add(evas, _("Acceleration"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 10.0, 1.0, 0, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 10.0, 1.0, 0,
 			    &(cfdata->numerator), NULL, 100);
    e_widget_framelist_object_append(of, ob);
-   
+
    ob = e_widget_label_add(evas, _("Threshold"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 10.0, 1.0, 0, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 10.0, 1.0, 0,
 			    &(cfdata->threshold), NULL, 100);
    e_widget_framelist_object_append(of, ob);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+
    e_dialog_resizable_set(cfd->dia, 0);
-   return o;   
+   return o;
 }
