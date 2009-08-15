@@ -129,6 +129,8 @@ static void _evry_list_update(Evry_State *s);
 static void _evry_list_show_items(Evry_State *s, Evry_Plugin *plugin);
 static void _evry_list_item_next(Evry_State *s);
 static void _evry_list_item_prev(Evry_State *s);
+static void _evry_list_item_first(Evry_State *s);
+static void _evry_list_item_last(Evry_State *s);
 static void _evry_list_plugin_next(Evry_State *s);
 static void _evry_list_plugin_prev(Evry_State *s);
 static void _evry_list_plugin_next_by_name(Evry_State *s, const char *key);
@@ -1226,6 +1228,10 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if ((!strcmp(ev->key, "BackSpace")) ||
 	    (!strcmp(ev->key, "Delete")))
      _evry_backspace(s);
+   else if (!strcmp(ev->key, "End"))
+     _evry_list_item_last(s);
+   else if (!strcmp(ev->key, "Home"))
+     _evry_list_item_first(s);
    else if (!strcmp(ev->key, "v") &&
 	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
      {
@@ -1796,6 +1802,36 @@ _evry_list_item_prev(Evry_State *s)
 	  }
      }
    _evry_list_win_hide();
+}
+
+static void
+_evry_list_item_first(Evry_State *s)
+{
+   Eina_List *l;
+   Evry_Item *it;
+
+   if (!s->plugin || !s->plugin->items) return;
+
+   s->plugin_auto_selected = EINA_FALSE;
+   s->item_auto_selected = EINA_FALSE;
+
+   _evry_list_item_sel(s, s->plugin->items->data);
+   _evry_selector_update(selector);
+}
+
+static void
+_evry_list_item_last(Evry_State *s)
+{
+   Eina_List *l;
+   Evry_Item *it;
+
+   if (!s->plugin || !s->plugin->items) return;
+
+   s->plugin_auto_selected = EINA_FALSE;
+   s->item_auto_selected = EINA_FALSE;
+
+   _evry_list_item_sel(s, eina_list_last(s->plugin->items)->data);
+   _evry_selector_update(selector);
 }
 
 static void
