@@ -1680,7 +1680,7 @@ _e_menu_items_layout_update(E_Menu *m)
 static void
 _e_menu_item_unrealize(E_Menu_Item *mi)
 {
-   e_box_freeze(mi->container_object);
+   if (mi->container_object) e_box_freeze(mi->container_object);
    if (mi->separator_object) evas_object_del(mi->separator_object);
    mi->separator_object = NULL;
    if (mi->bg_object) evas_object_del(mi->bg_object);

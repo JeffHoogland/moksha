@@ -150,6 +150,7 @@ _e_smart_child_resize_hook(void *data, Evas *e, Evas_Object *obj, void *event_in
    Evas_Coord w, h;
 
    sd = data;
+   if (!sd->child_obj) return;
    evas_object_geometry_get(sd->child_obj, NULL, NULL, &w, &h);
    if ((w != sd->child_w) || (h != sd->child_h))
      {
@@ -163,7 +164,8 @@ _e_smart_child_resize_hook(void *data, Evas *e, Evas_Object *obj, void *event_in
 static void
 _e_smart_reconfigure(E_Smart_Data *sd)
 {
-   evas_object_move(sd->child_obj, sd->x - sd->px, sd->y - sd->py);
+   if (sd->child_obj)
+     evas_object_move(sd->child_obj, sd->x - sd->px, sd->y - sd->py);
 }
 
 static void
@@ -212,35 +214,40 @@ static void
 _e_smart_show(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_show(sd->child_obj);
+   if (sd->child_obj)
+     evas_object_show(sd->child_obj);
 }
 
 static void
 _e_smart_hide(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_hide(sd->child_obj);
+   if (sd->child_obj)
+     evas_object_hide(sd->child_obj);
 }
 
 static void
 _e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 {
    INTERNAL_ENTRY;
-   evas_object_color_set(sd->child_obj, r, g, b, a);
+   if (sd->child_obj)
+     evas_object_color_set(sd->child_obj, r, g, b, a);
 }
 
 static void
 _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 {
    INTERNAL_ENTRY;
-   evas_object_clip_set(sd->child_obj, clip);
+   if (sd->child_obj)
+     evas_object_clip_set(sd->child_obj, clip);
 }
 
 static void
 _e_smart_clip_unset(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_clip_unset(sd->child_obj);
+   if (sd->child_obj)
+     evas_object_clip_unset(sd->child_obj);
 }
 
 /* never need to touch this */

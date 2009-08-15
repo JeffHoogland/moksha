@@ -416,6 +416,7 @@ EAPI void
 e_widget_change(Evas_Object *obj)
 {
    API_ENTRY return;
+   if (!e_widget_parent_get(obj)) return;
    e_widget_change(e_widget_parent_get(obj));
    if (sd->on_change_func) sd->on_change_func(sd->on_change_data, obj);
 }
@@ -532,35 +533,40 @@ static void
 _e_smart_show(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_show(sd->resize_obj);
+   if (sd->resize_obj)
+     evas_object_show(sd->resize_obj);
 }
 
 static void
 _e_smart_hide(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_hide(sd->resize_obj);
+   if (sd->resize_obj)
+     evas_object_hide(sd->resize_obj);
 }
 
 static void
 _e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 {
    INTERNAL_ENTRY;
-   evas_object_color_set(sd->resize_obj, r, g, b, a);
+   if (sd->resize_obj)
+     evas_object_color_set(sd->resize_obj, r, g, b, a);
 }
 
 static void
 _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 {
    INTERNAL_ENTRY;
-   evas_object_clip_set(sd->resize_obj, clip);
+   if (sd->resize_obj)
+     evas_object_clip_set(sd->resize_obj, clip);
 }
 
 static void
 _e_smart_clip_unset(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_clip_unset(sd->resize_obj);
+   if (sd->resize_obj)
+     evas_object_clip_unset(sd->resize_obj);
 }  
 
 /* never need to touch this */
