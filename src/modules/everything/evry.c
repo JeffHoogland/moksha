@@ -11,6 +11,7 @@
 #define INPUTLEN 40
 #define MATCH_LAG 0.33
 #define MAX_FUZZ 150
+#define MAX_WORDS 64
 
 
 typedef struct _Evry_State Evry_State;
@@ -360,11 +361,10 @@ evry_item_free(Evry_Item *it)
 
    if (it->ref > 0) return;
 
-   /* printf("%d, %d\t 0x%x 0x%x 0x%x free: %s\n",
+   /* printf("%d, %d\t free: %s\n",
     * 	  it->ref, item_cnt - 1,
-    * 	  it->label, it->uri, it->mime,
-    * 	  it->label); */
-   /* item_cnt--; */
+    * 	  it->label);
+    * item_cnt--; */
 
    if (it->cb_free) it->cb_free(it);
 
@@ -468,7 +468,7 @@ evry_fuzzy_match(const char *str, const char *match)
    /* words in match */
    unsigned int words = 1;
    unsigned int word = 0;
-   unsigned int word_min[64];
+   unsigned int word_min[MAX_WORDS];
 
    if (!match || !str) return 0;
 
@@ -478,7 +478,7 @@ evry_fuzzy_match(const char *str, const char *match)
 
    /* count words in match */
    word_min[0] = MAX_FUZZ;
-   for (m = match; *m != 0 && *(m+1) != 0; m++)
+   for (m = match; (*m != 0) && (*(m+1) != 0) && (words < MAX_WORDS); m++)
      {
    	if (isspace(*m) && !isspace(*(m+1)))
    	  {
@@ -489,7 +489,7 @@ evry_fuzzy_match(const char *str, const char *match)
    next = str;
    m = match;
 
-   for (word = 0; (word < words) && (*next != 0);)
+   for (; (word < words) && (*next != 0);)
      {
 	/* reset match */
 	if (word == 0) m = match;
@@ -792,8 +792,8 @@ _evry_selector_new(int type)
 	if (p->type != type) continue;
 	sel->plugins = eina_list_append(sel->plugins, p);
      }
-   if (type == type_action)
-     sel->plugins = eina_list_append(sel->plugins, action_selector);
+   /* if (type == type_action)
+    *   sel->plugins = eina_list_append(sel->plugins, action_selector); */
 
    return sel;
 }
@@ -1283,14 +1283,6 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  }
 	else _evry_list_plugin_next_by_name(s, ev->key);
      }
-   else if (!strcmp(ev->key, "Up"))
-     _evry_list_item_prev(s);
-   else if (!strcmp(ev->key, "Down"))
-     _evry_list_item_next(s);
-   else if (!strcmp(ev->key, "Next"))
-     _evry_list_plugin_next(s);
-   else if (!strcmp(ev->key, "Prior"))
-     _evry_list_plugin_prev(s);
    else if (!strcmp(ev->key, "Right"))
      {
 	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
@@ -1312,12 +1304,21 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	else
 	  _evry_plugin_action(selector, 1);
      }
-   else if (!strcmp(ev->key, "Tab"))
-     _evry_selectors_switch();
    else  if (!strcmp(ev->key, "Escape"))
      evry_hide();
-   else if ((!strcmp(ev->key, "BackSpace")) ||
-	    (!strcmp(ev->key, "Delete")))
+   else if (!strcmp(ev->key, "Up"))
+     _evry_list_item_prev(s);
+   else if (!strcmp(ev->key, "Down"))
+     _evry_list_item_next(s);
+   else if (!strcmp(ev->key, "Next"))
+     _evry_list_plugin_next(s);
+   else if (!strcmp(ev->key, "Prior"))
+     _evry_list_plugin_prev(s);
+   else if (!strcmp(ev->key, "Tab"))
+     _evry_selectors_switch();
+   else if (!strcmp(ev->key, "BackSpace"))
+     _evry_backspace(s);
+   else if (!strcmp(ev->key, "Delete"))
      _evry_backspace(s);
    else if (!strcmp(ev->key, "End"))
      _evry_list_item_last(s);
@@ -1681,6 +1682,8 @@ _evry_matches_update(Evry_Selector *sel)
 	  {
 	     sel->aggregator->fetch(sel->aggregator, s->input);
 	     s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
+	     if (s->plugin_auto_selected)
+	       _evry_select_plugin(s, NULL);
 	  }
 	else
 	  sel->aggregator->cleanup(sel->aggregator);
@@ -1787,13 +1790,10 @@ _evry_list_item_desel(Evry_State *s, Evry_Item *it)
      {
 	it = s->sel_item;
 
-	if (list->visible)
-	  {
-	     if (it->o_bg)
-	       edje_object_signal_emit(it->o_bg, "e,state,unselected", "e");
-	     if (it->o_icon)
-	       edje_object_signal_emit(it->o_icon, "e,state,unselected", "e");
-	  }
+	if (it->o_bg)
+	  edje_object_signal_emit(it->o_bg, "e,state,unselected", "e");
+	if (it->o_icon)
+	  edje_object_signal_emit(it->o_icon, "e,state,unselected", "e");
 
 	evry_item_free(it);
 	s->sel_item = NULL;
@@ -1841,12 +1841,12 @@ _evry_list_item_next(Evry_State *s)
    s->plugin_auto_selected = EINA_FALSE;
    s->item_auto_selected = EINA_FALSE;
 
-   if (!s->sel_item)
-     {
-	_evry_list_item_sel(s, s->plugin->items->data);
-	_evry_selector_update(selector);
-	return;
-     }
+   /* if (!s->sel_item)
+    *   {
+    * 	_evry_list_item_sel(s, s->plugin->items->data);
+    * 	_evry_selector_update(selector);
+    * 	return;
+    *   } */
 
    EINA_LIST_FOREACH (s->plugin->items, l, it)
      {
@@ -1888,6 +1888,7 @@ _evry_list_item_prev(Evry_State *s)
 	     break;
 	  }
      }
+
    _evry_list_win_hide();
 }
 
@@ -2155,19 +2156,25 @@ _evry_fuzzy_sort_cb(const void *data1, const void *data2)
        (it1->priority - it2->priority))
      return (it1->priority - it2->priority);
 
-   if (it1->fuzzy_match && !it2->fuzzy_match)
-     return -1;
+   if (it1->fuzzy_match || it2->fuzzy_match)
+     {
+	if (it1->fuzzy_match && !it2->fuzzy_match)
+	  return -1;
 
-   if (!it1->fuzzy_match && it2->fuzzy_match)
-     return 1;
+	if (!it1->fuzzy_match && it2->fuzzy_match)
+	  return 1;
 
-   if (it1->fuzzy_match - it2->fuzzy_match)
-     return (it1->fuzzy_match - it2->fuzzy_match);
+	if (it1->fuzzy_match - it2->fuzzy_match)
+	  return (it1->fuzzy_match - it2->fuzzy_match);
+     }
 
    if (it1->plugin->config->priority - it2->plugin->config->priority)
      return (it1->plugin->config->priority - it2->plugin->config->priority);
 
-   return (it1->priority - it2->priority);
+   if (it1->priority - it2->priority)
+     return (it1->priority - it2->priority);
+
+   return 0;
 }
 
 /* action selector plugin: provides list of actions registered for
@@ -2175,7 +2182,6 @@ _evry_fuzzy_sort_cb(const void *data1, const void *data2)
 static int
 _evry_plug_actions_init(void)
 {
-   Plugin_Config *pc;
    Evry_Plugin *p = E_NEW(Evry_Plugin, 1);
    p->name = "Select Action";
    p->type = type_action;
@@ -2186,13 +2192,8 @@ _evry_plug_actions_init(void)
    p->fetch    = &_evry_plug_actions_fetch;
    p->icon_get = &_evry_plug_actions_item_icon_get;
 
-   pc = E_NEW(Plugin_Config, 1);
-   pc->name = eina_stringshare_add(p->name);
-   pc->enabled = 1;
-   pc->priority = 1;
-   p->config = pc;
-
    action_selector = p;
+   evry_plugin_register(p, 2);
 
    return 1;
 }
@@ -2202,6 +2203,7 @@ _evry_plug_actions_free(void)
 {
    Evry_Plugin *p = action_selector;
 
+   evry_plugin_unregister(p);
    eina_stringshare_del(p->config->name);
    E_FREE(p->config);
    E_FREE(p);

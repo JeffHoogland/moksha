@@ -83,7 +83,6 @@ struct _Evry_Plugin
   /* run when plugin is activated. */
   int (*begin) (Evry_Plugin *p, const Evry_Item *item);
 
-
   int (*browse) (Evry_Plugin *p, const Evry_Item *item);
 
   /* get candidates matching string, fills 'candidates' list */
@@ -148,7 +147,7 @@ struct _Evry_App
   Efreet_Desktop *desktop;
 };
 
-void evry_plugin_register(Evry_Plugin *p);
+void evry_plugin_register(Evry_Plugin *p, int priority);
 void evry_plugin_unregister(Evry_Plugin *p);
 void evry_action_register(Evry_Action *act);
 void evry_action_unregister(Evry_Action *act);

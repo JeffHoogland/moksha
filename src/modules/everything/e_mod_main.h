@@ -28,6 +28,7 @@ struct _Config
   Eina_List *actions;
 
   Eina_Hash *history;
+  E_Action *action_show;
 };
 
 EAPI extern E_Module_Api e_modapi;

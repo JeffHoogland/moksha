@@ -108,7 +108,44 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
    Evas_Object *o = NULL;
    E_Border *bd = it->data[0];
 
-   if (bd->desktop)
+   if (bd->internal)
+     {
+	o = edje_object_add(e);
+	if (!bd->internal_icon) 
+	  e_util_edje_icon_set(o, "enlightenment/e");
+	else
+	  {
+	     if (!bd->internal_icon_key)
+	       {
+		  char *ext;
+		  ext = strrchr(bd->internal_icon, '.');
+		  if ((ext) && ((!strcmp(ext, ".edj"))))
+		    {
+		       if (!edje_object_file_set(o, bd->internal_icon, "icon"))
+			 e_util_edje_icon_set(o, "enlightenment/e");	       
+		    }
+		  else if (ext)
+		    {
+		       evas_object_del(o);
+		       o = e_icon_add(e);
+		       e_icon_file_set(o, bd->internal_icon);
+		    }
+		  else 
+		    {
+		       if (!e_util_edje_icon_set(o, bd->internal_icon))
+			 e_util_edje_icon_set(o, "enlightenment/e"); 
+		    }
+	       }
+	     else
+	       {
+		  edje_object_file_set(o, bd->internal_icon,
+				       bd->internal_icon_key);
+	       }
+	  }
+	return o;
+     }
+   
+   if (!o && bd->desktop)
      o = e_util_desktop_icon_add(bd->desktop, 128, e);
 
    if (!o && bd->client.netwm.icons)
@@ -152,7 +189,7 @@ _init(void)
    p->fetch = &_fetch;
    p->cleanup = &_cleanup;
    p->icon_get = &_item_icon_get;
-   evry_plugin_register(p);
+   evry_plugin_register(p, 2);
 
    return EINA_TRUE;
 }

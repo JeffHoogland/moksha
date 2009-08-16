@@ -18,7 +18,7 @@ struct _Inst
 
 static E_DBus_Connection *conn = NULL;
 static Eina_List *plugins = NULL;
-
+static int _prio = 5;
 
 static int
 _begin(Evry_Plugin *p, const Evry_Item *it)
@@ -376,7 +376,7 @@ _plugin_new(const char *name, int type, char *service, int max_hits, int begin)
    inst->max_hits = max_hits;
    inst->active = 0;
    p->private = inst;
-   evry_plugin_register(p);
+   evry_plugin_register(p, _prio++);
    plugins = eina_list_append(plugins, p);
 }
 

@@ -225,7 +225,7 @@ _init(void)
    p->cleanup = &_cleanup;
    p->icon_get = &_item_icon_get;
 
-   evry_plugin_register(p);
+   evry_plugin_register(p, 1);
 
    inst = E_NEW(Inst, 1);
 

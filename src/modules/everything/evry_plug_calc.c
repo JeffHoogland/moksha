@@ -201,7 +201,7 @@ _init(void)
    p1->fetch = &_fetch;
    p1->action = &_action;
    p1->cleanup = &_cleanup;
-   evry_plugin_register(p1);
+   evry_plugin_register(p1, 0);
 
    return EINA_TRUE;
 }

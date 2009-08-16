@@ -384,7 +384,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 static int
 _open_folder_check(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
-   return (it->uri && e_action_find("fileman"));
+   return (it->browseable && e_action_find("fileman"));
 }
 
 static int
@@ -427,7 +427,7 @@ _init(void)
    p1->fetch = &_fetch;
    p1->cleanup = &_cleanup;
    p1->icon_get = &_item_icon_get;
-   evry_plugin_register(p1);
+   evry_plugin_register(p1, 3);
 
    p2 = E_NEW(Evry_Plugin, 1);
    p2->name = "Files";
@@ -440,7 +440,7 @@ _init(void)
    p2->fetch = &_fetch;
    p2->cleanup = &_cleanup;
    p2->icon_get = &_item_icon_get;
-   evry_plugin_register(p2);
+   evry_plugin_register(p2, 1);
 
    act = E_NEW(Evry_Action, 1);
    act->name = "Open Folder (EFM)";
@@ -448,7 +448,7 @@ _init(void)
    act->type_in1 = "FILE";
    act->action = &_open_folder_action;
    act->check_item = &_open_folder_check;
-   act->icon = "folder";
+   act->icon = "folder-open";
    evry_action_register(act);
 
    return EINA_TRUE;

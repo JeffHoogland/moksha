@@ -141,7 +141,7 @@ _init(void)
    p->cleanup = &_cleanup;
    p->icon_get = &_item_icon_get;
 
-   evry_plugin_register(p);
+   evry_plugin_register(p, 10);
 
    act = E_NEW(Evry_Action, 1);
    act->name = "Show Dialog";

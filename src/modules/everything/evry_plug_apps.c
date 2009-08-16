@@ -662,7 +662,7 @@ _init(void)
    p1->fetch = &_fetch;
    p1->cleanup = &_cleanup;
    p1->icon_get = &_item_icon_get;
-   evry_plugin_register(p1);
+   evry_plugin_register(p1, 1);
 
    p2 = E_NEW(Evry_Plugin, 1);
    p2->name = "Open With...";
@@ -675,7 +675,7 @@ _init(void)
    p2->action = &_open_with_action;
    p2->cleanup = &_cleanup;
    p2->icon_get = &_item_icon_get;
-   evry_plugin_register(p2);
+   evry_plugin_register(p2, 3);
 
    act = E_NEW(Evry_Action, 1);
    act->name = "Launch";

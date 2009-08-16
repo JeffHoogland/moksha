@@ -343,7 +343,7 @@ _init(void)
    p->base.fetch = _fetch;
    p->base.cleanup = _cleanup;
 
-   evry_plugin_register(&p->base);
+   evry_plugin_register(&p->base, 100);
 
    _singleton = p;
    return EINA_TRUE;
