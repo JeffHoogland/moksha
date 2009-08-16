@@ -17,8 +17,8 @@ struct _State
 
 static Evry_Plugin *p1;
 static Evry_Plugin *p2;
+static Evry_Action *act;
 static Ecore_Idler *idler = NULL;
-
 
 static Evry_Item *
 _item_add(Evry_Plugin *p, const char *directory, const char *file)
@@ -380,6 +380,26 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
    return o;
 }
 
+
+static int
+_open_folder_check(Evry_Action *act __UNUSED__, const Evry_Item *it)
+{
+   return (it->browseable);
+}
+
+static int
+_open_folder_action(Evry_Action *act __UNUSED__, const Evry_Item *it1, const Evry_Item *it2 __UNUSED__, const char *input __UNUSED__)
+{      
+   E_Action *action = e_action_find("fileman");
+   Eina_List *m;
+   if (!action) return 0;
+
+   m = e_manager_list();
+   action->func.go(E_OBJECT(m->data), it1->uri);
+
+   return 1;
+}
+
 static Eina_Bool
 _init(void)
 {
@@ -409,6 +429,15 @@ _init(void)
    p2->icon_get = &_item_icon_get;
    evry_plugin_register(p2);
 
+   act = E_NEW(Evry_Action, 1);
+   act->name = "Open Folder (EFM)";
+   act->is_default = EINA_TRUE;
+   act->type_in1 = "FILE";
+   act->action = &_open_folder_action;
+   act->check_item = &_open_folder_check;
+   act->icon = "folder";
+   evry_action_register(act);
+   
    return EINA_TRUE;
 }
 
@@ -419,6 +448,8 @@ _shutdown(void)
    evry_plugin_unregister(p2);
    E_FREE(p1);
    E_FREE(p2);
+   evry_action_unregister(act);
+   E_FREE(act);
 }
 
 EINA_MODULE_INIT(_init);
