@@ -5,6 +5,7 @@
 
 /* local subsystem functions */
 static void _e_popup_free(E_Popup *pop);
+static int  _e_popup_idle_enterer(void *data);
 static int  _e_popup_cb_window_shape(void *data, int ev_type, void *ev);
 static E_Popup *_e_popup_find_by_window(Ecore_X_Window win);
 /*
@@ -93,8 +94,21 @@ e_popup_show(E_Popup *pop)
    E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    if (pop->visible) return;
    pop->visible = 1;
-   ecore_evas_show(pop->ecore_evas);
-   e_container_shape_show(pop->shape);
+   if (pop->shaped)
+     {
+        ecore_evas_move(pop->ecore_evas,
+                        pop->zone->container->manager->w,
+                        pop->zone->container->manager->h);
+        ecore_evas_show(pop->ecore_evas);
+        e_container_shape_show(pop->shape);
+        if (pop->idle_enterer) ecore_idle_enterer_del(pop->idle_enterer);
+        pop->idle_enterer = ecore_idle_enterer_add(_e_popup_idle_enterer, pop);
+     }
+   else
+     {
+        ecore_evas_show(pop->ecore_evas);
+        e_container_shape_show(pop->shape);
+     }
 }
 
 EAPI void
@@ -103,6 +117,8 @@ e_popup_hide(E_Popup *pop)
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    if (!pop->visible) return;
+   if (pop->idle_enterer) ecore_idle_enterer_del(pop->idle_enterer);
+   pop->idle_enterer = NULL;
    pop->visible = 0;
    ecore_evas_hide(pop->ecore_evas);
    e_container_shape_hide(pop->shape);
@@ -280,6 +296,8 @@ e_popup_idler_before(void)
 static void
 _e_popup_free(E_Popup *pop)
 {
+   if (pop->idle_enterer) ecore_idle_enterer_del(pop->idle_enterer);
+   pop->idle_enterer = NULL;
    E_FREE(pop->shape_rects);
    pop->shape_rects_num = 0;
    e_container_shape_hide(pop->shape);
@@ -290,6 +308,19 @@ _e_popup_free(E_Popup *pop)
    pop->zone->popups = eina_list_remove(pop->zone->popups, pop);
    _e_popup_list = eina_list_remove(_e_popup_list, pop);
    free(pop);
+}
+
+static int
+_e_popup_idle_enterer(void *data)
+{
+   E_Popup *pop;
+   
+   pop = (E_Popup *)data;
+   ecore_evas_move(pop->ecore_evas,
+		   pop->zone->x + pop->x, 
+		   pop->zone->y + pop->y);
+   pop->idle_enterer = NULL;
+   return 0;
 }
 
 static int

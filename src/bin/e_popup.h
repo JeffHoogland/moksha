@@ -28,6 +28,7 @@ struct _E_Popup
    E_Zone              *zone;
    int                  shape_rects_num;
    Ecore_X_Rectangle   *shape_rects;
+   Ecore_Idle_Enterer  *idle_enterer;
 };
 
 EAPI int         e_popup_init(void);
