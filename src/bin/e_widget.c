@@ -416,8 +416,7 @@ EAPI void
 e_widget_change(Evas_Object *obj)
 {
    API_ENTRY return;
-   if (!e_widget_parent_get(obj)) return;
-   e_widget_change(e_widget_parent_get(obj));
+   if (sd->parent_obj) e_widget_change(sd->parent_obj);
    if (sd->on_change_func) sd->on_change_func(sd->on_change_data, obj);
 }
 
