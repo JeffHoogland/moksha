@@ -546,7 +546,7 @@ msgstr "Запустить"
 
 #: src/bin/e_actions.c:2786 src/bin/e_int_border_prop.c:439
 msgid "Command"
-msgstr "Комманда"
+msgstr "Команда"
 
 #: src/bin/e_actions.c:2791
 msgid "Application"
@@ -832,12 +832,12 @@ msgid ""
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
 msgstr ""
 "Не получилось замкнуть рабочий стол, т.к. мышка и/или "
-"клавиатура<br>удерживаются каким-то приложением, и это удерживание не "
-"возможно разорвать"
+"клавиатура<br>удерживаются каким-то приложением, и это удерживание "
+"невозможно разорвать"
 
 #: src/bin/e_desklock.c:333
 msgid "Please enter your unlock password"
-msgstr "Пожалуйста введите ваш пароль"
+msgstr "Пожалуйста, введите ваш пароль"
 
 #: src/bin/e_desklock.c:709
 msgid "Authentication System Error"
@@ -852,7 +852,7 @@ msgid ""
 msgstr ""
 "Авторизации средствами PAM не удалось настроить сессию.<br>Код ошибки "
 "<hilight>%i</hilight>.<br>Это плохо и такого не должно случатьса."
-"<br>Пожалуйста сообщите об этой ошибке."
+"<br>Пожалуйста, сообщите об этой ошибке."
 
 #: src/bin/e_desklock.c:1036 src/bin/e_screensaver.c:95
 msgid "Activate Presentation Mode?"
@@ -1450,7 +1450,7 @@ msgstr "Гладко"
 
 #: src/bin/e_gadcon.c:1299 src/modules/gadman/e_mod_gadman.c:691
 msgid "Inset"
-msgstr "В Сэте"
+msgstr "Вклад"
 
 #: src/bin/e_gadcon.c:1308 src/bin/e_int_config_modules.c:41
 #: src/modules/gadman/e_mod_gadman.c:727
@@ -2178,7 +2178,7 @@ msgstr "Настройки Полки"
 #: src/bin/e_int_shelf_config.c:538
 #: src/modules/conf_fonts/e_int_config_fonts.c:253
 msgid "Tiny"
-msgstr "Тини"
+msgstr "Крошечный"
 
 #: src/bin/e_int_shelf_config.c:540
 #: src/modules/conf_fonts/e_int_config_fonts.c:100
@@ -2202,7 +2202,7 @@ msgstr "Огромный"
 
 #: src/bin/e_int_shelf_config.c:552 src/bin/e_int_shelf_config.c:676
 msgid "Set Contents..."
-msgstr ""
+msgstr "Настроить содержимое..."
 
 #: src/bin/e_int_shelf_config.c:577
 msgid "Above Everything"
@@ -2285,7 +2285,7 @@ msgstr ""
 "уже существует, НО имеет разрешения, которые являются\n"
 "ошибочными (должно быть читаемым и перезаписываемым\n"
 "только владельцем, и больше никем), или не принадлежит Вам.\n"
-"Пожалуйста проверьте: %s/enlightenment-%s\n"
+"Пожалуйста, проверьте: %s/enlightenment-%s\n"
 
 #: src/bin/e_ipc.c:57
 #, c-format
@@ -2297,7 +2297,7 @@ msgid ""
 msgstr ""
 "Директория IPC гнезда не может быть создана или\n"
 "исследована.\n"
-" Пожалуйста проверьте:\n"
+" Пожалуйста, проверьте:\n"
 "%s/enlightenment-%s\n"
 
 #: src/bin/e_main.c:323
@@ -2416,7 +2416,7 @@ msgid ""
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
 "Enlightenment обнаружил, что ecore_evas не поддерживает Software X11\n"
-"предоставление в Evas. Пожалуйста проверьте вашу установку Evas и Ecore\n"
+"предоставление в Evas. Пожалуйста, проверьте вашу установку Evas и Ecore\n"
 "и проверьте, что они поддерживают предоставление Software X11."
 
 #: src/bin/e_main.c:522
@@ -2426,7 +2426,7 @@ msgid ""
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
 "Enlightenment обнаружил, что ecore_evas не поддерживает Software Buffer\n"
-"предоставление в Evas. Пожалуйста проверьте вашу установку Evas и Ecore\n"
+"предоставление в Evas. Пожалуйста, проверьте вашу установку Evas и Ecore\n"
 "и проверьте, что они поддерживают предоставление Software Buffer."
 
 #: src/bin/e_main.c:538 src/bin/e_main.c:545
@@ -2502,7 +2502,7 @@ msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
-"Enlightenment обнаружил, что Evas не может создать буферный слой. Пожалуйста "
+"Enlightenment обнаружил, что Evas не может создать буферный слой. Пожалуйста, "
 "проверьте,\n"
 "что Evas поддерживает движок Software Buffer.\n"
 
@@ -2559,7 +2559,7 @@ msgstr "Настройка Хранителя Экрана"
 
 #: src/bin/e_main.c:748
 msgid "Enlightenment cannot configure the X screensaver."
-msgstr "Enlightenment не может настроить X скринсэйвер."
+msgstr "Enlightenment не может настроить хранитель экрана."
 
 #: src/bin/e_main.c:752
 msgid "Setup Desklock"
@@ -2580,7 +2580,7 @@ msgstr "Настройка Системы Управления"
 
 #: src/bin/e_main.c:792
 msgid "Enlightenment cannot initialize the System Command system.\n"
-msgstr "Enlightenment не может настроить систему Системных Комманд.\n"
+msgstr "Enlightenment не может настроить систему Системных Команд.\n"
 
 #: src/bin/e_main.c:797
 msgid "Setup Actions"
@@ -2971,7 +2971,7 @@ msgstr "Выключить"
 
 #: src/bin/e_sys.c:538
 msgid "Power off.<br><hilight>Please wait.</hilight>"
-msgstr "Выключение.<br><hilight>Пожалуйста ждите.</hilight>"
+msgstr "Выключение.<br><hilight>Пожалуйста, ждите.</hilight>"
 
 #: src/bin/e_sys.c:562
 msgid "Resetting"
@@ -2979,7 +2979,7 @@ msgstr "Перезагрузка"
 
 #: src/bin/e_sys.c:565
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
-msgstr "Перезагрузка.<br><hilight>Пожалуйста ждите.</hilight>"
+msgstr "Перезагрузка.<br><hilight>Пожалуйста, ждите.</hilight>"
 
 #: src/bin/e_sys.c:588
 msgid "Suspending"
@@ -2987,7 +2987,7 @@ msgstr "Приостановка"
 
 #: src/bin/e_sys.c:591
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
-msgstr "Переход в режим ожидания.<br><hilight>Пожалуйста ждите.</hilight>"
+msgstr "Переход в режим ожидания.<br><hilight>Пожалуйста, ждите.</hilight>"
 
 #: src/bin/e_sys.c:614
 msgid "Hibernating"
@@ -2995,7 +2995,7 @@ msgstr "Заморозка"
 
 #: src/bin/e_sys.c:617
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
-msgstr "Переход в режим сна.<br><hilight>Пожалуйста ждите.</hilight>"
+msgstr "Переход в режим сна.<br><hilight>Пожалуйста, ждите.</hilight>"
 
 #: src/bin/e_theme_about.c:17
 msgid "About Theme"
@@ -3442,7 +3442,7 @@ msgstr "Надписи Элементов Меню"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:147
 msgid "Limit caption length"
-msgstr "Ограничить длинну надписи"
+msgstr "Ограничить длину надписи"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:149
 #, c-format
@@ -3677,7 +3677,7 @@ msgstr "Заблокировать при старте Enlightenment"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:205
 msgid "Lock when X screensaver activates"
-msgstr "Запирать со стартом X скринсейвера"
+msgstr "Запирать со стартом хранителя экрана"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:210
 msgid "Time after screensaver activated"
@@ -3962,7 +3962,7 @@ msgstr ""
 
 #: src/modules/conf_display/e_int_config_display.c:190
 msgid "Resolution change"
-msgstr "Смена Резолюции"
+msgstr "Смена разрешения"
 
 #: src/modules/conf_display/e_int_config_display.c:194
 msgid "Save"
@@ -3974,11 +3974,11 @@ msgstr "Восстановить"
 
 #: src/modules/conf_display/e_int_config_display.c:228
 msgid "Screen Resolution Settings"
-msgstr "Настройки Резолюции Экрана"
+msgstr "Настройки Разрешения Экрана"
 
 #: src/modules/conf_display/e_int_config_display.c:405
 msgid "Resolution"
-msgstr "Резолюция"
+msgstr "Разрешение"
 
 #: src/modules/conf_display/e_int_config_display.c:412
 msgid "Restore on login"
@@ -4023,12 +4023,12 @@ msgid ""
 msgstr ""
 "Ваш X сервер не сообщил частот экрана.<br>Если у вас запущен nested X "
 "сервер, то этого следует ожидать.<br>Однако, если это не так, то текущая "
-"частота будет использована при<br>выставлении резолюции экрана, что может "
+"частота будет использована при<br>выставлении разрешения экрана, что может "
 "<hilight>повредить</hilight> ваш экран."
 
 #: src/modules/conf_display/e_mod_main.c:35
 msgid "Screen Resolution"
-msgstr "Резолюция Экрана"
+msgstr "Разрешение Экрана"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:60
 #: src/modules/conf_dpms/e_int_config_dpms.c:81
@@ -4188,7 +4188,7 @@ msgstr "WIN"
 #: src/modules/conf_mouse/e_mod_main.c:34 src/modules/mixer/app_mixer.c:283
 #: src/modules/mixer/app_mixer.c:301
 msgid "Input"
-msgstr "Вход"
+msgstr "Ввод"
 
 #: src/modules/conf_engine/e_int_config_engine.c:38
 msgid "Engine Settings"
@@ -4200,7 +4200,7 @@ msgstr "Включить Композицию"
 
 #: src/modules/conf_engine/e_int_config_engine.c:102
 msgid "Default Engine"
-msgstr "Движок по Умолчанию"
+msgstr "Движок по умолчанию"
 
 #: src/modules/conf_engine/e_int_config_engine.c:131
 msgid "Enable Composite Support ?"
@@ -4221,7 +4221,7 @@ msgstr "Движок"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:49
 msgid "Run Command Settings"
-msgstr "Настройки Запуска Комманды"
+msgstr "Настройки Запуска Команды"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:115
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:168
@@ -4274,7 +4274,7 @@ msgstr "Настройки Терминала"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:198
 msgid "Terminal Command (CTRL+RETURN to utilize)"
-msgstr "Комманда Вызова Терминала"
+msgstr "Команда Вызова Терминала"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:206
 #: src/modules/conf_winlist/e_int_config_winlist.c:295
@@ -4331,7 +4331,7 @@ msgstr "Выравнивание Y-Координат"
 #: src/modules/conf_exebuf/e_mod_main.c:35 src/modules/exebuf/e_mod_main.c:52
 #: src/modules/exebuf/e_mod_main.c:129
 msgid "Run Command"
-msgstr "Запуск Комманды"
+msgstr "Запуск Команды"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:60
 msgid "Core"
@@ -4383,7 +4383,7 @@ msgstr "Диалог Ошибки"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:77
 msgid "Exebuf Command"
-msgstr "Комманда Exebuf"
+msgstr "Команда Exebuf"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:78
 msgid "Splash Title"
@@ -4575,11 +4575,11 @@ msgstr "Параметры Метода Ввода"
 
 #: src/modules/conf_imc/e_int_config_imc.c:918
 msgid "Execute Command"
-msgstr "Выполнить Комманду"
+msgstr "Выполнить Команду"
 
 #: src/modules/conf_imc/e_int_config_imc.c:925
 msgid "Setup Command"
-msgstr "Настройка Комманды"
+msgstr "Настройка Команды"
 
 #: src/modules/conf_imc/e_int_config_imc.c:934
 msgid "Exported Environment Variables"
@@ -4681,7 +4681,7 @@ msgstr "Локаль"
 msgid ""
 "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
 msgstr ""
-"Пожалуйста нажмите последовательность клавиш,<br><br>или <hilight>Escape</"
+"Пожалуйста, нажмите последовательность клавиш,<br><br>или <hilight>Escape</"
 "hilight> для отмены."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:92
@@ -5188,7 +5188,7 @@ msgstr "%1.2f раз"
 
 #: src/modules/conf_scale/e_int_config_scale.c:272
 msgid "Constraints"
-msgstr ""
+msgstr "Ограничения"
 
 #: src/modules/conf_scale/e_int_config_scale.c:273
 msgid "Minimum"
@@ -5209,21 +5209,21 @@ msgstr "Настройки Хранителя Экрана"
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:135
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:173
 msgid "Enable X screensaver"
-msgstr "Включить X скринсейвер"
+msgstr "Включить хранитель экрана"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:138
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:176
 msgid "Screensaver Timer(s)"
-msgstr "Таймер(ы) Скринсэйвера"
+msgstr "Таймер(ы) хранителя экрана"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:140
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:178
 msgid "Time until X screensaver starts"
-msgstr "Время до старта X скринсейвера"
+msgstr "Время до старта X хранителя экрана"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:186
 msgid "Time until X screensaver alternates"
-msgstr "Время до смены X скринсейвера"
+msgstr "Время до смены X хранителя экрана"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:216
 msgid "Blanking"
@@ -6152,7 +6152,7 @@ msgstr "Тень"
 
 #: src/modules/exebuf/e_mod_main.c:48 src/modules/exebuf/e_mod_main.c:69
 msgid "Run Command Dialog"
-msgstr "Диалог Запуска Комманды"
+msgstr "Диалог Запуска Команды"
 
 #: src/modules/fileman/e_mod_main.c:310 src/modules/illume/e_mod_win.c:180
 msgid "Home"
@@ -6667,7 +6667,7 @@ msgid ""
 "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
 "<br>Or <hilight>Del</hilight> to reset the button."
 msgstr ""
-"Пожалуйста нажмите клавишу мыши<br>Нажмите <hilight>Escape</hilight> для "
+"Пожалуйста, нажмите клавишу мыши<br>Нажмите <hilight>Escape</hilight> для "
 "отмены<br>Или <hilight>Del</hilight> для сброса кнопки."
 
 #: src/modules/pager/e_mod_config.c:343
@@ -7084,7 +7084,7 @@ msgstr ""
 #~ msgstr "Переход по столам мышкой с краёв экрана"
 
 #~ msgid "Defined Command"
-#~ msgstr "Определённая Комманда"
+#~ msgstr "Определённая Команда"
 
 #~ msgid "Exit Immediately"
 #~ msgstr "Выход Немедленно"
@@ -7115,7 +7115,7 @@ msgstr ""
 
 #~ msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
 #~ msgstr ""
-#~ "Ваш компьютер останавливается.<br><hilight>Пожалуйста подождите.</hilight>"
+#~ "Ваш компьютер останавливается.<br><hilight>Пожалуйста, подождите.</hilight>"
 
 #~ msgid "Rebooting"
 #~ msgstr "Перезагрузка"
@@ -7334,7 +7334,7 @@ msgstr ""
 #~ msgstr "[%s] Получение канала..."
 
 #~ msgid "Logout is currently in progress.<br><hilight>Please wait.</hilight>"
-#~ msgstr "В процессе выхода.<br><hilight>Пожалуйста подождите.</hilight>"
+#~ msgstr "В процессе выхода.<br><hilight>Пожалуйста, подождите.</hilight>"
 
 #~ msgid ""
 #~ "Enlightenment is busy logging out.<br>You cannot perform other system "
@@ -7376,15 +7376,15 @@ msgstr ""
 
 #~ msgid "Rebooting your Computer.<br><hilight>Please wait.</hilight>"
 #~ msgstr ""
-#~ "Перезагрузка Вашего Компьютера.<br><hilight>Пожалуйста ждите.</hilight>"
+#~ "Перезагрузка Вашего Компьютера.<br><hilight>Пожалуйста, ждите.</hilight>"
 
 #~ msgid "Suspending your Computer.<br><hilight>Please wait.</hilight>"
 #~ msgstr ""
-#~ "Приостановка вашего компьютера.<br><hilight>Пожалуйста ждите.</hilight>"
+#~ "Приостановка вашего компьютера.<br><hilight>Пожалуйста, ждите.</hilight>"
 
 #~ msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
 #~ msgstr ""
-#~ "Заморозка Вашего Компьютера.<br><hilight>Пожалуйста подождите.</hilight>"
+#~ "Заморозка Вашего Компьютера.<br><hilight>Пожалуйста, подождите.</hilight>"
 
 #~ msgid "Check battery every:"
 #~ msgstr "Проверять батарею каждые:"
