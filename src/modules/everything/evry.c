@@ -598,18 +598,15 @@ evry_fuzzy_match(const char *str, const char *match)
 static Evry_List_Window *
 _evry_list_win_new(E_Zone *zone)
 {
-   int x, y;
+   int x, y, mw, mh;
    Evry_List_Window *list_win;
    E_Popup *popup;
    Evas_Object *o;
-
-   x = (zone->w / 2) - (win->popup->w / 3);
-   y = (zone->h / 2);
+   const char *offset_y;
 
    /* TODO get offsets from theme */
-   popup = e_popup_new(zone, x + 30, y - 4,
-		       win->popup->w * 2/3 - 60,
-		       evry_conf->height);
+   popup = e_popup_new(zone, 0, 0, 1, 1);
+
    if (!popup) return NULL;
 
    list_win = E_NEW(Evry_List_Window, 1);
@@ -627,6 +624,15 @@ _evry_list_win_new(E_Zone *zone)
    list_win->o_main = o;
    e_theme_edje_object_set(o, "base/theme/everything",
 			   "e/widgets/everything/list");
+   offset_y = edje_object_data_get(o, "offset_y");
+   edje_object_size_min_get(o, &mw, &mh);
+   if (mh == 0) mh = 200;
+   if (mw == 0) mw = win->popup->w / 2;
+
+   x = (win->popup->x + win->popup->w / 2) - (mw / 2);
+   y = (win->popup->y + win->popup->h) + (offset_y ? atoi(offset_y) : 0);
+
+   e_popup_move_resize(popup, x, y, mw, mh);
 
    o = e_box_add(popup->evas);
    list_win->o_list = o;
@@ -717,7 +723,7 @@ _evry_window_new(E_Zone *zone)
    E_Popup *popup;
    Evas_Object *o;
 
-   popup = e_popup_new(zone, 100, 100, 1, 1);
+   popup = e_popup_new(zone, 0, 0, 1, 1);
    if (!popup) return NULL;
 
    win = E_NEW(Evry_Window, 1);

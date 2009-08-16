@@ -26601,7 +26601,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   rel2.relative: 0.5 1.0;
 		   image {
 		       normal: "bt_base2.png";
-		       border: 7 7 7 7;
+		       border: 7 7 5 5;
 		   }
 		   
 	       }
@@ -26693,7 +26693,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       normal: "bt_hilight.png";
 		       border: 7 7 7 0;
 		   }
-		   color: 255 255 255 200;
+		   color: 255 255 255 120;
 	       }
 	   }
 	   part { name: "over2";
@@ -26701,8 +26701,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       description { state: "default" 0.0;
 		   rel1.to: "bg";
 		   rel2.to: "bg";
-		   /* rel2.relative: 1.0 0.5; */
-		   rel2.offset: -1 30;
+		   rel2.offset: -1 40;
 		   
 		   image {
 		       normal: "bt_shine.png";
@@ -26825,7 +26824,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       size: 10;
 		       min: 0 1;
 		       align: 0.0 0.5;
-		       /* text_class: "menu_item"; */
 		   }
 	       }
 	   }
@@ -26851,7 +26849,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       size: 10;
 		       min: 0 1;
 		       align: 1.0 0.0;
-		       /* text_class: "menu_item"; */
 		   }
 	       }
 	   }
@@ -26895,6 +26892,11 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   image: "menu_sel_fg.png" COMP;
        }
        data.item: "shaped" "1";
+       /* offset to main popup */
+       data.item: "offset_y" "-4";
+       
+       min: 350 235;
+       
        parts {	   
 	   part { name: "base";
 	       mouse_events:  0;
@@ -27492,7 +27494,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		  size: 10;
 		  min: 1 1;
 		  align: 0.5 0.5;
-		  text_class: "fileman_icon";
 	       }
 	    }
 	    description { state: "selected" 0.0;
@@ -27559,7 +27560,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		  size: 10;
 		  min: 1 1;
 		  align: 0.5 0.5;
-		  text_class: "fileman_icon";
 	       }
 	    }
 	    description { state: "selected" 0.0;
