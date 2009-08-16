@@ -384,18 +384,31 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 static int
 _open_folder_check(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
-   return (it->browseable);
+   return (it->uri && e_action_find("fileman"));
 }
 
 static int
-_open_folder_action(Evry_Action *act __UNUSED__, const Evry_Item *it1, const Evry_Item *it2 __UNUSED__, const char *input __UNUSED__)
-{      
+_open_folder_action(Evry_Action *act __UNUSED__, const Evry_Item *it, const Evry_Item *it2 __UNUSED__, const char *input __UNUSED__)
+{
    E_Action *action = e_action_find("fileman");
+   char *path;
    Eina_List *m;
+
    if (!action) return 0;
 
    m = e_manager_list();
-   action->func.go(E_OBJECT(m->data), it1->uri);
+
+   if (!it->browseable)
+     {
+	path = ecore_file_dir_get(it->uri);
+	if (!path) return 0;
+	action->func.go(E_OBJECT(m->data), path);
+	free(path);
+     }
+   else
+     {
+	action->func.go(E_OBJECT(m->data), it->uri);
+     }
 
    return 1;
 }
@@ -437,7 +450,7 @@ _init(void)
    act->check_item = &_open_folder_check;
    act->icon = "folder";
    evry_action_register(act);
-   
+
    return EINA_TRUE;
 }
 
