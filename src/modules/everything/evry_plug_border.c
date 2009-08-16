@@ -57,7 +57,7 @@ _fetch(Evry_Plugin *p, const char *input)
    Eina_List *l;
    int prio = 0;
    int m1, m2;
-   
+
    _cleanup(p);
 
    zone = e_util_zone_current_get(e_manager_current_get());

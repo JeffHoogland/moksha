@@ -183,7 +183,7 @@ int
 evry_init(void)
 {
    _evry_plug_actions_init();
-
+   
    return 1;
 }
 
@@ -192,6 +192,7 @@ evry_shutdown(void)
 {
    evry_hide();
    _evry_plug_actions_free();
+
    return 1;
 }
 
@@ -457,7 +458,6 @@ int
 evry_fuzzy_match(const char *str, const char *match)
 {
    const char *p, *m, *next;
-   char mc, pc;
    int sum = 0;
 
    unsigned int last = 0;
@@ -489,7 +489,7 @@ evry_fuzzy_match(const char *str, const char *match)
    next = str;
    m = match;
 
-   for (word = 0; word < words && *next != 0; )
+   for (word = 0; (word < words) && (*next != 0);)
      {
 	/* reset match */
 	if (word == 0) m = match;
@@ -497,7 +497,6 @@ evry_fuzzy_match(const char *str, const char *match)
 	/* end of matching */
 	if (*m == 0) break;
 
-	mc = tolower(*m);
 	offset = 0;
 	last = 0;
 	min = 1;
@@ -507,7 +506,7 @@ evry_fuzzy_match(const char *str, const char *match)
 	for (p = next; *next != 0; p++)
 	  {
 	     /* new word of string begins */
-	     if (*p == 0 || isspace(*p))
+	     if ((*p == 0) || isspace(*p))
 	       {
 		  if (word < words - 1)
 		    {
@@ -527,10 +526,8 @@ evry_fuzzy_match(const char *str, const char *match)
 		    }
 	       }
 
-	     pc = tolower(*p);
-
 	     /* current char matches? */
-	     if (pc != mc)
+	     if (tolower(*p) != tolower(*m))
 	       {
 		  offset++;
 		  continue;
@@ -548,12 +545,9 @@ evry_fuzzy_match(const char *str, const char *match)
 	     last = offset;
 
 	     /* try next char of match */
-	     m++;
-	     if (*m != 0 && !isspace(*m))
-	       {
-		  mc = tolower(*m);
-		  continue;
-	       }
+	     if (*(++m) != 0 && !isspace(*m))
+	       continue;
+
 
 	     /* end of match: store min weight of match */
 	     if (min < word_min[word])
@@ -613,8 +607,8 @@ _evry_list_win_new(E_Zone *zone)
    y = (zone->h / 2);
 
    /* TODO get offsets from theme */
-   popup = e_popup_new(zone, x + 50, y - 4,
-		       win->popup->w * 2/3 - 100,
+   popup = e_popup_new(zone, x + 30, y - 4,
+		       win->popup->w * 2/3 - 60,
 		       evry_conf->height);
    if (!popup) return NULL;
 

@@ -35,6 +35,28 @@ _act_cb_border_switch_to(E_Border *bd)
 }
 
 static void
+_act_cb_border_to_desktop(E_Border *bd)
+{
+   E_Zone *zone;
+   E_Desk *desk;
+   zone = e_util_zone_current_get(e_manager_current_get());
+   desk = e_desk_current_get(zone);
+
+   e_border_desk_set(bd, desk);
+
+   if (bd->shaded)
+     e_border_unshade(bd, E_DIRECTION_UP);
+
+   if (bd->iconic)
+     e_border_uniconify(bd);
+   else
+     e_border_raise(bd);
+
+   /* e_border_focus_set(bd, 1, 1); */
+   e_border_focus_set_with_pointer(bd);
+}
+
+static void
 _act_cb_border_fullscreen(E_Border *bd)
 {
    if (!bd->fullscreen)
@@ -119,21 +141,44 @@ _cleanup(Evry_Plugin *p)
 static int
 _fetch(Evry_Plugin *p, const char *input)
 {
+   E_Zone *zone;
+   E_Desk *desk;
+
+   zone = e_util_zone_current_get(e_manager_current_get());
+   desk = e_desk_current_get(zone);
+
    _cleanup(p);
 
-   _item_add(p, _("Switch To"), _act_cb_border_switch_to, "go-next", input);
+   _item_add(p, _("Switch to Window"),
+	     _act_cb_border_switch_to,
+	     "go-next", input);
+
+   if (desk != inst->border->desk)
+     _item_add(p, _("Send to Deskop"),
+	       _act_cb_border_to_desktop,
+	       "go-previous", input);
 
    if (inst->border->iconic)
-     _item_add(p, _("Uniconify"), _act_cb_border_unminimize, "window-minimize", input);
+     _item_add(p, _("Uniconify"),
+	       _act_cb_border_unminimize,
+	       "window-minimize", input);
    else
-     _item_add(p, _("Iconify"), _act_cb_border_minimize, "window-minimize", input);
+     _item_add(p, _("Iconify"),
+	       _act_cb_border_minimize,
+	       "window-minimize", input);
 
    if (!inst->border->fullscreen)
-     _item_add(p, _("Fullscreen"), _act_cb_border_fullscreen, "view-fullscreen", input);
+     _item_add(p, _("Fullscreen"),
+	       _act_cb_border_fullscreen,
+	       "view-fullscreen", input);
    else
-     _item_add(p, _("Unfullscreen"), _act_cb_border_fullscreen, "view-restore", input);
+     _item_add(p, _("Unfullscreen"),
+	       _act_cb_border_fullscreen,
+	       "view-restore", input);
 
-   _item_add(p, _("Close"), _act_cb_border_close, "window-close", input);
+   _item_add(p, _("Close"),
+	     _act_cb_border_close,
+	     "window-close", input);
 
    if (eina_list_count(p->items) > 0)
      {
@@ -161,9 +206,6 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 
    o = e_icon_add(e);
    evry_icon_theme_set(o, (const char *)it->data[1]);
-
-   /* icon = edje_object_add(e);
-    * e_theme_edje_object_set(icon, "base/theme/borders", (const char *)it->data[1]); */
 
    return o;
 }

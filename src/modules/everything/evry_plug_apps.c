@@ -188,7 +188,10 @@ _add_desktop_list(Evry_Plugin *p, Eina_List *apps, const char *input)
 	if (eina_list_count(p->items) > 199) continue;
 	if (!desktop->name || !desktop->exec) continue;
 
-	m1 = evry_fuzzy_match(desktop->exec, input);
+	char *exec = strrchr(desktop->exec, '/');
+	if (!exec++ || !exec) exec = desktop->exec;
+
+	m1 = evry_fuzzy_match(exec, input);
 	m2 = evry_fuzzy_match(desktop->name, input);
 
 	if (!m1 || (m2 && m2 < m1))
@@ -313,7 +316,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	char *dir;
 	char cmd[1024];
 	char path[1024];
-	
+
 	if (input)
 	  {
 	     snprintf(cmd, sizeof(cmd), "%s", input);
@@ -441,15 +444,48 @@ _app_action(const Evry_Item *it_app, const Evry_Item *it_file)
 
    if (app->desktop)
      {
-	if (it_file && it_file->uri)
-	  files = eina_list_append(files, it_file->uri);
+	if (it_file)
+	  {
+	     Eina_List *l;
+	     char *mime;
+	     char *path = NULL;
+	     int open_folder = 0;
 
-	e_exec(zone, app->desktop, NULL, files, "everything");
+	     if (!it_file->browseable)
+	       {
+		  EINA_LIST_FOREACH(app->desktop->mime_types, l, mime)
+		    {
+		       if (!strcmp(mime, "x-directory/normal"))
+			 {
+			    open_folder = 1;
+			    break;
+			 }
+		    }
+	       }
 
-	if (it_file && it_file->mime)
-	  e_exehist_mime_desktop_add(it_file->mime, app->desktop);
+	     if (open_folder)
+	       {
+		  path = ecore_file_dir_get(it_file->uri);
+		  files = eina_list_append(files, path);
+	       }
+	     else
+	       {
+		  files = eina_list_append(files, it_file->uri);
+	       }
 
-	if (files) eina_list_free(files);
+	     e_exec(zone, app->desktop, NULL, files, NULL);
+
+	     if (it_file && it_file->mime && !open_folder)
+	       e_exehist_mime_desktop_add(it_file->mime, app->desktop);
+
+	     if (files)
+	       eina_list_free(files);
+
+	     if (open_folder && path)
+	       free(path);
+	  }
+	else
+	  e_exec(zone, app->desktop, NULL, NULL, "everything");
      }
    else if (app->file)
      {
@@ -601,8 +637,7 @@ _new_app_action(Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, co
    else
      {
 	efreet_desktop_save_as(app->desktop, buf);
-	/*XXX hackish - desktop is removed on save_as..*/
-	efreet_desktop_new(app->desktop->orig_path);
+	/* efreet_desktop_new(app->desktop->orig_path); */
 
 	desktop = efreet_desktop_new(buf);
      }
@@ -657,7 +692,7 @@ _init(void)
    act1->type_in2 = "FILE";
    act1->action = &_exec_app_action;
    act1->check_item = &_exec_app_check_item;
-   act1->icon = "everything-launch";
+   act1->icon = "document-open";
    evry_action_register(act1);
 
    act2 = E_NEW(Evry_Action, 1);
