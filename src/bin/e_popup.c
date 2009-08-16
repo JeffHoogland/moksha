@@ -100,7 +100,6 @@ e_popup_show(E_Popup *pop)
                         pop->zone->container->manager->w,
                         pop->zone->container->manager->h);
         ecore_evas_show(pop->ecore_evas);
-        e_container_shape_show(pop->shape);
         if (pop->idle_enterer) ecore_idle_enterer_del(pop->idle_enterer);
         pop->idle_enterer = ecore_idle_enterer_add(_e_popup_idle_enterer, pop);
      }
@@ -286,7 +285,7 @@ e_popup_idler_before(void)
 	       }
 	     pop->need_shape_export = 0;
 	  }
-	if (pop->visible)
+	if ((pop->visible) && (!pop->idle_enterer))
 	  e_container_shape_show(pop->shape);
      }
 }
@@ -319,6 +318,7 @@ _e_popup_idle_enterer(void *data)
    ecore_evas_move(pop->ecore_evas,
 		   pop->zone->x + pop->x, 
 		   pop->zone->y + pop->y);
+   e_container_shape_show(pop->shape);
    pop->idle_enterer = NULL;
    return 0;
 }
