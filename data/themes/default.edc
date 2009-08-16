@@ -26601,8 +26601,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   rel2.relative: 0.5 1.0;
 		   image {
 		       normal: "menu_sel_bg.png";
-		       border: 8 8 5 9;
+		       border: 8 8 4 7;
 		   }
+		   
 	       }
 	       description { state: "wide" 0;
 		   inherit: "default" 0.0;
@@ -26687,10 +26688,14 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       description { state: "default" 0.0;
 		   rel1.to: "bg";
 		   rel2.to: "bg";
+		   rel2.relative: 1.0 0.5;
+		   rel2.offset: -1 10;
+		   
 		   image {
 		       normal: "menu_sel_fg.png";
-		       border: 8 8 11 4;
+		       border: 8 8 6 13;
 		   }
+		   color: 255 255 255 150;
 	       }
 	   }
        }
@@ -26746,7 +26751,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   part { name: "inner_clip";
 	       type: RECT;
 	       clip_to: "clip";
-	       mouse_events: 0;
 	       description {
 		   state: "default" 0.0;
 		   rel1.offset:   10   10;
@@ -26754,10 +26758,23 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	   }
 
+	   part { name: "icon_clip";
+	       type: RECT;
+	       clip_to: "inner_clip";
+	       description {
+		   state: "default" 0.0;
+		   color: 255 255 255 255;
+	       }
+	       description {
+		   state: "faded" 0.0;
+		   color: 255 255 255 200;
+	       }
+	   }
+
 	   part {
 	       name: "e.swallow.icons";
 	       type: SWALLOW;
-	       clip_to: "inner_clip";
+	       clip_to: "icon_clip";
 	       description {
 		   state: "default" 0.0;
 		   max: 64 64;
@@ -26770,7 +26787,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 		   rel2 {
 		       relative: 0.0 1.0;
-		       offset:   -11   -11;
+		       offset:   74  -11;
 		   }
 	       }
 	   }
@@ -26841,6 +26858,19 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       action: STATE_SET "default" 0.0;
 	       transition: SINUSOIDAL 0.3;
 	       target: "border";
+	   }
+	   program { name: "update";
+	       signal: "e,signal,update";
+	       source: "e";
+	       action: STATE_SET "faded" 0.0;
+	       transition: DECELERATE 0.1;
+	       target: "icon_clip";
+	       after: "show_icon";
+	   }
+	   program { name: "show_icon";
+	       action: STATE_SET "default" 0.0;
+	       transition: ACCELERATE 0.3;
+	       target: "icon_clip";
 	   }
        }
    }
