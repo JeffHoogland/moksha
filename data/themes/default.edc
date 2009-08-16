@@ -26601,7 +26601,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   rel2.relative: 0.5 1.0;
 		   image {
 		       normal: "menu_sel_bg.png";
-		       border: 8 8 4 7;
+		       border: 8 8 4 6;
 		   }
 		   
 	       }
@@ -26693,7 +26693,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   
 		   image {
 		       normal: "menu_sel_fg.png";
-		       border: 8 8 6 13;
+		       border: 8 8 5 13;
 		   }
 		   color: 255 255 255 150;
 	       }
