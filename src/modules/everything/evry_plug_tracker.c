@@ -29,7 +29,6 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 
    if (!strcmp(it->plugin->type_out, "APPLICATION"))
      {
-	Efreet_Desktop *desktop;
 	Eina_List *l;
 	const char *mime;
 	Evry_App *app = it->data[0];

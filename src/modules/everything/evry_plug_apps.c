@@ -28,7 +28,6 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 
    if (it)
      {
-	Eina_List *l;
 	Efreet_Desktop *desktop;
 
 	if (!it->uri) return 0;
@@ -182,7 +181,7 @@ _add_desktop_list(Evry_Plugin *p, Eina_List *apps, const char *input)
 {
    Efreet_Desktop *desktop;
    Eina_List *l;
-   int m1, m2, min;
+   int m1, m2;
 
    EINA_LIST_FOREACH(apps, l, desktop)
      {
@@ -319,7 +318,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	  {
 	     snprintf(cmd, sizeof(cmd), "%s", input);
 
-	     if (end = strchr(input, ' '))
+	     if ((end = strchr(input, ' ')))
 	       {
 		  int len = (end - input) + 1;
 		  if (len >= 0)
@@ -430,7 +429,6 @@ _app_action(const Evry_Item *it_app, const Evry_Item *it_file)
 {
    E_Zone *zone;
    Evry_App *app = NULL;
-   Efreet_Desktop *desktop = NULL;
    Eina_List *files = NULL;
    char *exe = NULL;
 
@@ -499,6 +497,8 @@ _open_with_action(Evry_Plugin *p, const Evry_Item *it, const char *input __UNUSE
    Inst *inst = p->private;
    if (inst->candidate)
      return _app_action(it, inst->candidate);
+
+   return 0;
 }
 
 static int

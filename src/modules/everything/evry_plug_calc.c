@@ -1,7 +1,6 @@
 #include "Evry.h"
 
 
-static void _item_add(Evry_Plugin *p, char *output, int prio);
 static int  _cb_data(void *data, int type, void *event);
 static int  _cb_error(void *data, int type, void *event);
 static int  _cb_del(void *data, int type, void *event);
@@ -141,7 +140,6 @@ static int
 _cb_data(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev = event;
-   Ecore_Exe_Event_Data_Line *l;
    Evry_Plugin *p = data;
    Evry_Item *it;
 
@@ -211,7 +209,6 @@ _init(void)
 static void
 _shutdown(void)
 {
-   Evry_Item *it;
    char *result;
 
    EINA_LIST_FREE(history, result)

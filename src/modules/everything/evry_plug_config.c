@@ -57,9 +57,9 @@ _fetch(Evry_Plugin *p, const char *input)
 	  {
 	     if (eci->pri >= 0)
 	       {
-		  if (match = evry_fuzzy_match(eci->label, input))
+		  if ((match = evry_fuzzy_match(eci->label, input)))
 		    _item_add(p, eci, match, 0);
-		  else if (match = evry_fuzzy_match(ecat->label, input))
+		  else if ((match = evry_fuzzy_match(ecat->label, input)))
 		    _item_add(p, eci, match, 1);
 	       }
 	  }

@@ -153,7 +153,6 @@ static Evas_Object *_evry_plug_actions_item_icon_get(Evry_Plugin *p, const Evry_
 
 static Evry_Plugin *_evry_plug_aggregator_new(void);
 static void _evry_plug_aggregator_free(Evry_Plugin *p);
-static int  _evry_plug_aggregator_begin(Evry_Plugin *p, const Evry_Item *it);
 static int  _evry_plug_aggregator_fetch(Evry_Plugin *p, const char *input);
 static int  _evry_plug_aggregator_action(Evry_Plugin *p, const Evry_Item *item, const char *input);
 static void _evry_plug_aggregator_cleanup(Evry_Plugin *p);
@@ -483,8 +482,7 @@ evry_fuzzy_match(const char *str, const char *match)
      {
    	if (isspace(*m) && !isspace(*(m+1)))
    	  {
-   	     word_min[words] = MAX_FUZZ;
-   	     words++;
+   	     word_min[words++] = MAX_FUZZ;
    	  }
      }
 
@@ -541,6 +539,7 @@ evry_fuzzy_match(const char *str, const char *match)
 	     /* first offset of match in word */
 	     if (!first)
 	       {
+		  offset *= 10;
 		  last = offset;
 		  first = 1;
 	       }
@@ -808,7 +807,6 @@ _evry_selector_new(int type)
 static void
 _evry_selector_free(Evry_Selector *sel)
 {
-   Evry_State *s;
    Evry_Plugin *p;
 
    if (sel->o_icon)
@@ -838,7 +836,6 @@ _evry_selector_activate(Evry_Selector *sel)
 {
    if (selector)
      {
-	Evry_State *s = selector->state;
 	Evry_Plugin *p;
 	Eina_List *l;
 
@@ -1360,7 +1357,6 @@ _evry_update(Evry_State *s, int fetch)
 static int
 _evry_update_timer(void *data)
 {
-   Evry_State *s = data;
    /* XXX pass selector as data? */
    _evry_matches_update(selector);
    _evry_selector_update(selector);
@@ -1611,7 +1607,7 @@ _evry_matches_update(Evry_Selector *sel)
    Evry_State *s = sel->state;
    Evry_Plugin *p;
    Eina_List *l;
-   Eina_Bool has_items;
+   Eina_Bool has_items = EINA_FALSE;
 
    EINA_LIST_FREE(s->cur_plugins, p);
 
@@ -1672,7 +1668,7 @@ _evry_matches_update(Evry_Selector *sel)
 static void
 _evry_list_scroll_to(Evry_State *s, Evry_Item *it)
 {
-   int n, h, mh, i = 0, max_w, max_h;
+   int n, h, mh, i = 0;
    Eina_List *l;
 
    if (!it) return;
@@ -1870,9 +1866,6 @@ _evry_list_item_prev(Evry_State *s)
 static void
 _evry_list_item_first(Evry_State *s)
 {
-   Eina_List *l;
-   Evry_Item *it;
-
    if (!s->plugin || !s->plugin->items) return;
 
    s->plugin_auto_selected = EINA_FALSE;
@@ -1885,9 +1878,6 @@ _evry_list_item_first(Evry_State *s)
 static void
 _evry_list_item_last(Evry_State *s)
 {
-   Eina_List *l;
-   Evry_Item *it;
-
    if (!s->plugin || !s->plugin->items) return;
 
    s->plugin_auto_selected = EINA_FALSE;
@@ -2266,7 +2256,7 @@ _evry_plug_actions_cleanup(Evry_Plugin *p)
 static Evas_Object *
 _evry_plug_actions_item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
-   Evas_Object *o;
+   Evas_Object *o = NULL;
    Evry_Action *act = it->data[0];
 
    if (!act) return NULL;

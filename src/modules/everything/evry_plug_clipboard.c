@@ -9,6 +9,8 @@ _action(Evry_Action *act __UNUSED__, const Evry_Item *it, const Evry_Item *it2 _
 {
    ecore_x_selection_primary_set(clipboard_win, it->label, strlen(it->label));
    ecore_x_selection_clipboard_set(clipboard_win, it->label, strlen(it->label));
+
+   return 1;
 }
 
 static int
