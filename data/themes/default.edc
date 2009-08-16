@@ -26701,8 +26701,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       description { state: "default" 0.0;
 		   rel1.to: "bg";
 		   rel2.to: "bg";
-		   /* rel2.relative: 1.0 0.5;
-		    * rel2.offset: -1 10; */
+		   /* rel2.relative: 1.0 0.5; */
+		   rel2.offset: -1 30;
 		   
 		   image {
 		       normal: "bt_shine.png";
