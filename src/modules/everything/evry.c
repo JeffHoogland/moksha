@@ -98,7 +98,7 @@ static void _evry_matches_update(Evry_Selector *sel);
 static void _evry_plugin_action(Evry_Selector *sel, int finished);
 static void _evry_backspace(Evry_State *s);
 static void _evry_update(Evry_State *s, int fetch);
-static void _evry_clear(Evry_State *s);
+static int  _evry_clear(Evry_State *s);
 static int  _evry_update_timer(void *data);
 static Evry_State *_evry_state_new(Evry_Selector *sel, Eina_List *plugins);
 static void _evry_state_pop(Evry_Selector *sel);
@@ -183,7 +183,7 @@ int
 evry_init(void)
 {
    _evry_plug_actions_init();
-   
+
    return 1;
 }
 
@@ -1238,40 +1238,83 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    ev = event;
    if (ev->event_window != input_window) return 1;
 
-   if       (!strcmp(ev->key, "Up"))
+
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
+     {
+	if (!strcmp(ev->key, "Tab"))
+	  _evry_list_plugin_next(s);
+	if (!strcmp(ev->key, "k"))
+	  _evry_list_item_prev(s);
+	else if (!strcmp(ev->key, "j"))
+	  _evry_list_item_next(s);
+	else if (!strcmp(ev->key, "n"))
+	  _evry_list_plugin_next(s);
+	else if (!strcmp(ev->key, "p"))
+	  _evry_list_plugin_prev(s);
+	else if (!strcmp(ev->key, "l"))
+	  _evry_browse_item(selector);
+	else if (!strcmp(ev->key, "h"))
+	  _evry_browse_back(selector);
+	else if (!strcmp(ev->key, "i"))
+	  _evry_selectors_switch();
+	else if (!strcmp(ev->key, "m"))
+	  _evry_plugin_action(selector, 1);
+     }
+   else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
+     {
+	if (!strcmp(ev->key, "u"))
+	  {
+	     if (!_evry_clear(s))
+	       _evry_browse_back(selector);
+	  }
+	else if (!strcmp(ev->key, "Tab"))
+	  _evry_list_plugin_next(s);
+	else if (!strcmp(ev->key, "Right"))
+	  _evry_list_plugin_next(s);
+	else if (!strcmp(ev->key, "Left"))
+	  _evry_list_plugin_prev(s);
+	else if (!strcmp(ev->key, "Return"))
+	  _evry_plugin_action(selector, 0);
+	else if (!strcmp(ev->key, "v"))
+	  {
+	     win->request_selection = EINA_TRUE;
+	     ecore_x_selection_primary_request
+	       (win->popup->evas_win, ECORE_X_SELECTION_TARGET_UTF8_STRING);
+	  }
+	else _evry_list_plugin_next_by_name(s, ev->key);
+     }
+   else if (!strcmp(ev->key, "Up"))
      _evry_list_item_prev(s);
    else if (!strcmp(ev->key, "Down"))
      _evry_list_item_next(s);
-   else if (!strcmp(ev->key, "Right") &&
-	    ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
-	     (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)))
+   else if (!strcmp(ev->key, "Next"))
      _evry_list_plugin_next(s);
-   else if (!strcmp(ev->key, "Left") &&
-	    ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
-	     (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)))
+   else if (!strcmp(ev->key, "Prior"))
      _evry_list_plugin_prev(s);
    else if (!strcmp(ev->key, "Right"))
-     _evry_browse_item(selector);
+     {
+	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+	  _evry_list_plugin_next(s);
+	else
+	  _evry_browse_item(selector);
+     }
    else if (!strcmp(ev->key, "Left"))
-     _evry_browse_back(selector);
-   else if ((!strcmp(ev->key, "Return")) &&
-	   ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
-	    (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)))
-     _evry_plugin_action(selector, 0);
+     {
+	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+	  _evry_list_plugin_prev(s);
+	else
+	  _evry_browse_back(selector);
+     }
    else if (!strcmp(ev->key, "Return"))
-     _evry_plugin_action(selector, 1);
-   else if (!strcmp(ev->key, "Tab") &&
-	    ((ev->modifiers & ECORE_EVENT_MODIFIER_ALT) ||
-	     (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
-     _evry_list_plugin_next(s);
+     {
+	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+	  _evry_plugin_action(selector, 0);
+	else
+	  _evry_plugin_action(selector, 1);
+     }
    else if (!strcmp(ev->key, "Tab"))
      _evry_selectors_switch();
-   else if (!strcmp(ev->key, "u") &&
-	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
-     _evry_clear(s);
-   else  if ((!strcmp(ev->key, "Escape")) ||
-	     (!strcmp(ev->key, "e") &&
-	      (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
+   else  if (!strcmp(ev->key, "Escape"))
      evry_hide();
    else if ((!strcmp(ev->key, "BackSpace")) ||
 	    (!strcmp(ev->key, "Delete")))
@@ -1280,19 +1323,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      _evry_list_item_last(s);
    else if (!strcmp(ev->key, "Home"))
      _evry_list_item_first(s);
-   else if (!strcmp(ev->key, "v") &&
-	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
-     {
-	win->request_selection = EINA_TRUE;
-	ecore_x_selection_primary_request(win->popup->evas_win,
-					  ECORE_X_SELECTION_TARGET_UTF8_STRING);
-     }
-   else if ((ev->key) &&
-	    (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
-     _evry_list_plugin_next_by_name(s, ev->key);
-   else if ((ev->compose) &&
-	    (!(ev->modifiers & ECORE_EVENT_MODIFIER_ALT) ||
-	      (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)))
+   else if (ev->compose)
      {
 	if (strlen(s->input) < (INPUTLEN - strlen(ev->compose)))
 	  {
@@ -1361,7 +1392,7 @@ _evry_update_timer(void *data)
    return 0;
 }
 
-static void
+static int
 _evry_clear(Evry_State *s)
 {
    if ((s->plugin && s->plugin->trigger && s->input) &&
@@ -1369,13 +1400,16 @@ _evry_clear(Evry_State *s)
      {
 	s->input[strlen(s->plugin->trigger)] = 0;
 	_evry_update(s, 1);
+	return 1;
      }
    else if (s->input[0] != 0)
      {
 	s->input[0] = 0;
 	_evry_update(s, 1);
 	edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
+	return 1;
      }
+   return 0;
 }
 
 static void
