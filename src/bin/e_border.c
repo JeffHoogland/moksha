@@ -60,6 +60,9 @@ static int  _e_border_cb_grab_replay(void *data, int type, void *event);
 static void _e_border_cb_drag_finished(E_Drag *drag, int dropped);
 
 static void _e_border_eval(E_Border *bd);
+static void _e_border_eval0(E_Border *bd);
+static void _e_border_container_layout_hook(E_Container *con);
+
 static void _e_border_moveinfo_gather(E_Border *bd, const char *source);
 static void _e_border_resize_handle(E_Border *bd);
 
@@ -102,7 +105,7 @@ static void _e_border_pointer_resize_end(E_Border *bd);
 static void _e_border_pointer_move_begin(E_Border *bd);
 static void _e_border_pointer_move_end(E_Border *bd);
 
-static void _e_border_hook_call(E_Border_Hook_Point hookpoint, E_Border *bd);
+static void _e_border_hook_call(E_Border_Hook_Point hookpoint, void *bd);
 
 /* local subsystem globals */
 static Eina_List *handlers = NULL;
@@ -2692,10 +2695,6 @@ e_border_idler_before(void)
    if (!borders)
      return;
 
-   /* We need to loop two times through the borders.
-    * 1. show windows
-    * 2. hide windows and evaluate rest
-    */
    for (ml = e_manager_list(); ml; ml = ml->next)
      {
 	E_Manager *man;
@@ -2708,6 +2707,21 @@ e_border_idler_before(void)
 	     E_Border *bd;
 
 	     con = cl->data;
+             
+             // pass 1 - eval0. fetch properties on new or on change and
+             // call hooks to decide what to do - maybe move/resize
+	     bl = e_container_border_list_last(con);
+	     while ((bd = e_container_border_list_prev(bl)))
+	       {
+		  if (bd->changed) _e_border_eval0(bd);
+	       }
+	     e_container_border_list_free(bl);
+             
+             // layout hook - this is where a hook gets to figure out what to
+             // do if anything.
+             _e_border_container_layout_hook(con);
+             
+             // pass 2 - show windows needing show
 	     bl = e_container_border_list_last(con);
 	     while ((bd = e_container_border_list_prev(bl)))
 	       {
@@ -2731,21 +2745,8 @@ e_border_idler_before(void)
 		    }
 	       }
 	     e_container_border_list_free(bl);
-	  }
-     }
-
-   for (ml = e_manager_list(); ml; ml = ml->next)
-     {
-	E_Manager *man;
-
-	man = ml->data;
-	for (cl = man->containers; cl; cl = cl->next)
-	  {
-	     E_Container *con;
-	     E_Border_List *bl;
-	     E_Border *bd;
-
-	     con = cl->data;
+             
+             // pass 3 - hide windows needing hide and eval (main eval)
 	     bl = e_container_border_list_first(con);
 	     while ((bd = e_container_border_list_next(bl)))
 	       {
@@ -5660,14 +5661,18 @@ _e_border_post_move_resize_job(void *data)
 }
 
 static void
-_e_border_eval(E_Border *bd)
-{	
-   E_Event_Border_Property *event;
+_e_border_container_layout_hook(E_Container *con)
+{
+   _e_border_hook_call(E_BORDER_HOOK_CONTAINER_LAYOUT, con);
+}
+
+static void
+_e_border_eval0(E_Border *bd)
+{
    int change_urgent = 0;
    int rem_change = 0;
-   int send_event = 1;
    int zx, zy, zw, zh;
-
+   
    if (e_object_is_del(E_OBJECT(bd)))
      {
 	fprintf(stderr, "ERROR: _e_border_eval(%p) with deleted border!\n", bd);
@@ -6462,6 +6467,15 @@ _e_border_eval(E_Border *bd)
    _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_FETCH, bd);
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_BORDER_ASSIGN, bd);
    
+   if (bd->need_reparent)
+     {     
+	ecore_x_window_save_set_add(bd->client.win);
+	ecore_x_window_reparent(bd->client.win, bd->client.shell_win, 0, 0);
+	if (bd->visible)
+	  ecore_x_window_show(bd->client.win);
+	bd->need_reparent = 0;
+     }
+   
    if ((bd->client.border.changed) && (!bd->shaded) &&
        (!(((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN))))
      {
@@ -6630,16 +6644,42 @@ _e_border_eval(E_Border *bd)
 	  }
      }
    
-   if (bd->need_reparent)
-     {     
-	ecore_x_window_save_set_add(bd->client.win);
-	ecore_x_window_reparent(bd->client.win, bd->client.shell_win, 0, 0);
-	if (bd->visible)
-	  ecore_x_window_show(bd->client.win);
-	bd->need_reparent = 0;
+   if ((bd->remember) && (rem_change))
+     e_remember_update(bd->remember, bd);
+   
+   if (change_urgent)
+     {
+	if (bd->client.icccm.urgent)
+	  edje_object_signal_emit(bd->bg_object, "e,state,urgent", "e");
+	else
+	  edje_object_signal_emit(bd->bg_object, "e,state,not_urgent", "e");
+	E_Event_Border_Urgent_Change *ev;
+
+	ev = calloc(1, sizeof(E_Event_Border_Urgent_Change));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ecore_event_add(E_EVENT_BORDER_URGENT_CHANGE, ev,
+	      _e_border_event_border_urgent_change_free, NULL);
      }
    
    _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_BORDER_ASSIGN, bd);
+}
+
+static void
+_e_border_eval(E_Border *bd)
+{	
+   E_Event_Border_Property *event;
+   int rem_change = 0;
+   int send_event = 1;
+   int zx, zy, zw, zh;
+
+   if (e_object_is_del(E_OBJECT(bd)))
+     {
+	fprintf(stderr, "ERROR: _e_border_eval(%p) with deleted border!\n", bd);
+	return;
+     }
+   if (bd->zone)
+     e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_NEW_BORDER, bd);
    
    if (bd->new_client)
@@ -7042,7 +7082,7 @@ _e_border_eval(E_Border *bd)
 	bd->changes.pos = 0;
 	bd->changes.size = 0;
 	rem_change = 1;
-    }
+     }
    else if (bd->changes.pos)
      {
 	if (1)
@@ -7430,21 +7470,6 @@ _e_border_eval(E_Border *bd)
 	bd->changes.icon = 0;
      }
 
-   if (change_urgent)
-     {
-	if (bd->client.icccm.urgent)
-	  edje_object_signal_emit(bd->bg_object, "e,state,urgent", "e");
-	else
-	  edje_object_signal_emit(bd->bg_object, "e,state,not_urgent", "e");
-	E_Event_Border_Urgent_Change *ev;
-
-	ev = calloc(1, sizeof(E_Event_Border_Urgent_Change));
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
-	ecore_event_add(E_EVENT_BORDER_URGENT_CHANGE, ev,
-	      _e_border_event_border_urgent_change_free, NULL);
-     }
-   
    bd->new_client = 0;
    bd->changed = 0;
    bd->changes.stack = 0;
@@ -8277,7 +8302,7 @@ _e_border_hooks_clean(void)
 }
 
 static void
-_e_border_hook_call(E_Border_Hook_Point hookpoint, E_Border *bd)
+_e_border_hook_call(E_Border_Hook_Point hookpoint, void *bd)
 {
    Eina_List *l;
 
@@ -8296,7 +8321,7 @@ _e_border_hook_call(E_Border_Hook_Point hookpoint, E_Border *bd)
 }
 
 EAPI E_Border_Hook *
-e_border_hook_add(E_Border_Hook_Point hookpoint, void (*func) (void *data, E_Border *bd), void *data)
+e_border_hook_add(E_Border_Hook_Point hookpoint, void (*func) (void *data, void *bd), void *data)
 {
    E_Border_Hook *bh;
    
