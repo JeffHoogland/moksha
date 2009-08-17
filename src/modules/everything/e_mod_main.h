@@ -8,6 +8,7 @@ typedef struct _Config Config;
 
 struct _Config
 {
+  int version;
   /* position */
   double rel_x, rel_y;
   /* size */
@@ -19,8 +20,9 @@ struct _Config
   int scroll_animate;
   double scroll_speed;
 
-  int auto_select_first;
-
+  int hide_input;
+  int hide_list;
+  
   Eina_Hash *key_bindings;
 
   /**/

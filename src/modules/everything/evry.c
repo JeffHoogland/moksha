@@ -128,7 +128,7 @@ static int  _evry_selector_objects_get(const char *type);
 static Evry_List_Window *_evry_list_win_new(E_Zone *zone);
 static void _evry_list_win_free(Evry_List_Window *win);
 static void _evry_list_win_show(void);
-static void _evry_list_win_hide(void);
+static void _evry_list_win_clear(int hide);
 static void _evry_list_clear_list(Evry_State *s);
 static void _evry_list_update(Evry_State *s);
 static void _evry_list_show_items(Evry_State *s, Evry_Plugin *plugin);
@@ -244,6 +244,9 @@ evry_show(E_Zone *zone)
      }
    e_box_align_set(list->o_tabs, 0.0, 0.5);
 
+   if (!evry_conf->hide_input)
+     edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
+   
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_EVENT_KEY_DOWN, _evry_cb_key_down, NULL));
@@ -699,14 +702,12 @@ _evry_list_win_show(void)
 }
 
 static void
-_evry_list_win_hide(void)
+_evry_list_win_clear(int hide)
 {
    Eina_List *l;
    Evry_Plugin *p;
 
    if (!list->visible) return;
-
-   list->visible = EINA_FALSE;
 
    EINA_LIST_FOREACH(selector->plugins, l, p)
      {
@@ -716,7 +717,13 @@ _evry_list_win_hide(void)
      }
    _evry_list_clear_list(selector->state);
 
-   edje_object_signal_emit(list->o_main, "e,state,list_hide", "e");
+   if (hide)
+     {
+	
+	list->visible = EINA_FALSE;
+	edje_object_signal_emit(list->o_main, "e,state,list_hide", "e");
+     }
+   
    /* e_popup_hide(list->popup); */
 }
 
@@ -857,7 +864,7 @@ _evry_selector_activate(Evry_Selector *sel)
 	     p->tab = NULL;
 	  }
 
-	_evry_list_win_hide();
+	_evry_list_win_clear(evry_conf->hide_list);
 	_evry_plugin_show(selector->state, NULL);
      }
 
@@ -878,6 +885,7 @@ _evry_selector_activate(Evry_Selector *sel)
 	     _evry_list_tabs_update(s);
 	     _evry_plugin_show(s, s->plugin);
 	     _evry_list_show_items(s, s->plugin);
+	     _evry_list_scroll_to(s, s->sel_item);
 	  }
      }
 }
@@ -1261,6 +1269,9 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
        (strcmp(ev->key, "Tab")) &&
        (strcmp(ev->key, "Escape")))
      {
+	if (!list->visible)
+	  _evry_list_win_show();
+	
 	if (s->plugin->cb_key_down(s->plugin, ev))
 	  return 1;
      }
@@ -1384,11 +1395,14 @@ _evry_backspace(Evry_State *s)
 static void
 _evry_update_text_label(Evry_State *s)
 {
-   if (strlen(s->input) > 0)
-     edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
-   else
-     edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
-
+   if (evry_conf->hide_input)
+     {
+	if (strlen(s->input) > 0)
+	  edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
+	else
+	  edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
+     }
+   
    edje_object_part_text_set(win->o_main, "e.text.label", s->input);
    edje_object_part_text_set(list->o_main, "e.text.label", s->input);
 
@@ -1433,7 +1447,8 @@ _evry_clear(Evry_State *s)
      {
 	s->input[0] = 0;
 	_evry_update(s, 1);
-	edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
+	if (evry_conf->hide_input)
+	  edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
 	return 1;
      }
    return 0;
@@ -1915,7 +1930,7 @@ _evry_list_item_prev(Evry_State *s)
 	  }
      }
 
-   _evry_list_win_hide();
+   _evry_list_win_clear(1);
 }
 
 static void

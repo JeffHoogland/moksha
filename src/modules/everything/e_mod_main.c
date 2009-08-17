@@ -9,6 +9,8 @@
 
 #include "e_mod_main.h"
 
+#define CONFIG_VERSION 1
+
 /* actual module specifics */
 static void  _e_mod_action_exebuf_cb(E_Object *obj, const char *params);
 static int   _e_mod_run_defer_cb(void *data);
@@ -70,36 +72,35 @@ e_modapi_init(E_Module *m)
 #undef D
 #define T Config
 #define D conf_edd
+   E_CONFIG_VAL(D, T, version, INT);
    E_CONFIG_VAL(D, T, width, INT);
    E_CONFIG_VAL(D, T, height, INT);
    E_CONFIG_VAL(D, T, rel_x, DOUBLE);
    E_CONFIG_VAL(D, T, rel_y, DOUBLE);
    E_CONFIG_VAL(D, T, scroll_animate, INT);
    E_CONFIG_VAL(D, T, scroll_speed, DOUBLE);
+   E_CONFIG_VAL(D, T, hide_input, INT);
+   E_CONFIG_VAL(D, T, hide_list, INT);
    E_CONFIG_LIST(D, T, plugins_conf, conf_item_edd);
 #undef T
 #undef D
    evry_conf = e_config_domain_load("module.everything", conf_edd);
 
-   if (!evry_conf)
+   if (!evry_conf || (evry_conf->version == CONFIG_VERSION))
      {
 	evry_conf = E_NEW(Config, 1);
+	evry_conf->version = CONFIG_VERSION;
 	evry_conf->rel_x = 50.0;
 	evry_conf->rel_y = 50.0;
 	evry_conf->width = 400;
 	evry_conf->height = 350;
-	evry_conf->scroll_animate = 1;
+	evry_conf->scroll_animate = 0;
 	evry_conf->scroll_speed = 0.08;
+	evry_conf->hide_input = 0;
+	evry_conf->hide_input = 1;
      }
 
-   /* evry_conf->history = eina_hash_string_superfast_new(NULL); */
-
-   evry_conf->width = 380;
-   evry_conf->height = 235;
-   evry_conf->scroll_animate = 0;
-   /* conf_module = m; */
-   evry_init();
-
+   /* search for plugins */
    eina_module_init();
 
    snprintf(dir, sizeof(dir), "%s/enlightenment/everything_plugins", e_prefix_lib_get());
@@ -130,6 +131,8 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("extensions", 80, _("Extensions"), NULL, "preferences-extensions");
    e_configure_registry_item_add("extensions/run_everything", 40, _("Run Everything"), NULL, "system-run", evry_config_dialog);
 
+   evry_init();
+   
    e_module_delayed_set(m, 1);
 
    return m;
