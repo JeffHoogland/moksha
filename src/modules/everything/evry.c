@@ -540,7 +540,7 @@ evry_fuzzy_match(const char *str, const char *match)
 	     /* first offset of match in word */
 	     if (!first)
 	       {
-		  offset *= 10;
+		  offset *= 2;
 		  last = offset;
 		  first = 1;
 	       }
