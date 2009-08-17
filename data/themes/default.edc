@@ -27735,7 +27735,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       offset: 2 2;
 		   }
 		   rel2 {
-		       relative: 1.0 1.0;
+		       relative: 0.9999 1.0;
 		       to: "frame";
 		       offset: -3 -3;
 		   }
@@ -27764,7 +27764,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       offset: 2 2;
 		   }
 		   rel2 {
-		       relative: 1.0 1.0;
+		       relative: 0.9999 1.0;
 		       to: "frame";
 		       offset: -3 -3;
 		   }
@@ -27812,7 +27812,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       target:  "clip1";
 	       target:  "clip2";
 	       target:  "clip3";
-	       transition: SINUSOIDAL 0.2;
+	       transition: LINEAR 0.2;
 	   }
        }
    }
