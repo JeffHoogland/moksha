@@ -459,9 +459,9 @@ linux_sys_class_power_supply_cb_re_init(void *data)
      {
 	EINA_LIST_FREE(events, sysev)
 	  {
-	     if (sysev->fd_handler)
-	       ecore_main_fd_handler_del(sysev->fd_handler);
-	     if (sysev->fd >= 0) close(sysev->fd);
+//	     if (sysev->fd_handler)
+//	       ecore_main_fd_handler_del(sysev->fd_handler);
+//	     if (sysev->fd >= 0) close(sysev->fd);
 	     free(sysev->name);
 	     free(sysev);
 	  }
@@ -500,9 +500,9 @@ linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd
 	  {
 	     events = eina_list_remove(events, sysev);
 	     
-	     if (sysev->fd_handler)
-	       ecore_main_fd_handler_del(sysev->fd_handler);
-	     if (sysev->fd >= 0) close(sysev->fd);
+//	     if (sysev->fd_handler)
+//	       ecore_main_fd_handler_del(sysev->fd_handler);
+//	     if (sysev->fd >= 0) close(sysev->fd);
 	     free(sysev->name);
 	     free(sysev);
 	     
@@ -664,14 +664,14 @@ linux_sys_class_power_supply_init(void)
 
 		  sysev = E_NEW(Sys_Class_Power_Supply_Uevent, 1);
 		  sysev->name = name;
-		  snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/uevent", name);
-		  sysev->fd = open(buf, O_RDONLY);
-		  if (sysev->fd >= 0)
-		    sysev->fd_handler = ecore_main_fd_handler_add(sysev->fd,
-								  ECORE_FD_READ,
-								  linux_sys_class_power_supply_cb_event_fd_active,
-								  sysev,
-								  NULL, NULL);
+//		  snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/uevent", name);
+//		  sysev->fd = open(buf, O_RDONLY);
+//		  if (sysev->fd >= 0)
+//		    sysev->fd_handler = ecore_main_fd_handler_add(sysev->fd,
+//								  ECORE_FD_READ,
+//								  linux_sys_class_power_supply_cb_event_fd_active,
+//								  sysev,
+//								  NULL, NULL);
 		  events = eina_list_append(events, sysev);
 		  linux_sys_class_power_supply_sysev_init(sysev);
 	       }
