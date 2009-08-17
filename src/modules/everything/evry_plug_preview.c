@@ -31,6 +31,7 @@ _cb_preview_thumb_gen(void *data, Evas_Object *obj, void *event_info)
    e_icon_size_get(o_thumb[1], &w, &h);
    edje_extern_object_min_size_set(o_thumb[1], w, h);
    edje_object_part_swallow(o_main, "e.swallow.icon2", o_thumb[1]);
+   evas_object_size_hint_aspect_set(o_thumb[1], EVAS_ASPECT_CONTROL_HORIZONTAL, w, h);
    evas_object_show(o_thumb[1]);
 }
 

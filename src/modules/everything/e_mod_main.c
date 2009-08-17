@@ -86,7 +86,7 @@ e_modapi_init(E_Module *m)
 #undef D
    evry_conf = e_config_domain_load("module.everything", conf_edd);
 
-   if (!evry_conf || (evry_conf->version == CONFIG_VERSION))
+   if (!evry_conf || (evry_conf->version != CONFIG_VERSION))
      {
 	evry_conf = E_NEW(Config, 1);
 	evry_conf->version = CONFIG_VERSION;
@@ -97,7 +97,7 @@ e_modapi_init(E_Module *m)
 	evry_conf->scroll_animate = 0;
 	evry_conf->scroll_speed = 0.08;
 	evry_conf->hide_input = 0;
-	evry_conf->hide_input = 1;
+	evry_conf->hide_list = 1;
      }
 
    /* search for plugins */
