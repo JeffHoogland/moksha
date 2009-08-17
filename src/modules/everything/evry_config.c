@@ -16,6 +16,8 @@ struct _E_Config_Dialog_Data
   int hide_input;
   int hide_list;
 
+  int quick_nav;
+
   int width, height;
   int scroll_animate;
 
@@ -62,6 +64,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
     * cfdata->width = evry_conf->width; */
    cfdata->hide_list = evry_conf->hide_list;
    cfdata->hide_input = evry_conf->hide_input;
+   cfdata->quick_nav = evry_conf->quick_nav;
    
    EINA_LIST_FOREACH(evry_conf->plugins, l, p)
      if (p->type == type_subject)
@@ -108,7 +111,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
     * evry_conf->scroll_animate = cfdata->scroll_animate; */
    evry_conf->hide_input = cfdata->hide_input;
    evry_conf->hide_list = cfdata->hide_list;
-
+   evry_conf->quick_nav = cfdata->quick_nav;
    evry_conf->plugins = eina_list_sort(evry_conf->plugins,
 				       eina_list_count(evry_conf->plugins),
 				       _evry_cb_plugin_sort);
@@ -202,8 +205,13 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    ob = e_widget_check_add(evas, _("Hide list"),
    			   &(cfdata->hide_list));
    e_widget_framelist_object_append(of, ob);
+
+   ob = e_widget_check_add(evas, _("Quick Navigation (ALT + h,j,k,l,n,p,m,i)"),
+   			   &(cfdata->quick_nav));
+   e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
+   
    /* ob = e_widget_label_add(evas, _("Popup Width"));
     * e_widget_framelist_object_append(of, ob);
     * ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),

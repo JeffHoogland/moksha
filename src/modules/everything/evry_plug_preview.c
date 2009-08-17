@@ -1,16 +1,16 @@
 #include "Evry.h"
 
 
-static Evry_Plugin *p1;
+static Evry_View *view = NULL;
 static Evas_Object *o_thumb[5];
-static const Evry_Item *cur_item = NULL;
 static Evas_Object *o_main = NULL;
-static Evas_Object *o_swallow = NULL;
-static Eina_List *cur_items = NULL;
+
 
 static int
 _check_item(const Evry_Item *it)
 {
+   if (!it) return 0;
+
    if (strcmp(it->plugin->type_out, "FILE")) return 0;
 
    if (!it->uri || !it->mime) return 0;
@@ -38,7 +38,7 @@ _cb_preview_thumb_gen(void *data, Evas_Object *obj, void *event_info)
 void
 _show_item(const Evry_Item *it, int dir)
 {
-   int w, h, x, y;
+   int w, h;
 
    if (o_thumb[1 + dir])
      {
@@ -67,7 +67,8 @@ _show_item(const Evry_Item *it, int dir)
    o_thumb[1] = e_thumb_icon_add(evas_object_evas_get(o_main));
    e_thumb_icon_file_set(o_thumb[1], it->uri, NULL);
    evas_object_smart_callback_add(o_thumb[1], "e_thumb_gen", _cb_preview_thumb_gen, NULL);
-   evas_object_geometry_get(o_main, &x, &y, &w, &h);
+   /* evas_object_geometry_get(o_main, &x, &y, &w, &h); */
+   edje_object_part_geometry_get(o_main, "e.swallow.icon2", NULL, NULL, &w, &h);
    e_thumb_icon_size_set(o_thumb[1], w, h);
    e_thumb_icon_begin(o_thumb[1]);
 
@@ -80,36 +81,16 @@ _show_item(const Evry_Item *it, int dir)
      }
 }
 
-static Evas_Object *
-_show(Evry_Plugin *p, Evas_Object *swallow, Eina_List *items)
-{
-   int w, h, x, y;
-   o_main = edje_object_add(evas_object_evas_get(swallow));
-   e_theme_edje_object_set(o_main, "base/theme/everything",
-			   "e/widgets/everything/preview");
-
-   edje_object_part_geometry_get(swallow, "e.swallow.list", &x, &y, &w, &h);
-   edje_extern_object_min_size_set(o_main, w * 3, 100);
-   evas_object_resize(o_main, w * 3, h);
-
-   if (!o_main) return NULL;
-   o_swallow = swallow;
-
-   _show_item(cur_item, 0);
-
-   cur_items = items;
-
-   return o_main;
-}
-
 static int
-_cb_key_down(Evry_Plugin *p, Ecore_Event_Key *ev)
+_cb_key_down(Evry_View *v, const Ecore_Event_Key *ev)
 {
-   Eina_List *l, *ll;
-   const Evry_Item *found = NULL, *it;
+   Eina_List *l, *ll, *cur_items;
+   Evry_Item *found = NULL, *it, *cur_item;
 
-   if (!strcmp(ev->key, "Right") ||
-       !strcmp(ev->key, "Down"))
+   cur_items = view->state->plugin->items;
+   cur_item  = view->state->sel_item;
+
+   if (!strcmp(ev->key, "Down"))
      {
 	l = eina_list_data_find_list(cur_items, cur_item);
 
@@ -135,12 +116,11 @@ _cb_key_down(Evry_Plugin *p, Ecore_Event_Key *ev)
 	if (found && (found != cur_item))
 	  {
 	     _show_item(found, 1);
-	     cur_item = found;
+	     evry_item_select(view->state, found);
 	  }
 	return 1;
      }
-   else if (!strcmp(ev->key, "Left") ||
-	    !strcmp(ev->key, "Up"))
+   else if (!strcmp(ev->key, "Up"))
      {
 	EINA_LIST_FOREACH(cur_items, ll, it)
 	  {
@@ -161,7 +141,7 @@ _cb_key_down(Evry_Plugin *p, Ecore_Event_Key *ev)
 	if (found && (found != cur_item))
 	  {
 	     _show_item(found, -1);
-	     cur_item = found;
+	     evry_item_select(view->state, found);
 	  }
 	return 1;
      }
@@ -169,61 +149,102 @@ _cb_key_down(Evry_Plugin *p, Ecore_Event_Key *ev)
    return 0;
 }
 
-static int
-_begin(Evry_Plugin *p, const Evry_Item *it)
-{
-   if (_check_item(it))
-     {
-	cur_item = it;
-	return 1;
-     }
 
-   return 0;
-}
+
 
 static void
-_cleanup(Evry_Plugin *p)
+_clear(Evry_View *v, const Evry_State *s)
 {
    if (o_thumb[0]) evas_object_del(o_thumb[0]);
    if (o_thumb[1]) evas_object_del(o_thumb[1]);
    if (o_thumb[2]) evas_object_del(o_thumb[2]);
-   if (o_main) evas_object_del(o_main);
    o_thumb[0] = NULL;
    o_thumb[1] = NULL;
    o_thumb[2] = NULL;
+}
+
+static void
+_cleanup(Evry_View *v)
+{
+   _clear(v, NULL);
+   
+   if (o_main) evas_object_del(o_main);
    o_main = NULL;
-   cur_items = NULL;
 }
 
-static int
-_action(Evry_Plugin *p, const Evry_Item *it, const char *input __UNUSED__)
+static Evry_Item *
+_find_first(const Evry_State *s)
 {
-   return 0;
+   Eina_List *l;
+   Evry_Item *it, *found = NULL;
+
+   if (_check_item(s->sel_item))
+     return s->sel_item;
+
+   EINA_LIST_FOREACH(s->plugin->items, l, it)
+     {
+	if (!_check_item(it)) continue;
+	found = it;
+	break;
+     }
+
+   return found;
 }
 
+
 static int
-_fetch(Evry_Plugin *p, const char *input __UNUSED__)
+_update(Evry_View *v, const Evry_State *s)
 {
+   Evry_Item *it;
+
+   v->state = s;
+   it = _find_first(s);
+
+   if (!it) return 0;
+
+   _show_item(it, 0);
+   evry_item_select(view->state, it);
+
    return 1;
 }
+
+
+static Evas_Object *
+_begin(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
+{
+   int w, h, x, y;
+   Evry_Item *it;
+
+   if (!(it = _find_first(s))) return NULL;
+
+   o_main = edje_object_add(evas_object_evas_get(swallow));
+   e_theme_edje_object_set(o_main, "base/theme/everything",
+			   "e/widgets/everything/preview");
+
+   edje_object_part_geometry_get(swallow, "e.swallow.list", &x, &y, &w, &h);
+   edje_extern_object_min_size_set(o_main, w * 3, 100);
+   evas_object_resize(o_main, w * 3, h);
+
+   if (!o_main) return NULL;
+
+   view->state = s;
+
+   _show_item(it, 0);
+
+   return o_main;
+}
+
 static Eina_Bool
 _init(void)
 {
-   p1 = E_NEW(Evry_Plugin, 1);
-   p1->name = "Preview";
-   p1->type = type_action;
-   p1->type_in  = "FILE";
-   p1->type_out = "NONE";
-   p1->icon = "preferences-desktop-wallpaper";
-   p1->need_query = 0;
-   p1->async_query = 1;
-   p1->begin = &_begin;
-   p1->fetch = &_fetch;
-   p1->show = &_show;
-   p1->cb_key_down = &_cb_key_down;
-   p1->action = &_action;
-   p1->cleanup = &_cleanup;
-   evry_plugin_register(p1, 3);
+   view = E_NEW(Evry_View, 1);
+   view->name = "Image Preview";
+   view->begin = &_begin;
+   view->update = &_update;
+   view->clear = &_clear;
+   view->cb_key_down = &_cb_key_down;
+   view->cleanup = &_cleanup;
+   evry_view_register(view, 2);
 
    return EINA_TRUE;
 }
@@ -231,8 +252,8 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_unregister(p1);
-   E_FREE(p1);
+   evry_view_unregister(view);
+   E_FREE(view);
 }
 
 

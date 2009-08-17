@@ -11,6 +11,8 @@
 typedef struct _Evry_Plugin Evry_Plugin;
 typedef struct _Evry_Item   Evry_Item;
 typedef struct _Evry_Action Evry_Action;
+typedef struct _Evry_State Evry_State;
+typedef struct _Evry_View   Evry_View;
 typedef struct _Evry_App Evry_App;
 typedef struct _Plugin_Config Plugin_Config;
 
@@ -50,7 +52,7 @@ struct _Evry_Item
 
   /* store value of fuzzy match with input */
   int fuzzy_match;
-  
+
   /* do not set by plugin! */
   Evry_Plugin *plugin;
   Evas_Object *o_icon;
@@ -80,7 +82,8 @@ struct _Evry_Plugin
 
   Eina_Bool browseable;
 
-  /* run when plugin is activated. */
+  /* run when plugin is activated. when return true plugin is added
+     to the list of current plugins and queried for results */
   int (*begin) (Evry_Plugin *p, const Evry_Item *item);
 
   int (*browse) (Evry_Plugin *p, const Evry_Item *item);
@@ -88,7 +91,7 @@ struct _Evry_Plugin
   /* get candidates matching string, fills 'candidates' list */
   int  (*fetch) (Evry_Plugin *p, const char *input);
 
-  /* run before new query and when hiding 'everything' */
+  /* run when state is removed in which this plugin is active */
   void (*cleanup) (Evry_Plugin *p);
 
   Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e);
@@ -102,10 +105,6 @@ struct _Evry_Plugin
   /* optional: create list of items when shown (e.g. for sorting) */
   void (*realize_items) (Evry_Plugin *p, Evas *e);
 
-  /* optional: */
-  Evas_Object *(*show) (Evry_Plugin *p, Evas_Object *swallower, Eina_List *items);
-  int (*cb_key_down) (Evry_Plugin *p, Ecore_Event_Key *ev);
-  
   Eina_List *items;
 
   Evas_Object *(*config_page) (void);
@@ -117,6 +116,50 @@ struct _Evry_Plugin
   /* not to be set by plugin! */
   Evas_Object *tab;
   Plugin_Config *config;
+};
+
+
+struct _Evry_State
+{
+  char *input;
+  /* all available plugins for current state */
+  Eina_List   *plugins;
+
+  /* currently active plugins, i.e. those that provide items */
+  Eina_List   *cur_plugins;
+
+  /* active plugin */
+  Evry_Plugin *plugin;
+
+  /* selected item */
+  Evry_Item   *sel_item;
+
+  /* Eina_List *sel_items; */
+
+  /* this is for the case when the current plugin was not selected
+     manually and a higher priority (async) plugin retrieves
+     candidates, the higher priority plugin is made current */
+  Eina_Bool plugin_auto_selected;
+  Eina_Bool item_auto_selected;
+
+  Evry_View *view;
+  Evas_Object *o_view;
+};
+
+struct _Evry_View
+{
+  const char *name;
+
+  Evas_Object *(*begin) (Evry_View *v, const Evry_State *s, const Evas_Object *swallow);
+
+  int (*cb_key_down) (Evry_View *v, const Ecore_Event_Key *ev);
+  int (*update) (Evry_View *v, const Evry_State *s);
+  void (*clear)  (Evry_View *v, const Evry_State *s);
+  void (*cleanup) (Evry_View *v);
+
+  const Evry_State *state;
+
+  int priority;
 };
 
 struct _Evry_Action
@@ -155,9 +198,18 @@ void evry_plugin_register(Evry_Plugin *p, int priority);
 void evry_plugin_unregister(Evry_Plugin *p);
 void evry_action_register(Evry_Action *act);
 void evry_action_unregister(Evry_Action *act);
+void evry_view_register(Evry_View *view, int priority);
+void evry_view_unregister(Evry_View *view);
+
+void evry_item_select(const Evry_State *s, Evry_Item *it);
+int  evry_list_win_show(void);
+void evry_list_win_hide(void);
+
 
 Evry_Item *evry_item_new(Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item));
 void evry_item_free(Evry_Item *it);
+void evry_item_ref(Evry_Item *it);
+
 void evry_plugin_async_update(Evry_Plugin *plugin, int state);
 void evry_clear_input(void);
 int  evry_icon_theme_set(Evas_Object *obj, const char *icon);

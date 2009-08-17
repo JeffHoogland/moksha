@@ -22,12 +22,15 @@ struct _Config
 
   int hide_input;
   int hide_list;
-  
+
+  int quick_nav;
+
   Eina_Hash *key_bindings;
 
   /**/
   Eina_List *plugins;
   Eina_List *actions;
+  Eina_List *views;
 
   Eina_Hash *history;
   E_Action *action_show;

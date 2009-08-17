@@ -3,7 +3,7 @@
 
 static Evry_Plugin *p;
 
-/* TODO handle border remove events */
+/* XXX handle border remove events */
 
 static void
 _cleanup(Evry_Plugin *p)

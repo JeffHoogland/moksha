@@ -51,7 +51,7 @@ e_modapi_init(E_Module *m)
    char buf[4096], dir[4096];
    char *file;
    E_Action *act;
-   
+
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/module.everything",
 	    e_user_homedir_get(), e_config_profile_get());
    ecore_file_mkdir(buf);
@@ -81,6 +81,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, scroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, hide_input, INT);
    E_CONFIG_VAL(D, T, hide_list, INT);
+   E_CONFIG_VAL(D, T, quick_nav, INT);
    E_CONFIG_LIST(D, T, plugins_conf, conf_item_edd);
 #undef T
 #undef D
@@ -98,6 +99,7 @@ e_modapi_init(E_Module *m)
 	evry_conf->scroll_speed = 0.08;
 	evry_conf->hide_input = 0;
 	evry_conf->hide_list = 1;
+	evry_conf->quick_nav = 1;
      }
 
    /* search for plugins */
@@ -125,14 +127,14 @@ e_modapi_init(E_Module *m)
 				 NULL, NULL, 0);
 	evry_conf->action_show = act;
      }
-   
+
    maug = e_int_menus_menu_augmentation_add("main/1", _e_mod_menu_add, NULL, NULL, NULL);
 
    e_configure_registry_category_add("extensions", 80, _("Extensions"), NULL, "preferences-extensions");
    e_configure_registry_item_add("extensions/run_everything", 40, _("Run Everything"), NULL, "system-run", evry_config_dialog);
 
    evry_init();
-   
+
    e_module_delayed_set(m, 1);
 
    return m;
@@ -205,8 +207,6 @@ _e_mod_action_exebuf_cb(E_Object *obj, const char *params __UNUSED__)
 	  zone = e_util_zone_current_get(e_manager_current_get());
      }
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
-
-   printf("zone %d %d\n", zone->x, zone->y);
 
    if (zone) evry_show(zone);
 }
@@ -308,4 +308,32 @@ evry_action_unregister(Evry_Action *action)
 {
    evry_conf->actions = eina_list_remove(evry_conf->actions, action);
    /* cleanup */
+}
+
+
+static int
+_evry_cb_view_sort(const void *data1, const void *data2)
+{
+   const Evry_View *v1 = data1;
+   const Evry_View *v2 = data2;
+   return v1->priority - v2->priority;
+}
+
+
+EAPI void
+evry_view_register(Evry_View *view, int priority)
+{
+   view->priority = priority;
+
+   evry_conf->views = eina_list_append(evry_conf->views, view);
+
+   evry_conf->views = eina_list_sort(evry_conf->views,
+				     eina_list_count(evry_conf->views),
+				     _evry_cb_view_sort);
+}
+
+EAPI void
+evry_view_unregister(Evry_View *view)
+{
+   evry_conf->views = eina_list_remove(evry_conf->views, view);
 }

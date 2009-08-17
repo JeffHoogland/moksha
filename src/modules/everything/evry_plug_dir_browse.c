@@ -254,7 +254,6 @@ _fetch(Evry_Plugin *p, const char *input)
    /* input is command ? */
    if (input)
      {
-	/* XXX free s->items?  */
 	if (!strncmp(input, "/", 1))
 	  {
 	     if (s->command) return 1;
@@ -266,7 +265,6 @@ _fetch(Evry_Plugin *p, const char *input)
 	     s->cur = p->items;
 	     s->command = EINA_TRUE;
 	     return 1;
-
 	  }
 	else if (!strncmp(input, "..", 2))
 	  {
@@ -287,7 +285,7 @@ _fetch(Evry_Plugin *p, const char *input)
 		  tmp = strdup(dir);
 		  snprintf(dir, (end - dir) + 1, "%s", tmp);
 	          it = evry_item_new(p, dir, NULL);
-		  if (!it) return 0; /* free stuff !!!*/
+		  if (!it) break;
 		  it->uri = eina_stringshare_add(dir);
 		  it->priority = prio;
 		  p->items = eina_list_append(p->items, it);
@@ -303,7 +301,6 @@ _fetch(Evry_Plugin *p, const char *input)
 	     p->items = eina_list_append(p->items, it);
 	     s->cur = p->items;
 	     s->command = EINA_TRUE;
-
 	     return 1;
 	  }
      }
@@ -322,7 +319,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	  {
 	     int match;
 	     if ((match = evry_fuzzy_match(it->label, input)))
-	       it->priority = match;
+	       it->fuzzy_match = match;
 	     else
 	       it = NULL;
 	  }
