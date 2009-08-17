@@ -9,7 +9,6 @@
 //   need delete select mode
 //   need after select on delete an ok/cancel if file or "ok to remove whole online source" if online
 //   need to make "exchange" wallpapers have a different look
-//   need signal to emit for popping down slide-up panel
 //   bug: animated wp doesnt workon first show
 //   need to disable "this screen" if multiple containers/zones dont exist
 //   need to disable "this desktop vs all desktops" if only 1 desk exists
@@ -324,7 +323,10 @@ _e_smart_reconfigure_do(void *data)
                          e_theme_edje_object_set(it->frame, "base/theme/widgets",
                                                  "e/conf/wallpaper/main/mini");
                        if (it->hilighted)
-                         edje_object_signal_emit(it->frame, "e,state,selected", "e");
+                         {
+                            edje_object_signal_emit(it->frame, "e,state,selected", "e");
+                            evas_object_raise(it->frame);
+                         }
                        evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_DOWN,
                                                       _item_down, it);
                        evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_UP,
@@ -634,7 +636,9 @@ _pan_unhilight(Evas_Object *obj, Item *it)
    if (!it->hilighted) return;
    it->hilighted = 0;
    if (it->frame)
-     edje_object_signal_emit(it->frame, "e,state,unselected", "e");
+     {
+        edje_object_signal_emit(it->frame, "e,state,unselected", "e");
+     }
 }
 
 static void
@@ -654,7 +658,10 @@ _pan_hilight(Evas_Object *obj, Item *it)
      }
    it->hilighted = 1;
    if (it->frame)
-     edje_object_signal_emit(it->frame, "e,state,selected", "e");
+     {
+        edje_object_signal_emit(it->frame, "e,state,selected", "e");
+        evas_object_raise(it->frame);
+     }
 }
 
 
@@ -664,6 +671,7 @@ _pan_sel(Evas_Object *obj, Item *it)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    if (sd->selmove > 0.0) return;
    edje_object_signal_emit(it->frame, "e,state,selected", "e");
+   evas_object_raise(it->frame); 
    if (!it->selected)
      {
         Eina_List *l;
@@ -767,9 +775,9 @@ _item_sort(Item *it)
                   it2 = NULL;
                }
              if (it2)
-               _pan_set(obj, 
-                        it2->x + (it2->w / 2) - (sd->w / 2), 
-                        it2->y + (it2->h / 2) - (sd->h / 2));
+               e_scrollframe_child_region_show(sd->info->sframe,
+                                               it2->x, it2->y,
+                                               it2->w, it2->h);
              sd->jump2hi = 1;
           }
      }
@@ -854,7 +862,10 @@ _pan_file_add(Evas_Object *obj, const char *file, Eina_Bool remote, Eina_Bool th
      e_theme_edje_object_set(it->frame, "base/theme/widgets",
                              "e/conf/wallpaper/main/mini");
    if (it->hilighted)
-     edje_object_signal_emit(it->frame, "e,state,selected", "e");
+     {
+        edje_object_signal_emit(it->frame, "e,state,selected", "e");
+        evas_object_raise(it->frame);
+     }
    evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_DOWN,
                                   _item_down, it);
    evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_UP,
@@ -997,12 +1008,21 @@ static void
 _wp_add(void *data, void *data2)
 {
    Info *info = data;
+   edje_object_signal_emit(info->bg, "e,action,panel,hide", "e");
 }
 
 static void
 _wp_delete(void *data, void *data2)
 {
    Info *info = data;
+   edje_object_signal_emit(info->bg, "e,action,panel,hide", "e");
+}
+
+static void
+_wp_changed(void *data, Evas_Object *obj, void *event_info)
+{
+   Info *info = data;
+   edje_object_signal_emit(info->bg, "e,action,panel,hide", "e");
 }
 
 static void _scan(Info *info);
@@ -1055,7 +1075,6 @@ _scan(Info *info)
         if (info->scans <= 0)
           {
              info->scans = 0;
-             printf("START\n");
              edje_object_signal_emit(info->bg, "e,state,busy,on", "e");
              edje_object_part_text_set(info->bg, "e.text.busy_label", _("Loading files..."));
           }
@@ -1196,14 +1215,17 @@ wp_browser_new(E_Container *con)
    
    rg = e_widget_radio_group_new(&(info->mode));
    o2 = e_widget_radio_add(info->win->evas, _("All Desktops"), 0, rg);
+   evas_object_smart_callback_add(o2, "changed", _wp_changed, info);
    e_widget_list_object_append(o, o2, 1, 0, 0.5);
    evas_object_show(o2);
    
    o2 = e_widget_radio_add(info->win->evas, _("This Desktop"), 1, rg);
+   evas_object_smart_callback_add(o2, "changed", _wp_changed, info);
    e_widget_list_object_append(o, o2, 1, 0, 0.5);
    evas_object_show(o2);
    
    o2 = e_widget_radio_add(info->win->evas, _("This Screen"), 2, rg);
+   evas_object_smart_callback_add(o2, "changed", _wp_changed, info);
    e_widget_list_object_append(o, o2, 1, 0, 0.5);
    evas_object_show(o2);
    
