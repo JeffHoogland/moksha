@@ -105,6 +105,12 @@ evry_plug_clipboard_la_LIBADD       = @e_libs@
 evry_plug_clipboard_la_LDFLAGS      = -no-undefined -module -avoid-version
 evry_plug_clipboard_la_LIBTOOLFLAGS = --tag=disable-static
 
+evry_plug_previewdir = $(plugindir)
+evry_plug_preview_LTLIBRARIES = evry_plug_preview.la
+evry_plug_preview_la_SOURCES =  evry_plug_preview.c
+evry_plug_preview_la_LIBADD       = @e_libs@
+evry_plug_preview_la_LDFLAGS      = -no-undefined -module -avoid-version
+evry_plug_preview_la_LIBTOOLFLAGS = --tag=disable-static
 
 uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)
