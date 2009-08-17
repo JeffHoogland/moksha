@@ -102,6 +102,10 @@ struct _Evry_Plugin
   /* optional: create list of items when shown (e.g. for sorting) */
   void (*realize_items) (Evry_Plugin *p, Evas *e);
 
+  /* optional: */
+  Evas_Object *(*show) (Evry_Plugin *p, Evas_Object *swallower, Eina_List *items);
+  int (*cb_key_down) (Evry_Plugin *p, Ecore_Event_Key *ev);
+  
   Eina_List *items;
 
   Evas_Object *(*config_page) (void);
