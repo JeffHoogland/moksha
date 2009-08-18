@@ -38,7 +38,7 @@ _item_add(Evry_Plugin *p, const char *directory, const char *file)
 static void
 _item_fill(Evry_Item *it)
 {
-   const char *mime, *ext = NULL;
+   const char *mime;
    
    if (it->mime) return;
 
@@ -47,20 +47,20 @@ _item_fill(Evry_Item *it)
 	it->mime = eina_stringshare_add("x-directory/normal");
 	it->browseable = EINA_TRUE;
      }
-   else if ((ext = strrchr(it->label, '.')))
-     {
-	if (!strcmp(ext, ".desktop") || !strcmp(ext, ".directory"))
-	  {
-	     Efreet_Desktop *desktop;
-
-	     desktop = efreet_desktop_new(it->uri);
-	     if (!desktop) return;
-	     it->label = eina_stringshare_add(desktop->name);
-	     it->mime = eina_stringshare_add("None");
-	     efreet_desktop_free(desktop);
-	     return;
-	  }
-     }
+   /* else if ((ext = strrchr(it->label, '.')))
+    *   {
+    * 	if (!strcmp(ext, ".desktop") || !strcmp(ext, ".directory"))
+    * 	  {
+    * 	     Efreet_Desktop *desktop;
+    * 
+    * 	     desktop = efreet_desktop_new(it->uri);
+    * 	     if (!desktop) return;
+    * 	     it->label = eina_stringshare_add(desktop->name);
+    * 	     it->mime = eina_stringshare_add("None");
+    * 	     efreet_desktop_free(desktop);
+    * 	     return;
+    * 	  }
+    *   } */
    else if ((mime = efreet_mime_type_get(it->uri)))
      {
 	it->mime = eina_stringshare_add(mime);

@@ -1276,7 +1276,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     if (!_evry_clear(s))
 	       _evry_browse_back(selector);
 	  }
-	else  if (!strcmp(key, "1"))
+	else if (!strcmp(key, "1"))
 	  _evry_view_toggle(s);
 	else if (!strcmp(key, "Tab"))
 	  _evry_plugin_next(s);
@@ -1531,6 +1531,8 @@ _evry_view_toggle(Evry_State *s)
    Evas_Object *o;
    Eina_List *l;
 
+   _evry_list_win_show();
+   
    if (s->view)
      {
 	s->view->cleanup(s->view);
