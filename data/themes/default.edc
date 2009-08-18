@@ -26637,7 +26637,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 		   rel2 {
 		       relative: 0 0;
-		       offset: 205 100;
+		       offset: 205 105;
 		       to: "selector_frame";
 		   }
 	       }
@@ -26655,7 +26655,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 		   rel2 {
 		       relative: 0 0;
-		       offset: 405 100;
+		       offset: 405 105;
 		       to: "selector_frame";
 		   }
 	       }
@@ -26673,7 +26673,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 		   rel2 {
 		       relative: 0 0;
-		       offset: 605 100;
+		       offset: 605 105;
 		       to: "selector_frame";
 		   }
 	       }
@@ -27611,21 +27611,11 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       description { state: "default" 0.0;
 		   color: 64 64 63 255;
 		   rel1 {
-		       relative: 0.0 0.0;
 			offset: -4 -4;
-			to: "frame";
 		   }
 		   rel2 {
-		       relative: 1.0 1.0;
 		       offset: 4 4;
-		       to: "frame";
 		   }
-	       }
-	   }
-	   part { name: "clip";
-	       type: RECT;
-	       mouse_events: 0;
-	       description { state: "default" 0.0;
 	       }
 	   }
 	   part { name: "frame";
@@ -27642,23 +27632,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 	       }
 	   }
-	   part { name: "clip1";
-	       type: RECT;
-	       clip_to: "clip";
-	       description { state: "default" 0.0;
-		   rel1.to: "e.swallow.icon1";
-		   rel2.to: "e.swallow.icon1";
-		   color: 200 200 200 0;
-	       }
-	       description { state: "right" 0.0;
-		   inherit: "default" 0.0;
-		   color: 255 255 255 255;
-	       }
-	   }
-
 	   part { name: "e.swallow.icon1";
 	       type: SWALLOW;
-	       clip_to: "clip1";
 	       description { state: "default" 0.0;
 		   rel1 {
 		       relative: 0.0 0.0;
@@ -27672,38 +27647,18 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 	       }
 	       description { state: "right" 0.0;
-		   rel1 {
-		       relative: 0.3333 0.0;
-		       to: "frame";
-		       offset: 2 2;
-		   }
-		   rel2 {
-		       relative: 0.6666 1.0;
-		       to: "frame";
-		       offset: -3 -3;
-		   }
-	       }
-	   }
-	   part { name: "clip2";
-	       type: RECT;
-	       clip_to: "clip";
-	       description { state: "default" 0.0;
-		   rel1.to: "e.swallow.icon2";
-		   rel2.to: "e.swallow.icon2";
-		   color: 255 255 255 255;
+		   inherit: "default" 0.0;
+		   rel1.relative: 0.3333 0.0;
+		   rel2.relative: 0.6666 1.0;
 	       }
 	       description { state: "left" 0.0;
 		   inherit: "default" 0.0;
-		   color: 200 200 200 0;
-	       }
-	       description { state: "right" 0.0;
-		   inherit: "left" 0.0;
+		   rel1.relative: 0.0 0.0;
+		   rel2.relative: 0.0 1.0;
 	       }
 	   }
-
 	   part { name: "e.swallow.icon2";
 	       type: SWALLOW;
-	       clip_to: "clip2";
 	       description { state: "default" 0.0;
 		   rel1 {
 		       relative: 0.3333 0.0;
@@ -27715,48 +27670,21 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       to: "frame";
 		       offset: -3 -3;
 		   }
-	       }
-	       description { state: "left" 0.0;
-		   rel1 {
-		       relative: 0.00 0.0;
-		       to: "frame";
-		       offset: 2 2;
-		   }
-		   rel2 {
-		       relative: 0.3333 1.0;
-		       to: "frame";
-		       offset: -3 -3;
-		   }
-	       }
-	       description { state: "right" 0.0;
-		   rel1 {
-		       relative: 0.6666 0.0;
-		       to: "frame";
-		       offset: 2 2;
-		   }
-		   rel2 {
-		       relative: 0.9999 1.0;
-		       to: "frame";
-		       offset: -3 -3;
-		   }
-	       }	
-	   }
-	   part { name: "clip3";
-	       type: RECT;
-	       clip_to: "clip";
-	       description { state: "default" 0.0;
-		   rel1.to: "e.swallow.icon3";
-		   rel2.to: "e.swallow.icon3";
-		   color: 200 200 200 0;
 	       }
 	       description { state: "left" 0.0;
 		   inherit: "default" 0.0;
-		   color: 255 255 255 255;
+		   rel1.relative: 0.00 0.0;
+		   rel2.relative: 0.3333 1.0;
 	       }
+	       description { state: "right" 0.0;
+		   inherit: "default" 0.0;
+		   rel1.relative: 0.6666 0.0;
+		   rel2.relative: 0.9999 1.0;
+	       }	
 	   }
+	
 	   part { name: "e.swallow.icon3";
 	       type: SWALLOW;
-	       clip_to: "clip3";
 	       description { state: "default" 0.0;
 		   rel1 {
 		       relative: 0.6666 0.0;
@@ -27770,16 +27698,14 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 	       }
 	       description { state: "left" 0.0;
-		   rel1 {
-		       relative: 0.3333 0.0;
-		       to: "frame";
-		       offset: 2 2;
-		   }
-		   rel2 {
-		       relative: 0.6666 1.0;
-		       to: "frame";
-		       offset: -3 -3;
-		   }		   
+		   inherit: "default" 0.0;
+		   rel1.relative: 0.3333 0.0;
+		   rel2.relative: 0.6666 1.0;
+	       }
+	       description { state: "right" 0.0;
+		   inherit: "default" 0.0;
+		   rel1.relative: 1.0 0.0;
+		   rel2.relative: 1.0 1.0;
 	       }
 	   }
        }
@@ -27790,18 +27716,16 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       action:  STATE_SET "right" 0.0;
 	       target:  "e.swallow.icon1";
 	       target:  "e.swallow.icon2";
-	       target:  "clip1";
-	       target:  "clip2";
+	       target:  "e.swallow.icon3";
 	       after:   "slide_middle";
 	   }
 	   program { name: "slide_right";
 	       signal:  "e,signal,slide_right";
 	       source:  "e";
 	       action:  STATE_SET "left" 0.0;
+	       target:  "e.swallow.icon1";
 	       target:  "e.swallow.icon2";
 	       target:  "e.swallow.icon3";
-	       target:  "clip2";
-	       target:  "clip3";
 	       after:   "slide_middle";
 	   }
 	   program { name: "slide_middle";
@@ -27809,10 +27733,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       target:  "e.swallow.icon1";
 	       target:  "e.swallow.icon2";
 	       target:  "e.swallow.icon3";
-	       target:  "clip1";
-	       target:  "clip2";
-	       target:  "clip3";
-	       transition: LINEAR 0.2;
+	       transition: LINEAR 0.15;
 	   }
        }
    }
