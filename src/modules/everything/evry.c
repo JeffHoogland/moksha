@@ -11,7 +11,7 @@
 #define INPUTLEN 40
 #define MATCH_LAG 0.33
 #define MAX_FUZZ 150
-#define MAX_WORDS 64
+#define MAX_WORDS 5
 
 
 
@@ -451,9 +451,9 @@ evry_fuzzy_match(const char *str, const char *match)
 
    unsigned int cnt = 0;
    /* words in match */
-   unsigned int words = 1;
-   unsigned int word = 0;
-   unsigned int word_min[MAX_WORDS];
+   unsigned int m_num = 1;
+   unsigned int m_cnt = 0;
+   unsigned int m_min[MAX_WORDS];
 
    if (!match || !str) return 0;
 
@@ -462,18 +462,18 @@ evry_fuzzy_match(const char *str, const char *match)
    for (; (*str != 0)   && isspace(*str);   str++);
 
    /* count words in match */
-   word_min[0] = MAX_FUZZ;
-   for (m = match; (*m != 0) && (*(m+1) != 0) && (words < MAX_WORDS); m++)
+   m_min[0] = MAX_FUZZ;
+   for (m = match; (*m != 0) && (*(m+1) != 0) && (m_num < MAX_WORDS); m++)
      if (isspace(*m) && !isspace(*(m+1)))
-       word_min[words++] = MAX_FUZZ;
+       m_min[m_num++] = MAX_FUZZ;
 
    next = str;
    m = match;
 
-   for (; (word < words) && (*next != 0);)
+   for (; (m_cnt < m_num) && (*next != 0);)
      {
 	/* reset match */
-	if (word == 0) m = match;
+	if (m_cnt == 0) m = match;
 
 	/* end of matching */
 	if (*m == 0) break;
@@ -489,12 +489,12 @@ evry_fuzzy_match(const char *str, const char *match)
 	     /* new word of string begins */
 	     if ((*p == 0) || isspace(*p))
 	       {
-		  if (word < words - 1)
+		  if (m_cnt < m_num - 1)
 		    {
 		       /* test next match */
 		       for (; (*m != 0) && !isspace(*m); m++);
 		       for (; (*m != 0) &&  isspace(*m); m++);
-		       word++;
+		       m_cnt++;
 		       break;
 		    }
 		  else
@@ -503,7 +503,7 @@ evry_fuzzy_match(const char *str, const char *match)
 		       for (; (*p != 0) && isspace(*p); p++);
 		       cnt++;
 		       next = p;
-		       word = 0;
+		       m_cnt = 0;
 		       break;
 		    }
 	       }
@@ -530,18 +530,17 @@ evry_fuzzy_match(const char *str, const char *match)
 	     if (*(++m) != 0 && !isspace(*m))
 	       continue;
 
-
 	     /* end of match: store min weight of match */
-	     min += (cnt - word) > 0 ? (cnt - word) : 0;
+	     min += (cnt - m_cnt) > 0 ? (cnt - m_cnt) : 0;
+	     
+	     if (min < m_min[m_cnt])
+	       m_min[m_cnt] = min;
 
-	     if (min < word_min[word])
-	       word_min[word] = min;
-
-	     if (word < words - 1)
+	     if (m_cnt < m_num - 1)
 	       {
 		  /* test next match */
 		  for (; (*m != 0) && isspace(*m); m++);
-		  word++;
+		  m_cnt++;
 		  break;
 	       }
 	     else if(*p != 0)
@@ -551,7 +550,7 @@ evry_fuzzy_match(const char *str, const char *match)
 		  for (; (*p != 0) &&  isspace(*p); p++);
 		  cnt++;
 		  next = p;
-		  word = 0;
+		  m_cnt = 0;
 		  break;
 	       }
 	     else
@@ -562,14 +561,14 @@ evry_fuzzy_match(const char *str, const char *match)
 	  }
      }
 
-   for (word = 0; word < words; word++)
+   for (m_cnt = 0; m_cnt < m_num; m_cnt++)
      {
-	if (word_min[word] >= MAX_FUZZ)
+	if (m_min[m_cnt] >= MAX_FUZZ)
 	  {
 	     sum = 0;
 	     break;
 	  }
-	sum += word_min[word];
+	sum += m_min[m_cnt];
      }
    /* if (sum)
     *   printf("min %d >> %s - %s\n", sum, match, str); */

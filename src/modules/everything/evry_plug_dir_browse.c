@@ -38,31 +38,28 @@ _item_add(Evry_Plugin *p, const char *directory, const char *file)
 static void
 _item_fill(Evry_Item *it)
 {
-   const char *mime;
+   const char *mime, *ext = NULL;
+   
+   if (it->mime) return;
 
-   if  (it->mime) return;
-
-   if ((e_util_glob_case_match(it->label, "*.desktop")) ||
-       (e_util_glob_case_match(it->label, "*.directory")))
-     {
-	Efreet_Desktop *desktop;
-
-	desktop = efreet_desktop_new(it->uri);
-	if (!desktop) return;
-	it->label = eina_stringshare_add(desktop->name);
-	efreet_desktop_free(desktop);
-     }
-
-   mime = efreet_mime_globs_type_get(it->uri);
-   if (mime)
-     {
-	it->mime = eina_stringshare_add(mime);
-     }
-   else if (ecore_file_is_dir(it->uri))
+   if (ecore_file_is_dir(it->uri))
      {
 	it->mime = eina_stringshare_add("x-directory/normal");
 	it->browseable = EINA_TRUE;
-	it->priority = 1;
+     }
+   else if ((ext = strrchr(it->label, '.')))
+     {
+	if (!strcmp(ext, ".desktop") || !strcmp(ext, ".directory"))
+	  {
+	     Efreet_Desktop *desktop;
+
+	     desktop = efreet_desktop_new(it->uri);
+	     if (!desktop) return;
+	     it->label = eina_stringshare_add(desktop->name);
+	     it->mime = eina_stringshare_add("None");
+	     efreet_desktop_free(desktop);
+	     return;
+	  }
      }
    else if ((mime = efreet_mime_type_get(it->uri)))
      {

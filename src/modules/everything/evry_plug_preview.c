@@ -4,7 +4,7 @@
 static Evry_View *view = NULL;
 static Evas_Object *o_thumb[5];
 static Evas_Object *o_main = NULL;
-
+static Eina_List *items = NULL;
 
 static int
 _check_item(const Evry_Item *it)
@@ -15,7 +15,7 @@ _check_item(const Evry_Item *it)
 
    if (!it->uri || !it->mime) return 0;
 
-   if (e_util_glob_case_match(it->mime, "*image/*"))
+   if (!strncmp(it->mime, "image/", 6))
      return 1;
 
    return 0;
@@ -84,73 +84,50 @@ _show_item(const Evry_Item *it, int dir)
 static int
 _cb_key_down(Evry_View *v, const Ecore_Event_Key *ev)
 {
-   Eina_List *l, *ll, *cur_items;
-   Evry_Item *found = NULL, *it, *cur_item;
+   Eina_List *l;
+   Evry_Item *it = NULL, *cur_item;
 
-   cur_items = view->state->plugin->items;
    cur_item  = view->state->sel_item;
 
    if (!strcmp(ev->key, "Down"))
      {
-	l = eina_list_data_find_list(cur_items, cur_item);
+	if (!items) return 1;
+	
+	l = eina_list_data_find_list(items, cur_item);
 
 	if (l && l->next)
+	  it = l->next->data;
+	else    
+	  it = items->data;
+	
+	if (it && (it != cur_item))
 	  {
-	     EINA_LIST_FOREACH(l->next, ll, it)
-	       {
-		  if (!_check_item(it)) continue;
-		  found = it;
-		  break;
-	       }
-	  }
-	if (!found)
-	  {
-	     EINA_LIST_FOREACH(cur_items, ll, it)
-	       {
-		  if (!_check_item(it)) continue;
-		  found = it;
-		  break;
-	       }
-	  }
-
-	if (found && (found != cur_item))
-	  {
-	     _show_item(found, 1);
-	     evry_item_select(view->state, found);
+	     _show_item(it, 1);
+	     evry_item_select(view->state, it);
 	  }
 	return 1;
      }
    else if (!strcmp(ev->key, "Up"))
      {
-	EINA_LIST_FOREACH(cur_items, ll, it)
-	  {
-	     if (it == cur_item)
-	       break;
+	if (!items) return 1;
+	
+	l = eina_list_data_find_list(items, cur_item);
 
-	     if (_check_item(it))
-	       found = it;
-	  }
-	if (!found && ll)
+	if (l && l->prev)
+	  it = l->prev->data;
+	else    
+	  it = eina_list_last(items)->data;
+	
+	if (it && (it != cur_item))
 	  {
-	     EINA_LIST_FOREACH(ll->next, l, it)
-	       {
-		  if (_check_item(it))
-		    found = it;
-	       }
-	  }
-	if (found && (found != cur_item))
-	  {
-	     _show_item(found, -1);
-	     evry_item_select(view->state, found);
+	     _show_item(it, -1);
+	     evry_item_select(view->state, it);
 	  }
 	return 1;
      }
 
    return 0;
 }
-
-
-
 
 static void
 _clear(Evry_View *v, const Evry_State *s)
@@ -181,16 +158,18 @@ _find_first(const Evry_State *s)
    if (_check_item(s->sel_item))
      return s->sel_item;
 
+   eina_list_free(items);
+   items = NULL;
+   
    EINA_LIST_FOREACH(s->plugin->items, l, it)
      {
 	if (!_check_item(it)) continue;
-	found = it;
-	break;
+	if (!found) found = it;
+	items = eina_list_append(items, it);
      }
 
    return found;
 }
-
 
 static int
 _update(Evry_View *v, const Evry_State *s)
@@ -207,7 +186,6 @@ _update(Evry_View *v, const Evry_State *s)
 
    return 1;
 }
-
 
 static Evas_Object *
 _begin(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
