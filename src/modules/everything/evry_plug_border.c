@@ -111,7 +111,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
    if (bd->internal)
      {
 	o = edje_object_add(e);
-	if (!bd->internal_icon) 
+	if (!bd->internal_icon)
 	  e_util_edje_icon_set(o, "enlightenment/e");
 	else
 	  {
@@ -122,7 +122,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 		  if ((ext) && ((!strcmp(ext, ".edj"))))
 		    {
 		       if (!edje_object_file_set(o, bd->internal_icon, "icon"))
-			 e_util_edje_icon_set(o, "enlightenment/e");	       
+			 e_util_edje_icon_set(o, "enlightenment/e");
 		    }
 		  else if (ext)
 		    {
@@ -130,10 +130,10 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 		       o = e_icon_add(e);
 		       e_icon_file_set(o, bd->internal_icon);
 		    }
-		  else 
+		  else
 		    {
 		       if (!e_util_edje_icon_set(o, bd->internal_icon))
-			 e_util_edje_icon_set(o, "enlightenment/e"); 
+			 e_util_edje_icon_set(o, "enlightenment/e");
 		    }
 	       }
 	     else
@@ -144,7 +144,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 	  }
 	return o;
      }
-   
+
    if (!o && bd->desktop)
      o = e_util_desktop_icon_add(bd->desktop, 128, e);
 
@@ -180,14 +180,9 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 static Eina_Bool
 _init(void)
 {
-   p = E_NEW(Evry_Plugin, 1);
-   p->name = "Windows";
-   p->type = type_subject;
-   p->type_in  = "NONE";
-   p->type_out = "BORDER";
-   p->fetch = &_fetch;
-   p->cleanup = &_cleanup;
-   p->icon_get = &_item_icon_get;
+   p = evry_plugin_new("Windows", type_subject, NULL, "BORDER", 0, NULL, NULL,
+		       NULL, _cleanup, _fetch, NULL, NULL, _item_icon_get, NULL, NULL);
+
    evry_plugin_register(p, 2);
 
    return EINA_TRUE;
@@ -196,9 +191,9 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_unregister(p);
-   E_FREE(p);
+   evry_plugin_free(p);
 }
+
 
 EINA_MODULE_INIT(_init);
 EINA_MODULE_SHUTDOWN(_shutdown);

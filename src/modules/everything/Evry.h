@@ -75,7 +75,7 @@ struct _Evry_Plugin
 
   /* whether the plugin uses evry_async_update to add new items */
   int async_fetch;
-  
+
   /* run when plugin is activated. when return true plugin is added
      to the list of current plugins and queried for results */
   int (*begin) (Evry_Plugin *p, const Evry_Item *item);
@@ -159,7 +159,6 @@ struct _Evry_Action
 
   const char *type_in1;
   const char *type_in2;
-  const char *type_out;
 
   int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input);
 
@@ -203,18 +202,30 @@ void evry_item_ref(Evry_Item *it);
 
 void evry_plugin_async_update(Evry_Plugin *plugin, int state);
 void evry_clear_input(void);
-int  evry_icon_theme_set(Evas_Object *obj, const char *icon);
+
+Evas_Object *evry_icon_mime_get(const char *mime, Evas *e);
+Evas_Object *evry_icon_theme_get(const char *icon, Evas *e);
 
 int  evry_fuzzy_match(const char *str, const char *match);
 
 Evry_Plugin *evry_plugin_new(const char *name, int type,
 			     const char *type_in, const char *type_out,
-			     int async_fetch, const char *trigger,
-			     int  (*begin) (Evry_Plugin *p, const Evry_Item *item),
+			     int async_fetch, const char *icon, const char *trigger,
+			     int  (*begin)   (Evry_Plugin *p, const Evry_Item *item),
 			     void (*cleanup) (Evry_Plugin *p),
-			     int  (*fetch) (Evry_Plugin *p, const char *input),
-			     int  (*action) (Evry_Plugin *p, const Evry_Item *item, const char *input),
-			     int  (*browse) (Evry_Plugin *p, const Evry_Item *item),
+			     int  (*fetch)   (Evry_Plugin *p, const char *input),
+			     int  (*action)  (Evry_Plugin *p, const Evry_Item *item, const char *input),
+			     int  (*browse)  (Evry_Plugin *p, const Evry_Item *item),
 			     Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
 			     Evas_Object *(*config_page) (Evry_Plugin *p),
 			     void (*config_apply) (Evry_Plugin *p));
+
+void evry_plugin_free(Evry_Plugin *p);
+
+
+Evry_Action *evry_action_new(const char *name, const char *type_in1, const char *type_in2, const char *icon,
+			     int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input),
+			     int (*check_item) (Evry_Action *act, const Evry_Item *it),
+			     Evas_Object *(*icon_get) (Evry_Action *act, Evas *e));
+
+void evry_action_free(Evry_Action *act);

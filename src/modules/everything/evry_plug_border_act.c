@@ -204,8 +204,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o;
 
-   o = e_icon_add(e);
-   evry_icon_theme_set(o, (const char *)it->data[1]);
+   o = evry_icon_theme_get((const char *)it->data[1], e);
 
    return o;
 }
@@ -213,16 +212,8 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 static Eina_Bool
 _init(void)
 {
-   p = E_NEW(Evry_Plugin, 1);
-   p->name = "Window Action";
-   p->type = type_action;
-   p->type_in  = "BORDER";
-   p->type_out = "NONE";
-   p->begin = &_begin;
-   p->fetch = &_fetch;
-   p->action = &_action;
-   p->cleanup = &_cleanup;
-   p->icon_get = &_item_icon_get;
+   p = evry_plugin_new("Window Action", type_action, "BORDER", NULL, 0, NULL, NULL,
+		       _begin, _cleanup, _fetch, _action, NULL, _item_icon_get, NULL, NULL);
 
    evry_plugin_register(p, 1);
 
@@ -234,8 +225,7 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_unregister(p);
-   E_FREE(p);
+   evry_plugin_free(p);
    E_FREE(inst);
 }
 

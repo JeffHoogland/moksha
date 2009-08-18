@@ -82,10 +82,8 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 
    if (eci->icon)
      {
-	o = e_icon_add(e);
-	if (!evry_icon_theme_set(o, eci->icon))
+	if (!(o = evry_icon_theme_get(eci->icon, e)))
 	  {
-	     evas_object_del(o);
 	     o = e_util_icon_add(eci->icon, e);
 	  }
      }
@@ -132,23 +130,13 @@ _action(Evry_Action *act, const Evry_Item *it, const Evry_Item *it2 __UNUSED__, 
 static Eina_Bool
 _init(void)
 {
-   p = E_NEW(Evry_Plugin, 1);
-   p->name = "Settings";
-   p->type = type_subject;
-   p->type_in  = "NONE";
-   p->type_out = "E_SETTINGS";
-   p->fetch = &_fetch;
-   p->cleanup = &_cleanup;
-   p->icon_get = &_item_icon_get;
+   p = evry_plugin_new("Settings", type_subject, NULL, "E_SETTINGS", 0, NULL, NULL,
+		       NULL, _cleanup, _fetch, NULL, NULL, _item_icon_get, NULL, NULL);
+
+   act = evry_action_new("Show Dialog", "E_SETTINGS", NULL, "preferences-advanced",
+			 _action, NULL, NULL);
 
    evry_plugin_register(p, 10);
-
-   act = E_NEW(Evry_Action, 1);
-   act->name = "Show Dialog";
-   act->is_default = EINA_TRUE;
-   act->type_in1 = "E_SETTINGS";
-   act->action = &_action;
-   act->icon = "preferences-advanced";
    evry_action_register(act);
 
    return EINA_TRUE;
@@ -157,10 +145,8 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_unregister(p);
-   evry_action_unregister(act);
-   E_FREE(p);
-   E_FREE(act);
+   evry_plugin_free(p);
+   evry_action_free(act);
 }
 
 EINA_MODULE_INIT(_init);

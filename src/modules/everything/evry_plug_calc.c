@@ -188,17 +188,9 @@ _cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 static Eina_Bool
 _init(void)
 {
-   p1 = E_NEW(Evry_Plugin, 1);
-   p1->name = "Calculator";
-   p1->type = type_subject;
-   p1->type_in  = "NONE";
-   p1->type_out = "TEXT";
-   p1->trigger = "=";
-   p1->icon = "accessories-calculator";
-   p1->begin = &_begin;
-   p1->fetch = &_fetch;
-   p1->action = &_action;
-   p1->cleanup = &_cleanup;
+   p1 = evry_plugin_new("Calculator", type_subject, NULL, "TEXT", 1, "accessories-calculator", "=",
+			_begin, _cleanup, _fetch, _action, NULL, NULL, NULL, NULL);
+   
    evry_plugin_register(p1, 0);
 
    return EINA_TRUE;
@@ -212,8 +204,7 @@ _shutdown(void)
    EINA_LIST_FREE(history, result)
      eina_stringshare_del(result);
 
-   evry_plugin_unregister(p1);
-   E_FREE(p1);
+   evry_plugin_free(p1);
 }
 
 

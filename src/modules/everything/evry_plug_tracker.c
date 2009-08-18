@@ -327,30 +327,12 @@ _fetch(Evry_Plugin *p, const char *input)
 static Evas_Object *
 _icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
-   char *icon_path;
-   Evas_Object *o = NULL;
-
    if (it->browseable)
-     {
-	o = e_icon_add(e);
-	evry_icon_theme_set(o, "folder");
-     }
+     return evry_icon_theme_get("folder", e);
    else
-     {
-	icon_path = efreet_mime_type_icon_get(it->mime, e_config->icon_theme, 64);
+     return evry_icon_mime_get(it->mime, e);
 
-	if (icon_path)
-	  {
-	     o = e_util_icon_add(icon_path, e);
-	     free(icon_path);
-	  }
-	else
-	  {
-	     o = e_icon_add(e);
-	     evry_icon_theme_set(o, "none");
-	  }
-     }
-   return o;
+   return NULL;
 }
 
 static void
@@ -359,7 +341,7 @@ _plugin_new(const char *name, int type, char *service, int max_hits, int begin)
    Evry_Plugin *p;
    Inst *inst;
 
-   p = evry_plugin_new(name, type, "", "FILE", 0, NULL,
+   p = evry_plugin_new(name, type, "", "FILE", 0, NULL, NULL,
 		       (begin ? _begin : NULL), _cleanup, _fetch,
 		       NULL, NULL, _icon_get, NULL, NULL);
 
@@ -410,6 +392,7 @@ _shutdown(void)
 	E_FREE(p);
      }
 }
+
 
 EINA_MODULE_INIT(_init);
 EINA_MODULE_SHUTDOWN(_shutdown);

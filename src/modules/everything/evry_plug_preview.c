@@ -10,15 +10,13 @@ static const char *view_types;
 static int
 _check_item(const Evry_Item *it)
 {
-   if (!it) return 0;
-
-   if (it->plugin->type_out != view_types) return 0;
-
-   if (!it->uri || !it->mime) return 0;
+   if ((!it || !it->uri || !it->mime) ||
+       (it->plugin->type_out != view_types))
+     return 0;
 
    if (!strncmp(it->mime, "image/", 6))
      return 1;
-
+   
    return 0;
 }
 

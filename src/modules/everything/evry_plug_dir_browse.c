@@ -39,7 +39,7 @@ static void
 _item_fill(Evry_Item *it)
 {
    const char *mime;
-   
+
    if (it->mime) return;
 
    if (ecore_file_is_dir(it->uri))
@@ -346,7 +346,6 @@ static Evas_Object *
 _icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
-   char *icon_path;
 
    if (!it->mime)
      _item_fill((Evry_Item *)it);
@@ -354,25 +353,10 @@ _icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
    if (!it->mime) return NULL;
 
    if (it->browseable)
-     {
-	o = e_icon_add(e);
-	evry_icon_theme_set(o, "folder");
-     }
+     o = evry_icon_theme_get("folder", e);
    else
-     {
-	icon_path = efreet_mime_type_icon_get(it->mime, e_config->icon_theme, 64);
+     o = evry_icon_mime_get(it->mime, e); 
 
-	if (icon_path)
-	  {
-	     o = e_util_icon_add(icon_path, e);
-	     free(icon_path);
-	  }
-	  if (!o)
-	  {
-	     o = e_icon_add(e);
-	     evry_icon_theme_set(o, "none");
-	  }
-     }
    return o;
 }
 
@@ -412,24 +396,20 @@ _open_folder_action(Evry_Action *act __UNUSED__, const Evry_Item *it, const Evry
 static Eina_Bool
 _init(void)
 {
-   p1 = evry_plugin_new("Files", type_subject, "FILE", "FILE", 0, NULL,
+   p1 = evry_plugin_new("Files", type_subject, "FILE", "FILE", 0, NULL, NULL,
 			_begin, _cleanup, _fetch, NULL, _browse, _icon_get,
 			NULL, NULL);
 
-   p2 = evry_plugin_new("Files", type_object, "FILE", "FILE", 0, NULL,
+   p2 = evry_plugin_new("Files", type_object, "FILE", "FILE", 0, NULL, NULL,
 			_begin, _cleanup, _fetch, NULL, _browse, _icon_get,
 			NULL, NULL);
-   
+
    evry_plugin_register(p1, 3);
    evry_plugin_register(p2, 1);
 
-   act = E_NEW(Evry_Action, 1);
-   act->name = "Open Folder (EFM)";
-   act->is_default = EINA_TRUE;
-   act->type_in1 = eina_stringshare_add("FILE");
-   act->action = &_open_folder_action;
-   act->check_item = &_open_folder_check;
-   act->icon = "folder-open";
+   act = evry_action_new("Open Folder (EFM)", "FILE", NULL, "folder-open",
+			 _open_folder_action, _open_folder_check, NULL);
+
    evry_action_register(act);
 
    return EINA_TRUE;
@@ -438,13 +418,11 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_unregister(p1);
-   evry_plugin_unregister(p2);
-   E_FREE(p1);
-   E_FREE(p2);
-   evry_action_unregister(act);
-   E_FREE(act);
+   evry_plugin_free(p1);
+   evry_plugin_free(p2);
+   evry_action_free(act);
 }
+
 
 EINA_MODULE_INIT(_init);
 EINA_MODULE_SHUTDOWN(_shutdown);

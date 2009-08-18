@@ -333,8 +333,7 @@ _init(void)
    p = E_NEW(Plugin, 1);
    p->base.name = "Spell Checker";
    p->base.type = type_subject;
-   p->base.type_in  = "NONE";
-   p->base.type_out = "TEXT";
+   p->base.type_out = eina_stringshare_add("TEXT");
    p->base.icon = "accessories-dictionary";
    p->base.trigger = TRIGGER;
    p->base.begin = _begin;
@@ -362,6 +361,8 @@ _shutdown(void)
    EINA_LIST_FREE(p->base.items, it)
      evry_item_free(it);
 
+   eina_stringshare_del(p->base.type_out);
+   
    evry_plugin_unregister(&p->base);
    E_FREE(p);
 }

@@ -252,7 +252,7 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
 Evry_Plugin *
 evry_plugin_new(const char *name, int type,
 		const char *type_in, const char *type_out,
-		int async_fetch, const char *trigger,
+		int async_fetch, const char *icon, const char *trigger,
 		int  (*begin) (Evry_Plugin *p, const Evry_Item *item),
 		void (*cleanup) (Evry_Plugin *p),
 		int  (*fetch) (Evry_Plugin *p, const char *input),
@@ -263,11 +263,13 @@ evry_plugin_new(const char *name, int type,
 		void (*config_apply) (Evry_Plugin *p))
 {
    Evry_Plugin *p = E_NEW(Evry_Plugin, 1);
-   
+
    p->name = eina_stringshare_add(name);
    p->type = type;
-   p->type_in  = eina_stringshare_add(type_in);
-   p->type_out = eina_stringshare_add(type_out);
+   p->type_in  = (type_in  ? eina_stringshare_add(type_in)  : NULL);
+   p->type_out = (type_out ? eina_stringshare_add(type_out) : NULL);
+   p->trigger  = (trigger  ? eina_stringshare_add(trigger)  : NULL);
+   p->icon     = (icon     ? eina_stringshare_add(icon)     : NULL);
    p->async_fetch = async_fetch;
    p->begin    = begin;
    p->cleanup  = cleanup;
@@ -277,11 +279,56 @@ evry_plugin_new(const char *name, int type,
    p->browse   = browse;
    p->config_page  = config_page;
    p->config_apply = config_apply;
-   
+
    return p;
 }
 
-  
+void
+evry_plugin_free(Evry_Plugin *p)
+{
+   evry_plugin_unregister(p);
+
+   if (p->name)     eina_stringshare_del(p->name);
+   if (p->type_in)  eina_stringshare_del(p->type_in);
+   if (p->type_out) eina_stringshare_del(p->type_out);
+   if (p->trigger)  eina_stringshare_del(p->trigger);
+   if (p->icon)     eina_stringshare_del(p->icon);
+
+   E_FREE(p);
+}
+
+
+Evry_Action *
+evry_action_new(const char *name, const char *type_in1, const char *type_in2, const char *icon,
+		int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input),
+		int (*check_item) (Evry_Action *act, const Evry_Item *it),
+		Evas_Object *(*icon_get) (Evry_Action *act, Evas *e))
+{
+   Evry_Action *act = E_NEW(Evry_Action, 1);
+   act->name = eina_stringshare_add(name);
+   act->type_in1 = (type_in1 ? eina_stringshare_add(type_in1) : NULL);
+   act->type_in2 = (type_in2 ? eina_stringshare_add(type_in2) : NULL);
+   act->action = action;
+   act->check_item = check_item;
+   act->icon = (icon ? eina_stringshare_add(icon) : NULL);
+
+   return act;
+}
+
+
+void
+evry_action_free(Evry_Action *act)
+{
+   evry_action_unregister(act);
+
+   if (act->name)     eina_stringshare_del(act->name);
+   if (act->type_in1) eina_stringshare_del(act->type_in1);
+   if (act->type_in2) eina_stringshare_del(act->type_in2);
+   if (act->icon)     eina_stringshare_del(act->icon);
+
+   E_FREE(act);
+}
+
 void
 evry_plugin_register(Evry_Plugin *plugin, int priority)
 {

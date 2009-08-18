@@ -380,7 +380,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static Evas_Object *
-_item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
+_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
    Evry_App *app = it->data[0];
@@ -389,10 +389,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
      o = e_util_desktop_icon_add(app->desktop, 64, e);
 
    if (!o)
-     {
-	o = e_icon_add(e);
-	evry_icon_theme_set(o, "system-run");
-     }
+     o = evry_icon_theme_get("system-run", e);
 
    return o;
 }
@@ -652,70 +649,37 @@ _init(void)
 {
    char *path, *p, *last;
 
-   p1 = E_NEW(Evry_Plugin, 1);
-   p1->name = "Applications";
-   p1->type = type_subject;
-   p1->type_in  = "NONE";
-   p1->type_out = "APPLICATION";
-   p1->begin = &_begin;
-   p1->fetch = &_fetch;
-   p1->cleanup = &_cleanup;
-   p1->icon_get = &_item_icon_get;
-   evry_plugin_register(p1, 1);
+   p1 = evry_plugin_new("Applications", type_subject, "", "APPLICATION", 0, NULL, NULL,
+			_begin, _cleanup, _fetch, NULL, NULL,
+			_icon_get, NULL, NULL);
+   
+   p2 = evry_plugin_new("Open With...", type_action, "FILE", "", 0, NULL, NULL,
+			_begin, _cleanup, _fetch, _open_with_action, NULL,
+			_icon_get, NULL, NULL);
 
-   p2 = E_NEW(Evry_Plugin, 1);
-   p2->name = "Open With...";
-   p2->type = type_action;
-   p2->type_in  = "FILE";
-   p2->type_out = "NONE";
-   p2->begin = &_begin;
-   p2->fetch = &_fetch;
-   p2->action = &_open_with_action;
-   p2->cleanup = &_cleanup;
-   p2->icon_get = &_item_icon_get;
+   evry_plugin_register(p1, 1);
    evry_plugin_register(p2, 3);
 
-   act = E_NEW(Evry_Action, 1);
-   act->name = "Launch";
-   act->is_default = EINA_TRUE;
-   act->type_in1 = "APPLICATION";
-   act->action = &_exec_app_action;
-   act->check_item = &_exec_app_check_item;
-   act->icon = "everything-launch";
+   act = evry_action_new("Launch", "APPLICATION", NULL, "everything-launch",
+			 _exec_app_action, _exec_app_check_item, NULL);
+   
+   act1 = evry_action_new("Open File...", "APPLICATION", "FILE", "document-open",
+			  _exec_app_action, _exec_app_check_item, NULL);
+   
+   act2 = evry_action_new("Edit Application Entry", "APPLICATION", NULL, "everything-launch",
+			  _edit_app_action, _edit_app_check_item, NULL);
+
+   act3 = evry_action_new("New Application Entry", "APPLICATION", NULL, "everything-launch",
+			  _new_app_action, _new_app_check_item, NULL);
+
+   act4 = evry_action_new("Open File...", "BORDER", NULL, "everything-launch",
+			  _exec_border_action, _exec_border_check_item, NULL);
+
+
    evry_action_register(act);
-
-   act1 = E_NEW(Evry_Action, 1);
-   act1->name = "Open File...";
-   act1->type_in1 = "APPLICATION";
-   act1->type_in2 = "FILE";
-   act1->action = &_exec_app_action;
-   act1->check_item = &_exec_app_check_item;
-   act1->icon = "document-open";
    evry_action_register(act1);
-
-   act2 = E_NEW(Evry_Action, 1);
-   act2->name = "Edit Application Entry";
-   act2->type_in1 = "APPLICATION";
-   act2->action = &_edit_app_action;
-   act2->check_item = &_edit_app_check_item;
-   act2->icon = "everything-launch";
    evry_action_register(act2);
-
-   act3 = E_NEW(Evry_Action, 1);
-   act3->name = "New Application Entry";
-   act3->type_in1 = "APPLICATION";
-   act3->action = &_new_app_action;
-   act3->check_item = &_new_app_check_item;
-   act3->icon = "everything-launch";
    evry_action_register(act3);
-
-   act4 = E_NEW(Evry_Action, 1);
-   act4->name = "Open File...";
-   act4->type_in1 = "BORDER";
-   act4->type_in2 = "FILE";
-   act4->action = &_exec_border_action;
-   act4->check_item = &_exec_border_check_item;
-   act4->icon = "everything-launch";
    evry_action_register(act4);
 
    /* taken from e_exebuf.c */
@@ -746,19 +710,13 @@ _shutdown(void)
 {
    char *str;
 
-   evry_plugin_unregister(p1);
-   evry_plugin_unregister(p2);
-   evry_action_unregister(act);
-   evry_action_unregister(act1);
-   evry_action_unregister(act2);
-   evry_action_unregister(act3);
-   E_FREE(p1);
-   E_FREE(p2);
-   E_FREE(act);
-   E_FREE(act1);
-   E_FREE(act2);
-   E_FREE(act3);
-   E_FREE(act4);
+   evry_plugin_free(p1);
+   evry_plugin_free(p2);
+   evry_action_free(act);
+   evry_action_free(act1);
+   evry_action_free(act2);
+   evry_action_free(act3);
+   evry_action_free(act4);
 
    EINA_LIST_FREE(exe_path, str)
      free(str);

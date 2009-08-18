@@ -25,13 +25,9 @@ _init(void)
    Ecore_X_Window win = ecore_x_window_new(0, 0, 0, 1, 1);
    if (!win) return EINA_FALSE;
 
-   act = E_NEW(Evry_Action, 1);
-   act->name = "Copy to Clipboard";
-   act->is_default = EINA_TRUE;
-   act->type_in1 = "TEXT";
-   act->action = &_action;
-   act->check_item = &_check_item;
-   act->icon = "edit-copy";
+   act = evry_action_new("Copy to Clipboard", "TEXT", NULL, "edit-copy",
+			 _action, _check_item, NULL);
+
    evry_action_register(act);
 
    clipboard_win = win;
@@ -43,8 +39,7 @@ static void
 _shutdown(void)
 {
    ecore_x_window_free(clipboard_win);
-   evry_action_unregister(act);
-   E_FREE(act);
+   evry_action_free(act);
 }
 
 EINA_MODULE_INIT(_init);
