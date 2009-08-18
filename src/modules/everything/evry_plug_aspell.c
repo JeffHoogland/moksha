@@ -308,6 +308,7 @@ _cleanup(Evry_Plugin *plugin)
    if (p->exe)
      {
 	ecore_exe_quit(p->exe);
+	ecore_exe_free(p->exe);
 	p->exe = NULL;
      }
    if (p->lang)

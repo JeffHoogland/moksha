@@ -2,7 +2,7 @@
 
 
 static Evry_View *view = NULL;
-static Evas_Object *o_thumb[5];
+static Evas_Object *o_thumb[4];
 static Evas_Object *o_main = NULL;
 static Eina_List *items = NULL;
 static const char *view_types;

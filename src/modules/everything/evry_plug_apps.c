@@ -161,9 +161,9 @@ _item_add(Evry_Plugin *p, Efreet_Desktop *desktop, char *file, int match)
      }
 
    if (desktop)
-     it = evry_item_new(p, desktop->name, &_item_free);
+     it = evry_item_new(p, desktop->name, _item_free);
    else
-     it = evry_item_new(p, file, &_item_free);
+     it = evry_item_new(p, file, _item_free);
 
    app = E_NEW(Evry_App, 1);
    app->desktop = desktop;
@@ -341,7 +341,7 @@ _fetch(Evry_Plugin *p, const char *input)
 
 	if (found || p == p2)
 	  {
-	     it = evry_item_new(p, _("Run Command"), &_item_free);
+	     it = evry_item_new(p, _("Run Command"), _item_free);
 	     app = E_NEW(Evry_App, 1);
 	     if (input)
 	       app->file = eina_stringshare_add(input);
@@ -352,7 +352,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	     p->items = eina_list_append(p->items, it);
 
 	     snprintf(cmd, sizeof(cmd), "xterm -hold -e %s", input);
-	     it = evry_item_new(p, _("Run in Terminal"), &_item_free);
+	     it = evry_item_new(p, _("Run in Terminal"), _item_free);
 	     app = E_NEW(Evry_App, 1);
 	     if (input)
 	       app->file = eina_stringshare_add(cmd);
@@ -652,7 +652,7 @@ _init(void)
    p1 = evry_plugin_new("Applications", type_subject, "", "APPLICATION", 0, NULL, NULL,
 			_begin, _cleanup, _fetch, NULL, NULL,
 			_icon_get, NULL, NULL);
-   
+
    p2 = evry_plugin_new("Open With...", type_action, "FILE", "", 0, NULL, NULL,
 			_begin, _cleanup, _fetch, _open_with_action, NULL,
 			_icon_get, NULL, NULL);
@@ -662,10 +662,10 @@ _init(void)
 
    act = evry_action_new("Launch", "APPLICATION", NULL, "everything-launch",
 			 _exec_app_action, _exec_app_check_item, NULL);
-   
+
    act1 = evry_action_new("Open File...", "APPLICATION", "FILE", "document-open",
 			  _exec_app_action, _exec_app_check_item, NULL);
-   
+
    act2 = evry_action_new("Edit Application Entry", "APPLICATION", NULL, "everything-launch",
 			  _edit_app_action, _edit_app_check_item, NULL);
 

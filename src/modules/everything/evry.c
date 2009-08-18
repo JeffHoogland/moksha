@@ -294,7 +294,8 @@ evry_item_new(Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *ite
 
    it->plugin = p;
    if (label) it->label = eina_stringshare_add(label);
-
+   if (cb_free) it->cb_free = cb_free;
+   
    it->ref = 1;
 
    /* item_cnt++; */
@@ -1949,7 +1950,7 @@ _evry_plug_actions_free(void)
    evry_plugin_unregister(p);
    eina_stringshare_del(p->config->name);
    E_FREE(p->config);
-   E_FREE(p);
+   evry_plugin_free(p); 
 }
 
 static int
@@ -2073,7 +2074,7 @@ _evry_plug_aggregator_free(Evry_Plugin *p)
 {
    if (p->config->name) eina_stringshare_del(p->config->name);
    E_FREE(p->config);
-   E_FREE(p);
+   evry_plugin_free(p); 
 }
 
 
@@ -2104,7 +2105,7 @@ _evry_plug_aggregator_fetch(Evry_Plugin *p, const char *input)
 		  if (!it->fuzzy_match)
 		    it->fuzzy_match = evry_fuzzy_match(it->label, input);
 
-		  if (it->fuzzy_match)
+		  if (it->fuzzy_match || selector == selectors[2])
 		    {
 		       evry_item_ref(it);
 		       items = eina_list_append(items, it);

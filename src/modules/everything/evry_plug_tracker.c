@@ -277,7 +277,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	inst->input = eina_stringshare_add(input);
 	search_text = malloc(sizeof(char) * strlen(input) + 1);
 	sprintf(search_text, "%s", input);
-	max_hits = 50;
+	max_hits = 100;
      }
    else if (!input && !p->begin && p->type == type_object)
      {

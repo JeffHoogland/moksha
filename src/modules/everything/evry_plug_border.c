@@ -17,7 +17,7 @@ _cleanup(Evry_Plugin *p)
 static void
 _item_free(Evry_Item *it)
 {
-   /* if (it->data[0]) e_object_unref(E_OBJECT(it->data[0])); */
+   if (it->data[0]) e_object_unref(E_OBJECT(it->data[0]));
 }
 
 static void
@@ -25,9 +25,9 @@ _item_add(Evry_Plugin *p, E_Border *bd, int match, int *prio)
 {
    Evry_Item *it;
 
-   it = evry_item_new(p, e_border_name_get(bd), &_item_free);
+   it = evry_item_new(p, e_border_name_get(bd), _item_free);
 
-   /* e_object_ref(E_OBJECT(bd)); */
+   e_object_ref(E_OBJECT(bd));
    it->data[0] = bd;
    it->fuzzy_match = match;
    it->priority = *prio;

@@ -121,7 +121,7 @@ _item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), c
 
    if (!match) return;
 
-   it = evry_item_new(p, label, &_item_free);
+   it = evry_item_new(p, label, _item_free);
    it->data[0] = action_cb;
    it->data[1] = (void *) eina_stringshare_add(icon);
    it->fuzzy_match = match;

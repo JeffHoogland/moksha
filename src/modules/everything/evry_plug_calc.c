@@ -73,8 +73,11 @@ _cleanup(Evry_Plugin *p)
    ecore_event_handler_del(error_handler);
    ecore_event_handler_del(del_handler);
    data_handler = NULL;
+   error_handler = NULL;
+   del_handler = NULL;
 
    ecore_exe_quit(exe);
+   ecore_exe_free(exe);
    exe = NULL;
 }
 

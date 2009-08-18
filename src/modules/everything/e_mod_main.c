@@ -176,6 +176,10 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("extensions/run_everything");
    e_configure_registry_category_del("extensions");
 
+   if (evry_conf->plugins_conf) eina_list_free(evry_conf->plugins_conf);
+   
+   E_FREE(evry_conf);
+   
    /* Clean EET */
    E_CONFIG_DD_FREE(conf_item_edd);
    E_CONFIG_DD_FREE(conf_edd);
@@ -294,6 +298,16 @@ evry_plugin_free(Evry_Plugin *p)
    if (p->trigger)  eina_stringshare_del(p->trigger);
    if (p->icon)     eina_stringshare_del(p->icon);
 
+   if (p->config)
+     {
+	if (p->config->name)
+	  eina_stringshare_del(p->config->name);
+	if (p->config->trigger)
+	  eina_stringshare_del(p->config->trigger);
+
+	E_FREE(p->config);
+     }
+   
    E_FREE(p);
 }
 
