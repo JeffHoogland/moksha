@@ -325,7 +325,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static Evas_Object *
-_item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
+_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    char *icon_path;
    Evas_Object *o = NULL;
@@ -359,17 +359,10 @@ _plugin_new(const char *name, int type, char *service, int max_hits, int begin)
    Evry_Plugin *p;
    Inst *inst;
 
-   p = E_NEW(Evry_Plugin, 1);
-   p->name = name;
-   p->type = type;
-   p->type_in = "NONE";
-   p->type_out = "FILE";
-   p->async_query = 1;
-   if (begin)
-     p->begin = &_begin;
-   p->fetch = &_fetch;
-   p->cleanup = &_cleanup;
-   p->icon_get = &_item_icon_get;
+   p = evry_plugin_new(name, type, "", "FILE", 0, NULL,
+		       (begin ? _begin : NULL), _cleanup, _fetch,
+		       NULL, NULL, _icon_get, NULL, NULL);
+
    inst = E_NEW(Inst, 1);
    inst->condition = "";
    inst->service = service;

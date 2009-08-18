@@ -470,7 +470,7 @@ evry_fuzzy_match(const char *str, const char *match)
    next = str;
    m = match;
 
-   for (; (m_cnt < m_num) && (*next != 0);)
+   while((m_cnt < m_num) && (*next != 0))
      {
 	/* reset match */
 	if (m_cnt == 0) m = match;
@@ -563,15 +563,14 @@ evry_fuzzy_match(const char *str, const char *match)
 
    for (m_cnt = 0; m_cnt < m_num; m_cnt++)
      {
-	if (m_min[m_cnt] >= MAX_FUZZ)
+	sum += m_min[m_cnt];
+	
+	if (sum >= MAX_FUZZ)
 	  {
 	     sum = 0;
 	     break;
 	  }
-	sum += m_min[m_cnt];
      }
-   /* if (sum)
-    *   printf("min %d >> %s - %s\n", sum, match, str); */
 
    return sum;
 }
@@ -1000,17 +999,17 @@ _evry_selector_actions_get(Evry_Item *it)
 
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
-	if (strcmp(p->type_in, it->plugin->type_out) &&
-	    (p != action_selector) &&
-	    (p != sel->aggregator)) continue;
-
-	if (p->begin)
+	if ((p == action_selector) || (p == sel->aggregator) ||
+	    (strstr(p->type_in, it->plugin->type_out)))
 	  {
-	     if (p->begin(p, it))
+	     if (p->begin)
+	       {
+		  if (p->begin(p, it))
+		    plugins = eina_list_append(plugins, p);
+	       }
+	     else
 	       plugins = eina_list_append(plugins, p);
 	  }
-	else
-	  plugins = eina_list_append(plugins, p);
      }
 
    if (!plugins) return 0;
@@ -1170,7 +1169,7 @@ _evry_selectors_switch(void)
 
    if (update_timer)
      {
-	if ((s && !s->plugin->async_query) &&
+	if ((s && !s->plugin->async_fetch) &&
 	    ((selector == selectors[0]) ||
 	     (selector == selectors[1])))
 	  {
@@ -1436,7 +1435,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    if (update_timer)
      {
 	if ((selector->state->plugin) &&
-	    (!selector->state->plugin->async_query))
+	    (!selector->state->plugin->async_fetch))
 	  {
 	     _evry_matches_update(selector);
 	     _evry_selector_update(selector);
@@ -1570,11 +1569,16 @@ _evry_matches_update(Evry_Selector *sel)
    Evry_State *s = sel->state;
    Evry_Plugin *p;
    Eina_List *l;
-   Eina_Bool has_items = EINA_FALSE;
-
+   const char *input;
+   
    EINA_LIST_FREE(s->cur_plugins, p);
 
-   if (s->input)
+   if (strlen(s->input) > 0)
+     input = s->input;
+   else
+     input = NULL;
+   
+   if (input)
      {
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
@@ -1598,23 +1602,13 @@ _evry_matches_update(Evry_Selector *sel)
 	     if (p->trigger) continue;
 	     if (p == sel->aggregator) continue;
 
-	     if (strlen(s->input) == 0)
-	       {
-		  if (!p->need_query)
-		    has_items = p->fetch(p, NULL);
-	       }
-	     else
-	       {
-		  has_items = p->fetch(p, s->input);
-	       }
-
-	     if (has_items || sel->states->next)
+	     if (p->fetch(p, input) || sel->states->next)
 	       s->cur_plugins = eina_list_append(s->cur_plugins, p);
 	  }
 
 	if (eina_list_count(s->cur_plugins) > 1)
 	  {
-	     sel->aggregator->fetch(sel->aggregator, s->input);
+	     sel->aggregator->fetch(sel->aggregator, input);
 	     s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
 	     if (s->plugin_auto_selected)
 	       _evry_select_plugin(s, NULL);
@@ -1923,16 +1917,16 @@ _evry_fuzzy_sort_cb(const void *data1, const void *data2)
 static int
 _evry_plug_actions_init(void)
 {
-   Evry_Plugin *p = E_NEW(Evry_Plugin, 1);
-   p->name = "Select Action";
-   p->type = type_action;
-   p->type_in  = "ANY";
-   p->type_out = "NONE";
-   p->begin    = &_evry_plug_actions_begin;
-   p->cleanup  = &_evry_plug_actions_cleanup;
-   p->fetch    = &_evry_plug_actions_fetch;
-   p->icon_get = &_evry_plug_actions_item_icon_get;
-
+   Evry_Plugin *p;
+   
+   p = evry_plugin_new("Select Action", type_action, "", "", 0, NULL,
+		       _evry_plug_actions_begin,
+		       _evry_plug_actions_cleanup,
+		       _evry_plug_actions_fetch,
+		       NULL, NULL,
+		       _evry_plug_actions_item_icon_get,
+		       NULL, NULL);
+   
    action_selector = p;
    evry_plugin_register(p, 2);
 
@@ -2046,15 +2040,17 @@ _evry_plug_actions_item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it,
 static Evry_Plugin *
 _evry_plug_aggregator_new(void)
 {
+   Evry_Plugin *p;
    Plugin_Config *pc;
-   Evry_Plugin *p = E_NEW(Evry_Plugin, 1);
-   p->name = "All";
-   p->type_in  = "NONE";
-   p->type_out = "NONE";
-   p->cleanup  = &_evry_plug_aggregator_cleanup;
-   p->fetch    = &_evry_plug_aggregator_fetch;
-   p->action   = &_evry_plug_aggregator_action;
-   p->icon_get = &_evry_plug_aggregator_item_icon_get;
+   
+   p = evry_plugin_new("All", 0, "", "", 0, NULL,
+		       NULL,
+		       _evry_plug_aggregator_cleanup,
+		       _evry_plug_aggregator_fetch,
+		       _evry_plug_aggregator_action,
+		       NULL,
+		       _evry_plug_aggregator_item_icon_get,
+		       NULL, NULL);
 
    pc = E_NEW(Plugin_Config, 1);
    pc->name = eina_stringshare_add(p->name);
@@ -2092,7 +2088,7 @@ _evry_plug_aggregator_fetch(Evry_Plugin *p, const char *input)
      cnt += eina_list_count(plugin->items);
 
 
-   if (input[0])
+   if (input)
      {
 	EINA_LIST_FOREACH(s->cur_plugins, l, plugin)
 	  {
@@ -2111,7 +2107,7 @@ _evry_plug_aggregator_fetch(Evry_Plugin *p, const char *input)
 	  }
      }
 
-   if (!input[0] || eina_list_count(items) < 20)
+   if (!input || eina_list_count(items) < 20)
      {
 	EINA_LIST_FOREACH(s->cur_plugins, l, plugin)
    	  {
@@ -2131,7 +2127,7 @@ _evry_plug_aggregator_fetch(Evry_Plugin *p, const char *input)
 
    eina_list_free(items);
 
-   if (input[0])
+   if (input)
      p->items = eina_list_sort(p->items, eina_list_count(p->items), _evry_fuzzy_sort_cb);
 
    return 1;

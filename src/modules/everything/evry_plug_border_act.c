@@ -218,7 +218,6 @@ _init(void)
    p->type = type_action;
    p->type_in  = "BORDER";
    p->type_out = "NONE";
-   p->need_query = 0;
    p->begin = &_begin;
    p->fetch = &_fetch;
    p->action = &_action;

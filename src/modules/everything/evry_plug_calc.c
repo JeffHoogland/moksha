@@ -195,8 +195,6 @@ _init(void)
    p1->type_out = "TEXT";
    p1->trigger = "=";
    p1->icon = "accessories-calculator";
-   p1->need_query = 0;
-   p1->async_query = 1;
    p1->begin = &_begin;
    p1->fetch = &_fetch;
    p1->action = &_action;

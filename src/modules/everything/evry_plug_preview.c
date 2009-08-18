@@ -5,13 +5,14 @@ static Evry_View *view = NULL;
 static Evas_Object *o_thumb[5];
 static Evas_Object *o_main = NULL;
 static Eina_List *items = NULL;
+static const char *view_types;
 
 static int
 _check_item(const Evry_Item *it)
 {
    if (!it) return 0;
 
-   if (strcmp(it->plugin->type_out, "FILE")) return 0;
+   if (it->plugin->type_out != view_types) return 0;
 
    if (!it->uri || !it->mime) return 0;
 
@@ -155,9 +156,6 @@ _find_first(const Evry_State *s)
    Eina_List *l;
    Evry_Item *it, *found = NULL;
 
-   if (_check_item(s->sel_item))
-     return s->sel_item;
-
    eina_list_free(items);
    items = NULL;
    
@@ -167,6 +165,9 @@ _find_first(const Evry_State *s)
 	if (!found) found = it;
 	items = eina_list_append(items, it);
      }
+
+   if (_check_item(s->sel_item))
+     return s->sel_item;
 
    return found;
 }
@@ -224,12 +225,15 @@ _init(void)
    view->cleanup = &_cleanup;
    evry_view_register(view, 2);
 
+   view_types = eina_stringshare_add("FILE");
+   
    return EINA_TRUE;
 }
 
 static void
 _shutdown(void)
 {
+   eina_stringshare_del(view_types); 
    evry_view_unregister(view);
    E_FREE(view);
 }

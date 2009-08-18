@@ -657,7 +657,6 @@ _init(void)
    p1->type = type_subject;
    p1->type_in  = "NONE";
    p1->type_out = "APPLICATION";
-   p1->need_query = 0;
    p1->begin = &_begin;
    p1->fetch = &_fetch;
    p1->cleanup = &_cleanup;
@@ -669,7 +668,6 @@ _init(void)
    p2->type = type_action;
    p2->type_in  = "FILE";
    p2->type_out = "NONE";
-   p2->need_query = 0;
    p2->begin = &_begin;
    p2->fetch = &_fetch;
    p2->action = &_open_with_action;

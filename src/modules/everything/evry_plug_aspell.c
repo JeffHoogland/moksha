@@ -337,8 +337,6 @@ _init(void)
    p->base.type_out = "TEXT";
    p->base.icon = "accessories-dictionary";
    p->base.trigger = TRIGGER;
-   p->base.need_query = 0;
-   p->base.async_query = 1;
    p->base.begin = _begin;
    p->base.fetch = _fetch;
    p->base.cleanup = _cleanup;

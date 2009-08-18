@@ -46,29 +46,31 @@ _item_fill(Evry_Item *it)
      {
 	it->mime = eina_stringshare_add("x-directory/normal");
 	it->browseable = EINA_TRUE;
+	return;
      }
-   /* else if ((ext = strrchr(it->label, '.')))
+
+   /* if ((ext = strrchr(it->label, '.')))
     *   {
     * 	if (!strcmp(ext, ".desktop") || !strcmp(ext, ".directory"))
     * 	  {
     * 	     Efreet_Desktop *desktop;
-    * 
     * 	     desktop = efreet_desktop_new(it->uri);
     * 	     if (!desktop) return;
+    * 	     eina_stringshare_del(it->label);
     * 	     it->label = eina_stringshare_add(desktop->name);
     * 	     it->mime = eina_stringshare_add("None");
     * 	     efreet_desktop_free(desktop);
     * 	     return;
     * 	  }
     *   } */
-   else if ((mime = efreet_mime_type_get(it->uri)))
+
+   if ((mime = efreet_mime_type_get(it->uri)))
      {
 	it->mime = eina_stringshare_add(mime);
+	return;
      }
-   else
-     {
-	it->mime = eina_stringshare_add("None");
-     }
+
+   it->mime = eina_stringshare_add("None");
 }
 
 static int
@@ -341,7 +343,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static Evas_Object *
-_item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
+_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
    char *icon_path;
@@ -410,36 +412,21 @@ _open_folder_action(Evry_Action *act __UNUSED__, const Evry_Item *it, const Evry
 static Eina_Bool
 _init(void)
 {
-   p1 = E_NEW(Evry_Plugin, 1);
-   p1->name = "Files";
-   p1->type = type_subject;
-   p1->type_in  = "NONE|FILE";
-   p1->type_out = "FILE";
-   p1->browseable = EINA_TRUE;
-   p1->begin = &_begin;
-   p1->browse = &_browse;
-   p1->fetch = &_fetch;
-   p1->cleanup = &_cleanup;
-   p1->icon_get = &_item_icon_get;
-   evry_plugin_register(p1, 3);
+   p1 = evry_plugin_new("Files", type_subject, "FILE", "FILE", 0, NULL,
+			_begin, _cleanup, _fetch, NULL, _browse, _icon_get,
+			NULL, NULL);
 
-   p2 = E_NEW(Evry_Plugin, 1);
-   p2->name = "Files";
-   p2->type = type_object;
-   p2->type_in  = "NONE|FILE";
-   p2->type_out = "FILE";
-   p2->browseable = EINA_TRUE;
-   p2->begin = &_begin;
-   p2->browse = &_browse;
-   p2->fetch = &_fetch;
-   p2->cleanup = &_cleanup;
-   p2->icon_get = &_item_icon_get;
+   p2 = evry_plugin_new("Files", type_object, "FILE", "FILE", 0, NULL,
+			_begin, _cleanup, _fetch, NULL, _browse, _icon_get,
+			NULL, NULL);
+   
+   evry_plugin_register(p1, 3);
    evry_plugin_register(p2, 1);
 
    act = E_NEW(Evry_Action, 1);
    act->name = "Open Folder (EFM)";
    act->is_default = EINA_TRUE;
-   act->type_in1 = "FILE";
+   act->type_in1 = eina_stringshare_add("FILE");
    act->action = &_open_folder_action;
    act->check_item = &_open_folder_check;
    act->icon = "folder-open";

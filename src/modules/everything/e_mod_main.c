@@ -249,7 +249,40 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
    return p1->config->priority - p2->config->priority;
 }
 
-EAPI void
+Evry_Plugin *
+evry_plugin_new(const char *name, int type,
+		const char *type_in, const char *type_out,
+		int async_fetch, const char *trigger,
+		int  (*begin) (Evry_Plugin *p, const Evry_Item *item),
+		void (*cleanup) (Evry_Plugin *p),
+		int  (*fetch) (Evry_Plugin *p, const char *input),
+		int  (*action) (Evry_Plugin *p, const Evry_Item *item, const char *input),
+		int  (*browse) (Evry_Plugin *p, const Evry_Item *item),
+		Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
+		Evas_Object *(*config_page) (Evry_Plugin *p),
+		void (*config_apply) (Evry_Plugin *p))
+{
+   Evry_Plugin *p = E_NEW(Evry_Plugin, 1);
+   
+   p->name = eina_stringshare_add(name);
+   p->type = type;
+   p->type_in  = eina_stringshare_add(type_in);
+   p->type_out = eina_stringshare_add(type_out);
+   p->async_fetch = async_fetch;
+   p->begin    = begin;
+   p->cleanup  = cleanup;
+   p->fetch    = fetch;
+   p->icon_get = icon_get;
+   p->action   = action;
+   p->browse   = browse;
+   p->config_page  = config_page;
+   p->config_apply = config_apply;
+   
+   return p;
+}
+
+  
+void
 evry_plugin_register(Evry_Plugin *plugin, int priority)
 {
    Eina_List *l;
@@ -289,21 +322,21 @@ evry_plugin_register(Evry_Plugin *plugin, int priority)
    /* TODO sorting, initialization, etc */
 }
 
-EAPI void
+void
 evry_plugin_unregister(Evry_Plugin *plugin)
 {
    evry_conf->plugins = eina_list_remove(evry_conf->plugins, plugin);
    /* cleanup */
 }
 
-EAPI void
+void
 evry_action_register(Evry_Action *action)
 {
    evry_conf->actions = eina_list_append(evry_conf->actions, action);
    /* TODO sorting, initialization, etc */
 }
 
-EAPI void
+void
 evry_action_unregister(Evry_Action *action)
 {
    evry_conf->actions = eina_list_remove(evry_conf->actions, action);
@@ -320,7 +353,7 @@ _evry_cb_view_sort(const void *data1, const void *data2)
 }
 
 
-EAPI void
+void
 evry_view_register(Evry_View *view, int priority)
 {
    view->priority = priority;
@@ -332,7 +365,7 @@ evry_view_register(Evry_View *view, int priority)
 				     _evry_cb_view_sort);
 }
 
-EAPI void
+void
 evry_view_unregister(Evry_View *view)
 {
    evry_conf->views = eina_list_remove(evry_conf->views, view);

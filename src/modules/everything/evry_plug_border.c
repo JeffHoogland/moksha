@@ -185,7 +185,6 @@ _init(void)
    p->type = type_subject;
    p->type_in  = "NONE";
    p->type_out = "BORDER";
-   p->need_query = 0;
    p->fetch = &_fetch;
    p->cleanup = &_cleanup;
    p->icon_get = &_item_icon_get;
