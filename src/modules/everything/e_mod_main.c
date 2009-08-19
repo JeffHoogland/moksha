@@ -126,7 +126,7 @@ e_modapi_init(E_Module *m)
      }
 
    e_action_predef_name_set(_("Everything"), _("Show Everything Dialog"),
-			    "everything", NULL, NULL, 0);
+			    "everything", "", NULL, 0);
    
    maug = e_int_menus_menu_augmentation_add("main/1", _e_mod_menu_add, NULL, NULL, NULL);
 
@@ -218,7 +218,12 @@ _e_mod_action_exebuf_cb(E_Object *obj, const char *params)
      }
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
 
-   if (zone) evry_show(zone, params);
+   if (!zone) return;
+
+   if (params && params[0])
+     evry_show(zone, params);
+   else
+     evry_show(zone, NULL);
 }
 
 /* menu item callback(s) */
