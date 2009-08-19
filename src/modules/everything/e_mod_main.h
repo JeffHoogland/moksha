@@ -15,7 +15,9 @@ struct _Config
   int width, height;
 
   /* generic plugin config */
-  Eina_List *plugins_conf;
+  Eina_List *conf_subjects;
+  Eina_List *conf_actions;
+  Eina_List *conf_objects;
 
   int scroll_animate;
   double scroll_speed;

@@ -385,11 +385,12 @@ _shutdown(void)
 
    EINA_LIST_FREE(plugins, p)
      {
-	evry_plugin_unregister(p);
+
 	inst = p->private;
 	if (inst->condition[0]) free(inst->condition);
 	E_FREE(inst);
-	E_FREE(p);
+	
+	evry_plugin_free(p);
      }
 }
 

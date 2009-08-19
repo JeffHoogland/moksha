@@ -13,7 +13,7 @@ _cb_border_remove(void *data, int type,  void *event)
    Evry_Item *it;
 
    ev = event;
-   
+
    EINA_LIST_FOREACH(p->items, l, it)
      {
 	if (it->data[0] == ev->border)
@@ -42,15 +42,14 @@ static void
 _cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
+   Ecore_Event_Handler *h;
 
    EINA_LIST_FREE(p->items, it)
      evry_item_free(it);
 
-   while (handlers)
-     {
-	ecore_event_handler_del(handlers->data);
-	handlers = eina_list_remove_list(handlers, handlers);
-     }
+   EINA_LIST_FREE(handlers, h)
+     ecore_event_handler_del(h);
+
 }
 
 static void

@@ -88,9 +88,9 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   eina_list_free(cfdata->p_subject);
-   eina_list_free(cfdata->p_action);
-   eina_list_free(cfdata->p_object);
+   if (cfdata->p_subject) eina_list_free(cfdata->p_subject);
+   if (cfdata->p_action)  eina_list_free(cfdata->p_action);
+   if (cfdata->p_object)  eina_list_free(cfdata->p_object);
 
    E_FREE(cfdata);
 }

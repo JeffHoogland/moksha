@@ -8,9 +8,7 @@ static int  _cb_del(void *data, int type, void *event);
 static Evry_Plugin *p1;
 static Ecore_Exe *exe = NULL;
 static Eina_List *history = NULL;
-static Ecore_Event_Handler *data_handler = NULL;
-static Ecore_Event_Handler *error_handler = NULL;
-static Ecore_Event_Handler *del_handler = NULL;
+static Eina_List *handlers = NULL;
 
 static int error = 0;
 
@@ -21,16 +19,6 @@ _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
 {
    Evry_Item *it;
 
-   data_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _cb_data, p);
-   error_handler = ecore_event_handler_add(ECORE_EXE_EVENT_ERROR, _cb_error, p);
-   del_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _cb_del, p);
-   exe = ecore_exe_pipe_run("bc -l",
-			    ECORE_EXE_PIPE_READ |
-			    ECORE_EXE_PIPE_READ_LINE_BUFFERED |
-			    ECORE_EXE_PIPE_WRITE |
-			    ECORE_EXE_PIPE_ERROR |
-			    ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
-			    NULL);
    if (history)
      {
 	const char *result;
@@ -46,12 +34,37 @@ _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
    it = evry_item_new(p, "0", NULL);
    p->items = eina_list_prepend(p->items, it);
 
+   return 1;
+}
+
+static int
+_run_bc(Evry_Plugin *p)
+{
+   handlers = eina_list_append
+     (handlers, ecore_event_handler_add
+      (ECORE_EXE_EVENT_DATA, _cb_data, p));
+   handlers = eina_list_append
+     (handlers, ecore_event_handler_add
+      (ECORE_EXE_EVENT_ERROR, _cb_error, p));
+   handlers = eina_list_append
+     (handlers, ecore_event_handler_add
+      (ECORE_EXE_EVENT_DEL, _cb_del, p));
+
+   exe = ecore_exe_pipe_run("bc -l",
+			    ECORE_EXE_PIPE_READ |
+			    ECORE_EXE_PIPE_READ_LINE_BUFFERED |
+			    ECORE_EXE_PIPE_WRITE |
+			    ECORE_EXE_PIPE_ERROR |
+			    ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
+			    NULL);
    return !!exe;
 }
+
 
 static void
 _cleanup(Evry_Plugin *p)
 {
+   Ecore_Event_Handler *h;
    Evry_Item *it;
    int items = 10;
 
@@ -69,16 +82,15 @@ _cleanup(Evry_Plugin *p)
 	evry_item_free(it);
      }
 
-   ecore_event_handler_del(data_handler);
-   ecore_event_handler_del(error_handler);
-   ecore_event_handler_del(del_handler);
-   data_handler = NULL;
-   error_handler = NULL;
-   del_handler = NULL;
+   EINA_LIST_FREE(handlers, h)
+     ecore_event_handler_del(h);
 
-   ecore_exe_quit(exe);
-   ecore_exe_free(exe);
-   exe = NULL;
+   if (exe)
+     {
+	ecore_exe_quit(exe);
+	ecore_exe_free(exe);
+	exe = NULL;
+     }
 }
 
 static int
@@ -123,8 +135,8 @@ _fetch(Evry_Plugin *p, const char *input)
 
    if (!input) return 0;
 
-   if (!data_handler && !_begin(p, NULL)) return 0;
-   
+   if (!exe && !_run_bc(p)) return 0;
+
    if (!strncmp(input, "scale=", 6))
      snprintf(buf, 1024, "%s\n", input);
    else
@@ -196,8 +208,8 @@ static Eina_Bool
 _init(void)
 {
    p1 = evry_plugin_new("Calculator", type_subject, NULL, "TEXT", 1, "accessories-calculator", "=",
-			NULL, _cleanup, _fetch, _action, NULL, NULL, NULL, NULL);
-   
+			_begin, _cleanup, _fetch, _action, NULL, NULL, NULL, NULL);
+
    evry_plugin_register(p1, 0);
 
    return EINA_TRUE;

@@ -139,16 +139,15 @@ struct _Evry_State
 
 struct _Evry_View
 {
+  Evry_View *id;
   const char *name;
 
-  Evas_Object *(*begin) (Evry_View *v, const Evry_State *s, const Evas_Object *swallow);
-
-  int (*cb_key_down) (Evry_View *v, const Ecore_Event_Key *ev);
-  int (*update) (Evry_View *v, const Evry_State *s);
-  void (*clear)  (Evry_View *v, const Evry_State *s);
-  void (*cleanup) (Evry_View *v);
-
-  const Evry_State *state;
+  Evry_View *(*create) (const Evry_View *view, const Evry_State *s, const Evas_Object *swallow);
+  void (*destroy) (const Evry_View *view);
+  Evas_Object *(*object) (const Evry_View *view);
+  int  (*cb_key_down) (const Evry_View *view, const Ecore_Event_Key *ev);
+  int  (*update) (const Evry_View *view);
+  void (*clear) (const Evry_View *view);
 
   int priority;
 };

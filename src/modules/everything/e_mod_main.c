@@ -9,7 +9,7 @@
 
 #include "e_mod_main.h"
 
-#define CONFIG_VERSION 1
+#define CONFIG_VERSION 2
 
 /* actual module specifics */
 static void _e_mod_action_exebuf_cb(E_Object *obj, const char *params);
@@ -82,7 +82,9 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, hide_input, INT);
    E_CONFIG_VAL(D, T, hide_list, INT);
    E_CONFIG_VAL(D, T, quick_nav, INT);
-   E_CONFIG_LIST(D, T, plugins_conf, conf_item_edd);
+   E_CONFIG_LIST(D, T, conf_subjects, conf_item_edd);
+   E_CONFIG_LIST(D, T, conf_actions, conf_item_edd);
+   E_CONFIG_LIST(D, T, conf_objects, conf_item_edd);
 #undef T
 #undef D
    evry_conf = e_config_domain_load("module.everything", conf_edd);
@@ -100,6 +102,9 @@ e_modapi_init(E_Module *m)
 	evry_conf->hide_input = 0;
 	evry_conf->hide_list = 1;
 	evry_conf->quick_nav = 1;
+	evry_conf->conf_subjects = NULL;
+	evry_conf->conf_actions = NULL;
+	evry_conf->conf_objects = NULL;	
      }
 
    /* search for plugins */
@@ -164,8 +169,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      }
 
    /* conf_module = NULL; */
-   eina_list_free(evry_conf->plugins);
-   eina_list_free(evry_conf->actions);
+   if (evry_conf->plugins) eina_list_free(evry_conf->plugins);
+   if (evry_conf->actions) eina_list_free(evry_conf->actions);
 
    if (plugins)
      {
@@ -182,7 +187,9 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("extensions/run_everything");
    e_configure_registry_category_del("extensions");
 
-   if (evry_conf->plugins_conf) eina_list_free(evry_conf->plugins_conf);
+   if (evry_conf->conf_subjects) eina_list_free(evry_conf->conf_subjects);
+   if (evry_conf->conf_actions)  eina_list_free(evry_conf->conf_actions);
+   if (evry_conf->conf_objects)  eina_list_free(evry_conf->conf_objects);
    
    E_FREE(evry_conf);
    
@@ -357,13 +364,20 @@ evry_action_free(Evry_Action *act)
 void
 evry_plugin_register(Evry_Plugin *p, int priority)
 {
-   Eina_List *l;
+   Eina_List *l, *confs = NULL;   
    Plugin_Config *pc;
    Eina_Bool found = 0;
 
    evry_conf->plugins = eina_list_append(evry_conf->plugins, p);
 
-   EINA_LIST_FOREACH(evry_conf->plugins_conf, l, pc)
+   if (p->type == type_subject)
+     confs = evry_conf->conf_subjects;
+   else if (p->type == type_action)
+     confs = evry_conf->conf_actions;
+   else if (p->type == type_object)
+     confs = evry_conf->conf_objects;
+   
+   EINA_LIST_FOREACH(confs, l, pc)
      {
 	if (pc->name && p->name && !strcmp(pc->name, p->name))
 	  {
@@ -379,7 +393,7 @@ evry_plugin_register(Evry_Plugin *p, int priority)
 	pc->enabled = 1;
 	pc->priority = priority ? priority : 100;;
 
-	evry_conf->plugins_conf = eina_list_append(evry_conf->plugins_conf, pc);
+	confs = eina_list_append(confs, pc);
      }
 
    /* if (plugin->trigger && !pc->trigger)
@@ -391,6 +405,13 @@ evry_plugin_register(Evry_Plugin *p, int priority)
 				       eina_list_count(evry_conf->plugins),
 				       _evry_cb_plugin_sort);
 
+   if (p->type == type_subject)
+     evry_conf->conf_subjects = confs;
+   else if (p->type == type_action)
+     evry_conf->conf_actions = confs;
+   else if (p->type == type_object)
+     evry_conf->conf_objects = confs;
+   
    if (p->type == type_subject)
      {
 	char buf[256];

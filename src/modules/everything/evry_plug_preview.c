@@ -1,11 +1,24 @@
 #include "Evry.h"
 
+typedef struct _Image_View Image_View;
+
+
+struct _Image_View
+{
+  Evry_View view;
+  Evas *evas;
+
+  const Evry_State *state;
+
+  Evas_Object *o_main;
+
+  Eina_List *items;
+  Evas_Object *o_thumb[4];
+};
+
 
 static Evry_View *view = NULL;
-static Evas_Object *o_thumb[4];
-static Evas_Object *o_main = NULL;
-static Eina_List *items = NULL;
-static const char *view_types;
+static const char *view_types = NULL;
 
 static int
 _check_item(const Evry_Item *it)
@@ -24,103 +37,102 @@ static void
 _cb_preview_thumb_gen(void *data, Evas_Object *obj, void *event_info)
 {
    Evas_Coord w, h;
-
-   if (!o_main) return;
-
-   e_icon_size_get(o_thumb[1], &w, &h);
-   edje_extern_object_min_size_set(o_thumb[1], w, h);
-   edje_object_part_swallow(o_main, "e.swallow.icon2", o_thumb[1]);
-   /* evas_object_size_hint_aspect_set(o_thumb[1], EVAS_ASPECT_CONTROL_HORIZONTAL, w, h); */
-   evas_object_show(o_thumb[1]);
+   Image_View *v = data;
+   
+   e_icon_size_get(v->o_thumb[1], &w, &h);
+   edje_extern_object_min_size_set(v->o_thumb[1], w, h);
+   edje_object_part_swallow(v->o_main, "e.swallow.icon2", v->o_thumb[1]);
+   evas_object_show(v->o_thumb[1]);
 }
 
 void
-_show_item(const Evry_Item *it, int dir)
+_show_item(Image_View *v, const Evry_Item *it, int dir)
 {
    int w, h;
 
-   if (o_thumb[1 + dir])
+   if (v->o_thumb[1 + dir])
      {
-	e_thumb_icon_end(o_thumb[1+dir]);
-	edje_object_part_unswallow(o_main, o_thumb[1+dir]);
-	evas_object_hide(o_thumb[1+dir]);
-	evas_object_del(o_thumb[1+dir]);
+	e_thumb_icon_end(v->o_thumb[1+dir]);
+	edje_object_part_unswallow(v->o_main, v->o_thumb[1+dir]);
+	evas_object_hide(v->o_thumb[1+dir]);
+	evas_object_del(v->o_thumb[1+dir]);
      }
 
-   if (dir && o_thumb[1])
+   if (dir && v->o_thumb[1])
      {
-	edje_object_part_unswallow(o_main, o_thumb[1]);
+	edje_object_part_unswallow(v->o_main, v->o_thumb[1]);
 
 	if (dir > 0)
 	  {
-	     o_thumb[2] = o_thumb[1];
-	     edje_object_part_swallow(o_main, "e.swallow.icon1", o_thumb[2]);
+	     v->o_thumb[2] = v->o_thumb[1];
+	     edje_object_part_swallow(v->o_main, "e.swallow.icon1", v->o_thumb[2]);
 	  }
 	else
 	  {
-	     o_thumb[0] = o_thumb[1];
-	     edje_object_part_swallow(o_main, "e.swallow.icon3", o_thumb[0]);
+	     v->o_thumb[0] = v->o_thumb[1];
+	     edje_object_part_swallow(v->o_main, "e.swallow.icon3", v->o_thumb[0]);
 	  }
      }
 
-   o_thumb[1] = e_thumb_icon_add(evas_object_evas_get(o_main));
-   e_thumb_icon_file_set(o_thumb[1], it->uri, NULL);
-   evas_object_smart_callback_add(o_thumb[1], "e_thumb_gen", _cb_preview_thumb_gen, NULL);
-   /* evas_object_geometry_get(o_main, &x, &y, &w, &h); */
-   edje_object_part_geometry_get(o_main, "e.swallow.icon2", NULL, NULL, &w, &h);
-   e_thumb_icon_size_set(o_thumb[1], w, h);
-   e_thumb_icon_begin(o_thumb[1]);
+   v->o_thumb[1] = e_thumb_icon_add(v->evas);
+   e_thumb_icon_file_set(v->o_thumb[1], it->uri, NULL);
+   evas_object_smart_callback_add(v->o_thumb[1], "e_thumb_gen", _cb_preview_thumb_gen, v);
+   edje_object_part_geometry_get(v->o_main, "e.swallow.icon2", NULL, NULL, &w, &h);
+   e_thumb_icon_size_set(v->o_thumb[1], w, h);
+   e_thumb_icon_begin(v->o_thumb[1]);
 
    if (dir)
      {
 	if (dir > 0)
-	  edje_object_signal_emit(o_main, "e,signal,slide_left", "e");
+	  edje_object_signal_emit(v->o_main, "e,signal,slide_left", "e");
 	else
-	  edje_object_signal_emit(o_main, "e,signal,slide_right", "e");
+	  edje_object_signal_emit(v->o_main, "e,signal,slide_right", "e");
      }
 }
 
 static int
-_cb_key_down(Evry_View *v, const Ecore_Event_Key *ev)
+_cb_key_down(const Evry_View *view, const Ecore_Event_Key *ev)
 {
+   Image_View *v = (Image_View *) view;
+   
    Eina_List *l;
    Evry_Item *it = NULL, *cur_item;
 
-   cur_item  = view->state->sel_item;
+   cur_item  = v->state->sel_item;
 
    if (!strcmp(ev->key, "Down"))
      {
-	if (!items) return 1;
+	if (!v->items) return 1;
 	
-	l = eina_list_data_find_list(items, cur_item);
+	l = eina_list_data_find_list(v->items, cur_item);
 
 	if (l && l->next)
 	  it = l->next->data;
 	else    
-	  it = items->data;
+	  it = v->items->data;
 	
 	if (it && (it != cur_item))
 	  {
-	     _show_item(it, 1);
-	     evry_item_select(view->state, it);
+	     _show_item(v, it, 1);
+	     evry_item_select(v->state, it);
 	  }
 	return 1;
      }
    else if (!strcmp(ev->key, "Up"))
      {
-	if (!items) return 1;
+	if (!v->items) return 1;
 	
-	l = eina_list_data_find_list(items, cur_item);
+	l = eina_list_data_find_list(v->items, cur_item);
 
 	if (l && l->prev)
 	  it = l->prev->data;
 	else    
-	  it = eina_list_last(items)->data;
+	  it = eina_list_last(v->items)->data;
 	
 	if (it && (it != cur_item))
 	  {
-	     _show_item(it, -1);
-	     evry_item_select(view->state, it);
+	     _show_item(v, it, -1);
+	     evry_item_select(v->state, it);
 	  }
 	return 1;
      }
@@ -129,98 +141,107 @@ _cb_key_down(Evry_View *v, const Ecore_Event_Key *ev)
 }
 
 static void
-_clear(Evry_View *v, const Evry_State *s)
+_view_clear(const Evry_View *view)
 {
-   if (o_thumb[0]) evas_object_del(o_thumb[0]);
-   if (o_thumb[1]) evas_object_del(o_thumb[1]);
-   if (o_thumb[2]) evas_object_del(o_thumb[2]);
-   o_thumb[0] = NULL;
-   o_thumb[1] = NULL;
-   o_thumb[2] = NULL;
-}
-
-static void
-_cleanup(Evry_View *v)
-{
-   _clear(v, NULL);
+   Image_View *v = (Image_View *) view;
    
-   if (o_main) evas_object_del(o_main);
-   o_main = NULL;
+   if (v->o_thumb[0]) evas_object_del(v->o_thumb[0]);
+   v->o_thumb[0] = NULL;
+   if (v->o_thumb[1]) evas_object_del(v->o_thumb[1]);
+   v->o_thumb[1] = NULL;
+   if (v->o_thumb[2]) evas_object_del(v->o_thumb[2]);
+   v->o_thumb[2] = NULL;
+   if (v->items) eina_list_free(v->items); 
+   v->items = NULL;
 }
 
-static Evry_Item *
-_find_first(const Evry_State *s)
+static Eina_List *
+_get_list(const Evry_State *s)
 {
-   Eina_List *l;
-   Evry_Item *it, *found = NULL;
-
-   eina_list_free(items);
-   items = NULL;
+   Eina_List *l, *items = NULL;
+   Evry_Item *it;
    
    EINA_LIST_FOREACH(s->plugin->items, l, it)
-     {
-	if (!_check_item(it)) continue;
-	if (!found) found = it;
-	items = eina_list_append(items, it);
-     }
+     if (_check_item(it)) 
+       items = eina_list_append(items, it);
 
-   if (_check_item(s->sel_item))
-     return s->sel_item;
-
-   return found;
+   return items;
 }
 
 static int
-_update(Evry_View *v, const Evry_State *s)
+_view_update(const Evry_View *view)
 {
+   Image_View *v = (Image_View *) view;
    Evry_Item *it;
 
-   v->state = s;
-   it = _find_first(s);
+   v->items = _get_list(v->state);
+   if (!v->items) return 0;
 
-   if (!it) return 0;
-
-   _show_item(it, 0);
-   evry_item_select(view->state, it);
-
+   it = eina_list_data_find(v->items, v->state->sel_item);
+   if (!it)
+     {
+	it = v->items->data;
+	evry_item_select(v->state, it);
+     }
+   
+   _show_item(v, it, 0);
+   
    return 1;
 }
 
 static Evas_Object *
-_begin(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
+_view_object(const Evry_View *view)
 {
+   return ((Image_View*) view)->o_main;
+}
+
+static Evry_View *
+_view_create(const Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
+{
+   Image_View *v;
    int w, h, x, y;
-   Evry_Item *it;
 
-   if (!(it = _find_first(s))) return NULL;
+   if (!_get_list(s))
+     return NULL;
 
-   o_main = edje_object_add(evas_object_evas_get(swallow));
-   e_theme_edje_object_set(o_main, "base/theme/everything",
+   v = E_NEW(Image_View, 1);
+   v->view = *view;
+   v->state = s;   
+   v->evas = evas_object_evas_get(swallow);
+   v->o_main = edje_object_add(v->evas);
+   e_theme_edje_object_set(v->o_main, "base/theme/everything",
 			   "e/widgets/everything/preview");
 
    edje_object_part_geometry_get(swallow, "e.swallow.list", &x, &y, &w, &h);
-   edje_extern_object_min_size_set(o_main, w * 3, 100);
-   evas_object_resize(o_main, w * 3, h);
+   edje_extern_object_min_size_set(v->o_main, w * 3, 100);
+   evas_object_resize(v->o_main, w * 3, h);
 
-   if (!o_main) return NULL;
+   return &v->view;
+}
 
-   view->state = s;
+static void
+_view_destroy(const Evry_View *view)
+{
+   Image_View *v = (Image_View *) view;
 
-   _show_item(it, 0);
+   _view_clear(view);
+   evas_object_del(v->o_main);
 
-   return o_main;
+   E_FREE(v);
 }
 
 static Eina_Bool
 _init(void)
 {
    view = E_NEW(Evry_View, 1);
-   view->name = "Image Preview";
-   view->begin = &_begin;
-   view->update = &_update;
-   view->clear = &_clear;
+   view->id = view;
+   view->name = "Image Viewer";
+   view->create = &_view_create;
+   view->destroy = &_view_destroy;
+   view->object = &_view_object;
+   view->update = &_view_update;
+   view->clear = &_view_clear;
    view->cb_key_down = &_cb_key_down;
-   view->cleanup = &_cleanup;
    evry_view_register(view, 2);
 
    view_types = eina_stringshare_add("FILE");
