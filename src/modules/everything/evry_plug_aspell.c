@@ -181,8 +181,13 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 	  word = _space_skip(word_end + 1);
      }
 
-   evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_ADD);
+   if (plugin->items)
+     {
+	evry_list_win_show();
+     }
 
+   evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_ADD);
+   
    return 1;
 }
 
@@ -221,12 +226,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
    const char *s;
    int len;
 
-   len = sizeof(TRIGGER) - 1;
-   if (strncmp(input, TRIGGER, len) != 0)
-     return 0;
+   if (!input) return 0;
 
-   input += len;
-
+   if (!p->handler.data && !_begin(plugin, NULL)) return 0;
+   
    len = sizeof(LANG_MODIFIER) - 1;
    if (strncmp(input, LANG_MODIFIER, len) == 0)
      {
@@ -337,7 +340,6 @@ _init(void)
    p->base.type_out = eina_stringshare_add("TEXT");
    p->base.icon = "accessories-dictionary";
    p->base.trigger = TRIGGER;
-   p->base.begin = _begin;
    p->base.fetch = _fetch;
    p->base.cleanup = _cleanup;
 

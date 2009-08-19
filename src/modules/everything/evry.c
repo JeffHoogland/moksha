@@ -48,6 +48,8 @@ struct _Evry_Window
 
   Eina_Bool request_selection;
   /* E_Popup *input_win; */
+
+  Eina_Bool plugin_dedicated;
 };
 
 struct _Evry_List_Window
@@ -88,7 +90,7 @@ static void _evry_selector_free(Evry_Selector *sel);
 static void _evry_selector_activate(Evry_Selector *sel);
 static void _evry_selector_update(Evry_Selector *sel);
 static void _evry_selector_icon_set(Evry_Selector *sel);
-static int  _evry_selector_subjects_get(void);
+static int  _evry_selector_subjects_get(const char *plugin_name);
 static int  _evry_selector_actions_get(Evry_Item *it);
 static int  _evry_selector_objects_get(const char *type);
 
@@ -156,7 +158,7 @@ evry_shutdown(void)
 }
 
 int
-evry_show(E_Zone *zone)
+evry_show(E_Zone *zone, const char *params)
 {
    if (win) return 0;
 
@@ -183,11 +185,14 @@ evry_show(E_Zone *zone)
    selectors[1] = _evry_selector_new(type_action);
    selectors[2] = _evry_selector_new(type_object);
 
-   _evry_selector_subjects_get();
-   _evry_selector_activate(selectors[0]);
+   if (params)
+     win->plugin_dedicated = EINA_TRUE;
 
    mime_hash = eina_hash_stringshared_new(NULL);
    
+   _evry_selector_subjects_get(params);
+   _evry_selector_activate(selectors[0]);
+
    _evry_selector_update(selector);
 
    e_popup_layer_set(list->popup, 255);
@@ -376,7 +381,13 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
    agg = selector->aggregator;
 
    /* received data from a plugin of the current selector ? */
-   if (!s || !eina_list_data_find(s->plugins, p)) return;
+   if (!s || !eina_list_data_find(s->plugins, p))
+     {
+	if (p->type == type_action)
+	  
+	return;
+
+     }
 
    if (action == EVRY_ASYNC_UPDATE_ADD)
      {
@@ -507,31 +518,43 @@ evry_fuzzy_match(const char *str, const char *match)
 	     /* current char matches? */
 	     if (tolower(*p) != tolower(*m))
 	       {
-		  offset++;
-		  continue;
+		  if (!first)
+		    offset += 1;
+		  else
+		    offset += 3;
+		  
+		  if (offset < 10)
+		    continue;
 	       }
-
-	     /* first offset of match in word */
-	     if (!first)
+	     
+	     if (min < MAX_FUZZ && offset < 10)
 	       {
-		  offset *= 2;
+		  /* first offset of match in word */
+		  if (!first)
+		    {
+		       first = 1;
+		       last = offset;
+		    }
+	     
+		  min += offset + (offset - last) * 5;
 		  last = offset;
-		  first = 1;
+		  
+		  /* try next char of match */
+		  if (*(++m) != 0 && !isspace(*m))
+		    continue;
+
+		  /* end of match: store min weight of match */
+		  min += (cnt - m_cnt) > 0 ? (cnt - m_cnt) : 0;
+
+		  if (min < m_min[m_cnt])
+		    m_min[m_cnt] = min;
 	       }
-
-	     min += offset + (offset - last) * 10;
-	     last = offset;
-
-	     /* try next char of match */
-	     if (*(++m) != 0 && !isspace(*m))
-	       continue;
-
-	     /* end of match: store min weight of match */
-	     min += (cnt - m_cnt) > 0 ? (cnt - m_cnt) : 0;
-
-	     if (min < m_min[m_cnt])
-	       m_min[m_cnt] = min;
-
+	     else
+	       {
+		  /* go to next match */
+		  for (; (*m != 0) && !isspace(*m); m++);
+	       }
+	     
 	     if (m_cnt < m_num - 1)
 	       {
 		  /* test next match */
@@ -957,7 +980,7 @@ _evry_list_win_update(Evry_State *s)
 }
 
 static int
-_evry_selector_subjects_get(void)
+_evry_selector_subjects_get(const char *plugin_name)
 {
    Eina_List *l, *plugins = NULL;
    Evry_Plugin *p;
@@ -965,6 +988,9 @@ _evry_selector_subjects_get(void)
 
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
+	if (plugin_name && strcmp(plugin_name, p->name))
+	  continue;
+
 	if (p->begin)
 	  {
 	     if (p->begin(p, NULL))
@@ -1598,7 +1624,7 @@ _evry_matches_update(Evry_Selector *sel)
 		 (!strncmp(s->input, p->trigger, strlen(p->trigger))))
 	       {
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
-		  p->fetch(p, s->input);
+		  p->fetch(p, s->input + strlen(p->trigger));
 		  break;
 	       }
 	  }
@@ -1608,10 +1634,12 @@ _evry_matches_update(Evry_Selector *sel)
      {
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
-	     if (p->trigger) continue;
+	     if (!win->plugin_dedicated && p->trigger) continue;
 	     if (p == sel->aggregator) continue;
 
-	     if (p->fetch(p, input) || sel->states->next)
+	     if (p->fetch(p, input)  ||
+		 (sel->states->next) ||
+		 (win->plugin_dedicated))
 	       s->cur_plugins = eina_list_append(s->cur_plugins, p);
 	  }
 
@@ -2278,7 +2306,7 @@ Evas_Object *
 evry_icon_mime_get(const char *mime, Evas *e)
 {
    char *file;
-   const char *icon = "";
+   const char *icon;
    
    if (!(icon = eina_hash_find(mime_hash, mime)))
      {
@@ -2287,11 +2315,11 @@ evry_icon_mime_get(const char *mime, Evas *e)
 	  {
 	     icon = eina_stringshare_add(file);
 	     free (file);
+	     eina_hash_add(mime_hash, mime, icon);
 	  }
-	eina_hash_add(mime_hash, mime, icon);
      }
 
-   if (icon && icon[0])
+   if (icon)
      return e_util_icon_add(icon, e);
    else
      return evry_icon_theme_get("none", e);

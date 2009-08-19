@@ -33,7 +33,6 @@ struct _Config
   Eina_List *views;
 
   Eina_Hash *history;
-  E_Action *action_show;
 };
 
 EAPI extern E_Module_Api e_modapi;
@@ -45,7 +44,7 @@ EAPI E_Config_Dialog *evry_config_dialog(E_Container *con, const char *params);
 
 int  evry_init(void);
 int  evry_shutdown(void);
-int  evry_show(E_Zone *zone);
+int  evry_show(E_Zone *zone, const char *params);
 void evry_hide(void);
 
 extern Config *evry_conf;

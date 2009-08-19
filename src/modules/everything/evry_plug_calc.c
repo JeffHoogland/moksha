@@ -121,10 +121,14 @@ _fetch(Evry_Plugin *p, const char *input)
 {
    char buf[1024];
 
-   if (!strncmp(input, "=scale=", 7))
-     snprintf(buf, 1024, "%s\n", input + (strlen(p->trigger)));
+   if (!input) return 0;
+
+   if (!data_handler && !_begin(p, NULL)) return 0;
+   
+   if (!strncmp(input, "scale=", 6))
+     snprintf(buf, 1024, "%s\n", input);
    else
-     snprintf(buf, 1024, "scale=3;%s\n", input + (strlen(p->trigger)));
+     snprintf(buf, 1024, "scale=3;%s\n", input);
 
    ecore_exe_send(exe, buf, strlen(buf));
 
@@ -192,7 +196,7 @@ static Eina_Bool
 _init(void)
 {
    p1 = evry_plugin_new("Calculator", type_subject, NULL, "TEXT", 1, "accessories-calculator", "=",
-			_begin, _cleanup, _fetch, _action, NULL, NULL, NULL, NULL);
+			NULL, _cleanup, _fetch, _action, NULL, NULL, NULL, NULL);
    
    evry_plugin_register(p1, 0);
 

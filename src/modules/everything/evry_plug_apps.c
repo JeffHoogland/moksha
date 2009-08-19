@@ -672,9 +672,8 @@ _init(void)
    act3 = evry_action_new("New Application Entry", "APPLICATION", NULL, "everything-launch",
 			  _new_app_action, _new_app_check_item, NULL);
 
-   act4 = evry_action_new("Open File...", "BORDER", NULL, "everything-launch",
+   act4 = evry_action_new("Open File...", "BORDER", "FILE", "everything-launch",
 			  _exec_border_action, _exec_border_check_item, NULL);
-
 
    evry_action_register(act);
    evry_action_register(act1);

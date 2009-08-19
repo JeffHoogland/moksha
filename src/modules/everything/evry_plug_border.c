@@ -2,8 +2,41 @@
 #include "e_mod_main.h"
 
 static Evry_Plugin *p;
+static Eina_List *handlers = NULL;
 
-/* XXX handle border remove events */
+
+static int
+_cb_border_remove(void *data, int type,  void *event)
+{
+   E_Event_Border_Remove *ev;
+   Eina_List *l;
+   Evry_Item *it;
+
+   ev = event;
+   
+   EINA_LIST_FOREACH(p->items, l, it)
+     {
+	if (it->data[0] == ev->border)
+	  {
+	     p->items = eina_list_remove(p->items, it);
+	     evry_item_free(it);
+	     evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
+	     break;
+	  }
+     }
+
+   return 1;
+}
+
+static int
+_begin(Evry_Plugin *p, const Evry_Item *it)
+{
+   handlers = eina_list_append
+     (handlers, ecore_event_handler_add
+      (E_EVENT_BORDER_REMOVE, _cb_border_remove, NULL));
+
+   return 1;
+}
 
 static void
 _cleanup(Evry_Plugin *p)
@@ -12,6 +45,12 @@ _cleanup(Evry_Plugin *p)
 
    EINA_LIST_FREE(p->items, it)
      evry_item_free(it);
+
+   while (handlers)
+     {
+	ecore_event_handler_del(handlers->data);
+	handlers = eina_list_remove_list(handlers, handlers);
+     }
 }
 
 static void
@@ -181,7 +220,7 @@ static Eina_Bool
 _init(void)
 {
    p = evry_plugin_new("Windows", type_subject, NULL, "BORDER", 0, NULL, NULL,
-		       NULL, _cleanup, _fetch, NULL, NULL, _item_icon_get, NULL, NULL);
+		       _begin, _cleanup, _fetch, NULL, NULL, _item_icon_get, NULL, NULL);
 
    evry_plugin_register(p, 2);
 
