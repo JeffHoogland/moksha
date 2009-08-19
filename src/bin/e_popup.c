@@ -285,7 +285,8 @@ e_popup_idler_before(void)
 	       }
 	     pop->need_shape_export = 0;
 	  }
-	if ((pop->visible) && (!pop->idle_enterer))
+	if ((pop->visible) && (!pop->idle_enterer) &&
+	    (!pop->shaped && e_config->use_composite))
 	  e_container_shape_show(pop->shape);
      }
 }
@@ -318,7 +319,10 @@ _e_popup_idle_enterer(void *data)
    ecore_evas_move(pop->ecore_evas,
 		   pop->zone->x + pop->x, 
 		   pop->zone->y + pop->y);
-   e_container_shape_show(pop->shape);
+
+   if (!(pop->shaped && e_config->use_composite))
+     e_container_shape_show(pop->shape);
+   
    pop->idle_enterer = NULL;
    return 0;
 }
