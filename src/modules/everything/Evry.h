@@ -180,32 +180,32 @@ struct _Evry_App
   Efreet_Desktop *desktop;
 };
 
-void evry_plugin_register(Evry_Plugin *p, int priority);
-void evry_plugin_unregister(Evry_Plugin *p);
-void evry_action_register(Evry_Action *act);
-void evry_action_unregister(Evry_Action *act);
-void evry_view_register(Evry_View *view, int priority);
-void evry_view_unregister(Evry_View *view);
+EAPI void evry_plugin_register(Evry_Plugin *p, int priority);
+EAPI void evry_plugin_unregister(Evry_Plugin *p);
+EAPI void evry_action_register(Evry_Action *act);
+EAPI void evry_action_unregister(Evry_Action *act);
+EAPI void evry_view_register(Evry_View *view, int priority);
+EAPI void evry_view_unregister(Evry_View *view);
 
-void evry_item_select(const Evry_State *s, Evry_Item *it);
-void evry_plugin_select(const Evry_State *s, Evry_Plugin *p);
-int  evry_list_win_show(void);
-void evry_list_win_hide(void);
+EAPI void evry_item_select(const Evry_State *s, Evry_Item *it);
+EAPI void evry_plugin_select(const Evry_State *s, Evry_Plugin *p);
+EAPI int  evry_list_win_show(void);
+EAPI void evry_list_win_hide(void);
 
 
-Evry_Item *evry_item_new(Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item));
-void evry_item_free(Evry_Item *it);
-void evry_item_ref(Evry_Item *it);
+EAPI Evry_Item *evry_item_new(Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item));
+EAPI void evry_item_free(Evry_Item *it);
+EAPI void evry_item_ref(Evry_Item *it);
 
-void evry_plugin_async_update(Evry_Plugin *plugin, int state);
-void evry_clear_input(void);
+EAPI void evry_plugin_async_update(Evry_Plugin *plugin, int state);
+EAPI void evry_clear_input(void);
 
-Evas_Object *evry_icon_mime_get(const char *mime, Evas *e);
-Evas_Object *evry_icon_theme_get(const char *icon, Evas *e);
+EAPI Evas_Object *evry_icon_mime_get(const char *mime, Evas *e);
+EAPI Evas_Object *evry_icon_theme_get(const char *icon, Evas *e);
 
-int  evry_fuzzy_match(const char *str, const char *match);
+EAPI int  evry_fuzzy_match(const char *str, const char *match);
 
-Evry_Plugin *evry_plugin_new(const char *name, int type,
+EAPI Evry_Plugin *evry_plugin_new(const char *name, int type,
 			     const char *type_in, const char *type_out,
 			     int async_fetch, const char *icon, const char *trigger,
 			     int  (*begin)   (Evry_Plugin *p, const Evry_Item *item),
@@ -217,12 +217,12 @@ Evry_Plugin *evry_plugin_new(const char *name, int type,
 			     Evas_Object *(*config_page) (Evry_Plugin *p),
 			     void (*config_apply) (Evry_Plugin *p));
 
-void evry_plugin_free(Evry_Plugin *p);
+EAPI void evry_plugin_free(Evry_Plugin *p);
 
 
-Evry_Action *evry_action_new(const char *name, const char *type_in1, const char *type_in2, const char *icon,
+EAPI Evry_Action *evry_action_new(const char *name, const char *type_in1, const char *type_in2, const char *icon,
 			     int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input),
 			     int (*check_item) (Evry_Action *act, const Evry_Item *it),
 			     Evas_Object *(*icon_get) (Evry_Action *act, Evas *e));
 
-void evry_action_free(Evry_Action *act);
+EAPI void evry_action_free(Evry_Action *act);
