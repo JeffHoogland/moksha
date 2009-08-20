@@ -20,10 +20,10 @@ e_widget_toolbook_add(Evas *evas, int icon_w, int icon_h)
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
    Evas_Coord mw, mh;
-   
+
    obj = e_widget_add(evas);
    e_widget_del_hook_set(obj, _e_wid_del_hook);
-   wd = calloc(1, sizeof(E_Widget_Data));
+   wd = E_NEW(E_Widget_Data, 1);
    e_widget_data_set(obj, wd);
    wd->o_widget = obj;
 
@@ -32,7 +32,7 @@ e_widget_toolbook_add(Evas *evas, int icon_w, int icon_h)
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    wd->o_tb = o;
-   
+
    o = e_widget_toolbar_add(evas, icon_w, icon_h);
    e_widget_table_object_append(wd->o_tb, o, 0, 0, 1, 1, 1, 1, 1, 0);
    wd->o_bar = o;
@@ -64,7 +64,7 @@ EAPI void
 e_widget_toolbook_page_show(Evas_Object *toolbook, int n)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(toolbook);
    e_widget_toolbar_item_select(wd->o_bar, n);
 }
@@ -74,10 +74,10 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    eina_list_free(wd->content);
-   free(wd);
+   E_FREE(wd);
 }
 
 static void
@@ -86,15 +86,15 @@ _item_sel(void *data1, void *data2)
    E_Widget_Data *wd;
    Evas_Object *obj, *sobj;
    Eina_List *l;
-   
+
    obj = data1;
    sobj = data2;
    wd = e_widget_data_get(obj);
-   
+
    for (l = wd->content; l; l = l->next)
      {
         Evas_Object *o;
-        
+
         o = l->data;
         if (o == sobj) evas_object_show(o);
         else evas_object_hide(o);
