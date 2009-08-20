@@ -239,7 +239,7 @@ SUBDIRS += connman
 endif
 
 if USE_MODULE_ILLUME
-SUBDIRS += illume
+SUBDIRS += illume illume2
 endif
 
 if USE_MODULE_SYSCON

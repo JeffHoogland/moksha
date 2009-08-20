@@ -555,6 +555,8 @@ src/modules/illume/Makefile
 src/modules/illume/module.desktop
 src/modules/illume/keyboards/Makefile
 src/modules/illume/dicts/Makefile
+src/modules/illume2/Makefile
+src/modules/illume2/module.desktop
 src/modules/syscon/Makefile
 src/modules/syscon/module.desktop
 src/modules/everything/Makefile

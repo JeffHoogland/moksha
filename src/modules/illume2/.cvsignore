@@ -1,0 +1,7 @@
+module.la
+*.lo
+Makefile.in
+Makefile
+.libs
+.deps
+module.desktop
