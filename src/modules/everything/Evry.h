@@ -105,7 +105,6 @@ struct _Evry_Plugin
   void *private;
 
   /* not to be set by plugin! */
-  Evas_Object *tab;
   Plugin_Config *config;
 };
 
@@ -125,8 +124,6 @@ struct _Evry_State
   /* selected item */
   Evry_Item   *sel_item;
 
-  /* Eina_List *sel_items; */
-
   /* this is for the case when the current plugin was not selected
      manually and a higher priority (async) plugin retrieves
      candidates, the higher priority plugin is made current */
@@ -134,17 +131,17 @@ struct _Evry_State
   Eina_Bool item_auto_selected;
 
   Evry_View *view;
-  Evas_Object *o_view;
 };
 
 struct _Evry_View
 {
   Evry_View *id;
   const char *name;
+  Evas_Object *o_list;
+  Evas_Object *o_bar;
 
   Evry_View *(*create) (const Evry_View *view, const Evry_State *s, const Evas_Object *swallow);
   void (*destroy) (const Evry_View *view);
-  Evas_Object *(*object) (const Evry_View *view);
   int  (*cb_key_down) (const Evry_View *view, const Ecore_Event_Key *ev);
   int  (*update) (const Evry_View *view);
   void (*clear) (const Evry_View *view);
@@ -191,6 +188,7 @@ void evry_view_register(Evry_View *view, int priority);
 void evry_view_unregister(Evry_View *view);
 
 void evry_item_select(const Evry_State *s, Evry_Item *it);
+void evry_plugin_select(const Evry_State *s, Evry_Plugin *p);
 int  evry_list_win_show(void);
 void evry_list_win_hide(void);
 
