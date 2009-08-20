@@ -412,6 +412,14 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 		    _evry_plugin_select(s, agg);
 	       }
 	  }
+	else
+	  {
+	     if (s->cur_plugins->data == agg)
+	       {
+		  agg->cleanup(agg);
+		  s->cur_plugins = eina_list_remove(s->cur_plugins, agg);
+	       }
+	  }
 
 	/* plugin is visible */
 	if ((s->plugin == p) || (s->plugin == agg))
@@ -424,17 +432,19 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 int
 evry_fuzzy_match(const char *str, const char *match)
 {
-   const char *p, *m, *next;
+   const char *p, *m, *next, *m_end;
    int sum = 0;
 
    unsigned int last = 0;
    unsigned int offset = 0;
    unsigned int min = 0;
    unsigned char first = 0;
+   /* ignore punctuation */
+   unsigned char ip = 1;
 
    unsigned int cnt = 0;
    /* words in match */
-   unsigned int m_num = 1;
+   unsigned int m_num = 0;
    unsigned int m_cnt = 0;
    unsigned int m_min[MAX_WORDS];
 
@@ -445,10 +455,14 @@ evry_fuzzy_match(const char *str, const char *match)
    for (; (*str != 0)   && isspace(*str);   str++);
 
    /* count words in match */
-   m_min[0] = MAX_FUZZ;
-   for (m = match; (*m != 0) && (*(m+1) != 0) && (m_num < MAX_WORDS); m++)
-     if (isspace(*m) && !isspace(*(m+1)))
-       m_min[m_num++] = MAX_FUZZ;
+   for (m = match; (*m != 0) && (m_num < MAX_WORDS);)
+     {
+	for (; (*m != 0) && !isspace(*m); m++);
+	for (; (*m != 0) &&  isspace(*m); m++);
+	m_min[m_num++] = MAX_FUZZ;
+     }
+   for (m = match; (*m != 0) && (m_num < MAX_WORDS); m++)
+     if (ip && ispunct(*m)) ip = 0;
 
    next = str;
    m = match;
@@ -470,7 +484,7 @@ evry_fuzzy_match(const char *str, const char *match)
 	for (p = next; *next != 0; p++)
 	  {
 	     /* new word of string begins */
-	     if ((*p == 0) || isspace(*p))
+	     if ((*p == 0) || isspace(*p) || (ip && ispunct(*p)))
 	       {
 		  if (m_cnt < m_num - 1)
 		    {
@@ -483,7 +497,7 @@ evry_fuzzy_match(const char *str, const char *match)
 		  else
 		    {
 		       /* go to next word */
-		       for (; (*p != 0) && isspace(*p); p++);
+		       for (; (*p != 0) && (isspace(*p) || (ip && ispunct(*p))); p++);
 		       cnt++;
 		       next = p;
 		       m_cnt = 0;
@@ -541,8 +555,8 @@ evry_fuzzy_match(const char *str, const char *match)
 	     else if(*p != 0)
 	       {
 		  /* go to next word */
-		  for (; (*p != 0) && !isspace(*p); p++);
-		  for (; (*p != 0) &&  isspace(*p); p++);
+		  for (; (*p != 0) && (!isspace(*p) || (ip && !ispunct(*p))); p++);
+		  for (; (*p != 0) &&  (isspace(*p) || (ip && ispunct(*p))); p++);
 		  cnt++;
 		  next = p;
 		  m_cnt = 0;
@@ -1296,8 +1310,12 @@ _evry_backspace(Evry_State *s)
 	pos = evas_string_char_prev_get(s->input, len, &val);
 	if ((pos < len) && (pos >= 0))
 	  {
+	     val = *(s->input + pos);
+
 	     s->input[pos] = 0;
-	     _evry_update(s, 1);
+
+	     if ((pos == 0) || !isspace(val))
+	       _evry_update(s, 1);
 	  }
      }
 }

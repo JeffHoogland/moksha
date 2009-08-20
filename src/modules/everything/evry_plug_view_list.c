@@ -43,10 +43,7 @@ static Evry_View *view = NULL;
 static void
 _list_clear(List_View *v)
 {
-   printf("clear list\n");
-
    Evry_Item *it;
-
 
    if (v->item_idler)
      {
@@ -221,15 +218,11 @@ _list_update(List_View *v)
 	evas_object_show(o);
 
 	if (divider)
-	  {
-	     edje_object_signal_emit(it->o_bg, "e,state,odd", "e");
-	     divider = 0;
-	  }
+	  edje_object_signal_emit(it->o_bg, "e,state,odd", "e");
 	else
-	  {
-	     edje_object_signal_emit(it->o_bg, "e,state,even", "e");
-	     divider = 1;
-	  }
+	  edje_object_signal_emit(it->o_bg, "e,state,even", "e");
+
+	divider = divider ? 0 : 1;
 
 	if (it->o_icon && edje_object_part_exists(o, "e.swallow.icons"))
 	  {
