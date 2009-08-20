@@ -56,7 +56,6 @@ e_widget_toolbook_page_append(Evas_Object *toolbook, Evas_Object *icon, const ch
    evas_object_hide(content);
    wd->content = eina_list_append(wd->content, content);
    e_widget_min_size_get(wd->o_tb, &minw, &minh);
-   printf("Toolbook: %d %d\n", minw, minh);
    e_widget_min_size_set(toolbook, minw, minh);
 }
 
