@@ -634,7 +634,7 @@ _evry_list_win_new(E_Zone *zone)
 
    o = e_box_add(popup->evas);
    e_box_orientation_set(o, 1);
-   /* e_box_homogenous_set(o, 1); */
+   e_box_homogenous_set(o, 1);
    edje_object_part_swallow(list_win->o_main, "e.swallow.bar", o);
    evas_object_show(o);
    list_win->o_tabs = o;
@@ -1399,6 +1399,9 @@ _evry_update(Evry_State *s, int fetch)
      {
 	if (update_timer) ecore_timer_del(update_timer);
 	update_timer = ecore_timer_add(MATCH_LAG, _evry_update_timer, s);
+
+	if (s->plugin && !s->plugin->trigger)
+	  edje_object_signal_emit(list->o_main, "e,signal,update", "e");
      }
 }
 
@@ -1630,45 +1633,6 @@ _evry_matches_update(Evry_Selector *sel)
 }
 
 static void
-_evry_tab_scroll_to(Evry_State *s, Evry_Plugin *p)
-{
-   int n, w, mw, i;
-   double align;
-
-   Eina_List *l;
-
-   for(i = 0, l = s->cur_plugins; l; l = l->next, i++)
-     if (l->data == p) break;
-
-   n = eina_list_count(s->cur_plugins);
-
-   e_box_min_size_get(list->o_tabs, &mw, NULL);
-   evas_object_geometry_get(list->o_tabs, NULL, NULL, &w, NULL);
-
-   if (mw <= w)
-     {
-	e_box_align_set(list->o_tabs, 0.0, 0.5);
-	return;
-     }
-
-   if (n > 1)
-     {
-	align = (double)i / (double)(n - 1);
-	/* if (evry_conf->scroll_animate)
-	 *   {
-	 *      if (!scroll_timer)
-	 *        scroll_timer = ecore_timer_add(0.01, _evry_list_scroll_timer, NULL);
-	 *      if (!scroll_animator)
-	 *        scroll_animator = ecore_animator_add(_evry_list_animator, NULL);
-	 *   }
-	 * else */
-	e_box_align_set(list->o_tabs, 1.0 - align, 0.5);
-     }
-   else
-     e_box_align_set(list->o_tabs, 1.0, 0.5);
-}
-
-static void
 _evry_item_desel(Evry_State *s, Evry_Item *it)
 {
    if (s->sel_item)
@@ -1815,12 +1779,13 @@ _evry_tabs_update(Evry_State *s)
      {
 	if (p->tab && !eina_list_data_find(s->cur_plugins, p))
 	  {
+	     edje_object_signal_emit(list->o_main, "e,signal,update", "e");
 	     e_box_unpack(p->tab);
 	     evas_object_del(p->tab);
 	     p->tab = NULL;
 	  }
      }
-
+   e_box_freeze(list->o_tabs);
    /* show/update tabs of active plugins */
    EINA_LIST_FOREACH(s->cur_plugins, l, p)
      {
@@ -1830,7 +1795,7 @@ _evry_tabs_update(Evry_State *s)
 	else
 	  edje_object_signal_emit(p->tab, "e,state,unselected", "e");
      }
-
+   e_box_thaw(list->o_tabs);
    if (s->plugin)
      _evry_tab_scroll_to(s, s->plugin);
 }
@@ -1839,7 +1804,9 @@ static void
 _evry_tab_show(Evry_State *s, Evry_Plugin *p)
 {
    Evas_Object *o;
-   Evas_Coord mw = 0, mh = 0;
+   Evas_Coord mw, cw, w;
+   mw = cw = w = 0;
+
    char buf[64];
    Eina_List *l;
 
@@ -1852,17 +1819,17 @@ _evry_tab_show(Evry_State *s, Evry_Plugin *p)
      }
    else
      {
+	edje_object_signal_emit(list->o_main, "e,signal,update", "e");
 	o = edje_object_add(list->popup->evas);
 
 	e_theme_edje_object_set(o, "base/theme/everything",
 				"e/widgets/everything/tab_item");
      }
 
-   snprintf(buf, 64, "%s (%d)", p->name, eina_list_count(p->items));
+   /* snprintf(buf, 64, "%s %d", p->name, eina_list_count(p->items)); */
+   snprintf(buf, 64, "%s", p->name);
 
    edje_object_part_text_set(o, "e.text.label", buf);
-
-   edje_object_size_min_calc(o, &mw, &mh);
 
    l = eina_list_data_find_list(s->cur_plugins, p);
    if (l && l->prev)
@@ -1874,10 +1841,57 @@ _evry_tab_show(Evry_State *s, Evry_Plugin *p)
      e_box_pack_end(list->o_tabs, o);
 
    evas_object_show(o);
-   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mw, mh, 9999, 9999);
+
+   evas_object_geometry_get(list->o_tabs, NULL, NULL, &w, NULL);
+   edje_object_size_min_calc(o, &mw, NULL);
+   edje_object_size_min_get(o, &mw, NULL);
+
+   /* hack because the theme doesnt give the real size...*/
+   mw += 15;
+
+   e_box_pack_options_set(o, 1, 1, 1, 0, 0.0, 0.5, (mw < cw ? cw : mw), 10, w/3, 100);
    e_box_thaw(list->o_tabs);
 
    p->tab = o;
+}
+
+static void
+_evry_tab_scroll_to(Evry_State *s, Evry_Plugin *p)
+{
+   int n, w, mw, i;
+   double align;
+
+   Eina_List *l;
+
+   for(i = 0, l = s->cur_plugins; l; l = l->next, i++)
+     if (l->data == p) break;
+
+   n = eina_list_count(s->cur_plugins);
+
+   e_box_min_size_get(list->o_tabs, &mw, NULL);
+   evas_object_geometry_get(list->o_tabs, NULL, NULL, &w, NULL);
+
+   if (mw <= w + 5)
+     {
+	e_box_align_set(list->o_tabs, 0.0, 0.5);
+	return;
+     }
+
+   if (n > 1)
+     {
+	align = (double)i / (double)(n - 1);
+	/* if (evry_conf->scroll_animate)
+	 *   {
+	 *      if (!scroll_timer)
+	 *        scroll_timer = ecore_timer_add(0.01, _evry_list_scroll_timer, NULL);
+	 *      if (!scroll_animator)
+	 *        scroll_animator = ecore_animator_add(_evry_list_animator, NULL);
+	 *   }
+	 * else */
+	e_box_align_set(list->o_tabs, 1.0 - align, 0.5);
+     }
+   else
+     e_box_align_set(list->o_tabs, 1.0, 0.5);
 }
 
 static int

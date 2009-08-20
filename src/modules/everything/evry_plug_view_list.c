@@ -154,9 +154,10 @@ _list_update(const Evry_View *view)
    List_View *v = (List_View *) view;
    Evry_Item *it;
    Eina_List *l;
-   int mw, mh;
+   int mw = -1, mh;
    Evas_Object *o;
-
+   int divider = 1;
+   
    _list_clear(view);
 
    if (!v->state->plugin)
@@ -164,7 +165,7 @@ _list_update(const Evry_View *view)
 
    evas_event_freeze(v->evas);
    e_box_freeze(v->o_list);
-
+   
    EINA_LIST_FOREACH(v->state->plugin->items, l, it)
      {
 	o = it->o_bg;
@@ -179,11 +180,23 @@ _list_update(const Evry_View *view)
 	     edje_object_part_text_set(o, "e.text.title", it->label);
 	  }
 
-	edje_object_size_min_calc(o, &mw, &mh);
+	if (mw < 0) edje_object_size_min_get(o, &mw, &mh);
+
 	e_box_pack_end(v->o_list, o);
 	e_box_pack_options_set(o, 1, 1, 1, 0, 0.5, 0.5, mw, mh, 9999, mh);
 	evas_object_show(o);
 
+	if (divider)
+	  {
+	     edje_object_signal_emit(it->o_bg, "e,state,odd", "e");
+	     divider = 0;
+	  }
+	else
+	  {
+	     edje_object_signal_emit(it->o_bg, "e,state,even", "e");
+	     divider = 1;
+	  }
+	
 	if (it->o_icon && edje_object_part_exists(o, "e.swallow.icons"))
 	  {
 	     edje_object_part_swallow(o, "e.swallow.icons", it->o_icon);
@@ -249,8 +262,6 @@ _list_item_next(List_View *v)
    Eina_List *l;
    Evry_Item *it;
 
-   if (!v->items) return;
-
    EINA_LIST_FOREACH (v->items, l, it)
      {
 	if (it != v->state->sel_item) continue;
@@ -270,10 +281,6 @@ _list_item_prev(List_View *v)
 {
    Eina_List *l;
    Evry_Item *it;
-
-   if (!v->items) return;
-
-   if (!v->state->sel_item) return;
 
    EINA_LIST_FOREACH (v->items, l, it)
      {
