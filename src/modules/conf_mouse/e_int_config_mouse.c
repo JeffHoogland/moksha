@@ -5,6 +5,7 @@ static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int  _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object  *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 					   E_Config_Dialog_Data *cfdata);
+static int  _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 struct _E_Config_Dialog_Data
 {
@@ -26,12 +27,12 @@ e_int_config_mouse(E_Container *con, const char *params __UNUSED__)
      return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
-
+   if (!v) return NULL;
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
-   v->override_auto_apply = 1;
+   v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con, _("Mouse Settings"), "E",
 			     "_config_mouse_dialog",
@@ -60,11 +61,18 @@ _create_data(E_Config_Dialog *cfd)
    return cfdata;
 }
 
+static int
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   return !((cfdata->mouse_hand == e_config->mouse_hand) &&
+	    (cfdata->numerator == e_config->mouse_accel_numerator) &&
+	    (cfdata->denominator == e_config->mouse_accel_denominator) &&
+	    (cfdata->threshold == e_config->mouse_accel_threshold));
+}
+
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   if (!cfdata) return;
-
    E_FREE(cfdata);
 }
 
@@ -73,10 +81,8 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->mouse_hand = cfdata->mouse_hand;
-
    e_config->mouse_accel_numerator = cfdata->numerator;
-   /* Force denominator to 1 for simplicity. */
-   e_config->mouse_accel_denominator = 1;
+   e_config->mouse_accel_denominator = cfdata->denominator;
    e_config->mouse_accel_threshold = cfdata->threshold;
 
    /* Apply the above settings */
