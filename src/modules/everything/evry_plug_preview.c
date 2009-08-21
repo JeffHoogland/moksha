@@ -91,7 +91,7 @@ _show_item(Image_View *v, const Evry_Item *it, int dir)
 }
 
 static int
-_cb_key_down(const Evry_View *view, const Ecore_Event_Key *ev)
+_cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 {
    Image_View *v = (Image_View *) view;
 
@@ -141,7 +141,7 @@ _cb_key_down(const Evry_View *view, const Ecore_Event_Key *ev)
 }
 
 static void
-_view_clear(const Evry_View *view)
+_view_clear(Evry_View *view)
 {
    Image_View *v = (Image_View *) view;
 
@@ -169,7 +169,7 @@ _get_list(const Evry_State *s)
 }
 
 static int
-_view_update(const Evry_View *view)
+_view_update(Evry_View *view)
 {
    Image_View *v = (Image_View *) view;
    Evry_Item *it;
@@ -190,7 +190,7 @@ _view_update(const Evry_View *view)
 }
 
 static Evry_View *
-_view_create(const Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
+_view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 {
    Image_View *v;
    int w, h, x, y;
@@ -216,7 +216,7 @@ _view_create(const Evry_View *view, const Evry_State *s, const Evas_Object *swal
 }
 
 static void
-_view_destroy(const Evry_View *view)
+_view_destroy(Evry_View *view)
 {
    Image_View *v = (Image_View *) view;
 

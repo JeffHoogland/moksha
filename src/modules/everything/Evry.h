@@ -137,14 +137,16 @@ struct _Evry_View
 {
   Evry_View *id;
   const char *name;
+  const char *trigger;
+  int active;
   Evas_Object *o_list;
   Evas_Object *o_bar;
 
-  Evry_View *(*create) (const Evry_View *view, const Evry_State *s, const Evas_Object *swallow);
-  void (*destroy) (const Evry_View *view);
-  int  (*cb_key_down) (const Evry_View *view, const Ecore_Event_Key *ev);
-  int  (*update) (const Evry_View *view);
-  void (*clear) (const Evry_View *view);
+  Evry_View *(*create) (Evry_View *view, const Evry_State *s, const Evas_Object *swallow);
+  void (*destroy) (Evry_View *view);
+  int  (*cb_key_down) (Evry_View *view, const Ecore_Event_Key *ev);
+  int  (*update) (Evry_View *view);
+  void (*clear) (Evry_View *view);
 
   int priority;
 };

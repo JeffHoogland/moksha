@@ -95,7 +95,7 @@ static void _evry_view_clear(Evry_State *s);
 static void _evry_list_win_update(Evry_State *s);
 static void _evry_view_update(Evry_State *s, Evry_Plugin *plugin);
 static int  _evry_view_key_press(Evry_State *s, Ecore_Event_Key *ev);
-static int  _evry_view_toggle(Evry_State *s);
+static int  _evry_view_toggle(Evry_State *s, const char *trigger);
 static void _evry_view_show(Evry_View *v);
 static void _evry_view_hide(Evry_View *v);
 
@@ -455,7 +455,7 @@ evry_fuzzy_match(const char *str, const char *match)
 	for (; (*m != 0) &&  isspace(*m); m++);
 	m_min[m_num++] = MAX_FUZZ;
      }
-   for (m = match; (*m != 0) && (m_num < MAX_WORDS); m++)
+   for (m = match; ip && (*m != 0); m++)
      if (ip && ispunct(*m)) ip = 0;
 
    next = str;
@@ -491,7 +491,7 @@ evry_fuzzy_match(const char *str, const char *match)
 		  else
 		    {
 		       /* go to next word */
-		       for (; (*p != 0) && (isspace(*p) || (ip && ispunct(*p))); p++);
+		       for (; (*p != 0) && ((isspace(*p) || (ip && ispunct(*p)))); p++);
 		       cnt++;
 		       next = p;
 		       m_cnt = 0;
@@ -549,8 +549,8 @@ evry_fuzzy_match(const char *str, const char *match)
 	     else if(*p != 0)
 	       {
 		  /* go to next word */
-		  for (; (*p != 0) && (!isspace(*p) || (ip && !ispunct(*p))); p++);
-		  for (; (*p != 0) &&  (isspace(*p) || (ip && ispunct(*p))); p++);
+		  for (; (*p != 0) && !((isspace(*p) || (ip && ispunct(*p)))); p++);
+		  for (; (*p != 0) &&  ((isspace(*p) || (ip && ispunct(*p)))); p++);
 		  cnt++;
 		  next = p;
 		  m_cnt = 0;
@@ -1182,7 +1182,7 @@ _evry_selectors_switch(void)
      }
 }
 
- static int
+static int
 _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev;
@@ -1235,7 +1235,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       _evry_browse_back(selector);
 	  }
 	else if (!strcmp(key, "1"))
-	  _evry_view_toggle(s);
+	  _evry_view_toggle(s, NULL);
 	else if (!strcmp(key, "Return"))
 	  _evry_plugin_action(selector, 0);
 	else if (!strcmp(key, "v"))
@@ -1272,10 +1272,17 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      goto end;
    else if ((ev->compose && !(ev->modifiers & ECORE_EVENT_MODIFIER_ALT)))
      {
-	if (strlen(s->input) < (INPUTLEN - strlen(ev->compose)))
+	int len = strlen(s->input);
+	if (len < (INPUTLEN - strlen(ev->compose)))
 	  {
 	     strcat(s->input, ev->compose);
-	     if (isspace(*ev->compose))
+	     /* if ((len == 0) && isspace(s->input[0]))
+	      *   _evry_show_triggers(); */
+	     if ((len == 1) &&
+		 (isspace(s->input[0])) &&
+		 (_evry_view_toggle(s, s->input + 1)))
+	       _evry_update(s, 0);
+	     else if (isspace(*ev->compose))
 	       _evry_update(s, 0);
 	     else
 	       _evry_update(s, 1);
@@ -1494,35 +1501,57 @@ _evry_view_clear(Evry_State *s)
 static int
 _evry_view_key_press(Evry_State *s, Ecore_Event_Key *ev)
 {
-   if (!s || !s->view) return 0;
+   if (!s || !s->view || !s->view->cb_key_down) return 0;
 
    return s->view->cb_key_down(s->view, ev);
 }
 
 
 static int
-_evry_view_toggle(Evry_State *s)
+_evry_view_toggle(Evry_State *s, const char *trigger)
 {
-   Evry_View *view, *v;
+   Evry_View *view, *v = NULL;
    Eina_List *l, *ll;
 
-   _evry_list_win_show();
-
-   l = eina_list_data_find_list(evry_conf->views, s->view->id);
-
-   if (l && l->next)
-     l = l->next;
-   else
-     l = evry_conf->views;
-
-   EINA_LIST_FOREACH(l, ll, view)
+   if (trigger)
      {
-	if ((view != s->view->id) &&
-	    (v = view->create(view, s, list->o_main)))
-	  break;
+	EINA_LIST_FOREACH(evry_conf->views, ll, view)
+	  {
+	     if (view->trigger && !strncmp(trigger, view->trigger, 1) &&
+		 (v = view->create(view, s, list->o_main)))
+	       break;
+	  }
+     }
+   else
+     {
+	l = eina_list_data_find_list(evry_conf->views, s->view->id);
+
+	if (l && l->next)
+	  l = l->next;
+	else
+	  l = evry_conf->views;
+
+	EINA_LIST_FOREACH(l, ll, view)
+	  {
+	     if ((!view->trigger) &&
+		 ((view == s->view->id) ||
+		  (v = view->create(view, s, list->o_main))))
+	       goto found;
+	  }
+
+	EINA_LIST_FOREACH(evry_conf->views, ll, view)
+	  {
+	     if ((!view->trigger) &&
+		 ((view == s->view->id) ||
+		  (v = view->create(view, s, list->o_main))))
+	       goto found;
+	  }
      }
 
+ found:
    if (!v) return 0;
+
+   _evry_list_win_show();
 
    if (s->view)
      {
@@ -1531,8 +1560,8 @@ _evry_view_toggle(Evry_State *s)
      }
 
    s->view = v;
-   v->update(v);
    _evry_view_show(v);
+   v->update(v);
 
    return 1;
 }

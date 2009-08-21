@@ -538,7 +538,7 @@ _list_plugin_prev(List_View *v)
 }
 
 static int
-_update(const Evry_View *view)
+_update(Evry_View *view)
 {
    List_View *v = (List_View *) view;
    _list_update(v);
@@ -547,7 +547,7 @@ _update(const Evry_View *view)
 }
 
 static void
-_clear(const Evry_View *view)
+_clear(Evry_View *view)
 {
    List_View *v = (List_View *) view;
    _list_clear(v);
@@ -556,7 +556,7 @@ _clear(const Evry_View *view)
 
 
 static int
-_cb_key_down(const Evry_View *view, const Ecore_Event_Key *ev)
+_cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 {
    List_View *v = (List_View *) view;
 
@@ -599,7 +599,7 @@ _cb_key_down(const Evry_View *view, const Ecore_Event_Key *ev)
 }
 
 static Evry_View *
-_create(const Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
+_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 {
    List_View *v;
    Evas_Object *o;
@@ -626,7 +626,7 @@ _create(const Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 }
 
 static void
-_destroy(const Evry_View *view)
+_destroy(Evry_View *view)
 {
    List_View *v = (List_View *) view;
    List_Tab *tab;
