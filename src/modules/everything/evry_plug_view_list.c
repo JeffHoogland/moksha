@@ -543,6 +543,7 @@ _update(const Evry_View *view)
    List_View *v = (List_View *) view;
    _list_update(v);
    _list_tabs_update(v);
+   return 1;
 }
 
 static void

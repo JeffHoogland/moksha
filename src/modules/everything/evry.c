@@ -432,7 +432,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 int
 evry_fuzzy_match(const char *str, const char *match)
 {
-   const char *p, *m, *next, *m_end;
+   const char *p, *m, *next;
    int sum = 0;
 
    unsigned int last = 0;
@@ -663,9 +663,6 @@ _evry_list_win_show(void)
 static void
 _evry_list_win_clear(int hide)
 {
-   Eina_List *l;
-   Evry_Plugin *p;
-
    if (!list->visible) return;
 
    if (selector->state)
@@ -769,8 +766,6 @@ _evry_selector_new(int type)
 static void
 _evry_selector_free(Evry_Selector *sel)
 {
-   Evry_Plugin *p;
-
    if (sel->o_icon)
      evas_object_del(sel->o_icon);
    evas_object_del(sel->o_main);
@@ -794,8 +789,6 @@ _evry_selector_activate(Evry_Selector *sel)
 
    if (selector)
      {
-	Evry_Plugin *p;
-	Eina_List *l;
 	s = selector->state;
 
 	edje_object_signal_emit(selector->o_main, "e,state,unselected", "e");
