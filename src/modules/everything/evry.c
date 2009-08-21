@@ -414,7 +414,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	  }
 	else
 	  {
-	     if (s->cur_plugins->data == agg)
+	     if (s->cur_plugins && s->cur_plugins->data == agg)
 	       {
 		  agg->cleanup(agg);
 		  s->cur_plugins = eina_list_remove(s->cur_plugins, agg);
