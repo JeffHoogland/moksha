@@ -128,7 +128,6 @@ static Ecore_Timer *update_timer = NULL;
 static Evry_Selector *selectors[3];
 static Evry_Selector *selector = NULL;
 static Evry_Plugin *action_selector = NULL;
-static Eina_Hash *mime_hash = NULL;
 
 /* externally accessible functions */
 int
@@ -178,8 +177,6 @@ evry_show(E_Zone *zone, const char *params)
 
    if (params)
      win->plugin_dedicated = EINA_TRUE;
-
-   mime_hash = eina_hash_stringshared_new(NULL);
 
    _evry_selector_subjects_get(params);
    _evry_selector_activate(selectors[0]);
@@ -251,9 +248,6 @@ evry_hide(void)
 
    _evry_window_free(win);
    win = NULL;
-
-   eina_hash_free(mime_hash);
-   mime_hash = NULL;
 
    EINA_LIST_FREE(handlers, ev)
      ecore_event_handler_del(ev);
@@ -2006,6 +2000,7 @@ _evry_icon_fdo_set(Evas_Object *obj, const char *icon)
    if ((!icon) || (!icon[0])) return 0;
    size = e_util_icon_size_normalize(72 * e_scale);
    path = efreet_icon_path_find(e_config->icon_theme, icon, size);
+
    if (!path) return 0;
    e_icon_file_set(obj, path);
    E_FREE(path);
@@ -2038,24 +2033,16 @@ evry_icon_theme_get(const char *icon, Evas *e)
 Evas_Object *
 evry_icon_mime_get(const char *mime, Evas *e)
 {
-   char *file;
-   const char *icon;
+   char *icon;
 
-   if (!(icon = eina_hash_find(mime_hash, mime)))
-     {
-	file = efreet_mime_type_icon_get(mime, e_config->icon_theme, 64);
-	if (file)
-	  {
-	     icon = eina_stringshare_add(file);
-	     free (file);
-	     eina_hash_add(mime_hash, mime, icon);
-	  }
-     }
+   icon = efreet_mime_type_icon_get(mime, e_config->icon_theme, 64);
 
    if (icon)
      return e_util_icon_add(icon, e);
    else
      return evry_icon_theme_get("none", e);
+
+   free(icon);
 
    return NULL;
 }
