@@ -27540,7 +27540,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       type: RECT;
 	       description { state: "default" 0.0;
 		   rel1.offset: 1 0;
-		   rel2.offset: -2  -1;		   
+		   rel2.offset: -3  -1;		   
 		   rel1.to: "bg";
 		   rel2.to: "bg";
 	       }
@@ -27550,8 +27550,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       description { state: "default" 0.0;
 		   visible: 0;
 		   color: 255 255 255 0;
-		   rel1.offset: 0 0;
-		   rel2.offset: -1  -1;
+		   rel1.offset: -1 0;
+		   rel2.offset: 1  -1;
 		   image {
 		       normal: "toolbar_sel.png";
 		       border: 2 2 0 0;
@@ -27560,7 +27560,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       description { state: "selected" 0.0;
 		   inherit: "default" 0.0;
 		   visible: 1;
-		   color: 235 235 235 250;
+		   color: 235 235 235 255;
 	       }
 	   }
 	   part { name: "clip";
