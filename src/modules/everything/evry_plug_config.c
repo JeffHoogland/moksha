@@ -130,10 +130,10 @@ _action(Evry_Action *act, const Evry_Item *it, const Evry_Item *it2 __UNUSED__, 
 static Eina_Bool
 _init(void)
 {
-   p = evry_plugin_new("Settings", type_subject, NULL, "E_SETTINGS", 0, NULL, NULL,
-		       NULL, _cleanup, _fetch, NULL, NULL, _item_icon_get, NULL, NULL);
+   p = evry_plugin_new(NULL, "Settings", type_subject, NULL, "E_SETTINGS", 0, NULL, NULL,
+		       NULL, _cleanup, _fetch, NULL, _item_icon_get, NULL, NULL);
 
-   act = evry_action_new("Show Dialog", "E_SETTINGS", NULL, "preferences-advanced",
+   act = evry_action_new("Show Dialog", "E_SETTINGS", NULL, NULL, "preferences-advanced",
 			 _action, NULL, NULL);
 
    evry_plugin_register(p, 10);
@@ -145,7 +145,9 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_free(p);
+   evry_plugin_free(p, 1);
+
+   
    evry_action_free(act);
 }
 

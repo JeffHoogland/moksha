@@ -42,8 +42,6 @@ static Eina_Bool list_cb(Eina_Module *m, void *data)
    return EINA_FALSE;
 }
 
-
-
 EAPI void *
 e_modapi_init(E_Module *m)
 {
@@ -168,10 +166,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 	e_action_del("everything");
      }
 
-   /* conf_module = NULL; */
-   if (evry_conf->plugins) eina_list_free(evry_conf->plugins);
-   if (evry_conf->actions) eina_list_free(evry_conf->actions);
-
    if (plugins)
      {
 	eina_module_list_unload(plugins);
@@ -187,6 +181,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("extensions/run_everything");
    e_configure_registry_category_del("extensions");
 
+   if (evry_conf->plugins)       eina_list_free(evry_conf->plugins);
+   if (evry_conf->actions)       eina_list_free(evry_conf->actions);
    if (evry_conf->conf_subjects) eina_list_free(evry_conf->conf_subjects);
    if (evry_conf->conf_actions)  eina_list_free(evry_conf->conf_actions);
    if (evry_conf->conf_objects)  eina_list_free(evry_conf->conf_objects);
@@ -272,19 +268,23 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
 }
 
 Evry_Plugin *
-evry_plugin_new(const char *name, int type,
+evry_plugin_new(Evry_Plugin *base, const char *name, int type,
 		const char *type_in, const char *type_out,
 		int async_fetch, const char *icon, const char *trigger,
-		int  (*begin) (Evry_Plugin *p, const Evry_Item *item),
+		Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
 		void (*cleanup) (Evry_Plugin *p),
 		int  (*fetch) (Evry_Plugin *p, const char *input),
 		int  (*action) (Evry_Plugin *p, const Evry_Item *item, const char *input),
-		int  (*browse) (Evry_Plugin *p, const Evry_Item *item),
 		Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
 		Evas_Object *(*config_page) (Evry_Plugin *p),
 		void (*config_apply) (Evry_Plugin *p))
 {
-   Evry_Plugin *p = E_NEW(Evry_Plugin, 1);
+   Evry_Plugin *p;
+
+   if (base)
+     p = base;
+   else
+     p = E_NEW(Evry_Plugin, 1);
 
    p->name = eina_stringshare_add(name);
    p->type = type;
@@ -298,7 +298,6 @@ evry_plugin_new(const char *name, int type,
    p->fetch    = fetch;
    p->icon_get = icon_get;
    p->action   = action;
-   p->browse   = browse;
    p->config_page  = config_page;
    p->config_apply = config_apply;
  
@@ -306,7 +305,7 @@ evry_plugin_new(const char *name, int type,
 }
 
 void
-evry_plugin_free(Evry_Plugin *p)
+evry_plugin_free(Evry_Plugin *p, int free_pointer)
 {
    evry_plugin_unregister(p);
 
@@ -325,13 +324,14 @@ evry_plugin_free(Evry_Plugin *p)
 
 	E_FREE(p->config);
      }
-   
-   E_FREE(p);
+
+   if (free_pointer)
+     E_FREE(p);
 }
 
 
 Evry_Action *
-evry_action_new(const char *name, const char *type_in1, const char *type_in2, const char *icon,
+evry_action_new(const char *name, const char *type_in1, const char *type_in2, const char *type_out, const char *icon,
 		int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input),
 		int (*check_item) (Evry_Action *act, const Evry_Item *it),
 		Evas_Object *(*icon_get) (Evry_Action *act, Evas *e))
@@ -340,6 +340,7 @@ evry_action_new(const char *name, const char *type_in1, const char *type_in2, co
    act->name = eina_stringshare_add(name);
    act->type_in1 = (type_in1 ? eina_stringshare_add(type_in1) : NULL);
    act->type_in2 = (type_in2 ? eina_stringshare_add(type_in2) : NULL);
+   act->type_out = (type_out ? eina_stringshare_add(type_out) : NULL);
    act->action = action;
    act->check_item = check_item;
    act->icon = (icon ? eina_stringshare_add(icon) : NULL);
@@ -356,6 +357,7 @@ evry_action_free(Evry_Action *act)
    if (act->name)     eina_stringshare_del(act->name);
    if (act->type_in1) eina_stringshare_del(act->type_in1);
    if (act->type_in2) eina_stringshare_del(act->type_in2);
+   if (act->type_out) eina_stringshare_del(act->type_out);
    if (act->icon)     eina_stringshare_del(act->icon);
 
    E_FREE(act);
@@ -479,3 +481,81 @@ evry_view_unregister(Evry_View *view)
 {
    evry_conf->views = eina_list_remove(evry_conf->views, view);
 }
+
+
+/* taken from e_utils. just changed 48 to 72.. we need
+   evry_icon_theme_set(Evas_Object *obj, const char *icon,
+   size:small, mid, large) imo */
+static int
+_evry_icon_theme_set(Evas_Object *obj, const char *icon)
+{
+   const char *file;
+   char buf[4096];
+
+   if ((!icon) || (!icon[0])) return 0;
+   snprintf(buf, sizeof(buf), "e/icons/%s", icon);
+   file = e_theme_edje_file_get("base/theme/icons", buf);
+   if (file[0])
+     {
+	e_icon_file_edje_set(obj, file, buf);
+	return 1;
+     }
+   return 0;
+}
+
+static int
+_evry_icon_fdo_set(Evas_Object *obj, const char *icon)
+{
+   char *path = NULL;
+   unsigned int size;
+
+   if ((!icon) || (!icon[0])) return 0;
+   size = e_util_icon_size_normalize(72 * e_scale);
+   path = efreet_icon_path_find(e_config->icon_theme, icon, size);
+
+   if (!path) return 0;
+   e_icon_file_set(obj, path);
+   E_FREE(path);
+   return 1;
+}
+
+Evas_Object *
+evry_icon_theme_get(const char *icon, Evas *e)
+{
+   Evas_Object *o = e_icon_add(e);
+
+   if (e_config->icon_theme_overrides)
+     {
+	if (_evry_icon_fdo_set(o, icon) ||
+	    _evry_icon_theme_set(o, icon))
+	  return o;
+     }
+   else
+     {
+	if (_evry_icon_theme_set(o, icon) ||
+	    _evry_icon_fdo_set(o, icon))
+	  return o;
+     }
+
+   evas_object_del(o);
+
+   return NULL;
+}
+
+Evas_Object *
+evry_icon_mime_get(const char *mime, Evas *e)
+{
+   char *icon;
+
+   icon = efreet_mime_type_icon_get(mime, e_config->icon_theme, 64);
+
+   if (icon)
+     return e_util_icon_add(icon, e);
+   else
+     return evry_icon_theme_get("none", e);
+
+   free(icon);
+
+   return NULL;
+}
+

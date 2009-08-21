@@ -27,7 +27,9 @@ module_la_SOURCES      = $(EVRYHEADERS) \
 			 e_mod_main.c \
                          e_mod_main.h \
 			 evry.c \
-                         evry_config.c
+                         evry_config.c \
+			 evry_plug_aggregator.c \
+			 evry_plug_actions.c
 
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@

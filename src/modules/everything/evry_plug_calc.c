@@ -14,7 +14,7 @@ static int error = 0;
 
 
 
-static int
+static Evry_Plugin *
 _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
 {
    Evry_Item *it;
@@ -34,7 +34,7 @@ _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
    it = evry_item_new(p, "0", NULL);
    p->items = eina_list_prepend(p->items, it);
 
-   return 1;
+   return p;
 }
 
 static int
@@ -207,8 +207,8 @@ _cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 static Eina_Bool
 _init(void)
 {
-   p1 = evry_plugin_new("Calculator", type_subject, NULL, "TEXT", 1, "accessories-calculator", "=",
-			_begin, _cleanup, _fetch, _action, NULL, NULL, NULL, NULL);
+   p1 = evry_plugin_new(NULL, "Calculator", type_subject, NULL, "TEXT", 1, "accessories-calculator", "=",
+			_begin, _cleanup, _fetch, _action, NULL, NULL, NULL);
 
    evry_plugin_register(p1, 0);
 
@@ -223,7 +223,7 @@ _shutdown(void)
    EINA_LIST_FREE(history, result)
      eina_stringshare_del(result);
 
-   evry_plugin_free(p1);
+   evry_plugin_free(p1, 1);
 }
 
 

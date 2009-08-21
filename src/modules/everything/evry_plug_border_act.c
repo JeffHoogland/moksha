@@ -83,7 +83,7 @@ _act_cb_border_unminimize(E_Border *bd)
    if (!bd->lock_user_iconify) e_border_uniconify(bd);
 }
 
-static int
+static Evry_Plugin *
 _begin(Evry_Plugin *p __UNUSED__, const Evry_Item *item)
 {
    E_Border *bd;
@@ -92,7 +92,7 @@ _begin(Evry_Plugin *p __UNUSED__, const Evry_Item *item)
    /* e_object_ref(E_OBJECT(bd)); */
    inst->border = bd;
 
-   return 1;
+   return p;
 }
 
 static int
@@ -212,8 +212,8 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 static Eina_Bool
 _init(void)
 {
-   p = evry_plugin_new("Window Action", type_action, "BORDER", NULL, 0, NULL, NULL,
-		       _begin, _cleanup, _fetch, _action, NULL, _item_icon_get, NULL, NULL);
+   p = evry_plugin_new(NULL, "Window Action", type_action, "BORDER", NULL, 0, NULL, NULL,
+		       _begin, _cleanup, _fetch, _action, _item_icon_get, NULL, NULL);
 
    evry_plugin_register(p, 1);
 
@@ -225,7 +225,7 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_free(p);
+   evry_plugin_free(p, 1);
    E_FREE(inst);
 }
 

@@ -195,6 +195,9 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    Image_View *v;
    int w, h, x, y;
 
+   if (!s->plugin)
+     return NULL;
+   
    if (!_get_list(s))
      return NULL;
 

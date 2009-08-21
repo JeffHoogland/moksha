@@ -21,7 +21,7 @@ struct _Plugin
    Eina_Bool is_first;
 };
 
-static Plugin *_singleton = NULL;
+static Plugin *plugin = NULL;
 
 static Eina_Bool
 _exe_restart(Plugin *p)
@@ -187,7 +187,7 @@ _cb_data(void *data, int type __UNUSED__, void *event)
      }
 
    evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_ADD);
-   
+
    return 1;
 }
 
@@ -229,7 +229,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (!input) return 0;
 
    if (!p->handler.data && !_begin(plugin, NULL)) return 0;
-   
+
    len = sizeof(LANG_MODIFIER) - 1;
    if (strncmp(input, LANG_MODIFIER, len) == 0)
      {
@@ -331,42 +331,27 @@ _init(void)
 {
    Plugin *p;
 
-   if (_singleton)
-     return EINA_TRUE;
-
    p = E_NEW(Plugin, 1);
-   p->base.name = "Spell Checker";
-   p->base.type = type_subject;
-   p->base.type_out = eina_stringshare_add("TEXT");
-   p->base.icon = "accessories-dictionary";
-   p->base.trigger = TRIGGER;
-   p->base.fetch = _fetch;
-   p->base.cleanup = _cleanup;
+   evry_plugin_new(&p->base, "Spell Checker", type_subject, "", "TEXT", 1,
+		   "accessories-dictionary", TRIGGER,
+		   NULL, _cleanup, _fetch, NULL, NULL, NULL, NULL);
 
    evry_plugin_register(&p->base, 100);
 
-   _singleton = p;
+   plugin = p;
    return EINA_TRUE;
 }
 
 static void
 _shutdown(void)
 {
-   Evry_Item *it;
    Plugin *p;
 
-   if (!_singleton)
-     return;
+   p = plugin;
 
-   p = _singleton;
-   _singleton = NULL;
+   _cleanup(&p->base);
 
-   EINA_LIST_FREE(p->base.items, it)
-     evry_item_free(it);
-
-   eina_stringshare_del(p->base.type_out);
-   
-   evry_plugin_unregister(&p->base);
+   evry_plugin_free(&p->base, 0);
    E_FREE(p);
 }
 

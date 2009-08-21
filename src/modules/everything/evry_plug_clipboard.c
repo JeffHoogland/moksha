@@ -25,7 +25,7 @@ _init(void)
    Ecore_X_Window win = ecore_x_window_new(0, 0, 0, 1, 1);
    if (!win) return EINA_FALSE;
 
-   act = evry_action_new("Copy to Clipboard", "TEXT", NULL, "edit-copy",
+   act = evry_action_new("Copy to Clipboard", "TEXT", NULL, NULL, "edit-copy",
 			 _action, _check_item, NULL);
 
    evry_action_register(act);

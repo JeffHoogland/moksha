@@ -76,11 +76,12 @@ struct _Evry_Plugin
   /* whether the plugin uses evry_async_update to add new items */
   int async_fetch;
 
-  /* run when plugin is activated. when return true plugin is added
-     to the list of current plugins and queried for results */
-  int (*begin) (Evry_Plugin *p, const Evry_Item *item);
+  /* list of items visible for everything */
+  Eina_List *items;
 
-  int (*browse) (Evry_Plugin *p, const Evry_Item *item);
+  /* run when plugin is activated. when return plugin is added
+     to the list of current plugins and queried for results */
+  Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item);
 
   /* get candidates matching string, fills 'candidates' list */
   int  (*fetch) (Evry_Plugin *p, const char *input);
@@ -95,14 +96,8 @@ struct _Evry_Plugin
   /* optional: default action for this plugins items */
   int  (*action) (Evry_Plugin *p, const Evry_Item *item, const char *input);
 
-
-  Eina_List *items;
-
   Evas_Object *(*config_page) (Evry_Plugin *p);
   void (*config_apply) (Evry_Plugin *p);
-
-  /* only for internal use by plugin */
-  void *private;
 
   /* not to be set by plugin! */
   Plugin_Config *config;
@@ -157,7 +152,8 @@ struct _Evry_Action
 
   const char *type_in1;
   const char *type_in2;
-
+  const char *type_out;
+  
   int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input);
 
   int (*check_item) (Evry_Action *act, const Evry_Item *it);
@@ -207,24 +203,24 @@ EAPI Evas_Object *evry_icon_theme_get(const char *icon, Evas *e);
 
 EAPI int  evry_fuzzy_match(const char *str, const char *match);
 
-EAPI Evry_Plugin *evry_plugin_new(const char *name, int type,
-			     const char *type_in, const char *type_out,
-			     int async_fetch, const char *icon, const char *trigger,
-			     int  (*begin)   (Evry_Plugin *p, const Evry_Item *item),
-			     void (*cleanup) (Evry_Plugin *p),
-			     int  (*fetch)   (Evry_Plugin *p, const char *input),
-			     int  (*action)  (Evry_Plugin *p, const Evry_Item *item, const char *input),
-			     int  (*browse)  (Evry_Plugin *p, const Evry_Item *item),
-			     Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
-			     Evas_Object *(*config_page) (Evry_Plugin *p),
-			     void (*config_apply) (Evry_Plugin *p));
+EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, int type,
+				  const char *type_in, const char *type_out,
+				  int async_fetch, const char *icon, const char *trigger,
+				  Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
+				  void (*cleanup) (Evry_Plugin *p),
+				  int  (*fetch)   (Evry_Plugin *p, const char *input),
+				  int  (*action)  (Evry_Plugin *p, const Evry_Item *item, const char *input),
+				  Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
+				  Evas_Object *(*config_page) (Evry_Plugin *p),
+				  void (*config_apply) (Evry_Plugin *p));
 
-EAPI void evry_plugin_free(Evry_Plugin *p);
+EAPI void evry_plugin_free(Evry_Plugin *p, int free_pointer);
 
 
-EAPI Evry_Action *evry_action_new(const char *name, const char *type_in1, const char *type_in2, const char *icon,
-			     int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input),
-			     int (*check_item) (Evry_Action *act, const Evry_Item *it),
-			     Evas_Object *(*icon_get) (Evry_Action *act, Evas *e));
+EAPI Evry_Action *evry_action_new(const char *name, const char *type_in1, const char *type_in2, const char *type_out,
+				  const char *icon,
+				  int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input),
+				  int (*check_item) (Evry_Action *act, const Evry_Item *it),
+				  Evas_Object *(*icon_get) (Evry_Action *act, Evas *e));
 
 EAPI void evry_action_free(Evry_Action *act);
