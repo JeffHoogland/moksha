@@ -466,6 +466,8 @@ _e_intl_language_path_find(char *language)
    Eina_List	*search_list;
    Eina_List	*next_dir;
    Eina_List	*next_search;
+   E_Path_Dir	*epd;
+   char		*search_locale;
    int		 found;
 
    search_list = _e_intl_locale_search_order_get(language);
@@ -477,18 +479,15 @@ _e_intl_language_path_find(char *language)
    dir_list = e_path_dir_list_get(path_messages);
 
    /* For each directory in the path */
-   for (next_dir = dir_list; next_dir && !found; next_dir = next_dir->next)
+   EINA_LIST_FOREACH(dir_list, next_dir, epd)
      {
-	E_Path_Dir *epd;
-	epd = next_dir->data;
+	if (found) break;
 
 	/* Match canonicalized locale against each possible search */
-	for (next_search = search_list; next_search && !found; next_search = next_search->next)
+	EINA_LIST_FOREACH(search_list, next_search, search_locale)
 	  {
-	     char *search_locale;
 	     char message_path[PATH_MAX];
 
-	     search_locale = next_search->data;
 	     snprintf(message_path, sizeof(message_path), "%s/%s/LC_MESSAGES/%s.mo", epd->dir, search_locale, PACKAGE);
 
 	     if ((ecore_file_exists(message_path)) && (!ecore_file_is_dir(message_path)))
@@ -580,18 +579,16 @@ _e_intl_locale_alias_hash_get(void)
 {
    Eina_List *next;
    Eina_List *dir_list;
+   E_Path_Dir *epd;
    Eina_Hash *alias_hash;
 
    dir_list = e_path_dir_list_get(path_messages);
    alias_hash = NULL;
 
-   for (next = dir_list; next; next = next->next)
+   EINA_LIST_FOREACH(dir_list, next, epd)
      {
 	char buf[4096];
-	E_Path_Dir *epd;
 	FILE *f;
-
-	epd = next->data;
 
 	snprintf(buf, sizeof(buf), "%s/locale.alias", epd->dir);
 	f = fopen(buf, "r");
@@ -1027,16 +1024,15 @@ _e_intl_imc_dir_scan(const char *dir)
    files = ecore_file_ls(dir);
 
    EINA_LIST_FREE(files, file)
+     {
+	if (strstr(file, ".imc") != NULL)
 	  {
-	     if (strstr(file, ".imc") != NULL)
-	       {
-		  char buf[PATH_MAX];
-
-		  snprintf(buf, sizeof(buf), "%s/%s", dir, file);
-		  imcs = eina_list_append(imcs, strdup(buf));
-	       }
-	free(file);
+	     char buf[PATH_MAX];
+	     
+	     snprintf(buf, sizeof(buf), "%s/%s", dir, file);
+	     imcs = eina_list_append(imcs, strdup(buf));
 	  }
-
+	free(file);
+     }
    return imcs;
 }

@@ -358,10 +358,7 @@ case HDL: \
 break;
 
 # define FREE_LIST(__list) \
-while (__list) { \
-   free(__list->data); \
-   __list = eina_list_remove_list(__list, __list); \
-}
+E_FREE_LIST(__list, free)
 
 # define SEND_DATA(__opcode) \
 ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __opcode, 0, 0, 0, data, bytes); \
@@ -371,9 +368,8 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_str_int_list_dec(e->data, e->size, &dat)) { \
-       for (l = dat; l; l = l->next) { \
-	  E_Ipc_Str_Int *__v; \
-	  __v = l->data;
+       E_Ipc_Str_Int *__v; \
+       EINA_LIST_FOREACH(dat, l, __v) {
 #define END_STRING_INT_LIST(__v) \
 	  E_FREE(__v->str); \
 	  free(__v); \
@@ -387,10 +383,9 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
-    for (l = __list; l; l = l->next) { \
-       __typ1 *__v1; \
+    __typ1 *__v1; \
+    EINA_LIST_FOREACH(__list, l, __v1) { \
        E_Ipc_Str_Int *__v2; \
-       __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_Str_Int));
 #define END_SEND_STRING_INT_LIST(__v1, __op) \
        dat = eina_list_append(dat, __v1); \
@@ -418,9 +413,9 @@ free(data);
     Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_3int_3str_list_dec(e->data, e->size, &dat)) {
 #define INT3_STRING3_LIST_ITERATE(__v) \
-       for (l = dat; l; l = l->next) { \
+       for (l = dat; l; l = eina_list_next(l)) { \
 	  E_Ipc_3Int_3Str *__v; \
-	  __v = l->data;
+	  __v = eina_list_data_get(l);
 #define END_INT3_STRING3_LIST(__v) \
    END_INT3_STRING3_LIST_ITERATE(__v) \
    END_INT3_STRING3_LIST_START()
@@ -450,10 +445,9 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
-    for (l = __list; l; l = l->next) { \
-       __typ1 *__v1; \
+    __typ1 *__v1; \
+    EINA_LIST_FOREACH(__list, l, __v1) { \
        E_Ipc_3Int_3Str *__v2; \
-       __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_3Int_3Str));
 #define END_SEND_INT3_STRING3_LIST(__v1, __op) \
        dat = eina_list_append(dat, __v1); \
@@ -481,9 +475,9 @@ free(data);
     Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_4int_2str_list_dec(e->data, e->size, &dat)) { 
 #define INT4_STRING2_LIST_ITERATE(__v) \
-       for (l = dat; l; l = l->next) { \
+       for (l = dat; l; l = eina_list_next(l)) { \
 	  E_Ipc_4Int_2Str *__v; \
-	  __v = l->data;
+	  __v = eina_list_data_get(l);
 #define END_INT4_STRING2_LIST(__v) \
    END_INT4_STRING2_LIST_ITERATE(__v) \
    END_INT4_STRING2_LIST_START()
@@ -512,10 +506,9 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
-    for (l = __list; l; l = l->next) { \
-       __typ1 *__v1; \
+    __typ1 *__v1; \
+    EINA_LIST_FOREACH(__list, l, __v1) { \
        E_Ipc_4Int_2Str *__v2; \
-       __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_4Int_2Str));
 #define END_SEND_INT4_STRING2_LIST(__v1, __op) \
        dat = eina_list_append(dat, __v1); \
@@ -543,9 +536,9 @@ free(data);
     Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_5int_2str_list_dec(e->data, e->size, &dat)) { 
 #define INT5_STRING2_LIST_ITERATE(__v) \
-       for (l = dat; l; l = l->next) { \
+       for (l = dat; l; l = eina_list_next(l)) { \
 	  E_Ipc_5Int_2Str *__v; \
-	  __v = l->data;
+	  __v = eina_list_data_get(l);
 #define END_INT5_STRING2_LIST(__v) \
    END_INT5_STRING2_LIST_ITERATE(__v) \
    END_INT5_STRING2_LIST_START()
@@ -574,10 +567,9 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
-    for (l = __list; l; l = l->next) { \
-       __typ1 *__v1; \
+    __typ1 *__v1; \
+    EINA_LIST_FOREACH(__list, l, __v1) { \
        E_Ipc_5Int_2Str *__v2; \
-       __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_5Int_2Str));
 #define END_SEND_INT5_STRING2_LIST(__v1, __op) \
        dat = eina_list_append(dat, __v1); \
@@ -605,9 +597,9 @@ free(data);
     Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_3int_4str_list_dec(e->data, e->size, &dat)) { 
 #define INT3_STRING4_LIST_ITERATE(__v) \
-       for (l = dat; l; l = l->next) { \
+       for (l = dat; l; l = eina_list_next(l)) { \
 	  E_Ipc_3Int_4Str *__v; \
-	  __v = l->data;
+	  __v = eina_list_data_get(l);
 #define END_INT3_STRING4_LIST(__v) \
    END_INT3_STRING4_LIST_ITERATE(__v) \
    END_INT3_STRING4_LIST_START()
@@ -638,10 +630,9 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
-    for (l = __list; l; l = l->next) { \
-       __typ1 *__v1; \
+    __typ1 *__v1; \
+    EINA_LIST_FOREACH(__list, l, __v1) { \
        E_Ipc_3Int_4Str *__v2; \
-       __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_3Int_4Str));
 #define END_SEND_INT3_STRING4_LIST(__v1, __op) \
        dat = eina_list_append(dat, __v1); \
@@ -656,9 +647,8 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_str_4int_list_dec(e->data, e->size, &dat)) { \
-       for (l = dat; l; l = l->next) { \
-	  E_Ipc_Str_4Int *__v; \
-	  __v = l->data;
+       E_Ipc_Str_4Int *__v; \
+       EINA_LIST_FOREACH(dat, l, __v) {
 #define END_STRING_INT4_LIST(__v) \
 	  E_FREE(__v->str); \
 	  free(__v); \
@@ -681,10 +671,9 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
-    for (l = __list; l; l = l->next) { \
-       __typ1 *__v1; \
+    __typ1 *__v1; \
+    EINA_LIST_FOREACH(__list, l, __v1) { \
        E_Ipc_Str_4Int *__v2; \
-       __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_Str_4Int));
 #define END_SEND_STRING_INT4_LIST(__v1, __op) \
        dat = eina_list_append(dat, __v1); \
@@ -708,9 +697,8 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_2str_int_list_dec(e->data, e->size, &dat)) { \
-       for (l = dat; l; l = l->next) { \
-	  E_Ipc_2Str_Int *__v; \
-	  __v = l->data;
+       E_Ipc_2Str_Int *__v; \
+       EINA_LIST_FOREACH(dat, l, __v) {
 #define END_STRING2_INT_LIST(__v) \
 	  E_FREE(__v->str1); \
 	  E_FREE(__v->str2); \
@@ -734,10 +722,9 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
-    for (l = __list; l; l = l->next) { \
-       __typ1 *__v1; \
+    __typ1 *__v1; \
+    EINA_LIST_FOREACH(__list, l, __v1) { \
        E_Ipc_2Str_Int *__v2; \
-       __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_2Str_Int));
 #define END_SEND_STRING2_INT_LIST(__v1, __op) \
        dat = eina_list_append(dat, __v1); \
@@ -760,9 +747,8 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     if (e_ipc_codec_2str_list_dec(e->data, e->size, &dat)) { \
-       for (l = dat; l; l = l->next) { \
-	  E_Ipc_2Str *__v; \
-	  __v = l->data;
+       E_Ipc_2Str *__v; \
+       EINA_LIST_FOREACH(dat, l, __v) {
 #define END_STRING2_LIST(__v) \
 	  E_FREE(__v->str1); \
 	  E_FREE(__v->str2); \
@@ -786,10 +772,9 @@ free(data);
  case HDL: { \
     Eina_List *dat = NULL, *l; \
     void *data; int bytes; \
-    for (l = __list; l; l = l->next) { \
-       __typ1 *__v1; \
+    __typ1 *__v1; \
+    EINA_LIST_FOREACH(__list, l, __v1) { \
        E_Ipc_2Str *__v2; \
-       __v1 = l->data; \
        __v2 = calloc(1, sizeof(E_Ipc_2Str));
 #define END_SEND_STRING2_LIST(__v1, __op) \
        dat = eina_list_append(dat, __v1); \
@@ -863,7 +848,7 @@ break;
    is the pointer to the current position in the list. 
  */
 #define FOR(__start) \
-   for (l = __start; l; l = l->next)
+   for (l = __start; l; l = eina_list_next(l))
 #define GENERIC(HDL) \
  case HDL: {
 
@@ -1041,7 +1026,7 @@ break;
 	 E_Response_Module_Data *md;
 	 E_Ipc_Str_Int *v;
 	 
-	 v = l->data;
+	 v = eina_list_data_get(l);
 	 md = malloc(sizeof(E_Response_Module_Data));
 	 
 	 md->name = v->str;
@@ -1117,7 +1102,7 @@ break;
    E_Font_Available *fa;
    Eina_List *fa_list;
    fa_list = e_font_available_list();
-   FOR(fa_list) { fa = l->data;
+   FOR(fa_list) { fa = eina_list_data_get(l);
       dat = eina_list_append(dat, fa->name);
    }
    ENCODE(dat, e_ipc_codec_str_list_enc);
@@ -1139,8 +1124,10 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 if (l->data) printf("REPLY: \"%s\"\n", (char *)(l->data));
-	 else printf("REPLY: \"\"\n");
+	 if (eina_list_data_get(l))
+	   printf("REPLY: \"%s\"\n", (char *)eina_list_data_get(l));
+	 else
+	   printf("REPLY: \"\"\n");
       }
       FREE_LIST(dat);
    }
@@ -1212,7 +1199,7 @@ break;
 
    LIST_ENCODE_START();
    E_Font_Fallback *ff;
-   FOR(e_config->font_fallbacks) { ff = l->data;
+   FOR(e_config->font_fallbacks) { ff = eina_list_data_get(l);
       dat = eina_list_append(dat, ff->name);
    }
    ENCODE(dat, e_ipc_codec_str_list_enc);
@@ -1234,8 +1221,10 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 if (l->data) printf("REPLY: \"%s\"\n", (char *)(l->data));
-	 else printf("REPLY: \"\"\n");
+	 if (eina_list_data_get(l))
+	   printf("REPLY: \"%s\"\n", (char *)eina_list_data_get(l));
+	 else
+	   printf("REPLY: \"\"\n");
       }
       FREE_LIST(dat);
    }
@@ -1427,8 +1416,10 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 if (l->data) printf("REPLY: \"%s\"\n", (char *)(l->data));
-         else printf("REPLY: \"\"\n");
+	 if (eina_list_data_get(l))
+	   printf("REPLY: \"%s\"\n", (char *)eina_list_data_get(l));
+         else
+	   printf("REPLY: \"\"\n");
       }
       FREE_LIST(dat);
    }
@@ -1506,21 +1497,14 @@ break;
    E_Path_Dir *p;
    if (s) {
       dat = eina_list_append(dat, eina_stringshare_add(s));
-      FOR(dir_list) { p = l->data;
+      FOR(dir_list) { p = eina_list_data_get(l);
 	 dat = eina_list_append(dat, eina_stringshare_add(p->dir));
       }
    }
 
    ENCODE(dat, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_DIRS_LIST_REPLY);
-   while (dat)
-     {
-	const char *dir;
-	
-	dir = dat->data;
-	eina_stringshare_del(dir);
-	dat = eina_list_remove_list(dat, dat);	
-     }
+   E_FREE_LIST(dat, eina_stringshare_del);
    e_path_dir_list_free(dir_list);
    END_STRING(s)
 #elif (TYPE == E_REMOTE_IN)
@@ -1539,9 +1523,9 @@ break;
    DECODE(e_ipc_codec_str_list_dec) {
      FOR(dat) {
        if (dat == l)
-	 printf("REPLY Listing for \"%s\"\n", (char *)(l->data));
+	 printf("REPLY Listing for \"%s\"\n", (char *)eina_list_data_get(l));
        else
-	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 printf("REPLY: \"%s\"\n", (char *)eina_list_data_get(l));
      }
      FREE_LIST(dat);
    }
@@ -1566,9 +1550,9 @@ break;
       count = 0;
       FOR(dat) {
 	 if (dat == l)
-	   type = l->data;
+	   type = eina_list_data_get(l);
 	 else {
-	   r->dirs[count] = l->data;
+	   r->dirs[count] = eina_list_data_get(l);
 	   count++;
 	 }
       }
@@ -2207,21 +2191,16 @@ break;
    E_CONFIG_LIMIT(e_config->zone_desks_x_count, 1, 64)
    E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64)
    {
-      Eina_List *l;
-      for (l = e_manager_list(); l; l = l->next)
+      Eina_List *l, *l2, *l3;
+      E_Manager *man;
+      E_Container *con;
+      E_Zone *zone;
+      EINA_LIST_FOREACH(e_manager_list(), l, man)
 	{
-	   E_Manager *man;
-	   Eina_List *l2;
-	   man = l->data;
-	   for (l2 = man->containers; l2; l2 = l2->next)
+	   EINA_LIST_FOREACH(man->containers, l2, con)
 	     {
-		E_Container *con;
-		Eina_List *l3;
-		con = l2->data;
-		for (l3 = con->zones; l3; l3 = l3->next)
+		EINA_LIST_FOREACH(con->zones, l3, zone)
 		  {
-		     E_Zone *zone;
-		     zone = l3->data;
 		     e_zone_desk_count_set(zone, 
 					   e_config->zone_desks_x_count, 
 					   e_config->zone_desks_y_count);
@@ -4654,7 +4633,7 @@ break;
 		Eina_List *m = e_manager_list();
 		int ok = 0;
 		if (m) {
-			E_Manager *man = m->data;
+			E_Manager *man = eina_list_data_get(m);
 
 			if (man) {
 				E_Action *act = e_action_find(actionName);
@@ -5106,7 +5085,7 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 printf("REPLY: \"%s\"\n", (char *)eina_list_data_get(l));
       }
       FREE_LIST(dat);
    }
@@ -5230,12 +5209,11 @@ break;
 #elif (TYPE == E_WM_IN)
    START_INT(val, HDL);
    Eina_List *ml;
+   E_Manager *man;
    e_config->use_e_cursor = val;
    E_CONFIG_LIMIT(e_config->use_e_cursor, 0, 1);
-   for (ml = e_manager_list(); ml; ml = ml->next)
+   EINA_LIST_FOREACH(e_manager_list(), ml, man)
      {
-	E_Manager *man;
-	man = ml->data;
 	if (man->pointer) e_object_del(E_OBJECT(man->pointer));
 	man->pointer = e_pointer_window_new(man->root, 1);
      }
@@ -5690,7 +5668,7 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 printf("REPLY: \"%s\"\n", (char *)eina_list_data_get(l));
       }
       FREE_LIST(dat);
    }
@@ -6567,7 +6545,7 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 printf("REPLY: \"%s\"\n", (char *)eina_list_data_get(l));
       }
       FREE_LIST(dat);
    }
@@ -6601,7 +6579,7 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 printf("REPLY: \"%s\"\n", (char *)eina_list_data_get(l));
       }
       FREE_LIST(dat);
    }
@@ -6635,7 +6613,7 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 printf("REPLY: \"%s\"\n", (char *)eina_list_data_get(l));
       }
       FREE_LIST(dat);
    }
@@ -6770,7 +6748,7 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 printf("REPLY: \"%s\"\n", (char *)eina_list_data_get(l));
       }
       FREE_LIST(dat);
    }
@@ -7266,7 +7244,7 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 printf("REPLY: \"%s\"\n", (char *)eina_list_data_get(l));
       }
       FREE_LIST(dat);
    }

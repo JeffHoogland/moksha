@@ -633,12 +633,10 @@ E_Storage *
 e_storage_find(const char *udi)
 {
    Eina_List *l;
+   E_Storage  *s;
    
-   for (l = _e_stores; l; l = l->next)
+   EINA_LIST_FOREACH(_e_stores, l, s)
      {
-	E_Storage  *s;
-	
-	s = l->data;
 	if (!strcmp(udi, s->udi)) return s;
      }
    return NULL;
@@ -865,12 +863,10 @@ EAPI E_Volume *
 e_volume_find(const char *udi)
 {
    Eina_List *l;
+   E_Volume *v;
    
-   for (l = _e_vols; l; l = l->next)
+   EINA_LIST_FOREACH(_e_vols, l, v)
      {
-	E_Volume *v;
-	
-	v = l->data;
 	if (!strcmp(udi, v->udi)) return v;
      }
    return NULL;
@@ -1208,11 +1204,8 @@ _e_fm_monitor_start_try(E_Fm_Task *task)
    Eina_List *l;
    
    /* look for any previous dir entries monitoring this dir */
-   for (l = _e_dirs; l; l = l->next)
+   EINA_LIST_FOREACH(_e_dirs, l, ed)
      {
-	E_Dir *ed;
-	
-	ed = l->data;
 	if ((ed->mon) && (!strcmp(ed->dir, task->src)))
 	  {
 	     /* found a previous dir - save it in ped */
@@ -1611,13 +1604,11 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       case E_FM_OP_MONITOR_SYNC: /* mon list sync */
 	  {
 	     Eina_List *l;
+	     E_Dir *ed;
 	     double stime;
 	     
-             for (l = _e_dirs; l; l = l->next)
+	     EINA_LIST_FOREACH(_e_dirs, l, ed)
 	       {
-		  E_Dir *ed;
-		  
-		  ed = l->data;
 		  if (ed->fq)
 		    {
 		       if (ed->sync == e->response)
@@ -1728,17 +1719,13 @@ static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id)
 
 static E_Fm_Slave *_e_fm_slave_get(int id)
 {
-   Eina_List *l = _e_fm_slaves;
+   Eina_List *l;
    E_Fm_Slave *slave;
 
-   while (l)
+   EINA_LIST_FOREACH(_e_fm_slaves, l, slave)
      {
-	slave = eina_list_data_get(l);
-
 	if (slave->id == id)
 	  return slave;
-
-	l = eina_list_next(l);
      }
 
    return NULL;
@@ -1867,9 +1854,8 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
        (event == ECORE_FILE_EVENT_CREATED_DIRECTORY))
      {
 	rp = ecore_file_realpath(dir);
-	for (l = _e_dirs; l; l = l->next)
+	EINA_LIST_FOREACH(_e_dirs, l, ed)
 	  {
-	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
 	     if (drp)
 	       {
@@ -1884,9 +1870,8 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
 	    (event == ECORE_FILE_EVENT_DELETED_DIRECTORY))
      {
 	rp = ecore_file_realpath(dir);
-	for (l = _e_dirs; l; l = l->next)
+	EINA_LIST_FOREACH(_e_dirs, l, ed)
 	  {
-	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
 	     if (drp)
 	       {
@@ -1900,9 +1885,8 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
    else if (event == ECORE_FILE_EVENT_MODIFIED)
      {
 	rp = ecore_file_realpath(dir);
-	for (l = _e_dirs; l; l = l->next)
+	EINA_LIST_FOREACH(_e_dirs, l, ed)
 	  {
-	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
 	     if (drp)
 	       {
@@ -1916,9 +1900,8 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
    else if (event == ECORE_FILE_EVENT_DELETED_SELF)
      {
 	rp = ecore_file_realpath(path);
-	for (l = _e_dirs; l; l = l->next)
+	EINA_LIST_FOREACH(_e_dirs, l, ed)
 	  {
-	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
 	     if (drp)
 	       {
@@ -1980,9 +1963,8 @@ _e_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing)
 	int skip = 0;
 	
 	t_now = ecore_time_get();
-	for (l = ed->recent_mods; l; l = l->next)
+	EINA_LIST_FOREACH(ed->recent_mods, l, m)
 	  {
-	     m = l->data;
 	     if ((m->mod) && (!strcmp(m->path, path)))
 	       {
 		  if ((t_now - m->timestamp) < DEF_MOD_BACKOFF)
@@ -2113,22 +2095,14 @@ _e_cb_file_mon_list_idler(void *data)
    /* FIXME: spool off files in idlers and handle sync req's */
    while (ed->fq)
      {
-	file = ed->fq->data;
+	file = eina_list_data_get(ed->fq);
 	if (!((ed->dot_order) && (!strcmp(file, ".order"))))
 	  {
 	     if (!strcmp(ed->dir, "/"))
 	       snprintf(buf, sizeof(buf), "/%s", file);
 	     else
 	       snprintf(buf, sizeof(buf), "%s/%s", ed->dir, file);
-/*	     
-	     if (//(!ed->fq->next) ||
-		 ((!strcmp(ed->fq->next->data, ".order"))
-		  //&& (!ed->fq->next->next)
-		  ))
-	       _e_file_add(ed, buf, 1);
-	     else
- */
-	       _e_file_add(ed, buf, 1);
+	     _e_file_add(ed, buf, 1);
 	  }
 	free(file);
 	ed->fq = eina_list_remove_list(ed->fq, ed->fq);

@@ -43,7 +43,7 @@ e_msg_init(void)
 EAPI int
 e_msg_shutdown(void)
 {
-   while (handlers) e_msg_handler_del(handlers->data);
+   while (handlers) e_msg_handler_del(eina_list_data_get(handlers));
    E_EVENT_MSG = 0;
    if (hand) ecore_event_handler_del(hand);
    hand = NULL;
@@ -115,25 +115,19 @@ _e_msg_event_cb(void *data, int ev_type, void *ev)
 {
    E_Msg_Event *e;
    Eina_List *l;
+   E_Msg_Handler *emsgh;
 
    processing_handlers++;
    e = ev;
-   for (l = handlers; l; l = l->next)
+   EINA_LIST_FOREACH(handlers, l, emsgh)
      {
-	E_Msg_Handler *emsgh;
-	
-	emsgh = l->data;
 	if (!emsgh->delete_me)
 	  emsgh->func(emsgh->data, e->name, e->info, e->val, e->obj);
      }
    processing_handlers--;
    if ((processing_handlers == 0) && (del_handlers))
      {
-	while (del_handlers)
-	  {
-	     e_msg_handler_del(del_handlers->data);
-	     del_handlers = eina_list_remove_list(del_handlers, del_handlers);
-	  }
+	E_FREE_LIST(del_handlers, e_msg_handler_del);
      }
    return 1;
 }

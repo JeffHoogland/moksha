@@ -226,9 +226,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     
 	     if (!cfdata->picon_mime) /* remove previous custom icon info */
 	       e_fm2_custom_file_del(buf);
-	     for (l = e_config->mime_icons; l; l = l->next)
+	     EINA_LIST_FOREACH(e_config->mime_icons, l, mi)
 	       {
-		  mi = l->data;
 		  if (!mi) continue;
 		  if (strcmp(mi->mime, cfdata->mime)) continue;
 		  if (mi->icon)

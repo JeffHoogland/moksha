@@ -216,6 +216,7 @@ _load_avail_gadgets(void *data)
 {
    E_Config_Dialog_Data *cfdata = NULL;
    Eina_List *l = NULL;
+   E_Gadcon_Client_Class *cc;
    Evas *evas;
    int w;
 
@@ -227,13 +228,12 @@ _load_avail_gadgets(void *data)
    e_widget_ilist_clear(cfdata->o_avail);
 //   l = e_gadcon_provider_list();
 //   if (l) l = eina_list_sort(l, -1, _gad_list_sort);
-   for (l = e_gadcon_provider_list(); l; l = l->next) 
+   EINA_LIST_FOREACH(e_gadcon_provider_list(), l, cc)
      {
-        E_Gadcon_Client_Class *cc;
         Evas_Object *icon = NULL;
         const char *lbl = NULL;
 
-        if (!(cc = l->data)) continue;
+        if (!cc) continue;
         // check the current site is allowed for this gadcon client
         if (cc->func.is_site && !cc->func.is_site(cfdata->site))
            continue;
@@ -257,6 +257,8 @@ _load_sel_gadgets(void *data)
 {
    E_Config_Dialog_Data *cfdata = NULL;
    Eina_List *l = NULL, *l2 = NULL;
+   E_Config_Gadcon_Client *cgc;
+   E_Gadcon_Client_Class *gcc;
    Evas *evas;
    int w;
 
@@ -266,18 +268,15 @@ _load_sel_gadgets(void *data)
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_sel);
    e_widget_ilist_clear(cfdata->o_sel);
-   for (l = cfdata->gc->cf->clients; l; l = l->next) 
+   EINA_LIST_FOREACH(cfdata->gc->cf->clients, l, cgc)
      {
-        E_Config_Gadcon_Client *cgc;
-
-        if (!(cgc = l->data)) continue;
-        for (l2 = e_gadcon_provider_list(); l2; l2 = l2->next) 
+        if (!cgc) continue;
+	EINA_LIST_FOREACH(e_gadcon_provider_list(), l2, gcc)
           {
-             E_Gadcon_Client_Class *gcc;
              Evas_Object *icon = NULL;
              const char *lbl = NULL;
 
-             if (!(gcc = l2->data)) continue;
+             if (!gcc) continue;
              if ((cgc->name) && (gcc->name) && 
                  (!strcmp(cgc->name, gcc->name))) 
                {
@@ -303,15 +302,17 @@ _cb_add(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata = NULL;
    Eina_List *l = NULL;
+   E_Ilist_Item *item = NULL;
    int i = 0, update = 0;
 
    if (!(cfdata = data)) return;
-   for (i = 0, l = e_widget_ilist_items_get(cfdata->o_avail); l; l = l->next, i++) 
+   i = -1;
+   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_avail), l, item)
      {
-        E_Ilist_Item *item = NULL;
         const char *name = NULL;
 
-        if (!(item = l->data)) continue;
+        i++;
+        if (!item) continue;
         if (!item->selected) continue;
         name = (char *)e_widget_ilist_nth_data_get(cfdata->o_avail, i);
         if (!name) continue;
@@ -334,23 +335,24 @@ _cb_del(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata = NULL;
    Eina_List *l = NULL, *g = NULL;
+   E_Ilist_Item *item = NULL;
+   E_Config_Gadcon_Client *cgc;
    int i = 0, update = 0;
 
    if (!(cfdata = data)) return;
-   for (i = 0, l = e_widget_ilist_items_get(cfdata->o_sel); l; l = l->next, i++) 
+   i = -1;
+   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_avail), l, item)
      {
-        E_Ilist_Item *item = NULL;
         const char *name = NULL;
 
-        if (!(item = l->data)) continue;
+	i++;
+        if (!item) continue;
         if (!item->selected) continue;
         name = (char *)e_widget_ilist_nth_data_get(cfdata->o_sel, i);
         if (!name) continue;
-        for (g = cfdata->gc->cf->clients; g; g = g->next)
+	EINA_LIST_FOREACH(cfdata->gc->cf->clients, g, cgc)
           {
-             E_Config_Gadcon_Client *cgc;
-
-             if (!(cgc = g->data)) continue;
+             if (!cgc) continue;
              if (strcmp(name, cgc->name)) continue;
              e_gadcon_client_config_del(cfdata->gc->cf, cgc);
              update = 1;

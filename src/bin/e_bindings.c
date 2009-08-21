@@ -87,26 +87,11 @@ e_bindings_init(void)
 EAPI int
 e_bindings_shutdown(void)
 {
-   E_Binding_Signal *binds;
-   E_Binding_Mouse *bindm;
-   E_Binding_Wheel *bindw;
-   E_Binding_Edge *binde;
-   E_Binding_Key *bindk;
-
-   EINA_LIST_FREE(mouse_bindings, bindm)
-     _e_bindings_mouse_free(bindm);
-
-   EINA_LIST_FREE(key_bindings, bindk)
-     _e_bindings_key_free(bindk);
-
-   EINA_LIST_FREE(edge_bindings, binde)
-     _e_bindings_edge_free(binde);
-
-   EINA_LIST_FREE(signal_bindings, binds)
-     _e_bindings_signal_free(binds);
-
-   EINA_LIST_FREE(wheel_bindings, bindw)
-     _e_bindings_wheel_free(bindw);
+   E_FREE_LIST(mouse_bindings, _e_bindings_mouse_free);
+   E_FREE_LIST(key_bindings, _e_bindings_key_free);
+   E_FREE_LIST(edge_bindings, _e_bindings_edge_free);
+   E_FREE_LIST(signal_bindings, _e_bindings_signal_free);
+   E_FREE_LIST(wheel_bindings, _e_bindings_wheel_free);
 
    return 1;
 }

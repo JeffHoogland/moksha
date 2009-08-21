@@ -129,22 +129,11 @@ e_dnd_init(void)
 EAPI int
 e_dnd_shutdown(void)
 {
-   Ecore_Event_Handler *h;
+   E_FREE_LIST(_drag_list, e_object_del);
 
-   while (_drag_list)
-     {
-	E_Drag *drag = _drag_list->data;
-	e_object_del(E_OBJECT(drag));
-     }
+   E_FREE_LIST(_drop_handlers, e_drop_handler_del);
 
-   while (_drop_handlers)
-     {
-	E_Drop_Handler *h = _drop_handlers->data;
-	e_drop_handler_del(h);
-     }
-
-   EINA_LIST_FREE(_event_handlers, h)
-     ecore_event_handler_del(h);
+   E_FREE_LIST(_event_handlers, ecore_event_handler_del);
 
    eina_hash_free(_drop_win_hash);
 

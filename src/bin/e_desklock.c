@@ -150,6 +150,7 @@ EAPI int
 e_desklock_show(void)
 {
    Eina_List		  *managers, *l, *l2, *l3;
+   E_Manager		  *man;
    E_Desklock_Popup_Data  *edp;
    Evas_Coord		  mw, mh;
    E_Zone		  *current_zone;
@@ -204,13 +205,11 @@ e_desklock_show(void)
    managers = e_manager_list();
    if (!e_grabinput_get(edd->elock_wnd, 0, edd->elock_wnd))
      {
-	for (l = managers; l; l = l->next)
+	EINA_LIST_FOREACH(managers, l, man)
 	  {
-	     E_Manager *man;
 	     Ecore_X_Window *windows;
 	     int wnum;
 	     
-	     man = l->data;
 	     windows = ecore_x_window_children_get(man->root, &wnum);
 	     if (windows)
 	       {
@@ -254,21 +253,14 @@ e_desklock_show(void)
    
    zone_counter = 0;
    total_zone_num = _e_desklock_zone_num_get();
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(managers, l, man)
      {
-	E_Manager *man;
-	
-	man = l->data;
-	for (l2 = man->containers; l2; l2 = l2->next)
+	E_Container *con;
+	EINA_LIST_FOREACH(man->containers, l2, con)
 	  {
-	     E_Container *con;
-	     
-	     con = l2->data;
-	     for (l3 = con->zones; l3; l3 = l3->next)
+	     E_Zone *zone;
+	     EINA_LIST_FOREACH(con->zones, l3, zone)
 	       {
-		  E_Zone *zone;
-		  
-		  zone = l3->data;
 		  edp = E_NEW(E_Desklock_Popup_Data, 1);
 		  if (edp)
 		    {
@@ -413,10 +405,9 @@ e_desklock_hide(void)
    
    if (edd->elock_grab_break_wnd)
      ecore_x_window_show(edd->elock_grab_break_wnd);
-   
-   while (edd->elock_wnd_list)
+  
+   EINA_LIST_FREE(edd->elock_wnd_list, edp) 
      {
-	edp = edd->elock_wnd_list->data;
 	if (edp)
 	  {
 	     e_popup_hide(edp->popup_wnd);
@@ -429,14 +420,9 @@ e_desklock_hide(void)
 	     e_util_defer_object_del(E_OBJECT(edp->popup_wnd));
 	     E_FREE(edp);
 	  }
-	edd->elock_wnd_list = eina_list_remove_list(edd->elock_wnd_list, edd->elock_wnd_list);
      }
    
-   while (edd->handlers)
-     {
-	ecore_event_handler_del(edd->handlers->data);
-	edd->handlers = eina_list_remove_list(edd->handlers, edd->handlers);
-     }
+   E_FREE_LIST(edd->handlers, ecore_event_handler_del);
    
    e_grabinput_release(edd->elock_wnd, edd->elock_wnd);
    ecore_x_window_free(edd->elock_wnd);
@@ -533,10 +519,8 @@ _e_desklock_cb_mouse_move(void *data, int type, void *event)
    if (current_zone == last_active_zone)
      return 1;
    
-   for (l = edd->elock_wnd_list; l; l = l->next)
+   EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
      {
-	edp = l->data;
-	
 	if (!edp) continue;
 	
 	if (edp->popup_wnd->zone == last_active_zone)
@@ -561,9 +545,8 @@ _e_desklock_passwd_update(void)
      *pp = '*';
    *pp = 0;
    
-   for (l = edd->elock_wnd_list; l; l = l->next)
+   EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
      {
-	edp = l->data;
 	edje_object_part_text_set(edp->login_box, "e.text.password", 
 				  passwd_hidden);
      }
@@ -606,16 +589,14 @@ _e_desklock_zone_num_get(void)
 {
    int num;
    Eina_List *l, *l2;
+   E_Manager *man;
    
    num = 0;
-   for (l = e_manager_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	E_Manager *man = l->data;
-	
-	for (l2 = man->containers; l2; l2 = l2->next)
+	E_Container *con;
+	EINA_LIST_FOREACH(man->containers, l2, con)
 	  {
-	     E_Container *con = l2->data;
-	     
 	     num += eina_list_count(con->zones);
 	  }
      }
@@ -657,6 +638,7 @@ static void
 _e_desklock_state_set(int state)
 {
    Eina_List *l;
+   E_Desklock_Popup_Data *edp;
    const char *signal, *text;
    if (!edd) return;
 
@@ -672,10 +654,8 @@ _e_desklock_state_set(int state)
 	text = "The password you entered is invalid. Try again.";
      }
 
-   for (l = edd->elock_wnd_list; l; l = l->next)
+   EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
      {
-	E_Desklock_Popup_Data *edp;
-	edp = l->data;
 	edje_object_signal_emit(edp->login_box, signal, "e.desklock");
 	edje_object_signal_emit(edp->bg_object, signal, "e.desklock");
 	edje_object_part_text_set(edp->login_box, "e.text.title", text);

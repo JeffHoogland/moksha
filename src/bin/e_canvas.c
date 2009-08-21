@@ -80,13 +80,12 @@ EAPI void
 e_canvas_recache(void)
 {
    Eina_List *l;
-   
-   for (l = _e_canvases; l; l = l->next)
+   Ecore_Evas *ee;
+
+   EINA_LIST_FOREACH(_e_canvases, l, ee)   
      {
-	Ecore_Evas *ee;
 	Evas *e;
 	
-	ee = l->data;
 	e = ecore_evas_get(ee);
 	evas_image_cache_set(e, e_config->image_cache * 1024);
 	evas_font_cache_set(e, e_config->font_cache * 1024);
@@ -111,13 +110,12 @@ EAPI void
 e_canvas_cache_flush(void)
 {
    Eina_List *l;
-   
-   for (l = _e_canvases; l; l = l->next)
+   Ecore_Evas *ee;
+
+   EINA_LIST_FOREACH(_e_canvases, l, ee)   
      {
-	Ecore_Evas *ee;
 	Evas *e;
 	
-	ee = l->data;
 	e = ecore_evas_get(ee);
 	evas_image_cache_flush(e);
 	evas_font_cache_flush(e);
@@ -130,13 +128,12 @@ EAPI void
 e_canvas_cache_reload(void)
 {
    Eina_List *l;
-   
-   for (l = _e_canvases; l; l = l->next)
+   Ecore_Evas *ee;
+
+   EINA_LIST_FOREACH(_e_canvases, l, ee)   
      {
-	Ecore_Evas *ee;
 	Evas *e;
 	
-	ee = l->data;
 	e = ecore_evas_get(ee);
 	evas_image_cache_reload(e);
      }
@@ -146,13 +143,12 @@ EAPI void
 e_canvas_idle_flush(void)
 {
    Eina_List *l;
-   
-   for (l = _e_canvases; l; l = l->next)
+   Ecore_Evas *ee;
+
+   EINA_LIST_FOREACH(_e_canvases, l, ee)   
      {
-	Ecore_Evas *ee;
 	Evas *e;
 	
-	ee = l->data;
 	e = ecore_evas_get(ee);
 	evas_render_idle_flush(e);
      }
@@ -162,13 +158,12 @@ EAPI void
 e_canvas_rehint(void)
 {
    Eina_List *l;
-   
-   for (l = _e_canvases; l; l = l->next)
+   Ecore_Evas *ee;
+
+   EINA_LIST_FOREACH(_e_canvases, l, ee)   
      {
-	Ecore_Evas *ee;
 	Evas *e;
 	
-	ee = l->data;
 	e = ecore_evas_get(ee);
 	if (e_config->font_hinting == 0)
 	  evas_font_hinting_set(e, EVAS_FONT_HINTING_BYTECODE);

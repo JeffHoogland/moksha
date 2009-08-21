@@ -51,11 +51,7 @@ e_container_init(void)
 EAPI int
 e_container_shutdown(void)
 {
-   while (handlers)
-     {
-	ecore_event_handler_del(handlers->data);
-	handlers = eina_list_remove_list(handlers, handlers);
-     }
+   E_FREE_LIST(handlers, ecore_event_handler_del);
    return 1;
 }
 
@@ -159,11 +155,9 @@ e_container_new(E_Manager *man)
    screens = (Eina_List *)e_xinerama_screens_get();
    if (screens)
      {
-	for (l = screens; l; l = l->next)
+	E_Screen *scr;
+	EINA_LIST_FOREACH(screens, l, scr)
 	  {
-	     E_Screen *scr;
-
-	     scr = l->data;
 	     zone = e_zone_new(con, scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
 	  }
      }
@@ -208,35 +202,32 @@ EAPI E_Container *
 e_container_current_get(E_Manager *man)
 {
    Eina_List *l;
+   E_Container *con;
    E_OBJECT_CHECK_RETURN(man, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
 
-   for (l = man->containers; l; l = l->next)
+   EINA_LIST_FOREACH(man->containers, l, con)
      {
-	E_Container *con;
-        
-        if (!(con = l->data)) continue;
+        if (!con) continue;
 	if (con->visible) return con;
      }
 
    /* If noone is available, return the first */
    if (!man->containers) return NULL;
    l = man->containers;
-   return (E_Container *)l->data;
+   return (E_Container *)eina_list_data_get(l);
 }
 
 EAPI E_Container *
 e_container_number_get(E_Manager *man, int num)
 {
    Eina_List *l;
+   E_Container *con;
 
    E_OBJECT_CHECK_RETURN(man, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
-   for (l = man->containers; l; l = l->next)
+   EINA_LIST_FOREACH(man->containers, l, con)
      {
-	E_Container *con;
-
-	con = l->data;
 	if (con->num == num) return con;
      }
    return NULL;
@@ -306,14 +297,12 @@ EAPI E_Zone *
 e_container_zone_at_point_get(E_Container *con, int x, int y)
 {
    Eina_List *l = NULL;
+   E_Zone *zone = NULL;
 
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
-   for (l = con->zones; l; l = l->next)
+   EINA_LIST_FOREACH(con->zones, l, zone)
      {
-	E_Zone *zone;
-
-	zone = l->data;
 	if (E_INSIDE(x, y, zone->x, zone->y, zone->w, zone->h))
 	  return zone;
      }
@@ -324,14 +313,12 @@ EAPI E_Zone *
 e_container_zone_number_get(E_Container *con, int num)
 {
    Eina_List *l = NULL;
+   E_Zone *zone = NULL;
 
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
-   for (l = con->zones; l; l = l->next)
+   EINA_LIST_FOREACH(con->zones, l, zone)
      {
-	E_Zone *zone;
-
-	zone = l->data;
 	if (zone->num == num) return zone;
      }
    return NULL;
@@ -341,14 +328,12 @@ EAPI E_Zone *
 e_container_zone_id_get(E_Container *con, int id)
 {
    Eina_List *l = NULL;
+   E_Zone *zone = NULL;
 
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
-   for (l = con->zones; l; l = l->next)
+   EINA_LIST_FOREACH(con->zones, l, zone)
      {
-	E_Zone *zone;
-
-	zone = l->data;
 	if (zone->id == id) return zone;
      }
    return NULL;
@@ -459,15 +444,13 @@ EAPI void
 e_container_shape_change_callback_del(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data)
 {
    Eina_List *l = NULL;
+   E_Container_Shape_Callback *cb = NULL;
 
    /* FIXME: if we call this from within a callback we are in trouble */
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
-   for (l = con->shape_change_cb; l; l = l->next)
+   EINA_LIST_FOREACH(con->shape_change_cb, l, cb)
      {
-	E_Container_Shape_Callback *cb;
-
-	cb = l->data;
 	if ((cb->func == func) && (cb->data == data))
 	  {
 	     con->shape_change_cb = eina_list_remove_list(con->shape_change_cb, l);
@@ -488,7 +471,6 @@ e_container_shape_rects_get(E_Container_Shape *es)
 EAPI void
 e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int num)
 {
-   Eina_List *l = NULL;
    int i;
    E_Rect *r;
 
@@ -496,9 +478,7 @@ e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int
    E_OBJECT_TYPE_CHECK(es, E_CONTAINER_SHAPE_TYPE);
    if (es->shape)
      {
-	for (l = es->shape; l; l = l->next)
-	  free(l->data);
-	eina_list_free(es->shape);
+	E_FREE_LIST(es->shape, free);
 	es->shape = NULL;
      }
    if ((rects) && (num == 1) &&
@@ -668,8 +648,8 @@ e_container_border_raise(E_Border *bd)
 
    /* Find the window below this one */
    l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd);
-   if (l->prev)
-     above = l->prev->data;
+   if (eina_list_prev(l))
+     above = eina_list_data_get(eina_list_prev(l));
    else
      {
 	/* Need to check the layers below */
@@ -678,7 +658,7 @@ e_container_border_raise(E_Border *bd)
 	     if ((bd->zone->container->layers[i].clients) &&
 		 (l = eina_list_last(bd->zone->container->layers[i].clients)))
 	       {
-		  above = l->data;
+		  above = eina_list_data_get(l);
 		  break;
 	       }
 	  }
@@ -722,8 +702,8 @@ e_container_border_lower(E_Border *bd)
 
    /* Find the window above this one */
    l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd);
-   if (l->next)
-     below = l->next->data;
+   if (eina_list_next(l))
+     below = eina_list_data_get(eina_list_next(l));
    else
      {
 	/* Need to check the layers above */
@@ -731,7 +711,7 @@ e_container_border_lower(E_Border *bd)
 	  {
 	     if (bd->zone->container->layers[i].clients)
 	       {
-		  below = bd->zone->container->layers[i].clients->data;
+		  below = eina_list_data_get(bd->zone->container->layers[i].clients);
 		  break;
 	       }
 	  }
@@ -849,9 +829,9 @@ e_container_border_list_next(E_Border_List *list)
 
    if (!list->clients) return NULL;
 
-   bd = list->clients->data;
+   bd = eina_list_data_get(list->clients);
 
-   list->clients = list->clients->next;
+   list->clients = eina_list_next(list->clients);
    while ((list->layer < 6) && (!list->clients))
      list->clients = list->container->layers[++list->layer].clients;
    return bd;
@@ -864,9 +844,9 @@ e_container_border_list_prev(E_Border_List *list)
 
    if (!list->clients) return NULL;
 
-   bd = list->clients->data;
+   bd = eina_list_data_get(list->clients);
 
-   list->clients = list->clients->prev;
+   list->clients = eina_list_prev(list->clients);
    while ((list->layer > 0) && (!list->clients))
      {
 	list->layer--;
@@ -886,20 +866,14 @@ e_container_border_list_free(E_Border_List *list)
 EAPI void
 e_container_all_freeze(void)
 {
-   Eina_List *managers, *l;
+   Eina_List *l, *ll;
+   E_Manager *man;
+   E_Container *con;
 
-   managers = e_manager_list();
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	Eina_List *ll;
-	E_Manager *man;
-
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
+	EINA_LIST_FOREACH(man->containers, ll, con)
 	  {
-	     E_Container *con;
-
-	     con = ll->data;
 	     evas_event_freeze(con->bg_evas);
 	  }
      }
@@ -908,20 +882,14 @@ e_container_all_freeze(void)
 EAPI void
 e_container_all_thaw(void)
 {
-   Eina_List *managers, *l;
+   Eina_List *l, *ll;
+   E_Manager *man;
+   E_Container *con;
 
-   managers = e_manager_list();
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	Eina_List *ll;
-	E_Manager *man;
-
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
+	EINA_LIST_FOREACH(man->containers, ll, con)
 	  {
-	     E_Container *con;
-
-	     con = ll->data;
 	     evas_event_thaw(con->bg_evas);
 	  }
      }
@@ -944,21 +912,15 @@ _e_container_free(E_Container *con)
 
    for (i = 0; i < 7; i++)
      {
-	for (l = con->layers[i].clients; l;)
+	EINA_LiST_FOREACH(con->layers[i].clients, l, tmp)
 	  {
-	     tmp = l;
-	     l = l->next;
-	     e_object_free(E_OBJECT(tmp->data));
+	     e_object_free(E_OBJECT(tmp));
 	  }
      }
  */   
    l = con->zones;
    con->zones = NULL;
-   while (l)
-     {
-	e_object_del(E_OBJECT(l->data));
-	l = eina_list_remove_list(l, l);
-     }
+   E_FREE_LIST(l, e_object_del);
    con->manager->containers = eina_list_remove(con->manager->containers, con);
    e_canvas_del(con->bg_ecore_evas);
    ecore_evas_free(con->bg_ecore_evas);
@@ -973,20 +935,14 @@ _e_container_free(E_Container *con)
 static E_Container *
 _e_container_find_by_event_window(Ecore_X_Window win)
 {
-   Eina_List *managers, *l;
+   Eina_List *l, *ll;
+   E_Manager *man;
+   E_Container *con;
 
-   managers = e_manager_list();
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	Eina_List *ll;
-	E_Manager *man;
-
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
+	EINA_LIST_FOREACH(man->containers, ll, con)
 	  {
-	     E_Container *con;
-
-	     con = ll->data;
 	     if (con->event_win == win) return con;
 	  }
      }
@@ -1115,12 +1071,8 @@ _e_container_shape_del(E_Container_Shape *es)
 static void
 _e_container_shape_free(E_Container_Shape *es)
 {
-   Eina_List *l = NULL;
-
    es->con->shapes = eina_list_remove(es->con->shapes, es);
-   for (l = es->shape; l; l = l->next)
-     free(l->data);
-   eina_list_free(es->shape);
+   E_FREE_LIST(es->shape, free);
    free(es);
 }
 
@@ -1128,13 +1080,12 @@ static void
 _e_container_shape_change_call(E_Container_Shape *es, E_Container_Shape_Change ch)
 {
    Eina_List *l = NULL;
+   E_Container_Shape_Callback *cb = NULL;
 
    if ((!es) || (!es->con) || (!es->con->shape_change_cb)) return;
-   for (l = es->con->shape_change_cb; l; l = l->next)
+   EINA_LIST_FOREACH(es->con->shape_change_cb, l, cb)
      {
-	E_Container_Shape_Callback *cb;
-
-	if (!(cb = l->data)) continue;
+	if (!cb) continue;
 	cb->func(cb->data, es, ch);
      }
 }
@@ -1144,6 +1095,8 @@ _e_container_resize_handle(E_Container *con)
 {
    E_Event_Container_Resize *ev;
    Eina_List *l, *screens, *zones = NULL;
+   E_Zone *zone;
+   E_Screen *scr;
    int i;
 
    ev = calloc(1, sizeof(E_Event_Container_Resize));
@@ -1155,14 +1108,10 @@ _e_container_resize_handle(E_Container *con)
 
    if (screens)
      {
-	for (l = con->zones; l; l = l->next)
-	  zones = eina_list_append(zones, l->data);
-	for (l = screens; l; l = l->next)
+	EINA_LIST_FOREACH(con->zones, l, zone)
+	  zones = eina_list_append(zones, zone);
+	EINA_LIST_FOREACH(screens, l, scr)
 	  {
-	     E_Screen *scr;
-	     E_Zone *zone;
-
-	     scr = l->data;
 	     zone = e_container_zone_id_get(con, scr->escreen);
 	     if (zone)
 	       {
@@ -1173,14 +1122,12 @@ _e_container_resize_handle(E_Container *con)
 	     else
 	       {
 		  Eina_List *ll;
+  		  E_Config_Shelf *cf_es;
 
 		  zone = e_zone_new(con, scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
 		  /* find any shelves configured for this zone and add them in */
-		  for (ll = e_config->shelves; ll; ll = ll->next)
+		  EINA_LIST_FOREACH(e_config->shelves, ll, cf_es)
 		    {
-		       E_Config_Shelf *cf_es;
-
-		       cf_es = ll->data;
 		       if (e_util_container_zone_id_get(cf_es->container, cf_es->zone) == zone)
 			 e_shelf_config_new(zone, cf_es);
 		    }
@@ -1191,37 +1138,28 @@ _e_container_resize_handle(E_Container *con)
 	     E_Zone *spare_zone = NULL;
 	     Eina_List *ll;
 
-	     for (ll = con->zones; ll; ll = ll->next)
+	     EINA_LIST_FOREACH(con->zones, ll, spare_zone)
 	       {
-		  spare_zone = ll->data;
 		  if (eina_list_data_find(zones, spare_zone))
 		    spare_zone = NULL;
 		  else break;
 	       }
-	     while (zones)
+	     EINA_LIST_FREE(zones, zone)
 	       {
-		  E_Zone *zone;
 		  Eina_List *shelves, *ll, *del_shelves;
+		  E_Shelf *es;
 		  E_Border_List *bl;
 		  E_Border *bd;
 
-		  zone = zones->data;
 		  /* delete any shelves on this zone */
 		  shelves = e_shelf_list();
 		  del_shelves = NULL;
-		  for (ll = shelves; ll; ll = ll->next)
+		  EINA_LIST_FOREACH(shelves, ll, es)
 		    {
-		       E_Shelf *es;
-
-		       es = ll->data;
 		       if (es->zone == zone)
 			 del_shelves = eina_list_append(del_shelves, es);
 		    }
-		  while (del_shelves)
-		    {
-		       e_object_del(E_OBJECT(del_shelves->data));
-		       del_shelves = eina_list_remove_list(del_shelves, del_shelves);
-		    }
+		  E_FREE_LIST(del_shelves, e_object_del);
 		  bl = e_container_border_list_first(zone->container);
 		  while ((bd = e_container_border_list_next(bl)))
 		    {
@@ -1236,7 +1174,6 @@ _e_container_resize_handle(E_Container *con)
 		    }
 		  e_container_border_list_free(bl);
 		  e_object_del(E_OBJECT(zone));
-		  zones = eina_list_remove_list(zones, zones);
 	       }
 	  }
      }
@@ -1254,17 +1191,15 @@ _e_container_resize_handle(E_Container *con)
    for (i = 0; i < 7; i++)
      {
 	Eina_List *tmp = NULL;
+	E_Border *bd;
 
 	/* Make temporary list as e_border_res_change_geometry_restore
 	 * rearranges the order. */
-	for (l = con->layers[i].clients; l; l = l->next)
-	     tmp = eina_list_append(tmp, l->data);
+	EINA_LIST_FOREACH(con->layers[i].clients, l, bd)
+	     tmp = eina_list_append(tmp, bd);
 
-	for (l = tmp; l; l = l->next)
+	EINA_LIST_FOREACH(tmp, l, bd)
 	  {
-	     E_Border *bd;
-
-	     bd = l->data;
 	     e_border_res_change_geometry_save(bd);
 	     e_border_res_change_geometry_restore(bd);
 	  }

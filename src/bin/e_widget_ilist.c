@@ -69,7 +69,7 @@ _queue_timer(void *data)
      {
         E_Widget_Queue_Item *qi;
 
-        qi = wd->queue.queue->data;
+        qi = eina_list_data_get(wd->queue.queue);
         if (qi->command == 0)
           {
              E_Widget_Callback *wcb, *rcb;
@@ -246,7 +246,7 @@ _queue_clear(Evas_Object *obj)
 
    wd = e_widget_data_get(obj);
    while (wd->queue.queue)
-     _queue_remove(obj, wd->queue.queue->data, 1);
+     _queue_remove(obj, eina_list_data_get(wd->queue.queue), 1);
    if (wd->queue.timer) ecore_timer_del(wd->queue.timer);
    wd->queue.timer = NULL;
 }
@@ -468,19 +468,16 @@ EAPI void
 e_widget_ilist_clear(Evas_Object *obj)
 {
    E_Widget_Data *wd;
+   E_Widget_Callback *wcb;
 
    wd = e_widget_data_get(obj);
    _queue_clear(obj);
    e_ilist_clear(wd->o_ilist);
    e_scrollframe_child_pos_set(wd->o_scrollframe, 0, 0);
-   while (wd->callbacks)
+   EINA_LIST_FREE(wd->callbacks, wcb)
      {
-	E_Widget_Callback *wcb;
-
-	wcb = wd->callbacks->data;
 	if (wcb->value) free(wcb->value);
 	free(wcb);
-	wd->callbacks = eina_list_remove_list(wd->callbacks, wd->callbacks);
      }
 }
 
@@ -739,17 +736,14 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
+   E_Widget_Callback *wcb;
 
    wd = e_widget_data_get(obj);
    _queue_clear(obj);
-   while (wd->callbacks)
+   EINA_LIST_FREE(wd->callbacks, wcb)
      {
-	E_Widget_Callback *wcb;
-
-	wcb = wd->callbacks->data;
 	if (wcb->value) free(wcb->value);
 	free(wcb);
-	wd->callbacks = eina_list_remove_list(wd->callbacks, wd->callbacks);
      }
    free(wd);
 }

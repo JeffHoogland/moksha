@@ -59,10 +59,7 @@ e_manager_init(void)
 EAPI int
 e_manager_shutdown(void)
 {
-   E_Manager *man;
-
-   EINA_LIST_FREE(managers, man)
-     e_object_del(E_OBJECT(man));
+   E_FREE_LIST(managers, e_object_del);
 
    if (frame_extents)
      {
@@ -323,15 +320,13 @@ EAPI void
 e_manager_show(E_Manager *man)
 {
    Eina_List *l;
+   E_Container *con;
    
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if (man->visible) return;
-   for (l = man->containers; l; l = l->next)
+   EINA_LIST_FOREACH(man->containers, l, con)
      {
-	E_Container *con;
-	
-	con = l->data;
 	e_container_show(con);
      }
    if (man->root != man->win)
@@ -357,15 +352,13 @@ EAPI void
 e_manager_hide(E_Manager *man)
 {
    Eina_List *l;
+   E_Container *con;
    
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if (!man->visible) return;
-   for (l = man->containers; l; l = l->next)
+   EINA_LIST_FOREACH(man->containers, l, con)
      {
-	E_Container *con;
-	
-	con = l->data;
 	e_container_hide(con);
      }
    if (man->root != man->win)
@@ -391,6 +384,7 @@ EAPI void
 e_manager_resize(E_Manager *man, int w, int h)
 {
    Eina_List *l;
+   E_Container *con;
    
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
@@ -400,11 +394,8 @@ e_manager_resize(E_Manager *man, int w, int h)
    if (man->root != man->win)
      ecore_x_window_resize(man->win, man->w, man->h);
 	
-   for (l = man->containers; l; l = l->next)
+   EINA_LIST_FOREACH(man->containers, l, con)
      {
-	E_Container *con;
-	
-	con = l->data;
 	e_container_resize(con, man->w, man->h);
      }
 
@@ -415,6 +406,7 @@ EAPI void
 e_manager_move_resize(E_Manager *man, int x, int y, int w, int h)
 {
    Eina_List *l;
+   E_Container *con;
    
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
@@ -428,11 +420,8 @@ e_manager_move_resize(E_Manager *man, int x, int y, int w, int h)
    man->h = h;
    ecore_x_window_move_resize(man->win, man->x, man->y, man->w, man->h);
 
-   for (l = man->containers; l; l = l->next)
+   EINA_LIST_FOREACH(man->containers, l, con)
      {
-	E_Container *con;
-	
-	con = l->data;
 	e_container_resize(con, man->w, man->h);
      }
 }
@@ -476,16 +465,15 @@ e_manager_current_get(void)
    int x, y;
    
    if (!managers) return NULL;
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(managers, l, man)
      {
-	man = l->data;
 	ecore_x_pointer_xy_get(man->win, &x, &y);
 	if (x == -1 && y == -1)
 	  continue;
 	if (E_INSIDE(x, y, man->x, man->y, man->w, man->h))
 	  return man;
      }
-   return managers->data;
+   return eina_list_data_get(managers);
 }
 
 EAPI E_Manager *
@@ -495,9 +483,8 @@ e_manager_number_get(int num)
    E_Manager *man;
    
    if (!managers) return NULL;
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(managers, l, man)
      {
-	man = l->data;
 	if (man->num == num)
 	  return man;
      }
@@ -508,12 +495,10 @@ EAPI void
 e_managers_keys_grab(void)
 {
    Eina_List *l;
+   E_Manager *man;
 
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(managers, l, man)
      {
-	E_Manager *man;
-	
-	man = l->data;
 	e_bindings_key_grab(E_BINDING_CONTEXT_ANY, man->root);
      }
 }
@@ -522,12 +507,10 @@ EAPI void
 e_managers_keys_ungrab(void)
 {
    Eina_List *l;
+   E_Manager *man;
    
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(managers, l, man)
      {
-	E_Manager *man;
-	
-	man = l->data;
 	e_bindings_key_ungrab(E_BINDING_CONTEXT_ANY, man->root);
      }
 }
@@ -538,21 +521,10 @@ _e_manager_free(E_Manager *man)
 {
    Eina_List *l;
 
-   while (man->handlers)
-     {
-	Ecore_Event_Handler *h;
-   
-	h = man->handlers->data;
-	man->handlers = eina_list_remove_list(man->handlers, man->handlers);
-	ecore_event_handler_del(h);
-     }
+   E_FREE_LIST(man->handlers, ecore_event_handler_del);
    l = man->containers;
    man->containers = NULL;
-   while (l)
-     {
-	e_object_del(E_OBJECT(l->data));
-	l = eina_list_remove_list(l, l);
-     }
+   E_FREE_LIST(l, e_object_del);
    if (man->root != man->win)
      {
 	ecore_x_window_free(man->win);
@@ -903,13 +875,12 @@ _e_manager_get_for_root(Ecore_X_Window root)
    E_Manager *man;
 
    if (!managers) return NULL;
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(managers, l, man)
      {
-	man = l->data;
 	if (man->root == root)
 	  return man;
      }
-   return managers->data;
+   return eina_list_data_get(managers);
 }
 
 

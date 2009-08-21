@@ -84,14 +84,12 @@ EAPI E_Storage *
 e_fm2_hal_storage_find(const char *udi)
 {
    Eina_List *l;
+   E_Storage  *s;
 
    if (!udi) return NULL;
-   
-   for (l = _e_stores; l; l = l->next)
+
+   EINA_LIST_FOREACH(_e_stores, l, s)   
      {
-	E_Storage  *s;
-	
-	s = l->data;
 	if (!strcmp(udi, s->udi)) return s;
      }
    return NULL;
@@ -369,14 +367,12 @@ EAPI E_Volume *
 e_fm2_hal_volume_find(const char *udi)
 {
    Eina_List *l;
+   E_Volume *v;
    
    if (!udi) return NULL;
 
-   for (l = _e_vols; l; l = l->next)
+   EINA_LIST_FOREACH(_e_vols, l, v)
      {
-	E_Volume *v;
-	
-	v = l->data;
 	if (!strcmp(udi, v->udi)) return v;
      }
    return NULL;
@@ -413,6 +409,7 @@ EAPI void
 e_fm2_hal_mount_add(E_Volume *v, const char *mountpoint)
 {
    Eina_List *l;
+   E_Fm2_Mount *m;
 
    v->mounted = 1;
    if (mountpoint && (*mountpoint != 0))
@@ -422,8 +419,8 @@ e_fm2_hal_mount_add(E_Volume *v, const char *mountpoint)
         v->mount_point = strdup(mountpoint);
      }
 
-   for (l = v->mounts; l; l = l->next)
-     _e_fm2_hal_mount_ok(l->data);
+   EINA_LIST_FOREACH(v->mounts, l, m)
+     _e_fm2_hal_mount_ok(m);
 
 //   printf("MOUNT %s %s\n", v->udi, v->mount_point);
 }
@@ -464,16 +461,14 @@ EAPI E_Fm2_Mount *
 e_fm2_hal_mount_find(const char *path)
 {
    Eina_List *l;
+   E_Volume *v;
 
-   for (l = _e_vols; l; l = l->next)
+   EINA_LIST_FOREACH(_e_vols, l, v)
      {
-	E_Volume *v;
-	
-	v = l->data;
 	if (v->mounted
 	    && !strncmp(path, v->mount_point, strlen(v->mount_point))
 	    && v->mounts) 
-	  return v->mounts->data;
+	  return eina_list_data_get(v->mounts);
      }
    return NULL;
 }
@@ -555,11 +550,12 @@ EAPI void
 e_fm2_hal_unmount_fail(E_Volume *v)
 {
    Eina_List *l;
+   E_Fm2_Mount *m;
 
    v->mounted = 1;
 
-   for (l = v->mounts; l; l = l->next)
-     _e_fm2_hal_unmount_fail(l->data);
+   EINA_LIST_FOREACH(v->mounts, l, m)
+     _e_fm2_hal_unmount_fail(m);
 }
 
 static void
@@ -616,10 +612,8 @@ e_fm2_hal_show_desktop_icons(void)
    char buf2[PATH_MAX] = {0};
    const char *id;
 
-   for (l = _e_vols; l; l = eina_list_next(l))
+   EINA_LIST_FOREACH(_e_vols, l, v)
      {
-	v = eina_list_data_get(l);
-
 	if (!v) continue;	
 	if (!v->storage) continue;
 
@@ -649,10 +643,8 @@ e_fm2_hal_hide_desktop_icons(void)
    char buf[PATH_MAX] = {0};
    const char *id;
 
-   for (l = _e_vols; l; l = eina_list_next(l))
+   EINA_LIST_FOREACH(_e_vols, l, v)
      {
-	v = eina_list_data_get(l);
-
 	if (!v) continue;	
 	if (!v->storage) continue;
 

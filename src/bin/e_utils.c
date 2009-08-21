@@ -126,13 +126,12 @@ EAPI E_Container *
 e_util_container_number_get(int num)
 {
    Eina_List *l;
+   E_Manager *man;
 
-   for (l = e_manager_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	E_Manager *man;
 	E_Container *con;
 
-	man = l->data;
 	con = e_container_number_get(man, num);
 	if (con) return con;
      }
@@ -507,17 +506,13 @@ EAPI E_Container *
 e_util_container_window_find(Ecore_X_Window win)
 {
    Eina_List *l, *ll;
+   E_Manager *man;
+   E_Container *con;
 
-   for (l = e_manager_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	E_Manager *man;
-
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
+	EINA_LIST_FOREACH(man->containers, ll, con)
           {
-	     E_Container *con;
-
-	     con = ll->data;
 	     if ((con->win == win) || (con->bg_win == win) ||
 		 (con->event_win == win))
 	       return con;
@@ -529,7 +524,7 @@ e_util_container_window_find(Ecore_X_Window win)
 EAPI E_Border *
 e_util_desk_border_above(E_Border *bd)
 {
-   E_Border *above = NULL;
+   E_Border *bd2, *above = NULL;
    Eina_List *l;
    int pos, i;
 
@@ -543,11 +538,10 @@ e_util_desk_border_above(E_Border *bd)
    else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
    else pos = 5;
 
-   for (l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd);
-	(l) && (l->next) && (!above);
-	l = l->next)
+   EINA_LIST_FOREACH(eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd), l, bd2)
      {
-	above = l->next->data;
+	if(!eina_list_next(l) || above) break;
+	above = eina_list_data_get(eina_list_next(l));
 	if ((above->desk != bd->desk) && (!above->sticky))
 	  above = NULL;
      }
@@ -556,11 +550,10 @@ e_util_desk_border_above(E_Border *bd)
 	/* Need to check the layers above */
 	for (i = pos + 1; (i < 7) && (!above); i++)
 	  {
-	     for (l = bd->zone->container->layers[i].clients;
-		  (l) && (!above);
-		  l = l->next)
+	     EINA_LIST_FOREACH(bd->zone->container->layers[i].clients, l, bd2)
 	       {
-		  above = l->data;
+		  if (above) break;
+		  above = bd2;
 		  if ((above->desk != bd->desk) && (!above->sticky))
 		    above = NULL;
 	       }
@@ -572,7 +565,7 @@ e_util_desk_border_above(E_Border *bd)
 EAPI E_Border *
 e_util_desk_border_below(E_Border *bd)
 {
-   E_Border *below = NULL;
+   E_Border *below = NULL, *bd2;
    Eina_List *l;
    int pos, i;
 
@@ -586,11 +579,10 @@ e_util_desk_border_below(E_Border *bd)
    else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
    else pos = 5;
 
-   for (l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd);
-	(l) && (l->prev) && (!below);
-	l = l->prev)
+   EINA_LIST_REVERSE_FOREACH(eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd), l, bd2)
      {
-	below = l->prev->data;
+	if (!eina_list_prev(l) || below) break;
+	below = eina_list_data_get(eina_list_prev(l));
 	if ((below->desk != bd->desk) && (!below->sticky))
 	  below = NULL;
      }
@@ -601,11 +593,10 @@ e_util_desk_border_below(E_Border *bd)
 	  {
 	     if (bd->zone->container->layers[i].clients)
 	       {
-		  for (l = eina_list_last(bd->zone->container->layers[i].clients);
-		       (l) && (!below);
-		       l = l->prev)
+		  EINA_LIST_REVERSE_FOREACH(eina_list_last(bd->zone->container->layers[i].clients), l, bd2)
 		    {
-		       below = l->data;
+		       if (below) break;
+		       below = bd2;
 		       if ((below->desk != bd->desk) && (!below->sticky))
 			 below = NULL;
 		    }
@@ -620,11 +611,12 @@ EAPI int
 e_util_edje_collection_exists(const char *file, const char *coll)
 {
    Eina_List *clist, *l;
+   char *str;
 
    clist = edje_file_collection_list(file);
-   for (l = clist; l; l = l->next)
+   EINA_LIST_FOREACH(clist, l, str)
      {
-	if (!strcmp(coll, l->data))
+	if (!strcmp(coll, str))
 	  {
 	     edje_file_collection_list_free(clist);
 	     return 1;

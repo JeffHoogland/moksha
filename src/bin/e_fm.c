@@ -1964,7 +1964,7 @@ _e_fm2_icon_thumb_edje_get(Evas *evas, const E_Fm2_Icon *ic, void (*cb) (void *d
 	Eina_List *l = edje_file_collection_list(buf);
 	if (!l)
 	  return NULL;
-	group = l->data;
+	group = eina_list_data_get(l);
 	edje_file_collection_list_free(l);
      }
 
@@ -2402,7 +2402,7 @@ _e_fm2_client_messages_flush(void)
 
 	cl = _e_fm2_client_get();
 	if (!cl) break;
-	_e_fm2_client_message_flush(cl, _e_fm2_messages->data);
+	_e_fm2_client_message_flush(cl, eina_list_data_get(_e_fm2_messages));
      }
 }
 
@@ -2684,7 +2684,7 @@ _e_fm2_file_force_update(const char *path)
 	  {
 	     E_Fm2_Icon *ic;
 
-	     ic = _e_fm2_icon_find(l->data, ecore_file_file_get(path));
+	     ic = _e_fm2_icon_find(o, ecore_file_file_get(path));
 	     if (ic)
 	       {
 		  E_Fm2_Finfo finf;
@@ -2696,7 +2696,7 @@ _e_fm2_file_force_update(const char *path)
 		  finf.lnk = ic->info.link;
 		  finf.rlnk = ic->info.real_link;
 		  ic->removable_state_change = 1;
-		  _e_fm2_live_file_changed(l->data, ecore_file_file_get(path),
+		  _e_fm2_live_file_changed(o, ecore_file_file_get(path),
 					   &finf);
 	       }
 	  }
@@ -2898,14 +2898,11 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     break;
 	  }
      }
-   while (dels)
+   EINA_LIST_FREE(dels, obj)
      {
-	Evas_Object *obj;
 	E_Fm2_Smart_Data *sd;
 
-	obj = dels->data;
         sd = evas_object_smart_data_get(obj);
-	dels = eina_list_remove_list(dels, dels);
 	if ((_e_fm2_list_walking > 0) &&
 	    (eina_list_data_find(_e_fm2_list_remove, obj))) continue;
 	if (sd->config->view.open_dirs_in_place)
@@ -2916,10 +2913,9 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
    _e_fm2_list_walking--;
    if (_e_fm2_list_walking == 0)
      {
-	while (_e_fm2_list_remove)
+	EINA_LIST_FREE(_e_fm2_list_remove, obj)
 	  {
-	     _e_fm2_list = eina_list_remove(_e_fm2_list, _e_fm2_list_remove->data);
-	     _e_fm2_list_remove = eina_list_remove_list(_e_fm2_list_remove, _e_fm2_list_remove);
+	     _e_fm2_list = eina_list_remove(_e_fm2_list, obj);
 	  }
      }
    switch (e->minor)
@@ -3000,8 +2996,8 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 
 	                a = e_action_find("fileman");
 	                m = e_manager_list();
-	                if (a && a->func.go && m && m->data)
-	                   a->func.go(E_OBJECT(m->data), mountpoint);
+	                if (a && a->func.go && m && eina_list_data_get(m))
+	                   a->func.go(E_OBJECT(eina_list_data_get(m)), mountpoint);
 	             }
 	        }
 	  }
@@ -3633,19 +3629,19 @@ _e_fm2_queue_process(Evas_Object *obj)
 	if (sd->tmp.list_index)
 	  {
 	     ll = sd->tmp.list_index;
-	     for (l = sd->icons; l; l = l->next)
+	     for (l = sd->icons; l; l = eina_list_next(l))
 	       {
 		  *ll = l;
 		  ll++;
 	       }
 	     /* binary search first queue */
-	     ic = sd->queue->data;
+	     ic = eina_list_data_get(sd->queue);
 	     p0 = 0; p1 = n;
 	     i = (p0 + p1) / 2;
 	     ll = sd->tmp.list_index;
 	     do
 	       {
-		  ic2 = ll[i]->data;
+		  ic2 = eina_list_data_get(ll[i]);
 		  v = _e_fm2_cb_icon_sort(ic, ic2);
 		  if (v < 0) /* ic should go before ic2 */
 		    p1 = i;
@@ -3676,9 +3672,8 @@ _e_fm2_queue_process(Evas_Object *obj)
 	  }
 	else
 	  {
-	     for (; l; l = l->next)
+	     EINA_LIST_FOREACH(l, l, ic2)
 	       {
-		  ic2 = l->data;
 		  if (_e_fm2_cb_icon_sort(ic, ic2) < 0)
 		    {
 		       if (l == sd->icons)
@@ -3936,7 +3931,6 @@ _e_fm2_icons_place_icon(E_Fm2_Icon *ic)
  _e_fm2_icon_place_relative(ic, ic2, 0, 1, 1, 0);
  if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
  */
-//   for (l = ic->sd->icons_place; l; l = l->next)
    EINA_LIST_FOREACH(ic->sd->icons, l, ic2)
      {
 	if ((ic2 != ic) && (ic2->saved_pos))
@@ -4111,11 +4105,7 @@ _e_fm2_icons_free(Evas_Object *obj)
    if (!sd) return;
    _e_fm2_queue_free(obj);
    /* free all icons */
-   while (sd->icons)
-     {
-	_e_fm2_icon_free(sd->icons->data);
-        sd->icons = eina_list_remove_list(sd->icons, sd->icons);
-     }
+   E_FREE_LIST(sd->icons, _e_fm2_icon_free);
    eina_list_free(sd->icons_place);
    sd->icons_place = NULL;
    sd->tmp.last_insert = NULL;
@@ -5127,7 +5117,7 @@ _e_fm2_icon_sel_first(Evas_Object *obj)
    if (!sd) return;
    if (!sd->icons) return;
    _e_fm2_icon_desel_any(obj);
-   ic = sd->icons->data;
+   ic = eina_list_data_get(sd->icons);
    _e_fm2_icon_select(ic);
    evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
    _e_fm2_icon_make_visible(ic);
@@ -5143,7 +5133,7 @@ _e_fm2_icon_sel_last(Evas_Object *obj)
    if (!sd) return;
    if (!sd->icons) return;
    _e_fm2_icon_desel_any(obj);
-   ic = eina_list_last(sd->icons)->data;
+   ic = eina_list_data_get(eina_list_last(sd->icons));
    _e_fm2_icon_select(ic);
    evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
    _e_fm2_icon_make_visible(ic);
@@ -5278,13 +5268,13 @@ _e_fm2_icon_next_find(Evas_Object *obj, int next, int match_func(E_Fm2_Icon *ic,
      {
 	if (next == 1)
 	  {
-	     if (!l->next) return NULL;
-	     ic_next = l->next->data;
+	     if (!eina_list_next(l)) return NULL;
+	     ic_next = eina_list_data_get(eina_list_next(l));
 	  }
 	if (next == -1)
 	  {
-	     if (!l->prev) return NULL;
-	     ic_next = l->prev->data;
+	     if (!eina_list_prev(l)) return NULL;
+	     ic_next = eina_list_data_get(eina_list_prev(l));
 	  }
      }
 
@@ -6187,10 +6177,10 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    if (sd->drop_all) /* drop arbitarily into the dir */
      {
 	/* move file into this fm dir */
-	for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
+	for (ll = fsel, il = isel; ll && il; ll = eina_list_next(ll), il = eina_list_next(il))
 	  {
-	     ic = il->data;
-	     fp = ll->data;
+	     ic = eina_list_data_get(il);
+	     fp = eina_list_data_get(ll);
 	     if (!fp) continue;
 
 	     if ((ic) && (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_CUSTOM_ICONS))
@@ -6232,9 +6222,8 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	  {
 	     sd->max.w = 0;
 	     sd->max.h = 0;
-	     for (l = sd->icons; l; l = l->next)
+	     EINA_LIST_FOREACH(sd->icons, l, ic)
 	       {
-		  ic = l->data;
 		  if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
 		  if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
 	       }
@@ -6249,10 +6238,10 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	if (sd->drop_after == -1) /* put into subdir/file in icon */
 	  {
 	     /* move file into dir that this icon is for */
-	     for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
+	     for (ll = fsel, il = isel; ll && il; ll = eina_list_next(ll), il = eina_list_next(il))
 	       {
-		  ic = il->data;
-		  fp = ll->data;
+		  ic = eina_list_data_get(il);
+		  fp = eina_list_data_get(ll);
 		  if (!fp) continue;
 
 		  args = _e_fm_string_append_quoted(args, &size, &length, fp);
@@ -6272,10 +6261,10 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	  {
 	     if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST && sd->order_file) /* list */
 	       {
-		  for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
+		  for (ll = fsel, il = isel; ll && il; ll = eina_list_next(ll), il = eina_list_next(il))
 		    {
-		       ic = il->data;
-		       fp = ll->data;
+		       ic = eina_list_data_get(il);
+		       fp = eina_list_data_get(ll);
 		       if (!fp) continue;
 		       snprintf(buf, sizeof(buf), "%s/%s",
 			     sd->realpath, ecore_file_file_get(fp));
@@ -6298,10 +6287,10 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	       }
 	     else
 	       {
-		  for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
+		  for (ll = fsel, il = isel; ll && il; ll = eina_list_next(ll), il = eina_list_next(il))
 		    {
-		       ic = il->data;
-		       fp = ll->data;
+		       ic = eina_list_data_get(il);
+		       fp = eina_list_data_get(ll);
 		       if (!fp) continue;
 
 		       args = _e_fm_string_append_quoted(args, &size, &length, fp);
@@ -6347,7 +6336,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
      {
 	EINA_LIST_FREE(_e_fm2_list_remove, obj)
 	  {
-	     _e_fm2_list = eina_list_remove(_e_fm2_list, _e_fm2_list_remove->data);
+	     _e_fm2_list = eina_list_remove(_e_fm2_list, obj);
 	  }
      }
    eina_list_free(fsel);
@@ -6407,9 +6396,9 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
 		  ic2->last_selected = 0;
 		  if (seen)
 		    {
-		       for (; (l) && (l->data != ic); l = l->prev)
+		       EINA_LIST_REVERSE_FOREACH(l, l, ic2)
 			 {
-			    ic2 = l->data;
+			    if (ic == ic2) break;
 			    if (!ic2->selected) sel_change = 1;
 			    _e_fm2_icon_select(ic2);
 			    ic2->last_selected = 0;
@@ -6417,9 +6406,9 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
 		    }
 		  else
 		    {
-		       for (; (l) && (l->data != ic); l = l->next)
+		       EINA_LIST_FOREACH(l, l, ic2)
 			 {
-			    ic2 = l->data;
+			    if (ic == ic2) break;
 			    if (!ic2->selected) sel_change = 1;
 			    _e_fm2_icon_select(ic2);
 			    ic2->last_selected = 0;
@@ -9394,7 +9383,8 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 	     if (e_filereg_file_protected(buf)) continue;
 
 	     files = _e_fm_string_append_quoted(files, &size, &len, buf);
-	     if (l->next) files = _e_fm_string_append_char(files, &size, &len, ' ');
+	     if (eina_list_next(l))
+	       files = _e_fm_string_append_char(files, &size, &len, ' ');
 	  }
 
 	eina_list_free(sel);
@@ -9545,7 +9535,7 @@ _e_fm2_live_process(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd->live.actions) return;
-   a = sd->live.actions->data;
+   a = eina_list_data_get(sd->live.actions);
    sd->live.actions = eina_list_remove_list(sd->live.actions, sd->live.actions);
    switch (a->type)
      {
@@ -9816,7 +9806,7 @@ _e_fm2_volume_icon_update(E_Volume *v)
         rp = e_fm2_real_path_get(o);
         if (strcmp(rp, fav) && strcmp(rp, desk)) continue;
         
-        ic = _e_fm2_icon_find(l->data, file);
+        ic = _e_fm2_icon_find(o, file);
         if (ic)
            _update_volume_icon(v, ic);
      }

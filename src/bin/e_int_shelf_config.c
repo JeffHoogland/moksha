@@ -180,16 +180,15 @@ _desk_sel_list_load(E_Config_Dialog_Data *cfdata)
      {
 	E_Desk *desk;
 	Eina_List *l = NULL;
+	E_Config_Shelf_Desk *sd;
 
 	desk = e_desk_at_xy_get(cfdata->es->zone, x, y);
 	e_widget_ilist_append(cfdata->desk_sel_list, NULL, desk->name, 
                               NULL, NULL, NULL);
 
-	for (l = cfdata->desk_list; l; l = l->next)
+	EINA_LIST_FOREACH(cfdata->desk_list, l, sd)
 	    {
-	       E_Config_Shelf_Desk *sd;
-
-	       if (!(sd = l->data)) continue;
+	       if (!sd) continue;
 	       if ((sd->x != x) || (sd->y != y)) continue;
 
 	       e_widget_ilist_multi_select(cfdata->desk_sel_list, 
@@ -413,14 +412,15 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	Eina_List *l = NULL;
 	Eina_List *desk_list = NULL;
+	E_Ilist_Item *item;
 
-	for (idx = 0, l = e_widget_ilist_items_get(cfdata->desk_sel_list); l; l = l->next, idx++)
+	idx = -1;
+	EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->desk_sel_list), l, item)
 	  {
-	     E_Ilist_Item *item;
 	     E_Desk *desk;
 	     E_Config_Shelf_Desk *sd;
 
-	     item = l->data;
+	     idx++;
 	     if ((!item) || (!item->selected)) continue;
 
 	     desk = e_desk_at_pos_get(cfdata->es->zone, idx);
@@ -456,14 +456,12 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	E_Desk *desk;
 	Eina_List *l;
+	E_Config_Shelf_Desk *sd;
 	int show_shelf=0;
 
 	desk = e_desk_current_get(cfdata->es->zone);
-	for (l = cfdata->escfg->desk_list; l; l = l->next)
+	EINA_LIST_FOREACH(cfdata->escfg->desk_list, l, sd)
           {
-             E_Config_Shelf_Desk *sd;
-
-             sd = l->data;
              if ((desk->x == sd->x) && (desk->y == sd->y))
                {
 	          show_shelf=1;
@@ -565,6 +563,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    E_Radio_Group *rg;
    Evas_Coord wmw, wmh;
    Eina_List *styles, *l;
+   char *style;
    int sel, n;
    
    /* FIXME: this is just raw config now - it needs UI improvments */
@@ -650,18 +649,20 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    sel = 0;
    styles = e_theme_shelf_list();
 
-   for (n = 0, l = styles; l; l = l->next, n++)
+   n = 0;
+   EINA_LIST_FOREACH(styles, l, style)
      {
 	char buf[4096];
 	
 	ob = e_livethumb_add(evas);
 	e_livethumb_vsize_set(ob, 120, 40);
 	oj = edje_object_add(e_livethumb_evas_get(ob));
-	snprintf(buf, sizeof(buf), "e/shelf/%s/base", (char *)l->data);
+	snprintf(buf, sizeof(buf), "e/shelf/%s/base", style);
 	e_theme_edje_object_set(oj, "base/theme/shelf", buf);
 	e_livethumb_thumb_set(ob, oj);
-	e_widget_ilist_append(oi, ob, (char *)l->data, NULL, NULL, l->data);
-	if (!strcmp(cfdata->es->style, (char *)l->data)) sel = n;
+	e_widget_ilist_append(oi, ob, style, NULL, NULL, style);
+	if (!strcmp(cfdata->es->style, style)) sel = n;
+	n++;
      }
    e_widget_min_size_get(oi, &wmw, &wmh);
    e_widget_min_size_set(oi, wmw, 160);

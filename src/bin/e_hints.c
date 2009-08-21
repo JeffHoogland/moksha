@@ -216,6 +216,7 @@ e_hints_manager_init(E_Manager *man)
    int			i = 0, num = 0;
    unsigned int		*areas = NULL;
    Eina_List		*cl;
+   E_Container		*c;
    Ecore_X_Window	*vroots = NULL;
    /* FIXME: Desktop names not yet implemented */
 /*   char			**names; */
@@ -236,11 +237,8 @@ e_hints_manager_init(E_Manager *man)
 	return;
      }
    
-   for (cl = man->containers; cl; cl = cl->next)
+   EINA_LIST_FOREACH(man->containers, cl, c)
      {
-	E_Container *c;
-
-	c = cl->data;
 	areas[4 * i] = c->x;
 	areas[4 * i + 1] = c->y;
 	areas[4 * i + 2] = c->w;
@@ -277,12 +275,10 @@ e_hints_client_list_set(void)
    Ecore_X_Window *clients = NULL;
 
    /* Get client count by adding client lists on all containers */
-   for (ml = e_manager_list(); ml; ml = ml->next)
+   EINA_LIST_FOREACH(e_manager_list(), ml, m)
      {
-	m = ml->data;
-	for (cl = m->containers; cl; cl = cl->next)
+	EINA_LIST_FOREACH(m->containers, cl, c)
 	  {
-	     c = cl->data;
 	     num += e_container_borders_count(c);
 	  }
      }
@@ -294,13 +290,11 @@ e_hints_client_list_set(void)
    /* Fetch window IDs and add to array */
    if (num > 0)
      {
-	for (ml = e_manager_list(); ml; ml = ml->next)
+     	EINA_LIST_FOREACH(e_manager_list(), ml, m)
 	  {
-	     m = ml->data;
 	     i = 0;
-	     for (cl = m->containers; cl; cl = cl->next)
+     	     EINA_LIST_FOREACH(m->containers, cl, c)
 	       {
-		  c = cl->data;
 		  bl = e_container_border_list_first(c);
 		  while ((b = e_container_border_list_next(bl)))
 		    clients[i++] = b->client.win;
@@ -320,9 +314,8 @@ e_hints_client_list_set(void)
      }
    else
      {
-	for (ml = e_manager_list(); ml; ml = ml->next)
+     	EINA_LIST_FOREACH(e_manager_list(), ml, m)
 	  {
-	     m = ml->data;
 	     ecore_x_netwm_client_list_set(m->root, NULL, 0);
 	     ecore_x_netwm_client_list_stacking_set(m->root, NULL, 0);
 	  }
@@ -344,12 +337,10 @@ e_hints_client_stacking_set(void)
    Ecore_X_Window *clients = NULL;
 
    /* Get client count */
-   for (ml = e_manager_list(); ml; ml = ml->next)
+   EINA_LIST_FOREACH(e_manager_list(), ml, m)
      {
-	m = ml->data;
-	for (cl = m->containers; cl; cl = cl->next)
+	EINA_LIST_FOREACH(m->containers, cl, c)
 	  {
-	     c = cl->data;
 	     num += e_container_borders_count(c);
 	  }
      }
@@ -359,12 +350,10 @@ e_hints_client_stacking_set(void)
 	clients = calloc(num, sizeof(Ecore_X_Window));
 	if (!clients) return;
 	
-	for (ml = e_manager_list(); ml; ml = ml->next)
+     	EINA_LIST_FOREACH(e_manager_list(), ml, m)
 	  {
-	     m = ml->data;
-	     for (cl = m->containers; cl; cl = cl->next)
+     	     EINA_LIST_FOREACH(m->containers, cl, c)
 	       {
-		  c = cl->data;
 		  bl = e_container_border_list_first(c);
 		  while ((b = e_container_border_list_next(bl)))
 		    {
@@ -390,18 +379,16 @@ e_hints_client_stacking_set(void)
 				  "This is strange, but not harmful.\n"
 				  "Please report this.\n");
 	  }
-	for (ml = e_manager_list(); ml; ml = ml->next)
+     	EINA_LIST_FOREACH(e_manager_list(), ml, m)
 	  {
-	     m = ml->data;
 	     ecore_x_netwm_client_list_stacking_set(m->root, clients, num);
 	  }
 	E_FREE(clients);
      }
    else
      {
-	for (ml = e_manager_list(); ml; ml = ml->next)
+     	EINA_LIST_FOREACH(e_manager_list(), ml, m)
 	  {
-	     m = ml->data;
 	     ecore_x_netwm_client_list_stacking_set(m->root, NULL, 0);
 	  }
      }

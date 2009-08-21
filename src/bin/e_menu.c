@@ -155,6 +155,8 @@ e_menu_init(void)
 EAPI int
 e_menu_shutdown(void)
 {
+   E_Menu *m;
+
    E_FN_DEL(ecore_event_handler_del, _e_menu_key_down_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_key_up_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_mouse_down_handler);
@@ -163,16 +165,10 @@ e_menu_shutdown(void)
    E_FN_DEL(ecore_event_handler_del, _e_menu_mouse_wheel_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_window_shape_handler);
 
-   while (_e_active_menus)
+   EINA_LIST_FREE(_e_active_menus, m)
      {
-	E_Menu *m;
-
-	m = _e_active_menus->data;
 	m->active = 0;
 	_e_menu_unrealize(m);
-	_e_active_menus = 
-          eina_list_remove_list(_e_active_menus, _e_active_menus);
-
 	m->in_active_list = 0;
 	e_object_unref(E_OBJECT(m));
      }
@@ -1957,19 +1953,15 @@ _e_menu_item_activate_next(void)
      {
 	/* Look at the next item and then cycle until we're not on
 	 * a separator. */
-	if (!(ll->next)) 
-	  ll = mi->menu->items;
-	else
-	   ll = ll->next;
-	mi = ll->data;
-	while (mi->separator || mi->disable)
+	do
 	  { 
-	     if (!(ll->next)) 
+	     if (!eina_list_next(ll)) 
 	       ll = mi->menu->items;
 	     else
-	       ll = ll->next;
-	     mi = ll->data;
+	       ll = eina_list_next(ll);
+	     mi = eina_list_data_get(ll);
 	  }
+	while (mi->separator || mi->disable);
 
 	e_menu_item_active_set(mi, 1);
 	_e_menu_item_ensure_onscreen(mi);
@@ -1991,19 +1983,15 @@ _e_menu_item_activate_previous(void)
      {
 	/* Look at the prev item and then cycle until we're not on
 	 * a separator. */
-	if (!(ll->prev)) 
-	  ll = eina_list_last(ll);
-	else
-	   ll = ll->prev;
-	mi = ll->data;
-	while (mi->separator || mi->disable)
+	do
 	  { 
-	     if (!(ll->prev)) 
+	     if (!eina_list_prev(ll)) 
 	       ll = eina_list_last(ll);
 	     else
-	       ll = ll->prev;
-	     mi = ll->data;
+	       ll = eina_list_prev(ll);
+	     mi = eina_list_data_get(ll);
 	  }
+	while (mi->separator || mi->disable);
 
 	e_menu_item_active_set(mi, 1);
 	_e_menu_item_ensure_onscreen(mi);
@@ -2024,11 +2012,11 @@ _e_menu_item_activate_first(void)
    if (m)
      {
 	ll = m->items;
-	mi = ll->data;
-	while ((mi->separator) && (ll->next))
+	mi = eina_list_data_get(ll);
+	while ((mi->separator) && eina_list_next(ll))
 	  {
-	     ll = ll->next;
-	     mi = ll->data;
+	     ll = eina_list_next(ll);
+	     mi = eina_list_data_get(ll);
 	  }
 	if (mi->separator) return;
 	e_menu_item_active_set(mi, 1);
@@ -2049,11 +2037,11 @@ _e_menu_item_activate_last(void)
    if (m)
      {
 	ll = eina_list_last(m->items);
-	mi = ll->data;
-	while ((mi->separator) && (ll->prev))
+	mi = eina_list_data_get(ll);
+	while ((mi->separator) && eina_list_prev(ll))
 	  {
-	     ll = ll->prev;
-	     mi = ll->data;
+	     ll = eina_list_prev(ll);
+	     mi = eina_list_data_get(ll);
 	  }
 	if (mi->separator) return;
 	e_menu_item_active_set(mi, 1);
@@ -2103,7 +2091,7 @@ _e_menu_item_activate_char(const char * key_compose)
    if (!m) 
      {
 	if (!_e_active_menus) return;
-	m = _e_active_menus->data;
+	m = eina_list_data_get(_e_active_menus);
 	if (!m) return;
      }
 
@@ -2112,7 +2100,7 @@ _e_menu_item_activate_char(const char * key_compose)
    if (!ll)
      {
 	ll = m->items;
-	mi = ll->data;
+	mi = eina_list_data_get(ll);
 	/* Only check the current item if it wasn't active before. */
 	if (!mi->separator && mi->label && !strncasecmp(key_compose, mi->label, strlen(key_compose))) 
 	  {
@@ -2124,32 +2112,27 @@ _e_menu_item_activate_char(const char * key_compose)
 
    ll_orig = ll;
 
-   mi = ll->data;
-   if (!(ll->next)) 
+   mi = eina_list_data_get(ll);
+   if (!eina_list_next(ll)) 
      ll = mi->menu->items;
    else
-     ll = ll->next;
-   mi = ll->data;
+     ll = eina_list_next(ll);
+   mi = eina_list_data_get(ll);
 
    /* While we don't have a label OR we don't match  AND we haven't
     * wrapped around */
    while ((!mi->label || strncasecmp(key_compose, mi->label, strlen(key_compose))) 
 	 && ll != ll_orig)
      {
-	if (!(ll->next)) 
-	  ll = mi->menu->items;
-	else
-	  ll = ll->next;
-	mi = ll->data;
-
-	while (mi->separator)
-	  { 
-	     if (!(ll->next)) 
-	       ll = mi->menu->items;
-	     else
-	       ll = ll->next;
-	     mi = ll->data;
+	do
+	  {
+	     if (!eina_list_next(ll)) 
+     	       ll = mi->menu->items;
+     	     else
+     	       ll = eina_list_next(ll);
+     	     mi = eina_list_data_get(ll);
 	  }
+	while (mi->separator);
      }
 
    e_menu_item_active_set(mi, 1);
@@ -2169,7 +2152,7 @@ _e_menu_activate_next(void)
 	  {
 	     if (mi->submenu->items)
 	       {
-		  mi = mi->submenu->items->data;
+		  mi = eina_list_data_get(mi->submenu->items);
 		  e_menu_item_active_set(mi, 1);
 		  _e_menu_item_ensure_onscreen(mi);
 	       }
@@ -2206,14 +2189,14 @@ _e_menu_activate_first(void)
    Eina_List *ll;
    
    if (!_e_active_menus) return;
-   m = _e_active_menus->data;
+   m = eina_list_data_get(_e_active_menus);
    if (!m->items) return;
    ll = m->items;
-   mi = ll->data;
-   while ((mi->separator) && (ll->next))
+   mi = eina_list_data_get(ll);
+   while ((mi->separator) && eina_list_next(ll))
      {
-	ll = ll->next;
-	mi = ll->data;
+	ll = eina_list_next(ll);
+	mi = eina_list_data_get(ll);
      }
    if (mi->separator) return;
    e_menu_item_active_set(mi, 1);   
@@ -2228,14 +2211,14 @@ _e_menu_activate_last(void)
    Eina_List *ll;
    
    if (!_e_active_menus) return;
-   m = _e_active_menus->data;
+   m = eina_list_data_get(_e_active_menus);
    if (!m->items) return;
    ll = eina_list_last(m->items);
-   mi = ll->data;
-   while ((mi->separator) && (ll->prev))
+   mi = eina_list_data_get(ll);
+   while ((mi->separator) && eina_list_prev(ll))
      {
-	ll = ll->prev;
-	mi = ll->data;
+	ll = eina_list_prev(ll);
+	mi = eina_list_data_get(ll);
      }
    if (mi->separator) return;
    e_menu_item_active_set(mi, 1);   
@@ -2380,7 +2363,7 @@ _e_menu_mouse_autoscroll_check(void)
 	  {
 	     E_Menu *m;
 	     
-	     m = _e_active_menus->data;
+	     m = eina_list_data_get(_e_active_menus);
 	     if (_e_menu_x + e_config->menu_autoscroll_cursor_margin >= (m->zone->w - 1))
 	       {
 		  if (_e_menu_outside_bounds_get(1, 0)) autoscroll_x = 1;

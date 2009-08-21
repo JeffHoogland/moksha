@@ -161,6 +161,7 @@ EAPI void
 e_path_user_path_remove(E_Path *ep, const char *path)
 {
    Eina_List *l;
+   E_Path_Dir *epd;
 
    E_OBJECT_CHECK(ep);
    E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
@@ -178,11 +179,8 @@ e_path_user_path_remove(E_Path *ep, const char *path)
 	if (!new_path) return;
 	strcpy(new_path, home_dir);
 	strcat(new_path, path + 1);
-	for (l = *(ep->user_dir_list); l; l = l->next)
+	EINA_LIST_FOREACH(*(ep->user_dir_list), l, epd)
 	  {
-	     E_Path_Dir *epd;
-	     
-	     epd = l->data;
 	     if (epd->dir)
 	       {
 		  if (!strcmp(epd->dir, new_path))
@@ -201,10 +199,8 @@ e_path_user_path_remove(E_Path *ep, const char *path)
       }
    else
      {
-	for (l = *(ep->user_dir_list); l; l = l->next)
+	EINA_LIST_FOREACH(*(ep->user_dir_list), l, epd)
 	  {
-	     E_Path_Dir *epd;
-	     epd = l->data;
 	     if (epd->dir)
 	       {
 		  if (!strcmp(epd->dir, path))
@@ -223,12 +219,10 @@ e_path_user_path_remove(E_Path *ep, const char *path)
 
 EAPI void
 e_path_user_path_clear(E_Path *ep)
-{	
-   while (*(ep->user_dir_list))
+{
+   E_Path_Dir *epd;
+   EINA_LIST_FREE(*(ep->user_dir_list), epd)
      {
-	E_Path_Dir *epd;
-	epd = (*(ep->user_dir_list))->data;
-	*(ep->user_dir_list) = eina_list_remove_list(*(ep->user_dir_list), *(ep->user_dir_list));
 	eina_stringshare_del(epd->dir);
 	free(epd);     
      }
@@ -268,11 +262,8 @@ e_path_find(E_Path *ep, const char *file)
 	  }
      }
    /* Look in the users dir list */
-   for (l = *(ep->user_dir_list); l; l = l->next)
+   EINA_LIST_FOREACH(*(ep->user_dir_list), l, epd)
      {
-	E_Path_Dir *epd;
-
-	epd = l->data;
 	if (epd->dir)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/%s", epd->dir, file);
@@ -294,8 +285,8 @@ e_path_find(E_Path *ep, const char *file)
 EAPI void
 e_path_evas_append(E_Path *ep, Evas *evas)
 {
-   Eina_List *l;
    Eina_List *dir_list;
+   E_Path_Dir *epd;
    
    E_OBJECT_CHECK(ep);
    E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
@@ -303,16 +294,12 @@ e_path_evas_append(E_Path *ep, Evas *evas)
 
    dir_list = e_path_dir_list_get(ep);
 
-   for (l = dir_list; l; l = l->next)
+   EINA_LIST_FREE(dir_list, epd)
      {
-	E_Path_Dir *epd;
-	
-	epd = l->data;
 	if (epd->dir) evas_font_path_append(evas, epd->dir);
 	eina_stringshare_del(epd->dir);
 	free(epd);
      }
-   if (dir_list) eina_list_free(dir_list);
 }
 
 /* combine default_list and and user_list in and easy to use list */
@@ -328,18 +315,16 @@ e_path_dir_list_get(E_Path *ep)
 
    if (ep->user_dir_list)
      {
-	for (l = *(ep->user_dir_list); l; l = l->next)
+	EINA_LIST_FOREACH(*(ep->user_dir_list), l, epd)
 	  {
-	     epd = l->data;
 	     new_epd = malloc(sizeof(E_Path_Dir));
 	     new_epd->dir = eina_stringshare_add(epd->dir);
 	     dir_list = eina_list_append(dir_list, new_epd);
 	  }
      }
 
-   for (l = ep->default_dir_list; l; l = l->next)
+   EINA_LIST_FOREACH(ep->default_dir_list, l, epd)
      {
-	epd = l->data;
 	new_epd = malloc(sizeof(E_Path_Dir));
 	new_epd->dir = eina_stringshare_add(epd->dir);
 	dir_list = eina_list_append(dir_list, new_epd);
@@ -353,10 +338,8 @@ e_path_dir_list_free(Eina_List *dir_list)
 {
    E_Path_Dir *epd;
 
-   while (dir_list)
+   EINA_LIST_FREE(dir_list, epd)
      {
-	epd = dir_list->data;
-	dir_list = eina_list_remove_list(dir_list, dir_list);
 	eina_stringshare_del(epd->dir);
 	free(epd);
      }
@@ -366,15 +349,13 @@ e_path_dir_list_free(Eina_List *dir_list)
 static void 
 _e_path_free(E_Path *ep)
 {
+   E_Path_Dir *epd;
+
    _e_path_cache_free(ep);
-   while (ep->default_dir_list)
+   EINA_LIST_FREE(ep->default_dir_list, epd)
      {
-	E_Path_Dir *epd;
-	epd = ep->default_dir_list->data;
 	eina_stringshare_del(epd->dir);
 	free(epd);
-	ep->default_dir_list = eina_list_remove_list(ep->default_dir_list, 
-						     ep->default_dir_list);
      }
    free(ep);
 }

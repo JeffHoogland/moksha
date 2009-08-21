@@ -35,7 +35,7 @@ e_toolbar_shutdown(void)
      {
 	E_Toolbar *tbar;
 
-	tbar = toolbars->data;
+	tbar = eina_list_data_get(toolbars);
 	e_object_del(E_OBJECT(tbar));
      }
    return 1;
@@ -499,14 +499,12 @@ _e_toolbar_fm2_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Toolbar *tbar;
    Eina_List *l = NULL;
+   E_Gadcon_Client *gcc = NULL;
 
    tbar = data;
    if (!tbar) return;
-   for (l = tbar->gadcon->clients; l; l = l->next) 
+   EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	E_Gadcon_Client *gcc = NULL;
-
-	gcc = l->data;
 	if (!gcc) continue;
 	evas_object_smart_callback_call(gcc->o_base, "changed", tbar);
      }
@@ -517,14 +515,12 @@ _e_toolbar_fm2_dir_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Toolbar *tbar;
    Eina_List *l = NULL;
+   E_Gadcon_Client *gcc = NULL;
 
    tbar = data;
    if (!tbar) return;
-   for (l = tbar->gadcon->clients; l; l = l->next) 
+   EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	E_Gadcon_Client *gcc = NULL;
-
-	gcc = l->data;
 	if (!gcc) continue;
 	evas_object_smart_callback_call(gcc->o_base, "dir_changed", tbar);
      }
@@ -535,14 +531,12 @@ _e_toolbar_fm2_dir_deleted(void *data, Evas_Object *obj, void *event_info)
 {
    E_Toolbar *tbar;
    Eina_List *l = NULL;
+   E_Gadcon_Client *gcc = NULL;
 
    tbar = data;
    if (!tbar) return;
-   for (l = tbar->gadcon->clients; l; l = l->next) 
+   EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	E_Gadcon_Client *gcc = NULL;
-
-	gcc = l->data;
 	if (!gcc) continue;
 	evas_object_smart_callback_call(gcc->o_base, "dir_deleted", tbar);
      }
@@ -553,14 +547,12 @@ _e_toolbar_fm2_files_deleted(void *data, Evas_Object *obj, void *event_info)
 {
    E_Toolbar *tbar;
    Eina_List *l = NULL;
+   E_Gadcon_Client *gcc = NULL;
 
    tbar = data;
    if (!tbar) return;
-   for (l = tbar->gadcon->clients; l; l = l->next) 
+   EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	E_Gadcon_Client *gcc = NULL;
-
-	gcc = l->data;
 	if (!gcc) continue;
 	evas_object_smart_callback_call(gcc->o_base, "files_deleted", tbar);
      }
@@ -571,14 +563,12 @@ _e_toolbar_fm2_selected(void *data, Evas_Object *obj, void *event_info)
 {
    E_Toolbar *tbar;
    Eina_List *l = NULL;
+   E_Gadcon_Client *gcc = NULL;
 
    tbar = data;
    if (!tbar) return;
-   for (l = tbar->gadcon->clients; l; l = l->next) 
+   EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	E_Gadcon_Client *gcc = NULL;
-
-	gcc = l->data;
 	if (!gcc) continue;
 	evas_object_smart_callback_call(gcc->o_base, "selected", tbar);
      }
@@ -589,14 +579,12 @@ _e_toolbar_fm2_selection_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Toolbar *tbar;
    Eina_List *l = NULL;
+   E_Gadcon_Client *gcc = NULL;
 
    tbar = data;
    if (!tbar) return;
-   for (l = tbar->gadcon->clients; l; l = l->next) 
+   EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	E_Gadcon_Client *gcc = NULL;
-
-	gcc = l->data;
 	if (!gcc) continue;
 	evas_object_smart_callback_call(gcc->o_base, "selection_changed", tbar);
      }

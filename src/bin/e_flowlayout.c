@@ -230,14 +230,16 @@ e_flowlayout_pack_before(Evas_Object *obj, Evas_Object *child, Evas_Object *befo
    E_Smart_Data *sd;
    int i = 0;
    Eina_List *l;
+   Evas_Object *item;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_flowlayout_smart_adopt(sd, child);
    sd->items = eina_list_prepend_relative(sd->items, child, before);
-   for (i = 0, l = sd->items; l; l = l->next, i++)
+   EINA_LIST_FOREACH(sd->items, l, item)
      {
-	if (l->data == child) break;
+	if (item == child) break;
+	i++;
      }
    sd->changed = 1;
    if (sd->frozen <= 0) _e_flowlayout_smart_reconfigure(sd);
@@ -250,14 +252,16 @@ e_flowlayout_pack_after(Evas_Object *obj, Evas_Object *child, Evas_Object *after
    E_Smart_Data *sd;
    int i = 0;
    Eina_List *l;
+   Evas_Object *item;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_flowlayout_smart_adopt(sd, child);
    sd->items = eina_list_append_relative(sd->items, child, after);
-   for (i = 0, l = sd->items; l; l = l->next, i++)
+   EINA_LIST_FOREACH(sd->items, l, item)
      {
-	if (l->data == child) break;
+	if (item == child) break;
+	i++;
      }
    sd->changed = 1;
    if (sd->frozen <= 0) _e_flowlayout_smart_reconfigure(sd);
@@ -464,6 +468,7 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
 {
    Evas_Coord x, y, w, h, xx, yy, cr, cc;
    Eina_List *l;
+   Evas_Object *obj;
    int minw, minh, wdif, hdif;
    int count, expand;
 
@@ -496,12 +501,10 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
      }
 
    /* Some odd expanding counter */
-   for (l = sd->items; l; l = l->next)
+   EINA_LIST_FOREACH(sd->items, l, obj)
      {
 	E_Flowlayout_Item *bi;
-	Evas_Object *obj;
 	
-	obj = l->data;
 	bi = evas_object_data_get(obj, "e_flowlayout_data");
 	if (bi)
 	  {
@@ -546,12 +549,10 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
    cc = 0;
 
    /* Now for the real deal */
-   for (l = sd->items; l; l = l->next)
+   EINA_LIST_FOREACH(sd->items, l, obj)
      {
 	E_Flowlayout_Item *bi;
-	Evas_Object *obj;
 	
-	obj = l->data;
 	bi = evas_object_data_get(obj, "e_flowlayout_data");
 	if (bi)
 	  {
@@ -720,6 +721,7 @@ static void
 _e_flowlayout_smart_extents_calcuate(E_Smart_Data *sd)
 {
    Eina_List *l;
+   Evas_Object *obj;
    int minw, minh, count;
 
    /* FIXME: need to calc max */
@@ -730,12 +732,10 @@ _e_flowlayout_smart_extents_calcuate(E_Smart_Data *sd)
    minh = 1;
    if (sd->homogenous)
      {
-	for (l = sd->items; l; l = l->next)
+	EINA_LIST_FOREACH(sd->items, l, obj)
 	  {
 	     E_Flowlayout_Item *bi;
-	     Evas_Object *obj;
 	     
-	     obj = l->data;
 	     bi = evas_object_data_get(obj, "e_flowlayout_data");	
 	     if (bi)
 	       {
@@ -794,12 +794,10 @@ _e_flowlayout_smart_extents_calcuate(E_Smart_Data *sd)
    /* TODO nonhomogenous */
    else
      {
-	for (l = sd->items; l; l = l->next)
+	EINA_LIST_FOREACH(sd->items, l, obj)
 	  {
 	     E_Flowlayout_Item *bi;
-	     Evas_Object *obj;
 	     
-	     obj = l->data;
 	     bi = evas_object_data_get(obj, "e_flowlayout_data");
 	     if (bi)
 	       {
@@ -901,7 +899,7 @@ _e_flowlayout_smart_del(Evas_Object *obj)
      {
 	Evas_Object *child;
 	
-	child = sd->items->data;
+	child = eina_list_data_get(sd->items);
 	e_flowlayout_unpack(child);
      }
    evas_object_del(sd->clip);
@@ -918,16 +916,17 @@ _e_flowlayout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if ((x == sd->x) && (y == sd->y)) return;
      {
 	Eina_List *l;
+	Evas_Object *item;
 	Evas_Coord dx, dy;
 	
 	dx = x - sd->x;
 	dy = y - sd->y;
-	for (l = sd->items; l; l = l->next)
+	EINA_LIST_FOREACH(sd->items, l, item)
 	  {
 	     Evas_Coord ox, oy;
 	     
-	     evas_object_geometry_get(l->data, &ox, &oy, NULL, NULL);
-	     evas_object_move(l->data, ox + dx, oy + dy);
+	     evas_object_geometry_get(item, &ox, &oy, NULL, NULL);
+	     evas_object_move(item, ox + dx, oy + dy);
 	  }
      }
    sd->x = x;

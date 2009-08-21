@@ -701,11 +701,9 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    if (e_config->transient.desktop)
      {
 	Eina_List *l;
-	for (l = bd->transients; l; l = l->next)
+	E_Border *child;
+	EINA_LIST_FOREACH(bd->transients, l, child)
 	  {
-	     E_Border *child;
-
-	     child = l->data;
 	     e_border_desk_set(child, bd->desk);
 	  }
      }
@@ -1207,6 +1205,7 @@ e_border_layer_set(E_Border *bd, int layer)
    if (e_config->transient.layer)
      {
 	Eina_List *l;
+	E_Border *child;
 
 	/* We need to set raise to one, else the child wont
 	 * follow to the new layer. It should be like this,
@@ -1214,11 +1213,8 @@ e_border_layer_set(E_Border *bd, int layer)
 	 * the transients.
 	 */
 	e_config->transient.raise = 1;
-	for (l = bd->transients; l; l = l->next)
+	EINA_LIST_FOREACH(bd->transients, l, child)
 	  {
-	     E_Border *child;
-
-	     child = l->data;
 	     child->layer = layer;
 	  }
      }
@@ -1230,7 +1226,7 @@ EAPI void
 e_border_raise(E_Border *bd)
 {
    E_Event_Border_Stack *ev;
-   E_Border *last = NULL;
+   E_Border *last = NULL, *child;
    Eina_List *l;
 
    E_OBJECT_CHECK(bd);
@@ -1240,11 +1236,8 @@ e_border_raise(E_Border *bd)
    
    if (e_config->transient.raise)
      {
-	for (l = eina_list_last(bd->transients); l; l = l->prev)
+	EINA_LIST_REVERSE_FOREACH(bd->transients, l, child)
 	  {
-	     E_Border *child;
-
-	     child = l->data;
 	     /* Don't stack iconic transients. If the user wants these shown,
 	      * thats another option.
 	      */
@@ -1320,7 +1313,7 @@ EAPI void
 e_border_lower(E_Border *bd)
 {
    E_Event_Border_Stack *ev;
-   E_Border *last = NULL;
+   E_Border *last = NULL, *child;
    Eina_List *l;
 
    E_OBJECT_CHECK(bd);
@@ -1330,11 +1323,8 @@ e_border_lower(E_Border *bd)
    
    if (e_config->transient.lower)
      {
-	for (l = eina_list_last(bd->transients); l; l = l->prev)
+	EINA_LIST_REVERSE_FOREACH(bd->transients, l, child)
 	  {
-	     E_Border *child;
-
-	     child = l->data;
 	     /* Don't stack iconic transients. If the user wants these shown,
 	      * thats another option.
 	      */
@@ -1410,7 +1400,7 @@ e_border_stack_above(E_Border *bd, E_Border *above)
 {
    /* TODO: Should stack above allow the border to change level */
    E_Event_Border_Stack *ev;
-   E_Border *last = NULL;
+   E_Border *last = NULL, *child;
    Eina_List *l;
 
    E_OBJECT_CHECK(bd);
@@ -1420,11 +1410,8 @@ e_border_stack_above(E_Border *bd, E_Border *above)
    
    if (e_config->transient.raise)
      {
-	for (l = eina_list_last(bd->transients); l; l = l->prev)
+	EINA_LIST_REVERSE_FOREACH(bd->transients, l, child)
 	  {
-	     E_Border *child;
-
-	     child = l->data;
 	     /* Don't stack iconic transients. If the user wants these shown,
 	      * thats another option.
 	      */
@@ -1468,7 +1455,7 @@ e_border_stack_below(E_Border *bd, E_Border *below)
 {
    /* TODO: Should stack below allow the border to change level */
    E_Event_Border_Stack *ev;
-   E_Border *last = NULL;
+   E_Border *last = NULL, *child;
    Eina_List *l;
 
    E_OBJECT_CHECK(bd);
@@ -1478,11 +1465,8 @@ e_border_stack_below(E_Border *bd, E_Border *below)
    
    if (e_config->transient.lower)
      {
-	for (l = eina_list_last(bd->transients); l; l = l->prev)
+	EINA_LIST_REVERSE_FOREACH(bd->transients, l, child)
 	  {
-	     E_Border *child;
-
-	     child = l->data;
 	     /* Don't stack iconic transients. If the user wants these shown,
 	      * thats another option.
 	      */
@@ -2457,12 +2441,10 @@ e_border_iconify(E_Border *bd)
    if (e_config->transient.iconify)
      {
 	Eina_List *l;
+	E_Border *child;
 
-	for (l = bd->transients; l; l = l->next)
+	EINA_LIST_FOREACH(bd->transients, l, child)
 	  {
-	     E_Border *child;
-
-	     child = l->data;
 	     e_border_iconify(child);
 	  }
      }
@@ -2502,12 +2484,10 @@ e_border_uniconify(E_Border *bd)
    if (e_config->transient.iconify)
      {
 	Eina_List *l;
+	E_Border *child;
 
-	for (l = bd->transients; l; l = l->next)
+	EINA_LIST_FOREACH(bd->transients, l, child)
 	  {
-	     E_Border *child;
-
-	     child = l->data;
 	     e_border_uniconify(child);
 	  }
      }
@@ -2530,11 +2510,9 @@ e_border_stick(E_Border *bd)
    if (e_config->transient.desktop)
      {
 	Eina_List *l;
-	for (l = bd->transients; l; l = l->next)
+	E_Border *child;
+	EINA_LIST_FOREACH(bd->transients, l, child)
 	  {
-	     E_Border *child;
-
-	     child = l->data;
 	     child->sticky = 1;
 	     e_hints_window_sticky_set(child, 1);
 	     e_border_show(child);
@@ -2566,11 +2544,9 @@ e_border_unstick(E_Border *bd)
    if (e_config->transient.desktop)
      {
 	Eina_List *l;
-	for (l = bd->transients; l; l = l->next)
+	E_Border *child;
+	EINA_LIST_FOREACH(bd->transients, l, child)
 	  {
-	     E_Border *child;
-
-	     child = l->data;
 	     child->sticky = 0;
 	     e_hints_window_sticky_set(child, 0);
 	  }
@@ -2668,12 +2644,10 @@ EAPI E_Border *
 e_border_find_by_alarm(Ecore_X_Sync_Alarm alarm)
 {
    Eina_List *l;
-   
-   for (l = borders; l; l = l->next)
+   E_Border *bd;
+  
+   EINA_LIST_FOREACH(borders, l, bd) 
      {
-	E_Border *bd;
-
-	bd = l->data;
 	if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
 	    (bd->client.netwm.sync.alarm == alarm))
 	  return bd;
@@ -2691,22 +2665,18 @@ EAPI void
 e_border_idler_before(void)
 {
    Eina_List *ml, *cl;
+   E_Manager *man;
+   E_Container *con;
 
    if (!borders)
      return;
 
-   for (ml = e_manager_list(); ml; ml = ml->next)
+   EINA_LIST_FOREACH(e_manager_list(), ml, man)
      {
-	E_Manager *man;
-
-	man = ml->data;
-	for (cl = man->containers; cl; cl = cl->next)
+	EINA_LIST_FOREACH(man->containers, cl, con)
 	  {
-	     E_Container *con;
 	     E_Border_List *bl;
 	     E_Border *bd;
-
-	     con = cl->data;
              
              // pass 1 - eval0. fetch properties on new or on change and
              // call hooks to decide what to do - maybe move/resize
@@ -3354,12 +3324,10 @@ EAPI void
 e_border_button_bindings_ungrab_all(void)
 {
    Eina_List *l;
-   
-   for (l = borders; l; l = l->next)
+   E_Border *bd;
+
+   EINA_LIST_FOREACH(borders, l, bd)   
      {
-	E_Border *bd;
-	
-	bd = l->data;
 	e_focus_setdown(bd);
 	e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
 	e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
@@ -3370,12 +3338,10 @@ EAPI void
 e_border_button_bindings_grab_all(void)
 {
    Eina_List *l;
+   E_Border *bd;
    
-   for (l = borders; l; l = l->next)
+   EINA_LIST_FOREACH(borders, l, bd)   
      {
-	E_Border *bd;
-	
-	bd = l->data;
 	e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
 	e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
 	e_focus_setup(bd);
@@ -3398,15 +3364,13 @@ EAPI Eina_List *
 e_border_lost_windows_get(E_Zone *zone)
 {
    Eina_List *list = NULL, *l;
+   E_Border *bd;
    int loss_overlap = 5;
    
    E_OBJECT_CHECK_RETURN(zone, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, NULL);
-   for (l = borders; l; l = l->next)
+   EINA_LIST_FOREACH(borders, l, bd)
      {
-	E_Border *bd;
-	
-	bd = l->data;
 	if (bd->zone)
 	  {
 	     if ((bd->zone == zone) ||
@@ -3538,12 +3502,10 @@ EAPI Eina_List *
 e_border_immortal_windows_get(void)
 {
    Eina_List *list = NULL, *l;
+   E_Border *bd;
    
-   for (l = borders; l; l = l->next)
+   EINA_LIST_FOREACH(borders, l, bd)
      {
-	E_Border *bd;
-	
-	bd = l->data;
 	if (bd->lock_life)
 	  list = eina_list_append(list, bd);
      }
@@ -3799,11 +3761,7 @@ _e_border_free(E_Border *bd)
 	ecore_poller_del(bd->ping_poller);
 	bd->ping_poller = NULL;
      }
-   while (bd->pending_move_resize)
-     {
-	free(bd->pending_move_resize->data);
-	bd->pending_move_resize = eina_list_remove_list(bd->pending_move_resize, bd->pending_move_resize);
-     }
+   E_FREE_LIST(bd->pending_move_resize, free);
 
    if (bd->shade.anim) ecore_animator_del(bd->shade.anim);
    if (bd->border_menu) e_menu_deactivate(bd->border_menu);
@@ -3930,6 +3888,7 @@ static void
 _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
+   E_Border *child;
 
    if (bd->fullscreen) bd->desk->fullscreen_borders--;
 
@@ -4000,13 +3959,9 @@ _e_border_del(E_Border *bd)
 	  }
 	bd->parent = NULL;
      }
-   while (bd->transients)
+   EINA_LIST_FREE(bd->transients, child)
      {
-	E_Border *child;
-
-	child = bd->transients->data;
 	child->parent = NULL;
-	bd->transients = eina_list_remove_list(bd->transients, bd->transients);
      }
 
    if (bd->leader)
@@ -4023,13 +3978,9 @@ _e_border_del(E_Border *bd)
 	  }
 	bd->leader = NULL;
      }
-   while (bd->group)
+   EINA_LIST_FREE(bd->group, child)
      {
-	E_Border *child;
-
-	child = bd->group->data;
 	child->leader = NULL;
-	bd->group = eina_list_remove_list(bd->group, bd->group);
      }
 }
 
@@ -5043,13 +4994,11 @@ static int
 _e_border_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev)
 {
    Eina_List *l;
+   E_Border *bd;
    
    /* mark all borders for desktop/icon updates */
-   for (l = borders; l; l = l->next)
+   EINA_LIST_FOREACH(borders, l, bd)
      {
-	E_Border *bd;
-
-	bd = l->data;
 	if (!bd->desktop)
 	  {
 	     bd->changes.icon = 1;
@@ -5066,6 +5015,7 @@ _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
 {
    Efreet_Event_Desktop_Change *event;
    Eina_List *l;
+   E_Border *bd;
 
    event = ev;
    e_init_status_set(_("Desktop file scan"));
@@ -5073,11 +5023,8 @@ _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
      {
       case EFREET_DESKTOP_CHANGE_ADD:
 	 /* If a desktop is added, make the borders without icon retry */
-	 for (l = borders; l; l = l->next)
+	 EINA_LIST_FOREACH(borders, l, bd)
 	   {
-	      E_Border *bd;
-
-	      bd = l->data;
 	      if (!bd->desktop)
 		{
 		   bd->changes.icon = 1;
@@ -5087,11 +5034,8 @@ _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
 	 break;
       case EFREET_DESKTOP_CHANGE_REMOVE:
 	 /* If a desktop is removed, drop the .desktop pointer */
-	 for (l = borders; l; l = l->next)
+	 EINA_LIST_FOREACH(borders, l, bd)
 	   {
-	      E_Border *bd;
-
-	      bd = l->data;
 	      if (bd->desktop == event->current)
 		{
 		   efreet_desktop_free(bd->desktop);
@@ -5103,12 +5047,8 @@ _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
 	 break;
       case EFREET_DESKTOP_CHANGE_UPDATE:
 	 /* If a desktop is updated, point to the new desktop and update the icon */
-	 for (l = borders; l; l = l->next)
+	 EINA_LIST_FOREACH(borders, l, bd)
 	   {
-	      E_Border *bd;
-
-	      bd = l->data;
-
 	      if (bd->desktop == event->previous)
 		{
 		   efreet_desktop_free(bd->desktop);
@@ -5132,13 +5072,11 @@ static int
 _e_border_cb_config_icon_theme(void *data, int ev_type, void *ev)
 {
    Eina_List *l;
+   E_Border *bd;
    
    /* mark all borders for desktop/icon updates */
-   for (l = borders; l; l = l->next)
+   EINA_LIST_FOREACH(borders, l, bd)
      {
-	E_Border *bd;
-
-	bd = l->data;
 	bd->changes.icon = 1;
 	bd->changed = 1;
      }
@@ -5717,11 +5655,9 @@ _e_border_eval0(E_Border *bd)
 		  else
 		    {
 		       Eina_List *l;
-		       for (l = bd->leader->group; l; l = l->next)
+		       E_Border *child;
+		       EINA_LIST_FOREACH(bd->leader->group, l, child)
 			 {
-			    E_Border *child;
-
-			    child = l->data;
 			    if ((child != bd) && (child->focused))
 			      e_border_focus_set(bd, 1, 1);
 			 }
@@ -6198,11 +6134,9 @@ _e_border_eval0(E_Border *bd)
 		  else
 		    {
 		       Eina_List *l;
-		       for (l = bd->leader->group; l; l = l->next)
+		       E_Border *child;
+		       EINA_LIST_FOREACH(bd->leader->group, l, child)
 			 {
-			    E_Border *child;
-
-			    child = l->data;
 			    if ((child != bd) && (child->focused))
 			      e_border_focus_set(bd, 1, 1);
 			 }
@@ -6669,6 +6603,7 @@ static void
 _e_border_eval(E_Border *bd)
 {	
    E_Event_Border_Property *event;
+   E_Border_Pending_Move_Resize *pnd;
    int rem_change = 0;
    int send_event = 1;
    int zx, zy, zw, zh;
@@ -6805,11 +6740,8 @@ _e_border_eval(E_Border *bd)
 		    }
 	       }
 	  }
-	while (bd->pending_move_resize)
+	EINA_LIST_FREE(bd->pending_move_resize, pnd)
 	  {
-	     E_Border_Pending_Move_Resize *pnd;
-
-	     pnd = bd->pending_move_resize->data;
 	     if ((!bd->lock_client_location) && (pnd->move))
 	       {
 		  bd->x = pnd->x;
@@ -6831,8 +6763,6 @@ _e_border_eval(E_Border *bd)
 		  bd->changes.size = 1;
 	       }
 	     free(pnd);
-	     bd->pending_move_resize = eina_list_remove_list(bd->pending_move_resize,
-							     bd->pending_move_resize);
 	  }
 
      	/* Recreate state */
@@ -7954,6 +7884,7 @@ _e_border_zone_update(E_Border *bd)
 {
    E_Container *con;
    Eina_List *l;
+   E_Zone *zone;
 
    /* still within old zone - leave it there */
    if (E_INTERSECTS(bd->x, bd->y, bd->w, bd->h,
@@ -7961,11 +7892,8 @@ _e_border_zone_update(E_Border *bd)
      return;
    /* find a new zone */
    con = bd->zone->container;
-   for (l = con->zones; l; l = l->next)
+   EINA_LIST_FOREACH(con->zones, l, zone)
      {
-	E_Zone *zone;
-
-	zone = l->data;
 	if (E_INTERSECTS(bd->x, bd->y, bd->w, bd->h,
 			 zone->x, zone->y, zone->w, zone->h))
 	  {
@@ -8284,18 +8212,14 @@ static int _e_border_hooks_walking = 0;
 static void
 _e_border_hooks_clean(void)
 {
-   Eina_List *l, *pl;
+   Eina_List *l, *ln;
+   E_Border_Hook *bh;
    
-   for (l = _e_border_hooks; l;)
+   EINA_LIST_FOREACH_SAFE(_e_border_hooks, l, ln, bh)
      {
-	E_Border_Hook *bh;
-	
-	bh = l->data;
-	pl = l;
-	l = l->next;
 	if (bh->delete_me)
 	  {
-	     _e_border_hooks = eina_list_remove_list(_e_border_hooks, pl);
+	     _e_border_hooks = eina_list_remove_list(_e_border_hooks, l);
 	     free(bh);
 	  }
      }
@@ -8305,13 +8229,11 @@ static void
 _e_border_hook_call(E_Border_Hook_Point hookpoint, void *bd)
 {
    Eina_List *l;
+   E_Border_Hook *bh;
 
    _e_border_hooks_walking++;
-   for (l = _e_border_hooks; l; l = l->next)
+   EINA_LIST_FOREACH(_e_border_hooks, l, bh)
      {
-	E_Border_Hook *bh;
-	
-	bh = l->data;
 	if (bh->delete_me) continue;
 	if (bh->hookpoint == hookpoint) bh->func(bh->data, bd);
      }
@@ -8362,7 +8284,7 @@ e_border_focus_track_thaw(void)
 EAPI E_Border *
 e_border_under_pointer_get(E_Desk *desk, E_Border *exclude)
 {
-   E_Border *bd = NULL;
+   E_Border *bd = NULL, *cbd;
    Eina_List *l;
    int x, y;
 
@@ -8376,11 +8298,8 @@ e_border_under_pointer_get(E_Desk *desk, E_Border *exclude)
    else
      return NULL;
 
-   for (l = e_border_raise_stack_get(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_raise_stack_get(), l, cbd)
      {
-	E_Border *cbd;
-
-	cbd = l->data;
 	if (!cbd) continue;
 	/* If a border was specified which should be excluded from the list
 	 * (because it will be closed shortly for example), skip */

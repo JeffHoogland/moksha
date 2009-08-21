@@ -49,6 +49,7 @@ e_desk_new(E_Zone *zone, int x, int y)
 {
    E_Desk *desk;
    Eina_List *l;
+   E_Config_Desktop_Name *cfname;
    char name[40];
    int ok;
 
@@ -64,11 +65,8 @@ e_desk_new(E_Zone *zone, int x, int y)
 
    /* Get current desktop's name */
    ok = 0;
-   for (l = e_config->desktop_names; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->desktop_names, l, cfname)
      {
-	E_Config_Desktop_Name *cfname;
-
-	cfname = l->data;
 	if ((cfname->container >= 0) &&
 	    (zone->container->num != cfname->container)) continue;
 	if ((cfname->zone >= 0) &&
@@ -125,12 +123,10 @@ EAPI void
 e_desk_name_del(int container, int zone, int desk_x, int desk_y)
 {
    Eina_List *l = NULL;
+   E_Config_Desktop_Name *cfname = NULL;
 
-   for (l = e_config->desktop_names; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->desktop_names, l, cfname)
      {
-	E_Config_Desktop_Name *cfname;
-
-	cfname = l->data;
 	if ((cfname->container == container) && (cfname->zone == zone) &&
 	    (cfname->desk_x == desk_x) && (cfname->desk_y == desk_y))
 	  {
@@ -151,18 +147,16 @@ e_desk_name_update(void)
    E_Container *con;
    E_Zone *zone;
    E_Desk *desk;
+   E_Config_Desktop_Name *cfname;
    int d_x, d_y, ok;
    char	name[40];
 
-   for (m = e_manager_list(); m; m = m->next)
+   EINA_LIST_FOREACH(e_manager_list(), m, man)
      {
-	man = m->data;
-	for (c = man->containers; c; c = c->next)
+	EINA_LIST_FOREACH(man->containers, c, con)
 	  {
-	     con = c->data;
-	     for (z = con->zones; z; z = z->next)
+	     EINA_LIST_FOREACH(con->zones, z, zone)
 	       {
-		  zone = z->data;
 		  for (d_x = 0; d_x < zone->desk_x_count; d_x++)
 		    {
 		       for (d_y = 0; d_y < zone->desk_y_count; d_y++)
@@ -170,11 +164,8 @@ e_desk_name_update(void)
 			    desk = zone->desks[d_x + zone->desk_x_count * d_y];
 			    ok = 0;
 
-			    for (l = e_config->desktop_names; l; l = l->next)
+			    EINA_LIST_FOREACH(e_config->desktop_names, l, cfname)
 			      {
-				 E_Config_Desktop_Name *cfname;
-
-				 cfname = l->data;
 				 if ((cfname->container >= 0) &&
 				     (con->num != cfname->container)) continue;
 				 if ((cfname->zone >= 0) &&
@@ -209,6 +200,7 @@ e_desk_show(E_Desk *desk)
    E_Event_Desk_Before_Show *eev;
    E_Event_Desk_After_Show *eeev;
    Eina_List *l;
+   E_Shelf *es;
    int was_zone = 0, x, y, dx = 0, dy = 0, prev_x = 0, prev_y = 0;
 
    E_OBJECT_CHECK(desk);
@@ -288,15 +280,14 @@ e_desk_show(E_Desk *desk)
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_DESK_SHOW, ev, _e_border_event_desk_show_free, NULL);
 
-   for (l = e_shelf_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
 	Eina_List *ll;
-	E_Shelf *es;
 	E_Config_Shelf *cf_es;
 	E_Zone *zone;
+	E_Config_Shelf_Desk *sd;
 	int show_shelf=0;
 
-	es = l->data;
 	if (!es) continue;
 	if (!es->cfg->desk_show_mode) continue;
 	cf_es = es->cfg;
@@ -305,11 +296,8 @@ e_desk_show(E_Desk *desk)
 	zone = e_util_zone_current_get(e_manager_current_get());
 	if (cf_es->zone != zone->num) continue;
 
-	for (ll = es->cfg->desk_list; ll; ll = ll->next)
+	EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
 	  {
-	     E_Config_Shelf_Desk *sd;
-
-	     sd = ll->data;
 	     if (!sd) continue;
 	     if ((desk->x == sd->x) && (desk->y == sd->y))
 	       {
@@ -382,9 +370,8 @@ e_desk_last_focused_focus(E_Desk *desk)
    Eina_List *l = NULL;
    E_Border *bd;
    
-   for (l = e_border_focus_stack_get(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
-	bd = l->data;
 	if ((!bd->iconic) && (bd->visible) && (bd->desk == desk) &&
 	    (bd->client.icccm.accepts_focus || bd->client.icccm.take_focus) &&
 	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DOCK) &&

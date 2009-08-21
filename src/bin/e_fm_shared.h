@@ -101,13 +101,10 @@ _e_volume_free(E_Volume *v)
 static void
 _e_storage_free(E_Storage *s)
 {
-   while (s->volumes)
+   E_Volume *v;
+   EINA_LIST_FREE(s->volumes, v)
      {
-	E_Volume *v;
-
-	v = s->volumes->data;
 	_e_volume_free(v);
-	s->volumes = eina_list_remove_list(s->volumes, s->volumes);
      }
    if (s->udi) free(s->udi);
    if (s->bus) free(s->bus);

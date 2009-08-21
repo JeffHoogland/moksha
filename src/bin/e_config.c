@@ -1303,8 +1303,6 @@ e_config_domain_load(const char *domain, E_Config_DD *edd)
    
    for (i =1; i <= _e_config_revisions; i++)
      {
-        char buf2[4096];
-        
         e_user_dir_snprintf(buf, sizeof(buf), "config/%s/%s.%i.cfg",
                             _e_config_profile, domain, i);
         ef = eet_open(buf, EET_FILE_MODE_READ);
@@ -1450,12 +1448,10 @@ EAPI E_Config_Binding_Mouse *
 e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in)
 {
    Eina_List *l;
-   
-   for (l = e_config->mouse_bindings; l; l = l->next)
+   E_Config_Binding_Mouse *eb;
+
+   EINA_LIST_FOREACH(e_config->mouse_bindings, l, eb)   
      {
-	E_Config_Binding_Mouse *eb;
-	
-	eb = l->data;
 	if ((eb->context == eb_in->context) &&
 	    (eb->button == eb_in->button) &&
 	    (eb->modifiers == eb_in->modifiers) &&
@@ -1473,12 +1469,10 @@ EAPI E_Config_Binding_Key *
 e_config_binding_key_match(E_Config_Binding_Key *eb_in)
 {
    Eina_List *l;
+   E_Config_Binding_Key *eb;
    
-   for (l = e_config->key_bindings; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->mouse_bindings, l, eb)   
      {
-	E_Config_Binding_Key *eb;
-	
-	eb = l->data;
 	if ((eb->context == eb_in->context) &&
 	    (eb->modifiers == eb_in->modifiers) &&
 	    (eb->any_mod == eb_in->any_mod) &&
@@ -1497,12 +1491,10 @@ EAPI E_Config_Binding_Edge *
 e_config_binding_edge_match(E_Config_Binding_Edge *eb_in)
 {
    Eina_List *l;
+   E_Config_Binding_Edge *eb;
    
-   for (l = e_config->edge_bindings; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->edge_bindings, l, eb)
      {
-	E_Config_Binding_Edge *eb;
-	
-	eb = l->data;
 	if ((eb->context == eb_in->context) &&
 	    (eb->modifiers == eb_in->modifiers) &&
 	    (eb->any_mod == eb_in->any_mod) &&
@@ -1521,12 +1513,10 @@ EAPI E_Config_Binding_Signal *
 e_config_binding_signal_match(E_Config_Binding_Signal *eb_in)
 {
    Eina_List *l;
+   E_Config_Binding_Signal *eb;
    
-   for (l = e_config->signal_bindings; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->signal_bindings, l, eb)
      {
-	E_Config_Binding_Signal *eb;
-	
-	eb = l->data;
 	if ((eb->context == eb_in->context) &&
 	    (eb->modifiers == eb_in->modifiers) &&
 	    (eb->any_mod == eb_in->any_mod) &&
@@ -1547,12 +1537,10 @@ EAPI E_Config_Binding_Wheel *
 e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in)
 {
    Eina_List *l;
-   
-   for (l = e_config->wheel_bindings; l; l = l->next)
+   E_Config_Binding_Wheel *eb;
+  
+   EINA_LIST_FOREACH(e_config->wheel_bindings, l, eb)
      {
-	E_Config_Binding_Wheel *eb;
-	
-	eb = l->data;
 	if ((eb->context == eb_in->context) &&
 	    (eb->direction == eb_in->direction) &&
 	    (eb->z == eb_in->z) &&

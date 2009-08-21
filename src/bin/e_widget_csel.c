@@ -51,6 +51,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 {
    E_Widget_Data *wd = data;
    Eina_List *l;
+   Evas_Object *eo, *so;
    int i;
    int changed = -1;
 
@@ -59,9 +60,10 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
    wd->changing = 1;
 
    /* entry changed */
-   for (l = wd->entries, i = 0; l; l = l->next, i++)
+   i = 0;
+   EINA_LIST_FOREACH(wd->entries, l, eo)
      {
-	if (o == l->data)
+	if (o == eo)
 	  {
 	     changed = i;
 	     switch (i)
@@ -99,6 +101,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 	       }
 	     break;
 	  }
+	i++;
      }
 
    if (changed != -1)
@@ -116,9 +119,9 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 
 
    /* update the sliders */
-   for (l = wd->sliders, i = 0; l; l = l->next, i++)
+   i = 0;
+   EINA_LIST_FOREACH(wd->sliders, l, so)
      {
-	Evas_Object *so = l->data;
 	if (o != so)
 	  {
 	     e_widget_cslider_update(so);
@@ -127,6 +130,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 	  {
 	     changed = i;
 	  }
+	i++;
      }
 
    /* update the spectrum */
@@ -143,10 +147,11 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
    e_widget_color_well_update(wd->well);
 
    /* now update the text fields to show current values */
-   for (l = wd->entries, i = 0; l; l = l->next, i++)
+   i = 0;
+   EINA_LIST_FOREACH(wd->entries, l, eo)
      {
 	char buf[10];
-	if (o == l->data) continue;
+	if (o == eo) continue;
 	switch (i)
 	  {
 	   case E_COLOR_COMPONENT_R:
@@ -168,7 +173,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 	      snprintf(buf, 10, "%.2f", wd->cv->v);
 	      break;
 	  }
-	e_widget_entry_text_set((Evas_Object *)(l->data), buf);
+	e_widget_entry_text_set(eo, buf);
      }
 
    wd->changing = 0;

@@ -153,12 +153,13 @@ e_widget_radio_toggle_set(Evas_Object *obj, int toggle)
    if (toggle)
      {
 	Eina_List *l;
+	Evas_Object *sobj;
 	
-	for (l = wd->group->radios; l; l = l->next)
+	EINA_LIST_FOREACH(wd->group->radios, l, sobj)
 	  {
-	     if (l->data != obj)
+	     if (sobj != obj)
 	       {
-		  wd = e_widget_data_get(l->data);
+		  wd = e_widget_data_get(sobj);
 		  if (wd->valnum == *(wd->group->valptr))
 		    {
 		       edje_object_signal_emit(wd->o_radio, "e,state,off", "e");
@@ -217,13 +218,14 @@ _e_wid_do(Evas_Object *obj)
    if ((wd->group) && (wd->group->valptr))
      {
 	Eina_List *l;
+	Evas_Object *sobj;
 	int toggled = 0;
 	
-	for (l = wd->group->radios; l; l = l->next)
+	EINA_LIST_FOREACH(wd->group->radios, l, sobj)
 	  {
-	     if (l->data != obj)
+	     if (sobj != obj)
 	       {
-		  wd = e_widget_data_get(l->data);
+		  wd = e_widget_data_get(sobj);
 		  if (wd->valnum == *(wd->group->valptr))
 		    {
 		       edje_object_signal_emit(wd->o_radio, "e,state,off", "e");

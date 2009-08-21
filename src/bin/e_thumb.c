@@ -59,11 +59,7 @@ e_thumb_shutdown(void)
    ecore_event_handler_del(_exe_del_handler);
    _exe_del_handler = NULL;
    _thumbnailers = eina_list_free(_thumbnailers);
-   while (_thumbnailers_exe)
-     {
-	ecore_exe_free(_thumbnailers_exe->data);
-	_thumbnailers_exe = eina_list_remove_list(_thumbnailers_exe, _thumbnailers_exe);
-     }
+   E_FREE_LIST(_thumbnailers_exe, ecore_exe_free);
    _thumb_queue = eina_list_free(_thumb_queue);
    _objid = 0;
    eina_hash_free(_thumbs);
@@ -154,10 +150,8 @@ e_thumb_icon_begin(Evas_Object *obj)
 	eth->queued = 1;
 	return;
      }
-   while (_thumb_queue)
+   EINA_LIST_FREE(_thumb_queue, eth2)
      {
-	eth2 = _thumb_queue->data;
-	_thumb_queue = eina_list_remove_list(_thumb_queue, _thumb_queue);
 	eth2->queued = 0;
 	eth2->busy = 1;
 	_pending++;
@@ -279,10 +273,8 @@ e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
    if (e->minor == 1)
      {
 	/* hello message */
-	while (_thumb_queue)
+	EINA_LIST_FREE(_thumb_queue, eth)
 	  {
-	     eth = _thumb_queue->data;
-	     _thumb_queue = eina_list_remove_list(_thumb_queue, _thumb_queue);
 	     eth->queued = 0;
 	     eth->busy = 1;
 	     _pending++;
@@ -316,7 +308,7 @@ _e_thumb_gen_begin(int objid, const char *file, const char *key, int w, int h)
    strcpy(buf, file);
    if (key) strcpy(buf + l1 + 1, key);
    else buf[l1 + 1] = 0;
-   cli = _thumbnailers->data;
+   cli = eina_list_data_get(_thumbnailers);
    if (!cli) return;
    _thumbnailers = eina_list_remove_list(_thumbnailers, _thumbnailers);
    _thumbnailers = eina_list_append(_thumbnailers, cli);
@@ -330,9 +322,8 @@ _e_thumb_gen_end(int objid)
    Ecore_Ipc_Client *cli;
 
    /* send thumb cancel */
-   for (l = _thumbnailers; l; l = l->next)
+   EINA_LIST_FOREACH(_thumbnailers, l, cli)
      {
-	cli = l->data;
 	ecore_ipc_client_send(cli, E_IPC_DOMAIN_THUMB, 2, objid, 0, 0, NULL, 0);
      }
 }
@@ -407,9 +398,10 @@ static int
 _e_thumb_cb_kill(void *data)
 {
    Eina_List *l;
+   Ecore_Exe *exe;
 
-   for (l = _thumbnailers_exe; l; l = l->next)
-     ecore_exe_terminate(l->data);
+   EINA_LIST_FOREACH(_thumbnailers_exe, l, exe)
+     ecore_exe_terminate(exe);
    _kill_timer = NULL;
    return 0;
 }
@@ -418,12 +410,13 @@ static int
 _e_thumb_cb_exe_event_del(void *data, int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
+   Ecore_Exe *exe;
    Eina_List *l;
 
    ev = event;
-   for (l = _thumbnailers_exe; l; l = l->next)
+   EINA_LIST_FOREACH(_thumbnailers_exe, l, exe)
      {
-	if (l->data == ev->exe)
+	if (exe == ev->exe)
 	  {
 	     _thumbnailers_exe = eina_list_remove_list(_thumbnailers_exe, l);
 	     break;

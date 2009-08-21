@@ -23,8 +23,10 @@ e_resist_container_border_position(E_Container *con, Eina_List *skiplist,
    Eina_List *l, *ll, *rects = NULL;
    E_Resist_Rect *r;
    E_Border_List *bl;
-   E_Border *bd;
+   E_Border *bd, *bd2;
    E_Desk *desk;
+   E_Shelf *es;
+   E_Zone *zone;
    
    if (!e_config->use_resist)
      {
@@ -51,11 +53,8 @@ e_resist_container_border_position(E_Container *con, Eina_List *skiplist,
       rects = eina_list_append(rects, r); \
    }
 
-   for (l = con->zones; l; l = l->next)
+   EINA_LIST_FOREACH(con->zones, l, zone)
      {
-	E_Zone *zone;
-
-	zone = l->data;
 	HOLDER(zone->x, zone->y, zone->w, zone->h, e_config->desk_resist);
      }
    /* FIXME: need to add resist or complete BLOCKS for things like ibar */
@@ -70,9 +69,9 @@ e_resist_container_border_position(E_Container *con, Eina_List *skiplist,
 	     int ok;
 
 	     ok = 1;
-	     for (ll = skiplist; ll; ll = ll->next)
+	     EINA_LIST_FOREACH(skiplist, ll, bd2)
 	       {
-		  if (ll->data == bd)
+		  if (bd2 == bd)
 		    {
 		       ok = 0;
 		       break;
@@ -87,21 +86,17 @@ e_resist_container_border_position(E_Container *con, Eina_List *skiplist,
    e_container_border_list_free(bl);
 
    desk = e_desk_current_get(e_zone_current_get(con));
-   for (l = e_shelf_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
-	E_Shelf *es;
 	Eina_List *ll;
+	E_Config_Shelf_Desk *sd;
 
-	es = l->data;
 	if (es->zone->container == con)
 	  {
 	     if (es->cfg->desk_show_mode)
 	       {
-		  for (ll = es->cfg->desk_list; ll; ll = ll->next)
+		  EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
 		    {
-		       E_Config_Shelf_Desk *sd;
-
-		       sd = ll->data;
 		       if (!sd) continue;
 		       if ((sd->x == desk->x) && (sd->y == desk->y))
 			 {
@@ -125,11 +120,7 @@ e_resist_container_border_position(E_Container *con, Eina_List *skiplist,
 		       	x, y, w, h,
 		       	rx, ry, rw, rh);
 
-	for (l = rects; l; l = l->next)
-	  {
-	     E_FREE(l->data);
-	  }
-	eina_list_free(rects);
+	E_FREE_LIST(rects, E_FREE);
      }
    return 1;
 }
@@ -142,6 +133,7 @@ e_resist_container_gadman_position(E_Container *con, Eina_List *skiplist,
 {
    Eina_List *l, *rects = NULL;
    E_Resist_Rect *r;
+   E_Shelf *es;
 
    if (!e_config->use_resist)
      {
@@ -150,11 +142,8 @@ e_resist_container_gadman_position(E_Container *con, Eina_List *skiplist,
 	return 0;
      }
 
-   for (l = e_shelf_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
-	E_Shelf *es;
-
-	es = l->data;
 	if (es->zone->container == con)
 	  {
 	     OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, es->w, es->h,
@@ -169,11 +158,7 @@ e_resist_container_gadman_position(E_Container *con, Eina_List *skiplist,
 		       	x, y, w, h,
 		       	rx, ry, NULL, NULL);
 
-	for (l = rects; l; l = l->next)
-	  {
-	     E_FREE(l->data);
-	  }
-	eina_list_free(rects);
+	E_FREE_LIST(rects, E_FREE);
      }
    return 1;
 }
@@ -195,9 +180,8 @@ _e_resist_rects(Eina_List *rects,
    dw = w - pw;
    dh = h - ph;
 
-   for (l = rects; l; l = l->next)
+   EINA_LIST_FOREACH(rects, l, r)
      {
-	r = l->data;
 	if (E_SPANS_COMMON(r->y, r->h, y, h))
 	  {
 	     if (dx > 0)

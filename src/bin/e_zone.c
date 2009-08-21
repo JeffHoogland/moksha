@@ -419,6 +419,7 @@ EAPI E_Zone *
 e_zone_current_get(E_Container *con)
 {
    Eina_List *l = NULL;
+   E_Zone *zone;
 
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
@@ -427,18 +428,14 @@ e_zone_current_get(E_Container *con)
 	int x, y;
 
 	ecore_x_pointer_xy_get(con->win, &x, &y);
-	for (l = con->zones; l; l = l->next)
+	EINA_LIST_FOREACH(con->zones, l, zone)
 	  {
-	     E_Zone *zone;
-
-	     zone = l->data;
 	     if (E_INSIDE(x, y, zone->x, zone->y, zone->w, zone->h))
 	       return zone;
 	  }
      }
    if (!con->zones) return NULL;
-   l = con->zones;
-   return (E_Zone *)l->data;
+   return (E_Zone *)eina_list_data_get(con->zones);
 }
 
 EAPI void
@@ -478,12 +475,10 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 	cx = next_zone->x;
 	cy = next_zone->y;
 	zones = eina_list_next(zones);
-	while (zones)
+	EINA_LIST_FOREACH(eina_list_next(zones), zones, next_zone)
 	  {
-	     next_zone = (E_Zone *)zones->data;
 	     if (next_zone->x != cx) one_col = 0;
 	     if (next_zone->y != cy) one_row = 0;
-	     zones = zones->next;
 	  }
      }
    if (eina_list_count(zone->container->manager->containers) > 1)
@@ -771,18 +766,14 @@ e_zone_flip_win_disable(void)
    Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
+   E_Zone *zone;
 
-   for (l = e_manager_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
+	EINA_LIST_FOREACH(man->containers, ll, con)
 	  {
-	     con = ll->data;
-	     for (lll = con->zones; lll; lll = lll->next)
+	     EINA_LIST_FOREACH(con->zones, lll, zone)
 	       {
-		  E_Zone *zone;
-
-		  zone = lll->data;
 		  ecore_x_window_hide(zone->edge.left);
 		  ecore_x_window_hide(zone->edge.right);
 		  ecore_x_window_hide(zone->edge.top);
@@ -806,18 +797,14 @@ e_zone_flip_win_restore(void)
    Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
+   E_Zone *zone;
 
-   for (l = e_manager_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
+	EINA_LIST_FOREACH(man->containers, ll, con)
 	  {
-	     con = ll->data;
-	     for (lll = con->zones; lll; lll = lll->next)
+	     EINA_LIST_FOREACH(con->zones, lll, zone)
 	       {
-		  E_Zone *zone;
-
-		  zone = lll->data;
 		  ecore_x_window_show(zone->edge.left);
 		  ecore_x_window_show(zone->edge.right);
 		  ecore_x_window_show(zone->edge.top);
@@ -946,7 +933,6 @@ static void
 _e_zone_free(E_Zone *zone)
 {
    E_Container *con;
-   Eina_List *l;
    Ecore_Animator *anim;
    void *data;
    int x, y;
@@ -985,15 +971,7 @@ _e_zone_free(E_Zone *zone)
      }
    
    /* remove handlers */
-   for (l = zone->handlers; l; l = l->next)
-     {
-	Ecore_Event_Handler *h;
-
-	h = l->data;
-	ecore_event_handler_del(h);
-     }
-   eina_list_free(zone->handlers);
-   zone->handlers = NULL;
+   E_FREE_LIST(zone->handlers, ecore_event_handler_del);
 
    con = zone->container;
    if (zone->name) eina_stringshare_del(zone->name);

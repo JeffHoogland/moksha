@@ -134,13 +134,11 @@ e_powersave_mode_get(void)
 static int
 _e_powersave_cb_deferred_timer(void *data)
 {
+   E_Powersave_Deferred_Action *pa;
+
    walking_deferred_actions++;
-   while (deferred_actions)
+   EINA_LIST_FREE(deferred_actions, pa)
      {
-	E_Powersave_Deferred_Action *pa;
-	
-	pa = deferred_actions->data;
-	deferred_actions = eina_list_remove_list(deferred_actions, deferred_actions);
 	if (!pa->delete_me) pa->func((void *)pa->data);
 	free(pa);
      }

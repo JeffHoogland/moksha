@@ -289,13 +289,11 @@ static int
 _e_sys_cb_logout_timer(void *data)
 {
    Eina_List *l;
+   E_Border *bd;
    int pending = 0;
 
-   for (l = e_border_client_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
-	E_Border *bd;
-
-	bd = l->data;
 	if (!bd->internal) pending++;
      }
    if (pending == 0) goto after;
@@ -356,6 +354,7 @@ static void
 _e_sys_logout_begin(E_Sys_Action a_after)
 {
    Eina_List *l;
+   E_Border *bd;
    E_Obj_Dialog *od;
 
    /* start logout - at end do the a_after action */
@@ -370,11 +369,8 @@ _e_sys_logout_begin(E_Sys_Action a_after)
    if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
    _e_sys_dialog = od;
    _e_sys_action_after = a_after;
-   for (l = e_border_client_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
-	E_Border *bd;
-
-	bd = l->data;
 	e_border_act_close_begin(bd);
      }
    /* and poll to see if all pending windows are gone yet every 0.5 sec */

@@ -32,6 +32,7 @@ EAPI int
 e_bg_init(void)
 {
    Eina_List *l = NULL;
+   E_Config_Desktop_Background *cfbg = NULL;
 
    /* Register mime handler */
    bg_hdl = e_fm2_mime_handler_new(_("Set As Background"), 
@@ -44,11 +45,8 @@ e_bg_init(void)
    if (e_config->desktop_default_background)
       e_filereg_register(e_config->desktop_default_background);
 
-   for (l = e_config->desktop_backgrounds; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cfbg)
      {
-	E_Config_Desktop_Background *cfbg;
-
-	cfbg = l->data;
 	if (!cfbg) continue;
 	e_filereg_register(cfbg->file);
      }
@@ -61,6 +59,7 @@ EAPI int
 e_bg_shutdown(void)
 {
    Eina_List *l = NULL;
+   E_Config_Desktop_Background *cfbg = NULL;
 
    /* Deregister mime handler */
    if (bg_hdl) 
@@ -73,11 +72,8 @@ e_bg_shutdown(void)
    if (e_config->desktop_default_background)
       e_filereg_deregister(e_config->desktop_default_background);
 
-   for (l = e_config->desktop_backgrounds; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cfbg)
      {
-	E_Config_Desktop_Background *cfbg;
-
-	cfbg = l->data;
 	if (!cfbg) continue;
 	e_filereg_deregister(cfbg->file);
      }
@@ -94,19 +90,18 @@ EAPI const E_Config_Desktop_Background *
 e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
 {
    Eina_List *l, *ll, *entries;
-   E_Config_Desktop_Background *bg = NULL;
+   E_Config_Desktop_Background *bg = NULL, *cfbg = NULL;
    const char *bgfile = "";
+   char *entry;
    int current_spec = 0; /* how specific the setting is - we want the least general one that applies */
 
    /* look for desk specific background. */
    if (container_num >= 0 || zone_num >= 0 || desk_x >= 0 || desk_y >= 0)
      {
-	for (l = e_config->desktop_backgrounds; l; l = l->next)
+	EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cfbg)
 	  {
-	     E_Config_Desktop_Background *cfbg;
 	     int spec;
 
-	     cfbg = l->data;
 	     if (!cfbg) continue;
 	     spec = 0;
 	     if (cfbg->container == container_num) spec++;
@@ -133,9 +128,9 @@ e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
 	     entries = edje_file_collection_list(bgfile);
 	     if (entries)
 	       {
-		  for (ll = entries; ll; ll = ll->next)
+		  EINA_LIST_FOREACH(entries, ll, entry)
 		    {
-		       if (!strcmp(ll->data, "e/desktop/background"))
+		       if (!strcmp(entry, "e/desktop/background"))
 			 {
 			    bg = cfbg;
 			    current_spec = spec;
@@ -154,6 +149,7 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
    const E_Config_Desktop_Background *cfbg;
    Eina_List *l, *entries;
    const char *bgfile = "";
+   char *entry;
    int ok = 0;
 
    cfbg = e_bg_config_get(container_num, zone_num, desk_x, desk_y);
@@ -189,9 +185,9 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 	entries = edje_file_collection_list(bgfile);
 	if (entries)
 	  {
-	     for (l = entries; l; l = l->next)
+	     EINA_LIST_FOREACH(entries, l, entry)
 	       {
-		  if (!strcmp(l->data, "e/desktop/background"))
+		  if (!strcmp(entry, "e/desktop/background"))
 		    {
 		       ok = 1;
 		       break;
@@ -442,13 +438,11 @@ EAPI void
 e_bg_del(int container, int zone, int desk_x, int desk_y)
 {
    Eina_List *l = NULL;
+   E_Config_Desktop_Background *cfbg = NULL;
    E_Event_Bg_Update *ev;
-   
-   for (l = e_config->desktop_backgrounds; l; l = l->next)
+  
+   EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cfbg) 
      {
-	E_Config_Desktop_Background *cfbg;
-	
-	cfbg = l->data;
 	if (!cfbg) continue;
 	if ((cfbg->container == container) && (cfbg->zone == zone) &&
 	    (cfbg->desk_x == desk_x) && (cfbg->desk_y == desk_y))
@@ -477,15 +471,12 @@ e_bg_update(void)
    E_Container *con;
    E_Zone *zone;
 
-   for (l = e_manager_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
+	EINA_LIST_FOREACH(man->containers, ll, con)
 	  {
-	     con = ll->data;
-	     for (lll = con->zones; lll; lll = lll->next)
+	     EINA_LIST_FOREACH(con->zones, lll, zone)
 	       {
-		  zone = lll->data;
 		  e_zone_bg_reconfigure(zone);
 	       }
 	  }

@@ -45,7 +45,7 @@ e_shelf_shutdown(void)
      {
 	E_Shelf *es;
 
-	es = shelves->data;
+	es = eina_list_data_get(shelves);
 	e_object_del(E_OBJECT(es));
      }
 
@@ -56,22 +56,21 @@ EAPI void
 e_shelf_config_init(void)
 {
    Eina_List *l;
+   E_Config_Shelf *cf_es;
    int id = 0;
 
    while (shelves)
      {
 	E_Shelf *es;
 
-	es = shelves->data;
+	es = eina_list_data_get(shelves);
 	e_object_del(E_OBJECT(es));
      }
 
-   for (l = e_config->shelves; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->shelves, l, cf_es)
      {
-	E_Config_Shelf *cf_es;
 	E_Zone *zone;
 
-	cf_es = l->data;
 	if (cf_es->id <= 0) cf_es->id = id + 1;
 	zone = e_util_container_zone_id_get(cf_es->container, cf_es->zone);
 	if (zone) 
@@ -230,9 +229,8 @@ e_shelf_zone_move_resize_handle(E_Zone *zone)
    E_Shelf *es;
    Evas_Coord w, h;
 
-   for (l = shelves; l; l = l->next)
+   EINA_LIST_FOREACH(shelves, l, es)
      {
-	es = l->data;
 	if (es->zone == zone) 
 	  {
 	     E_Gadcon * gc;
@@ -731,13 +729,11 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
      {
 	E_Desk *desk;
 	Eina_List *ll;
+	E_Config_Shelf_Desk *sd;
 
 	desk = e_desk_current_get(zone);
-	for (ll = cf_es->desk_list; ll; ll = ll->next)
+	EINA_LIST_FOREACH(cf_es->desk_list, ll, sd)
 	  {
-	     E_Config_Shelf_Desk *sd;
-
-	     sd = ll->data;
 	     if ((desk->x == sd->x) && (desk->y == sd->y))
 	       {
 		  e_shelf_show(es);
@@ -1068,15 +1064,13 @@ static void
 _e_shelf_toggle_border_fix(E_Shelf *es)
 {
    Eina_List *l;
+   E_Border *bd;
 
    if ((es->cfg->overlap) || (!e_config->border_fix_on_shelf_toggle))
      return;
 
-   for (l = e_border_client_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
-	E_Border *bd;
-
-	bd = l->data;
 	if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_NONE)
 	  {
 	     if (bd->lock_client_location) continue;

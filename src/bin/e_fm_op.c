@@ -1416,7 +1416,7 @@ _e_fm_op_scan_atom(E_Fm_Op_Task * task)
 
         _e_fm_op_work_queue = eina_list_append_relative_list(_e_fm_op_work_queue, rtask, _e_fm_op_separator);
 
-        ctask->link = _e_fm_op_separator->next;
+        ctask->link = eina_list_next(_e_fm_op_separator);
      }
    else if (task->type == E_FM_OP_SYMLINK)
      {

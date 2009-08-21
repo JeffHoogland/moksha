@@ -22,15 +22,14 @@ e_place_zone_region_smart_cleanup(E_Zone *zone)
 	  {
 	     int area;
 	     Eina_List *ll;
+	     E_Border *bd;
 
 	     /* Ordering windows largest to smallest gives better results */
 	     area = border->w * border->h;
-	     for (ll = borders; ll; ll = ll->next)
+	     EINA_LIST_FOREACH(borders, ll, bd)
 	       {
 		  int testarea;
-		  E_Border *bd;
 
-		  bd = ll->data;
 		  testarea = bd->w * bd->h;
 		  /* Insert the border if larger than the current border */
 		  if (area >= testarea)
@@ -46,15 +45,13 @@ e_place_zone_region_smart_cleanup(E_Zone *zone)
    e_container_border_list_free(bl);
 
    /* Loop over the borders moving each one using the smart placement */
-   while (borders)
+   EINA_LIST_FREE(borders, border)
      {
 	int new_x, new_y;
 
-	border = borders->data;
 	e_place_zone_region_smart(zone, borders, border->x, border->y,
 				  border->w, border->h, &new_x, &new_y);
 	e_border_move(border, new_x, new_y);
-	borders = eina_list_remove(borders, border);
      }
 }
 
@@ -69,7 +66,7 @@ _e_place_coverage_border_add(E_Zone *zone, Eina_List *skiplist, int ar, int x, i
 {
    Eina_List *ll;
    E_Border_List *bl;
-   E_Border *bd;
+   E_Border *bd, *bd2;
    int x2, y2, w2, h2;
    int ok;
    int iw, ih;
@@ -80,9 +77,9 @@ _e_place_coverage_border_add(E_Zone *zone, Eina_List *skiplist, int ar, int x, i
      {
 	ok = 1;
 	x2 = (bd->x - zone->x); y2 = (bd->y - zone->y); w2 = bd->w; h2 = bd->h;
-	for (ll = skiplist; ll; ll = ll->next)
+	EINA_LIST_FOREACH(skiplist, ll, bd2)
 	  {
-	     if (ll->data == bd)
+	     if (bd2 == bd)
 	       {
 		  ok = 0;
 		  break;
@@ -114,10 +111,8 @@ _e_place_coverage_shelf_add(E_Zone *zone, int ar, int x, int y, int w, int h)
    E_Shelf *es;
    int x2, y2, w2, h2;
 
-   for (l = e_shelf_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
-
-	es = l->data;
 	if (es->zone != zone) continue;
 	x2 = es->x; y2 = es->y; w2 = es->w; h2 = es->h;
 	if (E_INTERSECTS(x, y, w, h, x2, y2, w2, h2))
@@ -151,7 +146,7 @@ e_place_zone_region_smart(E_Zone *zone, Eina_List *skiplist, int x, int y, int w
    char               *u_x = NULL, *u_y = NULL;
    Eina_List          *ll;
    E_Border_List      *bl;
-   E_Border           *bd;
+   E_Border           *bd, *bd2;
 
    *rx = x;
    *ry = y;
@@ -195,13 +190,12 @@ e_place_zone_region_smart(E_Zone *zone, Eina_List *skiplist, int x, int y, int w
    if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART)
      {
 	Eina_List *l;
+	E_Shelf *es;
 
-	for (l = e_shelf_list(); l; l = l->next)
+	EINA_LIST_FOREACH(e_shelf_list(), l, es)
 	  {
-	     E_Shelf *es;
 	     int bx, by, bw, bh;
 
-	     es = l->data;
 	     if (es->zone != zone) continue;
 
 	     bx = es->x;
@@ -278,9 +272,9 @@ e_place_zone_region_smart(E_Zone *zone, Eina_List *skiplist, int x, int y, int w
 	int bx, by, bw, bh;
 
 	ok = 1;
-	for (ll = skiplist; ll; ll = ll->next)
+	EINA_LIST_FOREACH(skiplist, ll, bd2)
 	  {
-	     if (ll->data == bd)
+	     if (bd2 == bd)
 	       {
 		  ok = 0;
 		  break;

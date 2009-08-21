@@ -287,13 +287,14 @@ void
 e_object_breadcrumb_del(E_Object *obj, char *crumb)
 {
    Eina_List *l;
+   char *key;
    
    E_OBJECT_CHECK(obj);
-   for (l = obj->crumbs; l; l = l->next)
+   EINA_LIST_FOREACH(obj->crumbs, l, key)
      {
-	if (!strcmp(crumb, l->data))
+	if (!strcmp(crumb, key))
 	  {
-	     free(l->data);
+	     free(key);
 	     obj->crumbs = eina_list_remove_list(obj->crumbs, l);
 	     return;
 	  }
@@ -304,10 +305,11 @@ void
 e_object_breadcrumb_debug(E_Object *obj)
 {
    Eina_List *l;
+   char *key;
    
    E_OBJECT_CHECK(obj);
-   for (l = obj->crumbs; l; l = l->next)
-     printf("CRUMB: %s\n", l->data);
+   EINA_LISt_FOREACH(obj->crumbs, l, key)
+     printf("CRUMB: %s\n", key);
 }
 */
 

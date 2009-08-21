@@ -325,15 +325,14 @@ e_ilist_prepend_relative(Evas_Object *obj, Evas_Object *icon, const char *label,
 EAPI void 
 e_ilist_clear(Evas_Object *obj) 
 {
+   E_Ilist_Item *si = NULL;
+
    API_ENTRY return;
 
    e_ilist_freeze(obj);
-   while (sd->items) 
+   EINA_LIST_FREE(sd->items, si)
      {
-	E_Ilist_Item *si = NULL;
-
-	if (!(si = sd->items->data)) continue;
-	sd->items = eina_list_remove_list(sd->items, sd->items);
+	if (!si) continue;
 	if (si->o_icon) evas_object_del(si->o_icon);
 	evas_object_del(si->o_base);
 	E_FREE(si);
@@ -402,17 +401,16 @@ EAPI void
 e_ilist_unselect(Evas_Object *obj) 
 {
    Eina_List *l = NULL;
+   E_Ilist_Item *si = NULL;
    const char *stacking, *selectraise;
 
    API_ENTRY return;
 
    if (!sd->items) return;
    if (sd->selected < 0) return;
-   for (l = sd->items; l; l = l->next) 
+   EINA_LIST_FOREACH(sd->items, l, si)
      {
-	E_Ilist_Item *si = NULL;
-
-	if (!(si = l->data)) continue;
+	if (!si) continue;
 	if (!si->selected) continue;
 	edje_object_signal_emit(si->o_base, "e,state,unselected", "e");
 	si->selected = 0;
@@ -442,9 +440,9 @@ e_ilist_selected_set(Evas_Object *obj, int n)
    if (n >= i) n = i - 1;
    else if (n < 0) n = 0;
 
-   for (l = sd->items; l; l = l->next) 
+   EINA_LIST_FOREACH(sd->items, l, si)
      {
-	if (!(si = l->data)) continue;
+	if (!si) continue;
 	if ((!si->selected) || (si->header)) continue;
 	edje_object_signal_emit(si->o_base, "e,state,unselected", "e");
 	si->selected = 0;
@@ -484,6 +482,7 @@ EAPI int
 e_ilist_selected_get(Evas_Object *obj) 
 {
    Eina_List *l = NULL;
+   E_Ilist_Item *li = NULL;
    int i, j;
 
    API_ENTRY return -1;
@@ -493,12 +492,11 @@ e_ilist_selected_get(Evas_Object *obj)
    else
      {
 	j = -1;
-	for (i = 0, l = sd->items; l; l = l->next, i++) 
+	i = 0;
+	EINA_LIST_FOREACH(sd->items, l, li)
 	  {
-	     E_Ilist_Item *li = NULL;
-
-	     if (!(li = l->data)) continue;
-	     if (li->selected) j = i;
+	     if (li && li->selected) j = i;
+	     i++;
 	  }
 	return j;
      }
@@ -578,15 +576,14 @@ EAPI int
 e_ilist_selected_count_get(Evas_Object *obj) 
 {
    Eina_List *l = NULL;
+   E_Ilist_Item *si = NULL;
    int count = 0;
 
    API_ENTRY return 0;
    if (!sd->items) return 0;
-   for (l = sd->items; l; l = l->next) 
+   EINA_LIST_FOREACH(sd->items, l, si)
      {
-	E_Ilist_Item *si = NULL;
-
-	if (!(si = l->data)) continue;
+	if (!si) continue;
 	if (si->selected) count++;
      }
    return count;
@@ -701,17 +698,17 @@ EAPI void
 e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h) 
 {
    Eina_List *l = NULL;
+   E_Ilist_Item *si = NULL;
 
    API_ENTRY return;
    if ((sd->iw == w) && (sd->ih == h)) return;
    sd->iw = w;
    sd->ih = h;
-   for (l = sd->items; l; l = l->next) 
+   EINA_LIST_FOREACH(sd->items, l, si)
      {
-	E_Ilist_Item *si = NULL;
 	Evas_Coord mw = 0, mh = 0;
 
-	if (!(si = l->data)) continue;
+	if (!si) continue;
 	if (!si->o_icon) continue;
 	edje_extern_object_min_size_set(si->o_icon, w, h);
 	edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
@@ -960,7 +957,7 @@ _e_smart_event_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_in
 {
    E_Smart_Data *sd;
    Evas_Event_Mouse_Up *ev;
-   E_Ilist_Item *si;
+   E_Ilist_Item *si, *item;
    Eina_List *l = NULL;
    int i;
 
@@ -982,9 +979,10 @@ _e_smart_event_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_in
 
    if (!sd->items) return;
 
-   for (i = 0, l = sd->items; l; l = l->next, i++) 
+   i = 0;
+   EINA_LIST_FOREACH(sd->items, l, item)
      {
-	if (l->data == si) 
+	if (item == si) 
 	  {
 	     if (!sd->multi_select)
 	       e_ilist_selected_set(sd->o_smart, i);
@@ -999,6 +997,7 @@ _e_smart_event_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_in
 	       }
 	     break;
 	  }
+	i++;
      }
 
    if(!sd->selector) return;
@@ -1204,13 +1203,10 @@ _e_typebuf_match(Evas_Object *obj)
    strcat(match, sd->typebuf.buf);
    strcat(match, "*");
 
-   l = sd->items;
    n = 0;
-
-   while (l)
+   EINA_LIST_FOREACH(sd->items, l, si)
      {
 	const char *label = NULL;
-	si = l->data;
 	if (si) 
 	  {
 	     label = edje_object_part_text_get(si->o_base, "e.text.label");
@@ -1221,7 +1217,6 @@ _e_typebuf_match(Evas_Object *obj)
 		  break;
 	       }
 	  }
-	l = l->next;
 	n++;
      }
 

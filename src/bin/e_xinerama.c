@@ -65,13 +65,9 @@ e_xinerama_fake_screen_add(int x, int y, int w, int h)
 static void
 _e_xinerama_clean(void)
 {
-   E_Screen *s = NULL;
-
-   EINA_LIST_FREE(all_screens, s)
-     E_FREE(s);
-   EINA_LIST_FREE(chosen_screens, s);
-   EINA_LIST_FREE(fake_screens, s)
-     E_FREE(s);
+   E_FREE_LIST(all_screens, E_FREE);
+   eina_list_free(chosen_screens);
+   E_FREE_LIST(fake_screens, E_FREE);
 }
 
 static void
@@ -80,6 +76,7 @@ _e_xinerama_update(void)
    int n;
    Ecore_X_Window *roots;
    Eina_List *l;
+   E_Screen *scr;
 
    roots = ecore_x_window_root_list(&n);
    if (roots)
@@ -139,22 +136,17 @@ _e_xinerama_update(void)
 	  }
      }
    /* now go through all_screens... and build a list of chosen screens */
-   for (l = all_screens; l; l = l->next)
+   EINA_LIST_FOREACH(all_screens, l, scr)
      {
 	Eina_List *ll;
-	E_Screen *scr;
-	int add = 0;
+	E_Screen *scr2;
+	int add = 1;
 	Eina_List *removes;
 
-	scr = l->data;
-	add = 1;
 	removes = NULL;
 	/* does this screen intersect with any we have chosen? */
-	for (ll = chosen_screens; ll; ll = ll->next)
+	EINA_LIST_FOREACH(chosen_screens, ll, scr2)
 	  {
-	     E_Screen *scr2;
-
-	     scr2 = ll->data;
 	     /* if they intersect */
 	     if (E_INTERSECTS(scr->x, scr->y, scr->w, scr->h,
 			      scr2->x, scr2->y, scr2->w, scr2->h))
@@ -173,10 +165,9 @@ _e_xinerama_update(void)
 	       }
 	  }
 	/* if there are screens to remove - remove them */
-	while (removes)
+	EINA_LIST_FREE(removes, scr2)
 	  {
-	     chosen_screens = eina_list_remove(chosen_screens, removes->data);
-	     removes = eina_list_remove_list(removes, removes);
+	     chosen_screens = eina_list_remove(chosen_screens, scr2);
 	  }
 	/* if this screen is to be added, add it */
 	if (add)
@@ -185,14 +176,13 @@ _e_xinerama_update(void)
    chosen_screens = eina_list_sort(chosen_screens,
 				   eina_list_count(chosen_screens),
 				   _e_xinerama_cb_screen_sort);
-   for (n = 0, l = chosen_screens; l; l = l->next, n++)
+   n = 0;
+   EINA_LIST_FOREACH(chosen_screens, l, scr)
      {
-        E_Screen *scr;
-
-	scr = l->data;
 	printf("E17 INIT: XINERAMA CHOSEN: [%i], %ix%i+%i+%i\n",
 	       scr->screen, scr->w, scr->h, scr->x, scr->y);
 	scr->escreen = n;
+	n++;
      }
 }
 

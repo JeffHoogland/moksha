@@ -315,23 +315,17 @@ e_ipc_codec_str_list_dec(char *data, int bytes, Eina_List **dest)
 {
    E_Ipc_List *dat;
    Eina_List *list = NULL, *l;
+   E_Ipc_Str *str_node;
    
    if (!data) return 0;
    dat = eet_data_descriptor_decode(_e_ipc_str_list_edd, data, bytes);
    if (!dat) return 0;
-   for (l = dat->list; l; l = l->next)
+   EINA_LIST_FOREACH(dat->list, l, str_node)
      {
-        E_Ipc_Str *str_node;
-	
-        str_node = l->data;
 	list = eina_list_append(list, str_node->str);
      }
    if (dest) *dest = list;
-   while (dat->list)
-     {
-	free(dat->list->data);
-	dat->list = eina_list_remove_list(dat->list, dat->list);
-     }
+   E_FREE_LIST(dat->list, free);
    free(dat);
    return 1;
 }
@@ -341,23 +335,19 @@ e_ipc_codec_str_list_enc(Eina_List *list, int *size_ret)
 {
    E_Ipc_List dat;
    Eina_List *l;
+   E_Ipc_Str *str_node;
+   char *str;
    void *data;
    
    dat.list = NULL;
-   for (l = list; l; l = l->next)
+   EINA_LIST_FOREACH(list, l, str)
      {
-	E_Ipc_Str *str_node;
-	
 	str_node = malloc(sizeof(E_Ipc_Str));
-	str_node->str = l->data;
+	str_node->str = str;
 	dat.list = eina_list_append(dat.list, str_node);
      }
    data = eet_data_descriptor_encode(_e_ipc_str_list_edd, &dat, size_ret);
-   while (dat.list)
-     {
-	free(dat.list->data);
-	dat.list = eina_list_remove_list(dat.list, dat.list);
-     }
+   E_FREE_LIST(dat.list, free);
    return data;
 }
 

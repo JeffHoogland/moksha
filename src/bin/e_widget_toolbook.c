@@ -19,7 +19,6 @@ e_widget_toolbook_add(Evas *evas, int icon_w, int icon_h)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
-   Evas_Coord mw, mh;
 
    obj = e_widget_add(evas);
    e_widget_del_hook_set(obj, _e_wid_del_hook);
@@ -83,18 +82,15 @@ static void
 _item_sel(void *data1, void *data2)
 {
    E_Widget_Data *wd;
-   Evas_Object *obj, *sobj;
+   Evas_Object *o, *obj, *sobj;
    Eina_List *l;
 
    obj = data1;
    sobj = data2;
    wd = e_widget_data_get(obj);
 
-   for (l = wd->content; l; l = l->next)
+   EINA_LIST_FOREACH(wd->content, l, o) 
      {
-        Evas_Object *o;
-
-        o = l->data;
         if (o == sobj) evas_object_show(o);
         else evas_object_hide(o);
      }

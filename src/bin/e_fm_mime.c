@@ -53,9 +53,8 @@ e_fm_mime_icon_get(const char *mime)
    if (val) *val = 0;
 
    /* 1. look up in mapping to file or thumb (thumb has flag)*/
-   for (l = e_config->mime_icons; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->mime_icons, l, mi)
      {
-	mi = l->data;
 	if (e_util_glob_match(mi->mime, mime))
 	  {
 	     ecore_strlcpy(buf, mi->icon, sizeof(buf));
@@ -135,11 +134,7 @@ e_fm_mime_icon_cache_flush(void)
    Eina_List *freelist = NULL;
 
    eina_hash_foreach(icon_map, _e_fm_mime_icon_foreach, &freelist);
-   while (freelist)
-     {
-	eina_stringshare_del(freelist->data);
-	freelist = eina_list_remove_list(freelist, freelist);
-     }
+   E_FREE_LIST(freelist, eina_stringshare_del);
    eina_hash_free(icon_map);
    icon_map = NULL;
 }
@@ -337,17 +332,15 @@ e_fm2_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, co
 {
    Eina_List *handlers = NULL;
    Eina_List *l = NULL;
+   E_Fm2_Mime_Handler *handler = NULL;
 
    if ((!obj) || (!path) || (!mime)) return;
 
    handlers = e_fm2_mime_handler_mime_handlers_get(mime);
    if (!handlers) return;
 
-   for (l = handlers; l; l = l->next)
+   EINA_LIST_FOREACH(handlers, l, handler)
      {
-	E_Fm2_Mime_Handler *handler = NULL;
-
-	handler = l->data;
 	if (!handler) continue;
 	
 	e_fm2_mime_handler_call(handler, obj, path);
@@ -360,17 +353,15 @@ e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, co
 {
    Eina_List *handlers = NULL;
    Eina_List *l = NULL;
+   E_Fm2_Mime_Handler *handler = NULL;
 
    if ((!obj) || (!path) || (!glob)) return;
 
    handlers = e_fm2_mime_handler_glob_handlers_get(glob);
    if (!handlers) return;
 
-   for (l = handlers; l; l = l->next)
+   EINA_LIST_FOREACH(handlers, l, handler)
      {
-	E_Fm2_Mime_Handler *handler = NULL;
-
-	handler = l->data;
 	if (!handler) continue;
 	
 	e_fm2_mime_handler_call(handler, obj, path);
@@ -395,15 +386,16 @@ _e_fm2_mime_handler_glob_match_foreach(const Eina_Hash *hash __UNUSED__, const v
    E_Fm2_Mime_Handler_Tuple *tuple;
    Eina_List *handlers = NULL;
    Eina_List *l = NULL;
+   void *handler = NULL;
 
    tuple = fdata;
    if (e_util_glob_match(tuple->str, key))
      {
 	handlers = data;
-	for (l = handlers; l; l = l->next)
+	EINA_LIST_FOREACH(handlers, l, handler)
 	  {
-	     if (l->data)
-	       tuple->list = eina_list_append(tuple->list, l->data);
+	     if (handler)
+	       tuple->list = eina_list_append(tuple->list, handler);
 	  }
      }
 

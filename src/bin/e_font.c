@@ -29,6 +29,8 @@ e_font_apply(void)
 {
    char buf[1024];
    Eina_List *l;
+   E_Border *bd;
+   E_Font_Default *efd;
    E_Font_Fallback *eff;
    int blen, len;
 
@@ -46,9 +48,8 @@ e_font_apply(void)
 	     strcpy(buf, eff->name);
 	     blen -= len;
 	  }
-	for (l = eina_list_next(l); l; l = l->next)
+	EINA_LIST_FOREACH(eina_list_next(l), l, eff)
 	  {
-	     eff = eina_list_data_get(l);
 	     len = 1;
 	     if (len < blen)
 	       {
@@ -68,20 +69,14 @@ e_font_apply(void)
      edje_fontset_append_set(NULL);
 
    /* setup edje text classes */
-   for (l = e_config->font_defaults; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->font_defaults, l, efd)
      {
-	E_Font_Default *efd;
-
-	efd = eina_list_data_get(l);
 	edje_text_class_set(efd->text_class, efd->font, efd->size);
      }
 
    /* Update borders */
-   for (l = e_border_client_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
-	E_Border *bd;
-
-	bd = l->data;
 	e_border_frame_recalc(bd);
      }
 }
@@ -92,6 +87,7 @@ e_font_available_list(void)
    Eina_List *evas_fonts;
    Eina_List *e_fonts;
    Eina_List *l;
+   const char *evas_font;
    E_Manager *man;
    E_Container *con;
 
@@ -104,16 +100,14 @@ e_font_available_list(void)
    evas_fonts = evas_font_available_list(con->bg_evas);
 
    e_fonts = NULL;
-   for (l = evas_fonts; l; l = l->next)
+   EINA_LIST_FOREACH(evas_fonts, l, evas_font)
      {
 	E_Font_Available *efa;
-	const char *evas_font;
 	
 	efa = E_NEW(E_Font_Available, 1);
-	evas_font = l->data;
 	efa->name = eina_stringshare_add(evas_font);
 	e_fonts = eina_list_append(e_fonts, efa);
-     }	
+     }
 
    evas_font_available_list_free(con->bg_evas, evas_fonts);
 
@@ -125,10 +119,8 @@ e_font_available_list_free(Eina_List *available)
 {
    E_Font_Available *efa;
 
-   while (available)
+   EINA_LIST_FREE(available, efa)
      {	
-	efa = available->data;
-	available = eina_list_remove_list(available, available);
 	if (efa->name) eina_stringshare_del(efa->name);
 	E_FREE(efa);
     }
@@ -137,14 +129,11 @@ e_font_available_list_free(Eina_List *available)
 EAPI void
 e_font_properties_free(E_Font_Properties *efp)
 {
-   while (efp->styles)
+   const char *str;
+
+   EINA_LIST_FREE(efp->styles, str)
      {
-        const char *str;
-
-        str = efp->styles->data;
         if (str) eina_stringshare_del(str);
-        efp->styles = eina_list_remove_list(efp->styles, efp->styles);
-
      }
    if (efp->name) eina_stringshare_del(efp->name);
    free(efp);
@@ -261,6 +250,7 @@ e_font_available_list_parse(Eina_List *list)
 {
    Eina_Hash *font_hash;
    Eina_List *next;
+   void *key;
 
    font_hash = NULL;
 
@@ -280,8 +270,8 @@ e_font_available_list_parse(Eina_List *list)
    font_hash = _e_font_available_hash_add(font_hash, "Monospace:style=Oblique");
    font_hash = _e_font_available_hash_add(font_hash, "Monospace:style=Bold Oblique");
 
-   for (next = list; next; next = next->next)
-     font_hash = _e_font_available_hash_add(font_hash, next->data);
+   EINA_LIST_FOREACH(list, next, key)
+     font_hash = _e_font_available_hash_add(font_hash, key);
 
    return font_hash;
 }
@@ -303,11 +293,8 @@ e_font_fallback_clear(void)
 {
    E_Font_Fallback *eff;
 
-   while (e_config->font_fallbacks)
+   EINA_LIST_FREE(e_config->font_fallbacks, eff)
      {	
-	eff = e_config->font_fallbacks->data;
-	e_config->font_fallbacks = 
-          eina_list_remove_list(e_config->font_fallbacks, e_config->font_fallbacks);
 	if (eff->name) eina_stringshare_del(eff->name);
 	E_FREE(eff);
     }
@@ -341,12 +328,10 @@ EAPI void
 e_font_fallback_remove(const char *font)
 {
    Eina_List *next;
+   E_Font_Fallback *eff;
 
-   for (next = e_config->font_fallbacks; next; next = next->next)
+   EINA_LIST_FOREACH(e_config->font_fallbacks, next, eff)
      {
-	E_Font_Fallback *eff;
-	
-	eff = eina_list_data_get(next);
 	if (!strcmp(eff->name, font))
 	  {
 	     e_config->font_fallbacks = 
@@ -371,9 +356,8 @@ e_font_default_set(const char *text_class, const char *font, Evas_Font_Size size
    Eina_List *next;
 
    /* search for the text class */
-   for (next = e_config->font_defaults; next; next = next->next)
+   EINA_LIST_FOREACH(e_config->font_defaults, next, efd)
      {
-	efd = eina_list_data_get(next);
 	if (!strcmp(efd->text_class, text_class))
 	  {
 	     if (efd->font) eina_stringshare_del(efd->font);
@@ -407,9 +391,8 @@ e_font_default_get(const char *text_class)
    Eina_List *next;
 
    /* search for the text class */
-   for (next = e_config->font_defaults; next; next = next->next)
+   EINA_LIST_FOREACH(e_config->font_defaults, next, efd)
      {
-	efd = eina_list_data_get(next);
 	if (!strcmp(efd->text_class, text_class))
 	  {
 	     /* move to the front of the list */
@@ -432,9 +415,8 @@ e_font_default_remove(const char *text_class)
    Eina_List *next;
 
    /* search for the text class */
-   for (next = e_config->font_defaults; next; next = next->next)
+   EINA_LIST_FOREACH(e_config->font_defaults, next, efd)
      {
-	efd = eina_list_data_get(next);
 	if (!strcmp(efd->text_class, text_class))
 	  {
 	     e_config->font_defaults = 
@@ -482,10 +464,8 @@ e_font_default_string_get(const char *text_class, Evas_Font_Size *size_ret)
 	blen -= len;
      }
 
-   next = e_config->font_fallbacks;
-   while (next)
+   EINA_LIST_FOREACH(e_config->font_fallbacks, next, eff)
      {
-	eff = eina_list_data_get(next);
 	len = 1;
 	if (len < blen)
 	  {
@@ -498,7 +478,6 @@ e_font_default_string_get(const char *text_class, Evas_Font_Size *size_ret)
 	     strcat(_fn_buf, eff->name);
 	     blen -= len;
 	  }
-	next = eina_list_next(next);
      }
 
    if (size_ret) *size_ret = efd->size;

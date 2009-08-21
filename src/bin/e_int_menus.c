@@ -889,6 +889,7 @@ static void
 _e_int_menus_clients_menu_add_iconified(Eina_List *borders, E_Menu *m)
 {
    Eina_List *l = NULL;
+   E_Border *bd;
    E_Menu_Item *mi;
 
    if (eina_list_count(borders) > 0)
@@ -896,11 +897,8 @@ _e_int_menus_clients_menu_add_iconified(Eina_List *borders, E_Menu *m)
 	mi = e_menu_item_new(m); 
 	e_menu_item_separator_set(mi, 1); 
 
-	for (l = borders; l; l = l->next)
+	EINA_LIST_FOREACH(borders, l, bd)
 	  { 
-	     E_Border *bd; 
-
-	     bd = l->data;
 	     _e_int_menus_clients_item_create(bd, m);
 	  }
      }
@@ -910,16 +908,14 @@ static void
 _e_int_menus_clients_add_by_class(Eina_List *borders, E_Menu *m)
 {
    Eina_List *l = NULL, *ico = NULL;
+   E_Border *bd; 
    E_Menu *subm = NULL;
    E_Menu_Item *mi;
    char *class = NULL;
 
    class = strdup("");
-   for (l = borders; l; l = l->next) 
+   EINA_LIST_FOREACH(borders, l, bd)
      {
-	E_Border *bd; 
-
-	bd = l->data; 
 	if ((bd->iconic) && 
 	    (e_config->clientlist_separate_iconified_apps == E_CLIENTLIST_GROUPICONS_SEP))
 	  {
@@ -963,15 +959,13 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Eina_List *borders, E_Menu *
 {
    E_Desk *desk = NULL;
    Eina_List *l = NULL, *alt = NULL, *ico = NULL;
+   E_Border *bd;
    E_Menu *subm;
    E_Menu_Item *mi;
 
    /* Deal with present desk first */
-   for (l = borders; l; l = l->next)
+   EINA_LIST_FOREACH(borders, l, bd)
      {
-	E_Border *bd;
-
-	bd = l->data;
 	if (bd->iconic && e_config->clientlist_separate_iconified_apps && E_CLIENTLIST_GROUPICONS_SEP) 
 	  {
 	     ico = eina_list_append(ico, bd); 
@@ -1002,11 +996,8 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Eina_List *borders, E_Menu *
 	     e_menu_item_separator_set(mi, 1);
 	  }
 
-	for (l = alt; l; l = l->next)
+	EINA_LIST_FOREACH(alt, l, bd)
 	  {
-	     E_Border *bd;
-
-	     bd = l->data; 
 	     if ((bd->desk != desk) && 
 		 (e_config->clientlist_separate_with != E_CLIENTLIST_GROUP_SEP_NONE))
 	       {
@@ -1042,12 +1033,10 @@ static void
 _e_int_menus_clients_add_by_none(Eina_List *borders, E_Menu *m)
 {
    Eina_List *l = NULL, *ico = NULL;
+   E_Border *bd;
 
-   for (l = borders; l; l = l->next)
+   EINA_LIST_FOREACH(borders, l, bd)
      {
-	E_Border *bd;
-
-	bd = l->data;
 	if ((bd->iconic) && (e_config->clientlist_separate_iconified_apps) && 
             (E_CLIENTLIST_GROUPICONS_SEP)) 
 	  {
@@ -1065,6 +1054,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    E_Menu *subm;
    E_Menu_Item *mi;
    Eina_List *l = NULL, *borders = NULL;
+   E_Border *border;
    E_Zone *zone = NULL;
    E_Desk *desk = NULL;
    Main_Data *dat;
@@ -1078,11 +1068,8 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
      l = e_border_focus_stack_get(); 
    else
      l = e_border_client_list();
-   for (; l; l = l->next)
+   EINA_LIST_FOREACH(l, l, border)
      {
-	E_Border *border;
-
-	border = l->data;
 	if (border->client.netwm.state.skip_taskbar) continue;
 	if (border->user_skip_winlist) continue;
 	if ((border->zone == zone) || (border->iconic) ||
@@ -1267,6 +1254,7 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
    Eina_List *l, *borders = NULL;
+   E_Border *bd; 
    E_Menu *root;
    E_Zone *zone = NULL;
 
@@ -1283,12 +1271,10 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 	e_menu_item_label_set(mi, _("(No Windows)"));
 	return;
      }
-   for (l = borders; l; l = l->next)
+   EINA_LIST_FOREACH(borders, l, bd)
      {
-	E_Border *bd; 
 	const char *title = "";
 
-        bd = l->data;
 	title = e_border_name_get(bd);
 	mi = e_menu_item_new(m);
 	if ((title) && (title[0]))
@@ -1358,6 +1344,7 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
    Eina_List *l, *shelves = NULL;
+   E_Shelf *s;
    E_Container *con;
    E_Zone *zone;
 
@@ -1374,13 +1361,12 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("(No Shelves)"));
      }
-   for (l = shelves; l; l = l->next)
+   EINA_LIST_FOREACH(shelves, l, s)
      {
-	E_Shelf *s;
 	const char *name;
 	char buf[4096];
 
-	if (!(s = l->data)) continue;
+	if (!s) continue;
 	if (s->zone->num != zone->num) continue;
 	if (s->cfg->container != con->num) continue;
 

@@ -8,19 +8,14 @@ static void _e_test_internal(E_Container *con);
 EAPI void
 e_test(void)
 {
-   Eina_List *managers, *l, *ll;
+   Eina_List *l, *ll;
+   E_Manager *man;
+   E_Container *con;
    
-   managers = e_manager_list();
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	E_Manager *man;
-	
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
+	EINA_LIST_FOREACH(man->containers, ll, con)
 	  {
-	     E_Container *con;
-	     
-	     con = ll->data;
 	     _e_test_internal(con);
 	  }
      }
@@ -32,6 +27,7 @@ _e_test_timer(void *data)
 {
    E_Menu *m;
    Eina_List *managers, *l;
+   E_Manager *man;
    
    m = data;
    if (m)
@@ -42,11 +38,8 @@ _e_test_timer(void *data)
 	return 0;
      }
    managers = e_manager_list();
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(managers, l, man)
      {
-	E_Manager *man;
-	
-	man = l->data;
 	m = e_int_menus_main_new();
 	e_menu_activate_mouse(m,
 			      e_container_zone_number_get(e_container_current_get(man), 0),
@@ -122,14 +115,11 @@ static void
 _e_test_internal(E_Container *con)
 {
    E_Menu *m;
-   Eina_List *managers, *l;
+   Eina_List *l;
+   E_Manager *man;
    
-   managers = e_manager_list();
-   for (l = managers; l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	E_Manager *man;
-	
-	man = l->data;
 	m = e_int_menus_main_new();
 	e_menu_activate_mouse(m,
 			      e_container_zone_number_get(e_container_current_get(man), 0),
@@ -463,7 +453,7 @@ _e_test_cb_favorites_selected(void *data, Evas_Object *obj, void *event_info)
    printf("FAV SELECTED\n");
    selected = e_fm2_selected_list_get(obj);
    if (!selected) return;
-   ici = selected->data;
+   ici = eina_list_data_get(selected);
    if ((ici->link) && (ici->mount))
      e_fm2_path_set(data, ici->link, "/");
    else if (ici->link)
@@ -487,9 +477,8 @@ _e_test_cb_favorites_files_changed(void *data, Evas_Object *obj, void *event_inf
    realpath = e_fm2_real_path_get(data);
    p1 = ecore_file_realpath(realpath);
    if (!p1) goto done;
-   for (l = icons; l; l = l->next)
+   EINA_LIST_FOREACH(icons, l, ici)
      {
-	ici = l->data;
 	if (ici->link)
 	  {
 	     p2 = ecore_file_realpath(ici->link);

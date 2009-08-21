@@ -151,12 +151,10 @@ e_init_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     for (i = 0; i < num; i+= 2)
 	       {
 		  Eina_List *l;
+		  E_Manager *man;
 
-		  for (l = e_manager_list(); l; l = l->next)
+		  EINA_LIST_FOREACH(e_manager_list(), l, man)
 		    {
-		       E_Manager *man;
-
-		       man = l->data;
 		       if (man->root == initwins[i + 0])
 			 {
 			    man->initwin = initwins[i + 1];
@@ -191,13 +189,11 @@ e_init_client_del(Ecore_Ipc_Event_Client_Del *e)
    if (e->client == client)
      {
 	Eina_List *l;
+	E_Manager *man;
 
 	client = NULL;
-	for (l = e_manager_list(); l; l = l->next)
+	EINA_LIST_FOREACH(e_manager_list(), l, man)
 	  {
-	     E_Manager *man;
-
-	     man = l->data;
 	     man->initwin = 0;
 	  }
      }

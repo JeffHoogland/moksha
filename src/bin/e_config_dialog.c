@@ -83,10 +83,8 @@ e_config_dialog_find(const char *name, const char *class)
    Eina_List *l;
    E_Config_Dialog *cfd;
    
-   for (l = _e_config_dialog_list; l; l = l->next)
+   EINA_LIST_FOREACH(_e_config_dialog_list, l, cfd)
      {
-	cfd = l->data;
-
 	if ((!e_util_strcmp(name, cfd->name)) &&
 	    (!e_util_strcmp(class, cfd->class)))
 	  {
@@ -116,12 +114,11 @@ EAPI E_Config_Dialog *
 e_config_dialog_get(const char *name, const char *class) 
 {
    Eina_List *l;
+   E_Config_Dialog *cfd;
 
-   for (l = _e_config_dialog_list; l; l = l->next)
+   EINA_LIST_FOREACH(_e_config_dialog_list, l, cfd)
      {
-	E_Config_Dialog *cfd;
-
-	if (!(cfd = l->data)) continue;
+	if (!cfd) continue;
 	if ((!e_util_strcmp(name, cfd->name)) &&
 	    (!e_util_strcmp(class, cfd->class)))
 	  {

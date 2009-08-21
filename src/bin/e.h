@@ -126,14 +126,12 @@ typedef struct _E_Rect E_Rect;
     { \
        if (list) \
 	 { \
-	    Eina_List *tmp; \
-	    tmp = list; \
-	    list = NULL; \
-	    while (tmp) \
+	    void *data; \
+	    EINA_LIST_FREE(list, data) \
 	      { \
-		 free(tmp->data); \
-		 tmp = eina_list_remove_list(tmp, tmp); \
+		 free(data); \
 	      } \
+	    list = NULL; \
 	 } \
     } \
   while (0)

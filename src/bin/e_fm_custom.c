@@ -199,6 +199,7 @@ e_fm2_custom_file_del(const char *path)
 {
    Eina_List *list, *l;
    E_Fm2_Custom_File *cf2;
+   const void *key;
 
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
@@ -207,12 +208,12 @@ e_fm2_custom_file_del(const char *path)
    list = _e_fm2_custom_hash_key_base_list(_e_fm2_custom_hash, path);
    if (list)
      {
-	for (l = list; l; l = l->next)
+	EINA_LIST_FOREACH(list, l, key)
 	  {
-	     cf2 = eina_hash_find(_e_fm2_custom_hash, l->data);
+	     cf2 = eina_hash_find(_e_fm2_custom_hash, key);
 	     if (cf2)
 	       {
-		  eina_hash_del(_e_fm2_custom_hash, l->data, cf2);
+		  eina_hash_del(_e_fm2_custom_hash, key, cf2);
 		  _e_fm2_custom_file_del(cf2);
 	       }
 	  }
@@ -226,6 +227,7 @@ e_fm2_custom_file_rename(const char *path, const char *new_path)
 {
    E_Fm2_Custom_File *cf, *cf2;
    Eina_List *list, *l;
+   const void *key;
 
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
@@ -242,16 +244,16 @@ e_fm2_custom_file_rename(const char *path, const char *new_path)
    list = _e_fm2_custom_hash_key_base_list(_e_fm2_custom_hash, path);
    if (list)
      {
-	for (l = list; l; l = l->next)
+	EINA_LIST_FOREACH(list, l, key)
 	  {
-	     cf2 = eina_hash_find(_e_fm2_custom_hash, l->data);
+	     cf2 = eina_hash_find(_e_fm2_custom_hash, key);
 	     if (cf2)
 	       {
 		  char buf[PATH_MAX];
 
 		  strcpy(buf, new_path);
-		  strcat(buf, (char *)l->data + strlen(path));
-		  eina_hash_del(_e_fm2_custom_hash, l->data, cf2);
+		  strcat(buf, (char *)key + strlen(path));
+		  eina_hash_del(_e_fm2_custom_hash, key, cf2);
 		  cf = eina_hash_find(_e_fm2_custom_hash, buf);
 		  if (cf)
 		    _e_fm2_custom_file_del(cf);

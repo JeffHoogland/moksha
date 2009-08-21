@@ -157,18 +157,17 @@ static int
 _check_matches(E_Border *bd, int matchflags)
 {
    Eina_List *l;
+   E_Border *bd2;
    int n = 0;
    const char *title;
    
    title = e_border_name_get(bd);
-   for (l = e_border_client_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd2)
      {
-	E_Border *bd2;
 	int required_matches;
 	int matches;
 	const char *title2;
 	
-	bd2 = l->data;
         matches = 0;
 	required_matches = 0;
 	if (matchflags & E_REMEMBER_MATCH_NAME) required_matches++;

@@ -1307,9 +1307,10 @@ static void
 _e_main_manage_all(void)
 {
    Eina_List *l;
+   E_Manager *man;
 
-   for (l = e_manager_list(); l; l = l->next)
-     e_manager_manage_windows(l->data);
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
+     e_manager_manage_windows(man);
 }
 
 static int
@@ -1499,6 +1500,7 @@ static int
 _e_main_cb_idler_before(void *data __UNUSED__)
 {
    Eina_List *l, *pl;
+   E_Before_Idler *eb;
 
    e_menu_idler_before();
    e_focus_idler_before();
@@ -1506,23 +1508,15 @@ _e_main_cb_idler_before(void *data __UNUSED__)
    e_popup_idler_before();
    e_drag_idler_before();
    e_pointer_idler_before();
-   for (l = _e_main_idler_before_list; l; l = l->next)
+   EINA_LIST_FOREACH(_e_main_idler_before_list, l, eb)
      {
-	E_Before_Idler *eb;
-
-	eb = l->data;
 	if (!eb->delete_me)
 	  {
 	     if (!eb->func(eb->data)) eb->delete_me = 1;
 	  }
      }
-   for (l = _e_main_idler_before_list; l;)
+   EINA_LIST_FOREACH_SAFE(_e_main_idler_before_list, pl, l, eb)
      {
-	E_Before_Idler *eb;
-
-	eb = l->data;
-	pl = l;
-	l = l->next;
 	if ((eb->once) || (eb->delete_me))
 	  {
 	     _e_main_idler_before_list =
@@ -1574,25 +1568,21 @@ static void
 _e_main_desk_save(void)
 {
    Eina_List *ml;
+   E_Manager *man;
    char env[1024], name[1024];
 
-   for (ml = e_manager_list(); ml; ml = ml->next)
+   EINA_LIST_FOREACH(e_manager_list(), ml, man)
      {
-	E_Manager *man;
 	Eina_List *cl;
+	E_Container *con;
 
-	man = ml->data;
-	for (cl = man->containers; cl; cl = cl->next)
+	EINA_LIST_FOREACH(man->containers, cl, con)
 	  {
-	     E_Container *con;
 	     Eina_List *zl;
+	     E_Zone *zone;
 
-	     con = cl->data;
-	     for (zl = con->zones; zl; zl = zl->next)
+	     EINA_LIST_FOREACH(con->zones, zl, zone)
 	       {
-		  E_Zone *zone;
-
-		  zone = zl->data;
 		  snprintf(name, sizeof(name), "DESK_%d_%d_%d", man->num, con->num, zone->num);
 		  snprintf(env, sizeof(env), "%d,%d", zone->desk_x_current, zone->desk_y_current);
 		  e_util_env_set(name, env);
@@ -1605,16 +1595,15 @@ static void
 _e_main_desk_restore(E_Manager *man, E_Container *con)
 {
    Eina_List *zl;
+   E_Zone *zone;
    char *env;
    char name[1024];
 
-   for (zl = con->zones; zl; zl = zl->next)
+   EINA_LIST_FOREACH(con->zones, zl, zone)
      {
-	E_Zone *zone;
 	E_Desk *desk;
 	int desk_x, desk_y;
 
-	zone = zl->data;
 	snprintf(name, sizeof(name), "DESK_%d_%d_%d", man->num, con->num, zone->num);
 	env = getenv(name);
 	if (!env) continue;

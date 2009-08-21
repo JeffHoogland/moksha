@@ -62,14 +62,7 @@ e_pointer_init(void)
 EAPI int
 e_pointer_shutdown(void)
 {
-   while (handlers)
-     {
-	Ecore_Event_Handler *h;
-
-	h = handlers->data;
-	handlers = eina_list_remove_list(handlers, handlers);
-	ecore_event_handler_del(h);
-     }
+   E_FREE_LIST(handlers, ecore_event_handler_del);
    return 1;
 }
 
@@ -97,14 +90,13 @@ EAPI void
 e_pointers_size_set(int size)
 {
    Eina_List *l;
+   E_Pointer *p;
 
    if (!e_config->show_cursor) return;
-   for (l = _e_pointers; l; l = l->next)
+   EINA_LIST_FOREACH(_e_pointers, l, p)
      {
-	E_Pointer *p;
 	Evas_Engine_Info_Buffer *einfo;
 
-	p = l->data;
 	if (p->evas)
 	  {
 	     p->w = p->h = size;
@@ -173,9 +165,8 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
    Eina_List *l;
    E_Pointer_Stack *stack;
 
-   for (l = p->stack; l; l = l->next)
+   EINA_LIST_FOREACH(p->stack, l, stack)
      {
-	stack = l->data;
 	if ((stack->obj == obj) && ((!type) || (!strcmp(stack->type, type))))
 	  {
 	     _e_pointer_stack_free(stack);
@@ -193,7 +184,7 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
 	return;
      }
 
-   stack = p->stack->data;
+   stack = eina_list_data_get(p->stack);
    _e_pointer_type_set(p, stack->type);
 
    if (p->type) eina_stringshare_del(p->type);
@@ -208,14 +199,13 @@ EAPI void
 e_pointer_idler_before(void)
 {
    Eina_List *l;
+   E_Pointer *p;
 
    if (!e_config->show_cursor) return;
-   for (l = _e_pointers; l; l = l->next)
+   EINA_LIST_FOREACH(_e_pointers, l, p)
      {
-	E_Pointer *p;
 	Eina_List *updates;
 
-	p = l->data;
 	if (!p->e_cursor) continue;
 	if (!p->evas) continue;
 
@@ -333,11 +323,7 @@ _e_pointer_free(E_Pointer *p)
 
    _e_pointer_canvas_del(p);
 
-   while (p->stack)
-     {
-	_e_pointer_stack_free(p->stack->data);
-	p->stack = eina_list_remove_list(p->stack, p->stack);
-     }
+   E_FREE_LIST(p->stack, _e_pointer_stack_free);
 
    if (p->type) eina_stringshare_del(p->type);
    if (p->idle_timer) ecore_timer_del(p->idle_timer);
@@ -478,9 +464,8 @@ _e_pointer_cb_mouse_down(void *data, int type, void *event)
    E_Pointer *p;
 
    ev = event;
-   for (l = _e_pointers; l; l = l->next)
+   EINA_LIST_FOREACH(_e_pointers, l, p)
      {
-	p = l->data;
 	_e_pointer_active_handle(p);
 	if (e_powersave_mode_get() < E_POWERSAVE_MODE_EXTREME)
 	  {
@@ -500,9 +485,8 @@ _e_pointer_cb_mouse_up(void *data, int type, void *event)
    E_Pointer *p;
 
    ev = event;
-   for (l = _e_pointers; l; l = l->next)
+   EINA_LIST_FOREACH(_e_pointers, l, p)
      {
-	p = l->data;
 	_e_pointer_active_handle(p);
 	if (e_powersave_mode_get() < E_POWERSAVE_MODE_EXTREME)
 	  {
@@ -522,9 +506,8 @@ _e_pointer_cb_mouse_move(void *data, int type, void *event)
    E_Pointer *p;
 
    ev = event;
-   for (l = _e_pointers; l; l = l->next)
+   EINA_LIST_FOREACH(_e_pointers, l, p)
      {
-	p = l->data;
 	_e_pointer_active_handle(p);
 	if (e_powersave_mode_get() < E_POWERSAVE_MODE_HIGH)
 	  {
@@ -544,9 +527,8 @@ _e_pointer_cb_mouse_wheel(void *data, int type, void *event)
    E_Pointer *p;
 
    ev = event;
-   for (l = _e_pointers; l; l = l->next)
+   EINA_LIST_FOREACH(_e_pointers, l, p)
      {
-	p = l->data;
 	_e_pointer_active_handle(p);
 	if (e_powersave_mode_get() < E_POWERSAVE_MODE_EXTREME)
 	  {

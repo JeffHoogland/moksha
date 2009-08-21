@@ -276,11 +276,9 @@ e_init_init(void)
    screens = (Eina_List *)e_xinerama_screens_get();
    if (screens)
      {
-	for (l = screens; l; l = l->next)
+	E_Screen *scr;
+	EINA_LIST_FOREACH(screens, l, scr)
 	  {
-	     E_Screen *scr;
-	     
-	     scr = l->data;
 	     o = edje_object_add(_e_init_evas);
 	     if (l == screens)
 	       {
@@ -485,7 +483,7 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
    evas_image_cache_set(e, 4096 * 1024);
    evas_font_cache_set(e, 512 * 1024);
    
-   EINA_LIST_FOREACH(fpath, l, path) evas_font_path_append(e, l->data);
+   EINA_LIST_FOREACH(fpath, l, path) evas_font_path_append(e, path);
    
    if (font_hinting == 0)
      {

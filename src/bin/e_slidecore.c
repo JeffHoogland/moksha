@@ -316,14 +316,12 @@ _e_smart_add(Evas_Object *obj)
 static void
 _e_smart_del(Evas_Object *obj)
 {
+   E_Smart_Item *it;
+
    INTERNAL_ENTRY;
    if (sd->slide_animator) ecore_animator_del(sd->slide_animator);
-   while (sd->items)
+   EINA_LIST_FREE(sd->items, it)
      {
-	E_Smart_Item *it;
-	
-	it = sd->items->data;
-	sd->items = eina_list_remove_list(sd->items, sd->items);
 	if (it->label) eina_stringshare_del(it->label);
 	if (it->icon) eina_stringshare_del(it->icon);
 	free(it);

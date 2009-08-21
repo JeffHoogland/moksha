@@ -216,12 +216,10 @@ EAPI void
 e_popup_idler_before(void)
 {
    Eina_List *l;
+   E_Popup *pop;
    
-   for (l = _e_popup_list; l; l = l->next)
+   EINA_LIST_FOREACH(_e_popup_list, l, pop)
      {
-	E_Popup *pop;
-	
-	pop = l->data;
 	if (pop->need_shape_export)
 	  {
              Ecore_X_Rectangle *rects, *orects;
@@ -331,14 +329,12 @@ static int
 _e_popup_cb_window_shape(void *data, int ev_type, void *ev)
 {
    Eina_List *l;
+   E_Popup *pop;
    Ecore_X_Event_Window_Shape *e;
    
    e = ev;
-   for (l = _e_popup_list; l; l = l->next)
+   EINA_LIST_FOREACH(_e_popup_list, l, pop)
      {
-	E_Popup *pop;
-	
-	pop = l->data;
 	if (pop->evas_win == e->win)
 	  pop->need_shape_export = 1;
      }
@@ -351,9 +347,8 @@ _e_popup_find_by_window(Ecore_X_Window win)
    E_Popup *pop;
    Eina_List *l;
    
-   for (l = _e_popup_list; l; l = l->next)
+   EINA_LIST_FOREACH(_e_popup_list, l, pop)
      {
-	pop = l->data;
 	if (pop->evas_win == win) return pop;
      }
    return NULL;

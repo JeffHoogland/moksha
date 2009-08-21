@@ -101,6 +101,7 @@ e_module_new(const char *name)
    const char *modpath;
    char *s;
    Eina_List *l;
+   E_Config_Module *em;
    int in_list = 0;
 
    if (!name) return NULL;
@@ -199,11 +200,9 @@ init_done:
 	       }
 	  }
      }
-   for (l = e_config->modules; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->modules, l, em)
      {
-	E_Config_Module *em;
-
-	if (!(em = l->data)) continue;
+	if (!em) continue;
 	if (!e_util_strcmp(em->name, m->name))
 	  {
 	     in_list = 1;
@@ -408,12 +407,10 @@ EAPI void
 e_module_delayed_set(E_Module *m, int delayed)
 {
    Eina_List *l;
+   E_Config_Module *em;
    
-   for (l = e_config->modules; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->modules, l, em)
      {
-        E_Config_Module *em;
-	
-	em = l->data;
 	if (!em) continue;
 	if (!e_util_strcmp(m->name, em->name))
 	  {
@@ -433,12 +430,11 @@ e_module_priority_set(E_Module *m, int priority)
    /* Set the loading order for a module.
       More priority means load earlier */
    Eina_List *l;
+   E_Config_Module *em;
 
-   for (l = e_config->modules; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->modules, l, em)
      {
-	E_Config_Module *em;
-
-	if (!(em = l->data)) continue;
+	if (!em) continue;
 	if (!e_util_strcmp(m->name, em->name))
 	  {
 	     if (em->priority != priority)
@@ -535,7 +531,7 @@ _e_module_cb_idler(void *data)
 	const char *name;
 	E_Module *m;
 
-	name = _e_modules_delayed->data;
+	name = eina_list_data_get(_e_modules_delayed);
 	_e_modules_delayed = eina_list_remove_list(_e_modules_delayed, _e_modules_delayed);
 	m = NULL;
 	if (name) m = e_module_new(name);

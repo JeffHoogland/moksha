@@ -143,16 +143,15 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    Eina_List *mdirs = NULL, *l = NULL;
+   E_Path_Dir *epd = NULL;
 
    if (!cfdata) return;
 
    /* loop each path_modules dir and load modules for that path */
    mdirs = e_path_dir_list_get(path_modules);
-   for (l = mdirs; l; l = l->next) 
+   EINA_LIST_FOREACH(mdirs, l, epd)
      {
-	E_Path_Dir *epd = NULL;
-
-	if (!(epd = l->data)) continue;
+	if (!epd) continue;
 	if (!ecore_file_is_dir(epd->dir)) continue;
 	_load_modules(epd->dir);
      }
@@ -612,16 +611,16 @@ static void
 _select_all_modules(Evas_Object *obj, void *data)
 {
    Eina_List *l = NULL;
+   E_Ilist_Item *item = NULL;
    E_Config_Dialog_Data *cfdata = NULL;
-   int i = 0;
+   int i = -1;
 
    if (!(cfdata = data)) return;
-   for (i = 0, l = e_widget_ilist_items_get(obj); l; l = l->next, i++)
+   EINA_LIST_FOREACH(e_widget_ilist_items_get(obj), l, item)
      {
-	E_Ilist_Item *item = NULL;
 	CFModule *mod = NULL;
+	i++;
 
-	item = l->data;
 	if ((!item) || (!item->selected)) continue;
 	if (!(mod = e_widget_ilist_nth_data_get(obj, i))) continue;
 	mod->selected = 1;

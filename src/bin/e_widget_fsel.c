@@ -132,9 +132,8 @@ _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj, void *event_in
    realpath = e_fm2_real_path_get(wd->o_files_fm);
    p1 = ecore_file_realpath(realpath);
    if (!p1) goto done;
-   for (l = icons; l; l = l->next)
+   EINA_LIST_FOREACH(icons, l, ici)
      {
-	ici = l->data;
 	if (ici->link)
 	  {
 	     p2 = ecore_file_realpath(ici->link);
@@ -168,7 +167,7 @@ _e_wid_fsel_favorites_selected(void *data, Evas_Object *obj, void *event_info)
    if (!wd->o_files_frame) return;
    selected = e_fm2_selected_list_get(wd->o_favorites_fm);
    if (!selected) return;
-   ici = selected->data;
+   ici = eina_list_data_get(selected);
    if ((ici->link) && (ici->mount))
      e_fm2_path_set(wd->o_files_fm, ici->link, "/");
    else if (ici->real_link)
@@ -219,7 +218,7 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
    if (!wd->o_files_fm) return;
    selected = e_fm2_selected_list_get(wd->o_files_fm);
    if (!selected) return;
-   ici = selected->data;
+   ici = eina_list_data_get(selected);
    E_FREE(wd->path);
    realpath = e_fm2_real_path_get(wd->o_files_fm);
    if (!strcmp(realpath, "/"))

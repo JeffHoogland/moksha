@@ -7,12 +7,10 @@ EAPI int
 e_color_class_init(void)
 {
   Eina_List *l;
+  E_Color_Class *cc;
 
-  for (l = e_config->color_classes; l; l = l->next)
+  EINA_LIST_FOREACH(e_config->color_classes, l, cc)
     {
-       E_Color_Class *cc;
-
-       cc = l->data;
        if (!cc) continue;
 
        printf("INIT CC: %s, %d %d %d %d\n", cc->name, cc->r, cc->g, cc->b, cc->a);
@@ -90,9 +88,8 @@ e_color_class_find(const char *name)
   Eina_List *l;
   E_Color_Class *cc = NULL;
 
-  for (l = e_config->color_classes; l; l = l->next)
+  EINA_LIST_FOREACH(e_config->color_classes, l, cc)
     {
-       cc = l->data;
        if (!cc) continue;
 
        if (!strcmp(cc->name, name))

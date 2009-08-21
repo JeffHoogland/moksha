@@ -187,9 +187,8 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	break;
       case 2:
 	/* end thumb */
-	for (l = _thumblist; l; l = l->next)
+	EINA_LIST_FOREACH(_thumblist, l, eth)
 	  {
-	     eth = l->data;
 	     if (eth->objid == e->ref)
 	       {
 		  _thumblist = eina_list_remove_list(_thumblist, l);
@@ -221,7 +220,7 @@ _e_cb_timer(void *data)
    /* take thumb at head of list */
    if (_thumblist)
      {
-	eth = _thumblist->data;
+	eth = eina_list_data_get(_thumblist);
 	_thumblist = eina_list_remove_list(_thumblist, _thumblist);
 	_e_thumb_generate(eth);
 	if (eth->file) free(eth->file);

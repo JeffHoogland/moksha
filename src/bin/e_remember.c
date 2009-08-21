@@ -20,26 +20,21 @@ EAPI int
 e_remember_init(E_Startup_Mode mode)
 {
    Eina_List *l = NULL;
+   E_Remember *rem;
    int not_updated = 0;
 
    if (mode == E_STARTUP_START)
      {
-	for (l = e_config->remembers; l; l = l->next)
+	EINA_LIST_FOREACH(e_config->remembers, l, rem)
 	  {
-	     E_Remember *rem;
-
-	     rem = l->data;
 	     if ((rem->apply & E_REMEMBER_APPLY_RUN) && (rem->prop.command))
 	       e_util_head_exec(rem->prop.head, rem->prop.command);
 	  }
      }
 
 #if 1
-   for (l = e_config->remembers; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->remembers, l, rem)
      {
-        E_Remember *rem;
-
-        rem = l->data;
 	/* Code to bring up old configs to scratch. Can be removed
 	 * after X amount of time, where X is a figure that will be
 	 * decided by whoever remembers to take this out. */
@@ -110,13 +105,11 @@ e_remember_del(E_Remember *rem)
    if (rem->used_count != 0)
      {
 	Eina_List *l = NULL;
+	E_Border *bd;
 
 	rem->delete_me = 1;
-	for (l = e_border_client_list(); l; l = l->next)
+	EINA_LIST_FOREACH(e_border_client_list(), l, bd)
 	  {
-	     E_Border *bd;
-
-	     bd = l->data;
 	     if (bd->remember == rem)
 	       {
 		  bd->remember = NULL;
@@ -170,9 +163,8 @@ e_remember_match_update(E_Remember *rem)
 	rem->max_score = max_count;
 	e_config->remembers = eina_list_remove(e_config->remembers, rem);
 
-	for (l = e_config->remembers; l; l = l->next)
+	EINA_LIST_FOREACH(e_config->remembers, l, r)
 	  {
-	     r = l->data;
 	     if (r->max_score <= rem->max_score) break;
 	  }
 
@@ -364,16 +356,15 @@ static E_Remember *
 _e_remember_find(E_Border *bd, int check_usable)
 {
    Eina_List *l = NULL;
+   E_Remember *rem;
 
 #if REMEMBER_SIMPLE
-   for (l = e_config->remembers; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->remembers, l, rem)
      {
-	E_Remember *rem;
 	int required_matches;
 	int matches;
 	const char *title = "";
 
-	rem = l->data;
 	matches = 0;
 	required_matches = 0;
 	if (rem->match & E_REMEMBER_MATCH_NAME) required_matches++;
@@ -420,12 +411,10 @@ _e_remember_find(E_Border *bd, int check_usable)
     * with the most possible matches at the start of the list. This
     * means, as soon as a valid match is found, it is a match
     * within the set of best possible matches. */
-   for (l = e_config->remembers; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->remembers, l, rem)
      {
-        E_Remember *rem;
         const char *title = "";
 
-        rem = l->data;
         if ((check_usable) && (!e_remember_usable_get(rem)))
           continue;
 
