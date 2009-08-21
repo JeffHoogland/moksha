@@ -1260,6 +1260,8 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	else if (_evry_view_key_press(s, ev))
 	  goto end;
      }
+   else if (_evry_view_key_press(s, ev))
+     goto end;
    else if (!strcmp(key, "Right"))
      _evry_browse_item(selector);
    else if (!strcmp(key, "Left"))

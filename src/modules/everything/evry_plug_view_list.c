@@ -573,12 +573,25 @@ _cb_key_down(const Evry_View *view, const Ecore_Event_Key *ev)
      _list_plugin_next(v);
    else if (!strcmp(key, "Prior"))
      _list_plugin_prev(v);
-   else if ((!strcmp(key, "Left") && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
-     _list_plugin_prev(v);
-   else if ((!strcmp(key, "Right") && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
-     _list_plugin_prev(v);
+   else if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+     {
+	if (!strcmp(key, "Left"))
+	  _list_plugin_prev(v);
+	else if (!strcmp(key, "Right"))
+	  _list_plugin_next(v);
+	else return 0;
+	
+	return 1;
+     }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
-     _list_plugin_next_by_name(v, key);
+     {
+	if (!strcmp(key, "Left"))
+	  _list_plugin_prev(v);
+	else if (!strcmp(key, "Right"))
+	  _list_plugin_next(v);
+	else if (ev->compose)
+	  _list_plugin_next_by_name(v, key);
+     }   
    else return 0;
 
    return 1;
