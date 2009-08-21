@@ -335,8 +335,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_
    Item *it;
 
    wd = e_widget_data_get(data);
-
-   if (wd->o_base == NULL || wd->o_box == NULL) return ;
+   if ((!wd->o_base) || (!wd->o_box)) return;
 
    e_scrollframe_child_viewport_size_get(wd->o_base, &vw, &vh);
    e_box_min_size_get(wd->o_box, &mw, &mh);
