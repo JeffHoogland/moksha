@@ -37,6 +37,7 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 	if (act->type_in1 && (act->type_in1 == type) &&
 	    (!act->check_item || act->check_item(act, it)))
 	  {
+	     act->item1 = it;
 	     sel->actions = eina_list_append(sel->actions, act);
 	  }
      }

@@ -108,10 +108,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
 }
 
 static int
-_action(Evry_Plugin *plugin, const Evry_Item *it, const char *input)
+_action(Evry_Plugin *plugin, const Evry_Item *it)
 {
    if (it->plugin && it->plugin->action)
-     return it->plugin->action(it->plugin, it, input);
+     return it->plugin->action(it->plugin, it);
 
    return 0;
 }

@@ -334,8 +334,7 @@ _open_folder_check(Evry_Action *act __UNUSED__, const Evry_Item *it)
 }
 
 static int
-_open_folder_action(Evry_Action *act __UNUSED__, const Evry_Item *it,
-		    const Evry_Item *it2 __UNUSED__, const char *input __UNUSED__)
+_open_folder_action(Evry_Action *act)
 {
    E_Action *action = e_action_find("fileman");
    char *path;
@@ -345,16 +344,16 @@ _open_folder_action(Evry_Action *act __UNUSED__, const Evry_Item *it,
 
    m = e_manager_list();
 
-   if (!it->browseable)
+   if (!act->item1->browseable)
      {
-	path = ecore_file_dir_get(it->uri);
+	path = ecore_file_dir_get(act->item1->uri);
 	if (!path) return 0;
 	action->func.go(E_OBJECT(m->data), path);
 	free(path);
      }
    else
      {
-	action->func.go(E_OBJECT(m->data), it->uri);
+	action->func.go(E_OBJECT(m->data), act->item1->uri);
      }
 
    return 1;
@@ -376,7 +375,7 @@ _init(void)
    evry_plugin_register(p2, 1);
 
    act = evry_action_new("Open Folder (EFM)", "FILE", NULL, NULL, "folder-open",
-			 _open_folder_action, _open_folder_check, NULL);
+			 _open_folder_action, _open_folder_check, NULL, NULL, NULL);
 
    evry_action_register(act);
 

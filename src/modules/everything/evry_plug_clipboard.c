@@ -5,8 +5,10 @@ static Evry_Action *act;
 static Ecore_X_Window clipboard_win = 0;
 
 static int
-_action(Evry_Action *act __UNUSED__, const Evry_Item *it, const Evry_Item *it2 __UNUSED__, const char *input __UNUSED__)
+_action(Evry_Action *act)
 {
+   const Evry_Item *it = act->item1;
+   
    ecore_x_selection_primary_set(clipboard_win, it->label, strlen(it->label));
    ecore_x_selection_clipboard_set(clipboard_win, it->label, strlen(it->label));
 
@@ -26,7 +28,7 @@ _init(void)
    if (!win) return EINA_FALSE;
 
    act = evry_action_new("Copy to Clipboard", "TEXT", NULL, NULL, "edit-copy",
-			 _action, _check_item, NULL);
+			 _action, _check_item, NULL, NULL, NULL);
 
    evry_action_register(act);
 

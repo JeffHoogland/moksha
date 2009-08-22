@@ -384,23 +384,6 @@ _exec_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 }
 
 static int
-_exec_border_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
-{
-   E_Border *bd = it->data[0];
-   E_OBJECT_CHECK_RETURN(bd, 0);
-   E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, 0);
-
-   if ((bd->desktop && bd->desktop->exec) &&
-       ((strstr(bd->desktop->exec, "%u")) ||
-	(strstr(bd->desktop->exec, "%U")) ||
-	(strstr(bd->desktop->exec, "%f")) ||
-	(strstr(bd->desktop->exec, "%F"))))
-     return 1;
-
-   return 0;
-}
-
-static int
 _app_action(const Evry_Item *it_app, const Evry_Item *it_file)
 {
    E_Zone *zone;
@@ -482,26 +465,13 @@ _app_action(const Evry_Item *it_app, const Evry_Item *it_file)
 }
 
 static int
-_exec_app_action(Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input)
+_exec_app_action(Evry_Action *act)
 {
-   return _app_action(it1, it2);
+   return _app_action(act->item1, act->item2);
 }
 
 static int
-_exec_border_action(Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input)
-{
-   Evry_Item *it = E_NEW(Evry_Item, 1);
-   Evry_App *app = E_NEW(Evry_App, 1);
-   E_Border *bd = it1->data[0];
-
-   app->desktop = bd->desktop;
-   it->data[0] = app;
-
-   return _app_action(it, it2);
-}
-
-static int
-_open_with_action(Evry_Plugin *plugin, const Evry_Item *it, const char *input __UNUSED__)
+_open_with_action(Evry_Plugin *plugin, const Evry_Item *it)
 {
    Plugin *p = (Plugin*) plugin;
 
@@ -521,16 +491,13 @@ _edit_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
    return 0;
 }
 
-
 static int
-_edit_app_action(Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input)
+_edit_app_action(Evry_Action *act)
 {
    Evry_App *app;
    Efreet_Desktop *desktop;
 
-   if (!it1) return 0;
-
-   app  = it1->data[0];
+   app  = act->item1->data[0];
    if (app->desktop)
      desktop = app->desktop;
    else
@@ -548,7 +515,6 @@ _edit_app_action(Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, c
    return 1;
 }
 
-
 static int
 _new_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
@@ -562,9 +528,8 @@ _new_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
    return 0;
 }
 
-
 static int
-_new_app_action(Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input)
+_new_app_action(Evry_Action *act)
 {
    Evry_App *app;
    char *name;
@@ -573,9 +538,7 @@ _new_app_action(Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, co
    Efreet_Desktop *desktop;
    int i;
 
-   if (!it1) return 0;
-
-   app = it1->data[0];
+   app = act->item1->data[0];
 
    if (app->desktop)
      name = strdup(app->desktop->name);
@@ -621,6 +584,54 @@ _new_app_action(Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, co
    return 1;
 }
 
+static int
+_exec_border_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
+{
+   E_Border *bd = it->data[0];
+   E_OBJECT_CHECK_RETURN(bd, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, 0);
+
+   if ((bd->desktop && bd->desktop->exec) &&
+       ((strstr(bd->desktop->exec, "%u")) ||
+	(strstr(bd->desktop->exec, "%U")) ||
+	(strstr(bd->desktop->exec, "%f")) ||
+	(strstr(bd->desktop->exec, "%F"))))
+     return 1;
+
+   return 0;
+}
+
+static int
+_exec_border_action(Evry_Action *act)
+{
+   return _app_action(act->item1, act->item2);
+}
+
+static int
+_exec_border_intercept(Evry_Action *act)
+{
+   Evry_Item *it = E_NEW(Evry_Item, 1);
+   Evry_App *app = E_NEW(Evry_App, 1);
+   E_Border *bd = act->item1->data[0];
+
+   app->desktop = bd->desktop;
+   it->data[0] = app;
+
+   act->item1 = it;
+}
+
+
+static void
+_exec_border_cleanup(Evry_Action *act)
+{
+   Evry_Item *it = (Evry_Item*) act->item1;
+   Evry_App *app = it->data[0];
+   
+   E_FREE(app);
+   E_FREE(it);
+}
+
+
 static Eina_Bool
 _init(void)
 {
@@ -640,23 +651,28 @@ _init(void)
 
    act = evry_action_new("Launch", "APPLICATION", NULL, NULL,
 			 "everything-launch",
-			 _exec_app_action, _exec_app_check_item, NULL);
+			 _exec_app_action, _exec_app_check_item,
+			 NULL, NULL,NULL);
 
    act1 = evry_action_new("Open File...", "APPLICATION", "FILE", "APPLICATION",
 			  "document-open",
-			  _exec_app_action, _exec_app_check_item, NULL);
+			  _exec_app_action, _exec_app_check_item,
+			  NULL, NULL, NULL);
 
    act2 = evry_action_new("Edit Application Entry", "APPLICATION", NULL, NULL,
 			  "everything-launch",
-			  _edit_app_action, _edit_app_check_item, NULL);
+			  _edit_app_action, _edit_app_check_item,
+			  NULL, NULL, NULL);
 
    act3 = evry_action_new("New Application Entry", "APPLICATION", NULL, NULL,
 			  "everything-launch",
-			  _new_app_action, _new_app_check_item, NULL);
+			  _new_app_action, _new_app_check_item,
+			  NULL, NULL, NULL);
 
-   act4 = evry_action_new("Open File...", "BORDER", "FILE", NULL,
+   act4 = evry_action_new("Open File...", "BORDER", "FILE", "APPLICATION",
 			  "everything-launch",
-			  _exec_border_action, _exec_border_check_item, NULL);
+			  _exec_border_action, _exec_border_check_item,
+			  _exec_border_cleanup, _exec_border_intercept, NULL);
 
    evry_action_register(act);
    evry_action_register(act1);

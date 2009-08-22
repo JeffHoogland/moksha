@@ -190,7 +190,7 @@ _fetch(Evry_Plugin *p, const char *input)
 }
 
 static int
-_action(Evry_Plugin *p __UNUSED__, const Evry_Item *item, const char *input __UNUSED__)
+_action(Evry_Plugin *p __UNUSED__, const Evry_Item *item)
 {
    void (*border_action) (E_Border *bd);
    border_action = item->data[0];

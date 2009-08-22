@@ -29,8 +29,8 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 
    p->active = 0;
 
-   /* is application */
-   if (it->plugin->type_out == plugin->type_in)
+   /* is APPLICATION ? */
+   if (it && it->plugin->type_out == plugin->type_in)
      {
 	Eina_List *l;
 	const char *mime;

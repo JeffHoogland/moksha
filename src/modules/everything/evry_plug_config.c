@@ -92,7 +92,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 }
 
 static int
-_action(Evry_Action *act, const Evry_Item *it, const Evry_Item *it2 __UNUSED__, const char *input __UNUSED__)
+_action(Evry_Action *act)
 {
    E_Configure_It *eci, *eci2;
    E_Container *con;
@@ -101,7 +101,7 @@ _action(Evry_Action *act, const Evry_Item *it, const Evry_Item *it2 __UNUSED__, 
    char buf[1024];
    int found = 0;
 
-   eci = it->data[0];
+   eci = act->item1->data[0];
    con = e_container_current_get(e_manager_current_get());
 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
@@ -134,7 +134,7 @@ _init(void)
 		       NULL, _cleanup, _fetch, NULL, _item_icon_get, NULL, NULL);
 
    act = evry_action_new("Show Dialog", "E_SETTINGS", NULL, NULL, "preferences-advanced",
-			 _action, NULL, NULL);
+			 _action, NULL, NULL, NULL, NULL);
 
    evry_plugin_register(p, 10);
    evry_action_register(act);

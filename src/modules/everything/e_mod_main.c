@@ -274,7 +274,7 @@ evry_plugin_new(Evry_Plugin *base, const char *name, int type,
 		Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
 		void (*cleanup) (Evry_Plugin *p),
 		int  (*fetch) (Evry_Plugin *p, const char *input),
-		int  (*action) (Evry_Plugin *p, const Evry_Item *item, const char *input),
+		int  (*action) (Evry_Plugin *p, const Evry_Item *item),
 		Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
 		Evas_Object *(*config_page) (Evry_Plugin *p),
 		void (*config_apply) (Evry_Plugin *p))
@@ -331,9 +331,12 @@ evry_plugin_free(Evry_Plugin *p, int free_pointer)
 
 
 Evry_Action *
-evry_action_new(const char *name, const char *type_in1, const char *type_in2, const char *type_out, const char *icon,
-		int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input),
+evry_action_new(const char *name, const char *type_in1, const char *type_in2,
+		const char *type_out, const char *icon,
+		int  (*action) (Evry_Action *act),
 		int (*check_item) (Evry_Action *act, const Evry_Item *it),
+		void (*cleanup)    (Evry_Action *act),
+		int  (*intercept)  (Evry_Action *act),
 		Evas_Object *(*icon_get) (Evry_Action *act, Evas *e))
 {
    Evry_Action *act = E_NEW(Evry_Action, 1);
@@ -343,6 +346,8 @@ evry_action_new(const char *name, const char *type_in1, const char *type_in2, co
    act->type_out = (type_out ? eina_stringshare_add(type_out) : NULL);
    act->action = action;
    act->check_item = check_item;
+   act->intercept = intercept;
+   act->cleanup = cleanup;
    act->icon = (icon ? eina_stringshare_add(icon) : NULL);
 
    return act;

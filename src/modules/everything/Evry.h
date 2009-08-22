@@ -58,7 +58,7 @@ struct _Evry_Item
   Evas_Object *o_icon;
   Evas_Object *o_bg;
   int ref;
-  void (*cb_free) (Evry_Item *item);
+  void (*free) (Evry_Item *item);
 };
 
 struct _Evry_Plugin
@@ -94,7 +94,7 @@ struct _Evry_Plugin
   /* int (*candidate_info) (Evas *evas, Evry_Item *item); */
 
   /* optional: default action for this plugins items */
-  int  (*action) (Evry_Plugin *p, const Evry_Item *item, const char *input);
+  int  (*action) (Evry_Plugin *p, const Evry_Item *item);
 
   Evas_Object *(*config_page) (Evry_Plugin *p);
   void (*config_apply) (Evry_Plugin *p);
@@ -138,10 +138,10 @@ struct _Evry_View
   Evas_Object *o_bar;
 
   Evry_View *(*create) (Evry_View *view, const Evry_State *s, const Evas_Object *swallow);
-  void (*destroy) (Evry_View *view);
-  int  (*cb_key_down) (Evry_View *view, const Ecore_Event_Key *ev);
-  int  (*update) (Evry_View *view);
-  void (*clear) (Evry_View *view);
+  void (*destroy)      (Evry_View *view);
+  int  (*cb_key_down)  (Evry_View *view, const Ecore_Event_Key *ev);
+  int  (*update)       (Evry_View *view);
+  void (*clear)        (Evry_View *view);
 
   int priority;
 };
@@ -153,20 +153,18 @@ struct _Evry_Action
   const char *type_in1;
   const char *type_in2;
   const char *type_out;
+
+  const Evry_Item *item1;
+  const Evry_Item *item2;
   
-  int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input);
-
-  int (*check_item) (Evry_Action *act, const Evry_Item *it);
-
+  int  (*action)     (Evry_Action *act);
+  int  (*check_item) (Evry_Action *act, const Evry_Item *it);
+  int  (*intercept)  (Evry_Action *act);
+  void (*cleanup)    (Evry_Action *act);
   Evas_Object *(*icon_get) (Evry_Action *act, Evas *e);
 
   /* use icon name from theme */
   const char *icon;
-
-  Eina_Bool is_default;
-
-  /* only for internal use by plugin */
-  void *private;
 
   /* not to be set by plugin! */
   Evas_Object *o_icon;
@@ -209,7 +207,7 @@ EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, int type,
 				  Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
 				  void (*cleanup) (Evry_Plugin *p),
 				  int  (*fetch)   (Evry_Plugin *p, const char *input),
-				  int  (*action)  (Evry_Plugin *p, const Evry_Item *item, const char *input),
+				  int  (*action)  (Evry_Plugin *p, const Evry_Item *item),
 				  Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
 				  Evas_Object *(*config_page) (Evry_Plugin *p),
 				  void (*config_apply) (Evry_Plugin *p));
@@ -217,10 +215,13 @@ EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, int type,
 EAPI void evry_plugin_free(Evry_Plugin *p, int free_pointer);
 
 
-EAPI Evry_Action *evry_action_new(const char *name, const char *type_in1, const char *type_in2, const char *type_out,
+EAPI Evry_Action *evry_action_new(const char *name, const char *type_in1,
+				  const char *type_in2, const char *type_out,
 				  const char *icon,
-				  int  (*action) (Evry_Action *act, const Evry_Item *it1, const Evry_Item *it2, const char *input),
-				  int (*check_item) (Evry_Action *act, const Evry_Item *it),
+				  int  (*action)     (Evry_Action *act),
+				  int  (*check_item) (Evry_Action *act, const Evry_Item *it),
+				  void (*cleanup)    (Evry_Action *act),
+				  int  (*intercept)  (Evry_Action *act),
 				  Evas_Object *(*icon_get) (Evry_Action *act, Evas *e));
 
 EAPI void evry_action_free(Evry_Action *act);

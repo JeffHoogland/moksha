@@ -246,7 +246,7 @@ evry_item_new(Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *ite
 
    it->plugin = p;
    if (label) it->label = eina_stringshare_add(label);
-   if (cb_free) it->cb_free = cb_free;
+   if (free)  it->free = cb_free;
 
    it->ref = 1;
 
@@ -269,7 +269,7 @@ evry_item_free(Evry_Item *it)
     * 	  it->label);
     * item_cnt--; */
 
-   if (it->cb_free) it->cb_free(it);
+   if (it->free) it->free(it);
 
    if (it->label) eina_stringshare_del(it->label);
    if (it->uri) eina_stringshare_del(it->uri);
@@ -569,7 +569,8 @@ _evry_list_win_new(E_Zone *zone)
 
    evas_event_freeze(popup->evas);
    evas_event_feed_mouse_in(popup->evas, ecore_x_current_time_get(), NULL);
-   evas_event_feed_mouse_move(popup->evas, -1000000, -1000000, ecore_x_current_time_get(), NULL);
+   evas_event_feed_mouse_move(popup->evas, -1000000, -1000000,
+			      ecore_x_current_time_get(), NULL);
    o = edje_object_add(popup->evas);
    list_win->o_main = o;
    e_theme_edje_object_set(o, "base/theme/everything",
@@ -1380,25 +1381,24 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	  it_object = selector->state->sel_item;
 
 	if (act->type_in2 && !it_object) return;
-
-	act->action(act, s_subject->sel_item, it_object, NULL);
+	
+	act->item2 = it_object;
+	
+	act->action(act);
      }
    else
      {
 	Evry_Item *it = s_action->sel_item;
-	s_action->plugin->action(s_action->plugin, it,
-				 selector->state->input);
+	s_action->plugin->action(s_action->plugin, it);
      }
 
+   /* let subject and object plugin know that an action was performed */
    if (s_subject->plugin->action)
-     s_subject->plugin->action(s_subject->plugin,
-			       s_subject->sel_item,
-			       s_subject->input);
+     s_subject->plugin->action(s_subject->plugin, s_subject->sel_item);
 
    if (s_object && s_object->plugin->action)
-     s_object->plugin->action(s_object->plugin,
-			      s_object->sel_item,
-			      s_object->input);
+     s_object->plugin->action(s_object->plugin, s_object->sel_item);
+   
    if (finished)
      evry_hide();
 }
