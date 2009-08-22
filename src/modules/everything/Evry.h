@@ -79,11 +79,11 @@ struct _Evry_Plugin
   /* list of items visible for everything */
   Eina_List *items;
 
-  /* run when plugin is activated. when return plugin is added
+  /* run when plugin is activated. when returns positve it is added
      to the list of current plugins and queried for results */
   Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item);
 
-  /* get candidates matching string, fills 'candidates' list */
+  /* get candidates matching string, fill 'items' list */
   int  (*fetch) (Evry_Plugin *p, const char *input);
 
   /* run when state is removed in which this plugin is active */

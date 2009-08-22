@@ -126,7 +126,7 @@ _cleanup(Evry_Plugin *plugin)
 }
 
 static Evas_Object *
-_icon_get(Evry_Plugin *p, const Evry_Item *it, Evas *e)
+_icon_get(Evry_Plugin *plugin, const Evry_Item *it, Evas *e)
 {
    if (it->plugin && it->plugin->icon_get)
      return it->plugin->icon_get(it->plugin, it, e);
@@ -158,7 +158,7 @@ evry_plug_aggregator_new(Evry_Selector *selector)
 void
 evry_plug_aggregator_free(Evry_Plugin *plugin)
 {
-   Plugin *p = (Plugin *) plugin;
+   Plugin *p = (Plugin*) plugin;
 
    evry_plugin_free(&p->base, 0);
    E_FREE(p);

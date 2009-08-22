@@ -399,7 +399,7 @@ _list_tabs_update(List_View *v)
 	EINA_LIST_FOREACH(v->tabs, ll, tab)
 	  if (tab->plugin == p) break;
 
-	if (!tab)
+	if (!tab && (strlen(p->name) > 0))
 	  {
 	     tab = E_NEW(List_Tab, 1);
 	     tab->plugin = p;
@@ -414,8 +414,9 @@ _list_tabs_update(List_View *v)
 	     v->tabs = eina_list_append(v->tabs, tab);
 	  }
 
-	o = tab->o_tab;
+	if (!tab) continue;
 
+	o = tab->o_tab;
 	evas_object_show(o);
 	e_box_pack_end(v->o_tabs, o);
 

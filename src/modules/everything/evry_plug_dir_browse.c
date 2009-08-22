@@ -169,14 +169,15 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 
 	p = E_NEW(Plugin, 1);
 	p->base = *plugin;
-
+	p->base.items = NULL;
+	
 	p->directory = eina_stringshare_add(it->uri);
      }
    else   
      {
 	p = E_NEW(Plugin, 1);
 	p->base = *plugin;
-
+	p->base.items = NULL;
 	p->directory = eina_stringshare_add(e_user_homedir_get());
      }
    
@@ -217,7 +218,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (!p->command)
      {
 	if (p->base.items) eina_list_free(p->base.items);
-	plugin->items = NULL;
+	p->base.items = NULL;
      }
 
    /* input is command ? */

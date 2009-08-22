@@ -128,6 +128,13 @@ evry_plug_view_help_la_LIBADD       = @e_libs@
 evry_plug_view_help_la_LDFLAGS      = -no-undefined -module -avoid-version
 evry_plug_view_help_la_LIBTOOLFLAGS = --tag=disable-static
 
+evry_plug_wallpaperdir = $(plugindir)
+evry_plug_wallpaper_LTLIBRARIES = evry_plug_wallpaper.la
+evry_plug_wallpaper_la_SOURCES =  evry_plug_wallpaper.c
+evry_plug_wallpaper_la_LIBADD       = @e_libs@
+evry_plug_wallpaper_la_LDFLAGS      = -no-undefined -module -avoid-version
+evry_plug_wallpaper_la_LIBTOOLFLAGS = --tag=disable-static
+
 uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)
 

@@ -154,6 +154,16 @@ evry_show(E_Zone *zone, const char *params)
    e_popup_show(win->popup);
    e_popup_show(list->popup);
 
+   if (evry_conf->views && selector->state)
+     {
+	Evry_View *view =evry_conf->views->data;
+	Evry_State *s = selector->state;
+
+	s->view = view->create(view, s, list->o_main);
+	_evry_view_show(s->view);
+     }
+   else goto error;
+
    if (!evry_conf->hide_input)
      edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
 
@@ -164,6 +174,7 @@ evry_show(E_Zone *zone, const char *params)
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_SELECTION_NOTIFY,
        _evry_cb_selection_notify, win));
+
 
    return 1;
 
@@ -222,7 +233,7 @@ evry_hide(void)
 }
 
 
-void
+EAPI void
 evry_clear_input(void)
 {
    Evry_State *s = selector->state;
@@ -236,7 +247,7 @@ evry_clear_input(void)
 
 /* static int item_cnt = 0; */
 
-Evry_Item *
+EAPI Evry_Item *
 evry_item_new(Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item))
 {
    Evry_Item *it;
@@ -255,7 +266,7 @@ evry_item_new(Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *ite
    return it;
 }
 
-void
+EAPI void
 evry_item_free(Evry_Item *it)
 {
    if (!it) return;
@@ -281,7 +292,7 @@ evry_item_free(Evry_Item *it)
    E_FREE(it);
 }
 
-void
+EAPI void
 evry_item_select(const Evry_State *state, Evry_Item *it)
 {
    Evry_State *s = (Evry_State *)state;
@@ -292,13 +303,13 @@ evry_item_select(const Evry_State *state, Evry_Item *it)
    _evry_selector_update(selector);
 }
 
-void
+EAPI void
 evry_item_ref(Evry_Item *it)
 {
    it->ref++;
 }
 
-int
+EAPI int
 evry_list_win_show(void)
 {
    if (list->visible) return 0;
@@ -308,7 +319,7 @@ evry_list_win_show(void)
 }
 
 
-void
+EAPI void
 evry_list_win_hide(void)
 {
    _evry_list_win_clear(1);
@@ -316,7 +327,7 @@ evry_list_win_hide(void)
 
 
 
-void
+EAPI void
 evry_plugin_async_update(Evry_Plugin *p, int action)
 {
    Evry_State *s;
@@ -387,7 +398,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
      }
 }
 
-int
+EAPI int
 evry_fuzzy_match(const char *str, const char *match)
 {
    const char *p, *m, *next;
@@ -808,8 +819,11 @@ _evry_selector_icon_set(Evry_Selector *sel)
 	     evas_object_show(o);
 	     sel->o_icon = o;
 	  }
+	else
+	  sel->o_icon = NULL;
      }
-   else if (s->plugin && s->plugin->icon)
+
+   if (!sel->o_icon && s->plugin && s->plugin->icon)
      {
 	o = evry_icon_theme_get(s->plugin->icon, win->popup->evas);
 	if (o)
@@ -1056,20 +1070,28 @@ _evry_browse_item(Evry_Selector *sel)
    if (!type_out)
      return;
 
-   EINA_LIST_FOREACH(sel->plugins, l, plugin)
-     {
-	if ((!plugin->begin || !plugin->type_in) ||
-	    (plugin->type_in != type_out))
-	  continue;
+   if (it->plugin->begin &&
+       (p = it->plugin->begin(it->plugin, it)))
+     plugins = eina_list_append(plugins, p);
 
-	if ((p = plugin->begin(plugin, it)))
-	  plugins = eina_list_append(plugins, p);
+   if (!plugins)
+     {
+	EINA_LIST_FOREACH(sel->plugins, l, plugin)
+	  {
+	     /* if (eina_list_data_find_list(plugins, plugin))
+	      *   continue; */
+
+	     if ((!plugin->begin || !plugin->type_in) ||
+		 (plugin->type_in != type_out))
+	       continue;
+
+	     if ((p = plugin->begin(plugin, it)))
+	       plugins = eina_list_append(plugins, p);
+	  }
      }
 
    if (!plugins) return;
-
    _evry_view_hide(s->view);
-
    _evry_state_new(sel, plugins);
    _evry_matches_update(sel);
    _evry_selector_update(sel);
@@ -1088,11 +1110,9 @@ _evry_browse_back(Evry_Selector *sel)
    _evry_state_pop(sel);
 
    s = sel->state;
-
    sel->aggregator->fetch(sel->aggregator, s->input);
    _evry_selector_update(sel);
    _evry_update_text_label(s);
-   
    _evry_view_show(s->view);
 }
 
@@ -1382,9 +1402,9 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	  it_object = selector->state->sel_item;
 
 	if (act->type_in2 && !it_object) return;
-	
+
 	act->item2 = it_object;
-	
+
 	act->action(act);
 
 	if (act->cleanup) act->cleanup(act);
@@ -1401,7 +1421,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
    if (s_object && s_object->plugin->action)
      s_object->plugin->action(s_object->plugin, s_object->sel_item);
-   
+
    if (finished)
      evry_hide();
 }
