@@ -977,6 +977,7 @@ _evry_selector_objects_get(Evry_Action *act)
 	  {
 	     if ((act->type_out) &&
 		 (act->type_out == plugin->type_in) &&
+		 (!act->intercept || act->intercept(act)) &&
 		 (p = plugin->begin(plugin, it)))
 	       plugins = eina_list_append(plugins, p);
 	     else if (p = plugin->begin(plugin, NULL))
@@ -1385,6 +1386,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	act->item2 = it_object;
 	
 	act->action(act);
+
+	if (act->cleanup) act->cleanup(act);
      }
    else
      {
