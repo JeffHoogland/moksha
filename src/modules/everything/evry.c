@@ -246,7 +246,7 @@ evry_item_new(Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *ite
 
    it->plugin = p;
    if (label) it->label = eina_stringshare_add(label);
-   if (free)  it->free = cb_free;
+   it->free = cb_free;
 
    it->ref = 1;
 
@@ -980,7 +980,7 @@ _evry_selector_objects_get(Evry_Action *act)
 		 (!act->intercept || act->intercept(act)) &&
 		 (p = plugin->begin(plugin, it)))
 	       plugins = eina_list_append(plugins, p);
-	     else if (p = plugin->begin(plugin, NULL))
+	     else if ((p = plugin->begin(plugin, NULL)))
 	       plugins = eina_list_append(plugins, p);
 	  }
 	else

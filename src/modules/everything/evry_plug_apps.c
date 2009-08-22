@@ -618,6 +618,8 @@ _exec_border_intercept(Evry_Action *act)
    it->data[0] = app;
 
    act->item1 = it;
+
+   return 1;
 }
 
 
