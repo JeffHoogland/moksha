@@ -105,7 +105,7 @@ _fetch(Evry_Plugin *p, const char *input)
      }
 
    if (input)
-     p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
+     EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
 
    if (p->items) return 1;
 

@@ -59,10 +59,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 static void
 _list_free(Evry_Plugin *plugin)
 {
-   Evry_Item *it;
 
-   EINA_LIST_FREE(plugin->items, it)
-     evry_item_free(it);
 }
 
 static void
@@ -80,10 +77,9 @@ static void
 _cleanup(Evry_Plugin *plugin)
 {
    PLUGIN(p, plugin);
-   /* Plugin *p = (Plugin*) plugin; */
    Efreet_Desktop *desktop;
 
-   _list_free(plugin);
+   EVRY_PLUGIN_ITEMS_FREE(p);
 
    EINA_LIST_FREE(p->apps_mime, desktop)
      efreet_desktop_free(desktop);
@@ -236,14 +232,15 @@ static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
    PLUGIN(p, plugin);
-   /* Plugin *p = (Plugin*) plugin; */
    Eina_List *l;
    Efreet_Desktop *desktop;
+   Evry_Item *it;
    char *file;
+   int prio = 0;
 
    p->added = eina_hash_string_small_new(NULL);
 
-   _list_free(plugin);
+   EVRY_PLUGIN_ITEMS_FREE(p);
 
    /* add apps for a given mimetype */
    if (plugin->type == type_action)
@@ -340,20 +337,14 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    eina_hash_free(p->added);
 
-   if (plugin->items)
-     {
-	int prio = 0;
-	Evry_Item *it;
+   if (!plugin->items) return 0;
 
-	l = plugin->items;
-	plugin->items = eina_list_sort(l, eina_list_count(l), _cb_sort);
-	EINA_LIST_FOREACH(plugin->items, l, it)
-	  it->priority = prio++;
+   EVRY_PLUGIN_ITEMS_SORT(plugin, _cb_sort);
 
-	return 1;
-     }
+   EINA_LIST_FOREACH(plugin->items, l, it)
+     it->priority = prio++;
 
-   return 0;
+   return 1;
 }
 
 static Evas_Object *

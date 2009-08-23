@@ -134,14 +134,11 @@ _fetch(Evry_Plugin *p, const char *input)
 	  }
      }
 
-   if (p->items)
-     {
-	p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
+   if (!p->items) return 0;
+   
+   EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
 
-	return 1;
-     }
-
-   return 0;
+   return 1;
 }
 
 static Evas_Object *

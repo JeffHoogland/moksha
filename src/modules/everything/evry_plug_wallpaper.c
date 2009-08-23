@@ -96,7 +96,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 	p->base.items = NULL;
 	p->file = file;
 
-	it = evry_item_new(NULL, plugin, _("Set as Wallpaper"), NULL);
+	it = evry_item_new(NULL, EVRY_PLUGIN(p), _("Set as Wallpaper"), NULL);
 	it->browseable = EINA_TRUE;
 
 	p->items = eina_list_append(p->items, it);
@@ -170,7 +170,7 @@ _action(Evry_Plugin *plugin, const Evry_Item *item)
 {
    PLUGIN(p, plugin);
 
-   if (p->prev)
+   if (p->prev && p->prev->file)
      {
 	Import *import;
 	Item *it = (Item*) item;

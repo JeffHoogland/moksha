@@ -171,13 +171,11 @@ _fetch(Evry_Plugin *p, const char *input)
 	     _act_cb_border_close,
 	     "window-close", input);
 
-   if (eina_list_count(p->items) > 0)
-     {
-	p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
-	return 1;
-     }
+   if (!p->items) return 0;
 
-   return 0;
+   EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
+
+   return 1;
 }
 
 static int
