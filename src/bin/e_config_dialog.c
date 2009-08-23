@@ -273,7 +273,6 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    e_dialog_show(cfd->dia);
    if (cfd->icon) e_dialog_border_icon_set(cfd->dia, cfd->icon);
 
-   e_win_centered_set(cfd->dia->win, 1);
    cfd->view_type = type;
 }
 
