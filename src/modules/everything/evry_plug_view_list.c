@@ -582,7 +582,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	else if (!strcmp(key, "Right"))
 	  _list_plugin_next(v);
 	else return 0;
-	
+
 	return 1;
      }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
@@ -593,7 +593,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  _list_plugin_next(v);
 	else if (ev->compose)
 	  _list_plugin_next_by_name(v, key);
-     }   
+     }
    else return 0;
 
    return 1;

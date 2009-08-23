@@ -23,11 +23,13 @@ static const char *view_types = NULL;
 static int
 _check_item(const Evry_Item *it)
 {
-   if ((!it || !it->uri || !it->mime) ||
-       (it->plugin->type_out != view_types))
-     return 0;
+   if (!it || it->plugin->type_out != view_types) return 0;
 
-   if (!strncmp(it->mime, "image/", 6))
+   ITEM_FILE(file, it);
+
+   if (!file->uri || !file->mime) return 0;
+
+   if (!strncmp(file->mime, "image/", 6))
      return 1;
 
    return 0;
@@ -46,7 +48,7 @@ _cb_preview_thumb_gen(void *data, Evas_Object *obj, void *event_info)
 }
 
 void
-_show_item(Image_View *v, const Evry_Item *it, int dir)
+_show_item(Image_View *v, const Evry_Item_File *file, int dir)
 {
    int w, h;
 
@@ -75,7 +77,7 @@ _show_item(Image_View *v, const Evry_Item *it, int dir)
      }
 
    v->o_thumb[1] = e_thumb_icon_add(v->evas);
-   e_thumb_icon_file_set(v->o_thumb[1], it->uri, NULL);
+   e_thumb_icon_file_set(v->o_thumb[1], file->uri, NULL);
    evas_object_smart_callback_add(v->o_thumb[1], "e_thumb_gen", _cb_preview_thumb_gen, v);
    edje_object_part_geometry_get(v->o_main, "e.swallow.icon2", NULL, NULL, &w, &h);
    e_thumb_icon_size_set(v->o_thumb[1], w, h);
@@ -96,9 +98,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    Image_View *v = (Image_View *) view;
 
    Eina_List *l;
-   Evry_Item *it = NULL, *cur_item;
+   Evry_Item_File *file = NULL;
 
-   cur_item  = v->state->sel_item;
+   ITEM_FILE(cur_item, v->state->sel_item);
 
    if (!strcmp(ev->key, "Down"))
      {
@@ -107,14 +109,14 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	l = eina_list_data_find_list(v->items, cur_item);
 
 	if (l && l->next)
-	  it = l->next->data;
+	  file = l->next->data;
 	else
-	  it = v->items->data;
+	  file = v->items->data;
 
-	if (it && (it != cur_item))
+	if (file && (file != cur_item))
 	  {
-	     _show_item(v, it, 1);
-	     evry_item_select(v->state, it);
+	     _show_item(v, file, 1);
+	     evry_item_select(v->state, EVRY_ITEM(file));
 	  }
 	return 1;
      }
@@ -125,14 +127,14 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	l = eina_list_data_find_list(v->items, cur_item);
 
 	if (l && l->prev)
-	  it = l->prev->data;
+	  file = l->prev->data;
 	else
-	  it = eina_list_last(v->items)->data;
+	  file = eina_list_last(v->items)->data;
 
-	if (it && (it != cur_item))
+	if (file && (file != cur_item))
 	  {
-	     _show_item(v, it, -1);
-	     evry_item_select(v->state, it);
+	     _show_item(v, file, -1);
+	     evry_item_select(v->state, EVRY_ITEM(file));
 	  }
 	return 1;
      }
@@ -172,19 +174,20 @@ static int
 _view_update(Evry_View *view)
 {
    Image_View *v = (Image_View *) view;
-   Evry_Item *it;
+   Evry_Item_File *file, se;
+   Evry_Item *selected = v->state->sel_item;
 
    v->items = _get_list(v->state);
    if (!v->items) return 0;
 
-   it = eina_list_data_find(v->items, v->state->sel_item);
-   if (!it)
+   file = eina_list_data_find(v->items, selected);
+   if (!file)
      {
-	it = v->items->data;
-	evry_item_select(v->state, it);
+	file = v->items->data;
+	evry_item_select(v->state, EVRY_ITEM(file));
      }
 
-   _show_item(v, it, 0);
+   _show_item(v, file, 0);
 
    return 1;
 }
@@ -197,7 +200,7 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 
    if (!s->plugin)
      return NULL;
-   
+
    if (!_get_list(s))
      return NULL;
 
@@ -213,9 +216,9 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    edje_extern_object_min_size_set(v->o_main, w * 3, 100);
    evas_object_resize(v->o_main, w * 3, h);
 
-   v->view.o_list = v->o_main;
+   EVRY_VIEW(v)->o_list = v->o_main;
 
-   return &v->view;
+   return EVRY_VIEW(v);
 }
 
 static void

@@ -97,10 +97,10 @@ _fetch(Evry_Plugin *p, const char *input)
 
 	if (!input || match)
 	  {
-	     it = evry_item_new(p, act->name, NULL);
+	     it = evry_item_new(NULL, p, act->name, NULL);
 	     it->fuzzy_match = match;
-	     it->data[0] = act;
-	     p->items = eina_list_append(p->items, it);
+	     it->data = act;
+	     EVRY_PLUGIN_ITEM_APPEND(p, it);
 	  }
      }
 
@@ -116,7 +116,7 @@ static Evas_Object *
 _icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
-   Evry_Action *act = it->data[0];
+   Evry_Action *act = it->data;
 
    if (!act) return NULL;
 

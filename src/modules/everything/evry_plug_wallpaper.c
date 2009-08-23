@@ -8,14 +8,14 @@
 
 typedef struct _Plugin Plugin;
 typedef struct _Import Import;
-typedef struct _Item_Data Item_Data;
+typedef struct _Item Item;
 
 struct _Plugin
 {
   Evry_Plugin base;
   Plugin *prev;
   Eina_List *items;
-  const Evry_Item *item;
+  const Evry_Item_File *file;
 };
 
 struct _Import
@@ -32,8 +32,9 @@ struct _Import
   Evas *evas;
 };
 
-struct _Item_Data
+struct _Item
 {
+  Evry_Item base;
   const char *icon;
   int method;
 };
@@ -46,55 +47,68 @@ static int _import_cb_edje_cc_exit(void *data, int type, void *event);
 static Evry_Plugin *plugin;
 
 static void
-_item_free(Evry_Item *it)
+_item_free(Evry_Item *item)
 {
-   Item_Data *id = it->data[0];
-   E_FREE(id);
+   Item *it = (Item*) item;
+   E_FREE(it);
 }
 
 static void
 _item_add(Plugin *p, const char *name, int method, const char *icon)
 {
-   Evry_Item *it;
-   Item_Data *id;
+   Item *item = E_NEW(Item, 1);
+   evry_item_new(EVRY_ITEM(item), EVRY_PLUGIN(p), name, _item_free);
 
-   it = evry_item_new(&p->base, name, _item_free);
-   id = E_NEW(Item_Data, 1);
-   id->icon = icon;
-   id->method = method;
-   it->data[0] = id;
-   p->items = eina_list_append(p->items, it);
+   item->icon = icon;
+   item->method = method;
+
+   p->items = eina_list_append(p->items, EVRY_ITEM(item));
+}
+
+static Evas_Object *
+_item_icon_get(Evry_Plugin *plugin, const Evry_Item *item, Evas *e)
+{
+   return evry_icon_theme_get(((Item*)item)->icon, e);
+}
+
+static Evas_Object *
+_icon_get(Evry_Plugin *plugin, const Evry_Item *it, Evas *e)
+{
+   return evry_icon_theme_get("preferences-desktop-wallpaper", e);
 }
 
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *item)
 {
-   Plugin *p = (Plugin*) plugin;
-   Evry_Item *it;
+   PLUGIN(p, plugin);
 
    /* is FILE ? */
-   if (item && item->plugin->type_out == p->base.type_in)
+   if (item && item->plugin->type_out == plugin->type_in)
      {
-	if (!item->mime || (strncmp(item->mime, "image/", 6)))
+	Evry_Item *it;
+	ITEM_FILE(file, item);
+
+	if (!file->mime || (strncmp(file->mime, "image/", 6)))
 	  return NULL;
 
 	p = E_NEW(Plugin, 1);
 	p->base = *plugin;
 	p->base.items = NULL;
-	p->item = item;
+	p->file = file;
 
-	it = evry_item_new(&p->base, _("Set as Wallpaper"), NULL);
-
+	it = evry_item_new(NULL, plugin, _("Set as Wallpaper"), NULL);
 	it->browseable = EINA_TRUE;
+
 	p->items = eina_list_append(p->items, it);
 
-	return &p->base;
+	return EVRY_PLUGIN(p);
      }
    else if (item->plugin->type_out == plugin->type_out)
      {
 	p = E_NEW(Plugin, 1);
 	p->base = *plugin;
 	p->base.items = NULL;
+	p->base.icon_get = &_item_icon_get;
 	p->prev = (Plugin*) item->plugin;
 
 	_item_add(p, _("Stretch"), IMPORT_STRETCH,
@@ -108,7 +122,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 	_item_add(p, _("Fill"), IMPORT_SCALE_ASPECT_OUT,
 		  "enlightenment/wallpaper_stretch");
 
-	return &p->base;
+	return EVRY_PLUGIN(p);
      }
 
    return NULL;
@@ -117,11 +131,10 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 static void
 _cleanup(Evry_Plugin *plugin)
 {
-   Plugin *p = (Plugin*) plugin;
+   PLUGIN(p, plugin);
    Evry_Item *it;
 
-   if (p->base.items) eina_list_free(p->base.items);
-   p->base.items = NULL;
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    EINA_LIST_FREE(p->items, it)
      evry_item_free(it);
@@ -132,64 +145,47 @@ _cleanup(Evry_Plugin *plugin)
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
-   Plugin *p = (Plugin*) plugin;
+   PLUGIN(p, plugin);
    Evry_Item *it = NULL;
    Eina_List *l;
+   int match = 0;
 
-   if (p->base.items) eina_list_free(p->base.items);
-   p->base.items = NULL;
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    EINA_LIST_FOREACH(p->items, l, it)
-     plugin->items = eina_list_append(plugin->items, it);
+     if (!input || (match = evry_fuzzy_match(it->label, input)))
+       {
+	  it->fuzzy_match = match;
+	  EVRY_PLUGIN_ITEM_APPEND(p, it);
+       }
+
+   if (input)
+     plugin->items = evry_fuzzy_match_sort(plugin->items);
 
    return 1;
 }
 
 static int
-_action(Evry_Plugin *plugin, const Evry_Item *it)
+_action(Evry_Plugin *plugin, const Evry_Item *item)
 {
-   Plugin *p = (Plugin*) plugin;
+   PLUGIN(p, plugin);
 
    if (p->prev)
      {
-	const Evry_Item *it_file;
-	Item_Data *id;
 	Import *import;
-
+	Item *it = (Item*) item;
 	import = E_NEW(Import, 1);
-	it_file = p->prev->item;
-	id = it->data[0];
-	import->method = id->method;
-	import->file = it_file->uri;
+	import->method = it->method;
+	import->file = p->prev->file->uri;
 	import->quality = 100;
 	import->external = 0;
-	import->evas = evas_object_evas_get(it->o_bg); /* Eeek! */
+	import->evas = evas_object_evas_get(item->o_bg); /* Eeek! */
 	_import_edj_gen(import);
 
 	return 1;
      }
 
    return 0;
-}
-
-static Evas_Object *
-_icon_get(Evry_Plugin *plugin, const Evry_Item *it, Evas *e)
-{
-   /* Plugin *p = (Plugin*) plugin; */
-   Evas_Object *o = NULL;
-
-   if (it->data[0])
-     {
-	const char *icon = ((Item_Data*) it->data[0])->icon;
-
-	o = evry_icon_theme_get(icon, e);
-     }
-   else
-     {
-	o = evry_icon_theme_get("preferences-desktop-wallpaper", e);
-     }
-
-   return o;
 }
 
 static Eina_Bool
@@ -208,7 +204,7 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_free(plugin, 1);
+   EVRY_PLUGIN_FREE(plugin);
 }
 
 

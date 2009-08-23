@@ -7,10 +7,7 @@ static Evry_Action *act;
 static void
 _cleanup(Evry_Plugin *p)
 {
-   Evry_Item *it;
-
-   EINA_LIST_FREE(p->items, it)
-     evry_item_free(it);
+   EVRY_PLUGIN_ITEMS_FREE(p);
 }
 
 static void
@@ -18,24 +15,12 @@ _item_add(Evry_Plugin *p, E_Configure_It *eci, int match, int prio)
 {
    Evry_Item *it;
 
-   it = evry_item_new(p, eci->label, NULL);
-   it->data[0] = eci;
+   it = evry_item_new(NULL, p, eci->label, NULL);
+   it->data = eci;
    it->priority = prio;
    it->fuzzy_match = match;
 
-   p->items = eina_list_append(p->items, it);
-}
-
-static int
-_cb_sort(const void *data1, const void *data2)
-{
-   const Evry_Item *it1 = data1;
-   const Evry_Item *it2 = data2;
-
-   if (it1->fuzzy_match - it2->fuzzy_match)
-     return (it1->fuzzy_match - it2->fuzzy_match);
-
-   return (it1->priority - it2->priority);
+   EVRY_PLUGIN_ITEM_APPEND(p, it);
 }
 
 static int
@@ -67,7 +52,7 @@ _fetch(Evry_Plugin *p, const char *input)
 
    if (eina_list_count(p->items) > 0)
      {
-	p->items = eina_list_sort(p->items, eina_list_count(p->items), _cb_sort);
+	p->items = evry_fuzzy_match_sort(p->items);
 	return 1;
      }
 
@@ -78,7 +63,7 @@ static Evas_Object *
 _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
-   E_Configure_It *eci = it->data[0];
+   E_Configure_It *eci = it->data;
 
    if (eci->icon)
      {
@@ -101,7 +86,7 @@ _action(Evry_Action *act)
    char buf[1024];
    int found = 0;
 
-   eci = act->item1->data[0];
+   eci = act->item1->data;
    con = e_container_current_get(e_manager_current_get());
 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
@@ -145,9 +130,8 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_free(p, 1);
+   EVRY_PLUGIN_FREE(p);
 
-   
    evry_action_free(act);
 }
 

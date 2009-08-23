@@ -8,13 +8,44 @@
 #define EVRY_ASYNC_UPDATE_CLEAR 1
 
 
-typedef struct _Evry_Plugin Evry_Plugin;
-typedef struct _Evry_Item   Evry_Item;
-typedef struct _Evry_Action Evry_Action;
-typedef struct _Evry_State Evry_State;
-typedef struct _Evry_View   Evry_View;
-typedef struct _Evry_App Evry_App;
-typedef struct _Plugin_Config Plugin_Config;
+typedef struct _Evry_Plugin    Evry_Plugin;
+typedef struct _Evry_Item      Evry_Item;
+typedef struct _Evry_Item_App  Evry_Item_App;
+typedef struct _Evry_Item_File Evry_Item_File;
+typedef struct _Evry_Action    Evry_Action;
+typedef struct _Evry_State     Evry_State;
+typedef struct _Evry_View      Evry_View;
+typedef struct _Plugin_Config  Plugin_Config;
+
+#define EVRY_ITEM(_item) ((Evry_Item *)_item)
+#define EVRY_PLUGIN(_plugin) ((Evry_Plugin *) _plugin)
+#define EVRY_VIEW(_view) ((Evry_View *) _view)
+#define ITEM_FILE(_file, _item) Evry_Item_File *_file = (Evry_Item_File *) _item
+#define ITEM_APP(_app, _item)   Evry_Item_App *_app = (Evry_Item_App *) _item
+#define PLUGIN(_p, _plugin) Plugin *_p = (Plugin*) _plugin
+
+#define EVRY_PLUGIN_ITEMS_CLEAR(_p)       		\
+  if (EVRY_PLUGIN(_p)->items)				\
+    eina_list_free(EVRY_PLUGIN(_p)->items); 		\
+  EVRY_PLUGIN(_p)->items = NULL;
+
+#define EVRY_PLUGIN_ITEMS_FREE(_p)			\
+  Evry_Item *evryitem;					\
+  EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, evryitem)	\
+    evry_item_free(evryitem);
+
+#define EVRY_PLUGIN_ITEMS_SORT(_p, _sortcb)		\
+  EVRY_PLUGIN(_p)->items = eina_list_sort		\
+    (EVRY_PLUGIN(_p)->items,				\
+     eina_list_count(EVRY_PLUGIN(_p)->items), _sortcb);	\
+
+#define EVRY_PLUGIN_ITEM_APPEND(_p, _item)			\
+  EVRY_PLUGIN(_p)->items =					\
+    eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))	\
+
+#define EVRY_PLUGIN_FREE(_p)			\
+  evry_plugin_free(EVRY_PLUGIN(_p), 0);		\
+  E_FREE(_p);
 
 struct _Plugin_Config
 {
@@ -36,16 +67,14 @@ struct _Evry_Item
 {
   /* label to show for this item */
   const char *label;
-
-  const char *uri;
-  const char *mime;
+  const char *icon;
 
   /* item can be browsed, e.g. folders */
   Eina_Bool browseable;
 
   /* these are only for internally use by plugins */
   /* used e.g. as pointer for item data (Efreet_Desktop) */
-  void *data[4];
+  void *data;
 
   /* priority hints for sorting */
   int priority;
@@ -60,6 +89,21 @@ struct _Evry_Item
   int ref;
   void (*free) (Evry_Item *item);
 };
+
+struct _Evry_Item_App
+{
+  Evry_Item base;
+  const char *file;
+  Efreet_Desktop *desktop;
+};
+
+struct _Evry_Item_File
+{
+  Evry_Item base;
+  const char *uri;
+  const char *mime;
+};
+
 
 struct _Evry_Plugin
 {
@@ -156,7 +200,7 @@ struct _Evry_Action
 
   const Evry_Item *item1;
   const Evry_Item *item2;
-  
+
   int  (*action)     (Evry_Action *act);
   int  (*check_item) (Evry_Action *act, const Evry_Item *it);
   int  (*intercept)  (Evry_Action *act);
@@ -170,11 +214,6 @@ struct _Evry_Action
   Evas_Object *o_icon;
 };
 
-struct _Evry_App
-{
-  const char *file;
-  Efreet_Desktop *desktop;
-};
 
 EAPI void evry_plugin_register(Evry_Plugin *p, int priority);
 EAPI void evry_plugin_unregister(Evry_Plugin *p);
@@ -189,7 +228,7 @@ EAPI int  evry_list_win_show(void);
 EAPI void evry_list_win_hide(void);
 
 
-EAPI Evry_Item *evry_item_new(Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item));
+EAPI Evry_Item *evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item));
 EAPI void evry_item_free(Evry_Item *it);
 EAPI void evry_item_ref(Evry_Item *it);
 
@@ -200,6 +239,7 @@ EAPI Evas_Object *evry_icon_mime_get(const char *mime, Evas *e);
 EAPI Evas_Object *evry_icon_theme_get(const char *icon, Evas *e);
 
 EAPI int  evry_fuzzy_match(const char *str, const char *match);
+EAPI Eina_List *evry_fuzzy_match_sort(Eina_List *items);
 
 EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, int type,
 				  const char *type_in, const char *type_out,
@@ -225,3 +265,4 @@ EAPI Evry_Action *evry_action_new(const char *name, const char *type_in1,
 				  Evas_Object *(*icon_get) (Evry_Action *act, Evas *e));
 
 EAPI void evry_action_free(Evry_Action *act);
+

@@ -248,12 +248,18 @@ evry_clear_input(void)
 /* static int item_cnt = 0; */
 
 EAPI Evry_Item *
-evry_item_new(Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item))
+evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item))
 {
    Evry_Item *it;
-
-   it = E_NEW(Evry_Item, 1);
-   if (!it) return NULL;
+   if (base)
+     {
+	it = base;
+     }
+   else
+     {
+	it = E_NEW(Evry_Item, 1);
+	if (!it) return NULL;
+     }
 
    it->plugin = p;
    if (label) it->label = eina_stringshare_add(label);
@@ -280,16 +286,17 @@ evry_item_free(Evry_Item *it)
     * 	  it->label);
     * item_cnt--; */
 
-   if (it->free) it->free(it);
-
    if (it->label) eina_stringshare_del(it->label);
-   if (it->uri) eina_stringshare_del(it->uri);
-   if (it->mime) eina_stringshare_del(it->mime);
+   /* if (it->uri) eina_stringshare_del(it->uri);
+    * if (it->mime) eina_stringshare_del(it->mime); */
 
    if (it->o_bg) evas_object_del(it->o_bg);
    if (it->o_icon) evas_object_del(it->o_icon);
 
-   E_FREE(it);
+   if (it->free)
+     it->free(it);
+   else
+     E_FREE(it);
 }
 
 EAPI void
@@ -553,6 +560,35 @@ evry_fuzzy_match(const char *str, const char *match)
    return sum;
 }
 
+static int
+_evry_fuzzy_match_sort_cb(const void *data1, const void *data2)
+{
+   const Evry_Item *it1 = data1;
+   const Evry_Item *it2 = data2;
+
+   if (it1->priority - it2->priority)
+     return (it1->priority - it2->priority);
+
+   if (it1->fuzzy_match || it2->fuzzy_match)
+     {
+	if (it1->fuzzy_match && !it2->fuzzy_match)
+	  return -1;
+
+	if (!it1->fuzzy_match && it2->fuzzy_match)
+	  return 1;
+
+	if (it1->fuzzy_match - it2->fuzzy_match)
+	  return (it1->fuzzy_match - it2->fuzzy_match);
+     }
+
+   return 0;
+}
+
+EAPI Eina_List *
+evry_fuzzy_match_sort(Eina_List *items)
+{
+   return eina_list_sort(items, eina_list_count(items), _evry_fuzzy_match_sort_cb);
+}
 
 /* local subsystem functions */
 
@@ -1147,7 +1183,7 @@ _evry_selectors_switch(void)
 
 	if ((s->sel_item) &&
 	    (s->sel_item->plugin == action_selector) &&
-	    (act = s->sel_item->data[0]) &&
+	    (act = s->sel_item->data) &&
 	    (act->type_in2))
 	  {
 	     _evry_selector_objects_get(act);
@@ -1395,7 +1431,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
    if (s_action->sel_item->plugin == action_selector)
      {
-	Evry_Action *act = s_action->sel_item->data[0];
+	Evry_Action *act = s_action->sel_item->data;
 	Evry_Item *it_object = NULL;
 
 	if (selectors[2] == selector)
@@ -1513,7 +1549,13 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
      }
    else
      {
-	l = eina_list_data_find_list(evry_conf->views, s->view->id);
+	if (s->view)
+	  l = eina_list_data_find_list(evry_conf->views, s->view->id);
+	else
+	  {
+	     v = evry_conf->views->data;
+	     goto found;
+	  }
 
 	if (l && l->next)
 	  l = l->next;

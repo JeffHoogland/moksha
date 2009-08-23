@@ -15,7 +15,7 @@ struct _Plugin
   int max_hits;
   const char *input;
   const char *matched;
-  Eina_List *items;
+  Eina_List *files;
 };
 
 static E_DBus_Connection *conn = NULL;
@@ -25,16 +25,16 @@ static int _prio = 5;
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *it)
 {
-   Plugin *p = (Plugin*) plugin;
+   PLUGIN(p, plugin);
 
    p->active = 0;
 
    /* is APPLICATION ? */
    if (it && it->plugin->type_out == plugin->type_in)
      {
+	ITEM_APP(app, it);
 	Eina_List *l;
 	const char *mime;
-	Evry_App *app = it->data[0];
 	char mime_entry[256];
 	char rdf_query[32768];
 	int len = 0;
@@ -72,45 +72,57 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
    return plugin;
 }
 
-static Evry_Item *
-_item_add(Plugin *p, char *file, char *mime, int prio)
+static void
+_item_free(Evry_Item *it)
 {
-   Evry_Item *it;
+   ITEM_FILE(file, it);
+   if (file->uri) eina_stringshare_del(file->uri);
+   if (file->mime) eina_stringshare_del(file->mime);
+
+   E_FREE(file);
+}
+
+static Evry_Item_File *
+_item_add(Plugin *p, char *path, char *mime, int prio)
+{
+   Evry_Item_File *file;
+
    const char *filename;
    int folder = (!strcmp(mime, "Folder"));
 
    /* folders are specifically searched */
-   if (folder && p->base.begin)
+   if (folder && EVRY_PLUGIN(p)->begin)
      return NULL;
 
-   filename = ecore_file_file_get(file);
+   filename = ecore_file_file_get(path);
 
    if (!filename)
      return NULL;
 
-   it = evry_item_new(&p->base, filename, NULL);
-   if (!it)
-     return NULL;
-   it->priority = prio;
-   it->uri = eina_stringshare_add(file);
+   file = E_NEW(Evry_Item_File, 1);
+   if (!file) return NULL;
+
+   evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), filename, _item_free);
+   file->uri = eina_stringshare_add(path);
+
+   EVRY_ITEM(file)->priority = prio;
 
    if (folder)
      {
-	it->browseable = EINA_TRUE;
-	it->mime = eina_stringshare_add("x-directory/normal");
-	it->priority = 1;
+	EVRY_ITEM(file)->browseable = EINA_TRUE;
+	file->mime = eina_stringshare_add("x-directory/normal");
      }
    else
-     it->mime = eina_stringshare_add(mime);
+     file->mime = eina_stringshare_add(mime);
 
-   return it;
+   return file;
 }
 
 static void
 _cleanup(Evry_Plugin *plugin)
 {
-   Plugin *p = (Plugin*) plugin;
-   Evry_Item *it;
+   PLUGIN(p, plugin);
+   Evry_Item_File *file;
 
    p->active = 0;
 
@@ -122,12 +134,10 @@ _cleanup(Evry_Plugin *plugin)
      eina_stringshare_del(p->matched);
    p->matched = NULL;
 
-   EINA_LIST_FREE(p->items, it)
-     evry_item_free(it);
+   EINA_LIST_FREE(p->files, file)
+     evry_item_free(EVRY_ITEM(file));
 
-   if (p->base.items)
-     eina_list_free(p->base.items);
-   p->base.items = NULL;
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
 }
 
 static int
@@ -146,15 +156,15 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 {
    DBusMessageIter array, iter, item;
    char *uri, *mime, *date;
-   Evry_Item *it;
-   Eina_List *items = NULL;
+   Evry_Item_File *file;
+   Eina_List *files = NULL;
    Plugin *p = data;
 
    if (p->active) p->active--;
 
    if (dbus_error_is_set(error))
      {
-	_cleanup(&p->base);
+	_cleanup(EVRY_PLUGIN(p));
 	printf("Error: %s - %s\n", error->name, error->message);
 	return;
      }
@@ -182,31 +192,28 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 
 		  if (uri && mime && date)
 		    {
-		       it = _item_add(p, uri, mime, atoi(date));
-		       if (it)
-			 items = eina_list_append(items, it);
+		       file = _item_add(p, uri, mime, atoi(date));
+		       if (file) files = eina_list_append(files, file);
 		    }
 	       }
 	     dbus_message_iter_next(&item);
 	  }
      }
 
-   if (p->base.items)
-     eina_list_free(p->base.items);
-   p->base.items = NULL;
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
 
-   if (items)
+   if (files)
      {
 	Eina_List *l;
 
-	EINA_LIST_FREE(p->items, it)
-	  evry_item_free(it);
+	EINA_LIST_FREE(p->files, file)
+	  evry_item_free(EVRY_ITEM(file));
 
-	items = eina_list_sort(items, eina_list_count(items), _cb_sort);
-	p->items = items;
+	files = eina_list_sort(files, eina_list_count(files), _cb_sort);
+	p->files = files;
 
-	EINA_LIST_FOREACH(p->items, l, it)
-	  p->base.items = eina_list_append(p->base.items, it);
+	EINA_LIST_FOREACH(p->files, l, file)
+	  EVRY_PLUGIN_ITEM_APPEND(p, file);
 
 	if (p->matched)
 	  eina_stringshare_del(p->matched);
@@ -215,19 +222,19 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	else
 	  p->matched = NULL;
      }
-   else if (p->items && p->input && p->matched &&
+   else if (p->files && p->input && p->matched &&
 	    (strlen(p->input) > strlen(p->matched)))
      {
 	Eina_List *l;
 
-	EINA_LIST_FOREACH(p->items, l, it)
-	  if (evry_fuzzy_match(it->label, (p->input + strlen(p->matched))))
-	    p->base.items = eina_list_append(p->base.items, it);
+	EINA_LIST_FOREACH(p->files, l, file)
+	  if (evry_fuzzy_match(EVRY_ITEM(file)->label, (p->input + strlen(p->matched))))
+	    EVRY_PLUGIN_ITEM_APPEND(p, file);
      }
    else
      {
-	EINA_LIST_FREE(p->items, it)
-	  evry_item_free(it);
+	EINA_LIST_FREE(p->files, file)
+	  evry_item_free(EVRY_ITEM(file));
 
 	if (p->input)
 	  eina_stringshare_del(p->input);
@@ -238,13 +245,14 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
 	p->matched = NULL;
      }
 
-   evry_plugin_async_update(&p->base, EVRY_ASYNC_UPDATE_ADD);
+   evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
 }
 
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
-   Plugin *p = (Plugin*) plugin;
+   PLUGIN(p, plugin);
+
    DBusMessage *msg;
    int live_query_id = 0;
    int max_hits = p->max_hits;
@@ -321,7 +329,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (input && (strlen(input) > 2))
      free(search_text);
 
-   if (p->items) return 1;
+   if (p->files) return 1;
 
    return 0;
 }
@@ -329,10 +337,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
 static Evas_Object *
 _icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
+   ITEM_FILE(file, it);
+
    if (it->browseable)
      return evry_icon_theme_get("folder", e);
    else
-     return evry_icon_mime_get(it->mime, e);
+     return evry_icon_mime_get(file->mime, e);
 
    return NULL;
 }
@@ -349,17 +359,17 @@ _plugin_new(const char *name, int type, char *service, int max_hits, int begin)
    p->active = 0;
 
    if (!begin)
-     evry_plugin_new(&p->base, name, type, "", "FILE", 0, NULL, NULL,
+     evry_plugin_new(EVRY_PLUGIN(p), name, type, "", "FILE", 0, NULL, NULL,
 		     NULL, _cleanup, _fetch,
 		     NULL, _icon_get, NULL, NULL);
    else
-     evry_plugin_new(&p->base, name, type, "APPLICATION", "FILE", 0, NULL, NULL,
+     evry_plugin_new(EVRY_PLUGIN(p), name, type, "APPLICATION", "FILE", 0, NULL, NULL,
 		   _begin, _cleanup, _fetch,
 		   NULL, _icon_get, NULL, NULL);
 
    plugins = eina_list_append(plugins, p);
 
-   evry_plugin_register(&p->base, _prio++);
+   evry_plugin_register(EVRY_PLUGIN(p), _prio++);
 }
 
 
@@ -391,11 +401,9 @@ _shutdown(void)
 
    EINA_LIST_FREE(plugins, p)
      {
-	evry_plugin_free(&p->base, 0);
-
 	if (p->condition[0]) free(p->condition);
 
-	E_FREE(p);
+	EVRY_PLUGIN_FREE(p);
      }
 }
 

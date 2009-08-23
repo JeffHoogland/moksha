@@ -1,13 +1,14 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static Evry_Plugin *p;
+static Evry_Plugin *plugin;
 static Eina_List *handlers = NULL;
 
 
 static int
 _cb_border_remove(void *data, int type,  void *event)
 {
+   Evry_Plugin *p = data;
    E_Event_Border_Remove *ev;
    Eina_List *l;
    Evry_Item *it;
@@ -16,7 +17,7 @@ _cb_border_remove(void *data, int type,  void *event)
 
    EINA_LIST_FOREACH(p->items, l, it)
      {
-	if (it->data[0] == ev->border)
+	if (it->data == ev->border)
 	  {
 	     p->items = eina_list_remove(p->items, it);
 	     evry_item_free(it);
@@ -33,7 +34,7 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 {
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_REMOVE, _cb_border_remove, NULL));
+      (E_EVENT_BORDER_REMOVE, _cb_border_remove, p));
 
    return p;
 }
@@ -55,7 +56,10 @@ _cleanup(Evry_Plugin *p)
 static void
 _item_free(Evry_Item *it)
 {
-   if (it->data[0]) e_object_unref(E_OBJECT(it->data[0]));
+   if (it->data)
+     e_object_unref(E_OBJECT(it->data));
+
+   E_FREE(it);
 }
 
 static void
@@ -63,16 +67,16 @@ _item_add(Evry_Plugin *p, E_Border *bd, int match, int *prio)
 {
    Evry_Item *it;
 
-   it = evry_item_new(p, e_border_name_get(bd), _item_free);
+   it = evry_item_new(NULL, p, e_border_name_get(bd), _item_free);
 
    e_object_ref(E_OBJECT(bd));
-   it->data[0] = bd;
+   it->data = bd;
    it->fuzzy_match = match;
    it->priority = *prio;
 
    *prio += 1;
 
-   p->items = eina_list_append(p->items, it);
+   EVRY_PLUGIN_ITEM_APPEND(p, it);
 }
 
 static int
@@ -144,7 +148,7 @@ static Evas_Object *
 _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
-   E_Border *bd = it->data[0];
+   E_Border *bd = it->data;
 
    if (bd->internal)
      {
@@ -218,10 +222,10 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 static Eina_Bool
 _init(void)
 {
-   p = evry_plugin_new(NULL, "Windows", type_subject, NULL, "BORDER", 0, NULL, NULL,
+   plugin = evry_plugin_new(NULL, "Windows", type_subject, NULL, "BORDER", 0, NULL, NULL,
 		       _begin, _cleanup, _fetch, NULL, _item_icon_get, NULL, NULL);
 
-   evry_plugin_register(p, 2);
+   evry_plugin_register(plugin, 2);
 
    return EINA_TRUE;
 }
@@ -229,7 +233,7 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_free(p, 1);
+   EVRY_PLUGIN_FREE(plugin);
 }
 
 

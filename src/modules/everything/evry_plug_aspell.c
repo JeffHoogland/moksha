@@ -77,19 +77,20 @@ _space_find(const char *line)
 }
 
 static void
-_item_add(Evry_Plugin *p, const char *word, int word_size, int prio)
+_item_add(Plugin *p, const char *word, int word_size, int prio)
 {
    Evry_Item *it;
 
-   it = evry_item_new(p, NULL, NULL);
+   it = evry_item_new(NULL, EVRY_PLUGIN(p), NULL, NULL);
    if (!it) return;
    it->priority = prio;
    it->label = eina_stringshare_add_length(word, word_size);
-   p->items = eina_list_append(p->items, it);
+
+   EVRY_PLUGIN_ITEM_APPEND(p, it);
 }
 
 static void
-_suggestions_add(Evry_Plugin *p, const char *line)
+_suggestions_add(Plugin *p, const char *line)
 {
    const char *s;
 
@@ -123,18 +124,15 @@ _suggestions_add(Evry_Plugin *p, const char *line)
 }
 
 static void
-_clear_list(Evry_Plugin *plugin)
+_clear_list(Plugin *p)
 {
-   Evry_Item *it;
-   EINA_LIST_FREE(plugin->items, it)
-     evry_item_free(it);
+
 }
 
 static int
 _cb_data(void *data, int type __UNUSED__, void *event)
 {
-   Plugin *p = data;
-   Evry_Plugin *plugin = &p->base;
+   PLUGIN(p, data);
    Ecore_Exe_Event_Data *e = event;
    Ecore_Exe_Event_Data_Line *l;
    const char *word;
@@ -142,7 +140,7 @@ _cb_data(void *data, int type __UNUSED__, void *event)
    if (e->exe != p->exe)
      return 1;
 
-   _clear_list(plugin);
+   EVRY_PLUGIN_ITEMS_FREE(p);
 
    word = p->input;
    for (l = e->lines; l && l->line; l++)
@@ -181,12 +179,12 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 	  word = _space_skip(word_end + 1);
      }
 
-   if (plugin->items)
+   if (EVRY_PLUGIN(p)->items)
      {
 	evry_list_win_show();
      }
 
-   evry_plugin_async_update(plugin, EVRY_ASYNC_UPDATE_ADD);
+   evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
 
    return 1;
 }
@@ -207,7 +205,7 @@ _cb_del(void *data, int type __UNUSED__, void *event)
 static int
 _begin(Evry_Plugin *plugin, const Evry_Item *it __UNUSED__)
 {
-   Plugin *p = (Plugin *)plugin;
+   PLUGIN(p, plugin);
 
    if (!p->handler.data)
      p->handler.data = ecore_event_handler_add
@@ -222,7 +220,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it __UNUSED__)
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
-   Plugin *p = (Plugin *)plugin;
+   PLUGIN(p, plugin);
    const char *s;
    int len;
 
@@ -235,7 +233,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
 	const char *lang;
 
-	_clear_list(plugin);
+	EVRY_PLUGIN_ITEMS_FREE(p);
 
 	input += len;
 	for (s = input; *s != '\0'; s++)
@@ -292,11 +290,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
 static void
 _cleanup(Evry_Plugin *plugin)
 {
-   Plugin *p = (Plugin *)plugin;
-   Evry_Item *it;
+   PLUGIN(p, plugin);
 
-   EINA_LIST_FREE(p->base.items, it)
-     evry_item_free(it);
+   EVRY_PLUGIN_ITEMS_FREE(p)
 
    if (p->handler.data)
      {
@@ -332,11 +328,11 @@ _init(void)
    Plugin *p;
 
    p = E_NEW(Plugin, 1);
-   evry_plugin_new(&p->base, "Spell Checker", type_subject, "", "TEXT", 1,
+   evry_plugin_new(EVRY_PLUGIN(p), "Spell Checker", type_subject, "", "TEXT", 1,
 		   "accessories-dictionary", TRIGGER,
 		   NULL, _cleanup, _fetch, NULL, NULL, NULL, NULL);
 
-   evry_plugin_register(&p->base, 100);
+   evry_plugin_register(EVRY_PLUGIN(p), 100);
 
    plugin = p;
    return EINA_TRUE;
@@ -345,14 +341,7 @@ _init(void)
 static void
 _shutdown(void)
 {
-   Plugin *p;
-
-   p = plugin;
-
-   _cleanup(&p->base);
-
-   evry_plugin_free(&p->base, 0);
-   E_FREE(p);
+   EVRY_PLUGIN_FREE(plugin);
 }
 
 EINA_MODULE_INIT(_init);

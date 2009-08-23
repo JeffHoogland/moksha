@@ -8,7 +8,7 @@ struct _Inst
   E_Border *border;
 };
 
-static Evry_Plugin *p;
+static Evry_Plugin *plugin;
 static Inst *inst;
 
 
@@ -88,7 +88,7 @@ _begin(Evry_Plugin *p __UNUSED__, const Evry_Item *item)
 {
    E_Border *bd;
 
-   bd = item->data[0];
+   bd = item->data;
    /* e_object_ref(E_OBJECT(bd)); */
    inst->border = bd;
 
@@ -105,12 +105,6 @@ _cb_sort(const void *data1, const void *data2)
 }
 
 static void
-_item_free(Evry_Item *it)
-{
-   if (it->data[1]) eina_stringshare_del((const char *)it->data[1]);
-}
-
-static void
 _item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), const char *icon, const char *input)
 {
    Evry_Item *it;
@@ -121,9 +115,9 @@ _item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), c
 
    if (!match) return;
 
-   it = evry_item_new(p, label, _item_free);
-   it->data[0] = action_cb;
-   it->data[1] = (void *) eina_stringshare_add(icon);
+   it = evry_item_new(NULL, p, label, NULL);
+   it->icon = eina_stringshare_add(icon);
+   it->data = action_cb;
    it->fuzzy_match = match;
 
    p->items = eina_list_prepend(p->items, it);
@@ -132,10 +126,7 @@ _item_add(Evry_Plugin *p, const char *label, void (*action_cb) (E_Border *bd), c
 static void
 _cleanup(Evry_Plugin *p)
 {
-   Evry_Item *it;
-
-   EINA_LIST_FREE(p->items, it)
-     evry_item_free(it);
+   EVRY_PLUGIN_ITEMS_FREE(p);
 }
 
 static int
@@ -193,7 +184,7 @@ static int
 _action(Evry_Plugin *p __UNUSED__, const Evry_Item *item)
 {
    void (*border_action) (E_Border *bd);
-   border_action = item->data[0];
+   border_action = item->data;
    border_action(inst->border);
 
    return EVRY_ACTION_FINISHED;
@@ -204,7 +195,7 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
    Evas_Object *o;
 
-   o = evry_icon_theme_get((const char *)it->data[1], e);
+   o = evry_icon_theme_get(it->icon, e);
 
    return o;
 }
@@ -212,10 +203,10 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 static Eina_Bool
 _init(void)
 {
-   p = evry_plugin_new(NULL, "Window Action", type_action, "BORDER", NULL, 0, NULL, NULL,
+   plugin = evry_plugin_new(NULL, "Window Action", type_action, "BORDER", NULL, 0, NULL, NULL,
 		       _begin, _cleanup, _fetch, _action, _item_icon_get, NULL, NULL);
 
-   evry_plugin_register(p, 1);
+   evry_plugin_register(plugin, 1);
 
    inst = E_NEW(Inst, 1);
 
@@ -225,7 +216,7 @@ _init(void)
 static void
 _shutdown(void)
 {
-   evry_plugin_free(p, 1);
+   EVRY_PLUGIN_FREE(plugin);
    E_FREE(inst);
 }
 

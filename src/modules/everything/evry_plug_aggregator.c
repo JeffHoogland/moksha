@@ -54,8 +54,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    s = p->selector->state;
 
-   EINA_LIST_FREE(p->base.items, it)
-     evry_item_free(it);
+   EVRY_PLUGIN_ITEMS_FREE(p);
 
    EINA_LIST_FOREACH(s->cur_plugins, l, pp)
      cnt += eina_list_count(pp->items);
@@ -74,7 +73,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		    {
 		       evry_item_ref(it);
 		       items = eina_list_append(items, it);
-		       p->base.items = eina_list_append(p->base.items, it);
+		       EVRY_PLUGIN_ITEM_APPEND(p, it);
 		    }
 	       }
 	  }
@@ -92,7 +91,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
 		       evry_item_ref(it);
 		       it->fuzzy_match = 0;
-		       p->base.items = eina_list_append(p->base.items, it);
+		       EVRY_PLUGIN_ITEM_APPEND(p, it);
 		    }
    	       }
    	  }
@@ -101,8 +100,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (items) eina_list_free(items);
 
    if (input[0])
-     p->base.items = eina_list_sort
-       (p->base.items, eina_list_count(p->base.items), _cb_sort);
+     EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
 
    return 1;
 }
@@ -119,10 +117,7 @@ _action(Evry_Plugin *plugin, const Evry_Item *it)
 static void
 _cleanup(Evry_Plugin *plugin)
 {
-   Evry_Item *it;
-
-   EINA_LIST_FREE(plugin->items, it)
-     evry_item_free(it);
+   EVRY_PLUGIN_ITEMS_FREE(plugin);
 }
 
 static Evas_Object *
@@ -141,25 +136,23 @@ evry_plug_aggregator_new(Evry_Selector *selector)
    Plugin_Config *pc;
 
    p = E_NEW(Plugin, 1);
-   evry_plugin_new(&p->base, "All", 0, "", "", 0, NULL, NULL,
+   evry_plugin_new(EVRY_PLUGIN(p), "All", 0, "", "", 0, NULL, NULL,
 		   NULL, _cleanup, _fetch, _action, _icon_get,
 		   NULL, NULL);
 
    pc = E_NEW(Plugin_Config, 1);
    pc->enabled = 1;
    pc->priority = -1;
-   p->base.config = pc;
+   EVRY_PLUGIN(p)->config = pc;
 
    p->selector = selector;
 
-   return &p->base;
+   return EVRY_PLUGIN(p);
 }
 
 void
 evry_plug_aggregator_free(Evry_Plugin *plugin)
 {
-   Plugin *p = (Plugin*) plugin;
-
-   evry_plugin_free(&p->base, 0);
-   E_FREE(p);
+   PLUGIN(p, plugin);
+   EVRY_PLUGIN_FREE(p);
 }

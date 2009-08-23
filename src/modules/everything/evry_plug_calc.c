@@ -25,13 +25,13 @@ _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
 
 	EINA_LIST_FREE(history, result)
 	  {
-	     it = evry_item_new(p, result, NULL);
+	     it = evry_item_new(NULL, p, result, NULL);
 	     p->items = eina_list_prepend(p->items, it);
 	     eina_stringshare_del(result);
 	  }
      }
 
-   it = evry_item_new(p, "0", NULL);
+   it = evry_item_new(NULL, p, "0", NULL);
    p->items = eina_list_prepend(p->items, it);
 
    return p;
@@ -120,7 +120,7 @@ _action(Evry_Plugin *p, const Evry_Item *it)
 
    it = p->items->data;
 
-   it2 = evry_item_new(p, it->label, NULL);
+   it2 = evry_item_new(NULL, p, it->label, NULL);
    p->items = eina_list_prepend(p->items, it2);
 
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
@@ -170,7 +170,7 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 	p->items = eina_list_remove(p->items, it);
 	evry_item_free(it);
 
-	it = evry_item_new(p, ev->lines->line, NULL);
+	it = evry_item_new(NULL, p, ev->lines->line, NULL);
 	p->items = eina_list_prepend(p->items, it);
      }
 
@@ -223,7 +223,7 @@ _shutdown(void)
    EINA_LIST_FREE(history, result)
      eina_stringshare_del(result);
 
-   evry_plugin_free(p1, 1);
+   EVRY_PLUGIN_FREE(p1);
 }
 
 
