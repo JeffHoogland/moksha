@@ -555,17 +555,21 @@ evry_icon_theme_get(const char *icon, Evas *e)
 Evas_Object *
 evry_icon_mime_get(const char *mime, Evas *e)
 {
+   Evas_Object *o = NULL;
    char *icon;
 
    icon = efreet_mime_type_icon_get(mime, e_config->icon_theme, 64);
 
    if (icon)
-     return e_util_icon_add(icon, e);
+     {
+	o = e_util_icon_add(icon, e);
+	free(icon);
+     }
    else
-     return evry_icon_theme_get("none", e);
+     {
+	o = evry_icon_theme_get("none", e);
+     }
 
-   free(icon);
-
-   return NULL;
+   return o;
 }
 
