@@ -24,8 +24,9 @@ EAPI E_Config_Dialog *
 e_config_dialog_new(E_Container *con, const char *title, const char *name, const char *class, const char *icon, int icon_size, E_Config_Dialog_View *view, void *data)
 {
    E_Config_Dialog *cfd;
-   
-   cfd = E_OBJECT_ALLOC(E_Config_Dialog, E_CONFIG_DIALOG_TYPE, _e_config_dialog_free);
+
+   cfd = E_OBJECT_ALLOC(E_Config_Dialog, E_CONFIG_DIALOG_TYPE, 
+                        _e_config_dialog_free);
    cfd->view = view;
    cfd->con = con;
    cfd->title = eina_stringshare_add(title);
@@ -44,7 +45,8 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
    if (cfd->view->override_auto_apply)
      {
 	/* Dialog Requested To Not Auto-Apply */
-	if ((cfd->view->basic.apply_cfdata) || (cfd->view->advanced.apply_cfdata))
+	if ((cfd->view->basic.apply_cfdata) || 
+            (cfd->view->advanced.apply_cfdata))
 	  cfd->hide_buttons = 0;
      }
    else
@@ -54,7 +56,8 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
 	  cfd->hide_buttons = 1;
 	else
 	  {
-	     if ((cfd->view->basic.apply_cfdata) || (cfd->view->advanced.apply_cfdata))
+	     if ((cfd->view->basic.apply_cfdata) || 
+                 (cfd->view->advanced.apply_cfdata))
 	       cfd->hide_buttons = 0;
 	  }
      }
@@ -73,7 +76,7 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
 	break;
      }
    _e_config_dialog_list = eina_list_append(_e_config_dialog_list, cfd);
-   
+
    return cfd;
 }
 
@@ -82,7 +85,7 @@ e_config_dialog_find(const char *name, const char *class)
 {
    Eina_List *l;
    E_Config_Dialog *cfd;
-   
+
    EINA_LIST_FOREACH(_e_config_dialog_list, l, cfd)
      {
 	if ((!e_util_strcmp(name, cfd->name)) &&
@@ -129,7 +132,6 @@ e_config_dialog_get(const char *name, const char *class)
 }
 
 /* local subsystem functions */
-
 static void
 _e_config_dialog_free(E_Config_Dialog *cfd)
 {
@@ -151,12 +153,13 @@ _e_config_dialog_free(E_Config_Dialog *cfd)
 	cfd->dia = NULL;
      }
    E_FREE(cfd->view);
-   free(cfd);
+   E_FREE(cfd);
 }
 
 static void
 _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 {
+   Evas *evas;
    E_Dialog *pdia;
    Evas_Object *o, *ob, *sf;
    Evas_Coord mw = 0, mh = 0;
@@ -175,7 +178,8 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
          cfd->dia = e_dialog_normal_win_new(cfd->con, cfd->name, buf);
        else
          cfd->dia = e_dialog_new(cfd->con, cfd->name, buf);
-       e_object_del_attach_func_set(E_OBJECT(cfd->dia), _e_config_dialog_cb_dialog_del);
+       e_object_del_attach_func_set(E_OBJECT(cfd->dia), 
+                                    _e_config_dialog_cb_dialog_del);
      }         /* window was created before - deleting content only */
    else if (cfd->dia->content_object)
      evas_object_del(cfd->dia->content_object);
@@ -184,32 +188,33 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    e_dialog_title_set(cfd->dia, cfd->title);
    if (!cfd->cfdata) cfd->cfdata = cfd->view->create_cfdata(cfd);
 
+   evas = e_win_evas_get(cfd->dia->win);
    if (type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
      {
 	if (cfd->view->advanced.create_widgets)
 	  {
 	     o = e_widget_list_add(e_win_evas_get(cfd->dia->win), 0, 0);
-	     ob = cfd->view->basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	     ob = cfd->view->basic.create_widgets(cfd, evas, cfd->cfdata);
 	     if (cfd->view->scroll)
 	       {
 		  e_widget_min_size_resize(ob);
-		  sf = e_widget_scrollframe_simple_add(e_win_evas_get(cfd->dia->win), ob);
+		  sf = e_widget_scrollframe_simple_add(evas, ob);
 		  e_widget_list_object_append(o, sf, 1, 1, 0.0);
 	       }
 	     else
 	       e_widget_list_object_append(o, ob, 1, 1, 0.0);
-	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win),
+	     ob = e_widget_button_add(evas,
 				      _("Advanced"), "go-next",
 				      _e_config_dialog_cb_advanced, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
 	else
 	  {
-	     o = cfd->view->basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	     o = cfd->view->basic.create_widgets(cfd, evas, cfd->cfdata);
 	     if (cfd->view->scroll)
 	       {
 		  e_widget_min_size_resize(o);
-		  o = e_widget_scrollframe_simple_add(e_win_evas_get(cfd->dia->win), o);
+		  o = e_widget_scrollframe_simple_add(evas, o);
 	       }
 	  }
      }
@@ -217,32 +222,32 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
      {
 	if (cfd->view->basic.create_widgets)
 	  {
-	     o = e_widget_list_add(e_win_evas_get(cfd->dia->win), 0, 0);
-	     ob = cfd->view->advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	     o = e_widget_list_add(evas, 0, 0);
+	     ob = cfd->view->advanced.create_widgets(cfd, evas, cfd->cfdata);
 	     if (cfd->view->scroll)
 	       {
 		  e_widget_min_size_resize(ob);
-		  sf = e_widget_scrollframe_simple_add(e_win_evas_get(cfd->dia->win), ob);
+		  sf = e_widget_scrollframe_simple_add(evas, ob);
 		  e_widget_list_object_append(o, sf, 1, 1, 0.0);
 	       }
 	     else
 	       e_widget_list_object_append(o, ob, 1, 1, 0.0);
-	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win), 
+	     ob = e_widget_button_add(evas, 
 				      _("Basic"), "go-next",
 				      _e_config_dialog_cb_basic, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
 	else
 	  {
-	     o = cfd->view->advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	     o = cfd->view->advanced.create_widgets(cfd, evas, cfd->cfdata);
 	     if (cfd->view->scroll)
 	       {
 		  e_widget_min_size_resize(o);
-		  o = e_widget_scrollframe_simple_add(e_win_evas_get(cfd->dia->win), o);
+		  o = e_widget_scrollframe_simple_add(evas, o);
 	       }
 	  }
      }
-   
+
    e_widget_min_size_get(o, &mw, &mh);
    e_widget_on_change_hook_set(o, _e_config_dialog_cb_changed, cfd);
    e_dialog_content_set(cfd->dia, o, mw, mh);
@@ -268,6 +273,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    e_dialog_show(cfd->dia);
    if (cfd->icon) e_dialog_border_icon_set(cfd->dia, cfd->icon);
 
+   e_win_centered_set(cfd->dia->win, 1);
    cfd->view_type = type;
 }
 
@@ -315,16 +321,16 @@ _e_config_dialog_cb_ok(void *data, E_Dialog *dia)
 
    cfd = dia->data;
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-      {
-         if (cfd->view->basic.apply_cfdata)
-	   ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
-      }
+     {
+        if (cfd->view->basic.apply_cfdata)
+          ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
+     }
    else
-      {
-         if (cfd->view->advanced.apply_cfdata)
-	   ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
-      }
-   if (ok)
+     {
+        if (cfd->view->advanced.apply_cfdata)
+          ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
+     }
+   if (ok) 
      e_util_defer_object_del(E_OBJECT(cfd));
 }
 
@@ -336,15 +342,15 @@ _e_config_dialog_cb_apply(void *data, E_Dialog *dia)
 
    cfd = dia->data;
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-      {
-         if (cfd->view->basic.apply_cfdata)
-	   ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
-      }
+     {
+        if (cfd->view->basic.apply_cfdata)
+          ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
+     }
    else
-      {
-         if (cfd->view->advanced.apply_cfdata)
-	   ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
-      }   
+     {
+        if (cfd->view->advanced.apply_cfdata)
+          ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
+     }
    if ((ok) && (!cfd->hide_buttons))
      {
 	cfd->cfg_changed = 0;
@@ -384,9 +390,10 @@ _e_config_dialog_changed(E_Config_Dialog *cfd)
      }
    else
      {
-	if (cfd->auto_apply_timer)
-	  ecore_timer_del(cfd->auto_apply_timer);
-	cfd->auto_apply_timer = ecore_timer_add(0.5, _e_config_dialog_cb_auto_apply_timer, cfd);
+	if (cfd->auto_apply_timer) ecore_timer_del(cfd->auto_apply_timer);
+        cfd->auto_apply_timer = NULL;
+	cfd->auto_apply_timer = 
+          ecore_timer_add(0.5, _e_config_dialog_cb_auto_apply_timer, cfd);
      }
 }
 
