@@ -1,6 +1,6 @@
 #include "Evry.h"
 
-typedef struct _List_View List_View;
+typedef struct _View View;
 typedef struct _List_Tab  List_Tab;
 
 struct _List_Tab
@@ -11,7 +11,7 @@ struct _List_Tab
 
 
 
-struct _List_View
+struct _View
 {
   Evry_View view;
   Evas *evas;
@@ -41,7 +41,7 @@ static Evry_View *view = NULL;
 
 
 static void
-_list_clear(List_View *v)
+_list_clear(View *v)
 {
    Evry_Item *it;
 
@@ -90,7 +90,7 @@ _list_clear(List_View *v)
 }
 
 static void
-_list_scroll_to(List_View *v, const Evry_Item *it)
+_list_scroll_to(View *v, const Evry_Item *it)
 {
    int n, h, mh, i = 0;
    Eina_List *l;
@@ -126,7 +126,7 @@ _list_scroll_to(List_View *v, const Evry_Item *it)
 static int
 _list_item_idler(void *data)
 {
-   List_View *v = data;
+   View *v = data;
    Evry_Plugin *p = v->state->plugin;
    Eina_List *l;
    Evry_Item *it;
@@ -181,7 +181,7 @@ _list_item_set_unselected(const Evry_Item *it)
 }
 
 static int
-_list_update(List_View *v)
+_list_update(View *v)
 {
    Evry_Item *it;
    Eina_List *l;
@@ -251,7 +251,7 @@ _list_update(List_View *v)
 
 
 static void
-_list_item_sel(List_View *v, const Evry_Item *it)
+_list_item_sel(View *v, const Evry_Item *it)
 {
    if (v->state->sel_item)
      {
@@ -266,7 +266,7 @@ _list_item_sel(List_View *v, const Evry_Item *it)
 }
 
 static void
-_list_item_next(List_View *v)
+_list_item_next(View *v)
 {
    Eina_List *l;
    Evry_Item *it;
@@ -286,7 +286,7 @@ _list_item_next(List_View *v)
 }
 
 static void
-_list_item_prev(List_View *v)
+_list_item_prev(View *v)
 {
    Eina_List *l;
    Evry_Item *it;
@@ -309,7 +309,7 @@ _list_item_prev(List_View *v)
 }
 
 static void
-_list_item_first(List_View *v)
+_list_item_first(View *v)
 {
    Evry_Item *it;
 
@@ -321,7 +321,7 @@ _list_item_first(List_View *v)
 }
 
 static void
-_list_item_last(List_View *v)
+_list_item_last(View *v)
 {
    Evry_Item *it;
 
@@ -333,7 +333,7 @@ _list_item_last(List_View *v)
 }
 
 static void
-_list_tab_scroll_to(List_View *v, Evry_Plugin *p)
+_list_tab_scroll_to(View *v, Evry_Plugin *p)
 {
    int n, w, mw, i;
    double align;
@@ -372,7 +372,7 @@ _list_tab_scroll_to(List_View *v, Evry_Plugin *p)
 }
 
 static void
-_list_tabs_update(List_View *v)
+_list_tabs_update(View *v)
 {
 
    Eina_List *l, *ll;
@@ -440,7 +440,7 @@ _list_tabs_update(List_View *v)
 
 
 static void
-_list_tabs_clear(List_View *v)
+_list_tabs_clear(View *v)
 {
    Eina_List *l;
    List_Tab *tab;
@@ -455,7 +455,7 @@ _list_tabs_clear(List_View *v)
 }
 
 static void
-_list_plugin_select(List_View *v, Evry_Plugin *p)
+_list_plugin_select(View *v, Evry_Plugin *p)
 {
    evry_plugin_select(v->state, p);
 
@@ -465,7 +465,7 @@ _list_plugin_select(List_View *v, Evry_Plugin *p)
 }
 
 static void
-_list_plugin_next(List_View *v)
+_list_plugin_next(View *v)
 {
    Eina_List *l;
    Evry_Plugin *p = NULL;
@@ -484,7 +484,7 @@ _list_plugin_next(List_View *v)
 }
 
 static void
-_list_plugin_next_by_name(List_View *v, const char *key)
+_list_plugin_next_by_name(View *v, const char *key)
 {
    Eina_List *l;
    Evry_Plugin *p, *first = NULL, *next = NULL;
@@ -516,7 +516,7 @@ _list_plugin_next_by_name(List_View *v, const char *key)
 }
 
 static void
-_list_plugin_prev(List_View *v)
+_list_plugin_prev(View *v)
 {
    Eina_List *l;
    Evry_Plugin *p = NULL;
@@ -541,7 +541,8 @@ _list_plugin_prev(List_View *v)
 static int
 _update(Evry_View *view)
 {
-   List_View *v = (List_View *) view;
+   VIEW(v, view);
+
    _list_update(v);
    _list_tabs_update(v);
    return 1;
@@ -550,7 +551,8 @@ _update(Evry_View *view)
 static void
 _clear(Evry_View *view)
 {
-   List_View *v = (List_View *) view;
+   VIEW(v, view);
+
    _list_clear(v);
    _list_tabs_clear(v);
 }
@@ -559,7 +561,7 @@ _clear(Evry_View *view)
 static int
 _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 {
-   List_View *v = (List_View *) view;
+   VIEW(v, view);
 
    const char *key = ev->key;
 
@@ -602,10 +604,10 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 static Evry_View *
 _create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 {
-   List_View *v;
+   View *v;
    Evas_Object *o;
 
-   v = E_NEW(List_View, 1);
+   v = E_NEW(View, 1);
    v->view = *view;
    v->evas = evas_object_evas_get(swallow);
    v->swallow = swallow;
@@ -623,13 +625,13 @@ _create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v->view.o_bar = o;
    v->o_tabs = o;
 
-   return &v->view;
+   return EVRY_VIEW(v);
 }
 
 static void
 _destroy(Evry_View *view)
 {
-   List_View *v = (List_View *) view;
+   VIEW(v, view);
    List_Tab *tab;
 
    _clear(view);

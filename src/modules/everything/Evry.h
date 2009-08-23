@@ -23,6 +23,7 @@ typedef struct _Plugin_Config  Plugin_Config;
 #define ITEM_FILE(_file, _item) Evry_Item_File *_file = (Evry_Item_File *) _item
 #define ITEM_APP(_app, _item)   Evry_Item_App *_app = (Evry_Item_App *) _item
 #define PLUGIN(_p, _plugin) Plugin *_p = (Plugin*) _plugin
+#define VIEW(_v, _view) View *_v = (View*) _view
 
 #define EVRY_PLUGIN_ITEMS_CLEAR(_p)       		\
   if (EVRY_PLUGIN(_p)->items)				\

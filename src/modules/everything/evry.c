@@ -1553,7 +1553,8 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 	  l = eina_list_data_find_list(evry_conf->views, s->view->id);
 	else
 	  {
-	     v = evry_conf->views->data;
+	     view = evry_conf->views->data;
+	     v = view->create(view, s, list->o_main);
 	     goto found;
 	  }
 
@@ -1591,8 +1592,8 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
      }
 
    s->view = v;
-   _evry_view_show(v);
-   v->update(v);
+   _evry_view_show(s->view);
+   view->update(s->view);
 
    return 1;
 }
