@@ -174,7 +174,7 @@ static int
 _view_update(Evry_View *view)
 {
    Image_View *v = (Image_View *) view;
-   Evry_Item_File *file, se;
+   Evry_Item_File *file;
    Evry_Item *selected = v->state->sel_item;
 
    v->items = _get_list(v->state);

@@ -127,7 +127,6 @@ _read_directory(Plugin *p)
 {
    char *filename;
    Eina_List *files;
-   Evry_Item *it;
    char buf[4096];
    Evry_Item_File *file;
 

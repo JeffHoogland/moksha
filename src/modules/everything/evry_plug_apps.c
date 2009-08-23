@@ -57,12 +57,6 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 }
 
 static void
-_list_free(Evry_Plugin *plugin)
-{
-
-}
-
-static void
 _item_free(Evry_Item *item)
 {
    ITEM_APP(app, item);

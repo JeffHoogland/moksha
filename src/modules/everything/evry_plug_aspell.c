@@ -123,12 +123,6 @@ _suggestions_add(Plugin *p, const char *line)
      }
 }
 
-static void
-_clear_list(Plugin *p)
-{
-
-}
-
 static int
 _cb_data(void *data, int type __UNUSED__, void *event)
 {
