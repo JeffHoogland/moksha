@@ -458,9 +458,11 @@ e_gadcon_unpopulate(E_Gadcon *gc)
 
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
-   EINA_LIST_FREE(gc->clients, gcc)
+   /* Be carefull, e_object_del does remove gcc from gc->clients */
+   while (gc->clients)
      {
-	if (gcc->menu) 
+	gcc = eina_list_data_get(gc->clients);
+	if (gcc->menu)
 	  {
 	     e_menu_post_deactivate_callback_set(gcc->menu, NULL, NULL);
 	     e_object_del(E_OBJECT(gcc->menu));
