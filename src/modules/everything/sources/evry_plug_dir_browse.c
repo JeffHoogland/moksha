@@ -89,6 +89,8 @@ _dirbrowse_idler(void *data)
    Evry_Item_File *file;
    int cnt = 20;
 
+   if (!p->idler) return 0;
+   
    EINA_LIST_FOREACH(p->files, l, file)
      {
 	if (!file->mime)
@@ -208,7 +210,8 @@ _cleanup(Evry_Plugin *plugin)
 
    if (p->idler)
      ecore_idle_enterer_del(p->idler);
-
+   p->idler = NULL;
+   
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    E_FREE(p);
