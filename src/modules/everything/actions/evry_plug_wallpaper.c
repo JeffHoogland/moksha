@@ -82,8 +82,10 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 {
    PLUGIN(p, plugin);
 
+   if (!item) return NULL;
+   
    /* is FILE ? */
-   if (item && item->plugin->type_out == plugin->type_in)
+   if (item->plugin->type_out == plugin->type_in)
      {
 	Evry_Item *it;
 	ITEM_FILE(file, item);

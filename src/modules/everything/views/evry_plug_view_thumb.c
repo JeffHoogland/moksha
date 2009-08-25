@@ -15,6 +15,7 @@ struct _View
   int          iw, ih;
 };
 
+/* smart object based on wallpaper module */
 struct _Smart_Data
 {
   View        *view;
@@ -26,19 +27,10 @@ struct _Smart_Data
   Evas_Coord   x, y, w, h;
   Evas_Coord   cx, cy, cw, ch;
   Evas_Coord   sx, sy;
-  int          id_num;
-  int          sort_num;
   double       selmove;
-  Eina_Bool    selin : 1;
-  Eina_Bool    selout : 1;
-  Eina_Bool    jump2hi : 1;
-  /* */
   Eina_Bool    update : 1;
 
   int zoom;
-  
-  /* Ecore_Timer *seltimer; */
-  /* double       seltime; */
 };
 
 struct _Item
@@ -124,7 +116,7 @@ _e_smart_reconfigure_do(void *data)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    Eina_List *l;
    Item *it;
-   int iw, ih, redo = 0, changed = 0;
+   int iw, redo = 0, changed = 0;
    static int recursion = 0;
    Evas_Coord x, y, xx, yy, ww, hh, mw, mh, ox, oy, dd;
    
@@ -157,7 +149,7 @@ _e_smart_reconfigure_do(void *data)
 	sd->view->iw /= 3;
 	iw = sd->w / 3;
      }
-   else if (sd->zoom == 2)
+   else /* if (sd->zoom == 2) */
      {
 	iw = sd->w;
      }
@@ -169,19 +161,18 @@ _e_smart_reconfigure_do(void *data)
    y = 0;
    ww = iw;
    hh = (sd->view->ih * iw) / (sd->view->iw);
-   ih = hh;
    
    mw = mh = 0;
    EINA_LIST_FOREACH(sd->items, l, it)
      {
-        xx = sd->x - sd->cx + x;
+        /* xx = sd->x - sd->cx + x; */
         if (x > (sd->w - ww))
           {
              x = 0;
              y += hh;
              xx = sd->x - sd->cx + x;
           }
-        yy = sd->y - sd->cy + y;
+        /* yy = sd->y - sd->cy + y; */
         it->x = x;
         it->y = y;
         it->w = ww;
@@ -255,10 +246,8 @@ _e_smart_reconfigure_do(void *data)
         if ((sd->sx >= 0) && 
             (sd->selmove > 0.0))
           {
-             double a, d; //, di;
-             int sum = 0;
-             /* char *p; */
-             
+             double a, d;
+
              // -----0X0+++++
              dx = (it->x + (it->w / 2)) - sd->sx;
              dy = (it->y + (it->h / 2)) - sd->sy;
@@ -294,15 +283,21 @@ _e_smart_reconfigure_do(void *data)
                     a = M_PI - atan(-(double)dy / (double)dx);
                }
              d = sqrt((double)(dx * dx) + (double)(dy * dy));
-             dx = dy = 0;
+	     /* dy = 0; */
 
-             sum = 0;
              xx = sd->sx - sd->cx + ox;
              yy = sd->sy - sd->cy + oy;
-             if (xx < (sd->w / 2)) dx = sd->w - xx;
-             else dx = xx;
-             if (yy < (sd->h / 2)) dy = sd->h - yy;
-             else dy = yy;
+
+	     if (xx < (sd->w / 2))
+	       dx = sd->w - xx;
+             else
+	       dx = xx;
+
+	     if (yy < (sd->h / 2))
+	       dy = sd->h - yy;
+             else
+	       dy = yy;
+	     
              dd = dx - d;
              if (dy > dx) dd = dy - d;
              if (dd < 0) dd = 0;
@@ -789,6 +784,40 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
    if (!v->state->plugin)
      return 0;
+
+   if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+       ((!strcmp(ev->key, "plus")) ||
+	(!strcmp(ev->key, "z"))))
+     {
+	sd->zoom++;
+	if (sd->zoom > 2) sd->zoom = 0;
+
+	if (sd->zoom == 2)
+	  {
+	     EINA_LIST_FOREACH(sd->items, l, it)
+	       {
+		  if (it->have_thumb)
+		    {
+		       evas_object_del(it->thumb);
+		       it->thumb = NULL;
+		       it->have_thumb = EINA_FALSE;
+		    }
+		  else if (it->do_thumb)
+		    {
+		       e_thumb_icon_end(it->thumb);
+		       evas_object_del(it->thumb);
+		       it->thumb = NULL;
+		       it->do_thumb = EINA_FALSE;
+		    }
+	       }
+	  }
+	
+	
+	if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter); 
+	sd->idle_enter = ecore_idle_enterer_add(_e_smart_reconfigure_do, v->span);
+
+	goto end;
+     }
    
    if (v->tabs->key_down(v->tabs, ev))
      {
@@ -867,40 +896,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  }
 	goto end;
      }
-   else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-	    ((!strcmp(ev->key, "plus")) ||
-	     (!strcmp(ev->key, "z"))))
-     {
-	sd->zoom++;
-	if (sd->zoom > 2) sd->zoom = 0;
-
-	if (sd->zoom == 2)
-	  {
-	     EINA_LIST_FOREACH(sd->items, l, it)
-	       {
-		  if (it->have_thumb)
-		    {
-		       evas_object_del(it->thumb);
-		       it->thumb = NULL;
-		       it->have_thumb = EINA_FALSE;
-		    }
-		  else if (it->do_thumb)
-		    {
-		       e_thumb_icon_end(it->thumb);
-		       evas_object_del(it->thumb);
-		       it->thumb = NULL;
-		       it->do_thumb = EINA_FALSE;
-		    }
-	       }
-	  }
-	
-	
-	if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter); 
-	sd->idle_enter = ecore_idle_enterer_add(_e_smart_reconfigure_do, v->span);
-
-	goto end;
-     }
-
+   
    return 0;
 
  end:

@@ -382,7 +382,7 @@ _dbus_cb_version(void *data, DBusMessage *msg, DBusError *error)
 {
    DBusMessageIter iter;
    Plugin *p;
-   int version;
+   int version = 0;
 
    if (dbus_error_is_set(error))
      {
