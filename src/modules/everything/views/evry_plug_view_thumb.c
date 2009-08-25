@@ -233,7 +233,6 @@ _e_smart_reconfigure_do(void *data)
    oy = 0;
    if (sd->h > sd->ch) oy = (sd->h - sd->ch) / 2;
 
-
    if (sd->sel_item && !sd->update)
      {
    	int y, h;   	
@@ -242,7 +241,7 @@ _e_smart_reconfigure_do(void *data)
    	e_scrollframe_child_pos_get(sd->view->sframe, NULL, &y);
    	e_scrollframe_child_viewport_size_get(sd->view->sframe, NULL, &h);
    	
-	if ((it->y + it->h) - y >= h - it->h)
+	if ((it->y + it->h) - y > h)
 	  e_scrollframe_child_pos_set(sd->view->sframe, 0, it->y - (2 - sd->zoom) * it->h);
 	else if (it->y < y)
 	  e_scrollframe_child_pos_set(sd->view->sframe, 0, it->y);
@@ -604,7 +603,6 @@ _pan_item_add(Evas_Object *obj, Evry_Item *item)
    if (_check_item(item))
      it->get_thumb = EINA_TRUE;
    
-   
    evry_item_ref(item); 
 
    _e_smart_reconfigure(obj);
@@ -643,7 +641,7 @@ _pan_item_select(Evas_Object *obj, Item *it)
    if (sd->zoom < 2)
      edje_object_signal_emit(sd->sel_item->frame, "e,state,selected", "e");
 
-   sd->update = EINA_FALSE;
+   /* sd->update = EINA_FALSE; */
    
    if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter); 
    sd->idle_enter = ecore_idle_enterer_add(_e_smart_reconfigure_do, obj);

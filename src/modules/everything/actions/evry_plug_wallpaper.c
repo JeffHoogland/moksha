@@ -42,7 +42,7 @@ struct _Item
 
 static void _import_edj_gen(Import *import);
 static int _import_cb_edje_cc_exit(void *data, int type, void *event);
-
+static Import *import = NULL;
 
 static Evry_Plugin *plugin;
 
@@ -172,7 +172,13 @@ _action(Evry_Plugin *plugin, const Evry_Item *item)
 
    if (p->prev && p->prev->file)
      {
-	Import *import;
+	if (import)
+	  {
+	     if (import->exe_handler)
+	       ecore_event_handler_del(import->exe_handler);
+	     E_FREE(import);
+	  }
+
 	Item *it = (Item*) item;
 	import = E_NEW(Import, 1);
 	import->method = it->method;
@@ -198,6 +204,7 @@ _init(void)
 
    evry_plugin_register(plugin, 10);
 
+   
    return EINA_TRUE;
 }
 
@@ -205,6 +212,13 @@ static void
 _shutdown(void)
 {
    EVRY_PLUGIN_FREE(plugin);
+
+   if (import)
+     {
+	if (import->exe_handler)
+	  ecore_event_handler_del(import->exe_handler);
+	E_FREE(import);
+     }
 }
 
 
@@ -404,6 +418,9 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
 
    ev = event;
    import = data;
+
+   if (!ev->exe) return 1;
+     
    if (ev->exe != import->exe) return 1;
 
    if (ev->exit_code != 0)
@@ -423,7 +440,6 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
      }
 
    E_FREE(fdest);
-   E_FREE(import);
 
    return 0;
 }
