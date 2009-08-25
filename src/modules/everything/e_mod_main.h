@@ -96,8 +96,8 @@ void evry_plug_aggregator_free(Evry_Plugin *plugin);
 Evry_Plugin *evry_plug_actions_new(void);
 void evry_plug_actions_free(Evry_Plugin *plugin);
 
-Tab_View *evry_tab_view_new(const Evry_State *s, Evas *e);
-void evry_tab_view_free(Tab_View *v);
+EAPI Tab_View *evry_tab_view_new(const Evry_State *s, Evas *e);
+EAPI void evry_tab_view_free(Tab_View *v);
 
 extern Config *evry_conf;
 extern Evry_Selector **selectors;
