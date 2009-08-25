@@ -38,7 +38,7 @@ _cb_sort(const void *data1, const void *data2)
    if (it1->priority - it2->priority)
      return (it1->priority - it2->priority);
 
-   return 0;
+   return strcasecmp(it1->label, it2->label);   
 }
 
 static int

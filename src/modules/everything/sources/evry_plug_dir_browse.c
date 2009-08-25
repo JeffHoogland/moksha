@@ -15,7 +15,7 @@ struct _Plugin
   /* current list of files */
   Eina_List  *cur;
   Eina_Bool command;
-  Ecore_Idler *idler;
+  Ecore_Idle_Enterer *idler;
 };
 
 static Evry_Plugin *p1;
@@ -87,7 +87,7 @@ _dirbrowse_idler(void *data)
    Plugin *p = data;
    Eina_List *l;
    Evry_Item_File *file;
-   int cnt = 10;
+   int cnt = 20;
 
    EINA_LIST_FOREACH(p->files, l, file)
      {
@@ -109,6 +109,8 @@ _dirbrowse_idler(void *data)
 	return 0;
      }
 
+   e_util_wakeup();
+   
    return 1;
 }
 
@@ -156,7 +158,7 @@ _read_directory(Plugin *p)
 	free(filename);
      }
 
-   p->idler = ecore_idler_add(_dirbrowse_idler, p);
+   p->idler = ecore_idle_enterer_before_add(_dirbrowse_idler, p);
 }
 
 static Evry_Plugin *
@@ -205,7 +207,7 @@ _cleanup(Evry_Plugin *plugin)
      evry_item_free(EVRY_ITEM(file));
 
    if (p->idler)
-     ecore_idler_del(p->idler);
+     ecore_idle_enterer_del(p->idler);
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 

@@ -243,7 +243,7 @@ _init(void)
    view->update = &_view_update;
    view->clear = &_view_clear;
    view->cb_key_down = &_cb_key_down;
-   evry_view_register(view, 2);
+   evry_view_register(view, 3);
 
    view_types = eina_stringshare_add("FILE");
 

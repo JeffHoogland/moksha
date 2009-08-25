@@ -6,6 +6,7 @@
 
 typedef struct _Config Config;
 typedef struct _Evry_Selector Evry_Selector;
+typedef struct _Tab_View Tab_View;
 
 struct _Config
 {
@@ -57,7 +58,25 @@ struct _Evry_Selector
 
   /* all plugins that belong to this selector*/
   Eina_List   *plugins;
+
+  Evry_View *view;
 };
+
+struct _Tab_View
+{
+  Evas *evas;
+  const Evry_State *state;
+
+  Evas_Object *o_tabs;
+  Eina_List *tabs;
+
+  void (*update) (Tab_View *tv);
+  void (*clear) (Tab_View *tv);
+  int (*key_down) (Tab_View *tv, const Ecore_Event_Key *ev);
+  
+};
+
+
 
 EAPI extern E_Module_Api e_modapi;
 
@@ -76,6 +95,9 @@ void evry_plug_aggregator_free(Evry_Plugin *plugin);
 
 Evry_Plugin *evry_plug_actions_new(void);
 void evry_plug_actions_free(Evry_Plugin *plugin);
+
+Tab_View *evry_tab_view_new(const Evry_State *s, Evas *e);
+void evry_tab_view_free(Tab_View *v);
 
 extern Config *evry_conf;
 extern Evry_Selector **selectors;

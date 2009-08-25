@@ -26581,7 +26581,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 
 /////////////////////////////////////////////////////////////////////////////
    /*** MOD: EVERYTHING ***/
-   /* #define DROP_SHADOW 1 */
+   #define DROP_SHADOW 1
    
    ICON("everything-launch","icon_advanced.png",64)
      
@@ -26614,8 +26614,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   	       border: 50 50 50 50;
 	   	   }
 	   	   fill.smooth: 0;
-	   	   color: 255 255 255 100;
-	   	   
+	   	   color: 255 255 255 200;
 	       }
 	   }
 	   part { name: "bg";
@@ -26630,7 +26629,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   	       border: 7 7 5 5;
 	   	   }
 	   	   color: 255 255 255 255;
-	   	   
 	       }
 	       description { state: "wide" 0;
 	   	   inherit: "default" 0.0;
@@ -26650,7 +26648,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       border: 7 7 5 5;
 		   }
 		   color: 255 255 255 255;
-		   
 	       }
 	       description { state: "wide" 0;
 		   inherit: "default" 0.0;
@@ -26729,7 +26726,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   visible: 1;
 	       }
 	   }
-
 	   part { name: "over1";
 	       mouse_events: 0;
 	       description { state: "default" 0.0;
@@ -26749,7 +26745,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   rel1.to: "bg";
 		   rel2.to: "bg";
 		   rel2.offset: -1 40;
-		   
 		   image {
 		       normal: "bt_shine.png";
 		       border: 7 7 7 0;
@@ -26779,7 +26774,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 
    group { name: "e/modules/everything/selector_item";
        images {
-	   image: "gadman_border.png" COMP;
+	   image: "everything_border.png" COMP;
+	   image: "everything_item_bg.png" COMP;
        }
        parts {
 	   part { name: "clip";
@@ -26789,14 +26785,30 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   state: "default" 0.0;
 	       }
 	   }
-
-	   part { name: "border";
+	   part { name: "border_bg";
 	       clip_to: "clip";
 	       mouse_events:  0;
 	       description { state: "default" 0.0;
 		   color: 255 255 255 32;	       
+		   rel1.offset: 2 2;
+		   rel2.offset: -3 -3;		   
 		   image {
-		       normal: "gadman_border.png";
+		       normal: "everything_item_bg.png";
+		       border: 5 5 5 5;
+		   }
+	       }
+	       description { state: "selected" 0.0;
+		   inherit: "default" 0.0;
+		   color: 255 255 255 64;
+	       }
+	   }
+	   part { name: "border";
+	       clip_to: "clip";
+	       mouse_events:  0;
+	       description { state: "default" 0.0;
+		   color: 255 255 255 64;	       
+		   image {
+		       normal: "everything_border.png";
 		       border: 10 10 10 10;
 		   }
 	       }
@@ -26805,7 +26817,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   color: 255 255 255 128;
 	       }
 	   }
-
 	   part { name: "inner_clip";
 	       type: RECT;
 	       clip_to: "clip";
@@ -26815,7 +26826,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   rel2.offset:   -11   -11;
 	       }
 	   }
-
 	   part { name: "icon_clip";
 	       type: RECT;
 	       clip_to: "inner_clip";
@@ -26828,7 +26838,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   color: 255 255 255 200;
 	       }
 	   }
-
 	   part {
 	       name: "e.swallow.icons";
 	       type: SWALLOW;
@@ -26907,6 +26916,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       action: STATE_SET "selected" 0.0;
 	       transition: SINUSOIDAL 0.2;
 	       target: "border";
+	       target: "border_bg";
 	   }
 	   program { name: "unsel";
 	       signal: "e,state,unselected";
@@ -26914,6 +26924,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       action: STATE_SET "default" 0.0;
 	       transition: SINUSOIDAL 0.3;
 	       target: "border";
+	       target: "border_bg";
 	   }
 	   program { name: "update";
 	       signal: "e,signal,update";
@@ -26943,17 +26954,15 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	     image: "drop.png" COMP;
            #endif
        }
-       
        /* offset to main popup */
        #ifdef DROP_SHADOW
          data.item: "offset_y" "-52";
-         min: 450 285;
+         min: 480 315;
        #else
          data.item: "offset_y" "-2";
-         min: 350 235;
+         min: 380 265;
        #endif
        data.item: "shaped" "1";
-       
        parts {
           #ifdef DROP_SHADOW
 	   part { name: "shadow";
@@ -27051,13 +27060,11 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		    rel2.offset: -1 24;
 		}
 	    }
-
 	    part { name: "bg";
 		description { state: "default" 0.0;
 		    rel1.to_x: "base";
 		    rel1.to_y: "input_base";
 		    rel2.to:   "base";
-
 		    image {
 			normal: "base_bg.png";
 			border: 2 2 2 2;
@@ -27066,7 +27073,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		    color: 205 205 205 255;
 		}
 	    }
-
 	    part { name: "bar_base";
 		type: RECT;
 		description { state: "default" 0.0;
@@ -27128,7 +27134,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		    state: "default" 0.0;
 		    rel1.to: "bar_clip";
 		    rel1.offset: -1 0;
-
 		    rel2.to: "bar_clip";
 		    rel2.offset: -1 -1;
 		}
@@ -27162,8 +27167,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		    color: 255 255 255 128;
 		}
 	    }
-
-
 	    part { name: "input_bg";
 		clip_to: "input_base";
 		description { state: "default" 0.0;
@@ -27250,7 +27253,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		    visible: 1;
 		}
 	    }
-
 	    part { name: "list_clip";
 		type: RECT;
 		clip_to: "base";
@@ -27258,12 +27260,12 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		    color: 255 255 255 255;
 		    rel1 {
 			relative: 0.0 0.0;
-		       offset:   2 2;
+		       offset:   2 0;
 		       to: "base";
 		   }
 		   rel2 {
 		       relative: 1.0 0.0;
-		       offset:   -3  -2;
+		       offset:   -3  0;
 		       to_y: "bar_base";
 		       to_x: "base";
 		   }
@@ -27322,8 +27324,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       middle: 0;
 		   }
 		   fill.smooth : 0;
-		   color: 200 200 200 255;
-		   
+		   color: 200 200 200 255;		   
 	       }
 	   }
 	   part { name: "list_over2";
@@ -27343,8 +27344,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       middle: 0;
 		   }
 		   fill.smooth : 0;
-		   color: 200 200 200 255;
-		   
+		   color: 200 200 200 255;		   
 	       }
 	   }
 	   part { name: "box";
@@ -27362,7 +27362,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   	   }
 	   	   fill.smooth : 1;
 	   	   color: 255 255 255 250;
-	   	   
 	       }
 	   }
        }
@@ -27422,7 +27421,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   }
        }
    }
-
    
    group { name: "e/modules/everything/tab_item";
        images {
@@ -27430,7 +27428,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
        }
        min: 70 10;
        max: 100 10;
-       
        parts {
 	   part { name: "label2";
 	       type: TEXT;
@@ -27523,7 +27520,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   image: "bt_dis_hilight.png" COMP;
        }
        min: 140 28;
-
        parts {	   
 	   part { name: "list_bg";
 	       type: RECT;
@@ -27650,7 +27646,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       relative: 1.0 1.0;
 		       offset:   -3   -2;
 		   }
-
 		   color: 255 255 255 255;
 	       }
 	   }
@@ -27765,6 +27760,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 		   rel2 {
 		       relative: 1.0 1.0;
+		       offset: -1 -4;
 		   }
 	       }
 	   }
@@ -27817,8 +27813,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   rel1.relative: 0.6666 0.0;
 		   rel2.relative: 0.9999 1.0;
 	       }	
-	   }
-	
+	   }	
 	   part { name: "e.swallow.icon3";
 	       type: SWALLOW;
 	       description { state: "default" 0.0;
@@ -27877,3 +27872,622 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 
 
 
+/////////////////////////////////////////////////////////////////////////////
+   /*** WALLPAPER MAIN DIALOG ***/
+   group { name: "e/modules/everything/thumbview/main/window";
+      images {
+	 image: "vgrad_dark.png" COMP;
+	 image: "dia_topshad.png" COMP;
+	 image: "dia_botshad.png" COMP;
+         image: "dia_botshad.png" COMP;
+         image: "topsh.png" COMP;
+         image: "wp-bot1.png" COMP;
+         image: "wp-bot2.png" COMP;
+         image: "wp-tb1.png" COMP;
+         image: "wp-tb2.png" COMP;
+         image: "wp-tb3.png" COMP;
+         image: "wp-tbs.png" COMP;
+         image: "big_arrow_up.png" COMP;
+
+	 image: "busy-1.png" COMP;
+         image: "busy-2.png" COMP;
+         image: "busy-3.png" COMP;
+         image: "busy-4.png" COMP;
+         image: "busy-5.png" COMP;
+         image: "busy-6.png" COMP;
+         image: "busy-7.png" COMP;
+         image: "busy-8.png" COMP;
+         image: "busy-9.png" COMP;
+      }
+      parts {
+	 part { name: "base";
+	    mouse_events:  0;
+	    description { state: "default" 0.0;
+               color_class: "dialog_base";
+	       image.normal: "vgrad_dark.png";
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   0   -3;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -1  6;
+		  /* to_y: "bot1"; */
+	       }
+	      fill {
+		  smooth: 0;
+		  /* size {
+		   *    relative: 0.0 1.0;
+		   *    offset: 64 0;
+		   * } */
+	       }
+	    }
+	 }
+	 part { name: "e.swallow.preview";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	    }
+	 }
+	 part { name: "events";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	    }
+	 }
+	 part { name: "e.swallow.list";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   6   1;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -3  -3;
+		  /* to_y: "bot1"; */
+	       }
+	    }
+	 }
+	 part { name: "cover";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+               visible: 0;
+	    }
+	    description { state: "out" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+	    }
+	 }
+	 part { name: "shadow2";
+	    mouse_events:  0;
+	    description { state: "default" 0.0;
+	       rel1.relative: 0.0 1.0;
+	       rel1.offset: 0 -4;
+	       image.normal: "dia_botshad.png";
+	       fill {
+		  smooth: 0;
+		  size {
+		     relative: 0.0 1.0;
+		     offset: 64 0;
+		  }
+	       }
+	    }
+	 }
+	 part { name: "busy_clip";
+	    type: RECT;
+	    description { state: "default" 0.0;
+               visible: 0;
+	       color: 255 255 255 0;
+	    }
+	    description { state: "visible" 0.0;
+               visible: 1;
+	       color: 255 255 255 255;
+	    }
+	 }
+	 part { name: "busy";
+	    mouse_events:  0;
+            clip_to: "busy_clip";
+	    description { state: "default" 0.0;
+	       min: 32 32;
+	       max: 32 32;
+	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
+	       rel1 {
+		  relative: 0.5 0.5;
+		  offset:   0 0;
+	       }
+               rel2 {
+		  relative: 0.5 0.5;
+		  offset:   -1 1;
+	       }
+	       image {
+		  normal: "busy-9.png";
+		  tween:  "busy-1.png";
+		  tween:  "busy-2.png";
+		  tween:  "busy-3.png";
+		  tween:  "busy-4.png";
+		  tween:  "busy-5.png";
+		  tween:  "busy-6.png";
+		  tween:  "busy-7.png";
+		  tween:  "busy-8.png";
+	       }
+	    }
+	 }
+      }
+      programs {
+	 program { name: "busy1";
+	    signal: "e,state,busy,on";
+	    source: "e";
+            action:  STATE_SET "visible" 0.0;
+	    transition: LINEAR 1.0;
+            target: "busy_clip";
+	 }
+         program { name: "busy_anim";
+	    signal: "e,state,busy,on";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    transition: LINEAR 0.3333;
+	    target: "busy";
+	    after:  "busy_anim";
+	 }
+	 program { name: "busy2";
+	    signal: "e,state,busy,off";
+	    source: "e";
+            action:  STATE_SET "default" 0.0;
+	    transition: LINEAR 1.0;
+            target: "busy_clip";
+            after: "busy3";
+	 }
+	 program { name: "busy3";
+            action: ACTION_STOP;
+            target: "busy_anim";
+	 }
+      }
+   }
+
+   group { name: "e/modules/everything/thumbview/main/mini";
+       images {
+	   image: "e17_mini_button_shadow2.png" COMP;
+	   image: "everything_item_bg.png" COMP;
+       }
+       parts {
+	   part { name: "bg";
+	       mouse_events: 0;
+	       description { state: "default" 0.0;
+		   /* visible: 0; */
+		   rel1 {
+		       to: "base";
+		       offset: -1 -3;
+		   }
+		   rel2 {
+		       to: "base";
+		       offset: 0 2;
+		   }
+		   fill.smooth: 0;
+		   image {
+		       normal: "everything_item_bg.png";
+		       border: 5 5 5 5;
+		   }
+		   color: 255 255 255 32;
+	       }
+	       description { state: "visible" 0.0;
+		   inherit: "default" 0.0;
+		   color: 255 255 255 128;
+	       }
+	   }
+	   part { name: "base";
+	       mouse_events:  0;
+	       type: RECT;
+	       description { state: "default" 0.0;
+		   visible: 0;
+		   rel1 {
+		       relative: 0.0 0.0;
+		       offset:   0   4;
+		   }
+		   rel2 {
+		       relative: 1.0 1.0;
+		       offset:   -5  -5;
+		   }
+		   color: 255 255 255 0;
+	       }
+	       description { state: "visible" 0.0;
+		   inherit: "default" 0.0;
+		   visible: 1;
+		   color: 255 255 255 255;
+	       }
+	   }
+	   part { name: "e.swallow.content";
+	       clip_to: "base";
+	       type: SWALLOW;
+	       description { state: "default" 0.0;
+		   rel1 {
+		       to: "base";
+		       relative: 0.0 0.0;
+		       offset:   2   0;
+		   }
+		   rel2 {
+		       to: "base";
+		       relative: 1.0 1.0;
+		       offset:   -3  -11;
+		   }
+	       }
+	   }
+	   part { name: "e.swallow.icon";
+	       clip_to: "base";
+	       type: SWALLOW;
+	       description { state: "default" 0.0;
+		   rel1 {
+		       to: "base";
+		       relative: 0.0 0.0;
+		       offset:   5   3;
+		   }
+		   rel2 {
+		       to: "base";
+		       relative: 1.0 1.0;
+		       offset:   -6  -13;
+		   }
+	       }
+	   }
+	   part { name: "e.text.label";
+	       type: TEXT;
+	       clip_to: "base";
+	       effect: SOFT_SHADOW;
+	       mouse_events: 0;
+	       scale: 1;
+	       description {
+		   state: "default" 0.0;
+		   rel1 {
+		       offset: 2 -12;
+		       relative: 0.0 1.0;
+		   }
+		   rel2.offset: -2 -4;
+		   color: 210 210 210 255;
+		   color3: 0 0 0 0;
+		   text {
+		       font: "Sans";
+		       size: 10;
+		       min: 0 1;
+		       align: 0.5 0.0;
+		   }
+	       }
+	   }
+
+	   part { name: "events";
+	       type: RECT;
+	       description { state: "default" 0.0;
+		   color: 0 0 0 0;
+		   visible: 0;
+	       }
+	       description { state: "visible" 0.0;
+		   inherit: "default" 0.0;
+		   visible: 1;
+	       }
+	   }
+       }
+       programs {
+	   program { name: "sel";
+	       signal:  "e,state,selected";
+	       source:  "e";
+	       action:  STATE_SET "visible" 0.0;
+	       transition: DECELERATE 0.1;
+	       target:  "bg";
+	   }
+	   program { name: "unsel";
+	       signal:  "e,state,unselected";
+	       source:  "e";
+	       action:  STATE_SET "default" 0.0;
+	       transition: SINUSOIDAL 0.2;
+	       target:  "bg";
+	   }
+	   program { name: "thumb_gen";
+	      signal:  "e,action,thumb,gen";
+	      source:  "e";
+	      action:  STATE_SET "default" 0.0;
+	       transition: DECELERATE 0.0;
+	       target:  "base";
+	       after: "thumb_ungen";	       
+	   }
+	   program { name: "thumb_ungen";
+	      signal:  "e,action,thumb,ungen";
+	      source:  "e";
+	      action:  STATE_SET "visible" 0.0;
+	       transition: SINUSOIDAL 0.15;
+	       target:  "base";
+	   }
+	   program { name: "thumb_show_delayed";
+	      signal:  "e,action,thumb,show_delayed";
+	      source:  "e";
+	       action:  STATE_SET "default" 0.2;
+	       target:  "base";
+	       after: "thumb_show_delayed2";
+	   }
+	   program { name: "thumb_show_delayed2";
+	       action:  STATE_SET "visible" 0.0;
+	       transition: SINUSOIDAL 0.6;
+	       target:  "base";
+	   }
+	   program { name: "thumb_show";
+	      signal:  "e,action,thumb,show";
+	      source:  "e";
+	       action:  STATE_SET "visible" 0.0;
+	       transition: SINUSOIDAL 0.1;
+	       target:  "base";
+	   }	   
+       }
+   }
+
+   group { name: "e/modules/everything/thumbview/main/scrollframe";
+      images {
+	 image: "arrow_up.png" COMP;
+	 image: "arrow_down.png" COMP;
+	 image: "bt_sm_base1.png" COMP;
+	 image: "bt_sm_base2.png" COMP;
+	 image: "bt_sm_shine.png" COMP;
+	 image: "bt_sm_hilight.png" COMP;
+	 image: "sb_runnerv.png" COMP;
+      }
+      parts {
+//	 part { name: "clipper";
+//	    type: RECT;
+//	    mouse_events: 0;
+//	    description { state: "default" 0.0;
+//	    }
+//	 }
+	 part { name: "e.swallow.content"; 
+//	    clip_to: "clipper";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1.offset: 0 0;
+	       rel2 {
+		  relative: 0.0  1.0;
+		  offset:   2   -1;
+		  to_x: "sb_vbar";
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar";
+	    type: RECT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       min: 7 17;
+	       align: 1.0 0.0;
+	       rel1 {
+		  relative: 1.0 0.0;
+		  offset:   -1 0;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -1 -1;
+	       }
+	    }
+	    description { state: "hidden" 0.0;
+	       visible: 0;
+	       max: 0 99999;
+	       rel1 {
+		  relative: 1.0 0.0;
+		  offset:   -1 0;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -1 -1;
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar_base";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1 {
+		  relative: 0.0  1.0;
+		  offset:   0	 -1;
+		  to:       "sb_vbar_a1";
+	       }
+	       rel2 {
+		  relative: 1.0  0.0;
+		  offset:   -1	 0;
+		  to:       "sb_vbar_a2";
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar_runner";
+	    clip_to: "sb_vbar";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       max: 3 99999;
+	       rel1.to:       "sb_vbar_base";
+	       rel1.offset:   -2 0;
+	       rel2.to:       "sb_vbar_base";
+	       image {
+		  normal: "sb_runnerv.png";
+		  border: 0 0 4 4;
+	       }
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "sb_vbar_p1";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1 {
+		  relative: 0.0 1.0;
+		  to:       "sb_vbar_a1";
+	       }
+	       rel2 {
+		  relative: 1.0 0.0;
+		  to:       "e.dragable.vbar";
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar_p2";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 0;
+	       rel1 {
+		  relative: 0.0 1.0;
+		  to:       "e.dragable.vbar";
+	       }
+	       rel2 {
+		  relative: 1.0 0.0;
+		  to:       "sb_vbar_a2";
+	       }
+	    }
+	 }
+	 part { name: "e.dragable.vbar";
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    scale: 1;
+	    dragable {
+	       x: 0 0 0;
+	       y: 1 1 0;
+	       confine: "sb_vbar_base";
+	    }
+	    description { state: "default" 0.0;
+	       min: 7 17;
+	       rel1 {
+		  relative: 0.5  0.5;
+		  offset:   -1    0;
+		  to: "sb_vbar_base";
+	       }
+	       rel2 {
+		  relative: 0.5  0.5;
+		  offset:   -1    0;
+		  to: "sb_vbar_base";
+	       }
+	       image {
+		  normal: "bt_sm_base2.png";
+		  border: 6 6 6 6;
+	       }
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "bt_sm_base1.png";
+	    }
+	 }
+	 part { name: "sb_vbar_over1";
+	    clip_to: "sb_vbar";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.dragable.vbar";
+	       rel2.relative: 1.0 0.5;
+	       rel2.to: "e.dragable.vbar";
+	       image {
+		  normal: "bt_sm_hilight.png";
+		  border: 6 6 6 0;
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar_over2";
+	    clip_to: "sb_vbar";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.dragable.vbar";
+	       rel2.to: "e.dragable.vbar";
+	       image {
+		  normal: "bt_sm_shine.png";
+		  border: 6 6 6 0;
+	       }
+	    }
+	 }
+
+	 part { name: "sb_vbar_a1";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       min: 7 17;
+	       align: 0.5 0.0;
+	       /* aspect: 1.0 1.0; */
+	       aspect_preference: HORIZONTAL;
+	       color: 0 0 0 0;
+	       rel1 { to: "sb_vbar";
+		  relative: 0.0  0.0;
+		  offset:   0    0;
+	       }
+	       rel2 { to: "sb_vbar";
+		  relative: 1.0  0.0;
+		  offset:   -1   0;
+	       }
+	    }
+	 }
+	 part { name: "sb_vbar_a2";
+	    type: RECT;
+	    clip_to: "sb_vbar";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       min: 7 17;
+	       align: 0.5 1.0;
+	       /* aspect: 1.0 1.0; */
+	       aspect_preference: HORIZONTAL;
+	       color: 0 0 0 0;
+	       rel1 {
+		  to: "sb_vbar";
+		  relative: 0.0  1.0;
+		  offset:   0    0;
+	       }
+	       rel2 {
+		  to: "sb_vbar";
+		  relative: 1.0  1.0;
+		  offset:   -1   0;
+	       }
+	    }
+	 }
+      }
+      programs {
+	 program { name: "sb_vbar_show";
+	    signal: "e,action,show,vbar";
+	    source: "e";
+	    action:  STATE_SET "default" 0.0;
+	    target: "sb_vbar";
+	 }
+	 program { name: "sb_vbar_hide";
+	    signal: "e,action,hide,vbar";
+	    source: "e";
+	    action:  STATE_SET "hidden" 0.0;
+	    target: "sb_vbar";
+	 }
+	 program { name: "sb_vbar_a1_down2";
+	    signal: "mouse,down,1";
+	    source: "sb_vbar_a1";
+	    action:  DRAG_VAL_STEP 0.0 -1.0;
+	    target: "e.dragable.vbar";
+	 }
+	 program { name: "sb_vbar_a2_down2";
+	    signal: "mouse,down,1";
+	    source: "sb_vbar_a2";
+	    action:  DRAG_VAL_STEP 0.0 1.0;
+	    target: "e.dragable.vbar";
+	 }
+	 program { name: "sb_vbar_p1_down";
+	    signal: "mouse,down,1";
+	    source: "sb_vbar_p1";
+	    action:  DRAG_VAL_PAGE 0.0 -1.0;
+	    target: "e.dragable.vbar";
+	 }
+	 program { name: "sb_vbar_p2_down";
+	    signal: "mouse,down,1";
+	    source: "sb_vbar_p2";
+	    action:  DRAG_VAL_PAGE  0.0 1.0;
+	    target: "e.dragable.vbar";
+	 }
+	 program { name: "sb_vbar_down";
+	    signal: "mouse,down,1";
+	    source: "e.dragable.vbar";
+	    action:  STATE_SET "clicked" 0.0;
+	    target: "e.dragable.vbar";
+	 }
+	 program { name: "sb_vbar_up";
+	    signal: "mouse,up,1";
+	    source: "e.dragable.vbar";
+	    action:  STATE_SET "default" 0.0;
+	    target: "e.dragable.vbar";
+	 }
+      }
+   }

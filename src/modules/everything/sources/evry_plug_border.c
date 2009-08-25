@@ -3,7 +3,7 @@
 
 static Evry_Plugin *plugin;
 static Eina_List *handlers = NULL;
-
+static Eina_Hash *border_hash = NULL;
 
 static int
 _cb_border_remove(void *data, int type,  void *event)
@@ -20,6 +20,7 @@ _cb_border_remove(void *data, int type,  void *event)
 	if (it->data == ev->border)
 	  {
 	     p->items = eina_list_remove(p->items, it);
+	     eina_hash_del_by_key(border_hash, ev->border);
 	     evry_item_free(it);
 	     evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
 	     break;
@@ -29,6 +30,12 @@ _cb_border_remove(void *data, int type,  void *event)
    return 1;
 }
 
+static void _hash_free(void *data)
+{
+   Evry_Item *it = data;
+   evry_item_free(it);
+}
+
 static Evry_Plugin *
 _begin(Evry_Plugin *p, const Evry_Item *it)
 {
@@ -36,18 +43,21 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
      (handlers, ecore_event_handler_add
       (E_EVENT_BORDER_REMOVE, _cb_border_remove, p));
 
+   border_hash = eina_hash_pointer_new(_hash_free); 
+   
    return p;
 }
 
 static void
 _cleanup(Evry_Plugin *p)
 {
-   Evry_Item *it;
    Ecore_Event_Handler *h;
 
-   EINA_LIST_FREE(p->items, it)
-     evry_item_free(it);
-
+   eina_hash_free(border_hash);
+   border_hash = NULL;
+   
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+   
    EINA_LIST_FREE(handlers, h)
      ecore_event_handler_del(h);
 
@@ -65,17 +75,26 @@ _item_free(Evry_Item *it)
 static void
 _item_add(Evry_Plugin *p, E_Border *bd, int match, int *prio)
 {
-   Evry_Item *it;
+   Evry_Item *it = NULL;
 
+   if ((it = eina_hash_find(border_hash, &bd)))
+     {
+	it->priority = *prio;
+	EVRY_PLUGIN_ITEM_APPEND(p, it);
+	*prio += 1;
+	return;
+     }
+   
    it = evry_item_new(NULL, p, e_border_name_get(bd), _item_free);
 
    e_object_ref(E_OBJECT(bd));
    it->data = bd;
    it->fuzzy_match = match;
    it->priority = *prio;
-
    *prio += 1;
 
+   eina_hash_add(border_hash, &bd, it);
+   
    EVRY_PLUGIN_ITEM_APPEND(p, it);
 }
 
@@ -100,7 +119,7 @@ _fetch(Evry_Plugin *p, const char *input)
    int prio = 0;
    int m1, m2;
 
-   _cleanup(p);
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    zone = e_util_zone_current_get(e_manager_current_get());
 

@@ -1,35 +1,25 @@
-#include "Evry.h"
+#include "e_mod_main.h"
 
 typedef struct _View View;
-typedef struct _List_Tab  List_Tab;
-
-struct _List_Tab
-{
-  Evry_Plugin *plugin;
-  Evas_Object *o_tab;
-};
-
-
 
 struct _View
 {
   Evry_View view;
   Evas *evas;
-  const Evas_Object *swallow;
-
   const Evry_State *state;
-
+  Tab_View *tabs;
+  
   Evas_Object *o_list;
-  Evas_Object *o_tabs;
-
   Eina_List *items;
-  Eina_List *tabs;
 
-  Ecore_Idler *item_idler;
+  
+  Ecore_Idle_Enterer *item_idler;
 
   double       scroll_align_to;
   double       scroll_align;
 
+
+  
   /* int          ev_last_is_mouse;
    * Evry_Item   *item_mouseover; */
   /* Ecore_Timer *scroll_timer; */
@@ -47,7 +37,7 @@ _list_clear(View *v)
 
    if (v->item_idler)
      {
-	ecore_idler_del(v->item_idler);
+	ecore_idle_enterer_del(v->item_idler);
 	v->item_idler = NULL;
      }
 
@@ -86,7 +76,6 @@ _list_clear(View *v)
 
    e_box_thaw(v->o_list);
    evas_event_thaw(v->evas);
-
 }
 
 static void
@@ -154,6 +143,8 @@ _list_item_idler(void *data)
      }
    e_box_thaw(v->o_list);
 
+   e_util_wakeup();
+   
    if (cnt == 0) return 1;
  end:
    v->item_idler = NULL;
@@ -244,7 +235,7 @@ _list_update(View *v)
 
    _list_scroll_to(v, v->state->sel_item);
 
-   v->item_idler = ecore_idler_add(_list_item_idler, v);
+   v->item_idler = ecore_idle_enterer_add(_list_item_idler, v);
 
    return 1;
 }
@@ -332,219 +323,14 @@ _list_item_last(View *v)
    evry_item_select(v->state, it);
 }
 
-static void
-_list_tab_scroll_to(View *v, Evry_Plugin *p)
-{
-   int n, w, mw, i;
-   double align;
-   Eina_List *l;
-   const Evry_State *s = v->state;
-
-   for(i = 0, l = s->cur_plugins; l; l = l->next, i++)
-     if (l->data == p) break;
-
-   n = eina_list_count(s->cur_plugins);
-
-   e_box_min_size_get(v->o_tabs, &mw, NULL);
-   evas_object_geometry_get(v->o_tabs, NULL, NULL, &w, NULL);
-
-   if (mw <= w + 5)
-     {
-	e_box_align_set(v->o_tabs, 0.0, 0.5);
-	return;
-     }
-
-   if (n > 1)
-     {
-	align = (double)i / (double)(n - 1);
-	/* if (evry_conf->scroll_animate)
-	 *   {
-	 *      if (!scroll_timer)
-	 *        scroll_timer = ecore_timer_add(0.01, _evry_list_scroll_timer, NULL);
-	 *      if (!scroll_animator)
-	 *        scroll_animator = ecore_animator_add(_evry_list_animator, NULL);
-	 *   }
-	 * else */
-	e_box_align_set(v->o_tabs, 1.0 - align, 0.5);
-     }
-   else
-     e_box_align_set(v->o_tabs, 1.0, 0.5);
-}
-
-static void
-_list_tabs_update(View *v)
-{
-
-   Eina_List *l, *ll;
-   Evry_Plugin *p;
-   const Evry_State *s = v->state;
-   List_Tab *tab;
-   Evas_Coord mw, cw, w;
-   Evas_Object *o;
-
-   evas_object_geometry_get(v->o_tabs, NULL, NULL, &w, NULL);
-
-   /* remove tabs for not active plugins */
-   e_box_freeze(v->o_tabs);
-
-   EINA_LIST_FOREACH(v->tabs, l, tab)
-     {
-	e_box_unpack(tab->o_tab);
-	evas_object_hide(tab->o_tab);
-     }
-
-   /* show/update tabs of active plugins */
-   EINA_LIST_FOREACH(s->cur_plugins, l, p)
-     {
-	EINA_LIST_FOREACH(v->tabs, ll, tab)
-	  if (tab->plugin == p) break;
-
-	if (!tab && (strlen(p->name) > 0))
-	  {
-	     tab = E_NEW(List_Tab, 1);
-	     tab->plugin = p;
-
-	     o = edje_object_add(v->evas);
-	     e_theme_edje_object_set(o, "base/theme/everything",
-				     "e/modules/everything/tab_item");
-	     edje_object_part_text_set(o, "e.text.label", p->name);
-
-	     tab->o_tab = o;
-
-	     v->tabs = eina_list_append(v->tabs, tab);
-	  }
-
-	if (!tab) continue;
-
-	o = tab->o_tab;
-	evas_object_show(o);
-	e_box_pack_end(v->o_tabs, o);
-
-	edje_object_size_min_calc(o, &cw, NULL);
-	edje_object_size_min_get(o, &mw, NULL);
-
-	e_box_pack_options_set(o, 1, 1, 1, 0, 0.0, 0.5,
-			       (mw < cw ? cw : mw), 10,
-			       (w ? w/3 : 150), 9999);
-	if (s->plugin == p)
-	  edje_object_signal_emit(o, "e,state,selected", "e");
-	else
-	  edje_object_signal_emit(o, "e,state,unselected", "e");
-     }
-
-   e_box_thaw(v->o_tabs);
-
-   if (s->plugin)
-     _list_tab_scroll_to(v, s->plugin);
-}
-
-
-static void
-_list_tabs_clear(View *v)
-{
-   Eina_List *l;
-   List_Tab *tab;
-
-   e_box_freeze(v->o_tabs);
-   EINA_LIST_FOREACH(v->tabs, l, tab)
-     {
-	e_box_unpack(tab->o_tab);
-	evas_object_hide(tab->o_tab);
-     }
-   e_box_thaw(v->o_tabs);
-}
-
-static void
-_list_plugin_select(View *v, Evry_Plugin *p)
-{
-   evry_plugin_select(v->state, p);
-
-   _list_tabs_update(v);
-   _list_tab_scroll_to(v, p);
-   _list_update(v);
-}
-
-static void
-_list_plugin_next(View *v)
-{
-   Eina_List *l;
-   Evry_Plugin *p = NULL;
-   const Evry_State *s = v->state;
-
-   if (!s->plugin) return;
-
-   l = eina_list_data_find_list(s->cur_plugins, s->plugin);
-
-   if (l && l->next)
-     p = l->next->data;
-   else if (s->plugin != s->cur_plugins->data)
-     p = s->cur_plugins->data;
-
-   if (p) _list_plugin_select(v, p);
-}
-
-static void
-_list_plugin_next_by_name(View *v, const char *key)
-{
-   Eina_List *l;
-   Evry_Plugin *p, *first = NULL, *next = NULL;
-   int found = 0;
-   const Evry_State *s = v->state;
-
-   if (!s->plugin) return;
-
-   EINA_LIST_FOREACH(s->cur_plugins, l, p)
-     {
-	if (p->name && (!strncasecmp(p->name, key, 1)))
-	  {
-	     if (!first) first = p;
-
-	     if (found && !next)
-	       next = p;
-	  }
-	if (p == s->plugin) found = 1;
-     }
-
-   if (next)
-     p = next;
-   else if (first != s->plugin)
-     p = first;
-   else
-     p = NULL;
-
-   if (p) _list_plugin_select(v, p);
-}
-
-static void
-_list_plugin_prev(View *v)
-{
-   Eina_List *l;
-   Evry_Plugin *p = NULL;
-   const Evry_State *s = v->state;
-
-   if (!s->plugin) return;
-
-   l = eina_list_data_find_list(s->cur_plugins, s->plugin);
-
-   if (l && l->prev)
-     p = l->prev->data;
-   else
-     {
-	l = eina_list_last(s->cur_plugins);
-	if (s->plugin != l->data)
-	  p = l->data;
-     }
-
-   if (p) _list_plugin_select(v, p);
-}
-
 static int
 _update(Evry_View *view)
 {
    VIEW(v, view);
 
+   v->tabs->update(v->tabs);
    _list_update(v);
-   _list_tabs_update(v);
+
    return 1;
 }
 
@@ -553,10 +339,9 @@ _clear(Evry_View *view)
 {
    VIEW(v, view);
 
+   v->tabs->clear(v->tabs);
    _list_clear(v);
-   _list_tabs_clear(v);
 }
-
 
 static int
 _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
@@ -565,7 +350,12 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
    const char *key = ev->key;
 
-   if (!strcmp(key, "Up"))
+   if (v->tabs->key_down(v->tabs, ev))
+     {
+	_list_update(v);
+	return 1;
+     }
+   else if (!strcmp(key, "Up"))
      _list_item_prev(v);
    else if (!strcmp(key, "Down"))
      _list_item_next(v);
@@ -573,29 +363,6 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      _list_item_last(v);
    else if (!strcmp(key, "Home"))
      _list_item_first(v);
-   else if (!strcmp(key, "Next"))
-     _list_plugin_next(v);
-   else if (!strcmp(key, "Prior"))
-     _list_plugin_prev(v);
-   else if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
-     {
-	if (!strcmp(key, "Left"))
-	  _list_plugin_prev(v);
-	else if (!strcmp(key, "Right"))
-	  _list_plugin_next(v);
-	else return 0;
-
-	return 1;
-     }
-   else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
-     {
-	if (!strcmp(key, "Left"))
-	  _list_plugin_prev(v);
-	else if (!strcmp(key, "Right"))
-	  _list_plugin_next(v);
-	else if (ev->compose)
-	  _list_plugin_next_by_name(v, key);
-     }
    else return 0;
 
    return 1;
@@ -610,7 +377,6 @@ _create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v = E_NEW(View, 1);
    v->view = *view;
    v->evas = evas_object_evas_get(swallow);
-   v->swallow = swallow;
    v->state = s;
 
    o = e_box_add(v->evas);
@@ -619,11 +385,8 @@ _create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v->view.o_list = o;
    v->o_list = o;
 
-   o = e_box_add(v->evas);
-   e_box_orientation_set(o, 1);
-   e_box_homogenous_set(o, 1);
-   v->view.o_bar = o;
-   v->o_tabs = o;
+   v->tabs = evry_tab_view_new(s, v->evas);
+   v->view.o_bar = v->tabs->o_tabs;
 
    return EVRY_VIEW(v);
 }
@@ -632,19 +395,11 @@ static void
 _destroy(Evry_View *view)
 {
    VIEW(v, view);
-   List_Tab *tab;
 
    _clear(view);
-
-   EINA_LIST_FREE(v->tabs, tab)
-     {
-	evas_object_del(tab->o_tab);
-	E_FREE(tab);
-     }
-
    evas_object_del(v->o_list);
-   evas_object_del(v->o_tabs);
-
+   evry_tab_view_free(v->tabs);
+   
    E_FREE(v);
 }
 

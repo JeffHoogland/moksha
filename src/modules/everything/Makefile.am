@@ -1,6 +1,8 @@
 MAINTAINERCLEANFILES = Makefile.in everything.pc
 MODULE = everything
 
+SUBDIRS = sources actions views
+
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
@@ -29,7 +31,8 @@ module_la_SOURCES      = $(EVRYHEADERS) \
 			 evry.c \
                          evry_config.c \
 			 evry_plug_aggregator.c \
-			 evry_plug_actions.c
+			 evry_plug_actions.c \
+			 evry_view_plugin_tabs.c
 
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
@@ -42,99 +45,6 @@ installed_headers_DATA = $(EVRYHEADERS)
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = everything.pc
 
-plugindir              = $(libdir)/enlightenment/everything_plugins/core/$(MODULE_ARCH)
-
-evry_plug_appsdir = $(plugindir)
-evry_plug_apps_LTLIBRARIES = evry_plug_apps.la
-evry_plug_apps_la_SOURCES =  evry_plug_apps.c
-evry_plug_apps_la_LIBADD       = @e_libs@
-evry_plug_apps_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_apps_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_borderdir = $(plugindir)
-evry_plug_border_LTLIBRARIES = evry_plug_border.la
-evry_plug_border_la_SOURCES =  evry_plug_border.c
-evry_plug_border_la_LIBADD       = @e_libs@
-evry_plug_border_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_border_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_border_actdir = $(plugindir)
-evry_plug_border_act_LTLIBRARIES = evry_plug_border_act.la
-evry_plug_border_act_la_SOURCES =  evry_plug_border_act.c
-evry_plug_border_act_la_LIBADD       = @e_libs@
-evry_plug_border_act_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_border_act_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_dir_browsedir = $(plugindir)
-evry_plug_dir_browse_LTLIBRARIES = evry_plug_dir_browse.la
-evry_plug_dir_browse_la_SOURCES =  evry_plug_dir_browse.c
-evry_plug_dir_browse_la_LIBADD       = @e_libs@
-evry_plug_dir_browse_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_dir_browse_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_trackerdir = $(plugindir)
-evry_plug_tracker_LTLIBRARIES = evry_plug_tracker.la
-evry_plug_tracker_la_SOURCES =  evry_plug_tracker.c
-evry_plug_tracker_la_LIBADD       = @e_libs@
-evry_plug_tracker_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_tracker_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_calcdir = $(plugindir)
-evry_plug_calc_LTLIBRARIES = evry_plug_calc.la
-evry_plug_calc_la_SOURCES =  evry_plug_calc.c
-evry_plug_calc_la_LIBADD       = @e_libs@
-evry_plug_calc_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_calc_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_configdir = $(plugindir)
-evry_plug_config_LTLIBRARIES = evry_plug_config.la
-evry_plug_config_la_SOURCES =  evry_plug_config.c
-evry_plug_config_la_LIBADD       = @e_libs@
-evry_plug_config_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_config_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_aspelldir = $(plugindir)
-evry_plug_aspell_LTLIBRARIES = evry_plug_aspell.la
-evry_plug_aspell_la_SOURCES =  evry_plug_aspell.c
-evry_plug_aspell_la_LIBADD       = @e_libs@
-evry_plug_aspell_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_aspell_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_clipboarddir = $(plugindir)
-evry_plug_clipboard_LTLIBRARIES = evry_plug_clipboard.la
-evry_plug_clipboard_la_SOURCES =  evry_plug_clipboard.c
-evry_plug_clipboard_la_LIBADD       = @e_libs@
-evry_plug_clipboard_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_clipboard_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_previewdir = $(plugindir)
-evry_plug_preview_LTLIBRARIES = evry_plug_preview.la
-evry_plug_preview_la_SOURCES =  evry_plug_preview.c
-evry_plug_preview_la_LIBADD       = @e_libs@
-evry_plug_preview_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_preview_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_view_listdir = $(plugindir)
-evry_plug_view_list_LTLIBRARIES = evry_plug_view_list.la
-evry_plug_view_list_la_SOURCES =  evry_plug_view_list.c
-evry_plug_view_list_la_LIBADD       = @e_libs@
-evry_plug_view_list_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_view_list_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_view_helpdir = $(plugindir)
-evry_plug_view_help_LTLIBRARIES = evry_plug_view_help.la
-evry_plug_view_help_la_SOURCES =  evry_plug_view_help.c
-evry_plug_view_help_la_LIBADD       = @e_libs@
-evry_plug_view_help_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_view_help_la_LIBTOOLFLAGS = --tag=disable-static
-
-evry_plug_wallpaperdir = $(plugindir)
-evry_plug_wallpaper_LTLIBRARIES = evry_plug_wallpaper.la
-evry_plug_wallpaper_la_SOURCES =  evry_plug_wallpaper.c
-evry_plug_wallpaper_la_LIBADD       = @e_libs@
-evry_plug_wallpaper_la_LDFLAGS      = -no-undefined -module -avoid-version
-evry_plug_wallpaper_la_LIBTOOLFLAGS = --tag=disable-static
-
 uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)
-
+	rm -rf $(DESTDIR)$(libdir)/enlightenment/everything_plugins/core/

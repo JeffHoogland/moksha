@@ -10,7 +10,7 @@
  */
 #define INPUTLEN 40
 #define MATCH_LAG 0.33
-#define MAX_FUZZ 150
+#define MAX_FUZZ 100
 #define MAX_WORDS 5
 
 
@@ -40,7 +40,7 @@ static void _evry_matches_update(Evry_Selector *sel);
 static void _evry_plugin_action(Evry_Selector *sel, int finished);
 static void _evry_plugin_select(Evry_State *s, Evry_Plugin *p);
 static void _evry_plugin_list_insert(Evry_State *s, Evry_Plugin *p);
-static void _evry_backspace(Evry_State *s);
+static int  _evry_backspace(Evry_State *s);
 static void _evry_update(Evry_State *s, int fetch);
 static void _evry_update_text_label(Evry_State *s);
 static int  _evry_clear(Evry_State *s);
@@ -59,7 +59,7 @@ static int  _evry_selector_subjects_get(const char *plugin_name);
 static int  _evry_selector_actions_get(Evry_Item *it);
 static int  _evry_selector_objects_get(Evry_Action *act);
 
-static void _evry_browse_item(Evry_Selector *sel);
+static int  _evry_browse_item(Evry_Selector *sel);
 static void _evry_browse_back(Evry_Selector *sel);
 
 static Evry_Window *_evry_window_new(E_Zone *zone);
@@ -245,7 +245,7 @@ evry_clear_input(void)
 }
 
 
-/* static int item_cnt = 0; */
+static int item_cnt = 0;
 
 EAPI Evry_Item *
 evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item))
@@ -267,7 +267,7 @@ evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free
 
    it->ref = 1;
 
-   /* item_cnt++; */
+   item_cnt++;
 
    return it;
 }
@@ -283,13 +283,10 @@ evry_item_free(Evry_Item *it)
 
    /* printf("%d, %d\t free: %s\n",
     * 	  it->ref, item_cnt - 1,
-    * 	  it->label);
-    * item_cnt--; */
+    * 	  it->label); */
+   item_cnt--;
 
    if (it->label) eina_stringshare_del(it->label);
-   /* if (it->uri) eina_stringshare_del(it->uri);
-    * if (it->mime) eina_stringshare_del(it->mime); */
-
    if (it->o_bg) evas_object_del(it->o_bg);
    if (it->o_icon) evas_object_del(it->o_icon);
 
@@ -423,7 +420,8 @@ evry_fuzzy_match(const char *str, const char *match)
    unsigned int m_num = 0;
    unsigned int m_cnt = 0;
    unsigned int m_min[MAX_WORDS];
-
+   unsigned int m_len = 0;
+   
    if (!match || !str) return 0;
 
    /* remove white spaces at the beginning */
@@ -440,6 +438,11 @@ evry_fuzzy_match(const char *str, const char *match)
    for (m = match; ip && (*m != 0); m++)
      if (ip && ispunct(*m)) ip = 0;
 
+   m_len = strlen(match);
+
+   /* with less than 3 chars match must be a prefix */
+   if (m_len < 3) m_len = 0;
+   
    next = str;
    m = match;
 
@@ -489,11 +492,11 @@ evry_fuzzy_match(const char *str, const char *match)
 		  else
 		    offset += 3;
 
-		  if (offset < 10)
+		  if (offset <= m_len * 3)
 		    continue;
 	       }
 
-	     if (min < MAX_FUZZ && offset < 10)
+	     if (min < MAX_FUZZ && offset <= m_len * 3)
 	       {
 		  /* first offset of match in word */
 		  if (!first)
@@ -1087,24 +1090,25 @@ _evry_state_pop(Evry_Selector *sel)
      sel->state = NULL;
 }
 
-static void
+static int
 _evry_browse_item(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
    Evry_Item *it;
    Eina_List *l, *plugins = NULL;
    Evry_Plugin *p, *plugin;
+   Evry_View *view = NULL;
    const char *type_out;
 
    it = s->sel_item;
 
    if (!it || !it->browseable)
-     return;
+     return 0;
 
    type_out = it->plugin->type_out;
 
    if (!type_out)
-     return;
+     return 1;
 
    if (it->plugin->begin &&
        (p = it->plugin->begin(it->plugin, it)))
@@ -1126,13 +1130,32 @@ _evry_browse_item(Evry_Selector *sel)
 	  }
      }
 
-   if (!plugins) return;
-   _evry_view_hide(s->view);
+   if (!plugins) return 1;
+
+   if (s->view)
+     {
+	_evry_view_hide(s->view);
+	view = s->view->id;
+     }
+   
    _evry_state_new(sel, plugins);
    _evry_matches_update(sel);
    _evry_selector_update(sel);
-   _evry_list_win_update(sel->state);
+   s = sel->state;
+
+   if (view && list->visible && s)
+     {
+	s->view = view->create(view, s, list->o_main);
+	if (s->view)
+	  {
+	     _evry_view_show(s->view);
+	     s->view->update(s->view);
+	  }
+     }
+
    _evry_update_text_label(sel->state);
+
+   return 1;
 }
 
 static void
@@ -1281,15 +1304,18 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      {
 	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
 	  _evry_plugin_action(selector, 0);
-	else
+	else if (!_evry_browse_item(selector))
 	  _evry_plugin_action(selector, 1);
      }
-   else  if (!strcmp(key, "Escape"))
+   else if (!strcmp(key, "Escape"))
      evry_hide();
    else if (!strcmp(key, "Tab"))
      _evry_selectors_switch();
    else if (!strcmp(key, "BackSpace"))
-     _evry_backspace(s);
+     {
+	if (!_evry_backspace(s))
+	  _evry_browse_back(selector);
+     }
    else if (!strcmp(key, "Delete"))
      _evry_backspace(s);
    else if (_evry_view_key_press(s, ev))
@@ -1319,7 +1345,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    return 1;
 }
 
-static void
+static int
 _evry_backspace(Evry_State *s)
 {
    int len, val, pos;
@@ -1336,8 +1362,12 @@ _evry_backspace(Evry_State *s)
 
 	     if ((pos == 0) || !isspace(val))
 	       _evry_update(s, 1);
+
+	     return 1;
 	  }
      }
+
+   return 0;
 }
 
 static void

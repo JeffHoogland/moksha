@@ -22,6 +22,7 @@ static E_DBus_Connection *conn = NULL;
 static Eina_List *plugins = NULL;
 static int _prio = 5;
 
+
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *it)
 {
@@ -105,11 +106,12 @@ _item_add(Plugin *p, char *path, char *mime, int prio)
    evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), filename, _item_free);
    file->uri = eina_stringshare_add(path);
 
-   EVRY_ITEM(file)->priority = prio;
+   /* EVRY_ITEM(file)->priority = prio; */
 
    if (folder)
      {
 	EVRY_ITEM(file)->browseable = EINA_TRUE;
+	EVRY_ITEM(file)->priority = 1;
 	file->mime = eina_stringshare_add("x-directory/normal");
      }
    else
@@ -148,7 +150,10 @@ _cb_sort(const void *data1, const void *data2)
    it1 = data1;
    it2 = data2;
 
-   return (it2->priority - it1->priority);
+   if (it1->priority - it2->priority)
+     return (it1->priority - it2->priority);
+
+   return strcasecmp(it1->label, it2->label);
 }
 
 static void
@@ -362,15 +367,80 @@ _plugin_new(const char *name, int type, char *service, int max_hits, int begin)
      evry_plugin_new(EVRY_PLUGIN(p), name, type, "", "FILE", 0, NULL, NULL,
 		     NULL, _cleanup, _fetch,
 		     NULL, _icon_get, NULL, NULL);
-   else
+   else if (type == type_object)
      evry_plugin_new(EVRY_PLUGIN(p), name, type, "APPLICATION", "FILE", 0, NULL, NULL,
 		   _begin, _cleanup, _fetch,
 		   NULL, _icon_get, NULL, NULL);
-
+   
    plugins = eina_list_append(plugins, p);
 
    evry_plugin_register(EVRY_PLUGIN(p), _prio++);
 }
+
+static void
+_dbus_cb_version(void *data, DBusMessage *msg, DBusError *error)
+{
+   DBusMessageIter iter;
+   Plugin *p;
+   int version;
+
+   if (dbus_error_is_set(error))
+     {
+	printf("Error: %s - %s\n", error->name, error->message);
+	e_dbus_connection_close(conn);
+
+	EINA_LIST_FREE(plugins, p)
+	  {
+	     if (p->condition[0]) free(p->condition);
+
+	     EVRY_PLUGIN_FREE(p);
+	  }
+	return;
+     }
+
+   dbus_message_iter_init(msg, &iter);
+
+   if (dbus_message_iter_get_arg_type(&iter) == DBUS_TYPE_INT32)
+     dbus_message_iter_get_basic(&iter, &version);
+
+   printf("tracker version %d\n", version);
+
+   if (version < 690)
+     {
+	e_dbus_connection_close(conn);
+
+	EINA_LIST_FREE(plugins, p)
+	  {
+	     if (p->condition[0]) free(p->condition);
+
+	     EVRY_PLUGIN_FREE(p);
+	  }
+     }
+}
+
+
+static void
+_get_version(void)
+{
+   DBusMessage *msg;
+
+   msg = dbus_message_new_method_call("org.freedesktop.Tracker",
+				      "/org/freedesktop/Tracker",
+				      "org.freedesktop.Tracker",
+				      "GetVersion");
+
+   e_dbus_message_send(conn, msg, _dbus_cb_version, -1, NULL);
+   dbus_message_unref(msg);
+}
+
+
+/* static Evry_Plugin *
+ * _begin_subject(Evry_Plugin *plugin, const Evry_Item *it)
+ * {
+ *    if (!conn) return NULL;
+ *
+ *    return plugin;
+ * } */
 
 
 static Eina_Bool
@@ -388,6 +458,8 @@ _init(void)
 
    _plugin_new("Find Files", type_object,  "Files", 20, 1);
    _plugin_new("Folders",    type_object,  "Folders", 20, 0);
+   
+   _get_version();
 
    return EINA_TRUE;
 }

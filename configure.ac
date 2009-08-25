@@ -560,6 +560,9 @@ src/modules/illume2/module.desktop
 src/modules/syscon/Makefile
 src/modules/syscon/module.desktop
 src/modules/everything/Makefile
+src/modules/everything/sources/Makefile
+src/modules/everything/actions/Makefile
+src/modules/everything/views/Makefile
 src/modules/everything/module.desktop
 src/modules/everything/everything.pc
 src/modules/systray/Makefile

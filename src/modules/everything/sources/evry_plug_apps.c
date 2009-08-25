@@ -20,11 +20,16 @@ static Evry_Action *act3;
 static Evry_Action *act4;
 static Eina_List *exe_path = NULL;
 
+static void _hash_free(void *data)
+{
+   ITEM_APP(app, data);
+   evry_item_free(EVRY_ITEM(app));
+}
+
 
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *item)
 {
-   /* Plugin *p = (Plugin*) plugin; */
    PLUGIN(p, plugin);
 
    const char *mime;
@@ -53,6 +58,8 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 	  }
      }
 
+   p->added = eina_hash_string_small_new(_hash_free);
+   
    return EVRY_PLUGIN(p);
 }
 
@@ -61,8 +68,10 @@ _item_free(Evry_Item *item)
 {
    ITEM_APP(app, item);
 
-   if (app->file) eina_stringshare_del(app->file);
-   if (app->desktop) efreet_desktop_free(app->desktop);
+   if (app->desktop)
+     efreet_desktop_free(app->desktop);
+   if (app->file)
+     eina_stringshare_del(app->file);
 
    E_FREE(app);
 }
@@ -73,7 +82,9 @@ _cleanup(Evry_Plugin *plugin)
    PLUGIN(p, plugin);
    Efreet_Desktop *desktop;
 
-   EVRY_PLUGIN_ITEMS_FREE(p);
+   eina_hash_free(p->added);
+   
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    EINA_LIST_FREE(p->apps_mime, desktop)
      efreet_desktop_free(desktop);
@@ -94,15 +105,23 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
 
    if (!file) return 0;
 
+   if ((app = eina_hash_find(p->added, file)) &&
+       (!desktop || (desktop == app->desktop)))
+     {
+	if (!eina_list_data_find_list(EVRY_PLUGIN(p)->items, app))
+	  {
+	     EVRY_ITEM(app)->fuzzy_match = match;
+	     EVRY_PLUGIN_ITEM_APPEND(p, app);
+	  }
+	return 1;
+     }
+   
    if (!desktop)
      {
 	char match[4096];
 	Eina_List *l;
 	int len;
 	char *tmp;
-
-	if (eina_hash_find(p->added, file))
-	  return 0;
 
 	len = strlen(file);
 	tmp = ecore_file_app_exe_get(file);
@@ -121,24 +140,14 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
 	  }
 
 	free(tmp);
-
-	if (!desktop)
-	  eina_hash_add(p->added, file, file);
      }
 
    if (desktop)
      {
-	if ((d2 = eina_hash_find(p->added, file)) &&
-	    ((desktop == d2) ||
-	     (!strcmp(desktop->exec, d2->exec))))
-	  return 0;
-
 	if (!already_refd)
 	  efreet_desktop_ref(desktop);
-	eina_hash_add(p->added, file, desktop);
-	file = NULL;
      }
-
+   
    app = E_NEW(Evry_Item_App, 1);
 
    if (desktop)
@@ -147,11 +156,14 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
      evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), file, _item_free);
 
    app->desktop = desktop;
-   app->file = file;
+   app->file = eina_stringshare_add(file);
+
    EVRY_ITEM(app)->fuzzy_match = match;
 
    EVRY_PLUGIN_ITEM_APPEND(p, app);
 
+   eina_hash_add(p->added, file, app);
+   
    return 1;
 }
 
@@ -232,10 +244,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
    char *file;
    int prio = 0;
 
-   p->added = eina_hash_string_small_new(NULL);
-
-   EVRY_PLUGIN_ITEMS_FREE(p);
-
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+   
    /* add apps for a given mimetype */
    if (plugin->type == type_action)
      {
@@ -283,53 +293,52 @@ _fetch(Evry_Plugin *plugin, const char *input)
    	  _item_add(p, NULL, file, 1);
      }
 
+   /* TODO make this an action */
    /* show 'Run Command' item */
-   if (input)
-     {
-	int found = 0;
-	char *end;
-	char *dir;
-	char cmd[1024];
-	char path[1024];
-
-	snprintf(cmd, sizeof(cmd), "%s", input);
-
-	if ((end = strchr(input, ' ')))
-	  {
-	     int len = (end - input) + 1;
-	     if (len >= 0)
-	       snprintf(cmd, len, "%s", input);
-	  }
-
-	EINA_LIST_FOREACH(exe_path, l, dir)
-	  {
-	     snprintf(path, sizeof(path), "%s/%s", dir, cmd);
-	     if (ecore_file_exists(path))
-	       {
-		  found = 1;
-		  break;
-	       }
-	  }
-
-	if (found)
-	  {
-	     Evry_Item_App *app;
-	     app = E_NEW(Evry_Item_App, 1);
-	     evry_item_new(EVRY_ITEM(app), plugin, _("Run Command"), _item_free);
-	     app->file = eina_stringshare_add(input);
-	     EVRY_ITEM(app)->priority = 9999;
-	     EVRY_PLUGIN_ITEM_APPEND(p, app);
-
-	     snprintf(cmd, sizeof(cmd), "xterm -hold -e %s", input);
-	     app = E_NEW(Evry_Item_App, 1);
-	     evry_item_new(EVRY_ITEM(app), plugin, _("Run in Terminal"), _item_free);
-	     app->file = eina_stringshare_add(cmd);
-	     EVRY_ITEM(app)->priority = 1000;
-	     EVRY_PLUGIN_ITEM_APPEND(p, app);
-	  }
-     }
-
-   eina_hash_free(p->added);
+   /* if (input)
+    *   {
+    * 	int found = 0;
+    * 	char *end;
+    * 	char *dir;
+    * 	char cmd[1024];
+    * 	char path[1024];
+    * 
+    * 	snprintf(cmd, sizeof(cmd), "%s", input);
+    * 
+    * 	if ((end = strchr(input, ' ')))
+    * 	  {
+    * 	     int len = (end - input) + 1;
+    * 	     if (len >= 0)
+    * 	       snprintf(cmd, len, "%s", input);
+    * 	  }
+    * 
+    * 	EINA_LIST_FOREACH(exe_path, l, dir)
+    * 	  {
+    * 	     snprintf(path, sizeof(path), "%s/%s", dir, cmd);
+    * 	     if (ecore_file_exists(path))
+    * 	       {
+    * 		  found = 1;
+    * 		  break;
+    * 	       }
+    * 	  }
+    * 
+    * 	if (found)
+    * 	  {
+    * 	     Evry_Item_App *app;
+    * 	     app = E_NEW(Evry_Item_App, 1);
+    * 	     evry_item_new(EVRY_ITEM(app), plugin, _("Run Command"), _item_free);
+    * 	     app->file = eina_stringshare_add(input);
+    * 	     EVRY_ITEM(app)->priority = 9999;
+    * 	     EVRY_PLUGIN_ITEM_APPEND(p, app);
+    * 
+    * 	     snprintf(cmd, sizeof(cmd), "xterm -hold -e %s", input);
+    * 	     app = E_NEW(Evry_Item_App, 1);
+    * 	     evry_item_new(EVRY_ITEM(app), plugin, _("Run in Terminal"), _item_free);
+    * 	     app->file = eina_stringshare_add(cmd);
+    * 	     EVRY_ITEM(app)->priority = 1000;
+    * 	     EVRY_PLUGIN_ITEM_APPEND(p, app);
+    * 	  }
+    *   } */
 
    if (!plugin->items) return 0;
 
@@ -376,15 +385,11 @@ static int
 _app_action(const Evry_Item *it1, const Evry_Item *it2)
 {
    E_Zone *zone;
-   /* Evry_App *app = NULL; */
    Eina_List *files = NULL;
    char *exe = NULL;
 
    if (!it1) return 0;
-   /* app = it_app->data[0]; */
    ITEM_APP(app, it1);
-
-   if (!app) return 0;
 
    zone = e_util_zone_current_get(e_manager_current_get());
 
@@ -468,7 +473,6 @@ static int
 _open_with_action(Evry_Plugin *plugin, const Evry_Item *it)
 {
    PLUGIN(p, plugin);
-   /* Plugin *p = (Plugin*) plugin; */
 
    if (p->candidate)
      return _app_action(it, p->candidate);
@@ -480,7 +484,7 @@ static int
 _edit_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
    ITEM_APP(app, it);
-   /* Evry_App *app = it->data[0]; */
+
    if (app->desktop)
      return 1;
 
@@ -501,7 +505,7 @@ _edit_app_action(Evry_Action *act)
 	snprintf(buf, 128, "%s/.local/share/applications/%s.desktop",
 		 e_user_homedir_get(), app->file);
 	desktop = efreet_desktop_empty_new(eina_stringshare_add(buf));
-	/* XXX check if this gets freed by efreet*/
+	/* XXX check if this is freed by efreet*/
 	desktop->exec = strdup(app->file);
      }
 
@@ -514,7 +518,7 @@ static int
 _new_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
    ITEM_APP(app, it);
-   /* Evry_App *app = it->data[0]; */
+
    if (app->desktop)
      return 1;
 
@@ -527,7 +531,6 @@ _new_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 static int
 _new_app_action(Evry_Action *act)
 {
-   /* Evry_App *app; */
    char *name;
    char buf[4096];
    char *end;
@@ -535,7 +538,6 @@ _new_app_action(Evry_Action *act)
    int i;
 
    ITEM_APP(app, act->item1);
-   /* app = act->item1->data[0]; */
 
    if (app->desktop)
      name = strdup(app->desktop->name);
@@ -571,8 +573,6 @@ _new_app_action(Evry_Action *act)
    else
      {
 	efreet_desktop_save_as(app->desktop, buf);
-	/* efreet_desktop_new(app->desktop->orig_path); */
-
 	desktop = efreet_desktop_new(buf);
      }
 
@@ -607,14 +607,10 @@ _exec_border_action(Evry_Action *act)
 static int
 _exec_border_intercept(Evry_Action *act)
 {
-   /* Evry_Item *it = E_NEW(Evry_Item, 1); */
    Evry_Item_App *app = E_NEW(Evry_Item_App, 1);
    E_Border *bd = act->item1->data;
 
    app->desktop = bd->desktop;
-   /* it->data[0] = app; */
-
-   /* act->item1 = it; */
    act->item1 = EVRY_ITEM(app);
 
    return 1;
@@ -624,12 +620,8 @@ _exec_border_intercept(Evry_Action *act)
 static void
 _exec_border_cleanup(Evry_Action *act)
 {
-   /* Evry_Item *it = (Evry_Item*) act->item1;
-    * Evry_App *app = it->data[0]; */
    ITEM_APP(app, act->item1);
-
    E_FREE(app);
-   /* E_FREE(it); */
 }
 
 
