@@ -341,7 +341,7 @@ _cb_del(void *data, void *data2)
 
    if (!(cfdata = data)) return;
    i = -1;
-   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_avail), l, item)
+   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_sel), l, item)
      {
         const char *name = NULL;
 
