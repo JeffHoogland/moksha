@@ -56,7 +56,7 @@ e_widget_button_add(Evas *evas, const char *label, const char *icon, void (*func
 			   "e/widgets/button");
    edje_object_signal_callback_add(o, "e,action,click", "", 
 				   _e_wid_signal_cb1, obj);
-   if (label && label[0] != 0)
+   if ((label) && (label[0] != 0))
      {
 	edje_object_part_text_set(o, "e.text.label", label);
 	wd->type |= E_WIDGET_BUTTON_TEXT;
@@ -93,7 +93,7 @@ e_widget_button_label_set(Evas_Object *obj, const char *label)
 
    wd = e_widget_data_get(obj);
    edje_object_part_text_set(wd->o_button, "e.text.label", label);
-   if (label && label[0] != 0)
+   if ((label) && (label[0] != 0))
      wd->type |= E_WIDGET_BUTTON_TEXT;
    else
      wd->type = ~(wd->type & E_WIDGET_BUTTON_TEXT);
@@ -197,7 +197,7 @@ _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _e_wid_button_state_send(E_Widget_Data *wd)
 {
-   if (!wd || !wd->o_button) return;
+   if ((!wd) || (!wd->o_button)) return;
    if (wd->type & E_WIDGET_BUTTON_TEXT)
      {
 	if (wd->type & E_WIDGET_BUTTON_ICON)
