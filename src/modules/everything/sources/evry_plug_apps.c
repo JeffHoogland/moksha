@@ -390,14 +390,30 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	if (!p->apps_all)
 	  {
 	     Eina_List *apps = NULL;
-	     Eina_List *cats;
+	     Eina_List *cat_ss, *cat_app, *cat_sys, *cat_set;
 	     Eina_List *l, *ll;
 
 	     apps = efreet_util_desktop_name_glob_list("*");
-	     cats = efreet_util_desktop_category_list("Screensaver");
+	     cat_ss = efreet_util_desktop_category_list("Screensaver");
 
-	     EINA_LIST_FOREACH(cats, l, desktop)
+	     EINA_LIST_FOREACH(cat_ss, l, desktop)
 	       {
+		  ll = eina_list_data_find_list(apps, desktop);
+		  if (ll)
+		    {
+		       efreet_desktop_free(desktop);
+		       apps = eina_list_remove_list(apps, ll);
+		    }
+	       }
+	     cat_sys = efreet_util_desktop_category_list("System");
+	     cat_app = efreet_util_desktop_category_list("Applications");
+	     cat_set = efreet_util_desktop_category_list("Settings");
+
+	     EINA_LIST_FOREACH(cat_sys, l, desktop)
+	       {
+		  if (eina_list_data_find_list(cat_set, desktop)) continue;
+		  if (eina_list_data_find_list(cat_app, desktop)) continue;
+		  
 		  ll = eina_list_data_find_list(apps, desktop);
 		  if (ll)
 		    {
@@ -725,6 +741,8 @@ _exec_border_action(Evry_Action *act)
 static int
 _exec_border_intercept(Evry_Action *act)
 {
+   /* FIXME */
+   if (!act || !act->item1) return 0;
    Evry_Item_App *app = E_NEW(Evry_Item_App, 1);
    E_Border *bd = act->item1->data;
 
@@ -746,8 +764,6 @@ _exec_border_cleanup(Evry_Action *act)
 static Eina_Bool
 _init(void)
 {
-   /* char *path, *p, *last; */
-
    p1 = E_NEW(Plugin, 1);
    evry_plugin_new(EVRY_PLUGIN(p1), "Applications", type_subject, "", "APPLICATION", 0, NULL, NULL,
 		   _begin, _cleanup, _fetch, NULL, _icon_get, NULL, NULL);
