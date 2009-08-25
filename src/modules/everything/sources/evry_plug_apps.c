@@ -735,7 +735,7 @@ _exec_border_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 static int
 _exec_border_action(Evry_Action *act)
 {
-   ITEM_APP(app, act->item1);
+   /* ITEM_APP(app, act->item1); */
    
    return _app_action(act->item1, act->item2);
 }

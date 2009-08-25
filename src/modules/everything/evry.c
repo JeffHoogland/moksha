@@ -58,6 +58,7 @@ static void _evry_selector_icon_set(Evry_Selector *sel);
 static int  _evry_selector_subjects_get(const char *plugin_name);
 static int  _evry_selector_actions_get(Evry_Item *it);
 static int  _evry_selector_objects_get(Evry_Action *act);
+static void _evry_selector_thumb_gen(void *data, Evas_Object *obj, void *event_info);
 
 static int  _evry_browse_item(Evry_Selector *sel);
 static void _evry_browse_back(Evry_Selector *sel);
@@ -92,6 +93,7 @@ static Eina_List   *handlers = NULL;
 static Ecore_Timer *update_timer = NULL;
 static Evry_Plugin *action_selector = NULL;
 static Evry_Selector *selector = NULL;
+static const char *thumb_types = NULL;
 
 Evry_Selector **selectors;
 
@@ -100,6 +102,7 @@ int
 evry_init(void)
 {
    action_selector = evry_plug_actions_new();
+   thumb_types = eina_stringshare_add("FILE");
    return 1;
 }
 
@@ -109,7 +112,7 @@ evry_shutdown(void)
    evry_hide();
 
    evry_plug_actions_free(action_selector);
-
+   eina_stringshare_del(thumb_types);
    return 1;
 }
 
@@ -421,7 +424,7 @@ evry_fuzzy_match(const char *str, const char *match)
    unsigned int m_cnt = 0;
    unsigned int m_min[MAX_WORDS];
    unsigned int m_len = 0;
-   
+
    if (!match || !str) return 0;
 
    /* remove white spaces at the beginning */
@@ -442,7 +445,7 @@ evry_fuzzy_match(const char *str, const char *match)
 
    /* with less than 3 chars match must be a prefix */
    if (m_len < 3) m_len = 0;
-   
+
    next = str;
    m = match;
 
@@ -738,6 +741,7 @@ _evry_window_free(Evry_Window *win)
    e_object_del(E_OBJECT(win->popup));
    E_FREE(win);
 }
+
 static Evry_Selector *
 _evry_selector_new(int type)
 {
@@ -775,9 +779,14 @@ _evry_selector_new(int type)
 static void
 _evry_selector_free(Evry_Selector *sel)
 {
+   if (sel->do_thumb)
+     e_thumb_icon_end(sel->o_thumb);
+   if (sel->o_thumb)
+     evas_object_del(sel->o_thumb);
    if (sel->o_icon)
      evas_object_del(sel->o_icon);
-   evas_object_del(sel->o_main);
+   if (sel->o_main)
+     evas_object_del(sel->o_main);
 
    if (list->visible && (sel == selector))
      _evry_view_clear(sel->state);
@@ -788,6 +797,7 @@ _evry_selector_free(Evry_Selector *sel)
    evry_plug_aggregator_free(sel->aggregator);
 
    if (sel->plugins) eina_list_free(sel->plugins);
+
    E_FREE(sel);
 }
 
@@ -831,6 +841,56 @@ _evry_selector_activate(Evry_Selector *sel)
 }
 
 static void
+_evry_selector_thumb_gen(void *data, Evas_Object *obj, void *event_info)
+{
+   Evas_Coord w, h;
+   Evry_Selector *sel = data;
+
+   if (sel->o_icon)
+     evas_object_del(sel->o_icon);
+   sel->o_icon = NULL;
+
+   e_icon_size_get(sel->o_thumb, &w, &h);
+   edje_extern_object_aspect_set(sel->o_thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
+   edje_object_part_swallow(sel->o_main, "e.swallow.thumb", sel->o_thumb);
+   evas_object_show(sel->o_thumb);
+   edje_object_signal_emit(sel->o_main, "e,action,thumb,show", "e");
+   sel->do_thumb = EINA_FALSE;
+}
+
+static int
+_evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
+{
+   Evas_Coord w, h;
+
+   if (sel->do_thumb)
+     e_thumb_icon_end(sel->o_thumb);
+
+   if (sel->o_thumb)
+     evas_object_del(sel->o_thumb);
+
+   if (it->plugin->type_out != thumb_types) return 0;
+
+   ITEM_FILE(file, it);
+
+   if (!file->uri || !file->mime) return 0;
+
+   if (!strncmp(file->mime, "image/", 6))
+     {
+	sel->o_thumb = e_thumb_icon_add(win->popup->evas);
+	evas_object_smart_callback_add(sel->o_thumb, "e_thumb_gen", _evry_selector_thumb_gen, sel);
+	edje_object_part_geometry_get(sel->o_main, "e.swallow.thumb", NULL, NULL, &w, &h);
+	e_thumb_icon_file_set(sel->o_thumb, file->uri, NULL);
+	e_thumb_icon_size_set(sel->o_thumb, w, h);
+	e_thumb_icon_begin(sel->o_thumb);
+	sel->do_thumb = EINA_TRUE;
+	return 1;
+     }
+
+   return 0;
+}
+
+static void
 _evry_selector_icon_set(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
@@ -851,15 +911,20 @@ _evry_selector_icon_set(Evry_Selector *sel)
 
    if (it && it->plugin && it->plugin->icon_get)
      {
-	o = it->plugin->icon_get(it->plugin, it, win->popup->evas);
-	if (o)
+	if (!_evry_selector_thumb(sel, it))
 	  {
-	     edje_object_part_swallow(sel->o_main, "e.swallow.icons", o);
-	     evas_object_show(o);
-	     sel->o_icon = o;
+	     o = it->plugin->icon_get(it->plugin, it, win->popup->evas);
+	     if (o)
+	       {
+		  edje_object_part_swallow(sel->o_main, "e.swallow.icons", o);
+		  evas_object_show(o);
+		  sel->o_icon = o;
+	       }
 	  }
-	else
-	  sel->o_icon = NULL;
+     }
+   else if (it)
+     {
+	_evry_selector_thumb(sel, it);
      }
 
    if (!sel->o_icon && s->plugin && s->plugin->icon)
@@ -1017,19 +1082,19 @@ _evry_selector_objects_get(Evry_Action *act)
    Evry_Item *it;
    /* required type */
    const char *type_in = act->type_in2;
-   
+
    while (sel->state)
      _evry_state_pop(sel);
 
    it = selectors[0]->state->sel_item;
-   
+
    EINA_LIST_FOREACH(sel->plugins, l, plugin)
      {
 	/* plugin doesnt provide reuired type */
 	if ((plugin->type_out != type_in) &&
 	    (plugin != sel->aggregator))
 	  continue;
-	
+
 	if (plugin->begin)
 	  {
 	     /* plugins' begin method might require an item */
@@ -1140,7 +1205,7 @@ _evry_browse_item(Evry_Selector *sel)
 	_evry_view_hide(s->view);
 	view = s->view->id;
      }
-   
+
    _evry_state_new(sel, plugins);
    _evry_matches_update(sel);
    _evry_selector_update(sel);

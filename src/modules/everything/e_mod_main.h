@@ -59,7 +59,10 @@ struct _Evry_Selector
   /* all plugins that belong to this selector*/
   Eina_List   *plugins;
 
-  Evry_View *view;
+  Evry_View   *view;
+
+  Evas_Object *o_thumb;
+  Eina_Bool    do_thumb;
 };
 
 struct _Tab_View
