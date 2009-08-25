@@ -26587,9 +26587,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
      
    group { name: "e/modules/everything/main";
    #ifdef DROP_SHADOW
-       min: 720 218;
+       min: 520 218;
    #else
-       min: 620 118;
+       min: 420 118;
    #endif
        images {
 	   image: "base_bg.png" COMP;
@@ -26630,10 +26630,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   	   }
 	   	   color: 255 255 255 255;
 	       }
-	       description { state: "wide" 0;
-	   	   inherit: "default" 0.0;
-	   	   min: 620 118;
-	       }
 	   }
            #else
 	   part { name: "bg";
@@ -26649,24 +26645,42 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 		   color: 255 255 255 255;
 	       }
-	       description { state: "wide" 0;
-		   inherit: "default" 0.0;
-		   min: 620 118;
-	       }
 	   }
            #endif
-	   part { name: "selector_frame";
+	   part { name: "frame";
 	       type: RECT;
 	       description { state: "default" 0;
 		   color: 255 255 255 255;
 		   rel1 {
-		       offset: 5 5;
+		       offset: 8 1;
 		       to: "bg";
 		   }
 		   rel2 {
-		       offset: -6 -6;
+		       offset: -9 -2;
 		       to: "bg";
 		   }
+	       }
+	   }
+	   part { name: "selector_frame";
+	       type: RECT;
+	       clip_to: "frame";
+	       description { state: "default" 0;
+		   min: 600 100;
+		   align: 0.0 0.0;
+		   color: 255 255 255 255;
+		   rel1 {
+		       offset: 10 3;
+		       to: "bg";
+		   }
+		   rel2 {
+		       offset: -11 -3;
+		       to: "bg";
+		   }
+	       }
+	       description { state: "wide" 0;
+		   inherit: "default" 0.0;
+		   /* min: 622 118; */
+		   align: 1.0 0.0;
 	       }
 	   }
 	   part { name: "e.swallow.subject_selector";
@@ -26674,16 +26688,21 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       clip_to: "selector_frame";
 	       description { state: "default" 0;
 		   min: 200 100;
-		   max: 200 100;
+		   max: 200 999;
+		   align: 0.0 0.0;
 		   rel1 {
-		       offset: 5 5;
+		       offset: 0 2;
 		       to: "selector_frame";
 		   }
 		   rel2 {
-		       relative: 0 0;
-		       offset: 205 105;
+		       relative: 0 1;
+		       offset: 200 -2;
 		       to: "selector_frame";
 		   }
+	       }
+	       description { state: "wide" 0;
+		   inherit: "default" 0.0;
+		   visible: 0;
 	       }
 	   }
 	   part { name: "e.swallow.action_selector";
@@ -26691,16 +26710,18 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       clip_to: "selector_frame";
 	       description { state: "default" 0;
 		   min: 200 100;
-		   max: 200 100;
+		   max: 200 999;
+		   align: 0.0 0.0;
 		   rel1 {
-		       relative: 0 0;
-		       offset: 205 5;
-		       to: "selector_frame";
+		       relative: 1 0;
+		       offset: 0 2;
+		       to_y: "selector_frame";
+		       to_x: "e.swallow.subject_selector";
 		   }
 		   rel2 {
-		       relative: 0 0;
-		       offset: 405 105;
-		       to: "selector_frame";
+		       offset: 200 -2;
+		       to_y: "selector_frame";
+		       to_x: "e.swallow.subject_selector";
 		   }
 	       }
 	   }
@@ -26708,17 +26729,19 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       type: SWALLOW;
 	       clip_to: "selector_frame";
 	       description { state: "default" 0;
-		   max: 200 100;
+		   max: 200 999;
 		   visible: 0;
+		   align: 0.0 0.0;
 		   rel1 {
-		       relative: 0 0;
-		       offset: 405 5;
-		       to: "selector_frame";
+		       relative: 1 0;
+		       offset: 0 2;
+		       to_y: "selector_frame";
+		       to_x: "e.swallow.action_selector";
 		   }
 		   rel2 {
-		       relative: 0 0;
-		       offset: 605 105;
-		       to: "selector_frame";
+		       offset: 200 -2;
+		       to_y: "selector_frame";
+		       to_x: "e.swallow.action_selector";
 		   }
 	       }
 	       description { state: "wide" 0;
@@ -26759,7 +26782,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       action: STATE_SET "default" 0.00;
 	       transition: SINUSOIDAL 0.15;
 	       target: "bg";
+	       target: "selector_frame";
 	       target: "e.swallow.object_selector";
+	       target: "e.swallow.subject_selector";
 	   }
 	   program { name: "object_selector_show";
 	       signal: "e,state,object_selector_show";
@@ -26767,7 +26792,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       action: STATE_SET "wide" 0.00;
 	       transition: SINUSOIDAL 0.2;
 	       target: "bg";
+	       target: "selector_frame";
 	       target: "e.swallow.object_selector";
+	       target: "e.swallow.subject_selector";
 	   }
        }
    }
@@ -26799,14 +26826,14 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	       description { state: "selected" 0.0;
 		   inherit: "default" 0.0;
-		   color: 255 255 255 64;
+		   color: 255 255 255 96;
 	       }
 	   }
 	   part { name: "border";
 	       clip_to: "clip";
 	       mouse_events:  0;
 	       description { state: "default" 0.0;
-		   color: 255 255 255 64;	       
+		   color: 255 255 255 80;	       
 		   image {
 		       normal: "everything_border.png";
 		       border: 10 10 10 10;
@@ -26814,7 +26841,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	       description { state: "selected" 0.0;
 		   inherit: "default" 0.0;
-		   color: 255 255 255 128;
+		   color: 255 255 255 160;
 	       }
 	   }
 	   part { name: "inner_clip";
@@ -26850,11 +26877,11 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   aspect_preference: VERTICAL;
 		   rel1 {
 		       relative: 0.0 0.0;
-		       offset:   10   10;
+		       offset:   15   15;
 		   }
 		   rel2 {
-		       relative: 0.0 1.0;
-		       offset:   74  -11;
+		       relative: 0.0 0.0;
+		       offset:   79  79;
 		   }
 	       }
 	   }
@@ -26867,19 +26894,18 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       description {
 		   state: "default" 0.0;
 		   rel1 {
-		       offset: 6 1;
-		       relative: 1.0 0.5;
-		       to_x: "e.swallow.icons";
+		       offset: 20 1;
+		       relative: 0.0 0.6;
+		       /* to_x: "e.swallow.icons"; */
 		   }
-		   rel2.offset: -3 -2;
+		   rel2.offset: -11 -2;
 		   color: 255 255 255 255;
-		   color3: 60 60 60 64;
-		   color_class: "menu_item";
+		   color3: 40 40 40 128;
 		   text {
 		       font: "Sans:style=Bold";
 		       size: 10;
 		       min: 0 1;
-		       align: 0.0 0.5;
+		       align: 0.5 0.5;
 		   }
 	       }
 	   }
@@ -26899,7 +26925,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   rel2.offset: -13 -2;
 		   color: 210 210 210 255;
 		   color3: 0 0 0 0;
-		   color_class: "menu_item";
 		   text {
 		       font: "Sans";
 		       size: 10;
