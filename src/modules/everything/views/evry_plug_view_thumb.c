@@ -21,6 +21,7 @@ struct _Smart_Data
   Eina_List   *items;
   Item        *sel_item;
   Ecore_Idle_Enterer *idle_enter;
+  Ecore_Idle_Enterer *thumb_idler;
   Ecore_Animator *animator;
   Evas_Coord   x, y, w, h;
   Evas_Coord   cx, cy, cw, ch;
@@ -78,6 +79,43 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
    it->image = NULL;
 
 }
+
+static int
+_thumb_idler(void *data)
+{
+   Smart_Data *sd = data;
+   Eina_List *l;
+   Item *it;
+   int cnt = 0;
+   
+   EINA_LIST_FOREACH(sd->items, l, it)
+     {
+	if (it->thumb && !(it->have_thumb || it->do_thumb))
+	  {
+	     ITEM_FILE(file, it->item);
+	     
+	     evas_object_smart_callback_add(it->thumb, "e_thumb_gen", _thumb_gen, it);
+
+	     e_thumb_icon_file_set(it->thumb, file->uri, NULL);
+	     e_thumb_icon_size_set(it->thumb, it->w, it->h);
+	     e_thumb_icon_begin(it->thumb);
+	     it->do_thumb = EINA_TRUE;
+
+	     cnt++;
+	  }
+
+	if (cnt > 4)
+	  {
+	     e_util_wakeup();
+	     return 1;
+	  }
+     }
+
+   sd->thumb_idler = NULL;
+   
+   return 0;
+}
+
 
 static int
 _e_smart_reconfigure_do(void *data)
@@ -301,25 +339,12 @@ _e_smart_reconfigure_do(void *data)
 		    }
 	       }
 	     
-	     if (it->get_thumb && !it->have_thumb)
+	     if (it->get_thumb && !it->have_thumb && !it->thumb)
 	       {
-		  if (!it->thumb)
-		    {
-		       ITEM_FILE(file, it->item);
-		       
-		       it->thumb = e_thumb_icon_add(sd->view->evas);
-		       evas_object_smart_callback_add(it->thumb, "e_thumb_gen", _thumb_gen, it);
+		  it->thumb = e_thumb_icon_add(sd->view->evas);
 
-		       e_thumb_icon_file_set(it->thumb, file->uri, NULL);
-		       e_thumb_icon_size_set(it->thumb, iw, ih);
-		       e_thumb_icon_begin(it->thumb);
-		       it->do_thumb = EINA_TRUE;			    
-		    }
-		  else if (!it->do_thumb)
-		    {
-		       e_thumb_icon_begin(it->thumb);
-		       it->do_thumb = EINA_TRUE;			    
-		    }
+		  if (!sd->thumb_idler)
+		    sd->thumb_idler = ecore_idle_enterer_before_add(_thumb_idler, sd);			 
 	       }
 
 	     if (it->selected && sd->zoom < 2)
@@ -394,12 +419,12 @@ _e_smart_del(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
    Item *it;
-   /* if (sd->seltimer)
-    *   ecore_timer_del(sd->seltimer); */
-   /* if (sd->animator)
-    *   ecore_animator_del(sd->animator); */
+
    if (sd->idle_enter)
      ecore_idle_enterer_del(sd->idle_enter);
+   if (sd->thumb_idler)
+     ecore_idle_enterer_del(sd->thumb_idler);
+
    // sd->view is just referenced
    // sd->child_obj is unused
    EINA_LIST_FREE(sd->items, it)
@@ -928,7 +953,6 @@ _view_destroy(Evry_View *view)
 {
    VIEW(v, view);
    
-   /* _view_clear(view); */
    evas_object_del(v->bg);
    evas_object_del(v->sframe);
    evas_object_del(v->span);
