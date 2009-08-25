@@ -7,6 +7,8 @@ struct _Tab
 {
   Evry_Plugin *plugin;
   Evas_Object *o_tab;
+
+  int cw, mw;
 };
 
 
@@ -58,7 +60,7 @@ _tabs_update(Tab_View *v)
    Evry_Plugin *p;
    const Evry_State *s = v->state;
    Tab *tab;
-   Evas_Coord mw, cw, w;
+   Evas_Coord w;
    Evas_Object *o;
 
    evas_object_geometry_get(v->o_tabs, NULL, NULL, &w, NULL);
@@ -78,7 +80,7 @@ _tabs_update(Tab_View *v)
 	EINA_LIST_FOREACH(v->tabs, ll, tab)
 	  if (tab->plugin == p) break;
 
-	if (!tab && (strlen(p->name) > 0))
+	if (!tab)
 	  {
 	     tab = E_NEW(Tab, 1);
 	     tab->plugin = p;
@@ -90,6 +92,9 @@ _tabs_update(Tab_View *v)
 
 	     tab->o_tab = o;
 
+	     edje_object_size_min_calc(o, &tab->cw, NULL);
+	     edje_object_size_min_get(o,  &tab->mw, NULL);
+
 	     v->tabs = eina_list_append(v->tabs, tab);
 	  }
 
@@ -99,11 +104,8 @@ _tabs_update(Tab_View *v)
 	evas_object_show(o);
 	e_box_pack_end(v->o_tabs, o);
 
-	edje_object_size_min_calc(o, &cw, NULL);
-	edje_object_size_min_get(o, &mw, NULL);
-
 	e_box_pack_options_set(o, 1, 1, 1, 0, 0.0, 0.5,
-			       (mw < cw ? cw : mw), 10,
+			       (tab->mw < tab->cw ? tab->cw : tab->mw), 10,
 			       (w ? w/3 : 150), 9999);
 	if (s->plugin == p)
 	  edje_object_signal_emit(o, "e,state,selected", "e");
@@ -298,6 +300,7 @@ evry_tab_view_free(Tab_View *v)
    
    EINA_LIST_FREE(v->tabs, tab)
      {
+	e_box_unpack(tab->o_tab);
 	evas_object_del(tab->o_tab);
 	E_FREE(tab);
      }

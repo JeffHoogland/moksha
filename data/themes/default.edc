@@ -26579,7 +26579,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
    }
 
 
-/////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////
    /*** MOD: EVERYTHING ***/
    /* #define DROP_SHADOW 1 */
    
@@ -26862,7 +26862,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	       description {
 		   state: "faded" 0.0;
-		   color: 255 255 255 200;
+		   color: 255 255 255 120;
 	       }
 	   }
 	   part {
@@ -26871,6 +26871,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       clip_to: "icon_clip";
 	       description {
 		   state: "default" 0.0;
+		   min: 64 64;
 		   max: 64 64;
 		   aspect: 1.0 1.0;
 		   align: 0.0 0.5;
@@ -26885,6 +26886,28 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 	       }
 	   }
+	   part {
+	       name: "e.swallow.thumb";
+	       type: SWALLOW;
+	       clip_to: "icon_clip";
+	       description {
+		   state: "default" 0.0;
+		   min: 86 64;
+		   max: 86 64;
+		   aspect: 1.0 1.0;
+		   align: 0.0 0.5;
+		   aspect_preference: VERTICAL;
+		   rel1 {
+		       relative: 0.0 0.0;
+		       offset:   15   15;
+		   }
+		   rel2 {
+		       relative: 0.0 0.0;
+		       offset:   100  79;
+		   }
+		   color: 255 255 255 0;
+	       }
+	   }
 	   part { name: "e.text.label";
 	       type: TEXT;
 	       clip_to: "inner_clip";
@@ -26894,7 +26917,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       description {
 		   state: "default" 0.0;
 		   rel1 {
-		       offset: 20 1;
+		       offset: 20 6;
 		       relative: 0.0 0.6;
 		       /* to_x: "e.swallow.icons"; */
 		   }
@@ -26964,9 +26987,24 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       transition: ACCELERATE 0.3;
 	       target: "icon_clip";
 	   }
+	   program { name: "thumb_show";
+	      signal:  "e,action,thumb,show";
+	      source:  "e";
+	       action:  STATE_SET "faded" 0.0;
+	       /* transition: SINUSOIDAL 0.05; */
+	       target: "icon_clip";
+	       after:   "thumb_show2";
+	   }	   
+	   program { name: "thumb_show2";
+	       action:  STATE_SET "default" 0.0;
+	       transition: SINUSOIDAL 0.2;
+	       target: "icon_clip";
+	   }	   
        }
    }
    
+   /////////////////////////////////////////////////////////////////////////////
+   /*** EVERYTHING LIST POPUP ***/   
    group { name: "e/modules/everything/list";
        images {
 	   image: "base_bg.png" COMP;
@@ -27536,7 +27574,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   }
        }
    }
-
+   
+   /////////////////////////////////////////////////////////////////////////////
+   /*** EVERYTHING LIST VIEW ***/
    group { name: "e/modules/everything/item";
        images {
 	   image: "icon_right_arrow.png" COMP;
@@ -27759,6 +27799,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
        }
    }
 
+   /////////////////////////////////////////////////////////////////////////////
+   /*** EVERYTHING PREVIEW ***/
    group { name: "e/modules/everything/preview";
        parts {
 	   part { name: "bg";
@@ -27894,11 +27936,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
        }
    }
    
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-   /*** WALLPAPER MAIN DIALOG ***/
+   /////////////////////////////////////////////////////////////////////////////
+   /*** EVERYTHING THUMB VIEW ***/
    group { name: "e/modules/everything/thumbview/main/window";
       images {
 	 image: "vgrad_dark.png" COMP;
@@ -27937,14 +27976,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       rel2 {
 		  relative: 1.0 1.0;
 		  offset:   -1  6;
-		  /* to_y: "bot1"; */
 	       }
 	      fill {
 		  smooth: 0;
-		  /* size {
-		   *    relative: 0.0 1.0;
-		   *    offset: 64 0;
-		   * } */
 	       }
 	    }
 	 }
@@ -27969,7 +28003,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       rel2 {
 		  relative: 1.0 1.0;
 		  offset:   -3  -3;
-		  /* to_y: "bot1"; */
 	       }
 	    }
 	 }
@@ -28080,7 +28113,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   part { name: "bg";
 	       mouse_events: 0;
 	       description { state: "default" 0.0;
-		   /* visible: 0; */
 		   rel1 {
 		       to: "base";
 		       offset: -1 -3;
@@ -28096,7 +28128,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 		   color: 255 255 255 32;
 	       }
-	       description { state: "visible" 0.0;
+	       description { state: "selected" 0.0;
 		   inherit: "default" 0.0;
 		   color: 255 255 255 128;
 	       }
@@ -28122,8 +28154,22 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   color: 255 255 255 255;
 	       }
 	   }
-	   part { name: "e.swallow.content";
-	       clip_to: "base";
+	   part { name: "clip";
+	       mouse_events:  0;
+	       type: RECT;
+	       /* clip_to: "base"; */
+	       description { state: "default" 0.0;
+		   rel1.to: "base";
+		   rel2.to: "base";
+		   color: 235 235 235 255;
+	       }
+	       description { state: "selected" 0.0;
+		   inherit: "default" 0.0;
+		   color: 255 255 255 255;
+	       }
+	   }
+	   part { name: "e.swallow.icon";
+	       clip_to: "clip";
 	       type: SWALLOW;
 	       description { state: "default" 0.0;
 		   rel1 {
@@ -28138,8 +28184,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 	       }
 	   }
-	   part { name: "e.swallow.icon";
-	       clip_to: "base";
+	   part { name: "e.swallow.thumb";
+	       clip_to: "clip";
 	       type: SWALLOW;
 	       description { state: "default" 0.0;
 		   rel1 {
@@ -28177,26 +28223,15 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 	       }
 	   }
-
-	   part { name: "events";
-	       type: RECT;
-	       description { state: "default" 0.0;
-		   color: 0 0 0 0;
-		   visible: 0;
-	       }
-	       description { state: "visible" 0.0;
-		   inherit: "default" 0.0;
-		   visible: 1;
-	       }
-	   }
        }
        programs {
 	   program { name: "sel";
 	       signal:  "e,state,selected";
 	       source:  "e";
-	       action:  STATE_SET "visible" 0.0;
+	       action:  STATE_SET "selected" 0.0;
 	       transition: DECELERATE 0.1;
 	       target:  "bg";
+	       target:  "clip";
 	   }
 	   program { name: "unsel";
 	       signal:  "e,state,unselected";
@@ -28204,6 +28239,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       action:  STATE_SET "default" 0.0;
 	       transition: SINUSOIDAL 0.2;
 	       target:  "bg";
+	       target:  "clip";
 	   }
 	   program { name: "thumb_gen";
 	      signal:  "e,action,thumb,gen";

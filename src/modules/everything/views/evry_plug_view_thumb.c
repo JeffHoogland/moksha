@@ -70,7 +70,7 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
    
    e_icon_size_get(it->thumb, &w, &h);
    edje_extern_object_aspect_set(it->thumb, EDJE_ASPECT_CONTROL_BOTH, w, h); 
-   edje_object_part_swallow(it->frame, "e.swallow.icon", it->thumb);
+   edje_object_part_swallow(it->frame, "e.swallow.thumb", it->thumb);
    evas_object_show(it->thumb);
    it->have_thumb = EINA_TRUE;
    it->do_thumb = EINA_FALSE;
@@ -333,7 +333,7 @@ _e_smart_reconfigure_do(void *data)
 		       it->image = it->item->plugin->icon_get
 			 (it->item->plugin, it->item, sd->view->evas);
 
-		       edje_object_part_swallow(it->frame, "e.swallow.content", it->image);
+		       edje_object_part_swallow(it->frame, "e.swallow.icon", it->image);
 		       evas_object_show(it->image);
 		    }
 	       }
