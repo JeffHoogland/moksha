@@ -8,13 +8,14 @@ static void
 _cleanup(Evry_Plugin *p)
 {
    Evry_Item *it;
+   Evry_Action *act;
    Evry_Selector *sel = selectors[1];
 
    EINA_LIST_FREE(p->items, it)
      evry_item_free(it);
 
-   if (sel->actions) eina_list_free(sel->actions);
-   sel->actions = NULL;
+   EINA_LIST_FREE(sel->actions, act)
+     if (act->cleanup) act->cleanup(act);
 }
 
 static Evry_Plugin *
@@ -38,6 +39,10 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 	    (!act->check_item || act->check_item(act, it)))
 	  {
 	     act->item1 = it;
+
+	     if (act->type_out && act->intercept && !(act->intercept(act)))
+	       continue;;
+
 	     sel->actions = eina_list_append(sel->actions, act);
 	  }
      }

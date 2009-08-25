@@ -735,17 +735,17 @@ _exec_border_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 static int
 _exec_border_action(Evry_Action *act)
 {
+   ITEM_APP(app, act->item1);
+   
    return _app_action(act->item1, act->item2);
 }
 
 static int
 _exec_border_intercept(Evry_Action *act)
 {
-   /* FIXME */
-   if (!act || !act->item1) return 0;
    Evry_Item_App *app = E_NEW(Evry_Item_App, 1);
    E_Border *bd = act->item1->data;
-
+   
    app->desktop = bd->desktop;
    act->item1 = EVRY_ITEM(app);
 

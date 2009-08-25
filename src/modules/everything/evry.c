@@ -1007,6 +1007,7 @@ _evry_selector_actions_get(Evry_Item *it)
    return 1;
 }
 
+/* find plugins that provide the second item required for an action */
 static int
 _evry_selector_objects_get(Evry_Action *act)
 {
@@ -1014,26 +1015,28 @@ _evry_selector_objects_get(Evry_Action *act)
    Evry_Plugin *p, *plugin;
    Evry_Selector *sel = selectors[2];
    Evry_Item *it;
+   /* required type */
    const char *type_in = act->type_in2;
-
+   
    while (sel->state)
      _evry_state_pop(sel);
 
    it = selectors[0]->state->sel_item;
-
+   
    EINA_LIST_FOREACH(sel->plugins, l, plugin)
      {
+	/* plugin doesnt provide reuired type */
 	if ((plugin->type_out != type_in) &&
-	    (plugin != sel->aggregator)) continue;
-
+	    (plugin != sel->aggregator))
+	  continue;
+	
 	if (plugin->begin)
 	  {
-	     if ((act->type_out) &&
-		 (act->type_out == plugin->type_in) &&
-		 (!act->intercept || act->intercept(act)) &&
-		 (p = plugin->begin(plugin, it)))
-	       plugins = eina_list_append(plugins, p);
-	     else if ((p = plugin->begin(plugin, NULL)))
+	     /* plugins' begin method might require an item */
+	     /* like tracker searches files that match mimetype
+	      * of an application (item1) */
+	     if (((p = plugin->begin(plugin, it))) ||
+		 ((p = plugin->begin(plugin, NULL))))
 	       plugins = eina_list_append(plugins, p);
 	  }
 	else
@@ -1472,8 +1475,6 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	act->item2 = it_object;
 
 	act->action(act);
-
-	if (act->cleanup) act->cleanup(act);
      }
    else
      {
