@@ -867,8 +867,8 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  }
 	goto end;
      }
-   else if (!strcmp(ev->key, "plus") ||
-	    ((ev->modifiers & ECORE_EVENT_MODIFIER_ALT) &&
+   else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+	    ((!strcmp(ev->key, "plus")) ||
 	     (!strcmp(ev->key, "z"))))
      {
 	sd->zoom++;

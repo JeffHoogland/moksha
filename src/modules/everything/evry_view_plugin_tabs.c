@@ -259,13 +259,11 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
 	     _plugin_next(v);
 	     return 1;
 	  }
-	else if (ev->compose)
+	else if (ev->compose && isalpha(*ev->compose))
 	  {
 	     _plugin_next_by_name(v, key);
 	     return 1;
 	  }
-	
-
      }
 
    return 0;
