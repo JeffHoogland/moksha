@@ -26581,7 +26581,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 
 /////////////////////////////////////////////////////////////////////////////
    /*** MOD: EVERYTHING ***/
-   #define DROP_SHADOW 1
+   /* #define DROP_SHADOW 1 */
    
    ICON("everything-launch","icon_advanced.png",64)
      
