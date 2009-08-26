@@ -272,7 +272,7 @@ evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free
 
    it->ref = 1;
 
-   item_cnt++;
+   /* item_cnt++; */
 
    return it;
 }
@@ -1796,14 +1796,10 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
      }
    else s->plugin_auto_selected = EINA_FALSE;
 
-   if ((p || !s->plugin) &&  s->plugin != p)
-     {
-	_evry_item_desel(s, NULL);
-	s->plugin = p;
-	return;
-     }
+   if (s->plugin != p)
+     _evry_item_desel(s, NULL);
 
-   s->plugin = NULL;
+   s->plugin = p;
 }
 
 void
