@@ -152,11 +152,6 @@ evry_show(E_Zone *zone, const char *params)
 
    _evry_selector_update(selector);
 
-   e_popup_layer_set(list->popup, 255);
-   e_popup_layer_set(win->popup, 255);
-   e_popup_show(win->popup);
-   e_popup_show(list->popup);
-
    if (evry_conf->views && selector->state)
      {
 	Evry_View *view =evry_conf->views->data;
@@ -178,7 +173,14 @@ evry_show(E_Zone *zone, const char *params)
       (ECORE_X_EVENT_SELECTION_NOTIFY,
        _evry_cb_selection_notify, win));
 
+   e_popup_move(win->popup,  win->popup->x,  win->popup->y  - list->popup->h/2);
+   e_popup_move(list->popup, list->popup->x, list->popup->y - list->popup->h/2);
 
+   e_popup_layer_set(list->popup, 255);
+   e_popup_layer_set(win->popup, 255);
+   e_popup_show(win->popup);
+   e_popup_show(list->popup);
+   
    return 1;
 
  error:
@@ -248,7 +250,7 @@ evry_clear_input(void)
 }
 
 
-static int item_cnt = 0;
+/* static int item_cnt = 0; */
 
 EAPI Evry_Item *
 evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item))
@@ -287,7 +289,7 @@ evry_item_free(Evry_Item *it)
    /* printf("%d, %d\t free: %s\n",
     * 	  it->ref, item_cnt - 1,
     * 	  it->label); */
-   item_cnt--;
+   /* item_cnt--; */
 
    if (it->label) eina_stringshare_del(it->label);
    if (it->o_bg) evas_object_del(it->o_bg);
@@ -670,6 +672,7 @@ _evry_list_win_show(void)
    _evry_list_win_update(selector->state);
 
    edje_object_signal_emit(list->o_main, "e,state,list_show", "e");
+   edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
 }
 
 static void
@@ -684,6 +687,10 @@ _evry_list_win_clear(int hide)
      {
 	list->visible = EINA_FALSE;
 	edje_object_signal_emit(list->o_main, "e,state,list_hide", "e");
+	if (evry_conf->hide_input &&
+	    (!selector->state || !selector->state->input ||
+	     strlen(selector->state->input) == 0))
+	  edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
      }
 }
 
@@ -716,7 +723,7 @@ _evry_window_new(E_Zone *zone)
    edje_object_size_min_get(o, &mw, &mh);
 
    x = (zone->w / 2) - (mw / 2);
-   y = (zone->h / 2) - mh;
+   y = (zone->h / 2) - (mh / 2);
 
    e_popup_move_resize(popup, x, y, mw, mh);
 
@@ -737,7 +744,7 @@ _evry_window_free(Evry_Window *win)
    e_popup_hide(win->popup);
    evas_event_freeze(win->popup->evas);
    evas_object_del(win->o_main);
-   /* evas_event_thaw(win->popup->evas);    */
+   /* evas_event_thaw(win->popup->evas); */
    e_object_del(E_OBJECT(win->popup));
    E_FREE(win);
 }
@@ -1041,7 +1048,7 @@ _evry_selector_actions_get(Evry_Item *it)
    Evry_Plugin *p, *plugin;
    Evry_Selector *sel = selectors[1];
    const char *type_out;
-
+   
    while (sel->state)
      _evry_state_pop(sel);
 
@@ -1441,7 +1448,7 @@ _evry_backspace(Evry_State *s)
 static void
 _evry_update_text_label(Evry_State *s)
 {
-   if (evry_conf->hide_input)
+   if (!list->visible && evry_conf->hide_input)
      {
 	if (strlen(s->input) > 0)
 	  edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
@@ -1494,7 +1501,7 @@ _evry_clear(Evry_State *s)
      {
 	s->input[0] = 0;
 	_evry_update(s, 1);
-	if (evry_conf->hide_input)
+	if (!list->visible && evry_conf->hide_input)
 	  edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
 	return 1;
      }
@@ -1541,11 +1548,12 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
 	act->action(act);
      }
-   else
+   else if (s_action->plugin->action)
      {
 	Evry_Item *it = s_action->sel_item;
 	s_action->plugin->action(s_action->plugin, it);
      }
+   else return;
 
    /* let subject and object plugin know that an action was performed */
    if (s_subject->plugin->action)
@@ -1792,7 +1800,10 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
      {
 	_evry_item_desel(s, NULL);
 	s->plugin = p;
+	return;
      }
+
+   s->plugin = NULL;
 }
 
 void

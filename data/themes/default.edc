@@ -26587,9 +26587,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
      
    group { name: "e/modules/everything/main";
    #ifdef DROP_SHADOW
-       min: 520 218;
+       min: 516 222;
    #else
-       min: 420 118;
+       min: 416 122;
    #endif
        images {
 	   image: "base_bg.png" COMP;
@@ -26619,7 +26619,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   }
 	   part { name: "bg";
 	       description { state: "default" 0;
-	   	   min: 420 118;
+	   	   min: 416 118;
 	   	   rel1.relative: 0.5 0.0;
 	   	   rel1.offset: 0 50;
 	   	   rel2.relative: 0.5 1.0;
@@ -26634,7 +26634,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
            #else
 	   part { name: "bg";
 	       description { state: "default" 0;
-		   min: 420 118;
+		   min: 416 118;
 		   rel1.relative: 0.5 0.0;
 		   rel1.offset: 0 0;
 		   rel2.relative: 0.5 1.0;
@@ -26665,21 +26665,20 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       type: RECT;
 	       clip_to: "frame";
 	       description { state: "default" 0;
-		   min: 600 100;
+		   min: 600 110;
 		   align: 0.0 0.0;
 		   color: 255 255 255 255;
 		   rel1 {
-		       offset: 10 3;
+		       offset: 8 5;
 		       to: "bg";
 		   }
 		   rel2 {
-		       offset: -11 -3;
+		       offset: -9 -6;
 		       to: "bg";
 		   }
 	       }
 	       description { state: "wide" 0;
 		   inherit: "default" 0.0;
-		   /* min: 622 118; */
 		   align: 1.0 0.0;
 	       }
 	   }
@@ -26687,16 +26686,13 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       type: SWALLOW;
 	       clip_to: "selector_frame";
 	       description { state: "default" 0;
-		   min: 200 100;
-		   max: 200 999;
-		   align: 0.0 0.0;
 		   rel1 {
 		       offset: 0 2;
 		       to: "selector_frame";
 		   }
 		   rel2 {
 		       relative: 0 1;
-		       offset: 200 -2;
+		       offset: 199 -2;
 		       to: "selector_frame";
 		   }
 	       }
@@ -26709,9 +26705,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       type: SWALLOW;
 	       clip_to: "selector_frame";
 	       description { state: "default" 0;
-		   min: 200 100;
-		   max: 200 999;
-		   align: 0.0 0.0;
 		   rel1 {
 		       relative: 1 0;
 		       offset: 0 2;
@@ -26719,7 +26712,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       to_x: "e.swallow.subject_selector";
 		   }
 		   rel2 {
-		       offset: 200 -2;
+		       offset: 199 -2;
 		       to_y: "selector_frame";
 		       to_x: "e.swallow.subject_selector";
 		   }
@@ -26729,9 +26722,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       type: SWALLOW;
 	       clip_to: "selector_frame";
 	       description { state: "default" 0;
-		   max: 200 999;
-		   visible: 0;
-		   align: 0.0 0.0;
 		   rel1 {
 		       relative: 1 0;
 		       offset: 0 2;
@@ -26739,7 +26729,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       to_x: "e.swallow.action_selector";
 		   }
 		   rel2 {
-		       offset: 200 -2;
+		       offset: 199 -2;
 		       to_y: "selector_frame";
 		       to_x: "e.swallow.action_selector";
 		   }
@@ -26919,11 +26909,10 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   rel1 {
 		       offset: 20 6;
 		       relative: 0.0 0.6;
-		       /* to_x: "e.swallow.icons"; */
 		   }
 		   rel2.offset: -11 -2;
-		   color: 255 255 255 255;
-		   color3: 40 40 40 128;
+		   color: 205 205 205 255;
+		   color3: 40 40 40 64;
 		   text {
 		       font: "Sans:style=Bold";
 		       size: 10;
@@ -26931,6 +26920,12 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       align: 0.5 0.5;
 		   }
 	       }
+	       description {
+		   state: "selected" 0.0;
+		   inherit: "default" 0.0;
+		   color: 255 255 255 255;
+	       }
+
 	   }
 	   part { name: "e.text.plugin";
 	       type: TEXT;
@@ -26965,6 +26960,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       transition: SINUSOIDAL 0.2;
 	       target: "border";
 	       target: "border_bg";
+	       target: "e.text.label";
 	   }
 	   program { name: "unsel";
 	       signal: "e,state,unselected";
@@ -26973,6 +26969,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       transition: SINUSOIDAL 0.3;
 	       target: "border";
 	       target: "border_bg";
+	       target: "e.text.label";
 	   }
 	   program { name: "update";
 	       signal: "e,signal,update";
