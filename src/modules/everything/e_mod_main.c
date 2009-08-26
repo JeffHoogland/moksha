@@ -9,7 +9,7 @@
 
 #include "e_mod_main.h"
 
-#define CONFIG_VERSION 2
+#define CONFIG_VERSION 3
 
 /* actual module specifics */
 static void _e_mod_action_exebuf_cb(E_Object *obj, const char *params);
@@ -83,6 +83,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIST(D, T, conf_subjects, conf_item_edd);
    E_CONFIG_LIST(D, T, conf_actions, conf_item_edd);
    E_CONFIG_LIST(D, T, conf_objects, conf_item_edd);
+   E_CONFIG_LIST(D, T, conf_views,   conf_item_edd);
 #undef T
 #undef D
    evry_conf = e_config_domain_load("module.everything", conf_edd);
@@ -103,6 +104,7 @@ e_modapi_init(E_Module *m)
 	evry_conf->conf_subjects = NULL;
 	evry_conf->conf_actions = NULL;
 	evry_conf->conf_objects = NULL;
+	evry_conf->conf_views   = NULL;
      }
 
    /* search for plugins */

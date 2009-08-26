@@ -75,8 +75,9 @@ _cb_sort(const void *data1, const void *data2)
    if (!it1->browseable && it2->browseable)
      return 1;
 
-   if (it1->fuzzy_match - it2->fuzzy_match)
-     return (it1->fuzzy_match - it2->fuzzy_match);
+   if (it1->fuzzy_match && it2->fuzzy_match)
+     if (it1->fuzzy_match - it2->fuzzy_match)
+       return (it1->fuzzy_match - it2->fuzzy_match);
 
    return strcasecmp(it1->label, it2->label);
 }

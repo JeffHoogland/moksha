@@ -20,6 +20,7 @@ struct _Config
   Eina_List *conf_subjects;
   Eina_List *conf_actions;
   Eina_List *conf_objects;
+  Eina_List *conf_views;
 
   int scroll_animate;
   double scroll_speed;
