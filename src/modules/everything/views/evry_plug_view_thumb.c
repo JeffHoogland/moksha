@@ -333,29 +333,26 @@ _e_smart_reconfigure_do(void *data)
 
 		  evas_object_show(it->frame);
 
-		  if (it->selected && sd->zoom < 2)
-		    edje_object_signal_emit(it->frame, "e,state,selected", "e");
-
 		  if (sd->update && !it->visible)
 		    edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
 		  else if (!it->visible)
 		    edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
 
-		  if (it->get_thumb)
-		    {
-		       it->thumb = e_thumb_icon_add(sd->view->evas);
-
-		       if (!sd->thumb_idler)
-			 sd->thumb_idler = ecore_idle_enterer_before_add(_thumb_idler, sd);
-		    }
 		  it->visible = EINA_TRUE;
 	       }
 
-	     if (it->visible)
+	     if (it->selected && sd->zoom < 2)
+	       edje_object_signal_emit(it->frame, "e,state,selected", "e");
+	     
+	     evas_object_move(it->frame, xx + dx, yy + dy);
+	     evas_object_resize(it->frame, it->w, it->h);
+	     
+	     if (it->get_thumb && !it->thumb)
 	       {
-		  evas_object_move(it->frame, xx + dx, yy + dy);
-		  evas_object_resize(it->frame, it->w, it->h);
-
+		  it->thumb = e_thumb_icon_add(sd->view->evas);
+		  
+		  if (!sd->thumb_idler)
+		    sd->thumb_idler = ecore_idle_enterer_before_add(_thumb_idler, sd);
 	       }
           }
         else if (it->visible)
@@ -741,15 +738,14 @@ _view_update(Evry_View *view)
 	     added = 1;
 	     v_it = _pan_item_add(v->span, p_it);
 
-	     if (v_it)
-	       {
-		  v_it->pos = pos;
+	     if (!v_it) continue;
 
-		  if (p_it == v->state->sel_item)
-		    {
-		       sd->sel_item = v_it;
-		       v_it->selected = EINA_TRUE;
-		    }
+	     v_it->pos = pos;
+
+	     if (p_it == v->state->sel_item)
+	       {
+		  sd->sel_item = v_it;
+		  v_it->selected = EINA_TRUE;
 	       }
 	  }
 	pos++;
