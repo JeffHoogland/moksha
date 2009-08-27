@@ -40,9 +40,9 @@ _zone_layout(E_Zone *z)
      {
         int mw, mh;
         
-        if (bd->zone != z) continue;
-        if (bd->new_client) continue;
-        if (!bd->visible) continue;
+        if (bd->zone != z) continue; // skip other zones
+        if (bd->new_client) continue; // skip new clients 
+        if (!bd->visible) continue; // skip invisible
         
         illume_border_min_get(bd, &mw, &mh);
         if (illume_border_is_top_shelf(bd))
@@ -59,15 +59,15 @@ _zone_layout(E_Zone *z)
           }
      }
    
-   // actually apply the sizing, positioning and layering too
+   // phase 2. actually apply the sizing, positioning and layering too
    borders = e_border_client_list();
    EINA_LIST_FOREACH(borders, l, bd)
      {
         int mw, mh;
         
-        if (bd->zone != z) continue;
-        if (bd->new_client) continue;
-        if (!bd->visible) continue;
+        if (bd->zone != z) continue; // skip other zones
+        if (bd->new_client) continue; // skip new clients 
+        if (!bd->visible) continue; // skip invisible
         
         illume_border_min_get(bd, &mw, &mh);
         if (illume_border_is_top_shelf(bd))

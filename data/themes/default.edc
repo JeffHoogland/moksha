@@ -5618,8 +5618,8 @@ collections { /* begin the collection of edje groups that are in this file */
 	    type: SWALLOW;
 	    description { state: "default" 0.0;
 	       align: 0.5 0.5;
-	       aspect: 1.0 1.0;
-	       aspect_preference: VERTICAL;
+//	       aspect: 1.0 1.0;
+//	       aspect_preference: VERTICAL;
 	       rel1 {
 		  relative: 0.0 0.0;
 		  offset: 2 2;
