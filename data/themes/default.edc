@@ -28417,7 +28417,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       signal:  "e,state,unselected";
 	       source:  "e";
 	       action:  STATE_SET "default" 0.0;
-	       transition: LINEAR 0.1;
+	       /* transition: LINEAR 0.03; */
 	       target:  "bg";
 	       target:  "clip";
 	   }
@@ -28452,7 +28452,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	      signal:  "e,action,thumb,show";
 	      source:  "e";
 	       action:  STATE_SET "visible" 0.0;
-	       transition: SINUSOIDAL 0.1;
+	       /* transition: SINUSOIDAL 0.1; */
 	       target:  "base";
 	   }	   
        }

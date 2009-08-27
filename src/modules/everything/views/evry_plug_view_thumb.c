@@ -222,12 +222,10 @@ _e_smart_reconfigure_do(void *data)
         changed = 1;
      }
 
-   if (sd->view->list_mode)
-     {
-	ox = 0;
-	oy = 0;
-     }
-   else
+   ox = 0;
+   oy = 0;
+
+   if (!sd->view->list_mode)
      {
 	if (sd->w > sd->cw) ox = (sd->w - sd->cw) / 2;
 	if (sd->h > sd->ch) oy = (sd->h - sd->ch) / 2;
@@ -251,14 +249,11 @@ _e_smart_reconfigure_do(void *data)
 
    EINA_LIST_FOREACH(sd->items, l, it)
      {
-        Evas_Coord vw, vh;
-
         xx = sd->x - sd->cx + it->x + ox;
         yy = sd->y - sd->cy + it->y + oy;
 
-	evas_output_viewport_get(evas_object_evas_get(obj), NULL, NULL, &vw, &vh);
-
-        if (E_INTERSECTS(xx, yy, it->w, it->h, 0, 0, vw, vh))
+        if (E_INTERSECTS(xx, yy, it->w, it->h, 0, sd->y - (it->h*4),
+			 sd->x + sd->w, sd->y + sd->h + it->h*8))
           {
 	     if (!it->visible)
 	       {
@@ -589,7 +584,7 @@ _pan_item_select(Evas_Object *obj, Item *it)
      edje_object_signal_emit(sd->sel_item->frame, "e,state,selected", "e");
 
    if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-   sd->idle_enter = ecore_idle_enterer_add(_e_smart_reconfigure_do, obj);
+   sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, obj);
 }
 
 static void
@@ -610,7 +605,7 @@ _view_clear(Evry_View *view)
      }
 
    if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-   sd->idle_enter = ecore_idle_enterer_add(_e_smart_reconfigure_do, v->span);
+   sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
 
    v->tabs->clear(v->tabs);
 }
@@ -715,7 +710,7 @@ _view_update(Evry_View *view)
    if (added) sd->update = EINA_TRUE;
 
    if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-   sd->idle_enter = ecore_idle_enterer_add(_e_smart_reconfigure_do, v->span);
+   sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
 
    if (v_items) eina_list_free(v_items);
 
@@ -767,7 +762,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	_clear_items(v->span);
 
 	if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-	sd->idle_enter = ecore_idle_enterer_add(_e_smart_reconfigure_do, v->span);
+	sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
      }
    else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
        ((!strcmp(ev->key, "plus")) ||
@@ -780,7 +775,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  _clear_items(v->span);
 
 	if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-	sd->idle_enter = ecore_idle_enterer_add(_e_smart_reconfigure_do, v->span);
+	sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
 
 	goto end;
      }
@@ -936,7 +931,7 @@ _init(void)
    view->update = &_view_update;
    view->clear = &_view_clear;
    view->cb_key_down = &_cb_key_down;
-   evry_view_register(view, 2);
+   evry_view_register(view, 1);
 
    view_types = eina_stringshare_add("FILE");
 
