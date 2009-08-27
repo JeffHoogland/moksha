@@ -479,6 +479,10 @@ _evry_cb_view_sort(const void *data1, const void *data2)
 void
 evry_view_register(Evry_View *view, int priority)
 {
+   /* XXX remove: ignore old list view, some people might
+      forget to do make uninstall */
+   if (!strcmp(view->name, "List View")) return;
+
    view->priority = priority;
 
    evry_conf->views = eina_list_append(evry_conf->views, view);
@@ -494,84 +498,4 @@ evry_view_unregister(Evry_View *view)
    evry_conf->views = eina_list_remove(evry_conf->views, view);
 }
 
-
-/* taken from e_utils. just changed 48 to 72.. we need
-   evry_icon_theme_set(Evas_Object *obj, const char *icon,
-   size:small, mid, large) imo */
-static int
-_evry_icon_theme_set(Evas_Object *obj, const char *icon)
-{
-   const char *file;
-   char buf[4096];
-
-   if ((!icon) || (!icon[0])) return 0;
-   snprintf(buf, sizeof(buf), "e/icons/%s", icon);
-   file = e_theme_edje_file_get("base/theme/icons", buf);
-   if (file[0])
-     {
-	e_icon_file_edje_set(obj, file, buf);
-	return 1;
-     }
-   return 0;
-}
-
-static int
-_evry_icon_fdo_set(Evas_Object *obj, const char *icon)
-{
-   char *path = NULL;
-   unsigned int size;
-
-   if ((!icon) || (!icon[0])) return 0;
-   size = e_util_icon_size_normalize(72 * e_scale);
-   path = efreet_icon_path_find(e_config->icon_theme, icon, size);
-
-   if (!path) return 0;
-   e_icon_file_set(obj, path);
-   E_FREE(path);
-   return 1;
-}
-
-Evas_Object *
-evry_icon_theme_get(const char *icon, Evas *e)
-{
-   Evas_Object *o = e_icon_add(e);
-
-   if (e_config->icon_theme_overrides)
-     {
-	if (_evry_icon_fdo_set(o, icon) ||
-	    _evry_icon_theme_set(o, icon))
-	  return o;
-     }
-   else
-     {
-	if (_evry_icon_theme_set(o, icon) ||
-	    _evry_icon_fdo_set(o, icon))
-	  return o;
-     }
-
-   evas_object_del(o);
-
-   return NULL;
-}
-
-Evas_Object *
-evry_icon_mime_get(const char *mime, Evas *e)
-{
-   Evas_Object *o = NULL;
-   char *icon;
-
-   icon = efreet_mime_type_icon_get(mime, e_config->icon_theme, 64);
-
-   if (icon)
-     {
-	o = e_util_icon_add(icon, e);
-	free(icon);
-     }
-   else
-     {
-	o = evry_icon_theme_get("none", e);
-     }
-
-   return o;
-}
 

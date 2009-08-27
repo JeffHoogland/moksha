@@ -30,6 +30,7 @@ module_la_SOURCES      = $(EVRYHEADERS) \
                          e_mod_main.h \
 			 evry.c \
                          evry_config.c \
+	                 evry_util.c \
 			 evry_plug_aggregator.c \
 			 evry_plug_actions.c \
 			 evry_view_plugin_tabs.c

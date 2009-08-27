@@ -10,8 +10,6 @@
  */
 #define INPUTLEN 40
 #define MATCH_LAG 0.33
-#define MAX_FUZZ 100
-#define MAX_WORDS 5
 
 
 
@@ -158,6 +156,7 @@ evry_show(E_Zone *zone, const char *params)
 	Evry_State *s = selector->state;
 
 	s->view = view->create(view, s, list->o_main);
+
 	_evry_view_show(s->view);
      }
    else goto error;
@@ -250,7 +249,9 @@ evry_clear_input(void)
 }
 
 
-/* static int item_cnt = 0; */
+#ifdef CECHK_REFS
+static int item_cnt = 0;
+#endif
 
 EAPI Evry_Item *
 evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item))
@@ -272,7 +273,9 @@ evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free
 
    it->ref = 1;
 
-   /* item_cnt++; */
+#ifdef CHECK_REFS
+   item_cnt++;
+#endif
 
    return it;
 }
@@ -284,16 +287,17 @@ evry_item_free(Evry_Item *it)
 
    it->ref--;
 
+#ifdef CHECK_REFS
+   printf("%d, %d\t free: %s\n", it->ref, item_cnt - 1, it->label);
+#endif
+
    if (it->ref > 0) return;
 
-   /* printf("%d, %d\t free: %s\n",
-    * 	  it->ref, item_cnt - 1,
-    * 	  it->label);
-    * item_cnt--; */
+#ifdef CHECK_REFS
+   item_cnt--;
+#endif
 
    if (it->label) eina_stringshare_del(it->label);
-   if (it->o_bg) evas_object_del(it->o_bg);
-   if (it->o_icon) evas_object_del(it->o_icon);
 
    if (it->free)
      it->free(it);
@@ -407,196 +411,6 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
      }
 }
 
-EAPI int
-evry_fuzzy_match(const char *str, const char *match)
-{
-   const char *p, *m, *next;
-   int sum = 0;
-
-   unsigned int last = 0;
-   unsigned int offset = 0;
-   unsigned int min = 0;
-   unsigned char first = 0;
-   /* ignore punctuation */
-   unsigned char ip = 1;
-
-   unsigned int cnt = 0;
-   /* words in match */
-   unsigned int m_num = 0;
-   unsigned int m_cnt = 0;
-   unsigned int m_min[MAX_WORDS];
-   unsigned int m_len = 0;
-
-   if (!match || !str) return 0;
-
-   /* remove white spaces at the beginning */
-   for (; (*match != 0) && isspace(*match); match++);
-   for (; (*str != 0)   && isspace(*str);   str++);
-
-   /* count words in match */
-   for (m = match; (*m != 0) && (m_num < MAX_WORDS);)
-     {
-	for (; (*m != 0) && !isspace(*m); m++);
-	for (; (*m != 0) &&  isspace(*m); m++);
-	m_min[m_num++] = MAX_FUZZ;
-     }
-   for (m = match; ip && (*m != 0); m++)
-     if (ip && ispunct(*m)) ip = 0;
-
-   m_len = strlen(match);
-
-   /* with less than 3 chars match must be a prefix */
-   if (m_len < 3) m_len = 0;
-
-   next = str;
-   m = match;
-
-   while((m_cnt < m_num) && (*next != 0))
-     {
-	/* reset match */
-	if (m_cnt == 0) m = match;
-
-	/* end of matching */
-	if (*m == 0) break;
-
-	offset = 0;
-	last = 0;
-	min = 1;
-	first = 0;
-
-	/* match current word of string against current match */
-	for (p = next; *next != 0; p++)
-	  {
-	     /* new word of string begins */
-	     if ((*p == 0) || isspace(*p) || (ip && ispunct(*p)))
-	       {
-		  if (m_cnt < m_num - 1)
-		    {
-		       /* test next match */
-		       for (; (*m != 0) && !isspace(*m); m++);
-		       for (; (*m != 0) &&  isspace(*m); m++);
-		       m_cnt++;
-		       break;
-		    }
-		  else
-		    {
-		       /* go to next word */
-		       for (; (*p != 0) && ((isspace(*p) || (ip && ispunct(*p)))); p++);
-		       cnt++;
-		       next = p;
-		       m_cnt = 0;
-		       break;
-		    }
-	       }
-
-	     /* current char matches? */
-	     if (tolower(*p) != tolower(*m))
-	       {
-		  if (!first)
-		    offset += 1;
-		  else
-		    offset += 3;
-
-		  if (offset <= m_len * 3)
-		    continue;
-	       }
-
-	     if (min < MAX_FUZZ && offset <= m_len * 3)
-	       {
-		  /* first offset of match in word */
-		  if (!first)
-		    {
-		       first = 1;
-		       last = offset;
-		    }
-
-		  min += offset + (offset - last) * 5;
-		  last = offset;
-
-		  /* try next char of match */
-		  if (*(++m) != 0 && !isspace(*m))
-		    continue;
-
-		  /* end of match: store min weight of match */
-		  min += (cnt - m_cnt) > 0 ? (cnt - m_cnt) : 0;
-
-		  if (min < m_min[m_cnt])
-		    m_min[m_cnt] = min;
-	       }
-	     else
-	       {
-		  /* go to next match */
-		  for (; (*m != 0) && !isspace(*m); m++);
-	       }
-
-	     if (m_cnt < m_num - 1)
-	       {
-		  /* test next match */
-		  for (; (*m != 0) && isspace(*m); m++);
-		  m_cnt++;
-		  break;
-	       }
-	     else if(*p != 0)
-	       {
-		  /* go to next word */
-		  for (; (*p != 0) && !((isspace(*p) || (ip && ispunct(*p)))); p++);
-		  for (; (*p != 0) &&  ((isspace(*p) || (ip && ispunct(*p)))); p++);
-		  cnt++;
-		  next = p;
-		  m_cnt = 0;
-		  break;
-	       }
-	     else
-	       {
-		  next = p;
-		  break;
-	       }
-	  }
-     }
-
-   for (m_cnt = 0; m_cnt < m_num; m_cnt++)
-     {
-	sum += m_min[m_cnt];
-
-	if (sum >= MAX_FUZZ)
-	  {
-	     sum = 0;
-	     break;
-	  }
-     }
-
-   return sum;
-}
-
-static int
-_evry_fuzzy_match_sort_cb(const void *data1, const void *data2)
-{
-   const Evry_Item *it1 = data1;
-   const Evry_Item *it2 = data2;
-
-   if (it1->priority - it2->priority)
-     return (it1->priority - it2->priority);
-
-   if (it1->fuzzy_match || it2->fuzzy_match)
-     {
-	if (it1->fuzzy_match && !it2->fuzzy_match)
-	  return -1;
-
-	if (!it1->fuzzy_match && it2->fuzzy_match)
-	  return 1;
-
-	if (it1->fuzzy_match - it2->fuzzy_match)
-	  return (it1->fuzzy_match - it2->fuzzy_match);
-     }
-
-   return 0;
-}
-
-EAPI Eina_List *
-evry_fuzzy_match_sort(Eina_List *items)
-{
-   return eina_list_sort(items, eina_list_count(items), _evry_fuzzy_match_sort_cb);
-}
 
 /* local subsystem functions */
 
@@ -1155,11 +969,11 @@ _evry_state_pop(Evry_Selector *sel)
 
    free(s->input);
 
-   EINA_LIST_FREE(s->plugins, p)
-     p->cleanup(p);
-
    if (s->view)
      s->view->destroy(s->view);
+
+   EINA_LIST_FREE(s->plugins, p)
+     p->cleanup(p);
 
    E_FREE(s);
 

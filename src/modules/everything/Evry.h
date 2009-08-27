@@ -85,8 +85,6 @@ struct _Evry_Item
 
   /* do not set by plugin! */
   Evry_Plugin *plugin;
-  Evas_Object *o_icon;
-  Evas_Object *o_bg;
   int ref;
   void (*free) (Evry_Item *item);
 };

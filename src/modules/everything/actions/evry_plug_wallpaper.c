@@ -29,7 +29,6 @@ struct _Import
   Ecore_Event_Handler *exe_handler;
   char *tmpf;
   char *fdest;
-  Evas *evas;
 };
 
 struct _Item
@@ -187,7 +186,6 @@ _action(Evry_Plugin *plugin, const Evry_Item *item)
 	import->file = p->prev->file->uri;
 	import->quality = 100;
 	import->external = 0;
-	import->evas = evas_object_evas_get(item->o_bg); /* Eeek! */
 	_import_edj_gen(import);
 
 	return 1;
@@ -233,8 +231,8 @@ EINA_MODULE_SHUTDOWN(_shutdown);
 static void
 _import_edj_gen(Import *import)
 {
-   Evas *evas = import->evas;
-
+   Ecore_Evas *ee = ecore_evas_buffer_new(100, 100);
+   Evas *evas = ecore_evas_get(ee);
    Evas_Object *img;
    int fd, num = 1;
    int w = 0, h = 0;
@@ -285,7 +283,10 @@ _import_edj_gen(Import *import)
    evas_object_image_file_set(img, import->file, NULL);
    evas_object_image_size_get(img, &w, &h);
    evas_object_del(img);
+   ecore_evas_free(ee);
 
+   printf("w%d h%d\n", w, h);
+   
    if (import->external)
      {
 	fstrip = strdup(e_util_filename_escape(import->file));

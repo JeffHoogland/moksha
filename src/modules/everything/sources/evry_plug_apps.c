@@ -32,6 +32,7 @@ static Evry_Action *act2 = NULL;
 static Evry_Action *act3 = NULL;
 static Evry_Action *act4 = NULL;
 static Evry_Action *act5 = NULL;
+static Evry_Action *act6 = NULL;
 
 static Eina_List *exe_path = NULL;
 static Ecore_Idler *exe_scan_idler = NULL;
@@ -578,18 +579,23 @@ _exec_app_action(Evry_Action *act)
    return _app_action(act->item1, act->item2);
 }
 
+/* TODO config option for terminal and shell! */
 static int
 _exec_term_action(Evry_Action *act)
 {
    ITEM_APP(app, act->item1);
-   Evry_Item_App *fake = E_NEW(Evry_Item_App, 1);
+   Evry_Item_App *tmp;
    char buf[1024];
-   snprintf(buf, sizeof(buf), "xterm -hold -e '%s'", app->file);
-   fake->file = buf;
-   
-   return _app_action(EVRY_ITEM(fake), NULL);
+   int ret;
 
-   E_FREE(fake);
+   tmp = E_NEW(Evry_Item_App, 1);
+   snprintf(buf, sizeof(buf), "/usr/bin/xterm -hold -e '%s'", app->file);
+   tmp->file = buf;
+   ret = _app_action(EVRY_ITEM(tmp), NULL);
+
+   E_FREE(tmp);
+
+   return ret;
 }
 
 static int
@@ -613,6 +619,42 @@ _open_with_action(Evry_Plugin *plugin, const Evry_Item *it)
 
    return 0;
 }
+
+static int
+_open_term_action(Evry_Action *act)
+{
+   ITEM_FILE(file, act->item1);
+   Evry_Item_App *tmp;
+   char buf[1024];   
+   char *dir, *path;
+   int ret = 0;
+
+   if (act->item1->browseable)
+     {
+	path = ecore_file_escape_name(file->uri);
+     }
+   else
+     {
+	dir = ecore_file_dir_get(file->uri);
+	if (!dir) return 0;
+	path = ecore_file_escape_name(dir);
+
+	free(dir);
+     }
+   
+   if (path)
+     {
+	tmp = E_NEW(Evry_Item_App, 1);
+	snprintf(buf, sizeof(buf), "/usr/bin/xterm -e \'cd %s && /bin/bash\'", path);
+	tmp->file = buf;
+	ret = _app_action(EVRY_ITEM(tmp), NULL);
+	E_FREE(tmp);
+	free(path);
+     }
+   
+   return ret;
+}
+
 
 static int
 _edit_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
@@ -735,8 +777,6 @@ _exec_border_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 static int
 _exec_border_action(Evry_Action *act)
 {
-   /* ITEM_APP(app, act->item1); */
-   
    return _app_action(act->item1, act->item2);
 }
 
@@ -805,10 +845,16 @@ _init(void)
 			  "system-run",
 			  _exec_term_action, _exec_term_check_item,
 			  NULL, NULL, NULL);
+   
+   act6 = evry_action_new("Open Terminal here", "FILE", NULL, NULL,
+			  "system-run",
+			  _open_term_action, NULL, NULL, NULL, NULL);
+   
 
    evry_action_register(act);
    evry_action_register(act1);
    evry_action_register(act5);
+   evry_action_register(act6);
    evry_action_register(act2);
    evry_action_register(act3);
    evry_action_register(act4);
@@ -843,6 +889,7 @@ _shutdown(void)
    evry_action_free(act3);
    evry_action_free(act4);
    evry_action_free(act5);
+   evry_action_free(act6);
 
    E_CONFIG_DD_FREE(exelist_edd);
    E_CONFIG_DD_FREE(exelist_exe_edd);
