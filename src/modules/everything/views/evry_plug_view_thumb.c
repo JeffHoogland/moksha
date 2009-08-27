@@ -13,6 +13,7 @@ struct _View
 
   Evas_Object *bg, *sframe, *span;
   int          iw, ih;
+  int          zoom;
   Eina_Bool    list_mode : 1;
 };
 
@@ -30,7 +31,7 @@ struct _Smart_Data
   Evas_Coord   sx, sy;
   double       selmove;
   Eina_Bool    update : 1;
-  int zoom;
+
 };
 
 struct _Item
@@ -49,7 +50,7 @@ struct _Item
   int pos;
 };
 
-static Evry_View *view = NULL;
+static View *view = NULL;
 static const char *view_types = NULL;
 
 static void
@@ -133,7 +134,7 @@ _e_smart_reconfigure_do(void *data)
      {
 	iw = sd->w;
      }
-   else if (sd->zoom == 0)
+   else if (sd->view->zoom == 0)
      {
 	int cnt = eina_list_count(sd->items);
 
@@ -147,7 +148,7 @@ _e_smart_reconfigure_do(void *data)
 	else
 	  iw = sd->w / 4;
      }
-   else if (sd->zoom == 1)
+   else if (sd->view->zoom == 1)
      {
 	aspect_w *= 2;
 	aspect_w /= 3;
@@ -239,7 +240,7 @@ _e_smart_reconfigure_do(void *data)
 	if (sd->view->list_mode)
 	  align = it->y - (double)it->y / (double)sd->ch * (sd->h - it->h);
 	else if ((it->y + it->h) - sd->cy > sd->h)
-	  align = it->y - (2 - sd->zoom) * it->h;
+	  align = it->y - (2 - sd->view->zoom) * it->h;
 	else if (it->y < sd->cy)
 	  align = it->y;
 
@@ -271,19 +272,22 @@ _e_smart_reconfigure_do(void *data)
 		  edje_object_part_text_set(it->frame, "e.text.label", it->item->label);
 		  evas_object_show(it->frame);
 
-		  if (sd->update && !it->visible)
+		  if (sd->update)
 		    edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
-		  else if (!it->visible)
+		  else
 		    edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
 
 		  it->visible = EINA_TRUE;
 	       }
 
 	     /* hmmm somehow this should be moved up to !it->visible */
-	     if (it->selected && sd->zoom < 2)
-	       edje_object_signal_emit(it->frame, "e,state,selected", "e");
-	     else
-	       edje_object_signal_emit(it->frame, "e,state,unselected", "e");
+	     if (sd->update)
+	       {
+		  if (it->selected && sd->view->zoom < 2)
+		    edje_object_signal_emit(it->frame, "e,state,selected", "e");
+		  else
+		    edje_object_signal_emit(it->frame, "e,state,unselected", "e");
+	       }
 	     
 	     if (!it->image && !it->have_thumb &&
 		 it->item->plugin && it->item->plugin->icon_get)
@@ -330,7 +334,7 @@ _e_smart_reconfigure_do(void *data)
    if (changed)
      evas_object_smart_callback_call(obj, "changed", NULL);
 
-   sd->update = EINA_FALSE;
+   sd->update = EINA_TRUE;
 
    if (recursion == 0)
      sd->idle_enter = NULL;
@@ -580,7 +584,8 @@ _pan_item_select(Evas_Object *obj, Item *it)
    sd->sel_item = it;
    sd->sel_item->selected = EINA_TRUE;
 
-   if (sd->zoom < 2)
+   sd->update = EINA_FALSE;
+   if (sd->view->zoom < 2)
      edje_object_signal_emit(sd->sel_item->frame, "e,state,selected", "e");
 
    if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
@@ -760,7 +765,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->h);
 
 	_clear_items(v->span);
-
+	
 	if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
 	sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
      }
@@ -768,10 +773,10 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
        ((!strcmp(ev->key, "plus")) ||
 	(!strcmp(ev->key, "z"))))
      {
-	sd->zoom++;
-	if (sd->zoom > 2) sd->zoom = 0;
+	v->zoom++;
+	if (v->zoom > 2) v->zoom = 0;
 
-	if (sd->zoom == 2)
+	if (v->zoom == 2)
 	  _clear_items(v->span);
 
 	if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
@@ -867,6 +872,8 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 static Evry_View *
 _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 {
+   VIEW(parent, view);
+
    View *v;
 
    if (!s->plugin)
@@ -877,6 +884,10 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v->state = s;
    v->evas = evas_object_evas_get(swallow);
 
+   v->list_mode = parent->list_mode;
+   v->zoom = parent->zoom;
+   
+   
    v->bg = edje_object_add(v->evas);
    e_theme_edje_object_set(v->bg, "base/theme/widgets",
                            "e/modules/everything/thumbview/main/window");
@@ -896,9 +907,6 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    evas_object_show(v->span);
 
    EVRY_VIEW(v)->o_list = v->bg;
-
-   v->list_mode = EINA_TRUE;
-
 
    v->tabs = evry_tab_view_new(s, v->evas);
    v->view.o_bar = v->tabs->o_tabs;
@@ -923,15 +931,22 @@ _view_destroy(Evry_View *view)
 static Eina_Bool
 _init(void)
 {
-   view = E_NEW(Evry_View, 1);
-   view->id = view;
-   view->name = "Icon View";
-   view->create = &_view_create;
-   view->destroy = &_view_destroy;
-   view->update = &_view_update;
-   view->clear = &_view_clear;
-   view->cb_key_down = &_cb_key_down;
-   evry_view_register(view, 1);
+   View *v = E_NEW(View, 1);
+   
+   v->view.id = EVRY_VIEW(v);
+   v->view.name = "Icon View";
+   v->view.create = &_view_create;
+   v->view.destroy = &_view_destroy;
+   v->view.update = &_view_update;
+   v->view.clear = &_view_clear;
+   v->view.cb_key_down = &_cb_key_down;
+
+   /* TODO config option*/
+   v->list_mode = EINA_TRUE;
+   
+   evry_view_register(EVRY_VIEW(v), 1);
+
+   view = v;
 
    view_types = eina_stringshare_add("FILE");
 
@@ -942,7 +957,7 @@ static void
 _shutdown(void)
 {
    eina_stringshare_del(view_types);
-   evry_view_unregister(view);
+   evry_view_unregister(EVRY_VIEW(view));
    E_FREE(view);
 }
 

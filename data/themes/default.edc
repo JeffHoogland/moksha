@@ -26647,6 +26647,20 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	   }
            #endif
+	   part { name: "border_bg";
+	       mouse_events:  0;
+	       description { state: "default" 0.0;
+		   color: 255 255 255 66; //32;	       
+		   rel1.to: "bg";
+		   rel1.offset: 2 4;
+		   rel2.to: "bg";
+		   rel2.offset: -3 -3;		   
+		   image {
+		       normal: "everything_item_bg.png";
+		       border: 5 5 5 5;
+		   }
+	       }
+	   }
 	   part { name: "frame";
 	       type: RECT;
 	       description { state: "default" 0;
@@ -26806,7 +26820,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       clip_to: "clip";
 	       mouse_events:  0;
 	       description { state: "default" 0.0;
-		   color: 255 255 255 96; //32;	       
+		   color: 255 255 255 10; //32;	       
 		   rel1.offset: 2 2;
 		   rel2.offset: -3 -3;		   
 		   image {
@@ -26816,7 +26830,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	       description { state: "selected" 0.0;
 		   inherit: "default" 0.0;
-		   color: 255 255 255 96;
+		   color: 255 255 255 36;
 	       }
 	   }
 	   part { name: "border";
@@ -27010,6 +27024,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   image: "menu_sel_fg.png" COMP;
 	   image: "everything_bar.png" COMP;
 	   image: "everything_box.png" COMP;
+	   image: "vgrad_dark.png" COMP;
            #ifdef DROP_SHADOW
 	     image: "drop.png" COMP;
            #endif
@@ -27332,9 +27347,10 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	   }
 	   part { name: "list_bg";
-	       type: RECT;
+	       /* type: RECT; */
 	       clip_to: "base";
 	       description { state: "default" 0.0;
+		   image.normal: "vgrad_dark.png";
 		   rel1 {
 		       to: "list_clip";
 		       offset: 0 0;
@@ -27343,7 +27359,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		       to: "list_clip";
 		       offset: 0  0;
 		   }
-		   color: 234 234 234 255;
+		   fill.smooth: 0;
+		   /* color: 234 234 234 255; */
 	       }
 	   }
 	   part { name: "e.swallow.list";
@@ -27963,9 +27980,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
       parts {
 	 part { name: "base";
 	    mouse_events:  0;
-	    description { state: "default" 0.0;
-               color_class: "dialog_base";
-	       image.normal: "vgrad_dark.png";
+	     type: RECT;
+	     description { state: "default" 0.0;
+		 visible: 0;
 	       rel1 {
 		  relative: 0.0 0.0;
 		  offset:   0   -3;
@@ -27973,9 +27990,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       rel2 {
 		  relative: 1.0 1.0;
 		  offset:   -1  6;
-	       }
-	      fill {
-		  smooth: 0;
 	       }
 	    }
 	 }
@@ -28226,17 +28240,17 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       signal:  "e,state,selected";
 	       source:  "e";
 	       action:  STATE_SET "selected" 0.0;
-	       transition: DECELERATE 0.1;
+	       /* transition: DECELERATE 0.; */
 	       target:  "bg";
-	       target:  "clip";
+	       /* target:  "clip"; */
 	   }
 	   program { name: "unsel";
 	       signal:  "e,state,unselected";
 	       source:  "e";
 	       action:  STATE_SET "default" 0.0;
-	       transition: SINUSOIDAL 0.2;
+	       transition: SINUSOIDAL 0.1;
 	       target:  "bg";
-	       target:  "clip";
+	       /* target:  "clip"; */
 	   }
 	   program { name: "thumb_gen";
 	      signal:  "e,action,thumb,gen";
@@ -28409,17 +28423,16 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       signal:  "e,state,selected";
 	       source:  "e";
 	       action:  STATE_SET "selected" 0.0;
-	       /* transition: LINEAR 0.04; */
 	       target:  "bg";
-	       target:  "clip";
+	       /* target:  "clip"; */
 	   }
 	   program { name: "unsel";
 	       signal:  "e,state,unselected";
 	       source:  "e";
 	       action:  STATE_SET "default" 0.0;
-	       /* transition: LINEAR 0.03; */
+	       transition: SINUSOIDAL 0.1;
 	       target:  "bg";
-	       target:  "clip";
+	       /* target:  "clip"; */
 	   }
 	   program { name: "thumb_gen";
 	      signal:  "e,action,thumb,gen";

@@ -34,7 +34,7 @@ struct _Evry_List_Window
 };
 
 
-static void _evry_matches_update(Evry_Selector *sel);
+static void _evry_matches_update(Evry_Selector *sel, int async);
 static void _evry_plugin_action(Evry_Selector *sel, int finished);
 static void _evry_plugin_select(Evry_State *s, Evry_Plugin *p);
 static void _evry_plugin_list_insert(Evry_State *s, Evry_Plugin *p);
@@ -856,7 +856,7 @@ _evry_selector_subjects_get(const char *plugin_name)
    if (!plugins) return 0;
 
    _evry_state_new(sel, plugins);
-   _evry_matches_update(sel);
+   _evry_matches_update(sel, 1);
 
    return 1;
 }
@@ -894,7 +894,7 @@ _evry_selector_actions_get(Evry_Item *it)
    if (!plugins) return 0;
 
    _evry_state_new(sel, plugins);
-   _evry_matches_update(sel);
+   _evry_matches_update(sel, 1);
 
    return 1;
 }
@@ -938,7 +938,7 @@ _evry_selector_objects_get(Evry_Action *act)
    if (!plugins) return 0;
 
    _evry_state_new(sel, plugins);
-   _evry_matches_update(sel);
+   _evry_matches_update(sel, 1);
 
    return 1;
 }
@@ -1027,11 +1027,11 @@ _evry_browse_item(Evry_Selector *sel)
    if (s->view)
      {
 	_evry_view_hide(s->view);
-	view = s->view->id;
+	view = s->view;
      }
 
    _evry_state_new(sel, plugins);
-   _evry_matches_update(sel);
+   _evry_matches_update(sel, 1);
    _evry_selector_update(sel);
    s = sel->state;
 
@@ -1074,11 +1074,10 @@ _evry_selectors_switch(void)
 
    if (update_timer)
      {
-	if ((s && !s->plugin->async_fetch) &&
-	    ((selector == selectors[0]) ||
-	     (selector == selectors[1])))
+	if ((selector == selectors[0]) ||
+	    (selector == selectors[1]))
 	  {
-	     _evry_matches_update(selector);
+	     _evry_matches_update(selector, 0);
 	     _evry_selector_update(selector);
 	  }
 
@@ -1296,7 +1295,7 @@ _evry_update(Evry_State *s, int fetch)
 static int
 _evry_update_timer(void *data)
 {
-   _evry_matches_update(selector);
+   _evry_matches_update(selector, 1);
    _evry_selector_update(selector);
    _evry_list_win_update(selector->state);
    update_timer = NULL;
@@ -1338,12 +1337,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
    if (update_timer)
      {
-	if ((selector->state->plugin) &&
-	    (!selector->state->plugin->async_fetch))
-	  {
-	     _evry_matches_update(selector);
-	     _evry_selector_update(selector);
-	  }
+	_evry_matches_update(selector, 0);
+	_evry_selector_update(selector);
 
 	ecore_timer_del(update_timer);
 	update_timer = NULL;
@@ -1363,12 +1358,14 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
 	act->item2 = it_object;
 
-	act->action(act);
+	if (!act->action(act))
+	  return;
      }
    else if (s_action->plugin->action)
-     {
+     {	
 	Evry_Item *it = s_action->sel_item;
-	s_action->plugin->action(s_action->plugin, it);
+	if (!s_action->plugin->action(s_action->plugin, it))
+	  return;
      }
    else return;
 
@@ -1520,7 +1517,7 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 }
 
 static void
-_evry_matches_update(Evry_Selector *sel)
+_evry_matches_update(Evry_Selector *sel, int async)
 {
    Evry_State *s = sel->state;
    Evry_Plugin *p;
@@ -1557,11 +1554,15 @@ _evry_matches_update(Evry_Selector *sel)
 	  {
 	     if (!win->plugin_dedicated && p->trigger) continue;
 	     if (p == sel->aggregator) continue;
-
-	     if (p->fetch(p, input)  ||
-		 (sel->states->next) ||
-		 (win->plugin_dedicated))
-	       s->cur_plugins = eina_list_append(s->cur_plugins, p);
+	     if (!async && p->async_fetch && p->items) 
+	       {
+		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
+	       }
+	     else
+	       {
+		  if (p->fetch(p, input) || (sel->states->next) || (win->plugin_dedicated))
+		    s->cur_plugins = eina_list_append(s->cur_plugins, p);
+	       }
 	  }
 
 	if (eina_list_count(s->cur_plugins) > 1)
