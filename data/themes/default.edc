@@ -28161,7 +28161,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	       description { state: "visible" 0.0;
 		   inherit: "default" 0.0;
-		   visible: 1;
+		   visible: 0;
 		   color: 255 255 255 255;
 	       }
 	   }
@@ -28213,7 +28213,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   }
 	   part { name: "e.text.label";
 	       type: TEXT;
-	       clip_to: "base";
+	       /* clip_to: "base"; */
 	       effect: SOFT_SHADOW;
 	       mouse_events: 0;
 	       scale: 1;
@@ -28335,7 +28335,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	       description { state: "visible" 0.0;
 		   inherit: "default" 0.0;
-		   visible: 1;
+		   visible: 0;
 		   color: 255 255 255 255;
 	       }
 	   }
@@ -28389,7 +28389,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   }
 	   part { name: "e.text.label";
 	       type: TEXT;
-	       clip_to: "base";
+	       /* clip_to: "base"; */
 	       effect: SOFT_SHADOW;
 	       mouse_events: 0;
 	       scale: 1;
@@ -28458,7 +28458,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   }
 	   program { name: "thumb_show_delayed2";
 	       action:  STATE_SET "visible" 0.0;
-	       transition: SINUSOIDAL 0.6;
+	       transition: SINUSOIDAL 0.3;
 	       target:  "base";
 	   }
 	   program { name: "thumb_show";

@@ -364,11 +364,11 @@ _plugin_new(const char *name, int type, char *service, int max_hits, int begin)
    p->active = 0;
 
    if (!begin)
-     evry_plugin_new(EVRY_PLUGIN(p), name, type, "", "FILE", 0, NULL, NULL,
+     evry_plugin_new(EVRY_PLUGIN(p), name, type, "", "FILE", 1, NULL, NULL,
 		     NULL, _cleanup, _fetch,
 		     NULL, _icon_get, NULL, NULL);
    else if (type == type_object)
-     evry_plugin_new(EVRY_PLUGIN(p), name, type, "APPLICATION", "FILE", 0, NULL, NULL,
+     evry_plugin_new(EVRY_PLUGIN(p), name, type, "APPLICATION", "FILE", 1, NULL, NULL,
 		   _begin, _cleanup, _fetch,
 		   NULL, _icon_get, NULL, NULL);
    
