@@ -9,6 +9,28 @@ struct _Plugin
   Evry_Selector *selector;
 };
 
+static int
+_cb_sort_recent(const void *data1, const void *data2)
+{
+   const Evry_Item *it1 = data1;
+   const Evry_Item *it2 = data2;
+
+   if ((it1->plugin == action_selector) ||
+       (it2->plugin == action_selector))
+     {
+	if ((it1->plugin == action_selector) &&
+	    (it2->plugin == action_selector))
+	  return (it1->priority - it2->priority);
+	else if (it1->plugin == action_selector)
+	  return ((it1->plugin->config->priority + it1->priority)
+		  - it2->plugin->config->priority);
+	else
+	  return (it1->plugin->config->priority -
+		  (it1->plugin->config->priority + it2->priority));
+     }
+     
+  return -1;
+}
 
 static int
 _cb_sort(const void *data1, const void *data2)
@@ -23,9 +45,11 @@ _cb_sort(const void *data1, const void *data2)
 	    (it2->plugin == action_selector))
 	  return (it1->priority - it2->priority);
 	else if (it1->plugin == action_selector)
-	  return (it1->priority - it2->plugin->config->priority);
+	  return ((it1->plugin->config->priority + it1->priority)
+		  - it2->plugin->config->priority);
 	else
-	  return (it1->plugin->config->priority - it2->priority);
+	  return (it1->plugin->config->priority -
+		  (it1->plugin->config->priority + it2->priority));
      }
      
    if ((it1->plugin == it2->plugin) &&
@@ -112,8 +136,14 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (items) eina_list_free(items);
 
    if (input[0])
-     EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
-
+     {
+	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
+     }
+   else
+     {
+	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort_recent);
+     }
+   
    return 1;
 }
 

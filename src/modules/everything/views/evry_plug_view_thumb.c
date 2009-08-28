@@ -638,9 +638,6 @@ _update_frame(Evas_Object *obj)
    return 0;
 }
 
-static int _view_update_do(void *data);
-
-
 static int
 _view_update(Evry_View *view)
 {
