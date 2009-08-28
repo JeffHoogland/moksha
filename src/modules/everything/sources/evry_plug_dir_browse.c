@@ -1,7 +1,7 @@
 #include "Evry.h"
 
-
 #define MAX_ITEMS 100
+#define TERM_ACTION_DIR "/usr/bin/xterm -e \'cd %s && /bin/bash\'"
 
 typedef struct _Plugin Plugin;
 typedef struct _Data Data;
@@ -30,9 +30,10 @@ struct _Data
   Eina_List *files;
 };
 
-static Evry_Plugin *p1;
-static Evry_Plugin *p2;
-static Evry_Action *act;
+static Evry_Plugin *p1 = NULL;
+static Evry_Plugin *p2 = NULL;
+static Evry_Action *act1 = NULL;
+static Evry_Action *act2 = NULL;
 
 static long thread_cnt = 0;
 static long thread_last = 0;
@@ -86,6 +87,8 @@ _dirbrowse_idler(void *data)
    Plugin *p = data;
    Eina_List *l;
    Evry_Item_File *file;
+   Eina_Bool update = EINA_FALSE;
+   
    int cnt = 20;
 
    if (!p->idler) return 0;
@@ -96,11 +99,15 @@ _dirbrowse_idler(void *data)
 	  {
 	     _item_fill(file);
 	     cnt--;
+
+	     if (eina_list_data_find_list(EVRY_PLUGIN(p)->items, file))
+	       update = EINA_TRUE;
+	     
 	  }
 	if (cnt == 0) break;
      }
 
-   if (!p->command)
+   if (update && !p->command)
      {
 	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
 	evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
@@ -456,6 +463,41 @@ _open_folder_action(Evry_Action *act)
    return 1;
 }
 
+static int
+_open_term_action(Evry_Action *act)
+{
+   ITEM_FILE(file, act->item1);
+   Evry_Item_App *tmp;
+   char buf[1024];
+   char *dir, *path;
+   int ret = 0;
+
+   if (act->item1->browseable)
+     {
+	path = ecore_file_escape_name(file->uri);
+     }
+   else
+     {
+	dir = ecore_file_dir_get(file->uri);
+	if (!dir) return 0;
+	path = ecore_file_escape_name(dir);
+
+	free(dir);
+     }
+
+   if (path)
+     {
+	tmp = E_NEW(Evry_Item_App, 1);
+	snprintf(buf, sizeof(buf), TERM_ACTION_DIR, path);
+	tmp->file = buf;
+	ret = evry_util_exec_app(EVRY_ITEM(tmp), NULL);
+	E_FREE(tmp);
+	free(path);
+     }
+
+   return ret;
+}
+
 static Eina_Bool
 _init(void)
 {
@@ -470,11 +512,18 @@ _init(void)
    evry_plugin_register(p1, 3);
    evry_plugin_register(p2, 1);
 
-   act = evry_action_new("Open Folder (EFM)", "FILE", NULL, NULL, "folder-open",
-			 _open_folder_action, _open_folder_check, NULL, NULL, NULL);
+   act1 = evry_action_new("Open Folder (EFM)", "FILE", NULL, NULL, "folder-open",
+			 _open_folder_action, _open_folder_check, NULL, NULL, NULL);   
+   evry_action_register(act1, 0);
 
-   evry_action_register(act);
+   act2 = evry_action_new("Open Terminal here", "FILE", NULL, NULL,
+			  "system-run",
+			  _open_term_action, NULL, NULL, NULL, NULL);
+   evry_action_register(act2, 2);
 
+
+   
+   
    mime_folder = eina_stringshare_add("inode/directory");
 
    return EINA_TRUE;
@@ -488,7 +537,8 @@ _shutdown(void)
 
    eina_stringshare_del(mime_folder);
 
-   evry_action_free(act);
+   evry_action_free(act1);
+   evry_action_free(act2);
 }
 
 

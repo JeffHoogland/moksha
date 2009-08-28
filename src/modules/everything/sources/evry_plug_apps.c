@@ -1,7 +1,7 @@
 #include "Evry.h"
 
 #define TERM_ACTION_CMD "/usr/bin/xterm -hold -e '%s'"
-#define TERM_ACTION_DIR "/usr/bin/xterm -e \'cd %s && /bin/bash\'"
+
 
 typedef struct _Plugin Plugin;
 
@@ -34,8 +34,6 @@ static Evry_Action *act1 = NULL;
 static Evry_Action *act2 = NULL;
 static Evry_Action *act3 = NULL;
 static Evry_Action *act4 = NULL;
-static Evry_Action *act5 = NULL;
-static Evry_Action *act6 = NULL;
 
 static Eina_List *exe_path = NULL;
 static Ecore_Idler *exe_scan_idler = NULL;
@@ -495,91 +493,9 @@ _exec_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 }
 
 static int
-_app_action(const Evry_Item *it1, const Evry_Item *it2)
-{
-   E_Zone *zone;
-   Eina_List *files = NULL;
-   char *exe = NULL;
-
-   if (!it1) return 0;
-   ITEM_APP(app, it1);
-   
-   zone = e_util_zone_current_get(e_manager_current_get());
-
-   if (app->desktop)
-     {
-	if (it2)
-	  {
-	     ITEM_FILE(file, it2);
-
-	     Eina_List *l;
-	     char *mime;
-	     char *path = NULL;
-	     int open_folder = 0;
-
-	     if (!EVRY_ITEM(file)->browseable)
-	       {
-		  EINA_LIST_FOREACH(app->desktop->mime_types, l, mime)
-		    {
-		       if (!strcmp(mime, "x-directory/normal"))
-			 {
-			    open_folder = 1;
-			    break;
-			 }
-		    }
-	       }
-
-	     if (open_folder)
-	       {
-		  path = ecore_file_dir_get(file->uri);
-		  files = eina_list_append(files, path);
-	       }
-	     else
-	       {
-		  files = eina_list_append(files, file->uri);
-	       }
-
-	     e_exec(zone, app->desktop, NULL, files, NULL);
-
-	     if (file && file->mime && !open_folder)
-	       e_exehist_mime_desktop_add(file->mime, app->desktop);
-
-	     if (files)
-	       eina_list_free(files);
-
-	     if (open_folder && path)
-	       free(path);
-	  }
-	else
-	  e_exec(zone, app->desktop, NULL, NULL, "everything");
-     }
-   else if (app->file)
-     {
-	if (it2)
-	  {
-	     ITEM_FILE(file, it2);
-	     int len;
-
-	     len = strlen(app->file) + strlen(file->uri) + 2;
-	     exe = malloc(len);
-	     snprintf(exe, len, "%s %s", app->file, file->uri);
-	     e_exec(zone, NULL, exe, NULL, NULL);
-	     free(exe);
-	  }
-	else
-	  {
-	     exe = (char *) app->file;
-	     e_exec(zone, NULL, exe, NULL, NULL);
-	  }
-     }
-
-   return 1;
-}
-
-static int
 _exec_app_action(Evry_Action *act)
 {
-   return _app_action(act->item1, act->item2);
+   return evry_util_exec_app(act->item1, act->item2);
 }
 
 /* TODO config option for terminal and shell! */
@@ -594,7 +510,7 @@ _exec_term_action(Evry_Action *act)
    tmp = E_NEW(Evry_Item_App, 1);
    snprintf(buf, sizeof(buf), TERM_ACTION_CMD, app->file);
    tmp->file = buf;
-   ret = _app_action(EVRY_ITEM(tmp), NULL);
+   ret = evry_util_exec_app(EVRY_ITEM(tmp), NULL);
 
    E_FREE(tmp);
 
@@ -618,45 +534,11 @@ _open_with_action(Evry_Plugin *plugin, const Evry_Item *it)
    PLUGIN(p, plugin);
 
    if (p->candidate)
-     return _app_action(it, p->candidate);
+     return evry_util_exec_app(it, p->candidate);
 
    return 0;
 }
 
-static int
-_open_term_action(Evry_Action *act)
-{
-   ITEM_FILE(file, act->item1);
-   Evry_Item_App *tmp;
-   char buf[1024];
-   char *dir, *path;
-   int ret = 0;
-
-   if (act->item1->browseable)
-     {
-	path = ecore_file_escape_name(file->uri);
-     }
-   else
-     {
-	dir = ecore_file_dir_get(file->uri);
-	if (!dir) return 0;
-	path = ecore_file_escape_name(dir);
-
-	free(dir);
-     }
-
-   if (path)
-     {
-	tmp = E_NEW(Evry_Item_App, 1);
-	snprintf(buf, sizeof(buf), TERM_ACTION_DIR, path);
-	tmp->file = buf;
-	ret = _app_action(EVRY_ITEM(tmp), NULL);
-	E_FREE(tmp);
-	free(path);
-     }
-
-   return ret;
-}
 
 
 static int
@@ -760,49 +642,6 @@ _new_app_action(Evry_Action *act)
    return 1;
 }
 
-static int
-_exec_border_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
-{
-   E_Border *bd = it->data;
-   E_OBJECT_CHECK_RETURN(bd, 0);
-   E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, 0);
-
-   if ((bd->desktop && bd->desktop->exec) &&
-       ((strstr(bd->desktop->exec, "%u")) ||
-	(strstr(bd->desktop->exec, "%U")) ||
-	(strstr(bd->desktop->exec, "%f")) ||
-	(strstr(bd->desktop->exec, "%F"))))
-     return 1;
-
-   return 0;
-}
-
-static int
-_exec_border_action(Evry_Action *act)
-{
-   return _app_action(act->item1, act->item2);
-}
-
-static int
-_exec_border_intercept(Evry_Action *act)
-{
-   Evry_Item_App *app = E_NEW(Evry_Item_App, 1);
-   E_Border *bd = act->item1->data;
-
-   app->desktop = bd->desktop;
-   act->item1 = EVRY_ITEM(app);
-
-   return 1;
-}
-
-
-static void
-_exec_border_cleanup(Evry_Action *act)
-{
-   ITEM_APP(app, act->item1);
-   E_FREE(app);
-}
-
 
 static Eina_Bool
 _init(void)
@@ -817,51 +656,43 @@ _init(void)
 		   _icon_get, NULL, NULL);
 
    evry_plugin_register(EVRY_PLUGIN(p1), 1);
-   evry_plugin_register(EVRY_PLUGIN(p2), 3);
+   evry_plugin_register(EVRY_PLUGIN(p2), 1);
 
    act = evry_action_new("Launch", "APPLICATION", NULL, NULL,
 			 "everything-launch",
 			 _exec_app_action, _exec_app_check_item,
 			 NULL, NULL,NULL);
-
+   
    act1 = evry_action_new("Open File...", "APPLICATION", "FILE", "APPLICATION",
 			  "document-open",
 			  _exec_app_action, _exec_app_check_item,
 			  NULL, NULL, NULL);
 
-   act2 = evry_action_new("Edit Application Entry", "APPLICATION", NULL, NULL,
-			  "everything-launch",
-			  _edit_app_action, _edit_app_check_item,
-			  NULL, NULL, NULL);
-
-   act3 = evry_action_new("New Application Entry", "APPLICATION", NULL, NULL,
-			  "everything-launch",
-			  _new_app_action, _new_app_check_item,
-			  NULL, NULL, NULL);
-
-   act4 = evry_action_new("Open File...", "BORDER", "FILE", "APPLICATION",
-			  "everything-launch",
-			  _exec_border_action, _exec_border_check_item,
-			  _exec_border_cleanup, _exec_border_intercept, NULL);
-
-   act5 = evry_action_new("Run in Terminal", "APPLICATION", NULL, NULL,
+   act2 = evry_action_new("Run in Terminal", "APPLICATION", NULL, NULL,
 			  "system-run",
 			  _exec_term_action, _exec_term_check_item,
 			  NULL, NULL, NULL);
 
-   act6 = evry_action_new("Open Terminal here", "FILE", NULL, NULL,
-			  "system-run",
-			  _open_term_action, NULL, NULL, NULL, NULL);
+   act3 = evry_action_new("Edit Application Entry", "APPLICATION", NULL, NULL,
+			  "everything-launch",
+			  _edit_app_action, _edit_app_check_item,
+			  NULL, NULL, NULL);
+   
+   act4 = evry_action_new("New Application Entry", "APPLICATION", NULL, NULL,
+			  "everything-launch",
+			  _new_app_action, _new_app_check_item,
+			  NULL, NULL, NULL);
+
+   evry_action_register(act, 0);
+   evry_action_register(act1, 1);
+   evry_action_register(act2, 2);
+   evry_action_register(act3, 3);
+   evry_action_register(act4, 4);
+
+   
 
 
-   evry_action_register(act);
-   evry_action_register(act1);
-   evry_action_register(act5);
-   evry_action_register(act6);
-   evry_action_register(act2);
-   evry_action_register(act3);
-   evry_action_register(act4);
-
+   
    /* taken from e_exebuf.c */
    exelist_exe_edd = E_CONFIG_DD_NEW("E_Exe", E_Exe);
 #undef T
@@ -891,8 +722,6 @@ _shutdown(void)
    evry_action_free(act2);
    evry_action_free(act3);
    evry_action_free(act4);
-   evry_action_free(act5);
-   evry_action_free(act6);
 
    E_CONFIG_DD_FREE(exelist_edd);
    E_CONFIG_DD_FREE(exelist_exe_edd);

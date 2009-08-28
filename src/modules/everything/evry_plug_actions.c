@@ -58,10 +58,6 @@ _cb_sort(const void *data1, const void *data2)
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
 
-   if ((it1->plugin == it2->plugin) &&
-       (it1->priority - it2->priority))
-     return (it1->priority - it2->priority);
-
    if (it1->fuzzy_match || it2->fuzzy_match)
      {
 	if (it1->fuzzy_match && !it2->fuzzy_match)
@@ -73,9 +69,6 @@ _cb_sort(const void *data1, const void *data2)
 	if (it1->fuzzy_match - it2->fuzzy_match)
 	  return (it1->fuzzy_match - it2->fuzzy_match);
      }
-
-   if (it1->plugin->config->priority - it2->plugin->config->priority)
-     return (it1->plugin->config->priority - it2->plugin->config->priority);
 
    if (it1->priority - it2->priority)
      return (it1->priority - it2->priority);
@@ -105,6 +98,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	     it = evry_item_new(NULL, p, act->name, NULL);
 	     it->fuzzy_match = match;
 	     it->data = act;
+	     it->priority = act->priority;
 	     EVRY_PLUGIN_ITEM_APPEND(p, it);
 	  }
      }

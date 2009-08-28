@@ -453,8 +453,9 @@ evry_plugin_unregister(Evry_Plugin *p)
 }
 
 void
-evry_action_register(Evry_Action *action)
+evry_action_register(Evry_Action *action, int priority)
 {
+   action->priority = priority;
    evry_conf->actions = eina_list_append(evry_conf->actions, action);
    /* TODO sorting, initialization, etc */
 }

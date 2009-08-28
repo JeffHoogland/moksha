@@ -276,3 +276,84 @@ evry_icon_mime_get(const char *mime, Evas *e)
    return o;
 }
 
+EAPI int
+evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
+{
+   E_Zone *zone;
+   Eina_List *files = NULL;
+   char *exe = NULL;
+
+   if (!it_app) return 0;
+   ITEM_APP(app, it_app);
+   
+   zone = e_util_zone_current_get(e_manager_current_get());
+
+   if (app->desktop)
+     {
+	if (it_file)
+	  {
+	     ITEM_FILE(file, it_file);
+
+	     Eina_List *l;
+	     char *mime;
+	     char *path = NULL;
+	     int open_folder = 0;
+
+	     if (!EVRY_ITEM(file)->browseable)
+	       {
+		  EINA_LIST_FOREACH(app->desktop->mime_types, l, mime)
+		    {
+		       if (!strcmp(mime, "x-directory/normal"))
+			 {
+			    open_folder = 1;
+			    break;
+			 }
+		    }
+	       }
+
+	     if (open_folder)
+	       {
+		  path = ecore_file_dir_get(file->uri);
+		  files = eina_list_append(files, path);
+	       }
+	     else
+	       {
+		  files = eina_list_append(files, file->uri);
+	       }
+
+	     e_exec(zone, app->desktop, NULL, files, NULL);
+
+	     if (file && file->mime && !open_folder)
+	       e_exehist_mime_desktop_add(file->mime, app->desktop);
+
+	     if (files)
+	       eina_list_free(files);
+
+	     if (open_folder && path)
+	       free(path);
+	  }
+	else
+	  e_exec(zone, app->desktop, NULL, NULL, "everything");
+     }
+   else if (app->file)
+     {
+	if (it_file)
+	  {
+	     ITEM_FILE(file, it_file);
+	     int len;
+
+	     len = strlen(app->file) + strlen(file->uri) + 2;
+	     exe = malloc(len);
+	     snprintf(exe, len, "%s %s", app->file, file->uri);
+	     e_exec(zone, NULL, exe, NULL, NULL);
+	     free(exe);
+	  }
+	else
+	  {
+	     exe = (char *) app->file;
+	     e_exec(zone, NULL, exe, NULL, NULL);
+	  }
+     }
+
+   return 1;
+}

@@ -7,10 +7,12 @@ typedef struct _Item Item;
 struct _View
 {
   Evry_View view;
-  Evas *evas;
-  const Evry_State *state;
   Tab_View *tabs;
 
+  const Evry_State *state;
+  const Evry_Plugin *plugin;
+
+  Evas *evas;
   Evas_Object *bg, *sframe, *span;
   int          iw, ih;
   int          zoom;
@@ -25,13 +27,14 @@ struct _Smart_Data
   Item        *sel_item;
   Ecore_Idle_Enterer *idle_enter;
   Ecore_Idle_Enterer *thumb_idler;
+  Ecore_Idle_Enterer *update_idler;
   Ecore_Animator *animator;
   Evas_Coord   x, y, w, h;
   Evas_Coord   cx, cy, cw, ch;
   Evas_Coord   sx, sy;
   double       selmove;
   Eina_Bool    update : 1;
-
+  Eina_Bool    switch_mode : 1;
 };
 
 struct _Item
@@ -118,7 +121,7 @@ _e_smart_reconfigure_do(void *data)
    Item *it;
    int iw, redo = 0, changed = 0;
    static int recursion = 0;
-   Evas_Coord x, y, xx, yy, ww, hh, mw, mh, ox, oy; //, dd;
+   Evas_Coord x, y, xx, yy, ww, hh, mw, mh, ox = 0, oy = 0;
    Evas_Coord aspect_w, aspect_h;
 
    if (!sd) return 0;
@@ -223,31 +226,25 @@ _e_smart_reconfigure_do(void *data)
         changed = 1;
      }
 
-   ox = 0;
-   oy = 0;
+   if (sd->switch_mode) 
+     {
+	if (changed)
+	  evas_object_smart_callback_call(obj, "changed", NULL);
+	
+	sd->update = EINA_TRUE;
+	sd->switch_mode = EINA_FALSE;
 
+	if (recursion == 0)
+	  sd->idle_enter = NULL;
+	return 0;
+     }
+   
    if (!sd->view->list_mode)
      {
 	if (sd->w > sd->cw) ox = (sd->w - sd->cw) / 2;
 	if (sd->h > sd->ch) oy = (sd->h - sd->ch) / 2;
      }
-
-   if (sd->sel_item)
-     {
-	int align = -1;
-   	it = sd->sel_item;
-
-	if (sd->view->list_mode)
-	  align = it->y - (double)it->y / (double)sd->ch * (sd->h - it->h);
-	else if ((it->y + it->h) - sd->cy > sd->h)
-	  align = it->y - (2 - sd->view->zoom) * it->h;
-	else if (it->y < sd->cy)
-	  align = it->y;
-
-	if (align >= 0)
-	  e_scrollframe_child_pos_set(sd->view->sframe, 0, align);
-     }
-
+     
    EINA_LIST_FOREACH(sd->items, l, it)
      {
         xx = sd->x - sd->cx + it->x + ox;
@@ -272,23 +269,18 @@ _e_smart_reconfigure_do(void *data)
 		  edje_object_part_text_set(it->frame, "e.text.label", it->item->label);
 		  evas_object_show(it->frame);
 
-		  if (sd->update)
-		    edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
+		  if (it->changed)
+		    {
+		       edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
+		    }
 		  else
-		    edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
+		    {
+		       edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
+		    }
 
 		  it->visible = EINA_TRUE;
 	       }
 
-	     /* hmmm somehow this should be moved up to !it->visible */
-	     if (sd->update)
-	       {
-		  if (it->selected && sd->view->zoom < 2)
-		    edje_object_signal_emit(it->frame, "e,state,selected", "e");
-		  else
-		    edje_object_signal_emit(it->frame, "e,state,unselected", "e");
-	       }
-	     
 	     if (!it->image && !it->have_thumb &&
 		 it->item->plugin && it->item->plugin->icon_get)
 	       {
@@ -305,6 +297,14 @@ _e_smart_reconfigure_do(void *data)
 	     evas_object_move(it->frame, xx, yy);
 	     evas_object_resize(it->frame, it->w, it->h);
 
+	     if (sd->update || it->changed)
+	       {
+		  if (it->selected && sd->view->zoom < 2)
+		    edje_object_signal_emit(it->frame, "e,state,selected", "e");
+		  else
+		    edje_object_signal_emit(it->frame, "e,state,unselected", "e");
+	       }
+
 	     if (it->get_thumb && !it->thumb)
 	       {
 		  it->thumb = e_thumb_icon_add(sd->view->evas);
@@ -312,6 +312,9 @@ _e_smart_reconfigure_do(void *data)
 		  if (!sd->thumb_idler)
 		    sd->thumb_idler = ecore_idle_enterer_before_add(_thumb_idler, sd);
 	       }
+	     
+	     it->changed = EINA_FALSE;
+	     
           }
         else if (it->visible)
 	  {
@@ -327,8 +330,8 @@ _e_smart_reconfigure_do(void *data)
 	     it->have_thumb = EINA_FALSE;
 	     it->do_thumb = EINA_FALSE;
 	     it->visible = EINA_FALSE;
-	     it->changed = TRUE;
 	  }
+	it->changed = EINA_FALSE;
      }
 
    if (changed)
@@ -406,39 +409,19 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 }
 
 static void
-_e_smart_show(Evas_Object *obj)
-{
-   /* Smart_Data *sd = evas_object_smart_data_get(obj); */
-   //   evas_object_show(sd->child_obj);
-}
+_e_smart_show(Evas_Object *obj){}
 
 static void
-_e_smart_hide(Evas_Object *obj)
-{
-   /* Smart_Data *sd = evas_object_smart_data_get(obj); */
-   //   evas_object_hide(sd->child_obj);
-}
+_e_smart_hide(Evas_Object *obj){}
 
 static void
-_e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
-{
-   /* Smart_Data *sd = evas_object_smart_data_get(obj); */
-   //   evas_object_color_set(sd->child_obj, r, g, b, a);
-}
+_e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a){}
 
 static void
-_e_smart_clip_set(Evas_Object *obj, Evas_Object * clip)
-{
-   /* Smart_Data *sd = evas_object_smart_data_get(obj); */
-   //   evas_object_clip_set(sd->child_obj, clip);
-}
+_e_smart_clip_set(Evas_Object *obj, Evas_Object * clip){}
 
 static void
-_e_smart_clip_unset(Evas_Object *obj)
-{
-   /* Smart_Data *sd = evas_object_smart_data_get(obj); */
-   //   evas_object_clip_unset(sd->child_obj);
-}
+_e_smart_clip_unset(Evas_Object *obj){}
 
 static Evas_Object *
 _pan_add(Evas *evas)
@@ -546,6 +529,7 @@ _pan_item_add(Evas_Object *obj, Evry_Item *item)
    sd->items = eina_list_append(sd->items, it);
    it->obj = obj;
    it->item = item;
+   it->changed = EINA_TRUE;
 
    if (_check_item(item))
      it->get_thumb = EINA_TRUE;
@@ -578,18 +562,36 @@ static void
 _pan_item_select(Evas_Object *obj, Item *it)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
+   int align = -1;
 
-   sd->sel_item->selected = EINA_FALSE;
-   edje_object_signal_emit(sd->sel_item->frame, "e,state,unselected", "e");
-   sd->sel_item = it;
-   sd->sel_item->selected = EINA_TRUE;
+   if (sd->sel_item)
+     {
+	sd->sel_item->selected = EINA_FALSE;
+	edje_object_signal_emit(sd->sel_item->frame, "e,state,unselected", "e");
+	sd->sel_item = it;
+	sd->sel_item->selected = EINA_TRUE;
+     }
 
-   sd->update = EINA_FALSE;
-   if (sd->view->zoom < 2)
-     edje_object_signal_emit(sd->sel_item->frame, "e,state,selected", "e");
+   if (it)
+     {
+	sd->update = EINA_FALSE;
 
-   if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-   sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, obj);
+	if (sd->view->list_mode)
+	  align = it->y - (double)it->y / (double)sd->ch * (sd->h - it->h);
+	else if ((it->y + it->h) - sd->cy > sd->h)
+	  align = it->y - (2 - sd->view->zoom) * it->h;
+	else if (it->y < sd->cy)
+	  align = it->y;
+
+	if (align >= 0)
+	  e_scrollframe_child_pos_set(sd->view->sframe, 0, align);
+
+	if (sd->view->zoom < 2)
+	  edje_object_signal_emit(sd->sel_item->frame, "e,state,selected", "e");
+
+	if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
+	sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, obj);
+     }
 }
 
 static void
@@ -625,6 +627,21 @@ _sort_cb(const void *data1, const void *data2)
 }
 
 static int
+_update_frame(Evas_Object *obj)
+{
+   Smart_Data *sd = evas_object_smart_data_get(obj);
+   sd->switch_mode = EINA_TRUE;
+   _e_smart_reconfigure_do(obj);
+   sd->switch_mode = EINA_FALSE;
+   _pan_item_select(obj, sd->sel_item); 
+
+   return 0;
+}
+
+static int _view_update_do(void *data);
+
+
+static int
 _view_update(Evry_View *view)
 {
    VIEW(v, view);
@@ -632,31 +649,35 @@ _view_update(Evry_View *view)
    Item *v_it;
    Evry_Item *p_it;
    Eina_List *l, *ll, *p_items, *v_remove = NULL, *v_items = NULL;
-   int pos, last_pos;
-
+   int pos, last_pos, last_vis = 0, first_vis = 0;
+   Eina_Bool update = EINA_FALSE;
+   
    if (!v->state->plugin)
      {
 	_view_clear(view);
 	return 1;
      }
-
+   
    p_items = v->state->plugin->items;
 
+   /* go through current view items */
    EINA_LIST_FOREACH(sd->items, l, v_it)
      {
 	last_pos = v_it->pos;
 	v_it->pos = 0;
-	pos = 1;
-
+	pos = 1;	
+	
+	/* go through plugins current items */
 	EINA_LIST_FOREACH(p_items, ll, p_it)
 	  {
 	     if (v_it->item == p_it)
 	       {
 		  if (pos != last_pos)
 		    v_it->changed = EINA_TRUE;
-
+		  
 		  v_it->pos = pos;
 
+		  /* set selected state -> TODO remove*/
 		  if (p_it == v->state->sel_item)
 		    {
 		       sd->sel_item = v_it;
@@ -670,59 +691,79 @@ _view_update(Evry_View *view)
 	     pos++;
 	  }
 
-	if(v_it->pos)
+	if (v_it->visible)
+	  {
+	     if (!first_vis)
+	       first_vis = v_it->pos;
+	     last_vis = v_it->pos;
+	  }
+	
+	/* view item is in list of current items */
+	if (v_it->pos)
 	  {
 	     v_items = eina_list_append(v_items, v_it->item);
+
 	     if (_check_item(v_it->item))
 	       v_it->get_thumb = EINA_TRUE;
+	     
+	     if (v_it->visible && v_it->changed)
+	       update = EINA_TRUE;
 	  }
-
 	else
-	  v_remove = eina_list_append(v_remove, v_it);
+	  {
+	     if (v_it->visible) update = EINA_TRUE;
+	     v_remove = eina_list_append(v_remove, v_it);
+	  }
      }
-
-   if (v_remove)
-     sd->update = EINA_TRUE;
 
    EINA_LIST_FREE(v_remove, v_it)
      _pan_item_remove(v->span, v_it);
 
+   /* go through plugins current items */
    pos = 1;
-   int added = 0;
-
    EINA_LIST_FOREACH(p_items, l, p_it)
      {
+	/* item is not already in view */
 	if (!eina_list_data_find_list(v_items, p_it))
 	  {
-	     added = 1;
 	     v_it = _pan_item_add(v->span, p_it);
 
 	     if (!v_it) continue;
 
 	     v_it->pos = pos;
 
+	     /* TODO no needed */
 	     if (p_it == v->state->sel_item)
 	       {
 		  sd->sel_item = v_it;
 		  v_it->selected = EINA_TRUE;
 	       }
+
+	     if (pos > first_vis && pos < last_vis)
+	       update = EINA_TRUE;
 	  }
 	pos++;
      }
 
    sd->items = eina_list_sort(sd->items, eina_list_count(sd->items), _sort_cb);
 
-   if (added) sd->update = EINA_TRUE;
-
-   if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-   sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
-
+   if (update || !last_vis || v->plugin != v->state->plugin)
+     {
+	v->plugin = v->state->plugin;
+	
+	sd->update = EINA_TRUE;
+	_update_frame(v->span);
+     }
+   
    if (v_items) eina_list_free(v_items);
-
+   
    v->tabs->update(v->tabs);
 
-   return 1;
+   sd->update_idler = NULL;
+   
+   return 0;
 }
+
 static void
 _clear_items(Evas_Object *obj)
 {
@@ -761,27 +802,19 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
        (!strcmp(ev->key, "2")))
      {
 	v->list_mode = v->list_mode ? EINA_FALSE : EINA_TRUE;
-
-	e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->h);
-
 	_clear_items(v->span);
-	
-	if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-	sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
+	_update_frame(v->span);
      }
    else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
        ((!strcmp(ev->key, "plus")) ||
-	(!strcmp(ev->key, "z"))))
+	(!strcmp(ev->key, "3"))))
      {
 	v->zoom++;
 	if (v->zoom > 2) v->zoom = 0;
-
 	if (v->zoom == 2)
 	  _clear_items(v->span);
 
-	if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-	sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
-
+	_update_frame(v->span);
 	goto end;
      }
 

@@ -8,9 +8,9 @@ struct _Inst
   E_Border *border;
 };
 
-static Evry_Plugin *plugin;
-static Inst *inst;
-
+static Evry_Plugin *plugin = NULL;
+static Inst *inst = NULL;
+static Evry_Action *act = NULL;
 
 static void
 _act_cb_border_switch_to(E_Border *bd)
@@ -198,6 +198,52 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
    return o;
 }
 
+
+static int
+_exec_border_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
+{
+   E_Border *bd = it->data;
+   E_OBJECT_CHECK_RETURN(bd, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, 0);
+
+   if ((bd->desktop && bd->desktop->exec) &&
+       ((strstr(bd->desktop->exec, "%u")) ||
+	(strstr(bd->desktop->exec, "%U")) ||
+	(strstr(bd->desktop->exec, "%f")) ||
+	(strstr(bd->desktop->exec, "%F"))))
+     return 1;
+
+   return 0;
+}
+
+static int
+_exec_border_action(Evry_Action *act)
+{
+   return evry_util_exec_app(act->item1, act->item2);
+}
+
+static int
+_exec_border_intercept(Evry_Action *act)
+{
+   Evry_Item_App *app = E_NEW(Evry_Item_App, 1);
+   E_Border *bd = act->item1->data;
+
+   app->desktop = bd->desktop;
+   act->item1 = EVRY_ITEM(app);
+
+   return 1;
+}
+
+
+static void
+_exec_border_cleanup(Evry_Action *act)
+{
+   ITEM_APP(app, act->item1);
+   E_FREE(app);
+}
+
+
+
 static Eina_Bool
 _init(void)
 {
@@ -205,9 +251,14 @@ _init(void)
 		       _begin, _cleanup, _fetch, _action, _item_icon_get, NULL, NULL);
 
    evry_plugin_register(plugin, 1);
-
    inst = E_NEW(Inst, 1);
 
+   act = evry_action_new("Open File...", "BORDER", "FILE", "APPLICATION",
+			  "everything-launch",
+			  _exec_border_action, _exec_border_check_item,
+			  _exec_border_cleanup, _exec_border_intercept, NULL);
+   evry_action_register(act, 10);
+   
    return EINA_TRUE;
 }
 
@@ -216,6 +267,8 @@ _shutdown(void)
 {
    EVRY_PLUGIN_FREE(plugin);
    E_FREE(inst);
+   
+   evry_action_free(act);
 }
 
 

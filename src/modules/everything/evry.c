@@ -89,11 +89,12 @@ static Evry_List_Window *list = NULL;
 static Ecore_X_Window input_window = 0;
 static Eina_List   *handlers = NULL;
 static Ecore_Timer *update_timer = NULL;
-static Evry_Plugin *action_selector = NULL;
+
 static Evry_Selector *selector = NULL;
 static const char *thumb_types = NULL;
 
 Evry_Selector **selectors;
+Evry_Plugin *action_selector;
 
 /* externally accessible functions */
 int

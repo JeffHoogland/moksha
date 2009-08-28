@@ -30,7 +30,7 @@ _init(void)
    act = evry_action_new("Copy to Clipboard", "TEXT", NULL, NULL, "edit-copy",
 			 _action, _check_item, NULL, NULL, NULL);
 
-   evry_action_register(act);
+   evry_action_register(act, 10);
 
    clipboard_win = win;
 

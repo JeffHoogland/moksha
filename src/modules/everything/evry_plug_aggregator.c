@@ -16,6 +16,18 @@ _cb_sort(const void *data1, const void *data2)
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
 
+   if ((it1->plugin == action_selector) ||
+       (it2->plugin == action_selector))
+     {
+	if ((it1->plugin == action_selector) &&
+	    (it2->plugin == action_selector))
+	  return (it1->priority - it2->priority);
+	else if (it1->plugin == action_selector)
+	  return (it1->priority - it2->plugin->config->priority);
+	else
+	  return (it1->plugin->config->priority - it2->priority);
+     }
+     
    if ((it1->plugin == it2->plugin) &&
        (it1->priority - it2->priority))
      return (it1->priority - it2->priority);

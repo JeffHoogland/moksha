@@ -105,5 +105,5 @@ EAPI void evry_tab_view_free(Tab_View *v);
 
 extern Config *evry_conf;
 extern Evry_Selector **selectors;
-
+extern Evry_Plugin *action_selector;
 #endif

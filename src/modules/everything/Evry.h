@@ -211,34 +211,35 @@ struct _Evry_Action
 
   /* not to be set by plugin! */
   Evas_Object *o_icon;
+
+  int priority;
 };
 
-
-EAPI void evry_plugin_register(Evry_Plugin *p, int priority);
-EAPI void evry_plugin_unregister(Evry_Plugin *p);
-EAPI void evry_action_register(Evry_Action *act);
-EAPI void evry_action_unregister(Evry_Action *act);
-EAPI void evry_view_register(Evry_View *view, int priority);
-EAPI void evry_view_unregister(Evry_View *view);
-
+/* evry.c */
 EAPI void evry_item_select(const Evry_State *s, Evry_Item *it);
 EAPI void evry_plugin_select(const Evry_State *s, Evry_Plugin *p);
 EAPI int  evry_list_win_show(void);
 EAPI void evry_list_win_hide(void);
-
-
 EAPI Evry_Item *evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item));
 EAPI void evry_item_free(Evry_Item *it);
 EAPI void evry_item_ref(Evry_Item *it);
-
 EAPI void evry_plugin_async_update(Evry_Plugin *plugin, int state);
 EAPI void evry_clear_input(void);
 
+/* evry_util.c */
 EAPI Evas_Object *evry_icon_mime_get(const char *mime, Evas *e);
 EAPI Evas_Object *evry_icon_theme_get(const char *icon, Evas *e);
-
 EAPI int  evry_fuzzy_match(const char *str, const char *match);
 EAPI Eina_List *evry_fuzzy_match_sort(Eina_List *items);
+EAPI int evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file);
+
+/* e_mod_main.c */
+EAPI void evry_plugin_register(Evry_Plugin *p, int priority);
+EAPI void evry_plugin_unregister(Evry_Plugin *p);
+EAPI void evry_action_register(Evry_Action *act, int priority);
+EAPI void evry_action_unregister(Evry_Action *act);
+EAPI void evry_view_register(Evry_View *view, int priority);
+EAPI void evry_view_unregister(Evry_View *view);
 
 EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, int type,
 				  const char *type_in, const char *type_out,

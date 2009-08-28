@@ -122,7 +122,8 @@ _init(void)
 			 _action, NULL, NULL, NULL, NULL);
 
    evry_plugin_register(p, 10);
-   evry_action_register(act);
+
+   evry_action_register(act, 0);
 
    return EINA_TRUE;
 }
