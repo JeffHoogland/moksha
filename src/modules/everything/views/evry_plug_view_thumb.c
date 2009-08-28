@@ -278,6 +278,10 @@ _e_smart_reconfigure_do(void *data)
 		       edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
 		    }
 
+		  if (it->item->browseable)
+		    edje_object_signal_emit(it->frame, "e,state,browseable", "e");
+		  
+
 		  it->visible = EINA_TRUE;
 	       }
 
@@ -799,6 +803,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
        (!strcmp(ev->key, "2")))
      {
 	v->list_mode = v->list_mode ? EINA_FALSE : EINA_TRUE;
+	v->zoom = 0;
 	_clear_items(v->span);
 	_update_frame(v->span);
      }
@@ -824,33 +829,36 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    if (sd->items)
      l = eina_list_data_find_list(sd->items, sd->sel_item);
 
-   if (!strcmp(ev->key, "Right"))
+   if (!v->list_mode)
      {
-	if (l && l->next)
-	  it = l->next->data;
-
-	if (it)
+	if (!strcmp(ev->key, "Right"))
 	  {
-	     _pan_item_select(v->span, it);
-	     evry_item_select(v->state, it->item);
+	     if (l && l->next)
+	       it = l->next->data;
+
+	     if (it)
+	       {
+		  _pan_item_select(v->span, it);
+		  evry_item_select(v->state, it->item);
+	       }
+	     goto end;
 	  }
-	goto end;
-     }
-   else if (!strcmp(ev->key, "Left"))
-     {
-	if (!sd->items) return 1;
-
-	if (l && l->prev)
-	  it = l->prev->data;
-
-	if (it)
+	else if (!strcmp(ev->key, "Left"))
 	  {
-	     _pan_item_select(v->span, it);
-	     evry_item_select(v->state, it->item);
+	     if (!sd->items) return 1;
+
+	     if (l && l->prev)
+	       it = l->prev->data;
+
+	     if (it)
+	       {
+		  _pan_item_select(v->span, it);
+		  evry_item_select(v->state, it->item);
+	       }
+	     goto end;
 	  }
-	goto end;
      }
-   else if (!strcmp(ev->key, "Down"))
+   if (!strcmp(ev->key, "Down"))
      {
 	if (!sd->items) return 1;
 
