@@ -2439,30 +2439,30 @@ msgid ""
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
 "Enlightenment 无法在您的主目录创建目录。\n"
-"可能您没有主目录或者磁盘已满？"
+"可能您没有主目录或者磁盘已满？ "
 
 #: ../src/bin/e_main.c:569
-msgid "Enlightenment cannot set up its file registry system."
-msgstr "Enlightenment 无法建立它的文件注册系统。"
+msgid "Enlightenment cannot set up its file registry system. \n"
+msgstr "Enlightenment 无法建立它的文件注册系统。\n"
 
 #: ../src/bin/e_main.c:578
-msgid "Enlightenment cannot set up its config system."
-msgstr "Enlightenment 无法建立它的配置系统。"
+msgid "Enlightenment cannot set up its config system.\n"
+msgstr "Enlightenment 无法建立它的配置系统。\n"
 
 #: ../src/bin/e_main.c:592
-msgid "Enlightenment cannot set up its scale system."
-msgstr "Enlightenment 无法建立它的刻度系统。"
+msgid "Enlightenment cannot set up its scale system.\n"
+msgstr "Enlightenment 无法建立它的刻度系统。\n"
 
 #: ../src/bin/e_main.c:600
-msgid "Enlightenment cannot set up the pointer system."
-msgstr "Enlightenment 无法建立它的指针系统。"
+msgid "Enlightenment cannot set up the pointer system.\n"
+msgstr "Enlightenment 无法建立它的指针系统。\n"
 
 #: ../src/bin/e_main.c:609
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 无法建立路径以打开文件。\\n\"\n"
+"Enlightenment 无法建立路径以打开文件。\n"
 "\"可能您的内存用完了？"
 
 #: ../src/bin/e_main.c:627
@@ -2497,32 +2497,32 @@ msgstr "测试格式支持"
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
-msgstr "Enlightenment 发现 Evas 不能创建画笔缓冲。检查 Evas 是否支持软件缓冲。"
+msgstr "Enlightenment 发现 Evas 不能创建画笔缓冲。检查 Evas 是否支持软件缓冲。\n"
 
 #: ../src/bin/e_main.c:693
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
-msgstr "Enlightenment 发现 Evas 不能加载 PNG 文件。检查 Evas 是否支持加载 PNG。"
+msgstr "Enlightenment 发现 Evas 不能加载 PNG 文件。检查 Evas 是否支持加载 PNG。\n"
 
 #: ../src/bin/e_main.c:702
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
-msgstr "Enlightenment 发现 Evas 不能加载 JPEG 文件。检查 Evas 是否支持加载 JPEG。"
+msgstr "Enlightenment 发现 Evas 不能加载 JPEG 文件。检查 Evas 是否支持加载 JPEG。\n"
 
 #: ../src/bin/e_main.c:711
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
-msgstr "Enlightenment 发现 Evas 不能加载 EET 文件。检查 Evas 是否支持加载 EET。"
+msgstr "Enlightenment 发现 Evas 不能加载 EET 文件。检查 Evas 是否支持加载 EET。\n"
 
 #: ../src/bin/e_main.c:722
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
-msgstr "Enlightenment 发现 Evas 不能加载 Sans 字体。检查 Evas 是否支持 fontconfig，而且系统定义了 Sans 字体。"
+msgstr "Enlightenment 发现 Evas 不能加载 Sans 字体。检查 Evas 是否支持 fontconfig，而且系统定义了 Sans 字体。\n"
 
 #: ../src/bin/e_main.c:732
 msgid "Setup Screens"
@@ -3900,22 +3900,6 @@ msgid ""
 "not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d "
 "Hz will be restored in %d seconds."
 msgstr "现在这样正常吗？如果正常就<hilight>保存</hilight>设置，否则就恢复原设置。<br>如果您不按任何键，将在 %d 秒后恢复原来的分辨率 <br>%dx%d %d Hz。"
-
-#: ../src/modules/conf_display/e_int_config_display.c:136
-#, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
-"not.<br>If you do not press a button, the old resolution of<br>%dx%d will be "
-"restored in %d seconds."
-msgstr "现在这样正常吗？如果正常就<hilight>保存</hilight>设置，否则就恢复原设置。<br>如果您不按任何键，将在 %d 秒后恢复原来设置。"
-
-#: ../src/modules/conf_display/e_int_config_display.c:146
-#, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
-"not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d "
-"Hz will be restored <hilight>IMMEDIATELY</hilight>."
-msgstr "现在这样正常吗？如果正常就<hilight>保存</hilight>设置，否则就恢复原设置。<br>如果您不按任何键，<hilight>立即</hilight>恢复原有设置。"
 
 #: ../src/modules/conf_display/e_int_config_display.c:153
 #, c-format
