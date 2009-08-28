@@ -17,6 +17,7 @@ extern EAPI Ecore_X_Atom E_ATOM_MAPPED;
 extern EAPI Ecore_X_Atom E_ATOM_SHADE_DIRECTION;
 extern EAPI Ecore_X_Atom E_ATOM_HIDDEN;
 extern EAPI Ecore_X_Atom E_ATOM_BORDER_SIZE;
+extern EAPI Ecore_X_Atom E_ATOM_DESKTOP_FILE;
 
 /* extra e window states */
 /* if we add more states, we need to fix

@@ -14,6 +14,7 @@ EAPI Ecore_X_Atom E_ATOM_HIDDEN = 0;
 EAPI Ecore_X_Atom E_ATOM_BORDER_SIZE = 0;
 EAPI Ecore_X_Atom E_ATOM_WINDOW_STATE = 0;
 EAPI Ecore_X_Atom E_ATOM_WINDOW_STATE_CENTERED = 0;
+EAPI Ecore_X_Atom E_ATOM_DESKTOP_FILE = 0;
 
 /* externally accessible functions */
 EAPI int
@@ -29,11 +30,12 @@ e_atoms_init(void)
 	"__E_WINDOW_HIDDEN",
 	"__E_WINDOW_BORDER_SIZE",
 	"__E_ATOM_WINDOW_STATE",
-	"__E_ATOM_WINDOW_STATE_CENTERED"
+        "__E_ATOM_WINDOW_STATE_CENTERED",
+        "__E_ATOM_DESKTOP_FILE"
    };
-   Ecore_X_Atom atoms[10];
+   Ecore_X_Atom atoms[11];
    
-   ecore_x_atoms_get(atom_names, 10, atoms);
+   ecore_x_atoms_get(atom_names, 11, atoms);
    E_ATOM_MANAGED = atoms[0];
    E_ATOM_CONTAINER = atoms[1];
    E_ATOM_ZONE = atoms[2];
@@ -44,6 +46,7 @@ e_atoms_init(void)
    E_ATOM_BORDER_SIZE = atoms[7];
    E_ATOM_WINDOW_STATE = atoms[8];
    E_ATOM_WINDOW_STATE_CENTERED = atoms[9];
+   E_ATOM_DESKTOP_FILE = atoms[10];
    return 1;
 }
 

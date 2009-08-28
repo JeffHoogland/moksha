@@ -7368,7 +7368,8 @@ _e_border_eval(E_Border *bd)
 	     if ((bd->client.icccm.name) && (bd->client.icccm.class))
 	       bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
 							       bd->client.icccm.class);
-	     if (bd->desktop) efreet_desktop_ref(bd->desktop);
+	     /* already refd by desktop_wm_class_find */
+	     /* if (bd->desktop) efreet_desktop_ref(bd->desktop); */
 	  }
 	if (!bd->desktop)
 	  {
@@ -7376,6 +7377,19 @@ _e_border_eval(E_Border *bd)
 						      bd->client.netwm.pid);
 	     if (bd->desktop) efreet_desktop_ref(bd->desktop);
 	  }
+	if (!bd->desktop && bd->client.icccm.name)
+	  {
+	     /* this works for most cases as fallback. useful when app is
+		run from a shell  */
+	     bd->desktop = efreet_util_desktop_exec_find(bd->client.icccm.name);
+	  }
+
+	if (bd->desktop)
+	  {
+	     ecore_x_window_prop_string_set(bd->client.win, E_ATOM_DESKTOP_FILE,
+					    bd->desktop->orig_path);
+	  }
+
 	bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
 	if ((bd->focused) && (bd->icon_object))
 	  edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");

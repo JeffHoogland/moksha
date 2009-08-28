@@ -256,6 +256,8 @@ e_manager_manage_windows(E_Manager *man)
 		  E_Desk       *desk = NULL;
 		  E_Border     *bd = NULL;
 		  unsigned int  id;
+		  char *path;
+		  Efreet_Desktop *desktop = NULL;
 
 		  /* get all information from window before it is 
 		   * reset by e_border_new */
@@ -282,6 +284,14 @@ e_manager_manage_windows(E_Manager *man)
 					    deskxy[0],
 					    deskxy[1]);
 
+		  path = ecore_x_window_prop_string_get(windows[i],
+							E_ATOM_DESKTOP_FILE);
+		  if (path)
+		    {
+		       desktop = efreet_desktop_get(path);
+		       free(path);
+		    }
+
 		    {
 		       bd = e_border_new(con, windows[i], 1, 0);
 		       if (bd)
@@ -292,6 +302,7 @@ e_manager_manage_windows(E_Manager *man)
 			     * be set according to the desk */
 //			    if (zone) e_border_zone_set(bd, zone);
 			    if (desk) e_border_desk_set(bd, desk);
+			    bd->desktop = desktop;
 			 }
 		    }
 	       }
