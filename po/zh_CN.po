@@ -4,6 +4,7 @@
 # gao stone <gaoghy@gmail.com>, 2008.
 # Aron Xu <aronmalache@163.com>, 2008, 2009.
 # Luo Jie <lililjlj@gmail.com>, 2009.
+# eexpress <exp.exp@gmail.com>, 2009.
 #
 msgid ""
 msgstr ""
@@ -11,13 +12,11 @@ msgstr ""
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-08-25 17:13+0800\n"
 "PO-Revision-Date: 2009-08-09 11:05+0000\n"
-"Last-Translator: Careone <zzbusagain@yahoo.com.cn>\n"
+"Last-Translator: eexpress <exp.exp@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translations@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-08-27 10:00+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
 
 #: ../src/bin/e_about.c:17
 msgid "About Enlightenment"
@@ -384,19 +383,19 @@ msgstr "切换到桌面 ..."
 
 #: ../src/bin/e_actions.c:2629
 msgid "Flip Desktop Left (All Screens)"
-msgstr "向左翻转桌面（所有屏幕）"
+msgstr "向左翻转桌面(所有屏幕)"
 
 #: ../src/bin/e_actions.c:2631
 msgid "Flip Desktop Right (All Screens)"
-msgstr "向右翻转桌面（所有屏幕）"
+msgstr "向右翻转桌面(所有屏幕)"
 
 #: ../src/bin/e_actions.c:2633
 msgid "Flip Desktop Up (All Screens)"
-msgstr "向上翻转桌面（所有屏幕）"
+msgstr "向上翻转桌面(所有屏幕)"
 
 #: ../src/bin/e_actions.c:2635
 msgid "Flip Desktop Down (All Screens)"
-msgstr "向下翻转桌面（所有屏幕）"
+msgstr "向下翻转桌面(所有屏幕)"
 
 #: ../src/bin/e_actions.c:2637
 msgid "Flip Desktop By... (All Screens)"
@@ -825,7 +824,7 @@ msgstr "锁定失败"
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
-msgstr ""
+msgstr "桌面不能锁定，因为某些软件独占了键盘鼠标，并且独占不能解开。"
 
 #: ../src/bin/e_desklock.c:325
 msgid "Please enter your unlock password"
@@ -841,7 +840,7 @@ msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
 "The error code was <hilight>%i</hilight>.<br>This is bad and should not be "
 "happening. Please report this bug."
-msgstr ""
+msgstr "PAM 认证出错，不能产生认证会话。出错代码是 %i。这是不正常的，请报告错误。"
 
 #: ../src/bin/e_desklock.c:1016 ../src/bin/e_screensaver.c:95
 msgid "Activate Presentation Mode?"
@@ -852,7 +851,7 @@ msgid ""
 "You unlocked desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
-msgstr ""
+msgstr "您解锁桌面太快了。您想要启动简报模式并临时禁止屏保、屏幕锁、电源管理？"
 
 #: ../src/bin/e_desklock.c:1031 ../src/bin/e_screensaver.c:110
 msgid "No, but increase timeout"
@@ -873,7 +872,7 @@ msgid ""
 "will be used for this<br>window cannot be guessed. You will need to<br>use "
 "the window title instead. This will only<br>work if the window title is the "
 "same at<br>the time the window starts up, and does not<br>change."
-msgstr ""
+msgstr "您要产生图标的这个窗口，没有窗口名和窗口类名，图标必须要知道这些特性，而不能瞎猜的。您可以使用窗口标题名代替，但这必须是窗口启动后，其标题名和设置一致，并且一直不能改变。"
 
 #: ../src/bin/e_eap_editor.c:215
 msgid "Desktop Entry Editor"
@@ -1867,11 +1866,11 @@ msgid ""
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
 msgstr ""
-"你正试着让 Enlightenment "
-"记住把某些属性（诸如大小、位置、边框样式等）<br>应用到一个窗口，而这个窗口<hilight>并没有单一的属性</hilight>。<br><br>这意"
+"您正试着让 Enlightenment "
+"记住把某些属性(诸如大小、位置、边框样式等)<br>应用到一个窗口，而这个窗口<hilight>并没有单一的属性</hilight>。<br><br>这意"
 "味着它是跟其它一个或多个窗口共享名字／类、Transience、角色等属性的，<br>记住这个窗口的这些属性也会应用到匹配的那些窗口。<br><br>这只"
-"是个警告，如果你不想这个操作发生的话。<br>如果这是你所要做的，按一下<hilight>应用</hilight>或者<hilight>OK</hilig"
-"ht>按钮，你的操作就会生效。<br>如果你不想，按下<hilight>取消</hilight>，那就什么都不会发生。"
+"是个警告，如果您不想这个操作发生的话。<br>如果这是您所要做的，按一下<hilight>应用</hilight>或者<hilight>OK</hilig"
+"ht>按钮，您的操作就会生效。<br>如果您不想，按下<hilight>取消</hilight>，那就什么都不会发生。"
 
 #: ../src/bin/e_int_border_remember.c:332
 #: ../src/bin/e_int_border_remember.c:362
@@ -1885,8 +1884,8 @@ msgid ""
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
 msgstr ""
-"你正试着让 Enlightenment "
-"记住把某些属性（诸如大小、位置、边框样式等）<br>应用到一个窗口，却<hilight>不指定如何记住它</hilight>。<br><br>你必须指定至"
+"您正试着让 Enlightenment "
+"记住把某些属性(诸如大小、位置、边框样式等)<br>应用到一个窗口，却<hilight>不指定如何记住它</hilight>。<br><br>您必须指定至"
 "少一种记住这个窗口的方法。"
 
 #: ../src/bin/e_int_border_remember.c:365
@@ -1905,12 +1904,12 @@ msgid ""
 "<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
 "affected."
 msgstr ""
-"你正试着让 Enlightenment "
-"记住把某些属性（诸如大小、位置、边框样式等）<br>应用到一个窗口，而这个窗口<hilight>并没有单一的属性</hilight>。<br><br>这意"
-"味着它是跟其它一个或多个窗口共享名字／类、Transience、角色等属性的，<br>记住这个窗口的这些属性也会应用到匹配的那些窗口。<br><br>你可"
-"能需要启用<hilight>只匹配一个窗口</hilight>选项，如果你只是想要仅仅这个窗口的实例被修改，而保留其它窗口不变。<br><br>这只是个警"
-"告，如果你不想这个操作发生的话。<br>如果这是你所要做的，按一下<hilight>应用</hilight>或者<hilight>OK</hilight>"
-"按钮，你的操作就会生效。<br>如果你不想，按下<hilight>取消</hilight>，那就什么都不会发生。"
+"您正试着让 Enlightenment "
+"记住把某些属性(诸如大小、位置、边框样式等)<br>应用到一个窗口，而这个窗口<hilight>并没有单一的属性</hilight>。<br><br>这意"
+"味着它是跟其它一个或多个窗口共享名字／类、Transience、角色等属性的，<br>记住这个窗口的这些属性也会应用到匹配的那些窗口。<br><br>您可"
+"能需要启用<hilight>只匹配一个窗口</hilight>选项，如果您只是想要仅仅这个窗口的实例被修改，而保留其它窗口不变。<br><br>这只是个警"
+"告，如果您不想这个操作发生的话。<br>如果这是您所要做的，按一下<hilight>应用</hilight>或者<hilight>OK</hilight>"
+"按钮，您的操作就会生效。<br>如果您不想，按下<hilight>取消</hilight>，那就什么都不会发生。"
 
 #: ../src/bin/e_int_border_remember.c:442
 msgid "Nothing"
@@ -2081,7 +2080,7 @@ msgid ""
 "Error starting the input method executable<br><br>please make sure that your "
 "input<br>method configuration is correct and<br>that your "
 "configuration's<br>executable is in your PATH<br>"
-msgstr ""
+msgstr "启动输入法出现错误。请确定您的输入法配置正确，并且配置文件可执行。"
 
 #: ../src/bin/e_int_menus.c:89
 msgid "Main"
@@ -2136,7 +2135,7 @@ msgstr "显示/隐藏所有窗口"
 
 #: ../src/bin/e_int_menus.c:575
 msgid "(No Applications)"
-msgstr "（无应用程序）"
+msgstr "(无应用程序)"
 
 #: ../src/bin/e_int_menus.c:709
 msgid "Set Virtual Desktops"
@@ -2144,7 +2143,7 @@ msgstr "设定虚拟桌面"
 
 #: ../src/bin/e_int_menus.c:1087 ../src/bin/e_int_menus.c:1271
 msgid "(No Windows)"
-msgstr "（无窗口）"
+msgstr "(无窗口)"
 
 #: ../src/bin/e_int_menus.c:1181 ../src/bin/e_int_menus.c:1283
 msgid "No name!!"
@@ -2152,7 +2151,7 @@ msgstr "无名称！！"
 
 #: ../src/bin/e_int_menus.c:1362
 msgid "(No Shelves)"
-msgstr "（无书架）"
+msgstr "(无书架)"
 
 #: ../src/bin/e_int_menus.c:1374 ../src/bin/e_shelf.c:1157
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:132
@@ -2279,6 +2278,10 @@ msgid ""
 "or is not owned by you. Please check:\n"
 "%s/enlightenment-%s\n"
 msgstr ""
+"可能遇到 IPC 攻击。发现了 IPC 套接目录，\n"
+"但是权限太宽松(应该只能由所有者可读写)，\n"
+"或者所有者不是您。请检查："
+"%s/enlightenment-%s\n"
 
 #: ../src/bin/e_ipc.c:57
 #, c-format
@@ -2419,7 +2422,7 @@ msgid ""
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
 "Enlightenment 发现 ecore_evas 不支持 Evas 的软件 X11\n"
-"渲染。请检查你的 Evas 和 Ecore 安装并确认他们支持软\n"
+"渲染。请检查您的 Evas 和 Ecore 安装并确认他们支持软\n"
 "件 X11 渲染。"
 
 #: ../src/bin/e_main.c:538 ../src/bin/e_main.c:545
@@ -2494,32 +2497,32 @@ msgstr "测试格式支持"
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
-msgstr ""
+msgstr "Enlightenment 发现 Evas 不能创建画笔缓冲。检查 Evas 是否支持软件缓冲。"
 
 #: ../src/bin/e_main.c:693
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
-msgstr ""
+msgstr "Enlightenment 发现 Evas 不能加载 PNG 文件。检查 Evas 是否支持加载 PNG。"
 
 #: ../src/bin/e_main.c:702
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
-msgstr ""
+msgstr "Enlightenment 发现 Evas 不能加载 JPEG 文件。检查 Evas 是否支持加载 JPEG。"
 
 #: ../src/bin/e_main.c:711
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
-msgstr ""
+msgstr "Enlightenment 发现 Evas 不能加载 EET 文件。检查 Evas 是否支持加载 EET。"
 
 #: ../src/bin/e_main.c:722
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
-msgstr ""
+msgstr "Enlightenment 发现 Evas 不能加载 Sans 字体。检查 Evas 是否支持 fontconfig，而且系统定义了 Sans 字体。"
 
 #: ../src/bin/e_main.c:732
 msgid "Setup Screens"
@@ -2745,7 +2748,7 @@ msgid ""
 "have been disabled and will not be loaded to help<br>remove any problem "
 "modules from your configuration.<br><br>The module configuration dialog "
 "should let you select your<br>modules again."
-msgstr ""
+msgstr "Enlightenment 之前崩溃并重启过。全部模块都禁止加载，以便发现您的配置中的问题模块。您可以在模块设置对话栏中，重新加载模块。"
 
 #: ../src/bin/e_main.c:1050
 msgid "Configure Shelves"
@@ -2812,7 +2815,7 @@ msgstr "确定要删除此书架？"
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
-msgstr "你要求删除此书架。你确定要删除吗？"
+msgstr "您要求删除此书架。您确定要删除吗？"
 
 #: ../src/bin/e_shelf.c:1701 ../src/bin/e_toolbar.c:325
 msgid "Stop Moving/Resizing Items"
@@ -3794,7 +3797,7 @@ msgstr "拖拽对象到屏幕边缘时翻转"
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:298
 msgid "Wrap desktops around when flipping"
-msgstr ""
+msgstr "翻转时反转桌面？"
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:302
 msgid "Flip Animation"
@@ -3821,17 +3824,17 @@ msgstr "%1.1f 秒"
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:317
 msgid "Background panning"
-msgstr ""
+msgstr "背景摇镜"
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:321
 #, c-format
 msgid "%.2f X-axis pan factor"
-msgstr ""
+msgstr "%.2f X 轴摇镜系数"
 
 #: ../src/modules/conf_desks/e_int_config_desks.c:325
 #, c-format
 msgid "%.2f Y-axis pan factor"
-msgstr ""
+msgstr "%.2f Y 轴摇镜系数"
 
 #: ../src/modules/conf_desks/e_mod_main.c:35
 msgid "Virtual Desktops"
@@ -3866,7 +3869,7 @@ msgstr "正常窗口"
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:98
 msgid "Default Settings Dialogs Mode"
-msgstr ""
+msgstr "对话栏模式默认设定"
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:101
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:140
@@ -3896,7 +3899,7 @@ msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
 "not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d "
 "Hz will be restored in %d seconds."
-msgstr ""
+msgstr "现在这样正常吗？如果正常就<hilight>保存</hilight>设置，否则就恢复原设置。<br>如果您不按任何键，将在 %d 秒后恢复原来的分辨率 <br>%dx%d %d Hz。"
 
 #: ../src/modules/conf_display/e_int_config_display.c:136
 #, c-format
@@ -3904,7 +3907,7 @@ msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
 "not.<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored in %d seconds."
-msgstr ""
+msgstr "现在这样正常吗？如果正常就<hilight>保存</hilight>设置，否则就恢复原设置。<br>如果您不按任何键，将在 %d 秒后恢复原来设置。"
 
 #: ../src/modules/conf_display/e_int_config_display.c:146
 #, c-format
@@ -3912,7 +3915,7 @@ msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
 "not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d "
 "Hz will be restored <hilight>IMMEDIATELY</hilight>."
-msgstr ""
+msgstr "现在这样正常吗？如果正常就<hilight>保存</hilight>设置，否则就恢复原设置。<br>如果您不按任何键，<hilight>立即</hilight>恢复原有设置。"
 
 #: ../src/modules/conf_display/e_int_config_display.c:153
 #, c-format
@@ -3920,11 +3923,11 @@ msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if "
 "not.<br>If you do not press a button, the old resolution of<br>%dx%d will be "
 "restored <hilight>IMMEDIATELY</hilight>."
-msgstr ""
+msgstr "现在这样正常吗？如果正常就<hilight>保存</hilight>设置，否则就恢复原设置。<br>如果您不按任何键，<hilight>立即</hilight>恢复原有 <br>%dx%d 分辨率。"
 
 #: ../src/modules/conf_display/e_int_config_display.c:190
 msgid "Resolution change"
-msgstr "分辨率改变"
+msgstr "改变分辨率"
 
 #: ../src/modules/conf_display/e_int_config_display.c:194
 msgid "Save"
@@ -3969,9 +3972,9 @@ msgid ""
 "change screen resolutions without<br>the support of this extension. It could "
 "also be<br>that at the time <hilight>ecore</hilight> was built, there<br>was "
 "no XRandR support detected."
-msgstr ""
+msgstr "您的图形服务不支持 <hilight>XRandR</hilight>(缩放和旋转)扩展功能。<br>"
+"您不能在此情况下修改屏幕分辨率。<br>也可能是在编译 <hilight>ecore</hilight> 时没有检测到 XRandR 支持。"
 
-#: ../src/modules/conf_display/e_int_config_display.c:654
 msgid "No Refresh Rates Found"
 msgstr "未找到刷新率"
 
@@ -3982,7 +3985,7 @@ msgid ""
 "if you are not, then<br>the current refresh rate will be used when "
 "setting<br>the resolution, which may cause <hilight>damage</hilight> to your "
 "screen."
-msgstr ""
+msgstr "您的图形服务没报告刷新率。如果您是在运行一个嵌套的图形服务，这属于正常的。否则，在您修改屏幕分辨率的时候，只能使用当前的屏幕刷新率，这可能导致您的屏幕损伤。"
 
 #: ../src/modules/conf_display/e_mod_main.c:35
 msgid "Screen Resolution"
@@ -3995,11 +3998,11 @@ msgstr "显示电源管理信号"
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:61
 msgid "The current display server is not <br>DPMS capable."
-msgstr ""
+msgstr "当前显示服务，不兼容 <br>DPMS 特性。"
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:82
 msgid "The current display server does not <br>have the DPMS extension."
-msgstr ""
+msgstr "当前显示服务，不支持 <br>DPMS 扩展特性。"
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:112
 msgid "Display Power Management Settings"
@@ -4171,7 +4174,7 @@ msgid ""
 "You have chosen to enable composite support,<br>but your current screen does "
 "not support composite.<br><br>Are you sure you wish to enable composite "
 "support ?"
-msgstr ""
+msgstr "您已经选择了开启混合渲染，但是您当前的屏幕不支持。<br><br>您确定需要开启？"
 
 #: ../src/modules/conf_engine/e_mod_main.c:35
 msgid "Engine"
@@ -4232,7 +4235,7 @@ msgstr "终端设置"
 
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:198
 msgid "Terminal Command (CTRL+RETURN to utilize)"
-msgstr "终端命令（CTRL+RETURN 启用）"
+msgstr "终端命令(CTRL+RETURN 启用)"
 
 #: ../src/modules/conf_exebuf/e_int_config_exebuf.c:206
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:295
@@ -4302,15 +4305,15 @@ msgstr "标题栏"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:64
 msgid "Textblock Plain"
-msgstr ""
+msgstr "文字块无格式"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:65
 msgid "Textblock Light"
-msgstr ""
+msgstr "文字块减小"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:66
 msgid "Textblock Big"
-msgstr ""
+msgstr "文字块增大"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:70
 msgid "Settings Heading"
@@ -4587,7 +4590,7 @@ msgstr "启用缩略图滚动"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:100
 msgid "Threshold for a thumb drag"
-msgstr ""
+msgstr "缩略图拖放阈值"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:103
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:228
@@ -4597,7 +4600,7 @@ msgstr "%1.0f 像素"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:107
 msgid "Threshold for applying drag momentum"
-msgstr ""
+msgstr "启动拖放的阈值"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:110
 #, c-format
@@ -5176,11 +5179,11 @@ msgstr "屏幕保护程序计时器"
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:140
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:178
 msgid "Time until X screensaver starts"
-msgstr ""
+msgstr "屏保启动延时"
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:186
 msgid "Time until X screensaver alternates"
-msgstr ""
+msgstr "屏保停止延时"
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:216
 msgid "Blanking"
@@ -5890,12 +5893,12 @@ msgstr "选取窗口时提升窗口"
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:168
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:246
 msgid "Warp mouse to window while selecting"
-msgstr ""
+msgstr "选择时不在窗口回绕光标"
 
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:170
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:248
 msgid "Uncover windows while selecting"
-msgstr ""
+msgstr "选择时不覆盖窗口"
 
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:172
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:250
@@ -5905,16 +5908,16 @@ msgstr "选定时跳转到桌面"
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:176
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:254
 msgid "Warp Settings"
-msgstr ""
+msgstr "回绕设置"
 
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:177
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:255
 msgid "Warp At End"
-msgstr ""
+msgstr "尾部回绕"
 
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:257
 msgid "Warp Speed"
-msgstr ""
+msgstr "回绕速度"
 
 #: ../src/modules/cpufreq/e_mod_main.c:135
 msgid "Cpufreq"
@@ -5922,23 +5925,23 @@ msgstr "CPU 频率"
 
 #: ../src/modules/cpufreq/e_mod_main.c:182
 msgid "Fast (4 ticks)"
-msgstr "快 （4秒）"
+msgstr "快 (4秒)"
 
 #: ../src/modules/cpufreq/e_mod_main.c:189
 msgid "Medium (8 ticks)"
-msgstr "中等 （8秒）"
+msgstr "中等 (8秒)"
 
 #: ../src/modules/cpufreq/e_mod_main.c:196
 msgid "Normal (32 ticks)"
-msgstr "正常 （32秒）"
+msgstr "正常 (32秒)"
 
 #: ../src/modules/cpufreq/e_mod_main.c:203
 msgid "Slow (64 ticks)"
-msgstr "慢 （64秒）"
+msgstr "慢 (64秒)"
 
 #: ../src/modules/cpufreq/e_mod_main.c:210
 msgid "Very Slow (256 ticks)"
-msgstr "很慢 （256下）"
+msgstr "很慢 (256下)"
 
 #: ../src/modules/cpufreq/e_mod_main.c:225
 msgid "Manual"
@@ -5965,11 +5968,11 @@ msgstr "重置 CPU 电源策略"
 
 #: ../src/modules/cpufreq/e_mod_main.c:252
 msgid "Powersaving policy"
-msgstr ""
+msgstr "节电规则"
 
 #: ../src/modules/cpufreq/e_mod_main.c:280
 msgid "Automatic powersaving"
-msgstr ""
+msgstr "自动节电"
 
 #: ../src/modules/cpufreq/e_mod_main.c:299
 #, c-format
@@ -5995,7 +5998,7 @@ msgstr "设定 CPU 速度"
 
 #: ../src/modules/cpufreq/e_mod_main.c:337
 msgid "Powersaving behavior"
-msgstr ""
+msgstr "节电行为"
 
 #: ../src/modules/cpufreq/e_mod_main.c:386
 msgid ""
@@ -6008,7 +6011,7 @@ msgid ""
 "Your kernel does not support setting the<br>CPU frequency at all. You may be "
 "missing<br>Kernel modules or features, or your CPU<br>simply does not "
 "support this feature."
-msgstr ""
+msgstr "您的内核不支持设置设置 CPU 频率。<br>可能是缺少内核模块或者特性，或者是纯粹由于 CPU 不支持。"
 
 #: ../src/modules/cpufreq/e_mod_main.c:432
 msgid ""
@@ -6018,7 +6021,7 @@ msgstr "试着通过模块 setfreq 功能设定 CPU 频率设置<br>时发生一
 
 #: ../src/modules/dropshadow/e_mod_config.c:40
 msgid "Dropshadow Settings"
-msgstr ""
+msgstr "投影设置"
 
 #: ../src/modules/dropshadow/e_mod_config.c:108
 msgid "Quality"
@@ -6134,7 +6137,10 @@ msgid ""
 "functionality that your old<br>configuration simply lacks. This new set of "
 "defaults will fix<br>that by adding it in. You can re-configure things now "
 "to your<br>liking. Sorry for the hiccup in your configuration.<br>"
-msgstr ""
+msgstr "Fileman 模块的设置数据需要更新。<br>您的旧配置已被清除并建立了新的初始设置。<br>"
+"这在开发中是正常现象，所以无需提交错误。<br>这只是意味着 Fileman 需要新的初始配置来正常工作，"
+"旧配置缺少了某些功能。<br>新配置增加了这些功能。现在您可以重新按照喜好修改您的设置了。<br>"
+"我们对此造成的打搅表示抱歉。"
 
 #: ../src/modules/fileman/e_mod_main.c:444
 msgid ""
@@ -6145,17 +6151,18 @@ msgid ""
 "precaution your configuration has been now restored to<br>defaults. Sorry "
 "for the inconvenience.<br>"
 msgstr ""
-"您的配置文件比当前的 Enlightenment "
-"更新。这是非常奇怪的事。除非您降级了Enlightenment，或者复制了其它地方的某个新版本的配置文件，否则这种情况不应该发生。这是不好的情况，以防万一"
-"，您的配置文件已经被恢复到默认状态。对任何的不便表示歉意。<br>"
+"您的配置文件比当前的 Enlightenment 的更新。这是非常奇怪的事。<br>"
+"除非您降级了 Enlightenment，或者复制了其它地方的某个新版本的配置文件，<br>"
+"否则这种情况不应该发生。这是不好的情况，为防万一您的配置文件已经被恢复到默认状态。<br>"
+"对任何因此造成的的不便表示歉意。<br>"
 
 #: ../src/modules/fileman/e_mod_main.c:513
 msgid "Fileman Settings Updated"
-msgstr ""
+msgstr "Fileman 设置已更新"
 
 #: ../src/modules/fileman/e_mod_config.c:95
 msgid "Fileman Settings"
-msgstr "文件管理器设置"
+msgstr "Fileman 设置"
 
 #: ../src/modules/fileman/e_mod_config.c:227
 msgid "Icon Size"
@@ -6212,11 +6219,11 @@ msgstr "在桌面上显示 HAL 图标"
 
 #: ../src/modules/fileman/e_mod_config.c:273
 msgid "Mount volumes on insert"
-msgstr ""
+msgstr "插入介质后，立刻挂载"
 
 #: ../src/modules/fileman/e_mod_config.c:276
 msgid "Open filemanager on mount"
-msgstr ""
+msgstr "挂载后，打开文件管理器"
 
 #: ../src/modules/fileman/e_fwin.c:1463
 msgid "Go to Parent Directory"
@@ -6258,19 +6265,19 @@ msgstr ""
 #: ../src/modules/fileman_opinfo/e_mod_main.c:97
 #, c-format
 msgid "Moving is aborted"
-msgstr ""
+msgstr "移动操作被取消"
 
 #: ../src/modules/fileman/e_fwin.c:2207
 #: ../src/modules/fileman_opinfo/e_mod_main.c:100
 #, c-format
 msgid "Deleting is aborted"
-msgstr ""
+msgstr "删除操作被取消"
 
 #: ../src/modules/fileman/e_fwin.c:2210
 #: ../src/modules/fileman_opinfo/e_mod_main.c:103
 #, c-format
 msgid "Unknown operation from slave is aborted"
-msgstr ""
+msgstr "从设备的无效操作，已中止。"
 
 #: ../src/modules/fileman/e_fwin.c:2220
 #: ../src/modules/fileman_opinfo/e_mod_main.c:113
@@ -6282,70 +6289,70 @@ msgstr ""
 #: ../src/modules/fileman_opinfo/e_mod_main.c:115
 #, c-format
 msgid "Copying %s (eta: %d sec)"
-msgstr ""
+msgstr "复制 %s (剩余时间：%d 秒)"
 
 #: ../src/modules/fileman/e_fwin.c:2226
 #: ../src/modules/fileman_opinfo/e_mod_main.c:119
 #, c-format
 msgid "Move of %s done"
-msgstr ""
+msgstr "移动 %s 完成"
 
 #: ../src/modules/fileman/e_fwin.c:2228
 #: ../src/modules/fileman_opinfo/e_mod_main.c:121
 #, c-format
 msgid "Moving %s (eta: %d sec)"
-msgstr ""
+msgstr "移动 %s (剩余时间：%d 秒)"
 
 #: ../src/modules/fileman/e_fwin.c:2232
 #: ../src/modules/fileman_opinfo/e_mod_main.c:125
 #, c-format
 msgid "Delete done"
-msgstr ""
+msgstr "删除完成"
 
 #: ../src/modules/fileman/e_fwin.c:2234
 #: ../src/modules/fileman_opinfo/e_mod_main.c:127
 #, c-format
 msgid "Deleting files..."
-msgstr ""
+msgstr "正在删除文件..."
 
 #: ../src/modules/fileman/e_fwin.c:2237
 #: ../src/modules/fileman_opinfo/e_mod_main.c:130
 #, c-format
 msgid "Unknow operation from slave %d"
-msgstr ""
+msgstr "从设备 %d 产生无效的操作"
 
 #: ../src/modules/fileman_opinfo/e_mod_main.c:138
 #: ../src/modules/fileman_opinfo/e_mod_main.c:148
 msgid "(no information)"
-msgstr ""
+msgstr "(无信息)"
 
 #: ../src/modules/fileman_opinfo/e_mod_main.c:142
 #, c-format
 msgid "File: %s"
-msgstr ""
+msgstr "文件：%s"
 
 #: ../src/modules/fileman_opinfo/e_mod_main.c:144
 #, c-format
 msgid "From: %s"
-msgstr ""
+msgstr "发信人：%s"
 
 #: ../src/modules/fileman_opinfo/e_mod_main.c:151
 #, c-format
 msgid "To: %s"
-msgstr ""
+msgstr "收信人：%s"
 
 #: ../src/modules/fileman_opinfo/e_mod_main.c:330
 #, c-format
 msgid "Processing %d operation(s)"
-msgstr ""
+msgstr "正执行 %d 个操作"
 
 #: ../src/modules/fileman_opinfo/e_mod_main.c:334
 msgid "Filemanager is idle"
-msgstr ""
+msgstr "文件管理器空闲"
 
 #: ../src/modules/fileman_opinfo/e_mod_main.c:415
 msgid "EFM Operation Info"
-msgstr "EFM运行信息"
+msgstr "EFM 运行信息"
 
 #: ../src/modules/gadman/e_mod_config.c:58
 msgid "Gadgets Manager"
@@ -6549,7 +6556,7 @@ msgstr "IBox"
 
 #: ../src/modules/pager/e_mod_config.c:72
 msgid "Pager Settings"
-msgstr ""
+msgstr "页面设定"
 
 #: ../src/modules/pager/e_mod_config.c:120
 #: ../src/modules/pager/e_mod_config.c:160
@@ -6573,11 +6580,11 @@ msgstr "当桌面更改时显示弹出窗口"
 
 #: ../src/modules/pager/e_mod_config.c:132
 msgid "Show popup for urgent windows"
-msgstr ""
+msgstr "显示独占窗口的弹出列表？"
 
 #: ../src/modules/pager/e_mod_config.c:167
 msgid "Select and Slide button"
-msgstr ""
+msgstr "选择侧栏按键"
 
 #: ../src/modules/pager/e_mod_config.c:169
 #: ../src/modules/pager/e_mod_config.c:176
@@ -6634,11 +6641,11 @@ msgstr "紧急窗口设置"
 
 #: ../src/modules/pager/e_mod_config.c:230
 msgid "Show popup on urgent window"
-msgstr ""
+msgstr "在独占窗口显示弹出菜单"
 
 #: ../src/modules/pager/e_mod_config.c:233
 msgid "Popup on urgent window sticks on the screen"
-msgstr ""
+msgstr "屏幕置顶的独占窗口上显示弹出菜单？"
 
 #: ../src/modules/pager/e_mod_config.c:286
 msgid "Pager Button Grab"
@@ -6648,7 +6655,8 @@ msgstr ""
 msgid ""
 "Please press a mouse button<br>Press <hilight>Escape</hilight> to "
 "abort.<br>Or <hilight>Del</hilight> to reset the button."
-msgstr ""
+msgstr "请按一个鼠标按键，如要取消请按 <hilight>Esc</hilight>，"
+"<br>或使用 <hilight>Del</hilight> 恢复默认按键设置。"
 
 #: ../src/modules/pager/e_mod_config.c:343
 msgid "Attetion"
@@ -6659,7 +6667,7 @@ msgid ""
 "You cannot use the right mouse button in the<br>shelf for this as it is "
 "already taken by internal<br>code for context menus. <br>This button only "
 "works in the Popup"
-msgstr ""
+msgstr "您不能在 shelf 使用鼠标右键，因为右键已经被指定到上下文菜单。<br>此按键只能在弹出菜单工作。"
 
 #: ../src/modules/pager/e_mod_config.c:403
 #: ../src/modules/pager/e_mod_config.c:408
@@ -6838,7 +6846,8 @@ msgid ""
 "No menu files were<br>found on your system.<br>Please see "
 "the<br>documentation on<br>www.enlightenment.org<br>for more details "
 "on<br>how to get your<br>application menus<br>working."
-msgstr ""
+msgstr "您系统里没发现菜单文件。<br>详情请查阅 <br>www.enlightenment.org<br>"
+"上，关于如何让系统菜单正常工作的文档说明。"
 
 #: ../src/modules/wizard/page_030.c:107
 msgid "Select application menu"
@@ -6980,7 +6989,7 @@ msgstr "控制"
 msgid ""
 "Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
-msgstr ""
+msgstr "混音模块设置已改变。如有不便，敬请谅解。"
 
 #: ../src/modules/connman/e_mod_main.c:214
 msgid "Connection Manager"
@@ -7013,15 +7022,15 @@ msgstr "网络"
 
 #: ../src/modules/systray/e_mod_main.c:890
 msgid "Another systray exists"
-msgstr ""
+msgstr "有另外一个系统托盘存在。"
 
 #: ../src/modules/systray/e_mod_main.c:891
 msgid "There can be only one systray gadget and another one already exists."
-msgstr ""
+msgstr "只允许一个系统托盘的组件，目前已经有了一个。"
 
 #: ../src/modules/systray/e_mod_main.c:1093
 msgid "Systray"
-msgstr ""
+msgstr "系统托盘"
 
 #~ msgid "Configure Virtual Desktops"
 #~ msgstr "配置虚拟桌面"
@@ -7428,7 +7437,7 @@ msgstr ""
 #~ msgid ""
 #~ "You tried to drop an icon of an application that<br>does not have a matching "
 #~ "application file.<br><br>The icon cannot be added to IBar."
-#~ msgstr "你试着将一个没有 application 文件的应用程序图标拖放进来。<br><br>这个图标无法被加入到 IBar。"
+#~ msgstr "您试着将一个没有 application 文件的应用程序图标拖放进来。<br><br>这个图标无法被加入到 IBar。"
 
 #~ msgid "Enlightenment IBar Module"
 #~ msgstr "Enlightenment IBar 模块"
@@ -7503,7 +7512,7 @@ msgstr ""
 #~ msgstr "Eap 编辑器"
 
 #~ msgid "(Unused)"
-#~ msgstr "（未使用）"
+#~ msgstr "(未使用)"
 
 #~ msgid ""
 #~ "Enlightenment was unable run the program:\n"
@@ -7555,7 +7564,7 @@ msgstr ""
 #~ "如果没有，试着删除 ~/.ecore/enlightenment-* 下的所有文件，\n"
 #~ "然后再试着运行一遍。\n"
 #~ "\n"
-#~ "如果您使用AFS，那么你可能需要创建一个从 ~/.ecore 到 /tmp/my_directory/ecore\n"
+#~ "如果您使用AFS，那么您可能需要创建一个从 ~/.ecore 到 /tmp/my_directory/ecore\n"
 #~ "的符号链接，以便套接字的建立。"
 
 #~ msgid "Enlightenment IPC setup error!"
@@ -7639,19 +7648,19 @@ msgstr ""
 #~ msgstr "OK"
 
 #~ msgid "Check Fast (0.5 sec)"
-#~ msgstr "频繁检查（0.5秒）"
+#~ msgstr "频繁检查(0.5秒)"
 
 #~ msgid "Check Medium (1 sec)"
-#~ msgstr "一般检查（1秒）"
+#~ msgstr "一般检查(1秒)"
 
 #~ msgid "Check Normal (2 sec)"
-#~ msgstr "一般检查（2秒）"
+#~ msgstr "一般检查(2秒)"
 
 #~ msgid "Check Slow (5 sec)"
-#~ msgstr "缓慢检查（5秒）"
+#~ msgstr "缓慢检查(5秒)"
 
 #~ msgid "Check Very Slow (30 sec)"
-#~ msgstr "极缓慢检查（30秒）"
+#~ msgstr "极缓慢检查(30秒)"
 
 #~ msgid "No Digital Display"
 #~ msgstr "无数字显示"
@@ -7669,10 +7678,10 @@ msgstr ""
 #~ msgstr "很快"
 
 #~ msgid "Fix Aspect (Keep Height)"
-#~ msgstr "修正外观（保持高度）"
+#~ msgstr "修正外观(保持高度)"
 
 #~ msgid "Fix Aspect (Keep Width)"
-#~ msgstr "修正外观（保持宽度）"
+#~ msgstr "修正外观(保持宽度)"
 
 #~ msgid "Enlightenment Randr Module"
 #~ msgstr "Enlightenment Randr 模块"
@@ -7687,7 +7696,7 @@ msgstr ""
 #~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
 #~ "resolution %dx%d in %d seconds."
 #~ msgstr ""
-#~ "保持使用新的分辨率 <hilight>%dx%d</hilight> 吗？<br><br>将会恢复旧的分辨率 %dx%d （%d秒之内）。"
+#~ "保持使用新的分辨率 <hilight>%dx%d</hilight> 吗？<br><br>将会恢复旧的分辨率 %dx%d (%d秒之内)。"
 
 #~ msgid ""
 #~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
@@ -7713,19 +7722,19 @@ msgstr ""
 #~ msgstr "一小时"
 
 #~ msgid "Check Fast (1 sec)"
-#~ msgstr "频繁检查（1秒）"
+#~ msgstr "频繁检查(1秒)"
 
 #~ msgid "Check Medium (5 sec)"
-#~ msgstr "一般检查（5秒）"
+#~ msgstr "一般检查(5秒)"
 
 #~ msgid "Check Normal (10 sec)"
-#~ msgstr "一般检查（10秒）"
+#~ msgstr "一般检查(10秒)"
 
 #~ msgid "Check Slow (30 sec)"
-#~ msgstr "缓慢检查（30秒）"
+#~ msgstr "缓慢检查(30秒)"
 
 #~ msgid "Check Very Slow (60 sec)"
-#~ msgstr "极缓慢检查（60秒）"
+#~ msgstr "极缓慢检查(60秒)"
 
 #~ msgid "Back"
 #~ msgstr "后退"
@@ -7746,7 +7755,7 @@ msgstr ""
 #~ msgstr "中文 (简体)"
 
 #~ msgid "Chinese (Traditional)"
-#~ msgstr "中文（繁体）"
+#~ msgstr "中文(繁体)"
 
 #~ msgid "Hong Kong"
 #~ msgstr "香港"
@@ -7814,7 +7823,7 @@ msgstr ""
 #~ "启动图标编辑器错误\n"
 #~ "\n"
 #~ "请安装 e_util_eapp_edit\n"
-#~ "或者确认它已经在你的路径设置中\n"
+#~ "或者确认它已经在您的路径设置中\n"
 
 #~ msgid "Icon Edit Error"
 #~ msgstr "图标编辑错误"
@@ -7833,12 +7842,12 @@ msgstr ""
 #~ "这是 Enlightenment %s 。\n"
 #~ "版权所有 © 1999-2005，Enlightenment 开发小组。\n"
 #~ "\n"
-#~ "我们希望你能像我们开发这个软件一样开心地使用它。\n"
+#~ "我们希望您能像我们开发这个软件一样开心地使用它。\n"
 #~ "\n"
 #~ "请想想土豚们。它们也需要关爱。"
 
 #~ msgid "(Empty)"
-#~ msgstr "（空）"
+#~ msgstr "(空)"
 
 #~ msgid "Module API Error"
 #~ msgstr "模块API错误"
