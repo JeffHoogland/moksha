@@ -457,7 +457,7 @@ _evry_list_win_new(E_Zone *zone)
    e_theme_edje_object_set(o, "base/theme/everything",
 			   "e/modules/everything/list");
    offset_y = edje_object_data_get(o, "offset_y");
-   edje_object_size_min_get(o, &mw, &mh);
+   edje_object_size_min_calc(o, &mw, &mh);
    if (mh == 0) mh = 200;
    if (mw == 0) mw = win->popup->w / 2;
 
@@ -545,7 +545,7 @@ _evry_window_new(E_Zone *zone)
    e_theme_edje_object_set(o, "base/theme/everything",
 			   "e/modules/everything/main");
 
-   edje_object_size_min_get(o, &mw, &mh);
+   edje_object_size_min_calc(o, &mw, &mh);
 
    x = (zone->w / 2) - (mw / 2);
    y = (zone->h / 2) - (mh / 2);

@@ -26581,57 +26581,43 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 
    /////////////////////////////////////////////////////////////////////////////
    /*** MOD: EVERYTHING ***/
-   #define DROP_SHADOW 1
+   /* #define DROP_SHADOW 1 */
    
    ICON("everything-launch","icon_advanced.png",64)
      
    group { name: "e/modules/everything/main";
-   #ifdef DROP_SHADOW
-       min: 516 222;
-   #else
-       min: 416 122;
-   #endif
+   /* #ifdef DROP_SHADOW
+    *     min: 516 222;
+    * #else
+    *     min: 416 122;
+    * #endif */
        images {
 	   image: "base_bg.png" COMP;
 	   image: "inset_sunk.png" COMP;
 	   image: "menu_sel_bg.png" COMP;
 	   image: "menu_sel_fg.png" COMP;
-           #ifdef DROP_SHADOW
-	   image: "drop.png" COMP;
-           #endif
+	   image: "everything_drop.png" COMP;
        }
        data.item: "shaped" "1";
        parts {
-           #ifdef DROP_SHADOW
 	   part { name: "shadow";
 	       description { state: "default" 0.0;
-	   	   rel1.to: "bg";
+		   visible: 0;
+		   rel1.to: "bg";
 	   	   rel1.offset: -46 -46;
 	   	   rel2.to: "bg";
 	   	   rel2.offset: 45 45;
 	   	   image {
-	   	       normal: "drop.png";
+	   	       normal: "everything_drop.png";
 	   	       border: 50 50 50 50;
 	   	   }
 	   	   fill.smooth: 0;
 	   	   color: 255 255 255 220;
 	       }
-	   }
-	   part { name: "bg";
-	       description { state: "default" 0;
-	   	   min: 416 118;
-	   	   rel1.relative: 0.5 0.0;
-	   	   rel1.offset: 0 50;
-	   	   rel2.relative: 0.5 1.0;
-	   	   rel2.offset: 0 -51;
-	   	   image {
-	   	       normal: "bt_base2.png";
-	   	       border: 7 7 5 5;
-	   	   }
-	   	   color: 255 255 255 255;
+	       description { state: "default" 0.0;
+		   visible: 1;
 	       }
 	   }
-           #else
 	   part { name: "bg";
 	       description { state: "default" 0;
 		   min: 416 118;
@@ -26639,14 +26625,18 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   rel1.offset: 0 0;
 		   rel2.relative: 0.5 1.0;
 		   rel2.offset: 0 -1;
-		   image {
-		       normal: "bt_base2.png";
-		       border: 7 7 5 5;
-		   }
-		   color: 255 255 255 255;
+	     	   image {
+	     	       normal: "bt_base2.png";
+	     	       border: 7 7 5 5;
+	     	   }
+	       }
+	       description { state: "composite" 0;
+		   inherit: "default" 0.0;
+	   	   min: 516 118;
+	   	   rel1.offset: 0 50;
+	   	   rel2.offset: 0 -51;
 	       }
 	   }
-           #endif
 	   part { name: "border_bg";
 	       mouse_events:  0;
 	       description { state: "default" 0.0;
@@ -27025,23 +27015,17 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   image: "everything_bar.png" COMP;
 	   image: "everything_box.png" COMP;
 	   image: "vgrad_dark.png" COMP;
-           #ifdef DROP_SHADOW
-	     image: "drop.png" COMP;
-           #endif
+	   image: "everything_drop.png" COMP;
        }
        /* offset to main popup */
-       #ifdef DROP_SHADOW
-         data.item: "offset_y" "-52";
-         min: 480 315;
-       #else
-         data.item: "offset_y" "-2";
-         min: 380 265;
-       #endif
+       data.item: "offset_composite_y" "-52";
+       data.item: "offset_y" "-2";
        data.item: "shaped" "1";
+
        parts {
-          #ifdef DROP_SHADOW
 	   part { name: "shadow";
 	       description { state: "default" 0.0;
+		   visible: 0;
 	   	   rel1.offset: 0 -50;
 	   	   rel2 {
 	   	       relative: 1.0 1.0;
@@ -27049,58 +27033,44 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	   	       offset: -1 49;
 	   	   } 
 	   	   image {
-	   	       normal: "drop.png";
+	   	       normal: "everything_drop.png";
 	   	       border: 50 50 50 50;
 	   	   }
 	   	   fill.smooth: 0;
 	   	   color: 255 255 255 140;
 	       }
 	       description { state: "visible" 0.0;
+		   visible: 1;
+		   inherit: "default" 0.0;
 	   	   rel1.offset: 0 -50;
 	   	   rel2 {
 	   	       relative: 1.0 1.0;
 	   	       to_y: "base";
 	   	       offset: -1 49;
 	   	   } 
-	   	   image {
-	   	       normal: "drop.png";
-	   	       border: 50 50 50 50;
-	   	   }
-	   	   fill.smooth: 0;
 	   	   color: 255 255 255 255;
 	       }
 	   }
-	   part { name: "base";
+	   part { name: "frame";
 	       type: RECT;
 	       description { state: "default" 0.0;
-	   	   rel1 {
-	   	       relative: 0.0 1.0;
-	   	       to_y: "input_base";
-	   	       offset: 50 0;
-	   	   }
-	   	    rel2 {
-	   		to_y: "input_base";
-	   		offset: -50 0;
-	   	    }
-	   	}
-	   	description { state: "visible" 0.0;
-	   	    rel1 {
-	   		relative: 0.0 1.0;
-	   		to_y: "input_base";
-	   		offset: 50 0;
-	   	    }
-	   	    rel2 {
-	   		offset: -50 -51;
-	   	    }
-	   	}
-	    }
-           #else
+		   min: 380 265;
+		   visible: 0;
+	       }
+	       description { state: "composite" 0.0;
+		   min: 480 315;
+		   rel1.offset: 50 0;
+		   rel2.offset: -50 -51;
+	       }
+	       
+	   }
 	   part { name: "base";
 	       type: RECT;
 	       description { state: "default" 0.0;
 		   rel1 {
 		       relative: 0.0 1.0;
 		       to_y: "input_base";
+		       to_x: "frame";
 		       offset: 0 0;
 		   }
 		    rel2 {
@@ -27112,6 +27082,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		    rel1 {
 			relative: 0.0 1.0;
 			to_y: "input_base";
+			to_x: "frame";
 			offset: 0 0;
 		    }
 		    rel2 {
@@ -27119,7 +27090,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		    }
 		}
 	    }
-            #endif
 	    part { name: "input_base";
 		type: RECT;
 		description { state: "default" 0.0;
@@ -27449,9 +27419,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       action: STATE_SET "visible" 0.0;
 	       transition: DECELERATE 0.1;
 	       target: "base";
-	       #ifdef DROP_SHADOW
-	       target: "shadow";
-	       #endif
+	       /* #ifdef DROP_SHADOW
+	        * target: "shadow";
+	        * #endif */
 	   }
 	   program { name: "hide_list";
 	       signal: "e,state,list_hide";
@@ -27459,9 +27429,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       action: STATE_SET "default" 0.0;
 	       transition: ACCELERATE 0.08; 
 	       target: "base";
-	       #ifdef DROP_SHADOW
-	       target: "shadow";
-	       #endif
+	       /* #ifdef DROP_SHADOW
+	        * target: "shadow";
+	        * #endif */
 	   }
 	   program { name: "show_entry";
 	       signal: "e,state,entry_show";
