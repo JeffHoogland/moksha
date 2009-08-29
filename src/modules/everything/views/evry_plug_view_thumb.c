@@ -24,7 +24,7 @@ struct _Smart_Data
 {
   View        *view;
   Eina_List   *items;
-  Item        *sel_item;
+  Item        *cur_item;
   Ecore_Idle_Enterer *idle_enter;
   Ecore_Idle_Enterer *thumb_idler;
   Ecore_Idle_Enterer *update_idler;
@@ -108,6 +108,21 @@ _thumb_idler(void *data)
      }
 
    sd->thumb_idler = NULL;
+
+   return 0;
+}
+
+static int
+_check_item(const Evry_Item *it)
+{
+   if (it->plugin->type_out != view_types) return 0;
+
+   ITEM_FILE(file, it);
+
+   if (!file->uri || !file->mime) return 0;
+
+   if (!strncmp(file->mime, "image/", 6))
+     return 1;
 
    return 0;
 }
@@ -296,6 +311,11 @@ _e_smart_reconfigure_do(void *data)
 		       edje_object_part_swallow(it->frame, "e.swallow.icon", it->image);
 		       evas_object_show(it->image);
 		    }
+
+		  /* dirbrowse fetches the mimetype for icon_get */
+		  if (!it->get_thumb && _check_item(it->item))
+		    it->get_thumb = EINA_TRUE;
+
 	       }
 
 	     evas_object_move(it->frame, xx, yy);
@@ -506,21 +526,6 @@ _pan_view_set(Evas_Object *obj, View *view)
    sd->view = view;
 }
 
-static int
-_check_item(const Evry_Item *it)
-{
-   if (it->plugin->type_out != view_types) return 0;
-
-   ITEM_FILE(file, it);
-
-   if (!file->uri || !file->mime) return 0;
-
-   if (!strncmp(file->mime, "image/", 6))
-     return 1;
-
-   return 0;
-}
-
 static Item *
 _pan_item_add(Evas_Object *obj, Evry_Item *item)
 {
@@ -568,12 +573,12 @@ _pan_item_select(Evas_Object *obj, Item *it)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    int align = -1;
 
-   if (sd->sel_item)
+   if (sd->cur_item)
      {
-	sd->sel_item->selected = EINA_FALSE;
-	edje_object_signal_emit(sd->sel_item->frame, "e,state,unselected", "e");
-	sd->sel_item = it;
-	sd->sel_item->selected = EINA_TRUE;
+	sd->cur_item->selected = EINA_FALSE;
+	edje_object_signal_emit(sd->cur_item->frame, "e,state,unselected", "e");
+	sd->cur_item = it;
+	sd->cur_item->selected = EINA_TRUE;
      }
 
    if (it)
@@ -591,7 +596,7 @@ _pan_item_select(Evas_Object *obj, Item *it)
 	  e_scrollframe_child_pos_set(sd->view->sframe, 0, align);
 
 	if (sd->view->zoom < 2)
-	  edje_object_signal_emit(sd->sel_item->frame, "e,state,selected", "e");
+	  edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e");
 
 	if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
 	sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, obj);
@@ -637,7 +642,7 @@ _update_frame(Evas_Object *obj)
    sd->switch_mode = EINA_TRUE;
    _e_smart_reconfigure_do(obj);
    sd->switch_mode = EINA_FALSE;
-   _pan_item_select(obj, sd->sel_item); 
+   _pan_item_select(obj, sd->cur_item); 
 
    return 0;
 }
@@ -679,9 +684,9 @@ _view_update(Evry_View *view)
 		  v_it->pos = pos;
 
 		  /* set selected state -> TODO remove*/
-		  if (p_it == v->state->sel_item)
+		  if (p_it == v->state->cur_item)
 		    {
-		       sd->sel_item = v_it;
+		       sd->cur_item = v_it;
 		       v_it->selected = EINA_TRUE;
 		    }
 		  else
@@ -734,9 +739,9 @@ _view_update(Evry_View *view)
 	     v_it->pos = pos;
 
 	     /* TODO no needed */
-	     if (p_it == v->state->sel_item)
+	     if (p_it == v->state->cur_item)
 	       {
-		  sd->sel_item = v_it;
+		  sd->cur_item = v_it;
 		  v_it->selected = EINA_TRUE;
 	       }
 
@@ -827,7 +832,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      }
 
    if (sd->items)
-     l = eina_list_data_find_list(sd->items, sd->sel_item);
+     l = eina_list_data_find_list(sd->items, sd->cur_item);
 
    if (!v->list_mode)
      {
@@ -864,8 +869,8 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
 	EINA_LIST_FOREACH(l, ll, it)
 	  {
-	     if (it->y > sd->sel_item->y &&
-		 it->x >= sd->sel_item->x)
+	     if (it->y > sd->cur_item->y &&
+		 it->x >= sd->cur_item->x)
 	       break;
 	  }
 
@@ -885,8 +890,8 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
 	EINA_LIST_REVERSE_FOREACH(l, ll, it)
 	  {
-	     if (it->y < sd->sel_item->y &&
-		 it->x <= sd->sel_item->x)
+	     if (it->y < sd->cur_item->y &&
+		 it->x <= sd->cur_item->x)
 	       break;
 	  }
 

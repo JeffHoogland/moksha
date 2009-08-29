@@ -84,6 +84,7 @@ struct _Evry_Item
   int fuzzy_match;
 
   /* do not set by plugin! */
+  Evry_Item   *next;
   Evry_Plugin *plugin;
   int ref;
   void (*free) (Evry_Item *item);
@@ -160,8 +161,10 @@ struct _Evry_State
   Evry_Plugin *plugin;
 
   /* selected item */
-  Evry_Item   *sel_item;
+  Evry_Item   *cur_item;
 
+  Eina_List   *sel_items;
+  
   /* this is for the case when the current plugin was not selected
      manually and a higher priority (async) plugin retrieves
      candidates, the higher priority plugin is made current */
@@ -173,7 +176,7 @@ struct _Evry_State
 
 struct _Evry_View
 {
-  Evry_View *id;
+  Evry_View  *id;
   const char *name;
   const char *trigger;
   int active;
@@ -209,14 +212,12 @@ struct _Evry_Action
   /* use icon name from theme */
   const char *icon;
 
-  /* not to be set by plugin! */
-  Evas_Object *o_icon;
-
   int priority;
 };
 
 /* evry.c */
 EAPI void evry_item_select(const Evry_State *s, Evry_Item *it);
+EAPI void evry_item_mark(const Evry_State *state, Evry_Item *it, Eina_Bool mark);
 EAPI void evry_plugin_select(const Evry_State *s, Evry_Plugin *p);
 EAPI int  evry_list_win_show(void);
 EAPI void evry_list_win_hide(void);

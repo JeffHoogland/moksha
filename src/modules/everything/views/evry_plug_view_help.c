@@ -64,9 +64,8 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
    char *text =
      "<title><b>Welcome!</b></title>"
      "Ok, here comes the explanation of <hilight>everything</hilight>...<br>"
-     "<hilight>everything</hilight> is simple! Just type a few letters of <br>"
-     "the thing you are looking for. Use cursor <hilight>&lt;up/down&gt;</hilight> <br>"
-     "to choose from the list of found things.<br>"
+     "Just type a few letters of the thing you are looking for. <br>"
+     "Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>"
      "Press  <hilight>&lt;tab&gt;</hilight> to select "
      "an action, then press  <hilight>&lt;return&gt;</hilight>.<br>"
      /* "You might want to know <br>some mo keybinding to ease your experience though.<br>" */

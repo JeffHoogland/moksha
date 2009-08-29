@@ -16,7 +16,6 @@ struct _Plugin
   /* current list of files */
   Eina_List  *cur;
   Eina_Bool command;
-  Ecore_Idle_Enterer *idler;
 
   const char *input;
 };
@@ -79,49 +78,6 @@ _cb_sort(const void *data1, const void *data2)
        return (it1->fuzzy_match - it2->fuzzy_match);
 
    return strcasecmp(it1->label, it2->label);
-}
-
-static int
-_dirbrowse_idler(void *data)
-{
-   Plugin *p = data;
-   Eina_List *l;
-   Evry_Item_File *file;
-   Eina_Bool update = EINA_FALSE;
-   
-   int cnt = 20;
-
-   if (!p->idler) return 0;
-
-   EINA_LIST_FOREACH(p->files, l, file)
-     {
-	if (!file->mime)
-	  {
-	     _item_fill(file);
-	     cnt--;
-
-	     if (eina_list_data_find_list(EVRY_PLUGIN(p)->items, file))
-	       update = EINA_TRUE;
-	     
-	  }
-	if (cnt == 0) break;
-     }
-
-   if (update && !p->command)
-     {
-	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
-	evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
-     }
-
-   if (cnt > 0)
-     {
-	p->idler = NULL;
-	return 0;
-     }
-
-   e_util_wakeup();
-
-   return 1;
 }
 
 static void
@@ -242,11 +198,8 @@ _scan_end_func(void *data)
 	evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
      }
 
-   p->idler = ecore_idle_enterer_before_add(_dirbrowse_idler, p);
-
    E_FREE(d);
 }
-
 
 static void
 _read_directory(Plugin *p)
@@ -309,10 +262,6 @@ _cleanup(Evry_Plugin *plugin)
    EINA_LIST_FREE(p->files, file)
      evry_item_free(EVRY_ITEM(file));
 
-   if (p->idler)
-     ecore_idle_enterer_del(p->idler);
-   p->idler = NULL;
-
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    E_FREE(p);
@@ -364,8 +313,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
    	     int prio = 0;
 
    	     if (p->command) return 1;
+	     if (strncmp(p->directory, "/", 1)) return 0;
    	     if (!strcmp(p->directory, "/")) return 0;
-
+	     
    	     snprintf(dir, 4096, "%s", p->directory);
    	     end = strrchr(dir, '/');
 
@@ -405,7 +355,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
      return 0;
 
    EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
-
+   
    return 1;
 }
 
@@ -540,7 +490,6 @@ _shutdown(void)
    evry_action_free(act1);
    evry_action_free(act2);
 }
-
 
 EINA_MODULE_INIT(_init);
 EINA_MODULE_SHUTDOWN(_shutdown);

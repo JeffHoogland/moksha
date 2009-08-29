@@ -100,7 +100,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    Eina_List *l;
    Evry_Item_File *file = NULL;
 
-   ITEM_FILE(cur_item, v->state->sel_item);
+   ITEM_FILE(cur_item, v->state->cur_item);
 
    if (!strcmp(ev->key, "Down"))
      {
@@ -175,7 +175,7 @@ _view_update(Evry_View *view)
 {
    Image_View *v = (Image_View *) view;
    Evry_Item_File *file;
-   Evry_Item *selected = v->state->sel_item;
+   Evry_Item *selected = v->state->cur_item;
 
    v->items = _get_list(v->state);
    if (!v->items) return 0;

@@ -236,7 +236,6 @@ evry_hide(void)
    input_window = 0;
 }
 
-
 EAPI void
 evry_clear_input(void)
 {
@@ -317,6 +316,22 @@ evry_item_select(const Evry_State *state, Evry_Item *it)
 }
 
 EAPI void
+evry_item_mark(const Evry_State *state, Evry_Item *it, Eina_Bool mark)
+{
+   Evry_State *s = (Evry_State *)state;
+
+   if (mark)
+     s->sel_items = eina_list_append(s->sel_items, it);
+   else
+     s->sel_items = eina_list_remove(s->sel_items, it);
+   
+   /* s->plugin_auto_selected = EINA_FALSE;
+    * s->item_auto_selected = EINA_FALSE;
+    * _evry_item_sel(s, it);
+    * _evry_selector_update(selector); */
+}
+
+EAPI void
 evry_item_ref(Evry_Item *it)
 {
    it->ref++;
@@ -331,14 +346,11 @@ evry_list_win_show(void)
    return 1;
 }
 
-
 EAPI void
 evry_list_win_hide(void)
 {
    _evry_list_win_clear(1);
 }
-
-
 
 EAPI void
 evry_plugin_async_update(Evry_Plugin *p, int action)
@@ -508,7 +520,6 @@ _evry_list_win_clear(int hide)
      }
 }
 
-
 static Evry_Window *
 _evry_window_new(E_Zone *zone)
 {
@@ -652,9 +663,9 @@ _evry_selector_activate(Evry_Selector *sel)
      {
 	_evry_update_text_label(s);
 
-	if (sel->state->sel_item)
+	if (sel->state->cur_item)
 	  edje_object_part_text_set(sel->o_main, "e.text.plugin",
-				    s->sel_item->plugin->name);
+				    s->cur_item->plugin->name);
 
 	_evry_view_show(s->view);
 	_evry_list_win_update(s);
@@ -666,11 +677,6 @@ _evry_selector_thumb_gen(void *data, Evas_Object *obj, void *event_info)
 {
    Evas_Coord w, h;
    Evry_Selector *sel = data;
-
-   /* if (!(selector[0] == data) &&
-    *     !(selector[1] == data) &&
-    *     !(selector[2] == data))
-    *   return; */
 
    if (sel->o_icon)
      evas_object_del(sel->o_icon);
@@ -734,7 +740,7 @@ _evry_selector_icon_set(Evry_Selector *sel)
 
    if (!s) return;
 
-   it = s->sel_item;
+   it = s->cur_item;
 
    if (it && it->plugin && it->plugin->icon_get)
      {
@@ -774,14 +780,14 @@ _evry_selector_update(Evry_Selector *sel)
 
    if (s)
      {
-	it = s->sel_item;
+	it = s->cur_item;
 
 	if (!s->plugin && it)
 	  _evry_item_desel(s, NULL);
 	else if (it && !eina_list_data_find_list(s->plugin->items, it))
 	  _evry_item_desel(s, NULL);
 
-	it = s->sel_item;
+	it = s->cur_item;
 
 	if (s->plugin && (!it || s->item_auto_selected))
 	  {
@@ -913,7 +919,7 @@ _evry_selector_objects_get(Evry_Action *act)
    while (sel->state)
      _evry_state_pop(sel);
 
-   it = selectors[0]->state->sel_item;
+   it = selectors[0]->state->cur_item;
 
    EINA_LIST_FOREACH(sel->plugins, l, plugin)
      {
@@ -995,7 +1001,7 @@ _evry_browse_item(Evry_Selector *sel)
    Evry_View *view = NULL;
    const char *type_out;
 
-   it = s->sel_item;
+   it = s->cur_item;
 
    if (!it || !it->browseable)
      return 0;
@@ -1087,7 +1093,7 @@ _evry_selectors_switch(void)
 
    if (selector == selectors[0])
      {
-	if (s->sel_item)
+	if (s->cur_item)
 	  _evry_selector_activate(selectors[1]);
      }
    else if (selector == selectors[1])
@@ -1095,9 +1101,9 @@ _evry_selectors_switch(void)
 	int next_selector = 0;
 	Evry_Action *act;
 
-	if ((s->sel_item) &&
-	    (s->sel_item->plugin == action_selector) &&
-	    (act = s->sel_item->data) &&
+	if ((s->cur_item) &&
+	    (s->cur_item->plugin == action_selector) &&
+	    (act = s->cur_item->data) &&
 	    (act->type_in2))
 	  {
 	     _evry_selector_objects_get(act);
@@ -1344,15 +1350,15 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	update_timer = NULL;
      }
 
-   if (!s_subject->sel_item || !s_action->sel_item) return;
+   if (!s_subject->cur_item || !s_action->cur_item) return;
 
-   if (s_action->sel_item->plugin == action_selector)
+   if (s_action->cur_item->plugin == action_selector)
      {
-	Evry_Action *act = s_action->sel_item->data;
+	Evry_Action *act = s_action->cur_item->data;
 	Evry_Item *it_object = NULL;
 
 	if (selectors[2] == selector)
-	  it_object = selector->state->sel_item;
+	  it_object = selector->state->cur_item;
 
 	if (act->type_in2 && !it_object) return;
 
@@ -1363,7 +1369,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
      }
    else if (s_action->plugin->action)
      {	
-	Evry_Item *it = s_action->sel_item;
+	Evry_Item *it = s_action->cur_item;
 	if (!s_action->plugin->action(s_action->plugin, it))
 	  return;
      }
@@ -1371,10 +1377,10 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
    /* let subject and object plugin know that an action was performed */
    if (s_subject->plugin->action)
-     s_subject->plugin->action(s_subject->plugin, s_subject->sel_item);
+     s_subject->plugin->action(s_subject->plugin, s_subject->cur_item);
 
    if (s_object && s_object->plugin->action)
-     s_object->plugin->action(s_object->plugin, s_object->sel_item);
+     s_object->plugin->action(s_object->plugin, s_object->cur_item);
 
    if (finished)
      evry_hide();
@@ -1416,7 +1422,6 @@ _evry_view_hide(Evry_View *v)
      }
 }
 
-
 static void
 _evry_view_update(Evry_State *s, Evry_Plugin *p)
 {
@@ -1448,7 +1453,6 @@ _evry_view_key_press(Evry_State *s, Ecore_Event_Key *ev)
 
    return s->view->cb_key_down(s->view, ev);
 }
-
 
 static int
 _evry_view_toggle(Evry_State *s, const char *trigger)
@@ -1585,21 +1589,21 @@ _evry_matches_update(Evry_Selector *sel, int async)
 static void
 _evry_item_desel(Evry_State *s, Evry_Item *it)
 {
-   if (s->sel_item)
-     evry_item_free(s->sel_item);
+   if (s->cur_item)
+     evry_item_free(s->cur_item);
 
-   s->sel_item = NULL;
+   s->cur_item = NULL;
 }
 
 static void
 _evry_item_sel(Evry_State *s, Evry_Item *it)
 {
-   if (s->sel_item == it) return;
+   if (s->cur_item == it) return;
 
    _evry_item_desel(s, NULL);
 
    evry_item_ref(it);
-   s->sel_item = it;
+   s->cur_item = it;
 }
 
 static void
