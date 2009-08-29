@@ -448,16 +448,31 @@ _evry_list_win_new(E_Zone *zone)
      }
    list_win->popup = popup;
 
-   evas_event_freeze(popup->evas);
-   evas_event_feed_mouse_in(popup->evas, ecore_x_current_time_get(), NULL);
-   evas_event_feed_mouse_move(popup->evas, -1000000, -1000000,
-			      ecore_x_current_time_get(), NULL);
+   /* evas_event_freeze(popup->evas);
+    * evas_event_feed_mouse_in(popup->evas, ecore_x_current_time_get(), NULL);
+    * evas_event_feed_mouse_move(popup->evas, -1000000, -1000000,
+    * 			      ecore_x_current_time_get(), NULL); */
+
    o = edje_object_add(popup->evas);
    list_win->o_main = o;
    e_theme_edje_object_set(o, "base/theme/everything",
 			   "e/modules/everything/list");
-   offset_y = edje_object_data_get(o, "offset_y");
+
+   if (e_config->use_composite)
+     {
+	edje_object_signal_emit(o, "e,state,composited", "e");
+	edje_object_message_signal_process(o);
+	edje_object_calc_force(o);
+	offset_y = edje_object_data_get(o, "offset_composite_y");
+     }
+   else
+     offset_y = edje_object_data_get(o, "offset_y");
+
    edje_object_size_min_calc(o, &mw, &mh);
+
+   printf("list  min size %d %d - %d\n", mw, mh, atoi(offset_y));
+   
+
    if (mh == 0) mh = 200;
    if (mw == 0) mw = win->popup->w / 2;
 
@@ -472,7 +487,7 @@ _evry_list_win_new(E_Zone *zone)
    evas_object_show(o);
    e_popup_edje_bg_object_set(popup, o);
 
-   evas_event_thaw(popup->evas);
+   /* evas_event_thaw(popup->evas); */
 
    return list_win;
 }
@@ -545,6 +560,13 @@ _evry_window_new(E_Zone *zone)
    e_theme_edje_object_set(o, "base/theme/everything",
 			   "e/modules/everything/main");
 
+   if (e_config->use_composite)
+     {
+	edje_object_signal_emit(o, "e,state,composited", "e");
+	edje_object_message_signal_process(o);
+	edje_object_calc_force(o);
+     }
+   
    edje_object_size_min_calc(o, &mw, &mh);
 
    x = (zone->w / 2) - (mw / 2);
