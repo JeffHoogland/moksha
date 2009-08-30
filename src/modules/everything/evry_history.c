@@ -65,7 +65,7 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 {
    History_Entry *he = data;
    History_Item *hi;
-   Eina_List *l, *ll, *keys = fdata;
+   Eina_List *l, *ll;
    
    EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
      {
@@ -87,7 +87,7 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
    if (!he->items)
      {
 	E_FREE(he);
-	keys = eina_list_append(keys, key);
+	*((Eina_List **)fdata) = eina_list_append(*((Eina_List **)fdata), key);
      }
    
    return 1;
@@ -102,15 +102,13 @@ evry_history_free(void)
    evry_hist = e_config_domain_load("module.everything.history", hist_edd);
    if (evry_hist)
      {
-	keys = eina_list_append(keys, NULL);
-	eina_hash_foreach(evry_hist->subjects, _hist_cleanup_cb, keys);
+	eina_hash_foreach(evry_hist->subjects, _hist_cleanup_cb, &keys);
 	EINA_LIST_FREE(keys, key)
-	  if (key) eina_hash_del_by_key(evry_hist->subjects, key);
+	  eina_hash_del_by_key(evry_hist->subjects, key);
 
-	keys = eina_list_append(keys, NULL);
-	eina_hash_foreach(evry_hist->actions,  _hist_cleanup_cb, keys);
+	eina_hash_foreach(evry_hist->actions,  _hist_cleanup_cb, &keys);
 	EINA_LIST_FREE(keys, key)
-	  if (key) eina_hash_del_by_key(evry_hist->actions, key);
+	  eina_hash_del_by_key(evry_hist->actions, key);
 
 	evry_history_unload();
      }
