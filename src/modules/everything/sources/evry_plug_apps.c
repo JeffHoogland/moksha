@@ -11,6 +11,7 @@ struct _Plugin
   Eina_List *apps_mime;
   Eina_List *apps_all;
   const Evry_Item *candidate;
+  Eina_Hash *added;
 };
 
 /* taken from exebuf module */
@@ -84,12 +85,19 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 	p->apps_mime = eina_list_prepend(p->apps_mime, desktop);
      }
 
+   p->added = added;
+   if (!p->added)
+     p->added = eina_hash_string_small_new(_hash_free);
+   added = p->added;
+   
    return plugin;
 }
 
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *item)
 {
+   PLUGIN(p, plugin);
+   
    /* taken from exebuf module */
    char *path, *pp, *last;
    E_Exe_List *el;
@@ -128,7 +136,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 
    exe_scan_idler = ecore_idler_add(_scan_idler, NULL);
 
-   added = eina_hash_string_small_new(_hash_free);
+   p->added = eina_hash_string_small_new(_hash_free);
 
    return plugin;
 }
@@ -153,7 +161,12 @@ _cleanup(Evry_Plugin *plugin)
    Efreet_Desktop *desktop;
    char *str;
 
+   /* TODO popup end func !!!
+      - cleanup hash for open-with plugin */
    eina_hash_free(added);
+   added = NULL;
+   
+   eina_hash_free(p->added);
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
@@ -209,7 +222,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
 	char buf[1024];
 	char *tmp;
 
-	if ((app = eina_hash_find(added, file)))
+	if ((app = eina_hash_find(p->added, file)))
 	  {
 	     if (!eina_list_data_find_list(EVRY_PLUGIN(p)->items, app))
 	       {
@@ -245,7 +258,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
 
    if (!exe) return 0;
 
-   if ((app = eina_hash_find(added, exe)) &&
+   if ((app = eina_hash_find(p->added, exe)) &&
        (!desktop || (desktop == app->desktop)))
      {
 	if (!eina_list_data_find_list(EVRY_PLUGIN(p)->items, app))
@@ -270,7 +283,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
    app->desktop = desktop;
    if (file) app->file = eina_stringshare_add(file);
 
-   eina_hash_add(added, exe, app);
+   eina_hash_add(p->added, exe, app);
 
    if (desktop)
      {
@@ -279,13 +292,13 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
 	if (tmp && strcmp(exe, tmp))
 	  {
 	     evry_item_ref(EVRY_ITEM(app));
-	     eina_hash_add(added, tmp, app);
+	     eina_hash_add(p->added, tmp, app);
 	  }
      }
    if (file && strcmp(exe, file))
      {
 	evry_item_ref(EVRY_ITEM(app));
-	eina_hash_add(added, file, app);
+	eina_hash_add(p->added, file, app);
      }
 
    EVRY_ITEM(app)->fuzzy_match = match;
@@ -454,7 +467,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    if (!plugin->items) return 0;
 
-   EVRY_PLUGIN_ITEMS_SORT(plugin, _cb_sort);
+   if (plugin->type != type_action || input)
+     EVRY_PLUGIN_ITEMS_SORT(plugin, _cb_sort);
 
    EINA_LIST_FOREACH(plugin->items, l, it)
      it->priority = prio++;

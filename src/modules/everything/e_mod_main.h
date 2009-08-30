@@ -7,6 +7,9 @@
 typedef struct _Config Config;
 typedef struct _Evry_Selector Evry_Selector;
 typedef struct _Tab_View Tab_View;
+typedef struct _History History;
+typedef struct _History_Entry History_Entry;
+typedef struct _History_Item History_Item;
 
 struct _Config
 {
@@ -29,16 +32,37 @@ struct _Config
   int hide_list;
 
   int quick_nav;
-
-  Eina_Hash *key_bindings;
-
-  /**/
+  
   Eina_List *plugins;
   Eina_List *actions;
   Eina_List *views;
 
-  Eina_Hash *history;
+  const char *cmd_terminal;
 };
+
+
+
+struct _History_Item
+{
+  const char *plugin;
+  const char *context;
+  const char *input;
+  double last_used;
+  int count;
+};
+
+struct _History_Entry
+{
+  Eina_List *items;
+};
+
+struct _History
+{
+  int version;
+  Eina_Hash *subjects;
+  Eina_Hash *actions;
+};
+  
 
 struct _Evry_Selector
 {
@@ -64,6 +88,8 @@ struct _Evry_Selector
 
   Evas_Object *o_thumb;
   Eina_Bool    do_thumb;
+
+  Eina_Hash   *history;
 };
 
 struct _Tab_View
@@ -93,6 +119,7 @@ int  evry_init(void);
 int  evry_shutdown(void);
 int  evry_show(E_Zone *zone, const char *params);
 void evry_hide(void);
+void evry_save_history(void);
 
 Evry_Plugin *evry_plug_aggregator_new(Evry_Selector *selector);
 void evry_plug_aggregator_free(Evry_Plugin *plugin);
@@ -104,6 +131,7 @@ EAPI Tab_View *evry_tab_view_new(const Evry_State *s, Evas *e);
 EAPI void evry_tab_view_free(Tab_View *v);
 
 extern Config *evry_conf;
+extern History *evry_hist;
 extern Evry_Selector **selectors;
 extern Evry_Plugin *action_selector;
 #endif

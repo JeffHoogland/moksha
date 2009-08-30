@@ -81,6 +81,8 @@ static void _evry_item_sel(Evry_State *s, Evry_Item *it);
 
 static int  _evry_cb_key_down(void *data, int type, void *event);
 static int  _evry_cb_selection_notify(void *data, int type, void *event);
+static void _evry_history_item_add(Eina_Hash *hist, Evry_State *s);
+
 
 /* local subsystem globals */
 static Evry_Window *win = NULL;
@@ -163,7 +165,7 @@ evry_show(E_Zone *zone, const char *params)
 
    if (!evry_conf->hide_input)
      edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
-
+   
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_EVENT_KEY_DOWN, _evry_cb_key_down, NULL));
@@ -180,6 +182,12 @@ evry_show(E_Zone *zone, const char *params)
    e_popup_show(win->popup);
    e_popup_show(list->popup);
 
+   if (!evry_conf->hide_input)
+     {
+	edje_object_part_text_set(win->o_main, "e.text.label", "Search:");
+	edje_object_part_text_set(list->o_main, "e.text.label", "Search:");
+     }
+   
    return 1;
 
  error:
@@ -393,7 +401,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	  }
 
 	/* update aggregator */
-	if (eina_list_count(s->cur_plugins) > 1)
+	if (eina_list_count(s->cur_plugins) > 0)
 	  {
 	     agg->fetch(agg, s->input);
 
@@ -447,12 +455,7 @@ _evry_list_win_new(E_Zone *zone)
 	return NULL;
      }
    list_win->popup = popup;
-
-   /* evas_event_freeze(popup->evas);
-    * evas_event_feed_mouse_in(popup->evas, ecore_x_current_time_get(), NULL);
-    * evas_event_feed_mouse_move(popup->evas, -1000000, -1000000,
-    * 			      ecore_x_current_time_get(), NULL); */
-
+   
    o = edje_object_add(popup->evas);
    list_win->o_main = o;
    e_theme_edje_object_set(o, "base/theme/everything",
@@ -470,9 +473,6 @@ _evry_list_win_new(E_Zone *zone)
 
    edje_object_size_min_calc(o, &mw, &mh);
 
-   printf("list  min size %d %d - %d\n", mw, mh, atoi(offset_y));
-   
-
    if (mh == 0) mh = 200;
    if (mw == 0) mw = win->popup->w / 2;
 
@@ -486,9 +486,7 @@ _evry_list_win_new(E_Zone *zone)
    evas_object_resize(o, list_win->popup->w, list_win->popup->h);
    evas_object_show(o);
    e_popup_edje_bg_object_set(popup, o);
-
-   /* evas_event_thaw(popup->evas); */
-
+   
    return list_win;
 }
 
@@ -609,12 +607,22 @@ _evry_selector_new(int type)
    evas_object_show(o);
 
    if (type == type_subject)
-     edje_object_part_swallow(win->o_main, "e.swallow.subject_selector", o);
+     {
+	sel->history = evry_hist->subjects;
+	edje_object_part_swallow(win->o_main, "e.swallow.subject_selector", o);
+     }
    else if (type == type_action)
-     edje_object_part_swallow(win->o_main, "e.swallow.action_selector", o);
+     {
+	sel->history = evry_hist->actions;
+	edje_object_part_swallow(win->o_main, "e.swallow.action_selector", o);
+     }
+   
    else if (type == type_object)
-     edje_object_part_swallow(win->o_main, "e.swallow.object_selector", o);
-
+     {
+	sel->history = evry_hist->subjects;
+	edje_object_part_swallow(win->o_main, "e.swallow.object_selector", o);
+     }
+   
    p = evry_plug_aggregator_new(sel);
 
    sel->plugins = eina_list_append(sel->plugins, p);
@@ -1052,6 +1060,8 @@ _evry_browse_item(Evry_Selector *sel)
 
    if (!plugins) return 1;
 
+   _evry_history_item_add(sel->history, s); 
+   
    if (s->view)
      {
 	_evry_view_hide(s->view);
@@ -1353,6 +1363,102 @@ _evry_clear(Evry_State *s)
 }
 
 static void
+_evry_history_item_add(Eina_Hash *hist, Evry_State *s)
+{
+   History_Entry *he;
+   History_Item  *hi;
+   Evry_Item *it;
+   Eina_List *l;
+   const char *id;
+
+   if (!s) return;
+   
+   it = s->cur_item;
+   if (!it) return;
+
+   if (it->plugin->item_id)
+     id = it->plugin->item_id(it->plugin, it);
+   else
+     id = it->label;
+   
+   he = eina_hash_find(hist, id);
+   if (he)
+     {
+	/* found history entry */
+	EINA_LIST_FOREACH(he->items, l, hi)
+	  if (hi->plugin == it->plugin->name) break;
+
+	if (hi)
+	  {
+	     /* found history item */
+	     if (hi->input)
+	       {
+		  if (!s->input || !strncmp (hi->input, s->input, strlen(s->input)))
+		    {
+		       /* s->input matches hi->input and is equal or shorter */
+		       hi->count++;
+		       hi->last_used /= 1000.0;
+		       hi->last_used += ecore_time_get();
+		    }
+		  else if (s->input)
+		    {
+		       if (!strncmp (hi->input, s->input, strlen(hi->input)))
+			 {
+			    /* s->input matches hi->input but is longer */
+			    eina_stringshare_del(hi->input);
+			    hi->input = eina_stringshare_add(s->input);
+			 }
+		       else
+			 {
+			    /* s->input is different from hi->input
+			       -> create new item */
+			    hi = NULL;
+			 }
+		    }
+	       }
+	     else
+	       {
+		  /* remember input for item */
+		  hi->count++;
+		  hi->last_used /= 2.0;
+		  hi->last_used += ecore_time_get();
+
+		  if (s->input)
+		    hi->input = eina_stringshare_add(s->input);
+	       }
+	  }
+
+	if (!hi)
+	  {	     
+	     hi = E_NEW(History_Item, 1);
+	     hi->plugin = eina_stringshare_ref(it->plugin->name);
+	     hi->last_used = ecore_time_get();
+	     hi->count = 1;
+	     if (s->input)
+	       hi->input = eina_stringshare_add(s->input);
+
+	     he->items = eina_list_append(he->items, hi);
+	  }
+     }
+   else
+     {
+	he = E_NEW(History_Entry, 1);
+	hi = E_NEW(History_Item, 1);
+	hi->plugin = eina_stringshare_ref(it->plugin->name);
+	hi->last_used = ecore_time_get();
+	hi->count = 1;
+	if (s->input)
+	  hi->input = eina_stringshare_add(s->input);
+
+	he->items = eina_list_append(he->items, hi);
+	eina_hash_add(hist, id, he);
+     }
+   evry_save_history();
+
+}
+
+
+static void
 _evry_plugin_action(Evry_Selector *sel, int finished)
 {
    Evry_State *s_subject, *s_action, *s_object;
@@ -1361,7 +1467,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    s_action  = selectors[1]->state;
    s_object = NULL;
 
-   if (!s_subject || !s_action) return;
+   if (!s_subject || !s_action)
+     return;
 
    if (update_timer)
      {
@@ -1372,7 +1479,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	update_timer = NULL;
      }
 
-   if (!s_subject->cur_item || !s_action->cur_item) return;
+   if (!s_subject->cur_item || !s_action->cur_item)
+     return;
 
    if (s_action->cur_item->plugin == action_selector)
      {
@@ -1382,7 +1490,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	if (selectors[2] == selector)
 	  it_object = selector->state->cur_item;
 
-	if (act->type_in2 && !it_object) return;
+	if (act->type_in2 && !it_object)
+	  return;
 
 	act->item2 = it_object;
 
@@ -1397,6 +1506,11 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
      }
    else return;
 
+   _evry_history_item_add(evry_hist->subjects, s_subject);
+   _evry_history_item_add(evry_hist->actions,  s_action);
+   _evry_history_item_add(evry_hist->subjects,  s_object);
+   
+   
    /* let subject and object plugin know that an action was performed */
    if (s_subject->plugin->action)
      s_subject->plugin->action(s_subject->plugin, s_subject->cur_item);
@@ -1591,7 +1705,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	       }
 	  }
 
-	if (eina_list_count(s->cur_plugins) > 1)
+	if (eina_list_count(s->cur_plugins) > 0)
 	  {
 	     sel->aggregator->fetch(sel->aggregator, s->input);
 	     s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);

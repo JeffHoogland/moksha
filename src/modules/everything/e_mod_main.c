@@ -9,13 +9,18 @@
 
 #include "e_mod_main.h"
 
-#define CONFIG_VERSION 3
+#define CONFIG_VERSION 5
+#define HISTORY_VERSION 1
 
 /* actual module specifics */
-static void _e_mod_action_exebuf_cb(E_Object *obj, const char *params);
+static void _e_mod_action_cb(E_Object *obj, const char *params);
 static int  _e_mod_run_defer_cb(void *data);
 static void _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_mod_menu_add(void *data, E_Menu *m);
+static void _config_init(void);
+static void _config_free(void);
+static void _history_init(void);
+static void _history_free(void);
 
 static E_Int_Menu_Augmentation *maug = NULL;
 static E_Action *act = NULL;
@@ -23,8 +28,13 @@ static E_Action *act = NULL;
 static Eina_Array  *plugins = NULL;
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
+static E_Config_DD *hist_entry_edd = NULL;
+static E_Config_DD *hist_item_edd = NULL;
+static E_Config_DD *hist_edd = NULL;
+
 
 Config *evry_conf = NULL;
+History *evry_hist = NULL;
 
 /* module setup */
 EAPI E_Module_Api e_modapi =
@@ -32,7 +42,6 @@ EAPI E_Module_Api e_modapi =
     E_MODULE_API_VERSION,
     "Everything"
   };
-
 
 static Eina_Bool list_cb(Eina_Module *m, void *data)
 {
@@ -50,67 +59,18 @@ e_modapi_init(E_Module *m)
    char *file;
    E_Action *act;
 
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/module.everything",
-	    e_user_homedir_get(), e_config_profile_get());
-   ecore_file_mkdir(buf);
+   /* snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/module.everything",
+    * 	    e_user_homedir_get(), e_config_profile_get());
+    * ecore_file_mkdir(buf); */
 
-   conf_item_edd = E_CONFIG_DD_NEW("Plugin_Config", Plugin_Config);
-#undef T
-#undef D
-#define T Plugin_Config
-#define D conf_item_edd
-   E_CONFIG_VAL(D, T, name, STR);
-   E_CONFIG_VAL(D, T, trigger, STR);
-   E_CONFIG_VAL(D, T, min_query, INT);
-   E_CONFIG_VAL(D, T, loaded, INT);
-   E_CONFIG_VAL(D, T, enabled, INT);
-   E_CONFIG_VAL(D, T, priority, INT);
-   conf_edd = E_CONFIG_DD_NEW("Config", Config);
-#undef T
-#undef D
-#define T Config
-#define D conf_edd
-   E_CONFIG_VAL(D, T, version, INT);
-   E_CONFIG_VAL(D, T, width, INT);
-   E_CONFIG_VAL(D, T, height, INT);
-   E_CONFIG_VAL(D, T, rel_x, DOUBLE);
-   E_CONFIG_VAL(D, T, rel_y, DOUBLE);
-   E_CONFIG_VAL(D, T, scroll_animate, INT);
-   E_CONFIG_VAL(D, T, scroll_speed, DOUBLE);
-   E_CONFIG_VAL(D, T, hide_input, INT);
-   E_CONFIG_VAL(D, T, hide_list, INT);
-   E_CONFIG_VAL(D, T, quick_nav, INT);
-   E_CONFIG_LIST(D, T, conf_subjects, conf_item_edd);
-   E_CONFIG_LIST(D, T, conf_actions, conf_item_edd);
-   E_CONFIG_LIST(D, T, conf_objects, conf_item_edd);
-   E_CONFIG_LIST(D, T, conf_views,   conf_item_edd);
-#undef T
-#undef D
-   evry_conf = e_config_domain_load("module.everything", conf_edd);
-
-   if (!evry_conf || (evry_conf->version != CONFIG_VERSION))
-     {
-	evry_conf = E_NEW(Config, 1);
-	evry_conf->version = CONFIG_VERSION;
-	evry_conf->rel_x = 50.0;
-	evry_conf->rel_y = 50.0;
-	evry_conf->width = 400;
-	evry_conf->height = 350;
-	evry_conf->scroll_animate = 0;
-	evry_conf->scroll_speed = 0.08;
-	evry_conf->hide_input = 0;
-	evry_conf->hide_list = 1;
-	evry_conf->quick_nav = 1;
-	evry_conf->conf_subjects = NULL;
-	evry_conf->conf_actions = NULL;
-	evry_conf->conf_objects = NULL;
-	evry_conf->conf_views   = NULL;
-     }
-
+   _config_init();
+   _history_init();
+      
    /* search for plugins */
    eina_module_init();
 
-   snprintf(dir, sizeof(dir), "%s/enlightenment/everything_plugins", e_prefix_lib_get());
+   snprintf(dir, sizeof(dir), "%s/enlightenment/everything_plugins",
+	    e_prefix_lib_get());
    files = ecore_file_ls(dir);
 
    EINA_LIST_FREE(files, file)
@@ -127,20 +87,23 @@ e_modapi_init(E_Module *m)
    act = e_action_add("everything");
    if (act)
      {
-	act->func.go = _e_mod_action_exebuf_cb;
+	act->func.go = _e_mod_action_cb;
+	e_action_predef_name_set(_("Everything"),
+				 _("Show Everything Dialog"),
+				 "everything", "", NULL, 0);
      }
 
-   e_action_predef_name_set(_("Everything"), _("Show Everything Dialog"),
-			    "everything", "", NULL, 0);
-
-   maug = e_int_menus_menu_augmentation_add("main/1", _e_mod_menu_add, NULL, NULL, NULL);
+   maug = e_int_menus_menu_augmentation_add("main/1",
+					    _e_mod_menu_add,
+					    NULL, NULL, NULL);
 
    e_configure_registry_category_add("extensions", 80, _("Extensions"),
 				     NULL, "preferences-extensions");
 
-   e_configure_registry_item_add("extensions/run_everything", 40, _("Run Everything"),
-				 NULL, "system-run", evry_config_dialog);
-
+   e_configure_registry_item_add("extensions/run_everything", 40,
+				 _("Run Everything"),
+				 NULL, "system-run",
+				 evry_config_dialog);
    evry_init();
 
    e_module_delayed_set(m, 1);
@@ -152,7 +115,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
-
+   
    evry_shutdown();
 
    /* remove module-supplied menu additions */
@@ -183,17 +146,15 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("extensions/run_everything");
    e_configure_registry_category_del("extensions");
 
-   if (evry_conf->plugins)       eina_list_free(evry_conf->plugins);
-   if (evry_conf->actions)       eina_list_free(evry_conf->actions);
-   if (evry_conf->conf_subjects) eina_list_free(evry_conf->conf_subjects);
-   if (evry_conf->conf_actions)  eina_list_free(evry_conf->conf_actions);
-   if (evry_conf->conf_objects)  eina_list_free(evry_conf->conf_objects);
-
-   E_FREE(evry_conf);
+   _config_free();
+   _history_free();
 
    /* Clean EET */
    E_CONFIG_DD_FREE(conf_item_edd);
    E_CONFIG_DD_FREE(conf_edd);
+   E_CONFIG_DD_FREE(hist_item_edd);
+   E_CONFIG_DD_FREE(hist_entry_edd);
+   E_CONFIG_DD_FREE(hist_edd);
    return 1;
 }
 
@@ -201,12 +162,200 @@ EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.everything", conf_edd, evry_conf);
+
    return 1;
 }
 
+void
+evry_save_history(void)
+{
+   e_config_domain_save("module.everything.history", hist_edd, evry_hist);
+}
+
+
+static void
+_config_init()
+{
+#undef T
+#undef D
+#define T Plugin_Config
+#define D conf_item_edd
+   conf_item_edd = E_CONFIG_DD_NEW("Plugin_Config", Plugin_Config);
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, trigger, STR);
+   E_CONFIG_VAL(D, T, min_query, INT);
+   E_CONFIG_VAL(D, T, loaded, INT);
+   E_CONFIG_VAL(D, T, enabled, INT);
+   E_CONFIG_VAL(D, T, priority, INT);
+#undef T
+#undef D
+   
+#define T Config
+#define D conf_edd
+   conf_edd = E_CONFIG_DD_NEW("Config", Config);
+   E_CONFIG_VAL(D, T, version, INT);
+   E_CONFIG_VAL(D, T, width, INT);
+   E_CONFIG_VAL(D, T, height, INT);
+   E_CONFIG_VAL(D, T, rel_x, DOUBLE);
+   E_CONFIG_VAL(D, T, rel_y, DOUBLE);
+   E_CONFIG_VAL(D, T, scroll_animate, INT);
+   E_CONFIG_VAL(D, T, scroll_speed, DOUBLE);
+   E_CONFIG_VAL(D, T, hide_input, INT);
+   E_CONFIG_VAL(D, T, hide_list, INT);
+   E_CONFIG_VAL(D, T, quick_nav, INT);
+   E_CONFIG_VAL(D, T, cmd_terminal, STR);
+   E_CONFIG_LIST(D, T, conf_subjects, conf_item_edd);
+   E_CONFIG_LIST(D, T, conf_actions, conf_item_edd);
+   E_CONFIG_LIST(D, T, conf_objects, conf_item_edd);
+   E_CONFIG_LIST(D, T, conf_views,   conf_item_edd);
+#undef T
+#undef D
+   evry_conf = e_config_domain_load("module.everything", conf_edd);
+   
+   if (evry_conf && evry_conf->version != CONFIG_VERSION)
+     {
+	_config_free();
+	evry_conf = NULL;
+     }
+   
+   if (!evry_conf)
+     {
+	evry_conf = E_NEW(Config, 1);
+	evry_conf->version = CONFIG_VERSION;
+	evry_conf->rel_x = 50.0;
+	evry_conf->rel_y = 50.0;
+	evry_conf->width = 400;
+	evry_conf->height = 350;
+	evry_conf->scroll_animate = 0;
+	evry_conf->scroll_speed = 0.08;
+	evry_conf->hide_input = 0;
+	evry_conf->hide_list = 1;
+	evry_conf->quick_nav = 1;
+	evry_conf->conf_subjects = NULL;
+	evry_conf->conf_actions = NULL;
+	evry_conf->conf_objects = NULL;
+	evry_conf->conf_views   = NULL;
+	evry_conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm");
+     }
+}
+
+
+static void
+_config_free(void)
+{
+   Plugin_Config *pc;
+
+   /* free config */
+   if (evry_conf->cmd_terminal)
+     eina_stringshare_del(evry_conf->cmd_terminal);
+   EINA_LIST_FREE(evry_conf->conf_subjects, pc)
+     {
+	if (pc->name) eina_stringshare_del(pc->name);
+	if (pc->trigger) eina_stringshare_del(pc->trigger);
+	E_FREE(pc);
+     }
+   EINA_LIST_FREE(evry_conf->conf_actions, pc)
+     {
+	if (pc->name) eina_stringshare_del(pc->name);
+	if (pc->trigger) eina_stringshare_del(pc->trigger);
+	E_FREE(pc);
+     }
+   EINA_LIST_FREE(evry_conf->conf_objects, pc)
+     {
+	if (pc->name) eina_stringshare_del(pc->name);
+	if (pc->trigger) eina_stringshare_del(pc->trigger);
+	E_FREE(pc);
+     }
+   E_FREE(evry_conf);
+}
+
+
+static void
+_history_init(void)
+{
+#undef T
+#undef D   
+#define T History_Item
+#define D hist_item_edd
+   hist_item_edd = E_CONFIG_DD_NEW("History_Item", History_Item);
+   E_CONFIG_VAL(D, T, plugin, STR);
+   E_CONFIG_VAL(D, T, context, STR);
+   E_CONFIG_VAL(D, T, input, STR);
+   E_CONFIG_VAL(D, T, last_used, DOUBLE);
+   E_CONFIG_VAL(D, T, count, INT);  
+#undef T
+#undef D
+
+#define T History_Entry
+#define D hist_entry_edd
+   hist_entry_edd = E_CONFIG_DD_NEW("History_Entry", History_Entry);
+   E_CONFIG_LIST(D, T, items, hist_item_edd);
+#undef T
+#undef D
+
+#define T History
+#define D hist_edd
+   hist_edd = E_CONFIG_DD_NEW("History_Item", History);
+   E_CONFIG_VAL(D, T, version, INT);
+   E_CONFIG_HASH(D, T, subjects, hist_entry_edd);
+   E_CONFIG_HASH(D, T, actions,  hist_entry_edd);
+#undef T
+#undef D
+   evry_hist = e_config_domain_load("module.everything.history", hist_edd);
+   
+   if (evry_hist && evry_hist->version != HISTORY_VERSION)
+     {
+	_history_free();
+	evry_hist = NULL;
+     }
+   
+   if (!evry_hist)
+     {
+	evry_hist = E_NEW(History, 1);
+	evry_hist->version = HISTORY_VERSION;
+	
+     }
+   if (!evry_hist->subjects)
+     evry_hist->subjects = eina_hash_string_superfast_new(NULL);
+   if (!evry_hist->actions)
+     evry_hist->actions  = eina_hash_string_superfast_new(NULL);
+   
+}
+
+static Eina_Bool
+_hist_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+{
+   History_Entry *he = data;
+   History_Item *hi;
+   
+   EINA_LIST_FREE(he->items, hi)
+     {
+	if (hi->input)
+	  eina_stringshare_del(hi->input);
+	if (hi->plugin)
+	  eina_stringshare_del(hi->plugin);
+	if (hi->context)
+	  eina_stringshare_del(hi->context);
+	E_FREE(hi);
+     }
+
+   E_FREE(he);
+   return 1;
+}
+
+static void
+_history_free(void)
+{
+   eina_hash_foreach(evry_hist->subjects, _hist_free_cb, NULL);
+   eina_hash_foreach(evry_hist->actions,  _hist_free_cb, NULL);
+
+   E_FREE(evry_hist);
+}
+
+
 /* action callback */
 static void
-_e_mod_action_exebuf_cb(E_Object *obj, const char *params)
+_e_mod_action_cb(E_Object *obj, const char *params)
 {
    E_Zone *zone = NULL;
 
@@ -317,23 +466,6 @@ evry_plugin_free(Evry_Plugin *p, int free_pointer)
    if (p->trigger)  eina_stringshare_del(p->trigger);
    if (p->icon)     eina_stringshare_del(p->icon);
 
-   if (p->config)
-     {
-	if (p->type == type_subject)
-	  evry_conf->conf_subjects = eina_list_remove(evry_conf->conf_subjects, p->config);
-	else if (p->type == type_action)
-	  evry_conf->conf_actions = eina_list_remove(evry_conf->conf_actions, p->config);
-	else if (p->type == type_object)
-	  evry_conf->conf_objects = eina_list_remove(evry_conf->conf_objects, p->config);
-
-	if (p->config->name)
-	  eina_stringshare_del(p->config->name);
-	if (p->config->trigger)
-	  eina_stringshare_del(p->config->trigger);
-
-	E_FREE(p->config);
-     }
-
    if (free_pointer)
      E_FREE(p);
 }
@@ -380,7 +512,6 @@ evry_plugin_register(Evry_Plugin *p, int priority)
 {
    Eina_List *l, *confs = NULL;
    Plugin_Config *pc;
-   Eina_Bool found = 0;
 
    evry_conf->plugins = eina_list_append(evry_conf->plugins, p);
 
@@ -392,15 +523,10 @@ evry_plugin_register(Evry_Plugin *p, int priority)
      confs = evry_conf->conf_objects;
 
    EINA_LIST_FOREACH(confs, l, pc)
-     {
-	if (pc->name && p->name && !strcmp(pc->name, p->name))
-	  {
-	     found = 1;
-	     break;
-	  }
-     }
+     if (pc->name && p->name && !strcmp(pc->name, p->name))
+       break;
 
-   if (!found)
+   if (!pc)
      {
 	pc = E_NEW(Plugin_Config, 1);
 	pc->name = eina_stringshare_add(p->name);
@@ -414,7 +540,6 @@ evry_plugin_register(Evry_Plugin *p, int priority)
     *   pc->trigger = eina_stringshare_add(plugin->trigger); */
 
    p->config = pc;
-
    evry_conf->plugins = eina_list_sort(evry_conf->plugins,
 				       eina_list_count(evry_conf->plugins),
 				       _evry_cb_plugin_sort);
@@ -434,7 +559,6 @@ evry_plugin_register(Evry_Plugin *p, int priority)
 	e_action_predef_name_set(_("Everything"), buf,
 				 "everything", p->name, NULL, 1);
      }
-   /* TODO sorting, initialization, etc */
 }
 
 void

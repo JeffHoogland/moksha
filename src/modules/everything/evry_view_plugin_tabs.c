@@ -104,9 +104,13 @@ _tabs_update(Tab_View *v)
 	evas_object_show(o);
 	e_box_pack_end(v->o_tabs, o);
 
-	e_box_pack_options_set(o, 1, 1, 1, 0, 0.0, 0.5,
-			       (tab->mw < tab->cw ? tab->cw : tab->mw), 10,
-			       (w ? w/3 : 150), 9999);
+	if (eina_list_count(s->cur_plugins) == 2)
+	  e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5,
+				 120, 10, 120, 9999);
+	else
+	  e_box_pack_options_set(o, 1, 1, 1, 0, 0.0, 0.5,
+				 (tab->mw < tab->cw ? tab->cw : tab->mw), 10,
+				 (w ? w/3 : 120), 9999);
 	if (s->plugin == p)
 	  edje_object_signal_emit(o, "e,state,selected", "e");
 	else

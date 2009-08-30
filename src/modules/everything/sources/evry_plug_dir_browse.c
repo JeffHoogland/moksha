@@ -448,6 +448,14 @@ _open_term_action(Evry_Action *act)
    return ret;
 }
 
+static const char *
+_item_id(Evry_Plugin *p, const Evry_Item *item)
+{
+   ITEM_FILE(file, item);
+   
+   return file->uri;
+}
+
 static Eina_Bool
 _init(void)
 {
@@ -459,6 +467,9 @@ _init(void)
 			_begin, _cleanup, _fetch, NULL, _icon_get,
 			NULL, NULL);
 
+   p1->item_id = &_item_id;
+   p1->item_id = &_item_id;
+   
    evry_plugin_register(p1, 3);
    evry_plugin_register(p2, 1);
 

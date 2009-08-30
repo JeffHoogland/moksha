@@ -88,6 +88,7 @@ struct _Evry_Item
   Evry_Plugin *plugin;
   int ref;
   void (*free) (Evry_Item *item);
+  double usage;
 };
 
 struct _Evry_Item_App
@@ -136,7 +137,8 @@ struct _Evry_Plugin
   Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e);
   /* provide more information for a candidate */
   /* int (*candidate_info) (Evas *evas, Evry_Item *item); */
-
+  const char *(*item_id) (Evry_Plugin *p, const Evry_Item *it);
+  
   /* optional: default action for this plugins items */
   int  (*action) (Evry_Plugin *p, const Evry_Item *item);
 

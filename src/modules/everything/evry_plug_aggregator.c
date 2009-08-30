@@ -15,6 +15,13 @@ _cb_sort_recent(const void *data1, const void *data2)
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
 
+   if (it1->usage && it2->usage)
+     return (it2->usage - it1->usage);
+   if (it1->usage && !it2->usage)
+     return -1;
+   if (it2->usage && !it1->usage)
+     return 1;
+   
    if ((it1->plugin == action_selector) ||
        (it2->plugin == action_selector))
      {
@@ -26,7 +33,7 @@ _cb_sort_recent(const void *data1, const void *data2)
 		  - it2->plugin->config->priority);
 	else
 	  return (it1->plugin->config->priority -
-		  (it1->plugin->config->priority + it2->priority));
+		  (it2->plugin->config->priority + it2->priority));
      }
      
   return -1;
@@ -37,6 +44,13 @@ _cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
+
+   if (it1->usage && it2->usage)
+     return (it2->usage - it1->usage);
+   if (it1->usage && !it2->usage)
+     return -1;
+   if (it2->usage && !it1->usage)
+     return 1;
 
    if ((it1->plugin == action_selector) ||
        (it2->plugin == action_selector))
@@ -87,6 +101,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Evry_Item *it;
    int cnt = 0;
    Eina_List *items = NULL;
+   History_Entry *he;
+   History_Item *hi;
+   const char *id;
 
    s = p->selector->state;
 
@@ -115,11 +132,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
      }
 
-   if (!input[0] || eina_list_count(items) < 20)
+   if (!input[0] || eina_list_count(items) < 50)
      {
 	EINA_LIST_FOREACH(s->cur_plugins, l, pp)
    	  {
-   	     for (cnt = 0, ll = pp->items; ll && cnt < 15; ll = ll->next, cnt++)
+   	     for (cnt = 0, ll = pp->items; ll && cnt < 50; ll = ll->next, cnt++)
    	       {
 		  if (!items || !eina_list_data_find_list(items, ll->data))
 		    {
@@ -134,7 +151,34 @@ _fetch(Evry_Plugin *plugin, const char *input)
      }
 
    if (items) eina_list_free(items);
+   
+   EINA_LIST_FOREACH(EVRY_PLUGIN(p)->items, l, it)
+     {
+	cnt = 1;
+	if (it->usage) continue;
 
+	if (it->plugin->item_id)
+	  id = it->plugin->item_id(it->plugin, it);
+	else
+	  id = it->label;
+
+	if ((he = eina_hash_find(p->selector->history, id)))
+	  {
+	     EINA_LIST_FOREACH(he->items, ll, hi)
+	       {
+		  if ((hi->plugin == it->plugin->name) &&
+		      ((!input[0]) || (!input[0] && !hi->input) || 
+		       (!strncmp(input, hi->input, strlen(input))) ||
+		       (!strncmp(input, hi->input, strlen(hi->input)))))
+		    {
+		       cnt++;
+		       it->usage += hi->last_used;
+		    }
+	       }
+	     it->usage /= (double)cnt;
+	  }
+     }
+   
    if (input[0])
      {
 	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);

@@ -1,5 +1,4 @@
-#include "Evry.h"
-
+#include "e_mod_main.h"
 
 /* TODO check if trackerd is running and version */
 
@@ -21,7 +20,7 @@ struct _Plugin
 static E_DBus_Connection *conn = NULL;
 static Eina_List *plugins = NULL;
 static int _prio = 5;
-
+static int active = 0;
 
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *it)
@@ -170,6 +169,7 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
    if (dbus_error_is_set(error))
      {
 	_cleanup(EVRY_PLUGIN(p));
+	active = 0;
 	printf("Error: %s - %s\n", error->name, error->message);
 	return;
      }
@@ -253,6 +253,47 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
    evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
 }
 
+static void
+_dbus_cb_version(void *data, DBusMessage *msg, DBusError *error)
+{
+   DBusMessageIter iter;
+   int version = 0;
+
+   if (dbus_error_is_set(error))
+     {
+	printf("Error: %s - %s\n", error->name, error->message);
+	return;
+     }
+
+   dbus_message_iter_init(msg, &iter);
+
+   if (dbus_message_iter_get_arg_type(&iter) == DBUS_TYPE_INT32)
+     dbus_message_iter_get_basic(&iter, &version);
+
+   printf("tracker version %d\n", version);
+   
+   if (version < 690)
+     active = 0;
+   else
+     active = 2;
+}
+
+static void
+_get_version(void)
+{
+   DBusMessage *msg;
+
+   msg = dbus_message_new_method_call("org.freedesktop.Tracker",
+				      "/org/freedesktop/Tracker",
+				      "org.freedesktop.Tracker",
+				      "GetVersion");
+
+   e_dbus_message_send(conn, msg, _dbus_cb_version, -1, NULL);
+   dbus_message_unref(msg);
+
+   active = 1;
+}
+
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
@@ -305,6 +346,13 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	return 0;
      }
 
+
+   if (!active)
+     _get_version();
+
+   if (active != 2)
+     return 0;
+   
    p->active++;
 
    msg = dbus_message_new_method_call("org.freedesktop.Tracker",
@@ -377,70 +425,7 @@ _plugin_new(const char *name, int type, char *service, int max_hits, int begin)
    evry_plugin_register(EVRY_PLUGIN(p), _prio++);
 }
 
-static void
-_dbus_cb_version(void *data, DBusMessage *msg, DBusError *error)
-{
-   DBusMessageIter iter;
-   Plugin *p;
-   int version = 0;
 
-   if (dbus_error_is_set(error))
-     {
-	printf("Error: %s - %s\n", error->name, error->message);
-	e_dbus_connection_close(conn);
-
-	EINA_LIST_FREE(plugins, p)
-	  {
-	     if (p->condition[0]) free(p->condition);
-
-	     EVRY_PLUGIN_FREE(p);
-	  }
-	return;
-     }
-
-   dbus_message_iter_init(msg, &iter);
-
-   if (dbus_message_iter_get_arg_type(&iter) == DBUS_TYPE_INT32)
-     dbus_message_iter_get_basic(&iter, &version);
-
-   printf("tracker version %d\n", version);
-
-   if (version < 690)
-     {
-	e_dbus_connection_close(conn);
-
-	EINA_LIST_FREE(plugins, p)
-	  {
-	     if (p->condition[0]) free(p->condition);
-
-	     EVRY_PLUGIN_FREE(p);
-	  }
-     }
-}
-
-
-static void
-_get_version(void)
-{
-   DBusMessage *msg;
-
-   msg = dbus_message_new_method_call("org.freedesktop.Tracker",
-				      "/org/freedesktop/Tracker",
-				      "org.freedesktop.Tracker",
-				      "GetVersion");
-
-   e_dbus_message_send(conn, msg, _dbus_cb_version, -1, NULL);
-   dbus_message_unref(msg);
-}
-
-
-/* static Evry_Plugin *
- * _begin_subject(Evry_Plugin *plugin, const Evry_Item *it)
- * {
- *    if (!conn) return NULL;
- *
- *    return plugin;
- * } */
 
 
 static Eina_Bool
