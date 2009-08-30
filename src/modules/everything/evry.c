@@ -81,8 +81,6 @@ static void _evry_item_sel(Evry_State *s, Evry_Item *it);
 
 static int  _evry_cb_key_down(void *data, int type, void *event);
 static int  _evry_cb_selection_notify(void *data, int type, void *event);
-static void _evry_history_item_add(Eina_Hash *hist, Evry_State *s);
-
 
 /* local subsystem globals */
 static Evry_Window *win = NULL;
@@ -139,6 +137,8 @@ evry_show(E_Zone *zone, const char *params)
 
    list->visible = EINA_FALSE;
 
+   evry_history_load();
+   
    selectors = E_NEW(Evry_Selector*, 3);
    selectors[0] = _evry_selector_new(type_subject);
    selectors[1] = _evry_selector_new(type_action);
@@ -147,6 +147,7 @@ evry_show(E_Zone *zone, const char *params)
    if (params)
      win->plugin_dedicated = EINA_TRUE;
 
+   
    _evry_selector_subjects_get(params);
    _evry_selector_activate(selectors[0]);
 
@@ -242,6 +243,8 @@ evry_hide(void)
    ecore_x_window_free(input_window);
    e_grabinput_release(input_window, input_window);
    input_window = 0;
+
+   evry_history_unload();
 }
 
 EAPI void
@@ -1060,7 +1063,7 @@ _evry_browse_item(Evry_Selector *sel)
 
    if (!plugins) return 1;
 
-   _evry_history_item_add(sel->history, s); 
+   evry_history_add(sel->history, s); 
    
    if (s->view)
      {
@@ -1363,102 +1366,6 @@ _evry_clear(Evry_State *s)
 }
 
 static void
-_evry_history_item_add(Eina_Hash *hist, Evry_State *s)
-{
-   History_Entry *he;
-   History_Item  *hi;
-   Evry_Item *it;
-   Eina_List *l;
-   const char *id;
-
-   if (!s) return;
-   
-   it = s->cur_item;
-   if (!it) return;
-
-   if (it->plugin->item_id)
-     id = it->plugin->item_id(it->plugin, it);
-   else
-     id = it->label;
-   
-   he = eina_hash_find(hist, id);
-   if (he)
-     {
-	/* found history entry */
-	EINA_LIST_FOREACH(he->items, l, hi)
-	  if (hi->plugin == it->plugin->name) break;
-
-	if (hi)
-	  {
-	     /* found history item */
-	     if (hi->input)
-	       {
-		  if (!s->input || !strncmp (hi->input, s->input, strlen(s->input)))
-		    {
-		       /* s->input matches hi->input and is equal or shorter */
-		       hi->count++;
-		       hi->last_used /= 1000.0;
-		       hi->last_used += ecore_time_get();
-		    }
-		  else if (s->input)
-		    {
-		       if (!strncmp (hi->input, s->input, strlen(hi->input)))
-			 {
-			    /* s->input matches hi->input but is longer */
-			    eina_stringshare_del(hi->input);
-			    hi->input = eina_stringshare_add(s->input);
-			 }
-		       else
-			 {
-			    /* s->input is different from hi->input
-			       -> create new item */
-			    hi = NULL;
-			 }
-		    }
-	       }
-	     else
-	       {
-		  /* remember input for item */
-		  hi->count++;
-		  hi->last_used /= 2.0;
-		  hi->last_used += ecore_time_get();
-
-		  if (s->input)
-		    hi->input = eina_stringshare_add(s->input);
-	       }
-	  }
-
-	if (!hi)
-	  {	     
-	     hi = E_NEW(History_Item, 1);
-	     hi->plugin = eina_stringshare_ref(it->plugin->name);
-	     hi->last_used = ecore_time_get();
-	     hi->count = 1;
-	     if (s->input)
-	       hi->input = eina_stringshare_add(s->input);
-
-	     he->items = eina_list_append(he->items, hi);
-	  }
-     }
-   else
-     {
-	he = E_NEW(History_Entry, 1);
-	hi = E_NEW(History_Item, 1);
-	hi->plugin = eina_stringshare_ref(it->plugin->name);
-	hi->last_used = ecore_time_get();
-	hi->count = 1;
-	if (s->input)
-	  hi->input = eina_stringshare_add(s->input);
-
-	he->items = eina_list_append(he->items, hi);
-	eina_hash_add(hist, id, he);
-     }
-   evry_save_history();
-
-}
-
-
-static void
 _evry_plugin_action(Evry_Selector *sel, int finished)
 {
    Evry_State *s_subject, *s_action, *s_object;
@@ -1506,10 +1413,9 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
      }
    else return;
 
-   _evry_history_item_add(evry_hist->subjects, s_subject);
-   _evry_history_item_add(evry_hist->actions,  s_action);
-   _evry_history_item_add(evry_hist->subjects,  s_object);
-   
+   evry_history_add(evry_hist->subjects, s_subject);
+   evry_history_add(evry_hist->actions, s_action);
+   evry_history_add(evry_hist->subjects, s_object);
    
    /* let subject and object plugin know that an action was performed */
    if (s_subject->plugin->action)

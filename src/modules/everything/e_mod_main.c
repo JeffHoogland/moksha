@@ -10,7 +10,6 @@
 #include "e_mod_main.h"
 
 #define CONFIG_VERSION 5
-#define HISTORY_VERSION 1
 
 /* actual module specifics */
 static void _e_mod_action_cb(E_Object *obj, const char *params);
@@ -19,8 +18,6 @@ static void _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_mod_menu_add(void *data, E_Menu *m);
 static void _config_init(void);
 static void _config_free(void);
-static void _history_init(void);
-static void _history_free(void);
 
 static E_Int_Menu_Augmentation *maug = NULL;
 static E_Action *act = NULL;
@@ -28,13 +25,9 @@ static E_Action *act = NULL;
 static Eina_Array  *plugins = NULL;
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
-static E_Config_DD *hist_entry_edd = NULL;
-static E_Config_DD *hist_item_edd = NULL;
-static E_Config_DD *hist_edd = NULL;
-
 
 Config *evry_conf = NULL;
-History *evry_hist = NULL;
+
 
 /* module setup */
 EAPI E_Module_Api e_modapi =
@@ -64,7 +57,7 @@ e_modapi_init(E_Module *m)
     * ecore_file_mkdir(buf); */
 
    _config_init();
-   _history_init();
+   evry_history_init();
       
    /* search for plugins */
    eina_module_init();
@@ -147,14 +140,11 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_category_del("extensions");
 
    _config_free();
-   _history_free();
+   evry_history_free();
 
    /* Clean EET */
    E_CONFIG_DD_FREE(conf_item_edd);
    E_CONFIG_DD_FREE(conf_edd);
-   E_CONFIG_DD_FREE(hist_item_edd);
-   E_CONFIG_DD_FREE(hist_entry_edd);
-   E_CONFIG_DD_FREE(hist_edd);
    return 1;
 }
 
@@ -165,13 +155,6 @@ e_modapi_save(E_Module *m __UNUSED__)
 
    return 1;
 }
-
-void
-evry_save_history(void)
-{
-   e_config_domain_save("module.everything.history", hist_edd, evry_hist);
-}
-
 
 static void
 _config_init()
@@ -267,89 +250,6 @@ _config_free(void)
 	E_FREE(pc);
      }
    E_FREE(evry_conf);
-}
-
-
-static void
-_history_init(void)
-{
-#undef T
-#undef D   
-#define T History_Item
-#define D hist_item_edd
-   hist_item_edd = E_CONFIG_DD_NEW("History_Item", History_Item);
-   E_CONFIG_VAL(D, T, plugin, STR);
-   E_CONFIG_VAL(D, T, context, STR);
-   E_CONFIG_VAL(D, T, input, STR);
-   E_CONFIG_VAL(D, T, last_used, DOUBLE);
-   E_CONFIG_VAL(D, T, count, INT);  
-#undef T
-#undef D
-
-#define T History_Entry
-#define D hist_entry_edd
-   hist_entry_edd = E_CONFIG_DD_NEW("History_Entry", History_Entry);
-   E_CONFIG_LIST(D, T, items, hist_item_edd);
-#undef T
-#undef D
-
-#define T History
-#define D hist_edd
-   hist_edd = E_CONFIG_DD_NEW("History_Item", History);
-   E_CONFIG_VAL(D, T, version, INT);
-   E_CONFIG_HASH(D, T, subjects, hist_entry_edd);
-   E_CONFIG_HASH(D, T, actions,  hist_entry_edd);
-#undef T
-#undef D
-   evry_hist = e_config_domain_load("module.everything.history", hist_edd);
-   
-   if (evry_hist && evry_hist->version != HISTORY_VERSION)
-     {
-	_history_free();
-	evry_hist = NULL;
-     }
-   
-   if (!evry_hist)
-     {
-	evry_hist = E_NEW(History, 1);
-	evry_hist->version = HISTORY_VERSION;
-	
-     }
-   if (!evry_hist->subjects)
-     evry_hist->subjects = eina_hash_string_superfast_new(NULL);
-   if (!evry_hist->actions)
-     evry_hist->actions  = eina_hash_string_superfast_new(NULL);
-   
-}
-
-static Eina_Bool
-_hist_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
-{
-   History_Entry *he = data;
-   History_Item *hi;
-   
-   EINA_LIST_FREE(he->items, hi)
-     {
-	if (hi->input)
-	  eina_stringshare_del(hi->input);
-	if (hi->plugin)
-	  eina_stringshare_del(hi->plugin);
-	if (hi->context)
-	  eina_stringshare_del(hi->context);
-	E_FREE(hi);
-     }
-
-   E_FREE(he);
-   return 1;
-}
-
-static void
-_history_free(void)
-{
-   eina_hash_foreach(evry_hist->subjects, _hist_free_cb, NULL);
-   eina_hash_foreach(evry_hist->actions,  _hist_free_cb, NULL);
-
-   E_FREE(evry_hist);
 }
 
 

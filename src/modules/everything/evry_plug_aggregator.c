@@ -97,13 +97,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Plugin *p = (Plugin *) plugin;
    Evry_Plugin *pp;
    Evry_State *s;
-   Eina_List *l, *ll, *lll, *lp;
+   Eina_List *l, *ll, *lp;
    Evry_Item *it;
    int cnt = 0;
    Eina_List *items = NULL;
-   History_Entry *he;
-   History_Item *hi;
-   const char *id;
 
    EVRY_PLUGIN_ITEMS_FREE(p);
 
@@ -138,12 +135,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
    	  {
   	     for (cnt = 0, ll = pp->items; ll && cnt < 50; ll = ll->next, cnt++)
    	       {
-   		  if (!items || !eina_list_data_find_list(items, ll->data))
+   		  if (!eina_list_data_find_list(items, ll->data))
    		    {
    		       it = ll->data;
-
    		       evry_item_ref(it);
    		       it->fuzzy_match = 0;
+		       items = eina_list_append(items, it);
    		       EVRY_PLUGIN_ITEM_APPEND(p, it);
    		    }
    	       }
@@ -154,11 +151,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
 	EINA_LIST_FOREACH(pp->items, ll, it)
 	  {
-	     cnt = 1;
-	     if (it->usage == 0)
-	       continue;
+	     /* if (it->usage == 0)
+	      *   continue; */
 
-	     if ((it->usage > 0) && (!eina_list_data_find_list(items, it)))
+	     if (evry_history_item_usage_set(p->selector->history, it, input) &&
+		 (!eina_list_data_find_list(items, it)))
 	       {
 		  evry_item_ref(it);
 		  it->fuzzy_match = 0;
@@ -166,36 +163,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		  EVRY_PLUGIN_ITEM_APPEND(p, it);
 		  continue;
 	       }
-
-	     if (it->plugin->item_id)
-	       id = it->plugin->item_id(it->plugin, it);
-	     else
-	       id = it->label;
-
-	     if ((he = eina_hash_find(p->selector->history, id)))
-	       {
-		  EINA_LIST_FOREACH(he->items, lll, hi)
-		    {
-		       if ((hi->plugin == it->plugin->name) &&
-			   ((!input[0]) || (!input[0] && !hi->input) ||
-			    (!strncmp(input, hi->input, strlen(input))) ||
-			    (!strncmp(input, hi->input, strlen(hi->input)))))
-			 {
-			    cnt++;
-			    it->usage += hi->last_used;
-			 }
-		    }
-		  it->usage /= (double)cnt;
-
-		  if (!eina_list_data_find_list(items, it))
-		    {
-		       evry_item_ref(it);
-		       it->fuzzy_match = 0;
-		       items = eina_list_append(items, it);
-		       EVRY_PLUGIN_ITEM_APPEND(p, it);
-		    }
-	       }
-	     else it->usage = 0;
 	  }
      }
 

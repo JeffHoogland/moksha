@@ -115,11 +115,13 @@ EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 EAPI E_Config_Dialog *evry_config_dialog(E_Container *con, const char *params);
 
+EAPI Tab_View *evry_tab_view_new(const Evry_State *s, Evas *e);
+EAPI void evry_tab_view_free(Tab_View *v);
+
 int  evry_init(void);
 int  evry_shutdown(void);
 int  evry_show(E_Zone *zone, const char *params);
 void evry_hide(void);
-void evry_save_history(void);
 
 Evry_Plugin *evry_plug_aggregator_new(Evry_Selector *selector);
 void evry_plug_aggregator_free(Evry_Plugin *plugin);
@@ -127,8 +129,12 @@ void evry_plug_aggregator_free(Evry_Plugin *plugin);
 Evry_Plugin *evry_plug_actions_new(void);
 void evry_plug_actions_free(Evry_Plugin *plugin);
 
-EAPI Tab_View *evry_tab_view_new(const Evry_State *s, Evas *e);
-EAPI void evry_tab_view_free(Tab_View *v);
+void evry_history_init(void);
+void evry_history_free(void);
+void evry_history_load(void);
+void evry_history_unload(void);
+void evry_history_add(Eina_Hash *hist, Evry_State *s);
+int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input);
 
 extern Config *evry_conf;
 extern History *evry_hist;
