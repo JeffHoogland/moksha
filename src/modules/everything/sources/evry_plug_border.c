@@ -91,6 +91,11 @@ _item_add(Evry_Plugin *p, E_Border *bd, int match, int *prio)
    it->data = bd;
    it->fuzzy_match = match;
    it->priority = *prio;
+   if (bd->client.icccm.class)
+     it->id = eina_stringshare_add(bd->client.icccm.class);
+   if (bd->client.icccm.name)
+     it->id = eina_stringshare_add(bd->client.icccm.name);
+
    *prio += 1;
 
    eina_hash_add(border_hash, &bd, it);
@@ -235,17 +240,6 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
    return o;
 }
 
-static const char *
-_item_id(Evry_Plugin *p, const Evry_Item *it)
-{
-   E_Border *bd = it->data;
-   if (bd->client.icccm.class)
-     return (bd->client.icccm.class);
-   if (bd->client.icccm.name)
-     return (bd->client.icccm.name);
-   else
-     return NULL;
-}
 
 
 static Eina_Bool
@@ -254,8 +248,6 @@ _init(void)
    plugin = evry_plugin_new(NULL, "Windows", type_subject, NULL, "BORDER", 0, NULL, NULL,
 		       _begin, _cleanup, _fetch, NULL, _item_icon_get, NULL, NULL);
 
-   plugin->item_id = &_item_id;
-   
    evry_plugin_register(plugin, 2);
 
    return EINA_TRUE;

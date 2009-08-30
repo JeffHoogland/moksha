@@ -123,7 +123,7 @@ _scan_func(void *data)
 
 	snprintf(buf, sizeof(buf), "%s/%s", p->directory, filename);
 	file->uri = strdup(buf);
-
+	
 	if (ecore_file_is_dir(file->uri))
 	  EVRY_ITEM(file)->browseable = EINA_TRUE;
 
@@ -149,6 +149,21 @@ _append_file(Plugin *p, Evry_Item_File *file)
      }
 
    return 0;
+}
+
+static const char *
+_item_id(const char *uri)
+{
+   const char *s1, *s2, *s3;
+   s1 = s2 = s3 = uri;
+   
+   while (s1 && ++s1 && (s1 = strchr(s1, '/')))
+     {
+	s3 = s2;
+	s2 = s1;
+     }
+   
+   return s3;
 }
 
 static void
@@ -179,6 +194,7 @@ _scan_end_func(void *data)
 	filename = item->data;
 	uri = (char *) file->uri;
 	file->uri = eina_stringshare_add(uri);
+	item->id = eina_stringshare_add(_item_id(uri));
 	item->label = eina_stringshare_add(filename);
 	free(filename);
 	free(uri);
@@ -448,14 +464,6 @@ _open_term_action(Evry_Action *act)
    return ret;
 }
 
-static const char *
-_item_id(Evry_Plugin *p, const Evry_Item *item)
-{
-   ITEM_FILE(file, item);
-
-   return file->uri;
-}
-
 static Eina_Bool
 _init(void)
 {
@@ -466,9 +474,6 @@ _init(void)
    p2 = evry_plugin_new(NULL, "Files", type_object, "FILE", "FILE", 0, NULL, NULL,
 			_begin, _cleanup, _fetch, NULL, _icon_get,
 			NULL, NULL);
-
-   p1->item_id = &_item_id;
-   p1->item_id = &_item_id;
    
    evry_plugin_register(p1, 3);
    evry_plugin_register(p2, 1);

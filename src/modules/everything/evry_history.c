@@ -1,6 +1,6 @@
 #include "e_mod_main.h"
 
-#define HISTORY_VERSION 2
+#define HISTORY_VERSION 1
 
 static E_Config_DD *hist_entry_edd = NULL;
 static E_Config_DD *hist_item_edd = NULL;
@@ -122,8 +122,8 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
    it = s->cur_item;
    if (!it) return;
 
-   if (it->plugin->item_id)
-     id = it->plugin->item_id(it->plugin, it);
+   if (it->id)
+     id = it->id;
    else
      id = it->label;
    
@@ -210,8 +210,8 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
    Eina_List *l;
    int cnt = 1;
    
-   if (it->plugin->item_id)
-     id = it->plugin->item_id(it->plugin, it);
+   if (it->id)
+     id = it->id;
    else
      id = it->label;
 

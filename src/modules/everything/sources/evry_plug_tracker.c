@@ -82,6 +82,22 @@ _item_free(Evry_Item *it)
    E_FREE(file);
 }
 
+
+static const char *
+_item_id(const char *uri)
+{
+   const char *s1, *s2, *s3;
+   s1 = s2 = s3 = uri;
+   
+   while (s1 && ++s1 && (s1 = strchr(s1, '/')))
+     {
+	s3 = s2;
+	s2 = s1;
+     }
+   
+   return s3;
+}
+
 static Evry_Item_File *
 _item_add(Plugin *p, char *path, char *mime, int prio)
 {
@@ -103,9 +119,8 @@ _item_add(Plugin *p, char *path, char *mime, int prio)
    if (!file) return NULL;
 
    evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), filename, _item_free);
+   EVRY_ITEM(file)->id = eina_stringshare_add(_item_id(path));
    file->uri = eina_stringshare_add(path);
-
-   /* EVRY_ITEM(file)->priority = prio; */
 
    if (folder)
      {

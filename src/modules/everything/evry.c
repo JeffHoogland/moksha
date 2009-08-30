@@ -309,6 +309,7 @@ evry_item_free(Evry_Item *it)
 #endif
 
    if (it->label) eina_stringshare_del(it->label);
+   if (it->id) eina_stringshare_del(it->id);
 
    if (it->free)
      it->free(it);

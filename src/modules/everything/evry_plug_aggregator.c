@@ -128,8 +128,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
      }
 
-   /* always append items of action selector */
-   if (!input[0] && (p->selector == selectors[1]))
+   /* always append items of action or object selector */
+   if (!input[0] &&
+       ((p->selector == selectors[1]) ||
+	(p->selector == selectors[2])))
      {
    	EINA_LIST_FOREACH(lp, l, pp)
    	  {
