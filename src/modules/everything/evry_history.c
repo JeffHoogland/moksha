@@ -65,7 +65,7 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 {
    History_Entry *he = data;
    History_Item *hi;
-   Eina_List *l, *ll;
+   Eina_List *l, *ll, **keys = fdata;
    
    EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
      {
@@ -87,7 +87,7 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
    if (!he->items)
      {
 	E_FREE(he);
-	*((Eina_List **)fdata) = eina_list_append(*((Eina_List **)fdata), key);
+	*keys = eina_list_append(*keys, key);
      }
    
    return 1;
@@ -256,6 +256,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
    const char *id;
    Eina_List *l;
    int cnt = 1;
+   int matched;
    
    if (it->id)
      id = it->id;
@@ -268,13 +269,28 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
      {
 	EINA_LIST_FOREACH(he->items, l, hi)
 	  {
-	     if ((hi->plugin == it->plugin->name) &&
-		 ((!input[0]) || (!input[0] && !hi->input) ||
-		  (!strncmp(input, hi->input, strlen(input))) ||
-		  (!strncmp(input, hi->input, strlen(hi->input)))))
+	     if (hi->plugin == it->plugin->name)
 	       {
-		  cnt++;
-		  it->usage += hi->last_used;
+		  if ((!input[0]) || (!input[0] && !hi->input))
+		    {
+		       cnt++;
+		       it->usage += hi->last_used;
+		    }
+		  else
+		    {
+		       matched = 0;
+		       if (!strncmp(input, hi->input, strlen(input)))
+			 {
+			    matched = 1;
+			    it->usage += hi->last_used;
+			 }
+		       if (!strncmp(input, hi->input, strlen(hi->input)))
+			 {
+			    matched = 1;
+			    it->usage += hi->last_used;
+			 }
+		       if (matched) cnt++;
+		    }
 	       }
 	  }
 	if (it->usage)
