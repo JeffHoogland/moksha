@@ -163,10 +163,12 @@ _cleanup(Evry_Plugin *plugin)
 
    /* TODO popup end func !!!
       - cleanup hash for open-with plugin */
-   eina_hash_free(added);
+   if (added)
+     eina_hash_free(added);
    added = NULL;
-   
-   eina_hash_free(p->added);
+
+   if (p->added)
+     eina_hash_free(p->added);
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 

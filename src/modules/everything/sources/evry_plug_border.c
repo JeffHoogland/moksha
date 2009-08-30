@@ -53,7 +53,7 @@ _cleanup(Evry_Plugin *p)
 {
    Ecore_Event_Handler *h;
 
-   eina_hash_free(border_hash);
+   if (border_hash) eina_hash_free(border_hash);
    border_hash = NULL;
    
    EVRY_PLUGIN_ITEMS_CLEAR(p);

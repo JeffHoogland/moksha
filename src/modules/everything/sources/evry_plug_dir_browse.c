@@ -452,7 +452,7 @@ static const char *
 _item_id(Evry_Plugin *p, const Evry_Item *item)
 {
    ITEM_FILE(file, item);
-   
+
    return file->uri;
 }
 

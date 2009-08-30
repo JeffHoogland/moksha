@@ -279,6 +279,7 @@ evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free
    it->free = cb_free;
 
    it->ref = 1;
+   it->usage = -1;
 
 #ifdef CHECK_REFS
    item_cnt++;
@@ -403,8 +404,6 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	/* update aggregator */
 	if (eina_list_count(s->cur_plugins) > 0)
 	  {
-	     agg->fetch(agg, s->input);
-
 	     /* add aggregator */
 	     if (!(s->cur_plugins->data == agg))
 	       {
@@ -413,6 +412,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 		  if (s->plugin_auto_selected)
 		    _evry_plugin_select(s, agg);
 	       }
+	     agg->fetch(agg, s->input);
 	  }
 	else
 	  {
@@ -1707,8 +1707,8 @@ _evry_matches_update(Evry_Selector *sel, int async)
 
 	if (eina_list_count(s->cur_plugins) > 0)
 	  {
-	     sel->aggregator->fetch(sel->aggregator, s->input);
 	     s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
+	     sel->aggregator->fetch(sel->aggregator, s->input);
 	     if (s->plugin_auto_selected)
 	       _evry_plugin_select(s, NULL);
 	  }
