@@ -73,8 +73,7 @@ struct _Evry_Item
   /* item can be browsed, e.g. folders */
   Eina_Bool browseable;
 
-  /* these are only for internally use by plugins */
-  /* used e.g. as pointer for item data (Efreet_Desktop) */
+  /* for internally use by plugins */
   void *data;
 
   /* priority hints for sorting */
@@ -83,9 +82,13 @@ struct _Evry_Item
   /* store value of fuzzy match with input */
   int fuzzy_match;
 
-  /* optional: plugin can set id to identify it in
-     history otherwise label is used */
+  /* optional: plugin can set id to identify
+   * it in history otherwise label is used */
   const char *id;
+
+  /* if transient item is removed from history
+   * on shutdown */
+  Eina_Bool transient;
   
   /* do not set by plugin! */
   Evry_Item   *next;

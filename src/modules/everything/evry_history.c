@@ -60,9 +60,61 @@ _hist_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
    return 1;
 }
 
+static Eina_Bool
+_hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+{
+   History_Entry *he = data;
+   History_Item *hi;
+   Eina_List *l, *ll, *keys = fdata;
+   
+   EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
+     {
+	/* item is transient */
+	if (!hi->count)
+	  {
+	     if (hi->input)
+	       eina_stringshare_del(hi->input);
+	     if (hi->plugin)
+	       eina_stringshare_del(hi->plugin);
+	     if (hi->context)
+	       eina_stringshare_del(hi->context);
+	     E_FREE(hi);
+
+	     he->items = eina_list_remove_list(he->items, l);
+	  }
+     }
+
+   if (!he->items)
+     {
+	E_FREE(he);
+	keys = eina_list_append(keys, key);
+     }
+   
+   return 1;
+}
+
 void
 evry_history_free(void)
 {
+   Eina_List *keys = NULL;
+   char *key;
+   
+   evry_hist = e_config_domain_load("module.everything.history", hist_edd);
+   if (evry_hist)
+     {
+	keys = eina_list_append(keys, NULL);
+	eina_hash_foreach(evry_hist->subjects, _hist_cleanup_cb, keys);
+	EINA_LIST_FREE(keys, key)
+	  if (key) eina_hash_del_by_key(evry_hist->subjects, key);
+
+	keys = eina_list_append(keys, NULL);
+	eina_hash_foreach(evry_hist->actions,  _hist_cleanup_cb, keys);
+	EINA_LIST_FREE(keys, key)
+	  if (key) eina_hash_del_by_key(evry_hist->subjects, key);
+
+	evry_history_unload();
+     }
+   
    E_CONFIG_DD_FREE(hist_item_edd);
    E_CONFIG_DD_FREE(hist_entry_edd);
    E_CONFIG_DD_FREE(hist_edd);
@@ -77,6 +129,9 @@ evry_history_load(void)
      {
 	eina_hash_foreach(evry_hist->subjects, _hist_free_cb, NULL);
 	eina_hash_foreach(evry_hist->actions,  _hist_free_cb, NULL);
+	eina_hash_free(evry_hist->subjects);
+	eina_hash_free(evry_hist->actions);
+	
 	E_FREE(evry_hist);
 	evry_hist = NULL;
      }
@@ -112,7 +167,7 @@ void
 evry_history_add(Eina_Hash *hist, Evry_State *s)
 {
    History_Entry *he;
-   History_Item  *hi;
+   History_Item  *hi = NULL;
    Evry_Item *it;
    Eina_List *l;
    const char *id;
@@ -128,7 +183,12 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
      id = it->label;
    
    he = eina_hash_find(hist, id);
-   if (he)
+   if (!he)
+     {
+	he = E_NEW(History_Entry, 1);
+	eina_hash_add(hist, id, he);
+     }
+   else
      {
 	/* found history entry */
 	EINA_LIST_FOREACH(he->items, l, hi)
@@ -165,7 +225,8 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
 	     else
 	       {
 		  /* remember input for item */
-		  hi->count++;
+		  if (!it->transient)
+		    hi->count++;
 		  hi->last_used /= 2.0;
 		  hi->last_used += ecore_time_get();
 
@@ -173,31 +234,19 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
 		    hi->input = eina_stringshare_add(s->input);
 	       }
 	  }
-
-	if (!hi)
-	  {	     
-	     hi = E_NEW(History_Item, 1);
-	     hi->plugin = eina_stringshare_ref(it->plugin->name);
-	     hi->last_used = ecore_time_get();
-	     hi->count = 1;
-	     if (s->input)
-	       hi->input = eina_stringshare_add(s->input);
-
-	     he->items = eina_list_append(he->items, hi);
-	  }
      }
-   else
-     {
-	he = E_NEW(History_Entry, 1);
+
+   if (!hi)
+     {	     
 	hi = E_NEW(History_Item, 1);
 	hi->plugin = eina_stringshare_ref(it->plugin->name);
 	hi->last_used = ecore_time_get();
-	hi->count = 1;
+	if (!it->transient)
+	  hi->count = 1;
 	if (s->input)
 	  hi->input = eina_stringshare_add(s->input);
 
 	he->items = eina_list_append(he->items, hi);
-	eina_hash_add(hist, id, he);
      }
 }
 

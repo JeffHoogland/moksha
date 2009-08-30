@@ -91,11 +91,9 @@ _item_add(Evry_Plugin *p, E_Border *bd, int match, int *prio)
    it->data = bd;
    it->fuzzy_match = match;
    it->priority = *prio;
-   if (bd->client.icccm.class)
-     it->id = eina_stringshare_add(bd->client.icccm.class);
-   if (bd->client.icccm.name)
-     it->id = eina_stringshare_add(bd->client.icccm.name);
-
+   it->transient = EINA_TRUE;
+   it->id = eina_stringshare_add(e_util_winid_str_get(bd->win));
+   
    *prio += 1;
 
    eina_hash_add(border_hash, &bd, it);
