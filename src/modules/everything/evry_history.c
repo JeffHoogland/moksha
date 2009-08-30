@@ -143,7 +143,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
 		    {
 		       /* s->input matches hi->input and is equal or shorter */
 		       hi->count++;
-		       hi->last_used /= 1000.0;
+		       hi->last_used /= 4.0;
 		       hi->last_used += ecore_time_get();
 		    }
 		  else if (s->input)
