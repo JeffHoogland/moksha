@@ -32,12 +32,15 @@ struct _Config
   int hide_list;
 
   int quick_nav;
-  
+
+  const char *cmd_terminal;
+
+  /* not saved data */
   Eina_List *plugins;
   Eina_List *actions;
   Eina_List *views;
 
-  const char *cmd_terminal;
+  int min_w, min_h;
 };
 
 

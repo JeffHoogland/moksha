@@ -61,9 +61,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    Eina_List *l;
    Evry_Plugin *p;
 
-   /* cfdata->scroll_animate = evry_conf->scroll_animate;
-    * cfdata->height = evry_conf->height;
-    * cfdata->width = evry_conf->width; */
+   /* cfdata->scroll_animate = evry_conf->scroll_animate; */
+   cfdata->height = evry_conf->height;
+   cfdata->width = evry_conf->width;
    cfdata->hide_list = evry_conf->hide_list;
    cfdata->hide_input = evry_conf->hide_input;
    cfdata->quick_nav = evry_conf->quick_nav;
@@ -111,9 +111,9 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
 static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   /* evry_conf->width = cfdata->width;
-    * evry_conf->height = cfdata->height;
-    * evry_conf->scroll_animate = cfdata->scroll_animate; */
+   /* evry_conf->scroll_animate = cfdata->scroll_animate; */
+   evry_conf->width = cfdata->width;
+   evry_conf->height = cfdata->height;
    evry_conf->hide_input = cfdata->hide_input;
    evry_conf->hide_list = cfdata->hide_list;
    evry_conf->quick_nav = cfdata->quick_nav;
@@ -227,20 +227,21 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
 
-   /* ob = e_widget_label_add(evas, _("Popup Width"));
-    * e_widget_framelist_object_append(of, ob);
-    * ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),
-    * 			    300, 800, 5, 0, NULL,
-    * 			    &(cfdata->width), 200);
-    * e_widget_framelist_object_append(of, ob);
-    * 
-    * ob = e_widget_label_add(evas, _("Popup Height"));
-    * e_widget_framelist_object_append(of, ob);
-    * ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),
-    * 			    200, 800, 5, 0, NULL,
-    * 			    &(cfdata->height), 200);
-    * e_widget_framelist_object_append(of, ob);
-    * e_widget_list_object_append(o, of, 1, 1, 0.5); */
+   of = e_widget_framelist_add(evas, _("Size"), 0);
+   ob = e_widget_label_add(evas, _("Popup Width"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),
+   			    evry_conf->min_w, 800, 5, 0, NULL,
+   			    &(cfdata->width), 200);
+   e_widget_framelist_object_append(of, ob);
+   
+   ob = e_widget_label_add(evas, _("Popup Height"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),
+   			    evry_conf->min_h, 800, 5, 0, NULL,
+   			    &(cfdata->height), 200);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    /* of = e_widget_framelist_add(evas, _("Scroll Settings"), 0);
     * ob = e_widget_check_add(evas, _("Scroll Animate"),

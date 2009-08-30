@@ -207,8 +207,8 @@ _config_init()
 	evry_conf->version = CONFIG_VERSION;
 	evry_conf->rel_x = 50.0;
 	evry_conf->rel_y = 50.0;
-	evry_conf->width = 400;
-	evry_conf->height = 350;
+	evry_conf->width = 0;
+	evry_conf->height = 0;
 	evry_conf->scroll_animate = 0;
 	evry_conf->scroll_speed = 0.08;
 	evry_conf->hide_input = 0;

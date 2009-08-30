@@ -147,7 +147,6 @@ evry_show(E_Zone *zone, const char *params)
    if (params)
      win->plugin_dedicated = EINA_TRUE;
 
-   
    _evry_selector_subjects_get(params);
    _evry_selector_activate(selectors[0]);
 
@@ -441,11 +440,12 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 static Evry_List_Window *
 _evry_list_win_new(E_Zone *zone)
 {
-   int x, y, mw, mh;
+   int x, y, w, mw, mh;
    Evry_List_Window *list_win;
    E_Popup *popup;
    Evas_Object *o;
    const char *offset_y;
+   const char *offset_x;
 
    if (!evry_conf->views) return NULL;
 
@@ -470,20 +470,30 @@ _evry_list_win_new(E_Zone *zone)
 	edje_object_signal_emit(o, "e,state,composited", "e");
 	edje_object_message_signal_process(o);
 	edje_object_calc_force(o);
+	offset_x = edje_object_data_get(o, "offset_composite_x");
 	offset_y = edje_object_data_get(o, "offset_composite_y");
      }
    else
-     offset_y = edje_object_data_get(o, "offset_y");
-
+     {	
+	offset_x = edje_object_data_get(o, "offset_x");
+	offset_y = edje_object_data_get(o, "offset_y");
+     }
+   
    edje_object_size_min_calc(o, &mw, &mh);
-
+   
    if (mh == 0) mh = 200;
    if (mw == 0) mw = win->popup->w / 2;
 
-   x = (win->popup->x + win->popup->w / 2) - (mw / 2);
+   evry_conf->min_h = mh;
+   if (evry_conf->height > mh) 
+     mh = evry_conf->height;
+   
+   /* x = (win->popup->x + win->popup->w / 2) - (mw / 2); */
+   x =  win->popup->x + (offset_x ? atoi(offset_x) : 0);
    y = (win->popup->y + win->popup->h) + (offset_y ? atoi(offset_y) : 0);
-
-   e_popup_move_resize(popup, x, y, mw, mh);
+	
+   w = win->popup->w - (offset_x ? atoi(offset_x) : 0)*2;
+   e_popup_move_resize(popup, x, y, w, mh);
 
    o = list_win->o_main;
    evas_object_move(o, 0, 0);
@@ -571,9 +581,14 @@ _evry_window_new(E_Zone *zone)
    
    edje_object_size_min_calc(o, &mw, &mh);
 
+   evry_conf->min_w = mw;
+   
+   if (evry_conf->width > mw) 
+     mw = evry_conf->width;
+   
    x = (zone->w / 2) - (mw / 2);
    y = (zone->h / 2) - (mh / 2);
-
+   
    e_popup_move_resize(popup, x, y, mw, mh);
 
    o = win->o_main;
@@ -1264,9 +1279,15 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     if ((len == 1) &&
 		 (isspace(s->input[0])) &&
 		 (_evry_view_toggle(s, s->input + 1)))
-	       _evry_update(s, 0);
+	       {
+		  /* space at the beginning is trigger */
+		  _evry_update(s, 0);
+	       }
 	     else if (isspace(*ev->compose))
-	       _evry_update(s, 0);
+	       {
+		  /* do not update matches on space */
+		  _evry_update(s, 0);
+	       }
 	     else
 	       _evry_update(s, 1);
 	  }
