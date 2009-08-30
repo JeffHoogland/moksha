@@ -110,7 +110,7 @@ evry_history_free(void)
 	keys = eina_list_append(keys, NULL);
 	eina_hash_foreach(evry_hist->actions,  _hist_cleanup_cb, keys);
 	EINA_LIST_FREE(keys, key)
-	  if (key) eina_hash_del_by_key(evry_hist->subjects, key);
+	  if (key) eina_hash_del_by_key(evry_hist->actions, key);
 
 	evry_history_unload();
      }
