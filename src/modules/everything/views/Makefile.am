@@ -1,4 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
+MODULE = everything
 
 # the module .so file
 INCLUDES               = -I.. \
