@@ -56,6 +56,9 @@ _e_gdb_print_backtrace(int fd)
    char cmd[1024];
    size_t size;
 
+   if(getenv("E_NO_GDB_BACKTRACE"))
+     return;
+
    size = snprintf(cmd, sizeof(cmd),
 		   "gdb --pid=%d "
 		   "-ex 'thread apply all bt' "
