@@ -281,7 +281,6 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
    Eina_List *l;
    int cnt = 1;
    int matched;
-   double now = ecore_time_get();
    
    if (it->id)
      id = it->id;
@@ -296,7 +295,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
 	  {
 	     if (hi->plugin == it->plugin->name)
 	       {
-		  if ((!input[0]) || (!input[0] && !hi->input))
+		  if ((!input) || (!input && !hi->input))
 		    {
 		       cnt++;
 		       it->usage = hi->last_used;
@@ -319,7 +318,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
 		       if (matched) cnt++;
 		    }
 		  
-		  it->usage += (double) hi->count * (hi->last_used / now);
+		  it->usage *= (double) hi->count;
 	       }
 	  }
 	if (it->usage)

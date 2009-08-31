@@ -109,7 +109,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    /* first is aggregator itself */
    lp = s->cur_plugins->next;
 
-   if (input[0])
+   if (input)
      {
 	EINA_LIST_FOREACH(lp, l, pp)
 	  {
@@ -129,7 +129,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
      }
 
    /* always append items of action or object selector */
-   if (!input[0] &&
+   if ((!input) &&
        ((p->selector == selectors[1]) ||
 	(p->selector == selectors[2])))
      {
@@ -182,7 +182,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    if (items) eina_list_free(items);
 
-   if (input[0])
+   if (input)
      {
 	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
      }

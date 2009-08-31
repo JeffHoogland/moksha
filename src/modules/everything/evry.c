@@ -415,7 +415,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 		  if (s->plugin_auto_selected)
 		    _evry_plugin_select(s, agg);
 	       }
-	     agg->fetch(agg, s->input);
+	     agg->fetch(agg, s->input[0] ? s->input : NULL);
 	  }
 	else
 	  {
@@ -1592,10 +1592,12 @@ _evry_matches_update(Evry_Selector *sel, int async)
    Eina_List *l;
    const char *input;
 
+   /* TODO cleanup plugins */
    EINA_LIST_FREE(s->cur_plugins, p);
 
-   if (strlen(s->input) > 0)
-     input = s->input;
+   /* if (strlen(s->input) > 0) */
+   if (s->input[0])
+   input = s->input;
    else
      input = NULL;
 
@@ -1636,7 +1638,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	if (eina_list_count(s->cur_plugins) > 0)
 	  {
 	     s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
-	     sel->aggregator->fetch(sel->aggregator, s->input);
+	     sel->aggregator->fetch(sel->aggregator, input);
 	     if (s->plugin_auto_selected)
 	       _evry_plugin_select(s, NULL);
 	  }
