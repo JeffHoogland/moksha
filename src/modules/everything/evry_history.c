@@ -1,9 +1,10 @@
 #include "e_mod_main.h"
 
-#define HISTORY_VERSION 3
-#define SEVEN_DAYS 604800.0
-#define THIRTY_DAYS 2592000.0
-#define SOME_YEARS 1230336000.0
+#define HISTORY_VERSION 4
+
+#define SEVEN_DAYS  604800
+#define THIRTY_DAYS 2592000
+#define SOME_YEARS  1230336000
 
 typedef struct _Cleanup_Data Cleanup_Data;
 
@@ -32,6 +33,7 @@ evry_history_init(void)
    E_CONFIG_VAL(D, T, input, STR);
    E_CONFIG_VAL(D, T, last_used, DOUBLE);
    E_CONFIG_VAL(D, T, count, INT);
+   E_CONFIG_VAL(D, T, transient, INT);
 #undef T
 #undef D
    hist_entry_edd = E_CONFIG_DD_NEW("History_Entry", History_Entry);
@@ -81,9 +83,14 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 
    EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
      {
+	if (hi->last_used < d->time - SEVEN_DAYS)
+	  {
+	     hi->last_used = d->time;
+	     hi->count--;
+	  }
+	
 	/* item is transient or too old */
-	if ((!hi->count) ||
-	    (hi->last_used + (SEVEN_DAYS * (hi->count - 1)) < d->time))
+	if (!hi->count || hi->transient)
 	  {
 	     if (hi->input)
 	       eina_stringshare_del(hi->input);
@@ -116,7 +123,7 @@ evry_history_free(void)
    if (evry_hist)
      {
 	d = E_NEW(Cleanup_Data, 1);
-	d->time = ecore_time_get() - THIRTY_DAYS;
+	d->time = ecore_time_get() - SOME_YEARS;
 
 	if (evry_hist->subjects)
 	  {
@@ -223,9 +230,12 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
 		  if (!s->input || !strncmp (hi->input, s->input, strlen(s->input)))
 		    {
 		       /* s->input matches hi->input and is equal or shorter */
-		       hi->last_used = ecore_time_get();
-		       if (!it->transient)
+		       hi->last_used = (ecore_time_get() - SOME_YEARS);
+		       hi->count++;
+		       hi->transient = it->transient;
+		       if (it->transient)
 			 hi->count++;
+
 		    }
 		  else if (s->input)
 		    {
@@ -246,10 +256,13 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
 	     else
 	       {
 		  /* remember input for item */
-		  if (!it->transient)
+		  hi->count++;
+		  
+		  if (it->transient)
 		    hi->count++;
-		  hi->last_used /= 2.0;
-		  hi->last_used += ecore_time_get();
+
+		  /* hi->last_used /= 2.0; */
+		  hi->last_used = (ecore_time_get() - SOME_YEARS);
 
 		  if (s->input)
 		    hi->input = eina_stringshare_add(s->input);
@@ -261,10 +274,11 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
      {
 	hi = E_NEW(History_Item, 1);
 	hi->plugin = eina_stringshare_ref(it->plugin->name);
-	hi->last_used = ecore_time_get();
+	hi->last_used = (ecore_time_get() - SOME_YEARS);
 
-	if (!it->transient)
-	  hi->count = 1;
+	hi->count = 1;
+	if (it->transient)
+	  hi->count++;
 
 	if (s->input)
 	  hi->input = eina_stringshare_add(s->input);
@@ -280,9 +294,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
    History_Item *hi;
    const char *id;
    Eina_List *l;
-   int cnt = 0;
-   int matched;
-   double usage = 0;
+   int cnt;
    
    if (it->id)
      id = it->id;
@@ -290,45 +302,37 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
      id = it->label;
 
    it->usage = 0;
-
-   if ((he = eina_hash_find(hist, id)))
+   
+   if (!(he = eina_hash_find(hist, id)))
+     return 0;
+   
+   EINA_LIST_FOREACH(he->items, l, hi)
      {
-	EINA_LIST_FOREACH(he->items, l, hi)
-	  {
-	     if (hi->plugin == it->plugin->name)
-	       {
-		  if ((!input) || (!input && !hi->input))
-		    {
-		       cnt += hi->count;
-		       usage = hi->last_used;
-		    }
-		  else
-		    {
-		       /* double priority for exact matches */
-		       matched = 0;
-		       if (!strncmp(input, hi->input, strlen(input)))
-			 {
-			    matched = 1;
-			    usage += hi->last_used;
-			 }
-		       if (!strncmp(input, hi->input, strlen(hi->input)))
-			 {
-			    matched = 1;
-			    usage += hi->last_used;
-			 }
+	if (hi->plugin != it->plugin->name)
+	  continue;
 
-		       if (matched) cnt += hi->count;
-		    }
+	cnt = 0;
+	     
+	if (!input || !hi->input)
+	  {
+	     cnt = hi->count;
+	  }
+	else
+	  {
+	     /* higher priority for exact matches */
+	     if (!strncmp(input, hi->input, strlen(input)))
+	       {
+		  cnt +=  + hi->count;
+	       }
+	     if (!strncmp(input, hi->input, strlen(hi->input)))
+	       {
+		  cnt += 4 + hi->count;
 	       }
 	  }
-	if (usage)
-	  {
-	     usage -= SOME_YEARS;
-
-	     it->usage = usage * cnt;
-	     return 1;
-	  }
+	it->usage += (cnt * hi->last_used);
      }
+   
+   if (it->usage) return 1;
 
    return 0;
 }

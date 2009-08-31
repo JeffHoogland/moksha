@@ -16,7 +16,7 @@ _cb_sort_recent(const void *data1, const void *data2)
    const Evry_Item *it2 = data2;
 
    if (it1->usage && it2->usage)
-     return ((int)it2->usage - (int)it1->usage);
+     return (it2->usage - it1->usage);
    if (it1->usage && !it2->usage)
      return -1;
    if (it2->usage && !it1->usage)

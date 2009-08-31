@@ -52,6 +52,7 @@ struct _History_Item
   const char *input;
   double last_used;
   int count;
+  int transient;
 };
 
 struct _History_Entry
