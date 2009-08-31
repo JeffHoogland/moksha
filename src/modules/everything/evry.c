@@ -57,9 +57,6 @@ static int  _evry_selector_subjects_get(const char *plugin_name);
 static int  _evry_selector_actions_get(Evry_Item *it);
 static int  _evry_selector_objects_get(Evry_Action *act);
 
-static int  _evry_browse_item(Evry_Selector *sel);
-static void _evry_browse_back(Evry_Selector *sel);
-
 static Evry_Window *_evry_window_new(E_Zone *zone);
 static void _evry_window_free(Evry_Window *win);
 
@@ -488,7 +485,6 @@ _evry_list_win_new(E_Zone *zone)
    if (evry_conf->height > mh) 
      mh = evry_conf->height;
    
-   /* x = (win->popup->x + win->popup->w / 2) - (mw / 2); */
    x =  win->popup->x + (offset_x ? atoi(offset_x) : 0);
    y = (win->popup->y + win->popup->h) + (offset_y ? atoi(offset_y) : 0);
 	
@@ -1040,9 +1036,10 @@ _evry_state_pop(Evry_Selector *sel)
      sel->state = NULL;
 }
 
-static int
-_evry_browse_item(Evry_Selector *sel)
+int
+evry_browse_item(Evry_Selector *sel)
 {
+   if (!sel) sel = selector;
    Evry_State *s = sel->state;
    Evry_Item *it;
    Eina_List *l, *plugins = NULL;
@@ -1050,6 +1047,9 @@ _evry_browse_item(Evry_Selector *sel)
    Evry_View *view = NULL;
    const char *type_out;
 
+   if (!s)
+     return 0;
+   
    it = s->cur_item;
 
    if (!it || !it->browseable)
@@ -1077,7 +1077,8 @@ _evry_browse_item(Evry_Selector *sel)
 	  }
      }
 
-   if (!plugins) return 1;
+   if (!plugins)
+     return 1;
 
    evry_history_add(sel->history, s); 
    
@@ -1107,8 +1108,8 @@ _evry_browse_item(Evry_Selector *sel)
    return 1;
 }
 
-static void
-_evry_browse_back(Evry_Selector *sel)
+void
+evry_browse_back(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
 
@@ -1227,7 +1228,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	if (!strcmp(key, "u"))
 	  {
 	     if (!_evry_clear(s))
-	       _evry_browse_back(selector);
+	       evry_browse_back(selector);
 	  }
 	else if (!strcmp(key, "1"))
 	  _evry_view_toggle(s, NULL);
@@ -1245,14 +1246,14 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if (_evry_view_key_press(s, ev))
      goto end;
    else if (!strcmp(key, "Right"))
-     _evry_browse_item(selector);
+     evry_browse_item(selector);
    else if (!strcmp(key, "Left"))
-     _evry_browse_back(selector);
+     evry_browse_back(selector);
    else if (!strcmp(key, "Return"))
      {
 	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
 	  _evry_plugin_action(selector, 0);
-	else if (!_evry_browse_item(selector))
+	else /*if (!_evry_browse_item(selector))*/
 	  _evry_plugin_action(selector, 1);
      }
    else if (!strcmp(key, "Escape"))
@@ -1262,7 +1263,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if (!strcmp(key, "BackSpace"))
      {
 	if (!_evry_backspace(s))
-	  _evry_browse_back(selector);
+	  evry_browse_back(selector);
      }
    else if (!strcmp(key, "Delete"))
      _evry_backspace(s);
@@ -1420,8 +1421,12 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	  it_object = selector->state->cur_item;
 
 	if (act->type_in2 && !it_object)
-	  return;
-
+	  {
+	     if (selectors[1] == selector)
+	       _evry_selectors_switch();
+	     return;
+	  }
+	
 	act->item2 = it_object;
 
 	if (!act->action(act))

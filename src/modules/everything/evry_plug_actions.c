@@ -7,12 +7,10 @@
 static void
 _cleanup(Evry_Plugin *p)
 {
-   Evry_Item *it;
    Evry_Action *act;
    Evry_Selector *sel = selectors[1];
 
-   EINA_LIST_FREE(p->items, it)
-     evry_item_free(it);
+   EVRY_PLUGIN_ITEMS_FREE(p);
 
    EINA_LIST_FREE(sel->actions, act)
      if (act->cleanup) act->cleanup(act);
@@ -85,8 +83,7 @@ _fetch(Evry_Plugin *p, const char *input)
    Evry_Selector *sel = selectors[1];
    int match = 0;
 
-   EINA_LIST_FREE(p->items, it)
-     evry_item_free(it);
+   EVRY_PLUGIN_ITEMS_FREE(p);
 
    EINA_LIST_FOREACH(sel->actions, l, act)
      {

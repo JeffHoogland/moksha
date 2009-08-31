@@ -139,6 +139,9 @@ void evry_history_unload(void);
 void evry_history_add(Eina_Hash *hist, Evry_State *s);
 int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input);
 
+int  evry_browse_item(Evry_Selector *sel);
+void evry_browse_back(Evry_Selector *sel);
+
 extern Config *evry_conf;
 extern History *evry_hist;
 extern Evry_Selector **selectors;
