@@ -153,14 +153,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
 	EINA_LIST_FOREACH(pp->items, ll, it)
 	  {
-	     /* if (it->usage == 0)
-	      *   continue; */
-
 	     if (evry_history_item_usage_set(p->selector->history, it, input) &&
 		 (!eina_list_data_find_list(items, it)))
 	       {
 		  evry_item_ref(it);
-		  it->fuzzy_match = 0;
 		  items = eina_list_append(items, it);
 		  EVRY_PLUGIN_ITEM_APPEND(p, it);
 		  continue;
