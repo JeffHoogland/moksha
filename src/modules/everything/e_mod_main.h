@@ -65,6 +65,7 @@ struct _History
   int version;
   Eina_Hash *subjects;
   Eina_Hash *actions;
+  double begin;
 };
   
 

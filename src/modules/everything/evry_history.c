@@ -1,10 +1,8 @@
 #include "e_mod_main.h"
 
-#define HISTORY_VERSION 4
+#define HISTORY_VERSION 6
 
-#define SEVEN_DAYS  604800
-#define THIRTY_DAYS 2592000
-#define SOME_YEARS  1230336000
+#define TIME_NOW (1.0 - (evry_hist->begin / ecore_time_get())) / 1000000000000.0
 
 typedef struct _Cleanup_Data Cleanup_Data;
 
@@ -12,6 +10,7 @@ struct _Cleanup_Data
 {
   double time;
   Eina_List *keys;
+  Eina_Bool normalize;
 };
 
 static E_Config_DD *hist_entry_edd = NULL;
@@ -42,12 +41,13 @@ evry_history_init(void)
    E_CONFIG_LIST(D, T, items, hist_item_edd);
 #undef T
 #undef D
-   hist_edd = E_CONFIG_DD_NEW("History_Item", History);
+   hist_edd = E_CONFIG_DD_NEW("History", History);
 #define T History
 #define D hist_edd
-   E_CONFIG_VAL(D, T, version, INT);
+   E_CONFIG_VAL(D, T,  version, INT);
    E_CONFIG_HASH(D, T, subjects, hist_entry_edd);
    E_CONFIG_HASH(D, T, actions,  hist_entry_edd);
+   E_CONFIG_VAL(D, T,  begin, DOUBLE);
 #undef T
 #undef D
 }
@@ -83,12 +83,6 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 
    EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
      {
-	if (hi->last_used < d->time - SEVEN_DAYS)
-	  {
-	     hi->last_used = d->time;
-	     hi->count--;
-	  }
-	
 	/* item is transient or too old */
 	if (!hi->count || hi->transient)
 	  {
@@ -123,7 +117,7 @@ evry_history_free(void)
    if (evry_hist)
      {
 	d = E_NEW(Cleanup_Data, 1);
-	d->time = ecore_time_get() - SOME_YEARS;
+	/* d->time = ecore_time_get() - SOME_YEARS; */
 
 	if (evry_hist->subjects)
 	  {
@@ -168,7 +162,7 @@ evry_history_load(void)
      {
 	evry_hist = E_NEW(History, 1);
 	evry_hist->version = HISTORY_VERSION;
-
+	evry_hist->begin = ecore_time_get();
      }
    if (!evry_hist->subjects)
      evry_hist->subjects = eina_hash_string_superfast_new(NULL);
@@ -230,7 +224,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
 		  if (!s->input || !strncmp (hi->input, s->input, strlen(s->input)))
 		    {
 		       /* s->input matches hi->input and is equal or shorter */
-		       hi->last_used = (ecore_time_get() - SOME_YEARS);
+		       hi->last_used = TIME_NOW;
 		       hi->count++;
 		       hi->transient = it->transient;
 		       if (it->transient)
@@ -262,7 +256,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
 		    hi->count++;
 
 		  /* hi->last_used /= 2.0; */
-		  hi->last_used = (ecore_time_get() - SOME_YEARS);
+		  hi->last_used = TIME_NOW;
 
 		  if (s->input)
 		    hi->input = eina_stringshare_add(s->input);
@@ -274,7 +268,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
      {
 	hi = E_NEW(History_Item, 1);
 	hi->plugin = eina_stringshare_ref(it->plugin->name);
-	hi->last_used = (ecore_time_get() - SOME_YEARS);
+	hi->last_used = TIME_NOW;
 
 	hi->count = 1;
 	if (it->transient)
@@ -322,11 +316,11 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
 	     /* higher priority for exact matches */
 	     if (!strncmp(input, hi->input, strlen(input)))
 	       {
-		  cnt +=  + hi->count;
+		  cnt += hi->count*2;
 	       }
 	     if (!strncmp(input, hi->input, strlen(hi->input)))
 	       {
-		  cnt += 4 + hi->count;
+		  cnt += hi->count*2;
 	       }
 	  }
 	it->usage += (cnt * hi->last_used);
