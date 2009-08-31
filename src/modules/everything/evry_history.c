@@ -1,6 +1,16 @@
 #include "e_mod_main.h"
 
-#define HISTORY_VERSION 1
+#define HISTORY_VERSION 2
+#define SEVEN_DAYS 604800.0
+#define THIRTY_DAYS 2592000.0
+
+typedef struct _Cleanup_Data Cleanup_Data;
+
+struct _Cleanup_Data
+{
+  double time;
+  Eina_List *keys;
+};
 
 static E_Config_DD *hist_entry_edd = NULL;
 static E_Config_DD *hist_item_edd = NULL;
@@ -64,13 +74,15 @@ static Eina_Bool
 _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
    History_Entry *he = data;
+   Cleanup_Data *d = fdata;
    History_Item *hi;
-   Eina_List *l, *ll, **keys = fdata;
+   Eina_List *l, *ll;
    
    EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
      {
-	/* item is transient */
-	if (!hi->count)
+	/* item is transient or too old */
+	if ((!hi->count) ||
+	    (hi->last_used + (SEVEN_DAYS * (hi->count - 1)) < d->time))
 	  {
 	     if (hi->input)
 	       eina_stringshare_del(hi->input);
@@ -87,7 +99,7 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
    if (!he->items)
      {
 	E_FREE(he);
-	*keys = eina_list_append(*keys, key);
+	d->keys = eina_list_append(d->keys, key);
      }
    
    return 1;
@@ -96,20 +108,30 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 void
 evry_history_free(void)
 {
-   Eina_List *keys = NULL;
+   Cleanup_Data *d;
    char *key;
    
    evry_hist = e_config_domain_load("module.everything.history", hist_edd);
    if (evry_hist)
      {
-	eina_hash_foreach(evry_hist->subjects, _hist_cleanup_cb, &keys);
-	EINA_LIST_FREE(keys, key)
-	  eina_hash_del_by_key(evry_hist->subjects, key);
+	d = E_NEW(Cleanup_Data, 1);
+	d->time = ecore_time_get() - THIRTY_DAYS;
 
-	eina_hash_foreach(evry_hist->actions,  _hist_cleanup_cb, &keys);
-	EINA_LIST_FREE(keys, key)
-	  eina_hash_del_by_key(evry_hist->actions, key);
+	if (evry_hist->subjects)
+	  {
+	     eina_hash_foreach(evry_hist->subjects, _hist_cleanup_cb, d);
+	     EINA_LIST_FREE(d->keys, key)
+	       eina_hash_del_by_key(evry_hist->subjects, key);
+	  }
 
+	if (evry_hist->subjects)
+	  {
+	     eina_hash_foreach(evry_hist->actions, _hist_cleanup_cb, d);
+	     EINA_LIST_FREE(d->keys, key)
+	       eina_hash_del_by_key(evry_hist->actions, key);
+	  }
+	
+	E_FREE(d);
 	evry_history_unload();
      }
    
@@ -200,9 +222,9 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
 		  if (!s->input || !strncmp (hi->input, s->input, strlen(s->input)))
 		    {
 		       /* s->input matches hi->input and is equal or shorter */
-		       hi->count++;
-		       hi->last_used /= 4.0;
-		       hi->last_used += ecore_time_get();
+		       hi->last_used = ecore_time_get();
+		       if (!it->transient)
+			 hi->count++;
 		    }
 		  else if (s->input)
 		    {
@@ -239,8 +261,10 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
 	hi = E_NEW(History_Item, 1);
 	hi->plugin = eina_stringshare_ref(it->plugin->name);
 	hi->last_used = ecore_time_get();
+
 	if (!it->transient)
 	  hi->count = 1;
+
 	if (s->input)
 	  hi->input = eina_stringshare_add(s->input);
 
@@ -257,6 +281,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
    Eina_List *l;
    int cnt = 1;
    int matched;
+   double now = ecore_time_get();
    
    if (it->id)
      id = it->id;
@@ -274,10 +299,11 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
 		  if ((!input[0]) || (!input[0] && !hi->input))
 		    {
 		       cnt++;
-		       it->usage += hi->last_used;
+		       it->usage = hi->last_used;
 		    }
 		  else
 		    {
+		       /* double priority for exact matches */
 		       matched = 0;
 		       if (!strncmp(input, hi->input, strlen(input)))
 			 {
@@ -289,13 +315,16 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
 			    matched = 1;
 			    it->usage += hi->last_used;
 			 }
+		       
 		       if (matched) cnt++;
 		    }
+		  
+		  it->usage += (double) hi->count * (hi->last_used / now);
 	       }
 	  }
 	if (it->usage)
 	  {
-	     it->usage /= (double)cnt;
+	     it->usage /= (double) cnt;
 	     return 1;
 	  }
      }

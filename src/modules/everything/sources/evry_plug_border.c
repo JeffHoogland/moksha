@@ -20,7 +20,8 @@ _cb_border_remove(void *data, int type,  void *event)
 	if (it->data == ev->border)
 	  {
 	     p->items = eina_list_remove(p->items, it);
-	     eina_hash_del_by_key(border_hash, ev->border);
+	     if (border_hash)
+	       eina_hash_del_by_key(border_hash, ev->border);
 	     evry_item_free(it);
 	     evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
 	     break;
@@ -52,15 +53,14 @@ static void
 _cleanup(Evry_Plugin *p)
 {
    Ecore_Event_Handler *h;
+      
+   EINA_LIST_FREE(handlers, h)
+     ecore_event_handler_del(h);
 
    if (border_hash) eina_hash_free(border_hash);
    border_hash = NULL;
    
    EVRY_PLUGIN_ITEMS_CLEAR(p);
-   
-   EINA_LIST_FREE(handlers, h)
-     ecore_event_handler_del(h);
-
 }
 
 static void

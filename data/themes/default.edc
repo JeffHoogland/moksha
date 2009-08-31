@@ -26598,11 +26598,11 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       type: RECT;
 	       description { state: "default" 0.0;
 		   visible: 0;
-		   min: 436 118;
+		   min: 386 118;
 	       }
 	       description { state: "composite" 0.0;
 		   visible: 0;
-		   min: 536 218;
+		   min: 486 218;
 	       }	       
 	   }
 	   part { name: "frame";
@@ -26661,23 +26661,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		   }
 	       }
 	   }
-	   /* part { name: "clip";
-	    *     type: RECT;
-	    *     description { state: "default" 0.0;
-	    * 	   color: 255 255 255 255;
-	    * 	   rel1 {
-	    * 	       offset: 8 1;
-	    * 	       to: "bg";
-	    * 	   }
-	    * 	   rel2 {
-	    * 	       offset: -9 -2;
-	    * 	       to: "bg";
-	    * 	   }
-	    *     }
-	    * } */
 	   part { name: "selector_frame";
 	       type: RECT;
-	       /* clip_to: "clip"; */
 	       description { state: "default" 0.0;
 		   color: 255 255 255 255;
 		   rel1 {
@@ -27057,9 +27042,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
        }
        /* offset to main popup */
        data.item: "offset_y" "-2";
-       data.item: "offset_x" "20";
+       data.item: "offset_x" "16";
        data.item: "offset_composite_y" "-52";
-       data.item: "offset_composite_x" "20";
+       data.item: "offset_composite_x" "16";
        data.item: "shaped" "1";
 
        parts {
