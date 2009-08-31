@@ -12,7 +12,7 @@ static char *_get_bind_text(const char* action);
 
 static Evas_Object* _create_mover(E_Gadcon *gc);
 static Evas_Object* _get_mover(E_Gadcon_Client *gcc);
-static E_Gadcon* _gadman_gadcon_new(const char* name, Gadman_Layer_Type layer, E_Zone *zone);
+static E_Gadcon* _gadman_gadcon_new(const char* name, Gadman_Layer_Type layer, E_Zone *zone, E_Gadcon_Location * loc);
 
 static void on_shape_change(void *data, E_Container_Shape *es, E_Container_Shape_Change ch);
 
@@ -38,8 +38,12 @@ static void on_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void on_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void on_menu_add(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static int _e_gadman_client_add (void *data __UNUSED__, const E_Gadcon_Client_Class *cc);
+static void _e_gadman_client_remove (void *data __UNUSED__, E_Gadcon_Client *gcc);
+
 E_Gadcon_Client *current = NULL;
 Manager *Man = NULL;
+static E_Gadcon_Location * location = NULL;
 
 /* Implementation */
 void
@@ -64,6 +68,11 @@ gadman_init(E_Module *m)
    /* with this we can trap screen resolution change (a better way?)*/
    e_container_shape_change_callback_add(Man->container, on_shape_change, NULL);
 
+   /* create and register "desktop" location */
+   location = e_gadcon_location_new ("Desktop", E_GADCON_SITE_DESKTOP, _e_gadman_client_add, NULL, _e_gadman_client_remove, NULL);
+   e_gadcon_location_set_icon_name(location, "preferences-desktop");
+   e_gadcon_location_register(location);
+
    /* iterating through zones - and making gadmans on each */
    EINA_LIST_FOREACH(Man->container->zones, l, zone)
      {
@@ -72,7 +81,7 @@ gadman_init(E_Module *m)
 
 	for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
 	  {
-	     E_Gadcon *gc = _gadman_gadcon_new(layer_name[layer], layer, zone);
+	     E_Gadcon *gc = _gadman_gadcon_new(layer_name[layer], layer, zone, location);
 	     Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gc);
 	  }
      }
@@ -84,6 +93,7 @@ gadman_shutdown(void)
    E_Gadcon *gc;
    unsigned int layer;
 
+   e_gadcon_location_unregister(location);
    e_container_shape_change_callback_del(Man->container, on_shape_change, NULL);
 
    for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
@@ -203,7 +213,7 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone 
 }
 
 E_Gadcon_Client *
-gadman_gadget_add(E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer)
+gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer)
 {
    E_Config_Gadcon_Client *cf = NULL;
    E_Gadcon_Client *gcc;
@@ -444,7 +454,7 @@ gadman_update_bg(void)
 
 /* Internals */
 static E_Gadcon*
-_gadman_gadcon_new(const char* name, Gadman_Layer_Type layer, E_Zone *zone)
+_gadman_gadcon_new(const char* name, Gadman_Layer_Type layer, E_Zone *zone, E_Gadcon_Location * loc)
 {
    const Eina_List *l;
    E_Gadcon *gc;
@@ -457,6 +467,7 @@ _gadman_gadcon_new(const char* name, Gadman_Layer_Type layer, E_Zone *zone)
    gc->name = eina_stringshare_add(name);
    gc->layout_policy = E_GADCON_LAYOUT_POLICY_PANEL;
    gc->orient = E_GADCON_ORIENT_FLOAT;
+   gc->location = loc;
 
    /* Create ecore fullscreen window */
    if (layer > GADMAN_LAYER_BG)
@@ -762,6 +773,8 @@ _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu)
    e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
    e_util_menu_item_theme_icon_set(mi, "transform-scale");
    e_menu_item_callback_set(mi, on_menu_edit, gcc);
+
+   e_gadcon_client_add_location_menu(gcc, menu);
 
    /* Remove this gadgets */
    mi = e_menu_item_new(menu);
@@ -1340,3 +1353,16 @@ on_hide_stop(void *data __UNUSED__, Evas_Object *o __UNUSED__,
 {
    ecore_evas_hide(Man->top_ee);
 }
+
+static int 
+_e_gadman_client_add (void *data __UNUSED__, const E_Gadcon_Client_Class *cc)
+{
+   return !!gadman_gadget_add(cc, GADMAN_LAYER_BG);
+}
+
+static void 
+_e_gadman_client_remove (void *data __UNUSED__, E_Gadcon_Client *gcc)
+{
+   gadman_gadget_del(gcc);
+}
+

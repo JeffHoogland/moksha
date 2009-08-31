@@ -27,6 +27,9 @@ static int _e_shelf_cb_hide_animator_timer(void *data);
 static int _e_shelf_cb_hide_urgent_timer(void *data);
 static int _e_shelf_cb_instant_hide_timer(void *data);
 static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
+static void _e_shelf_gadcon_client_remove (void *data, E_Gadcon_Client *gcc);
+static int _e_shelf_gadcon_client_add (void *data, const E_Gadcon_Client_Class *cc);
+static const char * _e_shelf_orient_icon_name_get (E_Shelf *s);
 
 static Eina_List *shelves = NULL;
 static Eina_Hash *winid_shelves = NULL;
@@ -94,6 +97,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    E_Shelf *es;
    const char *option;
    char buf[1024];
+   const char * locname;
 
    es = E_OBJECT_ALLOC(E_Shelf, E_SHELF_TYPE, _e_shelf_free);
    if (!es) return NULL;
@@ -159,6 +163,11 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      }
 
    es->gadcon = e_gadcon_swallowed_new(es->name, es->id, es->o_base, "e.swallow.content");
+   locname = es->name;
+   if (!name) locname = _("Shelf #");
+   snprintf(buf, sizeof(buf), "%s %i", locname, es->id);
+   es->gadcon->location = e_gadcon_location_new (buf, E_GADCON_SITE_SHELF, _e_shelf_gadcon_client_add, es, _e_shelf_gadcon_client_remove, es);
+   e_gadcon_location_register(es->gadcon->location);
 // hmm dnd in ibar and ibox kill this. ok. need to look into this more   
 //   es->gadcon->instant_edit = 1;
    e_gadcon_min_size_request_callback_set(es->gadcon,
@@ -505,6 +514,7 @@ e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
             _e_shelf_orient_string_get(es));
    edje_object_signal_emit(es->o_base, buf, "e");
    edje_object_message_signal_process(es->o_base);
+   e_gadcon_location_set_icon_name(es->gadcon->location, _e_shelf_orient_icon_name_get (es));
    e_zone_useful_geometry_dirty(es->zone);
 }
 
@@ -752,6 +762,7 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
 static void
 _e_shelf_free(E_Shelf *es)
 {
+   e_gadcon_location_unregister(es->gadcon->location);
    e_zone_useful_geometry_dirty(es->zone);
    E_FREE_LIST(es->handlers, ecore_event_handler_del);
 
@@ -1722,3 +1733,84 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    e_util_menu_item_theme_icon_set(mi, "list-remove");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);   
 }
+
+static void
+_e_shelf_gadcon_client_remove (void *data, E_Gadcon_Client *gcc)
+{
+   E_Shelf *s;
+   E_Gadcon *gc;
+
+   s = data;
+   gc = s->gadcon;
+   e_gadcon_client_config_del(gc->cf, gcc->cf);
+   e_gadcon_unpopulate(gc);
+   e_gadcon_populate(gc);
+   e_config_save_queue();
+}
+
+static int
+_e_shelf_gadcon_client_add (void *data, const E_Gadcon_Client_Class *cc)
+{
+   E_Shelf *s;
+   E_Gadcon *gc;
+
+   s = data;
+   gc = s->gadcon;
+   if (!e_gadcon_client_config_new(gc, cc->name)) return 0;
+   e_gadcon_unpopulate(gc);
+   e_gadcon_populate(gc);
+   e_config_save_queue();
+   return 1;
+}
+
+static const char *
+_e_shelf_orient_icon_name_get (E_Shelf * s)
+{
+   const char * name;
+
+   name = NULL;
+   switch (s->cfg->orient) 
+     {
+      case E_GADCON_ORIENT_LEFT:
+	name = "preferences-position-left";
+	break;
+      case E_GADCON_ORIENT_RIGHT:
+	name = "preferences-position-right";
+	break;
+      case E_GADCON_ORIENT_TOP:
+	name = "preferences-position-top";
+	break;
+      case E_GADCON_ORIENT_BOTTOM:
+	name = "preferences-position-bottom";
+	break;
+      case E_GADCON_ORIENT_CORNER_TL:
+	name = "preferences-position-top-left";
+	break;
+      case E_GADCON_ORIENT_CORNER_TR:
+	name = "preferences-position-top-right";
+	break;
+      case E_GADCON_ORIENT_CORNER_BL:
+	name = "preferences-position-bottom-left";
+	break;
+      case E_GADCON_ORIENT_CORNER_BR:
+	name = "preferences-position-bottom-right";
+	break;
+      case E_GADCON_ORIENT_CORNER_LT:
+	name = "preferences-position-left-top";
+	break;
+      case E_GADCON_ORIENT_CORNER_RT:
+	name = "preferences-position-right-top";
+	break;
+      case E_GADCON_ORIENT_CORNER_LB:
+	name = "preferences-position-left-bottom";
+	break;
+      case E_GADCON_ORIENT_CORNER_RB:
+	name = "preferences-position-right-bottom";
+	break;
+      default:
+	name = "preferences-desktop-shelf";
+	break;
+     }
+   return name;
+}
+

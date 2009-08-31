@@ -47,6 +47,7 @@ typedef enum _E_Gadcon_Site
 typedef struct _E_Gadcon              E_Gadcon;
 typedef struct _E_Gadcon_Client       E_Gadcon_Client;
 typedef struct _E_Gadcon_Client_Class E_Gadcon_Client_Class;
+typedef struct _E_Gadcon_Location     E_Gadcon_Location;
 
 #else
 #ifndef E_GADCON_H
@@ -115,6 +116,7 @@ struct _E_Gadcon
    Ecore_X_Window      xdnd_win;
    E_Shelf            *shelf;
    E_Toolbar          *toolbar;
+   E_Gadcon_Location  *location;
 
    E_Drop_Handler *drop_handler;
 
@@ -210,6 +212,29 @@ struct _E_Gadcon_Client
    E_Config_Gadcon_Client *cf;
 };
 
+/* defines usable gadget placements such as Desktop, Shelf #, etc */
+/* next fields are mandatory (not NULL): name, add_gadget.func, remove_gadget.func */
+struct _E_Gadcon_Location
+{
+   /* location name */
+   const char * name;
+   /* icon related to location, such as "preferences-desktop-shelf" for shelves, "preferences-desktop" for menus */
+   const char * icon_name;
+   E_Gadcon_Site site;
+   /* adds gadcon client to location. Returns nonzero on success */
+   struct 
+     {
+	int (*func) (void *data, const E_Gadcon_Client_Class *cc);
+	void *data;
+     } gadget_add;
+   /* removes existing gadcon client from location */
+   struct 
+     {
+	void (*func) (void *data, E_Gadcon_Client *gcc);
+	void *data;
+     } gadget_remove;
+};
+
 EAPI int              e_gadcon_init(void);
 EAPI int              e_gadcon_shutdown(void);
 EAPI void             e_gadcon_provider_register(const E_Gadcon_Client_Class *cc);
@@ -276,6 +301,20 @@ EAPI Eina_Bool        e_gadcon_site_is_efm_toolbar(E_Gadcon_Site site);
 
 EAPI Eina_Bool        e_gadcon_site_is_any_toolbar(E_Gadcon_Site site); // all toolbar sities
 EAPI Eina_Bool        e_gadcon_site_is_not_toolbar(E_Gadcon_Site site); // all non-toolbar sities
+
+/* location helpers */
+
+EAPI E_Gadcon_Location *
+e_gadcon_location_new(const char * name, E_Gadcon_Site site,
+		       int (*add_func) (void *data, const E_Gadcon_Client_Class *cc),
+		       void * add_data,
+		       void (*remove_func) (void *data, E_Gadcon_Client *cc),
+		       void * remove_data);
+EAPI void e_gadcon_location_free(E_Gadcon_Location *loc);
+EAPI void e_gadcon_location_register (E_Gadcon_Location * loc);
+EAPI void e_gadcon_location_unregister (E_Gadcon_Location * loc);
+EAPI void e_gadcon_location_set_icon_name(E_Gadcon_Location *loc, const char *name);
+EAPI void e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu);
 
 #endif
 #endif

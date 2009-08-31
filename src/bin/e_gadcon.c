@@ -80,6 +80,7 @@ static void e_gadcon_layout_unpack(Evas_Object *obj);
 static void _e_gadcon_provider_populate_request(const E_Gadcon_Client_Class *cc);
 static void _e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc);
 
+static int _e_gadcon_location_change(E_Gadcon_Client * gcc, E_Gadcon_Location *src, E_Gadcon_Location *dst);
 /********************/
 #define E_LAYOUT_ITEM_DRAG_RESIST_LEVEL 10
 
@@ -190,6 +191,7 @@ static Eina_List *providers_list = NULL;
 static Eina_List *gadcons = NULL;
 static Eina_List *populate_requests = NULL;
 static Ecore_Idler *populate_idler = NULL;
+static Eina_List *gadcon_locations = NULL;
 
 /* This is the gadcon client which is currently dragged */
 static E_Gadcon_Client *drag_gcc = NULL;
@@ -285,6 +287,7 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, char *swallow
    gc->name = eina_stringshare_add(name);
    gc->id = id;
    gc->layout_policy = E_GADCON_LAYOUT_POLICY_PANEL;
+   gc->location = NULL;
 
    gc->edje.o_parent = obj;
    gc->edje.swallow_name = eina_stringshare_add(swallow_name);
@@ -1254,6 +1257,85 @@ e_gadcon_client_zone_get(E_Gadcon_Client *gcc)
    return e_gadcon_zone_get(gcc->gadcon);
 }
 
+static void
+_e_gadcon_client_change_gadcon(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadcon_Location *src, *dst;
+   E_Gadcon_Client * gcc;
+
+   gcc = data;
+   src = gcc->gadcon->location;
+   dst = e_object_data_get(E_OBJECT(mi));
+   _e_gadcon_location_change(gcc, src, dst);
+}
+
+static void
+_e_gadcon_add_locations_menu_for_site(E_Menu *m, E_Gadcon_Client *gcc, E_Gadcon_Site site, int * count)
+{
+   E_Menu_Item *mi;
+   const Eina_List *l;
+   E_Gadcon_Location * loc;
+   int k = *count;
+
+   EINA_LIST_FOREACH(gadcon_locations, l, loc)
+     {
+	if (loc->site == site)
+	  {
+		if (k)
+		  {
+			k = 0;
+			mi = e_menu_item_new(m);
+			e_menu_item_separator_set(mi, 1);
+   			(*count) = 0;
+		  }
+   		mi = e_menu_item_new(m);
+		e_menu_item_label_set(mi, loc->name);
+		e_object_data_set(E_OBJECT(mi), loc);
+		e_menu_item_callback_set(mi, _e_gadcon_client_change_gadcon, gcc);
+		if (loc == gcc->gadcon->location) e_menu_item_disabled_set(mi, 1);
+		if (loc->icon_name) e_util_menu_item_theme_icon_set(mi, loc->icon_name);
+		(*count)++;
+	  }
+     }
+}
+
+static void 
+_e_gadcon_gadget_move_to_pre_cb(void *data, E_Menu *m) 
+{
+   E_Gadcon_Client *gcc;
+   const char *name;
+   int n = 0;
+
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
+   gcc = data;
+
+   _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_SHELF, &n);
+   _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_DESKTOP, &n);
+   _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_TOOLBAR, &n);
+   _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_EFM_TOOLBAR, &n);
+   _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_UNKNOWN, &n);
+}
+
+EAPI void
+e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu)
+{
+   E_Menu *mn;
+   E_Menu_Item *mi;
+
+   E_OBJECT_CHECK(gcc);
+   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+
+   if (gcc->gadcon->location)
+     {
+	mn = e_menu_new();
+	mi = e_menu_item_new(menu);
+	e_menu_item_label_set(mi, _("Move this gadget to"));
+	e_util_menu_item_theme_icon_set(mi, "preferences-appearance");
+	e_menu_item_submenu_set(mi, mn);
+	e_menu_pre_activate_callback_set(mn, _e_gadcon_gadget_move_to_pre_cb, gcc);
+     }
+}
+
 EAPI void
 e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int flags)
 {
@@ -1316,6 +1398,8 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
 		e_util_menu_item_theme_icon_set(mi, "transform-scale");
 		e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
 	  }
+
+	e_gadcon_client_add_location_menu(gcc, menu);
 
 	mi = e_menu_item_new(menu);
 	e_menu_item_label_set(mi, _("Remove this gadget"));
@@ -5141,3 +5225,69 @@ _e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc)
 	populate_idler = NULL;
      }
 }
+
+/* gadgets movement between different gadcons */
+
+EAPI E_Gadcon_Location *
+e_gadcon_location_new(const char * name, 
+		      E_Gadcon_Site site,
+		      int (*add_func) (void *data, const E_Gadcon_Client_Class *cc),
+		      void * add_data,
+		      void (*remove_func) (void *data, E_Gadcon_Client *cc),
+		      void * remove_data)
+{
+   E_Gadcon_Location *loc;
+
+   loc  = E_NEW(E_Gadcon_Location, 1);
+   loc->name = eina_stringshare_add(name);
+   loc->site = site;
+   loc->gadget_add.func = add_func; 
+   loc->gadget_add.data = add_data; 
+   loc->gadget_remove.func = remove_func; 
+   loc->gadget_remove.data = remove_data; 
+   loc->icon_name = NULL;
+   return loc;
+}
+
+EAPI void
+e_gadcon_location_set_icon_name(E_Gadcon_Location *loc, const char *name)
+{
+   if (loc->icon_name) eina_stringshare_del(loc->icon_name);
+   if (name)
+     loc->icon_name = eina_stringshare_add(name);
+   else
+     loc->icon_name = NULL;
+}
+
+EAPI void
+e_gadcon_location_free(E_Gadcon_Location *loc)
+{
+   eina_stringshare_del(loc->name);
+   if (loc->icon_name) eina_stringshare_del(loc->icon_name);
+   free(loc);
+}
+
+EAPI void
+e_gadcon_location_register (E_Gadcon_Location * loc)
+{
+   gadcon_locations = eina_list_append(gadcon_locations, loc);
+}
+
+EAPI void
+e_gadcon_location_unregister (E_Gadcon_Location * loc)
+{
+   gadcon_locations = eina_list_remove(gadcon_locations, loc);
+}
+
+static int
+_e_gadcon_location_change(E_Gadcon_Client * gcc, E_Gadcon_Location *src, E_Gadcon_Location *dst)
+{
+   E_Gadcon_Client_Class *cc;
+
+   cc = eina_hash_find(providers, gcc->cf->name);
+   if (!cc) return 0;
+   if (!dst->gadget_add.func(dst->gadget_add.data, cc)) return 0;
+   src->gadget_remove.func(src->gadget_remove.data, gcc);
+   return 1;
+}
+

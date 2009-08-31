@@ -73,7 +73,7 @@ extern Manager *Man;
 
 void             gadman_init(E_Module *m);
 void             gadman_shutdown(void);
-E_Gadcon_Client *gadman_gadget_add(E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer);
+E_Gadcon_Client *gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer);
 void             gadman_gadget_del(E_Gadcon_Client *gcc);
 E_Gadcon_Client *gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone);
 void             gadman_gadget_edit_start(E_Gadcon_Client *gcc);
