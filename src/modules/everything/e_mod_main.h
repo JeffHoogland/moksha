@@ -128,20 +128,20 @@ int  evry_shutdown(void);
 int  evry_show(E_Zone *zone, const char *params);
 void evry_hide(void);
 
-Evry_Plugin *evry_plug_aggregator_new(Evry_Selector *selector);
-void evry_plug_aggregator_free(Evry_Plugin *plugin);
+EAPI Evry_Plugin *evry_plug_aggregator_new(Evry_Selector *selector);
+EAPI void evry_plug_aggregator_free(Evry_Plugin *plugin);
 
-Evry_Plugin *evry_plug_actions_new(void);
-void evry_plug_actions_free(Evry_Plugin *plugin);
+EAPI Evry_Plugin *evry_plug_actions_new(void);
+EAPI void evry_plug_actions_free(Evry_Plugin *plugin);
 
 void evry_history_init(void);
 void evry_history_free(void);
 void evry_history_load(void);
 void evry_history_unload(void);
 void evry_history_add(Eina_Hash *hist, Evry_State *s);
-int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input);
+EAPI int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input);
 
-int  evry_browse_item(Evry_Selector *sel);
+EAPI int  evry_browse_item(Evry_Selector *sel);
 void evry_browse_back(Evry_Selector *sel);
 
 extern Config *evry_conf;
