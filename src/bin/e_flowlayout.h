@@ -26,8 +26,8 @@ EAPI Evas_Object *e_flowlayout_pack_object_first (Evas_Object *obj);
 EAPI Evas_Object *e_flowlayout_pack_object_last  (Evas_Object *obj);
 EAPI void         e_flowlayout_pack_options_set  (Evas_Object *obj, int fill_w, int fill_h, int expand_w, int expand_h, double align_x, double align_y, Evas_Coord min_w, Evas_Coord min_h, Evas_Coord max_w, Evas_Coord max_h);
 EAPI void         e_flowlayout_unpack            (Evas_Object *obj);
-EAPI void         e_flowlayout_min_size_get      (Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh);
-EAPI void         e_flowlayout_max_size_get      (Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh);
+EAPI void         e_flowlayout_size_min_get      (Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh);
+EAPI void         e_flowlayout_size_max_get      (Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh);
 EAPI void         e_flowlayout_align_get         (Evas_Object *obj, double *ax, double *ay);
 EAPI void         e_flowlayout_align_set         (Evas_Object *obj, double ax, double ay);
 /* This function only works if homogenous is set */

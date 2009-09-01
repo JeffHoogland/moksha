@@ -63,7 +63,7 @@ EAPI Evas_Object
    if ((text_location) && (*text_location))
      e_entry_text_set(o, *text_location);
    
-   e_entry_min_size_get(o, &minw, &minh);
+   e_entry_size_min_get(o, &minw, &minh);
    e_widget_size_min_set(obj, minw, minh);
 
    wd->func = func;

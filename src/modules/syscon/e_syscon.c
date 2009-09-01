@@ -243,13 +243,13 @@ e_syscon_show(E_Zone *zone, const char *defact)
    evas_object_resize(o_bg, zw, zh);
    edje_object_calc_force(o_bg);
 
-   e_flowlayout_min_size_get(o_flow_main, &mw, &mh);
+   e_flowlayout_size_min_get(o_flow_main, &mw, &mh);
    edje_extern_object_min_size_set(o_flow_main, mw, mh); 
    edje_object_part_swallow(o_bg, "e.swallow.main", o_flow_main);
-   e_flowlayout_min_size_get(o_flow_secondary, &mw, &mh);
+   e_flowlayout_size_min_get(o_flow_secondary, &mw, &mh);
    edje_extern_object_min_size_set(o_flow_secondary, mw, mh); 
    edje_object_part_swallow(o_bg, "e.swallow.secondary", o_flow_secondary);
-   e_flowlayout_min_size_get(o_flow_extra, &mw, &mh);
+   e_flowlayout_size_min_get(o_flow_extra, &mw, &mh);
    edje_extern_object_min_size_set(o_flow_extra, mw, mh); 
    edje_object_part_swallow(o_bg, "e.swallow.extra", o_flow_extra);
 

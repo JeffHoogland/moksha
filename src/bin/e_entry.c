@@ -206,7 +206,7 @@ e_entry_password_set(Evas_Object *entry, int password_mode)
  * @param minh the location where to store the minimun height of the entry
  */
 EAPI void
-e_entry_min_size_get(Evas_Object *entry, Evas_Coord *minw, Evas_Coord *minh)
+e_entry_size_min_get(Evas_Object *entry, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Entry_Smart_Data *sd;
    

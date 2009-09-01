@@ -202,7 +202,7 @@ e_slider_direction_get(Evas_Object *obj)
 }
 
 EAPI void
-e_slider_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
+e_slider_size_min_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 {
    API_ENTRY return;
    if (minw) *minw = sd->minw;
