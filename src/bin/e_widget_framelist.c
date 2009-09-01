@@ -69,7 +69,7 @@ e_widget_framelist_object_append(Evas_Object *obj, Evas_Object *sobj)
 			  mw, mh, /* min */
 			  99999, 99999 /* max */
 			  );
-   e_box_min_size_get(wd->o_box, &mw, &mh);
+   e_box_size_min_get(wd->o_box, &mw, &mh);
    edje_extern_object_min_size_set(wd->o_box, mw, mh);
    edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->o_box);
    edje_object_size_min_calc(wd->o_frame, &mw, &mh);

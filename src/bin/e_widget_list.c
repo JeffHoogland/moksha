@@ -64,7 +64,7 @@ e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int e
 			    mw, mh, /* min */
 			    99999, 99999 /* max */
 			    );
-   e_box_min_size_get(wd->o_box, &mw, &mh);
+   e_box_size_min_get(wd->o_box, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
    e_widget_sub_object_add(obj, sobj);
    evas_object_show(sobj);

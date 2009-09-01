@@ -394,7 +394,7 @@ EAPI void
 e_ilist_min_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h) 
 {
    API_ENTRY return;
-   e_box_min_size_get(sd->o_box, w, h);
+   e_box_size_min_get(sd->o_box, w, h);
 }
 
 EAPI void 

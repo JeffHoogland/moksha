@@ -127,7 +127,7 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
 			  mw, mh, /* min */
 			  9999, 9999 /* max */
 			  );
-   e_box_min_size_get(wd->o_box, &mw, &mh);
+   e_box_size_min_get(wd->o_box, &mw, &mh);
    evas_object_resize(wd->o_box, mw, mh);
    evas_object_resize(wd->o_base, 500, 500);
    e_scrollframe_child_viewport_size_get(wd->o_base, &vw, &vh);
@@ -209,7 +209,7 @@ e_widget_toolbar_scrollable_set(Evas_Object *obj, Eina_Bool scrollable)
 
    wd = e_widget_data_get(obj);
    wd->scrollable = scrollable;
-   e_box_min_size_get(wd->o_box, &mw, &mh);
+   e_box_size_min_get(wd->o_box, &mw, &mh);
    evas_object_resize(wd->o_box, mw, mh);
    evas_object_resize(wd->o_base, 500, 500);
    e_scrollframe_child_viewport_size_get(wd->o_base, &vw, &vh);
@@ -338,7 +338,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_
    if ((!wd->o_base) || (!wd->o_box)) return;
 
    e_scrollframe_child_viewport_size_get(wd->o_base, &vw, &vh);
-   e_box_min_size_get(wd->o_box, &mw, &mh);
+   e_box_size_min_get(wd->o_box, &mw, &mh);
    evas_object_geometry_get(wd->o_box, NULL, NULL, &w, &h);
    if (vw >= mw)
      {

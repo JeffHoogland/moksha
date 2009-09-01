@@ -26,7 +26,7 @@ _tab_scroll_to(Tab_View *v, Evry_Plugin *p)
 
    n = eina_list_count(s->cur_plugins);
 
-   e_box_min_size_get(v->o_tabs, &mw, NULL);
+   e_box_size_min_get(v->o_tabs, &mw, NULL);
    evas_object_geometry_get(v->o_tabs, NULL, NULL, &w, NULL);
 
    if (mw <= w + 5)

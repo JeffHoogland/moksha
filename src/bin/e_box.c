@@ -283,7 +283,7 @@ e_box_unpack(Evas_Object *obj)
 }
 
 EAPI void
-e_box_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
+e_box_size_min_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Smart_Data *sd;
    
@@ -295,7 +295,7 @@ e_box_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 }
 
 EAPI void
-e_box_max_size_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
+e_box_size_max_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
 {
    E_Smart_Data *sd;
    

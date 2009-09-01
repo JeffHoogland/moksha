@@ -374,7 +374,7 @@ _e_winlist_size_adjust(void)
    int x, y, w, h;   
 
    e_box_freeze(list_object);
-   e_box_min_size_get(list_object, &mw, &mh);
+   e_box_size_min_get(list_object, &mw, &mh);
    edje_extern_object_min_size_set(list_object, mw, mh);
    edje_object_part_swallow(bg_object, "e.swallow.list", list_object);
    edje_object_size_min_calc(bg_object, &mw, &mh);

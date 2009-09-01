@@ -310,7 +310,7 @@ _e_kbd_int_matches_update(E_Kbd_Int *ki)
 	for (i = 0, l = matches; l; l = l->next, i++)
 	  {
 	     _e_kbd_int_matches_add(ki, l->data, i);
-	     e_box_min_size_get(ki->box_obj, &mw, &mh);
+	     e_box_size_min_get(ki->box_obj, &mw, &mh);
 	     edje_object_part_geometry_get(ki->base_obj, "e.swallow.label", 
 					   NULL, NULL, &vw, &vh);
 	     if (mw > vw) break;
@@ -330,7 +330,7 @@ _e_kbd_int_matches_update(E_Kbd_Int *ki)
 	  }
      }
    e_box_thaw(ki->box_obj);
-   e_box_min_size_get(ki->box_obj, &mw, &mh);
+   e_box_size_min_get(ki->box_obj, &mw, &mh);
    edje_extern_object_min_size_set(ki->box_obj, 0, mh);
    edje_object_part_swallow(ki->base_obj, "e.swallow.label", ki->box_obj);
    evas_event_thaw(ki->win->evas);

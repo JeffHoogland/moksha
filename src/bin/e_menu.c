@@ -1663,7 +1663,7 @@ _e_menu_items_layout_update(E_Menu *m)
 	     e_box_thaw(mi->container_object);
 	  }
      }
-   e_box_min_size_get(m->container_object, &bw, &bh);
+   e_box_size_min_get(m->container_object, &bw, &bh);
    edje_extern_object_min_size_set(m->container_object, bw, bh);
    edje_extern_object_max_size_set(m->container_object, bw, bh);
    edje_object_part_swallow(m->bg_object, "e.swallow.content", m->container_object);

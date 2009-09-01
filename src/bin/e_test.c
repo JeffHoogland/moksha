@@ -710,7 +710,7 @@ _e_test_internal(E_Container *con)
      }
    
    /* fixme... more */
-   e_box_min_size_get(ob, &mw, &mh);
+   e_box_size_min_get(ob, &mw, &mh);
    evas_object_resize(ob, mw, mh);
 
    e_scrollframe_child_set(of, ob);

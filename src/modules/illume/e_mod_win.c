@@ -562,7 +562,7 @@ _cb_resize(void)
    h -= flaunch->height;
    if (bx)
      {
-	e_box_min_size_get(bx, &mw, &mh);
+	e_box_size_min_get(bx, &mw, &mh);
 	if (mw < w) mw = w;
 	evas_object_move(sf, x, y);
 	evas_object_resize(bx, mw, mh);
