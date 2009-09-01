@@ -62,7 +62,7 @@ e_widget_table_object_align_append(Evas_Object *obj, Evas_Object *sobj, int col,
 			  mw, mh, /* min */
 			  99999, 99999 /* max */
 			  );
-   e_table_min_size_get(wd->o_table, &mw, &mh);
+   e_table_size_min_get(wd->o_table, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
    e_widget_sub_object_add(obj, sobj);
    evas_object_show(sobj);
@@ -86,7 +86,7 @@ e_widget_table_object_repack(Evas_Object *obj, Evas_Object *sobj, int col, int r
 			    mw, mh, /* min */
 			    99999, 99999 /* max */
 			    );
-   e_table_min_size_get(wd->o_table, &mw, &mh);
+   e_table_size_min_get(wd->o_table, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
 }
 

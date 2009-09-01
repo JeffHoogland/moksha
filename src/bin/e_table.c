@@ -176,7 +176,7 @@ e_table_col_row_size_get(Evas_Object *obj, int *cols, int *rows)
 }
 
 EAPI void
-e_table_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
+e_table_size_min_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Smart_Data *sd;
    
@@ -187,7 +187,7 @@ e_table_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 }
 
 EAPI void
-e_table_max_size_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
+e_table_size_max_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
 {
    E_Smart_Data *sd;
    
