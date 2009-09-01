@@ -42,13 +42,13 @@ _e_ipc_codec_eina_hash_add(void *hash, const void *key, void *data)
 
 #define E_IPC_DD_NEW(str, typ) \
    eet_data_descriptor_new(str, sizeof(typ), \
-			      (void *(*) (void *))eina_list_next, \
-			      (void *(*) (void *, void *))eina_list_append, \
-			      (void *(*) (void *))eina_list_data_get, \
-			      (void *(*) (void *))eina_list_free, \
+                              (void *(*) (void *))eina_list_next, \
+                              (void *(*) (void *, void *))eina_list_append, \
+                              (void *(*) (void *))eina_list_data_get, \
+                              (void *(*) (void *))eina_list_free, \
                               (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))eina_hash_foreach, \
-			      (void *(*) (void *, const char *, void *))_e_ipc_codec_eina_hash_add, \
-			      (void  (*) (void *))eina_hash_free)
+                              (void *(*) (void *, const char *, void *))_e_ipc_codec_eina_hash_add, \
+                              (void  (*) (void *))eina_hash_free)
 
 /* externally accessible functions */
 EAPI int

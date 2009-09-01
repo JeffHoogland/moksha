@@ -210,12 +210,12 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
      }
 
    e_widget_ilist_go(cfdata->list);
-   e_widget_min_size_get(cfdata->list, &w, NULL);
+   e_widget_size_min_get(cfdata->list, &w, NULL);
 
    /* NB: make the window look a bit better by not being so small */
 //   if (w < 300) w = 300;
 
-   e_widget_min_size_set(cfdata->list, 400, 200);
+   e_widget_size_min_set(cfdata->list, 400, 200);
    e_widget_ilist_thaw(cfdata->list);
    edje_thaw();
    evas_event_thaw(evas);

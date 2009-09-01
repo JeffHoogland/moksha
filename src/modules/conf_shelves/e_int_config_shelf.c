@@ -71,7 +71,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    of = e_widget_framelist_add(evas, _("Configured Shelves"), 0);
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, &(cfdata->cur_shelf));
    e_widget_ilist_selector_set(cfdata->o_list, 1);
-   e_widget_min_size_set(cfdata->o_list, 155, 250);
+   e_widget_size_min_set(cfdata->o_list, 155, 250);
    e_widget_framelist_object_append(of, cfdata->o_list);   
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -179,7 +179,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 			      _ilist_cb_selected, cfdata, buf);
      }
 
-   e_widget_min_size_set(cfdata->o_list, 155, 250);
+   e_widget_size_min_set(cfdata->o_list, 155, 250);
    e_widget_ilist_go(cfdata->o_list);
    e_widget_ilist_thaw(cfdata->o_list);
    edje_thaw();

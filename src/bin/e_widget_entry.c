@@ -64,7 +64,7 @@ EAPI Evas_Object
      e_entry_text_set(o, *text_location);
    
    e_entry_min_size_get(o, &minw, &minh);
-   e_widget_min_size_set(obj, minw, minh);
+   e_widget_size_min_set(obj, minw, minh);
 
    wd->func = func;
    wd->data = data;

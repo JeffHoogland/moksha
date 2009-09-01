@@ -11,7 +11,7 @@
 
 EAPI E_Config *e_config = NULL;
 
-static int _e_config_revisions = 9;
+static int _e_config_revisions = 0;
 
 /* local subsystem functions */
 static void _e_config_save_cb(void *data);

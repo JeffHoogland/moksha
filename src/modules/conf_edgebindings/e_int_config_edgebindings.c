@@ -232,7 +232,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_frametable_add(evas, _("Edge Bindings"), 0);
    ob = e_widget_ilist_add(evas, 32, 32, &(cfdata->locals.binding));
    cfdata->gui.o_binding_list = ob;   
-   e_widget_min_size_set(ob, 200, 160);
+   e_widget_size_min_set(ob, 200, 160);
    e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
    ob = e_widget_button_add(evas, _("Add Edge"), NULL, _add_edge_binding_cb, cfdata, NULL);
    cfdata->gui.o_add = ob;
@@ -257,7 +257,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Action"), 0);
    ob = e_widget_ilist_add(evas, 24, 24, &(cfdata->locals.action));
    cfdata->gui.o_action_list = ob;
-   e_widget_min_size_set(ob, 200, 240);
+   e_widget_size_min_set(ob, 200, 240);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
    

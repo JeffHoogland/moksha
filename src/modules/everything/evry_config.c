@@ -148,8 +148,8 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
      e_widget_ilist_append(obj, NULL, p->name, NULL, p, NULL);
 
    e_widget_ilist_go(obj);
-   e_widget_min_size_get(obj, &w, NULL);
-   e_widget_min_size_set(obj, w > 180 ? w : 180, 200);
+   e_widget_size_min_get(obj, &w, NULL);
+   e_widget_size_min_set(obj, w > 180 ? w : 180, 200);
    e_widget_ilist_thaw(obj);
    edje_thaw();
    evas_event_thaw(evas);

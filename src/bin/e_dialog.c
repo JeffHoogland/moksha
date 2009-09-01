@@ -234,7 +234,7 @@ e_dialog_show(E_Dialog *dia)
      }
 
    o = dia->box_object;
-   e_widget_min_size_get(o, &mw, &mh);
+   e_widget_size_min_get(o, &mw, &mh);
    edje_extern_object_min_size_set(o, mw, mh);
    edje_object_part_swallow(dia->bg_object, "e.swallow.buttons", o);
    

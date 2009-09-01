@@ -144,7 +144,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(o, of, 1, 0, 1, 1, 1, 1, 1, 1);
 
    ow = e_widget_textblock_add(evas);
-   e_widget_min_size_set(ow, 200, 70);
+   e_widget_size_min_set(ow, 200, 70);
    e_widget_textblock_markup_set(ow, _("Description: Unavailable"));
    cfdata->o_desc = ow;
    e_widget_table_object_append(o, ow, 0, 1, 2, 1, 1, 1, 1, 0);
@@ -244,9 +244,9 @@ _load_avail_gadgets(void *data)
                               (void *)cc->name, NULL);
      }
    e_widget_ilist_go(cfdata->o_avail);
-   e_widget_min_size_get(cfdata->o_avail, &w, NULL);
+   e_widget_size_min_get(cfdata->o_avail, &w, NULL);
    if (w < 200) w = 200;
-   e_widget_min_size_set(cfdata->o_avail, w, 250);
+   e_widget_size_min_set(cfdata->o_avail, w, 250);
    e_widget_ilist_thaw(cfdata->o_avail);
    edje_thaw();
    evas_event_thaw(evas);
@@ -289,9 +289,9 @@ _load_sel_gadgets(void *data)
           }
      }
    e_widget_ilist_go(cfdata->o_sel);
-   e_widget_min_size_get(cfdata->o_sel, &w, NULL);
+   e_widget_size_min_get(cfdata->o_sel, &w, NULL);
    if (w < 200) w = 200;
-   e_widget_min_size_set(cfdata->o_sel, w, 250);
+   e_widget_size_min_set(cfdata->o_sel, w, 250);
    e_widget_ilist_thaw(cfdata->o_sel);
    edje_thaw();
    evas_event_thaw(evas);

@@ -64,7 +64,7 @@ e_widget_radio_add(Evas *evas, const char *label, int valnum, E_Radio_Group *gro
    edje_object_part_text_set(o, "e.text.label", label);
    evas_object_show(o);
    edje_object_size_min_calc(o, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
    if ((wd->group) && (wd->group->valptr))
      {
 	if (*(wd->group->valptr) == valnum) edje_object_signal_emit(o, "e,state,on", "e");
@@ -125,7 +125,7 @@ e_widget_radio_icon_add(Evas *evas, const char *label, const char *icon, int ico
      }
   
    edje_object_size_min_calc(o, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
    if ((wd->group) && (wd->group->valptr))
      {
 	if (*(wd->group->valptr) == valnum) edje_object_signal_emit(o, "e,state,on", "e");

@@ -1204,7 +1204,7 @@ _e_cfg_win_complete(Evas_Object *ol)
    win = evas_object_data_get(ol, "win");
    d = win->data;
 
-   e_widget_min_size_get(ol, &mw, &mh);
+   e_widget_size_min_get(ol, &mw, &mh);
    evas_object_resize(ol, mw, mh);
 
    sf = e_widget_scrollframe_simple_add(evas_object_evas_get(ol), ol);

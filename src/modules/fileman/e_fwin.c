@@ -1139,7 +1139,7 @@ _e_fwin_cb_resize(E_Win *win)
 	  {
 	     int height;
 
-	     e_widget_min_size_get(fwin->tb_obj, NULL, &height);
+	     e_widget_size_min_get(fwin->tb_obj, NULL, &height);
 	     evas_object_resize(fwin->tb_obj, fwin->win->w, height);
 	  }
         EINA_LIST_FOREACH(fwin->pages, l, page)
@@ -1938,7 +1938,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
    e_widget_ilist_thaw(o);
    edje_thaw();
    evas_event_thaw(evas);
-   e_widget_min_size_set(o, 160, 240);
+   e_widget_size_min_set(o, 160, 240);
    e_widget_framelist_object_append(of, o);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
@@ -1948,7 +1948,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
 				     _e_fwin_cb_exec_cmd_changed, fad, NULL);
    e_widget_table_object_append(ot, fad->o_entry, 0, 2, 1, 1, 1, 1, 1, 0);
 
-   e_widget_min_size_get(ot, &mw, &mh);
+   e_widget_size_min_get(ot, &mw, &mh);
    e_dialog_content_set(dia, ot, mw, mh);
    evas_object_event_callback_add(ot, EVAS_CALLBACK_KEY_DOWN, _e_fwin_file_open_dialog_cb_key_down, page);
    e_dialog_show(dia);

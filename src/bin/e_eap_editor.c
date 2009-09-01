@@ -463,7 +463,7 @@ _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_
      e_widget_button_add(evas, "", NULL, _e_desktop_editor_cb_icon_select, 
 			 cfdata, editor);
    _e_desktop_editor_icon_update(cfdata);
-   e_widget_min_size_set(editor->img_widget, 48, 48);
+   e_widget_size_min_set(editor->img_widget, 48, 48);
    e_widget_frametable_object_append(o, editor->img_widget, 
 				     0, 0, 1, 1, 0, 0, 1, 1);
 
@@ -474,7 +474,7 @@ _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_
 				     0, 0, 1, 1, 1, 1, 1, 1);
 
    entry = e_widget_entry_add(evas, &(cfdata->name), NULL, NULL, NULL);
-   e_widget_min_size_set(entry, 100, 1);
+   e_widget_size_min_set(entry, 100, 1);
    e_widget_frametable_object_append(o, entry, 1, 0, 1, 1, 1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Executable")),
 				     0, 1, 1, 1, 1, 1, 1, 1);
@@ -606,7 +606,7 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
    
    evas_object_show(o);
    editor->icon_fsel = o;
-   e_widget_min_size_get(o, &mw, &mh);
+   e_widget_size_min_get(o, &mw, &mh);
    e_dialog_content_set(dia, o, mw, mh);
 
    /* buttons at the bottom */
@@ -670,7 +670,7 @@ _e_desktop_editor_cb_exec_select(void *data1, void *data2)
    
    evas_object_show(o);
    editor->exec_fsel = o;
-   e_widget_min_size_get(o, &mw, &mh);
+   e_widget_size_min_get(o, &mw, &mh);
    e_dialog_content_set(dia, o, mw, mh);
 
    /* buttons at the bottom */

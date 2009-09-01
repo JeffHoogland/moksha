@@ -58,7 +58,7 @@ e_widget_spectrum_add(Evas *evas, E_Color_Component mode, E_Color *cv)
 
    evas_object_show(o);
    edje_object_size_min_calc(o, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
 
    e_widget_sub_object_add(obj, o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);

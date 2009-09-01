@@ -10,24 +10,23 @@ typedef struct _E_Smart_Data E_Smart_Data;
 
 struct _E_Smart_Data
 { 
-   Evas_Object   *parent_obj;
-   Evas_Coord     x, y, w, h;
-   Evas_Coord     minw, minh;
-   Eina_List     *subobjs;
-   Evas_Object   *resize_obj;
-   void         (*del_func) (Evas_Object *obj);
-   void         (*focus_func) (Evas_Object *obj);
-   void         (*activate_func) (Evas_Object *obj);
-   void         (*disable_func) (Evas_Object *obj);
-   void         (*on_focus_func) (void *data, Evas_Object *obj);
-   void          *on_focus_data;
-   void         (*on_change_func) (void *data, Evas_Object *obj);
-   void          *on_change_data;
-   void          *data;
-   unsigned char  can_focus : 1;
-   unsigned char  child_can_focus : 1;
-   unsigned char  focused : 1;
-   unsigned char  disabled : 1;
+   Evas_Object *parent_obj;
+   Evas_Coord x, y, w, h, minw, minh;
+   Eina_List *subobjs;
+   Evas_Object *resize_obj;
+   void (*del_func) (Evas_Object *obj);
+   void (*focus_func) (Evas_Object *obj);
+   void (*activate_func) (Evas_Object *obj);
+   void (*disable_func) (Evas_Object *obj);
+   void (*on_focus_func) (void *data, Evas_Object *obj);
+   void *on_focus_data;
+   void (*on_change_func) (void *data, Evas_Object *obj);
+   void *on_change_data;
+   void *data;
+   unsigned char can_focus : 1;
+   unsigned char child_can_focus : 1;
+   unsigned char focused : 1;
+   unsigned char disabled : 1;
 };
 
 /* local subsystem functions */
@@ -113,7 +112,7 @@ e_widget_data_get(Evas_Object *obj)
 }
 
 EAPI void
-e_widget_min_size_set(Evas_Object *obj, Evas_Coord minw, Evas_Coord minh)
+e_widget_size_min_set(Evas_Object *obj, Evas_Coord minw, Evas_Coord minh)
 {
    API_ENTRY return;
    if (minw >= 0) sd->minw = minw;
@@ -121,7 +120,7 @@ e_widget_min_size_set(Evas_Object *obj, Evas_Coord minw, Evas_Coord minh)
 }
 
 EAPI void
-e_widget_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
+e_widget_size_min_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 {
    API_ENTRY return;
    if (minw) *minw = sd->minw;
@@ -463,7 +462,7 @@ e_widget_pointer_get(Evas_Object *obj)
 }
 
 EAPI void
-e_widget_min_size_resize(Evas_Object *obj)
+e_widget_size_min_resize(Evas_Object *obj)
 {
    API_ENTRY return;
    evas_object_resize(obj, sd->minw, sd->minh);

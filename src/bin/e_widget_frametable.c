@@ -46,7 +46,7 @@ e_widget_frametable_add(Evas *evas, const char *label, int homogenous)
    evas_object_show(o);
    
    edje_object_size_min_calc(wd->o_frame, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
    
    return obj;
 }
@@ -60,7 +60,7 @@ e_widget_frametable_object_append(Evas_Object *obj, Evas_Object *sobj, int col, 
    wd = e_widget_data_get(obj);
    
    e_table_pack(wd->o_table, sobj, col, row, colspan, rowspan);
-   e_widget_min_size_get(sobj, &mw, &mh);
+   e_widget_size_min_get(sobj, &mw, &mh);
    e_table_pack_options_set(sobj,
 			  fill_w, fill_h, /* fill */
 			  expand_w, expand_h, /* expand */
@@ -72,7 +72,7 @@ e_widget_frametable_object_append(Evas_Object *obj, Evas_Object *sobj, int col, 
    edje_extern_object_min_size_set(wd->o_table, mw, mh);
    edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->o_table);
    edje_object_size_min_calc(wd->o_frame, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
    e_widget_sub_object_add(obj, sobj);
    evas_object_show(sobj);
 }

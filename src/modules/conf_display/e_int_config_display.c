@@ -405,7 +405,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Resolution"), 0);   
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
    cfdata->res_list = ob;
-   e_widget_min_size_set(ob, 170, 215);
+   e_widget_size_min_set(ob, 170, 215);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
@@ -416,7 +416,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Refresh"), 0);   
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
    cfdata->rate_list = ob;
-   e_widget_min_size_set(ob, 100, 80);
+   e_widget_size_min_set(ob, 100, 80);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
 

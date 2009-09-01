@@ -197,7 +197,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     ob = cfd->view->basic.create_widgets(cfd, evas, cfd->cfdata);
 	     if (cfd->view->scroll)
 	       {
-		  e_widget_min_size_resize(ob);
+		  e_widget_size_min_resize(ob);
 		  sf = e_widget_scrollframe_simple_add(evas, ob);
 		  e_widget_list_object_append(o, sf, 1, 1, 0.0);
 	       }
@@ -213,7 +213,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     o = cfd->view->basic.create_widgets(cfd, evas, cfd->cfdata);
 	     if (cfd->view->scroll)
 	       {
-		  e_widget_min_size_resize(o);
+		  e_widget_size_min_resize(o);
 		  o = e_widget_scrollframe_simple_add(evas, o);
 	       }
 	  }
@@ -226,7 +226,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     ob = cfd->view->advanced.create_widgets(cfd, evas, cfd->cfdata);
 	     if (cfd->view->scroll)
 	       {
-		  e_widget_min_size_resize(ob);
+		  e_widget_size_min_resize(ob);
 		  sf = e_widget_scrollframe_simple_add(evas, ob);
 		  e_widget_list_object_append(o, sf, 1, 1, 0.0);
 	       }
@@ -242,13 +242,13 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     o = cfd->view->advanced.create_widgets(cfd, evas, cfd->cfdata);
 	     if (cfd->view->scroll)
 	       {
-		  e_widget_min_size_resize(o);
+		  e_widget_size_min_resize(o);
 		  o = e_widget_scrollframe_simple_add(evas, o);
 	       }
 	  }
      }
 
-   e_widget_min_size_get(o, &mw, &mh);
+   e_widget_size_min_get(o, &mw, &mh);
    e_widget_on_change_hook_set(o, _e_config_dialog_cb_changed, cfd);
    e_dialog_content_set(cfd->dia, o, mw, mh);
 

@@ -187,7 +187,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ol = e_widget_ilist_add(evas, 16, 16, NULL);
    cfdata->gui.list = ol;
    e_widget_ilist_go(ol);
-   e_widget_min_size_set(cfdata->gui.list, 250, 200);
+   e_widget_size_min_set(cfdata->gui.list, 250, 200);
    e_widget_frametable_object_append(of, ol, 0, 0, 3, 1, 1, 1, 1, 1);
 
    ob = e_widget_button_add(evas, _("Set"), "configure", _cb_config, cfdata, NULL);
@@ -255,8 +255,8 @@ _fill_list(E_Config_Dialog_Data *cfdata, const char *mtype)
 	e_widget_ilist_append(cfdata->gui.list, icon, m->mime, NULL, NULL, NULL);
      }
    e_widget_ilist_go(cfdata->gui.list);
-   e_widget_min_size_get(cfdata->gui.list, &w, &h);
-   e_widget_min_size_set(cfdata->gui.list, w, 200);
+   e_widget_size_min_get(cfdata->gui.list, &w, &h);
+   e_widget_size_min_set(cfdata->gui.list, w, 200);
    e_widget_ilist_thaw(cfdata->gui.list);
    edje_thaw();
    evas_event_thaw(evas);
@@ -290,8 +290,8 @@ _fill_tlist(E_Config_Dialog_Data *cfdata)
      }
    
    e_widget_ilist_go(cfdata->gui.tlist);
-   e_widget_min_size_get(cfdata->gui.tlist, &w, &h);
-   e_widget_min_size_set(cfdata->gui.tlist, w, 225);
+   e_widget_size_min_get(cfdata->gui.tlist, &w, &h);
+   e_widget_size_min_set(cfdata->gui.tlist, w, 225);
    e_widget_ilist_thaw(cfdata->gui.tlist);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(cfdata->gui.tlist));

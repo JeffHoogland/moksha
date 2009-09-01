@@ -157,7 +157,7 @@ e_wizard_page_show(Evas_Object *obj)
    o_content = obj;
    if (obj)
      {
-	e_widget_min_size_get(obj, &minw, &minh);
+	e_widget_size_min_get(obj, &minw, &minh);
 	edje_extern_object_min_size_set(obj, minw, minh);
 	edje_object_part_swallow(o_bg, "e.swallow.content", obj);
 	evas_object_show(obj);

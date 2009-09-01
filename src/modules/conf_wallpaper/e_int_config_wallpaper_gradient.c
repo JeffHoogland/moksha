@@ -155,7 +155,7 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    o = _preview_widget_add(evas);
    evas_object_show(o);
    evas_object_resize(o, 200, 150);
-   e_widget_min_size_set(o, 200, 150);
+   e_widget_size_min_set(o, 200, 150);
    e_widget_framelist_object_append(of, o);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    import->preview = o;
@@ -192,7 +192,7 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    e_widget_table_object_append(ot, of, 0, 2, 2, 1, 1, 1, 1, 1);
    e_widget_list_object_append(ol, ot, 1, 1, 0.5);
 
-   e_widget_min_size_get(ol, &mw, &mh);
+   e_widget_size_min_get(ol, &mw, &mh);
    e_dialog_content_set(dia, ol, mw, mh);
 
    e_dialog_button_add(dia, _("OK"), NULL, _import_cb_ok, cfdata);

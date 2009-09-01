@@ -81,7 +81,7 @@ e_widget_button_add(Evas *evas, const char *label, const char *icon, void (*func
 
    _e_wid_button_state_send(wd);
    edje_object_size_min_calc(wd->o_button, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
 
    return obj;
 }

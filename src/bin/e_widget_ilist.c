@@ -286,7 +286,7 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, const char **value)
    evas_object_smart_callback_add(o, "selected", _e_wid_cb_selected, obj);
 
    evas_object_resize(obj, 32, 32);
-   e_widget_min_size_set(obj, 32, 32);
+   e_widget_size_min_set(obj, 32, 32);
    return obj;
 }
 
@@ -457,8 +457,8 @@ e_widget_ilist_go(Evas_Object *obj)
      {
 	Evas_Coord wmw, wmh;
 
-	e_widget_min_size_get(obj, &wmw, &wmh);
-	e_widget_min_size_set(obj, mw + (w - vw), wmh);
+	e_widget_size_min_get(obj, &wmw, &wmh);
+	e_widget_size_min_set(obj, mw + (w - vw), wmh);
      }
    else if (mw < vw)
      evas_object_resize(wd->o_ilist, vw,mh);

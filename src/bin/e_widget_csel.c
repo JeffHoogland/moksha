@@ -266,7 +266,7 @@ e_widget_csel_add(Evas *evas, E_Color *color)
    o = e_widget_cslider_add(evas, wd->mode, wd->cv, 1, 1);
    e_widget_sub_object_add(obj, o);
    e_widget_on_change_hook_set(o, _e_wid_cb_color_changed, wd);
-   e_widget_min_size_set(o, 30, 50);
+   e_widget_size_min_set(o, 30, 50);
    evas_object_show(o);
    wd->vert = o;
    e_widget_table_object_append(table, o, 2, 1, 1, 1, 0, 1, 0, 1);

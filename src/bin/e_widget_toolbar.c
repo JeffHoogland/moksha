@@ -84,7 +84,7 @@ e_widget_toolbar_add(Evas *evas, int icon_w, int icon_h)
 
    edje_object_size_min_calc
      (e_scrollframe_edje_object_get(wd->o_base), &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
 
    return obj;
 }
@@ -132,9 +132,9 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
    evas_object_resize(wd->o_base, 500, 500);
    e_scrollframe_child_viewport_size_get(wd->o_base, &vw, &vh);
    if (wd->scrollable)
-     e_widget_min_size_set(obj, 500 - vw, mh + (500 - vh));
+     e_widget_size_min_set(obj, 500 - vw, mh + (500 - vh));
    else
-     e_widget_min_size_set(obj, mw + (500 - vw), mh + (500 - vh));
+     e_widget_size_min_set(obj, mw + (500 - vw), mh + (500 - vh));
 }
 
 EAPI void
@@ -214,9 +214,9 @@ e_widget_toolbar_scrollable_set(Evas_Object *obj, Eina_Bool scrollable)
    evas_object_resize(wd->o_base, 500, 500);
    e_scrollframe_child_viewport_size_get(wd->o_base, &vw, &vh);
    if (wd->scrollable)
-     e_widget_min_size_set(obj, 500 - vw, mh + (500 - vh));
+     e_widget_size_min_set(obj, 500 - vw, mh + (500 - vh));
    else
-     e_widget_min_size_set(obj, mw + (500 - vw), mh + (500 - vh));
+     e_widget_size_min_set(obj, mw + (500 - vw), mh + (500 - vh));
 }
 
 EAPI void

@@ -373,7 +373,7 @@ _bd_go(void *data, void *data2)
    
    e_widget_list_object_append(c, ob, 0, 0, 1.0);
    
-   e_widget_min_size_get(c, &w, &h);
+   e_widget_size_min_get(c, &w, &h);
    e_dialog_content_set(dia, c, w, h);
    e_dialog_show(dia);
 }
@@ -387,8 +387,8 @@ _bd_go(void *data, void *data2)
       ob = e_widget_entry_add(evas, &(cfdata->val), NULL, NULL, NULL); \
       if (!cfdata->val) e_widget_disabled_set(ob, 1); \
       e_widget_entry_readonly_set(ob, 1); \
-      e_widget_min_size_get(ob, &mw, &mh); \
-      e_widget_min_size_set(ob, 160, mh); \
+      e_widget_size_min_get(ob, &mw, &mh); \
+      e_widget_size_min_set(ob, 160, mh); \
       e_widget_frametable_object_append(of, ob, x + 1, y, 1, 1,    1, 1, 1, 1); \
    }
 #define CHK_ENTRY(label, x, y, val) \

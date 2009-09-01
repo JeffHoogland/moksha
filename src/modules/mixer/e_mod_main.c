@@ -604,10 +604,10 @@ _mixer_popup_new(E_Mixer_Instance *inst)
    e_widget_table_object_append(inst->ui.table, inst->ui.button,
                                 0, 7, colspan, 1, 1, 1, 1, 0);
 
-   e_widget_min_size_get(inst->ui.table, &mw, &mh);
+   e_widget_size_min_get(inst->ui.table, &mw, &mh);
    if (mh < 208) mh = 208;
    if (mw < 68) mw = 68;
-   e_widget_min_size_set(inst->ui.table, mw, mh);
+   e_widget_size_min_set(inst->ui.table, mw, mh);
 
    e_gadcon_popup_content_set(inst->popup, inst->ui.table);
    e_gadcon_popup_show(inst->popup);

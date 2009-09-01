@@ -448,9 +448,9 @@ net_dialog_show(Instance *inst, Conf_Network *cfnet)
    o = e_widget_label_add(evas, "Personal Name");
    e_widget_table_object_append(table, o, 0, row, 1, 1, 1, 1, 0, 0);
    o = e_widget_entry_add(evas, &(cfnet->name), NULL, NULL, NULL);
-   e_widget_min_size_get(o, &mw, &mh);
+   e_widget_size_min_get(o, &mw, &mh);
    mw = 160;
-   e_widget_min_size_set(o, mw, mh);
+   e_widget_size_min_set(o, mw, mh);
    e_widget_table_object_append(table, o, 1, row, 1, 1, 1, 1, 0, 0);
    row++;
 
@@ -470,9 +470,9 @@ net_dialog_show(Instance *inst, Conf_Network *cfnet)
 	o = e_widget_label_add(evas, "Password");
 	e_widget_table_object_append(table, o, 0, row, 1, 1, 1, 1, 0, 0);
 	o = e_widget_entry_add(evas, &(cfnet->password), NULL, NULL, NULL);
-	e_widget_min_size_get(o, &mw, &mh);
+	e_widget_size_min_get(o, &mw, &mh);
 	mw = 160;
-	e_widget_min_size_set(o, mw, mh);
+	e_widget_size_min_set(o, mw, mh);
 	e_widget_table_object_append(table, o, 1, row, 1, 1, 1, 1, 0, 0);
 	row++;
 
@@ -487,7 +487,7 @@ net_dialog_show(Instance *inst, Conf_Network *cfnet)
    e_widget_table_object_append(table, button, 0, row, 2, 1, 0, 0, 0, 0);
    row++;
 
-   e_widget_min_size_get(table, &mw, &mh);
+   e_widget_size_min_get(table, &mw, &mh);
    e_dialog_content_set(dialog, table, mw, mh);
 
    e_win_delete_callback_set(dialog->win, net_dialog_cb_del);
@@ -760,7 +760,7 @@ if_dialog_show(Instance *inst)
    e_widget_ilist_go(ilist);
    e_widget_ilist_thaw(ilist);
 
-   e_widget_min_size_set(ilist, 240, 180);
+   e_widget_size_min_set(ilist, 240, 180);
    e_widget_framelist_object_append(flist, ilist);
 
    e_widget_list_object_append(list, flist, 1, 0, 0.5);
@@ -770,7 +770,7 @@ if_dialog_show(Instance *inst)
 				inst, NULL);
    e_widget_list_object_append(list, button, 1, 0, 0.5);
 
-   e_widget_min_size_get(list, &mw, &mh);
+   e_widget_size_min_get(list, &mw, &mh);
    e_dialog_content_set(dialog, list, mw, mh);
 
    e_win_delete_callback_set(dialog->win, if_dialog_cb_del);
@@ -1070,7 +1070,7 @@ popup_show(Instance *inst)
    e_widget_ilist_go(ilist);
    e_widget_ilist_thaw(ilist);
 
-   e_widget_min_size_set(ilist, 240, 320);
+   e_widget_size_min_set(ilist, 240, 320);
    e_widget_table_object_append(base, ilist,
 			       0, 0, 1, 1, 1, 1, 1, 1);
 
@@ -1079,10 +1079,10 @@ popup_show(Instance *inst)
    e_widget_table_object_append(base, button,
 			       0, 1, 1, 1, 0, 0, 0, 0);
 
-   e_widget_min_size_get(base, &mw, &mh);
+   e_widget_size_min_get(base, &mw, &mh);
    if (mh < 188) mh = 188;
    if (mw < 168) mw = 168;
-   e_widget_min_size_set(base, mw, mh);
+   e_widget_size_min_set(base, mw, mh);
 
    edje_thaw();
 

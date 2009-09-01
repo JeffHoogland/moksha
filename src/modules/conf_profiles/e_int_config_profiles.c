@@ -106,13 +106,13 @@ _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    of = e_widget_framelist_add(evas, _("Available Profiles"), 0);
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, &(cfdata->sel_profile));
-   e_widget_min_size_set(cfdata->o_list, 140 * e_scale, 50 * e_scale);
+   e_widget_size_min_set(cfdata->o_list, 140 * e_scale, 50 * e_scale);
    e_widget_framelist_object_append(of, cfdata->o_list);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    ob = e_widget_textblock_add(evas);
-   e_widget_min_size_set(ob, 140 * e_scale, 50 * e_scale);
+   e_widget_size_min_set(ob, 140 * e_scale, 50 * e_scale);
    e_widget_textblock_markup_set(ob, _("Select a profile"));
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
    cfdata->o_text = ob;
@@ -206,7 +206,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    if (profiles) eina_list_free(profiles);
    if (selected >= 0)
      e_widget_ilist_selected_set(cfdata->o_list, selected);   
-   e_widget_min_size_set(cfdata->o_list, 155, 250);
+   e_widget_size_min_set(cfdata->o_list, 155, 250);
    e_widget_ilist_go(cfdata->o_list);
 
    e_widget_ilist_thaw(cfdata->o_list);
@@ -355,11 +355,11 @@ _dia_new_profile(E_Config_Dialog_Data *cfdata)
 				     0, 0, 1, 1,
 				     0, 1, 0, 0);
    ob = e_widget_entry_add(evas, &(cfdata->new_profile), NULL, NULL, NULL);
-   e_widget_min_size_set(ob, 100, 1);
+   e_widget_size_min_set(ob, 100, 1);
    e_widget_table_object_append(ot, ob,
 				     1, 0, 1, 1,
 				     1, 1, 1, 0);
-   e_widget_min_size_get(ot, &mw, &mh);
+   e_widget_size_min_get(ot, &mw, &mh);
    e_dialog_content_set(dia, ot, mw, mh);
 
    e_dialog_button_add(dia, _("OK"), NULL, _new_profile_cb_ok, cfdata);

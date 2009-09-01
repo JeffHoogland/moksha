@@ -47,7 +47,7 @@ e_widget_framelist_add(Evas *evas, const char *label, int horiz)
    evas_object_show(o);
    
    edje_object_size_min_calc(wd->o_frame, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
    
    return obj;
 }
@@ -61,7 +61,7 @@ e_widget_framelist_object_append(Evas_Object *obj, Evas_Object *sobj)
    wd = e_widget_data_get(obj);
    
    e_box_pack_end(wd->o_box, sobj);
-   e_widget_min_size_get(sobj, &mw, &mh);
+   e_widget_size_min_get(sobj, &mw, &mh);
    e_box_pack_options_set(sobj,
 			  1, 1, /* fill */
 			  1, 1, /* expand */
@@ -73,7 +73,7 @@ e_widget_framelist_object_append(Evas_Object *obj, Evas_Object *sobj)
    edje_extern_object_min_size_set(wd->o_box, mw, mh);
    edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->o_box);
    edje_object_size_min_calc(wd->o_frame, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
    e_widget_sub_object_add(obj, sobj);
    evas_object_show(sobj);
 }

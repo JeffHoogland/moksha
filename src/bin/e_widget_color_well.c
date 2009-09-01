@@ -152,7 +152,7 @@ e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
    evas_object_show(o); 
    wd->o_edje = o;
 
-   e_widget_min_size_set(obj, 50, 50);
+   e_widget_size_min_set(obj, 50, 50);
 
    o = evas_object_rectangle_add(evas);
    e_widget_sub_object_add(obj, o);

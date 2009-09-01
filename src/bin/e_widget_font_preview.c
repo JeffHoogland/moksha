@@ -50,7 +50,7 @@ e_widget_font_preview_add(Evas *evas, const char *text)
    edje_object_part_text_set(wd->o_text, "e.fontpreview.text", text);
 
    evas_object_resize(obj, 40, 40);  
-   e_widget_min_size_set(obj, 40, 40);
+   e_widget_size_min_set(obj, 40, 40);
    
    return obj;
 }

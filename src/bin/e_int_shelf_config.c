@@ -664,8 +664,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	if (!strcmp(cfdata->es->style, style)) sel = n;
 	n++;
      }
-   e_widget_min_size_get(oi, &wmw, &wmh);
-   e_widget_min_size_set(oi, wmw, 160);
+   e_widget_size_min_get(oi, &wmw, &wmh);
+   e_widget_size_min_set(oi, wmw, 160);
    
    e_widget_ilist_go(oi);
    e_widget_ilist_selected_set(oi, sel);
@@ -730,8 +730,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->desk_sel_list = ob;
    e_widget_ilist_multi_select_set(ob, 1);
    _desk_sel_list_load(cfdata);
-   e_widget_min_size_get(ob, &wmw, &wmh);
-   e_widget_min_size_set(ob, wmw, 64);
+   e_widget_size_min_get(ob, &wmw, &wmh);
+   e_widget_size_min_set(ob, wmw, 64);
    e_widget_framelist_object_append(of, ob);
 
    e_widget_list_object_append(o2, of, 1, 1, 0.5);

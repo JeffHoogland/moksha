@@ -35,7 +35,7 @@ e_widget_label_add(Evas *evas, const char *label)
    evas_object_show(o);
    edje_object_size_min_calc(o, &mw, &mh);
    e_widget_can_focus_set(obj, 0);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
       

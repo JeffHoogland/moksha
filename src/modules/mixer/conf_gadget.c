@@ -238,7 +238,7 @@ _fill_channels(Evas *evas, E_Config_Dialog_Data *cfdata)
       ++i;
    }
 
-   e_widget_min_size_get(ui->list, &mw, &mh);
+   e_widget_size_min_get(ui->list, &mw, &mh);
    evas_object_resize(ui->list, mw, mh);
 
    selected = eina_list_nth(ui->radios, cfdata->channel);
@@ -264,9 +264,9 @@ _channel_scroll_set_min_size(struct mixer_config_ui_channels *ui)
    if (len < 1)
       return;
 
-   e_widget_min_size_get(ui->list, &w, &h);
+   e_widget_size_min_get(ui->list, &w, &h);
    h = 4 * h / len;
-   e_widget_min_size_set(ui->scroll, w, h);
+   e_widget_size_min_set(ui->scroll, w, h);
 }
 
 static void

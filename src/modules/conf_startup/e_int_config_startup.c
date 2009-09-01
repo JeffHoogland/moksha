@@ -319,7 +319,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 				     e_fm2_pan_max_get,
 				     e_fm2_pan_child_size_get);
    cfdata->o_frame = of;
-   e_widget_min_size_set(of, 160, 160);
+   e_widget_size_min_set(of, 160, 160);
    e_widget_table_object_append(ol, of, 0, 2, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(ot, ol, 0, 0, 1, 1, 1, 1, 1, 1);
    

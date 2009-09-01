@@ -138,7 +138,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
    ob = e_widget_entry_add(evas, &(cfdata->mime), NULL, NULL, NULL);
    e_widget_entry_readonly_set(ob, 1);
-   e_widget_min_size_set(ob, 100, 1);
+   e_widget_size_min_set(ob, 100, 1);
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
       
@@ -168,7 +168,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 	if (icon) 
 	  e_widget_button_icon_set(oi, icon);
      }
-   e_widget_min_size_set(oi, 48, 48);
+   e_widget_size_min_set(oi, 48, 48);
    e_widget_frametable_object_append(of, oi, 1, 5, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -277,7 +277,7 @@ _cb_icon_sel(void *data, void *data2)
 
    cfdata->gui.fsel_wid = o;
    evas_object_show(o);
-   e_widget_min_size_get(o, &w, &h);
+   e_widget_size_min_get(o, &w, &h);
    e_dialog_content_set(dia, o, w, h);
    
    e_dialog_button_add(dia, _("OK"), NULL, _cb_fsel_ok, cfdata);

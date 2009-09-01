@@ -47,7 +47,7 @@ e_widget_preview_add(Evas *evas, int minw, int minh)
    e_widget_data_set(obj, wd);   
    e_widget_can_focus_set(obj, 0);
    edje_object_size_min_calc(wd->o_frame, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
    e_widget_sub_object_add(obj, o);
 
    return obj;
@@ -137,7 +137,7 @@ _e_wid_preview_thumb_gen(void *data, Evas_Object *obj, void *event_info)
    /* edje_extern_object_max_size_set(wd->img, w, h); */
    edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->img);
    edje_object_size_min_calc(wd->o_frame, &w, &h);
-   e_widget_min_size_set(wd->obj, w, h);
+   e_widget_size_min_set(wd->obj, w, h);
    evas_object_resize(wd->obj, w, h);
    evas_object_smart_callback_call(wd->obj, "preview_update", NULL);
 }

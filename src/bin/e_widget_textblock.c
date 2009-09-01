@@ -45,7 +45,7 @@ e_widget_textblock_add(Evas *evas)
    evas_object_show(o);
 		       
    evas_object_resize(obj, 32, 32);
-   e_widget_min_size_set(obj, 32, 32);
+   e_widget_size_min_set(obj, 32, 32);
    return obj;
 }
 

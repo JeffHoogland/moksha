@@ -8560,7 +8560,7 @@ _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title,
    
    o = e_widget_fsel_add(dia->win->evas, "/", sd->realpath, NULL, NULL, NULL, sd, NULL, sd, 1);
    evas_object_show(o);
-   e_widget_min_size_get(o, &w, &h);
+   e_widget_size_min_get(o, &w, &h);
    e_dialog_content_set(dia, o, w, h);
    dia->data = o;
 

@@ -165,7 +165,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_
    Evas_Coord mw, mh, vw, vh, w, h;    
 
    e_scrollframe_child_viewport_size_get(obj, &vw, &vh);
-   e_widget_min_size_get(data, &mw, &mh);
+   e_widget_size_min_get(data, &mw, &mh);
    evas_object_geometry_get(data, NULL, NULL, &w, &h);
    if (vw >= mw)
      {

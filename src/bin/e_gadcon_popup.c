@@ -148,7 +148,7 @@ _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj)
 {
    Evas_Coord w = 0, h = 0;
 
-   e_widget_min_size_get(obj, &w, &h);
+   e_widget_size_min_get(obj, &w, &h);
    if ((!w) || (!h)) evas_object_size_hint_min_get(obj, &w, &h);
    if ((!w) || (!h))
      {

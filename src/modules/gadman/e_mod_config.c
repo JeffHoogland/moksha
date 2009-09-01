@@ -232,7 +232,7 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
 					       e_fm2_pan_get,
 					       e_fm2_pan_max_get, 
 					       e_fm2_pan_child_size_get);
-   e_widget_min_size_set(cfdata->o_sf, 200, 250);
+   e_widget_size_min_set(cfdata->o_sf, 200, 250);
    e_widget_frametable_object_append(of, cfdata->o_sf, 0, 2, 2, 1, 1, 1, 1, 1);
    e_widget_table_object_append(ft, of, 1, 0, 1, 3, 1, 1, 1, 1);
 
@@ -306,9 +306,9 @@ _fill_gadgets_list(Evas_Object *ilist)
      }
 
    e_widget_ilist_go(ilist);
-   e_widget_min_size_get(ilist, &w, NULL);
+   e_widget_size_min_get(ilist, &w, NULL);
    if (w < 200) w = 200;
-   e_widget_min_size_set(ilist, w, 250);
+   e_widget_size_min_set(ilist, w, 250);
    e_widget_ilist_thaw(ilist);
 }
 

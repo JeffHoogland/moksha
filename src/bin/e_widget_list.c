@@ -47,7 +47,7 @@ e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int e
    
    e_box_pack_end(wd->o_box, sobj);
    mw = mh = 0;
-   e_widget_min_size_get(sobj, &mw, &mh);
+   e_widget_size_min_get(sobj, &mw, &mh);
    if (e_box_orientation_get(wd->o_box) == 1)
      e_box_pack_options_set(sobj,
 			    1, fill, /* fill */
@@ -65,7 +65,7 @@ e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int e
 			    99999, 99999 /* max */
 			    );
    e_box_min_size_get(wd->o_box, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
    e_widget_sub_object_add(obj, sobj);
    evas_object_show(sobj);
 }

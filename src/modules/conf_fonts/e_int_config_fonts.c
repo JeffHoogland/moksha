@@ -444,7 +444,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
    cfdata->gui.size_list = ob;
    e_widget_ilist_go(ob);
-   e_widget_min_size_set(ob, 100, 200);
+   e_widget_size_min_set(ob, 100, 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
 
@@ -606,8 +606,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->gui.class_list = ob;
    _class_list_load(cfdata);
    e_widget_ilist_multi_select_set(ob, 1);
-   e_widget_min_size_get(ob, &w, NULL);
-   e_widget_min_size_set(ob, w, 180);
+   e_widget_size_min_get(ob, &w, NULL);
+   e_widget_size_min_set(ob, w, 180);
    e_widget_on_change_hook_set(ob, _adv_class_cb_change, cfdata);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Enable Font Class"), &(cfdata->cur_enabled));
@@ -630,7 +630,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->gui.style_list = ob;
    e_widget_on_change_hook_set(ob, _adv_style_cb_change, cfdata);
    e_widget_ilist_go(ob);
-   e_widget_min_size_set(ob, 90, 90);
+   e_widget_size_min_set(ob, 90, 90);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 2, 0, 1, 1, 1, 1, 1, 1);
 
@@ -638,7 +638,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
    cfdata->gui.size_list = ob;
    e_widget_ilist_go(ob);
-   e_widget_min_size_set(ob, 90, 90);
+   e_widget_size_min_set(ob, 90, 90);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 2, 1, 1, 2, 1, 1, 1, 1);
 
@@ -1037,8 +1037,8 @@ _font_list_load(E_Config_Dialog_Data *cfdata, const char *cur_font)
      }
 
    e_widget_ilist_go(ob);
-   e_widget_min_size_get(ob, &w, NULL);
-   e_widget_min_size_set(ob, w, 250);
+   e_widget_size_min_get(ob, &w, NULL);
+   e_widget_size_min_set(ob, w, 250);
    e_widget_ilist_thaw(ob);
    edje_thaw();
    evas_event_thaw(evas);

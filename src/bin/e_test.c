@@ -548,7 +548,7 @@ _e_test_internal(E_Container *con)
    of = e_widget_scrollframe_pan_add(dia->win->evas, ofm,
 				     e_fm2_pan_set, e_fm2_pan_get,
 				     e_fm2_pan_max_get, e_fm2_pan_child_size_get);
-   e_widget_min_size_set(of, 128, 128);
+   e_widget_size_min_set(of, 128, 128);
    e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
    evas_object_show(ofm);
    evas_object_show(of);
@@ -583,14 +583,14 @@ _e_test_internal(E_Container *con)
    of = e_widget_scrollframe_pan_add(dia->win->evas, ofm,
 				     e_fm2_pan_set, e_fm2_pan_get,
 				     e_fm2_pan_max_get, e_fm2_pan_child_size_get);
-   e_widget_min_size_set(of, 128, 128);
+   e_widget_size_min_set(of, 128, 128);
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 0, 1, 0, 1);
    evas_object_show(ofm);
    evas_object_show(of);
    
    /* show and pack table */
    evas_object_show(ot);
-   e_widget_min_size_get(ot, &mw, &mh);
+   e_widget_size_min_get(ot, &mw, &mh);
    e_dialog_content_set(dia, ot, mw, mh);
    
    /* buttons at the bottom */
@@ -629,7 +629,7 @@ _e_test_internal(E_Container *con)
 			 _e_test_cb_selected, dia,
 			 _e_test_cb_changed, dia, 0);
    evas_object_show(o);
-   e_widget_min_size_get(o, &mw, &mh);
+   e_widget_size_min_get(o, &mw, &mh);
    e_dialog_content_set(dia, o, mw, mh);
    
    /* buttons at the bottom */
@@ -715,7 +715,7 @@ _e_test_internal(E_Container *con)
 
    e_scrollframe_child_set(of, ob);
    evas_object_show(ob);
-//   e_widget_min_size_get(o, &mw, &mh);
+//   e_widget_size_min_get(o, &mw, &mh);
    mw = 300; mh = 300;
    e_dialog_content_set(dia, of, mw, mh);
    evas_object_show(of);
@@ -782,7 +782,7 @@ _e_test_timer(void *data)
    e_widget_toolbar_item_select(o, 1);
    
    /* fixme... more */
-   e_widget_min_size_get(o, &mw, &mh);
+   e_widget_size_min_get(o, &mw, &mh);
    e_dialog_content_set(dia, o, mw, mh);
    evas_object_show(o);
    
@@ -849,7 +849,7 @@ _e_test_timer(void *data)
    e_widget_toolbar_item_select(o, 1);
    
    /* fixme... more */
-   e_widget_min_size_get(o, &mw, &mh);
+   e_widget_size_min_get(o, &mw, &mh);
    e_dialog_content_set(dia, o, mw, mh);
    evas_object_show(o);
    

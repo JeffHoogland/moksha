@@ -80,7 +80,7 @@ e_widget_flist_add(Evas *evas)
                                   _e_wid_cb_selected, obj);
 
    evas_object_resize(obj, 32, 32);
-   e_widget_min_size_set(obj, 32, 32);
+   e_widget_size_min_set(obj, 32, 32);
    return obj;
 }
 

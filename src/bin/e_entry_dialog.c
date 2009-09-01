@@ -56,7 +56,7 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
    ed->entry = e_widget_entry_add(dia->win->evas, &(ed->text), NULL, NULL, NULL);
    evas_object_smart_callback_add(ed->entry, "key_down", _e_entry_cb_key_down, ed);
    e_widget_list_object_append(o, ed->entry, 1, 1, 0.5);
-   e_widget_min_size_get(o, &w, &h);
+   e_widget_size_min_get(o, &w, &h);
    e_dialog_content_set(dia, o, w, h);
    
    e_dialog_button_add(dia, !button_text ? _("OK") : button_text, NULL, _e_entry_dialog_ok, ed);

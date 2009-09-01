@@ -346,7 +346,7 @@ _create_cards(E_Dialog *dialog, Evas *evas, E_Mixer_App_Dialog_Data *app)
 
    ui = &app->ui.cards;
    ui->list = e_widget_ilist_add(evas, 32, 32, &app->card);
-   e_widget_min_size_set(ui->list, 180, 100);
+   e_widget_size_min_set(ui->list, 180, 100);
    e_widget_ilist_go(ui->list);
    EINA_LIST_FOREACH(app->cards, l, card)
    {
@@ -372,7 +372,7 @@ _create_channels(E_Dialog *dialog, Evas *evas, E_Mixer_App_Dialog_Data *app)
 
    ui = &app->ui.channels;
    ui->list = e_widget_ilist_add(evas, 24, 24, &app->channel_name);
-   e_widget_min_size_set(ui->list, 180, 100);
+   e_widget_size_min_set(ui->list, 180, 100);
    e_widget_ilist_go(ui->list);
 
    ui->frame = e_widget_framelist_add(evas, _("Channels"), 0);
@@ -455,7 +455,7 @@ _create_ui(E_Dialog *dialog, E_Mixer_App_Dialog_Data *app)
       select_card(app);
    e_widget_ilist_selected_set(ui->channels.list, 1);
 
-   e_widget_min_size_get(ui->hlayout, &mw, &mh);
+   e_widget_size_min_get(ui->hlayout, &mw, &mh);
    if (mw < 300)
       mw = 300;
    if (mh < 200)

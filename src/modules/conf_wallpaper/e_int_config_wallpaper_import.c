@@ -204,7 +204,7 @@ e_int_config_wallpaper_import(void *data, const char *path)
 
    e_widget_list_object_append(o, ot, 0, 0, 0.5);
 
-   e_widget_min_size_get(o, &w, &h);
+   e_widget_size_min_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
    edje_object_part_swallow(import->bg_obj, "e.swallow.content", o);
    evas_object_show(o);
@@ -220,7 +220,7 @@ e_int_config_wallpaper_import(void *data, const char *path)
    e_win_centered_set(win, 1);
 
    o = import->box_obj;
-   e_widget_min_size_get(o, &w, &h);
+   e_widget_size_min_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
    edje_object_part_swallow(import->bg_obj, "e.swallow.buttons", o);
 
@@ -318,7 +318,7 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
    fsel->fsel_obj = ofm;
    e_widget_list_object_append(o, ofm, 1, 1, 0.5);
 
-   e_widget_min_size_get(o, &w, &h);
+   e_widget_size_min_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
    edje_object_part_swallow(fsel->bg_obj, "e.swallow.content", o);
    evas_object_show(o);
@@ -335,7 +335,7 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
    e_win_centered_set(win, 1);
 
    o = fsel->box_obj;
-   e_widget_min_size_get(o, &w, &h);
+   e_widget_size_min_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
    edje_object_part_swallow(fsel->bg_obj, "e.swallow.buttons", o);
 

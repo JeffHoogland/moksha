@@ -54,8 +54,8 @@ e_widget_toolbook_page_append(Evas_Object *toolbook, Evas_Object *icon, const ch
                                       ax, ay);
    evas_object_hide(content);
    wd->content = eina_list_append(wd->content, content);
-   e_widget_min_size_get(wd->o_tb, &minw, &minh);
-   e_widget_min_size_set(toolbook, minw, minh);
+   e_widget_size_min_get(wd->o_tb, &minw, &minh);
+   e_widget_size_min_set(toolbook, minw, minh);
 }
 
 EAPI void

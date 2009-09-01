@@ -167,20 +167,20 @@ e_configure_show(E_Container *con)
    e_widget_ilist_selector_set(eco->item_list, 1);
    e_widget_ilist_go(eco->item_list);
    e_widget_on_focus_hook_set(eco->item_list, _e_configure_focus_cb, eco->win);
-   e_widget_min_size_get(eco->item_list, &mw, &mh);
+   e_widget_size_min_get(eco->item_list, &mw, &mh);
    if (mw < (200 * e_scale)) mw = 200 * e_scale;
    if (mh < (120 * e_scale)) mh = 120 * e_scale;
-   e_widget_min_size_set(eco->item_list, mw, mh);
+   e_widget_size_min_set(eco->item_list, mw, mh);
    e_widget_list_object_append(eco->o_list, eco->item_list, 1, 1, 0.5);
 
-   e_widget_min_size_get(eco->o_list, &mw, &mh);
+   e_widget_size_min_get(eco->o_list, &mw, &mh);
    edje_extern_object_min_size_set(eco->o_list, mw, mh);
 
    /* Close Button */
    eco->close = e_widget_button_add(eco->evas, _("Close"), NULL, 
 				    _e_configure_cb_close, eco, NULL);
    e_widget_on_focus_hook_set(eco->close, _e_configure_focus_cb, eco->win);
-   e_widget_min_size_get(eco->close, &mw, &mh);
+   e_widget_size_min_get(eco->close, &mw, &mh);
    edje_extern_object_min_size_set(eco->close, mw, mh);
    edje_object_part_swallow(eco->edje, "e.swallow.button", eco->close);
    edje_object_size_min_calc(eco->edje, &ew, &eh);
@@ -349,8 +349,8 @@ _e_configure_category_cb(void *data, void *data2)
                               _e_configure_item_cb, ci, NULL);
      }
    e_widget_ilist_go(eco->item_list);
-   e_widget_min_size_get(eco->item_list, &w, &h);
-   e_widget_min_size_set(eco->item_list, w, h);
+   e_widget_size_min_get(eco->item_list, &w, &h);
+   e_widget_size_min_set(eco->item_list, w, h);
    e_widget_ilist_thaw(eco->item_list);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(eco->item_list));
@@ -503,8 +503,8 @@ _e_configure_fill_cat_list(void *data)
 	  }
      }
 
-   e_widget_min_size_get(eco->cat_list, &mw, &mh);
-   e_widget_min_size_set(eco->cat_list, mw, mh);
+   e_widget_size_min_get(eco->cat_list, &mw, &mh);
+   e_widget_size_min_set(eco->cat_list, mw, mh);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(eco->cat_list));
 }

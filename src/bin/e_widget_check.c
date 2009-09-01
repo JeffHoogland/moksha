@@ -47,7 +47,7 @@ e_widget_check_add(Evas *evas, const char *label, int *val)
    edje_object_part_text_set(o, "e.text.label", label);
    evas_object_show(o);
    edje_object_size_min_calc(o, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
    if (wd->valptr)
      {
 	if (*(wd->valptr)) edje_object_signal_emit(o, "e,state,checked", "e");
@@ -138,7 +138,7 @@ e_widget_check_icon_add(Evas *evas, const char *label, const char *icon, int ico
      }
    
    edje_object_size_min_calc(o, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
    if (wd->valptr)
      {
 	if (*(wd->valptr)) edje_object_signal_emit(o, "e,state,checked", "e");

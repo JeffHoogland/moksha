@@ -125,8 +125,8 @@ e_widget_aspect_child_set(Evas_Object *obj, Evas_Object *child)
    if (!wd) return;
 
    wd->child = child;
-   e_widget_min_size_get(child, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_get(child, &mw, &mh);
+   e_widget_size_min_set(obj, mw, mh);
    e_widget_sub_object_add(obj, child);
    _e_wid_reconfigure(wd);
 }

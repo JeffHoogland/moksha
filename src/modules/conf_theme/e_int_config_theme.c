@@ -421,7 +421,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 				  _cb_files_files_deleted, cfdata);
    e_widget_flist_path_set(o, path, "/");
 
-   e_widget_min_size_set(o, 160, 160);
+   e_widget_size_min_set(o, 160, 160);
    e_widget_table_object_append(ol, o, 0, 2, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(ot, ol, 0, 0, 1, 1, 1, 1, 1, 1);
 
@@ -1000,7 +1000,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_on_change_hook_set(ob, _cb_adv_categories_change, cfdata);
    cfdata->o_categories_ilist = ob;
    e_widget_ilist_multi_select_set(ob, 0);
-   e_widget_min_size_set(ob, 150, 250);
+   e_widget_size_min_set(ob, 150, 250);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 0, 1);
 
@@ -1008,7 +1008,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
    e_widget_on_change_hook_set(ob, _cb_adv_theme_change, cfdata);
    cfdata->o_files_ilist = ob;
-   e_widget_min_size_set(ob, 150, 250);
+   e_widget_size_min_set(ob, 150, 250);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
 

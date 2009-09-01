@@ -126,7 +126,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Events"), 0);
    il = e_widget_ilist_add(evas, 48, 48, NULL);
    cfdata->event_list = il;
-   e_widget_min_size_set(il, 140, 200);
+   e_widget_size_min_set(il, 140, 200);
    
    evas_event_freeze(evas_object_evas_get(il));
    edje_freeze();
@@ -144,7 +144,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Transitions"), 0);
    il = e_widget_ilist_add(evas, 48, 48, NULL);
    cfdata->trans_list = il;
-   e_widget_min_size_set(il, 100, 200);
+   e_widget_size_min_set(il, 100, 200);
    
    evas_event_freeze(evas_object_evas_get(il));
    edje_freeze();

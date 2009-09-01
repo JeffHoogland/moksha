@@ -65,7 +65,7 @@ wizard_page_show(E_Wizard_Page *pg)
 
    li = e_widget_list_add(pg->evas, 1, 0);
    ob = e_widget_scrollframe_simple_add(pg->evas, li);
-   e_widget_min_size_set(ob, 140 * e_scale, 140 * e_scale);
+   e_widget_size_min_set(ob, 140 * e_scale, 140 * e_scale);
 
    for (i = 0, l = desktops; l ; l = l->next, i++)
      {
@@ -85,7 +85,7 @@ wizard_page_show(E_Wizard_Page *pg)
         evas_object_show(ck);
      }
 
-   e_widget_min_size_get(li, &mw, &mh);
+   e_widget_size_min_get(li, &mw, &mh);
    evas_object_resize(li, mw, mh);
    
    e_widget_framelist_object_append(of, ob);

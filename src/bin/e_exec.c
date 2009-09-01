@@ -598,7 +598,7 @@ _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *li
 
 	e_widget_textblock_plain_set(obj, text);
      }
-   e_widget_min_size_set(obj, 240, 120);
+   e_widget_size_min_set(obj, 240, 120);
 
    e_widget_framelist_object_append(os, obj);
 

@@ -345,7 +345,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 					       e_fm2_pan_get,
 					       e_fm2_pan_max_get,
 					       e_fm2_pan_child_size_get);
-   e_widget_min_size_set(cfdata->o_sf, 100, 100);
+   e_widget_size_min_set(cfdata->o_sf, 100, 100);
    e_widget_table_object_append(ft, cfdata->o_sf, 0, 2, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(mt, ft, 0, 0, 1, 3, 1, 1, 1, 1);
 

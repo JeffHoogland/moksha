@@ -67,7 +67,7 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
      edje_object_signal_emit(o, "e,state,direction,h", "e");
    evas_object_show(o);
    edje_object_size_min_calc(o, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
 
    e_widget_sub_object_add(obj, o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);

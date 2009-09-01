@@ -171,7 +171,7 @@ _e_wid_reconfigure(E_Widget_Data *wd)
 	E_Widget_Desk_Data *dd = e_widget_data_get(dw);
 	if (dd->x < nx && dd->y < ny)
 	  {
-	     e_widget_min_size_set(dw, mw, mh);
+	     e_widget_size_min_set(dw, mw, mh);
 	     e_widget_table_object_repack(wd->table, dw, dd->x, dd->y, 1, 1, 1, 1, 1, 1);
 	     e_thumb_icon_size_set(dd->thumb, tw, th);
 	     e_thumb_icon_rethumb(dd->thumb); 
@@ -198,7 +198,7 @@ _e_wid_reconfigure(E_Widget_Data *wd)
 	     Evas_Object *dw;
 
 	     dw = e_widget_deskpreview_desk_add(evas_object_evas_get(wd->obj), zone, x, y, tw, th);
-	     e_widget_min_size_set(dw, mw, mh);
+	     e_widget_size_min_set(dw, mw, mh);
 
 	     e_widget_table_object_append(wd->table, dw, x, y, 1, 1, 1, 1, 1, 1);
 	     wd->desks = eina_list_append(wd->desks, dw);

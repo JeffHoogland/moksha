@@ -191,7 +191,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ilist = e_widget_ilist_add(evas, 24, 24, &(cfdata->themename));
    cfdata->gui.list = ilist;
 
-   e_widget_min_size_set(ilist, 200, 240);
+   e_widget_size_min_set(ilist, 200, 240);
 
    e_widget_framelist_object_append(of, ilist);
 
