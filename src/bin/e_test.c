@@ -262,7 +262,7 @@ _e_test_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Coord mw, mh, vw, vh, w, h;
    
    e_scrollframe_child_viewport_size_get(obj, &vw, &vh);
-   e_ilist_min_size_get(data, &mw, &mh);
+   e_ilist_size_min_get(data, &mw, &mh);
    evas_object_geometry_get(data, NULL, NULL, &w, &h);
    if (vw >= mw)
      {
@@ -327,7 +327,7 @@ _e_test_internal(E_Container *con)
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/cd.png");
    e_ilist_append(o, o3, "Norbert", 0, _e_test_sel, NULL, NULL, NULL);
    
-   e_ilist_min_size_get(o, &mw, &mh);
+   e_ilist_size_min_get(o, &mw, &mh);
    evas_object_resize(o, mw, mh);
    evas_object_focus_set(o, 1);
    evas_object_show(o);

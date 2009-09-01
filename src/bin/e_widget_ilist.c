@@ -449,7 +449,7 @@ e_widget_ilist_go(Evas_Object *obj)
 
    wd = e_widget_data_get(obj);
    wd->o_widget = obj;
-   e_ilist_min_size_get(wd->o_ilist, &mw, &mh);
+   e_ilist_size_min_get(wd->o_ilist, &mw, &mh);
    evas_object_resize(wd->o_ilist, mw, mh);
    e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
    evas_object_geometry_get(wd->o_scrollframe, NULL, NULL, &w, &h);
@@ -726,7 +726,7 @@ e_widget_ilist_preferred_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h
    evas_object_geometry_get(wd->o_scrollframe, NULL, NULL, &ww, &hh);
    evas_object_resize(wd->o_scrollframe, 200, 200);
    e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
-   e_ilist_min_size_get(wd->o_ilist, &mw, &mh);
+   e_ilist_size_min_get(wd->o_ilist, &mw, &mh);
    evas_object_resize(wd->o_scrollframe, ww, hh);
    if (w) *w = 200 - vw + mw;
    if (h) *h = 200 - vh + mh;
@@ -772,7 +772,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_
    Evas_Coord mw, mh, vw, vh, w, h;
 
    e_scrollframe_child_viewport_size_get(obj, &vw, &vh);
-   e_ilist_min_size_get(data, &mw, &mh);
+   e_ilist_size_min_get(data, &mw, &mh);
    evas_object_geometry_get(data, NULL, NULL, &w, &h);
    if (vw >= mw)
      {

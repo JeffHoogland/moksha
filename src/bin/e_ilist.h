@@ -34,7 +34,7 @@ EAPI int          e_ilist_selector_get          (Evas_Object *obj);
 EAPI void         e_ilist_selector_set          (Evas_Object *obj, int selector);
 EAPI int          e_ilist_multi_select_get      (Evas_Object *obj);
 EAPI void         e_ilist_multi_select_set      (Evas_Object *obj, int multi);
-EAPI void         e_ilist_min_size_get          (Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
+EAPI void         e_ilist_size_min_get          (Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
 EAPI void         e_ilist_unselect              (Evas_Object *obj);
 EAPI void         e_ilist_selected_set          (Evas_Object *obj, int n);
 EAPI int          e_ilist_selected_get          (Evas_Object *obj);

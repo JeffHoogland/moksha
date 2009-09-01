@@ -263,7 +263,7 @@ _cb_object_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    d = evas_object_data_get(obj, "..[winilist]");
    if (!d) return;
-   e_ilist_min_size_get(d->o_ilist, &lw, &lh);
+   e_ilist_size_min_get(d->o_ilist, &lw, &lh);
    if (lh < (120 * e_scale)) lh = 120 * e_scale;
    printf("%i\n", lh);
    e_scrollframe_child_viewport_size_get(d->o_frame, &vw, &vh);
@@ -403,7 +403,7 @@ _refill(Data *d)
    e_ilist_thaw(d->o_ilist);
    
    /* FIXME: figure out optimal size */
-   e_ilist_min_size_get(d->o_ilist, &lw, &lh);
+   e_ilist_size_min_get(d->o_ilist, &lw, &lh);
    if (lh < (120 * e_scale)) lh = 120 * e_scale;
    printf("%i\n", lh);
    e_scrollframe_child_viewport_size_get(d->o_frame, &vw, &vh);
