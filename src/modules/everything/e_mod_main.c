@@ -9,7 +9,7 @@
 
 #include "e_mod_main.h"
 
-#define CONFIG_VERSION 5
+#define CONFIG_VERSION 6
 
 /* actual module specifics */
 static void _e_mod_action_cb(E_Object *obj, const char *params);
@@ -187,6 +187,7 @@ _config_init()
    E_CONFIG_VAL(D, T, hide_list, INT);
    E_CONFIG_VAL(D, T, quick_nav, INT);
    E_CONFIG_VAL(D, T, cmd_terminal, STR);
+   E_CONFIG_VAL(D, T, cmd_sudo, STR);
    E_CONFIG_LIST(D, T, conf_subjects, conf_item_edd);
    E_CONFIG_LIST(D, T, conf_actions, conf_item_edd);
    E_CONFIG_LIST(D, T, conf_objects, conf_item_edd);
@@ -219,6 +220,7 @@ _config_init()
 	evry_conf->conf_objects = NULL;
 	evry_conf->conf_views   = NULL;
 	evry_conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm");
+	evry_conf->cmd_sudo = eina_stringshare_add("/usr/bin/gksudo --preserve-env");
      }
 }
 

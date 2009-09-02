@@ -1,8 +1,10 @@
 #include "e_mod_main.h"
 
-#define HISTORY_VERSION 6
+#define HISTORY_VERSION 7
 
-#define TIME_NOW (1.0 - (evry_hist->begin / ecore_time_get())) / 1000000000000.0
+#define SEVEN_DAYS 604800
+
+#define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
 
 typedef struct _Cleanup_Data Cleanup_Data;
 
@@ -27,11 +29,12 @@ evry_history_init(void)
    hist_item_edd = E_CONFIG_DD_NEW("History_Item", History_Item);
 #define T History_Item
 #define D hist_item_edd
-   E_CONFIG_VAL(D, T, plugin, STR);
-   E_CONFIG_VAL(D, T, context, STR);
-   E_CONFIG_VAL(D, T, input, STR);
+   E_CONFIG_VAL(D, T, plugin,    STR);
+   E_CONFIG_VAL(D, T, context,   STR);
+   E_CONFIG_VAL(D, T, input,     STR);
    E_CONFIG_VAL(D, T, last_used, DOUBLE);
-   E_CONFIG_VAL(D, T, count, INT);
+   E_CONFIG_VAL(D, T, usage,     DOUBLE);
+   E_CONFIG_VAL(D, T, count,     INT);
    E_CONFIG_VAL(D, T, transient, INT);
 #undef T
 #undef D
@@ -44,10 +47,10 @@ evry_history_init(void)
    hist_edd = E_CONFIG_DD_NEW("History", History);
 #define T History
 #define D hist_edd
-   E_CONFIG_VAL(D, T,  version, INT);
+   E_CONFIG_VAL(D, T,  version,  INT);
+   E_CONFIG_VAL(D, T,  begin,    DOUBLE);
    E_CONFIG_HASH(D, T, subjects, hist_entry_edd);
    E_CONFIG_HASH(D, T, actions,  hist_entry_edd);
-   E_CONFIG_VAL(D, T,  begin, DOUBLE);
 #undef T
 #undef D
 }
@@ -83,6 +86,12 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 
    EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
      {
+	if (hi->last_used < d->time - SEVEN_DAYS)
+	  {
+	     hi->count--;
+	     hi->last_used = d->time - SEVEN_DAYS/2;
+	  }
+	
 	/* item is transient or too old */
 	if (!hi->count || hi->transient)
 	  {
@@ -117,7 +126,7 @@ evry_history_free(void)
    if (evry_hist)
      {
 	d = E_NEW(Cleanup_Data, 1);
-	/* d->time = ecore_time_get() - SOME_YEARS; */
+	d->time = ecore_time_get();
 
 	if (evry_hist->subjects)
 	  {
@@ -193,17 +202,14 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
    Evry_Item *it;
    Eina_List *l;
    const char *id;
-
+   
    if (!s) return;
 
    it = s->cur_item;
    if (!it) return;
 
-   if (it->id)
-     id = it->id;
-   else
-     id = it->label;
-
+   id = (it->id ? it->id : it->label);
+   
    he = eina_hash_find(hist, id);
    if (!he)
      {
@@ -212,73 +218,33 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
      }
    else
      {
-	/* found history entry */
 	EINA_LIST_FOREACH(he->items, l, hi)
 	  if (hi->plugin == it->plugin->name) break;
-
-	if (hi)
-	  {
-	     /* found history item */
-	     if (hi->input)
-	       {
-		  if (!s->input || !strncmp (hi->input, s->input, strlen(s->input)))
-		    {
-		       /* s->input matches hi->input and is equal or shorter */
-		       hi->last_used = TIME_NOW;
-		       hi->count++;
-		       hi->transient = it->transient;
-		       if (it->transient)
-			 hi->count++;
-
-		    }
-		  else if (s->input)
-		    {
-		       if (!strncmp (hi->input, s->input, strlen(hi->input)))
-			 {
-			    /* s->input matches hi->input but is longer */
-			    eina_stringshare_del(hi->input);
-			    hi->input = eina_stringshare_add(s->input);
-			 }
-		       else
-			 {
-			    /* s->input is different from hi->input
-			       -> create new item */
-			    hi = NULL;
-			 }
-		    }
-	       }
-	     else
-	       {
-		  /* remember input for item */
-		  hi->count++;
-		  
-		  if (it->transient)
-		    hi->count++;
-
-		  /* hi->last_used /= 2.0; */
-		  hi->last_used = TIME_NOW;
-
-		  if (s->input)
-		    hi->input = eina_stringshare_add(s->input);
-	       }
-	  }
      }
 
    if (!hi)
      {
 	hi = E_NEW(History_Item, 1);
 	hi->plugin = eina_stringshare_ref(it->plugin->name);
-	hi->last_used = TIME_NOW;
-
-	hi->count = 1;
-	if (it->transient)
-	  hi->count++;
-
-	if (s->input)
-	  hi->input = eina_stringshare_add(s->input);
-
 	he->items = eina_list_append(he->items, hi);
      }
+
+   if (hi)
+     {
+	hi->last_used = ecore_time_get();
+	hi->usage /= 4.0;
+	hi->usage += TIME_FACTOR(hi->last_used);
+	hi->transient = it->transient;
+	hi->count += (hi->transient ? 2:1);
+
+	if (s->input)
+	  {
+	     if (hi->input)
+	       eina_stringshare_del(hi->input);
+
+	     hi->input = eina_stringshare_add(s->input);
+	  }
+     }   
 }
 
 int
@@ -286,18 +252,11 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
 {
    History_Entry *he;
    History_Item *hi;
-   const char *id;
    Eina_List *l;
-   int cnt;
-   
-   if (it->id)
-     id = it->id;
-   else
-     id = it->label;
 
-   it->usage = 0;
+   it->usage = 0.0;
    
-   if (!(he = eina_hash_find(hist, id)))
+   if (!(he = eina_hash_find(hist, (it->id ? it->id : it->label))))
      return 0;
    
    EINA_LIST_FOREACH(he->items, l, hi)
@@ -305,28 +264,26 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
 	if (hi->plugin != it->plugin->name)
 	  continue;
 
-	cnt = 0;
-	     
 	if (!input || !hi->input)
 	  {
-	     cnt = hi->count;
+	     it->usage = hi->usage * hi->count;
 	  }
 	else
 	  {
 	     /* higher priority for exact matches */
 	     if (!strncmp(input, hi->input, strlen(input)))
 	       {
-		  cnt += hi->count*2;
+		  it->usage += hi->usage * hi->count;
 	       }
 	     if (!strncmp(input, hi->input, strlen(hi->input)))
 	       {
-		  cnt += hi->count*2;
+		  it->usage += hi->usage * hi->count;
 	       }
 	  }
-	it->usage += (cnt * hi->last_used);
      }
    
-   if (it->usage) return 1;
+   if (it->usage > 0.0)
+     return 1;
 
    return 0;
 }

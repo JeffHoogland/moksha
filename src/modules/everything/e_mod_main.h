@@ -34,6 +34,7 @@ struct _Config
   int quick_nav;
 
   const char *cmd_terminal;
+  const char *cmd_sudo;
 
   /* not saved data */
   Eina_List *plugins;
@@ -51,6 +52,7 @@ struct _History_Item
   const char *context;
   const char *input;
   double last_used;
+  double usage;
   int count;
   int transient;
 };

@@ -1,4 +1,4 @@
-#include "Evry.h"
+#include "e_mod_main.h"
 
 #define TERM_ACTION_CMD "/usr/bin/xterm -hold -e '%s'"
 
@@ -35,6 +35,7 @@ static Evry_Action *act1 = NULL;
 static Evry_Action *act2 = NULL;
 static Evry_Action *act3 = NULL;
 static Evry_Action *act4 = NULL;
+static Evry_Action *act5 = NULL;
 
 static Eina_List *exe_path = NULL;
 static Ecore_Idler *exe_scan_idler = NULL;
@@ -89,7 +90,7 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
    if (!p->added)
      p->added = eina_hash_string_small_new(_hash_free);
    added = p->added;
-   
+
    return plugin;
 }
 
@@ -97,7 +98,7 @@ static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *item)
 {
    PLUGIN(p, plugin);
-   
+
    /* taken from exebuf module */
    char *path, *pp, *last;
    E_Exe_List *el;
@@ -209,7 +210,7 @@ _cleanup_open_with(Evry_Plugin *plugin)
      efreet_desktop_free(desktop);
 }
 
-static int
+static Evry_Item_App *
 _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
 {
    Evry_Item_App *app;
@@ -232,7 +233,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
 		  EVRY_ITEM(app)->plugin = EVRY_PLUGIN(p);
 		  EVRY_PLUGIN_ITEM_APPEND(p, app);
 	       }
-	     return 1;
+	     return app;
 	  }
 
 	len = strlen(file);
@@ -258,7 +259,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
    else
      exe = file;
 
-   if (!exe) return 0;
+   if (!exe) return NULL;
 
    if ((app = eina_hash_find(p->added, exe)) &&
        (!desktop || (desktop == app->desktop)))
@@ -269,7 +270,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
 	     EVRY_ITEM(app)->plugin = EVRY_PLUGIN(p);
 	     EVRY_PLUGIN_ITEM_APPEND(p, app);
 	  }
-	return 1;
+	return app;
      }
 
    if (desktop && !already_refd)
@@ -306,7 +307,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
    EVRY_ITEM(app)->fuzzy_match = match;
    EVRY_PLUGIN_ITEM_APPEND(p, app);
 
-   return 1;
+   return app;
 }
 
 static void
@@ -456,14 +457,32 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (input && len > 2)
      {
 	char *space;
-
+	Evry_Item_App *app;
+	char buf[256];
 	if ((space = strchr(input, ' ')))
 	  len = (space - input);
 
 	EINA_LIST_FOREACH(exe_list, l, file)
 	  {
 	     if (!strncmp(file, input, len))
-	       _item_add(p, NULL, file, 100);
+	       /* && (!space || (strlen(file) == len))) */
+	       {
+		  app = _item_add(p, NULL, file, 100);
+
+		  if (app)
+		    {
+		       eina_stringshare_del(EVRY_ITEM(app)->label);
+		       if (!space)
+			 EVRY_ITEM(app)->label = eina_stringshare_add(file);
+		       else
+			 {
+			    snprintf(buf, sizeof(buf), "%s%s", file, space);
+			    EVRY_ITEM(app)->label = eina_stringshare_add(buf);
+			    eina_stringshare_del(app->file);
+			    app->file = eina_stringshare_add(buf);
+			 }
+		    }
+	       }
 	  }
      }
 
@@ -514,7 +533,6 @@ _exec_app_action(Evry_Action *act)
    return evry_util_exec_app(act->item1, act->item2);
 }
 
-/* TODO config option for terminal and shell! */
 static int
 _exec_term_action(Evry_Action *act)
 {
@@ -524,7 +542,11 @@ _exec_term_action(Evry_Action *act)
    int ret;
 
    tmp = E_NEW(Evry_Item_App, 1);
-   snprintf(buf, sizeof(buf), TERM_ACTION_CMD, app->file);
+   snprintf(buf, sizeof(buf), "%s%s %s",
+	    evry_conf->cmd_terminal,
+	    (strcmp(evry_conf->cmd_terminal, "/usr/bin/xterm") ? "" : " -hold -e"),
+	    app->file);
+
    tmp->file = buf;
    ret = evry_util_exec_app(EVRY_ITEM(tmp), NULL);
 
@@ -545,6 +567,27 @@ _exec_term_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 }
 
 static int
+_exec_sudo_action(Evry_Action *act)
+{
+   ITEM_APP(app, act->item1);
+   Evry_Item_App *tmp;
+   char buf[1024];
+   int ret;
+
+   tmp = E_NEW(Evry_Item_App, 1);
+   snprintf(buf, sizeof(buf), "%s %s",
+	    evry_conf->cmd_sudo,
+	    (app->desktop ? app->desktop->exec : app->file));
+
+   tmp->file = buf;
+   ret = evry_util_exec_app(EVRY_ITEM(tmp), NULL);
+
+   E_FREE(tmp);
+
+   return ret;
+}
+
+static int
 _open_with_action(Evry_Plugin *plugin, const Evry_Item *it)
 {
    PLUGIN(p, plugin);
@@ -554,8 +597,6 @@ _open_with_action(Evry_Plugin *plugin, const Evry_Item *it)
 
    return 0;
 }
-
-
 
 static int
 _edit_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
@@ -678,7 +719,7 @@ _init(void)
 			 "everything-launch",
 			 _exec_app_action, _exec_app_check_item,
 			 NULL, NULL,NULL);
-   
+
    act1 = evry_action_new("Open File...", "APPLICATION", "FILE", "APPLICATION",
 			  "document-open",
 			  _exec_app_action, _exec_app_check_item,
@@ -693,22 +734,23 @@ _init(void)
 			  "everything-launch",
 			  _edit_app_action, _edit_app_check_item,
 			  NULL, NULL, NULL);
-   
+
    act4 = evry_action_new("New Application Entry", "APPLICATION", NULL, NULL,
 			  "everything-launch",
 			  _new_app_action, _new_app_check_item,
 			  NULL, NULL, NULL);
 
-   evry_action_register(act, 0);
+   act5 = evry_action_new("Run with Sudo", "APPLICATION", NULL, NULL,
+			  "system-run",
+			  _exec_sudo_action, NULL, NULL, NULL, NULL);
+
+   evry_action_register(act,  0);
    evry_action_register(act1, 1);
    evry_action_register(act2, 2);
    evry_action_register(act3, 3);
    evry_action_register(act4, 4);
+   evry_action_register(act5, 5);
 
-   
-
-
-   
    /* taken from e_exebuf.c */
    exelist_exe_edd = E_CONFIG_DD_NEW("E_Exe", E_Exe);
 #undef T
@@ -738,6 +780,7 @@ _shutdown(void)
    evry_action_free(act2);
    evry_action_free(act3);
    evry_action_free(act4);
+   evry_action_free(act5);
 
    E_CONFIG_DD_FREE(exelist_edd);
    E_CONFIG_DD_FREE(exelist_exe_edd);
