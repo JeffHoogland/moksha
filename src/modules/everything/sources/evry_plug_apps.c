@@ -465,22 +465,20 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	EINA_LIST_FOREACH(exe_list, l, file)
 	  {
 	     if (!strncmp(file, input, len))
-	       /* && (!space || (strlen(file) == len))) */
 	       {
 		  app = _item_add(p, NULL, file, 100);
 
-		  if (app)
+		  if (!app) continue;
+
+		  eina_stringshare_del(EVRY_ITEM(app)->label);
+		  if (!space)
+		    EVRY_ITEM(app)->label = eina_stringshare_add(file);
+		  else
 		    {
-		       eina_stringshare_del(EVRY_ITEM(app)->label);
-		       if (!space)
-			 EVRY_ITEM(app)->label = eina_stringshare_add(file);
-		       else
-			 {
-			    snprintf(buf, sizeof(buf), "%s%s", file, space);
-			    EVRY_ITEM(app)->label = eina_stringshare_add(buf);
-			    eina_stringshare_del(app->file);
-			    app->file = eina_stringshare_add(buf);
-			 }
+		       snprintf(buf, sizeof(buf), "%s%s", file, space);
+		       EVRY_ITEM(app)->label = eina_stringshare_add(buf);
+		       eina_stringshare_del(app->file);
+		       app->file = eina_stringshare_add(buf);
 		    }
 	       }
 	  }
