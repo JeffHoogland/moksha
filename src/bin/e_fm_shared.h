@@ -123,23 +123,10 @@ _e_volume_edd_new(void)
    Eet_Data_Descriptor *edd;
    Eet_Data_Descriptor_Class eddc;
 
-   eddc.version = EET_DATA_DESCRIPTOR_CLASS_VERSION;
-   eddc.func.mem_alloc = NULL;
-   eddc.func.mem_free = NULL;
-   eddc.func.str_alloc = (char *(*)(const char *)) strdup;
-   eddc.func.str_free = (void (*)(const char *)) free;
-   eddc.func.list_next = (void *(*)(void *)) eina_list_next;
-   eddc.func.list_append = (void *(*)(void *l, void *d)) eina_list_append;
-   eddc.func.list_data = (void *(*)(void *)) eina_list_data_get;
-   eddc.func.hash_foreach =
-     (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))
-     eina_hash_foreach;
-   eddc.func.hash_add = (void* (*) (void *, const char *, void *)) eet_eina_hash_add_alloc;
-   eddc.func.hash_free = (void  (*) (void *)) eina_hash_free;
-   eddc.name = "e_volume";
-   eddc.size = sizeof(E_Volume);
+   if (!eet_eina_stream_data_descriptor_class_set(&eddc, "e_volume", sizeof (E_Volume)))
+     return NULL;
 
-   edd = eet_data_descriptor2_new(&eddc);
+   edd = eet_data_descriptor_stream_new(&eddc);
 #define DAT(x, y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, E_Volume, x, y, z)
    DAT("type", type, EET_T_INT);
    DAT("udi", udi, EET_T_STRING);
@@ -164,23 +151,10 @@ _e_storage_edd_new(void)
    Eet_Data_Descriptor *edd;
    Eet_Data_Descriptor_Class eddc;
 
-   eddc.version = EET_DATA_DESCRIPTOR_CLASS_VERSION;
-   eddc.func.mem_alloc = NULL;
-   eddc.func.mem_free = NULL;
-   eddc.func.str_alloc = (char *(*)(const char *)) strdup;
-   eddc.func.str_free = (void (*)(const char *)) free;
-   eddc.func.list_next = (void *(*)(void *)) eina_list_next;
-   eddc.func.list_append = (void *(*)(void *l, void *d)) eina_list_append;
-   eddc.func.list_data = (void *(*)(void *)) eina_list_data_get;
-   eddc.func.hash_foreach =
-     (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))
-     eina_hash_foreach;
-   eddc.func.hash_add = (void* (*) (void *, const char *, void *)) eet_eina_hash_add_alloc;
-   eddc.func.hash_free = (void  (*) (Eina_Hash *)) eina_hash_free;
-   eddc.name = "e_storage";
-   eddc.size = sizeof(E_Storage);
+   if (!eet_eina_stream_data_descriptor_class_set(&eddc, "e_storage", sizeof (E_Storage)))
+     return NULL;
 
-   edd = eet_data_descriptor2_new(&eddc);
+   edd = eet_data_descriptor_stream_new(&eddc);
 #define DAT(x, y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, E_Storage, x, y, z)
    DAT("type", type, EET_T_INT);
    DAT("udi", udi, EET_T_STRING);
