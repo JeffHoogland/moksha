@@ -306,7 +306,8 @@ evry_item_free(Evry_Item *it)
 
    if (it->label) eina_stringshare_del(it->label);
    if (it->id) eina_stringshare_del(it->id);
-
+   if (it->context) eina_stringshare_del(it->context);
+   
    if (it->free)
      it->free(it);
    else
@@ -1080,7 +1081,7 @@ evry_browse_item(Evry_Selector *sel)
    if (!plugins)
      return 1;
 
-   evry_history_add(sel->history, s); 
+   evry_history_add(sel->history, s, NULL); 
    
    if (s->view)
      {
@@ -1440,9 +1441,9 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
      }
    else return;
 
-   evry_history_add(evry_hist->subjects, s_subject);
-   evry_history_add(evry_hist->actions, s_action);
-   evry_history_add(evry_hist->subjects, s_object);
+   evry_history_add(evry_hist->subjects, s_subject, NULL);
+   evry_history_add(evry_hist->actions, s_action, s_subject->cur_item->context);
+   evry_history_add(evry_hist->subjects, s_object, s_action->cur_item->context);
    
    /* let subject and object plugin know that an action was performed */
    if (s_subject->plugin->action)

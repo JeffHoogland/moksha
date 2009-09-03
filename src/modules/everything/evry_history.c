@@ -195,7 +195,7 @@ evry_history_unload(void)
 }
 
 void
-evry_history_add(Eina_Hash *hist, Evry_State *s)
+evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
 {
    History_Entry *he;
    History_Item  *hi = NULL;
@@ -219,7 +219,9 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
    else
      {
 	EINA_LIST_FOREACH(he->items, l, hi)
-	  if (hi->plugin == it->plugin->name) break;
+	  if ((hi->plugin == it->plugin->name) &&
+	      (ctxt == hi->context))
+	    break;
      }
 
    if (!hi)
@@ -236,7 +238,9 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
 	hi->usage += TIME_FACTOR(hi->last_used);
 	hi->transient = it->transient;
 	hi->count += (hi->transient ? 2:1);
-
+	if (ctxt && !hi->context)
+	  hi->context = eina_stringshare_ref(ctxt);
+	
 	if (s->input)
 	  {
 	     if (hi->input)
@@ -248,7 +252,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s)
 }
 
 int
-evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
+evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt)
 {
    History_Entry *he;
    History_Item *hi;
@@ -266,7 +270,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
 
 	if (!input || !hi->input)
 	  {
-	     it->usage = hi->usage * hi->count;
+	     it->usage += hi->usage * hi->count;
 	  }
 	else
 	  {
@@ -279,6 +283,11 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input)
 	       {
 		  it->usage += hi->usage * hi->count;
 	       }
+	  }
+	if (hi->context && ctxt)
+	  {
+	     if (hi->context == ctxt)
+	       it->usage += hi->usage * hi->count * 2;
 	  }
      }
    

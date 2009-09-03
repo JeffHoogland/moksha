@@ -50,7 +50,8 @@ _item_fill(Evry_Item_File *file)
    if ((mime = efreet_mime_type_get(file->uri)))
      {
 	file->mime = eina_stringshare_add(mime);
-
+	EVRY_ITEM(file)->context = eina_stringshare_ref(file->mime);
+	  
 	if ((!strcmp(mime, "inode/directory")) ||
 	    (!strcmp(mime, "inode/mount-point")))
 	  EVRY_ITEM(file)->browseable = EINA_TRUE;
@@ -202,8 +203,11 @@ _scan_end_func(void *data)
 	p->files = eina_list_append(p->files, file);
 
 	if (item->browseable)
-	  file->mime = eina_stringshare_ref(mime_folder);
-
+	  {
+	     file->mime = eina_stringshare_ref(mime_folder);
+	     EVRY_ITEM(file)->context = eina_stringshare_ref(file->mime);
+	  }
+	
 	if (p->command || cnt >= MAX_ITEMS) continue;
 	cnt += _append_file(p, file);
      }

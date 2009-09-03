@@ -70,6 +70,10 @@ struct _Evry_Item
   const char *label;
   const char *icon;
 
+  /* context provided by item. e.g. to remember which action
+   * was performed on a file with a specific mimetype */
+  const char *context;
+
   /* item can be browsed, e.g. folders */
   Eina_Bool browseable;
 

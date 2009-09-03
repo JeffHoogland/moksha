@@ -140,8 +140,8 @@ void evry_history_init(void);
 void evry_history_free(void);
 void evry_history_load(void);
 void evry_history_unload(void);
-void evry_history_add(Eina_Hash *hist, Evry_State *s);
-EAPI int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input);
+void evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt);
+int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt);
 
 EAPI int  evry_browse_item(Evry_Selector *sel);
 void evry_browse_back(Evry_Selector *sel);

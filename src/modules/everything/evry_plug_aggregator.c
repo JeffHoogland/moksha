@@ -99,13 +99,25 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Evry_State *s;
    Eina_List *l, *ll, *lp;
    Evry_Item *it;
-   int cnt = 0;
+   int i, cnt = 0;
    Eina_List *items = NULL;
-
+   const char *context = NULL;
+   
    EVRY_PLUGIN_ITEMS_FREE(p);
 
    s = p->selector->state;
 
+   for (i = 1; i < 3; i++)
+     {
+	Evry_Item *item;
+	if (p->selector == selectors[i])
+	  {
+	     item = selectors[i-1]->state->cur_item;
+	     context = item->context;
+	  }	
+     }
+   
+   
    /* first is aggregator itself */
    lp = s->cur_plugins->next;
 
@@ -153,7 +165,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
 	EINA_LIST_FOREACH(pp->items, ll, it)
 	  {
-	     if (evry_history_item_usage_set(p->selector->history, it, input) &&
+	     if (evry_history_item_usage_set(p->selector->history, it, input, context) &&
 		 (!eina_list_data_find_list(items, it)))
 	       {
 		  evry_item_ref(it);
