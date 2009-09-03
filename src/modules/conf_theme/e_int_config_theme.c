@@ -187,6 +187,8 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
    if (cfdata->o_fm) e_widget_change(cfdata->o_fm);
 }
 
+#if 0
+/* FIXME unused */
 static void
 _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
 {
@@ -194,6 +196,7 @@ _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
 
    cfdata = data;
 }
+#endif
 
 static void
 _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
@@ -287,10 +290,10 @@ _cb_import(void *data1, void *data2)
      cfdata->win_import = e_int_config_theme_import(cfdata->cfd);
 }
 
+#ifdef HAVE_EXCHANGE
 static void
 _cb_web(void *data1, void *data2)
 {
-#ifdef HAVE_EXCHANGE
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data1;
@@ -298,8 +301,8 @@ _cb_web(void *data1, void *data2)
      e_win_raise(cfdata->dia_web->win);
    else
      cfdata->dia_web = e_int_config_theme_web(cfdata->cfd);
-#endif
 }
+#endif
 
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
@@ -540,7 +543,6 @@ _get_theme_categories_list(void)
     */
    EINA_LIST_FOREACH(e_theme_category_list(), g, c)
      {
-	const char *result;
 	int res;
 
 	if (!c) continue;

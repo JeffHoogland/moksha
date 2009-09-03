@@ -189,7 +189,7 @@ _opinfo_op_registry_abort_cb(void *data, Evas_Object *obj, const char *emission,
 {
    int id;
    
-   id = (int)data;
+   id = (long)data;
    if (!id) return;
    
    e_fm2_operation_abort(id);
@@ -221,7 +221,7 @@ _opinfo_op_registry_detailed_cb(void *data, Evas_Object *obj, const char *emissi
 static void 
 _opinfo_op_registry_window_jump_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
-   int id = (int)data;
+   int id = (long)data;
    E_Fm2_Op_Registry_Entry *ere;
    E_Win *win;
    
@@ -257,7 +257,6 @@ _opinfo_op_registry_entry_add_cb(void *data, int type, void *event)
    E_Fm2_Op_Registry_Entry *ere = event;
    Instance *inst = data;
    Evas_Object *o;
-   int mw, mh, xh;
    
    if (!inst || !ere)
       return ECORE_CALLBACK_RENEW;
@@ -277,13 +276,13 @@ _opinfo_op_registry_entry_add_cb(void *data, int type, void *event)
    _opinfo_op_registry_summary_cb(inst, o, NULL, NULL);
    
    edje_object_signal_callback_add(o, "e,fm,operation,abort", "",
-                                   _opinfo_op_registry_abort_cb, (void*)ere->id);
+                                   _opinfo_op_registry_abort_cb, (void*)(long)ere->id);
    edje_object_signal_callback_add(o, "state,request,summary", "fileman_opinfo",
                                    _opinfo_op_registry_summary_cb, inst);
    edje_object_signal_callback_add(o, "state,request,detailed", "fileman_opinfo",
                                    _opinfo_op_registry_detailed_cb, inst);
    edje_object_signal_callback_add(o, "e,fm,window,jump", "",
-                                   _opinfo_op_registry_window_jump_cb, (void*)ere->id);
+                                   _opinfo_op_registry_window_jump_cb, (void*)(long)ere->id);
    
    e_fm2_op_registry_entry_listener_add(ere, _opinfo_op_registry_listener,
                                         o, _opinfo_op_registry_free_data);

@@ -7,7 +7,7 @@
 #ifndef E_INT_CONFIG_WALLPAPER_H
 #define E_INT_CONFIG_WALLPAPER_H
 
-void wp_conf_show(E_Container *con, const char *params);
+E_Config_Dialog *wp_conf_show(E_Container *con, const char *params);
 void wp_conf_hide(void);
 
 #endif

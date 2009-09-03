@@ -77,7 +77,7 @@ E_Gadcon_Client *gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer
 void             gadman_gadget_del(E_Gadcon_Client *gcc);
 E_Gadcon_Client *gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone);
 void             gadman_gadget_edit_start(E_Gadcon_Client *gcc);
-void             gadman_gadget_edit_end(void);
+void             gadman_gadget_edit_end(void *data, Evas_Object *obj, const char *emission, const char *source);
 void             gadman_gadgets_toggle(void);
 void             gadman_update_bg(void);
 E_Gadcon        *gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer);

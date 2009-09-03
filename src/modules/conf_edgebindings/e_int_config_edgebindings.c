@@ -1287,6 +1287,8 @@ _edge_binding_text_get(E_Zone_Edge edge, float delay, int mod)
 	   case E_ZONE_EDGE_BOTTOM_LEFT:
 	      strcat(b, "Bottom Left Edge");
 	      break;
+	   default:
+	      break;
 	  }
      }
 

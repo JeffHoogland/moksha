@@ -66,7 +66,7 @@ e_configure_show(E_Container *con)
    E_Configure *eco;
    E_Manager *man;
    Evas_Coord ew, eh, mw, mh;
-   Evas_Object *o, *of;
+   Evas_Object *o;
    Evas_Modifier_Mask mask;
    Eina_Bool kg;
 

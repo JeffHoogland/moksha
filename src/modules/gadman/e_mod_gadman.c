@@ -303,7 +303,7 @@ gadman_gadget_edit_start(E_Gadcon_Client *gcc)
 }
 
 void
-gadman_gadget_edit_end(void)
+gadman_gadget_edit_end(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    unsigned int layer;
 
@@ -1053,7 +1053,7 @@ on_frame_click(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    gcc = data;
 
-   if (gcc->gadcon->editing) gadman_gadget_edit_end();
+   if (gcc->gadcon->editing) gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
 
    current = gcc;
 

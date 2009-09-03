@@ -409,7 +409,6 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 {
    int wx = 0, wy = 0, ww = 0, wh = 0;
    int wx2 = 0, wy2 = 0, ww2 = 0, wh2 = 0;
-   int center = 0;
    int isdialog = 0;
    int pbx, pby, pbw, pbh;
    

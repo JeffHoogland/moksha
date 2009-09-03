@@ -136,7 +136,7 @@ _e_smart_reconfigure_do(void *data)
    Item *it;
    int iw, redo = 0, changed = 0;
    static int recursion = 0;
-   Evas_Coord x, y, xx, yy, ww, hh, cw, ch, mw, mh, ox, oy, dd;
+   Evas_Coord x, y, xx, yy, ww, hh, mw, mh, ox, oy, dd;
 
    if (!sd) return 0;
    if (sd->cx > (sd->cw - sd->w)) sd->cx = sd->cw - sd->w;
@@ -235,7 +235,7 @@ _e_smart_reconfigure_do(void *data)
  */
             )
           {
-             double a, d, di;
+             double a, d;
              int sum = 0;
              char *p;
              
@@ -249,7 +249,7 @@ _e_smart_reconfigure_do(void *data)
                   if (dy < 0)
                     a = -atan(-(double)dy / (double)dx);
                   // +--
-                  // |\
+                  /* |\ */
                   else
                     a = atan((double)dy / (double)dx);
                }
@@ -484,35 +484,35 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 static void
 _e_smart_show(Evas_Object *obj)
 {
-   Smart_Data *sd = evas_object_smart_data_get(obj);
+//   Smart_Data *sd = evas_object_smart_data_get(obj);
 //   evas_object_show(sd->child_obj);
 }
 
 static void
 _e_smart_hide(Evas_Object *obj)
 {
-   Smart_Data *sd = evas_object_smart_data_get(obj);
+//   Smart_Data *sd = evas_object_smart_data_get(obj);
 //   evas_object_hide(sd->child_obj);
 }
 
 static void
 _e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 {
-   Smart_Data *sd = evas_object_smart_data_get(obj);
+//   Smart_Data *sd = evas_object_smart_data_get(obj);
 //   evas_object_color_set(sd->child_obj, r, g, b, a);
 }
 
 static void
 _e_smart_clip_set(Evas_Object *obj, Evas_Object * clip)
 {
-   Smart_Data *sd = evas_object_smart_data_get(obj);
+//   Smart_Data *sd = evas_object_smart_data_get(obj);
 //   evas_object_clip_set(sd->child_obj, clip);
 }
 
 static void
 _e_smart_clip_unset(Evas_Object *obj)
 {
-   Smart_Data *sd = evas_object_smart_data_get(obj);
+//   Smart_Data *sd = evas_object_smart_data_get(obj);
 //   evas_object_clip_unset(sd->child_obj);
 }
 
@@ -632,7 +632,7 @@ _sel_timer(void *data)
 static void
 _pan_unhilight(Evas_Object *obj, Item *it)
 {
-   Smart_Data *sd = evas_object_smart_data_get(obj);
+//   Smart_Data *sd = evas_object_smart_data_get(obj);
    if (!it->hilighted) return;
    it->hilighted = 0;
    if (it->frame)
@@ -739,7 +739,7 @@ _pan_sel_up(Evas_Object *obj)
 static int
 _sort_cb(const void *d1, const void *d2)
 {
-   Item *it1 = d1, *it2 = d2;
+   const Item *it1 = d1, *it2 = d2;
    if ((!it1->sort_id) || (!it2->sort_id)) return 0;
    return strcmp(it1->sort_id, it2->sort_id);
 }
@@ -750,7 +750,6 @@ _item_sort(Item *it)
    Evas_Object *obj = it->obj;
    Smart_Data *sd = evas_object_smart_data_get(obj);
    int num, dosort = 0;
-   Eina_List *l;
    
    sd->id_num++;
    sd->info->scans--;
@@ -819,8 +818,8 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
 static void         
 _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   Evas_Event_Mouse_Down *ev = event_info;
-   Item *it = data;
+//   Evas_Event_Mouse_Down *ev = event_info;
+//   Item *it = data;
 //   _pan_sel(it->obj, it);
 }
     
@@ -1031,7 +1030,7 @@ static int
 _idler(void *data)
 {
    struct dirent *dp;
-   char buf[PATH_MAX], *p;
+   char buf[PATH_MAX];
    Info *info = data;
    
    if (!info->dir)
@@ -1288,7 +1287,7 @@ wp_broser_free(Info *info)
    info = NULL;
 }
 
-void
+E_Config_Dialog *
 wp_conf_show(E_Container *con, const char *params __UNUSED__)
 {
    if (global_info)
@@ -1297,6 +1296,8 @@ wp_conf_show(E_Container *con, const char *params __UNUSED__)
         e_win_raise(global_info->win);
      }
    global_info = wp_browser_new(con);
+
+   return NULL;
 }
 
 void

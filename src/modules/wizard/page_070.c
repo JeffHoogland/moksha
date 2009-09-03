@@ -83,6 +83,8 @@ static App apps[] =
    // loaded and parsed to make it easier to add more in some dir somewhere
 };
 
+/* FIXME unused*/
+#if 0
 static int
 _cb_sort_desks(Efreet_Desktop *d1, Efreet_Desktop *d2)
 {
@@ -90,6 +92,7 @@ _cb_sort_desks(Efreet_Desktop *d1, Efreet_Desktop *d2)
    if (!d2->name) return -1;
    return strcmp(d1->name, d2->name);
 }
+#endif
 
 static void
 _app_write(App *a)

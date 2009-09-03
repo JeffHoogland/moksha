@@ -6,7 +6,7 @@ static int         _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data 
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int         _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void        _cb_disable_check(void *data, Evas_Object *obj);
+//static void        _cb_disable_check(void *data, Evas_Object *obj);
 static void        _cb_enable_check(void *data, Evas_Object *obj);
 static void        _cb_disable_check_list(void *data, Evas_Object *obj);
 
@@ -321,12 +321,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
  * @param data A Evas_Object to chain together with the checkbox
  * @param obj A Evas_Object checkbox created with e_widget_check_add()
  */
+#if 0
+/* FIXME unused */
 static void
 _cb_disable_check(void *data, Evas_Object *obj)
 {
    e_widget_disabled_set((Evas_Object *) data, 
                          !e_widget_check_checked_get(obj));
 }
+#endif
 
 /*!
  * If the check is disabled then enable the chained object.

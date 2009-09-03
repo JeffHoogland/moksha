@@ -18,7 +18,6 @@ static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 static char *_gc_label(E_Gadcon_Client_Class *client_class);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
-static void _gc_id_del(E_Gadcon_Client_Class *client_class, const char *id);
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {

@@ -24,11 +24,10 @@ static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static void _cb_disable_check(void *data, Evas_Object *obj);
 static void _cb_disable_check_list(void *data, Evas_Object *obj);
-
 static void _cb_zone_policy_change(void *data, Evas_Object *obj);
-
+// unused
+//static void _cb_disable_check(void *data, Evas_Object *obj);
 void 
 _config_ibox_module(Config_Item *ci)
 {
@@ -223,13 +222,14 @@ _cb_zone_policy_change(void *data, Evas_Object *obj)
  * @param data A Evas_Object to chain together with the checkbox
  * @param obj A Evas_Object checkbox created with e_widget_check_add()
  */
+#if 0
 static void
 _cb_disable_check(void *data, Evas_Object *obj)
 {
    e_widget_disabled_set((Evas_Object *) data, 
                          !e_widget_check_checked_get(obj));
 }
-
+#endif
 /*!
  * @param data A Eina_List of Evas_Object to chain widgets together with the checkbox
  * @param obj A Evas_Object checkbox created with e_widget_check_add()

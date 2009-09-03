@@ -2290,7 +2290,7 @@ _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event)
 
    // add abort button callback with id of operation in registry
    edje_object_signal_callback_add(o, "e,fm,operation,abort", "", 
-                                   _e_fwin_op_registry_abort_cb, (void*)ere->id);
+                                   _e_fwin_op_registry_abort_cb, (void*)(long)ere->id);
    
    //Listen to progress changes
    e_fm2_op_registry_entry_listener_add(ere, _e_fwin_op_registry_listener_cb,
@@ -2316,7 +2316,7 @@ _e_fwin_op_registry_abort_cb(void *data, Evas_Object *obj, const char *emission,
 {
    int id;
    
-   id = (int)data;
+   id = (long)data;
    if (!id) return;
    
    e_fm2_operation_abort(id);

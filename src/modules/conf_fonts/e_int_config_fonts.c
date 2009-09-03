@@ -315,7 +315,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Font_Size_Data *size_data;
    CFText_Class *tc;
-   Eina_List *l;
 
    e_font_available_hash_free(cfdata->font_hash);
    cfdata->font_list =eina_list_free(cfdata->font_list);

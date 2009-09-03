@@ -70,7 +70,6 @@ EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
    Evas_Object *o, *of, *ob;
-   Eina_List *l;
    char *file;
    int sel = -1;
    int i = 0;

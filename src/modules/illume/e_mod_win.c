@@ -1011,7 +1011,7 @@ _apps_fm_config(Evas_Object *o)
 static void
 _apps_populate(void)
 {
-   Evas_Coord mw, mh, sfw, sfh;
+   Evas_Coord sfw, sfh;
    Evas_Object *o = NULL;
    char buf[PATH_MAX];
    int num = 0;

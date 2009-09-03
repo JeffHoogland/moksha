@@ -281,7 +281,6 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
-   Eina_List *l, *ll;
    Resolution *r;
 
    if (cfdata->surebox)

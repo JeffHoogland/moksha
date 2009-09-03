@@ -21,7 +21,6 @@ wizard_page_init(E_Wizard_Page *pg)
 {
    Eina_List *desks = NULL;
    Efreet_Desktop *desk;
-   int i;
    
    efreet_util_init();
                   
@@ -29,8 +28,6 @@ wizard_page_init(E_Wizard_Page *pg)
    desks = eina_list_sort(desks, 0, (Eina_Compare_Cb)_cb_sort_desks);
    EINA_LIST_FREE(desks, desk)
           {
-             char dbuf[4096];
-
              if (!desk->exec) continue;
              efreet_desktop_ref(desk);
              desktops = eina_list_append(desktops, desk);

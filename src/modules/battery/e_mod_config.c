@@ -127,7 +127,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *ob, *of, *otb;
+   Evas_Object *o, *ob, *otb;
    E_Radio_Group *rg;
 
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);

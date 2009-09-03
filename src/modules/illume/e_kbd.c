@@ -764,12 +764,11 @@ _e_kbd_dbus_cb_dev_add(void *data, DBusMessage *msg)
 {
    DBusError err;
    char *udi;
-   int ret;
         
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
    udi = strdup(udi);
-   ret = e_hal_device_query_capability(_e_kbd_dbus_conn, udi, "input.keyboard",
+   e_hal_device_query_capability(_e_kbd_dbus_conn, udi, "input.keyboard",
                                        _e_kbd_dbus_cb_input_keyboard_is, 
 				       strdup(udi));
 }

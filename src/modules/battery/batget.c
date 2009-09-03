@@ -411,9 +411,12 @@ darwin_check(void)
 /***---***/
 /* new linux power class api to get power info - brand new and this code
  * may have bugs, but it is a good attempt to get it right */
+#if 0
 static int linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd_handler);
-static void linux_sys_class_power_supply_init(void);
 static void linux_sys_class_power_supply_check(void);
+#endif
+static void linux_sys_class_power_supply_init(void);
+
 typedef struct _Sys_Class_Power_Supply_Uevent Sys_Class_Power_Supply_Uevent;
 
 #define BASIS_CHARGE  1
@@ -437,6 +440,8 @@ struct _Sys_Class_Power_Supply_Uevent
 };
 
 static Eina_List *events = NULL;
+
+#if 0
 static Ecore_Timer *sys_class_delay_check = NULL;
 
 static int
@@ -517,7 +522,7 @@ linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd
      }
    return 1;
 }
-
+#endif
 static void
 linux_sys_class_power_supply_sysev_init(Sys_Class_Power_Supply_Uevent *sysev)
 {
@@ -645,7 +650,7 @@ linux_sys_class_power_supply_init(void)
      {
 	Eina_List *bats;
 	char *name;
-	char buf[4096];
+//	char buf[4096];
 	
 	bats = ecore_file_ls("/sys/class/power_supply/");
 	if (bats)

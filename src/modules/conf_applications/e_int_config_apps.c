@@ -27,7 +27,7 @@ static Eina_List *_load_menu(const char *path);
 static Eina_List *_load_order(const char *path);
 static void _fill_apps(E_Config_Dialog_Data *cfdata);
 static void _fill_list(E_Config_Dialog_Data *cfdata);
-static int _cb_sort_desks(Efreet_Desktop *d1, Efreet_Desktop *d2);
+static int _cb_sort_desks(const void *d1, const void *d2);
 static void _all_list_cb_change(void *data, Evas_Object *obj);
 static void _sel_list_cb_change(void *data, Evas_Object *obj);
 static void _all_list_cb_selected(void *data);
@@ -418,8 +418,11 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_cb_sort_desks(Efreet_Desktop *d1, Efreet_Desktop *d2) 
+_cb_sort_desks(const void *data1, const void *data2) 
 {
+   const Efreet_Desktop *d1 = data1;
+   const Efreet_Desktop *d2 = data2;
+   
    if (!d1->name) return 1;
    if (!d2->name) return -1;
    return strcmp(d1->name, d2->name);

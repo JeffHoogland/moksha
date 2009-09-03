@@ -7,7 +7,6 @@ static Evas_Object *_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_D
 static void _ilist_fill(E_Config_Dialog_Data *cfdata);
 static void _ilist_cb_selected(void *data);
 static void _cb_add(void *data, void *data2);
-static void _cb_select(void *data, void *data2);
 static void _cb_delete(void *data, void *data2);
 static void _cb_reset(void *data, void *data2);
 static void _cb_dialog_yes(void *data);

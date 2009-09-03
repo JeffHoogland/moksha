@@ -293,7 +293,7 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	       {
 		  int frequency;
 		  
-		  frequency = (int)l->data;
+		  frequency = (long)l->data;
 		  mi = e_menu_item_new(mn);
 		  if (frequency < 1000000)
 		    snprintf(buf, sizeof(buf), _("%i MHz"), frequency / 1000);
@@ -502,8 +502,8 @@ _cpufreq_cb_sort(const void *item1, const void *item2)
 {
    int a, b;
 
-   a = (int)item1;
-   b = (int)item2;
+   a = (long)item1;
+   b = (long)item2;
    if (a < b) return -1;
    else if (a > b) return 1;
    return 0;
@@ -579,7 +579,7 @@ _cpufreq_status_check_available(Status *s)
 	     if (atoi(freq) != 0) 
 	       {
 		  s->frequencies = eina_list_append(s->frequencies,	
-						    (void *) atoi(freq));
+						    (void *) (long)atoi(freq));
 	       }
 	     freq = strtok(NULL, " ");
 	  }
@@ -719,7 +719,7 @@ _cpufreq_face_update_available(Instance *inst)
    frequency_msg = malloc(sizeof(Edje_Message_Int_Set) + (count - 1) * sizeof(int));
    frequency_msg->count = count;
    for (l = cpufreq_config->status->frequencies, i = 0; l; l = l->next, i++) 
-     frequency_msg->val[i] = (int)l->data;
+     frequency_msg->val[i] = (long)l->data;
    edje_object_message_send(inst->o_cpu, EDJE_MESSAGE_INT_SET, 1, frequency_msg);
    free(frequency_msg);
 
@@ -764,16 +764,16 @@ _cpufreq_face_cb_set_frequency(void *data, Evas_Object *obj, const char *emissio
 
    for (l = cpufreq_config->status->frequencies; l; l = l->next)
      {
-	if (cpufreq_config->status->cur_frequency == (int)l->data)
+	if (cpufreq_config->status->cur_frequency == (long)l->data)
 	  {
 	     if (!strcmp(emission, "e,action,frequency,increase"))
 	       {
-		  if (l->next) next_frequency = (int)l->next->data;
+		  if (l->next) next_frequency = (long)l->next->data;
 		  break;
 	       }
 	     else if (!strcmp(emission, "e,action,frequency,decrease"))
 	       {
-		  if (l->prev) next_frequency = (int)l->prev->data;
+		  if (l->prev) next_frequency = (long)l->prev->data;
 		  break;
 	       }
 	     else
@@ -963,7 +963,7 @@ _cpufreq_menu_frequency(void * data, E_Menu *m, E_Menu_Item *mi)
 {
    int frequency;
    
-   frequency = (int)data;
+   frequency = (long)data;
    if (frequency > 0) _cpufreq_set_frequency(frequency);
 }
 

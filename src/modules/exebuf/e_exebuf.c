@@ -826,6 +826,8 @@ _e_exebuf_backspace(void)
      }
 }
 
+/* unused */
+#if 0
 static void
 _e_exebuf_delete(void)
 {
@@ -923,6 +925,7 @@ _e_exebuf_delete(void)
 	  }
      }
 }
+#endif
 
 static void
 _e_exebuf_clear(void)

@@ -275,9 +275,9 @@ _grab_wnd_show(void *data1, void *data2)
    man = e_manager_current_get();
 
    cfdata->grab.btn = 0;
-   if ((int)data1 == BUTTON_DRAG)
+   if ((long)data1 == BUTTON_DRAG)
      cfdata->grab.btn = 1;
-   else if ((int)data1 == BUTTON_NOPLACE)
+   else if ((long)data1 == BUTTON_NOPLACE)
      cfdata->grab.btn = 2;
 
    cfdata->grab.dia = e_dialog_new(e_container_current_get(man), "Pager",
