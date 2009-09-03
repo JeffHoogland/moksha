@@ -7,15 +7,8 @@
 #ifndef E_MOVERESIZE_H
 #define E_MOVERESIZE_H
 
-EAPI void e_resize_begin(E_Zone *zone, int w, int h);
-EAPI void e_resize_end(void);
-EAPI void e_resize_update(int w, int h);
-
-EAPI void e_move_begin(E_Zone *zone, int x, int y);
-EAPI void e_move_end(void);
-EAPI void e_move_update(int x, int y);
-
-EAPI void e_move_resize_object_coords_set(int x, int y, int w, int h);
+EAPI int e_moveresize_init(void);
+EAPI int e_moveresize_shutdown(void);
 
 #endif
 #endif

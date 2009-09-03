@@ -245,8 +245,10 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    if (bd->client.argb)
      bd->win = ecore_x_window_manager_argb_new(con->win, 0, 0, bd->w, bd->h);
    else
-     bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
-   ecore_x_window_shape_events_select(bd->win, 1);
+     {
+	bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
+	ecore_x_window_shape_events_select(bd->win, 1);
+     }
    e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    e_focus_setup(bd);
@@ -281,14 +283,34 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 	return NULL;
      }
 
+   /* printf("##- ON MAP CLIENT 0x%x SIZE %ix%i %i:%i\n",
+    * 	  bd->client.win, bd->client.w, bd->client.h, att->x, att->y); */
+
+   /* FIXME: if first_map is 1 then we should ignore the first hide event
+    * or ensure the window is alreayd hidden and events flushed before we
+    * create a border for it */
+   if (first_map)
+     {
+	// printf("##- FIRST MAP\n");
+	bd->x = att->x;
+	bd->y = att->y;
+	bd->changes.pos = 1;
+	bd->re_manage = 1;
+	// needed to be 1 for internal windw and on restart.        
+	// bd->ignore_first_unmap = 2;
+     }
+   
+   bd->client.win = win;
+   bd->zone = e_zone_current_get(con);
+   
+   _e_border_hook_call(E_BORDER_HOOK_NEW_BORDER, bd);   
+
    bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_border_cb_mouse_in, bd));
    bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_border_cb_mouse_out, bd));
    bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_border_cb_mouse_down, bd));
    bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, _e_border_cb_mouse_up, bd));
    bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _e_border_cb_mouse_move, bd));
    bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL, _e_border_cb_mouse_wheel, bd));
-
-   bd->client.win = win;
 
    bd->client.icccm.title = NULL;
    bd->client.icccm.name = NULL;
@@ -454,23 +476,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    bd->changes.icon = 1;
    bd->changes.size = 1;
    bd->changes.shape = 1;
-
-//   printf("##- ON MAP CLIENT 0x%x SIZE %ix%i\n",
-//	  bd->client.win, bd->client.w, bd->client.h);
-
-   /* FIXME: if first_map is 1 then we should ignore the first hide event
-    * or ensure the window is alreayd hidden and events flushed before we
-    * create a border for it */
-   if (first_map)
-     {
-//	printf("##- FIRST MAP\n");
-	bd->x = att->x;
-	bd->y = att->y;
-	bd->changes.pos = 1;
-	bd->re_manage = 1;
-// needed to be 1 for internal windw and on restart.        
-//	bd->ignore_first_unmap = 2;
-     }
 
    /* just to friggin make java happy - we're DELAYING the reparent until
     * eval time...
@@ -683,6 +688,7 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    bd->desk = desk;
    e_border_zone_set(bd, desk->zone);
 
+   _e_border_hook_call(E_BORDER_HOOK_SET_DESK, bd);
    e_hints_window_desktop_set(bd);
 
    ev = calloc(1, sizeof(E_Event_Border_Desk_Set));
@@ -7920,8 +7926,6 @@ _e_border_zone_update(E_Border *bd)
 static int
 _e_border_resize_begin(E_Border *bd)
 {
-   int w, h;
-
    if (!bd->lock_user_stacking)
      {
 	if (e_config->border_raise_on_mouse_action)
@@ -7932,29 +7936,6 @@ _e_border_resize_begin(E_Border *bd)
        (bd->fullscreen) || (bd->lock_user_size))
      return 0;
 
-   if ((bd->client.icccm.base_w >= 0) &&
-       (bd->client.icccm.base_h >= 0))
-     {
-	if (bd->client.icccm.step_w > 0)
-	  w = (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w;
-	else
-	  w = bd->client.w;
-	if (bd->client.icccm.step_h > 0)
-	  h = (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h;
-	else
-	  h = bd->client.h;
-     }
-   else
-     {
-	if (bd->client.icccm.step_w > 0)
-	  w = (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w;
-	else
-	  w = bd->client.w;
-	if (bd->client.icccm.step_h > 0)
-	  h = (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h;
-	else
-	  h = bd->client.h;
-     }
    if (grabbed)
      e_grabinput_get(bd->win, 0, bd->win);
    if (bd->client.netwm.sync.request)
@@ -7964,11 +7945,9 @@ _e_border_resize_begin(E_Border *bd)
 	bd->client.netwm.sync.wait = 0;
 	bd->client.netwm.sync.send_time = ecore_loop_time_get();
      }
-   if (e_config->resize_info_follows)
-     e_move_resize_object_coords_set(bd->x + bd->fx.x, bd->y + bd->fx.y, bd->w, bd->h); 
-   else
-     e_move_resize_object_coords_set(bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
-   e_resize_begin(bd->zone, w, h);
+
+   _e_border_hook_call(E_BORDER_HOOK_RESIZE_BEGIN, bd); 
+   
    resize = bd;
    return 1;
 }
@@ -7984,7 +7963,8 @@ _e_border_resize_end(E_Border *bd)
 	ecore_x_sync_alarm_free(bd->client.netwm.sync.alarm);
 	bd->client.netwm.sync.alarm = 0;
      }
-   e_resize_end();
+   _e_border_hook_call(E_BORDER_HOOK_RESIZE_END, bd); 
+   
    resize = NULL;
    
    /* If this border was maximized, we need to unset Maximized state or
@@ -7998,36 +7978,7 @@ _e_border_resize_end(E_Border *bd)
 static void
 _e_border_resize_update(E_Border *bd)
 {
-   int w, h;
-
-   if ((bd->client.icccm.base_w >= 0) &&
-       (bd->client.icccm.base_h >= 0))
-     {
-	if (bd->client.icccm.step_w > 0)
-	  w = (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w;
-	else
-	  w = bd->client.w;
-	if (bd->client.icccm.step_h > 0)
-	  h = (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h;
-	else
-	  h = bd->client.h;
-     }
-   else
-     {
-	if (bd->client.icccm.step_w > 0)
-	  w = (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w;
-	else
-	  w = bd->client.w;
-	if (bd->client.icccm.step_h > 0)
-	  h = (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h;
-	else
-	  h = bd->client.h;
-     }
-   if (e_config->resize_info_follows)
-     e_move_resize_object_coords_set(bd->x + bd->fx.x, bd->y + bd->fx.y, bd->w, bd->h);
-   else
-     e_move_resize_object_coords_set(bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
-   e_resize_update(w, h);
+   _e_border_hook_call(E_BORDER_HOOK_RESIZE_UPDATE, bd);
 }
 
 static int
@@ -8053,11 +8004,8 @@ _e_border_move_begin(E_Border *bd)
 	bd->client.netwm.sync.time = ecore_loop_time_get();
      }
 #endif
-   if (e_config->move_info_follows)
-     e_move_resize_object_coords_set(bd->x + bd->fx.x, bd->y + bd->fx.y, bd->w, bd->h); 
-   else
-     e_move_resize_object_coords_set(bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
-   e_move_begin(bd->zone, bd->x, bd->y);
+   _e_border_hook_call(E_BORDER_HOOK_MOVE_BEGIN, bd);
+   
    move = bd;
    return 1;
 }
@@ -8075,7 +8023,8 @@ _e_border_move_end(E_Border *bd)
 	bd->client.netwm.sync.alarm = 0;
      }
 #endif
-   e_move_end();
+   _e_border_hook_call(E_BORDER_HOOK_MOVE_END, bd);
+   
    move = NULL;
    return 1;
 }
@@ -8083,11 +8032,7 @@ _e_border_move_end(E_Border *bd)
 static void
 _e_border_move_update(E_Border *bd)
 {
-   if (e_config->move_info_follows)
-     e_move_resize_object_coords_set(bd->x + bd->fx.x, bd->y + bd->fx.y, bd->w, bd->h); 
-   else
-     e_move_resize_object_coords_set(bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
-   e_move_update(bd->x, bd->y);
+   _e_border_hook_call(E_BORDER_HOOK_MOVE_UPDATE, bd);
 }
 
 static int

@@ -650,6 +650,11 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_intl_post_shutdown);
 
+   TS("move/resize info");
+   /* init move resize popup */
+   e_moveresize_init();
+   _e_main_shutdown_push(e_moveresize_shutdown);
+   
    TS("splash");
    if (!((!e_config->show_splash) || (after_restart)))
      {
