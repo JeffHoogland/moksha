@@ -674,7 +674,5 @@ extern EAPI int E_EVENT_BORDER_FOCUS_IN;
 extern EAPI int E_EVENT_BORDER_FOCUS_OUT;
 extern EAPI int E_EVENT_BORDER_PROPERTY;
 
-extern EAPI Ecore_X_Atom ECOMORPH_ATOM_MANAGED;
-
 #endif
 #endif
