@@ -50,8 +50,6 @@ e_module_shutdown(void)
      {
 	m = _e_modules->data;
 	
-	printf("module shutdown %s\n", m->name);
-	
 	if (m && m->enabled && !m->error)
 	  {
 	     m->func.save(m);
