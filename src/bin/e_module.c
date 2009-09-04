@@ -37,7 +37,6 @@ EAPI int
 e_module_shutdown(void)
 {
    E_Module *m;
-   Eina_List *l;
    
 #ifdef HAVE_VALGRIND
    /* do a leak check now before we dlclose() all those plugins, cause
@@ -46,13 +45,13 @@ e_module_shutdown(void)
    VALGRIND_DO_LEAK_CHECK
 #endif
 
-   // whats was this for? modules should not depend on each others load order
-   // _e_modules = eina_list_reverse(_e_modules); 
-   
-   /* FIXME there seems to be a module that modifies _e_modules here
-    * dont use EINA_LIST_FREE until solved! */
-   EINA_LIST_FOREACH(_e_modules, l, m)
+   /* do not use EINA_LIST_FREE! e_object_del modifies list */
+   while (_e_modules)
      {
+	m = _e_modules->data;
+	
+	printf("module shutdown %s\n", m->name);
+	
 	if (m && m->enabled && !m->error)
 	  {
 	     m->func.save(m);
@@ -62,10 +61,6 @@ e_module_shutdown(void)
 	e_object_del(E_OBJECT(m));
      }
 
-   if (_e_modules)
-     eina_list_free(_e_modules);
-   _e_modules = NULL;
-     
    return 1;
 }
 
