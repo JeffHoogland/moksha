@@ -53,8 +53,6 @@ e_module_shutdown(void)
     * dont use EINA_LIST_FREE until solved! */
    EINA_LIST_FOREACH(_e_modules, l, m)
      {
-	printf("shutdown module: %s\n", m->name);
-	
 	if (m && m->enabled && !m->error)
 	  {
 	     m->func.save(m);
