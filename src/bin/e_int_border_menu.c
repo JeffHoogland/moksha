@@ -143,7 +143,8 @@ e_int_border_menu_create(E_Border *bd)
 	  (bd->client.icccm.min_h == bd->client.icccm.max_h)) ||
 	 (bd->lock_user_maximize)))
      {
-	if ((!bd->lock_user_maximize) && (!bd->shaded) && (!bd->fullscreen))
+	if ((!bd->lock_user_maximize) && (!bd->shaded) && (!bd->fullscreen) && 
+            (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL))
 	  {
 	     separator = 0;
 	     mi = e_menu_item_new(m);
@@ -158,7 +159,8 @@ e_int_border_menu_create(E_Border *bd)
 
    if (!bd->internal)
      {
-	if ((!bd->lock_user_iconify) && (!bd->fullscreen))
+	if ((!bd->lock_user_iconify) && (!bd->fullscreen) && 
+            (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL))
 	  {
 	     separator = 0;
 	     mi = e_menu_item_new(m);
@@ -1032,7 +1034,8 @@ _e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 				  "e/widgets/border/default/stick");
      }
 
-   if ((!bd->lock_user_fullscreen) && (!bd->shaded))
+   if ((!bd->lock_user_fullscreen) && (!bd->shaded) && 
+       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL))
      {
 	submi = e_menu_item_new(subm);
 	e_menu_item_label_set(submi, _("Fullscreen"));
