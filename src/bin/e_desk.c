@@ -9,11 +9,11 @@
  */
 
 static void _e_desk_free(E_Desk *desk);
-static void _e_border_event_desk_show_free(void *data, void *ev);
-static void _e_border_event_desk_before_show_free(void *data, void *ev);
-static void _e_border_event_desk_after_show_free(void *data, void *ev);
-static void _e_border_event_desk_deskshow_free(void *data, void *ev);
-static void _e_border_event_desk_name_change_free(void *data, void *ev);
+static void _e_desk_event_desk_show_free(void *data, void *ev);
+static void _e_desk_event_desk_before_show_free(void *data, void *ev);
+static void _e_desk_event_desk_after_show_free(void *data, void *ev);
+static void _e_desk_event_desk_deskshow_free(void *data, void *ev);
+static void _e_desk_event_desk_name_change_free(void *data, void *ev);
 static void _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy);
 static void _e_desk_show_end(E_Desk *desk);
 static int _e_desk_show_animator(void *data);
@@ -101,7 +101,7 @@ e_desk_name_set(E_Desk *desk, const char *name)
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_DESK_NAME_CHANGE, ev, 
-		   _e_border_event_desk_name_change_free, NULL);
+		   _e_desk_event_desk_name_change_free, NULL);
 }
 
 EAPI void
@@ -211,7 +211,7 @@ e_desk_show(E_Desk *desk)
    eev->desk = e_desk_current_get(desk->zone);
    e_object_ref(E_OBJECT(eev->desk));
    ecore_event_add(E_EVENT_DESK_BEFORE_SHOW, eev, 
-                   _e_border_event_desk_before_show_free, NULL);
+                   _e_desk_event_desk_before_show_free, NULL);
 
    ecore_x_window_shadow_tree_flush();
    for (x = 0; x < desk->zone->desk_x_count; x++)
@@ -278,7 +278,7 @@ e_desk_show(E_Desk *desk)
    ev = E_NEW(E_Event_Desk_Show, 1);
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
-   ecore_event_add(E_EVENT_DESK_SHOW, ev, _e_border_event_desk_show_free, NULL);
+   ecore_event_add(E_EVENT_DESK_SHOW, ev, _e_desk_event_desk_show_free, NULL);
 
    EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
@@ -317,7 +317,7 @@ e_desk_show(E_Desk *desk)
 	eeev->desk = e_desk_current_get(desk->zone);
 	e_object_ref(E_OBJECT(eeev->desk));
 	ecore_event_add(E_EVENT_DESK_AFTER_SHOW, eeev, 
-			_e_border_event_desk_after_show_free, NULL);
+			_e_desk_event_desk_after_show_free, NULL);
      }
 
 }
@@ -361,7 +361,7 @@ e_desk_deskshow(E_Zone *zone)
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_DESK_DESKSHOW, ev, 
-		   _e_border_event_desk_deskshow_free, NULL);
+		   _e_desk_event_desk_deskshow_free, NULL);
 }
 
 EAPI void
@@ -521,7 +521,7 @@ _e_desk_free(E_Desk *desk)
 }
 
 static void
-_e_border_event_desk_show_free(void *data, void *event)
+_e_desk_event_desk_show_free(void *data, void *event)
 {
    E_Event_Desk_Show *ev;
 
@@ -531,7 +531,7 @@ _e_border_event_desk_show_free(void *data, void *event)
 }
 
 static void
-_e_border_event_desk_before_show_free(void *data, void *event)
+_e_desk_event_desk_before_show_free(void *data, void *event)
 {
    E_Event_Desk_Before_Show *ev;
 
@@ -541,7 +541,7 @@ _e_border_event_desk_before_show_free(void *data, void *event)
 }
 
 static void
-_e_border_event_desk_after_show_free(void *data, void *event)
+_e_desk_event_desk_after_show_free(void *data, void *event)
 {
    E_Event_Desk_After_Show *ev;
 
@@ -551,7 +551,7 @@ _e_border_event_desk_after_show_free(void *data, void *event)
 }
 
 static void
-_e_border_event_desk_deskshow_free(void *data, void *event)
+_e_desk_event_desk_deskshow_free(void *data, void *event)
 {
    E_Event_Desk_Show *ev;
 
@@ -561,7 +561,7 @@ _e_border_event_desk_deskshow_free(void *data, void *event)
 }
 
 static void
-_e_border_event_desk_name_change_free(void *data, void *event)
+_e_desk_event_desk_name_change_free(void *data, void *event)
 {
    E_Event_Desk_Name_Change *ev;
 
@@ -667,7 +667,7 @@ _e_desk_show_end(E_Desk *desk)
    ev->desk = e_desk_current_get(desk->zone);
    e_object_ref(E_OBJECT(ev->desk));
    ecore_event_add(E_EVENT_DESK_AFTER_SHOW, ev, 
-		   _e_border_event_desk_after_show_free, NULL);
+		   _e_desk_event_desk_after_show_free, NULL);
 }
 
 static int

@@ -504,8 +504,6 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
      }
    EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
-	ok = 0;
-
 	if (es->zone != zone) continue;
 	switch(es->gadcon->orient)
 	  {
@@ -529,6 +527,9 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 	   case E_GADCON_ORIENT_CORNER_RB:
 	      if (edge == E_ZONE_EDGE_RIGHT) ok = 1;
 	      break;
+	   default:
+	      ok = 0;
+	      break;
 	  }
 
 	if (!ok) continue;
@@ -541,7 +542,6 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 	zone->flip.es = es;
 	e_shelf_toggle(es, 1);
      }
-   ok = 0;
    switch(edge)
      {
       case E_ZONE_EDGE_LEFT:
@@ -555,6 +555,9 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 	 break;
       case E_ZONE_EDGE_BOTTOM:
 	 if (E_ZONE_FLIP_DOWN(zone)) ok = 1;
+	 break;
+      default:
+	 ok = 0;
 	 break;
      }
    if (!ok) return;
