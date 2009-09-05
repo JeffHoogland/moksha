@@ -16,7 +16,7 @@ static int _e_gadcon_cb_client_scroll_animator(void *data);
 static void _e_gadcon_cb_client_frame_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_gadcon_cb_client_frame_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_gadcon_client_save(E_Gadcon_Client *gcc);
-static void _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y);
+//static void _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y);
 static void _e_gadcon_client_inject(E_Gadcon *gc, E_Gadcon_Client *gcc, int x, int y);
 
 static void _e_gadcon_cb_min_size_request(void *data, Evas_Object *obj, void *event_info);
@@ -42,7 +42,7 @@ static void _e_gadcon_cb_signal_resize_left_go(void *data, Evas_Object *obj, con
 static void _e_gadcon_cb_signal_resize_right_start(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_gadcon_cb_signal_resize_right_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped);
+//static void _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped);
 static void _e_gadcon_cb_dnd_enter(void *data, const char *type, void *event);
 static void _e_gadcon_cb_dnd_move(void *data, const char *type, void *event);
 static void _e_gadcon_cb_dnd_leave(void *data, const char *type, void *event);
@@ -79,6 +79,8 @@ static void e_gadcon_layout_pack_aspect_pad_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_unpack(Evas_Object *obj);
 static void _e_gadcon_provider_populate_request(const E_Gadcon_Client_Class *cc);
 static void _e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc);
+static int  _e_gadcon_provider_populate_idler(void *data);
+static int  _e_gadcon_custom_populate_idler(void *data);
 
 static int _e_gadcon_location_change(E_Gadcon_Client * gcc, E_Gadcon_Location *src, E_Gadcon_Location *dst);
 /********************/
@@ -191,6 +193,8 @@ static Eina_List *providers_list = NULL;
 static Eina_List *gadcons = NULL;
 static Eina_List *populate_requests = NULL;
 static Ecore_Idler *populate_idler = NULL;
+static Eina_List *custom_populate_requests = NULL;
+static Ecore_Idler *custom_populate_idler = NULL;
 static Eina_List *gadcon_locations = NULL;
 
 /* This is the gadcon client which is currently dragged */
@@ -213,6 +217,12 @@ e_gadcon_shutdown(void)
      {
 	ecore_idler_del(populate_idler);
 	populate_idler = NULL;
+     }
+   eina_list_free(custom_populate_requests);
+   if (custom_populate_idler)
+     {
+	ecore_idler_del(custom_populate_idler);
+	custom_populate_idler = NULL;
      }
 
    return 1;
@@ -263,6 +273,11 @@ e_gadcon_custom_new(E_Gadcon *gc)
 {
    if (!gc) return;
    gadcons = eina_list_append(gadcons, gc);
+
+   if (!custom_populate_idler)
+     custom_populate_idler = ecore_idler_add(_e_gadcon_custom_populate_idler, NULL);
+   if (!eina_list_data_find(custom_populate_requests, gc))
+     custom_populate_requests = eina_list_append(custom_populate_requests, gc);
 }
 
 EAPI void
@@ -1303,7 +1318,6 @@ static void
 _e_gadcon_gadget_move_to_pre_cb(void *data, E_Menu *m) 
 {
    E_Gadcon_Client *gcc;
-   const char *name;
    int n = 0;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
@@ -1521,6 +1535,8 @@ e_gadcon_site_is_any_toolbar(E_Gadcon_Site site)
       case E_GADCON_SITE_TOOLBAR:
       case E_GADCON_SITE_EFM_TOOLBAR:
         return EINA_TRUE;
+      default:
+	 return EINA_FALSE;
      }
    return EINA_FALSE;
 }
@@ -1534,6 +1550,8 @@ e_gadcon_site_is_not_toolbar(E_Gadcon_Site site)
       case E_GADCON_SITE_TOOLBAR:
       case E_GADCON_SITE_EFM_TOOLBAR:
         return EINA_FALSE;
+      default:
+	 return EINA_TRUE;
      }
    return EINA_TRUE;
 }
@@ -1699,6 +1717,8 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
    e_config_save_queue();
 }
 
+#if 0
+/* FIXME unused */
 static void
 _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
 {
@@ -1741,6 +1761,7 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
 	  }
      }
 }
+#endif
 
 static void
 _e_gadcon_client_inject(E_Gadcon *gc, E_Gadcon_Client *gcc, int x, int y)
@@ -2233,6 +2254,8 @@ _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
    gcc->dy += y;
 }
 
+#if 0
+/* FIXME unused */
 static void
 _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped)
 {
@@ -2256,6 +2279,7 @@ _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped)
    new_gcc = NULL;
    drag_gcc = NULL;
 }
+#endif
 
 static void
 _e_gadcon_cb_dnd_enter(void *data, const char *type, void *event)
@@ -5176,6 +5200,30 @@ _e_gadcon_layout_smart_restore_gadcons_position_before_move(E_Smart_Data *sd, E_
 	if (lc == *lc_moving) continue;
 	lc->state = E_LAYOUT_ITEM_CONTAINER_STATE_NONE;
      }
+}
+
+static int
+_e_gadcon_custom_populate_idler(void *data)
+{
+   const E_Gadcon_Client_Class *cc;
+   const Eina_List *l;
+   E_Gadcon *gc;
+
+   EINA_LIST_FREE(custom_populate_requests, gc)
+     {
+	e_gadcon_layout_freeze(gc->o_container);
+	EINA_LIST_FOREACH(providers_list, l, cc)
+	  {
+	     if (gc->populate_class.func)
+	       gc->populate_class.func(gc->populate_class.data, gc, cc);
+	     else
+	       e_gadcon_populate_class(gc, cc);
+	  }
+	e_gadcon_layout_thaw(gc->o_container);
+     }
+
+   custom_populate_idler = NULL;
+   return 0;
 }
 
 static int
