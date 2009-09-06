@@ -153,6 +153,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	evas_object_show(es->o_event);
 	evas_object_show(es->o_base);
 	e_popup_edje_bg_object_set(es->popup, es->o_base);
+	ecore_x_netwm_window_type_set(es->popup->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
      }
    else
      {
@@ -691,7 +692,8 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 	evas_object_show(es->o_event);
 	evas_object_show(es->o_base);
 	e_popup_edje_bg_object_set(es->popup, es->o_base);
-
+	ecore_x_netwm_window_type_set(es->popup->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
+	
 	e_drop_xdnd_register_set(es->popup->evas_win, 1);
 	e_gadcon_xdnd_window_set(es->gadcon, es->popup->evas_win);
 	e_gadcon_dnd_window_set(es->gadcon, es->popup->evas_win);

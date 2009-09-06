@@ -1420,7 +1420,7 @@ _e_menu_realize(E_Menu *m)
    ecore_x_window_shape_events_select(m->evas_win, 1);
    ecore_evas_name_class_set(m->ecore_evas, "E", "_e_menu_window");
    ecore_evas_title_set(m->ecore_evas, "E Menu");
-   
+
    o = edje_object_add(m->evas);
    m->bg_object = o;
    evas_object_name_set(o, "menu/background");
@@ -1457,6 +1457,8 @@ _e_menu_realize(E_Menu *m)
 	else
 	  ecore_evas_shaped_set(m->ecore_evas, m->shaped);
      }
+
+   ecore_x_netwm_window_type_set(m->evas_win, ECORE_X_WINDOW_TYPE_MENU);
    
    o = e_box_add(m->evas);
    m->container_object = o;
