@@ -260,7 +260,7 @@ main(int argc, char **argv)
      }
 
    ecore_init();
-   eina_stringshare_init();
+   eina_init();
    ecore_app_args_set(argc, (const char **)argv);
    ecore_file_init();
    ecore_ipc_init();
@@ -308,7 +308,7 @@ main(int argc, char **argv)
    
    ecore_ipc_shutdown();
    ecore_file_shutdown();
-   eina_stringshare_shutdown();
+   eina_shutdown();
    ecore_shutdown();
    
    return 0;

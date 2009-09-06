@@ -148,7 +148,7 @@ static Eina_List *fwins = NULL;
 EAPI int
 e_fwin_init(void)
 {
-   eina_stringshare_init();
+   eina_init();
 
    return 1;
 }
@@ -161,7 +161,7 @@ e_fwin_shutdown(void)
    EINA_LIST_FREE(fwins, fwin)
      e_object_del(E_OBJECT(fwin));
 
-   eina_stringshare_shutdown();
+   eina_shutdown();
 
    return 1;
 }

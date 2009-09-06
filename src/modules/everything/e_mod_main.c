@@ -60,7 +60,7 @@ e_modapi_init(E_Module *m)
    evry_history_init();
       
    /* search for plugins */
-   eina_module_init();
+   eina_init();
 
    snprintf(dir, sizeof(dir), "%s/enlightenment/everything_plugins",
 	    e_prefix_lib_get());
@@ -131,7 +131,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 	eina_array_free(plugins);
      }
 
-   eina_module_shutdown();
+   eina_shutdown();
 
    while ((cfd = e_config_dialog_get("E", "_config_everything_dialog")))
      e_object_del(E_OBJECT(cfd));

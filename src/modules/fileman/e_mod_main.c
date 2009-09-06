@@ -43,7 +43,7 @@ e_modapi_init(E_Module *m)
    
    conf_module = m;
 
-   eina_stringshare_init();
+   eina_init();
 
    /* Setup Entry in Config Panel */
    e_configure_registry_category_add("fileman", 100, _("Files"), 
@@ -154,7 +154,7 @@ e_modapi_shutdown(E_Module *m)
    _e_mod_fileman_config_free();
    E_CONFIG_DD_FREE(conf_edd);
 
-   eina_stringshare_shutdown();
+   eina_shutdown();
 
    conf_module = NULL;
    return 1;

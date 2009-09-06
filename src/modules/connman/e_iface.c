@@ -1303,7 +1303,7 @@ main(int argc, char **argv)
      }
 
    ecore_init();
-   eina_stringshare_init();
+   eina_init();
    ecore_app_args_set(argc, (const char **)argv);
    e_dbus_init();
    evas_init();
@@ -1327,7 +1327,7 @@ main(int argc, char **argv)
    e_dbus_connection_close(c);
    evas_shutdown();
    e_dbus_shutdown();
-   eina_stringshare_shutdown();
+   eina_shutdown();
    ecore_shutdown();
 
    return 0;

@@ -685,7 +685,7 @@ e_fm2_init(void)
 {
    char  path[PATH_MAX];
 
-   eina_stringshare_init();
+   eina_init();
    ecore_job_init();
    _e_storage_volume_edd_init();
    e_user_dir_concat_static(path, "fileman/metadata");
@@ -788,7 +788,7 @@ e_fm2_shutdown(void)
    e_fm2_op_registry_shutdown();
    efreet_mime_shutdown();
    ecore_job_shutdown();
-   eina_stringshare_shutdown();
+   eina_shutdown();
    return 1;
 }
 
