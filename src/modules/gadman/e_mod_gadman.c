@@ -129,13 +129,18 @@ void
 gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 {
    Gadman_Layer_Type layer = (Gadman_Layer_Type)(long)data;
-   const Eina_List *l;
+   const Eina_List *l, *ll;
    E_Config_Gadcon_Client *cf_gcc;
+   E_Gadcon_Client *gcc = NULL;
 
    EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
      {
         if (cf_gcc->name && cc->name && !strcmp(cf_gcc->name, cc->name) && (gc->cf->zone == gc->zone->id))
-          gadman_gadget_place(cf_gcc, layer, gc->zone);
+	  {
+	     EINA_LIST_FOREACH(Man->gadgets[layer], ll, gcc)
+	       if (gcc->cf->id == cf_gcc->id) break;
+	     if (!gcc) gadman_gadget_place(cf_gcc, layer, gc->zone);
+	  }
      }
 }
 
