@@ -480,7 +480,8 @@ _systray_base_create(Instance *inst)
    evas_object_geometry_get(o, &x, &y, &w, &h);
    if (w < 1) w = 1;
    if (h < 1) h = 1;
-   inst->win.base = ecore_x_window_new(inst->win.parent, x, y, w, h);
+   inst->win.base = ecore_x_window_new(0, 0, 0, w, h);
+   ecore_x_window_reparent(inst->win.base, inst->win.parent, x, y); 
    ecore_x_window_background_color_set(inst->win.base, r, g, b);
    ecore_x_window_show(inst->win.base);
    return 1;
