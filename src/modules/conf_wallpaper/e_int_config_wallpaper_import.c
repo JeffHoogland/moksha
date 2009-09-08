@@ -250,6 +250,7 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
    Evas_Coord w, h;
    Evas_Modifier_Mask mask;
    const char *fdev, *fpath;
+   char buf[4096];
 
    fsel = E_NEW(FSel, 1);
    if (!fsel) return NULL;
@@ -306,12 +307,24 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
    fsel->content_obj = o;
 
    fdev = e_config->wallpaper_import_last_dev;
-   fpath = e_config->wallpaper_import_last_path;
+   snprintf(buf, sizeof(buf), "%s%s",fdev,e_config->wallpaper_import_last_path);
+    
+   if(!ecore_file_exists(ecore_file_realpath(buf)))
+   {
+      fpath = "/";
+   }
+   else
+   {
+      fpath = e_config->wallpaper_import_last_path;
+   }
+     
+   
    if ((!fdev) && (!fpath))
      {
 	fdev = "~/";
 	fpath = "/";
      }
+     
    ofm = e_widget_fsel_add(evas, fdev, fpath, NULL, NULL, NULL, NULL,
 			   NULL, NULL, 1);
    e_widget_fsel_window_object_set(ofm, E_OBJECT(win));
