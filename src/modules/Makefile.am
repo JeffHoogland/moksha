@@ -316,6 +316,7 @@ gadman \
 mixer \
 connman \
 illume \
+illume2 \
 syscon \
 everything \
 systray
