@@ -48,6 +48,8 @@ e_widget_flist_add(Evas *evas)
    wd->fmc.view.no_subdir_jump = 0;
    wd->fmc.icon.list.w = 48;
    wd->fmc.icon.list.h = 48;
+   wd->fmc.icon.icon.w = 48;
+   wd->fmc.icon.icon.h = 48;
    wd->fmc.icon.fixed.w = 1;
    wd->fmc.icon.fixed.h = 1;
    wd->fmc.icon.extension.show = 0;

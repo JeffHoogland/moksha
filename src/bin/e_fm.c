@@ -264,8 +264,8 @@ static void _e_fm2_icon_sel_up(Evas_Object *obj);
 
 static void _e_fm2_typebuf_show(Evas_Object *obj);
 static void _e_fm2_typebuf_hide(Evas_Object *obj);
-static void _e_fm2_typebuf_history_prev(Evas_Object *obj);
-static void _e_fm2_typebuf_history_next(Evas_Object *obj);
+//static void _e_fm2_typebuf_history_prev(Evas_Object *obj);
+//static void _e_fm2_typebuf_history_next(Evas_Object *obj);
 static void _e_fm2_typebuf_run(Evas_Object *obj);
 static void _e_fm2_typebuf_match(Evas_Object *obj, int next);
 static void _e_fm2_typebuf_complete(Evas_Object *obj);
@@ -396,7 +396,7 @@ static E_Fm2_Client *_e_fm2_client_get(void);
 static int _e_fm2_client_monitor_add(const char *path);
 static void _e_fm2_client_monitor_del(int id, const char *path);
 static int _e_fm_client_file_del(const char *args, Evas_Object *e_fm);
-static int _e_fm2_client_file_trash(const char *path, Evas_Object *e_fm);
+//static int _e_fm2_client_file_trash(const char *path, Evas_Object *e_fm);
 static int _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm);
 static int _e_fm_client_file_move(const char *args, Evas_Object *e_fm);
 static int _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm);
@@ -726,7 +726,7 @@ e_fm2_init(void)
    _e_fm2_icon_thumb_str = eina_stringshare_add("THUMB");
    _e_fm2_mime_inode_directory = eina_stringshare_add("inode/directory");
    _e_fm2_mime_app_desktop = eina_stringshare_add("application/x-desktop");
-   _e_fm2_mime_app_edje = eina_stringshare_add("application/x-edje");
+   _e_fm2_mime_app_edje = eina_stringshare_add("application/x-extension-edj");
    _e_fm2_mime_text_uri_list = eina_stringshare_add("text/uri-list");
 
    /// DBG
@@ -2091,6 +2091,10 @@ _e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *d
    Evas_Object *o;
    const char *icon;
 
+   if (ic->info.mime == _e_fm2_mime_app_edje)
+     return _e_fm2_icon_thumb_edje_get
+       (evas, ic, gen_func, data, force_gen, type_ret);
+
    icon = _e_fm2_icon_mime_type_special_match(ic);
    if (icon)
      {
@@ -2098,12 +2102,8 @@ _e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *d
 	  return _e_fm2_icon_desktop_get(evas, ic, type_ret);
 	else if (icon == _e_fm2_icon_thumb_str)
 	  {
-	     if (ic->info.mime == _e_fm2_mime_app_edje)
-	       return _e_fm2_icon_thumb_edje_get
-		 (evas, ic, gen_func, data, force_gen, type_ret);
-	     else
-	       return _e_fm2_icon_thumb_get
-		 (evas, ic, NULL, gen_func, data, force_gen, type_ret);
+	     return _e_fm2_icon_thumb_get
+	       (evas, ic, NULL, gen_func, data, force_gen, type_ret);
 	  }
 	else if (strncmp(icon, "e/icons/fileman/mime/", 21) == 0)
 	  return _e_fm2_icon_explicit_theme_get(evas, ic, icon + 21 - 5, type_ret);
@@ -2124,7 +2124,7 @@ _e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *d
      o = _e_fm2_icon_mime_theme_get(evas, ic, type_ret);
 
    if (o) return o;
-
+   
    /* XXX REMOVE/DEPRECATED below here */
    icon = e_fm_mime_icon_get(ic->info.mime);
    if (!icon) return NULL;
@@ -2474,6 +2474,7 @@ _e_fm_client_file_del(const char *files, Evas_Object *e_fm)
    return id;
 }
 
+#if 0
 static int
 _e_fm2_client_file_trash(const char *path, Evas_Object *e_fm)
 {
@@ -2481,6 +2482,7 @@ _e_fm2_client_file_trash(const char *path, Evas_Object *e_fm)
    e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_TRASH, _e_fm2_operation_abort_internal);
    return id;
 }
+#endif
 
 static int
 _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm)
@@ -5497,6 +5499,7 @@ _e_fm2_typebuf_hide(Evas_Object *obj)
    sd->typebuf_visible = 0;
 }
 
+#if 0
 static void
 _e_fm2_typebuf_history_prev(Evas_Object *obj)
 {
@@ -5516,6 +5519,7 @@ _e_fm2_typebuf_history_next(Evas_Object *obj)
    if (!sd) return;
    /* FIXME: do */
 }
+#endif
 
 static int
 _e_fm2_inplace_open(const E_Fm2_Icon *ic)
