@@ -1776,9 +1776,15 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
 	pw->drag.dx = ox - ev->canvas.x;
 	pw->drag.dy = oy - ev->canvas.y;
 	pw->drag.start = 1;
-	pw->drag.no_place = 0;
 	pw->drag.button = ev->button;
+#if 0
+	/* FIXME: disable move in pager for now, as dropping in between
+	   desks causes lost window */
+	pw->drag.no_place = 0;
 	if (ev->button == pager_config->btn_noplace) pw->drag.no_place = 1;
+#else
+	pw->drag.no_place = 1;
+#endif
      }
 }
 
