@@ -477,7 +477,7 @@ _e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
    unsigned int size;
 
    if ((!icon) || (!icon[0])) return 0;
-   size = e_util_icon_size_normalize(16 * e_scale);
+   size = e_util_icon_size_normalize(24 * e_scale);
    path = efreet_icon_path_find(e_config->icon_theme, icon, size);
    if (!path) return 0;
    e_menu_item_icon_file_set(mi, path);
