@@ -550,7 +550,9 @@ _e_fm2_icon_w_get(const E_Fm2_Smart_Data *sd)
 {
    if (sd->icon_size > -1)
      return sd->icon_size * e_scale;
-   return sd->config->icon.icon.w;
+   if (sd->config->icon.icon.w)
+     return sd->config->icon.icon.w;
+   return sd->config->icon.list.w;
 }
 
 static inline Evas_Coord
@@ -558,7 +560,9 @@ _e_fm2_icon_h_get(const E_Fm2_Smart_Data *sd)
 {
    if (sd->icon_size > -1)
      return sd->icon_size * e_scale;
-   return sd->config->icon.icon.h;
+   if (sd->config->icon.icon.h)
+     return sd->config->icon.icon.h;
+   return sd->config->icon.list.h;
 }
 
 static int
