@@ -228,7 +228,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	const char *pfile = "";
 	
 	edje_object_file_get(zone->bg_object, &pfile, NULL);
-	if (!e_util_strcmp(pfile, bgfile)) return;
+	if ((!e_util_strcmp(pfile, bgfile)) && !e_config->desk_flip_pan_bg) return;
      }
    
    if (transition == E_BG_TRANSITION_NONE)

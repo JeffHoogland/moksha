@@ -274,6 +274,8 @@ e_zone_move(E_Zone *zone, int x, int y)
 	 zone->x + 1 + cw, zone->y + zone->h - 1, zone->w - 2 - 2 * cw, 1);
    ecore_x_window_move_resize(zone->corner.bottom_left,
 	 zone->x + zone->w - cw - 2, zone->y + zone->h - 1, cw, 1);
+
+   e_zone_bg_reconfigure(zone);
 }
 
 EAPI void
@@ -329,6 +331,8 @@ e_zone_resize(E_Zone *zone, int w, int h)
 	 zone->x + 1 + cw, zone->y + zone->h - 1, zone->w - 2 - 2 * cw, 1);
    ecore_x_window_move_resize(zone->corner.bottom_left,
 	 zone->x + zone->w - cw - 2, zone->y + zone->h - 1, cw, 1);
+
+   e_zone_bg_reconfigure(zone);
 }
 
 EAPI void
@@ -394,6 +398,8 @@ e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h)
 	 zone->x + 1 + cw, zone->y + zone->h - 1, zone->w - 2 - 2 * cw, 1);
    ecore_x_window_move_resize(zone->corner.bottom_left,
 	 zone->x + zone->w - cw - 2, zone->y + zone->h - 1, cw, 1);
+
+   e_zone_bg_reconfigure(zone);
 } 
 
 EAPI void
