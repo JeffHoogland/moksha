@@ -7369,13 +7369,19 @@ _e_border_eval(E_Border *bd)
 	     evas_object_del(bd->icon_object);
 	     bd->icon_object = NULL;
 	  }
+	if (bd->remember && bd->remember->prop.desktop_file)
+	  {
+	     const char *desktop = bd->remember->prop.desktop_file;
+
+	     bd->desktop = efreet_desktop_new(desktop); 
+	     if (!bd->desktop)
+	       bd->desktop = efreet_util_desktop_name_find(desktop);
+	  }
 	if (!bd->desktop)
 	  {
 	     if ((bd->client.icccm.name) && (bd->client.icccm.class))
 	       bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
 							       bd->client.icccm.class);
-	     /* already refd by desktop_wm_class_find */
-	     /* if (bd->desktop) efreet_desktop_ref(bd->desktop); */
 	  }
 	if (!bd->desktop)
 	  {
@@ -7389,7 +7395,15 @@ _e_border_eval(E_Border *bd)
 		run from a shell  */
 	     bd->desktop = efreet_util_desktop_exec_find(bd->client.icccm.name);
 	  }
-
+	if (!bd->desktop && bd->client.icccm.transient_for)
+	  {
+	     E_Border *bd2 = e_border_find_by_client_window(bd->client.icccm.transient_for); 
+	     if (bd2 && bd2->desktop)
+	       {
+		  efreet_desktop_ref(bd2->desktop);
+		  bd->desktop = bd2->desktop;
+	       }
+	  }
 	if (bd->desktop)
 	  {
 	     ecore_x_window_prop_string_set(bd->client.win, E_ATOM_DESKTOP_FILE,

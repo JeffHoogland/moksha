@@ -93,7 +93,8 @@ e_remember_use(E_Remember *rem)
 EAPI void
 e_remember_unuse(E_Remember *rem)
 {
-   rem->used_count--;
+   if (rem->used_count > 0)
+     rem->used_count--;
    if ((rem->used_count == 0) && (rem->delete_me))
      _e_remember_free(rem);
 }
@@ -118,7 +119,6 @@ e_remember_del(E_Remember *rem)
 	  }
 	return;
      }
-   _e_remember_free(rem);
 }
 
 EAPI E_Remember *
@@ -366,16 +366,13 @@ _e_remember_find(E_Border *bd, int check_usable)
          * required, and if it is, check whether there's a match. If
          * it fails, then go to the next remember */
         if (rem->match & E_REMEMBER_MATCH_NAME &&
-	    e_util_strcmp(rem->name, bd->client.icccm.name) &&
-	    !e_util_both_str_empty(rem->name, bd->client.icccm.name))
+	    !e_util_glob_match(bd->client.icccm.name, rem->name))
           continue;
         if (rem->match & E_REMEMBER_MATCH_CLASS &&
-	    e_util_strcmp(rem->class, bd->client.icccm.class) &&
-	    !e_util_both_str_empty(rem->class, bd->client.icccm.class))
+	    !e_util_glob_match(bd->client.icccm.class, rem->class))
           continue;
         if (rem->match & E_REMEMBER_MATCH_TITLE &&
-	    e_util_strcmp(rem->title, title) &&
-	    !e_util_both_str_empty(rem->title, title))
+	    !e_util_glob_match(title, rem->title))
           continue;
         if (rem->match & E_REMEMBER_MATCH_ROLE &&
             e_util_strcmp(rem->role, bd->client.icccm.window_role) &&
