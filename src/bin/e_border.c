@@ -4757,143 +4757,8 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 
    if (!bd->lock_user_stacking)
      e_border_raise(bd);
-   if (e->direction == RESIZE_TL)
-     {
-	if (!_e_border_resize_begin(bd))
-	  return 1;
-	bd->resize_mode = RESIZE_TL;
 
-	bd->cur_mouse_action = e_action_find("window_resize");
-	if (bd->cur_mouse_action)
-	  {
-	     if ((!bd->cur_mouse_action->func.end_mouse) &&
-		 (!bd->cur_mouse_action->func.end))
-	       bd->cur_mouse_action = NULL;
-	     if (bd->cur_mouse_action)
-	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
-	  }
-	GRAV_SET(bd, ECORE_X_GRAVITY_SE);
-     }
-   else if (e->direction == RESIZE_T)
-     {
-	if (!_e_border_resize_begin(bd))
-	  return 1;
-	bd->resize_mode = RESIZE_T;
-
-	bd->cur_mouse_action = e_action_find("window_resize");
-	if (bd->cur_mouse_action)
-	  {
-	     if ((!bd->cur_mouse_action->func.end_mouse) &&
-		 (!bd->cur_mouse_action->func.end))
-	       bd->cur_mouse_action = NULL;
-	     if (bd->cur_mouse_action)
-	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
-	  }
-	GRAV_SET(bd, ECORE_X_GRAVITY_S);
-     }
-   else if (e->direction == RESIZE_TR)
-     {
-	if (!_e_border_resize_begin(bd))
-	  return 1;
-	bd->resize_mode = RESIZE_TR;
-
-	bd->cur_mouse_action = e_action_find("window_resize");
-	if (bd->cur_mouse_action)
-	  {
-	     if ((!bd->cur_mouse_action->func.end_mouse) &&
-		 (!bd->cur_mouse_action->func.end))
-	       bd->cur_mouse_action = NULL;
-	     if (bd->cur_mouse_action)
-	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
-	  }
-	GRAV_SET(bd, ECORE_X_GRAVITY_SW);
-     }
-   else if (e->direction == RESIZE_R)
-     {
-	if (!_e_border_resize_begin(bd))
-	  return 1;
-	bd->resize_mode = RESIZE_R;
-
-	bd->cur_mouse_action = e_action_find("window_resize");
-	if (bd->cur_mouse_action)
-	  {
-	     if ((!bd->cur_mouse_action->func.end_mouse) &&
-		 (!bd->cur_mouse_action->func.end))
-	       bd->cur_mouse_action = NULL;
-	     if (bd->cur_mouse_action)
-	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
-	  }
-	GRAV_SET(bd, ECORE_X_GRAVITY_W);
-     }
-   else if (e->direction == RESIZE_BR)
-     {
-	if (!_e_border_resize_begin(bd))
-	  return 1;
-	bd->resize_mode = RESIZE_BR;
-
-	bd->cur_mouse_action = e_action_find("window_resize");
-	if (bd->cur_mouse_action)
-	  {
-	     if ((!bd->cur_mouse_action->func.end_mouse) &&
-		 (!bd->cur_mouse_action->func.end))
-	       bd->cur_mouse_action = NULL;
-	     if (bd->cur_mouse_action)
-	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
-	  }
-	GRAV_SET(bd, ECORE_X_GRAVITY_NW);
-     }
-   else if (e->direction == RESIZE_B)
-     {
-	if (!_e_border_resize_begin(bd))
-	  return 1;
-	bd->resize_mode = RESIZE_B;
-
-	bd->cur_mouse_action = e_action_find("window_resize");
-	if (bd->cur_mouse_action)
-	  {
-	     if ((!bd->cur_mouse_action->func.end_mouse) &&
-		 (!bd->cur_mouse_action->func.end))
-	       bd->cur_mouse_action = NULL;
-	     if (bd->cur_mouse_action)
-	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
-	  }
-	GRAV_SET(bd, ECORE_X_GRAVITY_N);
-     }
-   else if (e->direction == RESIZE_BL)
-     {
-	if (!_e_border_resize_begin(bd))
-	  return 1;
-	bd->resize_mode = RESIZE_BL;
-
-	bd->cur_mouse_action = e_action_find("window_resize");
-	if (bd->cur_mouse_action)
-	  {
-	     if ((!bd->cur_mouse_action->func.end_mouse) &&
-		 (!bd->cur_mouse_action->func.end))
-	       bd->cur_mouse_action = NULL;
-	     if (bd->cur_mouse_action)
-	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
-	  }
-	GRAV_SET(bd, ECORE_X_GRAVITY_NE);
-     }
-   else if (e->direction == RESIZE_L)
-     {
-	if (!_e_border_resize_begin(bd))
-	  return 1;
-	bd->resize_mode = RESIZE_L;
-
-	bd->cur_mouse_action = e_action_find("window_resize");
-	if (bd->cur_mouse_action)
-	  {
-	     if ((!bd->cur_mouse_action->func.end_mouse) &&
-		 (!bd->cur_mouse_action->func.end))
-	       bd->cur_mouse_action = NULL;
-	     if (bd->cur_mouse_action)
-	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
-	  }
-	GRAV_SET(bd, ECORE_X_GRAVITY_E);
-     }
-   else if (e->direction == MOVE)
+   if (e->direction == MOVE)
      {
 	bd->cur_mouse_action = e_action_find("window_move");
 	if (bd->cur_mouse_action)
@@ -4907,7 +4772,59 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 		  bd->cur_mouse_action->func.go(E_OBJECT(bd), NULL); 
 	       }
 	  }
+	return 1;
      }
+
+   if (!_e_border_resize_begin(bd))
+     return 1;
+
+   switch(e->direction)
+     {
+      case RESIZE_TL:
+	 bd->resize_mode = RESIZE_TL;
+	 GRAV_SET(bd, ECORE_X_GRAVITY_SE);
+	 break;
+      case RESIZE_T:
+	 bd->resize_mode = RESIZE_T;
+	 GRAV_SET(bd, ECORE_X_GRAVITY_S);
+	break;
+      case RESIZE_TR:
+	 bd->resize_mode = RESIZE_TR;
+	 GRAV_SET(bd, ECORE_X_GRAVITY_SW);
+	break;
+      case RESIZE_R:
+	 bd->resize_mode = RESIZE_R;
+	 GRAV_SET(bd, ECORE_X_GRAVITY_W);
+	 break;
+      case RESIZE_BR:
+	 bd->resize_mode = RESIZE_BR;
+	 GRAV_SET(bd, ECORE_X_GRAVITY_NW);
+      case RESIZE_B:
+	 bd->resize_mode = RESIZE_B;
+	 GRAV_SET(bd, ECORE_X_GRAVITY_N);
+	 break;
+      case RESIZE_BL:
+	 bd->resize_mode = RESIZE_BL;
+	 GRAV_SET(bd, ECORE_X_GRAVITY_NE);
+	 break;
+      case RESIZE_L:
+	 bd->resize_mode = RESIZE_L;
+	 GRAV_SET(bd, ECORE_X_GRAVITY_E);
+	 break;
+      default:
+	 return 1;
+     }
+   
+   bd->cur_mouse_action = e_action_find("window_resize");
+   if (bd->cur_mouse_action)
+     {
+	if ((!bd->cur_mouse_action->func.end_mouse) &&
+	    (!bd->cur_mouse_action->func.end))
+	  bd->cur_mouse_action = NULL;
+	if (bd->cur_mouse_action)
+	  e_object_ref(E_OBJECT(bd->cur_mouse_action));
+     }
+
    return 1;
 }
 
