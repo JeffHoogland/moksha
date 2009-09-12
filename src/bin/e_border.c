@@ -107,6 +107,8 @@ static void _e_border_pointer_move_end(E_Border *bd);
 
 static void _e_border_hook_call(E_Border_Hook_Point hookpoint, void *bd);
 
+static void _e_border_client_move_resize_send(E_Border *bd);
+
 /* local subsystem globals */
 static Eina_List *handlers = NULL;
 static Eina_List *borders = NULL;
@@ -807,6 +809,22 @@ e_border_hide(E_Border *bd, int manage)
 }
 
 static void
+_e_border_client_move_resize_send(E_Border *bd)
+{
+   if (bd->internal_ecore_evas)
+     ecore_evas_managed_move(bd->internal_ecore_evas,
+			     bd->x + bd->fx.x + bd->client_inset.l,
+			     bd->y + bd->fx.y + bd->client_inset.t);
+   
+   ecore_x_icccm_move_resize_send(bd->client.win,
+				  bd->x + bd->fx.x + bd->client_inset.l,
+				  bd->y + bd->fx.y + bd->client_inset.t,
+				  bd->client.w,
+				  bd->client.h);
+}
+
+
+static void
 _e_border_move_internal(E_Border *bd, int x, int y, Eina_Bool without_border)
 {
    E_Event_Border_Move *ev;
@@ -851,15 +869,7 @@ _e_border_move_internal(E_Border *bd, int x, int y, Eina_Bool without_border)
 	ecore_x_netwm_sync_request_send(bd->client.win, bd->client.netwm.sync.serial++);
      }
 #endif
-   if (bd->internal_ecore_evas)
-     ecore_evas_managed_move(bd->internal_ecore_evas,
-			     bd->x + bd->fx.x + bd->client_inset.l,
-			     bd->y + bd->fx.y + bd->client_inset.t);
-   ecore_x_icccm_move_resize_send(bd->client.win,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t,
-				  bd->client.w,
-				  bd->client.h);
+   _e_border_client_move_resize_send(bd);
    _e_border_move_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Move));
    ev->border = bd;
@@ -944,15 +954,8 @@ e_border_fx_offset(E_Border *bd, int x, int y)
    bd->fx.y = y;
    bd->changed = 1;
    bd->changes.pos = 1;
-   if (bd->internal_ecore_evas)
-     ecore_evas_managed_move(bd->internal_ecore_evas,
-			     bd->x + bd->fx.x + bd->client_inset.l,
-			     bd->y + bd->fx.y + bd->client_inset.t);
-   ecore_x_icccm_move_resize_send(bd->client.win,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t,
-				  bd->client.w,
-				  bd->client.h);
+
+   _e_border_client_move_resize_send(bd);
    if (bd->moving) _e_border_move_update(bd);
 }
 
@@ -1007,15 +1010,8 @@ _e_border_resize_internal(E_Border *bd, int w, int h, Eina_Bool without_border)
 	bd->client.netwm.sync.wait++;
 	ecore_x_netwm_sync_request_send(bd->client.win, bd->client.netwm.sync.serial++);
      }
-   if (bd->internal_ecore_evas)
-     ecore_evas_managed_move(bd->internal_ecore_evas,
-			     bd->x + bd->fx.x + bd->client_inset.l,
-			     bd->y + bd->fx.y + bd->client_inset.t);
-   ecore_x_icccm_move_resize_send(bd->client.win,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t,
-				  bd->client.w,
-				  bd->client.h);
+
+   _e_border_client_move_resize_send(bd);
    _e_border_resize_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Resize));
    ev->border = bd;
@@ -1126,15 +1122,8 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
 	bd->client.netwm.sync.wait++;
 	ecore_x_netwm_sync_request_send(bd->client.win, bd->client.netwm.sync.serial++);
      }
-   if (bd->internal_ecore_evas)
-     ecore_evas_managed_move(bd->internal_ecore_evas,
-			     bd->x + bd->fx.x + bd->client_inset.l,
-			     bd->y + bd->fx.y + bd->client_inset.t);
-   ecore_x_icccm_move_resize_send(bd->client.win,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t,
-				  bd->client.w,
-				  bd->client.h);
+
+   _e_border_client_move_resize_send(bd);
    _e_border_resize_update(bd);
    mev = calloc(1, sizeof(E_Event_Border_Move));
    mev->border = bd;
@@ -3477,15 +3466,7 @@ e_border_frame_recalc(E_Border *bd)
 	bd->need_shape_merge = 1;
 	bd->need_shape_export = 1;
      }
-   if (bd->internal_ecore_evas)
-     ecore_evas_managed_move(bd->internal_ecore_evas,
-			     bd->x + bd->fx.x + bd->client_inset.l,
-			     bd->y + bd->fx.y + bd->client_inset.t);
-   ecore_x_icccm_move_resize_send(bd->client.win,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t,
-				  bd->client.w,
-				  bd->client.h);
+   _e_border_client_move_resize_send(bd);
 }
 
 EAPI Eina_List *
@@ -4307,11 +4288,8 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	       }
 	  }
      }
-   ecore_x_icccm_move_resize_send(bd->client.win,
-                                  bd->x + bd->fx.x + bd->client_inset.l,
-                                  bd->y + bd->fx.y + bd->client_inset.t,
-                                  bd->client.w,
-                                  bd->client.h);
+
+   _e_border_client_move_resize_send(bd);
    return 1;
 }
 
@@ -4358,11 +4336,8 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
 	else
 	  e_border_resize(bd, w, h);
      }
-   ecore_x_icccm_move_resize_send(bd->client.win,
-                                  bd->x + bd->fx.x + bd->client_inset.l,
-                                  bd->y + bd->fx.y + bd->client_inset.t,
-                                  bd->client.w,
-                                  bd->client.h);
+
+     _e_border_client_move_resize_send(bd);
    return 1;
 }
 
@@ -6529,15 +6504,8 @@ _e_border_eval(E_Border *bd)
 	     bd->placed = 1;
 	  }
 
-	if (bd->internal_ecore_evas)
-	  ecore_evas_managed_move(bd->internal_ecore_evas,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t);
-	ecore_x_icccm_move_resize_send(bd->client.win,
-				       bd->x + bd->fx.x + bd->client_inset.l,
-				       bd->y + bd->fx.y + bd->client_inset.t,
-				       bd->client.w,
-				       bd->client.h);
+	_e_border_client_move_resize_send(bd);
+
 	/* if the explicit geometry request asks for the app to be
 	 * in another zone - well move it there */
 	  {
@@ -6702,15 +6670,9 @@ _e_border_eval(E_Border *bd)
 				    bd->x + bd->fx.x,
 				    bd->y + bd->fx.y);
 	  }
-	if (bd->internal_ecore_evas)
-	  ecore_evas_managed_move(bd->internal_ecore_evas,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t);
-        ecore_x_icccm_move_resize_send(bd->client.win,
-                                       bd->x + bd->fx.x + bd->client_inset.l,
-                                       bd->y + bd->fx.y + bd->client_inset.t,
-                                       bd->client.w,
-                                       bd->client.h);
+
+	_e_border_client_move_resize_send(bd);
+
 	bd->changes.pos = 0;
 	bd->changes.size = 0;
 	rem_change = 1;
@@ -6729,15 +6691,9 @@ _e_border_eval(E_Border *bd)
 	     ecore_x_window_move(bd->win, bd->x + bd->fx.x, bd->y + bd->fx.y);
 	  }
 	e_container_shape_move(bd->shape, bd->x + bd->fx.x, bd->y + bd->fx.y);
-	if (bd->internal_ecore_evas)
-	  ecore_evas_managed_move(bd->internal_ecore_evas,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t);
-	ecore_x_icccm_move_resize_send(bd->client.win,
-				       bd->x + bd->fx.x + bd->client_inset.l,
-				       bd->y + bd->fx.y + bd->client_inset.t,
-				       bd->client.w,
-				       bd->client.h);
+
+	_e_border_client_move_resize_send(bd);
+
 	bd->changes.pos = 0;
 	rem_change = 1;
      }
@@ -6809,15 +6765,9 @@ _e_border_eval(E_Border *bd)
 	     evas_object_resize(bd->bg_object, bd->w, bd->h);
 	     e_container_shape_resize(bd->shape, bd->w, bd->h);
 	  }
-	if (bd->internal_ecore_evas)
-	  ecore_evas_managed_move(bd->internal_ecore_evas,
-				  bd->x + bd->fx.x + bd->client_inset.l,
-				  bd->y + bd->fx.y + bd->client_inset.t);
-	ecore_x_icccm_move_resize_send(bd->client.win,
-				       bd->x + bd->fx.x + bd->client_inset.l,
-				       bd->y + bd->fx.y + bd->client_inset.t,
-				       bd->client.w,
-				       bd->client.h);
+
+	_e_border_client_move_resize_send(bd);
+
 	bd->changes.size = 0;
 	rem_change = 1;
      }
@@ -6984,14 +6934,8 @@ _e_border_eval(E_Border *bd)
 		       bd->y = y - (bd->client_inset.t >> 1);
 		       bd->changed = 1;
 		       bd->changes.pos = 1;
-		       if (bd->internal_ecore_evas)
-			 ecore_evas_managed_move(bd->internal_ecore_evas,
-						 bd->x + bd->fx.x + bd->client_inset.l,
-						 bd->y + bd->fx.y + bd->client_inset.t);
-		       ecore_x_icccm_move_resize_send(bd->client.win,
-						      bd->x + bd->fx.x + bd->client_inset.l,
-						      bd->y + bd->fx.y + bd->client_inset.t,
-						      bd->client.w, bd->client.h);
+
+		       _e_border_client_move_resize_send(bd);
 		    }
 	       }
 	  }
