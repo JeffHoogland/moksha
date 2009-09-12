@@ -2067,7 +2067,7 @@ _e_fm2_icon_mime_theme_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_r
    char buf[1024];
    const char *file;
 
-   if (snprintf(buf, sizeof(buf), "e/icons/mimetypes/%s", ic->info.mime) >= sizeof(buf))
+   if (snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", ic->info.mime) >= sizeof(buf))
      return NULL;
 
    file = e_theme_edje_file_get("base/theme/icons", buf);
