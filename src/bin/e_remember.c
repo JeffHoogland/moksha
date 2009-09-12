@@ -10,8 +10,8 @@
 static void _e_remember_free(E_Remember *rem);
 static int _e_remember_sort_list(const void * d1, const void * d2);
 static E_Remember  *_e_remember_find(E_Border *bd, int check_usable);
-static void _e_remember_cb_hook_pre_post_fetch(void *data, E_Border *bd);
-static void _e_remember_cb_hook_eval_post_new_border(void *data, E_Border *bd);
+static void _e_remember_cb_hook_pre_post_fetch(void *data, void *bd);
+static void _e_remember_cb_hook_eval_post_new_border(void *data, void *bd);
 static Eina_List *hooks = NULL;
 
 /* FIXME: match netwm window type */
@@ -109,22 +109,17 @@ e_remember_use(E_Remember *rem)
 EAPI void
 e_remember_unuse(E_Remember *rem)
 {
-   if (rem->used_count > 0)
-     rem->used_count--;
-   if ((rem->used_count == 0) && (rem->delete_me))
-     _e_remember_free(rem);
+   rem->used_count--;
 }
 
 EAPI void
 e_remember_del(E_Remember *rem)
 {
-   if (rem->delete_me) return;
    if (rem->used_count != 0)
      {
 	Eina_List *l = NULL;
 	E_Border *bd;
 
-	rem->delete_me = 1;
 	EINA_LIST_FOREACH(e_border_client_list(), l, bd)
 	  {
 	     if (bd->remember == rem)
@@ -133,10 +128,8 @@ e_remember_del(E_Remember *rem)
 		  e_remember_unuse(rem);
 	       }
 	  }
-	return;
      }
-   else
-     _e_remember_free(rem); 
+   _e_remember_free(rem); 
 }
 
 EAPI E_Remember *
@@ -380,7 +373,7 @@ _e_remember_find(E_Border *bd, int check_usable)
 	    (((rem->transient) && (bd->client.icccm.transient_for != 0)) ||
 	     ((!rem->transient) && (bd->client.icccm.transient_for == 0))))
 	  matches++;
-	 if ((matches >= required_matches) && (!rem->delete_me))
+	 if (matches >= required_matches)
 	  return rem;
      }
    return NULL;
@@ -459,8 +452,9 @@ _e_remember_sort_list(const void * d1, const void * d2)
 }
 
 static void
-_e_remember_cb_hook_pre_post_fetch(void *data, E_Border *bd)
+_e_remember_cb_hook_pre_post_fetch(void *data, void *border)
 {
+   E_Border *bd = border;
    E_Remember *rem = NULL;
 
    if (!bd->new_client) return;
@@ -704,8 +698,10 @@ _e_remember_cb_hook_pre_post_fetch(void *data, E_Border *bd)
 
 
 static void
-_e_remember_cb_hook_eval_post_new_border(void *data, E_Border *bd)
+_e_remember_cb_hook_eval_post_new_border(void *data, void *border)
 {
+   E_Border *bd = border;
+
    if (!bd->new_client) return;
 
    if ((bd->internal) && (!bd->remember) &&
