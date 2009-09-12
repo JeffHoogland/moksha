@@ -6588,88 +6588,66 @@ _e_border_eval(E_Border *bd)
 	rem_change = 1;
      }
 
-   if ((bd->changes.pos) && (bd->changes.size))
+   if (bd->changes.size)
      {
+	int x = 0, y = 0, xx = 0, yy = 0;
+
 	if ((bd->shaded) && (!bd->shading))
 	  {
 	     evas_obscured_clear(bd->bg_evas);
-//	     if (0)
-//	       {
-//		  if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
-//		  bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job,
-//							bd);
-//		  bd->post_move = 1;
-//		  bd->post_resize = 1;
-//	       }
-//	     else
-	       {
-		  ecore_x_window_move_resize(bd->win, 
-					     bd->x + bd->fx.x, 
-					     bd->y + bd->fx.y,
-					     bd->w, bd->h);
-	       }
-	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
-	     if (bd->internal_ecore_evas)
-	       ecore_evas_move_resize(bd->internal_ecore_evas, 0, 0, bd->client.w, bd->client.h);
-	     else
-	       ecore_x_window_move_resize(bd->client.win, 0, 0, bd->client.w, bd->client.h);
-	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
-	     evas_object_resize(bd->bg_object, bd->w, bd->h);
-	     e_container_shape_resize(bd->shape, bd->w, bd->h);
-	     e_container_shape_move(bd->shape,
-				    bd->x + bd->fx.x,
-				    bd->y + bd->fx.y);
 	  }
 	else
 	  {
-	     int x = 0, y = 0;
+	     xx = bd->w - (bd->client_inset.l + bd->client_inset.r);
+	     yy = bd->h - (bd->client_inset.t + bd->client_inset.b);
 	     
 	     evas_obscured_clear(bd->bg_evas);
 	     evas_obscured_rectangle_add(bd->bg_evas,
-					 bd->client_inset.l, bd->client_inset.t,
-					 bd->w - (bd->client_inset.l + bd->client_inset.r),
-					 bd->h - (bd->client_inset.t + bd->client_inset.b));
-//	     if (0)
-//	       {
-//		  if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
-//		  bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job,
-//							bd);
-//		  bd->post_move = 1;
-//		  bd->post_resize = 1;
-//	       }
-//	     else
-	       {
-		  ecore_x_window_move_resize(bd->win,
-					     bd->x + bd->fx.x,
-					     bd->y + bd->fx.y,
-					     bd->w, bd->h);
-	       }
-	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
-	     ecore_x_window_move_resize(bd->client.shell_win,
-					bd->client_inset.l, bd->client_inset.t,
-					bd->w - (bd->client_inset.l + bd->client_inset.r),
-					bd->h - (bd->client_inset.t + bd->client_inset.b));
+					 bd->client_inset.l, bd->client_inset.t, xx, yy);
+
 	     if (bd->shading)
 	       {
 		  if (bd->shade.dir == E_DIRECTION_UP)
-		    y = bd->h - (bd->client_inset.t + bd->client_inset.b) - bd->client.h;
+		    {
+		       y = yy - bd->client.h;
+		    }
 		  else if (bd->shade.dir == E_DIRECTION_LEFT)
-		    x = bd->w - (bd->client_inset.l + bd->client_inset.r) - bd->client.h;
+		    {
+		       x = xx - bd->client.w;
+		    }		  
 	       }
-	     if (bd->internal_ecore_evas)
-	       ecore_evas_move_resize(bd->internal_ecore_evas,
-				      x, y, bd->client.w, bd->client.h);
-	     else
-	       ecore_x_window_move_resize(bd->client.win,
-					  x, y, bd->client.w, bd->client.h);
-
-	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
-	     evas_object_resize(bd->bg_object, bd->w, bd->h);
-	     e_container_shape_resize(bd->shape, bd->w, bd->h);
-	     e_container_shape_move(bd->shape, 
-				    bd->x + bd->fx.x,
-				    bd->y + bd->fx.y);
 	  }
+
+	if (!bd->changes.pos)
+	  {
+	     if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
+	     bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job, bd);
+	     bd->post_resize = 1;
+	  }
+	else
+	  {
+	     ecore_x_window_move_resize(bd->win,
+					bd->x + bd->fx.x,
+					bd->y + bd->fx.y,
+					bd->w, bd->h);
+	  }
+
+	ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
+
+	if ((!bd->shaded) || (bd->shading))
+	  ecore_x_window_move_resize(bd->client.shell_win,
+				     bd->client_inset.l, bd->client_inset.t, xx, yy);
+	
+	if (bd->internal_ecore_evas)
+	  ecore_evas_move_resize(bd->internal_ecore_evas, x, y, bd->client.w, bd->client.h);
+	else
+	  ecore_x_window_move_resize(bd->client.win, x, y, bd->client.w, bd->client.h);
+	
+	ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
+	evas_object_resize(bd->bg_object, bd->w, bd->h);
+	e_container_shape_resize(bd->shape, bd->w, bd->h);
+	if (bd->changes.pos)
+	  e_container_shape_move(bd->shape, bd->x + bd->fx.x, bd->y + bd->fx.y);
 
 	_e_border_client_move_resize_send(bd);
 
@@ -6695,80 +6673,6 @@ _e_border_eval(E_Border *bd)
 	_e_border_client_move_resize_send(bd);
 
 	bd->changes.pos = 0;
-	rem_change = 1;
-     }
-   else if (bd->changes.size)
-     {
-	if (bd->shaded && !bd->shading)
-	  {
-	     evas_obscured_clear(bd->bg_evas);
-	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
-	     if (1)
-	       {
-		  if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
-		  bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job,
-							bd);
-		  bd->post_resize = 1;
-	       }
-	     else
-	       {
-		  ecore_x_window_resize(bd->win, bd->w, bd->h);
-	       }
-	     if (bd->internal_ecore_evas)
-	       ecore_evas_move_resize(bd->internal_ecore_evas, 0, 0, bd->client.w, bd->client.h);
-	     else
-	       ecore_x_window_move_resize(bd->client.win, 0, 0, bd->client.w, bd->client.h);
-	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
-	     evas_object_resize(bd->bg_object, bd->w, bd->h);
-	     e_container_shape_resize(bd->shape, bd->w, bd->h);
-	  }
-	else
-	  {
-	     int x = 0, y = 0;
-	     
-	     evas_obscured_clear(bd->bg_evas);
-	     evas_obscured_rectangle_add(bd->bg_evas,
-					 bd->client_inset.l, bd->client_inset.t,
-					 bd->w - (bd->client_inset.l + bd->client_inset.r),
-					 bd->h - (bd->client_inset.t + bd->client_inset.b));
-	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
-	     if (1)
-	       {
-		  if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
-		  bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job,
-							bd);
-		  bd->post_resize = 1;
-	       }
-	     else
-	       {
-		  ecore_x_window_resize(bd->win, bd->w, bd->h);
-	       }
-	     ecore_x_window_move_resize(bd->client.shell_win,
-					bd->client_inset.l, bd->client_inset.t,
-					bd->w - (bd->client_inset.l + bd->client_inset.r),
-					bd->h - (bd->client_inset.t + bd->client_inset.b));
-	     if (bd->shading)
-	       {
-		  if (bd->shade.dir == E_DIRECTION_UP)
-		    y = bd->h - (bd->client_inset.t + bd->client_inset.b) - bd->client.h;
-		  else if (bd->shade.dir == E_DIRECTION_LEFT)
-		    x = bd->w - (bd->client_inset.l + bd->client_inset.r) - bd->client.h;
-	       }
-	     if (bd->internal_ecore_evas)
-	       ecore_evas_move_resize(bd->internal_ecore_evas,
-				      x, y, bd->client.w, bd->client.h);
-	     else
-	       ecore_x_window_move_resize(bd->client.win,
-					  x, y, bd->client.w, bd->client.h);
-
-	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
-	     evas_object_resize(bd->bg_object, bd->w, bd->h);
-	     e_container_shape_resize(bd->shape, bd->w, bd->h);
-	  }
-
-	_e_border_client_move_resize_send(bd);
-
-	bd->changes.size = 0;
 	rem_change = 1;
      }
 
