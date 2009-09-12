@@ -151,17 +151,22 @@ _basic_apply_border(E_Config_Dialog_Data *cfdata)
      }
    if (cfdata->remember_border) 
      {
-	if (!cfdata->border->remember) 
+	E_Remember *rem = cfdata->border->remember;
+
+	if (!rem) 
 	  {
-             cfdata->border->remember = e_remember_new();
-             if (cfdata->border->remember)
-	       e_remember_use(cfdata->border->remember);
+             rem = e_remember_new();
+             if (rem)
+	       e_remember_use(rem);
 	  }
-	if (cfdata->border->remember) 
+	if (rem) 
 	  {
-	     cfdata->border->remember->apply |= E_REMEMBER_APPLY_BORDER;
-             cfdata->border->remember->match = e_remember_default_match(cfdata->border);
-             e_remember_update(cfdata->border->remember, cfdata->border);
+	     rem->apply |= E_REMEMBER_APPLY_BORDER;
+             e_remember_default_match_set(rem, cfdata->border);
+	     if (rem->prop.border) eina_stringshare_del(rem->prop.border);
+	     rem->prop.border = eina_stringshare_add(cfdata->border->bordername);
+	     cfdata->border->remember = rem;
+             e_remember_update(cfdata->border);
 	  }
      }
    else 

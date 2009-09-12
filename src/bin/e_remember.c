@@ -135,6 +135,8 @@ e_remember_del(E_Remember *rem)
 	  }
 	return;
      }
+   else
+     _e_remember_free(rem); 
 }
 
 EAPI E_Remember *
@@ -192,40 +194,67 @@ e_remember_match_update(E_Remember *rem)
 }
 
 EAPI int
-e_remember_default_match(E_Border *bd)
+e_remember_default_match_set(E_Remember *rem, E_Border *bd)
 {
+   const char *title, *clasz, *name, *role;
+   
+   if (rem->name) eina_stringshare_del(rem->name);
+   if (rem->class) eina_stringshare_del(rem->class);
+   if (rem->title) eina_stringshare_del(rem->title);
+   if (rem->role) eina_stringshare_del(rem->role);
+   rem->name = NULL;
+   rem->class = NULL;
+   rem->title = NULL;
+   rem->role = NULL;
+
+   name = bd->client.icccm.name;
+   if (!name || name[0] == 0) name = NULL;
+   clasz = bd->client.icccm.class;
+   if (!clasz || clasz[0] == 0) clasz = NULL;
+   role = bd->client.icccm.window_role;
+   if (!role || role[0] == 0) role = NULL;
+   
    int match = E_REMEMBER_MATCH_TRANSIENT;
-   if ((bd->client.icccm.name) &&
-	 (bd->client.icccm.class) &&
-	 (bd->client.icccm.name[0] != 0) &&
-	 (bd->client.icccm.class[0] != 0))
-     match |= E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS;
-   else
-     if ((e_border_name_get(bd))[0] != 0)
-       match |= E_REMEMBER_MATCH_TITLE;
+   if (name && clasz)
+     {
+	match |= E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS;
+	rem->name = eina_stringshare_add(name);
+	rem->class = eina_stringshare_add(clasz);
+     }
+   else if ((title = e_border_name_get(bd)) && title[0])
+     {
+	match |= E_REMEMBER_MATCH_TITLE;
+	rem->title = eina_stringshare_add(title);
+     }   
+   if (role)
+     {
+	match |= E_REMEMBER_MATCH_ROLE;
+	rem->role = eina_stringshare_add(role);
+     }
 
-   if ((bd->client.icccm.window_role) &&
-	 (bd->client.icccm.window_role[0] != 0))
-     match |= E_REMEMBER_MATCH_ROLE;
-
-   if (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_UNKNOWN)
-     match |= E_REMEMBER_MATCH_TYPE;
-
+   rem->match = match;
+   
    return match;
 }
 
 EAPI void
-e_remember_update(E_Remember *rem, E_Border *bd)
+e_remember_update(E_Border *bd)
 {
-   if (!rem) return;
+   E_Remember *rem;
+   
    if (bd->new_client) return;
+   if (!bd->remember) return;
+   if (bd->remember->keep_settings) return;
+   
+   rem = bd->remember;
 
-   if (bd->remember && bd->remember->keep_settings)
-     return;
-
-   if (rem->prop.border) eina_stringshare_del(rem->prop.border);
-   rem->prop.border = NULL;
-
+   if (!(rem->name  || rem->class ||
+	 rem->title || rem->role))
+     {
+	e_remember_del(rem); 
+	return;
+     }
+   
    e_remember_match_update(rem);
 
    rem->type = bd->client.netwm.type;
@@ -252,15 +281,9 @@ e_remember_update(E_Remember *rem, E_Border *bd)
 	rem->prop.res_y = bd->zone->h;
 	rem->prop.pos_w = bd->client.w;
 	rem->prop.pos_h = bd->client.h;
-
 	rem->prop.w = bd->client.w;
 	rem->prop.h = bd->client.h;
-
 	rem->prop.layer = bd->layer;
-
-	if (bd->bordername)
-	  rem->prop.border = eina_stringshare_add(bd->bordername);
-
 	rem->prop.fullscreen = bd->fullscreen;
      }
 
@@ -720,7 +743,7 @@ _e_remember_cb_hook_eval_post_new_border(void *data, E_Border *bd)
 	     rem->match |= E_REMEMBER_MATCH_TRANSIENT;
 	     rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_BORDER;
 	     e_remember_use(rem);
-	     e_remember_update(rem, bd);
+	     e_remember_update(bd);
 	  }
      }
 }

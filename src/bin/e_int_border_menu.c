@@ -674,7 +674,7 @@ _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi)
    else
      bd->user_skip_winlist = 0;
    bd->changed = 1;
-   if (bd->remember) e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 static void
@@ -689,7 +689,7 @@ _e_border_menu_cb_skip_pager(void *data, E_Menu *m, E_Menu_Item *mi)
    else
      bd->client.netwm.state.skip_pager = 0;
    bd->changed = 1;
-   if (bd->remember) e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 static void
@@ -704,7 +704,7 @@ _e_border_menu_cb_skip_taskbar(void *data, E_Menu *m, E_Menu_Item *mi)
    else
      bd->client.netwm.state.skip_taskbar = 0;
    bd->changed = 1;
-   if (bd->remember) e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 static void 

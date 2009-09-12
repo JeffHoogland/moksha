@@ -435,7 +435,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    if (rem)
      {
-	rem->match = e_remember_default_match(cfdata->border);
+	e_remember_default_match_set(rem, cfdata->border);
 
 	if (cfdata->mode == MODE_GEOMETRY)
 	  rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE;
@@ -453,10 +453,12 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	cfdata->remember.apply_desktop_file = 0;
 	_remember_update(rem, cfdata);
 	_check_matches(cfdata, 1);
-	e_remember_update(rem, cfdata->border);
+
+	cfdata->border->remember = rem;
+	e_remember_update(cfdata->border);
      }
 
-   cfdata->border->remember = rem;
+
 
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -583,10 +585,10 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (cfdata->remember.set_focus_on_start) rem->apply |= E_REMEMBER_SET_FOCUS_ON_START;
 
 	_remember_update(rem, cfdata);
-	cfdata->border->remember = rem;
 	_check_matches(cfdata, 1);
 	rem->keep_settings = 0;
-	e_remember_update(rem, cfdata->border);
+	cfdata->border->remember = rem;
+	e_remember_update(cfdata->border);
 	rem->keep_settings = cfdata->remember.keep_settings;
      }
 

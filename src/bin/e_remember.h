@@ -108,8 +108,8 @@ EAPI void         e_remember_del(E_Remember *rem);
 EAPI E_Remember  *e_remember_find(E_Border *bd);
 EAPI E_Remember  *e_remember_find_usable(E_Border *bd);
 EAPI void         e_remember_match_update(E_Remember *rem);
-EAPI void         e_remember_update(E_Remember *rem, E_Border *bd);
-EAPI int	  e_remember_default_match(E_Border *bd);
+EAPI void         e_remember_update(E_Border *bd);
+EAPI int	  e_remember_default_match_set(E_Remember *rem, E_Border *bd);
     
 #endif
 #endif

@@ -670,8 +670,7 @@ e_border_zone_set(E_Border *bd, E_Zone *zone)
    ecore_event_add(E_EVENT_BORDER_ZONE_SET, ev, _e_border_event_border_zone_set_free, NULL);
 
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ZONE, &bd->zone->num, 1);
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -713,8 +712,7 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
 	     e_border_desk_set(child, bd->desk);
 	  }
      }
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -1311,8 +1309,7 @@ e_border_raise(E_Border *bd)
      }
 
    ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -1397,8 +1394,7 @@ e_border_lower(E_Border *bd)
      }
 
    ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -1452,8 +1448,7 @@ e_border_stack_above(E_Border *bd, E_Border *above)
      }
 
    ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -1507,8 +1502,7 @@ e_border_stack_below(E_Border *bd, E_Border *below)
      }
 
    ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -1918,8 +1912,7 @@ e_border_shade(E_Border *bd, E_Direction dir)
 	  }
 
      }
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -2027,8 +2020,7 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 	  }
 
      }
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -2188,8 +2180,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	                             bd->maximized & E_MAXIMIZE_VERTICAL);
 	
      }
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+     e_remember_update(bd);
 }
 
 EAPI void
@@ -2284,8 +2275,7 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	e_hints_window_maximized_set(bd, bd->maximized & E_MAXIMIZE_HORIZONTAL,
 	                             bd->maximized & E_MAXIMIZE_VERTICAL);
      }
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -2379,8 +2369,7 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 	bd->client.border.changed = 1;
 	bd->changed = 1;
      }
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -2414,8 +2403,7 @@ e_border_unfullscreen(E_Border *bd)
 	bd->client.border.changed = 1;
 	bd->changed = 1;
      }
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -2454,8 +2442,7 @@ e_border_iconify(E_Border *bd)
 	     e_border_iconify(child);
 	  }
      }
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -2497,8 +2484,7 @@ e_border_uniconify(E_Border *bd)
 	     e_border_uniconify(child);
 	  }
      }
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -2531,8 +2517,7 @@ e_border_stick(E_Border *bd)
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_stick_event");
    ecore_event_add(E_EVENT_BORDER_STICK, ev, _e_border_event_border_stick_free, NULL);
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -2566,8 +2551,7 @@ e_border_unstick(E_Border *bd)
    ecore_event_add(E_EVENT_BORDER_UNSTICK, ev, _e_border_event_border_unstick_free, NULL);
 
    e_border_desk_set(bd, e_desk_current_get(bd->zone));
-   if (bd->remember)
-     e_remember_update(bd->remember, bd);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -6346,8 +6330,8 @@ _e_border_eval0(E_Border *bd)
 	  }
      }
    
-   if ((bd->remember) && (rem_change))
-     e_remember_update(bd->remember, bd);
+   if (rem_change)
+     e_remember_update(bd);
    
    if (change_urgent)
      {
@@ -7226,8 +7210,8 @@ _e_border_eval(E_Border *bd)
 	bd->need_fullscreen = 0;
      }
  
-   if ((bd->remember) && (rem_change))
-     e_remember_update(bd->remember, bd);
+   if (rem_change)
+     e_remember_update(bd);
 
    if (send_event) // FIXME: send only if a property changed - above need to
      // check on that. for now - always send.

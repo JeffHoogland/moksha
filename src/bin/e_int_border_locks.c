@@ -192,8 +192,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (cfdata->border->remember)
 	  {
 	     cfdata->border->remember->apply |= E_REMEMBER_APPLY_LOCKS;
-             cfdata->border->remember->match = e_remember_default_match(cfdata->border);
-	     e_remember_update(cfdata->border->remember, cfdata->border);
+             e_remember_default_match_set(cfdata->border->remember, cfdata->border);
+	     e_remember_update(cfdata->border);
 	  }
      }
    else
@@ -252,8 +252,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (cfdata->border->remember)
 	  {
 	     cfdata->border->remember->apply |= E_REMEMBER_APPLY_LOCKS;
-             cfdata->border->remember->match = e_remember_default_match(cfdata->border);
-	     e_remember_update(cfdata->border->remember, cfdata->border);
+             e_remember_default_match_set(cfdata->border->remember, cfdata->border);
+	     e_remember_update(cfdata->border);
 	  }
      }
    else
