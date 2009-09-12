@@ -679,6 +679,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
      {
 	cfdata->remember.match_type = 0;
      }
+   ob = e_widget_label_add(evas, _("wildcard matches are allowed"));
+   e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Transience"), &(cfdata->remember.match_transient));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 1, 1, 1);

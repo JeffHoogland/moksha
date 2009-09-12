@@ -5615,7 +5615,6 @@ _e_border_eval0(E_Border *bd)
 {
    int change_urgent = 0;
    int rem_change = 0;
-   int zx, zy, zw, zh;
    
    if (e_object_is_del(E_OBJECT(bd)))
      {
@@ -5624,8 +5623,7 @@ _e_border_eval0(E_Border *bd)
      }
    
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_FETCH, bd);
-   if (bd->zone)
-     e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.client_leader)
      {
@@ -6154,7 +6152,6 @@ _e_border_eval0(E_Border *bd)
 
    if (bd->new_client)
      {
-	E_Remember *rem = NULL;
 	E_Event_Border_Add *ev;
 
 	ev = calloc(1, sizeof(E_Event_Border_Add));
@@ -6165,244 +6162,9 @@ _e_border_eval0(E_Border *bd)
 
 	if ((!bd->lock_border) || (!bd->client.border.name))
 	  bd->client.border.changed = 1;
-	if (!bd->remember)
-	  {
-	     rem = e_remember_find_usable(bd);
-	     if (rem)
-	       {
-		  bd->remember = rem;
-		  e_remember_use(rem);
-	       }
-	  }
-	if (bd->remember)
-	  {
-	     rem  = bd->remember;
-
-	     if (rem->apply & E_REMEMBER_APPLY_ZONE)
-	       {
-		  E_Zone *zone;
-		  
-		  zone = e_container_zone_number_get(bd->zone->container, rem->prop.zone);
-		  if (zone)
-		    e_border_zone_set(bd, zone);
-		  e_zone_useful_geometry_get(zone, &zx, &zy, &zw, &zh);
-	       }
-	     if (rem->apply & E_REMEMBER_APPLY_DESKTOP)
-	       {
-		  E_Desk *desk;
-		  
-		  desk = e_desk_at_xy_get(bd->zone, rem->prop.desk_x, rem->prop.desk_y);
-		  if (desk) 
-		    {
-		       e_border_desk_set(bd, desk);
-		       if (e_config->desk_auto_switch)
-			 e_desk_show(desk);
-		    }
-	       }
-	     if (rem->apply & E_REMEMBER_APPLY_SIZE)
-	       {
-		  bd->client.w = rem->prop.w;
-		  bd->client.h = rem->prop.h;
-		  /* we can trust internal windows */
-		  if (bd->internal)
-		    {
-		       if (bd->zone->w != rem->prop.res_x)
-			 {	 
-			    if (bd->client.w > (bd->zone->w - 64))
-			      bd->client.w = bd->zone->w - 64;
-			 }
-		       if (bd->zone->h != rem->prop.res_y)
-			 {	 
-			    if (bd->client.h > (bd->zone->h - 64))
-			      bd->client.h = bd->zone->h - 64;
-			 }
-		       if (bd->client.icccm.min_w > bd->client.w)
-			 bd->client.w = bd->client.icccm.min_w;
-		       if (bd->client.icccm.max_w < bd->client.w)
-			 bd->client.w = bd->client.icccm.max_w;
-		       if (bd->client.icccm.min_h > bd->client.h)
-			 bd->client.h = bd->client.icccm.min_h;
-		       if (bd->client.icccm.max_h < bd->client.h)
-			 bd->client.h = bd->client.icccm.max_h;
-		    }
-		  bd->w = bd->client.w + bd->client_inset.l + bd->client_inset.r;
-		  bd->h = bd->client.h + bd->client_inset.t + bd->client_inset.b;
-		  bd->changes.size = 1;
-		  bd->changes.shape = 1;
-	       }
-	     if ((rem->apply & E_REMEMBER_APPLY_POS) && (!bd->re_manage))
-	       {
-		  bd->x = rem->prop.pos_x;
-		  bd->y = rem->prop.pos_y;
-		  if (bd->zone->w != rem->prop.res_x)
-		    {
-		       int px;
-		       
-		       px = bd->x + (bd->w / 2);
-		       if (px < ((rem->prop.res_x * 1) / 3))
-			 {
-			    if (bd->zone->w >= (rem->prop.res_x / 3))
-			      bd->x = rem->prop.pos_x;
-			    else
-			      bd->x = ((rem->prop.pos_x - 0) * bd->zone->w) / 
-			      (rem->prop.res_x / 3);
-			 }
-		       else if (px < ((rem->prop.res_x * 2) / 3))
-			 {
-			    if (bd->zone->w >= (rem->prop.res_x / 3))
-			      bd->x = (bd->zone->w / 2) + 
-			      (px - (rem->prop.res_x / 2)) -
-			      (bd->w / 2);
-			    else
-			      bd->x = (bd->zone->w / 2) + 
-			      (((px - (rem->prop.res_x / 2)) * bd->zone->w) / 
-			       (rem->prop.res_x / 3)) -
-			      (bd->w / 2);
-			 }
-		       else
-			 {
-			    if (bd->zone->w >= (rem->prop.res_x / 3))
-			      bd->x = bd->zone->w + 
-			      rem->prop.pos_x - rem->prop.res_x +
-			      (rem->prop.w - bd->client.w);
-			    else
-			      bd->x = bd->zone->w + 
-			      (((rem->prop.pos_x - rem->prop.res_x) * bd->zone->w) /
-			       (rem->prop.res_x / 3)) +
-			      (rem->prop.w - bd->client.w);
-			 }
-		       if ((rem->prop.pos_x >= 0) && (bd->x < 0))
-			 bd->x = 0;
-		       else if (((rem->prop.pos_x + rem->prop.w) < rem->prop.res_x) &&
-				((bd->x + bd->w) > bd->zone->w))
-			 bd->x = bd->zone->w - bd->w;
-		    }
-		  if (bd->zone->h != rem->prop.res_y)
-		    {
-		       int py;
-		       
-		       py = bd->y + (bd->h / 2);
-		       if (py < ((rem->prop.res_y * 1) / 3))
-			 {
-			    if (bd->zone->h >= (rem->prop.res_y / 3))
-			      bd->y = rem->prop.pos_y;
-			    else
-			      bd->y = ((rem->prop.pos_y - 0) * bd->zone->h) / 
-			      (rem->prop.res_y / 3);
-			 }
-		       else if (py < ((rem->prop.res_y * 2) / 3))
-			 {
-			    if (bd->zone->h >= (rem->prop.res_y / 3))
-			      bd->y = (bd->zone->h / 2) + 
-			      (py - (rem->prop.res_y / 2)) -
-			      (bd->h / 2);
-			    else
-			      bd->y = (bd->zone->h / 2) + 
-			      (((py - (rem->prop.res_y / 2)) * bd->zone->h) / 
-			       (rem->prop.res_y / 3)) -
-			      (bd->h / 2);
-			 }
-		       else
-			 {
-			    if (bd->zone->h >= (rem->prop.res_y / 3))
-			      bd->y = bd->zone->h + 
-			      rem->prop.pos_y - rem->prop.res_y +
-			      (rem->prop.h - bd->client.h);
-			    else
-			      bd->y = bd->zone->h + 
-			      (((rem->prop.pos_y - rem->prop.res_y) * bd->zone->h) /
-			       (rem->prop.res_y / 3)) +
-			      (rem->prop.h - bd->client.h);
-			 }
-		       if ((rem->prop.pos_y >= 0) && (bd->y < 0))
-			 bd->y = 0;
-		       else if (((rem->prop.pos_y + rem->prop.h) < rem->prop.res_y) &&
-				((bd->y + bd->h) > bd->zone->h))
-			 bd->y = bd->zone->h - bd->h;
-		    }
-//		  if (bd->zone->w != rem->prop.res_x)
-//		    bd->x = (rem->prop.pos_x * bd->zone->w) / rem->prop.res_x;
-//		  if (bd->zone->h != rem->prop.res_y)
-//		    bd->y = (rem->prop.pos_y * bd->zone->h) / rem->prop.res_y;
-		  bd->x += bd->zone->x;
-		  bd->y += bd->zone->y;
-		  bd->placed = 1;
-		  bd->changes.pos = 1;
-	       }
-	     if (rem->apply & E_REMEMBER_APPLY_LAYER)
-	       {
-		  bd->layer = rem->prop.layer;
-		  if (bd->layer == 100)
-		    e_hints_window_stacking_set(bd, E_STACKING_NONE);
-		  else if (bd->layer == 150)
-		    e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
-		  e_container_border_raise(bd);
-	       }
-	     if (rem->apply & E_REMEMBER_APPLY_BORDER)
-	       {
-		  if (rem->prop.border)
-		    {
-		       if (bd->bordername) eina_stringshare_del(bd->bordername);
-		       if (rem->prop.border) bd->bordername = eina_stringshare_add(rem->prop.border);
-		       else bd->bordername = NULL;
-		       bd->client.border.changed = 1;
-		    }
-	       }
-	     if (rem->apply & E_REMEMBER_APPLY_FULLSCREEN)
-	       {
-		  if (rem->prop.fullscreen)
-		    e_border_fullscreen(bd, e_config->fullscreen_policy);
-	       }
-	     if (rem->apply & E_REMEMBER_APPLY_STICKY)
-	       {
-		  if (rem->prop.sticky) e_border_stick(bd);
-	       }
-	     if (rem->apply & E_REMEMBER_APPLY_SHADE)
-	       {
-		  if (rem->prop.shaded >= 100)
-		    e_border_shade(bd, rem->prop.shaded - 100);
-		  else if (rem->prop.shaded >= 50)
-		    e_border_unshade(bd, rem->prop.shaded - 50);
-	       }
-	     if (rem->apply & E_REMEMBER_APPLY_LOCKS)
-	       {
-		  bd->lock_user_location = rem->prop.lock_user_location;
-		  bd->lock_client_location = rem->prop.lock_client_location;
-		  bd->lock_user_size = rem->prop.lock_user_size;
-		  bd->lock_client_size = rem->prop.lock_client_size;
-		  bd->lock_user_stacking = rem->prop.lock_user_stacking;
-		  bd->lock_client_stacking = rem->prop.lock_client_stacking;
-		  bd->lock_user_iconify = rem->prop.lock_user_iconify;
-		  bd->lock_client_iconify = rem->prop.lock_client_iconify;
-		  bd->lock_user_desk = rem->prop.lock_user_desk;
-		  bd->lock_client_desk = rem->prop.lock_client_desk;
-		  bd->lock_user_sticky = rem->prop.lock_user_sticky;
-		  bd->lock_client_sticky = rem->prop.lock_client_sticky;
-		  bd->lock_user_shade = rem->prop.lock_user_shade;
-		  bd->lock_client_shade = rem->prop.lock_client_shade;
-		  bd->lock_user_maximize = rem->prop.lock_user_maximize;
-		  bd->lock_client_maximize = rem->prop.lock_client_maximize;
-		  bd->lock_user_fullscreen = rem->prop.lock_user_fullscreen;
-		  bd->lock_client_fullscreen = rem->prop.lock_client_fullscreen;
-		  bd->lock_border = rem->prop.lock_border;
-		  bd->lock_close = rem->prop.lock_close;
-		  bd->lock_focus_in = rem->prop.lock_focus_in;
-		  bd->lock_focus_out = rem->prop.lock_focus_out;
-		  bd->lock_life = rem->prop.lock_life;
-	       }
-	     if (rem->apply & E_REMEMBER_APPLY_SKIP_WINLIST)
-	       bd->user_skip_winlist = rem->prop.skip_winlist;
-	     if (rem->apply & E_REMEMBER_APPLY_SKIP_PAGER)
-	       bd->client.netwm.state.skip_pager = rem->prop.skip_pager;
-	     if (rem->apply & E_REMEMBER_APPLY_SKIP_TASKBAR)
-	       bd->client.netwm.state.skip_taskbar = rem->prop.skip_taskbar;
-	     if (rem->apply & E_REMEMBER_APPLY_ICON_PREF)
-	       bd->icon_preference = rem->prop.icon_preference;
-	     if (rem->apply & E_REMEMBER_SET_FOCUS_ON_START)
-	       bd->want_focus = 1;
-	  }
      }
 
+   /* PRE_POST_FETCH calls e_remember apply for new client */
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_POST_FETCH, bd);
    _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_FETCH, bd);
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_BORDER_ASSIGN, bd);
@@ -6771,13 +6533,11 @@ _e_border_eval(E_Border *bd)
 	     free(pnd);
 	  }
 
-     	/* Recreate state */
+	/* Recreate state */
 	e_hints_window_init(bd);
-	
-        if ((bd->client.e.state.centered) && 
+	if ((bd->client.e.state.centered) && 
 	    ((!bd->remember) ||
-	     ((bd->remember) && 
-	      (!(bd->remember->apply & E_REMEMBER_APPLY_POS)))))
+	     ((bd->remember) && (!(bd->remember->apply & E_REMEMBER_APPLY_POS)))))
 	  {
 	     bd->x = zx + (zw - bd->w) / 2;
 	     bd->y = zy + (zh - bd->h) / 2;
@@ -6785,23 +6545,6 @@ _e_border_eval(E_Border *bd)
 	     bd->placed = 1;
 	  }
 
-	if ((bd->internal) && (!bd->remember) && 
-	    (e_config->remember_internal_windows) &&
-	    (!bd->internal_no_remember))
-	  {
-	     E_Remember *rem;
-	     
-	     rem = e_remember_new();
-	     if (rem)
-	       {
-		  rem->match = E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT;
-		  rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_BORDER;
-		  bd->remember = rem;
-		  e_remember_use(rem);
-		  e_remember_update(rem, bd);
-	       }
-	  }
-	
 	if (bd->internal_ecore_evas)
 	  ecore_evas_managed_move(bd->internal_ecore_evas,
 				  bd->x + bd->fx.x + bd->client_inset.l,
@@ -6838,7 +6581,7 @@ _e_border_eval(E_Border *bd)
 	     if ((zone) && (zone != bd->zone))
 	       {
 		  e_border_zone_set(bd, zone);
-		  e_zone_useful_geometry_get(zone, &zx, &zy, &zw, &zh);
+		  /* e_zone_useful_geometry_get(zone, &zx, &zy, &zw, &zh); */
 	       }
 	  }
      }
