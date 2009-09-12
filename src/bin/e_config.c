@@ -328,6 +328,7 @@ e_config_init(void)
 #define D _e_config_remember_edd
    E_CONFIG_VAL(D, T, match, INT);
    E_CONFIG_VAL(D, T, apply_first_only, UCHAR);
+   E_CONFIG_VAL(D, T, keep_settings, UCHAR);
    E_CONFIG_VAL(D, T, name, STR);
    E_CONFIG_VAL(D, T, class, STR);
    E_CONFIG_VAL(D, T, title, STR);
@@ -381,7 +382,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, prop.head, INT);
    E_CONFIG_VAL(D, T, prop.command, STR);
    E_CONFIG_VAL(D, T, prop.icon_preference, UCHAR);
-   
+   E_CONFIG_VAL(D, T, prop.desktop_file, STR);
+
    _e_config_color_class_edd = E_CONFIG_DD_NEW("E_Color_Class", E_Color_Class);
 #undef T
 #undef D

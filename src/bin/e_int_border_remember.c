@@ -53,6 +53,7 @@ struct _E_Config_Dialog_Data
       int apply_run;
       int apply_icon_pref;
       int set_focus_on_start;
+      int keep_settings;
    } remember;
 };
 
@@ -168,6 +169,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (rem)
      {
 	if (rem->apply_first_only) cfdata->remember.apply_first_only = 1;
+	if (rem->keep_settings) cfdata->remember.keep_settings = 1;
 	if (rem->match & E_REMEMBER_MATCH_NAME)         cfdata->remember.match_name = 1;
 	if (rem->match & E_REMEMBER_MATCH_CLASS)        cfdata->remember.match_class = 1;
 	if (rem->match & E_REMEMBER_MATCH_TITLE)        cfdata->remember.match_title = 1;
@@ -501,9 +503,10 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
 
    if (rem)
-     {
+     {	
 	rem->apply = 0;
 	rem->match = 0;
+	rem->apply_first_only = cfdata->remember.apply_first_only;
 	if (cfdata->remember.match_name)         rem->match |= E_REMEMBER_MATCH_NAME;
 	if (cfdata->remember.match_class)        rem->match |= E_REMEMBER_MATCH_CLASS;
 	if (cfdata->remember.match_title)        rem->match |= E_REMEMBER_MATCH_TITLE;
@@ -527,13 +530,12 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (cfdata->remember.apply_icon_pref)    rem->apply |= E_REMEMBER_APPLY_ICON_PREF;
 	if (cfdata->remember.set_focus_on_start) rem->apply |= E_REMEMBER_SET_FOCUS_ON_START;
 
-	rem->apply_first_only = cfdata->remember.apply_first_only;
-
 	_remember_update(rem, cfdata);
-
 	cfdata->border->remember = rem;
-
+	
+	rem->keep_settings = 0;
 	e_remember_update(rem, cfdata->border);
+	rem->keep_settings = cfdata->remember.keep_settings;
      }
 
    e_config_save_queue();
@@ -667,14 +669,17 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_check_add(evas, _("Match only one window"), &(cfdata->remember.apply_first_only));
    e_widget_table_object_append(o, ob, 0, 1, 1, 1, 1, 1, 1, 1);
 
+   ob = e_widget_check_add(evas, _("Always focus on start"), &(cfdata->remember.set_focus_on_start));
+   e_widget_table_object_append(o, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+
+   ob = e_widget_check_add(evas, _("Keep current properties"), &(cfdata->remember.keep_settings));
+   e_widget_table_object_append(o, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+   
    if (cfdata->command)
      {
 	ob = e_widget_check_add(evas, _("Start this program on login"), &(cfdata->remember.apply_run));
-	e_widget_table_object_append(o, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+	e_widget_table_object_append(o, ob, 1, 3, 1, 1, 1, 1, 1, 1);
      }
-
-   ob = e_widget_check_add(evas, _("Always focus on start"), &(cfdata->remember.set_focus_on_start));
-   e_widget_table_object_append(o, ob, 1, 1, 1, 1, 1, 1, 1, 1);
 
    return o;
 }

@@ -204,6 +204,9 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    if (!rem) return;
    if (bd->new_client) return;
 
+   if (bd->remember && bd->remember->keep_settings)
+     return;
+   
    if (rem->prop.border) eina_stringshare_del(rem->prop.border);
    rem->prop.border = NULL;
    
