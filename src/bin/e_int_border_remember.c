@@ -584,6 +584,11 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (cfdata->remember.apply_icon_pref)    rem->apply |= E_REMEMBER_APPLY_ICON_PREF;
 	if (cfdata->remember.set_focus_on_start) rem->apply |= E_REMEMBER_SET_FOCUS_ON_START;
 
+	if (bd->client.icccm.transient_for != 0)
+	  rem->transient = 1;
+	else
+	  rem->transient = 0;
+
 	_remember_update(rem, cfdata);
 	_check_matches(cfdata, 1);
 	rem->keep_settings = 0;

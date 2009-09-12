@@ -232,6 +232,11 @@ e_remember_default_match_set(E_Remember *rem, E_Border *bd)
 	rem->role = eina_stringshare_add(role);
      }
 
+   if (bd->client.icccm.transient_for != 0)
+     rem->transient = 1;
+   else
+     rem->transient = 0;
+
    rem->match = match;
    
    return match;
@@ -258,11 +263,6 @@ e_remember_update(E_Border *bd)
    e_remember_match_update(rem);
 
    rem->type = bd->client.netwm.type;
-
-   if (bd->client.icccm.transient_for != 0)
-     rem->transient = 1;
-   else
-     rem->transient = 0;
 
    if (bd->fullscreen)
      {
