@@ -92,6 +92,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    E_Remember *rem;
 
    bd = cfdata->border;
+   rem = bd->remember;
 
    if (!bd->remember) cfdata->mode = MODE_NOTHING;
    else if ((cfdata->remember.apply_pos) && (cfdata->remember.apply_size) &&
@@ -163,8 +164,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      done:
 	cfdata->command = strdup(buf);
      }
-
-   rem = bd->remember;
 
    if (rem)
      {
@@ -403,7 +402,8 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
-   E_Remember *rem;
+   E_Border *bd = cfdata->border;
+   E_Remember *rem = bd->remember;
 
    if (!((cfdata->remember.apply_pos) || (cfdata->remember.apply_size) ||
 	 (cfdata->remember.apply_locks) || (cfdata->remember.apply_layer) ||
@@ -414,10 +414,10 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	 (cfdata->remember.apply_run) || (cfdata->remember.apply_icon_pref) ||
 	 (cfdata->remember.set_focus_on_start) || (cfdata->remember.apply_fullscreen)))
      {
-	if (cfdata->border->remember)
+	if (rem)
 	  {
-	     e_remember_unuse(cfdata->border->remember);
-	     e_remember_del(cfdata->border->remember);
+	     e_remember_unuse(rem);
+	     e_remember_del(rem);
 	     cfdata->border->remember = NULL;
 	  }
 	e_config_save_queue();
@@ -427,9 +427,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->remember.match_name) cfdata->remember.match_class = 1;
    else cfdata->remember.match_class = 0;
 
-   if (!((cfdata->remember.match_name) || (cfdata->remember.match_class) ||
+   if (!((cfdata->remember.match_name)  || (cfdata->remember.match_class) ||
 	 (cfdata->remember.match_title) || (cfdata->remember.match_role) ||
-	 (cfdata->remember.match_type) || (cfdata->remember.match_transient)))
+	 (cfdata->remember.match_type)  || (cfdata->remember.match_transient)))
      {
 	E_Dialog *dia;
 
@@ -452,11 +452,11 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	int matchflags = 0;
 
-	if (cfdata->remember.match_name) matchflags |= E_REMEMBER_MATCH_NAME;
+	if (cfdata->remember.match_name)  matchflags |= E_REMEMBER_MATCH_NAME;
 	if (cfdata->remember.match_class) matchflags |= E_REMEMBER_MATCH_CLASS;
 	if (cfdata->remember.match_title) matchflags |= E_REMEMBER_MATCH_TITLE;
-	if (cfdata->remember.match_role) matchflags |= E_REMEMBER_MATCH_ROLE;
-	if (cfdata->remember.match_type) matchflags |= E_REMEMBER_MATCH_TYPE;
+	if (cfdata->remember.match_role)  matchflags |= E_REMEMBER_MATCH_ROLE;
+	if (cfdata->remember.match_type)  matchflags |= E_REMEMBER_MATCH_TYPE;
 	if (cfdata->remember.match_transient) matchflags |= E_REMEMBER_MATCH_TRANSIENT;
 	if ((!cfdata->remember.apply_first_only) &&
 	    (_check_matches(cfdata->border, matchflags) > 1))
@@ -492,7 +492,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     return 0;
 	  }
      }
-   rem = cfdata->border->remember;
 
    if (!rem)
      {
@@ -500,45 +499,42 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (rem)
 	   e_remember_use(rem);
      }
+
    if (rem)
      {
 	rem->apply = 0;
 	rem->match = 0;
-	if (cfdata->remember.match_name) rem->match |= E_REMEMBER_MATCH_NAME;
-	if (cfdata->remember.match_class) rem->match |= E_REMEMBER_MATCH_CLASS;
-	if (cfdata->remember.match_title) rem->match |= E_REMEMBER_MATCH_TITLE;
-	if (cfdata->remember.match_role) rem->match |= E_REMEMBER_MATCH_ROLE;
-	if (cfdata->remember.match_type) rem->match |= E_REMEMBER_MATCH_TYPE;
-	if (cfdata->remember.match_transient) rem->match |= E_REMEMBER_MATCH_TRANSIENT;
-	if (cfdata->remember.apply_pos) rem->apply |= E_REMEMBER_APPLY_POS;
-	if (cfdata->remember.apply_size) rem->apply |= E_REMEMBER_APPLY_SIZE;
-	if (cfdata->remember.apply_layer) rem->apply |= E_REMEMBER_APPLY_LAYER;
-	if (cfdata->remember.apply_locks) rem->apply |= E_REMEMBER_APPLY_LOCKS;
-	if (cfdata->remember.apply_border) rem->apply |= E_REMEMBER_APPLY_BORDER;
-	if (cfdata->remember.apply_sticky) rem->apply |= E_REMEMBER_APPLY_STICKY;
-	if (cfdata->remember.apply_desktop) rem->apply |= E_REMEMBER_APPLY_DESKTOP;
-	if (cfdata->remember.apply_shade) rem->apply |= E_REMEMBER_APPLY_SHADE;
-	if (cfdata->remember.apply_fullscreen) rem->apply |= E_REMEMBER_APPLY_FULLSCREEN;
-	if (cfdata->remember.apply_zone) rem->apply |= E_REMEMBER_APPLY_ZONE;
+	if (cfdata->remember.match_name)         rem->match |= E_REMEMBER_MATCH_NAME;
+	if (cfdata->remember.match_class)        rem->match |= E_REMEMBER_MATCH_CLASS;
+	if (cfdata->remember.match_title)        rem->match |= E_REMEMBER_MATCH_TITLE;
+	if (cfdata->remember.match_role)         rem->match |= E_REMEMBER_MATCH_ROLE;
+	if (cfdata->remember.match_type)         rem->match |= E_REMEMBER_MATCH_TYPE;
+	if (cfdata->remember.match_transient)    rem->match |= E_REMEMBER_MATCH_TRANSIENT;
+	if (cfdata->remember.apply_pos)          rem->apply |= E_REMEMBER_APPLY_POS;
+	if (cfdata->remember.apply_size)         rem->apply |= E_REMEMBER_APPLY_SIZE;
+	if (cfdata->remember.apply_layer)        rem->apply |= E_REMEMBER_APPLY_LAYER;
+	if (cfdata->remember.apply_locks)        rem->apply |= E_REMEMBER_APPLY_LOCKS;
+	if (cfdata->remember.apply_border)       rem->apply |= E_REMEMBER_APPLY_BORDER;
+	if (cfdata->remember.apply_sticky)       rem->apply |= E_REMEMBER_APPLY_STICKY;
+	if (cfdata->remember.apply_desktop)      rem->apply |= E_REMEMBER_APPLY_DESKTOP;
+	if (cfdata->remember.apply_shade)        rem->apply |= E_REMEMBER_APPLY_SHADE;
+	if (cfdata->remember.apply_fullscreen)   rem->apply |= E_REMEMBER_APPLY_FULLSCREEN;
+	if (cfdata->remember.apply_zone)         rem->apply |= E_REMEMBER_APPLY_ZONE;
 	if (cfdata->remember.apply_skip_winlist) rem->apply |= E_REMEMBER_APPLY_SKIP_WINLIST;
-	if (cfdata->remember.apply_skip_pager) rem->apply |= E_REMEMBER_APPLY_SKIP_PAGER;
+	if (cfdata->remember.apply_skip_pager)   rem->apply |= E_REMEMBER_APPLY_SKIP_PAGER;
 	if (cfdata->remember.apply_skip_taskbar) rem->apply |= E_REMEMBER_APPLY_SKIP_TASKBAR;
-	if (cfdata->remember.apply_run) rem->apply |= E_REMEMBER_APPLY_RUN;
-	if (cfdata->remember.apply_icon_pref) rem->apply |= E_REMEMBER_APPLY_ICON_PREF;
+	if (cfdata->remember.apply_run)          rem->apply |= E_REMEMBER_APPLY_RUN;
+	if (cfdata->remember.apply_icon_pref)    rem->apply |= E_REMEMBER_APPLY_ICON_PREF;
 	if (cfdata->remember.set_focus_on_start) rem->apply |= E_REMEMBER_SET_FOCUS_ON_START;
 
 	rem->apply_first_only = cfdata->remember.apply_first_only;
 
 	_remember_update(rem, cfdata);
-     }
 
-   if (rem && cfdata->border)
-     {
-	e_remember_update(rem, cfdata->border);
 	cfdata->border->remember = rem;
+
+	e_remember_update(rem, cfdata->border);
      }
-   else if (rem)
-     e_remember_match_update(rem);
 
    e_config_save_queue();
    return 1; /* Apply was OK */
