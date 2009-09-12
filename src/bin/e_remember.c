@@ -203,30 +203,10 @@ e_remember_update(E_Remember *rem, E_Border *bd)
 {
    if (!rem) return;
    if (bd->new_client) return;
-   if (rem->name) eina_stringshare_del(rem->name);
-   if (rem->class) eina_stringshare_del(rem->class);
-   if (rem->title) eina_stringshare_del(rem->title);
-   if (rem->role) eina_stringshare_del(rem->role);
+
    if (rem->prop.border) eina_stringshare_del(rem->prop.border);
-   if (rem->prop.command) eina_stringshare_del(rem->prop.command);
-   rem->name = NULL;
-   rem->class = NULL;
-   rem->title = NULL;
-   rem->role = NULL;
    rem->prop.border = NULL;
-   rem->prop.command = NULL;
-
-   if (bd->client.icccm.name)
-     rem->name = eina_stringshare_add(bd->client.icccm.name);
-   if (bd->client.icccm.class)
-     rem->class = eina_stringshare_add(bd->client.icccm.class);
-   if (bd->client.netwm.name)
-     rem->title = eina_stringshare_add(bd->client.netwm.name);
-   else if (bd->client.icccm.title)
-     rem->title = eina_stringshare_add(bd->client.icccm.title);
-   if (bd->client.icccm.window_role)
-     rem->role = eina_stringshare_add(bd->client.icccm.window_role);
-
+   
    e_remember_match_update(rem);
 
    rem->type = bd->client.netwm.type;
@@ -306,48 +286,6 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    rem->prop.zone = bd->zone->num;
    rem->prop.head = bd->zone->container->manager->num;
 
-   if ((bd->client.icccm.command.argc > 0) &&
-       (bd->client.icccm.command.argv))
-     {
-	char buf[4096];
-	int i, j, k;
-
-	buf[0] = 0;
-	k = 0;
-	for (i = 0; i < bd->client.icccm.command.argc; i++)
-	  {
-	     if (i > 0)
-	       {
-		  buf[k] = ' ';
-		  k++;
-	       }
-	     for (j = 0; bd->client.icccm.command.argv[i][j]; j++)
-	       {
-		  if (k >= (sizeof(buf) - 10))
-		    {
-		       buf[k] = 0;
-		       goto done;
-		    }
-		  if ((bd->client.icccm.command.argv[i][j] == ' ') ||
-		      (bd->client.icccm.command.argv[i][j] == '\t') ||
-		      (bd->client.icccm.command.argv[i][j] == '\\') ||
-		      (bd->client.icccm.command.argv[i][j] == '\"') ||
-		      (bd->client.icccm.command.argv[i][j] == '\'') ||
-		      (bd->client.icccm.command.argv[i][j] == '$') ||
-		      (bd->client.icccm.command.argv[i][j] == '%'))
-		    {
-		       buf[k] = '\\';
-		       k++;
-		    }
-		  buf[k] = bd->client.icccm.command.argv[i][j];
-		  k++;
-	       }
-	  }
-	buf[k] = 0;
-	done:
-	rem->prop.command = eina_stringshare_add(buf);
-     }
-
    e_config_save_queue();
 }
 
@@ -425,16 +363,16 @@ _e_remember_find(E_Border *bd, int check_usable)
          * required, and if it is, check whether there's a match. If
          * it fails, then go to the next remember */
         if (rem->match & E_REMEMBER_MATCH_NAME &&
-            e_util_strcmp(rem->name, bd->client.icccm.name) &&
-            !e_util_both_str_empty(rem->name, bd->client.icccm.name))
+	    e_util_strcmp(rem->name, bd->client.icccm.name) &&
+	    !e_util_both_str_empty(rem->name, bd->client.icccm.name))
           continue;
         if (rem->match & E_REMEMBER_MATCH_CLASS &&
-            e_util_strcmp(rem->class, bd->client.icccm.class) &&
-            !e_util_both_str_empty(rem->class, bd->client.icccm.class))
+	    e_util_strcmp(rem->class, bd->client.icccm.class) &&
+	    !e_util_both_str_empty(rem->class, bd->client.icccm.class))
           continue;
         if (rem->match & E_REMEMBER_MATCH_TITLE &&
-            e_util_strcmp(rem->title, title) &&
-            !e_util_both_str_empty(rem->title, title))
+	    e_util_strcmp(rem->title, title) &&
+	    !e_util_both_str_empty(rem->title, title))
           continue;
         if (rem->match & E_REMEMBER_MATCH_ROLE &&
             e_util_strcmp(rem->role, bd->client.icccm.window_role) &&

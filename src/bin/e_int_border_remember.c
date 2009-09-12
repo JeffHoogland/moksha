@@ -24,6 +24,11 @@ struct _E_Config_Dialog_Data
    int mode;
    int warned;
    /*- ADVANCED -*/
+   char *name;
+   char *class;
+   char *title;
+   char *role;
+   char *command;
    struct {
       int match_name;
       int match_class;
@@ -57,7 +62,7 @@ e_int_border_remember(E_Border *bd)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
    v = E_NEW(E_Config_Dialog_View, 1);
    if (v)
       {
@@ -69,7 +74,7 @@ e_int_border_remember(E_Border *bd)
          v->advanced.apply_cfdata   = _advanced_apply_data;
          v->advanced.create_widgets = _advanced_create_widgets;
 	 v->override_auto_apply = 1;
-	 
+
          /* create config dialog for bd object/data */
          cfd = e_config_dialog_new(bd->zone->container,
 				   _("Window Remember"),
@@ -83,35 +88,13 @@ e_int_border_remember(E_Border *bd)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   if (cfdata->border->remember)
-     {
-	if (cfdata->border->remember->apply_first_only) cfdata->remember.apply_first_only = 1;
-	if (cfdata->border->remember->match & E_REMEMBER_MATCH_NAME) cfdata->remember.match_name = 1;
-	if (cfdata->border->remember->match & E_REMEMBER_MATCH_CLASS) cfdata->remember.match_class = 1;
-	if (cfdata->border->remember->match & E_REMEMBER_MATCH_TITLE) cfdata->remember.match_title = 1;
-	if (cfdata->border->remember->match & E_REMEMBER_MATCH_ROLE) cfdata->remember.match_role = 1;
-	if (cfdata->border->remember->match & E_REMEMBER_MATCH_TYPE) cfdata->remember.match_type = 1;
-	if (cfdata->border->remember->match & E_REMEMBER_MATCH_TRANSIENT) cfdata->remember.match_transient = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_POS) cfdata->remember.apply_pos = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_SIZE) cfdata->remember.apply_size = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_LAYER) cfdata->remember.apply_layer = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_LOCKS) cfdata->remember.apply_locks = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_BORDER) cfdata->remember.apply_border = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_STICKY) cfdata->remember.apply_sticky = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_DESKTOP) cfdata->remember.apply_desktop = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_SHADE) cfdata->remember.apply_shade = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_FULLSCREEN) cfdata->remember.apply_fullscreen = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_ZONE) cfdata->remember.apply_zone = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_SKIP_WINLIST) cfdata->remember.apply_skip_winlist = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_SKIP_PAGER) cfdata->remember.apply_skip_pager = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_SKIP_TASKBAR) cfdata->remember.apply_skip_taskbar = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_RUN) cfdata->remember.apply_run = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_ICON_PREF) cfdata->remember.apply_icon_pref = 1;
-	if (cfdata->border->remember->apply & E_REMEMBER_SET_FOCUS_ON_START) cfdata->remember.set_focus_on_start = 1;
+   E_Border *bd;
+   E_Remember *rem;
 
-     }
-   if (!cfdata->border->remember) cfdata->mode = MODE_NOTHING;
-   else if ((cfdata->remember.apply_pos) && (cfdata->remember.apply_size) && 
+   bd = cfdata->border;
+
+   if (!bd->remember) cfdata->mode = MODE_NOTHING;
+   else if ((cfdata->remember.apply_pos) && (cfdata->remember.apply_size) &&
 	    (cfdata->remember.apply_locks) && (cfdata->remember.apply_layer) &&
 	    (cfdata->remember.apply_border) && (cfdata->remember.apply_sticky) &&
 	    (cfdata->remember.apply_desktop) && (cfdata->remember.apply_shade) &&
@@ -119,15 +102,98 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	    (cfdata->remember.apply_skip_pager) && (cfdata->remember.apply_fullscreen) &&
 	    (cfdata->remember.apply_skip_taskbar))
      cfdata->mode = MODE_ALL;
-   else if ((cfdata->remember.apply_pos) && (cfdata->remember.apply_size) && 
+   else if ((cfdata->remember.apply_pos) && (cfdata->remember.apply_size) &&
 	    (cfdata->remember.apply_locks))
      cfdata->mode = MODE_GEOMETRY_LOCKS;
-   else if ((cfdata->remember.apply_pos) && (cfdata->remember.apply_size)) 
+   else if ((cfdata->remember.apply_pos) && (cfdata->remember.apply_size))
      cfdata->mode = MODE_GEOMETRY;
    else if ((cfdata->remember.apply_locks))
      cfdata->mode = MODE_LOCKS;
    else cfdata->mode = MODE_NOTHING;
+
+   if (bd->client.icccm.name && bd->client.icccm.name[0])
+     cfdata->name = strdup(bd->client.icccm.name);
+   if (bd->client.icccm.class && bd->client.icccm.class[0])
+     cfdata->class = strdup(bd->client.icccm.class);
+   if (bd->client.netwm.name && bd->client.netwm.name[0])
+     cfdata->title = strdup(bd->client.netwm.name);
+   else if (bd->client.icccm.title && bd->client.icccm.title[0])
+     cfdata->title = strdup(bd->client.icccm.title);
+   if (bd->client.icccm.window_role && bd->client.icccm.window_role[0])
+     cfdata->role = strdup(bd->client.icccm.window_role);
+
+   if ((bd->client.icccm.command.argc > 0) &&
+       (bd->client.icccm.command.argv))
+     {
+	char buf[4096];
+	int i, j, k;
+
+	buf[0] = 0;
+	k = 0;
+	for (i = 0; i < bd->client.icccm.command.argc; i++)
+	  {
+	     if (i > 0)
+	       {
+		  buf[k] = ' ';
+		  k++;
+	       }
+	     for (j = 0; bd->client.icccm.command.argv[i][j]; j++)
+	       {
+		  if (k >= (sizeof(buf) - 10))
+		    {
+		       buf[k] = 0;
+		       goto done;
+		    }
+		  if ((bd->client.icccm.command.argv[i][j] == ' ') ||
+		      (bd->client.icccm.command.argv[i][j] == '\t') ||
+		      (bd->client.icccm.command.argv[i][j] == '\\') ||
+		      (bd->client.icccm.command.argv[i][j] == '\"') ||
+		      (bd->client.icccm.command.argv[i][j] == '\'') ||
+		      (bd->client.icccm.command.argv[i][j] == '$') ||
+		      (bd->client.icccm.command.argv[i][j] == '%'))
+		    {
+		       buf[k] = '\\';
+		       k++;
+		    }
+		  buf[k] = bd->client.icccm.command.argv[i][j];
+		  k++;
+	       }
+	  }
+	buf[k] = 0;
+     done:
+	cfdata->command = strdup(buf);
+     }
+
+   rem = bd->remember;
+
+   if (rem)
+     {
+	if (rem->apply_first_only) cfdata->remember.apply_first_only = 1;
+	if (rem->match & E_REMEMBER_MATCH_NAME)         cfdata->remember.match_name = 1;
+	if (rem->match & E_REMEMBER_MATCH_CLASS)        cfdata->remember.match_class = 1;
+	if (rem->match & E_REMEMBER_MATCH_TITLE)        cfdata->remember.match_title = 1;
+	if (rem->match & E_REMEMBER_MATCH_ROLE)         cfdata->remember.match_role = 1;
+	if (rem->match & E_REMEMBER_MATCH_TYPE)         cfdata->remember.match_type = 1;
+	if (rem->match & E_REMEMBER_MATCH_TRANSIENT)    cfdata->remember.match_transient = 1;
+	if (rem->apply & E_REMEMBER_APPLY_POS)          cfdata->remember.apply_pos = 1;
+	if (rem->apply & E_REMEMBER_APPLY_SIZE)         cfdata->remember.apply_size = 1;
+	if (rem->apply & E_REMEMBER_APPLY_LAYER)        cfdata->remember.apply_layer = 1;
+	if (rem->apply & E_REMEMBER_APPLY_LOCKS)        cfdata->remember.apply_locks = 1;
+	if (rem->apply & E_REMEMBER_APPLY_BORDER)       cfdata->remember.apply_border = 1;
+	if (rem->apply & E_REMEMBER_APPLY_STICKY)       cfdata->remember.apply_sticky = 1;
+	if (rem->apply & E_REMEMBER_APPLY_DESKTOP)      cfdata->remember.apply_desktop = 1;
+	if (rem->apply & E_REMEMBER_APPLY_SHADE)        cfdata->remember.apply_shade = 1;
+	if (rem->apply & E_REMEMBER_APPLY_FULLSCREEN)   cfdata->remember.apply_fullscreen = 1;
+	if (rem->apply & E_REMEMBER_APPLY_ZONE)         cfdata->remember.apply_zone = 1;
+	if (rem->apply & E_REMEMBER_APPLY_SKIP_WINLIST) cfdata->remember.apply_skip_winlist = 1;
+	if (rem->apply & E_REMEMBER_APPLY_SKIP_PAGER)   cfdata->remember.apply_skip_pager = 1;
+	if (rem->apply & E_REMEMBER_APPLY_SKIP_TASKBAR) cfdata->remember.apply_skip_taskbar = 1;
+	if (rem->apply & E_REMEMBER_APPLY_RUN)          cfdata->remember.apply_run = 1;
+	if (rem->apply & E_REMEMBER_APPLY_ICON_PREF)    cfdata->remember.apply_icon_pref = 1;
+	if (rem->apply & E_REMEMBER_SET_FOCUS_ON_START) cfdata->remember.set_focus_on_start = 1;
+     }
 }
+
 
 static void *
 _create_data(E_Config_Dialog *cfd)
@@ -137,7 +203,7 @@ _create_data(E_Config_Dialog *cfd)
     * the running systems/config in the apply methods
     */
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->border = cfd->data;
    _fill_data(cfdata);
@@ -148,7 +214,13 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
-   cfdata->border->border_remember_dialog = NULL;
+   if (cfdata->name) free(cfdata->name);
+   if (cfdata->class) free(cfdata->class);
+   if (cfdata->title) free(cfdata->title);
+   if (cfdata->role) free(cfdata->role);
+   if (cfdata->command) free(cfdata->command);
+   if (cfdata->border)
+     cfdata->border->border_remember_dialog = NULL;
    free(cfdata);
 }
 
@@ -160,14 +232,14 @@ _check_matches(E_Border *bd, int matchflags)
    E_Border *bd2;
    int n = 0;
    const char *title;
-   
+
    title = e_border_name_get(bd);
    EINA_LIST_FOREACH(e_border_client_list(), l, bd2)
      {
 	int required_matches;
 	int matches;
 	const char *title2;
-	
+
         matches = 0;
 	required_matches = 0;
 	if (matchflags & E_REMEMBER_MATCH_NAME) required_matches++;
@@ -205,17 +277,41 @@ _check_matches(E_Border *bd, int matchflags)
    return n;
 }
 
+static void
+_remember_update(E_Remember *rem, E_Config_Dialog_Data *cfdata)
+{
+   if (rem->name) eina_stringshare_del(rem->name);
+   if (rem->class) eina_stringshare_del(rem->class);
+   if (rem->title) eina_stringshare_del(rem->title);
+   if (rem->role) eina_stringshare_del(rem->role);
+   if (rem->prop.command) eina_stringshare_del(rem->prop.command);
+   rem->name = NULL;
+   rem->class = NULL;
+   rem->title = NULL;
+   rem->role = NULL;
+   rem->prop.command = NULL;
+   if (cfdata->name  && cfdata->name[0])
+     rem->name = eina_stringshare_add(cfdata->name);
+   if (cfdata->class && cfdata->class[0])
+     rem->class = eina_stringshare_add(cfdata->class);
+   if (cfdata->title && cfdata->title[0])
+     rem->title = eina_stringshare_add(cfdata->title);
+   if (cfdata->role  && cfdata->role[0])
+     rem->role = eina_stringshare_add(cfdata->role);
+   if (cfdata->command && cfdata->command[0])
+     rem->prop.command = eina_stringshare_add(cfdata->command);
+}
+
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
-   
+   E_Remember *rem;
+
    if (cfdata->mode == MODE_NOTHING)
      {
 	if (cfdata->border->remember)
 	  {
-	     E_Remember *rem;
-	     
 	     rem = cfdata->border->remember;
 	     cfdata->border->remember = NULL;
 	     e_remember_unuse(rem);
@@ -227,7 +323,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (!cfdata->warned)
      {
 	int matches = 0;
-	
+
 	if ((cfdata->border->client.icccm.name) &&
 	    (cfdata->border->client.icccm.class) &&
 	    (cfdata->border->client.icccm.name[0] != 0) &&
@@ -238,7 +334,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (matches > 1)
 	  {
 	     E_Dialog *dia;
-	     
+
 	     dia = e_dialog_new(cfd->con, "E", "_border_remember_error_multi_dialog");
 	     e_dialog_title_set(dia, _("Window properties are not a unique match"));
 	     e_dialog_text_set
@@ -264,33 +360,41 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     return 0;
 	  }
      }
-   if (!cfdata->border->remember)
+
+   rem = cfdata->border->remember;
+
+   if (!rem)
      {
-	cfdata->border->remember = e_remember_new();
-	if (cfdata->border->remember)
-          e_remember_use(cfdata->border->remember);
+	rem = e_remember_new();
+	if (rem)
+	  e_remember_use(rem);
      }
 
-   if (cfdata->border->remember)
+   if (rem)
      {
-	cfdata->border->remember->match = e_remember_default_match(cfdata->border);
+	rem->match = e_remember_default_match(cfdata->border);
 
 	if (cfdata->mode == MODE_GEOMETRY)
-	  cfdata->border->remember->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE;
+	  rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE;
 	else if (cfdata->mode == MODE_LOCKS)
-	  cfdata->border->remember->apply = E_REMEMBER_APPLY_LOCKS;
+	  rem->apply = E_REMEMBER_APPLY_LOCKS;
 	else if (cfdata->mode == MODE_GEOMETRY_LOCKS)
-	  cfdata->border->remember->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_LOCKS;
+	  rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_LOCKS;
 	else if (cfdata->mode == MODE_ALL)
-	  cfdata->border->remember->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_LAYER | 
-					    E_REMEMBER_APPLY_LOCKS | E_REMEMBER_APPLY_BORDER | E_REMEMBER_APPLY_STICKY | 
-					    E_REMEMBER_APPLY_DESKTOP | E_REMEMBER_APPLY_SHADE | E_REMEMBER_APPLY_ZONE | 
+	  rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_LAYER |
+					    E_REMEMBER_APPLY_LOCKS | E_REMEMBER_APPLY_BORDER | E_REMEMBER_APPLY_STICKY |
+					    E_REMEMBER_APPLY_DESKTOP | E_REMEMBER_APPLY_SHADE | E_REMEMBER_APPLY_ZONE |
 					    E_REMEMBER_APPLY_SKIP_WINLIST | E_REMEMBER_APPLY_SKIP_PAGER | E_REMEMBER_APPLY_SKIP_TASKBAR |
 	                                    E_REMEMBER_APPLY_FULLSCREEN | E_REMEMBER_APPLY_ICON_PREF;
-	cfdata->border->remember->apply_first_only = 0;
-       e_remember_update(cfdata->border->remember, cfdata->border);
+	rem->apply_first_only = 0;
+
+	_remember_update(rem, cfdata);
+
+	e_remember_update(rem, cfdata->border);
      }
-  
+
+   cfdata->border->remember = rem;
+
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -299,8 +403,9 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
-   
-   if (!((cfdata->remember.apply_pos) || (cfdata->remember.apply_size) || 
+   E_Remember *rem;
+
+   if (!((cfdata->remember.apply_pos) || (cfdata->remember.apply_size) ||
 	 (cfdata->remember.apply_locks) || (cfdata->remember.apply_layer) ||
 	 (cfdata->remember.apply_border) || (cfdata->remember.apply_sticky) ||
 	 (cfdata->remember.apply_desktop) || (cfdata->remember.apply_shade) ||
@@ -318,7 +423,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_config_save_queue();
 	return 1;
      }
-   
+
    if (cfdata->remember.match_name) cfdata->remember.match_class = 1;
    else cfdata->remember.match_class = 0;
 
@@ -327,7 +432,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	 (cfdata->remember.match_type) || (cfdata->remember.match_transient)))
      {
 	E_Dialog *dia;
-	
+
 	dia = e_dialog_new(cfd->con, "E", "_border_remember_error_noprop_dialog");
 	e_dialog_title_set(dia, _("No match properties set"));
 	e_dialog_text_set
@@ -346,7 +451,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (!cfdata->warned)
      {
 	int matchflags = 0;
-	  
+
 	if (cfdata->remember.match_name) matchflags |= E_REMEMBER_MATCH_NAME;
 	if (cfdata->remember.match_class) matchflags |= E_REMEMBER_MATCH_CLASS;
 	if (cfdata->remember.match_title) matchflags |= E_REMEMBER_MATCH_TITLE;
@@ -357,7 +462,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	    (_check_matches(cfdata->border, matchflags) > 1))
 	  {
 	     E_Dialog *dia;
-	     
+
 	     dia = e_dialog_new(cfd->con, "E", "_border_remember_error_no_remember_dialog");
 	     e_dialog_title_set(dia, _("No match properties set"));
 	     e_dialog_text_set
@@ -387,44 +492,54 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     return 0;
 	  }
      }
+   rem = cfdata->border->remember;
 
-   if (!cfdata->border->remember)
+   if (!rem)
      {
-	cfdata->border->remember = e_remember_new();
-	if (cfdata->border->remember)
-	   e_remember_use(cfdata->border->remember);
+	rem = e_remember_new();
+	if (rem)
+	   e_remember_use(rem);
      }
-   if (cfdata->border->remember)
+   if (rem)
      {
-	cfdata->border->remember->apply = 0;
-	cfdata->border->remember->match = 0;
-	if (cfdata->remember.match_name) cfdata->border->remember->match |= E_REMEMBER_MATCH_NAME;
-	if (cfdata->remember.match_class) cfdata->border->remember->match |= E_REMEMBER_MATCH_CLASS;
-	if (cfdata->remember.match_title) cfdata->border->remember->match |= E_REMEMBER_MATCH_TITLE;
-	if (cfdata->remember.match_role) cfdata->border->remember->match |= E_REMEMBER_MATCH_ROLE;
-	if (cfdata->remember.match_type) cfdata->border->remember->match |= E_REMEMBER_MATCH_TYPE;
-	if (cfdata->remember.match_transient) cfdata->border->remember->match |= E_REMEMBER_MATCH_TRANSIENT;
-	if (cfdata->remember.apply_pos) cfdata->border->remember->apply |= E_REMEMBER_APPLY_POS;
-	if (cfdata->remember.apply_size) cfdata->border->remember->apply |= E_REMEMBER_APPLY_SIZE;
-	if (cfdata->remember.apply_layer) cfdata->border->remember->apply |= E_REMEMBER_APPLY_LAYER;
-	if (cfdata->remember.apply_locks) cfdata->border->remember->apply |= E_REMEMBER_APPLY_LOCKS;
-	if (cfdata->remember.apply_border) cfdata->border->remember->apply |= E_REMEMBER_APPLY_BORDER;
-	if (cfdata->remember.apply_sticky) cfdata->border->remember->apply |= E_REMEMBER_APPLY_STICKY;
-	if (cfdata->remember.apply_desktop) cfdata->border->remember->apply |= E_REMEMBER_APPLY_DESKTOP;
-	if (cfdata->remember.apply_shade) cfdata->border->remember->apply |= E_REMEMBER_APPLY_SHADE;
-	if (cfdata->remember.apply_fullscreen) cfdata->border->remember->apply |= E_REMEMBER_APPLY_FULLSCREEN;
-	if (cfdata->remember.apply_zone) cfdata->border->remember->apply |= E_REMEMBER_APPLY_ZONE;
-	if (cfdata->remember.apply_skip_winlist) cfdata->border->remember->apply |= E_REMEMBER_APPLY_SKIP_WINLIST;
-	if (cfdata->remember.apply_skip_pager) cfdata->border->remember->apply |= E_REMEMBER_APPLY_SKIP_PAGER;
-	if (cfdata->remember.apply_skip_taskbar) cfdata->border->remember->apply |= E_REMEMBER_APPLY_SKIP_TASKBAR;
-	if (cfdata->remember.apply_run) cfdata->border->remember->apply |= E_REMEMBER_APPLY_RUN;
-	if (cfdata->remember.apply_icon_pref) cfdata->border->remember->apply |= E_REMEMBER_APPLY_ICON_PREF;
-	if (cfdata->remember.set_focus_on_start) cfdata->border->remember->apply |= E_REMEMBER_SET_FOCUS_ON_START;
+	rem->apply = 0;
+	rem->match = 0;
+	if (cfdata->remember.match_name) rem->match |= E_REMEMBER_MATCH_NAME;
+	if (cfdata->remember.match_class) rem->match |= E_REMEMBER_MATCH_CLASS;
+	if (cfdata->remember.match_title) rem->match |= E_REMEMBER_MATCH_TITLE;
+	if (cfdata->remember.match_role) rem->match |= E_REMEMBER_MATCH_ROLE;
+	if (cfdata->remember.match_type) rem->match |= E_REMEMBER_MATCH_TYPE;
+	if (cfdata->remember.match_transient) rem->match |= E_REMEMBER_MATCH_TRANSIENT;
+	if (cfdata->remember.apply_pos) rem->apply |= E_REMEMBER_APPLY_POS;
+	if (cfdata->remember.apply_size) rem->apply |= E_REMEMBER_APPLY_SIZE;
+	if (cfdata->remember.apply_layer) rem->apply |= E_REMEMBER_APPLY_LAYER;
+	if (cfdata->remember.apply_locks) rem->apply |= E_REMEMBER_APPLY_LOCKS;
+	if (cfdata->remember.apply_border) rem->apply |= E_REMEMBER_APPLY_BORDER;
+	if (cfdata->remember.apply_sticky) rem->apply |= E_REMEMBER_APPLY_STICKY;
+	if (cfdata->remember.apply_desktop) rem->apply |= E_REMEMBER_APPLY_DESKTOP;
+	if (cfdata->remember.apply_shade) rem->apply |= E_REMEMBER_APPLY_SHADE;
+	if (cfdata->remember.apply_fullscreen) rem->apply |= E_REMEMBER_APPLY_FULLSCREEN;
+	if (cfdata->remember.apply_zone) rem->apply |= E_REMEMBER_APPLY_ZONE;
+	if (cfdata->remember.apply_skip_winlist) rem->apply |= E_REMEMBER_APPLY_SKIP_WINLIST;
+	if (cfdata->remember.apply_skip_pager) rem->apply |= E_REMEMBER_APPLY_SKIP_PAGER;
+	if (cfdata->remember.apply_skip_taskbar) rem->apply |= E_REMEMBER_APPLY_SKIP_TASKBAR;
+	if (cfdata->remember.apply_run) rem->apply |= E_REMEMBER_APPLY_RUN;
+	if (cfdata->remember.apply_icon_pref) rem->apply |= E_REMEMBER_APPLY_ICON_PREF;
+	if (cfdata->remember.set_focus_on_start) rem->apply |= E_REMEMBER_SET_FOCUS_ON_START;
 
-	cfdata->border->remember->apply_first_only = cfdata->remember.apply_first_only;
-	e_remember_update(cfdata->border->remember, cfdata->border);
+	rem->apply_first_only = cfdata->remember.apply_first_only;
+
+	_remember_update(rem, cfdata);
      }
-   
+
+   if (rem && cfdata->border)
+     {
+	e_remember_update(rem, cfdata->border);
+	cfdata->border->remember = rem;
+     }
+   else if (rem)
+     e_remember_match_update(rem);
+
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -436,7 +551,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob;
    E_Radio_Group *rg;
-   
+
    o = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->mode));
    ob = e_widget_radio_add(evas, _("Nothing"), MODE_NOTHING, rg);
@@ -458,35 +573,51 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
 
-   o = e_widget_list_add(evas, 0, 0);
-   
+   o = e_widget_table_add(evas, 0);
+
    of = e_widget_framelist_add(evas, _("Remember using"), 0);
-   if ((cfdata->border->client.icccm.name) &&
-       (cfdata->border->client.icccm.class) &&
-       (cfdata->border->client.icccm.name[0] != 0) &&
-       (cfdata->border->client.icccm.class[0] != 0))
+   if (cfdata->name)
      {
-	ob = e_widget_check_add(evas, _("Window name and class"), &(cfdata->remember.match_name));
+	ob = e_widget_check_add(evas, _("Window name"), &(cfdata->remember.match_name));
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_entry_add(evas, &cfdata->name, NULL, NULL, NULL);
+	e_widget_entry_readonly_set(ob, 1);
 	e_widget_framelist_object_append(of, ob);
      }
    else
      {
 	cfdata->remember.match_name = 0;
+     }
+   if (cfdata->class)
+     {
+	ob = e_widget_check_add(evas, _("Window class"), &(cfdata->remember.match_class));
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_entry_add(evas, &cfdata->class, NULL, NULL, NULL);
+	e_widget_entry_readonly_set(ob, 1);
+	e_widget_framelist_object_append(of, ob);
+     }
+   else
+     {
 	cfdata->remember.match_class = 0;
      }
-   if ((e_border_name_get(cfdata->border))[0] != 0)
+   if (cfdata->title)
      {
 	ob = e_widget_check_add(evas, _("Title"), &(cfdata->remember.match_title));
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_entry_add(evas, &cfdata->title, NULL, NULL, NULL);
+	e_widget_entry_readonly_set(ob, 1);
 	e_widget_framelist_object_append(of, ob);
      }
    else
      {
 	cfdata->remember.match_title = 0;
      }
-   if ((cfdata->border->client.icccm.window_role) && 
-       (cfdata->border->client.icccm.window_role[0] != 0))
+   if (cfdata->role)
      {
 	ob = e_widget_check_add(evas, _("Window Role"), &(cfdata->remember.match_role));
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_entry_add(evas, &cfdata->role, NULL, NULL, NULL);
+	e_widget_entry_readonly_set(ob, 1);
 	e_widget_framelist_object_append(of, ob);
      }
    else
@@ -504,7 +635,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
      }
    ob = e_widget_check_add(evas, _("Transience"), &(cfdata->remember.match_transient));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_frametable_add(evas, _("Properties to remember"), 0);
    ob = e_widget_check_add(evas, _("Position"), &(cfdata->remember.apply_pos));
@@ -535,19 +666,19 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(of, ob, 1, 5, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Skip Taskbar"), &(cfdata->remember.apply_skip_taskbar));
    e_widget_frametable_object_append(of, ob, 1, 6, 1, 1, 1, 1, 1, 1);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
-   ob = e_widget_check_add(evas, _("Match only one window"), &(cfdata->remember.apply_first_only));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_table_object_append(o, of, 1, 0, 1, 1, 1, 1, 1, 1);
 
-   if (cfdata->border->client.icccm.command.argv)
+   ob = e_widget_check_add(evas, _("Match only one window"), &(cfdata->remember.apply_first_only));
+   e_widget_table_object_append(o, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+
+   if (cfdata->command)
      {
 	ob = e_widget_check_add(evas, _("Start this program on login"), &(cfdata->remember.apply_run));
-	e_widget_list_object_append(o, ob, 1, 1, 0.5);
+	e_widget_table_object_append(o, ob, 1, 2, 1, 1, 1, 1, 1, 1);
      }
 
    ob = e_widget_check_add(evas, _("Always focus on start"), &(cfdata->remember.set_focus_on_start));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-  
+   e_widget_table_object_append(o, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+
    return o;
 }
