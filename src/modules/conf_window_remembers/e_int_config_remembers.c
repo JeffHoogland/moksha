@@ -204,7 +204,7 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
         /* Filter out E's own remember */
         if ((rem->name) && (!strcmp(rem->name, "E"))) continue;
         /* Filter out everything except the module config remembers */
-        if ((rem->name) && (rem->class[0] != '_')) continue;
+        if ((rem->class) && (rem->class[0] != '_')) continue;
 
         e_widget_ilist_append(cfdata->list, NULL, rem->name, NULL, rem, NULL);
      }
