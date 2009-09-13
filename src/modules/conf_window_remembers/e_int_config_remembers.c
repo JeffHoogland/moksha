@@ -166,7 +166,7 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
         if ((rem->name) && (!strcmp(rem->name, "E"))) continue;
         /* Filter out the module config remembers */
         if ((rem->class) && (rem->class[0] == '_')) continue;
-
+	
         if (rem->name)
           e_widget_ilist_append(cfdata->list, NULL, rem->name, NULL, rem, NULL);
         else if (rem->class)
@@ -187,8 +187,8 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
         if (!(rem = l->data)) continue;
 
         /* Garuntee we add only E's internal remembers */
-        if ((rem->name) && (strcmp(rem->name, "E"))) continue;
-
+        if ((!rem->name) || (strcmp(rem->name, "E"))) continue;
+	
         e_widget_ilist_append(cfdata->list, NULL, rem->class, NULL, rem, NULL);
      }
 
@@ -202,9 +202,9 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
         if (!(rem = l->data)) continue;
 
         /* Filter out E's own remember */
-        if ((rem->name) && (!strcmp(rem->name, "E"))) continue;
+        if ((!rem->name) || (!strcmp(rem->name, "E"))) continue;
         /* Filter out everything except the module config remembers */
-        if ((rem->class) && (rem->class[0] != '_')) continue;
+        if ((!rem->class) || (rem->class[0] != '_')) continue;
 
         e_widget_ilist_append(cfdata->list, NULL, rem->name, NULL, rem, NULL);
      }
