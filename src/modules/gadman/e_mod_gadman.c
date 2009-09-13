@@ -337,11 +337,11 @@ gadman_gadgets_show(void)
    if (Man->conf->bg_type == BG_STD)
      {
 	if (Man->conf->anim_bg)
-	 edje_object_signal_emit(Man->full_bg,
-	                        "e,state,visibility,show", "e");
+	  edje_object_signal_emit(Man->full_bg,
+	                         "e,state,visibility,show", "e");
 	else
-	 edje_object_signal_emit(Man->full_bg,
-	                         "e,state,visibility,show,now", "e");
+	  edje_object_signal_emit(Man->full_bg,
+	                          "e,state,visibility,show,now", "e");
      }
    else
      {
@@ -349,8 +349,8 @@ gadman_gadgets_show(void)
 	  edje_object_signal_emit(Man->full_bg,
 	                         "e,state,visibility,show,custom", "e");
 	else
-	 edje_object_signal_emit(Man->full_bg,
-	                        "e,state,visibility,show,custom,now", "e");
+	  edje_object_signal_emit(Man->full_bg,
+	                         "e,state,visibility,show,custom,now", "e");
      }
 
    /* Showing top gadgets */
@@ -373,19 +373,23 @@ gadman_gadgets_hide(void)
 
    Man->visible = 0;
 
-   if (Man->conf->anim_bg)
+   if (Man->conf->bg_type == BG_STD)
      {
-	edje_object_signal_emit(Man->full_bg,
-	                       "e,state,visibility,hide", "e");
-	edje_object_signal_emit(Man->full_bg,
-	                       "e,state,visibility,hide,custom", "e");
+	if (Man->conf->anim_bg)
+	     edje_object_signal_emit(Man->full_bg,
+	                             "e,state,visibility,hide", "e");
+	else
+	     edje_object_signal_emit(Man->full_bg,
+	                             "e,state,visibility,hide", "e");
      }
    else
      {
-	edje_object_signal_emit(Man->full_bg,
-	                       "e,state,visibility,hide,now", "e");
-	edje_object_signal_emit(Man->full_bg,
-	                       "e,state,visibility,hide,custom,now", "e");
+	if (Man->conf->anim_bg)
+	  edje_object_signal_emit(Man->full_bg,
+	                          "e,state,visibility,hide,custom", "e");
+	else
+	  edje_object_signal_emit(Man->full_bg,
+	                          "e,state,visibility,hide,custom,now", "e");
      }
 
    /* Hiding top gadgets */
