@@ -3,13 +3,13 @@
  */
 #include "e.h"
 
-static void _e_resize_begin(void *data, E_Border *bd);
-static void _e_resize_update(void *data, E_Border *bd);
-static void _e_resize_end(void *data, E_Border *bd);
+static void _e_resize_begin(void *data, void *bd);
+static void _e_resize_update(void *data, void *bd);
+static void _e_resize_end(void *data, void *bd);
 static void _e_resize_border_extents(E_Border *bd, int *w, int *h);
-static void _e_move_begin(void *data, E_Border *bd);
-static void _e_move_update(void *data, E_Border *bd);
-static void _e_move_end(void *data, E_Border *bd);
+static void _e_move_begin(void *data, void *bd);
+static void _e_move_update(void *data, void *bd);
+static void _e_move_end(void *data, void *bd);
 static void _e_move_resize_object_coords_set(int x, int y, int w, int h);
 
 static E_Popup *_disp_pop = NULL;
@@ -49,11 +49,14 @@ e_moveresize_shutdown(void)
 
    EINA_LIST_FREE(hooks, h)
      e_border_hook_del(h);
+
+   return 1;
 }
 
 static void
-_e_resize_begin(void *data, E_Border *bd)
+_e_resize_begin(void *data, void *border)
 {
+   E_Border *bd = border;
    Evas_Coord ew, eh;
    char buf[40];
    int w, h;
@@ -109,7 +112,7 @@ _e_resize_begin(void *data, E_Border *bd)
 }
 
 static void
-_e_resize_end(void *data, E_Border *bd)
+_e_resize_end(void *data, void *border)
 {
    if (e_config->resize_info_visible)
      {
@@ -129,8 +132,9 @@ _e_resize_end(void *data, E_Border *bd)
 }
 
 static void
-_e_resize_update(void *data, E_Border *bd)
+_e_resize_update(void *data, void *border)
 {
+   E_Border *bd = border;
    char buf[40];
    int w, h;
 
@@ -182,8 +186,9 @@ _e_resize_border_extents(E_Border *bd, int *w, int *h)
 }
 
 static void
-_e_move_begin(void *data, E_Border *bd)
+_e_move_begin(void *data, void *border)
 {
+   E_Border *bd = border;
    Evas_Coord ew, eh;
    char buf[40];
 
@@ -221,7 +226,7 @@ _e_move_begin(void *data, E_Border *bd)
 }
 
 static void
-_e_move_end(void *data, E_Border *bd)
+_e_move_end(void *data, void *border)
 {
    if (e_config->move_info_visible)
      {
@@ -241,8 +246,10 @@ _e_move_end(void *data, E_Border *bd)
 }
 
 static void
-_e_move_update(void *data, E_Border *bd)
+_e_move_update(void *data, void *border)
 {
+   E_Border *bd = border;
+   
    char buf[40];
 
    if (!_disp_pop) return;
