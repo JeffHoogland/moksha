@@ -1233,6 +1233,8 @@ ACT_FN_GO_EDGE(desk_flip_in_direction)
 	     wev->curr.x = offset;
 	  }
 	 break;
+      default:
+	 break;
      }
 
    current = e_desk_current_get(zone);

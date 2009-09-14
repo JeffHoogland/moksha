@@ -7,8 +7,7 @@
 static void _e_popup_free(E_Popup *pop);
 static int  _e_popup_idle_enterer(void *data);
 static int  _e_popup_cb_window_shape(void *data, int ev_type, void *ev);
-static E_Popup *_e_popup_find_by_window(Ecore_X_Window win);
-/*
+/*static E_Popup *_e_popup_find_by_window(Ecore_X_Window win);
 static int _e_popup_cb_mouse_down(void *data, int type, void *event);
 static int _e_popup_cb_mouse_up(void *data, int type, void *event);
 static int _e_popup_cb_mouse_wheel(void *data, int type, void *event);
@@ -341,7 +340,7 @@ _e_popup_cb_window_shape(void *data, int ev_type, void *ev)
    return 1;
 }
 
-static E_Popup *
+/*static E_Popup *
 _e_popup_find_by_window(Ecore_X_Window win)
 {
    E_Popup *pop;
@@ -353,6 +352,7 @@ _e_popup_find_by_window(Ecore_X_Window win)
      }
    return NULL;
 }
+*/
 /*
 static int
 _e_popup_cb_mouse_down(void *data, int type, void *event)
