@@ -24305,29 +24305,29 @@ BORDERICON("properties","icon_border_properties.png")
 
 // EFM icons //
 
-#define EFMICON(NAME, FILE, SIZE)                       \
-group { name: "e/icons/fileman/"NAME;                   \
-   max:  SIZE SIZE;                                     \
-   parts {                                              \
-      part { name: "icon";                              \
-	 mouse_events:  0;                              \
-	 description { state: "default" 0.0;            \
-	    aspect: 1.0 1.0;                            \
-	    aspect_preference: BOTH;                    \
-	    image.image: FILE COMP;                     \
-	    image.normal: FILE ;                        \
-	 }                                              \
-      }                                                 \
-   }                                                    \
-}
+/* #define EFMICON(NAME, FILE, SIZE)                    \
+ * group { name: "e/icons/fileman/"NAME;                \
+ *    max:  SIZE SIZE;                                  \
+ *    parts {                                           \
+ *       part { name: "icon";                           \
+ * 	 mouse_events:  0;                              \
+ * 	 description { state: "default" 0.0;            \
+ * 	    aspect: 1.0 1.0;                            \
+ * 	    aspect_preference: BOTH;                    \
+ * 	    image.image: FILE COMP;                     \
+ * 	    image.normal: FILE ;                        \
+ * 	 }                                              \
+ *       }                                              \
+ *    }                                                 \
+ * } */
 
 //EFMICON("folder","icon_efm_folder.png", 128)
-EFMICON("chrdev","icon_efm_file.png", 128)
-EFMICON("blkdev","icon_efm_file.png", 128)
-EFMICON("fifo","icon_efm_file.png", 128)
-EFMICON("socket","icon_efm_file.png", 128)
-EFMICON("executable","icon_efm_file.png", 128)
-EFMICON("file","icon_efm_file.png", 128)
+//EFMICON("chrdev","icon_efm_file.png", 128)
+//EFMICON("blkdev","icon_efm_file.png", 128)
+//EFMICON("fifo","icon_efm_file.png", 128)
+//EFMICON("socket","icon_efm_file.png", 128)
+//EFMICON("executable","icon_efm_file.png", 128)
+
 //EFMICON("home","icon_efm_home.png", 128)
 //EFMICON("root","icon_efm_root.png", 128)
 //EFMICON("tmp","icon_efm_tmp.png", 128)
@@ -24364,6 +24364,14 @@ MIMEICON("application/x-bzip2-compressed-tar","icon_mime_package.png",128);
 MIMEICON("application/x-compressed-tar","icon_mime_package.png",128);
 MIMEICON("application/x-tar","icon_mime_package.png", 128);
 MIMEICON("application/x-rar","icon_mime_package.png", 128);
+MIMEICON("inode/chardevice","icon_efm_file.png", 128);
+MIMEICON("inode/blockdevice","icon_efm_file.png", 128);
+MIMEICON("inode/fifo","icon_efm_file.png", 128);
+MIMEICON("inode/socket","icon_efm_file.png", 128);
+MIMEICON("inode/directory","icon_efm_folder.png", 128);
+MIMEICON("inode/file","icon_efm_file.png", 128); 
+MIMEICON("application/octet-stream","icon_efm_file.png", 128);
+MIMEICON("application/x-executable","icon_mime_executable_generic.png", 128);
 
 
 // Dynamic MIME Icons //

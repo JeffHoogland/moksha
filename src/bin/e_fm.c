@@ -1861,43 +1861,6 @@ _e_fm2_icon_explicit_get(Evas *evas, const E_Fm2_Icon *ic, const char *icon, con
 }
 
 /**
- * Find out a good fallback to use for given file.
- *
- * It will find out if it is a folder, file or like and set it accordingly.
- */
-static Evas_Object *
-_e_fm2_icon_fallback_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
-{
-   const char *name;
-
-   if (S_ISDIR(ic->info.statinfo.st_mode))
-     name = "folder";
-   else if (S_ISCHR(ic->info.statinfo.st_mode))
-     name = "chrdev";
-   else if (S_ISBLK(ic->info.statinfo.st_mode))
-     name = "blkdev";
-   else if (S_ISFIFO(ic->info.statinfo.st_mode))
-     name = "fifo";
-   else if (S_ISSOCK(ic->info.statinfo.st_mode))
-     name = "socket";
-   else
-     {
-	char buf[PATH_MAX];
-	if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf)))
-	  name = "file";
-	else
-	  {
-	     if (ecore_file_can_exec(buf))
-	       name = "executable";
-	     else
-	       name = "file";
-	  }
-     }
-
-   return _e_fm2_icon_explicit_theme_get(evas, ic, name, type_ret);
-}
-
-/**
  * Creates an icon that generates a thumbnail if required.
  *
  * @param group if given, will be used in e_thumb_icon_file_set()
@@ -2095,10 +2058,21 @@ _e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *d
    Evas_Object *o;
    const char *icon;
 
-   if (ic->info.mime == _e_fm2_mime_app_edje)
-     return _e_fm2_icon_thumb_edje_get
-       (evas, ic, gen_func, data, force_gen, type_ret);
+   /* create thumbnails for edje files */
+   if (_e_fm2_file_is_edje(ic->info.file))
+     {
+	o = _e_fm2_icon_thumb_edje_get
+	  (evas, ic, gen_func, data, force_gen, type_ret);
+	if (o) return o;
+     }
 
+   /* disabled until everyone has edje in mime.types:
+    *  use mimetype to identify edje.
+    * if (ic->info.mime == _e_fm2_mime_app_edje)
+    *   return _e_fm2_icon_thumb_edje_get
+    *     (evas, ic, gen_func, data, force_gen, type_ret); */
+
+   /* check user preferences */
    icon = _e_fm2_icon_mime_type_special_match(ic);
    if (icon)
      {
@@ -2109,8 +2083,8 @@ _e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *d
 	     return _e_fm2_icon_thumb_get
 	       (evas, ic, NULL, gen_func, data, force_gen, type_ret);
 	  }
-	else if (strncmp(icon, "e/icons/fileman/mime/", 21) == 0)
-	  return _e_fm2_icon_explicit_theme_get(evas, ic, icon + 21 - 5, type_ret);
+	else if (strncmp(icon, "e/icons/fileman/", 16) == 0)
+	  return _e_fm2_icon_explicit_theme_get(evas, ic, icon + 16, type_ret);
 	else
 	  return _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
      }
@@ -2128,20 +2102,22 @@ _e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *d
      o = _e_fm2_icon_mime_theme_get(evas, ic, type_ret);
 
    if (o) return o;
+
+   return NULL;
    
    /* XXX REMOVE/DEPRECATED below here */
-   icon = e_fm_mime_icon_get(ic->info.mime);
-   if (!icon) return NULL;
-
-   if (icon == _e_fm2_icon_desktop_str)
-     return _e_fm2_icon_desktop_get(evas, ic, type_ret);
-   else if (icon == _e_fm2_icon_thumb_str)
-     return _e_fm2_icon_thumb_get(evas, ic, NULL,
-				  gen_func, data, force_gen, type_ret);
-   else if (strncmp(icon, "e/icons/fileman/mime/", 21) == 0)
-     return _e_fm2_icon_explicit_theme_get(evas, ic, icon + 21 - 5, type_ret);
-   else
-     return _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
+   /* icon = e_fm_mime_icon_get(ic->info.mime);
+    * if (!icon) return NULL;
+    * 
+    * if (icon == _e_fm2_icon_desktop_str)
+    *   return _e_fm2_icon_desktop_get(evas, ic, type_ret);
+    * else if (icon == _e_fm2_icon_thumb_str)
+    *   return _e_fm2_icon_thumb_get(evas, ic, NULL,
+    * 				  gen_func, data, force_gen, type_ret);
+    * else if (strncmp(icon, "e/icons/fileman/", 16) == 0)
+    *   return _e_fm2_icon_explicit_theme_get(evas, ic, icon + 16, type_ret);
+    * else
+    * return _e_fm2_icon_explicit_get(evas, ic, icon, type_ret); */
 }
 
 /**
@@ -2282,7 +2258,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
      }
 
  fallback:
-   return _e_fm2_icon_fallback_get(evas, ic, type_ret);
+   return _e_fm2_icon_explicit_theme_get(evas, ic, "text/plain", type_ret);
 }
 
 EAPI E_Fm2_Icon_Info *
