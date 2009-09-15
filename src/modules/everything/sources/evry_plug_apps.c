@@ -515,14 +515,14 @@ _exec_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
    ITEM_APP(app, it);
 
-   if (app->desktop)
-     return 1;
+   /* if (app->desktop)
+    *   return 1; */
 
    /* run in terminal or do a .desktop entry! it's easy now */
    /* if (app->file && strlen(app->file) > 0)
     *   return 1; */
 
-   return 0;
+   return 1;
 }
 
 static int
