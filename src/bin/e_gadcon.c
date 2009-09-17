@@ -3251,7 +3251,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 
 	bi->h = sd->h;
 	xx = sd->x + bi->x;
-	yy = sd->y + ((sd->h - bi->h) / 2);
+	yy = sd->y; // + ((sd->h - bi->h) / 2);
 
 	if (sd->horizontal)
 	  {
@@ -3791,10 +3791,10 @@ _e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd)
 	  { 
 	     if (bi->gcc->state_info.resist <= E_LAYOUT_ITEM_DRAG_RESIST_LEVEL) 
 	       { 
-		  bi->gcc->state_info.resist++; 
-		  bi->gcc->config.pos = bi->ask.pos = bi->gcc->state_info.prev_pos;
+	     	  bi->gcc->state_info.resist++; 
+	     	  bi->gcc->config.pos = bi->ask.pos = bi->gcc->state_info.prev_pos;
 	       } 
-	     else 
+	     else
 	       { 
 		  bi->gcc->state_info.resist = 0; 
 		  if (eina_list_next(l)) 
@@ -3804,6 +3804,13 @@ _e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd)
 		       l->data = tp; 
 
 		       bi2 = evas_object_data_get(tp, "e_gadcon_layout_data");
+		       
+		       if (bi2->x + bi2->w/2 > bi->ask.pos + bi->w)
+			 {
+			    bi->gcc->config.pos = bi->ask.pos = bi->gcc->state_info.prev_pos;
+			    return;
+			 }
+		       
 		       bi->gcc->config.pos = bi->ask.pos = bi2->ask.pos;
 		       bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
 		       bi->gcc->state_info.want_save = 1;
@@ -3831,8 +3838,16 @@ _e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd)
 
 		       tp = eina_list_data_get(eina_list_prev(l));
 		       l->prev->data = eina_list_data_get(l);
+
 		       l->data = tp; 
 		       bi2 = evas_object_data_get(tp, "e_gadcon_layout_data");
+
+		       if (bi->ask.pos > bi2->x + bi2->w/2)
+			 {
+			    bi->gcc->config.pos = bi->ask.pos = bi->gcc->state_info.prev_pos;
+			    return;
+			 }
+
 		       bi->gcc->config.pos = bi->ask.pos = bi2->ask.pos;
 		       bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
 		       bi->gcc->state_info.want_save = 1;
@@ -4536,7 +4551,7 @@ _e_gadcon_layout_smart_containers_position_adjust(E_Smart_Data *sd, E_Layout_Ite
 
 	     bi2->gcc->config.pos = bi2->ask.pos = (bi2->x) = (bi->x);
 	     bi2->gcc->config.size = bi2->w;
-	     bi->x = (bi2->x) + (bi2->w);
+	     bi->x = bi2->x + bi2->w;
 
 	     t = bi->gcc->state_info.seq;
 	     bi->gcc->state_info.seq = bi2->gcc->state_info.seq;
