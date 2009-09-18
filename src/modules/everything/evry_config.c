@@ -19,6 +19,7 @@ struct _E_Config_Dialog_Data
   int quick_nav;
 
   int width, height;
+  double rel_x, rel_y;
   int scroll_animate;
 
   char *cmd_terminal;
@@ -68,6 +69,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->hide_list = evry_conf->hide_list;
    cfdata->hide_input = evry_conf->hide_input;
    cfdata->quick_nav = evry_conf->quick_nav;
+   cfdata->rel_x = evry_conf->rel_x;
+   cfdata->rel_y = evry_conf->rel_y;
    
    EINA_LIST_FOREACH(evry_conf->plugins, l, p)
      if (p->type == type_subject)
@@ -122,6 +125,9 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    evry_conf->hide_input = cfdata->hide_input;
    evry_conf->hide_list = cfdata->hide_list;
    evry_conf->quick_nav = cfdata->quick_nav;
+   evry_conf->rel_x = cfdata->rel_x;
+   evry_conf->rel_y = cfdata->rel_y;
+
    evry_conf->plugins = eina_list_sort(evry_conf->plugins,
 				       eina_list_count(evry_conf->plugins),
 				       _evry_cb_plugin_sort);
@@ -205,7 +211,7 @@ _plugin_move_down_cb(void *data, void *data2)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *otb;
 
@@ -239,8 +245,11 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
+   e_widget_toolbook_page_append(otb, NULL, _("General Settings"),
+				 o, 1, 0, 1, 0, 0.5, 0.0);
 
-   of = e_widget_framelist_add(evas, _("Size"), 0);
+   o = e_widget_list_add(evas, 0, 0);
+   of = e_widget_framelist_add(evas, _("Popup Size"), 0);
    ob = e_widget_label_add(evas, _("Popup Width"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),
@@ -256,14 +265,29 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
+   of = e_widget_framelist_add(evas, _("Popup Align"), 0);
+   ob = e_widget_label_add(evas, _("Vertical"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"),
+   			    0.0, 1.0, 0.01, 0,
+   			    &(cfdata->rel_y), NULL, 200);
+   e_widget_framelist_object_append(of, ob);
+   
+   ob = e_widget_label_add(evas, _("Horizontal"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"),
+   			    0.0, 1.0, 0.01, 0,
+   			    &(cfdata->rel_x), NULL, 200);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
    /* of = e_widget_framelist_add(evas, _("Scroll Settings"), 0);
     * ob = e_widget_check_add(evas, _("Scroll Animate"),
     * 			   &(cfdata->scroll_animate));
     * e_widget_framelist_object_append(of, ob);
     * e_widget_list_object_append(o, of, 1, 1, 0.5); */
 
-
-   e_widget_toolbook_page_append(otb, NULL, _("General Settings"),
+   e_widget_toolbook_page_append(otb, NULL, _("Position / Size"),
 				 o, 1, 0, 1, 0, 0.5, 0.0);
 
    ob = e_widget_list_add(evas, 1, 1);
@@ -331,5 +355,10 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 
    e_widget_toolbook_page_show(otb, 0);
 
+   /* e_widget_size_min_set(otb, 350, 350); */
+   e_widget_size_min_resize(otb);
+
+   e_dialog_resizable_set(cfd->dia, 1);
+   
    return otb;
 }

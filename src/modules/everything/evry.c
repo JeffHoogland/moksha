@@ -171,8 +171,8 @@ evry_show(E_Zone *zone, const char *params)
       (ECORE_X_EVENT_SELECTION_NOTIFY,
        _evry_cb_selection_notify, win));
 
-   e_popup_move(win->popup,  win->popup->x,  win->popup->y  - list->popup->h/2);
-   e_popup_move(list->popup, list->popup->x, list->popup->y - list->popup->h/2);
+   /* e_popup_move(win->popup,  win->popup->x,  win->popup->y  - list->popup->h/2);
+    * e_popup_move(list->popup, list->popup->x, list->popup->y - list->popup->h/2); */
 
    e_popup_layer_set(list->popup, 255);
    e_popup_layer_set(win->popup, 255);
@@ -583,8 +583,8 @@ _evry_window_new(E_Zone *zone)
    if (evry_conf->width > mw) 
      mw = evry_conf->width;
    
-   x = (zone->w / 2) - (mw / 2);
-   y = (zone->h / 2) - (mh / 2);
+   x = (zone->w * evry_conf->rel_x) - (mw / 2);
+   y = (zone->h * evry_conf->rel_y) - (mh / 2);
    
    e_popup_move_resize(popup, x, y, mw, mh);
 

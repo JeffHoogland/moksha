@@ -1,7 +1,7 @@
-#include "Evry.h"
+#include "e_mod_main.h"
 
 #define MAX_ITEMS 100
-#define TERM_ACTION_DIR "/usr/bin/xterm -e \'cd %s && /bin/bash\'"
+#define TERM_ACTION_DIR "%s"
 
 typedef struct _Plugin Plugin;
 typedef struct _Data Data;
@@ -438,33 +438,29 @@ _open_term_action(Evry_Action *act)
 {
    ITEM_FILE(file, act->item1);
    Evry_Item_App *tmp;
-   char buf[1024];
-   char *dir, *path;
+   char cwd[4096];
+   char *dir;
    int ret = 0;
 
    if (act->item1->browseable)
-     {
-	path = ecore_file_escape_name(file->uri);
-     }
+     dir = strdup(file->uri);
    else
-     {
-	dir = ecore_file_dir_get(file->uri);
-	if (!dir) return 0;
-	path = ecore_file_escape_name(dir);
+     dir = ecore_file_dir_get(file->uri);
 
-	free(dir);
-     }
-
-   if (path)
+   if (dir)
      {
+	getcwd(cwd, sizeof(cwd));
+	chdir(dir);
+	
 	tmp = E_NEW(Evry_Item_App, 1);
-	snprintf(buf, sizeof(buf), TERM_ACTION_DIR, path);
-	tmp->file = buf;
+	tmp->file = evry_conf->cmd_terminal;
+
 	ret = evry_util_exec_app(EVRY_ITEM(tmp), NULL);
 	E_FREE(tmp);
-	free(path);
+	E_FREE(dir);
+	chdir(cwd);
      }
-
+   
    return ret;
 }
 

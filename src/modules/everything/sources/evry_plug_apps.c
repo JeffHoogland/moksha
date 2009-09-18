@@ -513,7 +513,7 @@ _icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 static int
 _exec_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
-   ITEM_APP(app, it);
+   /* ITEM_APP(app, it); */
 
    /* if (app->desktop)
     *   return 1; */
@@ -538,18 +538,19 @@ _exec_term_action(Evry_Action *act)
    Evry_Item_App *tmp;
    char buf[1024];
    int ret;
-
+   char *escaped = ecore_file_escape_name(app->file);
+   
    tmp = E_NEW(Evry_Item_App, 1);
-   snprintf(buf, sizeof(buf), "%s%s %s",
+   snprintf(buf, sizeof(buf), "%s -hold -e %s",
 	    evry_conf->cmd_terminal,
-	    (strcmp(evry_conf->cmd_terminal, "/usr/bin/xterm") ? "" : " -hold -e"),
-	    app->file);
+	    (escaped ? escaped : app->file));
 
    tmp->file = buf;
    ret = evry_util_exec_app(EVRY_ITEM(tmp), NULL);
 
    E_FREE(tmp);
-
+   E_FREE(escaped);
+   
    return ret;
 }
 

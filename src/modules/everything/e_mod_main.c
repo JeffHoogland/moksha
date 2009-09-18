@@ -222,6 +222,14 @@ _config_init()
 	evry_conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm");
 	evry_conf->cmd_sudo = eina_stringshare_add("/usr/bin/gksudo --preserve-env");
      }
+
+   if ((evry_conf->rel_x > 1.0) ||
+       (evry_conf->rel_x < 0.0))
+     evry_conf->rel_x = 0.5;
+
+   if ((evry_conf->rel_y > 1.0) ||
+       (evry_conf->rel_y < 0.0))
+     evry_conf->rel_y = 0.3;
 }
 
 
