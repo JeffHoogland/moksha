@@ -982,11 +982,11 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
 
 	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
 	if (!pnd) return;
-	pnd->move = 1;
 	pnd->resize = 1;
 	pnd->without_border = without_border;
 	if (move)
 	  {
+	     pnd->move = 1;
 	     pnd->x = x;
 	     pnd->y = y;
 	  }
@@ -1012,17 +1012,17 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
    bd->pre_res_change.valid = 0;
    if (move)
      {
+	bd->changes.pos = 1;
 	bd->x = x;
 	bd->y = y;
-	bd->changes.pos = 1;
      }
    bd->w = w;
    bd->h = h;
    bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
    bd->client.h = bd->h - (bd->client_inset.t + bd->client_inset.b);
+   bd->changes.size = 1;
    bd->changed = 1;
 
-   bd->changes.size = 1;
    if ((bd->shaped) || (bd->client.shaped))
      {
 	bd->need_shape_merge = 1;
