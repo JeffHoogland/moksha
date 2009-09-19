@@ -1037,6 +1037,10 @@ e_hints_allowed_action_update(E_Border *bd, Ecore_X_Action action)
 	 break;
       case ECORE_X_ACTION_CLOSE:
 	 break;
+      case ECORE_X_ACTION_ABOVE:
+	 break;
+      case ECORE_X_ACTION_BELOW:
+	 break;
      }
 }
 
@@ -1095,6 +1099,10 @@ e_hints_allowed_action_get(E_Border *bd)
 		case ECORE_X_ACTION_CLOSE:
 		  bd->client.netwm.action.close = 1;
 		  break;
+		case ECORE_X_ACTION_ABOVE:
+		   break;
+		case ECORE_X_ACTION_BELOW:
+		   break;
 	       }
 	  }
 	free(action);
