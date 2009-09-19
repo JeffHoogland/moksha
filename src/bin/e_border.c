@@ -835,6 +835,7 @@ _e_border_move_internal(E_Border *bd, int x, int y, Eina_Bool without_border)
    if ((bd->fullscreen) || 
        (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip))) 
      return;
+
    ecore_x_window_shadow_tree_flush();
    if (bd->new_client)
      {
@@ -857,6 +858,7 @@ _e_border_move_internal(E_Border *bd, int x, int y, Eina_Bool without_border)
      }
 
    if ((x == bd->x) && (y == bd->y)) return;
+   bd->maximized = 0;
    bd->pre_res_change.valid = 0;
    bd->x = x;
    bd->y = y;
@@ -960,110 +962,7 @@ e_border_fx_offset(E_Border *bd, int x, int y)
 }
 
 static void
-_e_border_resize_internal(E_Border *bd, int w, int h, Eina_Bool without_border)
-{
-   E_Event_Border_Resize *ev;
-
-   E_OBJECT_CHECK(bd);
-   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-
-   if ((bd->shaded) || (bd->shading) || (bd->fullscreen) ||
-       (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)))
-     return;
-   ecore_x_window_shadow_tree_flush();
-
-   if (bd->new_client)
-     {
-	E_Border_Pending_Move_Resize  *pnd;
-
-	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
-	if (!pnd) return;
-	pnd->resize = 1;
-	pnd->without_border = without_border;
-	pnd->w = w;
-	pnd->h = h;
-	bd->pending_move_resize = eina_list_append(bd->pending_move_resize, pnd);
-	return;
-     }
-
-   if (without_border)
-     {
-	w += (bd->client_inset.l + bd->client_inset.r);
-	h += (bd->client_inset.t + bd->client_inset.b);
-     }
-
-   if ((w == bd->w) && (h == bd->h)) return;
-   bd->pre_res_change.valid = 0;
-   bd->w = w;
-   bd->h = h;
-   bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
-   bd->client.h = bd->h - (bd->client_inset.t + bd->client_inset.b);
-   bd->changed = 1;
-   bd->changes.size = 1;
-   if ((bd->shaped) || (bd->client.shaped))
-     {
-	bd->need_shape_merge = 1;
-	bd->need_shape_export = 1;
-     }
-   if (bd->client.netwm.sync.request)
-     {
-	bd->client.netwm.sync.wait++;
-	ecore_x_netwm_sync_request_send(bd->client.win, bd->client.netwm.sync.serial++);
-     }
-
-   _e_border_client_move_resize_send(bd);
-   _e_border_resize_update(bd);
-   ev = calloc(1, sizeof(E_Event_Border_Resize));
-   ev->border = bd;
-   e_object_ref(E_OBJECT(bd));
-//   e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
-   ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
-   _e_border_zone_update(bd);
-}
-
-/**
- * Resize window to values that already account border decorations.
- *
- * This call will consider given size already accounts border
- * decorations, so it will not be considered later. This will just
- * work properly with borders that have being evaluated and border
- * decorations are known (border->client_inset).
- *
- * @parm w horizontal window size.
- * @parm h vertical window size.
- *
- * @see e_border_resize_without_border()
- */
-EAPI void
-e_border_resize(E_Border *bd, int w, int h)
-{
-   _e_border_resize_internal(bd, w, h, 0);
-}
-
-/**
- * Resize window to values that do not account border decorations yet.
- *
- * This call will consider given size does not account border
- * decoration, so these values (border->client_inset) will be
- * accounted automatically. This is specially useful when it is a new
- * client and has not be evaluated yet, in this case
- * border->client_inset will be zeroed and no information is known. It
- * will mark pending requests so border will be accounted on
- * evalutation phase.
- *
- * @parm w horizontal window size.
- * @parm h vertical window size.
- *
- * @see e_border_resize()
- */
-EAPI void
-e_border_resize_without_border(E_Border *bd, int w, int h)
-{
-   _e_border_resize_internal(bd, w, h, 1);
-}
-
-static void
-_e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bool without_border)
+_e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bool without_border, Eina_Bool move)
 {
    E_Event_Border_Move		*mev;
    E_Event_Border_Resize	*rev;
@@ -1074,6 +973,7 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
    if ((bd->fullscreen) || 
        (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip))) 
      return;
+
    ecore_x_window_shadow_tree_flush();
 
    if (bd->new_client)
@@ -1085,8 +985,11 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
 	pnd->move = 1;
 	pnd->resize = 1;
 	pnd->without_border = without_border;
-	pnd->x = x;
-	pnd->y = y;
+	if (move)
+	  {
+	     pnd->x = x;
+	     pnd->y = y;
+	  }
 	pnd->w = w;
 	pnd->h = h;
 	bd->pending_move_resize = eina_list_append(bd->pending_move_resize, pnd);
@@ -1101,16 +1004,24 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
 	h += (bd->client_inset.t + bd->client_inset.b);
      }
 
-   if ((x == bd->x) && (y == bd->y) && (w == bd->w) && (h == bd->h)) return;
+   if ((!move || ((x == bd->x) && (y == bd->y))) &&
+	(w == bd->w) && (h == bd->h))
+     return;
+
+   bd->maximized = 0;
    bd->pre_res_change.valid = 0;
-   bd->x = x;
-   bd->y = y;
+   if (move)
+     {
+	bd->x = x;
+	bd->y = y;
+	bd->changes.pos = 1;
+     }
    bd->w = w;
    bd->h = h;
    bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
    bd->client.h = bd->h - (bd->client_inset.t + bd->client_inset.b);
    bd->changed = 1;
-   bd->changes.pos = 1;
+
    bd->changes.size = 1;
    if ((bd->shaped) || (bd->client.shaped))
      {
@@ -1125,12 +1036,15 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
 
    _e_border_client_move_resize_send(bd);
    _e_border_resize_update(bd);
-   mev = calloc(1, sizeof(E_Event_Border_Move));
-   mev->border = bd;
-   e_object_ref(E_OBJECT(bd));
-//   e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
-   ecore_event_add(E_EVENT_BORDER_MOVE, mev, _e_border_event_border_move_free, NULL);
-
+   if (move)
+     {
+	mev = calloc(1, sizeof(E_Event_Border_Move));
+	mev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	//   e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
+	ecore_event_add(E_EVENT_BORDER_MOVE, mev, _e_border_event_border_move_free, NULL);
+     }
+   
    rev = calloc(1, sizeof(E_Event_Border_Resize));
    rev->border = bd;
    e_object_ref(E_OBJECT(bd));
@@ -1157,7 +1071,7 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
 EAPI void
 e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 {
-   _e_border_move_resize_internal(bd, x, y, w, h, 0);
+   _e_border_move_resize_internal(bd, x, y, w, h, 0, 1);
 }
 
 /**
@@ -1178,7 +1092,48 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 EAPI void
 e_border_move_resize_without_border(E_Border *bd, int x, int y, int w, int h)
 {
-   _e_border_move_resize_internal(bd, x, y, w, h, 1);
+   _e_border_move_resize_internal(bd, x, y, w, h, 1, 1);
+}
+
+/**
+ * Resize window to values that already account border decorations.
+ *
+ * This call will consider given size already accounts border
+ * decorations, so it will not be considered later. This will just
+ * work properly with borders that have being evaluated and border
+ * decorations are known (border->client_inset).
+ *
+ * @parm w horizontal window size.
+ * @parm h vertical window size.
+ *
+ * @see e_border_resize_without_border()
+ */
+EAPI void
+e_border_resize(E_Border *bd, int w, int h)
+{
+   _e_border_move_resize_internal(bd, 0, 0, w, h, 0, 0);
+}
+
+/**
+ * Resize window to values that do not account border decorations yet.
+ *
+ * This call will consider given size does not account border
+ * decoration, so these values (border->client_inset) will be
+ * accounted automatically. This is specially useful when it is a new
+ * client and has not be evaluated yet, in this case
+ * border->client_inset will be zeroed and no information is known. It
+ * will mark pending requests so border will be accounted on
+ * evalutation phase.
+ *
+ * @parm w horizontal window size.
+ * @parm h vertical window size.
+ *
+ * @see e_border_resize()
+ */
+EAPI void
+e_border_resize_without_border(E_Border *bd, int w, int h)
+{
+   _e_border_move_resize_internal(bd, 0, 0, w, h, 1, 0);
 }
 
 EAPI void
@@ -1822,85 +1777,85 @@ e_border_shade(E_Border *bd, E_Direction dir)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->fullscreen) || ((bd->maximized) && (!e_config->allow_manip)) ||
-       (bd->shading)) return;
+   if ((bd->shaded) || (bd->shading) || 
+       ((bd->maximized) && (!e_config->allow_manip)) ||
+       (bd->fullscreen)) return;
    if ((bd->client.border.name) && 
        (!strcmp("borderless", bd->client.border.name))) return;
+
    ecore_x_window_shadow_tree_flush();
-   if (!bd->shaded)
+
+   bd->shade.x = bd->x;
+   bd->shade.y = bd->y;
+   bd->shade.dir = dir;
+
+   e_hints_window_shaded_set(bd, 1);
+   e_hints_window_shade_direction_set(bd, dir);
+
+   if (e_config->border_shade_animate)
      {
-	bd->shade.x = bd->x;
-	bd->shade.y = bd->y;
-	bd->shade.dir = dir;
+	bd->shade.start = ecore_loop_time_get();
+	bd->shading = 1;
+	bd->changes.shading = 1;
+	bd->changed = 1;
 
-	e_hints_window_shaded_set(bd, 1);
-	e_hints_window_shade_direction_set(bd, dir);
-
-	if (e_config->border_shade_animate)
-	  {
-	     bd->shade.start = ecore_loop_time_get();
-	     bd->shading = 1;
-	     bd->changes.shading = 1;
-	     bd->changed = 1;
-
-	     if (bd->shade.dir == E_DIRECTION_UP ||
-		 bd->shade.dir == E_DIRECTION_LEFT)
-	       ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_SW);
-	     else
-	       ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_NE);
-
-	     bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
-	     edje_object_signal_emit(bd->bg_object, "e,state,shading", "e");
-	  }
+	if (bd->shade.dir == E_DIRECTION_UP ||
+	    bd->shade.dir == E_DIRECTION_LEFT)
+	  ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_SW);
 	else
-	  {
-	     if (bd->shade.dir == E_DIRECTION_UP)
-	       {
-		  bd->h = bd->client_inset.t + bd->client_inset.b;
-	       }
-	     else if (bd->shade.dir == E_DIRECTION_DOWN)
-	       {
-		  bd->h = bd->client_inset.t + bd->client_inset.b;
-		  bd->y = bd->y + bd->client.h;
-		  bd->changes.pos = 1;
-	       }
-	     else if (bd->shade.dir == E_DIRECTION_LEFT)
-	       {
-		  bd->w = bd->client_inset.l + bd->client_inset.r;
-	       }
-	     else if (bd->shade.dir == E_DIRECTION_RIGHT)
-	       {
-		  bd->w = bd->client_inset.l + bd->client_inset.r;
-		  bd->x = bd->x + bd->client.w;
-		  bd->changes.pos = 1;
-	       }
+	  ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_NE);
 
-	     if ((bd->shaped) || (bd->client.shaped))
-	       {
-		  bd->need_shape_merge = 1;
-		  bd->need_shape_export = 1;
-	       }
-	     bd->changes.size = 1;
-	     bd->shaded = 1;
-	     bd->changes.shaded = 1;
-	     bd->changed = 1;
-	     if ((bd->shaped) || (bd->client.shaped))
-	       {
-		  bd->need_shape_merge = 1;
-		  bd->need_shape_export = 1;
-	       }
-	     edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
-	     e_border_frame_recalc(bd);
-	     ev = calloc(1, sizeof(E_Event_Border_Resize));
-	     ev->border = bd;
-	     /* The resize is added in the animator when animation complete */
-	     /* For non-animated, we add it immediately with the new size */
-	     e_object_ref(E_OBJECT(bd));
-//	     e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
-	     ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
+	bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
+	edje_object_signal_emit(bd->bg_object, "e,state,shading", "e");
+     }
+   else
+     {
+	if (bd->shade.dir == E_DIRECTION_UP)
+	  {
+	     bd->h = bd->client_inset.t + bd->client_inset.b;
+	  }
+	else if (bd->shade.dir == E_DIRECTION_DOWN)
+	  {
+	     bd->h = bd->client_inset.t + bd->client_inset.b;
+	     bd->y = bd->y + bd->client.h;
+	     bd->changes.pos = 1;
+	  }
+	else if (bd->shade.dir == E_DIRECTION_LEFT)
+	  {
+	     bd->w = bd->client_inset.l + bd->client_inset.r;
+	  }
+	else if (bd->shade.dir == E_DIRECTION_RIGHT)
+	  {
+	     bd->w = bd->client_inset.l + bd->client_inset.r;
+	     bd->x = bd->x + bd->client.w;
+	     bd->changes.pos = 1;
 	  }
 
+	if ((bd->shaped) || (bd->client.shaped))
+	  {
+	     bd->need_shape_merge = 1;
+	     bd->need_shape_export = 1;
+	  }
+	bd->changes.size = 1;
+	bd->shaded = 1;
+	bd->changes.shaded = 1;
+	bd->changed = 1;
+	if ((bd->shaped) || (bd->client.shaped))
+	  {
+	     bd->need_shape_merge = 1;
+	     bd->need_shape_export = 1;
+	  }
+	edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
+	e_border_frame_recalc(bd);
+	ev = calloc(1, sizeof(E_Event_Border_Resize));
+	ev->border = bd;
+	/* The resize is added in the animator when animation complete */
+	/* For non-animated, we add it immediately with the new size */
+	e_object_ref(E_OBJECT(bd));
+	//	     e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
+	ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
      }
+
    e_remember_update(bd);
 }
 
@@ -1911,104 +1866,104 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->fullscreen) || ((bd->maximized) && (!e_config->allow_manip)) ||
-       (bd->shading)) return;
+   if ((!bd->shaded) || (bd->shading) ||
+       ((bd->maximized) && (!e_config->allow_manip)) ||
+       (bd->fullscreen)) return;
+
    ecore_x_window_shadow_tree_flush();
-   if (bd->shaded)
+
+   bd->shade.dir = dir;
+
+   e_hints_window_shaded_set(bd, 0);
+   e_hints_window_shade_direction_set(bd, dir);
+
+   if (bd->shade.dir == E_DIRECTION_UP ||
+       bd->shade.dir == E_DIRECTION_LEFT)
      {
-	bd->shade.dir = dir;
-
-	e_hints_window_shaded_set(bd, 0);
-	e_hints_window_shade_direction_set(bd, dir);
-
-	if (bd->shade.dir == E_DIRECTION_UP ||
-	    bd->shade.dir == E_DIRECTION_LEFT)
-	  {
-	     bd->shade.x = bd->x;
-	     bd->shade.y = bd->y;
-	  }
-	else
-	  {
-	     bd->shade.x = bd->x - bd->client.w;
-	     bd->shade.y = bd->y - bd->client.h;
-	  }
-	if (e_config->border_shade_animate)
-	  {
-	     bd->shade.start = ecore_loop_time_get();
-	     bd->shading = 1;
-	     bd->changes.shading = 1;
-	     bd->changed = 1;
-
-	     if (bd->shade.dir == E_DIRECTION_UP)
-	       {
-		  ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_SW);
-		  ecore_x_window_move_resize(bd->client.win, 0,
-					     bd->h - (bd->client_inset.t + bd->client_inset.b) -
-					     bd->client.h,
-					     bd->client.w, bd->client.h);
-	       }
-	     else if (bd->shade.dir == E_DIRECTION_LEFT)
-	       {
-		  ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_SW);
-		  ecore_x_window_move_resize(bd->client.win,
-					     bd->w - (bd->client_inset.l + bd->client_inset.r) -
-					     bd->client.h,
-					     0, bd->client.w, bd->client.h);
-	       }
-	     else
-	       ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_NE);
-
-	     bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
-	     edje_object_signal_emit(bd->bg_object, "e,state,unshading", "e");
-	  }
-	else
-	  {
-	     if (bd->shade.dir == E_DIRECTION_UP)
-	       {
-		  bd->h = bd->client_inset.t + bd->client.h + bd->client_inset.b;
-	       }
-	     else if (bd->shade.dir == E_DIRECTION_DOWN)
-	       {
-		  bd->h = bd->client_inset.t + bd->client.h + bd->client_inset.b;
-		  bd->y = bd->y - bd->client.h;
-		  bd->changes.pos = 1;
-	       }
-	     else if (bd->shade.dir == E_DIRECTION_LEFT)
-	       {
-		  bd->w = bd->client_inset.l + bd->client.w + bd->client_inset.r;
-	       }
-	     else if (bd->shade.dir == E_DIRECTION_RIGHT)
-	       {
-		  bd->w = bd->client_inset.l + bd->client.w + bd->client_inset.r;
-		  bd->x = bd->x - bd->client.w;
-		  bd->changes.pos = 1;
-	       }
-	     if ((bd->shaped) || (bd->client.shaped))
-	       {
-		  bd->need_shape_merge = 1;
-		  bd->need_shape_export = 1;
-	       }
-	     bd->changes.size = 1;
-	     bd->shaded = 0;
-	     bd->changes.shaded = 1;
-	     bd->changed = 1;
-	     if ((bd->shaped) || (bd->client.shaped))
-	       {
-		  bd->need_shape_merge = 1;
-		  bd->need_shape_export = 1;
-	       }
-	     edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
-	     e_border_frame_recalc(bd);
-	     ev = calloc(1, sizeof(E_Event_Border_Resize));
-	     ev->border = bd;
-	     /* The resize is added in the animator when animation complete */
-	     /* For non-animated, we add it immediately with the new size */
-	     e_object_ref(E_OBJECT(bd));
-//	     e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
-	     ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
-	  }
-
+	bd->shade.x = bd->x;
+	bd->shade.y = bd->y;
      }
+   else
+     {
+	bd->shade.x = bd->x - bd->client.w;
+	bd->shade.y = bd->y - bd->client.h;
+     }
+   if (e_config->border_shade_animate)
+     {
+	bd->shade.start = ecore_loop_time_get();
+	bd->shading = 1;
+	bd->changes.shading = 1;
+	bd->changed = 1;
+
+	if (bd->shade.dir == E_DIRECTION_UP)
+	  {
+	     ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_SW);
+	     ecore_x_window_move_resize(bd->client.win, 0,
+					bd->h - (bd->client_inset.t + bd->client_inset.b) -
+					bd->client.h,
+					bd->client.w, bd->client.h);
+	  }
+	else if (bd->shade.dir == E_DIRECTION_LEFT)
+	  {
+	     ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_SW);
+	     ecore_x_window_move_resize(bd->client.win,
+					bd->w - (bd->client_inset.l + bd->client_inset.r) -
+					bd->client.h,
+					0, bd->client.w, bd->client.h);
+	  }
+	else
+	  ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_NE);
+
+	bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
+	edje_object_signal_emit(bd->bg_object, "e,state,unshading", "e");
+     }
+   else
+     {
+	if (bd->shade.dir == E_DIRECTION_UP)
+	  {
+	     bd->h = bd->client_inset.t + bd->client.h + bd->client_inset.b;
+	  }
+	else if (bd->shade.dir == E_DIRECTION_DOWN)
+	  {
+	     bd->h = bd->client_inset.t + bd->client.h + bd->client_inset.b;
+	     bd->y = bd->y - bd->client.h;
+	     bd->changes.pos = 1;
+	  }
+	else if (bd->shade.dir == E_DIRECTION_LEFT)
+	  {
+	     bd->w = bd->client_inset.l + bd->client.w + bd->client_inset.r;
+	  }
+	else if (bd->shade.dir == E_DIRECTION_RIGHT)
+	  {
+	     bd->w = bd->client_inset.l + bd->client.w + bd->client_inset.r;
+	     bd->x = bd->x - bd->client.w;
+	     bd->changes.pos = 1;
+	  }
+	if ((bd->shaped) || (bd->client.shaped))
+	  {
+	     bd->need_shape_merge = 1;
+	     bd->need_shape_export = 1;
+	  }
+	bd->changes.size = 1;
+	bd->shaded = 0;
+	bd->changes.shaded = 1;
+	bd->changed = 1;
+	if ((bd->shaped) || (bd->client.shaped))
+	  {
+	     bd->need_shape_merge = 1;
+	     bd->need_shape_export = 1;
+	  }
+	edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
+	e_border_frame_recalc(bd);
+	ev = calloc(1, sizeof(E_Event_Border_Resize));
+	ev->border = bd;
+	/* The resize is added in the animator when animation complete */
+	/* For non-animated, we add it immediately with the new size */
+	e_object_ref(E_OBJECT(bd));
+	//	     e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
+	ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
+     }
+
    e_remember_update(bd);
 }
 
@@ -7376,12 +7331,15 @@ _e_border_resize_begin(E_Border *bd)
 	  e_border_raise(bd);
      }
    if ((bd->shaded) || (bd->shading) ||
-       (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)) ||
        (bd->fullscreen) || (bd->lock_user_size))
      return 0;
 
+   if (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) &&
+       (!e_config->allow_manip))
+ 
    if (grabbed)
      e_grabinput_get(bd->win, 0, bd->win);
+
    if (bd->client.netwm.sync.request)
      {
 	bd->client.netwm.sync.alarm = ecore_x_sync_alarm_new(bd->client.netwm.sync.counter);
@@ -7433,8 +7391,11 @@ _e_border_move_begin(E_Border *bd)
 	if (e_config->border_raise_on_mouse_action)
 	  e_border_raise(bd);
      }
-   if ((((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)) ||
-       (bd->fullscreen) || (bd->lock_user_location))
+   if ((bd->fullscreen) || (bd->lock_user_location))
+     return 0;
+
+   if (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) &&
+       (!e_config->allow_manip))
      return 0;
 
    if (grabbed)
