@@ -662,7 +662,7 @@ e_border_zone_set(E_Border *bd, E_Zone *zone)
    if (bd->desk->zone != bd->zone)
      e_border_desk_set(bd, e_desk_current_get(bd->zone));
 
-   ev = calloc(1, sizeof(E_Event_Border_Zone_Set));
+   ev = E_NEW(E_Event_Border_Zone_Set, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_zone_set_event");
@@ -692,7 +692,7 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    _e_border_hook_call(E_BORDER_HOOK_SET_DESK, bd);
    e_hints_window_desktop_set(bd);
 
-   ev = calloc(1, sizeof(E_Event_Border_Desk_Set));
+   ev = E_NEW(E_Event_Border_Desk_Set, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_desk_set_event");
@@ -738,7 +738,7 @@ e_border_show(E_Border *bd)
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
 
-   ev = calloc(1, sizeof(E_Event_Border_Show));
+   ev = E_NEW(E_Event_Border_Show, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_show_event");
@@ -799,7 +799,7 @@ e_border_hide(E_Border *bd, int manage)
      {
 	E_Event_Border_Hide *ev;
 	
-	ev = calloc(1, sizeof(E_Event_Border_Hide));
+	ev = E_NEW(E_Event_Border_Hide, 1);
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
 //	e_object_breadcrumb_add(E_OBJECT(bd), "border_hide_event");
@@ -873,7 +873,7 @@ _e_border_move_internal(E_Border *bd, int x, int y, Eina_Bool without_border)
 #endif
    _e_border_client_move_resize_send(bd);
    _e_border_move_update(bd);
-   ev = calloc(1, sizeof(E_Event_Border_Move));
+   ev = E_NEW(E_Event_Border_Move, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 //  e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
@@ -1038,14 +1038,14 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
    _e_border_resize_update(bd);
    if (move)
      {
-	mev = calloc(1, sizeof(E_Event_Border_Move));
+	mev = E_NEW(E_Event_Border_Move, 1);
 	mev->border = bd;
 	e_object_ref(E_OBJECT(bd));
 	//   e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
 	ecore_event_add(E_EVENT_BORDER_MOVE, mev, _e_border_event_border_move_free, NULL);
      }
    
-   rev = calloc(1, sizeof(E_Event_Border_Resize));
+   rev = E_NEW(E_Event_Border_Resize, 1);
    rev->border = bd;
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
@@ -1219,7 +1219,7 @@ e_border_raise(E_Border *bd)
 	  }
      }
 
-   ev = calloc(1, sizeof(E_Event_Border_Stack));
+   ev = E_NEW(E_Event_Border_Stack, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 
@@ -1305,7 +1305,7 @@ e_border_lower(E_Border *bd)
 	  }
      }
 
-   ev = calloc(1, sizeof(E_Event_Border_Stack));
+   ev = E_NEW(E_Event_Border_Stack, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 
@@ -1372,7 +1372,7 @@ e_border_stack_above(E_Border *bd, E_Border *above)
 	  }
      }
 
-   ev = calloc(1, sizeof(E_Event_Border_Stack));
+   ev = E_NEW(E_Event_Border_Stack, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 
@@ -1426,7 +1426,7 @@ e_border_stack_below(E_Border *bd, E_Border *below)
 	  }
      }
 
-   ev = calloc(1, sizeof(E_Event_Border_Stack));
+   ev = E_NEW(E_Event_Border_Stack, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 
@@ -1688,7 +1688,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 		    edje_object_signal_emit(focused->icon_object, "e,state,unfocused", "e");
 		  e_focus_event_focus_out(focused);
 		  
-		  ev = calloc(1, sizeof(E_Event_Border_Focus_Out)); 
+		  ev = E_NEW(E_Event_Border_Focus_Out, 1); 
 		  ev->border = focused; 
 		  e_object_ref(E_OBJECT(focused));
 		  
@@ -1746,7 +1746,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     focused = bd;
 	     // Let send the focus event iff the focus is set explicitly,
 	     // not via callback
-	     ev = calloc(1, sizeof(E_Event_Border_Focus_In)); 
+	     ev = E_NEW(E_Event_Border_Focus_In, 1); 
 	     ev->border = bd; 
 	     e_object_ref(E_OBJECT(bd)); 
 	     
@@ -1760,7 +1760,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     focused = NULL;
 	     // Let send the focus event iff the focus is set explicitly,
 	     // not via callback
-	     ev = calloc(1, sizeof(E_Event_Border_Focus_Out)); 
+	     ev = E_NEW(E_Event_Border_Focus_Out, 1); 
 	     ev->border = bd; 
 	     e_object_ref(E_OBJECT(bd));
 
@@ -1847,7 +1847,7 @@ e_border_shade(E_Border *bd, E_Direction dir)
 	  }
 	edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
 	e_border_frame_recalc(bd);
-	ev = calloc(1, sizeof(E_Event_Border_Resize));
+	ev = E_NEW(E_Event_Border_Resize, 1);
 	ev->border = bd;
 	/* The resize is added in the animator when animation complete */
 	/* For non-animated, we add it immediately with the new size */
@@ -1955,7 +1955,7 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 	  }
 	edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
 	e_border_frame_recalc(bd);
-	ev = calloc(1, sizeof(E_Event_Border_Resize));
+	ev = E_NEW(E_Event_Border_Resize, 1);
 	ev->border = bd;
 	/* The resize is added in the animator when animation complete */
 	/* For non-animated, we add it immediately with the new size */
@@ -3867,7 +3867,7 @@ _e_border_del(E_Border *bd)
 
    if ((!bd->new_client) && (!stopping))
      {
-	ev = calloc(1, sizeof(E_Event_Border_Remove));
+	ev = E_NEW(E_Event_Border_Remove, 1);
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
 	// e_object_breadcrumb_add(E_OBJECT(bd), "border_remove_event");
@@ -5985,7 +5985,7 @@ _e_border_eval0(E_Border *bd)
      {
 	E_Event_Border_Add *ev;
 
-	ev = calloc(1, sizeof(E_Event_Border_Add));
+	ev = E_NEW(E_Event_Border_Add, 1);
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
 //	e_object_breadcrumb_add(E_OBJECT(bd), "border_add_event");
@@ -6188,7 +6188,7 @@ _e_border_eval0(E_Border *bd)
 	  edje_object_signal_emit(bd->bg_object, "e,state,not_urgent", "e");
 	E_Event_Border_Urgent_Change *ev;
 
-	ev = calloc(1, sizeof(E_Event_Border_Urgent_Change));
+	ev = E_NEW(E_Event_Border_Urgent_Change, 1);
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
 	ecore_event_add(E_EVENT_BORDER_URGENT_CHANGE, ev,
@@ -6809,7 +6809,7 @@ _e_border_eval(E_Border *bd)
 	  {
 	     E_Event_Border_Icon_Change *ev;
 
-	     ev = calloc(1, sizeof(E_Event_Border_Icon_Change));
+	     ev = E_NEW(E_Event_Border_Icon_Change, 1);
 	     ev->border = bd;
 	     e_object_ref(E_OBJECT(bd));
 //	     e_object_breadcrumb_add(E_OBJECT(bd), "border_icon_change_event");
@@ -6874,7 +6874,7 @@ _e_border_eval(E_Border *bd)
    if (send_event) // FIXME: send only if a property changed - above need to
      // check on that. for now - always send.
      {
-	event = calloc(1, sizeof(E_Event_Border_Property));
+	event = E_NEW(E_Event_Border_Property, 1);
 	event->border = bd;
 	e_object_ref(E_OBJECT(bd));
 	ecore_event_add(E_EVENT_BORDER_PROPERTY, event, _e_border_event_border_property_free, NULL);
@@ -7087,7 +7087,7 @@ _e_border_shade_animator(void *data)
 	e_border_frame_recalc(bd);
 
 	ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_NW);
-	ev = calloc(1, sizeof(E_Event_Border_Resize));
+	ev = E_NEW(E_Event_Border_Resize, 1);
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
 //	e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
@@ -7105,7 +7105,7 @@ _e_border_event_border_resize_free(void *data, void *ev)
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_resize_event");
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7116,7 +7116,7 @@ _e_border_event_border_move_free(void *data, void *ev)
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_move_event");
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7127,7 +7127,7 @@ _e_border_event_border_add_free(void *data, void *ev)
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_add_event");
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7138,7 +7138,7 @@ _e_border_event_border_remove_free(void *data, void *ev)
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_remove_event");
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7149,7 +7149,7 @@ _e_border_event_border_show_free(void *data, void *ev)
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_show_event");
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7160,7 +7160,7 @@ _e_border_event_border_hide_free(void *data, void *ev)
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_hide_event");
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7171,7 +7171,7 @@ _e_border_event_border_iconify_free(void *data, void *ev)
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_iconify_event");
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7182,7 +7182,7 @@ _e_border_event_border_uniconify_free(void *data, void *ev)
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_uniconify_event");
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7193,7 +7193,7 @@ _e_border_event_border_stick_free(void *data, void *ev)
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_stick_event");
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7204,7 +7204,7 @@ _e_border_event_border_unstick_free(void *data, void *ev)
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_unstick_event");
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7216,7 +7216,7 @@ _e_border_event_border_zone_set_free(void *data, void *ev)
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_zone_set_event");
    e_object_unref(E_OBJECT(e->border));
    e_object_unref(E_OBJECT(e->zone));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7228,7 +7228,7 @@ _e_border_event_border_desk_set_free(void *data, void *ev)
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_desk_set_event");
    e_object_unref(E_OBJECT(e->border));
    e_object_unref(E_OBJECT(e->desk));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7244,7 +7244,7 @@ _e_border_event_border_stack_free(void *data, void *ev)
 //	e_object_breadcrumb_del(E_OBJECT(e->above), "border_raise_event.above");
 	e_object_unref(E_OBJECT(e->stack));
      }
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7255,7 +7255,7 @@ _e_border_event_border_icon_change_free(void *data, void *ev)
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_icon_change_event");
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7265,7 +7265,7 @@ _e_border_event_border_urgent_change_free(void *data, void *ev)
 
    e = ev;
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7275,7 +7275,7 @@ _e_border_event_border_focus_in_free(void *data, void *ev)
 
    e = ev;
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7285,7 +7285,7 @@ _e_border_event_border_focus_out_free(void *data, void *ev)
 
    e = ev;
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
@@ -7295,7 +7295,7 @@ _e_border_event_border_property_free(void *data, void *ev)
 
    e = ev;
    e_object_unref(E_OBJECT(e->border));
-   free(e);
+   E_FREE(e);
 }
 
 static void
