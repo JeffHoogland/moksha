@@ -683,35 +683,13 @@ _e_remember_cb_hook_eval_post_new_border(void *data, void *border)
 	E_Remember *rem;
 
 	rem = e_remember_new();
-	if (rem)
-	  {
-	     bd->remember = rem;
-	     rem->match = 0;
-	     
-	     if (bd->client.icccm.name)
-	       {
-		  rem->name = eina_stringshare_add(bd->client.icccm.name);
-		  rem->match |= E_REMEMBER_MATCH_NAME;
-	       }
-	     if (bd->client.icccm.class)
-	       {
-		  rem->class = eina_stringshare_add(bd->client.icccm.class);
-		  rem->match |= E_REMEMBER_MATCH_CLASS;
-	       }
-	     if (bd->client.icccm.window_role)
-	       {
-		  rem->role = eina_stringshare_add(bd->client.icccm.window_role);
-		  rem->match |= E_REMEMBER_MATCH_ROLE;
-	       }
-	     if (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_UNKNOWN)
-	       {
-		  rem->match |= E_REMEMBER_MATCH_TYPE;
-	       }
+	if (!rem) return;
 
-	     rem->match |= E_REMEMBER_MATCH_TRANSIENT;
-	     rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_BORDER;
-	     e_remember_use(rem);
-	     e_remember_update(bd);
-	  }
+	e_remember_default_match_set(rem, bd);
+	
+	rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_BORDER;
+	e_remember_use(rem);
+	e_remember_update(bd);
+	bd->remember = rem;
      }
 }
