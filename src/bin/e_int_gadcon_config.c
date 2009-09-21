@@ -15,7 +15,7 @@ static void _load_sel_gadgets(void *data);
 static void _cb_add(void *data, void *data2);
 static void _cb_del(void *data, void *data2);
 static void _set_description(void *data, const char *name);
-static int _gad_list_sort(void *data1, void *data2);
+//static int _gad_list_sort(void *data1, void *data2);
 
 struct _E_Config_Dialog_Data 
 {
@@ -393,6 +393,8 @@ _set_description(void *data, const char *name)
    efreet_desktop_free(desk);
 }
 
+/* FIXME unused */
+#if 0
 static int 
 _gad_list_sort(void *data1, void *data2) 
 {
@@ -410,3 +412,4 @@ _gad_list_sort(void *data1, void *data2)
 
    return (strcmp(lbl1, lbl2));
 }
+#endif
