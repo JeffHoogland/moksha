@@ -1564,6 +1564,10 @@ _e_shelf_cb_hide_animator(void *data)
         hide_max = es->w - es->hidden_state_size;
         if (es->hide_origin == -1) es->hide_origin = es->x;
         break;
+      case E_GADCON_ORIENT_FLOAT:
+      case E_GADCON_ORIENT_HORIZ:
+      case E_GADCON_ORIENT_VERT:
+	break;
      }
 
    step = (hide_max / e_config->framerate) / es->cfg->hide_duration;
@@ -1614,6 +1618,10 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_CORNER_RT:
         e_shelf_move(es, es->hide_origin + es->hide_step, es->y);
         break;
+      case E_GADCON_ORIENT_FLOAT:
+      case E_GADCON_ORIENT_HORIZ:
+      case E_GADCON_ORIENT_VERT:
+	 break;
      }
 
    return 1;
