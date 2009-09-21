@@ -16,7 +16,7 @@ INCLUDES = -I$(top_srcdir) \
 
 bin_PROGRAMS = \
 enlightenment \
-enlightenment_remote \
+enlightenment_remote_old \
 enlightenment_imc \
 enlightenment_start \
 enlightenment_fm_open
@@ -318,12 +318,12 @@ $(enlightenment_src)
 enlightenment_LDFLAGS = -export-dynamic
 enlightenment_LDADD = @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@ @VALGRIND_LIBS@
 
-enlightenment_remote_SOURCES = \
+enlightenment_remote_old_SOURCES = \
 e.h \
 e_ipc_codec.c \
 e_remote_main.c
 
-enlightenment_remote_LDADD = @E_REMOTE_LIBS@
+enlightenment_remote_old_LDADD = @E_REMOTE_LIBS@
 
 enlightenment_imc_SOURCES = \
 e.h \

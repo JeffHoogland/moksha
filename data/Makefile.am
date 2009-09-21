@@ -3,6 +3,7 @@ SUBDIRS = \
 images \
 themes \
 other \
+tools \
 xsession \
 input_methods \
 etc \

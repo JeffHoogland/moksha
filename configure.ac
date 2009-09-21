@@ -576,6 +576,7 @@ data/themes/images/Makefile
 data/other/Makefile
 data/xsession/Makefile
 data/xsession/enlightenment.desktop
+data/tools/Makefile
 data/etc/Makefile
 data/icons/Makefile
 data/backgrounds/Makefile
