@@ -133,7 +133,6 @@ _e_remember_restore_cb(void *data, int type, void *event)
    E_Remember *rem;
    Eina_List *l;
    E_Action *act_fm, *act;
-   const char *path;
    E_Container *con;
 
    act_fm = e_action_find("fileman"); 
@@ -143,28 +142,37 @@ _e_remember_restore_cb(void *data, int type, void *event)
    EINA_LIST_FOREACH(remembers->list, l, rem)
      {
 	if (!rem->class) continue;
-	//printf("internal restore %s\n", rem->class);
 
 	if (!strncmp(rem->class, "e_fwin::", 8))
 	  {
-	     //printf("internal restore fm %p\n", (void *) act_fm);
 	     if (!act_fm)
 	       continue;
-	     if (!strlen(rem->class) > 8)
+	     /* at least '/' */
+	     if (!rem->class + 9)
 	       continue;
 
-	     path = rem->class + 8;
-
-	     act_fm->func.go(NULL, path);
+	     act_fm->func.go(NULL, rem->class + 8);
 	  }
 	else if (!strncmp(rem->class, "_config::", 9))
 	  {
-	     /* TODO parse _config::params::path */
-	     path = rem->class + 9;
-	     //printf("internal restore config %s\n", path);
+	     char *param = NULL;
+	     char path[1024];
+	     const char *p;
+	     
+	     p = rem->class + 9;
+
+	     if ((param = strstr(p, "::")))
+	       {
+		  snprintf(path, (param - p) + sizeof(char), "%s", p);
+		  param = param + 2;
+	       }
+	     else
+	       snprintf(path, sizeof(path), "%s", p);
+	     
+	     printf("internal restore config %s - %s\n", path, param);
 	     if (e_configure_registry_exists(path))
 	       {
-		  e_configure_registry_call(path, con, NULL);
+		  e_configure_registry_call(path, con, param);
 	       }
 	  }
 	else if (!strcmp(rem->class, "_configure"))
