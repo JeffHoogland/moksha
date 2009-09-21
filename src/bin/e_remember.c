@@ -169,7 +169,6 @@ _e_remember_restore_cb(void *data, int type, void *event)
 	     else
 	       snprintf(path, sizeof(path), "%s", p);
 	     
-	     printf("internal restore config %s - %s\n", path, param);
 	     if (e_configure_registry_exists(path))
 	       {
 		  e_configure_registry_call(path, con, param);
