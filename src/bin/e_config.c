@@ -1046,7 +1046,7 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->desk_flip_pan_bg, 0, 1);
    E_CONFIG_LIMIT(e_config->desk_flip_pan_x_axis_factor, 0.0, 1.0);
    E_CONFIG_LIMIT(e_config->desk_flip_pan_y_axis_factor, 0.0, 1.0);
-   E_CONFIG_LIMIT(e_config->remember_internal_windows, 0, 1);
+   E_CONFIG_LIMIT(e_config->remember_internal_windows, 0, 3);
    E_CONFIG_LIMIT(e_config->desk_auto_switch, 0, 1);
 
    E_CONFIG_LIMIT(e_config->dpms_enable, 0, 1);

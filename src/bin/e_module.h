@@ -17,6 +17,7 @@ typedef struct _E_Event_Module_Update E_Event_Module_Update;
 #define E_MODULE_TYPE 0xE0b0100b
 
 extern EAPI int E_EVENT_MODULE_UPDATE;
+extern EAPI int E_EVENT_MODULE_INIT_END;
 
 struct _E_Event_Module_Update
 {

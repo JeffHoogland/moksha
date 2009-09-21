@@ -213,7 +213,7 @@ _e_desktop_edit_view_create(E_Desktop_Edit *editor, E_Container *con)
 
    editor->cfd = 
      e_config_dialog_new(con, _("Desktop Entry Editor"), "E", 
-			 "_desktop_editor_dialog",
+			 "applications/new_application",
 			 "preferences-applications", 0, v, editor);
    
    if (!editor->cfd)

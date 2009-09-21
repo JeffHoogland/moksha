@@ -1071,7 +1071,7 @@ _mixer_module_config(E_Container *con, const char *params __UNUSED__)
 }
 
 static const char _reg_cat[] = "extensions";
-static const char _reg_item[] = "extensions/e";
+static const char _reg_item[] = "extensions/mixer";
 
 static void
 _mixer_configure_registry_register(void)

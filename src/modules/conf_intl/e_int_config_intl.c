@@ -569,7 +569,7 @@ e_int_config_intl(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "_config_intl_dialog")) return NULL;
+   if (e_config_dialog_find("E", "language/language_settings")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    
    v->create_cfdata           = _create_data;
@@ -581,7 +581,7 @@ e_int_config_intl(E_Container *con, const char *params __UNUSED__)
    
    cfd = e_config_dialog_new(con,
 			     _("Language Settings"),
-			    "E", "_config_intl_dialog",
+			     "E", "language/language_settings",
 			     "preferences-desktop-locale", 0, v, NULL);
    return cfd;
 }

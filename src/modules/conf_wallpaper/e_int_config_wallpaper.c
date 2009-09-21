@@ -83,7 +83,7 @@ _e_int_config_wallpaper_desk(E_Container *con, int con_num, int zone_num, int de
    E_Config_Dialog_View *v;
    E_Config_Wallpaper *cw;
 
-   if (e_config_dialog_find("E", "_config_wallpaper_dialog")) return NULL;
+   if (e_config_dialog_find("E", "appearance/wallpaper")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    cw = E_NEW(E_Config_Wallpaper, 1);
 
@@ -108,7 +108,7 @@ _e_int_config_wallpaper_desk(E_Container *con, int con_num, int zone_num, int de
    cw->desk_y = desk_y;
 
    cfd = e_config_dialog_new(con, _("Wallpaper Settings"), "E", 
-			     "_config_wallpaper_dialog",
+			     "appearance/wallpaper",
 			     "preferences-desktop-wallpaper", 0, v, cw);
    return cfd;
 }

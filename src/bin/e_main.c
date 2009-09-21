@@ -818,16 +818,6 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_exec_shutdown);
 
-   e_init_status_set(_("Setup Remembers"));
-   TS("remember");
-   /* do remember stuff */
-   if (!e_remember_init(after_restart ? E_STARTUP_RESTART: E_STARTUP_START))
-     {
-	e_error_message_show(_("Enlightenment cannot setup remember settings."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_remember_shutdown);
-
    TS("container freeze");
    e_container_all_freeze();
 
@@ -890,6 +880,16 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_module_shutdown);
+
+   e_init_status_set(_("Setup Remembers"));
+   TS("remember");
+   /* do remember stuff */
+   if (!e_remember_init(after_restart ? E_STARTUP_RESTART: E_STARTUP_START))
+     {
+       e_error_message_show(_("Enlightenment cannot setup remember settings."));
+       _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_remember_shutdown);
 
    e_init_status_set(_("Setup Color Classes"));
    TS("colorclasses");
@@ -1084,6 +1084,8 @@ main(int argc, char **argv)
    /* Store current selected desktops */
    _e_main_desk_save();
 
+   e_remember_internal_save();
+   
    /* unroll our stack of shutdown functions with exit code of 0 */
    _e_main_shutdown(0);
 

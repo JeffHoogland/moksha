@@ -36,7 +36,7 @@ e_int_config_exebuf(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "_config_exebuf_dialog")) return NULL;
+   if (e_config_dialog_find("E", "advanced/run_command")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    
    v->create_cfdata = _create_data;
@@ -47,7 +47,7 @@ e_int_config_exebuf(E_Container *con, const char *params __UNUSED__)
    v->advanced.create_widgets = _advanced_create_widgets;
    cfd = e_config_dialog_new(con,
 			     _("Run Command Settings"),
-			    "E", "_config_exebuf_dialog",
+			     "E", "advanced/run_command",
 			     "system-run", 0, v, NULL);
    return cfd;
 }

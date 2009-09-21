@@ -95,7 +95,7 @@ e_int_config_imc(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "_config_imc_dialog")) return NULL;
+   if (e_config_dialog_find("E", "language/input_method_settings")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
 
    v->create_cfdata           = _create_data;
@@ -107,7 +107,7 @@ e_int_config_imc(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con,
 			     _("Input Method Settings"),
-			    "E", "_config_imc_dialog",
+			     "E", "language/input_method_settings",
 			     "preferences-imc", 0, v, NULL);
    return cfd;
 }

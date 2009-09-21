@@ -116,7 +116,7 @@ e_int_config_color_classes(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "_config_color_classes_dialog")) return NULL;
+   if (e_config_dialog_find("E", "appearance/colors")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return NULL;
    
@@ -127,7 +127,7 @@ e_int_config_color_classes(E_Container *con, const char *params __UNUSED__)
    v->advanced.apply_cfdata = _adv_apply_data;
    v->advanced.create_widgets = _adv_create_widgets;
    
-   cfd = e_config_dialog_new(con, _("Colors"), "E", "_config_color_classes_dialog",
+   cfd = e_config_dialog_new(con, _("Colors"), "E", "appearance/colors",
 			     "preferences-desktop-color", 0, v, NULL);
    return cfd;
 }

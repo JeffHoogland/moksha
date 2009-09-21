@@ -155,7 +155,7 @@ e_int_config_fonts(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "_config_fonts_dialog")) return NULL;
+   if (e_config_dialog_find("E", "appearance/fonts")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
 
    v->create_cfdata           = _create_data;
@@ -166,7 +166,7 @@ e_int_config_fonts(E_Container *con, const char *params __UNUSED__)
    v->advanced.apply_cfdata   = _advanced_apply_data;
 
    cfd = e_config_dialog_new(con, _("Font Settings"),
-			     "E", "_config_fonts_dialog",
+			     "E", "appearance/fonts",
 			     "preferences-desktop-font", 0, v, NULL);
    return cfd;
 }

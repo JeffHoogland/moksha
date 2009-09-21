@@ -29,13 +29,15 @@ typedef struct _E_Remember E_Remember;
 #define E_REMEMBER_SET_FOCUS_ON_START (1 << 14)
 #define E_REMEMBER_APPLY_FULLSCREEN (1 << 15)
 
+#define E_REMEMBER_INTERNAL_DIALOGS   (1 << 0)
+#define E_REMEMBER_INTERNAL_FM_WINS   (1 << 1)
+
 #else
 #ifndef E_REMEMBER_H
 #define E_REMEMBER_H
 
 struct _E_Remember
 {
-   unsigned char  delete_me;
    int            match;
    unsigned char  apply_first_only;
    unsigned char  keep_settings;
@@ -110,6 +112,6 @@ EAPI E_Remember  *e_remember_find_usable(E_Border *bd);
 EAPI void         e_remember_match_update(E_Remember *rem);
 EAPI void         e_remember_update(E_Border *bd);
 EAPI int	  e_remember_default_match_set(E_Remember *rem, E_Border *bd);
-    
+EAPI void         e_remember_internal_save(void);
 #endif
 #endif

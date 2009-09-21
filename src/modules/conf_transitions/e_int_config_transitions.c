@@ -32,7 +32,7 @@ e_int_config_transitions(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "_config_transitions_dialog")) return NULL;
+   if (e_config_dialog_find("E", "appearance/transitions")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return NULL;
    
@@ -42,7 +42,7 @@ e_int_config_transitions(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create_widgets;
    
    cfd = e_config_dialog_new(con, _("Transition Settings"),
-			     "E", "_config_transitions_dialog",
+			     "E", "appearance/transitions",
 			     "preferences-transitions", 0, v, NULL);
    return cfd;
 }

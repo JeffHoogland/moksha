@@ -23,7 +23,7 @@ e_int_config_mouse(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "_config_mouse_dialog"))
+   if (e_config_dialog_find("E", "keyboard_and_mouse/mouse_settings"))
      return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
@@ -35,7 +35,7 @@ e_int_config_mouse(E_Container *con, const char *params __UNUSED__)
    v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con, _("Mouse Settings"), "E",
-			     "_config_mouse_dialog",
+			     "keyboard_and_mouse/mouse_settings",
 			     "preferences-desktop-mouse", 0, v, NULL);
    return cfd;
 }

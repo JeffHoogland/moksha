@@ -167,11 +167,12 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 
    pdia = cfd->dia;
    /* FIXME: get name/class form new call and use here */
-   if (type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-     snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "BASIC");
-   else
-     snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "ADVANCED");
-
+   /* if (type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
+    *   snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "BASIC");
+    * else
+    *   snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "ADVANCED"); */
+   snprintf(buf, sizeof(buf), "_config::%s", cfd->class);
+   
    if (!pdia)  /* creating window for the first time */
      {
        if ((cfd->view->normal_win) || (e_config->cfgdlg_normal_wins))

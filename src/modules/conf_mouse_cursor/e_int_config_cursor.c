@@ -31,7 +31,7 @@ e_int_config_cursor(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "_config_cursor_dialog")) return NULL;
+   if (e_config_dialog_find("E", "appearance/mouse_cursor")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    
    v->create_cfdata = _create_data;
@@ -43,7 +43,7 @@ e_int_config_cursor(E_Container *con, const char *params __UNUSED__)
    
    cfd = e_config_dialog_new(con,
 			     _("Cursor Settings"),
-			     "E", "_config_cursor_dialog",
+			     "E", "appearance/mouse_cursor",
 			     "preferences-desktop-pointer", 0, v, NULL);
    return cfd;
 }

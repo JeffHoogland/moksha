@@ -44,8 +44,6 @@ struct _E_Fwin
 
    Ecore_Event_Handler *zone_handler;
    Ecore_Event_Handler *zone_del_handler;
-
-   unsigned char        geom_save_ready : 1;
 };
 
 struct _E_Fwin_Page
@@ -172,55 +170,7 @@ e_fwin_shutdown(void)
 EAPI void
 e_fwin_new(E_Container *con, const char *dev, const char *path)
 {
-   E_Fwin *fwin;
-   E_Fm2_Custom_File *cf;
-   char buf[PATH_MAX];
-   int x, y, w, h;
-
-   fwin = _e_fwin_new(con, dev, path);
-
-   if (!fwin) return;
-
-   snprintf(buf, sizeof(buf), "dir::%s", e_fm2_real_path_get(fwin->cur_page->fm_obj));
-   cf = e_fm2_custom_file_get(buf);
-   if ((cf) && (cf->geom.valid))
-     {
-	int zx, zy, zw, zh;
-
-	x = cf->geom.x;
-	y = cf->geom.y;
-	w = cf->geom.w;
-	h = cf->geom.h;
-
-	e_zone_useful_geometry_get(fwin->win->border->zone,
-				   &zx, &zy, &zw, &zh);
-
-	/* checking width and height */
-	if (w < 24)
-	  w = 280 * e_scale;
-	else if (w > zw)
-	  w = zw;
-	if (h < 24)
-	  h = 200 * e_scale;
-	else if (h > zh)
-	  h = zh;
-
-	/* checking left-top corner */
-	if (x < zx)
-	  x = zx;
-	if (y < zy)
-	  y = zy;
-
-	/* checking right-bottom corner */
-	if ((zx + zw) < (x + w))
-	  x = zx + zw - w;
-	if ((zy + zh) < (y + h))
-	  y = zy + zh - h;
-
-	e_win_move_resize(fwin->win, x, y, w, h);
-     }
-
-   fwin->geom_save_ready = 1;
+   _e_fwin_new(con, dev, path);
 }
 
 EAPI void
@@ -409,7 +359,8 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    E_Fwin *fwin;
    E_Fwin_Page *page;
    Evas_Object *o;
-
+   char buf[PATH_MAX];
+   
    fwin = E_OBJECT_ALLOC(E_Fwin, E_FWIN_TYPE, _e_fwin_free);
    if (!fwin) return NULL;
    fwin->win = e_win_new(con);
@@ -448,10 +399,10 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    evas_object_pass_events_set(o, 1);
    fwin->over_obj = o;
 
-   e_win_name_class_set(fwin->win, "E", "e_fwin");
-
    e_fm2_path_set(page->fm_obj, dev, path);
    _e_fwin_window_title_set(page);
+   snprintf(buf, sizeof(buf), "e_fwin::%s", e_fm2_real_path_get(fwin->cur_page->fm_obj));
+   e_win_name_class_set(fwin->win, "E", buf);
 
    e_win_size_min_set(fwin->win, 24, 24);
    e_win_resize(fwin->win, 280 * e_scale, 200 * e_scale);
@@ -1084,27 +1035,27 @@ _e_fwin_cb_delete(E_Win *win)
    e_object_del(E_OBJECT(fwin));
 }
 
-static void
-_e_fwin_geom_save(E_Fwin *fwin)
-{
-   char buf[PATH_MAX];
-   E_Fm2_Custom_File *cf;
-
-   if (!fwin->geom_save_ready) return;
-   snprintf(buf, sizeof(buf), "dir::%s", e_fm2_real_path_get(fwin->cur_page->fm_obj));
-   cf = e_fm2_custom_file_get(buf);
-   if (!cf)
-     {
-	cf = alloca(sizeof(E_Fm2_Custom_File));
-	memset(cf, 0, sizeof(E_Fm2_Custom_File));
-     }
-   cf->geom.x = fwin->win->x;
-   cf->geom.y = fwin->win->y;
-   cf->geom.w = fwin->win->w;
-   cf->geom.h = fwin->win->h;
-   cf->geom.valid = 1;
-   e_fm2_custom_file_set(buf, cf);
-}
+/* static void
+ * _e_fwin_geom_save(E_Fwin *fwin)
+ * {
+ *    char buf[PATH_MAX];
+ *    E_Fm2_Custom_File *cf;
+ * 
+ *    if (!fwin->geom_save_ready) return;
+ *    snprintf(buf, sizeof(buf), "dir::%s", e_fm2_real_path_get(fwin->cur_page->fm_obj));
+ *    cf = e_fm2_custom_file_get(buf);
+ *    if (!cf)
+ *      {
+ * 	cf = alloca(sizeof(E_Fm2_Custom_File));
+ * 	memset(cf, 0, sizeof(E_Fm2_Custom_File));
+ *      }
+ *    cf->geom.x = fwin->win->x;
+ *    cf->geom.y = fwin->win->y;
+ *    cf->geom.w = fwin->win->w;
+ *    cf->geom.h = fwin->win->h;
+ *    cf->geom.valid = 1;
+ *    e_fm2_custom_file_set(buf, cf);
+ * } */
 
 static void
 _e_fwin_cb_move(E_Win *win)
@@ -1113,7 +1064,7 @@ _e_fwin_cb_move(E_Win *win)
 
    if (!win) return; //safety
    fwin = win->data;
-   _e_fwin_geom_save(fwin);
+   /* _e_fwin_geom_save(fwin); */
 }
 
 static void
@@ -1147,7 +1098,7 @@ _e_fwin_cb_resize(E_Win *win)
      }
    else if (fwin->zone)
      evas_object_resize(fwin->cur_page->scrollframe_obj, fwin->zone->w, fwin->zone->h);
-   _e_fwin_geom_save(fwin);
+   /* _e_fwin_geom_save(fwin); */
 }
 
 static void
@@ -1686,14 +1637,16 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
 		    {
 		       Evas_Object *oic;
 		       const char *itype = NULL;
-		       int ix, iy, iw, ih, nx, ny, nw, nh;
+		       int ix, iy, iw, ih, nx, ny, found = 0;
+		       E_Remember *rem = NULL;
+		       Eina_List *ll;
 
 		       oic = e_fm2_icon_get(evas_object_evas_get(page->fm_obj),
 					    ici->ic, NULL, NULL, 0, &itype);
 		       if (oic)
 			 {
 			    const char *file = NULL, *group = NULL;
-			    E_Fm2_Custom_File *cf;
+			    /* E_Fm2_Custom_File *cf; */
 			    
 			    if (fwin2->win->border->internal_icon)
 			      eina_stringshare_del(fwin2->win->border->internal_icon);
@@ -1721,42 +1674,18 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
 				   eina_stringshare_add(file);
 			      }
 			    evas_object_del(oic);
-			    
-			    snprintf(buf, sizeof(buf), "dir::%s",
-				     e_fm2_real_path_get(fwin2->cur_page->fm_obj));
-			    cf = e_fm2_custom_file_get(buf);
-			    if ((cf) && (cf->geom.valid))
-			      {
-				 nx = cf->geom.x;
-				 ny = cf->geom.y;
-				 nw = cf->geom.w;
-				 nh = cf->geom.h;
-				 /* if it ended up too small - fix to a decent size  */
-				 if (nw < 24) nw = 200 * e_scale;
-				 if (nh < 24) nh = 280 * e_scale;
 
-				 /* if it ended up out of the zone */
-				 if (nx < fwin2->win->border->zone->x)
-				   nx = fwin2->win->border->zone->x;
-				 if (ny < fwin2->win->border->zone->y)
-				   ny = fwin2->win->border->zone->y;
-				 if ((fwin2->win->border->zone->x + 
-				      fwin2->win->border->zone->w) <
-				     (fwin2->win->border->w + nx))
-				   nx = fwin2->win->border->zone->x + 
-				   fwin2->win->border->zone->w - 
-				     fwin2->win->border->w;
-				 if ((fwin2->win->border->zone->y + 
-				      fwin2->win->border->zone->h) <
-				     (fwin2->win->border->h + ny))
-				   ny = fwin2->win->border->zone->y + 
-				   fwin2->win->border->zone->h - 
-				   fwin2->win->border->h;
-				 e_win_move_resize(fwin2->win, nx, ny, nw, nh);
-			      }
-			    else
+			    snprintf(buf, sizeof(buf), "e_fwin::%s", e_fm2_real_path_get(fwin2->cur_page->fm_obj));
+			    EINA_LIST_FOREACH(e_config->remembers, ll, rem)
+			      if (rem->class && !strcmp(rem->class, buf))
+				{
+				   found = 1;
+				   break;
+				}
+			    
+			    if (!found)
 			      {
-				 /* No custom info, so just put window near icon */
+			       /* No custom info, so just put window near icon */
 				 e_fm2_icon_geometry_get(ici->ic, &ix, &iy, &iw, &ih);
 				 nx = (ix + (iw / 2));
 				 ny = (iy + (ih / 2));
@@ -1777,7 +1706,6 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
 				 e_win_move(fwin2->win, nx, ny);
 			      }
 			 }
-		       fwin2->geom_save_ready = 1;
 		       if (ici->label)
 			 e_win_title_set(fwin2->win, ici->label);
 		       else if (ici->file)

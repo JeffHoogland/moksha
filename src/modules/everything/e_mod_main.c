@@ -206,8 +206,8 @@ _config_init()
      {
 	evry_conf = E_NEW(Config, 1);
 	evry_conf->version = CONFIG_VERSION;
-	evry_conf->rel_x = 50.0;
-	evry_conf->rel_y = 50.0;
+	evry_conf->rel_x = 0.5;
+	evry_conf->rel_y = 0.33;
 	evry_conf->width = 0;
 	evry_conf->height = 0;
 	evry_conf->scroll_animate = 0;

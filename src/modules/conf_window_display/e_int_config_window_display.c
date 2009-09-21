@@ -31,7 +31,7 @@ struct _E_Config_Dialog_Data
    int border_shade_transition;
    double border_shade_speed;
    int use_app_icon;
-   int remember_internal_windows;
+   /* int remember_internal_windows; */
 };
 
 Eina_List *shading_list = NULL;
@@ -43,7 +43,7 @@ e_int_config_window_display(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "_config_window_display_dialog")) return NULL;
+   if (e_config_dialog_find("E", "windows/window_display")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
 
    /* methods */
@@ -56,7 +56,7 @@ e_int_config_window_display(E_Container *con, const char *params __UNUSED__)
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con,
 			     _("Window Display"),
-			     "E", "_config_window_display_dialog",
+			     "E", "windows/window_display",
 			     "preferences-system-windows", 0, v, NULL);
    return cfd;
 }
@@ -77,7 +77,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
        cfdata->resize_info_visible) cfdata->move_resize_info = 1;
    if (cfdata->border_shade_animate) cfdata->animate_shading = 1;
    cfdata->use_app_icon = e_config->use_app_icon;
-   cfdata->remember_internal_windows = e_config->remember_internal_windows;
+   /* cfdata->remember_internal_windows = e_config->remember_internal_windows; */
    cfdata->desk_auto_switch = e_config->desk_auto_switch;
 }
 
@@ -143,7 +143,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->border_shade_transition = cfdata->border_shade_transition;
    e_config->border_shade_speed = cfdata->border_shade_speed;
    e_config->use_app_icon = cfdata->use_app_icon;
-   e_config->remember_internal_windows = cfdata->remember_internal_windows;
+   /* e_config->remember_internal_windows = cfdata->remember_internal_windows; */
    e_config->desk_auto_switch = cfdata->desk_auto_switch;
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -275,11 +275,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
 
-   of = e_widget_framelist_add(evas, _("Internal Windows"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   ob = e_widget_check_add(evas, _("Always remember internal windows"), &(cfdata->remember_internal_windows));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
+   /* of = e_widget_framelist_add(evas, _("Internal Windows"), 0);
+    * e_widget_framelist_content_align_set(of, 0.0, 0.0);
+    * ob = e_widget_check_add(evas, _("Always remember internal windows"), &(cfdata->remember_internal_windows));
+    * e_widget_framelist_object_append(of, ob);
+    * e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1); */
 
    return ot;
 }

@@ -24,12 +24,14 @@ static Ecore_Idler *_e_module_idler = NULL;
 static Eina_List *_e_modules_delayed = NULL;
 
 EAPI int E_EVENT_MODULE_UPDATE = 0;
+EAPI int E_EVENT_MODULE_INIT_END = 0;
 
 /* externally accessible functions */
 EAPI int
 e_module_init(void)
 {
    E_EVENT_MODULE_UPDATE = ecore_event_type_new();
+   E_EVENT_MODULE_INIT_END = ecore_event_type_new();
    return 1;
 }
 
@@ -90,6 +92,11 @@ e_module_all_load(void)
 	     if (em->name) m = e_module_new(em->name);
 	     if (m) e_module_enable(m);
 	  }
+     }
+   
+   if (!_e_modules_delayed)
+     {
+	ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
      }
 }
 
@@ -514,16 +521,6 @@ _e_module_cb_dialog_disable(void *data, E_Dialog *dia)
    e_config_save_queue();
 }
 
-static void 
-_e_module_event_update_free(void *data, void *event) 
-{
-   E_Event_Module_Update *ev;
-   
-   if (!(ev = event)) return;
-   E_FREE(ev->name);
-   E_FREE(ev);
-}
-
 static int
 _e_module_cb_idler(void *data)
 {
@@ -539,7 +536,14 @@ _e_module_cb_idler(void *data)
 	if (m) e_module_enable(m);
 	eina_stringshare_del(name);
      }
-   if (_e_modules_delayed) return 1;
+   if (_e_modules_delayed)
+     {
+       e_util_wakeup();
+       return 1;
+     }
+
+   ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
+
    _e_module_idler = NULL;
    return 0;
 }
@@ -552,4 +556,15 @@ _e_module_sort_priority(const void *d1, const void *d2)
    m1 = d1;
    m2 = d2;
    return (m2->priority - m1->priority);
+}
+
+
+static void 
+_e_module_event_update_free(void *data, void *event) 
+{
+   E_Event_Module_Update *ev;
+   
+   if (!(ev = event)) return;
+   E_FREE(ev->name);
+   E_FREE(ev);
 }

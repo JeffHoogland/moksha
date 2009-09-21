@@ -45,7 +45,7 @@ e_int_config_desks(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "_config_desks_dialog")) return NULL;
+   if (e_config_dialog_find("E", "screen/virtual_desktops")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    
    /* methods */
@@ -60,7 +60,7 @@ e_int_config_desks(E_Container *con, const char *params __UNUSED__)
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con,
 			     _("Virtual Desktops Settings"),
-			    "E", "_config_desks_dialog",
+			     "E", "screen/virtual_desktops",
 			     "preferences-desktop", 0, v, NULL);
    return cfd;
 }
