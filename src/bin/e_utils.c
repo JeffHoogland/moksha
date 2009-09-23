@@ -579,9 +579,9 @@ e_util_desk_border_below(E_Border *bd)
    else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
    else pos = 5;
 
-   EINA_LIST_REVERSE_FOREACH(eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd), l, bd2)
+   for (l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd); l; l = l->prev)
      {
-	if (!eina_list_prev(l) || below) break;
+        if (!eina_list_prev(l) || below) break;
 	below = eina_list_data_get(eina_list_prev(l));
 	if ((below->desk != bd->desk) && (!below->sticky))
 	  below = NULL;
@@ -593,9 +593,10 @@ e_util_desk_border_below(E_Border *bd)
 	  {
 	     if (bd->zone->container->layers[i].clients)
 	       {
-		  EINA_LIST_REVERSE_FOREACH(eina_list_last(bd->zone->container->layers[i].clients), l, bd2)
+		  l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd);
+		  for (; l && !below; l = l->prev)
 		    {
-		       if (below) break;
+		       bd2 = l->data;
 		       below = bd2;
 		       if ((below->desk != bd->desk) && (!below->sticky))
 			 below = NULL;
