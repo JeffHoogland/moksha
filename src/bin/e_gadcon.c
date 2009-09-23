@@ -1971,11 +1971,13 @@ _e_gadcon_client_move_start(E_Gadcon_Client *gcc)
    if (gcc->gadcon->toolbar)
      evas_pointer_canvas_xy_get(gcc->gadcon->evas, &gcc->dx, &gcc->dy);
    else
-     ecore_x_pointer_xy_get(gcc->gadcon->zone->container->win, &gcc->dx, &gcc->dy);
-   e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &gcx, &gcy, NULL, NULL);
-   evas_object_geometry_get(gcc->gadcon->o_container, &gx, &gy, NULL, NULL);
-   gcc->dx -= (gcx + gx);
-   gcc->dy -= (gcy + gy);
+     {
+	ecore_x_pointer_xy_get(gcc->gadcon->zone->container->win, &gcc->dx, &gcc->dy);
+	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &gcx, &gcy, NULL, NULL);
+	evas_object_geometry_get(gcc->gadcon->o_container, &gx, &gy, NULL, NULL);
+	gcc->dx -= (gcx + gx);
+	gcc->dy -= (gcy + gy);
+     }
    
    if (gcc->o_frame)
      evas_object_geometry_get(gcc->o_frame, &x, &y, NULL, NULL);
@@ -2005,8 +2007,7 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
    int cx, cy;
    int gx, gy, gw, gh;
    int gcx = 0, gcy = 0;
-
-
+   int changes = 0;
    
    if (!gcc->moving) return;
    /* we need to get output not canvas because things like systray
@@ -2014,7 +2015,7 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
    /* maybe we should better grab mouse while move resize is active...*/
    //evas_pointer_canvas_xy_get(gcc->gadcon->evas, &cx, &cy);
    if (gcc->gadcon->toolbar)
-     evas_pointer_canvas_xy_get(gcc->gadcon->evas, &gcc->dx, &gcc->dy);
+     evas_pointer_canvas_xy_get(gcc->gadcon->evas, &cx, &cy);
    else
      {
 	ecore_x_pointer_xy_get(gcc->gadcon->zone->container->win, &cx, &cy);
@@ -2022,7 +2023,7 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
      }
    
    evas_object_geometry_get(gcc->gadcon->o_container, &gx, &gy, &gw, &gh);
-   
+
    cx -= (gx + gcx);
    cy -= (gy + gcy);
    
@@ -2031,6 +2032,13 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
    
    gcc->state_info.flags = E_GADCON_LAYOUT_ITEM_LOCK_POSITION | E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
    _e_gadcon_client_current_position_sync(gcc);
+
+   if (gcc->o_frame)
+     evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
+   else if (gcc->o_base)
+     evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
+   else return; /* make clang happy */
+
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      { 
 	if (cy + e_config->drag_resist < 0 || cy - e_config->drag_resist > gh)
@@ -2039,17 +2047,31 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
 	     return;
 	  }
 
-	if (x > 0)
+	if (x > 0 && (cx + gcc->drag.x > gcc->config.pos))
 	  {
 	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
 	       gcc->state_info.resist = 0;
 	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_INC;
+	     changes = 1;
 	  }
-	else if (x < 0)
+	else if (x < 0 && (cx + gcc->drag.x < gcc->config.pos))
 	  {
 	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_DEC)
 	       gcc->state_info.resist = 0; 
 	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_DEC;
+	     changes = 1;
+	  }
+
+	if (changes)
+	  {
+	     if (gcc->o_frame)
+	       e_gadcon_layout_pack_request_set(gcc->o_frame, cx + gcc->drag.x, w);
+	     else if (gcc->o_base)
+	       e_gadcon_layout_pack_request_set(gcc->o_base, cx + gcc->drag.x, w);
+
+	     gcc->config.size = w;
+	     evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
+	     gcc->config.res = w;
 	  }
      }
    else
@@ -2060,47 +2082,33 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
 	     return;
 	  }
 
-	if (y > 0)
+	if (y > 0 && (cy + gcc->drag.y > gcc->config.pos))
 	  {
 	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
 	       gcc->state_info.resist = 0;
 	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_INC;
+	     changes = 1;
 	  }
-	else if (y < 0)
+	else if (y < 0 && (cy + gcc->drag.y < gcc->config.pos))
 	  {
 	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_DEC)
 	       gcc->state_info.resist = 0;
 	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_DEC;
+	     changes = 1;
 	  }
-     }
 
-   if (gcc->o_frame)
-     evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
-   else if (gcc->o_base)
-     evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
-   else return; /* make clang happy */
-     
-   if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
-     {
-	if (gcc->o_frame)
-	  e_gadcon_layout_pack_request_set(gcc->o_frame, cx + gcc->drag.x, w);
-	else if (gcc->o_base)
-	  e_gadcon_layout_pack_request_set(gcc->o_base, cx + gcc->drag.x, w);
+	if (changes)
+	  {
+	     if (gcc->o_frame)
+	       e_gadcon_layout_pack_request_set(gcc->o_frame, cy + gcc->drag.y, h);
+	     else if (gcc->o_base)
+	       e_gadcon_layout_pack_request_set(gcc->o_base, cy + gcc->drag.y, h);
 
-	gcc->config.size = w;
-	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
-	gcc->config.res = w;
-     }
-   else
-     {
-	if (gcc->o_frame)
-	  e_gadcon_layout_pack_request_set(gcc->o_frame, cy + gcc->drag.y, h);
-	else if (gcc->o_base)
-	  e_gadcon_layout_pack_request_set(gcc->o_base, cy + gcc->drag.y, h);
+	     gcc->config.size = h;
+	     evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
+	     gcc->config.res = h;
+	  }
 
-	gcc->config.size = h;
-	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
-	gcc->config.res = h;
      }
    
    gcc->dx += x;
@@ -3633,8 +3641,10 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 
 	if (reduce_total <= need) 
 	  {
-	     EINA_LIST_REVERSE_FOREACH(l, l2, item)
-	       { 
+	     /* EINA_FUCK_REVERSE_FOREACH(l, l2, item) */
+	     for (l2 = l; l2;  l2 = l2->prev)
+	       {
+		  item = l2->data;
 		  bi2 = evas_object_data_get(item, "e_gadcon_layout_data"); 
 		  bi2->ask.size2 -= reduce; 
 	       } 
@@ -3890,7 +3900,7 @@ _e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd)
    Eina_List *l;
    Evas_Object *item;
 
-#if 1
+#if 0
    EINA_LIST_FOREACH(sd->items, l, item)
      {
 	bi = evas_object_data_get(item, "e_gadcon_layout_data");
@@ -4171,17 +4181,16 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
 	     if ((l) && eina_list_prev(l))
 	       {
 		  stop = 0;
-		  /* FIXME: patch from <victor.scorpion@gmail.com>
-		     just a workaround. something above is probably
-		     wrong (hannes) */
-		  /* EINA_LIST_REVERSE_FOREACH(eina_list_prev(l), l2, lc) */
-		  EINA_LIST_REVERSE_FOREACH_SAFE(eina_list_prev(l), l2, l2, lc)
+		  /* EINA_FUCK_REVERSE_FOREACH(eina_list_prev(l), l2, lc) */
+		  for (l2 = l->prev; l2; l2 = l2->prev)
 		    {
+		       lc = l2->data;
+		       
 		       if (stop) break;
 		       if ((lc->pos + lc->size) == prev_pos) break;
 		       prev_pos = lc->pos;
 
-		       EINA_LIST_REVERSE_FOREACH(eina_list_last(lc->items), l3, bi)
+		       EINA_LIST_REVERSE_FOREACH(lc->items, l3, bi)
 			 {
 			    if ((bi->ask.pos + bi->w) >= pos)
 			      {
@@ -4215,8 +4224,10 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
 
 	     ok = 0;
 	     new_pos = lc_moving->pos;
-	     EINA_LIST_REVERSE_FOREACH(eina_list_prev(l), l2, lc)
+	     /* EINA_FUCK_REVERSE_FOREACH(eina_list_prev(l), l2, lc) */
+	     for (l2 = l->prev; l2; l2 = l2->prev)
 	       {
+		  lc = l2->data;		  
 		  if (new_pos >= (lc->pos + lc->size)) break;
 
 		  ok = 1;
@@ -4295,7 +4306,7 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
 		    }
 
 		  ok = 1;
-		  new_pos += lc->size;
+		  /* new_pos += lc->size; */
 	       }
 
 	     if (new_pos > sd->w)
