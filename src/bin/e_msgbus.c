@@ -30,6 +30,7 @@ e_msgbus_init(void)
    _e_msgbus_data = E_NEW(E_Msgbus_Data, 1);
 
    e_dbus_init();
+   e_hal_init();
 
    _e_msgbus_data->conn = e_dbus_bus_get(DBUS_BUS_SESSION);
    if (!_e_msgbus_data->conn)
@@ -96,6 +97,7 @@ e_msgbus_shutdown(void)
      {
         e_dbus_connection_close(_e_msgbus_data->conn);
      }
+   e_hal_shutdown();
    e_dbus_shutdown();
 
    E_FREE(_e_msgbus_data);

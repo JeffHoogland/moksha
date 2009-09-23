@@ -271,6 +271,7 @@ main(int argc, char **argv)
 
    _e_storage_volume_edd_init();
    e_dbus_init();
+   e_hal_init();
    _e_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    if (_e_dbus_conn)
      {
@@ -303,6 +304,7 @@ main(int argc, char **argv)
      }
 
    if (_e_dbus_conn) e_dbus_connection_close(_e_dbus_conn);
+   e_hal_shutdown();
    e_dbus_shutdown();
    _e_storage_volume_edd_shutdown();
    
