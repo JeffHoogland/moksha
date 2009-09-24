@@ -1,14 +1,9 @@
 #include "e_mod_main.h"
 
-/* typedef struct _E_Config_Dialog_Data E_Config_Dialog_Data; */
-
 static void        *_create_data             (E_Config_Dialog *cfd);
 static void         _free_data               (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int          _basic_apply_data        (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-/* static int _subject = type_subject;
- * static int _action  = type_action;
- * static int _object  = type_object; */
 
 
 struct _E_Config_Dialog_Data
@@ -25,6 +20,10 @@ struct _E_Config_Dialog_Data
   char *cmd_terminal;
   char *cmd_sudo;
 
+  int view_mode;
+  int view_zoom;
+  int cycle_mode;
+  
   Evas_Object *l_subject;
   Evas_Object *l_action;
   Evas_Object *l_object;
@@ -63,14 +62,18 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    Eina_List *l;
    Evry_Plugin *p;
 
-   /* cfdata->scroll_animate = evry_conf->scroll_animate; */
-   cfdata->height = evry_conf->height;
-   cfdata->width = evry_conf->width;
-   cfdata->hide_list = evry_conf->hide_list;
-   cfdata->hide_input = evry_conf->hide_input;
-   cfdata->quick_nav = evry_conf->quick_nav;
-   cfdata->rel_x = evry_conf->rel_x;
-   cfdata->rel_y = evry_conf->rel_y;
+#define C(_name) cfdata->_name = evry_conf->_name
+   C(height);
+   C(width);
+   C(hide_list);
+   C(hide_input);
+   C(quick_nav);
+   C(rel_x);
+   C(rel_y);
+   C(view_mode);
+   C(view_zoom);
+   C(cycle_mode);
+#undef C
    
    EINA_LIST_FOREACH(evry_conf->plugins, l, p)
      if (p->type == type_subject)
@@ -119,17 +122,21 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
 static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   /* evry_conf->scroll_animate = cfdata->scroll_animate; */
-   evry_conf->width = cfdata->width;
-   evry_conf->height = cfdata->height;
-   evry_conf->hide_input = cfdata->hide_input;
-   evry_conf->hide_list = cfdata->hide_list;
-   evry_conf->quick_nav = cfdata->quick_nav;
-   evry_conf->rel_x = cfdata->rel_x;
-   evry_conf->rel_y = cfdata->rel_y;
 
-   evry_conf->plugins = eina_list_sort(evry_conf->plugins,
-				       eina_list_count(evry_conf->plugins),
+#define C(_name) evry_conf->_name = cfdata->_name
+  C(height);
+  C(width);
+  C(hide_list);
+  C(hide_input);
+  C(quick_nav);
+  C(rel_x);
+  C(rel_y);
+  C(view_mode);
+  C(view_zoom);
+  C(cycle_mode);
+#undef C
+
+   evry_conf->plugins = eina_list_sort(evry_conf->plugins, -1,
 				       _evry_cb_plugin_sort);
 
    if (evry_conf->cmd_terminal)
@@ -214,7 +221,8 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *otb;
-
+   E_Radio_Group *rg;
+   
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
 
    o = e_widget_list_add(evas, 0, 0);
@@ -232,7 +240,24 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Quick Navigation (ALT + h,j,k,l,n,p,m,i)"),
    			   &(cfdata->quick_nav));
    e_widget_framelist_object_append(of, ob);
-
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   of = e_widget_framelist_add(evas, _("Default View"), 0);
+   rg = e_widget_radio_group_new(&cfdata->view_mode); 
+   ob = e_widget_radio_add(evas, "List", 0, rg);
+   e_widget_radio_toggle_set(ob, (cfdata->view_mode == 0));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, "Icons", 1, rg);
+   e_widget_radio_toggle_set(ob, (cfdata->view_mode == 1));
+   e_widget_framelist_object_append(of, ob);
+   
+   ob = e_widget_check_add(evas, _("Up/Down select next item in icon view"),
+   			   &(cfdata->cycle_mode));
+   e_widget_framelist_object_append(of, ob);
+   
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   of = e_widget_framelist_add(evas, _("Commands"), 0);
    ob = e_widget_label_add(evas, _("Terminal Command"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_entry_add(evas, &(cfdata->cmd_terminal), NULL, NULL, NULL);

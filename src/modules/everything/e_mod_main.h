@@ -36,6 +36,12 @@ struct _Config
   const char *cmd_terminal;
   const char *cmd_sudo;
 
+  int view_mode;
+  int view_zoom;
+
+  /* use up/down keys for prev/next in thumb view */
+  int cycle_mode;
+
   /* not saved data */
   Eina_List *plugins;
   Eina_List *actions;

@@ -16,7 +16,7 @@ struct _View
   Evas_Object *bg, *sframe, *span;
   int          iw, ih;
   int          zoom;
-  Eina_Bool    list_mode : 1;
+  int         list_mode;
 };
 
 /* smart object based on wallpaper module */
@@ -834,7 +834,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    if (sd->items)
      l = eina_list_data_find_list(sd->items, sd->cur_item);
 
-   if (!v->list_mode)
+   if (!v->list_mode && !evry_conf->cycle_mode)
      {
 	if (!strcmp(ev->key, "Right"))
 	  {
@@ -867,11 +867,14 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      {
 	if (!sd->items) return 1;
 
-	EINA_LIST_FOREACH(l, ll, it)
+	if (!evry_conf->cycle_mode)
 	  {
-	     if (it->y > sd->cur_item->y &&
-		 it->x >= sd->cur_item->x)
-	       break;
+	     EINA_LIST_FOREACH(l, ll, it)
+	       {
+		  if (it->y > sd->cur_item->y &&
+		      it->x >= sd->cur_item->x)
+		    break;
+	       }
 	  }
 
 	if (!it && l && l->next)
@@ -888,11 +891,16 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      {
 	if (!sd->items) return 1;
 
-	EINA_LIST_REVERSE_FOREACH(l, ll, it)
+	if (!evry_conf->cycle_mode)
 	  {
-	     if (it->y < sd->cur_item->y &&
-		 it->x <= sd->cur_item->x)
-	       break;
+	     for(ll = l; ll; ll = ll->prev)
+	       {
+		  it = ll->data;
+		  
+		  if (it->y < sd->cur_item->y &&
+		      it->x <= sd->cur_item->x)
+		    break;
+	       }
 	  }
 
 	if (!it && l && l->prev)
@@ -909,8 +917,8 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      {
 	if (!v->list_mode)
 	  {
-	     evry_browse_item(NULL); 
-	     goto end;
+	     if (evry_browse_item(NULL))
+	       goto end;
 	  }
      }
    
@@ -935,9 +943,14 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v->state = s;
    v->evas = evas_object_evas_get(swallow);
 
-   v->list_mode = parent->list_mode;
+   printf("%d ---- %d\n", evry_conf->view_mode, parent->list_mode);
+
+   if (parent->list_mode < 0)
+     v->list_mode = evry_conf->view_mode;
+   else
+     v->list_mode = parent->list_mode;
+
    v->zoom = parent->zoom;
-   
    
    v->bg = edje_object_add(v->evas);
    e_theme_edje_object_set(v->bg, "base/theme/widgets",
@@ -992,8 +1005,7 @@ _init(void)
    v->view.clear = &_view_clear;
    v->view.cb_key_down = &_cb_key_down;
 
-   /* TODO config option*/
-   v->list_mode = EINA_TRUE;
+   v->list_mode = -1;
    
    evry_view_register(EVRY_VIEW(v), 1);
 

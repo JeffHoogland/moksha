@@ -188,6 +188,9 @@ _config_init()
    E_CONFIG_VAL(D, T, quick_nav, INT);
    E_CONFIG_VAL(D, T, cmd_terminal, STR);
    E_CONFIG_VAL(D, T, cmd_sudo, STR);
+   E_CONFIG_VAL(D, T, view_mode, INT);
+   E_CONFIG_VAL(D, T, view_zoom, INT);
+   E_CONFIG_VAL(D, T, cycle_mode, INT);
    E_CONFIG_LIST(D, T, conf_subjects, conf_item_edd);
    E_CONFIG_LIST(D, T, conf_actions, conf_item_edd);
    E_CONFIG_LIST(D, T, conf_objects, conf_item_edd);
@@ -221,8 +224,12 @@ _config_init()
 	evry_conf->conf_views   = NULL;
 	evry_conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm");
 	evry_conf->cmd_sudo = eina_stringshare_add("/usr/bin/gksudo --preserve-env");
+	evry_conf->view_mode = 0;
+	evry_conf->view_zoom = 0;
+	evry_conf->cycle_mode = 0;
      }
 
+   /* TODO: remove - fix old configs */
    if ((evry_conf->rel_x > 1.0) ||
        (evry_conf->rel_x < 0.0))
      evry_conf->rel_x = 0.5;

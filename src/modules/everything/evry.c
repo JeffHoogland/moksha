@@ -171,9 +171,6 @@ evry_show(E_Zone *zone, const char *params)
       (ECORE_X_EVENT_SELECTION_NOTIFY,
        _evry_cb_selection_notify, win));
 
-   /* e_popup_move(win->popup,  win->popup->x,  win->popup->y  - list->popup->h/2);
-    * e_popup_move(list->popup, list->popup->x, list->popup->y - list->popup->h/2); */
-
    e_popup_layer_set(list->popup, 255);
    e_popup_layer_set(win->popup, 255);
    e_popup_show(win->popup);
