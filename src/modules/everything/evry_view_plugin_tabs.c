@@ -49,7 +49,7 @@ _tab_scroll_to(Tab_View *v, Evry_Plugin *p)
 	e_box_align_set(v->o_tabs, 1.0 - align, 0.5);
      }
    else
-     e_box_align_set(v->o_tabs, 1.0, 0.5);
+     e_box_align_set(v->o_tabs, 0.0, 0.5);
 }
 
 static void
@@ -119,7 +119,11 @@ _tabs_update(Tab_View *v)
 
    e_box_thaw(v->o_tabs);
 
-   if (s->plugin)
+   if (eina_list_count(s->cur_plugins) == 2)
+     {
+       e_box_align_set(v->o_tabs, 0.0, 0.5);       
+     }
+   else if (s->plugin)
      _tab_scroll_to(v, s->plugin);
 }
 

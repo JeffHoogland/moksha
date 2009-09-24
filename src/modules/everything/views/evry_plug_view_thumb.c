@@ -943,8 +943,6 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v->state = s;
    v->evas = evas_object_evas_get(swallow);
 
-   printf("%d ---- %d\n", evry_conf->view_mode, parent->list_mode);
-
    if (parent->list_mode < 0)
      v->list_mode = evry_conf->view_mode;
    else

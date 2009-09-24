@@ -178,7 +178,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    /* NOTE this is kind of weird. list_count returns 2 even if there is
       only one item in list */
-   if (eina_list_count(lp) == 2)
+   if ((eina_list_count(lp) == 2) || (!EVRY_PLUGIN(p)->items))
      {
 	pp = lp->data;
 	EINA_LIST_FOREACH(pp->items, l, it)

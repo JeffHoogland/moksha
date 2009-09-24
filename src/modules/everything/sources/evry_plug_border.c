@@ -81,6 +81,7 @@ _item_add(Evry_Plugin *p, E_Border *bd, int match, int *prio)
      {
 	it->priority = *prio;
 	EVRY_PLUGIN_ITEM_APPEND(p, it);
+	it->fuzzy_match = match;
 	*prio += 1;
 	return;
      }

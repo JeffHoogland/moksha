@@ -1,6 +1,6 @@
 #include "e_mod_main.h"
 
-#define HISTORY_VERSION 7
+#define HISTORY_VERSION 8
 
 #define SEVEN_DAYS 604800
 
@@ -13,6 +13,7 @@ struct _Cleanup_Data
   double time;
   Eina_List *keys;
   Eina_Bool normalize;
+  const char *plugin;
 };
 
 static E_Config_DD *hist_entry_edd = NULL;
@@ -86,6 +87,13 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 
    EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
      {
+	/* item for this plugi nneed to be removed, e.g. on updates */
+	if (d->plugin)
+	  {
+	     if (hi->plugin == d->plugin)
+	       hi->transient = 1;
+	  }
+
 	if (hi->last_used < d->time - SEVEN_DAYS)
 	  {
 	     hi->count--;
@@ -135,7 +143,7 @@ evry_history_free(void)
 	       eina_hash_del_by_key(evry_hist->subjects, key);
 	  }
 
-	if (evry_hist->subjects)
+	if (evry_hist->actions)
 	  {
 	     eina_hash_foreach(evry_hist->actions, _hist_cleanup_cb, d);
 	     EINA_LIST_FREE(d->keys, key)
@@ -155,7 +163,7 @@ void
 evry_history_load(void)
 {
    evry_hist = e_config_domain_load("module.everything.history", hist_edd);
-
+     
    if (evry_hist && evry_hist->version != HISTORY_VERSION)
      {
 	eina_hash_foreach(evry_hist->subjects, _hist_free_cb, NULL);

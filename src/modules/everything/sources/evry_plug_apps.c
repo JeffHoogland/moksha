@@ -1,7 +1,5 @@
 #include "e_mod_main.h"
 
-#define TERM_ACTION_CMD "/usr/bin/xterm -hold -e '%s'"
-
 
 typedef struct _Plugin Plugin;
 
@@ -279,13 +277,22 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
    app = E_NEW(Evry_Item_App, 1);
 
    if (desktop)
-     evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), desktop->name, _item_free);
+     {
+       evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), desktop->name, _item_free);
+       EVRY_ITEM(app)->id = eina_stringshare_add(desktop->exec);
+     }
    else
-     evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), file, _item_free);
-
+     {
+       evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), file, _item_free);
+       EVRY_ITEM(app)->id = eina_stringshare_add(file);
+     }
+   
    app->desktop = desktop;
-   if (file) app->file = eina_stringshare_add(file);
 
+   /* XXX check required ? */
+   if (file)
+     app->file = eina_stringshare_add(file);
+   
    eina_hash_add(p->added, exe, app);
 
    if (desktop)
@@ -377,6 +384,28 @@ _cb_sort(const void *data1, const void *data2)
    else return 0;
 }
 
+static Eina_Bool
+_hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+{
+  History_Entry *he = data;
+  History_Item *hi;
+  Plugin *p = fdata;
+  Efreet_Desktop *d;
+  Eina_List *l;
+    
+  EINA_LIST_FOREACH(he->items, l, hi)
+    {
+      if (hi->plugin != p->base.name)
+	continue;
+      
+      if ((d = efreet_util_desktop_exec_find(key)))
+	_item_add(p, d, NULL, 1);
+      else
+	_item_add(p, NULL, (char *) key, 1);
+    }
+  return EINA_TRUE;
+}
+
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
@@ -448,9 +477,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
    /* add exe history items */
    else if (!plugin->items)
      {
-   	l = e_exehist_list_get();
-   	EINA_LIST_FREE(l, file)
-   	  _item_add(p, NULL, file, 1);
+   	/* l = e_exehist_list_get();
+   	 * EINA_LIST_FREE(l, file)
+   	 *   _item_add(p, NULL, file, 1); */
+
+	eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
      }
 
    /* add executables */
@@ -806,7 +837,7 @@ _scan_idler(void *data)
 	E_Exe *ee;
 	int different = 0;
 
-	/* FIXME: check theat they match or not */
+	/* FIXME: check wheter they match or not */
 	for (l = exe_list, l2 = exe_list2; l && l2; l = l->next, l2 = l2->next)
 	  {
 	     if (strcmp(l->data, l2->data))
