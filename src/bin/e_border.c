@@ -490,8 +490,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    ecore_x_window_show(bd->client.shell_win);
    bd->shape = e_container_shape_add(con);
 
-   if (e_config->focus_setting != E_FOCUS_NONE)
-     bd->take_focus = 1;
+   bd->take_focus = 1;
    bd->new_client = 1;
    bd->changed = 1;
 
@@ -4754,6 +4753,7 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
       case RESIZE_BR:
 	 bd->resize_mode = RESIZE_BR;
 	 GRAV_SET(bd, ECORE_X_GRAVITY_NW);
+	 break;
       case RESIZE_B:
 	 bd->resize_mode = RESIZE_B;
 	 GRAV_SET(bd, ECORE_X_GRAVITY_N);
@@ -4776,10 +4776,10 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 	if ((!bd->cur_mouse_action->func.end_mouse) &&
 	    (!bd->cur_mouse_action->func.end))
 	  bd->cur_mouse_action = NULL;
-	if (bd->cur_mouse_action)
-	  e_object_ref(E_OBJECT(bd->cur_mouse_action));
      }
-
+   if (bd->cur_mouse_action)
+     e_object_ref(E_OBJECT(bd->cur_mouse_action));
+   
    return 1;
 }
 
@@ -6837,19 +6837,31 @@ _e_border_eval(E_Border *bd)
 		  e_border_focus_set_with_pointer(bd);
 	       }
 	  }
+	else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
+	  {
+	     if ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
+		 ((e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED) &&
+		  (e_border_find_by_client_window(bd->client.icccm.transient_for) ==
+		   e_border_focused_get())))
+	       {
+		  if (!bd->lock_focus_out)
+		    e_border_focus_set_with_pointer(bd);
+	       }
+	  }
 	else
 	  {
-	     if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
+	     /* focus window by default when it is the only one on desk */
+	     E_Border *bd2 = NULL;
+	     Eina_List *l;
+	     EINA_LIST_FOREACH(focus_stack, l, bd2)
 	       {
-		  if ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
-		      ((e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED) &&
-		       (e_border_find_by_client_window(bd->client.icccm.transient_for) ==
-			e_border_focused_get())))
-		    {
-		       if (!bd->lock_focus_out)
-			 e_border_focus_set_with_pointer(bd);
-		    }
+		  if (bd == bd2) continue;
+		  if ((!bd2->iconic) && (bd2->visible) &&  (bd->desk == bd2->desk))
+		    break;
 	       }
+
+	     if (!bd2)
+	       e_border_focus_set_with_pointer(bd);
 	  }
      }
 
@@ -7336,10 +7348,14 @@ _e_border_resize_begin(E_Border *bd)
 
    if (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) &&
        (!e_config->allow_manip))
- 
-   if (grabbed)
-     e_grabinput_get(bd->win, 0, bd->win);
+     return 0;
 
+   if (grabbed && !e_grabinput_get(bd->win, 0, bd->win))
+     {
+	grabbed = 0;
+	return 0;
+     }
+   
    if (bd->client.netwm.sync.request)
      {
 	bd->client.netwm.sync.alarm = ecore_x_sync_alarm_new(bd->client.netwm.sync.counter);
@@ -7358,8 +7374,10 @@ static int
 _e_border_resize_end(E_Border *bd)
 {
    if (grabbed)
-     e_grabinput_release(bd->win, bd->win);
-   grabbed = 0;
+     {
+	e_grabinput_release(bd->win, bd->win);
+	grabbed = 0;
+     }
    if (bd->client.netwm.sync.alarm)
      {
 	ecore_x_sync_alarm_free(bd->client.netwm.sync.alarm);
@@ -7398,8 +7416,11 @@ _e_border_move_begin(E_Border *bd)
        (!e_config->allow_manip))
      return 0;
 
-   if (grabbed)
-     e_grabinput_get(bd->win, 0, bd->win);
+   if (grabbed && !e_grabinput_get(bd->win, 0, bd->win))
+     {
+	grabbed = 0;
+	return 0;
+     }
 #if 0
    if (bd->client.netwm.sync.request)
      {
@@ -7419,8 +7440,10 @@ static int
 _e_border_move_end(E_Border *bd)
 {
    if (grabbed)
-     e_grabinput_release(bd->win, bd->win);
-   grabbed = 0;
+     {
+	e_grabinput_release(bd->win, bd->win);
+	grabbed = 0;
+     }
 #if 0
    if (bd->client.netwm.sync.alarm)
      {
