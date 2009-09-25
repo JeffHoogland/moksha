@@ -23,6 +23,8 @@ struct _E_Config_Dialog_Data
   int view_mode;
   int view_zoom;
   int cycle_mode;
+
+  int history_sort_mode;
   
   Evas_Object *l_subject;
   Evas_Object *l_action;
@@ -73,6 +75,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    C(view_mode);
    C(view_zoom);
    C(cycle_mode);
+   C(history_sort_mode);
 #undef C
    
    EINA_LIST_FOREACH(evry_conf->plugins, l, p)
@@ -134,6 +137,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
   C(view_mode);
   C(view_zoom);
   C(cycle_mode);
+  C(history_sort_mode);
 #undef C
 
    evry_conf->plugins = eina_list_sort(evry_conf->plugins, -1,
@@ -254,7 +258,19 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Up/Down select next item in icon view"),
    			   &(cfdata->cycle_mode));
    e_widget_framelist_object_append(of, ob);
-   
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   of = e_widget_framelist_add(evas, _("History Sort"), 0);
+   rg = e_widget_radio_group_new(&cfdata->history_sort_mode); 
+   ob = e_widget_radio_add(evas, "By usage", 0, rg);
+   e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 0));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, "Most used", 1, rg);
+   e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 1));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, "Last used", 2, rg);
+   e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 2));
+   e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Commands"), 0);

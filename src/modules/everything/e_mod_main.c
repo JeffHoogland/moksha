@@ -191,6 +191,7 @@ _config_init()
    E_CONFIG_VAL(D, T, view_mode, INT);
    E_CONFIG_VAL(D, T, view_zoom, INT);
    E_CONFIG_VAL(D, T, cycle_mode, INT);
+   E_CONFIG_VAL(D, T, history_sort_mode, INT);
    E_CONFIG_LIST(D, T, conf_subjects, conf_item_edd);
    E_CONFIG_LIST(D, T, conf_actions, conf_item_edd);
    E_CONFIG_LIST(D, T, conf_objects, conf_item_edd);
@@ -227,6 +228,7 @@ _config_init()
 	evry_conf->view_mode = 0;
 	evry_conf->view_zoom = 0;
 	evry_conf->cycle_mode = 0;
+	evry_conf->history_sort_mode = 0;
      }
 
    /* TODO: remove - fix old configs */

@@ -39,6 +39,8 @@ struct _Config
   int view_mode;
   int view_zoom;
 
+  int history_sort_mode;
+  
   /* use up/down keys for prev/next in thumb view */
   int cycle_mode;
 
