@@ -616,18 +616,21 @@ _e_remember_cb_hook_pre_post_fetch(void *data, void *border)
 	  }
      }
    
-   if (bd->internal && remembers && bd->client.icccm.class)
+   if (bd->internal && remembers && bd->client.icccm.class && bd->client.icccm.class[0])
      {
 	Eina_List *l;
 	EINA_LIST_FOREACH(remembers->list, l, rem)
 	  {
-	     if (!strcmp(rem->class, bd->client.icccm.class))
+	     if (rem->class && !strcmp(rem->class, bd->client.icccm.class))
 		 break;
 	  }
 	if (rem)
 	  {
 	     temporary = 1;
 	     remembers->list = eina_list_remove(remembers->list, rem);
+	     if (!remembers->list)
+	       e_config_domain_save("e_remember_restart",
+				    e_remember_list_edd, remembers);
 	  }
 	else rem = bd->remember;
      }
