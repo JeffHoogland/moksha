@@ -729,6 +729,7 @@ _new_app_action(Evry_Action *act)
    return 1;
 }
 
+#define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
 
 static Eina_Bool
 _init(void)
@@ -781,6 +782,57 @@ _init(void)
    evry_action_register(act4, 4);
    evry_action_register(act5, 5);
 
+   Eina_List *l, *ll;
+   const char *file, *name;
+   History_Entry *he;
+   History_Item *hi;
+   name = EVRY_PLUGIN(p1)->name;
+   double t;
+   int found = 0;
+
+   evry_history_load();
+   
+   EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
+     {
+	t = e_exehist_newest_run_get(file);
+	he = eina_hash_find(evry_hist->subjects, file);
+
+	if (!he)
+	  {
+	     he = E_NEW(History_Entry, 1);
+	     eina_hash_add(evry_hist->subjects, file, he);
+	  }
+	else
+	  {
+	     EINA_LIST_FOREACH(he->items, ll, hi)
+	       {
+		  if (hi->plugin != name) continue;
+
+		  if (t > hi->last_used - 1.0)
+		    {
+		       hi->last_used = t;
+		       hi->usage += TIME_FACTOR(hi->last_used);
+		       hi->count = e_exehist_popularity_get(file);
+		    }
+		  found = 1;
+		  break;
+	       }
+
+	  }
+	
+	if (!found)
+	  {
+	     hi = E_NEW(History_Item, 1);
+	     hi->plugin = eina_stringshare_ref(name);
+	     hi->last_used = t;
+	     hi->count = e_exehist_popularity_get(file);
+	     hi->usage += TIME_FACTOR(hi->last_used);
+	     he->items = eina_list_append(he->items, hi);
+	  }
+	found = 0;
+     }
+   evry_history_unload();
+   
    /* taken from e_exebuf.c */
    exelist_exe_edd = E_CONFIG_DD_NEW("E_Exe", E_Exe);
 #undef T
