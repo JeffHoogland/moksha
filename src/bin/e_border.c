@@ -831,8 +831,10 @@ _e_border_move_internal(E_Border *bd, int x, int y, Eina_Bool without_border)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   if ((bd->fullscreen) || 
-       (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip))) 
+   if (bd->fullscreen) return;
+
+   /* allow border to unshade when it was maximized _and_ shaded */
+   if ((bd->maximized) && (!e_config->allow_manip) && (!bd->shading))
      return;
 
    ecore_x_window_shadow_tree_flush();
@@ -969,8 +971,9 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   if ((bd->fullscreen) || 
-       (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip))) 
+   if (bd->fullscreen) return;
+   
+   if ((bd->maximized) && (!e_config->allow_manip) && (!bd->shading))
      return;
 
    ecore_x_window_shadow_tree_flush();
@@ -1776,9 +1779,8 @@ e_border_shade(E_Border *bd, E_Direction dir)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->shaded) || (bd->shading) || 
-       ((bd->maximized) && (!e_config->allow_manip)) ||
-       (bd->fullscreen)) return;
+   if ((bd->shaded) || (bd->shading) || (bd->fullscreen) ||
+       ((bd->maximized) && (!e_config->allow_manip))) return;
    if ((bd->client.border.name) && 
        (!strcmp("borderless", bd->client.border.name))) return;
 
@@ -1865,9 +1867,8 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((!bd->shaded) || (bd->shading) ||
-       ((bd->maximized) && (!e_config->allow_manip)) ||
-       (bd->fullscreen)) return;
+   if ((!bd->shaded) || (bd->shading))
+     return;
 
    ecore_x_window_shadow_tree_flush();
 
@@ -2017,21 +2018,24 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	     max = E_MAXIMIZE_NONE;
 	     break;
 	   case E_MAXIMIZE_FULLSCREEN:
-	     if (bd->bg_object)
+	      printf("max fullscreen %d\n", max);
+
+	      w = bd->zone->w;
+	      h = bd->zone->h;
+
+	      if (bd->bg_object)
 	       {
 		  Evas_Coord cx, cy, cw, ch;
 
-		  edje_object_message_signal_process(bd->bg_object);
 		  edje_object_signal_emit(bd->bg_object, "e,action,maximize,fullscreen", "e");
-		  edje_object_message_signal_process(bd->bg_object);
 		  
-		  evas_object_resize(bd->bg_object, 1000, 1000);
+		  evas_object_resize(bd->bg_object, w, h);
 		  edje_object_calc_force(bd->bg_object);
 		  edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
 		  bd->client_inset.l = cx;
-		  bd->client_inset.r = 1000 - (cx + cw);
+		  bd->client_inset.r = w - (cx + cw);
 		  bd->client_inset.t = cy;
-		  bd->client_inset.b = 1000 - (cy + ch);
+		  bd->client_inset.b = h - (cy + ch);
 		  ecore_x_netwm_frame_size_set(bd->client.win,
 					       bd->client_inset.l, bd->client_inset.r,
 					       bd->client_inset.t, bd->client_inset.b);
@@ -2039,8 +2043,6 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 					   bd->client_inset.l, bd->client_inset.r,
 					   bd->client_inset.t, bd->client_inset.b);
 	       }
-	     w = bd->zone->w;
-	     h = bd->zone->h;
 	     e_border_resize_limit(bd, &w, &h);
 	     /* center x-direction */
 	     x1 = bd->zone->x + (bd->zone->w - w) / 2;
@@ -2053,8 +2055,8 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	       e_border_move_resize(bd, bd->x, y1, bd->w, h);
 	     else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
 	       e_border_move_resize(bd, x1, bd->y, w, bd->h);
-
 	     break;
+
 	   case E_MAXIMIZE_SMART:
 	   case E_MAXIMIZE_EXPAND:
 	     x1 = bd->zone->x;
@@ -2085,6 +2087,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	       e_border_move_resize(bd, x1, bd->y, w, bd->h);
 	     edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
 	     break;
+
 	   case E_MAXIMIZE_FILL:
 	     x1 = bd->zone->x;
 	     y1 = bd->zone->y;
@@ -2148,15 +2151,16 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	bd->pre_res_change.valid = 0;
 	bd->need_maximize = 0;
 
+	printf("unmax  %d\n", max);
 	if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN)
 	  {
+	     printf("fullscreen\n");
+
 	     if (bd->bg_object)
 	       {
 		  Evas_Coord cx, cy, cw, ch;
 		  
-		  edje_object_message_signal_process(bd->bg_object);
 		  edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
-		  edje_object_message_signal_process(bd->bg_object);
 		  
 		  evas_object_resize(bd->bg_object, 1000, 1000);
 		  edje_object_calc_force(bd->bg_object);
@@ -2357,7 +2361,7 @@ e_border_iconify(E_Border *bd)
    
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->fullscreen) || (bd->shading)) return;
+   if (bd->shading) return;
    ecore_x_window_shadow_tree_flush();
    if (!bd->iconic)
      {
@@ -2397,7 +2401,7 @@ e_border_uniconify(E_Border *bd)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->fullscreen) || (bd->shading)) return;
+   if (bd->shading) return;
    ecore_x_window_shadow_tree_flush();
    if (bd->iconic)
      {
@@ -4681,7 +4685,7 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
    if (!bd) return 1;
 
    if ((bd->shaded) || (bd->shading) ||
-       (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)) ||
+       ((bd->maximized) && (!e_config->allow_manip)) ||
        (bd->fullscreen) || (bd->moving) ||
        (bd->resize_mode != RESIZE_NONE))
      return 1;
@@ -7346,8 +7350,7 @@ _e_border_resize_begin(E_Border *bd)
        (bd->fullscreen) || (bd->lock_user_size))
      return 0;
 
-   if (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) &&
-       (!e_config->allow_manip))
+   if ((bd->maximized) && (!e_config->allow_manip))
      return 0;
 
    if (grabbed && !e_grabinput_get(bd->win, 0, bd->win))
@@ -7412,8 +7415,7 @@ _e_border_move_begin(E_Border *bd)
    if ((bd->fullscreen) || (bd->lock_user_location))
      return 0;
 
-   if (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) &&
-       (!e_config->allow_manip))
+   if ((bd->maximized) && (!e_config->allow_manip))
      return 0;
 
    if (grabbed && !e_grabinput_get(bd->win, 0, bd->win))

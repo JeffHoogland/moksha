@@ -118,8 +118,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_radio_add(evas, _("Smart expansion"), E_MAXIMIZE_SMART, rg);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_radio_add(evas, _("Expand the window"), E_MAXIMIZE_EXPAND, rg);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   /* ob = e_widget_radio_add(evas, _("Expand the window"), E_MAXIMIZE_EXPAND, rg);
+    * e_widget_list_object_append(o, ob, 1, 1, 0.5); */
    ob = e_widget_radio_add(evas, _("Fill available space"), E_MAXIMIZE_FILL, rg);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
@@ -139,10 +139,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    rg = e_widget_radio_group_new(&(cfdata->maximize_policy));
    ob = e_widget_radio_add(evas, _("Fullscreen"), E_MAXIMIZE_FULLSCREEN, rg);
    e_widget_framelist_object_append(of, ob);
+   /* FIXME smart is nothing else than expand - dont confuse users */
    ob = e_widget_radio_add(evas, _("Smart expansion"), E_MAXIMIZE_SMART, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Expand the window"), E_MAXIMIZE_EXPAND, rg);
-   e_widget_framelist_object_append(of, ob);
+   /* ob = e_widget_radio_add(evas, _("Expand the window"), E_MAXIMIZE_EXPAND, rg);
+    * e_widget_framelist_object_append(of, ob); */
    ob = e_widget_radio_add(evas, _("Fill available space"), E_MAXIMIZE_FILL, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -158,8 +159,14 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Miscellaneous Options"), 0);
-   ob = e_widget_check_add(evas, _("Allow window manipulation"), &(cfdata->allow_manip));
+   /* FIXME this should be default imho. no big deal if one resizes
+      a maximized window by mistake and then it's not maximized
+      anymore.. people will rather wonder why they cant shade
+      their window (hannes) */
+   ob = e_widget_check_add(evas, _("Allow manipulation of maximized windows"), &(cfdata->allow_manip));
    e_widget_framelist_object_append(of, ob);
+   /* FIXME: does this option make any sense? use a shelf that is
+      above windows in this case! */
    ob = e_widget_check_add(evas, _("Automatically move/resize windows on shelf autohide"), &(cfdata->border_fix_on_shelf_toggle));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
