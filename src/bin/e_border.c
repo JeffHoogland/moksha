@@ -6213,7 +6213,8 @@ _e_border_eval(E_Border *bd)
 
    if (e_object_is_del(E_OBJECT(bd)))
      {
-	fprintf(stderr, "ERROR: _e_border_eval(%p) with deleted border!\n", bd);
+	fprintf(stderr, "ERROR: _e_border_eval(%p) with deleted border! - %d\n", bd, bd->new_client);
+	bd->changed = 0;
 	return;
      }
    if (bd->zone)
