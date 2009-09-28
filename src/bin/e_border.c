@@ -831,12 +831,6 @@ _e_border_move_internal(E_Border *bd, int x, int y, Eina_Bool without_border)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   if (bd->fullscreen) return;
-
-   /* allow border to unshade when it was maximized _and_ shaded */
-   if ((bd->maximized) && (!e_config->allow_manip) && (!bd->shading))
-     return;
-
    ecore_x_window_shadow_tree_flush();
    if (bd->new_client)
      {
@@ -898,6 +892,13 @@ _e_border_move_internal(E_Border *bd, int x, int y, Eina_Bool without_border)
 EAPI void
 e_border_move(E_Border *bd, int x, int y)
 {
+   if (bd->fullscreen)
+     return;
+
+   /* allow border to unshade when it was maximized _and_ shaded */
+   if ((bd->maximized) && (!e_config->allow_manip) && (!bd->shading))
+     return;
+
    _e_border_move_internal(bd, x, y, 0);
 }
 
@@ -920,6 +921,13 @@ e_border_move(E_Border *bd, int x, int y)
 EAPI void
 e_border_move_without_border(E_Border *bd, int x, int y)
 {
+   if (bd->fullscreen)
+     return;
+
+   /* allow border to unshade when it was maximized _and_ shaded */
+   if ((bd->maximized) && (!e_config->allow_manip) && (!bd->shading))
+     return;
+
    _e_border_move_internal(bd, x, y, 1);
 }
 
@@ -970,11 +978,6 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-
-   if (bd->fullscreen) return;
-   
-   if ((bd->maximized) && (!e_config->allow_manip) && (!bd->shading))
-     return;
 
    ecore_x_window_shadow_tree_flush();
 
@@ -1073,6 +1076,10 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
 EAPI void
 e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 {
+   if ((bd->fullscreen) ||
+       ((bd->maximized) && (!e_config->allow_manip) && (!bd->shading)))
+     return;
+
    _e_border_move_resize_internal(bd, x, y, w, h, 0, 1);
 }
 
@@ -1094,6 +1101,10 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 EAPI void
 e_border_move_resize_without_border(E_Border *bd, int x, int y, int w, int h)
 {
+   if ((bd->fullscreen) ||
+       ((bd->maximized) && (!e_config->allow_manip) && (!bd->shading)))
+     return;
+
    _e_border_move_resize_internal(bd, x, y, w, h, 1, 1);
 }
 
@@ -1113,6 +1124,10 @@ e_border_move_resize_without_border(E_Border *bd, int x, int y, int w, int h)
 EAPI void
 e_border_resize(E_Border *bd, int w, int h)
 {
+   if ((bd->fullscreen) ||
+       ((bd->maximized) && (!e_config->allow_manip) && (!bd->shading)))
+     return;
+
    _e_border_move_resize_internal(bd, 0, 0, w, h, 0, 0);
 }
 
@@ -1135,6 +1150,10 @@ e_border_resize(E_Border *bd, int w, int h)
 EAPI void
 e_border_resize_without_border(E_Border *bd, int w, int h)
 {
+   if ((bd->fullscreen) ||
+       ((bd->maximized) && (!e_config->allow_manip) && (!bd->shading)))
+     return;
+
    _e_border_move_resize_internal(bd, 0, 0, w, h, 1, 0);
 }
 
@@ -2018,11 +2037,9 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	     max = E_MAXIMIZE_NONE;
 	     break;
 	   case E_MAXIMIZE_FULLSCREEN:
-	      printf("max fullscreen %d\n", max);
-
 	      w = bd->zone->w;
 	      h = bd->zone->h;
-
+	      
 	      if (bd->bg_object)
 	       {
 		  Evas_Coord cx, cy, cw, ch;
@@ -2151,11 +2168,8 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	bd->pre_res_change.valid = 0;
 	bd->need_maximize = 0;
 
-	printf("unmax  %d\n", max);
 	if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN)
 	  {
-	     printf("fullscreen\n");
-
 	     if (bd->bg_object)
 	       {
 		  Evas_Coord cx, cy, cw, ch;
@@ -2178,7 +2192,10 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	       }
 
 	     bd->maximized = E_MAXIMIZE_NONE;
-	     e_border_move_resize(bd, bd->zone->x + bd->saved.x, bd->zone->y + bd->saved.y, bd->saved.w, bd->saved.h);
+	     _e_border_move_resize_internal(bd,
+					    bd->zone->x + bd->saved.x,
+					    bd->zone->y + bd->saved.y,
+					    bd->saved.w, bd->saved.h, 0, 1);
 	     bd->saved.x = bd->saved.y = bd->saved.w = bd->saved.h = 0;
 	     e_hints_window_size_unset(bd);
 	  }
@@ -2209,7 +2226,8 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	       }
 
 	     e_border_resize_limit(bd, &w, &h);
-	     e_border_move_resize(bd, x, y, w, h);
+	     
+	     _e_border_move_resize_internal(bd, x, y, w, h, 0, 1);
 	     if (!(bd->maximized & E_MAXIMIZE_DIRECTION))
 	       {
 		  bd->maximized = E_MAXIMIZE_NONE;
