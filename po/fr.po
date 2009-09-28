@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-25 08:33+0400\n"
-"PO-Revision-Date: 2009-09-25 09:44+0400\n"
+"POT-Creation-Date: 2009-09-27 08:30+0400\n"
+"PO-Revision-Date: 2009-09-28 15:03+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <Enlightenment i18n French>\n"
 "MIME-Version: 1.0\n"
@@ -708,11 +708,11 @@ msgstr "Action reportée"
 msgid "Set As Background"
 msgstr "Utiliser comme fond d'écran"
 
-#: src/bin/e_border.c:4845
+#: src/bin/e_border.c:4849
 msgid "Desktop files scan done"
 msgstr "Analyse des fichiers desktop terminée"
 
-#: src/bin/e_border.c:4858
+#: src/bin/e_border.c:4862
 msgid "Desktop file scan"
 msgstr "Analyse des fichiers desktop"
 
@@ -3911,7 +3911,7 @@ msgstr "Bureaux virtuels"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:37
 msgid "Dialog Settings"
-msgstr "Paramétrage des boîtes de dialogues"
+msgstr "Paramétrage des boîtes de dialogue"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:94
 #: src/modules/conf_engine/e_int_config_engine.c:94
@@ -3931,7 +3931,7 @@ msgstr "Paramètres généraux"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:96
 msgid "Disable Confirmation Dialogs"
-msgstr "Désactiver les boîtes de dialogues de confirmation"
+msgstr "Désactiver les boîtes de dialogue de confirmation"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:98
 msgid "Normal Windows"
@@ -4785,7 +4785,7 @@ msgid "Autoscroll Cursor Margin"
 msgstr "Marge du curseur de défilement automatique"
 
 #: src/modules/conf_menus/e_int_config_menus.c:194
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:160
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 msgid "Miscellaneous Options"
 msgstr "Autres options"
 
@@ -5400,13 +5400,13 @@ msgid "Fill Options"
 msgstr "Options de remplissage"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:153
 #: src/modules/gadman/e_mod_gadman.c:731
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:154
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:155
 #: src/modules/gadman/e_mod_gadman.c:739
 msgid "Vertical"
 msgstr "Vertical"
@@ -5745,17 +5745,12 @@ msgid "Window Maximize Policy"
 msgstr "Politique de maximisation de la fenêtre"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:142
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:143
 msgid "Smart expansion"
 msgstr "Expansion intelligente"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:144
-msgid "Expand the window"
-msgstr "Étendre la fenêtre"
-
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:123
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:146
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:147
 msgid "Fill available space"
 msgstr "Remplir l'espace disponible"
 
@@ -5763,19 +5758,19 @@ msgstr "Remplir l'espace disponible"
 msgid "Maximize Policy"
 msgstr "Politique de maximisation"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:150
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:151
 msgid "Maximize Directions"
 msgstr "Directions de maximisation"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:156
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:157
 msgid "Both"
 msgstr "Les deux"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
-msgid "Allow window manipulation"
-msgstr "Autoriser la manipulation des fenêtres"
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:166
+msgid "Allow manipulation of maximized windows"
+msgstr "Autoriser la manipulation des fenêtres maximisées"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:170
 msgid "Automatically move/resize windows on shelf autohide"
 msgstr "Déplacer/Redimensionner automatiquement les fenêtres lors de l'auto-masquage du rack"
 
@@ -5822,7 +5817,7 @@ msgstr "Mémorisations propres à la fenêtre"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:119
 msgid "Remember internal dialogs"
-msgstr "Mémoriser les boîtes de dialogues internes"
+msgstr "Mémoriser les boîtes de dialogue internes"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:121
 msgid "Remember fileman windows"
@@ -7007,6 +7002,10 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 msgid "Systray"
 msgstr "Zone de notification"
 
+#~ msgid "Expand the window"
+#~ msgstr "Étendre la fenêtre"
+#~ msgid "Allow window manipulation"
+#~ msgstr "Autoriser la manipulation des fenêtres"
 #~ msgid ""
 #~ "You are trying to ask Enlightenment to remember to apply<br>properties "
 #~ "(such as size, location, border style etc.) to<br>a window that "

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-25 12:41+0200\n"
-"PO-Revision-Date: 2009-09-25 12:43+0200\n"
+"POT-Creation-Date: 2009-09-28 13:14+0200\n"
+"PO-Revision-Date: 2009-09-28 13:15+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -639,11 +639,11 @@ msgstr "Azione ritardata"
 msgid "Set As Background"
 msgstr "Imposta come sfondo"
 
-#: src/bin/e_border.c:4845
+#: src/bin/e_border.c:4867
 msgid "Desktop files scan done"
 msgstr "Scansione file desktop eseguita"
 
-#: src/bin/e_border.c:4858
+#: src/bin/e_border.c:4880
 msgid "Desktop file scan"
 msgstr "Scansione file desktop"
 
@@ -4914,7 +4914,7 @@ msgid "Autoscroll Cursor Margin"
 msgstr "Margine di autoscorrimento del cursore"
 
 #: src/modules/conf_menus/e_int_config_menus.c:194
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:160
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 msgid "Miscellaneous Options"
 msgstr "Opzioni varie"
 
@@ -5545,13 +5545,13 @@ msgid "Fill Options"
 msgstr "Opzioni di riempimento"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:153
 #: src/modules/gadman/e_mod_gadman.c:731
 msgid "Horizontal"
 msgstr "Orizzontale"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:154
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:155
 #: src/modules/gadman/e_mod_gadman.c:739
 msgid "Vertical"
 msgstr "Verticale"
@@ -5900,17 +5900,12 @@ msgid "Window Maximize Policy"
 msgstr "Regole massimizzazione finestra"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:142
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:143
 msgid "Smart expansion"
 msgstr "Intelligente"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:144
-msgid "Expand the window"
-msgstr "Espansiva"
-
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:123
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:146
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:147
 msgid "Fill available space"
 msgstr "Riempitiva"
 
@@ -5918,19 +5913,19 @@ msgstr "Riempitiva"
 msgid "Maximize Policy"
 msgstr "Regole di massimizzazione"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:150
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:151
 msgid "Maximize Directions"
 msgstr "Direzione massimizzazione"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:156
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:157
 msgid "Both"
 msgstr "Entrambi"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
-msgid "Allow window manipulation"
-msgstr "Consenti manipolazione finestre"
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:166
+msgid "Allow manipulation of maximized windows"
+msgstr "Consenti manipolazione finestre massimizzate"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:170
 msgid "Automatically move/resize windows on shelf autohide"
 msgstr "Sposta/ridimensiona finestre alla scomparsa della mensola"
 
