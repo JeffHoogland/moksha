@@ -9,7 +9,7 @@
 
 #include "e_mod_main.h"
 
-#define CONFIG_VERSION 6
+#define CONFIG_VERSION 7
 
 /* actual module specifics */
 static void _e_mod_action_cb(E_Object *obj, const char *params);
