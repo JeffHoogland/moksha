@@ -107,6 +107,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    s = p->selector->state;
 
+   if (!s || !s->cur_plugins || !s->cur_plugins->next)
+     return 0;
+
    for (i = 1; i < 3; i++)
      {
 	Evry_Item *item;
@@ -116,8 +119,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     context = item->context;
 	  }	
      }
-   
-   
+
    /* first is aggregator itself */
    lp = s->cur_plugins->next;
 
@@ -176,9 +178,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
      }
 
-   /* NOTE this is kind of weird. list_count returns 2 even if there is
-      only one item in list */
-   if ((eina_list_count(lp) == 2) || (!EVRY_PLUGIN(p)->items))
+   if (lp && (eina_list_count(lp) == 2) || (!EVRY_PLUGIN(p)->items))
      {
 	pp = lp->data;
 	EINA_LIST_FOREACH(pp->items, l, it)

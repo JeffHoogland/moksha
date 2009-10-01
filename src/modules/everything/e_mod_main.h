@@ -154,8 +154,8 @@ int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *inp
 EAPI int  evry_browse_item(Evry_Selector *sel);
 void evry_browse_back(Evry_Selector *sel);
 
-extern Config *evry_conf;
-extern History *evry_hist;
+EAPI extern Config *evry_conf;
+EAPI extern History *evry_hist;
 extern Evry_Selector **selectors;
 extern Evry_Plugin *action_selector;
 #endif
