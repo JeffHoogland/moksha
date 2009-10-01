@@ -1036,9 +1036,8 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
      }
    else
      {
-	if (1 && resize && bd->client.netwm.sync.request)
+	if (resize && bd->client.netwm.sync.request)
 	  {
-	     /* printf("add resize %d\n", bd->client.netwm.sync.serial); */
 	     bd->client.netwm.sync.wait++;
 	     _e_border_pending_move_resize_add(bd, move, 1, x, y, w, h, without_border,
 					       bd->client.netwm.sync.serial);
@@ -4857,11 +4856,12 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_alarm(e->alarm);
    if (!bd) return 1;
-   bd->client.netwm.sync.wait--;
-   bd->client.netwm.sync.send_time = ecore_loop_time_get();
+
+   if (bd->client.netwm.sync.wait)
+     bd->client.netwm.sync.wait--;
 
    if (ecore_x_sync_counter_query(bd->client.netwm.sync.counter, &serial))
-   {
+     {
 	E_Border_Pending_Move_Resize *pnd = NULL;
 
 	/* skip pending for which we didnt get a reply */
@@ -4878,8 +4878,6 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
 
 	if (pnd)
 	  {
-	     bd->client.netwm.sync.send_time = ecore_time_get();
-		  
 	     bd->x = pnd->x;
 	     bd->y = pnd->y;
 	     bd->w = pnd->w;
@@ -4892,7 +4890,7 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
 
    bd->changes.size = 1;
    bd->changes.pos = 1;		  
-   
+
    _e_border_eval(bd);
    evas_render(bd->bg_evas);
 
@@ -4900,6 +4898,7 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
 			  &bd->mouse.current.mx,
 			  &bd->mouse.current.my); 
 
+   bd->client.netwm.sync.send_time = ecore_loop_time_get();
    _e_border_resize_handle(bd);
 
    return 1;
@@ -5379,15 +5378,26 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	     if ((ecore_loop_time_get() - bd->client.netwm.sync.send_time) > 0.5)
 	       {
 		  E_Border_Pending_Move_Resize  *pnd;
+
+		  if (bd->pending_move_resize)
+		    {
+		       bd->changes.pos = 1;
+		       bd->changes.size = 1;
+		       bd->changed = 1;
+		       _e_border_client_move_resize_send(bd);
+		    }
 		  EINA_LIST_FREE(bd->pending_move_resize, pnd)
-		    E_FREE(pnd);	
+		    E_FREE(pnd);
+
 		  bd->client.netwm.sync.wait = 0;
-		  /* XXX bd->changes.pos/size = 1 ? */
 	       }
-	     /* sync wait is only used for initial resize and timeout
-	        otherwise resize handle is called in sync alarm */
+	     /* sync.wait is incremented when resize_handle sends
+	      * sync-request and decremented by sync-alarm cb. so
+	      * we resize here either on initial resize, timeout or
+	      * when no new resize-request was added by sync-alarm cb.
+	      */
 	     if (!bd->client.netwm.sync.wait)
-	       _e_border_resize_handle(bd);
+		  _e_border_resize_handle(bd);
 	  }
 	else
 	  _e_border_resize_handle(bd);
@@ -7467,24 +7477,16 @@ _e_border_resize_end(E_Border *bd)
 	ecore_x_sync_alarm_free(bd->client.netwm.sync.alarm);
 	bd->client.netwm.sync.alarm = 0;
 	/* resize to last geometry if sync alarm for it was not yet handled */
-	EINA_LIST_FREE(bd->pending_move_resize, pnd)
+	if (bd->pending_move_resize)
 	  {
-	     bd->x = pnd->x;
-	     bd->y = pnd->y;
-	     bd->w = pnd->w;
-	     bd->h = pnd->h;     
 	     bd->changed = 1;
 	     bd->changes.pos = 1;
 	     bd->changes.size = 1;
-	     E_FREE(pnd);
-	  }
-	if (bd->changes.size)
-	  {
-	     bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
-	     bd->client.h = bd->h - (bd->client_inset.t + bd->client_inset.b);
-	     /* needed ? */
 	     _e_border_client_move_resize_send(bd);
 	  }
+	
+	EINA_LIST_FREE(bd->pending_move_resize, pnd)
+	  E_FREE(pnd);
      }
 
    _e_border_hook_call(E_BORDER_HOOK_RESIZE_END, bd); 
