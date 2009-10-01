@@ -525,6 +525,7 @@ struct _E_Border_Pending_Move_Resize
    unsigned char move : 1;
    unsigned char resize : 1;
    unsigned char without_border : 1;
+   unsigned int  serial;
 };
 
 struct _E_Border_Hook

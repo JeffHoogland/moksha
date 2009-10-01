@@ -822,6 +822,25 @@ _e_border_client_move_resize_send(E_Border *bd)
 				  bd->client.h);
 }
 
+static void
+_e_border_pending_move_resize_add(E_Border *bd, int move, int resize,
+				  int x, int y, int w, int h,
+				  Eina_Bool without_border, unsigned int serial)
+{
+   E_Border_Pending_Move_Resize *pnd;
+
+   pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
+   if (!pnd) return;
+   pnd->resize = resize;
+   pnd->resize = move;
+   pnd->without_border = without_border;
+   pnd->x = x;
+   pnd->y = y;
+   pnd->w = w;
+   pnd->h = h;
+   pnd->serial = serial;
+   bd->pending_move_resize = eina_list_append(bd->pending_move_resize, pnd);
+}
 
 static void
 _e_border_move_internal(E_Border *bd, int x, int y, Eina_Bool without_border)
@@ -834,15 +853,7 @@ _e_border_move_internal(E_Border *bd, int x, int y, Eina_Bool without_border)
    ecore_x_window_shadow_tree_flush();
    if (bd->new_client)
      {
-	E_Border_Pending_Move_Resize  *pnd;
-
-	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
-	if (!pnd) return;
-	pnd->move = 1;
-	pnd->x = x;
-	pnd->y = y;
-	pnd->without_border = without_border;
-	bd->pending_move_resize = eina_list_append(bd->pending_move_resize, pnd);
+	_e_border_pending_move_resize_add(bd, 1, 0, x, y, 0, 0, without_border, 0);
 	return;
      }
 
@@ -983,21 +994,7 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
 
    if (bd->new_client)
      {
-	E_Border_Pending_Move_Resize  *pnd;
-
-	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
-	if (!pnd) return;
-	pnd->resize = 1;
-	pnd->without_border = without_border;
-	if (move)
-	  {
-	     pnd->move = 1;
-	     pnd->x = x;
-	     pnd->y = y;
-	  }
-	pnd->w = w;
-	pnd->h = h;
-	bd->pending_move_resize = eina_list_append(bd->pending_move_resize, pnd);
+	_e_border_pending_move_resize_add(bd, move, 1, x, y, w, h, without_border, 0);
 	return;
      }
 
@@ -1025,21 +1022,38 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
    bd->h = h;
    bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
    bd->client.h = bd->h - (bd->client_inset.t + bd->client_inset.b);
-   bd->changes.size = 1;
-   bd->changed = 1;
 
    if ((bd->shaped) || (bd->client.shaped))
      {
 	bd->need_shape_merge = 1;
 	bd->need_shape_export = 1;
      }
-   if (bd->client.netwm.sync.request)
+
+   if (bd->internal_ecore_evas)
      {
-	bd->client.netwm.sync.wait++;
-	ecore_x_netwm_sync_request_send(bd->client.win, bd->client.netwm.sync.serial++);
+	bd->changed = 1;
+	bd->changes.size = 1;
+     }
+   else
+     {
+	if (1 && resize && bd->client.netwm.sync.request)
+	  {
+	     /* printf("add resize %d\n", bd->client.netwm.sync.serial); */
+	     bd->client.netwm.sync.wait++;
+	     _e_border_pending_move_resize_add(bd, move, 1, x, y, w, h, without_border,
+					       bd->client.netwm.sync.serial);
+	     ecore_x_netwm_sync_request_send(bd->client.win,
+					     bd->client.netwm.sync.serial++);
+	  }
+	else
+	  {
+	     bd->changed = 1;
+	     bd->changes.size = 1;
+	  }
      }
 
    _e_border_client_move_resize_send(bd);
+   
    _e_border_resize_update(bd);
    if (move)
      {
@@ -4838,14 +4852,56 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Sync_Alarm *e;
-
+   unsigned int serial;
+   
    e = ev;
    bd = e_border_find_by_alarm(e->alarm);
    if (!bd) return 1;
    bd->client.netwm.sync.wait--;
    bd->client.netwm.sync.send_time = ecore_loop_time_get();
-   if (bd->client.netwm.sync.wait <= 0)
-     _e_border_resize_handle(bd);
+
+   if (ecore_x_sync_counter_query(bd->client.netwm.sync.counter, &serial))
+   {
+	E_Border_Pending_Move_Resize *pnd = NULL;
+
+	/* skip pending for which we didnt get a reply */
+	while (bd->pending_move_resize)
+	  {
+	     pnd = bd->pending_move_resize->data;
+	     bd->pending_move_resize = eina_list_remove(bd->pending_move_resize, pnd);
+
+	     if (serial == pnd->serial)
+	       break;
+
+	     E_FREE(pnd);
+	  }
+
+	if (pnd)
+	  {
+	     bd->client.netwm.sync.send_time = ecore_time_get();
+		  
+	     bd->x = pnd->x;
+	     bd->y = pnd->y;
+	     bd->w = pnd->w;
+	     bd->h = pnd->h;
+	     bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
+	     bd->client.h = bd->h - (bd->client_inset.t + bd->client_inset.b);
+	     E_FREE(pnd);
+	  }
+     }
+
+   bd->changes.size = 1;
+   bd->changes.pos = 1;		  
+   
+   _e_border_eval(bd);
+   evas_render(bd->bg_evas);
+
+   ecore_x_pointer_xy_get(e_manager_current_get()->root,
+			  &bd->mouse.current.mx,
+			  &bd->mouse.current.my); 
+
+   _e_border_resize_handle(bd);
+
    return 1;
 }
 
@@ -5279,15 +5335,14 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	int x, y, new_x, new_y;
 	int new_w, new_h;
 	Eina_List *skiplist = NULL;
-
 #if 0
+	// FIXME: remove? sync what for when only moving?
 	if ((ecore_loop_time_get() - bd->client.netwm.sync.time) > 0.5)
 	  bd->client.netwm.sync.wait = 0;
 	if ((bd->client.netwm.sync.request) &&
 	    (bd->client.netwm.sync.alarm) &&
 	    (bd->client.netwm.sync.wait > 1)) return 1;
 #endif
-
 	if ((bd->moveinfo.down.button >= 1) && (bd->moveinfo.down.button <= 3))
 	  {
 	     x = bd->mouse.last_down[bd->moveinfo.down.button - 1].x +
@@ -5318,19 +5373,24 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
      }
    else if (bd->resize_mode != RESIZE_NONE)
      {
-#if 0
-	/* FIXME: it seems we send sync requests we dont get replies to */
-	/* ie our sync wait > 1 often - try eclipse - its slow enough to */
-	/* REALLY show how bad this is */
-	printf("SYNC %i - %3.3f\n", bd->client.netwm.sync.wait,
-	       ecore_loop_time_get() - bd->client.netwm.sync.time);
-	if ((ecore_loop_time_get() - bd->client.netwm.sync.time) > 0.5)
-	  bd->client.netwm.sync.wait = 0;
 	if ((bd->client.netwm.sync.request) &&
-	    (bd->client.netwm.sync.alarm) &&
-	    (bd->client.netwm.sync.wait > 1)) return 1;
-#endif
-	_e_border_resize_handle(bd);
+	    (bd->client.netwm.sync.alarm))
+	  {
+	     if ((ecore_loop_time_get() - bd->client.netwm.sync.send_time) > 0.5)
+	       {
+		  E_Border_Pending_Move_Resize  *pnd;
+		  EINA_LIST_FREE(bd->pending_move_resize, pnd)
+		    E_FREE(pnd);	
+		  bd->client.netwm.sync.wait = 0;
+		  /* XXX bd->changes.pos/size = 1 ? */
+	       }
+	     /* sync wait is only used for initial resize and timeout
+	        otherwise resize handle is called in sync alarm */
+	     if (!bd->client.netwm.sync.wait)
+	       _e_border_resize_handle(bd);
+	  }
+	else
+	  _e_border_resize_handle(bd);
      }
    else
      {
@@ -7381,7 +7441,7 @@ _e_border_resize_begin(E_Border *bd)
    if (bd->client.netwm.sync.request)
      {
 	bd->client.netwm.sync.alarm = ecore_x_sync_alarm_new(bd->client.netwm.sync.counter);
-	bd->client.netwm.sync.serial = 0;
+	bd->client.netwm.sync.serial = 1;
 	bd->client.netwm.sync.wait = 0;
 	bd->client.netwm.sync.send_time = ecore_loop_time_get();
      }
@@ -7402,9 +7462,31 @@ _e_border_resize_end(E_Border *bd)
      }
    if (bd->client.netwm.sync.alarm)
      {
+	E_Border_Pending_Move_Resize  *pnd;
+	
 	ecore_x_sync_alarm_free(bd->client.netwm.sync.alarm);
 	bd->client.netwm.sync.alarm = 0;
+	/* resize to last geometry if sync alarm for it was not yet handled */
+	EINA_LIST_FREE(bd->pending_move_resize, pnd)
+	  {
+	     bd->x = pnd->x;
+	     bd->y = pnd->y;
+	     bd->w = pnd->w;
+	     bd->h = pnd->h;     
+	     bd->changed = 1;
+	     bd->changes.pos = 1;
+	     bd->changes.size = 1;
+	     E_FREE(pnd);
+	  }
+	if (bd->changes.size)
+	  {
+	     bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
+	     bd->client.h = bd->h - (bd->client_inset.t + bd->client_inset.b);
+	     /* needed ? */
+	     _e_border_client_move_resize_send(bd);
+	  }
      }
+
    _e_border_hook_call(E_BORDER_HOOK_RESIZE_END, bd); 
    
    resize = NULL;
