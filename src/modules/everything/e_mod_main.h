@@ -146,9 +146,9 @@ EAPI void evry_plug_actions_free(Evry_Plugin *plugin);
 
 void evry_history_init(void);
 void evry_history_free(void);
-void evry_history_load(void);
-void evry_history_unload(void);
-void evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt);
+EAPI void evry_history_load(void);
+EAPI void evry_history_unload(void);
+EAPI void evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt);
 int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt);
 
 EAPI int  evry_browse_item(Evry_Selector *sel);

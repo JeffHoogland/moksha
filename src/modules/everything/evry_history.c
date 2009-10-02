@@ -159,7 +159,7 @@ evry_history_free(void)
    E_CONFIG_DD_FREE(hist_edd);
 }
 
-void
+EAPI void
 evry_history_load(void)
 {
    evry_hist = e_config_domain_load("module.everything.history", hist_edd);
@@ -188,7 +188,7 @@ evry_history_load(void)
 }
 
 
-void
+EAPI void
 evry_history_unload(void)
 {
    if (!evry_hist) return;
@@ -202,7 +202,7 @@ evry_history_unload(void)
    evry_hist = NULL;
 }
 
-void
+EAPI void
 evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
 {
    History_Entry *he;
