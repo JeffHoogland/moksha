@@ -13,6 +13,8 @@ static void _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, voi
 static void _e_zone_event_zone_desk_count_set_free(void *data, void *ev);
 static int  _e_zone_cb_mouse_in(void *data, int type, void *event);
 static int  _e_zone_cb_mouse_out(void *data, int type, void *event);
+static int  _e_zone_cb_mouse_down(void *data, int type, void *event);
+static int  _e_zone_cb_mouse_up(void *data, int type, void *event);
 static int  _e_zone_cb_mouse_move(void *data, int type, void *event);
 static int  _e_zone_cb_desk_after_show(void *data, int type, void *event);
 static int  _e_zone_cb_edge_timer(void *data);
@@ -110,32 +112,10 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
    zone->corner.bottom_left = ecore_x_window_input_new(con->win,
 	 zone->x + zone->w - cw - 2, zone->y + zone->h - 1, cw, 1);
 
-   e_container_window_raise(zone->container, zone->corner.left_bottom, 999);
-   e_container_window_raise(zone->container, zone->corner.left_top, 999);
-   e_container_window_raise(zone->container, zone->corner.top_left, 999);
-   e_container_window_raise(zone->container, zone->corner.top_right, 999);
-   e_container_window_raise(zone->container, zone->corner.right_top, 999);
-   e_container_window_raise(zone->container, zone->corner.right_bottom, 999);
-   e_container_window_raise(zone->container, zone->corner.bottom_right, 999);
-   e_container_window_raise(zone->container, zone->corner.bottom_left, 999);
-
-   e_container_window_raise(zone->container, zone->edge.left, 999);
-   e_container_window_raise(zone->container, zone->edge.right, 999);
-   e_container_window_raise(zone->container, zone->edge.top, 999);
-   e_container_window_raise(zone->container, zone->edge.bottom, 999);
-
-   ecore_x_window_show(zone->edge.left);
-   ecore_x_window_show(zone->edge.right);
-   ecore_x_window_show(zone->edge.top);
-   ecore_x_window_show(zone->edge.bottom);
-   ecore_x_window_show(zone->corner.left_bottom);
-   ecore_x_window_show(zone->corner.left_top);
-   ecore_x_window_show(zone->corner.top_left);
-   ecore_x_window_show(zone->corner.top_right);
-   ecore_x_window_show(zone->corner.right_top);
-   ecore_x_window_show(zone->corner.right_bottom);
-   ecore_x_window_show(zone->corner.bottom_right);
-   ecore_x_window_show(zone->corner.bottom_left);
+   if(e_config->fullscreen_flip)
+     e_zone_edge_win_layer_set(zone, 250);
+   else
+     e_zone_edge_win_layer_set(zone, 200);
 
    zone->handlers = 
      eina_list_append(zone->handlers,
@@ -145,6 +125,14 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
      eina_list_append(zone->handlers,
                       ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT,
                                               _e_zone_cb_mouse_out, zone));
+   zone->handlers = 
+     eina_list_append(zone->handlers,
+                      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
+                                              _e_zone_cb_mouse_down, zone));
+   zone->handlers = 
+     eina_list_append(zone->handlers,
+                      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
+                                              _e_zone_cb_mouse_up, zone));
    zone->handlers = 
      eina_list_append(zone->handlers,
                       ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE,
@@ -567,7 +555,7 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 	 break;
      }
    if (!ok) return;
-   bind = e_bindings_edge_get("desk_flip_in_direction", edge);
+   bind = e_bindings_edge_get("desk_flip_in_direction", edge, 0);
    if (bind)
      {
 	zev = E_NEW(E_Event_Zone_Edge, 1);
@@ -829,6 +817,24 @@ e_zone_flip_win_restore(void)
 	       }
 	  }
      }
+}
+
+EAPI void
+e_zone_edge_win_layer_set(E_Zone *zone, int layer)
+{
+   e_container_window_raise(zone->container, zone->corner.left_bottom, layer);
+   e_container_window_raise(zone->container, zone->corner.left_top, layer);
+   e_container_window_raise(zone->container, zone->corner.top_left, layer);
+   e_container_window_raise(zone->container, zone->corner.top_right, layer);
+   e_container_window_raise(zone->container, zone->corner.right_top, layer);
+   e_container_window_raise(zone->container, zone->corner.right_bottom, layer);
+   e_container_window_raise(zone->container, zone->corner.bottom_right, layer);
+   e_container_window_raise(zone->container, zone->corner.bottom_left, layer);
+
+   e_container_window_raise(zone->container, zone->edge.left, layer);
+   e_container_window_raise(zone->container, zone->edge.right, layer);
+   e_container_window_raise(zone->container, zone->edge.top, layer);
+   e_container_window_raise(zone->container, zone->edge.bottom, layer);
 }
 
 static void
@@ -1170,6 +1176,94 @@ _e_zone_cb_mouse_out(void *data, int type, void *event)
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
    e_bindings_edge_out_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
+   return 1;
+}
+
+static int
+_e_zone_cb_mouse_down(void *data, int type, void *event)
+{
+   Ecore_Event_Mouse_Button *ev;
+   E_Event_Zone_Edge *zev;
+   E_Zone_Edge edge;
+   E_Zone *zone;
+
+   ev = event;
+   zone = data;
+
+   if (ev->event_window == zone->edge.left)
+     edge = E_ZONE_EDGE_LEFT;
+   else if (ev->event_window == zone->edge.top)
+     edge = E_ZONE_EDGE_TOP;
+   else if (ev->event_window == zone->edge.right)
+     edge = E_ZONE_EDGE_RIGHT;
+   else if (ev->event_window == zone->edge.bottom)
+     edge = E_ZONE_EDGE_BOTTOM;
+   else if ((ev->event_window == zone->corner.left_top) ||
+	    (ev->event_window == zone->corner.top_left))
+     edge = E_ZONE_EDGE_TOP_LEFT;
+   else if ((ev->event_window == zone->corner.right_top) ||
+	    (ev->event_window == zone->corner.top_right))
+     edge = E_ZONE_EDGE_TOP_RIGHT;
+   else if ((ev->event_window == zone->corner.right_bottom) ||
+	    (ev->event_window == zone->corner.bottom_right))
+     edge = E_ZONE_EDGE_BOTTOM_RIGHT;
+   else if ((ev->event_window == zone->corner.left_bottom) ||
+	    (ev->event_window == zone->corner.bottom_left))
+     edge = E_ZONE_EDGE_BOTTOM_LEFT;
+   else return 1;
+
+   zev = E_NEW(E_Event_Zone_Edge, 1);
+   zev->zone = zone;
+   zev->edge = edge;
+   zev->x = ev->x;
+   zev->y = ev->y;
+   zev->modifiers = ev->modifiers;
+   ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
+   e_bindings_edge_down_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
+   return 1;
+}
+
+static int
+_e_zone_cb_mouse_up(void *data, int type, void *event)
+{
+   Ecore_Event_Mouse_Button *ev;
+   E_Event_Zone_Edge *zev;
+   E_Zone_Edge edge;
+   E_Zone *zone;
+
+   ev = event;
+   zone = data;
+
+   if (ev->event_window == zone->edge.left)
+     edge = E_ZONE_EDGE_LEFT;
+   else if (ev->event_window == zone->edge.top)
+     edge = E_ZONE_EDGE_TOP;
+   else if (ev->event_window == zone->edge.right)
+     edge = E_ZONE_EDGE_RIGHT;
+   else if (ev->event_window == zone->edge.bottom)
+     edge = E_ZONE_EDGE_BOTTOM;
+   else if ((ev->event_window == zone->corner.left_top) ||
+	    (ev->event_window == zone->corner.top_left))
+     edge = E_ZONE_EDGE_TOP_LEFT;
+   else if ((ev->event_window == zone->corner.right_top) ||
+	    (ev->event_window == zone->corner.top_right))
+     edge = E_ZONE_EDGE_TOP_RIGHT;
+   else if ((ev->event_window == zone->corner.right_bottom) ||
+	    (ev->event_window == zone->corner.bottom_right))
+     edge = E_ZONE_EDGE_BOTTOM_RIGHT;
+   else if ((ev->event_window == zone->corner.left_bottom) ||
+	    (ev->event_window == zone->corner.bottom_left))
+     edge = E_ZONE_EDGE_BOTTOM_LEFT;
+   else return 1;
+
+   zev = E_NEW(E_Event_Zone_Edge, 1);
+   zev->zone = zone;
+   zev->edge = edge;
+   zev->x = ev->x;
+   zev->y = ev->y;
+   zev->modifiers = ev->modifiers;
+   ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
+   e_bindings_edge_up_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
    return 1;
 }
 

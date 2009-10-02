@@ -11,6 +11,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _cb_disable_check_list(void *data, Evas_Object *obj);
+static void _calibrate_binginds(void);
 
 #define MODE_CUSTOM 0
 #define MODE_BOTTOM_MIDDLE 1
@@ -300,6 +301,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_shelf_populate(cfdata->es);
    e_shelf_toggle(cfdata->es, 1);
    e_shelf_show(cfdata->es);
+   _calibrate_binginds();
    e_config_save_queue();
    cfdata->es->config_dialog = cfd;
    return 1; /* Apply was OK */
@@ -482,6 +484,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      e_shelf_toggle(cfdata->es, 1);
 
    e_zone_useful_geometry_dirty(cfdata->es->zone);
+   _calibrate_binginds();
    e_config_save_queue();   
    cfdata->es->config_dialog = cfd;
    return 1; /* Apply was OK */
@@ -495,6 +498,68 @@ _cb_configure(void *data, void *data2)
    cfdata = data;
    if (!cfdata->es->gadcon->config_dialog)
      e_int_gadcon_config_shelf(cfdata->es->gadcon);
+}
+
+static void
+_calibrate_binginds(void)
+{
+   E_Binding_Edge *bind;
+   Eina_List *l;
+   E_Shelf *es;
+
+#define EDGE_BINDING_REMOVE(type, click, delay) \
+   bind = e_bindings_edge_get("shelf_show", type, click); \
+   if (bind) \
+     e_bindings_edge_del(E_BINDING_CONTEXT_ZONE, type, \
+	   0, 1, "shelf_show", NULL, delay);
+   EDGE_BINDING_REMOVE(E_ZONE_EDGE_LEFT, 0, 0.0);
+   EDGE_BINDING_REMOVE(E_ZONE_EDGE_RIGHT, 0, 0.0);
+   EDGE_BINDING_REMOVE(E_ZONE_EDGE_TOP, 0, 0.0);
+   EDGE_BINDING_REMOVE(E_ZONE_EDGE_BOTTOM, 0, 0.0);
+   EDGE_BINDING_REMOVE(E_ZONE_EDGE_LEFT, 1, -1.0);
+   EDGE_BINDING_REMOVE(E_ZONE_EDGE_RIGHT, 1, -1.0);
+   EDGE_BINDING_REMOVE(E_ZONE_EDGE_TOP, 1, -1.0);
+   EDGE_BINDING_REMOVE(E_ZONE_EDGE_BOTTOM, 1, -1.0);
+#undef EDGE_BINDING_REMOVE
+
+#define EDGE_BINDING_ADD(es, type) \
+   if (es->cfg->autohide) \
+     { \
+	if (es->cfg->autohide_show_action) \
+	  e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, type, \
+		0, 1, "shelf_show", NULL, -1.0); \
+	else \
+	  e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, type, \
+		0, 1, "shelf_show", NULL, 0.0); \
+     }
+
+   EINA_LIST_FOREACH(e_shelf_list(), l, es)
+     {
+	switch(es->gadcon->orient)
+	  {
+	   case E_GADCON_ORIENT_LEFT:
+	   case E_GADCON_ORIENT_CORNER_LT:
+	   case E_GADCON_ORIENT_CORNER_LB:
+	      EDGE_BINDING_ADD(es, E_ZONE_EDGE_LEFT)
+	      break;
+	   case E_GADCON_ORIENT_RIGHT:
+	   case E_GADCON_ORIENT_CORNER_RT:
+	   case E_GADCON_ORIENT_CORNER_RB:
+	      EDGE_BINDING_ADD(es, E_ZONE_EDGE_RIGHT)
+	      break;
+	   case E_GADCON_ORIENT_TOP:
+	   case E_GADCON_ORIENT_CORNER_TL:
+	   case E_GADCON_ORIENT_CORNER_TR:
+	      EDGE_BINDING_ADD(es, E_ZONE_EDGE_TOP)
+	      break;
+	   case E_GADCON_ORIENT_BOTTOM:
+	   case E_GADCON_ORIENT_CORNER_BL:
+	   case E_GADCON_ORIENT_CORNER_BR:
+	      EDGE_BINDING_ADD(es, E_ZONE_EDGE_BOTTOM)
+	      break;
+	  }
+     }
+#undef EDGE_BINDING_ADD
 }
     
 /**--GUI--**/

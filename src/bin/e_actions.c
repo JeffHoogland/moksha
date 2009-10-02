@@ -2205,6 +2205,65 @@ ACT_FN_GO(shelf_show)
      }
 }
 /***************************************************************************/
+#define ACT_SHELF_SHOW(params, es) \
+if ((!params) || (params && (fnmatch(params, es->name, 0) == 0))) \
+  { \
+     e_shelf_toggle(es, 1); \
+     e_shelf_toggle(es, 0); \
+  }
+ACT_FN_GO_EDGE(shelf_show)
+{
+   Eina_List *l;
+   E_Shelf *es;
+
+   if (params)
+     {
+	for (; *params != '\0'; params++)
+	  if (!isspace(*params))
+	    break;
+	if (*params == '\0')
+	  params = NULL;
+     }
+
+   EINA_LIST_FOREACH(e_shelf_list(), l, es)
+     {
+	switch(ev->edge)
+	  {
+	   case E_ZONE_EDGE_LEFT:
+	      if ((es->gadcon->orient == E_GADCON_ORIENT_LEFT ||
+		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_LT ||
+		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_LB) &&
+		  (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		ACT_SHELF_SHOW(params, es);
+	      break;
+	   case E_ZONE_EDGE_RIGHT:
+	      if ((es->gadcon->orient == E_GADCON_ORIENT_RIGHT ||
+		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_RT ||
+		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_RB) &&
+		  (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		ACT_SHELF_SHOW(params, es);
+	      break;
+	   case E_ZONE_EDGE_TOP:
+	      if ((es->gadcon->orient == E_GADCON_ORIENT_TOP ||
+		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_TL ||
+		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_TR) &&
+		  (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		ACT_SHELF_SHOW(params, es);
+	      break;
+	   case E_ZONE_EDGE_BOTTOM:
+	      if ((es->gadcon->orient == E_GADCON_ORIENT_BOTTOM ||
+		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_BL ||
+		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_BR) &&
+		  (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		ACT_SHELF_SHOW(params, es);
+	      break;
+	   default:
+	      break;
+	  }
+     }
+}
+#undef ACT_SHELF_SHOW
+/***************************************************************************/
 
 typedef struct _Delayed_Action     Delayed_Action;
 
@@ -2581,6 +2640,7 @@ e_actions_init(void)
 
    /* shelf_show */
    ACT_GO(shelf_show);
+   ACT_GO_EDGE(shelf_show);
    e_action_predef_name_set(_("Desktop"), _("Show The Shelf"), "shelf_show",
 			    NULL, "shelf name glob: Shelf-* ", 1);
 

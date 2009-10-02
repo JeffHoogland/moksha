@@ -143,6 +143,7 @@ EAPI void       e_zone_desk_linear_flip_by(E_Zone *zone, int dx);
 EAPI void       e_zone_desk_linear_flip_to(E_Zone *zone, int x);
 EAPI void       e_zone_flip_win_disable(void);
 EAPI void       e_zone_flip_win_restore(void);
+EAPI void	e_zone_edge_win_layer_set(E_Zone *zone, int layer);
 
 EAPI void       e_zone_useful_geometry_dirty(E_Zone *zone);
 EAPI void       e_zone_useful_geometry_get(E_Zone *zone, int *x, int *y, int *w, int *h);

@@ -131,13 +131,11 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 
    /* TODO: We should have a mouse out on the evas object if we are on the desktop */
    es->handlers = eina_list_append(es->handlers,
-	 ecore_event_handler_add(E_EVENT_ZONE_EDGE_IN, _e_shelf_cb_mouse_in, es));
-   es->handlers = eina_list_append(es->handlers,
-	 ecore_event_handler_add(E_EVENT_ZONE_EDGE_OUT, _e_shelf_cb_mouse_out, es));
-   es->handlers = eina_list_append(es->handlers,
 	 ecore_event_handler_add(E_EVENT_ZONE_EDGE_MOVE, _e_shelf_cb_mouse_in, es));
    es->handlers = eina_list_append(es->handlers,
 	 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_shelf_cb_mouse_in, es));
+   es->handlers = eina_list_append(es->handlers,
+	 ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _e_shelf_cb_mouse_in, es));
    es->handlers = eina_list_append(es->handlers,
 	 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_shelf_cb_mouse_out, es));
 
@@ -1357,7 +1355,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
    es = data;
    if (es->cfg->autohide_show_action) return 1;
 
-   if ((type == E_EVENT_ZONE_EDGE_IN) || (type == E_EVENT_ZONE_EDGE_MOVE))
+   if (type == E_EVENT_ZONE_EDGE_MOVE)
      {
 	E_Event_Zone_Edge *ev;
 	int show = 0;
@@ -1436,18 +1434,26 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
      }
    else if (type == ECORE_X_EVENT_MOUSE_IN)
      {
-	Ecore_X_Window win;
 	Ecore_X_Event_Mouse_In *ev;
 
 	ev = event;
-	/* If we are about to hide the shelf, interrupt on mouse in */
-	if (es->popup) win = es->popup->evas_win;
-	else win = es->zone->container->event_win;
-	if (ev->win == win)
+	if (!es->popup) return 1;
+	if (ev->win == es->popup->evas_win)
 	  {
 	     edje_object_signal_emit(es->o_base, "e,state,focused", "e");
-	     if ((es->hide_animator) || (es->hide_timer) || (es->instant_timer))
-	       e_shelf_toggle(es, 1);
+	     e_shelf_toggle(es, 1);
+	  }
+     }
+   else if (type == ECORE_EVENT_MOUSE_MOVE)
+     {
+	Ecore_Event_Mouse_Move *ev;
+
+	ev = event;
+	if (!es->popup) return 1;
+	if (ev->event_window == es->popup->evas_win)
+	  {
+	     edje_object_signal_emit(es->o_base, "e,state,focused", "e");
+	     e_shelf_toggle(es, 1);
 	  }
      }
    return 1;
@@ -1461,45 +1467,7 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
 
    es = data;
 
-   if (type == E_EVENT_ZONE_EDGE_OUT)
-     {
-	E_Event_Zone_Edge *ev;
-	int show = 1;
-
-	ev = event;
-	if (es->zone != ev->zone) return 1;
-	switch (es->gadcon->orient)
-	  {
-	   case E_GADCON_ORIENT_LEFT:
-	   case E_GADCON_ORIENT_CORNER_LT:
-	   case E_GADCON_ORIENT_CORNER_LB:
-             if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->x >= es->x + es->w))
-               show = 0;
-             break;
-	   case E_GADCON_ORIENT_RIGHT:
-	   case E_GADCON_ORIENT_CORNER_RT:
-	   case E_GADCON_ORIENT_CORNER_RB:
-             if ((ev->edge == E_ZONE_EDGE_RIGHT) && (-ev->x > es->w))
-               show = 0;
-             break;
-	   case E_GADCON_ORIENT_TOP:
-	   case E_GADCON_ORIENT_CORNER_TL:
-	   case E_GADCON_ORIENT_CORNER_TR:
-             if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->y > es->y + es->h))
-               show = 0;
-             break;
-	   case E_GADCON_ORIENT_BOTTOM:
-	   case E_GADCON_ORIENT_CORNER_BL:
-	   case E_GADCON_ORIENT_CORNER_BR:
-             if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (-ev->y > es->h))
-               show = 0;
-             break;
-	   default:
-             break;
-	  }
-	if (!show) e_shelf_toggle(es, 0);
-     }
-   else if (type == ECORE_X_EVENT_MOUSE_OUT)
+   if (type == ECORE_X_EVENT_MOUSE_OUT)
      {
 	Ecore_X_Event_Mouse_Out *ev;
 

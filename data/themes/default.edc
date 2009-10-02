@@ -7124,7 +7124,7 @@ collections { /* begin the collection of edje groups that are in this file */
                color: 255 255 0 150;
             }
          }
-         part { name: "e.swallow.slider";
+         part { name: "e.swallow.check";
             type: SWALLOW;
             description { state: "default" 0.0;
                rel1 {
@@ -7135,8 +7135,23 @@ collections { /* begin the collection of edje groups that are in this file */
                }
                rel2 {
                   relative: 1 1;
+                  offset: -5 30;
+                  to_y: "e.text.description";
+               }
+            }
+         }
+         part { name: "e.swallow.slider";
+            type: SWALLOW;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 1 1;
+                  offset: 5 2;
+                  to_x: "e.swallow.background";
+                  to_y: "e.swallow.check";
+               }
+               rel2 {
+                  relative: 1 1;
                   offset: -5 -5;
-                  to_y: "e.swallow.background";
                }
             }
          }

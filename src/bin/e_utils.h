@@ -56,6 +56,7 @@ EAPI int          e_util_dir_check(const char *dir);
 EAPI void         e_util_defer_object_del(E_Object *obj);
 EAPI const char  *e_util_winid_str_get(Ecore_X_Window win);
 EAPI void         e_util_win_auto_resize_fill(E_Win *win);
+EAPI void         e_util_zone_edge_toggle(E_Zone_Edge edge, Eina_Bool show);
     
 #endif
 #endif
