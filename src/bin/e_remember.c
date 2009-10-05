@@ -564,7 +564,8 @@ _e_remember_cb_hook_eval_post_new_border(void *data, void *border)
 {
    E_Border *bd = border;
 
-   if (!bd->new_client) return;
+   // remember only when window was modified
+   // if (!bd->new_client) return;
 
    if ((bd->internal) && (!bd->remember) &&
        (e_config->remember_internal_windows) &&
