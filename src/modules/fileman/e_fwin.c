@@ -1685,7 +1685,12 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
 			    
 			    if (!found)
 			      {
-			       /* No custom info, so just put window near icon */
+				 int w, h, zw, zh;
+
+				 e_zone_useful_geometry_get(fwin2->win->border->zone,
+							    NULL, NULL, &zw, &zh);
+
+				 /* No custom info, so just put window near icon */
 				 e_fm2_icon_geometry_get(ici->ic, &ix, &iy, &iw, &ih);
 				 nx = (ix + (iw / 2));
 				 ny = (iy + (ih / 2));
@@ -1694,16 +1699,30 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
 				      nx += fwin->win->x;
 				      ny += fwin->win->y;
 				   }
+
+				 /* checking width and height */
+				 /* TODO add config for preffered
+				    initial size? */
+				 w = 5 * iw * e_scale;
+				 if (w > 400)
+				   w = 400;
+				 if (w > zw)
+				   w = zw;
+
+				 h = 4 * ih * e_scale;
+				 if (h > 300)
+				   h = 300;
+				 if (h > zh)
+				   h = zh;
+
 				 /* iff going out of zone - adjust to be in */
-				 if ((fwin2->win->border->zone->x + 
-				      fwin2->win->border->zone->w) <
-				     (fwin2->win->border->w + nx))
-				   nx -= fwin2->win->border->w;
-				 if ((fwin2->win->border->zone->y + 
-				      fwin2->win->border->zone->h) <
-				     (fwin2->win->border->h + ny))
-				   ny -= fwin2->win->border->h;
-				 e_win_move(fwin2->win, nx, ny);
+				 if ((fwin2->win->border->zone->x + fwin2->win->border->zone->w) < (w + nx))
+				   nx -= w;
+				 if ((fwin2->win->border->zone->y + fwin2->win->border->zone->h) < (h + ny))
+				   ny -= h;
+
+				 e_win_move_resize(fwin2->win, nx, ny, w, h);
+				 fwin2->win->border->placed = 1;
 			      }
 			 }
 		       if (ici->label)
