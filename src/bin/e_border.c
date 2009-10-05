@@ -832,7 +832,7 @@ _e_border_pending_move_resize_add(E_Border *bd, int move, int resize,
    pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
    if (!pnd) return;
    pnd->resize = resize;
-   pnd->resize = move;
+   pnd->move = move;
    pnd->without_border = without_border;
    pnd->x = x;
    pnd->y = y;
