@@ -181,6 +181,10 @@ e_hints_init(void)
 
 	     ecore_x_netwm_supported_set(roots[i], supported, supported_num);
 
+	     /* fake mwm, this might crash some ol' motif apps, if
+		they still exist, but at least it makes borderless
+		feature of Eterm and urxvt work... */
+	     ecore_x_atom_get("_MOTIF_WM_INFO");
 	  }
         free(roots);
      }
