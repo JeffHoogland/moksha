@@ -1375,7 +1375,7 @@ _evry_clear(Evry_State *s)
 	_evry_update(s, 1);
 	return 1;
      }
-   else if (s->input[0] != 0)
+   else if (s->input && s->input[0] != 0)
      {
 	s->input[0] = 0;
 	_evry_update(s, 1);

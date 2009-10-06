@@ -352,7 +352,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
    	       }
 
 	     _folder_item_add(p, "/");
-	     file = E_NEW(Evry_Item_File, 1);
 
    	     p->command = EINA_TRUE;
    	     return 1;

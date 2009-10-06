@@ -178,7 +178,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
      }
 
-   if (lp && (eina_list_count(lp) == 2) || (!EVRY_PLUGIN(p)->items))
+   if (lp && ((eina_list_count(lp) == 2) || (!EVRY_PLUGIN(p)->items)))
      {
 	pp = lp->data;
 	EINA_LIST_FOREACH(pp->items, l, it)

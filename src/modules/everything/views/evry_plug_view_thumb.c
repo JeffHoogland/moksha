@@ -195,7 +195,6 @@ _e_smart_reconfigure_do(void *data)
           {
              x = 0;
              y += hh;
-             xx = sd->x - sd->cx + x;
           }
 
         it->x = x;
@@ -577,13 +576,14 @@ _pan_item_select(Evas_Object *obj, Item *it)
      {
 	sd->cur_item->selected = EINA_FALSE;
 	edje_object_signal_emit(sd->cur_item->frame, "e,state,unselected", "e");
-	sd->cur_item = it;
-	sd->cur_item->selected = EINA_TRUE;
      }
 
    if (it)
      {
 	sd->update = EINA_FALSE;
+
+	sd->cur_item = it;
+	sd->cur_item->selected = EINA_TRUE;
 
 	if (sd->view->list_mode)
 	  align = it->y - (double)it->y / (double)sd->ch * (sd->h - it->h);
