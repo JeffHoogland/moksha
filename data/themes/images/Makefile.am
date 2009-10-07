@@ -249,6 +249,11 @@ dia_grad.png \
 dia_topshad.png \
 e17_fileman_thumb_bg.png \
 e17_mini_button_shadow2.png \
+everything_bar.png \
+everything_border.png \
+everything_box.png \
+everything_drop.png \
+everything_item_bg.png \
 exclam.png \
 frame_1.png \
 frame_2.png \
@@ -364,6 +369,7 @@ icon_mime_c.png \
 icon_mime_css.png \
 icon_mime_deb.png \
 icon_mime_doc.png \
+icon_mime_executable_generic.png \
 icon_mime_font_generic.png \
 icon_mime_h.png \
 icon_mime_html.png \

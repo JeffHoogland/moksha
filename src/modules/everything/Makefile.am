@@ -8,7 +8,7 @@ filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
 e-module-$(MODULE).edj module.desktop
 
-EXTRA_DIST = $(files_DATA)
+EXTRA_DIST = $(files_DATA) $(EVRYHEADERS) everything.pc.in
 
 # the module .so file
 INCLUDES               = -I. \
@@ -47,6 +47,6 @@ installed_headers_DATA = $(EVRYHEADERS)
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = everything.pc
 
-uninstall:
+uninstall-local:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/everything_plugins/core/
