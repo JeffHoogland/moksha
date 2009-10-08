@@ -144,7 +144,9 @@ e_int_border_menu_create(E_Border *bd)
 	 (bd->lock_user_maximize)))
      {
 	if ((!bd->lock_user_maximize) && (!bd->shaded) && (!bd->fullscreen) && 
-            (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL))
+            ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
+             (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN))
+            )
 	  {
 	     separator = 0;
 	     mi = e_menu_item_new(m);
@@ -160,7 +162,9 @@ e_int_border_menu_create(E_Border *bd)
    if (!bd->internal)
      {
 	if ((!bd->lock_user_iconify) && (!bd->fullscreen) && 
-            (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL))
+            ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
+             (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN))
+            )
 	  {
 	     separator = 0;
 	     mi = e_menu_item_new(m);
@@ -1035,7 +1039,9 @@ _e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi)
      }
 
    if ((!bd->lock_user_fullscreen) && (!bd->shaded) && 
-       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL))
+       ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
+        (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN))
+       )
      {
 	submi = e_menu_item_new(subm);
 	e_menu_item_label_set(submi, _("Fullscreen"));
