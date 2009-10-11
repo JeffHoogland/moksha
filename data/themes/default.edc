@@ -24387,6 +24387,9 @@ MIMEICON("inode/directory","icon_efm_folder.png", 128);
 MIMEICON("inode/file","icon_efm_file.png", 128); 
 MIMEICON("application/octet-stream","icon_efm_file.png", 128);
 MIMEICON("application/x-executable","icon_mime_executable_generic.png", 128);
+MIMEICON("application/x-ms-dos-executable","icon_mime_executable_generic.png", 128);
+MIMEICON("application/x-7z-compressed","icon_mime_package.png", 128);
+MIMEICON("application/vnd.ms-cab-compressed","icon_mime_package.png", 128);
 
 
 // Dynamic MIME Icons //
@@ -24428,17 +24431,29 @@ MIMEBASE("video/mpeg","icon_mime_video_generic.png", ".MPEG", 128);
 MIMEBASE("application/ogg","icon_mime_video_generic.png", ".OGG", 128);
 MIMEBASE("video/x-theora+ogg","icon_mime_video_generic.png", ".OGG", 128);
 MIMEBASE("video/x-msvideo","icon_mime_video_generic.png", ".AVI", 128);
+MIMEBASE("video/ogg","icon_mime_video_generic.png", ".OGG", 128);
+MIMEBASE("video/mp4","icon_mime_video_generic.png", ".MP4", 128);
+MIMEBASE("video/quicktime","icon_mime_video_generic.png", ".MOV", 128);
+MIMEBASE("video/x-matroska","icon_mime_video_generic.png", ".MKV", 128);
+MIMEBASE("video/x-flv","icon_mime_video_generic.png", ".FLV", 128);
+MIMEBASE("application/vnd.rn-realmedia","icon_mime_video_generic.png", ".REAL", 128);
+MIMEBASE("video/x-ms-wmv","icon_mime_video_generic.png", ".WMV", 128);
 
 MIMEBASE("image/png","icon_mime_image_generic.png", ".PNG", 128);
 MIMEBASE("image/jpeg","icon_mime_image_generic.png", ".JPEG", 128);
 MIMEBASE("image/gif","icon_mime_image_generic.png", ".GIF", 128);
 MIMEBASE("image/bmp","icon_mime_image_generic.png", ".BMP", 128);
 MIMEBASE("application/x-xcf","icon_mime_image_generic.png", ".XCF", 128);
+MIMEBASE("application/x-cbz","icon_mime_image_generic.png", ".CBZ", 128);
+MIMEBASE("application/x-cbr","icon_mime_image_generic.png", ".CBR", 128);
 
 MIMEBASE("audio/mpeg","icon_mime_audio_generic.png", ".MP3", 128);
 MIMEBASE("audio/x-wav","icon_mime_audio_generic.png", ".WAV", 128);
 MIMEBASE("audio/x-flac","icon_mime_audio_generic.png", ".FLAC", 128);
 MIMEBASE("audio/x-musepack","icon_mime_audio_generic.png", ".MPC", 128);
+MIMEBASE("audio/x-vorbis+ogg","icon_mime_audio_generic.png", ".OGG", 128);
+MIMEBASE("application/x-audacity-project","icon_mime_audio_generic.png", ".AUP", 128);
+MIMEBASE("audio/x-ms-wma","icon_mime_audio_generic.png", ".WMA", 128);
 
 MIMEBASE("text/css","icon_mime_text_generic.png", ".CSS", 128);
 MIMEBASE("text/html","icon_mime_text_generic.png", ".HTML", 128);
@@ -24449,7 +24464,16 @@ MIMEBASE("text/x-csharp","icon_mime_text_generic.png", ".C#", 128);
 MIMEBASE("text/x-patch","icon_mime_text_generic.png", ".PATCH", 128);
 MIMEBASE("text/plain","icon_mime_text_generic.png", ".TXT", 128);
 MIMEBASE("application/x-msword","icon_mime_text_generic.png", ".DOC", 128);
+MIMEBASE("application/vnd.ms-powerpoint","icon_mime_text_generic.png", ".PPT", 128);
+MIMEBASE("application/vnd.ms-excel","icon_mime_text_generic.png", ".XLS", 128);
 MIMEBASE("application/x-abiword","icon_mime_text_generic.png", ".ABW", 128);
+MIMEBASE("application/vnd.scribus","icon_mime_text_generic.png", ".SLA", 128);
+MIMEBASE("text/x-python","icon_mime_text_generic.png", ".PY", 128);
+MIMEBASE("application/x-awk","icon_mime_text_generic.png", ".AWK", 128);
+MIMEBASE("application/x-lyx","icon_mime_text_generic.png", ".LYX", 128);
+MIMEBASE("application/vnd.oasis.opendocument.spreadsheet","icon_mime_text_generic.png", ".ODS", 128);
+MIMEBASE("application/vnd.oasis.opendocument.text","icon_mime_text_generic.png", ".ODT", 128);
+MIMEBASE("application/vnd.oasis.opendocument.presentation","icon_mime_text_generic.png", ".ODP", 128);
 
 MIMEBASE("application/x-object","icon_efm_file.png", "", 128);
 MIMEBASE("application/x-shellscript","icon_applications.png", "", 128);
