@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-03 12:26+0200\n"
+"POT-Creation-Date: 2009-10-12 12:03+1100\n"
 "PO-Revision-Date: 2009-10-03 12:28+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -19,13 +19,13 @@ msgid "About Enlightenment"
 msgstr "Informazioni su Enlightenment"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2547 src/bin/e_config_dialog.c:270
-#: src/bin/e_fm.c:943 src/bin/e_int_border_menu.c:218
+#: src/bin/e_fm.c:943 src/bin/e_int_border_menu.c:222
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:20
 #: src/modules/conf/e_conf.c:180
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:848
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:121
-#: src/modules/fileman/e_fwin.c:1805 src/modules/illume/e_mod_win.c:177
+#: src/modules/fileman/e_fwin.c:1824 src/modules/illume/e_mod_win.c:177
 #: src/modules/mixer/app_mixer.c:531
 msgid "Close"
 msgstr "Chiudi"
@@ -181,15 +181,15 @@ msgstr "Menù"
 msgid "Window Menu"
 msgstr "Menù finestra"
 
-#: src/bin/e_actions.c:2537 src/bin/e_int_border_menu.c:188
+#: src/bin/e_actions.c:2537 src/bin/e_int_border_menu.c:192
 msgid "Raise"
 msgstr "Eleva"
 
-#: src/bin/e_actions.c:2542 src/bin/e_int_border_menu.c:180
+#: src/bin/e_actions.c:2542 src/bin/e_int_border_menu.c:184
 msgid "Lower"
 msgstr "Abbassa"
 
-#: src/bin/e_actions.c:2552 src/bin/e_int_border_menu.c:207
+#: src/bin/e_actions.c:2552 src/bin/e_int_border_menu.c:211
 msgid "Kill"
 msgstr "Uccidi"
 
@@ -214,8 +214,8 @@ msgstr "Commuta stato iconificata"
 msgid "Fullscreen Mode Toggle"
 msgstr "Commuta stato a tutto schermo"
 
-#: src/bin/e_actions.c:2578 src/bin/e_int_border_menu.c:151
-#: src/bin/e_int_border_menu.c:353
+#: src/bin/e_actions.c:2578 src/bin/e_int_border_menu.c:153
+#: src/bin/e_int_border_menu.c:357
 msgid "Maximize"
 msgstr "Massimizza"
 
@@ -665,7 +665,7 @@ msgstr "Selettore colore"
 #: src/modules/conf_theme/e_int_config_theme_import.c:113
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:212
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:340
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:334
 #: src/modules/cpufreq/e_mod_main.c:389 src/modules/cpufreq/e_mod_main.c:416
 #: src/modules/cpufreq/e_mod_main.c:435 src/modules/connman/e_mod_main.c:778
 msgid "OK"
@@ -679,7 +679,7 @@ msgstr "OK"
 #: src/modules/conf_theme/e_int_config_theme_import.c:117
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:216
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:344
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:338
 #: src/modules/syscon/e_syscon.c:97 src/modules/connman/e_mod_main.c:779
 msgid "Cancel"
 msgstr "Annulla"
@@ -1513,7 +1513,7 @@ msgstr ""
 "Un'istanza precedente di Enlightenment è ancora\n"
 "attiva su questo schermo. Abortisco l'avvio.\n"
 
-#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:567
+#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:571
 msgid "Window Locks"
 msgstr "Blocchi finestre"
 
@@ -1560,7 +1560,7 @@ msgid "Size"
 msgstr "Dimensione"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:539 src/bin/e_int_border_prop.c:469
+#: src/bin/e_int_border_menu.c:543 src/bin/e_int_border_prop.c:469
 #: src/bin/e_int_border_remember.c:708 src/bin/e_int_shelf_config.c:639
 msgid "Stacking"
 msgstr "Livello"
@@ -1640,107 +1640,107 @@ msgstr "Stacca dal desktop"
 msgid "More..."
 msgstr "Altro..."
 
-#: src/bin/e_int_border_menu.c:167
+#: src/bin/e_int_border_menu.c:171
 msgid "Iconify"
 msgstr "Iconifica"
 
-#: src/bin/e_int_border_menu.c:364
+#: src/bin/e_int_border_menu.c:368
 msgid "Maximize vertically"
 msgstr "Massimizza verticalmente"
 
-#: src/bin/e_int_border_menu.c:375
+#: src/bin/e_int_border_menu.c:379
 msgid "Maximize horizontally"
 msgstr "Massimizza orizzontalmente"
 
-#: src/bin/e_int_border_menu.c:386
+#: src/bin/e_int_border_menu.c:390
 msgid "Unmaximize"
 msgstr "Dimensioni normali"
 
-#: src/bin/e_int_border_menu.c:487
+#: src/bin/e_int_border_menu.c:491
 msgid "Keyboard Shortcut"
 msgstr "Scorciatoia di tastiera"
 
-#: src/bin/e_int_border_menu.c:493
+#: src/bin/e_int_border_menu.c:497
 msgid "To Favorites Menu"
 msgstr "Al menù preferiti"
 
-#: src/bin/e_int_border_menu.c:498
+#: src/bin/e_int_border_menu.c:502
 msgid "To Launcher"
 msgstr "Alla barra"
 
-#: src/bin/e_int_border_menu.c:520 src/modules/conf_borders/e_mod_main.c:37
+#: src/bin/e_int_border_menu.c:524 src/modules/conf_borders/e_mod_main.c:37
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
 msgid "Border"
 msgstr "Bordo"
 
-#: src/bin/e_int_border_menu.c:529
+#: src/bin/e_int_border_menu.c:533
 msgid "Skip"
 msgstr "Salta"
 
-#: src/bin/e_int_border_menu.c:548 src/bin/e_int_border_prop.c:433
+#: src/bin/e_int_border_menu.c:552 src/bin/e_int_border_prop.c:433
 #: src/modules/conf_colors/e_int_config_color_classes.c:514
 msgid "State"
 msgstr "Stato"
 
-#: src/bin/e_int_border_menu.c:559
+#: src/bin/e_int_border_menu.c:563
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:115
 msgid "Remember"
 msgstr "Ricorda..."
 
-#: src/bin/e_int_border_menu.c:575 src/bin/e_int_border_prop.c:75
+#: src/bin/e_int_border_menu.c:579 src/bin/e_int_border_prop.c:75
 msgid "Window Properties"
 msgstr "Proprietà della finestra"
 
-#: src/bin/e_int_border_menu.c:810
+#: src/bin/e_int_border_menu.c:814
 msgid "Always On Top"
 msgstr "Sempre sulle altre"
 
-#: src/bin/e_int_border_menu.c:821
+#: src/bin/e_int_border_menu.c:825
 #: src/modules/conf_fonts/e_int_config_fonts.c:101
 #: src/modules/conf_fonts/e_int_config_fonts.c:265
 #: src/modules/temperature/e_mod_config.c:260
 msgid "Normal"
 msgstr "Normale"
 
-#: src/bin/e_int_border_menu.c:832
+#: src/bin/e_int_border_menu.c:836
 msgid "Always Below"
 msgstr "Sempre sotto le altre"
 
-#: src/bin/e_int_border_menu.c:924
+#: src/bin/e_int_border_menu.c:928
 msgid "Select Border Style"
 msgstr "Seleziona stile del bordo"
 
-#: src/bin/e_int_border_menu.c:936
+#: src/bin/e_int_border_menu.c:940
 msgid "Use E17 Default Icon Preference"
 msgstr "Usa preferenza predefinita per l'icona"
 
-#: src/bin/e_int_border_menu.c:945
+#: src/bin/e_int_border_menu.c:949
 msgid "Use Application Provided Icon "
 msgstr "Usa icona fornita dall'applicazione"
 
-#: src/bin/e_int_border_menu.c:953
+#: src/bin/e_int_border_menu.c:957
 msgid "Use User Defined Icon"
 msgstr "Usa icona impostata dall'utente"
 
-#: src/bin/e_int_border_menu.c:1014 src/bin/e_int_border_prop.c:473
+#: src/bin/e_int_border_menu.c:1018 src/bin/e_int_border_prop.c:473
 msgid "Shaded"
 msgstr "Contratta"
 
-#: src/bin/e_int_border_menu.c:1027 src/bin/e_int_border_prop.c:472
+#: src/bin/e_int_border_menu.c:1031 src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr "Appiccicata"
 
-#: src/bin/e_int_border_menu.c:1041 src/bin/e_int_border_prop.c:477
+#: src/bin/e_int_border_menu.c:1047 src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:117
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:140
 msgid "Fullscreen"
 msgstr "A tutto schermo"
 
-#: src/bin/e_int_border_menu.c:1066 src/modules/conf_winlist/e_mod_main.c:35
+#: src/bin/e_int_border_menu.c:1072 src/modules/conf_winlist/e_mod_main.c:35
 msgid "Window List"
 msgstr "Lista finestre"
 
-#: src/bin/e_int_border_menu.c:1076 src/modules/pager/e_mod_main.c:261
+#: src/bin/e_int_border_menu.c:1082 src/modules/pager/e_mod_main.c:261
 #: src/modules/pager/e_mod_main.c:2843 src/modules/pager/e_mod_main.c:2850
 #: src/modules/pager/e_mod_main.c:2857 src/modules/pager/e_mod_main.c:2859
 #: src/modules/pager/e_mod_main.c:2861 src/modules/pager/e_mod_main.c:2863
@@ -1749,7 +1749,7 @@ msgstr "Lista finestre"
 msgid "Pager"
 msgstr "Pager"
 
-#: src/bin/e_int_border_menu.c:1086
+#: src/bin/e_int_border_menu.c:1092
 msgid "Taskbar"
 msgstr "Taskbar"
 
@@ -3408,7 +3408,7 @@ msgid "Restart Applications"
 msgstr "Applicazioni per il riavvio"
 
 #: src/modules/conf_applications/e_int_config_apps.c:236
-#: src/modules/fileman/e_fwin.c:1852
+#: src/modules/fileman/e_fwin.c:1871
 msgid "All Applications"
 msgstr "Tutte le applicazioni"
 
@@ -4199,8 +4199,8 @@ msgid ""
 msgstr ""
 "Selezionare un bordo dello schermo<br>o cliccare <hilight>Chiudi</hilight> "
 "per abortire.<br><br>Si può anche specificare un ritardo<br> per questa "
-"azione usando il cursore,<br>oppure fare in modo che risponda ai<br>"
-"clic del mouse sul bordo:"
+"azione usando il cursore,<br>oppure fare in modo che risponda ai<br>clic del "
+"mouse sul bordo:"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
 msgid "Edge Binding Settings"
@@ -5627,34 +5627,34 @@ msgstr "%3.0f%%"
 msgid "Select a Picture..."
 msgstr "Selezionare un'immmagine..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:620
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:613
 msgid "Picture Import Error"
 msgstr "Errore importazione immagine"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:621
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:614
 msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr ""
 "Enlightenment non ha potuto importare l'immagine<br>a causa di errori di "
 "conversione."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:711
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:721
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:806
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:816
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:702
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:712
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:795
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:805
 msgid "Wallpaper Import Error"
 msgstr "Errore importazione sfondo"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:712
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:807
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:703
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:796
 msgid ""
 "Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr ""
 "Enlightenment non ha potuto importare lo sfondo<br>a causa di un errore di "
 "copia."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:722
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:817
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:713
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:806
 msgid ""
 "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this "
 "is a valid wallpaper?"
@@ -6418,87 +6418,87 @@ msgstr "Directory superiore"
 msgid "Other application..."
 msgstr "Altre applicazioni..."
 
-#: src/modules/fileman/e_fwin.c:1495 src/modules/fileman/e_fwin.c:1803
+#: src/modules/fileman/e_fwin.c:1495 src/modules/fileman/e_fwin.c:1822
 msgid "Open"
 msgstr "Apri"
 
-#: src/modules/fileman/e_fwin.c:1500 src/modules/fileman/e_fwin.c:1801
+#: src/modules/fileman/e_fwin.c:1500 src/modules/fileman/e_fwin.c:1820
 msgid "Open with..."
 msgstr "Apri con..."
 
-#: src/modules/fileman/e_fwin.c:1821
+#: src/modules/fileman/e_fwin.c:1840
 msgid "Known Applications"
 msgstr "Applicazioni conosciute"
 
-#: src/modules/fileman/e_fwin.c:1831
+#: src/modules/fileman/e_fwin.c:1850
 msgid "Specific Applications"
 msgstr "Applicazioni specifiche"
 
-#: src/modules/fileman/e_fwin.c:1873
+#: src/modules/fileman/e_fwin.c:1892
 msgid "Custom Command"
 msgstr "Comando personalizzato"
 
-#: src/modules/fileman/e_fwin.c:2129
+#: src/modules/fileman/e_fwin.c:2148
 #: src/modules/fileman_opinfo/e_mod_main.c:94
 #, c-format
 msgid "Copying is aborted"
 msgstr "Copiatura abortita"
 
-#: src/modules/fileman/e_fwin.c:2132
+#: src/modules/fileman/e_fwin.c:2151
 #: src/modules/fileman_opinfo/e_mod_main.c:97
 #, c-format
 msgid "Moving is aborted"
 msgstr "Spostamento abortito"
 
-#: src/modules/fileman/e_fwin.c:2135
+#: src/modules/fileman/e_fwin.c:2154
 #: src/modules/fileman_opinfo/e_mod_main.c:100
 #, c-format
 msgid "Deleting is aborted"
 msgstr "Eliminazione abortita"
 
-#: src/modules/fileman/e_fwin.c:2138
+#: src/modules/fileman/e_fwin.c:2157
 #: src/modules/fileman_opinfo/e_mod_main.c:103
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "Operazione sconosciuta dallo slave abortita"
 
-#: src/modules/fileman/e_fwin.c:2148
+#: src/modules/fileman/e_fwin.c:2167
 #: src/modules/fileman_opinfo/e_mod_main.c:113
 #, c-format
 msgid "Copy of %s done"
 msgstr "Copiatura di %s eseguita"
 
-#: src/modules/fileman/e_fwin.c:2150
+#: src/modules/fileman/e_fwin.c:2169
 #: src/modules/fileman_opinfo/e_mod_main.c:115
 #, c-format
 msgid "Copying %s (eta: %d sec)"
 msgstr "Copio %s (rimangono %d sec)"
 
-#: src/modules/fileman/e_fwin.c:2154
+#: src/modules/fileman/e_fwin.c:2173
 #: src/modules/fileman_opinfo/e_mod_main.c:119
 #, c-format
 msgid "Move of %s done"
 msgstr "Spostamento di %s eseguito"
 
-#: src/modules/fileman/e_fwin.c:2156
+#: src/modules/fileman/e_fwin.c:2175
 #: src/modules/fileman_opinfo/e_mod_main.c:121
 #, c-format
 msgid "Moving %s (eta: %d sec)"
 msgstr "Sposto %s (rimangono %d sec)"
 
-#: src/modules/fileman/e_fwin.c:2160
+#: src/modules/fileman/e_fwin.c:2179
 #: src/modules/fileman_opinfo/e_mod_main.c:125
 #, c-format
 msgid "Delete done"
 msgstr "Eliminazione eseguita"
 
-#: src/modules/fileman/e_fwin.c:2162
+#: src/modules/fileman/e_fwin.c:2181
 #: src/modules/fileman_opinfo/e_mod_main.c:127
 #, c-format
 msgid "Deleting files..."
 msgstr "Eliminazione file..."
 
-#: src/modules/fileman/e_fwin.c:2165
+#: src/modules/fileman/e_fwin.c:2184
 #: src/modules/fileman_opinfo/e_mod_main.c:130
 #, c-format
 msgid "Unknow operation from slave %d"

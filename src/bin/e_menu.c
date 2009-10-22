@@ -1273,6 +1273,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 		    {
 		       o = e_icon_add(mi->menu->evas);
 		       mi->icon_object = o;
+                       e_icon_preload_set(mi->icon, 1);
 		       e_icon_file_set(o, mi->icon);
 		       e_icon_fill_inside_set(o, 1);
 		       e_icon_size_get(mi->icon_object, &icon_w, &icon_h);

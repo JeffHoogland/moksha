@@ -909,6 +909,7 @@ e_util_icon_add(const char *path, Evas *evas)
    if (!ecore_file_exists(path)) return NULL;
 
    o = e_icon_add(evas);
+   e_icon_preload_set(o, 1);
    ext = strrchr(path, '.');
    if (ext)
      {
