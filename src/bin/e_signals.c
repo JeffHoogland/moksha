@@ -56,7 +56,15 @@ _e_gdb_print_backtrace(int fd)
    char cmd[1024];
    size_t size;
 
-   if(getenv("E_NO_GDB_BACKTRACE"))
+   // FIXME: we are in a segv'd state. do as few function calls and things
+   // depending on a known working state as possible. this also prevents the
+   // white box allowing recovery or deeper gdbing, thus until this works
+   // properly, it's disabled (properly means always reliable, always
+   // printf bt and allows e to continue and pop up box, perferably allowing
+   // debugging in the gui etc. etc.
+   return;
+   
+   if (getenv("E_NO_GDB_BACKTRACE"))
      return;
 
    size = snprintf(cmd, sizeof(cmd),
