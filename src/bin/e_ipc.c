@@ -71,7 +71,7 @@ e_ipc_init(void)
    ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_ADD, _e_ipc_cb_client_add, NULL);
    ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_DEL, _e_ipc_cb_client_del, NULL);
    ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_DATA, _e_ipc_cb_client_data, NULL);
-
+   
    e_ipc_codec_init();
 #endif   
    return 1;
@@ -131,14 +131,53 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       case E_IPC_DOMAIN_REQUEST:
       case E_IPC_DOMAIN_REPLY:
       case E_IPC_DOMAIN_EVENT:
-	switch (e->minor)
-	  {
-#define TYPE  E_WM_IN
-#include "e_ipc_handlers.h"
-#undef TYPE	
-	   default:
-	     break;
-	  }
+        switch (e->minor)
+          {
+          case E_IPC_OP_EXEC_ACTION:
+               {
+                  E_Ipc_2Str *req = NULL;
+                  
+                  if (e_ipc_codec_2str_dec(e->data, e->size, &req))
+                    {
+                       Eina_List *m = e_manager_list();
+                       int len, ok = 0;
+                       void *d;
+                       
+                       if (m)
+                         {
+                            E_Manager *man = eina_list_data_get(m);
+                            
+                            if (man)
+                              {
+                                 E_Action *act = e_action_find(req->str1);
+                                 
+                                 if (act && act->func.go)
+                                   {
+                                      act->func.go(E_OBJECT(man), req->str2);
+                                      ok = 1;
+                                   }
+                              }
+                         }
+                       
+                       d = e_ipc_codec_int_enc(ok, &len);
+                       if (d)
+                         {
+                            ecore_ipc_client_send(e->client, 
+                                                  E_IPC_DOMAIN_REPLY, 
+                                                  E_IPC_OP_EXEC_ACTION_REPLY, 
+                                                  0, 0, 0, d, len);
+                            free(d);
+                         }
+                       
+                       E_FREE(req->str1);
+                       E_FREE(req->str2);
+                       E_FREE(req);
+                    }
+               }
+             break;
+          default:
+             break;
+          }
 	break;
       case E_IPC_DOMAIN_THUMB:
 	e_thumb_client_data(e);

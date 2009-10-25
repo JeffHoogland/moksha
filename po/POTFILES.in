@@ -77,7 +77,6 @@ src/bin/e_pointer.c
 src/bin/e_popup.c
 src/bin/e_prefix.c
 src/bin/e_remember.c
-src/bin/e_remote_main.c
 src/bin/e_resist.c
 src/bin/e_screensaver.c
 src/bin/e_scrollframe.c
