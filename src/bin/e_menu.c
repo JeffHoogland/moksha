@@ -33,84 +33,83 @@ struct _E_Menu_Category
 };
 
 /* local subsystem functions */
-static void _e_menu_free                          (E_Menu *m);
-static void _e_menu_item_free                     (E_Menu_Item *mi);
-static void _e_menu_item_realize                  (E_Menu_Item *mi);
-static void _e_menu_realize                       (E_Menu *m);
-static void _e_menu_items_layout_update           (E_Menu *m);
-static void _e_menu_item_unrealize                (E_Menu_Item *mi);
-static void _e_menu_unrealize                     (E_Menu *m);
-static void _e_menu_activate_internal             (E_Menu *m, E_Zone *zone);
-static void _e_menu_deactivate_all                (void);
-static void _e_menu_deactivate_above              (E_Menu *m);
-static void _e_menu_submenu_activate              (E_Menu_Item *mi);
-static void _e_menu_submenu_deactivate            (E_Menu_Item *mi);
-static void _e_menu_reposition                    (E_Menu *m);
-static int  _e_menu_active_call                   (void);
-static int _e_menu_realize_call                   (E_Menu_Item *mi);
-static void _e_menu_item_activate_next            (void);
-static void _e_menu_item_activate_previous        (void);
-static void _e_menu_item_activate_first           (void);
-static void _e_menu_item_activate_last            (void);
-static void _e_menu_item_activate_nth             (int n);
-static void _e_menu_item_activate_char            (const char * key_compose);
-static void _e_menu_activate_next                 (void);
-static void _e_menu_activate_previous             (void);
-static void _e_menu_activate_first                (void);
-static void _e_menu_activate_last                 (void);
+static void _e_menu_free(E_Menu *m);
+static void _e_menu_item_free(E_Menu_Item *mi);
+static void _e_menu_item_realize(E_Menu_Item *mi);
+static void _e_menu_realize(E_Menu *m);
+static void _e_menu_items_layout_update(E_Menu *m);
+static void _e_menu_item_unrealize(E_Menu_Item *mi);
+static void _e_menu_unrealize(E_Menu *m);
+static void _e_menu_activate_internal(E_Menu *m, E_Zone *zone);
+static void _e_menu_deactivate_all(void);
+static void _e_menu_deactivate_above(E_Menu *m);
+static void _e_menu_submenu_activate(E_Menu_Item *mi);
+static void _e_menu_submenu_deactivate(E_Menu_Item *mi);
+static void _e_menu_reposition(E_Menu *m);
+static int _e_menu_active_call(void);
+static int _e_menu_realize_call(E_Menu_Item *mi);
+static void _e_menu_item_activate_next(void);
+static void _e_menu_item_activate_previous(void);
+static void _e_menu_item_activate_first(void);
+static void _e_menu_item_activate_last(void);
+static void _e_menu_item_activate_nth(int n);
+static void _e_menu_item_activate_char(const char * key_compose);
+static void _e_menu_activate_next(void);
+static void _e_menu_activate_previous(void);
+static void _e_menu_activate_first(void);
+static void _e_menu_activate_last(void);
 #if 0
-static void _e_menu_activate_nth                  (int n);
+static void _e_menu_activate_nth(int n);
 #endif
-static E_Menu *_e_menu_active_get                 (void);
-static E_Menu_Item *_e_menu_item_active_get       (void);
-static Eina_List * _e_menu_list_item_active_get   (void);
-static int  _e_menu_outside_bounds_get            (int xdir, int ydir);
-static void _e_menu_scroll_by                     (int dx, int dy);
-static void _e_menu_mouse_autoscroll_check        (void);
-static void _e_menu_item_ensure_onscreen          (E_Menu_Item *mi);
-static int  _e_menu_auto_place                    (E_Menu *m, int x, int y, int w, int h);
-static void _e_menu_cb_intercept_item_move        (void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
-static void _e_menu_cb_intercept_item_resize      (void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
-static void _e_menu_cb_intercept_container_move   (void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
-static void _e_menu_cb_intercept_container_resize (void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
-static void _e_menu_cb_ecore_evas_resize          (Ecore_Evas *ee);
-static void _e_menu_cb_item_in                    (void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_menu_cb_item_out                   (void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static int  _e_menu_cb_key_down                   (void *data, int type, void *event);
-static int  _e_menu_cb_key_up                     (void *data, int type, void *event);
-static int  _e_menu_cb_mouse_down                 (void *data, int type, void *event);
-static int  _e_menu_cb_mouse_up                   (void *data, int type, void *event);
-static int  _e_menu_cb_mouse_move                 (void *data, int type, void *event);
-static int  _e_menu_cb_mouse_wheel                (void *data, int type, void *event);
-static int  _e_menu_cb_scroll_animator            (void *data);
-static int  _e_menu_cb_window_shape               (void *data, int ev_type, void *ev);
-
-static void      _e_menu_cb_item_submenu_post_default  (void *data, E_Menu *m, E_Menu_Item *mi);
-static Eina_Bool _e_menu_categories_free_cb            (const Eina_Hash *hash, const void *key, void *data, void *fdata);
+static E_Menu *_e_menu_active_get(void);
+static E_Menu_Item *_e_menu_item_active_get(void);
+static Eina_List *_e_menu_list_item_active_get(void);
+static int _e_menu_outside_bounds_get(int xdir, int ydir);
+static void _e_menu_scroll_by(int dx, int dy);
+static void _e_menu_mouse_autoscroll_check(void);
+static void _e_menu_item_ensure_onscreen(E_Menu_Item *mi);
+static int _e_menu_auto_place(E_Menu *m, int x, int y, int w, int h);
+static void _e_menu_cb_intercept_item_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
+static void _e_menu_cb_intercept_item_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
+static void _e_menu_cb_intercept_container_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
+static void _e_menu_cb_intercept_container_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
+static void _e_menu_cb_ecore_evas_resize(Ecore_Evas *ee);
+static void _e_menu_cb_item_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_menu_cb_item_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static int _e_menu_cb_key_down(void *data, int type, void *event);
+static int _e_menu_cb_key_up(void *data, int type, void *event);
+static int _e_menu_cb_mouse_down(void *data, int type, void *event);
+static int _e_menu_cb_mouse_up(void *data, int type, void *event);
+static int _e_menu_cb_mouse_move(void *data, int type, void *event);
+static int _e_menu_cb_mouse_wheel(void *data, int type, void *event);
+static int _e_menu_cb_scroll_animator(void *data);
+static int _e_menu_cb_window_shape(void *data, int ev_type, void *ev);
+static void _e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi);
+static Eina_Bool _e_menu_categories_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 
 /* local subsystem globals */
-static Ecore_X_Window       _e_menu_win                 = 0;
-static Eina_List           *_e_active_menus             = NULL;
-static E_Menu_Item         *_e_active_menu_item         = NULL;
+static Ecore_X_Window _e_menu_win = 0;
+static Eina_List *_e_active_menus = NULL;
+static E_Menu_Item *_e_active_menu_item = NULL;
 /*static Eina_Hash	   *_e_menu_category_items	= NULL;*/
-static Eina_Hash	   *_e_menu_categories		= NULL;
-static Ecore_X_Time         _e_menu_activate_time       = 0;
-static int                  _e_menu_activate_floating   = 0;
-static int                  _e_menu_activate_maybe_drag = 0;
-static int                  _e_menu_activate_dragging   = 0;
-static Ecore_Animator      *_e_menu_scroll_animator     = NULL;
-static double               _e_menu_scroll_start        = 0.0;
-static int                  _e_menu_x                   = 0;
-static int                  _e_menu_y                   = 0;
-static Ecore_X_Time         _e_menu_time                = 0;
-static int                  _e_menu_autoscroll_x        = 0;
-static int                  _e_menu_autoscroll_y        = 0;
-static Ecore_Event_Handler *_e_menu_key_down_handler     = NULL;
-static Ecore_Event_Handler *_e_menu_key_up_handler       = NULL;
-static Ecore_Event_Handler *_e_menu_mouse_down_handler   = NULL;
-static Ecore_Event_Handler *_e_menu_mouse_up_handler     = NULL;
-static Ecore_Event_Handler *_e_menu_mouse_move_handler   = NULL;
-static Ecore_Event_Handler *_e_menu_mouse_wheel_handler  = NULL;
+static Eina_Hash *_e_menu_categories = NULL;
+static Ecore_X_Time _e_menu_activate_time = 0;
+static int _e_menu_activate_floating = 0;
+static int _e_menu_activate_maybe_drag = 0;
+static int _e_menu_activate_dragging = 0;
+static Ecore_Animator *_e_menu_scroll_animator = NULL;
+static double _e_menu_scroll_start = 0.0;
+static int _e_menu_x = 0;
+static int _e_menu_y = 0;
+static Ecore_X_Time _e_menu_time = 0;
+static int _e_menu_autoscroll_x = 0;
+static int _e_menu_autoscroll_y = 0;
+static Ecore_Event_Handler *_e_menu_key_down_handler = NULL;
+static Ecore_Event_Handler *_e_menu_key_up_handler = NULL;
+static Ecore_Event_Handler *_e_menu_mouse_down_handler = NULL;
+static Ecore_Event_Handler *_e_menu_mouse_up_handler = NULL;
+static Ecore_Event_Handler *_e_menu_mouse_move_handler = NULL;
+static Ecore_Event_Handler *_e_menu_mouse_wheel_handler = NULL;
 static Ecore_Event_Handler *_e_menu_window_shape_handler = NULL;
 
 static Eina_List *
@@ -141,13 +140,25 @@ _e_menu_list_free_unref(Eina_List *l)
 EAPI int
 e_menu_init(void)
 {
-   _e_menu_key_down_handler     = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,           _e_menu_cb_key_down,    NULL);
-   _e_menu_key_up_handler       = ecore_event_handler_add(ECORE_EVENT_KEY_UP,             _e_menu_cb_key_up,      NULL);
-   _e_menu_mouse_down_handler   = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,  _e_menu_cb_mouse_down,  NULL);
-   _e_menu_mouse_up_handler     = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,    _e_menu_cb_mouse_up,    NULL);
-   _e_menu_mouse_move_handler   = ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE,         _e_menu_cb_mouse_move,  NULL);
-   _e_menu_mouse_wheel_handler  = ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,        _e_menu_cb_mouse_wheel, NULL);
-   _e_menu_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,     _e_menu_cb_window_shape, NULL);
+   _e_menu_key_down_handler = 
+     ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _e_menu_cb_key_down, NULL);
+   _e_menu_key_up_handler = 
+     ecore_event_handler_add(ECORE_EVENT_KEY_UP, _e_menu_cb_key_up, NULL);
+   _e_menu_mouse_down_handler = 
+     ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, 
+                             _e_menu_cb_mouse_down, NULL);
+   _e_menu_mouse_up_handler = 
+     ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, 
+                             _e_menu_cb_mouse_up, NULL);
+   _e_menu_mouse_move_handler = 
+     ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, 
+                             _e_menu_cb_mouse_move, NULL);
+   _e_menu_mouse_wheel_handler = 
+     ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL, 
+                             _e_menu_cb_mouse_wheel, NULL);
+   _e_menu_window_shape_handler = 
+     ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE, 
+                             _e_menu_cb_window_shape, NULL);
    _e_menu_categories = eina_hash_string_superfast_new(NULL);
    return 1;
 }
@@ -291,6 +302,7 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
 	  m->cur.y = y + h - m->cur.h;
 	break;
       case E_MENU_POP_DIRECTION_RIGHT:
+	_e_menu_realize(m);
 	m->cur.x = x + w;
 	m->cur.y = y;
 	break;
@@ -1055,9 +1067,7 @@ _e_menu_free(E_Menu *m)
    E_FREE(m->shape_rects);
    m->shape_rects_num = 0;
    EINA_LIST_FOREACH_SAFE(m->items, l, l_next, mi)
-     {
-	e_object_del(E_OBJECT(mi));
-     }
+     e_object_del(E_OBJECT(mi));
    if (m->in_active_list)
      {
 	_e_active_menus = eina_list_remove(_e_active_menus, m);
@@ -1273,9 +1283,9 @@ _e_menu_item_realize(E_Menu_Item *mi)
 		    {
 		       o = e_icon_add(mi->menu->evas);
 		       mi->icon_object = o;
-                       e_icon_preload_set(mi->icon, 1);
+                       e_icon_preload_set(mi->icon_object, 1);
 		       e_icon_file_set(o, mi->icon);
-		       e_icon_fill_inside_set(o, 1);
+		       e_icon_fill_inside_set(mi->icon_object, 1);
 		       e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
 		    }
 	       }
@@ -1417,7 +1427,8 @@ _e_menu_realize(E_Menu *m)
    evas_event_freeze(m->evas);
    /* move cursor out to avoid event cycles during setup */
    evas_event_feed_mouse_in(m->evas, ecore_x_current_time_get(), NULL);
-   evas_event_feed_mouse_move(m->evas, -1000000, -1000000, ecore_x_current_time_get(), NULL);
+   evas_event_feed_mouse_move(m->evas, -1000000, -1000000, 
+                              ecore_x_current_time_get(), NULL);
    ecore_x_window_shape_events_select(m->evas_win, 1);
    ecore_evas_name_class_set(m->ecore_evas, "E", "_e_menu_window");
    ecore_evas_title_set(m->ecore_evas, "E Menu");
@@ -1433,7 +1444,7 @@ _e_menu_realize(E_Menu *m)
    if (ok)
      {
 	const char *shape_option;
-	
+
 	shape_option = edje_object_data_get(o, "shaped");
 	if (shape_option)
 	  {
@@ -1471,9 +1482,7 @@ _e_menu_realize(E_Menu *m)
    edje_object_part_swallow(m->bg_object, "e.swallow.content", m->container_object);
    
    EINA_LIST_FOREACH(m->items, l, mi)
-     {
-	_e_menu_item_realize(mi);
-     }
+     _e_menu_item_realize(mi);
 
    _e_menu_items_layout_update(m);
    e_box_thaw(m->container_object);
@@ -1713,9 +1722,7 @@ _e_menu_unrealize(E_Menu *m)
    m->shape = NULL;
    e_box_freeze(m->container_object);
    EINA_LIST_FOREACH(m->items, l, mi)
-     {
-	_e_menu_item_unrealize(mi);
-     }
+     _e_menu_item_unrealize(mi);
    if (m->header.icon) evas_object_del(m->header.icon);
    m->header.icon = NULL;
    if (m->bg_object) evas_object_del(m->bg_object);
@@ -1785,9 +1792,7 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 	  {
 	     E_Menu_Category_Callback *cb;
 	     EINA_LIST_FOREACH(cat->callbacks, l, cb)
-	       {
-		  if (cb->create) cb->create(m, cat->data, cb->data);
-	       }
+               if (cb->create) cb->create(m, cat->data, cb->data);
 	  }
      }
    m->cur.visible = 1;
@@ -1903,9 +1908,7 @@ _e_menu_reposition(E_Menu *m)
    tmp = _e_active_menus_copy_ref();
 
    EINA_LIST_FOREACH(m->items, l, mi)
-     {
-	if ((mi->active) && (mi->submenu)) _e_menu_reposition(mi->submenu);
-     }
+     if ((mi->active) && (mi->submenu)) _e_menu_reposition(mi->submenu);
 
    _e_menu_list_free_unref(tmp);
 }
@@ -1994,7 +1997,7 @@ _e_menu_item_activate_previous(void)
 	       ll = eina_list_prev(ll);
 	     mi = eina_list_data_get(ll);
 	  }
-	while (mi->separator || mi->disable);
+	while ((mi->separator) || (mi->disable));
 
 	e_menu_item_active_set(mi, 1);
 	_e_menu_item_ensure_onscreen(mi);
@@ -2125,7 +2128,7 @@ _e_menu_item_activate_char(const char * key_compose)
    /* While we don't have a label OR we don't match  AND we haven't
     * wrapped around */
    while ((!mi->label || strncasecmp(key_compose, mi->label, strlen(key_compose))) 
-	 && ll != ll_orig)
+          && ll != ll_orig)
      {
 	do
 	  {
@@ -2546,30 +2549,21 @@ _e_menu_cb_key_down(void *data, int type, void *event)
    
    ev = event;
    if (ev->window != _e_menu_win) return 1;
-   if      ((!strcmp(ev->key, "Up")) ||
-	    (!strcmp(ev->key, "KP_Up")))
+   if ((!strcmp(ev->key, "Up")) || (!strcmp(ev->key, "KP_Up")))
      _e_menu_item_activate_previous();
-   else if ((!strcmp(ev->key, "Down")) ||
-	    (!strcmp(ev->key, "KP_Down")))
+   else if ((!strcmp(ev->key, "Down")) || (!strcmp(ev->key, "KP_Down")))
      _e_menu_item_activate_next();
-   else if ((!strcmp(ev->key, "Left")) ||
-	    (!strcmp(ev->key, "KP_Left")))
+   else if ((!strcmp(ev->key, "Left")) || (!strcmp(ev->key, "KP_Left")))
      _e_menu_activate_previous();
-   else if ((!strcmp(ev->key, "Right")) ||
-	    (!strcmp(ev->key, "KP_Right")))
+   else if ((!strcmp(ev->key, "Right")) || (!strcmp(ev->key, "KP_Right")))
      _e_menu_activate_next();
-   else if ((!strcmp(ev->key, "Home")) ||
-	    (!strcmp(ev->key, "KP_Home")))
+   else if ((!strcmp(ev->key, "Home")) || (!strcmp(ev->key, "KP_Home")))
      _e_menu_item_activate_first();
-   else if ((!strcmp(ev->key, "End")) ||
-	    (!strcmp(ev->key, "KP_End")))
+   else if ((!strcmp(ev->key, "End")) || (!strcmp(ev->key, "KP_End")))
      _e_menu_item_activate_last();
    else if (!strcmp(ev->key, "space"))
-     {
-	_e_menu_active_call();
-     }
-   else if ((!strcmp(ev->key, "Return")) ||
-	    (!strcmp(ev->key, "KP_Enter")))
+     _e_menu_active_call();
+   else if ((!strcmp(ev->key, "Return")) || (!strcmp(ev->key, "KP_Enter")))
      {
 	_e_menu_active_call();
 	_e_menu_deactivate_all();
@@ -2721,8 +2715,7 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
 	     evas_event_feed_mouse_move(m->evas,
 					ev->x - m->cur.x + m->zone->x,
 					ev->y - m->cur.y + m->zone->y,
-					ev->timestamp,
-					NULL);
+					ev->timestamp, NULL);
 	  }
      }
 
