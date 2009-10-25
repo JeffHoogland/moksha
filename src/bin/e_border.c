@@ -6297,7 +6297,6 @@ _e_border_eval(E_Border *bd)
    E_Border_Pending_Move_Resize *pnd;
    int rem_change = 0;
    int send_event = 1;
-   int zx, zy, zw, zh;
 
    if (e_object_is_del(E_OBJECT(bd)))
      {
@@ -6305,12 +6304,17 @@ _e_border_eval(E_Border *bd)
 	bd->changed = 0;
 	return;
      }
-   if (bd->zone)
-     e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_NEW_BORDER, bd);
    
    if (bd->new_client)
      {
+	int zx, zy, zw, zh;
+	zx = zy = zw = zh = 0;
+
+	if (bd->zone)
+	  e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+
 	if (bd->re_manage)
 	  {
 	     bd->x -= bd->client_inset.l;
@@ -6366,10 +6370,13 @@ _e_border_eval(E_Border *bd)
 		       bd->x = att->x;
 		       bd->y = att->y;
 		    }
-		  bd->changes.pos = 1;
-		  bd->placed = 1;
+		  if (e_container_zone_at_point_get(bd->zone->container, bd->x, bd->y))
+		    {
+		       bd->changes.pos = 1;
+		       bd->placed = 1;
+		    }
 	       }
-	     else
+	     if (!bd->placed)
 	       {
 		  /* FIXME: special placement for dialogs etc. etc. etc goes
 		   * here */
