@@ -118,9 +118,12 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
      {
 	if (exec)
 	  inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
-	else
-	  inst = 
-          efreet_desktop_command_get(desktop, files, _e_exec_cb_exec, launch);
+	else 
+          {
+             inst = 
+               efreet_desktop_command_get(desktop, files, 
+                                          _e_exec_cb_exec, launch);
+          }
      }
    else
      inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
@@ -227,7 +230,8 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	return NULL;
      }
    /* reset env vars */
-   if (launch->launch_method && !desktop) e_exehist_add(launch->launch_method, exec);
+   if (launch->launch_method && !desktop) 
+     e_exehist_add(launch->launch_method, exec);
    free(exec);
    /* 20 lines at start and end, 20x100 limit on bytes at each end. */
 //// FIXME: seem to be some issues with the pipe and filling up ram - need to
