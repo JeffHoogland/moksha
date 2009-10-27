@@ -248,9 +248,8 @@ e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc)
 	  }
      }
    EINA_LIST_FREE(dlist, gcc)
-     {
-	e_object_del(E_OBJECT(gcc));
-     }
+     e_object_del(E_OBJECT(gcc));
+
    eina_hash_del(providers, cc->name, cc);
    providers_list = eina_list_remove(providers_list, cc);
 }
@@ -425,13 +424,11 @@ e_gadcon_populate(E_Gadcon *gc)
 	       cf_gcc->id = eina_stringshare_add(cc->func.id_new(cc));
 
 	     if (!cf_gcc->style)
-	       {
-		  gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
-			cc->default_style);
-	       }
+               gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
+                                   cc->default_style);
 	     else
 	       gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
-		     cf_gcc->style);
+                                   cf_gcc->style);
 
 	     if (gcc)
 	       {
@@ -501,8 +498,8 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 	     E_Gadcon_Client *gcc;
 
 	     if ((!cf_gcc->id) &&
-		 (_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)))
-	       cf_gcc->id = eina_stringshare_add(cc->func.id_new(cc));
+		 (_e_gadcon_client_class_feature_check((E_Gadcon_Client_Class *)cc, "id_new", cc->func.id_new)))
+	       cf_gcc->id = eina_stringshare_add(cc->func.id_new((E_Gadcon_Client_Class *)cc));
 
 	     gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
 				 cf_gcc->style);
@@ -1584,7 +1581,7 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
    e_gadcon_client_edit_end(gcc);
    gcc->client_class->func.shutdown(gcc);
    if (gcc->client_class->func.id_del)
-     gcc->client_class->func.id_del(gcc->client_class, gcc->cf->id);
+     gcc->client_class->func.id_del((E_Gadcon_Client_Class *)gcc->client_class, gcc->cf->id);
    gcc->gadcon->clients = eina_list_remove(gcc->gadcon->clients, gcc);
    if (gcc->o_box) evas_object_del(gcc->o_box);
    if (gcc->o_frame) evas_object_del(gcc->o_frame);
@@ -1740,7 +1737,8 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
 		     _e_gadcon_cb_drag_finished);
    if (drag) 
      {
-	o = gcc->client_class->func.icon(gcc->client_class, e_drag_evas_get(drag));
+	o = gcc->client_class->func.icon((E_Gadcon_Client_Class *)gcc->client_class, 
+                                         e_drag_evas_get(drag));
 	evas_object_geometry_get(o, NULL, NULL, &w, &h);
 	if (!o)
 	  {
