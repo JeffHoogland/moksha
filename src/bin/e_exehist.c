@@ -240,6 +240,7 @@ e_exehist_sorted_list_get(E_Exehist_Sort sort_type, int max)
 	else
 	  {
 	     const char *exe;
+
 	     EINA_LIST_FOREACH(list, m, exe)
 	       {
 		  if (!exe) continue;
@@ -437,9 +438,8 @@ _e_exehist_normalize_exe(const char *exe)
    const char *ret;
    Eina_Bool flag = EINA_FALSE;
 
-   base = basename(exe);
-   if (base[0] == '.' && base[1] == '\0')
-     return NULL;
+   base = basename((char *)exe);
+   if ((base[0] == '.') && (base[1] == '\0')) return NULL;
 
    base = strdup(base);
    cp = base;
@@ -447,31 +447,26 @@ _e_exehist_normalize_exe(const char *exe)
      {
 	if (isspace(*cp))
 	  {
-	     if (!space)
-	       space = cp;
-	     if (flag)
-	       flag = EINA_FALSE;
+	     if (!space) space = cp;
+	     if (flag) flag = EINA_FALSE;
 	  }
 	else if (!flag)
 	  {
-	    
 	     /* usually a variable in the desktop exe field */
 	     if (space && *cp == '%')
 	       flag = EINA_TRUE;
 	     else
 	       {
 		  char lower = tolower(*cp);
-		  space = NULL;
 
-		  if (lower != *cp)
-		    *cp = lower;
+		  space = NULL;
+		  if (lower != *cp) *cp = lower;
 	       }
 	  }
 	cp++;
      }
 
-   if (space)
-     *space = '\0';
+   if (space) *space = '\0';
 
    ret = eina_stringshare_add(base);
    free(base);
@@ -499,8 +494,8 @@ _e_exehist_sort_exe_cb(const void *d1, const void *d2)
    ei1 = d1;
    ei2 = d2;
 
-   if (!ei1 || !ei1->normalized_exe) return 1;
-   if (!ei2 || !ei2->normalized_exe) return -1;
+   if ((!ei1) || (!ei1->normalized_exe)) return 1;
+   if ((!ei2) || (!ei2->normalized_exe)) return -1;
 
    return strcmp(ei1->normalized_exe, ei2->normalized_exe);
 }
@@ -510,11 +505,8 @@ _e_exehist_sort_pop_cb(const void *d1, const void *d2)
 {
    const E_Exehist_Item *ei1, *ei2;
 
-   ei1 = d1;
-   ei2 = d2;
-
-   if (!ei1) return 1;
-   if (!ei2) return -1;
+   if (!(ei1 = d1)) return 1;
+   if (!(ei2 = d2)) return -1;
 
    return ei2->count - ei1->count;
 }
