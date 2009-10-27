@@ -298,11 +298,11 @@ _e_wid_disable_hook(Evas_Object *obj)
 
    wd = e_widget_data_get(obj);
    if (e_widget_disabled_get(obj))
-     edje_object_signal_emit
-     (e_scrollframe_edje_object_get(wd->o_base), "e,state,disabled", "e");
+     edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_base), 
+                             "e,state,disabled", "e");
    else
-     edje_object_signal_emit
-     (e_scrollframe_edje_object_get(wd->o_base), "e,state,enabled", "e");
+     edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_base), 
+                             "e,state,enabled", "e");
 }
 
 static void
@@ -466,7 +466,7 @@ _item_select(Item *it)
    edje_object_signal_emit(it->o_base, "e,state,selected", "e");
    edje_object_signal_emit(it->o_icon, "e,state,selected", "e");
    _item_show(it);
-   if (it->func) it->func(it->data1, it->data2);
+   if (it->func) it->func((void *)it->data1, (void *)it->data2);
 }
 
 static void
