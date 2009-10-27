@@ -362,9 +362,7 @@ e_fm2_op_registry_entry_listener_add(E_Fm2_Op_Registry_Entry *entry, void (*cb)(
    err = eina_error_get();
    if (err)
      {
-	EINA_ERROR_PERR("could not add listener: %s\n",
-			eina_error_msg_get(err));
-
+        printf("could not add listener: %s\n", eina_error_msg_get(err));
 	if (free_data) free_data((void *)data);
 	free(listener);
 	return;
