@@ -394,7 +394,7 @@ valgrind_append(char **dst, int valgrind_mode, const char *valgrind_path, const 
 }
 
 static void
-copy_args(char **dst, const char **src, size_t count)
+copy_args(char **dst, char **src, size_t count)
 {
    for (; count > 0; count--, dst++, src++)
      *dst = *src;

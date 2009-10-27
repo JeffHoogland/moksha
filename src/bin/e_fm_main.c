@@ -434,13 +434,11 @@ _e_dbus_cb_dev_add(void *data, DBusMessage *msg)
 {
    DBusError err;
    char *udi = NULL;
-   int ret;
-   
+
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
    if (!udi) return;
-//   printf("DB DEV+: %s\n", udi);
-   ret = e_hal_device_query_capability(_e_dbus_conn, udi, "storage", 
+   e_hal_device_query_capability(_e_dbus_conn, udi, "storage", 
 				       _e_dbus_cb_store_is, strdup(udi));
    e_hal_device_query_capability(_e_dbus_conn, udi, "volume",
 				 _e_dbus_cb_vol_is, strdup(udi));
