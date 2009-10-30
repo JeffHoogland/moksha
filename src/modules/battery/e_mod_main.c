@@ -589,10 +589,10 @@ _battery_hal_find_battery(void *user_data, void *reply_data, DBusError *error)
 {
    Eina_List *l;
    char *device;
-
    E_Hal_Manager_Find_Device_By_Capability_Return *ret;
    
    ret = reply_data;
+   if (!ret) return;
    if (eina_list_count(ret->strings) < 1) return;
    EINA_LIST_FOREACH(ret->strings, l, device)
      _battery_hal_battery_add(device);
@@ -606,6 +606,7 @@ _battery_hal_find_ac(void *user_data, void *reply_data, DBusError *err)
    E_Hal_Manager_Find_Device_By_Capability_Return *ret;
    
    ret = reply_data;
+   if (!ret) return;
    if (eina_list_count(ret->strings) < 1) return;
    EINA_LIST_FOREACH(ret->strings, l, device)
      _battery_hal_ac_adapter_add(device);
@@ -618,6 +619,7 @@ _battery_hal_is_battery(void *user_data, void *reply_data, DBusError *err)
    E_Hal_Device_Query_Capability_Return *ret;
    
    ret = reply_data;
+   if (!ret) return;
    if (dbus_error_is_set(err))
      {
         dbus_error_free(err);
@@ -635,6 +637,7 @@ _battery_hal_is_ac_adapter(void *user_data, void *reply_data, DBusError *err)
    E_Hal_Device_Query_Capability_Return *ret;
    
    ret = reply_data;
+   if (!ret) return;
    if (dbus_error_is_set(err))
      {
         dbus_error_free(err);
