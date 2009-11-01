@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-27 19:23+0100\n"
-"PO-Revision-Date: 2009-10-27 19:27+0100\n"
+"PO-Revision-Date: 2009-11-01 14:05+0100\n"
 "Last-Translator: quaker66 <quaker66@gmail.com>\n"
 "Language-Team: easylinux <easylinux@sachiel.eu>\n"
 "MIME-Version: 1.0\n"
@@ -4100,15 +4100,15 @@ msgstr "Časovače"
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:204
 msgid "Standby time"
-msgstr "Rezervní čas"
+msgstr "Doba pohotovostního režimu"
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:216
 msgid "Suspend time"
-msgstr "Suspend čas"
+msgstr "Doba, po které se počítač uspí"
 
 #: ../src/modules/conf_dpms/e_int_config_dpms.c:228
 msgid "Off time"
-msgstr "Čas vypnutí"
+msgstr "Doba, po které se počítač vypne"
 
 #: ../src/modules/conf_dpms/e_mod_main.c:35
 msgid "Power Management"
