@@ -89,6 +89,8 @@ _e_backtrace_int(int fd, const char *msg, size_t msg_len)
    void *array[255];
    size_t size;
 
+   return; // disable. causes hangs and problems
+   
    _e_write_safe_int(fd, msg, msg_len);
    _e_write_safe(fd, "\nBEGIN TRACEBACK\n");
    size = backtrace(array, 255);
