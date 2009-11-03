@@ -166,7 +166,7 @@ AC_SUBST(dlopen_libs)
 
 AC_MSG_CHECKING([whether to enable Files menu item])
 AC_ARG_ENABLE([files],
-   AS_HELP_STRING([--enable-files],[enable Files menu item @<:@yes@:>@]),
+   AS_HELP_STRING([--enable-files],[enable Files menu item @<:@default=yes@:>@]),
    [e_cv_enable_files=$enableval],
    AC_CACHE_VAL([e_cv_enable_files], [e_cv_enable_files=yes]))
 if test "[${e_cv_enable_files}]" = yes; then
