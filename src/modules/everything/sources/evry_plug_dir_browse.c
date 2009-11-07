@@ -229,7 +229,7 @@ _read_directory(Plugin *p)
    Data *d = E_NEW(Data, 1);
    d->plugin = p;
    d->id = thread_cnt;
-   ecore_thread_run(_scan_func, _scan_end_func, d);
+   ecore_thread_run(_scan_func, _scan_end_func, NULL, d);
 }
 
 static Evry_Plugin *
