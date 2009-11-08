@@ -915,7 +915,7 @@ _e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error)
         return;
      }
 
-/*
+#if 0
    v->mounted = 1;
 //   printf("MOUNT: %s from %s\n", v->udi, v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
@@ -923,10 +923,10 @@ _e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error)
    strcpy(buf, v->udi);
    strcpy(buf + strlen(buf) + 1, v->mount_point);
    ecore_ipc_server_send(_e_ipc_server,
-			 6/*E_IPC_DOMAIN_FM*//*,
+			 6/*E_IPC_DOMAIN_FM*/,
 			 E_FM_OP_MOUNT_DONE,
 			 0, 0, 0, buf, size);
-*/
+#endif
 }
 
 EAPI void
@@ -998,7 +998,7 @@ _e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error)
         return;
      }
 
-/*
+#if 0
    v->mounted = 0;
 //   printf("UNMOUNT: %s from %s\n", v->udi, v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
@@ -1006,10 +1006,10 @@ _e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error)
    strcpy(buf, v->udi);
    strcpy(buf + strlen(buf) + 1, v->mount_point);
    ecore_ipc_server_send(_e_ipc_server,
-			 6/*E_IPC_DOMAIN_FM*//*,
+			 6/*E_IPC_DOMAIN_FM*/,
 			 E_FM_OP_UNMOUNT_DONE,
 			 0, 0, 0, buf, size);
-*/
+#endif
 }
 
 EAPI void
