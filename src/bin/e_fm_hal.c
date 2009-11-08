@@ -221,7 +221,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 	else
 	  snprintf(label, sizeof(label), _("Unknown Volume"));
 
-	if ((label) && (label[0]))
+	if (label[0])
 	  {
 	     if (v->label) free(v->label);
 	     v->label = strdup(label);
