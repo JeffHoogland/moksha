@@ -1074,7 +1074,6 @@ e_util_zone_edge_toggle(E_Zone_Edge edge, Eina_Bool show)
 {
    
    Eina_List *l, *ll, *lll;
-   Eina_List *mans, *cons;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
