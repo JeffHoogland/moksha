@@ -7,6 +7,10 @@
 #include "e.h"
 #include <X11/Xlib.h>
 
+#ifdef HAVE_EXECINFO_H
+# include <execinfo.h> 
+#endif
+
 static volatile Eina_Bool _e_x_composite_shutdown_try = 0;
 static void
 _e_x_composite_shutdown(void)

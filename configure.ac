@@ -149,6 +149,56 @@ CPPFLAGS="${PCPPFLAGS}"
 AC_SUBST(cf_cflags)
 AC_SUBST(cf_libs)
 
+
+execinfo_libs=""
+AC_CHECK_HEADERS([execinfo.h], [have_execinfo="yes"], [have_execinfo="no"])
+if test "x${have_execinfo}" = "xyes" ; then
+   AC_MSG_CHECKING([whether backtrace_symbols_fd() is in libc])
+
+   AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM(
+         [[
+#include <stdlib.h>
+#include <execinfo.h>
+         ]],
+         [[
+backtrace_symbols_fd(NULL, 0, 0);
+         ]])],
+      [link_execinfo="yes"],
+      [link_execinfo="no"])
+
+   AC_MSG_RESULT([${link_execinfo}])
+fi
+
+if test "x${link_execinfo}" = "xno" ; then
+   AC_MSG_CHECKING([whether backtrace_symbols_fd() is in libexecinfo])
+
+   LDFLAGS_save="${LDFLAGS}"
+   LDFLAGS="${LDFLAGS} -lexecinfo"
+   AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM(
+         [[
+#include <stdlib.h>
+#include <execinfo.h>
+         ]],
+         [[
+backtrace_symbols_fd(NULL, 0, 0);
+         ]])],
+      [
+       linkexec_info="yes"
+       execinfo_libs="-lexecinfo"
+      ],
+      [linkexec_info="no"])
+   LDFLAGS="${LDFLAGS_save}"
+
+   AC_MSG_RESULT([${link_execinfo}])
+fi
+
+if test "x${link_execinfo}" = "xno" ; then
+   AC_MSG_ERROR([Cannot use backtrace_symbols_fd()])
+fi
+
+
 #ALL_LINGUAS="bg de eo es fi fr ja pl pt ru zh_CN hu sl it cs da sk sv nb nl zh_TW ko"
 #ALL_LINGUAS="bg de eo es fi fr ja pt ru zh_CN hu sl it cs da sk sv nb nl zh_TW"
 # a lot of .po's are broken
@@ -260,8 +310,7 @@ requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-job ecor
 
 AC_E_CHECK_PKG(ECORE_IMF, [ecore-imf ecore-imf-evas], [], [:])
 
-
-e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS
+e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS" "$execinfo_libs
 e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "$ECORE_IMF_CFLAGS
 e_configflags="-DUSE_E_CONFIG_H"
 
