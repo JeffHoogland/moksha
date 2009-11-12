@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-11-10 08:09+0400\n"
-"PO-Revision-Date: 2009-11-11 16:12+0400\n"
+"PO-Revision-Date: 2009-11-12 12:58+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "Enlightenment"
 
 #: src/bin/e_about.c:26
 msgid "Copyright &copy; 1999-2009, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existant yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
-msgstr "Copyright &copy ; 1999-2009, par l'Équipe de Développement de Enlightenment.<br><br>Nous espérons que vous prendrez autant de plaisir à utiliser ce logiciel que nous en avons pris lors de son développement.<br><br>Ce logiciel est fourni  « tel quel » sans aucune garantie explicite ou implicite. Ce logiciel est régi par des conditions de licence, veuillez consulter les fichiers de licence COPYING et COPYING-PLAIN installés sur votre système.<br><br>Enlightenment est en cours de <hilight>DÉVELOPPEMENT INTENSIF</hilight> et n'est donc pas stable. Beaucoup de fonctionnalités sont encore incomplètes ou non encore implémentées et peuvent contenir de nombreux bogues. Vous êtes  <hilight>PRÉVENU !</hilight>"
+msgstr "Copyright &copy ; 1999-2009, par l'Équipe de Développement de Enlightenment.<br><br>Nous espérons que vous prendrez autant de plaisir à utiliser ce logiciel que nous en prenons à le développer.<br><br>Ce logiciel est fourni « TEL QUEL », sans aucune garantie explicite ou implicite. Ce logiciel est régi par des conditions de licence, veuillez consulter les fichiers de licence COPYING et COPYING-PLAIN installés sur votre système.<br><br>Enlightenment est en cours de <hilight>DÉVELOPPEMENT INTENSIF</hilight> et n'est donc pas stable. Beaucoup de fonctionnalités sont encore incomplètes ou non encore implémentées et peuvent contenir de nombreux bogues. Vous êtes <hilight>PRÉVENU !</hilight>"
 
 #: src/bin/e_about.c:50
 msgid "<title>The Team</title>"
@@ -138,7 +138,7 @@ msgstr "Vous avez demandé à mettre votre ordinateur en veille.<br><br>Êtes-vo
 
 #: src/bin/e_actions.c:2116
 msgid "Are you sure you want to hibernate?"
-msgstr "Êtes-vous sûr de vouloir mettre en hibernation ?"
+msgstr "Êtes-vous sûr de vouloir mettre votre ordinateur en hibernation ?"
 
 #: src/bin/e_actions.c:2118
 msgid "You requested to hibernate your Computer.<br><br>Are you sure you want to suspend to disk?"
@@ -2352,11 +2352,11 @@ msgid ""
 "or is not owned by you. Please check:\n"
 "%s/enlightenment-%s\n"
 msgstr ""
-"Tentative probable de hacking IPC. Le dossier\n"
-"de socket IPC existe déjà MAIS possède des permissions\n"
-"trop laxistes (il ne doit être que lisible et éditable\n"
-"par l'utilisateur, et par personne d'autre)\n"
-"ou ne vous appartient pas. Veuillez vérifier :\n"
+"Vulnérabilité au hacking IPC. Le dossier de socket IPC\n"
+"existe déjà MAIS possède des permissions trop\n"
+"laxistes (il ne doit être que lisible et éditable\n"
+"par l'utilisateur, et par personne d'autre) ou\n"
+"ne vous appartient pas. Veuillez vérifier :\n"
 "%s/enlightenment-%s\n"
 
 #: src/bin/e_ipc.c:57
@@ -2367,8 +2367,8 @@ msgid ""
 "Please check:\n"
 "%s/enlightenment-%s\n"
 msgstr ""
-"Le dossier de socket IPC n'a pu être créé ou\n"
-"examiné.\n"
+"Le dossier de socket IPC n'a pu être créé\n"
+"ou examiné.\n"
 "Veuillez vérifier :\n"
 "%s/enlightenment-%s\n"
 
@@ -2510,8 +2510,8 @@ msgid ""
 msgstr ""
 "Enlightenment a détecté que ecore_evas ne contient pas le support\n"
 "de rendu graphique logiciel X11 de Evas. Veuillez vérifier vos\n"
-"installations de Evas et Ecore, et que ces bibliothèques supportent\n"
-"le moteur de rendu logiciel X11."
+"installations de Evas et Ecore, et que ces bibliothèques\n"
+"supportent le moteur de rendu logiciel X11."
 
 #: src/bin/e_main.c:522
 msgid ""
@@ -2522,7 +2522,7 @@ msgstr ""
 "Enlightenment a détecté que ecore_evas ne supportait pas le moteur de\n"
 "rendu graphique logiciel en mémoire dans Evas. Veuillez vérifier vos\n"
 "installations de Evas et Ecore et vérifier qu'ils supportent le\n"
-"le moteur de rendu logiciel en mémoire."
+"moteur de rendu logiciel en mémoire."
 
 #: src/bin/e_main.c:538
 #: src/bin/e_main.c:545
@@ -2800,7 +2800,7 @@ msgstr "Configuration des pop-up"
 
 #: src/bin/e_main.c:967
 msgid "Enlightenment cannot set up its popup system."
-msgstr "Enlightenment ne peut pas configurer son système de  pop-up."
+msgstr "Enlightenment ne peut pas configurer son système de pop-up."
 
 #: src/bin/e_main.c:972
 msgid "Setup Shelves"
@@ -2853,7 +2853,7 @@ msgstr "Presque fini"
 #: src/bin/e_module.c:126
 #, c-format
 msgid "There was an error loading module named: %s<br>No module named %s could be found in the<br>module search directories.<br>"
-msgstr "Une erreur est survenue lors du chargement du module nommé : %s<br>Aucun module nommé %s n'a pu être trouvé dans les<br>dossiers de modules.<br>"
+msgstr "Une erreur est survenue lors du chargement du module nommé : %s<br>Aucun module nommé %s n'a pu être trouvé dans les<br>dossiers de recherche du module.<br>"
 
 #: src/bin/e_module.c:130
 #: src/bin/e_module.c:143
@@ -2865,7 +2865,7 @@ msgstr "Erreur de chargement du module"
 #: src/bin/e_module.c:154
 #, c-format
 msgid "There was an error loading module named: %s<br>The full path to this module is:<br>%s<br>The error reported was:<br>%s<br>"
-msgstr "Erreur lors du chargement du module nommé : %s<br>Le chemin d'accès de ce module est <br>%s<br>L'erreur retournée est:<br>%s<br>"
+msgstr "Erreur lors du chargement du module nommé : %s<br>Le chemin d'accès de ce module est <br>%s<br>L'erreur retournée est :<br>%s<br>"
 
 #: src/bin/e_module.c:159
 msgid "Module does not contain all needed functions"
@@ -2874,7 +2874,7 @@ msgstr "Le module ne contient pas toutes les fonctions nécessaires"
 #: src/bin/e_module.c:173
 #, c-format
 msgid "Module API Error<br>Error initializing Module: %s<br>It requires a minimum module API version of: %i.<br>The module API advertized by Enlightenment is: %i.<br>"
-msgstr "Erreur de l'API du module<br>Erreur d'initialisation du module : %s<br>La version minimale de l'API du module requise est : %i.<br>La version de l'API retournée par Enlightenment est : %i.<br>"
+msgstr "Erreur de l'API du module.<br>Erreur d'initialisation du module : %s<br>La version minimale de l'API du module requise est : %i.<br>La version de l'API retournée par Enlightenment est : %i.<br>"
 
 #: src/bin/e_module.c:178
 #, c-format
@@ -2953,11 +2953,11 @@ msgstr "Annuler la fermeture de session"
 
 #: src/bin/e_sys.c:362
 msgid "Logout in progress"
-msgstr "Fermeture de la session en cours"
+msgstr "Fermeture de la session en cours…"
 
 #: src/bin/e_sys.c:365
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
-msgstr "Fermeture de session en cours.<br><hilight>Veuillez patienter.</hilight>"
+msgstr "Fermeture de session en cours.<br><hilight>Veuillez patienter…</hilight>"
 
 #: src/bin/e_sys.c:391
 #: src/bin/e_sys.c:452
@@ -2987,7 +2987,7 @@ msgstr "Mise en hibernation en cours.<br>Vous ne pouvez pas effectuer d'autres a
 #: src/bin/e_sys.c:433
 #: src/bin/e_sys.c:479
 msgid "EEK! This should not happen"
-msgstr "ARGH ! Ça ne devrait pas se produire."
+msgstr "ARGH ! Ça ne devrait pas se produire…"
 
 #: src/bin/e_sys.c:459
 msgid "Power off failed."
@@ -3011,7 +3011,7 @@ msgstr "Extinction"
 
 #: src/bin/e_sys.c:534
 msgid "Power off.<br><hilight>Please wait.</hilight>"
-msgstr "Extinction.<br><hilight>Veuillez patienter.</hilight>"
+msgstr "Extinction.<br><hilight>Veuillez patienter…</hilight>"
 
 #: src/bin/e_sys.c:558
 msgid "Resetting"
@@ -3019,7 +3019,7 @@ msgstr "Redémarrage"
 
 #: src/bin/e_sys.c:561
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
-msgstr "Redémarrage.<br><hilight>Veuillez patienter.</hilight>"
+msgstr "Redémarrage.<br><hilight>Veuillez patienter…</hilight>"
 
 #: src/bin/e_sys.c:584
 msgid "Suspending"
@@ -3027,7 +3027,7 @@ msgstr "Mise en veille"
 
 #: src/bin/e_sys.c:587
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
-msgstr "Mise en veille.<br><hilight>Veuillez patienter.</hilight>"
+msgstr "Mise en veille.<br><hilight>Veuillez patienter…</hilight>"
 
 #: src/bin/e_sys.c:610
 msgid "Hibernating"
@@ -3035,7 +3035,7 @@ msgstr "Mise en hibernation"
 
 #: src/bin/e_sys.c:613
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
-msgstr "Mise en hibernation.<br><hilight>Veuillez patienter.</hilight>"
+msgstr "Mise en hibernation.<br><hilight>Veuillez patienter…</hilight>"
 
 #: src/bin/e_theme_about.c:17
 msgid "About Theme"
@@ -3051,7 +3051,7 @@ msgstr "Définir le contenu de la barre d'outils"
 
 #: src/bin/e_utils.c:245
 msgid "Cannot exit - immortal windows."
-msgstr "Impossible de quitter ‑ fenêtres immortelles."
+msgstr "Impossible de quitter – fenêtres immortelles."
 
 #: src/bin/e_utils.c:246
 msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
@@ -3100,17 +3100,17 @@ msgstr "il y a %li mois"
 #: src/bin/e_utils.c:847
 #, c-format
 msgid "%li Weeks ago"
-msgstr "il y a %li semaines"
+msgstr "il y a %li semaine(s)"
 
 #: src/bin/e_utils.c:849
 #, c-format
 msgid "%li Days ago"
-msgstr "il y a %li jours"
+msgstr "il y a %li jour(s)"
 
 #: src/bin/e_utils.c:851
 #, c-format
 msgid "%li Hours ago"
-msgstr "il y a %li heures"
+msgstr "il y a %li heure(s)"
 
 #: src/bin/e_utils.c:853
 #, c-format
@@ -3432,7 +3432,7 @@ msgstr "Afficher les fenêtres des autres écrans"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:111
 msgid "Separate Groups By"
-msgstr "Séparer les groupes par"
+msgstr "Séparer les groupes (par)"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:116
 msgid "Using separator bars"
@@ -4068,15 +4068,15 @@ msgstr "Minuteurs"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:204
 msgid "Standby time"
-msgstr "Délai de mise en veille"
+msgstr "Délai avant mise en veille"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:216
 msgid "Suspend time"
-msgstr "Délai d'hibernation"
+msgstr "Délai avant hibernation"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:228
 msgid "Off time"
-msgstr "Extinction"
+msgstr "Délai avant extinction"
 
 #: src/modules/conf_dpms/e_mod_main.c:35
 msgid "Power Management"
@@ -4092,7 +4092,7 @@ msgstr "<Aucun>"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:7
 msgid "Please select an edge,<br>or click <hilight>Close</hilight> to abort.<br><br>You can either specify a delay of this<br> action using the slider, or make it<br>respond to edge clicks:"
-msgstr "Veuillez choisir un bord,<br>ou cliquer sur <hilight>Fermer</hilight> pour annuler.<br><br>Vous avez le choix entre spécifier un délai pour<br>cette action en utilisant le curseur,<br>ou l'activer par un clic:"
+msgstr "Veuillez choisir un bord,<br>ou cliquez sur <hilight>Fermer</hilight> pour annuler.<br><br>Vous avez le choix entre spécifier un délai pour<br>cette action en utilisant le curseur,<br>ou l'activer par un clic :"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
 msgid "Edge Binding Settings"
@@ -4363,7 +4363,7 @@ msgstr "Bloc de texte large"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:70
 msgid "Settings Heading"
-msgstr "En-tête de la configuration"
+msgstr "En-tête de configuration"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:71
 msgid "About Title"
@@ -4439,7 +4439,7 @@ msgstr "Texte de la liste des éléments"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:91
 msgid "List Item"
-msgstr "Élément de la liste"
+msgstr "Élément de liste"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:94
 msgid "Filemanager"
@@ -4451,7 +4451,7 @@ msgstr "Typebuf"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:97
 msgid "Desktop Icon"
-msgstr "Icone du bureau"
+msgstr "Icone de bureau"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:103
 msgid "Small Styled"
@@ -4514,7 +4514,7 @@ msgstr "Style"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:645
 msgid "Advanced Preview Text.. 我真的会写中文"
-msgstr "Aperçu avancé du texte… 我真的会写中文"
+msgstr "Aperçu avancé du texte : 我真的会写中文"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:653
 msgid "Hinting"
@@ -4620,7 +4620,7 @@ msgstr "Enlightenment n'a pas pu importer la configuration.<br><br>Êtes-vous s�
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:297
 msgid "Enlightenment was unable to import the configuration<br>due to a copy error."
-msgstr "Enlightenment n'a pas pu importer cette configuration<br>à cause d'une erreur de copie."
+msgstr "Enlightenment n'a pas pu importer cette configuration,<br>à cause d'une erreur de copie."
 
 #: src/modules/conf_imc/e_mod_main.c:34
 #: src/modules/conf_intl/e_mod_main.c:34
@@ -5230,7 +5230,7 @@ msgstr "Délai avant le changement d'écran de veille de X"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:216
 msgid "Blanking"
-msgstr "Masquer"
+msgstr "Éteindre (blanking)"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:221
 msgid "Preferred"
@@ -5297,7 +5297,7 @@ msgstr "En ligne…"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1000
 msgid "Theme Categories"
-msgstr "Catégories de thèmes"
+msgstr "Catégories des thèmes"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1018
 msgid "Assign"
@@ -5318,7 +5318,7 @@ msgstr "Erreur lors de l'importation du thème"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:275
 msgid "Enlightenment was unable to import the theme.<br><br>Are you sure this is really a valid theme?"
-msgstr "Enlightenment n'a pu importer ce thème.<br><br>Êtes-vous sûr que ce soit réellement un thème valide ?"
+msgstr "Enlightenment n'a pu importer ce thème.<br><br>Êtes-vous sûr que c'est réellement un thème valide ?"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
@@ -5505,7 +5505,7 @@ msgstr "Enlightenment n'a pu importer le fond d'écran<br>à cause d'une erreur 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:713
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:806
 msgid "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this is a valid wallpaper?"
-msgstr "Enlightenment n'a pu importer le fond d'écran.<br><br>Êtes-vous sûr que ce soit un fond d'écran valide ?"
+msgstr "Enlightenment n'a pu importer le fond d'écran.<br><br>Êtes-vous sûr que c'est un fond d'écran valide ?"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:118
 msgid "Exchange wallpapers"
@@ -5689,7 +5689,7 @@ msgstr "Un clic dans une fenêtre la focalise toujours"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:212
 msgid "Refocus last focused window on desktop switch"
-msgstr "Refocaliser la dernière fenêtre lors d'un changement de bureau"
+msgstr "Refocaliser la dernière fenêtre focalisée lors d'un changement de bureau"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:214
 msgid "Revert focus when hiding or closing a window"
@@ -6639,7 +6639,7 @@ msgstr "Bouton de capture du Pager"
 
 #: src/modules/pager/e_mod_config.c:290
 msgid "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort.<br>Or <hilight>Del</hilight> to reset the button."
-msgstr "Veuillez cliquer sur un bouton de la souris<br>Presser<hilight>Échap</hilight> pour annuler.<br>Ou<br><hilight>Suppr</hilight>pour réinitialiser le bouton."
+msgstr "Veuillez cliquer sur un bouton de la souris<br>Pressez<hilight>Échap</hilight> pour annuler.<br>Ou<br><hilight>Suppr</hilight>pour réinitialiser le bouton."
 
 #: src/modules/pager/e_mod_config.c:345
 msgid "Attetion"
@@ -6839,7 +6839,7 @@ msgstr "Barre de lancement"
 
 #: src/modules/wizard/page_040.c:27
 msgid "Select applications"
-msgstr "Sélectionner les applications"
+msgstr "Sélectionnez les applications"
 
 #: src/modules/wizard/page_050.c:28
 msgid "Desktop Files"
@@ -6982,7 +6982,7 @@ msgstr "Périphérique réseau"
 
 #: src/modules/connman/e_mod_main.c:742
 msgid "Wifi"
-msgstr "Wifi"
+msgstr "Wi-Fi"
 
 #: src/modules/connman/e_mod_main.c:745
 msgid "LAN"
