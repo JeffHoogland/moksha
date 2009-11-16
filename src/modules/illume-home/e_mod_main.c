@@ -1,11 +1,8 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-#define IL_HOME_WIN_TYPE 0xE0b0102f
-
 /* local structures */
 typedef struct _Instance Instance;
-typedef struct _Il_Home_Win Il_Home_Win;
 
 struct _Instance 
 {
@@ -13,13 +10,6 @@ struct _Instance
    Evas_Object *o_btn;
    E_Menu *menu;
    Il_Home_Win *hwin;
-};
-struct _Il_Home_Win 
-{
-   E_Object e_obj_inherit;
-
-   E_Win *win;
-   Evas_Object *o_bg;
 };
 
 /* local function prototypes */
@@ -29,11 +19,9 @@ static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 static char *_gc_label(E_Gadcon_Client_Class *cc);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
-
 static void _il_home_btn_cb_click(void *data, void *data2);
 static void _il_home_btn_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void _il_home_menu_cb_post(void *data, E_Menu *mn);
-
 static void _il_home_win_new(Il_Home_Win *hwin);
 static void _il_home_win_cb_free(Il_Home_Win *hwin);
 static void _il_home_win_cb_delete(E_Win *win);
