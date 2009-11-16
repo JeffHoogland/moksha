@@ -123,7 +123,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 static char *
 _gc_label(E_Gadcon_Client_Class *cc) 
 {
-   return "Illume-Home";
+   return _("Illume-Home");
 }
 
 static Evas_Object *
@@ -233,7 +233,7 @@ _il_home_win_new(Il_Home_Win *hwin)
      }
    evas_object_show(hwin->o_bg);
 
-   e_win_title_set(hwin->win, "Illume Home");
+   e_win_title_set(hwin->win, _("Illume Home"));
    e_win_name_class_set(hwin->win, "Illume-Home", "Home");
    e_win_size_min_set(hwin->win, 24, 24);
    e_win_resize(hwin->win, 200, 200);
