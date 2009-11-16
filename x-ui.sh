@@ -18,8 +18,6 @@ Xephyr :1 -noreset -ac -br -dpi 183 -screen 320x480x16 -host-cursor &
 #Xephyr :1 -noreset -ac -br -dpi 186 -screen 272x480 &
 #Xephyr :1 -noreset -ac -br -dpi 142 -screen 240x320 &
 
-#Xnest -ac -br -geometry 320x480 :1 &
-
 sleep 1
 export DISPLAY=:1
 unset E_RESTART E_START E_IPC_SOCKET E_START_TIME E_CONF_PROFILE
