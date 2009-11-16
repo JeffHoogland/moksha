@@ -1,4 +1,5 @@
 #include "e.h"
+#include "e_mod_main.h"
 
 #define IL_HOME_WIN_TYPE 0xE0b0102f
 
