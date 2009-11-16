@@ -239,7 +239,7 @@ SUBDIRS += connman
 endif
 
 if USE_MODULE_ILLUME
-SUBDIRS += illume illume2
+SUBDIRS += illume illume2 illume-home
 endif
 
 if USE_MODULE_SYSCON
@@ -317,6 +317,7 @@ mixer \
 connman \
 illume \
 illume2 \
+illume-home \
 syscon \
 everything \
 systray
