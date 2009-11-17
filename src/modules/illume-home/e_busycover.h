@@ -12,6 +12,7 @@ struct _E_Busycover
    E_Zone *zone;
    Evas_Object *o_base;
    Eina_List *handlers, *handles;
+   const char *themedir;
 };
 
 struct _E_Busycover_Handle 

@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_busycover.h"
 
 /* local structures */
 typedef struct _Instance Instance;
@@ -35,7 +36,8 @@ static void _il_home_desktop_run(Efreet_Desktop *desktop);
 
 /* local variables */
 static Eina_List *instances = NULL;
-static E_Module *mod;
+static E_Module *mod = NULL;
+static E_Busycover *busycover = NULL;
 
 static const E_Gadcon_Client_Class _gc_class = 
 {
@@ -51,6 +53,13 @@ EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Illume Home" };
 EAPI void *
 e_modapi_init(E_Module *m) 
 {
+   E_Zone *zone;
+
+   zone = e_util_container_zone_number_get(0, 0);
+
+   e_busycover_init();
+   busycover = e_busycover_new(zone, m->dir);
+
    mod = m;
    e_gadcon_provider_register(&_gc_class);
    return m;
@@ -61,6 +70,12 @@ e_modapi_shutdown(E_Module *m)
 {
    e_gadcon_provider_unregister(&_gc_class);
    mod = NULL;
+   if (busycover) 
+     {
+        e_object_del(E_OBJECT(busycover));
+        busycover = NULL;
+     }
+   e_busycover_shutdown();
    return 1;
 }
 
@@ -367,8 +382,77 @@ _il_home_cb_selected(void *data, Evas_Object *obj, void *event)
              if (ici->real_link) 
                {
                   desktop = efreet_desktop_get(ici->real_link);
-//                  if (desktop) _il_home_desktop_run(desktop);
+                  if (desktop) _il_home_desktop_run(desktop);
+               }
+             else printf("No Real Link: %s\n", ici->file);
+          }
+     }
+}
+
+static void 
+_il_home_desktop_run(Efreet_Desktop *desktop) 
+{
+   Eina_List *l;
+   E_Border *bd;
+   E_Exec_Instance *eins;
+   char *exe = NULL, *p;
+
+   if (!desktop) return;
+   if (!desktop->exec) return;
+   p = strchr(desktop->exec, ' ');
+   if (!p)
+     exe = strdup(desktop->exec);
+   else 
+     {
+        exe = malloc(p - desktop->exec + 1);
+        if (exe) ecore_strlcpy(exe, desktop->exec, p - desktop->exec + 1);
+     }
+   if (exe) 
+     {
+        p = strrchr(exe, '/');
+        if (p) strcpy(exe, p + 1);
+     }
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
+     {
+        if (e_exec_startup_id_pid_find(bd->client.netwm.pid, 
+                                       bd->client.netwm.startup_id) == desktop) 
+          {
+             e_border_show(bd);
+             if (exe) free(exe);
+             return;
+          }
+        if (exe) 
+          {
+             if (bd->client.icccm.command.argv) 
+               {
+                  char *pp;
+
+                  pp = strrchr(bd->client.icccm.command.argv[0], '/');
+                  if (!pp) pp = bd->client.icccm.command.argv[0];
+                  if (!strcmp(exe, pp)) 
+                    {
+                       e_border_show(bd);
+                       if (exe) free(exe);
+                       return;
+                    }
+               }
+             if ((bd->client.icccm.name) && 
+                 (!strcasecmp(bd->client.icccm.name, exe))) 
+               {
+                  e_border_show(bd);
+                  if (exe) free(exe);
+                  return;
                }
           }
+     }
+   if (exe) free(exe);
+   eins = e_exec(e_util_container_zone_number_get(0, 0), 
+                 desktop, NULL, NULL, "illume-home");
+   if (eins) 
+     {
+        char buff[PATH_MAX];
+
+        snprintf(buff, sizeof(buff), "Starting %s", desktop->name);
+        e_busycover_push(busycover, buff, NULL);
      }
 }
