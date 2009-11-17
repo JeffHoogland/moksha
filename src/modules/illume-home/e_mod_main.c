@@ -26,6 +26,12 @@ static void _il_home_win_new(Il_Home_Win *hwin);
 static void _il_home_win_cb_free(Il_Home_Win *hwin);
 static void _il_home_win_cb_delete(E_Win *win);
 static void _il_home_win_cb_resize(E_Win *win);
+static void _il_home_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
+static void _il_home_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
+static void _il_home_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
+static void _il_home_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
+static void _il_home_cb_selected(void *data, Evas_Object *obj, void *event);
+static void _il_home_desktop_run(Efreet_Desktop *desktop);
 
 /* local variables */
 static Eina_List *instances = NULL;
@@ -205,6 +211,8 @@ static void
 _il_home_win_new(Il_Home_Win *hwin) 
 {
    E_Container *con;
+   E_Fm2_Config fmc;
+   char buff[PATH_MAX];
 
    if (!hwin) return;
    if (hwin->win) 
@@ -213,6 +221,7 @@ _il_home_win_new(Il_Home_Win *hwin)
         return;
      }
 
+   snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", mod->dir);
    con = e_container_current_get(e_manager_current_get());
 
    hwin->win = e_win_new(con);
@@ -224,19 +233,61 @@ _il_home_win_new(Il_Home_Win *hwin)
 
    hwin->o_bg = edje_object_add(e_win_evas_get(hwin->win));
    if (!e_theme_edje_object_set(hwin->o_bg, "base/theme/modules/illume-home", 
-                           "modules/illume-home/window")) 
-     {
-        char buff[PATH_MAX];
-
-        snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", mod->dir);
-        edje_object_file_set(hwin->o_bg, buff, "modules/illume-home/window");
-     }
+                                "modules/illume-home/window"))
+     edje_object_file_set(hwin->o_bg, buff, "modules/illume-home/window");
+   evas_object_move(hwin->o_bg, 0, 0);
+   evas_object_resize(hwin->o_bg, hwin->win->w, hwin->win->h);
    evas_object_show(hwin->o_bg);
+
+   hwin->o_sf = e_scrollframe_add(e_win_evas_get(hwin->win));
+   e_scrollframe_single_dir_set(hwin->o_sf, 1);
+   evas_object_move(hwin->o_sf, 0, 0);
+   evas_object_resize(hwin->o_sf, hwin->win->w, hwin->win->h);
+   evas_object_show(hwin->o_sf);
+
+   e_scrollframe_custom_edje_file_set(hwin->o_sf, buff, 
+                                      "modules/illume-home/launcher/scrollview");
+
+   memset(&fmc, 0, sizeof(E_Fm2_Config));
+   fmc.view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
+   fmc.view.open_dirs_in_place = 1;
+   fmc.view.selector = 0;
+//   fmc.view.single_click = illume_cfg->launcher.single_click;
+//   fmc.view.single_click_delay = illume_cfg->launcher.single_click_delay;
+   fmc.view.no_subdir_jump = 1;
+   fmc.icon.extension.show = 0;
+   fmc.icon.icon.w = 48;
+   fmc.icon.icon.h = 48;
+   fmc.icon.fixed.w = 48;
+   fmc.icon.fixed.h = 48;
+//   fmc.icon.icon.w = illume_cfg->launcher.icon_size * e_scale / 2.0;
+//   fmc.icon.icon.h = illume_cfg->launcher.icon_size * e_scale / 2.0;
+//   fmc.icon.fixed.w = illume_cfg->launcher.icon_size * e_scale / 2.0;
+//   fmc.icon.fixed.h = illume_cfg->launcher.icon_size * e_scale / 2.0;
+   fmc.list.sort.no_case = 0;
+   fmc.list.sort.dirs.first = 1;
+   fmc.list.sort.dirs.last = 0;
+   fmc.selection.single = 1;
+   fmc.selection.windows_modifiers = 0;
+
+   hwin->o_fm = e_fm2_add(e_win_evas_get(hwin->win));
+   e_fm2_config_set(hwin->o_fm, &fmc);
+   evas_object_show(hwin->o_fm);
+   e_fm2_path_set(hwin->o_fm, "/", getenv("HOME"));
+
+   e_scrollframe_extern_pan_set(hwin->o_sf, hwin->o_fm, 
+                                _il_home_pan_set, 
+                                _il_home_pan_get, 
+                                _il_home_pan_max_get, 
+                                _il_home_pan_child_size_get);
+   evas_object_smart_callback_add(hwin->o_fm, "selected", 
+                                  _il_home_cb_selected, NULL);
 
    e_win_title_set(hwin->win, _("Illume Home"));
    e_win_name_class_set(hwin->win, "Illume-Home", "Home");
    e_win_size_min_set(hwin->win, 24, 24);
    e_win_resize(hwin->win, 200, 200);
+   e_win_centered_set(hwin->win, 1);
    e_win_show(hwin->win);
 }
 
@@ -265,7 +316,59 @@ _il_home_win_cb_resize(E_Win *win)
    if (hwin->o_bg) 
      {
         if (hwin->win)
-          evas_object_resize(hwin->o_bg, 
-                             hwin->win->w, hwin->win->h);
+          evas_object_resize(hwin->o_bg, hwin->win->w, hwin->win->h);
+     }
+   if (hwin->o_sf) 
+     {
+        if (hwin->win)
+          evas_object_resize(hwin->o_sf, hwin->win->w, hwin->win->h);
+     }
+}
+
+static void 
+_il_home_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y) 
+{
+   e_fm2_pan_set(obj, x, y);
+}
+
+static void 
+_il_home_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y) 
+{
+   e_fm2_pan_get(obj, x, y);
+}
+
+static void 
+_il_home_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y) 
+{
+   e_fm2_pan_max_get(obj, x, y);
+}
+
+static void 
+_il_home_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h) 
+{
+   e_fm2_pan_child_size_get(obj, w, h);
+}
+
+static void 
+_il_home_cb_selected(void *data, Evas_Object *obj, void *event) 
+{
+   Eina_List *selected;
+   E_Fm2_Icon_Info *ici;
+
+   selected = e_fm2_selected_list_get(obj);
+   if (!selected) return;
+   EINA_LIST_FREE(selected, ici) 
+     {
+        Efreet_Desktop *desktop;
+
+        if (ici) 
+          {
+             printf("Selected: %s\n", ici->file);
+             if (ici->real_link) 
+               {
+                  desktop = efreet_desktop_get(ici->real_link);
+//                  if (desktop) _il_home_desktop_run(desktop);
+               }
+          }
      }
 }

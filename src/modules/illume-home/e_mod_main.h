@@ -10,7 +10,7 @@ struct _Il_Home_Win
    E_Object e_obj_inherit;
 
    E_Win *win;
-   Evas_Object *o_bg;
+   Evas_Object *o_bg, *o_sf, *o_fm;
 };
 
 EAPI extern E_Module_Api e_modapi;
