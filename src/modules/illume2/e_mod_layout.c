@@ -28,7 +28,7 @@ e_mod_layout_init(E_Module *m)
 {
    Eina_List *l;
    E_Manager *man;
-   
+
    hook1 = e_border_hook_add(E_BORDER_HOOK_EVAL_POST_FETCH,
 			     _e_mod_layout_cb_hook_post_fetch, NULL);
    hook2 = e_border_hook_add(E_BORDER_HOOK_EVAL_POST_BORDER_ASSIGN,
@@ -58,7 +58,7 @@ e_mod_layout_init(E_Module *m)
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
          (E_EVENT_ZONE_MOVE_RESIZE, _cb_event_zone_move_resize, NULL));
-   
+
    illume_layout_illume_init();
 }
 
@@ -68,7 +68,7 @@ e_mod_layout_shutdown(void)
    Ecore_Event_Handler *handle;
 
    illume_layout_illume_shutdown();
-   
+
    if (hook1) e_border_hook_del(hook1);
    if (hook2) e_border_hook_del(hook2);
    if (hook3) e_border_hook_del(hook3);
@@ -136,7 +136,7 @@ Eina_Bool
 illume_border_is_dialog(E_Border *bd)
 {
    int isdialog = 0, i;
-   
+
    if (bd->client.icccm.transient_for != 0)
      isdialog = 1;
    if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
@@ -327,7 +327,7 @@ _e_mod_layout_cb_hook_post_border_assign(void *data, void *data2)
 
    pbx = bd->x; pby = bd->y; pbw = bd->w; pbh = bd->h;
    zx = bd->zone->x; zy = bd->zone->y; zw = bd->zone->w; zh = bd->zone->h;
-   
+
    bd->placed = 1;
    bd->client.e.state.centered = 0;
    if (!((bd->need_fullscreen) || (bd->fullscreen)))
@@ -374,14 +374,14 @@ _e_mod_layout_cb_hook_post_border_assign(void *data, void *data2)
         bd->remember = NULL;
      }
    bd->lock_border = 1;
-   
+
    bd->lock_client_location = 1;
    bd->lock_client_size = 1;
    bd->lock_client_desk = 1;
    bd->lock_client_sticky = 1;
    bd->lock_client_shade = 1;
    bd->lock_client_maximize = 1;
-   
+
    bd->lock_user_location = 1;
    bd->lock_user_size = 1;
    bd->lock_user_sticky = 1;
@@ -398,7 +398,7 @@ _cb_event_border_add(void *data, int type, void *event)
 {
    E_Event_Border_Add *ev;
    E_Border *bd;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    bd = ev->border;
@@ -412,7 +412,7 @@ _cb_event_border_remove(void *data, int type, void *event)
 {
    E_Event_Border_Remove *ev;
    E_Border *bd;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    bd = ev->border;
@@ -426,7 +426,7 @@ _cb_event_border_focus_in(void *data, int type, void *event)
 {
    E_Event_Border_Focus_In *ev;
    E_Border *bd;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    bd = ev->border;
@@ -440,7 +440,7 @@ _cb_event_border_focus_out(void *data, int type, void *event)
 {
    E_Event_Border_Focus_Out *ev;
    E_Border *bd;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    bd = ev->border;
@@ -453,7 +453,7 @@ static int
 _cb_event_border_show(void *data, int type, void *event)
 {
    E_Event_Border_Show *ev;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    return 1;
@@ -463,7 +463,7 @@ static int
 _cb_event_border_hide(void *data, int type, void *event)
 {
    E_Event_Border_Hide *ev;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    return 1;
@@ -473,7 +473,7 @@ static int
 _cb_event_zone_move_resize(void *data, int type, void *event)
 {
    E_Event_Zone_Move_Resize *ev;
-   
+
    ev = event;
    if ((mode) && (mode->funcs.zone_move_resize)) 
      mode->funcs.zone_move_resize(ev->zone);
