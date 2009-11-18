@@ -201,9 +201,9 @@ _il_home_btn_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
 
-   if (!(inst = data)) return;
    ev = event;
    if (ev->button == 1) return;
+   if (!(inst = data)) return;
    if ((ev->button == 3) && (!inst->menu)) 
      {
         E_Menu *mn;
