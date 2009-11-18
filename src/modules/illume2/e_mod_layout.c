@@ -4,10 +4,10 @@
 #include "e_mod_layout_illume.h"
 
 // internal calls
-static void _e_mod_layout_cb_hook_container_layout(void *data, E_Container *con);
-static void _e_mod_layout_cb_hook_post_fetch(void *data, E_Border *bd);
-static void _e_mod_layout_cb_hook_post_border_assign(void *data, E_Border *bd);
-static void _e_mod_layout_cb_hook_end(void *data, E_Border *bd);
+static void _e_mod_layout_cb_hook_container_layout(void *data, void *data2);
+static void _e_mod_layout_cb_hook_post_fetch(void *data, void *data2);
+static void _e_mod_layout_cb_hook_post_border_assign(void *data, void *data2);
+static void _e_mod_layout_cb_hook_end(void *data, void *data2);
 static int _cb_event_border_add(void *data, int type, void *event);
 static int _cb_event_border_remove(void *data, int type, void *event);
 static int _cb_event_border_focus_in(void *data, int type, void *event);
@@ -219,7 +219,9 @@ illume_border_is_notification(E_Border *bd)
 Eina_Bool
 illume_border_is_home(E_Border *bd)
 {
-   // FIXME: detect
+   if ((bd->client.icccm.name) &&
+       (strstr(bd->client.icccm.name, "Illume-Home"))) 
+     return 1;
    return 0;
 }
 
@@ -274,11 +276,13 @@ illume_border_min_get(E_Border *bd, int *mw, int *mh)
 }
 
 static void
-_e_mod_layout_cb_hook_container_layout(void *data, E_Container *con)
+_e_mod_layout_cb_hook_container_layout(void *data, void *data2)
 {
    Eina_List *l;
    E_Zone *zone;
-   
+   E_Container *con;
+
+   if (!(con = data2)) return;
    EINA_LIST_FOREACH(con->zones, l, zone)
      {
         if ((mode) && (mode->funcs.zone_layout))
@@ -287,8 +291,11 @@ _e_mod_layout_cb_hook_container_layout(void *data, E_Container *con)
 }
 
 static void
-_e_mod_layout_cb_hook_post_fetch(void *data, E_Border *bd)
+_e_mod_layout_cb_hook_post_fetch(void *data, void *data2)
 {
+   E_Border *bd;
+
+   if (!(bd = data2)) return;
    if (bd->stolen) return;
    if (bd->new_client)
      {
@@ -310,12 +317,14 @@ _e_mod_layout_cb_hook_post_fetch(void *data, E_Border *bd)
 }
 
 static void
-_e_mod_layout_cb_hook_post_border_assign(void *data, E_Border *bd)
+_e_mod_layout_cb_hook_post_border_assign(void *data, void *data2)
 {
+   E_Border *bd;
    int zx, zy, zw, zh, pbx, pby, pbw, pbh;
-   
+
+   if (!(bd = data2)) return;
    if (bd->stolen) return;
-   
+
    pbx = bd->x; pby = bd->y; pbw = bd->w; pbh = bd->h;
    zx = bd->zone->x; zy = bd->zone->y; zw = bd->zone->w; zh = bd->zone->h;
    
@@ -379,8 +388,9 @@ _e_mod_layout_cb_hook_post_border_assign(void *data, E_Border *bd)
 }
 
 static void
-_e_mod_layout_cb_hook_end(void *data, E_Border *bd)
+_e_mod_layout_cb_hook_end(void *data, void *data2)
 {
+
 }
 
 static int
