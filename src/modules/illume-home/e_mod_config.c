@@ -187,7 +187,7 @@ _il_home_config_click_changed(void *data, Evas_Object *obj, void *event)
 {
    e_widget_disabled_set(delay_label, !il_home_cfg->single_click);
    e_widget_disabled_set(delay_slider, !il_home_cfg->single_click);
-   /* launcher change */
+   _il_home_config_changed(data, obj, event);
 }
 
 static int 
