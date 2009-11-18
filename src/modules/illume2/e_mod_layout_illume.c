@@ -6,21 +6,25 @@
 static void
 _border_add(E_Border *bd)
 { // handle a border being added
+   printf("Border Add\n");
 }
 
 static void
 _border_del(E_Border *bd)
 { // handle a border being deleted
+   printf("Border Del\n");
 }
 
 static void
 _border_focus_in(E_Border *bd)
 { // do something if focus enters a window
+   printf("Border Focus In\n");
 }
 
 static void
 _border_focus_out(E_Border *bd)
 { // do something if the rfocus exits a window
+   printf("Border Focus Out\n");
 }
 
 static void
