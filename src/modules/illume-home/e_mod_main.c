@@ -1,9 +1,13 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "e_busycover.h"
+
+#define IL_HOME_WIN_TYPE 0xE0b0102f
 
 /* local structures */
 typedef struct _Instance Instance;
+typedef struct _Il_Home_Win Il_Home_Win;
 
 struct _Instance 
 {
@@ -11,6 +15,13 @@ struct _Instance
    Evas_Object *o_btn;
    E_Menu *menu;
    Il_Home_Win *hwin;
+};
+struct _Il_Home_Win 
+{
+   E_Object e_obj_inherit;
+
+   E_Win *win;
+   Evas_Object *o_bg, *o_sf, *o_fm;
 };
 
 /* local function prototypes */
@@ -23,7 +34,7 @@ static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
 static void _il_home_btn_cb_click(void *data, void *data2);
 static void _il_home_btn_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void _il_home_menu_cb_post(void *data, E_Menu *mn);
-static void _il_home_win_new(Il_Home_Win *hwin);
+static void _il_home_win_new(Instance *inst);
 static void _il_home_win_cb_free(Il_Home_Win *hwin);
 static void _il_home_win_cb_delete(E_Win *win);
 static void _il_home_win_cb_resize(E_Win *win);
@@ -33,10 +44,11 @@ static void _il_home_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 static void _il_home_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
 static void _il_home_cb_selected(void *data, Evas_Object *obj, void *event);
 static void _il_home_desktop_run(Efreet_Desktop *desktop);
+static void _il_home_apps_populate(Il_Home_Win *hwin);
+static void _il_home_apps_unpopulate(Il_Home_Win *hwin);
 
 /* local variables */
 static Eina_List *instances = NULL;
-static E_Module *mod = NULL;
 static E_Busycover *busycover = NULL;
 
 static const E_Gadcon_Client_Class _gc_class = 
@@ -55,12 +67,13 @@ e_modapi_init(E_Module *m)
 {
    E_Zone *zone;
 
+   if (!il_home_config_init(m)) return NULL;
+
    zone = e_util_container_zone_number_get(0, 0);
 
    e_busycover_init();
    busycover = e_busycover_new(zone, m->dir);
 
-   mod = m;
    e_gadcon_provider_register(&_gc_class);
    return m;
 }
@@ -68,21 +81,23 @@ e_modapi_init(E_Module *m)
 EAPI int 
 e_modapi_shutdown(E_Module *m) 
 {
-   e_gadcon_provider_unregister(&_gc_class);
-   mod = NULL;
    if (busycover) 
      {
         e_object_del(E_OBJECT(busycover));
         busycover = NULL;
      }
    e_busycover_shutdown();
+
+   e_gadcon_provider_unregister(&_gc_class);
+
+   il_home_config_shutdown();
    return 1;
 }
 
 EAPI int 
 e_modapi_save(E_Module *m) 
 {
-   return 1;
+   return il_home_config_save();
 }
 
 /* local functions */
@@ -93,7 +108,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *icon;
    char buff[PATH_MAX];
 
-   snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", mod->dir);
+   snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", 
+            il_home_cfg->mod_dir);
    inst = E_NEW(Instance, 1);
    inst->o_btn = e_widget_button_add(gc->evas, NULL, NULL, 
                                      _il_home_btn_cb_click, inst, NULL);
@@ -153,7 +169,8 @@ _gc_icon(E_Gadcon_Client_Class *cc, Evas *evas)
    Evas_Object *o;
    char buff[PATH_MAX];
 
-   snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", mod->dir);
+   snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", 
+            il_home_cfg->mod_dir);
    o = edje_object_add(evas);
    edje_object_file_set(o, buff, "icon");
    return o;
@@ -175,13 +192,7 @@ _il_home_btn_cb_click(void *data, void *data2)
    Instance *inst;
 
    if (!(inst = data)) return;
-   if (!inst->hwin) 
-     {
-        inst->hwin = E_OBJECT_ALLOC(Il_Home_Win, IL_HOME_WIN_TYPE, 
-                                    _il_home_win_cb_free);
-     }
-   if (!inst->hwin) return;
-   _il_home_win_new(inst->hwin);
+   _il_home_win_new(inst);
 }
 
 static void 
@@ -223,32 +234,48 @@ _il_home_menu_cb_post(void *data, E_Menu *mn)
 }
 
 static void 
-_il_home_win_new(Il_Home_Win *hwin) 
+_il_home_win_new(Instance *inst) 
 {
+   Il_Home_Win *hwin;
    E_Container *con;
    E_Fm2_Config fmc;
    char buff[PATH_MAX];
 
-   if (!hwin) return;
-   if (hwin->win) 
+   if ((inst->hwin) && (inst->hwin->win)) 
      {
-        e_win_show(hwin->win);
+        e_border_uniconify(inst->hwin->win->border);
+        e_border_focus_set(inst->hwin->win->border, 1, 1);
         return;
      }
 
-   snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", mod->dir);
+   if (!inst->hwin) 
+     {
+        inst->hwin = E_OBJECT_ALLOC(Il_Home_Win, IL_HOME_WIN_TYPE, 
+                                    _il_home_win_cb_free);
+     }
+   hwin = inst->hwin;
+   if (!hwin) return;
+
    con = e_container_current_get(e_manager_current_get());
 
    hwin->win = e_win_new(con);
-   if (!hwin->win) return;
+   if (!hwin->win) 
+     {
+        e_object_del(E_OBJECT(hwin));
+        inst->hwin = NULL;
+        return;
+     }
 
    e_win_delete_callback_set(hwin->win, _il_home_win_cb_delete);
    e_win_resize_callback_set(hwin->win, _il_home_win_cb_resize);
-   hwin->win->data = hwin;
+   hwin->win->data = inst;
 
+   snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", 
+            il_home_cfg->mod_dir);
    hwin->o_bg = edje_object_add(e_win_evas_get(hwin->win));
-   if (!e_theme_edje_object_set(hwin->o_bg, "base/theme/modules/illume-home", 
-                                "modules/illume-home/window"))
+   if (!e_theme_edje_object_set(hwin->o_bg, 
+                                "base/theme/modules/illume-home", 
+                                "modules/illume-home/window")) 
      edje_object_file_set(hwin->o_bg, buff, "modules/illume-home/window");
    evas_object_move(hwin->o_bg, 0, 0);
    evas_object_resize(hwin->o_bg, hwin->win->w, hwin->win->h);
@@ -267,18 +294,18 @@ _il_home_win_new(Il_Home_Win *hwin)
    fmc.view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
    fmc.view.open_dirs_in_place = 1;
    fmc.view.selector = 0;
-//   fmc.view.single_click = illume_cfg->launcher.single_click;
-//   fmc.view.single_click_delay = illume_cfg->launcher.single_click_delay;
+   fmc.view.single_click = il_home_cfg->single_click;
+   fmc.view.single_click_delay = il_home_cfg->single_click_delay;
    fmc.view.no_subdir_jump = 1;
    fmc.icon.extension.show = 0;
    fmc.icon.icon.w = 48;
    fmc.icon.icon.h = 48;
    fmc.icon.fixed.w = 48;
    fmc.icon.fixed.h = 48;
-//   fmc.icon.icon.w = illume_cfg->launcher.icon_size * e_scale / 2.0;
-//   fmc.icon.icon.h = illume_cfg->launcher.icon_size * e_scale / 2.0;
-//   fmc.icon.fixed.w = illume_cfg->launcher.icon_size * e_scale / 2.0;
-//   fmc.icon.fixed.h = illume_cfg->launcher.icon_size * e_scale / 2.0;
+   fmc.icon.icon.w = il_home_cfg->icon_size * e_scale / 2.0;
+   fmc.icon.icon.h = il_home_cfg->icon_size * e_scale / 2.0;
+   fmc.icon.fixed.w = il_home_cfg->icon_size * e_scale / 2.0;
+   fmc.icon.fixed.h = il_home_cfg->icon_size * e_scale / 2.0;
    fmc.list.sort.no_case = 0;
    fmc.list.sort.dirs.first = 1;
    fmc.list.sort.dirs.last = 0;
@@ -298,6 +325,9 @@ _il_home_win_new(Il_Home_Win *hwin)
    evas_object_smart_callback_add(hwin->o_fm, "selected", 
                                   _il_home_cb_selected, NULL);
 
+   _il_home_apps_unpopulate(hwin);
+   _il_home_apps_populate(hwin);
+
    e_win_title_set(hwin->win, _("Illume Home"));
    e_win_name_class_set(hwin->win, "Illume-Home", "Home");
    e_win_size_min_set(hwin->win, 24, 24);
@@ -309,25 +339,35 @@ _il_home_win_new(Il_Home_Win *hwin)
 static void 
 _il_home_win_cb_free(Il_Home_Win *hwin) 
 {
+   if (hwin->o_bg) evas_object_del(hwin->o_bg);
+   hwin->o_bg = NULL;
+   if (hwin->o_sf) evas_object_del(hwin->o_sf);
+   hwin->o_sf = NULL;
+   if (hwin->o_fm) evas_object_del(hwin->o_fm);
+   hwin->o_fm = NULL;
    if (hwin->win) e_object_del(E_OBJECT(hwin->win));
-   e_object_del(E_OBJECT(hwin));
+   hwin->win = NULL;
 }
 
 static void 
 _il_home_win_cb_delete(E_Win *win) 
 {
-   Il_Home_Win *hwin;
+   Instance *inst;
 
-   hwin = win->data;
-   e_object_del(E_OBJECT(hwin));
+   if (!(inst = win->data)) return;
+   _il_home_apps_unpopulate(inst->hwin);
+   e_object_del(E_OBJECT(inst->hwin));
+   inst->hwin = NULL;
 }
 
 static void 
 _il_home_win_cb_resize(E_Win *win) 
 {
+   Instance *inst;
    Il_Home_Win *hwin;
 
-   hwin = win->data;
+   if (!(inst = win->data)) return;
+   if (!(hwin = inst->hwin)) return;
    if (hwin->o_bg) 
      {
         if (hwin->win)
@@ -455,4 +495,16 @@ _il_home_desktop_run(Efreet_Desktop *desktop)
         snprintf(buff, sizeof(buff), "Starting %s", desktop->name);
         e_busycover_push(busycover, buff, NULL);
      }
+}
+
+static void 
+_il_home_apps_populate(Il_Home_Win *hwin) 
+{
+
+}
+
+static void 
+_il_home_apps_unpopulate(Il_Home_Win *hwin) 
+{
+
 }
