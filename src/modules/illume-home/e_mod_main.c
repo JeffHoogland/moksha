@@ -601,7 +601,8 @@ _il_home_desks_populate(void)
                     continue;
                   if ((desktop) && (desktop->x)) 
                     {
-                       icon = eina_hash_find(desktop->x, "X-Application-Screenshot");
+                       icon = eina_hash_find(desktop->x, 
+                                             "X-Application-Screenshot");
                        if (icon) icon = strdup(icon);
                     }
                   if ((!icon) && (subentry->icon)) 
@@ -610,7 +611,8 @@ _il_home_desks_populate(void)
                          icon = strdup(subentry->icon);
                        else
                          icon = efreet_icon_path_find(e_config->icon_theme, 
-                                                      subentry->icon, 512);
+                                                      subentry->icon, 
+                                                      il_home_cfg->icon_size);
                     }
                   if (subentry->name) label = strdup(subentry->name);
                   if (desktop)
@@ -619,27 +621,26 @@ _il_home_desks_populate(void)
                          label = strdup(desktop->generic_name);
                        if ((!icon) && (desktop->icon))
                          icon = efreet_icon_path_find(e_config->icon_theme, 
-                                                      desktop->icon, 512);
+                                                      desktop->icon, 
+                                                      il_home_cfg->icon_size);
                     }
                   if (!icon) 
                     icon = efreet_icon_path_find(e_config->icon_theme, 
-                                                 "hires.jpg", 512);
+                                                 "hires.jpg", 
+                                                 il_home_cfg->icon_size);
                   if (!icon) icon = strdup("DEFAULT");
                   if (!label) label = strdup("???");
 
                   snprintf(buff, sizeof(buff), "%s / %s", plabel, label);
                   desks = eina_list_append(desks, desktop);
                   efreet_desktop_ref(desktop);
-                  /* launcher mode */
+                  if (desktop) 
                     {
-                       if (desktop) 
-                         {
-                            e_user_dir_snprintf(buff, sizeof(buff), 
-                                                "appshadow/%04x.desktop", num);
-                            ecore_file_symlink(desktop->orig_path, buff);
-                         }
-                       num++;
+                       e_user_dir_snprintf(buff, sizeof(buff), 
+                                           "appshadow/%04x.desktop", num);
+                       ecore_file_symlink(desktop->orig_path, buff);
                     }
+                  num++;
                   if (label) free(label);
                   if (icon) free(icon);
                }
