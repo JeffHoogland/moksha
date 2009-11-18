@@ -46,6 +46,7 @@ static void _il_home_cb_selected(void *data, Evas_Object *obj, void *event);
 static void _il_home_desktop_run(Efreet_Desktop *desktop);
 static void _il_home_apps_populate(Il_Home_Win *hwin);
 static void _il_home_apps_unpopulate(Il_Home_Win *hwin);
+static void _il_home_fmc_set(Evas_Object *obj);
 
 /* local variables */
 static Eina_List *instances = NULL;
@@ -202,9 +203,9 @@ _il_home_btn_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event
    Evas_Event_Mouse_Down *ev;
 
    ev = event;
-   if (ev->button == 1) return;
+   if (ev->button != 3) return;
    if (!(inst = data)) return;
-   if ((ev->button == 3) && (!inst->menu)) 
+   if (!inst->menu) 
      {
         E_Menu *mn;
         E_Zone *zone;
@@ -238,7 +239,6 @@ _il_home_win_new(Instance *inst)
 {
    Il_Home_Win *hwin;
    E_Container *con;
-   E_Fm2_Config fmc;
    char buff[PATH_MAX];
 
    if ((inst->hwin) && (inst->hwin->win)) 
@@ -290,30 +290,8 @@ _il_home_win_new(Instance *inst)
    e_scrollframe_custom_edje_file_set(hwin->o_sf, buff, 
                                       "modules/illume-home/launcher/scrollview");
 
-   memset(&fmc, 0, sizeof(E_Fm2_Config));
-   fmc.view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
-   fmc.view.open_dirs_in_place = 1;
-   fmc.view.selector = 0;
-   fmc.view.single_click = il_home_cfg->single_click;
-   fmc.view.single_click_delay = il_home_cfg->single_click_delay;
-   fmc.view.no_subdir_jump = 1;
-   fmc.icon.extension.show = 0;
-   fmc.icon.icon.w = 48;
-   fmc.icon.icon.h = 48;
-   fmc.icon.fixed.w = 48;
-   fmc.icon.fixed.h = 48;
-   fmc.icon.icon.w = il_home_cfg->icon_size * e_scale / 2.0;
-   fmc.icon.icon.h = il_home_cfg->icon_size * e_scale / 2.0;
-   fmc.icon.fixed.w = il_home_cfg->icon_size * e_scale / 2.0;
-   fmc.icon.fixed.h = il_home_cfg->icon_size * e_scale / 2.0;
-   fmc.list.sort.no_case = 0;
-   fmc.list.sort.dirs.first = 1;
-   fmc.list.sort.dirs.last = 0;
-   fmc.selection.single = 1;
-   fmc.selection.windows_modifiers = 0;
-
    hwin->o_fm = e_fm2_add(e_win_evas_get(hwin->win));
-   e_fm2_config_set(hwin->o_fm, &fmc);
+   _il_home_fmc_set(hwin->o_fm);
    evas_object_show(hwin->o_fm);
    e_fm2_path_set(hwin->o_fm, "/", getenv("HOME"));
 
@@ -507,4 +485,34 @@ static void
 _il_home_apps_unpopulate(Il_Home_Win *hwin) 
 {
 
+}
+
+static void 
+_il_home_fmc_set(Evas_Object *obj) 
+{
+   E_Fm2_Config fmc;
+
+   if (!obj) return;
+   memset(&fmc, 0, sizeof(E_Fm2_Config));
+   fmc.view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
+   fmc.view.open_dirs_in_place = 1;
+   fmc.view.selector = 0;
+   fmc.view.single_click = il_home_cfg->single_click;
+   fmc.view.single_click_delay = il_home_cfg->single_click_delay;
+   fmc.view.no_subdir_jump = 1;
+   fmc.icon.extension.show = 0;
+   fmc.icon.icon.w = 48;
+   fmc.icon.icon.h = 48;
+   fmc.icon.fixed.w = 48;
+   fmc.icon.fixed.h = 48;
+   fmc.icon.icon.w = il_home_cfg->icon_size * e_scale / 2.0;
+   fmc.icon.icon.h = il_home_cfg->icon_size * e_scale / 2.0;
+   fmc.icon.fixed.w = il_home_cfg->icon_size * e_scale / 2.0;
+   fmc.icon.fixed.h = il_home_cfg->icon_size * e_scale / 2.0;
+   fmc.list.sort.no_case = 0;
+   fmc.list.sort.dirs.first = 1;
+   fmc.list.sort.dirs.last = 0;
+   fmc.selection.single = 1;
+   fmc.selection.windows_modifiers = 0;
+   e_fm2_config_set(obj, &fmc);
 }
