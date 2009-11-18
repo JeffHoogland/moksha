@@ -51,10 +51,9 @@ _web_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 static void
 _web_pan_child_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 {
-   Evas_Coord tw, th, vw, vh;
+   Evas_Coord tw, th;
 
    evas_object_size_hint_min_get(obj, &tw, &th);
-   evas_object_geometry_get(obj, NULL, NULL, &vw, &vh);
    if (x) *x = tw;
    if (y) *y = th;
 }
