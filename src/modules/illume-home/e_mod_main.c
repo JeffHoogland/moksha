@@ -44,12 +44,15 @@ static void _il_home_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 static void _il_home_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
 static void _il_home_cb_selected(void *data, Evas_Object *obj, void *event);
 static void _il_home_desktop_run(Efreet_Desktop *desktop);
-static void _il_home_apps_populate(Il_Home_Win *hwin);
-static void _il_home_apps_unpopulate(Il_Home_Win *hwin);
+static void _il_home_apps_populate(void);
+static void _il_home_apps_unpopulate(void);
 static void _il_home_fmc_set(Evas_Object *obj);
+static void _il_home_desks_populate(void);
 
 /* local variables */
 static Eina_List *instances = NULL;
+static Eina_List *desks = NULL;
+static Eina_List *sels = NULL;
 static E_Busycover *busycover = NULL;
 
 static const E_Gadcon_Client_Class _gc_class = 
@@ -303,8 +306,8 @@ _il_home_win_new(Instance *inst)
    evas_object_smart_callback_add(hwin->o_fm, "selected", 
                                   _il_home_cb_selected, NULL);
 
-   _il_home_apps_unpopulate(hwin);
-   _il_home_apps_populate(hwin);
+   _il_home_apps_unpopulate();
+   _il_home_apps_populate();
 
    e_win_title_set(hwin->win, _("Illume Home"));
    e_win_name_class_set(hwin->win, "Illume-Home", "Home");
@@ -333,7 +336,7 @@ _il_home_win_cb_delete(E_Win *win)
    Instance *inst;
 
    if (!(inst = win->data)) return;
-   _il_home_apps_unpopulate(inst->hwin);
+//   _il_home_apps_unpopulate();
    e_object_del(E_OBJECT(inst->hwin));
    inst->hwin = NULL;
 }
@@ -476,15 +479,52 @@ _il_home_desktop_run(Efreet_Desktop *desktop)
 }
 
 static void 
-_il_home_apps_populate(Il_Home_Win *hwin) 
+_il_home_apps_populate(void) 
 {
+   Eina_List *l;
+   Instance *inst;
+   char buff[PATH_MAX];
 
+   e_user_dir_concat_static(buff, "appshadow");
+   ecore_file_mkpath(buff);
+
+   _il_home_desks_populate();
+
+   EINA_LIST_FOREACH(instances, l, inst) 
+     {
+        if (!inst->hwin) continue;
+        if (!inst->hwin->win) continue;
+        if (!inst->hwin->o_fm) continue;
+        _il_home_fmc_set(inst->hwin->o_fm);
+        e_fm2_path_set(inst->hwin->o_fm, NULL, buff);
+     }
 }
 
 static void 
-_il_home_apps_unpopulate(Il_Home_Win *hwin) 
+_il_home_apps_unpopulate(void) 
 {
+   Efreet_Desktop *desktop;
+   Eina_List *files;
+   char buff[PATH_MAX], *file;
+   size_t len;
 
+   EINA_LIST_FREE(desks, desktop)
+     efreet_desktop_free(desktop);
+
+   len = e_user_dir_concat_static(buff, "appshadow");
+   if ((len + 2) >= sizeof(buff)) return;
+
+   files = ecore_file_ls(buff);
+   buff[len] = '/';
+   len++;
+
+   EINA_LIST_FREE(files, file) 
+     {
+        if (ecore_strlcpy(buff + len, file, sizeof(buff) - len) >= sizeof(buff) - len)
+          continue;
+        ecore_file_unlink(buff);
+        free(file);
+     }
 }
 
 static void 
@@ -515,4 +555,95 @@ _il_home_fmc_set(Evas_Object *obj)
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(obj, &fmc);
+}
+
+void 
+_il_home_win_cfg_update(void) 
+{
+   _il_home_apps_unpopulate();
+   _il_home_apps_populate();
+}
+
+static void 
+_il_home_desks_populate(void) 
+{
+   Efreet_Menu *menu;
+
+   menu = efreet_menu_get();
+   if (menu) 
+     {
+        Eina_List *l, *ll;
+        Efreet_Desktop *desktop;
+        char *label, *icon, *plabel, buff[PATH_MAX];
+        Efreet_Menu *entry, *subentry;
+        Eina_List *settings, *sys, *kbd;
+        int num = 0;
+
+        settings = efreet_util_desktop_category_list("Settings");
+        sys = efreet_util_desktop_category_list("System");
+        kbd = efreet_util_desktop_category_list("Keyboard");
+        EINA_LIST_FOREACH(menu->entries, l, entry) 
+          {
+             if (entry->type != EFREET_MENU_ENTRY_MENU) continue;
+             desktop = entry->desktop;
+             plabel = NULL;
+             if (entry->name) plabel = strdup(entry->name);
+             if (!plabel) plabel = strdup("???");
+             EINA_LIST_FOREACH(entry->entries, ll, subentry) 
+               {
+                  if (subentry->type != EFREET_MENU_ENTRY_DESKTOP) continue;
+                  label = icon = NULL;
+                  if (!(desktop = subentry->desktop)) continue;
+                  if ((settings) && (sys) && 
+                      (eina_list_data_find(settings, desktop)) && 
+                      (eina_list_data_find(sys, desktop))) continue;
+                  if ((kbd) && (eina_list_data_find(kbd, desktop)))
+                    continue;
+                  if ((desktop) && (desktop->x)) 
+                    {
+                       icon = eina_hash_find(desktop->x, "X-Application-Screenshot");
+                       if (icon) icon = strdup(icon);
+                    }
+                  if ((!icon) && (subentry->icon)) 
+                    {
+                       if (subentry->icon[0] == '/')
+                         icon = strdup(subentry->icon);
+                       else
+                         icon = efreet_icon_path_find(e_config->icon_theme, 
+                                                      subentry->icon, 512);
+                    }
+                  if (subentry->name) label = strdup(subentry->name);
+                  if (desktop)
+                    {
+                       if (!label)
+                         label = strdup(desktop->generic_name);
+                       if ((!icon) && (desktop->icon))
+                         icon = efreet_icon_path_find(e_config->icon_theme, 
+                                                      desktop->icon, 512);
+                    }
+                  if (!icon) 
+                    icon = efreet_icon_path_find(e_config->icon_theme, 
+                                                 "hires.jpg", 512);
+                  if (!icon) icon = strdup("DEFAULT");
+                  if (!label) label = strdup("???");
+
+                  snprintf(buff, sizeof(buff), "%s / %s", plabel, label);
+                  desks = eina_list_append(desks, desktop);
+                  efreet_desktop_ref(desktop);
+                  /* launcher mode */
+                    {
+                       if (desktop) 
+                         {
+                            e_user_dir_snprintf(buff, sizeof(buff), 
+                                                "appshadow/%04x.desktop", num);
+                            ecore_file_symlink(desktop->orig_path, buff);
+                         }
+                       num++;
+                    }
+                  if (label) free(label);
+                  if (icon) free(icon);
+               }
+             if (plabel) free(plabel);
+          }
+     }
 }
