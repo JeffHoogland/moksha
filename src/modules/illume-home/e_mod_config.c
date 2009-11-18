@@ -176,7 +176,6 @@ _il_home_config_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
 static void 
 _il_home_config_changed(void *data, Evas_Object *obj, void *event) 
 {
-   printf("Il Home Config Changed\n");
    if (_il_home_config_change_timer) 
      ecore_timer_del(_il_home_config_change_timer);
    _il_home_config_change_timer = 
