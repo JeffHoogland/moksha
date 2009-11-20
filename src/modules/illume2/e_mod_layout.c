@@ -219,9 +219,10 @@ illume_border_is_notification(E_Border *bd)
 Eina_Bool
 illume_border_is_home(E_Border *bd)
 {
-   if ((bd->client.icccm.name) &&
-       (strstr(bd->client.icccm.name, "Illume-Home")) ||
-       (strstr(bd->client.icccm.title, "Home")))
+   if (((bd->client.icccm.name) && 
+        (strstr(bd->client.icccm.name, "Illume-Home"))) || 
+       ((bd->client.icccm.title) && 
+        (strstr(bd->client.icccm.title, "Home"))))
      return 1;
    return 0;
 }
