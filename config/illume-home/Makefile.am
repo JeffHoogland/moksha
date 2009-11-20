@@ -9,7 +9,7 @@ EXTRA_DIST = \
 	module.dropshadow.src \
 	module.pager.src
 
-filesdir = $(datadir)/enlightenment/data/config/illume
+filesdir = $(datadir)/enlightenment/data/config/illume-home
 files_DATA = \
         profile.desktop \
         icon.png \
@@ -20,7 +20,7 @@ files_DATA = \
 
 %.cfg: %.src
 	$(EET_EET) -e \
-	$(top_builddir)/config/illume/$@ config \
+	$(top_builddir)/config/illume-home/$@ config \
 	$< 1
 
 clean-local:
