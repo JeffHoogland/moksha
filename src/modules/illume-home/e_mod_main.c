@@ -419,13 +419,11 @@ _il_home_cb_selected(void *data, Evas_Object *obj, void *event)
 
         if (ici) 
           {
-             printf("Selected: %s\n", ici->file);
              if (ici->real_link) 
                {
                   desktop = efreet_desktop_get(ici->real_link);
                   if (desktop) _il_home_desktop_run(desktop);
                }
-             else printf("No Real Link: %s\n", ici->file);
           }
      }
 }
