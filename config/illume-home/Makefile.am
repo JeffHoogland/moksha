@@ -7,7 +7,8 @@ EXTRA_DIST = \
         icon.png \
 	module.battery.src \
 	module.dropshadow.src \
-	module.pager.src
+	module.pager.src \
+	module.illume-home.src
 
 filesdir = $(datadir)/enlightenment/data/config/illume-home
 files_DATA = \
@@ -16,7 +17,8 @@ files_DATA = \
 	e.cfg \
 	module.battery.cfg \
 	module.dropshadow.cfg \
-	module.pager.cfg
+	module.pager.cfg \
+	module.illume-home.cfg
 
 %.cfg: %.src
 	$(EET_EET) -e \
