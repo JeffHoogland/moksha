@@ -15,6 +15,13 @@ typedef enum _E_Kbd_Int_Type
    E_KBD_INT_TYPE_PASSWORD = (1 << 6)
 } E_Kbd_Int_Type;
 
+/* The natural text direction of the keyboard */
+typedef enum _E_kbd_Int_Direction
+{
+	E_KBD_INT_DIRECTION_LTR = (1 << 0),
+	E_KBD_INT_DIRECTION_RTL = (1 << 1)
+} E_Kbd_Int_Direction;
+
 typedef struct _E_Kbd_Int           E_Kbd_Int;
 typedef struct _E_Kbd_Int_Key       E_Kbd_Int_Key;
 typedef struct _E_Kbd_Int_Key_State E_Kbd_Int_Key_State;
@@ -34,6 +41,7 @@ struct _E_Kbd_Int
       const char       *file;
       int               w, h;
       int               fuzz;
+      int		direction;
       E_Kbd_Int_Type    type;
       Eina_List        *keys;
       E_Kbd_Int_Key    *pressed;
