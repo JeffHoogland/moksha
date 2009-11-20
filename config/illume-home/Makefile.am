@@ -5,6 +5,7 @@ EET_EET = @eet_eet@
 EXTRA_DIST = \
         profile.desktop \
         icon.png \
+        e.src \
 	module.battery.src \
 	module.dropshadow.src \
 	module.pager.src \
