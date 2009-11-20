@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
-MODULE = illume-kbd
+MODULE = illume-keyboard
 
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
