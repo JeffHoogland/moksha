@@ -100,12 +100,17 @@ e_modapi_init(E_Module *m)
 EAPI int 
 e_modapi_shutdown(E_Module *m) 
 {
+   Ecore_Event_Handler *handle;
+
    if (busycover) 
      {
         e_object_del(E_OBJECT(busycover));
         busycover = NULL;
      }
    e_busycover_shutdown();
+
+   EINA_LIST_FREE(handlers, handle)
+     ecore_event_handler_del(handle);
 
    e_gadcon_provider_unregister(&_gc_class);
 
