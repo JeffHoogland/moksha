@@ -1,4 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
+SUBDIRS = keyboards
 MODULE = illume-keyboard
 
 # data files for the module
