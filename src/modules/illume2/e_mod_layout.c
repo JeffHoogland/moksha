@@ -220,7 +220,8 @@ Eina_Bool
 illume_border_is_home(E_Border *bd)
 {
    if ((bd->client.icccm.name) &&
-       (strstr(bd->client.icccm.name, "Illume-Home"))) 
+       (strstr(bd->client.icccm.name, "Illume-Home")) ||
+       (strstr(bd->client.icccm.title, "Home")))
      return 1;
    return 0;
 }
