@@ -41,21 +41,25 @@ module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
+#Splash screen
 page_000_la_SOURCES      = page_000.c
 page_000_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_000_la_LDFLAGS      = -module -avoid-version
 page_000_la_DEPENDENCIES = $(top_builddir)/config.h
 
+#Choose language
 page_010_la_SOURCES      = page_010.c
 page_010_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_010_la_LDFLAGS      = -module -avoid-version
 page_010_la_DEPENDENCIES = $(top_builddir)/config.h
 
+#Choose Profile
 page_020_la_SOURCES      = page_020.c
 page_020_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_020_la_LDFLAGS      = -module -avoid-version
 page_020_la_DEPENDENCIES = $(top_builddir)/config.h
 
+#Choose Menus
 page_030_la_SOURCES      = page_030.c
 page_030_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_030_la_LDFLAGS      = -module -avoid-version
@@ -76,11 +80,13 @@ page_030_la_DEPENDENCIES = $(top_builddir)/config.h
 #page_060_la_LDFLAGS      = -module -avoid-version
 #page_060_la_DEPENDENCIES = $(top_builddir)/config.h
 
+#Choose appliactions
 page_070_la_SOURCES      = page_070.c
 page_070_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_070_la_LDFLAGS      = -module -avoid-version
 page_070_la_DEPENDENCIES = $(top_builddir)/config.h
 
+#Choose quick launch
 page_080_la_SOURCES      = page_080.c
 page_080_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_080_la_LDFLAGS      = -module -avoid-version
