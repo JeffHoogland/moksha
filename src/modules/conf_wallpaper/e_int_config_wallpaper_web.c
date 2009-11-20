@@ -26,7 +26,9 @@ _web_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    evas_object_geometry_get(obj, NULL, NULL, NULL, &vh);
 
    if (y < 0) y = 0;
-   if (y > th - vh) y = th - vh;
+   printf("Web Pan Set: %d %d\n", th, vh);
+   if (y > vh - th) y = vh - th;
+   printf("Web Pan Offset: %d\n", y);
    exchange_smart_object_offset_set(obj, 0, y);
 }
 
