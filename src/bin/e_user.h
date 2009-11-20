@@ -6,8 +6,6 @@
 #ifndef E_USER_H
 #define E_USER_H
 
-#include <Eina.h>
-
 EAPI const char *e_user_homedir_get(void);
 EAPI size_t      e_user_homedir_concat_len(char *dst, size_t size, const char *path, size_t path_len);
 EAPI size_t      e_user_homedir_snprintf(char *dst, size_t size, const char *fmt, ...) EINA_PRINTF(3, 4);
