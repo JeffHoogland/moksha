@@ -48,12 +48,17 @@ static void _il_home_apps_populate(void);
 static void _il_home_apps_unpopulate(void);
 static void _il_home_fmc_set(Evas_Object *obj);
 static void _il_home_desks_populate(void);
+static int _il_home_desktop_list_change(void *data, int type, void *event);
+static int _il_home_desktop_change(void *data, int type, void *event);
+static int _il_home_update_deferred(void *data);
 
 /* local variables */
 static Eina_List *instances = NULL;
 static Eina_List *desks = NULL;
 static Eina_List *sels = NULL;
+static Eina_List *handlers = NULL;
 static E_Busycover *busycover = NULL;
+static Ecore_Timer *defer = NULL;
 
 static const E_Gadcon_Client_Class _gc_class = 
 {
@@ -77,6 +82,16 @@ e_modapi_init(E_Module *m)
 
    e_busycover_init();
    busycover = e_busycover_new(zone, m->dir);
+
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(EFREET_EVENT_DESKTOP_LIST_CHANGE, 
+                                              _il_home_desktop_list_change, 
+                                              NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, 
+                                              _il_home_desktop_change, NULL));
 
    e_gadcon_provider_register(&_gc_class);
    return m;
@@ -648,3 +663,29 @@ _il_home_desks_populate(void)
           }
      }
 }
+
+static int 
+_il_home_desktop_list_change(void *data, int type, void *event) 
+{
+   if (defer) ecore_timer_del(defer);
+   defer = ecore_timer_add(1.0, _il_home_update_deferred, NULL);
+   return 1;
+}
+
+static int 
+_il_home_desktop_change(void *data, int type, void *event) 
+{
+   if (defer) ecore_timer_del(defer);
+   defer = ecore_timer_add(1.0, _il_home_update_deferred, NULL);
+   return 1;
+}
+
+static int 
+_il_home_update_deferred(void *data) 
+{
+   _il_home_apps_unpopulate();
+   _il_home_apps_populate();
+   defer = NULL;
+   return 0;
+}
+
