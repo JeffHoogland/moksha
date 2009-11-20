@@ -645,6 +645,7 @@ config/minimalist/Makefile
 config/scaleable/Makefile
 config/netbook/Makefile
 config/illume/Makefile
+config/illume-home/Makefile
 po/Makefile.in
 ])
 
