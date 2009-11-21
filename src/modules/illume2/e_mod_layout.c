@@ -77,7 +77,8 @@ e_mod_layout_shutdown(void)
    hook2 = NULL;
    hook3 = NULL;
    hook4 = NULL;
-   EINA_LIST_FREE(handlers, handle) ecore_event_handler_del(handle);
+   EINA_LIST_FREE(handlers, handle) 
+     ecore_event_handler_del(handle);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -171,9 +172,7 @@ illume_border_is_keyboard(E_Border *bd)
          (((bd->client.icccm.title) && (!strcmp(bd->client.icccm.title, "Keyboard"))) ||
           ((bd->client.icccm.name) && ((!strcmp(bd->client.icccm.name, "multitap-pad")))))
          && (bd->client.netwm.state.skip_taskbar)
-         && (bd->client.netwm.state.skip_pager)
-         )
-       )
+         && (bd->client.netwm.state.skip_pager))) 
      return 1;
    return 0;
 }

@@ -23,7 +23,9 @@ module_la_SOURCES      = e_mod_main.c \
                          e_mod_layout.h \
 		         e_mod_layout.c \
                          e_mod_layout_illume.c \
-                         e_mod_layout_illume.h
+                         e_mod_layout_illume.h \
+                         e_kbd.h \
+                         e_kbd.c
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
