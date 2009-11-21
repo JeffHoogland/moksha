@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
-MODULE = illume
+MODULE = illume-keyboard
 
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)/dicts
 files_DATA = \
