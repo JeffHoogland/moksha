@@ -21,10 +21,14 @@ pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH
 pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
-                         e_kbd.h \
-                         e_kbd.c \
-                         e_kbd_dbus.h \
-                         e_kbd_dbus.c
+                         e_kbd_int.c \
+                         e_kbd_int.h \
+                         e_kbd_dict.c \
+                         e_kbd_dict.h \
+                         e_kbd_buf.c \
+                         e_kbd_buf.h \
+                         e_kbd_send.c \
+                         e_kbd_send.h
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
