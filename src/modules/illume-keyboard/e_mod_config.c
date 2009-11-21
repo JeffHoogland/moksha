@@ -63,6 +63,8 @@ il_kbd_config_init(E_Module *m)
 EAPI int 
 il_kbd_config_shutdown(void) 
 {
+   il_kbd_cfg->cfd = NULL;
+
    e_configure_registry_item_del("illume/keyboard");
    e_configure_registry_category_del("illume");
 
@@ -117,7 +119,7 @@ _il_kbd_config_create(E_Config_Dialog *cfd)
 static void 
 _il_kbd_config_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-
+   il_kbd_cfg->cfd = NULL;
 }
 
 static Evas_Object *

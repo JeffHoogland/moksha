@@ -119,7 +119,7 @@ static void
 _il_home_config_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    il_home_cfg->cfd = NULL;
-   /* win cfg update */
+   il_home_win_cfg_update();
 }
 
 static Evas_Object *

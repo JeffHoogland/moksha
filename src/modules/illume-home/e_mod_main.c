@@ -124,6 +124,13 @@ e_modapi_save(E_Module *m)
    return il_home_config_save();
 }
 
+EAPI void 
+il_home_win_cfg_update(void) 
+{
+   _il_home_apps_unpopulate();
+   _il_home_apps_populate();
+}
+
 /* local functions */
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style) 
@@ -356,7 +363,7 @@ _il_home_win_cb_delete(E_Win *win)
    Instance *inst;
 
    if (!(inst = win->data)) return;
-//   _il_home_apps_unpopulate();
+   _il_home_apps_unpopulate();
    e_object_del(E_OBJECT(inst->hwin));
    inst->hwin = NULL;
 }
@@ -573,13 +580,6 @@ _il_home_fmc_set(Evas_Object *obj)
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(obj, &fmc);
-}
-
-void 
-_il_home_win_cfg_update(void) 
-{
-   _il_home_apps_unpopulate();
-   _il_home_apps_populate();
 }
 
 static void 
