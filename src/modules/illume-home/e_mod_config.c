@@ -102,7 +102,7 @@ il_home_config_show(E_Container *con, const char *params)
    v->normal_win = 1;
    v->scroll = 1;
 
-   cfd = e_config_dialog_new(con, "Home Settings", "E", 
+   cfd = e_config_dialog_new(con, _("Home Settings"), "E", 
                              "_config_illume_home_settings", 
                              "enlightenment/launcher_settings", 0, v, NULL);
    e_dialog_resizable_set(cfd->dia, 1);
