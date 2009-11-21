@@ -15,11 +15,14 @@ struct _Il_Kbd_Config
 
    // Not User Configurable. Placeholders
    const char *mod_dir;
+   E_Config_Dialog *cfd;
 };
 
 EAPI int il_kbd_config_init(E_Module *m);
 EAPI int il_kbd_config_shutdown(void);
 EAPI int il_kbd_config_save(void);
+
+EAPI void il_kbd_config_show(E_Container *con, const char *params);
 
 extern EAPI Il_Kbd_Config *il_kbd_cfg;
 
