@@ -5,7 +5,7 @@ static const char *
 _string_to_keysym(const char *str)
 {
    int glyph, ok;
-   
+
    /* utf8 -> glyph id (unicode - ucs4) */
    glyph = 0;
    ok = evas_string_char_next_get(str, 0, &glyph);
@@ -19,7 +19,7 @@ EAPI void
 e_kbd_send_string_press(const char *str, Kbd_Mod mod)
 {
    const char *key = NULL;
-   
+
    key = _string_to_keysym(str);
    if (!key) return;
    e_kbd_send_keysym_press(key, mod);

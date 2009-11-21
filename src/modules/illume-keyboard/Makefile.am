@@ -28,7 +28,9 @@ module_la_SOURCES      = e_mod_main.c \
                          e_kbd_buf.c \
                          e_kbd_buf.h \
                          e_kbd_send.c \
-                         e_kbd_send.h
+                         e_kbd_send.h \
+                         e_mod_config.c \
+                         e_mod_config.h
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version

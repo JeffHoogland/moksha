@@ -542,7 +542,7 @@ _e_kbd_buf_cb_faket(void *data)
    
    kb = data;
    kb->lookup.faket = NULL;
-   kb->lookup.func(kb->lookup.data);
+   kb->lookup.func((void *)kb->lookup.data);
    kb->lookup.func = NULL;
    kb->lookup.data = NULL;
    return 0;

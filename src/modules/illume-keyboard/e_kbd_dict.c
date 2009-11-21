@@ -7,8 +7,8 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
-
 #define MAXLATIN 0x100
+
 static unsigned char _e_kbd_normalise_base[MAXLATIN];
 static unsigned char _e_kbd_normalise_ready = 0;
 
@@ -82,16 +82,15 @@ _e_kbd_normalise_init(void)
 	  {"þ", "p"},
 	  {"ÿ", "y"}
      }; // 63 items
-   
+
    if (_e_kbd_normalise_ready) return;
    _e_kbd_normalise_ready = 1;
    for (i = 0; i < 128; i++)
      _e_kbd_normalise_base[i] = tolower(i);
    for (;i < MAXLATIN; i++)
      {
-	int glyph;
-	int j;
-	
+	int glyph, j;
+
 	for (j = 0; j < 63; j++)
 	  {
 	     evas_string_char_next_get(table[j][0], 0, &glyph);
@@ -131,11 +130,9 @@ _e_kbd_dict_normalized_strcpy(char *dst, const char *src)
 {
    const char *p;
    char *d;
-   
+
    for (p = src, d = dst; *p; p++, d++)
-     {
-	*d = _e_kbd_dict_letter_normalise(*p);
-     }
+     *d = _e_kbd_dict_letter_normalise(*p);
    *d = 0;
 }
 
@@ -143,7 +140,7 @@ static int
 _e_kbd_dict_matches_loolup_cb_sort(const void *d1, const void *d2)
 {
    const E_Kbd_Dict_Word *kw1, *kw2;
-   
+
    kw1 = d1;
    kw2 = d2;
    if (kw1->usage < kw2->usage) return 1;
@@ -155,7 +152,7 @@ static int
 _e_kbd_dict_writes_cb_sort(const void *d1, const void *d2)
 {
    const E_Kbd_Dict_Word *kw1, *kw2;
-   
+
    kw1 = d1;
    kw2 = d2;
    return _e_kbd_dict_normalized_strcmp(kw1->word, kw2->word);
@@ -166,13 +163,10 @@ static const char *
 _e_kbd_dict_line_next(E_Kbd_Dict *kd, const char *p)
 {
    const char *e, *pp;
-   
+
    e = kd->file.dict + kd->file.size;
    for (pp = p; pp < e; pp++)
-     {
-	if (*pp == '\n')
-	  return pp + 1;
-     }
+     if (*pp == '\n') return pp + 1;
    return NULL;
 }
 
@@ -181,7 +175,7 @@ _e_kbd_dict_line_parse(E_Kbd_Dict *kd, const char *p, int *usage)
 {
    const char *ps;
    char *wd = NULL;
-   
+
    for (ps = p; !isspace(*ps); ps++);
    wd = malloc(ps - p + 1);
    if (!wd) return NULL;
@@ -197,12 +191,11 @@ _e_kbd_dict_line_parse(E_Kbd_Dict *kd, const char *p, int *usage)
 }
 
 static void
-_e_kbd_dict_lookup_build_line(E_Kbd_Dict *kd, const char *p, const char *eol, 
-			      int *glyphs)
+_e_kbd_dict_lookup_build_line(E_Kbd_Dict *kd, const char *p, const char *eol, int *glyphs)
 {
    char *s;
    int p2;
-   
+
    s = alloca(eol - p + 1);
    strncpy(s, p, eol - p);
    s[eol - p] = 0;
@@ -228,11 +221,10 @@ _e_kbd_dict_lookup_build(E_Kbd_Dict *kd)
 	  {
 	     glyphs[0] = glyphs[1] = 0;
 	     _e_kbd_dict_lookup_build_line(kd, p, eol, glyphs);
-	     if ((glyphs[1] != pglyphs[1]) ||
-		 (glyphs[0] != pglyphs[0]))
+	     if ((glyphs[1] != pglyphs[1]) || (glyphs[0] != pglyphs[0]))
 	       {
 		  int v1, v2;
-		  
+
 		  if (isspace(glyphs[0]))
 		    {
 		       glyphs[0] = 0;
@@ -262,10 +254,9 @@ static int
 _e_kbd_dict_open(E_Kbd_Dict *kd)
 {
    struct stat st;
-   
+
    kd->file.fd = open(kd->file.file, O_RDONLY);
-   if (kd->file.fd < 0)
-     return 0;
+   if (kd->file.fd < 0) return 0;
    if (fstat(kd->file.fd, &st) < 0)
      {
 	close(kd->file.fd);
@@ -334,11 +325,11 @@ static E_Kbd_Dict_Word *
 _e_kbd_dict_changed_write_find(E_Kbd_Dict *kd, const char *word)
 {
    Eina_List *l;
-   
+
    for (l = kd->changed.writes; l; l = l->next)
      {
 	E_Kbd_Dict_Word *kw;
-	
+
 	kw = l->data;
 	if (!strcmp(kw->word, word)) return kw;
      }
@@ -349,7 +340,7 @@ EAPI void
 e_kbd_dict_save(E_Kbd_Dict *kd)
 {
    FILE *f;
-   
+
    // save any changes (new words added, usage adjustments).
    // all words MUST be sorted
    if (!kd->changed.writes) return;
@@ -366,13 +357,13 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
    if (f)
      {
 	const char *p, *pn;
-	
+
 	p = kd->file.dict;
 	while (p)
 	  {
 	     char *wd;
 	     int usage = 0;
-	     
+
 	     pn = _e_kbd_dict_line_next(kd, p);
 	     if (!pn) return;
 	     wd = _e_kbd_dict_line_parse(kd, p, &usage);
@@ -380,14 +371,13 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
 	       {
 		  if (kd->changed.writes)
 		    {
-		       int writeline;
-		       
-		       writeline = 0;
+		       int writeline = 0;
+
 		       while (kd->changed.writes)
 			 {
 			    E_Kbd_Dict_Word *kw;
 			    int cmp;
-			    
+
 			    kw = kd->changed.writes->data;
 			    cmp = _e_kbd_dict_normalized_strcmp(kw->word, wd);
 			    if (cmp < 0)
@@ -430,7 +420,7 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
 	while (kd->changed.writes)
 	  {
 	     E_Kbd_Dict_Word *kw;
-			    
+
 	     kw = kd->changed.writes->data;
 	     fprintf(f, "%s %i\n", kw->word, kw->usage);
 	     eina_stringshare_del(kw->word);
@@ -440,19 +430,16 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
 	fclose(f);
      }
    _e_kbd_dict_close(kd);
-   if (_e_kbd_dict_open(kd))
-     _e_kbd_dict_lookup_build(kd);
+   if (_e_kbd_dict_open(kd)) _e_kbd_dict_lookup_build(kd);
 }
 
 static int
 _e_kbd_dict_cb_save_flush(void *data)
 {
    E_Kbd_Dict *kd;
-   
+
    kd = data;
-   if ((kd->matches.list) ||
-       (kd->word.letters) ||
-       (kd->matches.deadends) ||
+   if ((kd->matches.list) || (kd->word.letters) || (kd->matches.deadends) ||
        (kd->matches.leads))
      return 1;
    kd->changed.flush_timer = NULL;
@@ -464,20 +451,19 @@ static void
 _e_kbd_dict_changed_write_add(E_Kbd_Dict *kd, const char *word, int usage)
 {
    E_Kbd_Dict_Word *kw;
-   
+
    kw = E_NEW(E_Kbd_Dict_Word, 1);
    kw->word = eina_stringshare_add(word);
    kw->usage = usage;
    kd->changed.writes = eina_list_prepend(kd->changed.writes, kw);
    if (eina_list_count(kd->changed.writes) > 64)
-     {
-	e_kbd_dict_save(kd);
-     }
+     e_kbd_dict_save(kd);
    else
      {
 	if (kd->changed.flush_timer)
 	  ecore_timer_del(kd->changed.flush_timer);
-	kd->changed.flush_timer = ecore_timer_add(5.0, _e_kbd_dict_cb_save_flush, kd);
+	kd->changed.flush_timer = 
+          ecore_timer_add(5.0, _e_kbd_dict_cb_save_flush, kd);
      }
 }
 
@@ -563,7 +549,7 @@ _e_kbd_dict_find_full(E_Kbd_Dict *kd, const char *word)
 {
    const char *p;
    int len;
-   
+
    p = _e_kbd_dict_find(kd, word);
    if (!p) return NULL;
    len = strlen(word);
@@ -576,7 +562,7 @@ e_kbd_dict_word_usage_adjust(E_Kbd_Dict *kd, const char *word, int adjust)
 {
    // add "adjust" to word usage count
    E_Kbd_Dict_Word *kw;
-   
+
    kw = _e_kbd_dict_changed_write_find(kd, word);
    if (kw)
      {
@@ -609,7 +595,7 @@ e_kbd_dict_word_delete(E_Kbd_Dict *kd, const char *word)
 {
    // delete a word from the dictionary
    E_Kbd_Dict_Word *kw;
-   
+
    kw = _e_kbd_dict_changed_write_find(kd, word);
    if (kw)
      kw->usage = -1;
@@ -654,7 +640,7 @@ e_kbd_dict_word_letter_add(E_Kbd_Dict *kd, const char *letter, int dist)
    // letter position - advance starts a new letter position
    Eina_List *l, *list;
    E_Kbd_Dict_Letter *kl;
-   
+
    l = eina_list_last(kd->word.letters);
    if (!l) return;
    list = l->data;
@@ -678,14 +664,14 @@ e_kbd_dict_word_letter_delete(E_Kbd_Dict *kd)
 {
    // delete the current letter completely
    Eina_List *l, *list;
-   
+
    l = eina_list_last(kd->word.letters);
    if (!l) return;
    list = l->data;
    while (list)
      {
 	E_Kbd_Dict_Letter *kl;
-	
+
 	kl = list->data;
 	eina_stringshare_del(kl->letter);
 	free(kl);
@@ -702,11 +688,9 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
    const char *p, *pn;
    char *base, *buf, *wd, *bufapp;
    E_Kbd_Dict_Letter *kl;
-   int len, dist = 0, d, baselen, maxdist = 0, md;
-   
+   int len = 0, dist = 0, d, baselen, maxdist = 0, md;
    static int level = 0, lv;
-   
-   len = 0;
+
    level++;
    for (l = word; l; l = l->next)
      {
@@ -763,7 +747,7 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
 	       {
 		  E_Kbd_Dict_Word *kw;
 		  int usage = 0;
-		  
+
 		  wd = _e_kbd_dict_line_parse(kd, p, &usage);
 		  if (!wd) break;
 		  if (_e_kbd_dict_normalized_strcmp(wd, buf))
@@ -776,7 +760,7 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
 		    {
 		       int accuracy;
 		       int w, b, w2, b2, wc, bc, upper;
-		       
+
 		       // match any capitalisation
 		       for (w = 0, b = 0; wd[w] && buf[b];)
 			 {
@@ -792,7 +776,7 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
 		       // be tweaked
 		       wc = eina_list_count(word);
 		       if (md < 1) md = 1;
-		       
+
 		       // basically a metric to see how far away teh keys that
 		       // were actually pressed are away from the letters of
 		       // this word in a physical on-screen sense
@@ -832,7 +816,7 @@ e_kbd_dict_matches_lookup(E_Kbd_Dict *kd)
    while (kd->matches.list)
      {
 	E_Kbd_Dict_Word *kw;
-	
+
 	kw = kd->matches.list->data;
 	eina_stringshare_del(kw->word);
 	free(kw);
@@ -866,7 +850,7 @@ e_kbd_dict_matches_match_get(E_Kbd_Dict *kd, int *pri_ret)
    if (kd->matches.list_ptr)
      {
 	E_Kbd_Dict_Word *kw;
-	
+
 	kw = kd->matches.list_ptr->data;
 	if (kw)
 	  {

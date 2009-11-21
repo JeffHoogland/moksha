@@ -1,9 +1,8 @@
-#include <Eina.h>
-
 #include "e.h"
 #include "e_kbd_buf.h"
 #include "e_kbd_int.h"
 #include "e_kbd_send.h"
+#include "e_mod_config.h"
 
 enum 
 {
@@ -18,7 +17,7 @@ static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *
 
 static void _e_kbd_int_layout_next(E_Kbd_Int *ki);
 static void _e_kbd_int_zoomkey_down(E_Kbd_Int *ki);
-static void _e_kbd_int_matches_update(E_Kbd_Int *ki);
+static void _e_kbd_int_matches_update(void *data);
 static void _e_kbd_int_dictlist_down(E_Kbd_Int *ki);
 static void _e_kbd_int_matchlist_down(E_Kbd_Int *ki);
 static void _e_kbd_int_layoutlist_down(E_Kbd_Int *ki);
@@ -287,12 +286,14 @@ _e_kbd_int_matches_free(E_Kbd_Int *ki)
 }
 
 static void
-_e_kbd_int_matches_update(E_Kbd_Int *ki)
+_e_kbd_int_matches_update(void *data)
 {
+   E_Kbd_Int *ki;
    const Eina_List *l, *matches;
    const char *actual;
    Evas_Coord mw, mh, vw, vh;
 
+   if (!(ki = data)) return;
    evas_event_freeze(ki->win->evas);
    e_box_freeze(ki->box_obj);
    _e_kbd_int_matches_free(ki);
@@ -1337,9 +1338,9 @@ _e_kbd_int_cb_dictlist_item_sel(void *data)
 	_e_kbd_int_layout_state_update(ki);
      }
 
-   //eina_stringshare_replace(&illume_cfg->kbd.dict, str);
-   //e_kbd_buf_dict_set(ki->kbuf, illume_cfg->kbd.dict);
-   //e_config_save_queue();
+   eina_stringshare_replace(&il_kbd_cfg->dict, str);
+   e_kbd_buf_dict_set(ki->kbuf, il_kbd_cfg->dict);
+   e_config_save_queue();
 
    _e_kbd_int_dictlist_down(ki);
 }
@@ -1767,9 +1768,9 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    evas_object_show(o);
    ki->box_obj = o;
 
-//   if (illume_cfg->kbd.dict)
-//     ki->kbuf = e_kbd_buf_new(ki->sysdicts, illume_cfg->kbd.dict);
-//   else
+   if (il_kbd_cfg->dict)
+     ki->kbuf = e_kbd_buf_new(ki->sysdicts, il_kbd_cfg->dict);
+   else
      ki->kbuf = e_kbd_buf_new(ki->sysdicts, "English_(US).dic");
 
    _e_kbd_int_layouts_list_update(ki);
