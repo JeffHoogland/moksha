@@ -13,7 +13,8 @@ e_modapi_init(E_Module *m)
 {
    if (!il_kbd_config_init(m)) return NULL;
 
-   ki = e_kbd_int_new(mod_dir, mod_dir, mod_dir);
+   ki = e_kbd_int_new(il_kbd_cfg->mod_dir, 
+                      il_kbd_cfg->mod_dir, il_kbd_cfg->mod_dir);
 
    return m;
 }
