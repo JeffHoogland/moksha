@@ -269,6 +269,8 @@ _il_home_win_new(Instance *inst)
 {
    Il_Home_Win *hwin;
    E_Container *con;
+   E_Zone *zone;
+   int y, w, h;
    char buff[PATH_MAX];
 
    if ((inst->hwin) && (inst->hwin->win)) 
@@ -336,11 +338,13 @@ _il_home_win_new(Instance *inst)
    _il_home_apps_unpopulate();
    _il_home_apps_populate();
 
+   zone = e_util_container_zone_number_get(0, 0);
+   e_zone_useful_geometry_get(zone, NULL, &y, &w, NULL);
+
    e_win_title_set(hwin->win, _("Illume Home"));
    e_win_name_class_set(hwin->win, "Illume-Home", "Home");
-   e_win_size_min_set(hwin->win, 24, 24);
-   e_win_resize(hwin->win, 200, 200);
-   e_win_centered_set(hwin->win, 1);
+   e_win_size_min_set(hwin->win, 48, 48);
+   e_win_move_resize(hwin->win, 0, y, w, 200);
    e_win_show(hwin->win);
 }
 
