@@ -609,8 +609,8 @@ src/modules/illume2/Makefile
 src/modules/illume2/module.desktop
 src/modules/illume-home/Makefile
 src/modules/illume-home/module.desktop
-src/modules/illume-bar/Makefile
-src/modules/illume-bar/module.desktop
+src/modules/illume-buttonbar/Makefile
+src/modules/illume-buttonbar/module.desktop
 src/modules/illume-keyboard/Makefile
 src/modules/illume-keyboard/module.desktop
 src/modules/illume-keyboard/keyboards/Makefile

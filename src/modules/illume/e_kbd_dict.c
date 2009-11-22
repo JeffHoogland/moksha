@@ -7,8 +7,8 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
-
 #define MAXLATIN 0x100
+
 static unsigned char _e_kbd_normalise_base[MAXLATIN];
 static unsigned char _e_kbd_normalise_ready = 0;
 

@@ -17,7 +17,7 @@ EAPI void *
 e_modapi_init(E_Module *m) 
 {
    /* set up the virtual keyboard */
-   //e_kbd_init(m);
+   e_kbd_init(m);
    e_mod_layout_init(m);
    return m; /* return NULL on failure, anything else on success. the pointer
 	      * returned will be set as m->data for convenience tracking */
@@ -28,7 +28,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m) 
 {
    e_mod_layout_shutdown();
-   //e_kbd_shutdown();
+   e_kbd_shutdown();
    return 1; /* 1 for success, 0 for failure */
 }
 

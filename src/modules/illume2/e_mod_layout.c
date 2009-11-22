@@ -138,8 +138,7 @@ illume_border_is_dialog(E_Border *bd)
 {
    int isdialog = 0, i;
 
-   if (bd->client.icccm.transient_for != 0)
-     isdialog = 1;
+   if (bd->client.icccm.transient_for != 0) isdialog = 1;
    if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
      {
 	isdialog = 1;
