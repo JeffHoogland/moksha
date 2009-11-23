@@ -454,7 +454,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	e_widget_preview_edje_set(o, cfdata->theme, "e/desktop/background");
       e_widget_aspect_child_set(oa, o);
       e_widget_list_object_append(of, oa, 1, 1, 0);
-
+      evas_object_show(o);
+      evas_object_show(oa);
    }
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
 

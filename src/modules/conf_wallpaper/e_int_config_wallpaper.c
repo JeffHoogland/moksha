@@ -574,6 +574,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
      f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
    e_widget_preview_edje_set(ow, f, "e/desktop/background");
    e_widget_aspect_child_set(oa, ow);
+   evas_object_show(ow);
+   evas_object_show(oa);
    e_widget_table_object_append(ot, oa, 0, 2, 2 + online, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
    e_dialog_resizable_set(cfd->dia, 1);
