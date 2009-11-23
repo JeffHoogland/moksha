@@ -218,7 +218,7 @@ Eina_Bool
 illume_border_is_home(E_Border *bd)
 {
    if (((bd->client.icccm.name) && 
-        (strstr(bd->client.icccm.name, "Illume-Home"))) || 
+        (!strcmp(bd->client.icccm.name, "Illume-Home"))) || 
        ((bd->client.icccm.title) && 
         (strstr(bd->client.icccm.title, "Home"))))
      return 1;
@@ -268,7 +268,7 @@ illume_border_min_get(E_Border *bd, int *mw, int *mh)
      }
    if (mh)
      {
-        if (bd->client.icccm.base_w > bd->client.icccm.min_h)
+        if (bd->client.icccm.base_h > bd->client.icccm.min_h)
           *mh = bd->client.icccm.base_h;
         else
           *mh = bd->client.icccm.min_h;

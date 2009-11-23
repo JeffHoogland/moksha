@@ -133,6 +133,7 @@ _e_kbd_slide(E_Kbd *kbd, int visible, double len)
 static void 
 _e_kbd_hide(E_Kbd *kbd)
 {
+   printf("Keyboard Hide\n");
    if (kbd->visible) return;
    if (il_cfg->sliding.kbd.duration <= 0)
      {
