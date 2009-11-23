@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "e_mod_layout.h"
 #include "e_kbd.h"
 
@@ -13,9 +14,15 @@ EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Illume2" };
 EAPI void *
 e_modapi_init(E_Module *m) 
 {
+   /* init the config system */
+   if (!il_config_init(m)) return NULL;
+
    /* set up the virtual keyboard */
    e_kbd_init(m);
+
+   /* init the layout system */
    e_mod_layout_init(m);
+
    return m; /* return NULL on failure, anything else on success. the pointer
 	      * returned will be set as m->data for convenience tracking */
 }
@@ -26,6 +33,7 @@ e_modapi_shutdown(E_Module *m)
 {
    e_mod_layout_shutdown();
    e_kbd_shutdown();
+   il_config_shutdown();
    return 1; /* 1 for success, 0 for failure */
 }
 
@@ -33,5 +41,5 @@ e_modapi_shutdown(E_Module *m)
 EAPI int
 e_modapi_save(E_Module *m) 
 {
-   return 1; /* 1 for success, 0 for failure */
+   return il_config_save();
 }

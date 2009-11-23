@@ -1,6 +1,7 @@
 #include "e.h"
 #include "e_kbd.h"
 #include "e_mod_layout.h"
+#include "e_mod_config.h"
 
 static Eina_List *handlers = NULL;
 static Eina_List *kbds = NULL;
@@ -133,8 +134,7 @@ static void
 _e_kbd_hide(E_Kbd *kbd)
 {
    if (kbd->visible) return;
-#if 0   
-   if (illume_cfg->sliding.kbd.duration <= 0)
+   if (il_cfg->sliding.kbd.duration <= 0)
      {
 	_e_kbd_border_hide(kbd->border);
 	kbd->actually_visible = kbd->visible;
@@ -142,8 +142,7 @@ _e_kbd_hide(E_Kbd *kbd)
 	_e_kbd_layout_send(kbd);
      }
    else
-     _e_kbd_slide(kbd, 0, (double)illume_cfg->sliding.kbd.duration / 1000.0);
-#endif   
+     _e_kbd_slide(kbd, 0, (double)il_cfg->sliding.kbd.duration / 1000.0);
 }
 
 static int
@@ -1023,8 +1022,7 @@ e_kbd_show(E_Kbd *kbd)
    if (kbd->disabled) return;
    kbd->actually_visible = kbd->visible;
    _e_kbd_layout_send(kbd);
-#if 0   
-   if (illume_cfg->sliding.kbd.duration <= 0)
+   if (il_cfg->sliding.kbd.duration <= 0)
      {
 	if (kbd->border)
 	  {
@@ -1041,9 +1039,8 @@ e_kbd_show(E_Kbd *kbd)
 	     e_border_fx_offset(kbd->border, 0, kbd->border->h - kbd->adjust);
 	     _e_kbd_border_show(kbd, kbd->border);
 	  }
-	_e_kbd_slide(kbd, 1, (double)illume_cfg->sliding.kbd.duration / 1000.0);
+	_e_kbd_slide(kbd, 1, (double)il_cfg->sliding.kbd.duration / 1000.0);
      }
-#endif   
 }
 
 EAPI void
