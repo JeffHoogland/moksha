@@ -6,6 +6,8 @@
 /* local function prototypes */
 static void _il_sk_win_cb_free(Il_Sk_Win *win);
 static void _il_sk_win_cb_resize(E_Win *win);
+static void _il_sk_win_cb_back_click(void *data, void *data2);
+static void _il_sk_win_cb_close_click(void *data, void *data2);
 
 EAPI int 
 e_mod_win_init(void) 
@@ -25,8 +27,7 @@ e_mod_win_new(void)
    Il_Sk_Win *swin;
    E_Zone *zone;
    Evas *evas;
-   Ecore_X_Window_State state[2];
-   int num = 0;
+   Ecore_X_Window_State states[2];
    char buff[PATH_MAX];
 
    snprintf(buff, sizeof(buff), "%s/e-module-illume-softkey.edj", 
@@ -36,10 +37,10 @@ e_mod_win_new(void)
    if (!swin) return NULL;
 
    swin->win = e_win_new(e_util_container_number_get(0));
-   if (!swin->win) return NULL;
-   state[num++] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
-   state[num++] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
-   ecore_x_netwm_window_state_set(swin->win->evas_win, state, num);
+   states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
+   states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
+   ecore_x_netwm_window_state_set(swin->win->evas_win, states, 2);
+   ecore_x_icccm_hints_set(swin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
 
    zone = e_util_container_zone_number_get(0, 0);
    e_win_no_remember_set(swin->win, 1);
@@ -62,14 +63,18 @@ e_mod_win_new(void)
    swin->o_box = e_widget_list_add(evas, 1, 1);
    edje_object_part_swallow(swin->o_base, "e.swallow.buttons", swin->o_box);
 
-   swin->b_back = e_widget_button_add(evas, NULL, "go-previous", NULL, NULL, NULL);
+   swin->b_back = e_widget_button_add(evas, NULL, "go-previous", 
+                                      _il_sk_win_cb_back_click, swin, NULL);
    e_widget_list_object_append(swin->o_box, swin->b_back, 1, 0, 0.5);
-   swin->b_close = e_widget_button_add(evas, NULL, "window-close", NULL, NULL, NULL);
+
+   swin->b_close = e_widget_button_add(evas, NULL, "window-close", 
+                                       _il_sk_win_cb_close_click, swin, NULL);
    e_widget_list_object_append(swin->o_box, swin->b_close, 1, 0, 0.5);
 
    e_win_size_min_set(swin->win, zone->w, 48);
    e_win_sticky_set(swin->win, 1);
    e_win_show(swin->win);
+
    ecore_x_netwm_window_type_set(swin->win->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
    e_win_move_resize(swin->win, 0, (zone->h - 48), zone->w, 48);
    return swin;
@@ -94,4 +99,25 @@ _il_sk_win_cb_resize(E_Win *win)
 
    if (!(swin = win->data)) return;
    evas_object_resize(swin->o_base, swin->win->w, swin->win->h);
+}
+
+static void 
+_il_sk_win_cb_back_click(void *data, void *data2) 
+{
+   Il_Sk_Win *swin;
+   E_Border *bd;
+
+   if (!(swin = data)) return;
+   if (!(bd = e_border_focused_get())) return;
+}
+
+static void 
+_il_sk_win_cb_close_click(void *data, void *data2) 
+{
+   Il_Sk_Win *swin;
+   E_Border *bd;
+
+   if (!(swin = data)) return;
+   if (!(bd = e_border_focused_get())) return;
+   e_border_act_close_begin(bd);
 }
