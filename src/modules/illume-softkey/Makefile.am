@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
-MODULE = illume-bar
+MODULE = illume-softkey
 
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)

@@ -412,7 +412,6 @@ AC_SUBST(SOUND_CFLAGS)
 AC_SUBST(SOUND_LIBS)
 
 AC_E_OPTIONAL_MODULE([ibar], true)
-AC_E_OPTIONAL_MODULE([ibar], true)
 AC_E_OPTIONAL_MODULE([dropshadow], true)
 AC_E_OPTIONAL_MODULE([clock], true)
 AC_E_OPTIONAL_MODULE([pager], true)
@@ -609,8 +608,8 @@ src/modules/illume2/Makefile
 src/modules/illume2/module.desktop
 src/modules/illume-home/Makefile
 src/modules/illume-home/module.desktop
-src/modules/illume-buttonbar/Makefile
-src/modules/illume-buttonbar/module.desktop
+src/modules/illume-softkey/Makefile
+src/modules/illume-softkey/module.desktop
 src/modules/illume-keyboard/Makefile
 src/modules/illume-keyboard/module.desktop
 src/modules/illume-keyboard/keyboards/Makefile

@@ -239,7 +239,7 @@ SUBDIRS += connman
 endif
 
 if USE_MODULE_ILLUME
-SUBDIRS += illume illume2 illume-home illume-buttonbar illume-keyboard
+SUBDIRS += illume illume2 illume-home illume-softkey illume-keyboard
 endif
 
 if USE_MODULE_SYSCON
