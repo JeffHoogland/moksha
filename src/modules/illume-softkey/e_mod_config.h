@@ -8,6 +8,8 @@ typedef struct _Il_Sk_Config Il_Sk_Config;
 struct _Il_Sk_Config 
 {
    int version;
+
+   const char *mod_dir;
 };
 
 EAPI int il_sk_config_init(E_Module *m);
