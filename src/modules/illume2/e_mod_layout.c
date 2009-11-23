@@ -181,7 +181,7 @@ Eina_Bool
 illume_border_is_bottom_panel(E_Border *bd)
 {
    if ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK) ||
-       (bd->client.qtopia.soft_menu))
+       (bd->client.qtopia.soft_menu)) 
      return 1;
    return 0;
 }

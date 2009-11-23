@@ -7,10 +7,7 @@
  * the .desktop file) but more specifically the api version it was compiled
  * for so E can skip modules that are compiled for an incorrect API version
  * safely) */
-EAPI E_Module_Api e_modapi = 
-{
-   E_MODULE_API_VERSION, "Illume2"
-};
+EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Illume2" };
 
 /* called first thing when E inits the module */
 EAPI void *

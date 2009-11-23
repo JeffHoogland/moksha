@@ -20,22 +20,21 @@ typedef enum _E_Kbd_Layout
 
 struct _E_Kbd
 {
-   E_Object             e_obj_inherit;
-   E_Win               *win;
-   E_Border            *border;
-   Ecore_Timer         *delay_hide;
-   Ecore_Animator      *animator;
-   Eina_List           *waiting_borders;
-   E_Kbd_Layout         layout;
-   double               start, len;
+   E_Object e_obj_inherit;
+   E_Win *win;
+   E_Border *border;
+   Ecore_Timer *delay_hide;
+   Ecore_Animator *animator;
+   Eina_List *waiting_borders;
+   E_Kbd_Layout layout;
+   double start, len;
 
-   int                  h;
-   int                  adjust_start, adjust, adjust_end;
-   
-   unsigned char        visible : 1;
-   unsigned char        actually_visible : 1;
-   unsigned char        disabled : 1; // if we have a real kbd plugged in
-   unsigned char        fullscreen : 1;
+   int h, adjust_start, adjust, adjust_end;
+
+   unsigned char visible : 1;
+   unsigned char actually_visible : 1;
+   unsigned char disabled : 1; // if we have a real kbd plugged in
+   unsigned char fullscreen : 1;
 };
 
 EAPI int e_kbd_init(E_Module *m);

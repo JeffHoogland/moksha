@@ -22,12 +22,12 @@ struct _Illume_Layout_Mode
    // may need more things later, but name + label will do for now
    struct {
       // ---
-      void (*border_add)       (E_Border *bd);
-      void (*border_del)       (E_Border *bd);
-      void (*border_focus_in)  (E_Border *bd);
+      void (*border_add) (E_Border *bd);
+      void (*border_del) (E_Border *bd);
+      void (*border_focus_in) (E_Border *bd);
       void (*border_focus_out) (E_Border *bd);
       // ---
-      void (*zone_layout)      (E_Zone *zone);
+      void (*zone_layout) (E_Zone *zone);
       void (*zone_move_resize) (E_Zone *zone);
       // --- add more below (activate callback, and more)
    } funcs;
@@ -35,7 +35,7 @@ struct _Illume_Layout_Mode
 
 void      illume_layout_mode_register(const Illume_Layout_Mode *laymode);
 void      illume_layout_mode_unregister(const Illume_Layout_Mode *laymode);
-    
+
 void      illume_border_activate(E_Border *bd);
 void      illume_border_show(E_Border *bd);
 void      illume_border_deactivate(E_Border *bd);
