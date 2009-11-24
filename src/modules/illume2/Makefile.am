@@ -1,5 +1,6 @@
 MAINTAINERCLEANFILES = Makefile.in
 MODULE = illume2
+SUBDIRS = keyboards
 
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)

@@ -4,6 +4,8 @@
 #include "e_mod_layout.h"
 #include "e_kbd.h"
 
+static E_Kbd *kbd = NULL;
+
 /* this is needed to advertise a label for the module IN the code (not just
  * the .desktop file) but more specifically the api version it was compiled
  * for so E can skip modules that are compiled for an incorrect API version
@@ -23,6 +25,10 @@ e_modapi_init(E_Module *m)
    /* init the layout system */
    e_mod_layout_init(m);
 
+   kbd = e_kbd_new(e_util_container_zone_number_get(0, 0), 
+                   m->dir, m->dir, m->dir);
+   e_kbd_show(kbd);
+
    return m; /* return NULL on failure, anything else on success. the pointer
 	      * returned will be set as m->data for convenience tracking */
 }
@@ -31,6 +37,9 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m) 
 {
+   e_object_del(E_OBJECT(kbd));
+   kbd = NULL;
+
    e_mod_layout_shutdown();
    e_kbd_shutdown();
    il_config_shutdown();

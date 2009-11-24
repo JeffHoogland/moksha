@@ -133,7 +133,6 @@ _e_kbd_slide(E_Kbd *kbd, int visible, double len)
 static void 
 _e_kbd_hide(E_Kbd *kbd)
 {
-   printf("Keyboard Hide\n");
    if (kbd->visible) return;
    if (il_cfg->sliding.kbd.duration <= 0)
      {
@@ -231,7 +230,7 @@ _e_kbd_all_show(void)
    Eina_List *l;
    E_Kbd *kbd;
 
-   EINA_LIST_FOREACH(kbds, l, kbd)
+   EINA_LIST_FOREACH(kbds, l, kbd) 
      e_kbd_show(kbd);
 }
 
@@ -251,7 +250,7 @@ _e_kbd_all_hide(void)
    Eina_List *l;
    E_Kbd *kbd;
 
-   EINA_LIST_FOREACH(kbds, l, kbd)
+   EINA_LIST_FOREACH(kbds, l, kbd) 
      e_kbd_hide(kbd);
 }
 
@@ -502,11 +501,11 @@ _e_kbd_cb_border_hook_pre_post_fetch(void *data, void *data2)
 static void
 _e_kbd_cb_border_hook_post_fetch(void *data, void *data2)
 {
-   E_Border *bd;
+   //E_Border *bd;
 
-   if (!(bd = data2)) return;
+   //if (!(bd = data2)) return;
    // nothing - all done in _e_kbd_cb_border_hook_pre_post_fetch()
-   if (!_e_kbd_by_border_get(bd)) return;
+   //if (!_e_kbd_by_border_get(bd)) return;
 }
 
 static void
@@ -517,8 +516,7 @@ _e_kbd_cb_border_hook_post_border_assign(void *data, void *data2)
    int pbx, pby, pbw, pbh;
 
    if (!(bd = data2)) return;
-   kbd = _e_kbd_by_border_get(bd);
-   if (!kbd) return;
+   if (!(kbd = _e_kbd_by_border_get(bd))) return;
 
    pbx = bd->x;
    pby = bd->y;
@@ -567,8 +565,7 @@ _e_kbd_cb_border_hook_post_border_assign(void *data, void *data2)
 	ecore_x_icccm_move_resize_send(bd->client.win,
 				       bd->x + bd->fx.x + bd->client_inset.l,
 				       bd->y + bd->fx.y + bd->client_inset.t,
-				       bd->client.w,
-				       bd->client.h);
+				       bd->client.w, bd->client.h);
 	bd->changed = 1;
 	bd->changes.pos = 1;
 	bd->changes.size = 1;
@@ -599,8 +596,7 @@ _e_kbd_cb_border_hook_end(void *data, void *data2)
    E_Kbd *kbd;
 
    if (!(bd = data2)) return;
-   kbd = _e_kbd_by_border_get(bd);
-   if (!kbd) return;
+   if (!(kbd = _e_kbd_by_border_get(bd))) return;
    if (kbd->border == bd)
      {
 	if (!kbd->actually_visible)
@@ -685,7 +681,6 @@ _e_kbd_dbus_keyboard_add(const char *udi)
 
    EINA_LIST_FOREACH(_e_kbd_dbus_keyboards, l, str)
      if (!strcmp(str, udi)) return;
-
    _e_kbd_dbus_keyboards = eina_list_append
      (_e_kbd_dbus_keyboards, eina_stringshare_add(udi));
 }
@@ -720,7 +715,6 @@ _e_kbd_dbus_keyboard_eval(void)
             have_real--;
             break;
          }
-
    if (have_real != _e_kbd_dbus_have_real_keyboard)
      {
 	_e_kbd_dbus_have_real_keyboard = have_real;
@@ -836,9 +830,11 @@ _e_kbd_dbus_ignore_keyboards_file_load(const char *file)
 	  }
 	p = buf;
 	while (isspace(*p)) p++;
-	if (*p)
-	  _e_kbd_dbus_real_ignore = eina_list_append
-	  (_e_kbd_dbus_real_ignore, eina_stringshare_add(p));
+	if (*p) 
+          {
+             _e_kbd_dbus_real_ignore = eina_list_append
+               (_e_kbd_dbus_real_ignore, eina_stringshare_add(p));
+          }
      }
    fclose(f);
 }
@@ -987,6 +983,8 @@ e_kbd_new(E_Zone *zone, const char *themedir, const char *syskbds, const char *s
    if (!kbd) return NULL;
    kbds = eina_list_append(kbds, kbd);
    kbd->layout = ECORE_X_VIRTUAL_KEYBOARD_STATE_ON;
+   kbd->visible = 0;
+   kbd->disabled = 0;
    return kbd;
 }
 
