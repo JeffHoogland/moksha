@@ -513,7 +513,7 @@ e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
             _e_shelf_orient_string_get(es));
    edje_object_signal_emit(es->o_base, buf, "e");
    edje_object_message_signal_process(es->o_base);
-   e_gadcon_location_set_icon_name(es->gadcon->location, _e_shelf_orient_icon_name_get (es));
+   e_gadcon_location_set_icon_name(es->gadcon->location, _e_shelf_orient_icon_name_get(es));
    e_zone_useful_geometry_dirty(es->zone);
 }
 
@@ -1342,7 +1342,7 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, 
                               cy + ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
 	break;
      }
 }

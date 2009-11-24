@@ -1907,7 +1907,7 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *e
 	     cy = cy + ev->output.y;
 	  }
 	e_menu_activate_mouse(mn, zone, cx, cy, 1, 1, 
-			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
      }
 }
 
@@ -2552,7 +2552,7 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
 	e_menu_activate_mouse(mn, zone, 
 			      cx + ev->output.x, 
                               cy + ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
      }
    else if (ev->button == 1)
      {
