@@ -1713,7 +1713,7 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
 }
 
 static void
-_e_shelf_gadcon_client_remove (void *data, E_Gadcon_Client *gcc)
+_e_shelf_gadcon_client_remove(void *data, E_Gadcon_Client *gcc)
 {
    E_Shelf *s;
    E_Gadcon *gc;
@@ -1727,7 +1727,7 @@ _e_shelf_gadcon_client_remove (void *data, E_Gadcon_Client *gcc)
 }
 
 static int
-_e_shelf_gadcon_client_add (void *data, const E_Gadcon_Client_Class *cc)
+_e_shelf_gadcon_client_add(void *data, const E_Gadcon_Client_Class *cc)
 {
    E_Shelf *s;
    E_Gadcon *gc;
@@ -1742,7 +1742,7 @@ _e_shelf_gadcon_client_add (void *data, const E_Gadcon_Client_Class *cc)
 }
 
 static const char *
-_e_shelf_orient_icon_name_get (E_Shelf * s)
+_e_shelf_orient_icon_name_get(E_Shelf * s)
 {
    const char * name;
 
