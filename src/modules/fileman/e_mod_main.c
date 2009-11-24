@@ -43,7 +43,7 @@ e_modapi_init(E_Module *m)
    
    conf_module = m;
 
-   eina_init();
+   //eina_init();
 
    /* Setup Entry in Config Panel */
    e_configure_registry_category_add("fileman", 100, _("Files"), 
@@ -154,7 +154,7 @@ e_modapi_shutdown(E_Module *m)
    _e_mod_fileman_config_free();
    E_CONFIG_DD_FREE(conf_edd);
 
-   eina_shutdown();
+   //eina_shutdown();
 
    conf_module = NULL;
    return 1;
@@ -369,10 +369,10 @@ _e_mod_menu_generate(void *data, E_Menu *m)
 void
 _e_mod_menu_add(void *data, E_Menu *m)
 {
+#ifdef ENABLE_FILES
    E_Menu_Item *mi;
    E_Menu *sub;
 
-#ifdef ENABLE_FILES
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Files"));
    e_util_menu_item_theme_icon_set(mi, "system-file-manager");
