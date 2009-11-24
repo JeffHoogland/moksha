@@ -27,7 +27,6 @@ void
 e_mod_layout_init(E_Module *m)
 {
    Eina_List *l;
-   E_Manager *man;
 
    hook1 = e_border_hook_add(E_BORDER_HOOK_EVAL_POST_FETCH,
 			     _e_mod_layout_cb_hook_post_fetch, NULL);
@@ -86,7 +85,7 @@ e_mod_layout_shutdown(void)
 
 static Eina_List *modes = NULL;
 static const Illume_Layout_Mode *mode = NULL;
-  
+
 void
 illume_layout_mode_register(const Illume_Layout_Mode *laymode)
 {
