@@ -983,8 +983,6 @@ e_kbd_new(E_Zone *zone, const char *themedir, const char *syskbds, const char *s
    if (!kbd) return NULL;
    kbds = eina_list_append(kbds, kbd);
    kbd->layout = ECORE_X_VIRTUAL_KEYBOARD_STATE_ON;
-   kbd->visible = 0;
-   kbd->disabled = 0;
    return kbd;
 }
 
