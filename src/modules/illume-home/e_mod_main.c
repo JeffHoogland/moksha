@@ -14,7 +14,7 @@ struct _Instance
    E_Gadcon_Client *gcc;
    Evas_Object *o_btn;
    E_Menu *menu;
-   Il_Home_Win *hwin;
+   Eina_List *wins;
 };
 struct _Il_Home_Win 
 {
@@ -80,6 +80,9 @@ e_modapi_init(E_Module *m)
 
    zone = e_util_container_zone_number_get(0, 0);
 
+   _il_home_apps_unpopulate();
+   _il_home_apps_populate();
+
    e_busycover_init();
    busycover = e_busycover_new(zone, m->dir);
 
@@ -101,6 +104,8 @@ EAPI int
 e_modapi_shutdown(E_Module *m) 
 {
    Ecore_Event_Handler *handle;
+
+   _il_home_apps_unpopulate();
 
    if (busycover) 
      {
@@ -162,6 +167,7 @@ static void
 _gc_shutdown(E_Gadcon_Client *gcc) 
 {
    Instance *inst;
+   Il_Home_Win *hwin;
 
    if (!(inst = gcc->data)) return;
    instances = eina_list_remove(instances, inst);
@@ -177,7 +183,11 @@ _gc_shutdown(E_Gadcon_Client *gcc)
                                        _il_home_btn_cb_mouse_down);
         evas_object_del(inst->o_btn);
      }
-   if (inst->hwin) e_object_del(E_OBJECT(inst->hwin));
+
+   EINA_LIST_FREE(inst->wins, hwin)
+     e_object_del(E_OBJECT(hwin));
+
+//   if (inst->hwin) e_object_del(E_OBJECT(inst->hwin));
    E_FREE(inst);
 }
 
@@ -273,19 +283,18 @@ _il_home_win_new(Instance *inst)
    int y, w, h;
    char buff[PATH_MAX];
 
+   /*
    if ((inst->hwin) && (inst->hwin->win)) 
      {
         e_border_uniconify(inst->hwin->win->border);
         e_border_focus_set(inst->hwin->win->border, 1, 1);
         return;
      }
+    */
 
-   if (!inst->hwin) 
-     {
-        inst->hwin = E_OBJECT_ALLOC(Il_Home_Win, IL_HOME_WIN_TYPE, 
-                                    _il_home_win_cb_free);
-     }
-   hwin = inst->hwin;
+   if (!hwin) 
+     hwin = E_OBJECT_ALLOC(Il_Home_Win, IL_HOME_WIN_TYPE, 
+                           _il_home_win_cb_free);
    if (!hwin) return;
 
    con = e_container_current_get(e_manager_current_get());
@@ -294,9 +303,10 @@ _il_home_win_new(Instance *inst)
    if (!hwin->win) 
      {
         e_object_del(E_OBJECT(hwin));
-        inst->hwin = NULL;
         return;
      }
+
+   inst->wins = eina_list_append(inst->wins, hwin);
 
    e_win_delete_callback_set(hwin->win, _il_home_win_cb_delete);
    e_win_resize_callback_set(hwin->win, _il_home_win_cb_resize);
@@ -335,9 +345,6 @@ _il_home_win_new(Instance *inst)
    evas_object_smart_callback_add(hwin->o_fm, "selected", 
                                   _il_home_cb_selected, NULL);
 
-   _il_home_apps_unpopulate();
-   _il_home_apps_populate();
-
    zone = e_util_container_zone_number_get(0, 0);
    e_zone_useful_geometry_get(zone, NULL, &y, &w, NULL);
 
@@ -365,11 +372,24 @@ static void
 _il_home_win_cb_delete(E_Win *win) 
 {
    Instance *inst;
+   Eina_List *l;
+   Il_Home_Win *hwin;
 
    if (!(inst = win->data)) return;
-   _il_home_apps_unpopulate();
-   e_object_del(E_OBJECT(inst->hwin));
-   inst->hwin = NULL;
+   EINA_LIST_FOREACH(inst->wins, l, hwin) 
+     {
+        if (hwin->win != win) 
+          {
+             hwin = NULL;
+             continue;
+          }
+        else break;
+//        _il_home_apps_unpopulate();
+     }
+   if (!hwin) return;
+   inst->wins = eina_list_remove(inst->wins, hwin);
+   e_object_del(E_OBJECT(hwin));
+   hwin = NULL;
 }
 
 static void 
@@ -377,9 +397,21 @@ _il_home_win_cb_resize(E_Win *win)
 {
    Instance *inst;
    Il_Home_Win *hwin;
+   Eina_List *l;
 
    if (!(inst = win->data)) return;
-   if (!(hwin = inst->hwin)) return;
+   EINA_LIST_FOREACH(inst->wins, l, hwin) 
+     {
+        if (hwin->win != win) 
+          {
+             hwin = NULL;
+             continue;
+          }
+        else break;
+//        _il_home_apps_unpopulate();
+     }
+   if (!hwin) return;
+
    if (hwin->o_bg) 
      {
         if (hwin->win)
@@ -510,7 +542,7 @@ _il_home_desktop_run(Efreet_Desktop *desktop)
 static void 
 _il_home_apps_populate(void) 
 {
-   Eina_List *l;
+   Eina_List *l, *ll;
    Instance *inst;
    char buff[PATH_MAX];
 
@@ -521,11 +553,14 @@ _il_home_apps_populate(void)
 
    EINA_LIST_FOREACH(instances, l, inst) 
      {
-        if (!inst->hwin) continue;
-        if (!inst->hwin->win) continue;
-        if (!inst->hwin->o_fm) continue;
-        _il_home_fmc_set(inst->hwin->o_fm);
-        e_fm2_path_set(inst->hwin->o_fm, NULL, buff);
+        Il_Home_Win *hwin;
+
+        EINA_LIST_FOREACH(inst->wins, ll, hwin) 
+          {
+             if (!hwin) continue;
+             _il_home_fmc_set(hwin->o_fm);
+             e_fm2_path_set(hwin->o_fm, NULL, buff);
+          }
      }
 }
 
