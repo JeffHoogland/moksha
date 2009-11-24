@@ -27,9 +27,9 @@ static int _e_shelf_cb_hide_animator_timer(void *data);
 static int _e_shelf_cb_hide_urgent_timer(void *data);
 static int _e_shelf_cb_instant_hide_timer(void *data);
 static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
-static void _e_shelf_gadcon_client_remove (void *data, E_Gadcon_Client *gcc);
-static int _e_shelf_gadcon_client_add (void *data, const E_Gadcon_Client_Class *cc);
-static const char * _e_shelf_orient_icon_name_get (E_Shelf *s);
+static void _e_shelf_gadcon_client_remove(void *data, E_Gadcon_Client *gcc);
+static int _e_shelf_gadcon_client_add(void *data, const E_Gadcon_Client_Class *cc);
+static const char * _e_shelf_orient_icon_name_get(E_Shelf *s);
 
 static Eina_List *shelves = NULL;
 static Eina_Hash *winid_shelves = NULL;
@@ -1318,7 +1318,7 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
    Evas_Event_Mouse_Down *ev;
    E_Shelf *es;
    E_Menu *mn;
-   int cx, cy, cw, ch;
+   int cx, cy;
    E_Zone *zone;
 
    es = data;
@@ -1337,7 +1337,7 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 
         zone = es->gadcon->zone;
         if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
-        e_gadcon_canvas_zone_geometry_get(es->gadcon, &cx, &cy, &cw, &ch);
+        e_gadcon_canvas_zone_geometry_get(es->gadcon, &cx, &cy, NULL, NULL);
 	e_menu_activate_mouse(mn,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, 
