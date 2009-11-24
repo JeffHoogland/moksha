@@ -44,10 +44,10 @@ typedef enum _E_Gadcon_Site
 #define E_GADCON_CLIENT_STYLE_PLAIN "plain"
 #define E_GADCON_CLIENT_STYLE_INSET "inset"
 
-typedef struct _E_Gadcon              E_Gadcon;
-typedef struct _E_Gadcon_Client       E_Gadcon_Client;
+typedef struct _E_Gadcon E_Gadcon;
+typedef struct _E_Gadcon_Client E_Gadcon_Client;
 typedef struct _E_Gadcon_Client_Class E_Gadcon_Client_Class;
-typedef struct _E_Gadcon_Location     E_Gadcon_Location;
+typedef struct _E_Gadcon_Location E_Gadcon_Location;
 
 #else
 #ifndef E_GADCON_H
@@ -58,27 +58,27 @@ typedef struct _E_Gadcon_Location     E_Gadcon_Location;
 
 struct _E_Gadcon
 {
-   E_Object             e_obj_inherit;
+   E_Object e_obj_inherit;
 
-   const char          *name;
-   int                  id;
-   
+   const char *name;
+   int id;
+
    E_Gadcon_Layout_Policy layout_policy;
-   
+
    struct 
      {
-	Evas_Object    *o_parent;
-	const char     *swallow_name;
+	Evas_Object *o_parent;
+	const char *swallow_name;
      } edje;
-   Ecore_Evas          *ecore_evas;
-   E_Zone              *zone;
-   
-   E_Gadcon_Orient      orient;
-   
-   Evas                *evas;
-   Evas_Object         *o_container;
-   Eina_List           *clients;
-   
+   Ecore_Evas *ecore_evas;
+   E_Zone *zone;
+
+   E_Gadcon_Orient orient;
+
+   Evas *evas;
+   Evas_Object *o_container;
+   Eina_List *clients;
+
    struct 
      {
 	void (*func) (void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
@@ -110,19 +110,18 @@ struct _E_Gadcon
 	void *data;
      } urgent_show;
    
-   E_Config_Dialog    *config_dialog;
-   unsigned char       editing : 1;
-   Ecore_X_Window      dnd_win;
-   Ecore_X_Window      xdnd_win;
-   E_Shelf            *shelf;
-   E_Toolbar          *toolbar;
-   E_Gadcon_Location  *location;
+   E_Config_Dialog *config_dialog;
+   unsigned char editing : 1;
+   Ecore_X_Window dnd_win, xdnd_win;
+   E_Shelf *shelf;
+   E_Toolbar *toolbar;
+   E_Gadcon_Location *location;
 
    E_Drop_Handler *drop_handler;
 
    E_Config_Gadcon *cf;
 
-   unsigned char          instant_edit : 1;
+   unsigned char instant_edit : 1;
 };
 
 #define GADCON_CLIENT_CLASS_VERSION 3
@@ -153,21 +152,22 @@ struct _E_Gadcon_Client_Class
 
 struct _E_Gadcon_Client
 {
-   E_Object               e_obj_inherit;
-   E_Gadcon              *gadcon;
-   const char            *name;
-   int                    id;
-   Evas_Object           *o_base;
-   Evas_Object           *o_box;
-   Evas_Object           *o_frame;
-   Evas_Object           *o_control;
-   Evas_Object           *o_event;
+   E_Object e_obj_inherit;
+   E_Gadcon *gadcon;
+   const char *name;
+   int id;
+   Evas_Object *o_base;
+   Evas_Object *o_box;
+   Evas_Object *o_frame;
+   Evas_Object *o_control;
+   Evas_Object *o_event;
    const E_Gadcon_Client_Class *client_class;
-   void                  *data;
+   void *data;
+
    struct 
      {
-	int               pos, size, res;                 //gadcon
-	double            pos_x, pos_y, size_w, size_h;   //gadman
+	int pos, size, res;                 //gadcon
+	double pos_x, pos_y, size_w, size_h;   //gadman
      } config; 
 
    struct 
@@ -180,34 +180,35 @@ struct _E_Gadcon_Client
 
    struct 
      {
-	Evas_Coord        w, h;
+	Evas_Coord w, h;
      } pad, min, aspect;
-   Ecore_Timer           *scroll_timer;
-   Ecore_Timer           *instant_edit_timer;
-   Ecore_Animator        *scroll_animator;
-   double                 scroll_pos;
-   double                 scroll_wanted;
+
+   Ecore_Timer *scroll_timer;
+   Ecore_Timer *instant_edit_timer;
+   Ecore_Animator *scroll_animator;
+   double scroll_pos, scroll_wanted;
+
    struct 
      {
 	void *data;
 	void (*func) (void *data);
      } scroll_cb;
 
-   E_Menu                *menu;
-   const char            *style;
-   unsigned char          autoscroll : 1;
-   unsigned char          resizable : 1;
+   E_Menu *menu;
+   const char *style;
+   unsigned char autoscroll : 1;
+   unsigned char resizable : 1;
    
-   unsigned char          moving : 1;
-   unsigned char          resizing : 1;
-   Evas_Coord             dx, dy;
+   unsigned char moving : 1;
+   unsigned char resizing : 1;
+   Evas_Coord dx, dy;
 
    struct 
      {
 	int x, y;
      } drag;
 
-   unsigned char       hidden : 1;
+   unsigned char hidden : 1;
 
    E_Config_Gadcon_Client *cf;
 };
@@ -295,8 +296,8 @@ EAPI void             e_gadcon_urgent_show(E_Gadcon *gc);
 
 /* site helpers */
 
-EAPI Eina_Bool        e_gadcon_site_is_shelf      (E_Gadcon_Site site);
-EAPI Eina_Bool        e_gadcon_site_is_desktop    (E_Gadcon_Site site);
+EAPI Eina_Bool        e_gadcon_site_is_shelf(E_Gadcon_Site site);
+EAPI Eina_Bool        e_gadcon_site_is_desktop(E_Gadcon_Site site);
 EAPI Eina_Bool        e_gadcon_site_is_efm_toolbar(E_Gadcon_Site site);
 
 EAPI Eina_Bool        e_gadcon_site_is_any_toolbar(E_Gadcon_Site site); // all toolbar sities
@@ -307,12 +308,12 @@ EAPI Eina_Bool        e_gadcon_site_is_not_toolbar(E_Gadcon_Site site); // all n
 EAPI E_Gadcon_Location *
 e_gadcon_location_new(const char * name, E_Gadcon_Site site,
 		       int (*add_func) (void *data, const E_Gadcon_Client_Class *cc),
-		       void * add_data,
+		       void *add_data,
 		       void (*remove_func) (void *data, E_Gadcon_Client *cc),
-		       void * remove_data);
+		       void *remove_data);
 EAPI void e_gadcon_location_free(E_Gadcon_Location *loc);
-EAPI void e_gadcon_location_register (E_Gadcon_Location * loc);
-EAPI void e_gadcon_location_unregister (E_Gadcon_Location * loc);
+EAPI void e_gadcon_location_register (E_Gadcon_Location *loc);
+EAPI void e_gadcon_location_unregister (E_Gadcon_Location *loc);
 EAPI void e_gadcon_location_set_icon_name(E_Gadcon_Location *loc, const char *name);
 EAPI void e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu);
 
