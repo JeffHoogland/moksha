@@ -40,6 +40,7 @@ e_mod_win_new(void)
    states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
    ecore_x_netwm_window_state_set(swin->win->evas_win, states, 2);
+
    ecore_x_icccm_hints_set(swin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
 
    zone = e_util_container_zone_number_get(0, 0);
@@ -72,11 +73,10 @@ e_mod_win_new(void)
    e_widget_list_object_append(swin->o_box, swin->b_close, 1, 0, 0.5);
 
    e_win_size_min_set(swin->win, zone->w, 48);
-   e_win_sticky_set(swin->win, 1);
    e_win_show(swin->win);
+   e_win_move_resize(swin->win, 0, (zone->h - 48), zone->w, 48);
 
    ecore_x_netwm_window_type_set(swin->win->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
-   e_win_move_resize(swin->win, 0, (zone->h - 48), zone->w, 48);
    return swin;
 }
 
