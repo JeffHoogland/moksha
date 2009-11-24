@@ -187,7 +187,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    EINA_LIST_FREE(inst->wins, hwin)
      e_object_del(E_OBJECT(hwin));
 
-//   if (inst->hwin) e_object_del(E_OBJECT(inst->hwin));
    E_FREE(inst);
 }
 
@@ -283,15 +282,6 @@ _il_home_win_new(Instance *inst)
    int y, w, h;
    char buff[PATH_MAX];
 
-   /*
-   if ((inst->hwin) && (inst->hwin->win)) 
-     {
-        e_border_uniconify(inst->hwin->win->border);
-        e_border_focus_set(inst->hwin->win->border, 1, 1);
-        return;
-     }
-    */
-
    if (!hwin) 
      hwin = E_OBJECT_ALLOC(Il_Home_Win, IL_HOME_WIN_TYPE, 
                            _il_home_win_cb_free);
@@ -384,7 +374,6 @@ _il_home_win_cb_delete(E_Win *win)
              continue;
           }
         else break;
-//        _il_home_apps_unpopulate();
      }
    if (!hwin) return;
    inst->wins = eina_list_remove(inst->wins, hwin);
@@ -408,7 +397,6 @@ _il_home_win_cb_resize(E_Win *win)
              continue;
           }
         else break;
-//        _il_home_apps_unpopulate();
      }
    if (!hwin) return;
 
