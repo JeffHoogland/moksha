@@ -13,9 +13,9 @@ e_modapi_init(E_Module *m)
 {
    if (!il_ind_config_init(m)) return NULL;
 
-   e_mod_win_init();
+   e_mod_ind_win_init();
 
-   iwin = e_mod_win_new();
+   iwin = e_mod_ind_win_new();
 
    return m;
 }
@@ -26,7 +26,7 @@ e_modapi_shutdown(E_Module *m)
    e_object_del(E_OBJECT(iwin));
    iwin = NULL;
 
-   e_mod_win_shutdown();
+   e_mod_ind_win_shutdown();
    il_ind_config_shutdown();
    return 1;
 }

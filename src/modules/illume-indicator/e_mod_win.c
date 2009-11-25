@@ -20,19 +20,19 @@ static void _il_ind_win_cb_menu_edit(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _il_ind_win_cb_menu_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
 
 EAPI int 
-e_mod_win_init(void) 
+e_mod_ind_win_init(void) 
 {
    return 1;
 }
 
 EAPI int 
-e_mod_win_shutdown(void) 
+e_mod_ind_win_shutdown(void) 
 {
    return 1;
 }
 
 EAPI Il_Ind_Win *
-e_mod_win_new(void) 
+e_mod_ind_win_new(void) 
 {
    Il_Ind_Win *iwin;
    E_Zone *zone;
