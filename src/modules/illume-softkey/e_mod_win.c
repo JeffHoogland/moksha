@@ -41,7 +41,7 @@ e_mod_win_new(void)
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
    ecore_x_netwm_window_state_set(swin->win->evas_win, states, 2);
    ecore_x_icccm_hints_set(swin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
-//   ecore_x_netwm_window_type_set(swin->win->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
+   ecore_x_netwm_window_type_set(swin->win->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
 
    zone = e_util_container_zone_number_get(0, 0);
    e_win_no_remember_set(swin->win, 1);
@@ -50,7 +50,7 @@ e_mod_win_new(void)
    e_win_borderless_set(swin->win, 1);
    swin->win->data = swin;
    e_win_title_set(swin->win, _("Illume Softkey"));
-   e_win_name_class_set(swin->win, "E", "Illume-Softkey");
+   e_win_name_class_set(swin->win, "Illume-Softkey", "Illume-Softkey");
 
    evas = e_win_evas_get(swin->win);
 
@@ -73,7 +73,7 @@ e_mod_win_new(void)
    e_widget_list_object_append(swin->o_box, swin->b_close, 1, 0, 0.5);
 
    e_win_size_min_set(swin->win, zone->w, 48);
-   e_win_layer_set(swin->win, 200);
+   e_win_layer_set(swin->win, 100);
    e_win_show(swin->win);
    e_win_move_resize(swin->win, 0, (zone->h - 48), zone->w, 48);
 

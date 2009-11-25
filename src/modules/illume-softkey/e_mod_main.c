@@ -27,7 +27,9 @@ e_modapi_shutdown(E_Module *m)
    swin = NULL;
 
    e_mod_win_shutdown();
+
    il_sk_config_shutdown();
+
    return 1;
 }
 
