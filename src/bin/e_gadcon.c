@@ -911,7 +911,8 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
      evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
    else if (gcc->o_base)
      evas_object_geometry_get(gcc->o_base, &x, &y, &w, &h);
-   else return; /* make clang happy */
+// FIXME
+//   else return; /* make clang happy */
    evas_object_move(gcc->o_control, x, y);
    evas_object_resize(gcc->o_control, w, h);
    e_theme_edje_object_set(gcc->o_control, "base/theme/gadman", 

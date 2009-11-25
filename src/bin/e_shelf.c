@@ -165,7 +165,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    locname = es->name;
    if (!name) locname = _("Shelf #");
    snprintf(buf, sizeof(buf), "%s %i", locname, es->id);
-   es->gadcon->location = e_gadcon_location_new (buf, E_GADCON_SITE_SHELF, _e_shelf_gadcon_client_add, es, _e_shelf_gadcon_client_remove, es);
+   es->gadcon->location = e_gadcon_location_new(buf, E_GADCON_SITE_SHELF, _e_shelf_gadcon_client_add, es, _e_shelf_gadcon_client_remove, es);
    e_gadcon_location_register(es->gadcon->location);
 // hmm dnd in ibar and ibox kill this. ok. need to look into this more   
 //   es->gadcon->instant_edit = 1;
