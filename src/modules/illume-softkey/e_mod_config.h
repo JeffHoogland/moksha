@@ -12,10 +12,10 @@ struct _Il_Sk_Config
    const char *mod_dir;
 };
 
-EAPI int il_sk_config_init(E_Module *m);
-EAPI int il_sk_config_shutdown(void);
-EAPI int il_sk_config_save(void);
-EAPI void il_sk_config_show(E_Container *con, const char *params);
+int il_sk_config_init(E_Module *m);
+int il_sk_config_shutdown(void);
+int il_sk_config_save(void);
+void il_sk_config_show(E_Container *con, const char *params);
 
 extern EAPI Il_Sk_Config *il_sk_cfg;
 

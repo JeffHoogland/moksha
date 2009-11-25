@@ -6,7 +6,7 @@
 EAPI Il_Ind_Config *il_ind_cfg = NULL;
 static E_Config_DD *conf_edd = NULL;
 
-EAPI int 
+int 
 il_ind_config_init(E_Module *m) 
 {
    conf_edd = E_CONFIG_DD_NEW("Illume-Ind_Cfg", Il_Ind_Config);
@@ -39,7 +39,7 @@ il_ind_config_init(E_Module *m)
    return 1;
 }
 
-EAPI int 
+int 
 il_ind_config_shutdown(void) 
 {
    if (il_ind_cfg->mod_dir) eina_stringshare_del(il_ind_cfg->mod_dir);
@@ -52,7 +52,7 @@ il_ind_config_shutdown(void)
    return 1;
 }
 
-EAPI int 
+int 
 il_ind_config_save(void) 
 {
    return 1;

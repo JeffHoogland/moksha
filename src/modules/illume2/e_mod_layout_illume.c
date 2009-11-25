@@ -23,7 +23,7 @@ _border_focus_in(E_Border *bd)
 
 static void
 _border_focus_out(E_Border *bd)
-{ // do something if the rfocus exits a window
+{ // do something if the focus exits a window
    printf("Border Focus Out\n");
 }
 
@@ -118,15 +118,12 @@ _zone_move_resize(E_Zone *z)
 const Illume_Layout_Mode laymode =
 {
    "illume", "Illume", // FIXME: translatable?
-     // ---
      _border_add,
      _border_del,
      _border_focus_in,
      _border_focus_out,
-     // ---
      _zone_layout,
-     _zone_move_resize,
-     // ---
+     _zone_move_resize
 };
 
 void

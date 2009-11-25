@@ -14,9 +14,9 @@ struct _Il_Ind_Config
    const char *mod_dir;
 };
 
-EAPI int il_ind_config_init(E_Module *m);
-EAPI int il_ind_config_shutdown(void);
-EAPI int il_ind_config_save(void);
+int il_ind_config_init(E_Module *m);
+int il_ind_config_shutdown(void);
+int il_ind_config_save(void);
 
 extern EAPI Il_Ind_Config *il_ind_cfg;
 

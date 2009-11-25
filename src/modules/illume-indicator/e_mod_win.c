@@ -19,19 +19,19 @@ static void _il_ind_win_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E
 static void _il_ind_win_cb_menu_edit(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _il_ind_win_cb_menu_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
 
-EAPI int 
+int 
 e_mod_ind_win_init(void) 
 {
    return 1;
 }
 
-EAPI int 
+int 
 e_mod_ind_win_shutdown(void) 
 {
    return 1;
 }
 
-EAPI Il_Ind_Win *
+Il_Ind_Win *
 e_mod_ind_win_new(void) 
 {
    Il_Ind_Win *iwin;

@@ -6,7 +6,7 @@ EAPI Il_Sk_Config *il_sk_cfg = NULL;
 static E_Config_DD *conf_edd = NULL;
 
 /* public functions */
-EAPI int 
+int 
 il_sk_config_init(E_Module *m) 
 {
    conf_edd = E_CONFIG_DD_NEW("Illume-Softkey_Cfg", Il_Sk_Config);
@@ -38,7 +38,7 @@ il_sk_config_init(E_Module *m)
    return 1;
 }
 
-EAPI int 
+int 
 il_sk_config_shutdown(void) 
 {
    if (il_sk_cfg->mod_dir) eina_stringshare_del(il_sk_cfg->mod_dir);
@@ -51,14 +51,14 @@ il_sk_config_shutdown(void)
    return 1;
 }
 
-EAPI int 
+int 
 il_sk_config_save(void) 
 {
    e_config_domain_save("module.illume-softkey", conf_edd, il_sk_cfg);
    return 1;
 }
 
-EAPI void 
+void 
 il_sk_config_show(E_Container *con, const char *params) 
 {
 

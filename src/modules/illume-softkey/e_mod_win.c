@@ -9,19 +9,19 @@ static void _il_sk_win_cb_resize(E_Win *win);
 static void _il_sk_win_cb_back_click(void *data, void *data2);
 static void _il_sk_win_cb_close_click(void *data, void *data2);
 
-EAPI int 
+int 
 e_mod_sk_win_init(void) 
 {
    return 1;
 }
 
-EAPI int 
+int 
 e_mod_sk_win_shutdown(void) 
 {
    return 1;
 }
 
-EAPI Il_Sk_Win *
+Il_Sk_Win *
 e_mod_sk_win_new(void) 
 {
    Il_Sk_Win *swin;
@@ -59,7 +59,7 @@ e_mod_sk_win_new(void)
                                 "modules/illume-softkey/window"))
      edje_object_file_set(swin->o_base, buff, "modules/illume-softkey/window");
    evas_object_move(swin->o_base, 0, 0);
-   evas_object_resize(swin->o_base, zone->w, 48);
+   evas_object_resize(swin->o_base, zone->w, 32);
    evas_object_show(swin->o_base);
 
    swin->o_box = e_widget_list_add(evas, 1, 1);
@@ -73,9 +73,9 @@ e_mod_sk_win_new(void)
                                        _il_sk_win_cb_close_click, swin, NULL);
    e_widget_list_object_append(swin->o_box, swin->b_close, 1, 0, 0.5);
 
-   e_win_size_min_set(swin->win, zone->w, 48);
+   e_win_size_min_set(swin->win, zone->w, 32);
    e_win_show(swin->win);
-   e_win_move_resize(swin->win, 0, (zone->h - 48), zone->w, 48);
+   e_win_move_resize(swin->win, 0, (zone->h - 32), zone->w, 32);
 
    return swin;
 }
