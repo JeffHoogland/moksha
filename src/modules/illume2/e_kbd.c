@@ -718,9 +718,9 @@ _e_kbd_dbus_keyboard_eval(void)
    if (have_real != _e_kbd_dbus_have_real_keyboard)
      {
 	_e_kbd_dbus_have_real_keyboard = have_real;
-	if (_e_kbd_dbus_have_real_keyboard)
-	  _e_kbd_all_disable();
-	else
+//	if (_e_kbd_dbus_have_real_keyboard)
+//	  _e_kbd_all_disable();
+//	else
 	  _e_kbd_all_enable();
      }
 }

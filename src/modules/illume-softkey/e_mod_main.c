@@ -3,7 +3,7 @@
 #include "e_mod_config.h"
 #include "e_mod_win.h"
 
-static Il_Sk_Win *win = NULL;
+static Il_Sk_Win *swin = NULL;
 
 EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Illume-Softkey" };
 
@@ -14,7 +14,8 @@ e_modapi_init(E_Module *m)
    if (!il_sk_config_init(m)) return NULL;
 
    e_mod_win_init();
-   win = e_mod_win_new();
+
+   swin = e_mod_win_new();
 
    return m;
 }
@@ -22,8 +23,8 @@ e_modapi_init(E_Module *m)
 EAPI int 
 e_modapi_shutdown(E_Module *m) 
 {
-   e_object_del(E_OBJECT(win));
-   win = NULL;
+   e_object_del(E_OBJECT(swin));
+   swin = NULL;
 
    e_mod_win_shutdown();
    il_sk_config_shutdown();
