@@ -10,19 +10,19 @@ static void _il_sk_win_cb_back_click(void *data, void *data2);
 static void _il_sk_win_cb_close_click(void *data, void *data2);
 
 EAPI int 
-e_mod_win_init(void) 
+e_mod_sk_win_init(void) 
 {
    return 1;
 }
 
 EAPI int 
-e_mod_win_shutdown(void) 
+e_mod_sk_win_shutdown(void) 
 {
    return 1;
 }
 
 EAPI Il_Sk_Win *
-e_mod_win_new(void) 
+e_mod_sk_win_new(void) 
 {
    Il_Sk_Win *swin;
    E_Zone *zone;
@@ -37,11 +37,11 @@ e_mod_win_new(void)
    if (!swin) return NULL;
 
    swin->win = e_win_new(e_util_container_number_get(0));
-   states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
-   states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
-   ecore_x_netwm_window_state_set(swin->win->evas_win, states, 2);
+//   states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
+//   states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
+//   ecore_x_netwm_window_state_set(swin->win->evas_win, states, 2);
    ecore_x_icccm_hints_set(swin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
-   ecore_x_netwm_window_type_set(swin->win->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
+//   ecore_x_netwm_window_type_set(swin->win->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
 
    zone = e_util_container_zone_number_get(0, 0);
    e_win_no_remember_set(swin->win, 1);
