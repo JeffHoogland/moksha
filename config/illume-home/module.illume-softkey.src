@@ -1,0 +1,3 @@
+group "Illume-Softkey_Cfg" struct {
+  value "version" int: 0;
+}

@@ -7,9 +7,10 @@ EXTRA_DIST = \
         icon.png \
         e.src \
 	module.battery.src \
-	module.dropshadow.src \
 	module.pager.src \
-	module.illume-home.src
+	module.illume-home.src \
+	module.illume-keyboard.src \
+	module.illume-softkey.src
 
 filesdir = $(datadir)/enlightenment/data/config/illume-home
 files_DATA = \
@@ -17,9 +18,10 @@ files_DATA = \
         icon.png \
 	e.cfg \
 	module.battery.cfg \
-	module.dropshadow.cfg \
 	module.pager.cfg \
-	module.illume-home.cfg
+	module.illume-home.cfg \
+        module.illume-keyboard.cfg \
+        module.illume-softkey.cfg
 
 %.cfg: %.src
 	$(EET_EET) -e \
@@ -28,4 +30,3 @@ files_DATA = \
 
 clean-local:
 	rm -rf *.cfg *~
-	
