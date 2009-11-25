@@ -60,7 +60,7 @@ e_mod_win_new(void)
    e_win_borderless_set(iwin->win, 1);
    iwin->win->data = iwin;
    e_win_title_set(iwin->win, _("Illume Indicator"));
-   e_win_name_class_set(iwin->win, "E", "Illume-Indicator");
+   e_win_name_class_set(iwin->win, "Illume-Indicator", "Illume-Indicator");
 
    evas = e_win_evas_get(iwin->win);
 
@@ -118,15 +118,18 @@ e_mod_win_new(void)
 static void 
 _il_ind_win_cb_free(Il_Ind_Win *iwin) 
 {
-   e_object_del(E_OBJECT(iwin->gadcon));
-   iwin->gadcon = NULL;
-
    if (iwin->menu) 
      {
         e_menu_post_deactivate_callback_set(iwin->menu, NULL, NULL);
         e_object_del(E_OBJECT(iwin->menu));
         iwin->menu = NULL;
      }
+
+   if (iwin->o_event) evas_object_del(iwin->o_event);
+   if (iwin->o_base) evas_object_del(iwin->o_base);
+
+   e_object_del(E_OBJECT(iwin->gadcon));
+   iwin->gadcon = NULL;
 
    e_object_del(E_OBJECT(iwin->win));
    E_FREE(iwin);

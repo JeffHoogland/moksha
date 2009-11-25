@@ -1,7 +1,7 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-#define IL_IND_WIN_TYPE 0xE1b0786
+#define IL_IND_WIN_TYPE 0xE1b0886
 
 typedef struct _Il_Ind_Win Il_Ind_Win;
 

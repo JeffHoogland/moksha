@@ -12,8 +12,11 @@ EAPI void *
 e_modapi_init(E_Module *m) 
 {
    if (!il_ind_config_init(m)) return NULL;
+
    e_mod_win_init();
+
    iwin = e_mod_win_new();
+
    return m;
 }
 
