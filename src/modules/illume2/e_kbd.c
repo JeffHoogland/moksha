@@ -109,7 +109,7 @@ _e_kbd_free(E_Kbd *kbd)
    kbds = eina_list_remove(kbds, kbd);
    if (kbd->animator) ecore_animator_del(kbd->animator);
    if (kbd->delay_hide) ecore_timer_del(kbd->delay_hide);
-// FIXME: thought right - on shutdoiwn, this might point to freed data
+// FIXME: thought right - on shutdown, this might point to freed data
 //   if (kbd->border) kbd->border->stolen = 0;
    EINA_LIST_FREE(kbd->waiting_borders, bd)
      bd->stolen = 0;

@@ -179,8 +179,9 @@ illume_border_is_keyboard(E_Border *bd)
 Eina_Bool
 illume_border_is_bottom_panel(E_Border *bd)
 {
-   if ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK) ||
-       (bd->client.qtopia.soft_menu)) 
+   if (((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK) ||
+       (bd->client.qtopia.soft_menu)) || 
+     (bd->client.icccm.name) && ((!strcmp(bd->client.icccm.name, "Illume-Softkey"))))
      return 1;
    return 0;
 }
@@ -190,7 +191,7 @@ Eina_Bool
 illume_border_is_top_shelf(E_Border *bd)
 {
    if ((bd->client.icccm.name) &&
-       (strstr(bd->client.icccm.name, "xfce4-panel")))
+       (strstr(bd->client.icccm.name, "Illume-Indicator")))
      return 1;
    // FIXME: detect
    return 0;

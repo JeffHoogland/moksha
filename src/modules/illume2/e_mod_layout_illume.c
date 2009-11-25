@@ -7,6 +7,10 @@ static void
 _border_add(E_Border *bd)
 { // handle a border being added
    printf("Border Add\n");
+   if (bd->client.icccm.transient_for)
+     printf("Transient For\n");
+   else if (bd->client.icccm.client_leader)
+     printf("Client Leader\n");
 }
 
 static void
@@ -37,7 +41,7 @@ _zone_layout(E_Zone *z)
    int shelfsize = 0;
    int kbdsize = 0;
    int panelsize = 0;
-   
+
    // phase 1. loop through borders to figure out sizes of things
    borders = e_border_client_list();
    EINA_LIST_FOREACH(borders, l, bd)
@@ -62,7 +66,7 @@ _zone_layout(E_Zone *z)
              if (kbdsize < mh) kbdsize = mh;
           }
      }
-   
+
    // phase 2. actually apply the sizing, positioning and layering too
    borders = e_border_client_list();
    EINA_LIST_FOREACH(borders, l, bd)
