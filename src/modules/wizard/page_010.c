@@ -7,7 +7,7 @@
 
 typedef struct _E_Intl_Pair E_Intl_Pair;
 
-static int  _basic_lang_list_sort(const void *data1, const void *data2);
+static int _basic_lang_list_sort(const void *data1, const void *data2);
 
 struct _E_Intl_Pair
 {
@@ -72,13 +72,13 @@ _basic_lang_list_sort(const void *data1, const void *data2)
 EAPI int
 wizard_page_init(E_Wizard_Page *pg)
 {
-   FILE		*output;
-   
+   FILE *output;
+
    output = popen("locale -a", "r");
    if (output) 
      {
 	char line[32];
-	
+
 	while (fscanf(output, "%[^\n]\n", line) == 1)
 	  {
 	     E_Locale_Parts *locale_parts;
@@ -93,9 +93,8 @@ wizard_page_init(E_Wizard_Page *pg)
 		    (locale_parts, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
 		  if (basic_language)
 		    {
-		       int i;
-		       
-		       i = 0;
+		       int i = 0;
+
 		       while (basic_language_predefined_pairs[i].locale_key)
 			 {
 			    /* if basic language is supported by E and System*/
@@ -124,27 +123,29 @@ wizard_page_init(E_Wizard_Page *pg)
      }
    return 1;
 }
+
 EAPI int
 wizard_page_shutdown(E_Wizard_Page *pg)
 {
    // FIXME: free blang_list
    return 1;
 }
+
 EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
    Evas_Object *o, *of, *ob;
    Eina_List *l;
    int i, sel = -1;
-   
+
    o = e_widget_list_add(pg->evas, 1, 0);
    e_wizard_title_set(_("Language"));
    of = e_widget_framelist_add(pg->evas, _("Select one"), 0);
    ob = e_widget_ilist_add(pg->evas, 32 * e_scale, 32 * e_scale, &lang);
    e_widget_size_min_set(ob, 140 * e_scale, 140 * e_scale);
-   
+
    e_widget_ilist_freeze(ob);
-   
+
    for (i = 0, l = blang_list; l; l = l->next, i++)
      {
 	E_Intl_Pair *pair;
@@ -164,7 +165,7 @@ wizard_page_show(E_Wizard_Page *pg)
    e_widget_ilist_go(ob);
    e_widget_ilist_thaw(ob);
    if (sel >= 0) e_widget_ilist_selected_set(ob, sel);
-   
+
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    evas_object_show(ob);
@@ -173,6 +174,7 @@ wizard_page_show(E_Wizard_Page *pg)
    pg->data = of;
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
+
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg)
 {
@@ -184,6 +186,7 @@ wizard_page_hide(E_Wizard_Page *pg)
    e_wizard_labels_update();
    return 1;
 }
+
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {

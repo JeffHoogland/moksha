@@ -39,11 +39,13 @@ wizard_page_init(E_Wizard_Page *pg)
 {
    return 1;
 }
+
 EAPI int
 wizard_page_shutdown(E_Wizard_Page *pg)
 {
    return 1;
 }
+
 EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
@@ -51,7 +53,7 @@ wizard_page_show(E_Wizard_Page *pg)
    Eina_List *l, *profiles;
    int i, sel = -1;
    Evas_Object *ilist;
-   
+
    o = e_widget_list_add(pg->evas, 1, 0);
    e_wizard_title_set(_("Profile"));
    of = e_widget_framelist_add(pg->evas, _("Select one"), 0);
@@ -60,9 +62,9 @@ wizard_page_show(E_Wizard_Page *pg)
    e_widget_size_min_set(ob, 140 * e_scale, 70 * e_scale);
    ilist = ob;
    e_widget_on_change_hook_set(ob, _profile_change, NULL);
-   
+
    e_widget_ilist_freeze(ob);
-   
+
    profiles = e_config_profile_list();
    for (i = 0, l = profiles; l; l = l->next, i++)
      {
@@ -70,7 +72,7 @@ wizard_page_show(E_Wizard_Page *pg)
 	char buf[PATH_MAX], *prof;
 	const char *label, *dir;
 	Evas_Object *ic;
-	
+
 	prof = l->data;
 	if (e_config_profile_get())
 	  {
@@ -111,20 +113,20 @@ wizard_page_show(E_Wizard_Page *pg)
 
    e_widget_ilist_go(ob);
    e_widget_ilist_thaw(ob);
-   
+
    e_widget_framelist_object_append(of, ob);
-   
+
    ob = e_widget_textblock_add(pg->evas);
    e_widget_size_min_set(ob, 140 * e_scale, 70 * e_scale);
    e_widget_textblock_markup_set(ob, _("Select a profile"));
    textblock = ob;
-   
+
    e_widget_framelist_object_append(of, ob);
-   
+
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    if (sel >= 0) e_widget_ilist_selected_set(ilist, sel);
-   
+
    evas_object_show(ob);
    evas_object_show(of);
    e_wizard_page_show(o);
@@ -132,6 +134,7 @@ wizard_page_show(E_Wizard_Page *pg)
    e_wizard_button_next_enable_set(0);
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
+
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg)
 {
@@ -140,7 +143,8 @@ wizard_page_hide(E_Wizard_Page *pg)
    if (e_config_profile_get())
      {
 	char buf[PATH_MAX];
-	if (e_user_dir_snprintf(buf, sizeof(buf), "config/%s", e_config_profile_get()) >= sizeof(buf))
+	if (e_user_dir_snprintf(buf, sizeof(buf), "config/%s", 
+                                e_config_profile_get()) >= sizeof(buf))
 	  return 1;
 	ecore_file_recursive_rm(buf);
      }
@@ -148,6 +152,7 @@ wizard_page_hide(E_Wizard_Page *pg)
    e_config_profile_set(profile);
    return 1;
 }
+
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {

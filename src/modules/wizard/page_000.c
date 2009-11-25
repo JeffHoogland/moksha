@@ -11,11 +11,13 @@ wizard_page_init(E_Wizard_Page *pg)
 {
    return 1;
 }
+
 EAPI int
 wizard_page_shutdown(E_Wizard_Page *pg)
 {
    return 1;
 }
+
 static int
 _next_page(void *data)
 {
@@ -23,6 +25,7 @@ _next_page(void *data)
    e_wizard_next();
    return 0;
 }
+
 EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
@@ -31,11 +34,13 @@ wizard_page_show(E_Wizard_Page *pg)
    ecore_timer_add(2.0, _next_page, NULL);
    return 1;
 }
+
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg)
 {
    return 1;
 }
+
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {
