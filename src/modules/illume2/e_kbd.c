@@ -413,7 +413,7 @@ _e_kbd_cb_border_property(void *data, int type, void *event)
    else e_kbd_fullscreen_set(ev->border->zone, 0);
    if (ev->border->client.vkbd.state == 0)
      return 1;
-   /* app wats kbd off - then kbd off it is */
+   /* app wants kbd off - then kbd off it is */
    else if (ev->border->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
      _e_kbd_all_hide();
    /* app wants something else than off... */
@@ -718,9 +718,11 @@ _e_kbd_dbus_keyboard_eval(void)
    if (have_real != _e_kbd_dbus_have_real_keyboard)
      {
 	_e_kbd_dbus_have_real_keyboard = have_real;
-//	if (_e_kbd_dbus_have_real_keyboard)
-//	  _e_kbd_all_disable();
-//	else
+#if 0
+	if (_e_kbd_dbus_have_real_keyboard)
+	  _e_kbd_all_disable();
+	else
+#endif
 	  _e_kbd_all_enable();
      }
 }
