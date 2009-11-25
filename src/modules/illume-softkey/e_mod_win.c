@@ -30,11 +30,11 @@ e_mod_sk_win_new(void)
    Ecore_X_Window_State states[2];
    char buff[PATH_MAX];
 
-   snprintf(buff, sizeof(buff), "%s/e-module-illume-softkey.edj", 
-            il_sk_cfg->mod_dir);
-
    swin = E_OBJECT_ALLOC(Il_Sk_Win, IL_SK_WIN_TYPE, _il_sk_win_cb_free);
    if (!swin) return NULL;
+
+   snprintf(buff, sizeof(buff), "%s/e-module-illume-softkey.edj", 
+            il_sk_cfg->mod_dir);
 
    swin->win = e_win_new(e_util_container_number_get(0));
    states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
@@ -43,9 +43,7 @@ e_mod_sk_win_new(void)
    ecore_x_icccm_hints_set(swin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
    ecore_x_netwm_window_type_set(swin->win->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
 
-   zone = e_util_container_zone_number_get(0, 0);
    e_win_no_remember_set(swin->win, 1);
-
    e_win_resize_callback_set(swin->win, _il_sk_win_cb_resize);
    e_win_borderless_set(swin->win, 1);
    swin->win->data = swin;
@@ -54,11 +52,14 @@ e_mod_sk_win_new(void)
 
    evas = e_win_evas_get(swin->win);
 
+   zone = e_util_container_zone_number_get(0, 0);
+
    swin->o_base = edje_object_add(evas);
    if (!e_theme_edje_object_set(swin->o_base, "base/theme/modules/illume-softkey", 
                                 "modules/illume-softkey/window"))
      edje_object_file_set(swin->o_base, buff, "modules/illume-softkey/window");
    evas_object_move(swin->o_base, 0, 0);
+   evas_object_resize(swin->o_base, zone->w, 48);
    evas_object_show(swin->o_base);
 
    swin->o_box = e_widget_list_add(evas, 1, 1);
@@ -73,7 +74,6 @@ e_mod_sk_win_new(void)
    e_widget_list_object_append(swin->o_box, swin->b_close, 1, 0, 0.5);
 
    e_win_size_min_set(swin->win, zone->w, 48);
-   e_win_layer_set(swin->win, 100);
    e_win_show(swin->win);
    e_win_move_resize(swin->win, 0, (zone->h - 48), zone->w, 48);
 
