@@ -903,16 +903,18 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    if (gcc->o_control) return;
-   e_gadcon_locked_set(gcc->gadcon, 1);
-   gcc->gadcon->editing = 1;
-   gcc->o_control = edje_object_add(gcc->gadcon->evas);
-   evas_object_layer_set(gcc->o_control, 100);
+
    if (gcc->o_frame)
      evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
    else if (gcc->o_base)
      evas_object_geometry_get(gcc->o_base, &x, &y, &w, &h);
-// FIXME
-//   else return; /* make clang happy */
+   else return; /* make clang happy */
+
+   gcc->o_control = edje_object_add(gcc->gadcon->evas);
+   evas_object_layer_set(gcc->o_control, 100);
+   e_gadcon_locked_set(gcc->gadcon, 1);
+   gcc->gadcon->editing = 1;
+
    evas_object_move(gcc->o_control, x, y);
    evas_object_resize(gcc->o_control, w, h);
    e_theme_edje_object_set(gcc->o_control, "base/theme/gadman", 
