@@ -25,18 +25,34 @@ il_config_init(E_Module *m)
    E_CONFIG_VAL(D, T, policy.vkbd.name, STR);
    E_CONFIG_VAL(D, T, policy.vkbd.title, STR);
    E_CONFIG_VAL(D, T, policy.vkbd.win_type, STR);
+   E_CONFIG_VAL(D, T, policy.vkbd.match.class, INT);
+   E_CONFIG_VAL(D, T, policy.vkbd.match.name, INT);
+   E_CONFIG_VAL(D, T, policy.vkbd.match.title, INT);
+   E_CONFIG_VAL(D, T, policy.vkbd.match.win_type, INT);
    E_CONFIG_VAL(D, T, policy.softkey.class, STR);
    E_CONFIG_VAL(D, T, policy.softkey.name, STR);
    E_CONFIG_VAL(D, T, policy.softkey.title, STR);
    E_CONFIG_VAL(D, T, policy.softkey.win_type, STR);
+   E_CONFIG_VAL(D, T, policy.softkey.match.class, INT);
+   E_CONFIG_VAL(D, T, policy.softkey.match.name, INT);
+   E_CONFIG_VAL(D, T, policy.softkey.match.title, INT);
+   E_CONFIG_VAL(D, T, policy.softkey.match.win_type, INT);
    E_CONFIG_VAL(D, T, policy.home.class, STR);
    E_CONFIG_VAL(D, T, policy.home.name, STR);
    E_CONFIG_VAL(D, T, policy.home.title, STR);
    E_CONFIG_VAL(D, T, policy.home.win_type, STR);
+   E_CONFIG_VAL(D, T, policy.home.match.class, INT);
+   E_CONFIG_VAL(D, T, policy.home.match.name, INT);
+   E_CONFIG_VAL(D, T, policy.home.match.title, INT);
+   E_CONFIG_VAL(D, T, policy.home.match.win_type, INT);
    E_CONFIG_VAL(D, T, policy.indicator.class, STR);
    E_CONFIG_VAL(D, T, policy.indicator.name, STR);
    E_CONFIG_VAL(D, T, policy.indicator.title, STR);
    E_CONFIG_VAL(D, T, policy.indicator.win_type, STR);
+   E_CONFIG_VAL(D, T, policy.indicator.match.class, INT);
+   E_CONFIG_VAL(D, T, policy.indicator.match.name, INT);
+   E_CONFIG_VAL(D, T, policy.indicator.match.title, INT);
+   E_CONFIG_VAL(D, T, policy.indicator.match.win_type, INT);
 
    il_cfg = e_config_domain_load("module.illume2", conf_edd);
    if ((il_cfg) && 
@@ -65,6 +81,10 @@ il_config_init(E_Module *m)
              il_cfg->policy.vkbd.title = 
                eina_stringshare_add("Virtual Keyboard");
              il_cfg->policy.vkbd.win_type = NULL;
+             il_cfg->policy.vkbd.match.class = 0;
+             il_cfg->policy.vkbd.match.name = 0;
+             il_cfg->policy.vkbd.match.title = 0;
+             il_cfg->policy.vkbd.match.win_type = 0;
              il_cfg->policy.softkey.class = 
                eina_stringshare_add("Illume-Softkey");
              il_cfg->policy.softkey.name = 
@@ -72,13 +92,21 @@ il_config_init(E_Module *m)
              il_cfg->policy.softkey.title = 
                eina_stringshare_add("Illume Softkey");
              il_cfg->policy.softkey.win_type = NULL;
+             il_cfg->policy.softkey.match.class = 0;
+             il_cfg->policy.softkey.match.name = 0;
+             il_cfg->policy.softkey.match.title = 0;
+             il_cfg->policy.softkey.match.win_type = 0;
              il_cfg->policy.home.class = 
                eina_stringshare_add("Illume-Home");
              il_cfg->policy.home.name = 
                eina_stringshare_add("Illume-Home");
              il_cfg->policy.home.title = 
                eina_stringshare_add("Illume Home");
-             il_cfg->policy.indicator.win_type = NULL;
+             il_cfg->policy.home.win_type = NULL;
+             il_cfg->policy.home.match.class = 0;
+             il_cfg->policy.home.match.name = 0;
+             il_cfg->policy.home.match.title = 0;
+             il_cfg->policy.home.match.win_type = 0;
              il_cfg->policy.indicator.class = 
                eina_stringshare_add("Illume-Indicator");
              il_cfg->policy.indicator.name = 
@@ -86,6 +114,10 @@ il_config_init(E_Module *m)
              il_cfg->policy.indicator.title = 
                eina_stringshare_add("Illume Indicator");
              il_cfg->policy.indicator.win_type = NULL;
+             il_cfg->policy.indicator.match.class = 0;
+             il_cfg->policy.indicator.match.name = 0;
+             il_cfg->policy.indicator.match.title = 0;
+             il_cfg->policy.indicator.match.win_type = 0;
           }
         il_cfg->version = (IL_CONFIG_MAJ << 16) | IL_CONFIG_MIN;
      }

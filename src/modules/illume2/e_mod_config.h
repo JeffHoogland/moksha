@@ -27,6 +27,10 @@ struct _Il_Config
              const char *name;
              const char *title;
              const char *win_type;
+             struct 
+               {
+                  int class, name, title, win_type;
+               } match;
           } vkbd, softkey, home, indicator;
      } policy;
 
