@@ -82,8 +82,8 @@ il_config_init(E_Module *m)
                eina_stringshare_add("Virtual Keyboard");
              il_cfg->policy.vkbd.win_type = ECORE_X_WINDOW_TYPE_NORMAL;
              il_cfg->policy.vkbd.match.class = 0;
-             il_cfg->policy.vkbd.match.name = 0;
-             il_cfg->policy.vkbd.match.title = 0;
+             il_cfg->policy.vkbd.match.name = 1;
+             il_cfg->policy.vkbd.match.title = 1;
              il_cfg->policy.vkbd.match.win_type = 0;
              il_cfg->policy.softkey.class = 
                eina_stringshare_add("Illume-Softkey");
@@ -93,8 +93,8 @@ il_config_init(E_Module *m)
                eina_stringshare_add("Illume Softkey");
              il_cfg->policy.softkey.win_type = ECORE_X_WINDOW_TYPE_NORMAL;
              il_cfg->policy.softkey.match.class = 0;
-             il_cfg->policy.softkey.match.name = 0;
-             il_cfg->policy.softkey.match.title = 0;
+             il_cfg->policy.softkey.match.name = 1;
+             il_cfg->policy.softkey.match.title = 1;
              il_cfg->policy.softkey.match.win_type = 0;
              il_cfg->policy.home.class = 
                eina_stringshare_add("Illume-Home");
@@ -104,8 +104,8 @@ il_config_init(E_Module *m)
                eina_stringshare_add("Illume Home");
              il_cfg->policy.home.win_type = ECORE_X_WINDOW_TYPE_NORMAL;
              il_cfg->policy.home.match.class = 0;
-             il_cfg->policy.home.match.name = 0;
-             il_cfg->policy.home.match.title = 0;
+             il_cfg->policy.home.match.name = 1;
+             il_cfg->policy.home.match.title = 1;
              il_cfg->policy.home.match.win_type = 0;
              il_cfg->policy.indicator.class = 
                eina_stringshare_add("Illume-Indicator");
@@ -115,8 +115,8 @@ il_config_init(E_Module *m)
                eina_stringshare_add("Illume Indicator");
              il_cfg->policy.indicator.win_type = ECORE_X_WINDOW_TYPE_NORMAL;
              il_cfg->policy.indicator.match.class = 0;
-             il_cfg->policy.indicator.match.name = 0;
-             il_cfg->policy.indicator.match.title = 0;
+             il_cfg->policy.indicator.match.name = 1;
+             il_cfg->policy.indicator.match.title = 1;
              il_cfg->policy.indicator.match.win_type = 0;
           }
         il_cfg->version = (IL_CONFIG_MAJ << 16) | IL_CONFIG_MIN;

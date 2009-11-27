@@ -97,7 +97,7 @@ _zone_layout(E_Zone *z)
           }
         else if (illume_border_is_home(bd))
           {
-             e_border_move_resize(bd, z->x, z->y, z->w, z->h);
+             e_border_move_resize(bd, z->x, z->y + shelfsize, z->w, z->h - shelfsize);
              if (bd->layer != 50) e_border_layer_set(bd, 50);
           }
         else if (illume_border_is_dialog(bd))

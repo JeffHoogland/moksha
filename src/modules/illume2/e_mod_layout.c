@@ -2,6 +2,7 @@
 #include "e_mod_main.h"
 #include "e_mod_layout.h"
 #include "e_mod_layout_illume.h"
+#include "e_mod_config.h"
 
 // internal calls
 static void _e_mod_layout_cb_hook_container_layout(void *data, void *data2);
@@ -164,15 +165,29 @@ illume_border_is_dialog(E_Border *bd)
 Eina_Bool
 illume_border_is_keyboard(E_Border *bd)
 {
-   if ((bd->client.vkbd.vkbd) || /* explicit hint that its a virtual keyboard */
-       /* legacy */
-       ( /* trap the matchbox qwerty and multitap kbd's */
-         (((bd->client.icccm.title) && 
-           (!strcmp(bd->client.icccm.title, "Keyboard"))) ||
-          ((bd->client.icccm.name) && 
-           ((!strcmp(bd->client.icccm.name, "multitap-pad")))))
-         && (bd->client.netwm.state.skip_taskbar)
-         && (bd->client.netwm.state.skip_pager))) 
+   if (bd->client.vkbd.vkbd) return 1;
+   if (il_cfg->policy.vkbd.match.title) 
+     {
+        if ((bd->client.icccm.title) && 
+            (!strcmp(bd->client.icccm.title, il_cfg->policy.vkbd.title)))
+          return 1;
+     }
+   if (il_cfg->policy.vkbd.match.name) 
+     {
+        if ((bd->client.icccm.name) && 
+            (!strcmp(bd->client.icccm.name, il_cfg->policy.vkbd.name)))
+          return 1;
+     }
+   if (il_cfg->policy.vkbd.match.class) 
+     {
+        if ((bd->client.icccm.class) && 
+            (!strcmp(bd->client.icccm.class, il_cfg->policy.vkbd.class)))
+          return 1;
+     }
+   if ((bd->client.icccm.name) && 
+       ((!strcmp(bd->client.icccm.name, "multitap-pad")))
+       && (bd->client.netwm.state.skip_taskbar)
+       && (bd->client.netwm.state.skip_pager)) 
      return 1;
    return 0;
 }
@@ -181,10 +196,26 @@ illume_border_is_keyboard(E_Border *bd)
 Eina_Bool
 illume_border_is_bottom_panel(E_Border *bd)
 {
+   if (il_cfg->policy.softkey.match.title) 
+     {
+        if ((bd->client.icccm.title) && 
+            (!strcmp(bd->client.icccm.title, il_cfg->policy.softkey.title)))
+          return 1;
+     }
+   if (il_cfg->policy.softkey.match.name) 
+     {
+        if ((bd->client.icccm.name) && 
+            (!strcmp(bd->client.icccm.name, il_cfg->policy.softkey.name)))
+          return 1;
+     }
+   if (il_cfg->policy.softkey.match.class) 
+     {
+        if ((bd->client.icccm.class) && 
+            (!strcmp(bd->client.icccm.class, il_cfg->policy.softkey.class)))
+          return 1;
+     }
    if (((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK) ||
-       (bd->client.qtopia.soft_menu)) || 
-     (bd->client.icccm.name) && 
-       ((!strcmp(bd->client.icccm.name, "Illume-Softkey"))))
+        (bd->client.qtopia.soft_menu)))
      return 1;
    return 0;
 }
@@ -193,10 +224,24 @@ illume_border_is_bottom_panel(E_Border *bd)
 Eina_Bool
 illume_border_is_top_shelf(E_Border *bd)
 {
-   if ((bd->client.icccm.name) && 
-       (strstr(bd->client.icccm.name, "Illume-Indicator")))
-     return 1;
-   // FIXME: detect
+   if (il_cfg->policy.indicator.match.title) 
+     {
+        if ((bd->client.icccm.title) && 
+            (!strcmp(bd->client.icccm.title, il_cfg->policy.indicator.title)))
+          return 1;
+     }
+   if (il_cfg->policy.indicator.match.name) 
+     {
+        if ((bd->client.icccm.name) && 
+            (!strcmp(bd->client.icccm.name, il_cfg->policy.indicator.name)))
+          return 1;
+     }
+   if (il_cfg->policy.indicator.match.class) 
+     {
+        if ((bd->client.icccm.class) && 
+            (!strcmp(bd->client.icccm.class, il_cfg->policy.indicator.class)))
+          return 1;
+     }
    return 0;
 }
 
@@ -220,11 +265,24 @@ illume_border_is_notification(E_Border *bd)
 Eina_Bool
 illume_border_is_home(E_Border *bd)
 {
-   if (((bd->client.icccm.name) && 
-        (!strcmp(bd->client.icccm.name, "Illume-Home"))) || 
-       ((bd->client.icccm.title) && 
-        (strstr(bd->client.icccm.title, "Home")))) 
-     return 1;
+   if (il_cfg->policy.home.match.title) 
+     {
+        if ((bd->client.icccm.title) && 
+            (!strcmp(bd->client.icccm.title, il_cfg->policy.home.title)))
+          return 1;
+     }
+   if (il_cfg->policy.home.match.name) 
+     {
+        if ((bd->client.icccm.name) && 
+            (!strcmp(bd->client.icccm.name, il_cfg->policy.home.name)))
+          return 1;
+     }
+   if (il_cfg->policy.home.match.class) 
+     {
+        if ((bd->client.icccm.class) && 
+            (!strcmp(bd->client.icccm.class, il_cfg->policy.home.class)))
+          return 1;
+     }
    return 0;
 }
 
