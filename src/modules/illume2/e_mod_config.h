@@ -1,7 +1,7 @@
 #ifndef E_MOD_CONFIG_H
 # define E_MOD_CONFIG_H
 
-# define IL_CONFIG_MIN 0
+# define IL_CONFIG_MIN 1
 # define IL_CONFIG_MAJ 0
 
 typedef struct _Il_Config Il_Config;
@@ -17,6 +17,18 @@ struct _Il_Config
              int duration;
           } kbd, softkey;
      } sliding;
+
+   struct 
+     {
+        const char *name;
+        struct 
+          {
+             const char *class;
+             const char *name;
+             const char *title;
+             const char *win_type;
+          } vkbd, softkey, home;
+     } policy;
 
    // Not User Configurable. Placeholders
    const char *mod_dir;
