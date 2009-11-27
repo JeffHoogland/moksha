@@ -26,7 +26,7 @@ struct _Il_Config
              const char *class;
              const char *name;
              const char *title;
-             const char *win_type;
+             int win_type;
              struct 
                {
                   int class, name, title, win_type;

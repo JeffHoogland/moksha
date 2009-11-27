@@ -167,8 +167,10 @@ illume_border_is_keyboard(E_Border *bd)
    if ((bd->client.vkbd.vkbd) || /* explicit hint that its a virtual keyboard */
        /* legacy */
        ( /* trap the matchbox qwerty and multitap kbd's */
-         (((bd->client.icccm.title) && (!strcmp(bd->client.icccm.title, "Keyboard"))) ||
-          ((bd->client.icccm.name) && ((!strcmp(bd->client.icccm.name, "multitap-pad")))))
+         (((bd->client.icccm.title) && 
+           (!strcmp(bd->client.icccm.title, "Keyboard"))) ||
+          ((bd->client.icccm.name) && 
+           ((!strcmp(bd->client.icccm.name, "multitap-pad")))))
          && (bd->client.netwm.state.skip_taskbar)
          && (bd->client.netwm.state.skip_pager))) 
      return 1;
@@ -181,7 +183,8 @@ illume_border_is_bottom_panel(E_Border *bd)
 {
    if (((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK) ||
        (bd->client.qtopia.soft_menu)) || 
-     (bd->client.icccm.name) && ((!strcmp(bd->client.icccm.name, "Illume-Softkey"))))
+     (bd->client.icccm.name) && 
+       ((!strcmp(bd->client.icccm.name, "Illume-Softkey"))))
      return 1;
    return 0;
 }
@@ -190,7 +193,7 @@ illume_border_is_bottom_panel(E_Border *bd)
 Eina_Bool
 illume_border_is_top_shelf(E_Border *bd)
 {
-   if ((bd->client.icccm.name) &&
+   if ((bd->client.icccm.name) && 
        (strstr(bd->client.icccm.name, "Illume-Indicator")))
      return 1;
    // FIXME: detect
@@ -220,7 +223,7 @@ illume_border_is_home(E_Border *bd)
    if (((bd->client.icccm.name) && 
         (!strcmp(bd->client.icccm.name, "Illume-Home"))) || 
        ((bd->client.icccm.title) && 
-        (strstr(bd->client.icccm.title, "Home"))))
+        (strstr(bd->client.icccm.title, "Home")))) 
      return 1;
    return 0;
 }

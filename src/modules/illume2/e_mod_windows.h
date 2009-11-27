@@ -3,4 +3,6 @@
 
 EAPI void il_config_windows_show(E_Container *con, const char *params);
 
+extern EAPI int IL_EVENT_WINDOW_SELECTED;
+
 #endif
