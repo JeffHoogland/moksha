@@ -339,7 +339,7 @@ _il_home_win_new(Instance *inst)
    e_zone_useful_geometry_get(zone, NULL, &y, &w, NULL);
 
    e_win_title_set(hwin->win, _("Illume Home"));
-   e_win_name_class_set(hwin->win, "Illume-Home", "Home");
+   e_win_name_class_set(hwin->win, "Illume-Home", "Illume-Home");
    e_win_size_min_set(hwin->win, 48, 48);
    e_win_move_resize(hwin->win, 0, y, w, 200);
    e_win_show(hwin->win);
