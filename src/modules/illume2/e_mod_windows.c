@@ -48,9 +48,22 @@ _il_config_windows_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _il_config_windows_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *list;
+   Evas_Object *list, *of, *ow;
 
    list = e_widget_list_add(evas, 0, 0);
+
+   of = e_widget_framelist_add(evas, _("Home"), 0);
+   e_widget_list_object_append(list, of, 1, 0, 0.0);
+
+   of = e_widget_framelist_add(evas, _("Indicator"), 0);
+   e_widget_list_object_append(list, of, 1, 0, 0.0);
+
+   of = e_widget_framelist_add(evas, _("Keyboard"), 0);
+   e_widget_list_object_append(list, of, 1, 0, 0.0);
+
+   of = e_widget_framelist_add(evas, _("Softkey"), 0);
+   e_widget_list_object_append(list, of, 1, 0, 0.0);
+
    return list;
 }
 

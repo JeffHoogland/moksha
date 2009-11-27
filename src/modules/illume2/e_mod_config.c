@@ -33,6 +33,10 @@ il_config_init(E_Module *m)
    E_CONFIG_VAL(D, T, policy.home.name, STR);
    E_CONFIG_VAL(D, T, policy.home.title, STR);
    E_CONFIG_VAL(D, T, policy.home.win_type, STR);
+   E_CONFIG_VAL(D, T, policy.indicator.class, STR);
+   E_CONFIG_VAL(D, T, policy.indicator.name, STR);
+   E_CONFIG_VAL(D, T, policy.indicator.title, STR);
+   E_CONFIG_VAL(D, T, policy.indicator.win_type, STR);
 
    il_cfg = e_config_domain_load("module.illume2", conf_edd);
    if ((il_cfg) && 
@@ -74,7 +78,14 @@ il_config_init(E_Module *m)
                eina_stringshare_add("Illume-Home");
              il_cfg->policy.home.title = 
                eina_stringshare_add("Illume Home");
-             il_cfg->policy.home.win_type = NULL;
+             il_cfg->policy.indicator.win_type = NULL;
+             il_cfg->policy.indicator.class = 
+               eina_stringshare_add("Illume-Indicator");
+             il_cfg->policy.indicator.name = 
+               eina_stringshare_add("Illume-Indicator");
+             il_cfg->policy.indicator.title = 
+               eina_stringshare_add("Illume Indicator");
+             il_cfg->policy.indicator.win_type = NULL;
           }
         il_cfg->version = (IL_CONFIG_MAJ << 16) | IL_CONFIG_MIN;
      }
@@ -126,6 +137,15 @@ il_config_shutdown(void)
      eina_stringshare_del(il_cfg->policy.home.title);
    if (il_cfg->policy.home.win_type) 
      eina_stringshare_del(il_cfg->policy.home.win_type);
+
+   if (il_cfg->policy.indicator.class) 
+     eina_stringshare_del(il_cfg->policy.indicator.class);
+   if (il_cfg->policy.indicator.name) 
+     eina_stringshare_del(il_cfg->policy.indicator.name);
+   if (il_cfg->policy.indicator.title) 
+     eina_stringshare_del(il_cfg->policy.indicator.title);
+   if (il_cfg->policy.indicator.win_type) 
+     eina_stringshare_del(il_cfg->policy.indicator.win_type);
 
    if (il_cfg->mod_dir) eina_stringshare_del(il_cfg->mod_dir);
 

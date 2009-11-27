@@ -27,7 +27,7 @@ struct _Il_Config
              const char *name;
              const char *title;
              const char *win_type;
-          } vkbd, softkey, home;
+          } vkbd, softkey, home, indicator;
      } policy;
 
    // Not User Configurable. Placeholders
