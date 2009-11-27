@@ -325,7 +325,8 @@ _il_home_win_new(Instance *inst)
    hwin->o_fm = e_fm2_add(e_win_evas_get(hwin->win));
    _il_home_fmc_set(hwin->o_fm);
    evas_object_show(hwin->o_fm);
-   e_fm2_path_set(hwin->o_fm, "/", getenv("HOME"));
+   e_user_dir_concat_static(buff, "appshadow");
+   e_fm2_path_set(hwin->o_fm, NULL, buff);
 
    e_scrollframe_extern_pan_set(hwin->o_sf, hwin->o_fm, 
                                 _il_home_pan_set, 
