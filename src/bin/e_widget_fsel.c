@@ -532,7 +532,7 @@ e_widget_fsel_path_get(Evas_Object *obj, const char **dev, const char **path)
 
    if (!obj) return;
    wd = e_widget_data_get(obj);
-   return e_fm2_path_get(wd->o_files_fm, dev, path);
+   e_fm2_path_get(wd->o_files_fm, dev, path);
 }
 
 EAPI const char *

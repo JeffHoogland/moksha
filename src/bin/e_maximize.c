@@ -25,7 +25,7 @@ static void _e_maximize_border_rects_fill_vert(E_Border *bd, Eina_List *rects, i
 EAPI void
 e_maximize_border_shelf_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2, E_Maximize dir)
 {
-   return e_maximize_border_shelf_fill(bd, x1, y1, x2, y2, dir);
+   e_maximize_border_shelf_fill(bd, x1, y1, x2, y2, dir);
 }
 
 EAPI void
