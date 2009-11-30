@@ -13,7 +13,7 @@ static int _il_config_animation_change_timeout(void *data);
 Ecore_Timer *_anim_change_timer = NULL;
 
 /* public functions */
-EAPI void 
+void 
 il_config_animation_show(E_Container *con, const char *params) 
 {
    E_Config_Dialog *cfd;
@@ -43,7 +43,7 @@ _il_config_animation_create(E_Config_Dialog *cfd)
 static void 
 _il_config_animation_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-
+   if (_anim_change_timer) ecore_timer_del(_anim_change_timer);
 }
 
 static Evas_Object *
