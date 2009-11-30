@@ -235,7 +235,7 @@ e_icon_size_get(Evas_Object *obj, int *w, int *h)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   return evas_object_image_size_get(sd->obj, w, h);
+   evas_object_image_size_get(sd->obj, w, h);
 }
 
 EAPI int
