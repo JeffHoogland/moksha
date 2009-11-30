@@ -34,7 +34,9 @@ module_la_SOURCES      = e_mod_main.h \
                          e_mod_windows.h \
                          e_mod_windows.c \
                          e_mod_select_window.h \
-                         e_mod_select_window.c
+                         e_mod_select_window.c \
+                         e_mod_policy.h \
+                         e_mod_policy.c
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version

@@ -34,6 +34,7 @@ struct _Illume_Layout_Mode
 
 void illume_layout_mode_register(const Illume_Layout_Mode *laymode);
 void illume_layout_mode_unregister(const Illume_Layout_Mode *laymode);
+Eina_List *illume_layout_modes_get(void);
 
 void illume_border_activate(E_Border *bd);
 void illume_border_show(E_Border *bd);

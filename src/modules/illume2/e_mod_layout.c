@@ -101,6 +101,12 @@ illume_layout_mode_unregister(const Illume_Layout_Mode *laymode)
    modes = eina_list_remove(modes, laymode);
 }
 
+Eina_List *
+illume_layout_modes_get(void) 
+{
+   return modes;
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // :: Convenience routines to make it easy to write layout logic code ::
 

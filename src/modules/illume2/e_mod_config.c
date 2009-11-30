@@ -3,6 +3,7 @@
 #include "e_mod_config.h"
 #include "e_mod_animation.h"
 #include "e_mod_windows.h"
+#include "e_mod_policy.h"
 
 /* local variables */
 EAPI Il_Config *il_cfg = NULL;
@@ -73,7 +74,7 @@ il_config_init(E_Module *m)
         /* Add new config variables here */
         if ((il_cfg->version & 0xffff) < 1) 
           {
-             il_cfg->policy.name = NULL;
+             il_cfg->policy.name = eina_stringshare_add("Illume");
              il_cfg->policy.vkbd.class = 
                eina_stringshare_add("Virtual-Keyboard");
              il_cfg->policy.vkbd.name = 
@@ -131,12 +132,16 @@ il_config_init(E_Module *m)
    e_configure_registry_generic_item_add("illume/windows", 0, _("Windows"), 
                                          NULL, "enlightenment/windows", 
                                          il_config_windows_show);
+   e_configure_registry_generic_item_add("illume/policy", 0, _("Policy"), 
+                                         NULL, "enlightenment/policy", 
+                                         il_config_policy_show);
    return 1;
 }
 
 EAPI int 
 il_config_shutdown(void) 
 {
+   e_configure_registry_item_del("illume/policy");
    e_configure_registry_item_del("illume/windows");
    e_configure_registry_item_del("illume/animation");
    e_configure_registry_category_del("illume");
