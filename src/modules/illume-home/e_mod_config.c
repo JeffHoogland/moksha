@@ -16,7 +16,7 @@ Ecore_Timer *_il_home_config_change_timer = NULL;
 Evas_Object *delay_label, *delay_slider;
 
 /* public functions */
-EAPI int 
+int 
 il_home_config_init(E_Module *m) 
 {
    conf_edd = E_CONFIG_DD_NEW("Illume-Home_Cfg", Il_Home_Config);
@@ -61,7 +61,7 @@ il_home_config_init(E_Module *m)
    return 1;
 }
 
-EAPI int 
+int 
 il_home_config_shutdown(void) 
 {
    il_home_cfg->cfd = NULL;
@@ -78,14 +78,14 @@ il_home_config_shutdown(void)
    return 1;
 }
 
-EAPI int 
+int 
 il_home_config_save(void) 
 {
    e_config_domain_save("module.illume-home", conf_edd, il_home_cfg);
    return 1;
 }
 
-EAPI void 
+void 
 il_home_config_show(E_Container *con, const char *params) 
 {
    E_Config_Dialog *cfd;
@@ -108,7 +108,7 @@ il_home_config_show(E_Container *con, const char *params)
    il_home_cfg->cfd = cfd;
 }
 
-/* local function prototypes */
+/* local functions */
 static void *
 _il_home_config_create(E_Config_Dialog *cfd) 
 {
@@ -192,7 +192,7 @@ _il_home_config_click_changed(void *data, Evas_Object *obj, void *event)
 static int 
 _il_home_config_change_timeout(void *data) 
 {
-   /* win cfg update */
+   il_home_win_cfg_update();
    e_config_save_queue();
    _il_home_config_change_timer = NULL;
    return 0;

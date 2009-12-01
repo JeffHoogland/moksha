@@ -7,6 +7,6 @@ EAPI void *e_modapi_init(E_Module *m);
 EAPI int e_modapi_shutdown(E_Module *m);
 EAPI int e_modapi_save(E_Module *m);
 
-EAPI void il_home_win_cfg_update(void);
+void il_home_win_cfg_update(void);
 
 #endif

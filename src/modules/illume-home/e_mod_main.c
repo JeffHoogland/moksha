@@ -129,7 +129,7 @@ e_modapi_save(E_Module *m)
    return il_home_config_save();
 }
 
-EAPI void 
+void 
 il_home_win_cfg_update(void) 
 {
    _il_home_apps_unpopulate();

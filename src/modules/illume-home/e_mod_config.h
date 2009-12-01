@@ -17,10 +17,10 @@ struct _Il_Home_Config
    E_Config_Dialog *cfd;
 };
 
-EAPI int il_home_config_init(E_Module *m);
-EAPI int il_home_config_shutdown(void);
-EAPI int il_home_config_save(void);
-EAPI void il_home_config_show(E_Container *con, const char *params);
+int il_home_config_init(E_Module *m);
+int il_home_config_shutdown(void);
+int il_home_config_save(void);
+void il_home_config_show(E_Container *con, const char *params);
 
 extern EAPI Il_Home_Config *il_home_cfg;
 
