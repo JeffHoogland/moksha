@@ -6,9 +6,12 @@
 static void *_il_config_policy_settings_create(E_Config_Dialog *cfd);
 static void _il_config_policy_settings_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_il_config_policy_settings_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _il_config_policy_settings_changed(void *data, Evas_Object *obj, void *event);
+static int _il_config_policy_settings_change_timeout(void *data);
 
 /* local variables */
 Ecore_Timer *_ps_change_timer = NULL;
+Evas_Object *o_top, *o_left;
 
 void 
 il_config_policy_settings_show(E_Container *con, const char *params) 
@@ -54,17 +57,46 @@ _il_config_policy_settings_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_
    rg = e_widget_radio_group_new(&(il_cfg->policy.mode.dual));
    ow = e_widget_radio_add(evas, _("Single App Mode"), 0, rg);
    e_widget_framelist_object_append(of, ow);
+   evas_object_smart_callback_add(ow, "changed", 
+                                  _il_config_policy_settings_changed, NULL);
    ow = e_widget_radio_add(evas, _("Dual App Mode"), 1, rg);
    e_widget_framelist_object_append(of, ow);
+   evas_object_smart_callback_add(ow, "changed", 
+                                  _il_config_policy_settings_changed, NULL);
    e_widget_list_object_append(list, of, 1, 0, 0.0);
 
    of = e_widget_framelist_add(evas, _("Window Layout"), 0);
    rg = e_widget_radio_group_new(&(il_cfg->policy.mode.side));
-   ow = e_widget_radio_add(evas, _("Top/Bottom"), 0, rg);
-   e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, _("Left/Right"), 1, rg);
-   e_widget_framelist_object_append(of, ow);
+   o_top = e_widget_radio_add(evas, _("Top/Bottom"), 0, rg);
+   e_widget_framelist_object_append(of, o_top);
+   evas_object_smart_callback_add(o_top, "changed", 
+                                  _il_config_policy_settings_changed, NULL);
+   o_left = e_widget_radio_add(evas, _("Left/Right"), 1, rg);
+   e_widget_framelist_object_append(of, o_left);
+   evas_object_smart_callback_add(o_left, "changed", 
+                                  _il_config_policy_settings_changed, NULL);
    e_widget_list_object_append(list, of, 1, 0, 0.0);
 
+   e_widget_disabled_set(o_top, !il_cfg->policy.mode.dual);
+   e_widget_disabled_set(o_left, !il_cfg->policy.mode.dual);
+
    return list;
+}
+
+static void 
+_il_config_policy_settings_changed(void *data, Evas_Object *obj, void *event) 
+{
+   e_widget_disabled_set(o_top, !il_cfg->policy.mode.dual);
+   e_widget_disabled_set(o_left, !il_cfg->policy.mode.dual);
+   if (_ps_change_timer) ecore_timer_del(_ps_change_timer);
+   _ps_change_timer = 
+     ecore_timer_add(0.5, _il_config_policy_settings_change_timeout, data);
+}
+
+static int 
+_il_config_policy_settings_change_timeout(void *data) 
+{
+   e_config_save_queue();
+   _ps_change_timer = NULL;
+   return 0;
 }
