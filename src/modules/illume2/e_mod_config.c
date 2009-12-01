@@ -11,7 +11,7 @@ EAPI Il_Config *il_cfg = NULL;
 static E_Config_DD *conf_edd = NULL;
 
 /* public functions */
-EAPI int 
+int 
 il_config_init(E_Module *m) 
 {
    conf_edd = E_CONFIG_DD_NEW("Illume_Cfg", Il_Config);
@@ -150,7 +150,7 @@ il_config_init(E_Module *m)
    return 1;
 }
 
-EAPI int 
+int 
 il_config_shutdown(void) 
 {
    e_configure_registry_item_del("illume/policy_settings");
@@ -198,7 +198,7 @@ il_config_shutdown(void)
    return 1;
 }
 
-EAPI int 
+int 
 il_config_save(void) 
 {
    e_config_domain_save("module.illume2", conf_edd, il_cfg);

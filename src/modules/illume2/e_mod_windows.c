@@ -36,7 +36,7 @@ il_config_windows_show(E_Container *con, const char *params)
    v->scroll = 1;
    cfd = e_config_dialog_new(con, _("Window Settings"), "E", 
                              "_config_illume_windows_settings", 
-                             "enlightenment/windows", 0, v, NULL);
+                             "preferences-system-windows", 0, v, NULL);
    e_dialog_resizable_set(cfd->dia, 1);
 }
 

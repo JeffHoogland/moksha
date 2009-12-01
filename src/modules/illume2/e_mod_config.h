@@ -43,9 +43,9 @@ struct _Il_Config
    E_Config_Dialog *cfd;
 };
 
-EAPI int il_config_init(E_Module *m);
-EAPI int il_config_shutdown(void);
-EAPI int il_config_save(void);
+int il_config_init(E_Module *m);
+int il_config_shutdown(void);
+int il_config_save(void);
 
 extern EAPI Il_Config *il_cfg;
 
