@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "e_mod_layout.h"
 #include "e_mod_layout_illume.h"
 
@@ -77,11 +78,13 @@ _zone_layout(E_Zone *z)
         if (illume_border_is_top_shelf(bd))
           {
              e_border_move_resize(bd, z->x, z->y, z->w, shelfsize);
+             e_border_stick(bd);
              if (bd->layer != 200) e_border_layer_set(bd, 200);
           }
         else if (illume_border_is_bottom_panel(bd))
           {
              e_border_move_resize(bd, z->x, z->y + z->h - panelsize, z->w, panelsize);
+             e_border_stick(bd);
              if (bd->layer != 100) e_border_layer_set(bd, 100);
           }
         else if (illume_border_is_keyboard(bd))
@@ -102,7 +105,14 @@ _zone_layout(E_Zone *z)
           }
         else
           {
-             e_border_move_resize(bd, z->x, z->y + shelfsize, z->w, z->h - shelfsize - kbdsize);
+             if (il_cfg->policy.mode.dual)
+               {
+                  /* determine where to place this border based on if any 
+                   * other borders are present, and also based on what the 
+                   * current policy 'side' is set to */
+               }
+             else
+               e_border_move_resize(bd, z->x, z->y + shelfsize, z->w, z->h - shelfsize - kbdsize);
              if (bd->layer != 100) e_border_layer_set(bd, 100);
           }
      }
