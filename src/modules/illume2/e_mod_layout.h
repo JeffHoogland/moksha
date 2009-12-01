@@ -39,6 +39,7 @@ Eina_List *illume_layout_modes_get(void);
 void illume_border_activate(E_Border *bd);
 void illume_border_show(E_Border *bd);
 void illume_border_deactivate(E_Border *bd);
+
 Eina_Bool illume_border_is_dialog(E_Border *bd);
 Eina_Bool illume_border_is_keyboard(E_Border *bd);
 Eina_Bool illume_border_is_bottom_panel(E_Border *bd);
@@ -49,6 +50,8 @@ Eina_Bool illume_border_is_home(E_Border *bd);
 Eina_Bool illume_border_is_side_pane_left(E_Border *bd);
 Eina_Bool illume_border_is_side_pane_right(E_Border *bd);
 Eina_Bool illume_border_is_overlay(E_Border *bd);
+Eina_Bool illume_border_is_conformant(E_Border *bd);
+
 void illume_border_slide_to(E_Border *bd, int x, int y, Illume_Anim_Class aclass);
 void illume_border_min_get(E_Border *bd, int *mw, int *mh);
 

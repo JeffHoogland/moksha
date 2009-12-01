@@ -316,6 +316,28 @@ illume_border_is_overlay(E_Border *bd)
    return 0;
 }
 
+Eina_Bool 
+illume_border_is_conformant(E_Border *bd) 
+{
+   Ecore_X_Atom *atoms;
+   Eina_Bool ret;
+   int num = 0, i;
+
+   ret = EINA_FALSE;
+   atoms = ecore_x_window_prop_list(bd->client.win, &num);
+   if (atoms) 
+     {
+        for (i = 0; i < num; i++) 
+          {
+             if (atoms[i] != ECORE_X_ATOM_E_ILLUME_CONFORMANT) continue;
+             ret = EINA_TRUE;
+             break;
+          }
+        free(atoms);
+     }
+   return ret;
+}
+
 void
 illume_border_slide_to(E_Border *bd, int x, int y, Illume_Anim_Class aclass)
 {

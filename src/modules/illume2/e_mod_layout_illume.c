@@ -3,6 +3,7 @@
 #include "e_mod_config.h"
 #include "e_mod_layout.h"
 #include "e_mod_layout_illume.h"
+#include "e_kbd.h"
 
 /* local function prototypes */
 static void _border_calc_position(E_Zone *z, E_Border *bd, int *x, int *y, int *w, int *h);
@@ -140,7 +141,7 @@ _border_calc_position(E_Zone *z, E_Border *bd, int *x, int *y, int *w, int *h)
         if (x) *x = z->x;
         if (y) *y = (z->y + shelfsize);
         if (w) *w = z->w;
-        if (h) *h = (z->h - shelfsize - panelsize);
+        if (h) *h = (z->h - shelfsize);
      }
 }
 
