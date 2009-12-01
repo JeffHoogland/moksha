@@ -16,13 +16,13 @@ Il_Select_Window_Type stype;
 Ecore_Timer *_change_timer = NULL;
 
 /* public functions */
-E_Config_Dialog *
+void 
 il_config_select_window(Il_Select_Window_Type type) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "_config_illume_select_window")) return NULL;
+   if (e_config_dialog_find("E", "_config_illume_select_window")) return;
    stype = type;
    v = E_NEW(E_Config_Dialog_View, 1);
    v->create_cfdata = _il_config_select_window_create_data;
@@ -36,7 +36,6 @@ il_config_select_window(Il_Select_Window_Type type)
                              "_config_illume_select_window", 
                              "enlightenment/windows", 0, v, NULL);
    e_dialog_resizable_set(cfd->dia, 1);
-   return cfd;
 }
 
 static void *
@@ -56,7 +55,7 @@ _il_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialo
 {
    Evas_Object *list, *ow;
    Eina_List *bds, *l;
-   int i = 0, sel = 0;
+   int i = 0, sel = -1;
 
    list = e_widget_list_add(evas, 0, 0);
    ow = e_widget_ilist_add(evas, 24, 24, NULL);
@@ -83,7 +82,7 @@ _il_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialo
      }
    e_widget_size_min_set(ow, 100, 200);
    e_widget_ilist_go(ow);
-   e_widget_ilist_selected_set(ow, sel);
+   if (sel >= 0) e_widget_ilist_selected_set(ow, sel);
    e_widget_ilist_thaw(ow);
    edje_thaw();
    evas_event_thaw(evas);

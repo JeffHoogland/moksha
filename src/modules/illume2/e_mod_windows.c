@@ -62,7 +62,7 @@ _il_config_windows_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    of = e_widget_framelist_add(evas, _("Home"), 0);
    ow = e_widget_button_add(evas, _("Select Window"), NULL, 
-                            _il_config_windows_select_home, cfd, NULL);
+                            _il_config_windows_select_home, NULL, NULL);
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Match Window Class"), 
                            &il_cfg->policy.home.match.class);
@@ -88,7 +88,7 @@ _il_config_windows_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    of = e_widget_framelist_add(evas, _("Indicator"), 0);
    ow = e_widget_button_add(evas, _("Select Window"), NULL, 
-                            _il_config_windows_select_indicator, cfd, NULL);
+                            _il_config_windows_select_indicator, NULL, NULL);
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Match Window Class"), 
                            &il_cfg->policy.indicator.match.class);
@@ -114,7 +114,7 @@ _il_config_windows_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    of = e_widget_framelist_add(evas, _("Keyboard"), 0);
    ow = e_widget_button_add(evas, _("Select Window"), NULL, 
-                            _il_config_windows_select_vkbd, cfd, NULL);
+                            _il_config_windows_select_vkbd, NULL, NULL);
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Match Window Class"), 
                            &il_cfg->policy.vkbd.match.class);
@@ -140,7 +140,7 @@ _il_config_windows_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    of = e_widget_framelist_add(evas, _("Softkey"), 0);
    ow = e_widget_button_add(evas, _("Select Window"), NULL, 
-                            _il_config_windows_select_softkey, cfd, NULL);
+                            _il_config_windows_select_softkey, NULL, NULL);
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Match Window Class"), 
                            &il_cfg->policy.softkey.match.class);
@@ -192,51 +192,27 @@ _il_config_windows_change_timeout(void *data)
 static void 
 _il_config_windows_select_home(void *data, void *data2) 
 {
-   E_Config_Dialog *pcfd, *cfd;
-
-   if (!(pcfd = data)) return;
    if (e_config_dialog_find("E", "_config_illume_select_window")) return;
-   cfd = il_config_select_window(IL_SELECT_WINDOW_TYPE_HOME);
-   if (!cfd) return;
-   ecore_x_icccm_transient_for_set(cfd->dia->win->evas_win, 
-                                   pcfd->dia->win->evas_win);
+   il_config_select_window(IL_SELECT_WINDOW_TYPE_HOME);
 }
 
 static void 
 _il_config_windows_select_vkbd(void *data, void *data2) 
 {
-   E_Config_Dialog *pcfd, *cfd;
-
-   if (!(pcfd = data)) return;
    if (e_config_dialog_find("E", "_config_illume_select_window")) return;
-   cfd = il_config_select_window(IL_SELECT_WINDOW_TYPE_VKBD);
-   if (!cfd) return;
-   ecore_x_icccm_transient_for_set(cfd->dia->win->evas_win, 
-                                   pcfd->dia->win->evas_win);
+   il_config_select_window(IL_SELECT_WINDOW_TYPE_VKBD);
 }
 
 static void 
 _il_config_windows_select_softkey(void *data, void *data2) 
 {
-   E_Config_Dialog *pcfd, *cfd;
-
-   if (!(pcfd = data)) return;
    if (e_config_dialog_find("E", "_config_illume_select_window")) return;
-   cfd = il_config_select_window(IL_SELECT_WINDOW_TYPE_SOFTKEY);
-   if (!cfd) return;
-   ecore_x_icccm_transient_for_set(cfd->dia->win->evas_win, 
-                                   pcfd->dia->win->evas_win);
+   il_config_select_window(IL_SELECT_WINDOW_TYPE_SOFTKEY);
 }
 
 static void 
 _il_config_windows_select_indicator(void *data, void *data2) 
 {
-   E_Config_Dialog *pcfd, *cfd;
-
-   if (!(pcfd = data)) return;
    if (e_config_dialog_find("E", "_config_illume_select_window")) return;
-   cfd = il_config_select_window(IL_SELECT_WINDOW_TYPE_INDICATOR);
-   if (!cfd) return;
-   ecore_x_icccm_transient_for_set(cfd->dia->win->evas_win, 
-                                   pcfd->dia->win->evas_win);
+   il_config_select_window(IL_SELECT_WINDOW_TYPE_INDICATOR);
 }

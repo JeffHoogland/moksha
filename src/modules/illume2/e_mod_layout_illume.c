@@ -6,13 +6,7 @@
 static void
 _border_add(E_Border *bd)
 { // handle a border being added
-/*
-   printf("Border Add\n");
-   if (bd->client.icccm.transient_for)
-     printf("Transient For\n");
-   else if (bd->client.icccm.client_leader)
-     printf("Client Leader\n");
-*/
+
 }
 
 static void
@@ -53,7 +47,7 @@ _zone_layout(E_Zone *z)
         if (bd->zone != z) continue; // skip other zones
         if (bd->new_client) continue; // skip new clients 
         if (!bd->visible) continue; // skip invisible
-        
+
         illume_border_min_get(bd, &mw, &mh);
         if (illume_border_is_top_shelf(bd))
           {
@@ -74,11 +68,11 @@ _zone_layout(E_Zone *z)
    EINA_LIST_FOREACH(borders, l, bd)
      {
         int mw, mh;
-        
+
         if (bd->zone != z) continue; // skip other zones
         if (bd->new_client) continue; // skip new clients 
         if (!bd->visible) continue; // skip invisible
-        
+
         illume_border_min_get(bd, &mw, &mh);
         if (illume_border_is_top_shelf(bd))
           {

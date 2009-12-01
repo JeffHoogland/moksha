@@ -10,6 +10,6 @@ enum _Il_Select_Window_Type
      IL_SELECT_WINDOW_TYPE_INDICATOR
 };
 
-E_Config_Dialog *il_config_select_window(Il_Select_Window_Type type);
+void il_config_select_window(Il_Select_Window_Type type);
 
 #endif
