@@ -425,7 +425,6 @@ _e_fwin_free(E_Fwin *fwin)
 {
    E_Fwin_Page *page;
 
-
    if (!fwin) return; //safety
 
    EINA_LIST_FREE(fwin->pages, page)
@@ -437,7 +436,6 @@ _e_fwin_free(E_Fwin *fwin)
 				       EVAS_CALLBACK_MOUSE_DOWN, 
 				       _e_fwin_zone_cb_mouse_down);
      }
-
 
    if (fwin->zone_handler) 
      ecore_event_handler_del(fwin->zone_handler);
@@ -589,7 +587,7 @@ _e_fwin_cb_page_change(void *data1, void *data2)
    E_Fwin *fwin = data1;
    E_Fwin_Page *page = data2, *prev;
 
-   if (!fwin || !page) return;
+   if ((!fwin) || (!page)) return;
    prev = eina_list_nth(fwin->pages, fwin->page_index);
    fwin->page_index = page->index;
 
