@@ -4,6 +4,7 @@
 #include "e_mod_animation.h"
 #include "e_mod_windows.h"
 #include "e_mod_policy.h"
+#include "e_mod_policy_settings.h"
 
 /* local variables */
 EAPI Il_Config *il_cfg = NULL;
@@ -22,6 +23,8 @@ il_config_init(E_Module *m)
    E_CONFIG_VAL(D, T, sliding.kbd.duration, INT);
    E_CONFIG_VAL(D, T, sliding.softkey.duration, INT);
    E_CONFIG_VAL(D, T, policy.name, STR);
+   E_CONFIG_VAL(D, T, policy.mode.dual, INT);
+   E_CONFIG_VAL(D, T, policy.mode.side, INT);
    E_CONFIG_VAL(D, T, policy.vkbd.class, STR);
    E_CONFIG_VAL(D, T, policy.vkbd.name, STR);
    E_CONFIG_VAL(D, T, policy.vkbd.title, STR);
@@ -120,6 +123,11 @@ il_config_init(E_Module *m)
              il_cfg->policy.indicator.match.title = 1;
              il_cfg->policy.indicator.match.win_type = 0;
           }
+        if ((il_cfg->version & 0xffff) < 2) 
+          {
+             il_cfg->policy.mode.dual = 0;
+             il_cfg->policy.mode.side = 0;
+          }
         il_cfg->version = (IL_CONFIG_MAJ << 16) | IL_CONFIG_MIN;
      }
    il_cfg->mod_dir = eina_stringshare_add(m->dir);
@@ -135,12 +143,17 @@ il_config_init(E_Module *m)
    e_configure_registry_generic_item_add("illume/policy", 0, _("Policy"), 
                                          NULL, "enlightenment/policy", 
                                          il_config_policy_show);
+   e_configure_registry_generic_item_add("illume/policy_settings", 0, 
+                                         _("Policy Settings"), 
+                                         NULL, "enlightenment/policy", 
+                                         il_config_policy_settings_show);
    return 1;
 }
 
 EAPI int 
 il_config_shutdown(void) 
 {
+   e_configure_registry_item_del("illume/policy_settings");
    e_configure_registry_item_del("illume/policy");
    e_configure_registry_item_del("illume/windows");
    e_configure_registry_item_del("illume/animation");

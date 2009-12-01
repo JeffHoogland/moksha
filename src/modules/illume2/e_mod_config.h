@@ -1,7 +1,7 @@
 #ifndef E_MOD_CONFIG_H
 # define E_MOD_CONFIG_H
 
-# define IL_CONFIG_MIN 1
+# define IL_CONFIG_MIN 2
 # define IL_CONFIG_MAJ 0
 
 typedef struct _Il_Config Il_Config;
@@ -32,6 +32,10 @@ struct _Il_Config
                   int class, name, title, win_type;
                } match;
           } vkbd, softkey, home, indicator;
+        struct 
+          {
+             int dual, side;
+          } mode;
      } policy;
 
    // Not User Configurable. Placeholders

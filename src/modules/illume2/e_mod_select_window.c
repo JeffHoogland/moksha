@@ -13,7 +13,7 @@ static int _il_config_select_window_match(E_Border *bd);
 
 /* local variables */
 Il_Select_Window_Type stype;
-Ecore_Timer *_change_timer = NULL;
+Ecore_Timer *_sw_change_timer = NULL;
 
 /* public functions */
 void 
@@ -154,8 +154,8 @@ _il_config_select_window_list_changed(void *data)
    if (name) free(name);
    if (class) free(class);
 
-   if (_change_timer) ecore_timer_del(_change_timer);
-   _change_timer = 
+   if (_sw_change_timer) ecore_timer_del(_sw_change_timer);
+   _sw_change_timer = 
      ecore_timer_add(0.5, _il_config_select_window_change_timeout, data);
 }
 
@@ -163,7 +163,7 @@ static int
 _il_config_select_window_change_timeout(void *data) 
 {
    e_config_save_queue();
-   _change_timer = NULL;
+   _sw_change_timer = NULL;
    return 0;
 }
 
