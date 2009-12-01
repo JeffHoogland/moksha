@@ -33,11 +33,11 @@ e_int_config_icon_themes(E_Container *con, const char *params __UNUSED__)
    if (e_config_dialog_find("E", "appearance/icon_theme")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
 
-   v->create_cfdata           = _create_data;
-   v->free_cfdata             = _free_data;
-   v->basic.create_widgets    = _basic_create_widgets;
-   v->basic.apply_cfdata      = _basic_apply_data;
-   v->basic.check_changed     = _basic_check_changed;
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
+   v->basic.create_widgets = _basic_create_widgets;
+   v->basic.apply_cfdata = _basic_apply_data;
+   v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con,
 			     _("Icon Theme Settings"),
