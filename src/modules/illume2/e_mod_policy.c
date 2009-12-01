@@ -103,21 +103,3 @@ _il_config_policy_change_timeout(void *data)
    _policy_change_timer = NULL;
    return 0;
 }
-
-static Evas_Object *
-_il_config_policy_settings_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
-{
-   Evas_Object *list, *of, *ow;
-   E_Radio_Group *rg;
-
-   list = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, _("Mode"), 0);
-   rg = e_widget_radio_group_new(&(il_cfg->policy.mode.dual));
-   ow = e_widget_radio_add(evas, _("Single App Mode"), 0, rg);
-   e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, _("Dual App Mode"), 1, rg);
-   e_widget_framelist_object_append(of, ow);
-
-   e_widget_list_object_append(list, of, 1, 0, 0.0);
-   return list;
-}
