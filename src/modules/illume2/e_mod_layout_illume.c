@@ -4,6 +4,14 @@
 #include "e_mod_layout.h"
 #include "e_mod_layout_illume.h"
 
+/* local function prototypes */
+static void _border_calc_position(E_Zone *z, E_Border *bd, int *x, int *y, int *w, int *h);
+
+/* local variables */
+static int shelfsize = 0;
+static int kbdsize = 0;
+static int panelsize = 0;
+
 static void
 _border_add(E_Border *bd)
 { // handle a border being added
@@ -33,11 +41,6 @@ _zone_layout(E_Zone *z)
 { // borders are in re-layout stage. this is where you move/resize them
    Eina_List *l, *borders;
    E_Border *bd;
-
-   // data for state
-   int shelfsize = 0;
-   int kbdsize = 0;
-   int panelsize = 0;
 
    // phase 1. loop through borders to figure out sizes of things
    borders = e_border_client_list();
@@ -94,7 +97,10 @@ _zone_layout(E_Zone *z)
           }
         else if (illume_border_is_home(bd))
           {
-             e_border_move_resize(bd, z->x, z->y + shelfsize, z->w, z->h - shelfsize);
+             int x, y, w, h;
+
+             _border_calc_position(z, bd, &x, &y, &w, &h);
+             e_border_move_resize(bd, x, y, w, h);
              if (bd->layer != 50) e_border_layer_set(bd, 50);
           }
         else if (illume_border_is_dialog(bd))
@@ -105,14 +111,10 @@ _zone_layout(E_Zone *z)
           }
         else
           {
-             if (il_cfg->policy.mode.dual)
-               {
-                  /* determine where to place this border based on if any 
-                   * other borders are present, and also based on what the 
-                   * current policy 'side' is set to */
-               }
-             else
-               e_border_move_resize(bd, z->x, z->y + shelfsize, z->w, z->h - shelfsize - kbdsize);
+             int x, y, w, h;
+
+             _border_calc_position(z, bd, &x, &y, &w, &h);
+             e_border_move_resize(bd, x, y, w, h);
              if (bd->layer != 100) e_border_layer_set(bd, 100);
           }
      }
@@ -122,6 +124,24 @@ static void
 _zone_move_resize(E_Zone *z)
 { // the zone was moved or resized - re-configure all windows in this zone
    _zone_layout(z);
+}
+
+/* local functions */
+static void 
+_border_calc_position(E_Zone *z, E_Border *bd, int *x, int *y, int *w, int *h) 
+{
+   if ((!z) || (!bd)) return;
+   if (il_cfg->policy.mode.dual) 
+     {
+
+     }
+   else 
+     {
+        if (x) *x = z->x;
+        if (y) *y = (z->y + shelfsize);
+        if (w) *w = z->w;
+        if (h) *h = (z->h - shelfsize - panelsize);
+     }
 }
 
 //////////////////////////////////////////////////////////////////////////////
