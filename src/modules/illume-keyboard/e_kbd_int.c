@@ -1735,7 +1735,7 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    e_win_resize_callback_set(ki->win, _e_kbd_int_cb_resize);
    e_win_borderless_set(ki->win, 1);
    ki->win->data = ki;
-   e_win_name_class_set(ki->win, "E", "Virtual-Keyboard");
+   e_win_name_class_set(ki->win, "Virtual-Keyboard", "Virtual-Keyboard");
    e_win_title_set(ki->win, "Virtual Keyboard");
 
    ki->base_obj = _theme_obj_new(ki->win->evas,
