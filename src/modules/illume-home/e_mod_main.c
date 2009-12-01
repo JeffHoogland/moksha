@@ -594,10 +594,6 @@ _il_home_fmc_set(Evas_Object *obj)
    fmc.view.single_click_delay = il_home_cfg->single_click_delay;
    fmc.view.no_subdir_jump = 1;
    fmc.icon.extension.show = 0;
-   fmc.icon.icon.w = 48;
-   fmc.icon.icon.h = 48;
-   fmc.icon.fixed.w = 48;
-   fmc.icon.fixed.h = 48;
    fmc.icon.icon.w = il_home_cfg->icon_size * e_scale / 2.0;
    fmc.icon.icon.h = il_home_cfg->icon_size * e_scale / 2.0;
    fmc.icon.fixed.w = il_home_cfg->icon_size * e_scale / 2.0;
