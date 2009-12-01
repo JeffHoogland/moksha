@@ -81,7 +81,7 @@ il_config_init(E_Module *m)
              il_cfg->policy.vkbd.class = 
                eina_stringshare_add("Virtual-Keyboard");
              il_cfg->policy.vkbd.name = 
-               eina_stringshare_add("E");
+               eina_stringshare_add("Virtual-Keyboard");
              il_cfg->policy.vkbd.title = 
                eina_stringshare_add("Virtual Keyboard");
              il_cfg->policy.vkbd.win_type = ECORE_X_WINDOW_TYPE_NORMAL;
@@ -95,7 +95,7 @@ il_config_init(E_Module *m)
                eina_stringshare_add("Illume-Softkey");
              il_cfg->policy.softkey.title = 
                eina_stringshare_add("Illume Softkey");
-             il_cfg->policy.softkey.win_type = ECORE_X_WINDOW_TYPE_NORMAL;
+             il_cfg->policy.softkey.win_type = ECORE_X_WINDOW_TYPE_DOCK;
              il_cfg->policy.softkey.match.class = 0;
              il_cfg->policy.softkey.match.name = 1;
              il_cfg->policy.softkey.match.title = 1;
@@ -117,7 +117,7 @@ il_config_init(E_Module *m)
                eina_stringshare_add("Illume-Indicator");
              il_cfg->policy.indicator.title = 
                eina_stringshare_add("Illume Indicator");
-             il_cfg->policy.indicator.win_type = ECORE_X_WINDOW_TYPE_NORMAL;
+             il_cfg->policy.indicator.win_type = ECORE_X_WINDOW_TYPE_DOCK;
              il_cfg->policy.indicator.match.class = 0;
              il_cfg->policy.indicator.match.name = 1;
              il_cfg->policy.indicator.match.title = 1;
