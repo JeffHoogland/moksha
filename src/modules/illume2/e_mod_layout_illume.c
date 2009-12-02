@@ -116,7 +116,14 @@ _zone_layout(E_Zone *z)
 
              _border_calc_position(z, bd, &x, &y, &w, &h);
              e_border_move_resize(bd, x, y, w, h);
-             if (bd->layer != 100) e_border_layer_set(bd, 100);
+             if (illume_border_is_conformant(bd)) 
+               {
+                  if (bd->layer != 120) e_border_layer_set(bd, 120);
+               }
+             else 
+               {
+                  if (bd->layer != 100) e_border_layer_set(bd, 100);
+               }
           }
      }
 }
@@ -132,23 +139,21 @@ static void
 _border_calc_position(E_Zone *z, E_Border *bd, int *x, int *y, int *w, int *h) 
 {
    if ((!z) || (!bd)) return;
-   if (il_cfg->policy.mode.dual) 
+   if (x) *x = z->x;
+   if (y) *y = (z->y + shelfsize);
+   if (w) *w = z->w;
+   if (illume_border_is_conformant(bd)) 
      {
-
+        if (h) *h = (z->h - shelfsize);
      }
    else 
      {
-        if (x) *x = z->x;
-        if (y) *y = (z->y + shelfsize);
-        if (w) *w = z->w;
-        if (illume_border_is_conformant(bd)) 
-          {
-             if (h) *h = (z->h - shelfsize);
-          }
-        else 
-          {
-             if (h) *h = (z->h - shelfsize - panelsize);
-          }
+        if (h) *h = (z->h - shelfsize - panelsize);
+     }
+   if (il_cfg->policy.mode.dual) 
+     {
+        /* we ignore config dialogs as we want them fullscreen in dual mode */
+        if (strstr(bd->client.icccm.class, "config")) return;
      }
 }
 
