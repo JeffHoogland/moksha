@@ -1442,12 +1442,12 @@ group "E_Config" struct {
     }
   }
   value "window_placement_policy" int: 0;
-  value "focus_policy" int: 2;
-  value "focus_setting" int: 3;
+  value "focus_policy" int: 0;
+  value "focus_setting" int: 1;
   value "pass_click_on" int: 1;
   value "always_click_to_raise" int: 0;
   value "always_click_to_focus" int: 0;
-  value "use_auto_raise" int: 1;
+  value "use_auto_raise" int: 0;
   value "auto_raise_delay" double: 0.5000000000000000000000000;
   value "use_resist" int: 1;
   value "drag_resist" int: 16;
@@ -1493,7 +1493,7 @@ group "E_Config" struct {
   value "resize_info_visible" int: 0;
   value "focus_last_focused_per_desktop" int: 1;
   value "focus_revert_on_hide_or_close" int: 1;
-  value "pointer_slide" int: 1;
+  value "pointer_slide" int: 0;
   value "use_e_cursor" int: 1;
   value "cursor_size" int: 32;
   value "menu_autoscroll_margin" int: 0;
