@@ -141,7 +141,14 @@ _border_calc_position(E_Zone *z, E_Border *bd, int *x, int *y, int *w, int *h)
         if (x) *x = z->x;
         if (y) *y = (z->y + shelfsize);
         if (w) *w = z->w;
-        if (h) *h = (z->h - shelfsize);
+        if (illume_border_is_conformant(bd)) 
+          {
+             if (h) *h = (z->h - shelfsize);
+          }
+        else 
+          {
+             if (h) *h = (z->h - shelfsize - panelsize);
+          }
      }
 }
 
