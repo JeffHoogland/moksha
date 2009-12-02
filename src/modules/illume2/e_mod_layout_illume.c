@@ -118,7 +118,7 @@ _zone_layout(E_Zone *z)
              e_border_move_resize(bd, x, y, w, h);
              if (illume_border_is_conformant(bd)) 
                {
-                  if (bd->layer != 120) e_border_layer_set(bd, 120);
+                  if (bd->layer != 110) e_border_layer_set(bd, 110);
                }
              else 
                {
