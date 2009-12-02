@@ -1,7 +1,8 @@
 # get rid of that stupid cache mechanism
 rm -f config.cache
 
-AC_INIT([enlightenment], [0.16.999.062], [enlightenment-devel@lists.sourceforge.net])
+AC_INIT([enlightenment], [0.16.999.063], [enlightenment-devel@lists.sourceforge.net])
+release="ver-svn-04"
 AC_PREREQ([2.52])
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
@@ -27,7 +28,6 @@ define([AC_LIBTOOL_LANG_F77_CONFIG], [:])
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 
-release="ver-pre-svn-04"
 AC_SUBST(release)
 
 AC_CHECK_FUNCS(setenv)

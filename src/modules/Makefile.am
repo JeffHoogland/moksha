@@ -318,6 +318,9 @@ connman \
 illume \
 illume2 \
 illume-home \
+illume-softkey \
+illume-keyboard \
+illume-indicator \
 syscon \
 everything \
 systray
