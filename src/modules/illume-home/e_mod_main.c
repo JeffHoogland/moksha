@@ -159,6 +159,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_event_callback_add(inst->o_btn, EVAS_CALLBACK_MOUSE_DOWN, 
                                   _il_home_btn_cb_mouse_down, inst);
 
+   _il_home_win_new(inst);
+
    instances = eina_list_append(instances, inst);
    return inst->gcc;
 }
@@ -279,7 +281,6 @@ _il_home_win_new(Instance *inst)
    Il_Home_Win *hwin;
    E_Container *con;
    E_Zone *zone;
-   int y, w, h;
    char buff[PATH_MAX];
 
    if (!hwin) 
@@ -334,15 +335,13 @@ _il_home_win_new(Instance *inst)
                                 _il_home_pan_max_get, 
                                 _il_home_pan_child_size_get);
    evas_object_smart_callback_add(hwin->o_fm, "selected", 
-                                  _il_home_cb_selected, NULL);
-
+                                  _il_home_cb_selected, hwin);
    zone = e_util_container_zone_number_get(0, 0);
-   e_zone_useful_geometry_get(zone, NULL, &y, &w, NULL);
 
    e_win_title_set(hwin->win, _("Illume Home"));
    e_win_name_class_set(hwin->win, "Illume-Home", "Illume-Home");
    e_win_size_min_set(hwin->win, 48, 48);
-   e_win_move_resize(hwin->win, 0, y, w, 200);
+   e_win_resize(hwin->win, zone->w, 200);
    e_win_show(hwin->win);
 }
 
@@ -440,10 +439,13 @@ _il_home_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 static void 
 _il_home_cb_selected(void *data, Evas_Object *obj, void *event) 
 {
+   Il_Home_Win *hwin;
    Eina_List *selected;
    E_Fm2_Icon_Info *ici;
 
-   selected = e_fm2_selected_list_get(obj);
+   printf("FM Selected\n");
+   if (!(hwin = data)) return;
+   selected = e_fm2_selected_list_get(hwin->o_fm);
    if (!selected) return;
    EINA_LIST_FREE(selected, ici) 
      {
