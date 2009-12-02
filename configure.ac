@@ -2,7 +2,7 @@
 rm -f config.cache
 
 AC_INIT([enlightenment], [0.16.999.063], [enlightenment-devel@lists.sourceforge.net])
-release="ver-svn-05"
+release="ver-pre-svn-05"
 AC_PREREQ([2.52])
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
