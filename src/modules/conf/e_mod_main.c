@@ -4,8 +4,6 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/***************************************************************************/
-/**/
 /* actual module specifics */
 
 static void  _e_mod_action_conf_cb(E_Object *obj, const char *params);
@@ -16,14 +14,6 @@ static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 
-/**/
-/***************************************************************************/
-
-/***************************************************************************/
-/**/
-/* gadget */
-/***************************************************************************/
-/**/
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
@@ -125,11 +115,7 @@ _cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
         
      }
 }
-/**/
-/***************************************************************************/
 
-/***************************************************************************/
-/**/
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {
