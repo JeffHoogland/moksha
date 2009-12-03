@@ -95,7 +95,7 @@ e_int_config_dpms(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if ((e_config_dialog_find("E", "screen/power_management")) ||
+   if ((e_config_dialog_find("E", "_config_dpms_dialogt")) ||
        (!_e_int_config_dpms_available()) ||
        (!_e_int_config_dpms_capable()))
      return NULL;
@@ -110,7 +110,7 @@ e_int_config_dpms(E_Container *con, const char *params __UNUSED__)
    v->override_auto_apply = 1;
 
    cfd = e_config_dialog_new(con, _("Display Power Management Settings"), "E",
-			     "screen/power_management", "preferences-system-power-management",
+			     "_config_dpms_dialog", "preferences-system-power-management",
 			     0, v, NULL);
    return cfd;
 }
