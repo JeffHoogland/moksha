@@ -22,7 +22,7 @@ e_int_config_remembers(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "windows/window_remembers")) return NULL;
+   if (e_config_dialog_find("E", "_config_remember_dialog")) return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
    v->create_cfdata = _create_data;
@@ -31,7 +31,7 @@ e_int_config_remembers(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
 
    cfd = e_config_dialog_new(con, _("Window Remembers"), "E", 
-                             "windows/window_remembers", 
+                             "_config_remember_dialog", 
                              "preferences-desktop-window-remember", 0, v, NULL);
    e_dialog_resizable_set(cfd->dia, 1);
    return cfd;
