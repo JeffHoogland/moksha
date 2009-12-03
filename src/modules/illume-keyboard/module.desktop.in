@@ -4,3 +4,5 @@ Name=Illume-Keyboard
 Icon=e-module-illume-keyboard
 X-Enlightenment-ModuleType=system
 Comment=<title>Illume Keyboard for Embedded</title>
+Comment[fr]=<title>Illume pour l'embarqué – Keyboard</title>
+Comment[it]=<title>Illume per sistemi embedded – modulo Keyboard</title>
