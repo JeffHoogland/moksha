@@ -83,7 +83,7 @@ _e_int_config_wallpaper_desk(E_Container *con, int con_num, int zone_num, int de
    E_Config_Dialog_View *v;
    E_Config_Wallpaper *cw;
 
-   if (e_config_dialog_find("E", "appearance/wallpaper")) return NULL;
+   if (e_config_dialog_find("E", "_config_wallpaper_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    cw = E_NEW(E_Config_Wallpaper, 1);
 
@@ -108,7 +108,7 @@ _e_int_config_wallpaper_desk(E_Container *con, int con_num, int zone_num, int de
    cw->desk_y = desk_y;
 
    cfd = e_config_dialog_new(con, _("Wallpaper Settings"), "E", 
-			     "appearance/wallpaper",
+			     "_config_wallpaper_dialog",
 			     "preferences-desktop-wallpaper", 0, v, cw);
    return cfd;
 }
@@ -554,6 +554,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Gradient..."), "preferences-gradient",
 			    _cb_gradient, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
+
 #ifdef HAVE_EXCHANGE
    if (online)
      {
@@ -684,6 +685,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Gradient..."), "preferences-gradient",
 			    _cb_gradient, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
+
 #ifdef HAVE_EXCHANGE
    if (online)
      {
