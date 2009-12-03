@@ -80,7 +80,7 @@ e_int_config_keybindings(E_Container *con, const char *params)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "keyboard_and_mouse/key_bindings")) return NULL;
+   if (e_config_dialog_find("E", "_config_keybindings_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
 
    v->create_cfdata = _create_data;
@@ -90,7 +90,7 @@ e_int_config_keybindings(E_Container *con, const char *params)
    v->override_auto_apply = 1;
 
    cfd = e_config_dialog_new(con, _("Key Binding Settings"), "E", 
-			     "keyboard_and_mouse/key_bindings",
+			     "_config_keybindings_dialog",
 			     "preferences-desktop-keyboard", 0, v, NULL);
    if ((params) && (params[0]))
      {
