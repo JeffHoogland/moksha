@@ -41,18 +41,19 @@ e_int_config_window_geometry(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "windows/window_geometry")) return NULL;
+   if (e_config_dialog_find("E", "_config_window_geometry_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
 
    /* methods */
-   v->create_cfdata           = _create_data;
-   v->free_cfdata             = _free_data;
-   v->basic.apply_cfdata      = _basic_apply_data;
-   v->basic.create_widgets    = _basic_create_widgets;
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
+   v->basic.apply_cfdata = _basic_apply_data;
+   v->basic.create_widgets = _basic_create_widgets;
+
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con,
 			     _("Window Geometry"),
-			     "E", "windows/window_geometry",
+			     "E", "_config_window_geometry_dialog",
 			     "preferences-window-manipulation", 0, v, NULL);
    return cfd;
 }

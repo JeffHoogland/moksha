@@ -4,10 +4,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/***************************************************************************/
-/**/
 /* actual module specifics */
-
 static void  _e_mod_action_exebuf_cb(E_Object *obj, const char *params);
 static int   _e_mod_run_defer_cb(void *data);
 static void  _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -17,17 +14,6 @@ static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 
-/**/
-/***************************************************************************/
-
-/***************************************************************************/
-/**/
-
-/**/
-/***************************************************************************/
-
-/***************************************************************************/
-/**/
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {

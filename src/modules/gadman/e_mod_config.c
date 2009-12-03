@@ -42,7 +42,7 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
    char buf[4096];
 
    /* check if config dialog exists ... */
-   if (e_config_dialog_find("E", "extensions/gadman"))
+   if (e_config_dialog_find("E", "_config_gadman"))
      return NULL;
 
    /* ... else create it */
@@ -56,7 +56,7 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
 
    snprintf(buf, sizeof(buf), "%s/e-module-gadman.edj", Man->module->dir);
    cfd = e_config_dialog_new(con, _("Gadgets Manager"),
-                             "E", "extensions/gadman",
+                             "E", "_config_gadman",
                              buf, 0, v, Man);
 
    Man->config_dialog = cfd;
