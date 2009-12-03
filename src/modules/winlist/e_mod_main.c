@@ -4,10 +4,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/***************************************************************************/
-/**/
 /* actual module specifics */
-
 static void _e_mod_action_winlist_cb(E_Object *obj, const char *params);
 static void _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev);
 static void _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key *ev);
@@ -15,17 +12,6 @@ static void _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecor
 static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
 
-/**/
-/***************************************************************************/
-
-/***************************************************************************/
-/**/
-
-/**/
-/***************************************************************************/
-
-/***************************************************************************/
-/**/
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {

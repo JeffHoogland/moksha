@@ -4,8 +4,6 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/***************************************************************************/
-/**/
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
@@ -25,11 +23,7 @@ static const E_Gadcon_Client_Class _gadcon_class =
      },
    E_GADCON_CLIENT_STYLE_INSET
 };
-/**/
-/***************************************************************************/
 
-/***************************************************************************/
-/**/
 /* actual module specifics */
 
 typedef struct _Instance  Instance;
