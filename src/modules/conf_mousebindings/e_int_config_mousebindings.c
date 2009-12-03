@@ -99,7 +99,7 @@ e_int_config_mousebindings(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "keyboard_and_mouse/mouse_bindings")) return NULL;
+   if (e_config_dialog_find("E", "_config_mousebindings_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    
    v->create_cfdata = _create_data;
@@ -110,7 +110,7 @@ e_int_config_mousebindings(E_Container *con, const char *params __UNUSED__)
    
    cfd = e_config_dialog_new(con,
 			     _("Mouse Binding Settings"),
-			     "E", "keyboard_and_mouse/mouse_bindings",
+			     "E", "_config_mousebindings_dialog",
 			     "preferences-desktop-mouse", 0, v, NULL);
    return cfd;
 }
