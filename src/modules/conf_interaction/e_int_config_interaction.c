@@ -23,7 +23,7 @@ e_int_config_interaction(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "keyboard_and_mouse/interaction")) return NULL;
+   if (e_config_dialog_find("E", "_config_config_interaction_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    
    v->create_cfdata = _create_data;
@@ -35,7 +35,7 @@ e_int_config_interaction(E_Container *con, const char *params __UNUSED__)
    
    cfd = e_config_dialog_new(con,
 			     _("Interaction Settings"),
-			     "E", "keyboard_and_mouse/interaction",
+			     "E", "_config_config_interaction_dialog",
 			     "preferences-interaction", 0, v, NULL);
    return cfd;
 }

@@ -30,7 +30,7 @@ e_int_config_icon_themes(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "appearance/icon_theme")) return NULL;
+   if (e_config_dialog_find("E", "_config_icon_theme_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
 
    v->create_cfdata = _create_data;
@@ -41,7 +41,7 @@ e_int_config_icon_themes(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con,
 			     _("Icon Theme Settings"),
-			     "E", "appearance/icon_theme",
+			     "E", "_config_icon_theme_dialog",
 			     "preferences-icon-theme", 0, v, NULL);
    return cfd;
 }

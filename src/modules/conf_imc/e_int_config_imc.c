@@ -95,19 +95,19 @@ e_int_config_imc(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "language/input_method_settings")) return NULL;
+   if (e_config_dialog_find("E", "_config_imc_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
 
-   v->create_cfdata           = _create_data;
-   v->free_cfdata             = _free_data;
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
    v->advanced.create_widgets = _advanced_create_widgets;
-   v->advanced.apply_cfdata   = _advanced_apply_data;
-   v->basic.create_widgets    = _basic_create_widgets;
-   v->basic.apply_cfdata      = _basic_apply_data;
+   v->advanced.apply_cfdata = _advanced_apply_data;
+   v->basic.create_widgets = _basic_create_widgets;
+   v->basic.apply_cfdata  = _basic_apply_data;
 
    cfd = e_config_dialog_new(con,
 			     _("Input Method Settings"),
-			     "E", "language/input_method_settings",
+			     "E", "_config_imc_dialog",
 			     "preferences-imc", 0, v, NULL);
    return cfd;
 }
