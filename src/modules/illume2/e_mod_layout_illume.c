@@ -83,18 +83,15 @@ _zone_layout(E_Zone *z)
           {
              e_border_move_resize(bd, z->x, z->y, z->w, shelfsize);
              e_border_stick(bd);
-             if (bd->layer != 200) e_border_layer_set(bd, 200);
           }
         else if (illume_border_is_bottom_panel(bd))
           {
              e_border_move_resize(bd, z->x, z->y + z->h - panelsize, z->w, panelsize);
              e_border_stick(bd);
-             if (bd->layer != 100) e_border_layer_set(bd, 100);
           }
         else if (illume_border_is_keyboard(bd))
           {
              e_border_move_resize(bd, z->x, z->y + z->h - kbdsize, z->w, kbdsize);
-             if (bd->layer != 150) e_border_layer_set(bd, 150);
           }
         else if (illume_border_is_home(bd))
           {
@@ -102,13 +99,11 @@ _zone_layout(E_Zone *z)
 
              _border_calc_position(z, bd, &x, &y, &w, &h);
              e_border_move_resize(bd, x, y, w, h);
-             if (bd->layer != 50) e_border_layer_set(bd, 50);
           }
         else if (illume_border_is_dialog(bd))
           {
              if (mh > z->h) mh = z->h;
              e_border_move_resize(bd, z->x, z->y + ((z->h - mh) / 2), z->w, mh);
-             if (bd->layer != 120) e_border_layer_set(bd, 120);
           }
         else
           {
