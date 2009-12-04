@@ -15,7 +15,7 @@ group "E_Config" struct {
   value "font_cache" int: 512;
   value "edje_cache" int: 32;
   value "edje_collection_cache" int: 64;
-  value "zone_desks_x_count" int: 4;
+  value "zone_desks_x_count" int: 1;
   value "zone_desks_y_count" int: 1;
   value "use_virtual_roots" int: 0;
   value "show_desktop_icons" int: 1;
@@ -259,7 +259,7 @@ group "E_Config" struct {
   group "modules" list {
     group "E_Config_Module" struct {
       value "name" string: "conf_edgebindings";
-      value "enabled" uchar: 1;
+      value "enabled" uchar: 0;
       value "delayed" uchar: 1;
       value "priority" int: 0;
     }
@@ -961,56 +961,6 @@ group "E_Config" struct {
       value "any_mod" uchar: 0;
     }
   }
-  group "edge_bindings" list {
-    group "E_Config_Binding_Edge" struct {
-      value "context" int: 3;
-      value "modifiers" int: 0;
-      value "action" string: "desk_flip_in_direction";
-      value "edge" uchar: 1;
-      value "any_mod" uchar: 0;
-      value "delay" float: 0.3000000119209289550781250;
-    }
-  }
-  group "edge_bindings" list {
-    group "E_Config_Binding_Edge" struct {
-      value "context" int: 3;
-      value "modifiers" int: 0;
-      value "action" string: "desk_flip_in_direction";
-      value "edge" uchar: 2;
-      value "any_mod" uchar: 0;
-      value "delay" float: 0.3000000119209289550781250;
-    }
-  }
-  group "edge_bindings" list {
-    group "E_Config_Binding_Edge" struct {
-      value "context" int: 3;
-      value "modifiers" int: 0;
-      value "action" string: "desk_flip_in_direction";
-      value "edge" uchar: 3;
-      value "any_mod" uchar: 0;
-      value "delay" float: 0.3000000119209289550781250;
-    }
-  }
-  group "edge_bindings" list {
-    group "E_Config_Binding_Edge" struct {
-      value "context" int: 3;
-      value "modifiers" int: 0;
-      value "action" string: "desk_flip_in_direction";
-      value "edge" uchar: 4;
-      value "any_mod" uchar: 0;
-      value "delay" float: 0.3000000119209289550781250;
-    }
-  }
-  group "edge_bindings" list {
-    group "E_Config_Binding_Edge" struct {
-      value "context" int: 3;
-      value "modifiers" int: 0;
-      value "action" string: "desk_deskshow_toggle";
-      value "edge" uchar: 6;
-      value "any_mod" uchar: 0;
-      value "delay" float: 0.3000000119209289550781250;
-    }
-  }
   group "signal_bindings" list {
     group "E_Config_Binding_Signal" struct {
       value "context" int: 2;
@@ -1443,10 +1393,10 @@ group "E_Config" struct {
   }
   value "window_placement_policy" int: 0;
   value "focus_policy" int: 0;
-  value "focus_setting" int: 1;
+  value "focus_setting" int: 0;
   value "pass_click_on" int: 1;
   value "always_click_to_raise" int: 0;
-  value "always_click_to_focus" int: 0;
+  value "always_click_to_focus" int: 1;
   value "use_auto_raise" int: 0;
   value "auto_raise_delay" double: 0.5000000000000000000000000;
   value "use_resist" int: 1;
@@ -1886,7 +1836,7 @@ group "E_Config" struct {
   value "icon_theme_overrides" uchar: 0;
   value "desk_flip_animate_mode" int: 1;
   value "desk_flip_animate_interpolation" int: 0;
-  value "desk_flip_animate_time" double: 0.2000000000000000111022302;
+  value "desk_flip_animate_time" double: 0.5000000000000000000000000;
   value "desk_flip_pan_bg" uchar: 0;
   value "desk_flip_pan_x_axis_factor" double: 0.0000000000000000000000000;
   value "desk_flip_pan_y_axis_factor" double: 0.0000000000000000000000000;
