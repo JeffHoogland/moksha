@@ -43,7 +43,7 @@ il_home_config_init(E_Module *m)
         il_home_cfg->version = 0;
         il_home_cfg->icon_size = 120;
         il_home_cfg->single_click = 1;
-        il_home_cfg->single_click_delay = 150;
+        il_home_cfg->single_click_delay = 50;
      }
    if (il_home_cfg) 
      {
