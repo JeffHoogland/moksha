@@ -61,7 +61,7 @@ e_modapi_shutdown(E_Module *m)
 	e_int_menus_menu_augmentation_del("config/1", maug);
 	maug = NULL;
      }
-   while ((cfd = e_config_dialog_get("E", "_config_wallpaper_dialog"))) 
+   while ((cfd = e_config_dialog_get("E", "appearance/wallpaper"))) 
      e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("internal/wallpaper_desk");
    e_configure_registry_category_del("internal");

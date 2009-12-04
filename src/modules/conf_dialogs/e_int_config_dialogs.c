@@ -24,7 +24,7 @@ e_int_config_dialogs(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "_config_config_dialog_dialog")) return NULL;
+   if (e_config_dialog_find("E", "settings/dialogs")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    
    v->create_cfdata = _create_data;
@@ -35,7 +35,7 @@ e_int_config_dialogs(E_Container *con, const char *params __UNUSED__)
    
    cfd = e_config_dialog_new(con,
 			     _("Dialog Settings"),
-			     "E", "_config_config_dialog_dialog",
+			     "E", "settings/dialogs",
 			     "preferences-dialogs", 0, v, NULL);
    return cfd;
 }

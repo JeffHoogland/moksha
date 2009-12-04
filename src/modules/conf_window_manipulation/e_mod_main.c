@@ -30,7 +30,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
-   while ((cfd = e_config_dialog_get("E", "_config_window_geometry_dialog"))) e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "windows/window_geometry"))) e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "_config_window_stacking_dialog"))) e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "_config_window_maxpolicy_dialog"))) e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("windows/window_geometry");

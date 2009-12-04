@@ -30,7 +30,7 @@ e_modapi_shutdown(E_Module *m)
    E_Config_Dialog *cfd;
 
    while ((cfd = e_config_dialog_get("E", "_config_mime_edit_dialog"))) e_object_del(E_OBJECT(cfd));
-   while ((cfd = e_config_dialog_get("E", "_config_mime_dialog"))) e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "fileman/file_icons"))) e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("fileman/file_icons");
    e_configure_registry_category_del("fileman");
    conf_module = NULL;

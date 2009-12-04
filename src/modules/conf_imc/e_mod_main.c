@@ -28,7 +28,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
-   while ((cfd = e_config_dialog_get("E", "_config_imc_dialog"))) e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "language/input_method_settings"))) e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("language/input_method_settings");
    e_configure_registry_category_del("language");
    conf_module = NULL;

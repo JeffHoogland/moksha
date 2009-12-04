@@ -216,7 +216,7 @@ e_int_config_display(E_Container *con, const char *params __UNUSED__)
         return NULL;
      }
 
-   if (e_config_dialog_find("E", "_config_display_dialog")) return NULL;
+   if (e_config_dialog_find("E", "screen/screen_resolution")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
@@ -226,7 +226,7 @@ e_int_config_display(E_Container *con, const char *params __UNUSED__)
    v->override_auto_apply = 1;
 
    cfd = e_config_dialog_new(con, _("Screen Resolution Settings"),
-			     "E", "_config_display_dialog",
+			     "E", "screen/screen_resolution",
 			     "preferences-system-screen-resolution", 0, v, NULL);
    return cfd;
 }

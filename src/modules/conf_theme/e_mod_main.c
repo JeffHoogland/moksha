@@ -48,7 +48,7 @@ e_modapi_shutdown(E_Module *m)
 	maug = NULL;
      }
 
-   while ((cfd = e_config_dialog_get("E", "_config_theme_dialog"))) 
+   while ((cfd = e_config_dialog_get("E", "apppearance/theme"))) 
      e_object_del(E_OBJECT(cfd));
 
    e_configure_registry_item_del("appearance/theme");

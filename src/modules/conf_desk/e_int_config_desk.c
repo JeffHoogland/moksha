@@ -33,7 +33,7 @@ e_int_config_desk(E_Container *con, const char *params)
    if (sscanf(params, "%i %i %i %i", &con_num, &zone_num, &dx, &dy) != 4)
      return NULL;
    
-   if (e_config_dialog_find("E", "_config_desk_dialog")) return NULL;
+   if (e_config_dialog_find("E", "internal/desk")) return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
    
@@ -49,7 +49,7 @@ e_int_config_desk(E_Container *con, const char *params)
    v->basic.create_widgets = _basic_create;
    v->override_auto_apply = 1;
    
-   cfd = e_config_dialog_new(con, _("Desk Settings"), "E", "_config_desk_dialog",
+   cfd = e_config_dialog_new(con, _("Desk Settings"), "E", "internal/desk",
 			     "preferences-desktop", 0, v, cfdata);
    return cfd;
 }

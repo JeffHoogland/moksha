@@ -85,7 +85,7 @@ e_int_config_fileman(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "_config_fileman")) return NULL;
+   if (e_config_dialog_find("E", "fileman/fileman")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
@@ -94,7 +94,7 @@ e_int_config_fileman(E_Container *con, const char *params __UNUSED__)
    v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con, _("Fileman Settings"), "E", 
-			     "_config_fileman",
+			     "fileman/fileman",
 			     "system-file-manager", 0, v, NULL);
    return cfd;
 }

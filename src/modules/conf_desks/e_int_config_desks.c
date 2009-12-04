@@ -49,18 +49,18 @@ e_int_config_desks(E_Container *con, const char *params __UNUSED__)
    v = E_NEW(E_Config_Dialog_View, 1);
    
    /* methods */
-   v->create_cfdata           = _create_data;
-   v->free_cfdata             = _free_data;
-   v->basic.apply_cfdata      = _basic_apply_data;
-   v->basic.create_widgets    = _basic_create_widgets;
-   v->basic.check_changed     = _basic_check_changed;
-   v->advanced.apply_cfdata   = _advanced_apply_data;
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
+   v->basic.apply_cfdata = _basic_apply_data;
+   v->basic.create_widgets = _basic_create_widgets;
+   v->basic.check_changed = _basic_check_changed;
+   v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
-   v->advanced.check_changed  = _advanced_check_changed;
+   v->advanced.check_changed = _advanced_check_changed;
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con,
 			     _("Virtual Desktops Settings"),
-			     "E", "_config_desks_dialog",
+			     "E", "screen/virtual_desktops",
 			     "preferences-desktop", 0, v, NULL);
    return cfd;
 }

@@ -29,7 +29,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
-   while ((cfd = e_config_dialog_get("E", "_config_scale_dialog"))) e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "appearance/scale"))) e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("appearance/scale");
    e_configure_registry_category_del("appearance");
    conf_module = NULL;

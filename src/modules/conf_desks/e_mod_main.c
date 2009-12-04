@@ -19,8 +19,11 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("screen", 30, _("Screen"), NULL, "preferences-desktop-display");
-   e_configure_registry_item_add("screen/virtual_desktops", 10, _("Virtual Desktops"), NULL, "preferences-desktop", e_int_config_desks);
+   e_configure_registry_category_add("screen", 30, _("Screen"), NULL, 
+                                     "preferences-desktop-display");
+   e_configure_registry_item_add("screen/virtual_desktops", 10, 
+                                 _("Virtual Desktops"), NULL, 
+                                 "preferences-desktop", e_int_config_desks);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;
@@ -30,7 +33,9 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
-   while ((cfd = e_config_dialog_get("E", "_config_desks_dialog"))) e_object_del(E_OBJECT(cfd));
+
+   while ((cfd = e_config_dialog_get("E", "screen/virtual_desktops"))) 
+     e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("screen/virtual_desktops");
    e_configure_registry_category_del("screen");
    conf_module = NULL;

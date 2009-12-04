@@ -32,7 +32,7 @@ e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
 
-   while ((cfd = e_config_dialog_get("E", "_config_profiles_dialog")))
+   while ((cfd = e_config_dialog_get("E", "settings/profiles")))
      e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("settings/profiles");
    e_configure_registry_category_del("settings");

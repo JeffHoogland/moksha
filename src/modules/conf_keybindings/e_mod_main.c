@@ -28,7 +28,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
-   while ((cfd = e_config_dialog_get("E", "_config_keybindings_dialog"))) e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "keyboard_and_mouse/key_bindings"))) e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("keyboard_and_mouse/key_bindings");
    e_configure_registry_category_del("keyboard_and_mouse");
    conf_module = NULL;

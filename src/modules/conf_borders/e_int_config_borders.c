@@ -24,11 +24,11 @@ e_int_config_borders(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "_config_border_style_dialog")) return NULL;
+   if (e_config_dialog_find("E", "appearance/borders")) return NULL;
    v = _config_view_new();
    if (!v) return NULL;
    cfd = e_config_dialog_new(con, _("Default Border Style"), 
-			     "E", "_config_border_style_dialog", 
+			     "E", "appearance/borders", 
 			     "preferences-system-windows", 0, v, con);
    return cfd;
 }
