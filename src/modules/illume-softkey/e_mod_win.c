@@ -126,7 +126,6 @@ _il_sk_win_cb_back_click(void *data, void *data2)
              if ((!fb->client.icccm.accepts_focus) && 
                  (!fb->client.icccm.take_focus)) continue;
              if (fb->client.netwm.state.skip_taskbar) continue;
-             printf("Have Focused Border: %s\n", fb->client.icccm.class);
              e_border_raise(fb);
              e_border_focus_set(fb, 1, 1);
              break;
