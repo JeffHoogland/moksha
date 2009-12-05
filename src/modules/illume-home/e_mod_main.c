@@ -343,6 +343,7 @@ _il_home_win_new(Instance *inst)
    e_win_size_min_set(hwin->win, 48, 48);
    e_win_resize(hwin->win, zone->w, 200);
    e_win_show(hwin->win);
+   e_border_focus_set(hwin->win->border, 1, 1);
 }
 
 static void 
