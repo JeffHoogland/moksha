@@ -984,8 +984,8 @@ e_border_fx_offset(E_Border *bd, int x, int y)
 static void
 _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bool without_border, Eina_Bool move)
 {
-   E_Event_Border_Move		*mev;
-   E_Event_Border_Resize	*rev;
+   E_Event_Border_Move *mev;
+   E_Event_Border_Resize *rev;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -6956,7 +6956,7 @@ _e_border_eval(E_Border *bd)
 	     EINA_LIST_FOREACH(focus_stack, l, bd2)
 	       {
 		  if (bd == bd2) continue;
-		  if ((!bd2->iconic) && (bd2->visible) &&  (bd->desk == bd2->desk))
+		  if ((!bd2->iconic) && (bd2->visible) && (bd->desk == bd2->desk))
 		    break;
 	       }
 
