@@ -105,10 +105,33 @@ static void
 _il_sk_win_cb_back_click(void *data, void *data2) 
 {
    Il_Sk_Win *swin;
-   E_Border *bd;
+   E_Border *bd, *fbd;
+   Eina_List *focused, *l;
 
    if (!(swin = data)) return;
    if (!(bd = e_border_focused_get())) return;
+   focused = e_border_focus_stack_get();
+   EINA_LIST_REVERSE_FOREACH(focused, l, fbd) 
+     {
+        E_Border *fb;
+
+        if (e_object_is_del(E_OBJECT(fbd))) continue;
+        if ((!fbd->client.icccm.accepts_focus) && 
+            (!fbd->client.icccm.take_focus)) continue;
+        if (fbd->client.netwm.state.skip_taskbar) continue;
+        if (fbd == bd) 
+          {
+             if (!(fb = focused->next->data)) continue;
+             if (e_object_is_del(E_OBJECT(fb))) continue;
+             if ((!fb->client.icccm.accepts_focus) && 
+                 (!fb->client.icccm.take_focus)) continue;
+             if (fb->client.netwm.state.skip_taskbar) continue;
+             printf("Have Focused Border: %s\n", fb->client.icccm.class);
+             e_border_raise(fb);
+             e_border_focus_set(fb, 1, 1);
+             break;
+          }
+     }
 }
 
 static void 

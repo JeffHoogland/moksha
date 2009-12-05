@@ -492,6 +492,8 @@ _il_home_desktop_run(Efreet_Desktop *desktop)
                                        bd->client.netwm.startup_id) == desktop) 
           {
              e_border_show(bd);
+             e_border_raise(bd);
+             e_border_focus_set(bd, 1, 1);
              if (exe) free(exe);
              return;
           }
@@ -506,6 +508,8 @@ _il_home_desktop_run(Efreet_Desktop *desktop)
                   if (!strcmp(exe, pp)) 
                     {
                        e_border_show(bd);
+                       e_border_raise(bd);
+                       e_border_focus_set(bd, 1, 1);
                        if (exe) free(exe);
                        return;
                     }
@@ -514,6 +518,8 @@ _il_home_desktop_run(Efreet_Desktop *desktop)
                  (!strcasecmp(bd->client.icccm.name, exe))) 
                {
                   e_border_show(bd);
+                  e_border_raise(bd);
+                  e_border_focus_set(bd, 1, 1);
                   if (exe) free(exe);
                   return;
                }
