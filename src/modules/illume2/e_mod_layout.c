@@ -16,6 +16,7 @@ static int _cb_event_border_focus_out(void *data, int type, void *event);
 static int _cb_event_border_show(void *data, int type, void *event);
 static int _cb_event_border_hide(void *data, int type, void *event);
 static int _cb_event_zone_move_resize(void *data, int type, void *event);
+static int _cb_event_client_message(void *data, int type, void *event);
 
 // state
 static E_Border_Hook *hook1 = NULL;
@@ -39,25 +40,28 @@ e_mod_layout_init(E_Module *m)
 			     _e_mod_layout_cb_hook_container_layout, NULL);
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_ADD, _cb_event_border_add, NULL));
+      (E_EVENT_BORDER_ADD, _cb_event_border_add, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_REMOVE, _cb_event_border_remove, NULL));
+      (E_EVENT_BORDER_REMOVE, _cb_event_border_remove, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_FOCUS_IN, _cb_event_border_focus_in, NULL));
+      (E_EVENT_BORDER_FOCUS_IN, _cb_event_border_focus_in, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_FOCUS_OUT, _cb_event_border_focus_out, NULL));
+      (E_EVENT_BORDER_FOCUS_OUT, _cb_event_border_focus_out, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_SHOW, _cb_event_border_show, NULL));
+      (E_EVENT_BORDER_SHOW, _cb_event_border_show, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_HIDE, _cb_event_border_hide, NULL));
+      (E_EVENT_BORDER_HIDE, _cb_event_border_hide, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-         (E_EVENT_ZONE_MOVE_RESIZE, _cb_event_zone_move_resize, NULL));
+      (E_EVENT_ZONE_MOVE_RESIZE, _cb_event_zone_move_resize, NULL));
+   handlers = eina_list_append
+     (handlers, ecore_event_handler_add
+      (ECORE_X_EVENT_CLIENT_MESSAGE, _cb_event_client_message, NULL));
 
    illume_layout_illume_init();
 }
@@ -586,5 +590,34 @@ _cb_event_zone_move_resize(void *data, int type, void *event)
    ev = event;
    if ((mode) && (mode->funcs.zone_move_resize)) 
      mode->funcs.zone_move_resize(ev->zone);
+   return 1;
+}
+
+static int 
+_cb_event_client_message(void *data, int type, void *event) 
+{
+   Ecore_X_Event_Client_Message *ev;
+   E_Border *bd;
+
+   ev = event;
+   if (ev->message_type != ECORE_X_ATOM_NET_ACTIVE_WINDOW) return 1;
+   bd = e_border_find_by_client_window(ev->win);
+   if ((bd) && (!bd->focused)) 
+     {
+        if ((e_config->focus_setting == E_FOCUS_NEW_WINDOW) || 
+            ((bd->parent) && 
+             ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) || 
+              ((bd->parent->focused) && 
+               (e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED))))) 
+          {
+             if (bd->iconic) 
+               {
+                  if (!bd->lock_user_iconify) e_border_uniconify(bd);
+               }
+             if (!bd->lock_user_stacking) e_border_raise(bd);
+             if (!bd->lock_focus_out) e_border_focus_set(bd, 1, 1);
+          }
+     }
+
    return 1;
 }
