@@ -338,6 +338,26 @@ illume_border_is_conformant(E_Border *bd)
    return ret;
 }
 
+Eina_List *
+illume_border_valid_borders_get(void) 
+{
+   Eina_List *bds, *l, *ret = NULL;
+   E_Border *bd;
+
+   bds = e_border_client_list();
+   EINA_LIST_FOREACH(bds, l, bd) 
+     {
+        if (!bd) continue;
+        if (illume_border_is_top_shelf(bd)) continue;
+        if (illume_border_is_bottom_panel(bd)) continue;
+        if (illume_border_is_keyboard(bd)) continue;
+        if (illume_border_is_dialog(bd)) continue;
+        if (strstr(bd->client.icccm.class, "config")) continue;
+        ret = eina_list_append(ret, bd);
+     }
+   return ret;
+}
+
 void
 illume_border_slide_to(E_Border *bd, int x, int y, Illume_Anim_Class aclass)
 {

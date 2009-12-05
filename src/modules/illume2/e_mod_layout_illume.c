@@ -16,7 +16,8 @@ static int panelsize = 0;
 static void
 _border_add(E_Border *bd)
 { // handle a border being added
-
+   e_border_raise(bd);
+   e_border_focus_set(bd, 1, 1);
 }
 
 static void
@@ -95,10 +96,8 @@ _zone_layout(E_Zone *z)
           }
         else if (illume_border_is_home(bd))
           {
-             int x, y, w, h;
-
-             _border_calc_position(z, bd, &x, &y, &w, &h);
-             e_border_move_resize(bd, x, y, w, h);
+             e_border_move_resize(bd, z->x, z->y + shelfsize, z->w, 
+                                  z->h - shelfsize - panelsize);
           }
         else if (illume_border_is_dialog(bd))
           {
@@ -107,18 +106,8 @@ _zone_layout(E_Zone *z)
           }
         else
           {
-             int x, y, w, h;
-
-             _border_calc_position(z, bd, &x, &y, &w, &h);
-             e_border_move_resize(bd, x, y, w, h);
-             if (illume_border_is_conformant(bd)) 
-               {
-                  if (bd->layer != 110) e_border_layer_set(bd, 110);
-               }
-             else 
-               {
-                  if (bd->layer != 100) e_border_layer_set(bd, 100);
-               }
+             e_border_move_resize(bd, z->x, z->y + shelfsize, z->w, 
+                                  z->h - shelfsize - panelsize);
           }
      }
 }
