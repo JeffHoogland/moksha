@@ -1844,11 +1844,9 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
 {
    E_Dir *ed;
    char *dir, *rp, *drp;
-   const char *file;
    Eina_List *l;
 
    dir = ecore_file_dir_get(path);
-   file = ecore_file_file_get(path);
    /* FIXME: get no create events if dir is empty */
    if ((event == ECORE_FILE_EVENT_CREATED_FILE) ||
        (event == ECORE_FILE_EVENT_CREATED_DIRECTORY))
@@ -2337,7 +2335,7 @@ _e_prepare_command(E_Fm_Op_Type type, const char *args)
 
    length = 256 + strlen(getenv("E_LIB_DIR")) + strlen(args);
    buffer = malloc(length);
-   length = snprintf(buffer, length, 
+   snprintf(buffer, length, 
                      "%s/enlightenment/utils/enlightenment_fm_op %s %s", 
                      getenv("E_LIB_DIR"), command, args);
 

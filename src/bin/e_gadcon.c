@@ -1984,6 +1984,8 @@ _e_gadcon_client_move_start(E_Gadcon_Client *gcc)
      evas_object_geometry_get(gcc->o_frame, &x, &y, NULL, NULL);
    else if (gcc->o_base)
      evas_object_geometry_get(gcc->o_base, &x, &y, NULL, NULL);
+   else
+     return;
 
    /* using drag pos to calc offset between pointer and gcc pos */
    gcc->drag.x = (x - gcc->dx);
@@ -2038,7 +2040,8 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
      evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
    else if (gcc->o_base)
      evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
-   else return; /* make clang happy */
+   else
+     return; /* make clang happy */
 
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      { 

@@ -1016,9 +1016,7 @@ static void
 _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    E_Zone *zone;
-   Evas_Event_Mouse_Down *ev;
 
-   ev = (Evas_Event_Mouse_Down *)event_info;
    zone = data;
    if (e_menu_grab_window_get()) return;
 

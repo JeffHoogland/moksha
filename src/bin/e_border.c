@@ -4056,12 +4056,11 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 static int
 _e_border_cb_window_reparent(void *data, int ev_type, void *ev)
 {
+#if 0
    E_Border *bd;
    Ecore_X_Event_Window_Reparent *e;
 
-   bd = data;
    e = ev;
-   return 1;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
    if (e->parent == bd->client.shell_win) return 1;
@@ -4071,6 +4070,7 @@ _e_border_cb_window_reparent(void *data, int ev_type, void *ev)
      }
    e_border_hide(bd, 0);
    e_object_del(E_OBJECT(bd));
+#endif
    return 1;
 }
 
@@ -4080,7 +4080,6 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
    E_Border *bd;
    Ecore_X_Event_Window_Configure_Request *e;
 
-   bd = data;
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd)
@@ -4300,8 +4299,6 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
      {
 	int w, h;
 
-	h = bd->h;
-	w = bd->w;
 	w = e->w + bd->client_inset.l + bd->client_inset.r;
 	h = e->h + bd->client_inset.t + bd->client_inset.b;
 	if ((bd->shaded) || (bd->shading))

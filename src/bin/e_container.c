@@ -59,7 +59,6 @@ EAPI E_Container *
 e_container_new(E_Manager *man)
 {
    E_Container *con;
-   E_Zone *zone;
    Evas_Object *o;
    char name[40];
    Eina_List *l, *screens;
@@ -158,11 +157,11 @@ e_container_new(E_Manager *man)
 	E_Screen *scr;
 	EINA_LIST_FOREACH(screens, l, scr)
 	  {
-	     zone = e_zone_new(con, scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
+	     e_zone_new(con, scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
 	  }
      }
    else
-     zone = e_zone_new(con, 0, 0, 0, 0, con->w, con->h);
+     e_zone_new(con, 0, 0, 0, 0, con->w, con->h);
    return con;
 }
 
@@ -1204,7 +1203,7 @@ _e_container_resize_handle(E_Container *con)
 	     e_border_res_change_geometry_restore(bd);
 	  }
 
-	tmp = eina_list_free(tmp);
+	eina_list_free(tmp);
      }
 }
 

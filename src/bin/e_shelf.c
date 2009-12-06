@@ -1319,7 +1319,6 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
    E_Shelf *es;
    E_Menu *mn;
    int cx, cy;
-   E_Zone *zone;
 
    es = data;
    ev = event_info;
@@ -1335,8 +1334,6 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 
 	_e_shelf_menu_append(es, mn);
 
-        zone = es->gadcon->zone;
-        if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
         e_gadcon_canvas_zone_geometry_get(es->gadcon, &cx, &cy, NULL, NULL);
 	e_menu_activate_mouse(mn,
 			      e_util_zone_current_get(e_manager_current_get()),
@@ -1509,7 +1506,7 @@ static int
 _e_shelf_cb_hide_animator(void *data)
 {
    E_Shelf *es;
-   int step, hide_max;
+   int step, hide_max = 0;
 
    es = data;
    switch (es->gadcon->orient)

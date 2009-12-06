@@ -995,7 +995,6 @@ _e_drag_xdnd_end(Ecore_X_Window win, int x, int y)
    if (ev.data)
      {
 	E_Drop_Handler *h;
-	int dropped = 0;
 
 	EINA_LIST_FOREACH(_drop_handlers, l, h)
 	  {
@@ -1007,7 +1006,6 @@ _e_drag_xdnd_end(Ecore_X_Window win, int x, int y)
 		 && E_INSIDE(x, y, dx, dy, dw, dh))
 	       {
 		  h->cb.drop(h->cb.data, h->active_type, &ev);
-		  dropped = 1;
 	       }
 	  }
      }

@@ -60,6 +60,8 @@ e_user_homedir_snprintf(char *dst, size_t size, const char *fmt, ...)
 
    if (!_e_user_homedir)
      e_user_homedir_get();
+   if (!_e_user_homedir)
+     return 0;
 
    va_start(ap, fmt);
 
@@ -162,6 +164,8 @@ e_user_dir_snprintf(char *dst, size_t size, const char *fmt, ...)
 
    if (!_e_user_dir)
      e_user_dir_get();
+   if (!_e_user_dir)
+     return 0;
 
    va_start(ap, fmt);
 

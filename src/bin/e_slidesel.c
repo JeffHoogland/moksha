@@ -193,12 +193,12 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 static void
 _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
+/*   
    Evas_Event_Key_Down *ev;
    E_Smart_Data *sd;
    
    sd = data;
    ev = event_info;
-/*   
    if (!strcmp(ev->keyname, "Left"))
      x -= sd->step.x;
    else if (!strcmp(ev->keyname, "Right"))

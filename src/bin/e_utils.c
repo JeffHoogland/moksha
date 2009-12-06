@@ -168,7 +168,8 @@ e_util_head_exec(int head, const char *cmd)
    Ecore_Exe *exe;
 
    penv_display = getenv("DISPLAY");
-   if (penv_display) penv_display = strdup(penv_display);
+   if (!penv_display) return 0;
+   penv_display = strdup(penv_display);
    /* set env vars */
    p1 = strrchr(penv_display, ':');
    p2 = strrchr(penv_display, '.');

@@ -34,6 +34,7 @@ e_sha1_sum(unsigned char *data, int size, unsigned char *dst)
    digest[3] = 0x10325476;
    digest[4] = 0xc3d2e1f0;
 
+   memset(buf, 0, sizeof(buf));
    for (left = size, d = data; left > 0; left--, d++)
      {
 	if ((index == 0) && (left < 64))

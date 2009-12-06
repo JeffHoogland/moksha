@@ -140,9 +140,6 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
 static int
 _e_ipc_cb_server_del(void *data, int type, void *event)
 {
-   Ecore_Ipc_Event_Server_Del *e;
-   
-   e = event;
    /* quit now */
    ecore_main_loop_quit();
    return 1;
@@ -244,13 +241,6 @@ struct _Color
    int use;
    unsigned char r, g, b;
 };
-
-static int
-_sort_col(const void *d1, const void *d2)
-{
-   Color *c1 = (Color *)d1, *c2 = (Color *)d2;
-   return c2->use - c1->use;
-}
 
 static void
 _e_thumb_generate(E_Thumb *eth)
