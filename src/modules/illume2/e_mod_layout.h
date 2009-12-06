@@ -29,6 +29,7 @@ struct _Illume_Layout_Mode
         void (*zone_layout) (E_Zone *zone);
         void (*zone_move_resize) (E_Zone *zone);
         // --- add more below (activate callback, and more)
+        void (*border_activate) (E_Border *bd);
      } funcs;
 };
 

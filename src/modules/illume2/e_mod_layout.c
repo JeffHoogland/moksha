@@ -622,22 +622,8 @@ _cb_event_client_message(void *data, int type, void *event)
    ev = event;
    if (ev->message_type != ECORE_X_ATOM_NET_ACTIVE_WINDOW) return 1;
    bd = e_border_find_by_client_window(ev->win);
-   if ((bd) && (!bd->focused)) 
-     {
-        if ((e_config->focus_setting == E_FOCUS_NEW_WINDOW) || 
-            ((bd->parent) && 
-             ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) || 
-              ((bd->parent->focused) && 
-               (e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED))))) 
-          {
-             if (bd->iconic) 
-               {
-                  if (!bd->lock_user_iconify) e_border_uniconify(bd);
-               }
-             if (!bd->lock_user_stacking) e_border_raise(bd);
-             if (!bd->lock_focus_out) e_border_focus_set(bd, 1, 1);
-          }
-     }
-
+   if (bd->stolen) return 1;
+   if ((mode) && (mode->funcs.border_activate))
+     mode->funcs.border_activate(bd);
    return 1;
 }
