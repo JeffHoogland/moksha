@@ -323,6 +323,7 @@ illume_border_is_overlay(E_Border *bd)
 Eina_Bool 
 illume_border_is_conformant(E_Border *bd) 
 {
+   if (strstr(bd->client.icccm.class, "config")) return EINA_FALSE;
    return ecore_x_e_illume_conformant_get(bd->client.win);
 }
 
