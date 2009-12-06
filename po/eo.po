@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-12-02 11:51+1100\n"
-"PO-Revision-Date: 2009-05-16 19:05+0000\n"
+"PO-Revision-Date: 2009-12-06 10:46+0100\n"
 "Last-Translator: Olivier <eliovir@nospam.gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "X-Poedit-Language: Esperanto\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Lokalize 0.3\n"
+"X-Generator: Lokalize 1.0\n"
 "X-Poedit-SearchPath-0: /usr/portage/distfiles/cvs-src/e17/apps/e/src\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -48,7 +48,6 @@ msgid "Enlightenment"
 msgstr "Enlightenment"
 
 #: src/bin/e_about.c:26
-#, fuzzy
 msgid ""
 "Copyright &copy; 1999-2009, by the Enlightenment Development Team.<br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -59,7 +58,7 @@ msgid ""
 "is not stable. Many features are incomplete or even non-existant yet and may "
 "have many bugs. You have been <hilight>WARNED!</hilight>"
 msgstr ""
-"Kopirajto &copy; 1999-2008; de la Programada Teamo de Enlightenment."
+"Kopirajto &copy; 1999-2009; de la Programada Teamo de Enlightenment."
 "<br><br>Ni esperas ke vi ĝojas uzadon de tiu programaro tiom kiel ni ĝojis "
 "dum skribado de ĝi.<br><br>Tiu programaro doniĝas tiel (\"kiel ĝi estas\")  "
 "sen eksplicita aŭ implicita garantio. Ĉi tiu softvaro estas regita de "
@@ -1160,31 +1159,28 @@ msgid "%s doesn't exist."
 msgstr "%s ne ekzistas."
 
 #: src/bin/e_fm.c:3017
-#, fuzzy
 msgid "Mount Error"
 msgstr "Eraro de surmeto"
 
 #: src/bin/e_fm.c:3017
 msgid "Can't mount device"
-msgstr ""
+msgstr "Ne eblas surmunti aparaton"
 
 #: src/bin/e_fm.c:3033
-#, fuzzy
 msgid "Unmount Error"
-msgstr "Eraro de surmeto"
+msgstr "Eraro de demunto"
 
 #: src/bin/e_fm.c:3033
 msgid "Can't unmount device"
-msgstr ""
+msgstr "Ne eblas demunti aparaton"
 
 #: src/bin/e_fm.c:3048
-#, fuzzy
 msgid "Eject Error"
-msgstr "Eraro"
+msgstr "Eraro de elĵeto"
 
 #: src/bin/e_fm.c:3048
 msgid "Can't eject device"
-msgstr ""
+msgstr "Ne eblas elĵeti aparaton"
 
 #: src/bin/e_fm.c:3685
 #, c-format
@@ -1235,16 +1231,15 @@ msgstr "Renomi"
 
 #: src/bin/e_fm.c:8070
 msgid "Unmount"
-msgstr ""
+msgstr "Demunti"
 
 #: src/bin/e_fm.c:8075
-#, fuzzy
 msgid "Mount"
-msgstr "Muti"
+msgstr "Surmunti"
 
 #: src/bin/e_fm.c:8080
 msgid "Eject"
-msgstr ""
+msgstr "Elĵeti"
 
 #: src/bin/e_fm.c:8090
 msgid "Properties"
@@ -1476,9 +1471,8 @@ msgid "Removable Device"
 msgstr "Demetebla Aparato"
 
 #: src/bin/e_gadcon.c:1339
-#, fuzzy
 msgid "Move this gadget to"
-msgstr "Forviŝi tiun vanaĵon"
+msgstr "Movi tiun vanaĵon"
 
 #: src/bin/e_gadcon.c:1359 src/modules/gadman/e_mod_gadman.c:703
 msgid "Plain"
@@ -1949,14 +1943,12 @@ msgid "Remember using"
 msgstr "Memori uzante"
 
 #: src/bin/e_int_border_remember.c:638
-#, fuzzy
 msgid "Window name"
-msgstr "Fenestradministrilo"
+msgstr "Fenestra nomo"
 
 #: src/bin/e_int_border_remember.c:650
-#, fuzzy
 msgid "Window class"
-msgstr "Fenestra Klaso"
+msgstr "Fenestraklaso"
 
 #: src/bin/e_int_border_remember.c:674
 msgid "Window Role"
@@ -1968,7 +1960,7 @@ msgstr "Fenestra tipo"
 
 #: src/bin/e_int_border_remember.c:694
 msgid "wildcard matches are allowed"
-msgstr ""
+msgstr "ajnaj kongruoj ne estas permesitaj"
 
 #: src/bin/e_int_border_remember.c:696
 msgid "Transience"
@@ -1995,9 +1987,8 @@ msgid "Skip Window List"
 msgstr "Forviŝi el Fenestrolisto"
 
 #: src/bin/e_int_border_remember.c:744
-#, fuzzy
 msgid "Application file or name (.desktop)"
-msgstr "Eraro dum lanĉo de aplikaĵo"
+msgstr "Dosiero aŭ nomo de aplikaĵo (.desktop)"
 
 #: src/bin/e_int_border_remember.c:752
 msgid "Match only one window"
@@ -2008,9 +1999,8 @@ msgid "Always focus on start"
 msgstr "Ĉiam fokusigi dum komenco"
 
 #: src/bin/e_int_border_remember.c:760
-#, fuzzy
 msgid "Keep current properties"
-msgstr "Ŝanĝi Piktogramajn Ecojn"
+msgstr "Gardi nunajn ecojn"
 
 #: src/bin/e_int_border_remember.c:766
 msgid "Start this program on login"
@@ -2671,7 +2661,6 @@ msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment ne povas difini sian \"dnd\"-sistemon."
 
 #: src/bin/e_main.c:864
-#, fuzzy
 msgid "Setup Grab Input Handling"
 msgstr "Agordi traktadon de enigo-aparato"
 
@@ -3961,7 +3950,7 @@ msgstr "Plidetala Modo"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:116
 msgid "Remember size and position of dialogs"
-msgstr ""
+msgstr "Memorigi grandecon kaj pozicion de dialogoj"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:149
 msgid "Default Dialog Mode"
@@ -4140,14 +4129,14 @@ msgid "<None>"
 msgstr "<Neniom>"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:7
-#, fuzzy
 msgid ""
 "Please select an edge,<br>or click <hilight>Close</hilight> to abort."
 "<br><br>You can either specify a delay of this<br> action using the slider, "
 "or make it<br>respond to edge clicks:"
 msgstr ""
 "Bonvolu elekti randon,<br>aŭ klaku <hilight>Fermi</hilight> por ĉesigi."
-"<br><br>Por ŝanĝi la tempolimon de tiu agado,<br>uzu la ŝovilon."
+"<br><br>Por ŝanĝi la tempolimon de tiu agado,<br>uzu la ŝovilon, aŭ "
+"igi ĝin<br>respondi al randaj klakoj:"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
 msgid "Edge Binding Settings"
@@ -4212,7 +4201,7 @@ msgstr "%.2f sekundoj"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:862
 msgid "Clickable edge"
-msgstr ""
+msgstr "Randa klako"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1175
 msgid "Binding Edge Error"
@@ -4568,14 +4557,12 @@ msgid "Enable Font Class"
 msgstr "Aktivigi Tiparan Klason"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:619
-#, fuzzy
 msgid "Font"
-msgstr "Tiparoj"
+msgstr "Tiparo"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:628
-#, fuzzy
 msgid "Style"
-msgstr "Stiloj"
+msgstr "Stilo"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:645
 msgid "Advanced Preview Text.. 我真的会写中文"
@@ -4607,9 +4594,8 @@ msgid "Enable Fallbacks"
 msgstr "Aktivigi Alternativecojn"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:691
-#, fuzzy
 msgid "Hinting / Fallbacks"
-msgstr "Alternativaj Tiparoj"
+msgstr "Aludado / Alternativecoj"
 
 #: src/modules/conf_icon_theme/e_int_config_icon_themes.c:43
 msgid "Icon Theme Settings"
@@ -4721,7 +4707,6 @@ msgid "%1.0f pixels"
 msgstr "%1.0f rastrumeroj"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:107
-#, fuzzy
 msgid "Threshold for applying drag momentum"
 msgstr "Sojlo por apliki moviĝeman ŝovon"
 
@@ -5876,7 +5861,7 @@ msgstr "Ambaŭ"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:166
 msgid "Allow manipulation of maximized windows"
-msgstr ""
+msgstr "Permesi manuzon de maksimumigitaj fenestroj"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:170
 msgid "Automatically move/resize windows on shelf autohide"
@@ -5924,14 +5909,12 @@ msgid "Window Remembers"
 msgstr "Fenestraj memoroj"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:119
-#, fuzzy
 msgid "Remember internal dialogs"
-msgstr "Ĉiam memori internajn fenestrojn"
+msgstr "Memori internajn fenestrojn"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:121
-#, fuzzy
 msgid "Remember fileman windows"
-msgstr "Ĉiam memori internajn fenestrojn"
+msgstr "Memori fenestrojn de dosieradministrilo"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:124
 msgid "Delete Remember(s)"
@@ -6351,11 +6334,11 @@ msgstr "Vidigi HAL-piktogramojn sur labortablo"
 
 #: src/modules/fileman/e_mod_config.c:273
 msgid "Mount volumes on insert"
-msgstr ""
+msgstr "Surmeti portilon post enigo"
 
 #: src/modules/fileman/e_mod_config.c:276
 msgid "Open filemanager on mount"
-msgstr ""
+msgstr "Lanĉi dosieradministrilon post surmunto"
 
 #: src/modules/fileman/e_fwin.c:1412
 msgid "Go to Parent Directory"
@@ -6389,98 +6372,92 @@ msgstr "Propran komandon"
 #: src/modules/fileman_opinfo/e_mod_main.c:94
 #, c-format
 msgid "Copying is aborted"
-msgstr ""
+msgstr "Kopiado estis ĉesigita"
 
 #: src/modules/fileman/e_fwin.c:2149
 #: src/modules/fileman_opinfo/e_mod_main.c:97
 #, c-format
 msgid "Moving is aborted"
-msgstr ""
+msgstr "Movado estis ĉesigita"
 
 #: src/modules/fileman/e_fwin.c:2152
 #: src/modules/fileman_opinfo/e_mod_main.c:100
 #, c-format
 msgid "Deleting is aborted"
-msgstr ""
+msgstr "Forigo estis ĉesigita"
 
 #: src/modules/fileman/e_fwin.c:2155
 #: src/modules/fileman_opinfo/e_mod_main.c:103
 #, c-format
 msgid "Unknown operation from slave is aborted"
-msgstr ""
+msgstr "Nekonata operacio el sklavo estis ĉesigita"
 
 #: src/modules/fileman/e_fwin.c:2165
 #: src/modules/fileman_opinfo/e_mod_main.c:113
 #, c-format
 msgid "Copy of %s done"
-msgstr ""
+msgstr "Kopiado de %s farita"
 
 #: src/modules/fileman/e_fwin.c:2167
 #: src/modules/fileman_opinfo/e_mod_main.c:115
 #, c-format
 msgid "Copying %s (eta: %d sec)"
-msgstr ""
+msgstr "Kopiante %s (estimata tempo: %d sec)"
 
 #: src/modules/fileman/e_fwin.c:2171
 #: src/modules/fileman_opinfo/e_mod_main.c:119
 #, c-format
 msgid "Move of %s done"
-msgstr ""
+msgstr "Movado de %s farita"
 
 #: src/modules/fileman/e_fwin.c:2173
 #: src/modules/fileman_opinfo/e_mod_main.c:121
 #, c-format
 msgid "Moving %s (eta: %d sec)"
-msgstr ""
+msgstr "Movante %s (estimata tempo: %d sec)"
 
 #: src/modules/fileman/e_fwin.c:2177
-#: src/modules/fileman_opinfo/e_mod_main.c:125
-#, fuzzy, c-format
+#: src/modules/fileman_opinfo/e_mod_main.c:125, c-format
 msgid "Delete done"
-msgstr "Forviŝi \"Edje\""
+msgstr "Forigado farita"
 
 #: src/modules/fileman/e_fwin.c:2179
-#: src/modules/fileman_opinfo/e_mod_main.c:127
-#, fuzzy, c-format
+#: src/modules/fileman_opinfo/e_mod_main.c:127, c-format
 msgid "Deleting files..."
-msgstr "La restartigo malsukcesis."
+msgstr "Forigado de dosieroj..."
 
 #: src/modules/fileman/e_fwin.c:2182
 #: src/modules/fileman_opinfo/e_mod_main.c:130
 #, c-format
 msgid "Unknow operation from slave %d"
-msgstr ""
+msgstr "Nekonata operacio el sklavo %d"
 
 #: src/modules/fileman_opinfo/e_mod_main.c:138
 #: src/modules/fileman_opinfo/e_mod_main.c:148
-#, fuzzy
 msgid "(no information)"
-msgstr "Ligila Informaĵo"
+msgstr "(Neniu informo)"
 
-#: src/modules/fileman_opinfo/e_mod_main.c:142
-#, fuzzy, c-format
+#: src/modules/fileman_opinfo/e_mod_main.c:142, c-format
 msgid "File: %s"
-msgstr "Dosiero:"
+msgstr "Dosiero: %s"
 
 #: src/modules/fileman_opinfo/e_mod_main.c:144
 #, c-format
 msgid "From: %s"
-msgstr ""
+msgstr "El: %s"
 
 #: src/modules/fileman_opinfo/e_mod_main.c:151
 #, c-format
 msgid "To: %s"
-msgstr ""
+msgstr "Por: %s"
 
-#: src/modules/fileman_opinfo/e_mod_main.c:329
-#, fuzzy, c-format
+#: src/modules/fileman_opinfo/e_mod_main.c:329, c-format
 msgid "Processing %d operation(s)"
-msgstr "%d agoj"
+msgstr "Procezante %d operacio(j)n"
 
 #: src/modules/fileman_opinfo/e_mod_main.c:333
-#, fuzzy
 msgid "Filemanager is idle"
-msgstr "Administrilo"
+msgstr "Administrilo estas senokupa"
 
 #: src/modules/fileman_opinfo/e_mod_main.c:414
 msgid "EFM Operation Info"
@@ -6599,12 +6576,12 @@ msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "bar source?"
 msgstr ""
-"Vi petis forviŝi \"%s\".<br><br>Ĉu vi certas ke vi volas forviŝi tiun bar-"
+"Vi petis forigi \"%s\".<br><br>Ĉu vi certas ke vi volas forigi tiun bar-"
 "fonton ?"
 
 #: src/modules/ibar/e_mod_config.c:187
 msgid "Are you sure you want to delete this bar source?"
-msgstr "Ĉu vi certas, ke vi deziras forviŝi tiun bar-fonton ?"
+msgstr "Ĉu vi certas, ke vi deziras forigi tiun bar-fonton ?"
 
 #: src/modules/ibar/e_mod_main.c:215
 msgid "IBar"
@@ -7141,296 +7118,3 @@ msgstr "Nu unu akcesoraĵo de taskopleto povas esti kaj alia jam ekzistas."
 #: src/modules/systray/e_mod_main.c:1094
 msgid "Systray"
 msgstr "Taskopleto"
-
-#~ msgid ""
-#~ "You are trying to ask Enlightenment to remember to apply<br>properties "
-#~ "(such as size, location, border style etc.) to<br>a window that "
-#~ "<hilight>does not have unique properties</hilight>.<br><br>This means it "
-#~ "shares Name/Class, Transience, Role etc. properties<br>with more than 1 "
-#~ "other window on the screen and remembering<br>properties for this window "
-#~ "will apply to all other windows<br>that match these properties."
-#~ "<br><br>You may wish to enable the <hilight>Match only one window</"
-#~ "hilight> option if<br>you only intend one instance of this window to be "
-#~ "modified, with<br>additional instances not being modified.<br><br>This is "
-#~ "just a warning in case you did not intend this to happen.<br>If you did, "
-#~ "simply press <hilight>Apply</hilight> or <hilight>OK</hilight> "
-#~ "buttons<br>and your settings will be accepted. Press <hilight>Cancel</"
-#~ "hilight> if you<br>are not sure and nothing will be affected."
-#~ msgstr ""
-#~ "Vi estas provanta demandi Enlightenment-on pri memorigo de apliko<br>de "
-#~ "ecoj (kiel grandeco, loko, randa stilo, ktp) al<br>fenestro kiu "
-#~ "<hilight>ne havas unikajn ecojn</hilight>.<br><br>Tio signifas ke ĝi "
-#~ "havigas ecojn de Nomo/Klaso,  Nedaŭro, Rolo, ktp<br>kun pli ol 1 alia "
-#~ "fenestro en la ekrano kaj memorado<br>de ecoj por ĉi tiu fenestro "
-#~ "koncernos ĉiuj aliajn<br>kiu kongruas kun tiuj ecoj.<br><br>Vi povus "
-#~ "deziri ebligi, la elekton<hilight>Kongrui nur unu fenestro</hilight> "
-#~ "se<br>vi nur intencas unu okazoj de ĉi tiu fenestro modifenda, "
-#~ "kun<br>kromaj okazoj ne modifendaj.<br><br>Tio estas nur averto en la "
-#~ "okazo ke vi ne intencas tian okazajxon.<br>Se vi volis tion, simple "
-#~ "alklaku la butonoj <hilight>Apliki</hilight> aŭ <hilight>OK</"
-#~ "hilight><br>kaj viaj agordoj estos akceptataj. Alklaku <hilight>Rezigni</"
-#~ "hilight> se vi<br> ne certas kaj nenio estos influata."
-
-#~ msgid "Window name and class"
-#~ msgstr "Fenestra nomo kaj klaso"
-
-#~ msgid "Internal Windows"
-#~ msgstr "Internaj Fenestroj"
-
-#~ msgid "Expand the window"
-#~ msgstr "Malvolvi la fenestron"
-
-#~ msgid "Allow window manipulation"
-#~ msgstr "Permesi fenestran manuzon"
-
-#~ msgid "idle"
-#~ msgstr "senokupa"
-
-#~ msgid "Mount of device failed"
-#~ msgstr "Surmeto de aparato malsukcesis"
-
-#~ msgid "Configure Virtual Desktops"
-#~ msgstr "Konfiguri Virtualajn Labortablojn"
-
-#~ msgid "Configure Contents..."
-#~ msgstr "Konfiguri Enhavojn..."
-
-#~ msgid "Shelf Size"
-#~ msgstr "Breta Grandeco"
-
-#~ msgid "Configure Shelf Contents"
-#~ msgstr "Konfiguri Bretan Enhavon"
-
-#~ msgid "Configure Toolbar Contents"
-#~ msgstr "Konfiguri Bretan Enhavon"
-
-#~ msgid "Configure Dialog Title"
-#~ msgstr "Titolo de Konfigura Dialogo"
-
-#~ msgid "Configure"
-#~ msgstr "Konfiguri"
-
-#~ msgid "Flip when moving mouse to the screen edge"
-#~ msgstr "Speguli dum la movado de la muso al ekrana rando"
-
-#~ msgid "Configure Heading"
-#~ msgstr "Konfigura Titolo"
-
-#~ msgid "Custom Grid Icons"
-#~ msgstr "Propraj Kadraj Piktogramoj"
-
-#~ msgid "Defined Command"
-#~ msgstr "Difinita Komando"
-
-#~ msgid "Exit Immediately"
-#~ msgstr "Tuj Eliri"
-
-#, fuzzy
-#~ msgid "Shut Down Immediately"
-#~ msgstr "Tuj Eliri"
-
-#~ msgid "Shut Down"
-#~ msgstr "Estingi"
-
-#~ msgid "Suspend to Disk"
-#~ msgstr "Diskodormigi"
-
-#~ msgid "Desktop Lock"
-#~ msgstr "Labortabla Ŝloso"
-
-#~ msgid "Shutting down of your system failed."
-#~ msgstr "Halto de via sistemo malsukcesis."
-
-#~ msgid "Rebooting your system failed."
-#~ msgstr "Relanĉo de via sistemo malsukcesis."
-
-#~ msgid "Suspend of your system failed."
-#~ msgstr "Dormigo de vian sistemo malsukcesis."
-
-#~ msgid "Shutting down"
-#~ msgstr "Haltante"
-
-#~ msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
-#~ msgstr "Haltante vian Komputilon.<br><hilight>Bonvolu atendi</hilight>"
-
-#~ msgid "Rebooting"
-#~ msgstr "Relanĉante"
-
-#~ msgid "Advanced Settings"
-#~ msgstr "Antaŭenigitaj Agordoj"
-
-#~ msgid "%1.0f percent"
-#~ msgstr "%1.0f porcentoj"
-
-#~ msgid ""
-#~ "You requested to delete \"%s\".<br><br>Are you sure you want to delete "
-#~ "this profile?"
-#~ msgstr ""
-#~ "Vi petis forviŝi \"%s\".<br><br>Ĉu vi certas ke vi volas forviŝi tiun "
-#~ "aspekton ?"
-
-#~ msgid "Are you sure you want to delete this profile?"
-#~ msgstr "Ĉu vi estas certa, ke vi deziras forviŝi tiun aspekton ?"
-
-#~ msgid "Plain Profile"
-#~ msgstr "Plata Aspekto"
-
-#~ msgid "Clone Current Profile"
-#~ msgstr "Kopii Nunan Aspekton"
-
-#~ msgid "Lock Screen"
-#~ msgstr "Ŝlosi Ekranon"
-
-#~ msgid "Logout"
-#~ msgstr "Elsaluti"
-
-#~ msgid "Desktop %i, %i"
-#~ msgstr "Labortablo %i, %i"
-
-#~ msgid "Configuration Upgraded"
-#~ msgstr "Agordo Aktualigita"
-
-#~ msgid "Configuration"
-#~ msgstr "Konfiguraĵo"
-
-#~ msgid "Toolbar Configuration"
-#~ msgstr "Konfiguraĵo de ilobreto"
-
-#~ msgid "Shelf Configuration"
-#~ msgstr "Breta Konfiguraĵo"
-
-#~ msgid "Enlightenment Configuration"
-#~ msgstr "Enlightenment-a Konfiguraĵo"
-
-#~ msgid "Items"
-#~ msgstr "Elementoj"
-
-#~ msgid "Configuration Panel"
-#~ msgstr "Panelo de Konfiguraĵo"
-
-#~ msgid "Default Configuration Dialogs Mode"
-#~ msgstr "Defaŭlta Reĝimo de Agordaj Dialogoj"
-
-#~ msgid "Input Method Configuration"
-#~ msgstr "Tajpo-Metoda Konfiguraĵo"
-
-#~ msgid "Language Configuration"
-#~ msgstr "Lingva Konfiguro"
-
-#~ msgid "Keyboard & Mouse"
-#~ msgstr "Klavaro kaj Muso"
-
-#~ msgid "Search Path Configuration"
-#~ msgstr "Serĉpada Agordo"
-
-#~ msgid "Dropshadow Configuration"
-#~ msgstr "Faligo-ombra Konfiguraĵo"
-
-#~ msgid "Fileman Configuration Updated"
-#~ msgstr "Agordo de Fileman Ĝisdatigita"
-
-#~ msgid "IBar Configuration"
-#~ msgstr "Konfiguraĵo de \"IBar\""
-
-#~ msgid "IBox Configuration"
-#~ msgstr "Konfiguraĵo de \"IBox\""
-
-#~ msgid "Pager Configuration"
-#~ msgstr "Paĝila Konfiguro"
-
-#~ msgid "Virtual Desktops Configuration"
-#~ msgstr "Agordoj de Virtualaj Labortabloj"
-
-#~ msgid "Temperature Configuration"
-#~ msgstr "Temperatura Konfiguro"
-
-#, fuzzy
-#~ msgid "Mixer Configuration"
-#~ msgstr "Paĝila Konfiguro"
-
-#, fuzzy
-#~ msgid "Mixer Module Configuration"
-#~ msgstr "Breta Konfiguraĵo"
-
-#~ msgid "Back"
-#~ msgstr "Reen"
-
-#~ msgid "Choose Language"
-#~ msgstr "Elekti Lingvon"
-
-#~ msgid "X reports there are no root windows and %i screens!\n"
-#~ msgstr "X raportas ke estas neniu radika fenestro kaj %i ekranoj!\n"
-
-#~ msgid "Disable this splash screen in the future?"
-#~ msgstr "Ĉu mi malebligos tiun komencan ekranon je proksima foje?"
-
-#~ msgid "Theme Bug Detected"
-#~ msgstr "Etosa Cimo Detektata"
-
-#~ msgid ""
-#~ "The theme you are using for your init splash<br>has a bug. It does not "
-#~ "respond to signals when<br>startup is complete. You should use an "
-#~ "init<br>splash theme that is correctly made or fix the<br>one you use."
-#~ msgstr ""
-#~ "La etoso kion vi uzas nun por via pravalora plaŭda<br>ekrano enhavas "
-#~ "cimon. Tio ne respondas al<br>signaloj kiam komenco estas kompleta. "
-#~ "Vi<br>devus uzi pravaloran plaŭdan etoson kiu korekte<br>estas farita aŭ "
-#~ "korekti tion kion vi uzas."
-
-#~ msgid "Init"
-#~ msgstr "Startigo"
-
-#~ msgid "Window Manipulation"
-#~ msgstr "Fenestra Manuzo"
-
-#~ msgid "When moving or resizing windows, resist at the boundaries"
-#~ msgstr "Dum fenestraj movadoj aŭ grandecŝangoj, rezisto kontraŭ limo"
-
-#~ msgid "Both directions"
-#~ msgstr "Ambaŭ direktoj"
-
-#~ msgid "Enlightenment cannot configure the mouse acceleration settings."
-#~ msgstr "Enlightenment ne povas difini la agordojn de musa plirapidigo."
-
-#~ msgid "Mouse Acceleration Settings"
-#~ msgstr "Agordoj de Plirapidigo de musa movado"
-
-#~ msgid "Add To Favorites Menu"
-#~ msgstr "Aldoni en la Menuon de Preferataĵoj"
-
-#~ msgid ""
-#~ "Battery Running Low<br>Your battery is running low.<br>You may wish to "
-#~ "switch to an AC source."
-#~ msgstr ""
-#~ "Malalta bateria funkcio<br>Via baterio estas malaltnivela.<br>Vi devus "
-#~ "interŝangi ĝin per alterna kurento."
-
-#~ msgid "BAD DRIVER"
-#~ msgstr "MALBONA PELILO"
-
-#~ msgid "FULL"
-#~ msgstr "PLENA"
-
-#~ msgid "High"
-#~ msgstr "Alta"
-
-#~ msgid "Low"
-#~ msgstr "Malalta"
-
-#~ msgid "Danger"
-#~ msgstr "Danĝero"
-
-#~ msgid "Charging"
-#~ msgstr "Ŝarĝanta"
-
-#~ msgid "NO INFO"
-#~ msgstr "NENIU INFORMAĵO"
-
-#~ msgid "NO BAT"
-#~ msgstr "NENIU BATERIO"
-
-#~ msgid "Urgent window"
-#~ msgstr "Urĝa Fenestro"
-
-#~ msgid "Error - Invalid Button"
-#~ msgstr "Eraro - Nevalida Butono"
