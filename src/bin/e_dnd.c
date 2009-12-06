@@ -917,6 +917,8 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 	     _drag_current = NULL;
 	     e_object_del(E_OBJECT(tmp));
 	  }
+	e_grabinput_release(_drag_win, _drag_win);
+	ecore_x_window_hide(_drag_win);
 	return;
      }
 
@@ -1343,7 +1345,6 @@ _e_dnd_cb_event_dnd_finished(void *data, int type, void *event)
 	e_object_del(E_OBJECT(tmp));
      }
 
-   e_grabinput_release(_drag_win, _drag_win);
    ecore_x_window_free(_drag_win);
    _drag_win = 0;
 
