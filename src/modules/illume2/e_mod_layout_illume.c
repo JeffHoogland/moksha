@@ -117,25 +117,11 @@ _zone_layout(E_Zone *z)
           }
         else
           {
-             E_Border *b;
-
              if (illume_border_is_conformant(bd)) 
-               {
-                  b = illume_border_top_shelf_get();
-                  if (b) e_border_hide(b, 1);
-                  b = illume_border_bottom_panel_get();
-                  if (b) e_border_hide(b, 1);
-                  e_border_move_resize(bd, z->x, z->y, z->w, z->h);
-               }
+               e_border_move_resize(bd, z->x, z->y, z->w, z->h);
              else 
-               {
-                  b = illume_border_top_shelf_get();
-                  if (b) e_border_show(b);
-                  b = illume_border_bottom_panel_get();
-                  if (b) e_border_show(b);
-                  e_border_move_resize(bd, z->x, z->y + shelfsize, z->w, 
-                                       z->h - shelfsize - panelsize);
-               }
+               e_border_move_resize(bd, z->x, z->y + shelfsize, z->w, 
+                                    z->h - shelfsize - panelsize);
           }
      }
 }
