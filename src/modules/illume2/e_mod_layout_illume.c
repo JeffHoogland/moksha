@@ -16,6 +16,9 @@ static int panelsize = 0;
 static void
 _border_add(E_Border *bd)
 { // handle a border being added
+   if (illume_border_is_top_shelf(bd)) return;
+   else if (illume_border_is_bottom_panel(bd)) return;
+   else if (illume_border_is_keyboard(bd)) return;
    e_border_raise(bd);
    e_border_focus_set(bd, 1, 1);
 }
