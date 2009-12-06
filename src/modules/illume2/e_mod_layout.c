@@ -323,23 +323,7 @@ illume_border_is_overlay(E_Border *bd)
 Eina_Bool 
 illume_border_is_conformant(E_Border *bd) 
 {
-   Ecore_X_Atom *atoms;
-   Eina_Bool ret;
-   int num = 0, i;
-
-   ret = EINA_FALSE;
-   atoms = ecore_x_window_prop_list(bd->client.win, &num);
-   if (atoms) 
-     {
-        for (i = 0; i < num; i++) 
-          {
-             if (atoms[i] != ECORE_X_ATOM_E_ILLUME_CONFORMANT) continue;
-             ret = EINA_TRUE;
-             break;
-          }
-        free(atoms);
-     }
-   return ret;
+   return ecore_x_e_illume_conformant_get(bd->client.win);
 }
 
 Eina_List *
@@ -380,6 +364,38 @@ illume_border_at_xy(int x, int y)
      }
    eina_list_free(bds);
    return ret;
+}
+
+E_Border *
+illume_border_top_shelf_get(void) 
+{
+   Eina_List *bds, *l;
+   E_Border *bd, *b = NULL;
+
+   bds = e_border_client_list();
+   EINA_LIST_FOREACH(bds, l, bd) 
+     {
+        if (!illume_border_is_top_shelf(bd)) continue;
+        b = bd;
+        break;
+     }
+   return b;
+}
+
+E_Border *
+illume_border_bottom_panel_get(void) 
+{
+   Eina_List *bds, *l;
+   E_Border *bd, *b = NULL;
+
+   bds = e_border_client_list();
+   EINA_LIST_FOREACH(bds, l, bd) 
+     {
+        if (!illume_border_is_bottom_panel(bd)) continue;
+        b = bd;
+        break;
+     }
+   return b;
 }
 
 void

@@ -55,6 +55,8 @@ Eina_Bool illume_border_is_conformant(E_Border *bd);
 
 Eina_List *illume_border_valid_borders_get(void);
 Eina_Bool illume_border_at_xy(int x, int y);
+E_Border *illume_border_top_shelf_get(void);
+E_Border *illume_border_bottom_panel_get(void);
 
 void illume_border_slide_to(E_Border *bd, int x, int y, Illume_Anim_Class aclass);
 void illume_border_min_get(E_Border *bd, int *mw, int *mh);
