@@ -22,6 +22,8 @@ struct _Il_Home_Win
 
    E_Win *win;
    Evas_Object *o_bg, *o_sf, *o_fm;
+   Eina_List *exes;
+   Ecore_Event_Handler *exit_hdl;
 };
 
 /* local function prototypes */
@@ -43,7 +45,7 @@ static void _il_home_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 static void _il_home_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 static void _il_home_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
 static void _il_home_cb_selected(void *data, Evas_Object *obj, void *event);
-static void _il_home_desktop_run(Efreet_Desktop *desktop);
+static void _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop);
 static void _il_home_apps_populate(void);
 static void _il_home_apps_unpopulate(void);
 static void _il_home_fmc_set(Evas_Object *obj);
@@ -51,6 +53,8 @@ static void _il_home_desks_populate(void);
 static int _il_home_desktop_list_change(void *data, int type, void *event);
 static int _il_home_desktop_change(void *data, int type, void *event);
 static int _il_home_update_deferred(void *data);
+static int _il_home_win_cb_exe_del(void *data, int type, void *event);
+static E_Border *_il_home_desktop_find_border(Efreet_Desktop *desktop);
 
 /* local variables */
 static Eina_List *instances = NULL;
@@ -344,11 +348,22 @@ _il_home_win_new(Instance *inst)
    e_win_resize(hwin->win, zone->w, 200);
    e_win_show(hwin->win);
    e_border_focus_set(hwin->win->border, 1, 1);
+
+   hwin->exit_hdl = 
+     ecore_event_handler_add(ECORE_EXE_EVENT_DEL, 
+                             _il_home_win_cb_exe_del, hwin);
 }
 
 static void 
 _il_home_win_cb_free(Il_Home_Win *hwin) 
 {
+   E_Exec_Instance *eins;
+
+   EINA_LIST_FREE(hwin->exes, eins)
+     E_FREE(eins);
+
+   if (hwin->exit_hdl) ecore_event_handler_del(hwin->exit_hdl);
+   hwin->exit_hdl = NULL;
    if (hwin->o_bg) evas_object_del(hwin->o_bg);
    hwin->o_bg = NULL;
    if (hwin->o_sf) evas_object_del(hwin->o_sf);
@@ -444,7 +459,6 @@ _il_home_cb_selected(void *data, Evas_Object *obj, void *event)
    Eina_List *selected;
    E_Fm2_Icon_Info *ici;
 
-   printf("FM Selected\n");
    if (!(hwin = data)) return;
    selected = e_fm2_selected_list_get(hwin->o_fm);
    if (!selected) return;
@@ -457,81 +471,48 @@ _il_home_cb_selected(void *data, Evas_Object *obj, void *event)
              if (ici->real_link) 
                {
                   desktop = efreet_desktop_get(ici->real_link);
-                  if (desktop) _il_home_desktop_run(desktop);
+                  if (desktop) 
+                    _il_home_desktop_run(hwin, desktop);
                }
           }
      }
 }
 
 static void 
-_il_home_desktop_run(Efreet_Desktop *desktop) 
+_il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop) 
 {
-   Eina_List *l;
-   E_Border *bd;
    E_Exec_Instance *eins;
-   char *exe = NULL, *p;
+   Eina_List *l;
 
    if (!desktop) return;
    if (!desktop->exec) return;
-   p = strchr(desktop->exec, ' ');
-   if (!p)
-     exe = strdup(desktop->exec);
-   else 
-     {
-        exe = malloc(p - desktop->exec + 1);
-        if (exe) ecore_strlcpy(exe, desktop->exec, p - desktop->exec + 1);
-     }
-   if (exe) 
-     {
-        p = strrchr(exe, '/');
-        if (p) strcpy(exe, p + 1);
-     }
-   EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
-     {
-        if (e_exec_startup_id_pid_find(bd->client.netwm.pid, 
-                                       bd->client.netwm.startup_id) == desktop) 
-          {
-             e_border_show(bd);
-             e_border_raise(bd);
-             e_border_focus_set(bd, 1, 1);
-             if (exe) free(exe);
-             return;
-          }
-        if (exe) 
-          {
-             if (bd->client.icccm.command.argv) 
-               {
-                  char *pp;
 
-                  pp = strrchr(bd->client.icccm.command.argv[0], '/');
-                  if (!pp) pp = bd->client.icccm.command.argv[0];
-                  if (!strcmp(exe, pp)) 
-                    {
-                       e_border_show(bd);
-                       e_border_raise(bd);
-                       e_border_focus_set(bd, 1, 1);
-                       if (exe) free(exe);
-                       return;
-                    }
-               }
-             if ((bd->client.icccm.name) && 
-                 (!strcasecmp(bd->client.icccm.name, exe))) 
+   EINA_LIST_FOREACH(hwin->exes, l, eins) 
+     {
+        if ((eins->desktop == desktop)) 
+          {
+             E_Border *bd;
+
+             bd = _il_home_desktop_find_border(desktop);
+             if (bd) 
                {
+                  e_border_uniconify(bd);
                   e_border_show(bd);
                   e_border_raise(bd);
                   e_border_focus_set(bd, 1, 1);
-                  if (exe) free(exe);
                   return;
                }
           }
      }
-   if (exe) free(exe);
+
    eins = e_exec(e_util_container_zone_number_get(0, 0), 
                  desktop, NULL, NULL, "illume-home");
    if (eins) 
      {
         char buff[PATH_MAX];
 
+        ecore_exe_tag_set(eins->exe, "illume-home");
+        hwin->exes = eina_list_append(hwin->exes, eins);
         snprintf(buff, sizeof(buff), "Starting %s", desktop->name);
         e_busycover_push(busycover, buff, NULL);
      }
@@ -725,3 +706,88 @@ _il_home_update_deferred(void *data)
    return 0;
 }
 
+static int 
+_il_home_win_cb_exe_del(void *data, int type, void *event) 
+{
+   Il_Home_Win *hwin;
+   Ecore_Exe_Event_Del *ev;
+   Eina_List *l;
+   char *tag;
+
+   if (!(hwin = data)) return 1;
+   ev = event;
+   if (!ev->exe) return 1;
+   if (!(tag = ecore_exe_tag_get(ev->exe))) return 1;
+   if (strcmp(tag, "illume-home")) return 1;
+
+   for (l = hwin->exes; l; l = l->next) 
+     {
+        E_Exec_Instance *eins;
+
+        if (!(eins = l->data)) continue;
+        if (eins->exe == ev->exe) 
+          {
+             hwin->exes = eina_list_remove(hwin->exes, eins);
+             E_FREE(eins);
+             return 1;
+          }
+     }
+   return 1;
+}
+
+static E_Border *
+_il_home_desktop_find_border(Efreet_Desktop *desktop) 
+{
+   Eina_List *l;
+   E_Border *bd;
+   char *exe = NULL, *p;
+
+   if (!desktop) return NULL;
+   if (!desktop->exec) return NULL;
+   p = strchr(desktop->exec, ' ');
+   if (!p)
+     exe = strdup(desktop->exec);
+   else 
+     {
+        exe = malloc(p - desktop->exec + 1);
+        if (exe) ecore_strlcpy(exe, desktop->exec, p - desktop->exec + 1);
+     }
+   if (exe) 
+     {
+        p = strrchr(exe, '/');
+        if (p) strcpy(exe, p + 1);
+     }
+
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
+     {
+        if (e_exec_startup_id_pid_find(bd->client.netwm.pid, 
+                                       bd->client.netwm.startup_id) == desktop) 
+          {
+             if (exe) free(exe);
+             return bd;
+          }
+        if (exe) 
+          {
+             if (bd->client.icccm.command.argv) 
+               {
+                  char *pp;
+
+                  pp = strrchr(bd->client.icccm.command.argv[0], '/');
+                  if (!pp) pp = bd->client.icccm.command.argv[0];
+                  if (!strcmp(exe, pp)) 
+                    {
+                       if (exe) free(exe);
+                       return bd;
+                    }
+               }
+             if ((bd->client.icccm.name) && 
+                 (!strcasecmp(bd->client.icccm.name, exe))) 
+               {
+                  if (exe) free(exe);
+                  return bd;
+               }
+          }
+     }
+   if (exe) free(exe);
+   return NULL;
+}
