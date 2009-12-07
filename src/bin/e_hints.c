@@ -520,7 +520,7 @@ e_hints_window_init(E_Border *bd)
      }
    if (bd->client.netwm.state.shaded)
      {
-if (!bd->lock_client_shade)
+        if (!bd->lock_client_shade)
 	  e_border_shade(bd, e_hints_window_shade_direction_get(bd));
 	else
 	  e_hints_window_shaded_set(bd, 0);
@@ -1113,9 +1113,6 @@ e_hints_allowed_action_get(E_Border *bd)
      }
 }
 
-
-
-
 EAPI void
 e_hints_window_visible_set(E_Border *bd)
 {
@@ -1414,7 +1411,8 @@ e_hints_openoffice_kde_fake(Ecore_X_Window root)
    ecore_x_netwm_wm_identify(root, win2, "KWin");
 }
 
-EAPI void e_hints_scale_update(void)
+EAPI void 
+e_hints_scale_update(void)
 {
    Ecore_X_Window *roots = NULL;
    int i, num;
