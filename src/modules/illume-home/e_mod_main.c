@@ -24,6 +24,8 @@ struct _Il_Home_Win
    Evas_Object *o_bg, *o_sf, *o_fm;
    Eina_List *exes;
    Ecore_Event_Handler *exit_hdl;
+   Ecore_Timer *timeout;
+   void *handle;
 };
 
 /* local function prototypes */
@@ -55,6 +57,7 @@ static int _il_home_desktop_change(void *data, int type, void *event);
 static int _il_home_update_deferred(void *data);
 static int _il_home_win_cb_exe_del(void *data, int type, void *event);
 static E_Border *_il_home_desktop_find_border(Efreet_Desktop *desktop);
+static int _il_home_win_cb_timeout(void *data);
 
 /* local variables */
 static Eina_List *instances = NULL;
@@ -511,10 +514,11 @@ _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop)
      {
         char buff[PATH_MAX];
 
+        hwin->timeout = ecore_timer_add(20.0, _il_home_win_cb_timeout, hwin);
         ecore_exe_tag_set(eins->exe, "illume-home");
         hwin->exes = eina_list_append(hwin->exes, eins);
         snprintf(buff, sizeof(buff), "Starting %s", desktop->name);
-        e_busycover_push(busycover, buff, NULL);
+        hwin->handle = e_busycover_push(busycover, buff, NULL);
      }
 }
 
@@ -727,6 +731,10 @@ _il_home_win_cb_exe_del(void *data, int type, void *event)
         if (!(eins = l->data)) continue;
         if (eins->exe == ev->exe) 
           {
+             if (hwin->timeout) ecore_timer_del(hwin->timeout);
+             hwin->timeout = NULL;
+             if (hwin->handle) e_busycover_pop(busycover, hwin->handle);
+             hwin->handle = NULL;
              hwin->exes = eina_list_remove(hwin->exes, eins);
              E_FREE(eins);
              return 1;
@@ -790,4 +798,16 @@ _il_home_desktop_find_border(Efreet_Desktop *desktop)
      }
    if (exe) free(exe);
    return NULL;
+}
+
+static int 
+_il_home_win_cb_timeout(void *data) 
+{
+   Il_Home_Win *hwin;
+
+   if (!(hwin = data)) return 1;
+   if (hwin->handle) e_busycover_pop(busycover, hwin->handle);
+   hwin->handle = NULL;
+   hwin->timeout = NULL;
+   return 0;
 }
