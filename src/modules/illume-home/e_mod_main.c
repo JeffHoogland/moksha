@@ -371,6 +371,8 @@ _il_home_win_cb_free(Il_Home_Win *hwin)
    EINA_LIST_FREE(hwin->exes, eins)
      E_FREE(eins);
 
+   if (hwin->win->evas_win)
+     e_drop_xdnd_register_set(hwin->win->evas_win, 0);
    if (hwin->timeout) ecore_timer_del(hwin->timeout);
    hwin->timeout = NULL;
    if (hwin->handle) e_busycover_pop(busycover, hwin->handle);
