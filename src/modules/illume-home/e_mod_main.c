@@ -365,6 +365,10 @@ _il_home_win_cb_free(Il_Home_Win *hwin)
    EINA_LIST_FREE(hwin->exes, eins)
      E_FREE(eins);
 
+   if (hwin->timeout) ecore_timer_del(hwin->timeout);
+   hwin->timeout = NULL;
+   if (hwin->handle) e_busycover_pop(busycover, hwin->handle);
+   hwin->handle = NULL;
    if (hwin->exit_hdl) ecore_event_handler_del(hwin->exit_hdl);
    hwin->exit_hdl = NULL;
    if (hwin->o_bg) evas_object_del(hwin->o_bg);
