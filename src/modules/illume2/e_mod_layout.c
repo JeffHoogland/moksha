@@ -347,24 +347,23 @@ illume_border_valid_borders_get(void)
    return ret;
 }
 
-Eina_Bool 
-illume_border_at_xy(int x, int y) 
+E_Border *
+illume_border_at_xy_get(int x, int y) 
 {
    Eina_List *bds, *l;
-   E_Border *bd;
-   int ret = EINA_FALSE;
+   E_Border *bd, *b = NULL;
 
    bds = illume_border_valid_borders_get();
    EINA_LIST_FOREACH(bds, l, bd) 
      {
-        if ((bd->x == x) && (bd->y == y)) 
+        if ((bd->fx.x == x) && (bd->fx.y == y)) 
           {
-             ret = EINA_TRUE;
+             b = bd;
              break;
           }
      }
    eina_list_free(bds);
-   return ret;
+   return b;
 }
 
 E_Border *

@@ -54,7 +54,7 @@ Eina_Bool illume_border_is_overlay(E_Border *bd);
 Eina_Bool illume_border_is_conformant(E_Border *bd);
 
 Eina_List *illume_border_valid_borders_get(void);
-Eina_Bool illume_border_at_xy(int x, int y);
+E_Border *illume_border_at_xy_get(int x, int y);
 E_Border *illume_border_top_shelf_get(void);
 E_Border *illume_border_bottom_panel_get(void);
 

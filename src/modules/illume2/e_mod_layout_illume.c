@@ -19,6 +19,15 @@ _border_add(E_Border *bd)
    if (illume_border_is_top_shelf(bd)) return;
    if (illume_border_is_bottom_panel(bd)) return;
    if (illume_border_is_keyboard(bd)) return;
+   if (illume_border_is_conformant(bd)) 
+     {
+        E_Border *b;
+
+        b = illume_border_top_shelf_get();
+        if (b) e_border_fx_offset(b, 0, -shelfsize);
+        b = illume_border_bottom_panel_get();
+        if (b) e_border_fx_offset(b, 0, -panelsize);
+     }
    e_border_raise(bd);
    e_border_focus_set(bd, 1, 1);
 }
@@ -26,7 +35,12 @@ _border_add(E_Border *bd)
 static void
 _border_del(E_Border *bd)
 { // handle a border being deleted
+   E_Border *b;
 
+   b = illume_border_top_shelf_get();
+   if (b) e_border_fx_offset(b, 0, 0);
+   b = illume_border_bottom_panel_get();
+   if (b) e_border_fx_offset(b, 0, 0);
 }
 
 static void
@@ -85,55 +99,76 @@ _zone_layout(E_Zone *z)
         illume_border_min_get(bd, &mw, &mh);
         if (illume_border_is_top_shelf(bd))
           {
-             if ((bd->x != z->x) || (bd->y != z->y) || (bd->w != z->w) || 
-                 (bd->h != shelfsize))
-               e_border_move_resize(bd, z->x, z->y, z->w, shelfsize);
+             if ((bd->w != z->w) || (bd->h != shelfsize))
+               e_border_resize(bd, z->w, shelfsize);
+             if ((bd->x != z->x) || (bd->y != z->y))
+               e_border_fx_offset(bd, z->x, z->y);
              e_border_stick(bd);
           }
         else if (illume_border_is_bottom_panel(bd))
           {
-             if ((bd->x != z->x) || (bd->y != (z->y + z->h - panelsize)) || 
-                 (bd->w != z->w) || (bd->h != panelsize))
-               e_border_move_resize(bd, z->x, z->y + z->h - panelsize, 
-                                    z->w, panelsize);
+             if ((bd->w != z->w) || (bd->h != panelsize))
+               e_border_resize(bd, z->w, panelsize);
+             if ((bd->x != z->x) || (bd->y != (z->y + z->h - panelsize)))
+               e_border_fx_offset(bd, z->x, (z->y + z->h - panelsize));
              e_border_stick(bd);
           }
         else if (illume_border_is_keyboard(bd))
           {
-             if ((bd->x != z->x) || (bd->y != (z->y + z->h - kbdsize)) || 
-                 (bd->w != z->w) || (bd->h != kbdsize))
-             e_border_move_resize(bd, z->x, z->y + z->h - kbdsize, 
-                                  z->w, kbdsize);
-          }
-        else if (illume_border_is_home(bd))
-          {
-             if ((bd->x != z->x) || (bd->y != z->y + shelfsize) || 
-                 (bd->w != z->w) || (bd->h != (z->h - shelfsize - panelsize)))
-               e_border_move_resize(bd, z->x, z->y + shelfsize, z->w, 
-                                    z->h - shelfsize - panelsize);
+             if ((bd->w != z->w) || (bd->h != kbdsize))
+               e_border_resize(bd, z->w, kbdsize);
+             if ((bd->x != z->x) || (bd->y != (z->y + z->h - kbdsize)))
+               e_border_fx_offset(bd, z->x, (z->y + z->h - kbdsize));
           }
         else if (illume_border_is_dialog(bd))
           {
              if (mh > z->h) mh = z->h;
-             if ((bd->x != z->x) || (bd->y != (z->y + ((z->h - mh) / 2))) || 
-                 (bd->w != z->w) || (bd->h != mh))
-               e_border_move_resize(bd, z->x, z->y + ((z->h - mh) / 2), 
-                                    z->w, mh);
+             if ((bd->w != z->w) || (bd->h != mh))
+               e_border_resize(bd, z->w, mh);
+             if ((bd->x != z->x) || (bd->y != (z->y + ((z->h - mh) / 2))))
+               e_border_fx_offset(bd, z->x, (z->y + ((z->h - mh) / 2)));
           }
         else
           {
-             if (illume_border_is_conformant(bd)) 
+             if (!il_cfg->policy.mode.dual) 
                {
-                  if ((bd->x != z->x) || (bd->y != z->y) || 
-                      (bd->w != z->w) || (bd->h != z->h))
-                    e_border_move_resize(bd, z->x, z->y, z->w, z->h);
+                  if (illume_border_is_conformant(bd)) 
+                    {
+                       if ((bd->w != z->w) || (bd->h != z->h))
+                         e_border_resize(bd, z->w, z->h);
+                       if ((bd->x != z->x) || (bd->y != z->y))
+                         e_border_fx_offset(bd, z->x, z->y);
+                    }
+                  else 
+                    {
+                       if ((bd->w != z->w) || (bd->h != (z->h - shelfsize - panelsize)))
+                         e_border_resize(bd, z->w, (z->h - shelfsize - panelsize));
+                       if ((bd->x != z->x) || (bd->y != (z->y + shelfsize)))
+                         e_border_fx_offset(bd, z->x, (z->y + shelfsize));
+                    }
                }
              else 
                {
-                  if ((bd->x != z->x) || (bd->y != z->y + shelfsize) || 
-                      (bd->w != z->w) || (bd->h != z->h - shelfsize - panelsize))
-                    e_border_move_resize(bd, z->x, z->y + shelfsize, z->w, 
-                                         z->h - shelfsize - panelsize);
+                  E_Border *b;
+                  int bx, by, bw, bh;
+
+                  /* in dual mode */
+                  if (il_cfg->policy.mode.side == 0) /* top/left */
+                    {
+                       bx = z->x;
+                       bw = z->w;
+                       by = (z->y + shelfsize);
+                       bh = ((z->h - shelfsize - panelsize) / 2);
+                       b = illume_border_at_xy_get(bx, by);
+                       if ((b) && (bd != b)) 
+                         by = by + bh;
+                       else if (b) 
+                         by = bd->y;
+                       if ((bd->w != bw) || (bd->h != bh))
+                         e_border_resize(bd, bw, bh);
+                       if ((bd->x != bx) || (bd->y != by))
+                         e_border_fx_offset(bd, bx, by);
+                    }
                }
           }
      }
