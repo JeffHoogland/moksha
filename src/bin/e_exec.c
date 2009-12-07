@@ -391,7 +391,6 @@ _e_exec_cb_exit(void *data, int type, void *event)
      {
 	if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
 	inst->expire_timer = ecore_timer_add(30.0, _e_exec_cb_instance_finish, inst); 
-        inst->exe = NULL;
      }
    else
      _e_exec_instance_free(inst);
