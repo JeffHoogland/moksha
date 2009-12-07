@@ -336,11 +336,14 @@ _il_home_win_new(Instance *inst)
    e_user_dir_concat_static(buff, "appshadow");
    e_fm2_path_set(hwin->o_fm, NULL, buff);
 
+   e_fm2_window_object_set(hwin->o_fm, E_OBJECT(hwin->win));
+
    e_scrollframe_extern_pan_set(hwin->o_sf, hwin->o_fm, 
                                 _il_home_pan_set, 
                                 _il_home_pan_get, 
                                 _il_home_pan_max_get, 
                                 _il_home_pan_child_size_get);
+   evas_object_propagate_events_set(hwin->o_fm, 0);
    evas_object_smart_callback_add(hwin->o_fm, "selected", 
                                   _il_home_cb_selected, hwin);
    zone = e_util_container_zone_number_get(0, 0);
@@ -351,6 +354,9 @@ _il_home_win_new(Instance *inst)
    e_win_resize(hwin->win, zone->w, 200);
    e_win_show(hwin->win);
    e_border_focus_set(hwin->win->border, 1, 1);
+
+   if (hwin->win->evas_win)
+     e_drop_xdnd_register_set(hwin->win->evas_win, 1);
 
    hwin->exit_hdl = 
      ecore_event_handler_add(ECORE_EXE_EVENT_DEL, 
