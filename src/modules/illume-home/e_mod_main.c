@@ -526,8 +526,8 @@ _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop)
      {
         char buff[PATH_MAX];
 
-        hwin->timeout = ecore_timer_add(20.0, _il_home_win_cb_timeout, hwin);
         ecore_exe_tag_set(eins->exe, "illume-home");
+        hwin->timeout = ecore_timer_add(20.0, _il_home_win_cb_timeout, hwin);
         hwin->exes = eina_list_append(hwin->exes, eins);
         snprintf(buff, sizeof(buff), "Starting %s", desktop->name);
         hwin->handle = e_busycover_push(busycover, buff, NULL);
