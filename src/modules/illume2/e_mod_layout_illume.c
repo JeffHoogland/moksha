@@ -5,9 +5,6 @@
 #include "e_mod_layout_illume.h"
 #include "e_kbd.h"
 
-/* local function prototypes */
-static void _border_calc_position(E_Zone *z, E_Border *bd, int *x, int *y, int *w, int *h);
-
 /* local variables */
 static int shelfsize = 0;
 static int kbdsize = 0;
@@ -128,6 +125,13 @@ _zone_layout(E_Zone *z)
              if ((bd->x != z->x) || (bd->y != (z->y + ((z->h - mh) / 2))))
                e_border_fx_offset(bd, z->x, (z->y + ((z->h - mh) / 2)));
           }
+        else if (strstr(bd->client.icccm.class, "config"))
+          {
+             if ((bd->w != z->w) || (bd->h != (z->h - shelfsize - panelsize)))
+               e_border_resize(bd, z->w, (z->h - shelfsize - panelsize));
+             if ((bd->x != z->x) || (bd->y != (z->y + shelfsize)))
+               e_border_fx_offset(bd, z->x, (z->y + shelfsize));
+          }
         else
           {
              if (!il_cfg->policy.mode.dual) 
@@ -198,29 +202,6 @@ _border_activate(E_Border *bd)
              if (!bd->lock_user_stacking) e_border_raise(bd);
              if (!bd->lock_focus_out) e_border_focus_set(bd, 1, 1);
           }
-     }
-}
-
-/* local functions */
-static void 
-_border_calc_position(E_Zone *z, E_Border *bd, int *x, int *y, int *w, int *h) 
-{
-   if ((!z) || (!bd)) return;
-   if (x) *x = z->x;
-   if (y) *y = (z->y + shelfsize);
-   if (w) *w = z->w;
-   if (illume_border_is_conformant(bd)) 
-     {
-        if (h) *h = (z->h - shelfsize);
-     }
-   else 
-     {
-        if (h) *h = (z->h - shelfsize - panelsize);
-     }
-   if (il_cfg->policy.mode.dual) 
-     {
-        /* we ignore config dialogs as we want them fullscreen in dual mode */
-        if (strstr(bd->client.icccm.class, "config")) return;
      }
 }
 
