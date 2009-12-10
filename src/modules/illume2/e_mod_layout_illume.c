@@ -16,15 +16,6 @@ _border_add(E_Border *bd)
    if (illume_border_is_top_shelf(bd)) return;
    if (illume_border_is_bottom_panel(bd)) return;
    if (illume_border_is_keyboard(bd)) return;
-   if (illume_border_is_conformant(bd)) 
-     {
-        E_Border *b;
-
-        b = illume_border_top_shelf_get();
-        if (b) e_border_fx_offset(b, 0, -shelfsize);
-        b = illume_border_bottom_panel_get();
-        if (b) e_border_fx_offset(b, 0, -panelsize);
-     }
    e_border_raise(bd);
    e_border_focus_set(bd, 1, 1);
 }
@@ -172,7 +163,19 @@ _zone_layout(E_Zone *z)
                        if ((b) && (bd != b)) 
                          by = by + bh;
                        else if (b) 
-                         by = bd->y;
+                         by = bd->fx.y;
+                       if (illume_border_is_conformant(bd)) 
+                         {
+                            by = z->y;
+                            bh = (z->h / 2);
+                            if ((b) && (bd != b)) 
+                              {
+                                 by = b->fx.y + b->h;
+                                 bh = (z->h - (b->fx.y + b->h));
+                              }
+                            else if (b) 
+                              by = bd->fx.y;
+                         }
                     }
                   else if (il_cfg->policy.mode.side == 1) /* left/right */
                     {
@@ -182,6 +185,15 @@ _zone_layout(E_Zone *z)
                          bx = bx + bw;
                        else if (b) 
                          bx = bd->x;
+                       if (illume_border_is_conformant(bd)) 
+                         {
+                            bx = z->x;
+                            by = z->y;
+                            bw = (z->w / 2);
+                            bh = z->h;
+                            if ((b) && (bd != b)) 
+                              bx = b->fx.x + b->w;
+                         }
                     }
                   if ((bd->w != bw) || (bd->h != bh))
                     e_border_resize(bd, bw, bh);
