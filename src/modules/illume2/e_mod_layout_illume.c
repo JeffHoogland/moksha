@@ -34,6 +34,9 @@ _border_del(E_Border *bd)
 { // handle a border being deleted
    E_Border *b;
 
+   if (illume_border_is_top_shelf(bd)) return;
+   if (illume_border_is_bottom_panel(bd)) return;
+   if (illume_border_is_keyboard(bd)) return;
    b = illume_border_top_shelf_get();
    if (b) e_border_fx_offset(b, 0, 0);
    b = illume_border_bottom_panel_get();
@@ -156,23 +159,34 @@ _zone_layout(E_Zone *z)
                   E_Border *b;
                   int bx, by, bw, bh;
 
+                  bx = z->x;
+                  bw = z->w;
+                  by = (z->y + shelfsize);
+                  bh = (z->h - shelfsize - panelsize);
+
                   /* in dual mode */
                   if (il_cfg->policy.mode.side == 0) /* top/left */
                     {
-                       bx = z->x;
-                       bw = z->w;
-                       by = (z->y + shelfsize);
                        bh = ((z->h - shelfsize - panelsize) / 2);
                        b = illume_border_at_xy_get(bx, by);
                        if ((b) && (bd != b)) 
                          by = by + bh;
                        else if (b) 
                          by = bd->y;
-                       if ((bd->w != bw) || (bd->h != bh))
-                         e_border_resize(bd, bw, bh);
-                       if ((bd->x != bx) || (bd->y != by))
-                         e_border_fx_offset(bd, bx, by);
                     }
+                  else if (il_cfg->policy.mode.side == 1) /* left/right */
+                    {
+                       bw = (z->w / 2);
+                       b = illume_border_at_xy_get(bx, by);
+                       if ((b) && (bd != b)) 
+                         bx = bx + bw;
+                       else if (b) 
+                         bx = bd->x;
+                    }
+                  if ((bd->w != bw) || (bd->h != bh))
+                    e_border_resize(bd, bw, bh);
+                  if ((bd->x != bx) || (bd->y != by))
+                    e_border_fx_offset(bd, bx, by);
                }
           }
      }
