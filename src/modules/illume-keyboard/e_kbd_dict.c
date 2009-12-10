@@ -137,7 +137,7 @@ _e_kbd_dict_normalized_strcpy(char *dst, const char *src)
 }
 
 static int
-_e_kbd_dict_matches_loolup_cb_sort(const void *d1, const void *d2)
+_e_kbd_dict_matches_lookup_cb_sort(const void *d1, const void *d2)
 {
    const E_Kbd_Dict_Word *kw1, *kw2;
 
@@ -826,7 +826,7 @@ e_kbd_dict_matches_lookup(E_Kbd_Dict *kd)
      _e_kbd_dict_matches_lookup_iter(kd, NULL, kd->word.letters);
    kd->matches.list = eina_list_sort(kd->matches.list,
 				     eina_list_count(kd->matches.list),
-				     _e_kbd_dict_matches_loolup_cb_sort);
+				     _e_kbd_dict_matches_lookup_cb_sort);
 }
 
 EAPI void
