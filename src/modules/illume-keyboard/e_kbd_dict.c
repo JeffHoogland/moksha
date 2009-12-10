@@ -387,7 +387,6 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
 				 eina_stringshare_del(kw->word);
 				 free(kw);
 				 kd->changed.writes  = eina_list_remove_list(kd->changed.writes, kd->changed.writes);
-				 writeline = 1;
 			      }
 			    else if (cmp == 0)
 			      {
