@@ -635,10 +635,25 @@ _cb_event_client_message(void *data, int type, void *event)
    E_Border *bd;
 
    ev = event;
-   if (ev->message_type != ECORE_X_ATOM_NET_ACTIVE_WINDOW) return 1;
-   bd = e_border_find_by_client_window(ev->win);
-   if (bd->stolen) return 1;
-   if ((mode) && (mode->funcs.border_activate))
-     mode->funcs.border_activate(bd);
+   if (ev->message_type == ECORE_X_ATOM_NET_ACTIVE_WINDOW) 
+     {
+        bd = e_border_find_by_client_window(ev->win);
+        if (bd->stolen) return 1;
+        if ((mode) && (mode->funcs.border_activate))
+          mode->funcs.border_activate(bd);
+     }
+   else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_MODE) 
+     {
+        Ecore_X_Illume_Mode mode;
+
+        mode = ecore_x_e_illume_mode_get(ev->win);
+        if (mode == ECORE_X_ILLUME_MODE_SINGLE) 
+          il_cfg->policy.mode.dual = 0;
+        else if (mode == ECORE_X_ILLUME_MODE_DUAL)
+          il_cfg->policy.mode.dual = 1;
+        else /* unknown */
+          il_cfg->policy.mode.dual = 0;
+        e_config_save_queue();
+     }
    return 1;
 }
