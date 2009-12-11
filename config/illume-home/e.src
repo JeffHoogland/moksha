@@ -1393,7 +1393,7 @@ group "E_Config" struct {
   }
   value "window_placement_policy" int: 0;
   value "focus_policy" int: 0;
-  value "focus_setting" int: 0;
+  value "focus_setting" int: 1;
   value "pass_click_on" int: 1;
   value "always_click_to_raise" int: 0;
   value "always_click_to_focus" int: 1;
