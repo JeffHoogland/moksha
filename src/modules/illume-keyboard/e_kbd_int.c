@@ -1795,7 +1795,6 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    ki->client_message_handler = ecore_event_handler_add
      (ECORE_X_EVENT_CLIENT_MESSAGE, _e_kbd_int_cb_client_message, ki);
 
-   e_win_sticky_set(ki->win, 1);
    e_win_show(ki->win);
    e_win_move_resize(ki->win, 0, (zone->h - mh), zone->w, mh);
    return ki;
