@@ -1821,7 +1821,8 @@ static int _e_fm_slave_error_cb(void *data, int type, void *event)
    return 1;
 }
 
-static int _e_fm_slave_del_cb(void *data, int type, void *event)
+static int 
+_e_fm_slave_del_cb(void *data, int type, void *event)
 {
    Ecore_Exe_Event_Del *e = event;
    E_Fm_Slave *slave;
