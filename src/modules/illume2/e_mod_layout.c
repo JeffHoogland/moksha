@@ -341,7 +341,6 @@ illume_border_valid_borders_get(void)
         if (illume_border_is_bottom_panel(bd)) continue;
         if (illume_border_is_keyboard(bd)) continue;
         if (illume_border_is_dialog(bd)) continue;
-        if (strstr(bd->client.icccm.class, "config")) continue;
         ret = eina_list_append(ret, bd);
      }
    return ret;

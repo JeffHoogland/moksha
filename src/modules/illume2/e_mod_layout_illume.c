@@ -119,13 +119,6 @@ _zone_layout(E_Zone *z)
              if ((bd->x != z->x) || (bd->y != (z->y + ((z->h - mh) / 2))))
                e_border_fx_offset(bd, z->x, (z->y + ((z->h - mh) / 2)));
           }
-        else if (strstr(bd->client.icccm.class, "config"))
-          {
-             if ((bd->w != z->w) || (bd->h != (z->h - shelfsize - panelsize)))
-               e_border_resize(bd, z->w, (z->h - shelfsize - panelsize));
-             if ((bd->x != z->x) || (bd->y != (z->y + shelfsize)))
-               e_border_fx_offset(bd, z->x, (z->y + shelfsize));
-          }
         else
           {
              if (!il_cfg->policy.mode.dual) 
