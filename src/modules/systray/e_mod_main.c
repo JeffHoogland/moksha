@@ -188,6 +188,11 @@ _systray_size_apply_do(Instance *inst)
    if (w < 1) w = 1;
    if (h < 1) h = 1;
 
+   if (eina_list_count(inst->icons) == 0)
+      ecore_x_window_hide(inst->win.base);
+   else
+      ecore_x_window_show(inst->win.base);
+
    e_gadcon_client_aspect_set(inst->gcc, w, h);
    e_gadcon_client_min_size_set(inst->gcc, w, h);
 
