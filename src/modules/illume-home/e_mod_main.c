@@ -520,7 +520,7 @@ _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop)
           }
      }
 
-   eins = e_exec(e_util_container_zone_number_get(0, 0), 
+   eins = e_exec(e_util_zone_current_get(e_manager_current_get()), 
                  desktop, NULL, NULL, "illume-home");
    if (eins) 
      {
