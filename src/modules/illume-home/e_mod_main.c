@@ -8,6 +8,7 @@
 /* local structures */
 typedef struct _Instance Instance;
 typedef struct _Il_Home_Win Il_Home_Win;
+typedef struct _Il_Home_Exec Il_Home_Exec;
 
 struct _Instance 
 {
@@ -22,11 +23,19 @@ struct _Il_Home_Win
 
    E_Win *win;
    Evas_Object *o_bg, *o_sf, *o_fm;
-   Eina_List *exes;
-   Ecore_Event_Handler *exit_hdl;
+};
+struct _Il_Home_Exec 
+{
+   Efreet_Desktop *desktop;
+   E_Border *border;
    Ecore_Timer *timeout;
+   int startup_id;
+   pid_t pid;
    void *handle;
 };
+
+static Eina_List *exes = NULL;
+static Ecore_Event_Handler *exit_hdl = NULL;
 
 /* local function prototypes */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
@@ -58,6 +67,8 @@ static int _il_home_update_deferred(void *data);
 static int _il_home_win_cb_exe_del(void *data, int type, void *event);
 static E_Border *_il_home_desktop_find_border(Efreet_Desktop *desktop);
 static int _il_home_win_cb_timeout(void *data);
+static int _il_home_border_add(void *data, int type, void *event);
+static int _il_home_border_remove(void *data, int type, void *event);
 
 /* local variables */
 static Eina_List *instances = NULL;
@@ -103,6 +114,19 @@ e_modapi_init(E_Module *m)
                       ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, 
                                               _il_home_desktop_change, NULL));
 
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(E_EVENT_BORDER_ADD, 
+                                              _il_home_border_add, NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(E_EVENT_BORDER_REMOVE, 
+                                              _il_home_border_remove, NULL));
+
+   exit_hdl = 
+     ecore_event_handler_add(ECORE_EXE_EVENT_DEL, 
+                             _il_home_win_cb_exe_del, NULL);
+
    e_gadcon_provider_register(&_gc_class);
    return m;
 }
@@ -111,6 +135,22 @@ EAPI int
 e_modapi_shutdown(E_Module *m) 
 {
    Ecore_Event_Handler *handle;
+   Il_Home_Exec *exe;
+
+   EINA_LIST_FREE(exes, exe) 
+     {
+        if (exe->handle) 
+          {
+             e_busycover_pop(busycover, exe->handle);
+             exe->handle = NULL;
+          }
+//        exes = eina_list_remove_list(exes, l);
+        if (exe->timeout) ecore_timer_del(exe->timeout);
+        E_FREE(exe);
+     }
+
+   if (exit_hdl) ecore_event_handler_del(exit_hdl);
+   exit_hdl = NULL;
 
    _il_home_apps_unpopulate();
 
@@ -357,10 +397,6 @@ _il_home_win_new(Instance *inst)
 
    if (hwin->win->evas_win)
      e_drop_xdnd_register_set(hwin->win->evas_win, 1);
-
-   hwin->exit_hdl = 
-     ecore_event_handler_add(ECORE_EXE_EVENT_DEL, 
-                             _il_home_win_cb_exe_del, hwin);
 }
 
 static void 
@@ -368,17 +404,8 @@ _il_home_win_cb_free(Il_Home_Win *hwin)
 {
    E_Exec_Instance *eins;
 
-   EINA_LIST_FREE(hwin->exes, eins)
-     E_FREE(eins);
-
    if (hwin->win->evas_win)
      e_drop_xdnd_register_set(hwin->win->evas_win, 0);
-   if (hwin->timeout) ecore_timer_del(hwin->timeout);
-   hwin->timeout = NULL;
-   if (hwin->handle) e_busycover_pop(busycover, hwin->handle);
-   hwin->handle = NULL;
-   if (hwin->exit_hdl) ecore_event_handler_del(hwin->exit_hdl);
-   hwin->exit_hdl = NULL;
    if (hwin->o_bg) evas_object_del(hwin->o_bg);
    hwin->o_bg = NULL;
    if (hwin->o_sf) evas_object_del(hwin->o_sf);
@@ -497,41 +524,57 @@ static void
 _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop) 
 {
    E_Exec_Instance *eins;
+   Il_Home_Exec *exe;
    Eina_List *l;
+   E_Border *b;
+   char buff[PATH_MAX];
 
    if (!desktop) return;
    if (!desktop->exec) return;
 
-   EINA_LIST_FOREACH(hwin->exes, l, eins) 
+   EINA_LIST_FOREACH(exes, l, exe) 
      {
-        if ((eins->desktop == desktop)) 
+        if ((exe->desktop == desktop)) 
           {
-             E_Border *bd;
-
-             bd = _il_home_desktop_find_border(desktop);
-             if (bd) 
+             if (exe->border) 
                {
-                  e_border_uniconify(bd);
-                  e_border_show(bd);
-                  e_border_raise(bd);
-                  e_border_focus_set(bd, 1, 1);
+                  e_border_uniconify(exe->border);
+                  e_border_show(exe->border);
+                  e_border_raise(exe->border);
+                  e_border_focus_set(exe->border, 1, 1);
                   return;
                }
           }
      }
 
+   b = _il_home_desktop_find_border(desktop);
+   if (b) 
+     {
+        e_border_uniconify(b);
+        e_border_show(b);
+        e_border_raise(b);
+        e_border_focus_set(b, 1, 1);
+        return;
+     }
+
+   exe = E_NEW(Il_Home_Exec, 1);
+   if (!exe) return;
+
    eins = e_exec(e_util_zone_current_get(e_manager_current_get()), 
                  desktop, NULL, NULL, "illume-home");
+   exe->desktop = desktop;
    if (eins) 
      {
-        char buff[PATH_MAX];
-
-        ecore_exe_tag_set(eins->exe, "illume-home");
-        hwin->timeout = ecore_timer_add(20.0, _il_home_win_cb_timeout, hwin);
-        hwin->exes = eina_list_append(hwin->exes, eins);
-        snprintf(buff, sizeof(buff), "Starting %s", desktop->name);
-        hwin->handle = e_busycover_push(busycover, buff, NULL);
+        exe->startup_id = eins->startup_id;
+        exe->pid = ecore_exe_pid_get(eins->exe);
      }
+
+   exe->timeout = ecore_timer_add(20.0, _il_home_win_cb_timeout, exe);
+
+   snprintf(buff, sizeof(buff), "Starting %s", desktop->name);
+   exe->handle = e_busycover_push(busycover, buff, NULL);
+
+   exes = eina_list_append(exes, exe);
 }
 
 static void 
@@ -725,30 +768,23 @@ _il_home_update_deferred(void *data)
 static int 
 _il_home_win_cb_exe_del(void *data, int type, void *event) 
 {
-   Il_Home_Win *hwin;
+   Il_Home_Exec *exe;
    Ecore_Exe_Event_Del *ev;
    Eina_List *l;
-   char *tag;
 
-   if (!(hwin = data)) return 1;
    ev = event;
-   if (!ev->exe) return 1;
-   if (!(tag = ecore_exe_tag_get(ev->exe))) return 1;
-   if (strcmp(tag, "illume-home")) return 1;
-
-   for (l = hwin->exes; l; l = l->next) 
+   EINA_LIST_FOREACH(exes, l, exe) 
      {
-        E_Exec_Instance *eins;
-
-        if (!(eins = l->data)) continue;
-        if (eins->exe == ev->exe) 
+        if (exe->pid == ev->pid) 
           {
-             if (hwin->timeout) ecore_timer_del(hwin->timeout);
-             hwin->timeout = NULL;
-             if (hwin->handle) e_busycover_pop(busycover, hwin->handle);
-             hwin->handle = NULL;
-             hwin->exes = eina_list_remove(hwin->exes, eins);
-             E_FREE(eins);
+             if (exe->handle) 
+               {
+                  e_busycover_pop(busycover, exe->handle);
+                  exe->handle = NULL;
+               }
+             exes = eina_list_remove_list(exes, l);
+             if (exe->timeout) ecore_timer_del(exe->timeout);
+             E_FREE(exe);
              return 1;
           }
      }
@@ -815,11 +851,71 @@ _il_home_desktop_find_border(Efreet_Desktop *desktop)
 static int 
 _il_home_win_cb_timeout(void *data) 
 {
-   Il_Home_Win *hwin;
+   Il_Home_Exec *exe;
 
-   if (!(hwin = data)) return 1;
-   if (hwin->handle) e_busycover_pop(busycover, hwin->handle);
-   hwin->handle = NULL;
-   hwin->timeout = NULL;
+   if (!(exe = data)) return 1;
+   if (exe->handle) e_busycover_pop(busycover, exe->handle);
+   exe->handle = NULL;
+   if (!exe->border) 
+     {
+        exes = eina_list_remove(exes, exe);
+        E_FREE(exe);
+        return 0;
+     }
+   exe->timeout = NULL;
    return 0;
+}
+
+static int 
+_il_home_border_add(void *data, int type, void *event) 
+{
+   E_Event_Border_Add *ev;
+   Il_Home_Exec *exe;
+   Eina_List *l;
+
+   ev = event;
+   EINA_LIST_FOREACH(exes, l, exe) 
+     {
+        if (!exe->border) 
+          {
+             if ((exe->startup_id == ev->border->client.netwm.startup_id) || 
+                 (exe->pid == ev->border->client.netwm.pid)) 
+               {
+                  exe->border = ev->border;
+                  if (exe->handle) 
+                    {
+                       e_busycover_pop(busycover, exe->handle);
+                       exe->handle = NULL;
+                    }
+                  if (exe->timeout) ecore_timer_del(exe->timeout);
+                  exe->timeout = NULL;
+                  return 1;
+               }
+          }
+     }
+   return 1;
+}
+
+static int 
+_il_home_border_remove(void *data, int type, void *event) 
+{
+   E_Event_Border_Remove *ev;
+   Il_Home_Exec *exe;
+   Eina_List *l;
+
+   ev = event;
+   EINA_LIST_FOREACH(exes, l, exe) 
+     {
+        if (exe->border == ev->border) 
+          {
+             if (exe->handle) 
+               {
+                  e_busycover_pop(busycover, exe->handle);
+                  exe->handle = NULL;
+               }
+             exe->border = NULL;
+             return 1;
+          }
+     }
+   return 1;
 }
