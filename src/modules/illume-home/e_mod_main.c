@@ -144,7 +144,6 @@ e_modapi_shutdown(E_Module *m)
              e_busycover_pop(busycover, exe->handle);
              exe->handle = NULL;
           }
-//        exes = eina_list_remove_list(exes, l);
         if (exe->timeout) ecore_timer_del(exe->timeout);
         E_FREE(exe);
      }
