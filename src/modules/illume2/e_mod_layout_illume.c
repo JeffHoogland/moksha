@@ -110,6 +110,7 @@ _zone_layout(E_Zone *z)
                e_border_resize(bd, z->w, kbdsize);
              if ((bd->x != z->x) || (bd->y != (z->y + z->h - kbdsize)))
                e_border_fx_offset(bd, z->x, (z->y + z->h - kbdsize));
+             e_border_stick(bd);
           }
         else if (illume_border_is_dialog(bd))
           {
