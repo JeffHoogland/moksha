@@ -655,5 +655,40 @@ _cb_event_client_message(void *data, int type, void *event)
           il_cfg->policy.mode.dual = 0;
         e_config_save_queue();
      }
+   else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_BACK) 
+     {
+        E_Border *bd, *fbd;
+        Eina_List *focused, *l;
+
+        if (!(bd = e_border_focused_get())) return 1;
+        focused = e_border_focus_stack_get();
+        EINA_LIST_REVERSE_FOREACH(focused, l, fbd) 
+          {
+             E_Border *fb;
+
+             if (e_object_is_del(E_OBJECT(fbd))) continue;
+             if ((!fbd->client.icccm.accepts_focus) && 
+                 (!fbd->client.icccm.take_focus)) continue;
+             if (fbd->client.netwm.state.skip_taskbar) continue;
+             if (fbd == bd) 
+               {
+                  if (!(fb = focused->next->data)) continue;
+                  if (e_object_is_del(E_OBJECT(fb))) continue;
+                  if ((!fb->client.icccm.accepts_focus) && 
+                      (!fb->client.icccm.take_focus)) continue;
+                  if (fb->client.netwm.state.skip_taskbar) continue;
+                  e_border_raise(fb);
+                  e_border_focus_set(fb, 1, 1);
+                  break;
+               }
+          }
+     }
+   else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_CLOSE) 
+     {
+        E_Border *bd;
+
+        if (!(bd = e_border_focused_get())) return 1;
+        e_border_act_close_begin(bd);
+     }
    return 1;
 }
