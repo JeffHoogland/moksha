@@ -133,7 +133,8 @@ _zone_layout(E_Zone *z)
                     }
                   else 
                     {
-                       if ((bd->w != z->w) || (bd->h != (z->h - shelfsize - panelsize)))
+                       if ((bd->w != z->w) || 
+                           (bd->h != (z->h - shelfsize - panelsize)))
                          e_border_resize(bd, z->w, (z->h - shelfsize - panelsize));
                        if ((bd->x != z->x) || (bd->y != (z->y + shelfsize)))
                          e_border_fx_offset(bd, z->x, (z->y + shelfsize));
@@ -150,7 +151,7 @@ _zone_layout(E_Zone *z)
                   bh = (z->h - shelfsize - panelsize);
 
                   /* in dual mode */
-                  if (il_cfg->policy.mode.side == 0) /* top/left */
+                  if (il_cfg->policy.mode.side == 0) /* top/bottom */
                     {
                        bh = ((z->h - shelfsize - panelsize) / 2);
                        b = illume_border_at_xy_get(bx, by);

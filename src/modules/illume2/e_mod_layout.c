@@ -632,11 +632,12 @@ static int
 _cb_event_client_message(void *data, int type, void *event) 
 {
    Ecore_X_Event_Client_Message *ev;
-   E_Border *bd;
 
    ev = event;
    if (ev->message_type == ECORE_X_ATOM_NET_ACTIVE_WINDOW) 
      {
+        E_Border *bd;
+
         bd = e_border_find_by_client_window(ev->win);
         if (bd->stolen) return 1;
         if ((mode) && (mode->funcs.border_activate))
