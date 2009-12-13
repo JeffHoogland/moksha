@@ -664,7 +664,7 @@ _il_home_desks_populate(void)
      {
         Eina_List *l, *ll;
         Efreet_Desktop *desktop;
-        char *label, *icon, *plabel, buff[PATH_MAX];
+        char buff[PATH_MAX];
         Efreet_Menu *entry, *subentry;
         Eina_List *settings, *sys, *kbd;
         int num = 0;
@@ -676,52 +676,16 @@ _il_home_desks_populate(void)
           {
              if (entry->type != EFREET_MENU_ENTRY_MENU) continue;
              desktop = entry->desktop;
-             plabel = NULL;
-             if (entry->name) plabel = strdup(entry->name);
-             if (!plabel) plabel = strdup("???");
              EINA_LIST_FOREACH(entry->entries, ll, subentry) 
                {
                   if (subentry->type != EFREET_MENU_ENTRY_DESKTOP) continue;
-                  label = icon = NULL;
                   if (!(desktop = subentry->desktop)) continue;
                   if ((settings) && (sys) && 
                       (eina_list_data_find(settings, desktop)) && 
                       (eina_list_data_find(sys, desktop))) continue;
                   if ((kbd) && (eina_list_data_find(kbd, desktop)))
                     continue;
-                  if ((desktop) && (desktop->x)) 
-                    {
-                       icon = eina_hash_find(desktop->x, 
-                                             "X-Application-Screenshot");
-                       if (icon) icon = strdup(icon);
-                    }
-                  if ((!icon) && (subentry->icon)) 
-                    {
-                       if (subentry->icon[0] == '/')
-                         icon = strdup(subentry->icon);
-                       else
-                         icon = efreet_icon_path_find(e_config->icon_theme, 
-                                                      subentry->icon, 
-                                                      il_home_cfg->icon_size);
-                    }
-                  if (subentry->name) label = strdup(subentry->name);
-                  if (desktop)
-                    {
-                       if (!label)
-                         label = strdup(desktop->generic_name);
-                       if ((!icon) && (desktop->icon))
-                         icon = efreet_icon_path_find(e_config->icon_theme, 
-                                                      desktop->icon, 
-                                                      il_home_cfg->icon_size);
-                    }
-                  if (!icon) 
-                    icon = efreet_icon_path_find(e_config->icon_theme, 
-                                                 "hires.jpg", 
-                                                 il_home_cfg->icon_size);
-                  if (!icon) icon = strdup("DEFAULT");
-                  if (!label) label = strdup("???");
-
-                  snprintf(buff, sizeof(buff), "%s / %s", plabel, label);
+                  if (!desktop) continue;
                   desks = eina_list_append(desks, desktop);
                   efreet_desktop_ref(desktop);
                   if (desktop) 
@@ -731,10 +695,7 @@ _il_home_desks_populate(void)
                        ecore_file_symlink(desktop->orig_path, buff);
                     }
                   num++;
-                  if (label) free(label);
-                  if (icon) free(icon);
                }
-             if (plabel) free(plabel);
           }
      }
 }
