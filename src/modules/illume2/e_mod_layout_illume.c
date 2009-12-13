@@ -70,7 +70,7 @@ _zone_layout(E_Zone *z)
    EINA_LIST_FOREACH(borders, l, bd)
      {
         int mw, mh;
-        
+
         if (bd->zone != z) continue; // skip other zones
         if (bd->new_client) continue; // skip new clients 
         if (!bd->visible) continue; // skip invisible
@@ -134,13 +134,7 @@ _zone_layout(E_Zone *z)
                e_border_fx_offset(bd, z->x, (z->y + ((z->h - mh) / 2)));
           }
         else if ((bd->need_fullscreen) || (bd->fullscreen)) 
-          {
-//             e_border_fullscreen(bd, E_FULLSCREEN_RESIZE);
-             if ((bd->w != z->w) || (bd->h != z->h))
-               e_border_resize(bd, z->w, z->h);
-             if ((bd->x != z->x) || (bd->y != z->y))
-               e_border_fx_offset(bd, z->x, z->y);
-          }
+          e_border_fullscreen(bd, E_FULLSCREEN_RESIZE);
         else
           {
              if (!il_cfg->policy.mode.dual) 
