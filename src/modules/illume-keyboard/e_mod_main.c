@@ -23,7 +23,8 @@ static void _il_kbd_stop(void);
 static void _il_kbd_start(void);
 static int _il_kbd_cb_exit(void *data, int type, void *event);
 static void _il_kbd_btn_cb_click(void *data, void *data2);
-static int _il_kbd_cb_border_focus(void *data, int type, void *event);
+static int _il_kbd_cb_border_focus_in(void *data, int type, void *event);
+//static int _il_kbd_cb_client_message(void *data, int type, void *event);
 
 /* local variables */
 static E_Kbd_Int *ki = NULL;
@@ -94,7 +95,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->handlers = 
      eina_list_append(inst->handlers, 
                       ecore_event_handler_add(E_EVENT_BORDER_FOCUS_IN, 
-                                              _il_kbd_cb_border_focus, inst));
+                                              _il_kbd_cb_border_focus_in, inst));
 
    instances = eina_list_append(instances, inst);
    return inst->gcc;
@@ -258,7 +259,7 @@ _il_kbd_btn_cb_click(void *data, void *data2)
 }
 
 static int 
-_il_kbd_cb_border_focus(void *data, int type, void *event) 
+_il_kbd_cb_border_focus_in(void *data, int type, void *event) 
 {
    Instance *inst;
    E_Event_Border_Focus_In *ev;

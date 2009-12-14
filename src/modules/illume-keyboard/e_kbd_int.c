@@ -226,7 +226,6 @@ _e_kbd_int_buf_send(E_Kbd_Int *ki)
    if (str) _e_kbd_int_string_send(ki, str);
 }
 
-
 static void
 _e_kbd_int_cb_match_select(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
