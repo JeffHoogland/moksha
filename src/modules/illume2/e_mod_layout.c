@@ -347,6 +347,38 @@ illume_border_valid_borders_get(void)
 }
 
 E_Border *
+illume_border_valid_border_get(void) 
+{
+   Eina_List *bds, *l;
+   E_Border *bd, *ret = NULL;
+
+   bds = e_border_client_list();
+   EINA_LIST_FOREACH(bds, l, bd) 
+     {
+        if (!bd) continue;
+        if (illume_border_is_top_shelf(bd)) continue;
+        if (illume_border_is_bottom_panel(bd)) continue;
+        if (illume_border_is_keyboard(bd)) continue;
+        if (illume_border_is_dialog(bd)) continue;
+        ret = bd;
+        break;
+     }
+   return ret;
+}
+
+int 
+illume_border_valid_count_get(void) 
+{
+   Eina_List *l;
+   int count;
+
+   l = illume_border_valid_borders_get();
+   count = eina_list_count(l);
+   eina_list_free(l);
+   return count;
+}
+
+E_Border *
 illume_border_at_xy_get(int x, int y) 
 {
    Eina_List *bds, *l;

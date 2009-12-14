@@ -1062,20 +1062,17 @@ EAPI void
 e_kbd_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h)
 {
    Eina_List *l;
+   E_Kbd *kbd;
 
    if (x) *x = zone->x;
    if (y) *y = zone->y;
    if (w) *w = zone->w;
    if (h) *h = zone->h;
-   for (l = kbds; l; l = l->next)
+   EINA_LIST_FOREACH(kbds, l, kbd)
      {
-	E_Kbd *kbd;
-
-	kbd = l->data;
 	if ((kbd->border) && (kbd->border->zone == zone))
 	  {
 	     if ((kbd->visible) && (!kbd->animator) && (!kbd->disabled)) 
-	       /* out finished, not disabled */
 	       {
 		  if (h)
 		    {
