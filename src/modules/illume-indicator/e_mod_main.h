@@ -13,6 +13,12 @@ struct _Il_Ind_Win
    E_Menu *menu;
    E_Gadcon *gadcon;
    Evas_Object *o_base, *o_event;
+   struct 
+     {
+        unsigned char start : 1;
+        unsigned char dnd : 1;
+        int x, y;
+     } drag;
 };
 
 EAPI extern E_Module_Api e_modapi;
