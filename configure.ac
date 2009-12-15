@@ -617,6 +617,8 @@ src/modules/illume-keyboard/keyboards/Makefile
 src/modules/illume-keyboard/dicts/Makefile
 src/modules/illume-indicator/Makefile
 src/modules/illume-indicator/module.desktop
+src/modules/illume-kbd-toggle/Makefile
+src/modules/illume-kbd-toggle/module.desktop
 src/modules/syscon/Makefile
 src/modules/syscon/module.desktop
 src/modules/everything/Makefile
