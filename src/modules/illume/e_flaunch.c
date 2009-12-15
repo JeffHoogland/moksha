@@ -97,14 +97,14 @@ _e_flaunch_apps_populate(E_Flaunch *fl)
    int num = 0, max, count;
    
    // FIXME: 3 should become config here
-   max = 3;
+   max = 10;
    // for now just look for any apps in "category" 'Bar' and add the first 3
    // FIXME: category should be configurable... 
-   bar_desktops = efreet_util_desktop_category_list("Bar");
+   bar_desktops = efreet_util_desktop_category_list("System");
    if (bar_desktops)
      {
 	Efreet_Desktop *desktop;
-	
+	printf("Have Desktops\n");
 	count = eina_list_count(bar_desktops);
 	if (count < max)
 	  {
@@ -118,6 +118,7 @@ _e_flaunch_apps_populate(E_Flaunch *fl)
 	  }
 	EINA_LIST_FOREACH(bar_desktops, l, desktop)
 	  {
+             printf("Desktop: %s\n", desktop->name);
 	     if (desktop->orig_path)
 	       {
 		  const char *dname;

@@ -239,7 +239,7 @@ SUBDIRS += connman
 endif
 
 if USE_MODULE_ILLUME
-SUBDIRS += illume illume2 illume-home illume-softkey illume-keyboard illume-indicator
+SUBDIRS += illume illume2 illume-home illume-softkey illume-keyboard illume-indicator illume-kbd-toggle
 endif
 
 if USE_MODULE_SYSCON
@@ -321,6 +321,7 @@ illume-home \
 illume-softkey \
 illume-keyboard \
 illume-indicator \
+illume-kbd-toggle \
 syscon \
 everything \
 systray
