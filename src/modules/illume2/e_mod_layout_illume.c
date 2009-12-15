@@ -259,12 +259,13 @@ _zone_layout(E_Zone *z)
           }
         else if (illume_border_is_dialog(bd)) 
           {
-             int mh;
+             int mw, mh;
 
-             illume_border_min_get(bd, NULL, &mh);
+             illume_border_min_get(bd, &mw, &mh);
              if (mh > z->h) mh = z->h;
-             _border_resize_fx(bd, z->x, (z->y + ((z->h - mh) / 2)), 
-                               z->w, mh);
+             if (mw > z->w) mw = z->w;
+             _border_resize_fx(bd, (z->x + ((z->w - mw) / 2)), 
+                               (z->y + ((z->h - mh) / 2)), mw, mh);
              if (bd->layer != 120) e_border_layer_set(bd, 120);
           }
         else 
