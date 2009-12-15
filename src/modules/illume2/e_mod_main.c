@@ -4,7 +4,9 @@
 #include "e_mod_layout.h"
 #include "e_kbd.h"
 #include "e_mod_gadcon.h"
+#include "e_mod_dnd.h"
 
+/* local variables */
 static E_Kbd *kbd = NULL;
 
 /* this is needed to advertise a label for the module IN the code (not just
@@ -17,8 +19,15 @@ EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Illume2" };
 EAPI void *
 e_modapi_init(E_Module *m) 
 {
-   /* init the config system */
+   /* init the config subsystem */
    if (!il_config_init(m)) return NULL;
+
+   /* init the drag-n-drop subsystem */
+   if (!e_mod_dnd_init()) 
+     {
+        il_config_shutdown();
+        return NULL;
+     }
 
    /* init the gadcon subsystem for adding a "button" to any gadget container
     * which will allow easy switching between policy app modes */
@@ -27,16 +36,15 @@ e_modapi_init(E_Module *m)
    /* set up the virtual keyboard */
    e_kbd_init(m);
 
-   /* init the layout system */
+   /* init the layout subsystem */
    e_mod_layout_init(m);
 
    /* create a new keyboard */
-   kbd = e_kbd_new(e_util_container_zone_number_get(0, 0), 
-                   m->dir, m->dir, m->dir);
+   kbd = 
+     e_kbd_new(e_util_container_zone_number_get(0, 0), m->dir, m->dir, m->dir);
 
    /* show the keyboard if needed */
    e_kbd_show(kbd);
-
 
    /* return NULL on failure, anything else on success. the pointer
     * returned will be set as m->data for convenience tracking */
@@ -60,6 +68,9 @@ e_modapi_shutdown(E_Module *m)
    /* shutdown the gadget subsystem */
    e_mod_gadcon_shutdown();
 
+   /* shutdown the dnd subsystem */
+   e_mod_dnd_shutdown();
+
    /* shutdown the config subsystem */
    il_config_shutdown();
 
@@ -72,4 +83,23 @@ EAPI int
 e_modapi_save(E_Module *m) 
 {
    return il_config_save();
+}
+
+/* local functions */
+static int 
+_cb_event_dnd_drop(void *data, int type, void *event) 
+{
+   return 1;
+}
+
+static int 
+_cb_event_dnd_position(void *data, int type, void *event) 
+{
+   return 1;
+}
+
+static int 
+_cb_event_dnd_selection(void *data, int type, void *event) 
+{
+   return 1;
 }
