@@ -163,8 +163,9 @@ _border_activate(E_Border *bd)
 {
    /* HANDLE A BORDER BEING ACTIVATED */
 
-   /* only set focus if border accepts it */
-   if ((!bd->client.icccm.accepts_focus) && (!bd->client.icccm.take_focus)) 
+   /* only set focus if border accepts it and it's not locked out */
+   if (((!bd->client.icccm.accepts_focus) && (!bd->client.icccm.take_focus)) ||
+       (bd->lock_focus_out))
      return;
 
    /* if the border is not focused, check focus settings */
