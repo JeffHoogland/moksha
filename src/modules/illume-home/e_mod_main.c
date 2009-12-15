@@ -329,9 +329,8 @@ _il_home_win_new(Instance *inst)
    E_Zone *zone;
    char buff[PATH_MAX];
 
-   if (!hwin) 
-     hwin = E_OBJECT_ALLOC(Il_Home_Win, IL_HOME_WIN_TYPE, 
-                           _il_home_win_cb_free);
+   hwin = E_OBJECT_ALLOC(Il_Home_Win, IL_HOME_WIN_TYPE, 
+                         _il_home_win_cb_free);
    if (!hwin) return;
 
    con = e_container_current_get(e_manager_current_get());
