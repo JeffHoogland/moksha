@@ -96,6 +96,8 @@ _border_add(E_Border *bd)
      {
         E_Border *b;
 
+        if (bd->layer != 115) e_border_layer_set(bd, 115);
+
         /* we lock stacking so that the keyboard does not get put 
          * under the window (if it's needed) */
         bd->lock_user_stacking = 1;
@@ -111,6 +113,10 @@ _border_add(E_Border *bd)
              b = illume_border_top_shelf_get();
              if (b) e_border_fx_offset(b, 0, -shelfsize);
           }
+     }
+   if (conform) 
+     {
+        if (bd->layer != 110) e_border_layer_set(bd, 110);
      }
 
    /* we lock stacking so that the keyboard does not get put 
@@ -220,10 +226,6 @@ _zone_layout(E_Zone *z)
         else if (illume_border_is_keyboard(bd)) 
           {
              if (kbdsize < mh) kbdsize = mh;
-          }
-        else if (illume_border_is_conformant(bd)) 
-          {
-             if (bd->layer != 110) e_border_layer_set(bd, 110);
           }
      }
 
