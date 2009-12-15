@@ -2,6 +2,7 @@
 Type=Link
 Name=First Run Wizard
 Name[cs]=Průvodce prvním spuštěním
+Name[el]=Οδηγός ρύθμισεων πρώτης εκτέλεσης
 Name[eo]=Asistanto de unua lanĉo
 Name[hu]=Első indítás varázsló
 Name[it]=Wizard prima esecuzione
@@ -10,6 +11,7 @@ Name[tr]=İlk Açılış Sihirbazı
 Icon=e-module-wizard
 Comment=<title>First Run Wizard</title><br>The first run wizard will help configure E, when E is started for the first time.<br><urgent>WARNING!!! DO NOT USE!!!</urgent>
 Comment[cs]=<title>Průvodce prvním spuštěním</title><br>Průvodce, který pomůže nastavit E17 při prvním spuštění.<br><urgent>VAROVÁNÍ!!! NEPOUŽÍVEJTE!!! Aktivován pouze při prvním spuštění!</urgent>
+Comment[el]=<title>Οδηγός ρύθμισεων πρώτης εκτέλεσης</title><br>Ο οδηγός ρύθμισεων πρώτης εκτέλεσης θα σας βοηθήσει να ρυμθίσετε το E, όταν αυτό ξεκινήσει για πρώτη φορά.<br><urgent>ΠΡΟΣΟΧΗ!!! ΜΗ ΤΟ ΧΡΗΣΙΜΟΠΟΙΕΙΤΕ !!!</urgent>
 Comment[eo]=<title>Asistanto de unua lanĉo</title><br>La asistanto de unua lanĉo helpos vi agordi E17, kiam E17 startiĝos je la unua fojo.<br><urgent>ATENTU!!! NE UZI!!!</urgent>
 Comment[hu]=<title>Első indítás varázsló</title><br>Ez a varázsló segítséget nyújt a számodra az E beállításához.<br><urgent>FIGYELEM!!! NE HASZNÁLD!!!</urgent>
 Comment[it]=<title>Wizard prima esecuzione</title><br>Wizard che aiuta a configurare E17 la prima volta che questo viene avviato.<br><urgent>ATTENZIONE!!! NON USARE!!!</urgent>

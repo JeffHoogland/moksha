@@ -2,6 +2,7 @@
 Type=Link
 Name=Start
 Name[cs]=Start menu
+Name[el]=Μενού εκκίνησης
 Name[eo]=Starto
 Name[hu]=Start menü
 Name[fr]=Menu E
@@ -10,6 +11,7 @@ Icon=e-module-start
 Comment=<title>Start Button Gadget</title><br>E17's "Start" button equivalent.
 Comment[cs]=<title>Gadget Start menu</title><br>E17 Start menu.
 Comment[de]=
+Comment[el]=<title>Συστατικό μενού εκκίνησης</title><br>Το κουμπί για το μενού εκκίνησης του E17.
 Comment[eo]=<title>Akcesoraĵo de starto-butono</title><br>Ekvivalenta "starto"-butono por E17.
 Comment[es]=<title>Dispositivo botón de inicio</title><br>El equivalente al botón "Inicio" en E17.
 Comment[fr]=<title>Gadget Menu E</title><br>L'équivalent du bouton « Démarrer » pour E17.
