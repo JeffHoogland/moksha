@@ -34,6 +34,14 @@ group "E_Config" struct {
   value "language" string: "en_US.UTF-8";
   group "modules" list {
     group "E_Config_Module" struct {
+      value "name" string: "illume-indicator";
+      value "enabled" uchar: 1;
+      value "delayed" uchar: 0;
+      value "priority" int: 0;
+    }
+  }
+  group "modules" list {
+    group "E_Config_Module" struct {
       value "name" string: "syscon";
       value "enabled" uchar: 1;
       value "delayed" uchar: 1;
@@ -402,7 +410,7 @@ group "E_Config" struct {
   }
   group "modules" list {
     group "E_Config_Module" struct {
-      value "name" string: "illume-indicator";
+      value "name" string: "illume-softkey";
       value "enabled" uchar: 1;
       value "delayed" uchar: 0;
       value "priority" int: 0;
@@ -410,7 +418,7 @@ group "E_Config" struct {
   }
   group "modules" list {
     group "E_Config_Module" struct {
-      value "name" string: "illume-softkey";
+      value "name" string: "illume2";
       value "enabled" uchar: 1;
       value "delayed" uchar: 0;
       value "priority" int: 0;
@@ -426,7 +434,7 @@ group "E_Config" struct {
   }
   group "modules" list {
     group "E_Config_Module" struct {
-      value "name" string: "illume2";
+      value "name" string: "illume-kbd-toggle";
       value "enabled" uchar: 1;
       value "delayed" uchar: 0;
       value "priority" int: 0;
@@ -1657,7 +1665,7 @@ group "E_Config" struct {
           value "geom.pos_y" double: 0.0000000000000000000000000;
           value "geom.size_w" double: 0.0000000000000000000000000;
           value "geom.size_h" double: 0.0000000000000000000000000;
-          value "state_info.seq" int: 2;
+          value "state_info.seq" int: 4;
           value "state_info.flags" int: 0;
           value "style" string: "plain";
           value "orient" int: 0;
@@ -1676,7 +1684,7 @@ group "E_Config" struct {
           value "geom.pos_y" double: 0.0000000000000000000000000;
           value "geom.size_w" double: 0.0000000000000000000000000;
           value "geom.size_h" double: 0.0000000000000000000000000;
-          value "state_info.seq" int: 3;
+          value "state_info.seq" int: 5;
           value "state_info.flags" int: 0;
           value "style" string: "plain";
           value "orient" int: 0;
@@ -1695,7 +1703,7 @@ group "E_Config" struct {
           value "geom.pos_y" double: 0.0000000000000000000000000;
           value "geom.size_w" double: 0.0000000000000000000000000;
           value "geom.size_h" double: 0.0000000000000000000000000;
-          value "state_info.seq" int: 4;
+          value "state_info.seq" int: 2;
           value "state_info.flags" int: 0;
           value "style" string: "plain";
           value "orient" int: 0;
@@ -1705,8 +1713,8 @@ group "E_Config" struct {
       }
       group "clients" list {
         group "E_Config_Gadcon_Client" struct {
-          value "name" string: "illume-keyboard";
-          value "id" string: "illume-keyboard.0";
+          value "name" string: "illume-kbd-toggle";
+          value "id" string: "illume-kbd-toggle.0";
           value "geom.pos" int: 0;
           value "geom.size" int: 32;
           value "geom.res" int: 800;
@@ -1714,7 +1722,7 @@ group "E_Config" struct {
           value "geom.pos_y" double: 0.0000000000000000000000000;
           value "geom.size_w" double: 0.0000000000000000000000000;
           value "geom.size_h" double: 0.0000000000000000000000000;
-          value "state_info.seq" int: 5;
+          value "state_info.seq" int: 3;
           value "state_info.flags" int: 0;
           value "style" string: "plain";
           value "orient" int: 0;
