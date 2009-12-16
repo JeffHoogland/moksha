@@ -14,7 +14,6 @@ struct _Instance
 {
    E_Gadcon_Client *gcc;
    Evas_Object *o_btn;
-   E_Menu *menu;
    Eina_List *wins;
 };
 struct _Il_Home_Win 
@@ -45,8 +44,6 @@ static char *_gc_label(E_Gadcon_Client_Class *cc);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
 static void _il_home_btn_cb_click(void *data, void *data2);
-static void _il_home_btn_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
-static void _il_home_menu_cb_post(void *data, E_Menu *mn);
 static void _il_home_win_new(Instance *inst);
 static void _il_home_win_cb_free(Il_Home_Win *hwin);
 static void _il_home_win_cb_delete(E_Win *win);
@@ -192,6 +189,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", 
             il_home_cfg->mod_dir);
+
    inst = E_NEW(Instance, 1);
    inst->o_btn = e_widget_button_add(gc->evas, NULL, NULL, 
                                      _il_home_btn_cb_click, inst, NULL);
@@ -201,9 +199,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_btn);
    inst->gcc->data = inst;
-
-   evas_object_event_callback_add(inst->o_btn, EVAS_CALLBACK_MOUSE_DOWN, 
-                                  _il_home_btn_cb_mouse_down, inst);
 
    _il_home_win_new(inst);
 
@@ -219,18 +214,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 
    if (!(inst = gcc->data)) return;
    instances = eina_list_remove(instances, inst);
-   if (inst->menu) 
-     {
-        e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-        e_object_del(E_OBJECT(inst->menu));
-        inst->menu = NULL;
-     }
-   if (inst->o_btn) 
-     {
-        evas_object_event_callback_del(inst->o_btn, EVAS_CALLBACK_MOUSE_DOWN, 
-                                       _il_home_btn_cb_mouse_down);
-        evas_object_del(inst->o_btn);
-     }
+   if (inst->o_btn) evas_object_del(inst->o_btn);
 
    EINA_LIST_FREE(inst->wins, hwin)
      e_object_del(E_OBJECT(hwin));
@@ -281,44 +265,6 @@ _il_home_btn_cb_click(void *data, void *data2)
 
    if (!(inst = data)) return;
    _il_home_win_new(inst);
-}
-
-static void 
-_il_home_btn_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event) 
-{
-   Instance *inst;
-   Evas_Event_Mouse_Down *ev;
-
-   ev = event;
-   if (ev->button != 3) return;
-   if (!(inst = data)) return;
-   if (!inst->menu) 
-     {
-        E_Menu *mn;
-        E_Zone *zone;
-        int x = 0, y = 0;
-
-        zone = e_util_zone_current_get(e_manager_current_get());
-        mn = e_menu_new();
-        inst->menu = mn;
-        e_menu_post_deactivate_callback_set(inst->menu, 
-                                            _il_home_menu_cb_post, inst);
-        e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
-        e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
-        e_menu_activate_mouse(mn, zone, x + ev->output.x, y + ev->output.y, 
-                              1, 1, E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
-     }
-}
-
-static void 
-_il_home_menu_cb_post(void *data, E_Menu *mn) 
-{
-   Instance *inst;
-
-   if (!(inst = data)) return;
-   if (!inst->menu) return;
-   e_object_del(E_OBJECT(inst->menu));
-   inst->menu = NULL;
 }
 
 static void 
