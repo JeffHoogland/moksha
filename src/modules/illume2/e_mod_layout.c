@@ -723,5 +723,23 @@ _cb_event_client_message(void *data, int type, void *event)
         if (!(bd = e_border_focused_get())) return 1;
         e_border_act_close_begin(bd);
      }
+   else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_DRAG_START) 
+     {
+        E_Border *bd;
+
+        bd = e_border_find_by_client_window(ev->win);
+        if (bd->stolen) return 1;
+        if ((mode) && (mode->funcs.drag_start))
+          mode->funcs.drag_start(bd);
+     }
+   else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_DRAG_END) 
+     {
+        E_Border *bd;
+
+        bd = e_border_find_by_client_window(ev->win);
+        if (bd->stolen) return 1;
+        if ((mode) && (mode->funcs.drag_end))
+          mode->funcs.drag_end(bd);
+     }
    return 1;
 }

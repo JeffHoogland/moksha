@@ -84,22 +84,3 @@ e_modapi_save(E_Module *m)
 {
    return il_config_save();
 }
-
-/* local functions */
-static int 
-_cb_event_dnd_drop(void *data, int type, void *event) 
-{
-   return 1;
-}
-
-static int 
-_cb_event_dnd_position(void *data, int type, void *event) 
-{
-   return 1;
-}
-
-static int 
-_cb_event_dnd_selection(void *data, int type, void *event) 
-{
-   return 1;
-}

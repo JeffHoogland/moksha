@@ -30,6 +30,8 @@ struct _Illume_Layout_Mode
         void (*zone_move_resize) (E_Zone *zone);
         // --- add more below (activate callback, and more)
         void (*border_activate) (E_Border *bd);
+        void (*drag_start) (E_Border *bd);
+        void (*drag_end) (E_Border *bd);
      } funcs;
 };
 
