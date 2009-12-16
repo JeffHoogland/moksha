@@ -18,7 +18,6 @@ static void _il_ind_win_cb_menu_pre(void *data, E_Menu *mn);
 static void _il_ind_win_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn);
 static void _il_ind_win_cb_menu_edit(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _il_ind_win_cb_menu_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
-static void _il_ind_win_cb_drag_finished(E_Drag *drag, int dropped);
 
 int 
 e_mod_ind_win_init(void) 
@@ -291,14 +290,4 @@ _il_ind_win_cb_menu_contents(void *data, E_Menu *mn, E_Menu_Item *mi)
    if (!(iwin = data)) return;
    if (!iwin->gadcon->config_dialog) 
      e_int_gadcon_config_shelf(iwin->gadcon);
-}
-
-static void 
-_il_ind_win_cb_drag_finished(E_Drag *drag, int dropped) 
-{
-   Il_Ind_Win *iwin;
-
-   if (!(iwin = drag->data)) return;
-   if (!dropped) printf("Not Dropped\n");
-   else printf("Dropped\n");
 }
