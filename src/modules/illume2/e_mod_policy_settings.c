@@ -78,19 +78,6 @@ _il_config_policy_settings_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_
                                   _il_config_policy_settings_changed, NULL);
    e_widget_list_object_append(list, of, 1, 0, 0.0);
 
-   of = e_widget_framelist_add(evas, _("Drag"), 0);
-   ow = e_widget_check_add(evas, _("Lock Top Shelf Position"), 
-                           &(il_cfg->policy.indicator.locked));
-   evas_object_smart_callback_add(ow, "changed", 
-                                  _il_config_policy_settings_changed, NULL);
-   e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, _("Lock Bottom Panel Position"), 
-                           &(il_cfg->policy.softkey.locked));
-   evas_object_smart_callback_add(ow, "changed", 
-                                  _il_config_policy_settings_changed, NULL);
-   e_widget_framelist_object_append(of, ow);
-   e_widget_list_object_append(list, of, 1, 0, 0.0);
-
    e_widget_disabled_set(o_top, !il_cfg->policy.mode.dual);
    e_widget_disabled_set(o_left, !il_cfg->policy.mode.dual);
 
@@ -100,17 +87,9 @@ _il_config_policy_settings_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_
 static void 
 _il_config_policy_settings_changed(void *data, Evas_Object *obj, void *event) 
 {
-   E_Border *bd;
-
-   bd = illume_border_top_shelf_get();
-   if (bd) ecore_x_e_illume_drag_locked_set(bd->client.win, 
-                                            il_cfg->policy.indicator.locked);
-   bd = illume_border_bottom_panel_get();
-   if (bd) ecore_x_e_illume_drag_locked_set(bd->client.win, 
-                                            il_cfg->policy.softkey.locked);
-
    e_widget_disabled_set(o_top, !il_cfg->policy.mode.dual);
    e_widget_disabled_set(o_left, !il_cfg->policy.mode.dual);
+
    if (_ps_change_timer) ecore_timer_del(_ps_change_timer);
    _ps_change_timer = 
      ecore_timer_add(0.5, _il_config_policy_settings_change_timeout, data);
@@ -119,7 +98,18 @@ _il_config_policy_settings_changed(void *data, Evas_Object *obj, void *event)
 static int 
 _il_config_policy_settings_change_timeout(void *data) 
 {
+   Ecore_X_Illume_Mode mode;
+
    e_config_save_queue();
    _ps_change_timer = NULL;
+
+   if (il_cfg->policy.mode.dual)
+     mode = ECORE_X_ILLUME_MODE_DUAL;
+   else 
+     mode = ECORE_X_ILLUME_MODE_SINGLE;
+
+   ecore_x_e_illume_mode_set(ecore_x_window_root_first_get(), mode);
+   ecore_x_e_illume_mode_send(ecore_x_window_root_first_get(), mode);
+
    return 0;
 }

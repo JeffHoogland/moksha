@@ -103,11 +103,17 @@ _gc_id_new(E_Gadcon_Client_Class *cc)
 static void 
 _btn_cb_click(void *data, void *data2) 
 {
-   if (il_cfg->policy.mode.dual)
-     il_cfg->policy.mode.dual = 0;
+   Ecore_X_Window xwin;
+   Ecore_X_Illume_Mode mode;
+
+   if (il_cfg->policy.mode.dual) 
+     mode = ECORE_X_ILLUME_MODE_SINGLE;
    else 
-     il_cfg->policy.mode.dual = 1;
-   e_config_save_queue();
+     mode = ECORE_X_ILLUME_MODE_DUAL;
+
+   xwin = ecore_x_window_root_first_get();
+   ecore_x_e_illume_mode_set(xwin, mode);
+   ecore_x_e_illume_mode_send(xwin, mode);
 }
 
 /* public functions */

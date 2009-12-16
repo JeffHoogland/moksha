@@ -678,6 +678,8 @@ _cb_event_client_message(void *data, int type, void *event)
    else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_MODE) 
      {
         Ecore_X_Illume_Mode mode;
+        E_Border *bd;
+        int lock = 1;
 
         mode = ecore_x_e_illume_mode_get(ev->win);
         if (mode == ECORE_X_ILLUME_MODE_SINGLE) 
@@ -687,6 +689,17 @@ _cb_event_client_message(void *data, int type, void *event)
         else /* unknown */
           il_cfg->policy.mode.dual = 0;
         e_config_save_queue();
+
+        if (mode == ECORE_X_ILLUME_MODE_DUAL) 
+          {
+             if (il_cfg->policy.mode.side == 0) lock = 0;
+          }
+        bd = illume_border_top_shelf_get();
+        if (bd) 
+          ecore_x_e_illume_drag_locked_set(bd->client.win, lock);
+        bd = illume_border_bottom_panel_get();
+        if (bd) 
+          ecore_x_e_illume_drag_locked_set(bd->client.win, lock);
      }
    else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_BACK) 
      {
