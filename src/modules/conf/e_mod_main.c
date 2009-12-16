@@ -21,7 +21,8 @@ static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 static char *_gc_label(E_Gadcon_Client_Class *client_class);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
-static void _cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _cb_button_click(void *data, void *data2);
+
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
@@ -37,18 +38,20 @@ static const E_Gadcon_Client_Class _gadcon_class =
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
-   Evas_Object *o;
+   Evas_Object *o, *icon;
    E_Gadcon_Client *gcc;
-   
-   o = e_icon_add(gc->evas);
-   e_util_icon_theme_set(o, "preferences-system");
-   evas_object_show(o);
+
+   o = e_widget_button_add(gc->evas, NULL, NULL, 
+                           _cb_button_click, NULL, NULL);
+
+   icon = e_icon_add(evas_object_evas_get(o));
+   e_util_icon_theme_set(icon, "preferences-system");
+   e_widget_button_icon_set(o, icon);
+
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = o;
    e_gadcon_client_util_menu_attach(gcc);
 
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,
-                                  _cb_mouse_up, NULL);
    return gcc;
 }
 
@@ -76,7 +79,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 static char *
 _gc_label(E_Gadcon_Client_Class *client_class)
 {
-   return "Settings";
+   return _("Settings");
 }
 
 static Evas_Object *
@@ -98,30 +101,17 @@ _gc_id_new(E_Gadcon_Client_Class *client_class)
    return _gadcon_class.name;
 }
 
-static void
-_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+static void 
+_cb_button_click(void *data, void *data2) 
 {
-   Evas_Event_Mouse_Up *ev;
    E_Action *a;
 
-   ev = event_info;
-   if (ev->button == 1) 
-     {
-        a = e_action_find("configuration");
-        if ((a) && (a->func.go)) a->func.go(NULL, NULL);
-     }
-   else if (ev->button == 3) 
-     {
-        
-     }
+   a = e_action_find("configuration");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
 /* module setup */
-EAPI E_Module_Api e_modapi =
-{
-   E_MODULE_API_VERSION,
-     "Conf"
-};
+EAPI E_Module_Api e_modapi ={ E_MODULE_API_VERSION, "Conf" };
 
 EAPI void *
 e_modapi_init(E_Module *m)
@@ -135,8 +125,9 @@ e_modapi_init(E_Module *m)
 	e_action_predef_name_set(_("Launch"), _("Settings Panel"), "configuration",
 				 NULL, NULL, 0);
      }
-   maug = e_int_menus_menu_augmentation_add_sorted
-     ("config/0", _("Settings Panel"), _e_mod_menu_add, NULL, NULL, NULL);
+   maug = 
+     e_int_menus_menu_augmentation_add_sorted("config/0", _("Settings Panel"), 
+                                              _e_mod_menu_add, NULL, NULL, NULL);
    e_module_delayed_set(m, 1);
    e_gadcon_provider_register(&_gadcon_class);
    return m;
