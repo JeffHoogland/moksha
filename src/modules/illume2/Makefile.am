@@ -40,9 +40,7 @@ module_la_SOURCES      = e_mod_main.h \
                          e_mod_policy_settings.h \
                          e_mod_policy_settings.c \
                          e_mod_gadcon.h \
-                         e_mod_gadcon.c \
-                         e_mod_dnd.h \
-                         e_mod_dnd.c
+                         e_mod_gadcon.c
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version

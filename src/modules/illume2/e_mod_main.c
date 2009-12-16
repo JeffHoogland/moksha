@@ -4,7 +4,6 @@
 #include "e_mod_layout.h"
 #include "e_kbd.h"
 #include "e_mod_gadcon.h"
-#include "e_mod_dnd.h"
 
 /* local variables */
 static E_Kbd *kbd = NULL;
@@ -21,13 +20,6 @@ e_modapi_init(E_Module *m)
 {
    /* init the config subsystem */
    if (!il_config_init(m)) return NULL;
-
-   /* init the drag-n-drop subsystem */
-   if (!e_mod_dnd_init()) 
-     {
-        il_config_shutdown();
-        return NULL;
-     }
 
    /* init the gadcon subsystem for adding a "button" to any gadget container
     * which will allow easy switching between policy app modes */
@@ -67,9 +59,6 @@ e_modapi_shutdown(E_Module *m)
 
    /* shutdown the gadget subsystem */
    e_mod_gadcon_shutdown();
-
-   /* shutdown the dnd subsystem */
-   e_mod_dnd_shutdown();
 
    /* shutdown the config subsystem */
    il_config_shutdown();
