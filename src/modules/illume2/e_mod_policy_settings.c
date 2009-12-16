@@ -98,6 +98,7 @@ _il_config_policy_settings_changed(void *data, Evas_Object *obj, void *event)
 static int 
 _il_config_policy_settings_change_timeout(void *data) 
 {
+   Ecore_X_Window xwin;
    Ecore_X_Illume_Mode mode;
 
    e_config_save_queue();
@@ -108,8 +109,9 @@ _il_config_policy_settings_change_timeout(void *data)
    else 
      mode = ECORE_X_ILLUME_MODE_SINGLE;
 
-   ecore_x_e_illume_mode_set(ecore_x_window_root_first_get(), mode);
-   ecore_x_e_illume_mode_send(ecore_x_window_root_first_get(), mode);
+   xwin = ecore_x_window_root_first_get();
+   ecore_x_e_illume_mode_set(xwin, mode);
+   ecore_x_e_illume_mode_send(xwin, mode);
 
    return 0;
 }

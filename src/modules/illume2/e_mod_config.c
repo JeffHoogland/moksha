@@ -41,7 +41,6 @@ il_config_init(E_Module *m)
    E_CONFIG_VAL(D, T, policy.softkey.match.name, INT);
    E_CONFIG_VAL(D, T, policy.softkey.match.title, INT);
    E_CONFIG_VAL(D, T, policy.softkey.match.win_type, INT);
-   E_CONFIG_VAL(D, T, policy.softkey.locked, INT);
    E_CONFIG_VAL(D, T, policy.home.class, STR);
    E_CONFIG_VAL(D, T, policy.home.name, STR);
    E_CONFIG_VAL(D, T, policy.home.title, STR);
@@ -58,7 +57,6 @@ il_config_init(E_Module *m)
    E_CONFIG_VAL(D, T, policy.indicator.match.name, INT);
    E_CONFIG_VAL(D, T, policy.indicator.match.title, INT);
    E_CONFIG_VAL(D, T, policy.indicator.match.win_type, INT);
-   E_CONFIG_VAL(D, T, policy.indicator.locked, INT);
 
    il_cfg = e_config_domain_load("module.illume2", conf_edd);
    if ((il_cfg) && 
@@ -130,11 +128,6 @@ il_config_init(E_Module *m)
              il_cfg->policy.mode.dual = 0;
              il_cfg->policy.mode.side = 0;
           }
-        if ((il_cfg->version & 0xffff) < 3) 
-          {
-             il_cfg->policy.softkey.locked = 1;
-             il_cfg->policy.indicator.locked = 1;
-          }
         il_cfg->version = (IL_CONFIG_MAJ << 16) | IL_CONFIG_MIN;
      }
    il_cfg->mod_dir = eina_stringshare_add(m->dir);
@@ -154,6 +147,7 @@ il_config_init(E_Module *m)
                                          _("Policy Settings"), 
                                          NULL, "enlightenment/policy", 
                                          il_config_policy_settings_show);
+
    return 1;
 }
 

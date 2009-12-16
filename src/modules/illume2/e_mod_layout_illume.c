@@ -149,6 +149,16 @@ _border_add(E_Border *bd)
    if ((bd->client.icccm.accepts_focus) && (bd->client.icccm.take_focus) 
        && (!bd->lock_focus_out))
      e_border_focus_set(bd, 1, 1);
+
+   if (bd == illume_border_top_shelf_get()) 
+     {
+        Ecore_X_Window xwin;
+        Ecore_X_Illume_Mode mode;
+
+        xwin = ecore_x_window_root_first_get();
+        mode = ecore_x_e_illume_mode_get(xwin);
+        ecore_x_e_illume_mode_send(xwin, mode);
+     }
 }
 
 static void 
