@@ -1412,7 +1412,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	for (i = 0; i < size; i++)
 	  {
 	     file[i] = text[i];
-	     printf("'%d-%c' ", text[i], text[i]);
+//	     printf("'%d-%c' ", text[i], text[i]);
 	     /*
 	     if (text[i] == ' ')
 	       {
