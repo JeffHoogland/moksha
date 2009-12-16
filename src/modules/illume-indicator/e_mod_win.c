@@ -7,8 +7,6 @@
 static void _il_ind_win_cb_free(Il_Ind_Win *iwin);
 static void _il_ind_win_cb_resize(E_Win *ewin);
 static void _il_ind_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
-static void _il_ind_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event);
-static void _il_ind_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event);
 static int _il_ind_win_gadcon_client_add(void *data, const E_Gadcon_Client_Class *cc);
 static void _il_ind_win_gadcon_client_del(void *data, E_Gadcon_Client *gcc);
 static void _il_ind_win_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
@@ -75,10 +73,6 @@ e_mod_ind_win_new(void)
    evas_object_resize(iwin->o_event, zone->w, 32);
    evas_object_event_callback_add(iwin->o_event, EVAS_CALLBACK_MOUSE_DOWN, 
                                   _il_ind_win_cb_mouse_down, iwin);
-   evas_object_event_callback_add(iwin->o_event, EVAS_CALLBACK_MOUSE_UP, 
-                                  _il_ind_win_cb_mouse_up, iwin);
-   evas_object_event_callback_add(iwin->o_event, EVAS_CALLBACK_MOUSE_MOVE, 
-                                  _il_ind_win_cb_mouse_move, iwin);
    evas_object_show(iwin->o_event);
    evas_object_layer_set(iwin->o_event, 200);
 
@@ -106,7 +100,7 @@ e_mod_ind_win_new(void)
                                       _il_ind_win_gadcon_size_request, iwin);
    e_gadcon_frame_request_callback_set(iwin->gadcon, 
                                        _il_ind_win_gadcon_frame_request, iwin);
-   e_gadcon_orient(iwin->gadcon, E_GADCON_ORIENT_TOP);
+   e_gadcon_orient(iwin->gadcon, E_GADCON_ORIENT_FLOAT);
    e_gadcon_zone_set(iwin->gadcon, zone);
    e_gadcon_ecore_evas_set(iwin->gadcon, iwin->win->ecore_evas);
    e_gadcon_util_menu_attach_func_set(iwin->gadcon, 
@@ -166,6 +160,8 @@ _il_ind_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
         iwin->drag.y = ev->output.y;
         iwin->drag.start = 1;
         iwin->drag.dnd = 0;
+        ecore_x_e_illume_drag_set(iwin->win->border->client.win, 1);
+        ecore_x_e_illume_drag_start_send(iwin->win->border->client.win);
      }
    else if (ev->button == 3) 
      {
@@ -183,72 +179,6 @@ _il_ind_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
         e_gadcon_canvas_zone_geometry_get(iwin->gadcon, &x, &y, NULL, NULL);
         e_menu_activate_mouse(mn, zone, x + ev->output.x, y + ev->output.y, 
                               1, 1, E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
-     }
-}
-
-static void 
-_il_ind_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event) 
-{
-   Il_Ind_Win *iwin;
-   Evas_Event_Mouse_Up *ev;
-
-   if (!(iwin = data)) return;
-   ev = event;
-   if ((ev->button == 1) && (!iwin->drag.dnd)) 
-     {
-        iwin->drag.start = 0;
-        iwin->drag.dnd = 0;
-     }
-}
-
-static void 
-_il_ind_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event) 
-{
-   Il_Ind_Win *iwin;
-   Evas_Event_Mouse_Move *ev;
-   int dx, dy;
-
-   if (!(iwin = data)) return;
-   ev = event;
-   if (!iwin->drag.start) return;
-   dx = ev->cur.output.x - iwin->drag.x;
-   dy = ev->cur.output.y - iwin->drag.y;
-   if (((dx * dx) + (dy * dy)) >
-       (e_config->drag_resist * e_config->drag_resist)) 
-     {
-        E_Drag *d;
-        Evas *evas;
-        Evas_Object *o;
-        int x, y, w, h;
-        const char *drag_types[] = { "illume/indicator" };
-
-        iwin->drag.dnd = 1;
-        iwin->drag.start = 0;
-        x = iwin->win->x;
-        y = iwin->win->y;
-        w = iwin->win->w;
-        h = iwin->win->h;
-
-        d = e_drag_new(iwin->win->container, x, y, drag_types, 
-                       1, iwin, -1, NULL, 
-                       _il_ind_win_cb_drag_finished);
-
-        evas = e_drag_evas_get(d);
-        o = edje_object_add(evas);
-        if (!e_theme_edje_object_set(o, "base/theme/modules/illume-indicator", 
-                                     "modules/illume-indicator/shelf")) 
-          {
-             char buff[PATH_MAX];
-
-             snprintf(buff, sizeof(buff), "%s/e-module-illume-indicator.edj", 
-                      il_ind_cfg->mod_dir);
-             edje_object_file_set(o, buff, "modules/illume-indicator/shelf");
-          }
-        evas_object_show(o);
-
-        e_drag_object_set(d, o);
-        e_drag_resize(d, w, h);
-        e_drag_start(d, iwin->drag.x, iwin->drag.y);
      }
 }
 
