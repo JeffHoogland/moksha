@@ -46,6 +46,7 @@ void
 illume_layout_illume_init(void) 
 {
    illume_layout_mode_register(&laymode);
+
    handlers = 
      eina_list_append(handlers, 
                       ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, 
@@ -231,7 +232,9 @@ _drag_start(E_Border *bd)
    ecore_x_window_show(_drag_win);
    if (!e_grabinput_get(_drag_win, 1, _drag_win)) 
      {
+        printf("Grab Input Failed\n");
         ecore_x_window_free(_drag_win);
+        _drag_win = 0;
         return;
      }
    _drag_border = bd;
@@ -241,6 +244,11 @@ static void
 _drag_end(E_Border *bd) 
 {
    /* HANDLE A BORDER DRAG BEING ENDED */
+
+   e_grabinput_release(_drag_win, _drag_win);
+   ecore_x_window_free(_drag_win);
+   _drag_win = 0;
+
    ecore_x_e_illume_drag_set(bd->client.win, 0);
    _drag_border = NULL;
 }
@@ -538,9 +546,6 @@ _cb_mouse_up(void *data, int type, void *event)
 
    ev = event;
    if (ev->window != _drag_win) return 1;
-   e_grabinput_release(_drag_win, _drag_win);
-   ecore_x_window_free(_drag_win);
-   _drag_win = 0;
    ecore_x_e_illume_drag_end_send(_drag_border->client.win);
    return 1;
 }
