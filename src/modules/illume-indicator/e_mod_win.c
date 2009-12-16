@@ -69,26 +69,21 @@ e_mod_ind_win_new(void)
    iwin->o_event = evas_object_rectangle_add(evas);
    evas_object_color_set(iwin->o_event, 0, 0, 0, 0);
    evas_object_move(iwin->o_event, 0, 0);
-   evas_object_resize(iwin->o_event, zone->w, 32);
    evas_object_event_callback_add(iwin->o_event, EVAS_CALLBACK_MOUSE_DOWN, 
                                   _il_ind_win_cb_mouse_down, iwin);
    evas_object_show(iwin->o_event);
-   evas_object_layer_set(iwin->o_event, 200);
 
    iwin->o_base = edje_object_add(evas);
-   evas_object_resize(iwin->o_base, zone->w, 32);
    if (!e_theme_edje_object_set(iwin->o_base, 
                                 "base/theme/modules/illume-indicator", 
                                 "modules/illume-indicator/shelf"))
      edje_object_file_set(iwin->o_base, buff, "modules/illume-indicator/shelf");
    evas_object_move(iwin->o_base, 0, 0);
-   evas_object_resize(iwin->o_base, zone->w, 32);
-   evas_object_layer_set(iwin->o_base, 200);
    evas_object_show(iwin->o_base);
 
    iwin->gadcon = e_gadcon_swallowed_new("illume-indicator", 1, iwin->o_base, 
                                          "e.swallow.content");
-   iwin->gadcon->instant_edit = 1;
+//   iwin->gadcon->instant_edit = 1;
    edje_extern_object_min_size_set(iwin->gadcon->o_container, zone->w, 32);
    edje_object_part_swallow(iwin->o_base, "e.swallow.content", 
                             iwin->gadcon->o_container);
@@ -155,6 +150,8 @@ _il_ind_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
    ev = event;
    if (ev->button == 1) 
      {
+        if (ecore_x_e_illume_drag_locked_get(iwin->win->border->client.win))
+          return;
         iwin->drag.x = ev->output.x;
         iwin->drag.y = ev->output.y;
         iwin->drag.start = 1;
