@@ -7,16 +7,16 @@ typedef struct _E_Config_Wallpaper E_Config_Wallpaper;
 #ifndef E_INT_CONFIG_WALLPAPER_H
 #define E_INT_CONFIG_WALLPAPER_H
 
-EAPI E_Config_Dialog *e_int_config_wallpaper(E_Container *con, const char *params __UNUSED__);
-EAPI E_Config_Dialog *e_int_config_wallpaper_desk(E_Container *con, const char *params);
+E_Config_Dialog *e_int_config_wallpaper(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_wallpaper_desk(E_Container *con, const char *params);
 
-EAPI void e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file);
-EAPI void e_int_config_wallpaper_import_done(E_Config_Dialog *dia);
-EAPI void e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia);
-EAPI void e_int_config_wallpaper_web_done(E_Config_Dialog *dia);
+void e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file);
+void e_int_config_wallpaper_import_done(E_Config_Dialog *dia);
+void e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia);
+void e_int_config_wallpaper_web_done(E_Config_Dialog *dia);
 
-EAPI void e_int_config_wallpaper_handler_set(Evas_Object *obj, const char *path, void *data);
-EAPI int e_int_config_wallpaper_handler_test(Evas_Object *obj, const char *path, void *data);
+void e_int_config_wallpaper_handler_set(Evas_Object *obj, const char *path, void *data);
+int e_int_config_wallpaper_handler_test(Evas_Object *obj, const char *path, void *data);
 
 #endif
 #endif

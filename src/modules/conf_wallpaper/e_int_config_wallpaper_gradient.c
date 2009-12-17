@@ -57,7 +57,7 @@ static Evas_Object *_preview_widget_add(Evas *evas);
 static void _import_cb_on_change(void *data, Evas_Object *obj);
 static void _import_cb_color_swap(void *data, void *data2);
 
-EAPI E_Dialog *
+E_Dialog *
 e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
 {
    Evas *evas;

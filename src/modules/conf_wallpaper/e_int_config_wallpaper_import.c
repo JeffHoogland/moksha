@@ -88,7 +88,7 @@ static void _import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *eve
 static void _fsel_cb_wid_on_focus(void *data, Evas_Object *obj);
 static void _fsel_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
 
-EAPI E_Win *
+E_Win *
 e_int_config_wallpaper_import(void *data, const char *path)
 {
    Evas *evas;
@@ -240,7 +240,7 @@ e_int_config_wallpaper_import(void *data, const char *path)
    return win;
 }
 
-EAPI E_Win *
+E_Win *
 e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
 {
    Evas *evas;
@@ -362,7 +362,7 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
    return win;
 }
 
-EAPI void
+void
 e_int_config_wallpaper_import_del(E_Win *win)
 {
    Import *import;
@@ -380,7 +380,7 @@ e_int_config_wallpaper_import_del(E_Win *win)
    if (import) free(import);
 }
 
-EAPI void
+void
 e_int_config_wallpaper_fsel_del(E_Win *win)
 {
    FSel *fsel;

@@ -95,7 +95,7 @@ _web_apply(const char *path, void *data)
    e_config_save_queue();
 }
 
-EAPI E_Dialog *
+E_Dialog *
 e_int_config_wallpaper_web(E_Config_Dialog *parent)
 {
    E_Dialog *dia;

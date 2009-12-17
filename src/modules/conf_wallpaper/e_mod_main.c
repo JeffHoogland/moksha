@@ -73,6 +73,7 @@ e_modapi_shutdown(E_Module *m)
 	e_fm2_mime_handler_mime_del(import_hdl, "image/png");
 	e_fm2_mime_handler_mime_del(import_hdl, "image/jpeg");
 	e_fm2_mime_handler_free(import_hdl);
+	import_hdl = NULL;
      }
    
    conf_module = NULL;

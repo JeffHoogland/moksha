@@ -58,13 +58,13 @@ struct _E_Config_Dialog_Data
 #endif   
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_wallpaper(E_Container *con, const char *params __UNUSED__)
 {
    return _e_int_config_wallpaper_desk(con, -1, -1, -1, -1);
 }
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_wallpaper_desk(E_Container *con, const char *params)
 {
    int con_num, zone_num, desk_x, desk_y;
@@ -113,7 +113,7 @@ _e_int_config_wallpaper_desk(E_Container *con, int con_num, int zone_num, int de
    return cfd;
 }
 
-EAPI void
+void
 e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file)
 {
    E_Config_Dialog_Data *cfdata;
@@ -135,7 +135,7 @@ e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file)
    if (cfdata->o_fm) e_widget_change(cfdata->o_fm);
 }
 
-EAPI void
+void
 e_int_config_wallpaper_import_done(E_Config_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
@@ -144,7 +144,7 @@ e_int_config_wallpaper_import_done(E_Config_Dialog *dia)
    cfdata->win_import = NULL;
 }
 
-EAPI void
+void
 e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
@@ -154,7 +154,7 @@ e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia)
 }
 
 #ifdef HAVE_EXCHANGE
-EAPI void
+void
 e_int_config_wallpaper_web_done(E_Config_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
@@ -164,7 +164,7 @@ e_int_config_wallpaper_web_done(E_Config_Dialog *dia)
 }
 #endif
 
-EAPI void 
+void
 e_int_config_wallpaper_handler_set(Evas_Object *obj, const char *path, void *data) 
 {
    const char *dev, *fpath;
@@ -189,7 +189,7 @@ e_int_config_wallpaper_handler_set(Evas_Object *obj, const char *path, void *dat
    e_int_config_wallpaper_import(NULL, path);
 }
 
-EAPI int 
+int 
 e_int_config_wallpaper_handler_test(Evas_Object *obj, const char *path, void *data) 
 {
    if (!path) return 0;
