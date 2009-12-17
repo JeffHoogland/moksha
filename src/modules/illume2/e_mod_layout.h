@@ -59,9 +59,12 @@ Eina_List *illume_border_valid_borders_get(void);
 E_Border *illume_border_valid_border_get(void);
 int illume_border_valid_count_get(void);
 E_Border *illume_border_at_xy_get(int x, int y);
+E_Border *illume_border_keyboard_get(void);
 E_Border *illume_border_top_shelf_get(void);
 E_Border *illume_border_bottom_panel_get(void);
-
+void illume_border_top_shelf_pos_get(int *x, int *y);
+void illume_border_top_shelf_size_get(int *w, int *h);
+void illume_border_top_shelf_safe_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
 void illume_border_slide_to(E_Border *bd, int x, int y, Illume_Anim_Class aclass);
 void illume_border_min_get(E_Border *bd, int *mw, int *mh);
 

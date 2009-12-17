@@ -27,9 +27,6 @@ static int _cb_mouse_move(void *data, int type, void *event);
 static int shelfsize = 0;
 static int kbdsize = 0;
 static int panelsize = 0;
-static Ecore_X_Window _drag_win = 0;
-static Eina_List *handlers = NULL;
-static E_Border *_drag_border = NULL;
 
 const Illume_Layout_Mode laymode = 
 {
@@ -46,25 +43,11 @@ void
 illume_layout_illume_init(void) 
 {
    illume_layout_mode_register(&laymode);
-
-   handlers = 
-     eina_list_append(handlers, 
-                      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, 
-                                              _cb_mouse_up, NULL));
-   handlers = 
-     eina_list_append(handlers, 
-                      ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, 
-                                              _cb_mouse_move, NULL));
 }
 
 void 
 illume_layout_illume_shutdown(void) 
 {
-   Ecore_Event_Handler *handler;
-
-   EINA_LIST_FREE(handlers, handler)
-     ecore_event_handler_del(handler);
-
    illume_layout_mode_unregister(&laymode);
 }
 
@@ -231,36 +214,15 @@ _border_activate(E_Border *bd)
 static void 
 _drag_start(E_Border *bd) 
 {
-   E_Container *con;
-
    /* HANDLE A BORDER DRAG BEING STARTED */
-
-   if (_drag_win) return;
-   con = bd->zone->container;
-   _drag_win = 
-     ecore_x_window_input_new(con->win, con->x, con->y, con->w, con->h);
-   ecore_x_window_show(_drag_win);
-   if (!e_grabinput_get(_drag_win, 1, _drag_win)) 
-     {
-        printf("Grab Input Failed\n");
-        ecore_x_window_free(_drag_win);
-        _drag_win = 0;
-        return;
-     }
-   _drag_border = bd;
+   ecore_x_e_illume_drag_set(bd->client.win, 1);
 }
 
 static void 
 _drag_end(E_Border *bd) 
 {
    /* HANDLE A BORDER DRAG BEING ENDED */
-
-   e_grabinput_release(_drag_win, _drag_win);
-   ecore_x_window_free(_drag_win);
-   _drag_win = 0;
-
    ecore_x_e_illume_drag_set(bd->client.win, 0);
-   _drag_border = NULL;
 }
 
 static void 
@@ -306,16 +268,22 @@ _zone_layout(E_Zone *z)
         /* trap 'special' windows as they need special treatment */
         if (illume_border_is_top_shelf(bd)) 
           {
-             _border_resize_fx(bd, z->x, z->y, z->w, shelfsize);
-             e_border_stick(bd);
-             if (bd->layer != 100) e_border_layer_set(bd, 100);
+             if (!ecore_x_e_illume_drag_get(bd->client.win)) 
+               {
+                  _border_resize_fx(bd, z->x, z->y, z->w, shelfsize);
+                  e_border_stick(bd);
+                  if (bd->layer != 100) e_border_layer_set(bd, 100);
+               }
           }
         else if (illume_border_is_bottom_panel(bd)) 
           {
-             _border_resize_fx(bd, z->x, (z->y + z->h - panelsize), 
-                               z->w, panelsize);
-             e_border_stick(bd);
-             if (bd->layer != 100) e_border_layer_set(bd, 100);
+             if (!ecore_x_e_illume_drag_get(bd->client.win)) 
+               {
+                  _border_resize_fx(bd, z->x, (z->y + z->h - panelsize), 
+                                    z->w, panelsize);
+                  e_border_stick(bd);
+                  if (bd->layer != 100) e_border_layer_set(bd, 100);
+               }
           }
         else if (illume_border_is_keyboard(bd)) 
           {
@@ -547,29 +515,4 @@ _zone_move_resize(E_Zone *z)
 {
    /* the zone was moved or resized - re-configure all windows in this zone */
    _zone_layout(z);
-}
-
-static int 
-_cb_mouse_up(void *data, int type, void *event) 
-{
-   Ecore_Event_Mouse_Button *ev;
-
-   ev = event;
-   if (ev->window != _drag_win) return 1;
-   ecore_x_e_illume_drag_end_send(_drag_border->client.win);
-   return 1;
-}
-
-static int 
-_cb_mouse_move(void *data, int type, void *event) 
-{
-   Ecore_Event_Mouse_Move *ev;
-
-   ev = event;
-   if (ev->window != _drag_win) return 1;
-   if ((ev->y + _drag_border->h) >= _drag_border->zone->h) return 1;
-   if ((ev->y + _drag_border->h) >= (_drag_border->zone->h - panelsize)) return 1;
-   if ((_drag_border->y != ev->y))
-     e_border_move(_drag_border, _drag_border->x, ev->y);
-   return 1;
 }
