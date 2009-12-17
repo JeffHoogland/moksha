@@ -1,13 +1,22 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
-#include "e.h"
-#include "e_mod_main.h"
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <limits.h>
 
 #ifdef __FreeBSD__
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #endif
+
+#include <Ecore.h>
+#include <Ecore_File.h>
+
+#include "e_mod_main_private.h"
+
 
 static int sensor_type = SENSOR_TYPE_NONE;
 static char *sensor_name = NULL;
