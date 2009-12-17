@@ -168,22 +168,16 @@ void
 e_int_config_wallpaper_handler_set(Evas_Object *obj, const char *path, void *data) 
 {
    const char *dev, *fpath;
+   Eina_Bool r1, r2;
 
    if (!path) return;
    e_fm2_path_get(obj, &dev, &fpath);
-   if (e_config->wallpaper_import_last_dev)
-     {
-	eina_stringshare_del(e_config->wallpaper_import_last_dev);
-	e_config->wallpaper_import_last_dev = NULL;
-     }
-   if (dev)
-     e_config->wallpaper_import_last_dev = eina_stringshare_add(dev);
-   if (e_config->wallpaper_import_last_path) {
-     eina_stringshare_del(e_config->wallpaper_import_last_path);
-     e_config->wallpaper_import_last_path = NULL;
-   }
-   if (fpath)
-     e_config->wallpaper_import_last_path = eina_stringshare_add(fpath);
+
+   r1 = eina_stringshare_replace(&e_config->wallpaper_import_last_dev, dev);
+   r2 = eina_stringshare_replace(&e_config->wallpaper_import_last_path, fpath);
+
+   if ((!r1) && (!r2)) return;
+
    e_config_save_queue();
 
    e_int_config_wallpaper_import(NULL, path);
