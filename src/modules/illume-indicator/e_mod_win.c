@@ -214,7 +214,6 @@ _il_ind_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event)
    bd = iwin->win->border;
    if (ecore_x_e_illume_drag_locked_get(bd->client.win)) return;
    if (!ecore_x_e_illume_drag_get(bd->client.win)) return;
-   ecore_x_e_illume_drag_set(bd->client.win, 0);
    ecore_x_e_illume_drag_end_send(bd->client.win);
 }
 
