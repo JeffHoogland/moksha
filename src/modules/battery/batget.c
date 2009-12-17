@@ -1,16 +1,22 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
-#include "e.h"
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
 
 #ifdef __FreeBSD__
-# include <sys/types.h>
 # include <sys/sysctl.h>
-# include <fcntl.h>
 # ifdef __i386__
 #  include <machine/apm_bios.h>
 # endif
-# include <stdio.h>
 #endif
 #ifdef HAVE_CFBASE_H
 # include <CFBase.h>
@@ -22,9 +28,9 @@
 # include <ps/IOPowerSources.h>
 #endif
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include <Ecore.h>
+#include <Ecore_File.h>
+#include <Ecore_Con.h>
 
 /* define MAX for all OS, instead of plenty #include */
 #ifndef MAX
@@ -667,7 +673,7 @@ linux_sys_class_power_supply_init(void)
                        continue;
 		    }
 
-		  sysev = E_NEW(Sys_Class_Power_Supply_Uevent, 1);
+		  sysev = (Sys_Class_Power_Supply_Uevent *)calloc(1, sizeof(Sys_Class_Power_Supply_Uevent));
 		  sysev->name = name;
 //		  snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/uevent", name);
 //		  sysev->fd = open(buf, O_RDONLY);
