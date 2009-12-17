@@ -429,6 +429,46 @@ illume_border_bottom_panel_get(void)
    return b;
 }
 
+void 
+illume_border_top_shelf_pos_get(int *x, int *y) 
+{
+   E_Border *bd;
+
+   if (!(bd = illume_border_top_shelf_get())) return;
+   if (x) *x = bd->x;
+   if (y) *y = bd->y;
+}
+
+void 
+illume_border_top_shelf_size_get(int *w, int *h) 
+{
+   E_Border *bd;
+
+   if (!(bd = illume_border_top_shelf_get())) return;
+   if (w) *w = bd->w;
+   if (h) *h = bd->h;
+}
+
+void 
+illume_border_bottom_panel_pos_get(int *x, int *y) 
+{
+   E_Border *bd;
+
+   if (!(bd = illume_border_bottom_panel_get())) return;
+   if (x) *x = bd->x;
+   if (y) *y = bd->y;
+}
+
+void 
+illume_border_bottom_panel_size_get(int *w, int *h) 
+{
+   E_Border *bd;
+
+   if (!(bd = illume_border_bottom_panel_get())) return;
+   if (w) *w = bd->w;
+   if (h) *h = bd->h;
+}
+
 void
 illume_border_slide_to(E_Border *bd, int x, int y, Illume_Anim_Class aclass)
 {
