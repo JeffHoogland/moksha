@@ -711,7 +711,7 @@ _cb_event_client_message(void *data, int type, void *event)
         E_Border *bd;
 
         bd = e_border_find_by_client_window(ev->win);
-        if (bd->stolen) return 1;
+        if ((!bd) || (bd->stolen)) return 1;
         if ((mode) && (mode->funcs.border_activate))
           mode->funcs.border_activate(bd);
      }
@@ -781,7 +781,7 @@ _cb_event_client_message(void *data, int type, void *event)
         E_Border *bd;
 
         bd = e_border_find_by_client_window(ev->win);
-        if (bd->stolen) return 1;
+        if ((!bd) || (bd->stolen)) return 1;
         if ((mode) && (mode->funcs.drag_start))
           mode->funcs.drag_start(bd);
      }
@@ -790,7 +790,7 @@ _cb_event_client_message(void *data, int type, void *event)
         E_Border *bd;
 
         bd = e_border_find_by_client_window(ev->win);
-        if (bd->stolen) return 1;
+        if ((!bd) || (bd->stolen)) return 1;
         if ((mode) && (mode->funcs.drag_end))
           mode->funcs.drag_end(bd);
      }
