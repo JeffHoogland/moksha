@@ -2,8 +2,27 @@
  * vim:cindent:ts=8:sw=3:sts=8:expandtab:cino=>5n-3f0^-2{2
  */
 
+#include "config.h"
+
 #ifndef _FILE_OFFSET_BITS
 # define _FILE_OFFSET_BITS  64
+#endif
+
+#ifdef HAVE_ALLOCA_H
+# include <alloca.h>
+#elif defined __GNUC__
+# define alloca __builtin_alloca
+#elif defined _AIX
+# define alloca __alloca
+#elif defined _MSC_VER
+# include <malloc.h>
+# define alloca _alloca
+#else
+# include <stddef.h>
+# ifdef  __cplusplus
+extern "C"
+# endif
+void *alloca (size_t);
 #endif
 
 #include <unistd.h>
