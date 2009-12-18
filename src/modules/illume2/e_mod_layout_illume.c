@@ -268,19 +268,42 @@ _zone_layout(E_Zone *z)
         /* trap 'special' windows as they need special treatment */
         if (illume_border_is_top_shelf(bd)) 
           {
+             /* make sure we are not dragging the shelf */
              if (!ecore_x_e_illume_drag_get(bd->client.win)) 
                {
-                  _border_resize_fx(bd, z->x, z->y, z->w, shelfsize);
+                  /* if we are not in dual mode, then set shelf to top */
+                  if (!il_cfg->policy.mode.dual)
+                    _border_resize_fx(bd, z->x, z->y, z->w, shelfsize);
+                  else 
+                    {
+                       /* make sure we are in landscape mode */
+                       if (il_cfg->policy.mode.side == 0) 
+                         _border_resize_fx(bd, z->x, bd->y, z->w, shelfsize);
+                       else
+                         _border_resize_fx(bd, z->x, z->y, z->w, shelfsize);
+                    }
                   e_border_stick(bd);
                   if (bd->layer != 100) e_border_layer_set(bd, 100);
                }
           }
         else if (illume_border_is_bottom_panel(bd)) 
           {
+             /* make sure we are not dragging the shelf */
              if (!ecore_x_e_illume_drag_get(bd->client.win)) 
                {
-                  _border_resize_fx(bd, z->x, (z->y + z->h - panelsize), 
-                                    z->w, panelsize);
+                  /* if we are not in dual mode, then set shelf to top */
+                  if (!il_cfg->policy.mode.dual)
+                    _border_resize_fx(bd, z->x, (z->y + z->h - panelsize), 
+                                      z->w, panelsize);
+                  else 
+                    {
+                       /* make sure we are in landscape mode */
+                       if (il_cfg->policy.mode.side == 0) 
+                         _border_resize_fx(bd, z->x, bd->y, z->w, panelsize);
+                       else
+                         _border_resize_fx(bd, z->x, (z->y + z->h - panelsize), 
+                                           z->w, panelsize);
+                    }
                   e_border_stick(bd);
                   if (bd->layer != 100) e_border_layer_set(bd, 100);
                }
@@ -370,9 +393,12 @@ _zone_layout_dual_top(E_Border *bd)
    else 
      {
         E_Border *b;
-        int bh, by;
+        int bh, by, ty;
 
         /* more than one valid border */
+
+        /* grab location of top shelf */
+        illume_border_top_shelf_pos_get(NULL, &ty);
 
         /* grab the border at this location */
         b = illume_border_at_xy_get(kx, shelfsize);
