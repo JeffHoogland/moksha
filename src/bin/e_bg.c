@@ -8,6 +8,10 @@ static void _e_bg_signal(void *data, Evas_Object *obj, const char *emission, con
 static void _e_bg_event_bg_update_free(void *data, void *event);
 static int  _e_bg_slide_animator(void *data);
 
+static void _e_bg_image_import_dialog_done(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode);
+static void _e_bg_image_import_done(void *data, Eina_Bool ok, const char *image_path, const char *edje_path);
+static void _e_bg_handler_image_imported(void *data, const char *image_path);
+
 /* local subsystem globals */
 EAPI int E_EVENT_BG_UPDATE = 0;
 static E_Fm2_Mime_Handler *bg_hdl = NULL;
@@ -27,14 +31,15 @@ struct _E_Bg_Anim_Params
    } freedom;
 };
 
-struct _E_Bg_Image_Import
+struct _E_Bg_Image_Import_Handle
 {
-   E_Object e_obj_inherit;
    struct {
       void (*func)(void *data, const char *edje_file);
       void *data;
    } cb;
-   // TODO: win and widget meat
+   E_Dialog *dia;
+   E_Util_Image_Import_Handle *importer;
+   Eina_Bool canceled:1;
 };
 
 /* externally accessible functions */
@@ -52,9 +57,8 @@ e_bg_init(void)
    if (bg_hdl)
      {
 	e_fm2_mime_handler_glob_add(bg_hdl, "*.edj");
-	// TODO:
-	//e_fm2_mime_handler_mime_add(bg_hdl, "image/png");
-	//e_fm2_mime_handler_mime_add(bg_hdl, "image/jpeg");
+	e_fm2_mime_handler_mime_add(bg_hdl, "image/png");
+	e_fm2_mime_handler_mime_add(bg_hdl, "image/jpeg");
      }
 
    /* Register files in use */
@@ -551,31 +555,79 @@ _e_bg_file_edje_check(const char *path)
  * User can cancel operation at any time, and in this case callback is
  * called with @c NULL as second parameter.
  *
- * The operation can be cancelled by application/module as well using
- * e_object_del(). Even in this case the callback is called so user
+ * The operation can be canceled by application/module as well using
+ * e_bg_image_import_cancel(). Even in this case the callback is called so user
  * can free possibly allocated data.
  *
  * @param image_file source file to use, must be supported by Evas.
  * @param cb callback to call when import process is done. The first
  *        argument is the given data, while the second is the path to
  *        the imported background file (edje) that can be used with
- *        e_bg_add() or e_bg_default_set(). Note that if this argument
- *        is @c NULL, then the import process was cancelled!
+ *        e_bg_add() or e_bg_default_set(). Note that if @a edje_file
+ *        is @c NULL, then the import process was canceled!
  *        This function is @b always called and after it returns
- *        E_Bg_Image_Import is deleted.
+ *        E_Bg_Image_Import_Handle is deleted.
  * @param data pointer to data to be given to callback.
  *
- * @return E_Object that handles the import process. It will die
- *         automatically when user cancels the process or when code
- *         automatically calls e_object_del().  Before dying, callback
+ * @return handle to the import process. It will die automatically
+ *         when user cancels the process or when code automatically
+ *         calls e_bg_image_import_cancel().  Before dying, callback
  *         will always be called.
  */
-EAPI E_Bg_Image_Import *
-e_bg_image_import_new(const char *image_file, void (*cb)(void *data, const char *edje_file), const void *data)
+EAPI E_Bg_Image_Import_Handle *
+e_bg_image_import(const char *image_file, void (*cb)(void *data, const char *edje_file), const void *data)
 {
-   // TODO: create win and process similar to e_int_config_wallpaper_import()
-   // TODO: and remove e_int_config_wallpaper_import.[ch]
-   return NULL;
+   E_Bg_Image_Import_Handle *handle;
+
+   if (!image_file) return NULL;
+   if (!cb) return NULL;
+
+   handle = E_NEW(E_Bg_Image_Import_Handle, 1);
+   if (!handle) return NULL;
+   handle->cb.func = cb;
+   handle->cb.data = (void *)data;
+
+   handle->dia = e_util_image_import_settings_new
+     (image_file, _e_bg_image_import_dialog_done, handle);
+   if (!handle->dia)
+     {
+	free(handle);
+	return NULL;
+     }
+   e_dialog_show(handle->dia);
+
+   return handle;
+}
+
+/**
+ * Cancels previously started import process.
+ *
+ * Note that his handle will be deleted when process import, so don't
+ * call it after your callback is called!
+ */
+EAPI void
+e_bg_image_import_cancel(E_Bg_Image_Import_Handle *handle)
+{
+   if (!handle) return;
+
+   handle->canceled = EINA_TRUE;
+
+   if (handle->cb.func)
+     {
+	handle->cb.func(handle->cb.data, NULL);
+	handle->cb.func = NULL;
+     }
+   if (handle->dia)
+     {
+	e_object_del(E_OBJECT(handle->dia));
+	handle->dia = NULL;
+     }
+   else if (handle->importer)
+     {
+	e_util_image_import_cancel(handle->importer);
+	handle->importer = NULL;
+     }
+   E_FREE(handle);
 }
 
 /**
@@ -595,9 +647,10 @@ e_bg_handler_set(Evas_Object *obj __UNUSED__, const char *path, void *data __UNU
 	e_bg_add(con->num, zone->num, desk->x, desk->y, path);
 	e_bg_update();
 	e_config_save_queue();
+	return;
      }
 
-   e_bg_image_import_new(path, NULL, NULL);
+   e_bg_image_import(path, _e_bg_handler_image_imported, NULL);
 }
 
 /**
@@ -726,4 +779,76 @@ _e_bg_slide_animator(void *data)
 	return 0;
      }
    return 1;
+}
+
+static void
+_e_bg_image_import_dialog_done(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode)
+{
+   E_Bg_Image_Import_Handle *handle = data;
+   const char *file;
+   char *name;
+   char buf[PATH_MAX];
+   size_t used, off;
+   unsigned num;
+
+   if (!ok) goto aborted;
+
+   file = ecore_file_file_get(path);
+   if (!file) goto aborted;
+   name = ecore_file_strip_ext(file);
+   if (!name) goto aborted;
+
+   used = e_user_dir_snprintf(buf, sizeof(buf), "backgrounds/%s.edj", name);
+   free(name);
+   if (used >= sizeof(buf)) goto aborted;
+
+   off = used - (sizeof(".edj") - 1);
+
+   for (num = 0; ecore_file_exists(buf); num++)
+     snprintf(buf + off, sizeof(buf) - off, "-%u.edj", num);
+
+   handle->importer = e_util_image_import
+     (path, buf, "e/desktop/background", external, quality, mode,
+      _e_bg_image_import_done, handle);
+   if (!handle->importer) goto aborted;
+
+   return;
+
+ aborted:
+   if (handle->cb.func)
+     {
+	handle->cb.func(handle->cb.data, NULL);
+	handle->cb.func = NULL;
+     }
+   if (!handle->canceled) E_FREE(handle);
+}
+
+static void
+_e_bg_image_import_done(void *data, Eina_Bool ok, const char *image_path __UNUSED__, const char *edje_path)
+{
+   E_Bg_Image_Import_Handle *handle = data;
+
+   if (!ok) edje_path = NULL;
+
+   if (handle->cb.func)
+     {
+	handle->cb.func(handle->cb.data, edje_path);
+	handle->cb.func = NULL;
+     }
+
+   if (!handle->canceled) E_FREE(handle);
+}
+
+static void
+_e_bg_handler_image_imported(void *data __UNUSED__, const char *image_path)
+{
+   E_Container *con = e_container_current_get(e_manager_current_get());
+   E_Zone *zone = e_zone_current_get(con);
+   E_Desk *desk = e_desk_current_get(zone);
+
+   if (!image_path) return;
+
+   e_bg_add(con->num, zone->num, desk->x, desk->y, image_path);
+   e_bg_update();
+   e_config_save_queue();
 }

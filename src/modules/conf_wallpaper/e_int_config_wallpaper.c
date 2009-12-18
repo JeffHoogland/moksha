@@ -164,32 +164,6 @@ e_int_config_wallpaper_web_done(E_Config_Dialog *dia)
 }
 #endif
 
-void
-e_int_config_wallpaper_handler_set(Evas_Object *obj, const char *path, void *data) 
-{
-   const char *dev, *fpath;
-   Eina_Bool r1, r2;
-
-   if (!path) return;
-   e_fm2_path_get(obj, &dev, &fpath);
-
-   r1 = eina_stringshare_replace(&e_config->wallpaper_import_last_dev, dev);
-   r2 = eina_stringshare_replace(&e_config->wallpaper_import_last_path, fpath);
-
-   if ((!r1) && (!r2)) return;
-
-   e_config_save_queue();
-
-   e_int_config_wallpaper_import(NULL, path);
-}
-
-int 
-e_int_config_wallpaper_handler_test(Evas_Object *obj, const char *path, void *data) 
-{
-   if (!path) return 0;
-   return 1;
-}
-
 static void
 _cb_button_up(void *data1, void *data2)
 {

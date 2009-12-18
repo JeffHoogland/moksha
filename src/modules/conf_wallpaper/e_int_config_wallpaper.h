@@ -15,8 +15,5 @@ void e_int_config_wallpaper_import_done(E_Config_Dialog *dia);
 void e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia);
 void e_int_config_wallpaper_web_done(E_Config_Dialog *dia);
 
-void e_int_config_wallpaper_handler_set(Evas_Object *obj, const char *path, void *data);
-int e_int_config_wallpaper_handler_test(Evas_Object *obj, const char *path, void *data);
-
 #endif
 #endif

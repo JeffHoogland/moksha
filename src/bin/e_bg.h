@@ -12,7 +12,7 @@ typedef enum {
 
 typedef struct _E_Event_Bg_Update E_Event_Bg_Update;
 
-typedef struct _E_Bg_Image_Import E_Bg_Image_Import;
+typedef struct _E_Bg_Image_Import_Handle E_Bg_Image_Import_Handle;
 
 #else
 #ifndef E_BG_H
@@ -42,7 +42,8 @@ EAPI void e_bg_update(void);
 EAPI void e_bg_handler_set(Evas_Object *obj, const char *path, void *data);
 EAPI int  e_bg_handler_test(Evas_Object *obj, const char *path, void *data);
 
-EAPI E_Bg_Image_Import *e_bg_image_import_new(const char *image_file, void (*cb)(void *data, const char *edje_file), const void *data);
+EAPI E_Bg_Image_Import_Handle *e_bg_image_import_new(const char *image_file, void (*cb)(void *data, const char *edje_file), const void *data);
+EAPI void                      e_bg_image_import_cancel(E_Bg_Image_Import_Handle *handle);
 
 #endif
 #endif

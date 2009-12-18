@@ -17,7 +17,8 @@ EAPI int     evil         = 0;
 EAPI int     starting     = 1;
 EAPI int     stopping     = 0;
 
-typedef struct _E_Util_Fake_Mouse_Up_Info E_Util_Fake_Mouse_Up_Info;
+typedef struct _E_Util_Fake_Mouse_Up_Info        E_Util_Fake_Mouse_Up_Info;
+typedef struct _E_Util_Image_Import_Settings     E_Util_Image_Import_Settings;
 
 struct _E_Util_Fake_Mouse_Up_Info
 {
@@ -25,9 +26,42 @@ struct _E_Util_Fake_Mouse_Up_Info
    int   button;
 };
 
+struct _E_Util_Image_Import_Settings
+{
+   E_Dialog *dia;
+   struct {
+      void (*func)(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode);
+      void *data;
+   } cb;
+   const char *path;
+   int quality;
+   int external;
+   int mode;
+   Eina_Bool ok;
+};
+
+struct _E_Util_Image_Import_Handle
+{
+   Ecore_Exe *exe;
+   Ecore_Event_Handler *handler;
+   struct {
+      void (*func)(void *data, Eina_Bool ok, const char *image_path, const char *edje_path);
+      void *data;
+   } cb;
+   struct {
+      const char *image, *edje, *temp;
+   } path;
+};
+
 /* local subsystem functions */
 static int _e_util_cb_delayed_del(void *data);
 static int _e_util_wakeup_cb(void *data);
+
+static void _e_util_image_import_settings_do(void *data, E_Dialog *dia);
+static void _e_util_image_import_settings_del(void *obj);
+
+static int _e_util_image_import_exit(void *data, int type __UNUSED__, void *event);
+static void _e_util_image_import_handle_free(E_Util_Image_Import_Handle *handle);
 
 /* local subsystem globals */
 static Ecore_Timer *_e_util_dummy_timer = NULL;
@@ -737,18 +771,18 @@ e_util_shell_env_path_eval(char *path)
 		       s = alloca(v2 - v1);
 		       strncpy(s, v1 + 1, v2 - v1 - 1);
 		       s[v2 - v1 - 1] = 0;
-		       if (strncmp(s, "XDG", 3)) 
+		       if (strncmp(s, "XDG", 3))
 			 v = getenv(s);
-		       else 
+		       else
 			 {
-			    if (!strcmp(s, "XDG_CONFIG_HOME")) 
+			    if (!strcmp(s, "XDG_CONFIG_HOME"))
 			      v = (char *)efreet_config_home_get();
-			    else if (!strcmp(s, "XDG_CACHE_HOME")) 
+			    else if (!strcmp(s, "XDG_CACHE_HOME"))
 			      v = (char *)efreet_cache_home_get();
-			    else if (!strcmp(s, "XDG_DATA_HOME")) 
+			    else if (!strcmp(s, "XDG_DATA_HOME"))
 			      v = (char *)efreet_data_home_get();
 			 }
-		       
+
 		       if (v)
 			 {
 			    vp = v;
@@ -1020,7 +1054,7 @@ e_util_winid_str_get(Ecore_X_Window win)
    const char *vals = "qWeRtYuIoP5-$&<~";
    static char id[9];
    unsigned int val;
-   
+
    val = (unsigned int)win;
    id[0] = vals[(val >> 28) & 0xf];
    id[1] = vals[(val >> 24) & 0xf];
@@ -1052,12 +1086,12 @@ EAPI void
 e_util_win_auto_resize_fill(E_Win *win)
 {
    E_Zone *zone = NULL;
-   
+
    if (win->border)
      zone = win->border->zone;
    if ((!zone) && (win->container))
      zone = e_util_zone_current_get(win->container->manager);
-   
+
    if (zone)
      {
 	int w, h;
@@ -1073,7 +1107,7 @@ e_util_win_auto_resize_fill(E_Win *win)
 EAPI void
 e_util_zone_edge_toggle(E_Zone_Edge edge, Eina_Bool show)
 {
-   
+
    Eina_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
@@ -1166,6 +1200,288 @@ e_util_zone_edge_toggle(E_Zone_Edge edge, Eina_Bool show)
      }
 }
 
+/**
+ * Creates a new dialog to query image import settings, report results.
+ *
+ * @param path may be used to display live preview (not used so far).
+ * @param cb function to call before exit. Last parameter is mode of
+ *        image filling.
+ * @param data extra data to give to @a cb as first argument.
+ *
+ * @return newly allocated window on success, @c NULL on failure. If
+ *         @c NULL is returned, then callback is never called!
+ */
+EAPI E_Dialog *
+e_util_image_import_settings_new(const char *path, void (*cb)(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode), const void *data)
+{
+   Evas *evas;
+   E_Util_Image_Import_Settings *ctxt;
+   Evas_Object *vlist, *frame, *radio, *check, *slider;
+   E_Radio_Group *rg;
+   Evas_Coord w, h;
+
+   if (!path) return NULL;
+   if (!cb) return NULL;
+
+   ctxt = E_NEW(E_Util_Image_Import_Settings, 1);
+   if (!ctxt) return NULL;
+
+   ctxt->dia = e_dialog_new(NULL, "E", "_image_import_settings");
+   if (!ctxt->dia)
+     {
+	E_FREE(ctxt);
+	return NULL;
+     }
+
+   ctxt->dia->data = ctxt;
+
+   e_object_del_attach_func_set
+     (E_OBJECT(ctxt->dia), _e_util_image_import_settings_del);
+   e_dialog_title_set(ctxt->dia, _("Image Import Settings"));
+   e_dialog_border_icon_set(ctxt->dia, "dialog-ask");
+
+   e_dialog_button_add
+     (ctxt->dia, _("Import"), NULL, _e_util_image_import_settings_do, ctxt);
+   e_dialog_button_add
+     (ctxt->dia, _("Cancel"), NULL, NULL, ctxt);
+   e_dialog_button_focus_num(ctxt->dia, 0);
+
+   ctxt->cb.func = cb;
+   ctxt->cb.data = (void *)data;
+   ctxt->path = eina_stringshare_add(path);
+   ctxt->quality = 90;
+   ctxt->ok = EINA_FALSE;
+   ctxt->external = EINA_FALSE;
+   ctxt->mode = E_IMAGE_IMPORT_STRETCH;
+
+   evas = e_win_evas_get(ctxt->dia->win);
+
+   vlist = e_widget_list_add(evas, 0, 0);
+
+   frame = e_widget_frametable_add(evas, _("Fill and Stretch Options"), 1);
+   rg = e_widget_radio_group_new(&ctxt->mode);
+
+#define RD(lbl, icon, val, col, row)					\
+   radio = e_widget_radio_icon_add					\
+     (evas, lbl, "enlightenment/wallpaper_"icon, 24, 24, val, rg);	\
+   e_widget_frametable_object_append(frame, radio, col, row, 1, 1, 1, 1, 0, 0)
+
+   RD(_("Stretch"), "stretch", E_IMAGE_IMPORT_STRETCH, 0, 0);
+   RD(_("Center"), "center", E_IMAGE_IMPORT_CENTER, 1, 0);
+   RD(_("Title"), "tile", E_IMAGE_IMPORT_TILE, 2, 0);
+   RD(_("Within"), "scale_aspect_in", E_IMAGE_IMPORT_SCALE_ASPECT_IN, 3, 0);
+   RD(_("Fill"), "scale_aspect_out", E_IMAGE_IMPORT_SCALE_ASPECT_OUT, 4, 0);
+#undef RD
+
+   e_widget_list_object_append(vlist, frame, 1, 1, 0.5);
+
+   frame = e_widget_frametable_add(evas, _("File Quality"), 0);
+
+   check = e_widget_check_add(evas, _("Use original file"), &ctxt->external);
+   e_widget_frametable_object_append(frame, check, 0, 0, 1, 1, 1, 0, 1, 0);
+
+   slider = e_widget_slider_add
+     (evas, 1, 0, _("%3.0f%%"), 0.0, 100.0, 1.0, 0, NULL, &ctxt->quality, 150);
+   e_widget_frametable_object_append(frame, slider, 0, 1, 1, 1, 1, 0, 1, 0);
+
+   e_widget_list_object_append(vlist, frame, 1, 1, 0.5);
+
+   e_widget_size_min_get(vlist, &w, &h);
+   w += 50;
+   e_dialog_content_set(ctxt->dia, vlist, w, h);
+
+   e_win_centered_set(ctxt->dia->win, 1);
+
+   return ctxt->dia;
+}
+
+/**
+ * Request given image to be imported as an edje file.
+ *
+ * This is useful to convert images to icons and background.
+ *
+ * @param image_path path to source image to use.
+ * @param edje_path path to destination edje to generate.
+ * @param external if @c EINA_TRUE, then it will not embed image into edje,
+ *        but reference the original @a image_path.
+ * @param quality quality value from 0-100.
+ * @param mode how to resize image with edje.
+ * @param cb function to callback when process finishes.
+ * @param data extra context to give to callback.
+ *
+ * @return handle so one can cancel the operation. This handle will be
+ *         invalid after @a cb is called!
+ */
+EAPI E_Util_Image_Import_Handle *
+e_util_image_import(const char *image_path, const char *edje_path, const char *edje_group, Eina_Bool external, int quality, E_Image_Import_Mode mode, void (*cb)(void *data, Eina_Bool ok, const char *image_path, const char *edje_path), const void *data)
+{
+   static const char *tmpdir = NULL;
+   E_Util_Image_Import_Handle *handle;
+   Evas_Imaging_Image *img;
+   int fd, w, h;
+   const char *escaped_file;
+   char cmd[PATH_MAX * 2], tmpn[PATH_MAX];
+   FILE *f;
+
+   if (!image_path) return NULL;
+   if (!edje_path) return NULL;
+   if (!edje_group) return NULL;
+   if (!cb) return NULL;
+
+   img = evas_imaging_image_load(image_path, NULL);
+   if (!img)
+     {
+	printf("Error loading image '%s'\n", image_path);
+	return NULL;
+     }
+   evas_imaging_image_size_get(img, &w, &h);
+   evas_imaging_image_free(img);
+
+   if (!tmpdir)
+     {
+	tmpdir = getenv("TMPDIR");
+	if (!tmpdir) tmpdir = "/tmp";
+     }
+   snprintf(tmpn, sizeof(tmpn), "%s/e_util_image_import-XXXXXX", tmpdir);
+   fd = mkstemp(tmpn);
+   if (fd < 0)
+     {
+	printf("Error Creating tmp file: %s\n", strerror(errno));
+	return NULL;
+     }
+
+   f = fdopen(fd, "wb");
+   if (!f)
+     {
+	printf("Cannot open %s for writing\n", tmpn);
+	close(fd);
+	return NULL;
+     }
+
+   escaped_file = e_util_filename_escape(image_path); // watch out ret buffer!
+
+   fprintf(f, "images.image: \"%s\" ", escaped_file);
+   if (external)
+     fputs("USER", f);
+   else if (quality >= 100)
+     fputs("COMP", f);
+   else
+     fprintf(f, "LOSSY %d", (quality > 1) ? quality : 90);
+
+   fprintf(f,
+	   ";\n"
+	   "collections {\n"
+	   "   group {\n"
+	   "      name: \"%s\";\n"
+	   "      data.item: \"style\" \"%d\";\n"
+	   "      max: %d %d;\n"
+	   "      parts {\n",
+	   edje_group, mode, w, h);
+
+   if ((mode == E_IMAGE_IMPORT_CENTER) ||
+       (mode == E_IMAGE_IMPORT_SCALE_ASPECT_IN))
+     {
+	fputs("         part {\n"
+	      "            type: RECT;\n"
+	      "            name: \"col\";\n"
+	      "            mouse_events: 0;\n"
+	      "            description {\n"
+	      "               state: \"default\" 0.0;\n"
+	      "               color: 255 255 255 255;\n"
+	      "            }\n"
+	      "         }\n",
+	      f);
+     }
+
+   fprintf(f,
+	   "         part {\n"
+	   "            type: IMAGE;\n"
+	   "            name: \"image\";\n"
+	   "            mouse_events: 0;\n"
+	   "            description {\n"
+	   "               state: \"default\" 0.0;\n"
+	   "               image {\n"
+	   "                  normal: \"%s\";\n"
+	   "                  scale_hint: STATIC;\n"
+	   "               }\n",
+	   escaped_file);
+
+   if (mode == E_IMAGE_IMPORT_TILE)
+     {
+	fprintf(f,
+		"               fill {\n"
+		"                  size {\n"
+		"                     relative: 0.0 0.0;\n"
+		"                     offset: %d %d;\n"
+		"                  }\n"
+		"               }\n",
+		w, h);
+     }
+   else if (mode == E_IMAGE_IMPORT_CENTER)
+     {
+	fprintf(f,
+		"               min: %d %d;\n"
+		"               max: %d %d;\n",
+		w, h, w, h);
+
+     }
+   else if ((mode == E_IMAGE_IMPORT_SCALE_ASPECT_IN) ||
+	    (mode == E_IMAGE_IMPORT_SCALE_ASPECT_OUT))
+     {
+	const char *locale = e_intl_language_get();
+	double aspect = (double)w / (double)h;
+	setlocale(LC_NUMERIC, "C");
+	fprintf(f,
+		"               aspect: %1.9f %1.9f;\n"
+		"               aspect_preference: %s;\n",
+		aspect, aspect,
+		(mode == E_IMAGE_IMPORT_SCALE_ASPECT_IN) ? "BOTH" : "NONE");
+	setlocale(LC_NUMERIC, locale);
+     }
+
+   fputs("            }\n" // description
+	 "         }\n"    // part
+	 "      }\n"       // parts
+	 "   }\n"          // group
+	 "}\n",            // collections
+	 f);
+
+   fclose(f); // fd gets closed here
+
+   snprintf(cmd, sizeof(cmd), "edje_cc %s %s",
+	    tmpn, e_util_filename_escape(edje_path));
+
+   handle = E_NEW(E_Util_Image_Import_Handle, 1);
+   if (!handle)
+     {
+	unlink(tmpn);
+	return NULL;
+     }
+
+   handle->cb.func = cb;
+   handle->cb.data = (void *)data;
+   handle->path.image = eina_stringshare_add(image_path);
+   handle->path.edje = eina_stringshare_add(edje_path);
+   handle->path.temp = eina_stringshare_add(tmpn);
+   handle->handler = ecore_event_handler_add
+     (ECORE_EXE_EVENT_DEL, _e_util_image_import_exit, handle);
+   handle->exe = ecore_exe_run(cmd, NULL);
+   if (!handle->exe)
+     {
+	_e_util_image_import_handle_free(handle);
+	return NULL;
+     }
+
+   return handle;
+}
+
+EAPI void
+e_util_image_import_cancel(E_Util_Image_Import_Handle *handle)
+{
+   if (!handle) return;
+   ecore_exe_kill(handle->exe);
+}
+
 /* local subsystem functions */
 static int
 _e_util_cb_delayed_del(void *data)
@@ -1181,4 +1497,55 @@ _e_util_wakeup_cb(void *data)
    return 0;
 }
 
+static void
+_e_util_image_import_settings_do(void *data, E_Dialog *dia)
+{
+   E_Util_Image_Import_Settings *ctxt = data;
+   ctxt->ok = EINA_TRUE;
+   e_util_defer_object_del(E_OBJECT(dia));
+}
+
+static void
+_e_util_image_import_settings_del(void *obj)
+{
+   E_Dialog *dia = obj;
+   E_Util_Image_Import_Settings *ctxt = dia->data;
+
+   ctxt->cb.func
+     (ctxt->cb.data, ctxt->path,
+      ctxt->ok, ctxt->external, ctxt->quality, ctxt->mode);
+
+   eina_stringshare_del(ctxt->path);
+   E_FREE(ctxt);
+}
+
+static int
+_e_util_image_import_exit(void *data, int type __UNUSED__, void *event)
+{
+   E_Util_Image_Import_Handle *handle = data;
+   Ecore_Exe_Event_Del *ev = event;
+   Eina_Bool ok;
+
+   if (ev->exe != handle->exe) return 1;
+
+   ok = (ev->exit_code == 0);
+
+   if (!ok) unlink(handle->path.edje);
+   handle->cb.func(handle->cb.data, ok, handle->path.image, handle->path.edje);
+
+   _e_util_image_import_handle_free(handle);
+
+   return 0;
+}
+
+static void
+_e_util_image_import_handle_free(E_Util_Image_Import_Handle *handle)
+{
+   unlink(handle->path.temp);
+   eina_stringshare_del(handle->path.image);
+   eina_stringshare_del(handle->path.edje);
+   eina_stringshare_del(handle->path.temp);
+   ecore_event_handler_del(handle->handler);
+   E_FREE(handle);
+}
 

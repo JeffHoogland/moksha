@@ -2,9 +2,25 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #ifdef E_TYPEDEFS
+
+typedef struct _E_Util_Image_Import_Handle       E_Util_Image_Import_Handle;
+
+typedef enum _E_Image_Import_Mode E_Image_Import_Mode;
+enum _E_Image_Import_Mode
+{
+  E_IMAGE_IMPORT_STRETCH = 0,
+  E_IMAGE_IMPORT_TILE = 1,
+  E_IMAGE_IMPORT_CENTER = 2,
+  E_IMAGE_IMPORT_SCALE_ASPECT_IN = 3,
+  E_IMAGE_IMPORT_SCALE_ASPECT_OUT = 4
+};
+
+
 #else
 #ifndef E_UTILS_H
 #define E_UTILS_H
+
+#define E_UTIL_IMAGE_IMPORT_SETTINGS 0xE0b0104f
 
 #define e_util_dialog_show(title, args...) \
 { \
@@ -57,6 +73,12 @@ EAPI void         e_util_defer_object_del(E_Object *obj);
 EAPI const char  *e_util_winid_str_get(Ecore_X_Window win);
 EAPI void         e_util_win_auto_resize_fill(E_Win *win);
 EAPI void         e_util_zone_edge_toggle(E_Zone_Edge edge, Eina_Bool show);
-    
+
+
+EAPI E_Dialog                   *e_util_image_import_settings_new(const char *path, void (*cb)(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode), const void *data);
+EAPI E_Util_Image_Import_Handle *e_util_image_import(const char *image_path, const char *edje_path, const char *edje_group, Eina_Bool external, int quality, E_Image_Import_Mode mode, void (*cb)(void *data, Eina_Bool ok, const char *image_path, const char *edje_path), const void *data);
+EAPI void                        e_util_image_import_cancel(E_Util_Image_Import_Handle *handle);
+
+
 #endif
 #endif
