@@ -1676,7 +1676,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	  {
 	     const char *file, *dst, *relative;
 	     int after;
-	     void *p = e->data;
+	     char *p = e->data;
 
 	     file = p;
 	     p += strlen(file) + 1;
@@ -1687,8 +1687,8 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     relative = p;
 	     p += strlen(relative) + 1;
 
-	     after = *(int *)p;
-
+	     after = *((int *)p);
+             
 	     _e_fm_reorder(file, dst, relative, after);
 	  }
 	break;
@@ -1752,7 +1752,7 @@ static E_Fm_Slave *_e_fm_slave_get(int id)
 
 static int _e_fm_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size)
 {
-   void *sdata;
+   char *sdata;
    int ssize;
    int magic = E_FM_OP_MAGIC;
    int result;
@@ -1780,7 +1780,7 @@ static int _e_fm_slave_data_cb(void *data, int type, void *event)
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
    int magic, id, size;
-   void *sdata;
+   char *sdata;
    int ssize;
 
    if (!e) return 1;
