@@ -158,10 +158,6 @@ _il_ind_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
      {
         if (ecore_x_e_illume_drag_locked_get(iwin->win->border->client.win))
           return;
-        iwin->drag.x = ev->output.x;
-        iwin->drag.y = ev->output.y;
-        iwin->drag.start = 1;
-        iwin->drag.dnd = 0;
         ecore_x_e_illume_drag_set(iwin->win->border->client.win, 1);
         ecore_x_e_illume_drag_start_send(iwin->win->border->client.win);
      }
