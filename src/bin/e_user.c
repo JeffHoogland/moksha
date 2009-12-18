@@ -49,6 +49,12 @@ e_user_homedir_concat_len(char *dst, size_t size, const char *path, size_t path_
    return ecore_str_join_len(dst, size, '/', _e_user_homedir, _e_user_homedir_len, path, path_len);
 }
 
+EAPI size_t
+e_user_homedir_concat(char *dst, size_t size, const char *path)
+{
+   return e_user_homedir_concat_len(dst, size, path, strlen(path));
+}
+
 /**
  * same as snprintf("~/"fmt, ...).
  */
@@ -151,6 +157,12 @@ e_user_dir_concat_len(char *dst, size_t size, const char *path, size_t path_len)
      e_user_dir_get();
 
    return ecore_str_join_len(dst, size, '/', _e_user_dir, _e_user_dir_len, path, path_len);
+}
+
+EAPI size_t
+e_user_dir_concat(char *dst, size_t size, const char *path)
+{
+   return e_user_dir_concat_len(dst, size, path, strlen(path));
 }
 
 /**
