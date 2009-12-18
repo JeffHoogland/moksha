@@ -500,17 +500,13 @@ void
 illume_border_app1_safe_region_get(E_Zone *zone, int *x, int *y, int *w, int *h) 
 {
    int ty, th;
-   int kx, ky, kw, kh;
    int nx, ny, nw, nh;
 
    if (!zone) return;
-   e_kbd_safe_app_region_get(zone, &kx, &ky, &kw, &kh);
-   nx = kx;
-   ny = ky;
-   nw = kw;
+   e_kbd_safe_app_region_get(zone, &nx, &ny, &nw, &nh);
    illume_border_top_shelf_pos_get(NULL, &ty);
    illume_border_top_shelf_size_get(NULL, &th);
-   nh = (ky + ty);
+   nh = (ny + ty);
    if (x) *x = nx;
    if (y) *y = ny;
    if (w) *w = nw;
@@ -521,18 +517,15 @@ void
 illume_border_app2_safe_region_get(E_Zone *zone, int *x, int *y, int *w, int *h) 
 {
    int ty, th, bh;
-   int kx, ky, kw, kh;
    int nx, ny, nw, nh;
 
    if (!zone) return;
-   e_kbd_safe_app_region_get(zone, &kx, &ky, &kw, &kh);
-   nx = kx;
-   nw = kw;
+   e_kbd_safe_app_region_get(zone, &nx, &ny, &nw, &nh);
    illume_border_top_shelf_pos_get(NULL, &ty);
    illume_border_top_shelf_size_get(NULL, &th);
    illume_border_bottom_panel_size_get(NULL, &bh);
    ny = (ty + th);
-   nh = (kh - ny - bh);
+   nh = (nh - ny - bh);
    if (x) *x = nx;
    if (y) *y = ny;
    if (w) *w = nw;
