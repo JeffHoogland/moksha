@@ -417,7 +417,7 @@ static int
 _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
 {
    int fd;
-   static void *buf = NULL;
+   static char *buf = NULL;
    static int length = 0;
    void *begin = NULL;
    ssize_t num = 0;
@@ -455,7 +455,7 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
              begin = buf;
 
 	     /* Check magic. */
-	     if (*(int *)buf != E_FM_OP_MAGIC)
+	     if (*((int *)buf) != E_FM_OP_MAGIC)
                {
                   E_FM_OP_DEBUG("Error while reading from STDIN: magic is not correct!\n");
                   break;
@@ -858,8 +858,8 @@ _e_fm_op_send_error(E_Fm_Op_Task * task, E_Fm_Op_Type type, const char *fmt, ...
 {
    va_list ap;
    char buffer[READBUFSIZE];
-   void *buf = &buffer[0];
-   char *str = buf + 3 * sizeof(int);
+   char *buf = &buffer[0];
+   char *str = buf + (3 * sizeof(int));
    int len = 0;
 
    va_start(ap, fmt);
@@ -873,11 +873,11 @@ _e_fm_op_send_error(E_Fm_Op_Task * task, E_Fm_Op_Type type, const char *fmt, ...
         vsnprintf(str, READBUFSIZE - 3 * sizeof(int), fmt, ap);
         len = strlen(str);
 
-        *(int *)buf = E_FM_OP_MAGIC;
-        *(int *)(buf + sizeof(int)) = type;
-        *(int *)(buf + 2 * sizeof(int)) = len + 1;
+        *((int *)buf) = E_FM_OP_MAGIC;
+        *((int *)(buf + sizeof(int))) = type;
+        *((int *)(buf + (2 * sizeof(int)))) = len + 1;
 
-        write(STDOUT_FILENO, buf, 3*sizeof(int) + len + 1);
+        write(STDOUT_FILENO, buf, (3 * sizeof(int)) + len + 1);
 
         E_FM_OP_DEBUG("%s", str);
 	E_FM_OP_DEBUG(" Error sent.\n");
@@ -925,13 +925,13 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, off_t done
 {
    const int magic = E_FM_OP_MAGIC;
    const int id = E_FM_OP_PROGRESS;
-   void *p, *data;
+   char *p, *data;
    int size, src_len, dst_len;
 
    src_len = strlen(src);
    dst_len = strlen(dst);
 
-   size = 2 * sizeof(int) + 2 * sizeof(off_t) + src_len + 1 + dst_len + 1;
+   size = (2 * sizeof(int)) + (2 * sizeof(off_t)) + src_len + 1 + dst_len + 1;
    data = alloca(3 * sizeof(int) + size);
    if (!data) return;
    p = data;
@@ -954,7 +954,7 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, off_t done
    P(dst);
 #undef P
 
-   write(STDOUT_FILENO, data, 3 * sizeof(int) + size);
+   write(STDOUT_FILENO, data, (3 * sizeof(int)) + size);
 
    E_FM_OP_DEBUG("Time left: %d at %e\n", eta, elapsed);
    E_FM_OP_DEBUG("Progress %d. \n", percent);

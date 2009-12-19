@@ -3082,7 +3082,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     off_t done, total;
 	     char *src = NULL;
 	     char *dst = NULL;
-	     void *p = e->data;
+	     char *p = e->data;
 
 	     if (!e->data) return;
 
@@ -5959,7 +5959,7 @@ static void
 _e_fm_file_reorder(const char *file, const char *dst, const char *relative, int after)
 {
    unsigned int length = strlen(file) + 1 + strlen(dst) + 1 + strlen(relative) + 1 + sizeof(after);
-   void *data, *p;
+   char *data, *p;
 
    data = alloca(length);
    if (!data) return;
