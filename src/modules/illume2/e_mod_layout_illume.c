@@ -282,31 +282,20 @@ _zone_layout(E_Zone *z)
                        else
                          _border_resize_fx(bd, z->x, z->y, z->w, shelfsize);
                     }
-                  e_border_stick(bd);
-                  if (bd->layer != 100) e_border_layer_set(bd, 100);
                }
+             e_border_stick(bd);
+             if (bd->layer != 100) e_border_layer_set(bd, 100);
           }
         else if (illume_border_is_bottom_panel(bd)) 
           {
              /* make sure we are not dragging the shelf */
              if (!ecore_x_e_illume_drag_get(bd->client.win)) 
                {
-                  /* if we are not in dual mode, then set shelf to top */
-                  if (!il_cfg->policy.mode.dual)
-                    _border_resize_fx(bd, z->x, (z->y + z->h - panelsize), 
-                                      z->w, panelsize);
-                  else 
-                    {
-                       /* make sure we are in landscape mode */
-                       if (il_cfg->policy.mode.side == 0) 
-                         _border_resize_fx(bd, z->x, bd->y, z->w, panelsize);
-                       else
-                         _border_resize_fx(bd, z->x, (z->y + z->h - panelsize), 
-                                           z->w, panelsize);
-                    }
-                  e_border_stick(bd);
-                  if (bd->layer != 100) e_border_layer_set(bd, 100);
+                  _border_resize_fx(bd, z->x, (z->y + z->h - panelsize), 
+                                    z->w, panelsize);
                }
+             e_border_stick(bd);
+             if (bd->layer != 100) e_border_layer_set(bd, 100);
           }
         else if (illume_border_is_keyboard(bd)) 
           {
@@ -324,13 +313,14 @@ _zone_layout(E_Zone *z)
              if (mw > z->w) mw = z->w;
              _border_resize_fx(bd, (z->x + ((z->w - mw) / 2)), 
                                (z->y + ((z->h - mh) / 2)), mw, mh);
-             if (bd->layer != 120) e_border_layer_set(bd, 120);
+             if (bd->layer != 160) e_border_layer_set(bd, 160);
           }
         else 
           {
              /* normal border, handle layout based on policy mode */
              if (il_cfg->policy.mode.dual) _zone_layout_dual(bd);
              else _zone_layout_single(bd);
+//             if (bd->layer != 120) e_border_layer_set(bd, 120);
           }
      }
 }
@@ -365,8 +355,10 @@ _zone_layout_dual(E_Border *bd)
 static void 
 _zone_layout_dual_top(E_Border *bd) 
 {
-   int kx, ky, kw, kh, ss, ps;
+   int kx, kw;
    int count, conform;
+   int ax, ay, aw, ah;
+   int zx, zy, zw, zh;
 
    /* get count of valid borders */
    count = illume_border_valid_count_get();
@@ -375,78 +367,95 @@ _zone_layout_dual_top(E_Border *bd)
    conform = illume_border_is_conformant(bd);
 
    /* grab the 'safe' region. Safe region is space not occupied by keyboard */
-   e_kbd_safe_app_region_get(bd->zone, &kx, &ky, &kw, &kh);
+   e_kbd_safe_app_region_get(bd->zone, &kx, NULL, &kw, NULL);
+
+   /*
    if (!conform) 
      {
-        /* if the border is not conformant and doesn't need fullscreen, then 
-         * we account for shelf & panel sizes */
         if (!((bd->need_fullscreen) || (bd->fullscreen))) 
           {
              if (kh >= bd->zone->h) ps = panelsize;
              ss = shelfsize;
           }
      }
+    */
+
+   illume_border_app1_safe_region_get(bd->zone, &ax, &ay, &aw, &ah);
+   illume_border_app2_safe_region_get(bd->zone, &zx, &zy, &zw, &zh);
 
    /* if there are no other borders, than give this one all available space */
    if (count < 2) 
-     _border_resize_fx(bd, kx, (ky + ss), kw, (kh - ss - ps));
+     {
+        if (ah >= zh) 
+          {
+             zx = ax;
+             zy = ax;
+             zw = aw;
+             zh = ah;
+          }
+        if ((bd->w != zw) || (bd->h != zh))
+          e_border_resize(bd, zw, zh);
+        if ((bd->x != zx) || (bd->y != zy) || (bd->fx.y != zy))
+          e_border_fx_offset(bd, zx, zy);
+     }
    else 
      {
-        E_Border *b;
-        int bh, by, ty;
+        E_Border *bt, *bb;
+        int bh, by;
 
         /* more than one valid border */
 
-        /* grab location of top shelf */
-        illume_border_top_shelf_pos_get(NULL, &ty);
-
-        /* grab the border at this location */
-        b = illume_border_at_xy_get(kx, shelfsize);
-
-        if ((b) && (bd != b)) 
+        if (ecore_x_e_virtual_keyboard_state_get(bd->client.win) > 
+            ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
           {
-             /* we have a border there, and it's not the current one */
-             if (!illume_border_is_conformant(b)) 
-               {
-                  /* border in this location is not conformant */
-                  bh = ((kh - ss - ps) / 2);
-                  by = (b->fx.y + b->h);
-               }
-             else 
-               {
-                  /* border there is conformant */
-                  if (conform) 
-                    {
-                       /* if current border is conformant, divide zone in half */
-                       bh = ((bd->zone->h - ss) / 2);
-                       by = by + bh;
-                    }
-                  else 
-                    {
-                       /* current border is not conformant */
-                       by = (b->fx.y + b->h);
-                       bh = (kh - by - ps);
-                    }
-               }
-          }
-        else if (b) 
-          {
-             /* border at this location and it's the current border */
-             by = bd->fx.y;
-             if (conform)
-               bh = ((kh - ss - ps) / 2);
-             else
-               bh = ((kh - ss - ps) / 2);
+             bh = ah;
+             by = ay;
           }
         else 
           {
-             /* no border at this location */
-             b = illume_border_valid_border_get();
-             if (conform) 
-               by = ky;
+             /* grab the border at this location */
+             bt = illume_border_at_xy_get(kx, ay);
+
+             if ((bt) && (bd != bt)) 
+               {
+                  bb = illume_border_at_xy_get(kx, zy);
+                  if (!bb) 
+                    {
+                       bh = zh;
+                       by = zy;
+                    }
+                  else if ((bb) && (bd != bb))
+                    {
+                       if (bt == e_border_focused_get()) 
+                         {
+                            if (ecore_x_e_virtual_keyboard_state_get(bd->client.win) <= 
+                                ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
+                              {
+                                 bh = zh;
+                                 by = zy;
+                              }
+                         }
+                       else if (bb = e_border_focused_get()) 
+                         {
+                            if (ecore_x_e_virtual_keyboard_state_get(bd->client.win) <= 
+                                ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
+                              {
+                                 bh = ah;
+                                 by = ay;
+                              }
+                         }
+                    }
+                  else if (bb) 
+                    {
+                       bh = zh;
+                       by = zy;
+                    }
+               }
              else 
-               by = (ky + ss);
-             bh = (kh - b->h);
+               {
+                  bh = ah;
+                  by = ay;
+               }
           }
         _border_resize_fx(bd, kx, by, kw, bh);
      }
