@@ -6,12 +6,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-12-09 10:53+0400\n"
-"PO-Revision-Date: 2009-12-13 08:58+0400\n"
+"POT-Creation-Date: 2009-12-19 08:49+0400\n"
+"PO-Revision-Date: 2009-12-19 09:43+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
@@ -596,8 +596,8 @@ msgstr "Afficher le menu…"
 
 #: src/bin/e_actions.c:2835
 #: src/bin/e_actions.c:2840
-#: src/modules/conf/e_mod_main.c:135
-#: src/modules/conf/e_mod_main.c:159
+#: src/modules/conf/e_mod_main.c:125
+#: src/modules/conf/e_mod_main.c:150
 #: src/modules/exebuf/e_mod_main.c:34
 #: src/modules/exebuf/e_mod_main.c:55
 #: src/modules/fileman/e_mod_main.c:63
@@ -654,8 +654,8 @@ msgstr "Activer/Désactiver le mode hors ligne"
 #: src/modules/conf_startup/e_int_config_startup.c:267
 #: src/modules/conf_theme/e_int_config_theme.c:400
 #: src/modules/conf_theme/e_int_config_theme.c:793
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:513
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:646
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:481
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:614
 #: src/modules/gadman/e_mod_config.c:189
 #: src/modules/syscon/e_mod_main.c:34
 #: src/modules/syscon/e_mod_main.c:38
@@ -705,8 +705,7 @@ msgstr "Générique : actions"
 msgid "Delayed Action"
 msgstr "Action reportée"
 
-#: src/bin/e_bg.c:38
-#: src/modules/conf_wallpaper/e_mod_main.c:38
+#: src/bin/e_bg.c:53
 msgid "Set As Background"
 msgstr "Utiliser comme fond d'écran"
 
@@ -737,7 +736,7 @@ msgstr "Sélecteur de couleurs"
 #: src/bin/e_module.c:403
 #: src/bin/e_sys.c:437
 #: src/bin/e_sys.c:483
-#: src/bin/e_utils.c:641
+#: src/bin/e_utils.c:675
 #: src/modules/conf_dpms/e_int_config_dpms.c:64
 #: src/modules/conf_dpms/e_int_config_dpms.c:85
 #: src/modules/conf_imc/e_int_config_imc_import.c:112
@@ -760,6 +759,7 @@ msgstr "O.K."
 #: src/bin/e_entry_dialog.c:63
 #: src/bin/e_fm.c:8543
 #: src/bin/e_fm_prop.c:513
+#: src/bin/e_utils.c:1246
 #: src/modules/conf_imc/e_int_config_imc_import.c:116
 #: src/modules/conf_mime/e_int_config_mime_edit.c:284
 #: src/modules/conf_profiles/e_int_config_profiles.c:365
@@ -1027,14 +1027,14 @@ msgid "Select All"
 msgstr "Tout sélectionner"
 
 #: src/bin/e_exec.c:225
-#: src/bin/e_utils.c:201
+#: src/bin/e_utils.c:235
 #: src/modules/conf_imc/e_int_config_imc.c:278
 #: src/modules/conf_imc/e_int_config_imc.c:518
 msgid "Run Error"
 msgstr "Erreur d'exécution"
 
 #: src/bin/e_exec.c:226
-#: src/bin/e_utils.c:202
+#: src/bin/e_utils.c:236
 #: src/modules/conf_imc/e_int_config_imc.c:279
 #: src/modules/conf_imc/e_int_config_imc.c:519
 #, c-format
@@ -1826,6 +1826,7 @@ msgstr "Propriétés ICCCM"
 
 #: src/bin/e_int_border_prop.c:419
 #: src/bin/e_int_border_remember.c:662
+#: src/bin/e_utils.c:1271
 msgid "Title"
 msgstr "Titre"
 
@@ -2046,6 +2047,7 @@ msgstr "Démarrer ce programme à l'ouverture de session"
 #: src/modules/battery/e_mod_main.c:176
 #: src/modules/conf/e_conf.c:120
 #: src/modules/conf/e_conf.c:131
+#: src/modules/conf/e_mod_main.c:82
 #: src/modules/conf_dialogs/e_mod_main.c:20
 #: src/modules/conf_profiles/e_mod_main.c:20
 #: src/modules/ibar/e_mod_main.c:314
@@ -3049,75 +3051,75 @@ msgstr "Utiliser ce thème"
 msgid "Set Toolbar Contents"
 msgstr "Définir le contenu de la barre d'outils"
 
-#: src/bin/e_utils.c:246
+#: src/bin/e_utils.c:280
 msgid "Cannot exit - immortal windows."
 msgstr "Impossible de quitter – fenêtres immortelles."
 
-#: src/bin/e_utils.c:247
+#: src/bin/e_utils.c:281
 msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr "Des fenêtres sont toujours présentes car elles ont été verrouillées. Toutefois,<br>Enlightenment n'autorisera pas la fin de session tant que ces<br>fenêtres n'auront pas été fermées, ou déverrouillées.<br>"
 
-#: src/bin/e_utils.c:805
+#: src/bin/e_utils.c:839
 #, c-format
 msgid "%'.0f Bytes"
 msgstr "%'.0f octets"
 
-#: src/bin/e_utils.c:809
+#: src/bin/e_utils.c:843
 #, c-format
 msgid "%'.0f KB"
 msgstr "%'.0f Ko"
 
-#: src/bin/e_utils.c:813
+#: src/bin/e_utils.c:847
 #, c-format
 msgid "%'.0f MB"
 msgstr "%'.0f Mo"
 
-#: src/bin/e_utils.c:817
+#: src/bin/e_utils.c:851
 #, c-format
 msgid "%'.1f GB"
 msgstr "%'.1f Go"
 
-#: src/bin/e_utils.c:837
+#: src/bin/e_utils.c:871
 #, c-format
 msgid "In the Future"
 msgstr "Dans le futur"
 
-#: src/bin/e_utils.c:842
+#: src/bin/e_utils.c:876
 #, c-format
 msgid "In the last Minute"
 msgstr "Durant la dernière minute"
 
-#: src/bin/e_utils.c:844
+#: src/bin/e_utils.c:878
 #, c-format
 msgid "%li Years ago"
 msgstr "il y a %li année(s)"
 
-#: src/bin/e_utils.c:846
+#: src/bin/e_utils.c:880
 #, c-format
 msgid "%li Months ago"
 msgstr "il y a %li mois"
 
-#: src/bin/e_utils.c:848
+#: src/bin/e_utils.c:882
 #, c-format
 msgid "%li Weeks ago"
 msgstr "il y a %li semaine(s)"
 
-#: src/bin/e_utils.c:850
+#: src/bin/e_utils.c:884
 #, c-format
 msgid "%li Days ago"
 msgstr "il y a %li jour(s)"
 
-#: src/bin/e_utils.c:852
+#: src/bin/e_utils.c:886
 #, c-format
 msgid "%li Hours ago"
 msgstr "il y a %li heure(s)"
 
-#: src/bin/e_utils.c:854
+#: src/bin/e_utils.c:888
 #, c-format
 msgid "%li Minutes ago"
 msgstr "il y a %li minutes"
 
-#: src/bin/e_utils.c:860
+#: src/bin/e_utils.c:894
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1180
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1134
 #: src/modules/conf_profiles/e_int_config_profiles.c:250
@@ -3125,6 +3127,55 @@ msgstr "il y a %li minutes"
 #: src/modules/wizard/page_020.c:30
 msgid "Unknown"
 msgstr "Inconnu"
+
+#: src/bin/e_utils.c:1240
+msgid "Image Import Settings"
+msgstr "Paramétrage de l'importation d'image"
+
+#: src/bin/e_utils.c:1244
+msgid "Import"
+msgstr "Importer"
+
+#: src/bin/e_utils.c:1261
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:164
+msgid "Fill and Stretch Options"
+msgstr "Options de remplissage et d'étirage"
+
+#: src/bin/e_utils.c:1269
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:167
+msgid "Stretch"
+msgstr "Étirer"
+
+#: src/bin/e_utils.c:1270
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:172
+msgid "Center"
+msgstr "Centrer"
+
+#: src/bin/e_utils.c:1272
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:182
+msgid "Within"
+msgstr "Contenir"
+
+#: src/bin/e_utils.c:1273
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:187
+msgid "Fill"
+msgstr "Remplir"
+
+#: src/bin/e_utils.c:1278
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:194
+msgid "File Quality"
+msgstr "Qualité du fichier"
+
+#: src/bin/e_utils.c:1280
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:196
+msgid "Use original file"
+msgstr "Utiliser le fichier original"
+
+#: src/bin/e_utils.c:1284
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:199
+#, c-format
+msgid "%3.0f%%"
+msgstr "%3.0f%%"
 
 #: src/bin/e_widget_config_list.c:63
 #: src/modules/conf_applications/e_int_config_apps.c:243
@@ -3157,8 +3208,8 @@ msgstr "Ajouter aux favoris"
 #: src/modules/conf_imc/e_int_config_imc.c:834
 #: src/modules/conf_startup/e_int_config_startup.c:275
 #: src/modules/conf_theme/e_int_config_theme.c:407
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:519
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:652
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:487
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:620
 #: src/modules/gadman/e_mod_config.c:193
 msgid "Go up a Directory"
 msgstr "Remonter d'un niveau"
@@ -3264,7 +3315,7 @@ msgstr "Auto-détection"
 #: src/modules/conf_applications/e_mod_main.c:39
 #: src/modules/conf_borders/e_mod_main.c:22
 #: src/modules/conf_desk/e_mod_main.c:20
-#: src/modules/conf_wallpaper/e_mod_main.c:29
+#: src/modules/conf_wallpaper/e_mod_main.c:28
 msgid "Internal"
 msgstr "Interne"
 
@@ -3308,22 +3359,22 @@ msgstr "Surveillance de la batterie"
 msgid "Clock"
 msgstr "Horloge"
 
-#: src/modules/conf/e_mod_main.c:135
-#: src/modules/conf/e_mod_main.c:139
-#: src/modules/conf/e_mod_main.c:159
-#: src/modules/conf/e_mod_main.c:260
+#: src/modules/conf/e_mod_main.c:125
+#: src/modules/conf/e_mod_main.c:129
+#: src/modules/conf/e_mod_main.c:150
+#: src/modules/conf/e_mod_main.c:251
 msgid "Settings Panel"
 msgstr "Panneau de configuration"
 
-#: src/modules/conf/e_mod_main.c:230
+#: src/modules/conf/e_mod_main.c:221
 msgid "Presentation"
 msgstr "Présentation"
 
-#: src/modules/conf/e_mod_main.c:237
+#: src/modules/conf/e_mod_main.c:228
 msgid "Offline"
 msgstr "Hors ligne"
 
-#: src/modules/conf/e_mod_main.c:265
+#: src/modules/conf/e_mod_main.c:256
 msgid "Modes"
 msgstr "Modes"
 
@@ -3398,7 +3449,7 @@ msgstr "Mémoriser la bordure lors de la prochaine apparition de cette fenêtre"
 #: src/modules/conf_startup/e_mod_main.c:20
 #: src/modules/conf_theme/e_mod_main.c:24
 #: src/modules/conf_transitions/e_mod_main.c:20
-#: src/modules/conf_wallpaper/e_mod_main.c:25
+#: src/modules/conf_wallpaper/e_mod_main.c:24
 #: src/modules/dropshadow/e_mod_main.c:89
 msgid "Look"
 msgstr "Apparence"
@@ -3756,8 +3807,8 @@ msgstr "%1.0f minutes"
 #: src/modules/conf_startup/e_int_config_startup.c:262
 #: src/modules/conf_theme/e_int_config_theme.c:396
 #: src/modules/conf_theme/e_int_config_theme.c:789
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:509
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:642
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:477
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:610
 #: src/modules/gadman/e_mod_config.c:186
 msgid "Personal"
 msgstr "Personnel"
@@ -5353,39 +5404,39 @@ msgstr "Transitions"
 msgid "Wallpaper Settings"
 msgstr "Paramétrage du fond d'écran"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:546
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:677
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:514
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:645
 msgid "Use Theme Wallpaper"
 msgstr "Utiliser le fond d'écran du thème"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:551
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:682
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:519
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:650
 msgid "Picture..."
 msgstr "Image…"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:554
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:685
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:522
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:653
 msgid "Gradient..."
 msgstr "Dégradé…"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:561
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:692
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:529
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:660
 msgid "Online..."
 msgstr "En ligne…"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:712
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:680
 msgid "Where to place the Wallpaper"
 msgstr "Où placer ce fond d'écran"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:713
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:681
 msgid "All Desktops"
 msgstr "Tous les bureaux"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:715
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:683
 msgid "This Desktop"
 msgstr "Ce bureau"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:717
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:685
 msgid "This Screen"
 msgstr "Cet écran"
 
@@ -5441,42 +5492,9 @@ msgstr "Sans raison bien déterminée, Enlightenment n'a pu créer un dégradé.
 msgid "Wallpaper settings..."
 msgstr "Paramétrage du fond d'écran…"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:164
-msgid "Fill and Stretch Options"
-msgstr "Options de remplissage et d'étirage"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:167
-msgid "Stretch"
-msgstr "Étirer"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:172
-msgid "Center"
-msgstr "Centrer"
-
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:177
 msgid "Tile"
 msgstr "Répéter"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:182
-msgid "Within"
-msgstr "Contenir"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:187
-msgid "Fill"
-msgstr "Remplir"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:194
-msgid "File Quality"
-msgstr "Qualité du fichier"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:196
-msgid "Use original file"
-msgstr "Utiliser le fichier original"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:199
-#, c-format
-msgid "%3.0f%%"
-msgstr "%3.0f%%"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:275
 msgid "Select a Picture..."
@@ -5511,10 +5529,10 @@ msgstr "Enlightenment n'a pu importer le fond d'écran.<br><br>Êtes-vous sûr q
 msgid "Exchange wallpapers"
 msgstr "Fonds d'écran Exchange "
 
-#: src/modules/conf_wallpaper/e_mod_main.c:27
-#: src/modules/conf_wallpaper/e_mod_main.c:31
-#: src/modules/conf_wallpaper/e_mod_main.c:34
-#: src/modules/conf_wallpaper/e_mod_main.c:102
+#: src/modules/conf_wallpaper/e_mod_main.c:26
+#: src/modules/conf_wallpaper/e_mod_main.c:30
+#: src/modules/conf_wallpaper/e_mod_main.c:33
+#: src/modules/conf_wallpaper/e_mod_main.c:83
 msgid "Wallpaper"
 msgstr "Fond d'écran"
 
@@ -6996,15 +7014,15 @@ msgstr "Périphérique spécifique"
 msgid "Networks"
 msgstr "Réseaux"
 
-#: src/modules/systray/e_mod_main.c:891
+#: src/modules/systray/e_mod_main.c:896
 msgid "Another systray exists"
 msgstr "Il y a déjà une zone de notification"
 
-#: src/modules/systray/e_mod_main.c:892
+#: src/modules/systray/e_mod_main.c:897
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Il y a déjà une zone de notification active et seule une instance de ce gadget est autorisée."
 
-#: src/modules/systray/e_mod_main.c:1094
+#: src/modules/systray/e_mod_main.c:1099
 msgid "Systray"
 msgstr "Zone de notification"
 

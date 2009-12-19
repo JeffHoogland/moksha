@@ -4,3 +4,5 @@ Name=Illume-Keyboard-Toggle
 Icon=e-module-illume-kbd-toggle
 X-Enlightenment-ModuleType=system
 Comment=<title>Illume Keyboard Toggle for Embedded</title>
+Comment[fr]=<title>Illume pour l'embarqué – Keyboard Toggle</title>
+Comment[it]=<title>Illume per sistemi embedded – modulo Keyboard-toggle</title>
