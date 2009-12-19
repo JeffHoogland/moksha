@@ -108,7 +108,7 @@ int _e_fm_op_overwrite_response = E_FM_OP_NONE;
 
 Eina_List *_e_fm_op_separator = NULL;
 
-void *_e_fm_op_stdin_buffer = NULL;
+char *_e_fm_op_stdin_buffer = NULL;
 
 struct _E_Fm_Op_Task
 {
@@ -419,7 +419,7 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
    int fd;
    static char *buf = NULL;
    static int length = 0;
-   void *begin = NULL;
+   char *begin = NULL;
    ssize_t num = 0;
    int msize;
    int identity;
