@@ -18,6 +18,7 @@ static void _zone_layout(E_Zone *z);
 static void _zone_layout_single(E_Border *bd);
 static void _zone_layout_dual(E_Border *bd);
 static void _zone_layout_dual_top(E_Border *bd);
+static void _zone_layout_dual_top_custom(E_Border *bd);
 static void _zone_layout_dual_left(E_Border *bd);
 static void _zone_move_resize(E_Zone *z);
 static int _cb_mouse_up(void *data, int type, void *event);
@@ -348,12 +349,105 @@ _zone_layout_single(E_Border *bd)
 static void 
 _zone_layout_dual(E_Border *bd) 
 {
-   if (il_cfg->policy.mode.side == 0) _zone_layout_dual_top(bd);
+   if (il_cfg->policy.mode.side == 0) 
+     {
+        int ty;
+
+        illume_border_top_shelf_pos_get(NULL, &ty);
+        if (ty <= bd->zone->y)
+          _zone_layout_dual_top(bd);
+        else
+          _zone_layout_dual_top_custom(bd);
+     }
    else if (il_cfg->policy.mode.side == 1) _zone_layout_dual_left(bd);
 }
 
 static void 
 _zone_layout_dual_top(E_Border *bd) 
+{
+   int kx, ky, kw, kh, ss, ps;
+   int count, conform;
+
+   /* get count of valid borders */
+   count = illume_border_valid_count_get();
+
+   /* fetch if this border is conformant */
+   conform = illume_border_is_conformant(bd);
+
+   /* grab the 'safe' region. Safe region is space not occupied by keyboard */
+   e_kbd_safe_app_region_get(bd->zone, &kx, &ky, &kw, &kh);
+   if (!conform) 
+     {
+        /* if the border is not conformant and doesn't need fullscreen, then 
+         * we account for shelf & panel sizes */
+        if (!((bd->need_fullscreen) || (bd->fullscreen))) 
+          {
+             if (kh >= bd->zone->h) ps = panelsize;
+             ss = shelfsize;
+          }
+     }
+
+   /* if there are no other borders, than give this one all available space */
+   if (count < 2) 
+     _border_resize_fx(bd, kx, (ky + ss), kw, (kh - ss - ps));
+   else 
+     {
+        E_Border *b;
+        int bx, by, bw, bh;
+
+        /* more than one valid border */
+        bx = kx;
+        by = (ky + ss);
+        bw = kw;
+        bh = (kh - ss - ps);
+        /* grab the border at this location */
+        b = illume_border_at_xy_get(kx, shelfsize);
+
+        if ((b) && (bd != b)) 
+          {
+             /* we have a border there, and it's not the current one */
+             if (!illume_border_is_conformant(b)) 
+               {
+                  /* border in this location is not conformant */
+                  bh = ((kh - ss - ps) / 2);
+                  by = (b->fx.y + b->h);
+               }
+             else 
+               {
+                  /* border there is conformant */
+                  if (conform) 
+                    {
+                       /* if current border is conformant, divide zone in half */
+                       bh = ((bd->zone->h - ss) / 2);
+                       by = by + bh;
+                    }
+                  else 
+                    {
+                       /* current border is not conformant */
+                       by = (b->fx.y + b->h);
+                       bh = (kh - by - ps);
+                    }
+               }
+          }
+        else if (b) 
+          {
+             /* border at this location and it's the current border */
+             by = bd->fx.y;
+             bh = ((kh - ss - ps) / 2);
+          }
+        else 
+          {
+             /* no border at this location */
+             b = illume_border_valid_border_get();
+             by = ky + ss;
+             bh = (ky - b->h);
+          }
+        _border_resize_fx(bd, bx, by, bw, bh);
+     }
+}
+
+static void 
+_zone_layout_dual_top_custom(E_Border *bd) 
 {
    int kx, kw;
    int count, conform;
