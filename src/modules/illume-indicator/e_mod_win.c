@@ -21,6 +21,8 @@ static void _il_ind_win_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E
 static void _il_ind_win_cb_menu_edit(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _il_ind_win_cb_menu_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
 
+static int my = 0;
+
 int 
 e_mod_ind_win_init(void) 
 {
@@ -160,6 +162,7 @@ _il_ind_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
           return;
         ecore_x_e_illume_drag_set(iwin->win->border->client.win, 1);
         ecore_x_e_illume_drag_start_send(iwin->win->border->client.win);
+        ecore_x_pointer_last_xy_get(NULL, &my);
      }
    else if (ev->button == 3) 
      {
@@ -186,6 +189,7 @@ _il_ind_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event)
    Il_Ind_Win *iwin;
    Evas_Event_Mouse_Move *ev;
    E_Border *bd;
+   int dy, ny, py;
 
    if (!(iwin = data)) return;
    ev = event;
@@ -193,8 +197,30 @@ _il_ind_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event)
    if (ecore_x_e_illume_drag_locked_get(bd->client.win)) return;
    if (!ecore_x_e_illume_drag_get(bd->client.win)) return;
    if ((bd->y + bd->h + ev->cur.output.y) >= (bd->zone->h)) return;
-   if (bd->y != (bd->y + ev->cur.output.y))
-     e_border_move(bd, bd->x, bd->y + ev->cur.output.y);
+
+   ecore_x_pointer_last_xy_get(NULL, &py);
+   dy = ((bd->zone->h - bd->h) / 8);
+
+   if ((ev->cur.output.y > ev->prev.output.y)) 
+     {
+        if ((py - my) < dy) return;
+     }
+   else 
+     {
+        if ((my - py) < dy) return;
+     }
+
+   if (py > my) 
+     ny = bd->y + dy;
+   else if (py <= my) 
+     ny = bd->y - dy;
+   else return;
+
+   if (bd->y != ny) 
+     {
+        e_border_move(bd, bd->x, ny);
+        my = py;
+     }
 }
 
 static void 
@@ -211,6 +237,7 @@ _il_ind_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event)
    if (ecore_x_e_illume_drag_locked_get(bd->client.win)) return;
    if (!ecore_x_e_illume_drag_get(bd->client.win)) return;
    ecore_x_e_illume_drag_end_send(bd->client.win);
+   my = 0;
 }
 
 static void 
