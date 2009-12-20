@@ -59,6 +59,7 @@ Eina_List *illume_border_valid_borders_get(void);
 E_Border *illume_border_valid_border_get(void);
 int illume_border_valid_count_get(void);
 E_Border *illume_border_at_xy_get(int x, int y);
+E_Border *illume_border_in_region_get(int x, int y, int w, int h);
 E_Border *illume_border_keyboard_get(void);
 E_Border *illume_border_top_shelf_get(void);
 E_Border *illume_border_bottom_panel_get(void);

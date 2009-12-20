@@ -388,7 +388,27 @@ illume_border_at_xy_get(int x, int y)
    bds = illume_border_valid_borders_get();
    EINA_LIST_FOREACH(bds, l, bd) 
      {
-        if ((bd->fx.x == x) && (bd->fx.y == y)) 
+        if (((bd->fx.x == x) && (bd->fx.y == y)) ||
+            ((bd->x == x) && (bd->y == y)))
+          {
+             b = bd;
+             break;
+          }
+     }
+   eina_list_free(bds);
+   return b;
+}
+
+E_Border *
+illume_border_in_region_get(int x, int y, int w, int h) 
+{
+   Eina_List *bds, *l;
+   E_Border *bd, *b = NULL;
+
+   bds = illume_border_valid_borders_get();
+   EINA_LIST_FOREACH(bds, l, bd) 
+     {
+        if (E_INSIDE(bd->x, bd->y, x, y, w, h)) 
           {
              b = bd;
              break;
@@ -523,7 +543,7 @@ illume_border_app2_safe_region_get(E_Zone *zone, int *x, int *y, int *w, int *h)
    illume_border_top_shelf_size_get(NULL, &th);
    illume_border_bottom_panel_size_get(NULL, &bh);
    ny = (ty + th);
-   nh = (nh- ny - bh);
+   nh = (nh - ny - bh);
    if (x) *x = nx;
    if (y) *y = ny;
    if (w) *w = nw;

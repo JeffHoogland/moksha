@@ -551,7 +551,10 @@ _zone_layout_dual_top_custom(E_Border *bd)
                   by = ay;
                }
           }
-        _border_resize_fx(bd, kx, by, kw, bh);
+        if ((bd->w != kw) || (bd->h != bh))
+          e_border_resize(bd, kw, bh);
+        if ((bd->x != kx) || (bd->y != by) || (bd->fx.y != by))
+          e_border_fx_offset(bd, kx, by);
      }
 }
 
