@@ -1727,7 +1727,7 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
    ecore_x_netwm_window_state_set(ki->win->evas_win, states, 2);
 
-   zone = e_util_container_zone_number_get(0, 0);
+   zone = e_util_zone_current_get(e_manager_current_get());
    e_win_no_remember_set(ki->win, 1);
    e_win_resize(ki->win, zone->w, zone->h);
 
