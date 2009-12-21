@@ -329,7 +329,7 @@ illume_border_is_conformant(E_Border *bd)
 }
 
 Eina_List *
-illume_border_valid_borders_get(void) 
+illume_border_valid_borders_get(E_Zone *zone) 
 {
    Eina_List *bds, *l, *ret = NULL;
    E_Border *bd;
@@ -338,6 +338,7 @@ illume_border_valid_borders_get(void)
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (!bd) continue;
+        if (bd->zone != zone) continue;
         if (illume_border_is_top_shelf(bd)) continue;
         if (illume_border_is_bottom_panel(bd)) continue;
         if (illume_border_is_keyboard(bd)) continue;
@@ -348,7 +349,7 @@ illume_border_valid_borders_get(void)
 }
 
 E_Border *
-illume_border_valid_border_get(void) 
+illume_border_valid_border_get(E_Zone  *zone) 
 {
    Eina_List *bds, *l;
    E_Border *bd, *ret = NULL;
@@ -357,6 +358,7 @@ illume_border_valid_border_get(void)
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (!bd) continue;
+        if (bd->zone != zone) continue;
         if (illume_border_is_top_shelf(bd)) continue;
         if (illume_border_is_bottom_panel(bd)) continue;
         if (illume_border_is_keyboard(bd)) continue;
@@ -368,24 +370,24 @@ illume_border_valid_border_get(void)
 }
 
 int 
-illume_border_valid_count_get(void) 
+illume_border_valid_count_get(E_Zone *zone) 
 {
    Eina_List *l;
    int count;
 
-   l = illume_border_valid_borders_get();
+   l = illume_border_valid_borders_get(zone);
    count = eina_list_count(l);
    eina_list_free(l);
    return count;
 }
 
 E_Border *
-illume_border_at_xy_get(int x, int y) 
+illume_border_at_xy_get(E_Zone *zone, int x, int y) 
 {
    Eina_List *bds, *l;
    E_Border *bd, *b = NULL;
 
-   bds = illume_border_valid_borders_get();
+   bds = illume_border_valid_borders_get(zone);
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (((bd->fx.x == x) && (bd->fx.y == y)) ||
@@ -400,12 +402,12 @@ illume_border_at_xy_get(int x, int y)
 }
 
 E_Border *
-illume_border_in_region_get(int x, int y, int w, int h) 
+illume_border_in_region_get(E_Zone *zone, int x, int y, int w, int h) 
 {
    Eina_List *bds, *l;
    E_Border *bd, *b = NULL;
 
-   bds = illume_border_valid_borders_get();
+   bds = illume_border_valid_borders_get(zone);
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (E_INSIDE(bd->x, bd->fx.y, x, y, w, h)) 
@@ -419,7 +421,7 @@ illume_border_in_region_get(int x, int y, int w, int h)
 }
 
 E_Border *
-illume_border_top_shelf_get(void) 
+illume_border_top_shelf_get(E_Zone *zone) 
 {
    Eina_List *bds, *l;
    E_Border *bd, *b = NULL;
@@ -427,6 +429,7 @@ illume_border_top_shelf_get(void)
    bds = e_border_client_list();
    EINA_LIST_FOREACH(bds, l, bd) 
      {
+        if (bd->zone != zone) continue;
         if (!illume_border_is_top_shelf(bd)) continue;
         b = bd;
         break;
@@ -435,7 +438,7 @@ illume_border_top_shelf_get(void)
 }
 
 E_Border *
-illume_border_bottom_panel_get(void) 
+illume_border_bottom_panel_get(E_Zone *zone) 
 {
    Eina_List *bds, *l;
    E_Border *bd, *b = NULL;
@@ -443,6 +446,7 @@ illume_border_bottom_panel_get(void)
    bds = e_border_client_list();
    EINA_LIST_FOREACH(bds, l, bd) 
      {
+        if (bd->zone != zone) continue;
         if (!illume_border_is_bottom_panel(bd)) continue;
         b = bd;
         break;
@@ -451,41 +455,41 @@ illume_border_bottom_panel_get(void)
 }
 
 void 
-illume_border_top_shelf_pos_get(int *x, int *y) 
+illume_border_top_shelf_pos_get(E_Zone *zone, int *x, int *y) 
 {
    E_Border *bd;
 
-   if (!(bd = illume_border_top_shelf_get())) return;
+   if (!(bd = illume_border_top_shelf_get(zone))) return;
    if (x) *x = bd->x;
    if (y) *y = bd->y;
 }
 
 void 
-illume_border_top_shelf_size_get(int *w, int *h) 
+illume_border_top_shelf_size_get(E_Zone *zone, int *w, int *h) 
 {
    E_Border *bd;
 
-   if (!(bd = illume_border_top_shelf_get())) return;
+   if (!(bd = illume_border_top_shelf_get(zone))) return;
    if (w) *w = bd->w;
    if (h) *h = bd->h;
 }
 
 void 
-illume_border_bottom_panel_pos_get(int *x, int *y) 
+illume_border_bottom_panel_pos_get(E_Zone *zone, int *x, int *y) 
 {
    E_Border *bd;
 
-   if (!(bd = illume_border_bottom_panel_get())) return;
+   if (!(bd = illume_border_bottom_panel_get(zone))) return;
    if (x) *x = bd->x;
    if (y) *y = bd->y;
 }
 
 void 
-illume_border_bottom_panel_size_get(int *w, int *h) 
+illume_border_bottom_panel_size_get(E_Zone *zone, int *w, int *h) 
 {
    E_Border *bd;
 
-   if (!(bd = illume_border_bottom_panel_get())) return;
+   if (!(bd = illume_border_bottom_panel_get(zone))) return;
    if (w) *w = bd->w;
    if (h) *h = bd->h;
 }
@@ -542,7 +546,7 @@ illume_border_app1_safe_region_get(E_Zone *zone, int *x, int *y, int *w, int *h)
 
    if (!zone) return;
    e_kbd_safe_app_region_get(zone, &nx, &ny, &nw, &nh);
-   illume_border_top_shelf_pos_get(NULL, &ty);
+   illume_border_top_shelf_pos_get(zone, NULL, &ty);
    if (nh >= zone->h) nh = (ny + ty);
    if (x) *x = nx;
    if (y) *y = ny;
@@ -558,9 +562,9 @@ illume_border_app2_safe_region_get(E_Zone *zone, int *x, int *y, int *w, int *h)
 
    if (!zone) return;
    e_kbd_safe_app_region_get(zone, &nx, NULL, &nw, &nh);
-   illume_border_top_shelf_pos_get(NULL, &ty);
-   illume_border_top_shelf_size_get(NULL, &th);
-   illume_border_bottom_panel_size_get(NULL, &bh);
+   illume_border_top_shelf_pos_get(zone, NULL, &ty);
+   illume_border_top_shelf_size_get(zone, NULL, &th);
+   illume_border_bottom_panel_size_get(zone, NULL, &bh);
    ny = (ty + th);
    nh = (nh - ny - bh);
    if (x) *x = nx;
@@ -792,6 +796,7 @@ _cb_event_client_message(void *data, int type, void *event)
      {
         Ecore_X_Illume_Mode mode;
         E_Border *bd;
+        E_Zone *zone;
         int lock = 1;
 
         mode = ecore_x_e_illume_mode_get(ev->win);
@@ -807,10 +812,12 @@ _cb_event_client_message(void *data, int type, void *event)
           {
              if (il_cfg->policy.mode.side == 0) lock = 0;
           }
-        bd = illume_border_top_shelf_get();
+
+        zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
+        bd = illume_border_top_shelf_get(zone);
         if (bd) 
           ecore_x_e_illume_drag_locked_set(bd->client.win, lock);
-        bd = illume_border_bottom_panel_get();
+        bd = illume_border_bottom_panel_get(zone);
         if (bd) 
           ecore_x_e_illume_drag_locked_set(bd->client.win, lock);
      }

@@ -109,14 +109,14 @@ _border_add(E_Border *bd)
         bd->lock_user_stacking = 1;
 
         /* conformant fullscreen borders just hide bottom panel */
-        b = illume_border_bottom_panel_get();
+        b = illume_border_bottom_panel_get(bd->zone);
         if (b) e_border_fx_offset(b, 0, -panelsize);
 
         /* for non-conformant fullscreen borders, 
          * we hide top shelf and bottom panel in all cases */
         if (!conform) 
           {
-             b = illume_border_top_shelf_get();
+             b = illume_border_top_shelf_get(bd->zone);
              if (b) e_border_fx_offset(b, 0, -shelfsize);
           }
      }
@@ -134,7 +134,7 @@ _border_add(E_Border *bd)
        && (!bd->lock_focus_out))
      e_border_focus_set(bd, 1, 1);
 
-   if (bd == illume_border_top_shelf_get()) 
+   if (bd == illume_border_top_shelf_get(bd->zone)) 
      {
         Ecore_X_Window xwin;
         Ecore_X_Illume_Mode mode;
@@ -155,14 +155,14 @@ _border_del(E_Border *bd)
         E_Border *b;
 
         /* conformant fullscreen borders just get bottom panel shown */
-        b = illume_border_bottom_panel_get();
+        b = illume_border_bottom_panel_get(bd->zone);
         if (b) e_border_fx_offset(b, 0, 0);
 
         /* for non-conformant fullscreen borders, 
          * we show top shelf and bottom panel in all cases */
         if (!illume_border_is_conformant(bd)) 
           {
-             b = illume_border_top_shelf_get();
+             b = illume_border_top_shelf_get(bd->zone);
              if (b) e_border_fx_offset(b, 0, 0);
           }
      }
@@ -358,7 +358,7 @@ _zone_layout_dual(E_Border *bd)
      {
         int ty;
 
-        illume_border_top_shelf_pos_get(NULL, &ty);
+        illume_border_top_shelf_pos_get(bd->zone, NULL, &ty);
         if (ty <= bd->zone->y)
           _zone_layout_dual_top(bd);
         else
@@ -375,7 +375,7 @@ _zone_layout_dual_top(E_Border *bd)
    int count, conform;
 
    /* get count of valid borders */
-   count = illume_border_valid_count_get();
+   count = illume_border_valid_count_get(bd->zone);
 
    /* fetch if this border is conformant */
    conform = illume_border_is_conformant(bd);
@@ -407,7 +407,7 @@ _zone_layout_dual_top(E_Border *bd)
         bw = kw;
         bh = (kh - ss - ps);
         /* grab the border at this location */
-        b = illume_border_at_xy_get(kx, shelfsize);
+        b = illume_border_at_xy_get(bd->zone, kx, shelfsize);
 
         if ((b) && (bd != b)) 
           {
@@ -444,7 +444,7 @@ _zone_layout_dual_top(E_Border *bd)
         else 
           {
              /* no border at this location */
-             b = illume_border_valid_border_get();
+             b = illume_border_valid_border_get(bd->zone);
              by = ky + ss;
              bh = (ky - b->h);
           }
@@ -461,7 +461,7 @@ _zone_layout_dual_top_custom(E_Border *bd)
    int zx, zy, zw, zh;
 
    /* get count of valid borders */
-   count = illume_border_valid_count_get();
+   count = illume_border_valid_count_get(bd->zone);
 
    /* fetch if this border is conformant */
    conform = illume_border_is_conformant(bd);
@@ -503,12 +503,12 @@ _zone_layout_dual_top_custom(E_Border *bd)
         else 
           {
              /* grab the border at this location */
-             bt = illume_border_at_xy_get(kx, ay);
+             bt = illume_border_at_xy_get(bd->zone, kx, ay);
 
              if ((bt) && (bd != bt)) 
                {
                   /* is there a border in the bottom section */
-                  bb = illume_border_at_xy_get(kx, zy);
+                  bb = illume_border_at_xy_get(bd->zone, kx, zy);
                   if (!bb) 
                     {
                        bh = zh;
@@ -566,7 +566,7 @@ _zone_layout_dual_left(E_Border *bd)
    int count, conform;
 
    /* get count of valid borders */
-   count = illume_border_valid_count_get();
+   count = illume_border_valid_count_get(bd->zone);
 
    /* fetch if this border is conformant */
    conform = illume_border_is_conformant(bd);
@@ -597,8 +597,9 @@ _zone_layout_dual_left(E_Border *bd)
         by = (ky + ss);
         bw = kw;
         bh = (kh - ss - ps);
+
         /* grab the border at this location */
-        b = illume_border_at_xy_get(kx, shelfsize);
+        b = illume_border_at_xy_get(bd->zone, kx, shelfsize);
 
         if ((b) && (bd != b)) 
           {
@@ -635,7 +636,7 @@ _zone_layout_dual_left(E_Border *bd)
         else 
           {
              /* no border at this location */
-             b = illume_border_valid_border_get();
+             b = illume_border_valid_border_get(bd->zone);
              bx = kx;
              bw = (kw - b->w);
           }
