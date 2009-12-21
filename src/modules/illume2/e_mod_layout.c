@@ -408,7 +408,7 @@ illume_border_in_region_get(int x, int y, int w, int h)
    bds = illume_border_valid_borders_get();
    EINA_LIST_FOREACH(bds, l, bd) 
      {
-        if (E_INSIDE(bd->x, bd->y, x, y, w, h)) 
+        if (E_INSIDE(bd->x, bd->fx.y, x, y, w, h)) 
           {
              b = bd;
              break;
@@ -513,6 +513,25 @@ illume_border_min_get(E_Border *bd, int *mw, int *mh)
           *mh = bd->client.icccm.base_h;
         else
           *mh = bd->client.icccm.min_h;
+     }
+}
+
+void 
+illume_border_max_get(E_Border *bd, int *mw, int *mh) 
+{
+   if (mw)
+     {
+        if (bd->client.icccm.base_w > bd->client.icccm.max_w)
+          *mw = bd->client.icccm.base_w;
+        else
+          *mw = bd->client.icccm.max_w;
+     }
+   if (mh)
+     {
+        if (bd->client.icccm.base_h > bd->client.icccm.max_h)
+          *mh = bd->client.icccm.base_h;
+        else
+          *mh = bd->client.icccm.max_h;
      }
 }
 

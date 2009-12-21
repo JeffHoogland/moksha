@@ -310,18 +310,23 @@ _zone_layout(E_Zone *z)
              int mw, mh;
 
              illume_border_min_get(bd, &mw, &mh);
-             if (mh > z->h) mh = z->h;
              if (mw > z->w) mw = z->w;
+             if (mh > z->h) mh = z->h;
              _border_resize_fx(bd, (z->x + ((z->w - mw) / 2)), 
                                (z->y + ((z->h - mh) / 2)), mw, mh);
              if (bd->layer != 160) e_border_layer_set(bd, 160);
           }
         else 
           {
+             if (illume_border_is_conformant(bd)) 
+               {
+                  /* make conformant windows under the indicator bar */
+                  if (bd->layer != 90) e_border_layer_set(bd, 90);
+               }
+
              /* normal border, handle layout based on policy mode */
              if (il_cfg->policy.mode.dual) _zone_layout_dual(bd);
              else _zone_layout_single(bd);
-//             if (bd->layer != 120) e_border_layer_set(bd, 120);
           }
      }
 }
@@ -463,17 +468,6 @@ _zone_layout_dual_top_custom(E_Border *bd)
    /* grab the 'safe' region. Safe region is space not occupied by keyboard */
    e_kbd_safe_app_region_get(bd->zone, &kx, NULL, &kw, NULL);
 
-   /*
-   if (!conform) 
-     {
-        if (!((bd->need_fullscreen) || (bd->fullscreen))) 
-          {
-             if (kh >= bd->zone->h) ps = panelsize;
-             ss = shelfsize;
-          }
-     }
-    */
-
    illume_border_app1_safe_region_get(bd->zone, &ax, &ay, &aw, &ah);
    illume_border_app2_safe_region_get(bd->zone, &zx, &zy, &zw, &zh);
 
@@ -512,6 +506,7 @@ _zone_layout_dual_top_custom(E_Border *bd)
 
              if ((bt) && (bd != bt)) 
                {
+                  /* is there a border in the bottom section */
                   bb = illume_border_at_xy_get(kx, zy);
                   if (!bb) 
                     {
@@ -527,6 +522,11 @@ _zone_layout_dual_top_custom(E_Border *bd)
                               {
                                  bh = zh;
                                  by = zy;
+                              }
+                            else 
+                              {
+                                 bh = ah;
+                                 by = ay;
                               }
                          }
                        else if (bb = e_border_focused_get()) 

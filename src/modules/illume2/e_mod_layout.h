@@ -69,6 +69,7 @@ void illume_border_bottom_panel_pos_get(int *x, int *y);
 void illume_border_bottom_panel_size_get(int *w, int *h);
 void illume_border_slide_to(E_Border *bd, int x, int y, Illume_Anim_Class aclass);
 void illume_border_min_get(E_Border *bd, int *mw, int *mh);
+void illume_border_max_get(E_Border *bd, int *mw, int *mh);
 
 void illume_border_app1_safe_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
 void illume_border_app2_safe_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
