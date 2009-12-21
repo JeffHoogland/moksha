@@ -364,7 +364,8 @@ _zone_layout_dual(E_Border *bd)
         else
           _zone_layout_dual_top_custom(bd);
      }
-   else if (il_cfg->policy.mode.side == 1) _zone_layout_dual_left(bd);
+   else if (il_cfg->policy.mode.side == 1) 
+     _zone_layout_dual_left(bd);
 }
 
 static void 

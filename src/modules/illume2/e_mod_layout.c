@@ -624,9 +624,10 @@ _e_mod_layout_cb_hook_post_border_assign(void *data, void *data2)
 
    bd->placed = 1;
    bd->client.e.state.centered = 0;
+
+   /* 
    if (!((bd->need_fullscreen) || (bd->fullscreen)))
      {
-/*        
         bd->x = zx; bd->y = zy; bd->w = zw; bd->h = zh;
         bd->client.w = bd->w; bd->client.h = bd->h;
         if ((pbx != bd->x) || (pby != bd->y)  ||
@@ -636,11 +637,9 @@ _e_mod_layout_cb_hook_post_border_assign(void *data, void *data2)
              bd->changes.pos = 1;
              bd->changes.size = 1;
           }
- */
      }
    else
      {
-/*        
         bd->x = zx; bd->y = zy; bd->w = zw; bd->h = zh;
         bd->client.w = bd->w; bd->client.h = bd->h;
         if ((pbx != bd->x) || (pby != bd->y) || 
@@ -660,9 +659,9 @@ _e_mod_layout_cb_hook_post_border_assign(void *data, void *data2)
              bd->changes.pos = 1;
              bd->changes.size = 1;
           }
- */
      }
-   if (bd->remember)
+    */
+    if (bd->remember)
      {
         e_remember_unuse(bd->remember);
         bd->remember = NULL;
