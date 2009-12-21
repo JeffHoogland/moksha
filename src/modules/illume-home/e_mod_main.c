@@ -93,7 +93,7 @@ e_modapi_init(E_Module *m)
 
    if (!il_home_config_init(m)) return NULL;
 
-   zone = e_util_container_zone_number_get(0, 0);
+   zone = e_util_zone_current_get(e_manager_current_get());
 
    _il_home_apps_unpopulate();
    _il_home_apps_populate();
@@ -272,7 +272,6 @@ _il_home_win_new(Instance *inst)
 {
    Il_Home_Win *hwin;
    E_Container *con;
-   E_Zone *zone;
    char buff[PATH_MAX];
 
    hwin = E_OBJECT_ALLOC(Il_Home_Win, IL_HOME_WIN_TYPE, 
@@ -330,12 +329,10 @@ _il_home_win_new(Instance *inst)
    evas_object_propagate_events_set(hwin->o_fm, 0);
    evas_object_smart_callback_add(hwin->o_fm, "selected", 
                                   _il_home_cb_selected, hwin);
-   zone = e_util_container_zone_number_get(0, 0);
 
    e_win_title_set(hwin->win, _("Illume Home"));
    e_win_name_class_set(hwin->win, "Illume-Home", "Illume-Home");
    e_win_size_min_set(hwin->win, 48, 48);
-   e_win_resize(hwin->win, zone->w, 200);
    e_win_show(hwin->win);
    e_border_focus_set(hwin->win->border, 1, 1);
 
