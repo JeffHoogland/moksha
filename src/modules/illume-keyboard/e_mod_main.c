@@ -94,7 +94,7 @@ _il_kbd_start(void)
           {
              E_Zone *zone;
 
-             zone = e_util_container_zone_number_get(0, 0);
+             zone = e_util_zone_current_get(e_manager_current_get());
              inst = e_exec(zone, desktop, NULL, NULL, "illume-keyboard");
              if (inst) 
                {
