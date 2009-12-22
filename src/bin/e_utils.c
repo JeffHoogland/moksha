@@ -926,12 +926,16 @@ e_util_library_path_strip(void)
 EAPI void
 e_util_library_path_restore(void)
 {
-   if (!prev_ld_library_path) return;
+   if (prev_ld_library_path)
+     {
    e_util_env_set("LD_LIBRARY_PATH", prev_ld_library_path);
    E_FREE(prev_ld_library_path);
-   if (!prev_path) return;
+     }
+   if (prev_path)
+     {
    e_util_env_set("PATH", prev_path);
    E_FREE(prev_path);
+     }
 }
 
 EAPI Evas_Object *
