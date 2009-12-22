@@ -26,8 +26,7 @@ static void _cb_button_click(void *data, void *data2);
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
-   GADCON_CLIENT_CLASS_VERSION,
-     "configuration",
+   GADCON_CLIENT_CLASS_VERSION, "configuration",
      {
         _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL, 
         e_gadcon_site_is_not_toolbar
@@ -86,8 +85,8 @@ static Evas_Object *
 _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 {
    Evas_Object *o;
-   char buf[4096];
-   
+   char buf[PATH_MAX];
+
    o = edje_object_add(evas);
    snprintf(buf, sizeof(buf), "%s/e-module-conf.edj",
             e_module_dir_get(conf_module));
@@ -111,7 +110,7 @@ _cb_button_click(void *data, void *data2)
 }
 
 /* module setup */
-EAPI E_Module_Api e_modapi ={ E_MODULE_API_VERSION, "Conf" };
+EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Conf" };
 
 EAPI void *
 e_modapi_init(E_Module *m)
@@ -122,8 +121,8 @@ e_modapi_init(E_Module *m)
    if (act)
      {
 	act->func.go = _e_mod_action_conf_cb;
-	e_action_predef_name_set(_("Launch"), _("Settings Panel"), "configuration",
-				 NULL, NULL, 0);
+	e_action_predef_name_set(_("Launch"), _("Settings Panel"), 
+                                 "configuration", NULL, NULL, 0);
      }
    maug = 
      e_int_menus_menu_augmentation_add_sorted("config/0", _("Settings Panel"), 
@@ -246,7 +245,7 @@ static void
 _e_mod_menu_add(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
-   
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Settings Panel"));
    e_util_menu_item_theme_icon_set(mi, "preferences-system");

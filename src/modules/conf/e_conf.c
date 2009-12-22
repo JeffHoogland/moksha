@@ -127,8 +127,7 @@ e_configure_show(E_Container *con)
    eco->edje = edje_object_add(eco->evas);
    e_theme_edje_object_set(eco->edje, "base/theme/configure", 
 			   "e/widgets/configure/main");
-   edje_object_part_text_set(eco->edje, "e.text.title", 
-			   _("Settings"));
+   edje_object_part_text_set(eco->edje, "e.text.title", _("Settings"));
 
    eco->o_list = e_widget_list_add(eco->evas, 0, 0);
    edje_object_part_swallow(eco->edje, "e.swallow.content", eco->o_list);
@@ -209,11 +208,8 @@ e_configure_show(E_Container *con)
 EAPI void 
 e_configure_del(void) 
 {
-   if (_e_configure) 
-     {
-	e_object_del(E_OBJECT(_e_configure));
-	_e_configure = NULL;
-     }
+   if (_e_configure) e_object_del(E_OBJECT(_e_configure));
+   _e_configure = NULL;
 }
 
 static void 
