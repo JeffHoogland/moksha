@@ -13,7 +13,7 @@ static void _cb_off_slider_change(void *data, Evas_Object *obj);
 static int _e_int_config_dpms_available(void);
 static int _e_int_config_dpms_capable(void);
 
-static void _cb_disable_check_list(void *data, Evas_Object *obj);
+static void _cb_disable_changed(void *data, Evas_Object *obj);
 
 struct _E_Config_Dialog_Data
 {
@@ -127,6 +127,16 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->off_timeout = e_config->dpms_off_timeout / 60;
 }
 
+static void
+_list_disabled_state_apply(Eina_List *list, Eina_Bool disabled)
+{
+   Eina_List *l;
+   Evas_Object *o;
+
+   EINA_LIST_FOREACH(list, l, o)
+      e_widget_disabled_set(o, disabled);
+}
+
 static void *
 _create_data(E_Config_Dialog *cfd)
 {
@@ -238,7 +248,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
 
    // handler for enable/disable widget array
-   e_widget_on_change_hook_set(dpms_check, _cb_disable_check_list, cfdata->dpms_list);
+   e_widget_on_change_hook_set(dpms_check, _cb_disable_changed, cfdata->dpms_list);
+   // setting initial state
+   _list_disabled_state_apply(cfdata->dpms_list, !cfdata->enable_dpms);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
@@ -318,12 +330,7 @@ _cb_off_slider_change(void *data, Evas_Object *obj)
  * @param obj A Evas_Object checkbox created with e_widget_check_add()
  */
 static void
-_cb_disable_check_list(void *data, Evas_Object *obj)
+_cb_disable_changed(void *data, Evas_Object *obj)
 {
-   Eina_List *list = (Eina_List*) data;
-   Eina_List *l;
-   Evas_Object *o;
-
-   EINA_LIST_FOREACH(list, l, o)
-      e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
+   _list_disabled_state_apply(data, !e_widget_check_checked_get(obj));
 }
