@@ -1695,25 +1695,6 @@ group "E_Config" struct {
           value "resizable" uchar: 0;
         }
       }
-      group "clients" list {
-        group "E_Config_Gadcon_Client" struct {
-          value "name" string: "illume2-mode";
-          value "id" string: "illume2-mode.0";
-          value "geom.pos" int: 0;
-          value "geom.size" int: 32;
-          value "geom.res" int: 800;
-          value "geom.pos_x" double: 0.0000000000000000000000000;
-          value "geom.pos_y" double: 0.0000000000000000000000000;
-          value "geom.size_w" double: 0.0000000000000000000000000;
-          value "geom.size_h" double: 0.0000000000000000000000000;
-          value "state_info.seq" int: 6;
-          value "state_info.flags" int: 0;
-          value "style" string: "plain";
-          value "orient" int: 0;
-          value "autoscroll" uchar: 0;
-          value "resizable" uchar: 0;
-        }
-      }
     }
   }
   group "gadcons" list {
