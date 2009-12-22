@@ -418,6 +418,10 @@ _cpufreq_set_frequency(int frequency)
 	e_dialog_show(dia);
 	return;
      }
+     
+     // change it to "userspace"
+     _cpufreq_set_governor("userspace");
+     
    snprintf(buf, sizeof(buf),
 	    "%s %s %i", cpufreq_config->set_exe_path, "frequency", frequency);
    ret = system(buf);
