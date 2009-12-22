@@ -248,8 +248,8 @@ e_exebuf_show(E_Zone *zone)
    el = e_config_domain_load("exebuf_exelist_cache", exelist_edd);
    if (el)
      {
-	     E_Exe *ee;
-	     
+        E_Exe *ee;
+
 	EINA_LIST_FREE(el->list, ee)
 	  {
 	     exe_list = eina_list_append(exe_list, strdup(ee->path));
@@ -1024,78 +1024,78 @@ _e_exebuf_matches_update(void)
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = efreet_util_desktop_name_glob_list(buf);
    EINA_LIST_FREE(list, desktop)
-	  {
-	     exe = ecore_file_app_exe_get(desktop->exec);
-	     if (exe)
-	       {
-		  desktop2 = eina_hash_find(added, exe);
-		  if (!desktop2 || (desktop2 != desktop))
-		    {
-		       eap_matches = eina_list_append(eap_matches, desktop);
-		       if (!added)
-			 added = eina_hash_string_superfast_new(NULL);
-		       eina_hash_add(added, exe, desktop);
-		    }
-		  free(exe);
-	       }
-	  }
+     {
+        exe = ecore_file_app_exe_get(desktop->exec);
+        if (exe)
+          {
+             desktop2 = eina_hash_find(added, exe);
+             if ((!desktop2) || (desktop2 != desktop))
+               {
+                  eap_matches = eina_list_append(eap_matches, desktop);
+                  if (!added)
+                    added = eina_hash_string_superfast_new(NULL);
+                  eina_hash_add(added, exe, desktop);
+               }
+             free(exe);
+          }
+     }
 
    snprintf(buf, sizeof(buf), "%s*", cmd_buf);
    list = efreet_util_desktop_exec_glob_list(buf);
    EINA_LIST_FREE(list, desktop)
-	  {
-	     exe = ecore_file_app_exe_get(desktop->exec);
-	     if (exe)
-	       {
-		  desktop2 = eina_hash_find(added, exe);
-		  if (!desktop2 || (desktop2 != desktop))
-		    {
-		       eap_matches = eina_list_append(eap_matches, desktop);
-		       if (!added)
-			 added = eina_hash_string_superfast_new(NULL);
-		       eina_hash_add(added, exe, desktop);
-		    }
-		  free(exe);
-	       }
-	  }
+     {
+        exe = ecore_file_app_exe_get(desktop->exec);
+        if (exe)
+          {
+             desktop2 = eina_hash_find(added, exe);
+             if ((!desktop2) || (desktop2 != desktop))
+               {
+                  eap_matches = eina_list_append(eap_matches, desktop);
+                  if (!added)
+                    added = eina_hash_string_superfast_new(NULL);
+                  eina_hash_add(added, exe, desktop);
+               }
+             free(exe);
+          }
+     }
 
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = efreet_util_desktop_generic_name_glob_list(buf);
    EINA_LIST_FREE(list, desktop)
      {
-	     exe = ecore_file_app_exe_get(desktop->exec);
-	     if (exe)
-	       {
-		  desktop2 = eina_hash_find(added, exe);
-		  if (!desktop2 || (desktop2 != desktop))
-		    {
-		       eap_matches = eina_list_append(eap_matches, desktop);
-		       if (!added)
-			 added = eina_hash_string_superfast_new(NULL);
-		       eina_hash_add(added, exe, desktop);
-		    }
-		  free(exe);
-	       }
-	  }
+        exe = ecore_file_app_exe_get(desktop->exec);
+        if (exe)
+          {
+             desktop2 = eina_hash_find(added, exe);
+             if ((!desktop2) || (desktop2 != desktop))
+               {
+                  eap_matches = eina_list_append(eap_matches, desktop);
+                  if (!added)
+                    added = eina_hash_string_superfast_new(NULL);
+                  eina_hash_add(added, exe, desktop);
+               }
+             free(exe);
+          }
+     }
 
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = efreet_util_desktop_comment_glob_list(buf);
    EINA_LIST_FREE(list, desktop)
      {
-	     exe = ecore_file_app_exe_get(desktop->exec);
-	     if (exe)
-	       {
-		  desktop2 = eina_hash_find(added, exe);
-		  if (!desktop2 || (desktop2 != desktop))
-		    {
-		       eap_matches = eina_list_append(eap_matches, desktop);
-		       if (!added)
-			 added = eina_hash_string_superfast_new(NULL);
-		       eina_hash_add(added, exe, desktop);
-		    }
-		  free(exe);
-	       }
-	  }
+        exe = ecore_file_app_exe_get(desktop->exec);
+        if (exe)
+          {
+             desktop2 = eina_hash_find(added, exe);
+             if ((!desktop2) || (desktop2 != desktop))
+               {
+                  eap_matches = eina_list_append(eap_matches, desktop);
+                  if (!added)
+                    added = eina_hash_string_superfast_new(NULL);
+                  eina_hash_add(added, exe, desktop);
+               }
+             free(exe);
+          }
+     }
 
    if (added) eina_hash_free(added);
    added = NULL;
@@ -1280,15 +1280,14 @@ _e_exebuf_hist_update(Eina_List *hist_matches)
 		  break;
 	       }
 	  }
-	     
+
 	if (found)
 	  {
 	     exe->desktop = desktop;
 	     edje_object_part_text_set(o, "e.text.title", desktop->name);
-	     
+
 	     if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	       {
-		       
 		  o = e_util_desktop_icon_add(desktop, 24, exebuf->evas);
 		  exe->icon_object = o;
 		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
