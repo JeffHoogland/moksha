@@ -340,8 +340,11 @@ _zone_layout(E_Zone *z)
 
              printf("Found Quickpanel Window: %s\n", bd->client.icccm.class);
              e_mod_border_min_get(bd, &mw, &mh);
-             if (bd->layer != IL_QUICK_PANEL_LAYER)
+             if ((bd->w != bd->zone->w) || (bd->h != mh)) 
+               e_border_resize(bd, bd->zone->w, mh);
+             if (bd->layer != IL_QUICK_PANEL_LAYER) 
                e_border_layer_set(bd, IL_QUICK_PANEL_LAYER);
+//             e_border_lower(bd);
           }
         else 
           {
