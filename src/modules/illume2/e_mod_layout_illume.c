@@ -6,6 +6,17 @@
 #include "e_mod_layout_illume.h"
 #include "e_kbd.h"
 
+/* define some values here for easily changing layers so we don't have to 
+ * grep through code to change layers */
+#define IL_TOP_SHELF_LAYER 180
+#define IL_BOTTOM_PANEL_LAYER 100
+#define IL_KEYBOARD_LAYER 150
+#define IL_DIALOG_LAYER 120
+#define IL_CONFORM_LAYER 140
+#define IL_FULLSCREEN_LAYER 200
+#define IL_QUICK_PANEL_LAYER 160
+#define IL_APP_LAYER 100
+
 /* local function prototypes */
 static void _border_resize_fx(E_Border *bd, int bx, int by, int bw, int bh);
 static void _border_add(E_Border *bd);
@@ -103,7 +114,8 @@ _border_add(E_Border *bd)
      {
         E_Border *b;
 
-        if (bd->layer != 115) e_border_layer_set(bd, 115);
+        if (bd->layer != IL_FULLSCREEN_LAYER) 
+          e_border_layer_set(bd, IL_FULLSCREEN_LAYER);
 
         /* we lock stacking so that the keyboard does not get put 
          * under the window (if it's needed) */
@@ -123,7 +135,8 @@ _border_add(E_Border *bd)
      }
    if (conform) 
      {
-        if (bd->layer != 110) e_border_layer_set(bd, 110);
+        if (bd->layer != IL_CONFORM_LAYER) 
+          e_border_layer_set(bd, IL_CONFORM_LAYER);
      }
 
    /* we lock stacking so that the keyboard does not get put 
@@ -286,7 +299,8 @@ _zone_layout(E_Zone *z)
                     }
                }
              e_border_stick(bd);
-             if (bd->layer != 100) e_border_layer_set(bd, 100);
+             if (bd->layer != IL_TOP_SHELF_LAYER) 
+               e_border_layer_set(bd, IL_TOP_SHELF_LAYER);
           }
         else if (e_mod_border_is_bottom_panel(bd)) 
           {
@@ -297,14 +311,16 @@ _zone_layout(E_Zone *z)
                                     z->w, panelsize);
                }
              e_border_stick(bd);
-             if (bd->layer != 100) e_border_layer_set(bd, 100);
+             if (bd->layer != IL_BOTTOM_PANEL_LAYER) 
+               e_border_layer_set(bd, IL_BOTTOM_PANEL_LAYER);
           }
         else if (e_mod_border_is_keyboard(bd)) 
           {
              _border_resize_fx(bd, z->x, (z->y + z->h - kbdsize), 
                                z->w, kbdsize);
              e_border_stick(bd);
-             if (bd->layer != 150) e_border_layer_set(bd, 150);
+             if (bd->layer != IL_KEYBOARD_LAYER) 
+               e_border_layer_set(bd, IL_KEYBOARD_LAYER);
           }
         else if (e_mod_border_is_dialog(bd)) 
           {
@@ -315,14 +331,16 @@ _zone_layout(E_Zone *z)
              if (mh > z->h) mh = z->h;
              _border_resize_fx(bd, (z->x + ((z->w - mw) / 2)), 
                                (z->y + ((z->h - mh) / 2)), mw, mh);
-             if (bd->layer != 160) e_border_layer_set(bd, 160);
+             if (bd->layer != IL_DIALOG_LAYER) 
+               e_border_layer_set(bd, IL_DIALOG_LAYER);
           }
         else 
           {
              if (e_mod_border_is_conformant(bd)) 
                {
                   /* make conformant windows under the indicator bar */
-                  if (bd->layer != 90) e_border_layer_set(bd, 90);
+                  if (bd->layer != IL_CONFORM_LAYER) 
+                    e_border_layer_set(bd, IL_CONFORM_LAYER);
                }
 
              /* normal border, handle layout based on policy mode */

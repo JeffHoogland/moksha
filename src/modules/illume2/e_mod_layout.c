@@ -401,19 +401,5 @@ _cb_event_client_message(void *data, int type, void *event)
         if ((mode) && (mode->funcs.drag_end))
           mode->funcs.drag_end(bd);
      }
-   else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_WINLIST_STATE) 
-     {
-        Ecore_X_Illume_Winlist_State state;
-
-        state = ecore_x_e_illume_winlist_state_get(ev->win);
-        if (state == ECORE_X_ATOM_E_ILLUME_WINLIST_ON) 
-          {
-             /* show winlist */
-          }
-        else 
-          {
-             /* hide winlist */
-          }
-     }
    return 1;
 }
