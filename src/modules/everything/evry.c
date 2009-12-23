@@ -11,11 +11,8 @@
 #define INPUTLEN 40
 #define MATCH_LAG 0.33
 
-
-
 typedef struct _Evry_Window Evry_Window;
 typedef struct _Evry_List_Window Evry_List_Window;
-
 
 struct _Evry_Window
 {
@@ -32,7 +29,6 @@ struct _Evry_List_Window
   Evas_Object *o_main;
   Eina_Bool    visible;
 };
-
 
 static void _evry_matches_update(Evry_Selector *sel, int async);
 static void _evry_plugin_action(Evry_Selector *sel, int finished);
@@ -207,7 +203,7 @@ evry_show(E_Zone *zone, const char *params)
 void
 evry_hide(void)
 {
-   Ecore_Event *ev;
+   Ecore_Event_Handler *ev;
 
    if (!win) return;
 
