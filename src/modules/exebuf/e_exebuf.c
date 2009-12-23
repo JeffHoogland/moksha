@@ -285,7 +285,7 @@ e_exebuf_show(E_Zone *zone)
 EAPI void
 e_exebuf_hide(void)
 {
-   Ecore_Event *ev;
+   Ecore_Event_Handler *ev;
    char *str;
 
    if (!exebuf) return;
