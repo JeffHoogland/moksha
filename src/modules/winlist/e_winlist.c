@@ -64,7 +64,7 @@ static double scroll_align_to = 0.0;
 static double scroll_align = 0.0;
 static Ecore_Timer *warp_timer = NULL;
 static Ecore_Timer *scroll_timer = NULL;
-static Ecore_Timer *animator = NULL;
+static Ecore_Animator *animator = NULL;
 
 /* externally accessible functions */
 EAPI int
