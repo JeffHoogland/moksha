@@ -18,7 +18,6 @@ static void _il_ind_win_cb_menu_post(void *data, E_Menu *m);
 static void _il_ind_win_menu_append(Il_Ind_Win *iwin, E_Menu *mn);
 static void _il_ind_win_cb_menu_pre(void *data, E_Menu *mn);
 static void _il_ind_win_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn);
-static void _il_ind_win_cb_menu_edit(void *data, E_Menu *mn, E_Menu_Item *mi);
 static void _il_ind_win_cb_menu_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
 
 static int my = 0;
@@ -285,17 +284,6 @@ _il_ind_win_cb_menu_pre(void *data, E_Menu *mn)
    e_menu_pre_activate_callback_set(mn, NULL, NULL);
 
    mi = e_menu_item_new(mn);
-   if (iwin->gadcon->editing)
-     e_menu_item_label_set(mi, _("Stop Moving/Resizing Items"));
-   else
-     e_menu_item_label_set(mi, _("Begin Moving/Resizing Items"));
-   e_util_menu_item_theme_icon_set(mi, "transform-scale");
-   e_menu_item_callback_set(mi, _il_ind_win_cb_menu_edit, iwin);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_separator_set(mi, 1);
-
-   mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Set Contents"));
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop-shelf");
    e_menu_item_callback_set(mi, _il_ind_win_cb_menu_contents, iwin);
@@ -327,18 +315,6 @@ static Evas_Object *
 _il_ind_win_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style) 
 {
    return NULL;
-}
-
-static void 
-_il_ind_win_cb_menu_edit(void *data, E_Menu *mn, E_Menu_Item *mi) 
-{
-   Il_Ind_Win *iwin;
-
-   if (!(iwin = data)) return;
-   if (iwin->gadcon->editing)
-     e_gadcon_edit_end(iwin->gadcon);
-   else
-     e_gadcon_edit_begin(iwin->gadcon);
 }
 
 static void 
