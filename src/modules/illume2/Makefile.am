@@ -25,6 +25,8 @@ module_la_SOURCES      = e_mod_main.h \
 		         e_mod_layout.c \
                          e_mod_layout_illume.h \
                          e_mod_layout_illume.c \
+                         e_mod_border.h \
+                         e_mod_border.c \
                          e_kbd.h \
                          e_kbd.c \
                          e_mod_config.h \
