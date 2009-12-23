@@ -37,16 +37,16 @@ struct _E_Kbd
    unsigned char fullscreen : 1;
 };
 
-EAPI int e_kbd_init(E_Module *m);
-EAPI int e_kbd_shutdown(void);
+int e_kbd_init(E_Module *m);
+int e_kbd_shutdown(void);
 
-EAPI E_Kbd *e_kbd_new(E_Zone *zone, const char *themedir, const char *syskbds, const char *sysdicts);
-EAPI void e_kbd_enable(E_Kbd *kbd);
-EAPI void e_kbd_disable(E_Kbd *kbd);
-EAPI void e_kbd_show(E_Kbd *kbd);
-EAPI void e_kbd_layout_set(E_Kbd *kbd, E_Kbd_Layout layout);
-EAPI void e_kbd_hide(E_Kbd *kbd);
-EAPI void e_kbd_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
-EAPI void e_kbd_fullscreen_set(E_Zone *zone, int fullscreen);
+E_Kbd *e_kbd_new(E_Zone *zone, const char *themedir, const char *syskbds, const char *sysdicts);
+void e_kbd_enable(E_Kbd *kbd);
+void e_kbd_disable(E_Kbd *kbd);
+void e_kbd_show(E_Kbd *kbd);
+void e_kbd_layout_set(E_Kbd *kbd, E_Kbd_Layout layout);
+void e_kbd_hide(E_Kbd *kbd);
+void e_kbd_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
+void e_kbd_fullscreen_set(E_Zone *zone, int fullscreen);
 
 #endif

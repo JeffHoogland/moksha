@@ -1,6 +1,5 @@
 #include "e.h"
 #include "e_kbd.h"
-#include "e_mod_layout.h"
 #include "e_mod_config.h"
 
 static Eina_List *handlers = NULL;
@@ -661,7 +660,7 @@ _e_kbd_layout_send(E_Kbd *kbd)
 // gets added for a bt kbd - unknown for usb.
 // 
 // chances are i either need a way for a platform config to list devices
-// known to be ebuilt-in keyboards but to be ignored when determining
+// known to be built-in keyboards but to be ignored when determining
 // if a vkbd should be disabled or not... or... i need some other way
 
 static E_DBus_Connection *_e_kbd_dbus_conn = NULL;
@@ -902,7 +901,7 @@ _e_kbd_dbus_real_kbd_shutdown(void)
    _e_kbd_dbus_have_real_keyboard = 0;
 }
 
-EAPI int
+int
 e_kbd_init(E_Module *m)
 {
    mod = m;
@@ -958,7 +957,7 @@ e_kbd_init(E_Module *m)
    return 1;
 }
 
-EAPI int 
+int 
 e_kbd_shutdown(void)
 {
    E_Border_Hook *bh;
@@ -976,7 +975,7 @@ e_kbd_shutdown(void)
    return 1;
 }
 
-EAPI E_Kbd *
+E_Kbd *
 e_kbd_new(E_Zone *zone, const char *themedir, const char *syskbds, const char *sysdicts)
 {
    E_Kbd *kbd;
@@ -988,7 +987,7 @@ e_kbd_new(E_Zone *zone, const char *themedir, const char *syskbds, const char *s
    return kbd;
 }
 
-EAPI void
+void
 e_kbd_enable(E_Kbd *kbd)
 {
    if (!kbd->disabled) return;
@@ -1000,7 +999,7 @@ e_kbd_enable(E_Kbd *kbd)
      }
 }
 
-EAPI void
+void
 e_kbd_disable(E_Kbd *kbd)
 {
    if (kbd->disabled) return;
@@ -1008,7 +1007,7 @@ e_kbd_disable(E_Kbd *kbd)
    kbd->disabled = 1;
 }
 
-EAPI void
+void
 e_kbd_show(E_Kbd *kbd)
 {
    if (kbd->delay_hide)
@@ -1042,14 +1041,14 @@ e_kbd_show(E_Kbd *kbd)
      }
 }
 
-EAPI void
+void
 e_kbd_layout_set(E_Kbd *kbd, E_Kbd_Layout layout)
 {
    kbd->layout = layout;
    _e_kbd_layout_send(kbd);
 }
 
-EAPI void
+void
 e_kbd_hide(E_Kbd *kbd)
 {
    if (!kbd->visible) return;
@@ -1058,7 +1057,7 @@ e_kbd_hide(E_Kbd *kbd)
      kbd->delay_hide = ecore_timer_add(0.2, _e_kbd_cb_delayed_hide, kbd);
 }
 
-EAPI void
+void
 e_kbd_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h)
 {
    Eina_List *l;
@@ -1085,7 +1084,7 @@ e_kbd_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h)
      }
 }
 
-EAPI void
+void
 e_kbd_fullscreen_set(E_Zone *zone, int fullscreen)
 {
    Eina_List *l;
