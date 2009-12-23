@@ -5,8 +5,8 @@
 #Xephyr :1 -noreset -ac -br -dpi 186 -screen 272x480x16 &
 #Xephyr :1 -noreset -ac -br -dpi 186 -screen 480x272x16 &
 #Xephyr :1 -noreset -ac -br -dpi 181 -screen 320x320x16 &
-Xephyr :1 -noreset -ac -br -dpi 183 -screen 320x480x16 -host-cursor &
-#Xephyr :1 -noreset -ac -br -dpi 183 -screen 480x320x16 -host-cursor &
+#Xephyr :1 -noreset -ac -br -dpi 183 -screen 320x480x16 -host-cursor &
+Xephyr :1 -noreset -ac -br -dpi 183 -screen 480x320x16 -host-cursor &
 #Xephyr :1 -noreset -ac -br -dpi 183 -screen 480x800x16 &
 #Xephyr :1 -noreset -ac -br -dpi 183 -screen 800x480x16 &
 #Xephyr :1 -noreset -ac -br -dpi 284 -screen 480x640x16 &
@@ -25,3 +25,5 @@ enlightenment_start \
 -no-precache \
 -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it \
 -profile illume-home
+#-fake-xinerama-screen 480x320+0+0 \
+#-fake-xinerama-screen 480x320+480+0

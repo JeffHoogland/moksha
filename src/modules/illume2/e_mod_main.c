@@ -3,7 +3,6 @@
 #include "e_mod_config.h"
 #include "e_mod_layout.h"
 #include "e_kbd.h"
-#include "e_mod_gadcon.h"
 
 /* local variables */
 static E_Kbd *kbd = NULL;
@@ -22,10 +21,6 @@ e_modapi_init(E_Module *m)
 
    /* init the config subsystem */
    if (!il_config_init(m)) return NULL;
-
-   /* init the gadcon subsystem for adding a "button" to any gadget container
-    * which will allow easy switching between policy app modes */
-   e_mod_gadcon_init();
 
    /* set up the virtual keyboard */
    e_kbd_init(m);
@@ -59,9 +54,6 @@ e_modapi_shutdown(E_Module *m)
 
    /* shutdown the kbd subsystem */
    e_kbd_shutdown();
-
-   /* shutdown the gadget subsystem */
-   e_mod_gadcon_shutdown();
 
    /* shutdown the config subsystem */
    il_config_shutdown();

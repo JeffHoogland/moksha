@@ -1,6 +1,5 @@
 #include "e.h"
 #include "e_mod_main.h"
-#include "e_mod_config.h"
 
 /* local structures */
 typedef struct _Instance Instance;
@@ -17,18 +16,45 @@ static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 static char *_gc_label(E_Gadcon_Client_Class *cc);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
-static void _btn_cb_click(void *data, void *data2);
+static void _cb_btn_click(void *data, void *data2);
 
 /* local variables */
 static Eina_List *instances = NULL;
+static const char *mod_dir = NULL;
 
 static const E_Gadcon_Client_Class _gc_class = 
 {
-   GADCON_CLIENT_CLASS_VERSION, "illume2", 
+   GADCON_CLIENT_CLASS_VERSION, "illume-mode-toggle", 
      { _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL, 
-          e_gadcon_site_is_not_toolbar 
+          e_gadcon_site_is_not_toolbar
      }, E_GADCON_CLIENT_STYLE_PLAIN
 };
+
+/* public functions */
+EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Illume Mode Toggle" };
+
+EAPI void *
+e_modapi_init(E_Module *m) 
+{
+   mod_dir = eina_stringshare_add(m->dir);
+   e_gadcon_provider_register(&_gc_class);
+   return m;
+}
+
+EAPI int 
+e_modapi_shutdown(E_Module *m) 
+{
+   e_gadcon_provider_unregister(&_gc_class);
+   if (mod_dir) eina_stringshare_del(mod_dir);
+   mod_dir = NULL;
+   return 1;
+}
+
+EAPI int 
+e_modapi_save(E_Module *m) 
+{
+   return 1;
+}
 
 /* local functions */
 static E_Gadcon_Client *
@@ -38,13 +64,12 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *icon;
    char buff[PATH_MAX];
 
-   snprintf(buff, sizeof(buff), "%s/e-module-illume2.edj", il_cfg->mod_dir);
-
+   snprintf(buff, sizeof(buff), "%s/e-module-illume-mode-toggle.edj", mod_dir);
    inst = E_NEW(Instance, 1);
    inst->o_btn = e_widget_button_add(gc->evas, NULL, NULL, 
-                                     _btn_cb_click, inst, NULL);
+                                     _cb_btn_click, inst, NULL);
    icon = e_icon_add(evas_object_evas_get(inst->o_btn));
-   e_icon_file_edje_set(icon, buff, "btn_icon");
+   e_icon_file_edje_set(icon, buff, "icon");
    e_widget_button_icon_set(inst->o_btn, icon);
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_btn);
@@ -75,7 +100,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 static char *
 _gc_label(E_Gadcon_Client_Class *cc) 
 {
-   return _("Illume2");
+   return _("Illume-Mode-Toggle");
 }
 
 static Evas_Object *
@@ -84,7 +109,7 @@ _gc_icon(E_Gadcon_Client_Class *cc, Evas *evas)
    Evas_Object *o;
    char buff[PATH_MAX];
 
-   snprintf(buff, sizeof(buff), "%s/e-module-illume2.edj", il_cfg->mod_dir);
+   snprintf(buff, sizeof(buff), "%s/e-module-illume-mode-toggle.edj", mod_dir);
    o = edje_object_add(evas);
    edje_object_file_set(o, buff, "icon");
    return o;
@@ -101,32 +126,17 @@ _gc_id_new(E_Gadcon_Client_Class *cc)
 }
 
 static void 
-_btn_cb_click(void *data, void *data2) 
+_cb_btn_click(void *data, void *data2) 
 {
    Ecore_X_Window xwin;
    Ecore_X_Illume_Mode mode;
 
-   if (il_cfg->policy.mode.dual) 
-     mode = ECORE_X_ILLUME_MODE_SINGLE;
-   else 
-     mode = ECORE_X_ILLUME_MODE_DUAL;
-
    xwin = ecore_x_window_root_first_get();
+   mode = ecore_x_e_illume_mode_get(xwin);
+   if (mode <= ECORE_X_ILLUME_MODE_SINGLE)
+     mode = ECORE_X_ILLUME_MODE_DUAL;
+   else
+     mode = ECORE_X_ILLUME_MODE_SINGLE;
    ecore_x_e_illume_mode_set(xwin, mode);
    ecore_x_e_illume_mode_send(xwin, mode);
-}
-
-/* public functions */
-int 
-e_mod_gadcon_init(void) 
-{
-   e_gadcon_provider_register(&_gc_class);
-   return 1;
-}
-
-int 
-e_mod_gadcon_shutdown(void) 
-{
-   e_gadcon_provider_unregister(&_gc_class);
-   return 1;
 }
