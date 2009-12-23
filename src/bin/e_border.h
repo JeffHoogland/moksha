@@ -496,7 +496,7 @@ struct _E_Border
    unsigned int layer;
    E_Action *cur_mouse_action;
    Ecore_Timer *raise_timer;
-   Ecore_Timer *ping_poller;
+   Ecore_Poller *ping_poller;
    Ecore_Timer *kill_timer;
    int shape_rects_num;
    Ecore_X_Rectangle *shape_rects;

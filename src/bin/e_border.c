@@ -5813,7 +5813,7 @@ _e_border_eval0(E_Border *bd)
 	  e_border_ping(bd);
 	else
 	  {
-	     if (bd->ping_poller) ecore_timer_del(bd->ping_poller);
+	     if (bd->ping_poller) ecore_poller_del(bd->ping_poller);
 	     bd->ping_poller = NULL;
 	  }
 	bd->client.icccm.fetch.protocol = 0;
