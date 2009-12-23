@@ -72,7 +72,7 @@ struct _E_Fm2_Smart_Data
    Eina_List        *icons_place;
    Eina_List        *queue;
    Ecore_Timer      *scan_timer;
-   Ecore_Timer      *sort_idler;
+   Ecore_Idler      *sort_idler;
    Ecore_Job        *scroll_job;
    Ecore_Job        *resize_job;
    Ecore_Job        *refresh_job;
@@ -945,9 +945,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 	e_dialog_title_set(dialog, _("Nonexistent path"));
         e_dialog_icon_set(dialog, "dialog-error", 64);
 
-	snprintf(text, sizeof(text),
-		 _("%s doesn't exist."),
-		 realpath);
+	snprintf(text, sizeof(text), _("%s doesn't exist."), realpath);
 
 	e_dialog_text_set(dialog, text);
 	e_win_centered_set(dialog->win, 1);
@@ -1783,8 +1781,8 @@ static Evas_Object *
 _e_fm2_icon_explicit_theme_icon_get(Evas *evas, const E_Fm2_Icon *ic __UNUSED__, const char *name, const char **type_ret)
 {
    Evas_Object *o = e_icon_add(evas);
-   if (!o)
-     return NULL;
+
+   if (!o) return NULL;
 
    if (!e_util_icon_theme_set(o, name))
      {
@@ -1953,10 +1951,10 @@ _e_fm2_icon_desktop_get_internal(Evas *evas, const E_Fm2_Icon *ic, Efreet_Deskto
      return _e_fm2_icon_explicit_edje_get(evas, ic, desktop->icon, type_ret);
 
    o = _e_fm2_icon_explicit_theme_icon_get(evas, ic, desktop->icon, type_ret);
-   if (o)
-     return o;
+   if (o) return o;
 
-   o = e_util_icon_theme_icon_add(desktop->icon, 48, evas);
+   o = e_util_desktop_icon_add(desktop, 48, evas);
+//   o = e_util_icon_theme_icon_add(desktop->icon, 48, evas);
    if (o && type_ret) *type_ret = "DESKTOP";
    return o;
 }
@@ -1971,15 +1969,13 @@ _e_fm2_icon_desktop_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
    Evas_Object *o;
    char buf[PATH_MAX];
 
-   if (!ic->info.file)
-     return NULL;
+   if (!ic->info.file) return NULL;
 
-   if (!_e_fm2_icon_realpath(ic, buf,sizeof(buf)))
+   if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf)))
      return NULL;
 
    ef = efreet_desktop_new(buf);
-   if (!ef)
-     return NULL;
+   if (!ef) return NULL;
 
    o = _e_fm2_icon_desktop_get_internal(evas, ic, ef, type_ret);
    efreet_desktop_free(ef);
@@ -2213,21 +2209,18 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 	      ((ic->info.icon[1] == '.') && (ic->info.icon[2] == '/')))))
 	  {
 	     o = _e_fm2_icon_explicit_get(evas, ic, ic->info.icon, type_ret);
-	     if (o)
-	       return o;
+	     if (o) return o;
 	  }
 
 	if (ic->info.mime)
 	  {
 	     o = _e_fm2_icon_mime_get(evas, ic, gen_func, data,
 					force_gen, type_ret);
-	     if (o)
-	       return o;
+	     if (o) return o;
 	  }
 
 	o =  _e_fm2_icon_explicit_theme_icon_get(evas, ic, ic->info.icon, type_ret);
-	if (!o)
-	  goto fallback;
+	if (!o) goto fallback;
 
 	return o;
      }
@@ -2235,26 +2228,26 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
    if (ic->info.icon_type == 1)
      {
 	Evas_Object *o;
+
 	o = _e_fm2_icon_thumb_get(evas, ic, NULL,
 				  gen_func, data, force_gen, type_ret);
-	if (o)
-	  return o;
+	if (o) return o;
      }
 
    if (ic->info.mime)
      {
         Evas_Object *o;
+
 	o = _e_fm2_icon_mime_get(evas, ic, gen_func, data, force_gen, type_ret);
-	if (o)
-	  return o;
+	if (o) return o;
      }
    else if (ic->info.file)
      {
 	Evas_Object *o;
+
 	o = _e_fm2_icon_discover_get(evas, ic, gen_func, data,
 				     force_gen, type_ret);
-	if (o)
-	  return o;
+	if (o) return o;
      }
 
  fallback:

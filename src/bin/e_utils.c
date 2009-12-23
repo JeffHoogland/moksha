@@ -197,7 +197,7 @@ e_util_head_exec(int head, const char *cmd)
 {
    char *penv_display;
    char *p1, *p2;
-   char buf[4096], buf2[32];
+   char buf[PATH_MAX], buf2[32];
    int ok = 0;
    Ecore_Exe *exe;
 
