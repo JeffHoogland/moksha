@@ -25,6 +25,7 @@ Eina_Bool e_mod_border_is_side_pane_left(E_Border *bd);
 Eina_Bool e_mod_border_is_side_pane_right(E_Border *bd);
 Eina_Bool e_mod_border_is_overlay(E_Border *bd);
 Eina_Bool e_mod_border_is_conformant(E_Border *bd);
+Eina_Bool e_mod_border_is_quickpanel(E_Border *bd);
 
 Eina_List *e_mod_border_valid_borders_get(E_Zone *zone);
 E_Border *e_mod_border_valid_border_get(E_Zone *zone);

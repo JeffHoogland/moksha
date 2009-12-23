@@ -8,12 +8,12 @@
 
 /* define some values here for easily changing layers so we don't have to 
  * grep through code to change layers */
-#define IL_TOP_SHELF_LAYER 180
+#define IL_TOP_SHELF_LAYER 200
 #define IL_BOTTOM_PANEL_LAYER 100
 #define IL_KEYBOARD_LAYER 150
 #define IL_DIALOG_LAYER 120
 #define IL_CONFORM_LAYER 140
-#define IL_FULLSCREEN_LAYER 200
+#define IL_FULLSCREEN_LAYER 140
 #define IL_QUICK_PANEL_LAYER 160
 #define IL_APP_LAYER 100
 
@@ -333,6 +333,15 @@ _zone_layout(E_Zone *z)
                                (z->y + ((z->h - mh) / 2)), mw, mh);
              if (bd->layer != IL_DIALOG_LAYER) 
                e_border_layer_set(bd, IL_DIALOG_LAYER);
+          }
+        else if (e_mod_border_is_quickpanel(bd)) 
+          {
+             int mw, mh;
+
+             printf("Found Quickpanel Window: %s\n", bd->client.icccm.class);
+             e_mod_border_min_get(bd, &mw, &mh);
+             if (bd->layer != IL_QUICK_PANEL_LAYER)
+               e_border_layer_set(bd, IL_QUICK_PANEL_LAYER);
           }
         else 
           {

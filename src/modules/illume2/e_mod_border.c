@@ -219,6 +219,12 @@ e_mod_border_is_conformant(E_Border *bd)
    return ecore_x_e_illume_conformant_get(bd->client.win);
 }
 
+Eina_Bool 
+e_mod_border_is_quickpanel(E_Border *bd) 
+{
+   return ecore_x_e_illume_quickpanel_get(bd->client.win);
+}
+
 Eina_List *
 e_mod_border_valid_borders_get(E_Zone *zone) 
 {
