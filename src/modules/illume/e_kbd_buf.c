@@ -540,7 +540,7 @@ static int
 _e_kbd_buf_cb_faket(void *data)
 {
    E_Kbd_Buf *kb;
-   
+
    kb = data;
    kb->lookup.faket = NULL;
    kb->lookup.func(kb->lookup.data);
@@ -550,7 +550,7 @@ _e_kbd_buf_cb_faket(void *data)
 }
 
 EAPI void
-e_kbd_buf_lookup(E_Kbd_Buf *kb, void (*func) (void *data), const void *data)
+e_kbd_buf_lookup(E_Kbd_Buf *kb, void (*func) (void *data), void *data)
 {
    e_kbd_buf_lookup_cancel(kb);
    

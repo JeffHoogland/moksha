@@ -19,7 +19,7 @@ struct _E_Appwin
    Eina_List           *borders;
    struct {
       void (*func) (void *data, E_Appwin *ess, E_Border *bd);
-      const void *data;
+      void *data;
    } callback;
    const char          *themedir;
    Ecore_Animator      *animator;
@@ -41,7 +41,7 @@ EAPI int e_appwin_shutdown(void);
 EAPI E_Appwin *e_appwin_new(E_Zone *zone, const char *themedir);
 EAPI void e_appwin_show(E_Appwin *esw);
 EAPI void e_appwin_hide(E_Appwin *esw);
-EAPI void e_appwin_border_select_callback_set(E_Appwin *esw, void (*func) (void *data, E_Appwin *ess, E_Border *bd), const void *data);
+EAPI void e_appwin_border_select_callback_set(E_Appwin *esw, void (*func) (void *data, E_Appwin *ess, E_Border *bd), void *data);
 
 extern EAPI int E_EVENT_APPWIN_DEL;
 

@@ -47,9 +47,10 @@ static void _cb_slipshelf_apps(const void *data, E_Slipshelf *ess, E_Slipshelf_A
 static void _cb_slipshelf_keyboard(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
 static void _cb_slipshelf_app_next(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
 static void _cb_slipshelf_app_prev(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
-static void _cb_slipwin_select(const void *data, E_Slipwin *esw, E_Border *bd);
-static void _cb_slipshelf_select(const void *data, E_Slipshelf *ess, E_Border *bd);
-static void _cb_slipshelf_home2(const void *data, E_Slipshelf *ess, E_Border *bd);
+static void _cb_slipwin_border_select(void *data, E_Slipwin *esw, E_Border *bd);
+static void _cb_slipshelf_select(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
+static void _cb_slipshelf_border_select(void *data, E_Slipshelf *ess, E_Border *bd);
+static void _cb_slipshelf_border_home2(void *data, E_Slipshelf *ess, E_Border *pbd);
 static void _cb_selected(void *data, Evas_Object *obj, void *event_info);
 static int _cb_efreet_desktop_list_change(void *data, int type, void *event);
 static int _cb_efreet_desktop_change(void *data, int type, void *event);
@@ -121,11 +122,11 @@ _e_mod_win_init(E_Module *m)
 				   _cb_slipshelf_app_next, NULL);
    e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_APP_PREV,
 				   _cb_slipshelf_app_prev, NULL);
-   e_slipshelf_border_select_callback_set(slipshelf, _cb_slipshelf_select, NULL);
-   e_slipshelf_border_home_callback_set(slipshelf, _cb_slipshelf_home2, NULL);
+   e_slipshelf_border_select_callback_set(slipshelf, _cb_slipshelf_border_select, NULL);
+   e_slipshelf_border_home_callback_set(slipshelf, _cb_slipshelf_border_home2, NULL);
    
    slipwin = e_slipwin_new(zone, e_module_dir_get(m));
-   e_slipwin_border_select_callback_set(slipwin, _cb_slipwin_select, NULL);
+   e_slipwin_border_select_callback_set(slipwin, _cb_slipwin_border_select, NULL);
 
    appwin = e_appwin_new(zone, e_module_dir_get(m));
    syswin = e_syswin_new(zone, e_module_dir_get(m));
@@ -351,9 +352,9 @@ _e_mod_win_slipshelf_cfg_update(void)
 				   _cb_slipshelf_app_next, NULL);
    e_slipshelf_action_callback_set(slipshelf, E_SLIPSHELF_ACTION_APP_PREV,
 				   _cb_slipshelf_app_prev, NULL);
-   e_slipshelf_border_select_callback_set(slipshelf, _cb_slipshelf_select, NULL);
-   e_slipshelf_border_home_callback_set(slipshelf, _cb_slipshelf_home2, NULL);
-   
+   e_slipshelf_border_select_callback_set(slipshelf, _cb_slipshelf_border_select, NULL);
+   e_slipshelf_border_home_callback_set(slipshelf, _cb_slipshelf_border_home2, NULL);
+
    _cb_resize();
    _e_mod_layout_apply_all();
 }
@@ -911,24 +912,24 @@ _cb_slipshelf_app_prev(const void *data, E_Slipshelf *ess, E_Slipshelf_Action ac
    _app_prev();
 }
 
-static void
-_cb_slipwin_select(const void *data, E_Slipwin *esw, E_Border *bd)
+static void 
+_cb_slipwin_border_select(void *data, E_Slipwin *esw, E_Border *bd) 
 {
    if (bd) _e_mod_layout_border_show(bd);
 }
 
 static void
-_cb_slipshelf_select(const void *data, E_Slipshelf *ess, E_Border *bd)
+_cb_slipshelf_border_select(void *data, E_Slipshelf *ess, E_Border *bd)
 {
    if (bd) _e_mod_layout_border_show(bd);
 }
 
 static void
-_cb_slipshelf_home2(const void *data, E_Slipshelf *ess, E_Border *pbd)
+_cb_slipshelf_border_home2(void *data, E_Slipshelf *ess, E_Border *pbd)
 {
    Eina_List *l;
-	E_Border *bd;
-	
+   E_Border *bd;
+
    EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
 	if (e_object_is_del(E_OBJECT(bd))) continue;

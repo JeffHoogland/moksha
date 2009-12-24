@@ -211,7 +211,7 @@ e_appwin_hide(E_Appwin *esw)
 }
 
 EAPI void
-e_appwin_border_select_callback_set(E_Appwin *esw, void (*func) (void *data, E_Appwin *ess, E_Border *bd), const void *data)
+e_appwin_border_select_callback_set(E_Appwin *esw, void (*func) (void *data, E_Appwin *ess, E_Border *bd), void *data)
 {
    E_OBJECT_CHECK(esw);
    E_OBJECT_TYPE_CHECK(esw, E_APPWIN_TYPE);
@@ -402,11 +402,6 @@ _e_appwin_cb_item_sel(void *data)
      ent->appwin->callback.func(ent->appwin->callback.data, ent->appwin, ent->border);
    e_appwin_hide(ent->appwin);
 }
-
-
-
-
-
 
 static Evas_Object *
 _theme_obj_new(Evas *e, const char *custom_dir, const char *group)

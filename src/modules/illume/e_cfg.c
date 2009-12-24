@@ -1974,7 +1974,7 @@ _dbcb_keyboard_get(E_DBus_Object *obj, DBusMessage *msg)
    else if ((illume_cfg->kbd.use_internal) && (!illume_cfg->kbd.run_keyboard))
      s = "internal";
    else if (illume_cfg->kbd.run_keyboard)
-     s = illume_cfg->kbd.run_keyboard;
+     s = (char *)illume_cfg->kbd.run_keyboard;
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_STRING, &(s));
    return reply;
 }

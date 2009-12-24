@@ -199,7 +199,7 @@ e_slipwin_hide(E_Slipwin *esw)
 }
 
 EAPI void
-e_slipwin_border_select_callback_set(E_Slipwin *esw, void (*func) (void *data, E_Slipwin *ess, E_Border *bd), const void *data)
+e_slipwin_border_select_callback_set(E_Slipwin *esw, void (*func) (void *data, E_Slipwin *ess, E_Border *bd), void *data)
 {
    E_OBJECT_CHECK(esw);
    E_OBJECT_TYPE_CHECK(esw, E_SLIPWIN_TYPE);
@@ -390,11 +390,6 @@ _e_slipwin_cb_item_sel(void *data)
      ent->slipwin->callback.func(ent->slipwin->callback.data, ent->slipwin, ent->border);
    e_slipwin_hide(ent->slipwin);
 }
-
-
-
-
-
 
 static Evas_Object *
 _theme_obj_new(Evas *e, const char *custom_dir, const char *group)

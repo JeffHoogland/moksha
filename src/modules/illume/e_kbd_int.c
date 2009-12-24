@@ -19,7 +19,7 @@ static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *
 
 static void _e_kbd_int_layout_next(E_Kbd_Int *ki);
 static void _e_kbd_int_zoomkey_down(E_Kbd_Int *ki);
-static void _e_kbd_int_matches_update(E_Kbd_Int *ki);
+static void _e_kbd_int_matches_update(void *data);
 static void _e_kbd_int_dictlist_down(E_Kbd_Int *ki);
 static void _e_kbd_int_matchlist_down(E_Kbd_Int *ki);
 static void _e_kbd_int_layoutlist_down(E_Kbd_Int *ki);
@@ -288,12 +288,14 @@ _e_kbd_int_matches_free(E_Kbd_Int *ki)
 }
 
 static void
-_e_kbd_int_matches_update(E_Kbd_Int *ki)
+_e_kbd_int_matches_update(void *data)
 {
+   E_Kbd_Int *ki;
    const Eina_List *l, *matches;
    const char *actual;
    Evas_Coord mw, mh, vw, vh;
-   
+
+   ki = data;
    evas_event_freeze(ki->win->evas);
    e_box_freeze(ki->box_obj);
    _e_kbd_int_matches_free(ki);

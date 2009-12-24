@@ -18,7 +18,7 @@ static void _e_slipshelf_cb_apps(void *data, Evas_Object *obj, const char *emiss
 static void _e_slipshelf_cb_keyboard(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_slipshelf_cb_app_next(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_slipshelf_cb_app_prev(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_slipshelf_cb_item_sel(void *data, void *data2);
+static void _e_slipshelf_cb_item_sel(void *data, E_Border *bd);
 static int _e_slipshelf_cb_animate(void *data);
 static void _e_slipshelf_slide(E_Slipshelf *ess, int out, double len);
 static int _e_slipshelf_cb_mouse_up(void *data, int type, void *event);
@@ -33,6 +33,7 @@ static void _e_slipshelf_title_update(E_Slipshelf *ess);
 static void _e_slipshelf_cb_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static void _e_slipshelf_cb_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static Evas_Object *_e_slipshelf_cb_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style);
+static void _e_winilist_cb_item_sel(void *data, void *data2);
 
 static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
 
@@ -183,7 +184,7 @@ e_slipshelf_new(E_Zone *zone, const char *themedir)
 					      _e_slipshelf_cb_item_sel,
 					      ess);
 	e_winilist_special_append(o, NULL, "Home", 
-				  _e_slipshelf_cb_item_sel,
+				  _e_winilist_cb_item_sel,
 				  ess, NULL);
 	evas_object_show(o);
      }
@@ -434,7 +435,7 @@ e_slipshelf_default_title_set(E_Slipshelf *ess, const char *title)
 }
 
 EAPI void
-e_slipshelf_border_select_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), const void *data)
+e_slipshelf_border_select_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), void *data)
 {
    E_OBJECT_CHECK(ess);
    E_OBJECT_TYPE_CHECK(ess, E_SLIPSHELF_TYPE);
@@ -443,7 +444,7 @@ e_slipshelf_border_select_callback_set(E_Slipshelf *ess, void (*func) (void *dat
 }
 
 EAPI void
-e_slipshelf_border_home_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), const void *data)
+e_slipshelf_border_home_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), void *data)
 {
    E_OBJECT_CHECK(ess);
    E_OBJECT_TYPE_CHECK(ess, E_SLIPSHELF_TYPE);
@@ -573,13 +574,11 @@ _e_slipshelf_cb_slide_down_delay(void *data)
 }
 
 static void
-_e_slipshelf_cb_item_sel(void *data, void *data2)
+_e_slipshelf_cb_item_sel(void *data, E_Border *bd)
 {
    E_Slipshelf *ess;
-   E_Border *bd;
-   
+
    ess = data;
-   bd = data2;
    ess->bsel = bd;
    if (bd)
      {
@@ -923,6 +922,39 @@ _e_slipshelf_cb_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const cha
    return NULL;
 }
 
+static void 
+_e_winilist_cb_item_sel(void *data, void *data2) 
+{
+   E_Slipshelf *ess;
+   E_Border *bd;
+
+   ess = data;
+   bd = data2;
+   ess->bsel = bd;
+   if (bd)
+     {
+	if (e_border_focused_get() == bd)
+	  {
+	     if (ess->slide_down_timer) ecore_timer_del(ess->slide_down_timer);
+	     ess->slide_down_timer = ecore_timer_add(0.5, _e_slipshelf_cb_slide_down_delay, ess);
+//	     _e_slipshelf_slide(ess, 0, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
+	     return;
+	  }
+	if (ess->callback_border_select.func)
+	  ess->callback_border_select.func(ess->callback_border_select.data, ess, bd);
+	if (ess->slide_down_timer) ecore_timer_del(ess->slide_down_timer);
+	ess->slide_down_timer = ecore_timer_add(0.5, _e_slipshelf_cb_slide_down_delay, ess);
+//	_e_slipshelf_slide(ess, 0, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
+     }
+   else
+     {
+	if (ess->callback_border_home.func)
+	  ess->callback_border_home.func(ess->callback_border_home.data, ess, bd);
+	if (ess->slide_down_timer) ecore_timer_del(ess->slide_down_timer);
+	ess->slide_down_timer = ecore_timer_add(0.5, _e_slipshelf_cb_slide_down_delay, ess);
+//	_e_slipshelf_slide(ess, 0, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
+     }
+}
 
 static Evas_Object *
 _theme_obj_new(Evas *e, const char *custom_dir, const char *group)

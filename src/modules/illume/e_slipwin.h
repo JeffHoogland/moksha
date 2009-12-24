@@ -19,7 +19,7 @@ struct _E_Slipwin
    Eina_List           *borders;
    struct {
       void (*func) (void *data, E_Slipwin *ess, E_Border *bd);
-      const void *data;
+      void *data;
    } callback;
    const char          *themedir;
    Ecore_Animator      *animator;
@@ -41,7 +41,7 @@ EAPI int e_slipwin_shutdown(void);
 EAPI E_Slipwin *e_slipwin_new(E_Zone *zone, const char *themedir);
 EAPI void e_slipwin_show(E_Slipwin *esw);
 EAPI void e_slipwin_hide(E_Slipwin *esw);
-EAPI void e_slipwin_border_select_callback_set(E_Slipwin *esw, void (*func) (void *data, E_Slipwin *ess, E_Border *bd), const void *data);
+EAPI void e_slipwin_border_select_callback_set(E_Slipwin *esw, void (*func) (void *data, E_Slipwin *ess, E_Border *bd), void *data);
 
 extern EAPI int E_EVENT_SLIPWIN_DEL;
 

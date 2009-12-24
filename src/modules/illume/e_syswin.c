@@ -199,7 +199,7 @@ e_syswin_hide(E_Syswin *esw)
 }
 
 EAPI void
-e_syswin_border_select_callback_set(E_Syswin *esw, void (*func) (void *data, E_Syswin *ess, E_Border *bd), const void *data)
+e_syswin_border_select_callback_set(E_Syswin *esw, void (*func) (void *data, E_Syswin *ess, E_Border *bd), void *data)
 {
    E_OBJECT_CHECK(esw);
    E_OBJECT_TYPE_CHECK(esw, E_SYSWIN_TYPE);

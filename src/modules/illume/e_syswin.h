@@ -19,7 +19,7 @@ struct _E_Syswin
    Eina_List           *borders;
    struct {
       void (*func) (void *data, E_Syswin *ess, E_Border *bd);
-      const void *data;
+      void *data;
    } callback;
    const char          *themedir;
    Ecore_Animator      *animator;
@@ -41,7 +41,7 @@ EAPI int e_syswin_shutdown(void);
 EAPI E_Syswin *e_syswin_new(E_Zone *zone, const char *themedir);
 EAPI void e_syswin_show(E_Syswin *esw);
 EAPI void e_syswin_hide(E_Syswin *esw);
-EAPI void e_syswin_border_select_callback_set(E_Syswin *esw, void (*func) (void *data, E_Syswin *ess, E_Border *bd), const void *data);
+EAPI void e_syswin_border_select_callback_set(E_Syswin *esw, void (*func) (void *data, E_Syswin *ess, E_Border *bd), void *data);
 
 extern EAPI int E_EVENT_SYSWIN_DEL;
 

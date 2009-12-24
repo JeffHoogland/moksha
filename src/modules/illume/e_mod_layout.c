@@ -26,10 +26,10 @@ struct _Effect
 static int _e_mod_layout_cb_effect_animator(void *data);
 static void _e_mod_layout_effect_slide_out(E_Border *bd, double in, int post);
 static void _e_mod_layout_effect_slide_in(E_Border *bd, double in, int post);
-static void _e_mod_layout_cb_hook_post_fetch(void *data, E_Border *bd);
+static void _e_mod_layout_cb_hook_post_fetch(void *data, void *data2);
 static void _e_mod_layout_post_border_assign(E_Border *bd, int not_new);
-static void _e_mod_layout_cb_hook_post_border_assign(void *data, E_Border *bd);
-static void _e_mod_layout_cb_hook_end(void *data, E_Border *bd);
+static void _e_mod_layout_cb_hook_post_border_assign(void *data, void *data2);
+static void _e_mod_layout_cb_hook_end(void *data, void *data2);
 static int _cb_event_border_add(void *data, int type, void *event);
 static int _cb_event_border_remove(void *data, int type, void *event);
 static int _cb_event_border_focus_in(void *data, int type, void *event);
@@ -379,8 +379,11 @@ _is_dialog(E_Border *bd)
 }
 
 static void
-_e_mod_layout_cb_hook_post_fetch(void *data, E_Border *bd)
+_e_mod_layout_cb_hook_post_fetch(void *data, void *data2)
 {
+   E_Border *bd;
+
+   if (!(bd = data2)) return;
    if (bd->stolen) return;
    if (bd->new_client)
      {
@@ -677,14 +680,20 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 }
 
 static void
-_e_mod_layout_cb_hook_post_border_assign(void *data, E_Border *bd)
+_e_mod_layout_cb_hook_post_border_assign(void *data, void *data2)
 {
+   E_Border *bd;
+
+   if (!(bd = data2)) return;
    _e_mod_layout_post_border_assign(bd, 0);
 }
 
 static void
-_e_mod_layout_cb_hook_end(void *data, E_Border *bd)
+_e_mod_layout_cb_hook_end(void *data, void *data2)
 {
+   E_Border *bd;
+
+   if (!(bd = data2)) return;
    if (bd->stolen) return;
    if ((bd == dockwin) && (!dockwin_use) && (dockwin->visible))
      _e_mod_layout_dockwin_hide();

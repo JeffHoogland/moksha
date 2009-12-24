@@ -57,7 +57,7 @@ struct _E_Slipshelf
    } control;
    struct {
       void (*func) (void *data, E_Slipshelf *ess, E_Border *bd);
-      const void *data;
+      void *data;
    } callback_border_select, callback_border_home;
    
    double               start;
@@ -79,9 +79,8 @@ EAPI void e_slipshelf_action_callback_set(E_Slipshelf *ess, E_Slipshelf_Action a
 EAPI void e_slipshelf_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
 EAPI void e_slipshelf_default_title_set(E_Slipshelf *ess, const char *title);
 
-EAPI void e_slipshelf_border_select_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), const void *data);
-EAPI void e_slipshelf_border_home_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), const void *data);
-
+EAPI void e_slipshelf_border_select_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), void *data);
+EAPI void e_slipshelf_border_home_callback_set(E_Slipshelf *ess, void (*func) (void *data, E_Slipshelf *ess, E_Border *bd), void *data);
 
 extern EAPI int E_EVENT_SLIPSHELF_ADD;
 extern EAPI int E_EVENT_SLIPSHELF_DEL;

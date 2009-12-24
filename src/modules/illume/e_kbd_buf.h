@@ -17,7 +17,7 @@ struct _E_Kbd_Buf
    E_Kbd_Buf_Layout *layout;
    struct {
       void        (*func) (void *data);
-      const void   *data;
+      void   *data;
 // FIXME: just faking delayed lookup with timer
       Ecore_Timer  *faket;
    } lookup;
@@ -65,7 +65,7 @@ EAPI void e_kbd_buf_pressed_point_add(E_Kbd_Buf *kb, int x, int y, int shift, in
 EAPI const char *e_kbd_buf_actual_string_get(E_Kbd_Buf *kb);
 EAPI const Eina_List *e_kbd_buf_string_matches_get(E_Kbd_Buf *kb);
 EAPI void e_kbd_buf_backspace(E_Kbd_Buf *kb);
-EAPI void e_kbd_buf_lookup(E_Kbd_Buf *kb, void (*func) (void *data), const void *data);
+EAPI void e_kbd_buf_lookup(E_Kbd_Buf *kb, void (*func) (void *data), void *data);
 EAPI void e_kbd_buf_lookup_cancel(E_Kbd_Buf *kb);
 EAPI void e_kbd_buf_word_use(E_Kbd_Buf *kb, const char *word);
     

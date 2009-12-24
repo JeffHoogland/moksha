@@ -202,7 +202,7 @@ static int
 _e_kbd_cb_delayed_hide(void *data)
 {
    E_Kbd *kbd;
-   
+
    kbd = data;
    _e_kbd_hide(kbd);
    kbd->delay_hide = NULL;
@@ -213,61 +213,63 @@ static void
 _e_kbd_all_enable(void)
 {
    Eina_List *l;
-	E_Kbd *kbd;
-	
+   E_Kbd *kbd;
+
    EINA_LIST_FOREACH(kbds, l, kbd)
-	e_kbd_enable(kbd);
+     e_kbd_enable(kbd);
 }
 
 static void
 _e_kbd_all_disable(void)
 {
    Eina_List *l;
-	E_Kbd *kbd;
-	
+   E_Kbd *kbd;
+
    EINA_LIST_FOREACH(kbds, l, kbd)
-	e_kbd_disable(kbd);
+     e_kbd_disable(kbd);
 }
 
 static void
 _e_kbd_all_show(void)
 {
    Eina_List *l;
-	E_Kbd *kbd;
-	
+   E_Kbd *kbd;
+
    EINA_LIST_FOREACH(kbds, l, kbd)
-	e_kbd_show(kbd);
+     e_kbd_show(kbd);
 }
 
 static void
 _e_kbd_all_layout_set(E_Kbd_Layout layout)
 {
    Eina_List *l;
-	E_Kbd *kbd;
-	
+   E_Kbd *kbd;
+
    EINA_LIST_FOREACH(kbds, l, kbd)
-	e_kbd_layout_set(kbd, layout);
+     e_kbd_layout_set(kbd, layout);
 }
 
 static void
 _e_kbd_all_hide(void)
 {
    Eina_List *l;
-	E_Kbd *kbd;
-	
+   E_Kbd *kbd;
+
    EINA_LIST_FOREACH(kbds, l, kbd)
-	e_kbd_hide(kbd);
+     e_kbd_hide(kbd);
 }
 
 static void
 _e_kbd_all_toggle(void)
 {
    Eina_List *l;
-	E_Kbd *kbd;
-	
-   EINA_LIST_FOREACH(kbds, l, kbd)
-	if (kbd->visible) e_kbd_hide(kbd);
-	else e_kbd_show(kbd);
+   E_Kbd *kbd;
+
+   EINA_LIST_FOREACH(kbds, l, kbd) 
+     {
+        if (kbd->visible) e_kbd_hide(kbd);
+        else e_kbd_show(kbd);
+     }
 }
 
 static int
@@ -444,9 +446,12 @@ _e_kbd_cb_border_property(void *data, int type, void *event)
    return 1;
 }
 
-static void
-_e_kbd_cb_border_hook_pre_post_fetch(void *data, E_Border *bd)
+static void 
+_e_kbd_cb_border_hook_pre_post_fetch(void *data, void *data2)
 {
+   E_Border *bd;
+
+   if (!(bd = data2)) return;
    // check if bd has special kbd properites - if so, store in created kbd
    if (!bd->new_client) return;
    if (_e_kbd_by_border_get(bd)) return;
@@ -500,18 +505,23 @@ _e_kbd_cb_border_hook_pre_post_fetch(void *data, E_Border *bd)
 }
 
 static void
-_e_kbd_cb_border_hook_post_fetch(void *data, E_Border *bd)
+_e_kbd_cb_border_hook_post_fetch(void *data, void *data2)
 {
+   E_Border *bd;
+
+   if (!(bd = data2)) return;
    // nothing - all done in _e_kbd_cb_border_hook_pre_post_fetch()
    if (!_e_kbd_by_border_get(bd)) return;
 }
 
 static void
-_e_kbd_cb_border_hook_post_border_assign(void *data, E_Border *bd)
+_e_kbd_cb_border_hook_post_border_assign(void *data, void *data2)
 {
+   E_Border *bd;
    E_Kbd *kbd;
    int pbx, pby, pbw, pbh;
-   
+
+   if (!(bd = data2)) return;
    kbd = _e_kbd_by_border_get(bd);
    if (!kbd) return;
    
@@ -588,10 +598,12 @@ _e_kbd_cb_border_hook_post_border_assign(void *data, E_Border *bd)
 }
 
 static void
-_e_kbd_cb_border_hook_end(void *data, E_Border *bd)
+_e_kbd_cb_border_hook_end(void *data, void *data2)
 {
    E_Kbd *kbd;
-   
+   E_Border *bd;
+
+   if (!(bd = data2)) return;
    kbd = _e_kbd_by_border_get(bd);
    if (!kbd) return;
    if (kbd->border == bd)
