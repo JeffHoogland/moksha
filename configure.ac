@@ -185,10 +185,10 @@ if test "x${link_execinfo}" = "xno" ; then
 backtrace_symbols_fd(NULL, 0, 0);
          ]])],
       [
-       linkexec_info="yes"
+       link_execinfo="yes"
        execinfo_libs="-lexecinfo"
       ],
-      [linkexec_info="no"])
+      [link_execinfo="no"])
    LDFLAGS="${LDFLAGS_save}"
 
    AC_MSG_RESULT([${link_execinfo}])
