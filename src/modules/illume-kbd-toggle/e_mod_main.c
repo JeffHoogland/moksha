@@ -7,7 +7,7 @@ struct _Instance
 {
    E_Gadcon_Client *gcc;
    Evas_Object *o_btn;
-   Ecore_Event_Handler *handler;
+   Eina_List *handlers;
 };
 
 /* local function prototypes */
@@ -19,6 +19,7 @@ static Evas_Object *_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
 static void _cb_btn_click(void *data, void *data2);
 static int _cb_border_focus_in(void *data, int type, void *event);
+static int _cb_border_remove(void *data, int type, void *event);
 
 /* local variables */
 static Eina_List *instances = NULL;
@@ -77,9 +78,14 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_btn);
    inst->gcc->data = inst;
 
-   inst->handler = 
-     ecore_event_handler_add(E_EVENT_BORDER_FOCUS_IN, 
-                             _cb_border_focus_in, inst);
+   inst->handlers = 
+     eina_list_append(inst->handlers, 
+                      ecore_event_handler_add(E_EVENT_BORDER_FOCUS_IN, 
+                                              _cb_border_focus_in, inst));
+   inst->handlers = 
+     eina_list_append(inst->handlers, 
+                      ecore_event_handler_add(E_EVENT_BORDER_REMOVE, 
+                                              _cb_border_remove, inst));
 
    instances = eina_list_append(instances, inst);
    return inst->gcc;
@@ -89,12 +95,13 @@ static void
 _gc_shutdown(E_Gadcon_Client *gcc) 
 {
    Instance *inst;
+   Ecore_Event_Handler *handler;
 
    if (!(inst = gcc->data)) return;
    instances = eina_list_remove(instances, inst);
    if (inst->o_btn) evas_object_del(inst->o_btn);
-   if (inst->handler) ecore_event_handler_del(inst->handler);
-   inst->handler = NULL;
+   EINA_LIST_FREE(inst->handlers, handler)
+     ecore_event_handler_del(handler);
    E_FREE(inst);
 }
 
@@ -191,5 +198,20 @@ _cb_border_focus_in(void *data, int type, void *event)
      e_icon_file_edje_set(icon, buff, "btn_icon");
    e_widget_button_icon_set(inst->o_btn, icon);
 
+   return 1;
+}
+
+static int 
+_cb_border_remove(void *data, int type, void *event) 
+{
+   Instance *inst;
+   Evas_Object *icon;
+   char buff[PATH_MAX];
+
+   if (!(inst = data)) return 1;
+   snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
+   icon = e_icon_add(evas_object_evas_get(inst->o_btn));
+   e_icon_file_edje_set(icon, buff, "icon");
+   e_widget_button_icon_set(inst->o_btn, icon);
    return 1;
 }
