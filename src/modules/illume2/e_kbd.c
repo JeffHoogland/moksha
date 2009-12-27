@@ -552,7 +552,6 @@ _e_kbd_cb_border_remove(void *data, int type, void *event)
    E_Kbd *kbd;
 
    ev = event;
-   /* TODO: Focused */
    if (!(kbd = _e_kbd_by_border_get(ev->border))) return 1;
    if (kbd->border == ev->border) 
      {
