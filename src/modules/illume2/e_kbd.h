@@ -1,11 +1,10 @@
 #ifndef E_KBD_H
 #define E_KBD_H
 
-typedef struct _E_Kbd E_Kbd;
-
 #define E_KBD_TYPE 0xE1b0988
 
-typedef enum _E_Kbd_Layout
+typedef enum _E_Kbd_Layout E_Kbd_Layout;
+enum _E_Kbd_Layout
 {
    E_KBD_LAYOUT_NONE,
    E_KBD_LAYOUT_DEFAULT,
@@ -22,24 +21,22 @@ typedef enum _E_Kbd_Layout
    E_KBD_LAYOUT_URL, 
    E_KBD_LAYOUT_KEYPAD, 
    E_KBD_LAYOUT_J2ME
-} E_Kbd_Layout;
+};
 
-struct _E_Kbd
+typedef struct _E_Kbd E_Kbd;
+struct _E_Kbd 
 {
    E_Object e_obj_inherit;
-   E_Win *win;
    E_Border *border;
-   Ecore_Timer *delay_hide;
+   Ecore_Timer *timer;
    Ecore_Animator *animator;
-   Eina_List *waiting_borders;
    E_Kbd_Layout layout;
+   Eina_List *waiting_borders;
+
    double start, len;
-
-   int h, adjust_start, adjust, adjust_end;
-
+   int h, adjust, adjust_start, adjust_end;
    unsigned char visible : 1;
-   unsigned char actually_visible : 1;
-   unsigned char disabled : 1; // if we have a real kbd plugged in
+   unsigned char disabled : 1;
    unsigned char fullscreen : 1;
 };
 
@@ -47,15 +44,15 @@ int e_kbd_init(E_Module *m);
 int e_kbd_shutdown(void);
 
 E_Kbd *e_kbd_new(void);
-void e_kbd_enable(E_Kbd *kbd);
-void e_kbd_disable(E_Kbd *kbd);
-void e_kbd_show(E_Kbd *kbd);
-void e_kbd_hide(E_Kbd *kbd);
-void e_kbd_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
-void e_kbd_fullscreen_set(E_Zone *zone, int fullscreen);
-void e_kbd_layout_set(E_Kbd *kbd, E_Kbd_Layout layout);
 void e_kbd_all_enable(void);
 void e_kbd_all_disable(void);
+void e_kbd_show(E_Kbd *kbd);
+void e_kbd_hide(E_Kbd *kbd);
+void e_kbd_enable(E_Kbd *kbd);
+void e_kbd_disable(E_Kbd *kbd);
+void e_kbd_layout_set(E_Kbd *kbd, E_Kbd_Layout layout);
+void e_kbd_fullscreen_set(E_Zone *zone, int fullscreen);
+void e_kbd_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
 
 extern const char *mod_dir;
 

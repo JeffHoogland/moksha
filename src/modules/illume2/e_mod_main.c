@@ -29,9 +29,6 @@ e_modapi_init(E_Module *m)
    /* create a new keyboard */
    kbd = e_kbd_new();
 
-   /* show the keyboard if needed */
-   e_kbd_show(kbd);
-
    /* return NULL on failure, anything else on success. the pointer
     * returned will be set as m->data for convenience tracking */
    return m;
