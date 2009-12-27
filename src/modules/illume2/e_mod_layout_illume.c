@@ -316,8 +316,11 @@ _zone_layout(E_Zone *z)
           }
         else if (e_mod_border_is_keyboard(bd)) 
           {
-             _border_resize_fx(bd, z->x, (z->y + z->h - kbdsize), 
-                               z->w, kbdsize);
+             if ((bd->h != kbdsize) || (bd->w != z->w))
+               e_border_resize(bd, z->w, kbdsize);
+             if ((bd->x != z->x) || (bd->y != (z->y + z->h - kbdsize)) || 
+                 (bd->fx.y != (z->y + z->h - kbdsize)))
+               e_border_move(bd, z->x, (z->y + z->h - kbdsize));
              e_border_stick(bd);
              if (bd->layer != IL_KEYBOARD_LAYER) 
                e_border_layer_set(bd, IL_KEYBOARD_LAYER);
