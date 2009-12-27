@@ -15,7 +15,13 @@ typedef enum _E_Kbd_Layout
    E_KBD_LAYOUT_PHONE_NUMBER,
    E_KBD_LAYOUT_HEX,
    E_KBD_LAYOUT_TERMINAL,
-   E_KBD_LAYOUT_PASSWORD
+   E_KBD_LAYOUT_PASSWORD, 
+   E_KBD_LAYOUT_IP, 
+   E_KBD_LAYOUT_HOST, 
+   E_KBD_LAYOUT_FILE, 
+   E_KBD_LAYOUT_URL, 
+   E_KBD_LAYOUT_KEYPAD, 
+   E_KBD_LAYOUT_J2ME
 } E_Kbd_Layout;
 
 struct _E_Kbd
@@ -40,13 +46,17 @@ struct _E_Kbd
 int e_kbd_init(E_Module *m);
 int e_kbd_shutdown(void);
 
-E_Kbd *e_kbd_new(E_Zone *zone, const char *themedir, const char *syskbds, const char *sysdicts);
+E_Kbd *e_kbd_new(void);
 void e_kbd_enable(E_Kbd *kbd);
 void e_kbd_disable(E_Kbd *kbd);
 void e_kbd_show(E_Kbd *kbd);
-void e_kbd_layout_set(E_Kbd *kbd, E_Kbd_Layout layout);
 void e_kbd_hide(E_Kbd *kbd);
 void e_kbd_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
 void e_kbd_fullscreen_set(E_Zone *zone, int fullscreen);
+void e_kbd_layout_set(E_Kbd *kbd, E_Kbd_Layout layout);
+void e_kbd_all_enable(void);
+void e_kbd_all_disable(void);
+
+extern const char *mod_dir;
 
 #endif

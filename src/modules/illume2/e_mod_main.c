@@ -17,8 +17,6 @@ EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Illume2" };
 EAPI void *
 e_modapi_init(E_Module *m) 
 {
-   E_Container *con;
-
    /* init the config subsystem */
    if (!il_config_init(m)) return NULL;
 
@@ -29,9 +27,7 @@ e_modapi_init(E_Module *m)
    e_mod_layout_init(m);
 
    /* create a new keyboard */
-   con = e_container_current_get(e_manager_current_get());
-   kbd = 
-     e_kbd_new(e_zone_current_get(con), m->dir, m->dir, m->dir);
+   kbd = e_kbd_new();
 
    /* show the keyboard if needed */
    e_kbd_show(kbd);
