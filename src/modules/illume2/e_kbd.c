@@ -151,11 +151,7 @@ e_kbd_show(E_Kbd *kbd)
      }
    else 
      {
-        if (kbd->border) 
-          {
-             e_border_fx_offset(kbd->border, 0, (kbd->border->h - kbd->adjust));
-             _e_kbd_border_show(kbd->border);
-          }
+        if (kbd->border) _e_kbd_border_show(kbd->border);
         _e_kbd_slide(kbd, 1, (double)il_cfg->sliding.kbd.duration / 1000.0);
      }
 }
@@ -404,13 +400,20 @@ _e_kbd_border_is_keyboard(E_Border *bd)
 static void 
 _e_kbd_hide(E_Kbd *kbd) 
 {
-   if (!kbd->visible) return;
+   if (kbd->timer) ecore_timer_del(kbd->timer);
+   kbd->timer = NULL;
+   if ((!kbd->visible) || (kbd->disabled)) return;
+   _e_kbd_layout_send(kbd);
    if (il_cfg->sliding.kbd.duration <= 0) 
      {
-        _e_kbd_border_hide(kbd->border);
-        _e_kbd_layout_send(kbd);
+        if (kbd->border) 
+          {
+             e_border_fx_offset(kbd->border, 0, kbd->border->h);
+             _e_kbd_border_hide(kbd->border);
+          }
+        kbd->visible = 0;
      }
-   else
+   else 
      _e_kbd_slide(kbd, 0, (double)il_cfg->sliding.kbd.duration / 1000.0);
 }
 
