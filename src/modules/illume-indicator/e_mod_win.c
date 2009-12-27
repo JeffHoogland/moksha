@@ -60,14 +60,13 @@ e_mod_ind_win_new(void)
 
    e_win_no_remember_set(iwin->win, 1);
    e_win_resize_callback_set(iwin->win, _il_ind_win_cb_resize);
-   e_win_borderless_set(iwin->win, 1);
    iwin->win->data = iwin;
    e_win_title_set(iwin->win, _("Illume Indicator"));
    e_win_name_class_set(iwin->win, "Illume-Indicator", "Illume-Indicator");
 
    evas = e_win_evas_get(iwin->win);
 
-   zone = e_util_container_zone_number_get(0, 0);
+   zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
 
    iwin->o_event = evas_object_rectangle_add(evas);
    evas_object_color_set(iwin->o_event, 0, 0, 0, 0);
@@ -111,7 +110,6 @@ e_mod_ind_win_new(void)
 
    e_win_size_min_set(iwin->win, zone->w, 32);
    e_win_show(iwin->win);
-   e_win_move_resize(iwin->win, 0, 0, zone->w, 32);
 
    return iwin;
 }
