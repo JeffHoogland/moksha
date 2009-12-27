@@ -230,6 +230,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
+   Evas_Coord wmw, wmh;
    Evas_Object *o, *ot, *ow, *bt;
 
    o = e_widget_list_add(evas, 0, 1);
@@ -245,6 +246,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_add = ow;
    e_widget_disabled_set(ow, 1);
    e_widget_frametable_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_size_min_get(ot, &wmw, &wmh);
+   e_widget_size_min_set(ot, 200, wmh);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
    ot = e_widget_frametable_add(evas, _("Selected Applications"), 0);
@@ -271,6 +274,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_del = ow;
    e_widget_disabled_set(ow, 1);
    e_widget_frametable_object_append(ot, ow, 0, 2, 1, 1, 1, 0, 1, 0);
+   e_widget_size_min_get(ot, &wmw, &wmh);
+   e_widget_size_min_set(ot, 200, wmh);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
    return o;
