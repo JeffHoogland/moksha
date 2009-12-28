@@ -7,7 +7,6 @@
 static void _il_kbd_stop(void);
 static void _il_kbd_start(void);
 static int _il_kbd_cb_exit(void *data, int type, void *event);
-//static int _il_kbd_cb_client_message(void *data, int type, void *event);
 
 /* local variables */
 static E_Kbd_Int *ki = NULL;
