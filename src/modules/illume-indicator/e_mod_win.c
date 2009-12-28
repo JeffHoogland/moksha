@@ -9,6 +9,7 @@ static void _il_ind_win_cb_resize(E_Win *ewin);
 static void _il_ind_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void _il_ind_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void _il_ind_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event);
+static void _il_ind_win_cb_mouse_wheel(void *data, Evas *evas, Evas_Object *obj, void *event);
 static int _il_ind_win_gadcon_client_add(void *data, const E_Gadcon_Client_Class *cc);
 static void _il_ind_win_gadcon_client_del(void *data, E_Gadcon_Client *gcc);
 static void _il_ind_win_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
@@ -77,6 +78,8 @@ e_mod_ind_win_new(void)
                                   _il_ind_win_cb_mouse_move, iwin);
    evas_object_event_callback_add(iwin->o_event, EVAS_CALLBACK_MOUSE_UP, 
                                   _il_ind_win_cb_mouse_up, iwin);
+   evas_object_event_callback_add(iwin->o_event, EVAS_CALLBACK_MOUSE_WHEEL, 
+                                  _il_ind_win_cb_mouse_wheel, iwin);
    evas_object_show(iwin->o_event);
 
    iwin->o_base = edje_object_add(evas);
@@ -153,6 +156,7 @@ _il_ind_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
 
    if (!(iwin = data)) return;
    ev = event;
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    if (ev->button == 1) 
      {
         if (ecore_x_e_illume_drag_locked_get(iwin->win->border->client.win))
@@ -190,6 +194,7 @@ _il_ind_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event)
 
    if (!(iwin = data)) return;
    ev = event;
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    bd = iwin->win->border;
    if (ecore_x_e_illume_drag_locked_get(bd->client.win)) return;
    if (!ecore_x_e_illume_drag_get(bd->client.win)) return;
@@ -229,12 +234,31 @@ _il_ind_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event)
 
    if (!(iwin = data)) return;
    ev = event;
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    if (ev->button != 1) return;
    bd = iwin->win->border;
    if (ecore_x_e_illume_drag_locked_get(bd->client.win)) return;
    if (!ecore_x_e_illume_drag_get(bd->client.win)) return;
    ecore_x_e_illume_drag_end_send(bd->client.win);
    my = 0;
+}
+
+static void 
+_il_ind_win_cb_mouse_wheel(void *data, Evas *evas, Evas_Object *obj, void *event) 
+{
+   Il_Ind_Win *iwin;
+   Evas_Event_Mouse_Wheel *ev;
+   Ecore_X_Illume_Quickpanel_State state;
+
+   if (!(iwin = data)) return;
+   ev = event;
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
+   if (ev->direction != 0) return;
+   if (ev->z > 0) 
+     state = ECORE_X_ILLUME_QUICKPANEL_STATE_ON;
+   else if (ev->z < 0) 
+     state = ECORE_X_ILLUME_QUICKPANEL_STATE_OFF;
+   ecore_x_e_illume_quickpanel_state_send(ecore_x_window_root_first_get(), state);
 }
 
 static void 
