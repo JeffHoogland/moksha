@@ -470,8 +470,7 @@ _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop)
    E_Border *b;
    char buff[PATH_MAX];
 
-   if (!desktop) return;
-   if (!desktop->exec) return;
+   if ((!desktop) || (!desktop->exec)) return;
 
    EINA_LIST_FOREACH(exes, l, exe) 
      {
