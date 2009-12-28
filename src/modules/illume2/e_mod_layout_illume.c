@@ -26,6 +26,8 @@ static void _border_focus_out(E_Border *bd);
 static void _border_activate(E_Border *bd);
 static void _drag_start(E_Border *bd);
 static void _drag_end(E_Border *bd);
+static void _quickpanel_on(E_Zone *zone);
+static void _quickpanel_off(E_Zone *zone);
 static void _zone_layout(E_Zone *z);
 static void _zone_layout_single(E_Border *bd);
 static void _zone_layout_dual(E_Border *bd);
@@ -48,7 +50,8 @@ const Illume_Layout_Mode laymode =
      _border_focus_in, _border_focus_out, 
      _zone_layout, _zone_move_resize, 
      _border_activate, 
-     _drag_start, _drag_end
+     _drag_start, _drag_end, 
+     _quickpanel_on, _quickpanel_off
 };
 
 /* public functions */
@@ -228,6 +231,18 @@ _drag_end(E_Border *bd)
 {
    /* HANDLE A BORDER DRAG BEING ENDED */
    ecore_x_e_illume_drag_set(bd->client.win, 0);
+}
+
+static void 
+_quickpanel_on(E_Zone *zone) 
+{
+   printf("Illume quickpanel on\n");
+}
+
+static void 
+_quickpanel_off(E_Zone *zone) 
+{
+   printf("Illume quickpanel off\n");
 }
 
 static void 

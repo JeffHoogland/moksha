@@ -20,6 +20,8 @@ struct _Illume_Layout_Mode
         void (*border_activate) (E_Border *bd);
         void (*drag_start) (E_Border *bd);
         void (*drag_end) (E_Border *bd);
+        void (*quickpanel_on) (E_Zone *zone);
+        void (*quickpanel_off) (E_Zone *zone);
      } funcs;
 };
 

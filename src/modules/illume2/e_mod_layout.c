@@ -4,7 +4,7 @@
 #include "e_mod_layout_illume.h"
 #include "e_mod_border.h"
 
-// internal calls
+/* local function prototypes */
 static void _e_mod_layout_cb_hook_container_layout(void *data, void *data2);
 static void _e_mod_layout_cb_hook_post_fetch(void *data, void *data2);
 static void _e_mod_layout_cb_hook_post_border_assign(void *data, void *data2);
@@ -18,12 +18,13 @@ static int _cb_event_border_hide(void *data, int type, void *event);
 static int _cb_event_zone_move_resize(void *data, int type, void *event);
 static int _cb_event_client_message(void *data, int type, void *event);
 
-// state
+/* local variables */
 static E_Border_Hook *hook1 = NULL;
 static E_Border_Hook *hook2 = NULL;
 static E_Border_Hook *hook3 = NULL;
 static Eina_List *handlers = NULL;
 
+/* public functions */
 void
 e_mod_layout_init(E_Module *m)
 {
@@ -106,6 +107,7 @@ illume_layout_modes_get(void)
    return modes;
 }
 
+/* local functions */
 static void
 _e_mod_layout_cb_hook_container_layout(void *data, void *data2)
 {
@@ -401,13 +403,18 @@ _cb_event_client_message(void *data, int type, void *event)
      }
    else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE) 
      {
+        E_Zone *zone;
+
+        zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
         if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_OFF) 
           {
-             printf("Quickpanel Off\n");
+             if ((mode) && (mode->funcs.quickpanel_off))
+               mode->funcs.quickpanel_off(zone);
           }
         else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_ON) 
           {
-             printf("Quickpanel On\n");
+             if ((mode) && (mode->funcs.quickpanel_on))
+               mode->funcs.quickpanel_on(zone);
           }
      }
    return 1;
