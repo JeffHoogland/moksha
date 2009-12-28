@@ -31,8 +31,6 @@ static int _e_kbd_cb_border_property(void *data, int type, void *event);
 
 /* hooks */
 static void _e_kbd_cb_border_pre_post_fetch(void *data, void *data2);
-static void _e_kbd_cb_border_post_border_assign(void *data, void *data2);
-static void _e_kbd_cb_border_eval_end(void *data, void *data2);
 
 /* local variables */
 static Eina_List *kbds = NULL, *handlers = NULL, *hooks = NULL;
@@ -652,100 +650,4 @@ _e_kbd_cb_border_pre_post_fetch(void *data, void *data2)
              return;
           }
      }
-}
-
-static void 
-_e_kbd_cb_border_post_border_assign(void *data, void *data2) 
-{
-   E_Border *bd;
-   E_Kbd *kbd;
-   int pbx, pby, pbw, pbh;
-
-   if (!(bd = data2)) return;
-   if (!(kbd = _e_kbd_by_border_get(bd))) return;
-   pbx = bd->x;
-   pby = bd->y;
-   pbw = bd->w;
-   pbh = bd->h;
-
-   bd->lock_border = 1;
-
-   bd->lock_client_location = 1;
-   bd->lock_client_size = 1;
-   bd->lock_client_desk = 1;
-   bd->lock_client_sticky = 1;
-   bd->lock_client_shade = 1;
-   bd->lock_client_maximize = 1;
-
-   bd->lock_user_location = 1;
-   bd->lock_user_size = 1;
-   bd->lock_user_desk = 1;
-   bd->lock_user_sticky = 1;
-   bd->lock_user_shade = 1;
-   bd->lock_user_maximize = 1;
-
-   bd->client.icccm.accepts_focus  = 0;
-   bd->client.icccm.take_focus  = 0;
-
-   bd->w = bd->zone->w;
-   bd->h = bd->h; 
-   bd->x = bd->zone->x;
-   bd->y = bd->zone->y + bd->zone->h - bd->h;
-
-   bd->client.w = bd->w - bd->client_inset.l - bd->client_inset.r;
-   bd->client.h = bd->h - bd->client_inset.t - bd->client_inset.b;
-
-   bd->changes.size = 1;
-   bd->placed = 1;
-
-   if ((pbx != bd->x) || (pby != bd->y)  ||
-       (pbw != bd->w) || (pbh != bd->h))
-     {
-	if (bd->internal_ecore_evas)
-	  {
-	     ecore_evas_managed_move(bd->internal_ecore_evas,
-				     bd->x + bd->fx.x + bd->client_inset.l,
-				     bd->y + bd->fx.y + bd->client_inset.t);
-	  }
-	ecore_x_icccm_move_resize_send(bd->client.win,
-				       bd->x + bd->fx.x + bd->client_inset.l,
-				       bd->y + bd->fx.y + bd->client_inset.t,
-				       bd->client.w, bd->client.h);
-	bd->changed = 1;
-	bd->changes.pos = 1;
-	bd->changes.size = 1;
-     }
-   if (bd == kbd->border)
-     {
-	if (kbd->h != bd->h)
-	  {
-	     if (kbd->animator)
-	       {
-		  if (kbd->adjust_end > kbd->adjust_start)
-		    {
-		       kbd->adjust_start -= (bd->h - kbd->h);
-		       kbd->adjust_end -= (bd->h - kbd->h);
-		    }
-	       }
-	     else if (!kbd->visible)
-	       e_border_fx_offset(kbd->border, 0, kbd->border->h);
-	     kbd->h = bd->h;
-	  }
-     }
-}
-
-static void 
-_e_kbd_cb_border_eval_end(void *data, void *data2) 
-{
-   E_Border *bd;
-   E_Kbd *kbd;
-
-   if (!(bd = data2)) return;
-   if (!(kbd = _e_kbd_by_border_get(bd))) return;
-   if (kbd->border == bd) 
-     {
-        if (!kbd->visible) _e_kbd_border_hide(kbd->border);
-     }
-   else
-     _e_kbd_border_hide(bd);
 }
