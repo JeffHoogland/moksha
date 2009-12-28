@@ -26,7 +26,7 @@ static Eina_List *handlers = NULL;
 
 /* public functions */
 void
-e_mod_layout_init(E_Module *m)
+e_mod_layout_init(void)
 {
    Eina_List *l;
 

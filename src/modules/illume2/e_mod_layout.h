@@ -25,7 +25,7 @@ struct _Illume_Layout_Mode
      } funcs;
 };
 
-void e_mod_layout_init(E_Module *m);
+void e_mod_layout_init(void);
 void e_mod_layout_shutdown(void);
 
 void illume_layout_mode_register(const Illume_Layout_Mode *laymode);

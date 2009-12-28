@@ -191,6 +191,7 @@ il_config_shutdown(void)
      eina_stringshare_del(il_cfg->policy.indicator.title);
 
    if (il_cfg->mod_dir) eina_stringshare_del(il_cfg->mod_dir);
+   il_cfg->mod_dir = NULL;
 
    E_FREE(il_cfg);
    il_cfg = NULL;

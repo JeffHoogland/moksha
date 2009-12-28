@@ -40,7 +40,7 @@ struct _E_Kbd
    unsigned char fullscreen : 1;
 };
 
-int e_kbd_init(E_Module *m);
+int e_kbd_init(void);
 int e_kbd_shutdown(void);
 
 E_Kbd *e_kbd_new(void);
@@ -53,7 +53,5 @@ void e_kbd_disable(E_Kbd *kbd);
 void e_kbd_layout_set(E_Kbd *kbd, E_Kbd_Layout layout);
 void e_kbd_fullscreen_set(E_Zone *zone, int fullscreen);
 void e_kbd_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
-
-extern const char *mod_dir;
 
 #endif

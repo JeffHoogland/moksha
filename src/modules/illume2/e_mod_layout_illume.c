@@ -146,6 +146,17 @@ _border_add(E_Border *bd)
     * under the window (if it's needed) */
    if (conform) bd->lock_user_stacking = 1;
 
+   /* handle setting quickpanel layer and lowering.
+    * This is handled here due to the delay with e_border_lower.
+    * If we try to handle this in zone_layout then things bog down a lot */
+   if (e_mod_border_is_quickpanel(bd)) 
+     {
+        if (bd->layer != IL_QUICK_PANEL_LAYER) 
+          e_border_layer_set(bd, IL_QUICK_PANEL_LAYER);
+        bd->lock_user_stacking = 1;
+        e_border_lower(bd);
+     }
+
    /* only set focus if border accepts it and it's not locked out */
    if ((bd->client.icccm.accepts_focus) && (bd->client.icccm.take_focus) 
        && (!bd->lock_focus_out))
@@ -236,13 +247,43 @@ _drag_end(E_Border *bd)
 static void 
 _quickpanel_on(E_Zone *zone) 
 {
+   Eina_List *qps, *l;
+   E_Border *bd;
+   int th, ty, ny = 0;
+
    printf("Illume quickpanel on\n");
+   if (!(qps = e_mod_border_quickpanel_borders_get(zone))) return;
+   e_mod_border_top_shelf_pos_get(zone, NULL, &ty);
+   e_mod_border_top_shelf_size_get(zone, NULL, &th);
+   ny = (ty + th);
+   EINA_LIST_FOREACH(qps, l, bd) 
+     {
+        int mh;
+
+        e_mod_border_min_get(bd, NULL, &mh);
+//        if ((bd->w != zone->w) || (bd->h != mh))
+//          e_border_resize(bd, zone->w, mh);
+        if ((bd->x != zone->x) || (bd->y != ny) || (bd->fx.y != ny))
+          e_border_fx_offset(bd, 0, ny);
+        ny += mh;
+     }
 }
 
 static void 
 _quickpanel_off(E_Zone *zone) 
 {
+   Eina_List *qps, *l;
+   E_Border *bd;
+   int ty;
+
    printf("Illume quickpanel off\n");
+   if (!(qps = e_mod_border_quickpanel_borders_get(zone))) return;
+   e_mod_border_top_shelf_pos_get(zone, NULL, &ty);
+   EINA_LIST_FOREACH(qps, l, bd) 
+     {
+        if ((bd->x != zone->x) || (bd->y != ty) || (bd->fx.y != ty))
+          e_border_fx_offset(bd, 0, ty);
+     }
 }
 
 static void 
@@ -347,19 +388,9 @@ _zone_layout(E_Zone *z)
              e_mod_border_min_get(bd, NULL, &mh);
              if ((bd->w != bd->zone->w) || (bd->h != mh)) 
                e_border_resize(bd, bd->zone->w, mh);
-             if (bd->layer != IL_QUICK_PANEL_LAYER) 
-               e_border_layer_set(bd, IL_QUICK_PANEL_LAYER);
-             e_border_lower(bd);
           }
         else 
           {
-             if (e_mod_border_is_conformant(bd)) 
-               {
-                  /* make conformant windows under the indicator bar */
-                  if (bd->layer != IL_CONFORM_LAYER) 
-                    e_border_layer_set(bd, IL_CONFORM_LAYER);
-               }
-
              /* normal border, handle layout based on policy mode */
              if (il_cfg->policy.mode.dual) _zone_layout_dual(bd);
              else _zone_layout_single(bd);

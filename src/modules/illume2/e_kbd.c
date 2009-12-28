@@ -38,14 +38,11 @@ static void _e_kbd_cb_border_eval_end(void *data, void *data2);
 static Eina_List *kbds = NULL, *handlers = NULL, *hooks = NULL;
 static E_Border *focused_border = NULL;
 static Ecore_X_Atom focused_vkbd_state = 0;
-const char *mod_dir = NULL;
 
 /* public functions */
 int 
-e_kbd_init(E_Module *m) 
+e_kbd_init(void) 
 {
-   mod_dir = eina_stringshare_add(m->dir);
-
    handlers = 
      eina_list_append(handlers, 
                       ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, 
@@ -94,9 +91,6 @@ e_kbd_shutdown(void)
 
    EINA_LIST_FREE(kbds, kbd)
      e_object_del(E_OBJECT(kbd));
-
-   if (mod_dir) eina_stringshare_del(mod_dir);
-   mod_dir = NULL;
 
    return 1;
 }

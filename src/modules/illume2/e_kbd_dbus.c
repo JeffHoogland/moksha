@@ -1,6 +1,7 @@
 #include "e.h"
 #include "e_kbd.h"
 #include "e_kbd_dbus.h"
+#include "e_mod_config.h"
 
 /* local variables */
 static int have_real_kbd = 0;
@@ -134,7 +135,7 @@ _e_kbd_dbus_ignore_kbds_load(void)
 
    /* load the 'ignore' file from the system/module dir */
    snprintf(buff, sizeof(buff), 
-            "%s/keyboards/ignore_built_in_keyboards", mod_dir);
+            "%s/keyboards/ignore_built_in_keyboards", il_cfg->mod_dir);
    _e_kbd_dbus_ignore_kbds_file_load(buff);
 }
 

@@ -21,10 +21,10 @@ e_modapi_init(E_Module *m)
    if (!il_config_init(m)) return NULL;
 
    /* set up the virtual keyboard */
-   e_kbd_init(m);
+   e_kbd_init();
 
    /* init the layout subsystem */
-   e_mod_layout_init(m);
+   e_mod_layout_init();
 
    /* create a new keyboard */
    kbd = e_kbd_new();
