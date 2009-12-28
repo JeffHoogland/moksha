@@ -240,6 +240,7 @@ e_mod_border_valid_borders_get(E_Zone *zone)
         if (e_mod_border_is_bottom_panel(bd)) continue;
         if (e_mod_border_is_keyboard(bd)) continue;
         if (e_mod_border_is_dialog(bd)) continue;
+        if (e_mod_border_is_quickpanel(bd)) continue;
         ret = eina_list_append(ret, bd);
      }
    return ret;
@@ -260,6 +261,7 @@ e_mod_border_valid_border_get(E_Zone  *zone)
         if (e_mod_border_is_bottom_panel(bd)) continue;
         if (e_mod_border_is_keyboard(bd)) continue;
         if (e_mod_border_is_dialog(bd)) continue;
+        if (e_mod_border_is_quickpanel(bd)) continue;
         ret = bd;
         break;
      }
@@ -273,6 +275,35 @@ e_mod_border_valid_count_get(E_Zone *zone)
    int count;
 
    l = e_mod_border_valid_borders_get(zone);
+   count = eina_list_count(l);
+   eina_list_free(l);
+   return count;
+}
+
+Eina_List *
+e_mod_border_quickpanel_borders_get(E_Zone *zone) 
+{
+   Eina_List *bds, *l, *ret = NULL;
+   E_Border *bd;
+
+   bds = e_border_client_list();
+   EINA_LIST_FOREACH(bds, l, bd) 
+     {
+        if (!bd) continue;
+        if (bd->zone != zone) continue;
+        if (!e_mod_border_is_quickpanel(bd)) continue;
+        ret = eina_list_append(ret, bd);
+     }
+   return ret;
+}
+
+int 
+e_mod_border_quickpanel_count_get(E_Zone *zone) 
+{
+   Eina_List *l;
+   int count;
+
+   l = e_mod_border_quickpanel_borders_get(zone);
    count = eina_list_count(l);
    eina_list_free(l);
    return count;

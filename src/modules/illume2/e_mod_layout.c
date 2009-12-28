@@ -321,21 +321,19 @@ _cb_event_client_message(void *data, int type, void *event)
      }
    else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_MODE) 
      {
-        Ecore_X_Illume_Mode mode;
         E_Border *bd;
         E_Zone *zone;
         int lock = 1;
 
-        mode = ecore_x_e_illume_mode_get(ev->win);
-        if (mode == ECORE_X_ILLUME_MODE_SINGLE) 
+        if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_SINGLE)
           il_cfg->policy.mode.dual = 0;
-        else if (mode == ECORE_X_ILLUME_MODE_DUAL)
+        else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL)
           il_cfg->policy.mode.dual = 1;
         else /* unknown */
           il_cfg->policy.mode.dual = 0;
         e_config_save_queue();
 
-        if (mode == ECORE_X_ILLUME_MODE_DUAL) 
+        if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL) 
           {
              if (il_cfg->policy.mode.side == 0) lock = 0;
           }
@@ -400,6 +398,17 @@ _cb_event_client_message(void *data, int type, void *event)
         if ((!bd) || (bd->stolen)) return 1;
         if ((mode) && (mode->funcs.drag_end))
           mode->funcs.drag_end(bd);
+     }
+   else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE) 
+     {
+        if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_OFF) 
+          {
+             printf("Quickpanel Off\n");
+          }
+        else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_ON) 
+          {
+             printf("Quickpanel On\n");
+          }
      }
    return 1;
 }

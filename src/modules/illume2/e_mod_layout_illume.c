@@ -147,16 +147,6 @@ _border_add(E_Border *bd)
    if ((bd->client.icccm.accepts_focus) && (bd->client.icccm.take_focus) 
        && (!bd->lock_focus_out))
      e_border_focus_set(bd, 1, 1);
-
-   if (bd == e_mod_border_top_shelf_get(bd->zone)) 
-     {
-        Ecore_X_Window xwin;
-        Ecore_X_Illume_Mode mode;
-
-        xwin = ecore_x_window_root_first_get();
-        mode = ecore_x_e_illume_mode_get(xwin);
-        ecore_x_e_illume_mode_send(xwin, mode);
-     }
 }
 
 static void 
@@ -304,12 +294,10 @@ _zone_layout(E_Zone *z)
           }
         else if (e_mod_border_is_bottom_panel(bd)) 
           {
-             /* make sure we are not dragging the shelf */
+             /* make sure we are not dragging the bottom panel */
              if (!ecore_x_e_illume_drag_get(bd->client.win)) 
-               {
-                  _border_resize_fx(bd, z->x, (z->y + z->h - panelsize), 
-                                    z->w, panelsize);
-               }
+               _border_resize_fx(bd, z->x, (z->y + z->h - panelsize), 
+                                 z->w, panelsize);
              e_border_stick(bd);
              if (bd->layer != IL_BOTTOM_PANEL_LAYER) 
                e_border_layer_set(bd, IL_BOTTOM_PANEL_LAYER);
@@ -339,15 +327,14 @@ _zone_layout(E_Zone *z)
           }
         else if (e_mod_border_is_quickpanel(bd)) 
           {
-             int mw, mh;
+             int mh;
 
-             printf("Found Quickpanel Window: %s\n", bd->client.icccm.class);
-             e_mod_border_min_get(bd, &mw, &mh);
+             e_mod_border_min_get(bd, NULL, &mh);
              if ((bd->w != bd->zone->w) || (bd->h != mh)) 
                e_border_resize(bd, bd->zone->w, mh);
              if (bd->layer != IL_QUICK_PANEL_LAYER) 
                e_border_layer_set(bd, IL_QUICK_PANEL_LAYER);
-//             e_border_lower(bd);
+             e_border_lower(bd);
           }
         else 
           {
@@ -440,6 +427,7 @@ _zone_layout_dual_top(E_Border *bd)
         by = (ky + ss);
         bw = kw;
         bh = (kh - ss - ps);
+
         /* grab the border at this location */
         b = e_mod_border_at_xy_get(bd->zone, kx, shelfsize);
 
