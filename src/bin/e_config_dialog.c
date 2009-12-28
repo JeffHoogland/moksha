@@ -12,6 +12,7 @@ static void _e_config_dialog_cb_ok(void *data, E_Dialog *dia);
 static void _e_config_dialog_cb_apply(void *data, E_Dialog *dia);
 static void _e_config_dialog_cb_advanced(void *data, void *data2);
 static void _e_config_dialog_cb_basic(void *data, void *data2);
+static int  _e_config_dialog_check_changed(E_Config_Dialog *cfd, unsigned char def);
 static void _e_config_dialog_cb_changed(void *data, Evas_Object *obj);
 static void _e_config_dialog_cb_close(void *data, E_Dialog *dia);
 
@@ -185,6 +186,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    else if (cfd->dia->content_object)
      evas_object_del(cfd->dia->content_object);
 
+   cfd->view_type = type;
    cfd->dia->data = cfd;
    e_dialog_title_set(cfd->dia, cfd->title);
    if (!cfd->cfdata) cfd->cfdata = cfd->view->create_cfdata(cfd);
@@ -271,10 +273,16 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
                            _e_config_dialog_cb_close, cfd);
     }
 
+   if (cfd->cfg_changed_auto)
+     {
+	int changed;
+
+	changed = _e_config_dialog_check_changed(cfd, 0);
+	e_config_dialog_changed_set(cfd, changed);
+     }
+
    e_dialog_show(cfd->dia);
    if (cfd->icon) e_dialog_border_icon_set(cfd->dia, cfd->icon);
-
-   cfd->view_type = type;
 }
 
 static int
@@ -415,19 +423,37 @@ _e_config_dialog_unchanged(E_Config_Dialog *cfd)
      }
 }
 
+static int
+_e_config_dialog_check_changed(E_Config_Dialog *cfd, unsigned char def)
+{
+   int changed;
+
+   if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
+     {
+        if (cfd->view->basic.check_changed)
+           changed = cfd->view->basic.check_changed(cfd, cfd->cfdata);
+	else
+	   changed = def;
+     }
+   else if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED)
+      {
+	 if (cfd->view->advanced.check_changed)
+	    changed = cfd->view->advanced.check_changed(cfd, cfd->cfdata);
+	 else
+	   changed = def;
+      }
+
+   return changed;
+}
+
 static void
 _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
 {
    E_Config_Dialog *cfd = data;
-   int changed = 1;
+   int changed;
 
    if (!cfd->cfg_changed_auto) return;
-   if ((cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC) &&
-       (cfd->view->basic.check_changed))
-     changed = cfd->view->basic.check_changed(cfd, cfd->cfdata);
-   else if ((cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED) &&
-	    (cfd->view->advanced.check_changed))
-     changed = cfd->view->advanced.check_changed(cfd, cfd->cfdata);
+   changed = _e_config_dialog_check_changed(cfd, 1);
 
    e_config_dialog_changed_set(cfd, changed);
 }
