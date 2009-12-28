@@ -3,9 +3,11 @@
 #include "e_mod_config.h"
 #include "e_mod_layout.h"
 #include "e_kbd.h"
+#include "e_quickpanel.h"
 
 /* local variables */
 static E_Kbd *kbd = NULL;
+static E_Quickpanel *qp = NULL;
 
 /* this is needed to advertise a label for the module IN the code (not just
  * the .desktop file) but more specifically the api version it was compiled
@@ -23,11 +25,16 @@ e_modapi_init(E_Module *m)
    /* set up the virtual keyboard */
    e_kbd_init();
 
+   /* init the quickpanel subsystem */
+   e_quickpanel_init();
+
    /* init the layout subsystem */
    e_mod_layout_init();
 
    /* create a new keyboard */
    kbd = e_kbd_new();
+
+   qp = e_quickpanel_new(e_zone_current_get(e_container_current_get(e_manager_current_get())));
 
    /* return NULL on failure, anything else on success. the pointer
     * returned will be set as m->data for convenience tracking */
@@ -38,12 +45,19 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m) 
 {
+   /* cleanup the quickpanel */
+   e_object_del(E_OBJECT(qp));
+   qp = NULL;
+
    /* cleanup the keyboard */
    e_object_del(E_OBJECT(kbd));
    kbd = NULL;
 
    /* run any layout shutdown code */
    e_mod_layout_shutdown();
+
+   /* shutdown the quickpanel subsystem */
+   e_quickpanel_shutdown();
 
    /* shutdown the kbd subsystem */
    e_kbd_shutdown();

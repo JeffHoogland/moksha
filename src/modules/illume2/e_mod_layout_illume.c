@@ -14,7 +14,7 @@
 #define IL_DIALOG_LAYER 120
 #define IL_CONFORM_LAYER 140
 #define IL_FULLSCREEN_LAYER 140
-#define IL_QUICK_PANEL_LAYER 160
+#define IL_QUICKPANEL_LAYER 160
 #define IL_APP_LAYER 100
 
 /* local function prototypes */
@@ -26,8 +26,6 @@ static void _border_focus_out(E_Border *bd);
 static void _border_activate(E_Border *bd);
 static void _drag_start(E_Border *bd);
 static void _drag_end(E_Border *bd);
-static void _quickpanel_on(E_Zone *zone);
-static void _quickpanel_off(E_Zone *zone);
 static void _zone_layout(E_Zone *z);
 static void _zone_layout_single(E_Border *bd);
 static void _zone_layout_dual(E_Border *bd);
@@ -50,8 +48,7 @@ const Illume_Layout_Mode laymode =
      _border_focus_in, _border_focus_out, 
      _zone_layout, _zone_move_resize, 
      _border_activate, 
-     _drag_start, _drag_end, 
-     _quickpanel_on, _quickpanel_off
+     _drag_start, _drag_end
 };
 
 /* public functions */
@@ -136,25 +133,11 @@ _border_add(E_Border *bd)
              if (b) e_border_fx_offset(b, 0, -shelfsize);
           }
      }
-   if (conform) 
+   else if (conform) 
      {
         if (bd->layer != IL_CONFORM_LAYER) 
           e_border_layer_set(bd, IL_CONFORM_LAYER);
-     }
-
-   /* we lock stacking so that the keyboard does not get put 
-    * under the window (if it's needed) */
-   if (conform) bd->lock_user_stacking = 1;
-
-   /* handle setting quickpanel layer and lowering.
-    * This is handled here due to the delay with e_border_lower.
-    * If we try to handle this in zone_layout then things bog down a lot */
-   if (e_mod_border_is_quickpanel(bd)) 
-     {
-        if (bd->layer != IL_QUICK_PANEL_LAYER) 
-          e_border_layer_set(bd, IL_QUICK_PANEL_LAYER);
         bd->lock_user_stacking = 1;
-        e_border_lower(bd);
      }
 
    /* only set focus if border accepts it and it's not locked out */
@@ -242,48 +225,6 @@ _drag_end(E_Border *bd)
 {
    /* HANDLE A BORDER DRAG BEING ENDED */
    ecore_x_e_illume_drag_set(bd->client.win, 0);
-}
-
-static void 
-_quickpanel_on(E_Zone *zone) 
-{
-   Eina_List *qps, *l;
-   E_Border *bd;
-   int th, ty, ny = 0;
-
-   printf("Illume quickpanel on\n");
-   if (!(qps = e_mod_border_quickpanel_borders_get(zone))) return;
-   e_mod_border_top_shelf_pos_get(zone, NULL, &ty);
-   e_mod_border_top_shelf_size_get(zone, NULL, &th);
-   ny = (ty + th);
-   EINA_LIST_FOREACH(qps, l, bd) 
-     {
-        int mh;
-
-        e_mod_border_min_get(bd, NULL, &mh);
-//        if ((bd->w != zone->w) || (bd->h != mh))
-//          e_border_resize(bd, zone->w, mh);
-        if ((bd->x != zone->x) || (bd->y != ny) || (bd->fx.y != ny))
-          e_border_fx_offset(bd, 0, ny);
-        ny += mh;
-     }
-}
-
-static void 
-_quickpanel_off(E_Zone *zone) 
-{
-   Eina_List *qps, *l;
-   E_Border *bd;
-   int ty;
-
-   printf("Illume quickpanel off\n");
-   if (!(qps = e_mod_border_quickpanel_borders_get(zone))) return;
-   e_mod_border_top_shelf_pos_get(zone, NULL, &ty);
-   EINA_LIST_FOREACH(qps, l, bd) 
-     {
-        if ((bd->x != zone->x) || (bd->y != ty) || (bd->fx.y != ty))
-          e_border_fx_offset(bd, 0, ty);
-     }
 }
 
 static void 
@@ -388,6 +329,8 @@ _zone_layout(E_Zone *z)
              e_mod_border_min_get(bd, NULL, &mh);
              if ((bd->w != bd->zone->w) || (bd->h != mh)) 
                e_border_resize(bd, bd->zone->w, mh);
+             if (bd->layer != IL_QUICKPANEL_LAYER) 
+               e_border_layer_set(bd, IL_QUICKPANEL_LAYER);
           }
         else 
           {

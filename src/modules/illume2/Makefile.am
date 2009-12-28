@@ -31,6 +31,8 @@ module_la_SOURCES      = e_mod_main.h \
                          e_kbd.c \
                          e_kbd_dbus.h \
                          e_kbd_dbus.c \
+                         e_quickpanel.h \
+                         e_quickpanel.c \
                          e_mod_config.h \
                          e_mod_config.c \
                          e_mod_animation.h \

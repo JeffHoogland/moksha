@@ -401,21 +401,5 @@ _cb_event_client_message(void *data, int type, void *event)
         if ((mode) && (mode->funcs.drag_end))
           mode->funcs.drag_end(bd);
      }
-   else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE) 
-     {
-        E_Zone *zone;
-
-        zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
-        if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_OFF) 
-          {
-             if ((mode) && (mode->funcs.quickpanel_off))
-               mode->funcs.quickpanel_off(zone);
-          }
-        else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_ON) 
-          {
-             if ((mode) && (mode->funcs.quickpanel_on))
-               mode->funcs.quickpanel_on(zone);
-          }
-     }
    return 1;
 }
