@@ -129,8 +129,8 @@ EAPI void               e_container_shape_solid_rect_get(E_Container_Shape *es, 
 EAPI int                e_container_borders_count(E_Container *con);
 EAPI void               e_container_border_add(E_Border *bd);
 EAPI void               e_container_border_remove(E_Border *bd);
-EAPI void               e_container_window_raise(E_Container *con, Ecore_X_Window, int layer);
-EAPI void               e_container_window_lower(E_Container *con, Ecore_X_Window, int layer);
+EAPI void               e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer);
+EAPI void               e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer);
 EAPI E_Border          *e_container_border_raise(E_Border *bd);
 EAPI E_Border          *e_container_border_lower(E_Border *bd);
 EAPI void               e_container_border_stack_above(E_Border *bd, E_Border *above);
