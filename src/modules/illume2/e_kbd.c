@@ -632,44 +632,25 @@ _e_kbd_cb_border_pre_post_fetch(void *data, void *data2)
 	EINA_LIST_FOREACH(kbds, l, kbd)
           {
 	     if (!kbd->border)
-	       {
-		  _e_kbd_border_adopt(kbd, bd);
-		  bd->stolen = 1;
-		  if (bd->remember)
-		    {
-		       if (bd->bordername)
-			 {
-			    eina_stringshare_del(bd->bordername);
-			    bd->bordername = NULL;
-			    bd->client.border.changed = 1;
-			 }
-		       e_remember_unuse(bd->remember);
-		       bd->remember = NULL;
-		    }
-		  eina_stringshare_replace(&bd->bordername, "borderless");
-		  bd->client.border.changed = 1;
-		  return;
-	       }
+               _e_kbd_border_adopt(kbd, bd);
 	     else
-	       {
-		  kbd->waiting_borders = eina_list_append(kbd->waiting_borders, bd);
-		  bd->stolen = 1;
-		  if (bd->remember)
-		    {
-		       if (bd->bordername)
-			 {
-			    eina_stringshare_del(bd->bordername);
-			    bd->bordername = NULL;
-			    bd->client.border.changed = 1;
-			 }
-		       e_remember_unuse(bd->remember);
-		       bd->remember = NULL;
-		    }
-		  eina_stringshare_replace(&bd->bordername, "borderless");
-		  bd->client.border.changed = 1;
-		  return;
-	       }
-	  }
+               kbd->waiting_borders = eina_list_append(kbd->waiting_borders, bd);
+             bd->stolen = 1;
+             if (bd->remember)
+               {
+                  if (bd->bordername)
+                    {
+                       eina_stringshare_del(bd->bordername);
+                       bd->bordername = NULL;
+                       bd->client.border.changed = 1;
+                    }
+                  e_remember_unuse(bd->remember);
+                  bd->remember = NULL;
+               }
+             eina_stringshare_replace(&bd->bordername, "borderless");
+             bd->client.border.changed = 1;
+             return;
+          }
      }
 }
 
