@@ -22,6 +22,7 @@ il_config_init(E_Module *m)
    E_CONFIG_VAL(D, T, version, INT);
    E_CONFIG_VAL(D, T, sliding.kbd.duration, INT);
    E_CONFIG_VAL(D, T, sliding.softkey.duration, INT);
+   E_CONFIG_VAL(D, T, sliding.quickpanel.duration, INT);
    E_CONFIG_VAL(D, T, policy.name, STR);
    E_CONFIG_VAL(D, T, policy.mode.dual, INT);
    E_CONFIG_VAL(D, T, policy.mode.side, INT);
@@ -127,6 +128,10 @@ il_config_init(E_Module *m)
           {
              il_cfg->policy.mode.dual = 0;
              il_cfg->policy.mode.side = 0;
+          }
+        if ((il_cfg->version & 0xffff) < 3) 
+          {
+             il_cfg->sliding.quickpanel.duration = 1000;
           }
         il_cfg->version = (IL_CONFIG_MAJ << 16) | IL_CONFIG_MIN;
      }

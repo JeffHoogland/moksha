@@ -78,6 +78,30 @@ _il_config_animation_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *
                                   _il_config_animation_change, NULL);
    e_widget_list_object_append(list, of, 1, 0, 0.0);
 
+   of = e_widget_framelist_add(evas, _("Quickpanel"), 0);
+   rg = e_widget_radio_group_new(&(il_cfg->sliding.quickpanel.duration));
+   ow = e_widget_radio_add(evas, _("Slow"), 2000, rg);
+   e_widget_framelist_object_append(of, ow);
+   evas_object_smart_callback_add(ow, "changed", 
+                                  _il_config_animation_change, NULL);
+   ow = e_widget_radio_add(evas, _("Medium"), 1000, rg);
+   e_widget_framelist_object_append(of, ow);
+   evas_object_smart_callback_add(ow, "changed", 
+                                  _il_config_animation_change, NULL);
+   ow = e_widget_radio_add(evas, _("Fast"), 500, rg);
+   e_widget_framelist_object_append(of, ow);
+   evas_object_smart_callback_add(ow, "changed", 
+                                  _il_config_animation_change, NULL);
+   ow = e_widget_radio_add(evas, _("Very Fast"), 250, rg);
+   e_widget_framelist_object_append(of, ow);
+   evas_object_smart_callback_add(ow, "changed", 
+                                  _il_config_animation_change, NULL);
+   ow = e_widget_radio_add(evas, _("Off"), 0, rg);
+   e_widget_framelist_object_append(of, ow);
+   evas_object_smart_callback_add(ow, "changed", 
+                                  _il_config_animation_change, NULL);
+   e_widget_list_object_append(list, of, 1, 0, 0.0);
+
    return list;
 }
 

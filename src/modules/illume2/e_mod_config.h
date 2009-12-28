@@ -1,7 +1,7 @@
 #ifndef E_MOD_CONFIG_H
 # define E_MOD_CONFIG_H
 
-# define IL_CONFIG_MIN 2
+# define IL_CONFIG_MIN 3
 # define IL_CONFIG_MAJ 0
 
 typedef struct _Il_Config Il_Config;
@@ -15,7 +15,7 @@ struct _Il_Config
         struct 
           {
              int duration;
-          } kbd, softkey;
+          } kbd, softkey, quickpanel;
      } sliding;
 
    struct 
