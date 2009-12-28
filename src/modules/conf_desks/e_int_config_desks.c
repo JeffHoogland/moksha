@@ -122,10 +122,8 @@ _basic_apply_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
      {
 	cfdata->flip_mode = 1;
 	e_config->desk_flip_animate_mode = 1;
-	e_config->desk_flip_animate_interpolation = 0;
-	e_config->desk_flip_animate_time  = 0.5;
      }
-   else
+   if (!cfdata->flip_animate)
      {
 	cfdata->flip_mode = 0;
 	e_config->desk_flip_animate_mode = 0;
@@ -153,20 +151,9 @@ _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	      return 1;
 	 }
 
-   if (cfdata->flip_animate)
-     {
-	if ((cfdata->flip_mode != 1) ||
-	    (e_config->desk_flip_animate_mode != 1) ||
-	    (e_config->desk_flip_animate_interpolation != 0) ||
-	    (e_config->desk_flip_animate_time != 0.5))
-	  return 1;
-     }
-   else
-     {
-	if ((cfdata->flip_mode != 0) ||
-	    (e_config->desk_flip_animate_mode != 0))
-	  return 1;
-     }
+   if ( (cfdata->flip_animate && (e_config->desk_flip_animate_mode == 0)) ||
+       (!cfdata->flip_animate && (e_config->desk_flip_animate_mode != 0)) )
+      return 1;
 
    return 0;
 }
@@ -184,6 +171,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      EINA_LIST_FOREACH(man->containers, ll, con)
        EINA_LIST_FOREACH(con->zones, lll, zone)
          e_zone_desk_count_set(zone, cfdata->x, cfdata->y);
+
+   cfdata->flip_animate = cfdata->flip_mode > 0;
 
    e_config->desk_flip_animate_mode = cfdata->flip_mode;
    e_config->desk_flip_animate_interpolation = cfdata->flip_interp;
