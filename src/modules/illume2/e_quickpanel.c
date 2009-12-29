@@ -79,7 +79,10 @@ e_quickpanel_show(E_Quickpanel *qp)
           ny += bd->h;
 
         EINA_LIST_FOREACH(qp->borders, l, bd) 
-          e_border_fx_offset(bd, 0, ny);
+          {
+             e_border_lower(bd);
+             e_border_fx_offset(bd, 0, ny);
+          }
         qp->visible = 1;
      }
    else
@@ -309,7 +312,10 @@ _e_quickpanel_hide(E_Quickpanel *qp)
         E_Border *bd;
 
         EINA_LIST_FOREACH(qp->borders, l, bd) 
-          e_border_fx_offset(bd, 0, 0);
+          {
+             e_border_lower(bd);
+             e_border_fx_offset(bd, 0, 0);
+          }
         qp->visible = 0;
      }
    else
