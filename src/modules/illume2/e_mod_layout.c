@@ -27,6 +27,8 @@ void
 e_mod_layout_init(void)
 {
    Eina_List *l;
+   Ecore_X_Illume_Mode mode;
+   Ecore_X_Window xwin;
 
    hook1 = e_border_hook_add(E_BORDER_HOOK_EVAL_POST_FETCH,
 			     _e_mod_layout_cb_hook_post_fetch, NULL);
@@ -52,6 +54,18 @@ e_mod_layout_init(void)
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_CLIENT_MESSAGE, _cb_event_client_message, NULL));
+
+   xwin = ecore_x_window_root_first_get();
+   if (il_cfg->policy.mode.dual == 0) 
+     mode = ECORE_X_ILLUME_MODE_SINGLE;
+   else 
+     {
+        if (il_cfg->policy.mode.side == 0)
+          mode = ECORE_X_ILLUME_MODE_DUAL_TOP;
+        else
+          mode = ECORE_X_ILLUME_MODE_DUAL_LEFT;
+     }
+   ecore_x_e_illume_mode_set(xwin, mode);
 
    illume_layout_illume_init();
 }
@@ -293,16 +307,20 @@ _cb_event_client_message(void *data, int type, void *event)
 
         if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_SINGLE)
           il_cfg->policy.mode.dual = 0;
-        else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL)
-          il_cfg->policy.mode.dual = 1;
+        else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL_TOP) 
+          {
+             il_cfg->policy.mode.dual = 1;
+             il_cfg->policy.mode.side = 0;
+             lock = 0;
+          }
+        else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL_LEFT) 
+          {
+             il_cfg->policy.mode.dual = 1;
+             il_cfg->policy.mode.side = 1;
+          }
         else /* unknown */
           il_cfg->policy.mode.dual = 0;
         e_config_save_queue();
-
-        if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL) 
-          {
-             if (il_cfg->policy.mode.side == 0) lock = 0;
-          }
 
         zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
         bd = e_mod_border_top_shelf_get(zone);

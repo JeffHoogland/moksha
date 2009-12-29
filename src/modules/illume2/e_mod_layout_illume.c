@@ -230,6 +230,7 @@ _drag_end(E_Border *bd)
 {
    /* HANDLE A BORDER DRAG BEING ENDED */
    ecore_x_e_illume_drag_set(bd->client.win, 0);
+//   _zone_layout(bd->zone);
 }
 
 static void 

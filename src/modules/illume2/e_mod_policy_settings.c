@@ -104,8 +104,13 @@ _il_config_policy_settings_change_timeout(void *data)
    e_config_save_queue();
    _ps_change_timer = NULL;
 
-   if (il_cfg->policy.mode.dual)
-     mode = ECORE_X_ILLUME_MODE_DUAL;
+   if (il_cfg->policy.mode.dual) 
+     {
+        if (il_cfg->policy.mode.side == 0)
+          mode = ECORE_X_ILLUME_MODE_DUAL_TOP;
+        else
+          mode = ECORE_X_ILLUME_MODE_DUAL_LEFT;
+     }
    else 
      mode = ECORE_X_ILLUME_MODE_SINGLE;
 

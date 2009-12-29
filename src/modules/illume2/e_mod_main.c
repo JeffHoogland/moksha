@@ -19,6 +19,8 @@ EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Illume2" };
 EAPI void *
 e_modapi_init(E_Module *m) 
 {
+   e_module_priority_set(m, 100);
+
    /* init the config subsystem */
    if (!il_config_init(m)) return NULL;
 

@@ -20,6 +20,7 @@ static void _il_ind_win_menu_append(Il_Ind_Win *iwin, E_Menu *mn);
 static void _il_ind_win_cb_menu_pre(void *data, E_Menu *mn);
 static void _il_ind_win_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn);
 static void _il_ind_win_cb_menu_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
+static int _il_ind_win_is_locked(void);
 
 static int my = 0;
 
@@ -108,11 +109,15 @@ e_mod_ind_win_new(void)
    e_gadcon_ecore_evas_set(iwin->gadcon, iwin->win->ecore_evas);
    e_gadcon_util_menu_attach_func_set(iwin->gadcon, 
                                       _il_ind_win_cb_menu_items_append, iwin);
-
    e_gadcon_populate(iwin->gadcon);
 
    e_win_size_min_set(iwin->win, zone->w, 32);
    e_win_show(iwin->win);
+
+   if (_il_ind_win_is_locked()) 
+     ecore_x_e_illume_drag_locked_set(iwin->win->border->client.win, 1);
+   else
+     ecore_x_e_illume_drag_locked_set(iwin->win->border->client.win, 0);
 
    return iwin;
 }
@@ -220,7 +225,7 @@ _il_ind_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event)
 
    if (bd->y != ny) 
      {
-        e_border_move(bd, bd->x, ny);
+        e_border_move(bd, bd->zone->x, ny);
         my = py;
      }
 }
@@ -347,4 +352,17 @@ _il_ind_win_cb_menu_contents(void *data, E_Menu *mn, E_Menu_Item *mi)
    if (!(iwin = data)) return;
    if (!iwin->gadcon->config_dialog) 
      e_int_gadcon_config_shelf(iwin->gadcon);
+}
+
+static int 
+_il_ind_win_is_locked(void) 
+{
+   Ecore_X_Window xwin;
+   Ecore_X_Illume_Mode mode;
+
+   xwin = ecore_x_window_root_first_get();
+   mode = ecore_x_e_illume_mode_get(xwin);
+   if (mode == ECORE_X_ILLUME_MODE_DUAL_TOP)
+     return 0;
+   return 1;
 }
