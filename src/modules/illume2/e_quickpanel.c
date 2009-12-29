@@ -231,7 +231,7 @@ _e_quickpanel_slide(E_Quickpanel *qp, int visible, double len)
         Eina_List *l;
         E_Border *bd;
 
-        EINA_LIST_FOREACH(qp->borders, l, bd)
+        EINA_LIST_FOREACH(qp->borders, l, bd) 
           qp->adjust_end += bd->h;
      }
    else 
@@ -271,7 +271,10 @@ _e_quickpanel_cb_animate(void *data)
    qp->adjust = (qp->adjust_end * v) + (qp->adjust_start * (1.0 - v));
 
    EINA_LIST_FOREACH(qp->borders, l, bd) 
-     e_border_fx_offset(bd, 0, (bd->h + qp->adjust));
+     {
+        e_border_lower(bd);
+        e_border_fx_offset(bd, 0, (bd->h + qp->adjust));
+     }
 
    if (t == qp->len) 
      {
