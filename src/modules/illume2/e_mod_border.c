@@ -222,7 +222,20 @@ e_mod_border_is_conformant(E_Border *bd)
 Eina_Bool 
 e_mod_border_is_quickpanel(E_Border *bd) 
 {
+   if (strstr(bd->client.icccm.class, "config")) return EINA_FALSE;
    return ecore_x_e_illume_quickpanel_get(bd->client.win);
+}
+
+Eina_Bool 
+e_mod_border_is_valid(E_Border *bd) 
+{
+   if (!bd) return EINA_FALSE;
+   if (e_mod_border_is_dialog(bd)) return EINA_FALSE;
+   if (e_mod_border_is_keyboard(bd)) return EINA_FALSE;
+   if (e_mod_border_is_bottom_panel(bd)) return EINA_FALSE;
+   if (e_mod_border_is_top_shelf(bd)) return EINA_FALSE;
+   if (e_mod_border_is_quickpanel(bd)) return EINA_FALSE;
+   return EINA_TRUE;
 }
 
 Eina_List *

@@ -26,12 +26,15 @@ Eina_Bool e_mod_border_is_side_pane_right(E_Border *bd);
 Eina_Bool e_mod_border_is_overlay(E_Border *bd);
 Eina_Bool e_mod_border_is_conformant(E_Border *bd);
 Eina_Bool e_mod_border_is_quickpanel(E_Border *bd);
+Eina_Bool e_mod_border_is_valid(E_Border *bd);
 
 Eina_List *e_mod_border_valid_borders_get(E_Zone *zone);
 E_Border *e_mod_border_valid_border_get(E_Zone *zone);
 int e_mod_border_valid_count_get(E_Zone *zone);
+
 Eina_List *e_mod_border_quickpanel_borders_get(E_Zone *zone);
 int e_mod_border_quickpanel_count_get(E_Zone *zone);
+
 E_Border *e_mod_border_at_xy_get(E_Zone *zone, int x, int y);
 E_Border *e_mod_border_in_region_get(E_Zone *zone, int x, int y, int w, int h);
 E_Border *e_mod_border_keyboard_get(E_Zone *zone);

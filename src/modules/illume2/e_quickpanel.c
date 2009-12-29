@@ -107,6 +107,25 @@ e_quickpanel_by_zone_get(E_Zone *zone)
    return NULL;
 }
 
+void 
+e_quickpanel_position_update(E_Quickpanel *qp) 
+{
+   Eina_List *l;
+   E_Border *bd;
+   int ty;
+
+   if (!qp) return;
+   e_mod_border_top_shelf_pos_get(qp->zone, NULL, &ty);
+   EINA_LIST_FOREACH(qp->borders, l, bd) 
+     {
+        bd->x = qp->zone->x;
+        bd->y = (ty - qp->h);
+        bd->changed = 1;
+        bd->changes.pos = 1;
+//        e_border_move(bd, qp->zone->x, (ty - qp->h));
+     }
+}
+
 /* local functions */
 static void 
 _e_quickpanel_cb_free(E_Quickpanel *qp) 
@@ -146,15 +165,14 @@ _e_quickpanel_cb_border_pre_post_fetch(void *data, void *data2)
 {
    E_Border *bd;
    E_Quickpanel *qp;
-   int ty, th;
+   int ty;
 
    if (!(bd = data2)) return;
    if (!bd->new_client) return;
-   if (_e_quickpanel_by_border_get(bd)) return;
    if (!_e_quickpanel_border_is_quickpanel(bd)) return;
+   if (_e_quickpanel_by_border_get(bd)) return;
    if (!(qp = e_quickpanel_by_zone_get(bd->zone))) return;
    e_mod_border_top_shelf_pos_get(qp->zone, NULL, &ty);
-   e_mod_border_top_shelf_size_get(qp->zone, NULL, &th);
    bd->stolen = 1;
    if (bd->remember) 
      {
@@ -172,7 +190,12 @@ _e_quickpanel_cb_border_pre_post_fetch(void *data, void *data2)
    qp->h += bd->h;
    e_border_move(bd, qp->zone->x, (ty - qp->h));
    if (qp->visible) 
-     e_border_fx_offset(bd, 0, (bd->h - th));
+     {
+        int th;
+
+        e_mod_border_top_shelf_size_get(qp->zone, NULL, &th);
+        e_border_fx_offset(bd, 0, (bd->h - th));
+     }
    qp->borders = eina_list_append(qp->borders, bd);
 }
 
@@ -281,12 +304,9 @@ _e_quickpanel_hide(E_Quickpanel *qp)
      {
         Eina_List *l;
         E_Border *bd;
-        int th;
 
-        e_mod_border_top_shelf_size_get(qp->zone, NULL, &th);
         EINA_LIST_FOREACH(qp->borders, l, bd) 
           e_border_fx_offset(bd, 0, 0);
-//          e_border_fx_offset(bd, 0, -th);
         qp->visible = 0;
      }
    else

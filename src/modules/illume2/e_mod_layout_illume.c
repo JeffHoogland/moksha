@@ -5,6 +5,7 @@
 #include "e_mod_layout.h"
 #include "e_mod_layout_illume.h"
 #include "e_kbd.h"
+#include "e_quickpanel.h"
 
 /* define some values here for easily changing layers so we don't have to 
  * grep through code to change layers */
@@ -79,19 +80,21 @@ _border_resize_fx(E_Border *bd, int bx, int by, int bw, int bh)
              bd->client.w = bw;
              bd->client.h = bh;
              bd->changes.size = 1;
+             bd->changed = 1;
           }
         if ((bd->x != bx) || (bd->y != by)) 
           {
              bd->x = bx;
              bd->y = by;
              bd->changes.pos = 1;
+             bd->changed = 1;
           }
      }
    else 
      {
-        if ((bd->w != bw) || (bd->h != bh))
+        if ((bd->w != bw) || (bd->h != bh)) 
           e_border_resize(bd, bw, bh);
-        if ((bd->x != bx) || (bd->y != by))
+        if ((bd->x != bx) || (bd->y != by)) 
           e_border_fx_offset(bd, bx, by);
      }
 }
@@ -185,6 +188,8 @@ static void
 _border_activate(E_Border *bd) 
 {
    /* HANDLE A BORDER BEING ACTIVATED */
+
+   if (bd->stolen) return;
 
    /* only set focus if border accepts it and it's not locked out */
    if (((!bd->client.icccm.accepts_focus) && (!bd->client.icccm.take_focus)) ||
@@ -331,9 +336,13 @@ _zone_layout(E_Zone *z)
                e_border_resize(bd, bd->zone->w, mh);
              if (bd->layer != IL_QUICKPANEL_LAYER) 
                e_border_layer_set(bd, IL_QUICKPANEL_LAYER);
+             bd->lock_user_stacking = 1;
           }
         else 
           {
+             if (bd->layer != IL_APP_LAYER) 
+               e_border_layer_set(bd, IL_APP_LAYER);
+
              /* normal border, handle layout based on policy mode */
              if (il_cfg->policy.mode.dual) _zone_layout_dual(bd);
              else _zone_layout_single(bd);
@@ -382,10 +391,7 @@ static void
 _zone_layout_dual_top(E_Border *bd) 
 {
    int kx, ky, kw, kh, ss, ps;
-   int count, conform;
-
-   /* get count of valid borders */
-   count = e_mod_border_valid_count_get(bd->zone);
+   int conform;
 
    /* fetch if this border is conformant */
    conform = e_mod_border_is_conformant(bd);
@@ -404,7 +410,7 @@ _zone_layout_dual_top(E_Border *bd)
      }
 
    /* if there are no other borders, than give this one all available space */
-   if (count < 2) 
+   if (e_mod_border_valid_count_get(bd->zone) < 2) 
      _border_resize_fx(bd, kx, (ky + ss), kw, (kh - ss - ps));
    else 
      {
@@ -574,10 +580,7 @@ static void
 _zone_layout_dual_left(E_Border *bd) 
 {
    int kx, ky, kw, kh, ss, ps;
-   int count, conform;
-
-   /* get count of valid borders */
-   count = e_mod_border_valid_count_get(bd->zone);
+   int conform;
 
    /* fetch if this border is conformant */
    conform = e_mod_border_is_conformant(bd);
@@ -596,7 +599,7 @@ _zone_layout_dual_left(E_Border *bd)
      }
 
    /* if there are no other borders, than give this one all available space */
-   if (count < 2) 
+   if (e_mod_border_valid_count_get(bd->zone) < 2) 
      _border_resize_fx(bd, kx, (ky + ss), kw, (kh - ss - ps));
    else 
      {

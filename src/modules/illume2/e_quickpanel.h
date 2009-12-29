@@ -24,5 +24,6 @@ E_Quickpanel *e_quickpanel_new(E_Zone *zone);
 void e_quickpanel_show(E_Quickpanel *qp);
 void e_quickpanel_hide(E_Quickpanel *qp);
 E_Quickpanel *e_quickpanel_by_zone_get(E_Zone *zone);
+void e_quickpanel_position_update(E_Quickpanel *qp);
 
 #endif
