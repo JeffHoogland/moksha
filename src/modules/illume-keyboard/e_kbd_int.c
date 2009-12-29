@@ -20,7 +20,6 @@ static void _e_kbd_int_zoomkey_down(E_Kbd_Int *ki);
 static void _e_kbd_int_matches_update(void *data);
 static void _e_kbd_int_dictlist_down(E_Kbd_Int *ki);
 static void _e_kbd_int_matchlist_down(E_Kbd_Int *ki);
-static void _e_kbd_int_layoutlist_down(E_Kbd_Int *ki);
 
 static void
 _e_kbd_int_cb_resize(E_Win *win)
@@ -32,7 +31,6 @@ _e_kbd_int_cb_resize(E_Win *win)
    _e_kbd_int_zoomkey_down(ki);
    _e_kbd_int_dictlist_down(ki);
    _e_kbd_int_matchlist_down(ki);
-   _e_kbd_int_layoutlist_down(ki);
 }
 
 static const char *
@@ -1263,7 +1261,6 @@ _e_kbd_int_cb_client_message(void *data, int type, void *event)
 	     _e_kbd_int_zoomkey_down(ki);
 	     _e_kbd_int_dictlist_down(ki);
 	     _e_kbd_int_matchlist_down(ki);
-	     _e_kbd_int_layoutlist_down(ki);
 	  }
 	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON)
 	  {
@@ -1462,7 +1459,6 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    e_popup_edje_bg_object_set(ki->dictlist.popup, ki->dictlist.base_obj);
    e_popup_show(ki->dictlist.popup);
 
-   _e_kbd_int_layoutlist_down(ki);
    _e_kbd_int_matchlist_down(ki);
 }
 
@@ -1568,7 +1564,6 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
    e_popup_show(ki->matchlist.popup);
 
    _e_kbd_int_dictlist_down(ki);
-   _e_kbd_int_layoutlist_down(ki);
 }
 
 static void
@@ -1599,110 +1594,12 @@ _e_kbd_int_cb_dicts(void *data, Evas_Object *obj, const char *emission, const ch
 }
 
 static void
-_e_kbd_int_layoutlist_down(E_Kbd_Int *ki)
-{
-   if (!ki->layoutlist.popup) return;
-   e_object_del(E_OBJECT(ki->layoutlist.popup));
-   ki->layoutlist.popup = NULL;
-}
-
-static void
-_e_kbd_int_cb_layoutlist_item_sel(void *data)
-{
-   E_Kbd_Int *ki;
-   E_Kbd_Int_Layout *kil;
-   int i;
-
-   ki = data;
-   i = e_widget_ilist_selected_get(ki->layoutlist.ilist_obj);
-   kil = eina_list_nth(ki->layouts, i);
-   _e_kbd_int_layout_select(ki, kil);
-   _e_kbd_int_layoutlist_down(ki);
-}
-
-static void
-_e_kbd_int_layoutlist_up(E_Kbd_Int *ki)
-{
-   Eina_List *l;
-   Evas_Object *o, *o2;
-   Evas_Coord mw, mh;
-   int sx, sy, sw, sh;
-
-   if (ki->layoutlist.popup) return;
-   ki->layoutlist.popup = e_popup_new(ki->win->border->zone, -1, -1, 1, 1);
-   e_popup_layer_set(ki->layoutlist.popup, 190);
-
-   o = _theme_obj_new(ki->layoutlist.popup->evas, ki->themedir,
-		      "e/modules/kbd/match/default");
-   ki->layoutlist.base_obj = o;
-
-   o = e_widget_ilist_add(ki->layoutlist.popup->evas, 32 * e_scale, 32 * e_scale, NULL);
-   ki->layoutlist.ilist_obj = o;
-   e_widget_ilist_selector_set(o, 1);
-   edje_object_part_swallow(ki->layoutlist.base_obj, "e.swallow.content", o);
-   evas_object_show(o);
-
-   e_widget_ilist_freeze(o);
-   for (l = ki->layouts; l; l = l->next)
-     {
-	E_Kbd_Int_Layout *kil;
-
-	kil = l->data;
-	o2 = e_icon_add(ki->layoutlist.popup->evas);
-	e_icon_fill_inside_set(o2, 1);
-	e_icon_scale_up_set(o2, 0);
-
-	if (kil->icon)
-	  {
-	     char *p;
-
-	     p = strrchr(kil->icon, '.');
-	     if (!strcmp(p, ".edj"))
-	       e_icon_file_edje_set(o2, kil->icon, "icon");
-	     else
-	       e_icon_file_set(o2, kil->icon);
-	  }
-	evas_object_show(o2);
-	e_widget_ilist_append(o, o2, kil->name,
-			      _e_kbd_int_cb_layoutlist_item_sel, ki, NULL);
-     }
-   e_widget_ilist_thaw(o);
-   e_widget_ilist_go(o);
-
-   e_widget_ilist_preferred_size_get(o, &mw, &mh);
-   if (mh < (120 *e_scale)) mh = 120 * e_scale;
-
-   edje_extern_object_min_size_set(ki->layoutlist.ilist_obj, mw, mh);
-   edje_object_part_swallow(ki->layoutlist.base_obj, "e.swallow.content",
-		   	    ki->layoutlist.ilist_obj);
-
-   edje_object_size_min_calc(ki->layoutlist.base_obj, &mw, &mh);
-   edje_extern_object_min_size_set(ki->layoutlist.ilist_obj, 0, 0);
-   edje_object_part_swallow(ki->layoutlist.base_obj, "e.swallow.content",
-			    ki->layoutlist.ilist_obj);
-   e_zone_useful_geometry_get(ki->win->border->zone, &sx, &sy, &sw, &sh);   
-   mw = ki->win->w;
-   if (mh > (sh - ki->win->h)) mh = sh - ki->win->h;
-   e_popup_move_resize(ki->layoutlist.popup,
-		       ki->win->x, ki->win->y - mh, mw, mh);
-   evas_object_resize(ki->layoutlist.base_obj, 
-		      ki->layoutlist.popup->w, ki->layoutlist.popup->h);
-   evas_object_show(ki->layoutlist.base_obj);
-   e_popup_edje_bg_object_set(ki->layoutlist.popup, ki->layoutlist.base_obj);
-   e_popup_show(ki->layoutlist.popup);
-
-   _e_kbd_int_dictlist_down(ki);
-   _e_kbd_int_matchlist_down(ki);
-}
-
-static void
 _e_kbd_int_cb_layouts(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Kbd_Int *ki;
 
    ki = data;
-   if (ki->layoutlist.popup) _e_kbd_int_layoutlist_down(ki);
-   else _e_kbd_int_layoutlist_up(ki);
+   _e_kbd_int_layout_next(ki);
 }
 
 EAPI E_Kbd_Int *
@@ -1810,7 +1707,6 @@ e_kbd_int_free(E_Kbd_Int *ki)
    _e_kbd_int_layout_free(ki);
    ecore_event_handler_del(ki->client_message_handler);
    if (ki->down.hold_timer) ecore_timer_del(ki->down.hold_timer);
-   _e_kbd_int_layoutlist_down(ki);
    _e_kbd_int_matchlist_down(ki);
    _e_kbd_int_zoomkey_down(ki);
    e_kbd_buf_free(ki->kbuf);
