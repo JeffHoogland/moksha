@@ -26,6 +26,7 @@ struct _Il_Home_Win
 struct _Il_Home_Exec 
 {
    Efreet_Desktop *desktop;
+   Ecore_Exe *exec;
    E_Border *border;
    Ecore_Timer *timeout;
    int startup_id;
@@ -136,6 +137,12 @@ e_modapi_shutdown(E_Module *m)
 
    EINA_LIST_FREE(exes, exe) 
      {
+        if (exe->exec) 
+          {
+             ecore_exe_terminate(exe->exec);
+             ecore_exe_free(exe->exec);
+             exe->exec = NULL;
+          }
         if (exe->handle) 
           {
              e_busycover_pop(busycover, exe->handle);
@@ -474,7 +481,7 @@ _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop)
 
    EINA_LIST_FOREACH(exes, l, exe) 
      {
-        if ((exe->desktop == desktop)) 
+        if (exe->desktop == desktop) 
           {
              if (exe->border) 
                {
@@ -505,6 +512,7 @@ _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop)
    exe->desktop = desktop;
    if (eins) 
      {
+        exe->exec = eins->exe;
         exe->startup_id = eins->startup_id;
         exe->pid = ecore_exe_pid_get(eins->exe);
      }
