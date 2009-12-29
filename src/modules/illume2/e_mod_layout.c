@@ -13,8 +13,6 @@ static int _cb_event_border_add(void *data, int type, void *event);
 static int _cb_event_border_remove(void *data, int type, void *event);
 static int _cb_event_border_focus_in(void *data, int type, void *event);
 static int _cb_event_border_focus_out(void *data, int type, void *event);
-static int _cb_event_border_show(void *data, int type, void *event);
-static int _cb_event_border_hide(void *data, int type, void *event);
 static int _cb_event_zone_move_resize(void *data, int type, void *event);
 static int _cb_event_client_message(void *data, int type, void *event);
 
