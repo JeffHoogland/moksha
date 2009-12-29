@@ -50,12 +50,6 @@ e_mod_layout_init(void)
       (E_EVENT_BORDER_FOCUS_OUT, _cb_event_border_focus_out, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_SHOW, _cb_event_border_show, NULL));
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_HIDE, _cb_event_border_hide, NULL));
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
       (E_EVENT_ZONE_MOVE_RESIZE, _cb_event_zone_move_resize, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
@@ -223,13 +217,11 @@ static int
 _cb_event_border_add(void *data, int type, void *event)
 {
    E_Event_Border_Add *ev;
-   E_Border *bd;
 
    ev = event;
    if (ev->border->stolen) return 1;
-   bd = ev->border;
    if ((mode) && (mode->funcs.border_add))
-     mode->funcs.border_add(bd);
+     mode->funcs.border_add(ev->border);
    return 1;
 }
 
@@ -237,13 +229,11 @@ static int
 _cb_event_border_remove(void *data, int type, void *event)
 {
    E_Event_Border_Remove *ev;
-   E_Border *bd;
 
    ev = event;
    if (ev->border->stolen) return 1;
-   bd = ev->border;
    if ((mode) && (mode->funcs.border_del))
-     mode->funcs.border_del(bd);
+     mode->funcs.border_del(ev->border);
    return 1;
 }
 
@@ -251,13 +241,11 @@ static int
 _cb_event_border_focus_in(void *data, int type, void *event)
 {
    E_Event_Border_Focus_In *ev;
-   E_Border *bd;
 
    ev = event;
    if (ev->border->stolen) return 1;
-   bd = ev->border;
    if ((mode) && (mode->funcs.border_focus_in))
-     mode->funcs.border_focus_in(bd);
+     mode->funcs.border_focus_in(ev->border);
    return 1;
 }
 
@@ -265,33 +253,11 @@ static int
 _cb_event_border_focus_out(void *data, int type, void *event)
 {
    E_Event_Border_Focus_Out *ev;
-   E_Border *bd;
 
    ev = event;
    if (ev->border->stolen) return 1;
-   bd = ev->border;
    if ((mode) && (mode->funcs.border_focus_out))
-     mode->funcs.border_focus_out(bd);
-   return 1;
-}
-
-static int
-_cb_event_border_show(void *data, int type, void *event)
-{
-   E_Event_Border_Show *ev;
-
-   ev = event;
-   if (ev->border->stolen) return 1;
-   return 1;
-}
-
-static int
-_cb_event_border_hide(void *data, int type, void *event)
-{
-   E_Event_Border_Hide *ev;
-
-   ev = event;
-   if (ev->border->stolen) return 1;
+     mode->funcs.border_focus_out(ev->border);
    return 1;
 }
 
