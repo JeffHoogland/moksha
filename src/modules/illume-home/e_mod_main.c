@@ -47,7 +47,6 @@ static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
 static void _il_home_btn_cb_click(void *data, void *data2);
 static void _il_home_win_new(Instance *inst);
 static void _il_home_win_cb_free(Il_Home_Win *hwin);
-static void _il_home_win_cb_delete(E_Win *win);
 static void _il_home_win_cb_resize(E_Win *win);
 static void _il_home_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _il_home_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
@@ -296,7 +295,6 @@ _il_home_win_new(Instance *inst)
 
    inst->wins = eina_list_append(inst->wins, hwin);
 
-   e_win_delete_callback_set(hwin->win, _il_home_win_cb_delete);
    e_win_resize_callback_set(hwin->win, _il_home_win_cb_resize);
    hwin->win->data = inst;
 
@@ -362,29 +360,6 @@ _il_home_win_cb_free(Il_Home_Win *hwin)
    hwin->o_fm = NULL;
    if (hwin->win) e_object_del(E_OBJECT(hwin->win));
    hwin->win = NULL;
-}
-
-static void 
-_il_home_win_cb_delete(E_Win *win) 
-{
-   Instance *inst;
-   Eina_List *l;
-   Il_Home_Win *hwin;
-
-   if (!(inst = win->data)) return;
-   EINA_LIST_FOREACH(inst->wins, l, hwin) 
-     {
-        if (hwin->win != win) 
-          {
-             hwin = NULL;
-             continue;
-          }
-        else break;
-     }
-   if (!hwin) return;
-   inst->wins = eina_list_remove(inst->wins, hwin);
-   e_object_del(E_OBJECT(hwin));
-   hwin = NULL;
 }
 
 static void 
