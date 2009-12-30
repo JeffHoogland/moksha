@@ -1382,10 +1382,10 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
    Ecore_Event_Key *ev;
 
    ev_last_is_mouse = 0;
-   
+
    ev = event;
    if (ev->event_window != input_window) return 1;
-   if      (!strcmp(ev->key, "Up"))
+   if (!strcmp(ev->key, "Up"))
      _e_exebuf_prev();
    else if (!strcmp(ev->key, "Down"))
      _e_exebuf_next();
