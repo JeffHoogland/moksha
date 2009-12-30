@@ -305,16 +305,22 @@ _cb_event_client_message(void *data, int type, void *event)
         E_Zone *zone;
         int lock = 1;
 
+        zone = e_util_zone_current_get(e_manager_current_get());
+
         if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_SINGLE)
           il_cfg->policy.mode.dual = 0;
         else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL_TOP) 
           {
+             if (e_mod_border_valid_count_get(zone) < 2) 
+               ecore_x_e_illume_home_send(ecore_x_window_root_first_get());
              il_cfg->policy.mode.dual = 1;
              il_cfg->policy.mode.side = 0;
              lock = 0;
           }
         else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL_LEFT) 
           {
+             if (e_mod_border_valid_count_get(zone) < 2) 
+               ecore_x_e_illume_home_send(ecore_x_window_root_first_get());
              il_cfg->policy.mode.dual = 1;
              il_cfg->policy.mode.side = 1;
           }
@@ -322,7 +328,6 @@ _cb_event_client_message(void *data, int type, void *event)
           il_cfg->policy.mode.dual = 0;
         e_config_save_queue();
 
-        zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
         bd = e_mod_border_top_shelf_get(zone);
         if (bd) 
           ecore_x_e_illume_drag_locked_set(bd->client.win, lock);

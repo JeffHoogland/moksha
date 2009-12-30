@@ -282,8 +282,10 @@ _e_quickpanel_cb_animate(void *data)
    if (t == qp->len) 
      {
         qp->animator = NULL;
-        if (qp->visible) qp->visible = 0;
-        else qp->visible = 1;
+        if (qp->visible) 
+          qp->visible = 0;
+        else 
+          qp->visible = 1;
         return 0;
      }
    return 1;
