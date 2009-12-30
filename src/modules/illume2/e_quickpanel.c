@@ -14,9 +14,12 @@ static int _e_quickpanel_cb_animate(void *data);
 static int _e_quickpanel_cb_delay_hide(void *data);
 static void _e_quickpanel_hide(E_Quickpanel *qp);
 static int _e_quickpanel_cb_sort(const void *b1, const void *b2);
+static int _e_quickpanel_cb_mouse_down(void *data, int type, void *event);
+static int _e_quickpanel_cb_mouse_wheel(void *data, int type, void *event);
 
 /* local variables */
 static Eina_List *qps = NULL, *handlers = NULL, *hooks = NULL;
+static Ecore_X_Window input_win = 0;
 
 /* public functions */
 int 
@@ -26,6 +29,15 @@ e_quickpanel_init(void)
      eina_list_append(handlers, 
                       ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, 
                                               _e_quickpanel_cb_client_message, NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                       ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, 
+                                               _e_quickpanel_cb_mouse_down, NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                       ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL, 
+                                               _e_quickpanel_cb_mouse_wheel, NULL));
+
    hooks = 
      eina_list_append(hooks, 
                       e_border_hook_add(E_BORDER_HOOK_EVAL_PRE_POST_FETCH, 
@@ -58,7 +70,6 @@ e_quickpanel_new(E_Zone *zone)
    qp = E_OBJECT_ALLOC(E_Quickpanel, E_QUICKPANEL_TYPE, _e_quickpanel_cb_free);
    if (!qp) return NULL;
    qp->zone = zone;
-   qp->visible = 0;
    qps = eina_list_append(qps, qp);
    return qp;
 }
@@ -69,6 +80,21 @@ e_quickpanel_show(E_Quickpanel *qp)
    if (qp->timer) ecore_timer_del(qp->timer);
    qp->timer = NULL;
    if (qp->visible) return;
+   if (!qp->borders) return;
+   if (!input_win) 
+     {
+        input_win = 
+          ecore_x_window_input_new(qp->zone->container->win, 
+                                   qp->zone->x, qp->zone->y, 
+                                   qp->zone->w, qp->zone->h);
+        ecore_x_window_show(input_win);
+        if (!e_grabinput_get(input_win, 1, input_win)) 
+          {
+             ecore_x_window_free(input_win);
+             input_win = 0;
+             return;
+          }
+     }
    if (il_cfg->sliding.quickpanel.duration <= 0) 
      {
         Eina_List *l;
@@ -126,7 +152,6 @@ e_quickpanel_position_update(E_Quickpanel *qp)
         bd->y = (ty - qp->h);
         bd->changed = 1;
         bd->changes.pos = 1;
-//        e_border_move(bd, qp->zone->x, (ty - qp->h));
      }
 }
 
@@ -202,7 +227,7 @@ _e_quickpanel_cb_border_pre_post_fetch(void *data, void *data2)
      }
    qp->borders = eina_list_append(qp->borders, bd);
    qp->borders = eina_list_sort(qp->borders, -1, _e_quickpanel_cb_sort);
-   qp->borders = eina_list_reverse(qp->borders);
+//   qp->borders = eina_list_reverse(qp->borders);
 }
 
 static E_Quickpanel *
@@ -311,6 +336,12 @@ _e_quickpanel_hide(E_Quickpanel *qp)
    if (qp->timer) ecore_timer_del(qp->timer);
    qp->timer = NULL;
    if (!qp->visible) return;
+   if (input_win) 
+     {
+        ecore_x_window_free(input_win);
+        e_grabinput_release(input_win, input_win);
+        input_win = 0;
+     }
    if (il_cfg->sliding.quickpanel.duration <= 0) 
      {
         Eina_List *l;
@@ -332,24 +363,53 @@ static int
 _e_quickpanel_cb_sort(const void *b1, const void *b2) 
 {
    const E_Border *bd1, *bd2;
-   int major1, minor1;
-   int major2, minor2;
+   int major1, major2;
 
    if (!(bd1 = b1)) return -1;
    if (!(bd2 = b2)) return 1;
    major1 = ecore_x_e_illume_quickpanel_priority_major_get(bd1->client.win);
    major2 = ecore_x_e_illume_quickpanel_priority_major_get(bd2->client.win);
-   minor1 = ecore_x_e_illume_quickpanel_priority_minor_get(bd1->client.win);
-   minor2 = ecore_x_e_illume_quickpanel_priority_minor_get(bd2->client.win);
    if (major1 < major2) return -1;
    else if (major1 > major2) return 1;
    else 
      {
-        if (major1 == major2) 
-          {
-             if (minor1 < minor2) return -1;
-             else if (minor1 > minor2) return 1;
-          }
+        int minor1, minor2;
+
+        minor1 = 
+          ecore_x_e_illume_quickpanel_priority_minor_get(bd1->client.win);
+        minor2 = 
+          ecore_x_e_illume_quickpanel_priority_minor_get(bd2->client.win);
+        if (minor1 < minor2) return -1;
+        else if (minor1 > minor2) return 1;
      }
    return 0;
+}
+
+static int 
+_e_quickpanel_cb_mouse_down(void *data, int type, void *event) 
+{
+   Ecore_Event_Mouse_Button *ev;
+   Ecore_X_Window xwin;
+
+   ev = event;
+   if (ev->event_window != input_win) return 1;
+   xwin = ecore_x_window_root_first_get();
+   ecore_x_e_illume_quickpanel_state_set(xwin, ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+   ecore_x_e_illume_quickpanel_state_send(xwin, ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+   return 1;
+}
+
+static int 
+_e_quickpanel_cb_mouse_wheel(void *data, int type, void *event) 
+{
+   Ecore_Event_Mouse_Wheel *ev;
+   Ecore_X_Window xwin;
+
+   ev = event;
+   if (ev->event_window != input_win) return 1;
+   if (ev->z > 0) return 1;
+   xwin = ecore_x_window_root_first_get();
+   ecore_x_e_illume_quickpanel_state_set(xwin, ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+   ecore_x_e_illume_quickpanel_state_send(xwin, ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+   return 1;
 }
