@@ -5,12 +5,12 @@
 #include "e_mod_main.h"
 
 /* celsius */
-#define TEMP_LOW_LOW	32
-#define TEMP_LOW_MID	43
-#define TEMP_LOW_HIGH	55
-#define TEMP_HIGH_LOW	43
-#define TEMP_HIGH_MID	65
-#define TEMP_HIGH_HIGH	93
+#define TEMP_LOW_LOW 32
+#define TEMP_LOW_MID 43
+#define TEMP_LOW_HIGH 55
+#define TEMP_HIGH_LOW 43
+#define TEMP_HIGH_MID 65
+#define TEMP_HIGH_HIGH 93
 
 #define FAR_2_CEL(x) (x - 32) / 1.8
 #define CEL_2_FAR(x) (x * 1.8) + 32
@@ -19,14 +19,12 @@ struct _E_Config_Dialog_Data
 {
    int poll_method;
    int poll_interval;
-   
+
    int unit_method;
    Unit units;
 
-   int low_method;
-   int low_temp;
-   int high_method;
-   int high_temp;
+   int low_method, low_temp;
+   int high_method, high_temp;
 
    int sensor;
    Eina_List *sensors;
@@ -35,22 +33,22 @@ struct _E_Config_Dialog_Data
 };
 
 /* Protos */
-static void          *_create_data(E_Config_Dialog *cfd);
-static void          _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object   *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int           _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object   *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int           _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void *_create_data(E_Config_Dialog *cfd);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 void
 config_temperature_module(Config_Face *inst) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   char buf[4096];
-   
+   char buf[PATH_MAX];
+
    v = E_NEW(E_Config_Dialog_View, 1);
-   
+
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
@@ -58,7 +56,8 @@ config_temperature_module(Config_Face *inst)
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
 
-   snprintf(buf, sizeof(buf), "%s/e-module-temperature.edj", e_module_dir_get(inst->module));
+   snprintf(buf, sizeof(buf), "%s/e-module-temperature.edj", 
+            e_module_dir_get(inst->module));
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
 			     _("Temperature Settings"),
 			     "E", "_e_mod_temperature_config_dialog",
@@ -69,19 +68,17 @@ config_temperature_module(Config_Face *inst)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
-   double      p;
-   int         pi;
-   Eina_List *therms;
-   Eina_List *l;
-   char       *name;
-   char        path[PATH_MAX];
-   
+   double p;
+   int pi;
+   Eina_List *therms, *l;
+   char path[PATH_MAX], *name;
+
    cfdata->units = cfdata->inst->units;
    if (cfdata->inst->units == CELCIUS) 
      cfdata->unit_method = 0;
    else 
      cfdata->unit_method = 1;
-   
+
    pi = cfdata->inst->poll_interval;
    cfdata->poll_interval = pi;
    if ((pi >= 1) && (pi <= 64)) 
@@ -92,7 +89,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->poll_method = 256; /* Slow */
    else if (pi > 256) 
      cfdata->poll_method = 512; /* Very Slow */
-   
+
    p = cfdata->inst->low;
    if (cfdata->units == FAHRENHEIT)
      p = FAR_2_CEL(p - 1); /* -1 so the conversion doesn't make mid go hi */
@@ -114,7 +111,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->high_method = TEMP_HIGH_MID;
    else if (p > TEMP_HIGH_MID) 
      cfdata->high_method = TEMP_HIGH_HIGH;
-   
+
    cfdata->sensor = 0;
    switch (cfdata->inst->sensor_type)
      {
@@ -129,8 +126,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	 therms = temperature_get_bus_files("i2c");
 	 if (therms)
 	   {
-              char *name;
-
 	      EINA_LIST_FREE(therms, name)
 	        {
 		   if (ecore_file_exists(name))
@@ -140,7 +135,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			sprintf(path, "%s", ecore_file_file_get(name));
 			len = strlen(path);
 			if (len > 6)
-			   path[len - 6] = '\0';
+                          path[len - 6] = '\0';
 	                cfdata->sensors = eina_list_append(cfdata->sensors, strdup(path));
 			/* TODO: Track down the user friendly names and display them instead.
 			 * User friendly names are not available on the system, lm-sensors 
@@ -164,8 +159,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	 therms = temperature_get_bus_files("pci");
 	 if (therms)
 	   {
-              char *name;
-
 	      EINA_LIST_FREE(therms, name)
 	        {
 		   if (ecore_file_exists(name))
@@ -205,9 +198,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		{
 		   cfdata->sensors = eina_list_append(cfdata->sensors, name);
 		   if (!strcmp(cfdata->inst->sensor_name, name))
-		     {
-			cfdata->sensor = n;
-		     }
+                     cfdata->sensor = n;
 		   n++;
 		}
 	   }
@@ -219,7 +210,7 @@ static void *
 _create_data(E_Config_Dialog *cfd) 
 {
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->inst = cfd->data;
    cfdata->sensors = NULL;
@@ -243,7 +234,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
-   
+
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Display Units"), 0);
    rg = e_widget_radio_group_new(&(cfdata->unit_method));
@@ -252,7 +243,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_radio_add(evas, _("Fahrenheit"), 1, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+
    of = e_widget_framelist_add(evas, _("Check Interval"), 0);
    rg = e_widget_radio_group_new(&(cfdata->poll_method));
    ob = e_widget_radio_add(evas, _("Fast"), 4, rg);
@@ -265,7 +256,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   
    if (cfdata->units == FAHRENHEIT)
      {
 	of = e_widget_framelist_add(evas, _("High Temperature"), 0);
@@ -278,7 +268,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	ob = e_widget_radio_add(evas, _("110 F"), TEMP_HIGH_LOW, rg);
 	e_widget_framelist_object_append(of, ob);
 	e_widget_list_object_append(o, of, 1, 1, 0.5);
-	
+
 	of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
 	rg = e_widget_radio_group_new(&(cfdata->low_method));
 
@@ -302,7 +292,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	ob = e_widget_radio_add(evas, _("43 C"), TEMP_HIGH_LOW, rg);
 	e_widget_framelist_object_append(of, ob);
 	e_widget_list_object_append(o, of, 1, 1, 0.5);
-	
+
 	of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
 	rg = e_widget_radio_group_new(&(cfdata->low_method));
 
@@ -347,7 +337,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
    Eina_List *l;
-   
+
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Display Units"), 0);
    rg = e_widget_radio_group_new(&(cfdata->unit_method));
@@ -362,7 +352,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	/* TODO: Notify user which thermal system is in use */
 	/* TODO: Let the user choose the wanted thermal system */
 	char *name;
-	int   n = 0;
+	int n = 0;
 
 	of = e_widget_framelist_add(evas, _("Sensors"), 0);
 	rg = e_widget_radio_group_new(&(cfdata->sensor));
@@ -397,7 +387,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f F"), 0, 230, 5, 0, NULL, &(cfdata->high_temp), 200);
 	e_widget_framelist_object_append(of, ob);
 	e_widget_list_object_append(o, of, 1, 1, 0.5);
-	
+
 	of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
 	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f F"), 0, 200, 5, 0, NULL, &(cfdata->low_temp), 200);
 	e_widget_framelist_object_append(of, ob);
@@ -409,7 +399,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f C"), 0, 110, 1, 0, NULL, &(cfdata->high_temp), 200);
 	e_widget_framelist_object_append(of, ob);
 	e_widget_list_object_append(o, of, 1, 1, 0.5);
-	
+
 	of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
 	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f C"), 0, 95, 1, 0, NULL, &(cfdata->low_temp), 200);
 	e_widget_framelist_object_append(of, ob);
