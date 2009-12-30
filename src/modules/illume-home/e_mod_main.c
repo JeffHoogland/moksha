@@ -15,6 +15,7 @@ struct _Instance
    E_Gadcon_Client *gcc;
    Evas_Object *o_btn;
    Eina_List *wins;
+   Ecore_Event_Handler *hdl;
 };
 struct _Il_Home_Win 
 {
@@ -66,6 +67,7 @@ static E_Border *_il_home_desktop_find_border(Efreet_Desktop *desktop);
 static int _il_home_win_cb_timeout(void *data);
 static int _il_home_border_add(void *data, int type, void *event);
 static int _il_home_border_remove(void *data, int type, void *event);
+static int _il_home_cb_client_message(void *data, int type, void *event);
 
 /* local variables */
 static Eina_List *instances = NULL;
@@ -191,6 +193,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
    Instance *inst;
    Evas_Object *icon;
+   Ecore_X_Window xwin;
+   Ecore_X_Illume_Mode mode;
    char buff[PATH_MAX];
 
    snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", 
@@ -208,6 +212,14 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    _il_home_win_new(inst);
 
+   xwin = ecore_x_window_root_first_get();
+   mode = ecore_x_e_illume_mode_get(xwin);
+   if (mode > ECORE_X_ILLUME_MODE_SINGLE)
+     _il_home_win_new(inst);
+
+   inst->hdl = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, 
+                                       _il_home_cb_client_message, inst);
+
    instances = eina_list_append(instances, inst);
    return inst->gcc;
 }
@@ -221,7 +233,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    if (!(inst = gcc->data)) return;
    instances = eina_list_remove(instances, inst);
    if (inst->o_btn) evas_object_del(inst->o_btn);
-
+   if (inst->hdl) ecore_event_handler_del(inst->hdl);
    EINA_LIST_FREE(inst->wins, hwin)
      e_object_del(E_OBJECT(hwin));
 
@@ -348,8 +360,6 @@ _il_home_win_new(Instance *inst)
 static void 
 _il_home_win_cb_free(Il_Home_Win *hwin) 
 {
-   E_Exec_Instance *eins;
-
    if (hwin->win->evas_win)
      e_drop_xdnd_register_set(hwin->win->evas_win, 0);
    if (hwin->o_bg) evas_object_del(hwin->o_bg);
@@ -792,6 +802,11 @@ _il_home_border_remove(void *data, int type, void *event)
      {
         if (exe->border == ev->border) 
           {
+             if (exe->exec) 
+               {
+                  ecore_exe_free(exe->exec);
+                  exe->exec = NULL;
+               }
              if (exe->handle) 
                {
                   e_busycover_pop(busycover, exe->handle);
@@ -801,5 +816,18 @@ _il_home_border_remove(void *data, int type, void *event)
              return 1;
           }
      }
+   return 1;
+}
+
+static int 
+_il_home_cb_client_message(void *data, int type, void *event) 
+{
+   Ecore_X_Event_Client_Message *ev;
+   Instance *inst;
+
+   ev = event;
+   if (ev->message_type != ECORE_X_ATOM_E_ILLUME_HOME) return 1;
+   if (!(inst = data)) return 1;
+   _il_home_win_new(inst);
    return 1;
 }
