@@ -413,7 +413,7 @@ group "E_Config" struct {
       value "name" string: "illume2";
       value "enabled" uchar: 1;
       value "delayed" uchar: 0;
-      value "priority" int: 0;
+      value "priority" int: 100;
     }
   }
   group "modules" list {
