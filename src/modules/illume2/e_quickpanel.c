@@ -13,6 +13,7 @@ static void _e_quickpanel_slide(E_Quickpanel *qp, int visible, double len);
 static int _e_quickpanel_cb_animate(void *data);
 static int _e_quickpanel_cb_delay_hide(void *data);
 static void _e_quickpanel_hide(E_Quickpanel *qp);
+static int _e_quickpanel_cb_sort(const void *b1, const void *b2);
 
 /* local variables */
 static Eina_List *qps = NULL, *handlers = NULL, *hooks = NULL;
@@ -200,6 +201,8 @@ _e_quickpanel_cb_border_pre_post_fetch(void *data, void *data2)
         e_border_fx_offset(bd, 0, (bd->h - th));
      }
    qp->borders = eina_list_append(qp->borders, bd);
+   qp->borders = eina_list_sort(qp->borders, -1, _e_quickpanel_cb_sort);
+   qp->borders = eina_list_reverse(qp->borders);
 }
 
 static E_Quickpanel *
@@ -323,4 +326,30 @@ _e_quickpanel_hide(E_Quickpanel *qp)
    else
      _e_quickpanel_slide(qp, 0, 
                          (double)il_cfg->sliding.quickpanel.duration / 1000.0);
+}
+
+static int 
+_e_quickpanel_cb_sort(const void *b1, const void *b2) 
+{
+   const E_Border *bd1, *bd2;
+   int major1, minor1;
+   int major2, minor2;
+
+   if (!(bd1 = b1)) return -1;
+   if (!(bd2 = b2)) return 1;
+   major1 = ecore_x_e_illume_quickpanel_priority_major_get(bd1->client.win);
+   major2 = ecore_x_e_illume_quickpanel_priority_major_get(bd2->client.win);
+   minor1 = ecore_x_e_illume_quickpanel_priority_minor_get(bd1->client.win);
+   minor2 = ecore_x_e_illume_quickpanel_priority_minor_get(bd2->client.win);
+   if (major1 < major2) return -1;
+   else if (major1 > major2) return 1;
+   else 
+     {
+        if (major1 == major2) 
+          {
+             if (minor1 < minor2) return -1;
+             else if (minor1 > minor2) return 1;
+          }
+     }
+   return 0;
 }
