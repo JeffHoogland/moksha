@@ -22,10 +22,16 @@ struct E_Connman_Instance
    E_Gadcon_Popup *popup;
    E_Menu *menu;
 
+   /* used by popup */
+   int offline_mode;
+   const char *service_path;
+   Eina_Bool first_selection;
+
    struct
    {
       Evas_Object *gadget;
-      Evas_Object *toggle_offline;
+      Evas_Object *list;
+      Evas_Object *offline_mode;
       Evas_Object *button;
       Evas_Object *table;
       struct
@@ -80,7 +86,7 @@ struct E_Connman_Module_Context
    } poller;
 
    Eina_Bool has_manager:1;
-   Eina_Bool offline_mode;
+   bool offline_mode;
    const char *technology;
    const E_Connman_Service *default_service;
    Eina_Inlist *services;

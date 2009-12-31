@@ -6891,6 +6891,50 @@ collections { /* begin the collection of edje groups that are in this file */
 
 // FIXME: do proper gadget and artwork
 
+// ICONS: receive the following signals, all with source being "e"
+//    e,favorite,{yes,no}
+//    e,auto_connect,{yes,no}
+//    e,pass_required,{yes,no}
+//    e,state,{idle,association,configuration,ready,disconnect,failure}
+//    e,mode,{managed,adhoc,gprs,edge,umts}
+//    e,security,{none,wep,psk,ieee8021x,wpa,rsn}
+// and also the following message:
+//    id=1, type=MSG_INT, description=strength (0-100)
+   group { name: "e/modules/connman/icon/ethernet";
+      max: 128 128;
+      min: 16 16;
+      parts {
+         part { name: "icon";
+            type: IMAGE;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image.image: "connman-ethernet.png" COMP;
+               image.normal: "connman-ethernet.png";
+            }
+         }
+      }
+   }
+   group { name: "e/modules/connman/icon/wifi";
+      max: 128 128;
+      min: 16 16;
+      parts {
+         part { name: "icon";
+            type: IMAGE;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image.image: "connman-wifi.png" COMP;
+               image.normal: "connman-wifi.png";
+            }
+         }
+      }
+   }
+
    group { name: "e/modules/connman/main";
       images {
          image: "connman-disconnect.png" COMP;

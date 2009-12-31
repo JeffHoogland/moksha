@@ -13,9 +13,7 @@
  * TODO:
  *
  *    MUST:
- *       1. popup with list of services, allows connecting + offline mode
- *       2. improve gadget ui
- *       3. fix stringshare usage errors (probably in e_connman itself)
+ *       1. improve gadget ui
  *
  *    GOOD:
  *       1. mouse over popup with information such as IP and AP name
@@ -67,14 +65,21 @@ e_connman_theme_path(void)
 static inline void
 _connman_dbus_error_show(const char *msg, const DBusError *error)
 {
+   const char *name;
+
    if ((!error) || (!dbus_error_is_set(error)))
      return;
+
+   name = error->name;
+   if (strncmp(name, "org.moblin.connman.Error.",
+	       sizeof("org.moblin.connman.Error.") - 1) == 0)
+     name += sizeof("org.moblin.connman.Error.") - 1;
 
    e_util_dialog_show(_("Connman Server Operation Failed"),
 		      _("Could not execute remote operation:<br>"
 			"%s<br>"
-			"Server Error %s: %s"),
-		      msg, error->name, error->message);
+			"Server Error <b>%s:</b> %s"),
+		      msg, name, error->message);
 }
 
 static inline void
@@ -86,8 +91,19 @@ _connman_operation_error_show(const char *msg)
 }
 
 static void
-_connman_toggle_offline_mode_cb(void *data __UNUSED__, DBusMessage *msg __UNUSED__, DBusError *error)
+_connman_toggle_offline_mode_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *error)
 {
+   E_Connman_Module_Context *ctxt = data;
+
+   if ((!error) || (!dbus_error_is_set(error)))
+     {
+	printf("DBG CONNMAN: successfuly toggled to offline mode\n");
+	// XXX hack: connman does not emit propertychanged for this, they need to fix it
+	e_connman_element_properties_sync(e_connman_manager_get());
+	_connman_default_service_changed_delayed(ctxt);
+	return;
+     }
+
    _connman_dbus_error_show(_("Cannot toggle system's offline mode."), error);
    dbus_error_free(error);
 }
@@ -106,13 +122,13 @@ _connman_toggle_offline_mode(E_Connman_Module_Context *ctxt)
    if (!e_connman_manager_offline_mode_get(&offline))
      {
 	_connman_operation_error_show
-	  (_("Cannot query system's offline mode."));
+	  (_("Query system's offline mode."));
 	return;
      }
 
    offline = !offline;
    if (!e_connman_manager_offline_mode_set
-       (offline, _connman_toggle_offline_mode_cb, NULL))
+       (offline, _connman_toggle_offline_mode_cb, ctxt))
      {
 	_connman_operation_error_show
 	  (_("Cannot toggle system's offline mode."));
@@ -146,7 +162,6 @@ _connman_service_free(E_Connman_Service *service)
    eina_stringshare_del(service->ipv4_address);
    eina_stringshare_del(service->ipv4_netmask);
 
-   e_connman_element_unref(service->element);
    E_FREE(service);
 }
 
@@ -293,6 +308,36 @@ _connman_service_new(E_Connman_Module_Context *ctxt, E_Connman_Element *element)
 }
 
 static void
+_connman_service_ask_pass_and_connect(E_Connman_Service *service)
+{
+   e_util_dialog_show("TODO", "TODO!");
+}
+
+static void
+_connman_service_connect_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *error)
+{
+   E_Connman_Module_Context *ctxt = data;
+
+   if (error && dbus_error_is_set(error))
+     {
+	if (strcmp(error->message,
+		   "org.moblin.connman.Error.AlreadyConnected") != 0)
+	  _connman_dbus_error_show(_("Connect to network service."), error);
+	dbus_error_free(error);
+     }
+
+   _connman_default_service_changed_delayed(ctxt);
+}
+
+static void
+_connman_service_connect(E_Connman_Service *service)
+{
+   if (!e_connman_service_connect
+       (service->element, _connman_service_connect_cb, service->ctxt))
+     _connman_operation_error_show(_("Connect to network service."));
+}
+
+static void
 _connman_services_free(E_Connman_Module_Context *ctxt)
 {
    while (ctxt->services)
@@ -379,6 +424,9 @@ _connman_default_service_changed(E_Connman_Module_Context *ctxt)
    eina_stringshare_replace(&ctxt->technology, tech);
    printf("DBG CONNMAN: manager technology is '%s'\n", tech);
 
+   if (!e_connman_manager_offline_mode_get(&ctxt->offline_mode))
+     ctxt->offline_mode = EINA_FALSE;
+
    ctxt->default_service = def;
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
      _connman_gadget_update(inst);
@@ -415,7 +463,7 @@ _connman_default_service_changed_delayed(E_Connman_Module_Context *ctxt)
 static void _connman_popup_del(E_Connman_Instance *inst);
 
 static int
-_connman_popup_input_window_mouse_up_cb(void *data, int type, void *event)
+_connman_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
    E_Connman_Instance *inst = data;
@@ -429,7 +477,7 @@ _connman_popup_input_window_mouse_up_cb(void *data, int type, void *event)
 }
 
 static int
-_connman_popup_input_window_key_down_cb(void *data, int type, void *event)
+_connman_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
    E_Connman_Instance *inst = data;
@@ -465,8 +513,6 @@ _connman_popup_input_window_create(E_Connman_Instance *inst)
    Ecore_X_Window w, popup_w;
    E_Manager *man;
 
-   return; // TODO
-
    man = e_manager_current_get();
 
    w = ecore_x_window_input_new(man->root, 0, 0, man->w, man->h);
@@ -489,8 +535,159 @@ _connman_popup_input_window_create(E_Connman_Instance *inst)
 }
 
 static void
+_connman_popup_cb_offline_mode_changed(void *data, Evas_Object *obj, void *event __UNUSED__)
+{
+   E_Connman_Instance *inst = data;
+   E_Connman_Module_Context *ctxt = inst->ctxt;
+   Eina_Bool offline = e_widget_check_checked_get(obj);
+
+   if ((!ctxt) || (!ctxt->has_manager))
+     {
+	_connman_operation_error_show(_("ConnMan Daemon is not running."));
+	return;
+     }
+
+   printf(">>>> OFFLINE=%hhu\n", offline);
+
+   if (!e_connman_manager_offline_mode_set
+       (offline, _connman_toggle_offline_mode_cb, ctxt))
+     {
+	_connman_operation_error_show
+	  (_("Cannot toggle system's offline mode."));
+	return;
+     }
+}
+
+static void
+_connman_popup_cb_controls(void *data, void *data2 __UNUSED__)
+{
+   E_Connman_Instance *inst = data;
+
+   _connman_popup_del(inst);
+
+   e_util_dialog_show("TODO", "TODO!");
+}
+
+static void
+_connman_popup_service_selected(void *data)
+{
+   E_Connman_Instance *inst = data;
+   E_Connman_Module_Context *ctxt = inst->ctxt;
+   E_Connman_Service *service;
+
+   if (inst->first_selection)
+     {
+	inst->first_selection = EINA_FALSE;
+	return;
+     }
+
+   if (!inst->service_path)
+     return;
+
+   EINA_INLIST_FOREACH(ctxt->services, service)
+     {
+	if (service->path == inst->service_path)
+	  {
+	     _connman_popup_del(inst);
+
+	     if (service->pass_required)
+	       _connman_service_ask_pass_and_connect(service);
+	     else
+	       _connman_service_connect(service);
+	     return;
+	  }
+     }
+}
+
+static void
+_connman_popup_update(E_Connman_Instance *inst)
+{
+   Evas_Object *list = inst->ui.list;
+   E_Connman_Service *service;
+   const char *default_path;
+   Evas *evas = evas_object_evas_get(list);
+   int i, selected;
+   char buf[128];
+
+   default_path = inst->ctxt->default_service ?
+     inst->ctxt->default_service->path : NULL;
+
+   /* TODO: replace this with a scroller + list of edje
+    * objects that are more full of features
+    */
+   e_widget_ilist_freeze(list);
+   e_widget_ilist_clear(list);
+   i = 0;
+   selected = -1;
+   EINA_INLIST_FOREACH(inst->ctxt->services, service)
+     {
+	Evas_Object *icon;
+	Edje_Message_Int msg;
+
+	if (service->path == default_path)
+	  selected = i;
+	i++;
+
+	snprintf(buf, sizeof(buf), "e/modules/connman/icon/%s", service->type);
+	icon = edje_object_add(evas);
+	e_theme_edje_object_set(icon, "base/theme/modules/connman", buf);
+
+	snprintf(buf, sizeof(buf), "e,state,%s", service->state);
+	edje_object_signal_emit(icon, buf, "e");
+
+	if (service->mode)
+	  {
+	     snprintf(buf, sizeof(buf), "e,mode,%s", service->mode);
+	     edje_object_signal_emit(icon, buf, "e");
+	  }
+
+	if (service->security)
+	  {
+	     snprintf(buf, sizeof(buf), "e,security,%s", service->security);
+	     edje_object_signal_emit(icon, buf, "e");
+	  }
+
+	if (service->favorite)
+	  edje_object_signal_emit(icon, "e,favorite,yes", "e");
+	else
+	  edje_object_signal_emit(icon, "e,favorite,no", "e");
+
+	if (service->auto_connect)
+	  edje_object_signal_emit(icon, "e,auto_connect,yes", "e");
+	else
+	  edje_object_signal_emit(icon, "e,auto_connect,no", "e");
+
+	if (service->pass_required)
+	  edje_object_signal_emit(icon, "e,pass_required,yes", "e");
+	else
+	  edje_object_signal_emit(icon, "e,pass_required,no", "e");
+
+	msg.val = service->strength;
+	edje_object_message_send(icon, EDJE_MESSAGE_INT, 1, &msg);
+
+	e_widget_ilist_append
+	  (list, icon, service->name, _connman_popup_service_selected,
+	   inst, service->path);
+     }
+
+   if (selected >= 0)
+     {
+	inst->first_selection = EINA_TRUE;
+	e_widget_ilist_selected_set(list, selected);
+     }
+   else
+     inst->first_selection = EINA_FALSE;
+
+   e_widget_ilist_thaw(list);
+   e_widget_ilist_go(list);
+
+   e_widget_check_checked_set(inst->ui.offline_mode, inst->ctxt->offline_mode);
+}
+
+static void
 _connman_popup_del(E_Connman_Instance *inst)
 {
+   eina_stringshare_replace(&inst->service_path, NULL);
    _connman_popup_input_window_destroy(inst);
    e_object_del(E_OBJECT(inst->popup));
    inst->popup = NULL;
@@ -499,14 +696,52 @@ _connman_popup_del(E_Connman_Instance *inst)
 static void
 _connman_popup_new(E_Connman_Instance *inst)
 {
+   E_Connman_Module_Context *ctxt = inst->ctxt;
    Evas *evas;
    Evas_Coord mw, mh;
 
-   // TODO
+   if (inst->popup)
+     {
+	e_gadcon_popup_show(inst->popup);
+	return;
+     }
+
+   inst->popup = e_gadcon_popup_new(inst->gcc);
+   evas = inst->popup->win->evas;
+
+   inst->ui.table = e_widget_table_add(evas, 0);
+
+   if (ctxt->default_service)
+     eina_stringshare_replace(&inst->service_path, ctxt->default_service->path);
+
+   // TODO: get this size from edj
+   inst->ui.list = e_widget_ilist_add(evas, 32, 32, &inst->service_path);
+   e_widget_size_min_set(inst->ui.list, 180, 100);
+   e_widget_table_object_append(inst->ui.table, inst->ui.list,
+				0, 0, 1, 5, 1, 1, 1, 1);
+
+   inst->offline_mode = ctxt->offline_mode;
+   inst->ui.offline_mode = e_widget_check_add
+     (evas, _("Offline mode"), &inst->offline_mode);
+
+   evas_object_show(inst->ui.offline_mode);
+   e_widget_table_object_append(inst->ui.table, inst->ui.offline_mode,
+				0, 5, 1, 1, 1, 1, 1, 0);
+   evas_object_smart_callback_add
+     (inst->ui.offline_mode, "changed",
+      _connman_popup_cb_offline_mode_changed, inst);
+
+   inst->ui.button = e_widget_button_add
+     (evas, _("Controls"), NULL,
+      _connman_popup_cb_controls, inst, NULL);
+   e_widget_table_object_append(inst->ui.table, inst->ui.button,
+                                0, 6, 1, 1, 1, 1, 1, 0);
+
+   _connman_popup_update(inst);
 
    e_widget_size_min_get(inst->ui.table, &mw, &mh);
    if (mh < 208) mh = 208;
-   if (mw < 68) mw = 68;
+   if (mw < 200) mw = 200;
    e_widget_size_min_set(inst->ui.table, mw, mh);
 
    e_gadcon_popup_content_set(inst->popup, inst->ui.table);
@@ -515,11 +750,9 @@ _connman_popup_new(E_Connman_Instance *inst)
 }
 
 static void
-_connman_menu_cb_post(void *data, E_Menu *menu)
+_connman_menu_cb_post(void *data, E_Menu *menu __UNUSED__)
 {
-   E_Connman_Instance *inst;
-
-   inst = data;
+   E_Connman_Instance *inst = data;
    if ((!inst) || (!inst->menu))
       return;
    if (inst->menu)
@@ -570,7 +803,7 @@ _connman_menu_new(E_Connman_Instance *inst, Evas_Event_Mouse_Down *ev)
 }
 
 static void
-_connman_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
+_connman_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    E_Connman_Instance *inst;
    Evas_Event_Mouse_Down *ev;
@@ -606,11 +839,17 @@ _connman_gadget_update(E_Connman_Instance *inst)
 
    if (!ctxt->has_manager)
      {
+	if (inst->popup)
+	  _connman_popup_del(inst);
+
 	edje_object_signal_emit(gadget, "e,unavailable", "e");
 	edje_object_part_text_set(gadget, "e.text.name", _("No ConnMan"));
 	edje_object_part_text_set(gadget, "e.text.error",
 				  _("No ConnMan server found."));
      }
+
+   if (inst->popup)
+     _connman_popup_update(inst);
 
    edje_object_signal_emit(gadget, "e,available", "e");
 
@@ -618,6 +857,7 @@ _connman_gadget_update(E_Connman_Instance *inst)
      edje_object_signal_emit(gadget, "e,changed,offline_mode,yes", "e");
    else
      edje_object_signal_emit(gadget, "e,changed,offline_mode,no", "e");
+
 
    printf("DBG CONNMAN: technology: %s\n", ctxt->technology);
 
@@ -876,7 +1116,7 @@ _connman_manager_changed(void *data, const E_Connman_Element *element __UNUSED__
    if (ctxt->poller.manager_changed)
      ecore_poller_del(ctxt->poller.manager_changed);
    ctxt->poller.manager_changed = ecore_poller_add
-     (ECORE_POLLER_CORE, 2, _connman_manager_changed_do, ctxt);
+     (ECORE_POLLER_CORE, 1, _connman_manager_changed_do, ctxt);
 }
 
 static int
