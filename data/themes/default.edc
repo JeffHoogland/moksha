@@ -24301,6 +24301,8 @@ BORDERICON("stacking","icon_border_stack_norm.png")
 BORDERICON("stack_on_top","icon_border_stack_top.png")
 BORDERICON("stack_normal","icon_border_stack_norm.png")
 BORDERICON("stack_below","icon_border_stack_bot.png")
+BORDERICON("move_icon", "move.png")
+BORDERICON("resize_icon", "resize.png");
 BORDERICON("maximize","icon_border_maximize.png")
 BORDERICON("fullscreen","icon_border_maximize.png")
 BORDERICON("minimize","icon_border_minimize.png")
