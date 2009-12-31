@@ -38,68 +38,43 @@ struct _E_Config_Dialog_Data
 */
 const CFTypes _types[] = 
 {
-     {"appearance", N_("Appearance"),    "preferences-appearance"},
-     {"config",     N_("Settings"),      "preferences-system"},
-     {"fileman",    N_("File Manager"),  "system-file-manager"},
-     {"shelf",      N_("Shelf"),         "preferences-desktop-shelf"}, //FIXME use gadget icon
-     {"system",     N_("System"),        "system"},
+     {"appearance", N_("Appearance"), "preferences-appearance"},
+     {"config", N_("Settings"), "preferences-system"},
+     {"fileman", N_("File Manager"), "system-file-manager"},
+     {"shelf", N_("Shelf"), "preferences-desktop-shelf"}, //FIXME use gadget icon
+     {"system", N_("System"), "system"},
      {NULL, NULL, NULL}
 };
 
 /* local function protos */
-static void        *_create_data          (E_Config_Dialog *cfd);
-static void         _fill_data            (E_Config_Dialog_Data *cfdata);
-static void         _free_data            (E_Config_Dialog *cfd,
-					   E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create         (E_Config_Dialog *cfd, Evas *evas,
-					   E_Config_Dialog_Data *cfdata);
-static void         _fill_type_hash       (void);
-static void         _load_modules         (const char *dir);
-static void         _fill_list            (Evas_Object *obj, int enabled);
-static Eina_Bool    _fill_list_types_avail(const Eina_Hash *hash __UNUSED__,
-					   const void *key __UNUSED__,
-					   void *data, void *fdata);
-static Eina_Bool    _fill_list_types_load (const Eina_Hash *hash __UNUSED__,
-					   const void *key __UNUSED__,
-					   void *data, void *fdata);
-static Eina_Bool    _fill_list_types           (Evas_Object *obj, CFType *cft,
-					   int enabled);
-static Eina_Bool    _types_hash_cb_free   (const Eina_Hash *hash __UNUSED__,
-					   const void *key __UNUSED__,
-					   void *data, void *fdata __UNUSED__);
-static Eina_Bool    _mod_hash_cb_free     (const Eina_Hash *hash __UNUSED__,
-					   const void *key __UNUSED__,
-					   void *data, void *fdata __UNUSED__);
-static Eina_Bool    _mod_hash_avail_list  (const Eina_Hash *hash __UNUSED__,
-					   const void *key __UNUSED__,
-					   void *data, void *fdata);
-static Eina_Bool    _mod_hash_load_list   (const Eina_Hash *hash __UNUSED__,
-					   const void *key __UNUSED__,
-					   void *data, void *fdata);
-static int          _mod_list_sort        (const void *data1, const void *data2);
-static void         _list_widget_load     (Evas_Object *obj, Eina_List *list);
-static void         _avail_list_cb_change (void *data, Evas_Object *obj);
-static void         _load_list_cb_change  (void *data, Evas_Object *obj);
-static void         _unselect_all_modules (void);
-static Eina_Bool    _mod_hash_unselect    (const Eina_Hash *hash __UNUSED__,
-					   const void *key __UNUSED__,
-					   void *data, void *fdata __UNUSED__);
-static void         _select_all_modules   (Evas_Object *obj, void *data);
-static void         _btn_cb_unload        (void *data, void *data2);
-static void         _btn_cb_load          (void *data, void *data2);
-static Eina_Bool    _mod_hash_load        (const Eina_Hash *hash __UNUSED__,
-					   const void *key __UNUSED__,
-					   void *data, void *fdata __UNUSED__);
-static Eina_Bool    _mod_hash_unload      (const Eina_Hash *hash __UNUSED__,
-					   const void *key __UNUSED__,
-					   void *data, void *fdata __UNUSED__);
-static void         _enable_modules       (int enable);
-static Eina_Bool    _enable_modules_types_enable (const Eina_Hash *hash __UNUSED__,
-						  const void *key __UNUSED__,
-						  void *data, void *fdata);
-static Eina_Bool    _enable_modules_types_disable (const Eina_Hash *hash __UNUSED__,
-						   const void *key __UNUSED__,
-						   void *data, void *fdata);
+static void *_create_data(E_Config_Dialog *cfd);
+static void _fill_data(E_Config_Dialog_Data *cfdata);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _fill_type_hash(void);
+static void _load_modules(const char *dir);
+static void _fill_list(Evas_Object *obj, int enabled);
+static Eina_Bool _fill_list_types_avail(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
+static Eina_Bool _fill_list_types_load(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
+static Eina_Bool _fill_list_types(Evas_Object *obj, CFType *cft, int enabled);
+static Eina_Bool _types_hash_cb_free(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static Eina_Bool _mod_hash_cb_free(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static Eina_Bool _mod_hash_avail_list(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
+static Eina_Bool _mod_hash_load_list(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
+static int _mod_list_sort(const void *data1, const void *data2);
+static void _list_widget_load(Evas_Object *obj, Eina_List *list);
+static void _avail_list_cb_change(void *data, Evas_Object *obj);
+static void _load_list_cb_change(void *data, Evas_Object *obj);
+static void _unselect_all_modules(void);
+static Eina_Bool _mod_hash_unselect(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static void _select_all_modules(Evas_Object *obj, void *data);
+static void _btn_cb_unload(void *data, void *data2);
+static void _btn_cb_load(void *data, void *data2);
+static Eina_Bool _mod_hash_load(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static Eina_Bool _mod_hash_unload(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static void _enable_modules(int enable);
+static Eina_Bool _enable_modules_types_enable(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
+static Eina_Bool _enable_modules_types_disable(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
 
 /* local variables */
 static Eina_Hash *types_hash = NULL;
@@ -240,10 +215,8 @@ _fill_type_hash(void)
 static void
 _load_modules(const char *dir)
 {
-   Eina_List *files = NULL;
-   Eina_List *l;
-   char *mod = NULL;
-   char *file;
+   Eina_List *files = NULL, *l;
+   char *mod = NULL, *file;
 
    if (!dir) return;
    if (!(files = ecore_file_ls(dir))) return;
@@ -255,7 +228,7 @@ _load_modules(const char *dir)
 	CFType *cft = NULL;
 	CFModule *cfm = NULL;
 	const char *type = NULL;
-	char buf[4096];
+	char buf[PATH_MAX];
 
 	/* check that we have a desktop file for this module */
 	snprintf(buf, sizeof(buf), "%s/%s/module.desktop", dir, mod);
@@ -346,8 +319,7 @@ _fill_list(Evas_Object *obj, int enabled)
 }
 
 static Eina_Bool
-_fill_list_types_avail(const Eina_Hash *hash __UNUSED__,
-		       const void *key __UNUSED__, void *data, void *fdata)
+_fill_list_types_avail(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
 {
    CFType *cft;
    Evas_Object *obj;
@@ -416,8 +388,7 @@ _fill_list_types(Evas_Object *obj, CFType *cft, int enabled)
 }
 
 static Eina_Bool
-_types_hash_cb_free(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
-		    void *data, void *fdata __UNUSED__)
+_types_hash_cb_free(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    CFType *type = NULL;
 
@@ -436,8 +407,7 @@ _types_hash_cb_free(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__
 }
 
 static Eina_Bool
-_mod_hash_cb_free(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
-		  void *data, void *fdata __UNUSED__)
+_mod_hash_cb_free(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    CFModule *mod = NULL;
 
@@ -452,8 +422,7 @@ _mod_hash_cb_free(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
 }
 
 static Eina_Bool
-_mod_hash_avail_list(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
-		     void *data, void *fdata)
+_mod_hash_avail_list(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
 {
    Eina_List **l;
    CFModule *mod = NULL;
@@ -466,8 +435,7 @@ _mod_hash_avail_list(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED_
 }
 
 static Eina_Bool
-_mod_hash_load_list(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
-		    void *data, void *fdata)
+_mod_hash_load_list(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
 {
    Eina_List **l;
    CFModule *mod = NULL;
@@ -503,7 +471,7 @@ _list_widget_load(Evas_Object *obj, Eina_List *list)
      {
 	Evas_Object *ic = NULL;
 	char *path;
-	char buf[4096];
+	char buf[PATH_MAX];
 
 	if (!mod) continue;
 	if (mod->icon)
@@ -597,8 +565,7 @@ _unselect_all_modules(void)
 }
 
 static Eina_Bool
-_mod_hash_unselect(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
-		   void *data, void *fdata __UNUSED__)
+_mod_hash_unselect(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    CFModule *mod = NULL;
 
@@ -619,8 +586,8 @@ _select_all_modules(Evas_Object *obj, void *data)
    EINA_LIST_FOREACH(e_widget_ilist_items_get(obj), l, item)
      {
 	CFModule *mod = NULL;
-	i++;
 
+	i++;
 	if ((!item) || (!item->selected)) continue;
 	if (!(mod = e_widget_ilist_nth_data_get(obj, i))) continue;
 	mod->selected = 1;
@@ -694,34 +661,29 @@ _enable_modules(int enable)
 }
 
 static Eina_Bool
-_enable_modules_types_enable(const Eina_Hash *hash __UNUSED__,
-			     const void *key __UNUSED__, void *data,
-			     void *fdata)
+_enable_modules_types_enable(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
 {
    CFType *cft;
 
    cft = data;
-   if (cft && cft->modules)
+   if ((cft) && (cft->modules))
      eina_hash_foreach(cft->modules, _mod_hash_load, NULL);
    return 1;
 }
 
 static Eina_Bool
-_enable_modules_types_disable(const Eina_Hash *hash __UNUSED__,
-			      const void *key __UNUSED__, void *data,
-			      void *fdata)
+_enable_modules_types_disable(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata)
 {
    CFType *cft;
 
    cft = data;
-   if (cft && cft->modules)
+   if ((cft) && (cft->modules))
      eina_hash_foreach(cft->modules, _mod_hash_unload, NULL);
    return 1;
 }
 
 static Eina_Bool
-_mod_hash_load(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
-	       void *data, void *fdata __UNUSED__)
+_mod_hash_load(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    CFModule *mod = NULL;
    E_Module *module = NULL;
@@ -737,8 +699,7 @@ _mod_hash_load(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
 }
 
 static Eina_Bool
-_mod_hash_unload(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
-		 void *data, void *fdata __UNUSED__)
+_mod_hash_unload(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    CFModule *mod = NULL;
    E_Module *module = NULL;
