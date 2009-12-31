@@ -6888,97 +6888,198 @@ collections { /* begin the collection of edje groups that are in this file */
 
 /////////////////////////////////////////////////////////////////////////////
    /*** MOD: CONNMAN ***/
-   /* inactive module right now - doesnt work, so this is a placeholder */
-   group {
-      name: "e/modules/connman/main"; // for gadget
-      alias: "e/modules/connman/network"; // for icon in popup
-      max: 128 128;
-      min: 1 1;
+
+// FIXME: do proper gadget and artwork
+
+   group { name: "e/modules/connman/main";
       images {
-	 image: "ball.png" COMP;
+         image: "connman-disconnect.png" COMP;
+         image: "connman-ethernet.png" COMP;
+         image: "connman-wifi.png" COMP;
       }
+      //max: 128 128;
+      min: 16 16;
+#if 0 // TODO: show strength in gadget
       script {
-       public message(Msg_Type:type, id, ...) {
-	  if ((type == MSG_INT_SET) && (id == 0)) {
-	     new sig;
+	 public message(Msg_Type:type, id, ...) {
+	    if ((type == MSG_INT) && (id == 1)) {
+	       new strength;
 
-	     sig = getarg(2);
-
-	     if (sig <= 0)
-	       run_program(PROGRAM:"sig_none");
-	     else if (sig < 33)
-	       run_program(PROGRAM:"sig_low");
-	     else if (sig < 66)
-	       run_program(PROGRAM:"sig_medium");
-	     else if (sig >= 66)
-	       run_program(PROGRAM:"sig_high");
-	  }
-       }
-      }
-      parts {
-	 part { name: "base";
-	    description { state: "default" 0.0;
-	       aspect: 1 1;
-	       aspect_preference: BOTH;
-	       image.normal: "ball.png";
+	       strength = getarg(2);
 	    }
 	 }
       }
-      programs {
-	 program { name: "sig_none";
-	    action: STATE_SET "default" 0.0;
-	    target: "base";
-	 }
-	 program { name: "sig_low";
-	    action: STATE_SET "default" 0.0;
-	    target: "base";
-	 }
-	 program { name: "sig_medium";
-	    action: STATE_SET "default" 0.0;
-	    target: "base";
-	 }
-	 program { name: "sig_high";
-	    action: STATE_SET "default" 0.0;
-	    target: "base";
-	 }
-	 program { name: "sec0";
-	    signal: "e,state,security,open";
-	    source: "e";
-	    action: STATE_SET "default" 0.0;
-	    target: "base";
-	 }
-	 program { name: "sec1";
-	    signal: "e,state,security,wep";
-	    source: "e";
-	    action: STATE_SET "default" 0.0;
-	    target: "base";
-	 }
-	 program { name: "sec2";
-	    signal: "e,state,security,wpa";
-	    source: "e";
-	    action: STATE_SET "default" 0.0;
-	    target: "base";
-	 }
-	 program { name: "sec3";
-	    signal: "e,state,security,rsn";
-	    source: "e";
-	    action: STATE_SET "default" 0.0;
-	    target: "base";
-	 }
-	 program { name: "sav0";
-	    signal: "e,state,saved,on";
-	    source: "e";
-	    action: STATE_SET "default" 0.0;
-	    target: "base";
-	 }
-	 program { name: "sav1";
-	    signal: "e,state,saved,off";
-	    source: "e";
-	    action: STATE_SET "default" 0.0;
-	    target: "base";
-	 }
+#endif
+      parts {
+         part {
+            name: "eventarea";
+            type: RECT;
+            mouse_events: 1;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 0;
+            }
+         }
+
+         part { name: "availability";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 128 128 0;
+               visible: 0;
+            }
+            description {
+               state: "unavailable" 0.0;
+               inherit: "default" 0.0;
+               color: 255 128 128 255;
+               visible: 1;
+            }
+         }
+         programs {
+            program { name: "e,available";
+               signal: "e,available";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "availability";
+               transition: LINEAR 0.2;
+            }
+            program { name: "e,unavailable";
+               signal: "e,unavailable";
+               source: "e";
+               action: STATE_SET "unavailable" 0.0;
+               target: "availability";
+               transition: LINEAR 0.2;
+            }
+         }
+
+         part { name: "state-clipper";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "pulse" 0.0;
+               color: 255 255 255 128;
+            }
+         }
+         programs {
+            program { name: "e,changed,state,ready";
+               signal: "e,changed,state,ready";
+               source: "e";
+               script {
+                  stop_program(PROGRAM:"state,pulse,0");
+                  stop_program(PROGRAM:"state,pulse,1");
+               }
+               after: "state,ready,apply";
+            }
+            program { name: "state,ready,apply";
+               action: STATE_SET "default" 0.0;
+               target: "state-clipper";
+               transition: LINEAR 0.1;
+            }
+
+            program { name: "e,changed,state,association";
+               signal: "e,changed,state,association";
+               source: "e";
+               after: "state,pulse,0";
+            }
+            program { name: "e,changed,state,configuration";
+               signal: "e,changed,state,configuration";
+               source: "e";
+               after: "state,pulse,0";
+            }
+
+            program { name: "state,pulse,0";
+               action: STATE_SET "default" 0.0;
+               target: "state-clipper";
+               transition: LINEAR 0.8;
+               after: "state,pulse,1";
+            }
+            program { name: "state,pulse,1";
+               action: STATE_SET "pulse" 0.0;
+               target: "state-clipper";
+               transition: LINEAR 0.8;
+               after: "state,pulse,0";
+            }
+         }
+
+         part { name: "technology";
+            type: IMAGE;
+            mouse_events: 0;
+            clip_to: "state-clipper";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               fixed: 1 1;
+               image.normal: "connman-disconnect.png";
+            }
+            description {
+               state: "ethernet" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "connman-ethernet.png";
+            }
+            description {
+               state: "wifi" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "connman-wifi.png";
+            }
+            // TODO: wimax, cellular, bluetooth
+         }
+         programs {
+            program { name: "e,changed,technology,none";
+               signal: "e,changed,technology,none";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "technology";
+            }
+            program { name: "e,changed,technology,ethernet";
+               signal: "e,changed,technology,ethernet";
+               source: "e";
+               action: STATE_SET "ethernet" 0.0;
+               target: "technology";
+            }
+            program { name: "e,changed,technology,wifi";
+               signal: "e,changed,technology,wifi";
+               source: "e";
+               action: STATE_SET "wifi" 0.0;
+               target: "technology";
+            }
+         }
+
+         part {
+            name: "e.text.name";
+            type: TEXT;
+            mouse_events: 0;
+	    effect: SOFT_SHADOW;
+            description {
+               state: "default" 0.0;
+	       color: 224 224 224 255;
+	       color3: 0 0 0 64;
+               align: 0.5 1.0;
+               rel1 {
+                  relative: 0.0 1.0;
+                  offset: 0 -20;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -1 -1;
+               }
+               text {
+                  font: "Sans";
+                  size: 8;
+                  align: 0.5 1.0;
+                  text: "";
+                  min: 0 1;
+               }
+            }
+         }
       }
    }
+
 
 /////////////////////////////////////////////////////////////////////////////
    /*** MOD: CONF_EDGEBINDINGS ***/

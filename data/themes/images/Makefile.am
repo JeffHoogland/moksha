@@ -571,5 +571,8 @@ icon_efm_file_del.png \
 exq-barglow.png \
 exq-bar.png \
 exq-bglight.png \
-exq-logo.png
+exq-logo.png \
+connman-disconnect.png \
+connman-ethernet.png \
+connman-wifi.png
 

@@ -3,1540 +3,1013 @@
  */
 #include "e.h"
 #include "e_mod_main.h"
-#include "e_iface.h"
 
-// FUCK.
-//
-// connman now completely changed api in git upstream (just found out) after
-// weeks of no changes - huge change. nothing seems compatible anymore.
-//
-// ...
-//
-// this basically puts this all on hold. hoo-ray!
-//
-// back to ignoring network stuff.
+/*
+ * STATUS:
+ *
+ *    displays current status, segfaults often. needs connman from git
+ *    (will be 0.48, still unreleased).
+ *
+ * TODO:
+ *
+ *    MUST:
+ *       1. popup with list of services, allows connecting + offline mode
+ *       2. improve gadget ui
+ *       3. fix stringshare usage errors (probably in e_connman itself)
+ *
+ *    GOOD:
+ *       1. mouse over popup with information such as IP and AP name
+ *          (remove name from gadget)
+ *       2. nice popup using edje objects as rows, not simple lists (fancy)
+ *       3. "Controls" for detailed information, similar to Mixer app
+ *          it would contain switches to toggle offline and choose
+ *          technologies that are enabled.
+ *       4. toggle internal e17 mode (Menu > Settings > Mode > Offline)
+ *
+ *    IDEAS:
+ *       1. create static connections
+ *
+ */
 
-// FIXME: need config to
-// 1. list instance id -> iface config
-// 2. list networks (essid, password, dhcp?, ip, gw, netmask)
+static E_Module *connman_mod = NULL;
+static char tmpbuf[PATH_MAX]; /* general purpose buffer, just use immediately */
 
+static const char _name[] = "connman";
+const char _Name[] = "Connection Manager";
 
-/***************************************************************************/
-/**/
-/* gadcon requirements */
-static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
-static void _gc_shutdown(E_Gadcon_Client *gcc);
-static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
-static char *_gc_label(E_Gadcon_Client_Class *client_class);
-static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
-static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
-/* and actually define the gadcon class that this module provides (just 1) */
-static const E_Gadcon_Client_Class _gadcon_class =
+static const char *e_str_idle = NULL;
+static const char *e_str_association = NULL;
+static const char *e_str_configuration = NULL;
+static const char *e_str_ready = NULL;
+static const char *e_str_disconnect = NULL;
+static const char *e_str_failure = NULL;
+
+static void _connman_default_service_changed_delayed(E_Connman_Module_Context *ctxt);
+static void _connman_gadget_update(E_Connman_Instance *inst);
+
+static const char *
+e_connman_theme_path(void)
 {
-   GADCON_CLIENT_CLASS_VERSION,
-     "connman",
+#define TF "/e-module-connman.edj"
+   size_t dirlen;
+
+   dirlen = strlen(connman_mod->dir);
+   if (dirlen >= sizeof(tmpbuf) - sizeof(TF))
+      return NULL;
+
+   memcpy(tmpbuf, connman_mod->dir, dirlen);
+   memcpy(tmpbuf + dirlen, TF, sizeof(TF));
+
+   return tmpbuf;
+#undef TF
+}
+
+static inline void
+_connman_dbus_error_show(const char *msg, const DBusError *error)
+{
+   if ((!error) || (!dbus_error_is_set(error)))
+     return;
+
+   e_util_dialog_show(_("Connman Server Operation Failed"),
+		      _("Could not execute remote operation:<br>"
+			"%s<br>"
+			"Server Error %s: %s"),
+		      msg, error->name, error->message);
+}
+
+static inline void
+_connman_operation_error_show(const char *msg)
+{
+   e_util_dialog_show(_("Connman Operation Failed"),
+		      _("Could not execute local operation:<br>%s"),
+		      msg);
+}
+
+static void
+_connman_toggle_offline_mode_cb(void *data __UNUSED__, DBusMessage *msg __UNUSED__, DBusError *error)
+{
+   _connman_dbus_error_show(_("Cannot toggle system's offline mode."), error);
+   dbus_error_free(error);
+}
+
+static void
+_connman_toggle_offline_mode(E_Connman_Module_Context *ctxt)
+{
+   bool offline;
+
+   if ((!ctxt) || (!ctxt->has_manager))
      {
-        _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
-        e_gadcon_site_is_not_toolbar
-     },
-   E_GADCON_CLIENT_STYLE_PLAIN
-};
-/**/
-/***************************************************************************/
+	_connman_operation_error_show(_("ConnMan Daemon is not running."));
+	return;
+     }
 
-static void gadget_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
+   if (!e_connman_manager_offline_mode_get(&offline))
+     {
+	_connman_operation_error_show
+	  (_("Cannot query system's offline mode."));
+	return;
+     }
 
-/***************************************************************************/
-/**/
-/* actual module specifics */
+   offline = !offline;
+   if (!e_connman_manager_offline_mode_set
+       (offline, _connman_toggle_offline_mode_cb, NULL))
+     {
+	_connman_operation_error_show
+	  (_("Cannot toggle system's offline mode."));
+	return;
+     }
+}
 
-typedef struct _Instance Instance;
-typedef struct _Conf Conf;
-typedef struct _Conf_Interface Conf_Interface;
-typedef struct _Conf_Network Conf_Network;
-
-
-struct _Instance
+static void
+_connman_cb_toggle_offline_mode(E_Object *obj __UNUSED__, const char *params __UNUSED__)
 {
-   E_Gadcon_Client *gcc;
-   Evas_Object     *o_net; // FIXME: clock to go...
+   E_Connman_Module_Context *ctxt;
 
-   E_Gadcon_Popup  *popup;
-   Evas_Object     *popup_ilist_obj;
-   E_Dialog        *if_dia;
-   Evas_Object     *if_radio_device;
-   Evas_Object     *if_ilist_obj;
-   E_Dialog        *net_dia;
-   E_Dialog        *manual_dia;
-   E_Dialog        *netlist_dia;
+   if (!connman_mod)
+      return;
 
-   struct {
-      int             ifmode;
-      int             ifmode_tmp;
-      const char     *ifpath;
-      const char     *ifpath_tmp;
-      const char     *bssid;
-      char           *sec;
-      Conf_Network   *cfnet, *cfnet_new;
-      Conf_Interface *cfif;
-   } config;
-};
+   ctxt = connman_mod->data;
+   _connman_toggle_offline_mode(ctxt);
+}
 
-struct _Conf_Interface
+static void
+_connman_service_free(E_Connman_Service *service)
 {
-   const char   *name;
-   const char   *id;
-   const char   *ifpath;
-   int           ifmode;
-   Conf_Network *netconf; // if ethernet - then this will hold config
-};
+   eina_stringshare_del(service->path);
+   eina_stringshare_del(service->name);
+   eina_stringshare_del(service->type);
+   eina_stringshare_del(service->mode);
+   eina_stringshare_del(service->state);
+   eina_stringshare_del(service->error);
+   eina_stringshare_del(service->security);
+   eina_stringshare_del(service->ipv4_method);
+   eina_stringshare_del(service->ipv4_address);
+   eina_stringshare_del(service->ipv4_netmask);
 
-struct _Conf_Network
+   e_connman_element_unref(service->element);
+   E_FREE(service);
+}
+
+static void
+_connman_service_changed(void *data, const E_Connman_Element *element)
 {
-   char *name;
-   char *essid;
-   char *password;
-   char *ip;
-   char *gateway;
-   char *netmask;
-   int dhcp;
-   int remember_password;
-   int use_always;
-   int addme;
-};
+   E_Connman_Service *service = data;
+   const char *str;
+   unsigned char u8;
+   bool b;
 
-struct _Conf
+#define GSTR(name, getter)			\
+   if (!getter(element, &str))			\
+     str = NULL;				\
+   eina_stringshare_replace(&service->name, str)
+
+   GSTR(name, e_connman_service_name_get);
+   GSTR(type, e_connman_service_type_get);
+   GSTR(mode, e_connman_service_mode_get);
+   GSTR(state, e_connman_service_state_get);
+   GSTR(error, e_connman_service_error_get);
+   GSTR(security, e_connman_service_security_get);
+   GSTR(ipv4_method, e_connman_service_ipv4_method_get);
+   GSTR(ipv4_address, e_connman_service_ipv4_address_get);
+   GSTR(ipv4_netmask, e_connman_service_ipv4_netmask_get);
+#undef GSTR
+
+   if (!e_connman_service_strength_get(element, &u8))
+     u8 = 0;
+   service->strength = u8;
+
+#define GBOOL(name, getter)				\
+   if (!getter(element, &b))				\
+     b = EINA_FALSE;					\
+   service->name = b
+
+   GBOOL(favorite, e_connman_service_favorite_get);
+   GBOOL(auto_connect, e_connman_service_auto_connect_get);
+   GBOOL(pass_required, e_connman_service_passphrase_required_get);
+#undef GBOOL
+
+
+   printf("DBG CONNMAN: service details changed: (default=%p, %hhu)\n"
+	  "    name....: %s\n"
+	  "    state...: %s\n"
+	  "    type....: %s\n"
+	  "    error...: %s\n"
+	  "    security: %s\n"
+	  "    strength: %hhu\n"
+	  "    flags...: favorite=%hhu, auto_connect=%hhu, pass_required=%hhu\n",
+	  service->ctxt->default_service,
+	  service->ctxt->default_service == service,
+	  service->name,
+	  service->state,
+	  service->type,
+	  service->error,
+	  service->security,
+	  service->strength,
+	  service->favorite,
+	  service->auto_connect,
+	  service->pass_required);
+
+   if ((service->ctxt->default_service == service) ||
+       (!service->ctxt->default_service))
+     _connman_default_service_changed_delayed(service->ctxt);
+   else
+     printf("DBG CONNMAN: do not request for delayed changed as this is not the default.\n");
+}
+
+static void
+_connman_service_freed(void *data)
 {
-   Eina_List *interfaces;
-   Eina_List *networks;
-};
+   E_Connman_Service *service = data;
+   E_Connman_Module_Context *ctxt = service->ctxt;
 
-static E_Module *connman_module = NULL;
-static E_DBus_Connection *connman_dbus = NULL;
-static Eina_List *instances = NULL;
-static E_Config_DD *conf_edd = NULL;
-static E_Config_DD *conf_interface_edd = NULL;
-static E_Config_DD *conf_network_edd = NULL;
-static Conf *conf = NULL;
+   printf("DBG CONNMAN service freed %s\n", service->name);
+
+   ctxt->services = eina_inlist_remove
+     (ctxt->services, EINA_INLIST_GET(service));
+
+   _connman_service_free(service);
+
+   if (ctxt->default_service == service)
+     {
+	ctxt->default_service = NULL;
+	_connman_default_service_changed_delayed(ctxt);
+     }
+}
+
+static E_Connman_Service *
+_connman_service_new(E_Connman_Module_Context *ctxt, E_Connman_Element *element)
+{
+   E_Connman_Service *service;
+   const char *str;
+   unsigned char u8;
+   bool b;
+
+   if (!element)
+     return NULL;
+
+   service = E_NEW(E_Connman_Service, 1);
+   if (!service)
+     return NULL;
+
+   service->ctxt = ctxt;
+   service->element = element;
+   service->path = eina_stringshare_add(element->path);
+
+#define GSTR(name, getter)			\
+   if (!getter(element, &str))			\
+     str = NULL;				\
+   service->name = eina_stringshare_add(str)
+
+   GSTR(name, e_connman_service_name_get);
+   GSTR(type, e_connman_service_type_get);
+   GSTR(mode, e_connman_service_mode_get);
+   GSTR(state, e_connman_service_state_get);
+   GSTR(error, e_connman_service_error_get);
+   GSTR(security, e_connman_service_security_get);
+   GSTR(ipv4_method, e_connman_service_ipv4_method_get);
+   GSTR(ipv4_address, e_connman_service_ipv4_address_get);
+   GSTR(ipv4_netmask, e_connman_service_ipv4_netmask_get);
+#undef GSTR
+
+   if (!e_connman_service_strength_get(element, &u8))
+     u8 = 0;
+   service->strength = u8;
+
+#define GBOOL(name, getter)				\
+   if (!getter(element, &b))				\
+     b = EINA_FALSE;					\
+   service->name = b
+
+   GBOOL(favorite, e_connman_service_favorite_get);
+   GBOOL(auto_connect, e_connman_service_auto_connect_get);
+   GBOOL(pass_required, e_connman_service_passphrase_required_get);
+#undef GBOOL
+
+   e_connman_element_listener_add
+     (element, _connman_service_changed, service,
+      _connman_service_freed);
+
+   return service;
+}
+
+static void
+_connman_services_free(E_Connman_Module_Context *ctxt)
+{
+   while (ctxt->services)
+     {
+	E_Connman_Service *service = (E_Connman_Service *)ctxt->services;
+	ctxt->services = eina_inlist_remove(ctxt->services, ctxt->services);
+	_connman_service_free(service);
+     }
+}
+
+static inline Eina_Bool
+_connman_services_element_exists(const E_Connman_Module_Context *ctxt, const E_Connman_Element *element)
+{
+   const E_Connman_Service *service;
+
+   EINA_INLIST_FOREACH(ctxt->services, service)
+     if (service->path == element->path)
+       return EINA_TRUE;
+
+   return EINA_FALSE;
+}
+
+static void
+_connman_services_load(E_Connman_Module_Context *ctxt)
+{
+   unsigned int i, count;
+   E_Connman_Element **elements;
+
+   if (!e_connman_manager_services_get(&count, &elements))
+     return;
+
+   for (i = 0; i < count; i++)
+     {
+	E_Connman_Element *e = elements[i];
+	E_Connman_Service *service;
+
+	if ((!e) || (_connman_services_element_exists(ctxt, e)))
+	  {
+	     printf("DBG CONNMAN service already exists %p (%s)\n",
+		    e, e ? e->path : "");
+	     continue;
+	  }
+
+	service = _connman_service_new(ctxt, e);
+	if (!service)
+	  continue;
+
+	printf("DBG CONNMAN added service: %s\n", service->name);
+	ctxt->services = eina_inlist_append
+	  (ctxt->services, EINA_INLIST_GET(service));
+     }
+
+   /* no need to remove elements, as they remove themselves */
+
+   free(elements);
+}
+
+static void
+_connman_default_service_changed(E_Connman_Module_Context *ctxt)
+{
+   E_Connman_Service *itr, *def = NULL;
+   E_Connman_Instance *inst;
+   const Eina_List *l;
+   const char *tech;
+
+   EINA_INLIST_FOREACH(ctxt->services, itr)
+     {
+	if (itr->state == e_str_ready)
+	  {
+	     def = itr;
+	     break;
+	  }
+	else if ((itr->state == e_str_association) &&
+		 ((!def) || (def && def->state != e_str_configuration)))
+	  def = itr;
+	else if (itr->state == e_str_configuration)
+	  def = itr;
+     }
+
+   printf("DBG CONNMAN: default service changed to %p (%s)\n", def, def ? def->name : "");
+
+   if (!e_connman_manager_technology_default_get(&tech))
+     tech = NULL;
+   eina_stringshare_replace(&ctxt->technology, tech);
+   printf("DBG CONNMAN: manager technology is '%s'\n", tech);
+
+   ctxt->default_service = def;
+   EINA_LIST_FOREACH(ctxt->instances, l, inst)
+     _connman_gadget_update(inst);
+}
+
+static void
+_connman_services_reload(E_Connman_Module_Context *ctxt)
+{
+   _connman_services_load(ctxt);
+   _connman_default_service_changed(ctxt);
+}
+
+static int
+_connman_default_service_changed_delayed_do(void *data)
+{
+   E_Connman_Module_Context *ctxt = data;
+
+   ctxt->poller.default_service_changed = NULL;
+   printf("\033[32mDBG CONNMAN: do delayed change\033[0m\n");
+   _connman_default_service_changed(ctxt);
+   return 0;
+}
+
+static void
+_connman_default_service_changed_delayed(E_Connman_Module_Context *ctxt)
+{
+   printf("\033[1;31mDBG CONNMAN: request delayed change\033[0m\n");
+   if (ctxt->poller.default_service_changed)
+     ecore_poller_del(ctxt->poller.default_service_changed);
+   ctxt->poller.default_service_changed = ecore_poller_add
+     (ECORE_POLLER_CORE, 1, _connman_default_service_changed_delayed_do, ctxt);
+}
+
+static void _connman_popup_del(E_Connman_Instance *inst);
+
+static int
+_connman_popup_input_window_mouse_up_cb(void *data, int type, void *event)
+{
+   Ecore_Event_Mouse_Button *ev = event;
+   E_Connman_Instance *inst = data;
+
+   if (ev->window != inst->ui.input.win)
+      return 1;
+
+   _connman_popup_del(inst);
+
+   return 1;
+}
+
+static int
+_connman_popup_input_window_key_down_cb(void *data, int type, void *event)
+{
+   Ecore_Event_Key *ev = event;
+   E_Connman_Instance *inst = data;
+   const char *keysym;
+
+   if (ev->window != inst->ui.input.win)
+      return 1;
+
+   keysym = ev->key;
+   if (strcmp(keysym, "Escape") == 0)
+      _connman_popup_del(inst);
+
+   return 1;
+}
+
+static void
+_connman_popup_input_window_destroy(E_Connman_Instance *inst)
+{
+   ecore_x_window_free(inst->ui.input.win);
+   inst->ui.input.win = 0;
+
+   ecore_event_handler_del(inst->ui.input.mouse_up);
+   inst->ui.input.mouse_up = NULL;
+
+   ecore_event_handler_del(inst->ui.input.key_down);
+   inst->ui.input.key_down = NULL;
+}
+
+static void
+_connman_popup_input_window_create(E_Connman_Instance *inst)
+{
+   Ecore_X_Window_Configure_Mask mask;
+   Ecore_X_Window w, popup_w;
+   E_Manager *man;
+
+   return; // TODO
+
+   man = e_manager_current_get();
+
+   w = ecore_x_window_input_new(man->root, 0, 0, man->w, man->h);
+   mask = (ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE |
+           ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING);
+   popup_w = inst->popup->win->evas_win;
+   ecore_x_window_configure(w, mask, 0, 0, 0, 0, 0, popup_w,
+                            ECORE_X_WINDOW_STACK_BELOW);
+   ecore_x_window_show(w);
+
+   inst->ui.input.mouse_up =
+      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
+                              _connman_popup_input_window_mouse_up_cb, inst);
+
+   inst->ui.input.key_down =
+      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
+                              _connman_popup_input_window_key_down_cb, inst);
+
+   inst->ui.input.win = w;
+}
+
+static void
+_connman_popup_del(E_Connman_Instance *inst)
+{
+   _connman_popup_input_window_destroy(inst);
+   e_object_del(E_OBJECT(inst->popup));
+   inst->popup = NULL;
+}
+
+static void
+_connman_popup_new(E_Connman_Instance *inst)
+{
+   Evas *evas;
+   Evas_Coord mw, mh;
+
+   // TODO
+
+   e_widget_size_min_get(inst->ui.table, &mw, &mh);
+   if (mh < 208) mh = 208;
+   if (mw < 68) mw = 68;
+   e_widget_size_min_set(inst->ui.table, mw, mh);
+
+   e_gadcon_popup_content_set(inst->popup, inst->ui.table);
+   e_gadcon_popup_show(inst->popup);
+   _connman_popup_input_window_create(inst);
+}
+
+static void
+_connman_menu_cb_post(void *data, E_Menu *menu)
+{
+   E_Connman_Instance *inst;
+
+   inst = data;
+   if ((!inst) || (!inst->menu))
+      return;
+   if (inst->menu)
+   {
+      e_object_del(E_OBJECT(inst->menu));
+      inst->menu = NULL;
+   }
+}
+
+static void
+_connman_menu_cb_cfg(void *data, E_Menu *menu __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Connman_Instance *inst = data;
+
+   if (!inst)
+      return;
+   if (inst->popup)
+      _connman_popup_del(inst);
+
+   e_util_dialog_show("TODO", "TODO!");
+}
+
+static void
+_connman_menu_new(E_Connman_Instance *inst, Evas_Event_Mouse_Down *ev)
+{
+   E_Zone *zone;
+   E_Menu *mn;
+   E_Menu_Item *mi;
+   int x, y;
+
+   zone = e_util_zone_current_get(e_manager_current_get());
+
+   mn = e_menu_new();
+   e_menu_post_deactivate_callback_set(mn, _connman_menu_cb_post, inst);
+   inst->menu = mn;
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Settings"));
+   e_util_menu_item_theme_icon_set(mi, "configure");
+   e_menu_item_callback_set(mi, _connman_menu_cb_cfg, inst);
+
+   e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
+   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
+   e_menu_activate_mouse(mn, zone, x + ev->output.x, y + ev->output.y,
+                         1, 1, E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
+   evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+                            EVAS_BUTTON_NONE, ev->timestamp, NULL);
+}
+
+static void
+_connman_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
+{
+   E_Connman_Instance *inst;
+   Evas_Event_Mouse_Down *ev;
+
+   inst = data;
+   if (!inst)
+      return;
+
+   ev = event;
+   if (ev->button == 1)
+   {
+      if (!inst->popup)
+         _connman_popup_new(inst);
+      else
+         _connman_popup_del(inst);
+   }
+   else if (ev->button == 2)
+      _connman_toggle_offline_mode(inst->ctxt);
+   else if ((ev->button == 3) && (!inst->menu))
+      _connman_menu_new(inst, ev);
+}
+
+static void
+_connman_gadget_update(E_Connman_Instance *inst)
+{
+   E_Connman_Module_Context *ctxt = inst->ctxt;
+   Evas_Object *gadget = inst->ui.gadget;
+   const E_Connman_Service *service;
+   Edje_Message_Int msg;
+   char buf[128];
+
+   printf("\033[1;33mUPDATE GADGET\033[0m\n");
+
+   if (!ctxt->has_manager)
+     {
+	edje_object_signal_emit(gadget, "e,unavailable", "e");
+	edje_object_part_text_set(gadget, "e.text.name", _("No ConnMan"));
+	edje_object_part_text_set(gadget, "e.text.error",
+				  _("No ConnMan server found."));
+     }
+
+   edje_object_signal_emit(gadget, "e,available", "e");
+
+   if (ctxt->offline_mode)
+     edje_object_signal_emit(gadget, "e,changed,offline_mode,yes", "e");
+   else
+     edje_object_signal_emit(gadget, "e,changed,offline_mode,no", "e");
+
+   printf("DBG CONNMAN: technology: %s\n", ctxt->technology);
+
+   if (ctxt->technology)
+     {
+	edje_object_part_text_set(gadget, "e.text.technology",
+				  ctxt->technology);
+	snprintf(buf, sizeof(buf), "e,changed,technology,%s",
+		 ctxt->technology);
+	edje_object_signal_emit(gadget, buf, "e");
+     }
+   else
+     {
+	edje_object_part_text_set(gadget, "e.text.technology", "");
+	edje_object_signal_emit(gadget, "e,changed,technology,none", "e");
+     }
+
+   service = ctxt->default_service;
+   printf("DBG CONNMAN: default_service: %p (%s)\n", service, service ? service->name : "");
+   if (!service)
+     {
+	edje_object_part_text_set(gadget, "e.text.name", _("No Connection"));
+	edje_object_signal_emit(gadget, "e,changed,service,none", "e");
+	return;
+     }
+
+   printf("\033[0mDBG CONNMAN: service details:\n"
+	  "    state: %s\n"
+	  "    type: %s\n"
+	  "    error: %s\n"
+	  "    security: %s\n"
+	  "    strength: %hhu\n"
+	  "    flags: favorite=%hhu, auto_connect=%hhu, pass_required=%hhu\033[0m\n",
+	  service->state,
+	  service->type,
+	  service->error,
+	  service->security,
+	  service->strength,
+	  service->favorite,
+	  service->auto_connect,
+	  service->pass_required);
+
+   if (service->name)
+     edje_object_part_text_set(gadget, "e.text.name", service->name);
+   else
+     edje_object_part_text_set(gadget, "e.text.name", _("Unknown Name"));
+
+   if (service->error)
+     {
+	edje_object_part_text_set(gadget, "e.text.error", service->error);
+	edje_object_signal_emit(gadget, "e,changed,error,yes", "e");
+     }
+   else
+     {
+	edje_object_part_text_set(gadget, "e.text.error", _("No error"));
+	edje_object_signal_emit(gadget, "e,changed,error,no", "e");
+     }
+
+   snprintf(buf, sizeof(buf), "e,changed,service,%s", service->type);
+   edje_object_signal_emit(gadget, buf, "e");
+
+   snprintf(buf, sizeof(buf), "e,changed,state,%s", service->state);
+   edje_object_signal_emit(gadget, buf, "e");
+   printf("DBG CONNMAN signal: %s\n", buf);
+
+   if (service->mode)
+     {
+	snprintf(buf, sizeof(buf), "e,changed,mode,%s", service->mode);
+	edje_object_signal_emit(gadget, buf, "e");
+     }
+
+   if (service->security)
+     {
+	snprintf(buf, sizeof(buf), "e,changed,security,%s", service->security);
+	edje_object_signal_emit(gadget, buf, "e");
+     }
+
+   if (service->favorite)
+     edje_object_signal_emit(gadget, "e,changed,favorite,yes", "e");
+   else
+     edje_object_signal_emit(gadget, "e,changed,favorite,no", "e");
+
+   if (service->auto_connect)
+     edje_object_signal_emit(gadget, "e,changed,auto_connect,yes", "e");
+   else
+     edje_object_signal_emit(gadget, "e,changed,auto_connect,no", "e");
+
+   if (service->pass_required)
+     edje_object_signal_emit(gadget, "e,changed,pass_required,yes", "e");
+   else
+     edje_object_signal_emit(gadget, "e,changed,pass_required,no", "e");
+
+
+   msg.val = service->strength;
+   edje_object_message_send(gadget, EDJE_MESSAGE_INT, 1, &msg);
+}
+
+/* Gadcon Api Functions */
 
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
-   Evas_Object *o;
-   E_Gadcon_Client *gcc;
-   Instance *inst;
-   Eina_List *l;
+   E_Connman_Instance *inst;
+   E_Connman_Module_Context *ctxt;
 
-   inst = E_NEW(Instance, 1);
+   if (!connman_mod)
+      return NULL;
 
-   o = edje_object_add(gc->evas);
-   e_theme_edje_object_set(o, "base/theme/modules/connman",
-			   "e/modules/connman/main");
-   evas_object_show(o);
+   ctxt = connman_mod->data;
 
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
-				  gadget_cb_mouse_down, inst);
+   inst = E_NEW(E_Connman_Instance, 1);
+   inst->ctxt = ctxt;
+   inst->ui.gadget = edje_object_add(gc->evas);
+   e_theme_edje_object_set(inst->ui.gadget, "base/theme/modules/connman",
+                           "e/modules/connman/main");
 
-   gcc = e_gadcon_client_new(gc, name, id, style, o);
-   gcc->data = inst;
+   inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->ui.gadget);
+   inst->gcc->data = inst;
 
-   inst->gcc = gcc;
-   inst->o_net = o;
+   evas_object_event_callback_add
+     (inst->ui.gadget, EVAS_CALLBACK_MOUSE_DOWN, _connman_cb_mouse_down, inst);
 
-   e_gadcon_client_util_menu_attach(gcc);
+   _connman_gadget_update(inst);
 
-   instances = eina_list_append(instances, inst);
+   ctxt->instances = eina_list_append(ctxt->instances, inst);
 
-   if (!conf)
-     {
-	conf = E_NEW(Conf, 1);
-	e_config_save_queue();
-     }
-   for (l = conf->interfaces; l; l = l->next)
-     {
-	Conf_Interface *cfif;
-
-	cfif = l->data;
-	if ((cfif->name) && (!strcmp(name, cfif->name)) &&
-	    (cfif->id) && (!strcmp(name, cfif->id)))
-	  {
-	     inst->config.cfif = cfif;
-	     break;
-	  }
-     }
-   if (!inst->config.cfif)
-     {
-        Conf_Interface *cfif;
-
-	cfif = E_NEW(Conf_Interface, 1);
-	cfif->name = eina_stringshare_add(name);
-	cfif->id = eina_stringshare_add(id);
-	conf->interfaces = eina_list_append(conf->interfaces, cfif);
-	inst->config.cfif = cfif;
-	e_config_save_queue();
-	// FIXME:  check interfaces - if one matches, do the if init
-     }
-   return gcc;
+   return inst->gcc;
 }
 
 static void
 _gc_shutdown(E_Gadcon_Client *gcc)
 {
-   Instance *inst;
+   E_Connman_Module_Context *ctxt;
+   E_Connman_Instance *inst;
+
+   if (!connman_mod)
+      return;
+
+   ctxt = connman_mod->data;
+   if (!ctxt)
+      return;
 
    inst = gcc->data;
-   instances = eina_list_remove(instances, inst);
+   if (!inst)
+      return;
 
-   evas_object_del(inst->o_net);
-   free(inst);
+   if (inst->menu)
+     {
+	e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
+	e_object_del(E_OBJECT(inst->menu));
+     }
+   evas_object_del(inst->ui.gadget);
+
+   ctxt->instances = eina_list_remove(ctxt->instances, inst);
+
+   E_FREE(inst);
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 {
-   Instance *inst;
-   Evas_Coord mw, mh;
-
-   inst = gcc->data;
-   mw = 0, mh = 0;
-   edje_object_size_min_get(inst->o_net, &mw, &mh);
-   if ((mw < 1) || (mh < 1))
-     edje_object_size_min_calc(inst->o_net, &mw, &mh);
-   if (mw < 4) mw = 4;
-   if (mh < 4) mh = 4;
-   e_gadcon_client_aspect_set(gcc, mw, mh);
-   e_gadcon_client_min_size_set(gcc, mw, mh);
+   e_gadcon_client_aspect_set(gcc, 16, 16);
+   e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   return _("Connection Manager");
+   return _(_Name);
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    Evas_Object *o;
-   char buf[4096];
 
    o = edje_object_add(evas);
-   snprintf(buf, sizeof(buf), "%s/e-module-connman.edj",
-	    e_module_dir_get(connman_module));
-   edje_object_file_set(o, buf, "icon");
+   edje_object_file_set(o, e_connman_theme_path(), "icon");
    return o;
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   return _gadcon_class.name;
+   E_Connman_Module_Context *ctxt;
+   Eina_List *instances;
+
+   if (!connman_mod)
+      return NULL;
+
+   ctxt = connman_mod->data;
+   if (!ctxt)
+      return NULL;
+
+   instances = ctxt->instances;
+   snprintf(tmpbuf, sizeof(tmpbuf), "connman.%d", eina_list_count(instances));
+   return tmpbuf;
 }
 
-/**/
-/***************************************************************************/
-
-/***************************************************************************/
-/**/
-static void if_dialog_hide(Instance *inst);
-static void popup_hide(Instance *inst);
-static void net_dialog_show(Instance *inst, Conf_Network *cfnet);
-static void net_dialog_hide(Instance *inst);
-static void popup_ifnet_nets_refresh(Instance *inst);
-
-static Eina_List *ifaces = NULL;
-
-static int
-inst_if_matches(Instance *inst, Interface *iface)
+static const E_Gadcon_Client_Class _gc_class =
 {
-   if ((inst->config.ifmode == 0) && (iface->prop.type) &&
-       (!strcmp(iface->prop.type, "80211")))
-     return 1;
-   if ((inst->config.ifmode == 1) && (iface->prop.type) &&
-       (!strcmp(iface->prop.type, "80203")))
-     return 1;
-   if ((inst->config.ifpath) && (!strcmp(iface->ifpath, inst->config.ifpath)))
-     return 1;
-   return 0;
-}
-
-static Interface *
-if_get(Instance *inst)
-{
-   Eina_List *l;
-   Interface *iface = NULL;
-
-   if (inst->config.ifpath)
-     iface = iface_find(inst->config.ifpath);
-   else
-     {
-	EINA_LIST_FOREACH(ifaces, l, iface)
-	  if (inst_if_matches(inst, iface)) return iface;
-     }
-   return iface;
-}
-
-static int
-net_join(Instance *inst, Interface *iface, Conf_Network *cfnet)
-{
-   if (!inst->config.sec)
-     {
-	iface_policy_set(iface, "auto");
-	iface_network_set(iface, cfnet->essid, "");
-	if (cfnet->dhcp)
-	  {
-	     iface_ipv4_set(iface, "dhcp", NULL, NULL, NULL);
-	  }
-	else
-	  iface_ipv4_set(iface, "static",
-			 cfnet->ip, cfnet->gateway,
-			 cfnet->netmask);
-	if ((!cfnet->remember_password) && (cfnet->password))
-	  {
-	     eina_stringshare_del(cfnet->password);
-	     cfnet->password = NULL;
-	  }
-     }
-   else
-     {
-	if (!cfnet->password)
-	  {
-	     net_dialog_show(inst, cfnet);
-	  }
-	else
-	  {
-	     iface_policy_set(iface, "auto");
-	     iface_network_set(iface, cfnet->essid, cfnet->password);
-	     if (cfnet->dhcp)
-	       {
-		  iface_ipv4_set(iface, "dhcp", NULL, NULL, NULL);
-	       }
-	     else
-	       iface_ipv4_set(iface, "static",
-			      cfnet->ip, cfnet->gateway,
-			      cfnet->netmask);
-	     if ((!cfnet->remember_password) && (cfnet->password))
-	       {
-		  eina_stringshare_del(cfnet->password);
-		  cfnet->password = NULL;
-	       }
-	  }
-     }
-   return 0;
-}
-
-#define STR_SHARE(x) \
-do { char *___s; ___s = (x); \
-   if (___s) { (x) = (char *)eina_stringshare_add(___s); free(___s); }	\
-} while (0);
-
-#define STR_UNSHARE(x) \
-do { char *___s; ___s = (x); \
-   if (___s) { (x) = strdup(___s); eina_stringshare_del(___s); } \
-} while (0);
-
-static void
-net_dialog_cb_ok(void *data, E_Dialog *dialog)
-{
-   Instance *inst;
-   Conf_Network *cfnet;
-   Interface *iface;
-
-   inst = data;
-   cfnet = inst->config.cfnet_new;
-   inst->config.cfnet = cfnet;
-   inst->config.cfnet_new = NULL;
-   if (cfnet->addme)
-     conf->networks = eina_list_prepend(conf->networks, cfnet);
-   STR_SHARE(cfnet->name);
-   STR_SHARE(cfnet->essid);
-   STR_SHARE(cfnet->password);
-   STR_SHARE(cfnet->ip);
-   STR_SHARE(cfnet->gateway);
-   STR_SHARE(cfnet->netmask);
-   net_dialog_hide(inst);
-   iface = if_get(inst);
-   if (iface) net_join(inst, iface, cfnet);
-   // FIXME: if ethernet - save cfnet to instances->confnet
-   e_config_save_queue();
-}
-
-static void
-net_dialog_cb_cancel(void *data, E_Dialog *dialog)
-{
-   Instance *inst;
-   Conf_Network *cfnet;
-
-   inst = data;
-   cfnet = inst->config.cfnet_new;
-   inst->config.cfnet_new = NULL;
-   if (cfnet->addme)
-     {
-	E_FREE(cfnet->name);
-	E_FREE(cfnet->essid);
-	E_FREE(cfnet->password);
-	E_FREE(cfnet->ip);
-	E_FREE(cfnet->gateway);
-	E_FREE(cfnet->netmask);
-	free(cfnet);
-     }
-   else if (inst->config.cfnet)
-     {
-	cfnet = inst->config.cfnet;
-	STR_SHARE(cfnet->name);
-	STR_SHARE(cfnet->essid);
-	STR_SHARE(cfnet->password);
-	STR_SHARE(cfnet->ip);
-	STR_SHARE(cfnet->gateway);
-	STR_SHARE(cfnet->netmask);
-     }
-   net_dialog_hide(inst);
-}
-
-static void
-net_dialog_cb_del(E_Win *win)
-{
-   E_Dialog *dialog;
-   Instance *inst;
-   Conf_Network *cfnet;
-
-   dialog = win->data;
-   inst = dialog->data;
-   cfnet = inst->config.cfnet_new;
-   inst->config.cfnet_new = NULL;
-   if (cfnet->addme)
-     {
-	E_FREE(cfnet->name);
-	E_FREE(cfnet->essid);
-	E_FREE(cfnet->password);
-	E_FREE(cfnet->ip);
-	E_FREE(cfnet->gateway);
-	E_FREE(cfnet->netmask);
-	free(cfnet);
-     }
-   else if (inst->config.cfnet)
-     {
-	cfnet = inst->config.cfnet;
-	STR_SHARE(cfnet->name);
-	STR_SHARE(cfnet->essid);
-	STR_SHARE(cfnet->password);
-	STR_SHARE(cfnet->ip);
-	STR_SHARE(cfnet->gateway);
-	STR_SHARE(cfnet->netmask);
-     }
-   net_dialog_hide(inst);
-}
-
-// FIXME: if iface deleted - del dialog
-// FIXME: if ifnet del (this ifnet) del dialog
-static void
-net_dialog_show(Instance *inst, Conf_Network *cfnet)
-{
-   E_Dialog *dialog;
-   Evas *evas;
-   Evas_Object *table, *o, *button;
-   Evas_Coord mw, mh;
-   int row = 0;
-
-   dialog = e_dialog_new(inst->gcc->gadcon->zone->container, "e", "e_connman_net_dialog");
-   e_dialog_title_set(dialog, "Connection Details");
-   dialog->data = inst;
-   evas = e_win_evas_get(dialog->win);
-
-   table = e_widget_table_add(evas, 0);
-
-   o = e_widget_label_add(evas, "Personal Name");
-   e_widget_table_object_append(table, o, 0, row, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfnet->name), NULL, NULL, NULL);
-   e_widget_size_min_get(o, &mw, &mh);
-   mw = 160;
-   e_widget_size_min_set(o, mw, mh);
-   e_widget_table_object_append(table, o, 1, row, 1, 1, 1, 1, 0, 0);
-   row++;
-
-   // FIXME: onyl for wifi - not LAN
-   o = e_widget_label_add(evas, "ESSID");
-   e_widget_table_object_append(table, o, 0, row, 1, 1, 1, 1, 0, 0);
-   o = e_widget_label_add(evas, cfnet->essid);
-   e_widget_table_object_append(table, o, 1, row, 1, 1, 1, 1, 0, 0);
-   row++;
-
-   o = e_widget_check_add(evas, "Use when available", &(cfnet->use_always));
-   e_widget_table_object_append(table, o, 0, row, 2, 1, 1, 1, 0, 0);
-   row++;
-
-   if (inst->config.sec)
-     {
-	o = e_widget_label_add(evas, "Password");
-	e_widget_table_object_append(table, o, 0, row, 1, 1, 1, 1, 0, 0);
-	o = e_widget_entry_add(evas, &(cfnet->password), NULL, NULL, NULL);
-	e_widget_size_min_get(o, &mw, &mh);
-	mw = 160;
-	e_widget_size_min_set(o, mw, mh);
-	e_widget_table_object_append(table, o, 1, row, 1, 1, 1, 1, 0, 0);
-	row++;
-
-	o = e_widget_check_add(evas, "Remember password", &(cfnet->remember_password));
-	e_widget_table_object_append(table, o, 0, row, 2, 1, 1, 1, 0, 0);
-	row++;
-     }
-
-   // FIXME: manual dialog needs to work
-   button = e_widget_button_add(evas, "Address Details", NULL, NULL,
-				inst, NULL);
-   e_widget_table_object_append(table, button, 0, row, 2, 1, 0, 0, 0, 0);
-   row++;
-
-   e_widget_size_min_get(table, &mw, &mh);
-   e_dialog_content_set(dialog, table, mw, mh);
-
-   e_win_delete_callback_set(dialog->win, net_dialog_cb_del);
-
-   e_dialog_button_add(dialog, "OK", NULL, net_dialog_cb_ok, inst);
-   e_dialog_button_add(dialog, "Cancel", NULL, net_dialog_cb_cancel, inst);
-   e_dialog_button_focus_num(dialog, 1);
-   e_win_centered_set(dialog->win, 1);
-   e_dialog_show(dialog);
-
-   inst->net_dia = dialog;
-}
-
-static void
-net_dialog_hide(Instance *inst)
-{
-   if (inst->net_dia)
-     {
-	e_object_del(E_OBJECT(inst->net_dia));
-	inst->net_dia = NULL;
-     }
-}
-
-// FIXME: need a "manual network settings" dialog:
-// * checkbox "use dhcp"
-// * entry "ip"
-// * entry "gateway"
-// * entry "netmask"
-static void
-manual_dialog_show(Instance *inst)
-{
-}
-
-static void
-manual_dialog_hide(Instance *inst)
-{
-}
-
-// FIXME: need saved networks list dialog
-// * ilist of saved network names
-// * delete button
-static void
-netlist_dialog_show(Instance *inst)
-{
-   Conf_Network *cfnet;
-
-   cfnet = inst->config.cfnet_new;
-   inst->config.cfnet_new = NULL;
-   if ((cfnet) && (cfnet->addme))
-     {
-	E_FREE(cfnet->name);
-	E_FREE(cfnet->essid);
-	E_FREE(cfnet->password);
-	E_FREE(cfnet->ip);
-	E_FREE(cfnet->gateway);
-	E_FREE(cfnet->netmask);
-	free(cfnet);
-     }
-   else if (inst->config.cfnet)
-     {
-	cfnet = inst->config.cfnet;
-	STR_SHARE(cfnet->name);
-	STR_SHARE(cfnet->essid);
-	STR_SHARE(cfnet->password);
-	STR_SHARE(cfnet->ip);
-	STR_SHARE(cfnet->gateway);
-	STR_SHARE(cfnet->netmask);
-     }
-   net_dialog_hide(inst);
-   manual_dialog_hide(inst);
-   if_dialog_hide(inst);
-   eina_stringshare_del(inst->config.ifpath);
-   inst->config.ifpath = NULL;
-}
-
-static void
-netlist_dialog_hide(Instance *inst)
-{
-}
-
-static void
-button_cb_netlist(void *data, void *data2)
-{
-   Instance *inst;
-
-   inst = data;
-   if (!inst->netlist_dia) netlist_dialog_show(inst);
-   else netlist_dialog_hide(inst);
-}
-
-static void
-if_dialog_cb_ok(void *data, E_Dialog *dialog)
-{
-   Instance *inst;
-
-   inst = data;
-   if_dialog_hide(inst);
-   eina_stringshare_del(inst->config.ifpath);
-   inst->config.ifmode = inst->config.ifmode_tmp;
-   inst->config.ifpath = inst->config.ifpath_tmp;
-   inst->config.ifpath_tmp = NULL;
-
-   if (inst->config.cfif)
-     {
-	if (inst->config.cfif->ifpath)
-	  {
-	     eina_stringshare_del(inst->config.cfif->ifpath);
-	     inst->config.cfif->ifpath = NULL;
-	  }
-	inst->config.cfif->ifpath = eina_stringshare_ref(inst->config.ifpath);
-	inst->config.cfif->ifmode = inst->config.ifmode;
-     }
-   popup_ifnet_nets_refresh(inst);
-   e_config_save_queue();
-}
-
-static void
-if_dialog_cb_cancel(void *data, E_Dialog *dialog)
-{
-   Instance *inst;
-
-   inst = data;
-   if_dialog_hide(inst);
-   eina_stringshare_del(inst->config.ifpath_tmp);
-   inst->config.ifpath_tmp = NULL;
-}
-
-static void
-if_dialog_cb_del(E_Win *win)
-{
-   E_Dialog *dialog;
-   Instance *inst;
-
-   dialog = win->data;
-   inst = dialog->data;
-   if_dialog_hide(inst);
-   eina_stringshare_del(inst->config.ifpath_tmp);
-   inst->config.ifpath_tmp = NULL;
-}
-
-static void
-if_radio_cb_generic(void *data, Evas_Object *obj, void *event_info)
-{
-   Instance *inst;
-
-   inst = data;
-   if (inst->config.ifmode != 2)
-     {
-	e_widget_ilist_unselect(inst->if_ilist_obj);
-	eina_stringshare_del(inst->config.ifpath);
-	inst->config.ifpath = NULL;
-     }
-}
-
-static void
-if_ilist_cb_if_sel(void *data)
-{
-   Instance *inst;
-
-   inst = data;
-   e_widget_radio_toggle_set(inst->if_radio_device, 1);
-}
-
-static void
-if_ilist_update(Instance *inst)
-{
-   Evas_Object *ilist;
-   Eina_List *l;
-   int i;
-
-   ilist = inst->if_ilist_obj;
-   if (!ilist) return;
-   e_widget_ilist_freeze(ilist);
-   e_widget_ilist_clear(ilist);
-
-   for (i = 0, l = ifaces; l; l = l->next, i++)
-     {
-	Interface *iface;
-	char buf[256];
-	const char *vendor, *product, *type;
-	Evas_Object *icon;
-
-	iface = l->data;
-	vendor = iface->prop.vendor;
-	product = iface->prop.product;
-	type = iface->prop.type;
-	icon = NULL;
-	if (type)
-	  {
-	     if (!strcmp(type, "80211"))
-	       {
-		  type = "WiFi";
-		  // FIXME: find an icon;
-	       }
-	     else if (!strcmp(type, "80203"))
-	       {
-		  type = "LAN";
-		  // FIXME: find an icon;
-	       }
-	     else if (!strcmp(type, "wimax"))
-	       {
-		  type = "WiMax";
-		  // FIXME: find an icon;
-	       }
-	     else if (!strcmp(type, "modem"))
-	       {
-		  type = "Modem";
-		  // FIXME: find an icon;
-	       }
-	     else if (!strcmp(type, "bluetooth"))
-	       {
-		  type = "Bluetooth";
-		  // FIXME: find an icon;
-	       }
-	  }
-	if (!vendor) vendor = "Unknown";
-	if (!product) product = "Unknown";
-	if (!type) type = "Unknown";
-	snprintf(buf, sizeof(buf), "%s (%s)", type, product);
-	e_widget_ilist_append(ilist, icon, buf, if_ilist_cb_if_sel, inst,
-			      iface->ifpath);
-	if ((inst->config.ifpath) &&
-	    (!strcmp(inst->config.ifpath, iface->ifpath)))
-	  e_widget_ilist_selected_set(ilist, i);
-     }
-
-   e_widget_ilist_go(ilist);
-   e_widget_ilist_thaw(ilist);
-}
-
-static void
-if_dialog_show(Instance *inst)
-{
-   E_Dialog *dialog;
-   Evas *evas;
-   Evas_Object *list, *flist, *o, *ilist, *button;
-   Evas_Coord mw, mh;
-   E_Radio_Group *rg;
-
-   dialog = e_dialog_new(inst->gcc->gadcon->zone->container, "e", "e_connman_iface_dialog");
-   e_dialog_title_set(dialog, _("Network Connection Settings"));
-   dialog->data = inst;
-   evas = e_win_evas_get(dialog->win);
-
-   list = e_widget_list_add(evas, 0, 0);
-
-   flist = e_widget_framelist_add(evas, _("Network Device"), 0);
-
-   inst->config.ifmode_tmp = inst->config.ifmode;
-   rg = e_widget_radio_group_new(&(inst->config.ifmode_tmp));
-
-   o = e_widget_radio_add(evas, _("Wifi"), 0, rg);
-   evas_object_smart_callback_add(o, "changed", if_radio_cb_generic, inst);
-   e_widget_framelist_object_append(flist, o);
-   o = e_widget_radio_add(evas, _("LAN"), 1, rg);
-   evas_object_smart_callback_add(o, "changed", if_radio_cb_generic, inst);
-   e_widget_framelist_object_append(flist, o);
-   o = e_widget_radio_add(evas, _("Specific Device"), 2, rg);
-   inst->if_radio_device = o;
-   e_widget_framelist_object_append(flist, o);
-
-   inst->config.ifpath_tmp = eina_stringshare_ref(inst->config.ifpath);
-   ilist = e_widget_ilist_add(evas, 48, 48, &(inst->config.ifpath_tmp));
-   inst->if_ilist_obj = ilist;
-
-   e_widget_ilist_freeze(ilist);
-
-   if_ilist_update(inst);
-
-   e_widget_ilist_go(ilist);
-   e_widget_ilist_thaw(ilist);
-
-   e_widget_size_min_set(ilist, 240, 180);
-   e_widget_framelist_object_append(flist, ilist);
-
-   e_widget_list_object_append(list, flist, 1, 0, 0.5);
-
-   // FIXME: netlist needs to work
-   button = e_widget_button_add(evas, _("Networks"), NULL, button_cb_netlist,
-				inst, NULL);
-   e_widget_list_object_append(list, button, 1, 0, 0.5);
-
-   e_widget_size_min_get(list, &mw, &mh);
-   e_dialog_content_set(dialog, list, mw, mh);
-
-   e_win_delete_callback_set(dialog->win, if_dialog_cb_del);
-
-   e_dialog_button_add(dialog, _("OK"), NULL, if_dialog_cb_ok, inst);
-   e_dialog_button_add(dialog, _("Cancel"), NULL, if_dialog_cb_cancel, inst);
-   e_dialog_button_focus_num(dialog, 1);
-   e_win_centered_set(dialog->win, 1);
-   e_dialog_show(dialog);
-
-   inst->if_dia = dialog;
-}
-
-static void
-if_dialog_hide(Instance *inst)
-{
-   if (inst->if_dia)
-     {
-	e_object_del(E_OBJECT(inst->if_dia));
-	inst->if_dia = NULL;
-	inst->if_radio_device = NULL;
-	inst->if_ilist_obj = NULL;
-     }
-}
-
-
-
-
-
-static void
-popup_cb_setup(void *data, void *data2)
-{
-   Instance *inst;
-
-   inst = data;
-   popup_hide(inst);
-   if (!inst->if_dia) if_dialog_show(inst);
-   else if_dialog_hide(inst);
-}
-
-static void
-popup_ifnet_icon_adjust(Evas_Object *icon, Interface_Network *ifnet)
-{
-   Edje_Message_Int_Set *msg;
-   Eina_List *l;
-   int saved = 0;
-
-   msg = alloca(sizeof(Edje_Message_Int_Set) + (0 * sizeof(int)));
-   msg->count = 1;
-   msg->val[0] = ifnet->signal_strength;
-   edje_object_message_send(icon, EDJE_MESSAGE_INT_SET, 1, msg);
-
-   if (ifnet->security)
-     {
-	if (!strcmp(ifnet->security, "WEP"))
-	  edje_object_signal_emit(icon, "e,state,security,wep", "e");
-	else if (!strcmp(ifnet->security, "WPA"))
-	  edje_object_signal_emit(icon, "e,state,security,wpa", "e");
-	else if (!strcmp(ifnet->security, "RSN"))
-	  edje_object_signal_emit(icon, "e,state,security,rsn", "e");
-     }
-   else
-     edje_object_signal_emit(icon, "e,state,security,open", "e");
-   if (conf)
-     {
-	for (l = conf->networks; l; l = l->next)
-	  {
-	     Conf_Network *cfnet;
-
-	     cfnet = l->data;
-	     if ((cfnet->essid) && (ifnet->essid) &&
-		 (!strcmp(cfnet->essid, ifnet->essid)))
-	       {
-		  saved = 1;
-		  break;
-	       }
-	  }
-     }
-   if (saved)
-     edje_object_signal_emit(icon, "e,state,saved,on", "e");
-   else
-     edje_object_signal_emit(icon, "e,state,saved,off", "e");
-}
-
-static void
-popup_cb_ifnet_sel(void *data)
-{
-   Instance *inst;
-   Eina_List *l;
-   Interface *iface;
-
-   inst = data;
-   if (!inst->config.bssid) return;
-   iface = if_get(inst);
-   if (!iface) return;
-   for (l = iface->networks; l; l = l->next)
-     {
-	Interface_Network *ifnet;
-
-	ifnet = l->data;
-	E_FREE(inst->config.sec);
-	if (ifnet->security) inst->config.sec = strdup(ifnet->security);
-	if (!strcmp(inst->config.bssid, ifnet->bssid))
-	  {
-	     Conf_Network *cfnet;
-
-	     printf("SEL %s\n", ifnet->essid);
-	     if (!conf)
-	       conf = E_NEW(Conf, 1);
-	     for (l = conf->networks; l; l = l->next)
-	       {
-		  cfnet = l->data;
-		  if (!strcmp(cfnet->essid, ifnet->essid))
-		    {
-		       STR_UNSHARE(cfnet->name);
-		       STR_UNSHARE(cfnet->essid);
-		       STR_UNSHARE(cfnet->password);
-		       STR_UNSHARE(cfnet->ip);
-		       STR_UNSHARE(cfnet->gateway);
-		       STR_UNSHARE(cfnet->netmask);
-		       inst->config.cfnet_new = cfnet;
-		       net_dialog_show(inst, cfnet);
-		       popup_hide(inst);
-		       return;
-		    }
-	       }
-	     cfnet = E_NEW(Conf_Network, 1);
-	     conf->networks = eina_list_prepend(conf->networks, cfnet);
-	     if (ifnet->essid)
-	       {
-		  cfnet->name = strdup(ifnet->essid);
-		  cfnet->essid = strdup(ifnet->essid);
-	       }
-	     else
-	       cfnet->name = strdup("NONE");
-	     cfnet->remember_password = 1;
-	     cfnet->dhcp = 1;
-	     cfnet->addme = 1;
-	     inst->config.cfnet_new = cfnet;
-	     net_dialog_show(inst, cfnet);
-	     popup_hide(inst);
-	     return;
-	  }
-     }
-   popup_hide(inst);
-}
-
-static void
-popup_ifnet_net_add(Instance *inst, Interface_Network *ifnet)
-{
-   const char *label;
-   Evas_Object *icon;
-
-   label = ifnet->essid;
-   if (!label) label = "NONE";
-   icon = edje_object_add(evas_object_evas_get(inst->popup_ilist_obj));
-   e_theme_edje_object_set(icon, "base/theme/modules/connman",
-			   "e/modules/connman/network");
-   popup_ifnet_icon_adjust(icon, ifnet);
-   e_widget_ilist_append(inst->popup_ilist_obj, icon, label,
-			 popup_cb_ifnet_sel, inst, ifnet->bssid);
-   evas_object_show(icon);
-}
-
-/*
-static int
-popup_ifnet_cb_sort(void *data1, void *data2)
-{
-   Interface_Network *ifnet1, *ifnet2;
-
-   ifnet1 = data1;
-   ifnet2 = data2;
-   return ifnet2->signal_strength - ifnet1->signal_strength;
-}
-*/
-static void
-popup_ifnet_nets_refresh(Instance *inst)
-{
-   Eina_List *l, *networks = NULL;
-   Interface *iface;
-   Evas_Object *ilist;
-
-   if (!inst->popup_ilist_obj) return;
-   ilist = inst->popup_ilist_obj;
-
-   iface = if_get(inst);
-
-   e_widget_ilist_freeze(ilist);
-   e_widget_ilist_clear(ilist);
-
-   if (iface)
-     {
-	for (l = iface->networks; l; l = l->next)
-	  networks = eina_list_append(networks, l->data);
-     }
-/*
-   if (networks)
-     networks = eina_list_sort(networks,
-			       eina_list_count(networks),
-			       popup_ifnet_cb_sort);
- */
-   for (l = networks; l; l = l->next)
-     {
-	Interface_Network *ifnet;
-
-	ifnet = l->data;
-	popup_ifnet_net_add(inst, ifnet);
-     }
-   if (networks) eina_list_free(networks);
-
-   e_widget_ilist_go(ilist);
-   e_widget_ilist_thaw(ilist);
-}
-
-static int
-ifnet_num_get(Interface *iface, Interface_Network *ifnet)
-{
-   Eina_List *l;
-   int i;
-
-   for (i = 0, l = iface->networks; l; l = l->next, i++)
-     {
-	if (ifnet == l->data) return i;
-     }
-   return -1;
-}
-
-static void
-popup_ifnet_add(Instance *inst, Interface *iface, Interface_Network *ifnet)
-{
-   if (!inst->popup_ilist_obj) return;
-   popup_ifnet_net_add(inst, ifnet);
-   e_widget_ilist_go(inst->popup_ilist_obj);
-//   popup_ifnet_nets_refresh(inst);
-}
-
-static void
-popup_ifnet_del(Instance *inst, Interface *iface, Interface_Network *ifnet)
-{
-   int i;
-
-   if (!inst->popup_ilist_obj) return;
-   i = ifnet_num_get(iface, ifnet);
-   if (i < 0) return;
-   e_widget_ilist_remove_num(inst->popup_ilist_obj, i);
-   e_widget_ilist_go(inst->popup_ilist_obj);
-//   popup_ifnet_nets_refresh(inst);
-}
-
-static void
-popup_ifnet_change(Instance *inst, Interface *iface, Interface_Network *ifnet)
-{
-   const char *label;
-   Evas_Object *icon;
-   int i;
-
-   if (!inst->popup_ilist_obj) return;
-   i = ifnet_num_get(iface, ifnet);
-   if (i < 0) return;
-   icon = e_widget_ilist_nth_icon_get(inst->popup_ilist_obj, i);
-   if (icon) popup_ifnet_icon_adjust(icon, ifnet);
-   label = ifnet->essid;
-   if (!label) label = "NONE";
-   e_widget_ilist_nth_label_set(inst->popup_ilist_obj, i, label);
-//   popup_ifnet_nets_refresh(inst);
-}
-
-static void
-popup_show(Instance *inst)
-{
-   Evas_Object *base, *ilist, *button, *o;
-   Evas *evas;
-   Evas_Coord mw, mh;
-
-   inst->popup = e_gadcon_popup_new(inst->gcc);
-   evas = inst->popup->win->evas;
-
-   edje_freeze();
-
-   base = e_widget_table_add(evas, 0);
-
-   o = edje_object_add(evas);
-   e_theme_edje_object_set(o, "base/theme/modules/connman",
-			   "e/modules/connman/network");
-   edje_object_size_min_get(o, &mw, &mh);
-   if ((mw < 1) || (mh < 1)) edje_object_size_min_calc(o, &mw, &mh);
-   if (mw < 4) mw = 4;
-   if (mh < 4) mh = 4;
-   evas_object_del(o);
-   ilist = e_widget_ilist_add(evas, mw, mh, &(inst->config.bssid));
-   inst->popup_ilist_obj = ilist;
-
-   e_widget_ilist_freeze(ilist);
-
-   popup_ifnet_nets_refresh(inst);
-
-   e_widget_ilist_go(ilist);
-   e_widget_ilist_thaw(ilist);
-
-   e_widget_size_min_set(ilist, 240, 320);
-   e_widget_table_object_append(base, ilist,
-			       0, 0, 1, 1, 1, 1, 1, 1);
-
-   button = e_widget_button_add(evas, _("Settings"), NULL, popup_cb_setup,
-				inst, NULL);
-   e_widget_table_object_append(base, button,
-			       0, 1, 1, 1, 0, 0, 0, 0);
-
-   e_widget_size_min_get(base, &mw, &mh);
-   if (mh < 188) mh = 188;
-   if (mw < 168) mw = 168;
-   e_widget_size_min_set(base, mw, mh);
-
-   edje_thaw();
-
-   e_gadcon_popup_content_set(inst->popup, base);
-   e_gadcon_popup_show(inst->popup);
-}
-
-static void
-popup_hide(Instance *inst)
-{
-   if (inst->popup)
-     {
-	e_object_del(E_OBJECT(inst->popup));
-	inst->popup = NULL;
-	inst->popup_ilist_obj = NULL;
-     }
-}
-
-static void
-gadget_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
-{
-   Instance *inst;
-   Evas_Event_Mouse_Down *ev;
-
-   ev = event;
-   inst = data;
-   if (ev->button == 1)
-     {
-	if (!inst->popup) popup_show(inst);
-	else popup_hide(inst);
-     }
-}
-
-static void
-inst_enable(Instance *inst)
-{
-   // FIXME: emit signal to enable
-}
-
-static void
-inst_disable(Instance *inst)
-{
-   // FIXME: emit signal to disable
-}
-
-static void
-inst_type(Instance *inst, const char *type)
-{
-   // FIXME: emit signal to change type
-}
-
-static void
-inst_connected(Instance *inst)
-{
-   // FIXME: emit signal
-}
-
-static void
-inst_disconnected(Instance *inst)
-{
-   // FIXME: emit signal
-}
-
-static void
-inst_connecting(Instance *inst)
-{
-   // FIXME: emit signal
-}
-
-static void
-inst_associating(Instance *inst)
-{
-   // FIXME: emit signal
-}
-
-static void
-inst_associated(Instance *inst)
-{
-   // FIXME: emit signal
-}
-
-static void
-inst_signal(Instance *inst, int sig)
-{
-   // FIXME: emit signal
-}
-
-static void
-inst_unknown(Instance *inst)
-{
-   // FIXME: emit signal
-}
-
-static void
-inst_off(Instance *inst)
-{
-   // FIXME: emit signal
-}
-
-static void
-inst_on(Instance *inst)
-{
-   // FIXME: emit signal
-}
-
-static void
-cb_if_del(void *data, Interface *iface, Interface_Network *ifnet)
-{
-   Eina_List *l;
-
-   printf("IF-- %s\n", iface->ifpath);
-   ifaces = eina_list_remove(ifaces, iface);
-   for (l = instances; l; l = l->next)
-     {
-	Instance *inst;
-
-	inst = l->data;
-	if (inst_if_matches(inst, iface))
-	  inst_disable(inst);
-	if_ilist_update(inst);
-     }
-}
-
-static void
-cb_if_ipv4(void *data, Interface *iface, Interface_Network *ifnet)
-{
-   Eina_List *l;
-
-   printf("IF   %s\n", iface->ifpath);
-   printf("  IPV4: [%s][%s][%s][%s]\n",
-	  iface->ipv4.method, iface->ipv4.address,
-	  iface->ipv4.gateway, iface->ipv4.netmask);
-   for (l = instances; l; l = l->next)
-     {
-	Instance *inst;
-
-	inst = l->data;
-	if (inst_if_matches(inst, iface))
-	  inst_connected(inst);
-     }
-}
-
-static void
-cb_if_net_sel(void *data, Interface *iface, Interface_Network *ifnet)
-{
-   Eina_List *l;
-
-   printf("IF   %s\n", iface->ifpath);
-   printf("  NET_SEL: [%s] [%s]\n",
-	  iface->network_selection.id, iface->network_selection.pass);
-   // FIXME: change status to say we managed to select a network
-   for (l = instances; l; l = l->next)
-     {
-	Instance *inst;
-
-	inst = l->data;
-	if (inst_if_matches(inst, iface))
-	  inst_associating(inst);
-     }
-}
-
-static void
-cb_if_scan_net_add(void *data, Interface *iface, Interface_Network *ifnet)
-{
-   Eina_List *l, *l2;
-
-//   printf("IF   %s\n", iface->ifpath);
-//   printf("  SCAN NET ADD: [%s] %i \"%s\" %s\n",
-//	  ifnet->bssid, ifnet->signal_strength, ifnet->essid, ifnet->security);
-   for (l = instances; l; l = l->next)
-     {
-	Instance *inst;
-
-	inst = l->data;
-	if (inst_if_matches(inst, iface))
-	  popup_ifnet_add(l->data, iface, ifnet);
-	if (!inst->config.cfnet)
-	  {
-	     for (l2 = conf->networks; l2; l2 = l2->next)
-	       {
-		  Conf_Network *cfnet;
-
-		  cfnet = l2->data;
-		  if ((ifnet->essid) && (cfnet->essid) &&
-		      (!strcmp(ifnet->essid, cfnet->essid)))
-		    {
-		       inst->config.cfnet = cfnet;
-		       net_join(inst, iface, cfnet);
-		       break;
-		    }
-	       }
-	  }
-     }
-}
-
-static void
-cb_if_scan_net_del(void *data, Interface *iface, Interface_Network *ifnet)
-{
-   Eina_List *l;
-
-//   printf("IF   %s\n", iface->ifpath);
-//   printf("  SCAN NET DEL: [%s] %i \"%s\" %s\n",
-//	  ifnet->bssid, ifnet->signal_strength, ifnet->essid, ifnet->security);
-   for (l = instances; l; l = l->next)
-     {
-	Instance *inst;
-
-	inst = l->data;
-	if (inst_if_matches(inst, iface))
-	  {
-	     popup_ifnet_del(l->data, iface, ifnet);
-	  }
-     }
-}
-
-static void
-cb_if_scan_net_change(void *data, Interface *iface, Interface_Network *ifnet)
-{
-   Eina_List *l;
-
-//   printf("IF   %s\n", iface->ifpath);
-//   printf("  SCAN NET CHANGE: [%s] %i \"%s\" %s\n",
-//	  ifnet->bssid, ifnet->signal_strength, ifnet->essid, ifnet->security);
-   for (l = instances; l; l = l->next)
-     {
-	Instance *inst;
-
-	inst = l->data;
-	if (inst_if_matches(inst, iface))
-	  popup_ifnet_change(l->data, iface, ifnet);
-     }
-}
-
-static void
-cb_if_signal(void *data, Interface *iface, Interface_Network *ifnet)
-{
-   Eina_List *l;
-
-   printf("IF   %s\n", iface->ifpath);
-   printf("  SIGNAL: %i\n", iface->signal_strength);
-   for (l = instances; l; l = l->next)
-     {
-	Instance *inst;
-
-	inst = l->data;
-	if (inst_if_matches(inst, iface))
-	  inst_signal(inst, iface->signal_strength);
-     }
-}
-
-static void
-cb_if_state(void *data, Interface *iface, Interface_Network *ifnet)
-{
-   Eina_List *l;
-
-   // .. iface->prop.state:
-   // scanning
-   // carrier
-   // configure
-   // ready
-   // unknown
-   // off
-   // enabled
-   // connect
-   // connected
-   printf("IF   %s\n", iface->ifpath);
-   printf("  STATE: %s\n", iface->prop.state);
-   // FIXME: show state instnaces for this iface
-   for (l = instances; l; l = l->next)
-     {
-	Instance *inst;
-
-	inst = l->data;
-	if (inst_if_matches(inst, iface))
-	  {
-	     if (!strcmp(iface->prop.state, "unknown"))
-	       inst_disconnected(inst);
-	     else if (!strcmp(iface->prop.state, "off"))
-	       inst_disconnected(inst);
-	     else if (!strcmp(iface->prop.state, "carrier"))
-	       inst_connecting(inst);
-	     else if (!strcmp(iface->prop.state, "configure"))
-	       inst_associated(inst);
-	     else if (!strcmp(iface->prop.state, "ready"))
-	       inst_connected(inst);
-	     else if (!strcmp(iface->prop.state, "enabled"))
-	       inst_associating(inst);
-	     else if (!strcmp(iface->prop.state, "connect"))
-	       inst_connecting(inst);
-	     else if (!strcmp(iface->prop.state, "connected"))
-	       inst_connected(inst);
-	  }
-     }
-}
-
-static void
-cb_if_policy(void *data, Interface *iface, Interface_Network *ifnet)
-{
-   Eina_List *l;
-
-   // .. iface->prop.policy:
-   // unknown
-   // off
-   // ignore
-   // auto
-   // ask
-   //
-   printf("IF   %s\n", iface->ifpath);
-   printf("  POLICY: %s\n", iface->prop.policy);
-   for (l = instances; l; l = l->next)
-     {
-	Instance *inst;
-
-	inst = l->data;
-	if (inst_if_matches(inst, iface))
-	  {
-	     if (!strcmp(iface->prop.policy, "unknown"))
-	       inst_unknown(inst);
-	     else if (!strcmp(iface->prop.policy, "off"))
-	       inst_off(inst);
-	     else if (!strcmp(iface->prop.policy, "ignore"))
-	       inst_off(inst);
-	     else if (!strcmp(iface->prop.policy, "auto"))
-	       inst_on(inst);
-	     else if (!strcmp(iface->prop.policy, "ask"))
-	       inst_on(inst);
-	  }
-     }
-}
-
-static void
-cb_main_if_add(void *data, Interface *iface, Interface_Network *ifnet)
-{
-   Eina_List *l;
-
-   printf("IF++ %s\n", iface->ifpath);
-   ifaces = eina_list_append(ifaces, iface);
-   iface_callback_add(iface, IFACE_EVENT_DEL, cb_if_del, NULL);
-   iface_callback_add(iface, IFACE_EVENT_IPV4_CHANGE, cb_if_ipv4, NULL);
-   iface_callback_add(iface, IFACE_EVENT_NETWORK_SELECTION_CHANGE, cb_if_net_sel, NULL);
-   iface_callback_add(iface, IFACE_EVENT_SCAN_NETWORK_ADD, cb_if_scan_net_add, NULL);
-   iface_callback_add(iface, IFACE_EVENT_SCAN_NETWORK_DEL, cb_if_scan_net_del, NULL);
-   iface_callback_add(iface, IFACE_EVENT_SCAN_NETWORK_CHANGE, cb_if_scan_net_change, NULL);
-   iface_callback_add(iface, IFACE_EVENT_SIGNAL_CHANGE, cb_if_signal, NULL);
-   iface_callback_add(iface, IFACE_EVENT_STATE_CHANGE, cb_if_state, NULL);
-   iface_callback_add(iface, IFACE_EVENT_POLICY_CHANGE, cb_if_policy, NULL);
-
-   for (l = instances; l; l = l->next)
-     {
-	Instance *inst;
-
-	inst = l->data;
-	if (inst_if_matches(inst, iface))
-	  {
-	     inst_enable(inst);
-	     if (!strcmp(iface->prop.policy, "unknown"))
-	       inst_unknown(inst);
-	     else if (!strcmp(iface->prop.policy, "off"))
-	       inst_off(inst);
-	     else if (!strcmp(iface->prop.policy, "ignore"))
-	       inst_off(inst);
-	     else if (!strcmp(iface->prop.policy, "auto"))
-	       inst_on(inst);
-	     else if (!strcmp(iface->prop.policy, "ask"))
-	       inst_on(inst);
-
-	     if (inst->config.cfif->netconf)
-	       {
-		  // FIXME: must be ethernet - bring up netconf
-	       }
-	  }
-	if_ilist_update(l->data);
-     }
-}
-
-/**/
-/***************************************************************************/
-
-/***************************************************************************/
-/**/
-/* module setup */
-EAPI E_Module_Api e_modapi =
-{
-   E_MODULE_API_VERSION,
-     "Connection Manager"
+   GADCON_CLIENT_CLASS_VERSION, _name,
+   {
+     _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
+     e_gadcon_site_is_not_toolbar
+   },
+   E_GADCON_CLIENT_STYLE_PLAIN
 };
+
+
+
+EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, _Name};
+
+static const char _act_toggle_offline_mode[] = "toggle_offline_mode";
+static const char _lbl_toggle_offline_mode[] = "Toggle Offline Mode";
+
+static void
+_connman_actions_register(E_Connman_Module_Context *ctxt)
+{
+   ctxt->actions.toggle_offline_mode = e_action_add(_act_toggle_offline_mode);
+   if (ctxt->actions.toggle_offline_mode)
+   {
+      ctxt->actions.toggle_offline_mode->func.go =
+	_connman_cb_toggle_offline_mode;
+      e_action_predef_name_set
+	(_(_Name), _(_lbl_toggle_offline_mode), _act_toggle_offline_mode,
+	 NULL, NULL, 0);
+   }
+}
+
+static void
+_connman_actions_unregister(E_Connman_Module_Context *ctxt)
+{
+   if (ctxt->actions.toggle_offline_mode)
+   {
+      e_action_predef_name_del(_(_Name), _(_lbl_toggle_offline_mode));
+      e_action_del(_act_toggle_offline_mode);
+   }
+}
+
+static int
+_connman_manager_changed_do(void *data)
+{
+   E_Connman_Module_Context *ctxt = data;
+
+   _connman_services_reload(ctxt);
+
+   ctxt->poller.manager_changed = NULL;
+   return 0;
+}
+
+static void
+_connman_manager_changed(void *data, const E_Connman_Element *element __UNUSED__)
+{
+   E_Connman_Module_Context *ctxt = data;
+   if (ctxt->poller.manager_changed)
+     ecore_poller_del(ctxt->poller.manager_changed);
+   ctxt->poller.manager_changed = ecore_poller_add
+     (ECORE_POLLER_CORE, 2, _connman_manager_changed_do, ctxt);
+}
+
+static int
+_connman_event_manager_in(void *data, int type __UNUSED__, void *event __UNUSED__)
+{
+   E_Connman_Module_Context *ctxt = data;
+   E_Connman_Element *element;
+
+   ctxt->has_manager = EINA_TRUE;
+
+   element = e_connman_manager_get();
+   e_connman_element_listener_add
+     (element, _connman_manager_changed, ctxt, NULL);
+
+   _connman_services_reload(ctxt);
+
+   return 1;
+}
+
+static int
+_connman_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED__)
+{
+   E_Connman_Module_Context *ctxt = data;
+
+   ctxt->has_manager = EINA_FALSE;
+   eina_stringshare_replace(&ctxt->technology, NULL);
+
+   _connman_services_free(ctxt);
+   _connman_default_service_changed(ctxt);
+
+   return 1;
+}
+
+static void
+_connman_events_register(E_Connman_Module_Context *ctxt)
+{
+   ctxt->event.manager_in = ecore_event_handler_add
+     (E_CONNMAN_EVENT_MANAGER_IN, _connman_event_manager_in, ctxt);
+   ctxt->event.manager_out = ecore_event_handler_add
+     (E_CONNMAN_EVENT_MANAGER_OUT, _connman_event_manager_out, ctxt);
+}
+
+static void
+_connman_events_unregister(E_Connman_Module_Context *ctxt)
+{
+   if (ctxt->event.manager_in)
+     ecore_event_handler_del(ctxt->event.manager_in);
+   if (ctxt->event.manager_out)
+     ecore_event_handler_del(ctxt->event.manager_out);
+}
 
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   connman_module = m;
+   E_Connman_Module_Context *ctxt;
+   E_DBus_Connection *c;
 
-   conf_network_edd = E_CONFIG_DD_NEW("Conf_Network", Conf_Network);
-   E_CONFIG_VAL(conf_network_edd, Conf_Network, name, STR);
-   E_CONFIG_VAL(conf_network_edd, Conf_Network, essid, STR);
-   E_CONFIG_VAL(conf_network_edd, Conf_Network, password, STR);
-   E_CONFIG_VAL(conf_network_edd, Conf_Network, ip, STR);
-   E_CONFIG_VAL(conf_network_edd, Conf_Network, gateway, STR);
-   E_CONFIG_VAL(conf_network_edd, Conf_Network, netmask, STR);
-   E_CONFIG_VAL(conf_network_edd, Conf_Network, dhcp, INT);
-   E_CONFIG_VAL(conf_network_edd, Conf_Network, remember_password, INT);
-   E_CONFIG_VAL(conf_network_edd, Conf_Network, use_always, INT);
+   e_str_idle = eina_stringshare_add("idle");
+   e_str_association = eina_stringshare_add("association");
+   e_str_configuration = eina_stringshare_add("configuration");
+   e_str_ready = eina_stringshare_add("ready");
+   e_str_disconnect = eina_stringshare_add("disconnect");
+   e_str_failure = eina_stringshare_add("failure");
 
-   conf_interface_edd = E_CONFIG_DD_NEW("Conf_Interface", Conf_Interface);
-   E_CONFIG_VAL(conf_interface_edd, Conf_Interface, name, STR);
-   E_CONFIG_VAL(conf_interface_edd, Conf_Interface, id, STR);
-   E_CONFIG_VAL(conf_interface_edd, Conf_Interface, ifpath, STR);
-   E_CONFIG_VAL(conf_interface_edd, Conf_Interface, ifmode, INT);
-   E_CONFIG_SUB(conf_interface_edd, Conf_Interface, netconf, conf_network_edd);
+   c = e_dbus_bus_get(DBUS_BUS_SYSTEM);
+   if (!c)
+      return NULL;
+   if (!e_connman_system_init(c))
+     return NULL;
 
-   conf_edd = E_CONFIG_DD_NEW("Conf", Conf);
-   E_CONFIG_LIST(conf_edd, Conf, interfaces, conf_interface_edd);
-   E_CONFIG_LIST(conf_edd, Conf, networks, conf_network_edd);
+   ctxt = E_NEW(E_Connman_Module_Context, 1);
+   if (!ctxt)
+      return NULL;
 
-   conf = e_config_domain_load("module.connman", conf_edd);
+   _connman_actions_register(ctxt);
+   e_gadcon_provider_register(&_gc_class);
 
-   connman_dbus = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (connman_dbus)
-     {
-	iface_system_callback_add(IFACE_EVENT_ADD, cb_main_if_add, NULL);
-	iface_system_init(connman_dbus);
-     }
+   _connman_events_register(ctxt);
 
-   e_gadcon_provider_register(&_gadcon_class);
-   return m;
+   connman_mod = m;
+   return ctxt;
+}
+
+static void
+_connman_instances_free(E_Connman_Module_Context *ctxt)
+{
+   while (ctxt->instances)
+   {
+      E_Connman_Instance *inst;
+
+      inst = ctxt->instances->data;
+      e_object_del(E_OBJECT(inst->gcc));
+   }
 }
 
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
-   // FIXME: free conf
+   E_Connman_Module_Context *ctxt;
+   E_Connman_Element *element;
 
-   E_CONFIG_DD_FREE(conf_network_edd);
-   E_CONFIG_DD_FREE(conf_interface_edd);
-   E_CONFIG_DD_FREE(conf_edd);
+   ctxt = m->data;
+   if (!ctxt)
+      return 0;
 
-   conf_network_edd = NULL;
-   conf_interface_edd = NULL;
-   conf_edd = NULL;
+   element = e_connman_manager_get();
+   e_connman_element_listener_del
+     (element, _connman_manager_changed, ctxt);
 
-   e_gadcon_provider_unregister(&_gadcon_class);
-   if (connman_dbus)
-     {
-	if (ifaces)
-	  {
-	     eina_list_free(ifaces);
-	     ifaces = NULL;
-	  }
-	iface_system_shutdown();
-//	e_dbus_connection_close(connman_dbus);
-	connman_dbus = NULL;
-     }
+   _connman_events_unregister(ctxt);
 
-   connman_module = NULL;
+   _connman_instances_free(ctxt);
+   _connman_services_free(ctxt);
+
+   _connman_actions_unregister(ctxt);
+   e_gadcon_provider_unregister(&_gc_class);
+
+   if (ctxt->poller.default_service_changed)
+     ecore_poller_del(ctxt->poller.default_service_changed);
+   if (ctxt->poller.manager_changed)
+     ecore_poller_del(ctxt->poller.manager_changed);
+
+   E_FREE(ctxt);
+   connman_mod = NULL;
+
+   e_connman_system_shutdown();
+
+   eina_stringshare_replace(&e_str_idle, NULL);
+   eina_stringshare_replace(&e_str_association, NULL);
+   eina_stringshare_replace(&e_str_configuration, NULL);
+   eina_stringshare_replace(&e_str_ready, NULL);
+   eina_stringshare_replace(&e_str_disconnect, NULL);
+   eina_stringshare_replace(&e_str_failure, NULL);
 
    return 1;
 }
@@ -1544,6 +1017,10 @@ e_modapi_shutdown(E_Module *m)
 EAPI int
 e_modapi_save(E_Module *m)
 {
-   if (conf) e_config_domain_save("module.connman", conf_edd, conf);
+   E_Connman_Module_Context *ctxt;
+
+   ctxt = m->data;
+   if (!ctxt)
+      return 0;
    return 1;
 }

@@ -411,6 +411,16 @@ fi
 AC_SUBST(SOUND_CFLAGS)
 AC_SUBST(SOUND_LIBS)
 
+AM_CONDITIONAL(HAVE_ECONNMAN, false)
+define([CHECK_MODULE_CONNMAN],
+[
+        AC_E_CHECK_PKG(ECONNMAN, [edbus econnman],
+                       [], [ECONNMAN=false])
+])
+AC_SUBST(ECONNMAN_CFLAGS)
+AC_SUBST(ECONNMAN_LIBS)
+
+
 AC_E_OPTIONAL_MODULE([ibar], true)
 AC_E_OPTIONAL_MODULE([dropshadow], true)
 AC_E_OPTIONAL_MODULE([clock], true)
@@ -469,7 +479,7 @@ AC_E_OPTIONAL_MODULE([conf_interaction], true)
 AC_E_OPTIONAL_MODULE([conf_scale], true)
 AC_E_OPTIONAL_MODULE([gadman], true)
 AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
-AC_E_OPTIONAL_MODULE([connman], false)
+AC_E_OPTIONAL_MODULE([connman], true, [CHECK_MODULE_CONNMAN])
 AC_E_OPTIONAL_MODULE([illume], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
 AC_E_OPTIONAL_MODULE([everything], true)
