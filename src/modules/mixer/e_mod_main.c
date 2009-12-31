@@ -147,6 +147,7 @@ _mixer_module_configuration_free(E_Mixer_Module_Config *conf)
    eina_hash_foreach(conf->gadgets,
                      _mixer_gadget_configuration_free_foreach, NULL);
    eina_hash_free(conf->gadgets);
+   eina_stringshare_del(conf->default_gc_id);
    free(conf);
 }
 
