@@ -16,8 +16,7 @@
  *       1. improve gadget ui
  *
  *    GOOD:
- *       1. mouse over popup with information such as IP and AP name
- *          (remove name from gadget)
+ *       1. imporve mouse over popup ui
  *       2. nice popup using edje objects as rows, not simple lists (fancy)
  *       3. "Controls" for detailed information, similar to Mixer app
  *          it would contain switches to toggle offline and choose
@@ -44,6 +43,7 @@ static const char *e_str_failure = NULL;
 
 static void _connman_default_service_changed_delayed(E_Connman_Module_Context *ctxt);
 static void _connman_gadget_update(E_Connman_Instance *inst);
+static void _connman_tip_update(E_Connman_Instance *inst);
 
 static const char *
 e_connman_theme_path(void)
@@ -827,132 +827,194 @@ _connman_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNU
 }
 
 static void
-_connman_gadget_update(E_Connman_Instance *inst)
+_connman_cb_mouse_in(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+{
+   E_Connman_Instance *inst = data;
+   Evas *e;
+
+   if (inst->tip)
+     return;
+
+   inst->tip = e_gadcon_popup_new(inst->gcc);
+   if (!inst->tip) return;
+
+   e = inst->tip->win->evas;
+
+   inst->o_tip = edje_object_add(e);
+   e_theme_edje_object_set(inst->o_tip, "base/theme/modules/connman/tip",
+			   "e/modules/connman/tip");
+
+   _connman_tip_update(inst);
+
+   e_gadcon_popup_content_set(inst->tip, inst->o_tip);
+   e_gadcon_popup_show(inst->tip);
+}
+
+static void
+_connman_cb_mouse_out(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+{
+   E_Connman_Instance *inst = data;
+
+   if (!inst->tip)
+     return;
+
+   evas_object_del(inst->o_tip);
+   e_object_del(E_OBJECT(inst->tip));
+   inst->tip = NULL;
+   inst->o_tip = NULL;
+}
+
+static void
+_connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
 {
    E_Connman_Module_Context *ctxt = inst->ctxt;
-   Evas_Object *gadget = inst->ui.gadget;
    const E_Connman_Service *service;
    Edje_Message_Int msg;
    char buf[128];
 
-   printf("\033[1;33mUPDATE GADGET\033[0m\n");
-
    if (!ctxt->has_manager)
      {
-	if (inst->popup)
-	  _connman_popup_del(inst);
-
-	edje_object_signal_emit(gadget, "e,unavailable", "e");
-	edje_object_part_text_set(gadget, "e.text.name", _("No ConnMan"));
-	edje_object_part_text_set(gadget, "e.text.error",
+	edje_object_signal_emit(o, "e,unavailable", "e");
+	edje_object_part_text_set(o, "e.text.name", _("No ConnMan"));
+	edje_object_part_text_set(o, "e.text.error",
 				  _("No ConnMan server found."));
-     }
-
-   if (inst->popup)
-     _connman_popup_update(inst);
-
-   edje_object_signal_emit(gadget, "e,available", "e");
-
-   if (ctxt->offline_mode)
-     edje_object_signal_emit(gadget, "e,changed,offline_mode,yes", "e");
-   else
-     edje_object_signal_emit(gadget, "e,changed,offline_mode,no", "e");
-
-
-   printf("DBG CONNMAN: technology: %s\n", ctxt->technology);
-
-   if (ctxt->technology)
-     {
-	edje_object_part_text_set(gadget, "e.text.technology",
-				  ctxt->technology);
-	snprintf(buf, sizeof(buf), "e,changed,technology,%s",
-		 ctxt->technology);
-	edje_object_signal_emit(gadget, buf, "e");
-     }
-   else
-     {
-	edje_object_part_text_set(gadget, "e.text.technology", "");
-	edje_object_signal_emit(gadget, "e,changed,technology,none", "e");
-     }
-
-   service = ctxt->default_service;
-   printf("DBG CONNMAN: default_service: %p (%s)\n", service, service ? service->name : "");
-   if (!service)
-     {
-	edje_object_part_text_set(gadget, "e.text.name", _("No Connection"));
-	edje_object_signal_emit(gadget, "e,changed,service,none", "e");
 	return;
      }
 
-   printf("\033[0mDBG CONNMAN: service details:\n"
-	  "    state: %s\n"
-	  "    type: %s\n"
-	  "    error: %s\n"
-	  "    security: %s\n"
-	  "    strength: %hhu\n"
-	  "    flags: favorite=%hhu, auto_connect=%hhu, pass_required=%hhu\033[0m\n",
-	  service->state,
-	  service->type,
-	  service->error,
-	  service->security,
-	  service->strength,
-	  service->favorite,
-	  service->auto_connect,
-	  service->pass_required);
+   edje_object_signal_emit(o, "e,available", "e");
+
+   if (ctxt->offline_mode)
+     edje_object_signal_emit(o, "e,changed,offline_mode,yes", "e");
+   else
+     edje_object_signal_emit(o, "e,changed,offline_mode,no", "e");
+
+   if (ctxt->technology)
+     {
+	edje_object_part_text_set(o, "e.text.technology",
+				  ctxt->technology);
+	snprintf(buf, sizeof(buf), "e,changed,technology,%s",
+		 ctxt->technology);
+	edje_object_signal_emit(o, buf, "e");
+     }
+   else
+     {
+	edje_object_part_text_set(o, "e.text.technology", "");
+	edje_object_signal_emit(o, "e,changed,technology,none", "e");
+     }
+
+   service = ctxt->default_service;
+   if (!service)
+     {
+	edje_object_part_text_set(o, "e.text.name", _("No Connection"));
+	edje_object_signal_emit(o, "e,changed,service,none", "e");
+
+	edje_object_part_text_set(o, "e.text.error", _("Not connected"));
+	edje_object_signal_emit(o, "e,changed,error,no", "e");
+
+	edje_object_signal_emit(o, "e,changed,mode,no", "e");
+
+	edje_object_signal_emit(o, "e,changed,mode,none", "e");
+	edje_object_signal_emit(o, "e,changed,security,none", "e");
+
+	edje_object_part_text_set(o, "e.text.ipv4_address", "");
+	edje_object_signal_emit(o, "e,changed,ipv4_address,no", "e");
+
+	edje_object_signal_emit(o, "e,changed,favorite,no", "e");
+	edje_object_signal_emit(o, "e,changed,auto_connect,no", "e");
+	edje_object_signal_emit(o, "e,changed,pass_required,no", "e");
+
+	return;
+     }
 
    if (service->name)
-     edje_object_part_text_set(gadget, "e.text.name", service->name);
+     edje_object_part_text_set(o, "e.text.name", service->name);
    else
-     edje_object_part_text_set(gadget, "e.text.name", _("Unknown Name"));
+     edje_object_part_text_set(o, "e.text.name", _("Unknown Name"));
 
    if (service->error)
      {
-	edje_object_part_text_set(gadget, "e.text.error", service->error);
-	edje_object_signal_emit(gadget, "e,changed,error,yes", "e");
+	edje_object_part_text_set(o, "e.text.error", service->error);
+	edje_object_signal_emit(o, "e,changed,error,yes", "e");
      }
    else
      {
-	edje_object_part_text_set(gadget, "e.text.error", _("No error"));
-	edje_object_signal_emit(gadget, "e,changed,error,no", "e");
+	edje_object_part_text_set(o, "e.text.error", _("No error"));
+	edje_object_signal_emit(o, "e,changed,error,no", "e");
      }
 
    snprintf(buf, sizeof(buf), "e,changed,service,%s", service->type);
-   edje_object_signal_emit(gadget, buf, "e");
+   edje_object_signal_emit(o, buf, "e");
 
    snprintf(buf, sizeof(buf), "e,changed,state,%s", service->state);
-   edje_object_signal_emit(gadget, buf, "e");
-   printf("DBG CONNMAN signal: %s\n", buf);
+   edje_object_signal_emit(o, buf, "e");
+   edje_object_part_text_set(o, "e.text.state", service->state);
 
    if (service->mode)
      {
 	snprintf(buf, sizeof(buf), "e,changed,mode,%s", service->mode);
-	edje_object_signal_emit(gadget, buf, "e");
+	edje_object_signal_emit(o, buf, "e");
      }
+   else
+     edje_object_signal_emit(o, "e,changed,mode,none", "e");
 
    if (service->security)
      {
 	snprintf(buf, sizeof(buf), "e,changed,security,%s", service->security);
-	edje_object_signal_emit(gadget, buf, "e");
+	edje_object_signal_emit(o, buf, "e");
+     }
+   else
+     edje_object_signal_emit(o, "e,changed,security,none", "e");
+
+   if (service->ipv4_address)
+     {
+	edje_object_part_text_set(o, "e.text.ipv4_address", service->ipv4_address);
+	edje_object_signal_emit(o, "e,changed,ipv4_address,yes", "e");
+     }
+   else
+     {
+	edje_object_part_text_set(o, "e.text.ipv4_address", "");
+	edje_object_signal_emit(o, "e,changed,ipv4_address,no", "e");
      }
 
    if (service->favorite)
-     edje_object_signal_emit(gadget, "e,changed,favorite,yes", "e");
+     edje_object_signal_emit(o, "e,changed,favorite,yes", "e");
    else
-     edje_object_signal_emit(gadget, "e,changed,favorite,no", "e");
+     edje_object_signal_emit(o, "e,changed,favorite,no", "e");
 
    if (service->auto_connect)
-     edje_object_signal_emit(gadget, "e,changed,auto_connect,yes", "e");
+     edje_object_signal_emit(o, "e,changed,auto_connect,yes", "e");
    else
-     edje_object_signal_emit(gadget, "e,changed,auto_connect,no", "e");
+     edje_object_signal_emit(o, "e,changed,auto_connect,no", "e");
 
    if (service->pass_required)
-     edje_object_signal_emit(gadget, "e,changed,pass_required,yes", "e");
+     edje_object_signal_emit(o, "e,changed,pass_required,yes", "e");
    else
-     edje_object_signal_emit(gadget, "e,changed,pass_required,no", "e");
-
+     edje_object_signal_emit(o, "e,changed,pass_required,no", "e");
 
    msg.val = service->strength;
-   edje_object_message_send(gadget, EDJE_MESSAGE_INT, 1, &msg);
+   edje_object_message_send(o, EDJE_MESSAGE_INT, 1, &msg);
+}
+
+static void
+_connman_tip_update(E_Connman_Instance *inst)
+{
+   _connman_edje_view_update(inst, inst->o_tip);
+}
+
+static void
+_connman_gadget_update(E_Connman_Instance *inst)
+{
+   E_Connman_Module_Context *ctxt = inst->ctxt;
+
+   if (!ctxt->has_manager && inst->popup)
+     _connman_popup_del(inst);
+
+   if (inst->popup)
+     _connman_popup_update(inst);
+   if (inst->tip)
+     _connman_tip_update(inst);
+
+   _connman_edje_view_update(inst, inst->ui.gadget);
 }
 
 /* Gadcon Api Functions */
@@ -979,6 +1041,10 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    evas_object_event_callback_add
      (inst->ui.gadget, EVAS_CALLBACK_MOUSE_DOWN, _connman_cb_mouse_down, inst);
+   evas_object_event_callback_add
+     (inst->ui.gadget, EVAS_CALLBACK_MOUSE_IN, _connman_cb_mouse_in, inst);
+   evas_object_event_callback_add
+     (inst->ui.gadget, EVAS_CALLBACK_MOUSE_OUT, _connman_cb_mouse_out, inst);
 
    _connman_gadget_update(inst);
 

@@ -41,6 +41,9 @@ struct E_Connman_Instance
          Ecore_Event_Handler *key_down;
       } input;
    } ui;
+
+   E_Gadcon_Popup *tip;
+   Evas_Object *o_tip;
 };
 
 struct E_Connman_Service
