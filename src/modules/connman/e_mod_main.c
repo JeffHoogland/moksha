@@ -1249,13 +1249,13 @@ e_modapi_init(E_Module *m)
 
    c = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    if (!c)
-      return NULL;
+     return NULL;
    if (!e_connman_system_init(c))
      return NULL;
 
    ctxt = E_NEW(E_Connman_Module_Context, 1);
    if (!ctxt)
-      return NULL;
+     return NULL;
 
    _connman_actions_register(ctxt);
    e_gadcon_provider_register(&_gc_class);
@@ -1270,12 +1270,12 @@ static void
 _connman_instances_free(E_Connman_Module_Context *ctxt)
 {
    while (ctxt->instances)
-   {
-      E_Connman_Instance *inst;
+     {
+        E_Connman_Instance *inst;
 
-      inst = ctxt->instances->data;
-      e_object_del(E_OBJECT(inst->gcc));
-   }
+        inst = ctxt->instances->data;
+        e_object_del(E_OBJECT(inst->gcc));
+     }
 }
 
 EAPI int
@@ -1286,7 +1286,7 @@ e_modapi_shutdown(E_Module *m)
 
    ctxt = m->data;
    if (!ctxt)
-      return 0;
+     return 0;
 
    element = e_connman_manager_get();
    e_connman_element_listener_del
@@ -1327,6 +1327,6 @@ e_modapi_save(E_Module *m)
 
    ctxt = m->data;
    if (!ctxt)
-      return 0;
+     return 0;
    return 1;
 }
