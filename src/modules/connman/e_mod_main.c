@@ -7,13 +7,16 @@
 /*
  * STATUS:
  *
- *    displays current status, segfaults often. needs connman from git
- *    (will be 0.48, still unreleased).
+ *    displays current status, allows connecting and
+ *    disconnecting. needs connman from git (will be 0.48, still
+ *    unreleased).
  *
  * TODO:
  *
  *    MUST:
- *       1. improve gadget ui
+ *       1. request for passphrase if pass_required is set or
+ *          connect error is org.moblin.connman.Error.PassphraseRequired
+ *       2. improve gadget ui
  *
  *    GOOD:
  *       1. imporve mouse over popup ui
@@ -338,6 +341,30 @@ _connman_service_connect(E_Connman_Service *service)
 }
 
 static void
+_connman_service_disconnect_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *error)
+{
+   E_Connman_Module_Context *ctxt = data;
+
+   if (error && dbus_error_is_set(error))
+     {
+	if (strcmp(error->message,
+		   "org.moblin.connman.Error.NotConnected") != 0)
+	  _connman_dbus_error_show(_("Disconnect to network service."), error);
+	dbus_error_free(error);
+     }
+
+   _connman_default_service_changed_delayed(ctxt);
+}
+
+static void
+_connman_service_disconnect(E_Connman_Service *service)
+{
+   if (!e_connman_service_disconnect
+       (service->element, _connman_service_disconnect_cb, service->ctxt))
+     _connman_operation_error_show(_("Disconnect to network service."));
+}
+
+static void
 _connman_services_free(E_Connman_Module_Context *ctxt)
 {
    while (ctxt->services)
@@ -592,6 +619,8 @@ _connman_popup_service_selected(void *data)
 
 	     if (service->pass_required)
 	       _connman_service_ask_pass_and_connect(service);
+	     else if (service->state == e_str_ready)
+	       _connman_service_disconnect(service);
 	     else
 	       _connman_service_connect(service);
 	     return;
@@ -878,6 +907,7 @@ _connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
 	edje_object_part_text_set(o, "e.text.name", _("No ConnMan"));
 	edje_object_part_text_set(o, "e.text.error",
 				  _("No ConnMan server found."));
+	edje_object_signal_emit(o, "e,changed,connected,no", "e");
 	return;
      }
 
@@ -888,7 +918,7 @@ _connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
    else
      edje_object_signal_emit(o, "e,changed,offline_mode,no", "e");
 
-   if (ctxt->technology)
+   if (ctxt->technology && ctxt->technology[0])
      {
 	edje_object_part_text_set(o, "e.text.technology",
 				  ctxt->technology);
@@ -907,9 +937,12 @@ _connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
      {
 	edje_object_part_text_set(o, "e.text.name", _("No Connection"));
 	edje_object_signal_emit(o, "e,changed,service,none", "e");
+	edje_object_signal_emit(o, "e,changed,connected,no", "e");
 
 	edje_object_part_text_set(o, "e.text.error", _("Not connected"));
 	edje_object_signal_emit(o, "e,changed,error,no", "e");
+
+	edje_object_part_text_set(o, "e.text.state", _("disconnect"));
 
 	edje_object_signal_emit(o, "e,changed,mode,no", "e");
 
@@ -925,6 +958,8 @@ _connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
 
 	return;
      }
+
+   edje_object_signal_emit(o, "e,changed,connected,yes", "e");
 
    if (service->name)
      edje_object_part_text_set(o, "e.text.name", service->name);
@@ -947,7 +982,7 @@ _connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
 
    snprintf(buf, sizeof(buf), "e,changed,state,%s", service->state);
    edje_object_signal_emit(o, buf, "e");
-   edje_object_part_text_set(o, "e.text.state", service->state);
+   edje_object_part_text_set(o, "e.text.state", _(service->state));
 
    if (service->mode)
      {
@@ -1240,12 +1275,12 @@ e_modapi_init(E_Module *m)
    E_Connman_Module_Context *ctxt;
    E_DBus_Connection *c;
 
-   e_str_idle = eina_stringshare_add("idle");
-   e_str_association = eina_stringshare_add("association");
-   e_str_configuration = eina_stringshare_add("configuration");
-   e_str_ready = eina_stringshare_add("ready");
-   e_str_disconnect = eina_stringshare_add("disconnect");
-   e_str_failure = eina_stringshare_add("failure");
+   e_str_idle = eina_stringshare_add(N_("idle"));
+   e_str_association = eina_stringshare_add(N_("association"));
+   e_str_configuration = eina_stringshare_add(N_("configuration"));
+   e_str_ready = eina_stringshare_add(N_("ready"));
+   e_str_disconnect = eina_stringshare_add(N_("disconnect"));
+   e_str_failure = eina_stringshare_add(N_("failure"));
 
    c = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    if (!c)

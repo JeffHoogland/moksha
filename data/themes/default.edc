@@ -6920,16 +6920,58 @@ collections { /* begin the collection of edje groups that are in this file */
    group { name: "e/modules/connman/icon/wifi";
       max: 128 128;
       min: 16 16;
+      images {
+         image: "connman-wifi-good.png" COMP;
+         image: "connman-wifi-medium.png" COMP;
+         image: "connman-wifi-bad.png" COMP;
+      }
+      script {
+	 public message(Msg_Type:type, id, ...) {
+	    if ((type == MSG_INT) && (id == 1)) {
+	       new strength;
+
+	       strength = getarg(2);
+
+               if (strength >= 65)
+                  run_program(PROGRAM:"strength,good");
+               else if (strength >= 35)
+                  run_program(PROGRAM:"strength,medium");
+               else
+                  run_program(PROGRAM:"strength,bad");
+	    }
+	 }
+      }
+
       parts {
          part { name: "icon";
             type: IMAGE;
             mouse_events: 0;
-            description {
-               state: "default" 0.0;
+            description { state: "default" 0.0;
                aspect: 1.0 1.0;
                aspect_preference: BOTH;
-               image.image: "connman-wifi.png" COMP;
-               image.normal: "connman-wifi.png";
+               image.normal: "connman-wifi-good.png";
+            }
+            description { state: "medium" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "connman-wifi-medium.png";
+            }
+            description { state: "bad" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "connman-wifi-bad.png";
+            }
+         }
+         programs {
+            program { name: "strength,good";
+               action: STATE_SET "default" 0.0;
+               target: "icon";
+            }
+            program { name: "strength,medium";
+               action: STATE_SET "medium" 0.0;
+               target: "icon";
+            }
+            program { name: "strength,bad";
+               action: STATE_SET "bad" 0.0;
+               target: "icon";
             }
          }
       }
@@ -6942,6 +6984,8 @@ collections { /* begin the collection of edje groups that are in this file */
 //    e,available:  connmand is running
 //
 //    e,changed,offline_mode,{yes,no}
+//    e,changed,connected,{yes,no}
+//    e,changed,service,{system,ethernet,wifi,wimax,bluetooth,cellular,vpn}
 //    e,changed,technology,{wifi,ethernet,bluetooth,wimax,cellular}
 //    e,changed,state,{idle,association,configuration,ready,disconnect,failure}
 //    e,changed,mode,{managed,adhoc,gprs,edge,umts}
@@ -6965,21 +7009,28 @@ collections { /* begin the collection of edje groups that are in this file */
       images {
          image: "connman-disconnect.png" COMP;
          image: "connman-ethernet.png" COMP;
-         image: "connman-wifi.png" COMP;
+         image: "connman-wifi-good.png" COMP;
+         image: "connman-wifi-medium.png" COMP;
+         image: "connman-wifi-bad.png" COMP;
       }
       //max: 128 128;
       min: 16 16;
-#if 0 // TODO: show strength in gadget
       script {
 	 public message(Msg_Type:type, id, ...) {
 	    if ((type == MSG_INT) && (id == 1)) {
 	       new strength;
 
 	       strength = getarg(2);
+
+               if (strength >= 65)
+                  run_program(PROGRAM:"strength,good");
+               else if (strength >= 35)
+                  run_program(PROGRAM:"strength,medium");
+               else
+                  run_program(PROGRAM:"strength,bad");
 	    }
 	 }
       }
-#endif
       parts {
          part {
             name: "eventarea";
@@ -7076,10 +7127,24 @@ collections { /* begin the collection of edje groups that are in this file */
             }
          }
 
-         part { name: "technology";
-            type: IMAGE;
+         part { name: "disconnected-visibility";
+            type: RECT;
             mouse_events: 0;
             clip_to: "state-clipper";
+            description { state: "default" 0.0;
+               color: 255 255 255 0;
+               visible: 0;
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               visible: 1;
+            }
+         }
+         part { name: "disconnected";
+            type: IMAGE;
+            mouse_events: 0;
+            clip_to: "disconnected-visibility";
             description {
                state: "default" 0.0;
                aspect: 1.0 1.0;
@@ -7087,36 +7152,130 @@ collections { /* begin the collection of edje groups that are in this file */
                fixed: 1 1;
                image.normal: "connman-disconnect.png";
             }
-            description {
-               state: "ethernet" 0.0;
+         }
+
+         part { name: "ethernet-visibility";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "state-clipper";
+            description { state: "default" 0.0;
+               color: 255 255 255 0;
+               visible: 0;
+            }
+            description { state: "visible" 0.0;
                inherit: "default" 0.0;
+               color: 255 255 255 255;
+               visible: 1;
+            }
+         }
+         part { name: "ethernet";
+            type: IMAGE;
+            mouse_events: 0;
+            clip_to: "ethernet-visibility";
+            description { state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               fixed: 1 1;
                image.normal: "connman-ethernet.png";
             }
-            description {
-               state: "wifi" 0.0;
-               inherit: "default" 0.0;
-               image.normal: "connman-wifi.png";
-            }
-            // TODO: wimax, cellular, bluetooth
          }
+
+         part { name: "wifi-visibility";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "state-clipper";
+            description { state: "default" 0.0;
+               color: 255 255 255 0;
+               visible: 0;
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               visible: 1;
+            }
+         }
+         part { name: "wifi";
+            type: IMAGE;
+            mouse_events: 0;
+            clip_to: "wifi-visibility";
+            description { state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               fixed: 1 1;
+               image.normal: "connman-wifi-good.png";
+            }
+            description { state: "good" 0.0;
+               inherit: "default" 0.0;
+            }
+            description { state: "medium" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "connman-wifi-medium.png";
+            }
+            description { state: "bad" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "connman-wifi-bad.png";
+            }
+         }
+
+         // TODO: wimax, cellular, bluetooth
+
          programs {
+            program { name: "strength,good";
+               action: STATE_SET "good" 0.0;
+               target: "wifi";
+               // add wimax, cellular, bluetooth
+            }
+            program { name: "strength,medium";
+               action: STATE_SET "medium" 0.0;
+               target: "wifi";
+               // add wimax, cellular, bluetooth
+            }
+            program { name: "strength,bad";
+               action: STATE_SET "bad" 0.0;
+               target: "wifi";
+               // add wimax, cellular, bluetooth
+            }
+
             program { name: "e,changed,technology,none";
                signal: "e,changed,technology,none";
                source: "e";
-               action: STATE_SET "default" 0.0;
-               target: "technology";
+               action: STATE_SET "visible" 0.0;
+               target: "disconnected-visibility";
+               after: "e,changed,technology,none,others";
             }
+            program { name: "e,changed,technology,none,others";
+               action: STATE_SET "default" 0.0;
+               target: "ethernet-visibility";
+               target: "wifi-visibility";
+               // add wimax, cellular, bluetooth
+            }
+
             program { name: "e,changed,technology,ethernet";
                signal: "e,changed,technology,ethernet";
                source: "e";
-               action: STATE_SET "ethernet" 0.0;
-               target: "technology";
+               action: STATE_SET "visible" 0.0;
+               target: "ethernet-visibility";
+               after: "e,changed,technology,ethernet,others";
             }
+            program { name: "e,changed,technology,ethernet,others";
+               action: STATE_SET "default" 0.0;
+               target: "disconnected-visibility";
+               target: "wifi-visibility";
+               // add wimax, cellular, bluetooth
+            }
+
             program { name: "e,changed,technology,wifi";
                signal: "e,changed,technology,wifi";
                source: "e";
-               action: STATE_SET "wifi" 0.0;
-               target: "technology";
+               action: STATE_SET "visible" 0.0;
+               target: "wifi-visibility";
+               after: "e,changed,technology,wifi,others";
+            }
+            program { name: "e,changed,technology,wifi,others";
+               action: STATE_SET "default" 0.0;
+               target: "disconnected-visibility";
+               target: "ethernet-visibility";
+               // add wimax, cellular, bluetooth
             }
          }
 
@@ -7146,50 +7305,70 @@ collections { /* begin the collection of edje groups that are in this file */
                   min: 0 1;
                }
             }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+         }
+
+         programs {
+            program {
+               name: "e,changed,connected,no";
+               signal: "e,changed,connected,no";
+               source: "e";
+               action: STATE_SET "hidden" 0.0;
+               target: "e.text.name";
+            }
+            program {
+               name: "e,changed,connected,yes";
+               signal: "e,changed,connected,yes";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.text.name";
+            }
          }
       }
    }
 
    group { name: "e/modules/connman/tip";
       images {
-	 image: "base_bg.png" COMP;
+         image: "inset_sunk.png" COMP;
          image: "connman-disconnect.png" COMP;
          image: "connman-ethernet.png" COMP;
          image: "connman-wifi.png" COMP;
       }
-      min: 300 128;
+      min: 300 148;
       script {
 	 public message(Msg_Type:type, id, ...) {
 	    if ((type == MSG_INT) && (id == 1)) {
 	       new strength;
                new buf[32];
+               new Float:val;
 
 	       strength = getarg(2);
 
                if (strength > 0) {
+                  val = float(strength) / 100.0;
+
                   snprintf(buf, sizeof(buf), "%d%%", strength);
                   set_text(PART:"strength", buf);
+                  set_drag(PART:"strength_gauge_knob", val, 0.0);
                   emit("strength,show", "");
                } else
                   emit("strength,hide", "");
+
+               if (strength >= 65)
+                  run_program(PROGRAM:"strength,good");
+               else if (strength >= 35)
+                  run_program(PROGRAM:"strength,medium");
+               else
+                  run_program(PROGRAM:"strength,bad");
 	    }
 	 }
       }
 
       parts {
-	 part { name: "base";
-	    mouse_events:  0;
-	    description { state: "default" 0.0;
-	       align: 0.5 0.0;
-               color_class: "menu_base";
-	       image {
-		  normal: "base_bg.png";
-		  border: 2 2 2 2;
-	       }
-	       fill.smooth: 0;
-	    }
-	 }
-
          part { name: "state-clipper";
             type: RECT;
             mouse_events: 0;
@@ -7244,12 +7423,11 @@ collections { /* begin the collection of edje groups that are in this file */
          }
 
          part { name: "technology";
-            type: IMAGE;
+            type: RECT;
             mouse_events: 0;
-            clip_to: "state-clipper";
             description {
                state: "default" 0.0;
-               image.normal: "connman-disconnect.png";
+               color: 255 255 255 0;
                min: 128 128;
                max: 128 128;
                align: 0.0 0.0;
@@ -7263,36 +7441,185 @@ collections { /* begin the collection of edje groups that are in this file */
                   offset: 137 137;
                }
             }
-            description {
-               state: "ethernet" 0.0;
-               inherit: "default" 0.0;
-               image.normal: "connman-ethernet.png";
+         }
+
+         part { name: "disconnected-visibility";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "state-clipper";
+            description { state: "default" 0.0;
+               color: 255 255 255 0;
+               visible: 0;
             }
-            description {
-               state: "wifi" 0.0;
+            description { state: "visible" 0.0;
                inherit: "default" 0.0;
-               image.normal: "connman-wifi.png";
+               color: 255 255 255 255;
+               visible: 1;
             }
-            // TODO: wimax, cellular, bluetooth
+         }
+         part { name: "disconnected";
+            type: IMAGE;
+            mouse_events: 0;
+            clip_to: "disconnected-visibility";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               fixed: 1 1;
+               image.normal: "connman-disconnect.png";
+               rel1.to: "technology";
+               rel2.to: "technology";
+            }
          }
          programs {
+            program {
+               signal: "load";
+               after: "e,changed,technology,none";
+            }
+         }
+
+         part { name: "ethernet-visibility";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "state-clipper";
+            description { state: "default" 0.0;
+               color: 255 255 255 0;
+               visible: 0;
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               visible: 1;
+            }
+         }
+         part { name: "ethernet";
+            type: IMAGE;
+            mouse_events: 0;
+            clip_to: "ethernet-visibility";
+            description { state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               fixed: 1 1;
+               image.normal: "connman-ethernet.png";
+               rel1.to: "technology";
+               rel2.to: "technology";
+            }
+         }
+
+         part { name: "wifi-visibility";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "state-clipper";
+            description { state: "default" 0.0;
+               color: 255 255 255 0;
+               visible: 0;
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               visible: 1;
+            }
+         }
+         part { name: "wifi";
+            type: IMAGE;
+            mouse_events: 0;
+            clip_to: "wifi-visibility";
+            description { state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               fixed: 1 1;
+               image.normal: "connman-wifi-good.png";
+               rel1.to: "technology";
+               rel2.to: "technology";
+            }
+            description { state: "good" 0.0;
+               inherit: "default" 0.0;
+            }
+            description { state: "medium" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "connman-wifi-medium.png";
+            }
+            description { state: "bad" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "connman-wifi-bad.png";
+            }
+         }
+
+         // TODO: wimax, cellular, bluetooth
+
+         programs {
+            program { name: "strength,good";
+               action: STATE_SET "good" 0.0;
+               target: "wifi";
+               // add wimax, cellular, bluetooth
+            }
+            program { name: "strength,medium";
+               action: STATE_SET "medium" 0.0;
+               target: "wifi";
+               // add wimax, cellular, bluetooth
+            }
+            program { name: "strength,bad";
+               action: STATE_SET "bad" 0.0;
+               target: "wifi";
+               // add wimax, cellular, bluetooth
+            }
+
             program { name: "e,changed,technology,none";
                signal: "e,changed,technology,none";
                source: "e";
-               action: STATE_SET "default" 0.0;
-               target: "technology";
+               action: STATE_SET "visible" 0.0;
+               target: "disconnected-visibility";
+               after: "e,changed,technology,none,others";
             }
+            program { name: "e,changed,technology,none,others";
+               action: STATE_SET "default" 0.0;
+               target: "ethernet-visibility";
+               target: "wifi-visibility";
+               // add wimax, cellular, bluetooth
+            }
+
             program { name: "e,changed,technology,ethernet";
                signal: "e,changed,technology,ethernet";
                source: "e";
-               action: STATE_SET "ethernet" 0.0;
-               target: "technology";
+               action: STATE_SET "visible" 0.0;
+               target: "ethernet-visibility";
+               after: "e,changed,technology,ethernet,others";
             }
+            program { name: "e,changed,technology,ethernet,others";
+               action: STATE_SET "default" 0.0;
+               target: "disconnected-visibility";
+               target: "wifi-visibility";
+               // add wimax, cellular, bluetooth
+            }
+
             program { name: "e,changed,technology,wifi";
                signal: "e,changed,technology,wifi";
                source: "e";
-               action: STATE_SET "wifi" 0.0;
-               target: "technology";
+               action: STATE_SET "visible" 0.0;
+               target: "wifi-visibility";
+               after: "e,changed,technology,wifi,others";
+            }
+            program { name: "e,changed,technology,wifi,others";
+               action: STATE_SET "default" 0.0;
+               target: "disconnected-visibility";
+               target: "ethernet-visibility";
+               // add wimax, cellular, bluetooth
+            }
+
+            program { name: "e,changed,connected,no";
+               signal: "e,changed,connected,no";
+               source: "e";
+               action: STATE_SET "visible" 0.0;
+               target: "disconnected-visibility";
+
+               after: "e,changed,technology,none,others";
+               after: "strength,hide";
+               after: "e,changed,connected,no,others";
+               after: "e,changed,ipv4_address,no";
+            }
+            program { name: "e,changed,connected,no,others";
+               action: STATE_SET "hidden" 0.0;
+               target: "e.text.error";
             }
          }
 
@@ -7302,9 +7629,10 @@ collections { /* begin the collection of edje groups that are in this file */
 	    effect: SOFT_SHADOW;
             description {
                state: "default" 0.0;
-	       color: 224 224 224 255;
+	       color: 240 240 240 255;
 	       color3: 0 0 0 64;
                align: 0.0 0.0;
+               fixed: 1 1;
                rel1 {
                   to_x: "technology";
                   relative: 1.0 0.0;
@@ -7316,7 +7644,7 @@ collections { /* begin the collection of edje groups that are in this file */
                }
                text {
                   font: "Sans:style=Bold";
-                  size: 14;
+                  size: 16;
                   align: 0.0 0.0;
                   text: "";
                   min: 1 1;
@@ -7329,7 +7657,7 @@ collections { /* begin the collection of edje groups that are in this file */
             mouse_events: 0;
             description {
                state: "default" 0.0;
-	       color: 96 96 96 255;
+	       color: 16 16 16 255;
                align: 0.0 0.0;
                rel1 {
                   to_x: "technology";
@@ -7343,8 +7671,8 @@ collections { /* begin the collection of edje groups that are in this file */
                   offset: -10 25;
                }
                text {
-                  font: "Sans";
-                  size: 10;
+                  font: "Sans:style=Bold";
+                  size: 12;
                   align: 0.0 0.0;
                   text: "";
                   min: 1 1;
@@ -7352,29 +7680,123 @@ collections { /* begin the collection of edje groups that are in this file */
             }
          }
 
+	 part { name: "strength_gauge_bg";
+	    type: IMAGE;
+	    scale: 1;
+	    mouse_events: 0;
+	    description {
+               state: "default" 0.0;
+               min: 100 10;
+               max: 100 99999;
+	       rel1 {
+                  to_x: "technology";
+                  to_y: "strength";
+                  relative: 1.0 0.0;
+                  offset: 10 -2;
+               }
+	       rel2 {
+                  to_x: "technology";
+                  to_y: "strength";
+                  relative: 1.0 1.0;
+                  offset: 109 1;
+               }
+	       image {
+                  normal: "inset_sunk.png";
+                  border: 6 6 6 6;
+               }
+	    }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+               min: 0 0;
+               max: 0 0;
+            }
+	 }
+	 part { name: "strength_gauge_confine";
+	    type: RECT;
+	    scale: 1;
+	    mouse_events: 0;
+	    description {
+               state: "default" 0.0;
+	       color: 0 255 0 0;
+	       rel1 {
+                  to: "strength_gauge_bg";
+                  offset: 1 1;
+               }
+	       rel2 {
+                  to: "strength_gauge_bg";
+                  offset: -2 -2;
+               }
+	    }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+	 }
+	 part { name: "strength_gauge_knob";
+	    mouse_events: 0;
+	    scale: 1;
+	    type: RECT;
+	    dragable {
+	       x: 1 1 0;
+	       y: 0 0 0;
+               confine: "strength_gauge_confine";
+	    }
+	    description {
+               state: "default" 0.0;
+               min: 0 0;
+               max: 0 0;
+	    }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+	 }
+	 part { name: "strength_gauge_fill";
+	    mouse_events: 0;
+	    type: RECT;
+	    description {
+               state: "default" 0.0;
+	       color: 55 55 55 100;
+               rel1.to: "strength_gauge_confine";
+               rel2 {
+                  to_x: "strength_gauge_knob";
+                  to_y: "strength_gauge_confine";
+               }
+	    }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+	 }
          part { name: "strength";
             type: TEXT;
             mouse_events: 0;
             description {
                state: "default" 0.0;
-	       color: 96 96 96 255;
-               align: 0.0 0.0;
+	       color: 16 16 16 255;
+               align: 0.5 0.0;
                fixed: 1 1;
                rel1 {
-                  to_x: "technology";
+                  to_x: "strength_gauge_confine";
                   to_y: "e.text.state";
-                  relative: 1.0 1.0;
-                  offset: 10 10;
+                  relative: 0.5 1.0;
+                  offset: -1 10;
                }
                rel2 {
+                  to_x: "strength_gauge_confine";
                   to_y: "e.text.state";
-                  relative: 1.0 1.0;
-                  offset: -10 25;
+                  relative: 0.5 1.0;
+                  offset: 1 25;
                }
                text {
                   font: "Sans";
                   size: 10;
-                  align: 0.0 0.0;
+                  align: 0.5 0.5;
                   text: "";
                   min: 1 1;
                }
@@ -7383,11 +7805,17 @@ collections { /* begin the collection of edje groups that are in this file */
                state: "hidden" 0.0;
                inherit: "default" 0.0;
                visible: 0;
+               rel1 {
+                  to_x: "technology";
+                  to_y: "e.text.state";
+                  relative: 1.0 1.0;
+                  offset: 0 0;
+               }
                rel2 { /* = rel1 */
                   to_x: "technology";
-                  to_y: "e.text.name";
-                  relative: 0.0 1.0;
-                  offset: 10 10;
+                  to_y: "e.text.state";
+                  relative: 1.0 1.0;
+                  offset: 0 0;
                }
             }
          }
@@ -7397,11 +7825,19 @@ collections { /* begin the collection of edje groups that are in this file */
                signal: "strength,show";
                action: STATE_SET "default" 0.0;
                target: "strength";
+               target: "strength_gauge_bg";
+               target: "strength_gauge_confine";
+               target: "strength_gauge_knob";
+               target: "strength_gauge_fill";
             }
             program { name: "strength,hide";
                signal: "strength,show";
                action: STATE_SET "hidden" 0.0;
                target: "strength";
+               target: "strength_gauge_bg";
+               target: "strength_gauge_confine";
+               target: "strength_gauge_knob";
+               target: "strength_gauge_fill";
             }
          }
 
@@ -7437,11 +7873,17 @@ collections { /* begin the collection of edje groups that are in this file */
                inherit: "default" 0.0;
                visible: 0;
                max: 0 0;
+               rel1 {
+                  to_x: "technology";
+                  to_y: "strength";
+                  relative: 1.0 1.0;
+                  offset: 0 0;
+               }
                rel2 { /* = rel1 */
                   to_x: "technology";
                   to_y: "strength";
                   relative: 1.0 1.0;
-                  offset: 10 10;
+                  offset: 0 0;
                }
             }
          }
@@ -7493,11 +7935,17 @@ collections { /* begin the collection of edje groups that are in this file */
                inherit: "default" 0.0;
                max: 0 0;
                visible: 0;
+               rel1 {
+                  to_x: "technology";
+                  to_y: "e.text.error";
+                  relative: 1.0 1.0;
+                  offset: 0 0;
+               }
                rel2 { /* = rel1 */
                   to_x: "technology";
-                  to_y: "strength";
+                  to_y: "e.text.error";
                   relative: 1.0 1.0;
-                  offset: 10 10;
+                  offset: 0 0;
                }
             }
          }
