@@ -17,6 +17,7 @@
  *       1. request for passphrase if pass_required is set or
  *          connect error is org.moblin.connman.Error.PassphraseRequired
  *       2. improve gadget ui
+ *       3. investigate stringshare mess when manager goes out
  *
  *    GOOD:
  *       1. imporve mouse over popup ui
@@ -24,7 +25,6 @@
  *       3. "Controls" for detailed information, similar to Mixer app
  *          it would contain switches to toggle offline and choose
  *          technologies that are enabled.
- *       4. toggle internal e17 mode (Menu > Settings > Mode > Offline)
  *
  *    IDEAS:
  *       1. create static connections
@@ -44,6 +44,7 @@ static const char *e_str_ready = NULL;
 static const char *e_str_disconnect = NULL;
 static const char *e_str_failure = NULL;
 
+static void _connman_service_ask_pass_and_connect(E_Connman_Service *service);
 static void _connman_default_service_changed_delayed(E_Connman_Module_Context *ctxt);
 static void _connman_gadget_update(E_Connman_Instance *inst);
 static void _connman_tip_update(E_Connman_Instance *inst);
@@ -65,6 +66,18 @@ e_connman_theme_path(void)
 #undef TF
 }
 
+static inline E_Connman_Service *
+_connman_ctxt_find_service_stringshare(const E_Connman_Module_Context *ctxt, const char *service_path)
+{
+   E_Connman_Service *itr;
+
+   EINA_INLIST_FOREACH(ctxt->services, itr)
+     if (itr->path == service_path)
+       return itr;
+
+   return NULL;
+}
+
 static inline void
 _connman_dbus_error_show(const char *msg, const DBusError *error)
 {
@@ -81,7 +94,7 @@ _connman_dbus_error_show(const char *msg, const DBusError *error)
    e_util_dialog_show(_("Connman Server Operation Failed"),
 		      _("Could not execute remote operation:<br>"
 			"%s<br>"
-			"Server Error <b>%s:</b> %s"),
+			"Server Error <hilight>%s:</hilight> %s"),
 		      msg, name, error->message);
 }
 
@@ -102,13 +115,21 @@ _connman_toggle_offline_mode_cb(void *data, DBusMessage *msg __UNUSED__, DBusErr
      {
 	printf("DBG CONNMAN: successfuly toggled to offline mode\n");
 	// XXX hack: connman does not emit propertychanged for this, they need to fix it
-	e_connman_element_properties_sync(e_connman_manager_get());
+	e_connman_manager_sync_elements();
 	_connman_default_service_changed_delayed(ctxt);
 	return;
      }
 
    _connman_dbus_error_show(_("Cannot toggle system's offline mode."), error);
    dbus_error_free(error);
+}
+
+static void
+_connman_toggle_offline_mode_pending_cb(void *data, DBusMessage *msg, DBusError *error)
+{
+   E_Connman_Module_Context *ctxt = data;
+   ctxt->offline_mode_pending = EINA_FALSE;
+   _connman_toggle_offline_mode_cb(data, msg, error);
 }
 
 static void
@@ -151,6 +172,174 @@ _connman_cb_toggle_offline_mode(E_Object *obj __UNUSED__, const char *params __U
    _connman_toggle_offline_mode(ctxt);
 }
 
+struct connman_passphrase_data
+{
+   void (*cb)(void *data, const char *password, const char *service_path);
+   void *data;
+   const char *service_path;
+   char *passphrase;
+   E_Connman_Module_Context *ctxt;
+   E_Dialog *dia;
+   Evas_Object *entry;
+   Eina_Bool canceled;
+   int cleartext;
+};
+
+static void
+_connman_passphrase_ask_cleartext_changed(void *data, Evas_Object *obj, void *event __UNUSED__)
+{
+   struct connman_passphrase_data *d = data;
+   e_widget_entry_password_set(d->entry, !e_widget_check_checked_get(obj));
+   e_widget_entry_readonly_set(d->entry, 0);
+   e_widget_focus_set(d->entry, 1);
+}
+
+static void
+_connman_passphrase_ask_ok(void *data, E_Dialog *dia)
+{
+   struct connman_passphrase_data *d = data;
+   d->canceled = EINA_FALSE;
+   e_object_del(E_OBJECT(dia));
+}
+
+static void
+_connman_passphrase_ask_cancel(void *data, E_Dialog *dia)
+{
+   struct connman_passphrase_data *d = data;
+   d->canceled = EINA_TRUE;
+   e_object_del(E_OBJECT(dia));
+}
+
+static void
+_connman_passphrase_ask_del(void *data)
+{
+   E_Dialog *dia = data;
+   struct connman_passphrase_data *d = e_object_data_get(E_OBJECT(dia));
+
+   if (d->canceled)
+     {
+	free(d->passphrase);
+	d->passphrase = NULL;
+     }
+
+   d->cb(d->data, d->passphrase, d->service_path);
+
+   eina_stringshare_del(d->service_path);
+   free(d->passphrase);
+   E_FREE(d);
+}
+
+static void
+_connman_passphrase_ask_key_down(void *data, Evas *e __UNUSED__, Evas_Object *o __UNUSED__, void *event)
+{
+   Evas_Event_Key_Down *ev = event;
+   struct connman_passphrase_data *d = data;
+
+   if (strcmp(ev->keyname, "Return") == 0)
+     _connman_passphrase_ask_ok(d, d->dia);
+   else if (strcmp(ev->keyname, "Escape") == 0)
+     _connman_passphrase_ask_cancel(d, d->dia);
+}
+
+static void
+_connman_passphrase_ask(E_Connman_Service *service, void (*cb)(void *data, const char *password, const char *service_path), const void *data)
+{
+   struct connman_passphrase_data *d;
+   Evas_Object *list, *o;
+   Evas *evas;
+   char buf[512];
+   const char *passphrase;
+   int mw, mh;
+
+   if (!cb)
+     return;
+   if (!service)
+     {
+	cb((void *)data, NULL, NULL);
+	return;
+     }
+
+   d = E_NEW(struct connman_passphrase_data, 1);
+   if (!d)
+     {
+	cb((void *)data, NULL, NULL);
+	return;
+     }
+   d->cb = cb;
+   d->data = (void *)data;
+   d->service_path = eina_stringshare_add(service->path);
+   d->ctxt = service->ctxt;
+   d->canceled = EINA_TRUE; /* closing the dialog defaults to cancel */
+   d->dia = e_dialog_new(NULL, "E", "connman_ask_passphrase");
+
+   e_dialog_title_set(d->dia, _("ConnMan needs your passphrase"));
+   e_dialog_icon_set(d->dia, "dialog-ask", 64);
+   e_dialog_border_icon_set(d->dia, "dialog-ask");
+
+   evas = d->dia->win->evas;
+
+   list = e_widget_list_add(evas, 0, 0);
+
+   o = edje_object_add(evas);
+   e_theme_edje_object_set(o, "base/theme/dialog",
+			   "e/widgets/dialog/text");
+   snprintf(buf, sizeof(buf),
+	    _("Connection Manager needs your passphrase for <br>"
+	      "the service <hilight>%s</hilight>"),
+	    service->name);
+   edje_object_part_text_set(o, "e.textblock.message", buf);
+   edje_object_size_min_calc(o, &mw, &mh);
+   evas_object_size_hint_min_set(o, mw, mh);
+   evas_object_resize(o, mw, mh);
+   evas_object_show(o);
+   e_widget_list_object_append(list, o, 1, 1, 0.5);
+
+   if (!e_connman_service_passphrase_get(service->element, &passphrase))
+     passphrase = NULL;
+   if (passphrase && passphrase[0])
+     d->passphrase = strdup(passphrase);
+   else
+     d->passphrase = NULL;
+
+   d->entry = o = e_widget_entry_add(evas, &d->passphrase, NULL, NULL, NULL);
+   e_widget_entry_password_set(o, 0);
+   evas_object_show(o);
+   e_widget_list_object_append(list, o, 1, 0, 0.0);
+
+#if 0 // NOT WORKING, e_widget_entry_password_set() changes stops editing!!!
+   d->cleartext = 1;
+   o = e_widget_check_add(evas, _("Show passphrase as clear text"),
+			  &d->cleartext);
+   evas_object_smart_callback_add
+     (o, "changed", _connman_passphrase_ask_cleartext_changed, d);
+   evas_object_show(o);
+   e_widget_list_object_append(list, o, 1, 0, 0.0);
+#endif
+
+   e_widget_size_min_get(list, &mw, &mh);
+   e_dialog_content_set(d->dia, list, mw, mh);
+
+   e_dialog_button_add
+     (d->dia, _("Ok"), NULL, _connman_passphrase_ask_ok, d);
+   e_dialog_button_add
+     (d->dia, _("Cancel"), NULL, _connman_passphrase_ask_cancel, d);
+
+   evas_object_event_callback_add
+     (d->dia->bg_object, EVAS_CALLBACK_KEY_DOWN,
+      _connman_passphrase_ask_key_down, d);
+
+   e_object_del_attach_func_set
+     (E_OBJECT(d->dia), _connman_passphrase_ask_del);
+   e_object_data_set(E_OBJECT(d->dia), d);
+
+   e_dialog_button_focus_num(d->dia, 0);
+   e_widget_focus_set(d->entry, 1);
+
+   e_dialog_resizable_set(d->dia, 1);
+   e_win_centered_set(d->dia->win, 1);
+   e_dialog_show(d->dia);
+}
+
 static void
 _connman_service_free(E_Connman_Service *service)
 {
@@ -176,10 +365,13 @@ _connman_service_changed(void *data, const E_Connman_Element *element)
    unsigned char u8;
    bool b;
 
-#define GSTR(name, getter)			\
+#define GSTR(name_, getter)			\
+   str = NULL;					\
    if (!getter(element, &str))			\
      str = NULL;				\
-   eina_stringshare_replace(&service->name, str)
+   if (service->name_ != str)				\
+     printf("changing "#name_": %s (%p) with %s (%p)\n", service->name_, service->name_, str, str); \
+   eina_stringshare_replace(&service->name_, str)
 
    GSTR(name, e_connman_service_name_get);
    GSTR(type, e_connman_service_type_get);
@@ -196,10 +388,11 @@ _connman_service_changed(void *data, const E_Connman_Element *element)
      u8 = 0;
    service->strength = u8;
 
-#define GBOOL(name, getter)				\
+#define GBOOL(name_, getter)				\
+   b = EINA_FALSE;					\
    if (!getter(element, &b))				\
      b = EINA_FALSE;					\
-   service->name = b
+   service->name_ = b
 
    GBOOL(favorite, e_connman_service_favorite_get);
    GBOOL(auto_connect, e_connman_service_auto_connect_get);
@@ -273,10 +466,11 @@ _connman_service_new(E_Connman_Module_Context *ctxt, E_Connman_Element *element)
    service->element = element;
    service->path = eina_stringshare_add(element->path);
 
-#define GSTR(name, getter)			\
+#define GSTR(name_, getter)			\
+   str = NULL;					\
    if (!getter(element, &str))			\
      str = NULL;				\
-   service->name = eina_stringshare_add(str)
+   service->name_ = eina_stringshare_add(str)
 
    GSTR(name, e_connman_service_name_get);
    GSTR(type, e_connman_service_type_get);
@@ -293,10 +487,11 @@ _connman_service_new(E_Connman_Module_Context *ctxt, E_Connman_Element *element)
      u8 = 0;
    service->strength = u8;
 
-#define GBOOL(name, getter)				\
+#define GBOOL(name_, getter)				\
+   b = EINA_FALSE;					\
    if (!getter(element, &b))				\
      b = EINA_FALSE;					\
-   service->name = b
+   service->name_ = b
 
    GBOOL(favorite, e_connman_service_favorite_get);
    GBOOL(auto_connect, e_connman_service_auto_connect_get);
@@ -308,36 +503,6 @@ _connman_service_new(E_Connman_Module_Context *ctxt, E_Connman_Element *element)
       _connman_service_freed);
 
    return service;
-}
-
-static void
-_connman_service_ask_pass_and_connect(E_Connman_Service *service)
-{
-   e_util_dialog_show("TODO", "TODO!");
-}
-
-static void
-_connman_service_connect_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *error)
-{
-   E_Connman_Module_Context *ctxt = data;
-
-   if (error && dbus_error_is_set(error))
-     {
-	if (strcmp(error->message,
-		   "org.moblin.connman.Error.AlreadyConnected") != 0)
-	  _connman_dbus_error_show(_("Connect to network service."), error);
-	dbus_error_free(error);
-     }
-
-   _connman_default_service_changed_delayed(ctxt);
-}
-
-static void
-_connman_service_connect(E_Connman_Service *service)
-{
-   if (!e_connman_service_connect
-       (service->element, _connman_service_connect_cb, service->ctxt))
-     _connman_operation_error_show(_("Connect to network service."));
 }
 
 static void
@@ -362,6 +527,144 @@ _connman_service_disconnect(E_Connman_Service *service)
    if (!e_connman_service_disconnect
        (service->element, _connman_service_disconnect_cb, service->ctxt))
      _connman_operation_error_show(_("Disconnect to network service."));
+}
+
+struct connman_service_connect_data
+{
+   const char *service_path;
+   E_Connman_Module_Context *ctxt;
+};
+
+static void
+_connman_service_connect_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *error)
+{
+   struct connman_service_connect_data *d = data;
+
+   if (error && dbus_error_is_set(error))
+     {
+	if ((strcmp(error->name,
+		    "org.moblin.connman.Error.PassphraseRequired") == 0) ||
+	    (strcmp(error->name,
+		    "org.moblin.connman.Error.Failed") == 0))
+	  {
+	     E_Connman_Service *service;
+
+	     service = _connman_ctxt_find_service_stringshare
+	       (d->ctxt, d->service_path);
+	     if (!service)
+	       _connman_operation_error_show
+		 (_("Service does not exist anymore"));
+	     else
+	       {
+		  _connman_service_disconnect(service);
+		  _connman_service_ask_pass_and_connect(service);
+	       }
+	  }
+	else if (strcmp(error->name,
+		   "org.moblin.connman.Error.AlreadyConnected") != 0)
+	  _connman_dbus_error_show(_("Connect to network service."), error);
+
+	dbus_error_free(error);
+     }
+
+   _connman_default_service_changed_delayed(d->ctxt);
+   eina_stringshare_del(d->service_path);
+   E_FREE(d);
+}
+
+static void
+_connman_service_connect(E_Connman_Service *service)
+{
+   struct connman_service_connect_data *d;
+
+   d = E_NEW(struct connman_service_connect_data, 1);
+   if (!d)
+     return;
+
+   d->service_path = eina_stringshare_ref(service->path);
+   d->ctxt = service->ctxt;
+
+   if (!e_connman_service_connect
+       (service->element, _connman_service_connect_cb, d))
+     {
+	eina_stringshare_del(d->service_path);
+	E_FREE(d);
+	_connman_operation_error_show(_("Connect to network service."));
+     }
+}
+
+struct connman_service_ask_pass_data
+{
+   const char *service_path;
+   E_Connman_Module_Context *ctxt;
+};
+
+static void
+_connman_service_ask_pass_and_connect__set_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *error)
+{
+   struct connman_service_ask_pass_data *d = data;
+   E_Connman_Service *service;
+
+   service = _connman_ctxt_find_service_stringshare(d->ctxt, d->service_path);
+   if (!service)
+     {
+	_connman_operation_error_show(_("Service does not exist anymore"));
+	goto end;
+     }
+
+   if ((!error) || (!dbus_error_is_set(error)))
+     _connman_service_connect(service);
+   // TODO: check if connman reports password was invalid and ask again?
+
+ end:
+   if ((error) && (dbus_error_is_set(error)))
+     dbus_error_free(error);
+   eina_stringshare_del(d->service_path);
+   E_FREE(d);
+}
+
+static void
+_connman_service_ask_pass_and_connect__ask_cb(void *data, const char *passphrase, const char *service_path)
+{
+   E_Connman_Module_Context *ctxt = data;
+   E_Connman_Service *service;
+   struct connman_service_ask_pass_data *d;
+
+   service = _connman_ctxt_find_service_stringshare(ctxt, service_path);
+   if (!service)
+     {
+	_connman_operation_error_show(_("Service does not exist anymore"));
+	return;
+     }
+
+   if (!passphrase)
+     {
+	_connman_service_disconnect(service);
+	return;
+     }
+
+   d = E_NEW(struct connman_service_ask_pass_data, 1);
+   if (!d)
+     return;
+   d->service_path = eina_stringshare_ref(service_path);
+   d->ctxt = ctxt;
+
+   if (!e_connman_service_passphrase_set
+       (service->element, passphrase,
+	_connman_service_ask_pass_and_connect__set_cb, d))
+     {
+	eina_stringshare_del(d->service_path);
+	E_FREE(d);
+	_connman_operation_error_show(_("Could not set service's passphrase"));
+	return;
+     }
+}
+
+static void
+_connman_service_ask_pass_and_connect(E_Connman_Service *service)
+{
+   _connman_passphrase_ask
+     (service, _connman_service_ask_pass_and_connect__ask_cb, service->ctxt);
 }
 
 static void
@@ -454,6 +757,14 @@ _connman_default_service_changed(E_Connman_Module_Context *ctxt)
    if (!e_connman_manager_offline_mode_get(&ctxt->offline_mode))
      ctxt->offline_mode = EINA_FALSE;
 
+   if ((e_config->mode.offline != ctxt->offline_mode) &&
+       (!ctxt->offline_mode_pending))
+     {
+	e_config->mode.offline = ctxt->offline_mode;
+	e_config_mode_changed();
+	e_config_save_queue();
+     }
+
    ctxt->default_service = def;
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
      _connman_gadget_update(inst);
@@ -480,6 +791,8 @@ _connman_default_service_changed_delayed_do(void *data)
 static void
 _connman_default_service_changed_delayed(E_Connman_Module_Context *ctxt)
 {
+   if (!ctxt->has_manager)
+     return;
    printf("\033[1;31mDBG CONNMAN: request delayed change\033[0m\n");
    if (ctxt->poller.default_service_changed)
      ecore_poller_del(ctxt->poller.default_service_changed);
@@ -611,21 +924,18 @@ _connman_popup_service_selected(void *data)
    if (!inst->service_path)
      return;
 
-   EINA_INLIST_FOREACH(ctxt->services, service)
-     {
-	if (service->path == inst->service_path)
-	  {
-	     _connman_popup_del(inst);
+   service = _connman_ctxt_find_service_stringshare(ctxt, inst->service_path);
+   if (!service)
+     return;
 
-	     if (service->pass_required)
-	       _connman_service_ask_pass_and_connect(service);
-	     else if (service->state == e_str_ready)
-	       _connman_service_disconnect(service);
-	     else
-	       _connman_service_connect(service);
-	     return;
-	  }
-     }
+   _connman_popup_del(inst);
+
+   if (service->pass_required)
+     _connman_service_ask_pass_and_connect(service);
+   else if (service->state == e_str_ready)
+     _connman_service_disconnect(service);
+   else
+     _connman_service_connect(service);
 }
 
 static void
@@ -832,6 +1142,35 @@ _connman_menu_new(E_Connman_Instance *inst, Evas_Event_Mouse_Down *ev)
 }
 
 static void
+_connman_tip_new(E_Connman_Instance *inst)
+{
+   Evas *e;
+
+   inst->tip = e_gadcon_popup_new(inst->gcc);
+   if (!inst->tip) return;
+
+   e = inst->tip->win->evas;
+
+   inst->o_tip = edje_object_add(e);
+   e_theme_edje_object_set(inst->o_tip, "base/theme/modules/connman/tip",
+			   "e/modules/connman/tip");
+
+   _connman_tip_update(inst);
+
+   e_gadcon_popup_content_set(inst->tip, inst->o_tip);
+   e_gadcon_popup_show(inst->tip);
+}
+
+static void
+_connman_tip_del(E_Connman_Instance *inst)
+{
+   evas_object_del(inst->o_tip);
+   e_object_del(E_OBJECT(inst->tip));
+   inst->tip = NULL;
+   inst->o_tip = NULL;
+}
+
+static void
 _connman_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    E_Connman_Instance *inst;
@@ -859,24 +1198,11 @@ static void
 _connman_cb_mouse_in(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    E_Connman_Instance *inst = data;
-   Evas *e;
 
    if (inst->tip)
      return;
 
-   inst->tip = e_gadcon_popup_new(inst->gcc);
-   if (!inst->tip) return;
-
-   e = inst->tip->win->evas;
-
-   inst->o_tip = edje_object_add(e);
-   e_theme_edje_object_set(inst->o_tip, "base/theme/modules/connman/tip",
-			   "e/modules/connman/tip");
-
-   _connman_tip_update(inst);
-
-   e_gadcon_popup_content_set(inst->tip, inst->o_tip);
-   e_gadcon_popup_show(inst->tip);
+   _connman_tip_new(inst);
 }
 
 static void
@@ -887,10 +1213,7 @@ _connman_cb_mouse_out(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUS
    if (!inst->tip)
      return;
 
-   evas_object_del(inst->o_tip);
-   e_object_del(E_OBJECT(inst->tip));
-   inst->tip = NULL;
-   inst->o_tip = NULL;
+   _connman_tip_del(inst);
 }
 
 static void
@@ -908,15 +1231,24 @@ _connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
 	edje_object_part_text_set(o, "e.text.error",
 				  _("No ConnMan server found."));
 	edje_object_signal_emit(o, "e,changed,connected,no", "e");
+	edje_object_part_text_set(o, "e.text.offline_mode", "");
+	edje_object_signal_emit(o, "e,changed,offline_mode,no", "e");
 	return;
      }
 
    edje_object_signal_emit(o, "e,available", "e");
 
    if (ctxt->offline_mode)
-     edje_object_signal_emit(o, "e,changed,offline_mode,yes", "e");
+     {
+	edje_object_signal_emit(o, "e,changed,offline_mode,yes", "e");
+	edje_object_part_text_set(o, "e.text.offline_mode",
+				  _("Offline mode: all radios are turned off"));
+     }
    else
-     edje_object_signal_emit(o, "e,changed,offline_mode,no", "e");
+     {
+	edje_object_signal_emit(o, "e,changed,offline_mode,no", "e");
+	edje_object_part_text_set(o, "e.text.offline_mode", "");
+     }
 
    if (ctxt->technology && ctxt->technology[0])
      {
@@ -926,7 +1258,7 @@ _connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
 		 ctxt->technology);
 	edje_object_signal_emit(o, buf, "e");
      }
-   else
+   else if (!ctxt->default_service)
      {
 	edje_object_part_text_set(o, "e.text.technology", "");
 	edje_object_signal_emit(o, "e,changed,technology,none", "e");
@@ -979,6 +1311,13 @@ _connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
 
    snprintf(buf, sizeof(buf), "e,changed,service,%s", service->type);
    edje_object_signal_emit(o, buf, "e");
+
+   if (!ctxt->technology)
+     {
+	edje_object_part_text_set(o, "e.text.technology", service->type);
+	snprintf(buf, sizeof(buf), "e,changed,technology,%s", service->type);
+	edje_object_signal_emit(o, buf, "e");
+     }
 
    snprintf(buf, sizeof(buf), "e,changed,state,%s", service->state);
    edje_object_signal_emit(o, buf, "e");
@@ -1251,6 +1590,24 @@ _connman_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED
    return 1;
 }
 
+static int
+_connman_event_mode_changed(void *data, int type __UNUSED__, void *event __UNUSED__)
+{
+   E_Connman_Module_Context *ctxt = data;
+   if ((ctxt->offline_mode == e_config->mode.offline) ||
+       (!ctxt->has_manager))
+     return 1;
+
+   if (!e_connman_manager_offline_mode_set
+       (e_config->mode.offline, _connman_toggle_offline_mode_pending_cb, ctxt))
+     _connman_operation_error_show
+       (_("Cannot toggle system's offline mode."));
+   else
+     ctxt->offline_mode_pending = EINA_TRUE;
+
+   return 1;
+}
+
 static void
 _connman_events_register(E_Connman_Module_Context *ctxt)
 {
@@ -1258,6 +1615,8 @@ _connman_events_register(E_Connman_Module_Context *ctxt)
      (E_CONNMAN_EVENT_MANAGER_IN, _connman_event_manager_in, ctxt);
    ctxt->event.manager_out = ecore_event_handler_add
      (E_CONNMAN_EVENT_MANAGER_OUT, _connman_event_manager_out, ctxt);
+   ctxt->event.mode_changed = ecore_event_handler_add
+     (E_EVENT_CONFIG_MODE_CHANGED, _connman_event_mode_changed, ctxt);
 }
 
 static void
@@ -1267,6 +1626,8 @@ _connman_events_unregister(E_Connman_Module_Context *ctxt)
      ecore_event_handler_del(ctxt->event.manager_in);
    if (ctxt->event.manager_out)
      ecore_event_handler_del(ctxt->event.manager_out);
+   if (ctxt->event.mode_changed)
+     ecore_event_handler_del(ctxt->event.mode_changed);
 }
 
 EAPI void *
@@ -1309,6 +1670,12 @@ _connman_instances_free(E_Connman_Module_Context *ctxt)
         E_Connman_Instance *inst;
 
         inst = ctxt->instances->data;
+
+	if (inst->popup)
+	  _connman_popup_del(inst);
+	if (inst->tip)
+	  _connman_tip_del(inst);
+
         e_object_del(E_OBJECT(inst->gcc));
      }
 }

@@ -80,6 +80,7 @@ struct E_Connman_Module_Context
    {
       Ecore_Event_Handler *manager_in;
       Ecore_Event_Handler *manager_out;
+      Ecore_Event_Handler *mode_changed;
    } event;
 
    struct
@@ -90,6 +91,7 @@ struct E_Connman_Module_Context
 
    Eina_Bool has_manager:1;
    bool offline_mode;
+   bool offline_mode_pending;
    const char *technology;
    const E_Connman_Service *default_service;
    Eina_Inlist *services;

@@ -573,6 +573,10 @@ exq-bar.png \
 exq-bglight.png \
 exq-logo.png \
 connman-disconnect.png \
+connman-disconnect-offline.png \
 connman-ethernet.png \
-connman-wifi.png
+connman-wifi.png \
+connman-wifi-good.png \
+connman-wifi-medium.png \
+connman-wifi-bad.png
 
