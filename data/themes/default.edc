@@ -7124,6 +7124,14 @@ collections { /* begin the collection of edje groups that are in this file */
                target: "state-inverted-clipper";
                after: "state-connecting-stop";
             }
+            program { name: "e,changed,state,disconnect";
+               signal: "e,changed,state,disconnect";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "state-clipper";
+               target: "state-inverted-clipper";
+               after: "state-connecting-stop";
+            }
 
             program { name: "e,changed,state,association";
                signal: "e,changed,state,association";
@@ -7482,6 +7490,14 @@ collections { /* begin the collection of edje groups that are in this file */
             }
             program { name: "e,changed,state,failure";
                signal: "e,changed,state,failure";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "state-clipper";
+               target: "state-inverted-clipper";
+               after: "state-connecting-stop";
+            }
+            program { name: "e,changed,state,disconnect";
+               signal: "e,changed,state,disconnect";
                source: "e";
                action: STATE_SET "default" 0.0;
                target: "state-clipper";
