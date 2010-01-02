@@ -7132,6 +7132,14 @@ collections { /* begin the collection of edje groups that are in this file */
                target: "state-inverted-clipper";
                after: "state-connecting-stop";
             }
+            program { name: "e,changed,state,idle";
+               signal: "e,changed,state,idle";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "state-clipper";
+               target: "state-inverted-clipper";
+               after: "state-connecting-stop";
+            }
 
             program { name: "e,changed,state,association";
                signal: "e,changed,state,association";
@@ -7392,6 +7400,19 @@ collections { /* begin the collection of edje groups that are in this file */
 
          programs {
             program {
+               name: "resize";
+               signal: "resize";
+	       script {
+		  new x, y, w, h;
+		  get_geometry(PART:"eventarea", x, y, w, h);
+		  if (w <= 32)
+		    set_state(PART:"e.text.name", "hidden", 0.0);
+		  else
+		    set_state(PART:"e.text.name", "default", 0.0);
+	       }
+            }
+
+            program {
                name: "e,changed,connected,no";
                signal: "e,changed,connected,no";
                source: "e";
@@ -7498,6 +7519,14 @@ collections { /* begin the collection of edje groups that are in this file */
             }
             program { name: "e,changed,state,disconnect";
                signal: "e,changed,state,disconnect";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "state-clipper";
+               target: "state-inverted-clipper";
+               after: "state-connecting-stop";
+            }
+            program { name: "e,changed,state,idle";
+               signal: "e,changed,state,idle";
                source: "e";
                action: STATE_SET "default" 0.0;
                target: "state-clipper";

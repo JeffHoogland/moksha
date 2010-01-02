@@ -8,16 +8,12 @@
  * STATUS:
  *
  *    displays current status, allows connecting and
- *    disconnecting. needs connman from git (will be 0.48, still
- *    unreleased).
+ *    disconnecting. needs connman 0.48 or even better from git.
  *
  * TODO:
  *
  *    MUST:
- *       1. request for passphrase if pass_required is set or
- *          connect error is org.moblin.connman.Error.PassphraseRequired
- *       2. improve gadget ui
- *       3. investigate stringshare mess when manager goes out
+ *       1. improve gadget ui
  *
  *    GOOD:
  *       1. imporve mouse over popup ui
@@ -28,6 +24,8 @@
  *
  *    IDEAS:
  *       1. create static connections
+ *       2. handle cellular: ask APN, Username and Password, use SetupRequired
+ *       3. handle vpn, bluetooth, wimax
  *
  */
 
@@ -317,6 +315,10 @@ _connman_passphrase_ask(E_Connman_Service *service, void (*cb)(void *data, const
 #endif
 
    e_widget_size_min_get(list, &mw, &mh);
+   if (mw < 200)
+     mw = 200;
+   if (mh < 60)
+     mh = 60;
    e_dialog_content_set(d->dia, list, mw, mh);
 
    e_dialog_button_add
@@ -369,8 +371,6 @@ _connman_service_changed(void *data, const E_Connman_Element *element)
    str = NULL;					\
    if (!getter(element, &str))			\
      str = NULL;				\
-   if (service->name_ != str)				\
-     printf("changing "#name_": %s (%p) with %s (%p)\n", service->name_, service->name_, str, str); \
    eina_stringshare_replace(&service->name_, str)
 
    GSTR(name, e_connman_service_name_get);
@@ -383,6 +383,9 @@ _connman_service_changed(void *data, const E_Connman_Element *element)
    GSTR(ipv4_address, e_connman_service_ipv4_address_get);
    GSTR(ipv4_netmask, e_connman_service_ipv4_netmask_get);
 #undef GSTR
+
+   if ((service->state != e_str_failure) && (service->error))
+     eina_stringshare_replace(&service->error, NULL);
 
    if (!e_connman_service_strength_get(element, &u8))
      u8 = 0;
@@ -483,6 +486,9 @@ _connman_service_new(E_Connman_Module_Context *ctxt, E_Connman_Element *element)
    GSTR(ipv4_netmask, e_connman_service_ipv4_netmask_get);
 #undef GSTR
 
+   if ((service->state != e_str_failure) && (service->error))
+     eina_stringshare_replace(&service->error, NULL);
+
    if (!e_connman_service_strength_get(element, &u8))
      u8 = 0;
    service->strength = u8;
@@ -512,9 +518,10 @@ _connman_service_disconnect_cb(void *data, DBusMessage *msg __UNUSED__, DBusErro
 
    if (error && dbus_error_is_set(error))
      {
-	if (strcmp(error->message,
+	if (strcmp(error->name,
 		   "org.moblin.connman.Error.NotConnected") != 0)
-	  _connman_dbus_error_show(_("Disconnect to network service."), error);
+	  _connman_dbus_error_show(_("Disconnect from network service."),
+				   error);
 	dbus_error_free(error);
      }
 
@@ -526,7 +533,7 @@ _connman_service_disconnect(E_Connman_Service *service)
 {
    if (!e_connman_service_disconnect
        (service->element, _connman_service_disconnect_cb, service->ctxt))
-     _connman_operation_error_show(_("Disconnect to network service."));
+     _connman_operation_error_show(_("Disconnect from network service."));
 }
 
 struct connman_service_connect_data
@@ -542,6 +549,9 @@ _connman_service_connect_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *
 
    if (error && dbus_error_is_set(error))
      {
+	/* TODO: cellular might ask for SetupRequired to enter APN,
+	 * username and password
+	 */
 	if ((strcmp(error->name,
 		    "org.moblin.connman.Error.PassphraseRequired") == 0) ||
 	    (strcmp(error->name,
@@ -554,11 +564,15 @@ _connman_service_connect_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *
 	     if (!service)
 	       _connman_operation_error_show
 		 (_("Service does not exist anymore"));
-	     else
+	     else if (strcmp(service->type, "wifi") == 0)
 	       {
 		  _connman_service_disconnect(service);
 		  _connman_service_ask_pass_and_connect(service);
 	       }
+	     else
+	       /* TODO: cellular might ask for user and pass */
+	       _connman_dbus_error_show(_("Connect to network service."),
+					error);
 	  }
 	else if (strcmp(error->name,
 		   "org.moblin.connman.Error.AlreadyConnected") != 0)
@@ -673,8 +687,13 @@ _connman_services_free(E_Connman_Module_Context *ctxt)
    while (ctxt->services)
      {
 	E_Connman_Service *service = (E_Connman_Service *)ctxt->services;
-	ctxt->services = eina_inlist_remove(ctxt->services, ctxt->services);
-	_connman_service_free(service);
+	e_connman_element_listener_del
+	  (service->element, _connman_service_changed, service);
+	/* no need for free or unlink, since listener_del() calls
+	 * _connman_service_freed()
+	 */
+	//ctxt->services = eina_inlist_remove(ctxt->services, ctxt->services);
+	//_connman_service_free(service);
      }
 }
 
@@ -1275,6 +1294,7 @@ _connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
 	edje_object_signal_emit(o, "e,changed,error,no", "e");
 
 	edje_object_part_text_set(o, "e.text.state", _("disconnect"));
+	edje_object_signal_emit(o, "e,changed,state,disconnect", "e");
 
 	edje_object_signal_emit(o, "e,changed,mode,no", "e");
 
