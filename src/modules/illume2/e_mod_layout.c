@@ -18,10 +18,12 @@ static int _e_mod_layout_cb_border_focus_in(void *data, int type, void *event);
 static int _e_mod_layout_cb_border_focus_out(void *data, int type, void *event);
 static int _e_mod_layout_cb_zone_move_resize(void *data, int type, void *event);
 static int _e_mod_layout_cb_client_message(void *data, int type, void *event);
+static int _e_mod_layout_cb_policy_change(void *data, int type, void *event);
 
 /* local variables */
 static Eina_List *hooks = NULL, *handlers = NULL;
 static E_Illume_Layout_Policy *policy = NULL;
+EAPI int E_ILLUME_EVENT_POLICY_CHANGE = 0;
 
 int 
 e_mod_layout_init(void) 
@@ -31,6 +33,8 @@ e_mod_layout_init(void)
    Eina_List *files;
    char buff[PATH_MAX], dir[PATH_MAX], *file;
    int ret = 0;
+
+   E_ILLUME_EVENT_POLICY_CHANGE = ecore_event_type_new();
 
    snprintf(buff, sizeof(buff), "%s.so", il_cfg->policy.name);
    snprintf(dir, sizeof(dir), "%s/enlightenment/modules/illume2/policies", 
@@ -189,6 +193,10 @@ _e_mod_layout_policy_load(const char *file)
 static void 
 _e_mod_layout_handlers_add(void) 
 {
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(E_ILLUME_EVENT_POLICY_CHANGE, 
+                                              _e_mod_layout_cb_policy_change, NULL));
    handlers = 
      eina_list_append(handlers, 
                        ecore_event_handler_add(E_EVENT_BORDER_ADD, 
@@ -484,5 +492,49 @@ _e_mod_layout_cb_client_message(void *data, int type, void *event)
         if ((policy) && (policy->funcs.drag_end))
           policy->funcs.drag_end(bd);
      }
+   return 1;
+}
+
+static int 
+_e_mod_layout_cb_policy_change(void *data, int type, void *event) 
+{
+   Eina_List *files;
+   char buff[PATH_MAX], dir[PATH_MAX], *file;
+
+   if (type != E_ILLUME_EVENT_POLICY_CHANGE) return 1;
+   if (policy) 
+     {
+        e_object_del(E_OBJECT(policy));
+        policy = NULL;
+     }
+
+   snprintf(buff, sizeof(buff), "%s.so", il_cfg->policy.name);
+   snprintf(dir, sizeof(dir), "%s/enlightenment/modules/illume2/policies", 
+            e_prefix_lib_get());
+
+   files = ecore_file_ls(dir);
+   EINA_LIST_FREE(files, file) 
+     {
+        if (strcmp(file, buff)) 
+          {
+             free(file);
+             continue;
+          }
+        snprintf(dir, sizeof(dir), 
+                 "%s/enlightenment/modules/illume2/policies/%s", 
+                 e_prefix_lib_get(), file);
+        break;
+     }
+   if (!file) 
+     {
+        snprintf(dir, sizeof(dir), 
+                 "%s/enlightenment/modules/illume2/policies/illume.so", 
+                 e_prefix_lib_get());
+     }
+   else 
+     free(file);
+
+   _e_mod_layout_policy_load(dir);
+
    return 1;
 }

@@ -1,7 +1,5 @@
 #include "E_Illume.h"
-#include "e_mod_layout.h"
 #include "e_mod_policy.h"
-#include "e_mod_config.h"
 
 /* local function prototypes */
 static void *_il_config_policy_create(E_Config_Dialog *cfd);
@@ -109,5 +107,6 @@ _il_config_policy_change_timeout(void *data)
 {
    e_config_save_queue();
    _policy_change_timer = NULL;
+   ecore_event_add(E_ILLUME_EVENT_POLICY_CHANGE, NULL, NULL, NULL);
    return 0;
 }

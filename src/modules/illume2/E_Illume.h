@@ -127,5 +127,6 @@ EAPI void e_illume_border_app2_safe_region_get(E_Zone *zone, int *x, int *y, int
 EAPI void e_illume_kbd_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h);
 
 extern EAPI E_Illume_Config *il_cfg;
+extern EAPI int E_ILLUME_EVENT_POLICY_CHANGE;
 
 #endif

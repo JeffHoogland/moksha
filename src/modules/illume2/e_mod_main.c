@@ -31,7 +31,16 @@ e_modapi_init(E_Module *m)
    e_module_priority_set(m, 100);
 
    /* init the config subsystem */
-   if (!e_mod_config_init(m)) return NULL;
+   if (!e_mod_config_init(m)) 
+     {
+        /* cleanup eina log domain */
+        if (_e_illume_log_dom >= 0) 
+          {
+             eina_log_domain_unregister(_e_illume_log_dom);
+             _e_illume_log_dom = -1;
+          }
+        return NULL;
+     }
 
    /* init the keyboard subsystem */
    e_kbd_init();

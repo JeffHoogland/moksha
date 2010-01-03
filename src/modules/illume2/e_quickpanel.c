@@ -199,6 +199,9 @@ _e_quickpanel_cb_border_pre_post_fetch(void *data, void *data2)
    if (!_e_quickpanel_border_is_quickpanel(bd)) return;
    if (_e_quickpanel_by_border_get(bd)) return;
    if (!(qp = e_quickpanel_by_zone_get(bd->zone))) return;
+
+   qp->borders = eina_list_sorted_insert(qp->borders, _e_quickpanel_cb_sort, bd);
+
    e_illume_border_top_shelf_pos_get(qp->zone, NULL, &ty);
    bd->stolen = 1;
    if (bd->remember) 
@@ -223,7 +226,6 @@ _e_quickpanel_cb_border_pre_post_fetch(void *data, void *data2)
         e_illume_border_top_shelf_size_get(qp->zone, NULL, &th);
         e_border_fx_offset(bd, 0, (bd->h - th));
      }
-   qp->borders = eina_list_sorted_insert(qp->borders, _e_quickpanel_cb_sort, bd);
 }
 
 static E_Quickpanel *
