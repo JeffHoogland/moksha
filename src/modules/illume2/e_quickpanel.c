@@ -366,10 +366,9 @@ _e_quickpanel_cb_sort(const void *b1, const void *b2)
    printf("Checking: %s against %s\n", bd2->client.icccm.name, bd1->client.icccm.name);
    major1 = ecore_x_e_illume_quickpanel_priority_major_get(bd1->client.win);
    major2 = ecore_x_e_illume_quickpanel_priority_major_get(bd2->client.win);
-   if (major2 > major1) return 1;
-   else if (major2 < major1) return -1;
-   /*
-   else if (major2 == major1) 
+   if (major1 < major2) return -1;
+   else if (major1 > major2) return 1;
+   else if (major1 == major2) 
      {
         int minor1, minor2;
 
@@ -378,10 +377,9 @@ _e_quickpanel_cb_sort(const void *b1, const void *b2)
         minor2 = 
           ecore_x_e_illume_quickpanel_priority_minor_get(bd2->client.win);
         printf("Minors: %d %d\n", minor2, minor1);
-        if (minor2 > minor1) return 1;
-        else if (minor2 < minor1) return -1;
+        if (minor1 < minor2) return -1;
+        else if (minor1 > minor2) return 1;
      }
-    */
    return 0;
 }
 
