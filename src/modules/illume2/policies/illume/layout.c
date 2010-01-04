@@ -3,6 +3,7 @@
 
 /* local function prototypes */
 static void _border_resize_fx(E_Border *bd, int bx, int by, int bw, int bh);
+static void _border_resize_move(E_Border *bd, int bx, int by, int bw, int bh);
 static void _zone_layout_single(E_Border *bd);
 static void _zone_layout_dual(E_Border *bd);
 static void _zone_layout_dual_top(E_Border *bd);
@@ -181,14 +182,14 @@ _layout_zone_layout(E_Zone *zone)
                {
                   /* if we are not in dual mode, then set shelf to top */
                   if (!il_cfg->policy.mode.dual)
-                    _border_resize_fx(bd, zone->x, zone->y, zone->w, shelfsize);
+                    _border_resize_move(bd, zone->x, zone->y, zone->w, shelfsize);
                   else 
                     {
                        /* make sure we are in landscape mode */
                        if (il_cfg->policy.mode.side == 0) 
-                         _border_resize_fx(bd, zone->x, bd->y, zone->w, shelfsize);
-                       else
-                         _border_resize_fx(bd, zone->x, zone->y, zone->w, shelfsize);
+                         _border_resize_move(bd, zone->x, bd->y, zone->w, shelfsize);
+                       else 
+                         _border_resize_move(bd, zone->x, zone->y, zone->w, shelfsize);
                     }
                }
              e_border_stick(bd);
@@ -304,6 +305,15 @@ _border_resize_fx(E_Border *bd, int bx, int by, int bw, int bh)
         if ((bd->x != bx) || (bd->y != by)) 
           e_border_fx_offset(bd, bx, by);
      }
+}
+
+static void 
+_border_resize_move(E_Border *bd, int bx, int by, int bw, int bh) 
+{
+   if ((bd->w != bw) || (bd->h != bh)) 
+     e_border_resize(bd, bw, bh);
+   if ((bd->x != bx) || (bd->y != by)) 
+     e_border_move(bd, bx, by);
 }
 
 static void 

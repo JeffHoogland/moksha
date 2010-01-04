@@ -48,7 +48,6 @@ e_mod_layout_init(void)
              free(file);
              continue;
           }
-        E_ILLUME_INF("Found Policy: %s", file);
         snprintf(dir, sizeof(dir), 
                  "%s/enlightenment/modules/illume2/policies/%s", 
                  e_prefix_lib_get(), file);
@@ -318,13 +317,11 @@ _e_mod_layout_cb_hook_post_border_assign(void *data, void *data2)
         bd->remember = NULL;
      }
    bd->lock_border = 1;
-   bd->lock_client_location = 1;
    bd->lock_client_size = 1;
    bd->lock_client_desk = 1;
    bd->lock_client_sticky = 1;
    bd->lock_client_shade = 1;
    bd->lock_client_maximize = 1;
-   bd->lock_user_location = 1;
    bd->lock_user_size = 1;
    bd->lock_user_sticky = 1;
 }
