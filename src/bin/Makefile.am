@@ -313,7 +313,7 @@ e_main.c \
 $(enlightenment_src)
 
 enlightenment_LDFLAGS = -export-dynamic
-enlightenment_LDADD = @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@ @VALGRIND_LIBS@
+enlightenment_LDADD = @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@ @VALGRIND_LIBS@ -lm
 
 enlightenment_imc_SOURCES = \
 e.h \

@@ -11,5 +11,5 @@ Description: Enlightenmnt Window Manager
 Requires: @requirements_e@
 Version: @VERSION@
 Libs: -L${libdir}
-Libs.private: 
+Libs.private:  -lm
 Cflags: -I${includedir} @e_configflags@

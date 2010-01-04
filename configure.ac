@@ -241,6 +241,7 @@ PKG_CHECK_MODULES(E_IMC, [
 ])
 
 PKG_CHECK_MODULES(E_THUMB, [
+  eina-0
   evas
   ecore
   ecore-evas
@@ -255,8 +256,9 @@ PKG_CHECK_MODULES(E_FM, [
   ecore
   ecore-file
   ecore-ipc
-  eet >= 1.0.1
+  eet >= 1.2.3
   efreet
+  dbus-1
   edbus
   ehal
   eina-0
@@ -284,6 +286,7 @@ PKG_CHECK_MODULES(E_INIT, [
   ecore
   ecore-file
   ecore-evas
+  ecore-x
   edje
   ecore-ipc
   eet >= 1.0.1
@@ -300,15 +303,16 @@ PKG_CHECK_MODULES(E, [
   ecore-ipc
   ecore-job
   ecore-file
-  eet >= 1.0.1
+  eet >= 1.2.3
   edje
   efreet
   efreet-mime
   eina-0
+  dbus-1
   edbus
   ehal
 ])
-requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-job ecore-file eet edje efreet efreet-mime eina-0 edbus ehal"
+requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-job ecore-file eet edje efreet efreet-mime eina-0 dbus-1 edbus ehal"
 
 AC_E_CHECK_PKG(ECORE_IMF, [ecore-imf ecore-imf-evas], [], [:])
 
@@ -359,7 +363,7 @@ AC_DEFINE(E_INTERNAL, 1, "This define can be used to wrap internal E stuff, as c
 AM_CONDITIONAL(HAVE_BATTERY, false)
 define([CHECK_MODULE_BATTERY],
 [
-        AC_E_CHECK_PKG(BATTERY, [ecore ecore-file ecore-con],
+        AC_E_CHECK_PKG(BATTERY, [ecore ecore-file ecore-con eina-0],
                        [], [BATTERY=false])
 ])
 
@@ -376,7 +380,7 @@ AM_CONDITIONAL(HAVE_TEMPERATURE, false)
 define([CHECK_MODULE_TEMPERATURE],
 [
         AC_E_CHECK_PKG(ECORE_TXT, [ecore-txt], [], [TEMPERATURE=false])
-        AC_E_CHECK_PKG(TEMPERATURE, [ecore ecore-file], [], [TEMPERATURE=false])
+        AC_E_CHECK_PKG(TEMPERATURE, [ecore ecore-file eina-0], [], [TEMPERATURE=false])
 ])
 
 AM_CONDITIONAL(HAVE_EXCHANGE, false)
