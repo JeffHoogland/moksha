@@ -230,13 +230,13 @@ AC_MSG_RESULT([$e_cv_enable_files])
 PKG_CHECK_MODULES(E_REMOTE, [
   ecore
   ecore-ipc
-  eet >= 1.0.1
+  eet >= 1.2.3
   eina-0
 ])
 
 PKG_CHECK_MODULES(E_IMC, [
   ecore-file
-  eet >= 1.0.1
+  eet >= 1.2.3
   eina-0
 ])
 
@@ -248,7 +248,7 @@ PKG_CHECK_MODULES(E_THUMB, [
   edje
   ecore-file
   ecore-ipc
-  eet >= 1.0.1
+  eet >= 1.2.3
   efreet
 ])
 
@@ -273,7 +273,7 @@ PKG_CHECK_MODULES(E_FM_OP, [
 PKG_CHECK_MODULES(E_FM_OPEN, [
   ecore
   ecore-ipc
-  eet >= 1.0.1
+  eet >= 1.2.3
   eina-0
 ])
 
@@ -289,7 +289,7 @@ PKG_CHECK_MODULES(E_INIT, [
   ecore-x
   edje
   ecore-ipc
-  eet >= 1.0.1
+  eet >= 1.2.3
   eina-0
 ])
 
@@ -346,7 +346,7 @@ AC_ARG_WITH(edje-cc,
 ])
 AC_SUBST(edje_cc)
 
-PKG_CHECK_MODULES(EET, [eet >= 1.0.1])
+PKG_CHECK_MODULES(EET, [eet >= 1.2.3])
 AC_ARG_WITH(eet-eet,
 [  --with-eet-eet=PATH              specify a specific path to eet utility],
 [
