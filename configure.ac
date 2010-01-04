@@ -621,7 +621,6 @@ src/modules/illume2/E_Illume.pc
 src/modules/illume2/keyboards/Makefile
 src/modules/illume2/policies/Makefile
 src/modules/illume2/policies/illume/Makefile
-src/modules/illume2/policies/samsung/Makefile
 src/modules/illume-home/Makefile
 src/modules/illume-home/module.desktop
 src/modules/illume-softkey/Makefile
