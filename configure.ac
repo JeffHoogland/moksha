@@ -30,6 +30,8 @@ AC_PROG_LIBTOOL
 
 AC_SUBST(release)
 
+EFL_CHECK_PATH_MAX
+
 AC_CHECK_FUNCS(setenv)
 AC_CHECK_FUNCS(unsetenv)
 
@@ -485,6 +487,7 @@ AC_E_OPTIONAL_MODULE([illume2], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
 AC_E_OPTIONAL_MODULE([everything], true)
 AC_E_OPTIONAL_MODULE([systray], true)
+AC_E_OPTIONAL_MODULE([comp], true)
 
 AC_OUTPUT([
 Makefile
@@ -645,6 +648,8 @@ src/modules/everything/module.desktop
 src/modules/everything/everything.pc
 src/modules/systray/Makefile
 src/modules/systray/module.desktop
+src/modules/comp/Makefile
+src/modules/comp/module.desktop
 src/preload/Makefile
 data/Makefile
 data/images/Makefile

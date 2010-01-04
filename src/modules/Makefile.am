@@ -258,6 +258,10 @@ if USE_MODULE_SYSTRAY
 SUBDIRS += systray
 endif
 
+if USE_MODULE_COMP
+SUBDIRS += comp
+endif
+
 
 DIST_SUBDIRS = \
 ibar \
@@ -329,4 +333,5 @@ illume-kbd-toggle \
 illume-mode-toggle \
 syscon \
 everything \
-systray
+systray \
+comp
