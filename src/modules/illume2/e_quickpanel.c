@@ -250,7 +250,7 @@ _e_quickpanel_by_border_get(E_Border *bd)
 static int 
 _e_quickpanel_border_is_quickpanel(E_Border *bd) 
 {
-   return ecore_x_e_illume_quickpanel_get(bd->client.win);
+   return bd->client.illume.quickpanel.quickpanel;
 }
 
 static void 
@@ -371,18 +371,18 @@ _e_quickpanel_cb_sort(const void *b1, const void *b2)
    if (!(bd1 = b1)) return -1;
    if (!(bd2 = b2)) return 1;
    printf("Checking: %s against %s\n", bd2->client.icccm.name, bd1->client.icccm.name);
-   major1 = ecore_x_e_illume_quickpanel_priority_major_get(bd1->client.win);
-   major2 = ecore_x_e_illume_quickpanel_priority_major_get(bd2->client.win);
+   major1 = bd1->client.illume.quickpanel.priority.major;
+   major2 = bd2->client.illume.quickpanel.priority.major;
    if (major1 < major2) ret = -1;
    else if (major1 > major2) ret = 1;
    else 
      {
         int minor1, minor2;
 
-        minor1 = 
-          ecore_x_e_illume_quickpanel_priority_minor_get(bd1->client.win);
-        minor2 = 
-          ecore_x_e_illume_quickpanel_priority_minor_get(bd2->client.win);
+        minor1 = bd1->client.illume.quickpanel.priority.minor;
+//          ecore_x_e_illume_quickpanel_priority_minor_get(bd1->client.win);
+        minor2 = bd2->client.illume.quickpanel.priority.minor;
+//          ecore_x_e_illume_quickpanel_priority_minor_get(bd2->client.win);
         if (minor1 < minor2) ret = -1;
         else if (minor1 > minor2) ret = 1;
         else ret = 0;
