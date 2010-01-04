@@ -235,8 +235,8 @@ _load_avail_gadgets(void *data)
 
         if (!cc) continue;
         // check the current site is allowed for this gadcon client
-        if (cc->func.is_site && !cc->func.is_site(cfdata->site))
-           continue;
+        if ((cc->func.is_site) && (!cc->func.is_site(cfdata->site)))
+          continue;
         if (cc->func.label) lbl = cc->func.label(cc);
         if (!lbl) lbl = cc->name;
         if (cc->func.icon) icon = cc->func.icon(cc, evas);
@@ -337,10 +337,9 @@ _cb_del(void *data, void *data2)
    Eina_List *l = NULL, *g = NULL;
    E_Ilist_Item *item = NULL;
    E_Config_Gadcon_Client *cgc;
-   int i = 0, update = 0;
+   int i = -1, update = 0;
 
    if (!(cfdata = data)) return;
-   i = -1;
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_sel), l, item)
      {
         const char *name = NULL;
@@ -379,7 +378,7 @@ _set_description(void *data, const char *name)
    E_Config_Dialog_Data *cfdata = NULL;
    E_Module *mod = NULL;
    Efreet_Desktop *desk = NULL;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    if (!(cfdata = data)) return;
    if (!name) return;

@@ -11,7 +11,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _cb_disable_check_list(void *data, Evas_Object *obj);
-static void _calibrate_binginds(void);
+static void _calibrate_bindings(void);
 
 #define MODE_CUSTOM 0
 #define MODE_BOTTOM_MIDDLE 1
@@ -301,7 +301,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_shelf_populate(cfdata->es);
    e_shelf_toggle(cfdata->es, 1);
    e_shelf_show(cfdata->es);
-   _calibrate_binginds();
+   _calibrate_bindings();
    e_config_save_queue();
    cfdata->es->config_dialog = cfd;
    return 1; /* Apply was OK */
@@ -484,7 +484,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      e_shelf_toggle(cfdata->es, 1);
 
    e_zone_useful_geometry_dirty(cfdata->es->zone);
-   _calibrate_binginds();
+   _calibrate_bindings();
    e_config_save_queue();   
    cfdata->es->config_dialog = cfd;
    return 1; /* Apply was OK */
@@ -501,7 +501,7 @@ _cb_configure(void *data, void *data2)
 }
 
 static void
-_calibrate_binginds(void)
+_calibrate_bindings(void)
 {
    E_Binding_Edge *bind;
    Eina_List *l;
@@ -717,8 +717,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    n = 0;
    EINA_LIST_FOREACH(styles, l, style)
      {
-	char buf[4096];
-	
+	char buf[PATH_MAX];
+
 	ob = e_livethumb_add(evas);
 	e_livethumb_vsize_set(ob, 120, 40);
 	oj = edje_object_add(e_livethumb_evas_get(ob));
