@@ -155,7 +155,7 @@ _cb_btn_click(void *data, void *data2)
    snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
 
    icon = e_icon_add(evas_object_evas_get(inst->o_btn));
-   state = ecore_x_e_virtual_keyboard_state_get(bd->client.win);
+   state = bd->client.vkbd.state;
    if ((state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) ||
        (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_UNKNOWN)) 
      {
@@ -190,7 +190,7 @@ _cb_border_focus_in(void *data, int type, void *event)
    snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
 
    icon = e_icon_add(evas_object_evas_get(inst->o_btn));
-   state = ecore_x_e_virtual_keyboard_state_get(bd->client.win);
+   state = bd->client.vkbd.state;
    if ((state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) ||
        (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_UNKNOWN)) 
      e_icon_file_edje_set(icon, buff, "icon");

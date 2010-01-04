@@ -1685,14 +1685,13 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    evas_object_show(ki->base_obj);
 
    e_win_size_min_set(ki->win, zone->w, mh);
-//   e_win_resize(ki->win, zone->w, mh);
    ecore_x_e_virtual_keyboard_set(ki->win->evas_win, 1);
 
    ki->client_message_handler = ecore_event_handler_add
      (ECORE_X_EVENT_CLIENT_MESSAGE, _e_kbd_int_cb_client_message, ki);
 
    e_win_show(ki->win);
-   e_win_move_resize(ki->win, 0, (zone->h - mh), zone->w, mh);
+//   e_win_move_resize(ki->win, 0, (zone->h - mh), zone->w, mh);
    return ki;
 }
 
