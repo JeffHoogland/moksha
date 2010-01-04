@@ -7458,9 +7458,9 @@ collections { /* begin the collection of edje groups that are in this file */
                   snprintf(buf, sizeof(buf), "%d%%", strength);
                   set_text(PART:"strength", buf);
                   set_drag(PART:"strength_gauge_knob", val, 0.0);
-                  emit("strength,show", "");
+                  run_program(PROGRAM:"strength,show");
                } else
-                  emit("strength,hide", "");
+                  run_program(PROGRAM:"strength,hide");
 
                if (strength >= 65)
                   run_program(PROGRAM:"strength,good");
@@ -8008,7 +8008,6 @@ collections { /* begin the collection of edje groups that are in this file */
 
          programs {
             program { name: "strength,show";
-               signal: "strength,show";
                action: STATE_SET "default" 0.0;
                target: "strength";
                target: "strength_gauge_bg";
@@ -8017,7 +8016,6 @@ collections { /* begin the collection of edje groups that are in this file */
                target: "strength_gauge_fill";
             }
             program { name: "strength,hide";
-               signal: "strength,show";
                action: STATE_SET "hidden" 0.0;
                target: "strength";
                target: "strength_gauge_bg";
