@@ -178,7 +178,7 @@ _layout_zone_layout(E_Zone *zone)
         if (e_illume_border_is_top_shelf(bd)) 
           {
              /* make sure we are not dragging the shelf */
-             if (!ecore_x_e_illume_drag_get(bd->client.win)) 
+             if (!bd->client.illume.drag.drag)
                {
                   /* if we are not in dual mode, then set shelf to top */
                   if (!il_cfg->policy.mode.dual)
@@ -199,7 +199,7 @@ _layout_zone_layout(E_Zone *zone)
         else if (e_illume_border_is_bottom_panel(bd)) 
           {
              /* make sure we are not dragging the bottom panel */
-             if (!ecore_x_e_illume_drag_get(bd->client.win)) 
+             if (!bd->client.illume.drag.drag)
                _border_resize_fx(bd, zone->x, (zone->y + zone->h - panelsize), 
                                  zone->w, panelsize);
              e_border_stick(bd);
@@ -477,8 +477,9 @@ _zone_layout_dual_top_custom(E_Border *bd)
 
         /* more than one valid border */
 
-        if (ecore_x_e_virtual_keyboard_state_get(bd->client.win) > 
-            ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
+        if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
+//        if (ecore_x_e_virtual_keyboard_state_get(bd->client.win) > 
+//            ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
           {
              bh = ah;
              by = ay;
@@ -501,8 +502,9 @@ _zone_layout_dual_top_custom(E_Border *bd)
                     {
                        if (bt == e_border_focused_get()) 
                          {
-                            if (ecore_x_e_virtual_keyboard_state_get(bd->client.win) <= 
-                                ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
+                            if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
+//                            if (ecore_x_e_virtual_keyboard_state_get(bd->client.win) <= 
+//                                ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
                               {
                                  bh = zh;
                                  by = zy;
@@ -515,8 +517,9 @@ _zone_layout_dual_top_custom(E_Border *bd)
                          }
                        else if (bb = e_border_focused_get()) 
                          {
-                            if (ecore_x_e_virtual_keyboard_state_get(bd->client.win) <= 
-                                ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
+                            if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
+//                            if (ecore_x_e_virtual_keyboard_state_get(bd->client.win) <= 
+//                                ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
                               {
                                  bh = ah;
                                  by = ay;

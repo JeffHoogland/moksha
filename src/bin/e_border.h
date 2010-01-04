@@ -365,6 +365,48 @@ struct _E_Border
 	 unsigned char vkbd : 1;
       } vkbd;
 
+      struct 
+        {
+           struct 
+             {
+                struct 
+                  {
+                     unsigned char conformant : 1;
+                  } fetch;
+                unsigned char conformant : 1;
+             } conformant;
+           struct 
+             {
+                struct 
+                  {
+                     unsigned char state : 1;
+                     struct 
+                       {
+                          unsigned int major : 1;
+                          unsigned int minor : 1;
+                       } priority;
+                     unsigned char quickpanel : 1;
+                  } fetch;
+                Ecore_X_Illume_Quickpanel_State state;
+                struct 
+                  {
+                     unsigned int major : 1;
+                     unsigned int minor : 1;
+                  } priority;
+                unsigned char quickpanel : 1;
+             } quickpanel;
+           struct 
+             {
+                struct 
+                  {
+                     unsigned char drag : 1;
+                     unsigned char locked : 1;
+                  } fetch;
+                unsigned char drag : 1;
+                unsigned char locked : 1;
+             } drag;
+        } illume;
+
       Ecore_X_Window_Attributes initial_attributes;
    } client;
    

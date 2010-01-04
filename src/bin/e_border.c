@@ -460,6 +460,21 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 		    bd->client.vkbd.fetch.state = 1;
 		  else if (atoms[i] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD)
 		    bd->client.vkbd.fetch.vkbd = 1;
+                  /* loop to check for illume atoms */
+                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_CONFORMANT)
+                    bd->client.illume.conformant.fetch.conformant = 1;
+                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE)
+                    bd->client.illume.quickpanel.fetch.state = 1;
+                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL)
+                    bd->client.illume.quickpanel.fetch.quickpanel = 1;
+                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MAJOR)
+                    bd->client.illume.quickpanel.fetch.priority.major = 1;
+                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MINOR)
+                    bd->client.illume.quickpanel.fetch.priority.minor = 1;
+                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG_LOCKED)
+                    bd->client.illume.drag.fetch.locked = 1;
+                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG)
+                    bd->client.illume.drag.fetch.drag = 1;
 	       }
 	     free(atoms);
 	  }
@@ -4481,6 +4496,41 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
 	bd->client.vkbd.fetch.vkbd = 1;
 	bd->changed = 1;
      }
+   else if (e->atom == ECORE_X_ATOM_E_ILLUME_CONFORMANT) 
+     {
+        bd->client.illume.conformant.fetch.conformant = 1;
+        bd->changed = 1;
+     }
+   else if (e->atom == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE) 
+     {
+        bd->client.illume.quickpanel.fetch.state = 1;
+        bd->changed = 1;
+     }
+   else if (e->atom == ECORE_X_ATOM_E_ILLUME_QUICKPANEL) 
+     {
+        bd->client.illume.quickpanel.fetch.quickpanel = 1;
+        bd->changed = 1;
+     }
+   else if (e->atom == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MAJOR) 
+     {
+        bd->client.illume.quickpanel.fetch.priority.major = 1;
+        bd->changed = 1;
+     }
+   else if (e->atom == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MINOR) 
+     {
+        bd->client.illume.quickpanel.fetch.priority.minor = 1;
+        bd->changed = 1;
+     }
+   else if (e->atom == ECORE_X_ATOM_E_ILLUME_DRAG_LOCKED) 
+     {
+        bd->client.illume.drag.fetch.locked = 1;
+        bd->changed = 1;
+     }
+   else if (e->atom == ECORE_X_ATOM_E_ILLUME_DRAG) 
+     {
+        bd->client.illume.drag.fetch.drag = 1;
+        bd->changed = 1;
+     }
    /*
    else if (e->atom == ECORE_X_ATOM_NET_WM_USER_TIME)
      {
@@ -5580,6 +5630,7 @@ _e_border_eval0(E_Border *bd)
 		    {
 		       Eina_List *l;
 		       E_Border *child;
+
 		       EINA_LIST_FOREACH(bd->leader->group, l, child)
 			 {
 			    if ((child != bd) && (child->focused))
@@ -5598,10 +5649,8 @@ _e_border_eval0(E_Border *bd)
 
 	bd->client.icccm.fetch.title = 0;
 	if (bd->bg_object)
-	  {
-	     edje_object_part_text_set(bd->bg_object, "e.text.title",
-				       bd->client.icccm.title);
-	  }
+          edje_object_part_text_set(bd->bg_object, "e.text.title",
+                                    bd->client.icccm.title);
 	rem_change = 1;
      }
    if (bd->client.netwm.fetch.name)
@@ -5611,10 +5660,8 @@ _e_border_eval0(E_Border *bd)
 
 	bd->client.netwm.fetch.name = 0;
 	if (bd->bg_object)
-	  {
-	     edje_object_part_text_set(bd->bg_object, "e.text.title",
-				       bd->client.netwm.name);
-	  }
+          edje_object_part_text_set(bd->bg_object, "e.text.title",
+                                    bd->client.netwm.name);
 	rem_change = 1;
      }
    if (bd->client.icccm.fetch.name_class)
@@ -5954,17 +6001,66 @@ _e_border_eval0(E_Border *bd)
 	bd->client.vkbd.fetch.vkbd = 0;
 	rem_change = 1;
      }
+   if (bd->client.illume.conformant.fetch.conformant) 
+     {
+        bd->client.illume.conformant.conformant = 
+          ecore_x_e_illume_conformant_get(bd->client.win);
+        bd->client.illume.conformant.fetch.conformant = 0;
+        rem_change = 1;
+     }
+   if (bd->client.illume.quickpanel.fetch.state) 
+     {
+        bd->client.illume.quickpanel.state = 
+          ecore_x_e_illume_quickpanel_state_get(bd->client.win);
+        bd->client.illume.quickpanel.fetch.state = 0;
+        rem_change = 1;
+     }
+   if (bd->client.illume.quickpanel.fetch.quickpanel) 
+     {
+        bd->client.illume.quickpanel.quickpanel = 
+          ecore_x_e_illume_quickpanel_get(bd->client.win);
+        bd->client.illume.quickpanel.fetch.quickpanel = 0;
+        rem_change = 1;
+     }
+   if (bd->client.illume.quickpanel.fetch.priority.major) 
+     {
+        bd->client.illume.quickpanel.priority.major = 
+          ecore_x_e_illume_quickpanel_priority_major_get(bd->client.win);
+        bd->client.illume.quickpanel.fetch.priority.major = 0;
+        rem_change = 1;
+     }
+   if (bd->client.illume.quickpanel.fetch.priority.minor) 
+     {
+        bd->client.illume.quickpanel.priority.minor = 
+          ecore_x_e_illume_quickpanel_priority_minor_get(bd->client.win);
+        bd->client.illume.quickpanel.fetch.priority.minor = 0;
+        rem_change = 1;
+     }
+   if (bd->client.illume.drag.fetch.drag) 
+     {
+        bd->client.illume.drag.drag = 
+          ecore_x_e_illume_drag_get(bd->client.win);
+        bd->client.illume.drag.fetch.drag = 0;
+        rem_change = 1;
+     }
+   if (bd->client.illume.drag.fetch.locked) 
+     {
+        bd->client.illume.drag.locked = 
+          ecore_x_e_illume_drag_locked_get(bd->client.win);
+        bd->client.illume.drag.fetch.locked = 0;
+        rem_change = 1;
+     }
    if (bd->changes.shape)
      {
 	Ecore_X_Rectangle *rects;
 	int num;
-	
+
 	bd->changes.shape = 0;
 	rects = ecore_x_window_shape_rectangles_get(bd->client.win, &num);
 	if (rects)
 	  {
 	     int cw = 0, ch = 0;
-	     
+
 	     /* This doesnt fix the race, but makes it smaller. we detect
 	      * this and if cw and ch != client w/h then mark this as needing
 	      * a shape change again to fixup next event loop.
@@ -6059,6 +6155,7 @@ _e_border_eval0(E_Border *bd)
 		    {
 		       Eina_List *l;
 		       E_Border *child;
+
 		       EINA_LIST_FOREACH(bd->leader->group, l, child)
 			 {
 			    if ((child != bd) && (child->focused))
@@ -6088,7 +6185,7 @@ _e_border_eval0(E_Border *bd)
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_POST_FETCH, bd);
    _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_FETCH, bd);
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_BORDER_ASSIGN, bd);
-   
+
    if (bd->need_reparent)
      {     
 	ecore_x_window_save_set_add(bd->client.win);
@@ -6097,16 +6194,15 @@ _e_border_eval0(E_Border *bd)
 	  ecore_x_window_show(bd->client.win);
 	bd->need_reparent = 0;
      }
-   
+
    if ((bd->client.border.changed) && (!bd->shaded) &&
        (!(((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN))))
      {
 	Evas_Object *o;
-	char buf[4096];
+	char buf[PATH_MAX];
 	const char *bordername;
 	Evas_Coord cx, cy, cw, ch;
-	int l, r, t, b;
-	int ok;
+	int l, r, t, b, ok;
 
 	if (bd->fullscreen)
 	  bordername = "borderless";
@@ -6143,7 +6239,8 @@ _e_border_eval0(E_Border *bd)
 
 	if ((!bd->client.border.name) || (strcmp(bd->client.border.name, bordername)))
 	  {
-	     if (bd->client.border.name) eina_stringshare_del(bd->client.border.name);
+	     if (bd->client.border.name) 
+               eina_stringshare_del(bd->client.border.name);
 	     bd->client.border.name = eina_stringshare_add(bordername);
 
 	     if (bd->bg_object)
@@ -6182,10 +6279,8 @@ _e_border_eval0(E_Border *bd)
 
 		  bd->bg_object = o;
 		  shape_option = edje_object_data_get(o, "shaped");
-		  if (shape_option && !strcmp(shape_option, "1"))
-		    {
-		       bd->shaped = 1;
-		    }
+		  if ((shape_option) && (!strcmp(shape_option, "1")))
+                    bd->shaped = 1;
 
 		  if (bd->client.netwm.name)
 		    edje_object_part_text_set(o, "e.text.title",
@@ -6195,7 +6290,8 @@ _e_border_eval0(E_Border *bd)
 					      bd->client.icccm.title);
 		  evas_object_resize(o, 1000, 1000);
 		  edje_object_calc_force(o);
-		  edje_object_part_geometry_get(o, "e.swallow.client", &cx, &cy, &cw, &ch);
+		  edje_object_part_geometry_get(o, "e.swallow.client", 
+                                                &cx, &cy, &cw, &ch);
 		  l = cx;
 		  r = 1000 - (cx + cw);
 		  t = cy;
@@ -6253,7 +6349,7 @@ _e_border_eval0(E_Border *bd)
 	       }
 	  }
 	bd->client.border.changed = 0;
-	
+
 	if (bd->icon_object)
 	  {
 	     if (bd->bg_object)
@@ -6265,25 +6361,25 @@ _e_border_eval0(E_Border *bd)
 	       evas_object_hide(bd->icon_object);
 	  }
      }
-   
-   if (rem_change)
-     e_remember_update(bd);
-   
+
+   if (rem_change) e_remember_update(bd);
+
    if (change_urgent)
      {
+	E_Event_Border_Urgent_Change *ev;
+
 	if (bd->client.icccm.urgent)
 	  edje_object_signal_emit(bd->bg_object, "e,state,urgent", "e");
 	else
 	  edje_object_signal_emit(bd->bg_object, "e,state,not_urgent", "e");
-	E_Event_Border_Urgent_Change *ev;
 
 	ev = E_NEW(E_Event_Border_Urgent_Change, 1);
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
 	ecore_event_add(E_EVENT_BORDER_URGENT_CHANGE, ev,
-	      _e_border_event_border_urgent_change_free, NULL);
+                        _e_border_event_border_urgent_change_free, NULL);
      }
-   
+
    _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_BORDER_ASSIGN, bd);
 }
 

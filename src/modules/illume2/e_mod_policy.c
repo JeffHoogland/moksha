@@ -44,6 +44,7 @@ static void
 _il_config_policy_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    if (_policy_change_timer) ecore_timer_del(_policy_change_timer);
+   _policy_change_timer = NULL;
 }
 
 static Evas_Object *

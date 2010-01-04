@@ -174,14 +174,15 @@ EAPI int
 e_illume_border_is_conformant(E_Border *bd) 
 {
    if (strstr(bd->client.icccm.class, "config")) return EINA_FALSE;
-   return ecore_x_e_illume_conformant_get(bd->client.win);
+   return bd->client.illume.conformant.conformant;
 }
 
 EAPI int 
 e_illume_border_is_quickpanel(E_Border *bd) 
 {
    if (strstr(bd->client.icccm.class, "config")) return EINA_FALSE;
-   return ecore_x_e_illume_quickpanel_get(bd->client.win);
+   return bd->client.illume.quickpanel.quickpanel;
+//   return ecore_x_e_illume_quickpanel_get(bd->client.win);
 }
 
 EAPI int 
