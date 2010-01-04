@@ -79,6 +79,7 @@ e_quickpanel_show(E_Quickpanel *qp)
    qp->timer = NULL;
    if (qp->visible) return;
    if (!qp->borders) return;
+   qp->borders = eina_list_sort(qp->borders, 0, _e_quickpanel_cb_sort);
    if (!input_win) 
      {
         input_win = 
@@ -100,10 +101,10 @@ e_quickpanel_show(E_Quickpanel *qp)
         int ny = 0;
 
         e_illume_border_top_shelf_size_get(qp->zone, NULL, &ny);
-        EINA_LIST_FOREACH(qp->borders, l, bd)
+        EINA_LIST_REVERSE_FOREACH(qp->borders, l, bd)
           ny += bd->h;
 
-        EINA_LIST_FOREACH(qp->borders, l, bd) 
+        EINA_LIST_REVERSE_FOREACH(qp->borders, l, bd) 
           {
              e_border_lower(bd);
              e_border_fx_offset(bd, 0, ny);
@@ -200,7 +201,9 @@ _e_quickpanel_cb_border_pre_post_fetch(void *data, void *data2)
    if (_e_quickpanel_by_border_get(bd)) return;
    if (!(qp = e_quickpanel_by_zone_get(bd->zone))) return;
 
-   qp->borders = eina_list_sorted_insert(qp->borders, _e_quickpanel_cb_sort, bd);
+   printf("Appending: %s\n", bd->client.icccm.name);
+   qp->borders = eina_list_append(qp->borders, bd);
+//   qp->borders = eina_list_sorted_insert(qp->borders, _e_quickpanel_cb_sort, bd);
 
    e_illume_border_top_shelf_pos_get(qp->zone, NULL, &ty);
    bd->stolen = 1;
@@ -219,6 +222,7 @@ _e_quickpanel_cb_border_pre_post_fetch(void *data, void *data2)
    bd->client.border.changed = 1;
    qp->h += bd->h;
    e_border_move(bd, qp->zone->x, (ty - qp->h));
+   /*
    if (qp->visible) 
      {
         int th;
@@ -226,6 +230,7 @@ _e_quickpanel_cb_border_pre_post_fetch(void *data, void *data2)
         e_illume_border_top_shelf_size_get(qp->zone, NULL, &th);
         e_border_fx_offset(bd, 0, (bd->h - th));
      }
+    */
 }
 
 static E_Quickpanel *
@@ -299,7 +304,7 @@ _e_quickpanel_cb_animate(void *data)
      }
    qp->adjust = (qp->adjust_end * v) + (qp->adjust_start * (1.0 - v));
 
-   EINA_LIST_FOREACH(qp->borders, l, bd) 
+   EINA_LIST_REVERSE_FOREACH(qp->borders, l, bd) 
      {
         e_border_lower(bd);
         e_border_fx_offset(bd, 0, (bd->h + qp->adjust));
@@ -361,16 +366,16 @@ static int
 _e_quickpanel_cb_sort(const void *b1, const void *b2) 
 {
    const E_Border *bd1, *bd2;
-   int major1, major2;
+   int major1, major2, ret;
 
-   if (!(bd1 = b1)) return 0;
+   if (!(bd1 = b1)) return -1;
    if (!(bd2 = b2)) return 1;
    printf("Checking: %s against %s\n", bd2->client.icccm.name, bd1->client.icccm.name);
    major1 = ecore_x_e_illume_quickpanel_priority_major_get(bd1->client.win);
    major2 = ecore_x_e_illume_quickpanel_priority_major_get(bd2->client.win);
-   if (major1 < major2) return -1;
-   else if (major1 > major2) return 1;
-   else if (major1 == major2) 
+   if (major1 < major2) ret = -1;
+   else if (major1 > major2) ret = 1;
+   else 
      {
         int minor1, minor2;
 
@@ -378,11 +383,12 @@ _e_quickpanel_cb_sort(const void *b1, const void *b2)
           ecore_x_e_illume_quickpanel_priority_minor_get(bd1->client.win);
         minor2 = 
           ecore_x_e_illume_quickpanel_priority_minor_get(bd2->client.win);
-        printf("Minors: %d %d\n", minor2, minor1);
-        if (minor1 < minor2) return -1;
-        else if (minor1 > minor2) return 1;
+        if (minor1 < minor2) ret = -1;
+        else if (minor1 > minor2) ret = 1;
+        else ret = 0;
      }
-   return 0;
+   printf("Return: %d\n", ret);
+   return ret;
 }
 
 static int 
