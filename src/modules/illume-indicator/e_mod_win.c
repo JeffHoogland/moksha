@@ -164,8 +164,7 @@ _il_ind_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    if (ev->button == 1) 
      {
-        if (ecore_x_e_illume_drag_locked_get(iwin->win->border->client.win))
-          return;
+        if (iwin->win->border->client.illume.drag.locked) return;
         ecore_x_e_illume_drag_set(iwin->win->border->client.win, 1);
         ecore_x_e_illume_drag_start_send(iwin->win->border->client.win);
         ecore_x_pointer_last_xy_get(NULL, &my);
@@ -201,8 +200,8 @@ _il_ind_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event)
    ev = event;
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    bd = iwin->win->border;
-   if (ecore_x_e_illume_drag_locked_get(bd->client.win)) return;
-   if (!ecore_x_e_illume_drag_get(bd->client.win)) return;
+   if (bd->client.illume.drag.locked) return;
+   if (!bd->client.illume.drag.drag) return;
    if ((bd->y + bd->h + ev->cur.output.y) >= (bd->zone->h)) return;
 
    ecore_x_pointer_last_xy_get(NULL, &py);
@@ -242,8 +241,8 @@ _il_ind_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event)
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    if (ev->button != 1) return;
    bd = iwin->win->border;
-   if (ecore_x_e_illume_drag_locked_get(bd->client.win)) return;
-   if (!ecore_x_e_illume_drag_get(bd->client.win)) return;
+   if (bd->client.illume.drag.locked) return;
+   if (!bd->client.illume.drag.drag) return;
    ecore_x_e_illume_drag_end_send(bd->client.win);
    my = 0;
 }
