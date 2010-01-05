@@ -22,9 +22,10 @@ e_mod_sk_win_shutdown(void)
 }
 
 Il_Sk_Win *
-e_mod_sk_win_new(void) 
+e_mod_sk_win_new(E_Screen *screen) 
 {
    Il_Sk_Win *swin;
+   E_Container *con;
    E_Zone *zone;
    Evas *evas;
    Ecore_X_Window_State states[2];
@@ -36,7 +37,10 @@ e_mod_sk_win_new(void)
    snprintf(buff, sizeof(buff), "%s/e-module-illume-softkey.edj", 
             il_sk_cfg->mod_dir);
 
-   swin->win = e_win_new(e_util_container_number_get(0));
+   con = e_container_current_get(e_manager_current_get());
+   zone = e_util_container_zone_id_get(con->num, screen->escreen);
+
+   swin->win = e_win_new(con);
    states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
    ecore_x_netwm_window_state_set(swin->win->evas_win, states, 2);
@@ -51,8 +55,6 @@ e_mod_sk_win_new(void)
    e_win_name_class_set(swin->win, "Illume-Softkey", "Illume-Softkey");
 
    evas = e_win_evas_get(swin->win);
-
-   zone = e_util_container_zone_number_get(0, 0);
 
    swin->o_base = edje_object_add(evas);
    if (!e_theme_edje_object_set(swin->o_base, "base/theme/modules/illume-softkey", 
@@ -75,7 +77,7 @@ e_mod_sk_win_new(void)
 
    e_win_size_min_set(swin->win, zone->w, 32);
    e_win_show(swin->win);
-   e_win_move_resize(swin->win, 0, (zone->h - 32), zone->w, 32);
+   e_win_move_resize(swin->win, zone->x, (zone->h - 32), zone->w, 32);
 
    return swin;
 }

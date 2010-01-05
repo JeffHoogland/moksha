@@ -3,6 +3,6 @@
 
 int e_mod_sk_win_init(void);
 int e_mod_sk_win_shutdown(void);
-Il_Sk_Win *e_mod_sk_win_new(void);
+Il_Sk_Win *e_mod_sk_win_new(E_Screen *screen);
 
 #endif
