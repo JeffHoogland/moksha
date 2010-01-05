@@ -6,9 +6,9 @@
 
 /* actual module specifics */
 
-static void  _e_mod_action_conf_cb(E_Object *obj, const char *params);
-static void  _e_mod_conf_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void  _e_mod_menu_add(void *data, E_Menu *m);
+static void _e_mod_action_conf_cb(E_Object *obj, const char *params);
+static void _e_mod_conf_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_mod_menu_add(void *data, E_Menu *m);
 
 static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
@@ -64,7 +64,7 @@ static void
 _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 {
    Evas_Coord mw, mh;
-   
+
    mw = 0, mh = 0;
    edje_object_size_min_get(gcc->o_base, &mw, &mh);
    if ((mw < 1) || (mh < 1))
@@ -165,7 +165,7 @@ static void
 _e_mod_action_conf_cb(E_Object *obj, const char *params)
 {
    E_Zone *zone = NULL;
-   
+
    if (obj)
      {
 	if (obj->type == E_MANAGER_TYPE)
@@ -173,15 +173,15 @@ _e_mod_action_conf_cb(E_Object *obj, const char *params)
 	else if (obj->type == E_CONTAINER_TYPE)
 	  zone = e_util_zone_current_get(((E_Container *)obj)->manager);
 	else if (obj->type == E_ZONE_TYPE)
-	  zone = e_util_zone_current_get(((E_Zone *)obj)->container->manager);
+          zone = ((E_Zone *)obj);
 	else
 	  zone = e_util_zone_current_get(e_manager_current_get());
      }
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
-   if (zone && params)
-      e_configure_registry_call(params, zone->container, params);
+   if ((zone) && (params))
+     e_configure_registry_call(params, zone->container, params);
    else if (zone)
-      e_configure_show(zone->container);
+     e_configure_show(zone->container);
 }
 
 /* menu item callback(s) */
@@ -235,6 +235,7 @@ static E_Menu *
 _e_mod_submenu_modes_get(void)
 {
    E_Menu *m = e_menu_new();
+
    if (!m) return NULL;
    e_menu_pre_activate_callback_set(m, _e_mod_submenu_modes_fill, NULL);
    return m;
