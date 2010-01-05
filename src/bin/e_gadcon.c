@@ -334,6 +334,7 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, char *swallow
 	gc->cf = E_NEW(E_Config_Gadcon, 1);
 	gc->cf->name = eina_stringshare_add(gc->name);
 	gc->cf->id = gc->id;
+        if (gc->zone) gc->cf->zone = gc->zone->id;
 	e_config->gadcons = eina_list_append(e_config->gadcons, gc->cf);
 	e_config_save_queue();
      }
@@ -590,9 +591,7 @@ e_gadcon_edit_begin(E_Gadcon *gc)
    e_gadcon_locked_set(gc, 1);
    gc->editing = 1;
    EINA_LIST_FOREACH(gc->clients, l, gcc)
-     {
-	e_gadcon_client_edit_begin(gcc);
-     }
+     e_gadcon_client_edit_begin(gcc);
    e_gadcon_layout_thaw(gc->o_container);
 }
 
@@ -607,9 +606,7 @@ e_gadcon_edit_end(E_Gadcon *gc)
    e_gadcon_layout_freeze(gc->o_container);
    gc->editing = 0;
    EINA_LIST_FOREACH(gc->clients, l, gcc)
-     {
-	e_gadcon_client_edit_end(gcc);
-     }
+     e_gadcon_client_edit_end(gcc);
    e_gadcon_layout_thaw(gc->o_container);
    e_gadcon_locked_set(gc, 0);
 }
@@ -621,9 +618,7 @@ e_gadcon_all_edit_begin(void)
    E_Gadcon *gc;
 
    EINA_LIST_FOREACH(gadcons, l, gc)
-     {
-	e_gadcon_edit_begin(gc);
-     }
+     e_gadcon_edit_begin(gc);
 }
 
 EAPI void
@@ -633,9 +628,7 @@ e_gadcon_all_edit_end(void)
    E_Gadcon *gc;
 
    EINA_LIST_FOREACH(gadcons, l, gc)
-     {
-	e_gadcon_edit_end(gc);
-     }
+     e_gadcon_edit_end(gc);
 }
 
 EAPI void
@@ -644,6 +637,7 @@ e_gadcon_zone_set(E_Gadcon *gc, E_Zone *zone)
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    gc->zone = zone;
+   if (gc->cf) gc->cf->zone = zone->id;
 }
 
 EAPI E_Zone *
@@ -679,9 +673,7 @@ e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h)
 }
 
 EAPI void
-e_gadcon_util_menu_attach_func_set(E_Gadcon *gc, 
-				   void (*func) (void *data, E_Gadcon_Client *gcc, E_Menu *menu),
-				   void *data)
+e_gadcon_util_menu_attach_func_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon_Client *gcc, E_Menu *menu), void *data)
 {
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
@@ -690,8 +682,7 @@ e_gadcon_util_menu_attach_func_set(E_Gadcon *gc,
 }
 
 EAPI void
-e_gadcon_util_lock_func_set(E_Gadcon *gc, void (*func) (void *data, int lock),
-                            void *data)
+e_gadcon_util_lock_func_set(E_Gadcon *gc, void (*func) (void *data, int lock), void *data)
 {
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
@@ -700,8 +691,7 @@ e_gadcon_util_lock_func_set(E_Gadcon *gc, void (*func) (void *data, int lock),
 }
 
 EAPI void
-e_gadcon_util_urgent_show_func_set(E_Gadcon *gc, void (*func) (void *data),
-				   void *data)
+e_gadcon_util_urgent_show_func_set(E_Gadcon *gc, void (*func) (void *data), void *data)
 {
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
@@ -1250,7 +1240,8 @@ e_gadcon_client_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *
 
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
-   if (!e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &gx, &gy, NULL, NULL)) return 0;
+   if (!e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &gx, &gy, NULL, NULL)) 
+     return 0;
    if (gcc->o_base) evas_object_geometry_get(gcc->o_base, x, y, w, h);
    if (x) *x += gx;
    if (y) *y += gy;
@@ -1289,20 +1280,21 @@ _e_gadcon_add_locations_menu_for_site(E_Menu *m, E_Gadcon_Client *gcc, E_Gadcon_
      {
 	if (loc->site == site)
 	  {
-		if (k)
-		  {
-			k = 0;
-			mi = e_menu_item_new(m);
-			e_menu_item_separator_set(mi, 1);
-   			(*count) = 0;
-		  }
-   		mi = e_menu_item_new(m);
-		e_menu_item_label_set(mi, loc->name);
-		e_object_data_set(E_OBJECT(mi), loc);
-		e_menu_item_callback_set(mi, _e_gadcon_client_change_gadcon, gcc);
-		if (loc == gcc->gadcon->location) e_menu_item_disabled_set(mi, 1);
-		if (loc->icon_name) e_util_menu_item_theme_icon_set(mi, loc->icon_name);
-		(*count)++;
+             if (k)
+               {
+                  k = 0;
+                  mi = e_menu_item_new(m);
+                  e_menu_item_separator_set(mi, 1);
+                  (*count) = 0;
+               }
+             mi = e_menu_item_new(m);
+             e_menu_item_label_set(mi, loc->name);
+             e_object_data_set(E_OBJECT(mi), loc);
+             e_menu_item_callback_set(mi, _e_gadcon_client_change_gadcon, gcc);
+             if (loc == gcc->gadcon->location) e_menu_item_disabled_set(mi, 1);
+             if (loc->icon_name) 
+               e_util_menu_item_theme_icon_set(mi, loc->icon_name);
+             (*count)++;
 	  }
      }
 }
@@ -1400,10 +1392,10 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
 
 	if (!gcc->o_control) 
 	  {
-		mi = e_menu_item_new(menu);
-		e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
-		e_util_menu_item_theme_icon_set(mi, "transform-scale");
-		e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
+             mi = e_menu_item_new(menu);
+             e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
+             e_util_menu_item_theme_icon_set(mi, "transform-scale");
+             e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
 	  }
 
 	e_gadcon_client_add_location_menu(gcc, menu);
@@ -1572,8 +1564,7 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
 	gcc->instant_edit_timer = NULL;
      }
    if (gcc->o_base)
-     evas_object_event_callback_del(gcc->o_base,
-				    EVAS_CALLBACK_DEL,
+     evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_DEL,
 				    _e_gadcon_client_del_hook);
    if (gcc->menu)
      {
@@ -1717,8 +1708,8 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
    Evas_Object *o = NULL;
    Evas_Coord w = 0, h = 0;
    const char *drag_types[] = { "enlightenment/gadcon_client" };
-   
-   if (drag_gcc || !gcc->gadcon->zone || !gcc->gadcon->zone->container)
+
+   if ((drag_gcc) || (!gcc->gadcon->zone) || (!gcc->gadcon->zone->container))
      return;
 
    drag_gcc = gcc;
@@ -1750,7 +1741,7 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
 	     evas_object_color_set(o, 255, 255, 255, 100);
 	  }
 	if (w < 10)
-	  w = h = 50;
+          w = h = 50;
 	e_drag_object_set(drag, o);
 	e_drag_resize(drag, w, h);
 	e_drag_start(drag, x + w/2, y + h/2);
