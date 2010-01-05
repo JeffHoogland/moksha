@@ -37,9 +37,10 @@ e_mod_ind_win_shutdown(void)
 }
 
 Il_Ind_Win *
-e_mod_ind_win_new(void) 
+e_mod_ind_win_new(E_Screen *screen) 
 {
    Il_Ind_Win *iwin;
+   E_Container *con;
    E_Zone *zone;
    Evas *evas;
    Eina_List *l;
@@ -53,7 +54,10 @@ e_mod_ind_win_new(void)
    snprintf(buff, sizeof(buff), "%s/e-module-illume-indicator.edj", 
             il_ind_cfg->mod_dir);
 
-   iwin->win = e_win_new(e_util_container_number_get(0));
+   con = e_container_current_get(e_manager_current_get());
+   zone = e_util_container_zone_id_get(con->num, screen->escreen);
+
+   iwin->win = e_win_new(con);
    states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
    ecore_x_netwm_window_state_set(iwin->win->evas_win, states, 2);
@@ -67,8 +71,6 @@ e_mod_ind_win_new(void)
    e_win_name_class_set(iwin->win, "Illume-Indicator", "Illume-Indicator");
 
    evas = e_win_evas_get(iwin->win);
-
-   zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
 
    iwin->o_event = evas_object_rectangle_add(evas);
    evas_object_color_set(iwin->o_event, 0, 0, 0, 0);
@@ -113,6 +115,7 @@ e_mod_ind_win_new(void)
 
    e_win_size_min_set(iwin->win, zone->w, 32);
    e_win_show(iwin->win);
+   e_win_move(iwin->win, zone->x, zone->y);
 
    if (_il_ind_win_is_locked()) 
      ecore_x_e_illume_drag_locked_set(iwin->win->border->client.win, 1);
