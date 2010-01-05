@@ -181,7 +181,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(o, of, 1, 0, 1, 1, 1, 1, 1, 1);
 
    ol = e_widget_textblock_add(evas);
-   e_widget_size_min_set(ol, 200, 70);
+   e_widget_size_min_set(ol, (200 * e_scale), 70);
    cfdata->o_desc = ol;
    e_widget_textblock_markup_set(ol, _("Description: Unavailable"));
    e_widget_table_object_append(o, ol, 0, 1, 2, 1, 1, 0, 1, 0);
@@ -312,7 +312,8 @@ _fill_list(Evas_Object *obj, int enabled)
 
    e_widget_ilist_go(obj);
    e_widget_size_min_get(obj, &w, NULL);
-   e_widget_size_min_set(obj, w > 180 ? w : 180, 200);
+   e_widget_size_min_set(obj, w > (180 * e_scale) ? (w * e_scale) : (180 * e_scale), 
+                         (200 * e_scale));
    e_widget_ilist_thaw(obj);
    edje_thaw();
    evas_event_thaw(evas);
