@@ -486,14 +486,19 @@ e_mod_comp_shutdown(void)
    
    EINA_LIST_FREE(compositors, c)
      {
-        if (c)
+        Comp_Win *cw;
+
+        while (c->wins)
           {
-             ecore_evas_free(c->ee);
+             cw = c->wins;
+             _e_mod_comp_win_hide(cw);
+             _e_mod_comp_win_del(cw);
+          }
+        ecore_evas_free(c->ee);
 //             ecore_x_composite_unredirect_subwindows
 //               (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-             ecore_x_composite_render_window_disable(c->win);
-             free(c);
-          }
+        ecore_x_composite_render_window_disable(c->win);
+        free(c);
      }
    
    E_FREE_LIST(handlers, ecore_event_handler_del);
