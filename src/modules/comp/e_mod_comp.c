@@ -183,7 +183,7 @@ _e_mod_comp_win_lower(Comp_Win *cw)
 static void
 _e_mod_comp_win_configure(Comp_Win *cw, int x, int y, int w, int h, int border)
 {
-   if (!((x == cw->c) && (y == cw->y)))
+   if (!((x == cw->x) && (y == cw->y)))
      {
         cw->x = x;
         cw->y = y;
@@ -406,6 +406,7 @@ _e_mod_comp_add(E_Manager *man)
    if (!c) return NULL;
    c->man = man;
    c->win = ecore_x_composite_render_window_enable(man->root);
+   if (c->man->num == 0) e_alert_composite_win = c->win;
    c->ee = ecore_evas_software_x11_new(NULL, c->win, 0, 0, man->w, man->h);
    c->evas = ecore_evas_get(c->ee);
    ecore_evas_show(c->ee);
@@ -490,7 +491,7 @@ e_mod_comp_shutdown(void)
 
         while (c->wins)
           {
-             cw = c->wins;
+             cw = (Comp_Win *)(c->wins);
              _e_mod_comp_win_hide(cw);
              _e_mod_comp_win_del(cw);
           }
@@ -498,6 +499,7 @@ e_mod_comp_shutdown(void)
 //             ecore_x_composite_unredirect_subwindows
 //               (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         ecore_x_composite_render_window_disable(c->win);
+        if (c->man->num == 0) e_alert_composite_win = 0;
         free(c);
      }
    

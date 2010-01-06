@@ -11,6 +11,7 @@
 #include <signal.h>
 #include <X11/Xlib.h>
 #include <X11/X.h>
+#include <X11/extensions/shape.h>
 #include <Ecore.h>
 
 /* local subsystem functions */
@@ -21,8 +22,10 @@ static char        *title = NULL, *str1 = NULL, *str2 = NULL;
 static Font         font = 0;
 static XFontStruct *fs = NULL;
 static GC           gc = 0;
-static Window       win = 0, b1 = 0, b2 = 0;
-static int          ww = 320, hh = 240;
+static Window       cwin = 0, win = 0, b1 = 0, b2 = 0;
+static int          ww = 320, hh = 240, wx = 20, wy = 20;
+
+EAPI unsigned long       e_alert_composite_win = 0;
 
 /* externally accessible functions */
 EAPI int
@@ -50,10 +53,13 @@ e_alert_init(const char *disp)
    att.override_redirect = True;
    mask = CWBackPixel | CWBorderPixel | CWOverrideRedirect;
    
+   wx = (wid - ww) / 2;
+   wy = (hih - hh) / 2;
+
    win = XCreateWindow(dd, DefaultRootWindow(dd), 
-		       (wid - ww) / 2, (hih - hh) / 2, ww, hh, 0,
-		       CopyFromParent, InputOutput,
-		       CopyFromParent, mask, &att);
+                       wx, wy, ww, hh, 0,
+                       CopyFromParent, InputOutput,
+                       CopyFromParent, mask, &att);
 
    b1 = XCreateWindow(dd, win, -100, -100, 1, 1, 0, CopyFromParent,
 		      InputOutput, CopyFromParent, mask, &att);
@@ -116,7 +122,21 @@ e_alert_show(const char *text)
    XMoveResizeWindow(dd, b2, w, hh - 15 - fh, mh + 10, fh + 10);
    XSelectInput(dd, b2, ButtonPressMask | ButtonReleaseMask | ExposureMask);
 
-   XMapWindow(dd, win);
+   if (e_alert_composite_win)
+     {
+#ifdef ShapeInput        
+        XRectangle rect;
+        
+        rect.x = wx;
+        rect.y = wy;
+        rect.width = ww;
+        rect.height = hh;
+        XShapeCombineRectangles(dd, e_alert_composite_win, ShapeInput, 
+                                0, 0, &rect, 1, ShapeSet, Unsorted);
+#endif        
+        XReparentWindow(dd, win, e_alert_composite_win, wx, wy);
+     }
+   XMapRaised(dd, win);
    XGrabPointer(dd, win, True, ButtonPressMask | ButtonReleaseMask,
 		GrabModeAsync, GrabModeAsync, None, None, CurrentTime);
    XGrabKeyboard(dd, win, False, GrabModeAsync, GrabModeAsync, CurrentTime);

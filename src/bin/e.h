@@ -221,4 +221,6 @@ extern EAPI int     evil;
 extern EAPI int     starting;
 extern EAPI int     stopping;
 
+extern EAPI unsigned long e_alert_composite_win;
+
 #endif
