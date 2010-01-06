@@ -91,6 +91,7 @@ _e_mod_comp_win_add(Comp *c, Ecore_X_Window win)
    // FIXME: check if bd or pop - track
    c->wins = eina_inlist_append(c->wins, EINA_INLIST_GET(cw));
    cw->c = c;
+   memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
    ecore_x_window_attributes_get(cw->win, &att);
    cw->input_only = att.input_only;
    cw->vis = att.visual;
