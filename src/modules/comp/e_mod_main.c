@@ -42,7 +42,10 @@ e_modapi_init(E_Module *m)
    
    _comp_mod = mod;
 
-   e_mod_comp_init();
+   if (!e_mod_comp_init())
+     {
+        // FIXME: handle if comp init fails
+     }
    
    return mod;
 }
