@@ -150,7 +150,8 @@ _e_mod_comp_update_rects_get(Update *up)
    int ri = 0;
    int x, y;
    unsigned char *t, *t2, *t3;
-   
+
+   if (!up->tiles) return NULL;
    r = calloc((up->tw * up->th) + 1, sizeof(Update_Rect));
    if (!r) return NULL;
    t = up->tiles;
@@ -250,23 +251,26 @@ _e_mod_comp_cb_animator(void *data)
         
         cw->update = 0;
         r = _e_mod_comp_update_rects_get(cw->up);
-        _e_mod_comp_update_clear(cw->up);
-        if (cw->xim)
+        if (r)
           {
-             for (i = 0; r[i].w > 0; i++)
+             _e_mod_comp_update_clear(cw->up);
+             if (cw->xim)
                {
-                  unsigned int *pix;
-                  int x, y, w, h;
-                  
-                  x = r[i].x;
-                  y = r[i].y;
-                  w = r[i].w;
-                  h = r[i].h;
-                  ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h);
-                  pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
-                  evas_object_image_size_set(cw->obj, cw->w, cw->h);
-                  evas_object_image_data_set(cw->obj, pix);
-                  evas_object_image_data_update_add(cw->obj, x, y, w, h);
+                  for (i = 0; r[i].w > 0; i++)
+                    {
+                       unsigned int *pix;
+                       int x, y, w, h;
+                       
+                       x = r[i].x;
+                       y = r[i].y;
+                       w = r[i].w;
+                       h = r[i].h;
+                       ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h);
+                       pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
+                       evas_object_image_size_set(cw->obj, cw->w, cw->h);
+                       evas_object_image_data_set(cw->obj, pix);
+                       evas_object_image_data_update_add(cw->obj, x, y, w, h);
+                    }
                }
           }
         free(r);
