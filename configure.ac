@@ -299,6 +299,7 @@ PKG_CHECK_MODULES(E, [
   ecore-x
   ecore-evas
   ecore-input
+  ecore-input-evas
   ecore-con
   ecore-ipc
   ecore-job
