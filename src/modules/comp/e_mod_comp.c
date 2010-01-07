@@ -54,7 +54,6 @@ struct _Comp_Win
    Ecore_X_Image  *xim; // x image - software fallback
    Update         *up; // update handler
    // fixme: shape rects
-   // fixme: argb windows
    // ...
    Eina_Bool       visible : 1; // is visible
    Eina_Bool       input_only : 1; // is input_only
