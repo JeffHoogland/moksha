@@ -1386,7 +1386,17 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 
 	files = ev->data;
 	for (i = 0; i < files->num_files; i++)
-	  l = eina_list_append(l, files->files[i]);
+	  {
+	     /* TODO: Check if hostname is in file:// uri */
+	     if (!strncmp(files->files[i], "file://", 7))
+	       l = eina_list_append(l, files->files[i] + 7);
+	     /* TODO: download files
+	     else if (!strncmp(files->files[i], "http://", 7))
+	     else if (!strncmp(files->files[i], "ftp://", 6))
+	     */
+	     else
+	       l = eina_list_append(l, files->files[i]);
+	  }
 	_xdnd->data = l;
 	_e_drag_xdnd_end(ev->win, _xdnd->x, _xdnd->y);
 	eina_list_free(l);
