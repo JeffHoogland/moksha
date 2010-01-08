@@ -705,6 +705,7 @@ _e_mod_comp_add(E_Manager *man)
    ecore_evas_show(c->ee);
    
    c->ee_win = ecore_evas_software_x11_window_get(c->ee);
+   ecore_x_screen_is_composited_set(c->man->num, c->ee_win);
 //   ecore_x_composite_unredirect_subwindows
 //     (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
 
@@ -773,6 +774,7 @@ e_mod_comp_shutdown(void)
      {
         Comp_Win *cw;
 
+        ecore_x_screen_is_composited_set(c->man->num, 0);
         while (c->wins)
           {
              cw = (Comp_Win *)(c->wins);
