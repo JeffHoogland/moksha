@@ -33,7 +33,7 @@ static E_Module *connman_mod = NULL;
 static char tmpbuf[PATH_MAX]; /* general purpose buffer, just use immediately */
 
 static const char _name[] = "connman";
-const char _Name[] = "Connection Manager";
+static const char _Name[] = "Connection Manager";
 
 static const char *e_str_idle = NULL;
 static const char *e_str_association = NULL;
