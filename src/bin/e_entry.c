@@ -1123,8 +1123,10 @@ _e_entry_smart_del(Evas_Object *object)
 #ifdef HAVE_ECORE_IMF
    if (sd->imf_context)
      {
-	ecore_event_handler_del(sd->imf_ee_commit_handler);
-	ecore_event_handler_del(sd->imf_ee_delete_handler);
+	if (sd->imf_ee_commit_handler) 
+          ecore_event_handler_del(sd->imf_ee_commit_handler);
+	if (sd->imf_ee_delete_handler) 
+          ecore_event_handler_del(sd->imf_ee_delete_handler);
 	ecore_imf_context_del(sd->imf_context);
      }
 #endif
@@ -1139,8 +1141,9 @@ _e_entry_smart_del(Evas_Object *object)
                                   _e_entry_mouse_up_cb);
    evas_object_event_callback_del(object, EVAS_CALLBACK_MOUSE_MOVE,
                                   _e_entry_mouse_move_cb);
-   
-   ecore_event_handler_del(sd->selection_handler);
+
+   if (sd->selection_handler) 
+     ecore_event_handler_del(sd->selection_handler);
    evas_object_del(sd->editable_object);
    evas_object_del(sd->entry_object);
    free(sd);

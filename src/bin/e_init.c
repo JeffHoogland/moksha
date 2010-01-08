@@ -37,7 +37,7 @@ e_init_shutdown(void)
    if (version) eina_stringshare_del(version);
    title = NULL;
    version = NULL;
-   ecore_event_handler_del(exe_del_handler);
+   if (exe_del_handler) ecore_event_handler_del(exe_del_handler);
    exe_del_handler = NULL;
    return 1;
 }

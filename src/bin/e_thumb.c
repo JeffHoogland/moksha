@@ -7,8 +7,8 @@ typedef struct _E_Thumb E_Thumb;
 
 struct _E_Thumb
 {
-   int   objid;
-   int   w, h;
+   int objid;
+   int w, h;
    const char *file;
    const char *key;
    char *sort_id;
@@ -56,7 +56,7 @@ e_thumb_shutdown(void)
 {
    _e_thumb_thumbnailers_kill_cancel();
    _e_thumb_cb_kill(NULL);
-   ecore_event_handler_del(_exe_del_handler);
+   if (_exe_del_handler) ecore_event_handler_del(_exe_del_handler);
    _exe_del_handler = NULL;
    _thumbnailers = eina_list_free(_thumbnailers);
    E_FREE_LIST(_thumbnailers_exe, ecore_exe_free);

@@ -699,7 +699,7 @@ _e_desklock_cb_exit(void *data, int type, void *event)
 	     /* security - null out passwd string once we are done with it */
 	     _e_desklock_null();
 	  }
-	ecore_event_handler_del(_e_desklock_exit_handler);
+	if (_e_desklock_exit_handler) ecore_event_handler_del(_e_desklock_exit_handler);
 	_e_desklock_exit_handler = NULL;
      }
    return 1;

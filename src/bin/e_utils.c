@@ -3,36 +3,37 @@
  */
 #include "e.h"
 
-EAPI E_Path *path_data    = NULL;
-EAPI E_Path *path_images  = NULL;
-EAPI E_Path *path_fonts   = NULL;
-EAPI E_Path *path_themes  = NULL;
-EAPI E_Path *path_icons   = NULL;
+EAPI E_Path *path_data = NULL;
+EAPI E_Path *path_images = NULL;
+EAPI E_Path *path_fonts = NULL;
+EAPI E_Path *path_themes = NULL;
+EAPI E_Path *path_icons = NULL;
 EAPI E_Path *path_modules = NULL;
 EAPI E_Path *path_backgrounds = NULL;
 EAPI E_Path *path_messages = NULL;
-EAPI int     restart      = 0;
-EAPI int     good         = 0;
-EAPI int     evil         = 0;
-EAPI int     starting     = 1;
-EAPI int     stopping     = 0;
+EAPI int restart = 0;
+EAPI int good = 0;
+EAPI int evil = 0;
+EAPI int starting = 1;
+EAPI int stopping = 0;
 
-typedef struct _E_Util_Fake_Mouse_Up_Info        E_Util_Fake_Mouse_Up_Info;
-typedef struct _E_Util_Image_Import_Settings     E_Util_Image_Import_Settings;
+typedef struct _E_Util_Fake_Mouse_Up_Info E_Util_Fake_Mouse_Up_Info;
+typedef struct _E_Util_Image_Import_Settings E_Util_Image_Import_Settings;
 
 struct _E_Util_Fake_Mouse_Up_Info
 {
    Evas *evas;
-   int   button;
+   int button;
 };
 
 struct _E_Util_Image_Import_Settings
 {
    E_Dialog *dia;
-   struct {
-      void (*func)(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode);
-      void *data;
-   } cb;
+   struct 
+     {
+        void (*func)(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode);
+        void *data;
+     } cb;
    const char *path;
    int quality;
    int external;
@@ -44,13 +45,15 @@ struct _E_Util_Image_Import_Handle
 {
    Ecore_Exe *exe;
    Ecore_Event_Handler *handler;
-   struct {
-      void (*func)(void *data, Eina_Bool ok, const char *image_path, const char *edje_path);
-      void *data;
-   } cb;
-   struct {
-      const char *image, *edje, *temp;
-   } path;
+   struct 
+     {
+        void (*func)(void *data, Eina_Bool ok, const char *image_path, const char *edje_path);
+        void *data;
+     } cb;
+   struct 
+     {
+        const char *image, *edje, *temp;
+     } path;
 };
 
 /* local subsystem functions */
@@ -122,8 +125,7 @@ e_util_zone_current_get(E_Manager *man)
 EAPI int
 e_util_glob_match(const char *str, const char *glob)
 {
-   if (!str || !glob)
-     return 0;
+   if ((!str) || (!glob)) return 0;
    if (glob[0] == 0)
      {
 	if (str[0] == 0) return 1;
@@ -474,7 +476,7 @@ EAPI int
 e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name)
 {
    const char *file;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    if ((!name) || (!name[0])) return 0;
    if (name[0]=='/' && ecore_file_exists(name))
@@ -495,9 +497,11 @@ e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name)
 EAPI unsigned int
 e_util_icon_size_normalize(unsigned int desired)
 {
-   const unsigned int *itr, known_sizes[] = {
-     16, 22, 24, 32, 36, 48, 64, 72, 96, 128, 192, 256, -1
-   };
+   const unsigned int *itr, known_sizes[] = 
+     {
+        16, 22, 24, 32, 36, 48, 64, 72, 96, 128, 192, 256, -1
+     };
+
    for (itr = known_sizes; *itr > 0; itr++)
      if (*itr >= desired)
        return *itr;
@@ -683,7 +687,7 @@ e_util_filename_escape(const char *filename)
 {
    const char *p;
    char *q;
-   static char buf[4096];
+   static char buf[PATH_MAX];
 
    if (!filename) return NULL;
    p = filename;
@@ -716,10 +720,10 @@ e_util_filename_escape(const char *filename)
 EAPI int
 e_util_icon_save(Ecore_X_Icon *icon, const char *filename)
 {
-   Ecore_Evas  *ee;
-   Evas        *evas;
+   Ecore_Evas *ee;
+   Evas *evas;
    Evas_Object *im;
-   int          ret;
+   int ret;
 
    ee = ecore_evas_buffer_new(icon->width, icon->height);
    if (!ee) return 0;
@@ -753,7 +757,7 @@ e_util_shell_env_path_eval(char *path)
     * $HOME/bin/$HOSTNAME/blah -> /home/user/bin/localhost/blah
     * etc. etc.
     */
-   char buf[4096], *pd, *p, *v2, *s, *vp;
+   char buf[PATH_MAX], *pd, *p, *v2, *s, *vp;
    char *v = NULL;
    char *v1 = NULL;
    int esc = 0, invar = 0;
@@ -867,9 +871,7 @@ e_util_file_time_get(time_t ftime)
    diff = ltime - ftime;
    buf[0] = 0;
    if (ftime > ltime)
-     {
-	snprintf(buf, sizeof(buf), _("In the Future"));
-     }
+     snprintf(buf, sizeof(buf), _("In the Future"));
    else
      {
 	if (diff <= 60)
@@ -928,13 +930,13 @@ e_util_library_path_restore(void)
 {
    if (prev_ld_library_path)
      {
-   e_util_env_set("LD_LIBRARY_PATH", prev_ld_library_path);
-   E_FREE(prev_ld_library_path);
+        e_util_env_set("LD_LIBRARY_PATH", prev_ld_library_path);
+        E_FREE(prev_ld_library_path);
      }
    if (prev_path)
      {
-   e_util_env_set("PATH", prev_path);
-   E_FREE(prev_path);
+        e_util_env_set("PATH", prev_path);
+        E_FREE(prev_path);
      }
 }
 
@@ -968,7 +970,6 @@ EAPI Evas_Object *
 e_util_desktop_icon_add(Efreet_Desktop *desktop, unsigned int size, Evas *evas)
 {
    if ((!desktop) || (!desktop->icon)) return NULL;
-
    return e_util_icon_theme_icon_add(desktop->icon, size, evas);
 }
 
@@ -1076,6 +1077,7 @@ static int
 _win_auto_size_calc(int max, int min)
 {
    const float *itr, scales[] = {0.25, 0.3, 0.5, 0.75, 0.8, 0.9, 0.95, -1};
+
    for (itr = scales; *itr > 0; itr++)
      {
 	int value = *itr * max;
@@ -1505,6 +1507,7 @@ static void
 _e_util_image_import_settings_do(void *data, E_Dialog *dia)
 {
    E_Util_Image_Import_Settings *ctxt = data;
+
    ctxt->ok = EINA_TRUE;
    e_util_defer_object_del(E_OBJECT(dia));
 }
@@ -1515,9 +1518,8 @@ _e_util_image_import_settings_del(void *obj)
    E_Dialog *dia = obj;
    E_Util_Image_Import_Settings *ctxt = dia->data;
 
-   ctxt->cb.func
-     (ctxt->cb.data, ctxt->path,
-      ctxt->ok, ctxt->external, ctxt->quality, ctxt->mode);
+   ctxt->cb.func(ctxt->cb.data, ctxt->path,
+                 ctxt->ok, ctxt->external, ctxt->quality, ctxt->mode);
 
    eina_stringshare_del(ctxt->path);
    E_FREE(ctxt);
@@ -1549,7 +1551,7 @@ _e_util_image_import_handle_free(E_Util_Image_Import_Handle *handle)
    eina_stringshare_del(handle->path.image);
    eina_stringshare_del(handle->path.edje);
    eina_stringshare_del(handle->path.temp);
-   ecore_event_handler_del(handle->handler);
+   if (handle->handler) ecore_event_handler_del(handle->handler);
    E_FREE(handle);
 }
 

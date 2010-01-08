@@ -8,10 +8,9 @@
 
 typedef struct _E_Remember_List E_Remember_List;
 
-
 struct _E_Remember_List
 {
-  Eina_List *list;
+   Eina_List *list;
 };
 
 /* local subsystem functions */

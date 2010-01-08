@@ -315,7 +315,8 @@ e_init_init(void)
 EAPI int
 e_init_shutdown(void)
 {
-   ecore_event_handler_del(_e_init_configure_handler);
+   if (_e_init_configure_handler) 
+     ecore_event_handler_del(_e_init_configure_handler);
    _e_init_configure_handler = NULL;
    e_init_hide();
    return 1;
