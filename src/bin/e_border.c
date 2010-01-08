@@ -6187,11 +6187,17 @@ _e_border_eval0(E_Border *bd)
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_BORDER_ASSIGN, bd);
 
    if (bd->need_reparent)
-     {     
-	ecore_x_window_save_set_add(bd->client.win);
+     {
+        if (!bd->internal)
+          ecore_x_window_save_set_add(bd->client.win);
 	ecore_x_window_reparent(bd->client.win, bd->client.shell_win, 0, 0);
 	if (bd->visible)
-	  ecore_x_window_show(bd->client.win);
+          {
+             if ((bd->new_client) && (bd->internal) && 
+                 (bd->internal_ecore_evas))
+               ecore_evas_show(bd->internal_ecore_evas);
+             ecore_x_window_show(bd->client.win);
+          }
 	bd->need_reparent = 0;
      }
 
