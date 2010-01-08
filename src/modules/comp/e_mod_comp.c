@@ -774,6 +774,8 @@ e_mod_comp_shutdown(void)
      {
         Comp_Win *cw;
 
+        if (c->render_animator)
+          ecore_animator_del(c->render_animator);
         ecore_x_screen_is_composited_set(c->man->num, 0);
         while (c->wins)
           {
