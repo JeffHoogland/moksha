@@ -380,7 +380,7 @@ _e_mod_comp_win_add(Comp *c, Ecore_X_Window win)
         evas_object_color_set(cw->obj, 0, 0, 0, 64);
      }
    cw->up = _e_mod_comp_update_new();
-   printf("  [0x%x] add\n", cw->win);
+//   printf("  [0x%x] add\n", cw->win);
    return cw;
 }
 
@@ -388,7 +388,7 @@ static void
 _e_mod_comp_win_del(Comp_Win *cw)
 {
    _e_mod_comp_update_free(cw->up);
-   printf("  [0x%x] del\n", cw->win);
+//   printf("  [0x%x] del\n", cw->win);
    if (cw->update)
      {
         cw->update = 0;
@@ -420,7 +420,7 @@ _e_mod_comp_win_show(Comp_Win *cw)
    if (cw->visible) return;
    cw->visible = 1;
    if (cw->input_only) return;
-   printf("  [0x%x] sho\n", cw->win);
+//   printf("  [0x%x] sho\n", cw->win);
    if (!cw->pixmap)
      {
         ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
@@ -436,7 +436,7 @@ _e_mod_comp_win_hide(Comp_Win *cw)
    if (!cw->visible) return;
    cw->visible = 0;
    if (cw->input_only) return;
-   printf("  [0x%x] hid\n", cw->win);
+//   printf("  [0x%x] hid\n", cw->win);
    if (cw->pixmap)
      {
         ecore_x_pixmap_free(cw->pixmap);
@@ -452,7 +452,7 @@ _e_mod_comp_win_hide(Comp_Win *cw)
 static void
 _e_mod_comp_win_raise_above(Comp_Win *cw, Comp_Win *cw2)
 {
-   printf("  [0x%x] abv [0x%x]\n", cw->win, cw2->win);
+//   printf("  [0x%x] abv [0x%x]\n", cw->win, cw2->win);
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
    cw->c->wins = eina_inlist_append_relative(cw->c->wins, 
                                              EINA_INLIST_GET(cw), 
@@ -465,7 +465,7 @@ _e_mod_comp_win_raise_above(Comp_Win *cw, Comp_Win *cw2)
 static void
 _e_mod_comp_win_raise(Comp_Win *cw)
 {
-   printf("  [0x%x] rai\n", cw->win);
+//   printf("  [0x%x] rai\n", cw->win);
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
    cw->c->wins = eina_inlist_append(cw->c->wins, EINA_INLIST_GET(cw));
    evas_object_raise(cw->obj);
@@ -476,7 +476,7 @@ _e_mod_comp_win_raise(Comp_Win *cw)
 static void
 _e_mod_comp_win_lower(Comp_Win *cw)
 {
-   printf("  [0x%x] low\n", cw->win);
+//   printf("  [0x%x] low\n", cw->win);
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
    cw->c->wins = eina_inlist_prepend(cw->c->wins, EINA_INLIST_GET(cw));
    evas_object_lower(cw->obj);
@@ -489,14 +489,14 @@ _e_mod_comp_win_configure(Comp_Win *cw, int x, int y, int w, int h, int border)
 {
    if (!((x == cw->x) && (y == cw->y)))
      {
-        printf("  [0x%x] mov %4i %4i\n", cw->win, x, y);
+//        printf("  [0x%x] mov %4i %4i\n", cw->win, x, y);
         cw->x = x;
         cw->y = y;
         evas_object_move(cw->obj, cw->x, cw->y);
      }
    if (!((w == cw->w) && (h == cw->h)))
      {
-        printf("  [0x%x] rsz %4ix%4i\n", cw->win, w, h);
+//        printf("  [0x%x] rsz %4ix%4i\n", cw->win, w, h);
 //        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
 //        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         if (cw->pixmap)
@@ -529,7 +529,7 @@ static void
 _e_mod_comp_win_damage(Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg)
 {
    if (cw->input_only) return;
-   printf("  [0x%x] dmg %4i %4i %4ix%4i\n", cw->win, x, y, w, h);
+//   printf("  [0x%x] dmg %4i %4i %4ix%4i\n", cw->win, x, y, w, h);
    if (dmg)
      {
         Ecore_X_Region parts;
