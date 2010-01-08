@@ -6,7 +6,7 @@ static char tmpbuf[PATH_MAX]; /* general purpose buffer, just use immediately */
 
 static const char _conf_domain[] = "module.mixer";
 static const char _name[] = "mixer";
-const char _Name[] = "Mixer";
+const char _e_mixer_Name[] = "Mixer";
 
 const char *
 e_mixer_theme_path(void)
@@ -952,7 +952,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 static char *
 _gc_label(E_Gadcon_Client_Class *client_class)
 {
-   return _(_Name);
+   return _(_e_mixer_Name);
 }
 
 static Evas_Object *
@@ -995,7 +995,7 @@ static const E_Gadcon_Client_Class _gc_class =
 
 
 
-EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, _Name};
+EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, _e_mixer_Name};
 
 static void
 _mixer_cb_volume_increase(E_Object *obj, const char *params)
@@ -1079,7 +1079,7 @@ _mixer_configure_registry_register(void)
 {
    e_configure_registry_category_add(_reg_cat, 90, _("Extensions"), NULL,
                                      "preferences-extensions");
-   e_configure_registry_item_add(_reg_item, 30, _(_Name), NULL,
+   e_configure_registry_item_add(_reg_item, 30, _(_e_mixer_Name), NULL,
                                  "preferences-desktop-mixer",
                                  _mixer_module_config);
 }
@@ -1190,23 +1190,23 @@ _mixer_actions_register(E_Mixer_Module_Context *ctxt)
    if (ctxt->actions.incr)
    {
       ctxt->actions.incr->func.go = _mixer_cb_volume_increase;
-      e_action_predef_name_set(_(_Name), _(_lbl_increase), _act_increase,
-                               NULL, NULL, 0);
+      e_action_predef_name_set(_(_e_mixer_Name), _(_lbl_increase),
+			       _act_increase, NULL, NULL, 0);
    }
 
    ctxt->actions.decr = e_action_add(_act_decrease);
    if (ctxt->actions.decr)
    {
       ctxt->actions.decr->func.go = _mixer_cb_volume_decrease;
-      e_action_predef_name_set(_(_Name), _(_lbl_decrease), _act_decrease,
-                               NULL, NULL, 0);
+      e_action_predef_name_set(_(_e_mixer_Name), _(_lbl_decrease),
+			       _act_decrease, NULL, NULL, 0);
    }
 
    ctxt->actions.mute = e_action_add(_act_mute);
    if (ctxt->actions.mute)
    {
       ctxt->actions.mute->func.go = _mixer_cb_volume_mute;
-      e_action_predef_name_set(_(_Name), _(_lbl_mute), _act_mute,
+      e_action_predef_name_set(_(_e_mixer_Name), _(_lbl_mute), _act_mute,
                                NULL, NULL, 0);
    }
 }
@@ -1216,19 +1216,19 @@ _mixer_actions_unregister(E_Mixer_Module_Context *ctxt)
 {
    if (ctxt->actions.incr)
    {
-      e_action_predef_name_del(_(_Name), _(_lbl_increase));
+      e_action_predef_name_del(_(_e_mixer_Name), _(_lbl_increase));
       e_action_del(_act_increase);
    }
 
    if (ctxt->actions.decr)
    {
-      e_action_predef_name_del(_(_Name), _(_lbl_decrease));
+      e_action_predef_name_del(_(_e_mixer_Name), _(_lbl_decrease));
       e_action_del(_act_decrease);
    }
 
    if (ctxt->actions.mute)
    {
-      e_action_predef_name_del(_(_Name), _(_lbl_mute));
+      e_action_predef_name_del(_(_e_mixer_Name), _(_lbl_mute));
       e_action_del(_act_mute);
    }
 }

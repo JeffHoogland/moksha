@@ -1,6 +1,6 @@
 #include "e_mod_main.h"
 
-extern const char _Name[];
+extern const char _e_mixer_Name[];
 
 struct _E_Config_Dialog_Data
 {
@@ -172,7 +172,7 @@ e_mixer_config_module_dialog_new(E_Container *con, E_Mixer_Module_Context *ctxt)
    E_Config_Dialog *dialog;
    E_Config_Dialog_View *view;
 
-   if (e_config_dialog_find(_Name, "extensions/mixer"))
+   if (e_config_dialog_find(_e_mixer_Name, "extensions/mixer"))
       return NULL;
 
    view = E_NEW(E_Config_Dialog_View, 1);
@@ -185,7 +185,7 @@ e_mixer_config_module_dialog_new(E_Container *con, E_Mixer_Module_Context *ctxt)
    view->basic.apply_cfdata = _basic_apply;
 
    dialog = e_config_dialog_new(con, _("Mixer Module Settings"),
-                                _Name, "extensions/mixer",
+                                _e_mixer_Name, "extensions/mixer",
                                 e_mixer_theme_path(), 0, view, ctxt);
 
    return dialog;

@@ -1,6 +1,6 @@
 #include "e_mod_main.h"
 
-extern const char _Name[];
+extern const char _e_mixer_Name[];
 
 typedef struct E_Mixer_App_Dialog_Data
 {
@@ -506,7 +506,7 @@ e_mixer_app_dialog_new(E_Container *con, void (*func)(E_Dialog *dialog, void *da
    E_Mixer_App_Dialog_Data *app;
    E_Dialog *dialog;
 
-   dialog = e_dialog_new(con, _Name, "e_mixer_app_dialog");
+   dialog = e_dialog_new(con, _e_mixer_Name, "e_mixer_app_dialog");
    if (!dialog)
       return NULL;
 
@@ -521,7 +521,7 @@ e_mixer_app_dialog_new(E_Container *con, void (*func)(E_Dialog *dialog, void *da
    app->del.data = data;
    app->del.func = func;
 
-   e_dialog_title_set(dialog, _(_Name));
+   e_dialog_title_set(dialog, _(_e_mixer_Name));
    e_dialog_resizable_set(dialog, 1);
 
    e_win_delete_callback_set(dialog->win, _cb_win_del);
