@@ -60,6 +60,7 @@ struct _Comp_Win
    Eina_Bool       input_only : 1; // is input_only
    Eina_Bool       argb : 1; // is argb
    Eina_Bool       update : 1; // has updates to fetch
+   Eina_Bool       redirected : 1; // has updates to fetch
 };
 
 static Eina_List *handlers = NULL;
@@ -389,6 +390,10 @@ _e_mod_comp_win_del(Comp_Win *cw)
 {
    _e_mod_comp_update_free(cw->up);
 //   printf("  [0x%x] del\n", cw->win);
+   if (cw->pixmap)
+     {
+        ecore_x_pixmap_free(cw->pixmap);
+     }
    if (cw->update)
      {
         cw->update = 0;
@@ -406,7 +411,12 @@ _e_mod_comp_win_del(Comp_Win *cw)
    eina_hash_del(windows, e_util_winid_str_get(cw->win), cw);
    if (cw->damage)
      {
+        Ecore_X_Region parts;
+   
         eina_hash_del(damages, e_util_winid_str_get(cw->damage), cw);
+        parts = ecore_x_region_new(NULL, 0);
+        ecore_x_damage_subtract(cw->damage, 0, parts);
+        ecore_x_region_free(parts);
         ecore_x_damage_free(cw->damage);
         cw->damage = 0;
      }
@@ -419,10 +429,11 @@ _e_mod_comp_win_show(Comp_Win *cw)
 {
    if (cw->visible) return;
    cw->visible = 1;
-   if (cw->input_only) return;
 //   printf("  [0x%x] sho\n", cw->win);
-   if (!cw->pixmap)
+   if (cw->input_only) return;
+   if (!cw->redirected)
      {
+        cw->redirected = 1;
         ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
      }
@@ -437,10 +448,11 @@ _e_mod_comp_win_hide(Comp_Win *cw)
    cw->visible = 0;
    if (cw->input_only) return;
 //   printf("  [0x%x] hid\n", cw->win);
-   if (cw->pixmap)
+   if (cw->redirected)
      {
-        ecore_x_pixmap_free(cw->pixmap);
         ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+        cw->redirected = 0;
+        if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
         cw->pixmap = 0;
         cw->pw = 0;
         cw->ph = 0;
@@ -617,6 +629,7 @@ _e_mod_comp_reparent(void *data, int type, void *event)
    Ecore_X_Event_Window_Reparent *ev = event;
    Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return 1;
+//   printf("== repar [0x%x] to [0x%x]\n", ev->win, ev->parent);
    if (ev->parent != cw->c->man->root)
      _e_mod_comp_win_del(cw);
    return 1;
@@ -790,8 +803,6 @@ e_mod_comp_shutdown(void)
      {
         Comp_Win *cw;
 
-        if (c->render_animator)
-          ecore_animator_del(c->render_animator);
         ecore_x_screen_is_composited_set(c->man->num, 0);
         while (c->wins)
           {
@@ -804,6 +815,7 @@ e_mod_comp_shutdown(void)
 //               (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         ecore_x_composite_render_window_disable(c->win);
         if (c->man->num == 0) e_alert_composite_win = 0;
+        if (c->render_animator) ecore_animator_del(c->render_animator);
         free(c);
      }
    
