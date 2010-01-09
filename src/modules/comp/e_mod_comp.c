@@ -520,7 +520,9 @@ _e_mod_comp_win_configure(Comp_Win *cw, int x, int y, int w, int h, int border)
           }
         cw->w = w;
         cw->h = h;
-        evas_object_resize(cw->obj, cw->w, cw->h);
+        evas_object_resize(cw->obj, 
+                           cw->w + (cw->border * 2), 
+                           cw->h + (cw->border * 2));
         if (cw->xim)
           {
              evas_object_image_data_set(cw->obj, NULL);
@@ -531,7 +533,9 @@ _e_mod_comp_win_configure(Comp_Win *cw, int x, int y, int w, int h, int border)
    if (cw->border != border)
      {
         cw->border = border;
-        // FIXME: handle border
+        evas_object_resize(cw->obj, 
+                           cw->w + (cw->border * 2), 
+                           cw->h + (cw->border * 2));
      }
    if (cw->input_only) return;
    _e_mod_comp_win_render_queue(cw);
