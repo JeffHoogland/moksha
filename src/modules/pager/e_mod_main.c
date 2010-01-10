@@ -652,10 +652,7 @@ _pager_window_free(Pager_Win *pw)
 static void
 _pager_window_move(Pager_Win *pw)
 {
-   int zx, zy;
-
-   e_zone_useful_geometry_get(pw->desk->desk->zone, &zx, &zy, NULL, NULL);
-   e_layout_child_move(pw->o_window, pw->border->x - zx, pw->border->y - zy);
+   e_layout_child_move(pw->o_window, pw->border->x, pw->border->y);
    e_layout_child_resize(pw->o_window, pw->border->w, pw->border->h);
 }
 
