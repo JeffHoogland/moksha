@@ -99,6 +99,7 @@ e_int_config_wallpaper_import(void *data, const char *path)
    Evas_Coord w, h;
    E_Config_Dialog_Data *cfdata;
    Evas_Modifier_Mask mask;
+   Eina_Bool kg;
 
    if (!path) return NULL;
 
@@ -145,13 +146,21 @@ e_int_config_wallpaper_import(void *data, const char *path)
    o = evas_object_rectangle_add(evas);
    import->event_obj = o;
    mask = 0;
-   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = evas_key_modifier_mask_get(evas, "Shift");
-   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = 0;
-   evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
    mask = 0;
-   evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
    mask = 0;
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
                                   _import_cb_key_down, import);
@@ -250,7 +259,8 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
    Evas_Coord w, h;
    Evas_Modifier_Mask mask;
    const char *fdev, *fpath;
-   char buf[4096];
+   char buf[PATH_MAX];
+   Eina_Bool kg;
 
    fsel = E_NEW(FSel, 1);
    if (!fsel) return NULL;
@@ -292,13 +302,21 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
    o = evas_object_rectangle_add(evas);
    fsel->event_obj = o;
    mask = 0;
-   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = evas_key_modifier_mask_get(evas, "Shift");
-   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = 0;
-   evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
    mask = 0;
-   evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
    mask = 0;
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
                                   _fsel_cb_key_down, fsel);
