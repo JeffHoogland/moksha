@@ -87,8 +87,8 @@ struct _Instance
    } timer;
    struct
    {
-      Ecore_Idler *size_apply;
-   } idler;
+      Ecore_Job *size_apply;
+   } job;
    Eina_List *icons;
    E_Menu *menu;
 };
@@ -200,20 +200,19 @@ _systray_size_apply_do(Instance *inst)
    ecore_x_window_move_resize(inst->win.base, x, y, w, h);
 }
 
-static int
+static void
 _systray_size_apply_delayed(void *data)
 {
    Instance *inst = data;
    _systray_size_apply_do(inst);
-   inst->idler.size_apply = NULL;
-   return 0;
+   inst->job.size_apply = NULL;
 }
 
 static void
 _systray_size_apply(Instance *inst)
 {
-   if (inst->idler.size_apply) return;
-   inst->idler.size_apply = ecore_idler_add(_systray_size_apply_delayed, inst);
+   if (inst->job.size_apply) return;
+   inst->job.size_apply = ecore_job_add(_systray_size_apply_delayed, inst);
 }
 
 static void
@@ -998,8 +997,8 @@ _gc_shutdown(E_Gadcon_Client *gcc)
      ecore_event_handler_del(inst->handler.configure);
    if (inst->timer.retry)
      ecore_timer_del(inst->timer.retry);
-   if (inst->idler.size_apply)
-     ecore_idler_del(inst->idler.size_apply);
+   if (inst->job.size_apply)
+     ecore_job_del(inst->job.size_apply);
 
    if (instance == inst)
      instance = NULL;
