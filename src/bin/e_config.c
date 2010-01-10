@@ -49,6 +49,43 @@ static E_Config_DD *_e_config_syscon_action_edd = NULL;
 EAPI int E_EVENT_CONFIG_ICON_THEME = 0;
 EAPI int E_EVENT_CONFIG_MODE_CHANGED = 0;
 
+static char *
+_e_config_profile_name_get(Eet_File *ef)
+{
+   /* profile config exists */
+   char *data, *s = NULL;
+   int data_len = 0;
+   
+   data = eet_read(ef, "config", &data_len);
+   if ((data) && (data_len > 0))
+     {
+        int ok = 1;
+        
+        for (s = data; s < (data + data_len); s++)
+          {
+             // if profile is not all ascii (valid printable ascii - no
+             // control codes etc.) or it contains a '/' (invalid as its a
+             // directory delimiter) - then it's invalid
+             if ((*s < ' ') || (*s > '~') || (*s == '/'))
+               {
+                  ok = 0;
+                  break;
+               }
+          }
+        if (ok)
+          {
+             s = malloc(data_len + 1);
+             if (s)
+               {
+                  memcpy(s, data, data_len);
+                  s[data_len] = 0;
+               }
+          }
+        free(data);
+     }
+   return s;
+}
+
 /* externally accessible functions */
 EAPI int
 e_config_init(void)
@@ -68,7 +105,13 @@ e_config_init(void)
 	/* try user profile config */
 	e_user_dir_concat_static(buf, "config/profile.cfg");
 	ef = eet_open(buf, EET_FILE_MODE_READ);
-	if (!ef)
+        if (ef)
+          {
+             _e_config_profile = _e_config_profile_name_get(ef);
+             eet_close(ef);
+             ef = NULL;
+          }
+	if (!_e_config_profile)
 	  {
              int i;
              
@@ -76,35 +119,28 @@ e_config_init(void)
                {
                   e_user_dir_snprintf(buf, sizeof(buf), "config/profile.%i.cfg", i);
                   ef = eet_open(buf, EET_FILE_MODE_READ);
-                  if (ef) break;
+                  if (ef)
+                    {
+                       _e_config_profile = _e_config_profile_name_get(ef);
+                       eet_close(ef);
+                       ef = NULL;
+                       if (_e_config_profile) break;
+                    }
                }
-             if (!ef)
+             if (!_e_config_profile)
                {
                   /* use system if no user profile config */
                   e_prefix_data_concat_static(buf, "data/config/profile.cfg");
                   ef = eet_open(buf, EET_FILE_MODE_READ);
                }
 	  }
-	if (ef)
-	  {
-	     /* profile config exists */
-	     char *data;
-	     int data_len = 0;
-
-	     data = eet_read(ef, "config", &data_len);
-	     if ((data) && (data_len > 0))
-	       {
-		  _e_config_profile = malloc(data_len + 1);
-		  if (_e_config_profile)
-		    {
-		       memcpy(_e_config_profile, data, data_len);
-		       _e_config_profile[data_len] = 0;
-		    }
-		  free(data);
-	       }
-	     eet_close(ef);
-	  }
-	else
+        if (ef)
+          {
+             _e_config_profile = _e_config_profile_name_get(ef);
+             eet_close(ef);
+             ef = NULL;
+          }
+        if (!_e_config_profile)
 	  {
 	     /* no profile config - try other means */
 	     char *link = NULL;
@@ -1438,7 +1474,7 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
 	     ret = ecore_file_mv(buf2, buf);
 	     if (!ret)
 	       {
-		  printf("*** Error saving profile. ***");
+		  printf("*** Error saving config. ***");
 	       }
 	  }
 	ecore_file_unlink(buf2);
