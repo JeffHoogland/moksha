@@ -652,7 +652,9 @@ _pager_window_free(Pager_Win *pw)
 static void
 _pager_window_move(Pager_Win *pw)
 {
-   e_layout_child_move(pw->o_window, pw->border->x, pw->border->y);
+   e_layout_child_move(pw->o_window, 
+                       pw->border->x - pw->border->zone->x, 
+                       pw->border->y - pw->border->zone->y);
    e_layout_child_resize(pw->o_window, pw->border->w, pw->border->h);
 }
 
