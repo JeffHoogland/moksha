@@ -3,6 +3,18 @@
 #include "e_mod_comp.h"
 #include "config.h"
 
+// TODO (no specific order):
+//   1. abstract evas object and compwin so we can duplicate the object N times
+//      in N canvases - for winlist, everything, pager etc. too
+//   2. implement "unmapped composite cache" -> N pixels worth of unmapped
+//      windows to be fully composited. only the most active/recent.
+//   3. for unmapped windows - when window goes out of unmapped comp cache
+//      make a miniature copy (1/4 width+height?) and set property on window
+//      with pixmap id
+//   4. add shadow to rect non argb windows
+//   5. abstract composite canvas to add extras in and "expose" it
+//   6. other engine fast-paths (gl specifically)!
+
 typedef struct _Update      Update;
 typedef struct _Update_Rect Update_Rect;
 
@@ -54,8 +66,6 @@ struct _Comp_Win
    Evas_Object    *obj; // shadow object
    Ecore_X_Image  *xim; // x image - software fallback
    Update         *up; // update handler
-   // fixme: shape rects
-   // ...
    Eina_Bool       visible : 1; // is visible
    Eina_Bool       input_only : 1; // is input_only
    Eina_Bool       argb : 1; // is argb
