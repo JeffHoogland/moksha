@@ -59,8 +59,10 @@ struct _Comp_Win
    Eina_Bool       visible : 1; // is visible
    Eina_Bool       input_only : 1; // is input_only
    Eina_Bool       argb : 1; // is argb
+   Eina_Bool       shaped : 1; // is shaped
    Eina_Bool       update : 1; // has updates to fetch
    Eina_Bool       redirected : 1; // has updates to fetch
+   Eina_Bool       shape_changed : 1; // shape changed
 };
 
 static Eina_List *handlers = NULL;
@@ -309,10 +311,102 @@ _e_mod_comp_cb_animator(void *data)
                             w = r[i].w;
                             h = r[i].h;
                             ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h);
+                            DBG("UPDATE [0x%x] %i %i %ix%i\n", cw->win, x, y, w, h);
                             pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
                             evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
                             evas_object_image_data_set(cw->obj, pix);
                             evas_object_image_data_update_add(cw->obj, x, y, w, h);
+                            if (cw->shaped) cw->shape_changed = 1;
+                         }
+                       if ((cw->shape_changed) && (!cw->argb))
+//                       if (0)
+                         {
+                            Ecore_X_Rectangle *rects;
+                            int num, i;
+                            
+                            DBG("SHAPE [0x%x] change\n", cw->win);
+                            rects = ecore_x_window_shape_rectangles_get
+                              (cw->win, &num);
+                            if ((rects) && (num == 1))
+                              {
+                                 DBG("SHAPE [0x%x] rect 1\n", cw->win);
+                                 if ((rects[0].x == 0) &&
+                                     (rects[0].y == 0) &&
+                                     (rects[0].width == cw->w) &&
+                                     (rects[0].height == cw->h))
+                                   {
+                                      DBG("SHAPE [0x%x] rect solid\n", cw->win);
+                                      free(rects);
+                                      rects = NULL;
+                                   }
+                              }
+                            if (rects)
+                              {
+                                 unsigned int *pix, *p;
+                                 unsigned char *spix, *sp;
+                                 int w, h, px, py;
+                                 
+                                 cw->shaped = 1;
+                                 evas_object_image_size_get(cw->obj, &w, &h);
+                                 if ((w > 0) && (h > 0))
+                                   {
+                                      pix = evas_object_image_data_get(cw->obj, 1);
+                                      spix = calloc(w * h, sizeof(unsigned char));
+                                      if (spix)
+                                        {
+                                           DBG("SHAPE [0x%x] rects %i\n", num);
+                                           for (i = 0; i < num; i++)
+                                             {
+                                                int rx, ry, rw, rh;
+                                                
+                                                rx = rects[i].x;
+                                                ry = rects[i].y;
+                                                rw = rects[i].width;
+                                                rh = rects[i].height;
+                                                E_RECTS_CLIP_TO_RECT
+                                                  (rx, ry, rw, rh, 0, 0, w, h);
+                                                sp = spix + (w * ry) + rx;
+                                                for (py = 0; py < rh; py++)
+                                                  {
+                                                     for (px = 0; px < rw; px++)
+                                                       {
+                                                          *sp = 1;
+                                                          sp++;
+                                                       }
+                                                     sp += w - rw;
+                                                  }
+                                             }
+                                           sp = spix;
+                                           p = pix;
+                                           for (py = 0; py < h; py++)
+                                             {
+                                                for (px = 0; px < w; px++)
+                                                  {
+                                                     if (*sp)
+                                                       *p |= 0xff000000;
+                                                     else
+                                                       *p = 0x00000000;
+                                                     sp++;
+                                                     p++;
+                                                  }
+                                             }
+                                           free(spix);
+                                        }
+                                      evas_object_image_data_set(cw->obj, pix);
+                                      evas_object_image_alpha_set(cw->obj, 1);
+                                      evas_object_image_data_update_add(cw->obj, 0, 0, w, h);
+                                   }
+                                 free(rects);
+                              }
+                            else
+                              {
+                                 cw->shaped = 0;
+                                 evas_object_image_alpha_set(cw->obj, 0);
+                                 // dont need to fix alpha chanel as blending 
+                                 // should be totally off here regardless of
+                                 // alpha channe; content
+                              }
+                            cw->shape_changed = 0;
                          }
                     }
                   free(r);
@@ -397,6 +491,9 @@ _e_mod_comp_win_add(Comp *c, Ecore_X_Window win)
    eina_hash_add(windows, e_util_winid_str_get(cw->win), cw);
    if (!cw->input_only)
      {
+        Ecore_X_Rectangle *rects;
+        int num;
+        
         cw->damage = ecore_x_damage_new(cw->win, ECORE_X_DAMAGE_REPORT_DELTA_RECTANGLES);
         eina_hash_add(damages, e_util_winid_str_get(cw->damage), cw);
         cw->obj = evas_object_image_filled_add(c->evas);
@@ -405,6 +502,28 @@ _e_mod_comp_win_add(Comp *c, Ecore_X_Window win)
           evas_object_image_alpha_set(cw->obj, 1);
         else
           evas_object_image_alpha_set(cw->obj, 0);
+        ecore_x_window_shape_events_select(cw->win, 1);
+        rects = ecore_x_window_shape_rectangles_get(cw->win, &num);
+        if (rects)
+          {
+             if ((rects) && (num == 1))
+               {
+                  if ((rects[0].x == 0) &&
+                      (rects[0].y == 0) &&
+                      (rects[0].width == att.w) &&
+                      (rects[0].height == att.h))
+                    {
+                       free(rects);
+                       rects = NULL;
+                    }
+               }
+             if (rects)
+               {
+                  cw->shaped = 1;
+                  cw->shape_changed = 1;
+                  free(rects);
+               }
+          }
      }
    else
      {
@@ -609,6 +728,20 @@ _e_mod_comp_win_damage(Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg)
    _e_mod_comp_win_render_queue(cw);
 }
 
+static void
+_e_mod_comp_win_reshape(Comp_Win *cw)
+{
+   if (cw->shape_changed) return;
+   cw->shape_changed = 1;
+   if (!cw->update)
+     {
+        cw->update = 1;
+        cw->c->updates = eina_list_append(cw->c->updates, cw);
+     }
+   _e_mod_comp_update_add(cw->up, 0, 0, cw->w, cw->h);
+   _e_mod_comp_win_render_queue(cw);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 static int
@@ -737,6 +870,10 @@ static int
 _e_mod_comp_shape(void *data, int type, void *event)
 { // later
    Ecore_X_Event_Window_Shape *ev = event;
+   Comp_Win *cw = _e_mod_comp_win_find(ev->win);
+   if (!cw) return 1;
+//   if (ev->event_win != cw->c->man->root) return 1;
+   _e_mod_comp_win_reshape(cw);
    return 1;
 }
 
