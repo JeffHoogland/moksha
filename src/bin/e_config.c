@@ -72,6 +72,7 @@ _e_config_profile_name_get(Eet_File *ef)
                   break;
                }
           }
+        s = NULL;
         if (ok)
           {
              s = malloc(data_len + 1);
