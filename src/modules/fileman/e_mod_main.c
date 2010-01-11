@@ -192,7 +192,15 @@ _e_mod_action_fileman_cb(E_Object *obj, const char *params)
 	else if (params && params[0] == '~')
 	  e_fwin_new(zone->container, "~/", params + 1);
 	else if (params)
-	  e_fwin_new(zone->container, params, "/");
+	  {
+	     char *path;
+	     path = e_util_shell_env_path_eval(params);
+	     if (path)
+	       {
+		  e_fwin_new(zone->container, path, "/");
+		  free(path);
+	       }
+	  }
 	else
 	  e_fwin_new(zone->container, "favorites", "/");
      }
