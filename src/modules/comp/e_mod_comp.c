@@ -114,18 +114,18 @@ _e_mod_comp_cb_animator(void *data)
           }
         if ((cw->pw > 0) && (cw->ph > 0))
           {
-             _e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
+             e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
              if (!cw->xim)
                {
                   if (cw->xim = ecore_x_image_new(cw->pw, cw->ph, cw->vis, cw->depth))
-                    _e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
+                    e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
                }
-             r = _e_mod_comp_update_rects_get(cw->up);
+             r = e_mod_comp_update_rects_get(cw->up);
              if (r) 
                {
                   if (cw->xim)
                     {
-                       _e_mod_comp_update_clear(cw->up);
+                       e_mod_comp_update_clear(cw->up);
                        for (i = 0; r[i].w > 0; i++)
                          {
                             unsigned int *pix;
@@ -355,7 +355,7 @@ _e_mod_comp_win_add(Comp *c, Ecore_X_Window win)
         cw->obj = evas_object_rectangle_add(c->evas);
         evas_object_color_set(cw->obj, 0, 0, 0, 64);
      }
-   cw->up = _e_mod_comp_update_new();
+   cw->up = e_mod_comp_update_new();
    DBG("  [0x%x] add\n", cw->win);
    return cw;
 }
@@ -363,7 +363,7 @@ _e_mod_comp_win_add(Comp *c, Ecore_X_Window win)
 static void
 _e_mod_comp_win_del(Comp_Win *cw)
 {
-   _e_mod_comp_update_free(cw->up);
+   e_mod_comp_update_free(cw->up);
    DBG("  [0x%x] del\n", cw->win);
    if (cw->pixmap)
      {
@@ -549,7 +549,7 @@ _e_mod_comp_win_damage(Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg)
         cw->update = 1;
         cw->c->updates = eina_list_append(cw->c->updates, cw);
      }
-   _e_mod_comp_update_add(cw->up, x, y, w, h);
+   e_mod_comp_update_add(cw->up, x, y, w, h);
    _e_mod_comp_win_render_queue(cw);
 }
 
@@ -563,7 +563,7 @@ _e_mod_comp_win_reshape(Comp_Win *cw)
         cw->update = 1;
         cw->c->updates = eina_list_append(cw->c->updates, cw);
      }
-   _e_mod_comp_update_add(cw->up, 0, 0, cw->w, cw->h);
+   e_mod_comp_update_add(cw->up, 0, 0, cw->w, cw->h);
    _e_mod_comp_win_render_queue(cw);
 }
 
