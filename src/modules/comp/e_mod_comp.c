@@ -15,11 +15,11 @@
 //   4. add shadow to rect non argb windows
 //   5. abstract composite canvas to add extras in and "expose" it
 //   6. other engine fast-paths (gl specifically)!
-//   7. check depth is 32bpp- cant do 16bpp compositing.
 //   8. transparenty property
-//   9. shortcut lots of stuff to draw inside the compositor - shelf, wallpaper, 
-//      efm - hell even menus and anything else in e (this is what e18 was
-//      mostly about)
+//   9. shortcut lots of stuff to draw inside the compositor - shelf,
+//      wallpaper, efm - hell even menus and anything else in e (this is what
+//      e18 was mostly about)
+//  10. fullscreen windows need to be able to bypass compositing
 
 typedef struct _Comp     Comp;
 typedef struct _Comp_Win Comp_Win;
@@ -305,10 +305,15 @@ _e_mod_comp_win_add(Comp *c, Ecore_X_Window win)
    if (!cw) return NULL;
    cw->win = win;
    // FIXME: check if bd or pop - track
-   c->wins = eina_inlist_append(c->wins, EINA_INLIST_GET(cw));
    cw->c = c;
    memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
    ecore_x_window_attributes_get(cw->win, &att);
+   if ((!att.input_only) && (att.depth != 24))
+     {
+        printf("WARNING: window 0x%x not 24/32bpp -> %ibpp\n", cw->win, att.depth);
+        free(cw);
+        return NULL;
+     }
    cw->input_only = att.input_only;
    cw->vis = att.visual;
    cw->depth = att.depth;
@@ -355,7 +360,11 @@ _e_mod_comp_win_add(Comp *c, Ecore_X_Window win)
         cw->obj = evas_object_rectangle_add(c->evas);
         evas_object_color_set(cw->obj, 0, 0, 0, 64);
      }
+   c->wins = eina_inlist_append(c->wins, EINA_INLIST_GET(cw));
    cw->up = e_mod_comp_update_new();
+   e_mod_comp_update_tile_size_set(cw->up, 32, 32);
+   // for software:
+   e_mod_comp_update_policy_set(cw->up, UPDATE_POLICY_HALF_WIDTH_OR_MORE_ROUND_UP_TO_FULL_WIDTH);
    DBG("  [0x%x] add\n", cw->win);
    return cw;
 }
@@ -580,7 +589,7 @@ _e_mod_comp_create(void *data, int type, void *event)
    if (c->win == ev->win) return 1;
    if (c->ee_win == ev->win) return 1;
    cw = _e_mod_comp_win_add(c, ev->win);
-   _e_mod_comp_win_configure(cw, ev->x, ev->y, ev->w, ev->h, ev->border);
+   if (cw) _e_mod_comp_win_configure(cw, ev->x, ev->y, ev->w, ev->h, ev->border);
    return 1;
 }
 
@@ -721,12 +730,39 @@ _e_mod_comp_add(E_Manager *man)
 {
    Comp *c;
    Ecore_X_Window *wins;
+   Ecore_X_Window_Attributes att;
    int i, num;
    
    c = calloc(1, sizeof(Comp));
    if (!c) return NULL;
    c->man = man;
    c->win = ecore_x_composite_render_window_enable(man->root);
+   if (!c->win)
+     {
+        e_util_dialog_internal
+          (_("Compositor Error"),
+           _("Your screen does not support the compositor<br>"
+             "overlay window. This is needed for it to<br>"
+             "function."));
+        free(c);
+        return NULL;
+     }
+   
+   memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
+   ecore_x_window_attributes_get(c->win, &att);   
+   
+   if (att.depth != 24)
+     {
+        e_util_dialog_internal
+          (_("Compositor Error"),
+           _("Your screen is not in 24/32bit display mode.<br>"
+             "This is required to be your default depth<br>"
+             "setting for the compositor to work properly."));
+        ecore_x_composite_render_window_disable(c->win);
+        free(c);
+        return NULL;
+     }
+   
    if (c->man->num == 0) e_alert_composite_win = c->win;
    c->ee = ecore_evas_software_x11_new(NULL, c->win, 0, 0, man->w, man->h);
    ecore_evas_manual_render_set(c->ee, 1);
@@ -763,6 +799,27 @@ _e_mod_comp_add(E_Manager *man)
    return c;
 }
 
+static void
+_e_mod_comp_del(Comp *c)
+{
+   Comp_Win *cw;
+   
+   ecore_x_screen_is_composited_set(c->man->num, 0);
+   while (c->wins)
+     {
+        cw = (Comp_Win *)(c->wins);
+        _e_mod_comp_win_hide(cw);
+        _e_mod_comp_win_del(cw);
+     }
+   ecore_evas_free(c->ee);
+//   ecore_x_composite_unredirect_subwindows
+//     (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+   ecore_x_composite_render_window_disable(c->win);
+   if (c->man->num == 0) e_alert_composite_win = 0;
+   if (c->render_animator) ecore_animator_del(c->render_animator);
+   free(c);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 Eina_Bool
@@ -788,7 +845,10 @@ e_mod_comp_init(void)
 
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-        compositors = eina_list_append(compositors, _e_mod_comp_add(man));
+        Comp *c;
+        
+        c = _e_mod_comp_add(man);
+        if (c) compositors = eina_list_append(compositors, c);
      }
    
    return 1;
@@ -799,25 +859,7 @@ e_mod_comp_shutdown(void)
 {
    Comp *c;
    
-   EINA_LIST_FREE(compositors, c)
-     {
-        Comp_Win *cw;
-
-        ecore_x_screen_is_composited_set(c->man->num, 0);
-        while (c->wins)
-          {
-             cw = (Comp_Win *)(c->wins);
-             _e_mod_comp_win_hide(cw);
-             _e_mod_comp_win_del(cw);
-          }
-        ecore_evas_free(c->ee);
-//             ecore_x_composite_unredirect_subwindows
-//               (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-        ecore_x_composite_render_window_disable(c->win);
-        if (c->man->num == 0) e_alert_composite_win = 0;
-        if (c->render_animator) ecore_animator_del(c->render_animator);
-        free(c);
-     }
+   EINA_LIST_FREE(compositors, c) _e_mod_comp_del(c);
    
    E_FREE_LIST(handlers, ecore_event_handler_del);
    

@@ -11,6 +11,7 @@ struct _Update
    int tw, th;
    int tsw, tsh;
    unsigned char *tiles;
+   Update_Policy pol;
 };
 
 static void
@@ -30,6 +31,7 @@ e_mod_comp_update_new(void)
    up = calloc(1, sizeof(Update));
    up->tsw = 32;
    up->tsh = 32;
+   up->pol = UPDATE_POLICY_RAW;
    return up;
 }
 
@@ -38,6 +40,21 @@ e_mod_comp_update_free(Update *up)
 {
    if (up->tiles) free(up->tiles);
    free(up);
+}
+
+void
+e_mod_comp_update_policy_set(Update *up, Update_Policy pol)
+{
+   up->pol = pol;
+}
+
+void
+e_mod_comp_update_tile_size_set(Update *up, int tsw, int tsh)
+{
+   if ((up->tsw == tsw) && (up->tsh == tsh)) return;
+   up->tsw = tsw;
+   up->tsh = tsh;
+   e_mod_comp_update_clear(up);
 }
 
 void
@@ -69,14 +86,19 @@ e_mod_comp_update_add(Update *up, int x, int y, int w, int h)
    E_RECTS_CLIP_TO_RECT(x, y, w, h, 0, 0, up->w, up->h);
    if ((w <= 0) || (h <= 0)) return;
 
-   /* fixme: optimisation specific to the software enigine - abstract */
-   if (1)
+   switch (up->pol)
      {
+     case UPDATE_POLICY_RAW:
+        break;
+     case UPDATE_POLICY_HALF_WIDTH_OR_MORE_ROUND_UP_TO_FULL_WIDTH:
         if (w > (up->w / 2))
           {
              x = 0;
              w = up->w;
           }
+        break;
+     default:
+        break;
      }
    
    tx = x / up->tsw;
