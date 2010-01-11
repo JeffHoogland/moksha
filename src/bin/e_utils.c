@@ -750,7 +750,7 @@ e_util_icon_save(Ecore_X_Icon *icon, const char *filename)
 }
 
 EAPI char *
-e_util_shell_env_path_eval(char *path)
+e_util_shell_env_path_eval(const char *path)
 {
    /* evaluate things like:
     * $HOME/bling -> /home/user/bling
