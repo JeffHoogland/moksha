@@ -14,6 +14,9 @@
 //   4. add shadow to rect non argb windows
 //   5. abstract composite canvas to add extras in and "expose" it
 //   6. other engine fast-paths (gl specifically)!
+//   7. check depth is 32bpp- cant do 16bpp compositing.
+//   8. transparenty property
+//   9. shortcut lots of stuff to draw inside the compositor - shelf, wallpaper, efm - hell even menus and anything else in e
 
 typedef struct _Update      Update;
 typedef struct _Update_Rect Update_Rect;
