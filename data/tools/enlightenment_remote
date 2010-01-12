@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # See the function show_help_new_tool in order to know more about this tool
 
@@ -206,11 +206,7 @@ er_default_profile_set(){
 #       RETURNS:  just finishes and exit
 #===============================================================================
 
-for dir in $( echo $PATH | tr ':' ' ' )
-do
-   test -x ${dir}/dbus-send && dbus_send_found=yes
-done
-if [[ "$dbus_send_found" != "yes" ]] ; then
+if ! type dbus-send > /dev/null 2>&1; then
    echo "E: dbus-send command not found, please install it first"
    exit 1
 fi
