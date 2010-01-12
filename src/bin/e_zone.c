@@ -63,7 +63,7 @@ EAPI E_Zone *
 e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
 {
    E_Zone *zone;
-   char    name[40];
+   char name[40];
    Evas_Object *o;
    E_Event_Zone_Add *ev;
    int cw, ch;

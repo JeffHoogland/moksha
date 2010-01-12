@@ -4726,12 +4726,12 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
 static int
 _e_border_cb_client_message(void *data, int ev_type, void *ev)
 {
-   E_Border *bd;
+//   E_Border *bd;
    Ecore_X_Event_Client_Message *e;
 
    e = ev;
-   bd = e_border_find_by_client_window(e->win);
-   if (!bd) return 1;
+//   bd = e_border_find_by_client_window(e->win);
+//   if (!bd) return 1;
    return 1;
 }
 
