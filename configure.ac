@@ -623,12 +623,6 @@ src/modules/illume/Makefile
 src/modules/illume/module.desktop
 src/modules/illume/keyboards/Makefile
 src/modules/illume/dicts/Makefile
-src/modules/illume2/Makefile
-src/modules/illume2/module.desktop
-src/modules/illume2/E_Illume.pc
-src/modules/illume2/keyboards/Makefile
-src/modules/illume2/policies/Makefile
-src/modules/illume2/policies/illume/Makefile
 src/modules/illume-home/Makefile
 src/modules/illume-home/module.desktop
 src/modules/illume-softkey/Makefile
