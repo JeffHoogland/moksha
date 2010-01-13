@@ -22,16 +22,16 @@ struct _Il_Home_Win
    E_Object e_obj_inherit;
 
    E_Win *win;
-   Evas_Object *o_bg, *o_sf, *o_fm;
+   Evas_Object *o_bg, *o_sf, *o_fm, *o_cover;
    E_Busycover *cover;
 };
 struct _Il_Home_Exec 
 {
+   E_Busycover *cover;
    Efreet_Desktop *desktop;
    Ecore_Exe *exec;
    E_Border *border;
    Ecore_Timer *timeout;
-   E_Busycover *cover;
    int startup_id;
    pid_t pid;
    void *handle;
@@ -95,8 +95,6 @@ e_modapi_init(E_Module *m)
    _il_home_apps_unpopulate();
    _il_home_apps_populate();
 
-   e_busycover_init();
-
    handlers = 
      eina_list_append(handlers, 
                       ecore_event_handler_add(EFREET_EVENT_DESKTOP_LIST_CHANGE, 
@@ -145,13 +143,10 @@ e_modapi_shutdown(E_Module *m)
              exe->handle = NULL;
           }
         if (exe->timeout) ecore_timer_del(exe->timeout);
-        exe->cover = NULL;
         E_FREE(exe);
      }
 
    _il_home_apps_unpopulate();
-
-   e_busycover_shutdown();
 
    EINA_LIST_FREE(handlers, handle)
      ecore_event_handler_del(handle);
@@ -192,18 +187,18 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->o_btn = e_widget_button_add(gc->evas, NULL, NULL, 
                                      _il_home_btn_cb_click, inst, NULL);
    icon = e_icon_add(evas_object_evas_get(inst->o_btn));
-   e_icon_file_edje_set(icon, buff, "btn_icon");
+   e_icon_file_edje_set(icon, buff, "icon");
    e_widget_button_icon_set(inst->o_btn, icon);
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_btn);
    inst->gcc->data = inst;
 
-//   _il_home_win_new(inst);
+   _il_home_win_new(inst);
 
    xwin = inst->gcc->gadcon->zone->black_win;
    mode = ecore_x_e_illume_mode_get(xwin);
-//   if (mode > ECORE_X_ILLUME_MODE_SINGLE)
-//     _il_home_win_new(inst);
+   if (mode > ECORE_X_ILLUME_MODE_SINGLE)
+     _il_home_win_new(inst);
 
    inst->hdl = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, 
                                        _il_home_cb_client_message, inst);
@@ -305,12 +300,6 @@ _il_home_win_new(Instance *inst)
    e_win_name_class_set(hwin->win, "Illume-Home", "Illume-Home");
    e_win_resize_callback_set(hwin->win, _il_home_win_cb_resize);
 
-   if (!hwin->cover) 
-     {
-        hwin->cover = 
-          e_busycover_new(inst->gcc->gadcon->zone, il_home_cfg->mod_dir);
-     }
-
    snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", 
             il_home_cfg->mod_dir);
 
@@ -347,6 +336,8 @@ _il_home_win_new(Instance *inst)
    evas_object_smart_callback_add(hwin->o_fm, "selected", 
                                   _il_home_cb_selected, hwin);
 
+   hwin->cover = e_busycover_new(hwin->win);
+
    e_win_move_resize(hwin->win, zone->x, zone->y, zone->w, 100);
    e_win_show(hwin->win);
    e_border_zone_set(hwin->win->border, zone);
@@ -362,6 +353,10 @@ _il_home_win_cb_free(Il_Home_Win *hwin)
 {
    if (hwin->win->evas_win)
      e_drop_xdnd_register_set(hwin->win->evas_win, 0);
+
+   if (hwin->cover) e_object_del(E_OBJECT(hwin->cover));
+   hwin->cover = NULL;
+
    if (hwin->o_bg) evas_object_del(hwin->o_bg);
    hwin->o_bg = NULL;
    if (hwin->o_sf) evas_object_del(hwin->o_sf);
@@ -400,6 +395,11 @@ _il_home_win_cb_resize(E_Win *win)
      {
         if (hwin->win)
           evas_object_resize(hwin->o_sf, hwin->win->w, hwin->win->h);
+     }
+   if (hwin->cover) 
+     {
+        if (hwin->win)
+          e_busycover_resize(hwin->cover, hwin->win->w, hwin->win->h);
      }
 }
 
@@ -492,6 +492,7 @@ _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop)
 
    exe = E_NEW(Il_Home_Exec, 1);
    if (!exe) return;
+   exe->cover = hwin->cover;
 
    eins = e_exec(hwin->win->border->zone, desktop, NULL, NULL, "illume-home");
    exe->desktop = desktop;
@@ -504,10 +505,8 @@ _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop)
      }
 
    exe->timeout = ecore_timer_add(20.0, _il_home_win_cb_timeout, exe);
-   exe->cover = hwin->cover;
    snprintf(buff, sizeof(buff), "Starting %s", desktop->name);
-   exe->handle = e_busycover_push(exe->cover, buff, NULL);
-
+   exe->handle = e_busycover_push(hwin->cover, buff, NULL);
    exes = eina_list_append(exes, exe);
 }
 
@@ -679,7 +678,6 @@ _il_home_win_cb_exe_del(void *data, int type, void *event)
                }
              exes = eina_list_remove_list(exes, l);
              if (exe->timeout) ecore_timer_del(exe->timeout);
-             exe->cover = NULL;
              E_FREE(exe);
              return 1;
           }
@@ -751,8 +749,11 @@ _il_home_win_cb_timeout(void *data)
    Il_Home_Exec *exe;
 
    if (!(exe = data)) return 1;
-   if (exe->handle) e_busycover_pop(exe->cover, exe->handle);
-   exe->handle = NULL;
+   if (exe->handle) 
+     {
+        e_busycover_pop(exe->cover, exe->handle);
+        exe->handle = NULL;
+     }
    if (!exe->border) 
      {
         exes = eina_list_remove(exes, exe);
