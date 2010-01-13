@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@/@PACKAGE@
+
+Name: e17-illume2
+Description: Illume2 Module for E17
+Requires: enlightenment
+Version: @VERSION@
+Libs: -L${libdir}
+Libs.private: 
+Cflags: -I${includedir}
