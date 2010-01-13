@@ -637,6 +637,12 @@ src/modules/illume-kbd-toggle/Makefile
 src/modules/illume-kbd-toggle/module.desktop
 src/modules/illume-mode-toggle/Makefile
 src/modules/illume-mode-toggle/module.desktop
+src/modules/illume2/Makefile
+src/modules/illume2/module.desktop
+src/modules/illume2/E_Illume.pc
+src/modules/illume2/keyboards/Makefile
+src/modules/illume2/policies/Makefile
+src/modules/illume2/policies/illume/Makefile
 src/modules/syscon/Makefile
 src/modules/syscon/module.desktop
 src/modules/everything/Makefile
