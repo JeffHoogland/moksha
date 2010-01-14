@@ -314,6 +314,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    E_Zone *zone;
    int idx;
    int restart = 0;
+   E_Config_Shelf_Desk *sd;
 
    /* Only change style is we need to */
    if (!cfdata->escfg->style) 
@@ -410,6 +411,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->escfg->hide_duration = cfdata->hide_duration;
 
    cfdata->escfg->desk_show_mode = cfdata->desk_show_mode;
+   EINA_LIST_FREE(cfdata->escfg->desk_list, sd)
+      free(sd);
    cfdata->escfg->desk_list = NULL;
    if (cfdata->desk_show_mode)
      {
@@ -421,7 +424,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->desk_sel_list), l, item)
 	  {
 	     E_Desk *desk;
-	     E_Config_Shelf_Desk *sd;
 
 	     idx++;
 	     if ((!item) || (!item->selected)) continue;
