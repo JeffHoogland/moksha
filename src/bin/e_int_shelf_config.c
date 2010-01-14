@@ -177,26 +177,26 @@ _desk_sel_list_load(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_clear(cfdata->desk_sel_list);
 
    for (y = 0; y < e_config->zone_desks_y_count; y++)
-   for (x = 0; x < e_config->zone_desks_x_count; x++)
-     {
-	E_Desk *desk;
-	Eina_List *l = NULL;
-	E_Config_Shelf_Desk *sd;
+     for (x = 0; x < e_config->zone_desks_x_count; x++)
+       {
+	  E_Desk *desk;
+	  Eina_List *l = NULL;
+	  E_Config_Shelf_Desk *sd;
 
-	desk = e_desk_at_xy_get(cfdata->es->zone, x, y);
-	e_widget_ilist_append(cfdata->desk_sel_list, NULL, desk->name, 
-                              NULL, NULL, NULL);
+	  desk = e_desk_at_xy_get(cfdata->es->zone, x, y);
+	  e_widget_ilist_append(cfdata->desk_sel_list, NULL, desk->name, 
+		NULL, NULL, NULL);
 
-	EINA_LIST_FOREACH(cfdata->desk_list, l, sd)
+	  EINA_LIST_FOREACH(cfdata->desk_list, l, sd)
 	    {
 	       if (!sd) continue;
 	       if ((sd->x != x) || (sd->y != y)) continue;
 
 	       e_widget_ilist_multi_select(cfdata->desk_sel_list, 
-                                           e_widget_ilist_count(cfdata->desk_sel_list));
+		     e_widget_ilist_count(cfdata->desk_sel_list));
 	       break;
 	    }
-     }
+       }
    e_widget_ilist_go(cfdata->desk_sel_list);
    e_widget_ilist_thaw(cfdata->desk_sel_list);
    edje_thaw();
