@@ -6531,9 +6531,10 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	ic->drag.src = 0;
         ic->down_sel = 0;
 
-	if ((_e_fm2_inplace_open(ic) == 0) &&
-	    (S_ISDIR(ic->info.statinfo.st_mode)) &&
-	    (ic->sd->config->view.single_click))
+	if ((ic->sd->config->view.single_click) &&
+	    (!evas_key_modifier_is_set(ev->modifiers, "Control")) &&
+	    (!evas_key_modifier_is_set(ev->modifiers, "Shift")) &&
+	    (_e_fm2_inplace_open(ic) == 0))
           evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
      }
 }
