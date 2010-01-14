@@ -1211,6 +1211,7 @@ linux_apm_check(void)
    bat_val = atoi(s1);
    if (!strcmp(s3, "sec")) time_val = atoi(s2);
    else if (!strcmp(s3, "min")) time_val = atoi(s2) * 60;
+   else time_val = 0;
    fclose(f);
    
    if ((bat_flags != 0xff) && (bat_flags & 0x80))
