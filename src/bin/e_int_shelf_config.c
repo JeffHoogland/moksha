@@ -466,7 +466,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
           {
              if ((desk->x == sd->x) && (desk->y == sd->y))
                {
-	          show_shelf=1;
+	          show_shelf = 1;
 		  break;
                }
           }
