@@ -22,21 +22,16 @@ static void _e_mod_win_cb_mouse_wheel(void *data, Evas *evas, Evas_Object *obj, 
 static int my = 0;
 
 Il_Ind_Win *
-e_mod_win_new(E_Screen *screen) 
+e_mod_win_new(E_Zone *zone) 
 {
    Il_Ind_Win *iwin;
-   E_Container *con;
-   E_Zone *zone;
    Evas *evas;
    Ecore_X_Window_State states[2];
 
    iwin = E_OBJECT_ALLOC(Il_Ind_Win, IL_IND_WIN_TYPE, _e_mod_win_cb_free);
    if (!iwin) return NULL;
 
-   con = e_container_current_get(e_manager_current_get());
-   zone = e_util_container_zone_id_get(con->num, screen->escreen);
-
-   iwin->win = e_win_new(con);
+   iwin->win = e_win_new(zone->container);
    iwin->win->data = iwin;
    states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;

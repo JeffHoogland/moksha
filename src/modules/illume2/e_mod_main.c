@@ -15,9 +15,10 @@ EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Illume2" };
 EAPI void *
 e_modapi_init(E_Module *m) 
 {
+   E_Manager *man;
    E_Container *con;
    E_Zone *zone;
-   Eina_List *l;
+   Eina_List *l, *ll, *lll;
 
    /* setup eina logging */
    if (_e_illume_log_dom < 0) 
@@ -46,46 +47,47 @@ e_modapi_init(E_Module *m)
         return NULL;
      }
 
-   con = e_container_current_get(e_manager_current_get());
-   EINA_LIST_FOREACH(con->zones, l, zone) 
-     {
-        E_Illume_Config_Zone *cz;
-
-        cz = e_illume_zone_config_get(zone->id);
-        if (cz->mode.dual == 0) 
-          ecore_x_e_illume_mode_set(zone->black_win, 
-                                    ECORE_X_ILLUME_MODE_SINGLE);
-        else 
-          {
-             if (cz->mode.side == 0)
-               ecore_x_e_illume_mode_set(zone->black_win, 
-                                         ECORE_X_ILLUME_MODE_DUAL_TOP);
-             else
-               ecore_x_e_illume_mode_set(zone->black_win, 
-                                         ECORE_X_ILLUME_MODE_DUAL_LEFT);
-          }
-     }
-
    /* initialize the keyboard subsystem */
    e_kbd_init();
-
-   /* initialize the quickpanel subsystem */
-   e_quickpanel_init();
-
-   /* initialize the layout subsystem */
-   e_mod_layout_init();
 
    /* create a new vkbd */
    kbd = e_kbd_new();
 
-   EINA_LIST_FOREACH(con->zones, l, zone) 
-     {
-        E_Quickpanel *qp;
+   /* initialize the quickpanel subsystem */
+   e_quickpanel_init();
 
-        /* create a new quickpanel */
-        if (!(qp = e_quickpanel_new(zone))) continue;
-        quickpanels = eina_list_append(quickpanels, qp);
+   EINA_LIST_FOREACH(e_manager_list(), l, man) 
+     {
+        EINA_LIST_FOREACH(man->containers, ll, con) 
+          {
+             EINA_LIST_FOREACH(con->zones, lll, zone) 
+               {
+                  E_Illume_Config_Zone *cz;
+                  E_Quickpanel *qp;
+
+                  /* create a new quickpanel */
+                  if (!(qp = e_quickpanel_new(zone))) continue;
+                  quickpanels = eina_list_append(quickpanels, qp);
+
+                  cz = e_illume_zone_config_get(zone->id);
+                  if (cz->mode.dual == 0) 
+                    ecore_x_e_illume_mode_set(zone->black_win, 
+                                              ECORE_X_ILLUME_MODE_SINGLE);
+                  else 
+                    {
+                       if (cz->mode.side == 0)
+                         ecore_x_e_illume_mode_set(zone->black_win, 
+                                                   ECORE_X_ILLUME_MODE_DUAL_TOP);
+                       else
+                         ecore_x_e_illume_mode_set(zone->black_win, 
+                                                   ECORE_X_ILLUME_MODE_DUAL_LEFT);
+                    }
+               }
+          }
      }
+
+   /* initialize the layout subsystem */
+   e_mod_layout_init();
 
    return m;
 }

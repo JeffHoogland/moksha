@@ -9,11 +9,9 @@ static void _il_sk_win_cb_back_click(void *data, void *data2);
 static void _il_sk_win_cb_close_click(void *data, void *data2);
 
 Il_Sk_Win *
-e_mod_softkey_win_new(E_Screen *screen) 
+e_mod_softkey_win_new(E_Zone *zone) 
 {
    Il_Sk_Win *swin;
-   E_Container *con;
-   E_Zone *zone;
    Evas *evas;
    Ecore_X_Window_State states[2];
    char buff[PATH_MAX];
@@ -23,10 +21,7 @@ e_mod_softkey_win_new(E_Screen *screen)
 
    snprintf(buff, sizeof(buff), "%s/e-module-illume-softkey.edj", mod_dir);
 
-   con = e_container_current_get(e_manager_current_get());
-   zone = e_util_container_zone_id_get(con->num, screen->escreen);
-
-   swin->win = e_win_new(con);
+   swin->win = e_win_new(zone->container);
    swin->win->data = swin;
    states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
