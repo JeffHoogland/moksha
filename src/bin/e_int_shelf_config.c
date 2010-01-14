@@ -167,7 +167,7 @@ static void
 _desk_sel_list_load(E_Config_Dialog_Data *cfdata) 
 {
    Evas *evas;
-   int x, y;
+   int x, y, i;
 
    if (!cfdata->desk_sel_list) return;
    evas = evas_object_evas_get(cfdata->desk_sel_list);
@@ -176,6 +176,7 @@ _desk_sel_list_load(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(cfdata->desk_sel_list);
    e_widget_ilist_clear(cfdata->desk_sel_list);
 
+   i = 0;
    for (y = 0; y < e_config->zone_desks_y_count; y++)
      for (x = 0; x < e_config->zone_desks_x_count; x++)
        {
@@ -186,14 +187,14 @@ _desk_sel_list_load(E_Config_Dialog_Data *cfdata)
 	  desk = e_desk_at_xy_get(cfdata->es->zone, x, y);
 	  e_widget_ilist_append(cfdata->desk_sel_list, NULL, desk->name, 
 		NULL, NULL, NULL);
+	  i++;
 
 	  EINA_LIST_FOREACH(cfdata->desk_list, l, sd)
 	    {
 	       if (!sd) continue;
 	       if ((sd->x != x) || (sd->y != y)) continue;
 
-	       e_widget_ilist_multi_select(cfdata->desk_sel_list, 
-		     e_widget_ilist_count(cfdata->desk_sel_list));
+	       e_widget_ilist_multi_select(cfdata->desk_sel_list, i);
 	       break;
 	    }
        }
@@ -433,7 +434,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     sd->y = desk->y;
 	     desk_list = eina_list_append(desk_list, sd);
 	  }
-	cfdata->escfg->desk_list = desk_list;
+	cfdata->desk_list = cfdata->escfg->desk_list = desk_list;
      }
 
    if (restart) 
