@@ -435,49 +435,51 @@ _e_mod_layout_cb_client_message(void *data, int type, void *event)
    else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_MODE) 
      {
         E_Border *bd;
+        E_Manager *man;
         E_Container *con;
         E_Zone *zone;
-        Eina_List *l;
+        Eina_List *l, *ll, *lll;
         int lock = 1;
 
-        con = e_container_current_get(e_manager_current_get());
-        EINA_LIST_FOREACH(con->zones, l, zone) 
-          {
-             if (zone->black_win == ev->win) 
-               {
-                  E_Illume_Config_Zone *cz;
+        EINA_LIST_FOREACH(e_manager_list(), lll, man) 
+          EINA_LIST_FOREACH(man->containers, ll, con) 
+            EINA_LIST_FOREACH(con->zones, l, zone) 
+              {
+                 if (zone->black_win == ev->win) 
+                   {
+                      E_Illume_Config_Zone *cz;
 
-                  cz = e_illume_zone_config_get(zone->id);
-                  if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_SINGLE)
-                    cz->mode.dual = 0;
-                  else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL_TOP) 
-                    {
-                       if (e_illume_border_valid_count_get(zone) < 2)
-                         ecore_x_e_illume_home_send(zone->black_win);
-                       cz->mode.dual = 1;
-                       cz->mode.side = 0;
-                       lock = 0;
-                    }
-                  else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL_LEFT) 
-                    {
-                       if (e_illume_border_valid_count_get(zone) < 2)
-                         ecore_x_e_illume_home_send(zone->black_win);
-                       cz->mode.dual = 1;
-                       cz->mode.side = 1;
-                    }
-                  else
-                    cz->mode.dual = 0;
-                  e_config_save_queue();
+                      cz = e_illume_zone_config_get(zone->id);
+                      if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_SINGLE)
+                        cz->mode.dual = 0;
+                      else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL_TOP) 
+                        {
+                           if (e_illume_border_valid_count_get(zone) < 2)
+                             ecore_x_e_illume_home_send(zone->black_win);
+                           cz->mode.dual = 1;
+                           cz->mode.side = 0;
+                           lock = 0;
+                        }
+                      else if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_MODE_DUAL_LEFT) 
+                        {
+                           if (e_illume_border_valid_count_get(zone) < 2)
+                             ecore_x_e_illume_home_send(zone->black_win);
+                           cz->mode.dual = 1;
+                           cz->mode.side = 1;
+                        }
+                      else
+                        cz->mode.dual = 0;
+                      e_config_save_queue();
 
-                  bd = e_illume_border_top_shelf_get(zone);
-                  if (bd)
-                    ecore_x_e_illume_drag_locked_set(bd->client.win, lock);
-                  bd = e_illume_border_bottom_panel_get(zone);
-                  if (bd)
-                    ecore_x_e_illume_drag_locked_set(bd->client.win, lock);
-                  break;
-               }
-          }
+                      bd = e_illume_border_top_shelf_get(zone);
+                      if (bd)
+                        ecore_x_e_illume_drag_locked_set(bd->client.win, lock);
+                      bd = e_illume_border_bottom_panel_get(zone);
+                      if (bd)
+                        ecore_x_e_illume_drag_locked_set(bd->client.win, lock);
+                      break;
+                   }
+              }
      }
    else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_BACK) 
      {
