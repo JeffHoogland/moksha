@@ -60,6 +60,9 @@ e_mod_softkey_win_new(E_Zone *zone)
    e_win_placed_set(swin->win, 1);
    swin->win->border->lock_user_location = 1;
 
+   ecore_x_e_illume_bottom_panel_geometry_set(ecore_x_window_root_first_get(), 
+                                              zone->x, (zone->h - 32), 
+                                              zone->w, 32);
    return swin;
 }
 
