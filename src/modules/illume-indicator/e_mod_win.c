@@ -231,7 +231,6 @@ _e_mod_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
 
    if (!(iwin = data)) return;
    ev = event;
-   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    if (ev->button == 1)
      {
         if (iwin->win->border->client.illume.drag.locked) return;
@@ -265,11 +264,9 @@ _e_mod_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event)
 
    if (!(iwin = data)) return;
    ev = event;
-   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    if (ev->button != 1) return;
    bd = iwin->win->border;
    if (bd->client.illume.drag.locked) return;
-   if (!ecore_x_e_illume_drag_get(bd->zone->black_win)) return;
    ecore_x_e_illume_drag_end_send(bd->client.win);
    my = 0;
 }
@@ -284,7 +281,6 @@ _e_mod_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event)
 
    if (!(iwin = data)) return;
    ev = event;
-   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    bd = iwin->win->border;
    if (bd->client.illume.drag.locked) return;
    if (!ecore_x_e_illume_drag_get(bd->zone->black_win)) return;
