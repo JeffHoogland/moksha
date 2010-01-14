@@ -12,7 +12,9 @@
 #Xephyr :1 -noreset -ac -br -dpi 284 -screen 480x640x16 &
 #Xephyr :1 -noreset -ac -br -dpi 284 -screen 640x480x16 -host-cursor &
 
-Xephyr :1 -noreset -ac -br -dpi 284 -screen 480x800 -host-cursor &
+Xephyr :1 -noreset -ac -br -dpi 183 -screen 960x400x16 -host-cursor &
+
+#Xephyr :1 -noreset -ac -br -dpi 284 -screen 480x800 -host-cursor &
 #Xephyr :1 -noreset -ac -br -dpi 284 -screen 480x640 &
 #Xephyr :1 -noreset -ac -br -dpi 284 -screen 640x480 &
 #Xephyr :1 -noreset -ac -br -dpi 181 -screen 320x320 &
@@ -25,6 +27,6 @@ unset E_RESTART E_START E_IPC_SOCKET E_START_TIME E_CONF_PROFILE
 enlightenment_start \
 -no-precache \
 -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it \
--profile illume-home
-#-fake-xinerama-screen 480x320+0+0 \
-#-fake-xinerama-screen 480x320+480+0
+-profile illume-home \
+-fake-xinerama-screen 480x400+0+0 \
+-fake-xinerama-screen 480x400+480+0

@@ -20,9 +20,7 @@ INCLUDES               = -I. \
 pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
 pkg_LTLIBRARIES        = module.la
 
-EILLUMEHEADERS = E_Illume.h
-
-module_la_SOURCES      = $(EILLUMEHEADERS) \
+module_la_SOURCES      = E_Illume.h \
 			 e_mod_main.h \
                          e_mod_main.c \
                          e_mod_config.h \
@@ -49,13 +47,6 @@ module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
-installed_headersdir = $(prefix)/include/@PACKAGE@
-installed_headers_DATA = $(EILLUMEHEADERS)
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = E_Illume.pc
-
 uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)/policies
-        

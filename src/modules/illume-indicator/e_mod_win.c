@@ -212,7 +212,8 @@ _e_mod_win_cb_menu_contents(void *data, E_Menu *mn, E_Menu_Item *mi)
      e_int_gadcon_config_shelf(iwin->gadcon);
 }
 
-static void _e_mod_win_cb_menu_post(void *data, E_Menu *mn) 
+static void 
+_e_mod_win_cb_menu_post(void *data, E_Menu *mn) 
 {
    Il_Ind_Win *iwin;
 
@@ -269,7 +270,6 @@ _e_mod_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event)
    bd = iwin->win->border;
    if (bd->client.illume.drag.locked) return;
    if (!ecore_x_e_illume_drag_get(bd->zone->black_win)) return;
-//   if (!bd->client.illume.drag.drag) return;
    ecore_x_e_illume_drag_end_send(bd->client.win);
    my = 0;
 }
@@ -288,7 +288,6 @@ _e_mod_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event)
    bd = iwin->win->border;
    if (bd->client.illume.drag.locked) return;
    if (!ecore_x_e_illume_drag_get(bd->zone->black_win)) return;
-//   if (!bd->client.illume.drag.drag) return;
    if ((bd->y + bd->h + ev->cur.output.y) >= (bd->zone->h)) return;
 
    ecore_x_pointer_last_xy_get(NULL, &py);
