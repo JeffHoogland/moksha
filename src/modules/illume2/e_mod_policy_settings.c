@@ -9,7 +9,7 @@ static void _il_config_policy_settings_changed(void *data, Evas_Object *obj, voi
 static int _il_config_policy_settings_change_timeout(void *data);
 
 /* local variables */
-Ecore_Timer *_ps_change_timer = NULL;
+Ecore_Timer *_policy_change_timer = NULL;
 Evas_Object *otop, *oleft;
 
 void 
@@ -42,7 +42,8 @@ _il_config_policy_settings_create(E_Config_Dialog *cfd)
 static void 
 _il_config_policy_settings_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   if (_ps_change_timer) ecore_timer_del(_ps_change_timer);
+   if (_policy_change_timer) ecore_timer_del(_policy_change_timer);
+   _policy_change_timer = NULL;
 }
 
 static Evas_Object *
@@ -88,8 +89,8 @@ _il_config_policy_settings_changed(void *data, Evas_Object *obj, void *event)
    e_widget_disabled_set(otop, !il_cfg->policy.mode.dual);
    e_widget_disabled_set(oleft, !il_cfg->policy.mode.dual);
 
-   if (_ps_change_timer) ecore_timer_del(_ps_change_timer);
-   _ps_change_timer = 
+   if (_policy_change_timer) ecore_timer_del(_policy_change_timer);
+   _policy_change_timer = 
      ecore_timer_add(0.5, _il_config_policy_settings_change_timeout, data);
 }
 
@@ -100,7 +101,7 @@ _il_config_policy_settings_change_timeout(void *data)
    Ecore_X_Illume_Mode mode;
 
    e_config_save_queue();
-   _ps_change_timer = NULL;
+   _policy_change_timer = NULL;
 
    if (il_cfg->policy.mode.dual) 
      {

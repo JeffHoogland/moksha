@@ -95,14 +95,12 @@ _layout_zone_layout(E_Zone *zone)
    Eina_List *l;
    E_Border *bd;
 
-//   printf("Layout Zone: %d\n", zone->id);
    cfg_zone = e_illume_zone_config_get(zone->id);
    EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
      {
         int mh;
 
         if ((bd->zone != zone) || (bd->new_client) || (!bd->visible)) continue;
-//        printf("\tBorder: %s\n", bd->client.icccm.name);
         if (e_illume_border_is_top_shelf(bd)) 
           {
              e_illume_border_min_get(bd, NULL, &mh);
@@ -448,6 +446,11 @@ _zone_layout_dual_top_custom(E_Border *bd)
                               {
                                  bh = ah;
                                  by = ay;
+                              }
+                            else 
+                              {
+                                 bh = zh;
+                                 by = zy;
                               }
                          }
                     }
