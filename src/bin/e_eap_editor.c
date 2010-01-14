@@ -134,7 +134,7 @@ EAPI E_Desktop_Edit *
 e_desktop_border_edit(E_Container *con, E_Border *bd)
 {
    E_Desktop_Edit *editor;
-   int new_desktop;
+   int new_desktop = 0;
 
    if (!con) return NULL;
    editor = E_OBJECT_ALLOC(E_Desktop_Edit, E_DESKTOP_EDIT_TYPE, _e_desktop_edit_free);
@@ -357,11 +357,9 @@ static int
 _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Desktop_Edit *editor;
-   Efreet_Desktop *desktop;
    char *str;
 
    editor = cfdata->editor;
-   desktop = editor->desktop;
 
    IFFREE(cfdata->desktop->name);
    IFDUP(cfdata->name, cfdata->desktop->name);
@@ -448,13 +446,11 @@ static Evas_Object *
 _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    E_Desktop_Edit *editor;
-   Efreet_Desktop *desktop;
    Evas_Object *ol, *o;
    Evas_Object *entry;
 
    editor = cfdata->editor;
    editor->evas = evas;
-   desktop = editor->desktop;
 
    ol = e_widget_table_add(evas, 0);
 
@@ -499,13 +495,11 @@ static Evas_Object *
 _e_desktop_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    E_Desktop_Edit *editor;
-   Efreet_Desktop *desktop;
    Evas_Object *ol, *o;
    Evas_Object *entry;
    Evas_Object *fn;
 
    editor = cfdata->editor;
-   desktop = editor->desktop;
 
    ol = _e_desktop_edit_basic_create_widgets(cfd, evas, cfdata);
 
@@ -685,11 +679,8 @@ _e_desktop_editor_cb_exec_select(void *data1, void *data2)
 }
 
 static void
-_e_desktop_edit_select_cb(void *data, Evas_Object *obj)
+_e_desktop_edit_select_cb(void *data __UNUSED__, Evas_Object *obj __UNUSED__)
 {
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = data;
 }
 
 static void

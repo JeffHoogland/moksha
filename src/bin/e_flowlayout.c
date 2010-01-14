@@ -469,7 +469,7 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
    Evas_Coord x, y, w, h, xx, yy, cr, cc;
    Eina_List *l;
    Evas_Object *obj;
-   int minw, minh, wdif, hdif;
+   int minw, minh;
    int count, expand;
 
 
@@ -535,8 +535,6 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
      }
    
    /* Some calculations */
-   wdif = w - minw;
-   hdif = h - minh;
    if (sd->flowright)
      xx = x;
    else

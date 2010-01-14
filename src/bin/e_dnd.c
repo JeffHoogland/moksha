@@ -479,6 +479,7 @@ e_drag_idler_before(void)
 				 break;
 			      }
 			 }
+		       // TODO: This is meaningless
 		       changed = 0;
 		    }
 		  if (changed)
@@ -1266,7 +1267,6 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Position *ev;
    Ecore_X_Rectangle rect;
-   Ecore_X_Action action;
    const char *id;
    const Eina_List *l;
    E_Drop_Handler *h;
@@ -1288,8 +1288,6 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
    rect.y = 0;
    rect.width = 0;
    rect.height = 0;
-
-   action = ev->action;
 
    active = 0;
    EINA_LIST_FOREACH(_drop_handlers, l, h)

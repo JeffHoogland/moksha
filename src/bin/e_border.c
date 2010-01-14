@@ -4003,7 +4003,6 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
    E_Border *bd;
    Ecore_X_Event_Window_Hide *e;
 
-   bd = data;
    e = ev;
 //   printf("HIDE: %x, event %x\n", e->win, e->event_win);
 // not interested in hide events from windows other than the window in question
@@ -4302,7 +4301,6 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
    E_Border *bd;
    Ecore_X_Event_Window_Resize_Request *e;
 
-   bd = data;
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd)

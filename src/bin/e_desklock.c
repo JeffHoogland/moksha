@@ -653,6 +653,8 @@ _e_desklock_state_set(int state)
 	signal = "e,state,invalid";
 	text = "The password you entered is invalid. Try again.";
      }
+   else
+     return;
 
    EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
      {

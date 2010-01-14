@@ -426,7 +426,7 @@ _e_config_dialog_unchanged(E_Config_Dialog *cfd)
 static int
 _e_config_dialog_check_changed(E_Config_Dialog *cfd, unsigned char def)
 {
-   int changed;
+   int changed = 0;
 
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
      {

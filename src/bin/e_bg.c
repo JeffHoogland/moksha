@@ -716,7 +716,6 @@ _e_bg_slide_animator(void *data)
    E_Bg_Anim_Params *params;
    E_Zone *zone;
    Evas_Object *o;
-   E_Desk *desk;
    double st;
    double t, dt, spd;
    Evas_Coord px, py, rx, ry, bw, bh, panw, panh;
@@ -724,9 +723,7 @@ _e_bg_slide_animator(void *data)
 
    params = data;
    zone = params->zone;
-   desk = e_desk_current_get(zone);
    t = ecore_loop_time_get();
-   dt = -1.0;
    spd = e_config->desk_flip_animate_time;
 
    o = zone->bg_scrollframe;

@@ -407,9 +407,7 @@ e_editable_cursor_pos_get(Evas_Object *editable)
 EAPI void
 e_editable_cursor_move_to_start(Evas_Object *editable)
 {
-   E_Editable_Smart_Data *sd;
-
-   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
+   if (!editable)
      return;
    e_editable_cursor_pos_set(editable, 0);
 }
@@ -544,9 +542,7 @@ e_editable_selection_pos_get(Evas_Object *editable)
 EAPI void
 e_editable_selection_move_to_start(Evas_Object *editable)
 {
-   E_Editable_Smart_Data *sd;
-
-   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
+   if (!editable)
      return;
    e_editable_selection_pos_set(editable, 0);
 }

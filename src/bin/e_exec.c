@@ -423,7 +423,6 @@ static void
 _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_Del *event,
 		     Ecore_Exe_Event_Data *error, Ecore_Exe_Event_Data *read)
 {
-   E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    E_Config_Dialog_Data *cfdata;
    E_Container *con;
@@ -450,9 +449,9 @@ _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_
 
    con = e_container_current_get(e_manager_current_get());
    /* Create The Dialog */
-   cfd = e_config_dialog_new(con, _("Application Execution Error"), 
-			     "E", "_e_exec_error_exit_dialog",
-			     NULL, 0, v, cfdata);
+   e_config_dialog_new(con, _("Application Execution Error"), 
+		       "E", "_e_exec_error_exit_dialog",
+		       NULL, 0, v, cfdata);
 }
 
 static void
