@@ -1166,14 +1166,13 @@ ACT_FN_GO(desk_flip_to)
 ACT_FN_GO_EDGE(desk_flip_in_direction)
 {
    E_Zone *zone;
-   E_Desk *prev = NULL, *current = NULL;
+   E_Desk *current = NULL;
    E_Event_Pointer_Warp *wev;
    int x, y, offset = 25;
 
    zone = _e_actions_zone_get(obj);
    wev = E_NEW(E_Event_Pointer_Warp, 1);
    if ((!wev) || (!zone)) return;
-   prev = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current);
    ecore_x_pointer_xy_get(zone->container->win, &x, &y);
    wev->prev.x = x;
    wev->prev.y = y;
@@ -2142,8 +2141,6 @@ ACT_FN_GO(hibernate)
 /***************************************************************************/
 ACT_FN_GO(pointer_resize_push)
 {
-   E_Manager *man = NULL;
-
    if (!obj) return;
    if (obj->type == E_BORDER_TYPE)
      {
@@ -2155,8 +2152,6 @@ ACT_FN_GO(pointer_resize_push)
 	    ((bd->maximized == E_MAXIMIZE_FULLSCREEN) &&
 	     (!e_config->allow_manip)))
 	  return;
-	if (bd->zone)
-	  man = bd->zone->container->manager;
 	e_pointer_type_push(bd->pointer, bd, params);
      }
 }
@@ -2164,8 +2159,6 @@ ACT_FN_GO(pointer_resize_push)
 /***************************************************************************/
 ACT_FN_GO(pointer_resize_pop)
 {
-   E_Manager *man = NULL;
-
    if (!obj) return;
    if (obj->type == E_BORDER_TYPE)
      {
@@ -2176,8 +2169,6 @@ ACT_FN_GO(pointer_resize_pop)
 	    (bd->fullscreen) || 
 		((bd->maximized == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)))
 	  return;
-	if (bd->zone)
-	  man = (E_Manager *)bd->zone->container->manager;
 	e_pointer_type_pop(bd->pointer, bd, params);
      }
 }
