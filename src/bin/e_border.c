@@ -6888,6 +6888,7 @@ _e_border_eval(E_Border *bd)
      {
 	int x, y;
 
+	ecore_x_pointer_xy_get(bd->zone->container->win, &x, &y);
 	if ((!bd->placed) && (!bd->re_manage) &&
 	    (e_config->window_placement_policy == E_WINDOW_PLACEMENT_MANUAL) &&
 	    (!((bd->client.icccm.transient_for != 0) ||
@@ -6904,7 +6905,6 @@ _e_border_eval(E_Border *bd)
 		    bd->cur_mouse_action = NULL;
 		  if (bd->cur_mouse_action)
 		    {
-		       ecore_x_pointer_xy_get(bd->zone->container->win, &x, &y);
 		       bd->x = x - (bd->w >> 1);
 		       bd->y = y - (bd->client_inset.t >> 1);
 		       bd->changed = 1;
