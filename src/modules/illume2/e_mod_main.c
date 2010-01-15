@@ -90,16 +90,20 @@ e_modapi_init(E_Module *m)
                     /* create a new quickpanel */
                     if (!(qp = e_quickpanel_new(zone))) continue;
                     quickpanels = eina_list_append(quickpanels, qp);
-
+                    
+                    mode = ECORE_X_ILLUME_MODE_SINGLE;
                     cz = e_illume_zone_config_get(zone->id);
-                    if (cz->mode.dual == 0) 
-                      mode = ECORE_X_ILLUME_MODE_SINGLE;
-                    else 
+                    if (cz)
                       {
-                         if (cz->mode.side == 0)
-                           mode = ECORE_X_ILLUME_MODE_DUAL_TOP;
-                         else
-                           mode = ECORE_X_ILLUME_MODE_DUAL_LEFT;
+                         if (cz->mode.dual == 0) 
+                           mode = ECORE_X_ILLUME_MODE_SINGLE;
+                         else 
+                           {
+                              if (cz->mode.side == 0)
+                                mode = ECORE_X_ILLUME_MODE_DUAL_TOP;
+                              else
+                                mode = ECORE_X_ILLUME_MODE_DUAL_LEFT;
+                           }
                       }
                     ecore_x_e_illume_mode_set(zone->black_win, mode);
                     zones[i++] = zone->black_win;

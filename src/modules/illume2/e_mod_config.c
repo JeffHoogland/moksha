@@ -236,4 +236,5 @@ e_illume_zone_config_get(int id)
    cz->mode.side = 0;
    il_cfg->policy.zones = eina_list_append(il_cfg->policy.zones, cz);
    e_mod_config_save();
+   return cz;
 }
